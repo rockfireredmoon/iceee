@@ -3,6 +3,6 @@
 Data\CreatureDef.txt
 Data\CreatureDef_Custom.txt
 Data\CreatureDef_Players88.txt
-Data\CreatureDef_ICEEE.txt
 Data\CreatureDef_Restored.txt
 Data\CreatureDef_Pets.txt
+Data\CreatureDef_ICEE.txt
