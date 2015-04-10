@@ -1,5 +1,6 @@
 #name custom_heathendel_knightrogue40p
 #speed 6
+#queue_jumps call
 
 ; 228 : Assault 40
 ; 446 : Bash 40
@@ -67,6 +68,10 @@ if VAR = 0
 endif
 return
 
+
+:tryMelee
+use 32766
+return
 
 
 :tryEarthshaker

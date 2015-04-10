@@ -2744,20 +2744,30 @@ link=1108350,1
 ID=1126556
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=Untitled
-Pos=2120.3,484.323,2853.17
+Pos=2178.12,480,2835.52
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#F7777
+spawnPackage=56_wacr_ThawingBrazier
+aiModule=custom_wailing
 
 [ENTRY]
 ID=1126557
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=Untitled
-Pos=2123.96,483.208,2958.08
-Orient=0,0,0,1
+Pos=2122.59,480,2968.17
+Orient=0,0.674288,0,0.738469
 Scale=1,1,1
 spawnPackage=56_wacr_TheWailer
 sequential=1
+
+[ENTRY]
+ID=1126558
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=Untitled
+Pos=2096.45,480,2821.33
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#F7777
 
 [ENTRY]
 ID=1127131

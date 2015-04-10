@@ -94,6 +94,7 @@ Regenerate(12)                               Iterative heal (amount).  Used for 
 RemoveAltBuff()                              Remove a cast/attack/movement speed buff.  Only used for [Suppress]
 RemoveAltDebuff()                            Removes debuffs (speeds, root, etc).  Only used for [Free]
 RemoveEtcBuff()                              Removes other buffs.  Only used for [Abolish]
+RemoveHealthBuff()                           Removes health buffs.  Only used for [Shield Warmer]
 RemoveEtcDebuff()                            Removes other debuffs.  Only used for [Purge]
 RemoveStatBuff()                             Removes stat buff.  Only used for [Corrupt]
 RemoveStatDebuff()                           Removes stat debuff.  Only used for [Cleanse]
@@ -1192,6 +1193,7 @@ void AbilityManager2 :: InitFunctionTables(void)
 	InsertFunction("RemoveAltBuff", &AbilityCalculator::RemoveAltBuff);
 	InsertFunction("RemoveStatBuff", &AbilityCalculator::RemoveStatBuff);
 	InsertFunction("RemoveEtcBuff", &AbilityCalculator::RemoveEtcBuff);
+	InsertFunction("RemoveHealthBuff", &AbilityCalculator::RemoveHealthBuff);
 
 	InsertFunction("Invisible", &AbilityCalculator::Invisible);
 	InsertFunction("WalkInShadows", &AbilityCalculator::WalkInShadows);
@@ -3010,6 +3012,14 @@ int AbilityCalculator :: RemoveEtcBuff(ARGUMENT_LIST args)
 {
 	//No arguments.
 	ciTarget->RemoveEtcBuff();
+	return ABILITY_SUCCESS;
+}
+
+//Action.  Check skill table for usage.
+int AbilityCalculator :: RemoveHealthBuff(ARGUMENT_LIST args)
+{
+	//No arguments.
+	ciTarget->RemoveHealthBuff();
 	return ABILITY_SUCCESS;
 }
 

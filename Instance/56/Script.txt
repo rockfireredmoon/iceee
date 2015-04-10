@@ -4,6 +4,7 @@
 #flag report_all 1
 
 #symbol CDEF_WAILER 1259
+#symbol CDEF_BRAZIER 7777
 
 #location LOC_WAILER_ROOM  1859 2702  2393 3234
 #location_br LOC_BRAZIER_1  1916 3053 140
@@ -25,11 +26,9 @@ set TEMP_TARGET 0
 set CID_WAILER 0
 set BRAZIER_1_RANGE 0
 set BRAZIER_2_RANGE 0
+set SHIELD_CAST 0
 
-set HEALTH_80 0
-set HEALTH_60 0
-set HEALTH_40 0
-set HEALTH_20 0
+set STAGE 0
 
 ; Just need this label, the entry point for instance scripts.
 :init
@@ -40,18 +39,20 @@ set HEALTH_20 0
 	wait 100
 	goto main
 
+;
+; When the wailer dies, remove all of his minions and stop checking his
+; health
+;
 
 :onKill_1259
-	set HEALTH_80 0
-	set HEALTH_60 0
-	set HEALTH_40 0
-	set HEALTH_20 0
+	set STAGE 99
 	print "Killed!"
 	call killMinions
 	return
 
 
 :findResultArrayCDEF
+	print ":findResultArrayCDEF"
 	pop SEARCHARG
 	set ITERATOR 0
 	iarrsize RESULTARRAY TEMPSIZE
@@ -99,6 +100,7 @@ set HEALTH_20 0
 	return
 
 :findResultArrayCID
+	print ":findResultArrayCID"
 	pop SEARCHARG
 	set ITERATOR 0
 	iarrsize RESULTARRAY TEMPSIZE
@@ -114,6 +116,19 @@ set HEALTH_20 0
 	pushint 0
 	return
 
+:brazierSearch
+	print "Searching for braziers"
+	scan_npc_cid LOC_WAILER_ROOM RESULTARRAY
+	pushint CDEF_BRAZIER
+	call findResultArrayCDEF
+	pop CID_BRAZIER1
+	print "CID brazier1"
+	printvar CID_BRAZIER1
+	pushint CDEF_BRAZIER
+	call findResultArrayCDEF
+	pop CID_BRAZIER2
+	print "CID brazier2"
+	printvar CID_BRAZIER2
 
 :eventWailerSearch
 	print ":eventWailerSearch"
@@ -133,7 +148,7 @@ set HEALTH_20 0
 	  return
 	else
 	  print ":found wailer!"
-	  queue_event "eventWailerShield" 2000
+	  call brazierSearch
 	  queue_event "eventWailerHealth" 2000
 	endif
 	return
@@ -142,116 +157,240 @@ set HEALTH_20 0
 :eventWailerShield
 	if CID_WAILER = 0
 	  return
+	endif	
+	
+	if SHIELD_CAST = 0
+		call tryCastShield
 	endif
 	
-	scan_npc_cid LOC_BRAZIER_1 RESULTARRAY
-	pushint CDEF_WAILER
-	call findResultArrayCID
-	pop BRAZIER_1_RANGE
+	print "TRY WARM"
+	printvar CID_BRAZIER1
 	
-	scan_npc_cid LOC_BRAZIER_2 RESULTARRAY
-	pushint CDEF_WAILER
-	call findResultArrayCID
-	pop BRAZIER_2_RANGE
+	set_target CID_BRAZIER1 CID_WAILER	      
+	ai_script_jump CID_BRAZIER1 "tryWarm"
+	print "TRY WARM2"
+	printvar CID_BRAZIER2
 	
-	set TEMP 0
-	if BRAZIER_1_RANGE = 0
-	  inc TEMP
-	endif
-	if BRAZIER_2_RANGE = 0
-	  inc TEMP
-	endif
-	if TEMP > 0
-	  call tryCastShield
-	endif
+	set_target CID_BRAZIER2 CID_WAILER	
+	ai_script_jump CID_BRAZIER2 "tryWarm"
 	
-	queue_event "eventWailerShield" 3000
-	  
+	;scan_npc_cid LOC_BRAZIER_1 RESULTARRAY
+	;pushint CDEF_WAILER
+	;call findResultArrayCID
+	;pop BRAZIER_1_RANGE
+	
+	;scan_npc_cid LOC_BRAZIER_2 RESULTARRAY
+	;pushint CDEF_WAILER
+	;call findResultArrayCID
+	;pop BRAZIER_2_RANGE
+	
+	;set TEMP 0
+	;if BRAZIER_1_RANGE = 0
+	  ;inc TEMP
+	;endif
+	;if BRAZIER_2_RANGE = 0
+	 ; inc TEMP
+	;endif
+	;if TEMP > 0
+	 ; call tryCastShield
+	;endif
+	
 	return
 
+;
+; Monitors the wailers health, and performs certain actions when
+; he reaches various levels of health
+;
 
 :eventWailerHealth
 	if CID_WAILER = 0
-	  return
+		return
 	endif
-	print ":wailer healther!"
+	print ":eventWailerHealth"
+	printvar STAGE
+	
+	if STAGE = 99
+		set STAGE 0
+		
+		;
+		; TO HELP DEVELOPMENT, START SEARCHING FOR A WAILER SO WE
+		; CAN GO AGAIN
+		;
+		
+		queue_event "eventWailerSearch" 5000
+		return
+	endif
+	
 	get_health_percent CID_WAILER TEMP
 	printvar TEMP
-	printvar CID_WAILER
-	printvar HEALTH_80
 	
-	if HEALTH_80 = 0
-	  if TEMP <= 80
-	    print ":at 80!"
-	    call spawnMinions
-	    set HEALTH_80 1
-	  endif
-	  queue_event "eventWailerHealth" 3000
-	  return
-	else
-	  if TEMP = 100
-	      call killMinions
-	      set HEALTH_80 0
-	  endif
+	if STAGE != 0
+		if TEMP = 100	
+			;
+			; If we have past the first phase, and the wailer returns to full health
+			; dismiss the adds and return to the waiting for the first phase
+			;				
+	    	call killMinions
+	    	set STAGE 0
+			queue_event "eventWailerHealth" 3000
+			return
+		endif
 	endif
 	
-	if HEALTH_60 = 0
-	  if TEMP <= 60
-	    call spawnMinions
-	    set HEALTH_60 1
-	  endif  
-	  queue_event "eventWailerHealth" 3000
-	  return
-	else
-	  if TEMP = 100
-	      call killMinions
-	      set HEALTH_80 0
-	      set HEALTH_60 0
-	  endif
+	;
+	; 80% The Wailer calls 3 forgotten souls to fight the group. 
+	;
+	
+	if STAGE = 0
+		if TEMP <= 80
+			print ":at 80!"
+			call spawnMinions
+	    	set STAGE 1
+	  	endif
+	  	queue_event "eventWailerHealth" 3000
+	  	return
 	endif
 	
-	if HEALTH_40 = 0
-	  if TEMP <= 40
-	    call spawnMinions
-	    set HEALTH_40 1
-	  endif
-	  queue_event "eventWailerHealth" 3000
-	  return
-	else
-	  if TEMP = 100
-	      call killMinions
-	      set HEALTH_80 0
-	      set HEALTH_60 0
-	      set HEALTH_40 0
-	  endif
+	;
+	; Between 60 and 70 % The Wailer casts his shield, 10k damage absorption, the group has to draw 
+	; The Wailer to one of the two braziers to purge the shield
+	;
+	
+	if STAGE = 1
+		print "stage 1"
+		print TEMP
+		if TEMP <= 70
+			print "Time for a shield"
+			set STAGE 2
+			set SHIELD_CAST 0
+	  	
+		  	queue_event "eventWailerHealth" 3000
+		  	return
+		endif	
+	endif
+	
+	;
+	; 60% The Wailer calls 3 more forgotten souls to fight the group. 
+	;
+	
+	if STAGE = 2
+	
+	  	queue_event "eventWailerShield" 2000
+	  	
+		if TEMP <= 60
+			print ":at 60!"
+			call spawnMinions
+	    	set STAGE 3
+	  	endif
+	  	
+	  	queue_event "eventWailerHealth" 3000
+	  	return
 	endif
 	
 	
-	if HEALTH_20 = 0
-	  if TEMP <= 20
-	    call spawnMinions
-	    set HEALTH_20 1
-	  endif
-	  queue_event "eventWailerHealth" 3000
-	  return
-	else
-	  if TEMP = 100
-	      call killMinions
-	      set HEALTH_80 0
-	      set HEALTH_60 0
-	      set HEALTH_40 0
-	      set HEALTH_20 0
-	  endif
+	;
+	; Between 40 and 50 % The Wailer casts his shield, 10k damage absorption, the group has to draw 
+	; The Wailer to one of the two braziers to purge the shield
+	;
+	
+	if STAGE = 3
+		if TEMP <= 50
+			print "Time for a shield"
+			set STAGE 4
+			set SHIELD_CAST 0
+	  	
+		  	queue_event "eventWailerHealth" 3000
+		  	return
+		endif	
 	endif
 	
+	;
+	; 40% The Wailer calls 3 more forgotten souls to fight the group. 
+	;
+	
+	if STAGE = 4
+	
+	  	queue_event "eventWailerShield" 2000
+	  	
+		if TEMP <= 40
+			print ":at 40!"
+			call spawnMinions
+	    	set STAGE 5
+	  	endif
+	  	
+	  	queue_event "eventWailerHealth" 3000
+	  	return
+	endif
+	
+	
+	;
+	; Between 20 and 30 % The Wailer casts his shield, 10k damage absorption, the group has to draw 
+	; The Wailer to one of the two braziers to purge the shield
+	;
+	
+	if STAGE = 5
+		if TEMP <= 30
+			print "Time for a shield"
+			set STAGE 6
+			set SHIELD_CAST 0
+	  	
+		  	queue_event "eventWailerHealth" 3000
+		  	return
+		endif	
+	endif
+	
+	
+	;
+	; 20% The Wailer calls 3 more forgotten souls to fight the group. 
+	;
+	if STAGE = 6
+	
+	  	queue_event "eventWailerShield" 2000
+	  	
+		if TEMP <= 20
+			print ":at 20!"
+			call spawnMinions
+	    	set STAGE 7
+	  	endif
+	  	
+	  	queue_event "eventWailerHealth" 3000
+	  	return
+	endif
+	
+	;
+	; Between 0 and 10 % The Wailer casts his shield, 10k damage absorption, the group has to draw 
+	; The Wailer to one of the two braziers to purge the shield
+	;
+	
+	if STAGE = 7
+		if TEMP <= 10
+			print "Time for a shield"
+			set STAGE 8
+			set SHIELD_CAST 0
+	  	
+		  	queue_event "eventWailerHealth" 3000
+		  	return
+		endif	
+	endif
+	
+	if STAGE = 8
+	  	queue_event "eventWailerShield" 2000
+	endif
+	
+	;
+	; Queue another wailer health check in 3 seconds
+	;
+		
+	print "loop :eventWailerHealth"
 	queue_event "eventWailerHealth" 3000
 	  
 	return
 
 
 :tryCastShield
+	print "Casting shield"
 	ai_script_jump CID_WAILER "extTryCastShield"
-
+	set SHIELD_CAST 1
 	return
 
 :killMinions

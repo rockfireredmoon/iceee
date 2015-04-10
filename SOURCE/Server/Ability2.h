@@ -666,6 +666,7 @@ public:
 	int RemoveAltBuff(ARGUMENT_LIST args);
 	int RemoveStatBuff(ARGUMENT_LIST args);
 	int RemoveEtcBuff(ARGUMENT_LIST args);
+	int RemoveHealthBuff(ARGUMENT_LIST args);
 
 	int Invisible(ARGUMENT_LIST args);
 	int WalkInShadows(ARGUMENT_LIST args);

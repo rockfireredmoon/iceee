@@ -2123,6 +2123,19 @@ void CreatureInstance :: RemoveStatBuff(void)
 	}
 }
 
+void CreatureInstance :: RemoveHealthBuff(void)
+{
+	// Special skill for shield warmer.
+	const int stats[3] = {
+		STAT::BASE_HEALTH,    STAT::BONUS_HEALTH,    STAT::CONSTITUTION,
+	};
+	for(int i = 0; i < 3; i++)
+	{
+		if(RemoveAbilityBuffWithStat(stats[i], 1.0F) == true)
+			return;
+	}
+}
+
 void CreatureInstance :: RemoveEtcBuff(void)
 {
 	//As per the skill description (for Abolish):

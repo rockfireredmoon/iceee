@@ -1,0 +1,25 @@
+#name custom_wailing
+#queue_call call
+
+; 5502 - Warming Brazier
+
+set var 0
+
+:begin
+	call waitfortarget
+	call tryWarm
+	wait 2000
+	goto begin
+
+:waitfortarget
+	has_target var
+	if var = 0
+	  wait 2000
+	  goto waitfortarget
+	endif
+	return
+
+:tryWarm
+	print "WARMING!" 
+	use 5502
+	return

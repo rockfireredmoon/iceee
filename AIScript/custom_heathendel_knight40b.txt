@@ -1,5 +1,6 @@
 #name custom_heathendel_knight40b
 #speed 6
+#queue_jumps call
 
 ; 228 : Assault 40
 ; 446 : Bash 40

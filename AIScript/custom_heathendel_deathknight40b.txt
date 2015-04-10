@@ -59,8 +59,8 @@ reset_goto begin
 
 
 :tryMelee
-use 32766
-return
+	use 32766
+	return
 
 :tryWither
 if WILL < 4

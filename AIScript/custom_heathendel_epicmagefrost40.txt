@@ -21,7 +21,7 @@
 ; 356 : Frost Shield 40  [Cooldown=HealthShield, Will=5, Group=146]
 ; 32760 : ranged autoattack
 
-; 5500 - Void Shield
+; 5501 - Void Shield
 
 ; Basic logic:
 ; Use the timers to scan targets for AoEs on a less frequent basis so the server
@@ -268,6 +268,6 @@ if VAR > 15000
   return
 endif
 
-use 5500
+use 5501
 
 return

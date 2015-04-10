@@ -596,6 +596,7 @@ public:
 	void Spin(void);
 	void RemoveStatBuff(void);
 	void RemoveEtcBuff(void);
+	void RemoveHealthBuff(void);
 
 	bool NearbySanctuary();
 	bool Translocate(bool test);
