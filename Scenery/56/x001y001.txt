@@ -2747,7 +2747,7 @@ Name=Untitled
 Pos=2178.12,480,2835.52
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=56_wacr_ThawingBrazier
+spawnPackage=#A7777
 aiModule=custom_wailing
 
 [ENTRY]
@@ -2767,7 +2767,8 @@ Name=Untitled
 Pos=2096.45,480,2821.33
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#F7777
+spawnPackage=#A7777
+aiModule=custom_wailing
 
 [ENTRY]
 ID=1127131

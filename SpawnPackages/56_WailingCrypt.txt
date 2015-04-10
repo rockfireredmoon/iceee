@@ -4,7 +4,7 @@ Spawn=1259,100  ;The Wailer (48)
 
 [ENTRY]
 Name=56_wacr_ThawingBrazier
-Flags=1
+Flags=16
 Spawn=7777,100  ;Thawing Brazier (1)
 Spawn=7777,100  ;Thawing Brazier (1)
 
