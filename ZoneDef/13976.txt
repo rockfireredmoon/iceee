@@ -1,0 +1,13 @@
+[ENTRY]
+ID=13976
+ACCOUNTID=1123
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=veloxspottedfur
+GroveName=veloxspottedfur
+WarpName=veloxspottedfur1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

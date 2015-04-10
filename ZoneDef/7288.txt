@@ -1,0 +1,13 @@
+[ENTRY]
+ID=7288
+ACCOUNTID=287
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=odawolf
+GroveName=odawolf
+WarpName=odawolf1
+Grove=1
+EnvironmentCycle=1
+DefLoc=2958,260,3821
+

@@ -1,0 +1,14 @@
+[ENTRY]
+ID=151061813
+Asset=Prop-Marker_Medium
+Pos=84787.1,777.142,56449.3
+Orient=0.34759,0,0,0.937647
+Scale=20,20,20
+
+[ENTRY]
+ID=151061814
+Asset=Prop-Marker_Medium
+Pos=85335.1,962.798,56583.4
+Orient=0.34759,0,0,0.937647
+Scale=20,20,20
+

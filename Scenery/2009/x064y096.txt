@@ -1,0 +1,8 @@
+[ENTRY]
+ID=151058664
+Asset=CL-Sick-Rotted_Forest1#CL-Sick-Rotted_Forest1
+Name=9
+Pos=48604.8,347.546,72208
+Orient=0,0,0,1
+Scale=1.7,1.7,1.7
+

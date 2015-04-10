@@ -1,0 +1,45 @@
+; Down to Eighth Floor
+:onKill_528
+spawn 687866838
+end
+
+; Down to Seventh Floor
+:onKill_506
+spawn 687866839
+end
+
+; Down to Sixth Floor
+:onKill_494
+spawn 687866840
+end
+
+; Down to Fifth Floor
+:onKill_515
+spawn 687866841
+end
+
+; Down to Fourth Floor
+:onKill_690
+spawn 687866842
+end
+
+; Down to Third Floor
+:onKill_811
+spawn 687866843
+end
+
+; Down to Second Floor
+:onKill_533
+spawn 687866844
+end
+
+; Down to First Floor
+:onKill_558
+spawn 687866845
+end
+
+; Boss kill.  Return portal, essence chest.
+:onKill_2680
+spawn 687866837
+spawn 687867597
+end

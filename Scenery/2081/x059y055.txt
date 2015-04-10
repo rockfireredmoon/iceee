@@ -1,0 +1,8 @@
+[ENTRY]
+ID=1358962975
+Asset=Par-Waves-1-Emitter
+Name=81
+Pos=59803,60.562,55056
+Orient=0,-0.999092,0,0.0425982
+Scale=1,1,1
+

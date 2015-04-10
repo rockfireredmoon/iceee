@@ -1,0 +1,16 @@
+[ENTRY]
+ID=151040073
+Asset=CL-Pine_Forest1
+Pos=80643,628.888,36104
+Orient=0,0,0,1
+Scale=2.625,2.625,2.625
+
+[ENTRY]
+ID=151057013
+Asset=Manipulator-SpawnPoint
+Pos=80339,389.96,36685
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=2a_trf_sectionC4_trees
+outerRadius=30
+

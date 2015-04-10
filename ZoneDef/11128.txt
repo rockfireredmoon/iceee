@@ -1,0 +1,13 @@
+[ENTRY]
+ID=11128
+ACCOUNTID=767
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=zed
+GroveName=zed
+WarpName=zed1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

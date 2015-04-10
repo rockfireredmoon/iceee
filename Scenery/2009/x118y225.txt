@@ -1,0 +1,9 @@
+[ENTRY]
+ID=150995680
+Asset=Prop-Bush-Med2
+Name=9
+Pos=89246.3,361.898,168906
+Orient=0,0,0,1
+Scale=1.25,1.25,1.25
+Flags=1
+

@@ -1,0 +1,3002 @@
+; NOTE: SEASONAL SPAWNS
+; Find these packages and uncomment their spawns to enable them
+
+;   Harvest Fest
+; HOLIDAY_turkatrice_26_27
+; HOLIDAY_turkatriceKing_k_30
+; HOLIDAY_turkatrice_32_33
+; HOLIDAY_turkatriceKing_k_35
+
+;   Winter Dawning
+; HOLIDAY_wf09_snowmen_32_33
+; HOLIDAY_wf09_snowmanKing_35
+; HOLIDAY_wf09_snowmen_26_27
+; HOLIDAY_wf09_snowmanKing_30
+; HOLIDAY_wf09_gifts_return
+
+
+; TODO: need to implement stepup spawns
+;   10_bxb_SporebringerSporelingStepup_37_38
+;   4_Trailblazer_StepUp
+;   4_quest_EyegoreStepup
+;
+; CONFLICT: 2a_obji_deepBlueCrystal with zone 44 (Sea Cave)
+;   Scan for 9:  Spawn=2966,100  ;Crystal Stump (1) at 8
+;   Scan for 44: Spawn=2965,100  ;Deep Blue Crystal (1) at 0
+; Using 44 so it doesn't break a quest.
+;
+; Check out dividers for
+; 2a_stc_sectionB7_general
+
+; 11_irh_fleshScavenger_r_42
+; 11_irh_vampiderCamp_42_43
+; 11_irh_vampiderCamp_32_33
+; 11_dth_shadowfieldCity
+; 11_rh_05_geoffryThistlefur_m_42
+; 11_dth_wilds_44_45_north
+; 11_dth_wilds_44_45_south
+; 11_dth_manormix_42_43
+; 12_ice_Wilds_45_46
+
+
+[ENTRY]
+Name=3_unikornGrove_21_22
+wanderRadius=60
+Spawn=363,50  ;Frighthoof Unikorn (22) at 2
+Spawn=362,50  ;Frighthoof Unikorn (21) at 11
+
+[ENTRY]
+Name=3_unikornGrove_22_23
+wanderRadius=60
+Spawn=364,50  ;Scarespire Unikorn (23) at 0
+Spawn=363,50  ;Frighthoof Unikorn (22) at 1
+
+[ENTRY]
+Name=3_rottingMushroomRings_22_23
+spawnDelay=300
+Spawn=2177,25  ;Quickcap Shroomie (22) at 0
+Spawn=2178,25  ;Rotcap Shroomie (23) at 0
+Spawn=415,25  ;Mistcap Corrupter (23) at 0
+Spawn=414,25  ;Mistcap Corrupter (22) at 0
+
+[ENTRY]
+Name=3_rocNests_24_25
+Spawn=410,50  ;Highland Roc (25) at 0
+Spawn=409,50  ;Upland Roc (24) at 0
+
+[ENTRY]
+Name=3_stonelionCamp_24_25
+Shares=30
+spawnDelay=300
+Spawn=393,10  ;Stalker (24) at 0
+Spawn=394,10  ;Pillager (25) at 0
+Spawn=416,10  ;Seer (25) at 0
+
+[ENTRY]
+Name=3_stonelionOverseer_o_25
+spawnDelay=300
+Spawn=394,50  ;Pillager (25) at 0
+Spawn=416,50  ;Seer (25) at 0
+
+[ENTRY]
+Name=3_robber-baronSwiftpaw_o_25
+UniquePoints=2
+spawnDelay=300
+Spawn=423,100  ;Robber-baron Swiftpaw (25) at 0
+
+[ENTRY]
+Name=3_robber-baronRedeye_o_25
+UniquePoints=2
+spawnDelay=300
+Spawn=424,100  ;Robber-baron Redeye (25) at 0
+
+[ENTRY]
+Name=3_outcastLackey_o_25
+spawnDelay=300
+Spawn=417,20  ;Outcast Brigand (24) at 0
+Spawn=418,20  ;Outcast Brigand (25) at 0
+Spawn=419,20  ;Outcast Lackey (25) at 0
+Spawn=420,20  ;Outcast Diabolist (24) at 0
+Spawn=421,20  ;Outcast Diabolist (25) at 0
+
+[ENTRY]
+Name=3_prideChiefBentclaw_o_25
+spawnDelay=300
+Spawn=395,100  ;Pride Chief Bentclaw (25) at 0
+
+[ENTRY]
+Name=3_outcastCamp_24_25
+spawnDelay=300
+Spawn=417,20  ;Outcast Brigand (24) at 0
+Spawn=418,20  ;Outcast Brigand (25) at 0
+Spawn=419,20  ;Outcast Lackey (25) at 0
+Spawn=420,20  ;Outcast Diabolist (24) at 0
+Spawn=421,20  ;Outcast Diabolist (25) at 0
+
+[ENTRY]
+Name=3_wolfDens_23_24
+Spawn=399,50  ;Blight Timberwolf (24) at 2
+Spawn=400,50  ;Blightwolf (25) at 3
+
+; NOTE: estimated from levels
+[ENTRY]
+Name=3_wilds_thumpers_23_25
+wanderRadius=60
+Spawn=2145,25  ;Scrunchfang Thumper (24)
+Spawn=403,25  ; Scrunchfang Thumper (25)
+Spawn=402,25  ;Gnawfang Thumper (24)
+Spawn=401,25  ;Gnawfang Thumper (23)
+
+[ENTRY]
+Name=3_wilds_HedgeDeerThump_23_25
+wanderRadius=60
+Spawn=355,50  ;Pricklepeal Hedgehog (20) at 0
+Spawn=356,50  ;Pricklepeal Hedgehog (21) at 1
+
+[ENTRY]
+Name=3_wilds_WolvesBears_21_23
+wanderRadius=60
+Spawn=355,80  ;Pricklepeal Hedgehog (20) at 5
+Spawn=356,20  ;Pricklepeal Hedgehog (21) at 21
+
+[ENTRY]
+Name=3_wilds_rlg_23_24
+Spawn=407,100  ;Greenbutte Stag (24) at 1
+
+[ENTRY]
+Name=3_obji_bg_01_twistedGrowth
+Spawn=448,100  ;Twisted Growth (1) at 5
+
+[ENTRY]
+Name=3_obji_bg_06_rocEgg
+Spawn=453,100  ;Roc Egg (1) at 0
+
+; TODO: supposed to be an interact?
+[ENTRY]
+Name=3_obji_lis_01_polishedStone
+Spawn=367,100  ;Thunderheel Goliath (22) at 1
+
+[ENTRY]
+Name=3_obji_lgc_05_mysteriousTablet
+Spawn=456,100  ;Prayer Brazier (1) at 1
+
+[ENTRY]
+Name=2_suf_windmills_27_28
+Spawn=497,25  ;Drench Blossom (27) at 3
+Spawn=498,25  ;Drench Blossom (28) at 0
+Spawn=504,25  ;Deadhand Skeleton (27) at 1
+Spawn=505,25  ;Deadhand Skeleton (28) at 1
+
+[ENTRY]
+Name=2_rhl_madCowCamp_24_25
+Spawn=540,50  ;Madcow Basher (24) at 0
+Spawn=541,50  ;Madcow Mootilator (26) at 0
+
+[ENTRY]
+Name=2_suf_wilds_clammyFlytrap_26_27
+Spawn=495,50  ;Clammy Flytrap (26) at 1
+Spawn=496,50  ;Clammy Flytrap (27) at 1
+
+[ENTRY]
+Name=2_stc_beach_25_26
+Spawn=519,33  ;Sandshell Snapper (25) at 0
+Spawn=520,33  ;Sandshell Snapper (26) at 2
+Spawn=514,34  ;Colossal Crustacean (25) at 1
+
+[ENTRY]
+Name=2_vonGruberCultists_25
+spawnDelay=300
+Spawn=589,100  ;Cultist (25) at 0
+
+[ENTRY]
+Name=2_trf_wildsBeach_25_27
+Spawn=514,25  ;Colossal Crustacean (25) at 13
+Spawn=516,25  ;Colossal Crustacean (26) at 39
+Spawn=521,25  ;Clamber Crab (26) at 33
+Spawn=522,25  ;Clamber Crab (27) at 21
+
+[ENTRY]
+Name=2_trf_wilds_wanders_27_29
+wanderRadius=100
+Spawn=2327,50  ;Slider (28) at 5
+Spawn=566,50  ;Attercop (28) at 5
+
+[ENTRY]
+Name=4_obji_fr_03_pileOfMeat
+Spawn=789,100  ;Pile of Meat (1) at 0
+
+[ENTRY]
+Name=4_obji_fr_04_thunderwalkerHorn
+Spawn=790,100  ;Thunderwalker Horn (1) at 0
+
+[ENTRY]
+Name=4_obji_fr_06_vespinhiveEgg
+Spawn=791,100  ;Vespinhive Egg (1) at 0
+
+[ENTRY]
+Name=4_obji_hwc_04_festeringSasparillaPlant
+Spawn=793,100  ;Festering Sasparilla Plant (1) at 0
+
+[ENTRY]
+Name=4_fr_01_vinyardFirepit02
+Spawn=797,100  ;Vineyard Firepit (1) at 1
+
+[ENTRY]
+Name=4_fr_01_vinyardFirepit03
+Spawn=798,100  ;Vineyard Firepit (1) at 1
+
+[ENTRY]
+Name=2_bre_04_obji_mome-rawtheLichen
+Spawn=594,100  ;Mome-rawthe Lichen (1) at 0
+
+[ENTRY]
+Name=2_sea_01_barrelOfSpice01
+Spawn=600,100  ;Barrel of Spices (1) at 0
+
+[ENTRY]
+Name=2_sea_01_barrelOfSpice02
+Spawn=600,100  ;Barrel of Spices (1) at 0
+
+[ENTRY]
+Name=2_sea_01_barrelOfSpice03
+Spawn=600,100  ;Barrel of Spices (1) at 1
+
+[ENTRY]
+Name=2_sea_01_barrelOfSpice04
+Spawn=600,100  ;Barrel of Spices (1) at 0
+
+[ENTRY]
+Name=2_sea_01_barrelOfSpice05
+Spawn=600,100  ;Barrel of Spices (1) at 0
+
+[ENTRY]
+Name=2_sea_01_barrelOfSpice06
+Spawn=600,100  ;Barrel of Spices (1) at 0
+
+[ENTRY]
+Name=2_sea_01_barrelOfSpice07
+Spawn=600,100  ;Barrel of Spices (1) at 0
+
+[ENTRY]
+Name=2_sea_01_barrelOfSpice08
+Spawn=600,100  ;Barrel of Spices (1) at 0
+
+[ENTRY]
+Name=2_sea_01_barrelOfSpice09
+Spawn=600,100  ;Barrel of Spices (1) at 1
+
+[ENTRY]
+Name=4_hwo_wilds_32_33
+wanderRadius=80
+Spawn=683,25  ;Watchful Deathgazer (32) at 0
+Spawn=684,25  ;Watchful Deathgazer (33) at 0
+Spawn=641,25  ;Heartwood Trapper (32) at 1
+Spawn=642,25  ;Heartwood Trapper (33) at 0
+
+[ENTRY]
+Name=test_sage
+
+[ENTRY]
+Name=4_ewd_wilds_34_35
+wanderRadius=100
+Spawn=655,25  ;Frenzied Landlurker (34) at 1
+Spawn=662,25  ;Leafy Gnasher (34) at 1
+Spawn=687,25  ;Bloodcrazed Landlurker (35) at 2
+Spawn=688,25  ;Lush Gnasher (35) at 9
+
+[ENTRY]
+Name=4_ewd_wilds_33_34
+wanderRadius=100
+Spawn=661,25  ;Leafy Gnasher (33) at 0
+Spawn=662,25  ;Leafy Gnasher (34) at 1
+Spawn=654,25  ;Frenzied Landlurker (33) at 2
+Spawn=655,25  ;Frenzied Landlurker (34) at 1
+
+[ENTRY]
+Name=4_ewd_wilds_32_33
+wanderRadius=100
+Spawn=652,25  ;Frightfang Stalker (32) at 1
+Spawn=653,25  ;Frightfang Stalker (33) at 0
+Spawn=659,25  ;Verdant Snaptrap (32) at 2
+Spawn=660,25  ;Verdant Snaptrap (33) at 1
+
+[ENTRY]
+Name=4_ewd_vespinCamps_33_34
+wanderRadius=30
+Spawn=647,33  ;Vespin Pulpmulcher (33) at 0
+Spawn=648,33  ;Vespin Pulpmulcher (34) at 0
+Spawn=982,34  ;Hive Champion (34) at 0
+
+[ENTRY]
+Name=4_ewd_wolfCamps_33_34
+Spawn=801,50  ;Frightfang Hunter (33) at 0
+Spawn=802,50  ;Frightfang Hunter (34) at 0
+
+[ENTRY]
+Name=4_ewd_thunderwalkerCamps_33_34
+Spawn=678,50  ;Timeworn Thunderwalker (33) at 0
+Spawn=679,50  ;Timeworn Thunderwalker (34) at 0
+
+[ENTRY]
+Name=4_hwo_shroomieCampSouth_34_35
+Spawn=631,50  ;Black Shroomie Rotinducer (34) at 0
+Spawn=632,50  ;Black Shroomie Rotcreator (35) at 0
+;Spawn=625,0  ;Rotted Arborslasher (34) at 0
+
+[ENTRY]
+Name=4_hwo_shroomieCampSouth_32_33
+Spawn=630,50  ;Black Shroomie Rotsprayer (33) at 0
+Spawn=629,50  ;Black Shroomie Rotseeder (32) at 0
+
+[ENTRY]
+Name=4_hwo_shroomieShrine_32_33
+Spawn=629,25  ;Black Shroomie Rotseeder (32) at 0
+Spawn=630,25  ;Black Shroomie Rotsprayer (33) at 0
+Spawn=623,25  ;Rotted Arborshredder (32) at 0
+Spawn=624,25  ;Rotted Arborlurker (33) at 0
+
+[ENTRY]
+Name=4_ewd_ruinsOfTallStand_34_35
+Spawn=650,50  ;Shadow (34) at 0
+Spawn=651,50  ;Shadow (35) at 0
+
+[ENTRY]
+Name=4_hwo_greyspanOrchardOutside_34_35
+Spawn=631,50  ;Black Shroomie Rotinducer (34) at 0
+Spawn=632,50  ;Black Shroomie Rotcreator (35) at 0
+
+[ENTRY]
+Name=4_hwo_rottedGrove_34_35
+Spawn=631,25  ;Black Shroomie Rotinducer (34) at 0
+Spawn=632,25  ;Black Shroomie Rotcreator (35) at 0
+Spawn=625,25  ;Rotted Arborslasher (34) at 0
+Spawn=626,25  ;Rotted Arborfink (35) at 4
+
+[ENTRY]
+Name=4_hwo_shroomieCampMiddle_30_31
+Spawn=621,15  ;Rotted Arboreal (30) at 1
+Spawn=622,15  ;Rotted Arborfiend (31) at 8
+Spawn=627,35  ;Black Shroomie Rotbringer (30) at 0
+Spawn=628,35  ;Black Shroomie Rotspreader (31) at 0
+
+[ENTRY]
+Name=4_obji_hwc_03_rottingPustule
+Spawn=792,100  ;Rotting Pustule (1) at 0
+
+[ENTRY]
+Name=5_sailorCamps_39_40
+spawnDelay=300
+Spawn=735,50  ;Anubian Deck Hand (39) at 0
+Spawn=736,50  ;Anubian Seafarer (40) at 0
+
+[ENTRY]
+Name=5_anubianScoutCamps_39_40
+spawnDelay=300
+Spawn=733,50  ;Anubian Scout (39) at 0
+Spawn=734,50  ;Anubian Operative (40) at 0
+
+[ENTRY]
+Name=5_stonelionCamps_35_36
+spawnDelay=300
+Spawn=728,33  ;Brute (35) at 0
+Spawn=729,33  ;Oracle (36) at 0
+Spawn=1439,34  ;Brute (36) at 0
+
+[ENTRY]
+Name=5_carrioniteCamp_33_34
+spawnDelay=300
+Spawn=825,50  ;Bone-Mystic (33) at 0
+Spawn=828,50  ;Warrior-Priest (34) at 0
+
+; TODO: not sure about this
+[ENTRY]
+Name=5_oasisCamp_35_36
+Shares=60
+Spawn=829,10  ;Oasis Djinn (35) at 0
+Spawn=830,10  ;Oasis Djinn (36) at 0
+Spawn=831,10  ;Earth Elemental (35) at 0
+Spawn=832,10  ;Earth Elemental (36) at 0
+Spawn=833,10  ;Water Elemental (35) at 0
+Spawn=834,10  ;Water Elemental (36) at 0
+
+[ENTRY]
+Name=5_excavatedCity_infectiousFleshpicker
+spawnDelay=300
+Spawn=847,100  ;Infectious Fleshpicker (36) at 0
+
+[ENTRY]
+Name=5_excavatedCity_Lower_36_37
+spawnDelay=300
+Spawn=835,25  ;Dune Dread (36) at 0
+Spawn=886,25  ;Dune Dread (37) at 0
+Spawn=887,25  ;Sandcaster (37) at 0
+Spawn=841,25  ;Sandcaster (36) at 0
+
+[ENTRY]
+Name=5_excavatedCity_upper_36_37
+spawnDelay=300
+Spawn=835,25  ;Dune Dread (36) at 0
+Spawn=841,25  ;Sandcaster (36) at 0
+Spawn=886,25  ;Dune Dread (37) at 0
+Spawn=887,25  ;Sandcaster (37) at 0
+
+[ENTRY]
+Name=5_excavatedCity_rogue_37
+spawnDelay=300
+Spawn=731,100  ;Silt Skeleton (36) at 0
+
+[ENTRY]
+Name=5_excavatedCity_lower_36_37
+spawnDelay=300
+Spawn=835,25  ;Dune Dread (36) at 0
+Spawn=886,25  ;Dune Dread (37) at 0
+Spawn=887,25  ;Sandcaster (37) at 0
+Spawn=841,25  ;Sandcaster (36) at 0
+
+; TODO: not sure about the other 2
+[ENTRY]
+Name=9_stonelionCamps_basePop
+spawnDelay=300
+Spawn=863,25  ;Spellfeather (38) at 0
+Spawn=864,25  ;Stormfeather (38) at 0
+Spawn=775,25  ;Shieldfeather (37) at 0
+Spawn=776,25  ;Shieldfeather (38) at 0
+;Spawn=862,0  ;Spellfeather (37) at 0
+;Spawn=865,0  ;Slinkfeather (38) at 0
+
+[ENTRY]
+Name=9_stonelionCamps_rogue
+spawnDelay=300
+Spawn=865,100  ;Slinkfeather (38) at 5
+
+[ENTRY]
+Name=9_stonelionCamps_druid
+spawnDelay=300
+Spawn=864,100  ;Stormfeather (38) at 0
+
+[ENTRY]
+Name=9_stonelion_outerCamps
+spawnDelay=300
+Spawn=870,33  ;Flame Dancer (37) at 0
+Spawn=869,33  ;Ransacker (38) at 0
+Spawn=868,34  ;Ransacker (37) at 0
+
+[ENTRY]
+Name=9_stonelion_mainCampOuter
+spawnDelay=300
+Spawn=871,25  ;Outrider (37) at 0
+Spawn=872,25  ;Outrider (38) at 0
+Spawn=874,25  ;Savant (37) at 0
+Spawn=875,25  ;Savant (38) at 0
+
+[ENTRY]
+Name=9_stonelion_mainCampInner
+spawnDelay=300
+Shares=60
+Spawn=871,10  ;Outrider (37) at 0
+Spawn=872,10  ;Outrider (38) at 0
+Spawn=873,10  ;Annihilator (38) at 0
+Spawn=874,10  ;Savant (37) at 0
+Spawn=875,10  ;Savant (38) at 0
+Spawn=876,10  ;Flame Dancer (38) at 0
+
+
+; TODO: quackatrice seem to be less common
+[ENTRY]
+Name=9_csh_wilds_39_40
+Shares=50
+Spawn=750,10  ;Lucid Crystalcreeper (39) at 0
+Spawn=751,10  ;Lucid Crystalcreeper (40) at 0
+Spawn=752,10  ;Crystalgazer (39) at 0
+Spawn=753,10  ;Crystalgazer (40) at 0
+Spawn=754,5  ;Quackatrice (39) at 1
+Spawn=755,5  ;Quackatrice (40) at 0
+
+[ENTRY]
+Name=9_antlionCamp_37_38
+wanderRadius=80
+Spawn=758,50  ;Fireridge Antlion (38) at 1
+Spawn=759,50  ;Fireridge Antlion (37) at 1
+
+[ENTRY]
+Name=9_skrillCamps_paths
+wanderRadius=80
+Shares=40
+Spawn=883,10  ;Skrill Sandspitter (39) at 1
+Spawn=884,10  ;Skrill Sandspitter (40) at 0
+Spawn=885,10  ;Skrill Swarmguard (39) at 1
+Spawn=741,10  ;Skrill Swarmguard (40)   Added later.
+
+[ENTRY]
+Name=9_skrillCamps_mounds
+wanderRadius=30
+Spawn=740,100  ;Skrill Drudgeling (39) at 0
+
+[ENTRY]
+Flags=3
+Name=5_obji_agc_02_anubianWeaponRack
+spawnDelay=300
+Spawn=888,100  ;Anubian Weapon Rack (1) at 0
+
+[ENTRY]
+Flags=3
+Name=5_obji_agc_03_ancientPotteryShard
+spawnDelay=300
+Spawn=889,100  ;Ancient Pottery Shard (1) at 0
+
+[ENTRY]
+Flags=3
+Name=5_obji_bz_04_rainBarrel
+spawnDelay=300
+Spawn=890,100  ;Crate of Egyptian Pottery (1) at 0
+
+; TODO: not sure about this... Barrel of Fish is needed for the lone
+; quest in south Dustshore, but it uses this spawn point.
+[ENTRY]
+Name=5_obji_nw_02_barrelOfEmeraldSalt
+spawnDelay=300
+Spawn=891,50  ;Barrel of Emerald Salt (1) at 0
+Divide=85000,2,51
+Spawn=1501,50  ;Barrel of Fish (1) at 0
+
+; 2 SpawnPoints
+[ENTRY]
+Name=5_NochePoisonclaw_r_37
+UniquePoints=2
+spawnDelay=300
+Spawn=843,100  ;Noche Poisonclaw (37) at 0
+
+; 2 SpawnPoints
+[ENTRY]
+Name=5_BrockIronclaw_k_37
+UniquePoints=2
+spawnDelay=300
+Spawn=840,100  ;Brock Ironclaw (37) at 1
+
+[ENTRY]
+Name=5_KrelAethyrclaw_m_37
+spawnDelay=300
+Spawn=842,100  ;Krel Aethyrclaw (37) at 0
+
+[ENTRY]
+Flags=3
+Name=9_obji_osl_02_crystalShard
+spawnDelay=300
+Spawn=904,100  ;Crystal Shard (1) at 0
+
+[ENTRY]
+Name=9_obji_osl_07_carrioniteEgg
+spawnDelay=300
+Spawn=901,100  ;Carrionite Egg (1) at 0
+
+[ENTRY]
+Flags=3
+Name=9_obji_osl_06_tigronsUnitFlag
+spawnDelay=300
+Spawn=911,100  ;Tigron's Unit Flag (1) at 0
+
+[ENTRY]
+Flags=3
+Name=9_obji_osl_06_lynxanasUnitFlag
+spawnDelay=300
+Spawn=912,100  ;Lynxana's Unit Flag (1) at 1
+
+[ENTRY]
+Flags=3
+Name=9_obji_osl_06_panterrasUnitFlag
+spawnDelay=300
+Spawn=910,100  ;Panterra's Unit Flag (1) at 1
+
+; TODO: not sure about this one.  Only 1 point, only one with Zunnti
+; Cragpaw and Solarmane also seem to spawn here.  Zunnti seems to be
+; the rarest, from the limited mob data.
+[ENTRY]
+Name=9_osl_06_keyHolders
+spawnDelay=300
+Spawn=913,40  ;Cragpaw Makhet (38) at 2
+Spawn=914,30  ;Zunnti Purr (38) at 2
+Spawn=915,40  ;Solarmane Freehowler (38) at 5   HEROIC
+
+[ENTRY]
+Name=10_oom_wilds_41_43
+wanderRadius=80
+Shares=80
+Spawn=944,10  ;Demented Timberfiend (42) at 1
+Spawn=945,10  ;Demented Timberfiend (43) at 1
+Spawn=947,10  ;Soulrot Shroomie (42) at 2
+Spawn=948,10  ;Soulrot Shroomie (43) at 0
+Spawn=952,10  ;Petrified Bark Splinter (41) at 0
+Spawn=953,10  ;Petrified Bark Splinter (42) at 1
+Spawn=954,10  ;Wicked Webspinner (41) at 16
+Spawn=955,10  ;Wicked Webspinner (42) at 2
+
+[ENTRY]
+Name=10_bsp_wilds_40_42
+wanderRadius=80
+Shares=60
+Spawn=933,10  ;Twistroot Timberfiend (41) at 1
+Spawn=934,10  ;Twistroot Timberfiend (42) at 0
+Spawn=936,10  ;Blackrot Shroomie (41) at 0
+Spawn=937,10  ;Blackrot Shroomie (42) at 0
+Spawn=938,10  ;Bark Splinter (40) at 0
+Spawn=939,10  ;Bark Splinter (41) at 0
+
+[ENTRY]
+Name=4_ewd_coastalCrabquatch_o_33_34
+wanderRadius=80
+Spawn=956,50  ;Coastal Crabquatch (33) at 0
+Spawn=957,50  ;Coastal Crabquatch (34) at 1
+
+; TODO: there aren't any close matches for this
+[ENTRY]
+Name=4_ewd_shadowplantCamps_34_35
+Spawn=959,50  ;Shadow (35) at 68
+Spawn=958,50  ;Shadow (34) at 105
+
+[ENTRY]
+Name=4_ewd_kingsley_k_34
+UniquePoints=3
+Spawn=981,100  ;Kingsley (34) at 14
+
+[ENTRY]
+Name=4_ewd_shadowsworn_k_35
+UniquePoints=3
+Spawn=980,100  ;Shadow (35) at 0
+;Spawn=651,50  ;Shadow (35) at 0
+;Spawn=650,50  ;Shadow (34) at 1
+
+[ENTRY]
+Name=4_ewd_quillhogCamps
+Spawn=984,50  ;Quillhog (33) at 1
+Spawn=985,50  ;Quillhog (34) at 2
+
+; 3 SpawnPoints
+[ENTRY]
+Name=4_ewd_sahniq
+UniquePoints=3
+Spawn=986,100  ;Sahniq (34) at 2
+
+[ENTRY]
+Name=4_ewd_vespinHiverunner
+Spawn=983,100  ;Vespin Hiverunner (33) at 5
+
+[ENTRY]
+Name=4_ewd_horridus
+Spawn=995,100  ;Horridus (34) at 5
+
+[ENTRY]
+Name=4_ewd_pricklepigCamps_33_34
+Spawn=996,35  ;Pricklepig Hogling (32) at 0
+Spawn=997,50  ;Pricklepig Hunter (33) at 0
+Spawn=998,15  ;Pricklepig Matriarch (33) at 2
+
+; TODO: 629 and 630 seem to be the most common
+; NOTE: 1 spawn point is out of place.  Added a divider to separate.
+[ENTRY]
+Name=4_hwo_shroomieCampNorth_32_33
+Shares=200
+Spawn=629,35  ;Black Shroomie Rotseeder (32) at 0
+Spawn=630,35  ;Black Shroomie Rotsprayer (33) at 0
+Spawn=623,15  ;Rotted Arborshredder (32) at 0
+Spawn=624,15  ;Rotted Arborlurker (33) at 0
+Divide=64000,2,101
+Spawn=621,15  ;Rotted Arboreal (30) at 1
+Spawn=622,15  ;Rotted Arborfiend (31) at 8
+Spawn=627,35  ;Black Shroomie Rotbringer (30) at 0
+Spawn=628,35  ;Black Shroomie Rotspreader (31) at 0
+
+
+[ENTRY]
+Name=4_hwo_blackShroomieSeedspreader
+Spawn=1002,100  ;Black Shroomie Seedspreader (32) at 0
+
+[ENTRY]
+Name=4_ewd_shadowhoundCamp
+Spawn=1004,50  ;Shadow (34) at 2
+Spawn=1005,50  ;Shadow (35) at 5
+
+[ENTRY]
+Name=4_ewd_coastalCrabquatch_33_34
+wanderRadius=80
+Spawn=956,50  ;Coastal Crabquatch (33) at 2
+Spawn=957,50  ;Coastal Crabquatch (34) at 2
+
+[ENTRY]
+Name=4_ewd_veilra
+Spawn=1006,100  ;Veilra (35) at 4
+
+[ENTRY]
+Name=4_ewd_edgewoodVenomspinner
+wanderRadius=20
+Spawn=1007,50  ;Edgewood Venomspinner (32) at 0
+Spawn=1008,50  ;Edgewood Venomspinner (33) at 2
+
+[ENTRY]
+Name=4_ewd_toxx
+Spawn=1009,100  ;Toxx (34) at 4
+
+[ENTRY]
+Flags=3
+Name=4_obji_fr_08_moundOfDirt
+Spawn=1018,100  ;Mound of Dirt (1) at 0
+
+[ENTRY]
+Name=4_obji_fr_09_shadowShrine
+Spawn=1019,100  ;Offering Bowl (1) at 0
+
+; TODO: unknown
+[ENTRY]
+Name=4_ewd_shadowLegionCommando_k_35
+;Spawn=1019,0  ;Offering Bowl (1) at 49
+
+; NOTE: 3 spawn points
+[ENTRY]
+Name=4_ewd_feng_k_34
+UniquePoints=3
+Spawn=1026,100  ;Feng (34) at 0
+
+[ENTRY]
+Name=4_ewd_verdantSnaptrapCamp_32_33
+Spawn=659,50  ;Verdant Snaptrap (32) at 1
+Spawn=660,50  ;Verdant Snaptrap (33) at 1
+
+[ENTRY]
+Name=4_ewd_waywardMurkflyCamps
+Spawn=1027,50  ;Wayward Murkfly (32) at 3
+Spawn=1030,50  ;Wayward Murkfly (33) at 2
+
+[ENTRY]
+Name=4_ewd_nilus
+Spawn=1031,100  ;Nilus (34) at 4
+
+[ENTRY]
+Name=4_ewd_odreetu
+Spawn=1032,100  ;Odreetu (34) at 4
+
+; TODO: other stuff around but this seems the most common
+[ENTRY]
+Name=4_ewd_blackShroomlingScoutCamps
+wanderRadius=80
+Spawn=1033,100  ;Rotbreath Scout (30) at 1
+
+[ENTRY]
+Name=4_ewd_edgewoodFlamespinner
+Spawn=1034,50  ;Edgewood Flamespinner (32) at 1
+Spawn=1035,50  ;Edgewood Flamespinner (33) at 2
+
+; NOTE: From creature file
+[ENTRY]
+Name=4_ewd_fierion
+UniquePoints=2
+Spawn=1036,100  ; Fierion (34)
+
+; TODO: these seem to be the most common
+[ENTRY]
+Name=4_hwo_wilds_30_31
+wanderRadius=80
+Spawn=633,25  ;Heartwood Doomhound (30) at 0
+Spawn=634,25  ;Heartwood Doomhound (31) at 1
+Spawn=639,25  ;Death Blossom (30) at 0
+Spawn=640,25  ;Death Blossom (31) at 1
+
+[ENTRY]
+Name=4_hwo_wilds_34_35
+wanderRadius=80
+Spawn=643,33  ;Timberland Chomper (34) at 2
+Spawn=644,33  ;Timberland Chomper (35) at 1
+Spawn=686,34  ;Heartwood Lasher (34) at 3
+
+[ENTRY]
+Name=4_hwo_wilds_33_34
+wanderRadius=80
+Spawn=643,50  ;Timberland Chomper (34) at 1
+Spawn=684,50  ;Watchful Deathgazer (33) at 1
+
+[ENTRY]
+Name=4_ewd_edgewoodFrostspinnerCamps
+Spawn=1049,50  ;Edgewood Frostspinner (33) at 1
+Spawn=1050,50  ;Edgewood Frostspinner (34) at 1
+
+[ENTRY]
+Name=4_ewd_cisserix
+Spawn=1051,100  ;Cisserix (35) at 5
+
+[ENTRY]
+Name=4_fr_01_vineyardFirepit04
+Spawn=799,100  ;Vineyard Firepit (1) at 1
+
+[ENTRY]
+Name=4_fr_01_vineyardFirepit05
+Spawn=800,100  ;Vineyard Firepit (1) at 0
+
+[ENTRY]
+Name=4_ewd_corruptedVineyard_33_34
+Spawn=806,50  ;Animated Creepweed (33) at 0
+Spawn=807,50  ;Animated Creepweed (34) at 0
+
+[ENTRY]
+Name=4_drm_wilds_47_48
+wanderRadius=60
+Spawn=1054,25  ;Dire Quackatrice (47) at 6
+Spawn=1055,25  ;Dire Quackatrice (48) at 8
+Spawn=1056,25  ;Giant Murkfly (47) at 94
+Spawn=1057,25  ;Giant Murkfly (48) at 67
+
+[ENTRY]
+Name=4_drm_tarPits_47_48
+wanderRadius=50
+Spawn=1058,50  ;Tar Elemental (47) at 2
+Spawn=1059,50  ;Tar Elemental (48) at 1
+
+[ENTRY]
+Flags=3
+Name=4_obji_glt_02_crateOfStolenGoods
+spawnDelay=300
+Spawn=1053,100  ;Crate of Stolen Goods (1) at 0
+
+; TODO: not sure if this should just be Arbormuse
+[ENTRY]
+Flags=1
+Name=4_npc_gfo_wanderguards
+Spawn=988,50  ;Heartwood Oakfist (45) at 0
+Spawn=990,50  ;Heartwood Arbormuse (45) at 0
+
+[ENTRY]
+Name=4_hwo_sporrid_r_33
+Spawn=1071,100  ;Sporrid (33) at 4
+
+[ENTRY]
+Name=4_hwo_zuuly_m_33
+Spawn=1069,100  ;Zuuly (33) at 5
+
+[ENTRY]
+Name=4_hwo_ruins_30_31
+Spawn=803,50  ;Ruins Watcher (30) at 0
+Spawn=804,50  ;Ruins Watcher (30) at 0
+
+[ENTRY]
+Name=4_hwo_oculan_m_32
+Spawn=1078,100  ;Oculan (32) at 5
+
+[ENTRY]
+Flags=7
+Name=Chicken
+Spawn=1079,100  ;Chicken (1) at 2
+
+; TODO: lots here
+[ENTRY]
+Name=10_bxb_wilds_38_40
+wanderRadius=80
+Shares=90
+Spawn=922,10  ;Rotted Timberfiend (39) at 0
+Spawn=923,10  ;Rotted Timberfiend (40) at 0
+Spawn=924,10  ;Rootrot Shroomie (38) at 1
+Spawn=925,10  ;Rootrot Shroomie (39) at 0
+Spawn=926,10  ;Rootrot Shroomie (40) at 0
+Spawn=927,10  ;Gloomfang Stalker (38) at 0
+Spawn=928,10  ;Gloomfang Stalker (39) at 1
+Spawn=929,10  ;Deadwood Pummeler (38) at 1
+Spawn=930,10  ;Deadwood Pummeler (39) at 1
+
+[ENTRY]
+Name=10_bxb_shellCrawlerCamp
+Spawn=1082,50  ;Shell Crawler (38) at 0
+Spawn=1083,50  ;Shell Crawler (39) at 1
+
+; TODO: From creature file
+[ENTRY]
+Name=10_bxb_sluddger
+Spawn=1085,100  ;Sluddger (40)
+
+[ENTRY]
+Flags=3
+Name=4_obji_fr_04_memory-of-youthVine
+Spawn=1017,100  ;Grave Vine (1) at 0
+
+; TODO: Seems to be the same spawn location as 4_fr_01_vineyardFirepit01_FIRE
+; The other firepits use the range of creatures defs around 790.
+[ENTRY]
+Name=4_fr_01_vineyardFirepit01
+Spawn=796,100  ;Vineyard Firepit (1) at 1
+
+; NOTE: seems to overlap with another spawn 4_fr_01_vineyardFirepit01,
+; so disabled here.
+[ENTRY]
+Name=4_fr_01_vineyardFirepit01_FIRE
+;Spawn=1101,0  ;Vineyard Firepit (1) at 0
+
+[ENTRY]
+Name=4_hwo_heartwoodTrapperCamps_32_33
+wanderRadius=80
+Spawn=641,50  ;Heartwood Trapper (32) at 1
+Spawn=642,50  ;Heartwood Trapper (33) at 0
+
+[ENTRY]
+Name=4_hwo_stumpSlayers_32
+Spawn=619,50  ;Stump Slayer (32) at 4
+Spawn=1102,50  ;Stump Slayer (32) at 4
+
+[ENTRY]
+Name=4_hwo_rottedArboreal_30
+Spawn=621,100  ;Rotted Arboreal (30) at 0
+
+[ENTRY]
+Name=4_bxb_deadwoodPummelerCamp_38_39
+Spawn=929,50  ;Deadwood Pummeler (38) at 1
+Spawn=930,50  ;Deadwood Pummeler (39) at 9
+wanderRadius=70
+
+[ENTRY]
+Name=10_bxb_blightonDeadroot
+UniquePoints=4
+Spawn=1110,100  ;Blighton Deadroot (40) at 1
+
+[ENTRY]
+Name=10_bxb_deadwoodPummelerCamp_38_39
+Spawn=929,50  ;Deadwood Pummeler (38) at 0
+Spawn=930,50  ;Deadwood Pummeler (39) at 0
+
+[ENTRY]
+Name=10_bxb_SporebringerSporelingStepup_37_38
+spawnDelay=300
+ScriptCall=1
+Spawn=1108,100  ;Deadwood Sporebringer (38) at 9
+wanderRadius=40
+
+[ENTRY]
+Name=10_bxb_gloomfangStalkerCamp_38_39
+Spawn=927,50  ;Gloomfang Stalker (38) at 0
+Spawn=928,50  ;Gloomfang Stalker (39) at 0
+wanderRadius=50
+
+[ENTRY]
+Name=10_bxb_RottedGroveCamps_38_39
+spawnDelay=300
+Spawn=929,25  ;Deadwood Pummeler (38) at 1
+Spawn=930,25  ;Deadwood Pummeler (39) at 2
+Spawn=1111,25  ;Deadwood Sludgemage (38) at 1
+Spawn=1112,25  ;Deadwood Sludgemage (39) at 1
+wanderRadius=40
+
+[ENTRY]
+Name=10_bxb_odrinTheSleek
+Spawn=1113,100  ;Odrin the Sleek (40) at 4
+
+[ENTRY]
+Name=10_bxb_rottedTimberfiendCamp_38_40
+Spawn=921,33  ;Rotted Timberfiend (38) at 3
+Spawn=922,34  ;Rotted Timberfiend (39) at 9
+Spawn=923,33  ;Rotted Timberfiend (40) at 5
+
+[ENTRY]
+Name=10_bxb_rootrotShroomieCamp_38_40
+Spawn=924,33  ;Rootrot Shroomie (38) at 2
+Spawn=925,34  ;Rootrot Shroomie (39) at 1
+Spawn=926,33  ;Rootrot Shroomie (40) at 1
+wanderRadius=30
+
+[ENTRY]
+Name=10_bxb_rotAfflictedGloomfangStalkers
+Spawn=1114,50  ;Rot Afflicted Stalker (38) at 0
+Spawn=1115,50  ;Rot Afflicted Stalker (39) at 0
+wanderRadius=40
+
+[ENTRY]
+Name=10_bxb_Volutella
+spawnDelay=300
+Spawn=1116,100  ;Volutella (39) at 0
+
+[ENTRY]
+Name=10_bxb_Buxusbane
+Spawn=1117,190  ;Buxusbane (40) at 3
+
+[ENTRY]
+Name=10_bxb_adolfoTheSickened_k_40
+Spawn=1118,100  ;Adolfo the Sickened (40) at 4
+
+[ENTRY]
+Name=10_bxb_blackShroomlingSporeCropper
+spawnDelay=300
+Spawn=1119,100  ;Black Shroomling Spore Cropper (38) at 0
+
+[ENTRY]
+Name=4_hwo_greysunMix_35
+loyaltyRadius=120
+spawnDelay=300
+Spawn=1090,50  ;Greysun Assassin (35) at 0
+Spawn=1091,50  ;Greysun Brawler (35) at 0
+
+; TODO: is this a boss? it has 3 spawn points
+[ENTRY]
+Name=4_hwo_greysun_GalenFrostfist_h_35
+loyaltyRadius=120
+spawnDelay=300
+Spawn=1092,100  ;Galen Frostfist (35) at 18
+
+[ENTRY]
+Name=4_hwo_greysunAssassin_35
+loyaltyRadius=120
+spawnDelay=300
+Spawn=1090,100  ;Greysun Assassin (35) at 0
+
+[ENTRY]
+Flags=3
+Name=10_obji_glt_04_kazeekelasFirstTablet
+UniquePoints=3
+Spawn=1125,100  ;Kazeekela's First Tablet (1) at 1
+
+[ENTRY]
+Flags=3
+Name=10_obji_glt_04_kazeekelasSecondTablet
+UniquePoints=4
+Spawn=1126,100  ;Kazeekela's Second Tablet (1) at 0
+
+[ENTRY]
+Name=10_obji_glt_04_kazeekelasThirdTablet
+UniquePoints=3
+Spawn=1127,100  ;Kazeekela's Third Tablet (1) at 0
+
+; TODO: occultist seems to be the most common spawn by far
+[ENTRY]
+Name=10_blp_cankerbarkCabalist_d_41
+spawnDelay=300
+Spawn=1129,100  ;Occultist (41) at 0
+
+[ENTRY]
+Name=10_blp_cankershroomCabalist_m_40
+spawnDelay=300
+Spawn=1128,100  ;Cabalist (40) at 0
+
+; 2 SpawnPoint
+[ENTRY]
+Name=10_blp_sapporen_k_41
+UniquePoints=2
+spawnDelay=300
+Spawn=1130,100  ;Sapporen (41) at 0
+
+; 3 SpawnPoints
+[ENTRY]
+Name=10_blp_shromdar_r_40
+UniquePoints=3
+spawnDelay=300
+Spawn=1131,100  ;Shromdar (40) at 4
+
+[ENTRY]
+Flags=3
+Name=10_obji_ibc_02_shadowstarDreamcatcherLocketCHEST
+Spawn=1132,100  ;Iron Chest (1) at 0
+
+[ENTRY]
+Name=10_bsp_infectedSapling_r_41
+Spawn=1133,100  ;Infected Sapling (41) at 0
+
+[ENTRY]
+Name=10_bsp_rottedGroveMother_d_41
+Spawn=1134,100  ;Rotted Grove Mother (41) at 2
+
+[ENTRY]
+Name=10_oom_shroomieLife-Blighter_m_41
+Spawn=1135,100  ;Life-Blighter (41) at 5
+
+[ENTRY]
+Name=10_bfg_rottedTimberfiends_38_39
+spawnDelay=300
+Spawn=921,50  ;Rotted Timberfiend (38) at 0
+Spawn=922,50  ;Rotted Timberfiend (39) at 0
+
+[ENTRY]
+Name=10_bfg_rootrotShroomies_38_39
+spawnDelay=300
+Spawn=924,50  ;Rootrot Shroomie (38) at 0
+Spawn=925,50  ;Rootrot Shroomie (39) at 0
+wanderRadius=40
+
+[ENTRY]
+Name=10_bfg_rottedRootsoaker_d_39
+spawnDelay=300
+Spawn=1138,100  ;Rotted Rootsoaker (39) at 0
+
+[ENTRY]
+Name=10_bfg_arvil_k_40
+UniquePoints=2
+Spawn=1139,100  ;Arvil (40) at 0
+
+[ENTRY]
+Name=10_bfg_rottedTimberiend_40
+Spawn=923,100  ;Rotted Timberfiend (40) at 0
+
+[ENTRY]
+Name=10_bfg_rootrotShroomie_40
+Spawn=926,100  ;Rootrot Shroomie (40) at 0
+
+
+; NOTE: Added a new spawn package solely for this point in Deadwood at the Bileforge.
+; Only spawns at the SpawnPoint at: 44892 117.054 66539 (ID:151026364)
+[ENTRY]
+Name=10_bfg_rottedJuggernaut_40
+Spawn=1146,100  ; Rotted Juggernaut (40)
+
+; TODO: not sure about Pyreguard
+[ENTRY]
+spawnDelay=300
+Name=10_oom_stumpSlayercamp_42_43
+Spawn=950,20  ;Stump Slayer (42) at 0
+Spawn=951,20  ;Stump Slayer (43) at 0
+Divide=82000,2,41
+Spawn=1184,40  ;Stumpslayer Pyreguard (42) at 0
+Spawn=950,10  ;Stump Slayer (42) at 0
+Spawn=951,10  ;Stump Slayer (43) at 0
+
+
+[ENTRY]
+Name=4_ewd_greySunMix2_35
+spawnDelay=300
+loyaltyRadius=120
+Spawn=1093,50  ;Greysun Armsman (35) at 0
+Spawn=1094,50  ;Greysun Brigand (35) at 0
+
+[ENTRY]
+Name=4_ewd_greysun_EzraDarktouch_h_d_35
+loyaltyRadius=120
+spawnDelay=300
+Spawn=1095,100  ;Ezra Darktouch (35) at 0
+
+[ENTRY]
+Name=4_Trailblazer_StepUp
+spawnDelay=480
+ScriptCall=1
+Spawn=1096,50  ;Lumberjack (33) at 0
+Spawn=1097,50  ;Chopper (33) at 0
+
+; TODO: from creature file
+; NOTE: by setting Sequential instead of Scriptcall, we can trigger
+; Babe the Blue (1099) to spawn without involving extra overhead to
+; keep track of spawn states.
+; Pawl is also spawned by the script, so we don't need anything here.
+[ENTRY]
+Name=4_Trailbalzer_PaulTrigger
+Sequential=1
+; Spawn=1098,100  ;Pawl (35)
+
+[ENTRY]
+Flags=3
+Name=10_obji_glt_07_vileSporePod
+Spawn=1140,100  ;Vile Spore Pod (1) at 0
+
+[ENTRY]
+Name=10_bfg_glt_07_rottedSporeSupply
+Spawn=1142,100  ;Rotted Spore Supply (1) at 0
+
+[ENTRY]
+Name=10_bfg_glt_07_rottedSporeSupplySMALL
+Spawn=1143,100  ;Rotted Spore Supply (1) at 0
+
+; TODO: not sure if these are supposed to be different
+[ENTRY]
+Flags=3
+Name=10_bfg_fireSmall
+Spawn=1144,50  ;Fire (1) at 0
+Spawn=1141,50  ;Fire (1) at 0
+
+[ENTRY]
+Flags=3
+Name=10_bfg_fireMedium
+Spawn=1141,100  ;Fire (1) at 1
+
+[ENTRY]
+Flags=3
+Name=10_bfg_fireLarge
+Spawn=1145,100  ;Fire (1) at 0
+
+[ENTRY]
+Flags=3
+Name=10_blp_ibc_01_khazeekelasAlphaSpore
+spawnDelay=300
+Spawn=1154,100  ;Khazeekela's Alpha Spore (1) at 0
+
+[ENTRY]
+Name=10_blp_ibc_01_khazeekelasAlphaSporeMIST
+spawnDelay=300
+Spawn=1154,100  ;Khazeekela's Alpha Spore (1) at 0
+
+[ENTRY]
+Name=10_blp_cankershroomTemplar_k_42
+spawnDelay=300
+Spawn=1181,100  ;Blood Gorger (42) at 0
+
+[ENTRY]
+Name=10_blp_stumpSlayerRotguard_d_42
+Spawn=1182,100  ;Stump Slayer Rotguard (42) at 4
+
+[ENTRY]
+Name=10_blp_fungaFrostspore_m_42
+UniquePoints=2
+spawnDelay=300
+Spawn=1185,100  ;Funga Frostspore (42) at 0
+
+[ENTRY]
+Name=10_blp_rekker_k_42
+UniquePoints=2
+spawnDelay=300
+Spawn=1183,100  ;Rekker (42) at 0
+
+[ENTRY]
+Name=10_oom_StumpslayerPyreguard_m_42
+spawnDelay=300
+Spawn=1184,100  ;Stumpslayer Pyreguard (42) at 0
+
+[ENTRY]
+Name=11_irh_risenCorpse_r_42
+spawnDelay=300
+Spawn=1191,100  ;Risen Corpse (42) at 0
+
+; TODO: from creature file
+[ENTRY]
+Name=11_irh_sythrexTheOverseer_m_42
+UniquePoints=2
+Spawn=1196,100  ;Sythrex the Overseer(42)
+
+; TODO: probably incomplete
+; The Stingerskrill was not in the location info.
+[ENTRY]
+Name=11_jld_junderbroodSkrillmix_43
+Shares=30
+Spawn=1193,10  ;Junderbrood Spitterskrill (43) at 10
+Spawn=1194,10  ;Junderbrood Scarabskrill (43) at 6
+Spawn=1189,10  ;Junderbrood Stingerskrill (43) 
+
+
+; TODO: from creature file
+[ENTRY]
+Name=11_irh_cryptDigger
+spawnDelay=300
+Spawn=1187,100  ;Crypt Digger(42)
+
+[ENTRY]
+Name=11_jld_junderbroodWorkskrill_k_43
+spawnDelay=300
+Spawn=1186,100  ;Junderbrood Workskrill (43) at 1
+
+; TODO: unknown
+; Only spawns in 2 locations.
+; No idea what's supposed to be here, if at all.
+[ENTRY]
+Name=11_irh_fleshScavenger_r_42
+Spawn=1226,100  ; Putrid Avien (42)
+
+
+; TODO: from creature file
+[ENTRY]
+Name=11_dth_boneCuller_k_41
+spawnDelay=300
+Spawn=1206,100  ;Bone-Culler (41)
+
+; TODO: all taken from creature file, searching Junderbrood level 44
+[ENTRY]
+Name=11_jld_junderbroodSkrillmix_44
+Spawn=1188,25  ;Junderbrood Soldierskrill (44)
+Spawn=1190,25  ;Junderbrood Stingerskrill (44)
+Spawn=1192,25  ;Junderbrood Spitterskrill (44)
+Spawn=1195,25  ;junderbroodScarabskrill (44)
+
+; TODO: from creature file
+[ENTRY]
+Name=11_jld_junderbroodSoldierskrill_k_44
+Spawn=1188,100  ;Junderbrood Soldierskrill (44)
+
+[ENTRY]
+Name=11_dth_organCuller_d_41
+spawnDelay=300
+Spawn=1205,100  ;Organ-Culler (41) at 0
+
+; TODO: From creature file
+[ENTRY]
+Name=11_jld_junderbroodSpitterskrill_d_43_44
+Spawn=1192,50  ;Junderbrood Spitterskrill (44)
+Spawn=1193,50  ;Junderbrood Spitterskrill (43)
+
+; TODO: From creature file
+[ENTRY]
+Name=11_jld_junderbroodScarabskrill_m_43_44
+Spawn=1194,50  ;Junderbrood Scarabskrill (43)
+Spawn=1195,50  ;junderbroodScarabskrill (44)
+
+; TODO: from creature file
+[ENTRY]
+Name=11_dth_limbCuller_r_41
+spawnDelay=300
+Spawn=1204,100  ;Limb-Culler (41)
+
+[ENTRY]
+Name=11_irh_undeadChirurgeon
+spawnDelay=300
+Spawn=1207,50  ;Undead Chirurgeon (43) at 0
+Spawn=1208,50  ;Undead Chirurgeon (43) at 5
+
+; TODO: from creature file
+[ENTRY]
+Name=11_dth_spitefulLanterneye_m_42
+spawnDelay=300
+Spawn=1210,100  ;Spiteful Lanterneye (42)
+
+[ENTRY]
+Name=11_dth_undeadFarmhand_r_43
+spawnDelay=300
+Spawn=1211,100  ;Undead Farmhand (43)
+
+; TODO: from creature file
+[ENTRY]
+Name=11_jld_HogcatcherMix_43_44
+spawnDelay=300
+Shares=80
+Spawn=1216,10  ;Hogcatcher Knight (44)
+Spawn=1218,10  ;Hogcatcher Knight (43)
+Spawn=1219,10  ;Hogcatcher Rogue (43)
+Spawn=1220,10  ;Hogcatcher Rogue (44)
+Spawn=1221,10  ;Hogcatcher Mage (43)
+Spawn=1222,10  ;Hogcatcher Mage (44)
+Spawn=1223,10  ;Hogcatcher Druid (43)
+Spawn=1224,10  ;Hogcatcher Druid (44)
+
+; TODO: from creature file
+[ENTRY]
+Flags=3
+Name=11_rh_02_constructAltar
+Spawn=1241,100  ;Construct Altar (1)
+
+; TODO: from creature file
+[ENTRY]
+Name=11_rh_02_quiltedConstruct_k_41
+Spawn=1242,100  ;Quilted Construct (41)
+
+; TODO: from creature file
+[ENTRY]
+Flags=3
+Name=11_rh_06_disturbedEarth
+Spawn=1244,100  ;Disturbed Earth (1)
+
+[ENTRY]
+Name=11_irh_daemonStagCamp
+Spawn=1228,50  ;Wrath Stag (42) at 7
+Spawn=1229,50  ;Wrath Stag (43) at 300
+
+; TODO: unknown
+; Guess.  No info, but seems to be a logical spawn based on the name.
+[ENTRY]
+Name=11_irh_vampiderCamp_32_33
+Spawn=1235,50  ;Shady Deathcrawler (42)
+Spawn=1236,50  ;Shady Deathcrawler (43)
+
+; TODO: from creature file
+[ENTRY]
+Name=11_irh_vampiderBloodmasser_k_44
+Spawn=1234,100  ;Deathcrawler Bloodmasser (44)
+
+; TODO: unknown
+; No info, but seems to be a logical spawn based on the name.
+[ENTRY]
+Name=11_irh_vampiderCamp_42_43
+Spawn=1235,50  ;Shady Deathcrawler (42)
+Spawn=1236,50  ;Shady Deathcrawler (43)
+
+
+[ENTRY]
+Name=11_dth_slimerCamp
+Spawn=1230,50  ;Torpid Slimer (41) at 0
+Spawn=1231,50  ;Torpid Slimer (42) at 1
+
+[ENTRY]
+Name=11_irh_bahmut
+spawnDelay=300
+Spawn=1232,100  ;Bahmut (43) at 8
+
+; TODO: unknown
+[ENTRY]
+Name=11_dth_wilds_42_43
+Spawn=1240,34  ;Grunes Deathweaver (42) at 3
+Spawn=1238,33  ;Haunt Hound (42) at 10
+Spawn=1231,33  ;Torpid Slimer (42) at 99
+
+; TODO: unknown
+; Guess.  It's around the Folkirk building, so...
+[ENTRY]
+Name=11_dth_manormix_42_43
+spawnDelay=300
+Spawn=1249,25  ; Folkirk Gardener (43)
+Spawn=1250,25  ; Folkirk Gardener (42)
+Spawn=1251,25  ; Folkirk Groundskeeper (42)
+Spawn=1252,25  ; Folkirk Groundskeeper (43)
+
+
+; TODO: from creature file
+[ENTRY]
+Name=11_dth_nefariousHareCamp
+Spawn=1255,50  ;Nefarious Hare (41)
+Spawn=1256,50  ;Nefarious Hare (42)
+
+; TODO: from creature file
+[ENTRY]
+Name=11_dth_CarrioniteGraveLooter_r_42_43
+spawnDelay=300
+Spawn=1253,50  ;Grave Looter (42)
+Spawn=1254,50  ;Grave Looter (43)
+
+[ENTRY]
+Name=11_dth_wilds_41_42
+Spawn=1237,25  ;Haunt Hound (41) at 3
+Spawn=1238,25  ;Haunt Hound (42) at 1
+Spawn=1239,25  ;Grunes Deathweaver (41) at 6
+Spawn=1240,25  ;Grunes Deathweaver (42) at 5
+
+; TODO: unknown
+; General Bodiccea spawns around this location, so having minions around makes sense.
+[ENTRY]
+Name=11_dth_shadowfieldCity
+spawnDelay=300
+Spawn=1213,50  ;Bodiccea Bonethrall (43)
+Spawn=1214,50  ;Bodiccea Frostthrall (43)
+
+; TODO: from creature file
+[ENTRY]
+Name=11_generalBodiccea
+spawnDelay=300
+Spawn=1215,100  ;General Bodiccea (44)
+
+; TODO: from creature file
+[ENTRY]
+Name=11_obji_rh_08_ale-BatteredGloom-Spite
+spawnDelay=300
+Spawn=1257,100  ;Ale-Battered Gloom-Spite (1)
+
+; TODO: from creature file
+[ENTRY]
+Name=11_taskmasterGlutt
+spawnDelay=300
+Spawn=1217,100  ;Taskmaster Glutt (42)
+
+[ENTRY]
+Name=11_dth_cucur
+UniquePoints=4
+spawnDelay=300
+Spawn=1225,100  ;Cucur (42)
+
+[ENTRY]
+Name=11_dth_gooran
+Spawn=1233,100  ;Gooran (43)
+
+; TODO: unknwon
+; Doesn't exist in the official creature list, had to create a new entry.
+[ENTRY]
+Name=11_rh_05_geoffryThistlefur_m_42
+Spawn=3452,100  ;Geoffry Thistlefur (42)
+
+[ENTRY]
+Name=11_dth_enslavedZombie
+Spawn=1212,100  ;Enslaved Zombie (42)
+
+[ENTRY]
+Name=11_alp_ZombieMix_44_45
+spawnDelay=300
+Spawn=1264,33  ;Zombie Deathsinger (44) at 5
+Spawn=1265,33  ;Zombie Corpsetracker (45) at 1
+Spawn=1273,34  ;Zombie Soulgazer (45) at 350
+
+; TODO: from creature file
+[ENTRY]
+Name=11_obji_wpc_01_bossHawgsTV
+spawnDelay=300
+Spawn=1266,100  ;Boss Hawg's T.V. (1)
+
+; TODO: unknown
+; No idea what these are supposed to be.  These are the few unused mobs at this level.
+[ENTRY]
+Name=11_dth_wilds_44_45_north
+Spawn=1269,50  ; Shoreline Twister (44)
+Spawn=1271,50  ; Shoreline Twister (45)
+
+; TODO: unknown
+; No idea what these are supposed to be.  These are the few unused mobs at this level.
+[ENTRY]
+Name=11_dth_wilds_44_45_south
+Spawn=1267,50  ; Crag Crawler (44)
+Spawn=1268,50  ; Crag Crawler (45)
+
+
+[ENTRY]
+Name=11_alp_zombieSoulgazer
+Spawn=1273,100  ;Zombie Soulgazer (45) at 5
+
+; TODO: unknown
+[ENTRY]
+Name=12_yti_maiYetiCamps
+Spawn=1274,25  ; Mai Bonecaster (46)
+Spawn=1275,25  ; Mai Bonebasher (47)
+Spawn=1276,25  ; Mai Bonecaster (47)
+Spawn=1277,25  ; Mai Snowscout (46)
+
+
+; TODO: unknown
+; Name match.
+[ENTRY]
+Name=12_yti_maiSnowScout
+Spawn=1277,100  ; Mai Snowscout (46)
+
+; TODO: unknown
+[ENTRY]
+Name=12_yti_pogonipCamp
+Spawn=1290,50  ;Pogonip Frostmage (46)
+Spawn=1291,50  ;Pogonip Frostmage (47)
+
+[ENTRY]
+Name=12_yti_lumberingBergbackCamp
+Spawn=1316,50  ;Lumbering Bergback (46)
+Spawn=1317,50  ;Lumbering Bergback (47)
+
+; TODO: unknown
+; Guessed on these.
+[ENTRY]
+Name=12_yti_wilds_46_47
+Spawn=1323,25  ; Ashen Snowstalker (46)
+Spawn=1324,25  ; Ashen Snowstalker (47)
+Spawn=1326,25  ; Crystalline Crawler (46)
+Spawn=1327,25  ; Crystalline Crawler (47)
+
+; NOTE: from creature file.
+[ENTRY]
+Name=12_vmp_fl_02_captive
+Spawn=1329,100   ;Captive (1)
+
+
+[ENTRY]
+Name=12_vmp_moonskullHunter_46_47
+Spawn=1330,50  ;Moonskull Hunter (46)
+Spawn=1331,50  ;Moonskull Hunter (47)
+
+[ENTRY]
+Name=12_vmp_vajCruentes
+Spawn=1332,100  ;Vaj Cruentes (47)
+
+[ENTRY]
+Name=12_vmp_fl_02_coffinOfBloodmending
+Spawn=1333,100  ;Bloodmending Coffin (1)
+
+[ENTRY]
+Name=12_vmp_bloodchanterAlchemist_46_47
+spawnDelay=300
+Spawn=1334,100  ;Bloodchanter Alchemist (46)
+Spawn=1335,100  ;Bloodchanter Alchemist (47)
+
+[ENTRY]
+Name=12_wpg_Wilds_44_45
+Shares=60
+Spawn=1292,10  ;Cougarant (44) at 18
+Spawn=1294,10  ;Cougarant (45) at 55
+Spawn=1295,10  ;Bushy Bantam (44) at 48
+Spawn=1296,10  ;Bushy Bantam (45) at 54
+Spawn=1298,10  ;Minotaurtle (44) at 54
+Spawn=1299,10  ;Minotaurtle (45) at 57
+
+; NOTE: Guessed.  Probably accurate.
+[ENTRY]
+Name=12_vmp_nightMare
+spawnDelay=300
+Spawn=1345,100  ;Night Mare (47)
+
+[ENTRY]
+Name=12_vmp_valkalSteedmaster
+spawnDelay=300
+Spawn=1346,100  ;Valkal Steedmaster (46)
+
+[ENTRY]
+Name=12_vmp_vajColtres
+spawnDelay=300
+Spawn=1354,100  ;Vaj Coltres (47)
+
+; TODO: from creature file
+[ENTRY]
+Name=12_fl_03_justiAmbereye_d_46
+spawnDelay=300
+Spawn=1351,100  ;Justi Ambereye (46)
+
+; TODO: from creature file
+[ENTRY]
+Name=12_vmp_valkalBloodfiend
+spawnDelay=300
+Spawn=1347,50  ;Valkal Bloodfiend (46)
+Spawn=1348,50  ;Valkal Bloodfiend (47)
+
+; TODO: guessing on these
+[ENTRY]
+Name=12_vmp_valkalCaster
+spawnDelay=300
+Spawn=1349,50  ;Valkal Shadowmancer (47)
+Spawn=1350,50  ;Valkal Polarmancer (46)
+
+; TODO: unknown
+; Guessing on these.
+[ENTRY]
+Name=12_wpg_Wilds_45_46
+Shares=60
+Spawn=1303,10  ; Butte Back (45)
+Spawn=1305,10  ; Butte Back (46)
+Spawn=1306,10  ; Ramble Cactus (45)
+Spawn=1308,10  ; Ramble Cactus (46)
+Spawn=1313,10  ; Berg Back (45)
+Spawn=1314,10  ; Berg Back (46)
+
+; TODO: from creature file
+[ENTRY]
+Name=12_vmp_soulstrikerCutthroat_46_47
+spawnDelay=300
+Spawn=1357,50  ;Soulstriker Cutthroat (46)
+Spawn=1358,50  ;Soulstriker Cutthroat (47)
+
+; TODO: unknown
+; Guessing on these.
+[ENTRY]
+Name=12_vmp_wilds_46_47
+Shares=60
+Spawn=1360,10  ;Shadowhound (46)
+Spawn=1361,10  ;Shadowhound (47)
+Spawn=1362,10  ;Balloon Spider (46)
+Spawn=1363,10  ;Balloon Spider (47)
+Spawn=1364,10  ;Bloodwing Sucker (46)
+Spawn=1365,10  ;Bloodwing Sucker (47)
+
+; TODO: from creature file
+[ENTRY]
+Name=12_vmp_ rockDervish
+Spawn=1373,50  ;Rock Dervish (46)
+Spawn=1375,50  ;Rock Dervish (47)
+
+; TODO: unknown
+; Guessed on these.  Seems reasonable.  Quackatrice also spawn around the Crystal Lake.
+[ENTRY]
+Name=12_ice_Wilds_45_46
+Spawn=1301,25  ; Quackatrice (45)
+Spawn=1302,25  ; Quackatrice (46)
+Spawn=1309,25  ; Glacial Crabquatch (45)
+Spawn=1310,25  ; Glacial Crabquatch (46)
+
+; TODO: from creature file
+[ENTRY]
+Name=12_ice_Goliaths_45_46
+spawnDelay=300
+Spawn=1311,50  ;Ice Goliath (45)
+Spawn=1312,50  ;Ice Goliath (46)
+
+[ENTRY]
+Name=12_dbh_skrilldrones_48
+spawnDelay=300
+Spawn=1405,100  ;Skrill Hivedrone (48) at 1
+
+[ENTRY]
+Name=12_dbh_skrillmix_48
+spawnDelay=300
+Spawn=1396,25  ;Skrill Hiveguard (48) at 0
+Spawn=1399,25  ;Skrill Hivesoldier (48) at 3
+Spawn=1402,25  ;Skrill Hivemender (48) at 1
+Spawn=1408,25  ;Skrill Hivemaker (48) at 1
+
+; TODO: unknown
+; Guessed for this one.  A quest involves killing these.
+; Presumably bhp=Boss Hawg's JUnk Palace
+[ENTRY]
+Name=12_bhp_entrance_47
+spawnDelay=300
+Spawn=1390,100  ; Haz'ard Scout (47)
+
+
+; TODO: from creature file
+[ENTRY]
+Name=12_vmp_vampider
+spawnDelay=300
+Spawn=1417,100  ;Vampider (47)
+
+[ENTRY]
+Name=5_wilds_33_34
+wanderRadius=100
+Shares=60
+Spawn=713,10  ;Spiketail Basher (33) at 0
+Spawn=714,10  ;Spiketail Basher (34) at 1
+Spawn=724,10  ;Saltbed Scavenger (33) at 2
+Spawn=725,10  ;Saltbed Scavenger (34) at 3
+Spawn=726,10  ;Sloven Sandhog (33) at 1
+Spawn=727,10  ;Sloven Sandhog (34) at 2
+
+[ENTRY]
+Flags=3
+Name=5_nw_01_carrioniteTotem01
+spawnDelay=300
+Spawn=897,100  ;Carrionite Totem (1) at 0
+
+[ENTRY]
+Flags=3
+Name=5_nw_01_carrioniteTotem02
+spawnDelay=300
+Spawn=896,100  ;Carrionite Totem (1) at 0
+
+[ENTRY]
+Flags=3
+Name=5_nw_01_carrioniteTotem04
+spawnDelay=300
+Spawn=895,100  ;Carrionite Totem (1) at 0
+
+[ENTRY]
+Name=5_wilds_35_36
+wanderRadius=100
+Shares=60
+Spawn=715,10  ;Spiketail Demolisher (35) at 1
+Spawn=716,10  ;Spiketail Demolisher (36) at 1
+Spawn=718,10  ;Windhowler Elemental (35) at 2
+Spawn=719,10  ;Windhowler Elemental (36) at 0
+Spawn=721,10  ;Dustshore Antlion (35) at 1
+Spawn=722,10  ;Dustshore Antlion (36) at 0
+
+[ENTRY]
+Name=5_wilds_36_37
+wanderRadius=100
+Shares=60
+Spawn=716,10  ;Spiketail Demolisher (36) at 0
+Spawn=717,10  ;Spiketail Juggernaut (37) at 1
+Spawn=719,10  ;Windhowler Elemental (36) at 0
+Spawn=720,10  ;Stormhowler Elemental (37) at 0
+Spawn=722,10  ;Dustshore Antlion (36) at 0
+Spawn=723,10  ;Dustshore Antlion (37) at 1
+
+[ENTRY]
+Name=9_wilds_37_38
+wanderRadius=90
+Shares=60
+Spawn=742,10  ;Needleskin Jabber (37) at 0
+Spawn=743,10  ;Needleskin Jabber (38) at 0
+Spawn=746,10  ;Ravenous Bonepicker (37) at 1
+Spawn=747,10  ;Ravenous Bonepicker (38) at 0
+Spawn=748,10  ;Toxic Sandscourge (37) at 1
+Spawn=749,10  ;Toxic Sandscourge (38) at 1
+
+[ENTRY]
+Name=9_wilds_38_39
+wanderRadius=90
+Shares=60
+Spawn=756,10  ;Ambermane Prowler (38) at 0
+Spawn=757,10  ;Ambermane Prowler (39) at 2
+Spawn=760,10  ;Sandgazer (38) at 1
+Spawn=761,10  ;Sandgazer (39) at 1
+Spawn=764,10  ;Dunehog (38) at 1
+Spawn=765,10  ;Dunehog (39) at 1
+
+[ENTRY]
+Name=5_avier_k_35
+spawnDelay=300
+Spawn=1448,100  ;Avier (35) at 2
+
+[ENTRY]
+Name=5_hajeenQaraba_m_37
+Spawn=1452,100  ;Hajeen Qaraba (37) at 5
+
+[ENTRY]
+Name=5_anubianPathfinder_39_40
+spawnDelay=300
+Spawn=1456,50  ;Anubian Pathfinder (39) at 2
+Spawn=1457,50  ;Anubian Pathfinder (40) at 4
+
+; TODO: all scuttler, no crabquatch
+[ENTRY]
+Name=5_ambercoastCrabquatch_39_40
+wanderRadius=40
+spawnDelay=300
+Spawn=1466,50  ;Ambercoast Scuttler (39) at 1
+Spawn=1468,50  ;Ambercoast Scuttler (40) at 0
+
+[ENTRY]
+Name=5_sandGoliathCamps_47
+Spawn=1469,50  ;Sand Goliath (47) at 0
+Spawn=1470,50  ;Sand Goliath (47) at 0
+
+[ENTRY]
+Name=5_brewtus_k_48
+Spawn=1471,100  ;Brewtus (47) at 5
+
+[ENTRY]
+Name=5_wilds_47
+wanderRadius=100
+Spawn=1472,100  ;Pinface Prickler (47) at 2
+
+[ENTRY]
+Name=5_lisianCultist/Ritualist
+Spawn=1473,50  ;Dustspinner (48) at 0
+Spawn=1474,50  ;Sandmother (48) at 0
+
+[ENTRY]
+Name=5_lisianShadowblade
+Spawn=1475,100  ;Scaleblade (49) at 2
+
+[ENTRY]
+Flags=1
+Name=5_npc_nws_MercenaryGuards
+Spawn=1460,100  ;Mercenary Guard (45) at 1
+
+[ENTRY]
+Name=5_stoneLionOutrider
+spawnDelay=300
+Spawn=1477,100  ;Outrider (36) at 1
+
+[ENTRY]
+Flags=1
+Name=5_npc_bzt_KomodoDragoons
+Spawn=1437,100  ;Komodo Dragoon (45) at 1
+
+; TODO: from creature file
+[ENTRY]
+Name=9_antlyss_k_39
+Spawn=1478,100  ;Antlyss (39)
+
+[ENTRY]
+Flags=1
+Name=5_npc_agc_ResearchAssistants
+Spawn=1464,100  ;Research Assistant (45) at 1
+
+[ENTRY]
+Name=9_fireridgeDenmother_d_38
+Spawn=1479,100  ;Fireridge Denmother (38) at 0
+
+[ENTRY]
+Flags=1
+Name=9_npc_osl_Solarmanes
+Spawn=1440,100  ;Solarmane (45) at 1
+
+[ENTRY]
+Name=5_cazadoreEntranceSimian
+spawnDelay=300
+Spawn=1482,100  ;Simian Slave (43) at 0
+
+[ENTRY]
+Name=5_cazadoreEntranceAnubian
+spawnDelay=300
+Spawn=1481,50  ;Anubian Blademaster (43) at 0
+Spawn=1483,50  ;Anubian Elementalist (43) at 0
+
+[ENTRY]
+Name=5_ambercoastScuttler_39_40
+wanderRadius=40
+spawnDelay=300
+Spawn=1466,50  ;Ambercoast Scuttler (39) at 4
+Spawn=1468,50  ;Ambercoast Scuttler (40) at 4
+
+[ENTRY]
+Name=9_obji_osl_11_SphynxTailAle
+spawnDelay=300
+Spawn=1487,100  ;Sphynx Tail Ale (1) at 0
+
+[ENTRY]
+Name=9_plateauFleshstingerCamp
+wanderRadius=60
+Spawn=773,50  ;Plateau Fleshstinger (38) at 0
+Spawn=774,50  ;Plateau Fleshstinger (39) at 1
+
+[ENTRY]
+Name=9_toxicSandscourgeCamp
+wanderRadius=60
+Spawn=748,50  ;Toxic Sandscourge (37) at 2
+Spawn=749,50  ;Toxic Sandscourge (38) at 1
+
+[ENTRY]
+Name=5_gangren_r_39
+Spawn=1491,100  ;Gangren (39) at 1
+
+[ENTRY]
+Name=9_lucidCrystalSlugCamp
+Spawn=750,50  ;Lucid Crystalcreeper (39) at 0
+Spawn=751,50  ;Lucid Crystalcreeper (40) at 1
+
+[ENTRY]
+Name=9_needleskinJabberCamp
+wanderRadius=60
+Spawn=742,50  ;Needleskin Jabber (37) at 0
+Spawn=743,50  ;Needleskin Jabber (38) at 0
+
+[ENTRY]
+Name=9_obji_osl_07_carrionBattlePlans
+spawnDelay=300
+Spawn=906,100  ;Carrion Battle Plans (1) at 0
+
+[ENTRY]
+Name=9_symbuhRafki_r_39
+UniquePoints=2
+spawnDelay=300
+Spawn=1496,100  ;Symbuh Rafki (39) at 12
+
+[ENTRY]
+Name=9_carrioniteCamps_rogue
+spawnDelay=300
+Spawn=865,100  ;Slinkfeather (38) at 0
+
+[ENTRY]
+Name=9_carrioniteCamps_basePop
+spawnDelay=300
+Shares=70
+Spawn=862,10  ;Spellfeather (37) at 0
+Spawn=863,10  ;Spellfeather (38) at 0
+Spawn=864,10  ;Stormfeather (38) at 0
+Spawn=775,10  ;Shieldfeather (37) at 0
+Spawn=776,10  ;Shieldfeather (38) at 0
+Spawn=775,10  ;Shieldfeather (37) at 1
+Spawn=776,10  ;Shieldfeather (38) at 1
+
+[ENTRY]
+Name=9_carrioniteCamps_druid
+spawnDelay=300
+Spawn=864,100  ;Stormfeather (38) at 0
+
+[ENTRY]
+Name=5_StonelionGarFireclaw_h_38
+spawnDelay=300
+Spawn=1499,100  ;Gar Fireclaw (38) at 0
+
+[ENTRY]
+Name=5_obji_AlliancePlans
+spawnDelay=300
+Spawn=1497,100  ;a sealed scroll (1) at 0
+
+[ENTRY]
+Name=5_SpymasterUsi_40
+spawnDelay=300
+Spawn=854,100  ;Spymaster Usi (40) at 5
+
+[ENTRY]
+Name=5_obji_bzt_08_rareStatuette
+spawnDelay=300
+Spawn=1500,100  ;Rare Statuette (1) at 0
+
+[ENTRY]
+Name=9_stonelion_Panterra_h_38
+spawnDelay=300
+Spawn=1509,100  ;Panterra (38) at 5
+
+[ENTRY]
+Name=9_stonelion_Tigron_h_38
+spawnDelay=300
+Spawn=1507,100  ;Tigron (38) at 5
+
+[ENTRY]
+Name=9_stonelion_Lynxana_h_38
+spawnDelay=300
+Spawn=1508,100  ;Lynxana (38) at 0
+
+[ENTRY]
+Name=5_commanderSlesh_r_34
+spawnDelay=300
+Spawn=827,100  ;Commander Slesh (34) at 0
+
+[ENTRY]
+Name=10_bxb_Baddyr_40
+spawnDelay=300
+Spawn=1076,100  ;Baddyr (40) at 5
+
+[ENTRY]
+Name=9_ravenousBonepickerCamp
+wanderRadius=60
+Spawn=746,50  ;Ravenous Bonepicker (37) at 1
+Spawn=747,50  ;Ravenous Bonepicker (38) at 1
+
+[ENTRY]
+Flags=3
+Name=10_obji_ibc01a_StrangeBook
+Spawn=1516,100  ;Strange Book (1) at 0
+
+[ENTRY]
+Name=5_sandboneGiant_k_42
+Spawn=1529,100  ;Sandbone Giant (42) at 2
+
+[ENTRY]
+Name=5_spiketailDemolisherCamp
+Spawn=715,50  ;Spiketail Demolisher (35) at 0
+Spawn=716,50  ;Spiketail Demolisher (36) at 0
+
+[ENTRY]
+Name=5_dustshoreAntlionCamp
+wanderRadius=80
+Spawn=721,50  ;Dustshore Antlion (35) at 0
+Spawn=722,50  ;Dustshore Antlion (36) at 0
+
+[ENTRY]
+Name=5_djinnOasis_m_35_36
+Spawn=829,50  ;Oasis Djinn (35) at 0
+Spawn=830,50  ;Oasis Djinn (36) at 0
+
+[ENTRY]
+Name=10_oom_putridSporeshroom_d_41
+spawnDelay=300
+Spawn=1538,100  ;Putrid Sporeshroom (41) at 1
+
+[ENTRY]
+Name=10_blp_durganWrathborn_k_42
+spawnDelay=300
+Spawn=1526,100  ;Durgan Wrathborn (42) at 0
+
+; TODO: 2 spawn points
+[ENTRY]
+Flags=3
+Name=10_obji_ibc01b_woodenChest
+UniquePoints=2
+Spawn=1528,100  ;Wooden Chest (1) at 0
+
+[ENTRY]
+Name=10_blp_eliaScorn_m_42
+spawnDelay=300
+Spawn=1527,100  ;Elia Scorn (42) at 5
+
+[ENTRY]
+Name=3a_bearCamp01_general
+wanderRadius=80
+Spawn=352,100  ;Rumblegrowl Bear (20) at 0
+
+[ENTRY]
+Name=3a_bearThumperCamp01_bears
+wanderRadius=80
+Spawn=352,50  ;Rumblegrowl Bear (20) at 0
+Spawn=353,50  ;Rumblegrowl Bear (21) at 0
+
+[ENTRY]
+Name=3a_bearThumperCamp01_thumpers
+wanderRadius=80
+Spawn=360,50  ;Nettlefang Thumper (20) at 1
+Spawn=361,50  ;Nettlefang Thumper (21) at 1
+
+[ENTRY]
+Name=3a_lavaWolfCamp01_general_21_22
+wanderRadius=80
+Spawn=430,50  ;Ashpaw Wolf (22) at 0
+Spawn=431,50  ;Cindersnarl Wolf (22) at 0
+
+[ENTRY]
+Name=3a_lavaWolfCamp01_general_22_23
+wanderRadius=80
+Spawn=431,50  ;Cindersnarl Wolf (22) at 0
+Spawn=433,50  ;Blisterbite Wolf (23) at 0
+
+[ENTRY]
+Name=3a_deerCamp01_general
+wanderRadius=80
+Spawn=358,50  ;Bolt Horn Deer (20) at 1
+Spawn=359,50  ;Bolt Horn Deer (21) at 1
+
+[ENTRY]
+Name=3a_wolfThumperCamp01_thumpers
+wanderRadius=50
+Spawn=361,50  ;Nettlefang Thumper (21) at 0
+Spawn=2141,50  ;Furyfang Thumper (22) at 1
+
+[ENTRY]
+Name=3a_wolfThumperCamp01_wolves
+wanderRadius=80
+Spawn=350,50  ;Taiga Wolf (21) at 0
+Spawn=351,50  ;Taiga Wolf (22) at 0
+
+[ENTRY]
+Name=3a_bearHedgehogCamp01_hedgehogs
+wanderRadius=40
+Spawn=357,50  ;Pikepeal Hedgehog (22) at 0
+Spawn=2143,50  ;Pikepeal Hedgehog (23) at 0
+
+[ENTRY]
+Name=3a_bearHedgehogCamp01_bears
+Spawn=354,50  ;Rumbleroar Bear (22) at 0
+Spawn=2142,50  ;Rumbleroar Bear (23) at 0
+
+[ENTRY]
+Name=3a_hedgeDeerRocCamp01_trees
+wanderRadius=40
+Spawn=355,50  ;Pricklepeal Hedgehog (20) at 1
+Spawn=356,50  ;Pricklepeal Hedgehog (21) at 1
+
+[ENTRY]
+Name=3a_hedgeDeerRocCamp01_general
+wanderRadius=60
+Spawn=358,25  ;Bolt Horn Deer (20) at 0
+Spawn=359,25  ;Bolt Horn Deer (21) at 0
+Spawn=2155,25  ;Wild Rocling (20) at 0
+Spawn=2156,25  ;Wild Rocling (21) at 0
+
+; TODO: no level 20 mobs in these scans, and the lev 22 mobs seem less common
+[ENTRY]
+Name=3a_goliathcamps01_20_21
+Spawn=366,35  ;Thundertoe Goliath (21) at 0
+Spawn=367,35  ;Thunderheel Goliath (22) at 0
+Spawn=2158,15  ;Flamestone Goliath (21) at 0
+Spawn=2162,15  ;Speedstone Goliath (22) at 3
+
+[ENTRY]
+Name=3a_goliathcamps01_21_22
+Spawn=366,34  ;Thundertoe Goliath (21) at 0
+Spawn=367,33  ;Thunderheel Goliath (22) at 0
+Spawn=2162,33  ;Speedstone Goliath (22) at 0
+
+[ENTRY]
+Name=3a_goliathcamps01_22_23
+Spawn=367,25  ;Thunderheel Goliath (22) at 0
+Spawn=368,25  ;Thunderheel Goliath (23) at 0
+Spawn=2159,25  ;Sleetrock Goliath (23) at 0
+Spawn=2162,25  ;Speedstone Goliath (22) at 0
+
+[ENTRY]
+Name=3a_goliathcamps01_23_24
+Spawn=368,25  ;Thunderheel Goliath (23) at 0
+Spawn=369,25  ;Thunderfoot Goliath (24) at 0
+Spawn=2159,25  ;Sleetrock Goliath (23) at 0
+Spawn=2163,25  ;Speedstone Goliath (24) at 0
+
+[ENTRY]
+Name=3a_goliathcamps01_24_25
+Spawn=369,25  ;Thunderfoot Goliath (24) at 0
+Spawn=370,25  ;Thunderfoot Goliath (25) at 0
+Spawn=2160,25  ;Deathstone Goliath (25) at 0
+Spawn=2163,25  ;Speedstone Goliath (24) at 0
+
+[ENTRY]
+Name=3a_hedgeDeerRocCamp02_trees
+wanderRadius=40
+Spawn=2174,50  ;Stout Rocling (23) at 0
+Spawn=2175,50  ;Stout Rocling (24) at 1
+
+[ENTRY]
+Name=3a_hedgeDeerRocCamp02_general
+wanderRadius=60
+Spawn=406,25  ;Greenbutte Stag (23) at 1
+Spawn=407,25  ;Greenbutte Stag (24) at 0
+Spawn=2172,25  ;Bloodquill Hedgehog (23) at 0
+Spawn=2173,25  ;Bloodquill Hedgehog (24) at 1
+
+[ENTRY]
+Name=3a_wolfCamp01_general
+wanderRadius=80
+Shares=30
+Spawn=2150,10  ;Wrathwolf Hunter (24) at 0
+Spawn=2151,10  ;Wrathwolf Hunter (25) at 0
+Spawn=2152,10  ;Wrathwolf Huntress (25) at 0
+
+[ENTRY]
+Name=3a_wolfDeerCamp01_trees
+wanderRadius=40
+Spawn=408,50  ;Greenbutte Buck (25) at 2
+Spawn=2147,50  ;Greenbutte Buck (24) at 4
+
+[ENTRY]
+Name=3a_wolfDeerCamp01_general
+wanderRadius=80
+Spawn=400,50  ;Blightwolf (25) at 0
+Spawn=2146,50  ;Blightwolf (24) at 0
+
+[ENTRY]
+Name=3a_caveGoliathCamp01_general
+Spawn=396,50  ;Cavern Goliath (24) at 0
+Spawn=397,50  ;Cavern Goliath (25) at 0
+
+[ENTRY]
+Name=3a_goliathCamps02_24_25
+Spawn=369,25  ;Thunderfoot Goliath (24) at 0
+Spawn=370,25  ;Thunderfoot Goliath (25) at 0
+Spawn=2160,25  ;Deathstone Goliath (25) at 0
+Spawn=2163,25  ;Speedstone Goliath (24) at 0
+
+[ENTRY]
+Name=3a_bearThumperCamp02_general
+wanderRadius=80
+Spawn=405,50  ;Booming Thunder Bear (25) at 3
+Spawn=2144,50  ;Booming Thunderbear (24) at 1
+
+[ENTRY]
+Name=3a_bearThumperCamp02_trees
+wanderRadius=40
+Spawn=403,50  ;Scrunchfang Thumper (25) at 1
+Spawn=2145,50  ;Scrunchfang Thumper (24) at 1
+
+[ENTRY]
+Name=3a_rocCamp01_general
+Spawn=409,50  ;Upland Roc (24) at 0
+Spawn=410,50  ;Highland Roc (25) at 0
+
+[ENTRY]
+Name=3a_shroomieCamp01_generalWoods
+wanderRadius=80
+spawnDelay=300
+Spawn=414,25  ;Mistcap Corrupter (22) at 0
+Spawn=415,25  ;Mistcap Corrupter (23) at 0
+Spawn=2178,25  ;Rotcap Shroomie (23) at 0
+Spawn=385,25  ;Blight Timberwolf (23) at 4
+
+[ENTRY]
+Name=3a_shroomieCamp01_general
+spawnDelay=300
+Spawn=2177,25  ;Quickcap Shroomie (22) at 0
+Spawn=2178,25  ;Rotcap Shroomie (23) at 0
+Spawn=415,25  ;Mistcap Corrupter (23) at 0
+Spawn=414,25  ;Mistcap Corrupter (22) at 0
+
+[ENTRY]
+Name=3a_bearThumperCamp03_general
+wanderRadius=80
+Spawn=386,50  ;Rolling Thunder Bear (23) at 2
+Spawn=404,50  ;Rolling Thunder Bear (24) at 2
+
+[ENTRY]
+Name=3a_bearThumperCamp03_trees
+wanderRadius=40
+Spawn=401,50  ;Gnawfang Thumper (23) at 0
+Spawn=402,50  ;Gnawfang Thumper (24) at 1
+
+[ENTRY]
+Name=3a_wolfThumperCamp02_general
+wanderRadius=80
+Spawn=385,50  ;Blight Timberwolf (23) at 1
+Spawn=399,50  ;Blight Timberwolf (24) at 5
+
+[ENTRY]
+Name=3a_wolfThumperCamp02_trees
+wanderRadius=60
+Spawn=401,50  ;Gnawfang Thumper (23) at 3
+Spawn=402,50  ;Gnawfang Thumper (24) at 11
+
+[ENTRY]
+Name=3a_deerHedgehogCamp01_general
+wanderRadius=60
+Spawn=2148,50  ;Cliffside Quillback (23) at 2
+Spawn=2149,50  ;Cliffside Quillback (24) at 4
+
+; TODO: no spawn data for this one
+[ENTRY]
+Name=3a_deerHedgehogCamp01_trees
+wanderRadius=50
+Spawn=2148,50  ;Cliffside Quillback (23) at 2
+Spawn=2149,50  ;Cliffside Quillback (24) at 4
+
+[ENTRY]
+Name=3a_spibearCamp01_general
+wanderRadius=60
+Spawn=376,50  ;Blightbiter Spibear (22) at 0
+Spawn=377,50  ;Blightbiter Spibear (23) at 0
+
+[ENTRY]
+Name=3a_blightedWoods_general
+wanderRadius=60
+Spawn=2183,20  ;Dreamfly (22) at 0
+Spawn=2184,20  ;Dreamfly (23) at 0
+Spawn=2185,20  ;Frightfang Spibear (22) at 0
+Spawn=2186,20  ;Frightfang Spibear (23) at 0
+Spawn=2187,20  ;Blightcap Shroomie (24) at 0
+
+[ENTRY]
+Name=3a_spikedToadCamp01_general
+wanderRadius=60
+Shares=30
+Spawn=387,10  ;Spindleshroom Toad (22) at 0
+Spawn=388,10  ;Spindleshroom Toad (23) at 0
+Spawn=389,10  ;Spikeshroom Toad (24) at 0
+
+[ENTRY]
+Name=3a_wilderbeastialCamp01_general
+spawnDelay=300
+Shares=30
+Spawn=390,10  ;Savage Wilderbeastial (24) at 0
+Spawn=391,10  ;Savage Wilderbeastial (25) at 0
+Spawn=392,10  ;Rampant Wilderbeastial (24) at 0
+
+[ENTRY]
+Name=3a_outcast/stonelionCamp01_stonelions
+spawnDelay=300
+Shares=30
+Spawn=416,10  ;Seer (25) at 0
+Spawn=393,10  ;Stalker (24) at 0
+Spawn=394,10  ;Pillager (25) at 0
+
+[ENTRY]
+Name=3a_outcast/stonelionCamp01_outcasts
+spawnDelay=300
+Spawn=417,20  ;Outcast Brigand (24) at 0
+Spawn=418,20  ;Outcast Brigand (25) at 0
+Spawn=419,20  ;Outcast Lackey (25) at 0
+Spawn=420,20  ;Outcast Diabolist (24) at 0
+Spawn=421,20  ;Outcast Diabolist (25) at 0
+
+[ENTRY]
+Name=3a_unikornCamp01_general
+wanderRadius=60
+Shares=30
+Spawn=362,10  ;Frighthoof Unikorn (21) at 0
+Spawn=363,10  ;Frighthoof Unikorn (22) at 0
+Spawn=364,10  ;Scarespire Unikorn (23) at 0
+
+; TODO: Very limited data
+[ENTRY]
+Name=3a_sectionC1_general
+wanderRadius=80
+Spawn=385,100  ;Blight Timberwolf (23) at 2
+
+; TODO: limited data
+[ENTRY]
+Name=3a_sectionC1_trees
+wanderRadius=60
+Spawn=401,100  ;Gnawfang Thumper (23) at 4
+
+[ENTRY]
+Name=3a_sectionB6_general
+wanderRadius=100
+Spawn=385,50  ;Blight Timberwolf (23) at 0
+Spawn=401,50  ;Gnawfang Thumper (23) at 0
+
+[ENTRY]
+Name=2a_suf_trees
+wanderRadius=50
+Spawn=502,50  ;Millstone Snail (26) at 0
+Spawn=503,50  ;Millstone Snail (27) at 1
+
+[ENTRY]
+Flags=1
+Name=3_npc_mid_guards
+Shares=30
+Spawn=2212,10  ;Midlands Militia (45) at 0
+Spawn=2213,10  ;Midlands Militia (45) at 0
+Spawn=2214,10  ;Midlands Militia (45) at 0
+
+[ENTRY]
+Name=2a_suf_general
+wanderRadius=100
+Spawn=495,25  ;Clammy Flytrap (26) at 0
+Spawn=496,25  ;Clammy Flytrap (27) at 0
+Spawn=497,25  ;Drench Blossom (27) at 1
+Spawn=498,25  ;Drench Blossom (28) at 0
+
+[ENTRY]
+Name=2a_suf_undead
+Spawn=504,25  ;Deadhand Skeleton (27) at 0
+Spawn=505,25  ;Deadhand Skeleton (28) at 0
+Spawn=2274,25  ;Bladehand Skeleton (27) at 0
+Spawn=2275,25  ;Frostbone Skeleton (28) at 0
+
+; TODO: some incomplete data
+[ENTRY]
+Name=2a_suf_beach_25_26
+wanderRadius=40
+Spawn=499,50  ;Lowtide Elemental (26) at 1
+Spawn=513,50  ;Lowtide Elemental (25) at 1
+
+[ENTRY]
+Name=2a_suf_beach_27_28
+wanderRadius=40
+Spawn=500,50  ;Hightide Elemental (27) at 0
+Spawn=501,50  ;Hightide Elemental (28) at 0
+
+[ENTRY]
+Name=2a_stc_scallywagCamps_general
+spawnDelay=300
+Spawn=509,25  ;Knife Twirler (26) at 0
+Spawn=510,25  ;Knife Twirler (27) at 0
+Spawn=2276,25  ;Sea Charmer (26) at 0
+Spawn=2277,25  ;Beach Brute (27) at 0
+
+; TODO: need a divider since they're spawning near the warpig camp
+[ENTRY]
+Name=2a_rhl_madCowCamp_general
+Spawn=540,25  ;Madcow Basher (24) at 0
+Spawn=541,25  ;Madcow Mootilator (26) at 0
+Divide=67144,1,51
+Spawn=3117,25  ;Warpig Brewmaster (25)
+Spawn=3118,25  ;Warpig Brewslinker (26)
+
+[ENTRY]
+Name=2a_rhl_dunkelhimerBrewery_outside
+spawnDelay=300
+Spawn=3117,25  ;Warpig Brewmaster (25) at 0
+Spawn=3118,25  ;Warpig Brewslinker (26) at 0
+Spawn=3119,25  ;Warpig Barleymancer (26) at 0
+Spawn=3120,25  ;Warpig Aleweaver (26) at 0
+
+[ENTRY]
+Name=2_rhl_slagPits_25_26
+Spawn=570,25  ;Slagstone Elemental (26) at 0
+Spawn=571,25  ;Slagstone Elemental (27) at 0
+Spawn=2263,25  ;Windpit Elemental (26) at 0
+Spawn=2264,25  ;Windpit Elemental (27) at 0
+
+[ENTRY]
+Name=2a_rhl_slagPitCamp_general
+Spawn=570,25  ;Slagstone Elemental (26) at 0
+Spawn=571,25  ;Slagstone Elemental (27) at 0
+Spawn=2263,25  ;Windpit Elemental (26) at 0
+Spawn=2264,25  ;Windpit Elemental (27) at 0
+
+[ENTRY]
+Name=2a_rhl_sectionA3_general
+wanderRadius=100
+Spawn=531,25  ;Rhineswine (25) at 1
+Spawn=544,25  ;Rhineswine (24) at 2
+Spawn=2265,25  ;Fowl Biter (24) at 1
+Spawn=2266,25  ;Fowl Biter (25) at 1
+
+[ENTRY]
+Name=2a_rhl_sectionA3_trees
+wanderRadius=60
+Spawn=542,50  ;Rhinewolf (24) at 1
+Spawn=543,50  ;Rhinewolf (25) at 2
+
+[ENTRY]
+Name=2a_rhl_sectionA3_flier
+wanderRadius=100
+Spawn=2267,100  ;Flamewing (25) at 4
+
+[ENTRY]
+Name=2a_rhl_spiderRuinsCamp_general
+spawnDelay=300
+Spawn=545,25  ;Mistfang Hunter (25) at 0
+Spawn=546,25  ;Mistfang Hunter (26) at 0
+Spawn=2303,25  ;Mistfang (25) at 0
+Spawn=2304,25  ;Mistfang (26) at 0
+
+[ENTRY]
+Name=2a_rhl_trollTown_general
+spawnDelay=300
+Spawn=537,20  ;Carver (28) at 0
+Spawn=538,20  ;Carver (29) at 0
+Spawn=554,20  ;Warrior (28) at 0
+Spawn=555,20  ;Warrior (29) at 0
+Spawn=556,20  ;Shaman (30) at 0
+
+[ENTRY]
+Name=2a_rhl_trollBridge_general
+spawnDelay=300
+Shares=60
+Spawn=537,10  ;Carver (28) at 0
+Spawn=538,10  ;Carver (29) at 0
+Spawn=539,10  ;Frostkeeper (29) at 0
+Spawn=553,10  ;Flamekeeper (28) at 0
+Spawn=554,10  ;Warrior (28) at 0
+Spawn=555,10  ;Warrior (29) at 0
+
+[ENTRY]
+Flags=3
+Name=3a_obji_bb03a_edgewaterMushroom
+Spawn=2270,100  ;Edgewater Mushroom (1) at 3
+
+[ENTRY]
+Flags=3
+Name=3a_obji_bb03a_eldenSprig
+Spawn=2272,100  ;Elden Sprig (1) at 2
+
+[ENTRY]
+Flags=3
+Name=3a_obji_bb03a_honeyRoot
+Spawn=2271,100  ;Honey Root (1) at 2
+
+[ENTRY]
+Name=3_bb04a_Gork_elderGoliath_h_k_25
+Spawn=2273,100  ;Gork (25) at 4
+
+[ENTRY]
+Name=2a_rhl_sectionA2_general
+wanderRadius=100
+Spawn=2278,25  ;Fowl Fighter (25) at 1
+Spawn=2279,25  ;Fowl Fighter (26) at 1
+Spawn=2280,25  ;Grey-Plate Hog (25) at 1
+Spawn=2281,25  ;Grey-Plate Hog (26) at 1
+
+[ENTRY]
+Name=2a_rhl_sectionA2_trees
+wanderRadius=60
+Spawn=2282,50  ;Earth Slug (25) at 1
+Spawn=2283,50  ;Earth Slug (26) at 1
+
+[ENTRY]
+Name=2a_rhl_sectionA2_flier
+wanderRadius=100
+Spawn=2284,100  ;Flamewing (27) at 5
+
+; TODO: south end has same name, different mix
+[ENTRY]
+Name=2a_rhl_sectionA8_general
+wanderRadius=100
+Shares=80
+Divide=71000,1,41
+Spawn=2291,10  ;Bristle Boar (26) at 1
+Spawn=2292,10  ;Bristle Boar (27) at 1
+Spawn=2293,10  ;Slag Worm (26) at 1
+Spawn=2294,10  ;Slag Worm (27) at 0
+Spawn=566,10  ;Attercop (28) at 1
+Spawn=567,10  ;Attercop (27) at 2
+Spawn=2326,10  ;Slider (27) at 1
+Spawn=2327,10  ;Slider (28) at 1
+
+[ENTRY]
+Name=2a_rhl_sectionA8_trees
+wanderRadius=60
+Spawn=2295,50  ;Slickpaw Wolf (26) at 0
+Spawn=2296,50  ;Slickpaw Wolf (27) at 1
+
+[ENTRY]
+Name=2a_rhl_sectionA8_flier
+wanderRadius=100
+Spawn=2297,100  ;Blazebug (28) at 3
+
+[ENTRY]
+Name=2a_stc_sectionA6_general
+wanderRadius=80
+Spawn=2287,25  ;Animated Stone (25) at 1
+Spawn=2288,25  ;Animated Stone (26) at 1
+Spawn=2289,25  ;Windscar Elemental (25) at 2
+Spawn=2290,25  ;Windscar Elemental (26) at 1
+
+[ENTRY]
+Flags=3
+Name=3a_obji_bg04_jaliBloom
+Spawn=467,100  ;Jali Bloom (1) at 7
+
+[ENTRY]
+Flags=3
+Name=3a_obji_hc04_blightweed
+Spawn=468,100  ;Blightweed (1) at 7
+
+[ENTRY]
+Flags=3
+Name=3a_obji_lgc01_yarynFern
+Spawn=466,100  ;Yaryn Fern (1) at 3
+
+; TODO: has 2 spawn points
+[ENTRY]
+Flags=3
+Name=3a_obji_lgc05_fendlesHead
+spawnDelay=300
+Spawn=454,100  ;Fendle's Head (1) at 0
+;Spawn=455,0  ;Statue (1) at 1
+
+[ENTRY]
+Flags=3
+Name=3a_obji_lgc03_stolenGoods
+spawnDelay=300
+Spawn=452,100  ;Stolen Goods (1) at 0
+
+[ENTRY]
+Flags=3
+Name=3a_obji_lt05_fire1
+Spawn=460,100  ;Prayer Brazier (1) at 0
+
+[ENTRY]
+Flags=3
+Name=3a_obji_lt05_fire2
+Spawn=456,100  ;Prayer Brazier (1) at 0
+
+[ENTRY]
+Flags=3
+Name=3a_obji_lt05_fire3
+Spawn=457,100  ;Prayer Brazier (1) at 0
+
+[ENTRY]
+Flags=3
+Name=3a_obji_lt06_krellBlossom
+Spawn=458,100  ;Krell Blossom (1) at 1
+
+[ENTRY]
+Name=3a_lt07a_Donk_goliath_h_k_23
+Spawn=2315,100  ;Donk (23) at 5
+
+; TODO: west side tends to have a different selection
+[ENTRY]
+Name=2a_stc_sectionB7_general
+wanderRadius=100
+Divide=69800,1,41
+Shares=80
+Spawn=529,10  ;Minotortise (26) at 1
+Spawn=530,10  ;Minotortise (27) at 0
+Spawn=2320,10  ;Seaside Needler (26) at 1
+Spawn=2352,10  ;Seaside Needler (27) at 2
+Spawn=562,10  ;Bulky Basher (27) at 1
+Spawn=563,10  ;Bulky Basher (28) at 1
+Spawn=564,10  ;Rhineworg (27) at 0
+Spawn=565,10  ;Rhineworg (28) at 0
+
+[ENTRY]
+Name=2a_rhl_sectionB6_trees
+wanderRadius=60
+Spawn=2311,50  ;Blight Mare (27) at 1
+Spawn=2314,50  ;Blight Mare (28) at 0
+
+[ENTRY]
+Name=2a_rhl_sectionB6_flier
+wanderRadius=100
+Spawn=2318,100  ;Feathered Shredder (28) at 0
+
+[ENTRY]
+Name=2a_rhl_sectionA9_general
+wanderRadius=80
+Spawn=2299,25  ;Mistweaver (25) at 0
+Spawn=2300,25  ;Mistweaver (26) at 1
+Spawn=2301,25  ;Hulkhog (25) at 2
+Spawn=2302,25  ;Hulkhog (26) at 0
+
+[ENTRY]
+Name=2a_rhl_sectionA9_flier
+wanderRadius=80
+Spawn=2298,100  ;Blazebug (27) at 0
+
+[ENTRY]
+Name=2a_trf_sectionC1_trees
+wanderRadius=60
+Spawn=2328,50  ;Razortusk (27) at 2
+Spawn=2329,50  ;Razortusk (28) at 1
+
+; TODO: only 2 points to draw from.
+[ENTRY]
+Name=2a_trf_sectionC1_general
+wanderRadius=80
+Spawn=2326,50  ;Slider (27) at 5
+Spawn=2327,50  ;Slider (28) at 486
+
+[ENTRY]
+Name=2a_trf_sectionC1_thunderWalker
+wanderRadius=100
+Spawn=2332,100  ;Rumble Walker (28) at 3
+
+[ENTRY]
+Name=2a_trf_hanselAndGretelCamp_general
+Spawn=559,50  ;Rhinehag (29) at 0
+Spawn=560,50  ;Rhinehag (30) at 0
+
+[ENTRY]
+Name=2a_trf_sectionC0_general
+wanderRadius=80
+Spawn=2322,25  ;Darkwood Spider (29) at 1
+Spawn=2323,25  ;Darkwood Spider (30) at 1
+Spawn=2324,25  ;Hazefly (29) at 0
+Spawn=2325,25  ;Hazefly (30) at 2
+
+[ENTRY]
+Name=2a_trf_sectionC4_general
+wanderRadius=100
+Spawn=2334,25  ;Shellback Slider (28) at 1
+Spawn=2335,25  ;Shellback Slider (29) at 3
+Spawn=2338,25  ;Dusky Attercop (28) at 1
+Spawn=2339,25  ;Dusky Attercop (29) at 1
+
+[ENTRY]
+Name=2a_trf_sectionC4_trees
+wanderRadius=60
+Spawn=2336,50  ;Quillboar (28) at 1
+Spawn=2337,50  ;Quillboar (29) at 2
+
+[ENTRY]
+Name=2a_trf_sectionC4_thunderWalker
+wanderRadius=100
+Spawn=2333,100  ;Rumble Tromper (29) at 2
+
+; TODO: many missing points, but this looks complete
+[ENTRY]
+Name=2a_rhl_sectionB2_general
+wanderRadius=80
+Spawn=2305,25  ;Thicket Crawler (26) at 0
+Spawn=2306,25  ;Thicket Crawler (27) at 0
+Spawn=2307,25  ;Treeline Stalker (26) at 0
+Spawn=2308,25  ;Treeline Stalker (27) at 0
+
+; TODO: not many points, only 1 with data
+[ENTRY]
+Name=2a_rhl_sectionB2_flier
+wanderRadius=80
+Spawn=2309,100  ;Trancefly (27) at 5
+
+[ENTRY]
+Name=2a_rhl_vonGruberCamp_general_25_26
+spawnDelay=300
+Spawn=581,25  ;Loyalist (26) at 0
+Spawn=583,25  ;Fanatic (26) at 0
+Spawn=587,25  ;Fanatic (26) at 0
+Spawn=589,25  ;Cultist (25) at 0
+
+[ENTRY]
+Name=2a_rhl_vonGruberCamp_general_26_27
+spawnDelay=300
+Shares=70
+Spawn=581,10  ;Loyalist (26) at 0
+Spawn=582,10  ;Loyalist (27) at 0
+Spawn=583,10  ;Fanatic (26) at 0
+Spawn=584,10  ;Fanatic (27) at 0
+Spawn=586,10  ;Assassin (27) at 0
+Spawn=587,10  ;Fanatic (26) at 0
+Spawn=588,10  ;Fanatic (27) at 0
+
+; TODO: the 500 range is only a closest spawn for 1 point
+[ENTRY]
+Name=2a_trf_dotcCamp_general
+spawnDelay=300
+Spawn=2778,20  ;Dominion Outrider (49) at 0
+Spawn=2779,20  ;Dominion Outrider (49) at 0
+Spawn=2780,20  ;Dominion Outrider (49) at 0
+Spawn=2781,20  ;Dominion Outrider (49) at 0
+Spawn=568,10  ;Dominion Outrider (49) at 0
+Spawn=569,10  ;Dominion Outrider (49) at 0
+
+[ENTRY]
+Name=2a_trf_sectionC1_lake
+wanderRadius=80
+Spawn=2330,50  ;Spiked Croaker (27) at 0
+Spawn=2331,50  ;Spiked Croaker (28) at 0
+
+[ENTRY]
+Name=2a_trf_rapunzelsTowerOutside_general
+Spawn=2334,25  ;Shellback Slider (28) at 0
+Spawn=2335,25  ;Shellback Slider (29) at 0
+Spawn=2338,25  ;Dusky Attercop (28) at 0
+Spawn=2339,25  ;Dusky Attercop (29) at 0
+
+[ENTRY]
+Name=3a_sectionC2_general
+wanderRadius=80
+Spawn=2172,50  ;Bloodquill Hedgehog (23) at 0
+Spawn=2173,50  ;Bloodquill Hedgehog (24) at 0
+
+[ENTRY]
+Name=3a_sectionC2_trees
+wanderRadius=60
+Spawn=401,50  ;Gnawfang Thumper (23) at 10
+Spawn=402,50  ;Gnawfang Thumper (24) at 4
+
+[ENTRY]
+Flags=1
+Name=2a_npc_guard
+Spawn=2379,50  ;Protector (50) at 0
+Spawn=2380,50  ;Protector (50) at 0
+
+[ENTRY]
+Flags=1
+Name=2a_npc_militia
+Spawn=2383,50  ;Defender (50) at 0
+Spawn=2385,50  ;Defender (50) at 0
+
+; TODO: has an unusual number of spawn points
+[ENTRY]
+Flags=3
+Name=2a_obji_ss06_IronBoundChest
+Spawn=2405,100  ;Iron-Bound Chest (1) at 0
+
+[ENTRY]
+Flags=3
+Name=2a_obji_eb02a_KeepsakeChest
+Spawn=2404,100  ;Keepsake Chest (1) at 0
+
+[ENTRY]
+Flags=3
+Name=2a_obji_eb02a_MadCowMagnet
+Spawn=2403,100  ;Undead Shrine (1) at 0
+
+[ENTRY]
+Flags=3
+Name=2a_obji_rb04_dirgeFern
+Spawn=2408,100  ;Dirge Fern (1) at 1
+
+[ENTRY]
+Name=2_VelacharTheBonelord
+Spawn=2410,100  ;Velachar the Bonelord (30) at 5
+
+[ENTRY]
+Name=4_obji_hwc_01_splinter-ShardOfTheSpiritMother
+Spawn=1020,100  ;Splinter-Shard of the Spirit Mother (1) at 0
+
+[ENTRY]
+Name=9_dustshellAntlion_k_36
+wanderRadius=100
+Spawn=2483,100  ;Dustshell Antlion (36) at 6
+
+[ENTRY]
+Flags=3
+Name=5_obji_agcn01_spikeballCactus
+Spawn=2494,100  ;Spikeball Cactus (1) at 243
+
+[ENTRY]
+Name=3_foulcap_d_24_quest
+spawnDelay=300
+Spawn=375,100  ;Foulcap (24) at 5
+
+[ENTRY]
+Name=5_quest_Rarrg_spiketail
+Spawn=2487,100  ;Rarrg (36) at 5
+
+[ENTRY]
+Name=5_quest_Sloffg_warthog
+Spawn=2488,100  ;Sloffg (37) at 5
+
+[ENTRY]
+Name=5_quest_Windwail_phoenix
+Spawn=2489,100  ;Windwail (37) at 5
+
+[ENTRY]
+Name=4_quest_doomound_rageclaw
+Spawn=2468,100  ;Rageclaw (31) at 4
+
+[ENTRY]
+Name=4_quest_trapper_Ironjaw
+Spawn=2469,100  ;Ironjaw (33) at 5
+
+[ENTRY]
+Flags=3
+Name=3a_obji_lt08_shinyStone
+Spawn=2312,100  ;Shiny Stone (1) at 0
+
+[ENTRY]
+Flags=3
+Name=3a_obji_lt09_graniteRoot
+Spawn=2313,100  ;Granite Root (1) at 2
+
+[ENTRY]
+Name=4_ShardChildren_genMix_33_34
+Shares=30
+Spawn=2773,10  ;Fanatic (34) at 0
+Spawn=2774,10  ;Searcher (33) at 0
+Spawn=2775,10  ;Collector (34) at 0
+
+; TODO: only 1 spawn point
+[ENTRY]
+Name=2a_rhl_sectionB6_general
+wanderRadius=100
+Spawn=562,25  ;Bulky Basher (27) at 17
+Spawn=563,25  ;Bulky Basher (28) at 8
+Spawn=564,25  ;Rhineworg (27) at 8
+Spawn=565,25  ;Rhineworg (28) at 11
+
+; TODO: spawn point says 47, but all mobs are 49
+[ENTRY]
+Name=2_rm_DominionOutridersOutside_47
+spawnDelay=300
+Spawn=2778,25  ;Dominion Outrider (49) at 0
+Spawn=2779,25  ;Dominion Outrider (49) at 0
+Spawn=2780,25  ;Dominion Outrider (49) at 0
+Spawn=2781,25  ;Dominion Outrider (49) at 0
+
+[ENTRY]
+Name=10_bsp_outsideZhushisLair
+wanderRadius=60
+spawnDelay=300
+Spawn=941,50  ;Vile Deathspinner (40) at 0
+Spawn=942,50  ;Vile Deathspinner (41) at 0
+
+
+
+; Harvest Fest only
+[ENTRY]
+Name=HOLIDAY_turkatrice_26_27
+; Spawn=2846,25  ;Turkatrice (26)
+; Spawn=2847,25  ;Turkatrice (27)
+; Spawn=2848,25  ;Turkatrice (26)
+; Spawn=2849,25  ;Turkatrice (27)
+
+; Harvest Fest only
+[ENTRY]
+Name=HOLIDAY_turkatriceKing_k_30
+; Spawn=2850,100  ;Turkatrice King (30)
+
+
+
+; Harvest Fest only
+[ENTRY]
+Name=HOLIDAY_turkatrice_32_33
+; Spawn=2851,25  ;Turkatrice (32)
+; Spawn=2852,25  ;Turkatrice (33)
+; Spawn=2853,25  ;Turkatrice (32)
+; Spawn=2854,25  ;Turkatrice (33)
+
+; Harvest Fest only
+[ENTRY]
+Name=HOLIDAY_turkatriceKing_k_35
+; Spawn=2855,100  ;Turkatrice King (35)
+
+
+
+; DISABLED WHEN EVENT IS NOT ACTIVE
+[ENTRY]
+Name=HOLIDAY_wf09_snowmen_32_33
+;Spawn=2893,25  ;Chillkin (32)
+;Spawn=2894,25  ;Chillkin (33)
+;Spawn=2895,25  ;Chillkin (32)
+;Spawn=2896,25  ;Chillkin (33)
+
+; DISABLED WHEN EVENT IS NOT ACTIVE
+[ENTRY]
+Name=HOLIDAY_wf09_snowmanKing_35
+;Spawn=2900,100  ;Chill Lord (35)
+
+; DISABLED WHEN EVENT IS NOT ACTIVE
+[ENTRY]
+Name=HOLIDAY_wf09_snowmen_26_27
+;Spawn=2889,25  ;Chillkin (26)
+;Spawn=2890,25  ;Chillkin (27)
+;Spawn=2891,25  ;Chillkin (26)
+;Spawn=2892,25  ;Chillkin (27)
+
+; DISABLED WHEN EVENT IS NOT ACTIVE
+[ENTRY]
+Name=HOLIDAY_wf09_snowmanKing_30
+;Spawn=2899,100  ;Chill Lord (30)
+
+; DISABLED WHEN EVENT IS NOT ACTIVE
+[ENTRY]
+Name=HOLIDAY_wf09_gifts_return
+Shares=20
+;Spawn=2922,10 ; Gift(1)
+;Spawn=2923,10 ; Gift(1)
+
+
+; NOTE: Although this says stepup, there's no indication from official gameplay
+; that there was a stepup spawn here.
+[ENTRY]
+Name=4_quest_EyegoreStepup
+Spawn=2969,100  ;Redeye Gazer (33) at 6
+
+[ENTRY]
+Name=3a_Lurrk_26
+spawnDelay=300
+Spawn=2963,100  ;Lurrk (26) at 5
+
+[ENTRY]
+Name=2_scallywag_RogrenBluepaw_28
+spawnDelay=300
+Spawn=2949,100  ;Rogren Bluepaw (28) at 5
+
+[ENTRY]
+Flags=3
+Name=2a_obji_jewelryBox
+Spawn=2964,100  ;Jewelry Box (1) at 0
+
+; TODO: not sure about this
+[ENTRY]
+Flags=6
+Name=2a_obji_deepBlueCrystal
+Spawn=2965,100  ;Deep Blue Crystal (1) at 0    ; FROM SEA CAVE
+;Spawn=2966,100  ;Crystal Stump (1) at 8
+
+; TODO: not sure about this
+[ENTRY]
+Flags=3
+Name=4a_obji_BlueFlame
+Spawn=2966,100  ;Crystal Stump (1) at 11
+
+[ENTRY]
+Name=4_quest_Eyegore
+Spawn=2968,100  ;Eyegore (33) at 5
+
+[ENTRY]
+Name=3_hc02a_Darkhoof
+Spawn=2342,100  ;Darkhoof (24) at 5
+
+[ENTRY]
+Name=2a_rhl_hulkhogs_25_26
+Spawn=2301,50  ;Hulkhog (25) at 0
+Spawn=2302,50  ;Hulkhog (26) at 0
+
+[ENTRY]
+Flags=4
+Name=4_hwo_woodlandGrazers_30_31
+wanderRadius=80
+Spawn=637,50  ;Woodland Grazer (30) at 0
+Spawn=638,50  ;Woodland Grazer (31) at 0
+
+; TODO: no appropriate spawns
+[ENTRY]
+Name=HOLIDAY_Easter_Egg
+
+[ENTRY]
+Name=Europe_overlandboss_thara_SP
+Spawn=3433,100  ;Thara Vikath (55) at 0
+spawnDelay=1800
+
+; TODO: from creature file
+[ENTRY]
+Name=Midlands_overlandboss_Nilana_SP
+Spawn=3439,100  ;Ni'Lania Vexus (55)
+spawnDelay=1800
+
+
+; Custom quest NPC by Dekker.
+[ENTRY]
+Name=z9_custom_Hell_Twelve
+Spawn=3628,100  ; Hell "Twelve"
+
+[ENTRY]
+Name=z9_custom_To_The_Void
+Spawn=3634,100  ; Hell "Twelve"

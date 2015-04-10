@@ -1,0 +1,17 @@
+[ENTRY]
+ID=151034494
+Asset=CL-Autumn_Forest4#CL-Autumn_Forest4
+Name=9
+Pos=93284.1,491.457,130765
+Orient=0,0.688921,0,0.724836
+Scale=1.225,1.225,1.225
+
+[ENTRY]
+ID=151055870
+Asset=Manipulator-SpawnPoint
+Name=9
+Pos=93217.7,422.614,131132
+Orient=0,0,0,1
+Scale=1,1,1
+Layer=151010786
+

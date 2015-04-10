@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151022239
+Asset=Manipulator-SpawnPoint
+Pos=33968.6,256.03,68520
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=4_hwo_rottedGrove_34_35
+outerRadius=10
+

@@ -1,0 +1,17 @@
+[ENTRY]
+ID=151027442
+Asset=CL-SnowyPine2#CL-SnowyPine2
+Pos=69485,1365.62,65761
+Orient=0,0.786425,0,0.617685
+Scale=2.725,2.725,2.725
+
+[ENTRY]
+ID=151031084
+Asset=Manipulator-SpawnPoint
+Pos=69020,901.543,65399
+Orient=0,0,0,1
+Scale=1,1,1
+innerRadius=50
+spawnPackage=12_ice_Wilds_45_46
+outerRadius=80
+

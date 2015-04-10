@@ -1,0 +1,10 @@
+[ENTRY]
+ID=151012632
+Asset=Manipulator-SpawnPoint
+Pos=81392,530.528,45436
+Orient=0,0,0,1
+Scale=1,1,1
+innerRadius=175
+spawnPackage=2_trf_wilds_wanders_27_29
+outerRadius=200
+

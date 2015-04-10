@@ -1,0 +1,14 @@
+[ENTRY]
+ID=687867626
+Asset=Prop-Swineland-Sign_Stop#Prop-Swineland-Sign_Stop
+Pos=932.238,0,1486.81
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
+ID=687867627
+Asset=Prop-Swineland-Sign_Stop#Prop-Swineland-Sign_Stop
+Pos=842.044,0,1588.86
+Orient=0,0,0,1
+Scale=1,1,1
+

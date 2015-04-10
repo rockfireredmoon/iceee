@@ -1,0 +1,13 @@
+[ENTRY]
+ID=7096
+ACCOUNTID=263
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=aquila
+GroveName=aquila
+WarpName=aquila1
+Grove=1
+EnvironmentCycle=1
+DefLoc=2958,260,3821
+

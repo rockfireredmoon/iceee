@@ -1,0 +1,13 @@
+[ENTRY]
+ID=5168
+ACCOUNTID=22
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=logic
+GroveName=logic
+WarpName=logic1
+Grove=1
+EnvironmentCycle=1
+DefLoc=2958,260,3821
+

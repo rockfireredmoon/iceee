@@ -1,0 +1,13 @@
+[ENTRY]
+ID=9008
+ACCOUNTID=502
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=dragongrove
+GroveName=dragongrove
+WarpName=dragongrove1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

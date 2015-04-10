@@ -1,0 +1,16 @@
+[ENTRY]
+ID=151018032
+Asset=Arid_Clutter?d=0.9&s=875645&sz=800
+Pos=79424,679.198,58079
+Orient=0,0,0,1
+Scale=1,1,1
+Flags=1
+
+[ENTRY]
+ID=151018049
+Asset=CL-Burnt-Pine1#CL-Burnt-Pine1
+Pos=79208,700.39,58498
+Orient=0,0,0,1
+Scale=2.025,2.025,2.025
+Flags=1
+

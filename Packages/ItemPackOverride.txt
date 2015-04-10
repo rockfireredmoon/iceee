@@ -1,0 +1,9 @@
+; Alternative item files that will override existing entries.  Can be
+; used to patch version-specific items without altering the primary ItemDef
+; files.
+
+Data\ItemDef_CSOverride.txt
+Data\ItemDef_CraftOverride.txt
+Data\ItemDef_GreysunOverride.txt
+Data\ItemDef_OverrideMasterPlans.txt
+Data\ItemDef_OverridePatch.txt

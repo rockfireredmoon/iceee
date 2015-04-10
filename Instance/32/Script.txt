@@ -1,0 +1,18 @@
+:init
+set killcount 0
+end
+
+; Stepup for Keanu Locksmithee
+:onKill_71
+:onKill_72
+inc killcount
+if killcount = 4
+  spawn 1029375
+end
+
+; Wilem Grays (Nottingham Sheriff) boss chest
+:onKill_82
+spawn 536871615
+end
+
+

@@ -1,0 +1,8 @@
+[ENTRY]
+ID=151047576
+Asset=Prop-Boulder_Scary#Prop-Boulder_Scary2
+Pos=66339,582.33,61502
+Orient=0,0.188859,0,0.982004
+Scale=4.55,4.55,4.55
+Flags=1
+

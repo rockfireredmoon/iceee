@@ -1,0 +1,7 @@
+[ENTRY]
+ID=151028038
+Asset=CL-Sick-Pine4#CL-Sick-Pine4
+Pos=68110,813.422,49757
+Orient=0,-0.375559,0,0.926799
+Scale=2.55,2.55,2.55
+

@@ -1,0 +1,7 @@
+[ENTRY]
+ID=151017732
+Asset=Prop-Dead-Forest-Tree#Prop-Dead-Forest-Tree4
+Pos=23199.4,52.1835,64177
+Orient=-0.188859,0,0,0.982004
+Scale=1,1,1
+

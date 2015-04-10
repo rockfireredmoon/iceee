@@ -1,0 +1,26 @@
+; Swirling Madness's Treasure
+[ENTRY]
+CreatureDefID=2732
+EssenceID=21279
+Item=5384,1
+Item=143505,1
+Item=5364,1
+Item=5426,1
+Item=5402,1
+Item=5383,1
+Item=5535,1
+Item=143456,1
+
+; Dungeon Loot (Bremen Asylum)
+[ENTRY]
+CreatureDefID=2707
+EssenceID=21261
+Item=5491,10
+Item=143449,10
+Item=143492,10
+Item=5468,10
+Item=5447,10
+Item=5427,10
+Item=5547,10
+Item=5515,10
+

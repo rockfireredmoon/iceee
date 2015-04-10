@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151002333
+Asset=Dead_Forest?d=0.9&amp;s=123549&amp;sz=900
+Name=9
+Pos=86864.2,220.857,159600
+Orient=0,-0.436398,0,-0.899754
+Scale=1.075,1.075,1.075
+Flags=1
+

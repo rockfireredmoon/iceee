@@ -1,0 +1,14 @@
+[ENTRY]
+ID=5152
+ACCOUNTID=20
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=weasel
+GroveName=weasel
+WarpName=weasel1
+Persist=1
+Grove=1
+EnvironmentCycle=1
+DefLoc=2958,260,3821
+

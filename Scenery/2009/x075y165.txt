@@ -1,0 +1,9 @@
+[ENTRY]
+ID=150998905
+Asset=CL-Roadside2#CL-Roadside2
+Name=9
+Pos=56704.9,195.304,124098
+Orient=0.0263736,-0.616514,-0.0174351,0.786709
+Scale=1.5,1.5,1.5
+Flags=1
+

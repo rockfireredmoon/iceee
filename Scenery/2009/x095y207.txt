@@ -1,0 +1,17 @@
+[ENTRY]
+ID=151020887
+Asset=Manipulator-SpawnPoint
+Name=9
+Pos=71696.5,117.418,155866
+Orient=0,0,0,1
+Scale=1,1,1
+Layer=150999310
+
+[ENTRY]
+ID=151022737
+Asset=Environment-Marker?type=GreatForest
+Name=9
+Pos=71305.4,155.577,155735
+Orient=0,0,0,1
+Scale=5.35,5.35,5.35
+

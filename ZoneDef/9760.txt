@@ -1,0 +1,13 @@
+[ENTRY]
+ID=9760
+ACCOUNTID=596
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=amzy
+GroveName=amzy
+WarpName=amzy1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

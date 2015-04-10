@@ -1,0 +1,17 @@
+[ENTRY]
+ID=151017737
+Asset=Prop-Dead-Forest-Tree#Prop-Dead-Forest-Tree5
+Pos=22632.1,42.1008,64814
+Orient=0,0,0.13459,0.990901
+Scale=0.875,0.875,0.875
+
+[ENTRY]
+ID=151022584
+Asset=Manipulator-SpawnPoint
+Pos=22662.3,75.1226,64534
+Orient=0,0,0,1
+Scale=1,1,1
+innerRadius=65
+spawnPackage=4_drm_wilds_47_48
+outerRadius=70
+

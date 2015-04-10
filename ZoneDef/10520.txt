@@ -1,0 +1,13 @@
+[ENTRY]
+ID=10520
+ACCOUNTID=691
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=tommyvu
+GroveName=tommyvu
+WarpName=tommyvu1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

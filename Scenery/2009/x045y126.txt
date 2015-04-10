@@ -1,0 +1,17 @@
+[ENTRY]
+ID=151016800
+Asset=Manipulator-SpawnPoint
+Name=9
+Pos=33857.3,1316.81,94940
+Orient=0,-0.223107,0,0.974794
+Scale=1,1,1
+Layer=150998697
+
+[ENTRY]
+ID=151059600
+Asset=Prop-Instance_Entrance#Prop-Instance_Entrance
+Name=9
+Pos=33811.3,1369.33,95229.3
+Orient=0,-0.928369,0,0.37166
+Scale=1.8,1.8,1.8
+

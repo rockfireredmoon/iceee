@@ -1,0 +1,15 @@
+[ENTRY]
+ID=9905
+ACCOUNTID=614
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=Coast
+ShardName=furryworld
+GroveName=furryworld
+WarpName=furryworld2
+DropRateProfile=standard
+Grove=1
+EnvironmentCycle=1
+BuildPermission=account,614,0,0,3,3
+DefLoc=3648,519,2780
+

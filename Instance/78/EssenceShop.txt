@@ -1,0 +1,27 @@
+; Taylin Rotbreath's Treasure
+; Restored from 0.8.7 chest screenshot.
+[ENTRY]
+CreatureDefID=2731
+EssenceID=21278
+Item=5558,1  ;Taylin's Mind Corrupter
+Item=5400,1  ;Taylin's Tainted Shoulders
+Item=143432,1  ;Silencer Blade
+Item=143491,1  ;Rot Shot
+Item=5513,1  ;Leggings of Loathing
+Item=5546,1  ;Rotbreah Ring
+Item=5467,1  ;Gravedigger Gloves
+Item=5534,1  ;Boots From Beyond
+
+; Dungeon Loot (Haunted Grove)
+[ENTRY]
+CreatureDefID=2705
+EssenceID=21259
+Item=5559,10
+Item=5382,10
+Item=143448,10
+Item=5490,10
+Item=5446,10
+Item=5425,10
+Item=5401,10
+Item=143475,10
+

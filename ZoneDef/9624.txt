@@ -1,0 +1,15 @@
+[ENTRY]
+ID=9624
+ACCOUNTID=579
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=wolfypup
+GroveName=wolfypup
+WarpName=wolfypup1
+DropRateProfile=standard
+Grove=1
+EnvironmentCycle=0
+BuildPermission=account,579,0,0,3,3
+DefLoc=2958,260,3821
+

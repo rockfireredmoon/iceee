@@ -1,0 +1,17 @@
+[ENTRY]
+ID=151019741
+Asset=Prop-Dead-Forest-Tree#Prop-Dead-Forest-Tree5
+Name=9
+Pos=12813.8,234.581,59034.9
+Orient=0,0.872355,0,0.488872
+Scale=1.35,1.35,1.35
+Flags=1
+
+[ENTRY]
+ID=151058518
+Asset=Manipulator-SpawnPoint
+Name=9
+Pos=12809,197.131,58890
+Orient=0,0,0,1
+Scale=1,1,1
+

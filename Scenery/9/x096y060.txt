@@ -1,0 +1,8 @@
+[ENTRY]
+ID=151018967
+Asset=Prop-Skrill_Mound
+Pos=72148,916.914,45654
+Orient=0,-0.104806,0,0.994493
+Scale=3.55,3.55,3.55
+Flags=1
+

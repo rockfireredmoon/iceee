@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151059248
+Asset=Prop-Banner-StoneLion1#Prop-Banner-StoneLion1
+Name=9
+Pos=50677.1,641.284,47346.8
+Orient=0.119779,0.557019,-0.0631218,0.819389
+Scale=2,2,2
+Flags=1
+

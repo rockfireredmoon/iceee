@@ -1,0 +1,8 @@
+[ENTRY]
+ID=151001753
+Asset=Prop-Dock3
+Pos=50331.1,76.8205,53990
+Orient=0,-0.999784,0,0.0207949
+Scale=1,1,1
+Flags=1
+

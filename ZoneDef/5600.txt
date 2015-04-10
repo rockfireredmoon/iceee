@@ -1,0 +1,15 @@
+[ENTRY]
+ID=5600
+ACCOUNTID=76
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=IronMaw1
+ShardName=Realm of Disaster
+GroveName=dmaster
+WarpName=dmaster1
+DropRateProfile=standard
+Grove=1
+EnvironmentCycle=0
+BuildPermission=account,76,0,0,13,23
+DefLoc=2676,322,3363
+

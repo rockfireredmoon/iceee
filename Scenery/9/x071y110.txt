@@ -1,0 +1,7 @@
+[ENTRY]
+ID=151015147
+Asset=CL-Dead-Rotted_Forest5#CL-Dead-Rotted_Forest5
+Pos=53319.4,857.87,83099
+Orient=0,0.651834,0,0.758361
+Scale=1.55,1.55,1.55
+

@@ -1,0 +1,10 @@
+[ENTRY]
+ID=151056537
+Asset=Manipulator-SpawnPoint
+Pos=69313,432.498,40092
+Orient=0,0,0,1
+Scale=1,1,1
+links_count=1
+link=151056542,1
+spawnPackage=2a_rhl_sectionA8_general
+

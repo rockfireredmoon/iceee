@@ -1,0 +1,13 @@
+[ENTRY]
+ID=9208
+ACCOUNTID=527
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=AutumnNightSky
+ShardName=rivendell
+GroveName=rivendell
+WarpName=rivendell1
+Grove=1
+EnvironmentCycle=1
+DefLoc=3426,524,2766
+

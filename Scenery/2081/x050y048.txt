@@ -1,0 +1,17 @@
+[ENTRY]
+ID=1358955952
+Asset=Manipulator-PathNode
+Name=81
+Pos=50998.1,593.536,48367
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
+ID=1358965054
+Asset=Bldg-Camelot8b?ATS=ATS-Castle_Camelot
+Name=81
+Pos=50455.8,423.58,48417
+Orient=0,0,0,1
+Scale=1.2,1.2,1.2
+Flags=1
+

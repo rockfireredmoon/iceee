@@ -1,0 +1,13 @@
+[ENTRY]
+ID=10880
+ACCOUNTID=736
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=babylongardens
+GroveName=babylongardens
+WarpName=babylongardens1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

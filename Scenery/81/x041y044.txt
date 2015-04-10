@@ -1,0 +1,17 @@
+[ENTRY]
+ID=1358961324
+Asset=Manipulator-SpawnPoint
+Pos=41909.6,181.244,44945
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=1a_thumperCamp02_general
+outerRadius=1
+
+[ENTRY]
+ID=1358962978
+Asset=Par-Waves-1-Emitter
+Pos=41328.9,61.6127,44369
+Orient=0,-0.548024,0,0.836463
+Scale=3,3,3
+Flags=1
+

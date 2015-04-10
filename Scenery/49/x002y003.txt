@@ -1,0 +1,10 @@
+[ENTRY]
+ID=10000005
+Asset=Manipulator-SpawnPoint
+Pos=2924,310,3053
+Orient=0,0,0,1
+Scale=1,1,1
+Facing=45
+sceneryName=generated_spawn
+spawnPackage=z49_dt_gen_Djinn_Lamp_1462
+

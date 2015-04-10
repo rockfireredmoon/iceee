@@ -1,0 +1,122 @@
+[ENTRY]
+Name=z38_eur_gen_Exit_to_Midlands_900
+Spawn=900,100  ;Exit to Midlands (1) at 0
+
+[ENTRY]
+Name=z38_eur_gen_Dungeon_Loot_2704
+Spawn=2704,100  ;Dungeon Loot (1) at 0
+
+[ENTRY]
+Name=3_gr_ArgotTheBoneshaker_25
+Spawn=398,100  ;Argot the Boneshaker (25) at 236
+
+[ENTRY]
+Name=3_gr_BossAndWings_25
+Spawn=697,50  ;Flowstone Goliath (25) at 42
+Spawn=699,50  ;Limestone Goliath (25) at 1
+
+[ENTRY]
+Flags=3
+Name=3a_obji_bb05_sparklingGreen
+Spawn=2310,100  ;Sparkling Green (1) at 0
+
+[ENTRY]
+Name=3a_Sharabat_m_h_25
+Spawn=2340,100  ;Sharabat (25) at 0
+
+[ENTRY]
+Name=3_gr_scatterstoneSTEPUP
+ScriptCall=1
+Spawn=2555,50  ;Scatterstone Hatchling (20) at 0
+Spawn=2556,50  ;Scatterstone Hatchling (21) at 4
+
+[ENTRY]
+Name=3_gr_scatterstoneHatchlingEGG
+Spawn=2555,100  ;Scatterstone Hatchling (20) at 20
+
+[ENTRY]
+Name=3_gr_scatterstoneHatchlingEGGS
+Spawn=2555,50  ;Scatterstone Hatchling (20) at 0
+Spawn=2556,50  ;Scatterstone Hatchling (21) at 4
+
+[ENTRY]
+Name=3_gr_goliathLOW_24_25
+Shares=80
+Spawn=692,10  ;Dripstone Goliath (24) at 0
+Spawn=693,10  ;Flowstone Goliath (24) at 0
+Spawn=694,10  ;Gypsum Goliath (24) at 0
+Spawn=695,10  ;Limestone Goliath (24) at 11
+Spawn=696,10  ;Dripstone Goliath (25) at 0
+Spawn=697,10  ;Flowstone Goliath (25) at 30
+Spawn=698,10  ;Gypsum Goliath (25) at 10
+Spawn=699,10  ;Limestone Goliath (25) at 20
+
+[ENTRY]
+Name=3_gr_goliathHIGH_24_25
+Shares=80
+Spawn=692,10  ;Dripstone Goliath (24) at 0
+Spawn=693,10  ;Flowstone Goliath (24) at 0
+Spawn=694,10  ;Gypsum Goliath (24) at 0
+Spawn=695,10  ;Limestone Goliath (24) at 0
+Spawn=696,10  ;Dripstone Goliath (25) at 0
+Spawn=697,10  ;Flowstone Goliath (25) at 0
+Spawn=698,10  ;Gypsum Goliath (25) at 0
+Spawn=699,10  ;Limestone Goliath (25) at 0
+
+[ENTRY]
+Name=3_gr_Grokk_k_26
+UniquePoints=2
+Spawn=2511,100  ;Grokk (26) at 0
+
+[ENTRY]
+Name=3_gr_scatterstoneGeneral
+Shares=30
+Spawn=2557,10  ;Scatterstone Brute (25) at 4
+Spawn=2558,10  ;Scatterstone Sorcerer (25) at 12
+Spawn=2559,10  ;Scatterstone Slasher (25) at 0
+
+[ENTRY]
+Name=3_gr_livingText_d_25
+ScriptCall=1
+Spawn=2564,100  ;Living Text (25) at 0
+
+[ENTRY]
+Name=3_dng_gr_obji_SharabatLewt
+Spawn=2730,100  ;Sharabat's Treasure (1) at 0
+
+[ENTRY]
+Name=3_gr_goliathCASTERS_24_25
+Spawn=692,25  ;Dripstone Goliath (24) at 0
+Spawn=693,25  ;Flowstone Goliath (24) at 0
+Spawn=696,25  ;Dripstone Goliath (25) at 0
+Spawn=697,25  ;Flowstone Goliath (25) at 0
+
+[ENTRY]
+Name=3_gr_stalags_26
+Spawn=702,50  ;Stalagsoothe (26) at 4
+Spawn=703,50  ;Stalagsorcer (26) at 0
+
+[ENTRY]
+Name=3_dng_gr_HardstoneGoliath_k_25
+Spawn=2743,100  ;Hardstone Goliath (25) at 376
+
+[ENTRY]
+Name=3_gr_minionOfMaut_m_25
+Spawn=2744,100  ;Minion of Maut (25) at 0
+
+[ENTRY]
+Name=3_gr_HardstoneGoliath_k_25
+Spawn=2743,100  ;Hardstone Goliath (25) at 0
+
+[ENTRY]
+Name=3_gr_goliathFIGHTERS_24_25
+Spawn=699,100  ;Limestone Goliath (25) at 0
+
+[ENTRY]
+Name=3_dng_gr_MautTheMystic_m_25
+Spawn=2512,100  ;Maut the Mystic (25) at 0
+
+[ENTRY]
+Name=3_gr_Rokmae_r_25
+Spawn=2560,100  ;Rokmae (26) at 0
+

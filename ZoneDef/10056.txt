@@ -1,0 +1,13 @@
+[ENTRY]
+ID=10056
+ACCOUNTID=633
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=alculani
+GroveName=alculani
+WarpName=alculani1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

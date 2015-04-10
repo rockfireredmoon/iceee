@@ -1,0 +1,57 @@
+FilterName	In#	Out#	Conditions	Actions	
+GreenWeapon1to19	2	2	0,itemtype,2|0,quality,2|0,cmp,level,<=,19|1,requireid,20523,1	Giveid,20943,1|giveid,20944,1	;1 Green Weapon + 1 Blood Root = 1 Polished Stone + 1 Raw Iron
+GreenArmor1to19	2	2	0,itemtype,3|0,quality,2|0,cmp,level,<=,19|1,requireid,20523,1	Giveid,20942,1|giveid,20945,1	;1 Green Armor + 1 Blood Root = 1 Fine Wool + 1 Rough Hide
+GreenWeapon20to29	2	2	0,itemtype,2|0,quality,2|0,cmp,level,>=,20|0,cmp,level,<=,29|1,requireid,20523,1	Giveid,20948,1|giveid,20949,1	;1 Green Weapon + 1 Blood Root = 1 Rough Gem + 1 Iron
+GreenArmor20to29	2	2	0,itemtype,3|0,quality,2|0,cmp,level,>=,20|0,cmp,level,<=,29|1,requireid,20523,1	Giveid,20947,1|giveid,20950,1	;1 Green Armor + 1 Blood Root = 1 Silken Fiber + Light Hide
+GreenWeapon30to39	2	2	0,itemtype,2|0,quality,2|0,cmp,level,>=,30|0,cmp,level,<=,39|1,requireid,20523,1	Giveid,20953,1|giveid,20954,1	;1 Green Weapon + 1 Blood Root = 1 Glow Stone + 1 Steel
+GreenArmor30to39	2	1	0,itemtype,3|0,quality,2|0,cmp,level,>=,30|0,cmp,level,<=,39|1,requireid,20523,1	Giveid,20955,1	;1 Green Armor + 1 Blood Root = 1 Thick Hide
+GreenWeapon40+	2	2	0,itemtype,2|0,quality,2|0,cmp,level,>=,40|1,requireid,20523,1	Giveid,20958,1|giveid,20959,1	;1 Green Weapon + 1 Blood Root = 1 Mystic Ore + 1 Black Iron
+GreenArmor40+	2	2	0,itemtype,3|0,quality,2|0,cmp,level,>=,40|1,requireid,20523,1	Giveid,20957,1|giveid,20960,1	;1 Green Armor + 1 Blood Root = 1 Royal Cloth + 1 Heavy Hide
+BlueWeapon1to19	2	2	0,itemtype,2|0,quality,3|0,cmp,level,<=,19|1,requireid,20523,1	Giveid,20943,2|giveid,20944,2	;1 Blue Weapon + 1 Blood Root = 2 Polished Stone + 2 Raw Iron
+BlueArmor1to19	2	2	0,itemtype,3|0,quality,3|0,cmp,level,<=,19|1,requireid,20523,1	Giveid,20942,2|giveid,20945,2	;1 Blue Armor + 1 Blood Root = 2 Fine Wool + 2 Rough Hide
+BlueWeapon20to29	2	2	0,itemtype,2|0,quality,3|0,cmp,level,>=,20|0,cmp,level,<=,29|1,requireid,20523,1	Giveid,20948,2|giveid,20949,2	;1 Blue Weapon + 1 Blood Root = 2 Rough Gem + 2 Iron
+BlueArmor20to29	2	2	0,itemtype,3|0,quality,3|0,cmp,level,>=,20|0,cmp,level,<=,29|1,requireid,20523,1	Giveid,20947,2|giveid,20950,2	;1 Blue Armor + 1 Blood Root = 2 Silken Fiber + 2 Light Hide
+BlueWeapon30to39	2	2	0,itemtype,2|0,quality,3|0,cmp,level,>=,30|0,cmp,level,<=,39|1,requireid,20523,1	Giveid,20953,2|giveid,20954,2	;1 Blue Weapon + 1 Blood Root = 2 Glow Stone + 2 Steel
+BlueArmor30to39	2	1	0,itemtype,3|0,quality,3|0,cmp,level,>=,30|0,cmp,level,<=,39|1,requireid,20523,1	Giveid,20955,2	;1 Blue Armor + 1 Blood Root = 2 Thick Hide
+BlueWeapon40+	2	2	0,itemtype,2|0,quality,3|0,cmp,level,>=,40|1,requireid,20523,1	Giveid,20958,2|giveid,20959,2	;1 Blue Weapon + 1 Blood Root = 2 Mystic Ore + 2 Black Iron
+BlueArmor40+	2	2	0,itemtype,3|0,quality,3|0,cmp,level,>=,40|1,requireid,20523,1	Giveid,20957,2|giveid,20960,2	;1 Blue Armor + 1 Blood Root = 2 Royal Cloth + 2 Heavy Hide
+PurpleWeapon20to29	2	2	0,itemtype,2|0,quality,4|0,cmp,level,>=,20|0,cmp,level,<=,29|1,requireid,20523,1	Giveid,20948,3|giveid,20949,3	;1 Purple Weapon + 1 Blood Root = 3 Rough Gem + 3 Iron
+PurpleArmor20to29	2	2	0,itemtype,3|0,quality,4|0,cmp,level,>=,20|0,cmp,level,<=,29|1,requireid,20523,1	Giveid,20947,3|giveid,20950,3	;1 Purple Armor + 1 Blue Root = 3 Silken Fiber + 3 Light Hide
+PurpleWeapon30to39	2	2	0,itemtype,2|0,quality,4|0,cmp,level,>=,30|0,cmp,level,<=,39|1,requireid,20523,1	Giveid,20953,3|giveid,20954,3	;1 Purple Weapon + 1 Blood Root = 3 Glow Stone + 3 Steel
+PurpleArmor30to39	2	1	0,itemtype,3|0,quality,4|0,cmp,level,>=,30|0,cmp,level,<=,39|1,requireid,20523,1	Giveid,20955,3	;1 Purple Armor + 1 Blood Root = 3 Thick Hide
+PurpleWeapon40+	2	2	0,itemtype,2|0,quality,4|0,cmp,level,>=,40|1,requireid,20523,1	Giveid,20958,3|giveid,20959,3	;1 Purple Weapon + 1 Blood Root = 3 Mystic Ore + 3 Black Iron
+PurpleArmor40+	2	2	0,itemtype,3|0,quality,4|0,cmp,level,>=,40|1,requireid,20523,1	Giveid,20957,3|giveid,20960,3	;1 Purple Armor + 1 Blood Root = 3 Royal Cloth + 3 Heavy Hide
+PlanToBlankScroll	4	1	0,itemtype,10|1,itemtype,10|2,itemtype,10|3,itemtype,10	Giveid,21429,1	;4 Crafting Plans (any type) = 1 Blank Scroll
+ScrollOfBounderDash	3	1	0,requireid,40115,3|1,requireid,20522,3|2,requireid,21429,1	Giveid,2050001,1	;3 Greater Speed Potion + 3 Infused Crystals + 1 Blank Scroll = 1 Scroll of Bounder Dash (40% speed) [BOUND]
+MagicalMapGlowtopMushroom	3	1	0,requireid,20526,3|1,requireid,20946,8|2,requireid,21429,1	Giveid,40071,1	;3 Portal Stone + 8 Glowtop Mushroom + 1 Blank Scroll = 1 Magical Map (Exodus skill) [BOUND]
+MagicalMapMysticOre	3	1	0,requireid,20526,3|1,requireid,20958,8|2,requireid,21429,1	Giveid,40071,1	;3 Portal Stone + 8 Mystic Ore + 1 Blank Scroll = 1 Magical Map (Exodus skill) [BOUND]
+Fireworks	2	1	0,requireid,20522,15|1,requireid,21429,1	Giveid,40067,5	;15 Infused Crystals + 1 Blank Scroll = 5 Fireworks [BOUND]
+GateScrollStonehenge	3	1	0,requireid,20526,3|1,requireid,20943,6|2,requireid,21429,1	Giveid,40059,1	;3 Portal Stone + 6 Polished Stone + 1 Blank Scroll = 1 Gate Scroll: Stonehenge [BOUND]
+GateScrollHadriansWall	3	1	0,requireid,20526,3|1,requireid,20946,6|2,requireid,21429,1	Giveid,40060,1	;3 Portal Stone + 6 Glowtop Mushroom + 1 Blank Scroll = 1 Gate Scroll: Hadrian's Wall [BOUND]
+GateScrollNewBadari	3	1	0,requireid,20526,3|1,requireid,20953,6|2,requireid,21429,1	Giveid,40061,1	;3 Portal Stone + 6 Glow Stone + 1 Blank Scroll = 1 Gate Scroll: New Badari [BOUND]
+GateScrollGreatForest	3	1	0,requireid,20526,3|1,requireid,20958,6|2,requireid,21429,1	Giveid,40062,1	;3 Portal Stone + 6 Mystic Ore + Blank Scroll = 1 Gate Scroll: Great Forest [BOUND]
+GreenRingToEssenceOfMagic	2	1	0,quality,2|0,cmp,equiptype,=,17|1,requireid,20525,3	Giveid,21430,1	;1 Green Ring + 3 Black Pearl = 1 Essence of Magic
+GreenAmuletToEssenceOfMagic	2	1	0,quality,2|0,cmp,equiptype,=,19|1,requireid,20525,3	Giveid,21430,1	;1 Green Amulet + 3 Black Pearl = 1 Essence of Magic
+BlueRingToEssenceOfMagic	2	1	0,quality,3|0,cmp,equiptype,=,17|1,requireid,20525,3	Giveid,21430,2	;1 Blue Ring + 3 Black Pearl = 2 Essence of Magic
+BlueAmuletToEssenceOfMagic	2	1	0,quality,3|0,cmp,equiptype,=,19|1,requireid,20525,3	Giveid,21430,2	;1 Blue Amulet + 3 Black Pearl = 2 Essence of Magic
+EpicRingToEssenceOfMagic	2	1	0,quality,4|0,cmp,equiptype,=,17|1,requireid,20525,3	Giveid,21430,3	;1 Epic Ring + 3 Black Pearl = 3 Essence of Magic
+EpicAmuletToEssenceOfMagic	2	1	0,quality,4|0,cmp,equiptype,=,19|1,requireid,20525,3	Giveid,21430,3	;1 Epic Amulet + 3 Black Pearl = 3 Essence of Magic
+SkillScrollEarthshaker	4	1	0,requireid,20523,3|1,requireid,20951,4|2,requireid,21429,1|3,requireid,21430,1	Giveid,70090,1	;3 Blood Root + 4 Spite Sprig + 1 Blank Scroll + 1 Essence of Magic = 1 Scroll of Earthshaker [Tier 6]
+SkillScrollFade	4	1	0,requireid,20525,3|1,requireid,20951,4|2,requireid,21429,1|3,requireid,21430,1	Giveid,70077,1	;3 Black Pearl + 4 Spite Sprig + 1 Blank Scroll + 1 Essence of Magic = 1 Scroll of Fade [Tier 3, 4 minute cooldown]
+SkillScrollWolfSpirit	4	1	0,requireid,20524,3|1,requireid,20956,4|2,requireid,21429,1|3,requireid,21430,1	Giveid,70015,1	;3 Amber + 4 Heartwood Blossom + 1 Blank Scroll + 1 Essence of Magic = 1 Scroll of Wolf Spirit [Tier 4, 5% str/dex, 10% might regen, -10% will regen]
+SkillScrollShadowSpirit	4	1	0,requireid,20525,3|1,requireid,20956,4|2,requireid,21429,1|3,requireid,21430,1	Giveid,70018,1	;3 Black Pearl + 4 Heartwood Blossom + 1 Blank Scroll + 1 Essence of Magic = 1 Scroll of Shadow Spirit [Tier 4, 5% psy/spi, 10% will regen, -10% might regen]
+SkillScrollResurrect	3	1	0,requireid,20524,6|1,requireid,21429,1|2,requireid,21430,1	Giveid,70040,1	;6 Amber + 1 Blank Scroll + 1 Essence of Magic = 1 Scroll of Resurrect [Tier 1, 1% health]
+SelfResurrect	4	1	0,requireid,40057,3|1,requireid,20524,3|2,requireid,21429,1|3,requireid,21430,1	Giveid,40128,1	;3 Basic Healing Potion: Level 50 + 3 Amber + 1 Blank Scroll + 1 Essence of Magic = Scroll of Self Resurrect [1% health] [BOUND]
+UpgradeBasicPotion10	3	1	0,requireid,40053,-1|1,requireidxmult,20524,0,5|2,requireidxmult,20946,0,5	Giveidxmult,40047,0,1	;1 Basic Potion: Level 10 + 5 Amber + 5 Glowtop Mushroom = 1 Healing Potion: Level 10 [BOUND] [FORMULA SCALES]
+UpgradeBasicPotion20	3	1	0,requireid,40054,-1|1,requireidxmult,20524,0,5|2,requireidxmult,20951,0,5	Giveidxmult,40048,0,1	;1 Basic Potion: Level 20 + 5 Amber + 5 Spite Sprig = 1 Healing Potion: Level 20 [BOUND] [FORMULA SCALES]
+UpgradeBasicPotion30	3	1	0,requireid,40055,-1|1,requireidxmult,20524,0,5|2,requireidxmult,20952,0,5	Giveidxmult,40049,0,1	;1 Basic Potion: Level 30 + 5 Amber + 5 Treeweave = 1 Healing Potion: Level 30 [BOUND] [FORMULA SCALES]
+UpgradeBasicPotion40	3	1	0,requireid,40056,-1|1,requireidxmult,20524,0,5|2,requireidxmult,20956,0,5	Giveidxmult,40050,0,1	;1 Basic Potion: Level 40 + 5 Amber + 5 Heartwood Blossom = 1 Healing Potion: Level 40 [BOUND] [FORMULA SCALES]
+UpgradeBasicPotion50	3	1	0,requireid,40057,-1|1,requireidxmult,20524,0,5|2,requireidxmult,20961,0,5	Giveidxmult,40051,0,1	;1 Basic Potion: Level 50 + 5 Amber + 5 Gloomberry = 1 Healing Potion: Level 50 [BOUND] [FORMULA SCALES]
+FullHealthPotion	2	1	0,requireidmult,40051,2|1,requireidxmult,20522,0,2	Giveidxdiv,40072,0,2	;2 Healing Potion: Level 50 + 4 Infused Crystals = 1 Healing Potion (Full) [BOUND] [FORMULA SCALES]
+SpeedPotion	3	1	0,requireid,40053,-1|1,requireidxmult,20522,0,3|2,requireidxmult,20946,0,3	Giveidxmult,40114,0,1	;1 Basic Potion: Level 10 + 3 Infused Crystals + 3 Glowtop Mushroom = 1 Speed Potion [BOUND] [FORMULA SCALES]
+EventTurkatricePet	5	1	0,requireid,20522,3|1,requireid,21319,2|2,requireid,21320,1|3,requireid,21321,2|4,requireid,21429,1	Giveid,2050006,1	;3 Infused Crystals + 2 Turkatrice Foot + 1 Turkatrice Beak + 2 Turkatrice Eye + 1 Blank Scroll = Turkatrice Pet (15) [BOUND]
+EventTurkatricePet	5	1	0,requireid,20522,3|1,requireid,21322,2|2,requireid,21323,1|3,requireid,21324,2|4,requireid,21429,1	Giveid,2050007,1	;3 Infused Crystals + 2 Turkatrice Foot + 1 Turkatrice Beak + 2 Turkatrice Eye + 1 Blank Scroll = Turkatrice Pet (26) [BOUND]
+EventTurkatricePet	5	1	0,requireid,20522,3|1,requireid,21325,2|2,requireid,21326,1|3,requireid,21327,2|4,requireid,21429,1	Giveid,2050008,1	;3 Infused Crystals + 2 Turkatrice Foot + 1 Turkatrice Beak + 2 Turkatrice Eye + 1 Blank Scroll = Turkatrice Pet (32) [BOUND]
+EventChillKinPet	5	1	0,requireid,20522,3|1,requireid,21344,2|2,requireid,21348,1|3,requireid,21352,1|4,requireid,21429,1	Giveid,2050009,1	;3 Infused Crystals + 2 Black Coal Eye + 1 Carrot Nose + 2 Tattered Scarf + 1 Blank Scroll = Chillkin Pet (15) [BOUND]
+EventChillKinPet	5	1	0,requireid,20522,3|1,requireid,21345,2|2,requireid,21349,1|3,requireid,21353,1|4,requireid,21429,1	Giveid,2050010,1	;3 Infused Crystals + 2 Black Coal Eye + 1 Carrot Nose + 2 Tattered Scarf + 1 Blank Scroll = Chillkin Pet (26) [BOUND]
+EventChillKinPet	5	1	0,requireid,20522,3|1,requireid,21346,2|2,requireid,21350,1|3,requireid,21354,1|4,requireid,21429,1	Giveid,2050011,1	;3 Infused Crystals + 2 Black Coal Eye + 1 Carrot Nose + 2 Tattered Scarf + 1 Blank Scroll = Chillkin Pet (32) [BOUND]

@@ -1,0 +1,7 @@
+[ENTRY]
+ID=151024946
+Asset=CL-Hills_Tree2#CL-Hills_Tree2
+Pos=52996.2,130.867,42627
+Orient=0,0.370921,0,0.928664
+Scale=2.15,2.15,2.15
+

@@ -1,0 +1,17 @@
+[ENTRY]
+ID=1358961083
+Asset=Manipulator-SpawnPoint
+Name=81
+Pos=54049.7,241.826,52129
+Orient=0,0,0,1
+Scale=1,1,1
+Layer=1358956908
+
+[ENTRY]
+ID=1358965885
+Asset=CL-Plains_Bush1#CL-Plains_Bush1
+Name=81
+Pos=54717.8,290.204,52300
+Orient=0,0,0,1
+Scale=1,1,1
+

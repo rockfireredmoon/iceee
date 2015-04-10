@@ -1,0 +1,193 @@
+#name custom_dekkerquest_offense
+#speed 6
+
+; Player skills
+; 492 - Wither 40
+; 373 - Malice Blast 40
+; 35 - Discipline 40 (passive)
+; 505 - Deathly 40
+; 509 - Nefritari's Aura
+; 57 - Death Specialization 40
+; 511 - Life Leech 40
+; 217 - Syphon 40
+; 397 - Creeping Death 40
+; 151 - Morass 40
+; 533 - Deathly Dart 40
+
+; 236 - Assail 40
+; 296 - Disembowel 40
+; 474 - Rend 40
+; 282 - Pierce 40
+; 135 - Death's Touch 40
+; 80 - Elusiveness 40 (passive)
+; 329 - Frenzy (40)
+; 210 - corrupt
+; 211 - suppress
+; 212 - abolish
+
+; Initialization
+set WILL 0
+set WILLCH 0
+set MIGHT 0
+set MIGHTCH 0
+set FIRSTATTACK 0
+set var 0
+
+:begin
+
+call waitfortarget
+use 32766
+
+call doFirstAttack
+call checkmightcharge
+call checkwillcharge
+call checkmight
+call checkwill
+
+goto begin
+
+
+
+
+:waitfortarget
+has_target var
+if var = 0
+  wait 500
+  goto waitfortarget
+endif
+return
+
+
+
+
+
+; ----------------------
+; ---  WILL CHARGES
+; ----------------------
+
+:checkwillcharge
+
+getwillcharge WILLCH
+if WILLCH < 3
+  return
+endif
+
+use 373
+
+return
+
+
+
+
+
+; ----------------------
+; ---  WILL
+; ----------------------
+
+:checkwill
+
+getwill WILL
+if WILL < 4
+  return
+endif
+
+call tryCastTheftOfWill
+; DISABLED     call tryCastNefritari
+is_busy var
+if var = 1
+  return
+endif
+
+use 492
+
+return
+
+
+
+:tryCastTheftOfWill
+getcooldown "Theft" var
+if var = 1
+  return
+endif
+get_target_property "will_charges" var
+if var < 2
+  return
+endif
+use 399
+return
+
+
+:tryCastNefritari
+getcooldown "DoT" var
+if var >= 1
+  return
+endif
+count_enemy_near 150 var
+if var < 2
+  return
+endif
+use 509
+return
+
+
+
+
+
+; ----------------------
+; ---  MIGHT CHARGES
+; ----------------------
+
+:checkmightcharge
+
+getmightcharge MIGHTCH
+if MIGHTCH >= 2
+  use 296
+  wait 1000
+  return
+endif
+
+return
+
+
+
+
+; ----------------------
+; ---  MIGHT
+; ----------------------
+:checkmight
+
+getmight MIGHT
+if MIGHT < 3
+  return
+endif
+
+use 236
+wait 2000
+return
+
+
+
+
+:doFirstAttack
+if FIRSTATTACK > 0
+  return
+endif
+
+randomize 4 FIRSTATTACK
+if FIRSTATTACK = 1
+  use 387
+  return
+endif
+if FIRSTATTACK = 2
+  use 210
+  return
+endif
+if FIRSTATTACK = 3
+  use 211
+  return
+endif
+if FIRSTATTACK = 4
+  use 212
+  return
+endif
+return

@@ -1,0 +1,20 @@
+[ENTRY]
+ID=901111
+PlacedBy=0
+Asset=Basic Desert?d=0.5&s=8717&sz=800
+Name=Scenery/85385
+PX=71406.3
+PY=376.259
+PZ=169426
+QX=0
+QY=0
+QZ=0
+QW=1
+SX=1
+SY=1
+SZ=1
+Flags=1
+Layer=0
+patrolSpeed=0
+patrolEvent=
+

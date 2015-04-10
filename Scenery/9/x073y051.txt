@@ -1,0 +1,16 @@
+[ENTRY]
+ID=151032567
+Asset=Par-Bees3-Emitter
+Pos=54760.3,163.913,38253
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
+ID=151054332
+Asset=Manipulator-SpawnPoint
+Pos=54793,160.658,38362
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=2a_suf_general
+outerRadius=30
+

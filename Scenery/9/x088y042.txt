@@ -1,0 +1,8 @@
+[ENTRY]
+ID=151004180
+Asset=Prop-Nordic_Props#Prop-Boat_Parts2
+Pos=66012,43.5078,32216
+Orient=-0.0224495,0.885641,0.147742,0.439669
+Scale=1.525,1.525,1.525
+Flags=1
+

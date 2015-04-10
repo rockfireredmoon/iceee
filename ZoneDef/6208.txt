@@ -1,0 +1,15 @@
+[ENTRY]
+ID=6208
+ACCOUNTID=152
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=Desert
+ShardName=desertruins
+GroveName=desertruins
+WarpName=desertruins1
+DropRateProfile=standard
+Grove=1
+EnvironmentCycle=1
+BuildPermission=account,152,0,0,13,23
+DefLoc=2958,260,3821
+

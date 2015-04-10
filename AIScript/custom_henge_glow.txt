@@ -1,0 +1,30 @@
+#name custom_henge_glow
+#idlespeed 1
+
+:begin
+
+visual_effect "Henge1"
+wait 10000
+
+visual_effect "Henge2"
+wait 10000
+
+visual_effect "Henge3"
+wait 10000
+
+visual_effect "Henge4"
+wait 10000
+
+visual_effect "Henge5"
+wait 10000
+
+visual_effect "Henge6"
+wait 10000
+
+visual_effect "Henge7"
+wait 10000
+
+visual_effect "Henge8"
+wait 10000
+
+goto begin

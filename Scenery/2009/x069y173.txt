@@ -1,0 +1,17 @@
+[ENTRY]
+ID=150999052
+Asset=CL-Wooden_Fence1#CL-Wooden_Fence1
+Name=9
+Pos=52312.5,293.317,130071
+Orient=0,-0.696135,0,0.717911
+Scale=1.5,1.5,1.5
+
+[ENTRY]
+ID=151049770
+Asset=Manipulator-SpawnPoint
+Name=9
+Pos=51770.7,186.367,130360
+Orient=0,0,0,1
+Scale=1,1,1
+Layer=151008377
+

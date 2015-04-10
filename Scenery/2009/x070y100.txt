@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151059602
+Asset=Prop-Stump_Entrance#Prop-Stump_Entrance
+Name=9
+Pos=52852.8,232.405,75037.5
+Orient=0,0.961275,0,-0.275591
+Scale=2.05,2.05,2.05
+Flags=1
+

@@ -1,0 +1,9 @@
+[ENTRY]
+ID=150995465
+Asset=Prop-Wooden_Fence2
+Name=9
+Pos=86465.4,318.279,180710
+Orient=0,0.693685,0,-0.720279
+Scale=20,20,20
+Flags=1
+

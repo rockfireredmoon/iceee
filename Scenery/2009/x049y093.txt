@@ -1,0 +1,18 @@
+[ENTRY]
+ID=151002629
+Asset=Basic Desert?d=0.5&amp;s=834817&amp;sz=800
+Name=9
+Pos=37198.9,230.304,70014.3
+Orient=0,0.352274,0,0.935897
+Scale=1,1,1
+Flags=1
+
+[ENTRY]
+ID=151058422
+Asset=Prop-Desert_Accent#Prop-Desert_Accent5
+Name=9
+Pos=37208.9,206.446,69991.4
+Orient=0,0,0,1
+Scale=0.25,0.25,0.25
+Flags=1
+

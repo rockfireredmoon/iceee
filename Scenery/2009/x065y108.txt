@@ -1,0 +1,16 @@
+[ENTRY]
+ID=151058984
+Asset=Prop-Tree-Cut_Down_Oak1
+Name=9
+Pos=49480,251.587,81615.2
+Orient=0,-0.324043,0,0.946042
+Scale=1.825,1.825,1.825
+
+[ENTRY]
+ID=151059003
+Asset=CL-Sick-Rotted_Forest3
+Name=9
+Pos=49094.4,329.446,81657
+Orient=0,0,0,1
+Scale=2.1,2.1,2.1
+

@@ -1,0 +1,7 @@
+[ENTRY]
+ID=151058279
+Asset=Effects#Par-Water_Mist-Emitter
+Pos=66981,273.517,59047
+Orient=0,0,0,1
+Scale=1,1,1
+

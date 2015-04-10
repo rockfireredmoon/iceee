@@ -1,0 +1,8 @@
+[ENTRY]
+ID=1358966979
+Asset=Effects#Par-Snow1-Emitter
+Name=81
+Pos=31651.3,408.733,67432.6
+Orient=0,-0.257081,0,0.96639
+Scale=1,1,1
+

@@ -1,0 +1,17 @@
+[ENTRY]
+ID=151011710
+Asset=Manipulator-SpawnPoint
+Pos=60477.1,250.25,32310
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=2_stc_beach_25_26
+outerRadius=5
+
+[ENTRY]
+ID=151054593
+Asset=Effects#Par-Waves-1-Emitter
+Pos=60189,60.673,32305
+Orient=0,-0.833272,0,0.552863
+Scale=1,1,1
+Flags=1
+

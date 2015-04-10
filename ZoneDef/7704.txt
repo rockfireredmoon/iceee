@@ -1,0 +1,13 @@
+[ENTRY]
+ID=7704
+ACCOUNTID=339
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=Autumn
+ShardName=lonewanderer
+GroveName=lonewanderer
+WarpName=lonewanderer1
+Grove=1
+EnvironmentCycle=1
+DefLoc=2958,260,3821
+

@@ -1,0 +1,13 @@
+[ENTRY]
+ID=5176
+ACCOUNTID=23
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=bottleneck
+GroveName=bottleneck
+WarpName=bottleneck1
+Grove=1
+EnvironmentCycle=1
+DefLoc=2958,260,3821
+

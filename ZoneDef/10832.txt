@@ -1,0 +1,13 @@
+[ENTRY]
+ID=10832
+ACCOUNTID=730
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=zavian
+GroveName=zavian
+WarpName=zavian1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

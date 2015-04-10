@@ -1,0 +1,8 @@
+[ENTRY]
+ID=1358966073
+Asset=Environment-Marker?type=Fields
+Name=81
+Pos=42169,105.452,53752.4
+Orient=0,0,0,1
+Scale=4.5,4.5,4.5
+

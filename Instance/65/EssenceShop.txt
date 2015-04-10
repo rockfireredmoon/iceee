@@ -1,0 +1,26 @@
+; Vangar One Eye's Treasure
+; Restored from 0.8.8b chest screenshot.
+[ENTRY]
+CreatureDefID=2742
+EssenceID=21292
+Item=143540,1  ;Outrider Staff
+Item=5569,1  ;Vangar's Battle Vest
+Item=5568,1  ;Vangar's Spike Spaulders
+Item=142767,1  ;Iron Molar
+Item=5571,1  ;Vangar's Bracers
+Item=142797,1  ;Dent Maker
+Item=142806,1  ;Swift Fang
+Item=5566,1  ;Mine Cap
+
+; Dungeon Loot (Rolsburg Mine)
+[ENTRY]
+CreatureDefID=2710
+EssenceID=21264
+Item=143539,10
+Item=143538,10
+Item=5570,10
+Item=142877,10
+Item=142867,10
+Item=5567,10
+Item=5572,10
+Item=142747,10

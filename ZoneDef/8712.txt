@@ -1,0 +1,13 @@
+[ENTRY]
+ID=8712
+ACCOUNTID=465
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=dwg
+GroveName=dwg
+WarpName=dwg1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

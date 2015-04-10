@@ -1,0 +1,13 @@
+[ENTRY]
+ID=11792
+ACCOUNTID=850
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=slidey
+GroveName=slidey
+WarpName=slidey1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

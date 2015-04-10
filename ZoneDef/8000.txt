@@ -1,0 +1,13 @@
+[ENTRY]
+ID=8000
+ACCOUNTID=376
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=scarlet
+GroveName=scarlet
+WarpName=scarlet1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

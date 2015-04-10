@@ -1,0 +1,8 @@
+[ENTRY]
+ID=151059535
+Asset=Prop-Instance_Entrance#Prop-Instance_Entrance
+Name=9
+Pos=30055,91.1771,54587.1
+Orient=0,-0.129634,0,0.991562
+Scale=1,1,1
+

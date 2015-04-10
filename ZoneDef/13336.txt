@@ -1,0 +1,13 @@
+[ENTRY]
+ID=13336
+ACCOUNTID=1043
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=tazsgrove
+GroveName=tazsgrove
+WarpName=tazsgrove1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

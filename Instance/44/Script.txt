@@ -1,0 +1,22 @@
+; Opis and Nedder boss spawns
+
+:init
+set opiscount 0
+set neddercount 0
+end
+
+:onKill_2587
+:onKill_2588
+inc opiscount 
+if opiscount >= 11
+  spawn_at 738198125 2589
+endif
+end
+
+:onKill_2528
+:onKill_2529
+inc neddercount 
+if neddercount >= 12
+  spawn_at 738198261 2531
+endif
+end

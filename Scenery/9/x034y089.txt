@@ -1,0 +1,7 @@
+[ENTRY]
+ID=151006755
+Asset=Prop-Willow_Tree#Prop-Willow_Tree4
+Pos=25795.7,23.7005,66808
+Orient=0,0.509841,0,0.860269
+Scale=2.725,2.725,2.725
+

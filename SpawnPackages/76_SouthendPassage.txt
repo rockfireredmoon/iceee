@@ -1,0 +1,4 @@
+; TODO: Unused?
+[ENTRY]
+Name=76_southendpassage_cavecrawler_6
+Spawn=1998,100  ; Cave Crawler (6)

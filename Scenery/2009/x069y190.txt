@@ -1,0 +1,16 @@
+[ENTRY]
+ID=150996564
+Asset=Prop-Bush-Med1#Prop-Bush-Med1
+Name=9
+Pos=52303.9,183.408,143027
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
+ID=151000877
+Asset=Prop-Hill_Tree3
+Name=9
+Pos=51951.8,206.128,142973
+Orient=0,0.696135,0,0.717911
+Scale=1,1,1
+

@@ -1,0 +1,8 @@
+[ENTRY]
+ID=151034259
+Asset=CL-UndeadTree4#CL-UndeadTree4
+Name=9
+Pos=71996,142.588,137250
+Orient=0,0,0,1
+Scale=1,1,1
+

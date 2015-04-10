@@ -1,0 +1,8 @@
+[ENTRY]
+ID=1358962738
+Asset=Effects#Par-Waves-1-Emitter
+Pos=26502.1,62.5215,68802.2
+Orient=0,-0.974616,0,0.223883
+Scale=3,3,3
+Flags=1
+

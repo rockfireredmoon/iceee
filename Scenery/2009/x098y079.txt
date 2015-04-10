@@ -1,0 +1,8 @@
+[ENTRY]
+ID=151024369
+Asset=Prop-Bush-Burnt_Large3#Prop-Bush-Burnt_Large3
+Name=9
+Pos=73960,873.548,59900.9
+Orient=0,0,0,1
+Scale=2.325,2.325,2.325
+

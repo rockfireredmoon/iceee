@@ -1,0 +1,29 @@
+﻿; Abandoned Monastery
+
+; Restored from screenshot.
+; Meandra's Treasure
+[ENTRY]
+CreatureDefID=1839
+EssenceID=20874
+Item=143500,1  ;Diabolical Bow
+Item=5503,1  ;Monasterial Leggings
+Item=5527,1  ;Boots of Ruin
+Item=143443,1  ;Spite Knife
+Item=5376,1  ;Forsaken Collar
+Item=5415,1  ;Forsaken Vestment
+Item=143470,1  ;Monasterial Staff
+Item=5481,1  ;Belt of Ruin
+
+; Restored from screenshot.
+; Dungeon Loot
+[ENTRY]
+CreatureDefID=2699
+EssenceID=21253
+Item=143426,10
+Item=5459,10
+Item=5377,10
+Item=5416,10
+Item=5504,10
+Item=5482,10
+Item=143485,10
+Item=143435,10

@@ -1,0 +1,15 @@
+[ENTRY]
+ID=7616
+ACCOUNTID=328
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=BremenDay
+ShardName=Sanctus
+GroveName=tutusportus
+WarpName=tutusportus1
+DropRateProfile=standard
+Grove=1
+EnvironmentCycle=0
+BuildPermission=account,328,0,0,3,3
+DefLoc=2836,263,3689
+

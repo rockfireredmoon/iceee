@@ -1,0 +1,13 @@
+[ENTRY]
+ID=6736
+ACCOUNTID=218
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=VampireNight
+ShardName=coalerbear
+GroveName=coalerbear
+WarpName=coalerbear1
+Grove=1
+EnvironmentCycle=1
+DefLoc=3008,262,3834
+

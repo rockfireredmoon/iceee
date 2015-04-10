@@ -1,0 +1,9 @@
+#name Bastion_NPC_GuardBowAnimation2
+#idlespeed 1
+
+; 5424 - Practice Arrow2 
+
+:begin
+use 5424
+wait 4000
+goto begin

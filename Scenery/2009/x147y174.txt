@@ -1,0 +1,17 @@
+[ENTRY]
+ID=151000124
+Asset=Prop-Autumn_Hill_Tree#Prop-Autumn_Hill_Tree6
+Name=9
+Pos=110704,455.56,131139
+Orient=0,0,0,1
+Scale=1.325,1.325,1.325
+Flags=1
+
+[ENTRY]
+ID=151056696
+Asset=Manipulator#Manipulator-PathNode
+Name=9
+Pos=110633,413.333,130826
+Orient=0,0,0,1
+Scale=1,1,1
+

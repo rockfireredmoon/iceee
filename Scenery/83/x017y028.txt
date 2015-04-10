@@ -1,0 +1,7 @@
+[ENTRY]
+ID=1392511238
+Asset=Prop-Lamp_Post_NB1
+Pos=17528.7,1465.63,28666.9
+Orient=0,0,0,1
+Scale=1,1,1
+

@@ -1,0 +1,17 @@
+[ENTRY]
+ID=151037934
+Asset=Prop-Bush_AridDead1
+Pos=21709.2,346.673,93484
+Orient=0,-0.281157,0,0.959662
+Scale=2.5,2.5,2.5
+Flags=1
+
+[ENTRY]
+ID=151037940
+Asset=Manipulator-SpawnPoint
+Pos=21734.7,344.848,93495
+Orient=0,-0.605186,0,0.796084
+Scale=1,1,1
+spawnPackage=5_excavatedCity_lower_36_37
+outerRadius=1
+

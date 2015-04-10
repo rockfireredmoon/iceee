@@ -1,0 +1,77 @@
+InternalName	DispName	MinLevel	MaxLevel	Stat	Operation	Value	NextName	BonusExp	BonusDrop
+#champion		-1	-1	strength	*	1.2			
+#champion		-1	-1	dexterity	*	1.2			
+#champion		-1	-1	constitution	*	1.2			
+#champion		-1	-1	psyche	*	1.2			
+#champion		-1	-1	spirit	*	1.2			
+#champion		-1	-1	base_damage_melee	*	1.2			
+#champion		-1	-1	damage_resist_melee	*	1.25			
+#champion		-1	-1	damage_resist_fire	*	1.25			
+#champion		-1	-1	damage_resist_frost	*	1.25			
+#champion		-1	-1	damage_resist_mystic	*	1.25			
+#champion		-1	-1	damage_resist_death	*	1.25			
+#elite		-1	-1	strength	*	1.4			
+#elite		-1	-1	dexterity	*	1.4			
+#elite		-1	-1	constitution	*	1.4			
+#elite		-1	-1	psyche	*	1.4			
+#elite		-1	-1	spirit	*	1.4			
+#elite		-1	-1	base_damage_melee	*	1.4			
+#elite		-1	-1	damage_resist_melee	*	1.5			
+#elite		-1	-1	damage_resist_fire	*	1.5			
+#elite		-1	-1	damage_resist_frost	*	1.5			
+#elite		-1	-1	damage_resist_mystic	*	1.5			
+#elite		-1	-1	damage_resist_death	*	1.5			
+fast1	Fast	1	29	mod_movement	++	20		30	60
+fast2	Fast	30	39	mod_movement	++	30		40	80
+fast3	Fast	40	70	mod_movement	++	40		50	100
+deadlyphy1	Deadly	1	29	mod_melee_to_crit	++	80	deadlymag1	70	140
+deadlyphy2	Deadly	30	39	mod_melee_to_crit	++	90	deadlymag2	90	180
+deadlyphy3	Deadly	40	70	mod_melee_to_crit	++	100	deadlymag3	110	220
+deadlymag1		-1	-1	mod_magic_to_crit	++	80			
+deadlymag2		-1	-1	mod_magic_to_crit	++	90			
+deadlymag3		-1	-1	mod_magic_to_crit	++	100			
+armor1	Armored	1	29	damage_resist_melee	*	2		30	60
+armor2	Armored	30	39	damage_resist_melee	*	3		40	80
+armor3	Armored	40	70	damage_resist_melee	*	4		50	100
+resist1	Resistant	1	29		#		#resist1	30	60
+resist2	Resistant	30	39		#		#resist2	40	80
+resist3	Resistant	40	70		#		#resist3	50	100
+#resist1		-1	-1	damage_resist_fire	*	2			
+#resist1		-1	-1	damage_resist_frost	*	2			
+#resist1		-1	-1	damage_resist_mystic	*	2			
+#resist1		-1	-1	damage_resist_death	*	2			
+#resist2		-1	-1	damage_resist_fire	*	3			
+#resist2		-1	-1	damage_resist_frost	*	3			
+#resist2		-1	-1	damage_resist_mystic	*	3			
+#resist2		-1	-1	damage_resist_death	*	3			
+#resist3		-1	-1	damage_resist_fire	*	4			
+#resist3		-1	-1	damage_resist_frost	*	4			
+#resist3		-1	-1	damage_resist_mystic	*	4			
+#resist3		-1	-1	damage_resist_death	*	4			
+regen1	Regen	10	19	mod_health_regen	++	36		50	100
+regen2	Regen	20	29	mod_health_regen	++	68		60	120
+regen3	Regen	30	39	mod_health_regen	++	96		70	140
+regen4	Regen	40	49	mod_health_regen	++	152		80	160
+regen5	Regen	50	59	mod_health_regen	++	260		90	180
+regen6	Regen	60	70	mod_health_regen	++	457		100	200
+tank1	Tank	10	19	constitution	*	1.4		30	60
+tank2	Tank	20	29	constitution	*	1.6		50	100
+tank3	Tank	30	39	constitution	*	1.8		70	140
+tank4	Tank	40	49	constitution	*	2		90	180
+tank5	Tank	50	59	constitution	*	2.2		110	220
+tank6	Tank	60	70	constitution	*	2.4		130	260
+strong1	Strong	10	19	base_damage_melee	*	1.3		40	80
+strong2	Strong	20	29	base_damage_melee	*	1.4		50	100
+strong3	Strong	30	39	base_damage_melee	*	1.5		60	120
+strong4	Strong	40	49	base_damage_melee	*	1.6		70	140
+strong5	Strong	50	59	base_damage_melee	*	1.7		80	160
+strong6	Strong	60	70	base_damage_melee	*	1.8		90	180
+reflect1	Reflect	25	35	damage_shield	++	10		50	100
+reflect2	Reflect	36	45	damage_shield	++	18		70	140
+reflect3	Reflect	46	70	damage_shield	++	26		90	180
+swiftphy1	Swift	1	29	melee_attack_speed	++	200	swiftmag1	30	60
+swiftphy2	Swift	30	39	melee_attack_speed	++	300	swiftmag2	50	100
+swiftphy3	Swift	40	70	melee_attack_speed	++	400	swiftmag3	70	140
+swiftmag1		-1	-1	magic_attack_speed	++	200			
+swiftmag2		-1	-1	magic_attack_speed	++	300			
+swiftmag3		-1	-1	magic_attack_speed	++	400			

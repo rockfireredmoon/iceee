@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151031947
+Asset=Manipulator-SpawnPoint
+Name=9
+Pos=21944,261.116,74556.8
+Orient=0,0,0,1
+Scale=1,1,1
+Layer=151002548
+

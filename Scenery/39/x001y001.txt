@@ -1,0 +1,16 @@
+[ENTRY]
+ID=654311591
+Asset=Prop-Ground_Plant4#Prop-Ground_Plant4
+Pos=1996.62,162.512,1163.72
+Orient=0,-0.227978,0,0.973666
+Scale=20,20,20
+Flags=1
+
+[ENTRY]
+ID=654311596
+Asset=Prop-Ground_Plant4
+Pos=1982.61,162.512,1044.17
+Orient=0,0,0,1
+Scale=20,20,20
+Flags=1
+

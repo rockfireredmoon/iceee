@@ -1,0 +1,17 @@
+[ENTRY]
+ID=151018616
+Asset=CL-AridBush6#CL-AridBush6
+Pos=69779,799.908,47883
+Orient=0,0.457338,0,0.889293
+Scale=1,1,1
+Flags=1
+
+[ENTRY]
+ID=151030158
+Asset=Manipulator-SpawnPoint
+Pos=70374,782.737,47687
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=12_wpg_Wilds_44_45
+outerRadius=200
+

@@ -1,0 +1,13 @@
+; Akaz's Treasure
+; Restored from 0.8.7 chest screenshot.
+[ENTRY]
+CreatureDefID=1533
+EssenceID=20775
+Item=5433,1  ;Light Feather Vest
+Item=143465,1  ;Carrion Claw
+Item=5370,1  ;Flocklord's Mantle
+Item=5521,1  ;Light Feather Leggings
+Item=5407,1  ;Thick Carrion Shoulderpads
+Item=143509,1  ;Birdsong Bow
+Item=143453,1  ;Avian Axe
+Item=5475,1  ;Birdsong Gloves

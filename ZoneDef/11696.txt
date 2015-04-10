@@ -1,0 +1,13 @@
+[ENTRY]
+ID=11696
+ACCOUNTID=838
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=HeartwoodNight
+ShardName=serakis
+GroveName=serakis
+WarpName=serakis1
+Grove=1
+EnvironmentCycle=1
+DefLoc=2932,258,3897
+

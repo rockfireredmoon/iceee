@@ -1,0 +1,17 @@
+[ENTRY]
+ID=151029241
+Asset=Manipulator-SpawnPoint
+Pos=63023.2,828.162,61493
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=11_dth_wilds_42_43
+outerRadius=10
+
+[ENTRY]
+ID=151045730
+Asset=Prop-Sick-Forest_Tree#Prop-Sick-Forest_Tree4
+Pos=63442.7,992.214,60774
+Orient=0,0,0,1
+Scale=1.6,1.6,1.6
+Flags=1
+

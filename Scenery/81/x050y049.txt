@@ -1,0 +1,17 @@
+[ENTRY]
+ID=1358954500
+Asset=Bldg-Camelot8b?ATS=ATS-Castle_Camelot
+Pos=50980.3,617.008,49170
+Orient=0,0.183947,0,0.982936
+Scale=1.5,1.5,1.5
+Flags=1
+
+[ENTRY]
+ID=1358960955
+Asset=Manipulator-SpawnPoint
+Pos=50885.7,145.571,49937
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=1a_swampNorth_general
+outerRadius=1
+

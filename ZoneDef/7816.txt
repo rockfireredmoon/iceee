@@ -1,0 +1,13 @@
+[ENTRY]
+ID=7816
+ACCOUNTID=353
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=ivalice
+GroveName=ivalice
+WarpName=ivalice1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

@@ -1,0 +1,16 @@
+[ENTRY]
+ID=151060401
+Asset=Prop-Banner_Post2
+Name=9
+Pos=69950,397.375,35133.4
+Orient=0,0.857299,0,0.514819
+Scale=1.625,1.625,1.625
+
+[ENTRY]
+ID=151060402
+Asset=Prop-Holiday-Harvest_Banner
+Name=9
+Pos=69936.1,511.076,35108.1
+Orient=0,0.857299,0,0.514819
+Scale=3.4,3.4,3.4
+

@@ -1,0 +1,13 @@
+[ENTRY]
+ID=10472
+ACCOUNTID=685
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=nighthawk
+GroveName=nighthawk
+WarpName=nighthawk1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

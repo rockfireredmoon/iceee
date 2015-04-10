@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151001090
+Asset=Dead-Rotted_Forest?d=0.9&amp;s=8718456&amp;sz=800
+Name=9
+Pos=68844,229.163,156460
+Orient=0,-0.8699,0,0.493228
+Scale=1,1,1
+Flags=1
+

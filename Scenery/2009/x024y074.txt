@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151051783
+Asset=Bldg-Ruins-Druid3?ATS=ATS-Ruins
+Name=9
+Pos=18212,153.291,55625
+Orient=0,-0.20846,0,0.978031
+Scale=1.25,1.25,1.25
+Flags=1
+

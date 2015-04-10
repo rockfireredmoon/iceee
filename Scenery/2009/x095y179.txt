@@ -1,0 +1,16 @@
+[ENTRY]
+ID=151045151
+Asset=Manipulator#Manipulator-PathNode
+Name=9
+Pos=71455.1,244.356,134977
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
+ID=151045152
+Asset=Manipulator-PathNode
+Name=9
+Pos=71354.7,241.748,134769
+Orient=0,0,0,1
+Scale=1,1,1
+

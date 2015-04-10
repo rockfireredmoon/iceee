@@ -1,0 +1,13 @@
+[ENTRY]
+ID=11856
+ACCOUNTID=858
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=fanebane
+GroveName=fanebane
+WarpName=fanebane1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

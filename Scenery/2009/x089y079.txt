@@ -1,0 +1,16 @@
+[ENTRY]
+ID=151040278
+Asset=Prop-Boulder_Arid2
+Name=9
+Pos=67261.6,582.974,59594
+Orient=0,0.192204,0,-0.981355
+Scale=7.975,7.975,7.975
+
+[ENTRY]
+ID=151040279
+Asset=Prop-Boulder_Arid#Prop-Boulder_Arid4
+Name=9
+Pos=67155,579.073,59616
+Orient=0,0.916166,0,-0.400799
+Scale=7.2,7.2,7.2
+

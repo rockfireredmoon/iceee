@@ -1,0 +1,17 @@
+[ENTRY]
+ID=1358955742
+Asset=Prop-Catapult
+Name=81
+Pos=46255.3,314.215,63463
+Orient=-0.019671,0.246665,-0.0568644,0.967231
+Scale=1.5,1.5,1.5
+Flags=1
+
+[ENTRY]
+ID=1358966735
+Asset=Light-Medium?COLOR=33FFFF
+Name=81
+Pos=46480.8,334.312,63330.9
+Orient=0,0,0,1
+Scale=1,1,1
+

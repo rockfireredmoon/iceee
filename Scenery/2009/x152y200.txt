@@ -1,0 +1,8 @@
+[ENTRY]
+ID=151027841
+Asset=Bldg-BloodTower1?ATS=ATS-Evil_Castle
+Name=9
+Pos=114637,1232.81,150241
+Orient=0,-0.947396,0,0.320063
+Scale=2.375,2.375,2.375
+

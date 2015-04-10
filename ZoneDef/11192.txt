@@ -1,0 +1,13 @@
+[ENTRY]
+ID=11192
+ACCOUNTID=775
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=dfield
+GroveName=dfield
+WarpName=dfield1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

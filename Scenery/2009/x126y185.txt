@@ -1,0 +1,17 @@
+[ENTRY]
+ID=151031592
+Asset=Prop-Autumn_Tree#Prop-Autumn_Tree1
+Name=9
+Pos=95184.4,450.977,139416
+Orient=0,0,0,1
+Scale=1.4,1.4,1.4
+
+[ENTRY]
+ID=151057532
+Asset=Manipulator-SpawnPoint
+Name=9
+Pos=94986.8,408.033,139473
+Orient=0,0.872355,0,0.488872
+Scale=1,1,1
+Layer=151011697
+

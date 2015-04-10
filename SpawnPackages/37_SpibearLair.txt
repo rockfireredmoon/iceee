@@ -1,0 +1,43 @@
+[ENTRY]
+Name=z37_eur_gen_Exit_to_Midlands_2195
+Spawn=2195,100  ;Exit to Midlands (1) at 0
+
+[ENTRY]
+Name=z37_eur_gen_Dungeon_Loot_2703
+Spawn=2703,100  ;Dungeon Loot (1) at 0
+
+[ENTRY]
+Name=3_dng_sl_Spibear_Denmother
+Spawn=378,100  ;Denmother Ursarach (24) at 0
+
+[ENTRY]
+Name=3_dng_sl_SpibearsFront_22_23
+Spawn=2686,100  ;Blightbiter Spibear (22) at 0
+
+[ENTRY]
+Flags=4
+Name=3_dng_sl_hornedHoppers_24_25
+Spawn=2509,50  ;Horned Hopper (24) at 0
+Spawn=2510,50  ;Horned Hopper (25) at 10
+
+[ENTRY]
+Name=3_dng_sl_BlightvenomScorpion_22_23
+ScriptCall=1
+Spawn=2139,50  ;Blightvenom Scorpion (23) at 6
+Spawn=2140,50  ;Blightvenom Scorpion (22) at 0
+
+[ENTRY]
+Name=3_dng_sl_SpibearsBack_22_23
+Spawn=2686,25  ;Blightbiter Spibear (22) at 0
+Spawn=2687,25  ;Blightbighter Spibear (23) at 0
+Spawn=2552,25  ;Blightfury Spibear (23) at 36
+Spawn=2508,25  ;Blightwitch Spibear
+
+[ENTRY]
+Name=3_dng_sl_Karronath_d_23
+Spawn=2554,100  ;Karronath
+
+[ENTRY]
+Name=3_dng_sl_obji_DenmotherUrsarachLewt
+Spawn=2729,100  ;Denmother Ursarach's Treasure (1) at 0
+

@@ -1,0 +1,13 @@
+[ENTRY]
+ID=13952
+ACCOUNTID=1120
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=ndfur
+GroveName=ndfur
+WarpName=ndfur1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

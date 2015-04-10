@@ -1,0 +1,50 @@
+#name mystic_creature_brave_6
+
+; 5058 - Mystical, 5 will, buff
+; 5157 - Assault, 3 might, add 1 mcharge
+; 5198 - Soul Needles, 3 will, add 1 wcharge
+; 5299 - Soul Burst, 1 will, need 1-3 mcharge
+; 32766 - melee
+; 5221 - Bash, 1 might, need 1-3 mcharge  (not in ability scan)
+
+set var 0
+use 5058
+
+:begin
+call waitfortarget
+use 32766
+
+getwillcharge var
+if var >= 2
+  use 5299
+  wait 1000
+endif
+
+getwill var
+if var >= 3
+  use 5198
+  wait 2000
+  goto begin
+endif
+
+getmightcharge var
+if var >= 2
+  use 5221
+  wait 2000
+endif
+
+getmight var
+if var >= 3
+  use 5157
+  wait 2000
+endif
+
+goto begin
+
+:waitfortarget
+has_target var
+if var = 0
+  wait 2000
+  goto waitfortarget
+endif
+return

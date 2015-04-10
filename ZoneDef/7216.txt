@@ -1,0 +1,13 @@
+[ENTRY]
+ID=7216
+ACCOUNTID=278
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=rikarou
+GroveName=rikarou
+WarpName=rikarou1
+Grove=1
+EnvironmentCycle=1
+DefLoc=2958,260,3821
+

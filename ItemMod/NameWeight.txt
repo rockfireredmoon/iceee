@@ -1,0 +1,43 @@
+; Determines how "important" each stat type is, when weighted against
+; each other when determining which modifiers to apply to a name.
+; This allows certain stats to take precedence above others.
+
+; Core stats are weighted low.  Special bonuses can supercede them, while
+; still allowing them to be compared against each other.
+strength=0.001
+dexterity=0.001
+constitution=0.001
+psyche=0.001
+spirit=0.001
+
+mod_melee_to_crit=4
+mod_magic_to_crit=4
+melee_attack_speed=3
+magic_attack_speed=3
+base_block=1.5
+base_parry=1.5
+base_dodge=1.5
+mod_movement=4
+
+dmg_mod_fire=0.8
+dmg_mod_frost=0.8
+dmg_mod_mystic=0.8
+dmg_mod_death=0.8
+base_healing=1.0
+
+;These two are implemented as negative values. The multiplier must convert
+;the rolled value to positive to be properly weighted against other stats.
+casting_setback_chance=-1.5
+channeling_break_chance=-1.5
+
+mod_health_regen=1
+
+; Don't include these.
+damage_resist_melee=0
+damage_resist_fire=0
+damage_resist_frost=0
+damage_resist_mystic=0
+damage_resist_death=0
+value=0
+wmin=0
+wmax=0

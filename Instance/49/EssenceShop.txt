@@ -1,0 +1,30 @@
+; Lord A'frott's Treasure
+[ENTRY]
+CreatureDefID=2735
+EssenceID=20769
+Item=4790,1
+Item=142445,1
+Item=142447,1
+Item=4792,1
+Item=4788,1
+Item=4787,1
+Item=4786,1
+Item=4791,1
+Item=142446,1
+Item=142444,1
+Item=4793,1
+Item=4789,1
+
+; Dungeon Loot
+[ENTRY]
+CreatureDefID=2714
+EssenceID=21268
+Item=143452,10
+Item=5369,10
+Item=800118,10
+Item=800178,10
+Item=5496,10
+Item=5539,10
+Item=5387,10
+Item=800129,10
+

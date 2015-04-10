@@ -1,0 +1,51 @@
+[ENTRY]
+Name=newb_alimatSummon_light1
+Spawn=2131,100  ;Burning Souls (1) at 0
+
+[ENTRY]
+Name=newb_alimatSummon_light2
+Spawn=2132,100  ;Burning Souls (1) at 0
+
+[ENTRY]
+Name=newb_alimatSummon_light3
+Spawn=2133,100  ;Burning Souls (1) at 0
+
+[ENTRY]
+Name=newb_alimatSummon_undead
+Spawn=1837,100  ;Swampmage (20) at 5
+
+[ENTRY]
+Name=newb_alimatSummon_Alimat
+Spawn=1952,100  ;Alimat (20) at 0
+
+[ENTRY]
+Name=newb_alimatSummon_undead2
+Spawn=90,100  ;Waterlogged Skeleton (20) at 5
+
+[ENTRY]
+Name=newb_alimatSummon_undead3
+Spawn=92,100  ;Drowned Zombie (20) at 5
+
+[ENTRY]
+Name=newb_alimatSummon_undead5
+Spawn=90,100  ;Waterlogged Skeleton (20) at 5
+
+[ENTRY]
+Name=newb_alimatSummon_undead6
+Spawn=92,100  ;Drowned Zombie (20) at 4
+
+[ENTRY]
+Name=newb_alimatSummon_undead4
+Spawn=90,100  ;Waterlogged Skeleton (20) at 5
+
+[ENTRY]
+Name=newb_alimatSummon_undead7
+Spawn=90,100  ;Waterlogged Skeleton (20) at 5
+
+[ENTRY]
+Name=newb_alimatSummon_undead8
+Spawn=92,100  ;Drowned Zombie (20) at 5
+
+[ENTRY]
+Name=newb_alimatSummon_undead9
+Spawn=92,100  ;Drowned Zombie (20) at 5

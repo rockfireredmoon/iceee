@@ -1,0 +1,17 @@
+[ENTRY]
+ID=151028039
+Asset=CL-Sick-Pine5#CL-Sick-Pine5
+Name=9
+Pos=66605,842.98,49182
+Orient=0,0,0,1
+Scale=2.75,2.75,2.75
+
+[ENTRY]
+ID=151030105
+Asset=Manipulator-SpawnPoint
+Name=9
+Pos=66030,898.792,49250.9
+Orient=0,0,0,1
+Scale=1,1,1
+Layer=151001723
+

@@ -1,0 +1,17 @@
+[ENTRY]
+ID=151041271
+Asset=Forest?d=0.9&s=811812&sz=800
+Pos=52414.4,419.624,49769
+Orient=0,-0.822955,0,-0.568107
+Scale=1.575,1.575,1.575
+Flags=1
+
+[ENTRY]
+ID=151052072
+Asset=Manipulator-SpawnPoint
+Pos=52249.1,333.935,49685
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=3a_shroomieCamp01_generalWoods
+outerRadius=30
+

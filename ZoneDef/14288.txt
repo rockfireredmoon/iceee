@@ -1,0 +1,13 @@
+[ENTRY]
+ID=14288
+ACCOUNTID=1162
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=honey
+GroveName=honey
+WarpName=honey1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

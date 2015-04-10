@@ -1,0 +1,8 @@
+[ENTRY]
+ID=151032086
+Asset=Bldg-Camelot8?ATS=ATS-Castle
+Name=9
+Pos=64420.3,617.008,124050
+Orient=0,0.183947,0,0.982936
+Scale=1.5,1.5,1.5
+

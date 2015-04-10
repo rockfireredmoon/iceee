@@ -1,0 +1,13 @@
+[ENTRY]
+ID=11384
+ACCOUNTID=799
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=korsolar
+GroveName=korsolar
+WarpName=korsolar1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

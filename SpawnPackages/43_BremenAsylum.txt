@@ -1,0 +1,92 @@
+; Note: some unique(?) spawns have multiple points
+
+[ENTRY]
+Flags=3
+Name=z43_ba_gen_Dungeon_Loot_2707
+Spawn=2707,100  ;Dungeon Loot (1) at 0
+
+[ENTRY]
+Flags=3
+Name=z43_ba_gen_Exit_to_New_Badari_2235
+Spawn=2235,100  ;Exit to New Badari (1) at 0
+
+[ENTRY]
+Name=2_ba_BizzarioStep_36
+Shares=80
+ScriptCall=1
+Spawn=614,10  ;Raving Madcap (35) at 2
+Spawn=615,10  ;Lunatic (35) at 1
+Spawn=2573,10  ;Maniacal Mystic (35) at 2
+Spawn=2574,10  ;Maniacal Mystic (36) at 0
+Spawn=2575,10  ;Raving Madcap (36) at 0
+Spawn=2576,10  ;Deranged Elementalist (35) at 0
+Spawn=2577,10  ;Deranged Elementalist (36) at 6
+Spawn=2578,10  ;Lunatic (36) at 0
+
+[ENTRY]
+Name=2_ba_frontHallway
+Shares=60
+Spawn=614,10  ;Raving Madcap (35) at 0
+Spawn=615,10  ;Lunatic (35) at 0
+Spawn=2573,10  ;Maniacal Mystic (35) at 0
+Spawn=2574,10  ;Maniacal Mystic (36) at 0
+Spawn=2575,10  ;Raving Madcap (36) at 0
+Spawn=2578,10  ;Lunatic (36) at 0
+
+[ENTRY]
+Name=5_quest_swirlingMadness_E_37
+Spawn=2502,100  ;Swirling Madness (37) at 0
+
+[ENTRY]
+Name=5_quest_taliaGallows_h_37
+Spawn=2501,100  ;Talia Gallows (37) at 0
+
+[ENTRY]
+Name=2_ba_frenziedArachnids_35
+Spawn=2722,100  ;Frenzied Arachnid (35) at 0
+
+; NOTE: 3 spawn points
+[ENTRY]
+Name=2_ba_feralExecutioner_k_36
+Spawn=2724,100  ;Feral Executioner (36) at 25
+
+; NOTE: 2 spawn points
+[ENTRY]
+Name=2_ba_Crawla_36
+Spawn=2723,100  ;Crawla (36) at 0
+
+[ENTRY]
+Name=2_ba_back
+Shares=80
+Spawn=614,10  ;Raving Madcap (35) at 0
+Spawn=615,10  ;Lunatic (35) at 0
+Spawn=2573,10  ;Maniacal Mystic (35) at 0
+Spawn=2574,10  ;Maniacal Mystic (36) at 0
+Spawn=2575,10  ;Raving Madcap (36) at 0
+Spawn=2576,10  ;Deranged Elementalist (35) at 0
+Spawn=2577,10  ;Deranged Elementalist (36) at 0
+Spawn=2578,10  ;Lunatic (36) at 0
+
+[ENTRY]
+Name=2_ba_front
+Shares=80
+Spawn=614,10  ;Raving Madcap (35) at 0
+Spawn=615,10  ;Lunatic (35) at 0
+Spawn=2573,10  ;Maniacal Mystic (35) at 0
+Spawn=2574,10  ;Maniacal Mystic (36) at 0
+Spawn=2575,10  ;Raving Madcap (36) at 0
+Spawn=2576,10  ;Deranged Elementalist (35) at 0
+Spawn=2577,10  ;Deranged Elementalist (36) at 0
+Spawn=2578,10  ;Lunatic (36) at 0
+
+[ENTRY]
+Flags=1
+Name=3_dng_ba_obji_SwirlingMadnessLewt
+Spawn=2732,100  ;Swirling Madness's Treasure (1) at 0
+
+[ENTRY]
+Name=2_ba_backHallway
+Spawn=614,25  ;Raving Madcap (35) at 0
+Spawn=615,25  ;Lunatic (35) at 0
+Spawn=2575,25  ;Raving Madcap (36) at 0
+Spawn=2577,25  ;Deranged Elementalist (36) at 0

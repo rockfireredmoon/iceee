@@ -1,0 +1,10 @@
+; A list of URLs that can be opened within the modded client.
+; This list is designed to allow the server administrator to change the URLs if
+; necessary without requiring a client update.  Useful if hosting on a different domain,
+; or different page name.
+; Each entry has Key=Value format, where the Key is the page name, and Value is the URL.
+
+Homepage=http://planetforevergame.com:81/
+Reference=http://planetforevergame.com:81/Reference.html
+Advanced Crafting=http://planetforevergame.com:81/AdvancedCrafting.html
+Chat Channel Colors=http://planetforevergame.com:81/ChatChannelColors.html

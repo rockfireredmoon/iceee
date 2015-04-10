@@ -1,0 +1,15 @@
+[ENTRY]
+ID=14192
+ACCOUNTID=1150
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=santee
+GroveName=santee
+WarpName=santee1
+DropRateProfile=standard
+Grove=1
+EnvironmentCycle=0
+BuildPermission=account,1150,0,0,3,3
+DefLoc=2958,260,3821
+

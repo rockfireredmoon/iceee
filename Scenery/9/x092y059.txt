@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151057139
+Asset=Manipulator-SpawnPoint
+Pos=69331,594.743,44522
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=2a_rhl_sectionB2_general
+outerRadius=30
+

@@ -1,0 +1,17 @@
+[ENTRY]
+ID=1358957071
+Asset=Manipulator-PathNode
+Name=81
+Pos=50040,240.587,68870
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
+ID=1358957149
+Asset=Manipulator-SpawnPoint
+Name=81
+Pos=50110,233.337,68840
+Orient=0,1,0,7.54979e-008
+Scale=1,1,1
+Layer=1358957942
+

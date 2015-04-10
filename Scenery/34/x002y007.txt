@@ -1,0 +1,7 @@
+[ENTRY]
+ID=570427371
+Asset=Prop-Spider_Webs#Prop-Spider_Webs1
+Pos=2344.26,195,7015.22
+Orient=0,0.872355,0,0.488872
+Scale=1.85,1.85,1.85
+

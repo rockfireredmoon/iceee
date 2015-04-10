@@ -1,0 +1,16 @@
+[ENTRY]
+ID=1358960544
+Asset=Manipulator-SpawnPoint
+Pos=42799.9,106.911,70055
+Orient=0,-0.960835,0,0.277121
+Scale=1,1,1
+spawnPackage=1a_thornbringerCamps01_general
+
+[ENTRY]
+ID=1358962718
+Asset=Effects#Par-Waves-1-Emitter
+Pos=42425.7,60.9294,70031
+Orient=0,0.0948572,0,0.995491
+Scale=3,3,3
+Flags=1
+

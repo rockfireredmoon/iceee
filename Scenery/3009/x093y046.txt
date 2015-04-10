@@ -1,0 +1,10 @@
+[ENTRY]
+ID=151060810
+Asset=Manipulator-SpawnPoint
+Pos=70422.5,455.15,35096.2
+Orient=0,0,0,1
+Scale=1,1,1
+innerRadius=25
+spawnPackage=HOLIDAY_wf09_snowmen_26_27
+outerRadius=30
+

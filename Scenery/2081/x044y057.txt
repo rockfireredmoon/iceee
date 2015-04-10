@@ -1,0 +1,16 @@
+[ENTRY]
+ID=1358967120
+Asset=Prop-Swamp-Tree#Prop-Swamp-Tree1
+Name=81
+Pos=44788.9,78.3574,57395.4
+Orient=0,0,0,1
+Scale=2.4,2.4,2.4
+
+[ENTRY]
+ID=1358967121
+Asset=CL-Swamp3#CL-Swamp3
+Name=81
+Pos=44569.5,94.8076,57925.6
+Orient=0,0,0,1
+Scale=1,1,1
+

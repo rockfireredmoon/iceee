@@ -1,0 +1,8 @@
+[ENTRY]
+ID=486540691
+Asset=Prop-Vampire_Rocks#Prop-Vampire_Rock3
+Pos=7173.72,80,5001.64
+Orient=0,-0.91071,0,0.413046
+Scale=5.3,5.3,5.3
+Flags=1
+

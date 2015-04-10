@@ -1,0 +1,13 @@
+; Pular's Treasure
+[ENTRY]
+CreatureDefID=1532
+EssenceID=20773
+Item=5388,1
+Item=143459,1
+Item=5540,1
+Item=5497,1
+Item=143479,1
+Item=5434,1
+Item=143495,1
+Item=5453,1
+

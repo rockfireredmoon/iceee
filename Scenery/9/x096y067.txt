@@ -1,0 +1,8 @@
+[ENTRY]
+ID=151028006
+Asset=Prop-Bush_Arid1#Prop-Bush_Arid1
+Pos=72094,1531.89,50913
+Orient=0,0,0,1
+Scale=1,1,1
+Flags=1
+

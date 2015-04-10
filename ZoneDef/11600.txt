@@ -1,0 +1,13 @@
+[ENTRY]
+ID=11600
+ACCOUNTID=826
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=NightSky
+ShardName=nowhereland
+GroveName=nowhereland
+WarpName=nowhereland1
+Grove=1
+EnvironmentCycle=0
+DefLoc=3926,300,3878
+

@@ -1,0 +1,15 @@
+[ENTRY]
+ID=8416
+ACCOUNTID=428
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=TarPit
+ShardName=lukas
+GroveName=lukas
+WarpName=lukas1
+DropRateProfile=standard
+Grove=1
+EnvironmentCycle=1
+BuildPermission=account,428,0,0,3,3
+DefLoc=2958,260,3821
+

@@ -1,0 +1,8 @@
+[ENTRY]
+ID=151002847
+Asset=Prop-Bones_Dragon1#Prop-Bones_Dragon1
+Pos=25711.2,208.566,78471
+Orient=0.0647073,0.00922056,0.0893826,0.99385
+Scale=1,1,1
+Flags=1
+

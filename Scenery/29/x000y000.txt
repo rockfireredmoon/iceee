@@ -1,0 +1,14 @@
+[ENTRY]
+ID=486539967
+Asset=Prop-Dungeon-Cobwebs1
+Pos=0,0,0
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
+ID=486540972
+Asset=Prop-Vampire_Rock2
+Pos=0,0,0
+Orient=0,0,0,1
+Scale=1,1,1
+

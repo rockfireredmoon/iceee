@@ -1,0 +1,16 @@
+[ENTRY]
+ID=5006
+ACCOUNTID=177
+NAME=Dev Wailing Crypt
+ENVIRONMENTTYPE=Dungeon1
+ShardName=Dev Wailing Crypt 
+WarpName=devWailingCrypt
+DropRateProfile=standard
+Audit=1
+Grove=1
+PlayerFilterType=1
+PlayerFilterID=-400000008,-400003048
+BuildPermission=account,1,1,3,98,94
+BuildPermission=account,177,1,3,98,94
+DefLoc=2121,660,703
+

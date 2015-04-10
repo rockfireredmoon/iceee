@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151033595
+Asset=Manipulator-SpawnPoint
+Pos=21856.6,298.119,82350
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=5_sailorCamps_39_40
+outerRadius=10
+

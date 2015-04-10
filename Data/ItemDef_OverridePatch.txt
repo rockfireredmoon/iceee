@@ -1,0 +1,93 @@
+; Greymist Gloves: Fix binding type.
+; Health Potions: Reduced cost.
+
+[ENTRY]
+mID=4912
+mType=3
+mDisplayName=Greymist Gloves
+mAppearance=[{["c"]={["type"]="Armor-Light-Low6",["colors"]=["696a7f","6a5c1c","34353f","6a5c1c"]}},null]
+mIcon=Icon-32-C_Armor-Hands01.png|Icon-32-BG-Blue.png
+mLevel=17
+mBindingType=2
+mEquipType=13
+mArmorType=1
+mArmorResistMelee=26
+mBonusStrength=2
+mBonusDexterity=3
+mValue=596
+mQualityLevel=2
+mMinUseLevel=17
+
+[ENTRY]
+mID=40053
+mType=5
+mDisplayName=Basic Health Potion: Level 10
+mIcon=Icon-32-Potion_Red.png|Icon-32-BG-Aqua.png
+mIvType1=1
+mIvMax1=20
+mLevel=10
+mBindingType=1
+mUseAbilityId=25016
+mValue=80
+mQualityLevel=1
+mMinUseLevel=10
+
+; ORIGINAL mValue=400
+[ENTRY]
+mID=40054
+mType=5
+mDisplayName=Basic Health Potion: Level 20
+mIcon=Icon-32-Potion_Red.png|Icon-32-BG-Aqua.png
+mIvType1=1
+mIvMax1=20
+mLevel=20
+mBindingType=1
+mUseAbilityId=25017
+mValue=200
+mQualityLevel=1
+mMinUseLevel=20
+
+; ORIGINAL mValue=1600
+[ENTRY]
+mID=40055
+mType=5
+mDisplayName=Basic Health Potion: Level 30
+mIcon=Icon-32-Potion_Red.png|Icon-32-BG-Aqua.png
+mIvType1=1
+mIvMax1=20
+mLevel=30
+mBindingType=1
+mUseAbilityId=25018
+mValue=520
+mQualityLevel=1
+mMinUseLevel=30
+
+; ORIGINAL mValue=6000
+[ENTRY]
+mID=40056
+mType=5
+mDisplayName=Basic Health Potion: Level 40
+mIcon=Icon-32-Potion_Red.png|Icon-32-BG-Aqua.png
+mIvType1=1
+mIvMax1=20
+mLevel=40
+mBindingType=1
+mUseAbilityId=25019
+mValue=1280
+mQualityLevel=1
+mMinUseLevel=40
+
+; ORIGINAL mValue=20000
+[ENTRY]
+mID=40057
+mType=5
+mDisplayName=Basic Health Potion: Level 50
+mIcon=Icon-32-Potion_Red.png|Icon-32-BG-Aqua.png
+mIvType1=1
+mIvMax1=20
+mLevel=50
+mBindingType=1
+mUseAbilityId=25020
+mValue=3200
+mQualityLevel=1
+mMinUseLevel=50

@@ -1,0 +1,13 @@
+[ENTRY]
+ID=14064
+ACCOUNTID=1134
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=jarani
+GroveName=jarani
+WarpName=jarani1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

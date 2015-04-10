@@ -1,0 +1,13 @@
+[ENTRY]
+ID=8472
+ACCOUNTID=435
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=dmw
+GroveName=dmw
+WarpName=dmw1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

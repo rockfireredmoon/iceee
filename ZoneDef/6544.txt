@@ -1,0 +1,13 @@
+[ENTRY]
+ID=6544
+ACCOUNTID=194
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=EarthriseDay
+ShardName=scion
+GroveName=scion
+WarpName=scion1
+Grove=1
+EnvironmentCycle=1
+DefLoc=2708,258,3910
+

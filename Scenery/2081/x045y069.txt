@@ -1,0 +1,8 @@
+[ENTRY]
+ID=1358966821
+Asset=CL-Hills_Tree3#CL-Hills_Tree3
+Name=81
+Pos=45952.4,355.64,69555.1
+Orient=0,0,0,1
+Scale=1.525,1.525,1.525
+

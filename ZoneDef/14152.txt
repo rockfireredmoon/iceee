@@ -1,0 +1,13 @@
+[ENTRY]
+ID=14152
+ACCOUNTID=1145
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=sthissis
+GroveName=sthissis
+WarpName=sthissis1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

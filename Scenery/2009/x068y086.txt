@@ -1,0 +1,16 @@
+[ENTRY]
+ID=151059470
+Asset=Prop-Autumn_Tree2
+Name=9
+Pos=51255.5,468.703,64902.8
+Orient=0,0,0,1
+Scale=1.5,1.5,1.5
+
+[ENTRY]
+ID=151059486
+Asset=Prop-Forest_Trees_Leaves#Prop-Forest-LargeTree_Leaves2
+Name=9
+Pos=51024.4,1018.21,65156.2
+Orient=0,0,0,1
+Scale=0.825,0.825,0.825
+

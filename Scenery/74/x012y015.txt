@@ -1,0 +1,8 @@
+[ENTRY]
+ID=1241514120
+Asset=Prop-Boat-Anubian
+Pos=12885.1,155.885,15003.5
+Orient=0,0.601198,0,0.7991
+Scale=1.825,1.825,1.825
+Flags=1
+

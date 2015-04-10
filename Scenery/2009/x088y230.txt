@@ -1,0 +1,8 @@
+[ENTRY]
+ID=151011434
+Asset=Prop-Tree_Platforms#Prop-Tree_Platform_Bridge
+Name=9
+Pos=66121.1,779.117,172692
+Orient=0.000506013,-0.101202,-0.00497431,0.994853
+Scale=1.95,1.95,1.95
+

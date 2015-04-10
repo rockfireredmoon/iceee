@@ -1,0 +1,14 @@
+[ENTRY]
+ID=5048
+ACCOUNTID=7
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=ginpaku
+GroveName=ginpaku
+WarpName=ginpaku1
+Persist=1
+Grove=1
+EnvironmentCycle=1
+DefLoc=2958,260,3821
+

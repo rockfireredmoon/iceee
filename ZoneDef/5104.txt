@@ -1,0 +1,15 @@
+[ENTRY]
+ID=5104
+ACCOUNTID=14
+NAME=Furry Olympics
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=anthrocon
+GroveName=anthrocon
+WarpName=anthrocon1
+DropRateProfile=standard
+Grove=1
+EnvironmentCycle=1
+BuildPermission=account,14,0,0,3,3
+DefLoc=2958,260,3821
+

@@ -1,0 +1,13 @@
+[ENTRY]
+ID=7368
+ACCOUNTID=297
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=Bastion
+ShardName=slavehut
+GroveName=slavehut
+WarpName=slavehut1
+Grove=1
+EnvironmentCycle=1
+DefLoc=2841,311,4751
+

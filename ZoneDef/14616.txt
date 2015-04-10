@@ -1,0 +1,13 @@
+[ENTRY]
+ID=14616
+ACCOUNTID=1203
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=slyjakster
+GroveName=slyjakster
+WarpName=slyjakster1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

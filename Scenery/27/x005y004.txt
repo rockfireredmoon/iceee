@@ -1,0 +1,7 @@
+[ENTRY]
+ID=452984878
+Asset=Dng-Hall_Straight1?ATS=ATS-Dungeon_Crypt
+Pos=5075,0,4865
+Orient=0,0.707107,0,0.707107
+Scale=1,1,1
+

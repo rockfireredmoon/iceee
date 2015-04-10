@@ -1,0 +1,13 @@
+[ENTRY]
+ID=10744
+ACCOUNTID=719
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=thedragoness
+GroveName=thedragoness
+WarpName=thedragoness1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

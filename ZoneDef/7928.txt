@@ -1,0 +1,13 @@
+[ENTRY]
+ID=7928
+ACCOUNTID=367
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=thedeathofchaz
+GroveName=thedeathofchaz
+WarpName=thedeathofchaz1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

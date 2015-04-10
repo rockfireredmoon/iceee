@@ -1,0 +1,13 @@
+[ENTRY]
+ID=6448
+ACCOUNTID=182
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=lath
+GroveName=lath
+WarpName=lath1
+Grove=1
+EnvironmentCycle=1
+DefLoc=2958,260,3821
+

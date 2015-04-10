@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151027999
+Asset=Bldg-Urban-Small_Facade2b?ATS=ATS-Warpig
+Name=9
+Pos=106251,1403.16,146223
+Orient=0,-0.458754,0,-0.888563
+Scale=1.475,1.475,1.475
+Flags=1
+

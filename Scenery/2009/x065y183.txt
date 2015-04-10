@@ -1,0 +1,8 @@
+[ENTRY]
+ID=151048837
+Asset=Prop-Dock3
+Name=9
+Pos=48783.2,37.2682,137715
+Orient=0,0,0,1
+Scale=1,1,1
+

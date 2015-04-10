@@ -1,0 +1,33 @@
+[ENTRY]
+Name=z39_fc_gen_Exit_to_Midlands_2193
+Spawn=2193,100  ;Exit to Midlands (1) at 0
+
+[ENTRY]
+Name=3_dng_fc_WildBeasts_24_25
+Shares=30
+Spawn=390,10  ;Savage Wilderbeastial (24) at 0
+Spawn=391,10  ;Savage Wilderbeastial (25) at 0
+Spawn=392,10  ;Rampant Wilderbeastial (24) at 0
+
+[ENTRY]
+Name=3_dng_fc_lizzards_26_27
+Spawn=2549,50  ;Thin Lizzard (26) at 10
+Spawn=2550,50  ;Thin Lizzard (27) at 10
+
+[ENTRY]
+Name=3_dng_fc_Lynott_r_27
+Spawn=2551,100  ;Lynott (27) at 73
+
+[ENTRY]
+Name=3_witchDoctorFrietz_d_25
+Spawn=443,100  ;Frietz Splithoof (25) at 62
+
+; TODO: has 2 spawn points
+[ENTRY]
+Name=3_GruttLongfang_k_25
+UniquePoints=2
+Spawn=2507,100  ;Grutt Longfang (25) at 353
+
+[ENTRY]
+Name=3_dng_fc_obji_FrietzSplithoofLewt
+Spawn=2728,100  ;Frietz Splithoof's Treasure (1) at 0

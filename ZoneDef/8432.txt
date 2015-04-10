@@ -1,0 +1,13 @@
+[ENTRY]
+ID=8432
+ACCOUNTID=430
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=AutumnSunrise
+ShardName=anotherzubat
+GroveName=anotherzubat
+WarpName=anotherzubat1
+Grove=1
+EnvironmentCycle=1
+DefLoc=3629,508,3142
+

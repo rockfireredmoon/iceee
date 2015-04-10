@@ -1,0 +1,8 @@
+[ENTRY]
+ID=1358966727
+Asset=Light-Medium?COLOR=33FFFF
+Name=81
+Pos=46856.2,210.543,46032.5
+Orient=0,0,0,1
+Scale=1,1,1
+

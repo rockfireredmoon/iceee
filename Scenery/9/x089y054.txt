@@ -1,0 +1,10 @@
+[ENTRY]
+ID=151060374
+Asset=Manipulator-SpawnPoint
+Pos=67001.8,741.747,40594.2
+Orient=0,0,0,1
+Scale=1,1,1
+innerRadius=25
+spawnPackage=HOLIDAY_turkatrice_26_27
+outerRadius=30
+

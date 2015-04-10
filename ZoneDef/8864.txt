@@ -1,0 +1,13 @@
+[ENTRY]
+ID=8864
+ACCOUNTID=484
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=jamhgrove
+GroveName=jamhgrove
+WarpName=jamhgrove1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

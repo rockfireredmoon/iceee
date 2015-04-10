@@ -1,0 +1,14 @@
+[ENTRY]
+ID=151015061
+Asset=Par-Flame-Emitter
+Pos=52608.6,768.177,81663
+Orient=0,0,0,1
+Scale=5.1,5.1,5.1
+
+[ENTRY]
+ID=151015062
+Asset=Treekin_Piles#Prop-Treekin_Pile2
+Pos=52615,743.352,81565
+Orient=0,0.777072,0,0.629412
+Scale=4.375,4.375,4.375
+

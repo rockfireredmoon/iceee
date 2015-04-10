@@ -1,0 +1,10 @@
+[ENTRY]
+ID=151056806
+Asset=Manipulator-SpawnPoint
+Pos=77077,420.229,41295
+Orient=0,0,0,1
+Scale=1,1,1
+links_count=1
+link=151056807,1
+spawnPackage=2a_trf_sectionC1_thunderWalker
+

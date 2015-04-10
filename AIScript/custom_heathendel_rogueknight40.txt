@@ -1,0 +1,105 @@
+#name custom_heathendel_rogueknight40
+#speed 6
+
+; 236 : Assail 40
+; 96 : Feline's Grace  [Group=34]
+; 5036 : Feline's Grace (15% bonus)  [Group=34]
+; 282 : Pierce 40  [Cooldown=Pierce]
+; 539 : Concussion 40   [Cooldown=Concussion]
+; 296 : Disembowel 40
+; 346 : Disarm 40   [Cooldown=Disarm]
+; 32766 : Melee autoattack
+
+
+set VAR 0
+set WILL 0
+set MIGHT 0
+set COOLDOWN 0
+
+
+:begin
+call waitfortarget
+call checkMightCharge
+call checkMight
+goto begin
+
+
+:checkMightCharge
+getmightcharge VAR
+if VAR < 3
+  return
+endif
+
+use 296
+reset_goto begin
+
+
+
+:checkMight
+getmight MIGHT
+if MIGHT < 3
+  return
+endif
+
+call tryConcussion
+call tryDisarm
+call tryPierce
+
+use 236
+reset_goto begin
+
+:tryMelee
+use 32766
+return
+
+:tryConcussion
+getcooldown "Concussion" COOLDOWN
+if COOLDOWN != 0
+  return
+endif
+
+use 539
+reset_goto begin
+
+
+
+:tryDisarm
+getcooldown "Disarm" COOLDOWN
+if COOLDOWN != 0
+  return
+endif
+
+use 346
+reset_goto begin
+
+
+:tryPierce
+getcooldown "Pierce" COOLDOWN
+if COOLDOWN != 0
+  return
+endif
+
+use 282
+reset_goto begin
+
+
+
+:castBuffs
+get_buff_tier 34 VAR
+if VAR = 0
+  use 5036
+endif
+return
+
+
+
+:waitfortarget
+has_target VAR
+if VAR = 0
+  wait 1000
+  goto waitfortarget
+endif
+
+call castBuffs
+use 32766
+return

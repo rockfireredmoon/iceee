@@ -1,0 +1,213 @@
+﻿; Bounty Chest: Fort Stonehenge
+[ENTRY]
+CreatureDefID=2865
+EssenceID=21330
+Item=143548,3
+Item=143547,3
+Item=143550,3
+Item=143549,3
+
+; Bounty Chest: Camelot
+[ENTRY]
+CreatureDefID=2864
+EssenceID=21329
+Item=5620,4
+Item=5618,4
+Item=5619,4
+Item=5617,4
+
+; Bounty Chest: Militia House
+[ENTRY]
+CreatureDefID=2867
+EssenceID=21332
+Item=5624,4
+Item=5621,4
+Item=5622,4
+Item=5623,4
+
+; Lunast's Chest
+[ENTRY]
+CreatureDefID=2612
+EssenceID=21149
+Item=5116,1
+Item=5115,1
+Item=5118,1
+Item=143294,1
+Item=5117,1
+Item=143295,1
+Item=143293,1
+Item=143296,1
+
+; Bounty Chest: Bath
+[ENTRY]
+CreatureDefID=2863
+EssenceID=21328
+Item=5616,4
+Item=5615,4
+Item=143546,4
+Item=143545,4
+
+; Bounty Chest: Nottingham
+[ENTRY]
+CreatureDefID=2866
+EssenceID=21331
+Item=143610,4
+Item=143553,4
+Item=143551,4
+Item=143554,4
+Item=143552,4
+
+; Underhenge Dungeon Loot
+[ENTRY]
+CreatureDefID=2696
+EssenceID=21250
+Item=5526,10
+Item=5557,10
+Item=5480,10
+Item=143484,10
+Item=143442,10
+Item=143425,10
+Item=5502,10
+Item=5414,10
+
+; Dungeon Loot
+[ENTRY]
+CreatureDefID=2726
+EssenceID=21269
+Item=143437,10
+Item=5441,10
+Item=143472,10
+Item=5509,10
+Item=5378,10
+Item=5396,10
+Item=5485,10
+Item=5462,10
+
+; Alexander's Chest
+[ENTRY]
+CreatureDefID=2617
+EssenceID=21153
+Item=5149,1
+Item=5154,1
+Item=5151,1
+Item=5152,1
+Item=5148,1
+Item=5150,1
+Item=5153,1
+Item=5155,1
+
+; Secret Stash!
+[ENTRY]
+CreatureDefID=2616
+EssenceID=21152
+Item=5147,1
+Item=143307,1
+Item=143305,1
+Item=143306,1
+Item=5146,1
+Item=143308,1
+
+; Doomfeather's Chest
+[ENTRY]
+CreatureDefID=2614
+EssenceID=21150
+Item=5140,1
+Item=5143,1
+Item=5142,1
+Item=143298,1
+Item=143297,1
+Item=143299,1
+Item=143300,1
+Item=5141,1
+
+; Bounty Chest: South Shield
+[ENTRY]
+CreatureDefID=2868
+EssenceID=21333
+Item=5627,4
+Item=5628,4
+Item=5625,4
+Item=5626,4
+
+; Robin's Chest
+[ENTRY]
+CreatureDefID=2615
+EssenceID=21151
+Item=143301,1
+Item=5145,1
+Item=143304,1
+Item=143302,1
+Item=5144,1
+Item=143303,1
+
+; Dungeon Loot (Cold Storm Cavern, log extract)
+[ENTRY]
+CreatureDefID=2697
+EssenceID=21251
+Item=5483,10
+Item=5417,10
+Item=5393,10
+Item=143436,10
+Item=5528,10
+Item=5440,10
+Item=143444,10
+Item=5505,10
+
+; Abandoned Monastery - Dungeon Loot
+[ENTRY]
+CreatureDefID=2699
+EssenceID=21253
+Item=143426,10
+Item=5459,10
+Item=5377,10
+Item=5416,10
+Item=5504,10
+Item=5482,10
+Item=143485,10
+Item=143435,10
+
+; Wilhelm's Crypt - Dungeon Loot
+[ENTRY]
+CreatureDefID=2698
+EssenceID=21252
+Item=5375,5
+Item=5412,5
+Item=5524,5
+Item=5500,5
+Item=143433,5
+Item=5457,5
+Item=143468,5
+Item=143498,5
+
+
+
+
+
+; Chillkin Hunt Reward Chest
+[ENTRY]
+CreatureDefID=2908
+EssenceID=21355   ;Highpoint Corn Cob Pipe
+Item=143585,3  ; Festive Dirk 7
+Item=143589,3  ; Holiday Smasher 7
+Item=143593,3  ; Candy Cane Talisman 7
+Item=143581,3  ; Candy Cane Wand 7
+
+
+; Chillkin Hunt Reward Chest
+[ENTRY]
+CreatureDefID=2909
+EssenceID=21357   ;Camelot Corn Cob Pipe
+Item=143586,3  ; Festive Dirk 16
+Item=143590,3  ; Holiday Smasher 16
+Item=143594,3  ; Candy Cane Talisman 16
+Item=143582,3  ; Candy Cane Wand 16
+
+
+; Harvest Fest Reward Chest (Camelot) via "Harvest Table" interact.
+[ENTRY]
+CreatureDefID=2860
+EssenceID=21318
+Item=143571,3
+Item=143572,3
+Item=143570,3
+Item=143569,3

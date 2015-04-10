@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151034483
+Asset=Prop-Wooden_Tower
+Name=9
+Pos=60014.4,492.396,34709
+Orient=0,0.0499792,0,0.99875
+Scale=3,3,3
+Flags=1
+

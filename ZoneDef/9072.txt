@@ -1,0 +1,13 @@
+[ENTRY]
+ID=9072
+ACCOUNTID=510
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=dfox
+GroveName=dfox
+WarpName=dfox1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

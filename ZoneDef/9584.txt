@@ -1,0 +1,13 @@
+[ENTRY]
+ID=9584
+ACCOUNTID=574
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=sardinia
+GroveName=sardinia
+WarpName=sardinia1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

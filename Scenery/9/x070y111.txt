@@ -1,0 +1,17 @@
+[ENTRY]
+ID=151015070
+Asset=Prop-Treekin_Pile1
+Pos=52540.7,1022.37,83742
+Orient=0,0.632673,0,0.774419
+Scale=1.8,1.8,1.8
+
+[ENTRY]
+ID=151025987
+Asset=Manipulator-SpawnPoint
+Pos=52756,591.15,83277
+Orient=0,0,0,1
+Scale=1,1,1
+Flags=1
+spawnPackage=10_oom_stumpSlayercamp_42_43
+outerRadius=10
+

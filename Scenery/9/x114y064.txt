@@ -1,0 +1,7 @@
+[ENTRY]
+ID=151061751
+Asset=Prop-Pine_Forest_Tree1
+Pos=86131,941.901,48099.7
+Orient=0.0848977,0,0,0.99639
+Scale=2.075,2.075,2.075
+

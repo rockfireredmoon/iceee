@@ -1,0 +1,13 @@
+[ENTRY]
+ID=13192
+ACCOUNTID=1025
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=doped
+GroveName=doped
+WarpName=doped1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

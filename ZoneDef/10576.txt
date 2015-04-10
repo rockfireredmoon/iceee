@@ -1,0 +1,13 @@
+[ENTRY]
+ID=10576
+ACCOUNTID=698
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=ninetails
+GroveName=ninetails
+WarpName=ninetails1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

@@ -1,0 +1,13 @@
+[ENTRY]
+ID=7024
+ACCOUNTID=254
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=btmk
+GroveName=btmk
+WarpName=btmk1
+Grove=1
+EnvironmentCycle=1
+DefLoc=2958,260,3821
+

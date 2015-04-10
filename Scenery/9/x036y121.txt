@@ -1,0 +1,16 @@
+[ENTRY]
+ID=151058874
+Asset=Prop-Cactus#Prop-Cactus1
+Pos=27615.9,397.034,90825
+Orient=0,0,0,1
+Scale=3.3,3.3,3.3
+Flags=1
+
+[ENTRY]
+ID=151058875
+Asset=CL-Desert3
+Pos=27617.5,395.988,90851.2
+Orient=0,0,0,1
+Scale=3,3,3
+Flags=1
+

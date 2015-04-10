@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151033040
+Asset=Prop-Dead-Forest-Tree5
+Name=9
+Pos=62240.4,183.189,134060
+Orient=0,0,0,1
+Scale=0.8,0.8,0.8
+Flags=1
+

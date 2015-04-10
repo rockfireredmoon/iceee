@@ -1,0 +1,9 @@
+#name Earthrise_flavor_catapultfiring1
+;#idlespeed 1
+
+; 5421 - Catapult1 
+
+:begin
+use 5421
+wait 10000
+goto begin

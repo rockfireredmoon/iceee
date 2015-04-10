@@ -1,0 +1,16 @@
+[ENTRY]
+ID=151046093
+Asset=CL-Fence-Stone_Blue5
+Name=9
+Pos=113973,450.683,138853
+Orient=0,0.930799,0,-0.365531
+Scale=1,1,1
+
+[ENTRY]
+ID=151056634
+Asset=Manipulator#Manipulator-PathNode
+Name=9
+Pos=113589,433.631,138785
+Orient=0,0,0,1
+Scale=1,1,1
+

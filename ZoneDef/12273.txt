@@ -1,0 +1,15 @@
+[ENTRY]
+ID=12273
+ACCOUNTID=910
+NAME=Grove
+TERRAINCONFIG=Terrain-Starting_Zone2#Terrain-Starting_Zone2.cfg
+ENVIRONMENTTYPE=Bastion
+ShardName=Seabreeze Shore
+GroveName=pale
+WarpName=pale2
+DropRateProfile=standard
+Grove=1
+EnvironmentCycle=0
+BuildPermission=account,910,4,4,7,7
+DefLoc=10994,546,12401
+

@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151022255
+Asset=Prop-Tribal_Lamp1
+Name=9
+Pos=108011,1073,147575
+Orient=0.114747,0,0,0.993395
+Scale=5.225,5.225,5.225
+Flags=1
+

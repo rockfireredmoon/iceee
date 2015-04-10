@@ -1,0 +1,16 @@
+[ENTRY]
+ID=150999881
+Asset=CL-Plains_Bush2#CL-Plains_Bush2
+Pos=56380.6,427.135,36852
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
+ID=151055854
+Asset=Manipulator-SpawnPoint
+Pos=56554.4,438.965,37201
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=2a_rhl_sectionA2_general
+outerRadius=30
+

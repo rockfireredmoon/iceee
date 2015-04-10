@@ -1,0 +1,8 @@
+[ENTRY]
+ID=151040460
+Asset=Prop-Palm-Tree5
+Name=9
+Pos=91142.2,166.361,147695
+Orient=0,0,-0.119712,0.992809
+Scale=1.9,1.9,1.9
+

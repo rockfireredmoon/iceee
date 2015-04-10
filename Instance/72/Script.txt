@@ -1,0 +1,20 @@
+:init
+set mossmastepup
+end
+
+; Scripted call from the spawn package
+:10_rk_MossmaSTEPUP
+inc mossmastepup
+if mossmastepup = 13
+  spawn_at 1207961205 1490
+end
+
+; Lost One's Treasure
+:onKill_949
+spawn 1207961763
+end
+
+; Rotted King's Treasure
+:onKill_946
+spawn 1207960970
+end

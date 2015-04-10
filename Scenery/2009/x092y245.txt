@@ -1,0 +1,16 @@
+[ENTRY]
+ID=151040946
+Asset=Prop-Sanctuary_Stone
+Name=9
+Pos=69512.6,1221.51,184009
+Orient=0,-0.518418,0,0.855127
+Scale=1,1,1
+
+[ENTRY]
+ID=151040947
+Asset=Manipulator-Sanctuary
+Name=9
+Pos=69512.7,1226.86,184009
+Orient=0,0,0,1
+Scale=1,1,1
+

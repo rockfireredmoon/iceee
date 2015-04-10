@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151003269
+Asset=Forest?d=0.9&amp;s=874567&amp;sz=800
+Name=9
+Pos=64391.7,251.284,155886
+Orient=0,0,0,1
+Scale=1,1,1
+Flags=1
+

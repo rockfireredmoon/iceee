@@ -1,0 +1,16 @@
+[ENTRY]
+ID=151058540
+Asset=Prop-Acacia_Tree#Prop-Acacia_Tree1
+Pos=42176.8,1226.32,75684
+Orient=-0.0291894,-0.647637,-0.0192998,0.761145
+Scale=0.575,0.575,0.575
+Flags=1
+
+[ENTRY]
+ID=151058557
+Asset=Prop-Bush_AridDead3#Prop-Bush_AridDead3
+Pos=42168.8,1216.39,75652
+Orient=0,0,0,1
+Scale=2.175,2.175,2.175
+Flags=1
+

@@ -1,0 +1,108 @@
+[ENTRY]
+Name=1_dng_wc_BoneThrall_13_14
+Spawn=300,50  ;Bone Thrall (13) at 0
+Spawn=294,50  ;Bone Thrall (14) at 0
+
+; TODO: shouldn't be heroic
+[ENTRY]
+Name=1_dng_wc_HighRitualistSquire_d_h_14
+;Spawn=303,100  ;High Ritualist (14) at 0
+Spawn=304,100  ;Templar Squire (13)
+
+[ENTRY]
+Name=1_dng_wc_RisenBones_13_14
+Spawn=293,50  ;Risen Bones (14) at 0
+Spawn=302,50  ;Risen Bones (13) at 0
+
+[ENTRY]
+Name=1_dng_wc_SpookyStagZombuck_k_h_14
+Spawn=305,100  ;Redeye Stag (13) at 0
+
+[ENTRY]
+Name=1_obj1_cam02i_powersource
+Spawn=208,100  ;Power Source (1) at 0
+
+[ENTRY]
+Name=1a_dng_wc_obji_WilhelmLewt
+Spawn=1814,100  ;Wilhelm's Treasure (1)
+
+[ENTRY]
+Name=1_dng_wc_ExhumedKingWilhelmRND_14
+Spawn=307,100  ;King Wilhelm (13) at 0
+
+[ENTRY]
+Name=1a_dng_wc_thornbringers_13_14
+Spawn=296,25  ;Ritualist (13) at 0
+Spawn=292,25  ;Ritualist (14) at 0
+Spawn=2430,25  ;Templar Squire (14) at 0
+Spawn=304,25  ;Templar Squire (13) at 0
+
+[ENTRY]
+Name=1a_dng_wc_undead_13_14
+Spawn=293,25  ;Risen Bones (14) at 0
+Spawn=294,25  ;Bone Thrall (14) at 0
+Spawn=300,25  ;Bone Thrall (13) at 0
+Spawn=302,25  ;Risen Bones (13) at 23
+
+[ENTRY]
+Name=1a_dng_wc_ritualist_13_14
+Spawn=296,50  ;Ritualist (13) at 15
+Spawn=292,50  ;Ritualist (14) at 521
+
+[ENTRY]
+Name=1_thornbringer_jengal_14
+Spawn=21,100  ;Jengal Narglor (14)  (from cdef file)
+
+[ENTRY]
+Name=1a_dng_wc_highRitualist_13
+Spawn=296,50  ;Ritualist (13) at 0
+Spawn=292,50  ;Ritualist (14) at 0
+
+[ENTRY]
+Name=1a_dng_wc_thornbringersHeroic_13_14
+Shares=60
+Spawn=2431,10  ;Skull Charmer (14) at 0
+Spawn=2432,10  ;Skull Charmer (13) at 0
+Spawn=2433,10  ;Crypt Creeper (14) at 0
+Spawn=2434,10  ;Grave Guardian (14) at 0
+Spawn=2435,10  ;Grave Guardian (13) at 0
+Spawn=2436,10  ;Bone Chiller (14) at 0
+
+[ENTRY]
+Name=1a_dng_wc_sages_13_14
+Spawn=2544,50  ;Sage (13) at 21
+Spawn=2545,50  ;Sage (14) at 25
+
+[ENTRY]
+Name=1a_dng_wc_sageMarlonWilberSTEPUP_m_15
+ScriptCall=1
+Spawn=2544,50  ;Sage (13) at 21
+Spawn=2545,50  ;Sage (14) at 25
+; Spawn=2546,100  ;Sage Marlon Wilber (15)  (from cdef file)
+
+[ENTRY]
+Name=1a_dng_wc_undeadHeroic_soldiers
+Spawn=2470,20  ;Undead Footsoldier (13) at 0
+Spawn=2471,20  ;Undead Footsoldier (14) at 0
+Spawn=2472,20  ;Rotting Assassin (13) at 0
+Spawn=2473,20  ;Rotting Assassin (14) at 0
+Spawn=2474,20  ;Moldy Magician (14) at 0
+
+[ENTRY]
+Name=1a_dng_wc_commanderAdalhelm_k_15
+UniquePoints=2
+Spawn=2547,100  ;Commander Adalhelm (15) at 0
+
+; NOTE: Is this supposed to be a stepup?
+[ENTRY]
+Name=1a_dng_wc_templarCornelius_k_15
+UniquePoints=6
+Spawn=2482,100  ;Templar Cornelius (15)  (from cdef file)
+
+[ENTRY]
+Name=1a_dng_wc_cryptWidows
+Spawn=2770,100  ;Crypt Widow (14) at 0
+
+[ENTRY]
+Name=1a_dng_wc_kerrathBellington_r_15
+Spawn=2480,100  ;Kerrath Bellington (15) (from cdef file)

@@ -1,0 +1,17 @@
+[ENTRY]
+ID=151002156
+Asset=Forest?d=1&s=812321&sz=900
+Pos=46442.5,461.608,55050
+Orient=0,0.492535,0,0.870293
+Scale=1,1,1
+Flags=1
+
+[ENTRY]
+ID=151053573
+Asset=Manipulator-SpawnPoint
+Pos=46450.1,220.055,55455
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=3a_sectionB6_general
+outerRadius=10
+

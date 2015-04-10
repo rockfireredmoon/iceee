@@ -1,0 +1,28 @@
+; Warpig Duff's Treasure
+; Restored from 0.8.6b chest screenshot
+[ENTRY]
+CreatureDefID=2733
+EssenceID=21280
+Item=5548,1  ;Cellar Ring
+Item=5403,1  ;Duff's Pauldrons
+Item=143450,1  ;Moonshine Mace
+Item=143462,1  ;Dunkelheimer Dagger
+Item=5516,1  ;Ale-Drenched Leggings
+Item=5559,1  ;Cellar Collar
+Item=5469,1  ;Dunkerlheimer Gloves
+Item=143457,1  ;Duff's Longsword
+
+
+; Dungeon Loot
+[ENTRY]
+CreatureDefID=2708
+EssenceID=21262
+Item=5492,10
+Item=5448,10
+Item=143506,10
+Item=5404,10
+Item=5562,10
+Item=5536,10
+Item=5428,10
+Item=5561,10
+

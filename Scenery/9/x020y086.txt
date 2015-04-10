@@ -1,0 +1,17 @@
+[ENTRY]
+ID=151001234
+Asset=CL-Plains_Bush1#CL-Plains_Bush1
+Pos=15630,211.337,64550
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
+ID=151020754
+Asset=Manipulator-SpawnPoint
+Pos=15544.9,230.429,64727
+Orient=0,0,0,1
+Scale=1,1,1
+innerRadius=115
+spawnPackage=4_ewd_edgewoodVenomspinner
+outerRadius=120
+

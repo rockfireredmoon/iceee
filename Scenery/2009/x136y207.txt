@@ -1,0 +1,16 @@
+[ENTRY]
+ID=151040291
+Asset=Prop-Boulder_Arid2
+Name=9
+Pos=102144,577.103,155636
+Orient=0,0.99524,0,0.0974564
+Scale=8.475,8.475,8.475
+
+[ENTRY]
+ID=151058287
+Asset=Effects#Par-Splash1-Emitter
+Name=9
+Pos=102036,448.19,155411
+Orient=0,0,0,1
+Scale=2.5,2.5,2.5
+

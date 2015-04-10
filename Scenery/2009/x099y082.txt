@@ -1,0 +1,17 @@
+[ENTRY]
+ID=151024455
+Asset=Prop-Battlefield_Barricade
+Name=9
+Pos=74855.1,847.114,61997.4
+Orient=0.153827,0.506349,0.297984,-0.794452
+Scale=9.7,9.7,9.7
+Flags=1
+
+[ENTRY]
+ID=151029587
+Asset=Manipulator-PathNode
+Name=9
+Pos=74508,953.925,62127
+Orient=0,0,0,1
+Scale=1,1,1
+

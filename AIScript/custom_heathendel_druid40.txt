@@ -1,0 +1,167 @@
+#name custom_heathendel_druid40
+#speed 6
+
+
+
+; 105 : Spirit of Solomon 40  [Group=37]
+; 5015 : Spirit of Solomon (15% buff)  [Group=37]
+; 101 : Root 6  [Cooldown=ReduceMovementSpeed, Will=5]
+; 488 : Soul Needles 40
+; 485 : Trauma 40
+; 495 : Mystic Missile 40
+; 369 : Soul Burst 40
+; 215 : Swarm 40   [Cooldown=DoT, Will=4]
+; 296 : Disembowel 40       Borrowing a rogue ability for lack of a melee execute
+; 32760 : ranged autoattack
+
+set VAR 0
+set WILL 0
+set COOLDOWN 0
+set SELFID 0
+set TARGID 0
+set OLDTARGID 0
+set ALLOWROOT 0
+
+get_self SELFID
+
+
+:begin
+call waitfortarget
+call checkWillCharge
+call checkMightCharge
+call checkWill
+call checkMight
+goto begin
+
+
+
+
+:checkWillCharge
+getwillcharge VAR
+if VAR >= 3
+  use 369
+  reset_goto begin
+endif
+return
+
+
+:checkMightCharge
+getmightcharge VAR
+if VAR >= 3
+  use 296
+  reset_goto begin
+endif
+return
+
+
+
+:checkWill
+getwill WILL
+if WILL < 3
+  return
+endif
+
+call checkRoot
+call checkSwarm
+call checkMysticMissile
+
+if WILL >= 3
+  use 488
+  reset_goto begin
+endif
+return
+
+
+
+:checkMight
+getmight VAR
+if VAR >= 3
+  use 485
+  reset_goto begin
+endif
+return
+
+
+:castBuffs
+get_buff_tier 37 VAR
+if VAR = 0
+  use 5015
+endif
+return
+
+
+
+
+:checkRoot
+if ALLOWROOT = 0
+  return
+endif
+if WILL < 5
+  return
+endif
+
+getcooldown "ReduceMovementSpeed" COOLDOWN
+if COOLDOWN != 0
+  return
+endif
+
+get_speed TARGID VAR
+if VAR = 0
+  return
+endif
+
+use 101
+set ALLOWROOT 0
+reset_goto begin
+
+
+
+:checkSwarm
+if WILL < 4
+  return
+endif
+getcooldown "DoT" COOLDOWN
+if COOLDOWN != 0
+  return
+endif
+count_enemy_at 150 VAR
+if VAR < 2
+  return
+endif
+set_gtae
+use 215
+reset_goto begin
+
+
+
+:checkMysticMissile
+if WILL < 4
+  return
+endif
+get_target_buff_tier 115 VAR
+if VAR != 0
+  return
+endif
+use 495
+reset_goto begin
+
+
+
+
+
+:waitfortarget
+has_target VAR
+if VAR = 0
+  wait 1000
+  goto waitfortarget
+endif
+
+get_target TARGID
+if TARGID != OLDTARGID
+  get_target OLDTARGID
+  set ALLOWROOT 1
+endif 
+
+call castBuffs
+use 32760
+return

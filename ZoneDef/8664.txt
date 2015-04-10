@@ -1,0 +1,13 @@
+[ENTRY]
+ID=8664
+ACCOUNTID=459
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=Bastion
+ShardName=vulpesgrove
+GroveName=vulpesgrove
+WarpName=vulpesgrove1
+Grove=1
+EnvironmentCycle=0
+DefLoc=3114,258,4436
+

@@ -1,0 +1,13 @@
+[ENTRY]
+ID=5025
+ACCOUNTID=4
+NAME=Grove
+TERRAINCONFIG=Terrain-Terrain-MTerrain-Camelot_Arena#Terrain-Camelot_Arena.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=aveline
+GroveName=aveline
+WarpName=aveline2
+Grove=1
+EnvironmentCycle=1
+DefLoc=2904,1252,2796
+

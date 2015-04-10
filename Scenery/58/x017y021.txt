@@ -1,0 +1,16 @@
+[ENTRY]
+ID=973080595
+PlacedBy=0
+Asset=Manipulator-PathNode
+Name=Untitled
+Pos=17975,1601.74,21010
+Orient=0,0,0,1
+Scale=1,1,1
+Flags=0
+Layer=0
+patrolSpeed=0
+patrolEvent=
+links_count=2
+link=973080596,1
+link=973080594,1
+

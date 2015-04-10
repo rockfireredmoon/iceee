@@ -1,0 +1,17 @@
+[ENTRY]
+ID=151001762
+Asset=Prop-Forest_Tree7
+Pos=47791.8,199.845,54235
+Orient=0,-0.618312,0,-0.785933
+Scale=1,1,1
+Flags=1
+
+[ENTRY]
+ID=151053876
+Asset=Manipulator-SpawnPoint
+Pos=47488,238.327,54102
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=3a_sectionB6_general
+outerRadius=200
+

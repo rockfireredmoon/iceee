@@ -1,0 +1,8 @@
+[ENTRY]
+ID=151016808
+Asset=CL-AridBush1#CL-AridBush1
+Pos=64111.3,752.258,56202
+Orient=0,0,0,1
+Scale=2.725,2.725,2.725
+Flags=1
+

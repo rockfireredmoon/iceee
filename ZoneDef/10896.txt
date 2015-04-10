@@ -1,0 +1,13 @@
+[ENTRY]
+ID=10896
+ACCOUNTID=738
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=shinokou
+GroveName=shinokou
+WarpName=shinokou1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

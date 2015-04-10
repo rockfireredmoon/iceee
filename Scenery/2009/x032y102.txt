@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151010766
+Asset=Prop-Henge-BlueStone
+Name=9
+Pos=24000.5,212.251,77079
+Orient=0.095766,0.404068,-0.0425837,-0.908705
+Scale=1.625,1.625,1.625
+Flags=1
+

@@ -1,0 +1,13 @@
+[ENTRY]
+ID=6328
+ACCOUNTID=167
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=sweet
+GroveName=sweet
+WarpName=sweet1
+Grove=1
+EnvironmentCycle=1
+DefLoc=2958,260,3821
+

@@ -1,0 +1,4958 @@
+// The stolen locket: Requires=16, Suggested=14, inverted this.
+// Added generic text to the first act of "Sneath the Betrayer".  Doesn't look like the quest
+// ever officially had it.
+
+// Null quest. Uses some placeholder values so the server doesn't issue data warnings.
+[ENTRY]
+ID=1
+Title=Null quest.
+BodyText=Null quest.
+CompleteText=Null quest.
+Level=1000
+Exp=1
+NumRewards=0
+Coin=0
+sGiver=0,0,0,-1
+QuestGiverID=1
+QuestEnderID=1
+[ACT]
+Act.BodyText=Null act.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Blah
+Obj.0.complete=0
+Obj.0.myCreatureDefID=1
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=0,0,0,-1;
+
+
+
+// Official quests
+
+[ENTRY]
+ID=251
+Title=Hides, Shells and Feathers
+BodyText=Oh! Hello there! Perhaps you could help me with a small amount of work I need done? I would gladly pay you for your efforts.
+
+I am a trader, you see. I take bits and pieces of creatures here in Anglorum over into Midlands and beyond to trade for other such creature bits, or just to sell. Normally, I have my man-servant, Aramere, do the collection of these things for me. But sadly, he is off on other business for me at this time, though he should be back by now! Hrmph!
+
+So, if you have the time and could use some coin, I could use some Barbhog Hides, Lake Crab Shells and some Talon Tailfeathers from the nasty little Talons that seem to infest this area - a half dozen of each should do just fine!
+CompleteText=You return! And I see you have my goods! Excellent! Take your reward and thank you very much!
+Level=11
+Suggested=11
+Exp=2147
+PartySize=1
+NumRewards=0
+Coin=270
+Unabandon=0
+QuestGiverID=1570
+QuestEnderID=1570
+Repeat=0
+sGiver=43972.6,189.574,65622.8,81
+sEnder=43972.6,189.574,65622.8,81
+Heroism=10
+[ACT]
+Act.BodyText=Gather six Barbhog Hides from Barbhogs.
+
+Gather six Lake Crab Shells from Scuttling Lake Crabs.
+
+Gather six Talon Tailfeathers from Talons.
+Obj.0.type=kill
+Obj.0.data1=1618,1619
+Obj.0.data2=6
+Obj.0.description=Gather 6 Boar Hides
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=500169
+Obj.0.completeText=0 of 6
+Obj.0.markerLocations=47005.9,189.444,67820.0,81;
+Obj.1.type=kill
+Obj.1.data1=124
+Obj.1.data2=6
+Obj.1.description=Gather 6 Lake Crab Shells
+Obj.1.complete=0
+Obj.1.myCreatureDefID=
+Obj.1.myItemID=500171
+Obj.1.completeText=0 of 6
+Obj.1.markerLocations=46890.0,74.8913,66762.0,81;
+Obj.2.type=kill
+Obj.2.data1=1621,1622,1623
+Obj.2.data2=6
+Obj.2.description=Gather 6 Hawk Feathers
+Obj.2.complete=0
+Obj.2.myCreatureDefID=
+Obj.2.myItemID=500170
+Obj.2.completeText=0 of 6
+Obj.2.markerLocations=46683.6,364.962,68657.0,81;
+[ACT]
+Act.BodyText=Return to Elden Motera.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=1570
+Obj.0.description=Return to Elden Motera
+Obj.0.complete=0
+Obj.0.myCreatureDefID=1570
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=43958.6,189.68,65628.0,81;
+
+[ENTRY]
+ID=253
+Title=In the Belly of the Beast
+BodyText=Hello friend. I could really use a favor! *sigh* This is a bit embarrassing...! I just returned from doing some outer patrolling alone. I got a small bit distracted and wandered into a pack of chompers - dreadful thing in fact. Locally, they call them Meadow Munchers - silly name! Ah, but to the point... There is one in particular that has caused me some grief. I think Boyle named him, even - Clampton! Well... *sigh* ...he ate my favorite sword. Yes, I know... Would you do me the great favor of hunting this pest down and retrieving my sword from his belly? Gaia only knows if I will even be able to use it again, but we shall see. Would you do this for me?
+CompleteText=Oh, Gaia be praised! You have my sword! Oh, well, you could have at least cleaned it a little, perhaps? Oh well, not to worry. Take your reward with my thanks! Oh, and PLEASE let us just keep this between us - Boyle would never let me live this down! Thank you again!
+Level=12
+Exp=2233
+PartySize=2
+NumRewards=1
+Coin=293
+Unabandon=0
+QuestGiverID=157
+QuestEnderID=157
+Repeat=0
+sGiver=43653.6,187.563,66018.9,81
+sEnder=43653.6,187.563,66018.9,81
+Heroism=10
+[ACT]
+Act.BodyText=That pest, Clampton, can be found meandering around the rest of his ilk to the west.
+Obj.0.type=kill
+Obj.0.data1=162
+Obj.0.data2=1
+Obj.0.description=Kill Clampton and retrieve Whitehoof's sword
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=500174
+Obj.0.completeText=0 of 1
+Obj.0.markerLocations=40275.1,383.989,68558.0,81;
+[ACT]
+Act.BodyText=Return to Master Sergeant Whitehoof.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Master Sergeant Whitehoof
+Obj.0.complete=0
+Obj.0.myCreatureDefID=157
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=43485.4,192.325,66020.0,81;
+RewardItem.0=143290,1,0
+RewardItem.1=143291,1,0
+RewardItem.2=143292,1,0
+RewardItem.3=143400,1,0
+
+[ENTRY]
+ID=250
+Title=Avalonian Violet Eyes
+BodyText=Hello! My name is Graynard Birk, collector of the finest varieties of plants from all across Anglorum! I have come here to Fort Stonehenge in search of Avalonian Violet Eyes. Normally, they only grow in the depths of Avalon. With the recent incursion of Avalonians into Anglorum, it seems some Avalonian Violet Eye spores have spread out of the gate and have taken root along the southern shores of the lake. If you could collect ten of these lovely plants for me, I would be forever in your debt!
+CompleteText=These are lovely! They will go wonderfully with the rest of my collection! Thank you kindly and good luck!
+Level=11
+Suggested=11
+Exp=2147
+PartySize=1
+NumRewards=0
+Coin=270
+Unabandon=0
+QuestGiverID=1571
+QuestEnderID=1571
+Repeat=0
+sGiver=43644.0,195.418,65700.0,81
+sEnder=43644.0,195.418,65700.0,81
+Heroism=6
+[ACT]
+Act.BodyText=Gather ten Avalonian Violet Eyes from the southern shore of the lake.
+Obj.0.type=gather
+Obj.0.data1=1785
+Obj.0.data2=10
+Obj.0.description=Gather 10 Avalonian Violet Eyes
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=500168
+Obj.0.completeText=0 of 10
+Obj.0.markerLocations=45803.5,176.013,67018.4,81;
+Obj.0.ActivateTime=2000
+Obj.0.ActivateText=Picking Flowers!
+[ACT]
+Act.BodyText=Return to Graynard Birk.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Graynard Birk
+Obj.0.complete=0
+Obj.0.myCreatureDefID=1571
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=43662.1,188.455,65704.0,81;
+
+[ENTRY]
+ID=245
+Title=Thornbringers Investigation
+BodyText=Welcome to Stonehenge. I am glad you have been sent to us. We surely can use help with some local issues.
+
+More specifically, I need some help dealing with these "thornbringers". Though they would appear to be Druids, like myself, they bring not life, but decay to all things around them.
+
+They have infested the shores south of the henge and seem to be spreading daily. I have yet to ascertain what their true purpose is, or even who the leader is amongst their ranks.
+
+Do me the favor of investigating their camps taking any documents that you may find. I must know who is behind this incursion and what exactly their aims are.
+CompleteText=You found something? Hrm... ...that name sounds familiar. Allow me some time to research this a bit further. In the meantime, talk with Druid Kearn; he has some related issues to discuss with you.
+Level=10
+Suggested=10
+Exp=2063
+PartySize=1
+NumRewards=0
+Coin=248
+Unabandon=0
+QuestGiverID=158
+QuestEnderID=158
+Repeat=0
+sGiver=43783.6,179.792,65508.9,81
+sEnder=43783.6,179.792,65508.9,81
+Heroism=6
+[ACT]
+Act.BodyText=You have found a note to some one named Priestess Claira. The rest of the note is in a language you cannot understand. Take the note and return to Druid Christie.
+Obj.0.type=gather
+Obj.0.data1=1580
+Obj.0.data2=1
+Obj.0.description=Take the Thornbringer Documents
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=500166
+Obj.0.completeText=0 of 1
+Obj.0.markerLocations=43971.0,118.751,69348.0,81;
+Obj.0.ActivateTime=2000
+Obj.0.ActivateText=Taking note...
+[ACT]
+Act.BodyText=Return to Druid Christie.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Druid Christie
+Obj.0.complete=0
+Obj.0.myCreatureDefID=158
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=43761.8,188.979,65650.0,81;
+
+[ENTRY]
+ID=552
+Title=BOUNTY: Barbhog Gorger
+BodyText=Kill 10 Barbhog Gorgers.
+CompleteText=
+Level=10,14
+Exp=825
+PartySize=1
+NumRewards=0
+Coin=99
+Unabandon=0
+QuestGiverID=2786
+QuestEnderID=2786
+Repeat=1
+sGiver=43652.0,186.0,65635.0,81
+sEnder=43652.0,186.0,65635.0,81
+Heroism=6
+[ACT]
+Act.BodyText=Kill 10 Barbhog Gorgers.
+Obj.0.type=kill
+Obj.0.data1=1618,1619
+Obj.0.data2=10
+Obj.0.description=Kill 10 Barbhog Gorgers
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 10
+Obj.0.markerLocations=44330.4,236.218,67597.5,81;
+[ACT]
+Act.BodyText=Return to the Bounty Board!
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=2786
+Obj.0.description=Return to the Bounty Board!
+Obj.0.complete=0
+Obj.0.myCreatureDefID=2786
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=43651.9,186.273,65635.3,81;
+RewardItem.0=21330,1,1
+
+[ENTRY]
+ID=252
+Title=Quality Bows
+BodyText=Hail adventurer! I am duty bound to be at my post defending Fort Stonehenge. Indeed, this consumes most of my time. When I am off duty, I enjoy making quality bows. Sadly, I do not have the time to hunt and collect the more rare items I need to build the bows. I would pay you for your efforts, if you could collect these items for me. This is not as simple as it seems. I need fine Buck antler for the bow and well hardened quills for my arrows. You would need to hunt an Elder Buck for the antler and one of the larger Quillback patriarchs for the quills. How about it?
+CompleteText=Let me see... Oh, these are of superb quality! Thank you very much! Please take your reward and good luck in your journeys!
+Level=11
+Suggested=13
+Exp=2334
+PartySize=2
+NumRewards=1
+Coin=338
+Unabandon=0
+QuestGiverID=168
+QuestEnderID=168
+Repeat=0
+sGiver=44048.8,233.862,65743.0,81
+sEnder=44048.8,233.862,65743.0,81
+Heroism=10
+[ACT]
+Act.BodyText=You will find Quillbacks to the west - there is normally a patriarch amongst them. They are big and hard to miss!
+
+You will find Bucks farther west. The Elder Buck are normally larger and their age has faded their fur. I am sure you will have no trouble spotting the differences between one and a normal Buck.
+
+Be on your guard. Your prey is older and stronger than the more common variety you will find out there!
+Obj.0.type=kill
+Obj.0.data1=1627
+Obj.0.data2=1
+Obj.0.description=Gather Hardened Quills
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=500172
+Obj.0.completeText=0 of 1
+Obj.0.markerLocations=36356.4,394.146,68418.0,81;
+Obj.1.type=kill
+Obj.1.data1=148
+Obj.1.data2=1
+Obj.1.description=Gather an Elder Buck Antler
+Obj.1.complete=0
+Obj.1.myCreatureDefID=
+Obj.1.myItemID=500173
+Obj.1.completeText=0 of 1
+Obj.1.markerLocations=35525.4,174.156,70091.0,81;
+[ACT]
+Act.BodyText=Return to Lieutenant Boyle.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Lieutenant Boyle
+Obj.0.complete=0
+Obj.0.myCreatureDefID=168
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=44050.1,233.862,65728.5,81;
+RewardItem.0=143286,1,0
+RewardItem.1=143287,1,0
+RewardItem.2=143288,1,0
+RewardItem.3=143289,1,0
+
+[ENTRY]
+ID=246
+Title=A More Direct Approach
+BodyText=Hello! While most of my fellow Druids want to discuss the "whats" and "hows" of dealing with these Thornbringers, I am one for more direct action! Go to the Thornbringer camps south of the henge and, well... ...simply put.. Kill them! My brethren may disagree with my urgent action, but I cannot stand idly by while they spread their decay!
+CompleteText=Perhaps this will make them think twice about keeping up their evil plans! Thank you very much!
+Level=10
+Suggested=10
+Exp=2063
+PartySize=1
+NumRewards=0
+Coin=248
+Unabandon=0
+QuestGiverID=1569
+QuestEnderID=1569
+Repeat=0
+sGiver=44197.2,242.721,65325.0,81
+sEnder=44197.2,242.721,65325.0,81
+Heroism=10
+[ACT]
+Act.BodyText=Kill 15 Thornbringers at the camps which lie south of the henge.
+Obj.0.type=kill
+Obj.0.data1=6,12,14,26
+Obj.0.data2=15
+Obj.0.description=Kill 15 Thornbringers
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 15
+Obj.0.markerLocations=43078.0,181.796,69355.0,81;
+[ACT]
+Act.BodyText=Return to Druid Klymer.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Druid Klymer
+Obj.0.complete=0
+Obj.0.myCreatureDefID=1569
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=44179.9,241.385,65332.1,81;
+
+[ENTRY]
+ID=551
+Title=BOUNTY: Meadow Muncher
+BodyText=Kill 10 Meadow Munchers.
+CompleteText=
+Level=10,14
+Exp=825
+PartySize=1
+NumRewards=0
+Coin=99
+Unabandon=0
+QuestGiverID=2785
+QuestEnderID=2785
+Repeat=1
+sGiver=43756.0,190.0,65925.0,81
+sEnder=43756.0,190.0,65925.0,81
+Heroism=6
+[ACT]
+Act.BodyText=Kill 10 Meadow Munchers.
+Obj.0.type=kill
+Obj.0.data1=1625,1626
+Obj.0.data2=10
+Obj.0.description=Kill 10 Meadow Munchers
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 10
+Obj.0.markerLocations=41781.5,315.278,67766.1,81;
+[ACT]
+Act.BodyText=Return to the Bounty Board!
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=2785
+Obj.0.description=Return to the Bounty Board!
+Obj.0.complete=0
+Obj.0.myCreatureDefID=2785
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=43757.0,190.554,65925.9,81;
+RewardItem.0=21330,1,1
+
+[ENTRY]
+ID=247
+Requires=245
+Title=Bandit Connection?
+BodyText=Ah Christie sent you? Good, I can use some help!
+CompleteText=Ah, just as I thought! Jek and Jester Jumptail; mostly buffoons, but with enough resources, it seems, they can cause quite a large amount of mayhem.
+Level=10
+Suggested=11
+Exp=2147
+PartySize=1
+NumRewards=0
+Coin=270
+Unabandon=0
+QuestGiverID=167
+QuestEnderID=167
+Repeat=0
+sGiver=43610.0,179.37,65435.0,81
+sEnder=43610.0,179.37,65435.0,81
+Heroism=6
+[ACT]
+Act.BodyText=I was sent from Camelot by Grand Druid Lunast. He is convinced the local Thornbringer situation is also related to the sudden rise of the River-Runner bandits. Previously, they were a source of little concern, doing little more than occasionally waylaying a passersby here and there, on their way to Camelot. Recently however, they have grown in not only numbers, but have gone as far as taking over some farmland south of Camelot itself!
+
+I am convinced there is a connection between the Thornbringers and the sudden rise of these bandits, as well. I have heard that a bandit messenger has been seen just south of the road. That same area seems to be visited quite regularly by one of the Thornbringers. Perhaps this is a message drop between the two? Investigate for me and let me know what you find. I can only act, in a more direct manner, if I have proof!
+Obj.0.type=travel
+Obj.0.data1=46393,207,67508,81
+Obj.0.data2=250
+Obj.0.description=Travel to the area South of the Road
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=46393.0,207.326,67508.0,81;
+[ACT]
+Act.BodyText=Search the area for any place that could be used as a message drop between the River-Runner Bandits and the Thornbringers.
+Obj.0.type=travel
+Obj.0.data1=46425,177,68334,81
+Obj.0.data2=120
+Obj.0.description=Search for a message drop location
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=46425.8,177.08,68334.0,81;
+[ACT]
+Act.BodyText=You see a odd looking stump that could be the perfect place for a message drop!
+Obj.0.type=gather
+Obj.0.data1=1599
+Obj.0.data2=1
+Obj.0.description=Search the old stump
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=500167
+Obj.0.completeText=0 of 1
+Obj.0.markerLocations=46425.8,177.08,68334.0,81;
+Obj.0.ActivateTime=3000
+Obj.0.ActivateText=Investigating old stump...
+[ACT]
+Act.BodyText=You found a poorly written message: "If you be wantin' we keeping up the troubles makin' and road raidin,' then youses are havin' to pays us more than tiny bit o'gold. Youses need be payin' us doubles, or wes is done, you see? - Jek and Jester"
+
+Take the message to Druid Kearn.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Druid Kearn
+Obj.0.complete=0
+Obj.0.myCreatureDefID=167
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=43611.7,179.502,65438.0,81;
+
+[ENTRY]
+ID=248
+Requires=247
+Title=The First Bandit Brother
+BodyText=Jek and Jester Jumptail are brothers. Bungling brothers, normally, but it seems they have gotten smarter - well that is doubtful... At least they have the help and resources from these Thornbringer Druids, to have greater numbers of men at their disposal. I know for a fact that Jek Jumptail is lording over three small bandit camps near the bridge to the southeast. Go to the camps and eliminate the bandits, and Jek Jumptail.
+CompleteText=Ah! You have done well striking a blow into the heart of these bandits! I thank you! Druid Christie has more information about the Thornbringers she wishes to share with you. Speak to her when you are able. Thank you again!
+Level=10
+Suggested=11
+Exp=2147
+PartySize=2
+NumRewards=0
+Coin=270
+Unabandon=0
+QuestGiverID=167
+QuestEnderID=167
+Repeat=0
+sGiver=43610.0,179.37,65435.0,81
+sEnder=43610.0,179.37,65435.0,81
+Heroism=10
+[ACT]
+Act.BodyText=I know for a fact that Jek Jumptail is lording over three small bandit camps near the bridge to the southeast. Go to the camps and eliminate the bandits and Jek Jumptail.
+Obj.0.type=travel
+Obj.0.data1=50265,242,68713,81
+Obj.0.data2=600
+Obj.0.description=Travel to the bandit camps in the southeast
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=50265.0,242.687,68713.0,81;
+[ACT]
+Act.BodyText=Kill 15 River-Runner Bandits and Jek Jumptail!
+Obj.0.type=kill
+Obj.0.data1=1698,1699,1700,1701,1702,1703
+Obj.0.data2=15
+Obj.0.description=Kill 15 River-Runner Bandits
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 15
+Obj.0.markerLocations=50265.0,242.687,68713.0,81;
+Obj.1.type=kill
+Obj.1.data1=32
+Obj.1.data2=1
+Obj.1.description=Kill Jek Jumptail
+Obj.1.complete=0
+Obj.1.myCreatureDefID=
+Obj.1.myItemID=
+Obj.1.completeText=0 of 1
+Obj.1.markerLocations=50110.0,233.234,68840.0,81;
+[ACT]
+Act.BodyText=Return to Druid Kearn.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Druid Kearn
+Obj.0.complete=0
+Obj.0.myCreatureDefID=167
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=43611.7,179.502,65438.0,81;
+
+[ENTRY]
+ID=249
+Requires=248
+Title=Travel to Camelot
+BodyText=Welcome back. I have more information regarding this Priestess Claira. She was once a Druid in our order, but she was cast out by Grand Druid Lunast himself! For what reason, I have no idea. Only Grand Druid Lunast could tell you. Travel to Camelot and speak to Grand Druid Lunast.
+CompleteText=Greetings. Druid Christie sent you from Fort Stonehenge? Ah yes, what news then?
+Level=11
+Suggested=11
+Exp=644
+PartySize=1
+NumRewards=0
+Coin=81
+Unabandon=0
+QuestGiverID=158
+QuestEnderID=169
+Repeat=0
+sGiver=43783.6,179.792,65508.9,81
+sEnder=54606.0,167.362,63317.0,81
+[ACT]
+Act.BodyText=Travel to Camelot and speak with Grand Druid Lunast in the Druid Hall.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Travel to the Druid Hall in Camelot
+Obj.0.complete=0
+Obj.0.myCreatureDefID=169
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=54610.797,167.304,63315.0,81;
+
+[ENTRY]
+ID=280
+Title=Harvesting the Razor Beaks
+BodyText=Salute! I am Turgan Gergendol, trader extraordinaire! You, friend, look strong and brave, yes? Yes! Excellent!
+
+I am low on some of my most popular supplies. With all the trouble that abounds in Anglorum - it's dreadful yes - it is a good time to be in the trade business. There are some things I could surely use, and I will pay you kindly, if you are up to the task.
+
+At the moment, I am in most dire need of Razor Beak Talons. I have a gentleman from New Badari who uses them for his weapon crafting business.
+
+Interested?
+CompleteText=Ah very good! Perhaps you could use some more work?
+Level=13
+Suggested=13
+Exp=2334
+PartySize=1
+NumRewards=0
+Coin=338
+Unabandon=0
+QuestGiverID=1576
+QuestEnderID=1576
+Repeat=0
+sGiver=55888.0,356.085,65855.0,81
+sEnder=55888.0,356.085,65855.0,81
+Heroism=10
+[ACT]
+Act.BodyText=Travel north of Camelot and harvest twelve Razor Beak Talons from the local flock.
+Obj.0.type=kill
+Obj.0.data1=1711,1712
+Obj.0.data2=12
+Obj.0.description=Gather 12 Razor Beak Talons
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=500181
+Obj.0.completeText=0 of 12
+Obj.0.markerLocations=58640.0,140.002,56566.0,81;
+[ACT]
+Act.BodyText=Return to Turgan Gergendol.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Turgan Gergendol
+Obj.0.complete=0
+Obj.0.myCreatureDefID=1576
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=56159.6,343.427,65981.0,81;
+
+[ENTRY]
+ID=254
+Requires=249
+Title=Aid to Druid Byrne
+BodyText=First, allow me to welcome you to our fair city of Camelot.
+
+Now that we have dispensed with the simple pleasantries, let us get to the heart of the matter.
+
+"Priestess" Claira is what she is calling herself these days? I see.
+
+Claira was once an acolyte in our order. She had talent, but she did not have the will to be taught or guided. She seemed to have little care for our ways and began to seek out powerful magics. I cautioned her against this. Yet, she persisted. I found in her possessions a book written by, of all things, a lich named Alimat. Where she could have possibly found such a thing I have no idea. That was the final straw. I told her she must leave and not return to our order.
+
+Now it would seem she has returned and is leading these Thornbringers. I must consult with some of the more senior members of our order before I proceed with any further action. In the meantime, I ask that you travel to the large farm south of Camelot and speak with Druid Byrne. The River-Runner Bandits have claimed the farm for themselves and Druid Byrne could surely use a hand in dealing with the situation.
+CompleteText=Good day. Did Lunast send you? Ah, good. I can use some help here.
+Level=11
+Suggested=11
+Exp=644
+PartySize=1
+NumRewards=0
+Coin=81
+Unabandon=0
+QuestGiverID=169
+QuestEnderID=177
+Repeat=0
+sGiver=54606.0,167.362,63317.0,81
+sEnder=55509.0,394.255,68948.0,81
+[ACT]
+Act.BodyText=Travel to the large farm south of Camelot and speak with Druid Byrne. The River-Runner Bandits have claimed the farm for themselves and Druid Byrne could surely use a hand in dealing with the situation.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Travel to Druid Byrne
+Obj.0.complete=0
+Obj.0.myCreatureDefID=177
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=55521.203,393.432,68929.0,81;
+
+[ENTRY]
+ID=279
+Title=The Tour
+BodyText=Ah! You look like you are new in town, yes? Excellent! I need someone to test my new Tour of Camelot brochure! It points out all the finer places and local flavor! Perhaps you could take the brochure and follow the path from point to point, and then return and tell me what you think?
+CompleteText=So, how did it go? Do you feel well informed about the city, or lost?
+
+Please do not say lost...
+
+Thank you very much!
+Level=11
+Suggested=11
+Exp=2147
+PartySize=1
+NumRewards=0
+Coin=270
+Unabandon=0
+QuestGiverID=1572
+QuestEnderID=1572
+Repeat=0
+sGiver=54903.0,147.311,63585.0,81
+sEnder=54903.0,147.311,63585.0,81
+[ACT]
+Act.BodyText=Travel to the Druid Hall.
+Obj.0.type=travel
+Obj.0.data1=54866,147,63294,81
+Obj.0.data2=100
+Obj.0.description=Travel to the Druid Hall
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=54866.1,147.576,63294.0,81;
+[ACT]
+Act.BodyText=The Druid Hall is home to the Order of Gaia. They are a druidic sect of Gaia followers who work with the King to protect Camelot.
+
+Next stop: The Crown and Sword Tavern!
+Obj.0.type=travel
+Obj.0.data1=54156,152,63368,81
+Obj.0.data2=100
+Obj.0.description=Travel to the Pigspit Tavern
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=54156.6,152.159,63368.0,81;
+[ACT]
+Act.BodyText=The Pigspit Tavern has a two out of five-star rating; but do not let that worry you! They have the finest ale in all of Anglorum! I mean, you are not actually going there for the food are you?
+
+Next stop: The Old Underground entrance.
+Obj.0.type=travel
+Obj.0.data1=55051,70,67249,81
+Obj.0.data2=100
+Obj.0.description=Travel to the Old Underground entrance
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=55051.1,70.0389,67249.0,81;
+[ACT]
+Act.BodyText=The Old Underground is a remnant of days long gone. It is said it once was used for transportation under a former city here. These days, it is locked up tight, and for good reason. Travelers are warned not to try to enter for
+fear of being maimed, killed, or eaten... Or possibly all three!
+
+Next stop: The Market
+Obj.0.type=travel
+Obj.0.data1=56024,352,66102,81
+Obj.0.data2=100
+Obj.0.description=Travel to the Market
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=56024.9,352.191,66102.9,81;
+[ACT]
+Act.BodyText=The Market is full of shop keepers and plenty of bargins! Enjoy!
+
+Next stop: The Camelot Great Library
+Obj.0.type=travel
+Obj.0.data1=56101,349,64231,81
+Obj.0.data2=100
+Obj.0.description=Travel to the Camelot Great Library
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=56101.5,349.563,64231.8,81;
+[ACT]
+Act.BodyText=The Camelot Great Library has a vast collection of books, scrolls and all kinds of things for the learned type!
+Special Celebrity note: You can sometimes find Merlin just browsing the stacks here!
+
+Next stop: Castle Camelot.
+Obj.0.type=travel
+Obj.0.data1=55057,176,63577,81
+Obj.0.data2=100
+Obj.0.description=Travel to Castle Camelot
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=55057.1,176.166,63577.7,81;
+[ACT]
+Act.BodyText=Look up and behold the glory of Castle Camelot. Finished in the last decade, it is home to our king, Arthur Pendragon and his wife, Queen
+Guinevere.
+
+The castle is also the home to the Knights of the Round. The King's Personal
+guard.
+
+Next Stop: Big Ben.
+Obj.0.type=travel
+Obj.0.data1=55260,158,63321,81
+Obj.0.data2=100
+Obj.0.description=Travel to Big Ben
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=55260.4,158.092,63321.7,81;
+[ACT]
+Act.BodyText=Big Ben; an ancient relic which is constantly maintained and preserved as a relic of the long lost past. It is one of the few remnants of "man" still to be found in our world!
+
+Thank you for taken Vanderworm Tours! I hope you have a pleasant stay in our fine city!
+Obj.0.type=talk
+Obj.0.data1=
+Obj.0.data2=
+Obj.0.description=Travel to Erl Vanderworm
+Obj.0.complete=0
+Obj.0.myCreatureDefID=1572
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=54909.3,154.673,63594.9,81;
+
+[ENTRY]
+ID=553
+Title=BOUNTY: Fierce Fowlbeast
+BodyText=Kill 10 Fierce Fowlbeasts.
+CompleteText=
+Level=12,16
+Exp=893
+PartySize=1
+NumRewards=0
+Coin=117
+Unabandon=0
+QuestGiverID=2787
+QuestEnderID=2787
+Repeat=1
+sGiver=54792.0,148.0,63594.0,81
+sEnder=54792.0,148.0,63594.0,81
+Heroism=6
+[ACT]
+Act.BodyText=Kill 10 Fierce Fowlbeasts.
+Obj.0.type=kill
+Obj.0.data1=1685,1686
+Obj.0.data2=10
+Obj.0.description=Kill 10 Fierce Fowlbeasts
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 10
+Obj.0.markerLocations=54510.1,178.341,61405.0,81;
+[ACT]
+Act.BodyText=Return to the Bounty Board!
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to the Bounty Board!
+Obj.0.complete=0
+Obj.0.myCreatureDefID=2787
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=54792.9,148.167,63594.5,81;
+RewardItem.0=21329,1,1
+
+[ENTRY]
+ID=554
+Title=BOUNTY: Steppe-Slimer 
+BodyText=Kill 10 Steppe-Slimers.
+CompleteText=
+Level=10,14
+Exp=825
+PartySize=1
+NumRewards=0
+Coin=99
+Unabandon=0
+QuestGiverID=2788
+QuestEnderID=2788
+Repeat=1
+sGiver=43652.0,186.0,65635.0,81
+sEnder=43652.0,186.0,65635.0,81
+Heroism=6
+[ACT]
+Act.BodyText=Kill 10 Steppe-Slimers.
+Obj.0.type=kill
+Obj.0.data1=1609,1610
+Obj.0.data2=10
+Obj.0.description=Kill 10 Steppe-Slimers
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 10
+Obj.0.markerLocations=53385,292.998,67891,81;
+[ACT]
+Act.BodyText=Return to the Bounty Board!
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to the Bounty Board!
+Obj.0.complete=0
+Obj.0.myCreatureDefID=2788
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=54649.2,233.192,67553.8,81;
+RewardItem.0=21329,1,1
+
+
+[ENTRY]
+ID=281
+Title=Unlucky Charms
+Requires=280
+BodyText=This time, I have an order for Thumper Feet. Not just an ordinary Thumper, though - Savage Thumpers! Lucky for you I only need three!
+CompleteText=Very well done. You have the knack for this, my own personal hunter! Perhaps one more job?
+Level=13
+Suggested=14
+Exp=2421
+PartySize=1
+NumRewards=0
+Coin=360
+Unabandon=0
+QuestGiverID=1576
+QuestEnderID=1576
+Repeat=0
+sGiver=55888.0,356.085,65855.0,81
+sEnder=55888.0,356.085,65855.0,81
+Heroism=10
+[ACT]
+Act.BodyText=Travel to the west of Fort Stonehenge and gather three Savage Thumper feet.
+Obj.0.type=kill
+Obj.0.data1=1633
+Obj.0.data2=3
+Obj.0.description=Collect 3 Savage Thumper Feet
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=500180
+Obj.0.completeText=0 of 3
+Obj.0.markerLocations=35680.0,375.54,66166.0,81;
+[ACT]
+Act.BodyText=Return to Turgan Gergendol.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Turgan Gergendol
+Obj.0.complete=0
+Obj.0.myCreatureDefID=1576
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=55902,360,65852,81
+
+[ENTRY]
+ID=255
+Requires=254
+Title=The Second Bandit Brother
+BodyText=So Kearn was right, there is a connection between the Thornbringers and these River-Runners.
+
+The task at hand here is quite simple: With Jek eliminated, that would only leave his older brother, Jester, to lead these ruffians. Yet, I have not seen any sign of his presence here at the farm. Of course, that does not mean he is not in the general area.
+
+If you could rid the farm of the bandits and eliminate Jester Jumptail, you would do us all a great favor.
+CompleteText=You return safely! Ah, so Jester is defeated and you have cleared out a fair amount of bandits as well - very well done. Perhaps with their leader defeated, the remaining bandits will have little reason to continue holding this farm.
+Level=11
+Suggested=12
+Exp=2233
+PartySize=1
+NumRewards=0
+Coin=293
+Unabandon=0
+QuestGiverID=177
+QuestEnderID=177
+Repeat=0
+sGiver=55509.0,394.255,68948.0,81
+sEnder=55509.0,394.255,68948.0,81
+Heroism=10
+[ACT]
+Act.BodyText=Kill 20 River-Runner Bandits at Farmer Felp's Farm and eliminate Jester Jumptail.
+Obj.0.type=kill
+Obj.0.data1=1692,1693,1694,1695,1696,1697
+Obj.0.data2=20
+Obj.0.description=Kill 20 River-Runner Bandits at the farm
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 20
+Obj.0.markerLocations=54874.5,246.845,68760.0,81;
+Obj.1.type=kill
+Obj.1.data1=1725
+Obj.1.data2=1
+Obj.1.description=Kill Jester Jumptail
+Obj.1.complete=0
+Obj.1.myCreatureDefID=
+Obj.1.myItemID=
+Obj.1.completeText=0 of 1
+Obj.1.markerLocations=57840.0,227.283,69085.0,81;
+[ACT]
+Act.BodyText=Return to Druid Byrne.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Druid Byrne
+Obj.0.complete=0
+Obj.0.myCreatureDefID=177
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=55521.203,393.432,68929.0,81;
+
+[ENTRY]
+ID=271
+Requires=254
+Title=Stolen Tools
+BodyText=If you are ridding my farm of these bandits, for sure I am glad of this, Would you also retrieve my stolen tools? These buggers have not only have been pillaging my farm, but they also stole my tools. My tools were all in an old bucket, all of which, bucket included, have been handed down from generation to generation. They may be old and even mostly useless, as tools go, but they have the value of sentiment.
+CompleteText=You found my tools! Oh thank you, thank you!
+Level=11
+Suggested=12
+Exp=2233
+PartySize=1
+NumRewards=0
+Coin=293
+Unabandon=0
+QuestGiverID=170
+QuestEnderID=170
+Repeat=0
+sGiver=55546.0,394.72,68939.0,81
+sEnder=55546.0,394.72,68939.0,81
+Heroism=10
+[ACT]
+Act.BodyText=Search the farm areas now occupied by bandits to find Farmer Felps's stolen tools.
+Obj.0.type=travel
+Obj.0.data1=57732,241,68674,81
+Obj.0.data2=100
+Obj.0.description=Find Farmer Felps's stolen tools
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=57732.4,241.87,68674.9,81;
+[ACT]
+Act.BodyText=Pick up Farmer Felps's tools.
+Obj.0.type=gather
+Obj.0.data1=1786
+Obj.0.data2=1
+Obj.0.description=Pick up Farmer Felps's tools
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=500175
+Obj.0.completeText=0 of 1
+Obj.0.markerLocations=57732.4,241.87,68674.9,81;
+Obj.0.ActivateTime=2000
+Obj.0.ActivateText=Taking Tools...
+[ACT]
+Act.BodyText=Return to Farmer Felps.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Farmer Felps
+Obj.0.complete=0
+Obj.0.myCreatureDefID=170
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=55521.203,393.432,68929.0,81;
+
+[ENTRY]
+ID=256
+Requires=255
+Title=Return to Grand Druid Lunast
+BodyText=I got a missive from Grand Druid Lunast while you were dealing with bandits. He wishes to speak with you again.
+CompleteText=Good, you have returned.
+Level=11
+Suggested=11
+Exp=644
+PartySize=1
+NumRewards=0
+Coin=81
+Unabandon=0
+QuestGiverID=177
+QuestEnderID=169
+Repeat=0
+sGiver=55509.0,394.255,68948.0,81
+sEnder=54606.0,167.362,63317.0,81
+[ACT]
+Act.BodyText=Travel to the Druid Hall in Camelot and speak with Grand Druid Lunast.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Travel to Druid Hall and speak with Lunast
+Obj.0.complete=0
+Obj.0.myCreatureDefID=169
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=54611.6,166.946,63316.0,81;
+
+
+// Note: I don't have any log data for this quest.
+[ENTRY]
+ID=257
+Requires=256
+Title=Aid to Druid Lorna
+BodyText=You have already done much to help our order, and now I ask of you to continue your aid. To the north of Camelot is a graveyard that includes a rather sizable crypt of the now long dead King Wilhelm. One of my trusted druids, Lorna, is there now. She has sent me information that the entire area is overrun with more of these Thornbringers. Worse, it appears they are dabbling in necromancy and raising the dead in the graveyard... I dread to think what is occurring in the depths of the crypt... This type of abomination cannot be allowed! The world is already plagued by the Legions of Sheol, we do not need another breed of undead plaguing our lands. Travel to Druid Lorna and offer her assistance.
+CompleteText=Lunast sent you himself? Then you must be quite skilled.
+Level=11
+Suggested=12
+Exp=1117
+PartySize=1
+NumRewards=0
+Coin=81
+Unabandon=0
+QuestGiverID=169
+QuestEnderID=174
+Repeat=0
+sGiver=54606.0,167.362,63317.0,81
+sEnder=57616.0,364.446,61884.0,81
+[ACT]
+Act.BodyText=Travel north and meet with Druid Lorna outside of the graveyard.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Travel to Druid Lorna
+Obj.0.complete=0
+Obj.0.myCreatureDefID=174
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=57631.5,363.687,61871.0,81;
+
+// Note: I don't have any log data for this quest.
+[ENTRY]
+ID=258
+Requires=257
+Title=The Locked Door
+BodyText=I have been investigating the graveyard and trying to ascertain exactly what the Thornbringers are doing here. Recently, the long-deceased have been rising from the grave. This is horrible! We must act quickly.
+The source of these risen dead must be inside the crypt. I see the Thornbringers come and go in and out of the crypt, but when I tried to enter, the door would not yield. There must be some secret to unlocking the door. Search the graveyard for a way to unlock the door.
+CompleteText=What is this? These symbols... they were freshly carved into the stone? But this... should not be. I have a very dark suspicion, but I need a book from the Camelot Great Library to confirm my fears.
+Level=11
+Suggested=12
+Exp=1117
+PartySize=1
+NumRewards=0
+Coin=81
+Unabandon=0
+QuestGiverID=174
+QuestEnderID=174
+Repeat=0
+sGiver=57616.0,364.446,61884.0,81
+sEnder=57616.0,364.446,61884.0,81
+Heroism=6
+[ACT]
+Act.BodyText=Search the Graveyard for any clue to how you may unlock the door.
+Obj.0.type=travel
+Obj.0.data1=58178,128,62084,81
+Obj.0.data2=100
+Obj.0.description=Search the Graveyard for clues
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=58178.9,128.774,62084.0,81;
+[ACT]
+Act.BodyText=You find an oddly-etched tombstone. The symbols are very strange. Make
+a rubbing and show it to Druid Lorna.
+Obj.0.type=activate
+Obj.0.data1=1789
+Obj.0.data2=1
+Obj.0.description=Make a rubbing of the oddly-etched symbols
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=58187.4,139.051,61999.7,81
+Obj.0.ActivateTime=2000
+Obj.0.ActivateText=Making a rubbing...
+[ACT]
+Act.BodyText=Return to Druid Lorna.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Druid Lorna
+Obj.0.complete=0
+Obj.0.myCreatureDefID=174
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=57616.0,364.446,61884.0,81;
+
+// Note: I don't have any log data for this quest.
+[ENTRY]
+ID=272
+Requires=257
+Title=Grave Lillies
+BodyText=Greetings! I have a small favor to ask, if it is not too much trouble? If you are planning to enter the graveyard, perhaps you could seek out some Grave Lillies for me? They only grow in soil around graves! Morbid yes, but they are beautiful. I would go myself, but Lorna forbade me to enter the graveyard now that the dead are once more walking around. If you could bring me half-a-dozen, I would be ever grateful.
+CompleteText=Oh my! Those are lovely! Thank you so much.
+Level=11
+Suggested=12
+Exp=2233
+PartySize=1
+NumRewards=0
+Coin=81
+Unabandon=0
+QuestGiverID=327
+QuestEnderID=327
+Repeat=0
+sGiver=57645.7,363.346,61878.0,81
+sEnder=57645.7,363.346,61878.0,81
+Heroism=6
+[ACT]
+Act.BodyText=Gather six Grave Lillies.
+Obj.0.type=gather
+Obj.0.data1=1792
+Obj.0.data2=6
+Obj.0.description=Gather 6 Grave Lillies
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=500179
+Obj.0.completeText=
+Obj.0.markerLocations=57690.9,102.589,62238.0,81;
+Obj.0.ActivateTime=2000
+Obj.0.ActivateText=Picking Flowers!
+[ACT]
+Act.BodyText=Return to Druid Felina.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Druid Felina
+Obj.0.complete=0
+Obj.0.myCreatureDefID=327
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=57631.5,363.687,61871.0,81;
+
+
+[ENTRY]
+ID=259
+Requires=258
+Title=A Trip to the Library
+BodyText=I need you to travel to the the Camelot Great Library and speak with Archivist Blackhorn. Tell him I sent you for a book called "Occultus Stilus quod Lingua". He may complain, but tell him it is of the utmost importance to the Order of Druids that you bring me this book. He will most likely still complain! Hurry and bring the book to me.
+CompleteText=Oh, good day to you. What can I do for you this fine day?
+
+You want what?!?!
+Level=12
+Suggested=12
+Exp=670
+PartySize=1
+NumRewards=0
+Coin=88
+Unabandon=0
+QuestGiverID=174
+QuestEnderID=179
+Repeat=0
+sGiver=57616.0,364.446,61884.0,81
+sEnder=56310.7,355.85,64235.7,81
+[ACT]
+Act.BodyText=Travel to the Camelot Great Library.
+Obj.0.type=travel
+Obj.0.data1=56065,347,64246,81
+Obj.0.data2=0
+Obj.0.description=Travel to the Camelot Great Library
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=56065.0,347.535,64246.0,81;
+[ACT]
+Act.BodyText=Speak with Archivist Blackhorn and ask him for the book "Occultus Stilus quod Lingua".
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Speak with Archivist Blackhorn
+Obj.0.complete=0
+Obj.0.myCreatureDefID=179
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=56300.0,347.535,64234.0,81;
+
+[ENTRY]
+ID=260
+Requires=259
+Title=A Special Book
+BodyText=You must surely be joking! That book is not for public consumption!
+
+...Lorna sent you? Let me guess, "the world will end" if she does not get the book?
+
+...undead in the graveyard? *sigh* So the world might actually end if I do not give you the book?
+
+*sigh* Fine! But this is a one-of-a-kind book. The only one even known to have existed. Written so long ago I am not sure we even have a date to put on it!
+
+You will find the book secured in a hidden cache, upstairs, behind a bookshelf in the far corner.
+
+I better get that book back in one piece without a bent page or paw print on it!
+CompleteText=You got it! Let me compare the rubbing you brought me with some entries in the book.
+Level=12
+Suggested=12
+Exp=1117
+PartySize=1
+NumRewards=0
+Coin=146
+Unabandon=0
+QuestGiverID=179
+QuestEnderID=174
+Repeat=0
+sGiver=56310.7,355.85,64235.7,81
+sEnder=57616.0,364.446,61884.0,81
+[ACT]
+Act.BodyText=Retrieve the Occultus Stilus quod Lingua from the secret cache behind the bookshelf upstairs.
+Obj.0.type=activate
+Obj.0.data1=1788
+Obj.0.data2=1
+Obj.0.description=Retrieve the book
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=500177
+Obj.0.completeText=0 of 1
+Obj.0.markerLocations=56152.4,427.535,64182.0,81;
+Obj.0.ActivateTime=2000
+Obj.0.ActivateText=Taking book
+[ACT]
+Act.BodyText=Take the Occultus Stilus quod Lingua to Druid Lorna.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Druid Lorna
+Obj.0.complete=0
+Obj.0.myCreatureDefID=174
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=57631.5,363.687,61871.0,81;
+
+[ENTRY]
+ID=261
+Requires=260
+Title=Unlocking the Door
+BodyText=As I feared, these are the symbols I thought they were!  I will do my best to find some way to open the door now that I think I know the secret. In the meantime, please take this note to Grand Druid Lunast. He may or may not choose to share the contents of it with you.
+CompleteText=Greetings once more. A note from Lorna? Allow me a moment to read this. This is not good news. I must speak with the other elders of our order immediately. In the meantime, I have something else I would like you to investigate.
+Level=13
+Suggested=13
+Exp=1167
+PartySize=1
+NumRewards=0
+Coin=0
+Unabandon=0
+QuestGiverID=174
+QuestEnderID=169
+Repeat=0
+sGiver=57616.0,364.446,61884.0,81
+sEnder=54606.0,167.362,63317.0,81
+[ACT]
+Act.BodyText=Travel to the Druid Hall in Camelot and speak with Grand Druid Lunast.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Travel to the Druid Hall and speak to Lunast
+Obj.0.complete=0
+Obj.0.myCreatureDefID=169
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=54611.6,166.946,63316.0,81;
+
+[ENTRY]
+ID=273
+Requires=260
+Title=The Letter
+BodyText=Hello, hello! I was hoping you would do me a small favor; I have an official letter that I need delivered quickly! If you are returning to Camelot, would you deliver this letter to Acolyte Goldheart?
+CompleteText=A letter for me? Let me see... *blush*
+
+Thank you for bringing this to me! It is of vital importance to me... ...I mean the Order of Gaia!
+Level=12
+Suggested=12
+Exp=1117
+PartySize=1
+NumRewards=0
+Coin=0
+Unabandon=0
+QuestGiverID=1790
+QuestEnderID=176
+Repeat=0
+sGiver=57651.0,331.998,61737.0,81
+sEnder=54648.0,163.902,63280.0,81
+[ACT]
+Act.BodyText=Deliver the letter to Acolyte Goldheart in the Druid Hall.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Deliver the letter to Acolyte Goldheart
+Obj.0.complete=0
+Obj.0.myCreatureDefID=176
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=54648.5,162.362,63289.0,81;
+
+[ENTRY]
+ID=262
+Requires=261
+Title=Dandridge Farm in Flames
+BodyText=I have received disturbing news regarding the old Dandridge farm. It has been abandoned for some time, but it seems someone has burned the place to the ground. The property was left to the order after the death of Mason Dandridge and I am very unhappy to hear someone has burned it down. Would you investigate and tell me what you find?
+CompleteText=Shadows? Are you sure? More dire news in what appears to be increasingly dire times.
+Level=13
+Suggested=13
+Exp=1167
+PartySize=1
+NumRewards=0
+Coin=169
+Unabandon=0
+QuestGiverID=169
+QuestEnderID=169
+Repeat=0
+sGiver=54606.0,167.362,63317.0,81
+sEnder=54606.0,167.362,63317.0,81
+Heroism=6
+[ACT]
+Act.BodyText=Investigate the old Dandridge Farm.
+Obj.0.type=travel
+Obj.0.data1=61130,199,58747,81
+Obj.0.data2=250
+Obj.0.description=Investigate the old Dandridge Farm
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=61130.6,199.041,58747.0,81;
+[ACT]
+Act.BodyText=You find the farm crawling with strange Shadows.
+Return to Grand Druid Lunast with your findings.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Grand Druid Lunast
+Obj.0.complete=0
+Obj.0.myCreatureDefID=169
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=54611.6,166.946,63316.0,81;
+
+[ENTRY]
+ID=263
+Requires=262
+Title=Speak to Merlin
+BodyText=Shadows. It would be best if you spoke with Merlin about this. He can best explain what you saw. Once you have spoken with him, return to me. Perhaps I will have word from the order on how to proceed with this Thornbringer problem by that time.
+CompleteText=Hello again, hero! What can I do for you? Shadows? There is much to explain if you wish to know about the Shadows.
+Level=13
+Suggested=13
+Exp=1167
+PartySize=1
+NumRewards=0
+Coin=0
+Unabandon=0
+QuestGiverID=169
+QuestEnderID=225
+Repeat=0
+sGiver=54606.0,167.362,63317.0,81
+sEnder=56363.8,379.563,64150.1,81
+[ACT]
+Act.BodyText=Travel to the Camelot Great Library and speak with Merlin.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Speak with Merlin
+Obj.0.complete=0
+Obj.0.myCreatureDefID=225
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=56366.703,377.535,64149.0,81;
+
+[ENTRY]
+ID=264
+Requires=263
+Title=The Shadow Legion
+BodyText=Shadows... Long ago, some very well meaning, yet foolish souls sought a power they should never truly possess. What they sought is known as the Mysterium Primordial, a book of infinite knowledge and power locked away from comprehension by a key known as the Enigma Primal. Those that sought it were possibly the most powerful beasts to walk the Earth - the Mystarchs. Two of the Mystarchs, Al'Idrisi and Jezebel, followed the roots of Yggdrasil, the world tree, into other planes of existence in search of the Enigma Primal.
+
+They were fools. Along the winding roots of infinite possible Earths, they found the Enigma Primal. As they claimed their prize, the Shadow came like smoke bellowing up from the cracks in the earth - whispering and grasping and following them.
+
+To make matters worse for the Mystarchs, was that the Enigma Primal was incomplete. While yes it was the key to understanding the Mysterium Primordial, the Enigma Primal was missing a single page - intentionally torn from its binding - the very first page. The key was in fact missing its own key. To attempt to read the Enigma Primal without fully comprehending it - via its own key - was to dip into insanity; such are the powers at play here.
+
+It was clear this Enigma Primal was a trap deliberately set by the Shadows, or as they began to call them, the Shadow Legion.
+
+While they did seal the Shadows out of our existence for the most part, the threat still lingers. Tears in reality from one world often cause rifts in another. When those rifts appear in our world, so do the Shadows.
+
+If, as you say, Shadows are now at the old Dandridge Farm, then I must inform Arthur immediately. Better still, you will inform Arthur! It is about time the Hero of Earthend met the king! Go to him; tell him what you told me and let him know that I will consult with him on this matter very shortly.
+CompleteText=Greetings hero! I have heard much of you and your exploits. I am grateful for your aid.
+
+What brings you here today?
+
+Merlin sent you... ...Shadows? Hmmm... Another troubling happening, especially considering the other troubles we currently face. Thank you for bringing this to my attention.
+Level=13
+Suggested=13
+Exp=1167
+PartySize=1
+NumRewards=0
+Coin=0
+Unabandon=0
+QuestGiverID=225
+QuestEnderID=230
+Repeat=0
+sGiver=56363.8,379.563,64150.1,81
+sEnder=538.0,120.216,765.491,82
+Heroism=10
+[ACT]
+Act.BodyText=Travel to Castle Camelot and speak with King Arthur Pendragon.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Speak with King Arthur Pendragon
+Obj.0.complete=0
+Obj.0.myCreatureDefID=230
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=55244.6,561.344,64274.7,81;
+
+[ENTRY]
+ID=265
+Requires=264
+Title=Speak with Sir Kay
+BodyText=Now I have something to ask of you. As you may know, we have had an incursion of Avalonians on the east shore of the lake. After an initial battle, we have mostly driven them back, but some still linger on our shores. We could use more strong arms to help deal with this threat. Speak with Sir Kay and he can give you specific direction as to how you may help.
+
+Again, I am glad to have you here in our lands.
+
+May Gaia guide you.
+CompleteText=Yes? Indeed, Arthur was correct. We can surely use more assistance with the Avalonian threat.
+Level=13
+Suggested=13
+Exp=1167
+PartySize=1
+NumRewards=0
+Coin=0
+Unabandon=0
+QuestGiverID=230
+QuestEnderID=233
+Repeat=0
+sGiver=538.0,120.216,765.491,82
+sEnder=55196.0,561.344,64415.0,81
+[ACT]
+Act.BodyText=Speak with Sir Kay.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Speak with Sir Kay
+Obj.0.complete=0
+Obj.0.myCreatureDefID=233
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=55199.203,561.344,64408.0,81;
+
+[ENTRY]
+ID=283
+Requires=265
+Title=The Milita House
+BodyText=The Knights of Avalon recently assaulted the east shore of the lake. Honestly, I cannot quite conceive of their exact purpose for this action. We have had an unspoken truce of sorts for many years. They did not breach the gate from their Avalonian stronghold and we in return have not attempted to enter. Mordred and Morgana have not been seen in our lands for many years. Why now they decided to strike out from Avalon is a mystery. More mysterious is the fact that they did not send elite troops. They sent a garrison or more of men, but they were not highly skilled and were easily beaten. I suspect something else is afoot. Something we are unaware of. That thought worries me.
+
+If you wish to assist in ridding our lands of the Avalonians, then head directly to the Militia House on the south-eastern shore of the lake. The Anglorum Militia is an army of the people. They are the backbone of Anglorum's defense.
+
+Go to the Militia House and speak with Captain Nordington. Be warned, he is a harsh but fair captain. If he is reluctant to even accept your help, just mention that Arthur sent you. I assure you that will, at the very least, make him reconsider any initial doubts he may have of you.
+
+Good luck and farewell.
+CompleteText=And you are? I do not have time to talk with the likes of you. Carry on...
+
+...ah Arthur sent you, eh? Hmmm... you do not look completely useless.
+
+I might have something you can do for me.
+Level=14
+Suggested=15
+Exp=1260
+PartySize=1
+NumRewards=0
+Coin=0
+Unabandon=0
+QuestGiverID=233
+QuestEnderID=234
+Repeat=0
+sGiver=55196.0,561.344,64415.0,81
+sEnder=50180.0,186.885,66403.0,81
+[ACT]
+Act.BodyText=Travel to the Militia House on the south-eastern shores of the lake.
+Obj.0.type=travel
+Obj.0.data1=50013,185,66241,81
+Obj.0.data2=200
+Obj.0.description=Travel to the Militia House
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=50013.1,185.619,66241.0,81;
+[ACT]
+Act.BodyText=Speak with Captain Nordington.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Speak with Captain Nordington
+Obj.0.complete=0
+Obj.0.myCreatureDefID=234
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=50174.0,187.152,66405.0,81;
+
+[ENTRY]
+ID=266
+Requires=264
+Title=Time to Act
+BodyText=Welcome again friend. The time to act is now. I have already sent instructions to Lorna. Return to her. She has unlocked the crypt and it is time we put this Thornbringer threat to an end.
+CompleteText=You are just in time.
+Level=13
+Suggested=13
+Exp=1167
+PartySize=1
+NumRewards=0
+Coin=0
+Unabandon=0
+QuestGiverID=169
+QuestEnderID=174
+Repeat=0
+sGiver=54606.0,167.362,63317.0,81
+sEnder=57616.0,364.446,61884.0,81
+[ACT]
+Act.BodyText=Travel to Druid Lorna.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Travel to Druid Lorna
+Obj.0.complete=0
+Obj.0.myCreatureDefID=174
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=57631.5,363.687,61871.0,81;
+
+[ENTRY]
+ID=274
+Requires=264
+Title=Another Letter
+BodyText=Hail friend! If you are traveling back to speak with Lorna, would you deliver this letter to Dern? It is just some more official business, nothing else.
+CompleteText=Hello again. She...she has...I mean, of course, yes official business! It is tiring, but we must keep up with the paperwork, even in these trying times.
+Now, let me see that.
+Level=12
+Suggested=12
+Exp=1117
+PartySize=1
+NumRewards=0
+Coin=0
+Unabandon=0
+QuestGiverID=176
+QuestEnderID=1790
+Repeat=0
+sGiver=54648.0,163.902,63280.0,81
+sEnder=57651.0,331.998,61737.0,81
+[ACT]
+Act.BodyText=Deliver the letter to Druid Dern.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Deliver the letter to Druid Dern
+Obj.0.complete=0
+Obj.0.myCreatureDefID=1790
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=57641.297,329.345,61733.0,81;
+
+[ENTRY]
+ID=267
+Requires=266
+Title=Wilhelm's Crypt
+BodyText=The crypt is unlocked. I sent a scout inside to see what exactly is going on down there. His report is horror. The Thrornbringers have some kind of power source they are using to raise the dead. The inside of the crypt is crawling with the recently risen. Worse, it appears even old King Wilhelm has arisen! The central part of the crypt is where we must strike. A powerful mage named Jengal is there overseeing this atrocity. You must kill him and steal the power source. We cannot allow this to continue!
+CompleteText=You are safely returned. This gladdens my heart. Leave the destruction of this power source to me. At least the dead will stop rising, but there is more at work here.
+Level=13
+Suggested=14
+Exp=2421
+PartySize=1
+NumRewards=0
+Coin=360
+Unabandon=0
+QuestGiverID=174
+QuestEnderID=174
+Repeat=0
+sGiver=57616.0,364.446,61884.0,81
+sEnder=57616.0,364.446,61884.0,81
+Heroism=14
+[ACT]
+Act.BodyText=Travel to Wilhelm's Crypt.
+Obj.0.type=travel
+Obj.0.data1=57448,91,62504,81
+Obj.0.data2=100
+Obj.0.description=Travel to Wilhelm's Crypt
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=57448.297,91.5541,62504.0,81;
+[ACT]
+Act.BodyText=Enter Wilhelm's Crypt.
+Obj.0.type=travel
+Obj.0.data1=5235,200,783,29
+Obj.0.data2=1000
+Obj.0.description=Enter Wilhelm's Crypt
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=57448.297,91.5541,62504.0,81;
+[ACT]
+Act.BodyText=Kill Jengal Narglor and steal the Power Source.
+Obj.0.type=kill
+Obj.0.data1=21
+Obj.0.data2=1
+Obj.0.description=Kill Jengal Narglor
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 1
+Obj.0.markerLocations=5223.17,230.0,3931.16,29;
+Obj.1.type=gather
+Obj.1.data1=208
+Obj.1.data2=1
+Obj.1.description=Steal the Power Source
+Obj.1.complete=0
+Obj.1.myCreatureDefID=
+Obj.1.myItemID=500290
+Obj.1.completeText=0 of 1
+Obj.1.markerLocations=5217.94,242.236,4032.42,29;
+Obj.1.ActivateTime=2000
+Obj.1.ActivateText=Stealing Power Source
+[ACT]
+Act.BodyText=Return to Druid Lorna.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Druid Lorna
+Obj.0.complete=0
+Obj.0.myCreatureDefID=174
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=57631.5,363.687,61871.0,81;
+
+[ENTRY]
+ID=277
+Title=Elden's Special Treat
+BodyText=Hail! You there! Yes hello! Are you venturing into Camelot? You are? Good! Perhaps you would do me a favor.
+
+I was sent here by my boss, Elden Motera in Fort Stonehenge, to fetch something from the city. Unfortunately , the guards seem to have mistaken me for some miscreant! I mean, look at me! I am an upstanding citizen! Really! To the point, they will not allow me into the city. Hrmph!
+
+Perhaps you could get the item for me. In the Slums you will find a Merga Moonseer. She is, uhm... ...witch, perhaps is the best way to describe her... Do not worry, she is harmless, if not a bit odd! Tell her Elden sent you for his special treat! She will understand.
+CompleteText=Who are you? What are you looking at, hmm? HRMM?! You looking at me? Am I a curiosity?? Oh... look, birds! I love birds... ...in a nice stew... ...with a touch of lemon... Did the lemons send you? Well, did they?!
+
+Oh, Elden sent you! Oh, I see then, you must not be working for THEM... ...this is good, good... ...hmm... Do you hear that? Sounds like dragons! Or wait...! No just a sparrow. Mostly the same they are, anyway...
+
+Oh, Elden's Special Treat? Oh yes, yes... ...freshly cooked, in fact, and tasty... ...tasty like fire... You ever eat fire? Not as bad as you think in fact....
+
+Give me a moment...
+Level=11
+Suggested=11
+Exp=644
+PartySize=1
+NumRewards=0
+Coin=81
+Unabandon=0
+QuestGiverID=1573
+QuestEnderID=1791
+Repeat=0
+sGiver=53358.0,168.994,64301.0,81
+sEnder=54810.0,88.3497,66829.0,81
+[ACT]
+Act.BodyText=Find Merga Moonseer in the Slums and get Elden's Special Treat.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Find Merga Moonseer
+Obj.0.complete=0
+Obj.0.myCreatureDefID=1791
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=54808.4,88.3497,66821.0,81;
+
+[ENTRY]
+ID=288
+Title=Avalonian Signet Rings
+BodyText=Hail! I see Nordington is giving you tasks. Good! Then you can do something for me, as well.
+
+If you are going to be battling these Avalonian thugs, then bring me their signet rings. We melt the rings down and sell the silver to tradesmen in Camelot. It is a fair way to keep coffers stocked for important supplies we may need.
+
+It takes thirty rings to make a small bar of silver. Once you have thirty, return to me and I will pay you a fair price for them.
+CompleteText=As promised, here is your payment.
+Level=14
+Suggested=15
+Exp=2520
+PartySize=1
+NumRewards=0
+Coin=405
+Unabandon=0
+QuestGiverID=180
+QuestEnderID=180
+Repeat=0
+sGiver=49960.0,184.161,66192.0,81
+sEnder=49960.0,184.161,66192.0,81
+Heroism=10
+[ACT]
+Act.BodyText=Collect Avalonian Signet Rings from defeated Avalonian troops all along the lake, at the farm, and across the bridge in the battlefield.
+Obj.0.type=kill
+Obj.0.data1=40,41,42,43,44,45,46,47,48,1704
+Obj.0.data2=30
+Obj.0.description=Collect 30 Avalonian Signet Rings
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=500021
+Obj.0.completeText=0 of 30
+Obj.0.markerLocations=
+[ACT]
+Act.BodyText=Return to Master Sergeant Dunn.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Master Sergeant Dunn
+Obj.0.complete=0
+Obj.0.myCreatureDefID=180
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=49960.0,184.068,66192.0,81;
+
+[ENTRY]
+ID=284
+Title=Basic Duty
+BodyText=First we need to see if you can even follow some basic orders... My orders!
+
+Up the coast along the beach are some weapon caches left behind by some Avalonians we beat back in recent days. Go up the coasts and look for three weapon caches. Take any weapons you find and bring them back to me. We are always looking for new equipment and I do not care if they were made in Camelot or in the 'misty shores,' or wherever-it-is these Avalonians come from.
+
+Be warned; there may still be a few stragglers wandering the shores.
+
+Now get going and make it quick!
+CompleteText=Hmm, not bad... At least you can walk somewhere and carry things! Congratulations!
+
+Now I know you can follow orders.
+Level=14
+Suggested=15
+Exp=1260
+PartySize=1
+NumRewards=0
+Coin=203
+Unabandon=0
+QuestGiverID=234
+QuestEnderID=234
+Repeat=0
+sGiver=50180.0,186.885,66403.0,81
+sEnder=50180.0,186.885,66403.0,81
+Heroism=6
+[ACT]
+Act.BodyText=Travel up the coast and seek out three Avalonian Weapon Caches.
+Obj.0.type=gather
+Obj.0.data1=1793
+Obj.0.data2=3
+Obj.0.description=Find 3 Avalonian Weapon Caches
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=500183
+Obj.0.completeText=0 of 3
+Obj.0.markerLocations=49344.5,92.4669,64949.0,81;
+Obj.0.ActivateTime=2000
+Obj.0.ActivateText=Taking weapons...
+[ACT]
+Act.BodyText=Return to Captain Nordington.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Captain Nordington
+Obj.0.complete=0
+Obj.0.myCreatureDefID=234
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=50172.3,187.202,66404.0,81;
+
+[ENTRY]
+ID=285
+Requires=284
+Title=Burning Ships
+BodyText=Now for something quite a bit more dangerous...
+
+The Avalonians still have men all up the coast and across the river. Additionally, they have infested the keep up the road.
+
+Just past the keep is a farm. The area is still thick with stragglers. I actually think they are afraid to go back to Avalon considering the losses they already took! At the farms you might find some Barrels of Pitch. Take one of the barrels, then go to the dock on the far north section of the coast, by the mouth of the river, and burn some of the boats. Maybe taking away their chance of escape back to that island of theirs will crush their spirits!
+
+Get moving and be quick about it!
+CompleteText=Ah-ha! I saw the smoke from here. I have to say, well done! You might be militia material, after all!
+Level=14
+Suggested=15
+Exp=1260
+PartySize=1
+NumRewards=0
+Coin=203
+Unabandon=0
+QuestGiverID=234
+QuestEnderID=234
+Repeat=0
+sGiver=50180.0,186.885,66403.0,81
+sEnder=50180.0,186.885,66403.0,81
+Heroism=6
+[ACT]
+Act.BodyText=Travel to the farm and find a barrel of pitch.
+Obj.0.type=gather
+Obj.0.data1=1801
+Obj.0.data2=1
+Obj.0.description=Find a barrel of pitch
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=500184
+Obj.0.completeText=0 of 1
+Obj.0.markerLocations=50688.8,157.904,62877.0,81;
+Obj.0.ActivateTime=2000
+Obj.0.ActivateText=Taking pitch...
+[ACT]
+Act.BodyText=Use the Pitch to set three Avalonian boats ablaze at the dock.
+Obj.0.type=activate
+Obj.0.data1=213
+Obj.0.data2=1
+Obj.0.description=Burn an Avalonian boat
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=49464.3,88.5514,62272.0,81;
+Obj.0.ActivateTime=2000
+Obj.0.ActivateText=Starting a fire...
+[ACT]
+Act.BodyText=Use the Pitch to set three Avalonian boats ablaze at the dock.
+Obj.0.type=activate
+Obj.0.data1=213
+Obj.0.data2=1
+Obj.0.description=Burn a second Avalonian boat
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=49464.3,88.5514,62272.0,81;
+Obj.0.ActivateTime=2000
+Obj.0.ActivateText=Starting a fire...
+[ACT]
+Act.BodyText=Use the Pitch to set three Avalonian boats ablaze at the dock.
+Obj.0.type=activate
+Obj.0.data1=213
+Obj.0.data2=1
+Obj.0.description=Burn a third Avalonian boat
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=49464.3,88.5514,62272.0,81;
+Obj.0.ActivateTime=2000
+Obj.0.ActivateText=Starting a fire...
+[ACT]
+Act.BodyText=Return to Captain Nordington.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Captain Nordington
+Obj.0.complete=0
+Obj.0.myCreatureDefID=234
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=50172.3,187.202,66404.0,81;
+
+[ENTRY]
+ID=289
+Requires=284
+Title=Taking Back our Supplies
+BodyText=There is much to be done to aid the Militia. If you are traveling into the farms up north, perhaps you could look for some of our stolen supplies. It seems a few of these Avalonians are quite crafty and have been sneaking in and taking our supplies at night - right under our noses! Return four crates of our supplies if you can find them!
+CompleteText=Thank you kindly. Not only does this save us the cost of resupplying, but it makes those thieving Avalonians suffer!
+Level=14
+Suggested=15
+Exp=2520
+PartySize=1
+NumRewards=0
+Coin=405
+Unabandon=0
+QuestGiverID=181
+QuestEnderID=181
+Repeat=0
+sGiver=49959.0,185.313,66289.0,81
+sEnder=49959.0,185.313,66289.0,81
+Heroism=6
+[ACT]
+Act.BodyText=Search the farm and the docks. Reclaim four crates of stolen militia supplies.
+Obj.0.type=gather
+Obj.0.data1=1813
+Obj.0.data2=4
+Obj.0.description=Gather 4 crates of Stolen Militia Supplies
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=500186
+Obj.0.completeText=0 of 4
+Obj.0.markerLocations=50038.6,615.056,62732.0,81;
+Obj.0.ActivateTime=2000
+Obj.0.ActivateText=Taking supplies...
+[ACT]
+Act.BodyText=Return to Lieutenant O'Haren.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Lieutenant O'Haren
+Obj.0.complete=0
+Obj.0.myCreatureDefID=181
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=49958.6,185.298,66289.0,81;
+
+[ENTRY]
+ID=558
+Title=BOUNTY: Battlefield Knights of Avalon
+BodyText=Kill 12 Knight of Avalon across the bridge on the battlefield. (Vindicators, Marauders, Fire-Charmers and Ice-Charmers)
+CompleteText=
+Level=17,21
+Exp=1097
+PartySize=1
+NumRewards=0
+Coin=189
+Unabandon=0
+QuestGiverID=2801
+QuestEnderID=2801
+Repeat=1
+sGiver=49966.0,184.0,66159.0,81
+sEnder=49966.0,184.0,66159.0,81
+Heroism=6
+[ACT]
+Act.BodyText=Kill 12 Knight of Avalon across the bridge on the battlefield. (Vindicators, Marauders, Fire-Charmers and Ice-Charmers)
+Obj.0.type=kill
+Obj.0.data1=1802,1803,1804,1805,1806,1807
+Obj.0.data2=12
+Obj.0.description=Kill 12 Knight of Avalon on the battlefield
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 12
+Obj.0.markerLocations=50938.8,191.071,60127.7,81;
+[ACT]
+Act.BodyText=Return to the Bounty Board!
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to the Bounty Board!
+Obj.0.complete=0
+Obj.0.myCreatureDefID=2801
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=49966.6,184.835,66159.7,81;
+RewardItem.0=21332,1,1
+
+[ENTRY]
+ID=286
+Requires=285
+Title=Assaulting the Keep
+BodyText=I think it's time we put mettle to the test.
+
+The keep up the road, Lakeshore Keep as it's known, is in the hands of an Avalonian captain named Konin Graves. I want him killed. Plain and simple. With him gone, we should be able to take the keep with ease.
+
+Step to it, soldier! *grin*
+CompleteText=Well done! We will move on the keep in due time. It will be much easier to take with Konin in his grave! *hah* Also, take this as a reward for you efforts!
+Level=14
+Suggested=16
+Exp=2628
+PartySize=2
+NumRewards=1
+Coin=428
+Unabandon=0
+QuestGiverID=234
+QuestEnderID=234
+Repeat=0
+sGiver=50180.0,186.885,66403.0,81
+sEnder=50180.0,186.885,66403.0,81
+Heroism=10
+[ACT]
+Act.BodyText=Kill Konin Graves.
+Obj.0.type=kill
+Obj.0.data1=1705
+Obj.0.data2=1
+Obj.0.description=Kill Konin Graves
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 1
+Obj.0.markerLocations=50408.6,244.719,64146.0,81;
+[ACT]
+Act.BodyText=Return to Captain Nordington.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Captain Nordington
+Obj.0.complete=0
+Obj.0.myCreatureDefID=234
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=50172.3,187.202,66404.0,81;
+RewardItem.0=5124,1,0
+RewardItem.1=5125,1,0
+RewardItem.2=5126,1,0
+RewardItem.3=5127,1,0
+
+[ENTRY]
+ID=287
+Requires=286
+Title=The Battlefield Camps
+BodyText=The last task I have for you is no easier than the last. In fact, you could consider it twice as hard!
+
+North past the farm and across the bridge, is the main battlefield where we put our steel to the heads of those Avalonians. The battlefield is now flanked by two Avalonian camps, the bulk of their remaining forces. The easiest way to kill a snake is to cut off its head! In this case, heads! Each camp is lorded over by Avalonian captains; Rancor Grinwind, a mage of considerable ability, and Pernin Ayn, a druid with a dead-eye bow shot. Both should be approached with extreme caution.
+
+Thus far you have proven your worth far beyond my expectations. If you choose to take this mission for me, I then offer you my greatest wishes for victory!
+CompleteText=I will have to travel to Camelot and thank Arthur personally for sending you to me. You are a true soldier!
+
+As a final reward, take one of these Recipes. We do not have many spare items these days, but if you can acquire all the items on the Recipe list, you can have a crafter in one of the towns create it for you!
+
+Again, I thank you and wish you many more victories!
+
+Farewell!
+Level=15
+Suggested=17
+Exp=2744
+PartySize=2
+NumRewards=1
+Coin=473
+Unabandon=0
+QuestGiverID=234
+QuestEnderID=234
+Repeat=0
+sGiver=50180.0,186.885,66403.0,81
+sEnder=50180.0,186.885,66403.0,81
+Heroism=10
+[ACT]
+Act.BodyText=Travel to the battlefield in the north and kill the two Avalonian Captains, Rancor Grinwind and Pernin Ayn
+Obj.0.type=kill
+Obj.0.data1=1809
+Obj.0.data2=1
+Obj.0.description=Kill Rancor Grinwind
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 1
+Obj.0.markerLocations=51965.2,561.198,60283.0,81;
+Obj.1.type=kill
+Obj.1.data1=1811
+Obj.1.data2=1
+Obj.1.description=Kill Pernin Ayn
+Obj.1.complete=0
+Obj.1.myCreatureDefID=
+Obj.1.myItemID=
+Obj.1.completeText=0 of 1
+Obj.1.markerLocations=49340.1,454.519,59514.0,81;
+[ACT]
+Act.BodyText=Return to Captain Nordington.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Captain Nordington
+Obj.0.complete=0
+Obj.0.myCreatureDefID=234
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=50172.3,187.202,66404.0,81;
+RewardItem.0=142544,1,0
+RewardItem.1=142550,1,0
+RewardItem.2=142545,1,0
+RewardItem.3=142548,1,0
+
+[ENTRY]
+ID=291
+Requires=286
+Title=Travel to Bath
+BodyText=Hail traveler. I know you are quite busy keeping up with Nordington's orders, but if you could do me a favor, when you have the time, I would appreciate it. I am to be wed in less than a month, but my duty keeps me here until the time of ceremony. My fiancee is in the town of Bath, in the north-west. His name is Master Sargeant Wright. If you could deliver a message to him for me, I would be forever in your debt!
+CompleteText=You have a message from my darling? Gaia be praised! Thank you for bringing me this, and welcome to Bath!
+Level=14
+Suggested=15
+Exp=756
+PartySize=1
+NumRewards=0
+Coin=122
+Unabandon=0
+QuestGiverID=183
+QuestEnderID=192
+Repeat=0
+sGiver=50157.1,186.854,66350.0,81
+sEnder=38969.0,304.03,54204.0,81
+[ACT]
+Act.BodyText=Travel to the north-western town of Bath and deliver Apprentice Swift's message to Master Sargeant Wright.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Deliver the message
+Obj.0.complete=0
+Obj.0.myCreatureDefID=192
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=38969.6,303.956,54205.0,81;
+
+[ENTRY]
+ID=290
+Requires=286
+Title=Salvaging Weapons
+BodyText=If you are heading into the battlefield, then you can do me another favor. Salvage any weapons you find in the field. There are sure to be many strewn about, if the Avalonians have not already picked the field clean. In which case you can also just steal weapons from the camps on either side of the battle field. We will take weapons from anywhere we can get them for sure. If you bring me ten weapons, I will reward you in kind.
+CompleteText=Well done. Again as promised, here is your reward.
+Level=15
+Suggested=17
+Exp=2744
+PartySize=1
+NumRewards=0
+Coin=473
+Unabandon=0
+QuestGiverID=180
+QuestEnderID=180
+Repeat=0
+sGiver=49960.0,184.161,66192.0,81
+sEnder=49960.0,184.161,66192.0,81
+Heroism=10
+[ACT]
+Act.BodyText=Travel to the battlefield in the north.
+Obj.0.type=travel
+Obj.0.data1=50738,445,59842,81
+Obj.0.data2=800
+Obj.0.description=Travel to the battlefield
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=50738.8,445.533,59842.0,81;
+[ACT]
+Act.BodyText=Collect ten weapons from the battlefield.
+Obj.0.type=gather
+Obj.0.data1=1810
+Obj.0.data2=10
+Obj.0.description=Collect 10 weapons
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=500185
+Obj.0.completeText=0 of 10
+Obj.0.markerLocations=50738.8,445.533,59842.0,81;
+Obj.0.ActivateTime=2000
+Obj.0.ActivateText=Taking weapon...
+[ACT]
+Act.BodyText=Return to Master Sergeant Dunn.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Master Sergeant Dunn
+Obj.0.complete=0
+Obj.0.myCreatureDefID=180
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=49960.0,184.068,66192.0,81;
+
+[ENTRY]
+ID=282
+Title=Earthen Hides
+Requires=281
+BodyText=Hello again! I have more work for you if you are interested!
+
+I could use some Earthen Hides from the giant lumbering Earth Keepers and Earth Trekkers up north.
+
+They are tough buggers, but I will pay you quite well for ten of their hides.
+CompleteText=Ah, well done once again! As always, check back later, I may have more work for you!
+Level=16
+Suggested=17
+Exp=2744
+PartySize=1
+NumRewards=0
+Coin=473
+Unabandon=0
+QuestGiverID=1576
+QuestEnderID=1576
+Repeat=0
+sGiver=55888.0,356.085,65855.0,81
+sEnder=55888.0,356.085,65855.0,81
+Heroism=10
+[ACT]
+Act.BodyText=Travel to the north and kill Earth Keepers and Earth Trekkers. Collect ten of their Earthen Hides and bring them to Turgan Gergendol.
+Obj.0.type=kill
+Obj.0.data1=1680,1681
+Obj.0.data2=10
+Obj.0.description=Collect 10 Earthen Hides
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=500182
+Obj.0.completeText=0 of 10
+Obj.0.markerLocations=53200.0,188.846,57378.0,81;
+[ACT]
+Act.BodyText=Return to Turgan Gergendol.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Turgan Gergendol
+Obj.0.complete=0
+Obj.0.myCreatureDefID=1576
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=56159.6,343.427,65981.0,81;
+
+[ENTRY]
+ID=278
+Title=Elden's Special Treat
+Requires=277
+BodyText=Ok ! Here we go... Shhhh! I hear spies! They are everywhere... ...listen! LISTEN!
+
+Wait... ...hmmm.... Do you like eggs? I do not trust them! They are liars, I tell you, all of them...! I hate eggs!
+
+Oh yes, the treats... Here take them... ...Jar of Fried Flies... ...they are so tasty and crunchy! Elden loves them! He is my best customer!
+
+Remember, the moths have ears everywhere... ...the sounds of sparrows could be dragons in disguise...
+
+...you can never be too careful these days...
+CompleteText=Oh thank Gaia! You have them. Now perhaps I can get back to Fort Stonehenge before Elden is too upset with me! Thank you friend! Farewell!
+Level=11
+Suggested=11
+Exp=644
+PartySize=1
+NumRewards=0
+Coin=81
+Unabandon=0
+QuestGiverID=1791
+QuestEnderID=1573
+Repeat=0
+sGiver=54810.0,88.3497,66829.0,81
+sEnder=53358.0,168.994,64301.0,81
+[ACT]
+Act.BodyText=Return to Aramere Gufflin.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Aramere Gufflin
+Obj.0.complete=0
+Obj.0.myCreatureDefID=1573
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=53359.0,168.831,64300.3,81;
+
+[ENTRY]
+ID=269
+Requires=267
+Title=Return to Grand Druid Lunast
+BodyText=We have new news about Claira and it is not good news. I had hoped ending this horror here would end the threat, I was wrong. Speak with Grand Druid Luncast as soon as you can. Thank you for your help here, you are a true hero!
+CompleteText=Greetings once more friend. I am glad to see you unharmed.
+Level=13
+Suggested=14
+Exp=726
+PartySize=1
+NumRewards=0
+Coin=108
+Unabandon=0
+QuestGiverID=174
+QuestEnderID=169
+Repeat=0
+sGiver=57616.0,364.446,61884.0,81
+sEnder=54606.0,167.362,63317.0,81
+[ACT]
+Act.BodyText=Travel to Grand Druid Lunast.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Travel to Grand Druid Lunast
+Obj.0.complete=0
+Obj.0.myCreatureDefID=169
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=54611.6,166.946,63316.0,81;
+
+
+
+[ENTRY]
+ID=270
+Title=Yellow-Heart Blossoms 
+BodyText=Hello! Hello! I could sure use some help from someone like you! I normally go to Farmer Felps' farm and pick Yellow Heart Blossoms once a week - they grow wild in the fields. This week I went down there and, after having only picked these few right here in my bucket, I was attacked by bandits! What is this world coming to?
+
+If you are going that way perhaps you could pick some of the Yellow Heart Blossoms for me? I would be ever grateful!
+CompleteText=You got them? Glorious day! Thank you so much!
+Level=11
+Suggested=11
+Exp=2147
+PartySize=1
+NumRewards=0
+Coin=270
+Unabandon=0
+QuestGiverID=1574
+QuestEnderID=1574
+Repeat=0
+sGiver=54517,222,67867,81
+sEnder=54517,222,67867,81
+Heroism=6
+[ACT]
+Act.BodyText=Gather eight Yellow-Heart Blossoms from Farmer Felps' Farm.
+Obj.0.type=gather
+Obj.0.data1=1787
+Obj.0.data2=8
+Obj.0.description=Gather 8 Yellow-Heart Blossoms
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=500176
+Obj.0.completeText=
+Obj.0.markerLocations=54686.1,247.371,68718.7,81;
+Obj.0.ActivateTime=2000
+Obj.0.ActivateText=Picking Flowers!
+[ACT]
+Act.BodyText=Return to Simon Greeneye.
+Obj.0.type=talk
+Obj.0.data1=1574
+Obj.0.data2=
+Obj.0.description=Return to Simon Greeneye
+Obj.0.complete=0
+Obj.0.myCreatureDefID=1574
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=54517,222,67867,81;
+
+
+[ENTRY]
+ID=275
+Title=Yet Another Letter
+Requires=274
+BodyText=Friend! Please do me one last favor and take another letter to my... ...to uh... Acolyte Goldheart in the Druid Hall?
+CompleteText=You again? Oh, more paperwork from Druid Dern? *beams*
+
+Let me see! *blush*
+
+I thank you... ...the Order of Gaia thanks you for you stalwart duty to us and making sure our paperwork is in order. *wink*
+Level=13
+Suggested=13
+Exp=2334
+PartySize=1
+NumRewards=0
+Coin=338
+Unabandon=0
+QuestGiverID=1790
+QuestEnderID=176
+Repeat=0
+sGiver=57651.0,331.998,61737.0,81
+sEnder=54648.0,163.902,63280.0,81
+[ACT]
+Act.BodyText=Deliver the letter to Acolyte Goldheart.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Deliver the letter to Acolyte Goldheart
+Obj.0.complete=0
+Obj.0.myCreatureDefID=176
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=54648.5,162.362,63289.0,81;
+
+[ENTRY]
+ID=268
+Requires=269
+Title=Priestess Claira
+BodyText=I have a great fear that these Thornbringers are part of something greater. I have suspicions I yet not even discuss with you, but there is one clear thing; Claira must be eliminated. She is the leader of these malcontents and the horror they wrought, which you saw first hand in the crypt. This is more than enough reason to act.
+
+We now know she is deep in the Underhenge, an old shrine under Stonhenge. It was left many years ago to decay due to its structural instability. Go to the Underhenge and put an end to Claira.
+CompleteText=Again you return unharmed. Gaia be praised. What is this...?
+
+...as I thought, this is all just part of Hetius and Mali's scheming.
+
+Hetius, Grand Fanatic Hetius as he is also known, is a follower of Hyperion. Hetius claims he himself has been to the gates of Tartarus and heard the voice of Hyperion himself. The voice gave him... instructions...
+
+Personally, I do not believe the tale. What I do believe is he, Mali, and all their followers, DO believe that this may be the start of an even greater threat.
+
+For now, though, I must thank you. You have done so much for our order and this land. Please take this key to my chest in the corner. You may open it and take one item of your choosing.
+
+Again friend, I thank you! May Gaia guide your hand, heart, and mind. Farewell.
+Level=14
+Suggested=15
+Exp=2520
+PartySize=1
+NumRewards=0
+Coin=405
+Unabandon=0
+QuestGiverID=169
+QuestEnderID=169
+Repeat=0
+sGiver=54606.0,167.362,63317.0,81
+sEnder=54606.0,167.362,63317.0,81
+Heroism=14
+[ACT]
+Act.BodyText=Travel to the Underhenge.
+Obj.0.type=travel
+Obj.0.data1=43580,59,68379,81
+Obj.0.data2=100
+Obj.0.description=Travel to Underhenge
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=43580.4,59.4127,68379.0,81;
+[ACT]
+Act.BodyText=Enter the Underhenge.
+Obj.0.type=travel
+Obj.0.data1=2229,290,5265,28
+Obj.0.data2=1000
+Obj.0.description=Enter the Underhenge
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=43580.4,59.4127,68379.0,81;
+[ACT]
+Act.BodyText=Kill Priestess Claira.
+Obj.0.type=kill
+Obj.0.data1=16
+Obj.0.data2=1
+Obj.0.description=Kill Priestess Claira
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 1
+Obj.0.markerLocations=2230.67,260.0,3283.46,28;
+[ACT]
+Act.BodyText=You found a message from someone named Hetius on the body of Priestess Claira.
+
+Take the message to Grand Druid Lunast.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Take the message to Grand Druid Lunast
+Obj.0.complete=0
+Obj.0.myCreatureDefID=169
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=54611.6,166.946,63316.0,81;
+RewardItem.0=21149,1,1
+
+[ENTRY]
+ID=556
+Title=BOUNTY: Vespins
+BodyText=Kill 12 Vespins at the Vespin hives.
+CompleteText=
+Level=15,19
+Exp=1008
+PartySize=1
+NumRewards=0
+Coin=162
+Unabandon=0
+QuestGiverID=2799
+QuestEnderID=2799
+Repeat=1
+sGiver=39067.0,304.318,54278.4,81
+sEnder=39067.0,304.318,54278.4,81
+Heroism=6
+[ACT]
+Act.BodyText=Kill 12 Vespins at the Vespin hives.
+Obj.0.type=kill
+Obj.0.data1=150,151,152,153,1676
+Obj.0.data2=12
+Obj.0.description=Kill 12 Vespins
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 12
+Obj.0.markerLocations=36327.7,201.271,57462.9,81;
+[ACT]
+Act.BodyText=Return to the Bounty Board!
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to the Bounty Board!
+Obj.0.complete=0
+Obj.0.myCreatureDefID=2799
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=39067.3,304.345,54282.6,81;
+RewardItem.0=21328,1,1
+
+[ENTRY]
+ID=294
+Title=Swamp Bandits
+BodyText=Hail and well met, friend! Are you perhaps looking for some work? If indeed you are, I can offer you some for sure.
+
+A group of bandits have been attacking travelers coming from the south, toward Bath. I have a man stationed not far from their encampment named Sargent Brahms. If you would, go and speak with him. We could really use some help ridding the area of these bandits.
+CompleteText=Yes? Oh, so Rhames sent you? Good, I can really use some assistance here.
+Level=14
+Suggested=15
+Exp=756
+PartySize=1
+NumRewards=0
+Coin=122
+Unabandon=0
+QuestGiverID=187
+QuestEnderID=1887
+Repeat=0
+sGiver=39376.3,310.14,54005.0,81
+sEnder=41762.0,526.848,56660.0,81
+[ACT]
+Act.BodyText=Talk to Sergeant Brahms at the edge of the Swamp.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Talk to Sergeant Brahms
+Obj.0.complete=0
+Obj.0.myCreatureDefID=1887
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=41758.5,526.886,56659.0,81;
+
+[ENTRY]
+ID=303
+Title=Rare Books
+BodyText=Greetings. I wonder if you had any plans to perhaps investigate the old Monastery to the south-west?
+
+If you do, I would like you to keep your eyes peeled for any rare books you might find. The entire place is now overrun with some crazy-brained monks. Some crazy woman has them all riled up that the end of days is nigh - you know the type eh? Yes well, be that as it may, there are still some very old and rare books to be found inside the depths of the Monastery. I would pay you very well if you bring me... hmmm... eight... yes, eight sounds about right! That will fill out another book shelf back home. Bring me the books and I will reward you very well.
+CompleteText=You have the books! Impressive. I was not sure you would even return! But you did... ...so I suppose I owe you a reward?
+
+Thank you and farewell!
+Level=16
+Suggested=17
+Exp=2744
+PartySize=5
+NumRewards=1
+Coin=473
+Unabandon=0
+QuestGiverID=190
+QuestEnderID=190
+Repeat=0
+sGiver=39387.0,320.127,53819.0,81
+sEnder=39387.0,320.127,53819.0,81
+Heroism=14
+[ACT]
+Act.BodyText=Collect 8 Rare Books from the Abandoned Monastery.
+Obj.0.type=gather
+Obj.0.data1=278
+Obj.0.data2=8
+Obj.0.description=Collect 8 Rare Books
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=500187
+Obj.0.completeText=0 of 8
+Obj.0.markerLocations=32891.7,407.99,61130.0,81;
+Obj.0.ActivateTime=2000
+Obj.0.ActivateText=Taking rare book
+[ACT]
+Act.BodyText=Return to Arcanist Frostsson.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Arcanist Frostsson
+Obj.0.complete=0
+Obj.0.myCreatureDefID=190
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=39386.0,320.127,53831.0,81;
+RewardItem.0=5131,1,0
+RewardItem.1=5128,1,0
+RewardItem.2=5129,1,0
+RewardItem.3=5130,1,0
+
+[ENTRY]
+ID=299
+Title=Vespin Honey Mead
+BodyText=Welcome! Welcome to the Rusty Nail! Finest establishment in Bath, you see!
+
+We are well known here for our delicious Vespin Honey Mead. Sadly, my supplies of Vespin Honey are reaching the bottom of the barrel. The Vespins are normally fairly passive and I have workers who collect honey for me at regular intervals. Of late, the Vespins have been aggressive! My workers had to flee the hives and left all the honey they had collected behind!
+
+If you could retrieve three of the buckets of honey they left behind, I would be very grateful! I only need three buckets of Vespin Honey to make an entirely fresh keg of mead. Interested?
+CompleteText=Ah yes, success! Prefect! Now I can complete my mead!
+
+Come back later and I may have more work for you to do! Farewell!
+Level=15
+Suggested=16
+Exp=2628
+PartySize=1
+NumRewards=0
+Coin=428
+Unabandon=0
+QuestGiverID=186
+QuestEnderID=186
+Repeat=0
+sGiver=39251.6,320.127,53810.0,81
+sEnder=39251.6,320.127,53810.0,81
+Heroism=6
+[ACT]
+Act.BodyText=Travel to the Vespin Hives and collect three buckets of Vespin Honey.
+Obj.0.type=gather
+Obj.0.data1=1946
+Obj.0.data2=3
+Obj.0.description=Collect 3 Buckets of Vespin Honey
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=500200
+Obj.0.completeText=0 of 3
+Obj.0.markerLocations=36462.7,202.813,57403.0,81;
+Obj.0.ActivateTime=2000
+Obj.0.ActivateText=Taking Bucket of Honey
+[ACT]
+Act.BodyText=Return to Innkeeper O'Riles.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Innkeeper O'Riles
+Obj.0.complete=0
+Obj.0.myCreatureDefID=186
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=39251.0,320.127,53810.0,81;
+
+[ENTRY]
+ID=298
+Title=The Stolen Locket
+BodyText=Good traveler, a word? I am in need of a brave soul to aid me. I was attacked by bandits while traveling from the south to Bath. They took all my valuables! I care little for most of them, but a locket was taken that is very dear to my heart. It was a gift from my dearest mother and I cannot live without it! If you could find the locket and bring it to me, I would be deep in your debt.
+CompleteText=You found it? Goodness and praise upon you! Thank you!
+Level=14
+Suggested=16
+Exp=2628
+PartySize=1
+NumRewards=0
+Coin=428
+Unabandon=0
+QuestGiverID=189
+QuestEnderID=189
+Repeat=0
+sGiver=39426.7,310.14,54027.0,81
+sEnder=39426.7,310.14,54027.0,81
+Heroism=6
+[ACT]
+Act.BodyText=Where ever the Bog Rats keep their stolen goods is the best place to look for the Greenwell Family Locket.
+Obj.0.type=activate
+Obj.0.data1=1945
+Obj.0.data2=1
+Obj.0.description=Find the Greenwell Family Locket
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=500199
+Obj.0.completeText=0 of 1
+Obj.0.markerLocations=43070.0,137.31,58866.0,81;
+Obj.0.ActivateTime=2000
+Obj.0.ActivateText=Taking locket...
+[ACT]
+Act.BodyText=Return the locket to Apprentice Greenwell.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Apprentice Greenwell
+Obj.0.complete=0
+Obj.0.myCreatureDefID=189
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=39419.3,310.14,54032.0,81;
+
+[ENTRY]
+ID=304
+Title=A Druid's Task
+BodyText=Hail. I do not suppose you have time to aid a simple druid?
+
+You do? Ah, Gaia be praised! Myself and Faern here were sent here from Camelot... Well, not sent here specifically, but sent to the old Monastery. Grand Druid Lunast asked us to gather some pulp from from the bookwyrms. When the bookwyrms take a new book as a body, it changes uhm... something... errr... ...well that is neither here nor there! The important thing is, we failed! I am sure Lunast thought we were up to the task, or else why would he have sent us?!
+
+Would you perchance gather the pulp we need? I suppose Lunast would be less angry with us if we at least returned with what he asked for.
+CompleteText=Praise Gaia, you brought the pulp! Now we must go and admit we failed, unless... you do not suppose he knew we could not manage to get it ourselves...? Perhaps this was a test to see how resourceful we are!
+
+I guess I will find out soon enough.
+
+Thank you again for all your help!
+Level=16
+Suggested=17
+Exp=2744
+PartySize=1
+NumRewards=0
+Coin=473
+Unabandon=0
+QuestGiverID=191
+QuestEnderID=191
+Repeat=0
+sGiver=39746.4,310.14,53847.0,81
+sEnder=39746.4,310.14,53847.0,81
+Heroism=10
+[ACT]
+Act.BodyText=Gather ten pieces of Bookwyrm Pulp from the various Bookwyrms in and around the Abandoned Monastery.
+Obj.0.type=kill
+Obj.0.data1=317,318
+Obj.0.data2=10
+Obj.0.description=Gather 10 pieces Bookwyrm Pulp
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=500207
+Obj.0.completeText=0 of 10
+Obj.0.markerLocations=33192.4,338.409,60629.0,81;
+[ACT]
+Act.BodyText=Return to Acolyte Michalka.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Acolyte Michalka
+Obj.0.complete=0
+Obj.0.myCreatureDefID=191
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=39742.9,310.14,53846.0,81;
+
+[ENTRY]
+ID=305
+Title=The Lost Journal
+BodyText=Hail traveler! Myself and my fellow druid Michalka have run into a spot of trouble. We were sent by Grand Druid Lunast to retrieve some pulp from the bookworms at the old Monastery. Michalka is concerned about our 'mission,' but I am more upset that while we were running for our lives, I lost my journal. Grand Druid Lunast may be angry with us for our failure. However, he will eventually get past that, but I will be surely lost without my trusty journal. It has the chronicle of my entire life in its pages! I fear that if it stays too long outside the monastery, that one of the bookworms may turn my journal into its next set of wings! So please, I beg you, go to the abandoned Monastery and find my journal. It should be outside in in the old graveyard, somewhere!
+CompleteText=You have my journal? I will never be able to thank you enough!
+Level=16
+Suggested=17
+Exp=2744
+PartySize=1
+NumRewards=0
+Coin=473
+Unabandon=0
+QuestGiverID=188
+QuestEnderID=188
+Repeat=0
+sGiver=39750.0,310.14,53822.0,81
+sEnder=39750.0,310.14,53822.0,81
+Heroism=6
+[ACT]
+Act.BodyText=Search the area outside the Abandoned Monastery for Faern's Journal.
+Obj.0.type=gather
+Obj.0.data1=1897
+Obj.0.data2=1
+Obj.0.description=Find Faern's Journal
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=500188
+Obj.0.completeText=0 of 1
+Obj.0.markerLocations=33192.4,338.409,60629.0,81;
+Obj.0.ActivateTime=2000
+Obj.0.ActivateText=Taking Journal
+[ACT]
+Act.BodyText=Return to Acolyte Faern.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Acolyte Faern
+Obj.0.complete=0
+Obj.0.myCreatureDefID=188
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=39746.2,310.14,53822.0,81;
+
+[ENTRY]
+ID=301
+Title=Herb Hunting!
+BodyText=Hail friend! Being the only herbalist in town can be quite a trying life. Everyone needs something all the time! Where is my Wort-Root? Where are my Barglefor leaves? When will it end?!
+
+Oh sorry, just a tad bit too busy for my own good. Perhaps you can assist me? I am out of three of my most popular herbs. Two are rather easy to obtain, though difficult to find; the third requires you to fell some nasty little beasts. Care to help me?
+
+Great! What I need is Petite Swamp Barbs. They grow just along the edges of the swamp to the south of town. I also need a handful of Wrath-Thorn Barbs. Your best bet for finding those lovelies is down by the old Monastery. I tend not to go there myself, that place gives me the creeps, but it is a great place to find Wrath-thorn growing wildly! Finally I need some Wandering Earth Moss. This one is a little tricky: Wandering Earth Moss is called that because it grows on the backs of Earth Trudgers. They are quite large, but I think you are more than a match for them! You will find them a bit north of the Monastery, so at least you will already be in the area collecting my Wrath-Thorn Barbs!
+CompleteText=You are back! Great! Now I can fill these orders.
+
+Check back later, I may have more herbs for you to hunt down for me!
+Level=15
+Suggested=16
+Exp=2628
+PartySize=1
+NumRewards=0
+Coin=428
+Unabandon=0
+QuestGiverID=193
+QuestEnderID=193
+Repeat=0
+sGiver=39693.0,318.676,53584.0,81
+sEnder=39693.0,318.676,53584.0,81
+Heroism=6
+[ACT]
+Act.BodyText=Gather the Petite Swamp Barbs from the edge of the swamp to the south of Bath.
+
+Gather the Wrath-Thorn near the old Monastery.
+
+Gather the Wandering Earth Moss by killing Earth Trudgers near the old Monastery.
+Obj.0.type=gather
+Obj.0.data1=1947
+Obj.0.data2=6
+Obj.0.description=Gather 6 Petite Swamp Barbs
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=500202
+Obj.0.completeText=0 of 6
+Obj.0.markerLocations=42744.0,96.4295,56479.0,81;
+Obj.0.ActivateTime=2000
+Obj.0.ActivateText=Picking herbs...
+Obj.1.type=gather
+Obj.1.data1=1948
+Obj.1.data2=6
+Obj.1.description=Gather 6 Wrath-Thorn
+Obj.1.complete=0
+Obj.1.myCreatureDefID=
+Obj.1.myItemID=500201
+Obj.1.completeText=0 of 6
+Obj.1.markerLocations=33216.9,320.508,60182.0,81;
+Obj.1.ActivateTime=2000
+Obj.1.ActivateText=Picking Herbs
+Obj.2.type=kill
+Obj.2.data1=1661,1662
+Obj.2.data2=6
+Obj.2.description=Gather 6 Wandering Earth Moss
+Obj.2.complete=0
+Obj.2.myCreatureDefID=
+Obj.2.myItemID=500212
+Obj.2.completeText=0 of 6
+Obj.2.markerLocations=34110.0,242.852,59548.0,81;
+[ACT]
+Act.BodyText=Reuturn to Herbalist Kaydee.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Herbalist Kaydee
+Obj.0.complete=0
+Obj.0.myCreatureDefID=193
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=39688.1,318.715,53594.0,81;
+
+[ENTRY]
+ID=557
+Title=BOUNTY: Drifting Bogbeast
+BodyText=Kill 10 Drifting Bogbeasts.
+CompleteText=
+Level=16,20
+Exp=1051
+PartySize=1
+NumRewards=0
+Coin=171
+Unabandon=0
+QuestGiverID=2800
+QuestEnderID=2800
+Repeat=1
+sGiver=39509.0,309.0,53769.0,81
+sEnder=39509.0,309.0,53769.0,81
+Heroism=6
+[ACT]
+Act.BodyText=Kill 10 Drifting Bogbeasts.
+Obj.0.type=kill
+Obj.0.data1=1758,1759
+Obj.0.data2=10
+Obj.0.description=Kill 10 Drifting Bogbeasts
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 10
+Obj.0.markerLocations=41208.7,123.395,52875.7,81;
+[ACT]
+Act.BodyText=Return to the Bounty Board!
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to the Bounty Board!
+Obj.0.complete=0
+Obj.0.myCreatureDefID=2800
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=39508.7,309.989,53770.2,81;
+RewardItem.0=21328,1,1
+
+[ENTRY]
+ID=555
+Title=BOUNTY: Ironskin Thrasher
+BodyText=Kill 10 Ironskin Thrashers.
+CompleteText=
+Level=15,19
+Exp=1008
+PartySize=1
+NumRewards=0
+Coin=162
+Unabandon=0
+QuestGiverID=2798
+QuestEnderID=2798
+Repeat=1
+sGiver=39055.0,312.0,53544.0,81
+sEnder=39055.0,312.0,53544.0,81
+Heroism=6
+[ACT]
+Act.BodyText=Kill 10 Ironskin Thrashers.
+Obj.0.type=kill
+Obj.0.data1=1753,1754
+Obj.0.data2=10
+Obj.0.description=Kill 10 Ironskin Thrashers
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 10
+Obj.0.markerLocations=36582.5,201.776,54127.6,81;
+[ACT]
+Act.BodyText=Return to the Bounty Board!
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to the Bounty Board!
+Obj.0.complete=0
+Obj.0.myCreatureDefID=2798
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=39061.0,311.643,53547.2,81;
+RewardItem.0=21328,1,1
+
+[ENTRY]
+ID=292
+Title=The Fate of Baron Unger
+BodyText=Greetings traveler. I am Lady Kathryn Rose, of the House of Rose. My family has lived in Bath and owned much of the surrounding land for many years. Our family has seen many highs and lows and it is a current low that I wish to discuss with you.
+
+This regards my uncle, Baron Unger. While it is common for him to be very much a hermit, I now have grown to worry about his well being. He lives high on the hill in the Overwatch Keep. Once a watch post, it was deeded to our family many years ago. Uncle Unger took the place as his own private sanctuary in which to study. I fear that his studies have gone from the mere hypothetical to the real. He was always obsessed with beast consciousness. Asking "What makes us self aware in ways that more common creatures are not?". People spoke of him doing experiments on local creatures.
+
+I have not heard a word from him in over three months. I sent a servant to speak with him - the servant never returned. I sent some of the local militia to speak with him - they returned with horrible news. It would seem the entire keep is overrun with strange creatures and they could not get inside to see if my uncle was there.
+
+I ask of you to go the to the keep and discover the fate of Baron Unger. If he lives, ask him to return to Bath. If the unthinkable has happened and he has... passed ...then please return his ring - the Rose Family Signet - to me, so that I may at least have something to remember him by.
+
+If you would do me this great favor I will be ever thankful.
+CompleteText=You have returned - what news?
+
+Oh...you have brought me his ring.
+
+This is a sad day for my family. To you, though, I must give thanks. You have at least let me know the fate of my uncle and I can begin to mourn his passing. Please take this reward for your efforts.
+Level=14
+Suggested=15
+Exp=2520
+PartySize=1
+NumRewards=0
+Coin=405
+Unabandon=0
+QuestGiverID=1854
+QuestEnderID=1854
+Repeat=0
+sGiver=39000.0,314.726,53686.0,81
+sEnder=39000.0,314.726,53686.0,81
+Heroism=6
+[ACT]
+Act.BodyText=Travel to Overwatch Keep.
+Obj.0.type=travel
+Obj.0.data1=36790,494,50157,81
+Obj.0.data2=200
+Obj.0.description=Travel to Overwatch Keep
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=36790.0,494.324,50157.0,81;
+[ACT]
+Act.BodyText=You arrive at the keep. The place is a wreck. Search the interior for Baron Unger.
+Obj.0.type=travel
+Obj.0.data1=36616,746,51175,81
+Obj.0.data2=80
+Obj.0.description=Find Baron Unger
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=36616.0,746.797,51175.0,81;
+[ACT]
+Act.BodyText=You have found the remains of Baron Unger. It would seem he fell victim to his own creations. Take the Rose Family Signet and return to Lady Kathryn Rose in the town of Bath.
+Obj.0.type=activate
+Obj.0.data1=1911
+Obj.0.data2=1
+Obj.0.description=Take the Rose Family Signet from the body
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=500206
+Obj.0.completeText=0 of 1
+Obj.0.markerLocations=36616.0,746.797,51175.0,81;
+Obj.0.ActivateTime=2000
+Obj.0.ActivateText=Taking the ring...
+[ACT]
+Act.BodyText=Take the ring to Lady Kathryn Rose in the town of Bath.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Lady Kathryn Rose
+Obj.0.complete=0
+Obj.0.myCreatureDefID=1854
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=39012.8,314.726,53679.0,81;
+RewardItem.0=5713,1,1
+
+
+[ENTRY]
+ID=293
+Requires=292
+Title=The Treasure Map
+BodyText=While you were gone, I had searched for some way to reward you for your efforts. I came across this old riddle of a map that promises to hold great treasure to the one who can solve it. It has been in the family for many years, though I am not sure any of my kin were adventurous enough to even seek out the prize. I cannot say exactly what could lay at the end, but perhaps an adventurer like yourself could find out?
+
+Take it and see if you can solve it. If perchance you do, please return to me and let me know what you discover at the end.
+CompleteText=What's this? A key... oh and it has our family seal on it! I know what this key is for! I just never thought I would ever see it! An heirloom chest passed down from family member to family member with a riddle of sorts. It was said that one day the key would be found. That was all! I suppose the whole time the map was just a way to find the key! You have earned the right to open the chest, adventurer, and take whatever may be inside!
+//Level=14
+Level=100
+Suggested=20
+Exp=3096
+PartySize=1
+NumRewards=0
+Coin=585
+Unabandon=0
+QuestGiverID=1854
+QuestEnderID=1854
+Repeat=0
+sGiver=39000.0,314.726,53686.0,81
+sEnder=39000.0,314.726,53686.0,81
+Heroism=14
+[ACT]
+Act.BodyText=The map is very old. It simply shows the basic outline of Anglorum. It has some basic, but very cryptic, instructions: "To find the way, seek the lonely grave marker upon the hill. From there, more will be revealed."
+Obj.0.type=travel
+Obj.0.data1=59586,443,57779,81;
+Obj.0.data2=100
+Obj.0.description=Find the Lonely Grave upon the hill
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=59586.1,443.008,57779.1,81;
+[ACT]
+Act.BodyText=The map text has now changed! "You found the lonely grave. Now seek the graves of three by the sea."
+Obj.0.type=travel
+Obj.0.data1=55496,177,69420,81
+Obj.0.data2=100
+Obj.0.description=Find the three graves by the sea
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=55496.3,177.254,69420.8,81;
+[ACT]
+Act.BodyText=The map text has changed again! "You found the three by the sea. Now seek the stone upon the stone upon the stone upon the stone."
+Obj.0.type=travel
+Obj.0.data1=48851,99,48707,81;
+Obj.0.data2=150
+Obj.0.description=Find the stones upon the stones
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=48851.1,99.9969,48707.6,81;
+[ACT]
+Act.BodyText=The map text has changed again! "You found the stones upon the stones. Now seek the hand grasping from the earth."
+Obj.0.type=travel
+Obj.0.data1=30190,157,59700,81;
+Obj.0.data2=100
+Obj.0.description=Find the hand grasping from the earth
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=30190.5,157.065,59700.4,81;
+[ACT]
+Act.BodyText=The map text has changed again "You found the hand grasping from the earth. Now seek the skull upon the tree."
+Obj.0.type=travel
+Obj.0.data1=47413,265,44620,81
+Obj.0.data2=100
+Obj.0.description=Find the skull upon the tree
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=47413.2,265.65,44620.9,81;
+[ACT]
+Act.BodyText=The map text has changed again "You found the lonely grave, and the three by sea. You found the stone upon the stone and the hand grasping from the earth, and now the skull upon the tree. Now seek the sword in the bones and take the key.
+Obj.0.type=travel
+Obj.0.data1=44645,277,59775,81
+Obj.0.data2=100
+Obj.0.description=Find the sword in the bones
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=44645.3,277.007,59775.3,81;
+[ACT]
+Act.BodyText=The map text has changed again: "You are complete." Take a close look at the Sword.
+Obj.0.type=activate
+Obj.0.data1=1926
+Obj.0.data2=1
+Obj.0.description=Take a close look at the sword
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=500198
+Obj.0.completeText=
+Obj.0.markerLocations=44645.3,277.007,59775.3,81;
+Obj.0.ActivateTime=2000
+Obj.0.ActivateText=Searching the sword...
+[ACT]
+Act.BodyText=In the hilt you find a key - it bears the seal of the Rose Family! Take this directly to Lady Kathryn Rose in Bath!
+Obj.0.type=talk
+Obj.0.data1=1854
+Obj.0.data2=0
+Obj.0.description=Return to Lady Kathryn Rose
+Obj.0.complete=0
+Obj.0.myCreatureDefID=1854
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=39000.0,314.726,53686.0,81;
+RewardItem.0=21176,1,1
+
+[ENTRY]
+ID=300
+Requires=299
+Title=Delivery to the Crossroads Inn
+BodyText=Hello again. Now that my mead is complete, I wonder if you would mind delivering a few bottles up to Grolmer Weiss at the Crossroads Inn?
+CompleteText=Is that the latest order of Vespin Honey Mead from bath? Oh lovely! Give it here!
+
+Oh where are my manners? ...ahem... Welcome to the Crossroads Inn.
+Level=16
+Suggested=16
+Exp=788
+PartySize=1
+NumRewards=0
+Coin=128
+Unabandon=0
+QuestGiverID=186
+QuestEnderID=195
+Repeat=0
+sGiver=39251.6,320.127,53810.0,81
+sEnder=43810.0,313.936,50124.0,81
+[ACT]
+Act.BodyText=Deliver the freshly bottled Vespin Honey Mead to Grolmer Weiss at the Crossroads Inn.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Deliver the Vespin Honey Mead
+Obj.0.complete=0
+Obj.0.myCreatureDefID=195
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=43830.2,313.936,50135.0,81;
+
+[ENTRY]
+ID=295
+Requires=294
+Title=The Bog Rats
+BodyText=Recently, we've been having a bit of a bandit problem. The buggers have been attacking travelers heading toward Bath. They call themselves the Bog Rats - how appropriate for the swamp scum that they are. Their leader is named Floro, or as he much prefers 'Floro the Sly' - feh! Sly my eye! He is nothing more than a thug that needs to be dealt with harshly.
+
+They have control of a fairly large area at the edge of the swamp. They have taken the small farm here and even have an encampment out on the island south of the farm.
+
+The most important thing is to rid ourselves of Floro. He is the ring leader. Without him, the rest will most likely scatter to the winds. The problem is I cannot seem to catch him. I have seen him enter the farm house and then seem to vanish. There must be some secret basement in that place, but I am unable to find it.
+
+I want you to assault their camps. Kill fifteen of them - that'll let them know how seriously we've taken thieving in these parts. At the same time, keep your eyes open for clues as to how to enter the basement of that farm house. I think our only chance of catching Floro is to get him while he is in there with no other way to escape.
+CompleteText=What news?
+Level=16
+Exp=2628
+PartySize=2
+NumRewards=0
+Coin=428
+Unabandon=0
+QuestGiverID=1887
+QuestEnderID=1887
+Repeat=0
+sGiver=41762.0,526.848,56660.0,81
+sEnder=41762.0,526.848,56660.0,81
+Heroism=10
+[ACT]
+Act.BodyText=Travel to the Bog Rat encampment and kill fifteen Bog Rat Bandits. Keep a look out for clues how to gain entrance to the farm house basement.
+Obj.0.type=kill
+Obj.0.data1=1882,1883,1884,1885
+Obj.0.data2=15
+Obj.0.description=Kill 15 Bog Rat Bandits
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 15
+Obj.0.markerLocations=44027.0,104.537,56845.0,81;
+[ACT]
+Act.BodyText=The last bandit you killed had a diary. A love struck bandit's sorrow may just be the clue you were looking for.
+
+"...so I suppose I am just another faceless bandit to her, but oh! Elindra, how I love you! Even though I know you only have eyes for Gillian Nor... but then you always did have a thing for those in authority. Gillian just thinks he is so special because Floro trusts him with the secret of the basement door..."
+
+Hunt down Gillian Nor and find the secret to unlock the farm house basement.
+Obj.0.type=kill
+Obj.0.data1=1886
+Obj.0.data2=1
+Obj.0.description=Kill Gillian Nor
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 1
+Obj.0.markerLocations=43387.1,91.2734,60734.0,81;
+[ACT]
+Act.BodyText=On the body of Gillian Nor you find a note that is some kind of switch sequence:
+
+the well -> the barrel by the door -> the bookshelf
+Obj.0.type=gather
+Obj.0.data1=1888
+Obj.0.data2=1
+Obj.0.description=Investigate the well
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=43513.7,132.823,58907.0,81;
+Obj.0.ActivateTime=2000
+Obj.0.ActivateText=Pushing loose brick
+[ACT]
+Act.BodyText=You found a loose brick in the well and slid it to the right. When pushed, it made a clicking noise.
+
+Investigate the barrel by the door.
+Obj.0.type=gather
+Obj.0.data1=1889
+Obj.0.data2=1
+Obj.0.description=Investigate the barrel by the door
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=43145.4,137.479,58730.0,81;
+Obj.0.ActivateTime=2000
+Obj.0.ActivateText=Turning barrel
+[ACT]
+Act.BodyText=You turned the barrel to the right and heard a clicking noise.
+
+Investigate the bookshelf.
+Obj.0.type=gather
+Obj.0.data1=1890
+Obj.0.data2=1
+Obj.0.description=Investigate the bookshelf
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=43097.1,137.31,58738.0,81;
+Obj.0.ActivateTime=2000
+Obj.0.ActivateText=Pushing book
+[ACT]
+Act.BodyText=You push a book into place and you hear a loud clicking noise... and the stove moves just a little.
+
+Before you continue, go speak with Sergeant Brahms and update him with this information.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Speak with Sergeant Brahms
+Obj.0.complete=0
+Obj.0.myCreatureDefID=1887
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=41758.5,526.886,56659.0,81;
+
+[ENTRY]
+ID=297
+Requires=295
+Title=Floro the Sly
+BodyText=Great news! Thank you for bringing me the information before you proceeded, just in case your efforts fail. Now that you can enter his secret basement, do so! Go back and kill Floro the Sly.
+CompleteText=You have succeeded?
+Level=16
+Exp=2628
+PartySize=2
+NumRewards=0
+Coin=428
+Unabandon=0
+QuestGiverID=1887
+QuestEnderID=1887
+Repeat=0
+sGiver=41762.0,526.848,56660.0,81
+sEnder=41762.0,526.848,56660.0,81
+Heroism=14
+[ACT]
+Act.BodyText=Return to the farm house and enter the farm house basement. Once inside, find and kill Floro the Sly.
+Obj.0.type=kill
+Obj.0.data1=39
+Obj.0.data2=1
+Obj.0.description=Kill Floro the Sly
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 1
+Obj.0.markerLocations=43059.9,137.31,58801.0,81;
+[ACT]
+Act.BodyText=Return to Sergeant Brahms with the news of your triumph over the Bog Rats and the demise of Floro the Sly.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Sergeant Brahms
+Obj.0.complete=0
+Obj.0.myCreatureDefID=1887
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=41762.3,526.722,56659.8,81;
+
+[ENTRY]
+ID=302
+Requires=301
+Title=Not Quite Herb Hunting!
+BodyText=Let me see... hmm... Yes, I am in need of more herbs... Well, ok, these are not exactly herbs, but I do still need them to be hunted down and collected. Though hmm... these are quite a bit more dangerous to gather, but if you are interested, I will pay you as best I can!
+
+Great! I need mosquito wings... not just any old mosquito wings either, but I need wings from the Swampside Bloodfiends to the north. Be warned, they are not called Bloodfiends for nothing, they are quite dangerous - approach with caution!
+
+I also need some very specific salamander tails. Locally, they call them Bogbeasts... hah! Just over sized lizards!
+
+Finally I need some Seacrab Eyes. Yeah, I know - eew! I have a monthly order for them from someone living in Nottingham - who knows? I just sell the stuff!
+
+Goodluck!
+CompleteText=Once more you have proven to be quite the hunter! Thank you very much.
+Level=18
+Suggested=20
+Exp=3096
+PartySize=1
+NumRewards=0
+Coin=585
+Unabandon=0
+QuestGiverID=193
+QuestEnderID=193
+Repeat=0
+sGiver=39693.0,318.676,53584.0,81
+sEnder=39693.0,318.676,53584.0,81
+Heroism=10
+[ACT]
+Act.BodyText=Collect eight Swampside Bloodfiend Wings, ten Bogbeast Tails, and eight Seacrab Eyes.
+Obj.0.type=kill
+Obj.0.data1=1762,1763
+Obj.0.data2=8
+Obj.0.description=Collect 8 Swampside Bloodfiend Wings
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=500203
+Obj.0.completeText=0 of 8
+Obj.0.markerLocations=45676.4,191.68,48680.0,81;
+Obj.1.type=kill
+Obj.1.data1=1758,1759,1760,1848,1849,1850,1851
+Obj.1.data2=10
+Obj.1.description=Collect 10 Bogbeast Tails
+Obj.1.complete=0
+Obj.1.myCreatureDefID=
+Obj.1.myItemID=500204
+Obj.1.completeText=0 of 10
+Obj.1.markerLocations=46512.1,98.466,52605.0,81;
+Obj.2.type=kill
+Obj.2.data1=1765,1766,1767
+Obj.2.data2=8
+Obj.2.description=Collect 8 Seacrab Eyes
+Obj.2.complete=0
+Obj.2.myCreatureDefID=
+Obj.2.myItemID=500205
+Obj.2.completeText=0 of 8
+Obj.2.markerLocations=41915.5,245.077,48233.0,81;
+[ACT]
+Act.BodyText=Return to Herbalist Kaydee.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Herbalist Kaydee
+Obj.0.complete=0
+Obj.0.myCreatureDefID=193
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=39688.1,318.715,53594.0,81;
+
+[ENTRY]
+ID=296
+Requires=297
+Title=Return to Lieutenant Rhames
+BodyText=Again my thanks! Return to Bath and speak with Lieutenant Rhames. I am sure he will be glad to hear the good news and reward you kindly.
+CompleteText=You have taken care of the bandit threat? Praise Gaia for your efforts! Please take this reward with the thanks of all the people of Bath.
+Level=15
+Exp=756
+PartySize=1
+NumRewards=1
+Coin=122
+Unabandon=0
+QuestGiverID=1887
+QuestEnderID=187
+Repeat=0
+sGiver=41762.0,526.848,56660.0,81
+sEnder=39376.3,310.14,54005.0,81
+[ACT]
+Act.BodyText=Return to Bath and speak with Lieutenant Rhames.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Speak with Lieutenant Rhames
+Obj.0.complete=0
+Obj.0.myCreatureDefID=187
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=39370.8,310.14,54010.0,81;
+RewardItem.0=5120,1,0
+RewardItem.1=5121,1,0
+RewardItem.2=5122,1,0
+RewardItem.3=5123,1,0
+
+[ENTRY]
+ID=559
+Title=BOUNTY: Rotback Slider
+BodyText=Kill 10 Rotback Sliders.
+CompleteText=
+Level=18,22
+Exp=1141
+PartySize=1
+NumRewards=0
+Coin=198
+Unabandon=0
+Repeat=1
+QuestGiverID=2802
+QuestEnderID=2802
+Repeat=1
+sGiver=43866.0,308.125,50255.0,81
+sEnder=43866.0,308.125,50255.0,81
+Heroism=6
+[ACT]
+Act.BodyText=Kill 10 Rotback Sliders.
+Obj.0.type=kill
+Obj.0.data1=1781,1782
+Obj.0.data2=10
+Obj.0.description=Kill 10 Rotback Sliders
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 10
+Obj.0.markerLocations=48362.0,103.681,49265.6,81;
+[ACT]
+Act.BodyText=Return to the Bounty Board!
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to the Bounty Board!
+Obj.0.complete=0
+Obj.0.myCreatureDefID=2802
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=43868.3,308.143,50257.0,81;
+RewardItem.0=21328,1,1
+
+[ENTRY]
+ID=308
+Title=The Gloom Witches
+BodyText=Good day, friend. I hope I am not bothering you, but I am in quite a predicament. I have been a fool and now I fear I may pay for my foolishness with my very soul! You see, I met this traveler on the road. She was kind, sincere and beautiful, so I was not at all adverse to having her travel the road with me. She said she knew a shortcut to Nottingham through the swamp! I must admit, I should have known something was wrong right then, but I suppose I was taken in by her charms. I agreed to follow her on this 'shortcut'. Next thing I know, she disappeared into the fog and I am standing at some old shack in the swamp, surrounded by Gloom Witches! Yes, Gloom Witches, here in Anglorum! Then darkness! I awoke sometime later in a cavern. The Gloom Witches were there! They were chanting some mojo I could not quite understand and I felt a retching pain. One of them spoke to me and told me she had just stolen a piece of my soul and put it in some big red bottle! I am not sure if she was serious or just trying to scare me. Then they set me free! I ran with all haste back here to the inn! This cannot be allowed to continue! I talked to the guards and local militia, but they do not seem to believe me! So, friend, I beg of you! Go into the swamp, to that shack, and destroy the vile Gloom Witches. And if you can, get back that piece of my soul! I think the cave was under the shack, but it is all a bit or a blur... Please, do what you can!
+CompleteText=Hello again. Yes, I 'felt' - something, I think...maybe... ...either way, I am better for knowing you put an end to those horrible creatures! Allow me to reward you for all you have done; take one of these items. Thank you and farewell.
+Level=18
+Suggested=20
+Exp=3096
+PartySize=5
+NumRewards=1
+Coin=585
+Unabandon=0
+QuestGiverID=206
+QuestEnderID=206
+Repeat=0
+sGiver=43922.7,308.138,50302.0,81
+sEnder=43922.7,308.138,50302.0,81
+Heroism=14
+[ACT]
+Act.BodyText=Travel into the swamp and find the Gloom Witch shack.
+Obj.0.type=travel
+Obj.0.data1=47956,98,47980,81
+Obj.0.data2=300
+Obj.0.description=Find the Gloom Witch Shack in the swamp
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=47956.5,98.6721,47980.0,81;
+[ACT]
+Act.BodyText=Find the entrance to the underground cavern.
+Obj.0.type=travel
+Obj.0.data1=48057,98,47923,81
+Obj.0.data2=140
+Obj.0.description=Find the entrance to the underground cavern
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=48057.9,98.0964,47923.0,81;
+[ACT]
+Act.BodyText=Enter the Cold Storm Cavern and kill twenty five Gloom Witches. If you can, try to reclaim the stolen piece of Grear McKay's soul!
+Obj.0.type=kill
+Obj.0.data1=97,98,99,100,101,102,104
+Obj.0.data2=25
+Obj.0.description=Kill 25 Gloom Witches in Cold Storm Cavern
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 25
+Obj.0.markerLocations=
+Obj.1.type=activate
+Obj.1.data1=1924
+Obj.1.data2=1
+Obj.1.description=Find and destroy the Big Red Bottle!
+Obj.1.complete=0
+Obj.1.myCreatureDefID=
+Obj.1.myItemID=
+Obj.1.completeText=
+Obj.1.markerLocations=2215.45,268.385,4074.45,27;
+Obj.1.ActivateTime=2000
+Obj.1.ActivateText=Destroying Big Red Bottle!
+[ACT]
+Act.BodyText=Return to Grear McKay.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Grear McKay.
+Obj.0.complete=0
+Obj.0.myCreatureDefID=206
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=43917.2,308.118,50305.0,81;
+RewardItem.0=5136,1,0
+RewardItem.1=5137,1,0
+RewardItem.2=5138,1,0
+RewardItem.3=5139,1,0
+
+[ENTRY]
+ID=311
+Title=Chase Away the Dooms!
+BodyText=Doom! Doom! Doom is what I sees! For you nothing but the dooms! A darkest darkness - a lifetime of pain and suffering! But wait! Yes, I know just how you can prevents the dooms! Bring me a Glindergloom! You heards me, bring me a Glindergloom, or you will forever face the dooms!
+CompleteText=What? What is this? A wand? A WAND? I told you to bring me a Glindergloom! A tasty mushroom is the only way to chase away the dooms! Hmm...though this is quite a nice wand! I guess you went through quite a bit of trouble to get this. Take this key and I will trade you this wand for one of the precious things I keep inside my box of treasures...but you are still doomed!
+Level=17
+Suggested=20
+Exp=3096
+PartySize=1
+NumRewards=0
+Coin=585
+Unabandon=0
+QuestGiverID=1578
+QuestEnderID=1578
+Repeat=0
+sGiver=43845.0,313.936,50210.0,81
+sEnder=43845.0,313.936,50210.0,81
+Heroism=10
+[ACT]
+Act.BodyText=You have absolutely no idea what a Glindergloom is. Perhaps you can find some information about Glinderglooms in the Camelot Great Library. Perhaps if you search the stacks, you can find a book that mentions Glinderglooms.
+Obj.0.type=travel
+Obj.0.data1=56255,347,64243,81
+Obj.0.data2=100
+Obj.0.description=Search the library for information
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=56255.1,347.535,64243.0,81;
+[ACT]
+Act.BodyText=You found a book that mentions a Glindergloom. There are two entries: One is a mushroom that is native to most of the continent. The other is a wand that can be fashioned, also know as Glindergloom. To fashion Glindergloom, you need three components: A Petrified Twig, a Perfect Ruby Eye of Earth and the toe bone of a Black Lich. The three pieces must be placed in a Putrefied Urn to fashion Glindergloom. You can only assume Teressa Doomfeather wants that wand.
+Petrified Twigs are commonly created by Mossback Sliders, which are large snails found in the swamp. Something in their excretions turns common twigs into rock-hard, Petrified Twigs. Search the swamp near the Mossback Sliders for a Petrified Twig.
+Ruby Eye of Earth is the eye of an earth elemental also found in the swamp. A Perfect Ruby Eye, though, would require one from the elder earth elemental, Gohlum.
+The toe bone of a Black Lich requires you know where to find a Black Lich! Search the undead ruins just south of the road through the swamp. It is rumored that a Black Lich has made those ruins his home.
+If you can find these three things, then you must find a Putrefied Urn. As luck would have it, there is such a thing in the lands of Anglorum, but the text mentions that it is near the entrance to Coldstorm Cavern, which is just north of here.
+If you truly wish to chase away the dooms, then you have quite a journey ahead of you.
+Obj.0.type=gather
+Obj.0.data1=2137
+Obj.0.data2=1
+Obj.0.description=Obtain a Petrified Twig
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=500228
+Obj.0.completeText=0 of 1
+Obj.0.markerLocations=47618.6,107.59,48789.5,81;
+Obj.0.ActivateTime=2000
+Obj.0.ActivateText=Taking petrified twig.
+Obj.1.type=kill
+Obj.1.data1=1773
+Obj.1.data2=1
+Obj.1.description=Obtain a Perfect Ruby Eye of Earth
+Obj.1.complete=0
+Obj.1.myCreatureDefID=
+Obj.1.myItemID=500229
+Obj.1.completeText=0 of 1
+Obj.1.markerLocations=49811.7,120.265,49990.2,81;
+Obj.2.type=kill
+Obj.2.data1=3123
+Obj.2.data2=1
+Obj.2.description=Obtain a Black Lich Toe Bone
+Obj.2.complete=0
+Obj.2.myCreatureDefID=
+Obj.2.myItemID=500230
+Obj.2.completeText=0 of 1
+Obj.2.markerLocations=46751.5,106.205,53859.8,81;
+[ACT]
+Act.BodyText=You have miraculously gathered the components to make Glindergloom! Now you must find the Putrefied Urn outside of Coldstorm Cavern to complete its creation!
+Obj.0.type=activate
+Obj.0.data1=2138
+Obj.0.data2=1
+Obj.0.description=Use the Putrefied Urn to make a Glindergloom
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=48107.1,109.705,48032.7,81;
+Obj.0.ActivateTime=20000
+Obj.0.ActivateText=Creating Glindergloom!
+[ACT]
+Act.BodyText=You have made Glindergloom! Now you can chase away the dooms! Return to Teressa Doomfeather.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Teressa Doomfeather
+Obj.0.complete=0
+Obj.0.myCreatureDefID=1578
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=43848.6,313.936,50201.0,81;
+RewardItem.0=21150,1,1
+
+[ENTRY]
+ID=306
+Requires=300
+Title=Moonberries
+BodyText=Perhaps you are more than just a deliverer of mead? Perhaps you could do something for me as well?
+
+I make the finest Moonberry Pies you will ever taste! Sadly, I am out of Moonberries! So you see, if perchance you were not busy right now, maybe you could fetch me some? I will gladly pay you for only half a dozen Moonberries! You see, just a piece of one, prepared by me in a special way, will flavor even the most dreadful pie I could make into a Moonberry masterpiece! So, if you would please journey to the east. A short distance to the south, Moonberries grow openly in the fields just outside the swamp. Do be careful, there are dreadful things lurking all over that menacing field.
+CompleteText=Ah-ho! Moonberries! You are simply a wondrous soul! Thank you!
+Level=17
+Suggested=18
+Exp=2854
+PartySize=1
+NumRewards=0
+Coin=495
+Unabandon=0
+QuestGiverID=195
+QuestEnderID=195
+Repeat=0
+sGiver=43810.0,313.936,50124.0,81
+sEnder=43810.0,313.936,50124.0,81
+Heroism=6
+[ACT]
+Act.BodyText=Travel south and gather six Moonberries.
+Obj.0.type=gather
+Obj.0.data1=1898
+Obj.0.data2=6
+Obj.0.description=Gather 6 Moonberries
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=500189
+Obj.0.completeText=0 of 6
+Obj.0.markerLocations=43407.0,298.329,52744.0,81;
+Obj.0.ActivateTime=2000
+Obj.0.ActivateText=Picking Moonberry...
+[ACT]
+Act.BodyText=Return to Grolmer Weiss.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Grolmer Weiss
+Obj.0.complete=0
+Obj.0.myCreatureDefID=195
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=43824.7,313.936,50134.0,81;
+
+[ENTRY]
+ID=310
+Title=The Runestones
+BodyText=Hail! Could I trouble you for some help? I was trying very hard to get some rubbings off some runes for my research. They sit surrounding a small pool in the swamp to the east. Sadly, I found them to be surrounded by creatures far beyond my ability to defend myself against, including an elder earth elemental the locals call Grohlum. You, on the other hand, look like you can handle yourself better than I in such situations. Would you get the rubbings for me?
+CompleteText=Thank you, friend. This will aid me in my research greatly!
+Level=17
+Suggested=18
+Exp=1427
+PartySize=1
+NumRewards=0
+Coin=248
+Unabandon=0
+QuestGiverID=196
+QuestEnderID=196
+Repeat=0
+sGiver=43934.8,313.936,50130.0,81
+sEnder=43934.8,313.936,50130.0,81
+Heroism=6
+[ACT]
+Act.BodyText=Travel east to the Runestones in the swamp.
+Obj.0.type=travel
+Obj.0.data1=49193,65,49204,81
+Obj.0.data2=250
+Obj.0.description=Travel east to the Runestones in the swamp
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=49193.1,65.5761,49204.0,81;
+[ACT]
+Act.BodyText=Make rubbings of the three Runestones.
+Obj.0.type=activate
+Obj.0.data1=1907
+Obj.0.data2=1
+Obj.0.description=Runestone Rubbing
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=500191
+Obj.0.completeText=0 of 1
+Obj.0.markerLocations=49286.1,79.949,49364.0,81;
+Obj.0.ActivateTime=2000
+Obj.0.ActivateText=Making a rubbing.
+Obj.1.type=activate
+Obj.1.data1=1908
+Obj.1.data2=1
+Obj.1.description=Runestone Rubbing
+Obj.1.complete=0
+Obj.1.myCreatureDefID=
+Obj.1.myItemID=500192
+Obj.1.completeText=0 of 1
+Obj.1.markerLocations=49068.9,77.6024,49044.0,81;
+Obj.1.ActivateTime=2000
+Obj.1.ActivateText=Making a rubbing.
+Obj.2.type=activate
+Obj.2.data1=1909
+Obj.2.data2=1
+Obj.2.description=Runestone Rubbing
+Obj.2.complete=0
+Obj.2.myCreatureDefID=
+Obj.2.myItemID=500193
+Obj.2.completeText=0 of 1
+Obj.2.markerLocations=49024.0,78.3723,49319.0,81;
+Obj.2.ActivateTime=2000
+Obj.2.ActivateText=Making a rubbing.
+[ACT]
+Act.BodyText=Return to Apprentice Cole.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Apprentice Cole
+Obj.0.complete=0
+Obj.0.myCreatureDefID=196
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=43933.9,313.936,50136.0,81;
+
+[ENTRY]
+ID=309
+Title=Gomren Root
+BodyText=Stranger, to you tidings of peace. I am Xanxi. I have come far to find something quite special, but thus far I failed to find what I seek.
+
+I am here seeking a rare root said only to grow in the northern swamps of Anglorum. The Gomren Root is nothing special to look at, but it can be used to create miraculous potions, in the hands of those who know how to use it. I have searched high and low, and yet I have not found what I seek. I ask of you that if you wander into the swamps - I know you will - please look for a Gomren Root. It looks much like a normal root, but I promise you will know one when you see it, if you see it. So in your travels, if you would perchance find one and bring it to me, I would reward you well.
+CompleteText=You have returned with a Gomren Root. I am pleased greatly by this. Take this as a reward for your efforts.
+
+Go in peace.
+Level=17
+Suggested=19
+Exp=2968
+PartySize=1
+NumRewards=1
+Coin=540
+Unabandon=0
+QuestGiverID=1577
+QuestEnderID=1577
+Repeat=0
+sGiver=43963.0,313.936,50147.0,81
+sEnder=43963.0,313.936,50147.0,81
+Heroism=6
+[ACT]
+Act.BodyText=Search the northern reaches of the swamp for a Gomren Root. Search carefully but beware the beasts that lurk all around.
+Obj.0.type=gather
+Obj.0.data1=1899
+Obj.0.data2=1
+Obj.0.description=Find a Gomren Root
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=500190
+Obj.0.completeText=0 of 1
+Obj.0.markerLocations=48189.8,67.0766,49285.3,81;
+Obj.0.ActivateTime=2000
+Obj.0.ActivateText=Taking Gomren Root...
+[ACT]
+Act.BodyText=Return to Xanxi Magla.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Xanxi Magla
+Obj.0.complete=0
+Obj.0.myCreatureDefID=1577
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=43956.8,313.936,50150.0,81;
+RewardItem.0=5132,1,0
+RewardItem.1=5133,1,0
+RewardItem.2=5134,1,0
+RewardItem.3=5135,1,0
+
+[ENTRY]
+ID=307
+Requires=306
+Title=Delivery to Tall Grass Farm
+BodyText=I have a delivery for the Tall Grass Farm. It is such a long trip these days - the only safe way is to go all the way to the south and follow the road around the lake, past Camelot and north again. You though... ...yes, you look like you would find a much faster way to go, perhaps through the wretched swamp, even? Well, to the point! I need this package delivered to Farmer Sned. He pays very good money for my Moonberry pies. Are you interested?
+CompleteText=What is that smell, hmmm? I must be... ...you have brought my Moonberry Pies - yes! Mmmmmm! I thought so! Thank you!
+Level=17
+Suggested=17
+Exp=2744
+PartySize=1
+NumRewards=0
+Coin=473
+Unabandon=0
+QuestGiverID=195
+QuestEnderID=173
+Repeat=0
+sGiver=43810.0,313.936,50124.0,81
+sEnder=57294.0,172.832,57207.0,81
+[ACT]
+Act.BodyText=Travel to Tall Grass Farm and deliver the Moonberry pies to Farmer Sned.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=173
+Obj.0.description=Deliver the Moonberry Pies to Farmer Sned
+Obj.0.complete=0
+Obj.0.myCreatureDefID=173
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=57290.203,172.462,57203.0,81;
+
+[ENTRY]
+ID=316
+Title=Trouble in Nottingham
+BodyText=Hail and well met. You are new to Nottingham, yes? I need an outsider to help me with a troubling issue.
+
+This entire area is lorded over by Willem Grays, though he prefers the moniker of Sheriff of Nottingham. At first his appointment by the crown was a blessing; he was ruthless with the local bandits and fair with the people. But then something changed. He began to levy larger and larger taxes on the local people. If they could not pay, he would toss them in the dungeon. In recent months, some people have gone missing entirely, and the more I investigate, the more it seems the Sheriff may be responsible.
+
+The guards here in the town I know are fair men, but to the north there are camps of "Sheriff's Deputies" - more like thugs - used to enforce the taxes. The Sheriff himself has not been seen for months. He never leaves his keep atop the mount.
+
+I am in a tough situation. I must respect the Sheriff's authority, but I cannot sit idly by and watch him terrorize the people. My missives to the crown have thus far gone with no response. Would you help me find out just what has happened to the Sheriff?
+CompleteText=Well met, friend. I am Robin. What can I do for you?
+Level=18
+Suggested=19
+Exp=891
+PartySize=1
+NumRewards=0
+Coin=162
+Unabandon=0
+QuestGiverID=197
+QuestEnderID=207
+Repeat=0
+sGiver=52866.9,196.717,48894.0,81
+sEnder=48281.0,221.065,44433.0,81
+[ACT]
+Act.BodyText=Travel into Sherwood Forest and speak with Robin Hood.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Speak with Robin Hood
+Obj.0.complete=0
+Obj.0.myCreatureDefID=207
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=48280.0,220.935,44434.0,81;
+
+[ENTRY]
+ID=561
+Title=BOUNTY: Swampstone Elementals
+BodyText=Kill 10 Swampstone Elementals. (Crushers and Carvers)
+CompleteText=
+Level=19,23
+Exp=1187
+PartySize=1
+NumRewards=0
+Coin=216
+Unabandon=0
+QuestGiverID=2804
+QuestEnderID=2804
+Repeat=1
+sGiver=52959.8,179.246,49052.3,81
+sEnder=52959.8,179.246,49052.3,81
+Heroism=6
+[ACT]
+Act.BodyText=Kill 10 Swampstone Elementals. (Crushers and Carvers)
+Obj.0.type=kill
+Obj.0.data1=1769,1770,1771,1772
+Obj.0.data2=10
+Obj.0.description=Kill 10 Swampstone Elementals
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 10
+Obj.0.markerLocations=47954.9,88.8382,49720.6,81;
+[ACT]
+Act.BodyText=Return to the Bounty Board!
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to the Bounty Board!
+Obj.0.complete=0
+Obj.0.myCreatureDefID=2804
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=52959.9,187.33,49052.2,81;
+RewardItem.0=21331,1,1
+
+[ENTRY]
+ID=322
+Title=Oliver's Treasure
+BodyText=You there! You the adventurous type? Up for some 'adventure'? Yes? Yes?
+
+Ah yes, you see this key? Hmm, yes, shiny, right? Very shiny! It opens a little box! A very small box, but inside is big treasure! Big treasure! Problem is, I lost the box! I was in the swamp with the box looking for the key, you see? Then I found the key! But I also found some very grumpy undead, so I ran. When I was clear of the swamp, I took the key and was going to open the box - but no box!
+
+Terrbile news, yes? Yes! So, s,o soooo.... If you go back to the undead ruins and find my box, then I can open it with the shiny key, yes? Do this for me and I will tell you a secret, yes? Yes!
+CompleteText=You have it! Give it to me!!
+Level=18
+Suggested=20
+Exp=3096
+PartySize=1
+NumRewards=0
+Coin=585
+Unabandon=0
+QuestGiverID=198
+QuestEnderID=198
+Repeat=0
+sGiver=53315.1,149.028,49002.0,81
+sEnder=53315.1,149.028,49002.0,81
+[ACT]
+Act.BodyText=Travel to the ruins in the swamp and search for Oliver's Treasure Box. All you know is it is somewhere in the old ruins.
+Obj.0.type=gather
+Obj.0.data1=1949
+Obj.0.data2=1
+Obj.0.description=Find Oliver's Treasure Box
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=500211
+Obj.0.completeText=0 of 1
+Obj.0.markerLocations=48101.0,96.4218,52768.0,81;
+Obj.0.ActivateTime=2000
+Obj.0.ActivateText=Taking Oliver's Treasure Box
+[ACT]
+Act.BodyText=Return to Oliver Wendel.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Oliver Wendel
+Obj.0.complete=0
+Obj.0.myCreatureDefID=198
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=53311.297,149.145,48998.0,81;
+
+[ENTRY]
+ID=563
+Title=BOUNTY: Swampmage
+BodyText=Kill 12 Swampmages.
+CompleteText=
+Level=20,24
+Exp=1238
+PartySize=1
+NumRewards=0
+Coin=234
+Unabandon=0
+QuestGiverID=2806
+QuestEnderID=2806
+Repeat=1
+sGiver=53467.0,156.733,48773.0,81
+sEnder=53467.0,156.733,48773.0,81
+Heroism=6
+[ACT]
+Act.BodyText=Kill 12 Swampmages.
+Obj.0.type=kill
+Obj.0.data1=1837,1838
+Obj.0.data2=12
+Obj.0.description=Kill 12 Swampmages
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 12
+Obj.0.markerLocations=49437.0,117.547,56242.3,81;
+[ACT]
+Act.BodyText=Return to the Bounty Board!
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to the Bounty Board!
+Obj.0.complete=0
+Obj.0.myCreatureDefID=2806
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=53467.9,156.714,48773.6,81;
+RewardItem.0=21331,1,1
+
+[ENTRY]
+ID=560
+Title=BOUNTY: Ferocious Fowlbeast
+BodyText=Kill 12 Ferocious Fowlbeasts.
+CompleteText=
+Level=19,23
+Exp=1187
+PartySize=1
+NumRewards=0
+Coin=216
+Unabandon=0
+QuestGiverID=2803
+QuestEnderID=2803
+Repeat=1
+sGiver=53436.0,282.0,48254.0,81
+sEnder=53436.0,282.0,48254.0,81
+Heroism=6
+[ACT]
+Act.BodyText=Kill 12 Ferocious Fowlbeasts.
+Obj.0.type=kill
+Obj.0.data1=1727,1728
+Obj.0.data2=12
+Obj.0.description=Kill 12 Ferocious Fowlbeasts
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 12
+Obj.0.markerLocations=51198.6,314.916,45254.4,81;
+[ACT]
+Act.BodyText=Return to the Bounty Board!
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to the Bounty Board!
+Obj.0.complete=0
+Obj.0.myCreatureDefID=2803
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=53436.3,282.396,48254.7,81;
+RewardItem.0=21331,1,1
+
+[ENTRY]
+ID=324
+Title=The Family Estate
+BodyText=Hello. Do you venture into the swamps often? If so, I could use your help.
+
+I have been researching my families history in the area. It would seem at one time my family had an estate in what is now all swamp land. If You would travel there and look for anything - even the smallest trinket - that may still remain, I would be very grateful. Would you do this for me the next time you are in the swamp?
+CompleteText=Any luck? Oh yes! This chest has my family crest upon it. This is most helpful! Thank you so much, stranger!
+Level=18
+Suggested=20
+Exp=3096
+PartySize=1
+NumRewards=0
+Coin=585
+Unabandon=0
+QuestGiverID=199
+QuestEnderID=199
+Repeat=0
+sGiver=53126.2,267.991,48204.0,81
+sEnder=53126.2,267.991,48204.0,81
+Heroism=6
+[ACT]
+Act.BodyText=Search the Brown family estate for any objects that may be of value.
+Obj.0.type=gather
+Obj.0.data1=1922
+Obj.0.data2=1
+Obj.0.description=Take the small chest
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=500196
+Obj.0.completeText=0 of 1
+Obj.0.markerLocations=48786.0,82.1067,54587.0,81;
+Obj.0.ActivateTime=2000
+Obj.0.ActivateText=Taking Small Chest
+[ACT]
+Act.BodyText=Return to Morgen Brown.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Morgen Brown
+Obj.0.complete=0
+Obj.0.myCreatureDefID=199
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=53124.703,266.08,48221.0,81;
+
+[ENTRY]
+ID=312
+Requires=307
+Title=Insufferable Blightbeaks
+BodyText=Good day, good day. I see you have brought the Moonberry Pies - mmmm, tasty! Sned will be happy for a whole week!
+
+I however, while I do love a good Moonberry Pie, have other concerns at the moment. I get little sleep these days. You see, with the harvest almost ready, those insufferable Blightbeaks are constantly coming in the night and trying to eat my crops. Do you by chance like hunting? If you could kill at least ten of those pests, it would certainly help save my crops and perhaps allow me to get a good night's worth of sleep!
+CompleteText=Great to see you return! I could hear their death cries even back here at the farm! Well done!
+Level=17
+Suggested=17
+Exp=2744
+PartySize=1
+NumRewards=0
+Coin=473
+Unabandon=0
+QuestGiverID=184
+QuestEnderID=184
+Repeat=0
+sGiver=57078.4,168.688,57246.0,81
+sEnder=57078.4,168.688,57246.0,81
+Heroism=10
+[ACT]
+Act.BodyText=Travel north and northwest of the the Tall Grass Farm and kill ten Blightbeak Roosters. They will often cluster beneath trees where they take their rest.
+Obj.0.type=kill
+Obj.0.data1=1683,1684
+Obj.0.data2=10
+Obj.0.description=Kill 10 Blightbeak Roosters
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 10
+Obj.0.markerLocations=55181.9,171.28,51453.5,81;
+[ACT]
+Act.BodyText=Return to Farmer Hughes.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Farmer Hughes
+Obj.0.complete=0
+Obj.0.myCreatureDefID=184
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=57078.0,168.688,57246.0,81;
+
+[ENTRY]
+ID=313
+Title=The Amulet
+BodyText=Hello traveler. I stand here and look at the Broken Tower, knowing the dangers that lurk inside, yet yearning for the knowledge stored up in its walls. Do you know the story of the tower? You see many years ago, it was a center for magical learning. While many in Anglorum have taken up the ways of druidic study, some search for more elemental power without the burdens of joining the order and praising Gaia with the rest of that lot. The Tower, as it was called, was taken over by a Lisian mage known as Sneath. He sought to train the best and brightest, to be a new generation of mages with real power. All was well until one day - boom! - something happened inside the tower. The earth shook and many of the surrounding structures sank into the lake. Not long after, Merlin arrived and looked very displeased. He entered the tower. Several hours later he came back outside with most of the students of the Tower. He then declared the Tower sealed and simply left. The door would no longer open and not even the entrance teleportation device would function.
+
+There was much speculation as to what happened. Some say Merlin was the cause of the entire thing. Some say Sneath tapped into some unknown power. No one is really sure, especially now that time has passed. I know the truth of it, though. I was there all those years ago. I can tell you Merlin was not to blame. In fact, without his help, many more may have died.
+
+Sneath was not an evil soul, but he did crave power. He sought all throughout the world for items of such power, so as to make that power his own and to teach that power to others. It was this craving that would be the end of the Tower. A stranger brought Sneath a book one day. He told Sneath it contained some of the wisdom of the Mystarchs. This surely got Sneath's attention and for days he languished in his study transcribing every character, every rune, every single word. This went on for nearly two weeks before Sneath emerged. He told us he had unlocked some secrets long forgotten and that a new era was at hand. This was the start of a very lengthy speech. As he spoke, he seemed more and more ill at ease, as if each word was taking more and more effort, and then he collapsed. We took him to his bed and let him rest.
+
+Late that night there was a terrible rumble in Tower, followed by a horrifying scream of agony from Sneath's room. We rushed in only to find him standing in the middle of the room surrounded by crackling energy. Again he began to speak, but his voice was not his own. In his hands was the book the stranger had brought and before him an urn filled with the dust of the dead, putrid and glowing a sickly green. Seemingly possessed, Sneath began to speak words I still have yet to comprehend, and all around me my friends began to wither and die. My own cowardice rushed up in me and I ran for my life. Half way down the hall, I nearly ran into Merlin, who was rushing toward Sneath's room. What transpired after that, I do not know. It was hours later that Merlin emerged with the book and a few more students. Merlin then cast some magic and sealed up the door. He then deactivated the teleporter, though its flame still burns. It simply does not work any longer.
+
+Over the years, I have sought answers from Merlin, but he had nothing to say to me, except to leave matters be. But I cannot. If Sneath still lives, I want revenge. He murdered my friends - my best friends and I did nothing to stop him. I have devoted my life to learning the ways of magic in hopes of returning inside the halls of the Tower, the Broken Tower, as they call it now. Though I have found no way to breach the ground floor door, I do believe I have found a way to reactivate the teleporter. Sadly, I am now aged and weak, too weak to ever find answers, or get my vengeance.
+
+Would you be my vengeance? Would you accept my plea to enter the Broken Tower and slay Sneath, if he still lives?
+
+Reactivating the teleporter is no easy feat. There is a way to break Merlin's enchantment on it and make it function for you. To make the key, I need something very special; a Black Lich wand. I have searched for many years to find how to obtain such a thing. In the ruined castle in the swamp, there is a very old altar where this can be done. But to do so you must first gather three amulet fragments. I have tracked them down, but they are all in the possession of powerful undead in the swamp. You must kill them and get the amulet fragments. Once you have them, you can summon a wretched Black Lich named Alimat, and retrieve his wand. With his wand I can fashion the key for you.
+
+I know this is a lot to ask.
+CompleteText=You have them? Let me see them...
+Level=18
+Suggested=20
+Exp=3096
+PartySize=2
+NumRewards=0
+Coin=585
+Unabandon=0
+QuestGiverID=185
+QuestEnderID=185
+Repeat=0
+sGiver=57119.0,115.0,57863.0,81
+sEnder=57119.0,115.0,57863.0,81
+Heroism=10
+[ACT]
+Act.BodyText=Dharga, Rocastor, and Nerilix each have one fragment of Alimat's Amulet. Kill them all and retrieve the amulet fragments.
+Obj.0.type=kill
+Obj.0.data1=1893
+Obj.0.data2=1
+Obj.0.description=Obtain the Amulet Fragment From Dharga
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=500208
+Obj.0.completeText=0 of 1
+Obj.0.markerLocations=49678.0,108.354,55940.0,81;
+Obj.1.type=kill
+Obj.1.data1=1894
+Obj.1.data2=1
+Obj.1.description=Obtain the Amulet Fragment From Rocastor
+Obj.1.complete=0
+Obj.1.myCreatureDefID=
+Obj.1.myItemID=500209
+Obj.1.completeText=0 of 1
+Obj.1.markerLocations=46948.0,72.0,56369.0,81;
+Obj.2.type=kill
+Obj.2.data1=1895
+Obj.2.data2=1
+Obj.2.description=Obtain the Amulet Fragment From Nerilix
+Obj.2.complete=0
+Obj.2.myCreatureDefID=
+Obj.2.myItemID=500210
+Obj.2.completeText=0 of 1
+Obj.2.markerLocations=47862.0,112.978,53625.0,81;
+[ACT]
+Act.BodyText=Return to Alexander Buckwalsh.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Alexander Buckwalsh
+Obj.0.complete=0
+Obj.0.myCreatureDefID=185
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=57118.3,115.574,57863.0,81;
+
+[ENTRY]
+ID=323
+Requires=322
+Title=The Secret Stash!
+BodyText=Yes, my treasure! All mine!
+
+As promised, I will tell you a secret! Deep in the swamp is a chest. You may take one item from inside. It has more treasure, but I have little use for weapons and armor. But I am sure you could use something to help you in your adventures, yes? Yes! Go now to the location! I hid the key to the chest on the sign! Who would look for the key right next to the chest, yes? NO! Never! That would be crazy! Go, go! Enjoy!
+
+Good luck!
+CompleteText=You see a sign written in some strange language. While the characters look familiar, what it actually means is a mystery! As promised, there is a key attached to the back of the sign, directly next the a chest!
+Level=19
+Suggested=20
+Exp=1548
+PartySize=1
+NumRewards=0
+Coin=0
+Unabandon=0
+QuestGiverID=198
+QuestEnderID=1925
+Repeat=0
+sGiver=53315.1,149.028,49002.0,81
+sEnder=48304.0,63.6454,54629.0,81
+[ACT]
+Act.BodyText=Travel to the location of Oliver's Secret Stash and take one item from the chest!
+Obj.0.type=talk
+Obj.0.data1=
+Obj.0.data2=
+Obj.0.description=Travel to Oliver's Secret Stash
+Obj.0.complete=0
+Obj.0.myCreatureDefID=1925
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=48306.1,72.0,54646.0,81;
+RewardItem.0=21152,1,1
+
+[ENTRY]
+ID=325
+Requires=324
+Title=Delivering the Payment
+BodyText=If you would do me one more favor? This information came to be via a fellow in Southshield, one Hampton Pinchpurse. Not the most trustworthy beast, but he did give me great information in this case! Would you take this payment to him and give him my thanks?
+CompleteText=Who are you? Oh, old Brown sent you to me with some coin? Well, give it here.
+
+Be careful around here, those Faerie Sworn seem to be popping up everywhere in these parts.
+Level=18
+Suggested=20
+Exp=3096
+PartySize=1
+NumRewards=0
+Coin=585
+Unabandon=0
+QuestGiverID=199
+QuestEnderID=212
+Repeat=0
+sGiver=53126.2,267.991,48204.0,81
+sEnder=43195.0,183.558,44299.0,81
+[ACT]
+Act.BodyText=Travel to Southshield and deliver the payment to Hampton Pursepinch.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Deliver the Payment
+Obj.0.complete=0
+Obj.0.myCreatureDefID=212
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=43192.8,183.802,44300.0,81;
+
+[ENTRY]
+ID=314
+Requires=313
+Title=Alimat
+BodyText=Now for the difficult task. This amulet will allow you to use the altar at the top of the old keep. This first altar is a portal - it should take you into a room under the old keep. Inside, you will find another altar. It is here you will summon Alimat. You must stay in contact with the altar the entire time you are summoning Alimat - it may take a while. It would be wise to bring companions, as I do not know what else could be summoned up along with him. I am well learned, but I am no expert in summoning of the dead. Once he is summoned, you must defeat him and take his wand. Once you have the wand, return to me and I can use it break the enchantment on the teleporter into the Broken Tower.
+CompleteText=You are truly amazing! Give me the wand!
+Level=18
+Suggested=20
+Exp=3096
+PartySize=5
+NumRewards=0
+Coin=585
+Unabandon=0
+QuestGiverID=185
+QuestEnderID=185
+Repeat=0
+sGiver=57119.0,115.0,57863.0,81
+sEnder=57119.0,115.0,57863.0,81
+Heroism=14
+[ACT]
+Act.BodyText=Travel to the peak of the old castle ruin in the swamp.
+Obj.0.type=travel
+Obj.0.data1=48453,294,57175,81
+Obj.0.data2=150
+Obj.0.description=Travel to the  peak of the old castle ruin
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=48453.7,294.81,57175.0,81;
+[ACT]
+Act.BodyText=Use the altar to enter Alimat's Summoning Chamber.
+Obj.0.type=travel
+Obj.0.data1=802,102,5723,79
+Obj.0.data2=1000
+Obj.0.description=Enter Alimat's Summoning Chamber
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=48453.7,294.81,57175.0,81;
+[ACT]
+Act.BodyText=Use the skull atop the fountain to summon Alimat. Kill Alimat and take his wand.
+Obj.0.type=activate
+Obj.0.data1=2134
+Obj.0.data2=1
+Obj.0.description=Summon Alimat
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=
+Obj.0.ActivateTime=30000
+Obj.0.ActivateText=Summoning Alimat
+[ACT]
+Act.BodyText=Use the skull atop the fountain to summon Alimat. Kill Alimat and take his wand.
+Obj.0.type=kill
+Obj.0.data1=1952
+Obj.0.data2=1
+Obj.0.description=Kill Alimat
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=500231
+Obj.0.completeText=0 of 1
+Obj.0.markerLocations=
+[ACT]
+Act.BodyText=Return to Alexander Buckwalsh.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Alexander Buckwalsh
+Obj.0.complete=0
+Obj.0.myCreatureDefID=185
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=57118.3,115.574,57863.0,81;
+RewardItem.0=141019,1,1
+
+[ENTRY]
+ID=315
+Requires=314
+Title=Sneath the Betrayer
+BodyText=Ah yes, with the wand and the amulet together you should now be able to use the teleporter and enter the Broken Tower. The device is a plinth with a brazier on top burning a pale violet hue. Once inside, be warned: Though the tower looks small on the outside, it's substantially larger inside. This was done long ago, some kind of spacial magic and I have no idea how it works, but just be warned and wary. If Sneath still lives, he will be very dangerous. Now go and exact the vengeance I myself can no longer fulfill myself.
+CompleteText=You returned. What happened?
+
+He was alive?! And you defeated him?!
+
+Then my vengeance is complete. I may now die knowing that he has finally been put to the grave. I will rest easy with this thought.
+
+Words cannot convey my thanks to you, friend. Take this key and use it on the chest beside me. Take one item of your choosing. It is the very least I can do to thank you!
+Level=18
+Suggested=21
+Exp=3224
+PartySize=5
+NumRewards=0
+Coin=630
+Unabandon=0
+QuestGiverID=185
+QuestEnderID=185
+Repeat=0
+sGiver=57119.0,115.0,57863.0,81
+sEnder=57119.0,115.0,57863.0,81
+Heroism=14
+[ACT]
+Act.BodyText=Travel to the Broken Tower, then use the teleporter to enter.
+Obj.0.type=travel
+Obj.0.data1=55748,200,59791,81
+Obj.0.data2=250
+Obj.0.description=Travel to the Broken Tower teleporter
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=55748.6,200.421,59791.0,81;
+[ACT]
+Act.BodyText=Use the teleporter to enter the Broken Tower.
+Obj.0.type=travel
+Obj.0.data1=471,205,759,33
+Obj.0.data2=1000
+Obj.0.description=Enter the Broken Tower.
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=55761.0,211.377,59790.0,81;
+[ACT]
+Act.BodyText=Find the fate of Sneath and kill him if he still lives.
+Obj.0.type=kill
+Obj.0.data1=114
+Obj.0.data2=1
+Obj.0.description=Find and Kill Sneath if he still lives
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 1
+Obj.0.markerLocations=
+[ACT]
+Act.BodyText=Return to Alexander Buckwalsh.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Alexander Buckwalsh
+Obj.0.complete=0
+Obj.0.myCreatureDefID=185
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=57118.3,115.574,57863.0,81;
+RewardItem.0=21153,1,1
+
+[ENTRY]
+ID=565
+Title=BOUNTY: Ironskin Pummeler
+BodyText=Kill 10 Ironskin Pummelers.
+CompleteText=
+Level=20,24
+Exp=1238
+PartySize=1
+NumRewards=0
+Coin=234
+Unabandon=0
+QuestGiverID=2808
+QuestEnderID=2808
+Repeat=1
+sGiver=42990.5,196.897,43867.3,81
+sEnder=42990.5,196.897,43867.3,81
+Heroism=6
+[ACT]
+Act.BodyText=Kill 10 Ironskin Pummelers.
+Obj.0.type=kill
+Obj.0.data1=1736,1737
+Obj.0.data2=10
+Obj.0.description=Kill 10 Ironskin Pummelers
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 10
+Obj.0.markerLocations=47747.0,262.379,43552.6,81;
+[ACT]
+Act.BodyText=Return to the Bounty Board!
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to the Bounty Board!
+Obj.0.complete=0
+Obj.0.myCreatureDefID=2808
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=42984.7,201.936,43877.7,81;
+RewardItem.0=21333,1,1
+
+[ENTRY]
+ID=564
+Title=BOUNTY: Spite-Stag
+BodyText=Kill 10 Spite-Stags.
+CompleteText=
+Level=20,24
+Exp=1238
+PartySize=1
+NumRewards=0
+Coin=234
+Unabandon=0
+QuestGiverID=2807
+QuestEnderID=2807
+Repeat=1
+sGiver=42690.0,175.0,43484.0,81
+sEnder=42690.0,175.0,43484.0,81
+Heroism=6
+[ACT]
+Act.BodyText=Kill 10 Spite-Stags.
+Obj.0.type=kill
+Obj.0.data1=1739,1740
+Obj.0.data2=10
+Obj.0.description=Kill 10 Spite-Stags
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 10
+Obj.0.markerLocations=46600.0,256.596,43215.7,81;
+[ACT]
+Act.BodyText=Return to the Bounty Board!
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to the Bounty Board!
+Obj.0.complete=0
+Obj.0.myCreatureDefID=2807
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=42690.9,175.245,43484.9,81;
+RewardItem.0=21333,1,1
+
+[ENTRY]
+ID=328
+Title=Faerie-Sworn Bounty
+BodyText=The Faerie-Sworn are a constant thorn in our sides here in Southshield. I will gladly pay a bounty if you can eliminate some of them and thin their numbers. Are you up to the task?
+CompleteText=Task complete? Very good! Thank you for your ruthless diligence.
+Level=19
+Suggested=20
+Exp=3096
+PartySize=1
+NumRewards=0
+Coin=585
+Unabandon=0
+QuestGiverID=203
+QuestEnderID=203
+Repeat=0
+sGiver=42447.1,243.547,42934.0,81
+sEnder=42447.1,243.547,42934.0,81
+Heroism=10
+[ACT]
+Act.BodyText=Travel to the Faerie-Sworn camps and kill twelve of their kind.
+Obj.0.type=kill
+Obj.0.data1=1744,1745,1746
+Obj.0.data2=12
+Obj.0.description=Kill 12 Faerie-Sworn
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 12
+Obj.0.markerLocations=44509.0,242.679,43488.0,81;
+[ACT]
+Act.BodyText=Return to Lieutenant Jenner.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Lieutenant Jenner
+Obj.0.complete=0
+Obj.0.myCreatureDefID=203
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=42446.8,243.5,42933.0,81;
+
+[ENTRY]
+ID=326
+Title=Faerie-Sworn Plans
+BodyText=If you have come to help us, then lets be about our business, otherwise I do not have time to talk to you.
+
+Ah, you want to help? Good. We have had increasing issues with traitors! That is what they are, plain and simple. These 'beasts' who would give their souls over to the Faeries, nothing but traitors to all beasts!
+
+They have several encampments to the east. I am getting suspicious that they may be up to something dire. I want you to travel to their camps and look for any information you can find about what they are planning.
+
+Hop to it! Make it quick!
+CompleteText=What's this? Plans to build some kind of portal?
+Level=19
+Suggested=20
+Exp=3096
+PartySize=1
+NumRewards=0
+Coin=585
+Unabandon=0
+QuestGiverID=202
+QuestEnderID=202
+Repeat=0
+sGiver=42485.0,242.42,42909.0,81
+sEnder=42485.0,242.42,42909.0,81
+Heroism=6
+[ACT]
+Act.BodyText=Search the Faerie-Sworn camps for clues to what they are planning.
+Obj.0.type=travel
+Obj.0.data1=44320,216,43022,81
+Obj.0.data2=100
+Obj.0.description=Find out what the Faerie-Sworn are planning
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=44320.0,216.667,43022.0,81;
+[ACT]
+Act.BodyText=You found what look like plans for some device.
+Obj.0.type=gather
+Obj.0.data1=1923
+Obj.0.data2=1
+Obj.0.description=Take the plans
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=500197
+Obj.0.completeText=0 of 1
+Obj.0.markerLocations=44320.0,216.667,43022.0,81;
+Obj.0.ActivateTime=2000
+Obj.0.ActivateText=Taking Plans
+[ACT]
+Act.BodyText=You found what looks like plans for some kind of gate. You should take this to Master Sergeant Mitchell, immediately.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Master Sergeant Mitchell
+Obj.0.complete=0
+Obj.0.myCreatureDefID=202
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=42485.2,242.384,42909.0,81;
+
+[ENTRY]
+ID=327
+Requires=326
+Title=The Hollow Tree
+BodyText=I knew they were up to something. This cannot be allowed to transpire. If, somehow, they could open a portal to bypass the wall, then all of Anglorum, even the rest of the continent, is in dire peril.
+
+ Find this Hollow Tree the plan speaks of. If that is their base of operations, then their leader must be inside. Kill their leader and do not allow them to complete that gate!
+
+Do not delay!
+CompleteText=You return - what news? There was a partial gate? Terrible news if there is truly some way for the Faeries to portal past the wall. I must send word to the crown immediately! Oh yes, thank you so much for you help. Accept this reward with my thanks. Farewell.
+Level=19
+Suggested=20
+Exp=3096
+PartySize=5
+NumRewards=1
+Coin=585
+Unabandon=0
+QuestGiverID=202
+QuestEnderID=202
+Repeat=0
+sGiver=42485.0,242.42,42909.0,81
+sEnder=42485.0,242.42,42909.0,81
+Heroism=14
+[ACT]
+Act.BodyText=Travel to the Hollow Tree.
+Obj.0.type=travel
+Obj.0.data1=46820,187,46136,81
+Obj.0.data2=200
+Obj.0.description=Travel to the Hollow Tree
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=46797.0,182.948,45594.0,81;
+[ACT]
+Act.BodyText=Enter the Hollow Tree.
+Obj.0.type=travel
+Obj.0.data1=927,192,855,36
+Obj.0.data2=1000
+Obj.0.description=Enter the Hollow Tree
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=46797.0,182.948,45594.0,81;
+[ACT]
+Act.BodyText=Kill the Faerie-Sworn leader!
+Obj.0.type=kill
+Obj.0.data1=88
+Obj.0.data2=1
+Obj.0.description=Kill the Faerie-Sworn Leader!
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 1
+Obj.0.markerLocations=
+[ACT]
+Act.BodyText=Return to Master Sergeant Mitchell.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Master Sergeant Mitchell
+Obj.0.complete=0
+Obj.0.myCreatureDefID=202
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=42485.2,242.384,42909.0,81;
+RewardItem.0=5156,1,0
+RewardItem.1=5157,1,0
+RewardItem.2=5158,1,0
+RewardItem.3=5159,1,0
+
+[ENTRY]
+ID=317
+Requires=316
+Title=A Task from Robin
+BodyText=You want to know what has happened to the Sheriff? It is true we have been enemies since he began his campaign of egregious taxes, but he was always more a scoundrel than a truly evil man. Lately that has changed. I have proof that he is directly responsible for the deaths of some of the local people. This I cannot allow to stand, but I do not condone murder, myself, unless there is no other choice.
+
+I want you to investigate the Sheriff's "Deputy" camps - they are nothing more than murderers and thieves. Perhaps you can find something there that will shed some light on the Sheriff's recent change in behavior.
+CompleteText=What news?
+Level=18
+Suggested=19
+Exp=2968
+PartySize=1
+NumRewards=0
+Coin=540
+Unabandon=0
+QuestGiverID=207
+QuestEnderID=207
+Repeat=0
+sGiver=48281.0,221.065,44433.0,81
+sEnder=48281.0,221.065,44433.0,81
+Heroism=6
+[ACT]
+Act.BodyText=Search the Deputy Camps for any clues as to what may have made the Sheriff of Nottingham become increasingly dangerous.
+Obj.0.type=travel
+Obj.0.data1=51601,279,46716,81
+Obj.0.data2=100
+Obj.0.description=Search the Deputy Camps
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=51601.0,279.675,46716.0,81;
+[ACT]
+Act.BodyText=You found Faerie Food! Take a sample of the Faerie Food and return to Robin Hood.
+Obj.0.type=gather
+Obj.0.data1=1920
+Obj.0.data2=1
+Obj.0.description=Take a sample of the Faerire Food
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=500194
+Obj.0.completeText=0 of 1
+Obj.0.markerLocations=51594.0,285.362,46679.0,81;
+Obj.0.ActivateTime=2000
+Obj.0.ActivateText=Gathering Faerie Food
+[ACT]
+Act.BodyText=Return to Robin Hood.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Robin Hood
+Obj.0.complete=0
+Obj.0.myCreatureDefID=207
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=48280.0,220.935,44434.0,81;
+
+[ENTRY]
+ID=320
+Requires=316
+Title=Bust Some Heads!
+BodyText=While Robin may have no flavor for vengeance, I do. The "deputies" have been murdering and thieving, and for this they should pay. If you're traveling to the camps, then lay a few of them low while you are there!
+CompleteText=You busted some heads for me? Excellent.
+Level=18
+Suggested=19
+Exp=2968
+PartySize=1
+NumRewards=0
+Coin=540
+Unabandon=0
+QuestGiverID=200
+QuestEnderID=200
+Repeat=0
+sGiver=48309.0,221.378,44411.0,81
+sEnder=48309.0,221.378,44411.0,81
+Heroism=10
+[ACT]
+Act.BodyText=Travel to the Deputy Camps and eliminate twelve Nottingham Deputies.
+Obj.0.type=kill
+Obj.0.data1=1862,1863,1864,1865,1866
+Obj.0.data2=12
+Obj.0.description=Kill 12 Nottingham Deputies
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 12
+Obj.0.markerLocations=51763.0,201.396,46429.0,81;
+[ACT]
+Act.BodyText=Return to Little Jon.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Little Jon
+Obj.0.complete=0
+Obj.0.myCreatureDefID=200
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=48308.2,221.414,44412.0,81;
+
+[ENTRY]
+ID=562
+Title=BOUNTY: Nottingham Deputies
+BodyText=Kill 12 Nottingham Deputies. (Enthralled Deputies and Spellbound Deputies)
+CompleteText=
+Level=19,23
+Exp=1187
+PartySize=1
+NumRewards=0
+Coin=216
+Unabandon=0
+QuestGiverID=2805
+QuestEnderID=2805
+Repeat=1
+sGiver=48427.0,172.488,44638.2,81
+sEnder=48427.0,172.488,44638.2,81
+Heroism=6
+[ACT]
+Act.BodyText=Kill 12 Nottingham Deputies. (Enthralled Deputies and Spellbound Deputies)
+Obj.0.type=kill
+Obj.0.data1=1862,1863,1864,1865
+Obj.0.data2=12
+Obj.0.description=Kill 12 Nottingham Deputies
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 12
+Obj.0.markerLocations=51942.5,207.575,46189.7,81;
+[ACT]
+Act.BodyText=Return to the Bounty Board!
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to the Bounty Board!
+Obj.0.complete=0
+Obj.0.myCreatureDefID=2805
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=48429.7,172.467,44634.9,81;
+RewardItem.0=21333,1,1
+
+[ENTRY]
+ID=321
+Requires=316
+Title=Thieving from the Thieves!
+BodyText=Ah yes! You there. If you are heading to the Deputy camps, perhaps you could liberate some of the stolen goods for us. Those thieves have taken supplies and food from everyone in the area. Simply taking some back would help those that are now living here. I mean, its really just stealing stolen goods... Hmm, is that still stealing? Could you do this?
+CompleteText=You brought the supplies! Thank you so much.
+Level=18
+Suggested=19
+Exp=2968
+PartySize=1
+NumRewards=0
+Coin=540
+Unabandon=0
+QuestGiverID=201
+QuestEnderID=201
+Repeat=0
+sGiver=48502.0,172.0,44670.0,81
+sEnder=48502.0,172.0,44670.0,81
+Heroism=6
+[ACT]
+Act.BodyText=Travel to the Deputy Camps and retrieve four crates of Stolen Goods.
+Obj.0.type=gather
+Obj.0.data1=1921
+Obj.0.data2=4
+Obj.0.description=Retrieve 4 crates of Stolen Goods
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=500195
+Obj.0.completeText=0 of 4
+Obj.0.markerLocations=51763.0,201.396,46429.0,81;
+Obj.0.ActivateTime=2000
+Obj.0.ActivateText=Stealing Stolen Goods...
+[ACT]
+Act.BodyText=Return to Friar Tuck.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Friar Tuck
+Obj.0.complete=0
+Obj.0.myCreatureDefID=201
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=48503.1,172.137,44668.0,81;
+
+[ENTRY]
+ID=318
+Requires=317
+Title=Return to Nottingham
+BodyText=You found Faerie food in the deputy camps? Oh, this is terrible news. You see, the Faeries are always on the move up here in the north. They themselves cannot pass Hadrian's wall, but their influence is always felt to those up here. Some fall prey to the whispers in the night and become puppets to the Faeries' string pulling. Eating Faerie food is akin to signing your soul over to them! The Sheriff himself has always been a glutton. If he has been tainted directly by Faerie food, then there is no recourse, he must be put down. His will is not his own and we cannot allow the Faeries to seed this land with anymore dissent than they already have.
+
+Return to Master Sergeant Illius and let him know what you plan to do. He will not stop you but, he will not aid you.
+
+Once you have put the Sheriff out of his misery, return to me. It's a sorrowful task for me to ask you to kill another beast, but there is no other recourse.
+CompleteText=Well met once more. You spoke to Robin, what did he say?
+Level=18
+Suggested=19
+Exp=891
+PartySize=1
+NumRewards=0
+Coin=162
+Unabandon=0
+QuestGiverID=207
+QuestEnderID=197
+Repeat=0
+sGiver=48281.0,221.065,44433.0,81
+sEnder=52866.9,196.717,48894.0,81
+[ACT]
+Act.BodyText=Return to Master Sergeant Illius.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Master Sergeant Illius.
+Obj.0.complete=0
+Obj.0.myCreatureDefID=197
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=52867.203,196.695,48895.0,81;
+
+[ENTRY]
+ID=319
+Requires=318
+Title=The Sheriff of Nottingham
+BodyText=I feared it may come to this. I cannot aid you in any way other than this: Take this key. It will allow you entry into the keep. I should not even do this, but I too cannot allow this beast - if he has been tainted by the Faeries - to continue to rule here.
+
+Go now and good luck.
+CompleteText=The news has already spread to my ears.
+
+The people will thank you as will I thank you. Though I am still troubled at this entire affair.
+
+Take this key, it will allow you to take one item from the chest inside my tent as a reward for you efforts.
+
+Thank you again and farewell!
+Level=18
+Suggested=20
+Exp=3096
+PartySize=5
+NumRewards=0
+Coin=585
+Unabandon=0
+QuestGiverID=197
+QuestEnderID=207
+Repeat=0
+sGiver=52866.9,196.717,48894.0,81
+sEnder=48281.0,221.065,44433.0,81
+Heroism=14
+[ACT]
+Act.BodyText=Travel up the mount to Nottingham Keep.
+Obj.0.type=travel
+Obj.0.data1=51077,685,48817,81
+Obj.0.data2=100
+Obj.0.description=Travel up the mount to Nottingham Keep
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=51077.0,685.639,48817.0,81;
+[ACT]
+Act.BodyText=Enter Nottingham Keep.
+Obj.0.type=travel
+Obj.0.data1=1392,240,1815,32
+Obj.0.data2=1000
+Obj.0.description=Enter Nottingham Keep
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=51077.0,685.639,48817.0,81;
+[ACT]
+Act.BodyText=Kill the Sheriff of Nottingham.
+Obj.0.type=kill
+Obj.0.data1=82
+Obj.0.data2=1
+Obj.0.description=Kill the Sheriff of Nottingham
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 1
+Obj.0.markerLocations=290.137,510.0,3837.72,32;
+[ACT]
+Act.BodyText=Return to Robin Hood.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Robin Hood
+Obj.0.complete=0
+Obj.0.myCreatureDefID=207
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=48280.0,220.935,44434.0,81;
+RewardItem.0=21151,1,1
+
+
+

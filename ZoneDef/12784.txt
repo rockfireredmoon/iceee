@@ -1,0 +1,15 @@
+[ENTRY]
+ID=12784
+ACCOUNTID=974
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=dragonspeak
+GroveName=dragonspeak
+WarpName=dragonspeak1
+DropRateProfile=standard
+Grove=1
+EnvironmentCycle=0
+BuildPermission=account,974,0,0,13,23
+DefLoc=2672,312,4805
+

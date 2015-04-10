@@ -1,0 +1,8 @@
+[ENTRY]
+ID=151026204
+Asset=Prop-Mushroom-Spewing_Tall2
+Pos=51808.2,322.866,80951
+Orient=0,0.877201,0,0.480124
+Scale=3.175,3.175,3.175
+Flags=1
+

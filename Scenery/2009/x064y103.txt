@@ -1,0 +1,8 @@
+[ENTRY]
+ID=151059213
+Asset=Prop-Moss_Rotted#Prop-Moss_Rotted
+Name=9
+Pos=48304.7,440.287,77419.5
+Orient=0,0,0,1
+Scale=1.75,1.75,1.75
+

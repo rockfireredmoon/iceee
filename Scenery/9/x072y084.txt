@@ -1,0 +1,16 @@
+[ENTRY]
+ID=151021299
+Asset=Prop-Boulder_Scary#Prop-Boulder_Scary1
+Pos=54013.4,89.1469,63625
+Orient=0,0.711318,0,0.702871
+Scale=7.7,7.7,7.7
+
+[ENTRY]
+ID=151027062
+Asset=Manipulator-SpawnPoint
+Pos=54736.7,857.443,63663
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=11_dth_organCuller_d_41
+outerRadius=1
+

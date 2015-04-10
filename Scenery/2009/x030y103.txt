@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151010701
+Asset=Prop-Wagon
+Name=9
+Pos=22517.4,283.868,77804
+Orient=0,-0.991458,0,0.130424
+Scale=1.6,1.6,1.6
+Flags=1
+

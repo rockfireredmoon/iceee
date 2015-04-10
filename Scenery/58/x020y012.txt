@@ -1,0 +1,14 @@
+[ENTRY]
+ID=973078824
+Asset=Prop-Palm-Tree3
+Pos=20338.1,1438.43,12506.2
+Orient=0,0,0,1
+Scale=2,2,2
+
+[ENTRY]
+ID=973078825
+Asset=Prop-Palm-Tree#Prop-Palm-Tree6
+Pos=20340.1,1437.63,12462.8
+Orient=0,-0.980893,0,0.194548
+Scale=1.975,1.975,1.975
+

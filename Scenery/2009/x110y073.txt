@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151049616
+Asset=Prop-Dambat-Gate#Prop-Dambat-Gate
+Name=9
+Pos=82619,789.856,54875
+Orient=0,-0.963983,0,-0.265964
+Scale=5.35,5.35,5.35
+Flags=1
+

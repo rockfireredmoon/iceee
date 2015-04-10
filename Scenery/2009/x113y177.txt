@@ -1,0 +1,17 @@
+[ENTRY]
+ID=151032548
+Asset=Prop-Palm-Tree5
+Name=9
+Pos=85190.7,95.8896,133339
+Orient=0,0,0,1
+Scale=2.3,2.3,2.3
+Flags=1
+
+[ENTRY]
+ID=151032554
+Asset=Prop-Palm-Tree#Prop-Palm-Tree1
+Name=9
+Pos=85183,98.0299,133321
+Orient=-0.119419,-0.00837301,0.0694398,0.990377
+Scale=1.275,1.275,1.275
+

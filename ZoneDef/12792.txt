@@ -1,0 +1,15 @@
+[ENTRY]
+ID=12792
+ACCOUNTID=975
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=boulder
+GroveName=boulder
+WarpName=boulder1
+DropRateProfile=standard
+Grove=1
+EnvironmentCycle=0
+BuildPermission=account,975,0,0,13,23
+DefLoc=2958,260,3821
+

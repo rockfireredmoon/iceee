@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151059495
+Asset=CL-UndeadBoulder1#CL-UndeadBoulder1
+Name=9
+Pos=52457.3,211.682,63466.7
+Orient=0,0.183947,0,0.982936
+Scale=2.1,2.1,2.1
+Flags=1
+

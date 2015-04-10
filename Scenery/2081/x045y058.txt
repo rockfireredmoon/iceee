@@ -1,0 +1,16 @@
+[ENTRY]
+ID=1358967114
+Asset=Prop-Swamp-Tree#Prop-Swamp-Tree3
+Name=81
+Pos=45279.1,66.6723,58236
+Orient=0,0.95209,0,0.305817
+Scale=2.25,2.25,2.25
+
+[ENTRY]
+ID=1358967119
+Asset=Swamp_Ruin?d=0.9&amp;s=123356&amp;sz=800
+Name=81
+Pos=45064.9,69.7114,58042
+Orient=0,-0.741296,0,0.671178
+Scale=1,1,1
+

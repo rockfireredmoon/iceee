@@ -1,0 +1,17 @@
+[ENTRY]
+ID=150999415
+Asset=CL-Hills_Tree3#CL-Hills_Tree3
+Pos=45906.7,519.395,56115
+Orient=0,0,0,1
+Scale=1,1,1
+Flags=1
+
+[ENTRY]
+ID=151051058
+Asset=Manipulator-PathNode
+Pos=45865.8,392.267,55734
+Orient=0,0,0,1
+Scale=0.95,0.95,0.95
+links_count=1
+link=151051057,1
+

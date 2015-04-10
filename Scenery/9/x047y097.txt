@@ -1,0 +1,17 @@
+[ENTRY]
+ID=151031535
+Asset=Basic Desert?d=0.3&s=856&sz=800
+Pos=35620.9,281.863,73334
+Orient=0,0.281157,0,0.959662
+Scale=1,1,1
+
+[ENTRY]
+ID=151031733
+Asset=Manipulator-SpawnPoint
+Pos=35521.7,268.813,73257
+Orient=0,0,0,1
+Scale=1,1,1
+innerRadius=95
+spawnPackage=5_wilds_33_34
+outerRadius=100
+

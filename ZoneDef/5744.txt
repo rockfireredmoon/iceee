@@ -1,0 +1,15 @@
+[ENTRY]
+ID=5744
+ACCOUNTID=94
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=bloodsworn
+GroveName=bloodsworn
+WarpName=bloodsworn1
+DropRateProfile=standard
+Grove=1
+EnvironmentCycle=1
+BuildPermission=account,94,0,0,3,3
+DefLoc=3022,258,4244
+

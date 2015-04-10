@@ -1,0 +1,13 @@
+[ENTRY]
+ID=7936
+ACCOUNTID=368
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=BremenSunrise
+ShardName=justicebadger
+GroveName=justicebadger
+WarpName=justicebadger1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

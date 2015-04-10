@@ -1,0 +1,13 @@
+[ENTRY]
+ID=8280
+ACCOUNTID=411
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=wubba
+GroveName=wubba
+WarpName=wubba1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

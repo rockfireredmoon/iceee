@@ -1,0 +1,1808 @@
+[ENTRY]
+mID=2005000
+mType=5
+mDisplayName=Pet: Flamemoth
+mAppearance=n4:{["a"]=[{["type"]="Item-Moth_Flame",["node"]="head_particles"}],["c"]="Horde-Flame_Moth",["sk"]={["flame"]="FFAC26",["wing"]="EC0704",["eye"]="322829",["abdomen2"]="AC250F",["abdomen"]="AB3F04"},["sz"]=".20"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=1
+mMinUseLevel=1
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 1<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5000
+
+[ENTRY]
+mID=2005001
+mType=5
+mDisplayName=Pet: Chicken
+mAppearance=n4:{["sk"]={["beak"]="DF9B12",["crest"]="BF0000",["main"]="DDCBCB"},["c"]="Horde-Chicken",["sz"]=".5"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=1
+mMinUseLevel=1
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 1<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5001
+
+[ENTRY]
+mID=2005002
+mType=5
+mDisplayName=Pet: Brainfreeze Moth
+mAppearance=n4:{["sk"]={["flame"]="2C073F",["wing"]="C0C3E9",["eye"]="A2FFFF",["abdomen2"]="368EFF",["abdomen"]="580E7F"},["c"]="Horde-Flame_Moth",["sz"]=".20"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=1
+mMinUseLevel=1
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 1<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5002
+
+[ENTRY]
+mID=2005003
+mType=5
+mDisplayName=Pet: Quackatrice
+mAppearance=n4:{["sk"]={["body_detail"]="949C46",["feet"]="5A3E32",["eyes"]="D9B400",["beak"]="B4970B",["body"]="49713D",["spines"]="919F8F",["head"]="204C69"},["c"]="Horde-Quack_a_Trice",["sz"]=".6"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=4
+mMinUseLevel=4
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 4<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5003
+
+[ENTRY]
+mID=2005004
+mType=5
+mDisplayName=Pet: Common Planter
+mAppearance=n4:{["sk"]={["pot"]="AA8F25",["base"]="8CAA8E",["detail"]="6A0000",["dirt"]="FF0000",["mouth"]="D4306C",["leaves"]="009409"},["c"]="Horde-Birdtrap",["sz"]=".4"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=4
+mMinUseLevel=4
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 4<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5004
+
+[ENTRY]
+mID=2005005
+mType=5
+mDisplayName=Pet: Iceberg Planter
+mAppearance=n4:{["sk"]={["pot"]="115B6A",["base"]="62A4BF",["detail"]="FFFE53",["dirt"]="D88EFF",["mouth"]="D4B351",["leaves"]="3A5523"},["c"]="Horde-Birdtrap",["sz"]=".4"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=4
+mMinUseLevel=4
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 4<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5005
+
+[ENTRY]
+mID=2005006
+mType=5
+mDisplayName=Pet: Fleshy Planter
+mAppearance=n4:{["sk"]={["pot"]="6A3709",["base"]="BF29A1",["detail"]="D44B68",["dirt"]="D88EFF",["mouth"]="D4D4D4",["leaves"]="AA1700"},["c"]="Horde-Birdtrap",["sz"]=".4"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=4
+mMinUseLevel=4
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 4<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5006
+
+[ENTRY]
+mID=2005007
+mType=5
+mDisplayName=Pet: Aphid Crab
+mAppearance=n4:{["sk"]={["fur"]="76AA13",["body_shell"]="D0FFFF",["legs_shell"]="133F15",["eye"]="5EFFB5",["face"]="6A5928"},["c"]="Horde-Crabquatch",["sz"]=".3"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=4
+mMinUseLevel=4
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 4<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5007
+
+[ENTRY]
+mID=2005008
+mType=5
+mDisplayName=Pet: Royal Rosebiter
+mAppearance=n4:{["sk"]={["head"]="212C3F",["mouth"]="E88D77",["legs"]="6A0E00",["pot"]="A5ABFF",["base"]="212C3F",["tassle"]="BF1A00",["spikes"]="AA8CFF",["petal"]="941400"},["c"]="Horde-Death_Blossom",["sz"]=".4"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=4
+mMinUseLevel=4
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 4<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5008
+
+[ENTRY]
+mID=2005009
+mType=5
+mDisplayName=Pet: Tiny Guinea
+mAppearance=n4:{["sk"]={["fur3"]="FFD737",["fur2"]="7F2816",["fur1"]="FFFFFF",["beak"]="D4B32E",["feathers"]="942E1A",["legs"]="FFD737",["eye"]="00D40D",["eyeball"]="FFFFFF",["crest"]="FFFFFF"},["c"]="Horde-Guinea_Fowl",["sz"]=".3"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=4
+mMinUseLevel=4
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 4<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5009
+
+[ENTRY]
+mID=2005010
+mType=5
+mDisplayName=Pet: Skybound Guinea
+mAppearance=n4:{["sk"]={["fur3"]="D4B32E",["fur2"]="FFFED4",["fur1"]="5EB5FF",["beak"]="BF6410",["feathers"]="FFFED4",["legs"]="D4B293",["eye"]="412DD4",["eyeball"]="FFFFFF",["crest"]="BFA129"},["c"]="Horde-Guinea_Fowl",["sz"]=".45"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=4
+mMinUseLevel=4
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 4<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5010
+
+[ENTRY]
+mID=2005011
+mType=5
+mDisplayName=Pet: Bloodbound Guinea
+mAppearance=n4:{["sk"]={["fur3"]="FF0000",["fur2"]="FFD4FE",["fur1"]="271B7F",["beak"]="D4B32E",["feathers"]="FFD4FE",["legs"]="D4B293",["eye"]="BF0000",["eyeball"]="FFFFFF",["crest"]="412DD4"},["c"]="Horde-Guinea_Fowl",["sz"]=".45"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=4
+mMinUseLevel=4
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 4<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5011
+
+[ENTRY]
+mID=2005012
+mType=5
+mDisplayName=Pet: Pasteycrown Guinea
+mAppearance=n4:{["sk"]={["fur3"]="0EFF90",["fur2"]="3F0335",["fur1"]="FFD4FE",["beak"]="D6FFB4",["feathers"]="7F066B",["legs"]="D4D4B0",["eye"]="18BF07",["eyeball"]="FFFFFF",["crest"]="D4B0D4"},["c"]="Horde-Guinea_Fowl",["sz"]=".45"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=4
+mMinUseLevel=4
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 4<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5012
+
+[ENTRY]
+mID=2005013
+mType=5
+mDisplayName=Pet: Dreamfly
+mAppearance=n4:{["sk"]={["head_wing"]="FFC51B",["wing5"]="36ADB2",["wing4"]="4E51FD",["wing3"]="760E9B",["carapace"]="453C49",["wing1"]="165153",["wing2"]="CD1312"},["c"]="Horde-Dreamfly",["sz"]=".20"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=5
+mMinUseLevel=5
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 5<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5013
+
+[ENTRY]
+mID=2005014
+mType=5
+mDisplayName=Pet: Flutterish
+mAppearance=n4:{["sk"]={["head_wing"]="752DAA",["wing5"]="B11DFF",["wing4"]="08B7FF",["wing3"]="B11DFF",["carapace"]="08B7FF",["wing1"]="FF0000",["wing2"]="FFFFFF"},["c"]="Horde-Dreamfly",["sz"]=".20"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=5
+mMinUseLevel=5
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 5<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5014
+
+[ENTRY]
+mID=2005015
+mType=5
+mDisplayName=Pet: Lunamoth
+mAppearance=n4:{["sk"]={["head_wing"]="A2BF4B",["wing5"]="24AA5E",["wing4"]="AA3C53",["wing3"]="5EFFB5",["carapace"]="D4D345",["wing1"]="165153",["wing2"]="91D458"},["c"]="Horde-Dreamfly",["sz"]=".20"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=5
+mMinUseLevel=5
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 5<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5015
+
+[ENTRY]
+mID=2005016
+mType=5
+mDisplayName=Pet: Sekrit Sting
+mAppearance=n4:{["sk"]={["leg_tips"]="121A94",["spots"]="2F5A7F",["mandibles"]="1A1255",["body"]="1F40AA",["body_detail"]="3F49D4",["stripes"]="150B2A",["claws"]="0A0F55",["underbelly"]="0960AA"},["c"]="Horde-Scorpion",["sz"]=".27"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=6
+mMinUseLevel=6
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 6<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5016
+
+[ENTRY]
+mID=2005017
+mType=5
+mDisplayName=Pet: Redcap Sporeling
+mAppearance=n4:{["sk"]={["cap_bottom"]="C54E46",["body"]="9A8965",["eyes"]="626262",["cap"]="FB4340"},["c"]="Horde-Shroomie",["sz"]=".38"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=6
+mMinUseLevel=6
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 6<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5017
+
+[ENTRY]
+mID=2005018
+mType=5
+mDisplayName=Pet: Bewlit Sporeling
+mAppearance=n4:{["sk"]={["cap_bottom"]="A24BBF",["body"]="8E74D4",["eyes"]="481355",["cap"]="B044FF"},["c"]="Horde-Shroomie",["sz"]=".28"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=6
+mMinUseLevel=6
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 6<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5018
+
+[ENTRY]
+mID=2005019
+mType=5
+mDisplayName=Pet: Windclaw Elemental
+mAppearance=n4:{["sk"]={["armor"]="E3AA05",["main2"]="4E4D5E",["main"]="5C5B6E",["eye"]="D20003",["main3"]="414050",["armor_marking"]="4008BA"},["c"]="Horde-Elemental_Air",["sz"]=".28"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=9
+mMinUseLevel=9
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 9<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5019
+
+[ENTRY]
+mID=2005020
+mType=5
+mDisplayName=Pet: Garish Weaver (F)
+mAppearance=n4:{["sk"]={["body_detail"]="FF00FD",["tips"]="00FFFF",["color"]="FF64AD",["body"]="009494",["highlight"]="FFFFFF",["color_detail"]="B044FF"},["c"]="Horde-Spider",["sz"]=".3"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=9
+mMinUseLevel=9
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 9<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5020
+
+[ENTRY]
+mID=2005021
+mType=5
+mDisplayName=Pet: Garish Weaver (M)
+mAppearance=n4:{["sk"]={["body_detail"]="7D61FF",["tips"]="8342FF",["color"]="202DFF",["body"]="B396D4",["highlight"]="FFFE7E",["color_detail"]="34B6FF"},["c"]="Horde-Spider",["sz"]=".3"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=9
+mMinUseLevel=9
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 9<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5021
+
+[ENTRY]
+mID=2005022
+mType=5
+mDisplayName=Pet: Coldstone Baiter
+mAppearance=n4:{["sk"]={["grass"]="FFFFFF",["apple"]="940D66",["teeth"]="FFA9FE",["stone"]="22B6D4",["stick"]="FFFFFF"},["c"]="Horde-Biter",["sz"]=".16"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=10
+mMinUseLevel=10
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 10<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5022
+
+[ENTRY]
+mID=2005023
+mType=5
+mDisplayName=Pet: Bloodhog
+mAppearance=n4:{["sk"]={["fur"]="BF0000",["eyes"]="00FF0F",["dark_fur"]="FFD6B1",["nails"]="151515",["quill1"]="7F0000",["quill2"]="6A0000"},["c"]="Horde-Dire_Hedgehog",["sz"]=".4"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=10
+mMinUseLevel=10
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 10<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5023
+
+[ENTRY]
+mID=2005024
+mType=5
+mDisplayName=Pet: Poise
+mAppearance=n4:{["sk"]={["face"]="151515",["mandibles"]="7F7F3F",["belly"]="D4D48C",["base"]="023F2D",["limbs"]="02553D",["eye"]="5619FF",["claws"]="5619FF",["teeth"]="FFFEA9"},["c"]="Boss-Sheaya",["sz"]=".26"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=10
+mMinUseLevel=10
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 10<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5024
+
+[ENTRY]
+mID=2005025
+mType=5
+mDisplayName=Pet: Disdain
+mAppearance=n4:{["sk"]={["face"]="9D9FBF",["mandibles"]="6B5A7F",["belly"]="6B5A7F",["base"]="FF61D7",["limbs"]="FF61D7",["eye"]="56FF19",["claws"]="40BF13",["teeth"]="FFD4FE"},["c"]="Boss-Sheaya",["sz"]=".26"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=10
+mMinUseLevel=10
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 10<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5025
+
+[ENTRY]
+mID=2005026
+mType=5
+mDisplayName=Pet: Flossie
+mAppearance=n4:{["sk"]={["base"]="7F5632",["eye"]="7F420B",["nose_ear"]="BF67A1",["highlight"]="553921",["teeth"]="ADD4D4"},["c"]="Horde-Rabbit",["sz"]="1"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=10
+mMinUseLevel=10
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 10<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5026
+
+[ENTRY]
+mID=2005027
+mType=5
+mDisplayName=Pet: Maclaw
+mAppearance=n4:{["sk"]={["eyeball"]="5915AA",["feet"]="7F570B",["beak"]="AA750E",["body"]="40BF13",["mouth"]="FF37D7",["tail"]="000BBF",["eye"]="7F420B",["head"]="BF0000"},["c"]="Horde-Roc",["sz"]=".20"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=10
+mMinUseLevel=10
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 10<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5027
+
+[ENTRY]
+mID=2005028
+mType=5
+mDisplayName=Pet: Drudge Slug
+mAppearance=n4:{["sk"]={["pupil"]="FF0000",["main"]="6C327F",["eye_color"]="FFFFFF",["eye_white"]="FF0000",["spots"]="D4D4D4",["underbelly"]="FFA2A2"},["c"]="Horde-Giant_Slug",["sz"]=".6"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=11
+mMinUseLevel=11
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 11<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5028
+
+[ENTRY]
+mID=2005029
+mType=5
+mDisplayName=Pet: Beedin
+mAppearance=n4:{["sk"]={["stinger"]="FF0000",["eyes"]="5915AA",["shell"]="380D6A",["body"]="FFFD00",["wings"]="D4D4B0",["legs"]="4E1294"},["c"]="Horde-Giant_Mosquito",["sz"]=".35"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=11
+mMinUseLevel=11
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 11<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5029
+
+[ENTRY]
+mID=2005030
+mType=5
+mDisplayName=Pet: Green Slimer
+mAppearance=n4:{["sk"]={["pupil"]="949400",["main"]="007F07",["eye_color"]="BFBE00",["eye_white"]="BFBE00",["spots"]="002A02",["underbelly"]="79FF81"},["c"]="Horde-Giant_Slug",["sz"]=".45"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=11
+mMinUseLevel=11
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 11<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5030
+
+[ENTRY]
+mID=2005031
+mType=5
+mDisplayName=Pet: Battle Boar
+mAppearance=n4:{["sk"]={["tail"]="D4D321",["skin"]="3F3F3F",["eye"]="FF0000",["tusks"]="2A2A2A",["eyeball"]="FFFFFF",["nose"]="D4D321",["armor"]="551717"},["c"]="Horde-Warthog",["sz"]=".6"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=12
+mMinUseLevel=12
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 12<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5031
+
+[ENTRY]
+mID=2005032
+mType=5
+mDisplayName=Pet: Snow Wolf
+mAppearance=n4:{["sk"]={["fur"]="000115",["ear"]="0960AA",["eye"]="0C78D4",["highlight"]="BFBFBF",["claws"]="00033F",["mouth"]="3F0000"},["c"]="Horde-Wolf",["sz"]=".35"}
+mIcon=Icon-32-Ability-D_Wolf_Spirit.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=12
+mMinUseLevel=12
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 12<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5032
+
+[ENTRY]
+mID=2005033
+mType=5
+mDisplayName=Pet: Flame Wolf
+mAppearance=n4:{["sk"]={["fur"]="2A0500",["ear"]="AA5726",["eye"]="FF8516",["highlight"]="BF5656",["claws"]="FF8516",["mouth"]="3F0000"},["c"]="Horde-Wolf",["sz"]=".35"}
+mIcon=Icon-32-Ability-D_Wolf_Spirit.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=12
+mMinUseLevel=12
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 12<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5033
+
+[ENTRY]
+mID=2005034
+mType=5
+mDisplayName=Pet: Tide Wolf
+mAppearance=n4:{["sk"]={["fur"]="0B5DE9",["ear"]="9043AA",["eye"]="D911FF",["highlight"]="B396D4",["claws"]="4C57FF",["mouth"]="3F0000"},["c"]="Horde-Wolf",["sz"]=".35"}
+mIcon=Icon-32-Ability-D_Wolf_Spirit.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=12
+mMinUseLevel=12
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 12<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5034
+
+[ENTRY]
+mID=2005035
+mType=5
+mDisplayName=Pet: Brimstone Stag
+mAppearance=n4:{["sk"]={["antlers"]="AA8F09",["hooves"]="D4480C",["eyes"]="FF0000",["body"]="3F3F3F",["tail"]="D4480C",["chest"]="943208"},["c"]="Horde-Stag",["sz"]=".40"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=13
+mMinUseLevel=13
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 13<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5035
+
+[ENTRY]
+mID=2005036
+mType=5
+mDisplayName=Pet: Lemon-Lime Crystal Slug
+mAppearance=n4:{["sk"]={["skin"]="FFFE7E",["eye"]="5EFFB5",["eyeball"]="FFFFFF",["crystal"]="00FF0F"},["c"]="Horde-Crystal_Slug",["sz"]=".45"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=13
+mMinUseLevel=13
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 13<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5036
+
+[ENTRY]
+mID=2005037
+mType=5
+mDisplayName=Pet: Diamond Mucker
+mAppearance=n4:{["sk"]={["skin"]="D2D5FF",["eye"]="FF2300",["eyeball"]="FFFED4",["crystal"]="D0FFFF"},["c"]="Horde-Crystal_Slug",["sz"]=".45"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=13
+mMinUseLevel=13
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 13<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5037
+
+[ENTRY]
+mID=2005038
+mType=5
+mDisplayName=Pet: Pond Sprite
+mAppearance=n4:{["sk"]={["water"]="00FFFF",["water_blend"]="00BFBF",["water_highlight"]="83FFDB"},["c"]="Horde-Elemental_Water",["sz"]=".28"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=13
+mMinUseLevel=13
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 13<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5038
+
+[ENTRY]
+mID=2005039
+mType=5
+mDisplayName=Pet: Lava Sprite
+mAppearance=n4:{["sk"]={["water"]="3F352C",["water_blend"]="FF0000",["water_highlight"]="BF6410"},["c"]="Horde-Elemental_Water",["sz"]=".28"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=13
+mMinUseLevel=13
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 13<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5039
+
+[ENTRY]
+mID=2005040
+mType=5
+mDisplayName=Pet: Pond-Pog
+mAppearance=n4:{["sk"]={["water"]="6518BF",["water_blend"]="00D40D",["water_highlight"]="BF6410"},["c"]="Horde-Elemental_Water",["sz"]=".28"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=13
+mMinUseLevel=13
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 13<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5040
+
+[ENTRY]
+mID=2005041
+mType=5
+mDisplayName=Pet: Betelghost
+mAppearance=n4:{["sk"]={["water"]="000000",["water_blend"]="7F7F7F",["water_highlight"]="FFFFFF"},["c"]="Horde-Elemental_Water",["sz"]=".28"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=13
+mMinUseLevel=13
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 13<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5041
+
+[ENTRY]
+mID=2005042
+mType=5
+mDisplayName=Pet: Bewk Werm
+mAppearance=n4:{["sk"]={["skin"]="FF560E",["trim"]="FFFE53",["spots"]="151515",["eye"]="FFFFFF",["paper"]="7F7F3F",["middletext"]="FFFFFF",["cover"]="022A11"},["c"]="Horde-Bookwyrm",["sz"]=".20"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=16
+mMinUseLevel=16
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 16<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5042
+
+[ENTRY]
+mID=2005043
+mType=5
+mDisplayName=Pet: Plagued Document
+mAppearance=n4:{["sk"]={["skin"]="151515",["trim"]="7F0000",["spots"]="7F1628",["eye"]="FF0000",["paper"]="D6B4FF",["middletext"]="0E0815",["cover"]="1D112A"},["c"]="Horde-Bookwyrm",["sz"]=".20"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=16
+mMinUseLevel=16
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 16<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5043
+
+[ENTRY]
+mID=2005044
+mType=5
+mDisplayName=Pet: Radioactive Document
+mAppearance=n4:{["sk"]={["skin"]="B5D431",["trim"]="085494",["spots"]="00D4D4",["eye"]="FFD737",["paper"]="D4D321",["middletext"]="B5D431",["cover"]="517F7F"},["c"]="Horde-Bookwyrm",["sz"]=".20"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=16
+mMinUseLevel=16
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 16<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5044
+
+[ENTRY]
+mID=2005045
+mType=5
+mDisplayName=Pet: Patriotic Document
+mAppearance=n4:{["sk"]={["skin"]="151EAA",["trim"]="FFFFFF",["spots"]="FFFFFF",["eye"]="FFFFFF",["paper"]="D4D48C",["middletext"]="FFFEA9",["cover"]="BF0000"},["c"]="Horde-Bookwyrm",["sz"]=".20"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=16
+mMinUseLevel=16
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 16<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5045
+
+[ENTRY]
+mID=2005046
+mType=5
+mDisplayName=Pet: Caylib
+mAppearance=n4:{["sk"]={["plates"]="2A1509",["skin"]="00BFBF",["tail2"]="202DFF",["tail1"]="29DBFF"},["c"]="Horde-Salamander",["sz"]=".35"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=16
+mMinUseLevel=16
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 16<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5046
+
+[ENTRY]
+mID=2005047
+mType=5
+mDisplayName=Pet: Bluebook Wyrm
+mAppearance=n4:{["sk"]={["skin"]="0D6A13",["trim"]="6A4909",["spots"]="6A1C1C",["eye"]="7F7E00",["paper"]="BFBE7E",["middletext"]="4F4F4F",["cover"]="080B3F"},["c"]="Horde-Bookwyrm",["sz"]=".20"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=16
+mMinUseLevel=16
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 16<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5047
+
+[ENTRY]
+mID=2005048
+mType=5
+mDisplayName=Pet: Fenleaper Salamander
+mAppearance=n4:{["sk"]={["plates"]="000000",["skin"]="FFFD00",["tail2"]="FFFD00",["tail1"]="3F3F00"},["c"]="Horde-Salamander",["sz"]=".35"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=16
+mMinUseLevel=16
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 16<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5048
+
+[ENTRY]
+mID=2005049
+mType=5
+mDisplayName=Pet: Devil's Jack
+mAppearance=n4:{["sk"]={["base"]="6A0000",["leaf"]="1B1C2A",["root"]="1B1C2A"},["c"]="Horde-Jack_o_Lantern",["sz"]=".14"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=19
+mMinUseLevel=19
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 19<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5049
+
+[ENTRY]
+mID=2005050
+mType=5
+mDisplayName=Pet: Freshling Jack
+mAppearance=n4:{["sk"]={["base"]="0D6A13",["leaf"]="A2BF2C",["root"]="5A6A2A"},["c"]="Horde-Jack_o_Lantern",["sz"]=".14"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=19
+mMinUseLevel=19
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 19<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5050
+
+[ENTRY]
+mID=2005051
+mType=5
+mDisplayName=Pet: Whatpumpkin
+mAppearance=n4:{["sk"]={["base"]="BF6410",["leaf"]="587F22",["root"]="6A5928"},["c"]="Horde-Jack_o_Lantern",["sz"]=".14"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=19
+mMinUseLevel=19
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 19<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5051
+
+[ENTRY]
+mID=2005052
+mType=5
+mDisplayName=Pet: Spirit Bear's Cub (M)
+mAppearance=n4:{["sk"]={["marking2"]="5915AA",["fur"]="D4D4D4",["muzzle"]="D2D5FF",["eye"]="493894",["marking1"]="5915AA",["mouth"]="FF0000",["noseclaws"]="43107F"},["c"]="Horde-Bear",["sz"]=".35"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=20
+mMinUseLevel=20
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 20<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5052
+
+[ENTRY]
+mID=2005053
+mType=5
+mDisplayName=Pet: Spirit Bear's Cub (F)
+mAppearance=n4:{["sk"]={["marking2"]="AA0F58",["fur"]="BFBFBF",["muzzle"]="FFD4FE",["eye"]="94214C",["marking1"]="AA0F58",["mouth"]="FF0000",["noseclaws"]="7F1D41"},["c"]="Horde-Bear",["sz"]=".3"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=20
+mMinUseLevel=20
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 20<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5053
+
+[ENTRY]
+mID=2005054
+mType=5
+mDisplayName=Pet: Mooncap Shroom
+mAppearance=n4:{["sk"]={["eyes"]="D865FF",["cap"]="AEDAFF",["body"]="799494",["spots"]="0EFF90",["cap_bottom"]="077F48"},["c"]="Horde-Black_Shroomie",["sz"]=".4"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=20
+mMinUseLevel=20
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 20<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5054
+
+[ENTRY]
+mID=2005055
+mType=5
+mDisplayName=Pet: Spinnach Shroom
+mAppearance=n4:{["sk"]={["eyes"]="D865FF",["cap"]="2C550A",["body"]="94677D",["spots"]="FF823A",["cap_bottom"]="D46C30"},["c"]="Horde-Black_Shroomie",["sz"]=".4"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=20
+mMinUseLevel=20
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 20<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5055
+
+[ENTRY]
+mID=2005056
+mType=5
+mDisplayName=Pet: Festershroom
+mAppearance=n4:{["sk"]={["eyes"]="0CFF66",["cap"]="A22CBF",["body"]="55143A",["spots"]="A3BF0C",["cap_bottom"]="B5D40E"},["c"]="Horde-Black_Shroomie",["sz"]=".4"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=20
+mMinUseLevel=20
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 20<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5056
+
+[ENTRY]
+mID=2005057
+mType=5
+mDisplayName=Pet: Taiga Wolf
+mAppearance=n4:{["sk"]={["fur"]="3F3F3F",["ear"]="A87764",["eye"]="00FFFF",["highlight"]="555555",["claws"]="151515",["mouth"]="7F7F7F"},["c"]="Horde-Wolf",["sz"]=".35"}
+mIcon=Icon-32-Ability-D_Wolf_Spirit.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=21
+mMinUseLevel=21
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 21<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5057
+
+[ENTRY]
+mID=2005058
+mType=5
+mDisplayName=Pet: Thundercharged Pup
+mAppearance=n4:{["sk"]={["tips"]="FFAF16",["lava"]="C7E90F",["stone"]="0B183F"},["c"]="Horde-Wolf_Flame_Goliath",["sz"]=".35"}
+mIcon=Icon-32-Ability-D_Wolf_Spirit.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=22
+mMinUseLevel=22
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 22<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5058
+
+[ENTRY]
+mID=2005059
+mType=5
+mDisplayName=Pet: Nawzelfraugh
+mAppearance=n4:{["sk"]={["base"]="AA0F0F",["rock"]="D4480C",["tongue"]="BF00BE",["teeth"]="AAAAAA",["lava"]="D4D300"},["c"]="Horde-Firefrog",["sz"]=".24"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=22
+mMinUseLevel=22
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 22<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5059
+
+[ENTRY]
+mID=2005060
+mType=5
+mDisplayName=Pet: Pookie
+mAppearance=n4:{["sk"]={["inside_ear"]="E95B9F",["fur2"]="FFD78A",["fur1"]="D4B351",["eye"]="482C6A"},["c"]="Horde-Spibear",["sz"]=".32"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=22
+mMinUseLevel=22
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 22<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5060
+
+[ENTRY]
+mID=2005061
+mType=5
+mDisplayName=Pet: Spykifraugh
+mAppearance=n4:{["sk"]={["base"]="009409",["spike"]="009494",["eye"]="AA0000",["highlight"]="AAA900",["mouth"]="BF1083"},["c"]="Horde-Spike_Toad",["sz"]=".24"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=22
+mMinUseLevel=22
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 22<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5061
+
+[ENTRY]
+mID=2005062
+mType=5
+mDisplayName=Pet: Amythest Pup
+mAppearance=n4:{["sk"]={["moss"]="3A2355",["eye"]="701AD4",["mouth"]="151515",["nose"]="7F7F54",["stone"]="FFFEA9"},["c"]="Horde-Wolf_Hill_Goliath",["sz"]=".35"}
+mIcon=Icon-32-Ability-D_Wolf_Spirit.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=23
+mMinUseLevel=23
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 23<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5062
+
+[ENTRY]
+mID=2005063
+mType=5
+mDisplayName=Pet: Blacksong
+mAppearance=n4:{["sk"]={["body"]="000000",["highlight"]="D4B30B",["mouth"]="BF0000"},["c"]="Horde-Phoenix",["sz"]=".18"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=25
+mMinUseLevel=25
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 25<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5063
+
+[ENTRY]
+mID=2005064
+mType=5
+mDisplayName=Pet: Blustersong
+mAppearance=n4:{["sk"]={["body"]="C0C3E9",["highlight"]="6D37D4",["mouth"]="BF6410"},["c"]="Horde-Phoenix",["sz"]=".18"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=25
+mMinUseLevel=25
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 25<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5064
+
+[ENTRY]
+mID=2005065
+mType=5
+mDisplayName=Pet: Blondesong
+mAppearance=n4:{["sk"]={["body"]="E9C533",["highlight"]="A0C7E9",["mouth"]="940D4D"},["c"]="Horde-Phoenix",["sz"]=".18"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=25
+mMinUseLevel=25
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 25<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5065
+
+[ENTRY]
+mID=2005066
+mType=5
+mDisplayName=Pet: Blightsong
+mAppearance=n4:{["sk"]={["body"]="91D458",["highlight"]="6A0000",["mouth"]="2A1B1B"},["c"]="Horde-Phoenix",["sz"]=".18"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=25
+mMinUseLevel=25
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 25<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5066
+
+[ENTRY]
+mID=2005067
+mType=5
+mDisplayName=Pet: Terrabull
+mAppearance=n4:{["sk"]={["horns"]="D4B32E",["head"]="1F6A24",["eyes"]="FFD70D",["shell_detail"]="6A4909",["body"]="1F6A24",["shell_1"]="57AA2C",["shell_2"]="133F15"},["c"]="Horde-Minotortoise",["sz"]=".24"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=26
+mMinUseLevel=26
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 26<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5067
+
+[ENTRY]
+mID=2005068
+mType=5
+mDisplayName=Pet: Grassflattener
+mAppearance=n4:{["sk"]={["skin_detail"]="74AA91",["horn_highlight"]="FFFED4",["horn_shade"]="E9E973",["horn_base"]="947D07",["horn_blend"]="806D7C",["skin"]="50AA56",["eye"]="464755",["skin_tip"]="949417",["horn_blend2"]="576D7F"},["c"]="Horde-Thunder_Walker",["sz"]=".28"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=28
+mMinUseLevel=28
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 28<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5068
+
+[ENTRY]
+mID=2005069
+mType=5
+mDisplayName=Pet: Icicleye
+mAppearance=n4:{["sk"]={["pupil"]="FFFD00",["flesh"]="A2FFFF",["eye"]="FFFEA9",["veins"]="00FFFF"},["c"]="Horde-Wandering_Eye",["sz"]=".13"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=30
+mMinUseLevel=30
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 30<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5069
+
+[ENTRY]
+mID=2005070
+mType=5
+mDisplayName=Pet: Fireye
+mAppearance=n4:{["sk"]={["pupil"]="58227F",["flesh"]="6A1C1C",["eye"]="D4B0D4",["veins"]="FF0000"},["c"]="Horde-Wandering_Eye",["sz"]=".13"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=30
+mMinUseLevel=30
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 30<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5070
+
+[ENTRY]
+mID=2005071
+mType=5
+mDisplayName=Pet: Slimeye
+mAppearance=n4:{["sk"]={["pupil"]="FFFD00",["flesh"]="639451",["eye"]="B3D496",["veins"]="FFD761"},["c"]="Horde-Wandering_Eye",["sz"]=".13"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=30
+mMinUseLevel=30
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 30<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5071
+
+[ENTRY]
+mID=2005072
+mType=5
+mDisplayName=Pet: Eye Dunno
+mAppearance=n4:{["sk"]={["pupil"]="BF0000",["flesh"]="274B6A",["eye"]="BFBE1E",["veins"]="33AA3A"},["c"]="Horde-Wandering_Eye",["sz"]=".13"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=30
+mMinUseLevel=30
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 30<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5072
+
+[ENTRY]
+mID=2005073
+mType=5
+mDisplayName=Pet: Lingering Wolf Spirit
+mAppearance=n4:{["sk"]={["fur"]="16052A",["eye"]="AA750E",["mouth"]="55072C",["highlight"]="FFD737",["stripe"]="FFAF16"},["c"]="Horde-Dire_Wolf",["sz"]=".35"}
+mIcon=Icon-32-Ability-D_Wolf_Spirit.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=31
+mMinUseLevel=31
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 31<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5073
+
+[ENTRY]
+mID=2005074
+mType=5
+mDisplayName=Pet: Wandering Wolf Spirit
+mAppearance=n4:{["sk"]={["fur"]="AAA937",["eye"]="5341AA",["mouth"]="55072C",["highlight"]="7D61FF",["stripe"]="8620FF"},["c"]="Horde-Dire_Wolf",["sz"]=".35"}
+mIcon=Icon-32-Ability-D_Wolf_Spirit.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=31
+mMinUseLevel=31
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 31<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5074
+
+[ENTRY]
+mID=2005075
+mType=5
+mDisplayName=Pet: Ravening Wolf Spirit
+mAppearance=n4:{["sk"]={["fur"]="8CAA8E",["eye"]="AA0000",["mouth"]="FF0000",["highlight"]="00FF0F",["stripe"]="00FF0F"},["c"]="Horde-Dire_Wolf",["sz"]=".35"}
+mIcon=Icon-32-Ability-D_Wolf_Spirit.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=31
+mMinUseLevel=31
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 31<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5075
+
+[ENTRY]
+mID=2005076
+mType=5
+mDisplayName=Pet: Fresh Shellack
+mAppearance=n4:{["sk"]={["plates"]="486A2C",["skin"]="FFD6B1",["eye_white"]="FFFFFF",["eye_pupil"]="4EFF36"},["c"]="Horde-Armored_Lizard",["sz"]=".24"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=33
+mMinUseLevel=33
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 33<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5076
+
+[ENTRY]
+mID=2005077
+mType=5
+mDisplayName=Pet: Lush Shellack
+mAppearance=n4:{["sk"]={["plates"]="34AA24",["skin"]="BFA129",["eye_white"]="FFFFFF",["eye_pupil"]="08FFB7"},["c"]="Horde-Armored_Lizard",["sz"]=".24"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=33
+mMinUseLevel=33
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 33<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5077
+
+[ENTRY]
+mID=2005078
+mType=5
+mDisplayName=Pet: Muddy Shellack
+mAppearance=n4:{["sk"]={["plates"]="3F200E",["skin"]="527F55",["eye_white"]="FFFFFF",["eye_pupil"]="FF560E"},["c"]="Horde-Armored_Lizard",["sz"]=".24"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=33
+mMinUseLevel=33
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 33<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5078
+
+[ENTRY]
+mID=2005079
+mType=5
+mDisplayName=Pet: Gem Lurer
+mAppearance=n4:{["sk"]={["gem"]="4013BF",["moss"]="7F0B0B",["stick"]="246A0A",["nugget"]="4F17E9",["stone"]="0E2A04"},["c"]="Horde-Megachomper",["sz"]=".17"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=35
+mMinUseLevel=35
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 35<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5079
+
+[ENTRY]
+mID=2005080
+mType=5
+mDisplayName=Pet: Pet Rock
+mAppearance=n4:{["sk"]={["gem"]="00E90E",["moss"]="672894",["stick"]="AA351D",["nugget"]="BF6410",["stone"]="2C3B55"},["c"]="Horde-Megachomper",["sz"]=".18"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=35
+mMinUseLevel=35
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 35<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5080
+
+[ENTRY]
+mID=2005081
+mType=5
+mDisplayName=Pet: Cactus Nocturne
+mAppearance=n4:{["sk"]={["base"]="0D092A",["needles"]="FF0000",["eyes"]="FF0000",["flower"]="FFFE53"},["c"]="Horde-Walking_Cactus",["sz"]=".28"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=37
+mMinUseLevel=37
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 37<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5081
+
+[ENTRY]
+mID=2005082
+mType=5
+mDisplayName=Pet: Cactus Frigido
+mAppearance=n4:{["sk"]={["base"]="1FA4BF",["needles"]="202DFF",["eyes"]="56FF19",["flower"]="D88EFF"},["c"]="Horde-Walking_Cactus",["sz"]=".28"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=37
+mMinUseLevel=37
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 37<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5082
+
+[ENTRY]
+mID=2005083
+mType=5
+mDisplayName=Pet: White Wolf
+mAppearance=n4:{["sk"]={["fur"]="BFBFBF",["ear"]="553636",["eye"]="00AA0A",["highlight"]="766B6D",["claws"]="553636",["mouth"]="553636"},["c"]="Horde-Wolf",["sz"]=".35"}
+mIcon=Icon-32-Ability-D_Wolf_Spirit.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=40
+mMinUseLevel=40
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 40<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5083
+
+[ENTRY]
+mID=2005084
+mType=5
+mDisplayName=Pet: Amber Wolf
+mAppearance=n4:{["sk"]={["eye"]="FF0000",["ice"]="AA8F25"},["c"]="Horde-Wolf_Ice_Goliath",["sz"]=".35"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=45
+mMinUseLevel=45
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 45<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5084
+
+[ENTRY]
+mID=2005085
+mType=5
+mDisplayName=Pet: Frigidog
+mAppearance=n4:{["sk"]={["eye"]="D46F12",["ice"]="0B7F7F"},["c"]="Horde-Wolf_Ice_Goliath",["sz"]=".35"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=45
+mMinUseLevel=45
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 45<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5085
+
+[ENTRY]
+mID=2005086
+mType=5
+mDisplayName=Pet: Craggy Crawler
+mAppearance=n4:{["sk"]={["snow"]="944D0D",["skin"]="551717",["fur"]="BFA129",["nails"]="7F420B",["horn"]="BFA129"},["c"]="Horde-Glacial_Walker",["sz"]=".22"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=46
+mMinUseLevel=46
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 46<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5086
+
+[ENTRY]
+mID=2005087
+mType=5
+mDisplayName=Pet: Earthen Ruby Dragon
+mAppearance=n4:{["sk"]={["base"]="1E3F20",["teeth"]="FFFFFF",["eye"]="D4480C",["horn"]="AA1700",["wing1"]="550000",["wing2"]="940000"},["c"]="Boss-Black_Dragon",["sz"]=".17"}
+mIcon=Icon-32-Ability-D_Damnation.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=50
+mMinUseLevel=50
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 50<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5087
+
+[ENTRY]
+mID=2005088
+mType=5
+mDisplayName=Pet: Frozen Bone Dragon
+mAppearance=n4:{["sk"]={["bone"]="8BAAAA",["plate"]="1E203F",["claw"]="000115",["wing"]="5056AA",["horn"]="7981FF"},["c"]="Boss-Anexima",["sz"]=".17"}
+mIcon=Icon-32-Bones_Dragon1.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=50
+mMinUseLevel=50
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 50<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5088
+
+[ENTRY]
+mID=2005089
+mType=5
+mDisplayName=Pet: Obsidian Dragon
+mAppearance=n4:{["sk"]={["wing"]="FFFED4",["mouth"]="6A2112",["belly"]="AA8F25",["base"]="120815",["eye"]="FF1685",["horns"]="FFFED4",["claws"]="AA8F25",["teeth"]="FFFFFF"},["c"]="Boss-Sand_Dragon",["sz"]=".17"}
+mIcon=Icon-32-Ability-D_Damnation.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=50
+mMinUseLevel=50
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 50<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5089
+
+[ENTRY]
+mID=2005090
+mType=5
+mDisplayName=Pet: Forestdrakeling
+mAppearance=n4:{["sk"]={["base"]="2C9433",["teeth"]="D4D48C",["eye"]="AA0000",["horn"]="6A6A46",["wing1"]="003F03",["wing2"]="39BF41"},["c"]="Boss-Black_Dragon",["sz"]=".17"}
+mIcon=Icon-32-Ability-D_Damnation.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=50
+mMinUseLevel=50
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 50<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5090
+
+[ENTRY]
+mID=2005091
+mType=5
+mDisplayName=Pet: Draginon
+mAppearance=n4:{["sk"]={["bone"]="947D38",["plate"]="8F78AA",["claw"]="6A3618",["wing"]="326A35",["horn"]="6A4343"},["c"]="Boss-Anexima",["sz"]=".17"}
+mIcon=Icon-32-Bones_Dragon1.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=50
+mMinUseLevel=50
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 50<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5091
+
+[ENTRY]
+mID=2005092
+mType=5
+mDisplayName=Pet: Indigold Sanddrake
+mAppearance=n4:{["sk"]={["wing"]="944D0D",["mouth"]="E93F3F",["belly"]="BF6410",["base"]="380D6A",["eye"]="009409",["horns"]="947D67",["claws"]="BFA085",["teeth"]="D4D4D4"},["c"]="Boss-Sand_Dragon",["sz"]=".17"}
+mIcon=Icon-32-Ability-D_Damnation.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=50
+mMinUseLevel=50
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 50<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5092
+
+[ENTRY]
+mID=2005093
+mType=5
+mDisplayName=Pet: Mini Grim
+mAppearance=n4:{["c"]="Boss-Ice_Wyrm",["sz"]=".17"}
+mIcon=Icon-32-Ability-D_Damnation.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=50
+mMinUseLevel=50
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 50<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5093
+
+[ENTRY]
+mID=2005094
+mType=5
+mDisplayName=Pet: Emerald Dreamfly
+mAppearance=n4:{["sk"]={["head_wing"]="00FF0F",["wing5"]="151515",["wing4"]="00FF0F",["wing3"]="151515",["carapace"]="151515",["wing1"]="151515",["wing2"]="FFFFFF"},["c"]="Horde-Dreamfly",["sz"]=".2"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=5
+mMinUseLevel=5
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 5<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5094
+
+[ENTRY]
+mID=2005095
+mType=5
+mDisplayName=Pet: Sunburn Stinger
+mAppearance=n4:{["sk"]={["leg_tips"]="FFD737",["spots"]="151515",["mandibles"]="7F0000",["body"]="BFA129",["body_detail"]="BF6410",["stripes"]="D40000",["claws"]="7F0000",["underbelly"]="7F0000"},["c"]="Horde-Scorpion",["sz"]=".27"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=6
+mMinUseLevel=6
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 6<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5095
+
+[ENTRY]
+mID=2005096
+mType=5
+mDisplayName=Pet: Evergreen Stag
+mAppearance=n4:{["sk"]={["antlers"]="00FF0F",["hooves"]="AE6AFF",["eyes"]="AE6AFF",["body"]="151515",["tail"]="00FF0F",["chest"]="00D40D"},["c"]="Horde-Stag",["sz"]=".4"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=13
+mMinUseLevel=13
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 13<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5096
+
+[ENTRY]
+mID=2005097
+mType=5
+mDisplayName=Pet: Pray's Turkatrice
+mAppearance=n4:{["sk"]={["feet"]="949400",["wing"]="BFA10A",["beak"]="BFA10A",["body"]="43107F",["neck"]="8620FF",["eye"]="8620FF",["tailgrey"]="107F16",["spines"]="107F16",["chest"]="BFA10A"},["c"]="Horde-Turkatrice",["sz"]=".5"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=15
+mMinUseLevel=15
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 15<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5097
+
+[ENTRY]
+mID=2005098
+mType=5
+mDisplayName=Pet: Nighter Lighter
+mAppearance=n4:{["a"]=[{["type"]="Item-Particle-Salamander_Flame",["node"]="tail"}],["c"]="Horde-Salamander",["sk"]={["plates"]="151515",["skin"]="2A0000",["tail2"]="000000",["tail1"]="000000"},["sz"]=".35"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=16
+mMinUseLevel=16
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 16<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5098
+
+[ENTRY]
+mID=2005099
+mType=5
+mDisplayName=Pet: Purple Nightmare
+mAppearance=n4:{["sk"]={["horn"]="BFBFBF",["eyes"]="BF0000",["tattoo"]="BF0000",["body"]="292055"},["c"]="Horde-Unikorn",["sz"]=".4"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=21
+mMinUseLevel=21
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 21<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5099
+
+[ENTRY]
+mID=2005100
+mType=5
+mDisplayName=Pet: Green Nightmare
+mAppearance=n4:{["sk"]={["horn"]="BFBFBF",["eyes"]="BFA129",["tattoo"]="BFA129",["body"]="19551D"},["c"]="Horde-Unikorn",["sz"]=".4"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=21
+mMinUseLevel=21
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 21<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5100
+
+[ENTRY]
+mID=2005101
+mType=5
+mDisplayName=Pet: Ruby Oreo
+mAppearance=n4:{["sk"]={["fire6"]="AA0000",["base"]="3F0000",["fire1"]="550000",["fire3"]="7F0000",["eye"]="FFFFFF",["fire2"]="6A0000",["fire5"]="940000",["fire4"]="FFFFFF"},["c"]="Horde-Elemental_Fire",["sz"]=".25"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=22
+mMinUseLevel=22
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 22<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5101
+
+[ENTRY]
+mID=2005102
+mType=5
+mDisplayName=Pet: Emerald Oreo
+mAppearance=n4:{["sk"]={["fire6"]="00AA0A",["base"]="003F03",["fire1"]="005505",["fire3"]="007F07",["eye"]="FFFFFF",["fire2"]="006A06",["fire5"]="009409",["fire4"]="FFFFFF"},["c"]="Horde-Elemental_Fire",["sz"]=".25"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=22
+mMinUseLevel=22
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 22<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5102
+
+[ENTRY]
+mID=2005103
+mType=5
+mDisplayName=Pet: Amythest Oreo
+mAppearance=n4:{["sk"]={["fire6"]="3911AA",["base"]="15063F",["fire1"]="1C0855",["fire3"]="2B0C7F",["eye"]="FFFFFF",["fire2"]="240A6A",["fire5"]="320E94",["fire4"]="FFFFFF"},["c"]="Horde-Elemental_Fire",["sz"]=".25"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=22
+mMinUseLevel=22
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 22<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5103
+
+[ENTRY]
+mID=2005104
+mType=5
+mDisplayName=Pet: Opal Oreo
+mAppearance=n4:{["sk"]={["fire6"]="8620FF",["base"]="FF0000",["fire1"]="FF8516",["fire3"]="00FF0F",["eye"]="FF00FD",["fire2"]="FFFD00",["fire5"]="000FFF",["fire4"]="FFFFFF"},["c"]="Horde-Elemental_Fire",["sz"]=".25"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=22
+mMinUseLevel=22
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 22<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5104
+
+[ENTRY]
+mID=2005105
+mType=5
+mDisplayName=Pet: Golden Rot-Weiler
+mAppearance=n4:{["sk"]={["bone"]="FFD6B1",["base"]="BFA129",["blood"]="7F0000",["eye1"]="FF560E",["nose"]="3F0000",["eye2"]="073B94"},["c"]="Horde-Undead_Wolf",["sz"]=".35"}
+mIcon=Icon-32-Ability-D_Wolf_Spirit.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=25
+mMinUseLevel=25
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 25<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5105
+
+[ENTRY]
+mID=2005106
+mType=5
+mDisplayName=Pet: Spectral Rot-Weiler
+mAppearance=n4:{["sk"]={["bone"]="57DBFF",["base"]="0A0F55",["blood"]="D4B30B",["eye1"]="00FF0F",["nose"]="2B6D7F",["eye2"]="FFD70D"},["c"]="Horde-Undead_Wolf",["sz"]=".35"}
+mIcon=Icon-32-Ability-D_Wolf_Spirit.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=25
+mMinUseLevel=25
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 25<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5106
+
+[ENTRY]
+mID=2005107
+mType=5
+mDisplayName=Pet: Hallowed Rot-Weiler
+mAppearance=n4:{["sk"]={["bone"]="AE6AFF",["base"]="FF560E",["blood"]="151515",["eye1"]="E90000",["nose"]="AE6AFF",["eye2"]="FF7EFE"},["c"]="Horde-Undead_Wolf",["sz"]=".35"}
+mIcon=Icon-32-Ability-D_Wolf_Spirit.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=25
+mMinUseLevel=25
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 25<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5107
+
+[ENTRY]
+mID=2005108
+mType=5
+mDisplayName=Pet: Chillainous Stag
+mAppearance=n4:{["sk"]={["fur"]="00FFFF",["hooves"]="00FFFF",["main"]="D0FFFF",["markings"]="001515",["horns"]="FFFFFF",["eyes"]="FF0000",["nose"]="BF0000",["teeth"]="FFFFFF"},["c"]="Horde-Devil_Stag",["sz"]=".4"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=40
+mMinUseLevel=40
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 40<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5108
+
+[ENTRY]
+mID=2005109
+mType=5
+mDisplayName=Pet: Charrming Stag
+mAppearance=n4:{["sk"]={["fur"]="FF560E",["hooves"]="FF560E",["main"]="FFD6B1",["markings"]="FF0000",["horns"]="FFFFFF",["eyes"]="FFD737",["nose"]="D4B32E",["teeth"]="FFFFFF"},["c"]="Horde-Devil_Stag",["sz"]=".4"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=40
+mMinUseLevel=40
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 40<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5109
+
+[ENTRY]
+mID=2005110
+mType=5
+mDisplayName=Pet: Chocolaterror Stag
+mAppearance=n4:{["sk"]={["fur"]="7F2B07",["hooves"]="7F2B07",["main"]="6A3618",["markings"]="151515",["horns"]="FFFFFF",["eyes"]="56FF19",["nose"]="48D415",["teeth"]="FFFFFF"},["c"]="Horde-Devil_Stag",["sz"]=".4"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=40
+mMinUseLevel=40
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 40<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5110
+
+[ENTRY]
+mID=2005111
+mType=5
+mDisplayName=Pet: Mushy the Snowshroom
+mAppearance=n4:{["sk"]={["cap_highlight"]="4DAAAA",["cap"]="D4D4D4",["moss"]="73FFFF",["undercap"]="AA0F58",["eye"]="FF1685",["body"]="D4D4D4",["body_highlight"]="4DAAAA",["tips"]="73FFFF"},["c"]="Boss-The_Lost_One",["sz"]=".12"}
+mIcon=Icon-32-Furry_Foot.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=44
+mMinUseLevel=44
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 44<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5111
+
+[ENTRY]
+mID=2005112
+mType=5
+mDisplayName=Pet: Mini Fengarian
+mAppearance=n4:{["c"]="Boss-Dragon",["sz"]=".17"}
+mIcon=Icon-32-Ability-D_Damnation.png|Icon-32-BG-Grey.png
+mIvType1=1
+mIvMax1=1
+mLevel=50
+mMinUseLevel=50
+mBindingType=1
+mValue=1
+mFlavorText=Minimum level required: 50<br>Double click to summon. If a pet already exists, it will be removed.
+mQualityLevel=2
+Params=pet=5112
+

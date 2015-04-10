@@ -1,0 +1,15 @@
+[ENTRY]
+ID=10664
+ACCOUNTID=709
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=pattycakes
+GroveName=pattycakes
+WarpName=pattycakes1
+DropRateProfile=standard
+Grove=1
+EnvironmentCycle=0
+BuildPermission=account,709,0,0,3,3
+DefLoc=2958,260,3821
+

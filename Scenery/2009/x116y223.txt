@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151012663
+Asset=CL-Sick-Forest5#CL-Sick-Forest5
+Name=9
+Pos=87635.8,189.404,167928
+Orient=0,0,0,1
+Scale=1.325,1.325,1.325
+Flags=1
+

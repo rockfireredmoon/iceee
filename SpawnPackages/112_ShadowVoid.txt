@@ -1,0 +1,21 @@
+[ENTRY]
+Name=dng_shvo_obj_summon
+Spawn=3633,100  ; Mysterious Crystal (1)
+
+[ENTRY]
+Name=dng_shvo_boss
+Spawn=3630,100  ; Void (52)
+
+[ENTRY]
+Name=dng_shvo_minion
+Spawn=3634,100  ; Portal to the Void (1)
+
+[ENTRY]
+Name=dng_shvo_obj_exit
+Spawn=3635,100  ; Return to the World (1)
+
+[ENTRY]
+Name=dng_shvo_Hell_Twelve
+Flags=16
+Spawn=3636,100  ; Hell "Twelve" (52)
+

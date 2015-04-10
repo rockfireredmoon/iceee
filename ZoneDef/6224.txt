@@ -1,0 +1,15 @@
+[ENTRY]
+ID=6224
+ACCOUNTID=154
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=orderofthemoon
+GroveName=orderofthemoon
+WarpName=orderofthemoon1
+DropRateProfile=standard
+Grove=1
+EnvironmentCycle=1
+BuildPermission=account,154,0,0,3,3
+DefLoc=2958,260,3821
+

@@ -1,0 +1,14 @@
+[ENTRY]
+Name=1_faerie_sworn_tree_StepTo_Isa
+Spawn=84,50  ;Thrall (20) at 0
+Spawn=86,50  ;Helot (20) at 0
+
+[ENTRY]
+Name=1a_dng_sh_obji_isaTiriaLewt
+Spawn=2727,100  ;Isa Tiria's Treasure (from cdef file)
+
+[ENTRY]
+Name=1_fearie_sworn_isa_tiria_20
+Spawn=88,100  ;Isa Tiria (20) at 0
+
+

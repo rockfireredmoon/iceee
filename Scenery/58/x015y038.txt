@@ -1,0 +1,14 @@
+[ENTRY]
+ID=973079598
+Asset=Bldg-Earthend_Wall1?ATS=ATS-Roman
+Pos=15530.2,1321.06,38035.8
+Orient=0,0.476433,0,-0.879211
+Scale=1,1,1
+
+[ENTRY]
+ID=973079600
+Asset=Bldg-Earthend_Tower1?ATS=ATS-Roman
+Pos=15620.1,1306.64,38158.6
+Orient=0,0.445376,0,-0.895344
+Scale=1,1,1
+

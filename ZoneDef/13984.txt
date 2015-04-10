@@ -1,0 +1,13 @@
+[ENTRY]
+ID=13984
+ACCOUNTID=1124
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=srazevedo
+GroveName=srazevedo
+WarpName=srazevedo1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

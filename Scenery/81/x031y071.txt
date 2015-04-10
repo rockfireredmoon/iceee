@@ -1,0 +1,17 @@
+[ENTRY]
+ID=1358957470
+Asset=Manipulator-SpawnPoint
+Pos=31020.5,151.058,71149
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=1a_crystalSlugCamp01_general
+outerRadius=1
+
+[ENTRY]
+ID=1358962731
+Asset=Effects#Par-Waves-1-Emitter
+Pos=31530.1,62.6021,71363
+Orient=0,0.543835,0,0.839192
+Scale=3,3,3
+Flags=1
+

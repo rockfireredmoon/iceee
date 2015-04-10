@@ -1,0 +1,38 @@
+#name 4_mage_30
+
+; 5029 - Athena's Gift, 5 will, buff
+; 5040 - Mage Armor, 5 will, buff
+; 5173 - Firebolt, 3 will, 1 wcharge
+; 5230 - Pyro Blast, 1 will, need 1-3 wcharge
+; 32760 - ranged melee
+; 32766 - melee
+
+set var 0
+use 5029
+use 5040
+
+:begin
+call waitfortarget
+use 32760
+
+getwillcharge var
+if var >= 3
+  use 5230
+  wait 1000
+endif
+
+getwill var
+if var >= 3
+  use 5173
+  wait 2000
+endif
+
+goto begin
+
+:waitfortarget
+has_target var
+if var = 0
+  wait 2000
+  goto waitfortarget
+endif
+return

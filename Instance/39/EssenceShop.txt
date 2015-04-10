@@ -1,0 +1,13 @@
+; Frietz Splithoof's Treasure
+[ENTRY]
+CreatureDefID=2728
+EssenceID=21285
+Item=5464,1
+Item=5422,1
+Item=143430,1
+Item=143446,1
+Item=143489,1
+Item=5397,1
+Item=5443,1
+Item=143473,1
+

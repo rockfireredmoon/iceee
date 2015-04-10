@@ -1,0 +1,13 @@
+[ENTRY]
+ID=13248
+ACCOUNTID=1032
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=zif
+GroveName=zif
+WarpName=zif1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

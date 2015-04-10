@@ -1,0 +1,8 @@
+[ENTRY]
+ID=151058590
+Asset=Prop-Acacia_Tree#Prop-Acacia_Tree5
+Name=9
+Pos=35335.1,1206.7,75705.8
+Orient=0,0,0,1
+Scale=0.65,0.65,0.65
+

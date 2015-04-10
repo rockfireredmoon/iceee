@@ -1,0 +1,7 @@
+[ENTRY]
+ID=822084722
+Asset=Prop-Pillar
+Pos=2980.76,180,6026.32
+Orient=0,0,0,1
+Scale=4,4,4
+

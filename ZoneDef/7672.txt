@@ -1,0 +1,13 @@
+[ENTRY]
+ID=7672
+ACCOUNTID=335
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=ironforge
+GroveName=ironforge
+WarpName=ironforge1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

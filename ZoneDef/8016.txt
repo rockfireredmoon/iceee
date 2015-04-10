@@ -1,0 +1,15 @@
+[ENTRY]
+ID=8016
+ACCOUNTID=378
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=ForestNight
+ShardName=arakou
+GroveName=arakou
+WarpName=arakou1
+DropRateProfile=standard
+Grove=1
+EnvironmentCycle=0
+BuildPermission=account,378,0,0,3,3
+DefLoc=5001,333,5687
+

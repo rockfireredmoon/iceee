@@ -1,0 +1,13 @@
+[ENTRY]
+ID=6960
+ACCOUNTID=246
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=stagwarrior
+GroveName=stagwarrior
+WarpName=stagwarrior1
+Grove=1
+EnvironmentCycle=1
+DefLoc=2958,260,3821
+

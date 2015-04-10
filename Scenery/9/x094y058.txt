@@ -1,0 +1,16 @@
+[ENTRY]
+ID=151019011
+Asset=Prop-Skrill_Mound
+Pos=70816,1331.24,44174
+Orient=0,-0.174109,0,0.984726
+Scale=1.3,1.3,1.3
+Flags=1
+
+[ENTRY]
+ID=151040124
+Asset=Prop-Skrill_Mound
+Pos=71058,1178.3,44057
+Orient=0,-0.764329,0,0.644826
+Scale=3.075,3.075,3.075
+Flags=1
+

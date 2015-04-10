@@ -1,0 +1,8 @@
+[ENTRY]
+ID=151028054
+Asset=Prop-Anubian_Watchtower
+Pos=19330.7,331.739,95264
+Orient=0,0,0,1
+Scale=3.5,3.5,3.5
+Flags=1
+

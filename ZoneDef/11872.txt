@@ -1,0 +1,13 @@
+[ENTRY]
+ID=11872
+ACCOUNTID=860
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=crimsonsenshi
+GroveName=crimsonsenshi
+WarpName=crimsonsenshi1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

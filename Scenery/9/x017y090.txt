@@ -1,0 +1,16 @@
+[ENTRY]
+ID=151021613
+Asset=Manipulator-SpawnPoint
+Pos=13232,162.905,67590
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=4_hwo_wilds_33_34
+outerRadius=10
+
+[ENTRY]
+ID=151054637
+Asset=Par-Waves-1-Emitter
+Pos=13117.2,60.8083,68076
+Orient=0,-0.0268119,0,0.999641
+Scale=3,3,3
+

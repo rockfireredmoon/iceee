@@ -1,0 +1,17 @@
+[ENTRY]
+ID=151029247
+Asset=Manipulator-SpawnPoint
+Pos=61508,825.422,61430
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=11_dth_wilds_42_43
+outerRadius=10
+
+[ENTRY]
+ID=151040316
+Asset=Prop-Boulder_Scary#Prop-Boulder_Scary5
+Pos=61923.4,833.771,61328
+Orient=-0.671747,-0.73181,0.0927965,0.0678149
+Scale=1.725,1.725,1.725
+Flags=1
+

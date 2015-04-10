@@ -1,0 +1,118 @@
+[ENTRY]
+Name=1a_dng_bt_archmage_vollon_m_20
+Spawn=114,100  ;Sneath the Betrayer (20) at 0
+
+[ENTRY]
+Name=1a_dng_bt_obji_VollonLewt
+Spawn=1856,100  ;Sneath's Treasure (1) at 0
+
+[ENTRY]
+Name=entrance_BrokenTowerFloor2_z1
+Spawn=1868,100  ;Second Floor (1) at 0
+
+[ENTRY]
+Name=1a_dng_bt_gearheart_d_20
+Spawn=1591,100  ;Gearheart (20) at 0
+
+[ENTRY]
+Name=entrance_BrokenTowerFloor3_z1
+Spawn=1869,100  ;Third Floor (1) at 0
+
+[ENTRY]
+Name=1a_dng_bt_Cognoggin_d_20
+Spawn=1592,100  ;Cognoggin (20) at 0
+
+[ENTRY]
+Name=entrance_BrokenTowerFloor4_z1
+Spawn=1870,100  ;Fourth Floor (1) at 0
+
+[ENTRY]
+Name=1a_dng_bt_Sprocketina_r_20
+Spawn=1880,100  ;Sprocketina (20) at 0
+
+[ENTRY]
+Name=entrance_BrokenTowerFloor5_z1
+Spawn=1871,100  ;Fifth Floor (1) at 0
+
+[ENTRY]
+Name=1a_dng_bt_Cauldronboil_m_20
+Spawn=1594,100  ;Antioss (20) at 0
+
+[ENTRY]
+Name=entrance_BrokenTowerFloor6_z1
+Spawn=1872,100  ;Sixth Floor (1) at 0
+
+[ENTRY]
+Name=1a_dng_bt_Cauldronbubble_m_20
+Spawn=1595,100  ;Antioll (20) at 0
+
+[ENTRY]
+Name=1a_dng_bt_Whackonomicon_r_20
+Spawn=1881,100  ;Whackonomicon (20) at 0
+
+[ENTRY]
+Name=entrance_BrokenTowerFloor7_z1
+Spawn=1873,100  ;Seventh Floor (1) at 0
+
+[ENTRY]
+Name=entrance_BrokenTowerFloor8_z1
+Spawn=1874,100  ;Eighth Floor (1) at 0
+
+[ENTRY]
+Name=1a_dng_bt_Salabim_m_20
+Spawn=1593,100  ;Salabim (20) at 0
+
+[ENTRY]
+Name=entrance_BrokenTowerFloor9_z1
+Spawn=1875,100  ;Ninth Floor (1) at 0
+
+[ENTRY]
+Name=1a_dng_bt_Wand_m_20
+Spawn=1596,100  ;Enchanted Wand (20) at 125
+
+[ENTRY]
+Name=entrance_BrokenTowerFloor10_z1
+Spawn=1876,100  ;Tenth Floor (1) at 0
+
+[ENTRY]
+Name=1a_dng_bt_Hat_m_20
+Spawn=1597,100  ;Enchanted Hat (20) at 0
+
+[ENTRY]
+Name=entrance_BrokenTowerFloor11_z1
+Spawn=1877,100  ;Eleventh Floor (1) at 0
+
+[ENTRY]
+Name=1a_dng_bt_Staff_m_20
+Spawn=1598,100  ;Enchanted Armor (20) at 0
+
+[ENTRY]
+Name=1a_dng_bt_front
+Shares=30
+Spawn=1581,10  ;Gearloose Clockwork (19) at 0
+Spawn=1582,10  ;Gearloose Clockwork (20) at 0
+Spawn=1583,10  ;Footloose Footnote (19) at 5
+
+[ENTRY]
+Name=1a_dng_bt_back
+Spawn=1589,25  ;Giant Darkhare (19) at 0
+Spawn=1590,25  ;Giant Darkhare (20) at 0
+Spawn=1583,25  ;Footloose Footnote (19) at 5
+Spawn=1584,25  ;Footloose Footnote (20) at 6
+
+[ENTRY]
+Name=1a_dng_bt_boss
+Shares=60
+Spawn=1584,10  ;Footloose Footnote (20) at 0
+Spawn=1585,10  ;Runaway Armor (19) at 0
+Spawn=1586,10  ;Runaway Armor (20) at 0
+Spawn=1587,10  ;Runaway Weapon (19) at 0
+Spawn=1588,10  ;Runaway Weapon (20) at 0
+Spawn=1590,10  ;Giant Darkhare (20) at 0
+
+[ENTRY]
+Name=1a_dng_bt_Mix_20
+Spawn=1582,25  ;Gearloose Clockwork (20) at 0
+Spawn=1584,25  ;Footloose Footnote (20) at 0
+Spawn=1588,25  ;Runaway Weapon (20) at 0
+Spawn=1590,25  ;Giant Darkhare (20) at 0

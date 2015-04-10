@@ -1,0 +1,17 @@
+[ENTRY]
+ID=151043776
+Asset=Prop-Boulder_Arid2
+Name=9
+Pos=84527.9,230.162,161353
+Orient=0,0,0,1
+Scale=5.5,5.5,5.5
+
+[ENTRY]
+ID=151044280
+Asset=Forest?d=0.9&amp;s=123549&amp;sz=900
+Name=9
+Pos=84106.2,287.121,161761
+Orient=0,-0.292261,0,-0.956339
+Scale=0.875,0.875,0.875
+Flags=1
+

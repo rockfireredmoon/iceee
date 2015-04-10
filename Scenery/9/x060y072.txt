@@ -1,0 +1,8 @@
+[ENTRY]
+ID=150999353
+Asset=CL-Plains_Bush1#CL-Plains_Bush1
+Pos=45357.8,384.258,54543
+Orient=0,0,0,1
+Scale=1,1,1
+Flags=1
+

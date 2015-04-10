@@ -1,0 +1,13 @@
+[ENTRY]
+ID=5952
+ACCOUNTID=120
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=snowshq
+GroveName=snowshq
+WarpName=snowshq1
+Grove=1
+EnvironmentCycle=1
+DefLoc=2958,260,3821
+

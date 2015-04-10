@@ -1,0 +1,16 @@
+[ENTRY]
+ID=151048836
+Asset=Prop-Dock3#Prop-Dock3
+Name=9
+Pos=48661.8,37.2682,137715
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
+ID=151048838
+Asset=Prop-Dock3
+Name=9
+Pos=48722.6,37.2682,137715
+Orient=0,0,0,1
+Scale=1,1,1
+

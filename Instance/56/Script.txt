@@ -1,0 +1,277 @@
+#name Wailing_Crypt_Instance
+#speed 100
+#queue_jumps call
+#flag report_all 1
+
+#symbol CDEF_WAILER 1259
+
+#location LOC_WAILER_ROOM  1859 2702  2393 3234
+#location_br LOC_BRAZIER_1  1916 3053 140
+#location_br LOC_BRAZIER_2  1916 2874 140
+
+;quick warp coords for boss room: /warp 2100 2900
+
+set SEARCHARG 0
+set ITERATOR 0
+set TEMPRES 0
+set TEMPSIZE 0
+set TEMPCID 0
+set TEMPCDEF 0
+set MESG 0
+
+set TEMP 0
+set TEMP_TARGET 0
+
+set CID_WAILER 0
+set BRAZIER_1_RANGE 0
+set BRAZIER_2_RANGE 0
+
+set HEALTH_80 0
+set HEALTH_60 0
+set HEALTH_40 0
+set HEALTH_20 0
+
+; Just need this label, the entry point for instance scripts.
+:init
+	queue_event "eventWailerSearch" 5000
+
+:main
+	exec_queue
+	wait 100
+	goto main
+
+
+:onKill_1259
+	set HEALTH_80 0
+	set HEALTH_60 0
+	set HEALTH_40 0
+	set HEALTH_20 0
+	print "Killed!"
+	call killMinions
+	return
+
+
+:findResultArrayCDEF
+	pop SEARCHARG
+	set ITERATOR 0
+	iarrsize RESULTARRAY TEMPSIZE
+	if ITERATOR < TEMPSIZE
+  		iarrvalue RESULTARRAY ITERATOR TEMPCID
+		get_cdef TEMPCID TEMPRES
+		if TEMPRES = SEARCHARG
+			pushvar TEMPCID
+			return
+  		endif
+  		inc ITERATOR
+  		recompare
+	endif
+	pushint 0
+	return
+
+:activateMinions
+	pop TARGET
+	print "!!target is"
+	printvar TARGET
+	print "!!wailer is"
+	printvar CID_WAILER
+	set ITERATOR 0
+	iarrsize RESULTARRAY TEMPSIZE
+	if ITERATOR < TEMPSIZE
+	  print "!!TEMPCID is"
+	  printvar TEMPCID
+	  iarrvalue RESULTARRAY ITERATOR TEMPCID
+	  if TEMPCID != CID_WAILER
+	      if MESG = 0
+	          chat "conRed" "Instance" "Come my guardians, deal with these pests!"
+	      	  set MESG 1
+	      endif
+	      get_cdef TEMPCID TEMPRES
+	      print "!!doing 1 target"
+	      printvar TEMPRES
+	      set_target TEMPCID TARGET
+	      print "!!jumping 1 target"
+		  ai_script_jump TEMPCID "tryMelee"
+		  print "!!incing 1 target"
+	  endif
+	  inc ITERATOR
+	  recompare
+	endif
+	return
+
+:findResultArrayCID
+	pop SEARCHARG
+	set ITERATOR 0
+	iarrsize RESULTARRAY TEMPSIZE
+	if ITERATOR < TEMPSIZE
+	  iarrvalue RESULTARRAY ITERATOR TEMPCID
+	  if TEMPCID = SEARCHARG
+	    pushvar TEMPCID
+	    return
+	  endif
+	  inc ITERATOR
+	  recompare
+	endif
+	pushint 0
+	return
+
+
+:eventWailerSearch
+	print ":eventWailerSearch"
+	if CID_WAILER != 0
+	  return
+	endif
+	scan_npc_cid LOC_WAILER_ROOM RESULTARRAY
+	printvar CDEF_WAILER
+	printintarr RESULTARRAY
+	pushint CDEF_WAILER
+	call findResultArrayCDEF
+	pop CID_WAILER
+	
+	if CID_WAILER = 0
+	  print ":no wailer!"
+	  queue_event "eventWailerSearch" 5000
+	  return
+	else
+	  print ":found wailer!"
+	  queue_event "eventWailerShield" 2000
+	  queue_event "eventWailerHealth" 2000
+	endif
+	return
+
+
+:eventWailerShield
+	if CID_WAILER = 0
+	  return
+	endif
+	
+	scan_npc_cid LOC_BRAZIER_1 RESULTARRAY
+	pushint CDEF_WAILER
+	call findResultArrayCID
+	pop BRAZIER_1_RANGE
+	
+	scan_npc_cid LOC_BRAZIER_2 RESULTARRAY
+	pushint CDEF_WAILER
+	call findResultArrayCID
+	pop BRAZIER_2_RANGE
+	
+	set TEMP 0
+	if BRAZIER_1_RANGE = 0
+	  inc TEMP
+	endif
+	if BRAZIER_2_RANGE = 0
+	  inc TEMP
+	endif
+	if TEMP > 0
+	  call tryCastShield
+	endif
+	
+	queue_event "eventWailerShield" 3000
+	  
+	return
+
+
+:eventWailerHealth
+	if CID_WAILER = 0
+	  return
+	endif
+	print ":wailer healther!"
+	get_health_percent CID_WAILER TEMP
+	printvar TEMP
+	printvar CID_WAILER
+	printvar HEALTH_80
+	
+	if HEALTH_80 = 0
+	  if TEMP <= 80
+	    print ":at 80!"
+	    call spawnMinions
+	    set HEALTH_80 1
+	  endif
+	  queue_event "eventWailerHealth" 3000
+	  return
+	else
+	  if TEMP = 100
+	      call killMinions
+	      set HEALTH_80 0
+	  endif
+	endif
+	
+	if HEALTH_60 = 0
+	  if TEMP <= 60
+	    call spawnMinions
+	    set HEALTH_60 1
+	  endif  
+	  queue_event "eventWailerHealth" 3000
+	  return
+	else
+	  if TEMP = 100
+	      call killMinions
+	      set HEALTH_80 0
+	      set HEALTH_60 0
+	  endif
+	endif
+	
+	if HEALTH_40 = 0
+	  if TEMP <= 40
+	    call spawnMinions
+	    set HEALTH_40 1
+	  endif
+	  queue_event "eventWailerHealth" 3000
+	  return
+	else
+	  if TEMP = 100
+	      call killMinions
+	      set HEALTH_80 0
+	      set HEALTH_60 0
+	      set HEALTH_40 0
+	  endif
+	endif
+	
+	
+	if HEALTH_20 = 0
+	  if TEMP <= 20
+	    call spawnMinions
+	    set HEALTH_20 1
+	  endif
+	  queue_event "eventWailerHealth" 3000
+	  return
+	else
+	  if TEMP = 100
+	      call killMinions
+	      set HEALTH_80 0
+	      set HEALTH_60 0
+	      set HEALTH_40 0
+	      set HEALTH_20 0
+	  endif
+	endif
+	
+	queue_event "eventWailerHealth" 3000
+	  
+	return
+
+
+:tryCastShield
+	ai_script_jump CID_WAILER "extTryCastShield"
+
+	return
+
+:killMinions
+	print ":killMinions"
+	despawn 1127142
+	despawn 1127141
+	despawn 1127140
+	return
+
+:spawnMinions
+	print ":spawnMinions"
+	spawn_at 1127142 0
+	spawn_at 1127141 0
+	spawn_at 1127140 0
+	set MESG 0
+	print ":getting tarrget"
+	get_target CID_WAILER TEMP_TARGET
+	printvar TEMP_TARGET
+	scan_npc_cid LOC_WAILER_ROOM RESULTARRAY
+	pushvar TEMP_TARGET
+	print ":calling activate"
+	call activateMinions
+	return

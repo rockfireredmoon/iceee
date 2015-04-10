@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151018305
+Asset=Effects#Par-Splash1-Emitter
+Name=9
+Pos=53363.8,732.573,77933
+Orient=0,-0.457338,0,0.889293
+Scale=2.5,2.5,2.5
+Flags=1
+

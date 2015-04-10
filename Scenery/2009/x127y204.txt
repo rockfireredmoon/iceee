@@ -1,0 +1,8 @@
+[ENTRY]
+ID=151017282
+Asset=Prop-Giant_Mushroom#Prop-Giant_Mushroom2
+Name=9
+Pos=95282,1469.59,153101
+Orient=0,0.0399894,0,0.9992
+Scale=0.575,0.575,0.575
+

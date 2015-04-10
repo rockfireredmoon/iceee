@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151051654
+Asset=Manipulator-SpawnPoint
+Pos=59089.7,523.488,52814
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=3a_wolfDeerCamp01_general
+outerRadius=30
+

@@ -1,0 +1,17 @@
+[ENTRY]
+ID=150999341
+Asset=CL-Plains_Bush1#CL-Plains_Bush1
+Pos=50346.8,342.557,48036
+Orient=0,0,0,1
+Scale=1,1,1
+Flags=1
+
+[ENTRY]
+ID=151052131
+Asset=Manipulator-PathNode
+Pos=50798.3,469.526,48733
+Orient=0,0,0,1
+Scale=1,1,1
+links_count=1
+link=151052130,1
+

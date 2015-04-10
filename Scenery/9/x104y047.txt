@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151056948
+Asset=Manipulator-SpawnPoint
+Pos=78427,423.845,35733
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=2a_trf_sectionC4_general
+outerRadius=30
+

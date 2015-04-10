@@ -1,0 +1,16 @@
+[ENTRY]
+ID=151058669
+Asset=Prop-GiantFlowersLotus#Prop-GiantFlowers4
+Name=9
+Pos=51966.7,299.162,39341.6
+Orient=-0.0656219,-0.807526,0.0964656,0.578179
+Scale=5.075,5.075,5.075
+
+[ENTRY]
+ID=151058723
+Asset=Prop-GiantFlowers5
+Name=9
+Pos=51784,342.458,39384.4
+Orient=-0.198062,0.230417,-0.0591044,0.950887
+Scale=2.425,2.425,2.425
+

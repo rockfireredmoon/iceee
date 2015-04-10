@@ -1,0 +1,16 @@
+[ENTRY]
+ID=1358966974
+Asset=Effects#Par-Snow1-Emitter
+Name=81
+Pos=34593.3,437.414,67046.2
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
+ID=1358966975
+Asset=Effects#Par-Snow1-Emitter
+Name=81
+Pos=34488.9,524.461,67874.9
+Orient=0,-0.237703,0,0.971338
+Scale=1,1,1
+

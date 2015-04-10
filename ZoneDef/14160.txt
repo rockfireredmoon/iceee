@@ -1,0 +1,15 @@
+[ENTRY]
+ID=14160
+ACCOUNTID=1146
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=Camelot
+ShardName=foxen
+GroveName=foxen
+WarpName=foxen1
+DropRateProfile=standard
+Grove=1
+EnvironmentCycle=1
+BuildPermission=account,1146,0,0,3,3
+DefLoc=2439,289,4041
+

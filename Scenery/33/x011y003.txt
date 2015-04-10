@@ -1,0 +1,7 @@
+[ENTRY]
+ID=553656150
+Asset=Prop-Chunks#Prop-Chunks2
+Pos=11348.6,200,3823.81
+Orient=0,0,0,1
+Scale=2.275,2.275,2.275
+

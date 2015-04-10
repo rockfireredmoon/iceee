@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151012687
+Asset=CL-Sick-Forest4#CL-Sick-Forest4
+Name=9
+Pos=80335,351.721,168688
+Orient=0,0,0,1
+Scale=0.7,0.7,0.7
+Flags=1
+

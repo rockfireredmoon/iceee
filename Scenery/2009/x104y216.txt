@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151018766
+Asset=Prop-Giant_Mushroom#Prop-Giant_Mushroom-Glowing3
+Name=9
+Pos=78110.9,179.355,162481
+Orient=0,0,0,1
+Scale=1,1,1
+Flags=1
+

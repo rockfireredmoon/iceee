@@ -1,0 +1,8 @@
+[ENTRY]
+ID=151058451
+Asset=CL-Hills_Tree2
+Name=9
+Pos=47162.7,2007.93,79104.2
+Orient=0,0,0,1
+Scale=3.175,3.175,3.175
+

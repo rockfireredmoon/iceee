@@ -1,0 +1,13 @@
+[ENTRY]
+ID=11664
+ACCOUNTID=834
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=potato
+GroveName=potato
+WarpName=potato1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

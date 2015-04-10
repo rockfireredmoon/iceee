@@ -1,0 +1,28 @@
+[ENTRY]
+Name=z61_ct_gen_Exit_to_Dustshore_1455
+Spawn=1455,100  ;Exit to Dustshore (1) at 0
+
+[ENTRY]
+Name=5_cz_cazadoreMix_43
+Shares=30
+Spawn=1427,10  ;Simian Gladiator (43) at 2
+Spawn=1428,10  ;Anubian Warmage (43) at 1
+Spawn=1429,10  ;Anubian Slavedriver (43) at 3
+
+[ENTRY]
+Name=5_cz_cazadoreSlaveless_43
+Spawn=1428,50  ;Anubian Warmage (43) at 2
+Spawn=1429,50  ;Anubian Slavedriver (43) at 1
+
+[ENTRY]
+Name=5_cz_GeneralThothmes_k_44
+Spawn=1431,100  ;General Thothmes (44) at 0
+
+[ENTRY]
+Name=5_cz_Grudd_k_44
+Spawn=1430,100  ;Grudd (44) at 214
+
+[ENTRY]
+Flags=1
+Name=5_cz_obji_ThothmesLewt
+Spawn=1531,100  ;Thothmes's Treasure (1) at 0

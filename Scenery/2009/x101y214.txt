@@ -1,0 +1,17 @@
+[ENTRY]
+ID=151018420
+Asset=Prop-Boulder5
+Name=9
+Pos=76430.5,455.035,161246
+Orient=0,0,0,1
+Scale=3.175,3.175,3.175
+Flags=1
+
+[ENTRY]
+ID=151023850
+Asset=Manipulator-PathNode
+Name=9
+Pos=75901.2,680.159,161223
+Orient=0,0,0,1
+Scale=1,1,1
+

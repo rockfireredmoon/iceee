@@ -1,0 +1,13 @@
+[ENTRY]
+ID=12424
+ACCOUNTID=929
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=hachi
+GroveName=hachi
+WarpName=hachi1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

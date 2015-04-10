@@ -1,0 +1,15 @@
+[ENTRY]
+ID=8136
+ACCOUNTID=393
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=cervinemeadow
+GroveName=cervinemeadow
+WarpName=cervinemeadow1
+DropRateProfile=standard
+Grove=1
+EnvironmentCycle=0
+BuildPermission=account,393,0,0,3,3
+DefLoc=2958,260,3821
+

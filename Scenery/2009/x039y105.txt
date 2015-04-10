@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151040376
+Asset=Prop-Anubian_Watchtower
+Name=9
+Pos=29748.9,1226.04,79283
+Orient=0,-0.548023,0,0.836463
+Scale=3.15,3.15,3.15
+Flags=1
+

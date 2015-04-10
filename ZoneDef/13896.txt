@@ -1,0 +1,13 @@
+[ENTRY]
+ID=13896
+ACCOUNTID=1113
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=filthymctavish
+GroveName=filthymctavish
+WarpName=filthymctavish1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

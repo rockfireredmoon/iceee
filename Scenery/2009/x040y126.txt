@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151011097
+Asset=Prop-Campfire
+Name=9
+Pos=30512.6,1247.64,94904
+Orient=0,0,0,1
+Scale=3.275,3.275,3.275
+Flags=1
+

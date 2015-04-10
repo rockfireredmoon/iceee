@@ -1,0 +1,13 @@
+[ENTRY]
+ID=14256
+ACCOUNTID=1158
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=nomasmetiches
+GroveName=nomasmetiches
+WarpName=nomasmetiches1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

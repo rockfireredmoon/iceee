@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151038756
+Asset=CL-Junk1
+Name=9
+Pos=56924.6,238.493,181345
+Orient=0,0,0,1
+Scale=1,1,1
+Flags=1
+

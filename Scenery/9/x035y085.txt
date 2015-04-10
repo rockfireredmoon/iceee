@@ -1,0 +1,8 @@
+[ENTRY]
+ID=151006743
+Asset=Prop-Willow_Tree#Prop-Willow_Tree1
+Pos=26393.9,105.526,64432
+Orient=0,0,0,1
+Scale=2.45,2.45,2.45
+Flags=1
+

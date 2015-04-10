@@ -1,0 +1,13 @@
+[ENTRY]
+ID=6600
+ACCOUNTID=201
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=mystic
+GroveName=mystic
+WarpName=mystic1
+Grove=1
+EnvironmentCycle=1
+DefLoc=2958,260,3821
+

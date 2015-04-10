@@ -1,0 +1,12 @@
+; Anglor Dren's Treasure
+[ENTRY]
+CreatureDefID=2725
+EssenceID=21275
+Item=5585,1
+Item=5583,1
+Item=5586,1
+Item=143541,1
+Item=143542,1
+Item=143544,1
+Item=5584,1
+Item=143543,1

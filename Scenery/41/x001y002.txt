@@ -1,0 +1,7 @@
+[ENTRY]
+ID=687867617
+Asset=Prop-Hammer_Metal#Prop-Hammer_Metal
+Pos=1412.36,-1.90735e-006,2231.54
+Orient=0.168382,-0.524435,0.381351,0.74242
+Scale=1,1,1
+

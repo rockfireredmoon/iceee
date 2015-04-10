@@ -1,0 +1,19 @@
+[ENTRY]
+ID=5552
+ACCOUNTID=70
+NAME=Grove
+TERRAINCONFIG=Terrain-Starting_Grove#Terrain-Starting_Grove.cfg
+ENVIRONMENTTYPE=StartingGrove
+MAPNAME=Maps-Starting_Grove
+REGIONS=Terrain-Starting_Grove/Starting_Grove_Regions.png
+ShardName=Animal Palette
+GroveName=spectrum
+WarpName=spectrum1
+DropRateProfile=standard
+Grove=1
+EnvironmentCycle=1
+PlayerFilterType=1
+PlayerFilterID=-400005320
+BuildPermission=account,70,1,2,5,5
+DefLoc=5659,677,5720
+

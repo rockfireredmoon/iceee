@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151029544
+Asset=Prop-Goliath_Mound_Ice#Prop-Goliath_Mound_Ice2
+Name=9
+Pos=67360,688.99,63661
+Orient=-0.0749294,0,0,0.997189
+Scale=0.975,0.975,0.975
+Flags=1
+

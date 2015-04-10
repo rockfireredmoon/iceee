@@ -1,0 +1,24 @@
+[ENTRY]
+ID=151058910
+Asset=Basic Desert?d=0.1&s=971817&sz=800
+Pos=22022.2,241.289,85572.4
+Orient=0,0.868214,0,-0.49619
+Scale=2.05,2.05,2.05
+Flags=1
+
+[ENTRY]
+ID=151062184
+Asset=CL-Desert#CL-Roadside_Desert4
+Pos=22385.1,231.316,85640.6
+Orient=0.0274314,0.677286,-0.0356533,0.734343
+Scale=1.2,1.2,1.2
+Flags=1
+
+[ENTRY]
+ID=151062185
+Asset=Prop-Cactus#Prop-Cactus2
+Pos=22394,217.956,85624.4
+Orient=0,0,0,1
+Scale=1.925,1.925,1.925
+Flags=1
+

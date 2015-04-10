@@ -1,0 +1,26 @@
+[ENTRY]
+ID=151032125
+Asset=Manipulator-SpawnPoint
+Name=9
+Pos=23275.1,250.522,84525
+Orient=0,0,0,1
+Scale=1,1,1
+Layer=151002638
+
+[ENTRY]
+ID=151058906
+Asset=Basic Desert?d=0.2&amp;s=778349&amp;sz=800
+Name=9
+Pos=23552.9,263.449,84413.7
+Orient=0,-0.29074,0,0.956802
+Scale=1,1,1
+
+[ENTRY]
+ID=151059732
+Asset=Manipulator-SpawnPoint
+Name=9
+Pos=23912.8,267.877,84413.1
+Orient=0,0,0,1
+Scale=1,1,1
+Layer=151011962
+

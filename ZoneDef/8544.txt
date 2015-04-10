@@ -1,0 +1,13 @@
+[ENTRY]
+ID=8544
+ACCOUNTID=444
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=nosgoth
+GroveName=nosgoth
+WarpName=nosgoth1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

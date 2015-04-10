@@ -1,0 +1,27 @@
+; Spynne and Doppelbock boss spawns
+
+:init
+set spynnecount 0
+set doppelbockcount 0
+end
+
+:onKill_2581
+:onKill_2582
+inc spynnecount 
+if spynnecount >= 6
+  spawn_at 704644783 2583
+end
+
+:onKill_472
+:onKill_474
+:onKill_550
+:onKill_2580
+inc doppelbockcount 
+if doppelbockcount >= 17
+  spawn_at 704644924 481
+end
+
+; Warpig Duff's Treasure
+:onKill_593
+spawn 704645035
+end

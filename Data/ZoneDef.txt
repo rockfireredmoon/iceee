@@ -1,0 +1,1043 @@
+[ENTRY]
+ID=2000
+NAME=EmptyTestMap
+ENVIRONMENTTYPE=Dungeon1
+ShardName=EmptyTestMap
+WarpName=emptytestmap
+DefLoc=0,0,0
+Instance=1
+PageSize=1000
+
+[ENTRY]
+DESC=Audit Europe
+ID=2009
+NAME=Europe
+TERRAINCONFIG=Terrain-Europe#Terrain-Europe.cfg
+ENVIRONMENTTYPE=Fields
+MAPNAME=Maps-Europe
+REGIONS=Terrain-Europe/Europe_Regions.png
+ShardName=Audit Europe
+WarpName=AuditE
+DefLoc=29560,214,65552
+PageSize=750
+
+[ENTRY]
+DESC=WD Europe
+ID=3009
+NAME=Europe
+TERRAINCONFIG=Terrain-Europe#Terrain-Europe.cfg
+ENVIRONMENTTYPE=CloudyDay
+MAPNAME=Maps-Europe
+REGIONS=Terrain-Europe/Europe_Regions.png
+ShardName=WD Europe
+WarpName=wdEurope
+DefLoc=67258,214,37424
+PageSize=750
+Audit=1
+
+[ENTRY]
+DESC=Camelot Anglorum
+ID=1081
+NAME=Anglorum
+TERRAINCONFIG=Terrain-Anglorum#Terrain-Anglorum.cfg
+ENVIRONMENTTYPE=Fields
+MAPNAME=Maps-Anglorum
+REGIONS=Terrain-Anglorum/Anglorum_Regions.png
+ShardName=Camelot Anglorum
+WarpName=FixCamelot
+DefLoc=53120,175,64170
+PageSize=1000
+
+[ENTRY]
+DESC=Audit Anglorum
+ID=2081
+NAME=Anglorum
+TERRAINCONFIG=Terrain-Anglorum#Terrain-Anglorum.cfg
+ENVIRONMENTTYPE=Fields
+MAPNAME=Maps-Anglorum
+REGIONS=Terrain-Anglorum/Anglorum_Regions.png
+ShardName=Audit Anglorum
+WarpName=AuditA
+DefLoc=43338,263,67846
+PageSize=1000
+
+[ENTRY]
+DESC=Winter Dawning
+ID=3081
+NAME=Anglorum
+TERRAINCONFIG=Terrain-Anglorum#Terrain-Anglorum.cfg
+ENVIRONMENTTYPE=CamelotDay
+MAPNAME=Maps-Anglorum
+REGIONS=Terrain-Anglorum/Anglorum_Regions.png
+ShardName=WD Anglorum
+WarpName=wdAnglorum
+DefLoc=53370,263,64206
+PageSize=1000
+Audit=1
+
+[ENTRY]
+DESC=Modded Europe
+ID=1009
+NAME=Europe
+TERRAINCONFIG=Terrain-Europe#Terrain-Europe.cfg
+ENVIRONMENTTYPE=Fields
+MAPNAME=Maps-Europe
+REGIONS=Terrain-Europe/Europe_Regions.png
+ShardName=Mod Europe
+WarpName=ModE
+DefLoc=29560,214,65552
+
+[ENTRY]
+DESC=Modded Corsica
+ID=1058
+NAME=Corsica
+TERRAINCONFIG=Terrain-Corsica#Terrain-Corsica.cfg
+ENVIRONMENTTYPE=NightSky
+MAPNAME=Maps-Corsica
+REGIONS=Terrain-Corsica/Corsica_Regions.png
+ShardName=Mod Corsica
+WarpName=ModC
+DefLoc=15463,1160,13639
+
+[ENTRY]
+DESC=Fix Cor
+ID=1158
+NAME=FixCor
+TERRAINCONFIG=Terrain-Corsica#Terrain-Corsica.cfg
+ENVIRONMENTTYPE=NightSky
+MAPNAME=Maps-Corsica
+REGIONS=Terrain-Corsica/Corsica_Regions.png
+ShardName=FixCor
+WarpName=FixCor
+DefLoc=15907,1111,12567
+PageSize=1000
+
+[ENTRY]
+DESC=Custom entry to test an untitled group of props from the Audit Log rip.
+ID=100
+NAME=Undefined
+ENVIRONMENTTYPE=CloudyDay
+ShardName=Unknown
+WarpName=Unknown
+DefLoc=2132,504,2381
+
+[ENTRY]
+ID=101
+NAME=Blank
+TERRAINCONFIG=Terrain-Blank#Terrain-Blank.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=Blank
+WarpName=Blank
+DefLoc=962,597,909
+
+[ENTRY]
+ID=103
+NAME=TestDungeon1C
+TERRAINCONFIG=Terrain-TestDungeon1C#Terrain-TestDungeon1C.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=TestDungeon1C
+WarpName=TestDungeon1C
+DefLoc=1420,1107,1836
+
+[ENTRY]
+ID=105
+NAME=NewBremen
+TERRAINCONFIG=Terrain-NewBremen#Terrain-NewBremen.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=NewBremen
+WarpName=NewBremen
+DefLoc=24883,122,33093
+
+[ENTRY]
+ID=1
+NAME=Sandbox
+TERRAINCONFIG=Terrain-Sandbox#Terrain-Sandbox.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=Sandbox
+WarpName=Sandbox
+DefLoc=18846,2622,3371
+
+[ENTRY]
+ID=2
+NAME=Andalusia
+TERRAINCONFIG=Terrain-Andalusia#Terrain-Andalusia.cfg
+ENVIRONMENTTYPE=CloudyDay
+DefLoc=0,0,0
+
+[ENTRY]
+ID=3
+NAME=Bremen
+TERRAINCONFIG=Terrain-Bremen#Terrain-Bremen.cfg
+ENVIRONMENTTYPE=CloudyDay
+DefLoc=0,0,0
+
+[ENTRY]
+ID=4
+NAME=Greenvale
+TERRAINCONFIG=Terrain-Greenvale#Terrain-Greenvale.cfg
+DefLoc=0,0,0
+
+[ENTRY]
+ID=5
+NAME=Midgaard
+TERRAINCONFIG=Terrain-Midgaard#Terrain-Midgaard.cfg
+ENVIRONMENTTYPE=CloudyDay
+DefLoc=0,0,0
+
+[ENTRY]
+ID=6
+NAME=Northern_Alps
+TERRAINCONFIG=Terrain-Northern_Alps#Terrain-Northern_Alps.cfg
+ENVIRONMENTTYPE=CloudyDay
+DefLoc=0,0,0
+
+[ENTRY]
+ID=8
+NAME=Blend
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=Blend
+WarpName=Blend
+DefLoc=2958,260,3821
+
+[ENTRY]
+ID=9
+NAME=Europe
+TERRAINCONFIG=Terrain-Europe#Terrain-Europe.cfg
+ENVIRONMENTTYPE=Fields
+MAPNAME=Maps-Europe
+REGIONS=Terrain-Europe/Europe_Regions.png
+ShardName=Europe 1
+WarpName=Europe
+Persist=1
+DefLoc=29560,214,65552
+PageSize=750
+EnvironmentCycle=1
+
+[ENTRY]
+ID=10
+NAME=Dungeon
+DefLoc=0,0,0
+
+[ENTRY]
+ID=11
+NAME=Cave
+ENVIRONMENTTYPE=AutumnDay
+ShardName=Unknown 1
+WarpName=Cave
+DefLoc=1849,600,1857
+
+[ENTRY]
+ID=17
+NAME=Sandbox2
+TERRAINCONFIG=Terrain-Sandbox2#Terrain-Sandbox2.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=Sandbox2
+WarpName=Sandbox2
+DefLoc=3047,258,4132
+
+[ENTRY]
+ID=19
+NAME=DungeonRoom1
+DefLoc=0,0,0
+
+[ENTRY]
+ID=22
+NAME=TestDungeon1
+ENVIRONMENTTYPE=SwinelandDay
+ShardName=Unknown
+WarpName=TestDungeon1
+DefLoc=1626,240,2982
+
+[ENTRY]
+ID=23
+NAME=Coastal Cave
+ENVIRONMENTTYPE=Dungeon1
+ShardName=Europe 1
+WarpName=Coastal Cave
+DefLoc=1498,200,1828
+Instance=1
+PageSize=1000
+MaxLeashRange=375
+
+[ENTRY]
+ID=24
+NAME=Fangarians Lair
+TERRAINCONFIG=Terrain-Fangarians_Lair#Terrain-Fangarians_Lair.cfg
+ENVIRONMENTTYPE=Dungeon1
+ShardName=Anglorum 1
+WarpName=Fangarians Lair
+DefLoc=1283,1109,1862
+PageSize=1000
+Instance=1
+MaxLeashRange=375
+
+[ENTRY]
+ID=25
+NAME=TestDungeon2
+ENVIRONMENTTYPE=Dungeon1
+DefLoc=0,0,0
+
+[ENTRY]
+ID=26
+NAME=The Down Below
+ENVIRONMENTTYPE=Dungeon1
+ShardName=Anglorum 1
+WarpName=The Down Below
+DefLoc=1213,305,1665
+PageSize=1000
+Instance=1
+MaxLeashRange=375
+
+[ENTRY]
+ID=27
+NAME=Cold Storm Cavern
+ENVIRONMENTTYPE=Dungeon1
+ShardName=Anglorum 1
+WarpName=Cold Storm Cavern
+PageSize=1000
+DefLoc=2173,250,2096
+Instance=1
+MaxLeashRange=375
+
+[ENTRY]
+ID=28
+NAME=Underhenge
+ENVIRONMENTTYPE=Dungeon1
+ShardName=Anglorum 1
+WarpName=Underhenge
+DefLoc=2216,290,5219
+PageSize=1000
+Instance=1
+MaxLeashRange=375
+
+[ENTRY]
+ID=29
+NAME=Wilhelm's Crypt
+ENVIRONMENTTYPE=Dungeon1
+ShardName=Anglorum 1
+WarpName=Wilhelm's Crypt
+DefLoc=5235,200,783
+PageSize=1000
+Instance=1
+MaxLeashRange=375
+
+[ENTRY]
+ID=30
+NAME=Monastery Cloister
+ENVIRONMENTTYPE=Dungeon1
+ShardName=Anglorum 1
+WarpName=Monastary Cloister
+DefLoc=3415,170,538
+Instance=1
+MaxLeashRange=375
+
+[ENTRY]
+ID=31
+NAME=Ranch Cellar
+ENVIRONMENTTYPE=Dungeon1
+ShardName=Anglorum 1
+WarpName=Ranch Cellar
+DefLoc=705,160,39
+Instance=1
+MaxLeashRange=375
+
+[ENTRY]
+ID=32
+NAME=Nottingham Castle
+ENVIRONMENTTYPE=Dungeon1
+ShardName=Anglorum 1
+WarpName=Nottingham Castle
+DefLoc=1392,240,1815
+PageSize=1000
+Instance=1
+MaxLeashRange=375
+
+[ENTRY]
+ID=33
+NAME=Broken Tower
+ENVIRONMENTTYPE=Dungeon1
+ShardName=Anglorum 1
+WarpName=Broken Tower
+DefLoc=476,205,759
+Instance=1
+PageSize=1000
+MaxLeashRange=375
+
+[ENTRY]
+ID=34
+NAME=Old Underground
+ENVIRONMENTTYPE=Dungeon1
+ShardName=Unknown
+WarpName=Old Underground
+DefLoc=3613,195,6736
+Instance=1
+PageSize=1000
+MaxLeashRange=375
+
+[ENTRY]
+ID=35
+NAME=New_Zone_7735
+ENVIRONMENTTYPE=CloudyDay
+DefLoc=0,0,0
+
+[ENTRY]
+ID=36
+NAME=Hollow Tree
+TERRAINCONFIG=Terrain-Hollow_Tree#Terrain-Hollow_Tree.cfg
+ENVIRONMENTTYPE=Forest
+ShardName=Anglorum 1
+WarpName=Hollow Tree
+DefLoc=1010,192,1152
+Instance=1
+PageSize=1000
+MaxLeashRange=375
+
+[ENTRY]
+ID=37
+NAME=Spibear Lair
+ENVIRONMENTTYPE=Dungeon1
+ShardName=Europe 1
+WarpName=Spibear Lair
+DefLoc=3351,380,1664
+Instance=1
+PageSize=1000
+MaxLeashRange=375
+
+[ENTRY]
+ID=38
+NAME=Goliath Ruins
+ENVIRONMENTTYPE=Dungeon1
+ShardName=Anglorum 1
+WarpName=Goliath Ruins
+DefLoc=3529,770,4971
+Instance=1
+PageSize=1000
+MaxLeashRange=375
+
+[ENTRY]
+ID=39
+NAME=Forest Cavern
+ENVIRONMENTTYPE=Dungeon1
+ShardName=Europe 1
+WarpName=Forest Cavern
+DefLoc=3492,220,2382
+Instance=1
+PageSize=1000
+MaxLeashRange=375
+
+[ENTRY]
+ID=40
+NAME=Manticore's Lair
+ENVIRONMENTTYPE=Dungeon1
+ShardName=Europe 1
+WarpName=Manticores Lair
+DefLoc=3146,340,1810
+Instance=1
+PageSize=1000
+MaxLeashRange=375
+
+[ENTRY]
+ID=41
+NAME=Rupunzels Tower
+ENVIRONMENTTYPE=Bremen
+ShardName=Europe 1
+WarpName=Rupunzels Tower
+DefLoc=719,50,849
+Instance=1
+PageSize=1000
+MaxLeashRange=375
+
+[ENTRY]
+ID=42
+NAME=Brewery Cellar
+ENVIRONMENTTYPE=Dungeon1
+ShardName=Europe 1
+WarpName=Brewery Cellar
+DefLoc=2420,100,2261
+Instance=1
+PageSize=1000
+MaxLeashRange=375
+
+[ENTRY]
+ID=43
+NAME=Bremen Asylum
+ENVIRONMENTTYPE=Dungeon1
+ShardName=Europe 1
+WarpName=Bremen Asylum
+DefLoc=2857,50,5018
+Instance=1
+PageSize=1000
+MaxLeashRange=375
+
+[ENTRY]
+ID=44
+NAME=Sea Cave
+ENVIRONMENTTYPE=Dungeon1
+ShardName=Europe 1
+WarpName=Sea Cave
+DefLoc=1110,503,1061
+PageSize=1000
+Instance=1
+MaxLeashRange=375
+
+[ENTRY]
+ID=45
+NAME=Giant Rotted Tree
+TERRAINCONFIG=Terrain-Rotted_Tree#Terrain-Rotted_Tree.cfg
+ENVIRONMENTTYPE=Rotted_Day
+ShardName=Rotted Tree
+WarpName=Rotted Tree
+DefLoc=1028,193,1174
+PageSize=1000
+Instance=1
+MaxLeashRange=375
+
+[ENTRY]
+ID=46
+NAME=Wild_Caverns
+ENVIRONMENTTYPE=Dungeon1
+ShardName=Unknown
+WarpName=Wild Caverns
+DefLoc=1001,99,904
+
+[ENTRY]
+ID=47
+NAME=Vespin Lair
+ENVIRONMENTTYPE=Dungeon1
+ShardName=Europe 1
+WarpName=Vespin Lair
+DefLoc=2448,158,1811
+PageSize=1000
+Instance=1
+MaxLeashRange=375
+
+[ENTRY]
+ID=48
+NAME=Dark Depths
+ENVIRONMENTTYPE=Dungeon1
+ShardName=Europe 1
+WarpName=Dark Depths
+DefLoc=4541,220,1476
+PageSize=1000
+Instance=1
+MaxLeashRange=375
+
+[ENTRY]
+ID=49
+NAME=Djinn Temple
+ENVIRONMENTTYPE=Dungeon1
+ShardName=Europe 1
+WarpName=Djinn Temple
+DefLoc=886,60,1896
+PageSize=1000
+Instance=1
+MaxLeashRange=375
+
+[ENTRY]
+ID=50
+NAME=Iron Maw
+TERRAINCONFIG=Terrain-Iron_Maw#Terrain-Iron_Maw.cfg
+ENVIRONMENTTYPE=CorsicaDay
+ShardName=Iron Maw
+WarpName=Iron Maw
+DefLoc=18938,1266,18778
+
+[ENTRY]
+ID=51
+NAME=Burning_Chasm
+TERRAINCONFIG=Terrain-Burning_Chasm#Terrain-Burning_Chasm.cfg
+ENVIRONMENTTYPE=Fire1
+ShardName=Unknown
+WarpName=Burning Chasm
+DefLoc=10559,1255,12104
+
+[ENTRY]
+ID=52
+NAME=West_Mine
+ENVIRONMENTTYPE=Dungeon1
+ShardName=Unknown
+WarpName=West Mine
+DefLoc=4899,720,476
+
+[ENTRY]
+ID=53
+NAME=East_Mine
+ENVIRONMENTTYPE=Dungeon1
+ShardName=Unknown
+WarpName=East Mine
+DefLoc=831,601,803
+
+[ENTRY]
+ID=54
+NAME=The_Deep
+ENVIRONMENTTYPE=Dungeon1
+ShardName=Unknown
+WarpName=The Deep
+DefLoc=4787,840,8645
+
+[ENTRY]
+ID=55
+NAME=Testing_Gauntlet
+TERRAINCONFIG=Terrain-Testing_Gauntlet#Terrain-Testing_Gauntlet.cfg
+ENVIRONMENTTYPE=Fields
+ShardName=Testing_Gauntlet
+WarpName=Testing_Gauntlet
+DefLoc=12353,477,11309
+
+[ENTRY]
+ID=56
+NAME=Wailing_Crypt
+ENVIRONMENTTYPE=Dungeon1
+ShardName=Unknown
+WarpName=Wailing Crypt
+DefLoc=2121,660,703
+Instance=1
+
+[ENTRY]
+ID=57
+NAME=Sangre_Gulch
+TERRAINCONFIG=Terrain-Sangre#Terrain-Sangre.cfg
+ENVIRONMENTTYPE=ForestSunset
+ShardName=Unknown
+WarpName=Sangre
+DefLoc=2785,7459,3716
+
+[ENTRY]
+ID=58
+NAME=Corsica
+TERRAINCONFIG=Terrain-Corsica#Terrain-Corsica.cfg
+ENVIRONMENTTYPE=NightSky
+MAPNAME=Maps-Corsica
+REGIONS=Terrain-Corsica/Corsica_Regions.png
+ShardName=Corsica 1
+WarpName=Corsica
+Persist=1
+DefLoc=15907,1111,12567
+PageSize=1000
+EnvironmentCycle=1
+
+[ENTRY]
+ID=59
+NAME=Starting_Grove
+TERRAINCONFIG=Terrain-Starting_Grove#Terrain-Starting_Grove.cfg
+;ENVIRONMENTTYPE=StartingGrove
+ENVIRONMENTTYPE=CloudyDay
+MAPNAME=Maps-Starting_Grove
+REGIONS=Terrain-Starting_Grove/Starting_Grove_Regions.png
+ShardName=Mushroom Isle 1
+WarpName=Mushroom Isle
+DefLoc=5420,625,6485
+PageSize=1000
+
+
+[ENTRY]
+ID=60
+NAME=Chunnel
+ENVIRONMENTTYPE=Dungeon1
+ShardName=Anglorum 1
+WarpName=Chunnel
+DefLoc=5583,570,3003
+PageSize=1000
+
+[ENTRY]
+ID=61
+NAME=Cazador Tunnel
+ENVIRONMENTTYPE=Dungeon1
+ShardName=Europe 1
+WarpName=Cazador Tunnel
+DefLoc=2443,600,1706
+Instance=1
+PageSize=1000
+MaxLeashRange=375
+
+[ENTRY]
+ID=62
+NAME=Pridelords Chamber
+ENVIRONMENTTYPE=Dungeon1
+ShardName=Unknown
+WarpName=Pridelords Chamber
+DefLoc=1318,320,1957
+PageSize=1000
+Instance=1
+MaxLeashRange=375
+
+[ENTRY]
+ID=63
+NAME=Hall of Bones
+TERRAINCONFIG=Terrain-Hall_of_Bones#Terrain-Hall_of_Bones.cfg
+ENVIRONMENTTYPE=Dungeon1
+ShardName=Europe 1
+WarpName=Hall of Bones
+DefLoc=1728,1281,1958
+PageSize=1000
+Instance=1
+MaxLeashRange=375
+
+[ENTRY]
+ID=64
+NAME=Light_Test
+TERRAINCONFIG=Terrain-Hall_of_Bones#Terrain-Hall_of_Bones.cfg
+ENVIRONMENTTYPE=Default_Cave
+DefLoc=0,0,0
+
+[ENTRY]
+ID=65
+NAME=Rolsburg Mine
+ENVIRONMENTTYPE=Dungeon1
+ShardName=Europe 1
+WarpName=Rolsburg Mine
+DefLoc=1230,600,1597
+PageSize=1000
+Instance=1
+MaxLeashRange=375
+
+[ENTRY]
+ID=66
+NAME=Valkals_Bloodkeep
+ENVIRONMENTTYPE=Dungeon1
+ShardName=Europe 1
+WarpName=Valkals Bloodkeep
+DefLoc=701,660,2794
+
+[ENTRY]
+ID=67
+NAME=Junk_Palace
+ENVIRONMENTTYPE=Dungeon1
+ShardName=Unknown
+WarpName=Junk Palace
+DefLoc=1419,284,2315
+
+[ENTRY]
+ID=68
+NAME=Grey Circle H.Q.
+ENVIRONMENTTYPE=Dungeon1
+ShardName=Europe 1
+WarpName=Grey Circle HQ
+DefLoc=859,245,746
+Instance=1
+PageSize=1000
+MaxLeashRange=375
+
+[ENTRY]
+ID=69
+NAME=Skrill_Queen_Lair
+ENVIRONMENTTYPE=Dungeon1
+ShardName=Europe 1
+WarpName=Skrill Queen Lair
+DefLoc=2662,1081,4301
+
+[ENTRY]
+ID=70
+NAME=Dire Wolf Den
+ENVIRONMENTTYPE=Dungeon1
+ShardName=Europe 1
+WarpName=Dire Wolf Den
+DefLoc=2907,360,3133
+Instance=1
+PageSize=1000
+MaxLeashRange=375
+
+[ENTRY]
+ID=71
+NAME=Zhushis Lair
+TERRAINCONFIG=Terrain-Zhushis_Lair#Terrain-Zhushis_Lair.cfg
+ENVIRONMENTTYPE=Rotted
+ShardName=Europe 1
+WarpName=Zhushis Lair
+DefLoc=1068,192,1167
+Instance=1
+PageSize=1000
+MaxLeashRange=375
+
+[ENTRY]
+ID=72
+NAME=Rotted Maze
+TERRAINCONFIG=Terrain-Rotted_Maze#Terrain-Rotted_Maze.cfg
+ENVIRONMENTTYPE=Rotted
+ShardName=Europe 1
+WarpName=Rotted Maze
+DefLoc=1898,1248,288
+Instance=1
+PageSize=750
+MaxAggroRange=110  ; The width of a hedge wall prop is about 77 units.
+MaxLeashRange=375
+EnvironmentCycle=1
+
+[ENTRY]
+ID=73
+NAME=Rotted Nursery
+TERRAINCONFIG=Terrain-Rotted_Nursery#Terrain-Rotted_Nursery.cfg
+ENVIRONMENTTYPE=Dungeon1
+ShardName=Europe 1
+WarpName=Rotted Nursery
+DefLoc=3334,199,1924
+Instance=1
+PageSize=1000
+MaxLeashRange=375
+EnvironmentCycle=1
+
+[ENTRY]
+ID=74
+NAME=Earthend
+TERRAINCONFIG=Terrain-Earthend#Terrain-Earthend.cfg
+ENVIRONMENTTYPE=EarthriseInstance
+ShardName=Earthrise 1
+WarpName=Earthend
+DefLoc=11279,281,13469
+PageSize=1000
+Instance=1
+EnvironmentCycle=1
+MaxLeashRange=375
+
+[ENTRY]
+ID=75
+NAME=Folkirk Manor
+ENVIRONMENTTYPE=Dungeon1
+ShardName=Europe 1
+WarpName=Folkirk Manor
+DefLoc=1558,500,8060
+Instance=1
+
+[ENTRY]
+ID=76
+NAME=Southend Passage
+ENVIRONMENTTYPE=Dungeon1
+ShardName=Corsica 1
+WarpName=Southend Passage
+DefLoc=873,601,762
+PageSize=1000
+Instance=1
+MaxAggroRange=100
+MaxLeashRange=375
+
+[ENTRY]
+ID=77
+NAME=Lighthouse
+ENVIRONMENTTYPE=Dungeon1
+ShardName=Corsica 1
+WarpName=Lighthouse
+DefLoc=426,300,1090
+Instance=1
+PageSize=1000
+MaxLeashRange=375
+
+[ENTRY]
+ID=78
+NAME=Haunted Grove
+TERRAINCONFIG=Terrain-Haunted_Grove#Terrain-Haunted_Grove.cfg
+ENVIRONMENTTYPE=Undead
+ShardName=Europe 1
+WarpName=Haunted Grove
+DefLoc=1907,266,468
+Instance=1
+PageSize=1000
+MaxLeashRange=375
+EnvironmentCycle=1
+
+[ENTRY]
+ID=79
+NAME=Summoning Chamber
+ENVIRONMENTTYPE=UndeadNight
+ShardName=Anglorum 1
+WarpName=Summoning Chamber
+DefLoc=806,102,5725
+Instance=1
+PageSize=1000
+MaxLeashRange=375
+
+[ENTRY]
+ID=80
+NAME=Spain
+TERRAINCONFIG=Terrain-Spain#Terrain-Spain.cfg
+ENVIRONMENTTYPE=Fields
+ShardName=Spain
+WarpName=Spain
+DefLoc=54074,413,17152
+EnvironmentCycle=1
+
+[ENTRY]
+ID=81
+NAME=Anglorum
+TERRAINCONFIG=Terrain-Anglorum#Terrain-Anglorum.cfg
+ENVIRONMENTTYPE=Fields
+MAPNAME=Maps-Anglorum
+REGIONS=Terrain-Anglorum/Anglorum_Regions.png
+ShardName=Anglorum 1
+WarpName=Anglorum
+Persist=1
+DefLoc=43330,263,67880
+PageSize=1000
+EnvironmentCycle=1
+
+
+[ENTRY]
+ID=82
+NAME=Camelot Chamber
+ENVIRONMENTTYPE=Genericindoor
+ShardName=Anglorum 1
+WarpName=Camelot Chamber
+DefLoc=550,120,1048
+PageSize=1000
+
+[ENTRY]
+ID=83
+NAME=Earthrise
+TERRAINCONFIG=Terrain-Corsica#Terrain-Corsica.cfg
+ENVIRONMENTTYPE=Fields
+MAPNAME=Maps-Corsica
+REGIONS=Terrain-Corsica/Corsica_Regions.png
+ShardName=Earthrise 1
+WarpName=Earthrise
+Persist=1
+DefLoc=18309,1653,22865
+PageSize=1000
+EnvironmentCycle=1
+
+[ENTRY]
+ID=84
+NAME=Von'Gruber's Manor
+ENVIRONMENTTYPE=Dungeon1
+ShardName=Europe 1
+WarpName=VonGruber Manor
+DefLoc=3002,60,2405
+Instance=1
+PageSize=1000
+MaxLeashRange=375
+
+; ENVIRONMENTTYPE=Desert
+[ENTRY]
+ID=85
+NAME=Kerakura's Lair
+TERRAINCONFIG=Terrain-KerakurasLair#Terrain-KerakurasLair.cfg
+ENVIRONMENTTYPE=DesertDay
+ShardName=Europe 1
+WarpName=Kerakuras Lair
+Instance=1
+DefLoc=27260,622,79635
+MaxLeashRange=375
+EnvironmentCycle=1
+
+[ENTRY]
+ID=86
+NAME=Grindle's Lair
+ENVIRONMENTTYPE=Dungeon1
+DefLoc=0,0,0
+
+[ENTRY]
+ID=87
+NAME=Templates
+TERRAINCONFIG=Terrain-Templates#Terrain-Templates.cfg
+ENVIRONMENTTYPE=Fields
+ShardName=Templates
+WarpName=Templates
+DefLoc=3839,436,4871
+
+[ENTRY]
+ID=88
+NAME=Mountain Valley
+TERRAINCONFIG=Terrain-Mountain_Valley#Terrain-Mountain_Valley.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=Mountain Valley
+WarpName=MountainValley
+Instance=1
+DefLoc=3520,491,4028
+
+[ENTRY]
+ID=89
+NAME=Camelot_Arena
+TERRAINCONFIG=Terrain-Terrain-MTerrain-Camelot_Arena#Terrain-Camelot_Arena.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=Anglorum 1
+WarpName=Camelot Arena
+DefLoc=2331,1251,2845
+EnvironmentCycle=1
+Arena=1
+
+[ENTRY]
+ID=1089
+NAME=Camelot_Arena2
+TERRAINCONFIG=Terrain-Terrain-MTerrain-Camelot_Arena#Terrain-Camelot_Arena.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=Anglorum 1
+WarpName=devCamelotArena
+DefLoc=2331,1251,2845
+EnvironmentCycle=1
+
+
+[ENTRY]
+ID=91
+NAME=New_Zone_6880
+ENVIRONMENTTYPE=CloudyDay
+DefLoc=0,0,0
+
+[ENTRY]
+ID=92
+NAME=Starting Zone2
+TERRAINCONFIG=Terrain-Starting_Zone2#Terrain-Starting_Zone2.cfg
+ENVIRONMENTTYPE=Bastion
+MAPNAME=Maps-Bastion
+REGIONS=Terrain-Starting_Zone2/Starting_Zone2_Regions.png
+ShardName=Starting Zone
+WarpName=Bastion
+DefLoc=10994,546,12401
+
+
+[ENTRY]
+ID=1059
+NAME=Museum
+TERRAINCONFIG=Terrain-Starting_Grove#Terrain-Starting_Grove.cfg
+ENVIRONMENTTYPE=StartingGrove
+MAPNAME=Maps-Starting_Grove
+REGIONS=Terrain-Starting_Grove/Starting_Grove_Regions.png
+ShardName=Player Museum
+WarpName=museum
+Grove=1
+DefLoc=5420,625,6485
+PageSize=1000
+EnvironmentCycle=1
+
+[ENTRY]
+ID=2088
+NAME=Mountain Valley
+TERRAINCONFIG=Terrain-Mountain_Valley#Terrain-Mountain_Valley.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=Mountain Valley
+WarpName=TestArena
+DefLoc=3520,491,4028
+;Arena=1
+Instance=1
+
+[ENTRY]
+ID=110
+NAME=Redemption
+TERRAINCONFIG=Terrain-Testing_Gauntlet#Terrain-Testing_Gauntlet.cfg
+ENVIRONMENTTYPE=CoastSunrise
+ShardName=Arena
+WarpName=Redemption
+Arena=1
+EnvironmentCycle=0
+DefLoc=13450,172,11060
+
+[ENTRY]
+ID=111
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=IronMaw1
+ShardName=Arena
+WarpName=The Cavern
+Arena=1
+EnvironmentCycle=1
+DefLoc=2686,312,4786
+
+[ENTRY]
+ID=112
+NAME=Shadow Void
+ENVIRONMENTTYPE=Dungeon1
+ShardName=Europe 1
+WarpName=Shadow Void
+DefLoc=5616,8,2523
+PageSize=1000
+Instance=1
+MaxLeashRange=1000
+

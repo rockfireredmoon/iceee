@@ -1,0 +1,25 @@
+; Rapunzel's Treasure
+[ENTRY]
+CreatureDefID=2738
+EssenceID=21290
+Item=143451,1
+Item=5517,1
+Item=5537,1
+Item=5385,1
+Item=5449,1
+Item=5470,1
+Item=5365,1
+Item=143493,1
+
+; Dungeon Loot (Rapunzel's Tower)
+[ENTRY]
+CreatureDefID=2711
+EssenceID=21265
+Item=143463,10
+Item=5471,10
+Item=5563,10
+Item=143476,10
+Item=5430,10
+Item=5493,10
+Item=5518,10
+Item=5429,10

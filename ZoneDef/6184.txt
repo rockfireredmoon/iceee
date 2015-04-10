@@ -1,0 +1,13 @@
+[ENTRY]
+ID=6184
+ACCOUNTID=149
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=undercity
+GroveName=undercity
+WarpName=undercity1
+Grove=1
+EnvironmentCycle=1
+DefLoc=2958,260,3821
+

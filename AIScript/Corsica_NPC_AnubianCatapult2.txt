@@ -1,0 +1,9 @@
+#name Corsica_NPC_AnubianCatapult2
+;#idlespeed 1
+
+; 5422 - Catapult2 
+
+:begin
+use 5422
+wait 10000
+goto begin

@@ -1,0 +1,13 @@
+[ENTRY]
+ID=13856
+ACCOUNTID=1108
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=rozene
+GroveName=rozene
+WarpName=rozene1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

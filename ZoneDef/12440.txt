@@ -1,0 +1,13 @@
+[ENTRY]
+ID=12440
+ACCOUNTID=931
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=ashy
+GroveName=ashy
+WarpName=ashy1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

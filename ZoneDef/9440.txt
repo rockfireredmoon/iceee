@@ -1,0 +1,13 @@
+[ENTRY]
+ID=9440
+ACCOUNTID=556
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=hollows
+GroveName=hollows
+WarpName=hollows1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

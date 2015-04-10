@@ -1,0 +1,8 @@
+[ENTRY]
+ID=973082865
+Asset=Sound?SOUND=Sound-Ambient-Oceanloop.ogg&amp;GAIN=0.3
+Pos=16609.7,1125.51,13483.7
+Orient=0,0,0,1
+Scale=1,1,1
+Flags=1
+

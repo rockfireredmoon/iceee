@@ -1,0 +1,16 @@
+[ENTRY]
+ID=151049917
+Asset=Prop-Boulder_Arid#Prop-Boulder_Arid2
+Pos=63632.2,596.324,53587
+Orient=0,0,0,1
+Scale=7.575,7.575,7.575
+Flags=1
+
+[ENTRY]
+ID=151049922
+Asset=Prop-Boulder_Arid#Prop-Boulder_Arid7
+Pos=63385.3,434.488,53833
+Orient=0,0.522687,0,0.852525
+Scale=2.4,2.4,2.4
+Flags=1
+

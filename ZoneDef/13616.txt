@@ -1,0 +1,13 @@
+[ENTRY]
+ID=13616
+ACCOUNTID=1078
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=fluffypaws
+GroveName=fluffypaws
+WarpName=fluffypaws1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

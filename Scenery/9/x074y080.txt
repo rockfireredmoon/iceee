@@ -1,0 +1,10 @@
+[ENTRY]
+ID=151052828
+Asset=Manipulator-SpawnPoint
+Pos=55567,189.077,60494
+Orient=0,-0.597195,0,0.802096
+Scale=1,1,1
+links_count=1
+link=151052829,1
+spawnPackage=3a_blightedWoods_general
+

@@ -1,0 +1,15 @@
+[ENTRY]
+ID=436209528
+Asset=Prop-Banner_Old3
+Pos=998.219,391.629,1844.64
+Orient=0,0.707107,0,0.707107
+Scale=1.4,1.4,1.4
+Flags=1
+
+[ENTRY]
+ID=436210460
+Asset=Prop-Vampire_Rock4
+Pos=896.663,612.634,1369.68
+Orient=0,0,0,1
+Scale=2.2,2.2,2.2
+

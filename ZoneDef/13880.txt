@@ -1,0 +1,13 @@
+[ENTRY]
+ID=13880
+ACCOUNTID=1111
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=squelch
+GroveName=squelch
+WarpName=squelch1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151059094
+Asset=Lights#Light-Large?COLOR=3333FF
+Name=9
+Pos=47961.3,393.157,71934.3
+Orient=0,0,0,1
+Scale=1,1,1
+Flags=1
+

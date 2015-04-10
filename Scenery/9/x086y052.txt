@@ -1,0 +1,16 @@
+[ENTRY]
+ID=151046036
+Asset=CL-Fence-Stone_Long_Blue2#CL-Fence-Stone_Long_Blue2
+Pos=65179.9,441.685,39053
+Orient=0,0.20846,0,0.978031
+Scale=1,1,1
+
+[ENTRY]
+ID=151056510
+Asset=Manipulator-SpawnPoint
+Pos=65247.4,420.52,39525
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=2a_rhl_sectionA8_general
+outerRadius=30
+

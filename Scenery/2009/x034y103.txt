@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151002849
+Asset=Prop-Desert_Accent#Prop-Desert_Accent1
+Name=9
+Pos=25793.2,434.156,77763.8
+Orient=-0.0198666,0.00229478,-0.0149964,0.999687
+Scale=1.475,1.475,1.475
+Flags=1
+

@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151015818
+Asset=Prop-Dungeon-Entrance-Mine1#Prop-Dungeon-Entrance-Mine1
+Name=9
+Pos=95299.8,1042.09,167484
+Orient=0,-0.822049,0,0.569417
+Scale=1.7,1.7,1.7
+Flags=1
+

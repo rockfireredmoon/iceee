@@ -1,0 +1,17 @@
+[ENTRY]
+ID=151000079
+Asset=Prop-Autumn_Hill_Tree#Prop-Autumn_Hill_Tree4
+Pos=66551,453.183,42723
+Orient=0,0,0,1
+Scale=1,1,1
+Flags=1
+
+[ENTRY]
+ID=151057192
+Asset=Manipulator-SpawnPoint
+Pos=66695,429.763,42508
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=2a_rhl_sectionB2_general
+outerRadius=30
+

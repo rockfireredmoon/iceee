@@ -1,0 +1,15 @@
+[ENTRY]
+ID=151037458
+Asset=CL-Crystal2
+Pos=36601.2,1175.66,81233
+Orient=0.136757,-0.577064,0.152889,0.790519
+Scale=9.7,9.7,9.7
+
+[ENTRY]
+ID=151054370
+Asset=Par-Waves-1-Emitter
+Pos=36135.1,1251.54,81172
+Orient=0,0.227327,0,-0.973818
+Scale=2,2,2
+Flags=1
+

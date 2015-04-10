@@ -1,0 +1,17 @@
+[ENTRY]
+ID=150999851
+Asset=Autumn_Forest?d=.9&amp;s=875639&amp;sz=800
+Name=9
+Pos=103514,503.108,139450
+Orient=0,0,0,1
+Scale=1,1,1
+Flags=1
+
+[ENTRY]
+ID=151057189
+Asset=Manipulator-PathNode
+Name=9
+Pos=103512,447.677,139209
+Orient=0,0,0,1
+Scale=1,1,1
+

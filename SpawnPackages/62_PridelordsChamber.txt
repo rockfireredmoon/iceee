@@ -1,0 +1,18 @@
+[ENTRY]
+Name=z62_pc_gen_Exit_to_Cracked_Rock_1458
+Spawn=1458,100  ;Exit to Cracked Rock (1) at 0
+
+[ENTRY]
+Name=9_pc_Chamber_38
+Spawn=1432,25  ;Strongpaw (38) at 4
+Spawn=1433,25  ;Prowlfang (38) at 0
+Spawn=1434,25  ;Spellmane (38) at 0
+Spawn=1435,25  ;Rendroar (38) at 0
+
+[ENTRY]
+Name=9_mountainKingPular_r_39
+Spawn=778,100  ;Pular (39) at 0
+
+[ENTRY]
+Name=9_pc_obji_PularLewt
+Spawn=1532,100  ;Pular's Treasure (1) at 0

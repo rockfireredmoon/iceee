@@ -1,0 +1,17 @@
+[ENTRY]
+ID=150995980
+Asset=CL-Hills_Rock3#CL-Hills_Rock3
+Name=9
+Pos=51630.8,523.055,128198
+Orient=0,-0.443948,0,0.896053
+Scale=1,1,1
+
+[ENTRY]
+ID=151047860
+Asset=Manipulator-SpawnPoint
+Name=9
+Pos=51474,431.312,128209
+Orient=0,-0.824886,0,0.5653
+Scale=1,1,1
+Layer=151007312
+

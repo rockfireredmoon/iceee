@@ -1,0 +1,11 @@
+#name Bastion_NPC_CatapultFiringAnimation
+;#idlespeed 1
+; 5421 - Catapult1
+; 5422 - Catapult2
+
+:begin
+use 5421
+wait 10000
+use 5422
+wait 10000
+goto begin

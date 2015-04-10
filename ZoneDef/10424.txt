@@ -1,0 +1,13 @@
+[ENTRY]
+ID=10424
+ACCOUNTID=679
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=alphasonicwolf
+GroveName=alphasonicwolf
+WarpName=alphasonicwolf1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

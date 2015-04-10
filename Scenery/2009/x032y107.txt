@@ -1,0 +1,8 @@
+[ENTRY]
+ID=151058901
+Asset=Basic Desert?d=0.3&amp;s=133817&amp;sz=800
+Name=9
+Pos=24629.8,395.334,80360.8
+Orient=0,0,0,1
+Scale=1,1,1
+

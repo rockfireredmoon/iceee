@@ -1,0 +1,13 @@
+[ENTRY]
+ID=12640
+ACCOUNTID=956
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=groveii
+GroveName=groveii
+WarpName=groveii1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

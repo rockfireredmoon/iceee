@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151023064
+Asset=Prop-Willow_Tree#Prop-Willow_Tree2
+Name=9
+Pos=75013.1,150.822,156563
+Orient=0,-0.717356,0,0.696707
+Scale=1.85,1.85,1.85
+Flags=1
+

@@ -1,0 +1,494 @@
+; UNOFFICIAL: Gambler
+[ENTRY]
+CreatureDefID=10015
+Item=3000200
+Item=3000201
+Item=3000202
+Item=3000203
+Item=3000204
+Item=3000205
+Item=3000206
+Item=3000207
+Item=3000208
+Item=3000209
+Item=3000210
+Item=3000220
+Item=3000221
+Item=3000222
+Item=3000223
+Item=3000224
+Item=3000225
+Item=3000226
+Item=3000227
+
+
+
+
+
+; UNOFFICIAL: Advanced refashioning support.
+[ENTRY]
+CreatureDefID=10014
+Item=8950 ;Invisible Boots
+Item=8951 ;Invisible Vest
+Item=8952 ;Invisible Gloves
+Item=8953 ;Invisible Leggings
+Item=8954 ;Invisible Sleeves
+Item=8956 ;Invisible Collar
+Item=8957 ;Invisible Belt
+Item=8958 ;Invisible Shoulderpads
+Item=8959 ;Invisible Cap
+Item=8980 ;Original Boots
+Item=8981 ;Original Vest
+Item=8982 ;Original Gloves
+Item=8983 ;Original Leggings
+Item=8984 ;Original Sleeves
+Item=8985 ;Original Buckler
+Item=8986 ;Original Collar
+Item=8987 ;Original Belt
+Item=8988 ;Original Shoulderpads
+Item=8989 ;Original Cap
+
+
+; UNOFFICIAL: NPC at the start of Anglorum, gives new players starting gear.
+[ENTRY]
+CreatureDefID=10011
+Item=956 ;Ragged Boots
+Item=970 ;Ragged Vest
+Item=1029 ;Ragged Gloves
+Item=1087 ;Ragged Leggings
+Item=1290 ;Ragged Sleeves
+Item=4733 ;Ragged Collar
+Item=5786 ;Ragged Belt
+Item=5787 ;Ragged Shoulderpads
+Item=5788 ;Ragged Cap
+Item=141016 ;Two Handed Sword
+Item=141017 ;Quarter Staff
+Item=141049 ;Pugio
+Item=141053 ;Hatchet
+Item=141178 ;Maple Bow
+Item=141196 ;Knives
+Item=141199 ;Twisted Branch
+Item=1357 ;Ragged Buckler
+
+; UNOFFICIAL: NPC at the start of Anglorum, gives new players summons.
+[ENTRY]
+CreatureDefID=10012
+Item=2015000 ;Summon Taiga Wolf
+Item=2015001 ;Summon Mini Dragon
+Item=2015002 ;Summon Anubian Archer
+Item=2015003 ;Summon City Guard
+Item=2015004 ;Summon Mage
+Item=2015005 ;Summon Mini Chomper
+Item=2015006 ;Summon Phoenix
+
+
+; UNOFFICIAL: NPC at the start of Anglorum, sells gamble items
+[ENTRY]
+CreatureDefID=10013
+Item=3000000
+Item=3000007
+Item=3000008
+Item=3000009
+Item=3000010
+Item=3000011
+Item=3000012
+Item=3000013
+Item=3000014
+Item=3000015
+Item=3000016
+Item=3000017
+Item=3000019
+Item=3000100
+Item=3000101
+Item=3000102
+Item=3000103
+Item=3000104
+Item=3000105
+Item=3000106
+Item=3000107
+Item=3000108
+
+; Raymond Everstout <Armor Merchant>
+[ENTRY]
+CreatureDefID=1816
+Item=5788
+Item=5787
+Item=970
+Item=1087
+Item=1029
+Item=956
+Item=4733
+Item=1290
+Item=5786
+Item=1357
+
+; Veran Shadedweller <General Merchant>
+[ENTRY]
+CreatureDefID=1818
+Item=20522
+Item=20523
+Item=20524
+Item=20525
+Item=20526
+Item=40053
+
+; Mara Hur <General Merchant>, Camelot Market
+[ENTRY]
+CreatureDefID=1820
+Item=20522  ;Infused Crystals
+Item=20523  ;Blood Root
+Item=20524  ;Amber
+Item=20525  ;Black Pearl
+Item=20526  ;Portal Stone
+Item=40053  ;Basic Health Potion: Level 10
+Item=40054  ;Basic Health Potion: Level 20
+Item=40055  ;Basic Health Potion: Level 30
+Item=40056  ;Basic Health Potion: Level 40
+Item=40057  ;Basic Health Potion: Level 50
+
+; Lex Ridare <Weapon Merchant>
+[ENTRY]
+CreatureDefID=1957
+Item=141091
+Item=141061
+Item=141147
+Item=141158
+Item=141250
+Item=141214
+Item=141232
+
+; Crighton Barheel <Container Merchant>
+[ENTRY]
+CreatureDefID=1040
+Item=2
+Item=3
+Item=4
+Item=5
+Item=6
+
+; Snerd Danelaw <General Merchant>
+[ENTRY]
+CreatureDefID=1981
+Item=20522
+Item=20523
+Item=20524
+Item=20525
+Item=20526
+Item=40053
+
+; Argus Milentius, Camelot Master Crafting Merchant
+[ENTRY]
+CreatureDefID=2758
+Item=800608	;Two Hand Weapon Plan: Gloomderang
+Item=800609	;Two Hand Weapon Plan: Flamefear
+Item=800610	;Two Hand Weapon Plan: Fellstar
+Item=800611	;Two Hand Weapon Plan: Grawl
+Item=800612	;Two Hand Weapon Plan: Dread
+Item=800613	;Two Hand Weapon Plan: Justicar
+Item=800614	;One Hand Weapon Plan: Skyfall
+Item=800615	;One Hand Weapon Plan: Darkflame
+Item=800616	;One Hand Weapon Plan: Windrend
+Item=800617	;One Hand Weapon Plan: Hark
+Item=800618	;One Hand Weapon Plan: Frosthand
+Item=800619	;One Hand Weapon Plan: The Gavel
+Item=800620	;Pole Weapon Plan: Thunderclap
+Item=800621	;Pole Weapon Plan: Timeless
+Item=800622	;Pole Weapon Plan: Midnight
+Item=800623	;Pole Weapon Plan: Impaler
+Item=800624	;Small Weapon Plan: Dawn
+Item=800625	;Small Weapon Plan: Twilight
+Item=800626	;Small Weapon Plan: Klaw
+Item=800627	;Small Weapon Plan: Hand of Pain
+Item=800628	;Small Weapon Plan: Riddler
+Item=800629	;Small Weapon Plan: Heart Stealer
+Item=800630	;Wand Weapon Plan: Blossom
+Item=800631	;Wand Weapon Plan: Wellspring
+Item=800632	;Bow Weapon Plan: Paramour
+Item=800633	;Bow Weapon Plan: Headhunter
+;Item=20968  ;Basic Armor Mold
+;Item=20967  ;Basic Weapon Mold
+;Item=20969  ;Standard Armor Mold
+;Item=20970  ;Standard Weapon Mold
+;Item=20971  ;Expert Armor Mold
+;Item=20972  ;Expert Weapon Mold
+;Item=20973  ;Adept Armor Mold
+;Item=20974  ;Adept Weapon Mold
+;Item=20975  ;Master Armor Mold
+;Item=20976  ;Master Weapon Mold
+
+
+; Alex Bitterblade <Weapon Merchant>
+[ENTRY]
+CreatureDefID=1817
+Item=141049
+Item=141053
+Item=141016
+Item=141017
+Item=141178
+Item=141199
+Item=141196
+
+
+; Gwynnith Starfury <Crafting Merchant>, Camelot Market
+[ENTRY]
+CreatureDefID=1829
+Item=20968  ;Basic Armor Mold
+Item=20967  ;Basic Weapon Mold
+Item=20969  ;Standard Armor Mold
+Item=20970  ;Standard Weapon Mold
+Item=20971  ;Expert Armor Mold
+Item=20972  ;Expert Weapon Mold
+Item=20973  ;Adept Armor Mold
+Item=20974  ;Adept Weapon Mold
+Item=20975  ;Master Armor Mold
+Item=20976  ;Master Weapon Mold
+
+
+; Krispin Kohnerr <Master Weaponsmith>, Camelot Market
+[ENTRY]
+CreatureDefID=1826
+Item=141061  ;Broad Axe (formerly Antler Handled Axe)
+Item=141147  ;War Hammer (formerly Gale Force Battlemace)
+Item=141250  ;Alder Bow (formerly Ironwood Recurve Bow)
+Item=141091  ;Jambiya (formerly Darkened Jambiya)
+Item=141158  ;Wooden Staff (formerly Dryad Walkingstick)
+Item=141232  ;Shurikens (formerly Iron Stars)
+Item=141214  ;Fir Wand (formerly Willow Branch)
+Item=141489  ;Bludgeon (formerly Shadewrought Mace)
+Item=141303  ;Katar (formerly Waterdancer Katar)
+Item=141262  ;Tomahawks (formerly Lightning-Etched Hatchet)
+Item=141268  ;Horned Wand (formerly Faux Unikorn Horn Wand)
+
+
+; Stefan Bloomingfield <Journeyman Armorer>, Camelot Market
+[ENTRY]
+CreatureDefID=1822
+Item=1345  ;Tarnished Sleeves (formerly Reinforced Armbraces)
+Item=1025  ;Tarnished Vest (formerly Cured Guard)
+Item=965  ;Tarnished Footguards (formerly Cured Footguards)
+Item=1083  ;Tarnished Gloves (formerly Thick Leather Gloves)
+Item=1142  ;Tarnished Pants (formerly Thick Leg Guards)
+Item=951  ;Tarnished Neckwrap (formerly Useful Gorget)
+Item=1213  ;Tarnished Shoulderpads (formerly Briarthorn Pauldron)
+Item=1233  ;Tarnished Belt (formerly Cured Belt)
+
+; Ricardo DeZinnias <Master Armorer>, Camelot Market
+[ENTRY]
+CreatureDefID=1823
+Item=1425  ;Worn Shield (formerly Laquered Azure Shield)
+Item=1605  ;Worn Sleeves (formerly Pilgrimmage Chant Sleeves)
+Item=1515  ;Worn Vest (formerly Pilgrimmage ChantVestment)
+Item=1701  ;Worn Shoes (formerly Pilgrimmage Chant Footwear)
+Item=1560  ;Worn Gloves (formerly Pilgrimmage Chant Gloves)
+Item=1725  ;Worn Helm (formerly Pilgrimmage Chant Helm)
+Item=1656  ;Worn Legwraps (formerly Pilgrimmage Chant Legwraps)
+Item=1458  ;Worn Drape (formerly Roc-Fury Drape)
+Item=1750  ;Worn Shoulders (formerly Pilgrimmage Chant Shoulders)
+Item=1777  ;Worn Belt (formerly Pilgrimmage Chant Belt)
+
+
+; Christophyr Furlong <Apprentice Armorer>, Camelot Market
+[ENTRY]
+CreatureDefID=1821
+Item=1275  ;Tattered Belt (formerly Wolf Skin Belt)
+Item=903  ;Tattered Collar (formerly Modest Band)
+Item=1097  ;Tattered Leggings (formerly Wool Kilt)
+Item=1157  ;Tattered Sandals (formerly Flax Sandals)
+Item=977  ;Tattered Shirt (formerly Flax Vestment)
+Item=1064  ;Tattered Mitts (formerly Durable Mitts)
+Item=1325  ;Tattered Sleeves (formerly Sleek Vambraces)
+Item=1216  ;Frayed Cinch (formerly Nettle Woven Cord)
+Item=908  ;Frayed Muffler (formerly Drape)
+Item=1101  ;Frayed Legwraps (formerly Simple Kilt)
+Item=1044  ;Frayed Handwraps (formerly Flax-Woven Handwraps)
+Item=1162  ;Frayed Clogs (formerly Simple Clogs)
+Item=986  ;Frayed Shirt (formerly Gilt Laced Vestment)
+Item=1305  ;Frayed Sleeves (formerly Thistle Woven Armguards)
+
+; Kristov Blade-Turner <Apprentice Weaponsmith>, Camelot Market
+[ENTRY]
+CreatureDefID=1825
+Item=1366  ;Tattered Shield (formerly Wooden Plank Shield)
+Item=1370  ;Frayed Shield (formerly Penitent Shield)
+Item=141025  ;Falchion (formerly Sharpened Falchion)
+Item=141141  ;Two Handed Hammer (formerly Quartz Warmace)
+Item=141181  ;Beech Bow (formerly Ash Blend Bow)
+Item=141078  ;Poniard (formerly Fisherman's Knife)
+Item=141163  ;Spear (formerly Scrimshaw Spear)
+Item=141220  ;Blades (formerly Thin Blades)
+Item=141202  ;Metallic Wand
+Item=141125  ;Claymore (formerly Officer's Longsword)
+Item=141184  ;Elm Bow (formerly Forager's Bow)
+Item=141153  ;Bo Staff (formerly Knot Top Staff)
+Item=141205  ;Knotted Wand (formerly Delicate Wand)
+
+
+; Martin Bestfeather <Journeyman Weaponsmith>, Camelot Market
+[ENTRY]
+CreatureDefID=1824
+Item=1379  ;Tarnished Shield (formerly Woven Fingerbone Shield)
+Item=141069  ;Mace (formerly Tusk Handled Mace)
+Item=141082  ;Rondel (formerly Initiate's Stiletto)
+Item=141226  ;Bolts (formerly Spikes)
+Item=141061  ;Broad Axe (formerly Antler Handled Axe)
+Item=141147  ;War Hammer (formerly Gale Force Battlemace)
+Item=141250  ;Alder Bow (formerly Ironwood Recurve Bow)
+Item=141091  ;Jambiya (formerly Darkened Jambiya)
+Item=141158  ;Wooden Staff (formerly Dryad Walkingstick)
+Item=141232  ;Shurikens (formerly Iron Stars)
+Item=141214  ;Fir Wand (formerly Willow Branch)
+
+
+; Wilford Mercia, <Master Weaponsmith>, Nottingham
+[ENTRY]
+CreatureDefID=1979
+Item=141061  ;Broad Axe (formerly Antler Handled Axe)
+Item=141147  ;War Hammer (formerly Gale Force Battlemace)
+Item=141250  ;Alder Bow (formerly Ironwood Recurve Bow)
+Item=141091  ;Jambiya (formerly Darkened Jambiya)
+Item=141158  ;Wooden Staff (formerly Dryad Walkingstick)
+Item=141232  ;Shurikens (formerly Iron Stars)
+Item=141214  ;Fir Wand (formerly Willow Branch)
+Item=141489  ;Bludgeon (formerly Shadewrought Mace)
+Item=141303  ;Katar (formerly Waterdancer Katar)
+Item=141262  ;Tomahawks (formerly Lightning-Etched Hatchet)
+Item=141268  ;Horned Wand (formerly Faux Unikorn Horn Wand)
+
+; Salisbury Bridgford, <Master Armorer>, Nottingham
+[ENTRY]
+CreatureDefID=1982
+Item=1425  ;Worn Shield (formerly Laquered Azure Shield)
+Item=1605  ;Worn Sleeves (formerly Pilgrimmage Chant Sleeves)
+Item=1515  ;Worn Vest (formerly Pilgrimmage ChantVestment)
+Item=1701  ;Worn Shoes (formerly Pilgrimmage Chant Footwear)
+Item=1560  ;Worn Gloves (formerly Pilgrimmage Chant Gloves)
+Item=1725  ;Worn Helm (formerly Pilgrimmage Chant Helm)
+Item=1656  ;Worn Legwraps (formerly Pilgrimmage Chant Legwraps)
+Item=1458  ;Worn Drape (formerly Roc-Fury Drape)
+Item=1750  ;Worn Shoulders (formerly Pilgrimmage Chant Shoulders)
+Item=1777  ;Worn Belt (formerly Pilgrimmage Chant Belt)
+
+
+; Snerd Danelaw, <Potions and Reagents>, Nottingham
+[ENTRY]
+CreatureDefID=1981
+Item=20522  ;Infused Crystals
+Item=20523  ;Blood Root
+Item=20524  ;Amber
+Item=20525  ;Black Pearl
+Item=20526  ;Portal Stone
+Item=40053  ;Basic Health Potion: Level 10
+Item=40054  ;Basic Health Potion: Level 20
+Item=40055  ;Basic Health Potion: Level 30
+Item=40056  ;Basic Health Potion: Level 40
+Item=40057  ;Basic Health Potion: Level 50
+
+; Camaroon Quid, <Master Armorer>, Southshield
+[ENTRY]
+CreatureDefID=2164
+Item=1425  ;Worn Shield (formerly Laquered Azure Shield)
+Item=1605  ;Worn Sleeves (formerly Pilgrimmage Chant Sleeves)
+Item=1515  ;Worn Vest (formerly Pilgrimmage ChantVestment)
+Item=1701  ;Worn Shoes (formerly Pilgrimmage Chant Footwear)
+Item=1560  ;Worn Gloves (formerly Pilgrimmage Chant Gloves)
+Item=1725  ;Worn Helm (formerly Pilgrimmage Chant Helm)
+Item=1656  ;Worn Legwraps (formerly Pilgrimmage Chant Legwraps)
+Item=1458  ;Worn Drape (formerly Roc-Fury Drape)
+Item=1750  ;Worn Shoulders (formerly Pilgrimmage Chant Shoulders)
+Item=1777  ;Worn Belt (formerly Pilgrimmage Chant Belt)
+
+; Christos Holteth, <Potions and Reagents>, Southshield
+[ENTRY]
+CreatureDefID=1970
+Item=20522  ;Infused Crystals
+Item=20523  ;Blood Root
+Item=20524  ;Amber
+Item=20525  ;Black Pearl
+Item=20526  ;Portal Stone
+Item=40053  ;Basic Health Potion: Level 10
+Item=40054  ;Basic Health Potion: Level 20
+Item=40055  ;Basic Health Potion: Level 30
+Item=40056  ;Basic Health Potion: Level 40
+Item=40057  ;Basic Health Potion: Level 50
+
+; Adrim Maxeo, <Master Weaponsmith>, Southshield
+[ENTRY]
+CreatureDefID=1968
+Item=141061  ;Broad Axe (formerly Antler Handled Axe)
+Item=141147  ;War Hammer (formerly Gale Force Battlemace)
+Item=141250  ;Alder Bow (formerly Ironwood Recurve Bow)
+Item=141091  ;Jambiya (formerly Darkened Jambiya)
+Item=141158  ;Wooden Staff (formerly Dryad Walkingstick)
+Item=141232  ;Shurikens (formerly Iron Stars)
+Item=141214  ;Fir Wand (formerly Willow Branch)
+Item=141489  ;Bludgeon (formerly Shadewrought Mace)
+Item=141303  ;Katar (formerly Waterdancer Katar)
+Item=141262  ;Tomahawks (formerly Lightning-Etched Hatchet)
+Item=141268  ;Horned Wand (formerly Faux Unikorn Horn Wand)
+
+
+; Ajax Satch, <Master Armorer>, Bath
+[ENTRY]
+CreatureDefID=1959
+Item=1345  ;Tarnished Sleeves (formerly Reinforced Armbraces)
+Item=1025  ;Tarnished Vest (formerly Cured Guard)
+Item=965  ;Tarnished Footguards (formerly Cured Footguards)
+Item=1083  ;Tarnished Gloves (formerly Thick Leather Gloves)
+Item=1142  ;Tarnished Pants (formerly Thick Leg Guards)
+Item=951  ;Tarnished Neckwrap (formerly Useful Gorget)
+Item=1213  ;Tarnished Shoulderpads (formerly Briarthorn Pauldron)
+Item=1233  ;Tarnished Belt (formerly Cured Belt)
+
+; Lex Ridare <Master Weaponsmith>, Bath (EE.info)
+;[ENTRY]
+;CreatureDefID=1957
+;Item=1374  ;Harlequin Kite Shield
+;Item=1381  ;Flame Wrought Shield
+;Item=1379  ;Tarnished Shield (formerly Woven Fingerbone Shield)
+;Item=141069  ;Mace (formerly Tusk Handled Mace)
+;Item=141030  ;Bone Handled Coustille
+;Item=141187  ;Rich Ash Bow
+;Item=141100  ;Ivory Needles
+;Item=141082  ;Rondel (formerly Initiate's Stiletto)
+;Item=141117  ;Ferret Katar
+;Item=141226  ;Bolts (formerly Spikes)
+;Item=141208  ;Spindle Twig
+;Item=141033  ;Brigand Short Sword
+;Item=141146  ;Cloudy Warmace
+;Item=141191  ;Flex Bow
+;Item=141102  ;Lynx Claw
+;Item=141086  ;Assassin Seax
+;Item=141168  ;Wintersong Spear
+;Item=141229  ;Iron Discs
+;Item=141211  ;Bent Bough
+;Item=141061  ;Broad Axe (formerly Antler Handled Axe)
+;Item=141073  ;Stellar Mace
+;Item=141038  ;Soldier's Sword
+;Item=141147  ;War Hammer (formerly Gale Force Battlemace)
+;Item=141250  ;Alder Bow (formerly Ironwood Recurve Bow)
+;Item=141193  ;Long Bow
+;Item=141106  ;Polar Talons
+;Item=141091  ;Jambiya (formerly Darkened Jambiya)
+;Item=141158  ;Wooden Staff (formerly Dryad Walkingstick)
+;Item=141232  ;Shurikens (formerly Iron Stars)
+;Item=141214  ;Fir Wand (formerly Willow Branch)
+
+; Taylor Rose, <Potions and Reagents>, Bath
+[ENTRY]
+CreatureDefID=1955
+Item=20522  ;Infused Crystals
+Item=20523  ;Blood Root
+Item=20524  ;Amber
+Item=20525  ;Black Pearl
+Item=20526  ;Portal Stone
+Item=40053  ;Basic Health Potion: Level 10
+Item=40054  ;Basic Health Potion: Level 20
+Item=40055  ;Basic Health Potion: Level 30
+Item=40056  ;Basic Health Potion: Level 40
+Item=40057  ;Basic Health Potion: Level 50
+
+
+
+
+
+

@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151050564
+Asset=Manipulator-SpawnPoint
+Pos=43495.8,398.184,60384
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=3a_bearHedgehogCamp01_hedgehogs
+outerRadius=30
+

@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151015989
+Asset=Prop-Dungeon_Chain#Prop-Dungeon_Chain1
+Name=9
+Pos=83684.4,43.3023,181556
+Orient=0.0661937,0.374382,-0.161034,0.910782
+Scale=5.05,5.05,5.05
+Flags=1
+

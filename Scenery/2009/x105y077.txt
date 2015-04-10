@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151018049
+Asset=CL-Burnt-Pine1#CL-Burnt-Pine1
+Name=9
+Pos=79208,700.39,58498
+Orient=0,0,0,1
+Scale=2.025,2.025,2.025
+Flags=1
+

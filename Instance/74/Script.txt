@@ -1,0 +1,15 @@
+set result 0
+
+:onKill_2071
+:onKill_2072
+:onKill_2073
+countalive 2074 result 
+if result = 0
+  spawn 1241514515
+end
+
+:onKill_2074
+countalive 2075 result 
+if result = 0
+  spawn 1241514516
+end

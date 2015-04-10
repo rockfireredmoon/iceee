@@ -1,0 +1,17 @@
+[ENTRY]
+ID=151053325
+Asset=Manipulator-SpawnPoint
+Name=9
+Pos=38899.7,237.102,53296
+Orient=0,0,0,1
+Scale=1,1,1
+Layer=151009942
+
+[ENTRY]
+ID=151059281
+Asset=Prop-Forest_Tree2
+Name=9
+Pos=38273.7,255.095,53638.6
+Orient=0,-0.810497,0,0.585743
+Scale=1,1,1
+

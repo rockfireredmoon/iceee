@@ -1,0 +1,8 @@
+[ENTRY]
+ID=1358954523
+Asset=Prop-Dead-Forest-Tree#Prop-Dead-Forest-Tree3
+Name=81
+Pos=50836.7,143.602,60754
+Orient=0,0,0,1
+Scale=1.275,1.275,1.275
+

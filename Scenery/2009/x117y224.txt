@@ -1,0 +1,16 @@
+[ENTRY]
+ID=151026448
+Asset=Prop-Mushroom_Glowpod1
+Name=9
+Pos=88363.3,220.347,168664
+Orient=0,-0.958016,0,0.286715
+Scale=2.05,2.05,2.05
+
+[ENTRY]
+ID=151026450
+Asset=Prop-Mushroom_Glowpod2
+Name=9
+Pos=88372.6,221.646,168655
+Orient=0.0667596,-0.931684,0.223067,0.278834
+Scale=2.675,2.675,2.675
+

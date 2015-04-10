@@ -1,0 +1,13 @@
+[ENTRY]
+ID=12448
+ACCOUNTID=932
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=roanoak
+GroveName=roanoak
+WarpName=roanoak1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

@@ -1,0 +1,8 @@
+[ENTRY]
+ID=151023068
+Asset=Prop-Bush-Swamp_Large2#Prop-Bush-Swamp_Large2
+Name=9
+Pos=73779.3,69.3587,155960
+Orient=0,0,0,1
+Scale=2.725,2.725,2.725
+

@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151052679
+Asset=Bldg-Ruins-Small_House1#Bldg-Ruins-Small_House1?ATS=ATS-Ruins
+Name=9
+Pos=20705.5,184.64,56407
+Orient=0,0.223106,0,0.974794
+Scale=1.1,1.1,1.1
+Flags=1
+

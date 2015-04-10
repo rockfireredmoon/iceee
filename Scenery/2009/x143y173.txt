@@ -1,0 +1,17 @@
+[ENTRY]
+ID=151000109
+Asset=CL-Plains_Bush2#CL-Plains_Bush2
+Name=9
+Pos=107825,412.169,130244
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
+ID=151056347
+Asset=Manipulator-SpawnPoint
+Name=9
+Pos=107445,429.999,130330
+Orient=0,0,0,1
+Scale=1,1,1
+Layer=151011018
+

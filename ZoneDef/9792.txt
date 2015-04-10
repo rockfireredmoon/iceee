@@ -1,0 +1,13 @@
+[ENTRY]
+ID=9792
+ACCOUNTID=600
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=Bastion
+ShardName=amo
+GroveName=amo
+WarpName=amo1
+Grove=1
+EnvironmentCycle=1
+DefLoc=3033,258,4151
+

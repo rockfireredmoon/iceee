@@ -1,0 +1,27 @@
+; Dungeon Loot
+[ENTRY]
+CreatureDefID=2717
+EssenceID=21271
+Item=5389,10
+Item=143480,10
+Item=800131,10
+Item=5522,10
+Item=5454,10
+Item=800242,10
+Item=5550,10
+Item=800162,10
+
+; Wither-Root's Treasure
+; Restored from Oso Loco's spreadsheet.
+[ENTRY]
+CreatureDefID=2736
+EssenceID=21282
+Item=5541,1  ;Blightbark Boots
+Item=5435,1  ;Wither-Root's Chestpiece
+Item=5371,1  ;Wither-Root's Headpiece
+Item=143510,1  ;Branchescha's Bow
+Item=142675,1  ;Steel Tears
+Item=800243,1  ;Weapon Plan: Sunburn
+Item=800213,1  ;Weapon Plan: Thirsty
+Item=143460,1  ;Timbernaut Chopper
+

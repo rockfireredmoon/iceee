@@ -1,0 +1,77 @@
+; Configuration options for each rarity type.  Greens start at 2.
+
+; NOTE: Level is no longer used here.  Modify Data\DropRateProfile.txt instead.
+
+; mQualityLevel = Corresponds to the mQualityLevel of the item.
+; Level = The required level to begin dropping these items.
+; Chance = The chance that a rarity will be upgraded.  100 = 1 in 100 = 1%.
+; StatMax = The maximum number of stat modifiers that may spawn on the item.
+; ModMax = The total number of modifiers that may spawn on the item.
+; LevelBonus = The percent chance to grant an additional modifier (per level)
+; RollMin = Lower bound ratio of total stats applied in a single allocation.
+; RollMax = Upper bound ratio of total stats applied in a single allocation.
+
+
+; Uncommon (Green)
+[ENTRY]
+mQualityLevel=2
+Level=1
+Chance=25
+StatMax=2
+ModMax=2
+LevelBonus=1.2
+RollMin=0
+RollMax=0
+NullMod=30
+StatPointMult=1.0
+; ValueMult=0.6
+
+; Rare (Blue)
+[ENTRY]
+mQualityLevel=3
+Level=15
+Chance=125
+StatMax=2
+ModMax=2
+LevelBonus=1.2
+RollMin=0
+RollMax=0
+NullMod=20
+StatPointMult=0.9
+
+; Epic (Purple)
+[ENTRY]
+mQualityLevel=4
+Level=25
+Chance=625
+StatMax=3
+ModMax=3
+LevelBonus=1.3
+RollMin=0.4
+RollMax=0.6
+NullMod=10
+StatPointMult=0.8
+
+; Legendary (Yellow)
+[ENTRY]
+mQualityLevel=5
+Level=45
+Chance=25000
+StatMax=3
+ModMax=4
+LevelBonus=1.4
+RollMin=0.2
+RollMax=0.5
+StatPointMult=0.8
+
+; Artifact (Orange)
+[ENTRY]
+mQualityLevel=6
+Level=99
+Chance=250000
+StatMax=4
+ModMax=5
+LevelBonus=1.75
+RollMin=0.2
+RollMax=0.4
+StatPointMult=1.0

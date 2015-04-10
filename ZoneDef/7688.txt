@@ -1,0 +1,13 @@
+[ENTRY]
+ID=7688
+ACCOUNTID=337
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=VampireNight
+ShardName=bloodsight
+GroveName=bloodsight
+WarpName=bloodsight1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

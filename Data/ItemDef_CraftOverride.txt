@@ -1,0 +1,337 @@
+; All - Changed value from 10000 to 1000.
+; 21303 - Corrected typo in name.
+
+[ENTRY]
+mID=21298
+mType=7
+mDisplayName=Al'zahrazzi's Frozen Heart
+mIcon=Icon-32-Heart.png|Icon-32-BG-Divine.png
+mIvType1=1
+mIvMax1=20
+mIvType2=8
+mIvMax2=1
+mLevel=45
+mBindingType=1
+mValue=1000
+mFlavorText=Rare Crafting Component
+mQualityLevel=2
+mMinUseLevel=45
+
+[ENTRY]
+mID=21303
+mType=7
+mDisplayName=Grimfrost's Shattered Eye
+mIcon=Icon-32-Eye_Green.png|Icon-32-BG-Divine.png
+mIvType1=1
+mIvMax1=20
+mIvType2=8
+mIvMax2=1
+mLevel=45
+mBindingType=1
+mValue=1000
+mFlavorText=Rare Crafting Component
+mQualityLevel=2
+mMinUseLevel=45
+
+[ENTRY]
+mID=21304
+mType=7
+mDisplayName=Vangar's Lucky Charm
+mIcon=Icon-32-Talisman_Turtle.png|Icon-32-BG-Divine.png
+mIvType1=1
+mIvMax1=20
+mIvType2=8
+mIvMax2=1
+mLevel=45
+mBindingType=1
+mValue=1000
+mFlavorText=Rare Crafting Component
+mQualityLevel=2
+mMinUseLevel=45
+
+[ENTRY]
+mID=21305
+mType=7
+mDisplayName=Roots of the Rotted King
+mIcon=Icon-32-Root1.png|Icon-32-BG-Divine.png
+mIvType1=1
+mIvMax1=20
+mIvType2=8
+mIvMax2=1
+mLevel=45
+mBindingType=1
+mValue=1000
+mFlavorText=Rare Crafting Component
+mQualityLevel=2
+mMinUseLevel=45
+
+[ENTRY]
+mID=21306
+mType=7
+mDisplayName=Lost One Spores
+mIcon=Icon-32-Small_Mushroom1.png|Icon-32-BG-Divine.png
+mIvType1=1
+mIvMax1=20
+mIvType2=8
+mIvMax2=1
+mLevel=45
+mBindingType=1
+mValue=1000
+mFlavorText=Rare Crafting Component
+mQualityLevel=2
+mMinUseLevel=45
+
+[ENTRY]
+mID=21307
+mType=7
+mDisplayName=Symbol of the Desert Brood
+mIcon=Icon-32-Shield6.png|Icon-32-BG-Divine.png
+mIvType1=1
+mIvMax1=20
+mIvType2=8
+mIvMax2=1
+mLevel=45
+mBindingType=1
+mValue=1000
+mFlavorText=Rare Crafting Component
+mQualityLevel=2
+mMinUseLevel=45
+
+[ENTRY]
+mID=21308
+mType=7
+mDisplayName=Heart of Tar
+mIcon=Icon-32-Black_Pearl.png|Icon-32-BG-Divine.png
+mIvType1=1
+mIvMax1=20
+mIvType2=8
+mIvMax2=1
+mLevel=45
+mBindingType=1
+mValue=1000
+mFlavorText=Rare Crafting Component
+mQualityLevel=2
+mMinUseLevel=45
+
+[ENTRY]
+mID=21309
+mType=7
+mDisplayName=Symbol of the Frozen Brood
+mIcon=Icon-32-Ability-M_Frost_Shield.png|Icon-32-BG-Divine.png
+mIvType1=1
+mIvMax1=20
+mIvType2=8
+mIvMax2=1
+mLevel=45
+mBindingType=1
+mValue=1000
+mFlavorText=Rare Crafting Component
+mQualityLevel=2
+mMinUseLevel=45
+
+[ENTRY]
+mID=21310
+mType=7
+mDisplayName=Perfect Murkfly Eye
+mIcon=Icon-32-Eye_Bug.png|Icon-32-BG-Divine.png
+mIvType1=1
+mIvMax1=20
+mIvType2=8
+mIvMax2=1
+mLevel=45
+mBindingType=1
+mValue=1000
+mFlavorText=Rare Crafting Component
+mQualityLevel=2
+mMinUseLevel=45
+
+[ENTRY]
+mID=21311
+mType=7
+mDisplayName=Outrider Skull Charm
+mIcon=Icon-32-Talisman_Skull.png|Icon-32-BG-Divine.png
+mIvType1=1
+mIvMax1=20
+mIvType2=8
+mIvMax2=1
+mLevel=45
+mBindingType=1
+mValue=1000
+mFlavorText=Rare Crafting Component
+mQualityLevel=2
+mMinUseLevel=45
+
+[ENTRY]
+mID=21312
+mType=7
+mDisplayName=Polished Sand Goliath Heart
+mIcon=Icon-32-Talisman3.png|Icon-32-BG-Divine.png
+mIvType1=1
+mIvMax1=20
+mIvType2=8
+mIvMax2=1
+mLevel=45
+mBindingType=1
+mValue=1000
+mFlavorText=Rare Crafting Component
+mQualityLevel=2
+mMinUseLevel=45
+
+[ENTRY]
+mID=21313
+mType=7
+mDisplayName=Frostbound Steel
+mIcon=Icon-32-Silver_Bar.png|Icon-32-BG-Divine.png
+mIvType1=1
+mIvMax1=20
+mIvType2=8
+mIvMax2=1
+mLevel=45
+mBindingType=1
+mValue=1000
+mFlavorText=Rare Crafting Component
+mQualityLevel=2
+mMinUseLevel=45
+
+
+
+
+[ENTRY]
+mID=20967
+mType=7
+mDisplayName=Basic Weapon Mold
+mIcon=Icon-32-Metal_Tube.png|Icon-32-BG-Divine.png
+mIvType1=1
+mIvMax1=1
+mIvType2=8
+mLevel=10
+mValue=400
+mFlavorText=Key Crafting Component
+mQualityLevel=1
+mMinUseLevel=10
+
+[ENTRY]
+mID=20968
+mType=7
+mDisplayName=Basic Armor Mold
+mIcon=Icon-32-Bremen-Arch_Center.png|Icon-32-BG-Divine.png
+mIvType1=1
+mIvMax1=1
+mIvType2=8
+mLevel=10
+mValue=400
+mFlavorText=Key Crafting Component
+mQualityLevel=1
+mMinUseLevel=10
+
+[ENTRY]
+mID=20969
+mType=7
+mDisplayName=Standard Armor Mold
+mIcon=Icon-32-Bremen-Arch_Center.png|Icon-32-BG-Divine.png
+mIvType1=1
+mIvMax1=1
+mIvType2=8
+mLevel=20
+mValue=1600
+mFlavorText=Key Crafting Component
+mQualityLevel=1
+mMinUseLevel=20
+
+[ENTRY]
+mID=20970
+mType=7
+mDisplayName=Standard Weapon Mold
+mIcon=Icon-32-Metal_Tube.png|Icon-32-BG-Divine.png
+mIvType1=1
+mIvMax1=1
+mIvType2=8
+mLevel=20
+mValue=1600
+mFlavorText=Key Crafting Component
+mQualityLevel=1
+mMinUseLevel=20
+
+[ENTRY]
+mID=20971
+mType=7
+mDisplayName=Expert Armor Mold
+mIcon=Icon-32-Bremen-Arch_Center.png|Icon-32-BG-Divine.png
+mIvType1=1
+mIvMax1=1
+mIvType2=8
+mLevel=30
+mValue=4000
+mFlavorText=Key Crafting Component
+mQualityLevel=1
+mMinUseLevel=30
+
+[ENTRY]
+mID=20972
+mType=7
+mDisplayName=Expert Weapon Mold
+mIcon=Icon-32-Metal_Tube.png|Icon-32-BG-Divine.png
+mIvType1=1
+mIvMax1=1
+mIvType2=8
+mLevel=30
+mValue=4000
+mFlavorText=Key Crafting Component
+mQualityLevel=1
+mMinUseLevel=30
+
+[ENTRY]
+mID=20973
+mType=7
+mDisplayName=Adept Armor Mold
+mIcon=Icon-32-Bremen-Arch_Center.png|Icon-32-BG-Divine.png
+mIvType1=1
+mIvMax1=1
+mIvType2=8
+mLevel=40
+mValue=24000
+mFlavorText=Key Crafting Component
+mQualityLevel=1
+mMinUseLevel=40
+
+[ENTRY]
+mID=20974
+mType=7
+mDisplayName=Adept Weapon Mold
+mIcon=Icon-32-Metal_Tube.png|Icon-32-BG-Divine.png
+mIvType1=1
+mIvMax1=1
+mIvType2=8
+mLevel=40
+mValue=24000
+mFlavorText=Key Crafting Component
+mQualityLevel=1
+mMinUseLevel=40
+
+[ENTRY]
+mID=20975
+mType=7
+mDisplayName=Master Armor Mold
+mIcon=Icon-32-Bremen-Arch_Center.png|Icon-32-BG-Divine.png
+mIvType1=1
+mIvMax1=1
+mIvType2=8
+mLevel=50
+mValue=100000
+mFlavorText=Key Crafting Component
+mQualityLevel=1
+mMinUseLevel=50
+
+[ENTRY]
+mID=20976
+mType=7
+mDisplayName=Master Weapon Mold
+mIcon=Icon-32-Metal_Tube.png|Icon-32-BG-Divine.png
+mIvType1=1
+mIvMax1=1
+mIvType2=8
+mLevel=50
+mValue=100000
+mFlavorText=Key Crafting Component
+mQualityLevel=1
+mMinUseLevel=50

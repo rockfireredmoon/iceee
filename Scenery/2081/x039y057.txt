@@ -1,0 +1,17 @@
+[ENTRY]
+ID=1358965155
+Asset=CL-Roadside2#CL-Roadside2
+Name=81
+Pos=39066.7,273.042,57136
+Orient=0,0.644218,0,0.764842
+Scale=1.5,1.5,1.5
+Flags=1
+
+[ENTRY]
+ID=1358966752
+Asset=Light-Medium
+Name=81
+Pos=39115.9,314.466,57155.4
+Orient=0,0,0,1
+Scale=1,1,1
+

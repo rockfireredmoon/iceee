@@ -1,0 +1,184 @@
+This is not a data file, just something for a reference.
+
+WEAPONS
+
+Level 10
+141049	Pugio
+141053	Hatchet
+141016	Two Handed Sword
+141017	Quarter Staff
+141199	Twisted Branch
+141178	Maple Bow
+141196	2	Knives
+
+Level 12
+141078	Poniard
+141025	Falchion
+141141	Two Handed Hammer
+141163	Spear
+141202	Metallic Wand
+141181	Beech Bow
+141220	Blades
+
+Level 15
+141082	Rondel
+141069	Mace
+141125	Claymore
+141153	Bo Staff
+141205	Knotted Wand
+141184	Elm Bow
+141226	Bolts
+
+Level 20
+141091	Jambiya
+141061	Broad Axe
+141147	War Hammer
+141158	Wooden Staff
+141214	Fir Wand
+141250	Alder Bow
+141232	Shurikens
+
+Level 25
+141303	Katar
+141489	Bludgeon
+141358	Zweihander
+141342	Lance
+141268	Horned Wand
+141451	Birch Bow
+141262	Tomahawks
+
+Level 30
+141394	Kris
+141423	Broadsword
+141370	Great Axe
+141354	Partisan
+141439	Ebon Wand
+141457	Ash Bow
+141448	Daggers
+
+Level 35
+141637	Shiv
+141688	Bone Mace
+141606	Great Sword
+141576	Long Staff
+141723	Poppy Wand
+141748	Willow Bow
+141735	Quills
+
+Level 40
+141660	Seax
+141709	Battle Axe
+141625	Flamberge
+141594	Stone Staff
+141731	Crystal Wand
+141756	Ebony Bow
+141744	Barbs
+
+
+
+ARMOR
+Level 13
+903	Tattered Collar
+977	Tattered Shirt
+1064	Tattered Mitts
+1097	Tattered Leggings
+1157	Tattered Sandals
+1275	Tattered Belt
+1325	Tattered Sleeves
+1366	Tattered Shield
+5789	Tattered Shoulders
+5790	Tattered Cap
+
+
+Level 15
+908	Frayed Muffler
+986	Frayed Shirt
+1044	Frayed Handwraps
+1101	Frayed Legwraps
+1162	Frayed Clogs
+1216	Frayed Cinch
+1305	Frayed Sleeves
+1370	Frayed Shield
+5791	Frayed Shoulderpads
+5792	Frayed Cap
+
+Level 20
+951	Tarnished Neckwrap
+965	Tarnished Footguards
+1025	Tarnished Vest
+1083	Tarnished Gloves
+1142	Tarnished Pants
+1213	Tarnished Shoulderpads
+1233	Tarnished Belt
+1345	Tarnished Sleeves
+1379	Tarnished Shield
+5793	Tarnished Skullcap
+
+Level 25
+1425	Worn Shield
+1458	Worn Drape
+1515	Worn Vest
+1560	Worn Gloves
+1605	Worn Sleeves
+1656	Worn Legwraps
+1701	Worn Shoes
+1725	Worn Helm
+1750	Worn Shoulders
+1777	Worn Belt
+
+Level 30
+1929	Faded Cinch
+1962	Faded Shoulders
+2011	Faded Headpiece
+2071	Faded Boots
+2124	Faded Leggings
+2178	Faded Armbands
+2258	Faded Gloves
+2297	Faded Chestpiece
+2341	Faded Choker
+2376	Faded Shield
+
+Level 35
+2393	Simple Buckler
+2422	Simple Gorget
+2463	Simple Tunic
+2503	Simple Gloves
+2543	Simple Armwraps
+2583	Simple Pants
+2623	Simple Boots
+2663	Simple Headgear
+2693	Simple Belt
+2717	Simple Shoulders
+
+Level 40
+2835	Plain Belt
+2859	Plain Pauldrons
+2893	Plain Helm
+2933	Plain Boots
+2973	Plain Leggings
+3014	Plain Armbands
+3055	Plain Gloves
+3095	Plain Chestpiece
+3135	Plain Collar
+3154	Plain Shield
+
+
+
+20967	Basic Weapon Mold	10
+20968	Basic Armor Mold	10
+20969	Standard Armor Mold	20
+20970	Standard Weapon Mold	20
+20971	Expert Armor Mold	30
+20972	Expert Weapon Mold	30
+20973	Adept Armor Mold	40
+20974	Adept Weapon Mold	40
+20975	Master Armor Mold	50
+20976	Master Weapon Mold	50
+
+
+
+40053	Basic Health Potion: Level 10
+40054	Basic Health Potion: Level 20
+40055	Basic Health Potion: Level 30
+40056	Basic Health Potion: Level 40
+40057	Basic Health Potion: Level 50

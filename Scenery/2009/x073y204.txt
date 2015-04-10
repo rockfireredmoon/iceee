@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151023189
+Asset=Environment-Marker?type=Forest
+Name=9
+Pos=55472.7,184.181,153686
+Orient=0,0,0,1
+Scale=5.1,5.1,5.1
+Flags=1
+

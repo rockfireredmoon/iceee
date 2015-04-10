@@ -1,0 +1,13 @@
+[ENTRY]
+ID=8824
+ACCOUNTID=479
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=kiezen
+GroveName=kiezen
+WarpName=kiezen1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

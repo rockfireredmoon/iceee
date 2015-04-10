@@ -1,0 +1,13 @@
+[ENTRY]
+ID=12368
+ACCOUNTID=922
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=lupineden
+GroveName=lupineden
+WarpName=lupineden1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

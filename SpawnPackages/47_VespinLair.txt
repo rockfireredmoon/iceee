@@ -1,0 +1,46 @@
+[ENTRY]
+Name=z47_vl_gen_Exit_to_Great_Forest_1014
+Spawn=1014,100  ;Exit to Great Forest (1) at 0
+
+[ENTRY]
+Name=4_vl_obji_HivequeenFrelonLewt
+Spawn=1023,100  ;Frelon's Treasure (1) at 0
+
+[ENTRY]
+Name=4_vl_front_33_35
+Spawn=280,25  ;Enslaved Mosquito (33) at 0
+Spawn=281,25  ;Enslaved Flame Moth (34) at 0
+Spawn=2593,25  ;Enslaved Mosquito (34) at 0
+Spawn=2594,25  ;Enslaved Flame Moth (33) at 0
+
+[ENTRY]
+Name=4_vl_vespinSlavers
+Spawn=425,20  ;Vespin Slaver (33) at 0
+Spawn=2595,20  ;Vespin Slaver (34) at 4
+Spawn=2596,20  ;Vespin Slaver (33) at 0
+Spawn=2597,20  ;Vespin Slaver (34) at 0
+Spawn=2598,20  ;Vespin Slaver (34) at 0
+
+[ENTRY]
+Name=4_vl_Mosca_r_34
+Spawn=1048,100  ;Mosca (34) at 0
+
+[ENTRY]
+Name=4_vl_GwarthimSTEPUP
+Spawn=426,100  ;Enslaved Skrill (35) at 0
+
+[ENTRY]
+Name=4_vl_back_33_35
+Spawn=280,20  ;Enslaved Mosquito (33) at 0
+Spawn=281,20  ;Enslaved Flame Moth (34) at 0
+Spawn=2593,20  ;Enslaved Mosquito (34) at 0
+Spawn=2594,20  ;Enslaved Flame Moth (33) at 0
+Spawn=426,20  ;Enslaved Skrill (35) at 0
+
+[ENTRY]
+Name=4_vl_Mothyra_m_35
+Spawn=1074,100  ;Mothyra (35) at 5
+
+[ENTRY]
+Name=4_vl_HiveQueenStep
+Spawn=411,100  ;Frelon's Yellowjacket (35) at 0

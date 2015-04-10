@@ -1,0 +1,13 @@
+[ENTRY]
+ID=13440
+ACCOUNTID=1056
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=eats
+GroveName=eats
+WarpName=eats1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

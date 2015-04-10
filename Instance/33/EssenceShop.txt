@@ -1,0 +1,26 @@
+; Dungeon Loot
+[ENTRY]
+CreatureDefID=2726
+EssenceID=21269
+Item=143437,10
+Item=5441,10
+Item=143472,10
+Item=5509,10
+Item=5378,10
+Item=5396,10
+Item=5485,10
+Item=5462,10
+
+; Sneath's Treasure
+[ENTRY]
+CreatureDefID=1856
+EssenceID=20877
+Item=143487,1
+Item=5395,1
+Item=143428,1
+Item=5421,1
+Item=5529,1
+Item=5508,1
+Item=5461,1
+Item=5543,1
+

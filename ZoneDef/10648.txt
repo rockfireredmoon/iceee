@@ -1,0 +1,13 @@
+[ENTRY]
+ID=10648
+ACCOUNTID=707
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=piopio
+GroveName=piopio
+WarpName=piopio1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

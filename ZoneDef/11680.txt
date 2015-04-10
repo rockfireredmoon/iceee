@@ -1,0 +1,13 @@
+[ENTRY]
+ID=11680
+ACCOUNTID=836
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=motochika
+GroveName=motochika
+WarpName=motochika1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

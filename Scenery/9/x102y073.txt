@@ -1,0 +1,10 @@
+[ENTRY]
+ID=151031320
+Asset=Manipulator-SpawnPoint
+Pos=77165,644.846,55257
+Orient=0,0,0,1
+Scale=1,1,1
+innerRadius=65
+spawnPackage=12_vmp_wilds_46_47
+outerRadius=70
+

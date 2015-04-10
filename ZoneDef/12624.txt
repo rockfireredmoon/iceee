@@ -1,0 +1,15 @@
+[ENTRY]
+ID=12624
+ACCOUNTID=954
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=GreatForestNight
+ShardName=archive
+GroveName=archive
+WarpName=archive1
+DropRateProfile=standard
+Grove=1
+EnvironmentCycle=0
+BuildPermission=account,954,0,0,3,3
+DefLoc=2340,880,5344
+

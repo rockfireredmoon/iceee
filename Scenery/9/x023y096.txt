@@ -1,0 +1,16 @@
+[ENTRY]
+ID=151008280
+Asset=Prop-Bush_Arid3#Prop-Bush_Arid3
+Pos=17764.9,220.4,72018
+Orient=0,0.589145,0,0.808028
+Scale=2.45,2.45,2.45
+Flags=1
+
+[ENTRY]
+ID=151008285
+Asset=CL-AridBush4#CL-AridBush4
+Pos=17824,224.281,72546
+Orient=0,0,0,1
+Scale=1.725,1.725,1.725
+Flags=1
+

@@ -1,0 +1,66 @@
+; Dual stats need higher priority than single stats, so that
+; singles won't override them.
+prefix=strength|dexterity,Mercenary
+prefix=strength|spirit,Tribal
+prefix=strength|psyche,Shaman
+prefix=strength|constitution,Warrior
+prefix=dexterity|spirit,Forest
+prefix=dexterity|psyche,Jester
+prefix=dexterity|constitution,Guile
+prefix=psyche|spirit,Elemental
+prefix=psyche|constitution,Wizard
+prefix=constitution|spirit,Vigorous
+prefix=strength,Gladiator
+prefix=dexterity,Assassin
+prefix=psyche,Enchanted
+prefix=constitution,Champion
+prefix=spirit,Astral
+
+;[SPECIAL]
+prefix=mod_melee_to_crit,Deadly
+suffix=mod_melee_to_crit,of Pain
+
+prefix=mod_magic_to_crit,Arcane
+suffix=mod_magic_to_crit,of Devastation
+
+prefix=melee_attack_speed,Swift
+suffix=melee_attack_speed,of Fury
+
+prefix=magic_attack_speed,Charged
+suffix=magic_attack_speed,of Warmth
+
+prefix=mod_movement,Speed
+suffix=mod_movement,of Quickness
+
+prefix=base_block,Robust
+suffix=base_block,of Protection
+
+prefix=base_parry,Skilled
+suffix=base_parry,of Deflection
+
+prefix=base_dodge,Nimble
+suffix=base_dodge,of Agility
+
+prefix=dmg_mod_fire,Blazing
+suffix=dmg_mod_fire,of Blazing
+
+prefix=dmg_mod_frost,Frozen
+suffix=dmg_mod_frost,of Freezing
+
+prefix=dmg_mod_mystic,Mystical
+suffix=dmg_mod_mystic,of Life
+
+prefix=dmg_mod_death,Deathly
+suffix=dmg_mod_death,of Death
+
+prefix=base_healing,Healer
+suffix=base_healing,of Healing
+
+prefix=casting_setback_chance,Stable
+suffix=casting_setback_chance,of Concentration
+
+prefix=channeling_break_chance,Disciplined
+suffix=channeling_break_chance,of Discipline
+
+prefix=mod_health_regen,Regenerative
+suffix=mod_health_regen,of Regeneration

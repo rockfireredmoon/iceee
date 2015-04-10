@@ -1,0 +1,579 @@
+[ENTRY]
+Flags=3
+Name=z26_db_gen_a_tattered_book_3034
+Spawn=3034,100  ;a tattered book (1) at 0
+
+[ENTRY]
+Flags=3
+Name=z26_db_gen_Exit_to_Midlands_3000
+Spawn=3000,100  ;Exit to Midlands (1) at 0
+
+[ENTRY]
+Flags=3
+Name=z26_db_gen_Teleporter_3007
+Spawn=3007,100  ;Teleporter (1) at 0
+
+[ENTRY]
+Flags=3
+Name=z26_db_gen_Teleporter_3005
+Spawn=3005,100  ;Teleporter (1) at 0
+
+[ENTRY]
+Flags=3
+Name=z26_db_gen_Teleporter_3003
+Spawn=3003,100  ;Teleporter (1) at 0
+
+[ENTRY]
+Flags=3
+Name=z26_db_gen_Teleporter_3008
+Spawn=3008,100  ;Teleporter (1) at 0
+
+[ENTRY]
+Flags=3
+Name=z26_db_gen_Teleporter_3009
+Spawn=3009,100  ;Teleporter (1) at 0
+
+[ENTRY]
+Flags=3
+Name=z26_db_gen_Teleporter_3006
+Spawn=3006,100  ;Teleporter (1) at 0
+
+[ENTRY]
+Flags=3
+Name=z26_db_gen_Teleporter_3004
+Spawn=3004,100  ;Teleporter (1) at 0
+
+[ENTRY]
+Flags=3
+Name=z26_db_gen_Reliquary_2998
+Spawn=2998,100  ;Reliquary (1) at 0
+
+[ENTRY]
+Flags=3
+Name=z26_db_gen_Reliquary_2997
+Spawn=2997,100  ;Reliquary (1) at 0
+
+[ENTRY]
+Flags=3
+Name=z26_db_gen_Reliquary_2996
+Spawn=2996,100  ;Reliquary (1) at 0
+
+[ENTRY]
+Flags=3
+Name=z26_db_gen_Teleporter_3010
+Spawn=3010,100  ;Teleporter (1) at 0
+
+[ENTRY]
+Flags=3
+Name=z26_db_gen_East_Wing_3114
+Spawn=3114,100  ;East Wing (1) at 0
+
+[ENTRY]
+Flags=3
+Name=z26_db_gen_North_Wing_3113
+Spawn=3113,100  ;North Wing (1) at 0
+
+[ENTRY]
+Flags=3
+Name=z26_db_gen_South_Wing_3109
+Spawn=3109,100  ;South Wing (1) at 0
+
+[ENTRY]
+Flags=3
+Name=z26_db_gen_North_Wing_3112
+Spawn=3112,100  ;North Wing (1) at 0
+
+[ENTRY]
+Flags=3
+Name=z26_db_gen_North_Wing_3111
+Spawn=3111,100  ;North Wing (1) at 0
+
+[ENTRY]
+Flags=3
+Name=z26_db_gen_South_Wing_3108
+Spawn=3108,100  ;South Wing (1) at 0
+
+[ENTRY]
+Flags=3
+Name=z26_db_gen_North_Wing_3110
+Spawn=3110,100  ;North Wing (1) at 0
+
+[ENTRY]
+Flags=3
+Name=z26_db_gen_South_Wing_3107
+Spawn=3107,100  ;South Wing (1) at 0
+
+[ENTRY]
+Name=1_dng_db_DeepStinger_k_33
+Spawn=2973,100  ;Deep Stinger (33) at 27
+
+[ENTRY]
+Name=1_dng_db_DeepStinger_r_33
+Spawn=273,100  ;Deep Stinger (33) at 0
+
+[ENTRY]
+Name=1_dng_db_skeletalArmorsmith/Weaponsmith_34
+Spawn=276,50  ;Skeletal Armorsmith (35) at 0
+Spawn=2978,50  ;Skeletal Weaponsmith (35)   ; From CDef file
+
+[ENTRY]
+Name=1_dng_db_skeletalGuardians_33
+Spawn=2975,500  ;Skeletal Guardian (34) at 0
+Spawn=275,50  ;Skeletal Guardian (34) at 0
+
+[ENTRY]
+Name=1_dng_db_skeletalGuardians/Seers_33
+Spawn=275,25  ;Skeletal Guardian (34) at 0
+Spawn=2975,25  ;Skeletal Guardian (34) at 3
+Spawn=2976,25  ;Skeletal Magus (34) at 0
+Spawn=2977,25  ;Skeletal Seer (34) at 0
+
+[ENTRY]
+Name=1_dng_db_venomousCrawlers_34
+Spawn=2979,50  ;Venemous Crawler (34) at 0
+Spawn=2980,50  ;Venemous Crawler (34) at 0
+
+[ENTRY]
+Name=1_dng_db_Archis_d_35
+Spawn=2981,100  ;Archis (35) at 0
+
+[ENTRY]
+Name=1_dng_db_lektus_k_35
+Spawn=2984,100  ;Lektus (35) at 24
+
+[ENTRY]
+Name=1_dng_db_skeletalBehemoth_k_35
+Spawn=2985,100  ;Skeletal Behemoth (35) at 0
+
+; NOTE: 2986 is much more common in the data
+[ENTRY]
+Name=1_dng_db_snapjawSprouts_33
+Spawn=2986,80  ;Snapjaw Sprout (33) at 0
+Spawn=264,20  ;Snapjaw Sprout (33) at 0
+
+
+[ENTRY]
+Name=1_dng_db_snapjawSprouts/Seedsower_33
+Spawn=2986,50  ;Snapjaw Sprout (33) at 0
+Spawn=2987,50  ;Snapjaw Seedsower (33) at 0
+
+[ENTRY]
+Name=1_dng_db_Snapjaw_h18
+Spawn=250,100  ;Snapjaw (34) at 0
+
+; TODO: from creature file
+[ENTRY]
+Name=1_dng_db_karush_k_35
+Spawn=2988,100  ;Karush (33)
+
+[ENTRY]
+Name=1_dng_db_guests/Visitors_33
+Spawn=268,25  ;Lost Guest (33) at 8
+Spawn=269,25  ;Mournful Visitor (33) at 14
+Spawn=2989,25  ;Lost Guest (33) at 13
+Spawn=2991,25  ;Anguished Visitor (33) at 7
+
+[ENTRY]
+Name=1_dng_db_guests/Visitors_33_34_FRONT
+Shares=30
+Spawn=268,10  ;Lost Guest (33) at 27
+Spawn=269,10  ;Mournful Visitor (33) at 29
+Spawn=2992,10  ;Mournful Visitor (34) at 5
+
+; TODO: from creature file
+[ENTRY]
+Name=1_dng_db_UnivitedGuest_k_34
+Spawn=248,100  Uninvited Guest (34)
+
+[ENTRY]
+Name=1_dng_db_guests/Visitors_33_34_BACK
+Shares=80
+Spawn=268,10  ;Lost Guest (33) at 0
+Spawn=269,10  ;Mournful Visitor (33) at 5
+Spawn=2989,10  ;Lost Guest (33) at 0
+Spawn=2990,10  ;Lost Guest (34) at 0
+Spawn=2991,10  ;Anguished Visitor (33) at 10
+Spawn=2992,10  ;Mournful Visitor (34) at 0
+Spawn=2993,10  ;Lost Guest (34) at 0
+Spawn=2994,10  ;Anguished Visitor (34) at 21
+
+[ENTRY]
+Name=1_dng_db_spinweaverMatriarch_k_35
+Spawn=3011,100  ;Spinweaver Matriarch (35) at 38
+
+[ENTRY]
+Name=1_dng_db_spinweaverEggSac
+Spawn=3013,100  ;Spinweaver Egg Sac (1) at 0
+
+[ENTRY]
+Name=1_dng_db_spinweaverBroodling_r_34
+Spawn=3013,100  ;Spinweaver Egg Sac (1) at 0
+
+[ENTRY]
+Name=1_dng_db_spinweaverMatriarch_k_35_B
+Spawn=3014,100  ;Spinweaver Matriarch (35) at 48
+
+[ENTRY]
+Name=1_dng_db_spinweaverMatriarch_k_35_C
+Spawn=3015,100  ;Spinweaver Matriarch (35) at 51
+
+[ENTRY]
+Name=1_dng_db_dissolvingCorpse
+Spawn=3022,100  ;Cocooned Corpse (1) at 0
+
+[ENTRY]
+Name=1_dng_db_cocoonedCorpse
+Spawn=3022,100  ;Cocooned Corpse (1) at 0
+
+[ENTRY]
+Name=1_dng_db_sepperan_k_35
+Spawn=3018,100  ;Sepperan (35) at 0
+
+[ENTRY]
+Name=1_dng_db_spinweaverMatriarch_k_35_D
+Spawn=3016,100  ;Spinweaver Matriarch (35) at 6
+
+[ENTRY]
+Name=1_dng_db_spinweaverMatriarch_k_35_E
+Spawn=3017,100  ;Spinweaver Matriarch (35) at 14
+
+[ENTRY]
+Name=1_dng_db_spinweaverMatriarch_k_35_F
+Spawn=3023,100  ;Spinweaver Matriarch (35) at 10
+
+[ENTRY]
+Name=1_dng_db_spinweaverMatriarch_k_35_G
+Spawn=3024,100  ;Spinweaver Matriarch (35) at 43
+
+[ENTRY]
+Name=1_dng_db_putridAntlions_33_34
+Spawn=3025,50  ;Putrid Antlion (34) at 34
+Spawn=3026,50  ;Putrid Antlion (34) at 34
+
+[ENTRY]
+Name=1_dng_db_hoffy_k_34_STEPUP
+ScriptCall=1
+Spawn=274,50  ;Infected Vermin (33) at 3
+Spawn=3027,50  ;Infected Vermin (34) at 2
+
+[ENTRY]
+Name=1_dng_db_Verash_k_35
+Spawn=3029,100  ;Verash (35) at 0
+
+[ENTRY]
+Name=1_dng_db_guests/Visitors_34
+Spawn=2993,50  ;Lost Guest (34) at 0
+Spawn=2994,50  ;Anguished Visitor (34) at 7
+
+[ENTRY]
+Name=1_dng_db_experimentalConstructs
+Shares=30
+Spawn=3030,10  ;Experimental Construct (34) at 0
+Spawn=3031,10  ;Experimental Construct (34) at 0
+Spawn=3032,10  ;Experimental Construct (34) at 29
+
+[ENTRY]
+Name=1_dng_db_completedConstruct_k_35
+Spawn=3033,100  ;Completed Construct (35) at 0
+
+[ENTRY]
+Name=1_dng_db_RanDangran_d_35
+Spawn=3036,100  ;Ran Dangran (35) at 0
+
+[ENTRY]
+Name=1_dng_db_duchessGlenell_h18
+Spawn=254,100  ;Arianna Glennell (36) at 0
+
+[ENTRY]
+Name=1_dng_db_chimmiChompers_34
+Spawn=272,50  ;Chimmi Chomper (34) at 0
+Spawn=3037,50  ;Chimmi Chomper (34) at 0
+
+; NOTE: from creature file
+[ENTRY]
+Name=1_dng_db_GurlopRND_h18
+Spawn=249,100  ;Gurlop (35)
+
+[ENTRY]
+Name=1_dng_db_festeringSlugs
+Spawn=3046,50  ;Festering Slug (34) at 0
+Spawn=3047,50  ;Festering Slug (35) at 0
+
+[ENTRY]
+Name=1_dng_db_Sillum_k_35
+Spawn=3048,100  ;Sillum (35) at 16
+
+[ENTRY]
+Name=1_dng_db_generalServantMix_34_35_FRONT
+Spawn=256,25  ;Sorrowful Handmaiden (35) at 0
+Spawn=257,25  ;Wistful Handmaiden (34) at 28
+Spawn=266,25  ;Rotting Servant (34) at 48
+Spawn=3045,25  ;Rotting Servant (35) at 0
+
+[ENTRY]
+Name=1_dng_db_witheringQuartermaster_k_35
+Spawn=3055,100  ;Withering Quartermaster (35) at 23
+
+; TODO: might need work
+[ENTRY]
+Name=1_dng_db_generalServantMix_34_35_BACK
+Spawn=256,20  ;Sorrowful Handmaiden (35) at 0
+Spawn=257,20  ;Wistful Handmaiden (34) at 0
+Spawn=267,20  ;Rotting Matron (34) at 0
+Spawn=3045,20  ;Rotting Servant (35) at 0
+Spawn=3054,20  ;Wistful Handmaiden (35) at 0
+;Spawn=3044,0  ;Rotting Matron (35) at 36
+
+[ENTRY]
+Name=1_dng_db_overseerAlwynn_STEPUP
+ScriptCall=1
+Shares=60
+Spawn=256,10  ;Sorrowful Handmaiden (35) at 0
+Spawn=257,10  ;Wistful Handmaiden (34) at 0
+Spawn=266,10  ;Rotting Servant (34) at 0
+Spawn=267,10  ;Rotting Matron (34) at 0
+Spawn=3045,10  ;Rotting Servant (35) at 0
+Spawn=3054,10  ;Wistful Handmaiden (35) at 25
+
+; NOTE: 11 spawn points but 1 is isolated far away
+[ENTRY]
+Name=1_dng_db_overseerFlammus_STEPUP
+ScriptCall=1
+Spawn=257,20  ;Wistful Handmaiden (34) at 0
+Spawn=266,20  ;Rotting Servant (34) at 0
+Spawn=267,20  ;Rotting Matron (34) at 0
+Spawn=3044,20  ;Rotting Matron (35) at 0
+Spawn=3045,20  ;Rotting Servant (35) at 0
+
+[ENTRY]
+Name=1_dng_db_overseerKeyt_STEPUP
+ScriptCall=1
+Spawn=256,20  ;Sorrowful Handmaiden (35) at 0
+Spawn=257,20  ;Wistful Handmaiden (34) at 0
+Spawn=266,20  ;Rotting Servant (34) at 0
+Spawn=267,20  ;Rotting Matron (34) at 0
+Spawn=3044,20  ;Rotting Matron (35) at 0
+
+[ENTRY]
+Name=1_dng_db_overseerMallord_STEPUP
+ScriptCall=1
+Shares=60
+Spawn=256,10  ;Sorrowful Handmaiden (35) at 0
+Spawn=266,10  ;Rotting Servant (34) at 0
+Spawn=267,10  ;Rotting Matron (34) at 0
+Spawn=3044,10  ;Rotting Matron (35) at 0
+Spawn=3045,10  ;Rotting Servant (35) at 0
+Spawn=3054,10  ;Wistful Handmaiden (35) at 0
+
+[ENTRY]
+Name=1_dng_db_overseerZanthryn_STEPUP
+ScriptCall=1
+Spawn=256,20  ;Sorrowful Handmaiden (35) at 0
+Spawn=257,20  ;Wistful Handmaiden (34) at 10
+Spawn=266,20  ;Rotting Servant (34) at 0
+Spawn=267,20  ;Rotting Matron (34) at 0
+Spawn=3044,20  ;Rotting Matron (35) at 0
+
+[ENTRY]
+Name=1_dng_db_deepStingers_34_35
+Spawn=3056,25  ;Deep Stinger (34) at 0
+Spawn=3057,25  ;Deep Stinger (35) at 0
+Spawn=3058,25  ;Deep Stinger (34) at 0
+Spawn=3059,25  ;Deep Stinger (35) at 0
+
+; NOTE: from creature file
+[ENTRY]
+Name=1_dng_db_Kemmil_k_35
+Spawn=3060,100  ;Kemmil (35)
+
+; NOTE: only 3 spawn points
+[ENTRY]
+Name=1_dng_db_skeletalGuardians/Seers_34
+Spawn=275,50  ;Skeletal Guardian (34) at 0
+Spawn=2975,50  ;Skeletal Guardian (34) at 0
+
+[ENTRY]
+Name=1_dng_db_kitchenCook/Brewer_34_35
+Spawn=3061,25  ;Impure Cook (35) at 0
+Spawn=3063,25  ;Impure Cook (34) at 0
+Spawn=3065,25  ;Undead Brewer (34) at 0
+Spawn=3066,25  ;Undead Brewer (35) at 0
+
+[ENTRY]
+Name=1_dng_db_kitchenCook/Gourmet_34_35
+Shares=60
+Spawn=270,10  ;Impure Cook (34) at 0
+Spawn=271,10  ;Foul Gourmet (34) at 0
+Spawn=3061,10  ;Impure Cook (35) at 0
+Spawn=3062,10  ;Foul Gourmet (35) at 0
+Spawn=3063,10  ;Impure Cook (34) at 0
+Spawn=3064,10  ;Impure Cook (35) at 21
+
+[ENTRY]
+Name=1_dng_db_kitchenBrewers_34_35
+Spawn=3065,50  ;Undead Brewer (34) at 0
+Spawn=3066,50  ;Undead Brewer (35) at 0
+
+[ENTRY]
+Name=1_dng_db_MasterChef_r_35
+Spawn=247,100  ;Seranno (35) at 0
+
+[ENTRY]
+Name=1_dng_db_Fillus_k_35_STEPUP
+ScriptCall=1
+Flags=4
+Spawn=3067,100  ;Moldering Chicken (1) at 1
+
+[ENTRY]
+Name=1_dng_db_animatedArmor/Blades_34_35
+Spawn=258,25  ;Animated Armor (34) at 0
+Spawn=259,25  ;Animated Blades (34) at 0
+Spawn=3069,25  ;Animated Armor (35) at 0
+Spawn=3070,25  ;Animated Blades (35) at 0
+
+; NOTE: Elian spawns at the northernmost point.
+[ENTRY]
+Name=1_dng_db_StrategistZao_r_35_STEPUP
+ScriptCall=1
+Spawn=3075,100  ;Animated Commander (35)
+PointOverride=436213709,252
+PointOverride=436213702,3080
+
+;Spawn=252,50  ;Elian Drudge (35)
+;Divide=2000,2,51
+;Spawn=3075,50  ;Animated Commander (35) at 0
+
+
+[ENTRY]
+Name=1_dng_db_animatedGeneral/Druid_34_35
+Spawn=258,20  ;Animated Armor (34) at 0
+Spawn=3069,20  ;Animated Armor (35) at 0
+Spawn=3070,20  ;Animated Blades (35) at 0
+Spawn=3071,20  ;Vanquished Augur (34) at 0
+Spawn=3072,20  ;Vanquished Augur (35) at 0
+
+[ENTRY]
+Name=1_dng_db_HenchmanGrakk_d_35_STEPUP
+ScriptCall=1
+Spawn=3076,50  ;Animated Henchman (35) at 0
+Spawn=3077,50  ;Animated Strategist (35) at 0
+
+[ENTRY]
+Name=mid2_db_4_UltonKlinon
+Spawn=3043,100  ;Ulton Klinon (45)
+;Spawn=262,50  ;Insane Captive (35) at 33
+;Spawn=263,50  ;Crazed Captive (35) at 20
+
+[ENTRY]
+Name=mid2_obji_db_cageKey
+Spawn=3081,100  ;Bone Key (1) at 0
+
+[ENTRY]
+Name=1_dng_db_animatedGeneral/Mage_34_35
+Spawn=258,25  ;Animated Armor (34) at 0
+Spawn=259,25  ;Animated Blades (34) at 0
+Spawn=3069,25  ;Animated Armor (35) at 0
+Spawn=3070,25  ;Animated Blades (35) at 16
+
+[ENTRY]
+Name=1_dng_db_DuchessGlennellVAMPIDER_d_36
+Spawn=3035,100  ;Arianna Glennell (36) at 0
+
+[ENTRY]
+Name=1_dng_db_inquisitorGloom_h21
+Spawn=253,100  ;Ferran Hollowind (36) at 0
+
+[ENTRY]
+Name=1_dng_db_captives_35
+Spawn=262,25  ;Insane Captive (35) at 0
+Spawn=263,25  ;Crazed Captive (35) at 0
+Spawn=3084,25  ;Insane Captive (35) at 0
+Spawn=3085,25  ;Feral Captive (35) at 0
+
+[ENTRY]
+Name=1_dng_db_skeletalGuardian_k_35
+Spawn=3087,100  ;Skeletal Guardian (35) at 0
+
+; NOTE: from creature file
+[ENTRY]
+Name=1_dng_db_chamberlainKorticoRND_h17
+Spawn=255,100  ;Chamberlain Kortico (36)
+
+[ENTRY]
+Name=1_dng_db_fallenGuard/Swordsman_35
+Spawn=260,50  ;Fallen Guardsman (35) at 0
+Spawn=261,50  ;Fallen Swordsman (35) at 0
+
+; NOTE: from creature file
+[ENTRY]
+Name=1_dng_db_ZackEmberfrost_m_35
+Spawn=3089,100  ;Zack Emberfrost (35)
+
+; NOTE: from creature file, also has 2 spawn points
+[ENTRY]
+Name=1_dng_db_PaylenMeer_d_35
+UniquePoints=2
+Spawn=3088,100  ;Paylen Meer (35)
+
+[ENTRY]
+Name=1_dng_db_feralHounds_35
+Spawn=3090,50  ;Feral Hound (35) at 0
+Spawn=3091,50  ;Feral Hound (35) at 0
+
+; NOTE: from creature file
+[ENTRY]
+Name=1_dng_db_Brexx_k_35
+Spawn=3092,100  ;Brexx (35)
+
+[ENTRY]
+Name=1_dng_db_skeletalBehemoth_k_35_v2
+Spawn=3093,100  ;Skeletal Behemoth (35) at 0
+
+; NOTE: only 1 spawn point?
+[ENTRY]
+Name=1_dng_db_skeletalGuardians_ATKANM_34
+Spawn=2982,100  ;Skeletal Guardian (34) at 0
+
+[ENTRY]
+Name=1_dng_db_skeletalWarden_k_35
+Spawn=3095,100  ;Skeletal Warden (35) at 0
+
+[ENTRY]
+Name=1_dng_db_undeadJailer_r_35
+Spawn=3094,100  ;Undead Jailer (35) at 0
+
+[ENTRY]
+Flags=3
+Name=mid2_obji_db_3_BlueCrownMushroom
+Spawn=2995,100  ;Blue Crown Mushroom (1) at 0
+
+[ENTRY]
+Name=1_dng_db_possessedText_34_35
+Spawn=3096,50  ;Possessed Text (34) at 0
+Spawn=3097,50  ;Possessed Text (35) at 0
+
+[ENTRY]
+Name=1_dng_db_alchemyRoom_34_35
+Shares=30
+Spawn=3099,10  ;Rotting Ritualist (35) at 0
+Spawn=3101,10  ;Fallen Fanatic (34) at 0
+Spawn=3103,10  ;Dark Guardian (35) at 5
+
+[ENTRY]
+Name=1_dng_db_blackrockElementals_44_45
+Spawn=3104,50  ;Blackrock Elemental (45) at 0
+Spawn=3105,50  ;Blackrock Elemental (44) at 0
+
+[ENTRY]
+Name=1_dng_db_maidens_34_35
+Spawn=256,50  ;Sorrowful Handmaiden (35) at 0
+Spawn=256,50  ;Sorrowful Handmaiden (35) at 18
+
+[ENTRY]
+Name=1_dng_db_Maddusk_k_45
+Spawn=3106,100  ;Maddusk (45) at 0
+
+[ENTRY]
+Name=1_dng_db_putridAntlions_34
+Spawn=3025,50  ;Putrid Antlion (34) at 0
+Spawn=3026,50  ;Putrid Antlion (34) at 0

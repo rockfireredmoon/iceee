@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151003665
+Asset=Prop-Desert_Rock#Prop-Desert_Rock5
+Name=9
+Pos=27851.3,234.861,71453
+Orient=0,0,0,1
+Scale=1,1,1
+Flags=1
+

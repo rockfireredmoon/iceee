@@ -1,0 +1,13 @@
+[ENTRY]
+ID=6880
+ACCOUNTID=236
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=pookyville
+GroveName=pookyville
+WarpName=pookyville1
+Grove=1
+EnvironmentCycle=1
+DefLoc=2958,260,3821
+

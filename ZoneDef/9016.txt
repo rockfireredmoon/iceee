@@ -1,0 +1,13 @@
+[ENTRY]
+ID=9016
+ACCOUNTID=503
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=vincy
+GroveName=vincy
+WarpName=vincy1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

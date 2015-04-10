@@ -1,0 +1,13 @@
+[ENTRY]
+ID=7840
+ACCOUNTID=356
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=Bastion
+ShardName=bob
+GroveName=bob
+WarpName=bob1
+Grove=1
+EnvironmentCycle=1
+DefLoc=2958,260,3821
+

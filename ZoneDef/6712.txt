@@ -1,0 +1,13 @@
+[ENTRY]
+ID=6712
+ACCOUNTID=215
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=BremenNight
+ShardName=nocturne
+GroveName=nocturne
+WarpName=nocturne1
+Grove=1
+EnvironmentCycle=1
+DefLoc=2958,260,3821
+

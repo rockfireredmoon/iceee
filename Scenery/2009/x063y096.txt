@@ -1,0 +1,16 @@
+[ENTRY]
+ID=151059511
+Asset=Prop-Instance_Entrance
+Name=9
+Pos=47777.8,399.828,72099.7
+Orient=0,-0.864924,0,0.501902
+Scale=1.55,1.55,1.55
+
+[ENTRY]
+ID=151059512
+Asset=Light-Medium?COLOR=33FFFF
+Name=9
+Pos=47792.6,392.221,72073.7
+Orient=0,-0.261909,0,0.965093
+Scale=1,1,1
+

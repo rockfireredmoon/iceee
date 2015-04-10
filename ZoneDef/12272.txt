@@ -1,0 +1,15 @@
+[ENTRY]
+ID=12272
+ACCOUNTID=910
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=VampireNight
+ShardName=Eternal Night
+GroveName=pale
+WarpName=pale1
+DropRateProfile=standard
+Grove=1
+EnvironmentCycle=0
+BuildPermission=account,910,0,0,13,23
+DefLoc=2958,260,3821
+

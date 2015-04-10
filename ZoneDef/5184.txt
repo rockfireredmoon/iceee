@@ -1,0 +1,13 @@
+[ENTRY]
+ID=5184
+ACCOUNTID=24
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=stormwindintelligenceseven
+GroveName=stormwindintelligenceseven
+WarpName=stormwindintelligenceseven1
+Grove=1
+EnvironmentCycle=1
+DefLoc=2958,260,3821
+

@@ -1,0 +1,8 @@
+[ENTRY]
+ID=436212645
+Asset=Manipulator-SpawnPoint
+Pos=1290,485,695
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=1_dng_db_skeletalGuardians_33
+

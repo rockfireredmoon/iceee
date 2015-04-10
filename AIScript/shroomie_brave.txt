@@ -1,0 +1,34 @@
+#name shroomie_brave
+
+; 5189 - Forcebolt, 3 might, add 1 mcharge
+; 5307 - Force blast, 1 might, need 1-3 mcharge
+; 32760 - ranged melee
+; 32766 - melee
+
+set var 0
+
+:begin
+call waitfortarget
+use 32760
+
+getmightcharge var
+if var >= 2
+  use 5307
+  wait 1000
+endif
+
+getmight var
+if var >= 3
+  use 5189
+  wait 2000
+endif
+
+goto begin
+
+:waitfortarget
+has_target var
+if var = 0
+  wait 2000
+  goto waitfortarget
+endif
+return

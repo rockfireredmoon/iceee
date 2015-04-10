@@ -1,0 +1,8 @@
+[ENTRY]
+ID=151059331
+Asset=CL-Fence_Rotted
+Name=9
+Pos=47198,205.954,70993.7
+Orient=0,0.111361,0,-0.99378
+Scale=1.5,1.5,1.5
+

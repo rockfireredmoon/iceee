@@ -1,0 +1,28 @@
+[ENTRY]
+Flags=3
+Name=z23_eur_gen_Exit_to_Midlands_2192
+Spawn=2192,100  ;Exit to Midlands (1) at 0
+
+[ENTRY]
+Name=3_dng_cc_Magmange_r_23
+Spawn=442,100  ;Magmange (23) at 247
+
+[ENTRY]
+Name=3_dng_cc_lavaWolves_21_22
+Spawn=430,50  ;Ashpaw Wolf (22) at 0
+Spawn=431,50  ;Cindersnarl Wolf (22) at 0
+
+[ENTRY]
+Name=3_dng_cc_fireElementals_22_23
+Spawn=2503,50  ;Magmental (22) at 0
+Spawn=2504,50  ;Magmental (23) at 0
+
+[ENTRY]
+Name=3_dng_cc_lavaWolves_22_23
+Spawn=431,50  ;Cindersnarl Wolf (22) at 15
+Spawn=433,50  ;Blisterbite Wolf (23) at 0
+
+[ENTRY]
+Name=3_dng_cc_Maggmuh_m_23
+Spawn=2548,100  ;Maggmuh (23) at 3
+

@@ -1,0 +1,304 @@
+#name custom_heathendel_anexima
+#speed 10
+
+; 229 - Assault : 50  [might=3]
+; 213 - Whiplash : 40  [might=3, cooldown=MeleeSpeedDebuff]
+; 344 - Thor's Mighty Blow : 50 [might=1, mcharge=1-5, cooldown=ThorsMightyBlow]
+; 465 - Disarm : 50 [might=3, cooldown=Disarm]
+; 347 - Spellbreaker : 50 [might=3, cooldown=Spellbreaker]
+; 283 - Pierce : 50  [might=3, cooldown=Pierce]
+; 534 - Deathly Dart : 50  [will=3, cooldown=DeathlyDart]
+; 490 - Soul Burst : 50 [cooldown=BasicExecute]
+; 510 - Nefritari's Aura : 50  [PBAE=150, will=3, cooldown=DoT]
+; 218 - Syphon : 50  [will=3, cooldown=HealthLeech
+; 392 - Hellfire : 50  [will=3, wcharge=1, cooldown=Hellfire]
+; 429 - Cataclysm : 50 [GTAE=150, wcharge=1-5, cooldown=Cataclysm]
+; 445 - Inferno : 50 [PBAE=150, will=2, wcharge=1-5, cooldown=Inferno]
+
+;** 149 - Frost Mire : 50  [will=3, cooldown=Daze]
+; 32766 - Melee Autoattack
+
+set WILL 0
+set WILLCH 0
+set MIGHT 0
+set MIGHTCH 0
+set VAR 0
+set TCOUNT 0
+set STRAT 0
+set COOLDOWN 0
+set TARGETAOECOUNT 0
+set SELFAOECOUNT 0
+set AOETRIGGERCOUNT 2
+
+queue_event "eventScanTargets" 3000
+
+
+:begin
+
+call waitForTarget
+use 32766
+
+exec_queue
+
+; If we can't use skills, go back.
+is_busy VAR
+if VAR = 1
+  goto begin
+endif
+
+call checkWillCharge
+call checkMightCharge
+
+if STRAT = 0
+  call checkWill
+  set STRAT 1
+endif
+
+if STRAT = 1
+  call checkMight
+  set STRAT 0
+endif
+
+goto begin
+
+
+
+
+:checkWillCharge
+getwillcharge WILLCH
+if WILLCH < 3
+  return
+endif
+
+call tryCataclysm
+call tryCastInferno
+call tryHellfire
+
+; Need to make sure we still have charges since inferno may have
+; triggered.
+getwillcharge WILLCH
+if WILLCH < 1
+  return
+endif
+
+use 490
+
+return
+
+
+
+:checkMightCharge
+getmightcharge MIGHTCH
+if MIGHTCH < 1
+  return
+endif
+
+call tryThorsMightyBlow
+
+use 447 
+return
+
+
+:checkWill
+getwill WILL
+if WILL < 3
+  return
+endif
+
+call tryDeathlyDart
+call tryCastSyphon
+call tryNefritarisAura
+
+is_busy VAR
+if VAR = 1
+  return
+endif
+
+use 245
+
+return
+
+
+
+:checkMight
+getmight MIGHT
+if MIGHT < 3
+  return
+endif
+
+call tryCastEarthshaker
+call tryWhiplash
+call tryDisarm
+call trySpellbreaker
+call tryPierce
+
+use 229
+return
+
+
+:tryWhiplash
+getcooldown "MeleeSpeedDebuff" COOLDOWN
+if COOLDOWN != 0
+  return
+endif
+
+use 213
+reset_goto begin
+
+
+
+:tryDisarm
+getcooldown "Disarm" COOLDOWN
+if COOLDOWN != 0
+  return
+endif
+
+use 465
+reset_goto begin
+
+
+
+:tryCastSyphon
+getcooldown "HealthLeech" VAR
+if VAR >= 1
+  return
+endif
+use 218
+return
+
+
+
+
+:tryCataclysm
+getcooldown "Cataclysm" VAR
+if VAR >= 1
+  return
+endif
+count_enemy_at 150 TCOUNT
+if TCOUNT < AOETRIGGERCOUNT
+  return
+endif
+set_gtae
+use 429
+reset_goto begin
+
+
+
+:tryCastInferno
+getcooldown "Inferno" VAR
+if VAR >= 1
+  return
+endif
+count_enemy_near 150 TCOUNT
+if TCOUNT < AOETRIGGERCOUNT
+  return
+endif
+use 445
+reset_goto begin
+
+
+:tryThorsMightyBlow
+getcooldown "ThorsMightyBlow" COOLDOWN
+if COOLDOWN != 0
+  return
+endif
+use 344
+reset_goto begin
+
+
+:tryCastEarthshaker
+if MIGHT < 4
+  return
+endif
+getcooldown "Earthshaker" VAR
+if VAR >= 1
+  return
+endif
+count_enemy_near 50 TCOUNT
+if TCOUNT < 2
+  return
+endif
+use 342
+return
+
+
+
+:trySpellbreaker
+getcooldown "Spellbreaker" COOLDOWN
+if COOLDOWN != 0
+  return
+endif
+cid_is_busy TARGID VAR
+if VAR = 0
+  return
+endif
+
+use 347
+reset_goto begin
+
+
+:tryPierce
+getcooldown "Pierce" COOLDOWN
+if COOLDOWN != 0
+  return
+endif
+
+use 283
+reset_goto begin
+
+
+
+:tryDeathlyDart
+getcooldown "DeathlyDart" COOLDOWN
+if COOLDOWN != 0
+  return
+endif
+use 534
+reset_goto begin
+
+
+:tryNefritarisAura
+getcooldown "DoT" COOLDOWN
+if COOLDOWN != 0
+  return
+endif
+
+count_enemy_near 150 VAR
+if VAR <= 1
+  return
+endif
+
+use 510
+reset_goto begin
+
+
+:tryHellfire
+getcooldown "Hellfire" COOLDOWN
+if COOLDOWN != 0
+  return
+endif
+getwill WILL
+if WILL < 3
+  return
+endif
+
+use 392
+reset_goto begin
+
+
+
+:waitForTarget
+has_target VAR
+if VAR = 0
+  wait 1000
+  goto waitForTarget
+endif
+return
+
+
+
+:eventScanTargets
+queue_event "eventScanTargets" 3000
+count_enemy_at 150 TARGETAOECOUNT
+count_enemy_near 150 SELFAOECOUNT
+return

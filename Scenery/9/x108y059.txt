@@ -1,0 +1,7 @@
+[ENTRY]
+ID=151040089
+Asset=CL-SnowyPine5#CL-SnowyPine5
+Pos=81510,983.271,44860
+Orient=0,0.613117,0,0.789992
+Scale=2.775,2.775,2.775
+

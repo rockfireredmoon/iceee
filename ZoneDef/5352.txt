@@ -1,0 +1,14 @@
+[ENTRY]
+ID=5352
+ACCOUNTID=45
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=ihaskewkies
+GroveName=ihaskewkies
+WarpName=ihaskewkies1
+Persist=1
+Grove=1
+EnvironmentCycle=1
+DefLoc=2958,260,3821
+

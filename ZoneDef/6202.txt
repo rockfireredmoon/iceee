@@ -1,0 +1,15 @@
+[ENTRY]
+ID=6202
+ACCOUNTID=151
+NAME=Grove
+TERRAINCONFIG=Terrain-Terrain-MTerrain-Camelot_Arena#Terrain-Camelot_Arena.cfg
+ENVIRONMENTTYPE=Swamp
+ShardName=Pripyat
+GroveName=otherworld
+WarpName=otherworld3
+DropRateProfile=standard
+Grove=1
+EnvironmentCycle=1
+BuildPermission=account,151,0,0,2,2
+DefLoc=2904,1252,2796
+

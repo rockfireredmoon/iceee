@@ -1,0 +1,7 @@
+[ENTRY]
+ID=151061721
+Asset=Bldg-Earthend_Tower1?ATS=ATS-Castle
+Pos=91585.9,1062.52,57797.4
+Orient=0,0,0,1
+Scale=6.925,6.925,6.925
+

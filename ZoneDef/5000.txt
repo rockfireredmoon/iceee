@@ -1,0 +1,15 @@
+[ENTRY]
+ID=5000
+ACCOUNTID=1
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=eld
+GroveName=eld
+WarpName=eld1
+DropRateProfile=standard
+Grove=1
+EnvironmentCycle=1
+BuildPermission=account,1,0,0,13,23
+DefLoc=3101,266,3723
+

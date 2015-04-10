@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151052513
+Asset=Manipulator-SpawnPoint
+Pos=49667.3,360.918,47359
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=3a_wolfThumperCamp02_general
+outerRadius=30
+

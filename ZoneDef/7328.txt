@@ -1,0 +1,13 @@
+[ENTRY]
+ID=7328
+ACCOUNTID=292
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=kipple
+GroveName=kipple
+WarpName=kipple1
+Grove=1
+EnvironmentCycle=1
+DefLoc=2958,260,3821
+

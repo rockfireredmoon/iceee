@@ -1,0 +1,17 @@
+[ENTRY]
+ID=150999966
+Asset=CL-Rock-Clutter#CL-Rock-Clutter
+Name=9
+Pos=80253.5,433.417,42949.4
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
+ID=151034944
+Asset=CL-Autumn_Forest1#CL-Autumn_Forest1
+Name=9
+Pos=80805,428.957,43131
+Orient=0,0,0,1
+Scale=1.65,1.65,1.65
+Flags=1
+

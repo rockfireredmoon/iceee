@@ -1,0 +1,13 @@
+[ENTRY]
+ID=6672
+ACCOUNTID=210
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=pixel
+GroveName=pixel
+WarpName=pixel1
+Grove=1
+EnvironmentCycle=1
+DefLoc=2958,260,3821
+

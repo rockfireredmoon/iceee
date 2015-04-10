@@ -1,0 +1,13 @@
+[ENTRY]
+ID=6040
+ACCOUNTID=131
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=kirkwoolf
+GroveName=kirkwoolf
+WarpName=kirkwoolf1
+Grove=1
+EnvironmentCycle=1
+DefLoc=2958,260,3821
+

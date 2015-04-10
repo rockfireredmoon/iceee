@@ -1,0 +1,15 @@
+[ENTRY]
+ID=14128
+ACCOUNTID=1142
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=ForestDay
+ShardName=skeletonhell
+GroveName=skeletonhell
+WarpName=skeletonhell1
+DropRateProfile=standard
+Grove=1
+EnvironmentCycle=0
+BuildPermission=account,1142,0,0,3,3
+DefLoc=536,258,508
+

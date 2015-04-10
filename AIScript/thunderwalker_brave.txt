@@ -1,0 +1,34 @@
+#name thunderwalker_brave
+
+; 5348 - Thunderbolt, 3 might, add 1 mcharge
+; 5349 - Thunder Blast, 1 might, need 1-3 mcharge
+; 32760 - ranged melee
+; 32766 - melee
+
+set var 0
+
+:begin
+call waitfortarget
+use 32766
+
+getmightcharge var
+if var >= 2
+  use 5349
+  wait 1000
+endif
+
+getmight var
+if var >= 3
+  use 5348
+  wait 2000
+endif
+
+goto begin
+
+:waitfortarget
+has_target var
+if var = 0
+  wait 2000
+  goto waitfortarget
+endif
+return

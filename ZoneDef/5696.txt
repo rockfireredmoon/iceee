@@ -1,0 +1,13 @@
+[ENTRY]
+ID=5696
+ACCOUNTID=88
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=tig
+GroveName=tig
+WarpName=tig1
+Grove=1
+EnvironmentCycle=1
+DefLoc=2958,260,3821
+

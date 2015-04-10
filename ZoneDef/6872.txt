@@ -1,0 +1,13 @@
+[ENTRY]
+ID=6872
+ACCOUNTID=235
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=AutumnSunset
+ShardName=midnite
+GroveName=midnite
+WarpName=midnite1
+Grove=1
+EnvironmentCycle=1
+DefLoc=2958,260,3821
+

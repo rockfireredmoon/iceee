@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151030374
+Asset=Manipulator-SpawnPoint
+Pos=69654,1236.83,53716
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=12_wpg_Wilds_44_45
+outerRadius=200
+

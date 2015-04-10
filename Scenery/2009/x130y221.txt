@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151040449
+Asset=CL-GrunsBush_3#CL-GrunsBush_3
+Name=9
+Pos=97592.4,1000,166343
+Orient=0,-0.628793,0,0.777573
+Scale=1.875,1.875,1.875
+Flags=3
+

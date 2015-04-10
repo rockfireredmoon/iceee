@@ -1,0 +1,8 @@
+[ENTRY]
+ID=151058928
+Asset=CL-Camp1
+Name=9
+Pos=49946.4,404.305,76828.7
+Orient=0,0,0,1
+Scale=1,1,1
+

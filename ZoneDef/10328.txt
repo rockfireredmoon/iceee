@@ -1,0 +1,15 @@
+[ENTRY]
+ID=10328
+ACCOUNTID=667
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=AutumnDay
+ShardName=omnihouse
+GroveName=omnihouse
+WarpName=omnihouse1
+DropRateProfile=standard
+Grove=1
+EnvironmentCycle=0
+BuildPermission=account,667,0,0,13,23
+DefLoc=4087,565,3769
+

@@ -1,0 +1,13 @@
+[ENTRY]
+ID=13288
+ACCOUNTID=1037
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=slimscrib
+GroveName=slimscrib
+WarpName=slimscrib1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

@@ -1,0 +1,27 @@
+[ENTRY]
+ID=151032125
+Asset=Manipulator-SpawnPoint
+Pos=23275.1,250.522,84525
+Orient=0,0,0,1
+Scale=1,1,1
+innerRadius=95
+spawnPackage=5_wilds_35_36
+outerRadius=100
+
+[ENTRY]
+ID=151058906
+Asset=Basic Desert?d=0.2&s=778349&sz=800
+Pos=23552.9,263.449,84413.7
+Orient=0,-0.29074,0,0.956802
+Scale=1,1,1
+
+[ENTRY]
+ID=151059732
+Asset=Manipulator-SpawnPoint
+Pos=23912.8,267.877,84413.1
+Orient=0,0,0,1
+Scale=1,1,1
+links_count=1
+link=151059744,1
+spawnPackage=5_quest_Windwail_phoenix
+

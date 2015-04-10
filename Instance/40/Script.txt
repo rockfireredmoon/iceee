@@ -1,0 +1,17 @@
+; Scorpse boss spawn
+
+:init
+set killcount 0
+end
+
+:onKill_2533
+:onKill_2534
+inc killcount
+if killcount >= 10
+  spawn_at 671089651 2535
+end
+
+; Dar Kulgac's Treasure
+:onKill_557
+spawn 671089734
+end

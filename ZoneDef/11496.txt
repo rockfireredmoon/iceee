@@ -1,0 +1,13 @@
+[ENTRY]
+ID=11496
+ACCOUNTID=813
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=hashtag
+GroveName=hashtag
+WarpName=hashtag1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

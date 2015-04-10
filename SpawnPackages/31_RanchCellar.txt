@@ -1,0 +1,15 @@
+[ENTRY]
+Name=1_floroTheSly_17
+Spawn=39,100  ;Floro the Sly (17) at 0
+
+[ENTRY]
+Name=1a_dng_rc_bandits
+Spawn=1882,34  ;Scoundrel (14) at 0
+Spawn=1883,33  ;Strongarm (15) at 0
+Spawn=1884,33  ;Siren (15) at 0
+
+[ENTRY]
+Name=1a_bograts_14_15
+Spawn=1882,34  ;Scoundrel (14) at 0
+Spawn=1883,33  ;Strongarm (15) at 0
+Spawn=1884,33  ;Siren (15) at 0

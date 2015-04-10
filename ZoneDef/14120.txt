@@ -1,0 +1,13 @@
+[ENTRY]
+ID=14120
+ACCOUNTID=1141
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=twitch
+GroveName=twitch
+WarpName=twitch1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

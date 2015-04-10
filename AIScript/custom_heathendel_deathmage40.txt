@@ -1,0 +1,184 @@
+#name custom_heathendel_deathmage40
+#speed 6
+
+; 259 : Forcebolt 40
+; 377 : Force Blast 40
+; 492 : Wither 40
+; 533 : Deathly Dart 40  [Cooldown=DeathlyDart]
+; 217 : Syphon 40  [Cooldown=HealthLeech, Will=3]
+; 373 : Malice Blast 40
+; 145 : Snare 40   [Cooldown=ReduceMovementSpeed, Will=3]
+; 509 : Nefritari's Aura 40  [Cooldown=DoT, PBAE=150, Will=3]
+; 527 : Impact Shot 40  [Cooldown=ImpactShot, Might=3]
+; 32760 : ranged autoattack
+
+
+set VAR 0
+set WILL 0
+set MIGHT 0
+set COOLDOWN 0
+set TARGID 0
+set OLDTARGID 0
+set ALLOWSNARE 0
+
+
+:begin
+
+call waitfortarget
+
+is_busy var
+if var = 1
+  goto begin
+endif
+
+call checkWillCharge
+call checkMightCharge
+call checkWill
+call checkMight
+goto begin
+
+
+:checkWillCharge
+getwillcharge VAR
+if VAR < 3
+  return
+endif
+
+use 373
+reset_goto begin
+
+
+
+:checkWill
+getwill WILL
+if WILL < 3
+  return
+endif
+
+if ALLOWSNARE = 1
+  set ALLOWSNARE 0
+  call trySnare
+endif
+
+call tryDeathlyDart
+call trySyphon
+call tryNefritarisAura
+
+use 492
+reset_goto begin
+
+
+
+:checkMightCharge
+getmightcharge VAR
+if VAR < 3
+  return
+endif
+
+use 377
+reset_goto begin
+
+
+
+:checkMight
+getmight MIGHT
+if MIGHT < 3
+  return
+endif
+
+call tryImpactShot
+
+use 259
+reset_goto begin
+
+
+
+:tryDeathlyDart
+getcooldown "DeathlyDart" COOLDOWN
+if COOLDOWN != 0
+  return
+endif
+use 533
+reset_goto begin
+
+
+:trySyphon
+getcooldown "HealthLeech" COOLDOWN
+if COOLDOWN != 0
+  return
+endif
+health_percent VAR
+if VAR >= 95
+  return
+endif
+
+use 217
+reset_goto begin
+
+
+
+:tryNefritarisAura
+getcooldown "DoT" COOLDOWN
+if COOLDOWN != 0
+  return
+endif
+
+count_enemy_near 150 VAR
+if VAR <= 1
+  return
+endif
+
+use 509
+reset_goto begin
+
+
+
+:trySnare
+getcooldown "ReduceMovementSpeed" COOLDOWN
+if COOLDOWN != 0
+  return
+endif
+
+get_target_range VAR
+if VAR < 200
+  return
+endif
+
+; We're ranged, so snare melee targets.
+; Professions: knight = 1, rogue = 2, mage = 3, druid = 4
+get_target_property "profession" VAR
+if VAR >= 3
+  return
+endif
+
+use 145
+reset_goto begin
+
+
+
+:tryImpactShot
+getcooldown "ImpactShot" COOLDOWN
+if COOLDOWN != 0
+  return
+endif
+use 527
+reset_goto begin
+
+
+
+
+:waitfortarget
+has_target VAR
+if VAR = 0
+  wait 1000
+  goto waitfortarget
+endif
+
+get_target TARGID
+if TARGID != OLDTARGID
+  get_target OLDTARGID
+  set ALLOWSNARE 1
+endif 
+
+use 32760
+return

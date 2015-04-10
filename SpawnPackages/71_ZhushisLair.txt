@@ -1,0 +1,22 @@
+[ENTRY]
+Name=z71_zl_gen_Exit_to_Deadwood_1523
+Spawn=1523,100  ;Exit to Deadwood (1) at 0
+
+[ENTRY]
+Name=10_ht_Zhushi_k_41
+Spawn=943,100  ;Zhushi (42) at 0
+
+[ENTRY]
+Name=10_ht_FateweaverBroodling
+Shares=30
+Spawn=1169,10  ;Fateweaver Broodling (40) at 0
+Spawn=2542,10  ;Fateweaver Broodling (40) at 0
+Spawn=2543,10  ;Fateweaver Broodling (40) at 0
+
+[ENTRY]
+Name=10_ht_Grizhu_k_41
+Spawn=1170,100  ;Grizhu (41) at 5
+
+[ENTRY]
+Name=10_ht_obji_ZhushiLewt
+Spawn=1536,100  ;Zhushi's Treasure (1) at 0

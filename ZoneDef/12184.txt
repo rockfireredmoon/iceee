@@ -1,0 +1,13 @@
+[ENTRY]
+ID=12184
+ACCOUNTID=899
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=kitling
+GroveName=kitling
+WarpName=kitling1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

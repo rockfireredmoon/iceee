@@ -1,0 +1,13 @@
+[ENTRY]
+ID=7016
+ACCOUNTID=253
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=rist
+GroveName=rist
+WarpName=rist1
+Grove=1
+EnvironmentCycle=1
+DefLoc=2958,260,3821
+

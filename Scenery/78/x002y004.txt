@@ -1,0 +1,16 @@
+[ENTRY]
+ID=1308622910
+Asset=Prop-Burnt_Pine1
+Pos=2020.02,405.827,4036.24
+Orient=0,0.266731,0,0.963771
+Scale=2.125,2.125,2.125
+Flags=1
+
+[ENTRY]
+ID=1308622947
+Asset=Prop-Burnt_Pine1
+Pos=2095.6,331.854,4036.24
+Orient=0,0.266731,0,0.963771
+Scale=2.125,2.125,2.125
+Flags=1
+

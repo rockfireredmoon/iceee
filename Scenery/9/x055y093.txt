@@ -1,0 +1,8 @@
+[ENTRY]
+ID=151038835
+Asset=Manipulator-SpawnPoint
+Pos=41322.9,228.265,69895
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=5_obji_bzt_08_rareStatuette
+

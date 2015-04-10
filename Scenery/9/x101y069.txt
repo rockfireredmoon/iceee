@@ -1,0 +1,15 @@
+[ENTRY]
+ID=151017788
+Asset=CL-Burnt-Pine2#CL-Burnt-Pine2
+Pos=75761,612.222,52336
+Orient=0,0,0,1
+Scale=2.275,2.275,2.275
+Flags=1
+
+[ENTRY]
+ID=151028234
+Asset=Prop-Pine-Sick_Tree#Prop-Pine-Sick_Tree5
+Pos=75971,522.109,52334
+Orient=0,0,0,1
+Scale=10,10,10
+

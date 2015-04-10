@@ -1,0 +1,13 @@
+[ENTRY]
+ID=13144
+ACCOUNTID=1019
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=arrowood
+GroveName=arrowood
+WarpName=arrowood1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

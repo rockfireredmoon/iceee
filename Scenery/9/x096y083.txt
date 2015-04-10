@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151029569
+Asset=Manipulator-SpawnPoint
+Pos=72691,925.379,62418
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=12_yti_wilds_46_47
+outerRadius=10
+

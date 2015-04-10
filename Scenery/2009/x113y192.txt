@@ -1,0 +1,17 @@
+[ENTRY]
+ID=151042648
+Asset=Forest?d=0.9&amp;s=811812&amp;sz=800
+Name=9
+Pos=84808.6,347.91,144096
+Orient=0,-0.873133,0,-0.487482
+Scale=1.575,1.575,1.575
+Flags=1
+
+[ENTRY]
+ID=151052131
+Asset=Manipulator-PathNode
+Name=9
+Pos=85358.3,469.526,144733
+Orient=0,0,0,1
+Scale=1,1,1
+

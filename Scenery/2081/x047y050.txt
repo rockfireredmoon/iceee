@@ -1,0 +1,9 @@
+[ENTRY]
+ID=1358963090
+Asset=Swamp_Ruin?d=0.9&amp;s=123456&amp;sz=900
+Name=81
+Pos=47970,81.0466,50853
+Orient=0,-0.741296,0,0.671178
+Scale=1,1,1
+Flags=1
+

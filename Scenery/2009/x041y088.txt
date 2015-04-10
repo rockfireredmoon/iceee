@@ -1,0 +1,17 @@
+[ENTRY]
+ID=151006164
+Asset=Mushrooms_Rotted?d=0.9&amp;s=173437&amp;sz=800
+Name=9
+Pos=31134.8,246.551,66177.4
+Orient=0,-0.827702,0,0.561168
+Scale=1.9,1.9,1.9
+Flags=1
+
+[ENTRY]
+ID=151023110
+Asset=Environment-Marker?type=Rotted
+Name=9
+Pos=31118.6,247.329,66252
+Orient=0,0,0,1
+Scale=3.975,3.975,3.975
+

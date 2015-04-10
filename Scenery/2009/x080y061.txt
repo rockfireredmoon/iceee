@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151025293
+Asset=CL-Hills_RockGiant2
+Name=9
+Pos=60095.8,392.013,46427
+Orient=0,-0.807558,0,0.589788
+Scale=0.675,0.675,0.675
+Flags=1
+

@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151013386
+Asset=CL-Market_Stall-Armor#CL-Market_Stall-Armor
+Name=9
+Pos=78528,433.509,39856
+Orient=0,-0.744643,0,0.667463
+Scale=1,1,1
+Flags=1
+

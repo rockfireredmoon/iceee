@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151026762
+Asset=Prop-Burnt_Pines#Prop-Burnt_Pine4
+Name=9
+Pos=78737,828.68,59256
+Orient=0.0538173,-0.537822,-0.147345,0.828336
+Scale=2.525,2.525,2.525
+Flags=1
+

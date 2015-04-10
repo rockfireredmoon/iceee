@@ -1,0 +1,16 @@
+[ENTRY]
+ID=1075402
+Asset=CL-Roof#CL-Roof11
+Name=
+Pos=3915.17,278.793,3850.19
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
+ID=1075404
+Asset=CL-Roof2
+Name=
+Pos=3969.43,282.072,4082.88
+Orient=0,-0.389418,0,0.921061
+Scale=1,1,1
+

@@ -1,0 +1,16 @@
+[ENTRY]
+ID=151043735
+Asset=Prop-Anubian_Palisade
+Name=9
+Pos=63368.2,157.306,140992
+Orient=-0.0918194,-0.144909,-0.0933036,0.980747
+Scale=1.5,1.5,1.5
+
+[ENTRY]
+ID=151043736
+Asset=Prop-Anubian_Palisade
+Name=9
+Pos=63252.4,150.88,140994
+Orient=-0.115102,0.0971678,0.149829,0.97717
+Scale=1.425,1.425,1.425
+

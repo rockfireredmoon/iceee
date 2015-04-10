@@ -1,0 +1,13 @@
+[ENTRY]
+ID=11896
+ACCOUNTID=863
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=ottgerden
+GroveName=ottgerden
+WarpName=ottgerden1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

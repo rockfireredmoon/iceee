@@ -1,0 +1,15 @@
+[ENTRY]
+ID=151010592
+Asset=Prop-Dock3
+Pos=20237,17.2894,75909
+Orient=0,0.375559,0,0.926799
+Scale=1.75,1.75,1.75
+Flags=1
+
+[ENTRY]
+ID=151054595
+Asset=Par-Waves-1-Emitter
+Pos=20039.5,60.8813,75811
+Orient=0,0.0299951,0,0.99955
+Scale=3,3,3
+

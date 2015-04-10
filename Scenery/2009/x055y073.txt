@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151001706
+Asset=Prop-Statue-HillGoliath2
+Name=9
+Pos=41885.3,42.4213,55166
+Orient=0.00587053,0.994005,0.0846943,-0.0688988
+Scale=3,3,3
+Flags=1
+

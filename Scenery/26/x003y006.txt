@@ -1,0 +1,7 @@
+[ENTRY]
+ID=436211453
+Asset=Prop-Table4#Prop-Table4
+Pos=3060,245,6905
+Orient=0,0,0,1
+Scale=1,1,1
+

@@ -1,0 +1,8 @@
+[ENTRY]
+ID=989855824
+Asset=Prop-Fog_White
+Pos=4917.57,1414.52,4964.8
+Orient=0,0,0,1
+Scale=3.275,3.275,3.275
+Flags=1
+

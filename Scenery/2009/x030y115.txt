@@ -1,0 +1,17 @@
+[ENTRY]
+ID=151007729
+Asset=Prop-Boulder_Arid3
+Name=9
+Pos=22975.5,238.484,86517
+Orient=0.0848977,0,0,0.99639
+Scale=4.6,4.6,4.6
+
+[ENTRY]
+ID=151032135
+Asset=Manipulator-SpawnPoint
+Name=9
+Pos=22652.4,254.901,86674
+Orient=0,0,0,1
+Scale=1,1,1
+Layer=151002648
+

@@ -1,0 +1,13 @@
+[ENTRY]
+ID=10696
+ACCOUNTID=713
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=whinp
+GroveName=whinp
+WarpName=whinp1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

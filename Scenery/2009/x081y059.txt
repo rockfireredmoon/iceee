@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151002859
+Asset=Bldg-BremenChurch?ATS=ATS-church
+Name=9
+Pos=60934.2,494.143,44523
+Orient=0,-0.505533,0,0.862807
+Scale=1,1,1
+Flags=1
+

@@ -1,0 +1,13 @@
+[ENTRY]
+ID=13208
+ACCOUNTID=1027
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=dragonsden
+GroveName=dragonsden
+WarpName=dragonsden1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

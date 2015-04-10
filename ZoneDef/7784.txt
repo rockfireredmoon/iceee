@@ -1,0 +1,13 @@
+[ENTRY]
+ID=7784
+ACCOUNTID=349
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=skunkgrove
+GroveName=skunkgrove
+WarpName=skunkgrove1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

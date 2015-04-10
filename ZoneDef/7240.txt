@@ -1,0 +1,13 @@
+[ENTRY]
+ID=7240
+ACCOUNTID=281
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=Citytavern
+ShardName=bfive
+GroveName=bfive
+WarpName=bfive1
+Grove=1
+EnvironmentCycle=1
+DefLoc=2603,258,3664
+

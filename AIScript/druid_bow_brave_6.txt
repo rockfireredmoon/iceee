@@ -1,0 +1,42 @@
+#name druid_bow_brave_6
+
+; 5044 - Root, 6 will
+; 5181 - Sting, 3 might, add 1 mcharge
+; 5234 - Deadly Shot, 1 might, need 1-3 mcharge
+; 32760 - ranged melee
+; 32766 - melee
+
+set var 0
+
+:begin
+call waitfortarget
+use 32760
+
+;;getwill var
+;;if var >= 10
+;;  use 5044
+;;  wait 2000
+;;endif
+;;goto begin
+
+getmightcharge var
+if var >= 2
+  use 5234
+  wait 1000
+endif
+
+getmight var
+if var >= 3
+  use 5181
+  wait 2000
+endif 
+
+goto begin
+
+:waitfortarget
+has_target var
+if var = 0
+  wait 2000
+  goto waitfortarget
+endif
+return

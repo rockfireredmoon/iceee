@@ -1,0 +1,47 @@
+[ENTRY]
+Name=56_wacr_TheWailer
+Spawn=1259,100  ;The Wailer (48)
+
+[ENTRY]
+Name=56_wacr_ThawingBrazier
+Spawn=7777,100  ;Thawing Brazier (1)
+
+[ENTRY]
+Name=56_wacr_Kyshf
+Spawn=3648,100  ;Kyshf (48)
+
+[ENTRY]
+Name=56_wacr_Alabaster
+Spawn=3649,100  ;Alabaster (48)
+
+[ENTRY]
+Name=56_wacr_MasonStronfeld
+Spawn=3674,100  ;Mason Stronfeld (47)
+
+[ENTRY]
+Name=56_wacr_Spiders
+Spawn=3652,50  ;Creepy Soulweaver (47)
+Spawn=3655,50  ;Crypt Creeper (46)
+
+[ENTRY]
+Name=56_wacr_CryptMix
+Shares=30
+Spawn=3650,10  ;Crypt Wanderer (46)
+Spawn=3651,10  ;Crypt Deathchanter (46)
+Spawn=3653,10  ;Crypt Guardian (47)
+
+[ENTRY]
+Name=56_wacr_NobleMix
+Spawn=3654,50  ;Decaying Noble (47)
+Spawn=3656,50  ;Crypt Caretaker (46)
+
+[ENTRY]
+Name=56_wacr_FullMix
+Shares=70
+Spawn=3650,10  ;Crypt Wanderer (46)
+Spawn=3651,10  ;Crypt Deathchanter (46)
+Spawn=3653,10  ;Crypt Guardian (47)
+Spawn=3654,10  ;Decaying Noble (47)
+Spawn=3656,10  ;Crypt Caretaker 
+Spawn=3652,10  ;Creepy Soulweaver (47)
+Spawn=3655,10  ;Crypt Creeper (46)

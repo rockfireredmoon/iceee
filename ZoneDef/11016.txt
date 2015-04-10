@@ -1,0 +1,13 @@
+[ENTRY]
+ID=11016
+ACCOUNTID=753
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=ozz
+GroveName=ozz
+WarpName=ozz1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

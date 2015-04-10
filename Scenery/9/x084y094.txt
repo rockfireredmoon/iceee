@@ -1,0 +1,16 @@
+[ENTRY]
+ID=151017625
+Asset=Prop-Burnt_Pines#Prop-Burnt_Pine3
+Pos=63063,962.954,70759
+Orient=0,0,0,1
+Scale=3.075,3.075,3.075
+Flags=1
+
+[ENTRY]
+ID=151040445
+Asset=CL-GrunsBush_3#CL-GrunsBush_3
+Pos=63012.5,993.651,70778
+Orient=0,0,0,1
+Scale=2.675,2.675,2.675
+Flags=1
+

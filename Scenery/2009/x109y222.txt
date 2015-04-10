@@ -1,0 +1,16 @@
+[ENTRY]
+ID=151025402
+Asset=Prop-Mushroom-Med_Rotted2#Prop-Mushroom-Med_Rotted2
+Name=9
+Pos=81810.2,206.69,167007
+Orient=0,0,0,1
+Scale=0.25,0.25,0.25
+
+[ENTRY]
+ID=151025403
+Asset=Prop-Mushroom-Med_Rotted3#Prop-Mushroom-Med_Rotted3
+Name=9
+Pos=81807.2,206.646,167004
+Orient=0,0,0,1
+Scale=0.25,0.25,0.25
+

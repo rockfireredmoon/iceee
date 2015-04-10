@@ -1,0 +1,15 @@
+[ENTRY]
+ID=14656
+ACCOUNTID=1208
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=ecarw
+GroveName=ecarw
+WarpName=ecarw1
+DropRateProfile=standard
+Grove=1
+EnvironmentCycle=0
+BuildPermission=account,1208,0,0,3,3
+DefLoc=2958,260,3821
+

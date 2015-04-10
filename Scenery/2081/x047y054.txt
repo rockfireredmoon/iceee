@@ -1,0 +1,17 @@
+[ENTRY]
+ID=1358963858
+Asset=Prop-Swamp-Tree3
+Name=81
+Pos=47740,92.8664,54406
+Orient=0,0,0,1
+Scale=2,2,2
+Flags=1
+
+[ENTRY]
+ID=1358963967
+Asset=CL-Swamp_Bushes1#CL-Swamp_Bushes1
+Name=81
+Pos=47750.2,88.3632,54486.9
+Orient=0,-0.0349931,0,0.999388
+Scale=1.525,1.525,1.525
+

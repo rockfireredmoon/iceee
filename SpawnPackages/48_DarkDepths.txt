@@ -1,0 +1,128 @@
+[ENTRY]
+Name=z48_dd_gen_Dungeon_Loot_2713
+Spawn=2713,100  ;Dungeon Loot (1) at 0
+
+[ENTRY]
+Name=z48_dd_gen_Exit_to_Great_Forest_1012
+Spawn=1012,100  ;Exit to Great Forest (1) at 0
+
+[ENTRY]
+Name=4_dd_Putritaur_k_h_35
+Spawn=972,100  ;Puritar (35) at 285
+
+[ENTRY]
+Name=4_dd_obji_DjallsVitiatorLewt
+Spawn=1022,100  ;Vitiator's Treasure (1) at 0
+
+[ENTRY]
+Name=4_dd_DjallVitiator_m_h_38
+Spawn=975,100  ;Aram Norr (35) at 0
+;Spawn=1022,0  ;Vitiator's Treasure (1) at 41
+
+[ENTRY]
+Name=4_obji_mvk01_artifactVase
+Spawn=1021,100  ;Artifact Vase (1) at 0
+
+[ENTRY]
+Name=4_dd_Excavators
+Spawn=1000,50  ;Entralled Excavator (34) at 0
+Spawn=1001,50  ;Enthralled Excavator (34) at 0
+
+[ENTRY]
+Name=4_dd_cultistsHallway_front
+Spawn=968,20  ;Djallist (34) at 0
+Spawn=969,20  ;Djallist (35) at 0
+Spawn=2640,20  ;Djallist (34) at 0
+Spawn=2641,20  ;Djallist (35) at 0
+Spawn=2644,20  ;Djallist Overseer (35) at 0
+
+[ENTRY]
+Name=4_dd_taintmawSTEPUP
+Spawn=966,50  ;Spoilivore (35) at 0
+Spawn=967,50  ;Spoilivore (34) at 0
+
+[ENTRY]
+Name=4_dd_cultistsRooms_front
+Shares=60
+Spawn=960,10  ;Imbrued Druid (34) at 0
+Spawn=961,10  ;Imbrued Druid (35) at 0
+Spawn=964,10  ;Banethorn Reaver (35) at 0
+Spawn=965,10  ;Banethorn Reaver (34) at 0
+Spawn=968,10  ;Djallist (34) at 0
+Spawn=2640,10  ;Djallist (34) at 0
+
+[ENTRY]
+Name=4_dd_chompers
+Spawn=966,50  ;Spoilivore (35) at 14
+Spawn=967,50  ;Spoilivore (34) at 15
+
+[ENTRY]
+Name=4_dd_spiders
+Spawn=2642,50  ;Shadowsilk Crawler (34) at 0
+Spawn=2643,50  ;Shadowsilk Crawler (35) at 0
+
+[ENTRY]
+Name=4_dd_Spoilivore_37_38
+Spawn=966,50  ;Spoilivore (35) at 0
+Spawn=967,50  ;Spoilivore (34) at 0
+
+[ENTRY]
+Name=4_dd_samsonvore_k_35
+Spawn=2645,100  ;Samsonvore (35) at 0
+
+[ENTRY]
+Name=4_dd_FelSeed_d_h_37
+Spawn=971,100  ;Fel Seed (35) at 0
+
+[ENTRY]
+Name=4_dd_wolves
+Spawn=962,50  ;Rot Lupus (35) at 0
+Spawn=963,50  ;Rot Lupus (34) at 0
+
+[ENTRY]
+Name=4_dd_Fangret_r_35
+Spawn=2646,100  ;Fangret (35) at 20
+
+[ENTRY]
+Name=4_dd_cultistsHallway_back
+Spawn=968,20  ;Djallist (34) at 0
+Spawn=969,20  ;Djallist (35) at 0
+Spawn=2640,20  ;Djallist (34) at 0
+Spawn=2641,20  ;Djallist (35) at 0
+Spawn=2644,20  ;Djallist Overseer (35) at 0
+
+[ENTRY]
+Name=4_dd_shadowsilkGorger_k_35
+Spawn=2648,100  ;Shadowsilk Gorger (35) at 0
+
+[ENTRY]
+Name=4_dd_Spynndel_d_35
+Spawn=2647,100  ;Spynndel (35) at 0
+
+[ENTRY]
+Name=4_dd_cultistsRooms_back
+Shares=80
+Spawn=960,10  ;Imbrued Druid (34) at 0
+Spawn=961,10  ;Imbrued Druid (35) at 0
+Spawn=964,10  ;Banethorn Reaver (35) at 0
+Spawn=965,10  ;Banethorn Reaver (34) at 0
+Spawn=968,10  ;Djallist (34) at 0
+Spawn=969,10  ;Djallist (35) at 0
+Spawn=2640,10  ;Djallist (34) at 0
+Spawn=2641,10  ;Djallist (35) at 0
+
+[ENTRY]
+Name=4_dd_marBrightclawSTEPUP
+Spawn=960,20  ;Imbrued Druid (34) at 0
+Spawn=964,20  ;Banethorn Reaver (35) at 0
+Spawn=965,20  ;Banethorn Reaver (34) at 0
+Spawn=968,20  ;Djallist (34) at 0
+Spawn=2640,20  ;Djallist (34) at 0
+
+[ENTRY]
+Name=4_dd_MarBlightclaw_r_h_37
+Spawn=973,100  ;Mar Blightclaw (35) at 0
+
+[ENTRY]
+Name=4_dd_SapLich_d_h_36
+Spawn=974,100  ;Sap Golem (35) at 0

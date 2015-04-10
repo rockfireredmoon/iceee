@@ -1,0 +1,13 @@
+[ENTRY]
+ID=13312
+ACCOUNTID=1040
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=fulerage
+GroveName=fulerage
+WarpName=fulerage1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

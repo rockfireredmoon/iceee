@@ -1,0 +1,17 @@
+[ENTRY]
+ID=150999844
+Asset=Autumn_Forest?d=0.9&s=123456&sz=800
+Pos=65811,313.497,44075
+Orient=0,0.0799149,0,0.996802
+Scale=1.325,1.325,1.325
+Flags=1
+
+[ENTRY]
+ID=151057100
+Asset=Manipulator-SpawnPoint
+Pos=65407.3,421.355,43761
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=2a_rhl_sectionB2_general
+outerRadius=30
+

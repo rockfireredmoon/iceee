@@ -1,0 +1,16 @@
+[ENTRY]
+ID=151010282
+Asset=Prop-Boulder7
+Pos=8987.4,219.836,62842
+Orient=0,0,0,1
+Scale=1.275,1.275,1.275
+Flags=1
+
+[ENTRY]
+ID=151019578
+Asset=Prop-Boulder5
+Pos=8930.9,139.38,62520
+Orient=0,-0.213347,0,0.976977
+Scale=1.9,1.9,1.9
+Flags=1
+

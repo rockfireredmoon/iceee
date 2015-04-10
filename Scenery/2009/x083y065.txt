@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151021230
+Asset=CL-AridBush4#CL-AridBush4
+Name=9
+Pos=62716.6,395.019,48843
+Orient=0,0,0,1
+Scale=1.325,1.325,1.325
+Flags=1
+

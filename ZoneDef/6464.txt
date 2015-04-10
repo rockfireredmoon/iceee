@@ -1,0 +1,13 @@
+[ENTRY]
+ID=6464
+ACCOUNTID=184
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=datpad
+GroveName=datpad
+WarpName=datpad1
+Grove=1
+EnvironmentCycle=1
+DefLoc=2958,260,3821
+

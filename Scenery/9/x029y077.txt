@@ -1,0 +1,14 @@
+[ENTRY]
+ID=151026729
+Asset=Environment-Marker?type=Fields
+Pos=21903.4,155.109,58279
+Orient=0,0,0,1
+Scale=3.875,3.875,3.875
+
+[ENTRY]
+ID=151054778
+Asset=Par-Waves-1-Emitter
+Pos=21828.1,64.691,57969
+Orient=0,0.983413,0,-0.181382
+Scale=3,3,3
+

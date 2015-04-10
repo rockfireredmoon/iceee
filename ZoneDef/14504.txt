@@ -1,0 +1,13 @@
+[ENTRY]
+ID=14504
+ACCOUNTID=1189
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=escalan
+GroveName=escalan
+WarpName=escalan1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

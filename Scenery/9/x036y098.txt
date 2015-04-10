@@ -1,0 +1,16 @@
+[ENTRY]
+ID=151031558
+Asset=Basic Desert?d=0.2&s=8187&sz=800
+Pos=27618.3,251.631,74104
+Orient=0,0.46178,0,0.886995
+Scale=1,1,1
+
+[ENTRY]
+ID=151031903
+Asset=Manipulator#Manipulator-PathNode
+Pos=27061.3,227.264,73849
+Orient=0,0,0,1
+Scale=1,1,1
+links_count=1
+link=151031891,1
+

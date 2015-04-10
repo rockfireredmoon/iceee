@@ -1,0 +1,17 @@
+[ENTRY]
+ID=151014962
+Asset=Manipulator-SpawnPoint
+Name=9
+Pos=24439.3,225.569,86908.5
+Orient=0,0.717356,0,0.696707
+Scale=1,1,1
+Layer=150998398
+
+[ENTRY]
+ID=151038100
+Asset=Prop-Desk_Set#Prop-Scroll1
+Name=9
+Pos=24390.2,220.873,86820
+Orient=0,0,0,1
+Scale=1,1,1
+

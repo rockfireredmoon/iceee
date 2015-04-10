@@ -1,0 +1,8 @@
+[ENTRY]
+ID=151004810
+Asset=CL-Beach_Debris2#CL-Beach_Debris2
+Pos=65269.3,67.4964,31252
+Orient=0,0.962209,0,0.272313
+Scale=1,1,1
+Flags=1
+

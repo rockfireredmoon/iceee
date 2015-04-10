@@ -1,0 +1,14 @@
+[ENTRY]
+ID=151061764
+Asset=Prop-Marker_Far
+Pos=84758.7,580.941,49676.3
+Orient=0,0,0,1
+Scale=10,10,10
+
+[ENTRY]
+ID=151061766
+Asset=Prop-Marker_Far
+Pos=84806.4,652.562,50166
+Orient=0,0,0,1
+Scale=10,10,10
+

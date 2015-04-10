@@ -1,0 +1,13 @@
+[ENTRY]
+ID=10416
+ACCOUNTID=678
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=pineapples
+GroveName=pineapples
+WarpName=pineapples1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

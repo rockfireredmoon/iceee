@@ -1,0 +1,13 @@
+[ENTRY]
+ID=10352
+ACCOUNTID=670
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=bunneh
+GroveName=bunneh
+WarpName=bunneh1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

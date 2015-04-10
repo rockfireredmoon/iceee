@@ -1,0 +1,15 @@
+[ENTRY]
+ID=8736
+ACCOUNTID=468
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=alwayseatyourvegetables
+GroveName=alwayseatyourvegetables
+WarpName=alwayseatyourvegetables1
+DropRateProfile=standard
+Grove=1
+EnvironmentCycle=0
+BuildPermission=account,468,0,0,3,3
+DefLoc=2958,260,3821
+

@@ -1,0 +1,13 @@
+[ENTRY]
+ID=9344
+ACCOUNTID=544
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=DesertDay
+ShardName=avalonia
+GroveName=avalonia
+WarpName=avalonia1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

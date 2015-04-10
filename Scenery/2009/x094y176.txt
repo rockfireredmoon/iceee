@@ -1,0 +1,17 @@
+[ENTRY]
+ID=150998124
+Asset=CL-Hills_Tree3#CL-Hills_Tree3
+Name=9
+Pos=71045.7,173.133,132293
+Orient=0,0,0,1
+Scale=1.475,1.475,1.475
+
+[ENTRY]
+ID=150998882
+Asset=Prop-Fence-Stone1
+Name=9
+Pos=70540,182.987,132340
+Orient=0,0.995415,0,0.09565
+Scale=1.5,1.5,1.5
+Flags=1
+

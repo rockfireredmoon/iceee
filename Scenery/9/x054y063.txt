@@ -1,0 +1,17 @@
+[ENTRY]
+ID=151050315
+Asset=Manipulator-SpawnPoint
+Pos=40658.5,315.348,47785
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=3a_deerCamp01_general
+outerRadius=1
+
+[ENTRY]
+ID=151054825
+Asset=Par-Waves-1-Emitter
+Pos=41210.7,70.083,47338
+Orient=0,0.993666,0,0.112373
+Scale=2,2,2
+Flags=1
+

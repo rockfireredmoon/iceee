@@ -1,0 +1,15 @@
+[ENTRY]
+ID=12144
+ACCOUNTID=894
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=kaile
+GroveName=kaile
+WarpName=kaile1
+DropRateProfile=standard
+Grove=1
+EnvironmentCycle=1
+BuildPermission=account,894,0,0,13,23
+DefLoc=3167,261,3835
+

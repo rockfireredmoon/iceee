@@ -1,0 +1,7 @@
+[ENTRY]
+ID=151061790
+Asset=Prop-Marker_Medium
+Pos=80296.9,873.111,48605.1
+Orient=0.34759,0,0,0.937647
+Scale=20,20,20
+

@@ -1,0 +1,13 @@
+[ENTRY]
+ID=7888
+ACCOUNTID=362
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=cthulhu
+GroveName=cthulhu
+WarpName=cthulhu1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

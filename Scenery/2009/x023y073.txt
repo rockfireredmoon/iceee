@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151050632
+Asset=Bldg-Dungeon-Entrance-Temple1?ATS=ATS-Roman_Low
+Name=9
+Pos=17856.3,63.5088,55399
+Orient=0.0052905,-0.500945,0.00465316,0.865451
+Scale=1,1,1
+Flags=1
+

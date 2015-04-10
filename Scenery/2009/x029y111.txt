@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151040950
+Asset=Prop-Sanctuary_Stone
+Name=9
+Pos=22166.3,202.374,83588
+Orient=0.0290913,0.59655,-0.0278884,0.801564
+Scale=1,1,1
+Flags=1
+

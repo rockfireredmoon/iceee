@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151025612
+Asset=Manipulator-SpawnPoint
+Pos=19323.8,1.28781,52226
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=4_hwo_greysun_GalenFrostfist_h_35
+outerRadius=40
+

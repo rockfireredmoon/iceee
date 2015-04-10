@@ -1,0 +1,13 @@
+[ENTRY]
+ID=12008
+ACCOUNTID=877
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=huskytv
+GroveName=huskytv
+WarpName=huskytv1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

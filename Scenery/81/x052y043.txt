@@ -1,0 +1,17 @@
+[ENTRY]
+ID=1358960731
+Asset=Manipulator-SpawnPoint
+Pos=52028.7,147.485,43900
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=1a_guineafowl/chomperCamp01_coast
+outerRadius=1
+
+[ENTRY]
+ID=1358962983
+Asset=Effects#Par-Waves-1-Emitter
+Pos=52293.9,61.8797,43514
+Orient=0,0.911458,0,0.411393
+Scale=2,2,2
+Flags=1
+

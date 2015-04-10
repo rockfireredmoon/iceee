@@ -1,0 +1,15 @@
+[ENTRY]
+ID=151031595
+Asset=Prop-Autumn_Tree#Prop-Autumn_Tree3
+Pos=62201.1,504.467,41349
+Orient=0,0,0,1
+Scale=1,1,1
+Flags=1
+
+[ENTRY]
+ID=151031598
+Asset=Prop-Dead-Forest-Tree#Prop-Dead-Forest-Tree1
+Pos=62086.4,445.925,41587
+Orient=0,0,0,1
+Scale=1,1,1
+

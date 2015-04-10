@@ -1,0 +1,8 @@
+[ENTRY]
+ID=687866726
+Asset=CL-Bramble_Thicket1
+Pos=7046.38,50,3163.24
+Orient=0,0.710353,0,0.703845
+Scale=4.825,4.825,4.825
+Flags=1
+

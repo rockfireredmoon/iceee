@@ -1,0 +1,13 @@
+[ENTRY]
+ID=6488
+ACCOUNTID=187
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=stine
+GroveName=stine
+WarpName=stine1
+Grove=1
+EnvironmentCycle=1
+DefLoc=2958,260,3821
+

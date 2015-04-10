@@ -1,0 +1,52 @@
+; Quest #314 = Alimat
+; Forward is the direction if you travel directly from the
+; entrance to the summoning object.
+; Wait between each spawn step to properly handle the delay between the
+; spawn triggers, or to skip them if re-starting the summon activation.
+
+set trigger 0
+end
+
+:onUse_2134
+wait 7500
+if trigger = 0
+  spawn 1325400172  ;Left fire holder
+  spawn 1325400193  ;Back mob
+  spawn 1325400196  ;Left mob
+  spawn 1325400194  ;Forward mob
+  spawn 1325400192  ;Right mob
+  set trigger 1
+endif
+
+wait 7500
+
+if trigger = 1
+  spawn 1325400170  ;Right fire holder
+  spawn 1325400191  ;Left mob
+  spawn 1325400173  ;Forward mob
+  spawn 1325400195  ;Right mob
+  set trigger 2
+endif
+
+wait 7500
+
+if trigger = 2
+  spawn 1325400171  ;Forward fire holder
+  spawn 1325400189  ;Left mob
+  spawn 1325400190  ;Right mob
+  set trigger 3
+endif
+
+; stop here to wait for finish
+end
+
+:onUseFinish_2134
+if trigger = 3
+  spawn 1325400187  ;Alimat
+  set trigger 4     ;Try to prevent spawning twice in case of multiple player activation
+endif
+
+end
+
+:onUseHalt_2134
+end

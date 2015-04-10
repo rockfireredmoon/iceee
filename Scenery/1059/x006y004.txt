@@ -1,0 +1,14 @@
+[ENTRY]
+ID=989855830
+Asset=Prop-Giant_Mushroom#Prop-Giant_Mushroom1
+Pos=6661.57,887.205,4826.19
+Orient=-0.00416743,-0.240502,-0.0648203,-0.968473
+Scale=2.95,2.95,2.95
+
+[ENTRY]
+ID=989855889
+Asset=Prop-Giant_Mushroom2
+Pos=6157.07,887.205,4826.19
+Orient=-0.0485495,0.510131,-0.0431508,-0.857641
+Scale=2.95,2.95,2.95
+

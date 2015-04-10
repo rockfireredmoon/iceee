@@ -1,0 +1,8 @@
+[ENTRY]
+ID=151026632
+Asset=Prop-Vampire_Fountain_Blood#Prop-Vampire_Fountain_Blood
+Name=9
+Pos=79129.9,1288.76,52757.3
+Orient=0,-0.0699428,0,0.997551
+Scale=2.95,2.95,2.95
+

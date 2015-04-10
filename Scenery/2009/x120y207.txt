@@ -1,0 +1,17 @@
+[ENTRY]
+ID=151021286
+Asset=Prop-Boulder_Arid#Prop-Boulder_Arid7
+Name=9
+Pos=90243.5,225.432,155516
+Orient=0,0,0,1
+Scale=1.875,1.875,1.875
+
+[ENTRY]
+ID=151042789
+Asset=Prop-Dead-Forest-Tree#Prop-Dead-Forest-Tree5
+Name=9
+Pos=90114.4,181.379,155250
+Orient=0,0,0,1
+Scale=1.625,1.625,1.625
+Flags=1
+

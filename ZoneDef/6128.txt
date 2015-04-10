@@ -1,0 +1,15 @@
+[ENTRY]
+ID=6128
+ACCOUNTID=142
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=frogpond
+GroveName=frogpond
+WarpName=frogpond1
+DropRateProfile=standard
+Grove=1
+EnvironmentCycle=1
+BuildPermission=account,142,0,0,3,3
+DefLoc=2958,260,3821
+

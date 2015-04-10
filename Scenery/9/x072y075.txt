@@ -1,0 +1,10 @@
+[ENTRY]
+ID=151053013
+Asset=Manipulator-SpawnPoint
+Pos=54084.5,160.7,56926
+Orient=0,-0.624897,0,0.780707
+Scale=1,1,1
+links_count=1
+link=151053016,1
+spawnPackage=3a_spikedToadCamp01_general
+

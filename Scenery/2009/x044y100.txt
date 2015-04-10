@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151058591
+Asset=CL-AridRock3#CL-AridRock3
+Name=9
+Pos=33427.5,1362.88,75730.8
+Orient=0,-0.439462,0,0.898261
+Scale=2.6,2.6,2.6
+Flags=1
+

@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151027756
+Asset=Effects#Par-Black_Smoke-Emitter
+Name=9
+Pos=52050.1,537.915,81911
+Orient=0,0,0,1
+Scale=2.85,2.85,2.85
+Flags=1
+

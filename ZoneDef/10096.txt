@@ -1,0 +1,13 @@
+[ENTRY]
+ID=10096
+ACCOUNTID=638
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=toyfox
+GroveName=toyfox
+WarpName=toyfox1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

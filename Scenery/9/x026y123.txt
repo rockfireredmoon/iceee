@@ -1,0 +1,8 @@
+[ENTRY]
+ID=151062197
+Asset=CL-Desert#CL-Roadside_Desert4
+Pos=19663.1,258.97,92885.2
+Orient=0,0.430458,0,0.902611
+Scale=1.425,1.425,1.425
+Flags=1
+

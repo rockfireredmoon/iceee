@@ -1,0 +1,15 @@
+[ENTRY]
+ID=5936
+ACCOUNTID=118
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=GreatForestNight
+ShardName=xaosrealms
+GroveName=xaosrealms
+WarpName=xaosrealms1
+DropRateProfile=standard
+Grove=1
+EnvironmentCycle=1
+BuildPermission=account,118,0,0,3,3
+DefLoc=3189,258,4270
+

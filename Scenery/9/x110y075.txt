@@ -1,0 +1,11 @@
+[ENTRY]
+ID=151030918
+Asset=Manipulator-SpawnPoint
+Pos=82501,751.256,56504
+Orient=0,-0.98279,0,0.184729
+Scale=1,1,1
+links_count=1
+link=151030919,1
+spawnPackage=12_vmp_ rockDervish
+outerRadius=10
+

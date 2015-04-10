@@ -1,0 +1,8 @@
+[ENTRY]
+ID=1358964182
+Asset=CL-Rock-Clutter#CL-Rock-Clutter
+Name=81
+Pos=42483.8,181.802,50696
+Orient=0,0.576959,0,0.816773
+Scale=1,1,1
+

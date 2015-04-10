@@ -1,0 +1,8 @@
+[ENTRY]
+ID=151022752
+Asset=Environment-Marker?type=GreatForest
+Pos=40456,174.084,60879
+Orient=0,0,0,1
+Scale=5.05,5.05,5.05
+Flags=1
+

@@ -1,0 +1,15 @@
+[ENTRY]
+ID=6520
+ACCOUNTID=191
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=DesertDay
+ShardName=light
+GroveName=light
+WarpName=light1
+DropRateProfile=standard
+Grove=1
+EnvironmentCycle=1
+BuildPermission=account,191,0,0,13,23
+DefLoc=2998,260,3921
+

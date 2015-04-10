@@ -1,0 +1,225 @@
+[ENTRY]
+mID=40114
+mType=5
+mDisplayName=Speed Potion
+mIcon=Icon-32-Potion_Yellow.png|Icon-32-BG-Aqua.png
+mIvType1=1
+mIvMax1=20
+mLevel=10
+mBindingType=1
+mUseAbilityId=25050
+mValue=800
+mFlavorText=A potion that increases movement speed by 10% for 3 minutes.
+mQualityLevel=1
+mMinUseLevel=10
+
+[ENTRY]
+mID=40115
+mType=5
+mDisplayName=Greater Speed Potion
+mIcon=Icon-32-Potion_Short_Yellow.png|Icon-32-BG-Aqua.png
+mIvType1=1
+mIvMax1=20
+mLevel=10
+mBindingType=1
+mUseAbilityId=25051
+mValue=1600
+mFlavorText=A potion that increases movement speed by 20% for 3 minutes.
+mQualityLevel=1
+mMinUseLevel=10
+
+[ENTRY]
+mID=40116
+mType=5
+mDisplayName=Energy Drink
+mIcon=Icon-32-Potion_Short_Blue.png|Icon-32-BG-Aqua.png
+mIvType1=1
+mIvMax1=20
+mLevel=10
+mBindingType=1
+mUseAbilityId=25052
+mValue=1400
+mFlavorText=A potion that increases both Might and Will regeneration by 20% for 3 minutes.
+mQualityLevel=1
+mMinUseLevel=10
+
+[ENTRY]
+mID=40117
+mType=5
+mDisplayName=Agility Potion
+mIcon=Icon-32-Potion_Short_Green.png|Icon-32-BG-Aqua.png
+mIvType1=1
+mIvMax1=20
+mLevel=10
+mBindingType=1
+mUseAbilityId=25053
+mValue=1400
+mFlavorText=A potion that increases Block, Parry, and Dodge rate by 5% for 3 minutes.
+mQualityLevel=1
+mMinUseLevel=10
+
+[ENTRY]
+mID=40118
+mType=5
+mDisplayName=Constitution Potion: Level 10
+mIcon=Icon-32-Potion_Pink.png|Icon-32-BG-Aqua.png
+mIvType1=1
+mIvMax1=20
+mLevel=10
+mBindingType=1
+mUseAbilityId=25054
+mValue=200
+mFlavorText=A potion that increases Constitution by 7 for 3 minutes.
+mQualityLevel=1
+mMinUseLevel=10
+
+[ENTRY]
+mID=40119
+mType=5
+mDisplayName=Constitution Potion: Level 20
+mIcon=Icon-32-Potion_Pink.png|Icon-32-BG-Aqua.png
+mIvType1=1
+mIvMax1=20
+mLevel=20
+mBindingType=1
+mUseAbilityId=25055
+mValue=400
+mFlavorText=A potion that increases Constitution by 12 for 3 minutes.
+mQualityLevel=1
+mMinUseLevel=20
+
+[ENTRY]
+mID=40120
+mType=5
+mDisplayName=Constitution Potion: Level 30
+mIcon=Icon-32-Potion_Pink.png|Icon-32-BG-Aqua.png
+mIvType1=1
+mIvMax1=20
+mLevel=30
+mBindingType=1
+mUseAbilityId=25056
+mValue=600
+mFlavorText=A potion that increases Constitution by 19 for 3 minutes.
+mQualityLevel=1
+mMinUseLevel=30
+
+[ENTRY]
+mID=40121
+mType=5
+mDisplayName=Constitution Potion: Level 40
+mIcon=Icon-32-Potion_Pink.png|Icon-32-BG-Aqua.png
+mIvType1=1
+mIvMax1=20
+mLevel=40
+mBindingType=1
+mUseAbilityId=25057
+mValue=800
+mFlavorText=A potion that increases Constitution by 28 for 3 minutes.
+mQualityLevel=1
+mMinUseLevel=40
+
+[ENTRY]
+mID=40122
+mType=5
+mDisplayName=Constitution Potion: Level 50
+mIcon=Icon-32-Potion_Pink.png|Icon-32-BG-Aqua.png
+mIvType1=1
+mIvMax1=20
+mLevel=50
+mBindingType=1
+mUseAbilityId=25058
+mValue=1000
+mFlavorText=A potion that increases Constitution by 39 for 3 minutes.
+mQualityLevel=1
+mMinUseLevel=50
+
+[ENTRY]
+mID=40123
+mType=5
+mDisplayName=Armor Boost Potion: Level 10
+mIcon=Icon-32-Potion_Blue.png|Icon-32-BG-Red.png
+mIvType1=1
+mIvMax1=20
+mLevel=10
+mBindingType=1
+mUseAbilityId=25059
+mValue=400
+mFlavorText=A level 10 potion that increases all armor ratings for 3 minutes.
+mQualityLevel=1
+mMinUseLevel=10
+
+[ENTRY]
+mID=40124
+mType=5
+mDisplayName=Armor Boost Potion: Level 20
+mIcon=Icon-32-Potion_Blue.png|Icon-32-BG-Red.png
+mIvType1=1
+mIvMax1=20
+mLevel=20
+mBindingType=1
+mUseAbilityId=25060
+mValue=600
+mFlavorText=A level 20 potion that increases all armor ratings for 3 minutes.
+mQualityLevel=1
+mMinUseLevel=20
+
+[ENTRY]
+mID=40125
+mType=5
+mDisplayName=Armor Boost Potion: Level 30
+mIcon=Icon-32-Potion_Blue.png|Icon-32-BG-Red.png
+mIvType1=1
+mIvMax1=20
+mLevel=30
+mBindingType=1
+mUseAbilityId=25061
+mValue=800
+mFlavorText=A level 30 potion that increases all armor ratings for 3 minutes.
+mQualityLevel=1
+mMinUseLevel=30
+
+[ENTRY]
+mID=40126
+mType=5
+mDisplayName=Armor Boost Potion: Level 40
+mIcon=Icon-32-Potion_Blue.png|Icon-32-BG-Red.png
+mIvType1=1
+mIvMax1=20
+mLevel=40
+mBindingType=1
+mUseAbilityId=25062
+mValue=1000
+mFlavorText=A level 40 potion that increases all armor ratings for 3 minutes.
+mQualityLevel=1
+mMinUseLevel=40
+
+[ENTRY]
+mID=40127
+mType=5
+mDisplayName=Armor Boost Potion: Level 50
+mIcon=Icon-32-Potion_Blue.png|Icon-32-BG-Red.png
+mIvType1=1
+mIvMax1=20
+mLevel=50
+mBindingType=1
+mUseAbilityId=25063
+mValue=1200
+mFlavorText=A level 50 potion that increases all armor ratings for 3 minutes.
+mQualityLevel=1
+mMinUseLevel=50
+
+[ENTRY]
+mID=40128
+mType=5
+mDisplayName=Scroll of Self Resurrect
+mIcon=Icon-32-Paper.png|Icon-32-BG-Green.png
+mIvType1=1
+mIvMax1=20
+mLevel=10
+mBindingType=1
+mUseAbilityId=25065
+mValue=1200
+mFlavorText=A scroll that can restore your life even after you've fallen.
+mQualityLevel=1
+mMinUseLevel=10
+

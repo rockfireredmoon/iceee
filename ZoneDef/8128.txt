@@ -1,0 +1,13 @@
+[ENTRY]
+ID=8128
+ACCOUNTID=392
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CoastSunrise
+ShardName=phoenix
+GroveName=phoenix
+WarpName=phoenix1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

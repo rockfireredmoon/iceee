@@ -1,0 +1,17 @@
+[ENTRY]
+ID=151012567
+Asset=Dead-Rotted_Forest?d=0.9&amp;s=871817&amp;sz=800
+Name=9
+Pos=87131.4,280.221,169819
+Orient=0,-0.548024,0,0.836463
+Scale=1.6,1.6,1.6
+Flags=1
+
+[ENTRY]
+ID=151025457
+Asset=CL-Rotted_Flora6
+Name=9
+Pos=87149.7,238.889,169960
+Orient=0,-0.637765,-0,-0.770231
+Scale=1.375,1.375,1.375
+

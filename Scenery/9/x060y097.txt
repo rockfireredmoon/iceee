@@ -1,0 +1,10 @@
+[ENTRY]
+ID=151024350
+Asset=Manipulator-SpawnPoint
+Pos=45035.4,327.501,73376
+Orient=0,0,0,1
+Scale=1,1,1
+innerRadius=95
+spawnPackage=10_bxb_wilds_38_40
+outerRadius=100
+

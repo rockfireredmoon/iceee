@@ -1,0 +1,17 @@
+[ENTRY]
+ID=151032505
+Asset=Manipulator-PathNode
+Pos=32395.1,1287.35,96091
+Orient=0,0,0,1
+Scale=1,1,1
+links_count=2
+link=151032502,1
+link=151032504,1
+
+[ENTRY]
+ID=151036740
+Asset=CL-AridRock1#CL-AridRock1
+Pos=32980.3,1440.3,96181
+Orient=0,-0.119712,0,0.992809
+Scale=1.3,1.3,1.3
+

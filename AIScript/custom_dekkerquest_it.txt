@@ -1,0 +1,661 @@
+#name custom_dekkerquest_it
+#speed 10
+#idlespeed 1
+
+; Player skills
+; 492 - Wither 40
+; 373 - Malice Blast 40
+; 35 - Discipline 40 (passive)
+; 505 - Deathly 40
+; 509 - Nefritari's Aura
+; 57 - Death Specialization 40
+; 511 - Life Leech 40
+; 217 - Syphon 40
+; 397 - Creeping Death 40
+; 151 - Morass 40
+; 533 - Deathly Dart 40
+
+; 236 - Assail 40
+; 296 - Disembowel 40
+; 474 - Rend 40
+; 282 - Pierce 40
+; 135 - Death's Touch 40
+; 80 - Elusiveness 40 (passive)
+; 329 - Frenzy (40)
+
+; 26014 - Divine Frost Shield
+
+; Initialization
+set WILL 0
+set WILLCH 0
+set MIGHT 0
+set MIGHTCH 0
+set TARG 0
+set ELAPSEDTIME 0
+set TIMEDIFF 0
+set LASTSHIELD 0
+set HEALTH80 0
+set HEALTH70 0
+set HEALTH60 0
+set HEALTH50 0
+set HEALTH40 0
+set HEALTH30 0
+set HEALTH20 0
+set HEALTH10 0
+set HEALTH02 0
+set CURHEALTH 0
+set CANSHIELD 0
+set TARGET 0
+set ALLY 0
+set PLAYEDSNDSHIELD 0
+set PLAYEDSNDINTRO 0
+set EXECSTRAT 0
+
+set PENDINGSPEECHMSG 0
+
+set SPEECHREADY 0
+set LASTSPEECH 0
+set ELAPSEDTIME 0
+
+use 35
+use 80
+
+
+call waitfortarget
+call playSoundIntro
+
+
+:begin
+
+call waitfortarget
+use 32766
+
+;call checkSpeechTimer
+call checkPendingSpeech
+call pullMinions
+call checkhealth
+call checkShieldRecast
+
+; If we can't use skills, go back.
+is_busy var
+if var = 1
+  goto begin
+endif
+
+call checkwillcharge
+call checkmightcharge
+call checkwill
+call checkmight
+
+goto begin
+
+
+:waitfortarget
+has_target var
+if var = 0
+  wait 1000
+  goto waitfortarget
+endif
+return
+
+
+
+
+; --- Decide what to do if there are enough charges to cast abilities.
+:checkwillcharge
+
+getwillcharge WILLCH
+if WILLCH < 3
+  return
+endif
+
+if EXECSTRAT = 0
+  randomize 3 EXECSTRAT
+endif
+
+if EXECSTRAT = 1
+  call tryExecCreepingDeath
+  return
+endif
+if EXECSTRAT = 2
+  call tryExecLifeLeech
+  return
+endif
+if EXECSTRAT = 3
+  call tryExecMaliceBlast
+  return
+endif  
+
+set EXECSTRAT 0
+return
+
+
+
+:tryExecCreepingDeath
+getcooldown "CreepingDeath" var
+if var >= 1
+  set EXECSTRAT 0    ; Not ready, use different strat
+  return
+endif
+
+if WILLCH < 4
+  return
+endif
+
+use 397
+set EXECSTRAT 0
+return
+
+
+
+:tryExecLifeLeech
+getcooldown "HealthLeech" var
+if var >= 1
+  set EXECSTRAT 0    ; Not ready, use different strat
+  return
+endif
+
+if WILLCH < 4
+  return
+endif
+
+use 511
+set EXECSTRAT 0
+return
+
+
+
+:tryExecMaliceBlast
+use 511
+set EXECSTRAT 0
+return
+
+
+
+; --- Decide what to do if there is enough will to use magic
+:checkwill
+
+getwill WILL
+if WILL < 3
+  return
+endif
+
+getcooldown "DeathlyDart" var
+if var = 0
+  use 533
+  wait 1000
+  return
+endif
+
+call tryCastSyphon
+is_busy var
+if var = 1
+  return
+endif
+
+call tryCastNefritari
+is_busy var
+if var = 1
+  return
+endif
+
+if WILL >= 4
+  use 492
+  wait 1000
+  return
+endif
+
+return
+
+
+
+
+; --- Decide what to do if there are enough charges to cast abilities.
+:checkmightcharge
+
+getmightcharge MIGHTCH
+if MIGHTCH >= 3
+  use 296
+  wait 1000
+  return
+endif
+
+return
+
+
+
+
+; --- Decide what to do if there is enough might to use abilities
+:checkmight
+
+; Check rend, and return if it was a success
+call tryCastRend
+is_busy var
+if var = 1
+  return
+endif
+
+if MIGHT < 3
+  return
+endif
+
+getcooldown "Pierce" var
+if var = 0
+  use 282
+  return
+endif
+
+use 236
+return
+
+
+
+
+:tryCastNefritari
+
+getcooldown "DoT" var
+if var >= 1
+  return
+endif
+
+count_enemy_near 150 var
+if var < 2
+  return
+endif
+
+use 509
+return
+
+
+:tryCastRend
+
+getmight MIGHT
+if MIGHT < 6
+  return
+endif
+
+getcooldown "Rend" var
+if var >= 1
+  return
+endif
+
+use 474
+return
+
+
+
+:tryCastSyphon
+getcooldown "HealthLeech" var
+if var >= 1
+  return
+endif
+use 217
+return
+
+
+
+
+
+; :waitChannelFinish
+; is_busy var
+; if var = 1
+;   wait 150
+;   goto waitChannelFinish
+; endif
+; return
+
+
+
+:checkhealth
+health_percent CURHEALTH
+
+if CURHEALTH <= 2
+  call health02
+endif
+if CURHEALTH <= 10
+  call health10
+endif
+if CURHEALTH <= 20
+  call health20
+endif
+if CURHEALTH <= 30
+  call health30
+endif
+if CURHEALTH <= 40
+  call health40
+endif
+if CURHEALTH <= 50
+  call health50
+endif
+if CURHEALTH <= 60
+  call health60
+endif
+if CURHEALTH <= 70
+  call health70
+endif
+if CURHEALTH <= 80
+  call health80
+endif
+return
+
+
+
+
+:health02
+if HEALTH02 = 0
+  set HEALTH02 1
+  set CANSHIELD 1
+;  play_sound "Sound-ModSound|Sound-ur_yoggsaron_slay01.ogg"
+;  say "Ha ha ha ha ha Aha ha ha ha ha ha!"
+  set PENDINGSPEECHMSG 102
+  return
+endif
+return
+
+:health10
+if HEALTH10 = 0
+  set HEALTH10 1
+  set CANSHIELD 1
+  instance_call "spawn10"
+;  play_sound "Sound-ModSound|Sound-ur_yoggsaron_tentacle01.ogg"
+;  say "Madness will consume you!"
+  set PENDINGSPEECHMSG 110
+  call onSummon
+  return
+endif
+return
+
+:health20
+if HEALTH20 = 0
+  set HEALTH20 1
+  set CANSHIELD 1
+  instance_call "spawn20"
+;  play_sound "Sound-ModSound|Sound-ur_yoggsaron_slay02.ogg"
+;  say "Eternal suffering awaits!"
+  set PENDINGSPEECHMSG 120
+  call onSummon
+  return
+endif
+return
+
+:health30
+if HEALTH30 = 0
+  set HEALTH30 1
+  set CANSHIELD 1
+  instance_call "spawn30"
+;  play_sound "Sound-ModSound|Sound-ur_yoggsaron_insanity02.ogg"
+;  say "Destroy them, minions, your master commands it!"
+  set PENDINGSPEECHMSG 130
+  call onSummon
+  return
+endif
+return
+
+:health40
+if HEALTH40 = 0
+  set HEALTH40 1
+  set CANSHIELD 1
+  instance_call "spawn40"
+;  play_sound "Sound-ModSound|Sound-ak_yoggsaron_whisper03.ogg"
+;  say "Hope is an illusion."
+  set PENDINGSPEECHMSG 140
+  call onSummon
+  return
+endif
+return
+
+:health50
+if HEALTH50 = 0
+  set HEALTH50 1
+  set CANSHIELD 1
+  instance_call "spawn50"
+;  play_sound "Sound-ModSound|Sound-ak_yoggsaron_howlingfjordwhisper02.ogg"
+;  say "Give in to your fear."
+  set PENDINGSPEECHMSG 150
+  call onSummon
+  return
+endif
+return
+
+:health60
+if HEALTH60 = 0
+  set HEALTH60 1
+  set CANSHIELD 1
+  instance_call "spawn60"
+; OLD
+;  play_sound "Sound-ModSound|Sound-ak_yoggsaron_howlingfjordwhisper01.ogg"
+;  say "They are coming for you..."
+
+;  play_sound "Sound-ModSound|Sound-ak_yoggsaron_whisper04.ogg"
+;  say "All that you know will fade."
+  set PENDINGSPEECHMSG 160
+  call onSummon
+  return
+endif
+return
+
+:health70
+if HEALTH70 = 0
+  set HEALTH70 1
+  set CANSHIELD 1
+  instance_call "spawn70"
+;  play_sound "Sound-ModSound|Sound-ak_yoggsaron_howlingfjordwhisper01.ogg"
+;  say "They are coming for you..."
+  set PENDINGSPEECHMSG 170
+  call onSummon
+  return
+endif
+return
+
+:health80
+if HEALTH80 = 0
+  set HEALTH80 1
+  set CANSHIELD 1
+  instance_call "spawn80"
+  ; This breakpoint does not spawn any minions
+  return
+endif
+return
+
+
+
+
+:checkShieldRecast
+if CANSHIELD = 0
+  return
+endif
+
+time_offset LASTSHIELD ELAPSEDTIME
+if ELAPSEDTIME < 30000
+  return
+endif
+
+set_elapsed_time LASTSHIELD
+
+;visual_effect "FrostShield1"
+;use 26014
+use 5500
+
+call playSoundFirstShield
+
+return
+
+
+
+
+:pullMinions
+get_idle_mob 3632 ALLY
+if ALLY > 0
+  get_target TARGET
+  set_other_target ALLY TARGET
+endif
+
+get_idle_mob 3631 ALLY
+if ALLY > 0
+  get_self TARGET
+  set_other_target ALLY TARGET
+;;;  aiscript_call ALLY "extSupport"
+endif
+
+return
+
+
+
+
+:playSoundFirstShield
+if PLAYEDSNDSHIELD = 0
+  set PENDINGSPEECHMSG 180
+;  play_sound "Sound-ModSound|Sound-ak_yoggsaron_whisper03.ogg"
+;  say "Hope is an illusion."
+  set PLAYEDSNDSHIELD 1
+endif
+return
+
+
+
+:playSoundIntro
+if PLAYEDSNDINTRO = 0
+  play_sound "Sound-ModSound|Sound-ak_yoggsaron_howlingfjordwhisper06.ogg"
+  say "There is no escape, not in this life, not in the next."
+  set PLAYEDSNDINTRO 1
+endif
+return
+
+
+
+; Get Hell Twelve and notify him of a summon, so he can respond with a voice.
+:onSummon
+find_cdef 3636 TARGET
+if TARGET = 0
+  return
+endif
+
+aiscript_call TARGET "extOnSummon"
+return
+
+
+
+
+:onDeath
+if HEALTH02 = 0
+  set HEALTH02 1
+  set CANSHIELD 1
+  play_sound "Sound-ModSound|Sound-ur_yoggsaron_slay01.ogg"
+  say "Ha ha ha ha ha Aha ha ha ha ha ha!"
+endif
+
+find_cdef 3636 TARGET
+if TARGET > 0
+
+; Hack to play Hell Twelve's victory line here, since the script stops
+; running when the target is cleared on death.
+;  play_sound "Sound-ModSound|Sound-vo_woe_illidan_mannoroth_05.ogg"
+;  say "Weak, pitiful creatures, hardly worthy of being called a legion."
+
+  aiscript_call TARGET "extOnBossDeath"
+endif
+end
+
+
+
+
+
+:checkSpeechTimer
+if SPEECHREADY = 1
+  return
+endif
+
+time_offset LASTSPEECH ELAPSEDTIME
+if ELAPSEDTIME < 4000
+  return
+endif
+
+set SPEECHREADY 1
+return
+
+
+
+:onSpeechPlayed
+set_elapsed_time LASTSPEECH
+set PENDINGSPEECHMSG 0
+set SPEECHREADY 0
+return
+
+
+
+
+:checkPendingSpeech
+
+if PENDINGSPEECHMSG = 0
+  return
+endif
+
+call checkSpeechTimer
+
+if SPEECHREADY = 0
+  return
+endif
+
+if PENDINGSPEECHMSG = 102
+  play_sound "Sound-ModSound|Sound-ur_yoggsaron_slay01.ogg"
+  say "Ha ha ha ha ha Aha ha ha ha ha ha!"
+  call onSpeechPlayed
+  return
+endif
+
+if PENDINGSPEECHMSG = 110
+  play_sound "Sound-ModSound|Sound-ur_yoggsaron_tentacle01.ogg"
+  say "Madness will consume you!"
+  call onSpeechPlayed
+  return
+endif
+
+if PENDINGSPEECHMSG = 120
+  play_sound "Sound-ModSound|Sound-ur_yoggsaron_slay02.ogg"
+  say "Eternal suffering awaits!"
+  call onSpeechPlayed
+  return
+endif
+
+if PENDINGSPEECHMSG = 130
+  play_sound "Sound-ModSound|Sound-ur_yoggsaron_insanity02.ogg"
+  say "Destroy them, minions, your master commands it!"
+  call onSpeechPlayed
+  return
+endif
+
+if PENDINGSPEECHMSG = 140
+  play_sound "Sound-ModSound|Sound-ak_yoggsaron_whisper03.ogg"
+  say "Hope is an illusion."
+  call onSpeechPlayed
+  return
+endif
+
+if PENDINGSPEECHMSG = 150
+  play_sound "Sound-ModSound|Sound-ak_yoggsaron_howlingfjordwhisper02.ogg"
+  say "Give in to your fear."
+  call onSpeechPlayed
+  return
+endif
+
+if PENDINGSPEECHMSG = 160
+  play_sound "Sound-ModSound|Sound-ak_yoggsaron_whisper04.ogg"
+  say "All that you know will fade."
+  call onSpeechPlayed
+  return
+endif
+
+if PENDINGSPEECHMSG = 170
+  play_sound "Sound-ModSound|Sound-ak_yoggsaron_howlingfjordwhisper01.ogg"
+  say "They are coming for you..."
+  call onSpeechPlayed
+  return
+endif
+
+if PENDINGSPEECHMSG = 180
+  play_sound "Sound-ModSound|Sound-ak_yoggsaron_whisper03.ogg"
+  say "Hope is an illusion."
+  call onSpeechPlayed
+  return
+endif
+return

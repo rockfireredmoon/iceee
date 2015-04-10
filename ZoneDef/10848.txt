@@ -1,0 +1,14 @@
+[ENTRY]
+ID=10848
+ACCOUNTID=732
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=SwampNight
+ShardName=mud
+GroveName=mud
+WarpName=mud1
+DropRateProfile=standard
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

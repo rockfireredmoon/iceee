@@ -1,0 +1,13 @@
+﻿; Earthrise, Militia Chest (reward for quest: The Anubian Captains)
+; Reference: http://eartheternal.wikia.com/wiki/The_Anubian_Captains
+[ENTRY]
+CreatureDefID=2611
+EssenceID=21148  ; Militia Key
+Item=143285,1  ;Earthrise War-Spear
+Item=143280,1  ;Earthrise Warbow
+Item=143283,1  ;Earthrise Maul
+Item=143281,1  ;Glint Daggers 
+Item=143279,1  ;Crooked Branch 
+Item=143282,1  ;Earthrise Piercer
+Item=143284,1  ;Earthrise Slasher 
+

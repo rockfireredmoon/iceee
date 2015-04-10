@@ -1,0 +1,8 @@
+[ENTRY]
+ID=1358966076
+Asset=Environment-Marker?type=Swamp
+Name=81
+Pos=49842.4,96.8278,57027
+Orient=0,0,0,1
+Scale=5.3,5.3,5.3
+

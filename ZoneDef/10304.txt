@@ -1,0 +1,13 @@
+[ENTRY]
+ID=10304
+ACCOUNTID=664
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=GreatForestSunset
+ShardName=ilumia
+GroveName=ilumia
+WarpName=ilumia1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

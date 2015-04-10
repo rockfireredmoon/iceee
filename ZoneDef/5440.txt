@@ -1,0 +1,13 @@
+[ENTRY]
+ID=5440
+ACCOUNTID=56
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=GreatForestSunrise
+ShardName=algeria
+GroveName=algeria
+WarpName=algeria1
+Grove=1
+EnvironmentCycle=1
+DefLoc=2968,265,4011
+

@@ -1,0 +1,15 @@
+[ENTRY]
+ID=151019875
+Asset=CL-AridBush4#CL-AridBush4
+Pos=68264,773.215,47241
+Orient=0,0,0,1
+Scale=1,1,1
+Flags=1
+
+[ENTRY]
+ID=151019887
+Asset=Prop-Lamp_Post_Junk#Prop-Lamp_Post_Junk1
+Pos=68293,588.378,46714
+Orient=0.00228283,-0.890285,0.109755,0.441974
+Scale=1.85,1.85,1.85
+

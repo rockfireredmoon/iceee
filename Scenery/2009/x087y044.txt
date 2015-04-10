@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151004495
+Asset=CL-Bremen_Arch3
+Name=9
+Pos=65462,462.09,33295
+Orient=0,-0.844161,0,0.536089
+Scale=1.675,1.675,1.675
+Flags=1
+

@@ -1,0 +1,13 @@
+[ENTRY]
+ID=12112
+ACCOUNTID=890
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=tectonic
+GroveName=tectonic
+WarpName=tectonic1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

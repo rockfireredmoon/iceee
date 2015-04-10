@@ -1,0 +1,2706 @@
+; This script defines how stats are applied for new sets.
+; Each item belonging to a set is tallied.  When the final tally is computed, it attempts
+; to call a script by using the ScriptName field (in the data table) and appending a number.
+; for example, if 4 Ghastly Spectre items are equipped, it would call
+; GhastlySpectre.4
+
+; Stats can be applied for additional pieces of a set, by using lables in decending
+; order.  The smallest number of items should be terminated with an "end" command.
+; so that the script does not continue to run into the next set's script.
+
+; NOTE: This data was a work in progress, never finished, never tested.
+
+:uncommon_Recruit_s.5
+add "strength" 3
+add "dexterity" 3
+add "base_block" 50
+end
+
+:uncommon_Recruit_s.4
+:uncommon_Recruit_s.3
+add "strength" 3
+add "dexterity" 3
+end
+
+:uncommon_Recruit_s.2
+add "strength" 1
+add "dexterity" 1
+end
+
+
+:uncommon_Squire_s.5
+add "constitution" 8
+add "base_block" 50
+end
+
+:uncommon_Squire_s.4
+:uncommon_Squire_s.3
+add "constitution" 8
+end
+
+:uncommon_Squire_s.2
+add "constitution" 4
+end
+
+
+
+:uncommon_Fortified.5
+add "strength" 3
+add "dexterity" 3
+add "melee_attack_speed" 75
+end
+
+:uncommon_Fortified.4
+:uncommon_Fortified.3
+:uncommon_Fortified.2
+add "strength" 1
+add "dexterity" 1
+end
+
+
+
+:uncommon_Brambled.10
+add "weapon_damage_1h" 100
+:uncommon_Brambled.9
+add "strength" 12
+end
+
+:uncommon_Brambled.8
+:uncommon_Brambled.7
+:uncommon_Brambled.6
+add "strength" 7
+end
+
+:uncommon_Brambled.5
+:uncommon_Brambled.4
+:uncommon_Brambled.3
+add "strength" 3
+end
+
+
+:uncommon_Ardent.9
+add "dexterity" 6
+add "constitution" 6
+add "offhand_weapon_damage" 100
+end
+
+:uncommon_Ardent.8
+:uncommon_Ardent.7
+:uncommon_Ardent.6
+add "dexterity" 4
+add "constitution" 4
+end
+
+:uncommon_Ardent.5
+:uncommon_Ardent.4
+:uncommon_Ardent.3
+add "dexterity" 2
+add "constitution" 2
+end
+
+
+
+
+:uncommon_Earthen.10
+add "strength" 8
+add "dexterity" 8
+add "mod_health_regen" 25
+end
+:uncommon_Earthen.9
+add "strength" 6
+add "dexterity" 6
+end
+:uncommon_Earthen.8
+:uncommon_Earthen.7
+:uncommon_Earthen.6
+add "strength" 4
+add "dexterity" 4
+end
+:uncommon_Earthen.5
+:uncommon_Earthen.4
+:uncommon_Earthen.3
+add "strength" 2
+add "dexterity" 2
+end
+
+
+:uncommon_Greymist.10
+add "constitution" 15
+add "base_block" 50
+end
+
+:uncommon_Greymist.9
+add "constitution" 12
+end
+
+:uncommon_Greymist.8
+:uncommon_Greymist.7
+:uncommon_Greymist.6
+add "constitution" 8
+end
+
+:uncommon_Greymist.5
+:uncommon_Greymist.4
+:uncommon_Greymist.3
+add "constitution" 4
+end
+
+
+
+
+
+:uncommon_Northlight.10
+:uncommon_Northlight.9
+add_f "might_regen" "0.20"
+add "strength" 8
+add "dexterity" 8
+end
+
+:uncommon_Northlight.8
+:uncommon_Northlight.7
+:uncommon_Northlight.6
+add "strength" 6
+add "dexterity" 6
+end
+
+:uncommon_Northlight.5
+:uncommon_Northlight.4
+:uncommon_Northlight.3
+add "strength" 4
+add "dexterity" 4
+end
+
+
+:uncommon_Riversong.11
+:uncommon_Riversong.10
+add "offhand_weapon_damage" 200
+add "dexterity" 16
+end
+
+:uncommon_Riversong.9
+add "dexterity" 13
+end
+
+:uncommon_Riversong.8
+:uncommon_Riversong.7
+:uncommon_Riversong.6
+add "dexterity" 9
+end
+
+:uncommon_Riversong.5
+:uncommon_Riversong.4
+:uncommon_Riversong.3
+add "dexterity" 5
+end
+
+
+
+
+:uncommon_Rosevine.11
+:uncommon_Rosevine.10
+add "damage_shield" 15
+add "dexterity" 16
+end
+
+:uncommon_Rosevine.9
+add "dexterity" 13
+end
+
+:uncommon_Rosevine.8
+:uncommon_Rosevine.7
+:uncommon_Rosevine.6
+add "dexterity" 9
+end
+:uncommon_Rosevine.5
+:uncommon_Rosevine.4
+:uncommon_Rosevine.3
+add "dexterity" 5
+end
+
+
+
+:uncommon_Dewdrop.12
+:uncommon_Dewdrop.11
+add "strength" 20
+add "mod_health_regen" 35
+end
+
+:uncommon_Dewdrop.10
+:uncommon_Dewdrop.9
+add "strength" 15
+end
+
+:uncommon_Dewdrop.8
+:uncommon_Dewdrop.7
+:uncommon_Dewdrop.6
+add "strength" 10
+end
+
+:uncommon_Dewdrop.5
+:uncommon_Dewdrop.4
+:uncommon_Dewdrop.3
+add "strength" 5
+end
+
+
+
+:uncommon_Ironwood.12
+:uncommon_Ironwood.11
+add "strength" 14
+add "dexterity" 14
+add "dmg_mod_melee" 150
+end
+
+:uncommon_Ironwood.10
+:uncommon_Ironwood.9
+add "strength" 11
+add "dexterity" 11
+end
+
+:uncommon_Ironwood.8
+:uncommon_Ironwood.7
+:uncommon_Ironwood.6
+add "strength" 8
+add "dexterity" 8
+end
+
+:uncommon_Ironwood.5
+:uncommon_Ironwood.4
+:uncommon_Ironwood.3
+add "strength" 5
+add "dexterity" 5
+end
+
+
+:uncommon_Stonefist.12
+:uncommon_Stonefist.11
+add "strength" 21
+add "weapon_damage_2h" 250
+end
+
+:uncommon_Stonefist.10
+:uncommon_Stonefist.9
+add "strength" 16
+end
+
+:uncommon_Stonefist.8
+:uncommon_Stonefist.7
+:uncommon_Stonefist.6
+add "strength" 11
+end
+
+:uncommon_Stonefist.5
+:uncommon_Stonefist.4
+:uncommon_Stonefist.3
+add "strength" 6
+end
+
+
+:uncommon_Wolfsong.12
+:uncommon_Wolfsong.11
+add "dexterity" 21
+add "base_dodge" 70
+end
+
+:uncommon_Wolfsong.10
+:uncommon_Wolfsong.9
+add "dexterity" 16
+end
+
+:uncommon_Wolfsong.8
+:uncommon_Wolfsong.7
+:uncommon_Wolfsong.6
+add "dexterity" 11
+end
+
+:uncommon_Wolfsong.5
+:uncommon_Wolfsong.4
+:uncommon_Wolfsong.3
+add "dexterity" 6
+end
+
+
+:uncommon_Bloodlust.12
+:uncommon_Bloodlust.11
+add "strength" 16
+add "dexterity" 16
+add "melee_attack_speed" 200
+end
+
+:uncommon_Bloodlust.10
+:uncommon_Bloodlust.9
+add "strength" 12
+add "dexterity" 12
+end
+
+:uncommon_Bloodlust.8
+:uncommon_Bloodlust.7
+:uncommon_Bloodlust.6
+add "strength" 8
+add "dexterity" 8
+end
+
+:uncommon_Bloodlust.5
+:uncommon_Bloodlust.4
+:uncommon_Bloodlust.3
+add "strength" 4
+add "dexterity" 4
+end
+
+
+:uncommon_Heirloom.12
+:uncommon_Heirloom.11
+add "constitution" 50
+add "damage_resist_melee" 400
+add "damage_resist_fire" 400
+add "damage_resist_frost" 400
+add "damage_resist_mystic" 400
+add "damage_resist_death" 400
+end
+
+:uncommon_Heirloom.10
+:uncommon_Heirloom.9
+add "constitution" 15
+end
+
+:uncommon_Heirloom.8
+:uncommon_Heirloom.7
+:uncommon_Heirloom.6
+add "constitution" 10
+end
+
+:uncommon_Heirloom.5
+:uncommon_Heirloom.4
+:uncommon_Heirloom.3
+add "constitution" 5
+end
+
+
+
+:uncommon_Emberlaid.12
+:uncommon_Emberlaid.11
+add "strength" 16
+add "dexterity" 16
+add "mod_health_regen" 40
+end
+
+:uncommon_Emberlaid.10
+:uncommon_Emberlaid.9
+add "strength" 12
+add "dexterity" 12
+end
+
+:uncommon_Emberlaid.8
+:uncommon_Emberlaid.7
+:uncommon_Emberlaid.6
+add "strength" 8
+add "dexterity" 8
+end
+
+:uncommon_Emberlaid.5
+:uncommon_Emberlaid.4
+:uncommon_Emberlaid.3
+add "strength" 4
+add "dexterity" 4
+end
+
+
+:uncommon_Swiftfury.12
+:uncommon_Swiftfury.11
+add "strength" 16
+add "dexterity" 16
+add "melee_attack_speed" 150
+end
+
+:uncommon_Swiftfury.10
+:uncommon_Swiftfury.9
+add "strength" 12
+add "dexterity" 12
+end
+
+:uncommon_Swiftfury.8
+:uncommon_Swiftfury.7
+:uncommon_Swiftfury.6
+add "strength" 8
+add "dexterity" 8
+end
+
+:uncommon_Swiftfury.5
+:uncommon_Swiftfury.4
+:uncommon_Swiftfury.3
+add "strength" 4
+add "dexterity" 4
+end
+
+
+
+:uncommon_Nightsong.12
+:uncommon_Nightsong.11
+add "strength" 16
+add "dexterity" 16
+add "base_parry" 100
+end
+
+:uncommon_Nightsong.10
+:uncommon_Nightsong.9
+add "strength" 12
+add "dexterity" 12
+end
+
+:uncommon_Nightsong.8
+:uncommon_Nightsong.7
+:uncommon_Nightsong.6
+add "strength" 8
+add "dexterity" 8
+end
+
+:uncommon_Nightsong.5
+:uncommon_Nightsong.4
+:uncommon_Nightsong.3
+add "strength" 4
+add "dexterity" 4
+end
+
+
+:uncommon_Bloodfang.12
+:uncommon_Bloodfang.11
+add "dexterity" 24
+add "mod_melee_to_crit" 100
+end
+
+:uncommon_Bloodfang.10
+:uncommon_Bloodfang.9
+add "dexterity" 18
+end
+
+:uncommon_Bloodfang.8
+:uncommon_Bloodfang.7
+:uncommon_Bloodfang.6
+add "dexterity" 12
+end
+
+:uncommon_Bloodfang.5
+:uncommon_Bloodfang.4
+:uncommon_Bloodfang.3
+add "dexterity" 6
+end
+
+
+
+:uncommon_Lurkwyrm.12
+:uncommon_Lurkwyrm.11
+add "dexterity" 22
+add "weapon_damage_small" 200
+end
+
+:uncommon_Lurkwyrm.10
+:uncommon_Lurkwyrm.9
+add "dexterity"18
+end
+
+:uncommon_Lurkwyrm.8
+:uncommon_Lurkwyrm.7
+:uncommon_Lurkwyrm.6
+add "dexterity" 12
+end
+
+:uncommon_Lurkwyrm.5
+:uncommon_Lurkwyrm.4
+:uncommon_Lurkwyrm.3
+add "dexterity" 6
+end
+
+
+:uncommon_Thunderbound.12
+:uncommon_Thunderbound.11
+add "strength" 22
+add "dr_mod_melee" 200
+end
+
+:uncommon_Thunderbound.10
+:uncommon_Thunderbound.9
+add "strength"18
+end
+
+:uncommon_Thunderbound.8
+:uncommon_Thunderbound.7
+:uncommon_Thunderbound.6
+add "strength" 12
+end
+
+:uncommon_Thunderbound.5
+:uncommon_Thunderbound.4
+:uncommon_Thunderbound.3
+add "strength" 6
+end
+
+
+:uncommon_Warmaster_s.12
+:uncommon_Warmaster_s.11
+add "strength" 28
+add "weapon_damage_2h" 300
+end
+
+:uncommon_Warmaster_s.10
+:uncommon_Warmaster_s.9
+add "strength" 21
+end
+
+:uncommon_Warmaster_s.8
+:uncommon_Warmaster_s.7
+:uncommon_Warmaster_s.6
+add "strength" 14
+end
+
+:uncommon_Warmaster_s.5
+:uncommon_Warmaster_s.4
+:uncommon_Warmaster_s.3
+add "strength" 7
+end
+
+
+:uncommon_Apprentice.5
+add "mod_health_regen" 15
+add "psyche" 3
+add "spirit" 3
+end
+
+:uncommon_Apprentice.4
+add "psyche" 3
+add "spirit" 3
+end
+
+:uncommon_Apprentice.3
+:uncommon_Apprentice.2
+add "psyche" 1
+add "spirit" 1
+end
+
+
+:uncommon_Disciple_s.5
+add "damage_resist_melee" 100
+add "damage_resist_fire" 100
+add "damage_resist_frost" 100
+add "damage_resist_mystic" 100
+add "damage_resist_death" 100
+add "psyche" 3
+add "spirit" 3
+end
+
+:uncommon_Disciple_s.4
+add "psyche" 3
+add "spirit" 3
+end
+
+:uncommon_Disciple_s.3
+:uncommon_Disciple_s.2
+add "psyche" 1
+add "spirit" 1
+end
+
+
+:uncommon_Charmed.5
+add "mod_health_regen" 20
+add "psyche" 3
+add "spirit" 3
+end
+
+:uncommon_Charmed.4
+add "psyche" 3
+add "spirit" 3
+end
+
+:uncommon_Charmed.3
+:uncommon_Charmed.2
+add "psyche" 1
+add "spirit" 1
+end
+
+
+:uncommon_Enchanted.9
+add "base_dodge" 70
+add "psyche" 5
+add "spirit" 5
+end
+
+:uncommon_Enchanted.8
+:uncommon_Enchanted.7
+:uncommon_Enchanted.6
+add "psyche" 5
+add "spirit" 5
+end
+
+:uncommon_Enchanted.5
+:uncommon_Enchanted.4
+:uncommon_Enchanted.3
+add "psyche" 2
+add "spirit" 2
+end
+
+
+:uncommon_Mystic.9
+add "base_damage_mystic" 20
+add "psyche" 8
+add "spirit" 8
+end
+
+:uncommon_Mystic.8
+:uncommon_Mystic.7
+:uncommon_Mystic.6
+add "psyche" 5
+add "spirit" 5
+end
+
+:uncommon_Mystic.5
+:uncommon_Mystic.4
+:uncommon_Mystic.3
+add "psyche" 2
+add "spirit" 2
+end
+
+
+:uncommon_Dusken.10
+:uncommon_Dusken.9
+add "constitution" 8
+add "spirit" 8
+end
+
+:uncommon_Dusken.8
+:uncommon_Dusken.7
+:uncommon_Dusken.6
+add "constitution" 5
+add "spirit" 5
+end
+
+:uncommon_Dusken.5
+:uncommon_Dusken.4
+:uncommon_Dusken.3
+add "constitution" 2
+add "spirit" 2
+end
+
+:uncommon_Spidersilk.10
+:uncommon_Spidersilk.9
+add "mod_movement" 10
+add "constitution" 8
+add "psyche" 8
+end
+
+:uncommon_Spidersilk.8
+:uncommon_Spidersilk.7
+:uncommon_Spidersilk.6
+add "constitution" 5
+add "psyche" 5
+end
+
+:uncommon_Spidersilk.5
+:uncommon_Spidersilk.4
+:uncommon_Spidersilk.3
+add "constitution" 2
+add "psyche" 2
+end
+
+:uncommon_Silversage.10
+:uncommon_Silversage.9
+add "mod_magic_to_crit" 50
+add "psyche" 8
+add "spirit" 8
+end
+
+:uncommon_Silversage.8
+:uncommon_Silversage.7
+:uncommon_Silversage.6
+add "psyche" 5
+add "spirit" 5
+end
+
+:uncommon_Silversage.5
+:uncommon_Silversage.4
+:uncommon_Silversage.3
+add "psyche" 2
+add "spirit" 2
+end
+
+
+:uncommon_Willowind.11
+:uncommon_Willowind.10
+:uncommon_Willowind.9
+add "mod_movement" 12
+add "psyche" 8
+add "spirit" 8
+end
+
+:uncommon_Willowind.8
+:uncommon_Willowind.7
+:uncommon_Willowind.6
+add "psyche" 5
+add "spirit" 5
+end
+
+:uncommon_Willowind.5
+:uncommon_Willowind.4
+:uncommon_Willowind.3
+add "psyche" 2
+add "spirit" 2
+end
+
+:uncommon_Starshine.11
+:uncommon_Starshine.10
+:uncommon_Starshine.9
+add "mod_health_regen" 30
+add "constitution" 12
+end
+
+:uncommon_Starshine.8
+:uncommon_Starshine.7
+:uncommon_Starshine.6
+add "constitution" 8
+end
+
+:uncommon_Starshine.5
+:uncommon_Starshine.4
+:uncommon_Starshine.3
+add "constitution" 4
+end
+
+:uncommon_Lorekeeper.12
+:uncommon_Lorekeeper.11
+add "constititution" 60
+add "psyche" 16
+end
+
+:uncommon_Lorekeeper.10
+:uncommon_Lorekeeper.9
+add "psyche" 12
+end
+
+:uncommon_Lorekeeper.8
+:uncommon_Lorekeeper.7
+:uncommon_Lorekeeper.6
+add "psyche" 8
+end
+
+:uncommon_Lorekeeper.5
+:uncommon_Lorekeeper.4
+:uncommon_Lorekeeper.3
+add "psyche" 4
+end
+
+
+:uncommon_Earthweave.12
+:uncommon_Earthweave.11
+add_f "will_regen" "0.20"
+add "psyche" 12
+add "spirit" 12
+end
+
+:uncommon_Earthweave.10
+:uncommon_Earthweave.9
+add "psyche" 9
+add "spirit" 9
+end
+
+:uncommon_Earthweave.8
+:uncommon_Earthweave.7
+:uncommon_Earthweave.6
+add "psyche" 6
+add "spirit" 6
+end
+
+:uncommon_Earthweave.5
+:uncommon_Earthweave.4
+:uncommon_Earthweave.3
+add "psyche" 3
+add "spirit" 3
+end
+
+:uncommon_Hollowind.12
+:uncommon_Hollowind.11
+add "mod_movement" 15
+add "psyche" 12
+add "spirit" 12
+end
+
+:uncommon_Hollowind.10
+:uncommon_Hollowind.9
+add "psyche" 9
+add "spirit" 9
+end
+
+:uncommon_Hollowind.8
+:uncommon_Hollowind.7
+:uncommon_Hollowind.6
+add "psyche" 6
+add "spirit" 6
+end
+
+:uncommon_Hollowind.5
+:uncommon_Hollowind.4
+:uncommon_Hollowind.3
+add "psyche" 3
+add "spirit" 3
+end
+
+:uncommon_Moonshadow.12
+:uncommon_Moonshadow.11
+add "mod_magic_to_crit" 50
+add "psyche" 12
+add "spirit" 12
+end
+
+:uncommon_Moonshadow.10
+:uncommon_Moonshadow.9
+add "psyche" 9
+add "spirit" 9
+end
+
+:uncommon_Moonshadow.8
+:uncommon_Moonshadow.7
+:uncommon_Moonshadow.6
+add "psyche" 6
+add "spirit" 6
+end
+
+:uncommon_Moonshadow.5
+:uncommon_Moonshadow.4
+:uncommon_Moonshadow.3
+add "psyche" 3
+add "spirit" 3
+end
+
+:uncommon_Goldenbirch.12
+:uncommon_Goldenbirch.11
+add "base_healing" 200
+add "spirit" 20
+end
+
+:uncommon_Goldenbirch.10
+:uncommon_Goldenbirch.9
+add "spirit" 15
+end
+
+:uncommon_Goldenbirch.8
+:uncommon_Goldenbirch.7
+:uncommon_Goldenbirch.6
+add "spirit" 10
+end
+
+:uncommon_Goldenbirch.5
+:uncommon_Goldenbirch.4
+:uncommon_Goldenbirch.3
+add "spirit" 5
+end
+
+:uncommon_Runelaid.12
+:uncommon_Runelaid.11
+add "damage_resist_melee" 600
+add "damage_resist_fire" 600
+add "damage_resist_frost" 600
+add "damage_resist_mystic" 600
+add "damage_resist_death" 600
+add "constitution" 20
+end
+
+:uncommon_Runelaid.10
+:uncommon_Runelaid.9
+add "constitution" 15
+end
+
+:uncommon_Runelaid.8
+:uncommon_Runelaid.7
+:uncommon_Runelaid.6
+add "constitution" 10
+end
+
+:uncommon_Runelaid.5
+:uncommon_Runelaid.4
+:uncommon_Runelaid.3
+add "constitution" 5
+end
+
+:uncommon_Azureweave.12
+:uncommon_Azureweave.11
+add "damage_shield" 10
+add "psyche" 13
+add "spirit" 13
+end
+
+:uncommon_Azureweave.10
+:uncommon_Azureweave.9
+add "psyche" 10
+add "spirit" 10
+end
+
+:uncommon_Azureweave.8
+:uncommon_Azureweave.7
+:uncommon_Azureweave.6
+add "psyche" 7
+add "spirit" 7
+end
+
+:uncommon_Azureweave.5
+:uncommon_Azureweave.4
+:uncommon_Azureweave.3
+add "psyche" 4
+add "spirit" 4
+end
+
+:uncommon_Flamewind.12
+:uncommon_Flamewind.11
+add "dmg_mod_fire" 200
+add "dmg_mod_death" 200
+add "psyche" 13
+add "spirit" 13
+end
+
+:uncommon_Flamewind.10
+:uncommon_Flamewind.9
+add "psyche" 10
+add "spirit" 10
+end
+
+:uncommon_Flamewind.8
+:uncommon_Flamewind.7
+:uncommon_Flamewind.6
+add "psyche" 7
+add "spirit" 7
+end
+
+:uncommon_Flamewind.5
+:uncommon_Flamewind.4
+:uncommon_Flamewind.3
+add "psyche" 4
+add "spirit" 4
+end
+
+:uncommon_Twilight.12
+:uncommon_Twilight.11
+add "dmg_mod_frost" 200
+add "dmg_mod_mystic" 200
+add "psyche" 13
+add "spirit" 13
+end
+
+:uncommon_Twilight.10
+:uncommon_Twilight.9
+add "psyche" 10
+add "spirit" 10
+end
+
+:uncommon_Twilight.8
+:uncommon_Twilight.7
+:uncommon_Twilight.6
+add "psyche" 7
+add "spirit" 7
+end
+
+:uncommon_Twilight.5
+:uncommon_Twilight.4
+:uncommon_Twilight.3
+add "psyche" 4
+add "spirit" 4
+end
+
+:uncommon_Soulward.12
+:uncommon_Soulward.11
+add "weapon_damage_bow" 300
+add "weapon_damage_wand" 300
+add "psyche" 13
+add "spirit" 13
+end
+
+:uncommon_Soulward.10
+:uncommon_Soulward.9
+add "psyche" 10
+add "spirit" 10
+end
+
+:uncommon_Soulward.8
+:uncommon_Soulward.7
+:uncommon_Soulward.6
+add "psyche" 7
+add "spirit" 7
+end
+
+:uncommon_Soulward.5
+:uncommon_Soulward.4
+:uncommon_Soulward.3
+add "psyche" 4
+add "spirit" 4
+end
+
+
+:uncommon_Fatespeaker.13
+:uncommon_Fatespeaker.12
+:uncommon_Fatespeaker.11
+add "mod_health_regen" 60
+add "constitution" 24
+end
+
+:uncommon_Fatespeaker.10
+:uncommon_Fatespeaker.9
+add "constitution" 18
+end
+
+:uncommon_Fatespeaker.8
+:uncommon_Fatespeaker.7
+:uncommon_Fatespeaker.6
+add "constitution" 12
+end
+
+:uncommon_Fatespeaker.5
+:uncommon_Fatespeaker.4
+:uncommon_Fatespeaker.3
+add "constitution" 6
+end
+
+
+:uncommon_Spellchanter_s.12
+:uncommon_Spellchanter_s.11
+add "casting_setback_chance" -300
+add "channeling_break_chance" -300
+add "psyche" 20
+add "spirit" 20
+end
+
+:uncommon_Spellchanter_s.10
+:uncommon_Spellchanter_s.9
+add "psyche" 15
+add "spirit" 15
+end
+
+:uncommon_Spellchanter_s.8
+:uncommon_Spellchanter_s.7
+:uncommon_Spellchanter_s.6
+add "psyche" 10
+add "spirit" 10
+end
+
+:uncommon_Spellchanter_s.5
+:uncommon_Spellchanter_s.4
+:uncommon_Spellchanter_s.3
+add "psyche" 5
+add "spirit" 5
+end
+
+
+:rare_Plains_Stalker.10
+:rare_Plains_Stalker.9
+add "mod_movement" 10
+add "strength" 9
+add "dexterity" 9
+end
+
+:rare_Plains_Stalker.8
+:rare_Plains_Stalker.7
+:rare_Plains_Stalker.6
+add "strength" 6
+add "dexterity" 6
+end
+
+:rare_Plains_Stalker.5
+:rare_Plains_Stalker.4
+:rare_Plains_Stalker.3
+add "strength" 3
+add "dexterity" 3
+end
+
+
+
+:rare_Blightmist_.10
+:rare_Blightmist_.9
+add "mod_movement" 10
+add "psyche" 6
+add "spirit" 6
+end
+
+:rare_Blightmist_.8
+:rare_Blightmist_.7
+:rare_Blightmist_.6
+add "psyche" 6
+add "spirit" 6
+end
+
+:rare_Blightmist_.5
+:rare_Blightmist_.4
+:rare_Blightmist_.3
+add "psyche" 3
+add "spirit" 3
+end
+
+
+:rare_Wild_Thorn.10
+:rare_Wild_Thorn.9
+add "damage_shield" 15
+add "constitution" 15
+end
+
+:rare_Wild_Thorn.8
+:rare_Wild_Thorn.7
+:rare_Wild_Thorn.6
+add "constitution" 10
+end
+
+:rare_Wild_Thorn.5
+:rare_Wild_Thorn.4
+:rare_Wild_Thorn.3
+add "constitution" 5
+end
+
+
+:rare_Crypt_Creeper.10
+:rare_Crypt_Creeper.9
+add "damage_shield" 15
+add "constitution" 15
+end
+
+:rare_Crypt_Creeper.8
+:rare_Crypt_Creeper.7
+:rare_Crypt_Creeper.6
+add "constitution" 10
+end
+
+:rare_Crypt_Creeper.5
+:rare_Crypt_Creeper.4
+:rare_Crypt_Creeper.3
+add "constitution" 5
+end
+
+
+:rare_Bandit_Slayer.10
+:rare_Bandit_Slayer.9
+add "mod_melee_to_crit" 100
+add "strength" 9
+add "dexterity" 9
+end
+
+:rare_Bandit_Slayer.8
+:rare_Bandit_Slayer.7
+:rare_Bandit_Slayer.6
+add "strength" 6
+add "dexterity" 6
+end
+
+:rare_Bandit_Slayer.5
+:rare_Bandit_Slayer.4
+:rare_Bandit_Slayer.3
+add "strength" 3
+add "dexterity" 3
+end
+
+
+:rare_Shadowcaster.10
+:rare_Shadowcaster.9
+add "mod_magic_to_crit" 100
+add "psyche" 9
+add "spirit" 9
+end
+
+:rare_Shadowcaster.8
+:rare_Shadowcaster.7
+:rare_Shadowcaster.6
+add "psyche" 6
+add "spirit" 6
+end
+
+:rare_Shadowcaster.5
+:rare_Shadowcaster.4
+:rare_Shadowcaster.3
+add "psyche" 3
+add "spirit" 3
+end
+
+
+:rare_Bonecrusher.11
+:rare_Bonecrusher.10
+:rare_Bonecrusher.9
+add "dmg_mod_melee" 150
+add "strength" 9
+add "dexterity" 9
+end
+
+:rare_Bonecrusher.8
+:rare_Bonecrusher.7
+:rare_Bonecrusher.6
+add "strength" 6
+add "dexterity" 6
+end
+
+:rare_Bonecrusher.5
+:rare_Bonecrusher.4
+:rare_Bonecrusher.3
+add "strength" 3
+add "dexterity" 3
+end
+
+
+:rare_Verdant_Vine.11
+:rare_Verdant_Vine.10
+:rare_Verdant_Vine.9
+add "dmg_mod_fire" 150
+add "dmg_mod_frost" 150
+add "dmg_mod_mystic" 150
+add "dmg_mod_death" 150
+add "psyche" 9
+add "spirit" 9
+end
+
+:rare_Verdant_Vine.8
+:rare_Verdant_Vine.7
+:rare_Verdant_Vine.6
+add "psyche" 6
+add "spirit" 6
+end
+
+:rare_Verdant_Vine.5
+:rare_Verdant_Vine.4
+:rare_Verdant_Vine.3
+add "psyche" 3
+add "spirit" 3
+end
+
+
+
+
+:rare_Duskstrider.11
+:rare_Duskstrider.10
+:rare_Duskstrider.9
+add "mod_movement" 12
+add "strength" 9
+add "dexterity" 9
+end
+
+:rare_Duskstrider.8
+:rare_Duskstrider.7
+:rare_Duskstrider.6
+add "strength" 6
+add "dexterity" 6
+end
+
+:rare_Duskstrider.5
+:rare_Duskstrider.4
+:rare_Duskstrider.3
+add "strength" 3
+add "dexterity" 3
+end
+
+
+
+:rare_Etherwind.11
+:rare_Etherwind.10
+:rare_Etherwind.9
+add "mod_movement" 12
+add "psyche" 9
+add "spirit" 9
+end
+
+:rare_Etherwind.8
+:rare_Etherwind.7
+:rare_Etherwind.6
+add "psyche" 6
+add "spirit" 6
+end
+
+:rare_Etherwind.5
+:rare_Etherwind.4
+:rare_Etherwind.3
+add "psyche" 3
+add "spirit" 3
+end
+
+:rare_Goliath_Stone.12
+:rare_Goliath_Stone.11
+add "mod_health_regen" 40
+add "constitution" 20
+end
+
+:rare_Goliath_Stone.10
+:rare_Goliath_Stone.9
+add "constitution" 15
+end
+
+:rare_Goliath_Stone.8
+:rare_Goliath_Stone.7
+:rare_Goliath_Stone.6
+add "constitution" 10
+end
+
+:rare_Goliath_Stone.5
+:rare_Goliath_Stone.4
+:rare_Goliath_Stone.3
+add "constitution" 5
+end
+
+
+:rare_Soulseer.12
+:rare_Soulseer.11
+add "mod_health_regen" 40
+add "constitution" 20
+end
+
+:rare_Soulseer.10
+:rare_Soulseer.9
+add "constitution" 15
+end
+
+:rare_Soulseer.8
+:rare_Soulseer.7
+:rare_Soulseer.6
+add "constitution" 10
+end
+
+:rare_Soulseer.5
+:rare_Soulseer.4
+:rare_Soulseer.3
+add "constitution" 5
+end
+
+
+:rare_Justiceborn.12
+:rare_Justiceborn.11
+add_f "might_regen" "0.20"
+add "constitution" 20
+end
+
+:rare_Justiceborn.10
+:rare_Justiceborn.9
+add "constitution" 15
+end
+
+:rare_Justiceborn.8
+:rare_Justiceborn.7
+:rare_Justiceborn.6
+add "constitution" 10
+end
+
+:rare_Justiceborn.5
+:rare_Justiceborn.4
+:rare_Justiceborn.3
+add "constitution" 5
+end
+
+
+:rare_Spirit_Woven.12
+:rare_Spirit_Woven.11
+add_f "will_regen" "0.20"
+add "constitution" 20
+end
+
+:rare_Spirit_Woven.10
+:rare_Spirit_Woven.9
+add "constitution" 15
+end
+
+:rare_Spirit_Woven.8
+:rare_Spirit_Woven.7
+:rare_Spirit_Woven.6
+add "constitution" 10
+end
+
+:rare_Spirit_Woven.5
+:rare_Spirit_Woven.4
+:rare_Spirit_Woven.3
+add "constitution" 5
+end
+
+
+:rare_Forsaken.12
+:rare_Forsaken.11
+add "mod_melee_to_crit" 100
+add "strength" 12
+add "dexterity" 12
+end
+
+:rare_Forsaken.10
+:rare_Forsaken.9
+add "strength" 9
+add "dexterity" 9
+end
+
+:rare_Forsaken.8
+:rare_Forsaken.7
+:rare_Forsaken.6
+add "strength" 6
+add "dexterity" 6
+end
+
+:rare_Forsaken.5
+:rare_Forsaken.4
+:rare_Forsaken.3
+add "strength" 3
+add "dexterity" 3
+end
+
+
+:rare_Burning_Grove.12
+:rare_Burning_Grove.11
+add "mod_magic_to_crit" 100
+add "psyche" 12
+add "spirit" 12
+end
+
+:rare_Burning_Grove.10
+:rare_Burning_Grove.9
+add "psyche" 9
+add "spirit" 9
+end
+
+:rare_Burning_Grove.8
+:rare_Burning_Grove.7
+:rare_Burning_Grove.6
+add "psyche" 6
+add "spirit" 6
+end
+
+:rare_Burning_Grove.5
+:rare_Burning_Grove.4
+:rare_Burning_Grove.3
+add "psyche" 3
+add "spirit" 3
+end
+
+
+:rare_Grove_Guardian_s.12
+:rare_Grove_Guardian_s.11
+add "base_dodge" 50
+add "strength" 12
+add "dexterity" 12
+end
+
+:rare_Grove_Guardian_s.10
+:rare_Grove_Guardian_s.9
+add "strength" 9
+add "dexterity" 9
+end
+
+:rare_Grove_Guardian_s.8
+:rare_Grove_Guardian_s.7
+:rare_Grove_Guardian_s.6
+add "strength" 6
+add "dexterity" 6
+end
+
+:rare_Grove_Guardian_s.5
+:rare_Grove_Guardian_s.4
+:rare_Grove_Guardian_s.3
+add "strength" 3
+add "dexterity" 3
+end
+
+
+
+:rare_Gloomshadow.12
+:rare_Gloomshadow.11
+add "base_dodge" 50
+add "psyche" 12
+add "spirit" 12
+end
+
+:rare_Gloomshadow.10
+:rare_Gloomshadow.9
+add "psyche" 9
+add "spirit" 9
+end
+
+:rare_Gloomshadow.8
+:rare_Gloomshadow.7
+:rare_Gloomshadow.6
+add "psyche" 6
+add "spirit" 6
+end
+
+:rare_Gloomshadow.5
+:rare_Gloomshadow.4
+:rare_Gloomshadow.3
+add "psyche" 3
+add "spirit" 3
+end
+
+
+:rare_Woodland_Tracker.11
+:rare_Woodland_Tracker.10
+:rare_Woodland_Tracker.9
+add "mod_movement" 12
+add "constitution" 15
+end
+
+:rare_Woodland_Tracker.8
+:rare_Woodland_Tracker.7
+:rare_Woodland_Tracker.6
+add "constitution" 10
+end
+
+:rare_Woodland_Tracker.5
+:rare_Woodland_Tracker.4
+:rare_Woodland_Tracker.3
+add "constitution" 5
+end
+
+:rare_Essence_Walker.12
+:rare_Essence_Walker.11
+:rare_Essence_Walker.10
+:rare_Essence_Walker.9
+add "mod_movement" 12
+add "constitution" 15
+end
+
+:rare_Essence_Walker.8
+:rare_Essence_Walker.7
+:rare_Essence_Walker.6
+add "constitution" 10
+end
+
+:rare_Essence_Walker.5
+:rare_Essence_Walker.4
+:rare_Essence_Walker.3
+add "constitution" 5
+end
+
+
+:rare_Shadow_Stalker.12
+:rare_Shadow_Stalker.11
+add "damage_resist_melee" 1000
+add "damage_resist_fire" 1000
+add "damage_resist_frost" 1000
+add "damage_resist_mystic" 1000
+add "damage_resist_death" 1000
+add "constitution" 20
+end
+
+:rare_Shadow_Stalker.10
+:rare_Shadow_Stalker.9
+add "constitution" 15
+end
+
+:rare_Shadow_Stalker.8
+:rare_Shadow_Stalker.7
+:rare_Shadow_Stalker.6
+add "constitution" 10
+end
+
+:rare_Shadow_Stalker.5
+:rare_Shadow_Stalker.4
+:rare_Shadow_Stalker.3
+add "constitution" 5
+end
+
+
+
+:rare_Aurora.12
+:rare_Aurora.11
+add "damage_resist_melee" 1000
+add "damage_resist_fire" 1000
+add "damage_resist_frost" 1000
+add "damage_resist_mystic" 1000
+add "damage_resist_death" 1000
+add "constitution" 20
+end
+
+:rare_Aurora.10
+:rare_Aurora.9
+add "constitution" 15
+end
+
+:rare_Aurora.8
+:rare_Aurora.7
+:rare_Aurora.6
+add "constitution" 10
+end
+
+:rare_Aurora.5
+:rare_Aurora.4
+:rare_Aurora.3
+add "constitution" 5
+end
+
+
+:rare_Cinder_Seared.12
+:rare_Cinder_Seared.11
+add "damage_shield" 15
+add "constitution" 20
+end
+
+:rare_Cinder_Seared.10
+:rare_Cinder_Seared.9
+add "constitution" 15
+end
+
+:rare_Cinder_Seared.8
+:rare_Cinder_Seared.7
+:rare_Cinder_Seared.6
+add "constitution" 10
+end
+
+:rare_Cinder_Seared.5
+:rare_Cinder_Seared.4
+:rare_Cinder_Seared.3
+add "constitution" 5
+end
+
+
+:rare_Illuminating.12
+:rare_Illuminating.11
+add "damage_shield" 15
+add "constitution" 20
+end
+
+:rare_Illuminating.10
+:rare_Illuminating.9
+add "constitution" 15
+end
+
+:rare_Illuminating.8
+:rare_Illuminating.7
+:rare_Illuminating.6
+add "constitution" 10
+end
+
+:rare_Illuminating.5
+:rare_Illuminating.4
+:rare_Illuminating.3
+add "constitution" 5
+end
+
+
+:rare_Honor_Guard.12
+:rare_Honor_Guard.11
+add_f "might_regen" "0.20"
+add "strength" 16
+add "dexterity" 16
+end
+
+:rare_Honor_Guard.10
+:rare_Honor_Guard.9
+add "strength" 12
+add "dexterity" 12
+end
+
+:rare_Honor_Guard.8
+:rare_Honor_Guard.7
+:rare_Honor_Guard.6
+add "strength" 8
+add "dexterity" 8
+end
+
+:rare_Honor_Guard.5
+:rare_Honor_Guard.4
+:rare_Honor_Guard.3
+add "strength" 4
+add "dexterity" 4
+end
+
+
+
+:rare_Glyph_Scribed.12
+:rare_Glyph_Scribed.11
+add_f "will_regen" "0.20"
+add "psyche" 16
+add "spirit" 16
+end
+
+:rare_Glyph_Scribed.10
+:rare_Glyph_Scribed.9
+add "psyche" 12
+add "spirit" 12
+end
+
+:rare_Glyph_Scribed.8
+:rare_Glyph_Scribed.7
+:rare_Glyph_Scribed.6
+add "psyche" 8
+add "spirit" 8
+end
+
+:rare_Glyph_Scribed.5
+:rare_Glyph_Scribed.4
+:rare_Glyph_Scribed.3
+add "psyche" 4
+add "spirit" 4
+end
+
+
+:rare_Vengeance_Seeker.12
+:rare_Vengeance_Seeker.11
+add "dmg_mod_melee" 200
+add "strength" 16
+add "dexterity" 16
+end
+
+:rare_Vengeance_Seeker.10
+:rare_Vengeance_Seeker.9
+add "strength" 12
+add "dexterity" 12
+end
+
+:rare_Vengeance_Seeker.8
+:rare_Vengeance_Seeker.7
+:rare_Vengeance_Seeker.6
+add "strength" 8
+add "dexterity" 8
+end
+
+:rare_Vengeance_Seeker.5
+:rare_Vengeance_Seeker.4
+:rare_Vengeance_Seeker.3
+add "strength" 4
+add "dexterity" 4
+end
+
+
+:rare_Ambergem.12
+:rare_Ambergem.11
+add "dmg_mod_fire" 200
+add "dmg_mod_frost" 200
+add "dmg_mod_mystic" 200
+add "dmg_mod_death" 200
+add "psyche" 16
+add "spirit" 16
+end
+
+:rare_Ambergem.10
+:rare_Ambergem.9
+add "psyche" 12
+add "spirit" 12
+end
+
+:rare_Ambergem.8
+:rare_Ambergem.7
+:rare_Ambergem.6
+add "psyche" 8
+add "spirit" 8
+end
+
+:rare_Ambergem.5
+:rare_Ambergem.4
+:rare_Ambergem.3
+add "psyche" 4
+add "spirit" 4
+end
+
+
+:rare_Fireforged.12
+:rare_Fireforged.11
+add "base_damage_fire" 30
+add "strength" 16
+add "dexterity" 16
+end
+:rare_Fireforged.10
+:rare_Fireforged.9
+add "strength" 12
+add "dexterity" 12
+end
+
+:rare_Fireforged.8
+:rare_Fireforged.7
+:rare_Fireforged.6
+add "strength" 8
+add "dexterity" 8
+end
+
+:rare_Fireforged.5
+:rare_Fireforged.4
+:rare_Fireforged.3
+add "strength" 4
+add "dexterity" 4
+end
+
+
+:rare_Djinn_Breath.12
+:rare_Djinn_Breath.11
+add "base_damage_mystic" 30
+add "psyche" 16
+add "spirit" 16
+end
+
+:rare_Djinn_Breath.10
+:rare_Djinn_Breath.9
+add "psyche" 12
+add "spirit" 12
+end
+
+:rare_Djinn_Breath.8
+:rare_Djinn_Breath.7
+:rare_Djinn_Breath.6
+add "psyche" 8
+add "spirit" 8
+end
+
+:rare_Djinn_Breath.5
+:rare_Djinn_Breath.4
+:rare_Djinn_Breath.3
+add "psyche" 4
+add "spirit" 4
+end
+
+
+
+:rare_Bloodfervor.12
+:rare_Bloodfervor.11
+add "mod_melee_to_crit" 120
+add "constitution" 20
+end
+
+:rare_Bloodfervor.10
+:rare_Bloodfervor.9
+add "constitution" 15
+end
+
+:rare_Bloodfervor.8
+:rare_Bloodfervor.7
+:rare_Bloodfervor.6
+add "constitution" 10
+end
+
+:rare_Bloodfervor.5
+:rare_Bloodfervor.4
+:rare_Bloodfervor.3
+add "constitution" 5
+end
+
+
+:rare_Sinstriker.12
+:rare_Sinstriker.11
+add "mod_magic_to_crit" 120
+add "constitution" 20
+end
+
+:rare_Sinstriker.10
+:rare_Sinstriker.9
+add "constitution" 15
+end
+
+:rare_Sinstriker.8
+:rare_Sinstriker.7
+:rare_Sinstriker.6
+add "constitution" 10
+end
+
+:rare_Sinstriker.5
+:rare_Sinstriker.4
+:rare_Sinstriker.3
+add "constitution" 5
+end
+
+
+
+:rare_Chieftan_s.12
+:rare_Chieftan_s.11
+add "damage_resist_melee" 1500
+add "damage_resist_fire" 1500
+add "damage_resist_frost" 1500
+add "damage_resist_mystic" 1500
+add "damage_resist_death" 1500
+add "constitution" 32
+end
+
+:rare_Chieftan_s.10
+:rare_Chieftan_s.9
+add "constitution" 24
+end
+
+:rare_Chieftan_s.8
+:rare_Chieftan_s.7
+:rare_Chieftan_s.6
+add "constitution" 16
+end
+
+:rare_Chieftan_s.5
+:rare_Chieftan_s.4
+:rare_Chieftan_s.3
+add "constitution" 8
+end
+
+
+:rare_Darksoul.12
+:rare_Darksoul.11
+add "damage_resist_melee" 1500
+add "damage_resist_fire" 1500
+add "damage_resist_frost" 1500
+add "damage_resist_mystic" 1500
+add "damage_resist_death" 1500
+add "constitution" 32
+end
+
+:rare_Darksoul.10
+:rare_Darksoul.9
+add "constitution" 24
+end
+
+:rare_Darksoul.8
+:rare_Darksoul.7
+:rare_Darksoul.6
+add "constitution" 16
+end
+
+:rare_Darksoul.5
+:rare_Darksoul.4
+:rare_Darksoul.3
+add "constitution" 8
+end
+
+
+
+:rare_Glorybound.12
+:rare_Glorybound.11
+add_f "might_regen" "0.20"
+add "constitution" 32
+end
+
+:rare_Glorybound.10
+:rare_Glorybound.9
+add "constitution" 24
+end
+
+:rare_Glorybound.8
+:rare_Glorybound.7
+:rare_Glorybound.6
+add "constitution" 16
+end
+
+:rare_Glorybound.5
+:rare_Glorybound.4
+:rare_Glorybound.3
+add "constitution" 8
+end
+
+
+
+:rare_Planeswalker.12
+:rare_Planeswalker.11
+add_f "will_regen" "0.20"
+add "constitution" 32
+end
+
+:rare_Planeswalker.10
+:rare_Planeswalker.9
+add "constitution" 24
+end
+
+:rare_Planeswalker.8
+:rare_Planeswalker.7
+:rare_Planeswalker.6
+add "constitution" 16
+end
+
+:rare_Planeswalker.5
+:rare_Planeswalker.4
+:rare_Planeswalker.3
+add "constitution" 8
+end
+
+
+
+:epic_Dauntless.12
+:epic_Dauntless.11
+add_f "might_regen" "0.20"
+add "constitution" 32
+end
+
+:epic_Dauntless.10
+:epic_Dauntless.9
+add "constitution" 24
+end
+
+:epic_Dauntless.8
+:epic_Dauntless.7
+:epic_Dauntless.6
+add "constitution" 16
+end
+
+:epic_Dauntless.5
+:epic_Dauntless.4
+:epic_Dauntless.3
+add "constitution" 8
+end
+
+
+
+:epic_Phantasmal.12
+:epic_Phantasmal.11
+add_f "will_regen" "0.20"
+add "constitution" 32
+end
+
+:epic_Phantasmal.10
+:epic_Phantasmal.9
+add "constitution" 24
+end
+
+:epic_Phantasmal.8
+:epic_Phantasmal.7
+:epic_Phantasmal.6
+add "constitution" 16
+end
+
+:epic_Phantasmal.5
+:epic_Phantasmal.4
+:epic_Phantasmal.3
+add "constitution" 8
+end
+
+
+
+
+
+:epic_Battlegrace.12
+:epic_Battlegrace.11
+add "damage_shield" 15
+add "constitution" 32
+end
+
+:epic_Battlegrace.10
+:epic_Battlegrace.9
+add "constitution" 24
+end
+
+:epic_Battlegrace.8
+:epic_Battlegrace.7
+:epic_Battlegrace.6
+add "constitution" 16
+end
+
+:epic_Battlegrace.5
+:epic_Battlegrace.4
+:epic_Battlegrace.3
+add "constitution" 8
+end
+
+
+
+:epic_Onyxheart.12
+:epic_Onyxheart.11
+add "damage_shield" 15
+add "constitution" 32
+end
+
+:epic_Onyxheart.10
+:epic_Onyxheart.9
+add "constitution" 24
+end
+
+:epic_Onyxheart.8
+:epic_Onyxheart.7
+:epic_Onyxheart.6
+add "constitution" 16
+end
+
+:epic_Onyxheart.5
+:epic_Onyxheart.4
+:epic_Onyxheart.3
+add "constitution" 8
+end
+
+
+
+:epic_Sparksmith.12
+:epic_Sparksmith.11
+add "dmg_mod_melee" 200
+add "strength" 20
+add "dexterity" 20
+end
+
+:epic_Sparksmith.10
+:epic_Sparksmith.9
+add "strength" 15
+add "dexterity" 15
+end
+
+:epic_Sparksmith.8
+:epic_Sparksmith.7
+:epic_Sparksmith.6
+add "strength" 10
+add "dexterity" 10
+end
+
+:epic_Sparksmith.5
+:epic_Sparksmith.4
+:epic_Sparksmith.3
+add "strength" 5
+add "dexterity" 5
+end
+
+
+:epic_Meteor_Shard.12
+:epic_Meteor_Shard.11
+add "dmg_mod_fire" 200
+add "dmg_mod_frost" 200
+add "dmg_mod_mystic" 200
+add "dmg_mod_death" 200
+add "psyche" 20
+add "spirit" 20
+end
+
+:epic_Meteor_Shard.10
+:epic_Meteor_Shard.9
+add "psyche" 15
+add "spirit" 15
+end
+
+:epic_Meteor_Shard.8
+:epic_Meteor_Shard.7
+:epic_Meteor_Shard.6
+add "psyche" 10
+add "spirit" 10
+end
+
+:epic_Meteor_Shard.5
+:epic_Meteor_Shard.4
+:epic_Meteor_Shard.3
+add "psyche" 5
+add "spirit" 5
+end
+
+
+:epic_Vigilant_Hunter.12
+:epic_Vigilant_Hunter.11
+add "mod_melee_to_crit" 130
+add "constitution" 36
+end
+
+:epic_Vigilant_Hunter.10
+:epic_Vigilant_Hunter.9
+add "constitution" 27
+end
+
+:epic_Vigilant_Hunter.8
+:epic_Vigilant_Hunter.7
+:epic_Vigilant_Hunter.6
+add "constitution" 18
+end
+
+:epic_Vigilant_Hunter.5
+:epic_Vigilant_Hunter.4
+:epic_Vigilant_Hunter.3
+add "constitution" 9
+end
+
+
+:epic_Stormcaller.12
+:epic_Stormcaller.11
+add "mod_magic_to_crit" 130
+add "constitution" 36
+end
+
+:epic_Stormcaller.10
+:epic_Stormcaller.9
+add "constitution" 27
+end
+
+:epic_Stormcaller.8
+:epic_Stormcaller.7
+:epic_Stormcaller.6
+add "constitution" 18
+end
+
+:epic_Stormcaller.5
+:epic_Stormcaller.4
+:epic_Stormcaller.3
+add "constitution" 9
+end
+
+
+:epic_Heaven_Shroud.12
+:epic_Heaven_Shroud.11
+add "damage_resist_melee" 1800
+add "damage_resist_fire" 1800
+add "damage_resist_frost" 1800
+add "damage_resist_mystic" 1800
+add "damage_resist_death" 1800
+add "constitution" 36
+end
+
+:epic_Heaven_Shroud.10
+:epic_Heaven_Shroud.9
+add "constitution" 27
+end
+
+:epic_Heaven_Shroud.8
+:epic_Heaven_Shroud.7
+:epic_Heaven_Shroud.6
+add "constitution" 18
+end
+
+:epic_Heaven_Shroud.5
+:epic_Heaven_Shroud.4
+:epic_Heaven_Shroud.3
+add "constitution" 9
+end
+
+
+:epic_Tidewalker.12
+:epic_Tidewalker.11
+add "damage_resist_melee" 1800
+add "damage_resist_fire" 1800
+add "damage_resist_frost" 1800
+add "damage_resist_mystic" 1800
+add "damage_resist_death" 1800
+add "constitution" 36
+end
+
+:epic_Tidewalker.10
+:epic_Tidewalker.9
+add "constitution" 27
+end
+
+:epic_Tidewalker.8
+:epic_Tidewalker.7
+:epic_Tidewalker.6
+add "constitution" 18
+end
+
+:epic_Tidewalker.5
+:epic_Tidewalker.4
+:epic_Tidewalker.3
+add "constitution" 9
+end
+
+
+:epic_Rageborn.11
+add "mod_movement" 15
+add "constitution" 36
+end
+
+:epic_Rageborn.10
+:epic_Rageborn.9
+add "constitution" 27
+end
+
+:epic_Rageborn.8
+:epic_Rageborn.7
+:epic_Rageborn.6
+add "constitution" 18
+end
+
+:epic_Rageborn.5
+:epic_Rageborn.4
+:epic_Rageborn.3
+add "constitution" 9
+end
+
+
+:epic_Tranquillity.12
+:epic_Tranquillity.11
+add "mod_movement" 15
+add "constitution" 36
+end
+
+:epic_Tranquillity.10
+:epic_Tranquillity.9
+add "constitution" 27
+end
+
+:epic_Tranquillity.8
+:epic_Tranquillity.7
+:epic_Tranquillity.6
+add "constitution" 18
+end
+
+:epic_Tranquillity.5
+:epic_Tranquillity.4
+:epic_Tranquillity.3
+add "constitution" 9
+end
+
+
+:epic_Valiant_Soldier.12
+:epic_Valiant_Soldier.11
+add "dmg_mod_melee" 250
+add "strength" 20
+add "dexterity" 20
+end
+
+:epic_Valiant_Soldier.10
+:epic_Valiant_Soldier.9
+add "strength" 15
+add "dexterity" 15
+end
+
+:epic_Valiant_Soldier.8
+:epic_Valiant_Soldier.7
+:epic_Valiant_Soldier.6
+add "strength" 10
+add "dexterity" 10
+end
+
+:epic_Valiant_Soldier.5
+:epic_Valiant_Soldier.4
+:epic_Valiant_Soldier.3
+add "strength" 5
+add "dexterity" 5
+end
+
+
+:epic_Pyre_Warden.12
+:epic_Pyre_Warden.11
+add "dmg_mod_fire" 250
+add "dmg_mod_frost" 250
+add "dmg_mod_mystic" 250
+add "dmg_mod_death" 250
+add "psyche" 20
+add "spirit" 20
+end
+
+:epic_Pyre_Warden.10
+:epic_Pyre_Warden.9
+add "psyche" 15
+add "spirit" 15
+end
+
+:epic_Pyre_Warden.8
+:epic_Pyre_Warden.7
+:epic_Pyre_Warden.6
+add "psyche" 10
+add "spirit" 10
+end
+
+:epic_Pyre_Warden.5
+:epic_Pyre_Warden.4
+:epic_Pyre_Warden.3
+add "psyche" 5
+add "spirit" 5
+end
+
+
+:epic_Lonewolf.12
+:epic_Lonewolf.11
+add "base_dodge" 70
+add "strength" 20
+add "dexterity" 20
+end
+
+:epic_Lonewolf.10
+:epic_Lonewolf.9
+add "strength" 15
+add "dexterity" 15
+end
+
+:epic_Lonewolf.8
+:epic_Lonewolf.7
+:epic_Lonewolf.6
+add "strength" 10
+add "dexterity" 10
+end
+
+:epic_Lonewolf.5
+:epic_Lonewolf.4
+:epic_Lonewolf.3
+add "strength" 5
+add "dexterity" 5
+end
+
+
+
+:epic_Faithkeeper.12
+:epic_Faithkeeper.11
+add "base_dodge" 70
+add "psyche" 20
+add "spirit" 20
+end
+
+:epic_Faithkeeper.10
+:epic_Faithkeeper.9
+add "psyche" 15
+add "spirit" 15
+end
+
+:epic_Faithkeeper.8
+:epic_Faithkeeper.7
+:epic_Faithkeeper.6
+add "psyche" 10
+add "spirit" 10
+end
+
+:epic_Faithkeeper.5
+:epic_Faithkeeper.4
+:epic_Faithkeeper.3
+add "psyche" 5
+add "spirit" 5
+end
+
+
+:epic_Blazing_Windrunner.12
+:epic_Blazing_Windrunner.11
+add "dmg_mod_melee" 200
+add "strength" 20
+add "dexterity" 20
+end
+
+:epic_Blazing_Windrunner.10
+:epic_Blazing_Windrunner.9
+add "strength" 15
+add "dexterity" 15
+end
+
+:epic_Blazing_Windrunner.8
+:epic_Blazing_Windrunner.7
+:epic_Blazing_Windrunner.6
+add "strength" 10
+add "dexterity" 10
+end
+
+:epic_Blazing_Windrunner.5
+:epic_Blazing_Windrunner.4
+:epic_Blazing_Windrunner.3
+add "strength" 5
+add "dexterity" 5
+end
+
+
+
+:epic_Prophet_Speaker.12
+:epic_Prophet_Speaker.11
+add "base_healing" 200
+add "psyche" 20
+add "spirit" 20
+end
+
+:epic_Prophet_Speaker.10
+:epic_Prophet_Speaker.9
+add "psyche" 15
+add "spirit" 15
+end
+
+:epic_Prophet_Speaker.8
+:epic_Prophet_Speaker.7
+:epic_Prophet_Speaker.6
+add "psyche" 10
+add "spirit" 10
+end
+
+:epic_Prophet_Speaker.5
+:epic_Prophet_Speaker.4
+:epic_Prophet_Speaker.3
+add "psyche" 5
+add "spirit" 5
+end
+
+
+:epic_Resilient_Guardian.12
+:epic_Resilient_Guardian.11
+add "damage_resist_melee" 2000
+add "damage_resist_fire" 2000
+add "damage_resist_frost" 2000
+add "damage_resist_mystic" 2000
+add "damage_resist_death" 2000
+add "strength" 20
+add "dexterity" 20
+end
+
+:epic_Resilient_Guardian.10
+:epic_Resilient_Guardian.9
+add "strength" 15
+add "dexterity" 15
+end
+
+:epic_Resilient_Guardian.8
+:epic_Resilient_Guardian.7
+:epic_Resilient_Guardian.6
+add "strength" 10
+add "dexterity" 10
+end
+
+:epic_Resilient_Guardian.5
+:epic_Resilient_Guardian.4
+:epic_Resilient_Guardian.3
+add "strength" 5
+add "dexterity" 5
+end
+
+
+:epic_Wrathbane.12
+:epic_Wrathbane.11
+add "damage_resist_melee" 2000
+add "damage_resist_fire" 2000
+add "damage_resist_frost" 2000
+add "damage_resist_mystic" 2000
+add "damage_resist_death" 2000
+add "psyche" 20
+add "spirit" 20
+end
+
+:epic_Wrathbane.10
+:epic_Wrathbane.9
+add "psyche" 15
+add "spirit" 15
+end
+
+:epic_Wrathbane.8
+:epic_Wrathbane.7
+:epic_Wrathbane.6
+add "psyche" 10
+add "spirit" 10
+end
+
+:epic_Wrathbane.5
+:epic_Wrathbane.4
+:epic_Wrathbane.3
+add "psyche" 5
+add "spirit" 5
+end
+
+
+:epic_Death_Prowler.12
+:epic_Death_Prowler.11
+add_f "might_regen" "0.20"
+add "constitution" 40
+end
+
+:epic_Death_Prowler.10
+:epic_Death_Prowler.9
+add "constitution" 30
+end
+
+:epic_Death_Prowler.8
+:epic_Death_Prowler.7
+:epic_Death_Prowler.6
+add "constitution" 20
+end
+
+:epic_Death_Prowler.5
+:epic_Death_Prowler.4
+:epic_Death_Prowler.3
+add "constitution" 10
+end
+
+
+
+:epic_Timeshift.12
+:epic_Timeshift.11
+add_f "will_regen" "0.20"
+add "constitution" 40
+end
+
+:epic_Timeshift.10
+:epic_Timeshift.9
+add "constitution" 30
+end
+
+:epic_Timeshift.8
+:epic_Timeshift.7
+:epic_Timeshift.6
+add "constitution" 20
+end
+
+:epic_Timeshift.5
+:epic_Timeshift.4
+:epic_Timeshift.3
+add "constitution" 10
+end
+
+
+:epic_Fierce_General_s.12
+:epic_Fierce_General_s.11
+add "mod_melee_to_crit" 150
+add "strength" 20
+add "dexterity" 20
+end
+
+:epic_Fierce_General_s.10
+:epic_Fierce_General_s.9
+add "strength" 15
+add "dexterity" 15
+end
+
+:epic_Fierce_General_s.8
+:epic_Fierce_General_s.7
+:epic_Fierce_General_s.6
+add "strength" 10
+add "dexterity" 10
+end
+
+:epic_Fierce_General_s.5
+:epic_Fierce_General_s.4
+:epic_Fierce_General_s.3
+add "strength" 5
+add "dexterity" 5
+end
+
+
+:epic_Pious_Apostle.12
+:epic_Pious_Apostle.11
+add "mod_magic_to_crit" 150
+add "psyche" 20
+add "spirit" 20
+end
+
+:epic_Pious_Apostle.10
+:epic_Pious_Apostle.9
+add "psyche" 15
+add "spirit" 15
+end
+
+:epic_Pious_Apostle.8
+:epic_Pious_Apostle.7
+:epic_Pious_Apostle.6
+add "psyche" 10
+add "spirit" 10
+end
+
+:epic_Pious_Apostle.5
+:epic_Pious_Apostle.4
+:epic_Pious_Apostle.3
+add "psyche" 5
+add "spirit" 5
+end
+
+
+
+:epic_Dragonbone.12
+:epic_Dragonbone.11
+add "damage_resist_melee" 2000
+add "damage_resist_fire" 2000
+add "damage_resist_frost" 2000
+add "damage_resist_mystic" 2000
+add "damage_resist_death" 2000
+add "casting_setback_chance" -200
+add "channeling_break_chance" -200
+add "constitution" 40
+end
+
+:epic_Dragonbone.10
+:epic_Dragonbone.9
+add "constitution" 30
+end
+
+:epic_Dragonbone.8
+:epic_Dragonbone.7
+:epic_Dragonbone.6
+add "constitution" 20
+end
+
+:epic_Dragonbone.5
+:epic_Dragonbone.4
+:epic_Dragonbone.3
+add "constitution" 10
+end
+
+
+
+:epic_Ghastly_Specter.12
+:epic_Ghastly_Specter.11
+add "damage_resist_melee" 2000
+add "damage_resist_fire" 2000
+add "damage_resist_frost" 2000
+add "damage_resist_mystic" 2000
+add "damage_resist_death" 2000
+add "casting_setback_chance" -200
+add "channeling_break_chance" -200
+add "constitution" 40
+end
+
+:epic_Ghastly_Specter.10
+:epic_Ghastly_Specter.9
+add "constitution" 30
+end
+
+:epic_Ghastly_Specter.8
+:epic_Ghastly_Specter.7
+:epic_Ghastly_Specter.6
+add "constitution" 20
+end
+
+:epic_Ghastly_Specter.5
+:epic_Ghastly_Specter.4
+:epic_Ghastly_Specter.3
+add "constitution" 10
+end

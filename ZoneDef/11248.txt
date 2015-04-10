@@ -1,0 +1,13 @@
+[ENTRY]
+ID=11248
+ACCOUNTID=782
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=melires
+GroveName=melires
+WarpName=melires1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

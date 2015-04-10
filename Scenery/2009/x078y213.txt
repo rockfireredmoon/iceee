@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151003439
+Asset=Swamp_Ruin?d=0.9&amp;s=8714567&amp;sz=800+
+Name=9
+Pos=58976.1,166.566,160379
+Orient=0,0.935616,0,0.353019
+Scale=1.925,1.925,1.925
+Flags=1
+

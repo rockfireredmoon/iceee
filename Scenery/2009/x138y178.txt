@@ -1,0 +1,8 @@
+[ENTRY]
+ID=151046046
+Asset=CL-Fence-Stone_Long_Blue2
+Name=9
+Pos=103853,454.841,134128
+Orient=0,-0.0399893,0,0.9992
+Scale=1,1,1
+

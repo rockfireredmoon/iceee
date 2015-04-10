@@ -1,0 +1,27 @@
+; Denmother Ursarach's Treasure
+[ENTRY]
+CreatureDefID=2729
+EssenceID=21291
+Item=5465,1
+Item=5532,1
+Item=5380,1
+Item=5398,1
+Item=143439,1
+Item=5511,1
+Item=5487,1
+Item=143431,1
+
+; Spibear Lair dungeon loot
+; Restored from 0.8.8b chest screenshot.
+[ENTRY]
+CreatureDefID=2703
+EssenceID=21257
+Item=143503,10  ;Blight Bow
+Item=5398,10  ;Shadow-Born Spaulders
+Item=5423,10  ;Karronath's Coat
+Item=143447,10  ;Spynch's Stinger
+Item=5510,10  ;Leggings of the Lair
+Item=5486,10  ;Belt of Woe
+Item=5544,10  ;Ring of Resentment
+Item=5531,10  ;Ursarach's Fur Footwraps
+

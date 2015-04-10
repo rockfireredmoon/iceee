@@ -1,0 +1,16 @@
+[ENTRY]
+ID=1358954564
+Asset=CL-Battlefield7#CL-Battlefield7
+Name=81
+Pos=51086.6,76.9055,59251
+Orient=0,0,0,1
+Scale=1.2,1.2,1.2
+
+[ENTRY]
+ID=1358962098
+Asset=Manipulator#Manipulator-PathNode
+Name=81
+Pos=51476.7,81.5518,59057
+Orient=0,0,0,1
+Scale=1,1,1
+

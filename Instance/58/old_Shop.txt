@@ -1,0 +1,336 @@
+﻿; Cheryl Cantrip <Reagent Merchant>, restored version.
+[ENTRY]
+CreatureDefID=3501
+Item=20522 ;Infused Crystals
+Item=20523 ;Blood Root
+Item=20524 ;Amber
+Item=20525 ;Black Pearl
+
+
+; Cora Cantrip <Reagent Merchant>, restored version.
+[ENTRY]
+CreatureDefID=3502
+Item=20522 ;Infused Crystals
+Item=20523 ;Blood Root
+Item=20524 ;Amber
+Item=20525 ;Black Pearl
+
+
+; Neville Nickblade <Weaponsmith>, restored version.
+[ENTRY]
+CreatureDefID=3504
+Item=142425 ;Pole
+Item=142424 ;Staff
+Item=142427 ;Longspear
+Item=142426 ;Spear
+Item=142358 ;Pig-Iron Daggers 
+Item=142366 ;Toe-Bone Wand
+Item=142409 ;Battleaxe
+Item=142410 ;Twin Axe
+Item=142411 ;Battlemace
+Item=142408 ;Battlesword
+Item=141461 ;Aspen Bow
+Item=142389 ;Bone Claws
+; Battlesword listed on EE.info with different ID that doesn't seem to exist.
+Item=142388 ;Stone Dagger
+Item=142391 ;Bone Katar
+Item=142390 ;Wooden Katar
+Item=142429 ;Carved Staff
+Item=142428 ;Twined Pole
+Item=142431 ;Tribal Spear
+Item=142430 ;Twisty Spear
+
+
+; Nigel Nickblade <Weaponsmith>
+[ENTRY]
+CreatureDefID=2084
+Item=142425 ;Pole
+Item=142424 ;Staff
+Item=142427 ;Longspear
+Item=142426 ;Spear
+Item=142358 ;Pig-Iron Daggers 
+Item=142366 ;Toe-Bone Wand
+Item=142409 ;Battleaxe
+Item=142410 ;Twin Axe
+Item=142411 ;Battlemace
+Item=142408 ;Battlesword
+Item=141461 ;Aspen Bow
+Item=142389 ;Bone Claws
+; Battlesword listed on EE.info with different ID that doesn't seem to exist.
+Item=142388 ;Stone Dagger
+Item=142391 ;Bone Katar
+Item=142390 ;Wooden Katar
+Item=142429 ;Carved Staff
+Item=142428 ;Twined Pole
+Item=142431 ;Tribal Spear
+Item=142430 ;Twisty Spear
+
+; Sarah Shielding <Armor Merchant>
+[ENTRY]
+CreatureDefID=2088
+Item=4752 ;Sleeves
+Item=3862 ;Shirt
+Item=3159 ;Leather Boots  (formerly Ink-Dyed Boots)
+Item=3162 ;Wool Shoes
+Item=4741 ;Gloves
+Item=4763 ;Leggings
+Item=4722 ;Collar
+Item=1350 ;Turtleshell Buckler
+Item=4757 ;Soft Sleeves
+Item=3647 ;Soft Shirt
+Item=4746 ;Soft Gloves
+Item=4768 ;Soft Kilt  (formerly Soft Leggings)
+Item=4727 ;Soft Collar
+Item=1351 ;Clamshell Buckler
+Item=4759 ;Flimsy Sleeves  (formerly Mercenary Sleeves)
+Item=4748 ;Flimsy Gloves  (formerly Mercenary Gloves)
+Item=4770 ;Flimsy Kilt  (formerly Mercenary Leggings)
+Item=4731 ;Flimsy Collar  (formerly Mercenary Collar)
+Item=3893 ;Flimsy Shirt  (formerly Mercenary Shirt)
+Item=1353 ;Flimsy Buckler (formerly Cured Hide Buckler)
+Item=1352 ;Recruit's Buckler  (formerly Wicker Buckler)
+Item=1354 ;Wooden Butterfly Buckler
+
+; Sylvia Shielding <Armorer>, restored version
+[ENTRY]
+CreatureDefID=3505
+Item=4752 ;Sleeves
+Item=3862 ;Shirt
+Item=3159 ;Leather Boots  (formerly Ink-Dyed Boots)
+Item=3162 ;Wool Shoes
+Item=4741 ;Gloves
+Item=4763 ;Leggings
+Item=4722 ;Collar
+Item=1350 ;Turtleshell Buckler
+Item=4757 ;Soft Sleeves
+Item=3647 ;Soft Shirt
+Item=4746 ;Soft Gloves
+Item=4768 ;Soft Kilt  (formerly Soft Leggings)
+Item=4727 ;Soft Collar
+Item=1351 ;Clamshell Buckler
+Item=4759 ;Flimsy Sleeves  (formerly Mercenary Sleeves)
+Item=4748 ;Flimsy Gloves  (formerly Mercenary Gloves)
+Item=4770 ;Flimsy Kilt  (formerly Mercenary Leggings)
+Item=4731 ;Flimsy Collar  (formerly Mercenary Collar)
+Item=3893 ;Flimsy Shirt  (formerly Mercenary Shirt)
+Item=1353 ;Flimsy Buckler (formerly Cured Hide Buckler)
+Item=1352 ;Recruit's Buckler  (formerly Wicker Buckler)
+Item=1354 ;Wooden Butterfly Buckler
+
+; Caesar Cantrip <General Merchant>, south Earthrise
+[ENTRY]
+CreatureDefID=2095
+Item=20522 ;Infused Crystals
+Item=20523 ;Blood Root
+Item=20524 ;Amber
+Item=20525 ;Black Pearl
+
+; Nona Nickblade <Weapon Merchant>, south Earthrise
+[ENTRY]
+CreatureDefID=2087
+Item=142379  ;Warped Mace
+Item=142378  ;Carved Axe
+Item=142376  ;Short Sword (formerly Glass Sword)
+Item=142417  ;Double Axe
+Item=142418  ;Heavy Mace
+Item=142416  ;Two-handed Sword (formerly Double-Edged Sword)
+Item=142398  ;Grooved Claw
+Item=142396  ;Dirk (formerly Grooved Dagger)
+Item=142438  ;Finished Spear (formerly Balanced Spear)
+Item=142436  ;Pugil Stick (formerly Balanced Staff)
+Item=142437  ;Walking Stick (formerly Oaken Staff)
+Item=142362  ;Spikes (formerly Quill Darts)
+Item=142370  ;Wooden Wand (formerly Practice-Wand)
+Item=142381  ;Painted Axe
+Item=142382  ;Cudgel (formerly Tribal Mace)
+Item=142380  ;Practice Sword
+Item=142422  ;Mercenary Axe
+Item=142423  ;Mercenary Mace
+Item=142421  ;Bastard Sword (formerly Mercenary Sword)
+Item=142128  ;Pine Bow (formerly Cherry Bow)
+Item=142401  ;Vile Claw
+Item=142400  ;Stiletto (formerly Pale Stiletto)
+Item=142402  ;Grooved Katar
+Item=142364  ;Stars (formerly Glass Star)
+Item=142372  ;Dark Wand (formerly Tailfeather-Wand)
+Item=141014  ;Short Sword
+Item=141053  ;Hatchet (formerly Bronze Axe)
+Item=141047  ;Pig Iron Mace
+Item=141021  ;Obsidian Spatha
+Item=141016  ;Two Handed Sword (formerly Two Hand Sword)
+Item=141178  ;Maple Bow (formerly Short Bow)
+Item=141092  ;Bramble Claw
+Item=141107  ;Pig-Iron Katar
+Item=141015  ;Simple Claw
+Item=141049  ;Pugio (formerly Bonny Dirk)
+Item=141017  ;Quarter Staff (formerly Wooden Staff)
+
+; Sandor Shielding <Armor Merchant>, south Earthrise
+[ENTRY]
+CreatureDefID=2091
+Item=4761  ;Shabby Sleeves (formerly Leafy Sleeves)
+Item=4739  ;Shabby Shirt (formerly Leafy Shirt)
+Item=4750  ;Shabby Gloves (formerly Leafy Gloves)
+Item=4772  ;Shabby Pants (formerly Leafy Leggings)
+Item=4729  ;Shabby Collar (formerly Leafy Collar)
+Item=1355  ;Shabby Buckler (formerly Bogmyrtle Kite Shield)
+Item=1290  ;Ragged Sleeves (formerly Sturdy Armwraps)
+Item=970  ;Ragged Vest (formerly Fine Linen Vestment)
+Item=1149  ;Shabby Shoes (formerly Hand-Woven Slippers)
+Item=1029  ;Ragged Gloves (formerly Woven Wraps)
+Item=1087  ;Ragged Leggings (formerly Plain Linen Wrap)
+Item=4733  ;Ragged Collar (formerly Woven Collar)
+Item=1358  ;Bonny Targe
+Item=1357  ;Ragged Buckler (formerly Ceremonial Targe)
+Item=1359  ;Crested Targe
+Item=1272  ;Rabbit Fur Gloves
+Item=954  ;Simple Leather Vest
+Item=956  ;Ragged Boots (formerly Simple Leather Boots)
+Item=957  ;Simple Leather Gloves
+Item=955  ;Simple Leather Pants
+
+; Camilla Cantrip <General Merchant>
+[ENTRY]
+CreatureDefID=2260
+Item=20522 ;Infused Crystals
+Item=20523 ;Blood Root
+Item=20524 ;Amber
+Item=20525 ;Black Pearl
+
+; Carmine Cantrip <General Merchant>
+[ENTRY]
+CreatureDefID=2094
+Item=20522 ;Infused Crystals
+Item=20523 ;Blood Root
+Item=20524 ;Amber
+Item=20525 ;Black Pearl
+
+; Nuno Nickblade <Weapon Merchant>
+[ENTRY]
+CreatureDefID=2261
+Item=142379  ;Warped Mace
+Item=142378  ;Carved Axe
+Item=142376  ;Short Sword (formerly Glass Sword)
+Item=142417  ;Double Axe
+Item=142418  ;Heavy Mace
+Item=142416  ;Two-handed Sword (formerly Double-Edged Sword)
+Item=142398  ;Grooved Claw
+Item=142396  ;Dirk (formerly Grooved Dagger)
+Item=142438  ;Finished Spear (formerly Balanced Spear)
+Item=142436  ;Pugil Stick (formerly Balanced Staff)
+Item=142437  ;Walking Stick (formerly Oaken Staff)
+Item=142362  ;Spikes (formerly Quill Darts)
+Item=142370  ;Wooden Wand (formerly Practice-Wand)
+Item=142381  ;Painted Axe
+Item=142382  ;Cudgel (formerly Tribal Mace)
+Item=142380  ;Practice Sword
+Item=142422  ;Mercenary Axe
+Item=142423  ;Mercenary Mace
+Item=142421  ;Bastard Sword (formerly Mercenary Sword)
+Item=142128  ;Pine Bow (formerly Cherry Bow)
+Item=142401  ;Vile Claw
+Item=142400  ;Stiletto (formerly Pale Stiletto)
+Item=142402  ;Grooved Katar
+Item=142364  ;Stars (formerly Glass Star)
+Item=142372  ;Dark Wand (formerly Tailfeather-Wand)
+Item=141014  ;Short Sword
+Item=141053  ;Hatchet (formerly Bronze Axe)
+Item=141047  ;Pig Iron Mace
+Item=141021  ;Obsidian Spatha
+Item=141016  ;Two Handed Sword (formerly Two Hand Sword)
+Item=141178  ;Maple Bow (formerly Short Bow)
+Item=141092  ;Bramble Claw
+Item=141107  ;Pig-Iron Katar
+Item=141015  ;Simple Claw
+Item=141049  ;Pugio (formerly Bonny Dirk)
+Item=141017  ;Quarter Staff (formerly Wooden Staff)
+
+; Sid Shielding <Armor Merchant>
+[ENTRY]
+CreatureDefID=2262
+Item=4761  ;Shabby Sleeves (formerly Leafy Sleeves)
+Item=4739  ;Shabby Shirt (formerly Leafy Shirt)
+Item=4750  ;Shabby Gloves (formerly Leafy Gloves)
+Item=4772  ;Shabby Pants (formerly Leafy Leggings)
+Item=4729  ;Shabby Collar (formerly Leafy Collar)
+Item=1355  ;Shabby Buckler (formerly Bogmyrtle Kite Shield)
+Item=1290  ;Ragged Sleeves (formerly Sturdy Armwraps)
+Item=970  ;Ragged Vest (formerly Fine Linen Vestment)
+Item=1149  ;Shabby Shoes (formerly Hand-Woven Slippers)
+Item=1029  ;Ragged Gloves (formerly Woven Wraps)
+Item=1087  ;Ragged Leggings (formerly Plain Linen Wrap)
+Item=4733  ;Ragged Collar (formerly Woven Collar)
+Item=1358  ;Bonny Targe
+Item=1357  ;Ragged Buckler (formerly Ceremonial Targe)
+Item=1359  ;Crested Targe
+Item=1272  ;Rabbit Fur Gloves
+Item=954  ;Simple Leather Vest
+Item=956  ;Ragged Boots (formerly Simple Leather Boots)
+Item=957  ;Simple Leather Gloves
+Item=955  ;Simple Leather Pants
+
+
+; Nancy Nickblade <Weapon Merchant>
+[ENTRY]
+CreatureDefID=2086
+Item=142379  ;Warped Mace
+Item=142378  ;Carved Axe
+Item=142376  ;Short Sword (formerly Glass Sword)
+Item=142417  ;Double Axe
+Item=142418  ;Heavy Mace
+Item=142416  ;Two-handed Sword (formerly Double-Edged Sword)
+Item=142398  ;Grooved Claw
+Item=142396  ;Dirk (formerly Grooved Dagger)
+Item=142438  ;Finished Spear (formerly Balanced Spear)
+Item=142436  ;Pugil Stick (formerly Balanced Staff)
+Item=142437  ;Walking Stick (formerly Oaken Staff)
+Item=142362  ;Spikes (formerly Quill Darts)
+Item=142370  ;Wooden Wand (formerly Practice-Wand)
+Item=142381  ;Painted Axe
+Item=142382  ;Cudgel (formerly Tribal Mace)
+Item=142380  ;Practice Sword
+Item=142422  ;Mercenary Axe
+Item=142423  ;Mercenary Mace
+Item=142421  ;Bastard Sword (formerly Mercenary Sword)
+Item=142128  ;Pine Bow (formerly Cherry Bow)
+Item=142401  ;Vile Claw
+Item=142400  ;Stiletto (formerly Pale Stiletto)
+Item=142402  ;Grooved Katar
+Item=142364  ;Stars (formerly Glass Star)
+Item=142372  ;Dark Wand (formerly Tailfeather-Wand)
+Item=141014  ;Short Sword
+Item=141053  ;Hatchet (formerly Bronze Axe)
+Item=141047  ;Pig Iron Mace
+Item=141021  ;Obsidian Spatha
+Item=141016  ;Two Handed Sword (formerly Two Hand Sword)
+Item=141178  ;Maple Bow (formerly Short Bow)
+Item=141092  ;Bramble Claw
+Item=141107  ;Pig-Iron Katar
+Item=141015  ;Simple Claw
+Item=141049  ;Pugio (formerly Bonny Dirk)
+Item=141017  ;Quarter Staff (formerly Wooden Staff)
+
+; Stannis Shielding <Armor Merchant>
+[ENTRY]
+CreatureDefID=2090
+Item=4761  ;Shabby Sleeves (formerly Leafy Sleeves)
+Item=4739  ;Shabby Shirt (formerly Leafy Shirt)
+Item=4750  ;Shabby Gloves (formerly Leafy Gloves)
+Item=4772  ;Shabby Pants (formerly Leafy Leggings)
+Item=4729  ;Shabby Collar (formerly Leafy Collar)
+Item=1355  ;Shabby Buckler (formerly Bogmyrtle Kite Shield)
+Item=1290  ;Ragged Sleeves (formerly Sturdy Armwraps)
+Item=970  ;Ragged Vest (formerly Fine Linen Vestment)
+Item=1149  ;Shabby Shoes (formerly Hand-Woven Slippers)
+Item=1029  ;Ragged Gloves (formerly Woven Wraps)
+Item=1087  ;Ragged Leggings (formerly Plain Linen Wrap)
+Item=4733  ;Ragged Collar (formerly Woven Collar)
+Item=1358  ;Bonny Targe
+Item=1357  ;Ragged Buckler (formerly Ceremonial Targe)
+Item=1359  ;Crested Targe
+Item=1272  ;Rabbit Fur Gloves
+Item=954  ;Simple Leather Vest
+Item=956  ;Ragged Boots (formerly Simple Leather Boots)
+Item=957  ;Simple Leather Gloves
+Item=955  ;Simple Leather Pants
+

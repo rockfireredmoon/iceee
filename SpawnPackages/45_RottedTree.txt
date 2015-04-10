@@ -1,0 +1,23 @@
+[ENTRY]
+Name=z45_rt_gen_Exit_to_Great_Forest_1016
+Spawn=1016,100  ;Exit to Great Forest (1) at 0
+
+[ENTRY]
+Name=4_rt_outerRing_32_33
+Shares=30
+Spawn=483,10  ;Taonbane (33) at 2
+Spawn=484,10  ;Vile Viande (33) at 2
+Spawn=512,10  ;Taonbane (32) at 0
+
+[ENTRY]
+Name=4_rt_LostOneStep_34
+Spawn=279,100  ;Vile Viande (34) at 2
+
+; NOTE: from creature file
+; doesn't seem to have associated loot, so removed
+[ENTRY]
+Flags=3
+Name=4_rt_obji_HedorahLewt
+;Spawn=1024,100  ;Hedora's Treasure (1)
+
+

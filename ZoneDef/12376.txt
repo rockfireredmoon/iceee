@@ -1,0 +1,13 @@
+[ENTRY]
+ID=12376
+ACCOUNTID=923
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=BremenDay
+ShardName=muddlekin
+GroveName=muddlekin
+WarpName=muddlekin1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

@@ -1,0 +1,16 @@
+[ENTRY]
+ID=151045542
+Asset=Manipulator-PathNode
+Name=9
+Pos=52199.6,361.027,136477
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
+ID=151058040
+Asset=CL-Roadside3#CL-Roadside3
+Name=9
+Pos=52048.5,336.404,135971
+Orient=-0.0447476,-0.595516,0.0601008,0.799841
+Scale=1.5,1.5,1.5
+

@@ -1,0 +1,13 @@
+[ENTRY]
+ID=8120
+ACCOUNTID=391
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=woodenstar
+GroveName=woodenstar
+WarpName=woodenstar1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

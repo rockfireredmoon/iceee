@@ -1,0 +1,13 @@
+[ENTRY]
+ID=6696
+ACCOUNTID=213
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CamelotDay
+ShardName=guardian
+GroveName=guardian
+WarpName=guardian1
+Grove=1
+EnvironmentCycle=1
+DefLoc=2993,266,3737
+

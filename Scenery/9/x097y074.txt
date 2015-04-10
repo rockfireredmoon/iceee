@@ -1,0 +1,16 @@
+[ENTRY]
+ID=151020255
+Asset=Prop-Burnt_Pines#Prop-Burnt_Pine2
+Pos=72825,983.445,56221
+Orient=0,0,0,1
+Scale=4.725,4.725,4.725
+Flags=1
+
+[ENTRY]
+ID=151020543
+Asset=Prop-Swineland-Junk_Pile#Prop-Swineland-Junk_Pile1
+Pos=73184,1335.58,55758
+Orient=0,-0.509841,0,0.860269
+Scale=3.4,3.4,3.4
+Flags=1
+

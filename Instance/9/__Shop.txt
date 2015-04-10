@@ -1,0 +1,634 @@
+; **** BAFFLEGATE (MIDLANDS) - Quest level 20/22
+
+; Piet Riposte <Weapon Merchant>, Bafflegate (GUESSED, taken from Wilford Mercia in Nottingham, Anglorum)
+[ENTRY]
+CreatureDefID=2219
+Item=141061  ;Broad Axe
+Item=141147  ;War Hammer
+Item=141250  ;Alder Bow
+Item=141091  ;Jambiya
+Item=141158  ;Wooden Staff
+Item=141232  ;Shurikens
+Item=141214  ;Fir Wand
+Item=141489  ;Bludgeon
+Item=141303  ;Katar
+Item=141262  ;Tomahawks
+Item=141268  ;Horned Wand
+
+; Rondo Hardhide <Armor Merchant>, Bafflegate (GUESSED, taken from Salisbury Bridgford in Nottingham, Anglorum)
+[ENTRY]
+CreatureDefID=2215
+Item=1425  ;Worn Shield
+Item=1605  ;Worn Sleeves
+Item=1515  ;Worn Vest
+Item=1701  ;Worn Shoes
+Item=1560  ;Worn Gloves
+Item=1725  ;Worn Helm
+Item=1656  ;Worn Legwraps
+Item=1458  ;Worn Drape
+Item=1750  ;Worn Shoulders
+Item=1777  ;Worn Belt
+
+; Ob Liette <Container Merchant>, Bafflegate  (OFFICIAL EER)
+[ENTRY]
+CreatureDefID=2217
+Item=9
+Item=10
+
+; Zora Qwench <Crafting Merchant>, Bafflegate  (GUESSED)
+[ENTRY]
+CreatureDefID=2221
+Item=20969	;Standard Armor Mold
+Item=20970	;Standard Weapon Mold
+
+; Mixi Sparkelle <General Merchant>, Bafflegate  (GUESSED, taken from Snerd Danelaw in Anglorum)
+[ENTRY]
+CreatureDefID=2216
+Item=20522
+Item=20523
+Item=20524
+Item=20525
+Item=20526
+Item=40053
+
+
+
+; **** LISTERM (MIDLANDS) - Quest level 23
+
+; Blane Crav <Weapon Merchant>, Listerm  (GUESSED, copying Bafflegate)
+[ENTRY]
+CreatureDefID=2223
+Item=141061  ;Broad Axe
+Item=141147  ;War Hammer
+Item=141250  ;Alder Bow
+Item=141091  ;Jambiya
+Item=141158  ;Wooden Staff
+Item=141232  ;Shurikens
+Item=141214  ;Fir Wand
+Item=141489  ;Bludgeon
+Item=141303  ;Katar
+Item=141262  ;Tomahawks
+Item=141268  ;Horned Wand
+
+; Gul Yathbane <Armor Merchant>, Listerm (GUESSED, copying Bafflegate)
+[ENTRY]
+CreatureDefID=2222
+Item=1425  ;Worn Shield
+Item=1605  ;Worn Sleeves
+Item=1515  ;Worn Vest
+Item=1701  ;Worn Shoes
+Item=1560  ;Worn Gloves
+Item=1725  ;Worn Helm
+Item=1656  ;Worn Legwraps
+Item=1458  ;Worn Drape
+Item=1750  ;Worn Shoulders
+Item=1777  ;Worn Belt
+
+; Holly Hillblight <General Merchant>, Listerm  (GUESSED)
+[ENTRY]
+CreatureDefID=2224
+Item=20522
+Item=20523
+Item=20524
+Item=20525
+Item=20526
+Item=40053
+Item=40054	;Basic Health Potion: Level 20
+
+
+; **** BANDIT'S BLUFF (MIDLANDS) - Quest level 24/25
+
+; Zim Bronzefold <Armor Merchant>, Bandit's Bluff (GUESSED Level 25 selection)
+[ENTRY]
+CreatureDefID=2225
+Item=1425	;Worn Shield
+Item=1458	;Worn Drape
+Item=1515	;Worn Vest
+Item=1560	;Worn Gloves
+Item=1605	;Worn Sleeves
+Item=1656	;Worn Legwraps
+Item=1701	;Worn Shoes
+Item=1725	;Worn Helm
+Item=1750	;Worn Shoulders
+Item=1777	;Worn Belt
+
+
+
+
+; Gretta Gouge <Weapon Merchant>, Bandit's Bluff (GUESSED, level 25 selection)
+[ENTRY]
+CreatureDefID=2226
+Item=141303	;Katar
+Item=141489	;Bludgeon
+Item=141358	;Zweihander
+Item=141342	;Lance
+Item=141268	;Horned Wand
+Item=141451	;Birch Bow
+Item=141262	;Tomahawks
+
+; Anai Derin <General Merchant>, Bandit's Bluff (GUESSED)
+[ENTRY]
+CreatureDefID=2227
+Item=20522
+Item=20523
+Item=20524
+Item=20525
+Item=20526
+Item=40053
+Item=40054	;Basic Health Potion: Level 20
+
+
+; **** LONGTAIL GYPSY CAMP (MIDLANDS) - Quest level 25
+
+; Dekard Rove <Weapon Merchant>  (GUESSED, level 25)
+[ENTRY]
+CreatureDefID=2230
+Item=141303	;Katar
+Item=141489	;Bludgeon
+Item=141358	;Zweihander
+Item=141342	;Lance
+Item=141268	;Horned Wand
+Item=141451	;Birch Bow
+Item=141262	;Tomahawks
+
+; Vangel Wayward <Armor Merchant> (GUESSED, level 25)
+[ENTRY]
+CreatureDefID=2229
+Item=1425	;Worn Shield
+Item=1458	;Worn Drape
+Item=1515	;Worn Vest
+Item=1560	;Worn Gloves
+Item=1605	;Worn Sleeves
+Item=1656	;Worn Legwraps
+Item=1701	;Worn Shoes
+Item=1725	;Worn Helm
+Item=1750	;Worn Shoulders
+Item=1777	;Worn Belt
+
+; Veedo <Container Merchant>  (OFFICIAL EER)
+[ENTRY]
+CreatureDefID=3173
+Item=9
+Item=10
+
+; Finn Afoot <General Merchant>  (OFFICIAL EER)
+[ENTRY]
+CreatureDefID=2228
+Item=20522
+Item=20523
+Item=20524
+Item=20525
+Item=20526
+Item=40054
+Item=20969
+Item=20970
+
+
+
+; **** EASTBRIDGE (NEW BADARI) - Quest level 27/28
+
+; Mungo Jeri <Armor Merchant> (GUESSED, Level 25)
+[ENTRY]
+CreatureDefID=2390
+Item=1425	;Worn Shield
+Item=1458	;Worn Drape
+Item=1515	;Worn Vest
+Item=1560	;Worn Gloves
+Item=1605	;Worn Sleeves
+Item=1656	;Worn Legwraps
+Item=1701	;Worn Shoes
+Item=1725	;Worn Helm
+Item=1750	;Worn Shoulders
+Item=1777	;Worn Belt
+
+; Rono Dueter <Weapon Merchant> (GUESSED, Level 25)
+[ENTRY]
+CreatureDefID=2391
+Item=141303	;Katar
+Item=141489	;Bludgeon
+Item=141358	;Zweihander
+Item=141342	;Lance
+Item=141268	;Horned Wand
+Item=141451	;Birch Bow
+Item=141262	;Tomahawks
+
+; Elee Mistoff <General Merchant>
+[ENTRY]
+CreatureDefID=2392 (GUESSED)
+Item=20522
+Item=20523
+Item=20524
+Item=20525
+Item=20526
+Item=40054
+Item=20969
+Item=20970
+
+
+
+; **** SEASCAPE (NEW BADARI) - Quest level 26/28
+
+; Gus Thea <Armor Merchant> (GUESSED, level 25)
+[ENTRY]
+CreatureDefID=2396
+Item=1425	;Worn Shield
+Item=1458	;Worn Drape
+Item=1515	;Worn Vest
+Item=1560	;Worn Gloves
+Item=1605	;Worn Sleeves
+Item=1656	;Worn Legwraps
+Item=1701	;Worn Shoes
+Item=1725	;Worn Helm
+Item=1750	;Worn Shoulders
+Item=1777	;Worn Belt
+
+; Rumpus <Weapon Merchant> (GUESSED, level 25)
+[ENTRY]
+CreatureDefID=2397
+Item=141303	;Katar
+Item=141489	;Bludgeon
+Item=141358	;Zweihander
+Item=141342	;Lance
+Item=141268	;Horned Wand
+Item=141451	;Birch Bow
+Item=141262	;Tomahawks
+
+; Tac Morgan  (OFFICIAL EER)
+[ENTRY]
+CreatureDefID=2398
+Item=20522
+Item=20523
+Item=20524
+Item=20525
+Item=20526
+Item=40054
+Item=20969
+Item=20970
+
+
+
+; **** BREMEN (NEW BADARI) - Quest level 27/30
+
+; Gernosh Redler <Crafting Merchant> (GUESSED, all material for a major town)
+[ENTRY]
+CreatureDefID=2389
+Item=20967	;Basic Weapon Mold
+Item=20968	;Basic Armor Mold
+Item=20969	;Standard Armor Mold
+Item=20970	;Standard Weapon Mold
+Item=20971	;Expert Armor Mold
+Item=20972	;Expert Weapon Mold
+Item=20973	;Adept Armor Mold
+Item=20974	;Adept Weapon Mold
+Item=20975	;Master Armor Mold
+Item=20976	;Master Weapon Mold
+
+; Mac Avity <Container Merchant>, Bremen  (OFFICIAL EER)
+[ENTRY]
+CreatureDefID=2386
+Item=2
+Item=3
+Item=4
+Item=5
+Item=6
+
+; Ser Growltiger <Weapon Merchant> (GUESSED, level 30)
+[ENTRY]
+CreatureDefID=2384
+Item=141394	;Kris
+Item=141423	;Broadsword
+Item=141370	;Great Axe
+Item=141354	;Partisan
+Item=141439	;Ebon Wand
+Item=141457	;Ash Bow
+Item=141448	;Daggers
+
+; Jenny Dot <Armor Merchant> (GUESSED, level 30)
+[ENTRY]
+CreatureDefID=2382
+Item=1929	;Faded Cinch
+Item=1962	;Faded Shoulders
+Item=2011	;Faded Headpiece
+Item=2071	;Faded Boots
+Item=2124	;Faded Leggings
+Item=2178	;Faded Armbands
+Item=2258	;Faded Gloves
+Item=2297	;Faded Chestpiece
+Item=2341	;Faded Choker
+Item=2376	;Faded Shield
+
+; Jelli Cles <General Merchant>  (OFFICIAL EER)
+[ENTRY]
+CreatureDefID=2387
+Item=20522
+Item=20523
+Item=20524
+Item=20525
+Item=20526
+Item=40054
+Item=20969
+Item=20970
+
+
+
+; **** ROLSBURG (NEW BADARI) - Quest level 29/30
+
+; Grizz Abella <Armor Merchant> (GUESSED, level 30)
+[ENTRY]
+CreatureDefID=2393
+Item=1929	;Faded Cinch
+Item=1962	;Faded Shoulders
+Item=2011	;Faded Headpiece
+Item=2071	;Faded Boots
+Item=2124	;Faded Leggings
+Item=2178	;Faded Armbands
+Item=2258	;Faded Gloves
+Item=2297	;Faded Chestpiece
+Item=2341	;Faded Choker
+Item=2376	;Faded Shield
+
+; Bustopher Jay <Weapon Merchant> (GUESSED, level 30)
+[ENTRY]
+CreatureDefID=2394
+Item=141394	;Kris
+Item=141423	;Broadsword
+Item=141370	;Great Axe
+Item=141354	;Partisan
+Item=141439	;Ebon Wand
+Item=141457	;Ash Bow
+Item=141448	;Daggers
+
+; Teren Bergorn <General Merchant>
+[ENTRY]
+CreatureDefID=2395
+Item=20522
+Item=20523
+Item=20524
+Item=20525
+Item=20526
+Item=40054
+Item=20969
+Item=20970
+
+
+
+; **** HEARTWOOD (GREAT FOREST) - Quest level 31/35
+
+; Rueben Stronghorn <Weapon Merchant> (GUESSED)
+[ENTRY]
+CreatureDefID=991
+Item=141394	;Kris
+Item=141423	;Broadsword
+Item=141370	;Great Axe
+Item=141354	;Partisan
+Item=141439	;Ebon Wand
+Item=141457	;Ash Bow
+Item=141448	;Daggers
+
+; Slitheen Daar <Armor Merchant>  (GUESSED)
+[ENTRY]
+CreatureDefID=992
+Item=1929	;Faded Cinch
+Item=1962	;Faded Shoulders
+Item=2011	;Faded Headpiece
+Item=2071	;Faded Boots
+Item=2124	;Faded Leggings
+Item=2178	;Faded Armbands
+Item=2258	;Faded Gloves
+Item=2297	;Faded Chestpiece
+Item=2341	;Faded Choker
+Item=2376	;Faded Shield
+
+; Gwin Rahmun'd <General Merchant>  (OFFICIAL EER)
+[ENTRY]
+CreatureDefID=1037
+Item=20522
+Item=20523
+Item=20524
+Item=20525
+Item=20526
+Item=40056
+Item=20973
+Item=20974
+
+; Crighton Barheel <Container Merchant>, Heartwood  (OFFICIAL EER)
+[ENTRY]
+CreatureDefID=1040
+Item=2
+Item=3
+Item=4
+Item=5
+Item=6
+
+
+
+
+; **** TALL STAND (GREAT FOREST) - Quest level 31/35
+
+; Ellyen Brahr <Crafting Merchant>
+[ENTRY]
+CreatureDefID=1041
+Item=20971	;Expert Armor Mold
+Item=20972	;Expert Weapon Mold
+
+
+; Anton Starque <Weapon Merchant> (GUESSED)
+[ENTRY]
+CreatureDefID=1038
+Item=141394	;Kris
+Item=141423	;Broadsword
+Item=141370	;Great Axe
+Item=141354	;Partisan
+Item=141439	;Ebon Wand
+Item=141457	;Ash Bow
+Item=141448	;Daggers
+
+; Pepper Longstockings <Reagent Merchant>  (OFFICIAL EER)
+[ENTRY]
+CreatureDefID=1045
+Item=20522
+Item=20523
+Item=20524
+Item=20525
+Item=20526
+
+
+
+
+; **** GREEN LINE THICKET (GREAT FOREST) - Quest level 38/39
+
+; Dupree Nolahn <Dupree Nolahn>  (OFFICIAL EER)
+[ENTRY]
+CreatureDefID=1046
+Item=141637
+Item=141688
+Item=141606
+Item=141576
+Item=141748
+Item=141723
+Item=141735
+
+; Rhaevyn Nightbreeze <Reagent Merchant>  (OFFICIAL EER)
+[ENTRY]
+CreatureDefID=1047
+Item=20522
+Item=20523
+Item=20524
+Item=20525
+Item=20526
+
+
+
+; **** IRONBIRCH CAMP (DEADWOOD) - Quest level 41/42
+
+; Auryn Willowbourne <Armor Merchant>  (GUESSED, using Oslis Vendors)
+[ENTRY]
+CreatureDefID=1080
+Item=2893
+Item=2859
+Item=3095
+Item=2973
+Item=3055
+Item=2933
+Item=3135
+Item=3014
+Item=2835
+Item=3154
+
+; Mikki Sootbellower <Armor Merchant> (GUESSED, not sure why there's 2 armor merchants here)
+[ENTRY]
+CreatureDefID=1081
+Item=2393	;Simple Buckler
+Item=2422	;Simple Gorget
+Item=2463	;Simple Tunic
+Item=2503	;Simple Gloves
+Item=2543	;Simple Armwraps
+Item=2583	;Simple Pants
+Item=2623	;Simple Boots
+Item=2663	;Simple Headgear
+Item=2693	;Simple Belt
+Item=2717	;Simple Shoulders
+
+
+; Boomslang Skye <General Merchant>  (OFFICIAL EER)
+[ENTRY]
+CreatureDefID=1084
+Item=20522
+Item=20523
+Item=20524
+Item=20525
+Item=20526
+Item=40055
+Item=20971
+Item=20972
+
+
+
+; **** NANTE'S WAYSTATION (DUSTSHORE) - Quest level 34/37
+
+; Alecia Moorbourne  (OFFICIAL EER)
+[ENTRY]
+CreatureDefID=1459
+Item=20522
+Item=20523
+Item=20524
+Item=20525
+Item=20526
+Item=40055
+Item=20971
+Item=20972
+
+
+
+
+; **** BAZAART (DUSTSHORE) - Quest level 36/40   Guessing level 35 gear
+
+; Frosty Knightsbridge <General Merchant> (OFFICIAL EER)
+[ENTRY]
+CreatureDefID=1418
+Item=20522
+Item=20523
+Item=20524
+Item=20525
+Item=20526
+Item=40055
+Item=20971
+Item=20972
+
+; Veridian Muckeater <Crafting Merchant>  (GUESSED)
+[ENTRY]
+CreatureDefID=1419
+Item=20971	;Expert Armor Mold
+Item=20972	;Expert Weapon Mold
+
+; Rolande Black <Weapon Merchant>    (GUESSED)
+[ENTRY]
+CreatureDefID=1421
+Item=141637	;Shiv
+Item=141688	;Bone Mace
+Item=141606	;Great Sword
+Item=141576	;Long Staff
+Item=141723	;Poppy Wand
+Item=141748	;Willow Bow
+Item=141735	;Quills
+
+; Brianna Hammerforge <Armor Merchant>  (GUESSED)
+[ENTRY]
+CreatureDefID=1422
+Item=2393	;Simple Buckler
+Item=2422	;Simple Gorget
+Item=2463	;Simple Tunic
+Item=2503	;Simple Gloves
+Item=2543	;Simple Armwraps
+Item=2583	;Simple Pants
+Item=2623	;Simple Boots
+Item=2663	;Simple Headgear
+Item=2693	;Simple Belt
+Item=2717	;Simple Shoulders
+
+; Killian D'Onyx <Container Merchant>  (GUESSED)
+[ENTRY]
+CreatureDefID=1424
+Item=9
+Item=10
+
+
+
+; **** OSLIS (CRACKED ROCK) - Quest level 37/40
+
+; Lynx Furnett <Armor Merchant>  (OFFICIAL EER)
+[ENTRY]
+CreatureDefID=2972
+Item=2893
+Item=2859
+Item=3095
+Item=2973
+Item=3055
+Item=2933
+Item=3135
+Item=3014
+Item=2835
+Item=3154
+
+; Twee Amberbeak <Weapon Merchant>  (OFFICIAL EER)
+[ENTRY]
+CreatureDefID=2971
+Item=141660
+Item=141709
+Item=141625
+Item=141594
+Item=141756
+Item=141731
+Item=141744
+
+; Logan Plains-Hunter <General Merchant>  (OFFICIAL EER)
+[ENTRY]
+CreatureDefID=1436
+Item=20522
+Item=20523
+Item=20524
+Item=20525
+Item=20526
+Item=40056
+Item=20973
+Item=20974

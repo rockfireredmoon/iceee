@@ -1,0 +1,16 @@
+[ENTRY]
+ID=151058554
+Asset=Prop-Bush_AridDead1#Prop-Bush_AridDead1
+Pos=42853.4,1239.17,75736.3
+Orient=0,-0.0249974,0,0.999687
+Scale=3.825,3.825,3.825
+Flags=1
+
+[ENTRY]
+ID=151058579
+Asset=Prop-Cactus#Prop-Cactus3
+Pos=42858.3,1237.9,75728.2
+Orient=0,0,0,1
+Scale=4.025,4.025,4.025
+Flags=1
+

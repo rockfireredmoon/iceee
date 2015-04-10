@@ -1,0 +1,8 @@
+[ENTRY]
+ID=150999177
+Asset=CL-Plains_Bush2
+Name=9
+Pos=50529.6,336.034,44428
+Orient=0,-0.531186,0,0.847255
+Scale=1,1,1
+

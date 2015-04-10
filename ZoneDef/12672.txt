@@ -1,0 +1,13 @@
+[ENTRY]
+ID=12672
+ACCOUNTID=960
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=moopy
+GroveName=moopy
+WarpName=moopy1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

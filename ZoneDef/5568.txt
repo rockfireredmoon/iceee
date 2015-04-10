@@ -1,0 +1,15 @@
+[ENTRY]
+ID=5568
+ACCOUNTID=72
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=fox
+GroveName=fox
+WarpName=fox1
+DropRateProfile=standard
+Grove=1
+EnvironmentCycle=1
+BuildPermission=account,72,0,0,3,3
+DefLoc=2958,260,3821
+

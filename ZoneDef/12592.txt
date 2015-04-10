@@ -1,0 +1,15 @@
+[ENTRY]
+ID=12592
+ACCOUNTID=950
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=Fire1
+ShardName=toxicego
+GroveName=toxicego
+WarpName=toxicego1
+DropRateProfile=standard
+Grove=1
+EnvironmentCycle=0
+BuildPermission=account,950,0,0,3,3
+DefLoc=3301,333,3821
+

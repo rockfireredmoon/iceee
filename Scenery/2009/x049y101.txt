@@ -1,0 +1,8 @@
+[ENTRY]
+ID=151058600
+Asset=Prop-Boulder_Arid#Prop-Boulder_Arid6
+Name=9
+Pos=37247.7,1196.54,76394
+Orient=0,0,-0.139543,0.990216
+Scale=2.95,2.95,2.95
+

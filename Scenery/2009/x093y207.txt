@@ -1,0 +1,17 @@
+[ENTRY]
+ID=151014119
+Asset=Manipulator-SpawnPoint
+Name=9
+Pos=70081.2,218.898,155637
+Orient=0,0,0,1
+Scale=1,1,1
+Layer=150998100
+
+[ENTRY]
+ID=151022643
+Asset=CL-RottedPine2#CL-RottedPine2
+Name=9
+Pos=69886.6,242.753,155814
+Orient=0,-0.981853,0,0.189641
+Scale=3.95,3.95,3.95
+

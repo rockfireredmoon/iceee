@@ -1,0 +1,414 @@
+[ENTRY]
+Flags=1
+Name=58_corsica_northbeachsentry_a
+Spawn=1975,100  ;Northbeach Sentry
+
+[ENTRY]
+Flags=1
+Name=58_corsica_northbeachsentry_b
+Spawn=1976,100  ;Northbeach Sentry
+
+[ENTRY]
+Flags=1
+Name=58_corsica_npc_SirLancelot
+Spawn=1954,100  ;Sir Lancelot (45)
+
+[ENTRY]
+Name=58_corsica_wanderleaf_3
+Flags=4
+spawnDelay=300
+Spawn=1984,50  ; Wanderleaf (3)
+Spawn=2135,50  ; Wanderleaf (3)
+
+[ENTRY]
+Name=58_corsica_vilewanderleaf_3
+spawnDelay=300
+Spawn=1985,100  ; Vile Wanderleaf (3)
+
+[ENTRY]
+Name=58_corsica_ferngar_4
+Spawn=1986,100  ; Ferngar (4)
+
+[ENTRY]
+Name=58_corsica_guineafowl_4
+spawnDelay=300
+Spawn=1987,100  ; Guineafowl (4)
+
+[ENTRY]
+Name=58_corsica_quackafowl_4
+spawnDelay=300
+Spawn=1989,50  ; Quackatrice (4)
+Spawn=1987,50  ; Guineafowl (4)
+
+[ENTRY]
+Name=58_corsica_crabquatch_4
+spawnDelay=300
+Spawn=1988,100  ; Crabquatch (4)
+
+
+[ENTRY]
+Name=58_corsica_quackatrice_4
+spawnDelay=300
+Spawn=1989,50  ; Quackatrice (4)
+Spawn=1990,50  ; Quackatrice (4)
+
+
+[ENTRY]
+Name=58_corsica_dreamfly_5
+spawnDelay=300
+Spawn=1991,50  ; Dreamfly (5)
+Spawn=1992,50  ; Dreamfly (5)
+
+[ENTRY]
+Name=58_corsica_anubianscout_6
+spawnDelay=300
+Spawn=1996,100  ; Anubian Scout (6)
+
+[ENTRY]
+Name=58_corsica_anubianmage_5
+spawnDelay=300
+Spawn=1997,100  ; Anubian Mage (5)
+
+[ENTRY]
+Name=58_corsica_greenshellcrab_5_6
+spawnDelay=300
+Spawn=2045,50  ; Greenshell Crab (5)
+Spawn=1999,50  ; Greenshell Crab (6)
+; 2046  ; Greenshell Crab (6)
+
+
+[ENTRY]
+Name=58_corsica_thornywanderleaf_4_5
+spawnDelay=300
+Spawn=2043,50  ; Thorny Wanderleaf (4)
+Spawn=2044,50  ; Thorny Wanderleaf (5)
+
+[ENTRY]
+Name=58_corsica_localplant_1
+Spawn=2103,100  ;Local Plant (1)
+
+[ENTRY]
+Flags=1
+Name=58_corsica_southendsentry_a
+Spawn=1977,100  ;Southend Sentry (45)
+
+[ENTRY]
+Flags=1
+Name=58_corsica_southendsentry_b
+Spawn=1978,100  ;Southend Sentry (45)
+
+
+
+
+
+[ENTRY]
+Name=58_earthrise_anubianarchitect_6_7
+spawnDelay=300
+Spawn=2013,50  ;Anubian Architect (7)
+Spawn=2014,50  ;Anubian Architect (6)
+
+[ENTRY]
+Name=58_earthrise_beachcrawler_6_7
+spawnDelay=300
+Spawn=2053,50  ; Beach Crawler (6)
+Spawn=2054,50  ; Beach Crawler (7)
+
+[ENTRY]
+Name=58_earthrise_sek_6
+spawnDelay=300
+Spawn=2002,100  ; Sek (6)
+
+[ENTRY]
+Name=58_earthrise_shieldarm_6
+spawnDelay=300
+Spawn=2016,100  ; Shieldarm (6)
+
+[ENTRY]
+Name=58_earthrise_simiangrunt_6
+spawnDelay=300
+Spawn=2003,50  ; Simian Grunt (6)
+Spawn=2004,50  ; Simian Grunt (6)
+
+[ENTRY]
+Name=58_earthrise_simianslave_6
+spawnDelay=300
+Spawn=2000,50  ; Simian Slave (6)
+Spawn=2001,50  ; Simian Slave (6)
+
+[ENTRY]
+Name=58_earthrise_smolderingwalker_6_7
+spawnDelay=300
+Spawn=2007,50  ; Smoldering Walker (6)
+Spawn=2008,50  ; Smoldering Walker (7)
+
+[ENTRY]
+Name=58_earthrise_sorceress_6
+spawnDelay=300
+Spawn=2019,100  ; Sorceress (6)
+
+[ENTRY]
+Name=58_earthrise_vespindrone_6
+spawnDelay=300
+Spawn=2010,100  ; Vespin Drone (6)
+
+[ENTRY]
+Name=58_earthrise_bladewind_7
+spawnDelay=300
+Spawn=2018,100  ; Bladewind (7)
+
+[ENTRY]
+Name=58_earthrise_bonepicker_7
+spawnDelay=300
+Spawn=2049,100  ; Bonepicker (7)
+
+[ENTRY]
+Name=58_earthrise_crusty_7
+spawnDelay=300
+Spawn=2055,100  ; Crusty (7)
+
+[ENTRY]
+Name=58_earthrise_earthelemental_7
+spawnDelay=300
+Spawn=2050,50  ; Earth Elemental (7)
+Spawn=2051,50  ; Earth Elemental (7)
+
+[ENTRY]
+Name=58_earthrise_flamesnout_7
+spawnDelay=300
+Spawn=2009,100  ; Flamesnout (14)
+
+[ENTRY]
+Name=58_earthrise_jabari_7
+spawnDelay=300
+Spawn=2006,100  ; Jabari (7)
+
+[ENTRY]
+Name=58_earthrise_kepi_7
+spawnDelay=300
+Spawn=2005,100  ; Kepi (8)
+
+[ENTRY]
+Name=58_earthrise_nehtu_7
+spawnDelay=300
+Spawn=2015,100  ; Nehtu (7)
+
+[ENTRY]
+Name=58_earthrise_preserver_7
+spawnDelay=300
+Spawn=2017,100  ; Preserver (7)
+
+; TODO: note that a level 8 variant exists
+[ENTRY]
+Name=58_earthrise_summoner_7
+spawnDelay=300
+Spawn=2023,100  ; Summoner (7)
+
+[ENTRY]
+Name=58_earthrise_vespinhiveward_7
+spawnDelay=300
+Spawn=2012,100  ; Vespin Hiveward (7)
+
+[ENTRY]
+Name=58_earthrise_vespinstinger_7
+spawnDelay=300
+Spawn=2011,100  ; Vespin Stinger (7)
+
+[ENTRY]
+Name=58_earthrise_vulture_7
+spawnDelay=300
+Spawn=2047,50  ; Vulture (7)
+Spawn=2048,50  ; Vulture (7)
+
+[ENTRY]
+Name=58_earthrise_captainmdjai_8
+spawnDelay=300
+Spawn=2021,100  ; Captain Mdjai (8)
+
+[ENTRY]
+Name=58_earthrise_captaintabia_8
+spawnDelay=300
+Spawn=2022,100  ; Captain Tabia (8)
+
+[ENTRY]
+Name=58_earthrise_hardbackgreyclaw_8
+spawnDelay=300
+Spawn=2059,50  ; Hardback Greyclaw (8)
+Spawn=2060,50  ; Hardback Greyclaw (8)
+
+[ENTRY]
+Name=58_earthrise_nubiti_8
+spawnDelay=300
+Spawn=2025,100  ; Nubiti (8)
+
+[ENTRY]
+Name=58_earthrise_redwingscavenger_8
+spawnDelay=300
+Spawn=2056,50  ; Redwing Scavenger (8)
+Spawn=2057,50  ; Redwing Scavenger (8)
+
+[ENTRY]
+Name=58_earthrise_shardbornsplinter_8
+spawnDelay=300
+Spawn=2027,50  ; Shardborn Splinter (8)
+Spawn=2028,50  ; Shardborn Splinter (8)
+
+[ENTRY]
+Name=58_earthrise_shardfly_8
+spawnDelay=300
+Spawn=2030,50  ; Shardfly (8)
+Spawn=2031,50  ; Shardfly (8)
+
+[ENTRY]
+Name=58_earthrise_stoneheart_8
+spawnDelay=300
+Spawn=2052,100  ; Stoneheart (8)
+
+[ENTRY]
+Name=58_earthrise_summoner_8
+spawnDelay=300
+Spawn=2024,100  ; Summoner (8)
+
+[ENTRY]
+Name=58_earthrise_amberwing_9
+spawnDelay=300
+Spawn=2032,100  ; Amberwing (9)
+
+[ENTRY]
+Name=58_earthrise_embalmer_9
+spawnDelay=300
+Spawn=2036,100  ; Embalmer (9)
+
+[ENTRY]
+Name=58_earthrise_enforcer_9
+spawnDelay=300
+Spawn=2033,100  ; Enforcer (9)
+
+[ENTRY]
+Name=58_earthrise_gromp_9
+spawnDelay=300
+Spawn=2061,100  ; Gromp (9)
+
+[ENTRY]
+Name=58_earthrise_kneph_9
+spawnDelay=300
+Spawn=2026,100  ; Kneph (9)
+
+[ENTRY]
+Name=58_earthrise_magician_9
+spawnDelay=300
+Spawn=2035,100  ; Magician (9)
+
+; TODO: Name changed in EER? (Scarr on EE.info)
+[ENTRY]
+Name=58_earthrise_scarr_9
+spawnDelay=300
+Spawn=2058,100  ; Vaykin (9)
+
+[ENTRY]
+Name=58_earthrise_shardbornarachnid_9
+spawnDelay=300
+Spawn=2038,50  ; Shardborn Arachnid (9)
+Spawn=2039,50  ; Shardborn Arachnid (9)
+
+[ENTRY]
+Name=58_earthrise_spike_9
+spawnDelay=300
+Spawn=2029,100  ; Spike (9)
+
+[ENTRY]
+Name=58_earthrise_taintedstomper_9
+spawnDelay=300
+Spawn=2062,50  ; Tainted Stomper (9)
+Spawn=2063,50  ; Tainted Stomper (9)
+
+[ENTRY]
+Name=58_earthrise_twistedthornbreaker_9
+spawnDelay=300
+Spawn=2040,50  ; Twisted Thornbreaker (9)
+Spawn=2041,50  ; Twisted Thornbreaker (9)
+
+[ENTRY]
+Name=58_earthrise_windstriker_9
+spawnDelay=300
+Spawn=2034,100  ; Windstriker (9)
+
+[ENTRY]
+Name=58_earthrise_commanderbakari_10
+spawnDelay=300
+Spawn=2037,100  ; Commander Bakari (10)
+
+[ENTRY]
+Name=58_earthrise_korunk_10
+spawnDelay=300
+Spawn=2064,100  ; Korunk (10)
+
+[ENTRY]
+Name=58_earthrise_seraceila_10
+spawnDelay=300
+Spawn=2042,100  ; Seraceila (10)
+
+[ENTRY]
+Name=58_earthrise_mix_vespin_6_7
+spawnDelay=300
+Spawn=2010,50  ; Vespin Drone (6)
+Spawn=2011,50  ; Vespin Stinger (7)
+
+[ENTRY]
+Flags=1
+Name=58_earthrise_npc_soldier
+spawnDelay=300
+Spawn=1980,50  ; Soldier (45)
+Spawn=1983,50  ; Soldier (45)
+
+[ENTRY]
+Flags=3
+Name=58_earthrise_quest_glintingstone
+spawnDelay=300
+Spawn=2111,100  ; Glinting Stone (1)
+
+[ENTRY]
+Flags=3
+Name=58_earthrise_quest_functionalcontroller
+Spawn=2112,100  ; Functional Controller (1)
+
+[ENTRY]
+Name=58_earthrise_mix_anubianbasecamp
+spawnDelay=300
+Spawn=2016,25  ; Shieldarm (6)
+Spawn=2017,25  ; Preserver (7)
+Spawn=2018,25  ; Bladewind (7)
+Spawn=2019,25  ; Sorceress (6)
+
+[ENTRY]
+Name=58_earthrise_mix_summonercamp
+spawnDelay=300
+Spawn=2016,25  ; Shieldarm (6)
+Spawn=2017,25  ; Preserver (7)
+Spawn=2018,25  ; Bladewind (7)
+Spawn=2019,25  ; Sorceress (6)
+
+[ENTRY]
+Name=58_earthrise_mix_southernsimiancamp
+spawnDelay=300
+Spawn=2016,25  ; Shieldarm (6)
+Spawn=2017,25  ; Preserver (7)
+Spawn=2018,25  ; Bladewind (7)
+Spawn=2019,25  ; Sorceress (6)
+
+[ENTRY]
+Name=58_earthrise_mix_anubianwarcamp
+spawnDelay=300
+Spawn=2033,25  ; Enforcer (9)
+Spawn=2034,25  ; Windstriker (9)
+Spawn=2035,25  ; Magician (9)
+Spawn=2036,25  ; Embalmer (9)
+
+[ENTRY]
+Flags=3
+Name=58_earthrise_quest_redwineflower
+Spawn=2114,100  ; Redwine Flower (1)
+
+[ENTRY]
+Flags=3
+Name=58_earthrise_quest_corpseofantonbrock
+Spawn=2113,100  ; Corpse of Anton Brock (1)

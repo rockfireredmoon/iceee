@@ -1,0 +1,17 @@
+[ENTRY]
+ID=151032567
+Asset=Par-Bees3-Emitter
+Name=9
+Pos=89320.3,163.913,134253
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
+ID=151054332
+Asset=Manipulator-SpawnPoint
+Name=9
+Pos=89353,160.658,134362
+Orient=0,0,0,1
+Scale=1,1,1
+Layer=151010287
+

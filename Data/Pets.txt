@@ -1,0 +1,113 @@
+5000,Flamemoth,1,1000,Flame Moth,2005000
+5001,Chicken,1,1000,Chicken,2005001
+5002,Brainfreeze Moth,1,1000,Flame Moth,2005002
+5003,Quackatrice,4,4000,Quackatrice,2005003
+5004,Common Planter,4,4000,Birdtrap,2005004
+5005,Iceberg Planter,4,4000,Birdtrap,2005005
+5006,Fleshy Planter,4,4000,Birdtrap,2005006
+5007,Aphid Crab,4,4000,Crabquatch,2005007
+5008,Royal Rosebiter,4,4000,Death Blossom,2005008
+5009,Tiny Guinea,4,4000,Guinea Fowl,2005009
+5010,Skybound Guinea,4,4000,Guinea Fowl,2005010
+5011,Bloodbound Guinea,4,4000,Guinea Fowl,2005011
+5012,Pasteycrown Guinea,4,4000,Guinea Fowl,2005012
+5013,Dreamfly,5,5000,Dreamfly,2005013
+5014,Flutterish,5,5000,Dreamfly,2005014
+5015,Lunamoth,5,5000,Dreamfly,2005015
+5016,Sekrit Sting,6,6000,Scorpion,2005016
+5017,Redcap Sporeling,6,6000,Shroomie,2005017
+5018,Bewlit Sporeling,6,6000,Shroomie,2005018
+5019,Windclaw Elemental,9,9000,Air Elemental,2005019
+5020,Garish Weaver (F),9,9000,Spider,2005020
+5021,Garish Weaver (M),9,9000,Spider,2005021
+5022,Coldstone Baiter,10,10000,Biter,2005022
+5023,Bloodhog,10,10000,Dire Hedgehog,2005023
+5024,Poise,10,10000,Sheaya,2005024
+5025,Disdain,10,10000,Sheaya,2005025
+5026,Flossie,10,10000,Rabbit,2005026
+5027,Maclaw,10,10000,Roc,2005027
+5028,Drudge Slug,11,11000,Giant Slug,2005028
+5029,Beedin,11,11000,Mosquito,2005029
+5030,Green Slimer,11,11000,Giant Slug,2005030
+5031,Battle Boar,12,12000,Warthog,2005031
+5032,Snow Wolf,12,12000,Wolf,2005032
+5033,Flame Wolf,12,12000,Wolf,2005033
+5034,Tide Wolf,12,12000,Wolf,2005034
+5035,Brimstone Stag,13,13000,Stag,2005035
+5036,Lemon-Lime Crystal Slug,13,13000,Crystal Slug,2005036
+5037,Diamond Mucker,13,13000,Crystal Slug,2005037
+5038,Pond Sprite,13,13000,Water Elemental,2005038
+5039,Lava Sprite,13,13000,Water Elemental,2005039
+5040,Pond-Pog,13,13000,Water Elemental,2005040
+5041,Betelghost,13,13000,Water Elemental,2005041
+5042,Bewk Werm,16,16000,Bookwyrm,2005042
+5043,Plagued Document,16,16000,Bookwyrm,2005043
+5044,Radioactive Document,16,16000,Bookwyrm,2005044
+5045,Patriotic Document,16,16000,Bookwyrm,2005045
+5046,Caylib,16,16000,Salamander,2005046
+5047,Bluebook Wyrm,16,16000,Bookwyrm,2005047
+5048,Fenleaper Salamander,16,16000,Salamander,2005048
+5049,Devil's Jack,19,19000,Jack-o-Lantern,2005049
+5050,Freshling Jack,19,19000,Jack-o-Lantern,2005050
+5051,Whatpumpkin,19,19000,Jack-o-Lantern,2005051
+5052,Spirit Bear's Cub (M),20,20000,Bear,2005052
+5053,Spirit Bear's Cub (F),20,20000,Bear,2005053
+5054,Mooncap Shroom,20,20000,Black Shroomie,2005054
+5055,Spinnach Shroom,20,20000,Black Shroomie,2005055
+5056,Festershroom,20,20000,Black Shroomie,2005056
+5057,Taiga Wolf,21,21000,Wolf,2005057
+5058,Thundercharged Pup,22,22000,Wolf Flame Goliath,2005058
+5059,Nawzelfraugh,22,22000,Firefrog,2005059
+5060,Pookie,22,22000,Spibear,2005060
+5061,Spykifraugh,22,22000,Spike Toad,2005061
+5062,Amythest Pup,23,23000,Wolf Hill Goliath,2005062
+5063,Blacksong,25,25000,Phoenix,2005063
+5064,Blustersong,25,25000,Phoenix,2005064
+5065,Blondesong,25,25000,Phoenix,2005065
+5066,Blightsong,25,25000,Phoenix,2005066
+5067,Terrabull,26,26000,Minotortoise,2005067
+5068,Grassflattener,28,28000,Thunder Walker,2005068
+5069,Icicleye,30,30000,Wandering Eye,2005069
+5070,Fireye,30,30000,Wandering Eye,2005070
+5071,Slimeye,30,30000,Wandering Eye,2005071
+5072,Eye Dunno,30,30000,Wandering Eye,2005072
+5073,Lingering Wolf Spirit,31,31000,Dire Wolf,2005073
+5074,Wandering Wolf Spirit,31,31000,Dire Wolf,2005074
+5075,Ravening Wolf Spirit,31,31000,Dire Wolf,2005075
+5076,Fresh Shellack,33,33000,Armored Lizard,2005076
+5077,Lush Shellack,33,33000,Armored Lizard,2005077
+5078,Muddy Shellack,33,33000,Armored Lizard,2005078
+5079,Gem Lurer,35,35000,Megachomper,2005079
+5080,Pet Rock,35,35000,Megachomper,2005080
+5081,Cactus Nocturne,37,37000,Walking Cactus,2005081
+5082,Cactus Frigido,37,37000,Walking Cactus,2005082
+5083,White Wolf,40,40000,Wolf,2005083
+5084,Amber Wolf,45,45000,Wolf Ice Goliath,2005084
+5085,Frigidog,45,45000,Wolf Ice Goliath,2005085
+5086,Craggy Crawler,46,46000,Glacial Walker,2005086
+5087,Earthen Ruby Dragon,50,50000,Black Dragon,2005087
+5088,Frozen Bone Dragon,50,50000,Bone Dragon,2005088
+5089,Obsidian Dragon,50,50000,Sand Dragon,2005089
+5090,Forestdrakeling,50,50000,Black Dragon,2005090
+5091,Draginon,50,50000,Bone Dragon,2005091
+5092,Indigold Sanddrake,50,50000,Sand Dragon,2005092
+5093,Mini Grim,50,50000,Ice Wyrm,2005093
+5094,Emerald Dreamfly,5,5000,Dreamfly,2005094
+5095,Sunburn Stinger,6,6000,Scorpion,2005095
+5096,Evergreen Stag,13,13000,Stag,2005096
+5097,Pray's Turkatrice,15,15000,Turkatrice,2005097
+5098,Nighter Lighter,16,16000,Salamander,2005098
+5099,Purple Nightmare,21,21000,Unikorn,2005099
+5100,Green Nightmare,21,21000,Unikorn,2005100
+5101,Ruby Oreo,22,22000,Fire Elemental,2005101
+5102,Emerald Oreo,22,22000,Fire Elemental,2005102
+5103,Amythest Oreo,22,22000,Fire Elemental,2005103
+5104,Opal Oreo,22,22000,Fire Elemental,2005104
+5105,Golden Rot-Weiler,25,25000,Undead Wolf,2005105
+5106,Spectral Rot-Weiler,25,25000,Undead Wolf,2005106
+5107,Hallowed Rot-Weiler,25,25000,Undead Wolf,2005107
+5108,Chillainous Stag,40,40000,Devil Stag,2005108
+5109,Charrming Stag,40,40000,Devil Stag,2005109
+5110,Chocolaterror Stag,40,40000,Devil Stag,2005110
+5111,Mushy the Snowshroom,44,44000,Lost One,2005111
+5112,Mini Fengarian,50,50000,Dragon,2005112

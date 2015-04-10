@@ -1,0 +1,8 @@
+[ENTRY]
+ID=151058184
+Asset=Prop-Nordic_Props#Prop-Fish_Rack
+Name=9
+Pos=64006.5,312.102,151591
+Orient=0,0,0,1
+Scale=1,1,1
+

@@ -1,0 +1,15 @@
+[ENTRY]
+ID=14224
+ACCOUNTID=1154
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=punnybunny
+GroveName=punnybunny
+WarpName=punnybunny1
+DropRateProfile=standard
+Grove=1
+EnvironmentCycle=0
+BuildPermission=account,1154,0,0,3,3
+DefLoc=2958,260,3821
+

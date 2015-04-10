@@ -1,0 +1,8 @@
+[ENTRY]
+ID=1358963248
+Asset=CL-Roadside5#CL-Roadside5
+Name=81
+Pos=52025.5,188.602,65011
+Orient=0,0.328769,0,0.94441
+Scale=1.5,1.5,1.5
+

@@ -1,0 +1,31 @@
+DefaultFlags=1
+
+[ENTRY]
+Name=z68_gchq_gen_Nefritari_s_Oak_Chest_2626
+Spawn=2626,100  ;Nefritari's Oak Chest (1) at 0
+
+[ENTRY]
+Name=z68_gchq_gen_Passage_to_New_Badari_2763
+Spawn=2763,100  ;Passage to New Badari (1) at 0
+
+[ENTRY]
+Name=z68_gchq_gen_Exit_to_Bremen_2767
+Spawn=2767,100  ;Exit to Bremen (1) at 0
+
+[ENTRY]
+Name=z68_gchq_gen_Lucius_Nightswift_478
+Spawn=478,100  ;Lucius Nightswift (45) at 0
+
+[ENTRY]
+Name=z68_gchq_gen_Nefritari_479
+Spawn=479,100  ;Nefritari (45) at 0
+
+[ENTRY]
+Name=z68_gchq_gen_Nefritari_s_Ash_Chest_2622
+Spawn=2622,100  ;Nefritari's Ash Chest (1) at 0
+
+
+; Custom quest NPC by Dekker.
+[ENTRY]
+Name=z68_gchq_custom_Sigil
+Spawn=3629,100  ; Sigil

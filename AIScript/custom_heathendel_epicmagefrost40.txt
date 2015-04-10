@@ -1,0 +1,273 @@
+#name custom_heathendel_epicmagefrost40
+#speed 6
+
+;  -----  NOTE  -----  
+;  This script is rigged to allow special boss mechanics for The Wailer (Wailing Crypt)
+;
+
+#queue_jumps call
+
+
+
+
+; 517 : Frostbolt 40  [Cooldown=BasicCharge2]
+; 523 : Cryo Blast 40
+; 149 : Frost Mire 50  [Cooldown=Daze]
+; 383 : Coldsnap 40  [Cooldown=ReduceMovementSpeed]
+; 259 : Forcebolt 40
+; 377 : Force Blast 40
+; 219 : Frost Storm 50  [Cooldown=DDAE1, Will=5, GTAE=150]
+; 399 : Theft of Will 50  [Cooldown=Theft, Will=2]
+; 356 : Frost Shield 40  [Cooldown=HealthShield, Will=5, Group=146]
+; 32760 : ranged autoattack
+
+; 5500 - Void Shield
+
+; Basic logic:
+; Use the timers to scan targets for AoEs on a less frequent basis so the server
+; is spending less time searching for targets.  If multiple targets are present,
+; reserve Will to let the mob charge up if they're under, since Frost Storm
+; has a higher cost than other skills.
+; If multi targets are not present, or waiting on cooldowns, use single target spells.
+; If Frost Shield is inactive, try to save up Will to cast at the earliest opportunity.
+
+set VAR 0
+set WILL 0
+set COOLDOWN 0
+set ELAPSEDTIME 0
+set TIMEOFFSET 0
+set MIRETARGETS 0
+set STORMTARGETS 0
+set RESERVEWILL 3
+set AOETRIGGERCOUNT 2
+set RESERVESHIELD 0
+
+
+:begin
+call waitfortarget
+
+exec_queue
+
+is_busy VAR
+if VAR = 1
+  goto begin
+endif
+
+call checkTimers
+
+call checkWillCharge
+call checkMightCharge
+call checkWill
+call checkMight
+goto begin
+
+
+
+
+:checkWillCharge
+getwillcharge VAR
+if VAR < 3
+  return
+endif
+
+use 523
+return
+
+
+
+:checkMightCharge
+getmightcharge VAR
+if VAR >= 3
+  use 377
+  reset_goto begin
+endif
+return
+
+
+
+:checkWill
+getwill WILL
+if WILL < RESERVEWILL
+  return
+endif
+if RESERVESHIELD = 1
+  call castBuffs
+  return
+endif
+
+call tryTheftOfWill
+call tryFrostMire
+call tryFrostStorm
+call tryFrostbolt
+call tryColdsnap
+
+return
+
+
+
+:tryFrostbolt
+getcooldown "BasicCharge2" COOLDOWN
+if COOLDOWN != 0
+  return
+endif
+
+use 517
+reset_goto begin
+
+
+
+
+:tryColdsnap
+getcooldown "ReduceMovementSpeed" COOLDOWN
+if COOLDOWN != 0
+  return
+endif
+
+use 383
+reset_goto begin
+
+
+
+:tryTheftOfWill
+getcooldown "Theft" COOLDOWN
+if COOLDOWN != 0
+  return
+endif
+get_target_property "will_charges" VAR
+if VAR < 2
+  return
+endif
+use 399
+reset_goto begin
+
+
+
+
+
+:tryFrostMire
+if MIRETARGETS < AOETRIGGERCOUNT
+  return
+endif
+if WILL < 3
+  return
+endif
+getcooldown "Daze" COOLDOWN
+if COOLDOWN != 0
+  return
+endif
+
+count_enemy_near 80 VAR
+if VAR < AOETRIGGERCOUNT
+  return
+endif
+
+use 149
+reset_goto begin
+
+
+
+:tryFrostStorm
+if STORMTARGETS < AOETRIGGERCOUNT
+  return
+endif
+if WILL < 5
+  return
+endif
+getcooldown "DDAE1" COOLDOWN
+if COOLDOWN != 0
+  set RESERVEWILL 3       ; Waiting on cooldown, go back to allowing cheaper skills.
+  return
+endif
+count_enemy_at 150 VAR
+if VAR < AOETRIGGERCOUNT
+  return
+endif
+set_gtae
+use 219
+reset_goto begin
+
+
+
+
+:checkMight
+getmight VAR
+if VAR >= 3
+  use 259
+  reset_goto begin
+endif
+return
+
+
+
+:castBuffs
+set RESERVESHIELD 0
+getcooldown "HealthShield" COOLDOWN
+if COOLDOWN != 0
+  set RESERVEWILL 3       ; Waiting on cooldown, go back to allowing cheaper skills.
+  return
+endif
+get_buff_tier 146 VAR
+if VAR != 0
+  return
+endif
+getwill WILL
+if WILL < 5
+  set RESERVEWILL 5
+  set RESERVESHIELD 1
+  return
+endif
+return
+
+
+
+
+
+:waitfortarget
+has_target VAR
+if VAR = 0
+  wait 1000
+  goto waitfortarget
+endif
+
+call castBuffs
+use 32760
+return
+
+
+
+:checkTimers
+time_offset ELAPSEDTIME TIMEOFFSET
+if TIMEOFFSET >= 2000
+  set_elapsed_time ELAPSEDTIME
+  call checkMultiTargets
+endif 
+
+:checkMultiTargets
+count_enemy_near 80 MIRETARGETS
+count_enemy_at 150 STORMTARGETS
+set RESERVEWILL 3
+if STORMTARGETS >= AOETRIGGERCOUNT
+  set RESERVEWILL 5
+endif
+  
+return
+
+
+
+; Called by the instance script to cast the invulnerability shield.
+
+:extTryCastShield
+
+getcooldown "HealthShield" COOLDOWN
+if COOLDOWN != 0
+  return
+endif
+
+get_property "bonus_health" VAR
+if VAR > 15000
+  return
+endif
+
+use 5500
+
+return

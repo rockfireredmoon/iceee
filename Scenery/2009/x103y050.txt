@@ -1,0 +1,17 @@
+[ENTRY]
+ID=151059547
+Asset=Prop-Autumn_Tree5
+Name=9
+Pos=77552.5,448.77,38040.1
+Orient=0,-0.836026,0,0.54869
+Scale=1.175,1.175,1.175
+Flags=1
+
+[ENTRY]
+ID=151059556
+Asset=CL-Plains_Bush2
+Name=9
+Pos=77892.3,405.253,37876.3
+Orient=0,0,0,1
+Scale=1,1,1
+

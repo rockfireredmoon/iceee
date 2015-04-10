@@ -1,0 +1,17 @@
+[ENTRY]
+ID=151046093
+Asset=CL-Fence-Stone_Blue5
+Pos=79413,450.683,42853
+Orient=0,0.930799,0,-0.365531
+Scale=1,1,1
+
+[ENTRY]
+ID=151056634
+Asset=Manipulator#Manipulator-PathNode
+Pos=79029,433.631,42785
+Orient=0,0,0,1
+Scale=1,1,1
+links_count=2
+link=151056635,1
+link=151056645,1
+

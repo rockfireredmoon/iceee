@@ -1,0 +1,10 @@
+[ENTRY]
+ID=1358959676
+Asset=Manipulator-SpawnPoint
+Pos=41100.3,3.20439,59569
+Orient=0,0.966185,0,0.25785
+Scale=2.3,2.3,2.3
+links_count=1
+link=1358959607,1
+spawnPackage=1a_crabCamp01_water
+

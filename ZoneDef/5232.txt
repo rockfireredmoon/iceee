@@ -1,0 +1,14 @@
+[ENTRY]
+ID=5232
+ACCOUNTID=30
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=trembol
+GroveName=trembol
+WarpName=trembol1
+Persist=1
+Grove=1
+EnvironmentCycle=1
+DefLoc=2958,260,3821
+

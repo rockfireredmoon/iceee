@@ -1,0 +1,13 @@
+[ENTRY]
+ID=11760
+ACCOUNTID=846
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=yumitag
+GroveName=yumitag
+WarpName=yumitag1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

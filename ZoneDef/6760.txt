@@ -1,0 +1,13 @@
+[ENTRY]
+ID=6760
+ACCOUNTID=221
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=BremenSunrise
+ShardName=lycaon
+GroveName=lycaon
+WarpName=lycaon1
+Grove=1
+EnvironmentCycle=1
+DefLoc=2987,261,3832
+

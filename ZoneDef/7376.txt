@@ -1,0 +1,13 @@
+[ENTRY]
+ID=7376
+ACCOUNTID=298
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CamelotDay
+ShardName=whitehand
+GroveName=whitehand
+WarpName=whitehand1
+Grove=1
+EnvironmentCycle=1
+DefLoc=2959,259,3947
+

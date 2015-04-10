@@ -1,0 +1,13 @@
+[ENTRY]
+ID=7560
+ACCOUNTID=321
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CoastSunset
+ShardName=ballantine
+GroveName=ballantine
+WarpName=ballantine1
+Grove=1
+EnvironmentCycle=1
+DefLoc=2955,258,4130
+

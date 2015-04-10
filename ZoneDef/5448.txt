@@ -1,0 +1,13 @@
+[ENTRY]
+ID=5448
+ACCOUNTID=57
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=shyra
+GroveName=shyra
+WarpName=shyra1
+Grove=1
+EnvironmentCycle=1
+DefLoc=2958,260,3821
+

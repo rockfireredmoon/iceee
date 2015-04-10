@@ -1,0 +1,13 @@
+[ENTRY]
+ID=11312
+ACCOUNTID=790
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=bnnest
+GroveName=bnnest
+WarpName=bnnest1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

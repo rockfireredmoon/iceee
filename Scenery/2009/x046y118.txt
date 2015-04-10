@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151004576
+Asset=Arid_Clutter?d=0.9&amp;s=87817&amp;sz=800
+Name=9
+Pos=34889.1,1331.19,89178
+Orient=0,0,0,1
+Scale=1,1,1
+Flags=1
+

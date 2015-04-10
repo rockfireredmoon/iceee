@@ -1,0 +1,13 @@
+[ENTRY]
+ID=8480
+ACCOUNTID=436
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=pachula
+GroveName=pachula
+WarpName=pachula1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

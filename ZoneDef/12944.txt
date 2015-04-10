@@ -1,0 +1,13 @@
+[ENTRY]
+ID=12944
+ACCOUNTID=994
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=yunor
+GroveName=yunor
+WarpName=yunor1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

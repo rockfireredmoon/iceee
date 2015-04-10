@@ -1,0 +1,17 @@
+[ENTRY]
+ID=151020890
+Asset=Manipulator-SpawnPoint
+Name=9
+Pos=33913.5,234.115,60348
+Orient=0,0,0,1
+Scale=1,1,1
+Layer=150999313
+
+[ENTRY]
+ID=151023101
+Asset=Sick-Rotted_Forest?d=0.9&amp;s=871336&amp;sz=800
+Name=9
+Pos=34486.4,236.722,60580
+Orient=0,-0.366273,0,0.930508
+Scale=0.725,0.725,0.725
+

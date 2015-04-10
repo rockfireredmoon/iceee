@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151054097
+Asset=Effects#Par-Waves-1-Emitter
+Name=9
+Pos=53871.1,60.2913,144890
+Orient=0,0,0,1
+Scale=3,3,3
+Flags=1
+

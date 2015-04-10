@@ -1,0 +1,75 @@
+[ENTRY]
+Name=z73_rn_gen_Exit_to_Deadwood_1522
+Spawn=1522,100  ;Exit to Deadwood (1) at 0
+
+[ENTRY]
+Name=z73_rn_gen_Dungeon_Loot_2717
+Spawn=2717,100  ;Dungeon Loot (1) at 0
+
+[ENTRY]
+Name=10_rn_Phlegmarg_m_h_39
+Spawn=1157,100  ;Phlegmarg (39) at 3
+
+[ENTRY]
+Flags=3
+Name=10_obji_glt_05_rottedCauldron
+Spawn=1180,100  ;Rotted Cauldron (1) at 0
+
+; NOTE: not sure about these, 2609 seems much less common.
+[ENTRY]
+Name=10_rn_generalShroomies
+Spawn=1151,30  ;Rotkeeper Shroomie (38) at 0
+Spawn=1152,30  ;Rotkeeper Shroomie (39) at 0
+Spawn=1156,30  ;Mucusmancer (39) at 0
+Spawn=2609,10  ;Moldmancer (38) at 0
+
+[ENTRY]
+Name=10_rn_generalTrees
+Spawn=1148,25  ;Rotted Timberlasher (38) at 0
+Spawn=1149,25  ;Rotted Timberlasher (39) at 0
+Spawn=2601,25  ;Rotted Timbernaut (38) at 0
+Spawn=2602,25  ;Rotted Timbernaut (39) at 0
+
+[ENTRY]
+Name=10_rn_sporebringers
+Spawn=1147,50  ;Sporebringer Sporeling (37) at 61
+Spawn=1150,50  ;Rotwood Sporebringer (38) at 5
+
+[ENTRY]
+Name=10_rn_sporelings
+Spawn=1147,100  ;Sporebringer Sporeling (37) at 0
+
+[ENTRY]
+Name=10_rn_generalDryads
+Spawn=1153,25  ;Malignant Midwife (37) at 0
+Spawn=1155,25  ;Malignant Midwife (38) at 0
+Spawn=2605,25  ;Pestilent Protector (38) at 0
+Spawn=2606,25  ;Pestilent Protector (39) at 0
+
+[ENTRY]
+Name=10_rn_Branchesca_d_h_39
+Spawn=1158,100  ;Branchesca (39) at 5
+
+[ENTRY]
+Name=10_rn_generalSnails
+Spawn=2603,50  ;Putrid Shellslider (38) at 0
+Spawn=2604,50  ;Fetid Shellslider (39) at 0
+
+[ENTRY]
+Name=10_rn_sparrenRotgut
+Spawn=2608,100  ;Sparren Rotgut (39) at 0
+
+[ENTRY]
+Name=10_rn_wither-rootSTEPUP
+ScriptCall=1
+Spawn=1148,20  ;Rotted Timberlasher (38) at 0
+Spawn=2599,20  ;Rotted Timbermage (38) at 0
+Spawn=2600,20  ;Rotted Timbermage (39) at 0
+Spawn=2601,20  ;Rotted Timbernaut (38) at 0
+Spawn=2602,20  ;Rotted Timbernaut (39) at 0
+
+; NOTE: from creature file
+[ENTRY]
+Flags=3
+Name=10_dng_rn_obji_Wither-rootLewt
+Spawn=2736,100  ;Wither-Root's Treasure (1)

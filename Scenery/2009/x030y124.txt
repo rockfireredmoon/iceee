@@ -1,0 +1,8 @@
+[ENTRY]
+ID=151050820
+Asset=Prop-Bird1
+Name=9
+Pos=22664.2,1068.67,93257.9
+Orient=0,0,0,1
+Scale=2,2,2
+

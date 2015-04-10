@@ -1,0 +1,13 @@
+[ENTRY]
+ID=7152
+ACCOUNTID=270
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=greenvale
+GroveName=greenvale
+WarpName=greenvale1
+Grove=1
+EnvironmentCycle=1
+DefLoc=2958,260,3821
+

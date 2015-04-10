@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151019347
+Asset=Prop-Snowy_Pine_Tree#Prop-Snowy_Pine_Tree9
+Name=9
+Pos=70397,967.432,64615
+Orient=0,0.0149994,0,0.999888
+Scale=7.25,7.25,7.25
+Flags=1
+

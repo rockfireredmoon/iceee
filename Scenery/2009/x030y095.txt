@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151008139
+Asset=Bldg-Ruins-Chapel1#Bldg-Ruins-Chapel1?ATS=ATS-Roman
+Name=9
+Pos=22861.1,106.467,71674
+Orient=0,0.309816,0,0.950797
+Scale=1.675,1.675,1.675
+Flags=1
+

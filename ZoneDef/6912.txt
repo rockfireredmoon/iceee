@@ -1,0 +1,13 @@
+[ENTRY]
+ID=6912
+ACCOUNTID=240
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=ltf
+GroveName=ltf
+WarpName=ltf1
+Grove=1
+EnvironmentCycle=1
+DefLoc=2958,260,3821
+

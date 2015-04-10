@@ -1,0 +1,16 @@
+[ENTRY]
+ID=1091923
+Asset=Cav-Room_Center?ATS=ATS-Cave_Dvergar
+Name=
+Pos=0,0,0
+Orient=0,0,0,1
+Scale=7,7,7
+
+[ENTRY]
+ID=1091924
+Asset=Cav-Room_Center?ATS=ATS-Cave_Dvergar
+Name=
+Pos=0,0,0
+Orient=0,0,0,1
+Scale=7,7,7
+

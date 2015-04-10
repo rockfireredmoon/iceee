@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151012685
+Asset=CL-Mushroom_Rotted3#CL-Mushroom_Rotted3
+Name=9
+Pos=80730.6,439.136,170527
+Orient=0,0,0,1
+Scale=1.65,1.65,1.65
+Flags=1
+

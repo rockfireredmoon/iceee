@@ -1,0 +1,13 @@
+[ENTRY]
+ID=13920
+ACCOUNTID=1116
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=silenthill
+GroveName=silenthill
+WarpName=silenthill1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

@@ -1,0 +1,8 @@
+[ENTRY]
+ID=151059514
+Asset=Light-Medium?COLOR=33FFFF
+Name=9
+Pos=63771.9,823.693,56567.2
+Orient=0,-0.859862,0,0.510526
+Scale=1,1,1
+

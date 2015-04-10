@@ -1,0 +1,15 @@
+:init
+set gakkstepup 0
+end
+
+; Scripted call from the spawn package
+:10_fc_gakkSTEPUP
+inc gakkstepup 
+if gakkstepup = 21
+  spawn_at 1174406607 2664
+end
+
+; Swirling Madness's Treasure
+:onKill_940
+spawn 1174406538
+end

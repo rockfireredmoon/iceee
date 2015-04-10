@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151020852
+Asset=Prop-Warpig_Wall1
+Name=9
+Pos=101351,1141.05,149227
+Orient=0,0.811428,0,-0.584452
+Scale=1.075,1.075,1.075
+Flags=1
+

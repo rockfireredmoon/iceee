@@ -1,0 +1,15 @@
+[ENTRY]
+ID=12816
+ACCOUNTID=978
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=SwinelandNight
+ShardName=dacza
+GroveName=dacza
+WarpName=dacza1
+DropRateProfile=standard
+Grove=1
+EnvironmentCycle=0
+BuildPermission=account,978,0,0,13,23
+DefLoc=2958,260,3821
+

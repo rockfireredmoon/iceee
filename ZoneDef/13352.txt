@@ -1,0 +1,13 @@
+[ENTRY]
+ID=13352
+ACCOUNTID=1045
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=xruzti
+GroveName=xruzti
+WarpName=xruzti1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

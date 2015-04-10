@@ -1,0 +1,33 @@
+#name flytrap_brave
+
+; 5157 - Assault, 3 might, add 1 mcharge
+; 5347 - Flytrap Spray, 3 might, need 1-5 mcharge
+; 32766 - melee
+
+set var 0
+
+:begin
+call waitfortarget
+use 32766
+
+getmightcharge var
+if var >= 2
+  use 5347
+  wait 1000
+endif
+
+getmight var
+if var >= 3
+  use 5157
+  wait 2000
+endif
+
+goto begin
+
+:waitfortarget
+has_target var
+if var = 0
+  wait 2000
+  goto waitfortarget
+endif
+return

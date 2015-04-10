@@ -1,0 +1,13 @@
+[ENTRY]
+ID=9192
+ACCOUNTID=525
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=pitbull
+GroveName=pitbull
+WarpName=pitbull1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

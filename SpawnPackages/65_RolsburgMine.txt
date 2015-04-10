@@ -1,0 +1,66 @@
+[ENTRY]
+Name=z65_rm_gen_Dungeon_Loot_2710
+Spawn=2710,100  ;Dungeon Loot (1) at 0
+
+[ENTRY]
+Name=z65_rm_gen_Exit_to_New_Badari_2360
+Spawn=2360,100  ;Exit to New Badari (1) at 0
+
+[ENTRY]
+Name=2_VangarOneEye_k_50
+Spawn=2378,100  ;Vangar One-Eye (50) at 0
+
+; NOTE: only 2 spawn points, everything level 49
+; 2537 may not belong, seems rarer
+[ENTRY]
+Name=2_rm_DominionOutriders_47
+Spawn=568,40  ;Dominion Outrider (49) at 0
+Spawn=569,40  ;Dominion Outrider (49) at 0
+Spawn=2537,20  ;Dominion Outrider (49) at 49
+
+[ENTRY]
+Name=2_rm_DominionOutridersHallway_47
+Shares=30
+Spawn=568,10  ;Dominion Outrider (49) at 0
+Spawn=569,10  ;Dominion Outrider (49) at 0
+Spawn=2537,10  ;Dominion Outrider (49) at 0
+
+[ENTRY]
+Name=2_rm_DominionMinemaster_k_47
+Spawn=2682,100  ;Dominion Minemaster (49) at 0
+
+[ENTRY]
+Name=2_rm_battleBoars
+Spawn=2538,100  ;Battle Boar (49) at 0
+
+[ENTRY]
+Name=2_rm_DominionOutridersRoom_47
+Spawn=568,25  ;Dominion Outrider (49) at 0
+Spawn=569,25  ;Dominion Outrider (49) at 0
+Spawn=2536,25  ;Dominion Outrider (49) at 0
+Spawn=2537,25  ;Dominion Outrider (49) at 0
+
+; NOTE: 2 spawn points
+[ENTRY]
+Name=2_rm_TammSwiftClaw_r_47
+UniquePoints=2
+Spawn=2540,100  ;Tamm Swiftclaw (49) at 25
+
+[ENTRY]
+Name=2_rm_Bora_k_47
+Spawn=2539,100  ;Bora (49) at 47
+
+[ENTRY]
+Name=2_rm_NerinRuneTail_d_48
+Spawn=2541,100  ;Nerin Runetail (49) at 65
+
+[ENTRY]
+Name=2_rm_ArkadosSTEPUP
+ScriptCall=1
+Spawn=2683,50  ;Rolsburg Rock Bear (49) at 0
+Spawn=2684,50  ;Rolsburg Rock Bear (49) at 0
+
+[ENTRY]
+Flags=1
+Name=2_dng_rm_obji_VangarOneEyeLewt
+Spawn=2742,100  ;Vangar One-Eye (50) at 15

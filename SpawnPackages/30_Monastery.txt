@@ -1,0 +1,107 @@
+[ENTRY]
+Name=1_dng_am_full_mix_16_17
+Spawn=317,20  ;Hardcover Wyrm (16) at 0
+Spawn=2442,20  ;Possessed Monk (16) at 0
+Spawn=2443,20  ;Hardcover Wyrm (17) at 0
+Spawn=319,20  ;Possessed Monk (17) at 2
+Spawn=320,20  ;Diabolical Abbot (17) at 0
+
+[ENTRY]
+Name=1_dng_am_RavingCenobiteRND_h17
+Spawn=323,100  ;Raving Cenobite (17) at 0
+
+[ENTRY]
+Name=1_dng_am_monks_k_17
+Spawn=319,50  ;Possessed Monk (17) at 0
+Spawn=320,50  ;Diabolical Abbot (17)
+
+[ENTRY]
+Name=1_dng_am_wyrms_16
+Spawn=317,50  ;Hardcover Wyrm (16) at 0
+Spawn=318,50  ;Tome Wyrm (16) at 0
+
+; 2 SpawnPoints
+[ENTRY]
+Name=1_dng_am_FolioRND_h17
+UniquePoints=2
+Spawn=322,100  ;Folio (17) at 0
+
+; 2 SpawnPoints
+[ENTRY]
+Name=1_dng_am_CodexRND_h17
+UniquePoints=2
+Spawn=321,100  ;Codex (17) at 0
+
+[ENTRY]
+Name=1_obji_bth_05_rareBook
+Spawn=278,100  ;Rare Book (1) at 0
+
+[ENTRY]
+Name=1a_dng_am_AbbessMeandra_k_17
+Spawn=1835,100  ;Abbess Meandra (17)
+
+[ENTRY]
+Name=1a_dng_am_obji_MeandraLewt
+Spawn=1839,100  ;Abbess Meandra (17)
+
+[ENTRY]
+Name=1a_dng_am_RavingCenobiteRND_h17
+Spawn=323,100  ;Raving Cenobite (17) at 0
+
+[ENTRY]
+Name=1a_dng_am_undead_corpseWidow
+Spawn=2449,100  ;Corpse Widow (19) at 11
+
+[ENTRY]
+Name=1a_dng_am_monks_k_17
+Spawn=319,50  ;Possessed Monk (17) at 0
+Spawn=2446,50  ;Zombie Monk (16) at 0
+
+[ENTRY]
+Name=1a_dng_am_undead_general
+Spawn=2445,34  ;Ancient Abbot (17) at 0
+Spawn=2444,33  ;Ancient Abbot (16) at 0
+Spawn=2446,33  ;Zombie Monk (16) at 0
+
+[ENTRY]
+Name=1a_dng_am_ovenSpawnPedestalLarge
+Spawn=2457,100  ;Ancient Pedestal (1) at 0
+
+; TODO: From creature list (size = 2)
+[ENTRY]
+Name=1a_dng_am_ovenSpawnOrbLarge
+Spawn=2459,100  ;Life Orb (1)
+
+; TODO: From creature list (size = 1.2)
+[ENTRY]
+Name=1a_dng_am_ovenSpawnOrbSmall
+Spawn=2460,100  ;Life Orb (1)
+
+; TODO: From creature list
+[ENTRY]
+Name=1a_dng_am_ovenSpawnSmoke
+Spawn=2456,100  ;Smoke (1)
+
+; TODO: From creature list
+[ENTRY]
+Name=1a_dng_am_charredSkeleton_k_17
+Spawn=2450,100  ;Charred Skeleton (17)
+
+; TODO: From creature list
+[ENTRY]
+Name=1a_dng_am_roastedCorpse_m_17
+Spawn=2451,100  ;Roasted Corpse (17)
+
+; TODO: From creature list
+[ENTRY]
+Name=1a_dng_am_KizzitTheLoathed_r_18
+Spawn=2453,100  ;Kizzit the Loathed (18)
+
+; TODO: From creature list
+[ENTRY]
+Name=1a_dng_am_BarenthalTheFeared_d_18
+Spawn=2452,100  ;Barenthal the Feared (18)
+
+[ENTRY]
+Name=1a_dng_am_KarethTheCreator_k_17
+Spawn=2461,100  ;Kareth the Creator (17) at 0

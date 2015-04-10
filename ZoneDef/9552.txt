@@ -1,0 +1,13 @@
+[ENTRY]
+ID=9552
+ACCOUNTID=570
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=Bastion
+ShardName=ferae
+GroveName=ferae
+WarpName=ferae1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

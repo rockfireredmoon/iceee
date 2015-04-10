@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151009948
+Asset=CL-Market_Stall-Wares1#CL-Market_Stall-Wares1
+Name=9
+Pos=10115,255.169,62980
+Orient=0,-0.983986,0,-0.178246
+Scale=1,1,1
+Flags=1
+

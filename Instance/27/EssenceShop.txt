@@ -1,0 +1,27 @@
+; Dungeon Loot
+[ENTRY]
+CreatureDefID=2697
+EssenceID=21251
+Item=5483,10
+Item=5417,10
+Item=5393,10
+Item=143436,10
+Item=5528,10
+Item=5440,10
+Item=143444,10
+Item=5505,10
+
+; Cyclona's Treasure (from screenshot reference)
+[ENTRY]
+CreatureDefID=1853
+EssenceID=20875
+Item=5460,1
+Item=5439,1
+Item=143501,1
+Item=5419,1
+Item=5418,1
+Item=5392,1
+Item=5506,1
+Item=143486,1
+
+

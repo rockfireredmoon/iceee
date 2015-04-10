@@ -1,0 +1,127 @@
+[ENTRY]
+Name=z72_rm_gen_Dungeon_Loot_2720
+Spawn=2720,100  ;Dungeon Loot (1) at 0
+
+[ENTRY]
+Name=z72_rm_gen_Exit_to_Deadwood_1521
+Spawn=1521,100  ;Exit to Deadwood (1) at 0
+
+; NOTE: no level 42 or 43 mobs in the scan.
+[ENTRY]
+Name=10_rk_Rotteds_42_44
+Spawn=1171,25  ;Rotted Ignoble (44) at 4
+Spawn=1172,25  ;Rotpine Rootlord (44) at 1
+Spawn=1176,25  ;Stump Slaughter (45) at 1
+Spawn=1177,25  ;Stump Splinter (44) at 1
+
+[ENTRY]
+Name=10_rk_BackMaze_43_45
+Spawn=1172,20  ;Rotpine Rootlord (44) at 10
+Spawn=1173,20  ;Ichorlord Shroomie (44) at 4
+Spawn=1175,20  ;Rotborne Dryad (45) at 1
+Spawn=1176,20  ;Stump Slaughter (45) at 4
+Spawn=1177,20  ;Stump Splinter (44) at 3
+
+[ENTRY]
+Name=10_rk_rottedKing_k_45
+Spawn=946,100  ;Rotted King (45) at 136
+
+[ENTRY]
+Name=10_rk_lostOne_d_44
+Spawn=949,100  ;The Lost One (44) at 0
+
+[ENTRY]
+Name=10_rk_Witherbreath_m_h_45
+Spawn=1179,100  ;Witherbreath (45)
+
+; NOTE: from creature file.  Doesn't seem to be in the mob scan.
+[ENTRY]
+Name=10_rk_Khazeekela_m_h_45
+Spawn=1494,100  ;Khazeekela The Reincarnated (43)
+
+[ENTRY]
+Flags=1
+Name=10_rk_obji_RottedKingLewt
+Spawn=1537,100  ;Rotted King's Treasure (1) at 0
+
+[ENTRY]
+Name=10_rk_dryads
+Shares=60
+Spawn=1175,10  ;Rotborne Dryad (45) at 0
+Spawn=2666,10  ;Rotborne Dryad (44) at 0
+Spawn=2670,10  ;Blackbark Dryad (44) at 0
+Spawn=2671,10  ;Blackbark Dryad (45) at 0
+Spawn=2676,10  ;Briskbranch Dryad (44) at 0
+Spawn=2677,10  ;Briskbranch Dryad (45) at 0
+
+[ENTRY]
+Name=10_rk_rottedTrees_front
+Spawn=1171,25  ;Rotted Ignoble (44) at 0
+Spawn=2674,25  ;Rotted Wrecker (44) at 0
+Spawn=2675,25  ;Rotted Wrecker (45) at 0
+Spawn=2678,25  ;Rotted Ignoble (45) at 0
+
+[ENTRY]
+Name=10_rk_MossmaSTEPUP
+ScriptCall=1
+Spawn=1175,20  ;Rotborne Dryad (45) at 0
+Spawn=2666,20  ;Rotborne Dryad (44) at 0
+Spawn=2671,20  ;Blackbark Dryad (45) at 0
+Spawn=2676,20  ;Briskbranch Dryad (44) at 0
+Spawn=2677,20  ;Briskbranch Dryad (45) at 0
+
+[ENTRY]
+Name=10_rk_front_v1
+Shares=80
+Spawn=1175,10  ;Rotborne Dryad (45) at 0
+Spawn=2666,10  ;Rotborne Dryad (44) at 0
+Spawn=2668,10  ;Blightlord Shroomie (44) at 0
+Spawn=2669,10  ;Blightlord Shroomie (45) at 0
+Spawn=2670,10  ;Blackbark Dryad (44) at 0
+Spawn=2671,10  ;Blackbark Dryad (45) at 0
+Spawn=2672,10  ;Hastelord Shroomie (44) at 0
+Spawn=2673,10  ;Hastelord Shroomie (45) at 0
+
+[ENTRY]
+Name=10_rk_stalagmites
+Spawn=1176,50  ;Stump Slaughter (45) at 0
+Spawn=1177,50  ;Stump Splinter (44) at 0
+
+[ENTRY]
+Name=10_rk_Cerrak
+Spawn=2679,100  ;Cerrak (45) at 0
+
+[ENTRY]
+Name=10_rk_front_v2
+Shares=70
+Spawn=1173,10  ;Ichorlord Shroomie (44) at 0
+Spawn=2665,10  ;Ichorlord Shroomie (45) at 0
+Spawn=2668,10  ;Blightlord Shroomie (44) at 0
+Spawn=2669,10  ;Blightlord Shroomie (45) at 0
+Spawn=2670,10  ;Blackbark Dryad (44) at 0
+Spawn=2676,10  ;Briskbranch Dryad (44) at 0
+Spawn=2677,10  ;Briskbranch Dryad (45) at 0
+
+[ENTRY]
+Name=10_rk_back_v1
+Shares=80
+Spawn=1175,10  ;Rotborne Dryad (45) at 0
+Spawn=2666,10  ;Rotborne Dryad (44) at 0
+Spawn=2668,10  ;Blightlord Shroomie (44) at 0
+Spawn=2669,10  ;Blightlord Shroomie (45) at 0
+Spawn=2670,10  ;Blackbark Dryad (44) at 0
+Spawn=2671,10  ;Blackbark Dryad (45) at 0
+Spawn=2672,10  ;Hastelord Shroomie (44) at 0
+Spawn=2673,10  ;Hastelord Shroomie (45) at 0
+
+[ENTRY]
+Name=10_rk_rottedTrees_back
+Spawn=1172,25  ;Rotpine Rootlord (44) at 0
+Spawn=2667,25  ;Rotpine Rootlord (45) at 0
+Spawn=2674,25  ;Rotted Wrecker (44) at 0
+Spawn=2675,25  ;Rotted Wrecker (45) at 0
+
+[ENTRY]
+Flags=1
+Name=1a_rm_obji_LostOneLewt
+Spawn=2737,100  ;Lost One's Treasure (1) at 0

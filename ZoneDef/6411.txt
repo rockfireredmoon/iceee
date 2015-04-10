@@ -1,0 +1,16 @@
+[ENTRY]
+ID=6411
+ACCOUNTID=177
+NAME=Grove
+TERRAINCONFIG=Terrain-Burning_Chasm#Terrain-Burning_Chasm.cfg
+ENVIRONMENTTYPE=WarmCave
+ShardName=handofkronos
+GroveName=handofkronos
+WarpName=handofkronos4
+DropRateProfile=standard
+Grove=1
+EnvironmentCycle=0
+PageSize=1000
+BuildPermission=account,177,5,5,6,8
+DefLoc=11266,1255,9899
+

@@ -1,0 +1,13 @@
+[ENTRY]
+ID=7392
+ACCOUNTID=300
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=zackslayer
+GroveName=zackslayer
+WarpName=zackslayer1
+Grove=1
+EnvironmentCycle=1
+DefLoc=2958,260,3821
+

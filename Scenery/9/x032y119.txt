@@ -1,0 +1,25 @@
+[ENTRY]
+ID=151003306
+Asset=Basic Desert?d=0.2&s=348349&sz=800
+Pos=24456.2,174.292,89459
+Orient=0,-0.29074,0,0.956802
+Scale=1,1,1
+Flags=1
+
+[ENTRY]
+ID=151034921
+Asset=Manipulator-SpawnPoint
+Pos=24672,226.125,89355
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=5_stonelionCamps_35_36
+outerRadius=10
+
+[ENTRY]
+ID=151053672
+Asset=Bldg-Ruins-Druid3#Bldg-Ruins-Druid3?ATS=ATS-Roman
+Pos=24134.3,168.05,89925
+Orient=0,-0.324043,0,0.946042
+Scale=1.875,1.875,1.875
+Flags=1
+

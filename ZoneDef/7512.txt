@@ -1,0 +1,13 @@
+[ENTRY]
+ID=7512
+ACCOUNTID=315
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=sealion
+GroveName=sealion
+WarpName=sealion1
+Grove=1
+EnvironmentCycle=1
+DefLoc=2958,260,3821
+

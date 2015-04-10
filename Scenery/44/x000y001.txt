@@ -1,0 +1,7 @@
+[ENTRY]
+ID=738197664
+Asset=Prop-Water_Planes#Prop-Water_Plane3
+Pos=944.85,0,1954.83
+Orient=0,0,0,1
+Scale=0.25,0.25,0.25
+

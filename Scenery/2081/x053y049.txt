@@ -1,0 +1,9 @@
+[ENTRY]
+ID=1358964854
+Asset=Bldg-Urban-Medium_Facade2?ATS=ATS-CAmelot
+Name=81
+Pos=53697.5,149.107,49355
+Orient=0,-0.99871,0,0.0507741
+Scale=1,1,1
+Flags=1
+

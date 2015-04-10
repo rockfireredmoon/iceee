@@ -1,0 +1,13 @@
+[ENTRY]
+ID=5041
+ACCOUNTID=0
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=Oinari
+WarpName=oinari1
+Persist=1
+Grove=1
+EnvironmentCycle=1
+DefLoc=2958,260,3821
+

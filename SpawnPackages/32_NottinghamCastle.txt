@@ -1,0 +1,58 @@
+[ENTRY]
+Name=1a_dng_nc_obji_SheriffLewt
+Spawn=1855,100  ;Sheriff's Treasure (from cdef file)
+
+[ENTRY]
+Name=1a_dng_nc_secondFloor
+Shares=40
+Spawn=71,10  ;Nottingham Guardsman (19) at 0
+Spawn=72,10  ;Nottingham Guardsman (20) at 0
+Spawn=77,10  ;Nottingham Marshal (20) at 0
+Spawn=78,10  ;Nottingham Marshal (20) at 0
+
+[ENTRY]
+Name=1a_dng_nc_KeanuLocksmithee_STEPUP
+Spawn=71,50  ;Nottingham Guardsman (19) at 20
+Spawn=72,50  ;Nottingham Guardsman (20) at 19
+
+; NOTE: this is a custom entry, not found in the official prop list.
+[ENTRY]
+Name=1a_dng_nc_KeanuLocksmithee
+Spawn=2118,100  ;Keanu Locksmithee (20)  (from cdef file)
+
+[ENTRY]
+Name=1a_dng_nc_keepHound
+Spawn=2464,100  ;Keep Hound (20) at 0
+
+[ENTRY]
+Name=1a_dng_nc_SheriffWilemGrays
+Spawn=82,100  ;Wilem Grays (20) at 0
+
+[ENTRY]
+Name=1a_dng_nc_firstFloorHeroic
+Shares=60
+Spawn=154,10  ;Nottingham Bowman (19) at 0
+Spawn=155,10  ;Nottingham Bowman (20) at 0
+Spawn=73,10  ;Nottingham Friar (19) at 0
+Spawn=74,10  ;Nottingham Friar (20) at 0
+Spawn=75,10  ;Nottingham Bailiff (19) at 0
+Spawn=76,10  ;Nottingham Bailiff (20) at 0
+
+[ENTRY]
+Name=1a_dng_nc_LoxleyKeymarshal
+Spawn=2117,100  ;Loxley Keymarshal (20) (from cdef file)
+
+[ENTRY]
+Name=1a_dng_nc_MaudlinTheWitch
+Spawn=80,100  ;Maudlin the Witch (20) at 0
+
+[ENTRY]
+Name=1a_dng_nc_firstFloorDefault
+Spawn=66,25  ;Nottingham Deputy (18) at 0
+Spawn=67,25  ;Nottingham Deputy (19) at 0
+Spawn=68,25  ;Nottingham Thief Catcher (18) at 0
+Spawn=69,25  ;Nottingham Thief Catcher (19) at 0
+
+[ENTRY]
+Name=1a_dng_nc_NottinghamTaxCollector
+Spawn=70,100  ;Nottingham Tax Collector (19) at 48

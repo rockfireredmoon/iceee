@@ -1,0 +1,17 @@
+[ENTRY]
+ID=151052039
+Asset=Manipulator-SpawnPoint
+Name=9
+Pos=68900.4,65.5984,124176
+Orient=0,0,0,1
+Scale=1,1,1
+Layer=151009326
+
+[ENTRY]
+ID=151054432
+Asset=Par-Waves-1-Emitter
+Name=9
+Pos=68748.2,75.834,123988
+Orient=0,0.998888,0,0.047151
+Scale=3,3,3
+

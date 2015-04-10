@@ -1,0 +1,13 @@
+[ENTRY]
+ID=14016
+ACCOUNTID=1128
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=foxyard
+GroveName=foxyard
+WarpName=foxyard1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

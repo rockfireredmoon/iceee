@@ -1,0 +1,13 @@
+[ENTRY]
+ID=12856
+ACCOUNTID=983
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=dormouse
+GroveName=dormouse
+WarpName=dormouse1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

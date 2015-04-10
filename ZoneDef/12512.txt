@@ -1,0 +1,15 @@
+[ENTRY]
+ID=12512
+ACCOUNTID=940
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=lunaraleaf
+GroveName=lunaraleaf
+WarpName=lunaraleaf1
+DropRateProfile=standard
+Grove=1
+EnvironmentCycle=0
+BuildPermission=account,940,0,0,3,3
+DefLoc=2958,260,3821
+

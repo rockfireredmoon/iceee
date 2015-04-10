@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151007785
+Asset=Prop-Tent3
+Name=9
+Pos=21253.5,148.729,80012.8
+Orient=0,-0.888928,0,0.458047
+Scale=1,1,1
+Flags=1
+

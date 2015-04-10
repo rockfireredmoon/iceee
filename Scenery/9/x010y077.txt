@@ -1,0 +1,15 @@
+[ENTRY]
+ID=151000933
+Asset=CL-Hills_Tree1#CL-Hills_Tree1
+Pos=7845.9,220.581,58239
+Orient=0,0,0,1
+Scale=1,1,1
+Flags=1
+
+[ENTRY]
+ID=151054717
+Asset=Par-Waves-1-Emitter
+Pos=7760.3,60.6525,57833
+Orient=0,-0.952644,0,0.304089
+Scale=3,3,3
+

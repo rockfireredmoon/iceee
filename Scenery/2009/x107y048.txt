@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151040073
+Asset=CL-Pine_Forest1
+Name=9
+Pos=80643,628.888,36104
+Orient=0,0,0,1
+Scale=2.625,2.625,2.625
+Flags=1
+

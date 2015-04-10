@@ -1,0 +1,8 @@
+[ENTRY]
+ID=151019322
+Asset=CL-SnowyPine3#CL-SnowyPine3
+Pos=78805,930.593,63146
+Orient=0,0.285952,0,0.958244
+Scale=1.775,1.775,1.775
+Flags=1
+

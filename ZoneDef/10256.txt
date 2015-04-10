@@ -1,0 +1,13 @@
+[ENTRY]
+ID=10256
+ACCOUNTID=658
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=sarucharmed
+GroveName=sarucharmed
+WarpName=sarucharmed1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

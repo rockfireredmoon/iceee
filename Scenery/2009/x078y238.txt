@@ -1,0 +1,17 @@
+[ENTRY]
+ID=151032118
+Asset=Manipulator#Manipulator-PathNode
+Name=9
+Pos=59118.1,175.475,178596
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
+ID=151032120
+Asset=Manipulator-SpawnPoint
+Name=9
+Pos=58974.3,201.225,178652
+Orient=0,0,0,1
+Scale=1,1,1
+Layer=151002634
+

@@ -1,0 +1,19 @@
+#name Newb_Knight
+
+; 32766 - melee
+
+set var 0
+
+:begin
+call waitfortarget
+use 32766
+wait 2000
+goto begin
+
+:waitfortarget
+has_target var
+if var = 0
+  wait 2000
+  goto waitfortarget
+endif
+return

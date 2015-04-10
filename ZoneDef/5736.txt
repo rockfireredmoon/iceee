@@ -1,0 +1,13 @@
+[ENTRY]
+ID=5736
+ACCOUNTID=93
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=xtb
+GroveName=xtb
+WarpName=xtb1
+Grove=1
+EnvironmentCycle=1
+DefLoc=2958,260,3821
+

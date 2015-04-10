@@ -1,0 +1,8 @@
+[ENTRY]
+ID=151040493
+Asset=CL-GrunsBush_5#CL-GrunsBush_5
+Pos=63955.8,761.502,65325
+Orient=0,0,0,1
+Scale=2.375,2.375,2.375
+Flags=1
+

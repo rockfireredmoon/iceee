@@ -1,0 +1,28 @@
+:init
+set taintmawstepup 0
+set marblightclawstepup 0
+end
+
+:onKill_966
+:onKill_967
+inc taintmawstepup 
+if taintmawstepup >= 9
+  spawn_at 805308154 970
+end
+
+:onKill_960
+:onKill_964
+:onKill_965
+:onKill_968
+:onKill_2640
+inc marblightclawstepup
+if marblightclawstepup >= 7
+  spawn 805308827
+end
+
+; Vitiator's Treasure (from Aram Norr)
+:onKill_975
+spawn 805308084
+end
+
+

@@ -1,0 +1,15 @@
+[ENTRY]
+ID=5010
+ACCOUNTID=2
+NAME=Testing_Gauntlet
+TERRAINCONFIG=Terrain-Testing_Gauntlet#Terrain-Testing_Gauntlet.cfg
+ENVIRONMENTTYPE=CamelotNight
+ShardName=firerock
+GroveName=firerock
+WarpName=firerock3
+DropRateProfile=standard
+Grove=1
+EnvironmentCycle=0
+BuildPermission=account,2,5,5,9,9
+DefLoc=11688,490,17628
+

@@ -1,0 +1,15 @@
+[ENTRY]
+ID=8224
+ACCOUNTID=404
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=Camelot
+ShardName=derpafoxgrove
+GroveName=derpafoxgrove
+WarpName=derpafoxgrove1
+DropRateProfile=standard
+Grove=1
+EnvironmentCycle=0
+BuildPermission=account,404,0,0,3,3
+DefLoc=2811,496,4685
+

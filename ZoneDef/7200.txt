@@ -1,0 +1,13 @@
+[ENTRY]
+ID=7200
+ACCOUNTID=276
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=AutumnNightSky
+ShardName=havenloft
+GroveName=havenloft
+WarpName=havenloft1
+Grove=1
+EnvironmentCycle=1
+DefLoc=2958,260,3821
+

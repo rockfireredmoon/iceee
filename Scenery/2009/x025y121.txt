@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151007809
+Asset=Prop-Anubian_Camp#Prop-Anubian_Palisade
+Name=9
+Pos=18806.5,171.955,91437
+Orient=-0.0788171,-0.788245,-0.153462,0.590684
+Scale=2.575,2.575,2.575
+Flags=1
+

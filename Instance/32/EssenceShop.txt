@@ -1,0 +1,29 @@
+﻿; Nottingham Castle
+
+; Restored from screenshot.
+; Sheriff's Treasure
+[ENTRY]
+CreatureDefID=1855
+EssenceID=20876
+Item=5484,1
+Item=143427,1
+Item=5394,1
+Item=5420,1
+Item=5554,1
+Item=5507,1
+Item=143502,1
+Item=143471,1
+
+; Restored from screenshot.
+; Dungeon Loot
+;[ENTRY]
+;CreatureDefID=2700
+;EssenceID=21254
+;Item=,10
+;Item=,10
+;Item=,10
+;Item=,10
+;Item=,10
+;Item=,10
+;Item=,10
+;Item=,10

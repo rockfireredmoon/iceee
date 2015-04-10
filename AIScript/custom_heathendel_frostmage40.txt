@@ -1,0 +1,132 @@
+#name custom_heathendel_frostmage40
+#speed 6
+
+; 517 : Frostbolt 40  [Cooldown=BasicCharge2]
+; 523 : Cryo Blast 40
+; 259 : Forcebolt 40
+; 377 : Force Blast 40
+; 419 : Frost Spear 40
+; *** 488 : Soul Needles 40
+; 101 : Root 6  [Cooldown=ReduceMovementSpeed, Will=5]
+; 32760 : ranged autoattack
+
+set VAR 0
+set WILL 0
+set MIGHT 0
+set COOLDOWN 0
+set SELFID 0
+set TARGID 0
+set OLDTARGID 0
+set ALLOWROOT 0
+
+get_self SELFID
+
+
+:begin
+call waitfortarget
+call checkWillCharge
+call checkMightCharge
+call checkWill
+call checkMight
+goto begin
+
+
+
+
+:checkWillCharge
+getwillcharge VAR
+if VAR < 3
+  return
+endif
+
+use 523
+reset_goto begin
+
+
+
+:checkMightCharge
+getmightcharge VAR
+if VAR >= 3
+  use 377
+  reset_goto begin
+endif
+return
+
+
+
+:checkWill
+getwill WILL
+if WILL < 4
+  return
+endif
+
+if ALLOWROOT = 1
+  call tryRoot
+  set ALLOWROOT = 0
+endif
+
+call tryFrostbolt
+
+use 419
+reset_goto begin
+
+
+
+:checkMight
+getmight MIGHT
+if MIGHT >= 3
+  use 259
+  reset_goto begin
+endif
+return
+
+
+
+:tryFrostbolt
+getcooldown "BasicCharge2" COOLDOWN
+if COOLDOWN != 0
+  return
+endif
+use 517
+reset_goto begin
+
+
+
+:tryRoot
+if WILL < 5
+  return
+endif
+
+getcooldown "ReduceMovementSpeed" COOLDOWN
+if COOLDOWN != 0
+  return
+endif
+
+get_speed TARGID VAR
+if VAR = 0
+  return
+endif
+
+use 101
+reset_goto begin
+
+
+
+
+:waitfortarget
+has_target VAR
+if VAR = 0
+  wait 1000
+  goto waitfortarget
+endif
+
+get_target TARGID
+if TARGID != OLDTARGID
+  get_target OLDTARGID
+  set ALLOWROOT 1
+endif 
+
+use 32760
+return
+
+

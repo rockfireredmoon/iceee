@@ -1,0 +1,15 @@
+[ENTRY]
+ID=151023064
+Asset=Prop-Willow_Tree#Prop-Willow_Tree2
+Pos=40453.1,150.822,60563
+Orient=0,-0.717356,0,0.696707
+Scale=1.85,1.85,1.85
+Flags=1
+
+[ENTRY]
+ID=151023078
+Asset=Prop-Bush-Large2
+Pos=39921.7,196.487,60735
+Orient=0,-0.747971,0,0.663731
+Scale=3.175,3.175,3.175
+

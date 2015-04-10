@@ -1,0 +1,7 @@
+[ENTRY]
+ID=436210974
+Asset=Dng-Hall_L2?ATS=ATS-Dungeon_Castle
+Pos=-1780,125,4160
+Orient=0,-0.707107,0,-0.707107
+Scale=1,1,1
+

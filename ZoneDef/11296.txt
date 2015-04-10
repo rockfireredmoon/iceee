@@ -1,0 +1,13 @@
+[ENTRY]
+ID=11296
+ACCOUNTID=788
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=zanarkand
+GroveName=zanarkand
+WarpName=zanarkand1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

@@ -1,0 +1,13 @@
+[ENTRY]
+ID=13864
+ACCOUNTID=1109
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=falleneden
+GroveName=falleneden
+WarpName=falleneden1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

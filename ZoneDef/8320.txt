@@ -1,0 +1,13 @@
+[ENTRY]
+ID=8320
+ACCOUNTID=416
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=valhalla
+GroveName=valhalla
+WarpName=valhalla1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

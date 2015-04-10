@@ -1,0 +1,8 @@
+[ENTRY]
+ID=151054600
+Asset=Par-Waves-1-Emitter
+Name=9
+Pos=18374.8,61.7561,74907
+Orient=0,-0.651834,0,0.758362
+Scale=3,3,3
+

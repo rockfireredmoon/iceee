@@ -1,0 +1,9 @@
+[ENTRY]
+ID=1358963746
+Asset=Prop-Swamp-Tree#Prop-Swamp-Tree1
+Name=81
+Pos=44070.4,88.3973,55503.7
+Orient=0,0.613117,0,0.789992
+Scale=2,2,2
+Flags=1
+

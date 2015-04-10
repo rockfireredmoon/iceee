@@ -1,0 +1,16 @@
+[ENTRY]
+ID=151023145
+Asset=Forest?d=0.9&s=871234&sz=800
+Pos=21736.1,223.474,53952
+Orient=0,-0.734548,0,0.678557
+Scale=1.25,1.25,1.25
+Flags=1
+
+[ENTRY]
+ID=151054855
+Asset=Par-Waves-1-Emitter
+Pos=21052.8,65.3643,53970
+Orient=0,0.635307,0,-0.77226
+Scale=3,3,3
+Flags=1
+

@@ -1,0 +1,5 @@
+[ENTRY]
+Name=0_trash_test
+UniquePoints=3
+spawnDelay=1
+Spawn=1079,100  ;Chicken (1)

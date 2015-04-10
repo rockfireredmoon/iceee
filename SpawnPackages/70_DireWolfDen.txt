@@ -1,0 +1,85 @@
+[ENTRY]
+Name=z70_wd_gen_Exit_to_Deadwood_1524
+Spawn=1524,100  ;Exit to Deadwood (1) at 0
+
+[ENTRY]
+Name=z70_wd_gen_Dungeon_Loot_2718
+Spawn=2718,100  ;Dungeon Loot (1) at 0
+
+[ENTRY]
+Name=10_fc_sapWing
+Spawn=1160,25  ;Sapmane Pouncer (39) at 0
+Spawn=1161,25  ;Sapmane Pouncer (40) at 0
+Spawn=1162,25  ;Sapmane Stalker (39) at 0
+Spawn=1163,25  ;Sapmane Stalker (40) at 0
+
+[ENTRY]
+Name=10_fc_SingemaneRaker
+Spawn=1502,100  ;Singemane Raker (39) at 0
+
+[ENTRY]
+Name=10_fc_Salamancer_m_40
+Spawn=1503,100  ;Salamancer (40) at 0
+
+[ENTRY]
+Name=10_fc_whiteWolves
+Shares=30
+Spawn=2655,10  ;White Wolf (40) at 0
+Spawn=2656,10  ;White Wolf (40) at 0
+Spawn=2657,10  ;White Wolf (40) at 0
+
+; NOTE: 2 spawn points
+[ENTRY]
+Name=10_fc_LadySilvermane_m_h_40
+UniquePoints=2
+Spawn=1168,100  ;Lady Silvermane (40) at 16
+
+[ENTRY]
+Name=10_fc_shadowWing
+Spawn=2650,25  ;Shadowmane Hunter (38) at 0
+Spawn=2651,25  ;Shadowmane Hunter (39) at 0
+Spawn=2652,25  ;Shadowmane Burner (38) at 0
+Spawn=2653,25  ;Shadowmane Froster (39) at 0
+
+[ENTRY]
+Name=10_fc_shadowManeBrute
+Spawn=2654,100  ;Shadowmane Brute (39) at 0
+
+[ENTRY]
+Name=10_fc_shadowFang
+Spawn=2649,100  ;Shadow Fang (40) at 0
+
+[ENTRY]
+Name=10_fc_mildewWing
+Spawn=1164,25  ;Mildewmane Yowler (39) at 0
+Spawn=1165,25  ;Mildewmane Yowler (38) at 0
+Spawn=1166,25  ;Mildewmane Growler (38) at 0
+Spawn=1167,25  ;Mildewmane Growler (39) at 0
+
+[ENTRY]
+Name=10_fc_rotmaneRaider
+Spawn=2658,100  ;Rotmane Raider (40) at 5
+
+[ENTRY]
+Flags=1
+Name=10_fc_obji_FoulFurLewt
+Spawn=1535,100  ;Foul Fur's Treasure (1) at 0
+
+[ENTRY]
+Name=10_fc_foulFur_k_42
+Spawn=940,100  ;Foul Fur (41) at 16
+
+[ENTRY]
+Name=10_fc_gakkSTEPUP
+ScriptCall=1
+Shares=30
+Spawn=2661,10  ;Cavern Crawler (38) at 0
+Spawn=2662,10  ;Cavern Crawler (39) at 0
+Spawn=2663,10  ;Cavern Crawler (40) at 0
+
+[ENTRY]
+Name=10_fc_lizards_38_40
+Shares=30
+Spawn=2661,10  ;Cavern Crawler (38) at 0
+Spawn=2662,10  ;Cavern Crawler (39) at 0
+Spawn=2663,10  ;Cavern Crawler (40) at 21

@@ -1,0 +1,13 @@
+[ENTRY]
+ID=10224
+ACCOUNTID=654
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=roadkill
+GroveName=roadkill
+WarpName=roadkill1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

@@ -1,0 +1,16 @@
+[ENTRY]
+ID=1127046
+Asset=Prop-Hadrian_Wall1
+Name=
+Pos=51160.4,149.01,40852.1
+Orient=0,0.968715,0,0.248176
+Scale=1,1,1
+
+[ENTRY]
+ID=1127047
+Asset=Prop-Hadrian_Wall1
+Name=
+Pos=51161.2,113.08,40852.7
+Orient=-0.967141,-0.0219371,-0.253276,0.00270946
+Scale=1,1,1
+

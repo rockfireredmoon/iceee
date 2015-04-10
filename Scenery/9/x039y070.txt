@@ -1,0 +1,16 @@
+[ENTRY]
+ID=151050175
+Asset=Manipulator-SpawnPoint
+Pos=29973.5,181.754,53042
+Orient=0,0.836026,0,0.54869
+Scale=1,1,1
+spawnPackage=3a_lavaWolfCamp01_general_22_23
+
+[ENTRY]
+ID=151054909
+Asset=Par-Waves-1-Emitter
+Pos=29724.3,65.3643,52815
+Orient=0,0.851272,0,-0.524725
+Scale=3,3,3
+Flags=1
+

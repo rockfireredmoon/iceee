@@ -1,0 +1,17 @@
+[ENTRY]
+ID=151017120
+Asset=Prop-Skrill_Mound
+Pos=59510.2,1435.68,58174
+Orient=0,0.15438,0,0.988012
+Scale=1.9,1.9,1.9
+Flags=1
+
+[ENTRY]
+ID=151026940
+Asset=Manipulator-SpawnPoint
+Pos=59476.5,1440.6,58276
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=11_jld_junderbroodSkrillmix_44
+outerRadius=40
+

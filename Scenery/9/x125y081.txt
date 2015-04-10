@@ -1,0 +1,14 @@
+[ENTRY]
+ID=151061730
+Asset=Bldg-Urban-Med_House1?ATS=ATS-Wooden
+Pos=94154.4,1166.97,61399
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
+ID=151061847
+Asset=Prop-Marker_Medium
+Pos=94361.6,1212.18,60780.4
+Orient=0.34759,0,0,0.937647
+Scale=20,20,20
+

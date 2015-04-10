@@ -1,0 +1,13 @@
+[ENTRY]
+ID=13048
+ACCOUNTID=1007
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=bluebird
+GroveName=bluebird
+WarpName=bluebird1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

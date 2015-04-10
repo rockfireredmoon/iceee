@@ -1,0 +1,9 @@
+[ENTRY]
+ID=150998893
+Asset=Prop-Lamp_Post1#Prop-Lamp_Post1
+Name=9
+Pos=59291.6,228.161,125563
+Orient=0.139369,0.0494902,-0.00697426,0.988978
+Scale=1.5,1.5,1.5
+Flags=1
+

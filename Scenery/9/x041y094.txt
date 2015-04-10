@@ -1,0 +1,17 @@
+[ENTRY]
+ID=151034449
+Asset=Manipulator#Manipulator-PathNode
+Pos=30842,264.534,71173
+Orient=0,0,0,1
+Scale=1,1,1
+links_count=2
+link=151034448,1
+link=151034450,1
+
+[ENTRY]
+ID=151062149
+Asset=Prop-Fence_Stone_Desert_Post
+Pos=30859.2,264.169,71166.2
+Orient=0,0.576959,0,0.816773
+Scale=1.375,1.375,1.375
+

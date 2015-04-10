@@ -1,0 +1,17 @@
+[ENTRY]
+ID=150998904
+Asset=CL-Roadside3#CL-Roadside3
+Name=9
+Pos=56624.3,191.562,122857
+Orient=-0.0204461,0.681332,-0.0219474,0.73136
+Scale=1.5,1.5,1.5
+Flags=1
+
+[ENTRY]
+ID=151010176
+Asset=Environment-Marker?type=Fields
+Name=9
+Pos=56572.4,235.247,122589
+Orient=0,0,0,1
+Scale=10,10,10
+

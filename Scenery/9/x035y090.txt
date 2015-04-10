@@ -1,0 +1,17 @@
+[ENTRY]
+ID=151021556
+Asset=Manipulator-SpawnPoint
+Pos=26678.8,216.484,68143
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=4_hwo_wilds_33_34
+outerRadius=10
+
+[ENTRY]
+ID=151023139
+Asset=Forest?d=0.9&s=834567&sz=800
+Pos=26354,220.157,67510
+Orient=0,0.8699,0,0.493228
+Scale=1,1,1
+Flags=1
+

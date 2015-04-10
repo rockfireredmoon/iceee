@@ -1,0 +1,18 @@
+[ENTRY]
+ID=151018043
+Asset=CL-Burnt-Pine2#CL-Burnt-Pine2
+Pos=81142,627.775,60901
+Orient=0,0,0,1
+Scale=2.15,2.15,2.15
+Flags=1
+
+[ENTRY]
+ID=151030956
+Asset=Manipulator-SpawnPoint
+Pos=81702,703.743,60840
+Orient=0,0,0,1
+Scale=1,1,1
+innerRadius=75
+spawnPackage=12_vmp_ rockDervish
+outerRadius=80
+

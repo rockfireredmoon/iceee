@@ -1,0 +1,47 @@
+#name mage_frost_brave_6
+
+; 5029 - Athena's Gift, 5 will, buff
+; 5195 - Frost Spear, 4 will, add 1 wcharge
+; 5217 - Jarnsaxa's Kiss - 3 will, need 1-5 wcharge
+; 32760 - ranged melee
+; 32766 - melee
+
+set var 0
+use 5029
+
+:begin
+call waitfortarget
+
+call selectauto
+
+getwillcharge var
+if var >= 2
+  use 5217
+  wait 1000
+endif
+
+getwill var
+if var >= 3
+  use 5195
+  wait 2000
+endif
+
+goto begin
+
+:waitfortarget
+has_target var
+if var = 0
+  wait 2000
+  goto waitfortarget
+endif
+return
+
+
+:selectauto
+getlevel var
+if var >= 10 
+  use 32760
+  return
+endif
+use 32766
+return

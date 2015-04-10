@@ -1,0 +1,4 @@
+; Format: CreatureDef=X,Y,Z,Facing
+
+; Custom addition for quest.
+3627=3818,509,2993,64

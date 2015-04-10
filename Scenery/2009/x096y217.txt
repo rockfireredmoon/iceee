@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151007441
+Asset=Prop-Bridge-Large_Wooden1#Prop-Bridge-Large_Wooden1
+Name=9
+Pos=72163.7,77.9827,163256
+Orient=0,0.0449846,0,0.998988
+Scale=1.6,1.6,1.6
+Flags=1
+

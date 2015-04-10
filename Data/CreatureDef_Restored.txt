@@ -1,0 +1,238 @@
+[ENTRY]
+ID=3500
+defHints=48
+sub_name=Research Assistant
+appearance=c2:{["g"]="m",["sk"]={["eye_white"]="B1A5A5",["inner_ear"]="D8C0B6",["base"]="8D86A1",["mask"]="9891AC",["chest"]="B9AAA0",["nails"]="56514A",["hands_feet"]="8E95A7",["nose"]="7E7890",["head_highlight"]="D4D4D4",["eye"]="71A6AC"},["b"]="n",["r"]="g",["c"]={["collar"]={["colors"]=["6a4829","6a5917","555555","552626","cfa43c"],["type"]="Armor-Cloth-Mid4"},["chest"]={["colors"]=["6a4829","6a5917","555555","552626","cfa43c"],["type"]="Armor-Cloth-Mid4"},["belt"]={["colors"]=["6a4829","6a5917","555555","552626","cfa43c"],["type"]="Armor-Cloth-Mid4"},["arms"]={["colors"]=["6a4829","6a5917","555555","552626","cfa43c"],["type"]="Armor-Cloth-Mid4"},["boots"]={["colors"]=["6a4829","6a5917","555555","552626","cfa43c"],["type"]="Armor-Cloth-Mid4"},["leggings"]={["colors"]=["6a4829","6a5917","555555","552626","cfa43c"],["type"]="Armor-Cloth-Mid4"}},["sz"]=1.0,["h"]=0}
+level=45
+display_name=Ker Bluefang
+will_regen=1
+might_regen=1
+profession=5
+creature_category=Mortal
+ai_package=nothing
+
+
+; REBUILT APPEARANCE - MAY NOT BE ACCURATE - ORIGINAL ID: 2092
+; Replaced to the appearance contributed by Spectre.
+[ENTRY]
+ID=3501
+defHints=2
+; appearance=c2:{["h"]=0,["c"]={["boots"]={["type"]="Armor-Cloth-Mid4",["colors"]=["CD901F","A74755","6A60A5","F6C52E","CFA43C"]},["leggings"]={["type"]="Armor-Cloth-Mid4",["colors"]=["CD901F","A74755","6A60A5","F6C52E","CFA43C"]},["belt"]={["type"]="Armor-Cloth-Mid4",["colors"]=["CD901F","A74755","6A60A5","F6C52E","CFA43C"]},["collar"]={["type"]="Armor-Cloth-Mid4",["colors"]=["CD901F","A74755","6A60A5","F6C52E","CFA43C"]},["chest"]={["type"]="Armor-Cloth-Mid4",["colors"]=["CD901F","6A60A5","6A60A5","F6C52E","CFA43C"]}},["b"]="n",["sk"]={["hair"]="83A3BF",["body_tats"]="7E855B",["arm_tats"]="7E855B",["skin"]="7F571F",["head_spots"]="9E9016",["eyeball"]="537689",["horn"]="A6A6A6",["eye_color"]="2B2B2B",["head_tattoos"]="8F7144",["body_spots"]="BE892B",["teeth"]="697261"},["r"]="p",["g"]="m",["sz"]="1"}
+appearance=c2:{["h"]=0,["c"]={["boots"]={["type"]="Armor-Cloth-Mid4",["colors"]=["CD901F","A74755","6A60A5","F6C52E","CFA43C"]},["leggings"]={["type"]="Armor-Cloth-Mid4",["colors"]=["CD901F","A74755","6A60A5","F6C52E","CFA43C"]},["belt"]={["type"]="Armor-Cloth-Mid4",["colors"]=["CD901F","A74755","6A60A5","F6C52E","CFA43C"]},["collar"]={["type"]="Armor-Cloth-Mid4",["colors"]=["CD901F","A74755","6A60A5","F6C52E","CFA43C"]},["chest"]={["type"]="Armor-Cloth-Mid4",["colors"]=["CD901F","6A60A5","6A60A5","F6C52E","CFA43C"]}},["b"]="n",["sk"]={["eyeball"]="BFBFBF",["body_tat"]="7F420B",["body_spots"]="BF6410",["hair_highlight"]="EAB749",["arm_tat"]="BFA129",["lips"]="BF5E43",["skin"]="7F5632",["pupil"]="2B2B2B",["face_tat"]="FFAA86",["eye"]="9027AA",["hair"]="6A2406",["horns"]="BFBFBF",["fur"]="BE892B"},["r"]="p",["g"]="f",["sz"]="1"}
+level=45
+display_name=Cheryl Cantrip
+sub_name=Reagent Merchant
+will_regen=1
+might_regen=1
+profession=5
+creature_category=Mortal
+ai_package=nothing
+rarity=2
+
+
+; Appearance contributed by Spectre.
+[ENTRY]
+defHints=2
+ID=3502
+will_regen=1
+might_regen=1
+appearance=c2:{["h"]=0,["c"]={["boots"]={["type"]="Armor-Cloth-Low4",["colors"]=["fffed4","11553c","b396d4","6a4829","e9c533"]},["chest"]={["type"]="Armor-Cloth-Low4",["colors"]=["b396d4","11553c","fffed4","e9c533","6a4829"]},["leggings"]={["type"]="Armor-Cloth-Low4",["colors"]=["b396d4","11553c","fffed4","6a4829","e9c533"]},["belt"]={["type"]="Armor-Light-High2",["colors"]=["fffed4","11553c","b396d4","6a4829","e9c533"]},["collar"]={["type"]="Armor-Cloth-Low2",["colors"]=["553921","b396d4","fffed4","11553c"]},["arms"]={["type"]="Armor-Cloth-Low4",["colors"]=["fffed4","11553c","b396d4","6a4829","e9c533"]}},["b"]="m",["sk"]={["eyeball"]="808080",["body_tat"]="7E855B",["body_spots"]="7E855B",["hair_highlight"]="EAB749",["arm_tat"]="7E855B",["lips"]="697261",["skin"]="7F571F",["pupil"]="2B2B2B",["face_tat"]="B98947",["eye"]="537689",["hair"]="947D07",["horns"]="A6A6A6",["fur"]="BE892B"},["r"]="p",["g"]="f",["sz"]="1"}
+level=45
+display_name=Cora Cantrip
+sub_name=Reagent Merchant
+profession=1
+creature_category=Mortal
+ai_package=nothing
+rarity=2
+
+
+; TODO: Needs old appearance.
+[ENTRY]
+ID=3503
+defHints=48
+will_regen=1
+might_regen=1
+appearance=c2:{["h"]=0,["c"]={["boots"]={["type"]="Armor-Medium-Low3",["colors"]=["3c407f","3f3f3f","877a62","8f9087","b68f67","4c3930"]},["chest"]={["type"]="Armor-Medium-Low3",["colors"]=["3c407f","3f3f3f","877a62","8f9087","b68f67","4c3930"]},["leggings"]={["type"]="Armor-Medium-Low3",["colors"]=["3c407f","3f3f3f","877a62","8f9087","b68f67","4c3930"]},["belt"]={["type"]="Armor-Medium-Low3",["colors"]=["3c407f","3f3f3f","877a62","8f9087","b68f67","4c3930"]},["collar"]={["type"]="Armor-Medium-Low3",["colors"]=["3c407f","3f3f3f","877a62","8f9087","b68f67","4c3930"]},["arms"]={["type"]="Armor-Medium-Low3",["colors"]=["3c407f","3f3f3f","877a62","8f9087","b68f67","4c3930"]}},["b"]="n",["sk"]={["wood"]="665A3F",["crest"]="49743E",["eyes"]="E99F5B",["foliage"]="4E7D42",["fringe"]="3E6E32"},["r"]="q",["g"]="f",["sz"]="1.1"}
+level=45
+display_name=Meer Greenleaf
+sub_name=Order of Gaia
+profession=4
+creature_category=Mortal
+ai_package=nothing
+rarity=2
+
+
+; Appearance restored by Spectre.
+[ENTRY]
+ID=3504
+defHints=2
+will_regen=1
+might_regen=1
+appearance=c2:{["h"]=2,["c"]={["boots"]={["type"]="Armor-Medium-Low6",["colors"]=["6a3425","6486bf","7f6b45","000000","000000","000000"]},["chest"]={["type"]="Armor-Light-Mid1",["colors"]=["7f6b45","2c3b55","6486bf","6a3425","bfa167","485a6a"]},["arms"]={["type"]="Armor-Light-Mid1",["colors"]=["7f6b45","2c3b55","6486bf","7f6b45","bfa167","485a6a"]},["leggings"]={["type"]="Armor-Light-Mid1",["colors"]=["7f6b45","2c3b55","6486bf","7f6b45","bfa167","485a6a"]},["collar"]={["type"]="Armor-Medium-Low1",["colors"]=["000000","374a6a","6a3425","bfa167"]},["belt"]={["type"]="Armor-Heavy-High1",["colors"]=["576d7f","6486bf","000000"]},["gloves"]={["type"]="Armor-Medium-Low6",["colors"]=["7f6b45","6a3425","6486bf","7f6b45","000000","000000"]}},["b"]="n",["sk"]={["hands_feet"]="BFA085",["eye_white"]="DDD7D2",["snout"]="94947B",["teeth"]="E9E9C2",["tail"]="95635B",["base"]="553921",["eye_lid"]="A28B7B",["nails"]="4A3A2F",["eye"]="947D38",["inner_ear"]="AA533C",["nose"]="BF9C9C",["chest"]="A58E7E"},["r"]="o",["g"]="m",["sz"]="1"}
+level=45
+display_name=Neville Nickblade
+sub_name=Weaponsmith
+creature_category=Mortal
+ai_package=nothing
+rarity=2
+
+
+; Appearance restored by Spectre.
+[ENTRY]
+ID=3505
+defHints=2
+will_regen=1
+might_regen=1
+appearance=c2:{["a"]=[{["type"]="Item-1hSword-Basic5",["node"]="left_hip",["colors"]=["455555","AA8DA9","FFD761"]}],["c"]={["boots"]={["type"]="Armor-CC-Clothing5",["colors"]=["8c5e46","515161","e8610b","8c5e46"]},["leggings"]={["type"]="Armor-Cloth-Low3",["colors"]=["aa7159","3f2212","494e4f","6b462f","6e634d","9b9388","d29775","867d75"]},["belt"]={["type"]="Armor-Heavy-Low2",["colors"]=["6b462f","6b462f","6b462f"]},["chest"]={["type"]="Armor-Light-Mid4",["colors"]=["7f3e2d","6a5949","8e7c73","555446","7c6c63"]},["gloves"]={["type"]="Armor-Medium-Mid2",["colors"]=["aaaaaa","4b1f20","60503e","8b7f86","a19a84","524432","3d322c"]}},["b"]="m",["sk"]={["hands_feet"]="BC9C8D",["eye_white"]="D4CDC2",["nails"]="7D6058",["ear_tips"]="C18D62",["base"]="F37231",["eye"]="AE562E",["inner_ear"]="BA9875",["nose"]="937C6E",["head_highlight"]="B89978"},["sz"]="1",["h"]=1,["g"]="f",["r"]="x"}
+level=45
+display_name=Sylvia Shielding 
+sub_name=Armorer
+creature_category=Mortal
+ai_package=nothing
+rarity=2
+
+[ENTRY]
+defHints=48
+ID=3506
+will_regen=1
+might_regen=1
+appearance=c2:{["h"]=0,["c"]={["boots"]={["type"]="Armor-Cloth-Low8",["colors"]=["551c04","8f784e","515161","d4c9b3"]},["chest"]={["type"]="Armor-Cloth-Low8",["colors"]=["551c04","8f784e","515161","d4c9b3"]},["arms"]={["type"]="Armor-Cloth-Low8",["colors"]=["551c04","8f784e","515161","d4c9b3"]},["leggings"]={["type"]="Armor-CC-Clothing1",["colors"]=["551c04","e9c57f","515161"]},["collar"]={["type"]="Armor-Cloth-Low8",["colors"]=["551c04","8f784e","515161","d4c9b3"]},["belt"]={["type"]="Armor-Cloth-Low8",["colors"]=["551c04","8f784e","515161","d4c9b3"]},["gloves"]={["type"]="Armor-Cloth-Low8",["colors"]=["551c04","8f784e","515161","d4c9b3"]}},["b"]="n",["sk"]={["plates"]="675757",["skin"]="713B3B",["eyeball"]="999999",["eye"]="43A364",["horns"]="674B4B",["nails"]="4D4141",["teeth"]="BABABA"},["r"]="e",["g"]="m",["sz"]="1.2"}
+level=45
+display_name=Raji Redhoof
+profession=1
+creature_category=Mortal
+ai_package=nothing
+
+[ENTRY]
+defHints=48
+ID=3507
+will_regen=1
+might_regen=1
+appearance=c2:{["h"]=0,["c"]={["boots"]={["type"]="Armor-Cloth-Male-Fancy1",["colors"]=[]},["chest"]={["type"]="Armor-Cloth-Male-Fancy1",["colors"]=[]},["leggings"]={["type"]="Armor-Cloth-Male-Fancy1",["colors"]=[]},["belt"]={["type"]="Armor-Cloth-Male-Fancy1",["colors"]=[]},["collar"]={["type"]="Armor-Cloth-Male-Fancy1",["colors"]=[]},["arms"]={["type"]="Armor-Cloth-Male-Fancy1",["colors"]=[]}},["b"]="m",["sk"]={["skin"]="6A5928",["tusks"]="CEC151",["eyeball"]="C7C5C5",["hair"]="7F0000",["eye"]="000EE9"},["r"]="s",["g"]="m",["sz"]="1.2"}
+level=45
+display_name=Worgram Wumpfist
+profession=1
+creature_category=Mortal
+ai_package=nothing
+
+
+; Not sure which interact is used to return to Earthrise from Earthend.
+; Creating a new object here for that.
+[ENTRY]
+ID=3508
+will_regen=1
+might_regen=1
+appearance=p1:{["a"]="Prop-Interact_Cylinder",["sz"]="2"}
+level=1
+display_name=Earthend
+profession=1
+creature_category=Inanimate
+ai_package=nothing
+
+; Special case friendly mob that can be overriden.
+[ENTRY]
+ID=3509
+defHints=48
+sub_name=
+appearance=n4:{["c"]="Horde-Invisible_Biped",["sk"]={["main"]="FFFFFF"},["sz"]="1.0"}
+level=1
+display_name=Generic Placeholder
+will_regen=1
+might_regen=1
+profession=5
+creature_category=Mortal
+ai_package=
+
+[ENTRY]
+ID=3510
+Effects=INVINCIBLE,IS_USABLE,UNATTACKABLE
+appearance=p1:{["a"]="Prop-Interact_Rectangle",["sz"]="2"}
+level=1
+display_name=Exit Arena
+profession=1
+creature_category=Inanimate
+
+[ENTRY]
+ID=3511
+Effects=INVINCIBLE,UNATTACKABLE
+appearance=p1:{["a"]="Prop-Interact_Rectangle",["sz"]="1"}
+level=1
+display_name=Block
+profession=1
+creature_category=Inanimate
+
+[ENTRY]
+ID=3512
+Effects=INVINCIBLE,UNATTACKABLE
+appearance=p1:{["a"]="Prop-Interact_Rectangle",["sz"]="2"}
+level=1
+display_name=Block
+profession=1
+creature_category=Inanimate
+
+[ENTRY]
+ID=3513
+Effects=INVINCIBLE,UNATTACKABLE
+appearance=p1:{["a"]="Prop-Interact_Rectangle",["sz"]="3"}
+level=1
+display_name=Block
+profession=1
+creature_category=Inanimate
+
+;[ENTRY]
+;ID=3600
+
+[ENTRY]
+defHints=48
+ID=3520
+level=50
+display_name=Lanternkeeper Lumin
+appearance=c2:{["a"]=[{["type"]="Armor-Warrior-Redeemer_Ranger-Helmet",["node"]="helmet",["colors"]=["1A1255","FFFEA9","482C6A"]},{["type"]="Armor-Warrior-Redeemer_Ranger-Left_Pauldron",["node"]="left_shoulder",["colors"]=["1A1255","FFFEA9","57357F"]},{["type"]="Armor-Warrior-Redeemer_Ranger-Right_Pauldron",["node"]="right_shoulder",["colors"]=["1A1255","FFFEA9","57357F"]}],["c"]={["boots"]={["type"]="Armor-Warrior-Redeemer_Ranger",["colors"]=["482c6a","1a1255","000000","aaa970","aaa970","000000"]},["chest"]={["type"]="Armor-Warrior-Redeemer_Ranger",["colors"]=["1a1255","482c6a","000000","1a1255","000000","fffea9"]},["arms"]={["type"]="Armor-Warrior-Redeemer_Ranger",["colors"]=["0f2055","000000","000000","000000","fffea9","000000"]},["leggings"]={["type"]="Armor-Warrior-Redeemer_Ranger",["colors"]=["1a1255","482c6a","7447aa","000000","000000","fffea9"]},["collar"]={["type"]="Armor-Cloth-Epic2",["colors"]=["000000","000000","fffea9","1a1255","000000","000000"]},["belt"]={["type"]="Armor-Warrior-Redeemer_Ranger",["colors"]=[]},["gloves"]={["type"]="Armor-Light-Epic2",["colors"]=["271b7f","1a1255","fffea9","57357f","57357f","000000"]}},["b"]="n",["sk"]={["hair"]="552B13",["body_tats"]="BF7979",["arm_tats"]="BF7979",["skin"]="BF7979",["head_spots"]="6A4343",["eyeball"]="D4D4B0",["horn"]="947979",["eye_color"]="256A39",["head_tattoos"]="BF7979",["body_spots"]="BF7979",["teeth"]="D4D4B0"},["sz"]="1.2",["h"]=1,["g"]="m",["r"]="p"}
+sub_name=Redeemer
+profession=1
+creature_category=Mortal
+rarity=3
+
+[ENTRY]
+defHints=48
+ID=3521
+level=50
+display_name=Lanternkeeper Rosco
+appearance=c2:{["a"]=[{["type"]="Armor-Warrior-Redeemer_Ranger-Left_Pauldron",["node"]="left_shoulder",["colors"]=["1A1255","AAA970","482C6A"]},{["type"]="Armor-Warrior-Redeemer_Ranger-Right_Pauldron",["node"]="right_shoulder",["colors"]=["1A1255","AAA970","482C6A"]},{["type"]="Armor-Light-Low2-Hat",["node"]="hat",["colors"]=["482C6A","AAA970"]}],["c"]={["boots"]={["type"]="Armor-Warrior-Redeemer_Ranger",["colors"]=["482c6a","1a1255","000000","aaa970","aaa970","000000"]},["chest"]={["type"]="Armor-Warrior-Redeemer_Ranger",["colors"]=["1a1255","482c6a","000000","1a1255","000000","aaa970"]},["arms"]={["type"]="Armor-Warrior-Redeemer_Ranger",["colors"]=["1a1255","000000","000000","000000","aaa970","000000"]},["leggings"]={["type"]="Armor-Warrior-Redeemer_Ranger",["colors"]=["1a1255","482c6a","482c6a","000000","000000","aaa970"]},["collar"]={["type"]="Armor-Cloth-Epic2",["colors"]=["000000","000000","fffea9","1a1255","000000","000000"]},["belt"]={["type"]="Armor-Light-Epic1",["colors"]=["1a1255","3a2355","aaa970","000000","000000"]},["gloves"]={["type"]="Armor-Medium-Mid2",["colors"]=["aaa970","1a1255","482c6a","1a1255","000000","000000","000000"]}},["b"]="n",["sk"]={["hair"]="2A1C16",["leg_patches"]="2A1C16",["chest_patch"]="2A1C16",["tusks"]="FFD6B1",["eye_white"]="FFFFFF",["nails"]="55382C",["base"]="7F571F",["inner_ear"]="3F2A21",["eye"]="BFBE3E",["eye_brows"]="3F2A21",["snout"]="7F5543",["arm_patches"]="2A1C16"},["sz"]="1.1",["h"]=1,["g"]="m",["r"]="k"}
+sub_name=Redeemer
+profession=1
+creature_category=Mortal
+rarity=3
+
+[ENTRY]
+defHints=48
+ID=3522
+level=50
+display_name=MJ Price
+appearance=n4:{["sk"]={["bone"]="FFAF3E",["trim"]="23232A",["skin"]="6A3618",["blood"]="7F0011",["pants"]="940D0D",["shirt"]="940D0D",["hair"]="111115",["detail"]="FF0000"},["c"]="Horde-Zombie_Destroyer",["sz"]="1.1"}
+sub_name=
+profession=1
+creature_category=Unliving
+rarity=3
+
+[ENTRY]
+defHints=48
+ID=3523
+level=50
+display_name=Damain Talamasca
+appearance=c2:{["h"]=0,["c"]={["boots"]={["type"]="Armor-Light-Low6",["colors"]=["8f78aa","1f183f","94653a","555446"]},["chest"]={["type"]="Armor-Light-Low6",["colors"]=["8f78aa","2b1a3f","94653a","555446"]},["arms"]={["type"]="Armor-Light-Low6",["colors"]=["8f78aa","1f183f","94653a","555446"]},["leggings"]={["type"]="Armor-Light-Low6",["colors"]=["8f78aa","1f183f","94653a","555446"]},["collar"]={["type"]="Armor-Light-Epic2",["colors"]=["1f183f","554654","8e6f52","262f42","949494","6a3709"]},["belt"]={["type"]="Armor-Light-Low8",["colors"]=["3f2b19","1f183f","94653a","555446","6e634d","9b9388"]},["gloves"]={["type"]="Armor-Light-Mid4",["colors"]=["473c55","3d312f","947b94","6a5949","6b5a7f"]}},["b"]="n",["sk"]={["hands_feet"]="BFA167",["goatee"]="94653A",["eye_white"]="DCDCDC",["snout"]="AA8E76",["horns"]="94653A",["face_highlight"]="BFA167",["eye"]="59AA77",["hoves"]="55473B",["eye_lid"]="7F7F6A",["base"]="94653A"},["r"]="c",["g"]="m",["sz"]="1.0"}
+sub_name=
+profession=1
+creature_category=Unliving
+rarity=3
+
+[ENTRY]
+defHints=48
+ID=3524
+level=50
+display_name=Joan Darkeye
+appearance=c2:{["a"]=[{["type"]="Armor-Warrior-Redeemer_Captain-Right_Pauldron",["node"]="right_shoulder",["colors"]=["3F2C35","736871","E9C4A2"]},{["type"]="Item-Spear-High1",["node"]="back_sheathe",["colors"]=["6A6A58","D4B293","2A1D23","00FFFF"]}],["c"]={["boots"]={["type"]="Armor-Warrior-Redeemer_Captain",["colors"]=[]},["chest"]={["type"]="Armor-Warrior-Redeemer_Captain",["colors"]=[]},["arms"]={["type"]="Armor-Warrior-Redeemer_Captain",["colors"]=[]},["leggings"]={["type"]="Armor-Warrior-Redeemer_Captain",["colors"]=[]},["collar"]={["type"]="Armor-Warrior-Redeemer_Captain",["colors"]=[]},["belt"]={["type"]="Armor-Warrior-Redeemer_Captain",["colors"]=[]},["gloves"]={["type"]="Armor-Warrior-Redeemer_Captain",["colors"]=[]}},["b"]="m",["sk"]={["hair"]="365555",["tusks"]="AA8E76",["eye_white"]="BF9C9C",["snout"]="2A2222",["base"]="6A5949",["thigh_patches"]="863825",["eye"]="3A5523",["arm_patches"]="1D4955",["wrist_patches"]="2B4955",["nails"]="AA8E76"},["sz"]="1.06",["h"]=1,["g"]="f",["r"]="k"}
+sub_name=Redeemer
+profession=1
+creature_category=Unliving
+rarity=3

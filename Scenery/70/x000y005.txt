@@ -1,0 +1,14 @@
+[ENTRY]
+ID=1174405853
+Asset=Prop-Boulder7
+Pos=-136.755,464.492,5268.55
+Orient=0,0,0,1
+Scale=1.675,1.675,1.675
+
+[ENTRY]
+ID=1174405854
+Asset=Prop-Boulder7
+Pos=-612.122,463.273,5909.21
+Orient=0,0,0,1
+Scale=1.675,1.675,1.675
+

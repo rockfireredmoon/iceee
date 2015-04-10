@@ -1,0 +1,9 @@
+[ENTRY]
+ID=1358963239
+Asset=CL-Roadside1
+Name=81
+Pos=51222.3,90.943,50292
+Orient=0,0,0,1
+Scale=1.5,1.5,1.5
+Flags=1
+

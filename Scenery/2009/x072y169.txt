@@ -1,0 +1,17 @@
+[ENTRY]
+ID=150996974
+Asset=CL-Hills_Tree6#CL-Hills_Tree6
+Name=9
+Pos=54280.6,201.898,126788
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
+ID=151048489
+Asset=Manipulator-SpawnPoint
+Name=9
+Pos=54177.3,252.016,127441
+Orient=0,0,0,1
+Scale=1,1,1
+Layer=151007676
+

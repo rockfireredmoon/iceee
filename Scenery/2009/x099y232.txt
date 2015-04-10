@@ -1,0 +1,17 @@
+[ENTRY]
+ID=151013567
+Asset=CL-Carrionite_4Platforms_A#CL-Carrionite_4Platforms_A
+Name=9
+Pos=74308.6,1838.56,174067
+Orient=0,-0.895698,0,0.444663
+Scale=1,1,1
+Flags=1
+
+[ENTRY]
+ID=151033861
+Asset=Prop-Nest-Ramp
+Name=9
+Pos=74254.4,2083.12,174611
+Orient=0.0342262,-0.934045,-0.0712886,0.348291
+Scale=1.925,1.925,1.925
+

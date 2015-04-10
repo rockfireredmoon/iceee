@@ -1,0 +1,14 @@
+[ENTRY]
+ID=151062128
+Asset=CL-Desert#CL-Roadside_Desert2
+Pos=37738.6,84.7779,67852
+Orient=-0.0251023,-0.716917,0.0243798,0.69628
+Scale=1,1,1
+
+[ENTRY]
+ID=151062129
+Asset=CL-Desert#CL-Roadside_Desert2
+Pos=37627.6,84.7814,67935.5
+Orient=0,-0.717356,0,0.696707
+Scale=1.35,1.35,1.35
+

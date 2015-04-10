@@ -1,0 +1,13 @@
+[ENTRY]
+ID=9480
+ACCOUNTID=561
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=foxeternal
+GroveName=foxeternal
+WarpName=foxeternal1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

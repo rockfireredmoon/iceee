@@ -1,0 +1,13 @@
+[ENTRY]
+ID=8513
+ACCOUNTID=440
+NAME=Grove
+TERRAINCONFIG=Terrain-Starting_Zone2#Terrain-Starting_Zone2.cfg
+ENVIRONMENTTYPE=EarthriseSunset
+ShardName=silverfox
+GroveName=silverfox
+WarpName=silverfox2
+Grove=1
+EnvironmentCycle=0
+DefLoc=10818,572,12214
+

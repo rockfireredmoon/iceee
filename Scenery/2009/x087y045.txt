@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151036601
+Asset=CL-Bush_Autumn5
+Name=9
+Pos=65351.9,378.951,33986
+Orient=0,-0.227978,0,0.973666
+Scale=1.275,1.275,1.275
+Flags=1
+

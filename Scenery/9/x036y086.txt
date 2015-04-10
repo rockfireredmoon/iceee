@@ -1,0 +1,14 @@
+[ENTRY]
+ID=151062452
+Asset=Prop-Forest_Tree6
+Pos=27238.4,229.375,64717.3
+Orient=0,0,0,1
+Scale=1.15,1.15,1.15
+
+[ENTRY]
+ID=151062453
+Asset=Prop-Forest_Tree4
+Pos=27588.9,197.487,64514.4
+Orient=0,0.997129,0,0.0757238
+Scale=1.25,1.25,1.25
+

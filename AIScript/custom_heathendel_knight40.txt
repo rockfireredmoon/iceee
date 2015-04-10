@@ -1,0 +1,142 @@
+#name custom_heathendel_knight40
+#speed 6
+
+; 228 : Assault 40
+; 446 : Bash 40
+; 539 : Concussion 40   [Cooldown=Concussion]
+; 346 : Disarm 40   [Cooldown=Disarm]
+; 457 : Blender 40   [Cooldown=Blender]
+; 322 : Can Opener 40   [GroupID=129]
+; 448 : Taurian Might 40   [GroupID=44]
+; 5063 : Taurian Might (15%)  [GroupID=44]
+; 32766 : Melee autoattack
+
+
+set VAR 0
+set COOLDOWN 0
+set USEBLENDER 0
+
+
+:begin
+call waitfortarget
+call checkMightCharge
+call checkMight
+goto begin
+
+
+
+
+; NOTE: Blender is set to use at 3 charges, and only if 2+ targets are present.
+; If Blender can't be used, it'll spam 1 charge bash instead.
+
+:checkMightCharge
+getmightcharge VAR
+if VAR < 1
+  return
+endif
+
+call tryBlender
+
+if USEBLENDER = 0
+  use 446
+  reset_goto begin
+endif
+return
+
+
+
+:checkMight
+getmight VAR
+if VAR < 3
+  return
+endif
+
+call tryCanOpener
+call tryConcussion
+call tryDisarm
+
+use 228
+reset_goto begin
+
+
+
+:castBuffs
+get_buff_tier 44 VAR
+if VAR = 0
+  use 5063
+endif
+return
+
+
+:tryCanOpener
+getmight VAR
+if VAR < 4
+  return
+endif
+
+get_target_buff_tier 129 VAR
+if VAR != 0
+  return
+endif
+
+use 322
+reset_goto begin
+
+
+
+:tryConcussion
+getcooldown "Concussion" COOLDOWN
+if COOLDOWN != 0
+  return
+endif
+
+use 539
+reset_goto begin
+
+
+
+:tryDisarm
+getcooldown "Disarm" COOLDOWN
+if COOLDOWN != 0
+  return
+endif
+
+use 346
+reset_goto begin
+
+
+
+:tryBlender
+count_enemy_near 50 VAR
+if VAR <= 1
+  set USEBLENDER 0
+  return
+endif
+set USEBLENDER 1
+
+getmightcharge VAR
+if VAR < 3
+  return
+endif
+
+getcooldown "Blender" COOLDOWN
+if COOLDOWN != 0
+  return
+endif
+
+use 457
+reset_goto begin
+
+
+
+
+:waitfortarget
+has_target VAR
+if VAR = 0
+  wait 1000
+  goto waitfortarget
+endif
+
+call castBuffs
+use 32766
+return

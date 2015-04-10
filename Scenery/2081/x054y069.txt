@@ -1,0 +1,16 @@
+[ENTRY]
+ID=1358962792
+Asset=Effects#Par-Waves-1-Emitter
+Name=81
+Pos=54990.2,65.225,69770.9
+Orient=0,0,0,1
+Scale=2,2,2
+
+[ENTRY]
+ID=1358962822
+Asset=Par-Waves-1-Emitter
+Name=81
+Pos=54359.9,61.2776,69862
+Orient=0,0,0,1
+Scale=2,2,2
+

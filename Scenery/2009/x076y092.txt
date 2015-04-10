@@ -1,0 +1,8 @@
+[ENTRY]
+ID=151017565
+Asset=Prop-Lamp_Post_Undead1#Prop-Lamp_Post_Undead1
+Name=9
+Pos=57741.9,858.382,69666
+Orient=0,0,0,1
+Scale=2.6,2.6,2.6
+

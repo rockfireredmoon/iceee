@@ -1,0 +1,13 @@
+[ENTRY]
+ID=7048
+ACCOUNTID=257
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=DesertNight
+ShardName=branden
+GroveName=branden
+WarpName=branden1
+Grove=1
+EnvironmentCycle=1
+DefLoc=3632,533,2765
+

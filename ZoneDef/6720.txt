@@ -1,0 +1,13 @@
+[ENTRY]
+ID=6720
+ACCOUNTID=216
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=ursaborn
+GroveName=ursaborn
+WarpName=ursaborn1
+Grove=1
+EnvironmentCycle=1
+DefLoc=2958,260,3821
+

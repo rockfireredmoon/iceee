@@ -1,0 +1,8 @@
+[ENTRY]
+ID=151060345
+Asset=Prop-Holiday-Harvest_Banner#Prop-Holiday-Harvest_Banner
+Name=9
+Pos=28699.6,751.93,61789.7
+Orient=0,-0.942563,0,-0.334029
+Scale=7.45,7.45,7.45
+

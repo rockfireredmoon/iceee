@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151053650
+Asset=Bldg-Ruins-Druid1#Bldg-Ruins-Druid1?ATS=ATS-Roman
+Name=9
+Pos=24541.9,71.1126,91729
+Orient=0,0,0,1
+Scale=2.1,2.1,2.1
+Flags=1
+

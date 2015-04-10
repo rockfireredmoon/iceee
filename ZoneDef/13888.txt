@@ -1,0 +1,15 @@
+[ENTRY]
+ID=13888
+ACCOUNTID=1112
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=lynvalina
+GroveName=lynvalina
+WarpName=lynvalina1
+DropRateProfile=standard
+Grove=1
+EnvironmentCycle=0
+BuildPermission=account,1112,0,0,3,3
+DefLoc=2958,260,3821
+

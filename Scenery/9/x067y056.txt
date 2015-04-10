@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151052572
+Asset=Manipulator-SpawnPoint
+Pos=50301.1,112.127,42666
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=3a_deerHedgehogCamp01_general
+outerRadius=30
+

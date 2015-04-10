@@ -1,0 +1,23 @@
+[ENTRY]
+Name=z9_eur_Shar_Zaris
+Spawn=1293,100  ;Shar Zaris (50) [NPC]
+
+[ENTRY]
+Name=z9_eur_Lanternkeeper_Lumin
+Spawn=3520,100  ;Lanternkeeper Lumin (50) [NPC]
+
+[ENTRY]
+Name=z9_eur_Lanternkeeper_Rosco
+Spawn=3521,100  ;Lanternkeeper Rosco (50) [NPC]
+
+[ENTRY]
+Name=z9_eur_MJ_Price
+Spawn=3522,100  ;MJ Price (50) [NPC]
+
+[ENTRY]
+Name=z9_eur_Damain_Talamasca
+Spawn=3523,100  ;Damain Talamasca (50) [NPC]
+
+[ENTRY]
+Name=z9_eur_Joan_Darkeye
+Spawn=3524,100  ;Joan Darkeye (50) [NPC]

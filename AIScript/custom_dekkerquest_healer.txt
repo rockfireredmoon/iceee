@@ -1,0 +1,163 @@
+#name custom_dekkerquest_healer
+#speed 10
+
+; Player skills
+; 492 - Wither 40
+; 373 - Malice Blast 40
+; 35 - Discipline 40 (passive)
+; 505 - Deathly 40
+; 509 - Nefritari's Aura
+; 57 - Death Specialization 40
+; 511 - Life Leech 40
+; 217 - Syphon 40
+; 397 - Creeping Death 40
+; 151 - Morass 40
+; 533 - Deathly Dart 40
+
+; 236 - Assail 40
+; 296 - Disembowel 40
+; 474 - Rend 40
+; 282 - Pierce 40
+; 135 - Death's Touch 40
+; 80 - Elusiveness 40 (passive)
+; 329 - Frenzy (40)
+
+; Mob skills
+; 5059 - Deathly, 5 Will, buff
+; 5157 - Assault, 3 might, add mcharge
+; 5204 - Wither, 4 will, add wcharge
+; 5303 - Malice Blast, 1 will, need 1-3 wcharge
+; 32766 - melee
+; 5221 - Bash (not used in the ability rip)
+; 5303 - Malice Blast (not used in the ability rip)
+
+; 26014 - Divine Frost Shield
+
+
+set STATUS 0
+set HEALTH 0
+set WILL 0
+set MIGHT 0
+set var 0
+
+
+:begin
+
+call waitfortarget
+
+; If we can't use skills, go back.
+is_busy var
+if var = 1
+  goto begin
+endif
+
+is_target_enemy STATUS
+if STATUS = 1
+  call doEnemy
+endif
+
+is_target_friendly STATUS
+if STATUS = 1
+  call doFriendly
+endif
+
+wait 250
+goto begin
+
+
+
+:waitfortarget
+has_target var
+if var = 0
+  wait 2000
+  goto waitfortarget
+endif
+return
+
+
+
+:doEnemy
+
+getwill WILL
+if WILL < 4
+  return
+endif
+
+;getcooldown "MeleeSpeedCastingSpeedDebuff" var
+;if var = 0
+;  use 151
+;  return
+;endif
+
+; Malediction
+getcooldown "StatDebuff" var
+if var = 0
+  use 387
+  return
+endif
+
+getcooldown "DoT" var
+if var = 0
+  use 509
+  return
+endif
+
+; just one wither/malice blast combo
+use 492
+wait 1000
+use 373
+wait 1000
+
+return
+
+
+:doFriendly
+target_health_percent HEALTH
+if HEALTH < 99
+  call doHealing
+endif
+return
+
+
+
+:doHealing
+getmight MIGHT
+if MIGHT < 4
+  return
+endif
+
+getwill WILL
+if WILL < 4
+  return
+endif
+
+; HEALING TENDRIL
+getcooldown "Heal" var
+if var = 0
+  use 168
+  return
+endif
+
+; HEALING BREEZE
+getcooldown "HoT" var
+if var = 0
+  use 148
+  return
+endif
+
+; HEALING HAND
+getcooldown "Heal_D" var
+if var = 0
+  use 175
+  return
+endif
+
+return
+
+
+
+
+
+:extSupport
+goto begin
+

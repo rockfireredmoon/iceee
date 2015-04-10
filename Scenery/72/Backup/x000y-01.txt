@@ -1,0 +1,7 @@
+[ENTRY]
+ID=1207960986
+Asset=CL-Sick-Rotted_Forest3#CL-Sick-Rotted_Forest3
+Pos=729.083,1336.6,-1141.57
+Orient=0,0,0.0848974,0.99639
+Scale=1.8,1.8,1.8
+

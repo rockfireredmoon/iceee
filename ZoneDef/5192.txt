@@ -1,0 +1,15 @@
+[ENTRY]
+ID=5192
+ACCOUNTID=25
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=grovelolz
+GroveName=grovelolz
+WarpName=grovelolz1
+DropRateProfile=standard
+Grove=1
+EnvironmentCycle=1
+BuildPermission=account,25,0,0,3,3
+DefLoc=2958,260,3821
+

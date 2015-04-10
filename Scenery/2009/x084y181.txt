@@ -1,0 +1,17 @@
+[ENTRY]
+ID=150996253
+Asset=CL-Hills_Bush3#CL-Hills_Bush3
+Name=9
+Pos=63163.4,6.20435,136220
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
+ID=151046519
+Asset=Manipulator-SpawnPoint
+Name=9
+Pos=63556.7,131.081,136489
+Orient=0,0,0,1
+Scale=1,1,1
+Layer=151006378
+

@@ -1,0 +1,13 @@
+[ENTRY]
+ID=11456
+ACCOUNTID=808
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=nermainwolfy
+GroveName=nermainwolfy
+WarpName=nermainwolfy1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

@@ -1,0 +1,17 @@
+[ENTRY]
+ID=1358958011
+Asset=Prop-Boulder2
+Name=81
+Pos=37439.7,54.6501,55150
+Orient=0,0,0,1
+Scale=2.5,2.5,2.5
+Flags=1
+
+[ENTRY]
+ID=1358966035
+Asset=Prop-Hill_Tree6
+Name=81
+Pos=37379.9,74.6394,55372
+Orient=0,0,0,1
+Scale=1,1,1
+

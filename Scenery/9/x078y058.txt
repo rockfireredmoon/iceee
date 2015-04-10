@@ -1,0 +1,8 @@
+[ENTRY]
+ID=150999121
+Asset=Prop-Bridge_a#Prop-Bridge2
+Pos=59002.1,302.366,43758
+Orient=0,-0.41232,0,0.911039
+Scale=2,2,2
+Flags=1
+

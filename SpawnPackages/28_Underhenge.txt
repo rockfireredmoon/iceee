@@ -1,0 +1,80 @@
+[ENTRY]
+Name=1_dng_uh_TemplarsDweamorists_14
+Spawn=282,50  ;Templar (14) at 0
+Spawn=283,50  ;Dweamorist (14) at 0
+
+[ENTRY]
+Name=1_dng_uh_Templars_14_15
+Spawn=282,50  ;Templar (14) at 0
+Spawn=286,50  ;Oracle (15) at 0
+
+; NOTE: this seems to be for heroics, as opposed to the _14 version which is normal.
+; Restored by looking at a direct virtual placement of the official spawns.
+[ENTRY]
+Name=1_dng_uh_TemplarsDweamorists_15
+Spawn=2411,25  ;Disciple (15)
+Spawn=2412,25  ;Disciple (14)
+Spawn=2413,25  ;Fanatic (14)
+Spawn=2414,25  ;Fanatic (15)
+;Spawn=284,50  ;Templar (15)
+;Spawn=285,50  ;Dweamorist (15) at 230
+
+[ENTRY]
+Name=1_dng_uh_OracleBriar_15
+Spawn=286,50  ;Oracle (15) at 0
+Spawn=287,50  ;Briarbearer (15) at 317
+
+[ENTRY]
+Name=1_dng_uh_FullMix_15
+Spawn=284,25  ;Templar (15) at 0
+Spawn=285,25  ;Dweamorist (15) at 0
+Spawn=286,25  ;Oracle (15) at 0
+Spawn=287,25  ;Briarbearer (15) at 0
+
+[ENTRY]
+Name=1_dng_uh_BramblebaneRND_15
+Spawn=290,100  ;Bramblebane (15)  (from cdef list)
+
+[ENTRY]
+Name=1a_dng_uh_obji_BramblebaneLewt
+Spawn=1827,100  ;Bramblebane's Treasure (1)  (from cdef list)
+
+[ENTRY]
+Name=1a_dng_uh_Alchemist_GreenEssenceDrop
+Spawn=2422,50  ;Field Alchemist (14) at 0
+Spawn=2413,50  ;Fanatic
+
+[ENTRY]
+Name=1a_dng_uh_heroic_fighters
+Spawn=2415,50  ;Cloakbearer (15) at 0
+Spawn=2413,50  ;Fanatic (14) at 0
+
+[ENTRY]
+Name=1a_dng_uh_Alchemists
+Spawn=2419,50  ;Alchemist (14) at 0
+Spawn=2420,50  ;Alchemist (15) at 0
+
+[ENTRY]
+Name=1a_dng_uh_thornbringer_priestessClaira_d_h_11
+Spawn=16,100  ;Priestess Claira (15) at 0
+
+[ENTRY]
+Name=1a_dng_uh_heroic_fullMix
+Shares=60
+Spawn=2411,10  ;Disciple (15) at 12
+Spawn=2412,10  ;Disciple (14) at 0
+Spawn=2413,10  ;Fanatic (14) at 12
+Spawn=2414,10  ;Fanatic (15) at 0
+Spawn=2415,10  ;Cloakbearer (15) at 0
+Spawn=2416,10  ;Sage (14) at 0
+
+[ENTRY]
+Name=1a_dng_uh_sparkwingPit
+ScriptCall=1
+Spawn=2427,50  ;Sparkwing (14) (from cdef list)
+Spawn=2428,50  ;Sparkwing (14) (from cdef list)
+
+[ENTRY]
+Name=1a_dng_uh_hengeSlugs
+Spawn=2440,50  ;Henge Slug (14) at 0
+Spawn=2441,50  ;Henge Slug (15) at 6

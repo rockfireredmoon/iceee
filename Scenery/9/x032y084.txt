@@ -1,0 +1,10 @@
+[ENTRY]
+ID=151022591
+Asset=Manipulator-SpawnPoint
+Pos=24338.1,94.7976,63453
+Orient=0,0,0,1
+Scale=1,1,1
+innerRadius=95
+spawnPackage=4_drm_wilds_47_48
+outerRadius=100
+

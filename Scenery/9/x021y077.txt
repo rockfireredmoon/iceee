@@ -1,0 +1,10 @@
+[ENTRY]
+ID=151019395
+Asset=Manipulator-SpawnPoint
+Pos=16078.2,288.942,58367
+Orient=0,0,0,1
+Scale=1,1,1
+innerRadius=99
+spawnPackage=4_ewd_pricklepigCamps_33_34
+outerRadius=100
+

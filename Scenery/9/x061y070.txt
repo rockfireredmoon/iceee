@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151009290
+Asset=Manipulator-SpawnPoint
+Pos=46077.4,486.709,52507
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=3_wilds_HedgeDeerThump_23_25
+outerRadius=200
+

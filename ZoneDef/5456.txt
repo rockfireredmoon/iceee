@@ -1,0 +1,13 @@
+[ENTRY]
+ID=5456
+ACCOUNTID=58
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=eefurever
+GroveName=eefurever
+WarpName=eefurever1
+Grove=1
+EnvironmentCycle=1
+DefLoc=2958,260,3821
+

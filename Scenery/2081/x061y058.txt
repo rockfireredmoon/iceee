@@ -1,0 +1,8 @@
+[ENTRY]
+ID=1358964416
+Asset=CL-Farm-BurnedField1
+Name=81
+Pos=61187.1,198.961,58495.5
+Orient=0,-0.613117,0,0.789992
+Scale=2,2,2
+

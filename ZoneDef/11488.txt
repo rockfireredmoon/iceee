@@ -1,0 +1,13 @@
+[ENTRY]
+ID=11488
+ACCOUNTID=812
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=daos
+GroveName=daos
+WarpName=daos1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

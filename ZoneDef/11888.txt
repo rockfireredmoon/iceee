@@ -1,0 +1,13 @@
+[ENTRY]
+ID=11888
+ACCOUNTID=862
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=zuri
+GroveName=zuri
+WarpName=zuri1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

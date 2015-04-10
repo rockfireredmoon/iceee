@@ -1,0 +1,13 @@
+[ENTRY]
+ID=9352
+ACCOUNTID=545
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=thebone
+GroveName=thebone
+WarpName=thebone1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

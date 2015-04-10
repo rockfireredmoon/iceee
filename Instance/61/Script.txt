@@ -1,0 +1,4 @@
+; General Thothmes's Treasure
+:onKill_1431
+spawn 1023410429
+end

@@ -1,0 +1,16 @@
+[ENTRY]
+ID=151040317
+Asset=Prop-Boulder_Scary5
+Pos=61687.1,720.738,60598
+Orient=0.181281,0.485504,0.46299,0.719071
+Scale=2.725,2.725,2.725
+Flags=1
+
+[ENTRY]
+ID=151045407
+Asset=Prop-Skrill_Buildings#Prop-Skrill_Mound
+Pos=62078,921.049,60027
+Orient=0,0,0,1
+Scale=1,1,1
+Flags=1
+

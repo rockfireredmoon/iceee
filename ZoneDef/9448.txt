@@ -1,0 +1,13 @@
+[ENTRY]
+ID=9448
+ACCOUNTID=557
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=birch
+GroveName=birch
+WarpName=birch1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

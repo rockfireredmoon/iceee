@@ -1,0 +1,15 @@
+[ENTRY]
+ID=12896
+ACCOUNTID=988
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=Sunrise
+ShardName=ashford
+GroveName=ashford
+WarpName=ashford1
+DropRateProfile=standard
+Grove=1
+EnvironmentCycle=1
+BuildPermission=account,988,0,0,13,23
+DefLoc=2932,258,3911
+

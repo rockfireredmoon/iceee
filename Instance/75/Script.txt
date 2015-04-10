@@ -1,0 +1,302 @@
+; SCRIPT OBJECTIVE:
+; The boss (Father Grundy) stands alone in the boss room.  Once he drops below 75%
+; health, it triggers the first wave of spawns: two sub-bosses (Uncle Moldyfork,
+; Mother Cruella) which appear at their respective coffins on each side of the room.
+; Once spawned, they will each begin walking toward another coffin.
+; If they manage to arrive at their respective coffins, yet another sub-boss will
+; be spawned.  So players are forced to deal with at least 3 bosses at once, but if
+; they fail to act quickly enough to aggro Moldyfork and Cruella then there can
+; potentially be 5 bosses in the room at once.
+
+; This is the first script to utilize a new mechanism built into the script system for
+; jumps to script labels to be queued or delayed, and processed at the first available
+; opportunity.  This script is set up to trigger new events which will be designed to
+; re-iterate themselves as long as required (if they must iterate at all).
+
+
+; Hierarchy logic: Nested events require the event before to be completed.  Once an
+; event is completed, it does not need to be performed again.  Items marked (repeat)
+; will re-fire until they are completed.
+;
+; Grundy: Search (repeat)
+;   Grundy: Wait for 75% (repeat)
+;     Cruella: Spawn
+;       Cruella: Search (repeat)
+;         Cruella: Walk
+;           Cruella: Spawn Relative
+;             Relative: Force Aggro
+;             Cruella: Force Aggro
+;     Moldyfork: Spawn
+;       Moldyfork: Search (repeat)
+;         Moldyfork: Walk
+;           Moldyfork: Spawn Relative
+;             Relative: Force Aggro
+;             Moldyfork: Force Aggro
+
+#name Folkirk_Instance
+#speed 25
+#queue_jumps call
+#flag report_all 1
+
+#symbol SPAWNPOINT_MOLDYFORK  1104027
+#symbol SPAWNPOINT_CRUELLA    1104028
+#symbol SPAWNPOINT_MOLDYFORK_REINFORCE  1114854
+#symbol SPAWNPOINT_CRUELLA_REINFORCE    1114853
+
+#symbol CDEF_FATHER_GRUNDY 1261
+#symbol CDEF_MOLDYFORK 1262
+#symbol CDEF_CRUELLA 1263
+#symbol CDEF_MOLDYFORK_SPAWN 3660
+#symbol CDEF_CRUELLA_SPAWN 3660
+
+#location LOC_BOSS_ROOM 3184 3798 3716 4149
+; #location LOC_CRUELLA_SPAWN 3601 3937 3661 3997
+; #location LOC_MOLDYFORK_SPAWN 3237 3939 3297 3999
+#location_br LOC_CRUELLA_REINFORCE 3571 3821 30
+#location_br LOC_MOLDYFORK_REINFORCE 3339 3823 30
+
+set ITERATOR 0
+set TEMPSIZE 0
+set TEMPCID 0
+set TEMPCDEF 0
+set TEMP 0
+set TARGET 0
+set CID_GRUNDY 0
+set CID_MOLDYFORK 0
+set CID_CRUELLA 0
+
+; We need this label, hardcoded in the server as the entry point for instance scripts.
+:init
+queue_event "eventGrundySearch" 5000
+
+:main
+exec_queue
+wait 100
+goto main
+
+
+
+
+:findInResultArray
+pop TEMPCDEF
+set ITERATOR 0
+iarrsize RESULTARRAY TEMPSIZE
+if ITERATOR < TEMPSIZE
+  iarrvalue RESULTARRAY ITERATOR TEMPCID
+  get_cdef TEMPCID TEMP
+  if TEMP = TEMPCDEF
+    pushvar TEMPCID
+    return
+  endif
+  inc ITERATOR
+  recompare
+endif
+pushint 0
+return
+
+
+
+:eventGrundySearch
+print ":eventGrundySearch"
+if CID_GRUNDY != 0
+  return
+endif
+scan_npc_cid LOC_BOSS_ROOM RESULTARRAY
+pushint CDEF_FATHER_GRUNDY
+call findInResultArray
+pop CID_GRUNDY
+
+if CID_GRUNDY = 0
+  queue_event "eventGrundySearch" 5000
+  return
+else
+  queue_event "eventGrundyHealth" 1000
+endif
+return
+
+
+
+:eventGrundyHealth
+print ":eventGrundyHealth"
+get_health_percent CID_GRUNDY TEMP
+if TEMP > 75
+  queue_event "eventGrundyHealth" 1000
+else
+  queue_event "eventSpawnMinibosses" 0
+endif
+return
+
+
+
+:eventSpawnMinibosses
+print ":eventSpawnMinibosses"
+spawn SPAWNPOINT_MOLDYFORK
+spawn SPAWNPOINT_CRUELLA
+queue_event "eventMoldyforkSearch" 0
+queue_event "eventCruellaSearch" 0
+return
+
+
+
+:eventMoldyforkSearch
+print ":eventMoldyforkSearch"
+if CID_MOLDYFORK != 0
+  return
+endif
+
+scan_npc_cid LOC_BOSS_ROOM RESULTARRAY
+
+pushint CDEF_MOLDYFORK
+call findInResultArray
+pop CID_MOLDYFORK
+
+if CID_MOLDYFORK = 0
+  queue_event "eventMoldyforkSearch" 5000
+else
+  queue_event "eventMoldyforkWalk" 0
+endif
+
+return
+
+
+
+:eventCruellaSearch
+print ":eventCruellaSearch"
+if CID_CRUELLA != 0
+  return
+endif
+
+scan_npc_cid LOC_BOSS_ROOM RESULTARRAY
+
+pushint CDEF_CRUELLA
+call findInResultArray
+pop CID_CRUELLA 
+
+if CID_CRUELLA = 0
+  queue_event "eventCruellaSearch" 5000
+else
+  queue_event "eventCruellaWalk" 1000
+endif
+
+return
+
+
+
+:eventMoldyforkWalk
+print ":eventMoldyforkWalk"
+order_walk CID_MOLDYFORK 3339 3822
+queue_event "eventMoldyforkWalking" 1000
+return
+
+
+
+:eventMoldyforkWalking
+print ":eventMoldyforkWalking"
+get_target CID_MOLDYFORK TEMP
+if TEMP = 0
+  scan_npc_cid LOC_MOLDYFORK_REINFORCE RESULTARRAY
+  pushint CDEF_MOLDYFORK
+  call findInResultArray
+  pop TEMP
+  if TEMP = 0
+    queue_event "eventMoldyforkWalking" 2000
+  else
+    queue_event "eventMoldyforkSpawnRelative" 0
+    queue_event "eventMoldyforkMain" 0
+  endif
+else
+  queue_event "eventMoldyforkMain" 1000
+endif
+return
+
+
+
+:eventCruellaWalk
+print ":eventCruellaWalk"
+order_walk CID_CRUELLA 3572 3819
+queue_event "eventCruellaWalking" 1000
+return
+
+
+
+:eventCruellaWalking
+print ":eventCruellaWalking"
+get_target CID_CRUELLA TEMP
+if TEMP = 0
+  scan_npc_cid LOC_CRUELLA_REINFORCE RESULTARRAY
+  pushint CDEF_CRUELLA
+  call findInResultArray
+  pop TEMP
+  if TEMP = 0
+    queue_event "eventCruellaWalking" 2000
+  else
+    queue_event "eventCruellaSpawnRelative" 0
+    queue_event "eventCruellaMain" 0
+  endif
+else
+  queue_event "eventMoldyforkMain" 1000
+endif
+return
+
+
+
+:eventMoldyforkSpawnRelative
+print ":eventMoldyforkSpawnRelative"
+spawn SPAWNPOINT_MOLDYFORK_REINFORCE
+return
+
+
+
+:eventMoldyforkMain
+print ":eventMoldyforkMain"
+if CID_MOLDYFORK = 0
+  return
+endif
+queue_event "eventMoldyforkMain" 5000
+
+get_target CID_MOLDYFORK TARGET
+if TARGET != 0
+  return
+endif
+
+if CID_GRUNDY != 0
+  get_target CID_GRUNDY TARGET
+  if TARGET != 0
+    set_target CID_MOLDYFORK TARGET
+  endif
+endif
+
+return
+
+
+
+:eventCruellaSpawnRelative
+print ":eventCruellaSpawnRelative"
+spawn SPAWNPOINT_CRUELLA_REINFORCE
+return
+
+
+
+:eventCruellaMain
+if CID_CRUELLA = 0
+  return
+endif
+
+print ":eventCruellaMain"
+queue_event "eventCruellaMain" 5000
+
+get_target CID_CRUELLA TARGET
+if TARGET != 0
+  return
+endif
+
+if CID_GRUNDY != 0
+  get_target CID_GRUNDY TARGET
+  if TARGET != 0
+    set_target CID_CRUELLA TARGET
+  endif
+endif
+return
+
+
+

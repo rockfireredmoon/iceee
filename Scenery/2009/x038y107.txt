@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151012847
+Asset=CL-RocNest1
+Name=9
+Pos=29230.7,1144.51,80321
+Orient=0,0,0,1
+Scale=1.65,1.65,1.65
+Flags=1
+

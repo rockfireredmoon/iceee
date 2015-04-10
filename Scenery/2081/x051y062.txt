@@ -1,0 +1,17 @@
+[ENTRY]
+ID=1358954844
+Asset=Prop-Boulder5
+Name=81
+Pos=51115.2,154.504,62791
+Orient=0.0770295,-0.105304,-0.726948,0.674184
+Scale=6.75,6.75,6.75
+Flags=1
+
+[ENTRY]
+ID=1358966687
+Asset=Prop-Boulder5
+Name=81
+Pos=51292,148.375,62589.9
+Orient=0,0,0,1
+Scale=1,1,1
+

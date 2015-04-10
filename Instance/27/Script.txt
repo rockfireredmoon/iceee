@@ -1,0 +1,20 @@
+:init
+set killcount 0
+end
+
+; Step-up spawn for Zimbaut
+:onKill_97
+:onKill_98
+:onKill_99
+:onKill_100
+:onKill_101
+:onKill_102
+inc killcount
+if killcount >= 7
+  spawn 1029374
+end
+
+; Cyclona's boss chest
+:onKill_1841
+spawn 452985536
+end

@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151053995
+Asset=Manipulator-SpawnPoint
+Pos=55625.4,361.909,40456
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=2a_suf_trees
+outerRadius=30
+

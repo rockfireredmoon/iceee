@@ -1,0 +1,8 @@
+[ENTRY]
+ID=1358964775
+Asset=Prop-Hill_Tree#Prop-Hill_Tree4
+Pos=44009,171.094,60569
+Orient=0,-0.999168,0,0.0407852
+Scale=1.375,1.375,1.375
+Flags=1
+

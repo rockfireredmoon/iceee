@@ -1,0 +1,17 @@
+[ENTRY]
+ID=151008030
+Asset=Prop-Goliath_Mound_Desert1
+Pos=26110.3,307.285,83638
+Orient=0,0.92269,0,0.385544
+Scale=2.2,2.2,2.2
+Flags=1
+
+[ENTRY]
+ID=151033996
+Asset=Manipulator-SpawnPoint
+Pos=26114.6,366.185,83426
+Orient=0,0.659385,0,0.751806
+Scale=1,1,1
+spawnPackage=5_sandGoliathCamps_47
+outerRadius=1
+

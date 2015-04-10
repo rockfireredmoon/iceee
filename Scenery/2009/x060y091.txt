@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151010353
+Asset=Sick-Rotted_Forest?d=0.9&amp;s=231567&amp;sz=800
+Name=9
+Pos=45702.5,277.455,68794
+Orient=0,0.049979,0,0.99875
+Scale=1.15,1.15,1.15
+Flags=1
+

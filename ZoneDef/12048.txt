@@ -1,0 +1,13 @@
+[ENTRY]
+ID=12048
+ACCOUNTID=882
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=fantasmano
+GroveName=fantasmano
+WarpName=fantasmano1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

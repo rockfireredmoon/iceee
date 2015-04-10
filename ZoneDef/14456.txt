@@ -1,0 +1,13 @@
+[ENTRY]
+ID=14456
+ACCOUNTID=1183
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=oakwood
+GroveName=oakwood
+WarpName=oakwood1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

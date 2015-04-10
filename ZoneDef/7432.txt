@@ -1,0 +1,13 @@
+[ENTRY]
+ID=7432
+ACCOUNTID=305
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=Corsica
+ShardName=unnoticed
+GroveName=unnoticed
+WarpName=unnoticed1
+Grove=1
+EnvironmentCycle=1
+DefLoc=2824,258,3896
+

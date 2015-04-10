@@ -1,0 +1,4 @@
+; Abbess Meandra boss chest
+:onKill_1835
+spawn 503318819
+end

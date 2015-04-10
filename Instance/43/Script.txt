@@ -1,0 +1,16 @@
+:init
+set bizzariostep 0
+end
+
+; Scripted call from the spawn package
+; Note: there are 73 spawn points.
+:2_ba_BizzarioStep_36
+inc bizzariostep 
+if bizzariostep = 32
+  spawn_at 721421920 618
+end
+
+; Swirling Madness's Treasure
+:onKill_2502
+spawn 721422274
+end

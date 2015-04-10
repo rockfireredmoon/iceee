@@ -1,0 +1,17 @@
+[ENTRY]
+ID=151031614
+Asset=Manipulator-SpawnPoint
+Pos=38073,170.053,68466
+Orient=0,0,0,1
+Scale=1,1,1
+innerRadius=65
+spawnPackage=5_wilds_33_34
+outerRadius=70
+
+[ENTRY]
+ID=151062131
+Asset=CL-Roadside_Desert4
+Pos=37647.7,191.909,68652.3
+Orient=-0.0569331,0.649369,-0.0432828,0.757103
+Scale=1,1,1
+

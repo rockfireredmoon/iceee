@@ -1,0 +1,15 @@
+[ENTRY]
+ID=10504
+ACCOUNTID=689
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=TarPitNight
+ShardName=tiraw
+GroveName=tiraw
+WarpName=tiraw1
+DropRateProfile=standard
+Grove=1
+EnvironmentCycle=0
+BuildPermission=account,689,0,0,3,3
+DefLoc=3578,703,2994
+

@@ -1,0 +1,13 @@
+[ENTRY]
+ID=7472
+ACCOUNTID=310
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=bigrustybots
+GroveName=bigrustybots
+WarpName=bigrustybots1
+Grove=1
+EnvironmentCycle=1
+DefLoc=2958,260,3821
+

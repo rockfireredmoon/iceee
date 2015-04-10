@@ -1,0 +1,9 @@
+[ENTRY]
+ID=1358955579
+Asset=CL-Wooden_Fence1#CL-Wooden_Fence1
+Name=81
+Pos=56322.4,105.397,59749
+Orient=0.111419,0.834228,0.0292608,0.539253
+Scale=1.5,1.5,1.5
+Flags=1
+

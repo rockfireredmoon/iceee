@@ -1,0 +1,14 @@
+[ENTRY]
+ID=151025339
+Asset=CL-Swamp-BullRushes2#CL-Swamp-BullRushes2
+Pos=53080.4,96.841,43403
+Orient=0,0,0,1
+Scale=1.5,1.5,1.5
+
+[ENTRY]
+ID=151025340
+Asset=CL-Swamp-BullRushes2
+Pos=53206.5,110.478,43404
+Orient=0,0.976071,0,-0.217452
+Scale=1.5,1.5,1.5
+

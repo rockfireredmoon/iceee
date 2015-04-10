@@ -1,0 +1,16 @@
+[ENTRY]
+ID=151012681
+Asset=CL-Mushroom_Rotted2#CL-Mushroom_Rotted2
+Pos=49325.3,503.852,74998
+Orient=0,0,0,1
+Scale=1.825,1.825,1.825
+Flags=1
+
+[ENTRY]
+ID=151015506
+Asset=CL-RottedPine4#CL-RottedPine4
+Pos=49412.4,756.423,74932
+Orient=0,0.514136,0,0.857709
+Scale=3.525,3.525,3.525
+Flags=1
+

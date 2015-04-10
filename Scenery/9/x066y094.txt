@@ -1,0 +1,17 @@
+[ENTRY]
+ID=151012587
+Asset=CL-Sick-Rotted_Forest3
+Pos=49518.8,207.732,71156
+Orient=0,0,0,1
+Scale=1.875,1.875,1.875
+Flags=1
+
+[ENTRY]
+ID=151024221
+Asset=Manipulator-SpawnPoint
+Pos=49754.6,210.472,71168
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=10_bxb_wilds_38_40
+outerRadius=10
+

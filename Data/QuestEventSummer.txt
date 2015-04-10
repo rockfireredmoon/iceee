@@ -1,0 +1,75 @@
+; Gift
+[ENTRY]
+ID=10001
+Title=A Special Gift
+BodyText=Bark! Ah, this time of year. How dreadful. Makes me long for the cold, desolate days of winter. Some beasts would disagree. I can only assume they're insane.
+
+However, there is a matter of partial significance. About a year ago, beasts suddenly found themselves capable of returning to this world. Many have arrived, if only to briefly observe the subtle changes from ages past.
+
+Those that have forged a new life here are brave, or simply insane, as already noted. To anyone who wishes to persist here among these quiet times, I have prepared a small gift. Speak to me when you're ready.
+CompleteText=Very well. Here you go.
+
+These health potions will aid you well in combat, so use them wisely.  The scrolls can boost the movement of yourself or ally, above and beyond what you are normally capable of.
+Level=15
+Suggested=15
+Exp=2600
+PartySize=1
+NumRewards=0
+Coin=250
+Unabandon=0
+QuestGiverID=10000
+QuestEnderID=10000
+Repeat=0
+RepeatDelay=D60
+sGiver=54895,147,63363,81
+sEnder=54895,147,63363,81
+[ACT]
+Act.BodyText=Speak to the wolf for your reward.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Talk to the Wolf
+Obj.0.complete=0
+Obj.0.myCreatureDefID=10000
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=54895,147,63363,81;
+RewardItem.0=40072,10,1     ; Full healing potion.
+RewardItem.1=2050001,20,1   ; Scroll of Bounder Dash
+
+[ENTRY]
+ID=10002
+Requires=10001
+Title=Another Special Gift
+BodyText=You're back again?  You creatures really are annoyi... I mean persistent. But I do have something else to offer.
+
+You may select one stack of scrolls.  Each kind may be used by any class.  Note that each of the abilities offered here are maximum tier of power.  However, they behave exactly like normal skills, so watch out for cooldowns.
+CompleteText=Choose wisely.
+Level=25
+Suggested=25
+Exp=3200
+PartySize=1
+NumRewards=1
+Coin=250
+Unabandon=0
+QuestGiverID=10000
+QuestEnderID=10000
+Repeat=0
+RepeatDelay=D60
+sGiver=54895,147,63363,81
+sEnder=54895,147,63363,81
+[ACT]
+Act.BodyText=Speak to the wolf for your reward.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Talk to the Wolf
+Obj.0.complete=0
+Obj.0.myCreatureDefID=10000
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=54895,147,63363,81;
+RewardItem.0=2050002,10,0   ; Scroll of Earthshaker
+RewardItem.1=2050003,10,0   ; Scroll of Fade
+RewardItem.2=2050004,10,0   ; Scroll of Frost Shield
+RewardItem.3=2050005,10,0   ; Scroll of Heart of Gaia

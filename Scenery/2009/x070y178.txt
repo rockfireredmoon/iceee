@@ -1,0 +1,8 @@
+[ENTRY]
+ID=151045678
+Asset=Manipulator-PathNode
+Name=9
+Pos=52964,351.285,133598
+Orient=0,0,0,1
+Scale=1,1,1
+

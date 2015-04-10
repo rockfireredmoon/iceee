@@ -1,0 +1,17 @@
+[ENTRY]
+ID=1358960481
+Asset=Manipulator-SpawnPoint
+Name=81
+Pos=57954.5,275.433,57004
+Orient=0,0,0,1
+Scale=1,1,1
+Layer=1358955907
+
+[ENTRY]
+ID=1358964303
+Asset=CL-Hills_Tree3#CL-Hills_Tree3
+Name=81
+Pos=57605.7,191.886,57413
+Orient=0,0,0,1
+Scale=1.475,1.475,1.475
+

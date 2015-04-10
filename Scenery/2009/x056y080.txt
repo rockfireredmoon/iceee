@@ -1,0 +1,8 @@
+[ENTRY]
+ID=151059871
+Asset=Prop-Teddy_Bear#Prop-Teddy_Bear
+Name=9
+Pos=42483.9,427.294,60017.4
+Orient=0,0.356949,0,0.934124
+Scale=1,1,1
+

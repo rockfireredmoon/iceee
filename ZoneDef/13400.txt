@@ -1,0 +1,13 @@
+[ENTRY]
+ID=13400
+ACCOUNTID=1051
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=hirvi
+GroveName=hirvi
+WarpName=hirvi1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

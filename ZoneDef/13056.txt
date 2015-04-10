@@ -1,0 +1,13 @@
+[ENTRY]
+ID=13056
+ACCOUNTID=1008
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=crazy
+GroveName=crazy
+WarpName=crazy1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

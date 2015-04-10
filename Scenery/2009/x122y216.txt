@@ -1,0 +1,17 @@
+[ENTRY]
+ID=151015089
+Asset=CL-UndeadTree1#CL-UndeadTree1
+Name=9
+Pos=92128.2,613.056,162101
+Orient=0,0,0,1
+Scale=1,1,1
+Flags=1
+
+[ENTRY]
+ID=151017541
+Asset=Prop-Lamp_Post_Undead1#Prop-Lamp_Post_Undead1
+Name=9
+Pos=91559.2,667.275,162271
+Orient=0,0,0,1
+Scale=1.275,1.275,1.275
+

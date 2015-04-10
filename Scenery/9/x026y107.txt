@@ -1,0 +1,8 @@
+[ENTRY]
+ID=151007746
+Asset=Prop-Shipwreck-Anubian3
+Pos=19731.2,-55.2594,80827
+Orient=0,-0.416871,0,0.908966
+Scale=10,10,10
+Flags=1
+

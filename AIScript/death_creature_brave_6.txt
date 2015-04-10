@@ -1,0 +1,52 @@
+#name death_creature_brave_6
+
+; REVISED - Data Rip
+; 5059 - Deathly, 5 Will, buff
+; 5157 - Assault, 3 might, add mcharge
+; 5204 - Wither, 4 will, add wcharge
+; 5303 - Malice Blast, 1 will, need 1-3 wcharge
+; 32766 - melee
+; 5221 - Bash (not used in the ability rip)
+; 5303 - Malice Blast (not used in the ability rip)
+
+set var 0
+use 5059
+
+:begin
+call waitfortarget
+use 32766
+
+getwillcharge var
+if var >= 2
+  use 5303
+  wait 1000
+endif
+
+getwill var
+if var >= 3
+  use 5204
+  wait 2000
+  goto begin
+endif
+
+getmightcharge var
+if var >= 2
+  use 5221
+  wait 1000
+endif
+
+getmight var
+if var >= 3
+  use 5157
+  wait 2000
+endif 
+
+goto begin
+
+:waitfortarget
+has_target var
+if var = 0
+  wait 2000
+  goto waitfortarget
+endif
+return

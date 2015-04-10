@@ -1,0 +1,13 @@
+[ENTRY]
+ID=9528
+ACCOUNTID=567
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=EarthriseDay
+ShardName=zelin
+GroveName=zelin
+WarpName=zelin1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

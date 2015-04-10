@@ -1,0 +1,16 @@
+[ENTRY]
+ID=151014119
+Asset=Manipulator-SpawnPoint
+Pos=35521.2,218.898,59637
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=4_hwo_shroomieShrine_32_33
+outerRadius=10
+
+[ENTRY]
+ID=151022643
+Asset=CL-RottedPine2#CL-RottedPine2
+Pos=35326.6,242.753,59814
+Orient=0,-0.981853,0,0.189641
+Scale=3.95,3.95,3.95
+

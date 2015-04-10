@@ -1,0 +1,410 @@
+; Template items for derived sets. These are level 1 items costing 1 copper
+; that can be generated in the server with a preset refashioned look
+; applied to them.  Their refashioned appearances can be transferred for
+; minimal cost.
+; NOTE! These IDs are hardcoded into the server.
+
+[ENTRY]
+mID=8900
+mType=3
+mDisplayName=Refashionable Boots
+mAppearance=[{["c"]={["type"]="Armor-Cloth-Low7",["colors"]=["625141","625141","aa7429","625141","625141"]}},null]
+mIcon=Icon-32-C_Armor-Feet02.png|Icon-32-BG-Blue.png
+mLevel=1
+mEquipType=16
+mArmorType=2
+mValue=1
+mQualityLevel=1
+mMinUseLevel=1
+
+[ENTRY]
+mID=8901
+mType=3
+mDisplayName=Refashionable Vest
+mAppearance=[{["c"]={["type"]="Armor-CC-Clothing6",["colors"]=["d29e6f","a5a19c","552c26","d29e6f"]}},null]
+mIcon=Icon-32-C_Armor-Chest02.png|Icon-32-BG-Blue.png
+mLevel=1
+mEquipType=11
+mArmorType=1
+mValue=1
+mQualityLevel=1
+mMinUseLevel=1
+
+[ENTRY]
+mID=8902
+mType=3
+mDisplayName=Refashionable Gloves
+mAppearance=[{["c"]={["type"]="Armor-Cloth-Low7",["colors"]=["d4b351","b38f68","7c6f61","c99877","b76057"]}},null]
+mIcon=Icon-32-C_Armor-Hands01.png|Icon-32-BG-Blue.png
+mLevel=1
+mEquipType=13
+mArmorType=1
+mValue=1
+mQualityLevel=1
+mMinUseLevel=1
+
+[ENTRY]
+mID=8903
+mType=3
+mDisplayName=Refashionable Leggings
+mAppearance=[{["c"]={["type"]="Armor-Cloth-Low7",["colors"]=["ffd761","ffd761","ffd761","ffd761","ffd761"]}},null]
+mIcon=Icon-32-M_Armor-Legs01.png|Icon-32-BG-Blue.png
+mLevel=1
+mEquipType=15
+mArmorType=1
+mValue=1
+mQualityLevel=1
+mMinUseLevel=1
+
+[ENTRY]
+mID=8904
+mType=3
+mDisplayName=Refashionable Sleeves
+mAppearance=[{["c"]={["type"]="Armor-Cloth-Male-Casual1",["colors"]=["515534","515534","aa8f25","515534","515534","515534"]}},null]
+mIcon=Icon-32-Armor-Arms03.png|Icon-32-BG-Blue.png
+mLevel=1
+mEquipType=12
+mArmorType=1
+mValue=1
+mQualityLevel=1
+mMinUseLevel=1
+
+[ENTRY]
+mID=8905
+mType=3
+mDisplayName=Refashionable Buckler
+mAppearance=[{["a"]={["type"]="Item-Shield-Basic3",["colors"]=["D4D48C","FFD6B1","AAA98D"]}},null]
+mIcon=Icon-32-Shield2.png|Icon-32-BG-Blue.png
+mLevel=1
+mEquipType=7
+mArmorType=5
+mValue=1
+mQualityLevel=1
+mMinUseLevel=1
+
+[ENTRY]
+mID=8906
+mType=3
+mDisplayName=Refashionable Collar
+mAppearance=[{["c"]={["type"]="Armor-Heavy-Mid3",["colors"]=["ab8a59","dd6c25","1f7c46","5f4d39","71523e","69987a","d29775","71523e"]}},null]
+mIcon=Icon-32-Armor-Neck03.png|Icon-32-BG-Blue.png
+mLevel=1
+mEquipType=9
+mArmorType=1
+mValue=1
+mQualityLevel=1
+mMinUseLevel=1
+
+[ENTRY]
+mID=8907
+mType=3
+mDisplayName=Refashionable Belt
+mAppearance=[{["c"]={["type"]="Armor-Cloth-Low2",["colors"]=["f9e1bb","71523e","e8af5e","6e85bb"]}},null]
+mIcon=Icon-32-Armor-Belts02.png|Icon-32-BG-Blue.png
+mLevel=1
+mEquipType=14
+mArmorType=1
+mValue=1
+mQualityLevel=1
+mMinUseLevel=1
+
+
+[ENTRY]
+mID=8908
+mType=3
+mDisplayName=Refashionable Shoulderpads
+mAppearance=[{["a"]={["type"]="Armor-Medium-Low3-Left_Pauldron",["colors"]=["595828","D4D4B0","877A62"]}},{["a"]={["type"]="Armor-Medium-Low3-Right_Pauldron",["colors"]=["595828","BFBF9F","877A62"]}}]
+mIcon=Icon-32-H_Armor-Shldr04.png|Icon-32-BG-Blue.png
+mLevel=1
+mEquipType=10
+mArmorType=1
+mValue=1
+mQualityLevel=1
+mMinUseLevel=1
+
+
+[ENTRY]
+mID=8909
+mType=3
+mDisplayName=Refashionable Cap
+mAppearance=[{["a"]={["type"]="Armor-Cloth-Low7-Helmet",["colors"]=["D4B293","7C6F61"]}},null]
+mIcon=Icon-32-C_Armor-Head01.png|Icon-32-BG-Blue.png
+mLevel=1
+mEquipType=8
+mArmorType=1
+mValue=1
+mQualityLevel=1
+mMinUseLevel=1
+
+; Invisible Items
+
+[ENTRY]
+mID=8950
+mType=3
+mDisplayName=Invisible Boots
+mAppearance=[{["a"]={["type"]="Item-Invisible"}},null]
+mIcon=Icon-32-C_Armor-Feet02.png|Icon-32-BG-Blue.png
+mLevel=1
+mEquipType=16
+mArmorType=2
+mValue=2000
+mQualityLevel=1
+mMinUseLevel=1
+mFlavorText=Refashioning this new look will turn your item invisible.
+
+[ENTRY]
+mID=8951
+mType=3
+mDisplayName=Invisible Vest
+mAppearance=[{["a"]={["type"]="Item-Invisible"}},null]
+mIcon=Icon-32-C_Armor-Chest02.png|Icon-32-BG-Blue.png
+mLevel=1
+mEquipType=11
+mArmorType=1
+mValue=4000
+mQualityLevel=1
+mMinUseLevel=1
+mFlavorText=Refashioning this new look will turn your item invisible.
+
+[ENTRY]
+mID=8952
+mType=3
+mDisplayName=Invisible Gloves
+mAppearance=[{["a"]={["type"]="Item-Invisible"}},null]
+mIcon=Icon-32-C_Armor-Hands01.png|Icon-32-BG-Blue.png
+mLevel=1
+mEquipType=13
+mArmorType=1
+mValue=2000
+mQualityLevel=1
+mMinUseLevel=1
+mFlavorText=Refashioning this new look will turn your item invisible.
+
+[ENTRY]
+mID=8953
+mType=3
+mDisplayName=Invisible Leggings
+mAppearance=[{["a"]={["type"]="Item-Invisible"}},null]
+mIcon=Icon-32-M_Armor-Legs01.png|Icon-32-BG-Blue.png
+mLevel=1
+mEquipType=15
+mArmorType=1
+mValue=32000
+mQualityLevel=1
+mMinUseLevel=1
+mFlavorText=Refashioning this new look will turn your item invisible.  Public indecency has its cost!
+
+[ENTRY]
+mID=8954
+mType=3
+mDisplayName=Invisible Sleeves
+mAppearance=[{["a"]={["type"]="Item-Invisible"}},null]
+mIcon=Icon-32-Armor-Arms03.png|Icon-32-BG-Blue.png
+mLevel=1
+mEquipType=12
+mArmorType=1
+mValue=2000
+mQualityLevel=1
+mMinUseLevel=1
+mFlavorText=Refashioning this new look will turn your item invisible.
+
+[ENTRY]
+mID=8956
+mType=3
+mDisplayName=Invisible Collar
+mAppearance=[{["a"]={["type"]="Item-Invisible"}},null]
+mIcon=Icon-32-Armor-Neck03.png|Icon-32-BG-Blue.png
+mLevel=1
+mEquipType=9
+mArmorType=1
+mValue=2000
+mQualityLevel=1
+mMinUseLevel=1
+mFlavorText=Refashioning this new look will turn your item invisible.
+
+[ENTRY]
+mID=8957
+mType=3
+mDisplayName=Invisible Belt
+mAppearance=[{["a"]={["type"]="Item-Invisible"}},null]
+mIcon=Icon-32-Armor-Belts02.png|Icon-32-BG-Blue.png
+mLevel=1
+mEquipType=14
+mArmorType=1
+mValue=2000
+mQualityLevel=1
+mMinUseLevel=1
+mFlavorText=Refashioning this new look will turn your item invisible.
+
+
+[ENTRY]
+mID=8958
+mType=3
+mDisplayName=Invisible Shoulderpads
+mAppearance=[{["a"]={["type"]="Item-Invisible"}},{["a"]={["type"]="Item-Invisible"}}]
+mIcon=Icon-32-H_Armor-Shldr04.png|Icon-32-BG-Blue.png
+mLevel=1
+mEquipType=10
+mArmorType=1
+mValue=2000
+mQualityLevel=1
+mMinUseLevel=1
+mFlavorText=Refashioning this new look will turn your item invisible.
+
+[ENTRY]
+mID=8959
+mType=3
+mDisplayName=Invisible Cap
+mAppearance=[{["a"]={["type"]="Item-Invisible"}},null]
+mIcon=Icon-32-C_Armor-Head01.png|Icon-32-BG-Blue.png
+mLevel=1
+mEquipType=8
+mArmorType=1
+mValue=4000
+mQualityLevel=1
+mMinUseLevel=1
+mFlavorText=Refashioning this new look will turn your item invisible.
+
+; Reset refashion
+
+[ENTRY]
+mID=8980
+mType=3
+mDisplayName=Original Boots
+mAppearance=[{["c"]={["type"]="Armor-Cloth-Low7",["colors"]=["625141","625141","aa7429","625141","625141"]}},null]
+mIcon=Icon-32-C_Armor-Feet02.png|Icon-32-BG-Blue.png
+mLevel=1
+mEquipType=16
+mArmorType=2
+mValue=1000
+mQualityLevel=1
+mMinUseLevel=1
+mFlavorText=Refashioning this new look will restore the original appearance of your item.
+
+[ENTRY]
+mID=8981
+mType=3
+mDisplayName=Original Vest
+mAppearance=[{["c"]={["type"]="Armor-CC-Clothing6",["colors"]=["d29e6f","a5a19c","552c26","d29e6f"]}},null]
+mIcon=Icon-32-C_Armor-Chest02.png|Icon-32-BG-Blue.png
+mLevel=1
+mEquipType=11
+mArmorType=1
+mValue=1000
+mQualityLevel=1
+mMinUseLevel=1
+mFlavorText=Refashioning this new look will restore the original appearance of your item.
+
+[ENTRY]
+mID=8982
+mType=3
+mDisplayName=Original Gloves
+mAppearance=[{["c"]={["type"]="Armor-Cloth-Low7",["colors"]=["d4b351","b38f68","7c6f61","c99877","b76057"]}},null]
+mIcon=Icon-32-C_Armor-Hands01.png|Icon-32-BG-Blue.png
+mLevel=1
+mEquipType=13
+mArmorType=1
+mValue=1000
+mQualityLevel=1
+mMinUseLevel=1
+mFlavorText=Refashioning this new look will restore the original appearance of your item.
+
+[ENTRY]
+mID=8983
+mType=3
+mDisplayName=Original Leggings
+mAppearance=[{["c"]={["type"]="Armor-Cloth-Low7",["colors"]=["ffd761","ffd761","ffd761","ffd761","ffd761"]}},null]
+mIcon=Icon-32-M_Armor-Legs01.png|Icon-32-BG-Blue.png
+mLevel=1
+mEquipType=15
+mArmorType=1
+mValue=1000
+mQualityLevel=1
+mMinUseLevel=1
+mFlavorText=Refashioning this new look will restore the original appearance of your item.
+
+[ENTRY]
+mID=8984
+mType=3
+mDisplayName=Original Sleeves
+mAppearance=[{["c"]={["type"]="Armor-Cloth-Male-Casual1",["colors"]=["515534","515534","aa8f25","515534","515534","515534"]}},null]
+mIcon=Icon-32-Armor-Arms03.png|Icon-32-BG-Blue.png
+mLevel=1
+mEquipType=12
+mArmorType=1
+mValue=1000
+mQualityLevel=1
+mMinUseLevel=1
+mFlavorText=Refashioning this new look will restore the original appearance of your item.
+
+[ENTRY]
+mID=8985
+mType=3
+mDisplayName=Original Buckler
+mAppearance=[{["a"]={["type"]="Item-Shield-Basic3",["colors"]=["D4D48C","FFD6B1","AAA98D"]}},null]
+mIcon=Icon-32-Shield2.png|Icon-32-BG-Blue.png
+mLevel=1
+mEquipType=7
+mArmorType=5
+mValue=1000
+mQualityLevel=1
+mMinUseLevel=1
+mFlavorText=Refashioning this new look will restore the original appearance of your item.
+
+[ENTRY]
+mID=8986
+mType=3
+mDisplayName=Original Collar
+mAppearance=[{["c"]={["type"]="Armor-Heavy-Mid3",["colors"]=["ab8a59","dd6c25","1f7c46","5f4d39","71523e","69987a","d29775","71523e"]}},null]
+mIcon=Icon-32-Armor-Neck03.png|Icon-32-BG-Blue.png
+mLevel=1
+mEquipType=9
+mArmorType=1
+mValue=1000
+mQualityLevel=1
+mMinUseLevel=1
+mFlavorText=Refashioning this new look will restore the original appearance of your item.
+
+[ENTRY]
+mID=8987
+mType=3
+mDisplayName=Original Belt
+mAppearance=[{["c"]={["type"]="Armor-Cloth-Low2",["colors"]=["f9e1bb","71523e","e8af5e","6e85bb"]}},null]
+mIcon=Icon-32-Armor-Belts02.png|Icon-32-BG-Blue.png
+mLevel=1
+mEquipType=14
+mArmorType=1
+mValue=1000
+mQualityLevel=1
+mMinUseLevel=1
+mFlavorText=Refashioning this new look will restore the original appearance of your item.
+
+
+[ENTRY]
+mID=8988
+mType=3
+mDisplayName=Original Shoulderpads
+mAppearance=[{["a"]={["type"]="Armor-Medium-Low3-Left_Pauldron",["colors"]=["595828","D4D4B0","877A62"]}},{["a"]={["type"]="Armor-Medium-Low3-Right_Pauldron",["colors"]=["595828","BFBF9F","877A62"]}}]
+mIcon=Icon-32-H_Armor-Shldr04.png|Icon-32-BG-Blue.png
+mLevel=1
+mEquipType=10
+mArmorType=1
+mValue=1000
+mQualityLevel=1
+mMinUseLevel=1
+mFlavorText=Refashioning this new look will restore the original appearance of your item.
+
+
+[ENTRY]
+mID=8989
+mType=3
+mDisplayName=Original Cap
+mAppearance=[{["a"]={["type"]="Armor-Cloth-Low7-Helmet",["colors"]=["D4B293","7C6F61"]}},null]
+mIcon=Icon-32-C_Armor-Head01.png|Icon-32-BG-Blue.png
+mLevel=1
+mEquipType=8
+mArmorType=1
+mValue=1000
+mQualityLevel=1
+mMinUseLevel=1
+mFlavorText=Refashioning this new look will restore the original appearance of your item.

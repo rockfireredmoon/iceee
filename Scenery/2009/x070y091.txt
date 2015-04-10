@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151016960
+Asset=Prop-Dungeon_Entrance-Crypt#Prop-Dungeon_Entrance-Crypt
+Name=9
+Pos=52546.8,536.22,68889
+Orient=0,0.119713,0,0.992809
+Scale=1.45,1.45,1.45
+Flags=1
+

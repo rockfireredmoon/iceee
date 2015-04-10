@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151044427
+Asset=Prop-BonesTex_A#Prop-Bones_RibsCage1
+Name=9
+Pos=83774.9,292.943,162314
+Orient=-0.223073,-0.0507716,0.130517,0.96469
+Scale=4.3,4.3,4.3
+Flags=1
+

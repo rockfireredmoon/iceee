@@ -1,0 +1,17 @@
+[ENTRY]
+ID=151047940
+Asset=Manipulator#Manipulator-PathNode
+Name=9
+Pos=49471.6,281.323,125500
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
+ID=151054223
+Asset=Effects#Par-Waves-1-Emitter
+Name=9
+Pos=48808.7,75.3518,125552
+Orient=0,0.407558,-0,-0.913179
+Scale=2.5,2.5,2.5
+Flags=1
+

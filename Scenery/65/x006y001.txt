@@ -1,0 +1,16 @@
+[ENTRY]
+ID=1090519117
+Asset=Prop-Door1#Prop-Door1
+Pos=6005,840,1340
+Orient=0,0.997189,0,0.0749295
+Scale=2.25,2.25,2.25
+Flags=1
+
+[ENTRY]
+ID=1090519120
+Asset=Prop-Door1
+Pos=6005,840,1380
+Orient=0,0,0,1
+Scale=2.25,2.25,2.25
+Flags=1
+

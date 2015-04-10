@@ -1,0 +1,7 @@
+[ENTRY]
+ID=151022745
+Asset=Environment-Marker?type=Forest
+Pos=29455.8,167.675,56960
+Orient=0,0,0,1
+Scale=7.95,7.95,7.95
+

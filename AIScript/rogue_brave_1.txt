@@ -1,0 +1,34 @@
+#name rogue_brave_1
+
+; 5165 - Assail - 3 might, add 1 mcharge
+; 5166 - Assail - 3 might, add 1 mcharge (same damage)
+; 5225 - Disembowel, 1 might, need 1-3 mcharge 
+; 32766 - melee
+
+set var 0
+
+:begin
+call waitfortarget
+use 32766
+
+getmightcharge var
+if var >= 1
+  use 5225
+  wait 1000
+endif
+
+getmight var
+if var >= 3
+  use 5165
+  wait 2000
+endif
+
+goto begin
+
+:waitfortarget
+has_target var
+if var = 0
+  wait 2000
+  goto waitfortarget
+endif
+return

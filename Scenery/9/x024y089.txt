@@ -1,0 +1,17 @@
+[ENTRY]
+ID=151001221
+Asset=Hill_Trees?d=0.9&s=871817&sz=800
+Pos=18032.6,189.913,67491
+Orient=0,-0.998444,0,0.0557676
+Scale=1,1,1
+Flags=1
+
+[ENTRY]
+ID=151021603
+Asset=Manipulator-SpawnPoint
+Pos=18268.7,192.568,67342
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=4_hwo_wilds_33_34
+outerRadius=10
+

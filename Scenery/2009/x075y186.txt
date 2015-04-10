@@ -1,0 +1,17 @@
+[ENTRY]
+ID=150998654
+Asset=Prop-Mills#Prop-Water_Mill
+Name=9
+Pos=56731.6,64.606,139696
+Orient=0,-0.948985,0,0.315322
+Scale=2,2,2
+
+[ENTRY]
+ID=151013353
+Asset=Prop-Fences#Prop-Wooden_Barricade1
+Name=9
+Pos=56483.9,215.192,140207
+Orient=-0.157449,0.692516,0.0677992,0.700738
+Scale=1.5,1.5,1.5
+Flags=1
+

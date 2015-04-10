@@ -1,0 +1,8 @@
+[ENTRY]
+ID=151052453
+Asset=Prop-Tribal_Furniture#Prop-Tribal_Lamp1
+Name=9
+Pos=18807.9,79.9213,54503.2
+Orient=0.0149573,0.0011239,0.0749213,0.997077
+Scale=4.375,4.375,4.375
+

@@ -1,0 +1,16 @@
+[ENTRY]
+ID=151010512
+Asset=Prop-Ground_Plant4#Prop-Ground_Plant4
+Pos=30185.1,286.087,68409
+Orient=0,0,0,1
+Scale=9.275,9.275,9.275
+Flags=1
+
+[ENTRY]
+ID=151023136
+Asset=CL-Rotted_Thicket1
+Pos=30439.1,303.48,68565
+Orient=0,-0.849481,0,0.52762
+Scale=4.375,4.375,4.375
+Flags=1
+

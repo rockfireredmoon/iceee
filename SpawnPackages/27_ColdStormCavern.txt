@@ -1,0 +1,66 @@
+[ENTRY]
+Name=1_dng_gc_FrontHalf_19_20
+Shares=60
+Spawn=97,10  ;Coldstorm Hag (19) at 0
+Spawn=98,10  ;Coldstorm Hag (20) at 3
+Spawn=99,10  ;Coldstorm Crone (19) at 0
+Spawn=100,10  ;Coldstorm Crone (20) at 15
+Spawn=101,10  ;Coldstorm Stormcaller (19) at 0
+Spawn=102,10  ;Coldstorm Stormcaller (20) at 0
+
+[ENTRY]
+Name=1_dng_gc_BackHalf_19_20
+Spawn=97,20  ;Coldstorm Hag (19) at 0
+Spawn=98,20  ;Coldstorm Hag (20) at 0
+Spawn=100,20  ;Coldstorm Crone (20) at 0
+Spawn=101,20  ;Coldstorm Stormcaller (19) at 2
+Spawn=102,20  ;Coldstorm Stormcaller (20) at 0
+
+[ENTRY]
+Name=1_coldstorm_coven_jezballa_20
+Spawn=104,100  ;Jezballa (20) at 60
+
+[ENTRY]
+Name=1a_ dng_cc_Cyclona_m_20
+Spawn=1841,100  ;Stormwitch Cyclona (20) at 0
+
+[ENTRY]
+Name=1a_dng_cc_obji_CyclonaLewt
+Spawn=1853,100  ;Cyclona's Treasure (1) [from creature file]
+
+[ENTRY]
+Name=1_dng_cc_FrontHalf_19_20
+Shares=60
+Spawn=97,10  ;Coldstorm Hag (19) at 0
+Spawn=98,10  ;Coldstorm Hag (20) at 0
+Spawn=99,10  ;Coldstorm Crone (19) at 0
+Spawn=100,10  ;Coldstorm Crone (20) at 0
+Spawn=101,10  ;Coldstorm Stormcaller (19) at 0
+Spawn=102,10  ;Coldstorm Stormcaller (20) at 0
+
+[ENTRY]
+Name=1_dng_cc_samhain_r_19
+Spawn=1579,50  ;Samhain (19) at 0
+Spawn=2439,50  ;Samhain (20) at 0
+
+[ENTRY]
+Name=1_dng_cc_BackHalf_19_20
+Shares=60
+Spawn=97,10  ;Coldstorm Hag (19) at 0
+Spawn=98,10  ;Coldstorm Hag (20) at 0
+Spawn=99,10  ;Coldstorm Crone (19) at 0
+Spawn=100,10  ;Coldstorm Crone (20) at 0
+Spawn=101,10  ;Coldstorm Stormcaller (19) at 0
+Spawn=102,10  ;Coldstorm Stormcaller (20) at 0
+
+[ENTRY]
+Name=1_dng_cc_samhain_r_19_SPAWNGARVEY
+Spawn=2437,100  ;Samhain (20) at 0
+
+[ENTRY]
+Name=1_dng_cc_garvey_k_20
+Spawn=2438,100  ;Garvey (20) [from creature file]
+
+[ENTRY]
+Name=1_dng_cc_custom_stepup_zimbaut
+Spawn=2776,100  ;Zimbaut (20) [from creature file]

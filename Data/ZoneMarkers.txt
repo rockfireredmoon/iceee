@@ -1,0 +1,230 @@
+; Defines locations for important objects in each zone.
+; For example, some server operations must check to see if the player
+; is within a sanctuary location.
+
+; Format:
+; Sanctuary=X,Y.Z,Bind Description Name,Server Map Name
+
+[ENTRY]
+ZoneID=23
+Sanctuary=1482.44,200,1714.19,Dungeon: Coastal Cave
+
+[ENTRY]
+ZoneID=24
+Sanctuary=1467.5,1107.58,1807.71,Dungeon: Grimfrost's Lair
+
+[ENTRY]
+ZoneID=26
+Sanctuary=1465.02,305,1623.29,Dungeon: The Down Below
+
+[ENTRY]
+ZoneID=27
+Sanctuary=2134.53,248.74,2166.58,Dungeon: Cold Storm Cavern
+
+[ENTRY]
+ZoneID=28
+Sanctuary=2171.27,290,5266.18,Dungeon: Underhenge
+
+[ENTRY]
+ZoneID=29
+Sanctuary=5178.01,200,724.452,Dungeon: Wilhelm's Crypt
+
+[ENTRY]
+ZoneID=30
+Sanctuary=3360.11,170,549.9,Dungeon: Abandoned Monastery
+
+[ENTRY]
+ZoneID=31
+Sanctuary=745.322,100,123.345,Dungeon: Ranch Cellar
+
+[ENTRY]
+ZoneID=32
+Sanctuary=1150.15,240,1815.21,Dungeon: Nottingham Castle
+
+[ENTRY]
+ZoneID=33
+Sanctuary=727.022,200,722.918,Dungeon: Broken Tower
+
+[ENTRY]
+ZoneID=36
+Sanctuary=1062.93,192.035,1136.89,Dungeon: Hollow Tree
+
+[ENTRY]
+ZoneID=37
+Sanctuary=3380.07,381.431,1697.99,Dungeon: Spibear Lair
+
+[ENTRY]
+ZoneID=38
+Sanctuary=3461.39,768.307,4984.94,Dungeon: Goliath Ruins
+
+[ENTRY]
+ZoneID=39
+Sanctuary=3560.7,221.606,2409.14,Dungeon: Forest Cavern
+
+[ENTRY]
+ZoneID=40
+Sanctuary=3014,340,1787.36,Dungeon: Manticore's Lair
+
+[ENTRY]
+ZoneID=41
+Sanctuary=664.406,50,845.438,Dungeon: Rapunzel's Tower
+
+[ENTRY]
+ZoneID=42
+Sanctuary=2358.08,100,2329.93,Dungeon: Brewery Cellar
+
+[ENTRY]
+ZoneID=43
+Sanctuary=2919.46,50,5044.42,Dungeon: Bremen Asylum
+
+[ENTRY]
+ZoneID=44
+Sanctuary=1072.37,506.523,958.038,Dungeon: Sea Cave
+
+[ENTRY]
+ZoneID=45
+Sanctuary=956.8,192.467,1122.83,Dungeon: Rotted Tree
+
+[ENTRY]
+ZoneID=47
+Sanctuary=2553.37,159.96,1813.05,Dungeon: Vespin Lair
+
+[ENTRY]
+ZoneID=48
+Sanctuary=4589.96,220,1421.09,Dungeon: Dark Depths
+
+[ENTRY]
+ZoneID=49
+Sanctuary=898.53,60,2027.16,Dungeon: Djinn Temple
+
+[ENTRY]
+ZoneID=58
+Sanctuary=14717.5,1511.22,31485.1,Earthrise: Highpoint
+Sanctuary=15585.4,1146.8,14052.3,Corsica: Northbeach
+Sanctuary=16726.3,1216.3,36693.9,Earthrise: Earthend
+Sanctuary=17832.4,1599.91,20622.6,Corsica: Southend
+Sanctuary=21071.6,1439.38,27592.8,Earthrise: Wayside War Camp
+
+[ENTRY]
+ZoneID=59
+Sanctuary=5822.23,684.726,5877.56,Mushroom Isle
+
+[ENTRY]
+ZoneID=60
+Sanctuary=4893.43,540.25,2585,Chunnel
+
+[ENTRY]
+ZoneID=61
+Sanctuary=2475.46,600,1681.78,Dungeon: Cazador Tunnel
+
+[ENTRY]
+ZoneID=62
+Sanctuary=1250.25,320,2031.42,Dungeon: Pridelord's Chamber
+
+[ENTRY]
+ZoneID=63
+Sanctuary=1564.88,1284.32,2047.21,Dungeon: Hall of Bones
+
+[ENTRY]
+ZoneID=65
+Sanctuary=1206.12,600,1570.04,Dungeon: Rolsburg Mine
+
+[ENTRY]
+ZoneID=70
+Sanctuary=2964.56,358.631,3141.22,Dungeon: Dire Wolf Den
+
+[ENTRY]
+ZoneID=71
+Sanctuary=1123.15,194.132,1154.48,Dungeon: Zhushi's Lair
+
+[ENTRY]
+ZoneID=72
+Sanctuary=1850.08,1251.08,330.062,Dungeon: Rotted Maze
+
+[ENTRY]
+ZoneID=73
+Sanctuary=3018.23,192.123,1897.79,Dungeon: Rotted Nursery
+
+[ENTRY]
+ZoneID=74
+Sanctuary=11225.6,280.613,13560,Dungeon: Earthend
+
+[ENTRY]
+ZoneID=76
+Sanctuary=814.166,600,751.802,Dungeon: Southend Passage
+
+[ENTRY]
+ZoneID=77
+Sanctuary=489.919,300,1142.96,Dungeon: Lighthouse
+
+[ENTRY]
+ZoneID=78
+Sanctuary=2039.05,265.957,482.774,Dungeon: Haunted Grove
+
+[ENTRY]
+ZoneID=79
+Sanctuary=797.084,99.9991,5607.19,Dungeon: Summoning Chamber
+
+[ENTRY]
+ZoneID=81
+Sanctuary=35313.8,303.571,59963,Anglorum: Western Highlands
+Sanctuary=36630.8,531.472,66813,Anglorum: Ironstone Watch
+Sanctuary=39036.8,307.893,54146,Anglorum: Bath
+Sanctuary=42516.8,174.356,43592,Anglorum: Southshield
+Sanctuary=43667.2,309.861,50334.9,Anglorum: Crossroads Inn
+Sanctuary=43537.6,188.11,65928,Anglorum: Fort Stonehenge
+Sanctuary=50106.3,181.549,66237,Anglorum: Militia House
+Sanctuary=52892.6,201.481,48728,Anglorum: Nottingham
+Sanctuary=54903.2,143.15,63164,Anglorum: Camelot (North)
+Sanctuary=54807.3,221.334,67405,Anglorum: Camelot (South)
+Sanctuary=56889.6,203.609,57599,Anglorum: Tallgrass Farm
+
+[ENTRY]
+ZoneID=84
+Sanctuary=2926.37,60,2174.92,Dungeon: VonGruber Manor
+
+; NOTE: Green Line Thicket will be considered as part of both Great Forest and Deadwood
+[ENTRY]
+ZoneID=9
+Sanctuary=10312.9,253.473,63013,Great Forest: Far Reach,Great Forest
+Sanctuary=20889.6,182.931,65512,Great Forest: Dire Murk,Great Forest
+Sanctuary=21581.2,199.359,57067,Great Forest: Near Dark Depths,Great Forest
+Sanctuary=22166.3,202.374,83588,Dustshore: Windswept Shores,Dustshore
+Sanctuary=22190.8,391.91,90407,Dustshore: Dig Site,Dustshore
+Sanctuary=22992.7,329.063,77925,Dustshore: Bazarrt,Dustshore
+Sanctuary=25498.2,1261.6,94738,Cracked Rock: Southern Road Entrance,CrackedRock
+Sanctuary=29850.3,372.58,61463,Great Forest: Heartwood,Great Forest
+Sanctuary=29605.4,174.063,71775,Dustshore: Nante's Waystation,Dustshore
+Sanctuary=29894.5,1178.07,80808,Cracked Rock: Oslis,CrackedRock
+Sanctuary=34952.6,1221.51,88009,Cracked Rock: Southern Stonelion Camps,CrackedRock
+Sanctuary=40054.6,209.24,49035,Midlands: Bafflegate,Midlands
+Sanctuary=41618.6,263.899,59912,Midlands: Listerm,Midlands
+Sanctuary=41499.2,225.075,65775,Great Forest: Green Line Thicket,Great Forest|Deadwood
+Sanctuary=43696.7,1218.92,76892,Cracked Rock: Skrill Hives,CrackedRock
+Sanctuary=48644.6,302.97,54803,Midlands: Bandit's Bluff,Midlands
+Sanctuary=49054.9,380.134,82767,Deadwood: Near Rotted Maze,Deadwood
+Sanctuary=52544.9,458.817,77167,Deadwood: Ironbirch Camp,Deadwood
+Sanctuary=54620.4,169.239,59117.8,Midlands: Hunter's Camp,Midlands
+Sanctuary=55679.7,316.312,41555.7,New Badari: Near Sea Cave,NewBadari
+Sanctuary=56831.7,244.989,72568,Deadwood: Near Zhushi's Lair,Deadwood
+Sanctuary=57051.3,265.332,50067.1,Midlands: Longtail Gypsy Camp,Midlands
+Sanctuary=60325.2,404.414,43756.7,New Badari: East Bridge,NewBadari
+Sanctuary=65093.4,420.641,34078.6,New Badari: Seascape,NewBadari
+Sanctuary=67749,424.811,37044,New Badari: Bremen,NewBadari
+Sanctuary=77682.9,440.637,39260,New Badari: Rolsburg,NewBadari
+
+[ENTRY]
+ZoneID=89
+Sanctuary=2331,1251.65,2845,Camelot Arena
+
+[ENTRY]
+ZoneID=110
+Sanctuary=13509.9,182.89,10955.5,Redemption Arena
+
+[ENTRY]
+ZoneID=111
+Sanctuary=2712.59,313.264,4761.07,Heathendel's Arena
+
+[ENTRY]
+ZoneID=112
+Sanctuary=5603.66,18.3835,2583.26,Shadow Void

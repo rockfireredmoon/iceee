@@ -1,0 +1,8 @@
+[ENTRY]
+ID=151033850
+Asset=CL-Carrionite_3Platforms_A#CL-Carrionite_3Platforms_A
+Name=9
+Pos=73602.8,1918.64,174792
+Orient=0,0.0549723,0,0.998488
+Scale=1,1,1
+

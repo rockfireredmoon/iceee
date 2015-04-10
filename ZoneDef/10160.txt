@@ -1,0 +1,15 @@
+[ENTRY]
+ID=10160
+ACCOUNTID=646
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=krikoles
+GroveName=krikoles
+WarpName=krikoles1
+DropRateProfile=standard
+Grove=1
+EnvironmentCycle=0
+BuildPermission=account,646,0,0,3,3
+DefLoc=2958,260,3821
+

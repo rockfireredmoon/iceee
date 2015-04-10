@@ -1,0 +1,13 @@
+[ENTRY]
+ID=9832
+ACCOUNTID=605
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=cervidia
+GroveName=cervidia
+WarpName=cervidia1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

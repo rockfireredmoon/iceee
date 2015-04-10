@@ -1,0 +1,8 @@
+[ENTRY]
+ID=151023079
+Asset=Prop-Bush-Large1#Prop-Bush-Large1
+Name=9
+Pos=74227.8,207.094,156772
+Orient=0,-0.747971,0,0.663731
+Scale=2.325,2.325,2.325
+

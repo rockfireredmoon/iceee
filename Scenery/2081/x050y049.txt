@@ -1,0 +1,9 @@
+[ENTRY]
+ID=1358954500
+Asset=Bldg-Camelot8b?ATS=ATS-Castle_Camelot
+Name=81
+Pos=50980.3,617.008,49170
+Orient=0,0.183947,0,0.982936
+Scale=1.5,1.5,1.5
+Flags=1
+

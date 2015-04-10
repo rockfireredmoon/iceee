@@ -1,0 +1,15 @@
+[ENTRY]
+ID=151001875
+Asset=CL-Skeleton_Bottle1#CL-Skeleton_Bottle1
+Pos=50524.9,181.554,55051
+Orient=0,0,-0.139543,0.990216
+Scale=1,1,1
+
+[ENTRY]
+ID=151001876
+Asset=CL-Boulder5
+Pos=50508.3,188.653,55050
+Orient=0,0.0149994,0,0.999887
+Scale=1.675,1.675,1.675
+Flags=1
+

@@ -1,0 +1,13 @@
+[ENTRY]
+ID=9976
+ACCOUNTID=623
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=shatari
+GroveName=shatari
+WarpName=shatari1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

@@ -1,0 +1,16 @@
+[ENTRY]
+ID=1358966720
+Asset=Prop-Instance_Entrance
+Name=81
+Pos=59201.4,61.3213,67048.8
+Orient=0,-0.703279,0,0.710914
+Scale=2.975,2.975,2.975
+
+[ENTRY]
+ID=1358966721
+Asset=Lights#Light-Large?COLOR=33FFFF
+Name=81
+Pos=59202.5,55.5316,67012.3
+Orient=0,0,0,1
+Scale=1,1,1
+

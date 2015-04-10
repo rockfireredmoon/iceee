@@ -1,0 +1,8 @@
+[ENTRY]
+ID=1091927
+Asset=Cav-Room_Center?ATS=ATS-Cave_Dvergar
+Name=
+Pos=4125.62,8.3767,3799.31
+Orient=0,0,0,1
+Scale=7,7,7
+

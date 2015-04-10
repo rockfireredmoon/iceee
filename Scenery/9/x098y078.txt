@@ -1,0 +1,8 @@
+[ENTRY]
+ID=151024225
+Asset=Prop-Swineland-Junk_Pile#Prop-Swineland-Junk_Pile1
+Pos=74115,860.804,59210
+Orient=0,0,0,1
+Scale=4.9,4.9,4.9
+Flags=1
+

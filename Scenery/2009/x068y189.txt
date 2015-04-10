@@ -1,0 +1,17 @@
+[ENTRY]
+ID=150996155
+Asset=CL-Hills_Bush1#CL-Hills_Bush1
+Name=9
+Pos=51078.2,265.024,141946
+Orient=0,0,0,1
+Scale=1,1,1
+Flags=1
+
+[ENTRY]
+ID=150999014
+Asset=CL-Roadside1
+Name=9
+Pos=51631.4,263.069,142390
+Orient=0,0.997495,0,0.0707372
+Scale=1.5,1.5,1.5
+

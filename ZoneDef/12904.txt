@@ -1,0 +1,15 @@
+[ENTRY]
+ID=12904
+ACCOUNTID=989
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=shire
+GroveName=shire
+WarpName=shire1
+DropRateProfile=standard
+Grove=1
+EnvironmentCycle=0
+BuildPermission=account,989,0,0,13,23
+DefLoc=2958,260,3821
+

@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151040070
+Asset=CL-SnowyPine1
+Name=9
+Pos=70038,1040.49,30535
+Orient=0,-0.951043,0,-0.309059
+Scale=5.6,5.6,5.6
+Flags=1
+

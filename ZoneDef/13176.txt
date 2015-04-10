@@ -1,0 +1,15 @@
+[ENTRY]
+ID=13176
+ACCOUNTID=1023
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=Swamp
+ShardName=froggy
+GroveName=froggy
+WarpName=froggy1
+DropRateProfile=standard
+Grove=1
+EnvironmentCycle=1
+BuildPermission=account,1023,0,0,3,3
+DefLoc=2958,260,3821
+

@@ -1,0 +1,61 @@
+[ENTRY]
+Name=z40_ml_gen_Exit_to_New_Badari_2354
+Spawn=2354,100  ;Exit to New Badari (1) at 0
+
+[ENTRY]
+Name=z40_ml_gen_Manticore_Forge_2967
+Spawn=2967,100  ;Manticore Forge (1) at 0
+
+[ENTRY]
+Name=z40_ml_gen_Dungeon_Loot_2709
+Spawn=2709,100  ;Dungeon Loot (1) at 0
+
+[ENTRY]
+Name=2_ml_manticore_30
+Spawn=557,100  ;Dar Kulgac (30) at 177
+
+[ENTRY]
+Name=2_ml_front
+Spawn=2688,20  ;Carver (28) at 0
+Spawn=2689,20  ;Carver (29) at 0
+Spawn=2690,20  ;Flamekeeper (28) at 0
+Spawn=2693,20  ;Warrior (28) at 0
+Spawn=2694,20  ;Warrior (29) at 0
+
+[ENTRY]
+Name=2_ml_back
+Spawn=2689,20  ;Carver (29) at 0
+Spawn=2690,20  ;Flamekeeper (28) at 0
+Spawn=2691,20  ;Frostkeeper (29) at 0
+Spawn=2693,20  ;Warrior (28) at 0
+Spawn=2694,20  ;Warrior (29) at 0
+
+[ENTRY]
+Name=2_ml_scorpions
+Spawn=2533,50  ;Silksand Stinger (28) at 0
+Spawn=2534,50  ;Silksand Stinger (29) at 0
+
+[ENTRY]
+Name=2_ml_DurgLunaa_r_29
+Spawn=2586,100  ;Durg Lunaa (29) at 0
+
+[ENTRY]
+Name=2_ml_MurrBrokk_m_30
+Spawn=2532,100  ;Murr Brokk (30) at 0
+
+[ENTRY]
+Name=2_ml_ScorpseSTEPUP
+Spawn=2533,50  ;Silksand Stinger (28) at 0
+Spawn=2534,50  ;Silksand Stinger (29) at 0
+
+[ENTRY]
+Name=2_ml_boss
+Shares=30
+Spawn=2689,10  ;Carver (29) at 0
+Spawn=2692,10  ;Shaman (30) at 0
+Spawn=2694,10  ;Warrior (29) at 0
+
+[ENTRY]
+Flags=3
+Name=2_dng_ml_obji_DarKulgacLewt
+Spawn=2734,100  ;Dar Kulgac's Treasure (1) at 0

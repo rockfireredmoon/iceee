@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151029353
+Asset=CL-LightHouse
+Name=9
+Pos=87913.4,362.176,131923
+Orient=0,0.994409,0,0.105599
+Scale=2.4,2.4,2.4
+Flags=1
+

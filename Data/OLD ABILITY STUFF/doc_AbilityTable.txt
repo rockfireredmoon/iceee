@@ -1,0 +1,114 @@
+########################################
+####        AbilityTable.txt        ####
+########################################
+
+clientOriginal_AbilityTable.txt
+Contains the original, unmodified client table. with bugs.  The original client table contains many errors and slight alterations which must be fixed for proper server emulation.  See this file for details.
+
+classic_AbilityTable.txt
+This file contains the skill table, modified and functioning to emulate SPM's ability set as closely as possible.
+
+
+IMPORTANT WHEN EDITING THE TABLE
+- Always use a value of zero, in quotes ("0") for channel duration and interrupts, otherwise the client will fail to load the table.  Load up player log and search for the phrase "an error" to find any info on which ability may be causing the problem.
+- Spreadsheet programs may insert fancy quotes [“] and [”] instead of the proper ["] which is strictly required for proper data loading by the server.  Copy and paste the proper form if necessary.
+
+
+SKILL ADDITIONS
+ID 25041 (Healing Potion) does not natively exist in 0.8.6 (was introduced in a later patch).
+
+
+
+Ability tables contain rows of information.  Each row contains data for one tier of one ability.
+
+The following skill table entries have malformed parenthesis.
+
+ID	Name			Original Function Block
+"338"	"Demoralize"		Add(DMG_MOD_MELEE,(-150,10)
+"339"	"Demoralize"		Add(DMG_MOD_MELEE,(-150,15)
+"459"	"Demoralize"		Add(DMG_MOD_MELEE,(-150,20)
+"5271"	"Demoralize"		Add(DMG_MOD_MELEE,(-300*mightCharges,6)
+"5272"	"Demoralize"		Add(DMG_MOD_MELEE,(-300*mightCharges,6)
+"5230"	"Pyro Blast"		FireDamage((A_PSYCHE*1.125)*1)*willCharges)
+"5231"	"Pyro Blast"		FireDamage((A_PSYCHE*1.125)*1)*willCharges)
+"5232"	"Pyro Blast"		FireDamage((A_PSYCHE*1.125)*1)*willCharges)
+"5233"	"Pyro Blast"		FireDamage((A_PSYCHE*1.125)*1)*willCharges)
+
+The following skill table entries attempt to imply multiplication with parenthesis, and also associate a negative sign.  The server is not designed to accommodate this, so they must be explicitly assigned.
+
+Ex: WMD(2) must become WMD*(2)
+Ex: -(A_STRENGTH*0.9)  must become  -1*(A_STRENGTH*0.9)
+ID	Name			Original Function Block
+"222"	"Veiled Carnage"	MeleeDamage(WMD(2)/5)
+"222"	"Veiled Carnage"	MeleeDamage(MWD(2))
+"5155"	"Veiled Carnage"	MeleeDamage(MWD(2))
+"5155"	"Veiled Carnage"	MeleeDamage(WMD(2)/5)
+"5019"	"Wither"		Add(DAMAGE_RESIST_DEATH,-(A_SPIRIT*1.75),20)
+"5193"	"Flame Spear"		Add(DAMAGE_RESIST_FIRE,-(A_PSYCHE*1.75),20)
+"5194"	"Flame Spear"		Add(DAMAGE_RESIST_FIRE,-(A_PSYCHE*1.75),20)
+"5195"	"Frost Spear"		Add(DAMAGE_RESIST_FROST,-(A_PSYCHE*1.75),20)
+"5196"	"Frost Spear"		Add(DAMAGE_RESIST_FROST,-(A_PSYCHE*1.75),20)
+"5197"	"Frost Spear"		Add(DAMAGE_RESIST_FROST,-(A_PSYCHE*1.75),20)
+"5204"	"Wither"		Add(DAMAGE_RESIST_DEATH,-(A_SPIRIT*1.75),20)
+"5205"	"Wither"		Add(DAMAGE_RESIST_DEATH,-(A_SPIRIT*1.75),20)
+"5211"	"Mystic Missile"	Add(DAMAGE_RESIST_MYSTIC,-(A_SPIRIT*1.75),20)
+"5212"	"Mystic Missile"	Add(DAMAGE_RESIST_MYSTIC,-(A_SPIRIT*1.75),20)
+"5213"	"Mystic Missile"	Add(DAMAGE_RESIST_MYSTIC,-(A_SPIRIT*1.75),20)
+"5253"	"Can Opener"		Add(DAMAGE_RESIST_MELEE,-(A_STRENGTH*0.9)*0.5,20)
+"5254"	"Can Opener"		Add(DAMAGE_RESIST_MELEE,-(A_STRENGTH*0.9)*0.5,20)
+"5255"	"Can Opener"		Add(DAMAGE_RESIST_MELEE,-(A_STRENGTH*0.9)*0.5,20)
+
+The following functions have a single quote in the action arguments.
+"5311"	"Cataclysm"
+
+The following stat names do not exist and should be replaced with their appropriate server name:
+
+Old Stat Name		Server Name
+MAGIC_CAST_SPEED	MAGIC_ATTACK_SPEED
+DR_RESIST_MELEE		DAMAGE_RESIST_MELEE
+DR_RESIST_FIRE		DAMAGE_RESIST_FIRE
+DR_RESIST_FROST		DAMAGE_RESIST_FROST
+DR_RESIST_DEATH		DAMAGE_RESIST_DEATH
+DR_RESIST_MYSTIC	DAMAGE_RESIST_MYSTIC
+
+
+
+
+The following typo and case sensitivity issues must be addressed:
+
+Old Value Name		Server Value Name
+A_PHYCHE		A_PSYCHE
+MightCharges		mightCharges
+
+
+
+The following abilities deal constant damage over time after the initial cast is finished and the player is free to perform another action without interrupting the effect.
+Add a tab separator to the end of the row, then add "secondarychannel".
+Enable this value for all tiers.
+
+- "Shadow Strike" (bleeding damage)
+- "Hemorrhage" (bleeding damage)
+- "Incinerate" (fire damage)
+- "Cataclysm" (fire damage)
+- "Winter's Caress" (frost damage)
+- "Creeping Death" (death damage)
+
+
+The following abilities utilize channel iterations to apply damage over time, but are displayed as instant attacks.  Being interrupted might be considered a bug.
+Add a tab separator to the end of the row, then add "unbreakablechannel".
+Enable this value for all tiers.
+
+- "Rage of Ares"
+- "Arrow Storm"
+- "Rend"
+
+
+
+Other notes:
+
+
+- The "Heart of Gaia" skill entries do not have a target type set in the original table.  Set to "onActivate:Self:"
+
+- The "Pierce" ability is described to mitigate damage, and does so by using Add() to remove armor.  However, the server processes action functions in their listed order.  For all skill entries, move the Add() function to the start of the onActivate function list.
+
+

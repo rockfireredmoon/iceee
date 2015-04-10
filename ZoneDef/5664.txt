@@ -1,0 +1,13 @@
+[ENTRY]
+ID=5664
+ACCOUNTID=84
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=NewBadariSunset
+ShardName=katalyst
+GroveName=katalyst
+WarpName=katalyst1
+Grove=1
+EnvironmentCycle=1
+DefLoc=3799,492,3164
+

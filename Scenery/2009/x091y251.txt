@@ -1,0 +1,17 @@
+[ENTRY]
+ID=151016694
+Asset=Manipulator-SpawnPoint
+Name=9
+Pos=68814,1498.99,188973
+Orient=0,0,0,1
+Scale=1,1,1
+Layer=150998665
+
+[ENTRY]
+ID=151037444
+Asset=Prop-Acacia_Tree3
+Name=9
+Pos=68649.9,1519.73,188800
+Orient=0,0.967462,0,0.253015
+Scale=1.6,1.6,1.6
+

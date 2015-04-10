@@ -1,0 +1,16 @@
+[ENTRY]
+ID=151013588
+Asset=Sick-Rotted_Forest?d=0.9&s=8436&sz=800
+Pos=34812,129.841,65383
+Orient=0,-0.470626,0,0.882333
+Scale=1.35,1.35,1.35
+Flags=1
+
+[ENTRY]
+ID=151022860
+Asset=CL-Rotted_Flora7
+Pos=34572.2,187.112,65359
+Orient=-0.0178961,-0.176485,0.103268,-0.978708
+Scale=2.525,2.525,2.525
+Flags=1
+

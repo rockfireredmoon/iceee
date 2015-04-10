@@ -1,0 +1,9 @@
+[ENTRY]
+ID=1358966626
+Asset=Environment-Marker?type=Camelot
+Name=81
+Pos=55159.4,-270.017,65212.1
+Orient=0,0,0,1
+Scale=17,17,17
+Flags=1
+

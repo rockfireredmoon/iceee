@@ -1,0 +1,16 @@
+[ENTRY]
+ID=1358965435
+Asset=Forest?d=0.9&s=123456&sz=800
+Pos=43567.1,287.171,41944
+Orient=0,0,0,1
+Scale=1,1,1
+Flags=1
+
+[ENTRY]
+ID=1358965441
+Asset=Forest?d=0.9&s=871827&sz=800
+Pos=43293,208.839,41940
+Orient=0,0,0,1
+Scale=1,1,1
+Flags=1
+

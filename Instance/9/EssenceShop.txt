@@ -1,0 +1,584 @@
+; Chillkin Hunt Reward Chest
+[ENTRY]
+CreatureDefID=2910
+EssenceID=21356   ;Bremen Corn Cob Pipe
+Item=143587,3  ; Festive Dirk 27
+Item=143591,3  ; Holiday Smasher 27
+Item=143595,3  ; Candy Cane Talisman 27
+Item=143583,3  ; Candy Cane Wand 27
+
+; Chillkin Hunt Reward Chest
+[ENTRY]
+CreatureDefID=2911
+EssenceID=21358   ;Heartwood Corn Cob Pipe
+Item=143588,3  ; Festive Dirk 33
+Item=143592,3  ; Holiday Smasher 33
+Item=143596,3  ; Candy Cane Talisman 33
+Item=143584,3  ; Candy Cane Wand 33
+
+; Harvest Fest Reward Chest (Bremen) via "Harvest Table" interact.
+[ENTRY]
+CreatureDefID=2861
+EssenceID=21316
+Item=143573,3
+Item=143574,3
+Item=143575,3
+Item=143576,3
+
+; Harvest Fest Reward Chest (Heartwood) via "Harvest Table" interact.
+[ENTRY]
+CreatureDefID=2862
+EssenceID=21317
+Item=143577,3
+Item=143578,3
+Item=143579,3
+Item=143580,3
+
+
+
+
+; Bounty Chest: Bafflegate
+[ENTRY]
+CreatureDefID=2872
+EssenceID=21337
+Item=5642,4
+Item=5641,4
+Item=5643,4
+Item=5644,4
+
+; Gorbi's Hunting Chest
+[ENTRY]
+CreatureDefID=2618
+EssenceID=21154
+Item=5168,1
+Item=5170,1
+Item=143313,1
+Item=5172,1
+Item=5169,1
+Item=5332,1
+Item=5173,1
+Item=5171,1
+
+; Danube's Chest
+[ENTRY]
+CreatureDefID=2619
+EssenceID=21155
+Item=143315,1
+Item=143314,1
+Item=143316,1
+Item=5182,1
+Item=143317,1
+Item=5183,1
+
+; Dungeon Loot
+[ENTRY]
+CreatureDefID=2704
+EssenceID=21258
+Item=143490,10
+Item=5533,10
+Item=5545,10
+Item=143474,10
+Item=5399,10
+Item=5489,10
+Item=5466,10
+Item=5363,10
+
+; Fendle's Chest
+[ENTRY]
+CreatureDefID=2620
+EssenceID=21156
+Item=143318,1
+Item=5187,1
+Item=5188,1
+Item=5186,1
+Item=5189,1
+Item=143319,1
+Item=5184,1
+Item=5185,1
+
+; Bounty Chest: Eastbridge
+[ENTRY]
+CreatureDefID=2873
+EssenceID=21338
+Item=5648,4
+Item=5645,4
+Item=5647,4
+Item=5646,4
+
+; Emberson Family Chest
+[ENTRY]
+CreatureDefID=2621
+EssenceID=21157
+Item=5199,1
+Item=5198,1
+Item=5202,1
+Item=143320,1
+Item=143321,1
+Item=5203,1
+Item=5200,1
+Item=5201,1
+
+; Bounty Chest: Rolsburg
+[ENTRY]
+CreatureDefID=2874
+EssenceID=21339
+Item=143568,5
+Item=5650,5
+Item=143567,5
+Item=143566,5
+Item=5651,5
+Item=143565,5
+Item=5652,5
+Item=5649,5
+
+; Bounty Chest: Heartwood
+[ENTRY]
+CreatureDefID=2877
+EssenceID=21342
+Item=5664,5
+Item=5665,5
+Item=5662,5
+Item=5666,5
+Item=5663,5
+Item=5661,5
+
+; Luger's Chest
+[ENTRY]
+CreatureDefID=2627
+EssenceID=21163
+Item=5243,1
+Item=5245,1
+Item=5242,1
+Item=5240,1
+Item=5241,1
+Item=143338,1
+Item=5244,1
+Item=143337,1
+
+; Matoska's Chest
+[ENTRY]
+CreatureDefID=2628
+EssenceID=21164
+Item=143344,1
+Item=143342,1
+Item=143340,1
+Item=143339,1
+Item=143341,1
+Item=143343,1
+
+; Ianto's Chest
+[ENTRY]
+CreatureDefID=2633
+EssenceID=21177
+Item=143360,1
+Item=143364,1
+Item=143361,1
+Item=143362,1
+Item=143359,1
+Item=143365,1
+Item=143363,1
+Item=5281,1
+
+; Carter's Chest
+[ENTRY]
+CreatureDefID=2630
+EssenceID=21166
+Item=5261,1
+Item=5259,1
+Item=143355,1
+Item=143354,1
+Item=143353,1
+Item=143356,1
+Item=5258,1
+Item=5260,1
+
+; Surefoot's Chest
+[ENTRY]
+CreatureDefID=2629
+EssenceID=21165
+Item=5255,1
+Item=143350,1
+Item=143351,1
+Item=143352,1
+Item=5256,1
+Item=5254,1
+Item=5257,1
+Item=143349,1
+
+; Bounty Chest: Dustshore
+[ENTRY]
+CreatureDefID=2871
+EssenceID=21336
+Item=143563,5
+Item=5638,5
+Item=5640,5
+Item=5637,5
+Item=143564,5
+Item=5639,5
+
+; Mork's Chest
+[ENTRY]
+CreatureDefID=1539
+EssenceID=21169
+Item=143368,1
+Item=143366,1
+Item=143367,1
+Item=143369,1
+Item=143372,1
+Item=143371,1
+Item=143370,1
+Item=5282,1
+
+; Dustchanter'a Chest
+[ENTRY]
+CreatureDefID=2610
+EssenceID=21174
+Item=143392,1
+Item=143391,1
+Item=143388,1
+Item=5304,1
+Item=5303,1
+Item=143389,1
+Item=143390,1
+Item=143393,1
+
+; Brossk's Chest
+[ENTRY]
+CreatureDefID=2637
+EssenceID=21172
+Item=143380,1
+Item=5299,1
+Item=5300,1
+Item=143382,1
+Item=143379,1
+Item=5298,1
+Item=143381,1
+Item=5297,1
+
+; Wild-Rowan's Chest
+[ENTRY]
+CreatureDefID=2632
+EssenceID=21168
+Item=5276,1
+Item=5277,1
+Item=5279,1
+Item=5275,1
+Item=5280,1
+Item=5274,1
+Item=5272,1
+Item=5278,1
+
+; Dusty Hunting Chest
+[ENTRY]
+CreatureDefID=2636
+EssenceID=21171
+Item=5331,1
+Item=143402,1
+Item=143403,1
+Item=143401,1
+Item=143405,1
+Item=143404,1
+
+; Warden's Chest
+[ENTRY]
+CreatureDefID=2635
+EssenceID=21170
+Item=5288,1
+Item=5287,1
+Item=143374,1
+Item=143375,1
+Item=143376,1
+Item=143373,1
+Item=143378,1
+Item=143377,1
+
+; Rimbaud's Oak Chest
+[ENTRY]
+CreatureDefID=2625
+EssenceID=21161
+Item=5230,1
+Item=5232,1
+Item=5231,1
+Item=5228,1
+Item=143334,1
+Item=143333,1
+Item=5233,1
+Item=5229,1
+
+; Rimbaud's Ironbound Chest
+[ENTRY]
+CreatureDefID=2623
+EssenceID=21159
+Item=5217,1
+Item=5219,1
+Item=143329,1
+Item=5220,1
+Item=143330,1
+Item=5221,1
+Item=5216,1
+Item=5218,1
+
+; Dungeon Loot (Rolsburg Mine)
+[ENTRY]
+CreatureDefID=2710
+EssenceID=21264
+Item=143539,10
+Item=143538,10
+Item=5570,10
+Item=142877,10
+Item=142867,10
+Item=5567,10
+Item=5572,10
+Item=142747,10
+
+; Willowynd's Chest
+[ENTRY]
+CreatureDefID=2631
+EssenceID=21167
+Item=5267,1
+Item=143357,1
+Item=5264,1
+Item=5262,1
+Item=143358,1
+Item=5263,1
+Item=5266,1
+Item=5265,1
+
+; Bounty Chest: Greenline Thicket
+[ENTRY]
+CreatureDefID=2869
+EssenceID=21334
+Item=143557,5
+Item=5629,5
+Item=5630,5
+Item=143555,5
+Item=5631,5
+Item=5632,5
+Item=143558,5
+Item=143556,5
+
+; Dungeon Loot
+[ENTRY]
+CreatureDefID=2717
+EssenceID=21271
+Item=5389,10
+Item=143480,10
+Item=800131,10
+Item=5522,10
+Item=5454,10
+Item=800242,10
+Item=5550,10
+Item=800162,10
+
+; Dungeon Loot (Dire Wolf Den)
+[ENTRY]
+CreatureDefID=2718
+EssenceID=21272
+Item=800152,10
+Item=800143,10
+Item=5476,10
+Item=5551,10
+Item=800223,10
+Item=5436,10
+Item=5408,10
+Item=143481,10
+
+; Bounty Chest: Ironbirch Camp
+[ENTRY]
+CreatureDefID=2870
+EssenceID=21335
+Item=5636,6
+Item=143560,6
+Item=5633,6
+Item=143561,6
+Item=5635,6
+Item=143562,6
+Item=143559,6
+Item=5634,6
+
+; Gawain's Chest
+[ENTRY]
+CreatureDefID=2638
+EssenceID=21173
+Item=143387,1
+Item=5301,1
+Item=5327,1
+Item=5302,1
+Item=143385,1
+Item=143386,1
+Item=143383,1
+Item=143384,1
+
+; Spibear Lair dungeon loot
+; Restored from 0.8.8b chest screenshot.
+[ENTRY]
+CreatureDefID=2703
+EssenceID=21257
+Item=143503,10  ;Blight Bow
+Item=5398,10  ;Shadow-Born Spaulders
+Item=5423,10  ;Karronath's Coat
+Item=143447,10  ;Spynch's Stinger
+Item=5510,10  ;Leggings of the Lair
+Item=5486,10  ;Belt of Woe
+Item=5544,10  ;Ring of Resentment
+Item=5531,10  ;Ursarach's Fur Footwraps
+
+; Dungeon Loot (Haunted Grove)
+[ENTRY]
+CreatureDefID=2705
+EssenceID=21259
+Item=5559,10
+Item=5382,10
+Item=143448,10
+Item=5490,10
+Item=5446,10
+Item=5425,10
+Item=5401,10
+Item=143475,10
+
+; Dungeon Loot (Brewery Cellar)
+[ENTRY]
+CreatureDefID=2708
+EssenceID=21262
+Item=5492,10
+Item=5448,10
+Item=143506,10
+Item=5404,10
+Item=5562,10
+Item=5536,10
+Item=5428,10
+Item=5561,10
+
+; Dungeon Loot (Manticore Lair)
+; Restored from a 0.8.6b chest screenshot.
+[ENTRY]
+CreatureDefID=2709
+EssenceID=21263
+Item=143507,10  ;Brokk's Bow
+Item=800114,10  ;Weapon Plan: Bad Dog
+Item=5386,10  ;Troll Hide Neckguard
+Item=800123,10  ;Weapon Plan: Cruel Intent
+Item=5472,10  ;Manticore Lair Bracers
+Item=800194,10  ;Weapon Plan: Dragon Needler
+Item=5450,10  ;Armbands of Dar Kulgac
+Item=800103,10  ;Weapon Plan: Equal Footing
+
+; Dungeon Loot (Dark Depths)
+; Restored from 0.8.8b chest screenshot.
+[ENTRY]
+CreatureDefID=2713
+EssenceID=21267
+Item=5368,10  ;Puritars Helm
+Item=143494,10  ;Darkness
+Item=143458,10  ;Axe of the Depths
+Item=5406,10  ;Imbrued Shoulderpads
+Item=5519,10  ;Banethorn Leggings
+Item=800107,10  ;Weapon Plan: Cold Muzzler
+Item=800148,10  ;Weapon Plan: The Drooler
+Item=800127,10  ;Weapon Plan: Dragon Wedge
+
+; Greysun Armaments
+; Restored from 0.8.7 chest screenshots.
+[ENTRY]
+CreatureDefID=1123
+EssenceID=20618
+Item=4148,5  ;Greysun Brawler's Chestpiece
+Item=4147,5  ;Greysun Assassin's Chestpiece
+Item=4143,5  ;Greysun Assassin's Shoulders
+Item=142186,5  ;Greysun Stars
+Item=142184,5  ;Greysun Armsman Waraxe
+Item=4142,5  ;Frostfists' Shoulders
+Item=4145,5  ;Greysun Brawler's Shoulders
+Item=4144,5  ;Darktouch's Shoulders
+Item=142185,5  ;Greysun Assassin's Sword
+Item=4149,5  ;Darktouch's Chestpiece
+Item=142182,5  ;Frostfist's Frozen Claw
+Item=4146,5  ;Frostfist's Chestpiece
+Item=142183,5  ;Greysun Brawler's Warhammer
+Item=142181,5  ;Darktouch's Bow
+
+
+; Dungeon Loot (Djinn Temple)
+[ENTRY]
+CreatureDefID=2714
+EssenceID=21268
+Item=143452,10
+Item=5369,10
+Item=800118,10
+Item=800178,10
+Item=5496,10
+Item=5539,10
+Item=5387,10
+Item=800129,10
+
+; Dungeon Loot (Bremen Asylum)
+[ENTRY]
+CreatureDefID=2707
+EssenceID=21261
+Item=5491,10
+Item=143449,10
+Item=143492,10
+Item=5468,10
+Item=5447,10
+Item=5427,10
+Item=5547,10
+Item=5515,10
+
+; Dungeon Loot (Rapunzel's Tower)
+[ENTRY]
+CreatureDefID=2711
+EssenceID=21265
+Item=143463,10
+Item=5471,10
+Item=5563,10
+Item=143476,10
+Item=5430,10
+Item=5493,10
+Item=5518,10
+Item=5429,10
+
+
+; Dungeon Loot (Rotted Maze)
+[ENTRY]
+CreatureDefID=2720
+EssenceID=21274
+Item=800437,10
+Item=800388,10
+Item=5391,10
+Item=5373,10
+Item=800407,10
+Item=800428,10
+Item=5478,10
+Item=143482,10
+
+; Ironbirch's Chest (Deadwood, Ironbirch)
+[ENTRY]
+CreatureDefID=2639
+EssenceID=21175
+Item=143396,1  ;Kingslayer Bow
+Item=5325,1  ;Ring of the Wood
+Item=143398,1  ;Dark Key
+Item=143394,1  ;Kingslayer Blade
+Item=5326,1  ;Amulet of the Wood
+Item=143399,1  ;Blackwell Mirror
+Item=143397,1  ;Kingslayer Wand
+Item=143395,1  ;Kingslayer Rend-Axe
+
+
+
+
+
+
+; Chanticleer's Chest (restored from Oso Loco's spreadsheet)
+[ENTRY]
+CreatureDefID=2624
+EssenceID=21160
+Item=5222,1
+Item=5223,1
+Item=5224,1
+Item=5225,1
+Item=5226,1
+Item=5227,1
+Item=143331,1
+Item=143332,1
+

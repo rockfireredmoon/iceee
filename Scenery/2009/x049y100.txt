@@ -1,0 +1,17 @@
+[ENTRY]
+ID=151059791
+Asset=CL-RocNest1#CL-RocNest1
+Name=9
+Pos=37338.2,1068.52,75234
+Orient=0,-0.833272,0,0.552863
+Scale=1,1,1
+
+[ENTRY]
+ID=151059792
+Asset=Manipulator-SpawnPoint
+Name=9
+Pos=37331.2,1090.86,75244.8
+Orient=0,0,0,1
+Scale=1,1,1
+Layer=151011985
+

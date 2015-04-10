@@ -1,0 +1,137 @@
+[ENTRY]
+Name=z41_rt_gen_Dungeon_Loot_2711
+Spawn=2711,100  ;Dungeon Loot (1) at 0
+
+[ENTRY]
+Name=z41_rt_gen_Up_2377
+Spawn=2377,100  ;Up (1) at 0
+
+[ENTRY]
+Name=z41_rt_gen_Up_2376
+Spawn=2376,100  ;Up (1) at 0
+
+[ENTRY]
+Name=z41_rt_gen_Up_2375
+Spawn=2375,100  ;Up (1) at 0
+
+[ENTRY]
+Name=z41_rt_gen_Up_2374
+Spawn=2374,100  ;Up (1) at 0
+
+[ENTRY]
+Name=z41_rt_gen_Up_2373
+Spawn=2373,100  ;Up (1) at 0
+
+[ENTRY]
+Name=z41_rt_gen_Up_2372
+Spawn=2372,100  ;Up (1) at 0
+
+[ENTRY]
+Name=z41_rt_gen_Up_2371
+Spawn=2371,100  ;Up (1) at 0
+
+[ENTRY]
+Name=z41_rt_gen_Up_2370
+Spawn=2370,100  ;Up (1) at 0
+
+[ENTRY]
+Name=z41_rt_gen_Exit_to_New_Badari_2356
+Spawn=2356,100  ;Exit to New Badari (1) at 0
+
+[ENTRY]
+Name=2_rt_IronJohn_k_h_35
+Spawn=528,100  ;Evil Queen (35) at 0
+
+[ENTRY]
+Name=2_rt_OldScratch_m_h_35
+Spawn=506,100  ;Old Scratch (35) at 140
+
+[ENTRY]
+Name=2_rt_DrKnowall_d_h_35
+Spawn=494,100  ;Galligantus (35) at 0
+
+[ENTRY]
+Name=2_rt_BadWolf_k_h_36
+Spawn=515,100  ;Bad Wolf (35) at 0
+
+[ENTRY]
+Name=2_rt_Floor3_1_35
+Spawn=523,25  ;Twisted Storyteller (34) at 0
+Spawn=808,25  ;Frog Prince (35) at 0
+Spawn=809,25  ;Piper Charmed Mage (34) at 0
+Spawn=810,25  ;Piper Charmed Druid (34) at 0
+
+[ENTRY]
+Name=2_rt_Dummling_k_h_36
+Spawn=690,100  ;Wicked Step-Mother (35) at 38
+
+[ENTRY]
+Name=2_rt_HansMyHedgehog_d_h_36
+Spawn=811,100  ;Maleficent (35) at 42
+
+[ENTRY]
+Name=entrance_RupunzelTowerFloor9_z2
+Spawn=2369,100  ;Ninth Floor (1) at 0
+
+[ENTRY]
+Name=entrance_RupunzelTowerFloor8_z2
+Spawn=2361,100  ;Eighth Floor (1) at 0
+
+[ENTRY]
+Name=entrance_RupunzelTowerFloor7_z2
+Spawn=2362,100  ;Seventh Floor (1) at 0
+
+[ENTRY]
+Name=entrance_RupunzelTowerFloor6_z2
+Spawn=2363,100  ;Sixth Floor (1) at 0
+
+[ENTRY]
+Name=entrance_RupunzelTowerFloor5_z2
+Spawn=2364,100  ;Fifth Floor (1) at 0
+
+[ENTRY]
+Name=entrance_RupunzelTowerFloor4_z2
+Spawn=2365,100  ;Fourth Floor (1) at 0
+
+[ENTRY]
+Name=entrance_RupunzelTowerFloor3_z2
+Spawn=2366,100  ;Third Floor (1) at 0
+
+[ENTRY]
+Name=entrance_RupunzelTowerFloor2_z2
+Spawn=2367,100  ;Second Floor (1) at 0
+
+[ENTRY]
+Name=entrance_RupunzelTowerFloor1_z2
+Spawn=2368,100  ;First Floor (1) at 0
+
+[ENTRY]
+Name=2a_obji_bre09_quarterNoteQuill
+Spawn=2407,100  ;Quarter Note Quill (1) at 0
+
+[ENTRY]
+Name=2_rt_Floor6_4_35
+Spawn=523,25  ;Twisted Storyteller (34) at 0
+Spawn=808,25  ;Frog Prince (35) at 0
+Spawn=809,25  ;Piper Charmed Mage (34) at 0
+Spawn=810,25  ;Piper Charmed Druid (34) at 0
+
+[ENTRY]
+Name=2_rt_PiedPiper_r_h_36
+Spawn=533,100  ;Pied Piper (35) at 0
+
+[ENTRY]
+Name=2_rt_rumpelstiltskin_r_h_37
+Spawn=558,100  ;Rumpelstiltzkin (35) at 0
+
+[ENTRY]
+Name=2_rt_Rapunzel_m_36
+Spawn=2680,100  ;Rapunzel (36) at 0
+
+[ENTRY]
+Name=2_dng_rt_obji_RapunzelLewt
+Spawn=2738,100  ;Rapunzel's Treasure (1) at 0
+
+[ENTRY]
+Name=2_rt_TheBeast_k_h_36
+Spawn=812,100  ;The Beast (35) at 55

@@ -1,0 +1,13 @@
+[ENTRY]
+ID=10456
+ACCOUNTID=683
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=gungan
+GroveName=gungan
+WarpName=gungan1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

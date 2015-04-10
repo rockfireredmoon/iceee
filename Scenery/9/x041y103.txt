@@ -1,0 +1,17 @@
+[ENTRY]
+ID=151032739
+Asset=Manipulator-SpawnPoint
+Pos=31135.2,1252.41,77595
+Orient=0,0,0,1
+Scale=1,1,1
+innerRadius=95
+spawnPackage=9_wilds_38_39
+outerRadius=100
+
+[ENTRY]
+ID=151034282
+Asset=Prop-Acacia_Tree#Prop-Acacia_Tree7
+Pos=31056,1231.07,77556
+Orient=0,0,0,1
+Scale=0.45,0.45,0.45
+

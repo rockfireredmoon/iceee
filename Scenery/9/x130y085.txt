@@ -1,0 +1,7 @@
+[ENTRY]
+ID=151061731
+Asset=Bldg-Castle-Med_Castle2#Bldg-Castle-Med_Castle2?ATS=ATS-Castle
+Pos=97504.4,1496.11,64143.2
+Orient=0,0.271547,0,0.962425
+Scale=2.1,2.1,2.1
+

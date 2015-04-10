@@ -1,0 +1,13 @@
+; Thothmes's Treasure
+[ENTRY]
+CreatureDefID=1531
+EssenceID=20771
+Item=142449,1
+Item=4794,1
+Item=4801,1
+Item=142448,1
+Item=142451,1
+Item=4797,1
+Item=4799,1
+Item=142450,1
+

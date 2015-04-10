@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151012673
+Asset=CL-Dead-Rotted_Forest4#CL-Dead-Rotted_Forest4
+Name=9
+Pos=87814.8,184.164,170678
+Orient=0,0,0,1
+Scale=1.375,1.375,1.375
+Flags=1
+

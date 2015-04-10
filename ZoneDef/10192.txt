@@ -1,0 +1,13 @@
+[ENTRY]
+ID=10192
+ACCOUNTID=650
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=darkstar
+GroveName=darkstar
+WarpName=darkstar1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

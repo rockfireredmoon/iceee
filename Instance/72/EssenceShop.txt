@@ -1,0 +1,39 @@
+; Dungeon Loot (Rotted Maze)
+[ENTRY]
+CreatureDefID=2720
+EssenceID=21274
+Item=800437,10
+Item=800388,10
+Item=5391,10
+Item=5373,10
+Item=800407,10
+Item=800428,10
+Item=5478,10
+Item=143482,10
+
+; Rotted King's Treasure
+[ENTRY]
+CreatureDefID=1537
+EssenceID=20783
+Item=5437,2  ;Blackbark Chestplate
+Item=800398,2  ;Weapon Plan: Good Fortune
+Item=143461,2  ;Grove Guardian
+Item=800377,2  ;Weapon Plan: Instinctual Edge
+Item=800397,2  ;Weapon Plan: The Amputator
+Item=800319,2  ;Weapon Plan: Blackness
+Item=5410,2  ;Putrescent Pauldrons
+Item=5523,2  ;Blackbark Leggings
+
+; Lost One's Treasure
+[ENTRY]
+CreatureDefID=2737
+EssenceID=21283
+Item=800318,2  ;Weapon Plan: Blue Steel
+Item=5437,2  ;Blackbark Chestplate
+Item=143461,2  ;Grove Guardian
+Item=800408,2  ;Weapon Plan: Skull Rapper
+Item=800448,2  ;Weapon Plan: True-Sight Flyer
+Item=5410,2  ;Putrescent Pauldrons
+Item=800387,2  ;Weapon Plan: Bloody Mess
+Item=5523,2  ;Blackbark Leggings
+

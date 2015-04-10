@@ -1,0 +1,13 @@
+; Zhushi's Treasure
+[ENTRY]
+CreatureDefID=1536
+EssenceID=20781
+Item=5555,1
+Item=5542,1
+Item=5455,1
+Item=143455,1
+Item=5477,1
+Item=5409,1
+Item=5390,1
+Item=143496,1
+

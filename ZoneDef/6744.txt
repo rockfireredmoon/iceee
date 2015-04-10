@@ -1,0 +1,13 @@
+[ENTRY]
+ID=6744
+ACCOUNTID=219
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=dancer
+GroveName=dancer
+WarpName=dancer1
+Grove=1
+EnvironmentCycle=1
+DefLoc=2958,260,3821
+

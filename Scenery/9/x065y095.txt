@@ -1,0 +1,17 @@
+[ENTRY]
+ID=151024809
+Asset=Manipulator-SpawnPoint
+Pos=48956.5,243.194,71371
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=10_bsp_wilds_40_42
+outerRadius=10
+
+[ENTRY]
+ID=151059170
+Asset=CL-Rotted_Flora5
+Pos=49376.8,346.969,71834.3
+Orient=0,0.997495,0,0.0707372
+Scale=2.975,2.975,2.975
+Flags=1
+

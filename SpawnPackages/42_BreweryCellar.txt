@@ -1,0 +1,80 @@
+[ENTRY]
+Flags=1
+Name=z42_bc_gen_Dungeon_Loot_2708
+Spawn=2708,100  ;Dungeon Loot (1) at 0
+
+[ENTRY]
+Flags=3
+Name=z42_bc_gen_Dunklehimer_Keg_596
+Spawn=596,100  ;Dunklehimer Keg (1) at 0
+
+[ENTRY]
+Flags=3
+Name=z42_bc_gen_Exit_to_New_Badari_2354
+Spawn=2354,100  ;Exit to New Badari (1) at 0
+
+[ENTRY]
+Flags=3
+Name=2a_obji_bre07_AleRecipe
+Spawn=2406,100  ;Ale Recipe (1) at 0
+
+[ENTRY]
+Name=2_dbc_front_25_26
+Shares=60
+Spawn=472,10  ;Warpig Barleymancer (26) at 0
+Spawn=474,10  ;Warpig Aleweaver (26) at 0
+Spawn=536,10  ;Warpig Brewslinker (25) at 0
+Spawn=550,10  ;Warpig Brewslinker (26) at 0
+Spawn=2579,10  ;Warpig Brewmaster (25) at 0
+Spawn=2580,10  ;Warpig Brewmaster (26) at 0
+
+
+[ENTRY]
+Name=2_dbc_back_25_26
+Shares=60
+Spawn=472,10  ;Warpig Barleymancer (26) at 0
+Spawn=474,10  ;Warpig Aleweaver (26) at 0
+Spawn=536,10  ;Warpig Brewslinker (25) at 0
+Spawn=550,10  ;Warpig Brewslinker (26) at 0
+Spawn=2579,10  ;Warpig Brewmaster (25) at 0
+Spawn=2580,10  ;Warpig Brewmaster (26) at 0
+
+[ENTRY]
+Name=2_dbc_cellarSpiders
+Spawn=2581,50  ;Cellar Spider (25) at 0
+Spawn=2582,50  ;Cellar Spider (26) at 0
+
+[ENTRY]
+Name=2_dbc_SpynneSTEPUP
+Spawn=2581,50  ;Cellar Spider (25) at 0
+Spawn=2582,50  ;Cellar Spider (26) at 0
+
+
+[ENTRY]
+Name=2_dbc_DoppelbockSTEPUP
+Spawn=472,25  ;Warpig Barleymancer (26) at 0
+Spawn=474,25  ;Warpig Aleweaver (26) at 0
+Spawn=550,25  ;Warpig Brewslinker (26) at 0
+Spawn=2580,25  ;Warpig Brewmaster (26) at 0
+
+[ENTRY]
+Name=2_rhl_warpigDuff_k_27
+Spawn=593,100  ;Warpig Duff (27) at 0
+
+; 3 SpawnPoints
+[ENTRY]
+Name=2_dbc_warpigMiller
+UniquePoints=3
+Spawn=2584,100  ;Warpig Miller (27) at 0
+
+; 2 SpawnPoints
+[ENTRY]
+Name=2_dbc_warpigBud
+UniquePoints=2
+Spawn=2585,100  ;Warpig Bud (28) at 0
+
+; NOTE: from creature file
+[ENTRY]
+Flags=3
+Name=2_dng_dbc_obji_WarpigDuffLewt
+Spawn=2733,100  ;Warpig Duff's Treasure (1)

@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151018050
+Asset=Manipulator-SpawnPoint
+Pos=7171.7,203.525,59179
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=4_ewd_coastalCrabquatch_o_33_34
+outerRadius=30
+

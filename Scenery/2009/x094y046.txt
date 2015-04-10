@@ -1,0 +1,8 @@
+[ENTRY]
+ID=151059289
+Asset=Prop-Autumn_Hill_Tree5
+Name=9
+Pos=70597,526.459,34830
+Orient=0,0,0,1
+Scale=1.375,1.375,1.375
+

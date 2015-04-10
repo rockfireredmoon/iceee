@@ -1,0 +1,108 @@
+SetName	MinItem	ItemList	FlavorText	
+uncommon_Recruit_s	2	1150,1352,5859,4771,5858  	2 Items:<br> +1 Strength<br> +1 Dexterity<br><br>4 Items:<br> +3 Strength<br> +3 Dexterity<br><br>All 5 Items:<br> +3 Strength<br> +3 Dexterity<br> +5% Block Chance	
+uncommon_Squire_s	2	5860,1356,4740,4947,5861  	2 Items:<br> +4 Constitution<br><br>All 5 Items:<br> +8 Constitution<br> +5% Block Chance<br>	FIX
+uncommon_Fortified	2	5863,5862,5864,5865,1360  	2 Items:<br> +4 Constitution<br><br>4 Items:<br> +8 Constitution<br>  <br>All 5 Items:<br> +8 Constitution<br> +5% Block Chance<br><br>	
+uncommon_Brambled	3	5866,5871,1179,5867,1035,141046,5869,5870,1362,5868	3 Items:<br> +3 Strength<br><br>6 Items:<br> +7 Strength<br><br>9 Items:<br> +12 Strength<br><br>All 10 Items:<br> +10% 1-Handed Weapon Specialization	
+uncommon_Ardent	3	1301,1224,1182,1002,905,1065,1121,1251,1369	3 Items:<br> +2 Dexterity<br> +2 Constitution<br><br>6 Items:<br> +4 Dexterity<br> +4 Constitution<br><br>All 9 Items:<br> +6 Dexterity<br> +6 Constitution<br> +10% Offhand Weapon Damage	
+uncommon_Earthen	3	5872,5873,5879,5875,5874,5876,1126,5877,5878,1371	3 Items:<br> +2 Strength<br> +2 Dexterity<br><br>6 Items:<br> +4 Strength<br> +4 Dexterity<br><br>9 Items:<br> +6 Strength<br> +6 Dexterity<br><br>All 10 Items:<br> +8 Strength<br> +8 Dexterity<br> +25 Hitpoint Regeneration	Has shield
+uncommon_Greymist	3	1241,5880,1218,5881,940,4912,988,1132,1259,1376  	3 Items:<br> +4 Constitution<br><br>6 Items:<br> +8 Constitution<br><br>9 Items:<br> +12 Constitution<br><br>All 10 Items:<br> +15 Constitution<br> +7% Block Chance<br>	
+uncommon_Northlight	3	1249,1341,1285,921,1057,5882,1174,1256,1380,1115  	3 Items:<br> +4 Strength<br> +4 Dexterity<br><br>6 Items:<br> +6 Strength<br> +6 Dexterity<br><br>9+ Items:<br> +8 Strength<br> +8 Dexterity<br> +20% Might Regeneration Rate<br>	
+uncommon_Riversong	3	1796,1598,1772,1678,1524,6366,1632,1434,1814,1754,1387  	3 Items:<br> +5 Dexterity<br><br>6 Items:<br> +9 Dexterity<br><br>9 Items:<br> +13 Dexterity<br><br>10+ Items:<br> +16 Dexterity<br> +20% Offhand Damage	
+uncommon_Rosevine	3	5883,5884,5890,1542,5885,1637,5886,5887,5888,5889,1426  	3 Items:<br> +5 Dexterity<br><br>6 Items:<br> +9 Dexterity<br><br>9 Items:<br> +13 Dexterity<br><br>10+ Items:<br> +16 Dexterity<br> +15 Damage Reflect	
+uncommon_Dewdrop	3	1592,1768,1686,1724,1517,1446,5891,1811,1838,1430,5893,5892  	3 Items:<br> +5 Strength<br><br>6 Items:<br> +10 Strength<br><br>9 Items:<br> +15 Strength<br><br>11+ Items:<br> +20 Strength<br> +35 Hitpoint Regeneration<br>	
+uncommon_Ironwood	3	2154,1915,2057,2303,2211,2000,5894,2318,1895,5895,2373,1966  	3 Items:<br> +5 Strength<br> +5 Dexterity<br><br>6 Items:<br> +8 Strength<br> +8 Dexterity<br><br>9 Items:<br> +11 Strength<br> +11 Dexterity<br><br>11+ Items:<br> +14 Strength<br> +14 Dexterity<br> +15% to Physical Damage	
+uncommon_Stonefist	3	2175,5897,2008,2325,5898,5896,2103,1902,1871,1918,1952,2377  	3 Items:<br> +6 Strength<br><br>6 Items:<br> +11 Strength<br><br>9 Items:<br> +16 Strength<br><br>11+ Items:<br> +21 Strength<br> +25% Two-Handed Weapon Specialization<br>	
+uncommon_Wolfsong	3	2182,5902,2313,5903,5901,5900,5899,5904,5905,2380,2126,5906  	3 Items:<br> +6 Dexterity<br><br>6 Items:<br> +11 Dexterity<br><br>9 Items:<br> +16 Dexterity<br><br>11+ Items:<br> +21 Dexterity<br> +7% Dodge Chance<br>	
+uncommon_Bloodlust	3	5907,5908,5910,2390,5909,5911,5912,5913,5914,2750,5916,5915  	3 Items:<br> +4 Strength<br> +4 Dexterity<br><br>6 Items:<br> +8 Strength<br> +8 Dexterity<br><br>9 Items:<br> +12 Strength<br> +12 Dexterity<br><br>11+ Items:<br> +16 Strength<br> +16 Dexterity<br> +20% Increased Attack Speed	
+uncommon_Heirloom	3	5917,5918,5921,5922,5919,5923,5924,5925,2396,2718,5920,5926  	3 Items:<br> +5 Constitution<br><br>6 Items:<br> +10 Constitution<br><br>9 Items:<br> +15 Constitution<br><br>11+ Items:<br> +50 Constitution<br> +400 Physical Armor<br> +400 Elemental Armor	
+uncommon_Emberlaid	3	3000,2826,2913,3151,2891,3124,3034,2795,5929,2852,5928,5927  	3 Items:<br> +4 Strength<br> +4 Dexterity<br><br>6 Items:<br> +8 Strength<br> +8 Dexterity<br><br>9 Items:<br> +12 Strength<br> +12 Dexterity<br><br>11+ Items:<br> +16 Strength<br> +16 Dexterity<br> +40 Hitpoint Regeneration	
+uncommon_Swiftfury	3	5931,5933,5934,5932,3048,2966,5935,5930,2779,2849,3156,2821  	3 Items:<br> +4 Strength<br> +4 Dexterity<br><br>6 Items:<br> +8 Strength<br> +8 Dexterity<br><br>9 Items:<br> +12 Strength<br> +12 Dexterity<br><br>11+ Items:<br> +16 Strength<br> +16 Dexterity<br> +15% Increased Attack Speed	
+uncommon_Nightsong	3	2813,3365,2824,3486,3305,3546,3183,5938,3170,3605,5937,5936  	3 Items:<br> +4 Strength<br> +4 Dexterity<br><br>6 Items:<br> +8 Strength<br> +8 Dexterity<br><br>9 Items:<br> +12 Strength<br> +12 Dexterity<br><br>11+ Items:<br> +16 Strength<br> +16 Dexterity<br> +10% Parry Chance	
+uncommon_Bloodfang	3	5939,5940,5949,5942,5943,5944,5941,5945,5946,5947,3175,5948  	3 Items:<br> +6 Dexterity<br><br>6 Items:<br> +12 Dexterity<br><br>9 Items:<br> +18 Dexterity<br><br>11+ Items:<br> +22 Dexterity<br> +10% Physical Critical Chance	
+uncommon_Lurkwyrm	3	3687,3377,3644,3499,3182,3603,3196,3330,5950,5951,3638,3254  	3 Items:<br> +6 Dexterity<br><br>6 Items:<br> +12 Dexterity<br><br>9 Items:<br> +18 Dexterity<br><br>11+ Items:<br> +22 Dexterity<br> +20% Small Weapon Specialization	
+uncommon_Thunderbound	3	5952,5953,3761,5955,5956,5957,5958,4104,3728,3857,4135,5954  	3 Items:<br> +6 Strength<br><br>6 Items:<br> +12 Strength<br><br>9 Items:<br> +18 Strength<br><br>11+ Items:<br> +22 Strength<br> +20% Physical Damage<br>	
+uncommon_Warmaster_s	3	5960,5962,4139,4113,5963,5964,5961,5959,3731,3841,3968,3765  	3 Items:<br> +7 Strength<br><br>6 Items:<br> +14 Strength<br><br>9 Items:<br> +21 Strength<br><br>11+ Items:<br> +28 Strength<br> +30% Two-Handed Weapon Specialization	
+uncommon_Apprentice	2	4749,6126,4738,6125,143625  		
+uncommon_Disciple_s	2	6128,4773,4948,6127,143626  		
+uncommon_Charmed	2	1028,1089,971,4955,143627  		
+uncommon_Enchanted	3	901,1214,6130,1119,1260,1323,6129,975,143628  		
+uncommon_Mystic	3	6136,6138,6134,6135,6137,6133,6132,6131,143629  		
+uncommon_Dusken	3	1236,910,1215,1046,6139,1258,1307,1163,143630,983  		
+uncommon_Spidersilk	3	6140,6146,1268,6142,6143,6144,6145,1337,143631,6141  		
+uncommon_Silversage	3	6147,6148,6154,6152,6150,6151,6153,6149,993,143632  		
+uncommon_Willowind	3	6155,6163,6160,1567,6159,6161,6158,6162,6156,6157,143633  		
+uncommon_Starshine	3	1785,6164,6165,1455,1803,1826,1740,1618,1684,143634,1499  		
+uncommon_Lorekeeper	3	6174,1867,6182,6180,6177,6178,6179,2100,6181,6175,143636,6176  		
+uncommon_Earthweave	3	6190,2213,6185,6186,6187,6183,6188,6189,6184,2050,143637,2310  		
+uncommon_Hollowind	3	6191,1922,2330,2218,2026,6193,1908,1880,2072,1955,143638,6192  		
+uncommon_Moonshadow	3	2679,2409,2479,2672,2561,2733,6194,2599,2708,2441,143639,2521  		
+uncommon_Goldenbirch	3	2527,2683,2654,2406,2617,2487,2567,2734,2753,6195,143640,2465  		
+uncommon_Runelaid	3	6196,6198,6199,6200,2952,6201,2764,6202,6197,143641,3074,6203  		
+uncommon_Azureweave	3	2802,2995,6208,3137,6204,2884,6205,6206,2916,6207,3078,143642  		
+uncommon_Flamewind	3	6209,6214,6216,6212,6213,3441,2786,6215,6210,6211,143643,4884  		
+uncommon_Twilight	3	3403,3494,3310,3552,3447,3222,3676,3695,3642,3608,143644,3250  		
+uncommon_Soulward	3	6223,6221,6222,3452,6217,3711,6224,6218,6220,143645,6219,6226  		
+uncommon_Fatespeaker	3	3745,3987,3865,3867,4028,3946,6227,6228,3908,6225,6229,143646,4068  		
+uncommon_Spellchanter_s	3	3748,4031,3903,6230,6231,6232,6233,4011,3911,143647,4071,6234  		
+rare_Plains_Stalker	3	1309,1225,1188,1068,1105,911,1237,1254,1372,1009  		
+rare_Wild_Thorn	3	5966,5967,1017,5968,5969,5970,5965,5971,1378,5972  		
+rare_Bandit_Slayer	3	5973,5974,5980,5976,5977,5978,5979,1382,1137,5975  		
+rare_Bonecrusher	3	1614,1781,1707,1383,1464,1550,1795,1819,5982,1664,5981  		
+rare_Duskstrider	3	1603,5985,5984,5986,5987,5988,5983,5989,5990,1427,5991  		
+rare_Goliath_Stone	3	1606,1787,1703,1429,1726,1476,1562,1810,1839,5992,1672,1531  		
+rare_Justiceborn	3	5993,2058,1984,2288,2239,2117,2332,1896,1868,1958,2374,1933  		
+rare_Forsaken	3	1898,2190,1927,2068,2228,2007,2338,1879,2379,1960,5994,2293  		
+rare_Grove_Guardian_s	3	1909,2193,1939,2083,2234,1992,2299,2142,2345,1886,2383,1979  		
+rare_Woodland_Tracker	3	2732,5995,5996,2391,2639,2400,2490,5997,5998,5999,2460  		
+rare_Shadow_Stalker	3	2735,2534,2701,6000,2497,2676,2576,2426,2752,2719,2394,2457  		
+rare_Cinder_Seared	3	6002,2931,3153,6005,6003,6004,3093,6001,6006,2858,2969,6007  		
+rare_Honor_Guard	3	3004,2837,2924,2875,3088,3126,3057,2801,2772,3155,2866,6008  		
+rare_Vengeance_Seeker	3	3366,3657,3516,3245,3336,3561,3456,3186,2814,2784,3169,6009  		
+rare_Fireforged	3	3371,3507,3596,3188,3341,3282,6010,3675,6011,3653,3609,3177  		
+rare_Bloodfervor	3	6013,6017,6014,6018,6016,6015,6012,6019,3612,3180,3438,6020  		
+rare_Chieftan_s	3	3744,3996,3914,4137,4077,4045,3896,3975,4114,3724,3768,6021  		
+rare_Glorybound	3	3749,4022,4029,3889,6022,6023,4101,4691,4140,3855,3941,3758  		
+rare_Blightmist_	3	6235,6236,6238,6241,6239,6240,6242,143648,6237,6243  		
+rare_Crypt_Creeper	3	1314,1226,1075,1135,943,1242,1255,1193,143649,6244  		
+rare_Shadowcaster	3	1199,944,1080,6245,1243,1257,1318,143650,1020,1221  		
+rare_Verdant_Vine	3	6247,6253,6248,6249,6250,6251,6246,6252,1736,1495,143651  		
+rare_Etherwind	3	1798,6254,1698,1513,1469,1558,1666,1827,1749,143652,1775  		
+rare_Soulseer	3	6264,6259,6260,6261,6262,6255,6263,6258,1760,6256,143653,6257  		
+rare_Spirit_Woven	3	2185,6271,6268,6269,6270,6265,6272,6274,6273,6267,6266,143654  		
+rare_Burning_Grove	3	6275,6276,6284,6278,6280,6281,6279,2120,6282,6283,143655,6277  		
+rare_Gloomshadow	3	6295,6289,6290,6291,6292,6285,6293,6288,6294,6286,143656,6287  		
+rare_Essence_Walker	3	2519,6300,6298,6299,2582,6296,2742,6301,2703,2620,6297,143657  		
+rare_Aurora	3	6302,6303,6311,2627,6306,6308,6305,6307,6309,6310,143658,6304  		
+rare_Illuminating	3	2992,3054,2872,6314,3142,2794,2769,6313,6315,143659,6312,2834  		
+rare_Glyph_Scribed	3	6317,6322,6320,6321,2955,6316,6323,6325,6324,6319,6318,143660  		
+rare_Ambergem	3	6326,6327,6335,6329,6331,6333,6330,6332,6334,3606,143661,6328  		
+rare_Djinn_Breath	3	6344,6340,6341,3431,6342,6336,3697,6339,6343,6337,143662,6338  		
+rare_Sinstriker	3	3379,3226,3347,3559,6345,3689,3705,6346,3529,3289,143663,3656  		
+rare_Darksoul	3	6347,6348,6356,6350,6352,6354,6351,6353,6355,3839,143664,6349  		
+rare_Planeswalker	3	6365,6360,6361,3970,6362,6357,6363,6359,6364,6358,143665,5603  		
+epic_Dauntless	3	5816,5817,5823,5818,1576,5819,1533,5820,5821,5822,1432,1761  		
+epic_Onyxheart	3	6030,6031,6032,6033,6027,6034,6029,6035,2171,143613,6028,6036  		
+epic_Sparksmith	3	5825,2159,5832,2069,5827,5828,2137,5829,5830,5831,2378,5826  		
+epic_Vigilant_Hunter	3	2166,5834,2382,2368,2260,2012,5833,1907,5836,5837,5835,1945  		
+epic_Heaven_Shroud	3	5839,5846,2610,5841,2472,5843,5840,5838,5844,2392,5845,5842  		
+epic_Rageborn	3	2556,2694,2636,2476,2645,2596,2416,2737,5847,2395,2711  		
+epic_Valiant_Soldier	3	3024,2940,2901,3133,3062,3102,2970,5848,2767,2840,2863,3152  		
+epic_Lonewolf	3	3029,2897,3108,3149,3067,2944,2806,2775,2860,3157,2987,2843  		
+epic_Blazing_Windrunner	3	5849,5850,3530,3171,5851,3350,3563,3428,3233,2790,3666,3623  		
+epic_Resilient_Guardian	3	3678,3370,3359,3568,3298,3464,3190,5852,3173,3637,3539,3671  		
+epic_Death_Prowler	3	3424,5857,3543,3179,3570,5854,3363,3686,5855,5856,5853,3301  		
+epic_Fierce_General_s	3	4016,3935,3875,4087,4056,3954,4115,3743,3719,3844,4134,3774  		
+epic_Dragonbone	3	3747,3988,3770,3909,4061,3871,4099,3737,4138,3859,3981,4092  		
+epic_Phantasmal	3	1813,1607,1778,1716,1731,1477,6025,1674,1841,6026,143612,6024  		
+epic_Battlegrace	3	1893,5824,1934,2063,2372,2019,2334,2226,2131,1865,1949,2273  		
+epic_Meteor_Shard	3	6037,2354,2247,2023,6039,1903,1873,1928,1959,6038,2280,143614  		
+epic_Stormcaller	3	6040,6041,6045,2094,6043,6044,6042,2111,1887,1973,143615,2269  		
+epic_Tidewalker	3	2509,2669,2398,2589,2731,2749,6047,2702,2520,143616,6046,2697  		
+epic_Tranquillity	3	6049,6055,6052,6053,6054,6048,2760,6057,6056,6051,6050,143617  		
+epic_Pyre_Warden	3	2796,6058,6067,6060,6062,6064,6061,6063,6065,6066,143618,6059  		
+epic_Faithkeeper	3	6078,6072,6073,6074,6075,6068,6076,6071,6077,6069,143619,6070  		
+epic_Prophet_Speaker	3	3381,6083,6080,6081,6082,2807,6084,6086,6085,6079,3290,143620  		
+epic_Wrathbane	3	6087,6088,6096,6090,6092,6094,6091,6093,3703,6095,143621,6089  		
+epic_Timeshift	3	6101,6102,3454,3194,6097,3706,6100,3613,6098,143622,6099,3674  		
+epic_Pious_Apostle	3	6104,6110,6107,6108,6109,6103,6111,6113,6112,6106,6105,143623  		
+epic_Ghastly_Specter	3	6114,6115,6124,6117,6119,6121,6118,6120,6122,6123,143624,6116  		

@@ -1,0 +1,4 @@
+; Spawn Frietz Splithoof's Treasure
+:onKill_443
+spawn 654311943
+end

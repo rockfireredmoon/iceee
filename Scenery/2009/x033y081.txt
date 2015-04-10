@@ -1,0 +1,8 @@
+[ENTRY]
+ID=151021088
+Asset=Prop-Boulder5
+Name=9
+Pos=24987.8,224.802,61456
+Orient=0,0,0,1
+Scale=4.7,4.7,4.7
+

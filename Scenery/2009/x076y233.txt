@@ -1,0 +1,16 @@
+[ENTRY]
+ID=151044731
+Asset=Prop-Palm-Tree#Prop-Palm-Tree1
+Name=9
+Pos=57729.9,86.1338,175073
+Orient=0.0635591,-0.257787,0.00192574,0.964107
+Scale=2.825,2.825,2.825
+
+[ENTRY]
+ID=151054554
+Asset=Par-Waves-1-Emitter
+Name=9
+Pos=57289.7,62.5712,175390
+Orient=0,-0.605188,0,0.796082
+Scale=3,3,3
+

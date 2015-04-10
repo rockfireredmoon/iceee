@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151040699
+Asset=Prop-Fog_White
+Name=9
+Pos=58423.7,1114.39,47833
+Orient=0,0,0,1
+Scale=4.775,4.775,4.775
+Flags=1
+

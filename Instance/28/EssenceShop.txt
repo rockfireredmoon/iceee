@@ -1,0 +1,26 @@
+; Underhenge Dungeon Loot
+[ENTRY]
+CreatureDefID=2696
+EssenceID=21250
+Item=5526,10
+Item=5557,10
+Item=5480,10
+Item=143484,10
+Item=143442,10
+Item=143425,10
+Item=5502,10
+Item=5414,10
+
+
+; Bramblebane's Treasure (restored from 0.8.8b screenshot)
+[ENTRY]
+CreatureDefID=1827
+EssenceID=20873
+Item=143434,1
+Item=5479,1
+Item=5413,1
+Item=143499,1
+Item=143469,1
+Item=5556,1
+Item=5501,1
+Item=5458,1

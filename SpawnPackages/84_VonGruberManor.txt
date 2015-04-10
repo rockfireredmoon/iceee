@@ -1,0 +1,22 @@
+[ENTRY]
+Name=z84_vgm_gen_Exit_to_New_Badari_2764
+Spawn=2764,100  ;Exit to New Badari (1) at 0
+
+[ENTRY]
+Name=2_vonGruber_INSTANCE_general
+Shares=70
+Spawn=581,10  ;Loyalist (26) at 0
+Spawn=582,10  ;Loyalist (27) at 0
+Spawn=583,10  ;Fanatic (26) at 0
+Spawn=584,10  ;Fanatic (27) at 0
+Spawn=587,10  ;Fanatic (26) at 0
+Spawn=588,10  ;Fanatic (27) at 0
+Spawn=589,10  ;Cultist (25) at 0
+
+[ENTRY]
+Name=2_vonGruber_INSTANCE_assassins
+Spawn=586,100  ;Assassin (27) at 0
+
+[ENTRY]
+Name=2_vonGruber_INSTANCE_vonGruber
+Spawn=527,100  ;Baron VonGruber (28) at 0

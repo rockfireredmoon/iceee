@@ -1,0 +1,55 @@
+; First floor boss/door
+:onKill_1591
+spawn 553656611
+end
+
+; Second floor boss/door
+:onKill_1592
+spawn 553656613
+end
+
+; Third floor boss/door
+:onKill_1880
+spawn 553656615
+end
+
+; Fourth floor boss/door
+:onKill_1594
+spawn 553656617
+end
+
+; Fifth floor boss/door
+:onKill_1595
+spawn 553656619
+end
+
+; Sixth floor boss/door
+:onKill_1881
+spawn 553656624
+end
+
+; Seventh floor boss/door
+:onKill_1593
+spawn 553656625
+end
+
+; Eighth floor boss/door
+:onKill_1596
+spawn 553656627
+end
+
+; Ninth floor boss/door
+:onKill_1597
+spawn 553656629
+end
+
+; Tenth floor boss/door
+:onKill_1598
+spawn 553656631
+end
+
+; Eleventh floor boss/loot chest/exit
+:onKill_114
+spawn 553656610
+spawn 10000001
+end

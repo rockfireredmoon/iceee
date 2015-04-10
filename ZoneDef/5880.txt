@@ -1,0 +1,13 @@
+[ENTRY]
+ID=5880
+ACCOUNTID=111
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=hideout
+GroveName=hideout
+WarpName=hideout1
+Grove=1
+EnvironmentCycle=1
+DefLoc=2958,260,3821
+

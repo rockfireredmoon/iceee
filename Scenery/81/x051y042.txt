@@ -1,0 +1,16 @@
+[ENTRY]
+ID=1358962980
+Asset=Par-Waves-1-Emitter
+Pos=51070.7,62.3188,42195
+Orient=0,0.688921,0,0.724836
+Scale=3,3,3
+Flags=1
+
+[ENTRY]
+ID=1358962981
+Asset=Par-Waves-1-Emitter
+Pos=51070.7,61.3631,42855
+Orient=0,0.688921,0,0.724836
+Scale=3,3,3
+Flags=1
+

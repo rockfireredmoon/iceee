@@ -1,0 +1,15 @@
+[ENTRY]
+ID=5601
+ACCOUNTID=76
+NAME=Grove
+TERRAINCONFIG=Terrain-Testing_Gauntlet#Terrain-Testing_Gauntlet.cfg
+ENVIRONMENTTYPE=Default_Cave
+ShardName=Realm of Disaster
+GroveName=dmaster
+WarpName=dmaster2
+DropRateProfile=standard
+Grove=1
+EnvironmentCycle=0
+BuildPermission=account,76,5,5,9,9
+DefLoc=13685,490,16495
+

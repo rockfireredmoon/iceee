@@ -1,0 +1,35 @@
+; Format: CreatureDef=X,Y,Z,Facing
+
+3600=48656,326,54824,128   ; Keystone Sanctuary <Bandit's Bluff>
+3601=22150,228,83582,128   ; Keystone Sanctuary <Dustshore
+3602=34973,1247,87996,128  ; Keystone Sanctuary <Cracked Rock>
+3603=56843,269,72589,128   ; Keystone Sanctuary <Deadwood>
+
+
+
+; HARVEST FEST NPCS - BREMEN
+; 2858=68933,300,35592,128  ; Jir Slickpaw <Harvest-Master>
+; 2879=68873,300,35610,64  ; Harvest-Master's Chest
+; 2861=68971.3,423.96,35457.7,0  ;Harvest Table
+
+; HARVEST FEST NPCS - HEARTWOOD
+; 2859=28949,508,62815,210  ; Larin Barksoul <Harvest-Master>
+; 2880=28985,508,62878,146  ; Harvest-Master's Chest
+; 2862=28852.5,507.19,62903,0  ;Harvest Table
+
+
+
+
+; WINTER DAWNING NPCS - BREMEN
+; Facing them, from left to right:
+;2903=68964,424,35668,128   ; Forden Jallows
+;2910=68932,424,35666,128   ; Chillkin Hunt Reward Chest
+;2929=68908,424,35668,128   ; Brenna Nalision
+;2933=68878,424,35670,64    ; Holiday Gift Chest  Note: prop has a different facing
+
+; WINTER DAWNING NPCS - HEARTWOOD
+; Facing them, from left to right:
+;2904=28930,508,62789,210  ; Haslo Norgun
+;2911=28942,508,62813,210  ; Chillkin Hunt Reward Chest
+;2930=28952,508,62832,210  ; Aris Redbark
+;2934=28962,508,62852,146  ; Holiday Gift Chest

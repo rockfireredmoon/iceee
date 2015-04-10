@@ -1,0 +1,15 @@
+[ENTRY]
+ID=8880
+ACCOUNTID=486
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=MidlandsNight
+ShardName=dexid
+GroveName=dexid
+WarpName=dexid1
+DropRateProfile=standard
+Grove=1
+EnvironmentCycle=1
+BuildPermission=account,486,0,0,3,3
+DefLoc=3454,513,2940
+

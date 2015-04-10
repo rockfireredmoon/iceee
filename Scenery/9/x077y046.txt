@@ -1,0 +1,16 @@
+[ENTRY]
+ID=151034485
+Asset=Prop-Wooden_Tower
+Pos=57949,186.003,34962
+Orient=0,0.0749297,0,0.997189
+Scale=3.8,3.8,3.8
+Flags=1
+
+[ENTRY]
+ID=151034492
+Asset=CL-Autumn_Forest3#CL-Autumn_Forest3
+Pos=58154.8,456.103,35047
+Orient=0,-0.891207,0,0.453596
+Scale=1.45,1.45,1.45
+Flags=1
+

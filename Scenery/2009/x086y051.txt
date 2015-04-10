@@ -1,0 +1,8 @@
+[ENTRY]
+ID=151046033
+Asset=CL-Fence-Stone_Blue3
+Name=9
+Pos=65181.2,440.288,38931
+Orient=0,0.20846,0,0.978031
+Scale=1,1,1
+

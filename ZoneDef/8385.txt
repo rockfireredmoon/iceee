@@ -1,0 +1,15 @@
+[ENTRY]
+ID=8385
+ACCOUNTID=424
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=fyrusolin
+GroveName=fyrusolin
+WarpName=fyrusolin2
+DropRateProfile=standard
+Grove=1
+EnvironmentCycle=0
+BuildPermission=account,424,0,0,3,3
+DefLoc=2958,260,3821
+

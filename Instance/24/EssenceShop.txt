@@ -1,0 +1,15 @@
+﻿; Fangarians Lair
+
+; Restored from 0.8.7 screenshot.
+; Grimfrost's Treasure
+[ENTRY]
+CreatureDefID=2757
+EssenceID=21299
+Item=5576,1
+Item=5580,1
+Item=5581,1
+Item=5575,1
+Item=5579,1
+Item=5578,1
+Item=5577,1
+Item=5582,1

@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151032715
+Asset=Fog#Prop-Fog_White_Ground
+Name=9
+Pos=53748.1,115.882,39322
+Orient=0,0,0,1
+Scale=4.25,4.25,4.25
+Flags=1
+

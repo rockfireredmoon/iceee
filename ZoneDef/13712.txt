@@ -1,0 +1,13 @@
+[ENTRY]
+ID=13712
+ACCOUNTID=1090
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=masasi
+GroveName=masasi
+WarpName=masasi1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

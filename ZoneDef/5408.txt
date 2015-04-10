@@ -1,0 +1,13 @@
+[ENTRY]
+ID=5408
+ACCOUNTID=52
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=olympus
+GroveName=olympus
+WarpName=olympus1
+Grove=1
+EnvironmentCycle=1
+DefLoc=2958,260,3821
+

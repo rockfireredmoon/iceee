@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151024470
+Asset=Prop-Water_Planes#Prop-Water_Plane1
+Name=9
+Pos=93998.7,708.614,143293
+Orient=0,-0.144492,0,0.989506
+Scale=1.075,1.075,1.075
+Flags=1
+

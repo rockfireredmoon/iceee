@@ -1,0 +1,13 @@
+[ENTRY]
+ID=9920
+ACCOUNTID=616
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=cosentino
+GroveName=cosentino
+WarpName=cosentino1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

@@ -1,0 +1,13 @@
+; Defines a list of item files to load.
+
+Data\ItemDef.txt
+Data\ItemDef_Legacy.txt
+Data\ItemDef_Custom.txt
+Data\ItemDef_Gamble.txt
+Data\ItemDef_Refashionable.txt
+Data\ItemDef_Pets.txt
+Data\ItemDef_SkillOrb.txt
+Data\ItemDef_NewPotions.txt
+Data\ItemDef_CustomSets.txt
+Data\ItemDef_NewQuest.txt
+;Data\npcarmoursets.txt

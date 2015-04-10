@@ -1,0 +1,13 @@
+[ENTRY]
+ID=7312
+ACCOUNTID=290
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=daokan
+GroveName=daokan
+WarpName=daokan1
+Grove=1
+EnvironmentCycle=1
+DefLoc=2958,260,3821
+

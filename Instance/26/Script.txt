@@ -1,0 +1,70 @@
+:init
+set hoffy_STEPUP 0
+set overseerAlwynn_STEPUP 0
+set overseerFlammus_STEPUP 0
+set overseerKeyt_STEPUP 0
+set overseerMallord_STEPUP 0
+set overseerZanthryn_STEPUP 0
+set Fillus_STEPUP 0
+set StrategistZao_STEPUP 0
+set HenchmanGrakk_STEPUP 0
+end
+
+; Scripted calls from the spawn package
+
+:1_dng_db_hoffy_k_34_STEPUP
+inc hoffy_STEPUP
+if hoffy_STEPUP = 7
+  spawn_at 436213159 3028
+end
+
+:1_dng_db_overseerAlwynn_STEPUP
+inc overseerAlwynn_STEPUP
+if overseerAlwynn_STEPUP = 11
+  spawn_at 436214309 3050
+end
+
+; NOTE: 11 spawn points but one is isolated far away
+:1_dng_db_overseerFlammus_STEPUP
+inc overseerFlammus_STEPUP
+if overseerFlammus_STEPUP = 10
+  spawn_at 436213441 3053
+end
+
+:1_dng_db_overseerKeyt_STEPUP
+inc overseerKeyt_STEPUP
+if overseerKeyt_STEPUP = 11
+  spawn_at 436213453 3052
+end
+
+:1_dng_db_overseerMallord_STEPUP
+inc overseerMallord_STEPUP 
+if overseerMallord_STEPUP = 11
+  spawn_at 436213475 3051
+end
+
+:1_dng_db_overseerZanthryn_STEPUP
+inc overseerZanthryn_STEPUP
+if overseerZanthryn_STEPUP = 11
+  spawn_at 436213496 3049
+end
+
+:1_dng_db_Fillus_k_35_STEPUP
+inc Fillus_STEPUP
+if Fillus_STEPUP = 16
+  spawn_at 436213685 3068
+end
+
+; Elian is one of the spawnpoints, so do with 3 instead of 4
+:1_dng_db_StrategistZao_r_35_STEPUP
+inc StrategistZao_STEPUP
+if StrategistZao_STEPUP = 3
+  spawn_at 436213702 3078
+end
+
+:1_dng_db_HenchmanGrakk_d_35_STEPUP
+inc HenchmanGrakk_STEPUP 
+if HenchmanGrakk_STEPUP = 6
+  spawn_at 436213716 3079
+end
+

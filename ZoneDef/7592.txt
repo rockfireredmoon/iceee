@@ -1,0 +1,15 @@
+[ENTRY]
+ID=7592
+ACCOUNTID=325
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=muramasa
+GroveName=muramasa
+WarpName=muramasa1
+DropRateProfile=standard
+Grove=1
+EnvironmentCycle=1
+BuildPermission=account,325,0,0,3,3
+DefLoc=2958,260,3821
+

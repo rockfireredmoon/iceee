@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151004111
+Asset=Prop-Autumn_Tree#Prop-Autumn_Tree5
+Name=9
+Pos=77979.9,592.256,38673.3
+Orient=0,-0.836026,0,0.54869
+Scale=1.175,1.175,1.175
+Flags=1
+

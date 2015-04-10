@@ -1,0 +1,13 @@
+[ENTRY]
+ID=10840
+ACCOUNTID=731
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=swooptoptree
+GroveName=swooptoptree
+WarpName=swooptoptree1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

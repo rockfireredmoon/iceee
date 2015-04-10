@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151032195
+Asset=Manipulator#Manipulator-PathNode
+Pos=26689.9,264.835,86765
+Orient=0,0,0,1
+Scale=1,1,1
+links_count=1
+link=151032194,1
+

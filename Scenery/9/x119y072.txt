@@ -1,0 +1,14 @@
+[ENTRY]
+ID=151061696
+Asset=Prop-Pine-Sick_Tree1
+Pos=89862.3,1156.46,54184.4
+Orient=0,0,-0.0649542,0.997888
+Scale=4.6,4.6,4.6
+
+[ENTRY]
+ID=151061826
+Asset=Prop-Marker_Medium
+Pos=89496,1208.91,54651.6
+Orient=0.34759,0,0,0.937647
+Scale=20,20,20
+

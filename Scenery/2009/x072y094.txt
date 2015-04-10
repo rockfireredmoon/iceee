@@ -1,0 +1,16 @@
+[ENTRY]
+ID=151058402
+Asset=CL-Mushroom_Rotted3#CL-Mushroom_Rotted3
+Name=9
+Pos=54675.2,158.853,71198.2
+Orient=0,-0.795602,0,0.60582
+Scale=0.25,0.25,0.25
+
+[ENTRY]
+ID=151058405
+Asset=CL-Mushroom_Small4#CL-Mushroom_Small4
+Name=9
+Pos=54655.6,146.327,71144.4
+Orient=0,0,0,1
+Scale=1,1,1
+

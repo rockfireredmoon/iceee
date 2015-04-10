@@ -1,0 +1,13 @@
+[ENTRY]
+ID=10312
+ACCOUNTID=665
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=kaitheotter
+GroveName=kaitheotter
+WarpName=kaitheotter1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

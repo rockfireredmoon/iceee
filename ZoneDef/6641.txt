@@ -1,0 +1,13 @@
+[ENTRY]
+ID=6641
+ACCOUNTID=206
+NAME=Grove
+TERRAINCONFIG=Terrain-Starting_Zone2#Terrain-Starting_Zone2.cfg
+ENVIRONMENTTYPE=Bastion
+ShardName=fennecus
+GroveName=fennecus
+WarpName=fennecus2
+Grove=1
+EnvironmentCycle=1
+DefLoc=10994,546,12401
+

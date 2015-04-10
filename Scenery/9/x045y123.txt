@@ -1,0 +1,16 @@
+[ENTRY]
+ID=151016694
+Asset=Manipulator-SpawnPoint
+Pos=34254,1498.99,92973
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=9_stonelion_outerCamps
+outerRadius=5
+
+[ENTRY]
+ID=151037444
+Asset=Prop-Acacia_Tree3
+Pos=34089.9,1519.73,92800
+Orient=0,0.967462,0,0.253015
+Scale=1.6,1.6,1.6
+

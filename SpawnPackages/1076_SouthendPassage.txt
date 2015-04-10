@@ -1,0 +1,18 @@
+; EER data.
+
+[ENTRY]
+Name=newb_csa_tunnel_greenshellCrab
+Spawn=1999,100  ;Greenshell Crab (6) at 0
+
+[ENTRY]
+Name=newb_csa_tunnel_caveCrawler
+Spawn=1998,100  ;Cave Crawler (6) at 0
+
+[ENTRY]
+Name=southendpass_krustythecrab_SP
+Spawn=3403,100  ;Krusty the Crab (7) at 0
+
+[ENTRY]
+Name=southendpassage_seafood_sp
+Spawn=3402,100  ;Sea Food (6) at 0
+

@@ -1,0 +1,13 @@
+[ENTRY]
+ID=8832
+ACCOUNTID=480
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=arizonacrow
+GroveName=arizonacrow
+WarpName=arizonacrow1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

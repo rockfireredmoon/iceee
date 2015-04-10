@@ -1,0 +1,16 @@
+[ENTRY]
+ID=151012036
+Asset=Sick-Rotted_Forest?d=0.9&s=231437&sz=800
+Pos=43704.2,279.686,66195
+Orient=0,0.918788,0,0.394751
+Scale=1.425,1.425,1.425
+Flags=1
+
+[ENTRY]
+ID=151018766
+Asset=Prop-Giant_Mushroom#Prop-Giant_Mushroom-Glowing3
+Pos=43550.9,179.355,66481
+Orient=0,0,0,1
+Scale=1,1,1
+Flags=1
+

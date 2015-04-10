@@ -1,0 +1,13 @@
+[ENTRY]
+ID=12568
+ACCOUNTID=947
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=mooshroomre
+GroveName=mooshroomre
+WarpName=mooshroomre1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

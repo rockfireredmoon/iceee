@@ -1,0 +1,16 @@
+[ENTRY]
+ID=151032775
+Asset=Manipulator-SpawnPoint
+Pos=34791.4,1344.47,75754
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=9_wilds_37_38
+outerRadius=10
+
+[ENTRY]
+ID=151058601
+Asset=Prop-Boulder_Arid#Prop-Boulder_Arid4
+Pos=35055,1276.24,75841.1
+Orient=0,0,-0.119712,0.992809
+Scale=3.325,3.325,3.325
+

@@ -1,0 +1,16 @@
+[ENTRY]
+ID=1358961533
+Asset=Manipulator-SpawnPoint
+Pos=35673.1,392.202,51892
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=1a_rockBearCamp03_general
+outerRadius=1
+
+[ENTRY]
+ID=1358962769
+Asset=Par-Waves-1-Emitter
+Pos=35368.7,60.2209,51187
+Orient=0,-0.939099,0,0.343646
+Scale=2.5,2.5,2.5
+

@@ -1,0 +1,138 @@
+#name custom_heathendel_mage40
+#speed 6
+
+; 244 : Firebolt 40
+; 414 : Pyroblast 40
+; 259 : Forcebolt 40
+; 377 : Force Blast 40
+; 381 : Hand of Heraclitus 40   [Cooldown:BasicCast]
+; 428 : Cataclysm 40   [Cooldown:Cataclysm]
+; 100 : Mage Armor 40  [ABGID:35]
+; 5009 : Mage Armor (50%)  [ABGID:35]
+; 89 : Athena's Gift 40  [ABGID:33]
+; 5008 : Athena's Gift (15%) [ABGID:33]
+; 32760 : ranged autoattack
+
+set VAR 0
+set COOLDOWN 0
+
+
+:begin
+call waitfortarget
+call checkWillCharge
+call checkMightCharge
+call checkWill
+call checkMight
+goto begin
+
+
+
+
+:checkWillCharge
+getwillcharge VAR
+if VAR < 3
+  return
+endif
+
+call checkCataclysm
+
+getwillcharge VAR
+if VAR >= 3
+  use 414
+  reset_goto begin
+endif
+return
+
+
+
+:checkMightCharge
+getmightcharge VAR
+if VAR >= 3
+  use 377
+  reset_goto begin
+endif
+return
+
+
+
+:checkWill
+getwill VAR
+if VAR < 3
+  return
+endif
+
+call checkHeraclitus
+
+getwill VAR
+if VAR >= 3
+  use 244
+  reset_goto begin
+endif
+return
+
+
+
+:checkMight
+getmight VAR
+if VAR >= 3
+  use 259
+  reset_goto begin
+endif
+return
+
+
+:castBuffs
+get_buff_tier 35 VAR
+if VAR = 0
+  use 5009
+endif
+
+get_buff_tier 33 VAR
+if VAR = 0
+  use 5008
+endif
+return
+
+
+
+:checkCataclysm
+getcooldown "Cataclysm" COOLDOWN
+if COOLDOWN != 0
+  return
+endif
+
+count_enemy_at 150 VAR
+if VAR <= 1
+  return
+endif
+set_gtae
+use 428
+reset_goto begin
+
+
+
+:checkHeraclitus
+getcooldown "BasicCast" COOLDOWN
+if COOLDOWN != 0
+  return
+endif
+
+target_in_range 30 VAR
+if VAR = 1
+  use 381
+  reset_goto begin
+endif
+return
+
+
+
+:waitfortarget
+has_target VAR
+if VAR = 0
+  wait 1000
+  goto waitfortarget
+endif
+
+call castBuffs
+use 32760
+return

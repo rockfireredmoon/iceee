@@ -1,0 +1,17 @@
+[ENTRY]
+ID=150999205
+Asset=CL-Rock-Clutter#CL-Rock-Clutter
+Pos=41356,298.864,50673
+Orient=0,0,0,1
+Scale=1,1,1
+Flags=1
+
+[ENTRY]
+ID=151053204
+Asset=Manipulator-SpawnPoint
+Pos=41538.2,276.701,50790
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=3a_unikornCamp01_general
+outerRadius=10
+

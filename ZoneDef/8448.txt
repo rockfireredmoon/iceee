@@ -1,0 +1,15 @@
+[ENTRY]
+ID=8448
+ACCOUNTID=432
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=ForestDay
+ShardName=dandan
+GroveName=dandan
+WarpName=dandan1
+DropRateProfile=standard
+Grove=1
+EnvironmentCycle=0
+BuildPermission=account,432,0,0,3,3
+DefLoc=3425,514,2792
+

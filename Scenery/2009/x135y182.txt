@@ -1,0 +1,8 @@
+[ENTRY]
+ID=150999852
+Asset=CL-Rock-Clutter#CL-Rock-Clutter
+Name=9
+Pos=101263,565.301,136841
+Orient=0,0,0,1
+Scale=1,1,1
+

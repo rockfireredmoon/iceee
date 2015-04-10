@@ -1,0 +1,13 @@
+[ENTRY]
+ID=8888
+ACCOUNTID=487
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=noix
+GroveName=noix
+WarpName=noix1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

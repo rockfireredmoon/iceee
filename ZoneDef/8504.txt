@@ -1,0 +1,13 @@
+[ENTRY]
+ID=8504
+ACCOUNTID=439
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=pac
+GroveName=pac
+WarpName=pac1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

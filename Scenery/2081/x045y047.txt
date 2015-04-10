@@ -1,0 +1,9 @@
+[ENTRY]
+ID=1358966068
+Asset=Environment-Marker?type=Forest
+Name=81
+Pos=45446.6,185.336,47003
+Orient=0,0,0,1
+Scale=5.55,5.55,5.55
+Flags=1
+

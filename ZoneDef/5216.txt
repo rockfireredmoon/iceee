@@ -1,0 +1,13 @@
+[ENTRY]
+ID=5216
+ACCOUNTID=28
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=kaffir
+GroveName=kaffir
+WarpName=kaffir1
+Grove=1
+EnvironmentCycle=1
+DefLoc=2958,260,3821
+

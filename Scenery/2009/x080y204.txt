@@ -1,0 +1,17 @@
+[ENTRY]
+ID=151021891
+Asset=Manipulator-SpawnPoint
+Name=9
+Pos=60590,234.105,153247
+Orient=0,0,0,1
+Scale=1,1,1
+Layer=150999723
+
+[ENTRY]
+ID=151029156
+Asset=Prop-Flowers-Kadzu#Prop-Flowers-Kadzu1
+Name=9
+Pos=60214.7,176.716,153447
+Orient=0,0,0,1
+Scale=0.8,0.8,0.8
+

@@ -1,0 +1,8 @@
+[ENTRY]
+ID=151001616
+Asset=Prop-Boat-Fishing
+Pos=56247.7,72.663,33571
+Orient=-0.197532,0.0454879,-0.977734,0.0542904
+Scale=1,1,1
+Flags=1
+

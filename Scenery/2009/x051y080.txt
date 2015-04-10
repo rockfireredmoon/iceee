@@ -1,0 +1,17 @@
+[ENTRY]
+ID=151048121
+Asset=Forest?d=0.9&amp;s=231457&amp;sz=800
+Name=9
+Pos=38796,276.615,60667.2
+Orient=0,0.930216,0,0.367013
+Scale=1.325,1.325,1.325
+Flags=1
+
+[ENTRY]
+ID=151059783
+Asset=Prop-Bridge2
+Name=9
+Pos=38991.2,240.476,60073
+Orient=0,-0.164252,0,0.986418
+Scale=2.5,2.5,2.5
+

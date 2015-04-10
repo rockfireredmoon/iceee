@@ -1,0 +1,13 @@
+[ENTRY]
+ID=14528
+ACCOUNTID=1192
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=denchofish
+GroveName=denchofish
+WarpName=denchofish1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

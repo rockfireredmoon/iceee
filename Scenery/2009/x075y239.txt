@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151040951
+Asset=Manipulator-Sanctuary
+Name=9
+Pos=56725.5,211.26,179588
+Orient=0,0,0,1
+Scale=1,1,1
+Flags=1
+

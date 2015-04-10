@@ -1,0 +1,13 @@
+[ENTRY]
+ID=10808
+ACCOUNTID=727
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=raptorjesus
+GroveName=raptorjesus
+WarpName=raptorjesus1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

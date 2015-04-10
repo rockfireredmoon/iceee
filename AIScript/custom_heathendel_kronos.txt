@@ -1,0 +1,192 @@
+#name custom_heathendel_kronos
+#speed 10
+
+; 342 - Earthshaker : 50
+; 229 - Assault : 50
+; 447 - Bash : 50
+; 540 - Concussion : 50
+; 426 - Wildfire : 50
+; 445 - Inferno : 50
+; 245 - Firebolt : 50
+; 415 - Pyro Blast : 50
+; 218 - Syphon : 50
+; 507 - Discipline : 50
+; 32 - Concentration : 60 (30%)
+; 32766 - Melee Autoattack
+
+set WILL 0
+set WILLCH 0
+set MIGHT 0
+set MIGHTCH 0
+set var 0
+set TCOUNT 0
+set STRAT 0
+
+use 507
+use 32
+
+
+:begin
+;debugprint ":begin"
+
+call waitForTarget
+use 32766
+
+; If we can't use skills, go back.
+is_busy var
+if var = 1
+  goto begin
+endif
+
+;debugprint "Checkcharges"
+call checkWillCharge
+call checkMightCharge
+
+if STRAT = 0
+  call checkWill
+  set STRAT 1
+endif
+
+if STRAT = 1
+  call checkMight
+  set STRAT 0
+endif
+
+;debugprint "end loop"
+goto begin
+
+
+
+
+:checkWillCharge
+getwillcharge WILLCH
+if WILLCH < 3
+  return
+endif
+
+call tryCastInferno
+is_busy var
+if var = 1
+  return
+endif
+
+; Need to make sure we still have charges since inferno may have
+; triggered.
+getwillcharge WILLCH
+if WILLCH < 1
+  return
+endif
+
+use 415
+
+return
+
+
+
+:checkMightCharge
+getmightcharge MIGHTCH
+if MIGHTCH < 1
+  return
+endif
+
+use 447 
+
+return
+
+
+
+:checkWill
+getwill WILL
+if WILL < 3
+  return
+endif
+
+call tryCastWildfire
+is_busy var
+if var = 1
+  return
+endif
+
+call tryCastSyphon
+is_busy var
+if var = 1
+  return
+endif
+
+use 245
+
+return
+
+
+
+:checkMight
+
+getmight MIGHT
+call tryCastEarthshaker
+
+if MIGHT < 3
+  return
+endif
+
+getcooldown "Concussion" var
+if var = 0
+  use 540
+  return
+endif
+
+use 229
+
+return
+
+:tryCastSyphon
+getcooldown "HealthLeech" var
+if var >= 1
+  return
+endif
+use 218
+return
+
+:tryCastWildfire
+count_enemy_at 100 TCOUNT
+if TCOUNT < 2
+  return
+endif
+use 426
+return
+
+:tryCastInferno
+getcooldown "Inferno" var
+if var >= 1
+  return
+endif
+count_enemy_near 150 TCOUNT
+if TCOUNT < 2
+  return
+endif
+use 445
+return
+
+:tryCastEarthshaker
+if MIGHT < 4
+  return
+endif
+getcooldown "Earthshaker" var
+if var >= 1
+  return
+endif
+count_enemy_near 50 TCOUNT
+if TCOUNT < 2
+  return
+endif
+use 342
+return
+
+
+:waitForTarget
+;debugprint ":waitForTarget"
+has_target var
+if var = 0
+  wait 1000
+  goto waitForTarget
+endif
+return

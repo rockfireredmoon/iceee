@@ -1,0 +1,15 @@
+[ENTRY]
+ID=7824
+ACCOUNTID=354
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CoastNight
+ShardName=zackblackwolf
+GroveName=zackblackwolf
+WarpName=zackblackwolf1
+DropRateProfile=standard
+Grove=1
+EnvironmentCycle=0
+BuildPermission=account,354,0,0,13,23
+DefLoc=2958,260,3821
+

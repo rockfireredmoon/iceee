@@ -1,0 +1,13 @@
+[ENTRY]
+ID=13992
+ACCOUNTID=1125
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=pehto
+GroveName=pehto
+WarpName=pehto1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

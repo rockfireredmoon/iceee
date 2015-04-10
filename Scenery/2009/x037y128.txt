@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151032854
+Asset=Prop-Entrance1
+Name=9
+Pos=28368.1,1198.79,96064
+Orient=0,-0.62614,0,-0.779711
+Scale=1.5,1.5,1.5
+Flags=1
+

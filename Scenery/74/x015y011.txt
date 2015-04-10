@@ -1,0 +1,14 @@
+[ENTRY]
+ID=1241514350
+PlacedBy=-400000000
+Asset=Manipulator-SpawnPoint
+Name=Untitled
+Pos=15352.6,50.6918,11136.1
+Orient=0,0,0,1
+Scale=1,1,1
+Flags=0
+Layer=0
+patrolSpeed=0
+patrolEvent=
+spawnPackage=def_1241513989
+

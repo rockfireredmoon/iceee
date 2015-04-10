@@ -1,0 +1,14 @@
+[ENTRY]
+ID=1392510402
+Asset=Manipulator-PathNode
+Pos=15592.7,1180.26,36976.1
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
+ID=1392510407
+Asset=Manipulator-PathNode
+Pos=15606.2,1180.69,36987.8
+Orient=0,0,0,1
+Scale=1,1,1
+

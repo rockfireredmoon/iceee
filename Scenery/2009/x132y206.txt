@@ -1,0 +1,17 @@
+[ENTRY]
+ID=151015321
+Asset=Prop-Sick-Forest_Tree#Prop-Sick-Forest_Tree2
+Name=9
+Pos=99511,555.971,154672
+Orient=-0.0749297,0,0,0.997189
+Scale=2.075,2.075,2.075
+Flags=1
+
+[ENTRY]
+ID=151017094
+Asset=CL-AridBush4#CL-AridBush4
+Name=9
+Pos=99262.8,566.902,155145
+Orient=0,0,0,1
+Scale=1,1,1
+

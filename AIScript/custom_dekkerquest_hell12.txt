@@ -1,0 +1,326 @@
+#name custom_dekkerquest_hell12
+
+#speed 10
+#idlespeed 1
+
+; Player skills
+; 492 - Wither 40
+; 373 - Malice Blast 40
+; 35 - Discipline 40 (passive)
+; 505 - Deathly 40
+; 509 - Nefritari's Aura
+; 57 - Death Specialization 40
+; 511 - Life Leech 40
+; 217 - Syphon 40
+; 397 - Creeping Death 40
+; 151 - Morass 40
+; 533 - Deathly Dart 40
+
+; 228 - Assail 40
+; 457 - Blender 40
+; 213 - Whiplash 40
+; 339 - Demoralize 40
+; 306 - Rage of Ares 40
+; 410 - Fatal Crescent 40
+; 162 - Warrior's Spirit 6
+; 346 - Disarm 40
+
+; Mob skills
+; 5059 - Deathly, 5 Will, buff
+; 5157 - Assault, 3 might, add mcharge
+; 5204 - Wither, 4 will, add wcharge
+; 5303 - Malice Blast, 1 will, need 1-3 wcharge
+; 32766 - melee
+; 5221 - Bash (not used in the ability rip)
+; 5303 - Malice Blast (not used in the ability rip)
+
+; 26014 - Divine Frost Shield
+
+
+set STATUS 0
+set HEALTH 0
+set MIGHT 0
+set MIGHTCH 0
+set var 0
+set RND 0
+set LASTSPEECH 0
+set ELAPSEDTIME 0
+set SPEECHREADY 0
+set PENDINGWAVESND 0
+set PENDINGWINSND 0
+set PLAYEDSNDINTRO 0
+set PLAYEDSNDBOSSLOW 0
+set PLAYEDSNDBOSSDEAD 0
+set FIRSTDISPEL 0
+
+; Get moving, then play 
+use 32766
+call playSoundIntro
+
+
+:begin
+
+call checkSpeechTimer
+call checkPendingSpeech
+
+; Since this script allows idle processing, check for target here.
+has_target var
+if var = 0
+  wait 250
+  goto begin
+endif
+
+is_target_enemy STATUS
+if STATUS = 1
+  call doEnemy
+endif
+
+is_target_friendly STATUS
+if STATUS = 1
+  call doFriendly
+endif
+
+wait 250
+goto begin
+
+
+:waitfortarget
+has_target var
+if var = 0
+  wait 2000
+  goto waitfortarget
+endif
+return
+
+
+
+:doEnemy
+
+call checkBossShield
+call checkMightCharges
+call checkMight
+
+use 236
+wait 2000
+use 296
+wait 1000
+
+return
+
+
+:doFriendly
+return
+
+
+:checkBossShield
+
+get_target_cdef var
+if var != 3630
+  return
+endif
+
+get_target_property "bonus_health" var
+if var > 0
+  dispel_target_property "bonus_health" 1
+  visual_effect_t "Abolish"
+  call checkFirstDispel
+  say "Strike him now!"
+endif
+
+return
+
+
+:checkMightCharges
+getmightcharge MIGHTCH
+if MIGHTCH >= 3
+  use 457
+  return
+endif
+return
+
+:checkMight
+getmight MIGHT
+if MIGHT < 3
+  return
+endif
+
+getcooldown "MeleeSpeedDebuff" var
+if var = 0
+  use 213
+  return
+endif
+
+getcooldown "Demoralize" var
+if var = 0
+  use 339
+  return
+endif
+
+getcooldown "Disarm" var
+if var = 0
+  use 346
+  return
+endif
+
+use 228
+return
+
+
+:checkSpeechTimer
+
+if SPEECHREADY = 1
+  return
+endif
+
+time_offset LASTSPEECH ELAPSEDTIME
+if ELAPSEDTIME < 2750
+  return
+endif
+
+set_elapsed_time LASTSPEECH
+set SPEECHREADY 1
+return
+
+
+:checkPendingSpeech
+if SPEECHREADY = 0
+  return
+endif
+
+health_percent HEALTH
+if HEALTH <= 0
+  return
+endif
+
+if PENDINGWAVESND = 1
+  call playPendingWaveSnd
+  return
+endif
+
+if PENDINGWINSND = 1
+  call playPendingWinSnd
+  return
+endif
+
+get_target_cdef var
+if var != 3630
+  return
+endif
+
+target_health_percent var
+if var <= 25
+  call playBossNearDeath
+endif
+
+return
+
+
+:playBossNearDeath
+if PLAYEDSNDBOSSLOW = 0
+  play_sound "Sound-ModSound|Sound-vo_woe_illidan_escort_11.ogg"
+  say "Too easy..."
+  set PLAYEDSNDBOSSLOW 1
+endif
+return
+
+
+
+; Called externally by the boss script when it summons a new wave,
+; or is defeated.
+; Clear the speech timer so that he gives some time for the boss
+; speech to finish before responding.
+
+:extOnSummon
+health_percent var
+if var > 1
+  set_elapsed_time LASTSPEECH
+  set SPEECHREADY 0
+  set PENDINGWAVESND 1
+endif
+goto begin
+
+:extOnBossDeath
+health_percent var
+if var > 1
+  set_elapsed_time LASTSPEECH
+  set SPEECHREADY 0
+  set PENDINGWAVESND 0
+  set PENDINGWINSND 1
+endif
+goto begin
+
+
+
+
+:playPendingWaveSnd
+set PENDINGWAVESND 0
+
+randomize 5 var
+if var = 1
+  play_sound "Sound-ModSound|Sound-vo_woe_illidan_mannoroth_03.ogg"
+  say "Let them come..."
+  return
+endif
+
+if var = 2
+  play_sound "Sound-ModSound|Sound-vo_woe_illidan_mannoroth_04.ogg"
+  say "There are so many of them!"
+  return
+endif
+
+if var = 3
+  play_sound "Sound-ModSound|Sound-vo_woe_illidan_mannoroth_06.ogg"
+  say "Oh, this will be fun!"
+  return
+endif
+
+if var = 4
+  play_sound "Sound-ModSound|Sound-vo_woe_illidan_bosscloak_01.ogg"
+  say "Return to the shadows!"
+  return
+endif
+
+if var = 5
+  play_sound "Sound-ModSound|Sound-vo_woe_illidan_combat_04.ogg"
+  say "Death to the legion!"
+  return
+endif
+
+return
+
+
+:playPendingWinSnd
+if PLAYEDSNDBOSSDEAD = 1
+  return
+endif
+
+set PENDINGWINSND 0
+play_sound "Sound-ModSound|Sound-vo_woe_illidan_mannoroth_05.ogg"
+say "Weak, pitiful creatures, hardly worthy of being called a legion."
+set PLAYEDSNDBOSSDEAD 1
+
+return
+
+
+
+
+:playSoundIntro
+if PLAYEDSNDINTRO = 0
+  wait 6000
+  play_sound "Sound-ModSound|Sound-vo_woe_illidan_combat_04.ogg"
+  say "Death to the legion!"
+  set PLAYEDSNDINTRO 1
+endif
+return
+
+:checkFirstDispel
+if FIRSTDISPEL = 0
+  set FIRSTDISPEL 1
+  say "Beware of its void shield! Only I can dispel it!"
+endif
+return
+
+
+:onDeath
+say "Arrggh... we have failed... no stopping it now..."
+end

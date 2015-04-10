@@ -1,0 +1,13 @@
+[ENTRY]
+ID=13912
+ACCOUNTID=1115
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=saas
+GroveName=saas
+WarpName=saas1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

@@ -1,0 +1,13 @@
+[ENTRY]
+ID=14368
+ACCOUNTID=1172
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=owinburg
+GroveName=owinburg
+WarpName=owinburg1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

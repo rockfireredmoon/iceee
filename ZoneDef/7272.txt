@@ -1,0 +1,13 @@
+[ENTRY]
+ID=7272
+ACCOUNTID=285
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=kitties
+GroveName=kitties
+WarpName=kitties1
+Grove=1
+EnvironmentCycle=1
+DefLoc=2958,260,3821
+

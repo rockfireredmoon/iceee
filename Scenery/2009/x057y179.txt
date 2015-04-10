@@ -1,0 +1,17 @@
+[ENTRY]
+ID=151048826
+Asset=Prop-Interact_Cylinder#Prop-Interact_Cylinder
+Name=9
+Pos=43482.4,61.8153,134542
+Orient=0,0,0,1
+Scale=5,5,5
+
+[ENTRY]
+ID=151054206
+Asset=Effects#Par-Waves-1-Emitter
+Name=9
+Pos=42960.9,74.9835,134736
+Orient=0,-0.852108,0,0.523366
+Scale=2,2,2
+Flags=1
+

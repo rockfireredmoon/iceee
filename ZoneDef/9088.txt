@@ -1,0 +1,13 @@
+[ENTRY]
+ID=9088
+ACCOUNTID=512
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=kst
+GroveName=kst
+WarpName=kst1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

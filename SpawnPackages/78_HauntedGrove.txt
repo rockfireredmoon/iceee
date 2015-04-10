@@ -1,0 +1,95 @@
+[ENTRY]
+Name=z78_hg_gen_Dungeon_Loot_2705
+Spawn=2705,100  ;Dungeon Loot (1) at 0
+
+[ENTRY]
+Name=z78_hg_gen_Exit_to_Midlands_2194
+Spawn=2194,100  ;Exit to Midlands (1) at 0
+
+[ENTRY]
+Flags=3
+Name=3a_obji_lt06_bloodPetalFlower
+Spawn=459,100  ;Blood Petal Flower (1) at 0
+
+[ENTRY]
+Name=3_hg_undeadGeneralFront
+Shares=60
+Spawn=2514,10  ;Grove Guardian (24) at 0
+Spawn=2515,10  ;Grove Guardian (25) at 6
+Spawn=2516,10  ;Burntbone Mage (24) at 0
+Spawn=2517,10  ;Burntbone Mage (25) at 2
+Spawn=2518,10  ;Swiftbone Skeleton (24) at 0
+Spawn=2519,10  ;Marrow Blighter (25) at 0
+
+[ENTRY]
+Name=3_hg_undeadGraveyardSTEPUP
+Spawn=2520,25  ;Fresh Corpse (24) at 0
+Spawn=2521,25  ;Fresh Corpse (25) at 0
+Spawn=2522,25  ;Fresh Corpse (24) at 5
+Spawn=2523,25  ;Fresh Corpse (25) at 5
+
+[ENTRY]
+Name=3_hg_vultures_24_25
+Spawn=2569,50  ;Rotten Fleshpicker (24) at 0
+Spawn=2570,50  ;Rotten Fleshpicker (25) at 0
+
+[ENTRY]
+Name=3_hg_groveGiant_25
+Spawn=2571,100  ;Grove Giant (25) at 0
+
+[ENTRY]
+Name=3_hg_undeadGraveyardGENERAL
+Spawn=2520,25  ;Fresh Corpse (24) at 0
+Spawn=2521,25  ;Fresh Corpse (25) at 0
+Spawn=2522,25  ;Fresh Corpse (24) at 5
+Spawn=2523,25  ;Fresh Corpse (25) at 5
+
+[ENTRY]
+Name=3_hg_undeadGeneralBack
+Shares=60
+Spawn=2514,10  ;Grove Guardian (24) at 0
+Spawn=2515,10  ;Grove Guardian (25) at 0
+Spawn=2516,10  ;Burntbone Mage (24) at 0
+Spawn=2517,10  ;Burntbone Mage (25) at 20
+Spawn=2518,10  ;Swiftbone Skeleton (24) at 31
+Spawn=2519,10  ;Marrow Blighter (25) at 0
+
+[ENTRY]
+Name=3_hg_snails_24_25
+Spawn=2566,50  ;Putrid Mollusk (24) at 0
+Spawn=2567,50  ;Putrid Mollusk (25) at 10
+
+[ENTRY]
+Name=3_hg_Ziph_k_26
+Spawn=2572,100  ;Ziph (26) at 0
+
+[ENTRY]
+Name=3_hg_Slydd_26
+Spawn=2568,100  ;Slydd (26) at 66
+
+[ENTRY]
+Name=3_hg_Darcca_r_26
+Spawn=2525,100  ;Darcca Razorbone (26) at 0
+
+[ENTRY]
+Name=3_zombifiedOmbwah_d_24
+Spawn=444,100  ;Zombified Ombwah (24) at 117
+
+[ENTRY]
+Name=3_zombifiedSnype_r_24
+Spawn=445,100  ;Zombified Snype (24) at 0
+
+[ENTRY]
+Name=3_zombifiedStefan_k_24
+Spawn=446,100  ;Zombified Stefan (24) at 22
+
+; NOTE: from creature file
+[ENTRY]
+Name=3_dng_hg_obji_TaylinRotbreathLewt
+Spawn=2731,100  ;Taylin Rotbreath's Treasure (1)
+
+; NOTE: from creature file, new entry
+[ENTRY]
+Name=3_hg_undeadGraveyardSTEPUP_boss
+Spawn=2524,100  ;Taylin Rotbreath (26)
+

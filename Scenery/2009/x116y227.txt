@@ -1,0 +1,8 @@
+[ENTRY]
+ID=151025455
+Asset=CL-Rotted_Flora6
+Name=9
+Pos=87174.4,202.867,170698
+Orient=0,0,0,1
+Scale=2.65,2.65,2.65
+

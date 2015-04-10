@@ -1,0 +1,14 @@
+[ENTRY]
+ID=1308622940
+Asset=Prop-Burnt_Pine1
+Pos=712.442,516.482,4135.22
+Orient=0,0.731146,0,0.682221
+Scale=2.125,2.125,2.125
+
+[ENTRY]
+ID=1308622941
+Asset=Prop-Burnt_Pine1
+Pos=272.681,394.033,4191.89
+Orient=0,0,0,1
+Scale=5.825,5.825,5.825
+

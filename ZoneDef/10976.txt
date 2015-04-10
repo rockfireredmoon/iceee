@@ -1,0 +1,13 @@
+[ENTRY]
+ID=10976
+ACCOUNTID=748
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=sillfox
+GroveName=sillfox
+WarpName=sillfox1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

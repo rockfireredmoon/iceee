@@ -1,0 +1,13 @@
+[ENTRY]
+ID=9600
+ACCOUNTID=576
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=salith
+GroveName=salith
+WarpName=salith1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

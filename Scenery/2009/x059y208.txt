@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151001703
+Asset=Hill_Trees?d=0.9&amp;s=871657&amp;sz=800
+Name=9
+Pos=44756.1,215.377,156636
+Orient=0,-0.859862,0,0.510526
+Scale=1,1,1
+Flags=1
+

@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151059555
+Asset=CL-Autumn_Forest2#CL-Autumn_Forest2
+Name=9
+Pos=75589.8,358.179,38539.8
+Orient=0,0.422854,0,-0.906198
+Scale=1.425,1.425,1.425
+Flags=1
+

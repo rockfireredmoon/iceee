@@ -1,0 +1,15 @@
+[ENTRY]
+ID=151007745
+Asset=Prop-Shipwreck-Anubian
+Pos=19421.3,-69.0739,83539
+Orient=0,-0.964884,0,0.262678
+Scale=9.15,9.15,9.15
+Flags=1
+
+[ENTRY]
+ID=151054456
+Asset=Par-Waves-1-Emitter
+Pos=19182.8,64.691,83903
+Orient=0,-0.969273,0,0.245988
+Scale=3,3,3
+

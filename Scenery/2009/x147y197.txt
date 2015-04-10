@@ -1,0 +1,8 @@
+[ENTRY]
+ID=151028234
+Asset=Prop-Pine-Sick_Tree#Prop-Pine-Sick_Tree5
+Name=9
+Pos=110531,522.109,148334
+Orient=0,0,0,1
+Scale=10,10,10
+

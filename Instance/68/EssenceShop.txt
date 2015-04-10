@@ -1,0 +1,25 @@
+; Nefritari's Ash Chest
+[ENTRY]
+CreatureDefID=2622
+EssenceID=21158
+Item=5214,1
+Item=143328,1
+Item=5213,1
+Item=5215,1
+Item=5212,1
+Item=5211,1
+Item=143327,1
+Item=143326,1
+
+; Nefritari's Oak Chest
+[ENTRY]
+CreatureDefID=2626
+EssenceID=21162
+Item=5238,1
+Item=5237,1
+Item=143336,1
+Item=5234,1
+Item=5236,1
+Item=143335,1
+Item=5235,1
+Item=5239,1

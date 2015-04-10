@@ -1,0 +1,8 @@
+[ENTRY]
+ID=1392510495
+Asset=Manipulator-SpawnPoint
+Pos=19280.1,1724.65,24525.1
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=def_1392509642
+

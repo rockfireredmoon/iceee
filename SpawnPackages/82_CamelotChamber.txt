@@ -1,0 +1,13 @@
+DefaultFlags=1
+
+[ENTRY]
+Name=generated_231
+Spawn=231,100  ;Queen Guinevere (110)
+
+[ENTRY]
+Name=generated_1718
+Spawn=1718,100  ;City Watch (45)
+
+[ENTRY]
+Name=generated_1719
+Spawn=1719,100  ;City Watch (45)

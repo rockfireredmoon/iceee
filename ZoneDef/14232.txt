@@ -1,0 +1,13 @@
+[ENTRY]
+ID=14232
+ACCOUNTID=1155
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=wuff
+GroveName=wuff
+WarpName=wuff1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

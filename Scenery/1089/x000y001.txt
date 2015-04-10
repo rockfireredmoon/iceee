@@ -1,0 +1,8 @@
+[ENTRY]
+ID=1030220
+Asset=Prop-Pine_Forest_Tree5
+Name=Untitled
+Pos=1825,1256.89,2435
+Orient=0,0,0,1
+Scale=3.6,3.6,3.6
+

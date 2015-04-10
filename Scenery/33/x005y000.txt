@@ -1,0 +1,14 @@
+[ENTRY]
+ID=553657011
+Asset=Par-Flame-Emitter
+Pos=5978.39,0,947.338
+Orient=0,0,0,1
+Scale=10,10,10
+
+[ENTRY]
+ID=553657012
+Asset=Par-Flame-Emitter
+Pos=5977.76,0,735.372
+Orient=0,0,0,1
+Scale=10,10,10
+

@@ -1,0 +1,15 @@
+[ENTRY]
+ID=553652717
+Asset=Prop-Bookcase2
+Pos=5005.52,248.902,3238.64
+Orient=0,-0.709231,0,-0.704976
+Scale=2,2,2
+
+[ENTRY]
+ID=553652741
+Asset=Prop-Bookcase2
+Pos=5005.52,200.07,3238.64
+Orient=0,-0.709231,0,-0.704976
+Scale=2,2,2
+Flags=1
+

@@ -1,0 +1,13 @@
+[ENTRY]
+ID=9456
+ACCOUNTID=558
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=samaye
+GroveName=samaye
+WarpName=samaye1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

@@ -1,0 +1,7 @@
+[ENTRY]
+ID=151061723
+Asset=Bldg-Urban-Med_House1?ATS=ATS-Wooden
+Pos=94210.9,1110.32,59293.7
+Orient=0,0,0,1
+Scale=1,1,1
+

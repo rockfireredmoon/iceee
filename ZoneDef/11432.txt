@@ -1,0 +1,13 @@
+[ENTRY]
+ID=11432
+ACCOUNTID=805
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=fgs
+GroveName=fgs
+WarpName=fgs1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

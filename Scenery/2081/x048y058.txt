@@ -1,0 +1,9 @@
+[ENTRY]
+ID=1358965883
+Asset=CL-Plains_Bush2#CL-Plains_Bush2
+Name=81
+Pos=48725.8,454.451,58444
+Orient=0,0,0,1
+Scale=1,1,1
+Flags=1
+

@@ -1,0 +1,13 @@
+[ENTRY]
+ID=10592
+ACCOUNTID=700
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=shadyhollow
+GroveName=shadyhollow
+WarpName=shadyhollow1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

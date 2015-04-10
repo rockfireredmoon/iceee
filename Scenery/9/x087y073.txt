@@ -1,0 +1,7 @@
+[ENTRY]
+ID=151061491
+Asset=CL-AridBush6#CL-AridBush6
+Pos=65949.3,1093.36,54793.8
+Orient=0,-0.319309,0,0.947651
+Scale=1.8,1.8,1.8
+

@@ -1,0 +1,1869 @@
+DefID	Explicit	PackageList	Name
+735	0	CraftComponent_BlackIron	;Anubian Deck Hand
+741	0	CraftComponent_BlackIron	;Skrill Swarmguard*
+775	0	CraftComponent_BlackIron	;Shieldfeather
+776	0	CraftComponent_BlackIron	;Shieldfeather
+862	0	CraftComponent_BlackIron	;Spellfeather
+863	0	CraftComponent_BlackIron	;Spellfeather
+864	0	CraftComponent_BlackIron	;Stormfeather
+868	0	CraftComponent_BlackIron	;Ransacker
+869	0	CraftComponent_BlackIron	;Ransacker
+883	0	CraftComponent_BlackIron	;Skrill Sandspitter
+884	0	CraftComponent_BlackIron	;Skrill Sandspitter
+885	0	CraftComponent_BlackIron	;Skrill Swarmguard(implied)
+947	0	CraftComponent_BlackIron	;Soulrot Shroomie
+948	0	CraftComponent_BlackIron	;Soulrot Shroomie
+950	0	CraftComponent_BlackIron	;Stump Slayer
+951	0	CraftComponent_BlackIron	;Stump Slayer
+1119	0	CraftComponent_BlackIron	;Black Shroomling Spore Cropper
+1128	0	CraftComponent_BlackIron	;Cabalist*
+1129	0	CraftComponent_BlackIron	;Occultist*
+1169	0	CraftComponent_BlackIron	;Fateweaver Broodling(implied)
+1169	0	CraftComponent_BlackIron	;Fateweaver Broodling(implied)
+1466	0	CraftComponent_BlackIron	;Ambercoast Scuttler(implied)
+1468	0	CraftComponent_BlackIron	;Ambercoast Scuttler*
+1473	0	CraftComponent_BlackIron	;Dustspinner
+1474	0	CraftComponent_BlackIron	;Sandmother
+2542	0	CraftComponent_BlackIron	;Fateweaver Broodling*
+12	0	CraftComponent_FineWool	;Convert
+14	0	CraftComponent_FineWool	;Convert(implied)
+17	0	CraftComponent_FineWool	;Moon Dancer
+18	0	CraftComponent_FineWool	;Moon Dancer
+19	0	CraftComponent_FineWool	;Raised Soul
+20	0	CraftComponent_FineWool	;Raised Soul
+21	0	CraftComponent_FineWool	;Jengal Narglor
+32	0	CraftComponent_FineWool	;Jek Jumptail
+282	0	CraftComponent_FineWool	;Templar
+283	0	CraftComponent_FineWool	;Dweamorist
+284	0	CraftComponent_FineWool	;Templar
+285	0	CraftComponent_FineWool	;Dweamorist
+287	0	CraftComponent_FineWool	;Briarbearer
+292	0	CraftComponent_FineWool	;Ritualist
+293	0	CraftComponent_FineWool	;Risen Bones(implied)
+296	0	CraftComponent_FineWool	;Ritualist
+302	0	CraftComponent_FineWool	;Risen Bones
+303	0	CraftComponent_FineWool	;High Ritualist
+319	0	CraftComponent_FineWool	;Possessed Monk
+320	0	CraftComponent_FineWool	;Diabolical Abbot
+323	0	CraftComponent_FineWool	;Raving Cenobite
+1692	0	CraftComponent_FineWool	;Ruffian
+1693	0	CraftComponent_FineWool	;Ruffian
+1694	0	CraftComponent_FineWool	;Soothsayer
+1698	0	CraftComponent_FineWool	;Goon
+1699	0	CraftComponent_FineWool	;Goon(implied)
+1702	0	CraftComponent_FineWool	;Scoundrel
+1862	0	CraftComponent_FineWool	;Enthralled Deputy
+1863	0	CraftComponent_FineWool	;Enthralled Deputy
+1882	0	CraftComponent_FineWool	;Scoundrel
+2411	0	CraftComponent_FineWool	;Disciple(implied)
+2412	0	CraftComponent_FineWool	;Disciple
+2413	0	CraftComponent_FineWool	;Fanatic
+2414	0	CraftComponent_FineWool	;Fanatic
+2416	0	CraftComponent_FineWool	;Sage(implied)
+2430	0	CraftComponent_FineWool	;Templar Squire
+2433	0	CraftComponent_FineWool	;Crypt Creeper
+2442	0	CraftComponent_FineWool	;Possessed Monk(implied)
+2444	0	CraftComponent_FineWool	;Ancient Abbot
+2445	0	CraftComponent_FineWool	;Ancient Abbot(implied)
+2544	0	CraftComponent_FineWool	;Sage
+2545	0	CraftComponent_FineWool	;Sage(implied)
+736	0	CraftComponent_Gloomberry	;Anubian Seafarer*
+741	0	CraftComponent_Gloomberry	;Skrill Swarmguard*
+756	0	CraftComponent_Gloomberry	;Ambermane Prowler
+757	0	CraftComponent_Gloomberry	;Ambermane Prowler
+758	0	CraftComponent_Gloomberry	;Fireridge Antlion
+759	0	CraftComponent_Gloomberry	;Fireridge Antlion
+764	0	CraftComponent_Gloomberry	;Dunehog
+765	0	CraftComponent_Gloomberry	;Dunehog
+883	0	CraftComponent_Gloomberry	;Skrill Sandspitter(implied)
+884	0	CraftComponent_Gloomberry	;Skrill Sandspitter*
+885	0	CraftComponent_Gloomberry	;Skrill Swarmguard(implied)
+933	0	CraftComponent_Gloomberry	;Twistroot Timberfiend(implied)
+934	0	CraftComponent_Gloomberry	;Twistroot Timberfiend*
+936	0	CraftComponent_Gloomberry	;Blackrot Shroomie*
+938	0	CraftComponent_Gloomberry	;Bark Splinter
+939	0	CraftComponent_Gloomberry	;Bark Splinter
+941	0	CraftComponent_Gloomberry	;Vile Deathspinner
+942	0	CraftComponent_Gloomberry	;Vile Deathspinner
+947	0	CraftComponent_Gloomberry	;Soulrot Shroomie(implied)
+948	0	CraftComponent_Gloomberry	;Soulrot Shroomie*
+950	0	CraftComponent_Gloomberry	;Stump Slayer*
+951	0	CraftComponent_Gloomberry	;Stump Slayer(implied)
+1160	0	CraftComponent_Gloomberry	;Sapmane Pouncer
+1161	0	CraftComponent_Gloomberry	;Sapmane Pouncer
+1162	0	CraftComponent_Gloomberry	;Sapmane Stalker
+1163	0	CraftComponent_Gloomberry	;Sapmane Stalker
+1169	0	CraftComponent_Gloomberry	;Fateweaver Broodling*
+1443	0	CraftComponent_Gloomberry	;Wing Weaver
+1466	0	CraftComponent_Gloomberry	;Ambercoast Scuttler(implied)
+1468	0	CraftComponent_Gloomberry	;Ambercoast Scuttler*
+1526	0	CraftComponent_Gloomberry	;Durgan Wrathborn*
+2483	0	CraftComponent_Gloomberry	;Dustshell Antlion
+2542	0	CraftComponent_Gloomberry	;Fateweaver Broodling(implied)
+2542	0	CraftComponent_Gloomberry	;Fateweaver Broodling(implied)
+2653	0	CraftComponent_Gloomberry	;Shadowmane Froster
+2655	0	CraftComponent_Gloomberry	;White Wolf
+2656	0	CraftComponent_Gloomberry	;White Wolf
+2656	0	CraftComponent_Gloomberry	;White Wolf*
+2657	0	CraftComponent_Gloomberry	;White Wolf
+279	0	CraftComponent_GlowStone	;Vile Viande*
+484	0	CraftComponent_GlowStone	;Vile Viande(implied)
+523	0	CraftComponent_GlowStone	;Twisted Storyteller
+537	0	CraftComponent_GlowStone	;Carver
+538	0	CraftComponent_GlowStone	;Carver(implied)
+554	0	CraftComponent_GlowStone	;Warrior
+555	0	CraftComponent_GlowStone	;Warrior
+556	0	CraftComponent_GlowStone	;Shaman
+559	0	CraftComponent_GlowStone	;Rhinehag
+560	0	CraftComponent_GlowStone	;Rhinehag
+614	0	CraftComponent_GlowStone	;Raving Madcap
+619	0	CraftComponent_GlowStone	;Stump Slayer
+620	0	CraftComponent_GlowStone	;Stump Slayer
+622	0	CraftComponent_GlowStone	;Rotted Arborfiend
+625	0	CraftComponent_GlowStone	;Rotted Arborslasher
+627	0	CraftComponent_GlowStone	;Black Shroomie Rotbringer
+628	0	CraftComponent_GlowStone	;Black Shroomie Rotspreader*
+633	0	CraftComponent_GlowStone	;Heartwood Doomhound(implied)
+634	0	CraftComponent_GlowStone	;Heartwood Doomhound*
+637	0	CraftComponent_GlowStone	;Woodland Grazer*
+650	0	CraftComponent_GlowStone	;Shadow*
+679	0	CraftComponent_GlowStone	;Timeworn Thunderwalker*
+683	0	CraftComponent_GlowStone	;Watchful Deathgazer
+683	0	CraftComponent_GlowStone	;Watchful Deathgazer*
+684	0	CraftComponent_GlowStone	;Watchful Deathgazer
+684	0	CraftComponent_GlowStone	;Watchful Deathgazer*
+717	0	CraftComponent_GlowStone	;Spiketail Juggernaut*
+718	0	CraftComponent_GlowStone	;Windhowler Elemental
+719	0	CraftComponent_GlowStone	;Windhowler Elemental
+720	0	CraftComponent_GlowStone	;Stormhowler Elemental
+728	0	CraftComponent_GlowStone	;Brute
+728	0	CraftComponent_GlowStone	;Brute*
+729	0	CraftComponent_GlowStone	;Oracle*
+733	0	CraftComponent_GlowStone	;Anubian Scout*
+742	0	CraftComponent_GlowStone	;Needleskin Jabber
+743	0	CraftComponent_GlowStone	;Needleskin Jabber
+752	0	CraftComponent_GlowStone	;Crystalgazer
+753	0	CraftComponent_GlowStone	;Crystalgazer
+758	0	CraftComponent_GlowStone	;Fireridge Antlion*
+759	0	CraftComponent_GlowStone	;Fireridge Antlion*
+760	0	CraftComponent_GlowStone	;Sandgazer
+761	0	CraftComponent_GlowStone	;Sandgazer
+806	0	CraftComponent_GlowStone	;Animated Creepweed
+807	0	CraftComponent_GlowStone	;Animated Creepweed
+808	0	CraftComponent_GlowStone	;Frog Prince
+809	0	CraftComponent_GlowStone	;Piper Charmed Mage
+813	0	CraftComponent_GlowStone	;Djinn Thugee
+814	0	CraftComponent_GlowStone	;Djinn Thugee
+815	0	CraftComponent_GlowStone	;Djinn Hashashin
+816	0	CraftComponent_GlowStone	;Sultanic Djinn
+817	0	CraftComponent_GlowStone	;Sultanic Djinn
+819	0	CraftComponent_GlowStone	;Khalific Djinn
+820	0	CraftComponent_GlowStone	;Khalific Djinn
+821	0	CraftComponent_GlowStone	;Djinn Vizier*
+825	0	CraftComponent_GlowStone	;Bone-Mystic
+829	0	CraftComponent_GlowStone	;Oasis Djinn
+830	0	CraftComponent_GlowStone	;Oasis Djinn
+835	0	CraftComponent_GlowStone	;Dune Dread
+835	0	CraftComponent_GlowStone	;Dune Dread*
+841	0	CraftComponent_GlowStone	;Sandcaster(implied)
+862	0	CraftComponent_GlowStone	;Spellfeather
+863	0	CraftComponent_GlowStone	;Spellfeather
+864	0	CraftComponent_GlowStone	;Stormfeather
+868	0	CraftComponent_GlowStone	;Ransacker(implied)
+869	0	CraftComponent_GlowStone	;Ransacker*
+870	0	CraftComponent_GlowStone	;Flame Dancer
+870	0	CraftComponent_GlowStone	;Flame Dancer*
+871	0	CraftComponent_GlowStone	;Outrider
+871	0	CraftComponent_GlowStone	;Outrider*
+872	0	CraftComponent_GlowStone	;Outrider
+876	0	CraftComponent_GlowStone	;Flame Dancer
+883	0	CraftComponent_GlowStone	;Skrill Sandspitter*
+884	0	CraftComponent_GlowStone	;Skrill Sandspitter(implied)
+886	0	CraftComponent_GlowStone	;Dune Dread
+887	0	CraftComponent_GlowStone	;Sandcaster
+921	0	CraftComponent_GlowStone	;Rotted Timberfiend
+922	0	CraftComponent_GlowStone	;Rotted Timberfiend
+923	0	CraftComponent_GlowStone	;Rotted Timberfiend
+924	0	CraftComponent_GlowStone	;Rootrot Shroomie
+924	0	CraftComponent_GlowStone	;Rootrot Shroomie*
+925	0	CraftComponent_GlowStone	;Rootrot Shroomie
+926	0	CraftComponent_GlowStone	;Rootrot Shroomie
+927	0	CraftComponent_GlowStone	;Gloomfang Stalker*
+928	0	CraftComponent_GlowStone	;Gloomfang Stalker*
+929	0	CraftComponent_GlowStone	;Deadwood Pummeler
+930	0	CraftComponent_GlowStone	;Deadwood Pummeler
+996	0	CraftComponent_GlowStone	;Pricklepig Hogling*
+1033	0	CraftComponent_GlowStone	;Rotbreath Scout
+1090	0	CraftComponent_GlowStone	;Greysun Assassin
+1093	0	CraftComponent_GlowStone	;Greysun Armsman
+1108	0	CraftComponent_GlowStone	;Deadwood Sporebringer
+1119	0	CraftComponent_GlowStone	;Black Shroomling Spore Cropper
+1160	0	CraftComponent_GlowStone	;Sapmane Pouncer*
+1161	0	CraftComponent_GlowStone	;Sapmane Pouncer(implied)
+1432	0	CraftComponent_GlowStone	;Strongpaw*
+1439	0	CraftComponent_GlowStone	;Brute
+1439	0	CraftComponent_GlowStone	;Brute*
+1477	0	CraftComponent_GlowStone	;Outrider
+2483	0	CraftComponent_GlowStone	;Dustshell Antlion*
+2575	0	CraftComponent_GlowStone	;Raving Madcap(implied)
+2576	0	CraftComponent_GlowStone	;Deranged Elementalist
+2577	0	CraftComponent_GlowStone	;Deranged Elementalist
+2688	0	CraftComponent_GlowStone	;Carver(implied)
+2689	0	CraftComponent_GlowStone	;Carver(implied)
+2692	0	CraftComponent_GlowStone	;Shaman(implied)
+2693	0	CraftComponent_GlowStone	;Warrior(implied)
+2693	0	CraftComponent_GlowStone	;Warrior(implied)
+2694	0	CraftComponent_GlowStone	;Warrior(implied)
+2694	0	CraftComponent_GlowStone	;Warrior(implied)
+2774	0	CraftComponent_GlowStone	;Searcher
+2968	0	CraftComponent_GlowStone	;Eyegore*
+142	0	CraftComponent_GlowtopMushroom	;Riverside Bloodfiend
+147	0	CraftComponent_GlowtopMushroom	;Root-Slimer
+148	0	CraftComponent_GlowtopMushroom	;Rohnno
+150	0	CraftComponent_GlowtopMushroom	;Vespin Drone
+151	0	CraftComponent_GlowtopMushroom	;Vespin Worker
+152	0	CraftComponent_GlowtopMushroom	;Vespin Warrior
+153	0	CraftComponent_GlowtopMushroom	;Vespin Drone
+330	0	CraftComponent_GlowtopMushroom	;Quillback Challenger
+352	0	CraftComponent_GlowtopMushroom	;Rumblegrowl Bear
+353	0	CraftComponent_GlowtopMushroom	;Rumblegrowl Bear
+355	0	CraftComponent_GlowtopMushroom	;Pricklepeal Hedgehog
+356	0	CraftComponent_GlowtopMushroom	;Pricklepeal Hedgehog
+357	0	CraftComponent_GlowtopMushroom	;Pikepeal Hedgehog
+358	0	CraftComponent_GlowtopMushroom	;Bolt Horn Deer
+359	0	CraftComponent_GlowtopMushroom	;Bolt Horn Deer
+360	0	CraftComponent_GlowtopMushroom	;Nettlefang Thumper
+361	0	CraftComponent_GlowtopMushroom	;Nettlefang Thumper
+385	0	CraftComponent_GlowtopMushroom	;Blight Timberwolf
+399	0	CraftComponent_GlowtopMushroom	;Blight Timberwolf
+431	0	CraftComponent_GlowtopMushroom	;Cindersnarl Wolf
+1609	0	CraftComponent_GlowtopMushroom	;Steppe-Slimer
+1610	0	CraftComponent_GlowtopMushroom	;Steppe-Slimer
+1618	0	CraftComponent_GlowtopMushroom	;Barbhog Gorger
+1619	0	CraftComponent_GlowtopMushroom	;Barbhog Gorger
+1620	0	CraftComponent_GlowtopMushroom	;Barbhog Bruiser
+1621	0	CraftComponent_GlowtopMushroom	;Razor-Talon
+1627	0	CraftComponent_GlowtopMushroom	;Atalis
+1628	0	CraftComponent_GlowtopMushroom	;Buckbrute
+1629	0	CraftComponent_GlowtopMushroom	;Buckbrute
+1632	0	CraftComponent_GlowtopMushroom	;Feral Thumper
+1633	0	CraftComponent_GlowtopMushroom	;Savage Thumper
+1673	0	CraftComponent_GlowtopMushroom	;Spineback Hoglet
+1680	0	CraftComponent_GlowtopMushroom	;Earth Trekker
+1681	0	CraftComponent_GlowtopMushroom	;Earth Keeper
+1684	0	CraftComponent_GlowtopMushroom	;Blightbeak Rooster
+1685	0	CraftComponent_GlowtopMushroom	;Fierce Fowlbeast
+1686	0	CraftComponent_GlowtopMushroom	;Fierce Fowlbeast
+1687	0	CraftComponent_GlowtopMushroom	;Frenzied Fowlbeast
+1709	0	CraftComponent_GlowtopMushroom	;Rootslug
+1711	0	CraftComponent_GlowtopMushroom	;Razor-Beak
+1712	0	CraftComponent_GlowtopMushroom	;Razor-Beak
+1713	0	CraftComponent_GlowtopMushroom	;Stout-Beak
+1714	0	CraftComponent_GlowtopMushroom	;Flesh Scrounger
+1734	0	CraftComponent_GlowtopMushroom	;Ironskin Slasher
+1735	0	CraftComponent_GlowtopMushroom	;Ironskin Slasher(implied)
+1741	0	CraftComponent_GlowtopMushroom	;Stout-Stag(implied)
+1742	0	CraftComponent_GlowtopMushroom	;Stout-Stag
+1753	0	CraftComponent_GlowtopMushroom	;Ironskin Thrasher
+1754	0	CraftComponent_GlowtopMushroom	;Ironskin Thrasher
+1755	0	CraftComponent_GlowtopMushroom	;Ironskin Mauler
+1756	0	CraftComponent_GlowtopMushroom	;Ironskin Mauler
+1758	0	CraftComponent_GlowtopMushroom	;Drifting Bogbeast
+1759	0	CraftComponent_GlowtopMushroom	;Drifting Bogbeast
+1765	0	CraftComponent_GlowtopMushroom	;Hulking Seacrab
+1766	0	CraftComponent_GlowtopMushroom	;Scampering Seacrab
+1781	0	CraftComponent_GlowtopMushroom	;Rotback Slider
+1851	0	CraftComponent_GlowtopMushroom	;Roving Bogbeast
+1857	0	CraftComponent_GlowtopMushroom	;Tireless Tusker
+1858	0	CraftComponent_GlowtopMushroom	;Tireless Tusker
+1912	0	CraftComponent_GlowtopMushroom	;Failed Experiment
+1913	0	CraftComponent_GlowtopMushroom	;Failed Experiment(implied)
+1913	0	CraftComponent_GlowtopMushroom	;Failed Experiment(implied)
+1913	0	CraftComponent_GlowtopMushroom	;Failed Experiment(implied)
+2141	0	CraftComponent_GlowtopMushroom	;Furyfang Thumper
+2143	0	CraftComponent_GlowtopMushroom	;Pikepeal Hedgehog
+279	0	CraftComponent_HeartwoodBlossom	;Vile Viande
+279	0	CraftComponent_HeartwoodBlossom	;Vile Viande*
+280	0	CraftComponent_HeartwoodBlossom	;Enslaved Mosquito
+281	0	CraftComponent_HeartwoodBlossom	;Enslaved Flame Moth
+411	0	CraftComponent_HeartwoodBlossom	;Frelon's Yellowjacket
+425	0	CraftComponent_HeartwoodBlossom	;Vespin Slaver(implied)
+425	0	CraftComponent_HeartwoodBlossom	;Vespin Slaver(implied)
+425	0	CraftComponent_HeartwoodBlossom	;Vespin Slaver(implied)
+425	0	CraftComponent_HeartwoodBlossom	;Vespin Slaver(implied)
+483	0	CraftComponent_HeartwoodBlossom	;Taonbane
+484	0	CraftComponent_HeartwoodBlossom	;Vile Viande
+512	0	CraftComponent_HeartwoodBlossom	;Taonbane
+624	0	CraftComponent_HeartwoodBlossom	;Rotted Arborlurker*
+627	0	CraftComponent_HeartwoodBlossom	;Black Shroomie Rotbringer*
+628	0	CraftComponent_HeartwoodBlossom	;Black Shroomie Rotspreader*
+639	0	CraftComponent_HeartwoodBlossom	;Death Blossom
+640	0	CraftComponent_HeartwoodBlossom	;Death Blossom
+641	0	CraftComponent_HeartwoodBlossom	;Heartwood Trapper
+642	0	CraftComponent_HeartwoodBlossom	;Heartwood Trapper
+647	0	CraftComponent_HeartwoodBlossom	;Vespin Pulpmulcher
+648	0	CraftComponent_HeartwoodBlossom	;Vespin Pulpmulcher
+686	0	CraftComponent_HeartwoodBlossom	;Heartwood Lasher
+713	0	CraftComponent_HeartwoodBlossom	;Spiketail Basher
+714	0	CraftComponent_HeartwoodBlossom	;Spiketail Basher
+715	0	CraftComponent_HeartwoodBlossom	;Spiketail Demolisher
+716	0	CraftComponent_HeartwoodBlossom	;Spiketail Demolisher
+721	0	CraftComponent_HeartwoodBlossom	;Dustshore Antlion
+722	0	CraftComponent_HeartwoodBlossom	;Dustshore Antlion
+723	0	CraftComponent_HeartwoodBlossom	;Dustshore Antlion
+724	0	CraftComponent_HeartwoodBlossom	;Saltbed Scavenger
+725	0	CraftComponent_HeartwoodBlossom	;Saltbed Scavenger
+726	0	CraftComponent_HeartwoodBlossom	;Sloven Sandhog
+727	0	CraftComponent_HeartwoodBlossom	;Sloven Sandhog
+735	0	CraftComponent_HeartwoodBlossom	;Anubian Deck Hand*
+741	0	CraftComponent_HeartwoodBlossom	;Skrill Swarmguard(implied)
+746	0	CraftComponent_HeartwoodBlossom	;Ravenous Bonepicker
+747	0	CraftComponent_HeartwoodBlossom	;Ravenous Bonepicker
+748	0	CraftComponent_HeartwoodBlossom	;Toxic Sandscourge
+749	0	CraftComponent_HeartwoodBlossom	;Toxic Sandscourge
+750	0	CraftComponent_HeartwoodBlossom	;Lucid Crystalcreeper
+751	0	CraftComponent_HeartwoodBlossom	;Lucid Crystalcreeper
+754	0	CraftComponent_HeartwoodBlossom	;Quackatrice
+755	0	CraftComponent_HeartwoodBlossom	;Quackatrice
+756	0	CraftComponent_HeartwoodBlossom	;Ambermane Prowler
+757	0	CraftComponent_HeartwoodBlossom	;Ambermane Prowler
+758	0	CraftComponent_HeartwoodBlossom	;Fireridge Antlion
+759	0	CraftComponent_HeartwoodBlossom	;Fireridge Antlion
+760	0	CraftComponent_HeartwoodBlossom	;Sandgazer(implied)
+761	0	CraftComponent_HeartwoodBlossom	;Sandgazer*
+764	0	CraftComponent_HeartwoodBlossom	;Dunehog
+765	0	CraftComponent_HeartwoodBlossom	;Dunehog
+773	0	CraftComponent_HeartwoodBlossom	;Plateau Fleshstinger
+773	0	CraftComponent_HeartwoodBlossom	;Plateau Fleshstinger*
+774	0	CraftComponent_HeartwoodBlossom	;Plateau Fleshstinger
+801	0	CraftComponent_HeartwoodBlossom	;Frightfang Hunter*
+835	0	CraftComponent_HeartwoodBlossom	;Dune Dread(implied)
+883	0	CraftComponent_HeartwoodBlossom	;Skrill Sandspitter*
+884	0	CraftComponent_HeartwoodBlossom	;Skrill Sandspitter(implied)
+885	0	CraftComponent_HeartwoodBlossom	;Skrill Swarmguard*
+886	0	CraftComponent_HeartwoodBlossom	;Dune Dread*
+924	0	CraftComponent_HeartwoodBlossom	;Rootrot Shroomie(implied)
+925	0	CraftComponent_HeartwoodBlossom	;Rootrot Shroomie*
+926	0	CraftComponent_HeartwoodBlossom	;Rootrot Shroomie(implied)
+927	0	CraftComponent_HeartwoodBlossom	;Gloomfang Stalker*
+928	0	CraftComponent_HeartwoodBlossom	;Gloomfang Stalker(implied)
+938	0	CraftComponent_HeartwoodBlossom	;Bark Splinter
+939	0	CraftComponent_HeartwoodBlossom	;Bark Splinter
+941	0	CraftComponent_HeartwoodBlossom	;Vile Deathspinner
+942	0	CraftComponent_HeartwoodBlossom	;Vile Deathspinner
+952	0	CraftComponent_HeartwoodBlossom	;Petrified Bark Splinter
+953	0	CraftComponent_HeartwoodBlossom	;Petrified Bark Splinter
+962	0	CraftComponent_HeartwoodBlossom	;Rot Lupus
+963	0	CraftComponent_HeartwoodBlossom	;Rot Lupus
+966	0	CraftComponent_HeartwoodBlossom	;Spoilivore
+967	0	CraftComponent_HeartwoodBlossom	;Spoilivore
+996	0	CraftComponent_HeartwoodBlossom	;Pricklepig Hogling
+1007	0	CraftComponent_HeartwoodBlossom	;Edgewood Venomspinner
+1008	0	CraftComponent_HeartwoodBlossom	;Edgewood Venomspinner
+1033	0	CraftComponent_HeartwoodBlossom	;Rotbreath Scout*
+1114	0	CraftComponent_HeartwoodBlossom	;Rot Afflicted Stalker
+1115	0	CraftComponent_HeartwoodBlossom	;Rot Afflicted Stalker
+1138	0	CraftComponent_HeartwoodBlossom	;Rotted Rootsoaker*
+1162	0	CraftComponent_HeartwoodBlossom	;Sapmane Stalker
+1163	0	CraftComponent_HeartwoodBlossom	;Sapmane Stalker
+1164	0	CraftComponent_HeartwoodBlossom	;Mildewmane Yowler
+1165	0	CraftComponent_HeartwoodBlossom	;Mildewmane Yowler
+1442	0	CraftComponent_HeartwoodBlossom	;Condor Knight
+1466	0	CraftComponent_HeartwoodBlossom	;Ambercoast Scuttler
+1468	0	CraftComponent_HeartwoodBlossom	;Ambercoast Scuttler
+2322	0	CraftComponent_HeartwoodBlossom	;Darkwood Spider
+2323	0	CraftComponent_HeartwoodBlossom	;Darkwood Spider
+2483	0	CraftComponent_HeartwoodBlossom	;Dustshell Antlion
+2593	0	CraftComponent_HeartwoodBlossom	;Enslaved Mosquito
+2595	0	CraftComponent_HeartwoodBlossom	;Vespin Slaver
+2596	0	CraftComponent_HeartwoodBlossom	;Vespin Slaver
+2597	0	CraftComponent_HeartwoodBlossom	;Vespin Slaver
+2598	0	CraftComponent_HeartwoodBlossom	;Vespin Slaver
+2650	0	CraftComponent_HeartwoodBlossom	;Shadowmane Hunter
+2651	0	CraftComponent_HeartwoodBlossom	;Shadowmane Hunter
+2655	0	CraftComponent_HeartwoodBlossom	;White Wolf
+2656	0	CraftComponent_HeartwoodBlossom	;White Wolf
+2657	0	CraftComponent_HeartwoodBlossom	;White Wolf
+2773	0	CraftComponent_HeartwoodBlossom	;Fanatic*
+734	0	CraftComponent_HeavyHide	;Anubian Operative*
+748	0	CraftComponent_HeavyHide	;Toxic Sandscourge
+749	0	CraftComponent_HeavyHide	;Toxic Sandscourge
+750	0	CraftComponent_HeavyHide	;Lucid Crystalcreeper(implied)
+751	0	CraftComponent_HeavyHide	;Lucid Crystalcreeper*
+758	0	CraftComponent_HeavyHide	;Fireridge Antlion
+759	0	CraftComponent_HeavyHide	;Fireridge Antlion
+921	0	CraftComponent_HeavyHide	;Rotted Timberfiend(implied)
+922	0	CraftComponent_HeavyHide	;Rotted Timberfiend(implied)
+923	0	CraftComponent_HeavyHide	;Rotted Timberfiend*
+936	0	CraftComponent_HeavyHide	;Blackrot Shroomie*
+950	0	CraftComponent_HeavyHide	;Stump Slayer*
+951	0	CraftComponent_HeavyHide	;Stump Slayer(implied)
+1160	0	CraftComponent_HeavyHide	;Sapmane Pouncer
+1161	0	CraftComponent_HeavyHide	;Sapmane Pouncer
+1162	0	CraftComponent_HeavyHide	;Sapmane Stalker
+1163	0	CraftComponent_HeavyHide	;Sapmane Stalker
+1164	0	CraftComponent_HeavyHide	;Mildewmane Yowler
+1165	0	CraftComponent_HeavyHide	;Mildewmane Yowler
+1169	0	CraftComponent_HeavyHide	;Fateweaver Broodling*
+1441	0	CraftComponent_HeavyHide	;Buzzard Blade
+2483	0	CraftComponent_HeavyHide	;Dustshell Antlion
+2542	0	CraftComponent_HeavyHide	;Fateweaver Broodling(implied)
+2542	0	CraftComponent_HeavyHide	;Fateweaver Broodling(implied)
+2652	0	CraftComponent_HeavyHide	;Shadowmane Burner
+2653	0	CraftComponent_HeavyHide	;Shadowmane Froster
+2655	0	CraftComponent_HeavyHide	;White Wolf
+2656	0	CraftComponent_HeavyHide	;White Wolf
+2656	0	CraftComponent_HeavyHide	;White Wolf*
+2657	0	CraftComponent_HeavyHide	;White Wolf
+68	0	CraftComponent_Iron	;Nottingham Thief Catcher
+69	0	CraftComponent_Iron	;Nottingham Thief Catcher
+91	0	CraftComponent_Iron	;Drowned Zombie(implied)
+92	0	CraftComponent_Iron	;Drowned Zombie*
+367	0	CraftComponent_Iron	;Thunderheel Goliath
+368	0	CraftComponent_Iron	;Thunderheel Goliath
+386	0	CraftComponent_Iron	;Rolling Thunder Bear*
+390	0	CraftComponent_Iron	;Savage Wilderbeastial*
+391	0	CraftComponent_Iron	;Savage Wilderbeastial(implied)
+396	0	CraftComponent_Iron	;Cavern Goliath*
+416	0	CraftComponent_Iron	;Seer
+417	0	CraftComponent_Iron	;Outcast Brigand
+418	0	CraftComponent_Iron	;Outcast Brigand
+420	0	CraftComponent_Iron	;Outcast Diabolist
+421	0	CraftComponent_Iron	;Outcast Diabolist
+431	0	CraftComponent_Iron	;Cindersnarl Wolf*
+509	0	CraftComponent_Iron	;Knife Twirler
+510	0	CraftComponent_Iron	;Knife Twirler
+529	0	CraftComponent_Iron	;Minotortise*
+530	0	CraftComponent_Iron	;Minotortise(implied)
+531	0	CraftComponent_Iron	;Rhineswine(implied)
+537	0	CraftComponent_Iron	;Carver
+538	0	CraftComponent_Iron	;Carver
+544	0	CraftComponent_Iron	;Rhineswine*
+545	0	CraftComponent_Iron	;Mistfang Hunter*
+546	0	CraftComponent_Iron	;Mistfang Hunter*
+553	0	CraftComponent_Iron	;Flamekeeper*
+554	0	CraftComponent_Iron	;Warrior
+554	0	CraftComponent_Iron	;Warrior*
+555	0	CraftComponent_Iron	;Warrior
+556	0	CraftComponent_Iron	;Shaman
+559	0	CraftComponent_Iron	;Rhinehag
+560	0	CraftComponent_Iron	;Rhinehag
+570	0	CraftComponent_Iron	;Slagstone Elemental
+571	0	CraftComponent_Iron	;Slagstone Elemental
+583	0	CraftComponent_Iron	;Fanatic
+584	0	CraftComponent_Iron	;Fanatic
+587	0	CraftComponent_Iron	;Fanatic
+588	0	CraftComponent_Iron	;Fanatic
+627	0	CraftComponent_Iron	;Black Shroomie Rotbringer
+628	0	CraftComponent_Iron	;Black Shroomie Rotspreader
+1864	0	CraftComponent_Iron	;Spellbound Deputy
+1865	0	CraftComponent_Iron	;Spellbound Deputy
+1895	0	CraftComponent_Iron	;Nerilix*
+2175	0	CraftComponent_Iron	;Stout Rocling*
+2178	0	CraftComponent_Iron	;Rotcap Shroomie*
+2277	0	CraftComponent_Iron	;Beach Brute
+2304	0	CraftComponent_Iron	;Mistfang*
+2311	0	CraftComponent_Iron	;Blight Mare*
+2324	0	CraftComponent_Iron	;Hazefly
+2325	0	CraftComponent_Iron	;Hazefly
+2330	0	CraftComponent_Iron	;Spiked Croaker*
+2331	0	CraftComponent_Iron	;Spiked Croaker(implied)
+2334	0	CraftComponent_Iron	;Shellback Slider(implied)
+2335	0	CraftComponent_Iron	;Shellback Slider*
+2338	0	CraftComponent_Iron	;Dusky Attercop*
+2339	0	CraftComponent_Iron	;Dusky Attercop(implied)
+2503	0	CraftComponent_Iron	;Magmental
+2504	0	CraftComponent_Iron	;Magmental
+2579	0	CraftComponent_Iron	;Warpig Brewmaster
+2580	0	CraftComponent_Iron	;Warpig Brewmaster
+2688	0	CraftComponent_Iron	;Carver(implied)
+2688	0	CraftComponent_Iron	;Carver(implied)
+2689	0	CraftComponent_Iron	;Carver(implied)
+2689	0	CraftComponent_Iron	;Carver(implied)
+2690	0	CraftComponent_Iron	;Flamekeeper(implied)
+2692	0	CraftComponent_Iron	;Shaman(implied)
+2693	0	CraftComponent_Iron	;Warrior(implied)
+2693	0	CraftComponent_Iron	;Warrior(implied)
+2694	0	CraftComponent_Iron	;Warrior(implied)
+2694	0	CraftComponent_Iron	;Warrior(implied)
+2950	0	CraftComponent_Iron	;Cultist*
+2959	0	CraftComponent_Iron	;Oglan Ironhead*
+3117	0	CraftComponent_Iron	;Warpig Brewmaster(implied)
+3117	0	CraftComponent_Iron	;Warpig Brewmaster(implied)
+352	0	CraftComponent_LightHide	;Rumblegrowl Bear
+352	0	CraftComponent_LightHide	;Rumblegrowl Bear*
+353	0	CraftComponent_LightHide	;Rumblegrowl Bear
+353	0	CraftComponent_LightHide	;Rumblegrowl Bear*
+355	0	CraftComponent_LightHide	;Pricklepeal Hedgehog
+356	0	CraftComponent_LightHide	;Pricklepeal Hedgehog
+357	0	CraftComponent_LightHide	;Pikepeal Hedgehog
+358	0	CraftComponent_LightHide	;Bolt Horn Deer
+359	0	CraftComponent_LightHide	;Bolt Horn Deer
+364	0	CraftComponent_LightHide	;Scarespire Unikorn*
+376	0	CraftComponent_LightHide	;Blightbiter Spibear(implied)
+376	0	CraftComponent_LightHide	;Blightbiter Spibear(implied)
+431	0	CraftComponent_LightHide	;Cindersnarl Wolf
+433	0	CraftComponent_LightHide	;Blisterbite Wolf
+531	0	CraftComponent_LightHide	;Rhineswine
+539	0	CraftComponent_LightHide	;Frostkeeper*
+544	0	CraftComponent_LightHide	;Rhineswine
+633	0	CraftComponent_LightHide	;Heartwood Doomhound
+634	0	CraftComponent_LightHide	;Heartwood Doomhound
+1734	0	CraftComponent_LightHide	;Ironskin Slasher
+1735	0	CraftComponent_LightHide	;Ironskin Slasher
+1739	0	CraftComponent_LightHide	;Spite-Stag
+1740	0	CraftComponent_LightHide	;Spite-Stag
+1762	0	CraftComponent_LightHide	;Swampside Bloodfiend
+1763	0	CraftComponent_LightHide	;Swampside Bloodfiend
+1834	0	CraftComponent_LightHide	;Bone Knight*
+1837	0	CraftComponent_LightHide	;Swampmage*
+2143	0	CraftComponent_LightHide	;Pikepeal Hedgehog
+2172	0	CraftComponent_LightHide	;Bloodquill Hedgehog
+2173	0	CraftComponent_LightHide	;Bloodquill Hedgehog
+2183	0	CraftComponent_LightHide	;Dreamfly
+2184	0	CraftComponent_LightHide	;Dreamfly
+2265	0	CraftComponent_LightHide	;Fowl Biter
+2266	0	CraftComponent_LightHide	;Fowl Biter
+2267	0	CraftComponent_LightHide	;Flamewing*
+2268	0	CraftComponent_LightHide	;Flamewing(implied)
+2268	0	CraftComponent_LightHide	;Flamewing(implied)
+2301	0	CraftComponent_LightHide	;Hulkhog*
+2302	0	CraftComponent_LightHide	;Hulkhog(implied)
+2330	0	CraftComponent_LightHide	;Spiked Croaker
+2331	0	CraftComponent_LightHide	;Spiked Croaker
+2334	0	CraftComponent_LightHide	;Shellback Slider
+2335	0	CraftComponent_LightHide	;Shellback Slider
+2686	0	CraftComponent_LightHide	;Blightbiter Spibear*
+2691	0	CraftComponent_LightHide	;Frostkeeper(implied)
+734	0	CraftComponent_MysticOre	;Anubian Operative*
+735	0	CraftComponent_MysticOre	;Anubian Deck Hand
+750	0	CraftComponent_MysticOre	;Lucid Crystalcreeper(implied)
+751	0	CraftComponent_MysticOre	;Lucid Crystalcreeper*
+754	0	CraftComponent_MysticOre	;Quackatrice(implied)
+755	0	CraftComponent_MysticOre	;Quackatrice*
+865	0	CraftComponent_MysticOre	;Slinkfeather
+921	0	CraftComponent_MysticOre	;Rotted Timberfiend
+922	0	CraftComponent_MysticOre	;Rotted Timberfiend
+923	0	CraftComponent_MysticOre	;Rotted Timberfiend
+924	0	CraftComponent_MysticOre	;Rootrot Shroomie
+925	0	CraftComponent_MysticOre	;Rootrot Shroomie
+926	0	CraftComponent_MysticOre	;Rootrot Shroomie
+947	0	CraftComponent_MysticOre	;Soulrot Shroomie
+948	0	CraftComponent_MysticOre	;Soulrot Shroomie
+950	0	CraftComponent_MysticOre	;Stump Slayer
+950	0	CraftComponent_MysticOre	;Stump Slayer*
+951	0	CraftComponent_MysticOre	;Stump Slayer
+951	0	CraftComponent_MysticOre	;Stump Slayer*
+1119	0	CraftComponent_MysticOre	;Black Shroomling Spore Cropper
+1128	0	CraftComponent_MysticOre	;Cabalist*
+1169	0	CraftComponent_MysticOre	;Fateweaver Broodling(implied)
+1169	0	CraftComponent_MysticOre	;Fateweaver Broodling(implied)
+1472	0	CraftComponent_MysticOre	;Pinface Prickler
+1473	0	CraftComponent_MysticOre	;Dustspinner
+1932	0	CraftComponent_MysticOre	;Frostbound Marid Chanter
+2542	0	CraftComponent_MysticOre	;Fateweaver Broodling*
+2661	0	CraftComponent_MysticOre	;Cavern Crawler
+2662	0	CraftComponent_MysticOre	;Cavern Crawler
+2663	0	CraftComponent_MysticOre	;Cavern Crawler
+6	0	CraftComponent_PolishedStone	;Acolyte
+12	0	CraftComponent_PolishedStone	;Convert
+14	0	CraftComponent_PolishedStone	;Convert(implied)
+17	0	CraftComponent_PolishedStone	;Moon Dancer
+18	0	CraftComponent_PolishedStone	;Moon Dancer
+26	0	CraftComponent_PolishedStone	;Seer
+84	0	CraftComponent_PolishedStone	;Thrall
+86	0	CraftComponent_PolishedStone	;Helot
+101	0	CraftComponent_PolishedStone	;Coldstorm Stormcaller
+102	0	CraftComponent_PolishedStone	;Coldstorm Stormcaller
+232	0	CraftComponent_PolishedStone	;Duelist
+282	0	CraftComponent_PolishedStone	;Templar
+283	0	CraftComponent_PolishedStone	;Dweamorist
+284	0	CraftComponent_PolishedStone	;Templar
+285	0	CraftComponent_PolishedStone	;Dweamorist
+287	0	CraftComponent_PolishedStone	;Briarbearer
+292	0	CraftComponent_PolishedStone	;Ritualist
+293	0	CraftComponent_PolishedStone	;Risen Bones(implied)
+294	0	CraftComponent_PolishedStone	;Bone Thrall
+296	0	CraftComponent_PolishedStone	;Ritualist
+300	0	CraftComponent_PolishedStone	;Bone Thrall
+302	0	CraftComponent_PolishedStone	;Risen Bones
+317	0	CraftComponent_PolishedStone	;Hardcover Wyrm(implied)
+318	0	CraftComponent_PolishedStone	;Tome Wyrm
+319	0	CraftComponent_PolishedStone	;Possessed Monk
+320	0	CraftComponent_PolishedStone	;Diabolical Abbot
+387	0	CraftComponent_PolishedStone	;Spindleshroom Toad
+388	0	CraftComponent_PolishedStone	;Spindleshroom Toad
+1581	0	CraftComponent_PolishedStone	;Gearloose Clockwork
+1582	0	CraftComponent_PolishedStone	;Gearloose Clockwork(implied)
+1625	0	CraftComponent_PolishedStone	;Meadow Muncher
+1626	0	CraftComponent_PolishedStone	;Meadow Muncher
+1638	0	CraftComponent_PolishedStone	;Pond-sprite*
+1692	0	CraftComponent_PolishedStone	;Ruffian
+1693	0	CraftComponent_PolishedStone	;Ruffian
+1696	0	CraftComponent_PolishedStone	;Charlatan
+1698	0	CraftComponent_PolishedStone	;Goon
+1699	0	CraftComponent_PolishedStone	;Goon
+1702	0	CraftComponent_PolishedStone	;Scoundrel
+1882	0	CraftComponent_PolishedStone	;Scoundrel
+1884	0	CraftComponent_PolishedStone	;Siren
+1891	0	CraftComponent_PolishedStone	;Seer
+2411	0	CraftComponent_PolishedStone	;Disciple(implied)
+2412	0	CraftComponent_PolishedStone	;Disciple
+2413	0	CraftComponent_PolishedStone	;Fanatic
+2414	0	CraftComponent_PolishedStone	;Fanatic
+2416	0	CraftComponent_PolishedStone	;Sage(implied)
+2419	0	CraftComponent_PolishedStone	;Alchemist(implied)
+2420	0	CraftComponent_PolishedStone	;Alchemist
+2422	0	CraftComponent_PolishedStone	;Field Alchemist
+2427	0	CraftComponent_PolishedStone	;Sparkwing(implied)
+2428	0	CraftComponent_PolishedStone	;Sparkwing
+2440	0	CraftComponent_PolishedStone	;Henge Slug(implied)
+2441	0	CraftComponent_PolishedStone	;Henge Slug
+2442	0	CraftComponent_PolishedStone	;Possessed Monk
+2443	0	CraftComponent_PolishedStone	;Hardcover Wyrm
+2444	0	CraftComponent_PolishedStone	;Ancient Abbot
+2445	0	CraftComponent_PolishedStone	;Ancient Abbot
+2446	0	CraftComponent_PolishedStone	;Zombie Monk
+2447	0	CraftComponent_PolishedStone	;Zombie Monk
+2544	0	CraftComponent_PolishedStone	;Sage
+2545	0	CraftComponent_PolishedStone	;Sage(implied)
+6	0	CraftComponent_RawIron	;Acolyte
+12	0	CraftComponent_RawIron	;Convert
+14	0	CraftComponent_RawIron	;Convert
+19	0	CraftComponent_RawIron	;Raised Soul
+20	0	CraftComponent_RawIron	;Raised Soul
+21	0	CraftComponent_RawIron	;Jengal Narglor
+283	0	CraftComponent_RawIron	;Dweamorist
+285	0	CraftComponent_RawIron	;Dweamorist
+286	0	CraftComponent_RawIron	;Oracle
+287	0	CraftComponent_RawIron	;Briarbearer
+292	0	CraftComponent_RawIron	;Ritualist
+296	0	CraftComponent_RawIron	;Ritualist
+303	0	CraftComponent_RawIron	;High Ritualist
+320	0	CraftComponent_RawIron	;Diabolical Abbot
+367	0	CraftComponent_RawIron	;Thunderheel Goliath
+368	0	CraftComponent_RawIron	;Thunderheel Goliath
+1694	0	CraftComponent_RawIron	;Soothsayer
+1698	0	CraftComponent_RawIron	;Goon
+1699	0	CraftComponent_RawIron	;Goon
+1701	0	CraftComponent_RawIron	;Magician
+1702	0	CraftComponent_RawIron	;Scoundrel(implied)
+1725	0	CraftComponent_RawIron	;Jester Jumptail
+1773	0	CraftComponent_RawIron	;Grohlum
+1882	0	CraftComponent_RawIron	;Scoundrel
+1884	0	CraftComponent_RawIron	;Siren
+1885	0	CraftComponent_RawIron	;Elindra Shale
+2411	0	CraftComponent_RawIron	;Disciple
+2412	0	CraftComponent_RawIron	;Disciple
+2413	0	CraftComponent_RawIron	;Fanatic
+2414	0	CraftComponent_RawIron	;Fanatic
+2416	0	CraftComponent_RawIron	;Sage(implied)
+2419	0	CraftComponent_RawIron	;Alchemist
+2420	0	CraftComponent_RawIron	;Alchemist
+2422	0	CraftComponent_RawIron	;Field Alchemist
+2430	0	CraftComponent_RawIron	;Templar Squire
+2431	0	CraftComponent_RawIron	;Skull Charmer(implied)
+2432	0	CraftComponent_RawIron	;Skull Charmer
+2446	0	CraftComponent_RawIron	;Zombie Monk(implied)
+2447	0	CraftComponent_RawIron	;Zombie Monk
+2461	0	CraftComponent_RawIron	;Kareth the Creator
+2544	0	CraftComponent_RawIron	;Sage(implied)
+2545	0	CraftComponent_RawIron	;Sage
+90	0	CraftComponent_RoughGem	;Waterlogged Skeleton*
+91	0	CraftComponent_RoughGem	;Drowned Zombie
+92	0	CraftComponent_RoughGem	;Drowned Zombie
+350	0	CraftComponent_RoughGem	;Taiga Wolf(implied)
+351	0	CraftComponent_RoughGem	;Taiga Wolf*
+376	0	CraftComponent_RoughGem	;Blightbiter Spibear*
+386	0	CraftComponent_RoughGem	;Rolling Thunder Bear*
+387	0	CraftComponent_RoughGem	;Spindleshroom Toad
+388	0	CraftComponent_RoughGem	;Spindleshroom Toad
+389	0	CraftComponent_RoughGem	;Spikeshroom Toad
+393	0	CraftComponent_RoughGem	;Stalker
+410	0	CraftComponent_RoughGem	;Highland Roc*
+416	0	CraftComponent_RoughGem	;Seer
+417	0	CraftComponent_RoughGem	;Outcast Brigand
+418	0	CraftComponent_RoughGem	;Outcast Brigand
+419	0	CraftComponent_RoughGem	;Outcast Lackey
+420	0	CraftComponent_RoughGem	;Outcast Diabolist
+421	0	CraftComponent_RoughGem	;Outcast Diabolist
+430	0	CraftComponent_RoughGem	;Ashpaw Wolf*
+472	0	CraftComponent_RoughGem	;Warpig Barleymancer
+509	0	CraftComponent_RoughGem	;Knife Twirler
+510	0	CraftComponent_RoughGem	;Knife Twirler
+514	0	CraftComponent_RoughGem	;Colossal Crustacean
+516	0	CraftComponent_RoughGem	;Colossal Crustacean
+517	0	CraftComponent_RoughGem	;Scavenger Crab
+518	0	CraftComponent_RoughGem	;Scavenger Crab
+537	0	CraftComponent_RoughGem	;Carver
+538	0	CraftComponent_RoughGem	;Carver
+539	0	CraftComponent_RoughGem	;Frostkeeper
+553	0	CraftComponent_RoughGem	;Flamekeeper
+553	0	CraftComponent_RoughGem	;Flamekeeper*
+554	0	CraftComponent_RoughGem	;Warrior
+554	0	CraftComponent_RoughGem	;Warrior*
+555	0	CraftComponent_RoughGem	;Warrior
+556	0	CraftComponent_RoughGem	;Shaman
+559	0	CraftComponent_RoughGem	;Rhinehag
+560	0	CraftComponent_RoughGem	;Rhinehag
+570	0	CraftComponent_RoughGem	;Slagstone Elemental
+570	0	CraftComponent_RoughGem	;Slagstone Elemental*
+571	0	CraftComponent_RoughGem	;Slagstone Elemental
+581	0	CraftComponent_RoughGem	;Loyalist
+582	0	CraftComponent_RoughGem	;Loyalist
+583	0	CraftComponent_RoughGem	;Fanatic
+584	0	CraftComponent_RoughGem	;Fanatic
+587	0	CraftComponent_RoughGem	;Fanatic
+588	0	CraftComponent_RoughGem	;Fanatic
+621	0	CraftComponent_RoughGem	;Rotted Arboreal
+683	0	CraftComponent_RoughGem	;Watchful Deathgazer
+684	0	CraftComponent_RoughGem	;Watchful Deathgazer
+803	0	CraftComponent_RoughGem	;Ruins Watcher
+804	0	CraftComponent_RoughGem	;Ruins Watcher
+1033	0	CraftComponent_RoughGem	;Rotbreath Scout
+1583	0	CraftComponent_RoughGem	;Footloose Footnote(implied)
+1584	0	CraftComponent_RoughGem	;Footloose Footnote*
+1589	0	CraftComponent_RoughGem	;Giant Darkhare(implied)
+1590	0	CraftComponent_RoughGem	;Giant Darkhare*
+1837	0	CraftComponent_RoughGem	;Swampmage*
+1862	0	CraftComponent_RoughGem	;Enthralled Deputy
+1863	0	CraftComponent_RoughGem	;Enthralled Deputy
+2160	0	CraftComponent_RoughGem	;Deathstone Goliath
+2177	0	CraftComponent_RoughGem	;Quickcap Shroomie*
+2265	0	CraftComponent_RoughGem	;Fowl Biter(implied)
+2266	0	CraftComponent_RoughGem	;Fowl Biter*
+2276	0	CraftComponent_RoughGem	;Sea Charmer*
+2277	0	CraftComponent_RoughGem	;Beach Brute
+2301	0	CraftComponent_RoughGem	;Hulkhog(implied)
+2302	0	CraftComponent_RoughGem	;Hulkhog*
+2304	0	CraftComponent_RoughGem	;Mistfang*
+2315	0	CraftComponent_RoughGem	;Donk*
+2324	0	CraftComponent_RoughGem	;Hazefly
+2325	0	CraftComponent_RoughGem	;Hazefly
+2333	0	CraftComponent_RoughGem	;Rumble Tromper*
+2334	0	CraftComponent_RoughGem	;Shellback Slider*
+2335	0	CraftComponent_RoughGem	;Shellback Slider(implied)
+2338	0	CraftComponent_RoughGem	;Dusky Attercop(implied)
+2339	0	CraftComponent_RoughGem	;Dusky Attercop*
+2503	0	CraftComponent_RoughGem	;Magmental
+2504	0	CraftComponent_RoughGem	;Magmental
+2526	0	CraftComponent_RoughGem	;Cavern Snapper
+2527	0	CraftComponent_RoughGem	;Cavern Snapper
+2552	0	CraftComponent_RoughGem	;Blightfury Spibear*
+2579	0	CraftComponent_RoughGem	;Warpig Brewmaster
+2580	0	CraftComponent_RoughGem	;Warpig Brewmaster
+2592	0	CraftComponent_RoughGem	;Colossal Crustacean
+2686	0	CraftComponent_RoughGem	;Blightbiter Spibear(implied)
+2686	0	CraftComponent_RoughGem	;Blightbiter Spibear(implied)
+2688	0	CraftComponent_RoughGem	;Carver
+2689	0	CraftComponent_RoughGem	;Carver
+2690	0	CraftComponent_RoughGem	;Flamekeeper
+2691	0	CraftComponent_RoughGem	;Frostkeeper
+2692	0	CraftComponent_RoughGem	;Shaman(implied)
+2693	0	CraftComponent_RoughGem	;Warrior(implied)
+2693	0	CraftComponent_RoughGem	;Warrior(implied)
+2693	0	CraftComponent_RoughGem	;Warrior(implied)
+2694	0	CraftComponent_RoughGem	;Warrior
+3117	0	CraftComponent_RoughGem	;Warpig Brewmaster
+3119	0	CraftComponent_RoughGem	;Warpig Barleymancer
+150	0	CraftComponent_RoughHide	;Vespin Drone
+151	0	CraftComponent_RoughHide	;Vespin Worker
+153	0	CraftComponent_RoughHide	;Vespin Drone
+352	0	CraftComponent_RoughHide	;Rumblegrowl Bear
+353	0	CraftComponent_RoughHide	;Rumblegrowl Bear
+360	0	CraftComponent_RoughHide	;Nettlefang Thumper
+361	0	CraftComponent_RoughHide	;Nettlefang Thumper
+1618	0	CraftComponent_RoughHide	;Barbhog Gorger
+1619	0	CraftComponent_RoughHide	;Barbhog Gorger
+1620	0	CraftComponent_RoughHide	;Barbhog Bruiser
+1632	0	CraftComponent_RoughHide	;Feral Thumper
+1633	0	CraftComponent_RoughHide	;Savage Thumper
+1664	0	CraftComponent_RoughHide	;Shadehog
+1665	0	CraftComponent_RoughHide	;Shadehog
+1673	0	CraftComponent_RoughHide	;Spineback Hoglet
+1685	0	CraftComponent_RoughHide	;Fierce Fowlbeast
+1686	0	CraftComponent_RoughHide	;Fierce Fowlbeast
+1687	0	CraftComponent_RoughHide	;Frenzied Fowlbeast
+1711	0	CraftComponent_RoughHide	;Razor-Beak
+1712	0	CraftComponent_RoughHide	;Razor-Beak
+1736	0	CraftComponent_RoughHide	;Ironskin Pummeler
+1737	0	CraftComponent_RoughHide	;Ironskin Pummeler(implied)
+1741	0	CraftComponent_RoughHide	;Stout-Stag
+1742	0	CraftComponent_RoughHide	;Stout-Stag(implied)
+1753	0	CraftComponent_RoughHide	;Ironskin Thrasher
+1754	0	CraftComponent_RoughHide	;Ironskin Thrasher
+1755	0	CraftComponent_RoughHide	;Ironskin Mauler
+1756	0	CraftComponent_RoughHide	;Ironskin Mauler
+1758	0	CraftComponent_RoughHide	;Drifting Bogbeast
+1759	0	CraftComponent_RoughHide	;Drifting Bogbeast
+1859	0	CraftComponent_RoughHide	;Tenacious Tusker
+1860	0	CraftComponent_RoughHide	;Tenacious Tusker
+1912	0	CraftComponent_RoughHide	;Failed Experiment
+1913	0	CraftComponent_RoughHide	;Failed Experiment
+2155	0	CraftComponent_RoughHide	;Wild Rocling
+2156	0	CraftComponent_RoughHide	;Wild Rocling
+736	0	CraftComponent_RoyalCloth	;Anubian Seafarer*
+868	0	CraftComponent_RoyalCloth	;Ransacker
+869	0	CraftComponent_RoyalCloth	;Ransacker
+921	0	CraftComponent_RoyalCloth	;Rotted Timberfiend
+922	0	CraftComponent_RoyalCloth	;Rotted Timberfiend
+923	0	CraftComponent_RoyalCloth	;Rotted Timberfiend
+924	0	CraftComponent_RoyalCloth	;Rootrot Shroomie
+925	0	CraftComponent_RoyalCloth	;Rootrot Shroomie
+926	0	CraftComponent_RoyalCloth	;Rootrot Shroomie
+933	0	CraftComponent_RoyalCloth	;Twistroot Timberfiend
+934	0	CraftComponent_RoyalCloth	;Twistroot Timberfiend
+938	0	CraftComponent_RoyalCloth	;Bark Splinter*
+939	0	CraftComponent_RoyalCloth	;Bark Splinter*
+947	0	CraftComponent_RoyalCloth	;Soulrot Shroomie
+948	0	CraftComponent_RoyalCloth	;Soulrot Shroomie
+950	0	CraftComponent_RoyalCloth	;Stump Slayer
+951	0	CraftComponent_RoyalCloth	;Stump Slayer
+1076	0	CraftComponent_RoyalCloth	;Baddyr*
+1119	0	CraftComponent_RoyalCloth	;Black Shroomling Spore Cropper
+1128	0	CraftComponent_RoyalCloth	;Cabalist*
+1466	0	CraftComponent_RoyalCloth	;Ambercoast Scuttler(implied)
+1468	0	CraftComponent_RoyalCloth	;Ambercoast Scuttler*
+1473	0	CraftComponent_RoyalCloth	;Dustspinner
+1931	0	CraftComponent_RoyalCloth	;Frostbound Marid Hero
+376	0	CraftComponent_SilkenFiber	;Blightbiter Spibear*
+386	0	CraftComponent_SilkenFiber	;Rolling Thunder Bear*
+389	0	CraftComponent_SilkenFiber	;Spikeshroom Toad*
+417	0	CraftComponent_SilkenFiber	;Outcast Brigand
+418	0	CraftComponent_SilkenFiber	;Outcast Brigand
+420	0	CraftComponent_SilkenFiber	;Outcast Diabolist
+421	0	CraftComponent_SilkenFiber	;Outcast Diabolist
+504	0	CraftComponent_SilkenFiber	;Deadhand Skeleton*
+509	0	CraftComponent_SilkenFiber	;Knife Twirler
+510	0	CraftComponent_SilkenFiber	;Knife Twirler
+514	0	CraftComponent_SilkenFiber	;Colossal Crustacean(implied)
+516	0	CraftComponent_SilkenFiber	;Colossal Crustacean(implied)
+536	0	CraftComponent_SilkenFiber	;Warpig Brewslinker
+537	0	CraftComponent_SilkenFiber	;Carver
+538	0	CraftComponent_SilkenFiber	;Carver
+539	0	CraftComponent_SilkenFiber	;Frostkeeper*
+550	0	CraftComponent_SilkenFiber	;Warpig Brewslinker
+553	0	CraftComponent_SilkenFiber	;Flamekeeper(implied)
+554	0	CraftComponent_SilkenFiber	;Warrior
+555	0	CraftComponent_SilkenFiber	;Warrior
+559	0	CraftComponent_SilkenFiber	;Rhinehag
+560	0	CraftComponent_SilkenFiber	;Rhinehag
+581	0	CraftComponent_SilkenFiber	;Loyalist
+582	0	CraftComponent_SilkenFiber	;Loyalist
+627	0	CraftComponent_SilkenFiber	;Black Shroomie Rotbringer
+890	0	CraftComponent_SilkenFiber	;Crate of Egyptian Pottery*
+1581	0	CraftComponent_SilkenFiber	;Gearloose Clockwork(implied)
+1582	0	CraftComponent_SilkenFiber	;Gearloose Clockwork*
+1864	0	CraftComponent_SilkenFiber	;Spellbound Deputy
+1865	0	CraftComponent_SilkenFiber	;Spellbound Deputy
+2265	0	CraftComponent_SilkenFiber	;Fowl Biter*
+2266	0	CraftComponent_SilkenFiber	;Fowl Biter(implied)
+2276	0	CraftComponent_SilkenFiber	;Sea Charmer
+2514	0	CraftComponent_SilkenFiber	;Grove Guardian(implied)
+2515	0	CraftComponent_SilkenFiber	;Grove Guardian*
+2592	0	CraftComponent_SilkenFiber	;Colossal Crustacean*
+2686	0	CraftComponent_SilkenFiber	;Blightbiter Spibear(implied)
+2686	0	CraftComponent_SilkenFiber	;Blightbiter Spibear(implied)
+2688	0	CraftComponent_SilkenFiber	;Carver
+2689	0	CraftComponent_SilkenFiber	;Carver
+2690	0	CraftComponent_SilkenFiber	;Flamekeeper
+2691	0	CraftComponent_SilkenFiber	;Frostkeeper(implied)
+2693	0	CraftComponent_SilkenFiber	;Warrior(implied)
+2693	0	CraftComponent_SilkenFiber	;Warrior(implied)
+2694	0	CraftComponent_SilkenFiber	;Warrior(implied)
+2694	0	CraftComponent_SilkenFiber	;Warrior(implied)
+350	0	CraftComponent_SpiteSprig	;Taiga Wolf
+351	0	CraftComponent_SpiteSprig	;Taiga Wolf
+352	0	CraftComponent_SpiteSprig	;Rumblegrowl Bear
+353	0	CraftComponent_SpiteSprig	;Rumblegrowl Bear
+357	0	CraftComponent_SpiteSprig	;Pikepeal Hedgehog
+358	0	CraftComponent_SpiteSprig	;Bolt Horn Deer
+359	0	CraftComponent_SpiteSprig	;Bolt Horn Deer
+360	0	CraftComponent_SpiteSprig	;Nettlefang Thumper
+361	0	CraftComponent_SpiteSprig	;Nettlefang Thumper
+362	0	CraftComponent_SpiteSprig	;Frighthoof Unikorn*
+376	0	CraftComponent_SpiteSprig	;Blightbiter Spibear*
+385	0	CraftComponent_SpiteSprig	;Blight Timberwolf(implied)
+390	0	CraftComponent_SpiteSprig	;Savage Wilderbeastial(implied)
+391	0	CraftComponent_SpiteSprig	;Savage Wilderbeastial*
+399	0	CraftComponent_SpiteSprig	;Blight Timberwolf
+504	0	CraftComponent_SpiteSprig	;Deadhand Skeleton*
+509	0	CraftComponent_SpiteSprig	;Knife Twirler(implied)
+510	0	CraftComponent_SpiteSprig	;Knife Twirler*
+529	0	CraftComponent_SpiteSprig	;Minotortise
+530	0	CraftComponent_SpiteSprig	;Minotortise
+537	0	CraftComponent_SpiteSprig	;Carver*
+538	0	CraftComponent_SpiteSprig	;Carver(implied)
+545	0	CraftComponent_SpiteSprig	;Mistfang Hunter(implied)
+546	0	CraftComponent_SpiteSprig	;Mistfang Hunter*
+554	0	CraftComponent_SpiteSprig	;Warrior(implied)
+555	0	CraftComponent_SpiteSprig	;Warrior*
+570	0	CraftComponent_SpiteSprig	;Slagstone Elemental*
+571	0	CraftComponent_SpiteSprig	;Slagstone Elemental(implied)
+633	0	CraftComponent_SpiteSprig	;Heartwood Doomhound
+634	0	CraftComponent_SpiteSprig	;Heartwood Doomhound
+639	0	CraftComponent_SpiteSprig	;Death Blossom
+640	0	CraftComponent_SpiteSprig	;Death Blossom
+1027	0	CraftComponent_SpiteSprig	;Wayward Murkfly
+1030	0	CraftComponent_SpiteSprig	;Wayward Murkfly
+1734	0	CraftComponent_SpiteSprig	;Ironskin Slasher
+1735	0	CraftComponent_SpiteSprig	;Ironskin Slasher
+1736	0	CraftComponent_SpiteSprig	;Ironskin Pummeler
+1737	0	CraftComponent_SpiteSprig	;Ironskin Pummeler
+1739	0	CraftComponent_SpiteSprig	;Spite-Stag
+1740	0	CraftComponent_SpiteSprig	;Spite-Stag
+1741	0	CraftComponent_SpiteSprig	;Stout-Stag
+1742	0	CraftComponent_SpiteSprig	;Stout-Stag
+1762	0	CraftComponent_SpiteSprig	;Swampside Bloodfiend
+1763	0	CraftComponent_SpiteSprig	;Swampside Bloodfiend
+1765	0	CraftComponent_SpiteSprig	;Hulking Seacrab
+1848	0	CraftComponent_SpiteSprig	;Bulwark Bogbeast
+1849	0	CraftComponent_SpiteSprig	;Bulwark Bogbeast
+2143	0	CraftComponent_SpiteSprig	;Pikepeal Hedgehog
+2148	0	CraftComponent_SpiteSprig	;Cliffside Quillback
+2149	0	CraftComponent_SpiteSprig	;Cliffside Quillback
+2172	0	CraftComponent_SpiteSprig	;Bloodquill Hedgehog
+2173	0	CraftComponent_SpiteSprig	;Bloodquill Hedgehog
+2175	0	CraftComponent_SpiteSprig	;Stout Rocling*
+2183	0	CraftComponent_SpiteSprig	;Dreamfly
+2184	0	CraftComponent_SpiteSprig	;Dreamfly
+2185	0	CraftComponent_SpiteSprig	;Frightfang Spibear*
+2265	0	CraftComponent_SpiteSprig	;Fowl Biter
+2266	0	CraftComponent_SpiteSprig	;Fowl Biter
+2267	0	CraftComponent_SpiteSprig	;Flamewing
+2267	0	CraftComponent_SpiteSprig	;Flamewing*
+2268	0	CraftComponent_SpiteSprig	;Flamewing
+2276	0	CraftComponent_SpiteSprig	;Sea Charmer*
+2299	0	CraftComponent_SpiteSprig	;Mistweaver
+2300	0	CraftComponent_SpiteSprig	;Mistweaver
+2301	0	CraftComponent_SpiteSprig	;Hulkhog
+2302	0	CraftComponent_SpiteSprig	;Hulkhog
+2320	0	CraftComponent_SpiteSprig	;Seaside Needler
+2322	0	CraftComponent_SpiteSprig	;Darkwood Spider
+2322	0	CraftComponent_SpiteSprig	;Darkwood Spider*
+2323	0	CraftComponent_SpiteSprig	;Darkwood Spider
+2326	0	CraftComponent_SpiteSprig	;Slider
+2327	0	CraftComponent_SpiteSprig	;Slider
+2330	0	CraftComponent_SpiteSprig	;Spiked Croaker
+2331	0	CraftComponent_SpiteSprig	;Spiked Croaker
+2334	0	CraftComponent_SpiteSprig	;Shellback Slider
+2335	0	CraftComponent_SpiteSprig	;Shellback Slider
+2338	0	CraftComponent_SpiteSprig	;Dusky Attercop*
+2339	0	CraftComponent_SpiteSprig	;Dusky Attercop(implied)
+2352	0	CraftComponent_SpiteSprig	;Seaside Needler
+2587	0	CraftComponent_SpiteSprig	;Sea Slug
+2588	0	CraftComponent_SpiteSprig	;Sea Slug
+2686	0	CraftComponent_SpiteSprig	;Blightbiter Spibear(implied)
+2686	0	CraftComponent_SpiteSprig	;Blightbiter Spibear(implied)
+2688	0	CraftComponent_SpiteSprig	;Carver(implied)
+2689	0	CraftComponent_SpiteSprig	;Carver(implied)
+2693	0	CraftComponent_SpiteSprig	;Warrior(implied)
+2694	0	CraftComponent_SpiteSprig	;Warrior(implied)
+537	0	CraftComponent_Steel	;Carver(implied)
+538	0	CraftComponent_Steel	;Carver
+559	0	CraftComponent_Steel	;Rhinehag(implied)
+560	0	CraftComponent_Steel	;Rhinehag
+626	0	CraftComponent_Steel	;Rotted Arborfink
+627	0	CraftComponent_Steel	;Black Shroomie Rotbringer
+628	0	CraftComponent_Steel	;Black Shroomie Rotspreader
+629	0	CraftComponent_Steel	;Black Shroomie Rotseeder*
+641	0	CraftComponent_Steel	;Heartwood Trapper(implied)
+642	0	CraftComponent_Steel	;Heartwood Trapper*
+718	0	CraftComponent_Steel	;Windhowler Elemental
+718	0	CraftComponent_Steel	;Windhowler Elemental*
+719	0	CraftComponent_Steel	;Windhowler Elemental
+729	0	CraftComponent_Steel	;Oracle
+731	0	CraftComponent_Steel	;Silt Skeleton
+735	0	CraftComponent_Steel	;Anubian Deck Hand
+741	0	CraftComponent_Steel	;Skrill Swarmguard(implied)
+748	0	CraftComponent_Steel	;Toxic Sandscourge*
+749	0	CraftComponent_Steel	;Toxic Sandscourge(implied)
+752	0	CraftComponent_Steel	;Crystalgazer*
+753	0	CraftComponent_Steel	;Crystalgazer(implied)
+758	0	CraftComponent_Steel	;Fireridge Antlion(implied)
+759	0	CraftComponent_Steel	;Fireridge Antlion*
+773	0	CraftComponent_Steel	;Plateau Fleshstinger*
+774	0	CraftComponent_Steel	;Plateau Fleshstinger(implied)
+803	0	CraftComponent_Steel	;Ruins Watcher(implied)
+804	0	CraftComponent_Steel	;Ruins Watcher*
+809	0	CraftComponent_Steel	;Piper Charmed Mage
+810	0	CraftComponent_Steel	;Piper Charmed Druid
+825	0	CraftComponent_Steel	;Bone-Mystic
+829	0	CraftComponent_Steel	;Oasis Djinn
+830	0	CraftComponent_Steel	;Oasis Djinn
+831	0	CraftComponent_Steel	;Earth Elemental
+832	0	CraftComponent_Steel	;Earth Elemental
+835	0	CraftComponent_Steel	;Dune Dread*
+841	0	CraftComponent_Steel	;Sandcaster*
+864	0	CraftComponent_Steel	;Stormfeather
+870	0	CraftComponent_Steel	;Flame Dancer
+876	0	CraftComponent_Steel	;Flame Dancer
+883	0	CraftComponent_Steel	;Skrill Sandspitter*
+884	0	CraftComponent_Steel	;Skrill Sandspitter(implied)
+885	0	CraftComponent_Steel	;Skrill Swarmguard*
+886	0	CraftComponent_Steel	;Dune Dread(implied)
+887	0	CraftComponent_Steel	;Sandcaster(implied)
+924	0	CraftComponent_Steel	;Rootrot Shroomie
+925	0	CraftComponent_Steel	;Rootrot Shroomie
+926	0	CraftComponent_Steel	;Rootrot Shroomie(implied)
+926	0	CraftComponent_Steel	;Rootrot Shroomie(implied)
+929	0	CraftComponent_Steel	;Deadwood Pummeler(implied)
+930	0	CraftComponent_Steel	;Deadwood Pummeler*
+947	0	CraftComponent_Steel	;Soulrot Shroomie
+948	0	CraftComponent_Steel	;Soulrot Shroomie
+1007	0	CraftComponent_Steel	;Edgewood Venomspinner*
+1008	0	CraftComponent_Steel	;Edgewood Venomspinner(implied)
+1033	0	CraftComponent_Steel	;Rotbreath Scout*
+1093	0	CraftComponent_Steel	;Greysun Armsman
+1094	0	CraftComponent_Steel	;Greysun Brigand
+1434	0	CraftComponent_Steel	;Spellmane*
+2483	0	CraftComponent_Steel	;Dustshell Antlion*
+2688	0	CraftComponent_Steel	;Carver(implied)
+2689	0	CraftComponent_Steel	;Carver(implied)
+2775	0	CraftComponent_Steel	;Collector*
+425	0	CraftComponent_ThickHide	;Vespin Slaver
+637	0	CraftComponent_ThickHide	;Woodland Grazer*
+650	0	CraftComponent_ThickHide	;Shadow*
+713	0	CraftComponent_ThickHide	;Spiketail Basher
+714	0	CraftComponent_ThickHide	;Spiketail Basher
+715	0	CraftComponent_ThickHide	;Spiketail Demolisher
+716	0	CraftComponent_ThickHide	;Spiketail Demolisher
+717	0	CraftComponent_ThickHide	;Spiketail Juggernaut
+721	0	CraftComponent_ThickHide	;Dustshore Antlion
+722	0	CraftComponent_ThickHide	;Dustshore Antlion
+723	0	CraftComponent_ThickHide	;Dustshore Antlion
+728	0	CraftComponent_ThickHide	;Brute*
+742	0	CraftComponent_ThickHide	;Needleskin Jabber*
+743	0	CraftComponent_ThickHide	;Needleskin Jabber(implied)
+746	0	CraftComponent_ThickHide	;Ravenous Bonepicker
+747	0	CraftComponent_ThickHide	;Ravenous Bonepicker
+748	0	CraftComponent_ThickHide	;Toxic Sandscourge
+749	0	CraftComponent_ThickHide	;Toxic Sandscourge
+750	0	CraftComponent_ThickHide	;Lucid Crystalcreeper*
+751	0	CraftComponent_ThickHide	;Lucid Crystalcreeper(implied)
+752	0	CraftComponent_ThickHide	;Crystalgazer*
+753	0	CraftComponent_ThickHide	;Crystalgazer(implied)
+756	0	CraftComponent_ThickHide	;Ambermane Prowler
+757	0	CraftComponent_ThickHide	;Ambermane Prowler
+758	0	CraftComponent_ThickHide	;Fireridge Antlion
+758	0	CraftComponent_ThickHide	;Fireridge Antlion*
+759	0	CraftComponent_ThickHide	;Fireridge Antlion
+759	0	CraftComponent_ThickHide	;Fireridge Antlion*
+764	0	CraftComponent_ThickHide	;Dunehog
+765	0	CraftComponent_ThickHide	;Dunehog
+829	0	CraftComponent_ThickHide	;Oasis Djinn*
+830	0	CraftComponent_ThickHide	;Oasis Djinn*
+842	0	CraftComponent_ThickHide	;Krel Aethyrclaw*
+871	0	CraftComponent_ThickHide	;Outrider(implied)
+872	0	CraftComponent_ThickHide	;Outrider(implied)
+996	0	CraftComponent_ThickHide	;Pricklepig Hogling
+1007	0	CraftComponent_ThickHide	;Edgewood Venomspinner
+1008	0	CraftComponent_ThickHide	;Edgewood Venomspinner
+1009	0	CraftComponent_ThickHide	;Toxx*
+1114	0	CraftComponent_ThickHide	;Rot Afflicted Stalker
+1115	0	CraftComponent_ThickHide	;Rot Afflicted Stalker
+1160	0	CraftComponent_ThickHide	;Sapmane Pouncer
+1161	0	CraftComponent_ThickHide	;Sapmane Pouncer
+1162	0	CraftComponent_ThickHide	;Sapmane Stalker
+1163	0	CraftComponent_ThickHide	;Sapmane Stalker
+1166	0	CraftComponent_ThickHide	;Mildewmane Growler
+1167	0	CraftComponent_ThickHide	;Mildewmane Growler
+1439	0	CraftComponent_ThickHide	;Brute(implied)
+1444	0	CraftComponent_ThickHide	;Aerie Crony*
+1466	0	CraftComponent_ThickHide	;Ambercoast Scuttler
+1466	0	CraftComponent_ThickHide	;Ambercoast Scuttler*
+1468	0	CraftComponent_ThickHide	;Ambercoast Scuttler
+1477	0	CraftComponent_ThickHide	;Outrider*
+2334	0	CraftComponent_ThickHide	;Shellback Slider
+2335	0	CraftComponent_ThickHide	;Shellback Slider
+2483	0	CraftComponent_ThickHide	;Dustshell Antlion
+2595	0	CraftComponent_ThickHide	;Vespin Slaver
+2596	0	CraftComponent_ThickHide	;Vespin Slaver
+2597	0	CraftComponent_ThickHide	;Vespin Slaver
+2598	0	CraftComponent_ThickHide	;Vespin Slaver
+2655	0	CraftComponent_ThickHide	;White Wolf
+2656	0	CraftComponent_ThickHide	;White Wolf
+2657	0	CraftComponent_ThickHide	;White Wolf
+2775	0	CraftComponent_ThickHide	;Collector*
+279	0	CraftComponent_Treeweave	;Vile Viande(implied)
+411	0	CraftComponent_Treeweave	;Frelon's Yellowjacket*
+426	0	CraftComponent_Treeweave	;Enslaved Skrill
+484	0	CraftComponent_Treeweave	;Vile Viande*
+537	0	CraftComponent_Treeweave	;Carver
+538	0	CraftComponent_Treeweave	;Carver
+553	0	CraftComponent_Treeweave	;Flamekeeper(implied)
+554	0	CraftComponent_Treeweave	;Warrior
+555	0	CraftComponent_Treeweave	;Warrior
+556	0	CraftComponent_Treeweave	;Shaman
+559	0	CraftComponent_Treeweave	;Rhinehag
+560	0	CraftComponent_Treeweave	;Rhinehag
+627	0	CraftComponent_Treeweave	;Black Shroomie Rotbringer
+633	0	CraftComponent_Treeweave	;Heartwood Doomhound(implied)
+634	0	CraftComponent_Treeweave	;Heartwood Doomhound*
+637	0	CraftComponent_Treeweave	;Woodland Grazer*
+713	0	CraftComponent_Treeweave	;Spiketail Basher(implied)
+714	0	CraftComponent_Treeweave	;Spiketail Basher*
+728	0	CraftComponent_Treeweave	;Brute(implied)
+733	0	CraftComponent_Treeweave	;Anubian Scout*
+736	0	CraftComponent_Treeweave	;Anubian Seafarer
+742	0	CraftComponent_Treeweave	;Needleskin Jabber(implied)
+743	0	CraftComponent_Treeweave	;Needleskin Jabber*
+754	0	CraftComponent_Treeweave	;Quackatrice*
+755	0	CraftComponent_Treeweave	;Quackatrice(implied)
+775	0	CraftComponent_Treeweave	;Shieldfeather
+776	0	CraftComponent_Treeweave	;Shieldfeather
+803	0	CraftComponent_Treeweave	;Ruins Watcher*
+804	0	CraftComponent_Treeweave	;Ruins Watcher(implied)
+808	0	CraftComponent_Treeweave	;Frog Prince
+809	0	CraftComponent_Treeweave	;Piper Charmed Mage
+810	0	CraftComponent_Treeweave	;Piper Charmed Druid
+841	0	CraftComponent_Treeweave	;Sandcaster
+841	0	CraftComponent_Treeweave	;Sandcaster*
+862	0	CraftComponent_Treeweave	;Spellfeather
+863	0	CraftComponent_Treeweave	;Spellfeather
+865	0	CraftComponent_Treeweave	;Slinkfeather
+887	0	CraftComponent_Treeweave	;Sandcaster
+921	0	CraftComponent_Treeweave	;Rotted Timberfiend
+922	0	CraftComponent_Treeweave	;Rotted Timberfiend
+923	0	CraftComponent_Treeweave	;Rotted Timberfiend
+924	0	CraftComponent_Treeweave	;Rootrot Shroomie
+925	0	CraftComponent_Treeweave	;Rootrot Shroomie
+925	0	CraftComponent_Treeweave	;Rootrot Shroomie*
+926	0	CraftComponent_Treeweave	;Rootrot Shroomie
+927	0	CraftComponent_Treeweave	;Gloomfang Stalker*
+928	0	CraftComponent_Treeweave	;Gloomfang Stalker(implied)
+929	0	CraftComponent_Treeweave	;Deadwood Pummeler
+930	0	CraftComponent_Treeweave	;Deadwood Pummeler
+947	0	CraftComponent_Treeweave	;Soulrot Shroomie
+948	0	CraftComponent_Treeweave	;Soulrot Shroomie
+968	0	CraftComponent_Treeweave	;Djallist(implied)
+968	0	CraftComponent_Treeweave	;Djallist(implied)
+969	0	CraftComponent_Treeweave	;Djallist(implied)
+969	0	CraftComponent_Treeweave	;Djallist(implied)
+1027	0	CraftComponent_Treeweave	;Wayward Murkfly*
+1030	0	CraftComponent_Treeweave	;Wayward Murkfly(implied)
+1090	0	CraftComponent_Treeweave	;Greysun Assassin
+1093	0	CraftComponent_Treeweave	;Greysun Armsman
+1094	0	CraftComponent_Treeweave	;Greysun Brigand
+1119	0	CraftComponent_Treeweave	;Black Shroomling Spore Cropper
+1439	0	CraftComponent_Treeweave	;Brute
+2573	0	CraftComponent_Treeweave	;Maniacal Mystic
+2574	0	CraftComponent_Treeweave	;Maniacal Mystic
+2640	0	CraftComponent_Treeweave	;Djallist
+2641	0	CraftComponent_Treeweave	;Djallist
+2688	0	CraftComponent_Treeweave	;Carver(implied)
+2688	0	CraftComponent_Treeweave	;Carver(implied)
+2689	0	CraftComponent_Treeweave	;Carver(implied)
+2689	0	CraftComponent_Treeweave	;Carver(implied)
+2690	0	CraftComponent_Treeweave	;Flamekeeper
+2692	0	CraftComponent_Treeweave	;Shaman(implied)
+2693	0	CraftComponent_Treeweave	;Warrior(implied)
+2693	0	CraftComponent_Treeweave	;Warrior(implied)
+2694	0	CraftComponent_Treeweave	;Warrior(implied)
+2694	0	CraftComponent_Treeweave	;Warrior(implied)
+2774	0	CraftComponent_Treeweave	;Searcher
+1835	0	essence_abandonedmonastery_meandra	;Abbess Meandra
+2502	0	essence_bremenasylum_swirlingmadness	;Swirling Madness
+593	0	essence_brewerycellar_warpigduff	;Warpig Duff
+114	0	essence_brokentower_sneath	;Sneath the Betrayer
+1431	0	essence_cazadortunnel_thothmes	;General Thothmes
+1841	0	essence_coldstormcavern_cyclona	;Stormwitch Cyclona
+975	0	essence_darkdepths_vitiator	;Aram Norr
+940	0	essence_direwolfden_foulfur	;Foul Fur
+711	0	essence_djinntemple_lordafrott	;Lord A'Frott
+2756	0	essence_fangarianslair_grimfrost	;Grimfrost
+443	0	essence_forestcavern_frietzsplithoof	;Frietz Splithoof
+2340	0	essence_goliathruins_sharabat	;Sharabat
+739	0	essence_hallofbones_akaz	;Akaz
+2524	0	essence_hauntedgrove_taylinrotbreath	;Taylin Rotbreath
+88	0	essence_hollowtree_isatiria	;Isa Tiria
+1995	0	essence_lighthouse_anglordren	;Anglor Dren
+557	0	essence_manticorelair_darkulgac	;Dar Kulgac
+82	0	essence_nottinghamcastle_wilemgrays	;Wilem Grays
+778	0	essence_pridelordschamber_pular	;Pular
+2680	0	essence_rapunzelstower_rapunzel	;Rapunzel
+2378	0	essence_rolsburgmine_vangaroneeye	;Vangar One-Eye
+946	0	essence_rottedmaze_rottedking	;Rotted King
+949	0	essence_rottedmaze_thelostone	;The Lost One
+2607	0	essence_rottednursery_witherroot	;Wither-Root
+378	0	essence_spibearlair_denmotherursarach	;Denmother Ursarach
+290	0	essence_underhenge_bramblebane	;Bramblebane
+649	0	essence_vespinlair_hivequeenfrelon	;Hive Queen Frelon
+307	0	essence_wilhelmscrypt_kingwilhelm	;King Wilhelm
+943	0	essence_zhushislair_zhushi	;Zhushi
+2889	0	HOLIDAY_BremenCornCobPipe	;Chillkin
+2890	0	HOLIDAY_BremenCornCobPipe	;Chillkin
+2891	0	HOLIDAY_BremenCornCobPipe	;Chillkin
+2892	0	HOLIDAY_BremenCornCobPipe	;Chillkin
+2899	0	HOLIDAY_BremenWintry	;Chill Lord
+2899	0	HOLIDAY_BremenWintry	;Chill Lord
+2899	0	HOLIDAY_BremenWintry	;Chill Lord
+2899	0	HOLIDAY_BremenWintry	;Chill Lord
+2885	0	HOLIDAY_CamelotCornCobPipe	;Chillkin
+2886	0	HOLIDAY_CamelotCornCobPipe	;Chillkin
+2887	0	HOLIDAY_CamelotCornCobPipe	;Chillkin
+2888	0	HOLIDAY_CamelotCornCobPipe	;Chillkin
+2898	0	HOLIDAY_CamelotWintry	;Chill Lord
+2898	0	HOLIDAY_CamelotWintry	;Chill Lord
+2898	0	HOLIDAY_CamelotWintry	;Chill Lord
+2898	0	HOLIDAY_CamelotWintry	;Chill Lord
+2893	0	HOLIDAY_HeartwoodCornCobPipe	;Chillkin
+2894	0	HOLIDAY_HeartwoodCornCobPipe	;Chillkin
+2895	0	HOLIDAY_HeartwoodCornCobPipe	;Chillkin
+2896	0	HOLIDAY_HeartwoodCornCobPipe	;Chillkin
+2900	0	HOLIDAY_HeartwoodWintry	;Chill Lord
+2900	0	HOLIDAY_HeartwoodWintry	;Chill Lord
+2900	0	HOLIDAY_HeartwoodWintry	;Chill Lord
+2900	0	HOLIDAY_HeartwoodWintry	;Chill Lord
+2881	0	HOLIDAY_HighpointCornCobPipe	;Chillkin
+2882	0	HOLIDAY_HighpointCornCobPipe	;Chillkin
+2883	0	HOLIDAY_HighpointCornCobPipe	;Chillkin
+2884	0	HOLIDAY_HighpointCornCobPipe	;Chillkin
+2897	0	HOLIDAY_WinterDawningCreditShopSet	;Chill Lord (8)
+2898	0	HOLIDAY_WinterDawningCreditShopSet	;Chill Lord (20)
+2899	0	HOLIDAY_WinterDawningCreditShopSet	;Chill Lord (30)
+2900	0	HOLIDAY_WinterDawningCreditShopSet	;Chill Lord (35)
+2841	0	HOLIDAY_CamelotTurkatriceLeg	;Turkatrice
+2842	0	HOLIDAY_CamelotTurkatriceLeg	;Turkatrice
+2843	0	HOLIDAY_CamelotTurkatriceLeg	;Turkatrice
+2844	0	HOLIDAY_CamelotTurkatriceLeg	;Turkatrice
+2846	0	HOLIDAY_BremenTurkatriceLeg	;Turkatrice
+2847	0	HOLIDAY_BremenTurkatriceLeg	;Turkatrice
+2848	0	HOLIDAY_BremenTurkatriceLeg	;Turkatrice
+2849	0	HOLIDAY_BremenTurkatriceLeg	;Turkatrice
+2851	0	HOLIDAY_HeartwoodTurkatriceLeg	;Turkatrice
+2852	0	HOLIDAY_HeartwoodTurkatriceLeg	;Turkatrice
+2853	0	HOLIDAY_HeartwoodTurkatriceLeg	;Turkatrice
+2854	0	HOLIDAY_HeartwoodTurkatriceLeg	;Turkatrice
+2845	0	HOLIDAY_HarvestHat	;Turkatrice King
+2850	0	HOLIDAY_HarvestHat	;Turkatrice King
+2855	0	HOLIDAY_HarvestHat	;Turkatrice King
+2841	0	HOLIDAY_TurkatricePartsLev15	;Turkatrice
+2842	0	HOLIDAY_TurkatricePartsLev15	;Turkatrice
+2843	0	HOLIDAY_TurkatricePartsLev15	;Turkatrice
+2844	0	HOLIDAY_TurkatricePartsLev15	;Turkatrice
+2846	0	HOLIDAY_TurkatricePartsLev26	;Turkatrice
+2847	0	HOLIDAY_TurkatricePartsLev26	;Turkatrice
+2848	0	HOLIDAY_TurkatricePartsLev26	;Turkatrice
+2849	0	HOLIDAY_TurkatricePartsLev26	;Turkatrice
+2851	0	HOLIDAY_TurkatricePartsLev32	;Turkatrice
+2852	0	HOLIDAY_TurkatricePartsLev32	;Turkatrice
+2853	0	HOLIDAY_TurkatricePartsLev32	;Turkatrice
+2854	0	HOLIDAY_TurkatricePartsLev32	;Turkatrice
+2845	0	HOLIDAY_TurkatricePartsLev15	;Turkatrice King
+2850	0	HOLIDAY_TurkatricePartsLev26	;Turkatrice King
+2855	0	HOLIDAY_TurkatricePartsLev32	;Turkatrice King
+2885	0	HOLIDAY_ChillkinPartsLev15	;Chillkin (15)
+2886	0	HOLIDAY_ChillkinPartsLev15	;Chillkin (16)
+2887	0	HOLIDAY_ChillkinPartsLev15	;Chillkin (15)
+2888	0	HOLIDAY_ChillkinPartsLev15	;Chillkin (16)
+2889	0	HOLIDAY_ChillkinPartsLev26	;Chillkin (26)
+2890	0	HOLIDAY_ChillkinPartsLev26	;Chillkin (27)
+2891	0	HOLIDAY_ChillkinPartsLev26	;Chillkin (26)
+2892	0	HOLIDAY_ChillkinPartsLev26	;Chillkin (27)
+2893	0	HOLIDAY_ChillkinPartsLev32	;Chillkin (32)
+2894	0	HOLIDAY_ChillkinPartsLev32	;Chillkin (33)
+2895	0	HOLIDAY_ChillkinPartsLev32	;Chillkin (32)
+2896	0	HOLIDAY_ChillkinPartsLev32	;Chillkin (33)
+2898	0	HOLIDAY_ChillkinPartsLev15	;Chill Lord (20)
+2899	0	HOLIDAY_ChillkinPartsLev26	;Chill Lord (30)
+2900	0	HOLIDAY_ChillkinPartsLev32	;Chill Lord (35)
+2881	0	HOLIDAY_snowball	;Chillkin
+2882	0	HOLIDAY_snowball	;Chillkin
+2883	0	HOLIDAY_snowball	;Chillkin
+2884	0	HOLIDAY_snowball	;Chillkin
+2885	0	HOLIDAY_snowball	;Chillkin
+2886	0	HOLIDAY_snowball	;Chillkin
+2887	0	HOLIDAY_snowball	;Chillkin
+2888	0	HOLIDAY_snowball	;Chillkin
+2889	0	HOLIDAY_snowball	;Chillkin
+2890	0	HOLIDAY_snowball	;Chillkin
+2891	0	HOLIDAY_snowball	;Chillkin
+2892	0	HOLIDAY_snowball	;Chillkin
+2893	0	HOLIDAY_snowball	;Chillkin
+2894	0	HOLIDAY_snowball	;Chillkin
+2895	0	HOLIDAY_snowball	;Chillkin
+2896	0	HOLIDAY_snowball	;Chillkin
+1118	0	plan_Adolfo_the_Sickened_1118	
+2755	0	plan_Al'zahrazzi_2755	
+1952	0	plan_Alimat_1952	
+3050	0	plan_Alwynn_3050	
+1595	0	plan_Antioll_1595	
+1594	0	plan_Antioss_1594	
+1478	0	plan_Antlyss_1478	
+2071	0	plan_Anubian_Captain_2071	
+2072	0	plan_Anubian_Captain_2072	
+2073	0	plan_Anubian_Captain_2073	
+1676	0	plan_Apis_1676	
+2981	0	plan_Archis_2981	
+398	0	plan_Argot_the_Boneshaker_398	
+3035	0	plan_Arianna_Glennell_3035	
+2685	0	plan_Arkados_2685	
+1139	0	plan_Arvil_1139	
+1627	0	plan_Atalis_1627	
+1448	0	plan_Avier_1448	
+1099	0	plan_Babe_the_Blue_1099	
+515	0	plan_Bad_Wolf_515	
+1076	0	plan_Baddyr_1076	
+1232	0	plan_Bahmut_1232	
+2452	0	plan_Barenthal_the_Feared_2452	
+527	0	plan_Baron_VonGruber_527	
+1567	0	plan_Beaker_1567	
+618	0	plan_Bizzario_618	
+3123	0	plan_Black_Lich_3123	
+2957	0	plan_Blanche_Marin_2957	
+1568	0	plan_Blightbeak_Matriarch_1568	
+2539	0	plan_Bora_2539	
+1668	0	plan_Bouldergeist_1668	
+1158	0	plan_Branchesca_1158	
+1471	0	plan_Brewtus_1471	
+3092	0	plan_Brexx_3092	
+840	0	plan_Brock_Ironclaw_840	
+1117	0	plan_Buxusbane_1117	
+1761	0	plan_Caylib_1761	
+2679	0	plan_Cerrak_2679	
+255	0	plan_Chamberlain_Kortico_255	
+1051	0	plan_Cisserix_1051	
+162	0	plan_Clampton_162	
+321	0	plan_Codex_321	
+1592	0	plan_Cognoggin_1592	
+2547	0	plan_Commander_Adalhelm_2547	
+827	0	plan_Commander_Slesh_827	
+3080	0	plan_Commander_Wylle_3080	
+2074	0	plan_Commander_Zalika_2074	
+3033	0	plan_Completed_Construct_3033	
+913	0	plan_Cragpaw_Makhet_913	
+2723	0	plan_Crawla_2723	
+1916	0	plan_Crazed_Experiment_1916	
+1892	0	plan_Creptus_Klyde_1892	
+1225	0	plan_Cucur_1225	
+2525	0	plan_Darcca_Razorbone_2525	
+2342	0	plan_Darkhoof_2342	
+1893	0	plan_Dharga_1893	
+2315	0	plan_Donk_2315	
+481	0	plan_Doppelbock_481	
+507	0	plan_Dreadclaw_507	
+1706	0	plan_Dreyn_Glorinmar_1706	
+2586	0	plan_Durg_Lunaa_2586	
+1526	0	plan_Durgan_Wrathborn_1526	
+252	0	plan_Elain_Drudge_252	
+1527	0	plan_Elia_Scorn_1527	
+1885	0	plan_Elindra_Shale_1885	
+1598	0	plan_Enchanted_Armor_1598	
+1597	0	plan_Enchanted_Hat_1597	
+1596	0	plan_Enchanted_Wand_1596	
+528	0	plan_Evil_Queen_528	
+2968	0	plan_Eyegore_2968	
+1095	0	plan_Ezra_Darktouch_1095	
+971	0	plan_Fel_Seed_971	
+1026	0	plan_Feng_1026	
+253	0	plan_Ferran_Hollowind_253	
+1036	0	plan_Fierion_1036	
+3068	0	plan_Fillus_3068	
+3053	0	plan_Flammus_3053	
+2429	0	plan_Fleym_2429	
+1717	0	plan_Floo_1717	
+39	0	plan_Floro_the_Sly_39	
+322	0	plan_Folio_322	
+375	0	plan_Foulcap_375	
+1688	0	plan_Foulra_1688	
+2646	0	plan_Frangret_2646	
+2664	0	plan_Gakk_2664	
+1092	0	plan_Galen_Frostfist_1092	
+494	0	plan_Galligantus_494	
+1491	0	plan_Gangren_1491	
+1499	0	plan_Gar_Fireclaw_1499	
+2438	0	plan_Garvey_2438	
+1591	0	plan_Gearheart_1591	
+2075	0	plan_General_Akhom_2075	
+1215	0	plan_General_Bodiccea_1215	
+3452	0	plan_Geoffry_Thistlefur_3452	
+1484	0	plan_Ghul_1484	
+1886	0	plan_Gillian_Nor_1886	
+1446	0	plan_Gizzardbane_1446	
+1679	0	plan_Glim_1679	
+1643	0	plan_Gobbal_1643	
+1233	0	plan_Gooran_1233	
+1866	0	plan_Gora_Oshman_1866	
+2660	0	plan_Gotte_2660	
+2958	0	plan_Granger_Lashley_2958	
+1170	0	plan_Grizhu_1170	
+1773	0	plan_Grohlum_1773	
+2511	0	plan_Grokk_2511	
+1430	0	plan_Grudd_1430	
+2507	0	plan_Grutt_Longfang_2507	
+249	0	plan_Gurlop_249	
+1647	0	plan_Guttera_1647	
+1073	0	plan_Gwarthim_1073	
+1452	0	plan_Hajeen_Qaraba_1452	
+994	0	plan_Hedorah_994	
+1650	0	plan_Heemo_1650	
+3079	0	plan_Henchman_Grakk_3079	
+3028	0	plan_Hoffy_3028	
+995	0	plan_Horridus_995	
+2469	0	plan_Ironjaw_2469	
+32	0	plan_Jek_Jumptail_32	
+21	0	plan_Jengal_Narglor_21	
+1725	0	plan_Jester_Jumptail_1725	
+104	0	plan_Jezballa_104	
+1351	0	plan_Justi_Ambereye_1351	
+2461	0	plan_Kareth_the_Creator_2461	
+2554	0	plan_Karronath_2554	
+2988	0	plan_Karush_2988	
+2118	0	plan_Keanu_Locksmithee_2118	
+3060	0	plan_Kemmil_3060	
+2480	0	plan_Kerrath_Bellington_2480	
+3052	0	plan_Keyt_3052	
+981	0	plan_Kingsley_981	
+2453	0	plan_Kizzit_the_Loathed_2453	
+1705	0	plan_Konin_Graves_1705	
+842	0	plan_Krel_Aethyrclaw_842	
+1768	0	plan_Krustee_1768	
+1168	0	plan_Lady_Silvermane_1168	
+2984	0	plan_Lektus_2984	
+2117	0	plan_Loxley_Keymarshal_2117	
+2963	0	plan_Lurrk_2963	
+1658	0	plan_Lusana_1658	
+2551	0	plan_Lynott_2551	
+1508	0	plan_Lynxana_1508	
+3106	0	plan_Maddusk_3106	
+2548	0	plan_Maggmuh_2548	
+442	0	plan_Magmange_442	
+1697	0	plan_Mahj_1697	
+811	0	plan_Maleficent_811	
+3051	0	plan_Mallord_3051	
+1663	0	plan_Mamothus_1663	
+973	0	plan_Mar_Blightclaw_973	
+1485	0	plan_Marid_1485	
+80	0	plan_Maudlin_the_Witch_80	
+2512	0	plan_Maut_the_Mystic_2512	
+1613	0	plan_Mollus_1613	
+1048	0	plan_Mosca_1048	
+1764	0	plan_Mosk_1764	
+1490	0	plan_Mossma_1490	
+1074	0	plan_Mothyra_1074	
+2532	0	plan_Murr_Brokk_2532	
+2659	0	plan_Namask_2659	
+2531	0	plan_Nedder_2531	
+1895	0	plan_Nerilix_1895	
+2541	0	plan_Nerin_Runetail_2541	
+1031	0	plan_Nilus_1031	
+843	0	plan_Noche_Poisonclaw_843	
+70	0	plan_Nottingham_Tax_Collector_70	
+1078	0	plan_Oculan_1078	
+1078	0	plan_Oculan_1078	
+1032	0	plan_Odreetu_1032	
+1113	0	plan_Odrin_the_Sleek_1113	
+2959	0	plan_Oglan_Ironhead_2959	
+506	0	plan_Old_Scratch_506	
+132	0	plan_Oosa_132	
+2589	0	plan_Opis_2589	
+1747	0	plan_Osi_1747	
+1509	0	plan_Panterra_1509	
+1098	0	plan_Pawl_1098	
+3088	0	plan_Paylen_Meer_3088	
+1716	0	plan_Petrie_1716	
+1157	0	plan_Phlegmarg_1157	
+533	0	plan_Pied_Piper_533	
+1666	0	plan_Poombra_1666	
+395	0	plan_Pride_Chief_Bentclaw_395	
+16	0	plan_Priestess_Claira_16	
+137	0	plan_Prisk_137	
+972	0	plan_Puritar_972	
+1242	0	plan_Quilted_Construct_1242	
+2468	0	plan_Rageclaw_2468	
+3036	0	plan_Ran_Dangran_3036	
+2487	0	plan_Rarrg_2487	
+2956	0	plan_Razlen_Zaraster_2956	
+1183	0	plan_Rekker_1183	
+148	0	plan_Rhono_148	
+2565	0	plan_Ritt_2565	
+424	0	plan_Robber-baron_Redeye_424	
+423	0	plan_Robber-baron_Swiftpaw_423	
+1894	0	plan_Rocastor_1894	
+2949	0	plan_Rogren_Bluepaw_2949	
+2560	0	plan_Rokmae_2560	
+1445	0	plan_Rotbeak_1445	
+558	0	plan_Rumpelstiltzkin_558	
+2546	0	plan_Sage_Marlon_Wilber_2546	
+986	0	plan_Sahniq_986	
+1593	0	plan_Salabim_1593	
+1503	0	plan_Salamancer_1503	
+1529	0	plan_Sandbone_Giant_1529	
+974	0	plan_Sap_Golem_974	
+1130	0	plan_Sapporen_1130	
+2535	0	plan_Scorpse_2535	
+1659	0	plan_Seff_1659	
+3018	0	plan_Sepperan_3018	
+247	0	plan_Seranno_247	
+2649	0	plan_Shadow_Fang_2649	
+1131	0	plan_Shromdar_1131	
+3048	0	plan_Sillum_3048	
+2488	0	plan_Sloffg_2488	
+1085	0	plan_Sluddger_1085	
+2568	0	plan_Slydd_2568	
+250	0	plan_Snapjaw_250	
+1654	0	plan_Snatchclaw_1654	
+1710	0	plan_Sohlt_1710	
+915	0	plan_Solarmane_Freehowler_915	
+1634	0	plan_Spahz_1634	
+2608	0	plan_Sparren_Rotgut_2608	
+1071	0	plan_Sporrid_1071	
+1880	0	plan_Sprocketina_1880	
+854	0	plan_Spymaster_Usi_854	
+2553	0	plan_Spynch_2553	
+2647	0	plan_Spynndel_2647	
+2583	0	plan_Spynne_2583	
+2561	0	plan_Stallonus_2561	
+3078	0	plan_Strategist_Zao_3078	
+143	0	plan_Sukkra_143	
+1496	0	plan_Symbuh_Rafki_1496	
+1196	0	plan_Sythrex_the_Overseer_1196	
+970	0	plan_Taint_Maw_970	
+2501	0	plan_Talia_Gallows_2501	
+2540	0	plan_Tamm_Swiftclaw_2540	
+1217	0	plan_Taskmaster_Glutt_1217	
+2482	0	plan_Templar_Cornelius_2482	
+2530	0	plan_Terannius_2530	
+812	0	plan_The_Beast_812	
+1507	0	plan_Tigron_1507	
+1009	0	plan_Toxx_1009	
+1752	0	plan_Trabid_1752	
+248	0	plan_Uninvited_Guest_248	
+1617	0	plan_Ursa_1617	
+1354	0	plan_Vaj_Coltres_1354	
+1332	0	plan_Vaj_Cruentes_1332	
+1006	0	plan_Veilra_1006	
+2410	0	plan_Velachar_the_Bonelord_2410	
+3029	0	plan_Verash_3029	
+1703	0	plan_Viktor_D'Mar_1703	
+1624	0	plan_Volter_1624	
+1116	0	plan_Volutella_1116	
+2585	0	plan_Warpig_Bud_2585	
+2584	0	plan_Warpig_Miller_2584	
+1881	0	plan_Whackonomicon_1881	
+690	0	plan_Wicked_Step-Mother_690	
+2489	0	plan_Windwail_2489	
+1179	0	plan_Witherbreath_1179	
+3089	0	plan_Zack_Emberfrost_3089	
+3049	0	plan_Zanthryn_3049	
+2776	0	plan_Zimbaut_2776	
+2572	0	plan_Ziph_2572	
+444	0	plan_Zombified_Ombwah_444	
+445	0	plan_Zombified_Snype_445	
+446	0	plan_Zombified_Stefan_446	
+914	0	plan_Zunnti_Purr_914	
+1069	0	plan_Zuuly_1069	
+2755	0	RareCraftComponent_Al'zahrazzi's_Frozen_Heart	;Al'zahrazzi
+1931	0	RareCraftComponent_Frostbound_Steel	;Frostbound Marid Hero
+1932	0	RareCraftComponent_Frostbound_Steel	;Frostbound Marid Chanter
+1933	0	RareCraftComponent_Frostbound_Steel	;Frostbound Marid Blade
+2745	0	RareCraftComponent_Frostbound_Steel	;Frostbound Marid Chanter
+2746	0	RareCraftComponent_Frostbound_Steel	;Frostbound Marid Hero
+2747	0	RareCraftComponent_Frostbound_Steel	;Frostbound Marid Blade
+2756	0	RareCraftComponent_Grimfrost's_Shattered_Eye	;Grimfrost
+1058	0	RareCraftComponent_Heart_of_Tar	;Tar Elemental
+1059	0	RareCraftComponent_Heart_of_Tar	;Tar Elemental
+949	0	RareCraftComponent_Lost_One_Spores	;The Lost One
+568	0	RareCraftComponent_Outrider_Skull_Charm	;Dominion Outrider
+569	0	RareCraftComponent_Outrider_Skull_Charm	;Dominion Outrider
+2536	0	RareCraftComponent_Outrider_Skull_Charm	;Dominion Outrider
+2537	0	RareCraftComponent_Outrider_Skull_Charm	;Dominion Outrider
+2778	0	RareCraftComponent_Outrider_Skull_Charm	;Dominion Outrider
+2779	0	RareCraftComponent_Outrider_Skull_Charm	;Dominion Outrider
+2780	0	RareCraftComponent_Outrider_Skull_Charm	;Dominion Outrider
+2781	0	RareCraftComponent_Outrider_Skull_Charm	;Dominion Outrider
+1056	0	RareCraftComponent_Perfect_Murkfly_Eye	;Giant Murkfly
+1057	0	RareCraftComponent_Perfect_Murkfly_Eye	;Giant Murkfly
+1469	0	RareCraftComponent_Polished_Sand_Goliath_Heart	;Sand Goliath
+1470	0	RareCraftComponent_Polished_Sand_Goliath_Heart	;Sand Goliath
+946	0	RareCraftComponent_Roots_of_the_Rotted_King	;Rotted King
+1473	0	RareCraftComponent_Symbol_of_the_Desert_Brood	;Dustspinner
+1474	0	RareCraftComponent_Symbol_of_the_Desert_Brood	;Sandmother
+1475	0	RareCraftComponent_Symbol_of_the_Desert_Brood	;Scaleblade
+1940	0	RareCraftComponent_Symbol_of_the_Frozen_Brood	;Shaman
+1941	0	RareCraftComponent_Symbol_of_the_Frozen_Brood	;Shaman
+1942	0	RareCraftComponent_Symbol_of_the_Frozen_Brood	;Bladefist
+1943	0	RareCraftComponent_Symbol_of_the_Frozen_Brood	;Bladefist
+1944	0	RareCraftComponent_Symbol_of_the_Frozen_Brood	;Sentry
+2748	0	RareCraftComponent_Symbol_of_the_Frozen_Brood	;Shaman
+2749	0	RareCraftComponent_Symbol_of_the_Frozen_Brood	;Shaman
+2750	0	RareCraftComponent_Symbol_of_the_Frozen_Brood	;Sentry
+2751	0	RareCraftComponent_Symbol_of_the_Frozen_Brood	;Bladefist
+2752	0	RareCraftComponent_Symbol_of_the_Frozen_Brood	;Bladefist
+2378	0	RareCraftComponent_Vangar's_Lucky_Charm	;Vangar One-Eye
+317	0	token_abandonedmonastery	;Hardcover Wyrm
+318	0	token_abandonedmonastery	;Tome Wyrm
+319	0	token_abandonedmonastery	;Possessed Monk
+320	0	token_abandonedmonastery	;Diabolical Abbot
+321	0	token_abandonedmonastery	;Codex
+322	0	token_abandonedmonastery	;Folio
+323	0	token_abandonedmonastery	;Raving Cenobite
+2442	0	token_abandonedmonastery	;Possessed Monk
+2443	0	token_abandonedmonastery	;Hardcover Wyrm
+2444	0	token_abandonedmonastery	;Ancient Abbot
+2445	0	token_abandonedmonastery	;Ancient Abbot
+2446	0	token_abandonedmonastery	;Zombie Monk
+2447	0	token_abandonedmonastery	;Zombie Monk
+2448	0	token_abandonedmonastery	;Resurrected Cenobite
+2449	0	token_abandonedmonastery	;Corpse Widow
+2450	0	token_abandonedmonastery	;Charred Skeleton
+2451	0	token_abandonedmonastery	;Roasted Corpse
+2452	0	token_abandonedmonastery	;Barenthal the Feared
+2453	0	token_abandonedmonastery	;Kizzit the Loathed
+2461	0	token_abandonedmonastery	;Kareth the Creator
+614	0	token_bremenasylum	;Raving Madcap
+615	0	token_bremenasylum	;Lunatic
+2573	0	token_bremenasylum	;Maniacal Mystic
+2574	0	token_bremenasylum	;Maniacal Mystic
+2575	0	token_bremenasylum	;Raving Madcap
+2576	0	token_bremenasylum	;Deranged Elementalist
+2577	0	token_bremenasylum	;Deranged Elementalist
+2578	0	token_bremenasylum	;Lunatic
+2722	0	token_bremenasylum	;Frenzied Arachnid
+472	0	token_brewerycellar	;Warpig Barleymancer
+474	0	token_brewerycellar	;Warpig Aleweaver
+536	0	token_brewerycellar	;Warpig Brewslinker
+550	0	token_brewerycellar	;Warpig Brewslinker
+2579	0	token_brewerycellar	;Warpig Brewmaster
+2580	0	token_brewerycellar	;Warpig Brewmaster
+2581	0	token_brewerycellar	;Cellar Spider
+2582	0	token_brewerycellar	;Cellar Spider
+1581	0	token_brokentower	;Gearloose Clockwork
+1582	0	token_brokentower	;Gearloose Clockwork
+1583	0	token_brokentower	;Footloose Footnote
+1584	0	token_brokentower	;Footloose Footnote
+1585	0	token_brokentower	;Runaway Armor
+1586	0	token_brokentower	;Runaway Armor
+1587	0	token_brokentower	;Runaway Weapon
+1588	0	token_brokentower	;Runaway Weapon
+1589	0	token_brokentower	;Giant Darkhare
+1590	0	token_brokentower	;Giant Darkhare
+1591	0	token_brokentower	;Gearheart
+1592	0	token_brokentower	;Cognoggin
+1593	0	token_brokentower	;Salabim
+1594	0	token_brokentower	;Antioss
+1595	0	token_brokentower	;Antioll
+1596	0	token_brokentower	;Enchanted Wand
+1597	0	token_brokentower	;Enchanted Hat
+1598	0	token_brokentower	;Enchanted Armor
+1880	0	token_brokentower	;Sprocketina
+1881	0	token_brokentower	;Whackonomicon
+97	0	token_coldstormcavern	;Coldstorm Hag
+98	0	token_coldstormcavern	;Coldstorm Hag
+99	0	token_coldstormcavern	;Coldstorm Crone
+100	0	token_coldstormcavern	;Coldstorm Crone
+101	0	token_coldstormcavern	;Coldstorm Stormcaller
+102	0	token_coldstormcavern	;Coldstorm Stormcaller
+2437	0	token_coldstormcavern	;Samhain
+2438	0	token_coldstormcavern	;Garvey
+960	0	token_darkdepths	;Imbrued Druid
+961	0	token_darkdepths	;Imbrued Druid
+962	0	token_darkdepths	;Rot Lupus
+963	0	token_darkdepths	;Rot Lupus
+964	0	token_darkdepths	;Banethorn Reaver
+965	0	token_darkdepths	;Banethorn Reaver
+966	0	token_darkdepths	;Spoilivore
+967	0	token_darkdepths	;Spoilivore
+968	0	token_darkdepths	;Djallist
+969	0	token_darkdepths	;Djallist
+1000	0	token_darkdepths	;Entralled Excavator
+1001	0	token_darkdepths	;Enthralled Excavator
+2640	0	token_darkdepths	;Djallist
+2641	0	token_darkdepths	;Djallist
+2644	0	token_darkdepths	;Djallist Overseer
+2645	0	token_darkdepths	;Samsonvore
+2648	0	token_darkdepths	;Shadowsilk Gorger
+1160	0	token_direwolfden	;Sapmane Pouncer
+1161	0	token_direwolfden	;Sapmane Pouncer
+1162	0	token_direwolfden	;Sapmane Stalker
+1163	0	token_direwolfden	;Sapmane Stalker
+1164	0	token_direwolfden	;Mildewmane Yowler
+1165	0	token_direwolfden	;Mildewmane Yowler
+1166	0	token_direwolfden	;Mildewmane Growler
+1167	0	token_direwolfden	;Mildewmane Growler
+1502	0	token_direwolfden	;Singemane Raker
+2650	0	token_direwolfden	;Shadowmane Hunter
+2651	0	token_direwolfden	;Shadowmane Hunter
+2652	0	token_direwolfden	;Shadowmane Burner
+2653	0	token_direwolfden	;Shadowmane Froster
+2654	0	token_direwolfden	;Shadowmane Brute
+2655	0	token_direwolfden	;White Wolf
+2656	0	token_direwolfden	;White Wolf
+2657	0	token_direwolfden	;White Wolf
+2661	0	token_direwolfden	;Cavern Crawler
+2662	0	token_direwolfden	;Cavern Crawler
+2663	0	token_direwolfden	;Cavern Crawler
+813	0	token_djinntemple	;Djinn Thugee
+814	0	token_djinntemple	;Djinn Thugee
+815	0	token_djinntemple	;Djinn Hashashin
+816	0	token_djinntemple	;Sultanic Djinn
+817	0	token_djinntemple	;Sultanic Djinn
+818	0	token_djinntemple	;Djinn Padishah
+819	0	token_djinntemple	;Khalific Djinn
+820	0	token_djinntemple	;Khalific Djinn
+821	0	token_djinntemple	;Djinn Vizier
+692	0	token_goliathruins	;Dripstone Goliath
+693	0	token_goliathruins	;Flowstone Goliath
+694	0	token_goliathruins	;Gypsum Goliath
+695	0	token_goliathruins	;Limestone Goliath
+696	0	token_goliathruins	;Dripstone Goliath
+697	0	token_goliathruins	;Flowstone Goliath
+698	0	token_goliathruins	;Gypsum Goliath
+699	0	token_goliathruins	;Limestone Goliath
+702	0	token_goliathruins	;Stalagsoothe
+703	0	token_goliathruins	;Stalagsorcer
+2555	0	token_goliathruins	;Scatterstone Hatchling
+2556	0	token_goliathruins	;Scatterstone Hatchling
+2557	0	token_goliathruins	;Scatterstone Brute
+2558	0	token_goliathruins	;Scatterstone Sorcerer
+2559	0	token_goliathruins	;Scatterstone Slasher
+2564	0	token_goliathruins	;Living Text
+2743	0	token_goliathruins	;Hardstone Goliath
+2744	0	token_goliathruins	;Minion of Maut
+1090	0	token_greysuncamp	;Greysun Assassin
+1091	0	token_greysuncamp	;Greysun Brawler
+1092	0	token_greysuncamp	;Galen Frostfist
+1093	0	token_greysuncamp	;Greysun Armsman
+1094	0	token_greysuncamp	;Greysun Brigand
+1095	0	token_greysuncamp	;Ezra Darktouch
+2514	0	token_hauntedgrove	;Grove Guardian
+2515	0	token_hauntedgrove	;Grove Guardian
+2516	0	token_hauntedgrove	;Burntbone Mage
+2517	0	token_hauntedgrove	;Burntbone Mage
+2518	0	token_hauntedgrove	;Swiftbone Skeleton
+2519	0	token_hauntedgrove	;Marrow Blighter
+2520	0	token_hauntedgrove	;Fresh Corpse
+2521	0	token_hauntedgrove	;Fresh Corpse
+2522	0	token_hauntedgrove	;Fresh Corpse
+2523	0	token_hauntedgrove	;Fresh Corpse
+2566	0	token_hauntedgrove	;Putrid Mollusk
+2567	0	token_hauntedgrove	;Putrid Mollusk
+2569	0	token_hauntedgrove	;Rotten Fleshpicker
+2570	0	token_hauntedgrove	;Rotten Fleshpicker
+2571	0	token_hauntedgrove	;Grove Giant
+2533	0	token_manticorelair	;Silksand Stinger
+2534	0	token_manticorelair	;Silksand Stinger
+2688	0	token_manticorelair	;Carver
+2689	0	token_manticorelair	;Carver
+2690	0	token_manticorelair	;Flamekeeper
+2691	0	token_manticorelair	;Frostkeeper
+2692	0	token_manticorelair	;Shaman
+2693	0	token_manticorelair	;Warrior
+2694	0	token_manticorelair	;Warrior
+523	0	token_rapunzelstower	;Twisted Storyteller
+808	0	token_rapunzelstower	;Frog Prince
+809	0	token_rapunzelstower	;Piper Charmed Mage
+810	0	token_rapunzelstower	;Piper Charmed Druid
+568	0	token_rolsburgmine	;Dominion Outrider
+569	0	token_rolsburgmine	;Dominion Outrider
+2536	0	token_rolsburgmine	;Dominion Outrider
+2537	0	token_rolsburgmine	;Dominion Outrider
+2538	0	token_rolsburgmine	;Battle Boar
+2682	0	token_rolsburgmine	;Dominion Minemaster
+2683	0	token_rolsburgmine	;Rolsburg Rock Bear
+2684	0	token_rolsburgmine	;Rolsburg Rock Bear
+1171	0	token_rottedmaze	;Rotted Ignoble
+1172	0	token_rottedmaze	;Rotpine Rootlord
+1173	0	token_rottedmaze	;Ichorlord Shroomie
+1175	0	token_rottedmaze	;Rotborne Dryad
+1176	0	token_rottedmaze	;Stump Slaughter
+1177	0	token_rottedmaze	;Stump Splinter
+2665	0	token_rottedmaze	;Ichorlord Shroomie
+2666	0	token_rottedmaze	;Rotborne Dryad
+2667	0	token_rottedmaze	;Rotpine Rootlord
+2668	0	token_rottedmaze	;Blightlord Shroomie
+2669	0	token_rottedmaze	;Blightlord Shroomie
+2670	0	token_rottedmaze	;Blackbark Dryad
+2671	0	token_rottedmaze	;Blackbark Dryad
+2672	0	token_rottedmaze	;Hastelord Shroomie
+2673	0	token_rottedmaze	;Hastelord Shroomie
+2674	0	token_rottedmaze	;Rotted Wrecker
+2675	0	token_rottedmaze	;Rotted Wrecker
+2676	0	token_rottedmaze	;Briskbranch Dryad
+2677	0	token_rottedmaze	;Briskbranch Dryad
+1147	0	token_rottednursery	;Sporebringer Sporeling
+1148	0	token_rottednursery	;Rotted Timberlasher
+1149	0	token_rottednursery	;Rotted Timberlasher
+1150	0	token_rottednursery	;Rotwood Sporebringer
+1151	0	token_rottednursery	;Rotkeeper Shroomie
+1152	0	token_rottednursery	;Rotkeeper Shroomie
+1153	0	token_rottednursery	;Malignant Midwife
+1155	0	token_rottednursery	;Malignant Midwife
+1156	0	token_rottednursery	;Mucusmancer
+2599	0	token_rottednursery	;Rotted Timbermage
+2600	0	token_rottednursery	;Rotted Timbermage
+2601	0	token_rottednursery	;Rotted Timbernaut
+2602	0	token_rottednursery	;Rotted Timbernaut
+2603	0	token_rottednursery	;Putrid Shellslider
+2604	0	token_rottednursery	;Fetid Shellslider
+2605	0	token_rottednursery	;Pestilent Protector
+2606	0	token_rottednursery	;Pestilent Protector
+2609	0	token_rottednursery	;Moldmancer
+2139	0	token_spibearlair	;Blightvenom Scorpion
+2140	0	token_spibearlair	;Blightvenom Scorpion
+2508	0	token_spibearlair	;Blightwitch Spibear
+2509	0	token_spibearlair	;Horned Hopper
+2510	0	token_spibearlair	;Horned Hopper
+2552	0	token_spibearlair	;Blightfury Spibear
+2554	0	token_spibearlair	;Karronath
+2686	0	token_spibearlair	;Blightbiter Spibear
+2687	0	token_spibearlair	;Blightbighter Spibear
+282	0	token_underhenge	;Templar
+283	0	token_underhenge	;Dweamorist
+284	0	token_underhenge	;Templar
+285	0	token_underhenge	;Dweamorist
+286	0	token_underhenge	;Oracle
+287	0	token_underhenge	;Briarbearer
+2411	0	token_underhenge	;Disciple
+2412	0	token_underhenge	;Disciple
+2413	0	token_underhenge	;Fanatic
+2414	0	token_underhenge	;Fanatic
+2415	0	token_underhenge	;Cloakbearer
+2416	0	token_underhenge	;Sage
+2419	0	token_underhenge	;Alchemist
+2420	0	token_underhenge	;Alchemist
+2422	0	token_underhenge	;Field Alchemist
+2427	0	token_underhenge	;Sparkwing
+2428	0	token_underhenge	;Sparkwing
+2440	0	token_underhenge	;Henge Slug
+2441	0	token_underhenge	;Henge Slug
+21	0	token_wilhelmscrypt	;Jengal Narglor
+292	0	token_wilhelmscrypt	;Ritualist
+293	0	token_wilhelmscrypt	;Risen Bones
+294	0	token_wilhelmscrypt	;Bone Thrall
+296	0	token_wilhelmscrypt	;Ritualist
+300	0	token_wilhelmscrypt	;Bone Thrall
+302	0	token_wilhelmscrypt	;Risen Bones
+303	0	token_wilhelmscrypt	;High Ritualist
+305	0	token_wilhelmscrypt	;Redeye Stag
+2431	0	token_wilhelmscrypt	;Skull Charmer
+2432	0	token_wilhelmscrypt	;Skull Charmer
+2433	0	token_wilhelmscrypt	;Crypt Creeper
+2434	0	token_wilhelmscrypt	;Grave Guardian
+2435	0	token_wilhelmscrypt	;Grave Guardian
+2436	0	token_wilhelmscrypt	;Bone Chiller
+2470	0	token_wilhelmscrypt	;Undead Footsoldier
+2471	0	token_wilhelmscrypt	;Undead Footsoldier
+2472	0	token_wilhelmscrypt	;Rotting Assassin
+2473	0	token_wilhelmscrypt	;Rotting Assassin
+2474	0	token_wilhelmscrypt	;Moldy Magician
+2480	0	token_wilhelmscrypt	;Kerrath Bellington
+2482	0	token_wilhelmscrypt	;Templar Cornelius
+2544	0	token_wilhelmscrypt	;Sage
+2545	0	token_wilhelmscrypt	;Sage
+2546	0	token_wilhelmscrypt	;Sage Marlon Wilber
+2547	0	token_wilhelmscrypt	;Commander Adalhelm
+2770	0	token_wilhelmscrypt	;Crypt Widow
+2055	0	named_Crusty_2055	
+2006	0	named_Jabari_2006	
+2009	0	named_Flamesnout_2009	
+2012	0	named_Vespin_Hiveward_2012	
+2049	0	named_Bonepicker_2049	
+2015	0	named_Nehtu_2015	
+2052	0	named_Stoneheart_2052	
+2064	0	named_Korunk_2064	
+2032	0	named_Amberwing_2032	
+2058	0	named_VaykinScarr_2058	
+2061	0	named_Gromp_2061	
+2029	0	named_Spike_2029	

@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151023136
+Asset=CL-Rotted_Thicket1
+Name=9
+Pos=64999.1,303.48,164565
+Orient=0,-0.849481,0,0.52762
+Scale=4.375,4.375,4.375
+Flags=1
+

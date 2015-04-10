@@ -1,0 +1,13 @@
+[ENTRY]
+ID=8024
+ACCOUNTID=379
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=glim
+GroveName=glim
+WarpName=glim1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

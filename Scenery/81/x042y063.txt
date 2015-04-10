@@ -1,0 +1,7 @@
+[ENTRY]
+ID=1358965343
+Asset=CL-Hills_Bush1#CL-Hills_Bush1
+Pos=42010,142.387,63869
+Orient=0,0,0,1
+Scale=1,1,1
+

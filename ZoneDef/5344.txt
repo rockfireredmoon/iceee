@@ -1,0 +1,16 @@
+[ENTRY]
+ID=5344
+ACCOUNTID=44
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=Forest
+ShardName=Liska's Grove
+GroveName=liskaqsgrovetag
+WarpName=liskaqsgrovetag1
+DropRateProfile=standard
+Persist=1
+Grove=1
+EnvironmentCycle=1
+BuildPermission=account,44,0,0,13,23
+DefLoc=2958,260,3821
+

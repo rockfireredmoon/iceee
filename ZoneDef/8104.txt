@@ -1,0 +1,13 @@
+[ENTRY]
+ID=8104
+ACCOUNTID=389
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=nicafur
+GroveName=nicafur
+WarpName=nicafur1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

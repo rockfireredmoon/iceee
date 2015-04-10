@@ -1,0 +1,13 @@
+[ENTRY]
+ID=11024
+ACCOUNTID=754
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=tristanlolcatz
+GroveName=tristanlolcatz
+WarpName=tristanlolcatz1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

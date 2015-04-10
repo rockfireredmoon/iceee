@@ -1,0 +1,13 @@
+[ENTRY]
+ID=11928
+ACCOUNTID=867
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=luskisnopaw
+GroveName=luskisnopaw
+WarpName=luskisnopaw1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

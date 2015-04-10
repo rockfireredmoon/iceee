@@ -1,0 +1,16 @@
+[ENTRY]
+ID=151060069
+Asset=Prop-BonesTex_A#Prop-Bones_RibsCage1
+Name=9
+Pos=28067.5,620.863,78486.3
+Orient=-0.173999,0.589921,0.139632,0.776029
+Scale=1.95,1.95,1.95
+
+[ENTRY]
+ID=151060085
+Asset=Prop-Bones_Dragon#Prop-Bones_DragonSkull1
+Name=9
+Pos=28201.2,628.22,78419.7
+Orient=0.669338,0.740885,0.040472,0.0379382
+Scale=2.025,2.025,2.025
+

@@ -1,0 +1,16 @@
+[ENTRY]
+ID=151052874
+Asset=Manipulator#Manipulator-PathNode
+Name=9
+Pos=85769.6,259.367,159396
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
+ID=151058249
+Asset=Dead_Forest?d=0.9&amp;s=123949&amp;sz=900
+Name=9
+Pos=85832.1,326.37,159050
+Orient=0,-0.997495,0,0.0707368
+Scale=1.225,1.225,1.225
+

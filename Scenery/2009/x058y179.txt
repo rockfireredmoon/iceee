@@ -1,0 +1,17 @@
+[ENTRY]
+ID=151046111
+Asset=Manipulator-SpawnPoint
+Name=9
+Pos=43921.4,254.944,134668
+Orient=0,0,0,1
+Scale=1,1,1
+Layer=151006171
+
+[ENTRY]
+ID=151048825
+Asset=Prop-Statues#Prop-Statue-Body_Standing1
+Name=9
+Pos=43680.6,-232.032,134543
+Orient=0.328205,-0.831384,-0.201987,-0.400353
+Scale=30,30,30
+

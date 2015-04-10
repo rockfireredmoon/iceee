@@ -1,0 +1,13 @@
+[ENTRY]
+ID=7624
+ACCOUNTID=329
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=sacurashadow
+GroveName=sacurashadow
+WarpName=sacurashadow1
+Grove=1
+EnvironmentCycle=1
+DefLoc=2958,260,3821
+

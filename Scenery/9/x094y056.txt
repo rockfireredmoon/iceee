@@ -1,0 +1,8 @@
+[ENTRY]
+ID=151008352
+Asset=Prop-Boulder5
+Pos=71228,935.746,42076
+Orient=0,0,0,1
+Scale=1.825,1.825,1.825
+Flags=1
+

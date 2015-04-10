@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151051618
+Asset=Manipulator-SpawnPoint
+Pos=58870,494.568,48735
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=3a_wolfDeerCamp01_trees
+outerRadius=30
+

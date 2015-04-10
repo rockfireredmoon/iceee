@@ -1,0 +1,64 @@
+Zone=44
+
+[ENTRY]
+Flags=3
+Name=z44_sc_gen_Exit_to_New_Badari_2237
+Spawn=2237,100  ;Exit to New Badari (1) at 0
+
+[ENTRY]
+Name=2_sc_front_k_27_28
+Spawn=516,20  ;Colossal Crustacean (26) at 0
+Spawn=517,20  ;Scavenger Crab (26) at 0
+Spawn=2526,20  ;Cavern Snapper (26) at 0
+Spawn=2527,20  ;Cavern Snapper (27) at 0
+Spawn=2592,20  ;Colossal Crustacean (27) at 0
+
+[ENTRY]
+Name=2_sc_front_27_28
+Spawn=516,20  ;Colossal Crustacean (26) at 0
+Spawn=517,20  ;Scavenger Crab (26) at 0
+Spawn=518,20  ;Scavenger Crab (27) at 5
+Spawn=2526,20  ;Cavern Snapper (26) at 0
+Spawn=2527,20  ;Cavern Snapper (27) at 0
+
+[ENTRY]
+Name=2_sc_Terannius_k_28
+Spawn=2530,100  ;Terannius (28) at 0
+
+[ENTRY]
+Name=2_sc_OpisSTEPUP
+Spawn=2587,50  ;Sea Slug (26) at 0
+Spawn=2588,50  ;Sea Slug (27) at 0
+; Spawn=2589,100  ;Opis (27) at 0
+
+[ENTRY]
+Name=2_sc_back_26_27
+Shares=60
+Spawn=516,10  ;Colossal Crustacean (26) at 0
+Spawn=517,10  ;Scavenger Crab (26) at 0
+Spawn=518,10  ;Scavenger Crab (27) at 19
+Spawn=2526,10  ;Cavern Snapper (26) at 0
+Spawn=2527,10  ;Cavern Snapper (27) at 0
+Spawn=2592,10  ;Colossal Crustacean (27) at 0
+
+[ENTRY]
+Name=2_sc_boss_27
+Shares=30
+Spawn=518,10  ;Scavenger Crab (27) at 0
+Spawn=2527,10  ;Cavern Snapper (27) at 0
+Spawn=2592,10  ;Colossal Crustacean (27) at 0
+
+[ENTRY]
+Name=2_sc_dreadclaw_k_28
+Spawn=507,100  ;Dreadclaw (28) at 0
+
+[ENTRY]
+Name=2_sc_NedderSTEPUP
+Spawn=2528,50  ;Cave Fly (26) at 3
+Spawn=2529,50  ;Cave Fly (27) at 0
+; Spawn=2531,100  ;Nedder (28) at 5
+
+[ENTRY]
+Flags=6
+Name=2a_obji_deepBlueCrystal
+Spawn=2965,100  ;Deep Blue Crystal (1) at 0

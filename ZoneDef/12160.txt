@@ -1,0 +1,13 @@
+[ENTRY]
+ID=12160
+ACCOUNTID=896
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=huskyfluff
+GroveName=huskyfluff
+WarpName=huskyfluff1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

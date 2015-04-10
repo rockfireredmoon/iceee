@@ -1,0 +1,1063 @@
+; NOTE:
+; Replaced spawn at (36664.4 726.797 51140) ID: 1358957840
+; original package: 1a_overwatchCamp01_general
+; with custom heroic spawn
+
+; Replaced spawn at (36806.2 473.849 50071) ID:1358957883
+; original: 1a_swampNorth_general
+
+; NOTE: SEASONAL SPAWNS
+; Find these packages and uncomment their spawns to enable them
+
+;   Harvest Fest
+; HOLIDAY_turkatrice_15_16
+; HOLIDAY_turkatriceKing_k_20
+
+
+;   Winter Dawning
+; HOLIDAY_wf09_snowmen_15_16
+; HOLIDAY_wf09_snowmanKing_20
+; HOLIDAY_wf09_gifts
+
+; NOT IMPLEMENTED:
+; HOLIDAY_Easter_Egg
+
+[ENTRY]
+Flags=3
+Name=1a_obji_TBNote_fs01
+spawnDelay=300
+Spawn=1580,100  ;a note (1) at 0
+
+[ENTRY]
+Flags=1
+Name=1a_npc_City_Watch
+Spawn=1718,25  ;City Watch (45) at 0
+Spawn=1719,25  ;City Watch (45) at 0
+Spawn=1720,25  ;City Watch (45) at 0
+Spawn=1721,25  ;City Watch (45) at 0
+
+[ENTRY]
+Name=1a_quackatriceCamp01_trees
+wanderRadius=50
+Spawn=126,100  ;Blightbeak Nester (12) at 0
+
+[ENTRY]
+Flags=3
+Name=1a_obji_cam02a_tombstone
+Spawn=1789,100  ;Oddly-Etched Tombstone (1) at 0
+
+[ENTRY]
+Flags=3
+Name=1a_obji_fs05_avalonianVioletEye
+Spawn=1785,100  ;Avalonian Violet Eye (1) at 2
+
+[ENTRY]
+Name=1a_quackatriceCamp01_general
+wanderRadius=60
+Spawn=146,50  ;Blightbeak Striker (12) at 0
+Spawn=1566,50  ;Blightbeak Brute (11) at 1
+
+[ENTRY]
+Flags=1
+Name=1a_npc_Nottingham_Watch
+Spawn=1722,50  ;Nottingham Watch (50) at 0
+Spawn=1723,50  ;Nottingham Watch (50) at 0
+
+[ENTRY]
+Name=1a_mosquitoCamp01_general
+wanderRadius=80
+Spawn=142,50  ;Riverside Bloodfiend (11) at 1
+Spawn=1600,50  ;Riverside Bloodfiend (12) at 2
+
+[ENTRY]
+Name=1a_mosquitoCamp02_Sukkra
+Spawn=143,100  ;Sukkra (13) at 2
+
+; NOTE: from cdef file
+[ENTRY]
+Name=1a_quackatriceCamp01_BlightbeakMatriarch
+UniquePoints=3
+wanderRadius=60
+Spawn=1568,100  ;Blightbeak Matriarch (13)
+
+[ENTRY]
+Name=1a_quackatriceCamp01_Beaker
+wanderRadius=60
+Spawn=1567,100  ;Beaker (12) at 10
+
+[ENTRY]
+Name=1a_slugCamp01_trees
+wanderRadius=60
+Spawn=1602,100  ;Root-Slimer (12) at 1
+Spawn=147,100  ;Root-Slimer (11) at 1
+
+[ENTRY]
+Flags=3
+Name=1a_obji_TBMissive_fs03
+Spawn=1599,100  ;Old Stump (1) at 0
+
+[ENTRY]
+Name=1a_rockBearCamp01_general
+wanderRadius=160
+Shares=30
+Spawn=1614,10  ;Stonepelt Thrasher (10) at 0
+Spawn=1615,10  ;Stonepelt Thrasher (11) at 3
+Spawn=1616,10  ;Stonepelt Mauler (11) at 0
+
+[ENTRY]
+Name=1a_rockBearCamp01_Ursa
+Spawn=1617,100  ;Ursa (12) at 10
+
+[ENTRY]
+Name=1a_riverRunnerCamp02_general
+spawnDelay=300
+Spawn=1692,20  ;Ruffian (11) at 0
+Spawn=1693,20  ;Ruffian (12) at 0
+Spawn=1694,20  ;Soothsayer (11) at 0
+Spawn=1695,20  ;Soothsayer (12) at 0
+Spawn=1696,20  ;Charlatan (12) at 0
+;Spawn=1787,0  ;Yellow-Heart Blossoms (1) at 4
+
+[ENTRY]
+Name=1a_riverRunnerCamp02_rogue
+spawnDelay=300
+Spawn=1696,100  ;Charlatan (12) at 0
+
+; 3 SpawnPoints
+[ENTRY]
+Name=1a_riverRunnerCamp02_Mahj
+UniquePoints=3
+spawnDelay=300
+Spawn=1697,100  ;Mahj (12) at 0
+
+[ENTRY]
+Name=1a_hog/rocCamp01_rocs
+wanderRadius=60
+Spawn=1621,100  ;Razor-Talon (11) at 0
+Spawn=1622,100  ;Stout-Talon (10) at 0
+Spawn=1623,100  ;Stout-Talon (11) at 0
+
+[ENTRY]
+Name=1a_slugCamp01_general
+wanderRadius=60
+Spawn=1609,100  ;Steppe-Slimer (11) at 1
+Spawn=1610,100  ;Steppe-Slimer (12) at 1
+
+[ENTRY]
+Name=1a_slugCamp01_snail
+wanderRadius=60
+Spawn=1612,100  ;Spikeback Slider (12) at 0
+
+[ENTRY]
+Name=1a_slugCamp01_mollus
+wanderRadius=60
+Spawn=1613,100  ;Mollus (13) at 5
+
+[ENTRY]
+Name=1a_riverRunnerCamp01_general
+spawnDelay=300
+Spawn=1698,20  ;Goon (10) at 0
+Spawn=1699,20  ;Goon (11) at 0
+Spawn=1700,20  ;Magician (10) at 0
+Spawn=1701,20  ;Magician (11) at 0
+Spawn=1702,20  ;Scoundrel (11) at 0
+
+[ENTRY]
+Name=1a_riverRunnerCamp01_rogue
+spawnDelay=300
+Spawn=1702,100  ;Scoundrel (11) at 0
+
+[ENTRY]
+Name=1a_riverRunnerCamp01_JekJumptail
+spawnDelay=300
+Spawn=32,100  ;Jek Jumptail (12) at 0
+
+[ENTRY]
+Name=1a_riverRunnerCamp01_ViktorDMar
+spawnDelay=300
+Spawn=1703,100  ;Viktor D'mar (11) at 4
+
+[ENTRY]
+Name=1a_frostcicleCamp01_general
+Shares=30
+Spawn=1931,10  ;Frostbound Marid Hero (49) at 0
+Spawn=1932,10  ;Frostbound Marid Chanter (49) at 0
+Spawn=1933,10  ;Frostbound Marid Blade (49) at 0
+
+[ENTRY]
+Name=1a_crystalSlugCamp01_general
+wanderRadius=50
+Spawn=1929,50  ;Lucent Shellback (46) at 0
+Spawn=1930,50  ;Lucent Shellback (47) at 0
+
+[ENTRY]
+Name=1a_element/goliathCamp01_general
+Shares=30
+Spawn=1937,10  ;Frostone Reaver (47) at 0
+Spawn=1938,10  ;Frostone Weaver (46) at 0
+Spawn=1939,10  ;Frostone Weaver (47) at 0
+
+[ENTRY]
+Name=1a_element/goliathCamp01_goliath
+Spawn=1936,100  ;Lumbering Frostfiend (50) at 0
+
+[ENTRY]
+Name=1a_yetiCamp01_sentry
+Spawn=1944,100  ;Sentry (47) at 0
+
+[ENTRY]
+Name=1a_glacialWalkerCamp01_general
+wanderRadius=80
+Spawn=1934,50  ;Ancient Ice-trekker (46) at 0
+Spawn=1935,50  ;Ancient Ice-trekker (47) at 0
+
+[ENTRY]
+Name=1a_yetiCamp01_general
+Spawn=1940,25  ;Shaman (46) at 0
+Spawn=1941,25  ;Shaman (47) at 0
+Spawn=1942,25  ;Bladefist (46) at 0
+Spawn=1943,25  ;Bladefist (47) at 0
+
+[ENTRY]
+Flags=3
+Name=1a_obji_cam06_graveLillies
+spawnDelay=300
+Spawn=1792,100  ;Grave Lillies (1) at 0
+
+[ENTRY]
+Flags=3
+Name=1a_obji_bath05_petiteSwampBarb
+Spawn=1947,100  ;Petite Swamp Barb (1) at 1
+
+[ENTRY]
+Flags=3
+Name=1a_obji_cam04_yellowHeartBlossoms
+spawnDelay=300
+Spawn=1787,100  ;Yellow-Heart Blossoms (1) at 3
+
+[ENTRY]
+Flags=3
+Name=1a_obji_cri01_moonberry
+Spawn=1898,100  ;Moonbery Bush (1) at 11
+
+[ENTRY]
+Flags=3
+Name=1a_obji_bath04_bucketOfVespinHoney
+Spawn=1946,100  ;Bucket of Vespin Honey (1) at 0
+
+[ENTRY]
+Flags=3
+Name=1a_obji_bath05_wrathThorn
+Spawn=1948,100  ;Wrath-Thorn (1) at 0
+
+[ENTRY]
+Flags=3
+Name=1a_obji_bath08_FaernsJournal
+UniquePoints=4
+Spawn=1897,100  ;Faerns' Journal (1) at 0
+
+[ENTRY]
+Name=1a_overwatchCamp01_general
+wanderRadius=30
+spawnDelay=300
+Spawn=1912,25  ;Failed Experiment (14) at 0
+Spawn=1913,25  ;Failed Experiment (15) at 0
+Spawn=1914,25  ;Failed Experiment (14) at 0
+Spawn=1915,25  ;Failed Experiment (15) at 0
+
+[ENTRY]
+Name=1a_overwatchCamp01_custom_crazed
+spawnDelay=300
+Spawn=1916,100  ;Crazed Experiment (15)
+
+[ENTRY]
+Name=1a_fireChomperCamp01_general
+wanderRadius=60
+Spawn=1670,50  ;Charred Chomper (14) at 0
+Spawn=1671,50  ;Charred Chomper (15) at 0
+
+[ENTRY]
+Name=1a_swampSouth_general
+wanderRadius=40
+Shares=120
+Spawn=1794,10  ;Bogbeak Striker (19) at 0
+Spawn=1796,10  ;Bogbeak Striker (20) at 0
+Spawn=1798,10  ;Bogbeak Bruiser (19) at 0
+Spawn=1799,10  ;Bogbeak Bruiser (20) at 0
+Spawn=1843,10  ;Muck-mancer (19) at 0
+Spawn=1844,10  ;Muck-mancer (20) at 0
+Spawn=1845,10  ;Muck-molder (19) at 0
+Spawn=1846,10  ;Muck-molder (20) at 0
+Spawn=1848,10  ;Bulwark Bogbeast (19) at 0
+Spawn=1849,10  ;Bulwark Bogbeast (20) at 0
+Spawn=1850,10  ;Roving Bogbeast (19) at 0
+Spawn=1851,10  ;Roving Bogbeast (20) at 0
+
+[ENTRY]
+Name=1a_swampNorth_general
+wanderRadius=50
+Shares=120
+Spawn=1769,10  ;Swampstone Crusher (18) at 0
+Spawn=1770,10  ;Swampstone Crusher (19) at 0
+Spawn=1771,10  ;Swampstone Carver (18) at 0
+Spawn=1772,10  ;Swampstone Carver (19) at 0
+Spawn=1774,10  ;Quagfly Guzzler (18) at 0
+Spawn=1775,10  ;Quagfly Guzzler (19) at 0
+Spawn=1776,10  ;Quagfly Drifter (18) at 0
+Spawn=1777,10  ;Quagfly Drifter (19) at 0
+Spawn=1779,10  ;Mossback Slider (18) at 0
+Spawn=1780,10  ;Mossback Slider (19) at 0
+Spawn=1781,10  ;Rotback Slider (18) at 0
+Spawn=1782,10  ;Rotback Slider (19) at 0
+
+[ENTRY]
+Name=1a_rockBearCamp03_general
+wanderRadius=90
+Spawn=1753,25  ;Ironskin Thrasher (15) at 0
+Spawn=1754,25  ;Ironskin Thrasher (16) at 0
+Spawn=1755,25  ;Ironskin Mauler (15) at 0
+Spawn=1756,25  ;Ironskin Mauler (16) at 0
+
+[ENTRY]
+Name=1a_swampNorth_Gohlum
+wanderRadius=50
+Spawn=1773,100  ;Grohlum (20) at 5
+
+[ENTRY]
+Name=1a_rockBear/StagCamp01_general
+wanderRadius=60
+Shares=80
+Spawn=1734,10  ;Ironskin Slasher (19) at 0
+Spawn=1735,10  ;Ironskin Slasher (20) at 0
+Spawn=1736,10  ;Ironskin Pummeler (20) at 0
+Spawn=1737,10  ;Ironskin Pummeler (19) at 0
+Spawn=1739,10  ;Spite-Stag (19) at 0
+Spawn=1740,10  ;Spite-Stag (20) at 0
+Spawn=1741,10  ;Stout-Stag (19) at 0
+Spawn=1742,10  ;Stout-Stag (20) at 0
+
+[ENTRY]
+Name=1a_salamanderCamp01_general
+wanderRadius=60
+Shares=30
+Spawn=1758,10  ;Drifting Bogbeast (16) at 0
+Spawn=1759,10  ;Drifting Bogbeast (17) at 0
+Spawn=1760,10  ;Bulky Bogbeast (17) at 0
+
+[ENTRY]
+Name=1a_salamanderCamp02_Caylib
+wanderRadius=60
+Spawn=1761,100  ;Caylib (18) at 0
+
+[ENTRY]
+Name=1a_Rocastor_m_22
+Spawn=1894,100  ;Rocastor (22) at 5
+
+[ENTRY]
+Name=1a_Nerilix_r_22
+Spawn=1895,100  ;Nerilix (22) at 0
+
+[ENTRY]
+Name=1a_thornbringerCamps01_general
+spawnDelay=300
+Spawn=6,25  ;Acolyte (10) at 0
+Spawn=12,25  ;Convert (10) at 0
+Spawn=14,25  ;Convert (11) at 0
+Spawn=26,25  ;Seer (13) at 0
+
+[ENTRY]
+Name=1a_koaCamp02_general
+spawnDelay=300
+Spawn=40,20  ;Knave (14) at 0
+Spawn=41,20  ;Knave (13) at 0
+Spawn=42,20  ;Squire (14) at 0
+Spawn=43,20  ;Squire (13) at 0
+Spawn=1704,20  ;Augur (14) at 0
+
+[ENTRY]
+Flags=3
+Name=1_obji_mh_02_avalonianWeaponCache
+spawnDelay=300
+Spawn=1793,100  ;Avalonian Weapon Cache (1) at 0
+
+[ENTRY]
+Flags=3
+Name=1a_obj_mh03_stolenSupplies
+spawnDelay=300
+Spawn=1813,100  ;Stolen Militia Supplies (1) at 0
+
+[ENTRY]
+Name=1a_koaCamp03_general
+spawnDelay=300
+Shares=70
+Spawn=1802,10  ;Vindicator (16) at 0
+Spawn=1803,10  ;Vindicator (17) at 0
+Spawn=1804,10  ;Marauder (16) at 0
+Spawn=1805,10  ;Marauder (17) at 0
+Spawn=1806,10  ;Fire-charmer (16) at 0
+Spawn=1807,10  ;Ice Charmer (17) at 0
+Spawn=1808,10  ;Harbringer (17) at 0
+
+[ENTRY]
+Flags=3
+Name=1a_obj_mh01a_pitch
+spawnDelay=300
+Spawn=1801,100  ;Barrel of Pitch (1) at 0
+
+[ENTRY]
+Flags=3
+Name=1a_obji_ssh01_faerieSwornPlans
+spawnDelay=300
+Spawn=1923,100  ;Faerie-Sworn Plans (1) at 0
+
+[ENTRY]
+Name=1a_obji_nthm_smallChest
+Spawn=1922,100  ;Small Chest (1) at 0
+
+[ENTRY]
+Flags=3
+Name=1a_obji_nthm03_stolenGoods
+spawnDelay=300
+Spawn=1921,100  ;Crate of Stolen Goods (1) at 0
+
+[ENTRY]
+Flags=3
+Name=1a_obji_nthm01a_faerieFood
+spawnDelay=300
+Spawn=1920,100  ;Faerie Food (1) at 0
+
+[ENTRY]
+Flags=3
+Name=1a_obji_mh02a_battlefieldweapons
+spawnDelay=300
+Spawn=1810,100  ;Battlefield Weapons (1) at 2
+
+[ENTRY]
+Name=1a_crabquatchCamp01_general
+wanderRadius=40
+Spawn=1927,50  ;Frostclaw (46) at 0
+Spawn=1928,50  ;Frostclaw (47) at 0
+
+[ENTRY]
+Name=1a_crabCamp01_land
+wanderRadius=40
+Spawn=1651,50  ;Intrepid Lake Crab (14) at 0
+Spawn=1652,50  ;Intrepid Lake Crab (15) at 0
+
+[ENTRY]
+Name=1a_crabCamp02_general
+wanderRadius=40
+Shares=30
+Spawn=1765,10  ;Hulking Seacrab (19) at 0
+Spawn=1766,10  ;Scampering Seacrab (18) at 0
+Spawn=1767,10  ;Scampering Seacrab (19) at 0
+
+[ENTRY]
+Name=1a_thumperCamp01_general
+wanderRadius=160
+Shares=30
+Spawn=1631,10  ;Feral Thumper (13) at 0
+Spawn=1632,10  ;Feral Thumper (14) at 0
+Spawn=1633,10  ;Savage Thumper (14) at 0
+
+; NOTE: From cdef file
+[ENTRY]
+Name=1a_thumperCamp01_spahz
+Spawn=1634,100  ;Spahz (15)
+
+[ENTRY]
+Name=1a_mosquitoCamp02_general
+wanderRadius=80
+Spawn=1648,50  ;Lakeside Bloodfiend (14) at 0
+Spawn=1649,50  ;Lakeside Bloodfiend (15) at 0
+
+[ENTRY]
+Name=1a_guineafowlCamp02_general
+wanderRadius=80
+Shares=30
+Spawn=1644,10  ;Fowlfused Lurker (13) at 0
+Spawn=1645,10  ;Fowlfused Lurker (14) at 0
+Spawn=1646,10  ;Fowlfused Brute (14) at 0
+
+; NOTE: from cdef file
+[ENTRY]
+Name=1a_guineafowlCamp02_Guttera
+Spawn=1647,100  ;Guttera (15)
+
+[ENTRY]
+Name=1a_mosquitoCamp02_Heemo
+Spawn=1650,100  ;Heemo (16) at 5
+
+; TODO Stoneskin Pummeler should have aggro
+[ENTRY]
+Name=1a_rockBearCamp02_general
+wanderRadius=160
+Flags=4
+Shares=30
+Spawn=1635,10  ;Stoneskin Slasher (13) at 0
+Spawn=1636,10  ;Stoneskin Slasher (14) at 0
+Spawn=1637,10  ;Stoneskin Pummeler (14) at 0
+
+[ENTRY]
+Name=1a_roc/vultureCamp01_Petrie
+wanderRadius=120
+Spawn=1716,100  ;Petrie (14) at 1
+
+[ENTRY]
+Name=1a_roc/vultureCamp01_general
+wanderRadius=120
+Spawn=1711,25  ;Razor-Beak (12) at 0
+Spawn=1712,25  ;Razor-Beak (13) at 0
+Spawn=1713,25  ;Stout-Beak (13) at 0
+Spawn=1714,25  ;Flesh Scrounger (12) at 0
+
+; NOTE: from cdef file
+[ENTRY]
+Name=1a_roc/vultureCamp01_Floo
+wanderRadius=120
+Spawn=1717,100  ;Floo (14)
+
+[ENTRY]
+Name=1a_chomperCamp02_Gobbal
+Spawn=1643,100  ;Gobbal (15) at 1
+
+[ENTRY]
+Name=1a_chomperCamp02_general
+wanderRadius=160
+Spawn=1641,50  ;Meadow Masher (13) at 0
+Spawn=1642,50  ;Meadow Masher (14) at 0
+
+[ENTRY]
+Name=1a_waterElementalCamp01_general_STEPUP
+wanderRadius=160
+spawnDelay=300
+ScriptCall=1
+Spawn=1638,100  ;Pond-sprite (13) at 0
+
+[ENTRY]
+Name=1a_rockBearCamp02_Oosa
+Spawn=132,100  ;Oosa (15) at 4
+
+[ENTRY]
+Name=1a_bograts_14_15
+spawnDelay=300
+Shares=30
+Spawn=1882,10  ;Scoundrel (14) at 1
+Spawn=1883,10  ;Strongarm (15) at 2
+Spawn=1884,10  ;Siren (15) at 1
+
+[ENTRY]
+Name=1a_bograts_elindra
+spawnDelay=300
+Spawn=1885,100  ;Elindra Shale (15) at 0
+
+[ENTRY]
+Name=1a_smpBandit_gillianNor_r_h_16
+spawnDelay=300
+Spawn=1886,100  ;Gillian Nor (16) at 2
+
+[ENTRY]
+Name=1a_vulcan/warthogCamp01_general
+wanderRadius=80
+Spawn=1661,50  ;Earth Trudger (16) at 0
+Spawn=1662,50  ;Earth Trudger (17) at 0
+
+[ENTRY]
+Name=1a_wolfCamp01_packWolf
+wanderRadius=80
+Spawn=1655,50  ;Hillside Packwolf (15) at 0
+Spawn=1656,50  ;Hillside Packwolf (16) at 0
+
+[ENTRY]
+Name=1a_crabCamp01_Snatchclaw
+wanderRadius=40
+Spawn=1654,100  ;Snatchclaw (16) at 4
+
+[ENTRY]
+Name=1a_crabCamp01_water
+wanderRadius=40
+Spawn=1653,100  ;Bustling Lake Crab (15) at 5
+
+[ENTRY]
+Name=1a_wolfCamp01_loneWolf
+wanderRadius=80
+Spawn=1657,100  ;Hillside Lonewolf (16) at 0
+
+[ENTRY]
+Name=1a_wolfCamp01_Lusana
+Spawn=1658,100  ;Lusana (17) at 3
+
+[ENTRY]
+Name=1a_wolfCamp01_Seff
+Spawn=1659,100  ;Seff (17) at 3
+
+[ENTRY]
+Name=1a_chomperCamp01_general
+wanderRadius=160
+Spawn=1625,50  ;Meadow Muncher (10) at 0
+Spawn=1626,50  ;Meadow Muncher (11) at 0
+
+[ENTRY]
+Name=1a_chomperCamp01_Clampton
+Spawn=162,100  ;Clampton (12) at 1
+
+[ENTRY]
+Name=1a_hedgehogCamp01_generalLower
+wanderRadius=160
+Spawn=128,50  ;Quillback Battler (10) at 0
+Spawn=138,50  ;Quillback Striker (11) at 0
+
+[ENTRY]
+Name=1a_hedgehogCamp01_generalUpper
+wanderRadius=160
+Spawn=138,50  ;Quillback Striker (11) at 0
+Spawn=330,50  ;Quillback Challenger (12) at 0
+
+[ENTRY]
+Name=1a_hedgehogCamp01_Atalis
+Spawn=1627,100  ;Atalis (13) at 1
+
+[ENTRY]
+Name=1a_hog/rocCamp01_hogs
+wanderRadius=60
+Shares=30
+Spawn=1618,10  ;Barbhog Gorger (10) at 0
+Spawn=1619,10  ;Barbhog Gorger (11) at 0
+Spawn=1620,10  ;Barbhog Bruiser (11) at 0
+
+; 2 SpawnPoints
+[ENTRY]
+Name=1a_hog/rocCamp01_Prisk
+UniquePoints=2
+wanderRadius=60
+Spawn=137,100  ;Prisk (12) at 5
+
+; 2 SpawnPoints
+[ENTRY]
+Name=1a_hog/rocCamp01_Volter
+UniquePoints=2
+wanderRadius=60
+Spawn=1624,100  ;Volter (12) at 1
+
+[ENTRY]
+Name=1a_hedgehog/warthogCamp01_general
+wanderRadius=80
+Spawn=1857,25  ;Tireless Tusker (12) at 0
+Spawn=1858,25  ;Tireless Tusker (13) at 0
+Spawn=1859,25  ;Tenacious Tusker (12) at 0
+Spawn=1860,25  ;Tenacious Tusker (13) at 0
+
+[ENTRY]
+Name=1a_guineafowlCamp01_general
+wanderRadius=60
+Shares=30
+Spawn=1685,10  ;Fierce Fowlbeast (12) at 0
+Spawn=1686,10  ;Fierce Fowlbeast (13) at 0
+Spawn=1687,10  ;Frenzied Fowlbeast (13) at 0
+
+[ENTRY]
+Name=1a_slugCamp02_general
+wanderRadius=80
+Spawn=1708,50  ;Rootslug (12) at 0
+Spawn=1709,50  ;Rootslug (13) at 0
+
+; NOTE: From cdef file
+[ENTRY]
+Name=1a_guineafowlCamp01_Foulra
+wanderRadius=60
+Spawn=1688,100  ;Foulra (14)
+
+[ENTRY]
+Name=1a_slugCamp02_Sohlt
+wanderRadius=80
+Spawn=1710,100  ;Sohlt (14) at 3
+
+[ENTRY]
+Name=1a_earthElementalCamp01_general_STEPUP
+wanderRadius=80
+spawnDelay=300
+ScriptCall=1
+Spawn=1689,100  ;Living Granite (12) at 0
+
+[ENTRY]
+Name=1a_stagCamp01_general
+Spawn=1628,50  ;Buckbrute (11) at 0
+Spawn=1629,50  ;Buckbrute (12) at 0
+
+[ENTRY]
+Name=1a_stagCamp01_Rohnno
+Spawn=148,100  ;Rohnno (13) at 0
+
+[ENTRY]
+Name=1a_hedgehog/warthogCamp01_trees_STEPUP
+wanderRadius=30
+spawnDelay=300
+ScriptCall=1
+Spawn=1673,100  ;Spineback Hoglet (12) at 0
+
+[ENTRY]
+Name=1a_guineafowl/chomperCamp01_trees
+wanderRadius=60
+Spawn=1727,25  ;Ferocious Fowlbeast (18) at 0
+Spawn=1728,25  ;Ferocious Fowlbeast (19) at 0
+Spawn=1729,25  ;Berserk Fowlbeast (18) at 0
+Spawn=1730,25  ;Berserk Fowlbeast (19) at 0
+
+[ENTRY]
+Name=1a_guineafowl/chomperCamp01_coast
+wanderRadius=60
+Spawn=1732,100  ;Scorched Snapper (19) at 0
+
+[ENTRY]
+Name=1a_Dharga_k_21
+Spawn=1893,100  ;Dharga (21) at 2
+
+[ENTRY]
+Name=1a_faeCamp01_general
+spawnDelay=300
+Shares=30
+Spawn=1744,10  ;Helfae (19) at 0
+Spawn=1745,10  ;Drudge (19) at 0
+Spawn=1746,10  ;Hexer (20) at 0
+
+[ENTRY]
+Name=1a_faeCamp01_Osi
+spawnDelay=300
+Spawn=1747,100  ;Osi (21) at 0
+
+[ENTRY]
+Name=1a_deputyCamp01_GoraOshmin
+spawnDelay=300
+Spawn=1866,100  ;Gora Oshmin (20) at 4
+
+[ENTRY]
+Name=1a_deputyCamp01_general
+spawnDelay=300
+Spawn=1862,25  ;Enthralled Deputy (18) at 0
+Spawn=1863,25  ;Enthralled Deputy (19) at 0
+Spawn=1864,25  ;Spellbound Deputy (18) at 0
+Spawn=1865,25  ;Spellbound Deputy (19) at 0
+
+[ENTRY]
+Name=1a_gloomWitchCamp01_general
+spawnDelay=300
+Spawn=97,50  ;Coldstorm Hag (19) at 0
+Spawn=99,50  ;Coldstorm Crone (19) at 0
+
+[ENTRY]
+Name=1a_vulcan/quackCamp01_vulcan
+wanderRadius=120
+Spawn=1680,50  ;Earth Trekker (18) at 0
+Spawn=1681,50  ;Earth Keeper (17) at 0
+
+[ENTRY]
+Name=1a_vulcan/quackCamp01_quack
+wanderRadius=40
+Spawn=1683,50  ;Blightbeak Rooster (17) at 1
+Spawn=1684,50  ;Blightbeak Rooster (18) at 2
+
+[ENTRY]
+Name=1a_bookwyrmCamp01_general
+wanderRadius=60
+Spawn=317,50  ;Hardcover Wyrm (16) at 0
+Spawn=318,50  ;Tome Wyrm (16) at 0
+
+[ENTRY]
+Name=1a_mosquitoCamp03_general
+Spawn=1762,50  ;Swampside Bloodfiend (19) at 0
+Spawn=1763,50  ;Swampside Bloodfiend (20) at 0
+
+[ENTRY]
+Name=1a_thumperCamp02_Trabid
+Spawn=1752,100  ;Trabid (21) at 5
+
+[ENTRY]
+Name=1a_thumperCamp02_general
+wanderRadius=60
+Spawn=1748,25  ;Pronto-pounder (18) at 0
+Spawn=1749,25  ;Pronto-pounder (19) at 0
+Spawn=1750,25  ;Pain-pounder (18) at 0
+Spawn=1751,25  ;Pain-pounder (19) at 0
+
+[ENTRY]
+Name=1a_mosquitoCamp03_Mosk
+Spawn=1764,100  ;Mosk (21) at 1
+
+[ENTRY]
+Name=1a_crabCamp02_Krustee
+Spawn=1768,100  ;Krustee (20) at 0
+
+[ENTRY]
+Name=1a_thornbringerCamp02_CreptusKlyde
+spawnDelay=300
+Spawn=1892,100  ;Creptus Klyde (14) at 0
+
+[ENTRY]
+Name=1a_thornbringerCamp02_general
+spawnDelay=300
+Spawn=17,20  ;Moon Dancer (12) at 0
+Spawn=18,20  ;Moon Dancer (13) at 0
+Spawn=19,20  ;Raised Soul (12) at 0
+Spawn=20,20  ;Raised Soul (13) at 0
+Spawn=1891,20  ;Seer (13) at 0
+
+[ENTRY]
+Name=1a_koaCamp02_DreynGlorinmar
+Spawn=1706,100  ;Dreyn Glorinmar (15) at 0
+
+[ENTRY]
+Name=1a_shadowCamp01_Glim
+wanderRadius=40
+Spawn=1679,100  ;Glim (14) at 8
+
+[ENTRY]
+Name=1a_shadowCamp01_general
+wanderRadius=40
+Spawn=63,20  ;Shadow (12) at 1
+Spawn=64,20  ;Shadow (12) at 0
+Spawn=65,20  ;Shadow (12) at 0
+Spawn=1677,20  ;Shadow (13) at 0
+Spawn=1678,20  ;Shadow (13) at 0
+
+[ENTRY]
+Name=1a_koaCamp01_general
+spawnDelay=300
+Spawn=44,20  ;Partisan (15) at 0
+Spawn=45,20  ;Partisan (14) at 0
+Spawn=46,20  ;Beguiler (14) at 0
+Spawn=47,20  ;Beguiler (15) at 0
+Spawn=48,20  ;Warlock (15) at 0
+
+[ENTRY]
+Name=1a_koaCamp01_KoninGraves
+Spawn=1705,100  ;Konin Graves (16) at 5
+
+[ENTRY]
+Name=1a_vespinCamp01_general
+wanderRadius=40
+Spawn=150,25  ;Vespin Drone (15) at 0
+Spawn=151,25  ;Vespin Worker (15) at 0
+Spawn=152,25  ;Vespin Warrior (16) at 0
+Spawn=153,25  ;Vespin Drone (16) at 0
+
+[ENTRY]
+Name=1a_earthElementalCamp02_general_STEPUP
+wanderRadius=70
+spawnDelay=300
+ScriptCall=1
+Spawn=1667,100  ;Rubble-wraith (16) at 9
+
+; NOTE: from cdef file.  Also has 3 spawn points.
+[ENTRY]
+Name=1a_vulcan/warthogCamp01_Poombra
+UniquePoints=3
+wanderRadius=80
+Spawn=1666,100  ;Poombra (18)
+
+[ENTRY]
+Name=1a_vespinCamp01_Apis
+Spawn=1676,100  ;Apis (17) at 2
+
+[ENTRY]
+Name=1a_vulcan/warthogCamp01_trees
+wanderRadius=80
+Spawn=1664,50  ;Shadehog (16) at 4
+Spawn=1665,50  ;Shadehog (17) at 6
+
+; NOTE: from cdef file
+[ENTRY]
+Name=1a_vulcan/warthogCamp01_Mamothus
+Spawn=1663,100  ;Mamothus (18)
+
+[ENTRY]
+Name=1a_koaCamp03_PerninAyn
+spawnDelay=300
+Spawn=1811,100  ;Pernin Ayn (18) at 0
+
+[ENTRY]
+Name=1a_koaCamp03_RancorGrinwind
+spawnDelay=300
+Spawn=1809,100  ;Rancor Grindwind (18) at 0
+
+[ENTRY]
+Name=1a_undeadCamp01_general
+wanderRadius=20
+Spawn=89,20  ;Waterlogged Skeleton (19) at 0
+Spawn=90,20  ;Waterlogged Skeleton (20) at 0
+Spawn=91,20  ;Drowned Zombie (19) at 0
+Spawn=92,20  ;Drowned Zombie (20) at 0
+Spawn=95,20  ;Brittle Knight (20) at 0
+
+[ENTRY]
+Name=1a_undeadCamp02_general
+Spawn=1834,20  ;Bone Knight (20) at 0
+Spawn=1836,20  ;Bone Knight (21) at 0
+Spawn=1837,20  ;Swampmage (20) at 0
+Spawn=1838,20  ;Swampmage (21) at 0
+Spawn=1840,20  ;Crack-Bone Skeleton (21) at 0
+
+[ENTRY]
+Flags=3
+Name=1_obji_cam_15_avalonBoat04
+Spawn=213,100  ;Avalonian Boat (1) at 0
+
+[ENTRY]
+Flags=3
+Name=1_obji_cam_15_avalonBoat05
+Spawn=213,100  ;Avalonian Boat (1) at 0
+
+[ENTRY]
+Flags=3
+Name=1_obji_cam_15_avalonBoat01
+Spawn=213,100  ;Avalonian Boat (1) at 0
+
+[ENTRY]
+Flags=3
+Name=1_obji_cam_15_avalonBoat02
+Spawn=213,100  ;Avalonian Boat (1) at 0
+
+[ENTRY]
+Flags=3
+Name=1_obji_cam_15_avalonBoat03
+Spawn=213,100  ;Avalonian Boat (1) at 0
+
+[ENTRY]
+Name=1_thornbringer_camps_12_13
+spawnDelay=300
+Spawn=17,20  ;Moon Dancer (12) at 0
+Spawn=18,20  ;Moon Dancer (13) at 0
+Spawn=19,20  ;Raised Soul (12) at 0
+Spawn=20,20  ;Raised Soul (13) at 0
+Spawn=1891,20  ;Seer (13) at 0
+
+[ENTRY]
+Flags=3
+Name=1_obji_not_02_uniformCrate
+spawnDelay=300
+Spawn=311,100  ;Uniform Crate (1) at 2
+
+[ENTRY]
+Name=1a_scuttlingLakeCrab_k_11
+wanderRadius=30
+Spawn=124,100  ;Scuttling Lake Crab (11) at 0
+
+[ENTRY]
+Name=1a_riverRunnerCamp02_JesterJumptail
+spawnDelay=300
+Spawn=1725,100  ;Jester Jumptail (13) at 0
+
+
+
+; DISABLED WHEN EVENT IS NOT ACTIVE
+[ENTRY]
+Name=HOLIDAY_turkatrice_15_16
+; Spawn=2841,25  ;Turkatrice (15)
+; Spawn=2842,25  ;Turkatrice (16)
+; Spawn=2843,25  ;Turkatrice (15)
+; Spawn=2844,25  ;Turkatrice (16)
+
+; DISABLED WHEN EVENT IS NOT ACTIVE
+[ENTRY]
+Name=HOLIDAY_turkatriceKing_k_20
+; Spawn=2845,100  ;Turkatrice King (20)
+
+
+
+; DISABLED WHEN EVENT IS NOT ACTIVE
+[ENTRY]
+Name=HOLIDAY_wf09_snowmen_15_16
+;Spawn=2885,25  ;Chillkin (15)
+;Spawn=2886,25  ;Chillkin (16)
+;Spawn=2887,25  ;Chillkin (15)
+;Spawn=2888,25  ;Chillkin (16)
+
+; DISABLED WHEN EVENT IS NOT ACTIVE
+[ENTRY]
+Name=HOLIDAY_wf09_snowmanKing_20
+;Spawn=2898,100  ;Chill Lord (20)
+
+; DISABLED WHEN EVENT IS NOT ACTIVE
+[ENTRY]
+Name=HOLIDAY_wf09_gifts
+Shares=20
+;Spawn=2922,10 ; Gift(1)
+;Divide=63277,2,10
+;Spawn=2923,10 ; Gift(1)
+
+
+
+[ENTRY]
+Name=1a_hoz_general1_22_23
+spawnDelay=300
+Spawn=2950,25  ;Cultist (22) at 0
+Spawn=2951,25  ;Cultist (22) at 0
+Spawn=2952,25  ;Magician (23) at 0
+Spawn=2953,25  ;Ranger (23) at 0
+
+[ENTRY]
+Name=1a_hoz_BlancheMarin_m_23
+spawnDelay=300
+Spawn=2957,100  ;Blanche Marin (23) at 0
+
+[ENTRY]
+Name=1a_hoz_GrangerLashley_d_23
+UniquePoints=2
+spawnDelay=300
+Spawn=2958,100  ;Granger Lashley (23) at 4
+
+[ENTRY]
+Name=1a_hoz_OglanIronhead_k_23
+spawnDelay=300
+Spawn=2959,100  ;Oglan Ironhead (23) at 0
+
+[ENTRY]
+Name=1a_hoz_RazlenZaraster_m_23
+spawnDelay=300
+Spawn=2956,100  ;Razlen Zaraster (23) at 0
+
+[ENTRY]
+Name=1a_hoz_general2_23
+spawnDelay=300
+Spawn=2954,50  ;Acolyte (23) at 0
+Spawn=2955,50  ;Devoted (23) at 0
+
+[ENTRY]
+Name=1a_obji_cri03_gomrenRoot
+Spawn=1899,100  ;Gomren Root (1) at 0
+
+[ENTRY]
+Flags=3
+Name=1a_obji_oliversTreasureBox
+Spawn=1949,100  ;Oliver's Treasure Box (1) at 0
+
+[ENTRY]
+Name=1a_blackLich_m_20
+Spawn=3123,100  ;Black Lich (20) at 5
+
+[ENTRY]
+Flags=3
+Name=1a_obji_cri05_petrifiedTwig
+Spawn=2137,100  ;Petrified Twig (1) at 0
+
+; TODO: need entry
+[ENTRY]
+Name=HOLIDAY_Easter_Egg
+
+[ENTRY]
+Name=Anglorum_overlandboss_kilvath_sp
+Spawn=3411,100  ;Kilvath L'vithian (55) at 5
+spawnDelay=1800
+
+[ENTRY]
+Name=custom_henge_Hadrians_Wall
+Spawn=880,100  ; Hadrian's Wall
+
+
+; Custom quest NPC by Dekker.
+[ENTRY]
+Name=custom_Mike_Zean
+Spawn=3626,100  ; Mike Zean
+
+
+
+

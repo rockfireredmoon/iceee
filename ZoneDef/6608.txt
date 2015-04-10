@@ -1,0 +1,13 @@
+[ENTRY]
+ID=6608
+ACCOUNTID=202
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=NightSky
+ShardName=sergeant
+GroveName=sergeant
+WarpName=sergeant1
+Grove=1
+EnvironmentCycle=1
+DefLoc=2931,258,3928
+

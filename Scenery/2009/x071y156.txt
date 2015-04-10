@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151055828
+Asset=Prop-Hadrian_Wall1
+Name=9
+Pos=53927.8,189.951,117450
+Orient=0,0.282683,0,-0.959213
+Scale=1,1,1
+Flags=1
+

@@ -1,0 +1,17 @@
+:init
+set stepupSageMarlonWilber 0
+end
+
+
+; King Wilhelm's boss chest
+:onKill_307
+spawn 486542154
+end
+
+
+; Scripted call from the spawn package
+:1a_dng_wc_sageMarlonWilberSTEPUP_m_15
+inc stepupSageMarlonWilber
+if stepupSageMarlonWilber = 6
+  spawn_at 486542605 2546
+end

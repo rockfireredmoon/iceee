@@ -1,0 +1,8 @@
+[ENTRY]
+ID=151029674
+Asset=CL-Crystal2#CL-Crystal2
+Name=9
+Pos=102081,834.591,158154
+Orient=0,0,0,1
+Scale=1,1,1
+

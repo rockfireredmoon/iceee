@@ -1,0 +1,8 @@
+[ENTRY]
+ID=1358966726
+Asset=Prop-Instance_Entrance
+Name=81
+Pos=46821.1,305.53,45925.7
+Orient=0,-0.714979,0,-0.699146
+Scale=4.1,4.1,4.1
+

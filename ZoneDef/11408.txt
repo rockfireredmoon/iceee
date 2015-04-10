@@ -1,0 +1,13 @@
+[ENTRY]
+ID=11408
+ACCOUNTID=802
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=grif
+GroveName=grif
+WarpName=grif1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

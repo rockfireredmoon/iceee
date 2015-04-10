@@ -1,0 +1,17 @@
+[ENTRY]
+ID=151041278
+Asset=Forest?d=0.9&s=81712&sz=800
+Pos=46153.6,384.493,51458
+Orient=0,-0.668055,0,-0.744112
+Scale=1.35,1.35,1.35
+Flags=1
+
+[ENTRY]
+ID=151050873
+Asset=Manipulator-SpawnPoint
+Pos=45760.7,327.485,51463
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=3a_hedgeDeerRocCamp01_general
+outerRadius=1
+

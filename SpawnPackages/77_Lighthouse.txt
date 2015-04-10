@@ -1,0 +1,8 @@
+[ENTRY]
+Name=77_lighthouse_madvine_5
+Spawn=1993,50  ; Madvine (5)
+Spawn=1994,50  ; Madvine (5)
+
+[ENTRY]
+Name=77_lighthouse_anglordren_5
+Spawn=1995,100  ; Anglor Dren (5)

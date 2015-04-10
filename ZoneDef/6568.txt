@@ -1,0 +1,13 @@
+[ENTRY]
+ID=6568
+ACCOUNTID=197
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=zenithia
+GroveName=zenithia
+WarpName=zenithia1
+Grove=1
+EnvironmentCycle=1
+DefLoc=2958,260,3821
+

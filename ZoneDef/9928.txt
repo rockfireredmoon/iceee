@@ -1,0 +1,13 @@
+[ENTRY]
+ID=9928
+ACCOUNTID=617
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=theiron
+GroveName=theiron
+WarpName=theiron1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151021436
+Asset=Manipulator-SpawnPoint
+Pos=20396.6,464.515,64710
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=4_ewd_edgewoodFlamespinner
+outerRadius=10
+

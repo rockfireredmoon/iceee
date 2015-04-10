@@ -1,0 +1,29 @@
+[ENTRY]
+Name=z63_hb_gen_Exit_to_Cracked_Rock_1461
+Spawn=1461,100  ;Exit to Cracked Rock (1) at 0
+
+[ENTRY]
+Name=9_hb_AerieCrony_k_38
+Spawn=1444,100  ;Aerie Crony (38) at 5
+
+[ENTRY]
+Name=9_hb_carrionites_38
+Spawn=1441,40  ;Buzzard Blade (38) at 0
+Spawn=1442,40  ;Condor Knight (38) at 0
+Spawn=1443,20  ;Wing Weaver (38) at 0
+
+[ENTRY]
+Name=9_hb_Gizzardbane_m_39
+Spawn=1446,100  ;Gizzardbane (39) at 9
+
+[ENTRY]
+Name=9_hb_Rotbeak_m_39
+Spawn=1445,100  ;Rotbeak (39) at 13
+
+[ENTRY]
+Name=9_flockLordAkaz_m_39
+Spawn=739,100  ;Akaz (39) at 0
+
+[ENTRY]
+Name=9_hb_obji_AkazLewt
+Spawn=1533,100  ;Akaz's Treasure (1) at 0

@@ -1,0 +1,17 @@
+[ENTRY]
+ID=151034206
+Asset=Manipulator-SpawnPoint
+Pos=27054.5,255.966,77543
+Orient=0,0,0,1
+Scale=1,1,1
+innerRadius=95
+spawnPackage=5_wilds_47
+outerRadius=100
+
+[ENTRY]
+ID=151060082
+Asset=Prop-Bones_Dragon#Prop-Bones_DragonSkull1
+Pos=27611.7,631.932,77763.7
+Orient=-0.264121,-0.572329,0.457928,0.626882
+Scale=1.925,1.925,1.925
+

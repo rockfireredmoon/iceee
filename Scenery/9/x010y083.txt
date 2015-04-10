@@ -1,0 +1,16 @@
+[ENTRY]
+ID=151010188
+Asset=CL-Beach_Debris2#CL-Beach_Debris2
+Pos=7759.6,198.857,62612
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
+ID=151018085
+Asset=Manipulator-SpawnPoint
+Pos=7605.4,194.512,62987
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=4_ewd_coastalCrabquatch_o_33_34
+outerRadius=30
+

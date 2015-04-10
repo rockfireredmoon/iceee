@@ -1,0 +1,4 @@
+; Isia Tiria's chest
+:onKill_88
+spawn 603979981
+end

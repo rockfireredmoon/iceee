@@ -1,0 +1,16 @@
+:init
+set stepupSpynch
+end
+
+; Spawn Denmother Ursarach's Treasure
+:onKill_378
+spawn 620757760
+end
+
+; Scripted call from the spawn package
+; For Spynch
+:3_dng_sl_BlightvenomScorpion_22_23
+inc stepupSpynch
+if stepupSpynch = 8
+  spawn_at 620757672 2553
+end

@@ -1,0 +1,17 @@
+[ENTRY]
+ID=151028231
+Asset=CL-Burnt-Pine5#CL-Burnt-Pine5
+Pos=75677,753.815,50999
+Orient=0,-0.0649542,0,0.997888
+Scale=3.05,3.05,3.05
+
+[ENTRY]
+ID=151031333
+Asset=Manipulator-SpawnPoint
+Pos=75554,789.031,50657
+Orient=0,0,0,1
+Scale=1,1,1
+innerRadius=65
+spawnPackage=12_vmp_wilds_46_47
+outerRadius=70
+

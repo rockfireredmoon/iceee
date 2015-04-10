@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151013615
+Asset=Prop-Carrionite_Nests#Prop-Nest-Ramp
+Name=9
+Pos=38775.7,1401.58,76511
+Orient=0,0.350227,0,0.936665
+Scale=1.125,1.125,1.125
+Flags=3
+

@@ -1,0 +1,13 @@
+[ENTRY]
+ID=9248
+ACCOUNTID=532
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=HeartwoodNight
+ShardName=crowl
+GroveName=crowl
+WarpName=crowl1
+Grove=1
+EnvironmentCycle=1
+DefLoc=3079,258,4041
+

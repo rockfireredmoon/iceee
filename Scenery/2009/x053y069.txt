@@ -1,0 +1,8 @@
+[ENTRY]
+ID=151059573
+Asset=Light-Large
+Name=9
+Pos=40339,332.18,52019.1
+Orient=0,0,0,1
+Scale=1,1,1
+

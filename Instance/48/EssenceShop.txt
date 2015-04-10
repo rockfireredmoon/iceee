@@ -1,0 +1,26 @@
+; Vitiator's Treasure
+[ENTRY]
+CreatureDefID=1022
+EssenceID=20532
+Item=5549,1
+Item=800158,1
+Item=5538,1
+Item=5473,1
+Item=5451,1
+Item=800229,1
+Item=143478,1
+Item=800149,1
+
+; Dungeon Loot (Dark Depths)
+; Restored from 0.8.8b chest screenshot.
+[ENTRY]
+CreatureDefID=2713
+EssenceID=21267
+Item=5368,10  ;Puritars Helm
+Item=143494,10  ;Darkness
+Item=143458,10  ;Axe of the Depths
+Item=5406,10  ;Imbrued Shoulderpads
+Item=5519,10  ;Banethorn Leggings
+Item=800107,10  ;Weapon Plan: Cold Muzzler
+Item=800148,10  ;Weapon Plan: The Drooler
+Item=800127,10  ;Weapon Plan: Dragon Wedge

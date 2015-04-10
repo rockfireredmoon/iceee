@@ -1,0 +1,42 @@
+[ENTRY]
+Name=74_earthend_diviner_9
+Spawn=2069,100  ; Diviner (9)
+
+[ENTRY]
+Name=74_earthend_jackal_9
+Spawn=2066,100  ; Jackal (9)
+
+[ENTRY]
+Name=74_earthend_anubiancaptain_a_10
+Spawn=2071,100  ; Anubian Captain (10)
+
+[ENTRY]
+Name=74_earthend_anubiancaptain_b_10
+Spawn=2072,100  ; Anubian Captain (10)
+
+[ENTRY]
+Name=74_earthend_anubiancaptain_c_10
+Spawn=2073,100  ; Anubian Captain (10)
+
+[ENTRY]
+Name=74_earthend_commanderzalika_10
+Spawn=2074,100  ; Commander Zalika (10)
+
+[ENTRY]
+Name=74_earthend_generalakhom_10
+Spawn=2075,100  ; General Akhom (10)
+
+[ENTRY]
+Name=74_earthend_seeress_10
+Spawn=2068,100  ; Seeress (10)
+
+[ENTRY]
+Name=74_earthend_swordmaster_10
+Spawn=2065,100  ; Swordmaster (10)
+
+[ENTRY]
+Name=74_earthend_mix_a_9_10
+Spawn=2066,25  ; Jackal (9)
+Spawn=2068,25  ; Seeress (10)
+Spawn=2069,25  ; Diviner (9)
+Spawn=2065,25  ; Swordmaster (10)

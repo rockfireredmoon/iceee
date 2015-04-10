@@ -1,0 +1,13 @@
+[ENTRY]
+ID=7808
+ACCOUNTID=352
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=wolfen
+GroveName=wolfen
+WarpName=wolfen1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

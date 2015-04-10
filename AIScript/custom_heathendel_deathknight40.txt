@@ -1,0 +1,199 @@
+#name custom_heathendel_deathknight40
+#speed 6
+#queue_jumps call
+
+; 228 : Assault 40
+; 446 : Bash 40
+; 448 : Taurian Might 40   [GroupID=44]
+; 5063 : Taurian Might (15%)  [GroupID=44]
+; 344 : Thor's Mighty Blow 50  [Cooldown=ThorsMightyBlow]
+; 347 : Spellbreaker 50   [Cooldown=Spellbreaker, Might=3]
+; 101 : Root 6  [Cooldown=ReduceMovementSpeed, Will=5]
+; 492 : Wither 40
+; 373 : Malice Blast : 40
+; 533 : Deathly Dart 40  [Cooldown=DeathlyDart]
+; 509 : Nefritari's Aura 40  [Cooldown=DoT, PBAE=150, Will=3]
+; 32766 : Melee autoattack
+
+
+set VAR 0
+set WILL 0
+set MIGHT 0
+set COOLDOWN 0
+set TARGID 0
+set OLDTARGID 0
+set ALLOWROOT 0
+
+
+:begin
+call waitfortarget
+call checkWillCharge
+call checkMightCharge
+call checkWill
+call checkMight
+goto begin
+
+:tryMelee
+use 32766
+return
+
+:checkWillCharge
+getwillcharge VAR
+if VAR < 3
+  return
+endif
+
+use 373
+reset_goto begin
+
+
+
+:checkWill
+getwill WILL
+if WILL < 3
+  return
+endif
+
+call tryRoot
+call tryDeathlyDart
+call tryNefritarisAura
+
+use 492
+reset_goto begin
+
+
+
+:checkMightCharge
+getmightcharge VAR
+if VAR < 3
+  return
+endif
+
+call tryThorsMightyBlow
+
+use 446
+reset_goto begin
+
+
+
+:checkMight
+getmight MIGHT
+if MIGHT < 3
+  return
+endif
+
+call trySpellbreaker
+
+use 228
+reset_goto begin
+
+
+
+:trySpellbreaker
+getcooldown "Spellbreaker" COOLDOWN
+if COOLDOWN != 0
+  return
+endif
+cid_is_busy TARGID VAR
+if VAR = 0
+  return
+endif
+
+use 347
+reset_goto begin
+
+
+
+:tryThorsMightyBlow
+getcooldown "ThorsMightyBlow" COOLDOWN
+if COOLDOWN != 0
+  return
+endif
+use 344
+reset_goto begin
+
+
+
+
+
+
+
+
+:castBuffs
+get_buff_tier 44 VAR
+if VAR = 0
+  use 5063
+endif
+return
+
+
+
+
+:tryRoot
+if ALLOWROOT = 0
+  return
+endif
+if WILL < 5
+  return
+endif
+
+getcooldown "ReduceMovementSpeed" COOLDOWN
+if COOLDOWN != 0
+  return
+endif
+
+get_speed TARGID VAR
+if VAR = 0
+  return
+endif
+
+use 101
+set ALLOWROOT 0
+reset_goto begin
+
+
+
+:tryDeathlyDart
+getcooldown "DeathlyDart" COOLDOWN
+if COOLDOWN != 0
+  return
+endif
+use 533
+reset_goto begin
+
+
+
+:tryNefritarisAura
+getcooldown "DoT" COOLDOWN
+if COOLDOWN != 0
+  return
+endif
+
+count_enemy_near 150 VAR
+if VAR <= 1
+  return
+endif
+
+use 509
+reset_goto begin
+
+
+
+
+
+:waitfortarget
+has_target VAR
+if VAR = 0
+  wait 1000
+  goto waitfortarget
+endif
+
+get_target TARGID
+if TARGID != OLDTARGID
+  get_target OLDTARGID
+  set ALLOWROOT 1
+endif 
+
+call castBuffs
+use 32766
+return

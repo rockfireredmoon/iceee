@@ -1,0 +1,25 @@
+; Sharabat's Treasure
+[ENTRY]
+CreatureDefID=2730
+EssenceID=21277
+Item=5362,1
+Item=5424,1
+Item=5488,1
+Item=143504,1
+Item=5381,1
+Item=5445,1
+Item=143440,1
+Item=5512,1
+
+; Dungeon Loot
+[ENTRY]
+CreatureDefID=2704
+EssenceID=21258
+Item=143490,10
+Item=5533,10
+Item=5545,10
+Item=143474,10
+Item=5399,10
+Item=5489,10
+Item=5466,10
+Item=5363,10

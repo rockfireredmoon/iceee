@@ -1,0 +1,15 @@
+[ENTRY]
+ID=5496
+ACCOUNTID=63
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=fuzzyhideout
+GroveName=fuzzyhideout
+WarpName=fuzzyhideout1
+DropRateProfile=standard
+Grove=1
+EnvironmentCycle=1
+BuildPermission=account,63,0,0,3,3
+DefLoc=2958,260,3821
+

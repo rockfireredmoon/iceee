@@ -1,0 +1,17 @@
+[ENTRY]
+ID=151021402
+Asset=Prop-Swineland-Junk_Pile#Prop-Swineland-Junk_Pile2
+Name=9
+Pos=100622,1419.36,148264
+Orient=0,-0.996322,0,0.085691
+Scale=2.6,2.6,2.6
+Flags=1
+
+[ENTRY]
+ID=151021410
+Asset=Prop-The_Great_Nook_Scaffold#Prop-The_Great_Nook_Scaffold
+Name=9
+Pos=100968,1592.95,147751
+Orient=0,0,0,1
+Scale=1.625,1.625,1.625
+

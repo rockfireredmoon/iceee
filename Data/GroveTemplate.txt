@@ -1,0 +1,32 @@
+ShortName	FileName	TerrainConfig	EnvType	MapName	Regions	TileX1	TileY1	TileX2	TileY2	DefaultX	DefaultY	DefaultZ
+Dungeon			Dungeon1			0	0	5	5	2000	200	2000
+Anglorum	Terrain-Anglorum	Terrain-Anglorum#Terrain-Anglorum.cfg	Fields	Maps-Anglorum	Terrain-Anglorum/Anglorum_Regions.png	11	19	34	39	43330	263	67880
+Blank	Terrain-Blank	Terrain-Blank#Terrain-Blank.cfg	CloudyDay			0	0	0	0	962	597	909
+Blend	Terrain-Blend	Terrain-Blend#Terrain-Blend.cfg	CloudyDay			0	0	3	3	2958	260	3821
+Burning_Chasm	Terrain-Burning_Chasm	Terrain-Burning_Chasm#Terrain-Burning_Chasm.cfg	Fire1			5	5	6	8	10559	1255	12104
+Camelot_Arena	Terrain-Camelot_Arena	Terrain-Terrain-MTerrain-Camelot_Arena#Terrain-Camelot_Arena.cfg	CloudyDay			0	0	2	2	2331	1251	2845
+Corsica	Terrain-Corsica	Terrain-Corsica#Terrain-Corsica.cfg	NightSky	Maps-Corsica	Terrain-Corsica/Corsica_Regions.png	3	3	34	21	15907	1111	12567
+Earthend	Terrain-Earthend	Terrain-Earthend#Terrain-Earthend.cfg	EarthriseInstance			5	5	7	8	11279	281	13469
+Europe	Terrain-Europe	Terrain-Europe#Terrain-Europe.cfg	Fields	Maps-Europe	Terrain-Europe/Europe_Regions.png	1	3	98	94	29560	214	65552
+Fangarians_Lair	Terrain-Fangarians_Lair	Terrain-Fangarians_Lair#Terrain-Fangarians_Lair.cfg	Dungeon1			0	0	1	1	1283	1109	1862
+Filler_Tiles	Terrain-Filler_Tiles					0	0	0	0			
+Hall_of_Bones	Terrain-Hall_of_Bones	Terrain-Hall_of_Bones#Terrain-Hall_of_Bones.cfg	Dungeon1			0	0	1	1	1728	1281	1958
+Haunted_Grove	Terrain-Haunted_Grove	Terrain-Haunted_Grove#Terrain-Haunted_Grove.cfg	Undead			0	0	1	1	1907	266	468
+Hollow_Tree	Terrain-Hollow_Tree	Terrain-Hollow_Tree#Terrain-Hollow_Tree.cfg	Forest			0	0	0	0	1010	192	1152
+Iron_Maw	Terrain-Iron_Maw	Terrain-Iron_Maw#Terrain-Iron_Maw.cfg	CorsicaDay			5	3	11	11	18938	1266	18778
+KerakurasLair	Terrain-KerakurasLair	Terrain-KerakurasLair#Terrain-KerakurasLair.cfg	DesertDay			12	38	16	42	27260	622	79635
+Mountain_Valley	Terrain-Mountain_Valley	Terrain-Mountain_Valley#Terrain-Mountain_Valley.cfg	CloudyDay			0	0	3	8	3520	491	4028
+NewBremen	Terrain-NewBremen	Terrain-NewBremen#Terrain-NewBremen.cfg	CloudyDay			10	15	13	23	24883	122	33093
+Rotted_Maze	Terrain-Rotted_Maze	Terrain-Rotted_Maze#Terrain-Rotted_Maze.cfg	Rotted			0	0	1	1	1898	1248	288
+Rotted_Nursery	Terrain-Rotted_Nursery	Terrain-Rotted_Nursery#Terrain-Rotted_Nursery.cfg	Dungeon1			0	0	1	1	3334	199	1924
+Rotted_Tree	Terrain-Rotted_Tree	Terrain-Rotted_Tree#Terrain-Rotted_Tree.cfg	Rotted_Day			0	0	0	0	1028	193	1174
+Sandbox	Terrain-Sandbox	Terrain-Sandbox#Terrain-Sandbox.cfg	CloudyDay			0	0	7	7	18846	2622	3371
+Sandbox2	Terrain-Sandbox2	Terrain-Sandbox2#Terrain-Sandbox2.cfg	CloudyDay			0	0	23	46	3047	258	4132
+Sangre	Terrain-Sangre	Terrain-Sangre#Terrain-Sangre.cfg	ForestSunset			0	0	9	9	2785	7459	3716
+Spain	Terrain-Spain	Terrain-Spain#Terrain-Spain.cfg	Fields			4	4	37	31	54074	413	17152
+Starting_Grove	Terrain-Starting_Grove	Terrain-Starting_Grove#Terrain-Starting_Grove.cfg	CloudyDay	Maps-Starting_Grove	Terrain-Starting_Grove/Starting_Grove_Regions.png	1	2	5	5	5420	625	6485
+Starting_Zone2	Terrain-Starting_Zone2	Terrain-Starting_Zone2#Terrain-Starting_Zone2.cfg	Bastion	Maps-Bastion	Terrain-Starting_Zone2/Starting_Zone2_Regions.png	4	4	7	7	10994	546	12401
+Templates	Terrain-Templates	Terrain-Templates#Terrain-Templates.cfg	Fields			0	0	2	8	3839	436	4871
+TestDungeon1C	Terrain-TestDungeon1C	Terrain-TestDungeon1C#Terrain-TestDungeon1C.cfg	CloudyDay			0	0	1	1	1420	1107	1836
+Testing_Gauntlet	Terrain-Testing_Gauntlet	Terrain-Testing_Gauntlet#Terrain-Testing_Gauntlet.cfg	Fields			5	5	9	9	12353	477	11309
+Zhushis_Lair	Terrain-Zhushis_Lair	Terrain-Zhushis_Lair#Terrain-Zhushis_Lair.cfg	Rotted			0	0	0	0	1068	192	1167

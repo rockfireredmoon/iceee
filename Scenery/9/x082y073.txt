@@ -1,0 +1,15 @@
+[ENTRY]
+ID=151044621
+Asset=Prop-Giant_Mushroom_Chopped#Prop-Giant_Mushroom_Stump
+Pos=61905.7,733.241,55491
+Orient=0,0,0,1
+Scale=1.4,1.4,1.4
+Flags=1
+
+[ENTRY]
+ID=151048308
+Asset=Prop-Giant_Mushroom_Chopped#Prop-Giant_Mushroom_Chopped2
+Pos=61823.2,725.206,55319
+Orient=0,0.149439,0,0.988771
+Scale=1.75,1.75,1.75
+

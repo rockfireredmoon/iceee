@@ -1,0 +1,15 @@
+[ENTRY]
+ID=151037456
+Asset=CL-Crystal8#CL-Crystal8
+Pos=37300.1,1250.09,81103
+Orient=0.218229,0,0,0.975898
+Scale=1,1,1
+
+[ENTRY]
+ID=151054372
+Asset=Par-Waves-1-Emitter
+Pos=37096,1265.75,81253
+Orient=0,-0.0206669,0,-0.999786
+Scale=2.5,2.5,2.5
+Flags=1
+

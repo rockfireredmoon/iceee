@@ -1,0 +1,8 @@
+[ENTRY]
+ID=151057530
+Asset=CL-Roadside3#CL-Roadside3
+Name=9
+Pos=71545.4,199.772,133505
+Orient=0,-0.564642,0,0.825336
+Scale=1.5,1.5,1.5
+

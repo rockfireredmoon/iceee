@@ -1,0 +1,7 @@
+[ENTRY]
+ID=151054975
+Asset=CL-Fence-Stone_Blue1
+Pos=81462,490.937,41029
+Orient=0,0.324043,0,0.946042
+Scale=1,1,1
+

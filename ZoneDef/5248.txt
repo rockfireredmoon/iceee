@@ -1,0 +1,13 @@
+[ENTRY]
+ID=5248
+ACCOUNTID=32
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=toolcave
+GroveName=toolcave
+WarpName=toolcave1
+Grove=1
+EnvironmentCycle=1
+DefLoc=2958,260,3821
+

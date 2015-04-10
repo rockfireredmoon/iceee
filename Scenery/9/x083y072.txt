@@ -1,0 +1,8 @@
+[ENTRY]
+ID=151049923
+Asset=Prop-Boulder_Arid4
+Pos=62906,401.449,54416
+Orient=0,-0.0649542,0,0.997888
+Scale=4.175,4.175,4.175
+Flags=1
+

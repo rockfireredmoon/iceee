@@ -1,0 +1,26 @@
+; Dungeon Loot
+[ENTRY]
+CreatureDefID=2698
+EssenceID=21252
+Item=5375,5
+Item=5412,5
+Item=5524,5
+Item=5500,5
+Item=143433,5
+Item=5457,5
+Item=143468,5
+Item=143498,5
+
+
+; Wilhelm's Treasure (restored from old 0.8.5 image)
+[ENTRY]
+CreatureDefID=1814
+EssenceID=20872
+Item=5525,2
+Item=5411,2
+Item=5456,2
+Item=5374,2
+Item=143441,2
+Item=5499,2
+Item=143424,2
+Item=143483,2

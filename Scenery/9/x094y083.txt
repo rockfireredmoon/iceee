@@ -1,0 +1,10 @@
+[ENTRY]
+ID=151031090
+Asset=Manipulator-SpawnPoint
+Pos=70708,975.907,62943
+Orient=0,0,0,1
+Scale=1,1,1
+innerRadius=50
+spawnPackage=12_ice_Wilds_45_46
+outerRadius=100
+

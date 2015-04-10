@@ -1,0 +1,36 @@
+[ENTRY]
+Name=1a_dng_gfl_frostboundMarids_47
+Shares=30
+Spawn=2745,10  ;Frostbound Marid Chanter (49) at 9
+Spawn=2746,10  ;Frostbound Marid Hero (49) at 0
+Spawn=2747,10  ;Frostbound Marid Blade (49) at 0
+
+[ENTRY]
+Name=1a_dng_gfl_lumberingFrostfiend_47
+Spawn=2753,100  ;Lumbering Frostfiend (50) at 0
+
+[ENTRY]
+Name=1a_dng_gfl_frostflowReaver_r_47
+Spawn=2754,100  ;Frostflow Reaver (48) at 0
+
+[ENTRY]
+Name=1a_dng_gfl_Grimfrost_d_48
+Spawn=2756,100  ;Grimfrost (53) at 0
+
+[ENTRY]
+Name=1a_dng_gfl_yetis_46_47
+Spawn=2748,20  ;Shaman (47) at 0
+Spawn=2749,20  ;Shaman (46) at 0
+Spawn=2750,20  ;Sentry (47) at 0
+Spawn=2751,20  ;Bladefist (47) at 31
+Spawn=2752,20  ;Bladefist (46) at 0
+
+[ENTRY]
+Name=1a_dng_gfl_Al'zahrazzi_m_47
+Spawn=2755,100  ;Al'zahrazzi (51) at 0
+
+[ENTRY]
+Name=1a_dng_gfl_obji_GrimfrostLewt
+Spawn=2757,100  ;Grimfrost's Treasure  (from cdef file)
+
+

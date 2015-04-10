@@ -1,0 +1,14 @@
+[ENTRY]
+ID=5392
+ACCOUNTID=50
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=elk
+GroveName=elk
+WarpName=elk1
+Persist=1
+Grove=1
+EnvironmentCycle=1
+DefLoc=2958,260,3821
+

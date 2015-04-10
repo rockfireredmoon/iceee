@@ -1,0 +1,13 @@
+[ENTRY]
+ID=12632
+ACCOUNTID=955
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=redpandawesome
+GroveName=redpandawesome
+WarpName=redpandawesome1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

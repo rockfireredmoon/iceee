@@ -1,0 +1,13 @@
+; Frelon's Treasure
+[ENTRY]
+CreatureDefID=1023
+EssenceID=20531
+Item=5367,1
+Item=143508,1
+Item=800098,1
+Item=800169,1
+Item=5431,1
+Item=800168,1
+Item=5495,1
+Item=800138,1
+

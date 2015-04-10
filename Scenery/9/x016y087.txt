@@ -1,0 +1,17 @@
+[ENTRY]
+ID=151000916
+Asset=CL-Plains_Bush2#CL-Plains_Bush2
+Pos=12405,175.053,65454
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
+ID=151013337
+Asset=Manipulator-SpawnPoint
+Pos=12062.2,204.17,65464
+Orient=0,0,0,1
+Scale=1,1,1
+innerRadius=145
+spawnPackage=4_ewd_wilds_34_35
+outerRadius=150
+

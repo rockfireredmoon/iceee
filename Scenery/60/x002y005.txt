@@ -1,0 +1,7 @@
+[ENTRY]
+ID=1006633084
+Asset=Prop-Water_Plane1
+Pos=2385,330,5745
+Orient=0,0,0,1
+Scale=2,2,2
+

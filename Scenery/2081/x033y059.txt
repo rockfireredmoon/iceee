@@ -1,0 +1,9 @@
+[ENTRY]
+ID=1358965118
+Asset=CL-Roadside4#CL-Roadside4
+Name=81
+Pos=33496.7,242.734,59380.1
+Orient=0,0.324044,0,0.946042
+Scale=1.5,1.5,1.5
+Flags=1
+

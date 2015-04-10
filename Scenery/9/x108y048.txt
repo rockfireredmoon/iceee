@@ -1,0 +1,8 @@
+[ENTRY]
+ID=151037986
+Asset=Bldg-Cottage_Small2?ATS=ATS-DotC_Cottage
+Pos=81738,411.728,36586
+Orient=0,-0.0898786,0,0.995953
+Scale=1,1,1
+Flags=1
+

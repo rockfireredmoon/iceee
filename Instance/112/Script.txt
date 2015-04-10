@@ -1,0 +1,121 @@
+#name instance_shadowvoid_112
+
+; Spawners: 
+; 1091955   1091954    Entrance side (East)
+; 1091952   1091953    North
+; 1091949   1091948    South
+; 1091950   1091951    Boss side (West)
+
+;70% - 5
+;60% - 5
+;50% - 8 reverse syphon
+;40% - 5
+;30% - 5
+;20% - 8 reverse syphon
+;10% - 5
+
+; Init phase only
+:init
+set SPAWN80 0
+set SPAWN70 0
+set SPAWN60 0
+set SPAWN50 0
+set SPAWN40 0
+set SPAWN30 0
+set SPAWN20 0
+set SPAWN10 0
+set HELLID 0
+set BOSSID
+end
+
+
+:spawn80
+if SPAWN80 = 0
+  set SPAWN80 1
+  print "Instance spawn hell12"
+  spawn 1030430
+  get_npc_id 3636 HELLID
+  get_npc_id 3630 BOSSID
+  set_target HELLID BOSSID
+endif
+end
+
+:spawn70
+if SPAWN70 = 0
+  set SPAWN70 1
+  spawn_at 1091949 3632
+  spawn_at 1091950 3632
+  spawn_at 1091951 3632
+  spawn_at 1091952 3632
+endif
+end
+
+:spawn60
+if SPAWN60 = 0
+  set SPAWN60 1
+  spawn_at 1091948 3632
+  spawn_at 1091949 3632
+  spawn_at 1091950 3632
+  spawn_at 1091951 3632
+  spawn_at 1091952 3632
+  spawn_at 1091953 3632
+endif
+end
+
+:spawn50
+if SPAWN50 = 0
+  set SPAWN50 1
+  spawn_at 1091948 3631
+  spawn_at 1091949 3631
+  spawn_at 1091950 3631
+  spawn_at 1091951 3631
+  spawn_at 1091952 3631
+  spawn_at 1091953 3631
+  spawn_at 1091954 3631
+  spawn_at 1091955 3631
+endif
+end
+
+:spawn40
+if SPAWN40 = 0
+  set SPAWN40 1
+  spawn_at 1091948 3632
+  spawn_at 1091949 3632
+  spawn_at 1091950 3632
+  spawn_at 1091951 3632
+  spawn_at 1091952 3632
+endif
+end
+
+:spawn30
+if SPAWN30 = 0
+  set SPAWN30 1
+  spawn_at 1091948 3632
+  spawn_at 1091949 3632
+  spawn_at 1091950 3632
+  spawn_at 1091951 3632
+  spawn_at 1091952 3632
+endif
+end
+
+:spawn20
+if SPAWN20 = 0
+  set SPAWN20 1
+  spawn_at 1091948 3631
+  spawn_at 1091949 3631
+  spawn_at 1091950 3631
+  spawn_at 1091951 3631
+  spawn_at 1091952 3631
+endif
+end
+
+:spawn10
+if SPAWN10 = 0
+  set SPAWN10 1
+  spawn_at 1091948 3632
+  spawn_at 1091949 3632
+  spawn_at 1091950 3632
+  spawn_at 1091951 3632
+  spawn_at 1091952 3632
+endif
+end

@@ -1,0 +1,13 @@
+[ENTRY]
+ID=7768
+ACCOUNTID=347
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=facade
+GroveName=facade
+WarpName=facade1
+Grove=1
+EnvironmentCycle=1
+DefLoc=2826,313,4678
+

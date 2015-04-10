@@ -1,0 +1,17 @@
+[ENTRY]
+ID=151018578
+Asset=Prop-Tribal_Furniture#Prop-Tribal_Lamp1
+Name=9
+Pos=99990.8,815.396,145167
+Orient=-0.059964,0,0,0.998201
+Scale=2.925,2.925,2.925
+
+[ENTRY]
+ID=151030086
+Asset=Manipulator-SpawnPoint
+Name=9
+Pos=100257,850.138,144756
+Orient=0,0,0,1
+Scale=1,1,1
+Layer=151001717
+

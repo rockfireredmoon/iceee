@@ -1,0 +1,7 @@
+[ENTRY]
+ID=151061525
+Asset=Environment-Marker?type=Swineland_Dead
+Pos=79111.4,973.551,51657.5
+Orient=0,0,0,1
+Scale=6.425,6.425,6.425
+

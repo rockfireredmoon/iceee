@@ -1,0 +1,16 @@
+:init
+set arkadosstepup
+end
+
+; Scripted call from the spawn package
+:2_rm_ArkadosSTEPUP
+inc arkadosstepup
+if arkadosstepup = 10
+  spawn_at 1090520584 2685
+endif
+end
+
+; Vangar One Eye's Treasure
+:onKill_2378
+spawn 1090520592
+end

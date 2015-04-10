@@ -1,0 +1,22 @@
+[ENTRY]
+ID=151031570
+Asset=Basic Desert?d=0.2&s=887&sz=800
+Pos=25461.3,352.871,75413.6
+Orient=0,-0.0898778,0,0.995953
+Scale=1,1,1
+
+[ENTRY]
+ID=151062166
+Asset=CL-Desert#CL-Roadside_Desert5
+Pos=25132.5,287.049,75382.3
+Orient=0.0209403,-0.923208,0.0508277,0.380349
+Scale=1,1,1
+Flags=1
+
+[ENTRY]
+ID=151062167
+Asset=CL-Desert#CL-Roadside_Desert1
+Pos=24983.6,280.703,75409.4
+Orient=0,0.416871,0,0.908966
+Scale=1.325,1.325,1.325
+

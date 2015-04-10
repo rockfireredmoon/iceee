@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151040739
+Asset=Prop-Forest_Tree3
+Name=9
+Pos=53188.5,734.288,76820.1
+Orient=0,-0.847678,0,-0.530511
+Scale=0.575,0.575,0.575
+Flags=1
+

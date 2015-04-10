@@ -1,0 +1,13 @@
+[ENTRY]
+ID=13392
+ACCOUNTID=1050
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=rzrtelhalm
+GroveName=rzrtelhalm
+WarpName=rzrtelhalm1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

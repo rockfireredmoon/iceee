@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151017069
+Asset=CL-UndeadTree5#CL-UndeadTree5
+Name=9
+Pos=54935.1,632.059,68002.3
+Orient=0,0,0,1
+Scale=2,2,2
+Flags=1
+

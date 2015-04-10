@@ -1,0 +1,13 @@
+[ENTRY]
+ID=11520
+ACCOUNTID=816
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=kristophius
+GroveName=kristophius
+WarpName=kristophius1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

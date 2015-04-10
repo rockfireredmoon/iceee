@@ -1,0 +1,13 @@
+[ENTRY]
+ID=14184
+ACCOUNTID=1149
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=forgecave
+GroveName=forgecave
+WarpName=forgecave1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

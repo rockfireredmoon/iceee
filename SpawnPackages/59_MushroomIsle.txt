@@ -1,0 +1,20 @@
+[ENTRY]
+Flags=4
+Name=def_989855820
+Spawn=2168,100  ;Flamemoth (1)
+
+[ENTRY]
+Name=def_989855787
+Spawn=2171,100  ;Hammer (1)
+
+[ENTRY]
+Name=def_989855799
+Spawn=2182,100  ;Dvergar Raider (1)
+
+[ENTRY]
+Name=def_989855786
+Spawn=2169,100  ;Dvergar Raider (1)
+
+[ENTRY]
+Name=def_989855789
+Spawn=2170,100  ;Boat: Needs Repair! (1)

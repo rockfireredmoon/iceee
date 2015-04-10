@@ -1,0 +1,13 @@
+[ENTRY]
+ID=7488
+ACCOUNTID=312
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=naskgrove
+GroveName=naskgrove
+WarpName=naskgrove1
+Grove=1
+EnvironmentCycle=1
+DefLoc=2958,260,3821
+

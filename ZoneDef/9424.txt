@@ -1,0 +1,13 @@
+[ENTRY]
+ID=9424
+ACCOUNTID=554
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=huntress
+GroveName=huntress
+WarpName=huntress1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

@@ -1,0 +1,19 @@
+[ENTRY]
+Name=z85_keku_Exit_to_New_Badari
+;Spawn=2764,100  ;Exit to New Badari (1) at 0
+
+[ENTRY]
+Name=z85_keku_Dustspinner
+Spawn=1473,100  ;Sandmother (48)
+
+[ENTRY]
+Name=z85_keku_Sandmother
+Spawn=1474,100  ;Sandmother (48)
+
+[ENTRY]
+Name=z85_keku_Scaleblade
+Spawn=1475,100  ;Scaleblade (48)
+
+[ENTRY]
+Name=z85_keku_Kerakura
+Spawn=1488,100  ;Kerakura (50)

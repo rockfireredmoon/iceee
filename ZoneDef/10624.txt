@@ -1,0 +1,13 @@
+[ENTRY]
+ID=10624
+ACCOUNTID=704
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=valand
+GroveName=valand
+WarpName=valand1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

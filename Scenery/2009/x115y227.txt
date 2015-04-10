@@ -1,0 +1,17 @@
+[ENTRY]
+ID=151024754
+Asset=Manipulator-SpawnPoint
+Name=9
+Pos=86684.5,220.129,170787
+Orient=0,0,0,1
+Scale=1,1,1
+Layer=151000536
+
+[ENTRY]
+ID=151027687
+Asset=Prop-Spider_Cocoon#Prop-Spider_Cocoon2
+Name=9
+Pos=86983.6,253.936,170463
+Orient=0.0390303,0.898893,-0.428685,0.0818411
+Scale=1.45,1.45,1.45
+

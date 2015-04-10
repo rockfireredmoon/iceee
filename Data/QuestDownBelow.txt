@@ -1,0 +1,525 @@
+[ENTRY]
+ID=616
+Title=The Doctor
+BodyText=Hail friend. My name is Arianna Glennell. my husband and I- when we lived - ruled here...before it fell. All things that remain here now are monstrous or unliving.
+
+It has been far too long since anyone new has walked these halls. It is good to cast my eyes upon the living once more.
+
+Once we ruled a vast area beyond. Then in the deepest depths of the Bleakness we sealed our doors in an attempt to protect our very lives from the wave of death sweeping across the continent. My husband made this decision against my wishes! I..I had to abide by his decision. I DID convince him to bring as many peasants into the castle before sealing the doors. At least I did the best I could to save the less fortunate. Though in the end perhaps they would have had a better chance on the outside.
+
+We had sealed ourselves inside this place but we were not alone. Soon, after we sealed the castle and collapsed the mountain on the entrance, people began to vanish in the night. The castle is massive even now, though much of it has collapsed, but then it was an entire city built deep into the rock. It was not long before I discovered the source of the evil - my own husband. He had been affected by some evil and in the end we killed him but not before he cursed us all to this eternal undeath - this limbo.
+
+In the end there were five of us who finally destroyed the beast my husband had become. The first was the doctor Ran Dangran; he was always a friend to our family. Then there was Seranno, the Master Chef and the Guard Captain, Elian Grudge. Finally there was a priest of Gaia - he who in the end slew my husband with his own hands - Ferran Hollowind. It took all of us to destroy the beast. Now I only hope you can help us find peace.
+
+You must kill all those who slew the Duke. The Doctor, the Chef and the Captain are where to begin, they must be set to rest. Their souls must be captured and brought here and placed in these reliquaries. There is a sealed door in the far east of the castle on the lower level. Once these three are free this door will open and you may help Ferran finally be at rest. Finally you must slay me - and I will not resist. The others however - they are so lost they may object, but you must free them nonetheless.
+
+You should begin with Ran Dangran. You can find him in his old laboratory. Take this vessel. When you slay Ran his soul will be captured inside the vessel. Go now and good luck!
+CompleteText=Very well done. The first step is complete. You can now use the first teleporter for easier access to the rest of the castle. The teleporters are located directly below this platform. Each teleporter has a blue crystal and blue particle atop them.
+Level=34
+Suggested=35
+Exp=5675
+PartySize=5
+NumRewards=0
+Coin=1508
+Unabandon=0
+QuestGiverID=254
+QuestEnderID=254
+Repeat=0
+sGiver=1026.04,335,2206.2,26
+sEnder=1026.04,335,2206.2,26
+Heroism=14
+[ACT]
+Act.BodyText=Travel to the laboratory and collect the soul of Ran Dangran, the doctor.
+Obj.0.type=kill
+Obj.0.data1=3036
+Obj.0.data2=1
+Obj.0.description=Collect the soul of Ran Dangran, the doctor
+Obj.0.complete=0
+Obj.0.myCreatureDefID=0
+Obj.0.myItemID=500278
+Obj.0.completeText=0 of 1
+Obj.0.markerLocations=2134.99,245,4952.27,26;
+[ACT]
+Act.BodyText=Return to Arianna Glennell.
+Obj.0.type=talk
+Obj.0.data1=
+Obj.0.data2=
+Obj.0.description=Return to Arianna Glennell
+Obj.0.complete=0
+Obj.0.myCreatureDefID=254
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=1026.04,335,2206.2,26;
+
+[ENTRY]
+ID=617
+Requires=616
+Title=The Master Chef
+BodyText=Next you should collect the soul of Seranno, the Master Chef. He has gone completely mad and is very dangerous. You will find him in the kitchen.
+CompleteText=Again you have done as I asked. Thank you. There is now but one fly to be spun into our web. You can now use the second teleporter. The teleporters are located directly below this platform. Each teleporter has a blue crystal and blue particle atop them.
+Level=34
+Suggested=35
+Exp=5675
+PartySize=1
+NumRewards=0
+Coin=1508
+Unabandon=0
+QuestGiverID=254
+QuestEnderID=254
+Repeat=0
+sGiver=1026.04,335,2206.2,26
+sEnder=1026.04,335,2206.2,26
+Heroism=14
+[ACT]
+Act.BodyText=Collect the soul of Seranno, the Master Chef.
+Obj.0.type=kill
+Obj.0.data1=247
+Obj.0.data2=1
+Obj.0.description=Collect the soul of Seranno, the Master Chef
+Obj.0.complete=0
+Obj.0.myCreatureDefID=0
+Obj.0.myItemID=500279
+Obj.0.completeText=0 of 1
+Obj.0.markerLocations=3401.48,245,3784.49,26;
+[ACT]
+Act.BodyText=Return to Arianna Glennell.
+Obj.0.type=talk
+Obj.0.data1=
+Obj.0.data2=
+Obj.0.description=Return to Arianna Glennell
+Obj.0.complete=0
+Obj.0.myCreatureDefID=254
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=1026.04,335,2206.2,26;
+
+
+[ENTRY]
+ID=618
+Requires=617
+Title=The Guard Captain
+BodyText=The last conspirator is Elian Grudge, the former Captain of the Guard. It was he who first suspected that ... well he and my husband were close and he knew something was afoot. You will find him in the guard chambers - in the north east section of the castle. He is a very skilled knight; use caution! After this is done you can use the third teleporter. The teleporters are located directly below this platform. Each teleporter has a blue crystal and blue particle atop them.
+CompleteText=Ahah! You have done it. You have unlocked the door to the dungeon level of the castle. After so many years we may finally be reunited!Hah! You fool ! Your ears were so eager to hear my lies and believe them! My husband was a fool - just like you! Now I can finally rejoin Ferran and he will be reborn and rule this world! I warn you - do not venture into the lowest levels. Beyond that door is only death for you! Now I must go - and be...myself again... Thank you friend! Ahahahah!
+Level=34
+Suggested=35
+Exp=5675
+PartySize=5
+NumRewards=0
+Coin=1508
+Unabandon=0
+QuestGiverID=254
+QuestEnderID=254
+Repeat=0
+sGiver=1026.04,335,2206.2,26
+sEnder=1026.04,335,2206.2,26
+Heroism=14
+[ACT]
+Act.BodyText=Collect the soul of Elian Grudge.
+Obj.0.type=kill
+Obj.0.data1=252
+Obj.0.data2=1
+Obj.0.description=Collect the soul of Elian Grudge
+Obj.0.complete=0
+Obj.0.myCreatureDefID=0
+Obj.0.myItemID=500280
+Obj.0.completeText=
+Obj.0.markerLocations=4644.73,245,2040.79,26;
+[ACT]
+Act.BodyText=Return to Arianna Glennell.
+Obj.0.type=talk
+Obj.0.data1=
+Obj.0.data2=
+Obj.0.description=Return to Arianna Glennell
+Obj.0.complete=0
+Obj.0.myCreatureDefID=254
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=1026.04,335,2206.2,26;
+
+[ENTRY]
+ID=619
+Requires=618
+Title=The Duchess and the Beast
+BodyText=This book is tattered but still able to be read in some places. It appears to be the journal of the Mevron Glennell, the former Duke."...and so it is done, the doors are sealed. I was lucky to gather as many of the commoners as I could in hopes of preserving their lives...""...she has been acting strangely, I think she may be ill, he pallor is off...""...more people have vanished into the night, Ferran is leading the searches but so far none of the missing have been found...""...is a beast! If I had not seen it with my own eyes I would not have...""...she was my wife...but now she lies with the beast...""...this may be my last entry, We have sealed the dungeon door. Ran, Elian and Seranno aided me and I could not have done it with out their help, hopefully my sacrifice will be enough to keep him there...though his curse may doom those who still live..."The journal tells the true story of what happened here. The Duchess and Ferran seem to have been responsible for the terror.Arianna lied to you and is obviously evil to the core - hunt her down and slay her for what she has done.
+CompleteText=
+Level=34
+Suggested=36
+Exp=5907
+PartySize=5
+NumRewards=0
+Coin=1598
+Unabandon=0
+QuestGiverID=3034
+QuestEnderID=3034
+sGiver=1063,335,2129,26
+sEnder=1063,335,2129,26
+Heroism=14
+[ACT]
+Act.BodyText=Kill Arianna Glennell.
+Obj.0.type=kill
+Obj.0.data1=3035
+Obj.0.data2=1
+Obj.0.description=Kill Arianna Glennell
+Obj.0.complete=0
+Obj.0.myCreatureDefID=0
+Obj.0.myItemID=
+Obj.0.completeText=0 of 1
+Obj.0.markerLocations=10481.3,5,2408.36,26;
+[ACT]
+Act.BodyText=Return to the book.
+Obj.0.type=talk
+Obj.0.data1=
+Obj.0.data2=
+Obj.0.description=Return to the book
+Obj.0.complete=0
+Obj.0.myCreatureDefID=3034
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=1063,335,2129,26;
+
+[ENTRY]
+ID=620
+Title=The Down Below
+BodyText=Hail traveler. Welcome to our camp. We have been excavating the fabled "Down Below", an underground castle with a history predating the Bleakness. If you have any questions speak with Illia Baro - she is the team leader.
+CompleteText=Good-day to you and welcome to our camp. We have spent quite some time clearing out this place and we finally found the entrance. This place was once regarded as only legend but now we see it revealed. There are many mysteries inside I am sure. You should talk to the rest of my team here. I am sure some could use your help. You may enter the Down Below but do so at your own risk. Goodluck.
+Level=30
+Suggested=31
+Exp=4828
+PartySize=1
+NumRewards=0
+Coin=1193
+Unabandon=0
+QuestGiverID=3041
+QuestEnderID=3038
+Repeat=0
+sGiver=60964.0,204.0,52164.0,9
+sEnder=61135.0,207.0,52272.0,9
+Heroism=14
+[ACT]
+Act.BodyText=Speak with Illia Baro.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Speak with Illia Baro
+Obj.0.complete=0
+Obj.0.myCreatureDefID=3038
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=61135.0,207.0,52272.0,9;
+
+
+[ENTRY]
+ID=621
+Requires=620
+Title=Blue Crown Mushrooms
+BodyText=Greetings! If you are planning to explore the Down Below then perhaps you could do me a favor. There is a rare type of mushroom - Blue Crown Mushrooms they are called - that grow in abundance inside. I could really use a dozen of these mushrooms to study. If you could collect them for me I would greatly appreciate it! Also, if you have not already, you should speak with Trent. He is studying the effects of the Blue Crown Mushrooms on some denizens of the Down Below.
+CompleteText=You have returned with the mushrooms - excellent!
+Level=30
+Suggested=35
+Exp=5675
+PartySize=5
+NumRewards=0
+Coin=1508
+Unabandon=0
+QuestGiverID=3042
+QuestEnderID=3042
+Repeat=0
+sGiver=61035.7,203.232,52301.5,9
+sEnder=61035.7,203.232,52301.5,9
+Heroism=14
+[ACT]
+Act.BodyText=Collect twelve Blue Crown Mushrooms from the Down Below.
+Obj.0.type=gather
+Obj.0.data1=2995
+Obj.0.data2=12
+Obj.0.description=Collect 12 Blue Crown Mushrooms
+Obj.0.complete=0
+Obj.0.myCreatureDefID=500281
+Obj.0.myItemID=
+Obj.0.completeText=0 of 12
+Obj.0.markerLocations=
+Obj.0.ActivateTime=2000
+Obj.0.ActivateText=Gathering Blue Crown Mushroom...
+[ACT]
+Act.BodyText=Return to Marzala Kir.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Marzala Kir
+Obj.0.complete=0
+Obj.0.myCreatureDefID=3042
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=61035.7,203.232,52301.5,9;
+
+
+[ENTRY]
+ID=622
+Requires=621
+Title=More Blue Crown Mushrooms
+BodyText=I will continue to pay you if you continue to bring me Blue Crown Mushrooms. Bring me 20 more and I will happily reward you.
+CompleteText=You return once more - and with more mushrooms. Thank you!
+Level=34
+Suggested=35
+Exp=2270
+PartySize=5
+NumRewards=0
+Coin=603
+Unabandon=0
+QuestGiverID=3042
+QuestEnderID=3042
+Repeat=0
+sGiver=61035.7,203.232,52301.5,9
+sEnder=61035.7,203.232,52301.5,9
+Heroism=14
+[ACT]
+Act.BodyText=Collect twenty Blue Crown Mushrooms from the Down Below.
+Obj.0.type=gather
+Obj.0.data1=2995
+Obj.0.data2=20
+Obj.0.description=Collect 20 Blue Crown Mushrooms
+Obj.0.complete=0
+Obj.0.myCreatureDefID=500282
+Obj.0.myItemID=
+Obj.0.completeText=0 of 20
+Obj.0.markerLocations=61035.7,203.232,52301.5,9;
+Obj.0.ActivateTime=2000
+Obj.0.ActivateText=Gathering Blue Crown Mushroom...
+[ACT]
+Act.BodyText=Return to Marzala Kir.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Marzala Kir
+Obj.0.complete=0
+Obj.0.myCreatureDefID=3042
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=61035.7,203.232,52301.5,9;
+
+[ENTRY]
+ID=623
+Requires=620
+Title=Blue Crown Effects: Samples
+BodyText=Hail. I may not look the part but I am quite keen in understanding how the world works. In particular there is a fungus - Blue Crown Mushroom - that grows in the depths of the Down Below. I am interested in how these mushrooms may effect creatures who are constantly in contact with them. I would like some samples from some of the larger creatures to study. Do you think you could gather them for me? If you choose to aid me you should also speak with Marzala. She is looking into the effects of the Blue Crown Mushrooms as well.
+CompleteText=Thank you! These should help me understand the effects greatly. Do you have time to gather some more samples for me?
+Level=34
+Suggested=35
+Exp=5675
+PartySize=5
+NumRewards=0
+Coin=1508
+Unabandon=0
+QuestGiverID=3040
+QuestEnderID=3040
+Repeat=0
+sGiver=61091.0,207.0,52145.0,9
+sEnder=61091.0,207.0,52145.0,9
+Heroism=14
+[ACT]
+Act.BodyText=Collect samples from Snapjaw, Verash, and Gurlop.
+Obj.0.type=kill
+Obj.0.data1=250
+Obj.0.data2=1
+Obj.0.description=Collect a sample: Snapjaw
+Obj.0.complete=0
+Obj.0.myCreatureDefID=500283
+Obj.0.myItemID=
+Obj.0.completeText=0 of 1
+Obj.0.markerLocations=
+Obj.1.type=kill
+Obj.1.data1=3029
+Obj.1.data2=1
+Obj.1.description=Collect a sample: Verash
+Obj.1.complete=0
+Obj.1.myCreatureDefID=500284
+Obj.1.myItemID=
+Obj.1.completeText=0 of 1
+Obj.1.markerLocations=
+Obj.2.type=kill
+Obj.2.data1=249
+Obj.2.data2=1
+Obj.2.description=Collect a sample: Gurlop
+Obj.2.complete=0
+Obj.2.myCreatureDefID=500285
+Obj.2.myItemID=
+Obj.2.completeText=0 of 1
+Obj.2.markerLocations=
+[ACT]
+Act.BodyText=Return to Trent Prentiss.
+Obj.0.type=talk
+Obj.0.data1=
+Obj.0.data2=
+Obj.0.description=Return to Trent Prentiss
+Obj.0.complete=0
+Obj.0.myCreatureDefID=3040
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=61091.0,207.0,52145.0,9;
+
+
+[ENTRY]
+ID=624
+Requires=623
+Title=Blue Crown Effects: More Samples
+BodyText=Great! Here is a list of three more of the larger creatures that I could use samples from. Good luck!
+CompleteText=You return safely once more, praise Gaia, and you have my samples. Thank you so much.
+Level=34
+Suggested=35
+Exp=5675
+PartySize=5
+NumRewards=0
+Coin=1508
+Unabandon=0
+QuestGiverID=3040
+QuestEnderID=3040
+Repeat=0
+sGiver=61091.0,207.0,52145.0,9
+sEnder=61091.0,207.0,52145.0,9
+Heroism=14
+[ACT]
+Act.BodyText=Collect samples from Archis, Lektus, and Sillum.
+Obj.0.type=kill
+Obj.0.data1=2981
+Obj.0.data2=1
+Obj.0.description=Collect a sample: Archis
+Obj.0.complete=0
+Obj.0.myCreatureDefID=500286
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=
+Obj.1.type=kill
+Obj.1.data1=2984
+Obj.1.data2=1
+Obj.1.description=Collect a sample: Lektus
+Obj.1.complete=0
+Obj.1.myCreatureDefID=500287
+Obj.1.myItemID=
+Obj.1.completeText=
+Obj.1.markerLocations=
+Obj.2.type=kill
+Obj.2.data1=3048
+Obj.2.data2=1
+Obj.2.description=Collect a sample: Sillum
+Obj.2.complete=0
+Obj.2.myCreatureDefID=500288
+Obj.2.myItemID=
+Obj.2.completeText=
+Obj.2.markerLocations=
+[ACT]
+Act.BodyText=Return to Trent Prentiss.
+Obj.0.type=talk
+Obj.0.data1=
+Obj.0.data2=
+Obj.0.description=Return to Trent Prentiss
+Obj.0.complete=0
+Obj.0.myCreatureDefID=3040
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=61091.0,207.0,52145.0,9;
+
+[ENTRY]
+ID=625
+Requires=620
+Title=Lost Below
+BodyText=Friend if you are heading into the Down Below I would ask you to keep an eye out for our lost brother - Ulton Klinon. He ventured into the depths some time ago and we have not seen him since! He is a brave fellow but prone to getting in to matters too difficult to handle. Please if you can - find him and help him return to camp.
+CompleteText=Oh thank Gaia you have come!
+Level=34
+Suggested=36
+Exp=5907
+PartySize=5
+NumRewards=0
+Coin=1598
+Unabandon=0
+QuestGiverID=3039
+QuestEnderID=3043
+Repeat=0
+sGiver=61235,212,52198,9
+sEnder=
+Heroism=14
+[ACT]
+Act.BodyText=Find Ulton Klinon.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Find Ulton Klinon
+Obj.0.complete=0
+Obj.0.myCreatureDefID=3043
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=10160.3,5,4268.33,26;
+
+
+[ENTRY]
+ID=626
+Title=Lost Below: Find the Key
+BodyText=Help me! Please get the key to my cage. It doesn't look like a key though! It looks like a skull and cross-bones - I know that makes it soooo much easier to find in HERE - right? *sigh* It must be some where down here please find it and get me out of here!
+CompleteText=Finally I can leave this wretched place! Give me the key!
+Level=34
+Suggested=36
+Exp=5907
+PartySize=5
+NumRewards=0
+Coin=1598
+Unabandon=0
+QuestGiverID=3043
+QuestEnderID=3043
+Repeat=0
+sGiver=10054,5,4265.04,26
+sEnder=10054,5,4265.04,26
+Heroism=14
+[ACT]
+Act.BodyText=Find the key to Ulton's cage.
+Obj.0.type=gather
+Obj.0.data1=3081
+Obj.0.data2=1
+Obj.0.description=Find the key to Ulton's cage
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=500289
+Obj.0.completeText=0 of 1
+Obj.0.markerLocations=
+Obj.0.ActivateTime=2000
+Obj.0.ActivateText=Taking the key...
+[ACT]
+Act.BodyText=Return to Ulton Klinon.
+Obj.0.type=talk
+Obj.0.data1=
+Obj.0.data2=
+Obj.0.description=Return to Ulton Klinon
+Obj.0.complete=0
+Obj.0.myCreatureDefID=3043
+Obj.0.myItemID=500289
+Obj.0.completeText=
+Obj.0.markerLocations=
+
+
+[ENTRY]
+ID=627
+Title=Lost Below: Freedom
+BodyText=Thank you friend. I can make my own way out of this terrible place. Then I am heading back to Listerm. I think my days of bravely seeking adventure are coming to an end. Speak with Granon Burgess. He owes me some coin and I think you have earned it for setting me free!
+CompleteText=Hello again friend! Thank you for saving Ulton. Ulton told me you would come looking for me - my debt to him I pay to you. Here take this bit of coin and an extra reward from me personally. Again, Thank you so much. Farewell!
+Level=34
+Suggested=36
+Exp=1772
+PartySize=5
+NumRewards=0
+Coin=479
+Unabandon=0
+QuestGiverID=3043
+QuestEnderID=3039
+Repeat=0
+sGiver=10054,5,4265.04,26
+sEnder=61235,212,52198,9
+Heroism=14
+[ACT]
+Act.BodyText=Speak with Granon Burgess.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Speak with Granon Burgess
+Obj.0.complete=0
+Obj.0.myCreatureDefID=3039
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=61235,212,52198,9;

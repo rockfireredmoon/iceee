@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151014900
+Asset=Manipulator-SpawnPoint
+Pos=18865.6,258.742,92271
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=5_anubianScoutCamps_39_40
+outerRadius=10
+

@@ -1,0 +1,13 @@
+[ENTRY]
+ID=11040
+ACCOUNTID=756
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=snivies
+GroveName=snivies
+WarpName=snivies1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

@@ -1,0 +1,8 @@
+[ENTRY]
+ID=151008609
+Asset=Prop-Boulder_Arid#Prop-Boulder_Arid2
+Pos=24787.4,298.599,92255
+Orient=0,0,0,1
+Scale=4.525,4.525,4.525
+Flags=1
+

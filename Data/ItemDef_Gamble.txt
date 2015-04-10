@@ -1,0 +1,659 @@
+[ENTRY]
+mID=3000000
+mType=3
+mDisplayName=Gamble: Old Equipment (Any Armor)
+mAppearance=[{}]
+mIcon=Icon-32-Crate.png|Icon-32-BG-Grey.png
+mLevel=1
+mBindingType=1
+mEquipType=17
+mArmorType=1
+mValue=2000
+mFlavorText=Purchase this to instantly gamble for a random item of the described type.
+mQualityLevel=5
+mMinUseLevel=1
+
+[ENTRY]
+mID=3000007
+mType=3
+mDisplayName=Gamble: Old Equipment (Shield)
+mAppearance=[{}]
+mIcon=Icon-32-Crate.png|Icon-32-BG-Grey.png
+mLevel=1
+mBindingType=1
+mEquipType=17
+mArmorType=1
+mValue=2000
+mFlavorText=Purchase this to instantly gamble for a random item of the described type.
+mQualityLevel=5
+mMinUseLevel=1
+
+[ENTRY]
+mID=3000008
+mType=3
+mDisplayName=Gamble: Old Equipment (Head)
+mAppearance=[{}]
+mIcon=Icon-32-Crate.png|Icon-32-BG-Grey.png
+mLevel=1
+mBindingType=1
+mEquipType=17
+mArmorType=1
+mValue=2000
+mFlavorText=Purchase this to instantly gamble for a random item of the described type.
+mQualityLevel=5
+mMinUseLevel=1
+
+[ENTRY]
+mID=3000009
+mType=3
+mDisplayName=Gamble: Old Equipment (Neck)
+mAppearance=[{}]
+mIcon=Icon-32-Crate.png|Icon-32-BG-Grey.png
+mLevel=1
+mBindingType=1
+mEquipType=17
+mArmorType=1
+mValue=2000
+mFlavorText=Purchase this to instantly gamble for a random item of the described type.
+mQualityLevel=5
+mMinUseLevel=1
+
+[ENTRY]
+mID=3000010
+mType=3
+mDisplayName=Gamble: Old Equipment (Shoulder)
+mAppearance=[{}]
+mIcon=Icon-32-Crate.png|Icon-32-BG-Grey.png
+mLevel=1
+mBindingType=1
+mEquipType=17
+mArmorType=1
+mValue=2000
+mFlavorText=Purchase this to instantly gamble for a random item of the described type.
+mQualityLevel=5
+mMinUseLevel=1
+
+[ENTRY]
+mID=3000011
+mType=3
+mDisplayName=Gamble: Old Equipment (Chest)
+mAppearance=[{}]
+mIcon=Icon-32-Crate.png|Icon-32-BG-Grey.png
+mLevel=1
+mBindingType=1
+mEquipType=17
+mArmorType=1
+mValue=2000
+mFlavorText=Purchase this to instantly gamble for a random item of the described type.
+mQualityLevel=5
+mMinUseLevel=1
+
+[ENTRY]
+mID=3000012
+mType=3
+mDisplayName=Gamble: Old Equipment (Arms)
+mAppearance=[{}]
+mIcon=Icon-32-Crate.png|Icon-32-BG-Grey.png
+mLevel=1
+mBindingType=1
+mEquipType=17
+mArmorType=1
+mValue=2000
+mFlavorText=Purchase this to instantly gamble for a random item of the described type.
+mQualityLevel=5
+mMinUseLevel=1
+
+[ENTRY]
+mID=3000013
+mType=3
+mDisplayName=Gamble: Old Equipment (Hands)
+mAppearance=[{}]
+mIcon=Icon-32-Crate.png|Icon-32-BG-Grey.png
+mLevel=1
+mBindingType=1
+mEquipType=17
+mArmorType=1
+mValue=2000
+mFlavorText=Purchase this to instantly gamble for a random item of the described type.
+mQualityLevel=5
+mMinUseLevel=1
+
+[ENTRY]
+mID=3000014
+mType=3
+mDisplayName=Gamble: Old Equipment (Waist)
+mAppearance=[{}]
+mIcon=Icon-32-Crate.png|Icon-32-BG-Grey.png
+mLevel=1
+mBindingType=1
+mEquipType=17
+mArmorType=1
+mValue=2000
+mFlavorText=Purchase this to instantly gamble for a random item of the described type.
+mQualityLevel=5
+mMinUseLevel=1
+
+[ENTRY]
+mID=3000015
+mType=3
+mDisplayName=Gamble: Old Equipment (Legs)
+mAppearance=[{}]
+mIcon=Icon-32-Crate.png|Icon-32-BG-Grey.png
+mLevel=1
+mBindingType=1
+mEquipType=17
+mArmorType=1
+mValue=2000
+mFlavorText=Purchase this to instantly gamble for a random item of the described type.
+mQualityLevel=5
+mMinUseLevel=1
+
+[ENTRY]
+mID=3000016
+mType=3
+mDisplayName=Gamble: Old Equipment (Feet)
+mAppearance=[{}]
+mIcon=Icon-32-Crate.png|Icon-32-BG-Grey.png
+mLevel=1
+mBindingType=1
+mEquipType=17
+mArmorType=1
+mValue=2000
+mFlavorText=Purchase this to instantly gamble for a random item of the described type.
+mQualityLevel=5
+mMinUseLevel=1
+
+
+[ENTRY]
+mID=3000017
+mType=3
+mDisplayName=Gamble: Old Equipment (Ring)
+mAppearance=[{}]
+mIcon=Icon-32-Crate.png|Icon-32-BG-Grey.png
+mLevel=1
+mBindingType=1
+mEquipType=17
+mArmorType=1
+mValue=2000
+mFlavorText=Purchase this to instantly gamble for a random item of the described type.
+mQualityLevel=5
+mMinUseLevel=1
+
+[ENTRY]
+mID=3000019
+mType=3
+mDisplayName=Gamble: Old Equipment (Amulet)
+mAppearance=[{}]
+mIcon=Icon-32-Crate.png|Icon-32-BG-Grey.png
+mLevel=1
+mBindingType=1
+mEquipType=17
+mArmorType=1
+mValue=2000
+mFlavorText=Purchase this to instantly gamble for a random item of the described type.
+mQualityLevel=5
+mMinUseLevel=1
+
+[ENTRY]
+mID=3000100
+mType=3
+mDisplayName=Gamble: Old Equipment (Any Weapon)
+mAppearance=[{}]
+mIcon=Icon-32-Crate.png|Icon-32-BG-Grey.png
+mLevel=1
+mBindingType=1
+mEquipType=17
+mArmorType=1
+mValue=2000
+mFlavorText=Purchase this to instantly gamble for a random weapon of the described type.
+mQualityLevel=5
+mMinUseLevel=1
+
+
+[ENTRY]
+mID=3000101
+mType=3
+mDisplayName=Gamble: Old Equipment (Small)
+mAppearance=[{}]
+mIcon=Icon-32-Crate.png|Icon-32-BG-Grey.png
+mLevel=1
+mBindingType=1
+mEquipType=17
+mArmorType=1
+mValue=2000
+mFlavorText=Purchase this to instantly gamble for a random weapon of the described type.
+mQualityLevel=5
+mMinUseLevel=1
+
+[ENTRY]
+mID=3000102
+mType=3
+mDisplayName=Gamble: Old Equipment (One Hand)
+mAppearance=[{}]
+mIcon=Icon-32-Crate.png|Icon-32-BG-Grey.png
+mLevel=1
+mBindingType=1
+mEquipType=17
+mArmorType=1
+mValue=2000
+mFlavorText=Purchase this to instantly gamble for a random weapon of the described type.
+mQualityLevel=5
+mMinUseLevel=1
+
+[ENTRY]
+mID=3000103
+mType=3
+mDisplayName=Gamble: Old Equipment (Two Hand)
+mAppearance=[{}]
+mIcon=Icon-32-Crate.png|Icon-32-BG-Grey.png
+mLevel=1
+mBindingType=1
+mEquipType=17
+mArmorType=1
+mValue=2000
+mFlavorText=Purchase this to instantly gamble for a random weapon of the described type.
+mQualityLevel=5
+mMinUseLevel=1
+
+[ENTRY]
+mID=3000104
+mType=3
+mDisplayName=Gamble: Old Equipment (Pole)
+mAppearance=[{}]
+mIcon=Icon-32-Crate.png|Icon-32-BG-Grey.png
+mLevel=1
+mBindingType=1
+mEquipType=17
+mArmorType=1
+mValue=2000
+mFlavorText=Purchase this to instantly gamble for a random weapon of the described type.
+mQualityLevel=5
+mMinUseLevel=1
+
+[ENTRY]
+mID=3000105
+mType=3
+mDisplayName=Gamble: Old Equipment (Wand)
+mAppearance=[{}]
+mIcon=Icon-32-Crate.png|Icon-32-BG-Grey.png
+mLevel=1
+mBindingType=1
+mEquipType=17
+mArmorType=1
+mValue=2000
+mFlavorText=Purchase this to instantly gamble for a random weapon of the described type.
+mQualityLevel=5
+mMinUseLevel=1
+
+[ENTRY]
+mID=3000106
+mType=3
+mDisplayName=Gamble: Old Equipment (Bow)
+mAppearance=[{}]
+mIcon=Icon-32-Crate.png|Icon-32-BG-Grey.png
+mLevel=1
+mBindingType=1
+mEquipType=17
+mArmorType=1
+mValue=2000
+mFlavorText=Purchase this to instantly gamble for a random weapon of the described type.
+mQualityLevel=5
+mMinUseLevel=1
+
+[ENTRY]
+mID=3000107
+mType=3
+mDisplayName=Gamble: Old Equipment (Thrown)
+mAppearance=[{}]
+mIcon=Icon-32-Crate.png|Icon-32-BG-Grey.png
+mLevel=1
+mBindingType=1
+mEquipType=17
+mArmorType=1
+mValue=2000
+mFlavorText=Purchase this to instantly gamble for a random weapon of the described type.
+mQualityLevel=5
+mMinUseLevel=1
+
+[ENTRY]
+mID=3000108
+mType=3
+mDisplayName=Gamble: Old Equipment (Arcane Totem)
+mAppearance=[{}]
+mIcon=Icon-32-Crate.png|Icon-32-BG-Grey.png
+mLevel=1
+mBindingType=1
+mEquipType=17
+mArmorType=1
+mValue=2000
+mFlavorText=Purchase this to instantly gamble for a random weapon of the described type.
+mQualityLevel=5
+mMinUseLevel=1
+
+[ENTRY]
+mID=3000200
+mType=3
+mDisplayName=Gamble Armor: Shield
+mAppearance=[{}]
+mIcon=Icon-32-Crate.png|Icon-32-BG-Grey.png
+mLevel=10
+mBindingType=0
+mEquipType=7
+mArmorType=1
+mValue=500
+mFlavorText=Purchasing this will generate a randomized item equal to your level. The actual cost is based on your character level, 2 silverr per level. So if you are level 30, it will cost you 3 gold.
+mQualityLevel=2
+mMinUseLevel=10
+Params=gamble=1&cost_per_level=200&drop_rate_bonus=1.0&drop_rate_profile=gamble
+
+[ENTRY]
+mID=3000201
+mType=3
+mDisplayName=Gamble Armor: Head
+mAppearance=[{}]
+mIcon=Icon-32-Crate.png|Icon-32-BG-Grey.png
+mLevel=10
+mBindingType=0
+mEquipType=8
+mArmorType=1
+mValue=500
+mFlavorText=Purchasing this will generate a randomized item equal to your level. The actual cost is based on your character level, 2 silverr per level. So if you are level 30, it will cost you 3 gold.
+mQualityLevel=2
+mMinUseLevel=10
+Params=gamble=1&cost_per_level=200&drop_rate_bonus=1.0&drop_rate_profile=gamble
+
+[ENTRY]
+mID=3000202
+mType=3
+mDisplayName=Gamble Armor: Shoulder
+mAppearance=[{}]
+mIcon=Icon-32-Crate.png|Icon-32-BG-Grey.png
+mLevel=10
+mBindingType=0
+mEquipType=10
+mArmorType=1
+mValue=500
+mFlavorText=Purchasing this will generate a randomized item equal to your level. The actual cost is based on your character level, 2 silverr per level. So if you are level 30, it will cost you 3 gold.
+mQualityLevel=2
+mMinUseLevel=10
+Params=gamble=1&cost_per_level=200&drop_rate_bonus=1.0&drop_rate_profile=gamble
+
+[ENTRY]
+mID=3000203
+mType=3
+mDisplayName=Gamble Armor: Chest
+mAppearance=[{}]
+mIcon=Icon-32-Crate.png|Icon-32-BG-Grey.png
+mLevel=10
+mBindingType=0
+mEquipType=11
+mArmorType=1
+mValue=500
+mFlavorText=Purchasing this will generate a randomized item equal to your level. The actual cost is based on your character level, 2 silverr per level. So if you are level 30, it will cost you 3 gold.
+mQualityLevel=2
+mMinUseLevel=10
+Params=gamble=1&cost_per_level=200&drop_rate_bonus=1.0&drop_rate_profile=gamble
+
+[ENTRY]
+mID=3000204
+mType=3
+mDisplayName=Gamble Armor: Arms
+mAppearance=[{}]
+mIcon=Icon-32-Crate.png|Icon-32-BG-Grey.png
+mLevel=10
+mBindingType=0
+mEquipType=12
+mArmorType=1
+mValue=500
+mFlavorText=Purchasing this will generate a randomized item equal to your level. The actual cost is based on your character level, 2 silverr per level. So if you are level 30, it will cost you 3 gold.
+mQualityLevel=2
+mMinUseLevel=10
+Params=gamble=1&cost_per_level=200&drop_rate_bonus=1.0&drop_rate_profile=gamble
+
+[ENTRY]
+mID=3000205
+mType=3
+mDisplayName=Gamble Armor: Hands
+mAppearance=[{}]
+mIcon=Icon-32-Crate.png|Icon-32-BG-Grey.png
+mLevel=10
+mBindingType=0
+mEquipType=13
+mArmorType=1
+mValue=500
+mFlavorText=Purchasing this will generate a randomized item equal to your level. The actual cost is based on your character level, 2 silverr per level. So if you are level 30, it will cost you 3 gold.
+mQualityLevel=2
+mMinUseLevel=10
+Params=gamble=1&cost_per_level=200&drop_rate_bonus=1.0&drop_rate_profile=gamble
+
+[ENTRY]
+mID=3000206
+mType=3
+mDisplayName=Gamble Armor: Waist
+mAppearance=[{}]
+mIcon=Icon-32-Crate.png|Icon-32-BG-Grey.png
+mLevel=10
+mBindingType=0
+mEquipType=14
+mArmorType=1
+mValue=500
+mFlavorText=Purchasing this will generate a randomized item equal to your level. The actual cost is based on your character level, 2 silverr per level. So if you are level 30, it will cost you 3 gold.
+mQualityLevel=2
+mMinUseLevel=10
+Params=gamble=1&cost_per_level=200&drop_rate_bonus=1.0&drop_rate_profile=gamble
+
+[ENTRY]
+mID=3000207
+mType=3
+mDisplayName=Gamble Armor: Legs
+mAppearance=[{}]
+mIcon=Icon-32-Crate.png|Icon-32-BG-Grey.png
+mLevel=10
+mBindingType=0
+mEquipType=15
+mArmorType=1
+mValue=500
+mFlavorText=Purchasing this will generate a randomized item equal to your level. The actual cost is based on your character level, 2 silverr per level. So if you are level 30, it will cost you 3 gold.
+mQualityLevel=2
+mMinUseLevel=10
+Params=gamble=1&cost_per_level=200&drop_rate_bonus=1.0&drop_rate_profile=gamble
+
+[ENTRY]
+mID=3000208
+mType=3
+mDisplayName=Gamble Armor: Feet
+mAppearance=[{}]
+mIcon=Icon-32-Crate.png|Icon-32-BG-Grey.png
+mLevel=10
+mBindingType=0
+mEquipType=16
+mArmorType=1
+mValue=500
+mFlavorText=Purchasing this will generate a randomized item equal to your level. The actual cost is based on your character level, 2 silverr per level. So if you are level 30, it will cost you 3 gold.
+mQualityLevel=2
+mMinUseLevel=10
+Params=gamble=1&cost_per_level=200&drop_rate_bonus=1.0&drop_rate_profile=gamble
+
+[ENTRY]
+mID=3000209
+mType=3
+mDisplayName=Gamble Armor: Neck
+mAppearance=[{}]
+mIcon=Icon-32-Crate.png|Icon-32-BG-Grey.png
+mLevel=10
+mBindingType=0
+mEquipType=9
+mArmorType=1
+mValue=500
+mFlavorText=Purchasing this will generate a randomized item equal to your level. The actual cost is based on your character level, 2 silverr per level. So if you are level 30, it will cost you 3 gold.
+mQualityLevel=2
+mMinUseLevel=10
+Params=gamble=1&cost_per_level=200&drop_rate_bonus=1.0&drop_rate_profile=gamble
+
+[ENTRY]
+mID=3000210
+mType=3
+mDisplayName=Gamble: Ring
+mAppearance=[{}]
+mIcon=Icon-32-Crate.png|Icon-32-BG-Grey.png
+mLevel=10
+mBindingType=0
+mEquipType=17
+mArmorType=1
+mValue=500
+mFlavorText=Purchasing this will generate a randomized item equal to your level. The actual cost is based on your character level, 2 silverr per level. So if you are level 30, it will cost you 3 gold.
+mQualityLevel=2
+mMinUseLevel=10
+Params=gamble=1&cost_per_level=200&drop_rate_bonus=1.0&drop_rate_profile=gamble
+
+[ENTRY]
+mID=3000211
+mType=3
+mDisplayName=Gamble: Amulet
+mAppearance=[{}]
+mIcon=Icon-32-Crate.png|Icon-32-BG-Grey.png
+mLevel=10
+mBindingType=0
+mEquipType=19
+mArmorType=1
+mValue=500
+mFlavorText=Purchasing this will generate a randomized item equal to your level. The actual cost is based on your character level, 2 silverr per level. So if you are level 30, it will cost you 3 gold.
+mQualityLevel=2
+mMinUseLevel=10
+Params=gamble=1&cost_per_level=200&drop_rate_bonus=1.0&drop_rate_profile=gamble
+
+[ENTRY]
+mID=3000220
+mType=3
+mDisplayName=Gamble Weapon: Small
+mAppearance=[{}]
+mIcon=Icon-32-Crate.png|Icon-32-BG-Grey.png
+mLevel=10
+mBindingType=0
+mEquipType=1
+mWeaponType=1
+mArmorType=1
+mValue=500
+mFlavorText=Purchasing this will generate a randomized item equal to your level. The actual cost is based on your character level, 2 silverr per level. So if you are level 30, it will cost you 3 gold.
+mQualityLevel=2
+mMinUseLevel=10
+Params=gamble=1&cost_per_level=200&drop_rate_bonus=1.0&drop_rate_profile=gamble
+
+[ENTRY]
+mID=3000221
+mType=3
+mDisplayName=Gamble Weapon: One Hand
+mAppearance=[{}]
+mIcon=Icon-32-Crate.png|Icon-32-BG-Grey.png
+mLevel=10
+mBindingType=0
+mEquipType=1
+mWeaponType=2
+mArmorType=1
+mValue=500
+mFlavorText=Purchasing this will generate a randomized item equal to your level. The actual cost is based on your character level, 2 silverr per level. So if you are level 30, it will cost you 3 gold.
+mQualityLevel=2
+mMinUseLevel=10
+Params=gamble=1&cost_per_level=200&drop_rate_bonus=1.0&drop_rate_profile=gamble
+
+[ENTRY]
+mID=3000222
+mType=3
+mDisplayName=Gamble Weapon: Two Hand
+mAppearance=[{}]
+mIcon=Icon-32-Crate.png|Icon-32-BG-Grey.png
+mLevel=10
+mBindingType=0
+mEquipType=5
+mWeaponType=3
+mArmorType=1
+mValue=500
+mFlavorText=Purchasing this will generate a randomized item equal to your level. The actual cost is based on your character level, 2 silverr per level. So if you are level 30, it will cost you 3 gold.
+mQualityLevel=2
+mMinUseLevel=10
+Params=gamble=1&cost_per_level=200&drop_rate_bonus=1.0&drop_rate_profile=gamble
+
+[ENTRY]
+mID=3000223
+mType=3
+mDisplayName=Gamble Weapon: Pole
+mAppearance=[{}]
+mIcon=Icon-32-Crate.png|Icon-32-BG-Grey.png
+mLevel=10
+mBindingType=0
+mEquipType=5
+mWeaponType=4
+mArmorType=1
+mValue=500
+mFlavorText=Purchasing this will generate a randomized item equal to your level. The actual cost is based on your character level, 2 silverr per level. So if you are level 30, it will cost you 3 gold.
+mQualityLevel=2
+mMinUseLevel=10
+Params=gamble=1&cost_per_level=200&drop_rate_bonus=1.0&drop_rate_profile=gamble
+
+[ENTRY]
+mID=3000224
+mType=3
+mDisplayName=Gamble Weapon: Wand
+mAppearance=[{}]
+mIcon=Icon-32-Crate.png|Icon-32-BG-Grey.png
+mLevel=10
+mBindingType=0
+mEquipType=6
+mWeaponType=5
+mArmorType=1
+mValue=500
+mFlavorText=Purchasing this will generate a randomized item equal to your level. The actual cost is based on your character level, 2 silverr per level. So if you are level 30, it will cost you 3 gold.
+mQualityLevel=2
+mMinUseLevel=10
+Params=gamble=1&cost_per_level=200&drop_rate_bonus=1.0&drop_rate_profile=gamble
+
+[ENTRY]
+mID=3000225
+mType=3
+mDisplayName=Gamble Weapon: Bow
+mAppearance=[{}]
+mIcon=Icon-32-Crate.png|Icon-32-BG-Grey.png
+mLevel=10
+mBindingType=0
+mEquipType=6
+mWeaponType=6
+mArmorType=1
+mValue=500
+mFlavorText=Purchasing this will generate a randomized item equal to your level. The actual cost is based on your character level, 2 silverr per level. So if you are level 30, it will cost you 3 gold.
+mQualityLevel=2
+mMinUseLevel=10
+Params=gamble=1&cost_per_level=200&drop_rate_bonus=1.0&drop_rate_profile=gamble
+
+[ENTRY]
+mID=3000226
+mType=3
+mDisplayName=Gamble Weapon: Thrown
+mAppearance=[{}]
+mIcon=Icon-32-Crate.png|Icon-32-BG-Grey.png
+mLevel=10
+mBindingType=0
+mEquipType=6
+mWeaponType=7
+mArmorType=1
+mValue=500
+mFlavorText=Purchasing this will generate a randomized item equal to your level. The actual cost is based on your character level, 2 silverr per level. So if you are level 30, it will cost you 3 gold.
+mQualityLevel=2
+mMinUseLevel=10
+Params=gamble=1&cost_per_level=200&drop_rate_bonus=1.0&drop_rate_profile=gamble
+
+[ENTRY]
+mID=3000227
+mType=3
+mDisplayName=Gamble Weapon: Arcane Totem
+mAppearance=[{}]
+mIcon=Icon-32-Crate.png|Icon-32-BG-Grey.png
+mLevel=10
+mBindingType=0
+mEquipType=1
+mWeaponType=8
+mArmorType=1
+mValue=500
+mFlavorText=Purchasing this will generate a randomized item equal to your level. The actual cost is based on your character level, 2 silver per level. So if you are level 30, it will cost you 60 silver.
+mQualityLevel=2
+mMinUseLevel=10
+Params=gamble=1&cost_per_level=200&drop_rate_bonus=1.0&drop_rate_profile=gamble

@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151011706
+Asset=Manipulator-SpawnPoint
+Pos=62558,103.67,31446
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=2_stc_beach_25_26
+outerRadius=5
+

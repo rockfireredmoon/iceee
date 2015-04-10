@@ -1,0 +1,13 @@
+[ENTRY]
+ID=14592
+ACCOUNTID=1200
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=uncia
+GroveName=uncia
+WarpName=uncia1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

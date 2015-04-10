@@ -1,0 +1,13 @@
+[ENTRY]
+ID=13632
+ACCOUNTID=1080
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=viridiana
+GroveName=viridiana
+WarpName=viridiana1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

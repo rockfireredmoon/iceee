@@ -1,0 +1,17 @@
+[ENTRY]
+ID=151059488
+Asset=Dead_Forest?d=0.9&amp;s=123949&amp;sz=900
+Name=9
+Pos=49260.7,106.751,63667.6
+Orient=0,-0.997495,0,0.0707368
+Scale=1.375,1.375,1.375
+
+[ENTRY]
+ID=151059825
+Asset=Manipulator-SpawnPoint
+Name=9
+Pos=48845.1,208.379,63069.9
+Orient=0,-0.838759,0,0.544503
+Scale=1,1,1
+Layer=151012009
+

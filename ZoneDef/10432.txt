@@ -1,0 +1,13 @@
+[ENTRY]
+ID=10432
+ACCOUNTID=680
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=autumnforest
+GroveName=autumnforest
+WarpName=autumnforest1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

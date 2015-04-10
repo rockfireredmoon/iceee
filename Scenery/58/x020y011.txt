@@ -1,0 +1,7 @@
+[ENTRY]
+ID=973078826
+Asset=Prop-Palm-Tree#Prop-Palm-Tree2
+Pos=20388.2,1359.93,11689.8
+Orient=-0.221372,-0.960447,0.166905,-0.0260474
+Scale=2,2,2
+

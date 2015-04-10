@@ -1,0 +1,17 @@
+[ENTRY]
+ID=151024170
+Asset=Manipulator-SpawnPoint
+Name=9
+Pos=79037.1,240.664,163551
+Orient=0,0,0,1
+Scale=1,1,1
+Layer=151000312
+
+[ENTRY]
+ID=151058346
+Asset=CL-Rotted_Flora2#CL-Rotted_Flora2
+Name=9
+Pos=79306.3,241.399,163952
+Orient=0,0,0,1
+Scale=2.225,2.225,2.225
+

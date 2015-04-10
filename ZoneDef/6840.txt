@@ -1,0 +1,13 @@
+[ENTRY]
+ID=6840
+ACCOUNTID=231
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=ort
+GroveName=ort
+WarpName=ort1
+Grove=1
+EnvironmentCycle=1
+DefLoc=2958,260,3821
+

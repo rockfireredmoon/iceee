@@ -1,0 +1,13 @@
+[ENTRY]
+ID=11152
+ACCOUNTID=770
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=chantai
+GroveName=chantai
+WarpName=chantai1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

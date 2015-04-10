@@ -1,0 +1,13 @@
+[ENTRY]
+ID=9712
+ACCOUNTID=590
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=amoz
+GroveName=amoz
+WarpName=amoz1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

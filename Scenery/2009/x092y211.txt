@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151022734
+Asset=Prop-Giant_Mushroom-Rotted#Prop-Giant_Mushroom-Rotted1
+Name=9
+Pos=69347.9,235.115,158308
+Orient=-0.163942,0.507168,0.22484,0.815691
+Scale=1.025,1.025,1.025
+Flags=1
+

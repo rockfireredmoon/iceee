@@ -1,0 +1,8 @@
+[ENTRY]
+ID=151021388
+Asset=CL-AridRock1#CL-AridRock1
+Name=9
+Pos=101109,892.609,146212
+Orient=0,0,0,1
+Scale=2.6,2.6,2.6
+

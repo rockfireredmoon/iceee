@@ -1,0 +1,13 @@
+[ENTRY]
+ID=10496
+ACCOUNTID=688
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=dogemon
+GroveName=dogemon
+WarpName=dogemon1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

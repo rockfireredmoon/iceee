@@ -1,0 +1,10 @@
+[ENTRY]
+ID=151019896
+Asset=Manipulator-SpawnPoint
+Pos=35661.1,214.853,61651
+Orient=0,0,0,1
+Scale=1,1,1
+innerRadius=145
+spawnPackage=4_hwo_wilds_32_33
+outerRadius=150
+

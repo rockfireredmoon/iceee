@@ -1,0 +1,17 @@
+[ENTRY]
+ID=151000571
+Asset=CL-Rock-Clutter1#CL-Rock-Clutter1
+Name=9
+Pos=15978,180.819,65293.9
+Orient=0,-0.0199987,0,0.9998
+Scale=0.475,0.475,0.475
+Flags=1
+
+[ENTRY]
+ID=151026176
+Asset=Manipulator-PathNode
+Name=9
+Pos=16471.1,182.576,65344
+Orient=0,0,0,1
+Scale=1,1,1
+

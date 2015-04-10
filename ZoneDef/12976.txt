@@ -1,0 +1,15 @@
+[ENTRY]
+ID=12976
+ACCOUNTID=998
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=ashes
+GroveName=ashes
+WarpName=ashes1
+DropRateProfile=standard
+Grove=1
+EnvironmentCycle=0
+BuildPermission=account,998,0,0,3,3
+DefLoc=2958,260,3821
+

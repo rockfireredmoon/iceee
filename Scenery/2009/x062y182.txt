@@ -1,0 +1,8 @@
+[ENTRY]
+ID=151033937
+Asset=CL-Bramble_Thicket1
+Name=9
+Pos=46548.9,178.337,136529
+Orient=0,0.0249976,0,0.999687
+Scale=5.55,5.55,5.55
+

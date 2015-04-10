@@ -1,0 +1,15 @@
+[ENTRY]
+ID=151000424
+Asset=Prop-Willow_Tree#Prop-Willow_Tree3
+Pos=41025.3,175.141,60047
+Orient=0,0.977865,0,0.209239
+Scale=1.85,1.85,1.85
+Flags=1
+
+[ENTRY]
+ID=151061906
+Asset=Prop-Teddy_Bear#Prop-Teddy_Bear
+Pos=41236,171.383,60540.3
+Orient=0.0720758,-0.94157,-0.163498,0.285515
+Scale=1,1,1
+

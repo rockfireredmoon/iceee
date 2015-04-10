@@ -1,0 +1,16 @@
+[ENTRY]
+ID=151009580
+Asset=Par-Waves-1-Emitter
+Pos=55124.4,150.475,53646
+Orient=0,-0.998531,0,-0.0541771
+Scale=1,1,1
+Flags=1
+
+[ENTRY]
+ID=151009583
+Asset=Par-Slow_Drip-Emitter
+Pos=55147.8,207.561,53995
+Orient=0,0,0,1
+Scale=1,1,1
+Flags=1
+

@@ -1,0 +1,13 @@
+[ENTRY]
+ID=6832
+ACCOUNTID=230
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=NightSky
+ShardName=nukoh
+GroveName=nukoh
+WarpName=nukoh1
+Grove=1
+EnvironmentCycle=1
+DefLoc=3010,262,3826
+

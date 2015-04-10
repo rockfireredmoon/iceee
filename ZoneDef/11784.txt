@@ -1,0 +1,13 @@
+[ENTRY]
+ID=11784
+ACCOUNTID=849
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=hera
+GroveName=hera
+WarpName=hera1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

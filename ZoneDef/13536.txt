@@ -1,0 +1,13 @@
+[ENTRY]
+ID=13536
+ACCOUNTID=1068
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=sinbad
+GroveName=sinbad
+WarpName=sinbad1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

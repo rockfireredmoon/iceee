@@ -1,0 +1,13 @@
+[ENTRY]
+ID=11368
+ACCOUNTID=797
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=ForestDay
+ShardName=kyuuketsuki
+GroveName=kyuuketsuki
+WarpName=kyuuketsuki1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2957,260,3784
+

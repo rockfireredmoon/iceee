@@ -1,0 +1,8 @@
+[ENTRY]
+ID=151016117
+Asset=Prop-Sick-Forest_Tree#Prop-Sick-Forest_Tree4
+Pos=56923.2,689.141,58765
+Orient=0,0,0,1
+Scale=1.8,1.8,1.8
+Flags=1
+

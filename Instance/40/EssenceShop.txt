@@ -1,0 +1,26 @@
+; Dar Kulgac's Treasure
+[ENTRY]
+CreatureDefID=2734
+EssenceID=21281
+Item=800113,1
+Item=5366,1
+Item=143477,1
+Item=800133,1
+Item=800184,1
+Item=800134,1
+Item=5494,1
+Item=5405,1
+
+; Dungeon Loot (Manticore Lair)
+; Restored from a 0.8.6b chest screenshot.
+[ENTRY]
+CreatureDefID=2709
+EssenceID=21263
+Item=143507,10  ;Brokk's Bow
+Item=800114,10  ;Weapon Plan: Bad Dog
+Item=5386,10  ;Troll Hide Neckguard
+Item=800123,10  ;Weapon Plan: Cruel Intent
+Item=5472,10  ;Manticore Lair Bracers
+Item=800194,10  ;Weapon Plan: Dragon Needler
+Item=5450,10  ;Armbands of Dar Kulgac
+Item=800103,10  ;Weapon Plan: Equal Footing

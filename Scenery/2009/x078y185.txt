@@ -1,0 +1,8 @@
+[ENTRY]
+ID=151043021
+Asset=CL-Dead-Forest4#CL-Dead-Forest4
+Name=9
+Pos=59244.7,223.02,138857
+Orient=0,0,0,1
+Scale=1,1,1
+

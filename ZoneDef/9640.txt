@@ -1,0 +1,13 @@
+[ENTRY]
+ID=9640
+ACCOUNTID=581
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=marda
+GroveName=marda
+WarpName=marda1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

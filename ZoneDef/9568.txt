@@ -1,0 +1,13 @@
+[ENTRY]
+ID=9568
+ACCOUNTID=572
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=krutonaga
+GroveName=krutonaga
+WarpName=krutonaga1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

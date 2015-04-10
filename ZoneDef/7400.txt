@@ -1,0 +1,13 @@
+[ENTRY]
+ID=7400
+ACCOUNTID=301
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=NightSky
+ShardName=wolfden
+GroveName=wolfden
+WarpName=wolfden1
+Grove=1
+EnvironmentCycle=1
+DefLoc=2958,260,3821
+

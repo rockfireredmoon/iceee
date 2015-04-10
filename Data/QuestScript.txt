@@ -1,0 +1,527 @@
+; Labels use the following format
+; :onActivate_%1_%2
+;   %1 is the Quest ID.
+;   %2 is the act.
+; When a Gather or Activate operation is initiated on an object,
+; it attempts to locate a script with a matching label to run.
+;
+; Commands:
+; info %1
+;   Display an info message to the player.  Appears in yellow text.
+;   %1 is a string (enclosed in quotation marks ["])
+;
+; effect %1
+;   Display an ability animation effect over the target object.  The effect
+;   name is specific to the client's internal ability effects.
+;   %1 is a string (enclosed in quotation marks ["])
+;
+; wait_finish
+;   Halts the script until a Gather or Activate interaction has completed.
+;
+; npcunusable %1
+;   Disable the usability status of the target object.  This will affect
+;   all players who intend to use an object, so the target should be
+;   erased afterward.
+;   %1 is an integer.  If nonzero, this is the millisecond time to wait before
+;   automatically deleting the object.
+;
+; npcremove
+;   Erase the target object from the instance.  Respawn conditions may
+;   apply.
+;
+; require_cdef %1
+;   End the script if the activated object does not match this type.  Use this if
+;   a quest has separate gather/activation types and you want to filter them.
+;   %1 is a Creature Definition ID.
+;
+; spawn %1
+;   Forces a spawn point to activate.  Spawning conditions are ignored.
+;   %1 is the Prop ID of the spawn point.
+;
+; spawn_at %1 %2
+;   Spawn a specific creature type at a spawn point.  See "setvar" for additional params.
+;   %1 is an integer of the CreatureDef ID
+;   %2 is an integer of the Prop ID
+;
+; warp_zone %1
+;   Warps a player to the target zone.  They will spawn at the default entrance coordinates.
+;   %1 is an integer of the Zone ID.
+;
+; jmp_cdef %1 %2
+;   Perform a conditional jump to a label if the player is activating/gathering a specific
+;   CreatureDef type.
+;   %1 is an integer of the CreatureDef ID
+;   %2 is a string of the label name to jump to.
+;
+; setvar %1 %2
+;   Extra command to set some special parameters used with 'spawn_at'
+;   %1 is an integer of the variable index.  Must be 0 or 1.
+;   %2 is an integer of the value to set.
+;   Variable index 0 is an optional lifespan, in milliseconds.  If nonzero, the creature
+;   will be spawned as dead, then erased from existence when the time expires.
+;   Variable index 1 is an elevation offset, to spawn above or below the spawn point.
+;   May be useful for fire effects on braziers.
+;
+; emote %1
+;   Makes the player perform an emote.
+;   %1 is a string of the emote name (enclosed in quotation marks ["])
+;
+; wait %1
+;   Halt the script until a certain amount of time has passed.
+;   %1 is the duration to wait, in milliseconds.
+;
+; end
+;   Unconditional halt of the script.  Use this at the end of a label block.
+
+
+; Knight = 380, Rogue = 384, Mage = 386, Druid = 382
+
+:onActivate_380_2
+:onActivate_384_2
+:onActivate_386_2
+:onActivate_382_2
+require_cdef 2170
+wait_finish
+warp_zone 58
+end
+
+:onActivate_247_2
+require_cdef 1599
+wait_finish
+info "You find a message!"
+end
+
+
+; 285 = Burning Ships
+; Effect for the burning ships.  Each of the three ships is activated
+; as a separate act. All three acts will use the same script.
+:onActivate_285_1
+:onActivate_285_2
+:onActivate_285_3
+npcunusable
+wait 500
+effect "PyroblastHit"
+wait_finish
+effect "HellfireHit"
+npcremove
+end
+
+; 295 = The Bog Rats
+:onActivate_295_2
+wait_finish
+info "You push a loose brick to the right and hear a clicking sound."
+end
+
+:onActivate_295_3
+wait_finish
+info "You turn the barrel to the right and hear a clicking noise."
+end
+
+:onActivate_295_4
+wait_finish
+info "You push a book into place and you hear a loud clicking noise... and the stove moves just a little."
+end
+
+
+; 309 = Gomren Root
+:onActivate_309_0
+wait_finish
+info "You have found a very rare Gomren Root!"
+end
+
+
+; 311 = Chase Away the Dooms!
+
+:onActivate_311_1
+require_cdef 2137
+wait_finish
+info "You have found a Petrified Twig! You are one step closer to chasing away the dooms!"
+end
+
+:onActivate_311_2
+require_cdef 2138
+wait 10000
+info "The urn trembles and shakes..."
+wait 5000
+info "The smell of burnt toe bone pervades the air..."
+wait_finish
+info "Objective complete: Use the Putrefied Urn to make a Glindergloom"
+info "You have created Glindergloom! Now you can chase away the dooms!"
+end
+
+
+; DISABLED: MOVED TO INSTANCE SCRIPT AND EXPANDED CAPABILITIES
+;; 314 = Alimat
+;; Forward is the direction if you travel directly from the
+;; entrance to the summoning object.
+;
+;:onActivate_314_2
+;require_cdef 2134
+;
+;wait 7500
+;
+;spawn 1325400172  ;Left fire holder
+;spawn 1325400193  ;Back mob
+;spawn 1325400196  ;Left mob
+;spawn 1325400194  ;Forward mob
+;spawn 1325400192  ;Right mob
+;
+;wait 7500
+;
+;spawn 1325400170  ;Right fire holder
+;spawn 1325400191  ;Left mob
+;spawn 1325400173  ;Forward mob
+;spawn 1325400195  ;Right mob
+;
+;wait 7500
+;
+;spawn 1325400171  ;Forward fire holder
+;spawn 1325400189  ;Left mob
+;spawn 1325400190  ;Right mob
+;
+;wait_finish
+;
+;spawn 1325400187  ;Alimat
+;
+;end
+
+
+; 317 = A Task from Robin
+:onActivate_317_1
+require_cdef 1920
+wait_finish
+info "Take a sample of the Faerire Food."
+end
+
+
+; 322 = Oliver's Treasure
+:onActivate_322_0
+require_cdef 1949
+wait_finish
+info "You found Oliver's Treasure Box!"
+end
+
+
+
+
+
+;;;;;;;;;;;;;;;;;;;;;
+;;  EUROPE
+;;;;;;;;;;;;;;;;;;;;;
+; 406 = Lighting the Way
+; Effect for spawning fire.
+:onActivate_406_0
+wait_finish
+setvar 0 120000          ; Spawn property: duration (milliseconds)
+setvar 1 16              ; Spawn property: elevation modifer (for brazier prop)
+jmp_cdef 456 sub_406_456
+jmp_cdef 457 sub_406_457
+jmp_cdef 460 sub_406_460
+end
+
+:sub_406_456
+spawn_at 1144 151056221
+end
+
+:sub_406_457
+spawn_at 1144 151056222
+end
+
+:sub_406_460
+setvar 0 120000
+setvar 1 16
+spawn_at 1144 151056220
+end
+
+:onActivate_414_0
+require_cdef 2313
+wait_finish
+info "You found a Granite Root."
+end
+
+:onActivate_407_0
+require_cdef 458
+wait_finish
+info "You have found a Krell Blossom."
+end
+
+:onActivate_408_1
+require_cdef 459
+wait_finish
+info "You have found a Blood Petal Flower."
+end
+
+:onActivate_436_0
+require_cdef 452
+wait_finish
+info "You found a crate of Thaddeus Toadhollow's goods."
+end
+
+:onActivate_439_0
+require_cdef 455
+wait_finish
+spawn 151056259   ; Spawn Fendle's head.
+end
+
+:onActivate_441_0
+require_cdef 2403
+wait_finish
+info "It appears to be some sort of Undead Shrine!"
+end
+
+:onActivate_444_0
+require_cdef 2403
+wait_finish
+info "You have cleansed the shrine of the evil Undead aura!"
+end
+
+:onActivate_462_0
+require_cdef 2405
+wait_finish
+info "You found an Iron-Bound Chest!"
+end
+
+:onActivate_459_0
+require_cdef 600
+wait_finish
+info "You have collected a Packaged Spice."
+end
+
+:onActivate_479_1
+require_cdef 2406
+wait_finish
+info "You found an Ale Recipe!"
+end
+
+:onActivate_488_0
+require_cdef 2408
+wait_finish
+info "You found a Dirge Fern!"
+end
+
+:onActivate_608_0
+require_cdef 2964
+wait_finish
+info "You found the Jewelry Box!"
+end
+
+:onActivate_610_1
+require_cdef 2965
+wait_finish
+info "You found a Deep Blue Crystal!"
+end
+
+:onActivate_611_1
+require_cdef 2966
+wait_finish
+info "The Crystals are purified!"
+end
+
+:onActivate_612_1
+require_cdef 2967
+wait_finish
+info "The crystals have been forged!"
+end
+
+:onActivate_508_0
+require_cdef 792
+wait_finish
+info "You destroyed pustule and took the seed!"
+end
+
+:onActivate_512_0
+require_cdef 2467
+wait_finish
+info "You have successfully activated the Rune Stone!"
+end
+
+:onActivate_519_0
+require_cdef 2466
+wait_finish
+info "You have burned the Amanita Verosa Shrine!"
+setvar 0 120000  ; duration (milliseconds)
+setvar 1 0       ; elevation modifer
+spawn_at 3283 10000220
+end
+
+:onActivate_521_0
+require_cdef 1020
+wait_finish
+info "You found a Splinter-Shard!"
+end
+
+; For this quest the objective is set to gather so the same firepit
+; can't be reactivated.  Replace with a new temporary firepit prop
+; and flame effect.
+:onActivate_122_0
+wait_finish
+info "Vineyard Firepit Lit!"
+setvar 0 120000   ;duration (milliseconds)
+setvar 1 0        ;elevation modifer (for brazier prop)
+jmp_cdef 796 sub_122_796
+jmp_cdef 797 sub_122_797
+jmp_cdef 798 sub_122_798
+jmp_cdef 799 sub_122_799
+jmp_cdef 800 sub_122_800
+end
+
+:sub_122_796
+spawn_at 1101 151024638
+spawn_at 1144 151024638
+end
+
+:sub_122_797
+spawn_at 1101 151013136
+spawn_at 1144 151013136
+end
+
+:sub_122_798
+spawn_at 1101 151013137
+spawn_at 1144 151013137
+end
+
+:sub_122_799
+spawn_at 1101 151022410
+spawn_at 1144 151022410
+end
+
+:sub_122_800
+spawn_at 1101 151022411
+spawn_at 1144 151022411
+end
+
+
+
+:onActivate_126_0
+wait_finish
+jmp_cdef 790 sub_126_790
+jmp_cdef 1017 sub_126_1017
+end
+
+:sub_126_790
+info "You found a Thunderwalker Horn!"
+end
+
+:sub_126_1017
+info "You found a Gravevine!"
+end
+
+:onActivate_499_0
+require_cdef 1019
+wait_finish
+info "You burn the ingredients into a fine ash!"
+end
+
+:onActivate_523_0
+require_cdef 1021
+wait_finish
+info "You found a Artifact Vase!"
+end
+
+:onActivate_222_0
+require_cdef 1500
+wait_finish
+info "What a rare find!"
+end
+
+:onActivate_54_0
+wait_finish
+info "You sketched the Totem in great detail."
+end
+
+:onActivate_142_0
+require_cdef 1497
+wait_finish
+info "You have found rough plans for an Anubian and Outcast alliance!"
+end
+
+:onActivate_535_0
+require_cdef 2494
+wait_finish
+info "You have found a Spikeball Cactus!"
+end
+
+:onActivate_233_0
+wait_finish
+setvar 0 120000   ;duration (milliseconds)
+setvar 1 0        ;elevation modifer (for brazier prop)
+jmp_cdef 910 sub_233_910
+jmp_cdef 911 sub_233_911
+jmp_cdef 912 sub_233_912
+end
+
+:sub_233_910
+spawn_at 1145 151017666
+info "You take Panterra's Charred Unit Flag."
+end
+
+:sub_233_911
+spawn_at 1145 151017664
+info "You take Tigron's Charred Unit Flag."
+end
+
+:sub_233_912
+spawn_at 1145 151017665
+info "You take Lynxana's Charred Unit Flag."
+end
+
+
+;:onActivate_153_0
+;require_cdef 901
+;wait_finish
+;npcunusable 1 60000
+;end
+
+
+
+:onActivate_534_1
+require_cdef 2495
+wait_finish
+info "You found a Djinn Parchment!"
+end
+
+; NOT IMPLEMENTED
+;:onObjComplete_538_0_0
+;info "You collected Spencer's Journal!"
+;end
+
+
+; Spawn the fire effects
+:onActivate_238_1
+require_cdef 1142
+wait_finish
+spawn 151026350
+spawn 151026348
+spawn 151026346
+spawn 151026357
+spawn 151026347
+spawn 151026349
+spawn 151026351
+spawn 151026354
+spawn 151026353
+spawn 151026352
+spawn 151026344
+end
+
+
+
+:onActivate_239_0
+wait 1000
+info "The Mushroom tastes awful!"
+emote "Hit_Bow"
+wait 2000
+info "Really Awful!"
+emote "Hit_Dual_Wield"
+wait 2000
+info "You feel a little dizzy!"
+emote "Hit_Staff"
+wait 2000
+info "BURP!"
+emote "Hit_Two_Handed"
+end
+
+:onActivate_242_0
+require_cdef 1528
+wait_finish
+info "You take a skeletal hand from the chest."
+end

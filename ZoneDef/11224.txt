@@ -1,0 +1,15 @@
+[ENTRY]
+ID=11224
+ACCOUNTID=779
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=ForestNight
+ShardName=tay
+GroveName=tay
+WarpName=tay1
+DropRateProfile=standard
+Grove=1
+EnvironmentCycle=1
+BuildPermission=account,779,0,0,3,3
+DefLoc=3703,513,3012
+

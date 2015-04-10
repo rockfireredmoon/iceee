@@ -1,0 +1,157 @@
+#name custom_heathendel_rogueknight40p
+#speed 6
+
+; 236 : Assail 40
+; 96 : Feline's Grace  [Group=34]
+; 5036 : Feline's Grace (15% bonus)  [Group=34]
+; 282 : Pierce 40  [Cooldown=Pierce]
+; 336 : Hemorrhage 40  [Cooldown=Hemorrhage]
+; 400 : Theft of Might 50  [Cooldown=Theft]
+; 342 - Earthshaker : 50  [Might=4]
+; 347 : Spellbreaker 50   [Cooldown=Spellbreaker, Might=3]
+; 296 : Disembowel 40
+; 32766 : Melee autoattack
+
+
+set VAR 0
+set WILL 0
+set MIGHT 0
+set COOLDOWN 0
+set TARGID 0
+
+
+:begin
+call waitfortarget
+call checkMightCharge
+call checkMight
+goto begin
+
+
+:checkMightCharge
+getmightcharge VAR
+if VAR < 3
+  return
+endif
+
+call tryHemorrhage
+
+use 296
+reset_goto begin
+
+
+
+:checkMight
+getmight MIGHT
+if MIGHT < 3
+  return
+endif
+
+call tryTheftOfMight
+call tryEarthshaker
+call trySpellbreaker
+call tryPierce
+
+use 236
+reset_goto begin
+
+
+
+
+:tryTheftOfMight
+getcooldown "Theft" COOLDOWN
+if COOLDOWN != 0
+  return
+endif
+
+get_target_property "might_charges" VAR
+if VAR < 2
+  return
+endif
+
+use 400
+reset_goto begin
+
+
+
+
+:tryEarthshaker
+getcooldown "Earthshaker" var
+if var != 0
+  return
+endif
+count_enemy_near 50 TCOUNT
+if TCOUNT < 2
+  return
+endif
+
+; Easy way to wait for more might to regenerate
+; Exit the call as if the skill was casted, preventing other skills
+; further in the cycle from being used.
+if MIGHT < 4
+  wait 500
+  reset_goto begin
+endif
+
+use 342
+reset_goto begin
+
+
+
+
+:tryPierce
+getcooldown "Pierce" COOLDOWN
+if COOLDOWN != 0
+  return
+endif
+
+use 282
+reset_goto begin
+
+
+:trySpellbreaker
+getcooldown "Spellbreaker" COOLDOWN
+if COOLDOWN != 0
+  return
+endif
+cid_is_busy TARGID VAR
+if VAR = 0
+  return
+endif
+
+use 347
+reset_goto begin
+
+
+
+:tryHemorrhage
+getcooldown "Hemorrhage" COOLDOWN
+if COOLDOWN != 0
+  return
+endif
+
+use 336
+reset_goto begin
+
+
+
+:castBuffs
+get_buff_tier 34 VAR
+if VAR = 0
+  use 5036
+endif
+return
+
+
+
+:waitfortarget
+has_target VAR
+if VAR = 0
+  wait 1000
+  goto waitfortarget
+endif
+
+get_target TARGID
+
+call castBuffs
+use 32766
+return

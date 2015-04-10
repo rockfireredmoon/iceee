@@ -1,0 +1,17 @@
+[ENTRY]
+ID=1358965732
+Asset=Prop-Bush-Large3#Prop-Bush-Large3
+Name=81
+Pos=37316.9,401.823,57998
+Orient=0,0,0,1
+Scale=1,1,1
+Flags=1
+
+[ENTRY]
+ID=1358966033
+Asset=CL-Hills_Tree5
+Name=81
+Pos=37690.8,115.054,57305
+Orient=0,0,0,1
+Scale=0.775,0.775,0.775
+

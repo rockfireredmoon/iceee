@@ -1,0 +1,14 @@
+[ENTRY]
+ID=5056
+ACCOUNTID=8
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=nekomata
+GroveName=nekomata
+WarpName=nekomata1
+Persist=1
+Grove=1
+EnvironmentCycle=1
+DefLoc=2958,260,3821
+

@@ -1,0 +1,13 @@
+[ENTRY]
+ID=11960
+ACCOUNTID=871
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CamelotDay
+ShardName=woodland
+GroveName=woodland
+WarpName=woodland1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

@@ -1,0 +1,25 @@
+; Foul Fur's Treasure
+[ENTRY]
+CreatureDefID=1535
+EssenceID=20778
+Item=800132,1
+Item=143454,1
+Item=5372,1
+Item=800232,1
+Item=5498,1
+Item=143466,1
+Item=800141,1
+Item=5565,1
+
+; Dungeon Loot (Dire Wolf Den)
+[ENTRY]
+CreatureDefID=2718
+EssenceID=21272
+Item=800152,10
+Item=800143,10
+Item=5476,10
+Item=5551,10
+Item=800223,10
+Item=5436,10
+Item=5408,10
+Item=143481,10

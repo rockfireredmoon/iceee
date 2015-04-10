@@ -1,0 +1,105 @@
+; NOTE: 2 spawn points [5_dt_Gotte]
+
+
+[ENTRY]
+Flags=3
+Name=z49_dt_gen_Rune_Stone_2491
+Spawn=2491,100  ;Rune Stone (1) at 0
+
+[ENTRY]
+Flags=1
+Name=z49_dt_gen_Dungeon_Loot_2714
+Spawn=2714,100  ;Dungeon Loot (1) at 0
+
+[ENTRY]
+Flags=3
+Name=z49_dt_gen_Rune_Stone_2493
+Spawn=2493,100  ;Rune Stone (1) at 0
+
+[ENTRY]
+Flags=3
+Name=z49_dt_gen_Rune_Stone_2492
+Spawn=2492,100  ;Rune Stone (1) at 0
+
+[ENTRY]
+Flags=3
+Name=z49_dt_gen_Djinn_Lamp_1462
+Spawn=1462,100  ;Djinn Lamp (1) at 0
+
+[ENTRY]
+Flags=3
+Name=z49_dt_gen_Exit_to_Dustshore_1454
+Spawn=1454,100  ;Exit to Dustshore (1) at 0
+
+[ENTRY]
+Flags=3
+Name=z49_dt_gen_Lamp_Exit_1463
+Spawn=1463,100  ;Lamp Exit (1) at 0
+
+[ENTRY]
+Flags=3
+Name=z49_dt_gen_a_corpse_1486
+Spawn=1486,100  ;a corpse (1) at 0
+
+[ENTRY]
+Name=5_dt_lordAFrott_m_h_38
+Spawn=711,100  ;Lord A'Frott (38) at 0
+
+[ENTRY]
+Name=5_dt_Marid_m_h_37
+Spawn=1485,100  ;Marid (37) at 275
+
+[ENTRY]
+Flags=3
+Name=5_obji_bztn03_djinnParchment
+Spawn=2495,100  ;Djinn Parchment (1) at 0
+
+[ENTRY]
+Name=5_dt_NamaskSTEPUP
+Spawn=813,20  ;Djinn Thugee (35) at 0
+Spawn=814,20  ;Djinn Thugee (36) at 0
+Spawn=816,20  ;Sultanic Djinn (35) at 0
+Spawn=817,20  ;Sultanic Djinn (36) at 0
+Spawn=820,20  ;Khalific Djinn (36) at 0
+
+[ENTRY]
+Name=5_dt_front_35_36
+Shares=60
+Spawn=813,10  ;Djinn Thugee (35) at 0
+Spawn=814,10  ;Djinn Thugee (36) at 0
+Spawn=816,10  ;Sultanic Djinn (35) at 0
+Spawn=817,10  ;Sultanic Djinn (36) at 0
+Spawn=819,10  ;Khalific Djinn (35) at 0
+Spawn=820,10  ;Khalific Djinn (36) at 0
+
+[ENTRY]
+Name=5_dt_back_36_37
+Shares=60
+Spawn=813,10  ;Djinn Thugee (35) at 0
+Spawn=814,10  ;Djinn Thugee (36) at 0
+Spawn=816,10  ;Sultanic Djinn (35) at 0
+Spawn=817,10  ;Sultanic Djinn (36) at 0
+Spawn=819,10  ;Khalific Djinn (35) at 0
+Spawn=820,10  ;Khalific Djinn (36) at 0
+
+; NOTE: 2 spawn points
+[ENTRY]
+Name=5_dt_Gotte
+UniquePoints=2
+Spawn=2660,100  ;Gotte (37) at 12
+
+[ENTRY]
+Name=5_dt_Ghul_m_h_37
+Spawn=1484,100  ;Ghul (37) at 0
+
+[ENTRY]
+Name=5_dt_boss_36_37
+Spawn=814,20  ;Djinn Thugee (36) at 0
+Spawn=815,20  ;Djinn Hashashin (37) at 0
+Spawn=818,20  ;Djinn Padishah (37) at 0
+Spawn=820,20  ;Khalific Djinn (36) at 0
+Spawn=821,20  ;Djinn Vizier (37) at 0
+
+[ENTRY]
+Name=5_dng_dt_obji_LordAfrottLewt
+Spawn=2735,100  ;Lord A'frott's Treasure (1) at 0

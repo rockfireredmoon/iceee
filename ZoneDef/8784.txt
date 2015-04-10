@@ -1,0 +1,13 @@
+[ENTRY]
+ID=8784
+ACCOUNTID=474
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=jacob
+GroveName=jacob
+WarpName=jacob1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

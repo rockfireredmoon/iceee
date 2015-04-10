@@ -1,0 +1,7 @@
+[ENTRY]
+ID=151058581
+Asset=CL-Dead-Rotted_Forest2
+Pos=51868.6,497.41,78896.4
+Orient=0,0.617059,0,0.786917
+Scale=4.25,4.25,4.25
+

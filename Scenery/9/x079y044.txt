@@ -1,0 +1,15 @@
+[ENTRY]
+ID=151001658
+Asset=Prop-Boat-Fishing
+Pos=59448.3,61.8759,33618
+Orient=-0.76239,0.235446,0.392075,0.457825
+Scale=2.2,2.2,2.2
+Flags=1
+
+[ENTRY]
+ID=151054603
+Asset=Effects#Par-Waves-1-Emitter
+Pos=59861.8,61.9259,33373
+Orient=0,-0.947396,0,0.320063
+Scale=2,2,2
+

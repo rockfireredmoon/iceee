@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151017976
+Asset=CL-Sick-Pine3#CL-Sick-Pine3
+Name=9
+Pos=64498.8,867.42,49325
+Orient=0,0,0,1
+Scale=3.55,3.55,3.55
+Flags=1
+

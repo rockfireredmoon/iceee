@@ -1,0 +1,8 @@
+[ENTRY]
+ID=151059052
+Asset=Environment-Marker?type=Rotted
+Name=9
+Pos=40502.1,124.258,67011
+Orient=0,0,0,1
+Scale=3.75,3.75,3.75
+

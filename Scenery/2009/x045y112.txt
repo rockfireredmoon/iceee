@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151014355
+Asset=CL-Crystal3#CL-Crystal3
+Name=9
+Pos=34083.4,1302.71,84181
+Orient=0,0,0,1
+Scale=2.925,2.925,2.925
+Flags=1
+

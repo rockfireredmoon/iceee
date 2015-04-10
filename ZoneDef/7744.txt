@@ -1,0 +1,13 @@
+[ENTRY]
+ID=7744
+ACCOUNTID=344
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=starwolf
+GroveName=starwolf
+WarpName=starwolf1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

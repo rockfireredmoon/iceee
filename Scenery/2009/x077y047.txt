@@ -1,0 +1,9 @@
+[ENTRY]
+ID=151034500
+Asset=CL-Camp_Raider1
+Name=9
+Pos=58108,406.438,35411
+Orient=0,0,0,1
+Scale=1,1,1
+Flags=1
+

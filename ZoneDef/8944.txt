@@ -1,0 +1,13 @@
+[ENTRY]
+ID=8944
+ACCOUNTID=494
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=god
+GroveName=god
+WarpName=god1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

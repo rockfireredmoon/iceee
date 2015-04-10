@@ -1,0 +1,13 @@
+[ENTRY]
+ID=9104
+ACCOUNTID=514
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=thundermdark
+GroveName=thundermdark
+WarpName=thundermdark1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

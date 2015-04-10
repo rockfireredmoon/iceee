@@ -1,0 +1,13 @@
+[ENTRY]
+ID=11712
+ACCOUNTID=840
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=quicksilverhq
+GroveName=quicksilverhq
+WarpName=quicksilverhq1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

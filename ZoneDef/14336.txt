@@ -1,0 +1,13 @@
+[ENTRY]
+ID=14336
+ACCOUNTID=1168
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=nbe
+GroveName=nbe
+WarpName=nbe1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

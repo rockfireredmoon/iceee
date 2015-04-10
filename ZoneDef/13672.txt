@@ -1,0 +1,15 @@
+[ENTRY]
+ID=13672
+ACCOUNTID=1085
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=Autumn
+ShardName=brunopessoli
+GroveName=brunopessoli
+WarpName=brunopessoli1
+DropRateProfile=standard
+Grove=1
+EnvironmentCycle=0
+BuildPermission=account,1085,0,0,3,3
+DefLoc=2958,260,3821
+

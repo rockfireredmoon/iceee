@@ -1,0 +1,4 @@
+Display Name	Chance	MinLevel	MaxLevel	MinAffix	MaxAffix	IntrinsicAffix	BonusExp	BonusDrop
+Elite	60	15	29	1	1	#champion	40	320
+Elite	60	30	39	1	2	#elite	70	560
+Elite	60	40	70	2	2	#elite	80	640

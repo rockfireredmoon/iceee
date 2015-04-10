@@ -1,0 +1,14 @@
+[ENTRY]
+ID=151058430
+Asset=CL-Hills_Tree3#CL-Hills_Tree3
+Pos=59940.4,254.894,48472
+Orient=0,0,0,1
+Scale=1.575,1.575,1.575
+
+[ENTRY]
+ID=151060056
+Asset=Prop-Boulder3
+Pos=59789,699.919,48010.3
+Orient=0,0.777072,0,0.629412
+Scale=2.85,2.85,2.85
+

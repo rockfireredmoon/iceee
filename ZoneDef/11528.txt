@@ -1,0 +1,13 @@
+[ENTRY]
+ID=11528
+ACCOUNTID=817
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=erranderbowfumpti
+GroveName=erranderbowfumpti
+WarpName=erranderbowfumpti1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+
