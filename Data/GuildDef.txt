@@ -1,6 +1,6 @@
 [ENTRY]
 ID=1
-Name=The Lighthouse Keepers Guild
+Name=Lightkeepers Guild
 GuildType=1 ; Neutral
 GuildHall=43644.0,195.418,65700.0,200
 1=100

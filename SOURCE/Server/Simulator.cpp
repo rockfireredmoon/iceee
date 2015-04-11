@@ -115,6 +115,7 @@ OnExitFunctionClearBuffers::~OnExitFunctionClearBuffers()
 #include <errno.h>
 #endif
 
+const char EXIT_GUILD_HALL[] = "EXIT GUILD HALL";
 const char EXIT_GROVE[] = "EXIT GROVE";
 const char EXIT_PVP[] = "EXIT PVP";
 
@@ -7235,7 +7236,13 @@ int SimulatorThread :: handle_command_grove(void)
 
 		wpos += PutInteger(&SendBuf[wpos], ZoneDefManager::HENGE_ID_CUSTOMWARP);
 
-		if(pld.zoneDef->mGrove == true)
+		if(pld.zoneDef->mGuildHall == true)
+		{
+			wpos += PutByte(&SendBuf[wpos], groveCount + 1);
+			wpos += PutStringUTF(&SendBuf[wpos], EXIT_GUILD_HALL);
+			wpos += PutInteger(&SendBuf[wpos], 0);
+		}
+		else if(pld.zoneDef->mGrove == true)
 		{
 			wpos += PutByte(&SendBuf[wpos], groveCount + 1);
 			wpos += PutStringUTF(&SendBuf[wpos], EXIT_GROVE);
@@ -7364,6 +7371,15 @@ int SimulatorThread :: CheckValidHengeDestination(const char *destName, int crea
 			if(pld.zoneDef->mGrove == false)
 			{
 				SendInfoMessage("You are not in a grove.", INFOMSG_ERROR);
+				return false;
+			}
+			return true;
+		}
+		if(strcmp(destName, EXIT_GUILD_HALL) == 0)
+		{
+			if(pld.zoneDef->mGuildHall == false)
+			{
+				SendInfoMessage("You are not in a guild hall.", INFOMSG_ERROR);
 				return false;
 			}
 			return true;

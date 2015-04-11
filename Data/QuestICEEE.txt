@@ -1,7 +1,7 @@
 
 [ENTRY]
 ID=1000
-Title=Join The Lighthouse Keepers Guild
+Title=Join The Lightkeepers Guild
 BodyText=SOME STUFF ABOUT THE GUILD
 CompleteText=SOME STUFF ABOUT HAVING JOINED. 
 Level=11
@@ -32,11 +32,11 @@ Obj.0.markerLocations=46837.5,73.8242,65919.8,81;
 Obj.0.ActivateTime=10000
 Obj.0.ActivateText=Gathering Wreckage!
 [ACT]
-Act.BodyText=Return to Lighthouse Keeper Murdoch.
+Act.BodyText=Return to Lightkeeper Murdoch.
 Obj.0.type=talk
 Obj.0.data1=0
 Obj.0.data2=0
-Obj.0.description=Return to Lighthouse Keeper Murdoch
+Obj.0.description=Return to Lightkeeper Murdoch
 Obj.0.complete=0
 Obj.0.myCreatureDefID=7779
 Obj.0.myItemID=
@@ -80,11 +80,11 @@ Obj.0.markerLocations=46837.5,73.8242,65919.8,81;
 Obj.0.ActivateTime=10000
 Obj.0.ActivateText=Gathering Wreckage!
 [ACT]
-Act.BodyText=Return to Lighthouse Keeper Murdoch.
+Act.BodyText=Return to Lightkeeper Murdoch.
 Obj.0.type=talk
 Obj.0.data1=0
 Obj.0.data2=0
-Obj.0.description=Return to Lighthouse Keeper Murdoch
+Obj.0.description=Return to Lightkeeper Murdoch
 Obj.0.complete=0
 Obj.0.myCreatureDefID=7779
 Obj.0.myItemID=
