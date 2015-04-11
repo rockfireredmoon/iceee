@@ -1,0 +1,8 @@
+[ENTRY]
+ID=1126559
+Asset=CL-LightHouse
+Name=
+Pos=2987.74,266.249,3636.41
+Orient=0,0,0,1
+Scale=1,1,1
+

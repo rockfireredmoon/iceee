@@ -69,6 +69,7 @@ public:
 	bool mInstance;          //If true, this zone is an instance, and spawns will be limited.
 	bool mGrove;             //If true, this is a user grove and should be saved to the custom groves file.
 	bool mArena;             //If true, this zone is an arena and has custom rulesets attached to it.
+	bool mGuildHall;		 //If true, this zone is a guild hall and has custom rulesets attached to it
 	bool mEnvironmentCycle;  //If true, environment time of day cycling is enabled.
 	bool mAudit;             //If true, scenery edits are forced to be audited (by default, groves are not but normal gameplay zones are).
 	int mMaxAggroRange;      //This is a forced limit to the range that mobs may aggro.  Intended for places like the Rotted Maze
@@ -101,6 +102,7 @@ public:
 	void CopyFrom(const ZoneDefInfo& other);
 	void SetDefaults(void);
 	bool IsPlayerGrove(void);
+	bool IsGuildHall(void);
 	bool IsPVPArena(void);
 	bool IsFreeTravel(void);
 	bool IsDungeon(void);
@@ -172,7 +174,7 @@ public:
 	int CheckAutoSave(bool force);
 
 	//int EnumerateGroves(std::string &groveName, std::vector<ZoneDefInfo*> &groveList);
-	int EnumerateGroves(int searchAccountID, std::vector<std::string>& groveList);
+	int EnumerateGroves(int searchAccountID, int creatureDefId, std::vector<std::string>& groveList);
 	int EnumerateArenas(std::vector<std::string>& arenaList);
 	void UpdateGroveAccountID(const char *groveName, int newAccountID);
 	void UpdateZoneIndex(int zoneID, int accountID, const char *warpName, const char *groveName, bool allowCreate);

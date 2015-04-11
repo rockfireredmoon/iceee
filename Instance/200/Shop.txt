@@ -1,0 +1,5 @@
+; Lighthouse keepers guild vendor
+
+[ENTRY]
+CreatureDefID=7781
+Item=8101  ;A hat!

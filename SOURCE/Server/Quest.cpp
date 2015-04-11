@@ -538,6 +538,10 @@ void QuestDefinition :: Clear(void)
 	mScriptAcceptAction.Clear();
 	mScriptCompleteCondition.Clear();
 	mScriptCompleteAction.Clear();
+
+	valourGiven = 0;
+	valourRequired = 0;
+	guildId = 0;
 }
 
 void QuestDefinition :: CopyFrom(const QuestDefinition &other)
@@ -579,6 +583,10 @@ void QuestDefinition :: CopyFrom(const QuestDefinition &other)
 	mScriptAcceptAction.CopyFrom(other.mScriptAcceptAction);
 	mScriptCompleteCondition.CopyFrom(other.mScriptCompleteCondition);
 	mScriptCompleteAction.CopyFrom(other.mScriptCompleteAction);
+
+	valourGiven = other.valourGiven;
+	valourRequired = other.valourRequired;
+	guildId = other.guildId;
 }
 
 int QuestDefinition :: GetObjective(unsigned int act, int type, int CDefID)
@@ -898,6 +906,21 @@ void QuestDefinitionContainer :: LoadFromFile(const char *filename)
 			else if(strcmp(lfr.SecBuffer, "SUGGESTED") == 0)
 			{
 				newItem.levelSuggested = lfr.BlockToIntC(1);
+				LastLoadString = NULL;
+			}
+			else if(strcmp(lfr.SecBuffer, "VALOURGIVEN") == 0)
+			{
+				newItem.valourGiven = lfr.BlockToIntC(1);
+				LastLoadString = NULL;
+			}
+			else if(strcmp(lfr.SecBuffer, "VALOURREQUIRED") == 0)
+			{
+				newItem.valourRequired = lfr.BlockToIntC(1);
+				LastLoadString = NULL;
+			}
+			else if(strcmp(lfr.SecBuffer, "VALOURREQUIRED") == 0)
+			{
+				newItem.guildId = lfr.BlockToIntC(1);
 				LastLoadString = NULL;
 			}
 			else if(strcmp(lfr.SecBuffer, "EXP") == 0)

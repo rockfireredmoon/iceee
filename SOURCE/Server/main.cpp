@@ -438,6 +438,9 @@ int main(int argc, char *argv[])
 	g_GambleManager.LoadFile(Platform::GenerateFilePath(GAuxBuf, "Data", "Gamble.txt"));
 	g_Log.AddMessageFormat("Loaded %d Gamble definitions.", g_GambleManager.GetStandardCount());
 
+	g_GuildManager.LoadFile(Platform::GenerateFilePath(GAuxBuf, "Data", "GuildDef.txt"));
+	g_Log.AddMessageFormat("Loaded %d Guild definitions.", g_GuildManager.GetStandardCount());
+
 	g_ZoneDefManager.LoadData();
 	g_GroveTemplateManager.LoadData();
 

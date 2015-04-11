@@ -84,6 +84,15 @@ public:
 	void Clear(void);
 };
 
+struct GuildListObject
+{
+	int GuildDefID;
+	int Valour;
+
+	GuildListObject() { Clear(); };
+	void Clear(void) { GuildDefID = 0; Valour = 0; }
+};
+
 struct SidekickObject
 {
 	static const int GENERIC = 0;
@@ -285,6 +294,7 @@ public:
 	ActiveCharacterData activeData;
 	AbilityContainer abilityList;
 	PreferenceContainer preferenceList;
+	vector<GuildListObject> guildList;
 	vector<FriendListObject> friendList;
 	vector<SidekickObject> SidekickList;  //Holds a list of Creature Def IDs for each attached sidekick.
 	vector<int> hengeList;     //List of CreatureDefIDs of henges that have been activated.
@@ -309,6 +319,10 @@ public:
 	void EraseExpirationTime(void);
 	void SetExpireTime(void);
 	void ExtendExpireTime(void);
+
+	void JoinGuild(int GuildDefID);
+	void AddValour(int GuildDefID, int valour);
+	bool IsInGuildAndHasValour(int GuildDefID, int valour);
 
 	void AddFriend(int CDefID, const char *name);
 	int RemoveFriend(const char *name);

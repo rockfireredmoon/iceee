@@ -7,6 +7,8 @@
 #include "Audit.h"  //For scenery audits.
 #include "InstanceScale.h"
 #include "Report.h"
+#include "Character.h"
+#include "Guilds.h"
 
 ZoneDefManager g_ZoneDefManager;
 ZoneBarrierManager g_ZoneBarrierManager;
@@ -213,6 +215,7 @@ void ZoneDefInfo :: Clear(void)
 	mPersist = false;
 	mInstance = false;
 	mGrove = false;
+	mGuildHall = false;
 	mArena = false;
 	mAudit = false;
 	mEnvironmentCycle = false;
@@ -248,6 +251,7 @@ void ZoneDefInfo :: CopyFrom(const ZoneDefInfo& other)
 	mPersist = other.mPersist;
 	mInstance = other.mInstance;
 	mGrove = other.mGrove;
+	mGuildHall = other.mGuildHall;
 	mArena = other.mArena;
 	mAudit = other.mAudit;
 	mEnvironmentCycle = other.mEnvironmentCycle;
@@ -289,6 +293,11 @@ void ZoneDefInfo :: SetDefaults(void)
 		CreateDefaultGrovePermission();
 }
 
+bool ZoneDefInfo :: IsGuildHall(void)
+{
+	return mGuildHall;
+}
+
 bool ZoneDefInfo :: IsPlayerGrove(void)
 {
 	if(mGrove == true && mID >= ZoneDefManager::GROVE_ZONE_ID_DEFAULT)
@@ -315,7 +324,7 @@ bool ZoneDefInfo :: IsFreeTravel(void)
 
 bool ZoneDefInfo :: IsDungeon(void)
 {
-	if(mGrove == false && mArena == false && mInstance == true)
+	if(mGuildHall == false && mGrove == false && mArena == false && mInstance == true)
 		return true;
 
 	return false;
@@ -703,6 +712,8 @@ int ZoneDefManager :: LoadFile(const char *fileName)
 					newItem.mInstance = lfr.BlockToBoolC(1);
 				else if(strcmp(lfr.SecBuffer, "GROVE") == 0)
 					newItem.mGrove = lfr.BlockToBoolC(1);
+				else if(strcmp(lfr.SecBuffer, "GUILDHALL") == 0)
+					newItem.mGuildHall = lfr.BlockToBoolC(1);
 				else if(strcmp(lfr.SecBuffer, "ARENA") == 0)
 					newItem.mArena = lfr.BlockToBoolC(1);
 				else if(strcmp(lfr.SecBuffer, "AUDIT") == 0)
@@ -939,6 +950,7 @@ int ZoneDefManager :: CreateGrove(int accountID, const char *grovename)
 	newZone.DefY = 260;
 	newZone.DefZ = 3821;
 	newZone.mGrove = true;
+	newZone.mGuildHall = false;
 
 	//Flag for the next autosave.
 	newZone.PendingChanges = 1;
@@ -1014,15 +1026,36 @@ int ZoneDefManager :: CheckAutoSave(bool force)
 	return saveOps;
 }
 
-int ZoneDefManager :: EnumerateGroves(int searchAccountID, std::vector<std::string>& groveList)
+int ZoneDefManager :: EnumerateGroves(int searchAccountID, int characterDefId, std::vector<std::string>& groveList)
 {
 	cs.Enter("ZoneDefManager::EnumerateGroves");
 	ZONEINDEX_ITERATOR it;
+	CharacterData  *cdata = g_CharacterManager.GetPointerByID(characterDefId);
+
 	for(it = mZoneIndex.begin(); it != mZoneIndex.end(); ++it)
 	{
 		if(it->second.mAccountID == searchAccountID)
 		{
 			groveList.push_back(it->second.mWarpName);
+		}
+		else
+		{
+			// Check if the zone is a guild hall for a guild the character is in
+			for(int i = 0 ; i < cdata->guildList.size(); i++)
+			{
+				int guildDefID = cdata->guildList[0].GuildDefID;
+				GuildDefinition *gDef = g_GuildManager.GetGuildDefinition(guildDefID);
+				if(gDef == NULL) {
+					g_Log.AddMessageFormat("Guild definition %d does not exist", guildDefID);
+				}
+				else {
+					if(it->second.mID == gDef->guildHallZone && cdata->IsInGuildAndHasValour(guildDefID, 0))
+					{
+						groveList.push_back(it->second.mWarpName);
+						break;
+					}
+				}
+			}
 		}
 	}
 	cs.Leave();

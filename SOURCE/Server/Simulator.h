@@ -8,6 +8,7 @@
 #include "ActiveCharacter.h"
 #include "QuestScript.h"
 #include "Report.h"
+#include "Guilds.h"
 
 class AccountData;
 struct PlayerInstancePlacementData;
@@ -115,7 +116,7 @@ public:
 	long TotalSendBytes;
 	long TotalRecBytes;
 	int MessageEnd;
-	int ReadPos;    //Current read position within RecBuf(), when extracting data from packets. 
+	int ReadPos;    //Current read position within RecBuf(), when extracting data from packets.
 	int WritePos;   //Current write position within SendBuf(), when writing packets.
 	bool PendingSend; //If set to true, the recv() handler will send any data marked for sending
 	char Aux1[4096];          //Generic large buffer.
@@ -175,6 +176,7 @@ public:
 	void SendInfoMessage(const char *message, char eventID);
 	void SendPlaySound(const char *assetPackage, const char *soundFile);
 	void LoadAccountCharacters(AccountData *accPtr);
+	void JoinGuild(GuildDefinition *gDef, int startValour);
 	
 	void handle_query_persona_list(void);
 	int handle_query_persona_create(void);

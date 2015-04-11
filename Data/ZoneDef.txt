@@ -1041,3 +1041,13 @@ PageSize=1000
 Instance=1
 MaxLeashRange=1000
 
+[ENTRY]
+ID=200
+NAME=The Lighthouse Keepers Guild Hall
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=IronMaw1
+ShardName=Europe 1
+GuildHall=1
+WarpName=The Lighthouse Keepers Guild Hall
+EnvironmentCycle=1
+DefLoc=2686,312,4786

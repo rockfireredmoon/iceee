@@ -1,0 +1,4 @@
+[ENTRY]
+Flags=3
+Name=guildquest_01_wreakage
+Spawn=7780,100  ;Ship wreakage

@@ -425,6 +425,11 @@ public:
 	unsigned long RepeatMinuteDelay;  //Number of minutes that must pass before the quest is reactivated for another one-time completion.  Specifically used for event quests so the ID does not remain forever in the completed list.  Note this is a special case and not related to <Repeat>, which must remain false for this work correctly.
 	int heroism;         //This is a quest completion bonus new to this server.
 
+	//	IceEE additions
+	int guildId;		// This quest requires the player is part of this guid
+	int	valourRequired;	// The amount of valour required to activate the quest
+	int valourGiven;	// The amount of valour given on completion
+
 	// This stuff is used internally for determining quest marker information.  It is extracted from the "sGiver" field and converted to numerical types here for faster processing.
 	int giverX;
 	int giverY;

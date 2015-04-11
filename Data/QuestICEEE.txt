@@ -1,0 +1,92 @@
+
+[ENTRY]
+ID=1000
+Title=Join The Lighthouse Keepers Guild
+BodyText=SOME STUFF ABOUT THE GUILD
+CompleteText=SOME STUFF ABOUT HAVING JOINED. 
+Level=11
+Suggested=11
+Exp=1478
+PartySize=1
+NumRewards=0
+Coin=0
+Unabandon=0
+QuestGiverID=7779
+QuestEnderID=7779
+Repeat=0
+sGiver=43644.0,195.418,65700.0,81
+sEnder=43644.0,195.418,65700.0,81
+Heroism=6
+ScriptCompleteAction=join_guild 1 100
+[ACT]
+Act.BodyText=Gather three pieces of shipwreck from the beach.
+Obj.0.type=gather
+Obj.0.data1=7780
+Obj.0.data2=3
+Obj.0.description=Gather 3 pieces of wreckage
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=8100
+Obj.0.completeText=0 of 3
+Obj.0.markerLocations=46837.5,73.8242,65919.8,81;
+Obj.0.ActivateTime=10000
+Obj.0.ActivateText=Gathering Wreckage!
+[ACT]
+Act.BodyText=Return to Lighthouse Keeper Murdoch.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Lighthouse Keeper Murdoch
+Obj.0.complete=0
+Obj.0.myCreatureDefID=7779
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=44487.2,224.503,65150,81;
+
+
+[ENTRY]
+ID=1001
+Title=Do Some Jobs For your Guild
+BodyText=This is your first guild specific quest blah blah. You will earn 200 valour.
+CompleteText=Your guild thanks you! 
+Level=11
+Suggested=11
+Exp=0
+PartySize=1
+NumRewards=0
+Coin=0
+Unabandon=0
+ValourRequired=100
+GuildID=1
+ValourGiven=200
+QuestGiverID=7779
+QuestEnderID=7779
+Repeat=0
+sGiver=43644.0,195.418,65700.0,81
+sEnder=43644.0,195.418,65700.0,81
+Heroism=6
+ScriptCompleteAction=join_guild 1 100
+[ACT]
+Act.BodyText=Gather three pieces of shipwreck from the beach.
+Obj.0.type=gather
+Obj.0.data1=7780
+Obj.0.data2=3
+Obj.0.description=Gather 3 pieces of wreckage
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=8100
+Obj.0.completeText=0 of 3
+Obj.0.markerLocations=46837.5,73.8242,65919.8,81;
+Obj.0.ActivateTime=10000
+Obj.0.ActivateText=Gathering Wreckage!
+[ACT]
+Act.BodyText=Return to Lighthouse Keeper Murdoch.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Lighthouse Keeper Murdoch
+Obj.0.complete=0
+Obj.0.myCreatureDefID=7779
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=44487.2,224.503,65150,81;

@@ -41,6 +41,8 @@ bool CharacterServerData :: VerifyIdle(void)
 		return false;
 	if(zoneDef->mGrove == true)
 		return false;
+	if(zoneDef->mGuildHall == true)
+		return false;
 	if(zoneDef->mInstance == true)
 		return false;
 

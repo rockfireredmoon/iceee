@@ -1123,6 +1123,7 @@ void CharacterData :: ClearAll(void)
 	abilityList.AbilityList.clear();
 	preferenceList.PrefList.clear();
 	friendList.clear();
+	guildList.clear();
 	SidekickList.clear();
 	MaxSidekicks = MAX_SIDEKICK;
 
@@ -1186,6 +1187,34 @@ void CharacterData :: ExtendExpireTime(void)
 {
 	if(expireTime != 0)
 		SetExpireTime();
+}
+
+void CharacterData :: AddValour(int GuildDefID, int valour)
+{
+	for(size_t i = 0; i < guildList.size(); i++) {
+		if(guildList[i].GuildDefID == GuildDefID) {
+			guildList[i].Valour += valour;
+			return;
+		}
+	}
+}
+
+bool CharacterData :: IsInGuildAndHasValour(int GuildDefID, int valour) {
+	for(size_t i = 0; i < guildList.size(); i++)
+		if(guildList[i].GuildDefID == GuildDefID && guildList[i].Valour >= valour)
+			return true;
+	return false;
+}
+
+void CharacterData :: JoinGuild(int GuildDefID)
+{
+	for(size_t i = 0; i < guildList.size(); i++)
+		if(guildList[i].GuildDefID == GuildDefID)
+			return;
+
+	GuildListObject newObject;
+	newObject.GuildDefID = GuildDefID;
+	guildList.push_back(newObject);
 }
 
 void CharacterData :: AddFriend(int CDefID, const char *name)
@@ -1505,6 +1534,10 @@ void CharacterData :: BuildAvailableQuests(QuestDefinitionContainer &questList)
 		if(qd->profession != 0)
 			if(cdef.css.profession != qd->profession)
 				continue;
+
+		// Guild requirements
+		if(qd->guildId != 0 && !IsInGuildAndHasValour(qd->guildId, qd->valourRequired))
+			continue;
 
 		//If we get here, the quest is good to add to at least one availability list.
 		qr.QuestID = qd->questID;
@@ -2172,6 +2205,23 @@ int CheckSection_General(FileReader &fr, CharacterData &cd, const char *debugFil
 				cd.AddFriend(CDefID, name);
 		}
 	}
+	else if(strcmp(fr.SecBuffer, "GUILDLIST") == 0)
+		{
+			//Restore this entry so it can be re-broken with multibreak instead
+			if(fr.BlockPos[1] > 0)
+				fr.DataBuffer[fr.BlockPos[1] - 1] = '=';
+
+			int r = fr.MultiBreak("=,");
+			if(r >= 3)
+			{
+				int GuildDefID = fr.BlockToIntC(1);
+				int valour = fr.BlockToIntC(1);
+				if(GuildDefID != 0) {
+					cd.JoinGuild(GuildDefID);
+					cd.AddValour(GuildDefID, valour);
+				}
+			}
+		}
 	else if(strcmp(fr.SecBuffer, "SIDEKICK") == 0)
 	{
 		//Restore this entry so it can be re-broken with multibreak instead
@@ -2531,6 +2581,10 @@ void SaveCharacterToStream(FILE *output, CharacterData &cd)
 
 	Util::WriteIntegerList(output, "Abilities", cd.abilityList.AbilityList);
 
+	//Guild list
+	for(size_t i = 0; i < cd.guildList.size(); i++)
+		fprintf(output, "GuildList=%d,%d\r\n", cd.guildList[i].GuildDefID, cd.guildList[i].Valour);
+
 	//Friend list
 	for(size_t i = 0; i < cd.friendList.size(); i++)
 		fprintf(output, "FriendList=%d,%s\r\n", cd.friendList[i].CDefID, cd.friendList[i].Name.c_str());
@@ -2690,6 +2744,22 @@ int GetCharacterIndexByName(char *name)
 }
 */
 
+//GuildListObject :: GuildListObject()
+//{
+//	Clear();
+//}
+//
+//GuildListObject :: ~GuildListObject()
+//{
+//}
+//
+//GuildListObject :: Clear(void)
+//{
+//	GuildDefID = 0;
+//	Valour = 0;
+//}
+
+//
 
 FriendListObject :: FriendListObject()
 {

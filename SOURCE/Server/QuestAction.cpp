@@ -4,6 +4,7 @@
 #include "Stats.h"
 #include "Item.h"
 #include "Simulator.h"
+#include "Stats.h"
 
 namespace QuestCommand
 {
@@ -27,6 +28,7 @@ const QuestScriptCommandDef* ExtendedQuestAction :: GetCommandDef(const std::str
 		{"remove_item",    ACTION_REMOVE_ITEM, 2, CommandParam::INTEGER, CommandParam::INTEGER, CommandParam::NONE },
 		{"send_text",      ACTION_SEND_TEXT, 1, CommandParam::STRING, CommandParam::NONE, CommandParam::NONE },
 		{"play_sound",     ACTION_PLAY_SOUND, 1, CommandParam::STRING, CommandParam::NONE, CommandParam::NONE },
+		{"join_guild",     ACTION_JOIN_GUILD, 2, CommandParam::INTEGER, CommandParam::INTEGER, CommandParam::NONE },
 	};
 
 	static const int count = COUNT_ARRAY_ELEMENTS(commands);
@@ -235,6 +237,24 @@ int QuestActionContainer :: ExecuteSingleCommand(SimulatorThread *caller, Extend
 				sub.push_back("");
 			}
 			caller->SendPlaySound(sub[0].c_str(), sub[1].c_str());
+		}
+		break;
+	case ACTION_JOIN_GUILD:
+		{
+			int guildDefID = e.param[0];
+			int startValour = e.param[1];
+
+			//Find out
+			GuildDefinition *gDef = g_GuildManager.GetGuildDefinition(guildDefID);
+			if(gDef == NULL)
+				caller->SendInfoMessage("Hrmph. This guild does not exist, please report a bug!", INFOMSG_INFO);
+			else {
+				caller->SendInfoMessage("Joining guild ..", INFOMSG_INFO);
+				caller->JoinGuild(gDef, startValour);
+				char buffer[64];
+				Util::SafeFormat(buffer, sizeof(buffer), "You have joined %s", gDef->defName);
+				caller->SendInfoMessage(buffer, INFOMSG_INFO);
+			}
 		}
 		break;
 	default:

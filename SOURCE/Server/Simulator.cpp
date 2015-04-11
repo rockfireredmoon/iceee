@@ -1220,6 +1220,17 @@ void SimulatorThread :: SendInfoMessage(const char *message, char eventID)
 	AttemptSend(SendBuf, wpos);
 }
 
+
+void SimulatorThread :: JoinGuild(GuildDefinition *gDef, int startValour)
+{
+	pld.charPtr->JoinGuild(gDef->guildDefinitionID);
+	pld.charPtr->AddValour(gDef->guildDefinitionID, startValour);
+	pld.charPtr->cdef.css.SetSubName(gDef->defName);
+	creatureInst->SendStatUpdate(STAT::SUB_NAME);
+	AddMessage((long)&pld.charPtr->cdef, 0, BCM_UpdateCreatureDef);
+	pld.charPtr->pendingChanges++;
+}
+
 void SimulatorThread :: SendPlaySound(const char *assetPackage, const char *soundFile)
 {
 	int wpos = 0;
@@ -3361,6 +3372,10 @@ int SimulatorThread :: handle_query_map_marker(void)
 					if(pld.charPtr->questJournal.completedQuests.HasQuestID(qd->Requires) == -1)
 						continue;
 
+				// Guild requirements
+				if(qd->guildId != 0 && !creatureInst->charPtr->IsInGuildAndHasValour(qd->guildId, qd->valourRequired))
+					continue;
+
 				qRes.push_back(STRINGLIST());
 				qRes.back().push_back(qd->title.c_str());
 				Util::SafeFormat(Aux1, sizeof(Aux1), "(%d %d %d)", qd->giverX, qd->giverY, qd->giverZ);
@@ -4216,6 +4231,10 @@ void SimulatorThread :: handle_communicate(void)
 				breakLoop = true;
 				break;
 			case CHAT_SCOPE_CLAN:
+				if(it->pld.CreatureDefID == pld.CreatureDefID)  //Send to self
+					send = true;
+				else if(g_GuildManager.IsMutualGuild(it->pld.CreatureDefID, pld.CreatureDefID) ==true)
+					send = true;
 				break;
 			default:
 				break;
@@ -4383,9 +4402,20 @@ int SimulatorThread :: CheckValidWarpZone(int ZoneID)
 		return ERROR_NONE;
 
 	//For regular players
-	if(zonePtr->mGrove == false && zonePtr->mArena == false)
+	if(zonePtr->mGrove == false && zonePtr->mArena == false && zonePtr ->mGuildHall)
 		if(CheckPermissionSimple(Perm_Account, Permission_Debug) == false)
 			return ERROR_WARPGROVEONLY;
+
+	//For guild hall
+	if(zonePtr -> mGuildHall) {
+		// Must be in guild
+		GuildDefinition *gdef = g_GuildManager.GetGuildDefinitionForGuildHallZoneID(ZoneID);
+		if(!pld.charPtr->IsInGuildAndHasValour(gdef->guildDefinitionID, 0))
+		{
+			LogMessageL(MSG_SHOW, "[ERROR] Not allowed to warp to guild hall unless in guild: %d", ZoneID);
+			return ERROR_INVALIDZONE;
+		}
+	}
 
 	if(zonePtr->CanPlayerWarp(creatureInst->CreatureDefID, pld.accPtr->ID) == false)
 		return ERROR_USERBLOCK;
@@ -7185,9 +7215,8 @@ int SimulatorThread :: handle_query_trade_essence(void)
 int SimulatorThread :: handle_command_grove(void)
 {
 	std::vector<std::string> groveList;
-	//vector<ZoneDefInfo*> groveList;
-	//int groveCount = g_ZoneDefManager.EnumerateGroves(pld.accPtr->GroveName, groveList);
-	int groveCount = g_ZoneDefManager.EnumerateGroves(pld.accPtr->ID, groveList);
+
+	int groveCount = g_ZoneDefManager.EnumerateGroves(pld.accPtr->ID,  pld.CreatureDefID, groveList);
 	int wpos = 0;
 	if(groveCount > 0)
 	{
