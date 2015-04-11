@@ -2,6 +2,7 @@
 #define QUESTACTION_H
 
 #include "CommonTypes.h"
+#include "Guilds.h"
 
 class SimulatorThread;
 

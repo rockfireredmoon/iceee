@@ -1,3 +1,8 @@
+#pragma once
+#ifndef GUILDS_H
+#define GUILDS_H
+
+
 #include <vector>
 #include <string>
 
@@ -36,3 +41,6 @@ public:
 };
 
 extern GuildManager g_GuildManager;
+
+
+#endif /* GUILDS_H */

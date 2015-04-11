@@ -38,6 +38,7 @@ CPP_SRCS += \
 ../SOURCE/Server/FriendStatus.cpp \
 ../SOURCE/Server/Gamble.cpp \
 ../SOURCE/Server/Globals.cpp \
+../SOURCE/Server/Guilds.cpp \
 ../SOURCE/Server/HTTPBase.cpp \
 ../SOURCE/Server/HTTPDistribute.cpp \
 ../SOURCE/Server/IGForum.cpp \
@@ -109,6 +110,7 @@ OBJS += \
 ./SOURCE/Server/FriendStatus.o \
 ./SOURCE/Server/Gamble.o \
 ./SOURCE/Server/Globals.o \
+./SOURCE/Server/Guilds.o \
 ./SOURCE/Server/HTTPBase.o \
 ./SOURCE/Server/HTTPDistribute.o \
 ./SOURCE/Server/IGForum.o \
@@ -177,6 +179,7 @@ CPP_DEPS += \
 ./SOURCE/Server/FileReader3.d \
 ./SOURCE/Server/FriendStatus.d \
 ./SOURCE/Server/Gamble.d \
+./SOURCE/Server/Guilds.d \
 ./SOURCE/Server/Globals.d \
 ./SOURCE/Server/HTTPBase.d \
 ./SOURCE/Server/HTTPDistribute.d \

@@ -152,6 +152,8 @@ If using Code::Blocks on LINUX
 #include "Crafting.h"
 #include "InstanceScale.h"
 
+extern GuildManager g_GuildManager;
+
 ChangeData g_AutoSaveTimer;
 
 char GAuxBuf[1024];    //Note, if this size is modified, change all "extern" references

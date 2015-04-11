@@ -8,7 +8,6 @@
 #include "InstanceScale.h"
 #include "Report.h"
 #include "Character.h"
-#include "Guilds.h"
 
 ZoneDefManager g_ZoneDefManager;
 ZoneBarrierManager g_ZoneBarrierManager;

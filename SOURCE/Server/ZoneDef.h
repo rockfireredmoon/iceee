@@ -9,6 +9,7 @@
 #include "Account.h"  //for ChangeData
 #include "CommonTypes.h"
 #include "Report.h"
+#include "Guilds.h"
 
 class DropRateProfile;
 
