@@ -1,0 +1,19 @@
+material GUI/AreaDebug
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			scene_blend add
+			depth_check off
+			fog_override true
+
+			texture_unit
+			{
+				// A solid color we can use to fill boxes.
+				colour_op_ex source1 src_manual src_current 1.0 0.925490196078431 0.0 0.4
+			}
+		}
+	}
+}

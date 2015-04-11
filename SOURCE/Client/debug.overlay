@@ -1,0 +1,51 @@
+EE/Debug
+{
+	zorder 650
+	
+	container Panel(EE/Debug/Panel)
+	{
+		metrics_mode pixels
+		top 5
+		left 5
+
+		element TextArea(EE/Debug/Text)
+		{
+			metrics_mode pixels
+			left 0
+			top 0
+//			caption .
+			width 600
+			height 480
+			font_name BlueHighway
+			char_height 12
+			colour_top 0.95 0.95 0.95
+			colour_bottom 0.95 0.95 0.95
+		}
+	}
+}
+
+EE/Debug/Shadow
+{
+	zorder 649
+	
+	container Panel(EE/Debug/Shadow/Panel)
+	{
+		metrics_mode pixels
+		top 5
+		left 5
+
+		element TextArea(EE/Debug/Text/Shadow)
+		{
+			metrics_mode pixels
+			left 1
+			top 1
+//			caption .
+			width 600
+			height 480
+			font_name BlueHighway
+			char_height 12
+			colour_top 0.2 0.2 0.2
+			colour_bottom 0.2 0.2 0.2
+		}
+	}
+}

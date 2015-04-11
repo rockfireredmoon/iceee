@@ -623,7 +623,7 @@ appearance=n4:{["sk"]={["skin"]="6A5939",["accent"]="554015",["eye"]="FF0000",["
 ID=7777
 will_regen=1
 might_regen=1
-appearance=p1:{["a"]="Prop-Brazier_Blue"}
+appearance=p1:{["a"]="Par-Flame-Emitter",["sz"]=".75"}
 level=1
 display_name=Thawing Brazier
 profession=1

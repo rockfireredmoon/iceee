@@ -50,6 +50,15 @@ set STAGE 0
 	call killMinions
 	return
 
+:onKill_3649
+    spawn 1126558
+    call brazierSearch
+    return
+   
+:onKill_3648
+	spawn 1126556
+	call brazierSearch
+	return
 
 :findResultArrayCDEF
 	print ":findResultArrayCDEF"
