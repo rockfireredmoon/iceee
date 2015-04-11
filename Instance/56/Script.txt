@@ -413,9 +413,9 @@ set STAGE 0
 
 :spawnMinions
 	print ":spawnMinions"
-	spawn_at 1127142 0
-	spawn_at 1127141 0
-	spawn_at 1127140 0
+	spawn_at 1127142 7778
+	spawn_at 1127141 7778
+	spawn_at 1127140 7778
 	set MESG 0
 	print ":getting tarrget"
 	get_target CID_WAILER TEMP_TARGET
