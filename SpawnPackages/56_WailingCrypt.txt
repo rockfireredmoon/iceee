@@ -10,10 +10,12 @@ Spawn=7777,100  ;Thawing Brazier (1)
 
 [ENTRY]
 Name=56_wacr_Kyshf
+Sequential=1
 Spawn=3648,100  ;Kyshf (48)
 
 [ENTRY]
 Name=56_wacr_Alabaster
+Sequential=1
 Spawn=3649,100  ;Alabaster (48)
 
 [ENTRY]

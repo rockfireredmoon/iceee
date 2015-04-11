@@ -51,11 +51,13 @@ set STAGE 0
 	return
 
 :onKill_3649
+	print "Alabaster killed, spawining brazier flame"
     spawn 1126558
     call brazierSearch
     return
    
 :onKill_3648
+	print "KYHYSYSHSF killed, spawining brazier flame"
 	spawn 1126556
 	call brazierSearch
 	return
