@@ -4415,6 +4415,10 @@ int SimulatorThread :: CheckValidWarpZone(int ZoneID)
 			LogMessageL(MSG_SHOW, "[ERROR] Not allowed to warp to guild hall unless in guild: %d", ZoneID);
 			return ERROR_INVALIDZONE;
 		}
+		else
+		{
+			return ERROR_NONE;
+		}
 	}
 
 	if(zonePtr->CanPlayerWarp(creatureInst->CreatureDefID, pld.accPtr->ID) == false)
@@ -4662,7 +4666,7 @@ int SimulatorThread :: handle_command_warpg(void)
 	ZoneDefInfo *zoneDef = g_ZoneDefManager.GetPointerByExactWarpName(grove);
 	if(zoneDef == NULL)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Grove not found.");
-	if(zoneDef->mGrove == false)
+	if(zoneDef->mGrove == false && !zoneDef->mGuildHall)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Destination is not a grove.");
 
 	int errCode = CheckValidWarpZone(zoneDef->mID);
