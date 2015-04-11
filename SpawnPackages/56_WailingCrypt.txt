@@ -30,12 +30,16 @@ Spawn=3655,50  ;Crypt Creeper (46)
 [ENTRY]
 Name=56_wacr_CryptMix
 Shares=30
+Spawn=3650,10  ;Crypt Wanderer (46)
+Spawn=3651,10  ;Crypt Deathchanter (46)
+Spawn=3653,10  ;Crypt Guardian (47)
+
+[ENTRY]
+Name=56_wacr_ForgottenSoul
+Shares=100
 Spawn=7778,10  ;Crypt Wanderer (46)
 Spawn=7778,10  ;Crypt Wanderer (46)
 Spawn=7778,10  ;Crypt Wanderer (46)
-;Spawn=3650,10  ;Crypt Wanderer (46)
-;Spawn=3651,10  ;Crypt Deathchanter (46)
-;Spawn=3653,10  ;Crypt Guardian (47)
 
 [ENTRY]
 Name=56_wacr_NobleMix
