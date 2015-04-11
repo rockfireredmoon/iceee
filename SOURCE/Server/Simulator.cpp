@@ -7442,7 +7442,7 @@ int SimulatorThread :: handle_query_henge_setDest(void)
 			InteractObject *interact = NULL;
 			bool blockAttempt = false;
 
-			if((strcmp(destName, EXIT_GROVE) == 0) || (strcmp(destName, EXIT_PVP) == 0))
+			if((strcmp(destName, EXIT_GROVE) == 0) || (strcmp(destName, EXIT_PVP) == 0) || (strcmp(destName, EXIT_GUILD_HALL) == 0))
 			{
 				int destID = pld.charPtr->groveReturnPoint[3];  //x, y, z, zoneID
 				if(destID == 0)
