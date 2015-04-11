@@ -315,6 +315,8 @@ bool ZoneDefInfo :: IsFreeTravel(void)
 {
 	if(IsPlayerGrove() == true)
 		return true;
+	if(IsGuildHall() == true)
+		return true;
 	if(IsPVPArena() == true)
 		return true;
 
