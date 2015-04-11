@@ -143,19 +143,20 @@ class this.Assembler.Factory
 			return this._assemble(obj);
 			  // [018]  OP_POPTRAP        1      0    0    0
 			  // [019]  OP_JMP            0     27    0    0
-
-			try
-			{
-				this.log.error("Error assembling " + $[stack offset 1] + ": " + this._assemble(obj));
-				this.mRequiredArchivesError = this._assemble(obj);
-				this.onError($[stack offset 1], this._assemble(obj));
-				this.disassemble($[stack offset 1]);
-				this.createErrorNode($[stack offset 1].getNode());
-			}
-			catch( err )
-			{
-				this.log.error(err);
-			}
+	
+			// TODO - Em VERY not sure about this
+			//try
+			//{
+			//	this.log.error("Error assembling " + $[stack offset 1] + ": " + this._assemble(obj));
+			//	this.mRequiredArchivesError = this._assemble(obj);
+			//	this.onError($[stack offset 1], this._assemble(obj));
+			//	this.disassemble($[stack offset 1]);
+			//	this.createErrorNode($[stack offset 1].getNode());
+			//}
+			//catch( err )
+			//{
+			//	this.log.error(err);
+			//}
 		}
 
 		return false;
@@ -172,7 +173,7 @@ class this.Assembler.Factory
 
 	function createErrorNode( parentNode )
 	{
-		local name = parentNode.getName() + "/ErrorNode/" + this.gNextErrorID++.tostring();
+		local name = parentNode.getName() + "/ErrorNode/" + ( this.gNextErrorID++);
 		local sphere = this._scene.createEntity(name, "Manipulator-QuestionMark.mesh");
 		sphere.setVisibilityFlags(this.VisibilityFlags.ANY);
 		sphere.setQueryFlags(this.QueryFlags.ANY | this.QueryFlags.MANIPULATOR);

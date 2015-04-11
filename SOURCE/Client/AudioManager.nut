@@ -179,7 +179,7 @@ class this.AudioManager
 			}
 		}
 
-		local id = "Music_" + this.mNextTrackID++.tostring();
+		local id = "Music_" + ( this.mNextTrackID++);
 		local emitter;
 
 		try
@@ -343,7 +343,7 @@ class this.AudioManager
 
 	function createSoundEmitter( sound )
 	{
-		local id = "Sound_" + this.mNextTrackID++.tostring();
+		local id = "Sound_" + (this.mNextTrackID++);
 		local emitter = this._scene.createSoundEmitter(id);
 		emitter.setSound(sound);
 		return emitter;

@@ -133,17 +133,28 @@ this.ClanRankValue <- {
 	Member = 2,
 	Initiate = 1
 };
+
+this.GuildRankValue <- {
+	Leader = 4,
+	Officer = 3,
+	Member = 2,
+	Initiate = 1
+};
+
 class this.Screens.SocialWindow extends this.GUI.Frame
 {
 	static mClassName = "Screens.SocialWindow";
+	
 	mFriendsBrowser = null;
 	mIgnoredBrowser = null;
 	mClanBrowser = null;
+	
 	mAddButton = null;
 	mStatusButton = null;
 	mRemoveButton = null;
 	mAddIgnoreButton = null;
 	mRemoveIgnoreButton = null;
+	
 	mClanAddButton = null;
 	mClanRemoveButton = null;
 	mClanMOTDButton = null;
@@ -153,6 +164,7 @@ class this.Screens.SocialWindow extends this.GUI.Frame
 	mClanMOTDLabel = null;
 	mClanMOTD = null;
 	mClanLeader = false;
+	
 	mFriendPopup = null;
 	mFriends = null;
 	mClan = null;
@@ -172,6 +184,14 @@ class this.Screens.SocialWindow extends this.GUI.Frame
 	mStatus = "";
 	mIsClanOfficer = false;
 	mClanOfficerActions = null;
+	
+	// Guild
+	mGuildBrowser = null;
+	mGuildComponent = null;
+	mGuildMOTDLabel = null;
+	mGuildName = null;
+	mGuildMOTD = null;
+	
 	MAX_CHARACTERS = 200;
 	constructor()
 	{
@@ -230,6 +250,8 @@ class this.Screens.SocialWindow extends this.GUI.Frame
 		ignoredPane.add(this.mIgnoredComponent, this.GUI.BorderLayout.CENTER);
 		ignoredPane.add(ignoredActions, this.GUI.BorderLayout.SOUTH);
 		ignoredPane.setInsets(3);
+		
+		// Clans
 		this.mClanBrowser = this.GUI.ColumnList();
 		this.mClanBrowser.addColumn("Name", 100);
 		this.mClanBrowser.setShowingHeaders(false);
@@ -288,15 +310,50 @@ class this.Screens.SocialWindow extends this.GUI.Frame
 		clanPane.add(this.mClanMemberActions, this.GUI.BorderLayout.SOUTH);
 		clanPane.add(this.mClanOfficerActions, this.GUI.BorderLayout.SOUTH);
 		clanPane.setInsets(3);
+		
+		
+		
+		// Guilds
+		this.mGuildBrowser = this.GUI.ColumnList();
+		this.mGuildBrowser.addColumn("Name", 100);
+		this.mGuildBrowser.setShowingHeaders(false);
+		this.mGuildBrowser.setAppearance("DarkBorder");
+		this.mGuildBrowser.setRowAppearance("ColumnSelection");
+		this.mGuildBrowser.setSelectionInsets([
+			3,
+			3
+		]);
+		this.mGuildMOTDLabel = this.GUI.HTML("");
+		this.mGuildMOTDLabel.setPreferredSize(100, 50);
+		this.mGuildMOTDLabel.setText("<i>Downloading guild information...</i>");
+		this.mGuildComponent = this.GUI.Component(this.GUI.BorderLayout());
+		this.mGuildComponent.add(this.mGuildMOTDLabel, this.GUI.BorderLayout.CENTER);
+		local leaveGuildButton = this.GUI.Button("Leave Clan", this, "onLeaveGuild");
+		leaveGuildButton.setSize(25, 100);
+		this.mGuildMemberActions = this.GUI.Container(this.GUI.BoxLayout());
+		this.mGuildMemberActions.getLayoutManager().setPackAlignment(0.5);
+		this.mGuildMemberActions.add(leaveGuildButton);
+		this.mGuildMemberActions.setInsets(3, 0, 3, 3);
+		this.mGuildMemberActions.setVisible(false);
+		local guildPane = this.GUI.Container(this.GUI.BorderLayout());
+		guildPane.add(this.mGuildComponent, this.GUI.BorderLayout.CENTER);
+		guildPane.add(this.mGuildMemberActions, this.GUI.BorderLayout.SOUTH);
+		guildPane.setInsets(3);
+		
+		
+		// This
 		this.mTabPane = this.GUI.TabbedPane();
 		this.mTabPane.setTabPlacement("top");
 		this.mTabPane.setTabFontColor("E4E4E4");
 		this.mTabPane.addTab("Friends", friendsPane);
 		this.mTabPane.addTab("Clan", clanPane);
+		this.mTabPane.addTab("Guild", guildPane);
 		this.mTabPane.addTab("Ignored", ignoredPane);
 		this.mTabPane.addActionListener(this);
 		this.mTabPane.setInsets(3);
+		
 		this.mCurrentTab = "Friends";
+		
 		this.mFriendPopup = this.GUI.PopupMenu();
 		this.mFriendPopup.addActionListener(this);
 		this.mFriendPopup.addMenuOption("IM", "Send Instant Message");
@@ -309,6 +366,8 @@ class this.Screens.SocialWindow extends this.GUI.Frame
 		::_Connection.sendQuery("friends.getstatus", this, []);
 		::_Connection.sendQuery("clan.info", this, []);
 		::_Connection.sendQuery("clan.list", this, []);
+		::_Connection.sendQuery("guilds.info", this, []);
+		::_Connection.sendQuery("guilds.list", this, []);
 		::_Connection.addListener(this);
 		::_ChatManager.addListener(this);
 	}
@@ -320,6 +379,13 @@ class this.Screens.SocialWindow extends this.GUI.Frame
 		this.updateClanPanel();
 	}
 
+	function onGuildLeft()
+	{
+		this.mGuildName = null;
+		this.mGuildMOTD = null;
+		this.updateGuildPanel();
+	}
+
 	function onLeaveClan( button )
 	{
 		local request = ::GUI.PopupQuestionBox("Are you sure you want to leave the Clan \'" + this.mClanName + "\'?");
@@ -328,7 +394,7 @@ class this.Screens.SocialWindow extends this.GUI.Frame
 		request.showInputBox();
 		request.center();
 	}
-
+	
 	function onClanLeaveAccept( window )
 	{
 		window.destroy();
@@ -342,6 +408,15 @@ class this.Screens.SocialWindow extends this.GUI.Frame
 		this.mClanLeader = false;
 		this.updateClanPanel();
 		this.mClanMOTDLabel.setText("<i><font size=\"14\">The clan has been disbanded.</font></i>");
+	}
+
+	function onLeaveGuild( button )
+	{
+		local request = ::GUI.PopupQuestionBox("Are you sure you want to leave the Guild \'" + this.mGuildName + "\'?");
+		request.setAcceptActionName("onGuildLeaveAccept");
+		request.addActionListener(this);
+		request.showInputBox();
+		request.center();
 	}
 
 	function onInputComplete( entry )
@@ -689,6 +764,27 @@ class this.Screens.SocialWindow extends this.GUI.Frame
 		}
 	}
 
+	function updateGuildBrowser()
+	{
+		local name = this.getSelectedGuildMember();
+		this.mGuildBrowser.removeAllRows();
+
+		foreach( f in this.mGuild )
+		{
+			local obj = this.GUI.SocialWindowListObject(f.name, f.level, "Test", ::Professions[f.profession].name, f.online, null, "", this.mFriendPopup, f.rank);
+			this.mGuildBrowser.addRow([
+				obj
+			]);
+
+			if (name == f.name)
+			{
+				this.mGuildBrowser.setSelectedRows([
+					this.mGuildBrowser.getRowCount() - 1
+				]);
+			}
+		}
+	}
+
 	function updateClanBrowser()
 	{
 		local name = this.getSelectedClanMember();
@@ -765,6 +861,61 @@ class this.Screens.SocialWindow extends this.GUI.Frame
 		this.mClan = tmp;
 	}
 
+	function sortGuildMemberRank( m1, m2 )
+	{
+		if (m1 == m2)
+		{
+			return 0;
+		}
+
+		if (this.GuildRankValue[m1.rank] > this.GuildRankValue[m2.rank])
+		{
+			return -1;
+		}
+
+		if (this.GuildRankValue[m1.rank] < this.GuildRankValue[m2.rank])
+		{
+			return 1;
+		}
+
+		return 0;
+	}
+	
+	function sortGuild()
+	{
+		local online = [];
+		local offline = [];
+		local tmp = [];
+
+		foreach( f in this.mGuild )
+		{
+			if (f.online)
+			{
+				online.append(f);
+			}
+			else
+			{
+				offline.append(f);
+			}
+		}
+
+		this.Util.bubbleSort(online, this.sortGuildMemberRank);
+		this.Util.bubbleSort(offline, this.sortGuildMemberRank);
+		local tmp = [];
+
+		foreach( f in online )
+		{
+			tmp.append(f);
+		}
+
+		foreach( f in offline )
+		{
+			tmp.append(f);
+		}
+
+		this.mGuild = tmp;
+	}
+
 	function sortFriends()
 	{
 		local online = [];
@@ -837,6 +988,20 @@ class this.Screens.SocialWindow extends this.GUI.Frame
 		{
 			this.mStatus = results[0][0];
 		}
+		else if (qa.query == "guild.info")
+		{
+			if (results.len() > 0)
+			{
+				this.mGuildName = results[0][0];
+				this.mGuildMOTD = results[1][0];
+			}
+			else
+			{
+				this.mGuildName = null;
+				this.mGuildMOTD = null;
+			}
+			this.updateGuildPanel();
+		}
 		else if (qa.query == "clan.info")
 		{
 			if (results.len() > 0)
@@ -854,6 +1019,32 @@ class this.Screens.SocialWindow extends this.GUI.Frame
 
 			this.mClanMOTDButton.setEnabled(true);
 			this.updateClanPanel();
+		}
+		else if (qa.query == "clan.list")
+		{
+			this.mGuild = [];
+			local x = 0;
+
+			foreach( r in results )
+			{
+				local name = r[0];
+				local level = r[1];
+				local profession = r[2];
+				local online = r[3];
+				local rank = r[4];
+				this.mGuild.append({
+					name = name,
+					profession = profession.tointeger(),
+					level = level,
+					online = online == "true",
+					rank = rank
+				});
+				x++;
+			}
+
+			this.sortGuild();
+			this.updateGuildBrowser();
+			this.updateGuildPanel();
 		}
 		else if (qa.query == "clan.list")
 		{
@@ -1243,6 +1434,41 @@ class this.Screens.SocialWindow extends this.GUI.Frame
 		}
 
 		this.mClanMOTDLabel.setText(txt);
+	}
+	
+	function updateGuildMOTD()
+	{
+		local txt;
+
+		if (this.mGuildName == null || this.mGuildMOTD == null)
+		{
+			txt = "<i>Downloading guild information...</i>";
+		}
+		else
+		{
+			txt = "<b><font size=\"23\" color=\"fff77f\">" + this.mGuildName + "</font></b><br><i><font size=\"16\">" + (this.mGuildMOTD != "" ? this.mGuildMOTD : "Clan message not set.") + "</font></i>";
+		}
+
+		this.mGuildMOTDLabel.setText(txt);
+	}
+
+	function updateGuildPanel()
+	{
+		this.mGuildComponent.removeAll();
+
+		if (this.mGuildName == null)
+		{
+			this.mGuildMOTDLabel.setText("<i>You are not in a guild.</i>");
+			this.mGuildComponent.add(this.mGuildMOTDLabel, this.GUI.BorderLayout.CENTER);
+			this.mGuildMemberActions.setVisible(false);
+		}
+		else
+		{
+			this.mGuildComponent.add(this.mGuildMOTDLabel, this.GUI.BorderLayout.NORTH);
+			this.mGuildComponent.add(this.GUI.ScrollPanel(this.mGuildBrowser), this.GUI.BorderLayout.CENTER);
+			this.mGuildMemberActions.setVisible(true);
+			this.updateGuildMOTD();
+		}
 	}
 
 	function onQueryTimeout( qa )

@@ -297,7 +297,7 @@ class this.GUI.PVPScreen extends this.GUI.Frame
 
 	function updateState( gameState )
 	{
-		switch($[stack offset 1])
+		switch(gameState)
 		{
 		case this.PVPGameState.WAITING_TO_START:
 			foreach( id, value in this.mRedTeam )

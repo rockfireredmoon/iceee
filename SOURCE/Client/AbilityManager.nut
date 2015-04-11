@@ -1411,14 +1411,28 @@ class this.Ability extends this.Action
 
 			if (fn_name in this.RequirementTable)
 			{
-				return res;
+				// TODO - Em, not sure about this
+				
+				//return res;
 				  // [044]  OP_POPTRAP        1      0    0    0
 				  // [045]  OP_JMP            0      9    0    0
-				this.log.debug("Error evaluating: " + $[stack offset 1]);
-				return $[stack offset 5] + " " + $[stack offset 1];
+				//this.log.debug("Error evaluating: " + req;
+				//return $[stack offset 5] + " " + req;
+				
+				
+				this.log.debug("Error evaluating: " + req);
+				
+				if (fn_name in this.EquipmentRequirementsTable)
+				{
+					this.mEquipRequirements.append(this.EquipmentRequirementsTable[fn_name]);
+				}
+
+				return this.RequirementTable[fn_name];
+				
 			}
 			else
 			{
+				this.log.error("Unregistered Ability Requirement : " + fn_name);
 			}
 		}
 		else

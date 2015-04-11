@@ -1287,11 +1287,15 @@ class this.Assembler.Creature extends this.Assembler.Factory
 			return true;
 		}
 
-		return false;
+		// Em - Not entirely sure about this
+		
+		//return false;
 		  // [103]  OP_POPTRAP        1      0    0    0
 		  // [104]  OP_JMP            0     10    0    0
-		this.log.debug("Error assembling attachment: " + $[stack offset 2]);
-		$[stack offset 1].mAssemblyData.attachmentIndex++;
+		//this.log.debug("Error assembling attachment: " + $[stack offset 2]);
+		
+		this.log.debug("Error assembling attachment: " + so);
+		so.mAssemblyData.attachmentIndex++;
 		return false;
 	}
 
@@ -2403,11 +2407,16 @@ class this.Assembler.Creature extends this.Assembler.Factory
 			return true;
 		}
 
-		return false;
+		// Em - Not sure about this
+		
+		// return false;
 		  // [303]  OP_POPTRAP        1      0    0    0
-		  // [304]  OP_JMP            0     10    0    0
-		this.log.debug("Error assembling detail: " + $[stack offset 3]);
-		$[stack offset 1].mAssemblyData.detailIndex++;
+		  // [304]  OP_JMP            0     10    0    0		  
+		//this.log.debug("Error assembling detail: " + $[stack offset 3]);		
+		//$[stack offset 1].mAssemblyData.detailIndex++;
+		
+		this.log.debug("Error assembling detail: " + so);	
+		so.mAssemblyData.detailIndex++;
 		return false;
 	}
 

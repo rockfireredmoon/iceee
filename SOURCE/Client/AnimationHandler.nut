@@ -486,7 +486,7 @@ class this.AnimationHandler.Horde extends this.AnimationHandler
 	{
 		if (pBool)
 		{
-			this.mEntity.getAnimationUnit(0).setTimeScaleFactor(1e-006.0);
+			this.mEntity.getAnimationUnit(0).setTimeScaleFactor(0.00001);
 		}
 		else
 		{

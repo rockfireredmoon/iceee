@@ -6584,7 +6584,7 @@ class this.SceneObject extends this.MessageBroadcaster
 				this.mDeathAppearanceChangeEvent = null;
 			}
 
-			this.log.debug("Morphing to: " + $[stack offset 1]);
+			this.log.debug("Morphing to: " + stat);
 
 			if (data == null)
 			{
@@ -6601,7 +6601,7 @@ class this.SceneObject extends this.MessageBroadcaster
 				if (delay > 0)
 				{
 					this.mDeathAppearanceChangeEvent = ::_eventScheduler.fireIn(delay.tofloat() / 1000.0, this, "performMorph", data);
-					this.log.debug("Scheduled morph: " + $[stack offset 1]);
+					this.log.debug("Scheduled morph: " + stat);
 					  // [076]  OP_POPTRAP        1      0    0    0
 					return;
 				}

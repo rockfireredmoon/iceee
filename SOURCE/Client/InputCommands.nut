@@ -1903,7 +1903,7 @@ this.InputCommands.shop <- function ( args )
 		this.log.debug("You must select an NPC first.");
 	}
 };
-this.InputCommands.do <- function ( args )
+this.InputCommands["do"] <- function ( args )
 {
 	if (args.len() == 0)
 	{
