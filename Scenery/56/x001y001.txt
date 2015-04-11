@@ -2744,10 +2744,11 @@ link=1108350,1
 ID=1126556
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=Untitled
-Pos=2178.12,480,2835.52
+Pos=2309.5,495.214,2767.04
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#A7777
+spawnPackage=56_wacr_ThawingBrazier
+maxActive=0
 aiModule=custom_wailing
 
 [ENTRY]
@@ -2764,10 +2765,11 @@ sequential=1
 ID=1126558
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=Untitled
-Pos=2096.45,480,2821.33
+Pos=1947.43,498.335,2767.93
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#A7777
+spawnPackage=56_wacr_ThawingBrazier
+maxActive=0
 aiModule=custom_wailing
 
 [ENTRY]
@@ -2830,4 +2832,20 @@ spawnPackage=56_wacr_CryptMix
 maxActive=0
 links_count=1
 link=1127132,1
+
+[ENTRY]
+ID=1127155
+Asset=Prop-Braziers#Prop-Brazier_Unlit
+Name=
+Pos=2308.77,475.422,2767.44
+Orient=0,0,0,1
+Scale=1.5,1.5,1.5
+
+[ENTRY]
+ID=1127157
+Asset=Prop-Brazier_Unlit
+Name=
+Pos=1947.21,475.422,2767.44
+Orient=0,0,0,1
+Scale=1.5,1.5,1.5
 

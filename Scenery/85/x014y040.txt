@@ -226,16 +226,17 @@ Flags=1
 [ENTRY]
 ID=1030452
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=27535.5,618.133,78382.8
 Orient=0,-0.795843,0,0.605503
 Scale=1,1,1
 spawnPackage=z85_keku_Kerakura
+aiModule=custom_heathendel_mage40
 
 [ENTRY]
 ID=1030453
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=27253.2,654.907,78291.3
 Orient=0,-0.663135,0,0.748499
 Scale=1,1,1
@@ -246,7 +247,7 @@ link=1030467,1
 [ENTRY]
 ID=1030454
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=27253.3,656.799,78580
 Orient=0,-0.501213,0,0.865324
 Scale=1,1,1
@@ -257,7 +258,7 @@ link=1030468,1
 [ENTRY]
 ID=1030455
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=27440.7,655.999,78099.4
 Orient=0,-0.886627,0,0.462485
 Scale=1,1,1
@@ -268,7 +269,7 @@ link=1030466,1
 [ENTRY]
 ID=1030456
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=27748.3,656.772,78121.9
 Orient=0,-0.998531,0,-0.0541771
 Scale=1,1,1
@@ -279,7 +280,7 @@ link=1030465,1
 [ENTRY]
 ID=1030457
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=27857.9,654.968,78324.5
 Orient=0,-0.752331,0,-0.658786
 Scale=1,1,1
@@ -290,7 +291,7 @@ link=1030464,1
 [ENTRY]
 ID=1030458
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=27825.2,653.076,78602.4
 Orient=0,0.535416,0,0.844589
 Scale=1,1,1
@@ -301,7 +302,7 @@ link=1030463,1
 [ENTRY]
 ID=1030462
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=27808.1,656.859,78619.6
 Orient=-0.00999983,0,0,0.99995
 Scale=1,1,1
@@ -311,7 +312,7 @@ link=1030460,1
 [ENTRY]
 ID=1030463
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=27852.3,653.996,78387.5
 Orient=0,0,0,1
 Scale=1,1,1
@@ -321,7 +322,7 @@ link=1030458,1
 [ENTRY]
 ID=1030464
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=27776.6,656.199,78141
 Orient=0,0,0,1
 Scale=1,1,1
@@ -331,7 +332,7 @@ link=1030457,1
 [ENTRY]
 ID=1030465
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=27465.4,654.859,78097.1
 Orient=0,0,0,1
 Scale=1,1,1
@@ -341,7 +342,7 @@ link=1030456,1
 [ENTRY]
 ID=1030466
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=27255.6,655.754,78262.2
 Orient=0,0,0,1
 Scale=1,1,1
@@ -351,7 +352,7 @@ link=1030455,1
 [ENTRY]
 ID=1030467
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=27237.4,656.723,78546.7
 Orient=0,0,0,1
 Scale=1,1,1
@@ -361,7 +362,7 @@ link=1030453,1
 [ENTRY]
 ID=1030470
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=27411.2,631.507,78364.9
 Orient=0,-0.807558,0,0.589788
 Scale=1,1,1
@@ -370,7 +371,7 @@ spawnPackage=z85_keku_Sandmother
 [ENTRY]
 ID=1030471
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=27658.9,612.919,78425.3
 Orient=0,-0.696135,0,0.717911
 Scale=1,1,1
@@ -379,7 +380,7 @@ spawnPackage=z85_keku_Sandmother
 [ENTRY]
 ID=1030472
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=27677.2,669.169,77916.6
 Orient=0,-0.761095,0,0.64864
 Scale=1,1,1
@@ -388,7 +389,7 @@ spawnPackage=z85_keku_Sandmother
 [ENTRY]
 ID=1030473
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=27625.1,657.203,77968.2
 Orient=0,0.266731,0,0.963771
 Scale=1,1,1
@@ -397,7 +398,7 @@ spawnPackage=z85_keku_Sandmother
 [ENTRY]
 ID=1030474
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=27715.8,657.508,77977
 Orient=0,-0.909298,0,-0.416147
 Scale=1,1,1
