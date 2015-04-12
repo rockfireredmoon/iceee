@@ -648,7 +648,7 @@ damage_resist_frost=1500
 damage_resist_mystic=1500
 damage_resist_death=1500
 profession=4
-ai_package=custom_heathendel_knightrogue40p
+ai_package=knight_brave_6
 
 [ENTRY]
 defHints=48
