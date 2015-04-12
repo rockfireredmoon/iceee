@@ -114,7 +114,7 @@ int ActiveSpawner :: GetRespawnDelaySeconds(void)
 			delaySeconds = delay;
 	}
 	if(delaySeconds == CreatureSpawnDef::DEFAULT_DESPAWNTIME)
-		if(spawnPackage->spawnDelay != 0)
+		if(spawnPackage != NULL && spawnPackage->spawnDelay != 0)
 			delaySeconds = spawnPackage->spawnDelay;
 
 	return delaySeconds;
@@ -326,7 +326,7 @@ void SpawnTile :: RunProcessing(ActiveInstance *inst)
 			continue;
 		*/
 
-		CreatureInstance *cInst = SpawnCreature(inst, &it->second, 0);
+		CreatureInstance *cInst = SpawnCreature(inst, &it->second, 0, 0);
 		if(cInst != NULL)
 		{
 			it->second.OnSpawnSuccess();
@@ -335,9 +335,9 @@ void SpawnTile :: RunProcessing(ActiveInstance *inst)
 	}
 }
 
-CreatureInstance * SpawnTile :: SpawnCreature(ActiveInstance *inst, ActiveSpawner *spawner, int forceCreatureDef)
+CreatureInstance * SpawnTile :: SpawnCreature(ActiveInstance *inst, ActiveSpawner *spawner, int forceCreatureDef, int forceFlags)
 {
-	if(spawner->spawnPackage == NULL)
+	if(forceCreatureDef == 0 && spawner->spawnPackage == NULL)
 	{
 		g_Log.AddMessageFormat("[WARNING] SpawnCreature() spawnPackage is NULL (prop ID: %d)", spawner->spawnPoint->ID);
 		spawner->Invalidate();
@@ -346,7 +346,7 @@ CreatureInstance * SpawnTile :: SpawnCreature(ActiveInstance *inst, ActiveSpawne
 
 	int CDefID = -1;
 	int SpawnFlags = 0;
-	if(spawner->spawnPoint->extraData->spawnPackage[0] == '#')
+	if(forceCreatureDef == 0 && spawner->spawnPackage != NULL && spawner->spawnPoint->extraData->spawnPackage[0] == '#')
 	{
 		size_t len = strlen(spawner->spawnPoint->extraData->spawnPackage);
 		int cOffset = 1;
@@ -397,10 +397,15 @@ CreatureInstance * SpawnTile :: SpawnCreature(ActiveInstance *inst, ActiveSpawne
 	else
 	{
 		if(forceCreatureDef == 0)
+		{
 			CDefID = spawner->spawnPackage->GetRandomSpawn(spawner->spawnPoint);
+			SpawnFlags = spawner->spawnPackage->SpawnFlags;
+		}
 		else
+		{
 			CDefID = forceCreatureDef;
-		SpawnFlags = spawner->spawnPackage->SpawnFlags;
+			SpawnFlags = forceFlags;
+		}
 	}
 
 	if(CDefID == -1)
@@ -1035,7 +1040,7 @@ void SpawnManager :: RemoveSpawnPoint(int PropID)
 	}
 }
 
-void SpawnManager :: TriggerSpawn(int PropID, int forceCreatureDef)
+int SpawnManager :: TriggerSpawn(int PropID, int forceCreatureDef, int forceFlags)
 {
 	//Used by the quest script system, forces a prop to spawn.
 	ActiveSpawner *obj = NULL;
@@ -1045,7 +1050,7 @@ void SpawnManager :: TriggerSpawn(int PropID, int forceCreatureDef)
 		obj = it->GetActiveSpawner(PropID);
 		if(obj != NULL)
 		{
-			CreatureInstance *inst = it->SpawnCreature(actInst, obj, forceCreatureDef);
+			CreatureInstance *inst = it->SpawnCreature(actInst, obj, forceCreatureDef, forceFlags);
 			if(inst != NULL)
 			{
 				obj->OnSpawnSuccess();
@@ -1053,10 +1058,13 @@ void SpawnManager :: TriggerSpawn(int PropID, int forceCreatureDef)
 				char buffer[100];
 				int wpos = PrepExt_GeneralMoveUpdate(buffer, inst);
 				actInst->LSendToLocalSimulator(buffer, wpos, inst->CurrentX, inst->CurrentZ);
+
+				return inst->CreatureID;
 			}
-			return;
+			return -1;
 		}
 	}
+	return -1;
 }
 
 SpawnPackageDef :: SpawnPackageDef()

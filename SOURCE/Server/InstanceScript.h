@@ -47,6 +47,7 @@ private:
 
 	//Script helper functions, often utilizing the Instance for lookups.
 	void ScanNPCCID(InstanceLocation *location, std::vector<int>& destResult);
+	void ScanNPCCIDFor(InstanceLocation *location, int CDefId, std::vector<int>& destResult);
 	CreatureInstance* GetNPCPtr(int CID);
 };
 

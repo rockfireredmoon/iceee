@@ -156,7 +156,7 @@ public:
 	bool AddSpawnerFromProp(SPAWN_MAP::iterator &position, SceneryObject *prop);
 	void RunProcessing(ActiveInstance *inst);
 	bool Debug_VerifyProp(int zone, int propID, SceneryObject *ptr);
-	CreatureInstance * SpawnCreature(ActiveInstance *inst, ActiveSpawner *spawner, int forceCreatureDef);
+	CreatureInstance * SpawnCreature(ActiveInstance *inst, ActiveSpawner *spawner, int forceCreatureDef, int forceFlags);
 	void RemoveAllAttachedCreature(ActiveInstance *inst);
 	void RemoveAttachedCreature(int CreatureID);
 	void UpdateSpawnPoint(SceneryObject *prop);
@@ -287,7 +287,7 @@ public:
 	void RunGarbageCheck(TILELIST_CONT &activeTileList);
 	void UpdateSpawnPoint(SceneryObject *prop);
 	void RemoveSpawnPoint(int PropID);
-	void TriggerSpawn(int PropID, int forceCreatureDef);
+	int TriggerSpawn(int PropID, int forceCreatureDef, int forceFlags);
 
 private:
 	bool HasTileCoord(int x, int y, TILELIST_CONT &searchList);

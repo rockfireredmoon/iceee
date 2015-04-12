@@ -7,29 +7,41 @@
 #symbol CDEF_BRAZIER 7777
 
 #location LOC_WAILER_ROOM  1859 2702  2393 3234
-#location_br LOC_BRAZIER_1  1916 3053 140
-#location_br LOC_BRAZIER_2  1916 2874 140
+#location_br LOC_BRAZIER_1  2306 2766 25
+#location_br LOC_BRAZIER_2  1948 2766 25
 
 ;quick warp coords for boss room: /warp 2100 2900
+;
+;
+; The Wailing Crypt instance script. This script is primarily for the
+; final fight with the Wailer.
+;
+; 1. Players must first kill Kyshf. This will activate the 1st brazier in the Wailers room
+; 2. Players must first kill Alabaster. This will activate a 2nd brazier in the Wailers room
+; 3. Wailer spawns adds on 80%, 60%, 40% and 20%. 
+; 4. Wailer trys to cast wailing shield at 70%, 50%, 30% and 10%.
+; 5. With both braziers activated, they will purge the shield when the wailer is within 10m
+ 
 
 set SEARCHARG 0
 set ITERATOR 0
 set TEMPRES 0
 set TEMPSIZE 0
 set TEMPCID 0
-set TEMPCDEF 0
-set MESG 0
-
 set TEMP 0
-set TEMP_TARGET 0
+set TEMPTARGET 0
+set TEMPWAILER 0
 
 set CID_WAILER 0
-set BRAZIER_1_RANGE 0
-set BRAZIER_2_RANGE 0
+set CID_BRAZIER_1 0
+set CID_BRAZIER_2 0
+set BRAZIER_1_LIT 0
+set BRAZIER_2_LIT 0
 
 set STAGE 0
 
 ; Just need this label, the entry point for instance scripts.
+
 :init
 	queue_event "eventWailerSearch" 5000
 
@@ -47,7 +59,6 @@ set STAGE 0
 	set STAGE 99
 	call killMinions
 	return
-
 ;
 ; Alabaster killed, spawn the flame on one of the braziers.
 ; The flame is the creature that has the purge ability. The
@@ -55,7 +66,8 @@ set STAGE 0
 ;
 :onKill_3649
     spawn 1126558
-    call brazierSearch
+    set BRAZIER_1_LIT 1
+	queue_event "brazierSearch" 1000
     return
 
 ;
@@ -65,7 +77,8 @@ set STAGE 0
 ;  
 :onKill_3648
 	spawn 1126556
-	call brazierSearch
+    set BRAZIER_2_LIT 1
+	queue_event "brazierSearch" 1000
 	return
 
 :findResultArrayCDEF
@@ -84,11 +97,12 @@ set STAGE 0
 	endif
 	pushint 0
 	return
-
+	
 ;
 ; The adds should now be spawned, but we need them
 ; to target whoever is attacking The Wailer and start
-; attacking them.;
+; attacking them.
+;
 
 :activateMinions
 	pop TARGET
@@ -97,10 +111,6 @@ set STAGE 0
 	if ITERATOR < TEMPSIZE
 	  iarrvalue RESULTARRAY ITERATOR TEMPCID
 	  if TEMPCID != CID_WAILER
-	      if MESG = 0
-	          chat "conRed" "Instance" "Come my guardians, deal with these pests!"
-	      	  set MESG 1
-	      endif
 	      get_cdef TEMPCID TEMPRES
 	      set_target TEMPCID TARGET
 		  ai_script_jump TEMPCID "tryMelee"
@@ -137,24 +147,41 @@ set STAGE 0
 	return
 
 ;
-; Search the room for the braziers. When they are found
-; we get their CID, which can be used for targeting and
-; calling AI scripts
+; Search for the CIDs of the two braziers, but only start do so
+; when both are lit. The _LIT flag is set by the onKill_ 
+; labels.
 ;
 
 :brazierSearch
-	scan_npc_cid LOC_WAILER_ROOM RESULTARRAY
-	pushint CDEF_BRAZIER
-	call findResultArrayCDEF
-	pop CID_BRAZIER1
-	pushint CDEF_BRAZIER
-	call findResultArrayCDEF
-	pop CID_BRAZIER2
-
-;
-; Periodically search the room for the wailer. When 
-; found, start monitoring is health.
-;
+	if BRAZIER_1_LIT = 0
+		return
+	endif
+	if BRAZIER_2_LIT = 0
+		return
+	endif
+	
+	;
+	; We now know there are 2 braziers lit, so try and find out their CID
+	; which we can then use to target the players
+	;
+	set CID_BRAZIER_1 0
+	set CID_BRAZIER_2 0
+	
+	scan_npc_cid_for LOC_WAILER_ROOM RESULTARRAY CDEF_BRAZIER	
+	set ITERATOR 0
+	iarrsize RESULTARRAY TEMPSIZE
+	if TEMPSIZE = 2
+		iarrvalue RESULTARRAY 0 CID_BRAZIER_1
+		iarrvalue RESULTARRAY 1 CID_BRAZIER_2
+		return
+	endif
+	
+	; If we got here, the braziers were not found for some reason
+	print "ERROR: Expected to find 2 lit braziers, but did not"
+	
+	queue_event "brazierSearch" 1000
+	 
+	return
 
 :eventWailerSearch
 	if CID_WAILER != 0
@@ -169,28 +196,40 @@ set STAGE 0
 	  queue_event "eventWailerSearch" 5000
 	  return
 	else
-	  call brazierSearch
 	  queue_event "eventWailerHealth" 2000
 	endif
 	return
 
-;
-; 
-; 
 
 :eventWailerShield
 	if CID_WAILER = 0
-	  return
+		return
 	endif	
+		
+	;
+	; Check if the wailer is near either shield, if so .. we don't cast
+	;
+	scan_npc_cid LOC_BRAZIER_1 RESULTARRAY
+	pushint CDEF_WAILER
+	call findResultArrayCDEF
+	pop TEMPWAILER
+	if TEMPWAILER = 0
+		scan_npc_cid LOC_BRAZIER_2 RESULTARRAY
+		pushint CDEF_WAILER
+		call findResultArrayCDEF
+		pop TEMPWAILER
+		if TEMPWAILER = 0
+			call tryCastShield
+			return
+		endif
+	endif
 	
-	call tryCastShield
-	
-	if CID_BRAZIER1 != 0
-		if CID_BRAZIER2 != 0
-			set_target CID_BRAZIER1 CID_WAILER	      
-			ai_script_jump CID_BRAZIER1 "tryWarm"
-			set_target CID_BRAZIER2 CID_WAILER	
-			ai_script_jump CID_BRAZIER2 "tryWarm"
+	if CID_BRAZIER_1 != 0
+		if CID_BRAZIER_2 != 0
+			set_target CID_BRAZIER_1 CID_WAILER	      
+			ai_script_jump CID_BRAZIER_1 "tryWarm"
+			set_target CID_BRAZIER_2 CID_WAILER	
+			ai_script_jump CID_BRAZIER_2 "tryWarm"
 		endif
 	endif
 	
@@ -239,7 +278,6 @@ set STAGE 0
 	
 	if STAGE = 0
 		if TEMP <= 80
-			print ":at 80!"
 			call spawnMinions
 	    	set STAGE 1
 	  	endif
@@ -255,6 +293,7 @@ set STAGE 0
 	if STAGE = 1
 		if TEMP <= 70
 			set STAGE 2
+	  	
 		  	queue_event "eventWailerHealth" 3000
 		  	return
 		endif	
@@ -349,7 +388,6 @@ set STAGE 0
 	if STAGE = 7
 		if TEMP <= 10
 			set STAGE 8
-	  	
 		  	queue_event "eventWailerHealth" 3000
 		  	return
 		endif	
@@ -363,7 +401,6 @@ set STAGE 0
 	; Queue another wailer health check in 3 seconds
 	;
 		
-	print "loop :eventWailerHealth"
 	queue_event "eventWailerHealth" 3000
 	  
 	return
@@ -379,20 +416,12 @@ set STAGE 0
 	despawn 1127140
 	return
 
-;
-; Spawn 3 minions and search for their CID. activateMinions
-; will then be called to make them target whoever is attacking
-; the Wailer and start attacking them
-;
-
 :spawnMinions
-	spawn_at 1127142 7778
-	spawn_at 1127141 7778
-	spawn_at 1127140 7778
-	set MESG 0
-	get_target CID_WAILER TEMP_TARGET
-	printvar TEMP_TARGET
+	spawn_flag 1127142 7778 32
+	spawn_flag 1127141 7778 32
+	spawn_flag 1127140 7778 32
+	get_target CID_WAILER TEMPTARGET
 	scan_npc_cid LOC_WAILER_ROOM RESULTARRAY
-	pushvar TEMP_TARGET
+	pushvar TEMPTARGET
 	call activateMinions
 	return

@@ -17,12 +17,14 @@ enum InstanceScriptExtOpCodes
 	// Implemenation-Specific named commands.
 	OP_SPAWN,         //spawn <propid>  force a spawnpoint generate a spawn
 	OP_SPAWNAT,       //spawnat <propid> <creatureDef>  generate an arbitrary creature at a known spawnpoint.
+	OP_SPAWNFLAG,       //spawnflag <propid> <creatureDef> <flags> generate an arbitrary creature at a known spawnpoint with specified flags.
 	OP_COUNTALIVE,    //
 	OP_SPAWNLOC,      //spawnloc <creaturedefid> <x> <y> <z>  Spawn a creature at exact coordinates. NOTE: x,y,z are pushed onto stack.
 	OP_GETNPCID,      //get_npc_id <int_creaturedefID> <var_output>     Get the first creature matching a DefID and place it into VAR.
 	OP_SETTARGET,     //set_target <var_sourceCID> <var_targetCID>   Set the CreatureID from VAR1 to target the CreatureID from VAR2
 
 	OP_SCAN_NPC_CID,         //scan_mobs_cid <str:location> <iarray:dest>
+	OP_SCAN_NPC_CID_FOR,     //scan_mobs_cid_for <str:location> <iarray:dest> <creatureDef>
 	OP_GET_CDEF,
 	OP_GET_HEALTH_PERCENT,   //get_health_percent <var:CID>
 	OP_ORDER_WALK,           //order_walk <var:CID> <int:destX> <int:destZ>
@@ -37,12 +39,14 @@ OpCodeInfo extCoreOpCode[] = {
 	// Implementation-Specific commands.
 	{ "spawn",            OP_SPAWN,           1, {OPT_INT,  OPT_NONE,    OPT_NONE}},
 	{ "spawn_at",         OP_SPAWNAT,         2, {OPT_INT,  OPT_INT,     OPT_NONE}},
+	{ "spawn_flag",       OP_SPAWNFLAG,       3, {OPT_INT,  OPT_INT,     OPT_INT}},
 	{ "countalive",       OP_COUNTALIVE,      2, {OPT_INT,  OPT_VAR,     OPT_NONE}},
 	{ "spawnloc",         OP_SPAWNLOC,        1, {OPT_INT,  OPT_NONE,    OPT_NONE}},
 	{ "get_npc_id",       OP_GETNPCID,        2, {OPT_INT,  OPT_VAR,     OPT_NONE}},
 	{ "set_target",       OP_SETTARGET,       2, {OPT_VAR,  OPT_VAR,     OPT_NONE}},
 
 	{ "scan_npc_cid",     OP_SCAN_NPC_CID,    2, {OPT_STR,  OPT_INTARR,  OPT_NONE}},
+	{ "scan_npc_cid_for", OP_SCAN_NPC_CID_FOR,3, {OPT_STR,  OPT_INTARR,  OPT_INT}},
 	{ "get_cdef",         OP_GET_CDEF,        2, {OPT_VAR,  OPT_VAR,     OPT_NONE}},
 	{ "get_health_percent",     OP_GET_HEALTH_PERCENT,    2, {OPT_VAR,  OPT_VAR,  OPT_NONE}},
 	{ "order_walk",       OP_ORDER_WALK,      3, {OPT_VAR,  OPT_INT,     OPT_INT}},
@@ -139,11 +143,15 @@ void InstanceScriptPlayer::RunImplementationCommands(int opcode)
 		actInst->spawnsys.RemoveSpawnPoint(instr->param1);
 		break;
 	case OP_SPAWN:
-		actInst->spawnsys.TriggerSpawn(instr->param1, 0);
+		actInst->spawnsys.TriggerSpawn(instr->param1, 0, 0);
 		//g_Log.AddMessageFormat("Fired spawn: %d", def->instr[curInst].param1);
 		break;
 	case OP_SPAWNAT:
-		actInst->spawnsys.TriggerSpawn(instr->param1, instr->param2);
+		actInst->spawnsys.TriggerSpawn(instr->param1, instr->param2, 0);
+		//g_Log.AddMessageFormat("Fired spawn: %d, creature: %d", def->instr[curInst].param1, def->instr[curInst].param2);
+		break;
+	case OP_SPAWNFLAG:
+		actInst->spawnsys.TriggerSpawn(instr->param1, instr->param2, instr->param3);
 		//g_Log.AddMessageFormat("Fired spawn: %d, creature: %d", def->instr[curInst].param1, def->instr[curInst].param2);
 		break;
 	case OP_SPAWNLOC:
@@ -183,6 +191,14 @@ void InstanceScriptPlayer::RunImplementationCommands(int opcode)
 			int index = VerifyIntArrayIndex(instr->param2);
 			if(index >= 0)
 				ScanNPCCID(loc, intArray[index].arrayData);
+		}
+		break;
+	case OP_SCAN_NPC_CID_FOR:
+		{
+			InstanceLocation *loc = GetLocationByName(GetStringPtr(instr->param1));
+			int index = VerifyIntArrayIndex(instr->param2);
+			if(index >= 0)
+				ScanNPCCIDFor(loc, instr->param3, intArray[index].arrayData);
 		}
 		break;
 	case OP_GET_CDEF:
@@ -273,6 +289,28 @@ InstanceLocation* InstanceScriptPlayer::GetLocationByName(const char *name)
 		return NULL;
 	InstanceScriptDef *thisDef = dynamic_cast<InstanceScriptDef*>(def);
 	return thisDef->GetLocationByName(name);
+}
+
+void InstanceScriptPlayer::ScanNPCCIDFor(InstanceLocation *location, int CDefID, std::vector<int>& destResult)
+{
+	destResult.clear();
+	if(actInst == NULL || location == NULL)
+		return;
+	for(size_t i = 0; i < actInst->NPCListPtr.size(); i++)
+	{
+		CreatureInstance *ci = actInst->NPCListPtr[i];
+		if(ci->CreatureDefID != CDefID)
+			continue;
+		if(ci->CurrentX < location->mX1)
+			continue;
+		if(ci->CurrentX > location->mX2)
+			continue;
+		if(ci->CurrentZ < location->mY1)
+			continue;
+		if(ci->CurrentZ > location->mY2)
+			continue;
+		destResult.push_back(ci->CreatureID);
+	}
 }
 
 void InstanceScriptPlayer::ScanNPCCID(InstanceLocation *location, std::vector<int>& destResult)

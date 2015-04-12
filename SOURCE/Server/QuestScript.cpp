@@ -103,7 +103,7 @@ void QuestScriptPlayer::RunImplementationCommands(int opcode)
 			active = false;
 		break;
 	case OP_SPAWN:
-		actInst->spawnsys.TriggerSpawn(instr->param1, 0);
+		actInst->spawnsys.TriggerSpawn(instr->param1, 0, 0);
 		break;
 	case OP_SPAWNAT:
 		actInst->SpawnAtProp(instr->param1, instr->param2, RunTimeVar[0], RunTimeVar[1]);
