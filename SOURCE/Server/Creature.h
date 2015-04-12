@@ -345,6 +345,7 @@ public:
 	void AddBaseStatMod(int statID, float amount);
 	void SubtractBaseStatMod(int statID, float amount);
 	void UpdateBaseStatMinimum(int statID, float amount);
+	void Untransform();
 	void RemoveBuffsFromAbility(int abilityID, bool send);
 	void RemoveBuffIndex(size_t index);
 	void RemoveAllBuffs(bool send);
@@ -634,7 +635,7 @@ public:
 
 
 	//Custom Ability Functions, called through the ability system to handle special operations
-	void CAF_Transform(void);
+	void CAF_Transform(int CDefID);
 	int CAF_SummonSidekick(int CDefID, int maxSummon, short abGroupID);
 	void CAF_RunSidekickStatFilter(int abGroupID);
 	int CAF_RegisterTargetSidekick(int abGroupID);

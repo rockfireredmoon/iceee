@@ -11,4 +11,5 @@ Data\ItemDef_NewPotions.txt
 Data\ItemDef_CustomSets.txt
 Data\ItemDef_NewQuest.txt
 Data\ItemDef_ICEEE.txt
+Data\ItemDef_Transformations.txt
 ;Data\npcarmoursets.txt

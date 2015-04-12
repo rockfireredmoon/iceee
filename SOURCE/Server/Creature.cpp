@@ -1662,6 +1662,11 @@ void CreatureInstance :: RemoveBuffIndex(size_t index)
 	activeStatMod.erase(activeStatMod.begin() + index);
 }
 
+void CreatureInstance :: Untransform()
+{
+	_RemoveStatusList(StatusEffects::TRANSFORMED);
+}
+
 
 // Remove all buffs
 void CreatureInstance :: RemoveBuffsFromAbility(int abilityID, bool send)
@@ -1672,8 +1677,10 @@ void CreatureInstance :: RemoveBuffsFromAbility(int abilityID, bool send)
 		if(activeStatMod[i].abilityID == abilityID)
 		{
 			//Hack for some experimental transformation ability
-			if(activeStatMod[i].abilityGroupID == 544)
-				_RemoveStatusList(StatusEffects::TRANSFORMED);
+//			if(activeStatMod[i].abilityGroupID == 544)
+//				_RemoveStatusList(StatusEffects::TRANSFORMED);
+
+			g_AbilityManager.ActivateAbility(this, abilityID, EventType::onDeactivate, &ab[0]);
 
 			RemoveBuffIndex(i);
 		}
@@ -6722,13 +6729,13 @@ int CreatureInstance :: GetAggroRange(CreatureInstance *target)
 }
 
 
-void CreatureInstance :: CAF_Transform(void)
+void CreatureInstance :: CAF_Transform(int CDefID)
 {
-	g_Log.AddMessageFormat("Transforming");
+	g_Log.AddMessageFormat("Transforming %d into %d", CreatureDefID, CDefID);
 	_AddStatusList(StatusEffects::TRANSFORMED, -1);
 	SetServerFlag(ServerFlags::IsTransformed, true);
 
-	CreatureDefinition *cdef = CreatureDef.GetPointerByCDef(15008);
+	CreatureDefinition *cdef = CreatureDef.GetPointerByCDef(CDefID);
 	if(cdef != NULL)
 		AppearanceTransform(cdef->css.appearance.c_str());
 

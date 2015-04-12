@@ -622,7 +622,7 @@ CreatureInstance * SpawnTile :: SpawnCreature(ActiveInstance *inst, ActiveSpawne
 
 	attachedCreatureID.push_back(ptr->CreatureID);
 
-	g_Log.AddMessageFormat("[DEBUG] Pushed %d onto %d,%d", ptr->CreatureID, TileX, TileY);
+	//g_Log.AddMessageFormat("[DEBUG] Pushed %d onto %d,%d", ptr->CreatureID, TileX, TileY);
 
 	return ptr;
 }

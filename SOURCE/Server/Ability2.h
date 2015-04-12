@@ -104,6 +104,7 @@ namespace EventType
 		onParry = 2,
 		onRequest = 3,
 		onActivate = 4,
+		onDeactivate = 5,
 		MAX_EVENT
 	};
 	const char *GetNameByEventID(int eventID);
@@ -678,7 +679,9 @@ public:
 	//Unofficial ability functions (custom features unique to this server)
 	int SetAutoAttack(ARGUMENT_LIST args);
 	int DisplayEffect(ARGUMENT_LIST args);
-	int InterruptChance(ARGUMENT_LIST args);  
+	int InterruptChance(ARGUMENT_LIST args);
+	int Transform(ARGUMENT_LIST args);
+	int Untransform(ARGUMENT_LIST args);
 
 	//Server-side helper functions.
 	int GetImplicitDamage(void);

@@ -1,0 +1,14 @@
+[ENTRY]
+mID=50001
+mType=5
+mDisplayName=Blood Of The Rotted Wolf
+mIcon=Icon-32-Potion_Short_Green.png|Icon-32-BG-Red.png
+mIvType1=1
+mIvMax1=20
+mLevel=10
+mBindingType=1
+mUseAbilityId=26000
+mValue=800
+mFlavorText=A potion that transforms you into a feral form, increasing movement speed by 150% for 5 minutes.
+mQualityLevel=1
+mMinUseLevel=10

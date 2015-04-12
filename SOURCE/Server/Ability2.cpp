@@ -111,6 +111,8 @@ TopHated(10)                                 Unknown effect (unknown parameter).
 Translocate()                                Transports to bind location.  Only used for [Portal: Bind]
 UnHate()                                     Remove all hate generated against you.
 WalkInShadows(120,A_DEXTERITY*1.0)           Limited unseen movement (duration_sec, movementCounter?)
+Transform(CDefID)							 Transform into a creature
+Untransform()								 Revert to natural appearance
 
 */
 
@@ -122,6 +124,7 @@ namespace EventType
 		{
 		case onRequest: return "onRequest";
 		case onActivate: return "onActivate";
+		case onDeactivate: return "onDeactivate";
 		case onIterate: return "onIterate";
 		case onParry: return "onParry";
 		}
@@ -131,6 +134,7 @@ namespace EventType
 	{
 		if(eventName.compare("onRequest") == 0) return onRequest;
 		if(eventName.compare("onActivate") == 0) return onActivate;
+		if(eventName.compare("onDeactivate") == 0) return onDeactivate;
 		if(eventName.compare("onIterate") == 0) return onIterate;
 		if(eventName.compare("onParry") == 0) return onParry;
 		return UNDEFINED;
@@ -1206,6 +1210,8 @@ void AbilityManager2 :: InitFunctionTables(void)
 	InsertFunction("SetAutoAttack", &AbilityCalculator::SetAutoAttack);
 	InsertFunction("DisplayEffect", &AbilityCalculator::DisplayEffect);
 	InsertFunction("InterruptChance", &AbilityCalculator::InterruptChance);
+	InsertFunction("Transform", &AbilityCalculator::Transform);
+	InsertFunction("Untransform", &AbilityCalculator::Untransform);
 	
 	//The verifier indicates which argument indexes should be flagged for examination
 	//as valid expressions.
@@ -1645,7 +1651,7 @@ int AbilityManager2 :: EnumerateTargets(CreatureInstance *actor, int targetType,
 
 int AbilityManager2 :: ActivateAbility(CreatureInstance *cInst, short abilityID, int eventType, ActiveAbilityInfo *abInfo)
 {
-	//g_Log.AddMessageFormat("ActivateAbility [%s] AbID:%d, Evt:%d", cInst->css.display_name, abilityID, eventType);
+//	g_Log.AddMessageFormat("ActivateAbility [%s] AbID:%d, Evt:%d", cInst->css.display_name, abilityID, eventType);
 
 	//Hack for autoattacks and quest interaction triggers
 	int result = CheckActivateSpecialAbility(cInst, abilityID, eventType);
@@ -1667,7 +1673,7 @@ int AbilityManager2 :: ActivateAbility(CreatureInstance *cInst, short abilityID,
 		return ABILITY_BAD_EVENT;
 	}
 
-	if(eventType == EventType::onRequest)
+	if(eventType == EventType::onRequest || eventType == EventType::onDeactivate)
 	{
 		abProcessing.mIsRequestGTAE = (it->second.mTargetType == TargetType::GTAE);
 
@@ -1708,11 +1714,11 @@ int AbilityManager2 :: ActivateAbility(CreatureInstance *cInst, short abilityID,
 			return ABILITY_COOLDOWN;
 	}
 
-	/*  DEBUG ONLY
-	g_Log.AddMessageFormat("%s %s (%d) %s", cInst->css.display_name, it->second.GetRowAsCString(ABROW::NAME), abilityID, EventType::GetNameByEventID(eventType));
-	for(int i = 0; i < ab->TargetCount; i++)
-		g_Log.AddMessageFormat("  %d: %s", i, ab->TargetList[i]->css.display_name);
-	*/
+	/*  DEBUG ONLY */
+//	g_Log.AddMessageFormat("%s %s (%d) %s", cInst->css.display_name, it->second.GetRowAsCString(ABROW::NAME), abilityID, EventType::GetNameByEventID(eventType));
+//	for(int i = 0; i < ab->TargetCount; i++)
+//		g_Log.AddMessageFormat("  %d: %s", i, ab->TargetList[i]->css.display_name);
+	/**/
 
 	for(int targIndex = 0; targIndex < ab->TargetCount; targIndex++)
 	{
@@ -3109,6 +3115,23 @@ int AbilityCalculator :: DisplayEffect(ARGUMENT_LIST args)
 {
 	const char *effect = args.GetString(0);
 	ciSource->SimulateEffect(effect, ciTarget);
+	return ABILITY_SUCCESS;
+}
+
+//Action.  New to this server.  Transform into another creature
+int AbilityCalculator :: Transform(ARGUMENT_LIST args)
+{
+	int creatureDefID = args.GetInteger(0);
+	g_Log.AddMessageFormat("Transform: %d", creatureDefID);
+	ciSource->CAF_Transform(creatureDefID);
+	return ABILITY_SUCCESS;
+}
+
+//Action.  New to this server.  Transform into another creature
+int AbilityCalculator :: Untransform(ARGUMENT_LIST args)
+{
+	g_Log.AddMessageFormat("Untransform");
+	ciSource->Untransform();
 	return ABILITY_SUCCESS;
 }
 
