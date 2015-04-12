@@ -63,240 +63,267 @@ set TEMP 0
 set TARGET 0
 set CID_GRUNDY 0
 set CID_MOLDYFORK 0
+set CID_MOLDYFORK_RELATIVE 0
 set CID_CRUELLA 0
+set CID_CRUELLA_RELATIVE 0
 
 ; We need this label, hardcoded in the server as the entry point for instance scripts.
 :init
-queue_event "eventGrundySearch" 5000
+	queue_event "eventGrundySearch" 5000
 
 :main
-exec_queue
-wait 100
-goto main
-
-
+	exec_queue
+	wait 100
+	goto main
 
 
 :findInResultArray
-pop TEMPCDEF
-set ITERATOR 0
-iarrsize RESULTARRAY TEMPSIZE
-if ITERATOR < TEMPSIZE
-  iarrvalue RESULTARRAY ITERATOR TEMPCID
-  get_cdef TEMPCID TEMP
-  if TEMP = TEMPCDEF
-    pushvar TEMPCID
-    return
-  endif
-  inc ITERATOR
-  recompare
-endif
-pushint 0
-return
+	pop TEMPCDEF
+	set ITERATOR 0
+	iarrsize RESULTARRAY TEMPSIZE
+	if ITERATOR < TEMPSIZE
+		iarrvalue RESULTARRAY ITERATOR TEMPCID
+		get_cdef TEMPCID TEMP
+		if TEMP = TEMPCDEF
+			pushvar TEMPCID
+			return
+		endif
+		inc ITERATOR
+		recompare
+	endif
+	pushint 0
+	return
 
 
 
 :eventGrundySearch
-print ":eventGrundySearch"
-if CID_GRUNDY != 0
-  return
-endif
-scan_npc_cid LOC_BOSS_ROOM RESULTARRAY
-pushint CDEF_FATHER_GRUNDY
-call findInResultArray
-pop CID_GRUNDY
-
-if CID_GRUNDY = 0
-  queue_event "eventGrundySearch" 5000
-  return
-else
-  queue_event "eventGrundyHealth" 1000
-endif
-return
-
+	print ":eventGrundySearch"
+	if CID_GRUNDY != 0
+		return
+	endif
+	scan_npc_cid LOC_BOSS_ROOM RESULTARRAY
+	pushint CDEF_FATHER_GRUNDY
+	call findInResultArray
+	pop CID_GRUNDY
+	if CID_GRUNDY = 0
+		queue_event "eventGrundySearch" 5000
+		return
+	else
+		queue_event "eventGrundyHealth" 1000
+	endif
+	return
 
 
 :eventGrundyHealth
-print ":eventGrundyHealth"
-get_health_percent CID_GRUNDY TEMP
-if TEMP > 75
-  queue_event "eventGrundyHealth" 1000
-else
-  queue_event "eventSpawnMinibosses" 0
-endif
-return
-
-
+	print ":eventGrundyHealth"
+	get_health_percent CID_GRUNDY TEMP
+	if TEMP > 75
+		queue_event "eventGrundyHealth" 1000
+	else
+		queue_event "eventSpawnMinibosses" 0
+	endif
+	return
 
 :eventSpawnMinibosses
-print ":eventSpawnMinibosses"
-spawn SPAWNPOINT_MOLDYFORK
-spawn SPAWNPOINT_CRUELLA
-queue_event "eventMoldyforkSearch" 0
-queue_event "eventCruellaSearch" 0
-return
-
+	print ":eventSpawnMinibosses"
+	spawn SPAWNPOINT_MOLDYFORK
+	spawn SPAWNPOINT_CRUELLA
+	queue_event "eventMoldyforkSearch" 0
+	queue_event "eventCruellaSearch" 0
+	return
 
 
 :eventMoldyforkSearch
-print ":eventMoldyforkSearch"
-if CID_MOLDYFORK != 0
-  return
-endif
+	print ":eventMoldyforkSearch"
+	if CID_MOLDYFORK != 0
+		return
+	endif
+	
+	scan_npc_cid LOC_BOSS_ROOM RESULTARRAY
+	
+	pushint CDEF_MOLDYFORK
+	call findInResultArray
+	pop CID_MOLDYFORK
+	
+	if CID_MOLDYFORK = 0
+		queue_event "eventMoldyforkSearch" 5000
+	else
+		queue_event "eventMoldyforkWalk" 0
+	endif
 
-scan_npc_cid LOC_BOSS_ROOM RESULTARRAY
+	return
 
-pushint CDEF_MOLDYFORK
-call findInResultArray
-pop CID_MOLDYFORK
+:eventCruellaRelativeSearch
+	print ":eventCruellaRelativeSearch"
+	if CID_CRUELAA != 0
+		return
+	endif
+	
+	scan_npc_cid LOC_BOSS_ROOM RESULTARRAY
+	
+	pushint CDEF_CRUELAA_SPAWN
+	call findInResultArray
+	pop CID_CRUELAA_RELATIVE
+	
+	if CID_CRUELAA_RELATIVATE = 0
+		queue_event "eventCruellaRelativeSearch" 5000
+	else
+		get_target CID_CRUELLA TARGET
+		if TARGET != 0
+			set_target CID_CRUELLA_RELATIVE TARGET			
+		  	ai_script_jump CID_CRUELLA_RELATIVE "tryMelee"
+		endif
+	endif
 
-if CID_MOLDYFORK = 0
-  queue_event "eventMoldyforkSearch" 5000
-else
-  queue_event "eventMoldyforkWalk" 0
-endif
+	return
 
-return
+:eventMoldyforkRelativeSearch
+	print ":eventMoldyforkRelativeSearch"
+	if CID_MOLDYFORK != 0
+		return
+	endif
+	
+	scan_npc_cid LOC_BOSS_ROOM RESULTARRAY
+	
+	pushint CDEF_MOLDYFORK_SPAWN
+	call findInResultArray
+	pop CID_MOLDYFORK_RELATIVE
+	
+	if CID_MOLDYFORK_RELATIVATE = 0
+		queue_event "eventMoldyforkRelativeSearch" 5000
+	else
+		get_target CID_MOLDYFORK TARGET
+		if TARGET != 0
+			set_target CID_MOLDYFORK_RELATIVE TARGET			
+		  	ai_script_jump CID_MOLDYFORK_RELATIVE "tryMelee"
+		endif
+	endif
 
+	return
 
 
 :eventCruellaSearch
-print ":eventCruellaSearch"
-if CID_CRUELLA != 0
-  return
-endif
+	print ":eventCruellaSearch"
+	if CID_CRUELLA != 0
+		return
+	endif
 
-scan_npc_cid LOC_BOSS_ROOM RESULTARRAY
+	scan_npc_cid LOC_BOSS_ROOM RESULTARRAY
 
-pushint CDEF_CRUELLA
-call findInResultArray
-pop CID_CRUELLA 
+	pushint CDEF_CRUELLA
+	call findInResultArray
+	pop CID_CRUELLA 
 
-if CID_CRUELLA = 0
-  queue_event "eventCruellaSearch" 5000
-else
-  queue_event "eventCruellaWalk" 1000
-endif
+	if CID_CRUELLA = 0
+		queue_event "eventCruellaSearch" 5000
+	else
+		queue_event "eventCruellaWalk" 1000
+	endif
 
 return
-
-
 
 :eventMoldyforkWalk
-print ":eventMoldyforkWalk"
-order_walk CID_MOLDYFORK 3339 3822
-queue_event "eventMoldyforkWalking" 1000
-return
-
-
+	print ":eventMoldyforkWalk"
+	order_walk CID_MOLDYFORK 3339 3822
+	queue_event "eventMoldyforkWalking" 1000
+	return
 
 :eventMoldyforkWalking
-print ":eventMoldyforkWalking"
-get_target CID_MOLDYFORK TEMP
-if TEMP = 0
-  scan_npc_cid LOC_MOLDYFORK_REINFORCE RESULTARRAY
-  pushint CDEF_MOLDYFORK
-  call findInResultArray
-  pop TEMP
-  if TEMP = 0
-    queue_event "eventMoldyforkWalking" 2000
-  else
-    queue_event "eventMoldyforkSpawnRelative" 0
-    queue_event "eventMoldyforkMain" 0
-  endif
-else
-  queue_event "eventMoldyforkMain" 1000
-endif
-return
-
-
+	print ":eventMoldyforkWalking"
+	get_target CID_MOLDYFORK TEMP
+	if TEMP = 0
+  		scan_npc_cid LOC_MOLDYFORK_REINFORCE RESULTARRAY
+  		pushint CDEF_MOLDYFORK
+  		call findInResultArray
+  		pop TEMP
+  		if TEMP = 0
+    		queue_event "eventMoldyforkWalking" 2000
+  		else
+    		queue_event "eventMoldyforkSpawnRelative" 0
+    		queue_event "eventMoldyforkMain" 0
+  		endif
+	else
+  		queue_event "eventMoldyforkMain" 1000
+	endif
+	return
 
 :eventCruellaWalk
-print ":eventCruellaWalk"
-order_walk CID_CRUELLA 3572 3819
-queue_event "eventCruellaWalking" 1000
-return
-
-
+	print ":eventCruellaWalk"
+	order_walk CID_CRUELLA 3572 3819
+	queue_event "eventCruellaWalking" 1000
+	return
 
 :eventCruellaWalking
-print ":eventCruellaWalking"
-get_target CID_CRUELLA TEMP
-if TEMP = 0
-  scan_npc_cid LOC_CRUELLA_REINFORCE RESULTARRAY
-  pushint CDEF_CRUELLA
-  call findInResultArray
-  pop TEMP
-  if TEMP = 0
-    queue_event "eventCruellaWalking" 2000
-  else
-    queue_event "eventCruellaSpawnRelative" 0
-    queue_event "eventCruellaMain" 0
-  endif
-else
-  queue_event "eventMoldyforkMain" 1000
-endif
-return
-
-
+	print ":eventCruellaWalking"
+	get_target CID_CRUELLA TEMP
+	if TEMP = 0
+		scan_npc_cid LOC_CRUELLA_REINFORCE RESULTARRAY
+		pushint CDEF_CRUELLA
+		call findInResultArray
+		pop TEMP
+		if TEMP = 0
+			queue_event "eventCruellaWalking" 2000
+		else
+			queue_event "eventCruellaSpawnRelative" 0
+			queue_event "eventCruellaMain" 0
+		endif
+	else
+		queue_event "eventMoldyforkMain" 1000
+	endif
+	return
 
 :eventMoldyforkSpawnRelative
-print ":eventMoldyforkSpawnRelative"
-spawn SPAWNPOINT_MOLDYFORK_REINFORCE
-return
-
-
+	print ":eventMoldyforkSpawnRelative"
+	spawn SPAWNPOINT_MOLDYFORK_REINFORCE
+	queue_event "eventMoldyforkRelativeSearch" 1000
+	return
 
 :eventMoldyforkMain
-print ":eventMoldyforkMain"
-if CID_MOLDYFORK = 0
-  return
-endif
-queue_event "eventMoldyforkMain" 5000
+	print ":eventMoldyforkMain"
+	if CID_MOLDYFORK = 0
+	  return
+	endif
+	queue_event "eventMoldyforkMain" 5000
 
-get_target CID_MOLDYFORK TARGET
-if TARGET != 0
-  return
-endif
+	get_target CID_MOLDYFORK TARGET
+	if TARGET != 0
+		return
+	endif
 
-if CID_GRUNDY != 0
-  get_target CID_GRUNDY TARGET
-  if TARGET != 0
-    set_target CID_MOLDYFORK TARGET
-  endif
-endif
+	if CID_GRUNDY != 0
+		get_target CID_GRUNDY TARGET
+		if TARGET != 0
+			set_target CID_MOLDYFORK TARGET
+		endif
+	endif
 
-return
-
-
+	return
 
 :eventCruellaSpawnRelative
-print ":eventCruellaSpawnRelative"
-spawn SPAWNPOINT_CRUELLA_REINFORCE
-return
-
-
+	print ":eventCruellaSpawnRelative"
+	spawn SPAWNPOINT_CRUELLA_REINFORCE
+	queue_event "eventCruellaRelativeSearch" 1000
+	return
 
 :eventCruellaMain
-if CID_CRUELLA = 0
-  return
-endif
+	if CID_CRUELLA = 0
+		return
+	endif
 
-print ":eventCruellaMain"
-queue_event "eventCruellaMain" 5000
+	print ":eventCruellaMain"
+	queue_event "eventCruellaMain" 5000
 
-get_target CID_CRUELLA TARGET
-if TARGET != 0
-  return
-endif
+	get_target CID_CRUELLA TARGET
+	if TARGET != 0
+  		return
+	endif
 
-if CID_GRUNDY != 0
-  get_target CID_GRUNDY TARGET
-  if TARGET != 0
-    set_target CID_CRUELLA TARGET
-  endif
-endif
-return
-
+	if CID_GRUNDY != 0
+		get_target CID_GRUNDY TARGET
+		if TARGET != 0
+			set_target CID_CRUELLA TARGET
+		endif
+	endif
+	return
 
 
