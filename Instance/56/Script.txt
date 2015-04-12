@@ -26,7 +26,6 @@ set TEMP_TARGET 0
 set CID_WAILER 0
 set BRAZIER_1_RANGE 0
 set BRAZIER_2_RANGE 0
-set SHIELD_CAST 0
 
 set STAGE 0
 
@@ -46,24 +45,30 @@ set STAGE 0
 
 :onKill_1259
 	set STAGE 99
-	print "Killed!"
 	call killMinions
 	return
 
+;
+; Alabaster killed, spawn the flame on one of the braziers.
+; The flame is the creature that has the purge ability. The
+; ability will only be activated if both braziers are lit.
+;
 :onKill_3649
-	print "Alabaster killed, spawining brazier flame"
     spawn 1126558
     call brazierSearch
     return
-   
+
+;
+; Kyshf killed, spawn the flame on one of the braziers.
+; The flame is the creature that has the purge ability. The
+; ability will only be activated if both braziers are lit.
+;  
 :onKill_3648
-	print "KYHYSYSHSF killed, spawining brazier flame"
 	spawn 1126556
 	call brazierSearch
 	return
 
 :findResultArrayCDEF
-	print ":findResultArrayCDEF"
 	pop SEARCHARG
 	set ITERATOR 0
 	iarrsize RESULTARRAY TEMPSIZE
@@ -80,17 +85,16 @@ set STAGE 0
 	pushint 0
 	return
 
+;
+; The adds should now be spawned, but we need them
+; to target whoever is attacking The Wailer and start
+; attacking them.;
+
 :activateMinions
 	pop TARGET
-	print "!!target is"
-	printvar TARGET
-	print "!!wailer is"
-	printvar CID_WAILER
 	set ITERATOR 0
 	iarrsize RESULTARRAY TEMPSIZE
 	if ITERATOR < TEMPSIZE
-	  print "!!TEMPCID is"
-	  printvar TEMPCID
 	  iarrvalue RESULTARRAY ITERATOR TEMPCID
 	  if TEMPCID != CID_WAILER
 	      if MESG = 0
@@ -98,113 +102,97 @@ set STAGE 0
 	      	  set MESG 1
 	      endif
 	      get_cdef TEMPCID TEMPRES
-	      print "!!doing 1 target"
-	      printvar TEMPRES
 	      set_target TEMPCID TARGET
-	      print "!!jumping 1 target"
 		  ai_script_jump TEMPCID "tryMelee"
-		  print "!!incing 1 target"
 	  endif
 	  inc ITERATOR
 	  recompare
 	endif
 	return
 
+;
+; Find a CID in an array. Expects RESULTARRAY to
+; be the array, and whatever is on top of the
+; stack is what to search for. If it is in the
+; the array, it will pushed back onto the stack
+; otherwise zero will be returned.
+;
+; TODO should this be a script function?
+;
+
 :findResultArrayCID
-	print ":findResultArrayCID"
 	pop SEARCHARG
 	set ITERATOR 0
 	iarrsize RESULTARRAY TEMPSIZE
 	if ITERATOR < TEMPSIZE
-	  iarrvalue RESULTARRAY ITERATOR TEMPCID
-	  if TEMPCID = SEARCHARG
-	    pushvar TEMPCID
-	    return
-	  endif
-	  inc ITERATOR
-	  recompare
+		iarrvalue RESULTARRAY ITERATOR TEMPCID
+		if TEMPCID = SEARCHARG
+			pushvar TEMPCID
+			return
+		endif
+		inc ITERATOR
+		recompare
 	endif
 	pushint 0
 	return
 
+;
+; Search the room for the braziers. When they are found
+; we get their CID, which can be used for targeting and
+; calling AI scripts
+;
+
 :brazierSearch
-	print "Searching for braziers"
 	scan_npc_cid LOC_WAILER_ROOM RESULTARRAY
 	pushint CDEF_BRAZIER
 	call findResultArrayCDEF
 	pop CID_BRAZIER1
-	print "CID brazier1"
-	printvar CID_BRAZIER1
 	pushint CDEF_BRAZIER
 	call findResultArrayCDEF
 	pop CID_BRAZIER2
-	print "CID brazier2"
-	printvar CID_BRAZIER2
+
+;
+; Periodically search the room for the wailer. When 
+; found, start monitoring is health.
+;
 
 :eventWailerSearch
-	print ":eventWailerSearch"
 	if CID_WAILER != 0
 	  return
 	endif
 	scan_npc_cid LOC_WAILER_ROOM RESULTARRAY
-	printvar CDEF_WAILER
-	printintarr RESULTARRAY
 	pushint CDEF_WAILER
 	call findResultArrayCDEF
 	pop CID_WAILER
 	
 	if CID_WAILER = 0
-	  print ":no wailer!"
 	  queue_event "eventWailerSearch" 5000
 	  return
 	else
-	  print ":found wailer!"
 	  call brazierSearch
 	  queue_event "eventWailerHealth" 2000
 	endif
 	return
 
+;
+; 
+; 
 
 :eventWailerShield
 	if CID_WAILER = 0
 	  return
 	endif	
 	
-	if SHIELD_CAST = 0
-		call tryCastShield
+	call tryCastShield
+	
+	if CID_BRAZIER1 != 0
+		if CID_BRAZIER2 != 0
+			set_target CID_BRAZIER1 CID_WAILER	      
+			ai_script_jump CID_BRAZIER1 "tryWarm"
+			set_target CID_BRAZIER2 CID_WAILER	
+			ai_script_jump CID_BRAZIER2 "tryWarm"
+		endif
 	endif
-	
-	print "TRY WARM"
-	printvar CID_BRAZIER1
-	
-	set_target CID_BRAZIER1 CID_WAILER	      
-	ai_script_jump CID_BRAZIER1 "tryWarm"
-	print "TRY WARM2"
-	printvar CID_BRAZIER2
-	
-	set_target CID_BRAZIER2 CID_WAILER	
-	ai_script_jump CID_BRAZIER2 "tryWarm"
-	
-	;scan_npc_cid LOC_BRAZIER_1 RESULTARRAY
-	;pushint CDEF_WAILER
-	;call findResultArrayCID
-	;pop BRAZIER_1_RANGE
-	
-	;scan_npc_cid LOC_BRAZIER_2 RESULTARRAY
-	;pushint CDEF_WAILER
-	;call findResultArrayCID
-	;pop BRAZIER_2_RANGE
-	
-	;set TEMP 0
-	;if BRAZIER_1_RANGE = 0
-	  ;inc TEMP
-	;endif
-	;if BRAZIER_2_RANGE = 0
-	 ; inc TEMP
-	;endif
-	;if TEMP > 0
-	 ; call tryCastShield
-	;endif
 	
 	return
 
@@ -217,8 +205,6 @@ set STAGE 0
 	if CID_WAILER = 0
 		return
 	endif
-	print ":eventWailerHealth"
-	printvar STAGE
 	
 	if STAGE = 99
 		set STAGE 0
@@ -233,7 +219,6 @@ set STAGE 0
 	endif
 	
 	get_health_percent CID_WAILER TEMP
-	printvar TEMP
 	
 	if STAGE != 0
 		if TEMP = 100	
@@ -268,13 +253,8 @@ set STAGE 0
 	;
 	
 	if STAGE = 1
-		print "stage 1"
-		print TEMP
 		if TEMP <= 70
-			print "Time for a shield"
 			set STAGE 2
-			set SHIELD_CAST 0
-	  	
 		  	queue_event "eventWailerHealth" 3000
 		  	return
 		endif	
@@ -289,7 +269,6 @@ set STAGE 0
 	  	queue_event "eventWailerShield" 2000
 	  	
 		if TEMP <= 60
-			print ":at 60!"
 			call spawnMinions
 	    	set STAGE 3
 	  	endif
@@ -306,9 +285,7 @@ set STAGE 0
 	
 	if STAGE = 3
 		if TEMP <= 50
-			print "Time for a shield"
 			set STAGE 4
-			set SHIELD_CAST 0
 	  	
 		  	queue_event "eventWailerHealth" 3000
 		  	return
@@ -324,7 +301,6 @@ set STAGE 0
 	  	queue_event "eventWailerShield" 2000
 	  	
 		if TEMP <= 40
-			print ":at 40!"
 			call spawnMinions
 	    	set STAGE 5
 	  	endif
@@ -341,9 +317,7 @@ set STAGE 0
 	
 	if STAGE = 5
 		if TEMP <= 30
-			print "Time for a shield"
 			set STAGE 6
-			set SHIELD_CAST 0
 	  	
 		  	queue_event "eventWailerHealth" 3000
 		  	return
@@ -359,7 +333,6 @@ set STAGE 0
 	  	queue_event "eventWailerShield" 2000
 	  	
 		if TEMP <= 20
-			print ":at 20!"
 			call spawnMinions
 	    	set STAGE 7
 	  	endif
@@ -375,9 +348,7 @@ set STAGE 0
 	
 	if STAGE = 7
 		if TEMP <= 10
-			print "Time for a shield"
 			set STAGE 8
-			set SHIELD_CAST 0
 	  	
 		  	queue_event "eventWailerHealth" 3000
 		  	return
@@ -399,29 +370,29 @@ set STAGE 0
 
 
 :tryCastShield
-	print "Casting shield"
 	ai_script_jump CID_WAILER "extTryCastShield"
-	set SHIELD_CAST 1
 	return
 
 :killMinions
-	print ":killMinions"
 	despawn 1127142
 	despawn 1127141
 	despawn 1127140
 	return
 
+;
+; Spawn 3 minions and search for their CID. activateMinions
+; will then be called to make them target whoever is attacking
+; the Wailer and start attacking them
+;
+
 :spawnMinions
-	print ":spawnMinions"
 	spawn_at 1127142 7778
 	spawn_at 1127141 7778
 	spawn_at 1127140 7778
 	set MESG 0
-	print ":getting tarrget"
 	get_target CID_WAILER TEMP_TARGET
 	printvar TEMP_TARGET
 	scan_npc_cid LOC_WAILER_ROOM RESULTARRAY
 	pushvar TEMP_TARGET
-	print ":calling activate"
 	call activateMinions
 	return
