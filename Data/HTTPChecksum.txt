@@ -1,6 +1,6 @@
 /Release/Current/EarthEternal.car="cb42f92948c3e4cf963ef475c004d8bd"
 
-/Release/Current/Media/Catalogs.car="2c35a76eb423e71c2ded6dfbcdd9b212"
+/Release/Current/Media/Catalogs.car="9a8835b7395c3f0d2b670fc9c9e74655"
 
 /Release/Current/Media/Prop-ModAddons1.car="3d71aa991925f59e7bb6f6e0fbc75b5d"
 
