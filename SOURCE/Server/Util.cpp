@@ -17,6 +17,7 @@
 #include "Ability2.h"  //For ability event ID numbers
 #include "ZoneDef.h"
 #include <math.h>
+#include <stdlib.h>
 
 ChangeData SessionVarsChangeData;
 

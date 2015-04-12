@@ -622,6 +622,8 @@ CreatureInstance * SpawnTile :: SpawnCreature(ActiveInstance *inst, ActiveSpawne
 
 	attachedCreatureID.push_back(ptr->CreatureID);
 
+	g_Log.AddMessageFormat("[DEBUG] Pushed %d onto %d,%d", ptr->CreatureID, TileX, TileY);
+
 	return ptr;
 }
 
@@ -687,6 +689,11 @@ bool SpawnTile :: RemoveSpawnPoint(ActiveInstance *inst, int PropID)
 
 void SpawnTile :: RemoveSpawnPointCreatures(ActiveSpawner *spawner)
 {
+	RemoveSpawnPointCreature(spawner, 0);
+}
+
+void SpawnTile :: RemoveSpawnPointCreature(ActiveSpawner *spawner, int creatureID)
+{
 	//Removes all creatures spawned by this point. 
 #ifndef CREATUREMAP
 	std::list<CreatureInstance>::iterator cit;
@@ -694,7 +701,7 @@ void SpawnTile :: RemoveSpawnPointCreatures(ActiveSpawner *spawner)
 	int count = 0;
 	while(cit != manager->actInst->NPCList.end())
 	{
-		if((cit->serverFlags & ServerFlags::IsNPC) && cit->spawnGen == spawner)
+		if((creatureID == 0 || creatureID == cit->creatureID) && (cit->serverFlags & ServerFlags::IsNPC) && cit->spawnGen == spawner)
 		{
 			MessageComponent msg;
 			msg.SimulatorID = -1;
@@ -723,7 +730,7 @@ void SpawnTile :: RemoveSpawnPointCreatures(ActiveSpawner *spawner)
 	while(cit != manager->actInst->NPCList.end())
 	{
 		CreatureInstance *ptr = &cit->second;
-		if((ptr->serverFlags & ServerFlags::IsNPC) && ptr->spawnGen == spawner)
+		if((creatureID == 0 || creatureID == ptr->CreatureID) && (ptr->serverFlags & ServerFlags::IsNPC) && ptr->spawnGen == spawner)
 		{
 			MessageComponent msg;
 			msg.SimulatorID = -1;
@@ -746,7 +753,7 @@ void SpawnTile :: RemoveSpawnPointCreatures(ActiveSpawner *spawner)
 #endif
 	manager->actInst->RebuildNPCList();
 
-	g_Log.AddMessageFormat("[DEBUG] RemoveSpawnPoint() removed %d spawned creatures", count);
+//	g_Log.AddMessageFormat("[DEBUG] RemoveSpawnPoint() removed %d spawned creatures", count);
 
 	/*
 	for(cit = inst->NPCList.begin(); cit != inst->NPCList.end(); ++cit)
@@ -763,6 +770,15 @@ void SpawnTile :: RemoveSpawnPointCreatures(ActiveSpawner *spawner)
 	}
 	g_Log.AddMessageFormat("[DEBUG] RemoveSpawnPoint() unattached %d creatures", debugRemoved);
 	*/
+}
+
+void SpawnTile :: Despawn(int CreatureID)
+{
+	SPAWN_MAP::iterator it;
+	for(it = activeSpawn.begin(); it != activeSpawn.end(); it++)
+	{
+		RemoveSpawnPointCreature(&it->second, CreatureID);
+	}
 }
 
 ActiveSpawner * SpawnTile :: GetActiveSpawner(int PropID)
@@ -1037,6 +1053,17 @@ void SpawnManager :: RemoveSpawnPoint(int PropID)
 		if(it->RemoveSpawnPoint(actInst, PropID) == true)
 			g_Log.AddMessageFormat("Removing %d from %d, %d", PropID, it->TileX, it->TileY);
 		//	return;
+	}
+}
+
+void SpawnManager :: Despawn(int CreatureID)
+{
+	ActiveSpawner *obj = NULL;
+	std::list<SpawnTile>::iterator it;
+	for(it = spawnTiles.begin(); it != spawnTiles.end(); it++)
+	{
+		g_Log.AddMessageFormat("[DEBUG] Checking for despawn of %d on %d,%d", CreatureID, it->TileX, it->TileY);
+		it->Despawn(CreatureID);
 	}
 }
 

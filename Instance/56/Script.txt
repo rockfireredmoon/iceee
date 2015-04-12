@@ -5,10 +5,11 @@
 
 #symbol CDEF_WAILER 1259
 #symbol CDEF_BRAZIER 7777
+#symbol CDEF_GUARDIAN 7778
 
 #location LOC_WAILER_ROOM  1859 2702  2393 3234
-#location_br LOC_BRAZIER_1  2306 2766 25
-#location_br LOC_BRAZIER_2  1948 2766 25
+#location_br LOC_BRAZIER_1  2306 2766 35
+#location_br LOC_BRAZIER_2  1948 2766 35
 
 ;quick warp coords for boss room: /warp 2100 2900
 ;
@@ -410,16 +411,29 @@ set STAGE 0
 	ai_script_jump CID_WAILER "extTryCastShield"
 	return
 
+;
+; Kill all NPC that are that have CDefID of CDEF_GUARDIAN
+;
+
 :killMinions
-	despawn 1127142
-	despawn 1127141
-	despawn 1127140
+	print "Kill minions"
+	scan_npc_cid_for LOC_WAILER_ROOM RESULTARRAY CDEF_GUARDIAN	
+	set ITERATOR 0
+	iarrsize RESULTARRAY TEMPSIZE
+	if ITERATOR < TEMPSIZE
+  		iarrvalue RESULTARRAY ITERATOR TEMPCID
+		print "   Kill minion"
+		printvar TEMPCID
+  		despawn TEMPCID
+  		inc ITERATOR
+  		recompare
+	endif
 	return
 
 :spawnMinions
-	spawn_flag 1127142 7778 32
-	spawn_flag 1127141 7778 32
-	spawn_flag 1127140 7778 32
+	spawn_flag 1127142 CDEF_GUARDIAN 32
+	spawn_flag 1127141 CDEF_GUARDIAN 32
+	spawn_flag 1127140 CDEF_GUARDIAN 32
 	get_target CID_WAILER TEMPTARGET
 	scan_npc_cid LOC_WAILER_ROOM RESULTARRAY
 	pushvar TEMPTARGET

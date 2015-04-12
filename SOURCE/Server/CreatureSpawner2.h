@@ -102,6 +102,7 @@ struct ActiveSpawner
 	std::vector<int> attachedCreatureID;  //A list of creature IDs attached to this spawn point.
 
 	ActiveSpawner();
+	bool HasCreature(int creatureID);
 	void Clear(void);
 	bool UpdateSourcePackage(void);
 	void Invalidate(void);
@@ -160,8 +161,10 @@ public:
 	void RemoveAllAttachedCreature(ActiveInstance *inst);
 	void RemoveAttachedCreature(int CreatureID);
 	void UpdateSpawnPoint(SceneryObject *prop);
+	void Despawn(int CreatureID);
 	bool RemoveSpawnPoint(ActiveInstance *inst, int PropID);
 	void RemoveSpawnPointCreatures(ActiveSpawner *spawner);
+	void RemoveSpawnPointCreature(ActiveSpawner *spawner, int creatureID);
 	ActiveSpawner * GetActiveSpawner(int PropID);
 	bool QualifyDelete(void);
 	void GetAttachedCreatures(int sceneryID, std::vector<int> &results);
@@ -288,6 +291,7 @@ public:
 	void UpdateSpawnPoint(SceneryObject *prop);
 	void RemoveSpawnPoint(int PropID);
 	int TriggerSpawn(int PropID, int forceCreatureDef, int forceFlags);
+	void Despawn(int CreatureID);
 
 private:
 	bool HasTileCoord(int x, int y, TILELIST_CONT &searchList);

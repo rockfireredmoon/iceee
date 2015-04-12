@@ -55,7 +55,7 @@ OpCodeInfo extCoreOpCode[] = {
 
 	{ "info",             OP_INFO,            1, {OPT_STR,  OPT_NONE,    OPT_NONE}},
 	{ "chat",             OP_CHAT,            3, {OPT_STR,  OPT_STR,     OPT_STR}},
-	{ "despawn",          OP_DESPAWN,         1, {OPT_INT,  OPT_NONE,    OPT_NONE}},
+	{ "despawn",          OP_DESPAWN,         1, {OPT_VAR,  OPT_NONE,    OPT_NONE}},
 };
 const int maxExtOpCode = COUNT_ARRAY_ELEMENTS(extCoreOpCode);
 
@@ -140,8 +140,15 @@ void InstanceScriptPlayer::RunImplementationCommands(int opcode)
 	switch(opcode)
 	{
 	case OP_DESPAWN:
-		actInst->spawnsys.RemoveSpawnPoint(instr->param1);
+	{
+		CreatureInstance *source = actInst->GetInstanceByCID(GetVarValue(instr->param1));
+		g_Log.AddMessageFormat("Despawn: %d (%d)", GetVarValue(instr->param1), source->CreatureDefID);
+		if(source == NULL)
+			g_Log.AddMessageFormat("Despawn failed, %d does not exist.", GetVarValue(instr->param1));
+		else
+			actInst->spawnsys.Despawn(GetVarValue(instr->param1));
 		break;
+	}
 	case OP_SPAWN:
 		actInst->spawnsys.TriggerSpawn(instr->param1, 0, 0);
 		//g_Log.AddMessageFormat("Fired spawn: %d", def->instr[curInst].param1);
