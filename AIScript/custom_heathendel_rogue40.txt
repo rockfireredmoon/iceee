@@ -1,5 +1,6 @@
 #name custom_heathendel_rogue40
 #speed 6
+#queue_jumps call
 
 
 set VAR 0
@@ -50,6 +51,9 @@ return
 
 
 
+:tryMelee
+use 32766
+return
 
 :tryPierce
 getcooldown "Pierce" COOLDOWN

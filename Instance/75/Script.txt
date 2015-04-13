@@ -46,12 +46,10 @@
 #symbol CDEF_FATHER_GRUNDY 1261
 #symbol CDEF_MOLDYFORK 1262
 #symbol CDEF_CRUELLA 1263
-#symbol CDEF_MOLDYFORK_SPAWN 3660
-#symbol CDEF_CRUELLA_SPAWN 3660
+#symbol CDEF_MOLDYFORK_REINFORCE 3685
+#symbol CDEF_CRUELLA_REINFORCE 3685
 
 #location LOC_BOSS_ROOM 3184 3798 3716 4149
-; #location LOC_CRUELLA_SPAWN 3601 3937 3661 3997
-; #location LOC_MOLDYFORK_SPAWN 3237 3939 3297 3999
 #location_br LOC_CRUELLA_REINFORCE 3571 3821 30
 #location_br LOC_MOLDYFORK_REINFORCE 3339 3823 30
 
@@ -63,9 +61,9 @@ set TEMP 0
 set TARGET 0
 set CID_GRUNDY 0
 set CID_MOLDYFORK 0
-set CID_MOLDYFORK_RELATIVE 0
+set CID_MOLDYFORK_REINFORCE 0
 set CID_CRUELLA 0
-set CID_CRUELLA_RELATIVE 0
+set CID_CRUELLA_REINFORCE 0
 
 ; We need this label, hardcoded in the server as the entry point for instance scripts.
 :init
@@ -97,7 +95,6 @@ set CID_CRUELLA_RELATIVE 0
 
 
 :eventGrundySearch
-	print ":eventGrundySearch"
 	if CID_GRUNDY != 0
 		return
 	endif
@@ -115,7 +112,6 @@ set CID_CRUELLA_RELATIVE 0
 
 
 :eventGrundyHealth
-	print ":eventGrundyHealth"
 	get_health_percent CID_GRUNDY TEMP
 	if TEMP > 75
 		queue_event "eventGrundyHealth" 1000
@@ -125,7 +121,6 @@ set CID_CRUELLA_RELATIVE 0
 	return
 
 :eventSpawnMinibosses
-	print ":eventSpawnMinibosses"
 	spawn SPAWNPOINT_MOLDYFORK
 	spawn SPAWNPOINT_CRUELLA
 	queue_event "eventMoldyforkSearch" 0
@@ -134,7 +129,6 @@ set CID_CRUELLA_RELATIVE 0
 
 
 :eventMoldyforkSearch
-	print ":eventMoldyforkSearch"
 	if CID_MOLDYFORK != 0
 		return
 	endif
@@ -154,56 +148,41 @@ set CID_CRUELLA_RELATIVE 0
 	return
 
 :eventCruellaRelativeSearch
-	print ":eventCruellaRelativeSearch"
-	if CID_CRUELAA != 0
-		return
-	endif
-	
-	scan_npc_cid LOC_BOSS_ROOM RESULTARRAY
-	
-	pushint CDEF_CRUELAA_SPAWN
-	call findInResultArray
-	pop CID_CRUELAA_RELATIVE
-	
-	if CID_CRUELAA_RELATIVATE = 0
-		queue_event "eventCruellaRelativeSearch" 5000
-	else
-		get_target CID_CRUELLA TARGET
+	scan_npc_cid_for LOC_BOSS_ROOM RESULTARRAY CDEF_CRUELLA_REINFORCE
+	iarrsize RESULTARRAY TEMPSIZE
+	if TEMPSIZE > 0
+		iarrvalue RESULTARRAY 0 CID_CRUELLA_REINFORCE
+		get_target CID_GRUNDY TARGET
 		if TARGET != 0
-			set_target CID_CRUELLA_RELATIVE TARGET			
-		  	ai_script_jump CID_CRUELLA_RELATIVE "tryMelee"
+			set_target CID_CRUELLA_REINFORCE TARGET			
+		  	ai_script_jump CID_CRUELLA_REINFORCE "tryMelee"
 		endif
+	else
+		queue_event "eventCruellaRelativeSearch" 5000
 	endif
-
 	return
 
 :eventMoldyforkRelativeSearch
-	print ":eventMoldyforkRelativeSearch"
-	if CID_MOLDYFORK != 0
-		return
-	endif
-	
-	scan_npc_cid LOC_BOSS_ROOM RESULTARRAY
-	
-	pushint CDEF_MOLDYFORK_SPAWN
-	call findInResultArray
-	pop CID_MOLDYFORK_RELATIVE
-	
-	if CID_MOLDYFORK_RELATIVATE = 0
-		queue_event "eventMoldyforkRelativeSearch" 5000
-	else
-		get_target CID_MOLDYFORK TARGET
+	scan_npc_cid_for LOC_BOSS_ROOM RESULTARRAY CDEF_MOLDYFORK_REINFORCE
+	iarrsize RESULTARRAY TEMPSIZE
+	if TEMPSIZE > 0
+		iarrvalue RESULTARRAY 0 CID_MOLDYFORK_REINFORCE
+		get_target CID_GRUNDY TARGET
+		print "Looking for grundy target"
 		if TARGET != 0
-			set_target CID_MOLDYFORK_RELATIVE TARGET			
-		  	ai_script_jump CID_MOLDYFORK_RELATIVE "tryMelee"
+			print "Found target!"
+			printvar TARGET
+			printvar CID_MOLDYFORK_REINFORCE
+			set_target CID_MOLDYFORK_REINFORCE TARGET			
+		  	ai_script_jump CID_MOLDYFORK_REINFORCE "tryMelee"
 		endif
+	else
+		queue_event "eventMoldyforkRelativeSearch" 5000
 	endif
-
 	return
 
 
 :eventCruellaSearch
-	print ":eventCruellaSearch"
 	if CID_CRUELLA != 0
 		return
 	endif
@@ -223,13 +202,11 @@ set CID_CRUELLA_RELATIVE 0
 return
 
 :eventMoldyforkWalk
-	print ":eventMoldyforkWalk"
 	order_walk CID_MOLDYFORK 3339 3822
 	queue_event "eventMoldyforkWalking" 1000
 	return
 
 :eventMoldyforkWalking
-	print ":eventMoldyforkWalking"
 	get_target CID_MOLDYFORK TEMP
 	if TEMP = 0
   		scan_npc_cid LOC_MOLDYFORK_REINFORCE RESULTARRAY
@@ -248,13 +225,11 @@ return
 	return
 
 :eventCruellaWalk
-	print ":eventCruellaWalk"
 	order_walk CID_CRUELLA 3572 3819
 	queue_event "eventCruellaWalking" 1000
 	return
 
 :eventCruellaWalking
-	print ":eventCruellaWalking"
 	get_target CID_CRUELLA TEMP
 	if TEMP = 0
 		scan_npc_cid LOC_CRUELLA_REINFORCE RESULTARRAY
@@ -273,13 +248,11 @@ return
 	return
 
 :eventMoldyforkSpawnRelative
-	print ":eventMoldyforkSpawnRelative"
 	spawn SPAWNPOINT_MOLDYFORK_REINFORCE
 	queue_event "eventMoldyforkRelativeSearch" 1000
 	return
 
 :eventMoldyforkMain
-	print ":eventMoldyforkMain"
 	if CID_MOLDYFORK = 0
 	  return
 	endif
@@ -300,7 +273,6 @@ return
 	return
 
 :eventCruellaSpawnRelative
-	print ":eventCruellaSpawnRelative"
 	spawn SPAWNPOINT_CRUELLA_REINFORCE
 	queue_event "eventCruellaRelativeSearch" 1000
 	return
@@ -309,8 +281,6 @@ return
 	if CID_CRUELLA = 0
 		return
 	endif
-
-	print ":eventCruellaMain"
 	queue_event "eventCruellaMain" 5000
 
 	get_target CID_CRUELLA TARGET

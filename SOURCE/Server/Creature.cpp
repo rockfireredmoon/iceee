@@ -1658,6 +1658,10 @@ void CreatureInstance :: UpdateBaseStatMinimum(int statID, float amount)
 // responsible for iterating or otherwise correctly determinating a valid index.
 void CreatureInstance :: RemoveBuffIndex(size_t index)
 {
+
+	//			g_AbilityManager.ActivateAbility(this, abilityID, EventType::onDeactivate, &ab[0]);
+	g_AbilityManager.ActivateAbility(this, activeStatMod[index].abilityID, EventType::onDeactivate, &ab[0]);
+
 	SubtractBaseStatMod(activeStatMod[index].modStatID, activeStatMod[index].amount);
 	activeStatMod.erase(activeStatMod.begin() + index);
 }
@@ -1680,7 +1684,7 @@ void CreatureInstance :: RemoveBuffsFromAbility(int abilityID, bool send)
 //			if(activeStatMod[i].abilityGroupID == 544)
 //				_RemoveStatusList(StatusEffects::TRANSFORMED);
 
-			g_AbilityManager.ActivateAbility(this, abilityID, EventType::onDeactivate, &ab[0]);
+//			g_AbilityManager.ActivateAbility(this, abilityID, EventType::onDeactivate, &ab[0]);
 
 			RemoveBuffIndex(i);
 		}

@@ -151,7 +151,7 @@ class this.States.LoginState extends this.State
 		this.mCS.setSticky("center", "center");
 		this.mCS.setPosition(-50, -275);
 		this.mCS.setSize(395, 530);
-		this.mCS.setOverlay("GUI/Overlay2");
+		this.mCS.baseContainer.setOverlay("GUI/Overlay2");
 		this.mCS.secondContainer <- ::GUI.Container();
 		this.mCS.setLayoutManager(this.GUI.BorderLayout());
 		this.mCS.setInsets(10, 0, 0, 0);

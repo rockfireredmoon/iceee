@@ -3114,6 +3114,7 @@ void AbilityCalculator :: ConsumeReagent(void)
 int AbilityCalculator :: DisplayEffect(ARGUMENT_LIST args)
 {
 	const char *effect = args.GetString(0);
+	g_Log.AddMessageFormat("Display Effect: %s", effect);
 	ciSource->SimulateEffect(effect, ciTarget);
 	return ABILITY_SUCCESS;
 }

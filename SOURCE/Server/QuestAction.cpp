@@ -22,6 +22,7 @@ const QuestScriptCommandDef* ExtendedQuestAction :: GetCommandDef(const std::str
 		//Conditions
 		{"heroism",     CONDITION_HEROISM, 2, CommandParam::COMPARE, CommandParam::INTEGER, CommandParam::NONE },
 		{"has_item",    CONDITION_HAS_ITEM, 2, CommandParam::INTEGER, CommandParam::INTEGER, CommandParam::NONE },
+		{"transformed", CONDITION_TRANSFORMED, 0, CommandParam::NONE, CommandParam::NONE, CommandParam::NONE },
 		
 		//Actions
 		{"change_heroism", ACTION_CHANGE_HEROISM, 1, CommandParam::INTEGER, CommandParam::NONE, CommandParam::NONE },
@@ -29,6 +30,8 @@ const QuestScriptCommandDef* ExtendedQuestAction :: GetCommandDef(const std::str
 		{"send_text",      ACTION_SEND_TEXT, 1, CommandParam::STRING, CommandParam::NONE, CommandParam::NONE },
 		{"play_sound",     ACTION_PLAY_SOUND, 1, CommandParam::STRING, CommandParam::NONE, CommandParam::NONE },
 		{"join_guild",     ACTION_JOIN_GUILD, 2, CommandParam::INTEGER, CommandParam::INTEGER, CommandParam::NONE },
+		{"transform",      ACTION_TRANSFORM, 1, CommandParam::INTEGER, CommandParam::NONE, CommandParam::NONE },
+		{"untransform",    ACTION_UNTRANSFORM, 0, CommandParam::NONE, CommandParam::NONE, CommandParam::NONE },
 	};
 
 	static const int count = COUNT_ARRAY_ELEMENTS(commands);
