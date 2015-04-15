@@ -12,8 +12,8 @@ const int MODMESSAGE_EVENT_PING_START = 20;
 const int MODMESSAGE_EVENT_PING_STOP = 21;
 const int MODMESSAGE_EVENT_PING_QUERY = 22;
 const int MODMESSAGE_EVENT_GENERIC_REQUEST = 23;
-const int MODMESSAGE_EVENT_POPUP_MSG = 30;
 const int MODMESSAGE_EVENT_STOP_SWIM = 40;
+const int MODMESSAGE_EVENT_POPUP_MSG = 30;
 
 extern char MessageBuf[128];
 
@@ -79,6 +79,7 @@ int PrepExt_SendVisWeapon(char *buffer, int CreatureID, short visWeapon);
 int PrepExt_CooldownExpired(char *buffer, long actor, const char *cooldownCategory);
 int PrepExt_ChangeTarget(char *buffer, int sourceID, int targetID);
 int PrepExt_ExperienceGain(char *buffer, int CreatureID, int ExpAmount);
+int PrepExt_SendValour(char *buffer, int CreatureID, int ValourAmount, int GuildDefID, int rank, int title);
 int PrepExt_SendExperience(char *buffer, int CreatureID, int ExpAmount);
 int PrepExt_QueryResponseNull(char *buffer, int queryIndex);
 int PrepExt_QueryResponseString(char *buffer, int queryIndex, const char *strData);
@@ -98,6 +99,7 @@ int PrepExt_CreatureEventPortalRequest(char *buffer, int actorID, const char *ca
 int PrepExt_CreatureEventVaultSize(char *buffer, int actorID, int vaultSize);
 int PrepExt_SendEnvironmentUpdateMsg(char *buffer, const char *zoneIDString, const ZoneDefInfo *zoneDef);
 int PrepExt_SendTimeOfDayMsg(char *buffer, const char *envType);
+int PrepExt_Broadcast(char *buffer, const char *message);
 
 int SendToAllSimulator(char *buffer, int length, int ignoreIndex);
 int SendToOneSimulator(char *buffer, int length, int simIndex);

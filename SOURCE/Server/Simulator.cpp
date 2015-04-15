@@ -860,7 +860,7 @@ void SimulatorThread :: ForceErrorMessage(const char *message, int msgtype)
 	}
 	else
 	{
-		size += PutByte(&SendBuf[size], 100);   //_handleModMessage   REQUIRES MODDED CLIENT
+		size += PutByte(&SendBuf[size], 100);   //_handleModMessage   REQUIRES MODDED CLIENT (AddOns.nut)
 		size += PutShort(&SendBuf[size], 0);    //Reserve for size
 
 		size += PutByte(&SendBuf[size], MODMESSAGE_EVENT_POPUP_MSG);   //event for advanced emote
@@ -1205,6 +1205,32 @@ void SimulatorThread :: ClearAuxBuffers(void)
 	memset(Aux1, 0, sizeof(Aux1));
 	memset(Aux2, 0, sizeof(Aux2));
 	memset(Aux3, 0, sizeof(Aux3));
+}
+
+void SimulatorThread :: BroadcastMessage(const char *message)
+{
+	LogMessageL(MSG_SHOW, "Broadcast message '%s'", message);
+
+	int wpos = PrepExt_Broadcast(SendBuf, message);
+
+	SIMULATOR_IT it;
+	for(it = Simulator.begin(); it != Simulator.end(); ++it)
+	{
+
+		if(it->ProtocolState == 0)
+		{
+			//LogMessageL(MSG_ERROR, "[WARNING] Cannot not send chat to lobby protocol simulator");
+			continue;
+		}
+
+		if(it->isConnected == false)
+			continue;
+
+		if(it->pld.charPtr == NULL)
+			continue;
+
+		it->AttemptSend(SendBuf, wpos);
+	}
 }
 
 void SimulatorThread :: SendInfoMessage(const char *message, char eventID)
@@ -2372,6 +2398,17 @@ void SimulatorThread :: UpdateSocialEntry(bool newOnlineStatus, bool onlyUpdateF
 	g_FriendListManager.UpdateSocialEntry(data);
 }
 
+void SimulatorThread :: BroadcastGuildChange(int guildDefID)
+{
+	int wpos = 0;
+	wpos += PutByte(&SendBuf[wpos], 99);
+	wpos += PutShort(&SendBuf[wpos], 0);
+	wpos += PutByte(&SendBuf[wpos], 1);
+	wpos += PutInteger(&SendBuf[wpos], guildDefID);
+	PutShort(&SendBuf[1], wpos - 3);
+	AttemptSend(SendBuf, wpos);
+}
+
 void SimulatorThread :: BroadcastShardChanged(void)
 {
 	if(IsGMInvisible() == true)
@@ -2512,6 +2549,10 @@ bool SimulatorThread :: HandleQuery(int &PendingData)
 		PendingData = handle_query_clan_info();
 	else if(query.name.compare("clan.list") == 0)
 		PendingData = handle_query_clan_list();
+	else if(query.name.compare("guild.info") == 0)
+		PendingData = handle_query_guild_info();
+	else if(query.name.compare("guild.leave") == 0)
+		PendingData = handle_query_guild_leave();
 	else if(query.name.compare("scenery.edit") == 0)
 		handle_query_scenery_edit();
 	else if(query.name.compare("scenery.delete") == 0)
@@ -3373,8 +3414,12 @@ int SimulatorThread :: handle_query_map_marker(void)
 					if(pld.charPtr->questJournal.completedQuests.HasQuestID(qd->Requires) == -1)
 						continue;
 
+				// Guild start quest
+				if(qd->guildStart && creatureInst->charPtr->IsInGuildAndHasValour(qd->guildId, 0))
+					continue;
+
 				// Guild requirements
-				if(qd->guildId != 0 && !creatureInst->charPtr->IsInGuildAndHasValour(qd->guildId, qd->valourRequired))
+				if(!qd->guildStart && qd->guildId != 0 && !creatureInst->charPtr->IsInGuildAndHasValour(qd->guildId, qd->valourRequired))
 					continue;
 
 				qRes.push_back(STRINGLIST());
@@ -7930,6 +7975,8 @@ int SimulatorThread :: handle_query_quest_complete(void)
 
 	response = creatureInst->ProcessQuestRewards(QID, rewardedItems);
 
+
+
 	if(response < 0)
 	{
 		if(response == -2)
@@ -9115,6 +9162,120 @@ int SimulatorThread :: handle_query_persona_resCost(void)
 	PutShort(&SendBuf[1], wpos - 3);             //Set message size
 	return wpos;
 }
+
+int SimulatorThread :: handle_query_guild_info(void)
+{
+	/*  Query: guild.info
+		Retrieves the guild info of the Simulator player.
+		Args: [none]
+	*/
+	int wpos = 0;
+	wpos += PutByte(&SendBuf[wpos], 1);       //_handleQueryResultMsg
+	wpos += PutShort(&SendBuf[wpos], 0);      //Message size
+	wpos += PutInteger(&SendBuf[wpos], query.ID);  //Query response index
+
+	if(pld.charPtr->guildList.size() == 0) {
+		wpos += PutShort(&SendBuf[wpos], 0);
+	}
+	else {
+		wpos += PutShort(&SendBuf[wpos], pld.charPtr->guildList.size());
+		for(uint i = 0 ; i < pld.charPtr->guildList.size(); i++)
+		{
+
+			//local defID = r[0];
+			//local valour = r[1];
+			//local guildType = r[2];
+			//local name = r[3];
+			//local motto = r[4];
+			//local rankTitle = r[5];
+			//local rankLevel = r[6];
+
+			GuildDefinition *gdef = g_GuildManager.GetGuildDefinition(pld.charPtr->guildList[i].GuildDefID);
+			wpos += PutByte(&SendBuf[wpos], 7);
+
+
+
+			sprintf(Aux1, "%d", pld.charPtr->guildList[i].GuildDefID);
+			wpos += PutStringUTF(&SendBuf[wpos], Aux1);
+
+			sprintf(Aux1, "%d", pld.charPtr->guildList[i].Valour);
+			wpos += PutStringUTF(&SendBuf[wpos], Aux1);
+
+			sprintf(Aux1, "%d", gdef->guildType);
+			wpos += PutStringUTF(&SendBuf[wpos], Aux1);
+
+			wpos += PutStringUTF(&SendBuf[wpos], gdef->defName);
+
+			wpos += PutStringUTF(&SendBuf[wpos], gdef->motto);
+
+			GuildRankObject *rank = g_GuildManager.GetRank(pld.CreatureDefID, gdef->guildDefinitionID);
+			if(rank == NULL) {
+				wpos += PutStringUTF(&SendBuf[wpos], "No rank");
+				wpos += PutStringUTF(&SendBuf[wpos], "0");
+			}
+			else {
+
+				wpos += PutStringUTF(&SendBuf[wpos], rank->title.c_str());
+				sprintf(Aux1, "%d", rank->rank);
+				wpos += PutStringUTF(&SendBuf[wpos], Aux1);
+			}
+		}
+	}
+
+	PutShort(&SendBuf[1], wpos - 3);
+	return wpos;
+}
+
+int SimulatorThread :: handle_query_guild_leave(void)
+{
+	int guildDefID = atoi(query.args[0].c_str());
+
+	if(query.argCount < 1)
+		return PrepExt_QueryResponseError(SendBuf, query.ID, "Guild ID required");
+	QuestDefinitionContainer::ITERATOR it;
+		std::vector<int> defs;
+
+	// Make sure any guild quests are abandoned
+	for(it = QuestDef.mQuests.begin(); it != QuestDef.mQuests.end(); ++it)
+	{
+		QuestDefinition *qd = &it->second;
+		if(qd->guildId == guildDefID)
+		{
+			int QID = qd->questID;
+			if(pld.charPtr->questJournal.activeQuests.HasQuestID(QID))
+			{
+				if(qd->unabandon == true)
+				{
+					SendInfoMessage("You cannot abandon that quest.", INFOMSG_ERROR);
+					QID = 0;  //Set to zero so it's not actually removed in the server or the client.
+				}
+				pld.charPtr->questJournal.QuestLeave(QID);
+			}
+		}
+	}
+
+	int wpos = 0;
+	wpos += PutByte(&SendBuf[wpos], 1);       //_handleQueryResultMsg
+	wpos += PutShort(&SendBuf[wpos], 0);      //Message size
+	wpos += PutInteger(&SendBuf[wpos], query.ID);  //Query response index
+	wpos += PutShort(&SendBuf[wpos], defs.size());
+	for(int i = 0 ; i < defs.size() ; i++) {
+		sprintf(Aux1, "%d", defs[i]);
+		wpos += PutByte(&SendBuf[wpos], 1);
+		wpos += PutStringUTF(&SendBuf[wpos], Aux1);
+	}
+	PutShort(&SendBuf[1], wpos - 3);
+	AttemptSend(SendBuf, wpos);
+
+	pld.charPtr->LeaveGuild(guildDefID);
+	BroadcastGuildChange(guildDefID);
+	pld.charPtr->pendingChanges++;
+	pld.charPtr->cdef.css.SetSubName(NULL);
+	creatureInst->SendStatUpdate(STAT::SUB_NAME);
+
+	return 0;
+}
+
 
 int SimulatorThread :: handle_query_clan_info(void)
 {
@@ -11213,6 +11374,13 @@ int SimulatorThread :: handle_command_dtrig(void)
 			const char *pkg = query.GetString(1);
 			const char *snd = query.GetString(2);
 			SendPlaySound(pkg, snd);
+		}
+		break;
+	case 999:
+		if(query.argCount > 1)
+		{
+			const char *message = query.GetString(1);
+			BroadcastMessage(message);
 		}
 		break;
 	case 1000:

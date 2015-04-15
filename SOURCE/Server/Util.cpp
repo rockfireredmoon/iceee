@@ -495,6 +495,19 @@ int PrepExt_UpdatePosInc(char *buffer, CreatureInstance *cInst)
 	return wpos;
 }
 
+int PrepExt_Broadcast(char *buffer, const char *message)
+{
+	int wpos = 0;
+	wpos += PutByte(&buffer[wpos], 0);       //_handleInfoMsg
+	wpos += PutShort(&buffer[wpos], 0);      //Placeholder for size
+
+	wpos += PutStringUTF(&buffer[wpos], message);
+	wpos += PutByte(&buffer[wpos], 14);       //Event type for broadcast
+
+	PutShort(&buffer[1], wpos - 3);     //Set size
+	return wpos;
+}
+
 int PrepExt_GeneralMoveUpdate(char *buffer, CreatureInstance *cInst)
 {
 	//Combination of velocity, elevation and short position update.

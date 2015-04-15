@@ -223,6 +223,7 @@ public:
 	
 	std::vector<QuestRepeatDelay> delayedRepeat;
 
+	bool IsCompleted(int QuestID);
 	void AddPendingQuest(QuestReference &newItem);
 	int QuestJoin_Helper(int questID);
 	int CheckQuestShare(int questID);
@@ -426,6 +427,7 @@ public:
 	int heroism;         //This is a quest completion bonus new to this server.
 
 	//	IceEE additions
+	bool guildStart;	// This quest starts a guild (and so the player must not be in that guild for it to be available)
 	int guildId;		// This quest requires the player is part of this guid
 	int	valourRequired;	// The amount of valour required to activate the quest
 	int valourGiven;	// The amount of valour given on completion

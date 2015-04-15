@@ -1199,11 +1199,32 @@ void CharacterData :: AddValour(int GuildDefID, int valour)
 	}
 }
 
+int CharacterData :: GetValour(int GuildDefID)
+{
+	for(size_t i = 0; i < guildList.size(); i++) {
+		if(guildList[i].GuildDefID == GuildDefID) {
+			return guildList[i].Valour;
+		}
+	}
+	return 0;
+}
+
 bool CharacterData :: IsInGuildAndHasValour(int GuildDefID, int valour) {
 	for(size_t i = 0; i < guildList.size(); i++)
 		if(guildList[i].GuildDefID == GuildDefID && guildList[i].Valour >= valour)
 			return true;
 	return false;
+}
+
+void CharacterData :: LeaveGuild(int GuildDefID)
+{
+	for(size_t i = 0; i < guildList.size(); i++) {
+		if(guildList[i].GuildDefID == GuildDefID) {
+			guildList.erase(guildList.begin() + i);
+			break;
+		}
+	}
+	OnRankChange(0);
 }
 
 void CharacterData :: JoinGuild(int GuildDefID)
@@ -1535,8 +1556,12 @@ void CharacterData :: BuildAvailableQuests(QuestDefinitionContainer &questList)
 			if(cdef.css.profession != qd->profession)
 				continue;
 
+		// Guild start quest
+		if(qd->guildStart && IsInGuildAndHasValour(qd->guildId, 0))
+			continue;
+
 		// Guild requirements
-		if(qd->guildId != 0 && !IsInGuildAndHasValour(qd->guildId, qd->valourRequired))
+		if(!qd->guildStart && qd->guildId != 0 && !IsInGuildAndHasValour(qd->guildId, qd->valourRequired))
 			continue;
 
 		//If we get here, the quest is good to add to at least one availability list.
@@ -1546,7 +1571,9 @@ void CharacterData :: BuildAvailableQuests(QuestDefinitionContainer &questList)
 
 		//Add to the pending list.  This function performs the necessary checks.
 		if(soon == false)
+		{
 			questJournal.AddPendingQuest(qr);
+		}
 		else
 			questJournal.availableSoonQuests.AddItem(qr);
 	}
@@ -1767,6 +1794,15 @@ void CharacterData :: OnCharacterCreation(void)
 		quickbar0.append("null,null,null,null]}\"");
 		preferenceList.SetPref("quickbar.0", quickbar0.c_str());
 	}
+}
+
+void CharacterData :: OnRankChange(int newRank)
+{
+	//This function is intended to be called from the main thread.
+	//Since we're altering the character data, need to lock access.
+	g_CharacterManager.GetThread("CharacterData::OnRankChange");
+	BuildAvailableQuests(QuestDef);
+	g_CharacterManager.ReleaseThread();
 }
 
 void CharacterData :: OnLevelChange(int newLevel)
@@ -2215,7 +2251,7 @@ int CheckSection_General(FileReader &fr, CharacterData &cd, const char *debugFil
 			if(r >= 3)
 			{
 				int GuildDefID = fr.BlockToIntC(1);
-				int valour = fr.BlockToIntC(1);
+				int valour = fr.BlockToIntC(2);
 				if(GuildDefID != 0) {
 					cd.JoinGuild(GuildDefID);
 					cd.AddValour(GuildDefID, valour);

@@ -6,12 +6,28 @@
 #include <vector>
 #include <string>
 
+
+struct GuildRankObject
+{
+	int rank;
+	std::string title;
+	int valour;
+	std::string _data;
+
+	GuildRankObject() { Clear(); };
+	~GuildRankObject() { }
+	void Clear(void);
+	void RunLoadDefaults(void);
+};
+
 struct GuildDefinition
 {
 	char defName[20];
+	char motto[128];
 	int guildDefinitionID;
 	int guildType;
 	std::string sGuildHall;
+	std::vector<GuildRankObject> ranks;
 
 	// Used internally and extracted from sGuildHall
 	int guildHallX;
@@ -38,6 +54,7 @@ public:
 	GuildDefinition *GetGuildDefinitionForGuildHallZoneID(int zoneID);
 	GuildDefinition *GetGuildDefinition(int GuildDefID);
 	bool IsMutualGuild(int selfDefID, int otherDefID);
+	GuildRankObject *GetRank(int CDefId, int guildDefId);
 };
 
 extern GuildManager g_GuildManager;

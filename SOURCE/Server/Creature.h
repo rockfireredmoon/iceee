@@ -302,6 +302,7 @@ public:
 	char Faction;
 	int PartyID;
 	unsigned long serverFlags;
+	int transformCreatureId;
 
 	SelectedObject CurrentTarget;
 
@@ -360,6 +361,7 @@ public:
 
 	void RemoveNoncombatantStatus(const char *debugCaller);
 	int GetKillExperience(int attackerLevel);
+	void AddValour(int amount, int guildDefId);
 	void AddExperience(int amount);
 	void AddHeroism(int amount);
 	void AddHeroismForQuest(int amount, int questLevel);
@@ -635,6 +637,7 @@ public:
 
 
 	//Custom Ability Functions, called through the ability system to handle special operations
+	bool IsTransformed();
 	void CAF_Transform(int CDefID);
 	int CAF_SummonSidekick(int CDefID, int maxSummon, short abGroupID);
 	void CAF_RunSidekickStatFilter(int abGroupID);

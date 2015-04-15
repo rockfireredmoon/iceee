@@ -119,6 +119,8 @@ public:
 	int CapExperienceLevel;
 	int CapExperienceAmount;
 
+	int CapValourLevel;
+
 	bool CustomAbilityMechanics;  //If true, certain abilities may be processed with custom mechanics differently than a classic official server might.
 
 	bool SendLobbyHeartbeat;

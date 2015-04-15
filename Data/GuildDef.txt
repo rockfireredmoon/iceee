@@ -1,10 +1,11 @@
 [ENTRY]
 ID=1
 Name=Lightkeepers Guild
+Motto=Keeping The Lights Burning
 GuildType=1 ; Neutral
 GuildHall=43644.0,195.418,65700.0,200
-1=100
-2=500
-3=1000
-4=10000
-5=100000
+1=100,Candle Holder
+2=500,Torch Bearer
+3=1000,Fire Starter
+4=10000,Light Maker 
+5=100000,Day Bringer

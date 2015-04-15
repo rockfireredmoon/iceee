@@ -30,6 +30,32 @@ void GuildDefinition:: RunLoadDefaults(void)
 		guildHallZ = static_cast<int>(strtod(locData[2].c_str(), NULL));
 		guildHallZone = static_cast<int>(strtol(locData[3].c_str(), NULL, 10));
 	}
+
+	for(uint i = 0 ; i < ranks.size() ; i++)
+	{
+		ranks[i].RunLoadDefaults();
+	}
+}
+
+void GuildRankObject :: Clear(void)
+{
+	valour = 0;
+	rank = 0;
+}
+
+void GuildRankObject :: RunLoadDefaults()
+{
+	STRINGLIST rankData;
+	Util::Split(_data, ",", rankData);
+	if(rankData.size() < 2)
+	{
+		g_Log.AddMessageFormat("[WARNING] Rank:%d has incomplete rank string", rank);
+	}
+	else
+	{
+		valour = static_cast<int>(strtod(rankData[0].c_str(), NULL));
+		title = rankData[1].c_str();
+	}
 }
 
 GuildManager :: GuildManager()
@@ -76,8 +102,27 @@ void GuildManager :: LoadFile(const char *filename)
 				newItem.guildType = lfr.BlockToIntC(1);
 			else if(strcmp(lfr.SecBuffer, "GUILDHALL") == 0)
 				newItem.sGuildHall = lfr.BlockToStringC(1, 0);
-			else
-				g_Log.AddMessageFormat("Unknown identifier [%s] in file [%s]", lfr.SecBuffer, filename);
+			else if(strcmp(lfr.SecBuffer, "MOTTO") == 0)
+				Util::SafeCopy(newItem.motto, lfr.BlockToStringC(1, 0), sizeof(newItem.motto));
+			else {
+				// Assume to be rank
+				uint rank = lfr.BlockToIntC(0);
+				if(rank != newItem.ranks.size() + 1) {
+					if(newItem.ranks.size() > 0) {
+						g_Log.AddMessageFormat("Unknown identifier [%s] in file [%s], expected <rank>=<valour>", lfr.SecBuffer, filename);
+					}
+					else {
+						g_Log.AddMessageFormat("Unknown identifier [%s] in file [%s]", lfr.SecBuffer, filename);
+					}
+				}
+				else {
+					GuildRankObject newObject;
+					newObject.rank = newItem.ranks.size() + 1;
+					newObject._data = lfr.BlockToStringC(1, 0);
+					newItem.ranks.push_back(newObject);
+				}
+
+			}
 		}
 	}
 	if(newItem.guildDefinitionID != 0)
@@ -116,6 +161,17 @@ GuildDefinition * GuildManager :: GetGuildDefinitionForGuildHallZoneID(int zoneI
 	return NULL;
 }
 
+GuildRankObject * GuildManager :: GetRank(int CDefID, int guildDefId) {
+	CharacterData *cdata = g_CharacterManager.GetPointerByID(CDefID);
+	int val = cdata->GetValour(guildDefId);
+	GuildDefinition *def = GetGuildDefinition(guildDefId);
+	for(int i = def->ranks.size() - 1 ; i >= 0; i--) {
+		if(val >= def->ranks[i].valour) {
+			return &def->ranks[i];
+		}
+	}
+	return NULL;
+}
 
 bool GuildManager :: IsMutualGuild(int selfDefID, int otherDefID)
 {

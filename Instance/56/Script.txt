@@ -57,6 +57,7 @@ set STAGE 0
 ;
 
 :onKill_1259
+	broadcast "The Wailer wails no more!"
 	set STAGE 99
 	call killMinions
 	return

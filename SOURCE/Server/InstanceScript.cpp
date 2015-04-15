@@ -32,6 +32,7 @@ enum InstanceScriptExtOpCodes
 	OP_AI_SCRIPT_JUMP,      //ai_script_jump <var:CID> <str:label>
 	OP_INFO,                //info <str:message> <int:globalBroadcast>
 	OP_CHAT,
+	OP_BROADCAST,
 	OP_DESPAWN         // despawn <propid> force a despawn of a spawnpoint
 };
 
@@ -55,6 +56,7 @@ OpCodeInfo extCoreOpCode[] = {
 
 	{ "info",             OP_INFO,            1, {OPT_STR,  OPT_NONE,    OPT_NONE}},
 	{ "chat",             OP_CHAT,            3, {OPT_STR,  OPT_STR,     OPT_STR}},
+	{ "broadcast",        OP_BROADCAST,       1, {OPT_STR,  OPT_NONE,    OPT_STR}},
 	{ "despawn",          OP_DESPAWN,         1, {OPT_VAR,  OPT_NONE,    OPT_NONE}},
 };
 const int maxExtOpCode = COUNT_ARRAY_ELEMENTS(extCoreOpCode);
@@ -276,6 +278,13 @@ void InstanceScriptPlayer::RunImplementationCommands(int opcode)
 		{
 			char buffer[4096];
 			int wpos = PrepExt_GenericChatMessage(buffer, 0, GetStringPtr(instr->param1), GetStringPtr(instr->param2), GetStringPtr(instr->param3));
+			actInst->LSendToAllSimulator(buffer, wpos, -1);
+		}
+		break;
+	case OP_BROADCAST:
+		{
+			char buffer[4096];
+			int wpos = PrepExt_Broadcast(buffer, GetStringPtr(instr->param1));
 			actInst->LSendToAllSimulator(buffer, wpos, -1);
 		}
 		break;

@@ -397,7 +397,7 @@ namespace STAT
 	HIDE_NAMEBOARD           = 158,
 
 	//New ones found in 8.8, not sure about between versions
-	HIDE_MINIMAP             = 159
+	HIDE_MINIMAP             = 159,
 	};
 }
 

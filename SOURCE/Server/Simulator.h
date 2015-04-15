@@ -173,6 +173,7 @@ public:
 	bool HandleCommand(int &PendingData);
 
 	void ClearAuxBuffers(void);
+	void BroadcastMessage(const char *message);
 	void SendInfoMessage(const char *message, char eventID);
 	void SendPlaySound(const char *assetPackage, const char *soundFile);
 	void LoadAccountCharacters(AccountData *accPtr);
@@ -260,6 +261,8 @@ public:
 	int handle_query_ab_respec_price(void);
 	int handle_query_util_version(void);
 	int handle_query_persona_resCost(void);
+	int handle_query_guild_info(void);
+	int handle_query_guild_leave(void);
 	int handle_query_clan_info(void);
 	int handle_query_clan_list(void);
 	int handle_query_spawn_list(void);
@@ -374,6 +377,7 @@ public:
 	void SendTimeOfDay(const char *envType);
 	void CheckMapUpdate(bool force);
 	void UpdateSocialEntry(bool newOnlineStatus, bool onlyUpdateFriendList);
+	void BroadcastGuildChange(int guildDefID);
 	void BroadcastShardChanged(void);
 	void SendSetMap(void);
 	void SetPosition(int xpos, int ypos, int zpos, int update);

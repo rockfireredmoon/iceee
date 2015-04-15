@@ -542,6 +542,7 @@ void QuestDefinition :: Clear(void)
 	valourGiven = 0;
 	valourRequired = 0;
 	guildId = 0;
+	guildStart = false;
 }
 
 void QuestDefinition :: CopyFrom(const QuestDefinition &other)
@@ -587,6 +588,7 @@ void QuestDefinition :: CopyFrom(const QuestDefinition &other)
 	valourGiven = other.valourGiven;
 	valourRequired = other.valourRequired;
 	guildId = other.guildId;
+	guildStart = other.guildStart;
 }
 
 int QuestDefinition :: GetObjective(unsigned int act, int type, int CDefID)
@@ -908,6 +910,11 @@ void QuestDefinitionContainer :: LoadFromFile(const char *filename)
 				newItem.levelSuggested = lfr.BlockToIntC(1);
 				LastLoadString = NULL;
 			}
+			else if(strcmp(lfr.SecBuffer, "GUILDSTART") == 0)
+			{
+				newItem.guildStart = lfr.BlockToIntC(1) == 1;
+				LastLoadString = NULL;
+			}
 			else if(strcmp(lfr.SecBuffer, "VALOURGIVEN") == 0)
 			{
 				newItem.valourGiven = lfr.BlockToIntC(1);
@@ -918,7 +925,7 @@ void QuestDefinitionContainer :: LoadFromFile(const char *filename)
 				newItem.valourRequired = lfr.BlockToIntC(1);
 				LastLoadString = NULL;
 			}
-			else if(strcmp(lfr.SecBuffer, "VALOURREQUIRED") == 0)
+			else if(strcmp(lfr.SecBuffer, "GUILDID") == 0)
 			{
 				newItem.guildId = lfr.BlockToIntC(1);
 				LastLoadString = NULL;
@@ -1475,7 +1482,7 @@ int QuestJournal :: QuestGenericData(char *buffer, int bufsize, char *convBuf, i
 	wpos += PutInteger(&buffer[wpos], QueryIndex); //Query response index
 
 	wpos += PutShort(&buffer[wpos], 1);           //Array count
-	wpos += PutByte(&buffer[wpos], 23);           //String count
+	wpos += PutByte(&buffer[wpos], 24);           //String count
 
 	wpos += PutStringUTF(&buffer[wpos], StringFromInt(convBuf, qd->questID));   //[0] = Quest ID
 	wpos += PutStringUTF(&buffer[wpos], qd->title.c_str());   //[1] = Title
@@ -1487,12 +1494,13 @@ int QuestJournal :: QuestGenericData(char *buffer, int bufsize, char *convBuf, i
 	wpos += PutStringUTF(&buffer[wpos], StringFromInt(convBuf, qd->numRewards));   //[7] = rewards
 	wpos += PutStringUTF(&buffer[wpos], StringFromInt(convBuf, qd->coin));   //[8] = coin
 	wpos += PutStringUTF(&buffer[wpos], StringFromBool(convBuf, qd->unabandon));   //[9] = unabandon
+	wpos += PutStringUTF(&buffer[wpos], StringFromInt(convBuf, qd->valourGiven)); //[10] = valour
 
 	//3 sets of data, 3 elements each
 	//  [0] = Objective text
 	//  [1] = Complete: either "true" or "false"
 	//  [2] = myItemID
-	//Spans Rows: {10, 11, 12}, {13, 14, 15}, {16, 17, 18}
+	//Spans Rows: {11, 12, 13}, {14, 15, 16}, {17, 18, 19}
 	int a;
 	for(a = 0; a < 3; a++)
 	{
@@ -1504,6 +1512,8 @@ int QuestJournal :: QuestGenericData(char *buffer, int bufsize, char *convBuf, i
 	for(a = 0; a < 4; a++)
 		wpos += PutStringUTF(&buffer[wpos], qd->rewardItem[a].Print(convBuf));
 
+
+	//Spans Rows: {20, 21, 22, 23}
 	PutShort(&buffer[1], wpos - 3);               //Set message size
 	return wpos;
 }
@@ -1538,7 +1548,7 @@ int QuestJournal :: QuestData(char *buffer, char *convBuf, int QuestID, int Quer
 	wpos += PutInteger(&buffer[wpos], QueryIndex);    //Query response index
 
 	wpos += PutShort(&buffer[wpos], 1);           //Array count
-	wpos += PutByte(&buffer[wpos], 34);           //String count
+	wpos += PutByte(&buffer[wpos], 35);           //String count
 
 	/*
 	if(r == -1)
@@ -1569,6 +1579,7 @@ int QuestJournal :: QuestData(char *buffer, char *convBuf, int QuestID, int Quer
 	wpos += PutStringUTF(&buffer[wpos], StringFromInt(convBuf, qd->numRewards));   //[7] = rewards
 	wpos += PutStringUTF(&buffer[wpos], StringFromInt(convBuf, qd->coin));   //[8] = coin
 	wpos += PutStringUTF(&buffer[wpos], StringFromBool(convBuf, qd->unabandon));   //[9] = unabandon
+	wpos += PutStringUTF(&buffer[wpos], StringFromInt(convBuf, qd->valourGiven));   //[10] = valour
 
 	/*
 	sprintf(ConvBuf, "%g,%g,%g,%d", qd->sGiver.x, qd->sGiver.y, qd->sGiver.z, qd->sGiver.zone);
@@ -1577,20 +1588,20 @@ int QuestJournal :: QuestData(char *buffer, char *convBuf, int QuestID, int Quer
 	sprintf(ConvBuf, "%g,%g,%g,%d", qd->sEnder.x, qd->sEnder.y, qd->sEnder.z, qd->sEnder.zone);
 	wpos += PutStringUTF(&buffer[wpos], ConvBuf);   //[11] = ender
 	*/
-	wpos += PutStringUTF(&buffer[wpos], qd->sGiver.c_str());  //[10]
-	wpos += PutStringUTF(&buffer[wpos], qd->sEnder.c_str());  //[11]
+	wpos += PutStringUTF(&buffer[wpos], qd->sGiver.c_str());  //[11]
+	wpos += PutStringUTF(&buffer[wpos], qd->sEnder.c_str());  //[12]
 
 	//3 sets of data, 6 elements each
-	// [12]   i+0  description.  If not empty, get the rest.
-	// [13]   i+1  complete ("true", "false" ?)
-	// [14]   i+2  myCreatureDefID
-	// [15]   i+3  myItemID
-	// [16]   i+4  completeText
-	// [17]   i+5  markerLocations  "x,y,z,zone;x,y,z,zone;..."
+	// [13]   i+0  description.  If not empty, get the rest.
+	// [14]   i+1  complete ("true", "false" ?)
+	// [15]   i+2  myCreatureDefID
+	// [16]   i+3  myItemID
+	// [17]   i+4  completeText
+	// [18]   i+5  markerLocations  "x,y,z,zone;x,y,z,zone;..."
 
-	//Spans Rows: {12, 13, 14, 15, 16, 17}
-	//            {18, 19, 20, 21, 22, 23}
-	//            {24, 25, 26, 27, 28, 29}
+	//Spans Rows: {13, 14, 15, 16, 17, 18}
+	//            {19, 20, 21, 22, 23, 24}
+	//            {25, 26, 27, 28, 29, 30}
 
 	int a;
 	for(a = 0; a < 3; a++)
@@ -1639,7 +1650,7 @@ int QuestJournal :: QuestData(char *buffer, char *convBuf, int QuestID, int Quer
 		wpos += PutStringUTF(&buffer[wpos], qd->actList[act].objective[a].markerLocations.c_str());
 	}
 
-	// {30, 31, 32, 33}
+	// {31, 32, 33, 34}
 	for(a = 0; a < 4; a++)
 		wpos += PutStringUTF(&buffer[wpos], qd->rewardItem[a].Print(convBuf));
 

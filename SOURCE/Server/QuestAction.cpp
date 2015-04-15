@@ -22,16 +22,18 @@ const QuestScriptCommandDef* ExtendedQuestAction :: GetCommandDef(const std::str
 		//Conditions
 		{"heroism",     CONDITION_HEROISM, 2, CommandParam::COMPARE, CommandParam::INTEGER, CommandParam::NONE },
 		{"has_item",    CONDITION_HAS_ITEM, 2, CommandParam::INTEGER, CommandParam::INTEGER, CommandParam::NONE },
-		{"transformed", CONDITION_TRANSFORMED, 0, CommandParam::NONE, CommandParam::NONE, CommandParam::NONE },
+		{"transformed", CONDITION_TRANSFORMED, 1, CommandParam::INTEGER, CommandParam::NONE, CommandParam::NONE },
+		{"untransformed", CONDITION_UNTRANSFORMED, 0, CommandParam::NONE, CommandParam::NONE, CommandParam::NONE },
 		
 		//Actions
 		{"change_heroism", ACTION_CHANGE_HEROISM, 1, CommandParam::INTEGER, CommandParam::NONE, CommandParam::NONE },
 		{"remove_item",    ACTION_REMOVE_ITEM, 2, CommandParam::INTEGER, CommandParam::INTEGER, CommandParam::NONE },
 		{"send_text",      ACTION_SEND_TEXT, 1, CommandParam::STRING, CommandParam::NONE, CommandParam::NONE },
 		{"play_sound",     ACTION_PLAY_SOUND, 1, CommandParam::STRING, CommandParam::NONE, CommandParam::NONE },
-		{"join_guild",     ACTION_JOIN_GUILD, 2, CommandParam::INTEGER, CommandParam::INTEGER, CommandParam::NONE },
+		{"join_guild",     ACTION_JOIN_GUILD, 1, CommandParam::INTEGER, CommandParam::NONE, CommandParam::NONE },
 		{"transform",      ACTION_TRANSFORM, 1, CommandParam::INTEGER, CommandParam::NONE, CommandParam::NONE },
 		{"untransform",    ACTION_UNTRANSFORM, 0, CommandParam::NONE, CommandParam::NONE, CommandParam::NONE },
+		{"broadcast",      ACTION_BROADCAST, 1, CommandParam::STRING, CommandParam::NONE, CommandParam::NONE },
 	};
 
 	static const int count = COUNT_ARRAY_ELEMENTS(commands);
@@ -214,6 +216,29 @@ int QuestActionContainer :: ExecuteSingleCommand(SimulatorThread *caller, Extend
 			return -1;
 		}
 		break;
+	case CONDITION_TRANSFORMED:
+		{
+			int creatureDefID = e.param[0];
+			if(cInst->IsTransformed() && cInst->transformCreatureId == creatureDefID)
+				return 0;
+			CreatureDefinition *def = CreatureDef.GetPointerByCDef(creatureDefID);
+			char buffer[128];
+			Util::SafeFormat(buffer, sizeof(buffer), "You must be transformed into %s to continue with this quest.", def->css.display_name);
+			caller->SendInfoMessage(buffer, INFOMSG_INFO);
+			return -1;
+
+		}
+	case CONDITION_UNTRANSFORMED:
+		{
+			if(!cInst->IsTransformed())
+				return 0;
+			CreatureDefinition *def = CreatureDef.GetPointerByCDef(cInst->transformCreatureId);
+			char buffer[128];
+			Util::SafeFormat(buffer, sizeof(buffer), "You cannot be transformed into %s to continue with this quest.", def->css.display_name);
+			caller->SendInfoMessage(buffer, INFOMSG_INFO);
+			return -1;
+		}
+		break;
 	case ACTION_CHANGE_HEROISM:
 		cInst->css.heroism += e.param[0];
 		cInst->OnHeroismChange();
@@ -242,22 +267,39 @@ int QuestActionContainer :: ExecuteSingleCommand(SimulatorThread *caller, Extend
 			caller->SendPlaySound(sub[0].c_str(), sub[1].c_str());
 		}
 		break;
+	case ACTION_BROADCAST:
+		{
+			char buffer[128];
+			Util::SafeFormat(buffer, sizeof(buffer), e.paramStr.c_str(), cInst->css.display_name);
+			caller->BroadcastMessage(buffer);
+		}
+		break;
 	case ACTION_JOIN_GUILD:
 		{
 			int guildDefID = e.param[0];
-			int startValour = e.param[1];
-
-			//Find out
 			GuildDefinition *gDef = g_GuildManager.GetGuildDefinition(guildDefID);
 			if(gDef == NULL)
 				caller->SendInfoMessage("Hrmph. This guild does not exist, please report a bug!", INFOMSG_INFO);
 			else {
 				caller->SendInfoMessage("Joining guild ..", INFOMSG_INFO);
-				caller->JoinGuild(gDef, startValour);
+				caller->JoinGuild(gDef, 0);
 				char buffer[64];
 				Util::SafeFormat(buffer, sizeof(buffer), "You have joined %s", gDef->defName);
 				caller->SendInfoMessage(buffer, INFOMSG_INFO);
 			}
+		}
+		break;
+	case ACTION_TRANSFORM:
+		{
+			int creatureDefID = e.param[0];
+			g_Log.AddMessageFormat("Transform: %d", creatureDefID);
+			cInst->CAF_Transform(creatureDefID);
+		}
+		break;
+	case ACTION_UNTRANSFORM:
+		{
+			g_Log.AddMessageFormat("Untransform");
+			cInst->Untransform();
 		}
 		break;
 	default:

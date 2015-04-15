@@ -25,6 +25,7 @@
 #include "InstanceScale.h"
 #include "VirtualItem.h"
 #include "ConfigString.h"
+#include "Guilds.h"
 
 #include "Debug.h"
 #include "Report.h"
@@ -1668,6 +1669,7 @@ void CreatureInstance :: RemoveBuffIndex(size_t index)
 
 void CreatureInstance :: Untransform()
 {
+	transformCreatureId = 0;
 	_RemoveStatusList(StatusEffects::TRANSFORMED);
 }
 
@@ -6078,6 +6080,51 @@ int CreatureInstance :: GetKillExperience(int attackerLevel)
 	adjusted = (int)((float)adjusted * rMult);
 	return adjusted;
 }
+void CreatureInstance :: AddValour(int GuildDefID, int amount)
+{
+	if(amount == 0) {
+		return;
+	}
+
+	if(actInst == NULL || charPtr == NULL)
+	{
+		g_Log.AddMessageFormat("[ERROR] AddValour() active instance or charPtr is NULL.");
+		return;
+	}
+
+	GuildDefinition *guildDef = g_GuildManager.GetGuildDefinition(GuildDefID);
+	GuildRankObject *currentRank = g_GuildManager.GetRank(CreatureDefID, GuildDefID);
+	charPtr->AddValour(GuildDefID, amount);
+	GuildRankObject *newRank = g_GuildManager.GetRank(CreatureDefID, GuildDefID);
+	if(newRank == NULL) {
+		g_Log.AddMessageFormat("[ERROR] Huh, no new rank in guild, joined %d to %d", CreatureDefID, GuildDefID);
+		return;
+	}
+	if(currentRank == NULL || currentRank->valour != newRank->valour)
+	{
+		char buffer[128];
+		Util::SafeFormat(buffer, sizeof(buffer), "You have gained %d valour in %s", amount,guildDef->defName);
+		simulatorPtr->SendInfoMessage(buffer, INFOMSG_INFO);
+	}
+	if(currentRank == NULL || currentRank->rank != newRank->rank)
+	{
+		charPtr->OnRankChange(newRank->rank);
+
+		simulatorPtr->BroadcastGuildChange(GuildDefID);
+
+		char buffer[128];
+		Util::SafeFormat(buffer, sizeof(buffer), "You have been promoted to %s in %s", newRank->title.c_str(),guildDef->defName);
+		simulatorPtr->SendInfoMessage(buffer, INFOMSG_INFO);
+
+		char Buffer[1024];
+		int size = PrepExt_SendEffect(Buffer, CreatureID, "GuildDing", 0);
+		actInst->LSendToAllSimulator(Buffer, size, -1);
+	}
+
+	// TODO need to actually inform client somehow to update guild tab, maybe animations?
+
+}
+
 
 void CreatureInstance :: AddExperience(int amount)
 {
@@ -6262,6 +6309,7 @@ int CreatureInstance :: ProcessQuestRewards(int QuestID, const std::vector<Quest
 	if(simulatorPtr == NULL)
 		return -1;
 
+	AddValour(qd->guildId, qd->valourGiven);
 	AddExperience(qd->experience);
 	AddHeroismForQuest(qd->heroism, qd->levelSuggested);
 	css.copper += qd->coin;
@@ -6640,6 +6688,12 @@ void CreatureInstance :: SetLevel(int newLevel)
 	if(actInst == NULL)
 		return;
 
+	char buffer[256];
+	char sbuffer[256];
+	Util::SafeFormat(buffer, sizeof(buffer), "%s is now level %d!", css.display_name, css.level);
+	int wpos = PrepExt_Broadcast(buffer, sbuffer);
+	actInst->LSendToAllSimulator(buffer, wpos, -1);
+
 	std::vector<short> statList;
 	RemoveStatModsBySource(BuffSource::ITEM);
 	charPtr->UpdateBaseStats(this, true);
@@ -6679,7 +6733,7 @@ void CreatureInstance :: SetLevel(int newLevel)
 	if(charPtr != NULL)
 		charPtr->OnLevelChange(newLevel);
 
-	int wpos = PrepExt_SendSpecificStats(GSendBuf, this, statList);
+	wpos = PrepExt_SendSpecificStats(GSendBuf, this, statList);
 	//actInst->LSendToOneSimulator(GSendBuf, wpos, simulatorPtr);
 	actInst->LSendToLocalSimulator(GSendBuf, wpos, CurrentX, CurrentZ);
 }
@@ -6732,6 +6786,10 @@ int CreatureInstance :: GetAggroRange(CreatureInstance *target)
 	return Util::ClipInt(aggroRange, lowest, maximum);
 }
 
+bool CreatureInstance :: IsTransformed()
+{
+	return serverFlags & ServerFlags::IsTransformed;
+}
 
 void CreatureInstance :: CAF_Transform(int CDefID)
 {
@@ -6741,7 +6799,12 @@ void CreatureInstance :: CAF_Transform(int CDefID)
 
 	CreatureDefinition *cdef = CreatureDef.GetPointerByCDef(CDefID);
 	if(cdef != NULL)
+	{
 		AppearanceTransform(cdef->css.appearance.c_str());
+		transformCreatureId = CDefID;
+	}
+	else
+		transformCreatureId = 0;
 
 	/*
 	int r = CreatureDef.GetIndex(15008);

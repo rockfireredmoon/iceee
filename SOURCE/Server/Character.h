@@ -320,7 +320,9 @@ public:
 	void SetExpireTime(void);
 	void ExtendExpireTime(void);
 
+	int GetValour(int GuildDefID);
 	void JoinGuild(int GuildDefID);
+	void LeaveGuild(int GuildDefID);
 	void AddValour(int GuildDefID, int valour);
 	bool IsInGuildAndHasValour(int GuildDefID, int valour);
 
@@ -341,6 +343,7 @@ public:
 	void VersionUpgradeCharacterItems(void);
 	void OnCharacterCreation(void);
 	void OnLevelChange(int newLevel);
+	void OnRankChange(int newRank);
 	void SetPlayerDefaults(void);
 	void AbilityRespec(CreatureInstance *ptr);
 	void SetLastChannel(const char *name, const char *password);
