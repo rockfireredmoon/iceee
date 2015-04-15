@@ -32,5 +32,6 @@ Spawn=3662,100  ;Manor Hound (46)
 [ENTRY]
 Name=75_foma_DistantRelative
 Spawn=3685,100  ;Distant Relative (46)
+Spawn=3685,100  ;Distant Relative (46)
 
 
