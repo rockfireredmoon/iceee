@@ -47,7 +47,7 @@
 #symbol CDEF_MOLDYFORK 1262
 #symbol CDEF_CRUELLA 1263
 #symbol CDEF_MOLDYFORK_REINFORCE 3685
-#symbol CDEF_CRUELLA_REINFORCE 3685
+#symbol CDEF_CRUELLA_REINFORCE 3686
 
 #location LOC_BOSS_ROOM 3184 3798 3716 4149
 #location_br LOC_CRUELLA_REINFORCE 3571 3821 30
@@ -248,6 +248,7 @@ return
 	return
 
 :eventMoldyforkSpawnRelative
+	spawn_flag SPAWNPOINT_MOLDYFORK_REINFORCE CDEF_MOLDYFORK_REINFORCE 32
 	spawn SPAWNPOINT_MOLDYFORK_REINFORCE
 	queue_event "eventMoldyforkRelativeSearch" 1000
 	return
@@ -273,7 +274,7 @@ return
 	return
 
 :eventCruellaSpawnRelative
-	spawn SPAWNPOINT_CRUELLA_REINFORCE
+	spawn_flag SPAWNPOINT_CRUELLA_REINFORCE CDEF_CRUELLA_REINFORCE 32
 	queue_event "eventCruellaRelativeSearch" 1000
 	return
 
