@@ -1085,6 +1085,27 @@ damage_resist_death=2800
 profession=2
 ai_package=custom_heathendel_rogue40
 
+[ENTRY]
+ID=3686
+level=46
+display_name=Missing Cousin
+creature_category=Unliving
+rarity=1
+appearance=c2:{["a"]=[{["type"]="Item-1hAxe-Med2",["node"]="left_hand",["colors"]=["295520","946624","944D0D","0E1508"]},{["type"]="Item-1hMace-Basic5",["node"]="right_hand"}],["c"]={["boots"]={["type"]="Armor-Light-Low1",["colors"]=[]},["chest"]={["type"]="Armor-Light-Low1",["colors"]=[]},["arms"]={["type"]="Armor-Light-Low1",["colors"]=[]},["leggings"]={["type"]="Armor-Light-Low1",["colors"]=[]},["collar"]={["type"]="Armor-Light-Low1",["colors"]=[]},["belt"]={["type"]="Armor-Light-Low1",["colors"]=[]},["gloves"]={["type"]="Armor-Light-Low1",["colors"]=[]}},["b"]="n",["sk"]={["hair"]="843C2B",["leg_patches"]="843C2B",["chest_patch"]="974632",["tusks"]="BFBE5E",["eye_white"]="ADADAD",["nails"]="63594E",["base"]="90AA5E",["inner_ear"]="994936",["eye"]="B18B65",["eye_brows"]="B25540",["snout"]="6F6152",["arm_patches"]="6E3325"},["sz"]="1.0216",["h"]=0,["g"]="m",["r"]="k"}
+strength=150
+dexterity=150
+constitution=175
+psyche=90
+spirit=90
+base_damage_melee=188
+damage_resist_melee=2800
+damage_resist_fire=2800
+damage_resist_frost=2800
+damage_resist_mystic=2800
+damage_resist_death=2800
+profession=2
+ai_package=custom_heathendel_rogue40
+
 
 [ENTRY]
 ID=9990
