@@ -1109,7 +1109,7 @@ ID=928183
 Asset=Prop-Crypt_Coffin
 Name=Scenery/81355
 Pos=2567.65,600,2511.11
-Orient=0,4.76837e-007,0,1
+Orient=0,4.76837e-07,0,1
 Scale=2,2,2
 
 [ENTRY]
@@ -1117,7 +1117,7 @@ ID=928184
 Asset=Prop-Crypt_Coffin
 Name=Scenery/81356
 Pos=2568.55,583.801,2511.15
-Orient=0,4.76837e-007,0,1
+Orient=0,4.76837e-07,0,1
 Scale=2.075,2.075,2.075
 
 [ENTRY]
@@ -1246,7 +1246,7 @@ ID=928200
 Asset=Prop-Crypt_Coffin
 Name=Scenery/81372
 Pos=2349.59,600,3045.45
-Orient=0,4.76837e-007,0,1
+Orient=0,4.76837e-07,0,1
 Scale=2,2,2
 
 [ENTRY]
@@ -1254,7 +1254,7 @@ ID=928201
 Asset=Prop-Crypt_Coffin
 Name=Scenery/81373
 Pos=2350.49,583.801,3045.49
-Orient=0,4.76837e-007,0,1
+Orient=0,4.76837e-07,0,1
 Scale=2.075,2.075,2.075
 
 [ENTRY]
@@ -1429,7 +1429,7 @@ ID=928254
 Asset=Dng-Room_Round_Corner2?ATS=ATS-Dungeon
 Name=Scenery/81426
 Pos=2640,600,3290
-Orient=0,-5.96046e-008,0,-1
+Orient=0,-5.96046e-08,0,-1
 Scale=1,1,1
 Flags=1
 
@@ -1438,7 +1438,7 @@ ID=928255
 Asset=Dng-Room_Corner_1Door?ATS=ATS-Dungeon
 Name=Scenery/81427
 Pos=2640,600,2750
-Orient=0,-5.96046e-008,0,-1
+Orient=0,-5.96046e-08,0,-1
 Scale=1,1,1
 Flags=1
 
@@ -1447,7 +1447,7 @@ ID=928256
 Asset=Dng-Room_Round_Corner1?ATS=ATS-Dungeon
 Name=Scenery/81428
 Pos=3470,600,2840
-Orient=0,-1,0,5.96046e-008
+Orient=0,-1,0,5.96046e-08
 Scale=1,1,1
 Flags=1
 
@@ -1456,7 +1456,7 @@ ID=928257
 Asset=Dng-Room_Round_Corner1?ATS=ATS-Dungeon
 Name=Scenery/81429
 Pos=2460,600,2570
-Orient=0,-1,0,5.96046e-008
+Orient=0,-1,0,5.96046e-08
 Scale=1,1,1
 Flags=1
 
@@ -1501,7 +1501,7 @@ ID=928262
 Asset=Dng-Room_Round_Corner1?ATS=ATS-Dungeon
 Name=Scenery/81434
 Pos=2280,600,3110
-Orient=0,-1,0,5.96046e-008
+Orient=0,-1,0,5.96046e-08
 Scale=1,1,1
 Flags=1
 
@@ -1537,7 +1537,7 @@ ID=928266
 Asset=Dng-Room_1Sided?ATS=ATS-Dungeon
 Name=Scenery/81438
 Pos=2460,600,2750
-Orient=0,-1,0,5.96046e-008
+Orient=0,-1,0,5.96046e-08
 Scale=1,1,1
 Flags=1
 
@@ -1573,7 +1573,7 @@ ID=928272
 Asset=Dng-Room_Round_Corner1?ATS=ATS-Dungeon
 Name=Scenery/81444
 Pos=3650,600,3020
-Orient=0,-5.96046e-008,0,-1
+Orient=0,-5.96046e-08,0,-1
 Scale=1,1,1
 Flags=1
 
@@ -1582,7 +1582,7 @@ ID=928275
 Asset=Dng-Room_Narrow_DoorA?ATS=ATS-Dungeon
 Name=Scenery/81447
 Pos=3290,600,3020
-Orient=0,-1,0,5.96046e-008
+Orient=0,-1,0,5.96046e-08
 Scale=1,1,1
 Flags=1
 
@@ -1591,7 +1591,7 @@ ID=928276
 Asset=Dng-Room_Divider?ATS=ATS-Dungeon
 Name=Scenery/81448
 Pos=3745,600,2840
-Orient=0,-5.96046e-008,0,-1
+Orient=0,-5.96046e-08,0,-1
 Scale=1,1,1
 Flags=1
 
@@ -1600,7 +1600,7 @@ ID=928280
 Asset=Dng-Room_Extender1?ATS=ATS-Dungeon
 Name=Scenery/81452
 Pos=3450,480,3700
-Orient=0,-1,0,5.96046e-008
+Orient=0,-1,0,5.96046e-08
 Scale=1,1,1
 Flags=1
 
@@ -1609,7 +1609,7 @@ ID=928284
 Asset=Dng-Room_Round_Corner1?ATS=ATS-Dungeon
 Name=Scenery/81456
 Pos=3090,480,3570
-Orient=0,1,0,5.96046e-008
+Orient=0,1,0,5.96046e-08
 Scale=1,1,1
 Flags=1
 
@@ -1618,7 +1618,7 @@ ID=928286
 Asset=Dng-Room_Narrow_I?ATS=ATS-Dungeon
 Name=Scenery/81458
 Pos=3270,480,3570
-Orient=0,5.96046e-008,0,1
+Orient=0,5.96046e-08,0,1
 Scale=1,1,1
 Flags=1
 
@@ -1636,7 +1636,7 @@ ID=928290
 Asset=Dng-Room_Round_Corner1?ATS=ATS-Dungeon
 Name=Scenery/81462
 Pos=3090,480,3750
-Orient=0,1.58933e-008,0,1
+Orient=0,1.58933e-08,0,1
 Scale=1,1,1
 Flags=1
 
@@ -1654,7 +1654,7 @@ ID=928306
 Asset=Dng-Room_Round_Corner1?ATS=ATS-Dungeon
 Name=Scenery/81478
 Pos=2910,480,3750
-Orient=0,1,0,5.96046e-008
+Orient=0,1,0,5.96046e-08
 Scale=1,1,1
 Flags=1
 
@@ -1663,7 +1663,7 @@ ID=928321
 Asset=Dng-Room_Extender1?ATS=ATS-Dungeon
 Name=Scenery/81493
 Pos=3450,480,3760
-Orient=0,-1,0,5.96046e-008
+Orient=0,-1,0,5.96046e-08
 Scale=1,1,1
 Flags=1
 
@@ -2595,4 +2595,6 @@ Orient=0,-0.747971,0,0.663731
 Scale=1,1,1
 spawnPackage=75_foma_DistantRelative
 maxActive=0
+links_count=1
+link=1104027,0
 

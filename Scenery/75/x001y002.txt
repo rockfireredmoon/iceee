@@ -1319,7 +1319,7 @@ ID=928278
 Asset=Dng-Room_Round_Corner1?ATS=ATS-Dungeon
 Name=Scenery/81450
 Pos=3630,480,4060
-Orient=0,5.96046e-008,0,1
+Orient=0,5.96046e-08,0,1
 Scale=1,1,1
 Flags=1
 
@@ -1346,7 +1346,7 @@ ID=928283
 Asset=Dng-Room_Round_Corner1?ATS=ATS-Dungeon
 Name=Scenery/81455
 Pos=3270,480,3880
-Orient=0,1,0,5.96046e-008
+Orient=0,1,0,5.96046e-08
 Scale=1,1,1
 Flags=1
 
@@ -1382,7 +1382,7 @@ ID=928292
 Asset=Dng-Room_Round_Corner1?ATS=ATS-Dungeon
 Name=Scenery/81464
 Pos=2910,480,3930
-Orient=0,1.58933e-008,0,1
+Orient=0,1.58933e-08,0,1
 Scale=1,1,1
 Flags=1
 
@@ -1391,7 +1391,7 @@ ID=928293
 Asset=Dng-Room_Round_Corner1?ATS=ATS-Dungeon
 Name=Scenery/81465
 Pos=2730,480,3930
-Orient=0,1,0,5.96046e-008
+Orient=0,1,0,5.96046e-08
 Scale=1,1,1
 Flags=1
 
@@ -1400,7 +1400,7 @@ ID=928294
 Asset=Dng-Room_Round_Corner1?ATS=ATS-Dungeon
 Name=Scenery/81466
 Pos=3100,480,4300
-Orient=0,1,0,5.96046e-008
+Orient=0,1,0,5.96046e-08
 Scale=1,1,1
 Flags=1
 
@@ -1418,7 +1418,7 @@ ID=928296
 Asset=Dng-Room_Divider?ATS=ATS-Dungeon
 Name=Scenery/81468
 Pos=2825,480,4480
-Orient=0,-5.96046e-008,0,-1
+Orient=0,-5.96046e-08,0,-1
 Scale=1,1,1
 Flags=1
 
@@ -1436,7 +1436,7 @@ ID=928298
 Asset=Dng-Room_Narrow_I?ATS=ATS-Dungeon
 Name=Scenery/81470
 Pos=2920,480,4480
-Orient=0,-5.96046e-008,0,-1
+Orient=0,-5.96046e-08,0,-1
 Scale=1,1,1
 Flags=1
 
@@ -1445,7 +1445,7 @@ ID=928299
 Asset=Dng-Room_Narrow_DoorA?ATS=ATS-Dungeon
 Name=Scenery/81471
 Pos=3820,480,4480
-Orient=0,-5.96046e-008,0,-1
+Orient=0,-5.96046e-08,0,-1
 Scale=1,1,1
 Flags=1
 
@@ -1472,7 +1472,7 @@ ID=928303
 Asset=Dng-Room_Round_Corner2?ATS=ATS-Dungeon
 Name=Scenery/81475
 Pos=3460,480,4300
-Orient=0,1,0,5.96046e-008
+Orient=0,1,0,5.96046e-08
 Scale=1,1,1
 Flags=1
 
@@ -1541,8 +1541,9 @@ Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=75_foma_UncleMoldyfork
 maxActive=0
-links_count=1
+links_count=2
 link=1104026,0
+link=1114854,0
 
 [ENTRY]
 ID=1104028
