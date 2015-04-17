@@ -143,7 +143,7 @@ class this.LoadScreen.GUI extends this.GUI.Component
 		this.mAnnouncements.setFont(announceTextFont);
 		this.mAnnouncements.setSize(480, 70);
 		this.mAnnouncements.setPreferredSize(480, 70);
-		this.mAnnouncements.setText("Welcome to Planet Forever!");
+		this.mAnnouncements.setText("Welcome to Earth Eternal!");
 		this.mAnnouncements.addActionListener(this);
 		announceComp.add(this.mAnnouncements);
 		local tipBG = ::GUI.Panel(null);
@@ -166,13 +166,13 @@ class this.LoadScreen.GUI extends this.GUI.Component
 		this.mTip.setSize(624, 34);
 		this.mTip.setPreferredSize(624, 34);
 		this.mTip.addActionListener(this);
-		this.mTip.setText("Welcome to Planet Forever!");
+		this.mTip.setText("Welcome to Earth Eternal!");
 		tipComp.add(this.mTip);
 		this.mAnnouncementTexts = [
-			"Welcome to Planet Forever!"
+			"Welcome to Earth Eternal!"
 		];
 		this.mTipTexts = [
-			"Welcome to Planet Forever!"
+			"Welcome to Earth Eternal!"
 		];
 		this.validate();
 		this.setVisible(true);
@@ -385,7 +385,7 @@ class this.LoadScreenManager
 			}
 		};
 		local txt = "";
-		req.open("GET", "http://www.eartheternal.com/loading_announcements");
+		req.open("GET", "http://armouree.vm.bytemark.co.uk/iceee/loading_announcements");
 		req.send(txt);
 	}
 
@@ -414,7 +414,7 @@ class this.LoadScreenManager
 			}
 		};
 		local txt = "";
-		req.open("GET", "http://www.eartheternal.com/loading_tips");
+		req.open("GET", "http://armouree.vm.bytemark.co.uk/iceee/tips");
 		req.send(txt);
 	}
 

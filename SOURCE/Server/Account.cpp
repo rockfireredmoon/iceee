@@ -396,6 +396,8 @@ void AccountData :: GenerateSaltedHash(const char *inputString, std::string &out
 	std::string s;
 	s.append(inputString);
 	s.append(salt, sizeof(RandomSalt));
+
+	g_Log.AddMessageFormat("REMOVEME! %s : %s", inputString, s.c_str());
 	MD5 hash;
 	hash.update((unsigned char*)s.c_str(), s.size());
 	hash.finalize();

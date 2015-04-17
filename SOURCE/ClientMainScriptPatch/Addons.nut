@@ -132,6 +132,7 @@ class Screens.ModPanel extends GUI.Frame
 	mButtonModSettings = null;
 	mButtonIGF = null;
 	mButtonItemPreview = null;
+	mButtonInstanceScript = null;
 	mButtonEmoteBrowser = null;
 	mButtonPetBrowser = null;
 
@@ -162,6 +163,9 @@ class Screens.ModPanel extends GUI.Frame
 		mButtonItemPreview = _createButton("Item Preview");
 		mButtonItemPreview.setTooltip(_createTooltip("Ctrl+F10"));
 
+		mButtonInstanceScript = _createButton("Instance Script");
+		mButtonInstanceScript.setTooltip(_createTooltip("/iscript"));
+
 		mButtonEmoteBrowser = _createButton("Emote Browser");
 		mButtonEmoteBrowser.setTooltip(_createTooltip("/pose"));
 
@@ -175,6 +179,7 @@ class Screens.ModPanel extends GUI.Frame
 		cmain.add(mButtonPropSearch);
 		cmain.add(mButtonPropGenerator);
 		cmain.add(mButtonEasyATS);
+		cmain.add(mButtonInstanceScript);
 		cmain.add(GUI.Spacer(0, 15));
 		cmain.add(mButtonModSettings);
 		cmain.add(GUI.Spacer(0, 15));

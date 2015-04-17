@@ -1,0 +1,20 @@
+#name Grove_5008
+#speed 10
+#queue_jumps call
+#flag report_all 1
+
+:init
+	queue_event "intruderSearch" 5000
+
+:main
+	exec_queue
+	wait 100
+	goto main
+
+:intruderSearch
+	queue_event "intruderSearch" 5000
+	return
+
+:onKill_1259
+	broadcast "The Wailer wails no morexxx!"
+	return
