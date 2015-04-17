@@ -1078,19 +1078,7 @@ class this.Screens.SocialWindow extends this.GUI.Frame
 		}
 		else if (qa.query == "guild.leave")
 		{		
-			print("RESULTS 1: " + results + " (" + results.len() + ")");
-			foreach( r in results )
-			{
-				print("   >> " + r);
-			}
-			
 			::_questManager.requestQuestList();
-			print("RESULTS 2: " + results + " (" + results.len() + ")");
-			foreach( r in results )
-			{
-				print("   >> " + r);
-			}
-			
 			foreach( r in results )
 			{
 				local questId = r[0];

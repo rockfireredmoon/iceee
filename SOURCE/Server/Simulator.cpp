@@ -1,5 +1,6 @@
 #include <ctime>
 #include <math.h>
+#include <fstream>
 
 #include "Simulator.h"
 #include "StringList.h"
@@ -1134,6 +1135,8 @@ void SimulatorThread :: handle_lobby_authenticate(void)
 	//Convert client password to server password.
 	std::string password;
 	AccountData::GenerateSaltedHash(Aux3, password);
+
+	LogMessageL(MSG_ERROR, "REMOVEME login name: %s  ah: %s, sh: %s", Aux2, Aux3, password.c_str());
 
 	AccountData *accPtr = NULL;
 	if(authMethod == AuthMethod::DEV)
@@ -2551,6 +2554,14 @@ bool SimulatorThread :: HandleQuery(int &PendingData)
 		PendingData = handle_query_clan_list();
 	else if(query.name.compare("guild.info") == 0)
 		PendingData = handle_query_guild_info();
+	else if(query.name.compare("script.load") == 0)
+		PendingData = handle_query_script_load();
+	else if(query.name.compare("script.save") == 0)
+		PendingData = handle_query_script_save();
+	else if(query.name.compare("script.kill") == 0)
+		PendingData = handle_query_script_kill();
+	else if(query.name.compare("script.run") == 0)
+		PendingData = handle_query_script_run();
 	else if(query.name.compare("guild.leave") == 0)
 		PendingData = handle_query_guild_leave();
 	else if(query.name.compare("scenery.edit") == 0)
@@ -9161,6 +9172,146 @@ int SimulatorThread :: handle_query_persona_resCost(void)
 
 	PutShort(&SendBuf[1], wpos - 3);             //Set message size
 	return wpos;
+}
+
+int SimulatorThread :: handle_query_script_save(void)
+{
+	if(CheckPermissionSimple(Perm_Account, Permission_Admin) == false)
+		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
+
+	/*  Query: script.load
+		Get a script (instance script etc)
+		Args: [none]
+	*/
+
+	int wpos = 0;
+	wpos += PutByte(&SendBuf[wpos], 1);       //_handleQueryResultMsg
+	wpos += PutShort(&SendBuf[wpos], 0);      //Message size
+	wpos += PutInteger(&SendBuf[wpos], query.ID);  //Query response index
+
+	char tempStrBuf[100];
+	Util::SafeFormat(tempStrBuf, sizeof(tempStrBuf), "Instance\\==%d", creatureInst->actInst->mZone);
+	Platform::FixPaths(tempStrBuf);
+	Platform::MakeDirectory(tempStrBuf);
+	Util::SafeFormat(tempStrBuf, sizeof(tempStrBuf), "Instance\\%d\\Script.txt.tmp", creatureInst->actInst->mZone);
+	Platform::FixPaths(tempStrBuf);
+	char strBuf[100];
+	Util::SafeFormat(strBuf, sizeof(strBuf), "Instance\\%d\\Script.txt", creatureInst->actInst->mZone);
+	Platform::FixPaths(strBuf);
+
+	std::ofstream out(tempStrBuf);
+	out << query.args[0];
+	out.close();
+
+	// If we wrote OK, delete the old file and swap in the new one
+	if(remove(strBuf) == 0) {
+		if(rename(tempStrBuf, strBuf) == 0) {
+			Util::SafeFormat(Aux1, sizeof(Aux1), "Script for %d save.", creatureInst->actInst->mZone);
+			SendInfoMessage(Aux1, INFOMSG_INFO);
+			return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
+		}
+		else {
+			LogMessageL(MSG_WARN, "[WARNING] Failed to rename %s to %s, old script will no longer be available, neither will new", tempStrBuf, strBuf);
+			return PrepExt_QueryResponseError(SendBuf, query.ID, "Failed to rename new file, the script may now be missing!");
+		}
+	}
+	else {
+		LogMessageL(MSG_WARN, "[WARNING] Failed to remove %, new script will not be available.", strBuf);
+		return PrepExt_QueryResponseError(SendBuf, query.ID, "Failed to delete old script file, new one not swapped in.");
+	}
+
+}
+
+int SimulatorThread :: handle_query_script_load(void)
+{
+	if(CheckPermissionSimple(Perm_Account, Permission_Admin) == false)
+		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
+
+	/*  Query: script.load
+		Get a script (instance script etc)
+		Args: [none]
+	*/
+
+	int wpos = 0;
+	wpos += PutByte(&SendBuf[wpos], 1);       //_handleQueryResultMsg
+	wpos += PutShort(&SendBuf[wpos], 0);      //Message size
+	wpos += PutInteger(&SendBuf[wpos], query.ID);  //Query response index
+
+	char strBuf[100];
+	Util::SafeFormat(strBuf, sizeof(strBuf), "Instance\\%d\\Script.txt", creatureInst->actInst->mZone);
+	Platform::FixPaths(strBuf);
+	FileReader lfr;
+	if(lfr.OpenText(strBuf) != Err_OK)
+	{
+		LogMessageL(MSG_WARN, "[WARNING] Load script query unable to open file: %s", strBuf);
+		return 0;
+	}
+
+	std::vector<std::string> lines;
+	while(lfr.FileOpen() == true)
+	{
+		lfr.ReadLine();
+		lines.push_back(lfr.DataBuffer);
+	}
+	wpos += PutShort(&SendBuf[wpos], lines.size() + 1);
+	for(uint i = 0 ; i < lines.size() ; i++) {
+		wpos += PutByte(&SendBuf[wpos], 1);
+		wpos += PutStringUTF(&SendBuf[wpos], lines[i].c_str());
+	}
+
+	// The last record contains info about the instance itself for the editor UI
+	wpos += PutByte(&SendBuf[wpos], 2);
+	wpos += PutStringUTF(&SendBuf[wpos], creatureInst->actInst->scriptPlayer.active ? "true" : "false"); // active
+	sprintf(Aux1, "%d", creatureInst->actInst->mZone);
+	wpos += PutStringUTF(&SendBuf[wpos], Aux1);
+
+	PutShort(&SendBuf[1], wpos - 3);
+	return wpos;
+}
+
+int SimulatorThread :: handle_query_script_kill(void)
+{
+	if(CheckPermissionSimple(Perm_Account, Permission_Admin) == false)
+		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
+
+	if(!creatureInst->actInst->scriptPlayer.active)
+		return PrepExt_QueryResponseError(SendBuf, query.ID, "Script not running.");
+
+	/*  Query: script.load
+		Get a script (instance script etc)
+		Args: [none]
+	*/
+
+	LogMessageL(MSG_SHOW, "Handling kill script request");
+	creatureInst->actInst->KillScript();
+	Util::SafeFormat(Aux1, sizeof(Aux1), "Script for %d killed.", creatureInst->actInst->mZone);
+	SendInfoMessage(Aux1, INFOMSG_INFO);
+	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
+}
+
+int SimulatorThread :: handle_query_script_run(void)
+{
+	if(CheckPermissionSimple(Perm_Account, Permission_Admin) == false)
+		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
+
+	if(creatureInst->actInst->scriptPlayer.active)
+		return PrepExt_QueryResponseError(SendBuf, query.ID, "Script already running.");
+
+	/*  Query: script.load
+		Get a script (instance script etc)
+		Args: [none]
+	*/
+
+	LogMessageL(MSG_SHOW, "Handling script run");
+	if(creatureInst->actInst->RunScript()) {
+		Util::SafeFormat(Aux1, sizeof(Aux1), "Script for %d now running.", creatureInst->actInst->mZone);
+		SendInfoMessage(Aux1, INFOMSG_INFO);
+	}
+	else {
+		Util::SafeFormat(Aux1, sizeof(Aux1), "Failed to run script for %d .", creatureInst->actInst->mZone);
+		SendInfoMessage(Aux1, INFOMSG_ERROR);
+	}
+	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
 }
 
 int SimulatorThread :: handle_query_guild_info(void)

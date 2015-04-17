@@ -7,8 +7,10 @@ ENVIRONMENTTYPE=CloudyDay
 ShardName=fakefurokonomi
 GroveName=fakefurokonomi
 WarpName=fakefurokonomi1
+DropRateProfile=standard
 Persist=1
 Grove=1
 EnvironmentCycle=1
+BuildPermission=account,6,0,0,3,3
 DefLoc=2958,260,3821
 

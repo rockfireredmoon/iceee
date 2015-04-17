@@ -220,6 +220,10 @@ class this.Screens.Vault extends this.GUI.BigFrame
 					this.mVaultContainer.updateContainer();
 				}
 			}
+			
+			if(containerName == "deliveryBox")
+			{
+			}
 		}
 	}
 
@@ -550,8 +554,20 @@ class this.Screens.Vault extends this.GUI.BigFrame
 	{
 		this.mVaultContainer.addMovingToProperties("inventory", this.MoveToProperties(this.MovementTypes.MOVE));
 		this.mVaultContainer.addMovingToProperties("vault", this.MoveToProperties(this.MovementTypes.MOVE));
+		this.mVaultContainer.addMovingToProperties("deliveryBox", this.MoveToProperties(this.MovementTypes.MOVE));
 		this.mVaultContainer.addAcceptingFromProperties("inventory", this.AcceptFromProperties(this));
 		this.mVaultContainer.addAcceptingFromProperties("vault", this.AcceptFromProperties(this));
+		this.mVaultContainer.addAcceptingFromProperties("deliveryBox", this.AcceptFromProperties(this));
+		
+		
+		this.mDeliveryBoxAC.addMovingToProperties("inventory", this.MoveToProperties(this.MovementTypes.MOVE));
+		this.mDeliveryBoxAC.addMovingToProperties("deliveryBox", this.MoveToProperties(this.MovementTypes.MOVE));
+		this.mDeliveryBoxAC.addMovingToProperties("vault", this.MoveToProperties(this.MovementTypes.MOVE));
+		this.mDeliveryBoxAC.addAcceptingFromProperties("inventory", this.AcceptFromProperties(this));
+		this.mDeliveryBoxAC.addAcceptingFromProperties("vault", this.AcceptFromProperties(this));
+		this.mDeliveryBoxAC.addAcceptingFromProperties("deliveryBox", this.AcceptFromProperties(this));
+		
+		
 	}
 
 	function setVaultSize( newVaultSize )

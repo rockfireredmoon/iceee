@@ -7,7 +7,9 @@ ENVIRONMENTTYPE=ForestDay
 ShardName=kyuuketsuki
 GroveName=kyuuketsuki
 WarpName=kyuuketsuki1
+DropRateProfile=standard
 Grove=1
 EnvironmentCycle=0
+BuildPermission=account,797,0,0,3,3
 DefLoc=2957,260,3784
 

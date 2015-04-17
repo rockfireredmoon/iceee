@@ -344,6 +344,7 @@ CreatureInstance * SpawnTile :: SpawnCreature(ActiveInstance *inst, ActiveSpawne
 		return NULL;
 	}
 
+	bool propSpawn = false;
 	int CDefID = -1;
 	int SpawnFlags = 0;
 	if(forceCreatureDef == 0 && spawner->spawnPackage != NULL && spawner->spawnPoint->extraData->spawnPackage[0] == '#')
@@ -388,10 +389,43 @@ CreatureInstance * SpawnTile :: SpawnCreature(ActiveInstance *inst, ActiveSpawne
 				SpawnFlags |= SpawnPackageDef::FLAG_VISWEAPON_RANGED;
 				cOffset++;
 			}
+			else if(p == 'p' || p == 'P')
+			{
+				propSpawn = true;
+				cOffset++;
+				break;
+			}
 			else
 				break;
 		}
-		CDefID = atoi(&spawner->spawnPoint->extraData->spawnPackage[cOffset]);
+
+		if(propSpawn)
+		{
+			char buffer[256];
+			char* prop = spawner->spawnPoint->extraData->spawnPackage + 2;
+			Util::SafeFormat(buffer, sizeof(buffer), "p1:{[\"a\"]=\"%s\"}", prop);
+
+			/* Make a fake creature consisting of a prop. This means instance scripts (and so groves) could spawn props by
+			 * by using a spawn point with maxActive of 0, then use the script to spawn them.
+			 */
+			CreatureDefinition newItem;
+			CDefID = g_SpawnPackageManager.fakeCreatureId++;
+			newItem.css.level = 1;
+			newItem.css.profession = 1;
+			memcpy(newItem.css.creature_category, "Inanimate\0", 9);
+			newItem.css.SetAppearance(buffer);
+			newItem.CreatureDefID = CDefID;
+			newItem.css.SetDisplayName(spawner->spawnPoint->extraData->spawnName);
+
+			CreatureDef.AddNPCDef(newItem);
+
+			g_Log.AddMessageFormat("[INFO] Creating ad-hoc prop creature: %d ()", newItem.CreatureDefID);
+
+		}
+		else
+		{
+			CDefID = atoi(&spawner->spawnPoint->extraData->spawnPackage[cOffset]);
+		}
 		//g_Log.AddMessageFormat("[WARNING] SpawnCreature() resolved direct spawn: %d", CDefID);
 	}
 	else
@@ -429,6 +463,7 @@ CreatureInstance * SpawnTile :: SpawnCreature(ActiveInstance *inst, ActiveSpawne
 		spawner->Invalidate();
 		return NULL;
 	}*/
+
 	CreatureDefinition *cdef = CreatureDef.GetPointerByCDef(CDefID);
 	if(cdef == NULL)
 	{

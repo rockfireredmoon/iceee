@@ -323,6 +323,8 @@ public:
 	QuestScript::QuestScriptPlayer* GetSimulatorQuestScript(SimulatorThread *simulatorPtr);
 	void RunProcessingCycle(void);
 	void UpdateEnvironmentCycle(const char *timeOfDay);
+	bool KillScript();
+	bool RunScript();
 	void ScriptCallKill(int CreatureDefID);
 	void ScriptCallUse(int CreatureDefID);
 	void ScriptCallUseHalt(int CreatureDefID);

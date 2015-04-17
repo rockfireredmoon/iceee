@@ -2854,6 +2854,35 @@ void ActiveInstance :: ScriptCall(const char *name)
 		scriptPlayer.RunUntilWait();
 }
 
+bool ActiveInstance :: RunScript()
+{
+	if(scriptPlayer.active) {
+		g_Log.AddMessageFormat("Request to run script for %d when it is already running", mZone);
+		return false;
+	}
+	char buffer[256];
+	Util::SafeFormat(buffer, sizeof(buffer), "Instance\\%d\\Script.txt", mZone);
+	Platform::FixPaths(buffer);
+	scriptDef.CompileFromSource(buffer);
+	scriptPlayer.Initialize(&scriptDef);
+	scriptPlayer.SetInstancePointer(this);
+	scriptPlayer.JumpToLabel("init");
+	return true;
+}
+
+bool ActiveInstance :: KillScript()
+{
+	if(scriptPlayer.active) {
+		g_Log.AddMessageFormat("Killing script for %d", mZone);
+		scriptPlayer.HaltExecution();
+		return true;
+	}
+	else {
+		g_Log.AddMessageFormat("Request to kill inactive script %d", mZone);
+		return false;
+	}
+}
+
 void ActiveInstance :: FetchNearbyCreatures(SimulatorThread *simPtr, CreatureInstance *player)
 {
 	int wpos = 0;

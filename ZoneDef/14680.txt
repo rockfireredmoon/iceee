@@ -1,12 +1,12 @@
 [ENTRY]
 ID=14680
-ACCOUNTID=1211
+ACCOUNTID=1212
 NAME=Grove
 TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
 ENVIRONMENTTYPE=CloudyDay
-ShardName=emeraldtest
-GroveName=emeraldtest
-WarpName=emeraldtest1
+ShardName=emsgroves
+GroveName=emsgroves
+WarpName=emsgroves1
 Grove=1
 EnvironmentCycle=0
 DefLoc=2958,260,3821

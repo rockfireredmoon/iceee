@@ -142,7 +142,6 @@ public:
 
 	static const int SPAWN_TILE_SIZE = 560;
 	static const int SPAWN_TILE_RANGE = 2;
-
 	int TileX;
 	int TileY;
 	bool sceneryLoaded;
@@ -255,6 +254,7 @@ public:
 	//SPAWNPACKAGECONT packageList;
 	std::vector<SpawnPackageList> packageList;
 	SpawnPackageDef nullSpawnPackage;
+	int fakeCreatureId = 60000;
 
 	void LoadFromFile(const char *subfolder, const char *filename);
 	SpawnPackageDef * GetPointerByName(const char *name);

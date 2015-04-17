@@ -39,13 +39,13 @@ wine UTILITIES/CARDecode.exe "${SCRATCH}/archives/EarthEternal.car"
 
 echo "Copying mod scripts"
 pushd SOURCE/ClientMod/EarthEternal
-find . -name '*.nut' | cpio -pdm "${SCRATCH}/content"
-find . -name '*.cnut' | cpio -pdm "${SCRATCH}/content"
+find . -name '*.nut' | cpio -updm "${SCRATCH}/content"
+find . -name '*.cnut' | cpio -updm "${SCRATCH}/content"
 popd
 
 echo "Copying patch scripts"
 pushd SOURCE/ClientMainScriptPatch
-find . -name '*.nut' | cpio -pdm "${SCRATCH}/content"
+find . -name '*.nut' | cpio -updm "${SCRATCH}/content"
 popd
 
 pushd "${SCRATCH}/content"
@@ -100,7 +100,7 @@ for i in $(find .) ; do
 				 fi ;;
 		*".mp3") out="${target}/$(basename $i .mp3).ogg"
 				 echo "Converting ${i} from MP3 to ${out}"
-				 if ! ffmpeg -i "${i}" -acodec libvorbis "${out}" ; then
+				if ! ffmpeg -v 0 -i "${i}" -acodec libvorbis "${out}" ; then
 					echo "Failed to encode ${i}" >&2
 					exit 1
 				 fi ;;
@@ -117,24 +117,73 @@ popd
 echo "Archiving sounds"
 wine UTILITIES/CARDecode.exe "${SCRATCH}/archives/Sound-ModSound.zip"
 
+echo "Other Asset patches"
+for i in SOURCE/AssetPatches/*; do
+	if [ -d "${i}" ] ; then
+		carbase=$(basename ${i}).car
+		carfile=${base}/asset/Release/Current/Media/${carbase}
+		if [ ! -f "${carfile}" ]; then
+			echo "$0: No car ${carfile} for ${i}" >&2
+			exit 1
+		fi 	
+		cp "${carfile}" "${SCRATCH}/archives"
+		wine UTILITIES/CARDecode.exe "${SCRATCH}/archives/${carbase}"
+		rm -fr "${SCRATCH}/content"
+		mkdir -p "${SCRATCH}/content"
+		pushd "${SCRATCH}/content"
+		zipbase=$(basename ${i}).zip
+		unzip -q "${SCRATCH}/archives/${zipbase}"
+		popd
+		pushd "${i}"
+		find . | cpio -updm "${SCRATCH}/content"
+		popd
+		pushd "${SCRATCH}/content"
+		echo "Compressing earth eternal"
+		zip -dg -q -r "${SCRATCH}/archives/${zipbase}" *
+		popd
+		wine UTILITIES/CARDecode.exe "${SCRATCH}/archives/${zipbase}"
+	fi
+done
+
+echo "Others"
+for i in SOURCE/CAR/*.car ; do
+	if [ ! -f "${SCRATCH}/archives/$(basename $i)" ] ;then
+		cp "${i}" "${SCRATCH}/archives"
+		echo "${i} -> ${SCRATCH}/archives"
+	fi
+done
+
+
 echo "Checksumming"
 rm -f "${SCRATCH}/HTTPChecksum.txt"
  
-echo "/Release/Current/EarthEternal.car="$(wine UTILITIES/MD5.exe "${SCRATCH}/archives/EarthEternal.car"|tr -d '\r') >> "${SCRATCH}/HTTPChecksum.txt"
-echo "/Release/Current/Media/Catalogs.car="$(wine UTILITIES/MD5.exe "${SCRATCH}/archives/Catalogs.car"|tr -d '\r') >> "${SCRATCH}/HTTPChecksum.txt"
-echo "/Release/Current/Media/Prop-ModAddons1.car="$(wine UTILITIES/MD5.exe "SOURCE/CAR/Prop-ModAddons1.car"|tr -d '\r') >> "${SCRATCH}/HTTPChecksum.txt"
-echo "/Release/Current/Media/Sound-ModSound.car="$(wine UTILITIES/MD5.exe "${SCRATCH}/archives/Sound-ModSound.car"|tr -d '\r') >> "${SCRATCH}/HTTPChecksum.txt"
+echo "/Release/Current/EarthEternal.car=\""$(wine UTILITIES/MD5.exe "${SCRATCH}/archives/EarthEternal.car"|tr -d '\r')"\"" >> "${SCRATCH}/HTTPChecksum.txt"
+for i in ${SCRATCH}/archives/*.car; do
+	if [ $(basename $i) != "EarthEternal.car" ] ; then
+		echo "/Release/Current/Media/$(basename ${i})=\""$(wine UTILITIES/MD5.exe "${i}"|tr -d '\r')"\"" >> "${SCRATCH}/HTTPChecksum.txt"
+	fi
+done
+#echo "/Release/Current/Media/Catalogs.car="$(wine UTILITIES/MD5.exe "${SCRATCH}/archives/Catalogs.car"|tr -d '\r') >> "${SCRATCH}/HTTPChecksum.txt"
+#echo "/Release/Current/Media/Prop-ModAddons1.car="$(wine UTILITIES/MD5.exe "SOURCE/CAR/Prop-ModAddons1.car"|tr -d '\r') >> "${SCRATCH}/HTTPChecksum.txt"
+#echo "/Release/Current/Media/Sound-ModSound.car="$(wine UTILITIES/MD5.exe "${SCRATCH}/archives/Sound-ModSound.car"|tr -d '\r') >> "${SCRATCH}/HTTPChecksum.txt"
 
 if [ -d asset -a -d Data ]; then
 	echo -n "Install to assets dir? y/n: "
 	read yesno
 	case "${yesno}" in
 		y|Y|yes|Yes) :
-			cp "${SCRATCH}/archives/EarthEternal.car" asset/Release/Current
-			cp "${SCRATCH}/archives/Catalogs.car" asset/Release/Current/Media
-			cp "SOURCE/CAR/Prop-ModAddons1.car" asset/Release/Current/Media
-			cp "${SCRATCH}/archives/Sound-ModSound.car" asset/Release/Current/Media
-			cp "${SCRATCH}/HTTPChecksum.txt" Data
+			cp "${SCRATCH}/archives/EarthEternal.car" ${base}/asset/Release/Current
+			echo "Copied EarthEternal.car"
+			for i in ${SCRATCH}/archives/*.car; do
+				if [ $(basename $i) != "EarthEternal.car" ] ; then
+					cp "${i}" ${base}/asset/Release/Current/Media
+					echo "Copied $(basename ${i})"
+				fi
+			done
+			#cp "${SCRATCH}/archives/Catalogs.car" ${base}/asset/Release/Current/Media
+			#cp "SOURCE/CAR/Prop-ModAddons1.car" ${base}/asset/Release/Current/Media
+			#cp "${SCRATCH}/archives/Sound-ModSound.car" ${base}/asset/Release/Current/Media
+			cp "${SCRATCH}/HTTPChecksum.txt" ${base}/Data
 			echo "All files copied" ;;
 	esac
 fi
