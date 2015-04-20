@@ -7,7 +7,9 @@ ENVIRONMENTTYPE=CloudyDay
 ShardName=derikwolfie
 GroveName=derikwolfie
 WarpName=derikwolfie1
+DropRateProfile=standard
 Grove=1
 EnvironmentCycle=0
+BuildPermission=account,1092,0,0,3,3
 DefLoc=2958,260,3821
 

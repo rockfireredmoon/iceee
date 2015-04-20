@@ -865,6 +865,7 @@ might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 
+
 channeling_break_chance=500
 appearance=c2:{["a"]=[{["type"]="Item-Dagger-Basic5",["node"]="right_hand"}],["h"]=1,["c"]={["leggings"]={["type"]="Armor-CC-Clothing1",["colors"]=["293f2a","3f2105","ffaf16"]},["boots"]={["type"]="Armor-CC-Clothing1",["colors"]=["293f2a","3f2105","ffaf16"]},["chest"]={["type"]="Armor-CC-Clothing1",["colors"]=["293f2a","3f2105","ffaf16"]}},["b"]="n",["sk"]={["hair"]="843C2B",["leg_patches"]="843C2B",["chest_patch"]="974632",["tusks"]="C8BBA5",["eye_white"]="ADADAD",["nails"]="63594E",["base"]="847668",["inner_ear"]="994936",["eye"]="B18B65",["eye_brows"]="994936",["snout"]="994936",["arm_patches"]="6E3325"},["g"]="m",["r"]="k"}
 level=16
@@ -13048,6 +13049,7 @@ level=24
 display_name=Madcow Basher
 profession=2
 creature_category=Animal
+
 ai_package=melee_creature_brave_6
 total_size=18
 
@@ -31426,6 +31428,7 @@ profession=1
 creature_category=Mortal
 rarity=3
 ai_package=example
+appearance=n4:{["a"]=[{["type"]="Item-2hAxe-Basic4",["node"]="right_hand",["colors"]=["FFFFFF","F26522","943208"]}],["c"]="Horde-Warpig2",["sk"]={["cloth2"]="151515",["skin"]="947D50",["cloth1"]="943208",["eye"]="000994",["nails"]="B5815D",["trim"]="954806"},["sz"]="1.10"}
 
 [ENTRY]
 ID=1356
@@ -38818,6 +38821,7 @@ casting_setback_chance=500
 channeling_break_chance=500
 appearance=n4:{["sk"]={["body_detail"]="553A07",["feet"]="E9C559",["eyes"]="2B363F",["beak"]="E9C559",["body"]="4E6894",["spines"]="AA0000",["head"]="3A4855"},["c"]="Horde-Quack_a_Trice",["sz"]="1.6"}
 level=18
+
 display_name=Blightbeak Rooster
 profession=5
 creature_category=Magical
@@ -49489,6 +49493,7 @@ appearance=n4:{["sk"]={["eyes"]="BF0000",["moss"]="7F2B07",["stone"]="555446"},[
 level=23
 display_name=Sleetrock Goliath
 profession=4
+
 creature_category=Magical
 ai_package=mage_fire_brave_6
 total_size=32
@@ -51696,6 +51701,7 @@ profession=1
 creature_category=Mortal
 ai_package=nothing
 total_size=5
+
 
 [ENTRY]
 defHints=2
@@ -63802,6 +63808,7 @@ total_size=1
 defHints=48
 ID=2827
 will_regen=1
+
 might_regen=1
 appearance=p1:{["a"]="Prop-Notice_Board"}
 level=45

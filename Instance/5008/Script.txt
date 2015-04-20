@@ -15,6 +15,8 @@
 	queue_event "intruderSearch" 5000
 	return
 
-:onKill_1259
-	broadcast "The Wailer wails no morexxx!"
+:onKill_678
+	broadcast "A huge green crystal appears!"
+	print "STUFFFFF!"
+	spawn 1127184
 	return

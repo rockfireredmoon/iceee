@@ -7,7 +7,9 @@ ENVIRONMENTTYPE=CloudyDay
 ShardName=stormwindintelligenceseven
 GroveName=stormwindintelligenceseven
 WarpName=stormwindintelligenceseven1
+DropRateProfile=standard
 Grove=1
 EnvironmentCycle=1
+BuildPermission=account,24,0,0,3,3
 DefLoc=2958,260,3821
 

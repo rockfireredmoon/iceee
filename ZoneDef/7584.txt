@@ -7,7 +7,9 @@ ENVIRONMENTTYPE=CloudyDay
 ShardName=foxden
 GroveName=foxden
 WarpName=foxden1
+DropRateProfile=standard
 Grove=1
 EnvironmentCycle=1
+BuildPermission=account,324,0,0,3,3
 DefLoc=2958,260,3821
 

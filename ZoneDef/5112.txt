@@ -7,7 +7,9 @@ ENVIRONMENTTYPE=CloudyDay
 ShardName=grovea
 GroveName=grovea
 WarpName=grovea1
+DropRateProfile=standard
 Grove=1
 EnvironmentCycle=1
+BuildPermission=account,15,0,0,3,3
 DefLoc=2958,260,3821
 

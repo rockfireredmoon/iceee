@@ -5127,7 +5127,7 @@ spawnPackage=56_wacr_FullMix
 [ENTRY]
 ID=1127166
 Asset=Prop-Battlefield1#Prop-Battlefield_Skeleton1
-Name=
+Name=Untitled
 Pos=1940.98,0,1147.4
 Orient=0,0,0,1
 Scale=1,1,1
@@ -5135,7 +5135,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1127167
 Asset=Prop-Battlefield1#Prop-Battlefield_Skeleton1
-Name=
+Name=Untitled
 Pos=2094.32,660,709.713
 Orient=0,0,0,1
 Scale=1,1,1
@@ -5143,7 +5143,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1127168
 Asset=Prop-Battlefield1#Prop-Battlefield_Skeleton2
-Name=
+Name=Untitled
 Pos=2177.11,600,1522.46
 Orient=0,0,0,1
 Scale=1,1,1
@@ -5151,7 +5151,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1127171
 Asset=Prop-Battlefield1#Prop-Battlefield_Skeleton1
-Name=
+Name=Untitled
 Pos=2831.28,600,1259.92
 Orient=0,0,0,1
 Scale=1,1,1
@@ -5159,7 +5159,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1127172
 Asset=Prop-Battlefield1#Prop-Battlefield_Skeleton2
-Name=
+Name=Untitled
 Pos=3361.02,600,665.426
 Orient=0,0,0,1
 Scale=1,1,1
@@ -5167,7 +5167,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1127174
 Asset=Prop-Battlefield1#Prop-Battlefield_Skeleton4
-Name=
+Name=Untitled
 Pos=3726.09,600,1853.71
 Orient=0,0,0,1
 Scale=1.2,1.2,1.2

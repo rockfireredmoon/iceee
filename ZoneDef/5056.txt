@@ -7,8 +7,10 @@ ENVIRONMENTTYPE=CloudyDay
 ShardName=nekomata
 GroveName=nekomata
 WarpName=nekomata1
+DropRateProfile=standard
 Persist=1
 Grove=1
 EnvironmentCycle=1
+BuildPermission=account,8,0,0,3,3
 DefLoc=2958,260,3821
 

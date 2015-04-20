@@ -7,7 +7,9 @@ ENVIRONMENTTYPE=CloudyDay
 ShardName=corruption
 GroveName=corruption
 WarpName=corruption1
+DropRateProfile=standard
 Grove=1
 EnvironmentCycle=1
+BuildPermission=account,67,0,0,3,3
 DefLoc=2958,260,3821
 
