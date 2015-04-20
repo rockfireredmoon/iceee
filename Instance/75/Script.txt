@@ -249,7 +249,6 @@ return
 
 :eventMoldyforkSpawnRelative
 	spawn_flag SPAWNPOINT_MOLDYFORK_REINFORCE CDEF_MOLDYFORK_REINFORCE 32
-	spawn SPAWNPOINT_MOLDYFORK_REINFORCE
 	queue_event "eventMoldyforkRelativeSearch" 1000
 	return
 

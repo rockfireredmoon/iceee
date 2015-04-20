@@ -1,4 +1,5 @@
 #name knight_brave_6
+#queue_jumps call
 
 ; 5063 - Taurian Might, 5 might, buff
 ; 5157 - Assault, 3 might, add 1 mcharge
@@ -32,4 +33,8 @@ if var = 0
   wait 2000
   goto waitfortarget
 endif
+return
+
+:tryMelee
+use 32766
 return

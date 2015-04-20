@@ -37,9 +37,9 @@ Spawn=3653,10  ;Crypt Guardian (47)
 [ENTRY]
 Name=56_wacr_ForgottenSoul
 Shares=100
-Spawn=7778,10  ;Crypt Wanderer (46)
-Spawn=7778,10  ;Crypt Wanderer (46)
-Spawn=7778,10  ;Crypt Wanderer (46)
+Spawn=7778,100  ;Crypt Wanderer (46)
+Spawn=7778,100  ;Crypt Wanderer (46)
+Spawn=7778,100  ;Crypt Wanderer (46)
 
 [ENTRY]
 Name=56_wacr_NobleMix
