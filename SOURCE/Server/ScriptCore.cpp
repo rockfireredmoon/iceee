@@ -571,23 +571,23 @@ void ScriptDef :: OutputDisassemblyToFile(FILE *output)
 		output = stdout;
 
 	fprintf(output, "Script: %s\r\n", scriptName.c_str());
-	fprintf(output, "Labels: %d\r\n", label.size());
+	fprintf(output, "Labels: %lu\r\n", label.size());
 	for(size_t i = 0; i < label.size(); i++)
-		fprintf(output, "[%d] = %s : %d\r\n", i, label[i].name.c_str(), label[i].instrOffset);
+		fprintf(output, "[%lu] = %s : %d\r\n", i, label[i].name.c_str(), label[i].instrOffset);
 
 	fprintf(output, "\r\nStrings:\r\n");
 	for(size_t i = 0; i < stringList.size(); i++)
-		fprintf(output, "[%d]=[%s]\r\n", i, stringList[i].c_str());
+		fprintf(output, "[%lu]=[%s]\r\n", i, stringList[i].c_str());
 
 	fprintf(output, "\r\nVariables:\r\n");
 	for(size_t i = 0; i < varName.size(); i++)
-		fprintf(output, "[%d]=[%s]\r\n", i, varName[i].c_str());
+		fprintf(output, "[%lu]=[%s]\r\n", i, varName[i].c_str());
 
 	fprintf(output, "\r\nInstructions:\r\n");
 	for(size_t i = 0; i < instr.size(); i++)
 	{
 		OpCodeInfo *opi = GetInstructionData(instr[i].opCode);
-		fprintf(output, "[%d] : %s %d %d\r\n", i, opi->name, instr[i].param1, instr[i].param2);
+		fprintf(output, "[%lu] : %s %d %d\r\n", i, opi->name, instr[i].param1, instr[i].param2);
 	}
 	fprintf(output, "\r\n");
 }
@@ -1423,7 +1423,7 @@ ScriptCompiler::ScriptCompiler()
 {
 	mCurrentNestLevel = 0;
 	mLastNestLevel = 0;
-	const char *mSourceFile = "<no file>";
+	mSourceFile = "<no file>";
 	mLineNumber = 0;
 	mInlineBeginInstr = 0;
 }

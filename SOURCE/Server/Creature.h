@@ -18,6 +18,7 @@ class SimulatorThread;
 #include "Stats.h"
 #include "AbilityTime.h"
 #include "Arena.h"
+#include "DropTable.h"
 
 class CreatureInstance;  //Forward declaration for a pointer in the SelectedObject structure
 class AIScriptPlayer;    //Forward declaration for AI script
@@ -234,6 +235,7 @@ struct BaseStatData
 	char valueType;     //
 	BaseStatData()
 	{
+		valueType = 0;
 		StatID = 0;
 		fBaseVal = 0;
 		fModTotal = 0;

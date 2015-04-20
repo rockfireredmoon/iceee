@@ -11,6 +11,7 @@
 
 #include <vector>
 #include <map>
+#include <set>
 #include <string>
 
 class CreatureInstance;
@@ -27,8 +28,24 @@ public:
 	int CreatureID;              //The owner of this container.  Ex: The ID of the dead creature.
 	std::vector<int> lootableID; //List of CreatureDefIDs that may loot this creature.
 	std::vector<int> itemList;   //List of items left in this container.
+	std::map<int, std::set<int> > greeded;   //Map of ItemIDs and CreatureIDs that have greeded this loot.
+	std::map<int, std::set<int> > needed;    //Map of ItemIDs and CreatureIDs that have needed this loot.
+	std::map<int, std::set<int> > passed;    //Map of ItemIDs and CreatureIDs that have passed on this loot.
+
+	bool IsPassed(int itemId, int creatureId);
+	bool IsNeeded(int itemId, int creatureId);
+	int CountNeeds(int itemId);
+	bool IsGreeded(int itemId, int creatureId);
+	bool HasAnyDecided(int creatureID);
+	bool Decided(int creatureID, std::map<int, std::set<int> > map);
 	void AddItem(int itemID);
+	int CountDecisions(int itemId);
+	int Count(int itemId, std::map<int, int> map);
+	void Greed(int itemId, int creatureId);
+	void Pass(int itemId, int creatureId);
+	void Need(int itemId, int creatureId);
 	int HasItem(int itemID);
+	bool ContainsTag(int lootTag);
 	void RemoveItem(int index);
 	int WriteLootQueryToBuffer(char *buffer, char *convbuf, int queryIndex);
 	void AddLootableID(int newLootableID);
@@ -53,6 +70,7 @@ public:
 	int AttachLootToCreature(const ActiveLootContainer &loot, int CreatureID);
 	int GetCreature(int creatureID);
 	void RemoveCreature(int creatureID);
+	ActiveLootContainer * GetLootTag(int lootTag);
 	void Clear(void);
 
 	int WriteLootQueryToBuffer(int creatureID, char *buffer, char *convbuf, int queryIndex);

@@ -2,8 +2,27 @@
 #include "ByteBuffer.h"
 #include "Simulator.h"
 #include "StringList.h"
+#include "Util.h"
+#include "Globals.h"
 
 PartyManager g_PartyManager;
+
+static int lootSeq = 0;
+
+LootTag :: LootTag()
+{
+	Clear();
+}
+
+void LootTag :: Clear(void)
+{
+	slotIndex = 0;
+	itemId = 0;
+	creatureId = 0;
+	lootCreatureId = 0;
+	lootTag = 0;
+	needed = false;
+}
 
 void ActiveParty :: AddMember(CreatureInstance* member)
 {
@@ -84,6 +103,18 @@ PartyMember* ActiveParty :: GetMemberByID(int memberID)
 		if(mMemberList[i].mCreatureID == memberID)
 			return &mMemberList[i];
 	return NULL;
+}
+
+PartyMember* ActiveParty :: GetNextLooter()
+{
+	if(mNextToGetLoot >= mMemberList.size()) {
+		mNextToGetLoot = 0;
+	}
+	if(mNextToGetLoot >= mMemberList.size()) {
+		return NULL;
+	}
+	mNextToGetLoot++;
+	return &mMemberList[mNextToGetLoot - 1];
 }
 
 PartyMember* ActiveParty :: GetMemberByDefID(int memberDefID)
@@ -181,6 +212,13 @@ int ActiveParty :: GetMaxPlayerLevel(void)
 	return highest;
 }
 
+void ActiveParty:: BroadcastInfoMessageToAllMembers(const char *buffer)
+{
+	int wpos = 0;
+	char SendBuf[24576];     //Holds data that is being prepared for sending
+	wpos += PrepExt_SendInfoMessage(&SendBuf[wpos], buffer, INFOMSG_INFO);
+	BroadCast(SendBuf, wpos);
+}
 
 void ActiveParty :: BroadCast(const char *buffer, int length)
 {
@@ -220,6 +258,10 @@ PartyManager :: PartyManager()
 int PartyManager :: GetNextPartyID(void)
 {
 	return nextPartyID++;
+}
+
+ActiveParty :: ActiveParty() {
+	lootTags.clear();
 }
 
 ActiveParty* PartyManager :: GetPartyByLeader(int leaderDefID)
@@ -482,7 +524,6 @@ void PartyManager :: CheckMemberLogin(CreatureInstance* member)
 void PartyManager :: DebugForceRemove(CreatureInstance *caller)
 {
 	caller->PartyID = 0;
-	int pos = 0;
 	for(size_t i = 0; i < mPartyList.size(); i++)
 	{
 		if(mPartyList[i].HasMember(caller->CreatureDefID) == false)
@@ -524,6 +565,104 @@ void PartyManager :: DebugDestroyParties(void)
 		mPartyList[i].DebugDestroyParty(WriteBuf, wpos);
 
 	mPartyList.clear();
+}
+
+int PartyManager :: StrategyChange(char *outbuf, LootMode newLootMode)
+{
+	int wpos = 0;
+	wpos += PutByte(&outbuf[wpos], 6);     //_handlePartyUpdateMsg
+	wpos += PutShort(&outbuf[wpos], 0);
+
+	wpos += PutByte(&outbuf[wpos], PartyUpdateOpTypes::STRATEGY_CHANGE);
+	wpos += PutInteger(&outbuf[wpos], newLootMode);
+
+	PutShort(&outbuf[1], wpos - 3);       //Set message size
+	return wpos;
+}
+
+int PartyManager :: StrategyFlagsChange(char *outbuf, int newFlags)
+{
+	int wpos = 0;
+	wpos += PutByte(&outbuf[wpos], 6);     //_handlePartyUpdateMsg
+	wpos += PutShort(&outbuf[wpos], 0);
+
+	wpos += PutByte(&outbuf[wpos], PartyUpdateOpTypes::STRATEGYFLAGS_CHANGE);
+	wpos += PutInteger(&outbuf[wpos], newFlags);
+
+	PutShort(&outbuf[1], wpos - 3);       //Set message size
+	return wpos;
+}
+
+
+int PartyManager :: OfferLoot(char *outbuf, int itemDefID, const char *lootTag, bool needed)
+{
+	int wpos = 0;
+	wpos += PutByte(&outbuf[wpos], 6);     //_handlePartyUpdateMsg
+	wpos += PutShort(&outbuf[wpos], 0);
+
+	wpos += PutByte(&outbuf[wpos], PartyUpdateOpTypes::OFFER_LOOT);
+	wpos += PutStringUTF(&outbuf[wpos], lootTag);
+	wpos += PutInteger(&outbuf[wpos], itemDefID);;
+	wpos += PutByte(&outbuf[wpos], needed ? 1 : 0);
+
+	PutShort(&outbuf[1], wpos - 3);       //Set message size
+	return wpos;
+}
+
+int PartyManager :: WriteLootRoll(char *outbuf, const char *itemDefName, char roll, const char *bidder)
+{
+	int wpos = 0;
+	wpos += PutByte(&outbuf[wpos], 6);     //_handlePartyUpdateMsg
+	wpos += PutShort(&outbuf[wpos], 0);
+
+	wpos += PutByte(&outbuf[wpos], PartyUpdateOpTypes::LOOT_ROLL);
+	wpos += PutStringUTF(&outbuf[wpos], itemDefName);
+	wpos += PutByte(&outbuf[wpos], roll);
+	wpos += PutStringUTF(&outbuf[wpos], bidder);
+	PutShort(&outbuf[1], wpos - 3);       //Set message size
+	return wpos;
+}
+
+
+
+LootTag * ActiveParty :: GetTag(int itemId, int creatureId)
+{
+	typedef std::map<int, LootTag>::iterator it_type;
+	for(it_type iterator = lootTags.begin(); iterator != lootTags.end(); ++iterator) {
+		if(iterator->second.itemId == itemId && iterator->second.creatureId == creatureId) {
+			return &iterator->second;
+		}
+	}
+	return NULL;
+}
+
+LootTag ActiveParty :: TagItem(int itemId, int creatureId, int lootCreatureId)
+{
+	LootTag tag;
+	tag.lootTag = ++lootSeq;
+	tag.creatureId = creatureId;
+	tag.itemId = itemId;
+	tag.lootCreatureId = lootCreatureId;
+	lootTags[tag.lootTag] = tag;
+	g_Log.AddMessageFormat("Tagged item %d for loot creature %d to creature %d. Tag is %d", tag.itemId, tag.lootCreatureId, tag.creatureId, tag.lootTag);
+	return tag;
+}
+
+int PartyManager :: WriteLootWin(char *outbuf, const char *lootTag, const char *originalTag, const char *winner, int creatureId, int slotIndex)
+{
+	int wpos = 0;
+	wpos += PutByte(&outbuf[wpos], 6);     //_handlePartyUpdateMsg
+	wpos += PutShort(&outbuf[wpos], 0);
+
+	wpos += PutByte(&outbuf[wpos], PartyUpdateOpTypes::LOOT_WIN);
+	wpos += PutStringUTF(&outbuf[wpos], lootTag);
+	wpos += PutStringUTF(&outbuf[wpos], originalTag);
+	wpos += PutStringUTF(&outbuf[wpos], winner);
+	char buf[34];
+	Util::SafeFormat(buf, sizeof(buf), "%d:%d", creatureId, slotIndex);
+	wpos += PutStringUTF(&outbuf[wpos], buf);
+	PutShort(&outbuf[1], wpos - 3);       //Set message size
+	return wpos;
 }
 
 int PartyManager :: WriteInvite(char *outbuf, int leaderId, const char *leaderName)

@@ -31419,6 +31419,7 @@ ai_package=example
 
 [ENTRY]
 ID=1355
+appearance=n4:{["a"]=[{["type"]="Item-2hAxe-Basic4",["node"]="right_hand",["colors"]=["FFFFFF","F26522","943208"]}],["c"]="Horde-Warpig2",["sk"]={["cloth2"]="151515",["skin"]="947D50",["cloth1"]="943208",["eye"]="000994",["nails"]="B5815D",["trim"]="954806"},["sz"]="1.10"}
 will_regen=1
 might_regen=1
 level=50

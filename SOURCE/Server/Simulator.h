@@ -9,6 +9,8 @@
 #include "QuestScript.h"
 #include "Report.h"
 #include "Guilds.h"
+#include "DropTable.h"
+#include "PartyManager.h"
 
 class AccountData;
 struct PlayerInstancePlacementData;
@@ -39,7 +41,7 @@ struct SimulatorQuery
 	int ID;
 	std::string name;
 	std::vector<std::string> args;
-	int argCount;
+	uint argCount;
 
 	SimulatorQuery();
 	~SimulatorQuery();
@@ -178,6 +180,8 @@ public:
 	void SendPlaySound(const char *assetPackage, const char *soundFile);
 	void LoadAccountCharacters(AccountData *accPtr);
 	void JoinGuild(GuildDefinition *gDef, int startValour);
+	void CheckIfLootReadyToDistribute(ActiveLootContainer *loot, LootTag *lootTag);
+	PartyMember * RollForPartyLoot(ActiveParty *party, std::set<int> creatureIds, const char *rollType, int itemId);
 	
 	void handle_query_persona_list(void);
 	int handle_query_persona_create(void);
@@ -200,6 +204,8 @@ public:
 	void handle_query_item_split(void);
 	void handle_query_loot_list(void);
 	void handle_query_loot_item(void);
+	void handle_query_loot_need_greed_pass(void);
+	int protected_helper_query_loot_need_greed_pass(void);
 	void handle_query_loot_exit(void);
 	void handle_query_creature_isusable(void);
 	void handle_query_scenery_edit(void);
@@ -483,7 +489,7 @@ public:
 
 	bool TargetRarityAboveNormal(void);
 	//void VerifySendBufSize(int length);
-	void VerifyGenericBuffer(const char *buffer, int buflen);
+	void VerifyGenericBuffer(const char *buffer, uint buflen);
 	void LogPingStatistics(bool server, bool client);
 
 	void Debug_GenerateReport(ReportBuffer *report);

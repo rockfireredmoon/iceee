@@ -1861,6 +1861,16 @@ int SendToFriendSimulator(char *buffer, int length, int CDefID)
 	return success;
 }
 
+int randmod(int max) {
+	// Max is exclusive, e.g, max of 10 would give numbers between 0 and 9
+	return rand()%max;
+}
+
+int randmodrng(int min, int max) {
+	// Min is inclusive, max is exclusive, e.g, min of 3, max of 10 would give numbers between 3 and 9
+	return(rand()%(max-min)+min);
+}
+
 int randint(int min, int max)
 {
 	//Returning <max> is possible, but highly unlikely compared to the individual

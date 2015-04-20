@@ -106,6 +106,8 @@ int SendToOneSimulator(char *buffer, int length, int simIndex);
 int SendToOneSimulator(char *buffer, int length, SimulatorThread *simPtr);
 int SendToFriendSimulator(char *buffer, int length, int CDefID);
 int randint(int min, int max);
+int randmod(int max);
+int randmodrng(int min, int max);
 double randdbl(double min, double max);
 
 char *StringFromInt(char *buffer, int value);

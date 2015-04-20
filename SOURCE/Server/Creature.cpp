@@ -2534,12 +2534,48 @@ void CreatureInstance :: ProcessDeath(void)
 			highestLev = GetHighestLevel(attackerList);
 
 		CreateLoot(highestLev);
+		ActiveLootContainer loot = actInst->lootsys.creatureList[activeLootID];
 
 		for(size_t i = 0; i < attackerList.size(); i++)
 		{	
 			//ResolveAttackers() performs creature lookups, so the pointer is valid.
 			CreatureInstance *attacker = attackerList[i].ptr;
+
+			// Add as lootable immediately if not in party, or if free-for-all is set and need or greed is not set
+			// Also, if all of the items in the loot are mundane, and include mundane items is off, just allow loot immediately
+
+//			ActiveParty *party = attacker->PartyID > 0 ? g_PartyManager.GetPartyByID(attacker->PartyID) : NULL;
+//			bool partyLootable = party != NULL && party->mMemberList.size() > 1;
+//			bool needOrGreed = party != NULL && ( party->mLootFlags & NEED_B4_GREED ) > 0;
+//			if(partyLootable && ( party->mLootFlags & MUNDANE ) == 0) {
+//				// Make sure there is at least one non-mundane item
+////				&& (itemDef->mQualityLevel >= 2 || ( party->mLootFlags & MUNDANE ) > 0);
+//			}
+//
+//			if(activeLootID > 0) {
+//				if(!partyLootable || (partyLootable && party->mLootMode == FREE_FOR_ALL && !needOrGreed)) {
+//					// Not in party, or free-for-all is set and need or greed is not set, so allow immediate loot
+//					AddLootableID(attacker->CreatureDefID);
+//				}
+//				else {
+//					// Otherwise offer party loot
+//					char SendBuf[32];
+//					char buffer[16];
+//					vector<int> itemList = loot.itemList;
+//					g_Log.AddMessageFormat("There are %d items in the loot list", itemList.size());
+//					for (int i = 0 ; i < itemList.size(); i++) {
+//						int it = itemList[i];
+//						LootTag tag = party->TagItem(it, attacker->CreatureID, loot.CreatureID);
+//						g_Log.AddMessageFormat("REMOVEME     Tag: %d (%d) into %d", tag.lootTag, tag.creatureId, activeLootID);
+//						Util::SafeFormat(buffer, sizeof(buffer), "%d", tag.lootTag);
+//						int wpos = PartyManager::OfferLoot(SendBuf, it, buffer, needOrGreed);
+//						attacker->actInst->LSendToOneSimulator(SendBuf, wpos, attacker->simulatorPtr);
+//					}
+//				}
+//			}
+
 			AddLootableID(attacker->CreatureDefID);
+
 			if(attacker->HasStatus(StatusEffects::DEAD) == false)
 			{
 				attacker->CheckQuestKill(this);
@@ -6588,7 +6624,7 @@ float CreatureInstance :: GetDropRateMultiplier(CreatureDefinition *cdef)
 	return dropRateBonus;
 }
 
-void CreatureInstance :: CreateLoot(int finderLevel)
+void  CreatureInstance :: CreateLoot(int finderLevel)
 {
 	//Called whenever this creature dies.  Generates and associates a list of loot to this creature,
 	//if applicable.
@@ -6615,6 +6651,7 @@ void CreatureInstance :: CreateLoot(int finderLevel)
 
 
 	ActiveLootContainer loot;
+	loot.CreatureID = CreatureID;
 
 	float dropRateBonus = GetDropRateMultiplier(cdef);
 
@@ -6845,7 +6882,7 @@ int CreatureInstance :: CAF_SummonSidekick(int CDefID, int maxSummon, short abGr
 	{
 		int wpos = PrepExt_SendInfoMessage(GSendBuf, "You cannot summon any more creatures of that type.", INFOMSG_INFO);
 		simulatorPtr->AttemptSend(GSendBuf, wpos);
-		return NULL;
+		return -1;
 	}
 
 	SidekickObject skobj(CDefID, SidekickObject::ABILITY, abGroupID);

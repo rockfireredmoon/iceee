@@ -528,7 +528,7 @@ InventorySlot * InventoryManager :: GetItemPtrByID(int itemID)
 	return NULL;
 }
 
-int InventoryManager :: GetItemBySlot(int containerID, int slot)
+int InventoryManager :: GetItemBySlot(int containerID, uint slot)
 {
 	if(slot < 0)
 		return -1;
@@ -2012,7 +2012,7 @@ void CharacterData :: Debug_CountItems(int *intArr)
 			ItemDef *itemDef = slot->ResolveItemPtr();
 			if(itemDef != NULL)
 			{
-				intArr[itemDef->mQualityLevel]++;
+				intArr[(int)itemDef->mQualityLevel]++;
 			}
 		}
 	}
@@ -2687,7 +2687,7 @@ void SaveCharacterToStream(FILE *output, CharacterData &cd)
 		for(b = 0; b < (int)cd.inventory.containerList[a].size(); b++)
 		{
 			InventorySlot *slot = &cd.inventory.containerList[a][b];
-			fprintf(output, "%s=%d,%d",
+			fprintf(output, "%s=%lu,%d",
 				GetContainerNameFromID((slot->CCSID & CONTAINER_ID) >> 16),
 				slot->CCSID & CONTAINER_SLOT,
 				slot->IID );

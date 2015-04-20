@@ -996,7 +996,7 @@ int HTTPDistribute :: FillErrorMessage(int errCode)
 		{
 			wpos += sprintf(&SendBuf[wpos], "Content-Length: %d\r\n", (int)g_HTTP404Message.size());
 			wpos += sprintf(&SendBuf[wpos], "Content-Type: text/html\r\n\r\n");
-			wpos += sprintf(&SendBuf[wpos], g_HTTP404Message.c_str());
+			wpos += sprintf(&SendBuf[wpos], "%s", g_HTTP404Message.c_str());
 		}
 		else
 		{

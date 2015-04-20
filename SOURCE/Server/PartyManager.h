@@ -14,19 +14,69 @@ struct PartyMember
 	int mSocket;
 };
 
+
+//this.LootModes <- {
+//	FREE_FOR_ALL = 0,
+//	ROUND_ROBIN = 1,
+//	LOOT_MASTER = 2
+//};
+//this.LootFlags <- {
+//	NEED_B4_GREED = 1,
+//	MUNDANE = 2
+//};
+
+
+enum LootFlags
+{
+	NEED_B4_GREED = (1 << 0),
+	MUNDANE = (1 << 1)
+};
+enum LootMode
+{
+	FREE_FOR_ALL  = 0,   //The default
+	ROUND_ROBIN = 1,	 //Offer to each player in turn
+	LOOT_MASTER = 2      //Leader keeps all loot
+};
+
+//Holds details about a tagged loot, i.e. a party loot. Each item for each player
+//gets a tag, and this used in the handshaking when deciding the window of the
+//roll
+class LootTag
+{
+public:
+	int lootTag;
+	int itemId;
+	int creatureId;
+	int lootCreatureId;
+	int slotIndex;
+	bool needed;
+
+	LootTag();
+	void Clear(void);
+};
+
 class ActiveParty
 {
 public:
 	int mPartyID;
 	int mLeaderDefID;
 	int mLeaderID;
+	LootMode mLootMode;
+	int mLootFlags;
+	uint mNextToGetLoot;
 	std::string mLeaderName;
 	std::vector<PartyMember> mMemberList;
+	std::map<int, LootTag> lootTags;
+	ActiveParty();
+	LootTag * GetTag(int itemId, int creatureId);
+	LootTag TagItem(int itemId, int creatureId, int lootCreatureId);
+	void Dump();
 	void AddMember(CreatureInstance* member);
 	bool HasMember(int memberDefID);
 	void RemoveMember(int memberDefID);
 	bool UpdateLeaderDropped(int memberID);
 	bool SetLeader(int newLeaderDefID);
+	PartyMember* GetNextLooter();
 	PartyMember* GetMemberByID(int memberID);
 	PartyMember* GetMemberByDefID(int memberDefID);
 	bool UpdatePlayerReferences(CreatureInstance* member);
@@ -35,6 +85,7 @@ public:
 	void DebugDestroyParty(const char *buffer, int length);
 	void Disband(char *buffer);
 	int GetMaxPlayerLevel(void);
+	void BroadcastInfoMessageToAllMembers(const char *buffer);
 
 	void BroadCast(const char *buffer, int length);
 	void BroadCastExcept(const char *buffer, int length, int excludeDefID);
@@ -92,6 +143,12 @@ struct PartyManager
 	void DebugDestroyParties(void);
 	void DebugForceRemove(CreatureInstance *caller);
 
+	static int StrategyFlagsChange(char *outbuf, int newFlags);
+	static int StrategyChange(char *outbuf, LootMode newLootMode);
+	static int OfferLoot(char *outbuf, int itemDefID, const char *lootTag, bool needed);
+
+	static int WriteLootRoll(char *outbuf, const char *itemDefName, char roll, const char *bidder);
+	static int WriteLootWin(char *outbuf, const char *lootTag, const char *originalTag, const char *winner, int creatureId, int slotIndex);
 	static int WriteInvite(char *outbuf, int leaderId, const char *leaderName);
 	static int WriteProposeInvite(char *outbuf, int proposeeId, const char *proposeeName, int proposerId, const char *proposerName);
 	static int WriteMemberList(char *outbuf, ActiveParty *party, int memberID);

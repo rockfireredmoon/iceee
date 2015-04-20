@@ -370,6 +370,12 @@ short ProfBaseStats[6][5] = {
 
 CharacterStatSet :: CharacterStatSet()
 {
+	size = 1.0F;
+	damage_resist_frost = 0;
+	damage_resist_fire = 0;
+	damage_resist_death = 0;
+	damage_resist_mystic = 0;
+	damage_resist_melee = 0;
 	will_regen = 1.0F;
 	might_regen = 1.0F;
 	mod_casting_speed = 1.4013e-045F;
@@ -718,7 +724,7 @@ bool isStatEqual(int StatIndex, CharacterStatSet *css1, CharacterStatSet *css2)
 const char * GetStatValueAsString(int StatIndex, char *ConvBuf, CharacterStatSet *css)
 {
 	if(StatIndex == -1)
-		return false;
+		return NULL;
 
 	char *base = (char*)css + StatList[StatIndex].offset;
 	switch(StatList[StatIndex].etype)

@@ -379,53 +379,75 @@ class this.LootOptions extends this.GUI.Frame
 {
 	mFreeForAll = null;
 	mRoundRobin = null;
+	mLootMaster = null;
 	mNeedBeforeGreed = null;
 	mIncludeMundane = null;
 	constructor()
 	{
 		this.GUI.Frame.constructor(this.TXT("Loot options"));
-		this.setSize(170, 200);
-		this.setPreferredSize(170, 200);
-		this.setInsets(0, 0, 0, 0);
-		local baseContainer = this.GUI.Container(this.GUI.GridLayout(7, 1));
-		this.setContentPane(baseContainer);
-		baseContainer.setInsets(20, 20, 20, 20);
-		baseContainer.getLayoutManager().setRows(20, 10, 20, 20, 20, 5, 20);
-		local op1Container = this.GUI.Container(this.GUI.GridLayout(1, 2));
-		baseContainer.add(op1Container);
-		op1Container.getLayoutManager().setColumns(20, "*");
+		
 		this.mFreeForAll = this.GUI.CheckBox("CheckBoxSmall");
-		op1Container.add(this.mFreeForAll);
 		this.mFreeForAll.addActionListener(this);
 		this.mFreeForAll.setReleaseMessage("onFreeForAll");
-		op1Container.add(this.GUI.Label(this.TXT("Free for All")));
-		baseContainer.add(this.GUI.Spacer(10, 10));
-		local op2Container = this.GUI.Container(this.GUI.GridLayout(1, 2));
-		baseContainer.add(op2Container);
-		op2Container.getLayoutManager().setColumns(20, "*");
+		
 		this.mRoundRobin = this.GUI.CheckBox("CheckBoxSmall");
-		op2Container.add(this.mRoundRobin);
 		this.mRoundRobin.addActionListener(this);
 		this.mRoundRobin.setReleaseMessage("onRoundRobin");
-		op2Container.add(this.GUI.Label(this.TXT("Round Robin")));
-		baseContainer.add(this.GUI.Spacer(10, 10));
-		local op3Container = this.GUI.Container(this.GUI.GridLayout(1, 2));
-		baseContainer.add(op3Container);
-		op3Container.getLayoutManager().setColumns(20, "*");
+		
+		this.mLootMaster = this.GUI.CheckBox("CheckBoxSmall");
+		this.mLootMaster.addActionListener(this);
+		this.mLootMaster.setReleaseMessage("onLootMaster");
+		
 		this.mNeedBeforeGreed = this.GUI.CheckBox("CheckBoxSmall");
-		op3Container.add(this.mNeedBeforeGreed);
 		this.mNeedBeforeGreed.addActionListener(this);
 		this.mNeedBeforeGreed.setReleaseMessage("onNeedBeforeGreed");
-		op3Container.add(this.GUI.Label(this.TXT("Need before Greed")));
-		baseContainer.add(this.GUI.Spacer(10, 5));
-		local op4Container = this.GUI.Container(this.GUI.GridLayout(1, 2));
-		baseContainer.add(op4Container);
-		op4Container.getLayoutManager().setColumns(20, "*");
+		
 		this.mIncludeMundane = this.GUI.CheckBox("CheckBoxSmall");
-		op4Container.add(this.mIncludeMundane);
 		this.mIncludeMundane.addActionListener(this);
 		this.mIncludeMundane.setReleaseMessage("onIncludeMundane");
-		op4Container.add(this.GUI.Label(this.TXT("Include mundane items")));
+		
+		local op1Container = this.GUI.Container(this.GUI.GridLayout(1, 2));
+		op1Container.getLayoutManager().setColumns(20, "*");
+		op1Container.add(this.mFreeForAll);		
+		op1Container.add(this.GUI.Label(this.TXT("Free for All")));
+		
+		local op2Container = this.GUI.Container(this.GUI.GridLayout(1, 2));
+		op2Container.getLayoutManager().setColumns(20, "*");
+		op2Container.add(this.mRoundRobin);
+		op2Container.add(this.GUI.Label(this.TXT("Round Robin")));
+		
+		local op3Container = this.GUI.Container(this.GUI.GridLayout(1, 2));
+		op3Container.getLayoutManager().setColumns(20, "*");
+		op3Container.add(this.mLootMaster);
+		op3Container.add(this.GUI.Label(this.TXT("Loot Master")));
+		
+		local op4Container = this.GUI.Container(this.GUI.GridLayout(1, 2));
+		op4Container.getLayoutManager().setColumns(20, "*");
+		op4Container.add(this.mNeedBeforeGreed);
+		op4Container.add(this.GUI.Label(this.TXT("Need before Greed")));
+		
+		local op5Container = this.GUI.Container(this.GUI.GridLayout(1, 2));
+		op5Container.getLayoutManager().setColumns(20, "*");
+		op5Container.add(this.mIncludeMundane);
+		op5Container.add(this.GUI.Label(this.TXT("Include mundane items")));		
+		
+		local baseContainer = this.GUI.Container(this.GUI.GridLayout(9, 1));
+		baseContainer.setInsets(20, 20, 20, 20);
+		baseContainer.getLayoutManager().setRows(20, 10, 20, 10, 20, 20, 20, 5, 20);
+		baseContainer.add(op1Container);
+		baseContainer.add(this.GUI.Spacer(10, 10));
+		baseContainer.add(op2Container);
+		baseContainer.add(this.GUI.Spacer(10, 10));
+		baseContainer.add(op3Container);
+		baseContainer.add(this.GUI.Spacer(10, 10));
+		baseContainer.add(op4Container);
+		baseContainer.add(this.GUI.Spacer(10, 5));
+		baseContainer.add(op5Container);
+		
+		this.setSize(170, 230);
+		this.setPreferredSize(170, 230);
+		this.setInsets(0, 0, 0, 0);
+		this.setContentPane(baseContainer);
 	}
 
 	function setStrategy( newMode )
@@ -434,11 +456,19 @@ class this.LootOptions extends this.GUI.Frame
 		{
 			this.mRoundRobin.setChecked(false);
 			this.mFreeForAll.setChecked(true);
+			this.mLootMaster.setChecked(false);
 		}
 		else if (newMode == this.LootModes.ROUND_ROBIN)
 		{
 			this.mRoundRobin.setChecked(true);
 			this.mFreeForAll.setChecked(false);
+			this.mLootMaster.setChecked(false);
+		}
+		else if (newMode == this.LootModes.LOOT_MASTER)
+		{
+			this.mRoundRobin.setChecked(false);
+			this.mFreeForAll.setChecked(false);
+			this.mLootMaster.setChecked(true);
 		}
 	}
 
@@ -446,6 +476,23 @@ class this.LootOptions extends this.GUI.Frame
 	{
 		this.mNeedBeforeGreed.setChecked((newFlags & this.LootFlags.NEED_B4_GREED) != 0);
 		this.mIncludeMundane.setChecked((newFlags & this.LootFlags.MUNDANE) != 0);
+	}
+	
+	function onLootMaster( evt, checked )
+	{
+		if (checked)
+		{
+			::_Connection.sendQuery("party", this, [
+				"loot.mode",
+				this.LootModes.LOOT_MASTER
+			]);
+			this.mRoundRobin.setChecked(false);
+			this.mFreeForAll.setChecked(false);
+		}
+		else
+		{
+			this.mLootMaster.setChecked(true);
+		}
 	}
 
 	function onFreeForAll( evt, checked )
@@ -457,6 +504,7 @@ class this.LootOptions extends this.GUI.Frame
 				this.LootModes.FREE_FOR_ALL
 			]);
 			this.mRoundRobin.setChecked(false);
+			this.mLootMaster.setChecked(false);
 		}
 		else
 		{
@@ -473,6 +521,7 @@ class this.LootOptions extends this.GUI.Frame
 				this.LootModes.ROUND_ROBIN
 			]);
 			this.mFreeForAll.setChecked(false);
+			this.mLootMaster.setChecked(false);
 		}
 		else
 		{
@@ -501,6 +550,7 @@ class this.LootOptions extends this.GUI.Frame
 	function setDefaults()
 	{
 		this.mFreeForAll.setChecked(true);
+		this.mLootMaster.setChecked(false);
 		this.mRoundRobin.setChecked(false);
 		this.mNeedBeforeGreed.setChecked(false);
 		this.mIncludeMundane.setChecked(false);
@@ -510,6 +560,7 @@ class this.LootOptions extends this.GUI.Frame
 	{
 		this.mFreeForAll.setEnabled(value);
 		this.mRoundRobin.setEnabled(value);
+		this.mLootMaster.setEnabled(value);
 		this.mNeedBeforeGreed.setEnabled(value);
 		this.mIncludeMundane.setEnabled(value);
 	}
@@ -1158,10 +1209,8 @@ class this.PartyManager
 
 	function lootWon( lootTag, originalTag, winner )
 	{
-		print("ICE lootTag: " + lootTag + " orig: " + originalTag + " winner: " + winner);
 		foreach( oc in this.mOfferComponents )
 		{
-			print("   oC: " +oc.mLootTag);
 			if (oc.mLootTag == originalTag)
 			{
 				local itemdef = ::_ItemDataManager.getItemDef(oc.mItemDefId);

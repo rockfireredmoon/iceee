@@ -24,14 +24,14 @@ char g_ClanMOTD[] = "Recreating EE, one byte at a time.";
 char g_ClanLeader[] = "true";
 
 //Data returned on a query request for "clan.list"
-int g_ClanMemberCount = 0;                     //Number of clan characters
-char *g_ClanMemberList[3][5] = { 
-	//Name, level, profession ("0"), online ("true"), rank
-	"This Guy",     "100",  "1",  "true", "Leader",
-	"That Guy",      "50",  "4",  "true", "Officer",
-	"Annoying Guy",  "10",  "2", "false", "Minion"
-	//"Cool Guy",      "40",  "1", "false", "Others"
-};
+//int g_ClanMemberCount = 0;                     //Number of clan characters
+//char *g_ClanMemberList[3][5] = {
+//	//Name, level, profession ("0"), online ("true"), rank
+//	"This Guy",     "100",  "1",  "true", "Leader",
+//	"That Guy",      "50",  "4",  "true", "Officer",
+//	"Annoying Guy",  "10",  "2", "false", "Minion"
+//	//"Cool Guy",      "40",  "1", "false", "Others"
+//};
 
 float HeroismHealthDivisor = 10000.0F;  //Divide heroism by this to get the bonus health percent
 

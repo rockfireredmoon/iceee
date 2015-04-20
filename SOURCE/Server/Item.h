@@ -96,7 +96,7 @@ public:
 	//if(g_ProtocolVersion >= 7)
 	int resultItemId;
 	int keyComponentId;
-	int numberOfItems;
+	uint numberOfItems;
 	std::vector<int> craftItemDefId;   //needs to be variable depending on <numberOfItems>
 
 	//if(g_ProtocolVersion >= 9)

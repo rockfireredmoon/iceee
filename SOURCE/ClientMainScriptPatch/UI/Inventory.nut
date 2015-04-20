@@ -7,7 +7,6 @@ class this.Screens.Inventory extends this.GUI.ContainerFrame
 	mScreenContainer = null;
 	mInventoryContainer = null;
 	mInventoryContainerHolder = null;
-	mBuyBagButton = null;
 	mBagContainer = null;
 	mBagContainerHolder = null;
 	mColumns = 8;
@@ -784,9 +783,7 @@ class this.Screens.Inventory extends this.GUI.ContainerFrame
 		local extraHeight = 0;
 		this.mCurrentInventorySize <= MAX_SLOTS;
 		  // [078]  OP_JMP            5      4    0    0
-		local BUTTON_HEIGHT = 32;
 		showMoreBagButton = true;
-		extraHeight = BUTTON_HEIGHT;
 		local size = this.mInventoryContainer.getPreferredSize();
 		this.mInventoryContainerHolder.setSize(size.width + 4, size.height + 3 + extraHeight);
 		this.mInventoryContainerHolder.setPreferredSize(size.width + 4, size.height + 3 + extraHeight);
@@ -810,27 +807,7 @@ class this.Screens.Inventory extends this.GUI.ContainerFrame
 		local inventory = ::_ItemDataManager.getContents("inv");
 		this.onContainerUpdated("inv", ::_avatar.getID(), inventory);
 		this.mInventoryContainerHolder.add(this.mInventoryContainer);
-		  // [158]  OP_JMP            3     69    0    0
-		this.mBuyBagButton = this.GUI.BuyMoreBagsButton("Buy More Bags");
-		this.mBuyBagButton.addActionListener(this);
-		this.mBuyBagButton.setReleaseMessage("_buyMoreBagsPress");
-		this.mInventoryContainerHolder.add(this.mBuyBagButton);
-		this.mBuyBagButton.setFont(::GUI.Font("Maiandra", 22, false));
-		this.mBuyBagButton.setFontColor(this.Colors.white);
-		local bagLabel = this.mBuyBagButton.getLabel();
-		bagLabel.setTextAlignment(0.52200001, 0.63999999);
-		local creditAmt = 0;
-
-		if (::_avatar && ::_avatar.getStat(this.Stat.CREDITS) != null)
-		{
-			creditAmt = ::_avatar.getStat(this.Stat.CREDITS);
-		}
-
-		if (creditAmt < this.COST_OF_BAG)
-		{
-			this.mBuyBagButton.setFontColor(this.Colors.red);
-		}
-
+		
 		this.mScreenContainer.add(this.mInventoryContainerHolder);
 		this.mScreenContainer.add(this.mBagContainerHolder);
 		this.setSize(this.getPreferredSize());
@@ -838,25 +815,6 @@ class this.Screens.Inventory extends this.GUI.ContainerFrame
 
 	function onCreditUpdated( value )
 	{
-		//if (value < this.COST_OF_BAG)
-		//{
-//			this.mBuyBagButton.setFontColor(this.Colors.red);
-		//}
-		//else
-		//{
-//			this.mBuyBagButton.setFontColor(this.Colors.white);
-		//}
-	}
-
-	function _buyMoreBagsPress( button )
-	{
-		local creditShop = this.Screens.get("CreditShop", true);
-
-		if (creditShop)
-		{
-			creditShop.setVisible(true);
-			creditShop.selectPanel("BAGS");
-		}
 	}
 
 	function setContainerMoveProperties()

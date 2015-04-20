@@ -48,6 +48,17 @@ pushd SOURCE/ClientMainScriptPatch
 find . -name '*.nut' | cpio -updm "${SCRATCH}/content"
 popd
 
+MAJOR_ICEEE_VERSION=ICE1
+BUILD_NUMBER=$(date +%Y%m%d_%H%M)
+FULL_VERSION="0.8.6-${MAJOR_ICEEE_VERSION}-PF-${BUILD_NUMBER}"
+
+#// DO NOT EDIT, THIS IS A GENERATED FILE
+#///gVersion <- "0.8.9H-r16373-o214-20110513_1240";
+#gVersion <- "0.8.6-r12-PF-20150205_2026";
+echo "// DO NOT EDIT, THIS IS A GENERATED FILE
+//gVersion <- \"0.8.9H-r16373-o214-20110513_1240\";
+gVersion <- \"${FULL_VERSION}\"" > "${SCRATCH}/content/Version.nut";
+
 pushd "${SCRATCH}/content"
 echo "Compiling all scripts"
 find . -name '*.nut'|while read line ; do
@@ -184,6 +195,6 @@ if [ -d asset -a -d Data ]; then
 			#cp "SOURCE/CAR/Prop-ModAddons1.car" ${base}/asset/Release/Current/Media
 			#cp "${SCRATCH}/archives/Sound-ModSound.car" ${base}/asset/Release/Current/Media
 			cp "${SCRATCH}/HTTPChecksum.txt" ${base}/Data
-			echo "All files copied" ;;
+			echo "All files copied for version ${FULL_VERSION}" ;;
 	esac
 fi

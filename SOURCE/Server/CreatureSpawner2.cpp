@@ -1401,6 +1401,7 @@ SpawnPackageDef * SpawnPackageList :: HasCreatureDef(int CreatureDefID)
 SpawnPackageManager :: SpawnPackageManager()
 {
 	Util::SafeCopy(nullSpawnPackage.packageName, "nullSpawnPackage", sizeof(nullSpawnPackage.packageName));
+	fakeCreatureId = 60000;
 }
 
 SpawnPackageManager :: ~SpawnPackageManager()
@@ -1558,6 +1559,7 @@ int CreatureSpawnDef :: GetLeashLength(void)
 
 UniqueSpawnEntry :: UniqueSpawnEntry()
 {
+	mSpawnTime = 0;
 	mMaxSpawnCount = 0;
 	mRandomIndex = 0;
 	mRestartTime = 0;

@@ -32,8 +32,9 @@ enum InstanceScriptExtOpCodes
 	OP_AI_SCRIPT_JUMP,      //ai_script_jump <var:CID> <str:label>
 	OP_INFO,                //info <str:message> <int:globalBroadcast>
 	OP_CHAT,
-	OP_BROADCAST,
-	OP_DESPAWN         // despawn <propid> force a despawn of a spawnpoint
+	OP_BROADCAST,           // broadcast <message> send info message locally or broadcast to server in instance
+	OP_DESPAWN,             // despawn <propid> force a despawn of a spawnpoint
+	OP_DESPAWN_ALL,			// despawn_all <creatureDefID> despawn all creatures of a type
 };
 
 OpCodeInfo extCoreOpCode[] = {
@@ -58,6 +59,7 @@ OpCodeInfo extCoreOpCode[] = {
 	{ "chat",             OP_CHAT,            3, {OPT_STR,  OPT_STR,     OPT_STR}},
 	{ "broadcast",        OP_BROADCAST,       1, {OPT_STR,  OPT_NONE,    OPT_STR}},
 	{ "despawn",          OP_DESPAWN,         1, {OPT_VAR,  OPT_NONE,    OPT_NONE}},
+	{ "despawn_all",      OP_DESPAWN_ALL,     1, {OPT_VAR,  OPT_NONE,    OPT_NONE}},
 };
 const int maxExtOpCode = COUNT_ARRAY_ELEMENTS(extCoreOpCode);
 
@@ -141,6 +143,19 @@ void InstanceScriptPlayer::RunImplementationCommands(int opcode)
 	ScriptCore::OpData *instr = &def->instr[curInst];
 	switch(opcode)
 	{
+	case OP_DESPAWN_ALL:
+	{
+		while(true) {
+			CreatureInstance *source = actInst->GetNPCInstanceByCDefID(GetVarValue(instr->param1));
+			if(source == NULL)
+				break;
+			else {
+				g_Log.AddMessageFormat("Despawn: %d (%d)", GetVarValue(instr->param1), source->CreatureID);
+				actInst->spawnsys.Despawn(source->CreatureID);
+			}
+		}
+		break;
+	}
 	case OP_DESPAWN:
 	{
 		CreatureInstance *source = actInst->GetInstanceByCID(GetVarValue(instr->param1));
@@ -284,8 +299,16 @@ void InstanceScriptPlayer::RunImplementationCommands(int opcode)
 	case OP_BROADCAST:
 		{
 			char buffer[4096];
-			int wpos = PrepExt_Broadcast(buffer, GetStringPtr(instr->param1));
-			actInst->LSendToAllSimulator(buffer, wpos, -1);
+			if(actInst->mZoneDefPtr->mGrove)
+			{
+				int wpos = PrepExt_SendInfoMessage(buffer, GetStringPtr(instr->param1), INFOMSG_INFO);
+				actInst->LSendToAllSimulator(buffer, wpos, -1);
+			}
+			else
+			{
+				int wpos = PrepExt_Broadcast(buffer, GetStringPtr(instr->param1));
+				actInst->LSendToAllSimulator(buffer, wpos, -1);
+			}
 		}
 		break;
 	default:

@@ -5,7 +5,7 @@
 #include <algorithm>
 #include "Util.h"
 
-#pragma warning(disable:4996)
+//#pragma warning(disable:4996)
 
 const char *QuestIndicator::QueryResponse[] = {
 	"NONE",
@@ -18,7 +18,7 @@ const char *QuestIndicator::QueryResponse[] = {
 
 QuestDefinitionContainer QuestDef;
 
-extern int g_ProtocolVersion;
+//extern int g_ProtocolVersion;
 
 QuestRepeatDelay :: QuestRepeatDelay(int questID, unsigned long startTimeMinutes, unsigned long waitTimeMinutes)
 {

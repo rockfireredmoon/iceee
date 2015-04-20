@@ -254,7 +254,7 @@ public:
 	//SPAWNPACKAGECONT packageList;
 	std::vector<SpawnPackageList> packageList;
 	SpawnPackageDef nullSpawnPackage;
-	int fakeCreatureId = 60000;
+	int fakeCreatureId;
 
 	void LoadFromFile(const char *subfolder, const char *filename);
 	SpawnPackageDef * GetPointerByName(const char *name);

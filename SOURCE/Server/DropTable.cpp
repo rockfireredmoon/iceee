@@ -87,7 +87,6 @@ namespace LootSystem
 	}
 }
 
-
 ActiveLootContainer :: ActiveLootContainer()
 {
 	CreatureID = 0;
@@ -101,6 +100,9 @@ ActiveLootContainer :: ActiveLootContainer(int creatureID)
 ActiveLootContainer :: ~ActiveLootContainer()
 {
 	itemList.clear();
+	greeded.clear();
+	needed.clear();
+	passed.clear();
 }
 
 void ActiveLootContainer :: AddItem(int itemID)
@@ -187,7 +189,90 @@ int ActiveLootContainer :: GetItemCount(void) const
 
 void ActiveLootContainer :: CopyLootContents(const ActiveLootContainer &source)
 {
+	CreatureID = source.CreatureID;
 	itemList.assign(source.itemList.begin(), source.itemList.end());
+	greeded.clear();
+	greeded.insert(source.greeded.begin(), source.greeded.end());
+	needed.clear();
+	needed.insert(source.needed.begin(), source.needed.end());
+	passed.clear();
+	passed.insert(source.passed.begin(), source.passed.end());
+}
+
+void ActiveLootContainer :: Greed(int itemId, int creatureId)
+{
+	if(greeded.count(itemId) == 0) {
+		set<int> a;
+		greeded[itemId] = a;
+	}
+	greeded[itemId].insert(creatureId);
+}
+
+void ActiveLootContainer :: Need(int itemId, int creatureId)
+{
+	if(needed.count(itemId) == 0) {
+		set<int> a;
+		needed[itemId] = a;
+	}
+	needed[itemId].insert(creatureId);
+}
+
+void ActiveLootContainer :: Pass(int itemId, int creatureId)
+{
+	if(passed.count(itemId) == 0) {
+		set<int> a;
+		passed[itemId] = a;
+	}
+	passed[itemId].insert(creatureId);
+}
+
+bool ActiveLootContainer :: IsPassed(int itemId, int creatureId)
+{
+	return passed.count(itemId) >0 && passed[itemId].count(creatureId) > 0;
+}
+
+bool ActiveLootContainer :: IsNeeded(int itemId, int creatureId)
+{
+	return needed.count(itemId) >0 && needed[itemId].count(creatureId) > 0;
+}
+
+bool ActiveLootContainer :: IsGreeded(int itemId, int creatureId)
+{
+	return greeded.count(itemId) >0 && greeded[itemId].count(creatureId) > 0;
+}
+
+bool ActiveLootContainer :: HasAnyDecided(int creatureId)
+{
+	return Decided(creatureId, greeded) || Decided(creatureId, needed) || Decided(creatureId, passed);
+}
+
+bool ActiveLootContainer :: Decided(int creatureId, std::map<int, std::set<int> > map)
+{
+	return map.count(creatureId) > 0;
+}
+
+int ActiveLootContainer :: CountNeeds(int itemId)
+{
+	return needed.count(itemId) > 0 ? needed[itemId].size() : 0;
+}
+
+int ActiveLootContainer :: CountDecisions(int itemId)
+{
+	return ( greeded.count(itemId) > 0 ? greeded[itemId].size() : 0 ) +
+			( needed.count(itemId) > 0 ? needed[itemId].size() : 0 ) +
+			( passed.count(itemId) > 0 ? passed[itemId].size() : 0 );
+}
+
+int ActiveLootContainer :: Count(int itemId, std::map<int, int> map)
+{
+	int count = 0;
+	typedef std::map<int, int>::iterator it_type;
+	for(it_type iterator = map.begin(); iterator != map.end(); ++iterator) {
+		if(iterator->first == itemId) {
+			count++;
+		}
+	}
+	return count;
 }
 
 WorldLootContainer :: WorldLootContainer()
@@ -258,6 +343,7 @@ int randint_32bit(int min, int max)
 	//unsigned long rand_build = ((rand() & 0xFF) << 24) | ((rand() & 0xFF) << 16) | ((rand() & 0xFF) << 8) | ((rand() & 0xFF));
 	return min + (rand_build % (max - min + 1));
 }
+
 
 DropSetDefinition :: DropSetDefinition()
 {

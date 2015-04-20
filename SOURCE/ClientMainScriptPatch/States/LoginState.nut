@@ -75,7 +75,7 @@ class this.States.LoginState extends this.State
 		this.mMenu.faqButton.addActionListener({
 			function onActionPerformed( b )
 			{
-				this.System.openURL("http://www.eartheternal.com/help");
+				this.System.openURL("http://armouree.vm.bytemark.co.uk/dokuwiki/doku.php?id=iceee:players:introduction");
 			}
 
 		});
@@ -88,7 +88,7 @@ class this.States.LoginState extends this.State
 			}
 
 		});
-		this.mMenu.forParents <- ::GUI.BigButton("For Parents");
+		this.mMenu.forParents <- ::GUI.BigButton("For Furries");
 		this.mMenu.container.add(this.mMenu.forParents);
 		this.mMenu.forParents.addActionListener({
 			function onActionPerformed( b )
@@ -102,7 +102,7 @@ class this.States.LoginState extends this.State
 		this.mMenu.forgotPassword.addActionListener({
 			function onActionPerformed( b )
 			{
-				this.System.openURL("http://www.eartheternal.com/reset_password");
+				this.System.openURL("http://iceee.servegame.com/ResetPassword.html");
 			}
 
 		});
@@ -146,93 +146,148 @@ class this.States.LoginState extends this.State
 
 	function _buildLogin()
 	{
-		this.mCS.baseContainer <- ::GUI.Container();
-		this.mCS.setLayoutManager(this.GUI.BorderLayout());
-		this.mCS.setSticky("center", "center");
-		this.mCS.setPosition(-50, -275);
-		this.mCS.setSize(395, 530);
-		this.mCS.baseContainer.setOverlay("GUI/Overlay2");
-		this.mCS.secondContainer <- ::GUI.Container();
-		this.mCS.setLayoutManager(this.GUI.BorderLayout());
-		this.mCS.setInsets(10, 0, 0, 0);
-		this.mCS.add(this.mCS, this.GUI.BorderLayout.SOUTH);
-		this.mCS.accountPanel <- ::GUI.Panel();
-		this.mCS.setLayoutManager(this.GUI.GridLayout(2, 1));
-		this.mCS.setSize(400, 300);
-		this.mCS.setInsets(10, 10, 10, 10);
-		this.mCS.add(this.mCS, this.GUI.BorderLayout.NORTH);
-		this.mCS.accountTitle <- ::GUI.Label("New to Earth Eternal");
-		this.mCS.setFont(this.GUI.Font("Maiandra", 32));
-		this.mCS.setTextAlignment(0.5, 0.5);
-		this.mCS.add(this.mCS);
-		this.mCS.accountButtonContainer <- this.GUI.Container();
-		this.mCS.setLayoutManager(this.GUI.BoxLayoutV());
-		this.mCS.getLayoutManager().setExpand(false);
-		this.mCS.add(this.mCS);
-		this.mCS.accountButton <- ::GUI.BigButton("Create Account");
-		this.mCS.setReleaseMessage("onCreateAccount");
-		this.mCS.add(this.mCS);
-		this.mCS.thirdContainer <- ::GUI.Container();
-		this.mCS.setLayoutManager(this.GUI.BorderLayout());
-		this.mCS.setInsets(10, 0, 0, 0);
-		this.mCS.add(this.mCS, this.GUI.BorderLayout.SOUTH);
-		this.mCS.loginPanel <- ::GUI.Panel();
-		this.mCS.setLayoutManager(this.GUI.BorderLayout());
-		this.mCS.setSize(400, 160);
-		this.mCS.setInsets(10, 10, 10, 10);
-		this.mCS.setFont(this.GUI.Font("Maiandra", 32));
-		this.mCS.add(this.mCS, this.GUI.BorderLayout.SOUTH);
-		local accountText = "Email:";
-		this.mCS.loginGrid <- ::GUI.Container();
-		this.mCS.setLayoutManager(this.GUI.GridLayout(2, 2));
-		this.mCS.getLayoutManager().setColumns(this.Math.max(this.mCS.getFont().getTextMetrics(accountText).width, this.mCS.getFont().getTextMetrics("Password:").width) + 5, "*");
-		this.mCS.getLayoutManager().setGaps(6, 6);
-		this.mCS.usernameLabel <- ::GUI.Label(accountText);
-		this.mCS.add(this.mCS, this.GUI.GridLayout.FILL);
-		this.mCS.usernameInput <- ::GUI.InputArea();
-		this.mCS.addActionListener(this);
-		this.mCS.add(this.mCS);
-		this.mCS.passwordLabel <- ::GUI.Label("Password:");
-		this.mCS.add(this.mCS, this.GUI.GridLayout.FILL);
-		this.mCS.passwordInput <- ::GUI.InputArea();
-		this.mCS.setPassword(true);
-		this.mCS.addActionListener(this);
-		this.mCS.add(this.mCS);
-		this.mCS.buttonContainer <- ::GUI.Container();
-		this.mCS.setLayoutManager(this.GUI.BorderLayout());
-		this.mCS.setInsets(10, 0, 0, 0);
-		this.mCS.loginButton <- this.GUI.BigButton("Login");
-		this.mCS.setReleaseMessage("onLogin");
-		this.mCS.add(this.mCS, this.GUI.BorderLayout.EAST);
-		this.mCS.checkBoxContainer <- this.GUI.Component();
-		this.mCS.setLayoutManager(this.GUI.BoxLayout());
-		this.mCS.getLayoutManager().setExpand(false);
-		this.mCS.add(this.mCS, this.GUI.BorderLayout.WEST);
-		this.mCS.checkBox <- this.GUI.CheckBox();
-		this.mCS.add(this.mCS);
-		this.mCS.checkLabelContainer <- this.GUI.Component();
-		this.mCS.setLayoutManager(this.GUI.BoxLayout());
-		this.mCS.setInsets(3, 0, 0, 0);
-		this.mCS.add(this.mCS);
-		this.mCS.checkLabel <- this.GUI.Label("Remember Me");
-		this.mCS.setFont(this.GUI.Font("Maiandra", 16));
-		this.mCS.add(this.mCS);
-		this.mCS.add(this.mCS, this.GUI.BorderLayout.CENTER);
-		this.mCS.add(this.mCS, this.GUI.BorderLayout.SOUTH);
-		this.mCS.loginButton.addActionListener(this);
-		this.mCS.accountButton.addActionListener(this);
-		local creds = ::Pref.get("login.Credentials");
+		local baseContainer = mCS.baseContainer <- ::GUI.Container();
+		baseContainer.setLayoutManager( GUI.BorderLayout() );
+		baseContainer.setSticky("center", "center");
+		baseContainer.setPosition( -50, -275);
+		baseContainer.setSize( 425, 530 );
+		baseContainer.setOverlay("GUI/Overlay2");
 
-		if (creds != "")
-		{
-			local parts = this.Util.split(this.base64_decode(creds), ":");
-			this.mCS.setText(parts[0]);
-			this.mCS.setText(parts[1]);
-			this.mCS.setChecked(true);
+		local secondContainer = mCS.secondContainer <- ::GUI.Container();
+		secondContainer.setLayoutManager( GUI.BorderLayout() );
+		secondContainer.setInsets( 10, 0, 0, 0 );
+		baseContainer.add( secondContainer, GUI.BorderLayout.SOUTH );
+
+		local infoPanel = mCS.infoPanel <- ::GUI.Panel();
+		infoPanel.setLayoutManager( GUI.BorderLayout() );
+		infoPanel.setInsets( 10, 10, 10, 10 );
+		infoPanel.setSize( 400, 200 );
+		baseContainer.add( infoPanel, GUI.BorderLayout.CENTER );
+		
+		local infoTitle = mCS.infoTitle <- ::GUI.Label("NEWS");
+		infoTitle.setFont( GUI.Font( "Maiandra", 32 ) );
+		infoPanel.add( infoTitle, GUI.BorderLayout.NORTH );
+		
+		local scrollArea = mCS.scrollArea <- GUI.ScrollPanel();
+		infoPanel.add( scrollArea, GUI.BorderLayout.CENTER );
+		
+		mNews = mCS.infoArea <- ::GUI.HTML();
+		mNews.setAppearance("PaperBackBorder");
+		mNews.setVisible(true);
+		mNews.setLayoutManager(::GUI.FlowLayout());
+		mNews.getLayoutManager().setAlignment("left");
+		mNews.getLayoutManager().setGaps(0.0, 0.0);
+		mNews.setInsets( 10, 10, 10, 10 );
+		mNews.setFont( GUI.Font( "Maiandra", 18 ) );
+		mNews.setFontColor( "2b1b00" );		
+		mNews.setText("Loading...");
+		scrollArea.attach( mNews );
+
+		fetchNews(); 
+
+		local accountPanel = mCS.accountPanel <- ::GUI.Panel();
+		accountPanel.setLayoutManager( GUI.GridLayout(2, 1) );
+		accountPanel.setSize( 400, 300 );
+		accountPanel.setInsets( 10, 10, 10, 10 );
+		//accountPanel.getLayoutManager().setAlignment( "center" );
+		secondContainer.add( accountPanel, GUI.BorderLayout.NORTH );
+
+		local accountTitle = mCS.accountTitle <- ::GUI.Label("New to Planet Forever - IceEE?");
+		accountTitle.setFont( GUI.Font( "Maiandra", 32 ) );
+		accountTitle.setTextAlignment(0.5, 0.5);
+		accountPanel.add( accountTitle );
+	
+		local accountButtonContainer = mCS.accountButtonContainer <- GUI.Container();
+		accountButtonContainer.setLayoutManager( GUI.BoxLayoutV() );
+		accountButtonContainer.getLayoutManager().setExpand( false );
+		accountPanel.add(accountButtonContainer);
+
+		local accountButton = mCS.accountButton <- ::GUI.BigButton( "Create Account" );
+		accountButton.setReleaseMessage("onCreateAccount");
+		accountButtonContainer.add( accountButton );
+		
+		local thirdContainer = mCS.thirdContainer <- ::GUI.Container();
+		thirdContainer.setLayoutManager( GUI.BorderLayout() );
+		thirdContainer.setInsets( 10, 0, 0, 0 );
+		secondContainer.add( thirdContainer, GUI.BorderLayout.SOUTH );
+
+		local loginPanel = mCS.loginPanel <- ::GUI.Panel();		
+		loginPanel.setLayoutManager( GUI.BorderLayout() );
+		loginPanel.setSize( 400, 160 );
+		loginPanel.setInsets( 10, 10, 10, 10 );
+		loginPanel.setFont( GUI.Font( "Maiandra", 32 ) );
+		thirdContainer.add( loginPanel, GUI.BorderLayout.SOUTH );
+		
+		local accountText = "Username:";
+		
+		// The username/password grid
+		local loginGrid = mCS.loginGrid <- ::GUI.Container();
+		loginGrid.setLayoutManager( GUI.GridLayout(2,2) );
+		loginGrid.getLayoutManager().setColumns(
+				Math.max(
+					loginPanel.getFont().getTextMetrics(accountText).width,
+					loginPanel.getFont().getTextMetrics("Password:").width) + 5,
+				"*");
+		loginGrid.getLayoutManager().setGaps(6,6);
+		
+		local usernameLabel = mCS.usernameLabel <- ::GUI.Label(accountText);
+		loginGrid.add(usernameLabel, GUI.GridLayout.FILL);
+
+		local usernameInput = mCS.usernameInput <- ::GUI.InputArea();
+		loginGrid.add( usernameInput );
+
+		local passwordLabel = mCS.passwordLabel <- ::GUI.Label("Password:");
+		loginGrid.add(passwordLabel, GUI.GridLayout.FILL);
+
+		local passwordInput = mCS.passwordInput <- ::GUI.InputArea();
+		passwordInput.setPassword(true);
+		passwordInput.addActionListener(this);
+		loginGrid.add(passwordInput);
+		
+		local buttonContainer = mCS.buttonContainer <- ::GUI.Container();
+		buttonContainer.setLayoutManager( GUI.BorderLayout() );
+		buttonContainer.setInsets( 10, 0, 0, 0 );
+		
+		local loginButton = mCS.loginButton <- GUI.BigButton("Login");
+		loginButton.setReleaseMessage( "onLogin" );
+		buttonContainer.add( loginButton, GUI.BorderLayout.EAST );
+
+		local checkBoxContainer = mCS.checkBoxContainer <- GUI.Component()
+		checkBoxContainer.setLayoutManager( GUI.BoxLayout() );
+		checkBoxContainer.getLayoutManager().setExpand(false);
+		buttonContainer.add( checkBoxContainer, GUI.BorderLayout.WEST );
+
+		local checkBox = mCS.checkBox <- GUI.CheckBox();	
+		checkBoxContainer.add( checkBox );
+
+		local checkLabelContainer = mCS.checkLabelContainer <- GUI.Component();
+		checkLabelContainer.setLayoutManager( GUI.BoxLayout() )
+		checkLabelContainer.setInsets( 3, 0, 0, 0 );
+		checkBoxContainer.add( checkLabelContainer );
+		
+		local checkLabel = mCS.checkLabel <- GUI.Label("Remember Me");
+		checkLabel.setFont( GUI.Font( "Maiandra", 16 ) );
+		checkLabelContainer.add( checkLabel );
+				
+		loginPanel.add(loginGrid, GUI.BorderLayout.CENTER);
+		loginPanel.add(buttonContainer, GUI.BorderLayout.SOUTH);
+
+		mCS.loginButton.addActionListener( this );
+		mCS.accountButton.addActionListener( this );
+
+		local creds = ::Pref.get( "login.Credentials" );
+		if( creds != "" )
+		{			
+			local parts = Util.split( base64_decode( creds ), ":" );
+						
+			usernameInput.setText( parts[0] );
+			passwordInput.setText( parts[1] );
+			
+			checkBox.setChecked(true);
 		}
 
-		this.mCS.setTabOrderTarget(this.mCS);
-		this.mCS.setTabOrderTarget(this.mCS);
+		usernameInput.setTabOrderTarget( passwordInput );
+		passwordInput.setTabOrderTarget( usernameInput );	
 	}
 
 	function setNews( input )
@@ -271,7 +326,7 @@ class this.States.LoginState extends this.State
 			}
 		};
 		local txt = "";
-		req.open("GET", "http://www.eartheternal.com/in_game_news");
+		req.open("GET", "http://armouree.vm.bytemark.co.uk/iceee/in_game_news");
 		req.send(txt);
 	}
 
@@ -315,7 +370,7 @@ class this.States.LoginState extends this.State
 		}
 		else
 		{
-			this.System.openURL("http://www.eartheternal.com/affiliate?code=OneDownload");
+			this.System.openURL("http://iceee.servegame.com/Account.html");
 		}
 	}
 
@@ -356,7 +411,7 @@ class this.States.LoginState extends this.State
 	{
 		::_username = username;
 		::_password = password;
-		this.mConnectMessageState = this.States.MessageState("Connecting to Earth Eternal servers...", this.GUI.ConfirmationWindow.CANCEL, this.GUI.ProgressAnimation());
+		this.mConnectMessageState = this.States.MessageState("Connecting to Planet Forever servers...", this.GUI.ConfirmationWindow.CANCEL, this.GUI.ProgressAnimation());
 		this.States.push(this.mConnectMessageState);
 		local htmlComp = this.mConnectMessageState.getHTMLComp();
 		htmlComp.addActionListener(this);

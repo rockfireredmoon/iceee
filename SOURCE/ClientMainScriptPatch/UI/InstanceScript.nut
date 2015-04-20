@@ -135,7 +135,6 @@ class this.Screens.InstanceScript extends this.GUI.Frame
 		if (value && !this.isVisible())
 		{
 			this.mScript.setText("");
-			this.mScript.requestKeyboardFocus();
 			::_Connection.sendQuery("script.load", this, []);
 		}
 
@@ -165,7 +164,10 @@ class this.Screens.InstanceScript extends this.GUI.Frame
 				}
 			}
 			this.mScript.setText(str);
-			this.mScript.requestKeyboardFocus();
+			this.mScript.mCursorStart = 0;
+			this.mScript.mCursorEnd = 0;
+			this.mScript.buildRows();
+			this.mScript.updateCursorPosition();
 		}
 		else if (qa.query == "script.run" || qa.query == "script.kill" || qa.query == "script.save")
 		{		

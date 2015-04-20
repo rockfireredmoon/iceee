@@ -16,9 +16,9 @@
 
 #include "md5.hh"
 
-char *GetValueOfKey(MULTISTRING &extract, const char *key);  //External function
+//char *GetValueOfKey(MULTISTRING &extract, const char *key);  //External function
 
-extern char GAuxBuf[];
+//extern char GAuxBuf[];
 
 AccountManager g_AccountManager;
 
