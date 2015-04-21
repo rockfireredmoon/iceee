@@ -5540,6 +5540,11 @@ int SimulatorThread :: protected_CheckDistance(int creatureID)
 
 int SimulatorThread :: protected_CheckDistanceBetweenCreatures(CreatureInstance *sourceCreatureInst, int creatureID)
 {
+	return protected_CheckDistanceBetweenCreaturesFor(sourceCreatureInst, creatureID, INTERACT_RANGE);
+}
+
+int SimulatorThread :: protected_CheckDistanceBetweenCreaturesFor(CreatureInstance *sourceCreatureInst, int creatureID, int range)
+{
 	if(sourceCreatureInst == NULL)
 		return QueryErrorMsg::GENERIC;
 	if(sourceCreatureInst->actInst == NULL)
@@ -5549,7 +5554,7 @@ int SimulatorThread :: protected_CheckDistanceBetweenCreatures(CreatureInstance 
 	if(object == NULL)
 		return QueryErrorMsg::INVALIDOBJ;
 	int dist = sourceCreatureInst->actInst->GetBoxRange(sourceCreatureInst, object);
-	if(dist > INTERACT_RANGE)
+	if(dist > range)
 		return QueryErrorMsg::OUTOFRANGE;
 
 	return 0;
@@ -11004,7 +11009,7 @@ int SimulatorThread :: OfferLoot(int mode, ActiveLootContainer *loot, ActivePart
 	for(uint i = 0 ; i < party->mMemberList.size(); i++) {
 		if(receivingCreature == NULL || party->mMemberList[i].mCreatureID != receivingCreature->CreatureID) {
 			// Only send offer to players in range
-			int distCheck = protected_CheckDistanceBetweenCreatures(party->mMemberList[i].mCreaturePtr, CID);
+			int distCheck = protected_CheckDistanceBetweenCreaturesFor(party->mMemberList[i].mCreaturePtr, CID, PARTY_LOOT_RANGE);
 			if(distCheck == 0)
 			{
 				LootTag tag = party->TagItem(ItemID, party->mMemberList[i].mCreaturePtr->CreatureID, CID);

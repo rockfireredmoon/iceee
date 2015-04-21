@@ -329,6 +329,7 @@ public:
 	int handle_query_go(void);
 
 	int protected_CheckDistanceBetweenCreatures(CreatureInstance *sourceCreatureInst, int creatureID);
+	int protected_CheckDistanceBetweenCreaturesFor(CreatureInstance *sourceCreatureInst, int creatureID, int range);
 	int protected_CheckDistance(int creatureID);
 	int protected_helper_query_loot_item(void);
 	bool HasPropEditPermission(SceneryObject *prop, float x = 0.0F, float z = 0.0F);
@@ -512,6 +513,7 @@ public:
 	static const int DefaultWarpDistance = 200;
 
 	static const int INTERACT_RANGE = 50;
+	static const int PARTY_LOOT_RANGE = 500;
 
 	QuestScript::QuestScriptPlayer questScript;
 
