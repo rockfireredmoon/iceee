@@ -180,6 +180,7 @@ public:
 	void SendPlaySound(const char *assetPackage, const char *soundFile);
 	void LoadAccountCharacters(AccountData *accPtr);
 	void JoinGuild(GuildDefinition *gDef, int startValour);
+	int OfferLoot(int mode, ActiveLootContainer *loot, ActiveParty *party, CreatureInstance *receivingCreature, int ItemID, bool needOrGreed, int CID, int conIndex);
 	void CheckIfLootReadyToDistribute(ActiveLootContainer *loot, LootTag *lootTag);
 	PartyMember * RollForPartyLoot(ActiveParty *party, std::set<int> creatureIds, const char *rollType, int itemId);
 	
@@ -327,6 +328,7 @@ public:
 	int handle_query_instance(void);
 	int handle_query_go(void);
 
+	int protected_CheckDistanceBetweenCreatures(CreatureInstance *sourceCreatureInst, int creatureID);
 	int protected_CheckDistance(int creatureID);
 	int protected_helper_query_loot_item(void);
 	bool HasPropEditPermission(SceneryObject *prop, float x = 0.0F, float z = 0.0F);

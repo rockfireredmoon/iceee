@@ -636,6 +636,34 @@ LootTag * ActiveParty :: GetTag(int itemId, int creatureId)
 	return NULL;
 }
 
+void ActiveParty :: RemoveTagsForLootCreatureId(int lootCreatureId)
+{
+	std::map<int, LootTag>::iterator itr = lootTags.begin();
+	while (itr != lootTags.end()) {
+		if (itr->second.lootCreatureId == lootCreatureId) {
+			std::map<int, LootTag>::iterator toErase = itr;
+			++itr;
+			lootTags.erase(toErase);
+		} else {
+			++itr;
+		}
+	}
+}
+
+void ActiveParty :: RemoveCreatureTags(int itemId, int creatureId)
+{
+	std::map<int, LootTag>::iterator itr = lootTags.begin();
+	while (itr != lootTags.end()) {
+		if (itr->second.itemId == itemId && itr->second.creatureId == creatureId) {
+			std::map<int, LootTag>::iterator toErase = itr;
+			++itr;
+			lootTags.erase(toErase);
+		} else {
+			++itr;
+		}
+	}
+}
+
 LootTag ActiveParty :: TagItem(int itemId, int creatureId, int lootCreatureId)
 {
 	LootTag tag;

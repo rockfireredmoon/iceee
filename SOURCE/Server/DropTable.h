@@ -26,12 +26,15 @@ public:
 	ActiveLootContainer(int creatureID);
 	~ActiveLootContainer();
 	int CreatureID;              //The owner of this container.  Ex: The ID of the dead creature.
+	int robinID;				 //The ID of the current round robin for party loot
+	bool stage2;				 //Whether the looting is on it's second stage (i.e. robin offered/leader offered)
 	std::vector<int> lootableID; //List of CreatureDefIDs that may loot this creature.
 	std::vector<int> itemList;   //List of items left in this container.
 	std::map<int, std::set<int> > greeded;   //Map of ItemIDs and CreatureIDs that have greeded this loot.
 	std::map<int, std::set<int> > needed;    //Map of ItemIDs and CreatureIDs that have needed this loot.
 	std::map<int, std::set<int> > passed;    //Map of ItemIDs and CreatureIDs that have passed on this loot.
 
+	void RemoveAllRolls();
 	bool IsPassed(int itemId, int creatureId);
 	bool IsNeeded(int itemId, int creatureId);
 	int CountNeeds(int itemId);
@@ -39,6 +42,8 @@ public:
 	bool HasAnyDecided(int creatureID);
 	bool Decided(int creatureID, std::map<int, std::set<int> > map);
 	void AddItem(int itemID);
+	void RemoveCreatureRolls(int itemId, int creatureId);
+	void RemoveCreatureRollsFromMap(int itemId, int creatureId, std::map<int, std::set<int> > map);
 	int CountDecisions(int itemId);
 	int Count(int itemId, std::map<int, int> map);
 	void Greed(int itemId, int creatureId);

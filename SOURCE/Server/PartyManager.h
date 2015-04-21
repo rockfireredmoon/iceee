@@ -69,6 +69,8 @@ public:
 	std::map<int, LootTag> lootTags;
 	ActiveParty();
 	LootTag * GetTag(int itemId, int creatureId);
+	void RemoveTagsForLootCreatureId(int lootCreatureId);
+	void RemoveCreatureTags(int itemId, int creatureId);
 	LootTag TagItem(int itemId, int creatureId, int lootCreatureId);
 	void Dump();
 	void AddMember(CreatureInstance* member);

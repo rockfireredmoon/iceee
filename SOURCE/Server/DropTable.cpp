@@ -90,11 +90,13 @@ namespace LootSystem
 ActiveLootContainer :: ActiveLootContainer()
 {
 	CreatureID = 0;
+	robinID = 0;
 }
 
 ActiveLootContainer :: ActiveLootContainer(int creatureID)
 {
 	CreatureID = creatureID;
+	robinID = 0;
 }
 
 ActiveLootContainer :: ~ActiveLootContainer()
@@ -190,6 +192,7 @@ int ActiveLootContainer :: GetItemCount(void) const
 void ActiveLootContainer :: CopyLootContents(const ActiveLootContainer &source)
 {
 	CreatureID = source.CreatureID;
+	robinID = source.robinID;
 	itemList.assign(source.itemList.begin(), source.itemList.end());
 	greeded.clear();
 	greeded.insert(source.greeded.begin(), source.greeded.end());
@@ -273,6 +276,27 @@ int ActiveLootContainer :: Count(int itemId, std::map<int, int> map)
 		}
 	}
 	return count;
+}
+
+void ActiveLootContainer :: RemoveAllRolls()
+{
+	greeded.clear();
+	needed.clear();
+	passed.clear();
+}
+
+void ActiveLootContainer :: RemoveCreatureRolls(int itemId, int creatureId)
+{
+	RemoveCreatureRollsFromMap(itemId, creatureId, greeded);
+	RemoveCreatureRollsFromMap(itemId, creatureId, needed);
+	RemoveCreatureRollsFromMap(itemId, creatureId, passed);
+}
+
+
+void ActiveLootContainer ::  RemoveCreatureRollsFromMap(int itemId, int creatureId, std::map<int, std::set<int> > map)
+{
+	if(map.count(itemId) > 0)
+		map[itemId].erase(map[itemId].find(creatureId));
 }
 
 WorldLootContainer :: WorldLootContainer()
