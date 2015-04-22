@@ -183,7 +183,9 @@ public:
 	int OfferLoot(int mode, ActiveLootContainer *loot, ActiveParty *party, CreatureInstance *receivingCreature, int ItemID, bool needOrGreed, int CID, int conIndex);
 	void CheckIfLootReadyToDistribute(ActiveLootContainer *loot, LootTag *lootTag);
 	PartyMember * RollForPartyLoot(ActiveParty *party, std::set<int> creatureIds, const char *rollType, int itemId);
-	
+
+	int handle_query_account_info(void);
+	int handle_query_statuseffect_set(void);
 	void handle_query_persona_list(void);
 	int handle_query_persona_create(void);
 	int handle_query_persona_delete(void);
@@ -513,7 +515,7 @@ public:
 	static const int DefaultWarpDistance = 200;
 
 	static const int INTERACT_RANGE = 50;
-	static const int PARTY_LOOT_RANGE = 500;
+	static const int PARTY_LOOT_RANGE =1920;
 
 	QuestScript::QuestScriptPlayer questScript;
 

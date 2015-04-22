@@ -91,12 +91,14 @@ ActiveLootContainer :: ActiveLootContainer()
 {
 	CreatureID = 0;
 	robinID = 0;
+	stage2 = false;
 }
 
 ActiveLootContainer :: ActiveLootContainer(int creatureID)
 {
 	CreatureID = creatureID;
 	robinID = 0;
+	stage2 = false;
 }
 
 ActiveLootContainer :: ~ActiveLootContainer()
@@ -752,6 +754,9 @@ void DropTableManager :: RollDrops(const DropRollParameters& params, std::vector
 			while(needed > 0)
 			{
 				dropRoll = randint_32bit(1, max);
+
+				// TODO - REMOVE THIS REMOVE THIS  REMOVE THIS  REMOVE THIS
+//				dropRoll = 0;
 				if(dropRoll <= needed)
 				{
 					itemIndex = randint(0, filter[i]->mItemList.size() - 1);
@@ -765,6 +770,9 @@ void DropTableManager :: RollDrops(const DropRollParameters& params, std::vector
 				}
 				*/
 				needed -= max;
+
+				// TODO REMOVE THIS  REMOVE THIS REMOVE THIS REMOVE THIS
+//				break;
 			}
 		}
 	}

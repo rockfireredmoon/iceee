@@ -6096,7 +6096,9 @@ void CreatureInstance :: AddValour(int GuildDefID, int amount)
 
 	GuildDefinition *guildDef = g_GuildManager.GetGuildDefinition(GuildDefID);
 	GuildRankObject *currentRank = g_GuildManager.GetRank(CreatureDefID, GuildDefID);
+	g_CharacterManager.GetThread("CharacterData::AddValour");
 	charPtr->AddValour(GuildDefID, amount);
+	g_CharacterManager.ReleaseThread();
 	GuildRankObject *newRank = g_GuildManager.GetRank(CreatureDefID, GuildDefID);
 	if(newRank == NULL) {
 		g_Log.AddMessageFormat("[ERROR] Huh, no new rank in guild, joined %d to %d", CreatureDefID, GuildDefID);
