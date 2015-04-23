@@ -2684,22 +2684,11 @@ ID=1107789
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=Untitled
 Pos=2334.69,600,1429.12
-Orient=0,-0.0898785,0,0.995953
+Orient=0,-0.0799146,0,0.996802
 Scale=1,1,1
 spawnPackage=56_wacr_FullMix
 links_count=1
 link=1107790,0
-
-[ENTRY]
-ID=1107790
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=Untitled
-Pos=2332.55,600,1502.88
-Orient=0,0,0,1
-Scale=1,1,1
-spawnPackage=56_wacr_FullMix
-links_count=1
-link=1107789,0
 
 [ENTRY]
 ID=1107792
@@ -2936,23 +2925,12 @@ link=1107818,1
 ID=1107820
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=Untitled
-Pos=2858.83,600,1273
+Pos=2858.83,600,1282.91
 Orient=0,-0.999991,0,-0.00420359
 Scale=1,1,1
 spawnPackage=56_wacr_CryptMix
 links_count=1
 link=1107821,0
-
-[ENTRY]
-ID=1107821
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=Untitled
-Pos=2857.27,600,1293.94
-Orient=0,0.997495,0,0.0707372
-Scale=1,1,1
-spawnPackage=56_wacr_CryptMix
-links_count=1
-link=1107820,0
 
 [ENTRY]
 ID=1107853
@@ -5136,7 +5114,7 @@ Scale=1,1,1
 ID=1127167
 Asset=Prop-Battlefield1#Prop-Battlefield_Skeleton1
 Name=Untitled
-Pos=2094.32,660,709.713
+Pos=2094.32,660,708.979
 Orient=0,0,0,1
 Scale=1,1,1
 
@@ -5171,4 +5149,21 @@ Name=Untitled
 Pos=3726.09,600,1853.71
 Orient=0,0,0,1
 Scale=1.2,1.2,1.2
+
+[ENTRY]
+ID=1127371
+Asset=Prop-Crypt_Props#Prop-Crypt_CoffinB
+Name=Untitled
+Pos=3428.55,605.429,832.646
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
+ID=1127372
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=2333.81,600,1493.64
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=56_wacr_FullMix
 

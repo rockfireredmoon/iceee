@@ -23,7 +23,7 @@ link=1291845790,1
 [ENTRY]
 ID=1126661
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=427.923,300,625.581
 Orient=0,0,0,1
 Scale=1,1,1
@@ -35,7 +35,7 @@ link=1126663,1
 [ENTRY]
 ID=1126662
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=600.822,300,673.06
 Orient=0,0,0,1
 Scale=1,1,1
@@ -46,7 +46,7 @@ link=1126666,1
 [ENTRY]
 ID=1126663
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=271.759,300,674.867
 Orient=0,0,0,1
 Scale=1,1,1
@@ -57,7 +57,7 @@ link=1126664,1
 [ENTRY]
 ID=1126664
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=280.389,300,874.887
 Orient=0,0,0,1
 Scale=1,1,1
@@ -68,7 +68,7 @@ link=1126663,1
 [ENTRY]
 ID=1126665
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=420.23,300,915.93
 Orient=0,0,0,1
 Scale=1,1,1
@@ -79,7 +79,7 @@ link=1126664,1
 [ENTRY]
 ID=1126666
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=597.603,300,864.345
 Orient=0,0,0,1
 Scale=1,1,1
@@ -90,18 +90,22 @@ link=1126665,1
 [ENTRY]
 ID=1126667
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=585.01,300,746.046
 Orient=0,0.997495,0,0.0707372
 Scale=1,1,1
+spawnPackage=77_lighthouse_madvine_5
+maxActive=0
 
 [ENTRY]
 ID=1126668
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=263.362,300,743.008
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=77_lighthouse_madvine_5
+maxActive=0
 
 [ENTRY]
 ID=1291845633

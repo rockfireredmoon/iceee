@@ -2748,7 +2748,7 @@ link=1107787,1
 [ENTRY]
 ID=1127165
 Asset=Prop-Marker1#Prop-Corpse_Marker
-Name=
+Name=Untitled
 Pos=1354.69,0,186.095
 Orient=0,0,0,1
 Scale=1,1,1
@@ -2756,7 +2756,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1127169
 Asset=Prop-Battlefield1#Prop-Battlefield_Skeleton3
-Name=
+Name=Untitled
 Pos=1227.28,600,1320.91
 Orient=0,0,0,1
 Scale=1.5,1.5,1.5
@@ -2764,8 +2764,8 @@ Scale=1.5,1.5,1.5
 [ENTRY]
 ID=1127170
 Asset=Prop-Battlefield1#Prop-Battlefield_Skeleton4
-Name=
+Name=Untitled
 Pos=857.32,600,889.783
 Orient=0,0,0,1
-Scale=1,1,1
+Scale=1.5,1.5,1.5
 

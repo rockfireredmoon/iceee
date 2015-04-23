@@ -2814,7 +2814,8 @@ Name=Untitled
 Pos=2124.38,514.602,3182.86
 Orient=0,0.681639,0,0.731689
 Scale=1,1,1
-maxActive=5
+spawnPackage=56_wacr_ForgottenSoul
+maxActive=0
 links_count=1
 link=1127131,1
 
@@ -2825,7 +2826,8 @@ Name=Untitled
 Pos=2340.99,514.285,2959.89
 Orient=0,0.990105,0,0.140332
 Scale=1,1,1
-maxActive=5
+spawnPackage=56_wacr_ForgottenSoul
+maxActive=0
 links_count=1
 link=1127132,1
 
@@ -2848,7 +2850,7 @@ Scale=1.5,1.5,1.5
 [ENTRY]
 ID=1127175
 Asset=Prop-Battlefield1#Prop-Battlefield_Skeleton1
-Name=
+Name=Untitled
 Pos=3812.58,600,2556.41
 Orient=0,0.761095,0,0.64864
 Scale=1,1,1

@@ -805,7 +805,8 @@ Name=Untitled
 Pos=1903.4,514.213,2960.43
 Orient=0,0,0,1
 Scale=1,1,1
-maxActive=5
+spawnPackage=56_wacr_ForgottenSoul
+maxActive=0
 links_count=1
 link=1127135,1
 
