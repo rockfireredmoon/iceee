@@ -10670,6 +10670,7 @@ channeling_break_chance=500
 appearance=n4:{["sk"]={["tips"]="FF7E00",["lava"]="FF0000",["stone"]="000000"},["c"]="Horde-Wolf_Flame_Goliath",["sz"]="2.5"}
 level=23
 display_name=Magmange
+rarity=1
 profession=2
 creature_category=Animal
 ai_package=melee_creature_brave_6
@@ -12179,6 +12180,7 @@ channeling_break_chance=500
 appearance=n4:{["sk"]={["eye_socket"]="555555",["spots"]="2A2A2A",["eye"]="FFFD00",["shell"]="943208",["underbelly"]="55540D"},["c"]="Horde-Giant_Crab",["sz"]="2.5"}
 level=28
 display_name=Dreadclaw
+rarity=1
 profession=2
 creature_category=Animal
 ai_package=melee_creature_brave_6
@@ -53683,7 +53685,7 @@ display_name=Darkhoof
 sub_name=Elder Unikorn
 profession=2
 creature_category=Magical
-rarity=1
+rarity=2
 ai_package=melee_creature_brave_6
 total_size=14
 
@@ -74093,7 +74095,7 @@ profession=1
 creature_category=Divine
 ;ai_package=example
 ai_package=mage_fire_brave_6
-rarity=0
+rarity=3
 total_size=60
 
 [ENTRY]
