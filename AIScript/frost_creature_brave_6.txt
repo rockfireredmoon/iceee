@@ -1,4 +1,5 @@
 #name frost_creature_brave_6
+#queue_jumps call
 
 ; 5057 - Frozen, 5 will, buff
 ; 5157 - Assault, 3 might, add 1 mcharge
@@ -47,4 +48,8 @@ if var = 0
   wait 2000
   goto waitfortarget
 endif
+return
+
+:tryMelee
+use 32766
 return

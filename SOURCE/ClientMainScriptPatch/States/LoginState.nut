@@ -88,7 +88,7 @@ class this.States.LoginState extends this.State
 			}
 
 		});
-		this.mMenu.forParents <- ::GUI.BigButton("For Furries");
+		this.mMenu.forParents <- ::GUI.BigButton("For Testers");
 		this.mMenu.container.add(this.mMenu.forParents);
 		this.mMenu.forParents.addActionListener({
 			function onActionPerformed( b )

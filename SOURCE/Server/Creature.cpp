@@ -6693,11 +6693,9 @@ void CreatureInstance :: SetLevel(int newLevel)
 	if(actInst == NULL)
 		return;
 
-	char buffer[256];
 	char sbuffer[256];
-	Util::SafeFormat(buffer, sizeof(buffer), "%s is now level %d!", css.display_name, css.level);
-	int wpos = PrepExt_Broadcast(buffer, sbuffer);
-	actInst->LSendToAllSimulator(buffer, wpos, -1);
+	Util::SafeFormat(sbuffer, sizeof(sbuffer), "%s is now level %d!", css.display_name, css.level);
+	simulatorPtr->BroadcastMessage(sbuffer);
 
 	std::vector<short> statList;
 	RemoveStatModsBySource(BuffSource::ITEM);
@@ -6738,7 +6736,7 @@ void CreatureInstance :: SetLevel(int newLevel)
 	if(charPtr != NULL)
 		charPtr->OnLevelChange(newLevel);
 
-	wpos = PrepExt_SendSpecificStats(GSendBuf, this, statList);
+	int wpos = PrepExt_SendSpecificStats(GSendBuf, this, statList);
 	//actInst->LSendToOneSimulator(GSendBuf, wpos, simulatorPtr);
 	actInst->LSendToLocalSimulator(GSendBuf, wpos, CurrentX, CurrentZ);
 }

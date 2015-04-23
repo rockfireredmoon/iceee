@@ -180,6 +180,8 @@ public:
 	void SendPlaySound(const char *assetPackage, const char *soundFile);
 	void LoadAccountCharacters(AccountData *accPtr);
 	void JoinGuild(GuildDefinition *gDef, int startValour);
+
+	void ResetLoot(ActiveLootContainer *loot, ActiveParty *party, LootTag *lootTag);
 	int OfferLoot(int mode, ActiveLootContainer *loot, ActiveParty *party, CreatureInstance *receivingCreature, int ItemID, bool needOrGreed, int CID, int conIndex);
 	void CheckIfLootReadyToDistribute(ActiveLootContainer *loot, LootTag *lootTag);
 	PartyMember * RollForPartyLoot(ActiveParty *party, std::set<int> creatureIds, const char *rollType, int itemId);

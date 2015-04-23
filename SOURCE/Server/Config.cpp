@@ -372,6 +372,8 @@ void LoadConfig(const char *filename)
 				g_Config.SceneryAuditDelay = lfr.BlockToIntC(1);
 			else if(strcmp(NameBlock, "SceneryAuditAllow") == 0)
 				g_Config.SceneryAuditAllow = lfr.BlockToBoolC(1);
+			else if(strcmp(NameBlock, "MegaLootParty") == 0)
+				g_Config.MegaLootParty = lfr.BlockToBoolC(1);
 			else if(strcmp(NameBlock, "LootMaxRandomizedLevel") == 0)
 				g_Config.LootMaxRandomizedLevel = lfr.BlockToIntC(1);
 			else if(strcmp(NameBlock, "LootMaxRandomizedSpecialLevel") == 0)

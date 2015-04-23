@@ -700,6 +700,7 @@ void DropTableManager :: ResolveAutotable(void)
 //item ID to the output vector.
 void DropTableManager :: RollDrops(const DropRollParameters& params, std::vector<int>& output)
 {
+
 	//The creature table has highest priority and can override level drops.
 	CCREATURE::iterator crit = mCreature.find(params.mCreatureDefID);
 
@@ -738,41 +739,44 @@ void DropTableManager :: RollDrops(const DropRollParameters& params, std::vector
 		queryResults.Filter(DropTableManager::CLASS_FLAG_EXPLICIT, filter);
 		for(size_t i = 0; i < filter.size(); i++)
 		{
-			int max = 0, needed = 0;
-			if(filter[i]->mRarity == DropSetDefinition::CHANCE_PERCENT)
-			{
-				needed = filter[i]->mChance;
-				max = 100;
+			if(g_Config.MegaLootParty) {
+				itemIndex = randint(0, filter[i]->mItemList.size() - 1);
+				output.push_back(filter[i]->mItemList[itemIndex]);
 			}
-			else if(filter[i]->mRarity == DropSetDefinition::CHANCE_SHARES)
+			else
 			{
-				needed = LootSystem::ComputeSharesByFraction(filter[i]->mChance);
-				max = LootSystem::DROP_MAX_SHARES;
-			}
-			//If the chance uses a percent above 100, it can roll multiple times.
-			//For for any other percent, or for drops based on shares, it will only roll one.
-			while(needed > 0)
-			{
-				dropRoll = randint_32bit(1, max);
-
-				// TODO - REMOVE THIS REMOVE THIS  REMOVE THIS  REMOVE THIS
-//				dropRoll = 0;
-				if(dropRoll <= needed)
+				int max = 0, needed = 0;
+				if(filter[i]->mRarity == DropSetDefinition::CHANCE_PERCENT)
 				{
-					itemIndex = randint(0, filter[i]->mItemList.size() - 1);
-					output.push_back(filter[i]->mItemList[itemIndex]);
+					needed = filter[i]->mChance;
+					max = 100;
+				}
+				else if(filter[i]->mRarity == DropSetDefinition::CHANCE_SHARES)
+				{
+					needed = LootSystem::ComputeSharesByFraction(filter[i]->mChance);
+					max = LootSystem::DROP_MAX_SHARES;
 				}
 
-				/*  DEBUGGING
-				else
+				//If the chance uses a percent above 100, it can roll multiple times.
+				//For for any other percent, or for drops based on shares, it will only roll one.
+				while(needed > 0)
 				{
-					g_Log.AddMessageFormat("Failed roll (%d,%d) [%s]: %d / %d (need: %d)", filter[i]->mRarity, filter[i]->mChance, filter[i]->mName.c_str(), dropRoll, max, needed);
-				}
-				*/
-				needed -= max;
+					dropRoll = randint_32bit(1, max);
 
-				// TODO REMOVE THIS  REMOVE THIS REMOVE THIS REMOVE THIS
-//				break;
+					if(dropRoll <= needed)
+					{
+						itemIndex = randint(0, filter[i]->mItemList.size() - 1);
+						output.push_back(filter[i]->mItemList[itemIndex]);
+					}
+
+					/*  DEBUGGING
+					else
+					{
+						g_Log.AddMessageFormat("Failed roll (%d,%d) [%s]: %d / %d (need: %d)", filter[i]->mRarity, filter[i]->mChance, filter[i]->mName.c_str(), dropRoll, max, needed);
+					}
+					*/
+					needed -= max;
+				}
 			}
 		}
 	}
