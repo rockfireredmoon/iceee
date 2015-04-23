@@ -7,6 +7,8 @@
 #include "DebugProfiler.h"
 #include "Globals.h"
 #include <stdlib.h>
+#include <stdio.h>
+#include <errno.h>
 
 SceneryManager g_SceneryManager;
 GlobalSceneryVars g_SceneryVars;
@@ -565,7 +567,7 @@ bool SceneryPage::SaveFile(const char *fileName)
 	FILE *output = fopen(fileName, "wb");
 	if(output == NULL)
 	{
-		g_Log.AddMessageFormat("[ERROR] Could not open file for writing [%s]", fileName);
+		g_Log.AddMessageFormat("[ERROR] Could not open file for writing [%s] - %d. %s", fileName, errno, strerror(errno));
 		return false;
 	}
 

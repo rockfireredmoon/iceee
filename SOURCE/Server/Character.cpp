@@ -1056,6 +1056,12 @@ int InventoryManager :: VerifyEquipItem(ItemDef *itemDef, int destSlot, int char
 			break;
 		}
 		break;
+	case ItemEquipType::RED_CHARM: targetEquipSlot = ItemEquipSlot::RED_CHARM; break;
+	case ItemEquipType::BLUE_CHARM: targetEquipSlot = ItemEquipSlot::RED_CHARM; break;
+	case ItemEquipType::PURPLE_CHARM: targetEquipSlot = ItemEquipSlot::PURPLE_CHARM; break;
+	case ItemEquipType::YELLOW_CHARM: targetEquipSlot = ItemEquipSlot::YELLOW_CHARM; break;
+	case ItemEquipType::GREEN_CHARM: targetEquipSlot = ItemEquipSlot::GREEN_CHARM; break;
+	case ItemEquipType::ORANGE_CHARM: targetEquipSlot = ItemEquipSlot::ORANGE_CHARM; break;
 	case ItemEquipType::ARMOR_SHIELD: targetEquipSlot = ItemEquipSlot::WEAPON_OFF_HAND; break;
 	case ItemEquipType::ARMOR_HEAD: targetEquipSlot = ItemEquipSlot::ARMOR_HEAD; break;
 	case ItemEquipType::ARMOR_NECK: targetEquipSlot = ItemEquipSlot::ARMOR_NECK; break;

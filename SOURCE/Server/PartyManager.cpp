@@ -261,6 +261,13 @@ int PartyManager :: GetNextPartyID(void)
 }
 
 ActiveParty :: ActiveParty() {
+	mLeaderDefID = 0;
+	mLeaderID = 0;
+	mLeaderName = "";
+	mPartyID = 0;
+	mNextToGetLoot = 0;
+	mLootFlags = 0;
+	mLootMode = FREE_FOR_ALL;
 	lootTags.clear();
 }
 
@@ -636,11 +643,11 @@ LootTag * ActiveParty :: GetTag(int itemId, int creatureId)
 	return NULL;
 }
 
-void ActiveParty :: RemoveTagsForLootCreatureId(int lootCreatureId)
+void ActiveParty :: RemoveTagsForLootCreatureId(int lootCreatureId, int itemId)
 {
 	std::map<int, LootTag>::iterator itr = lootTags.begin();
 	while (itr != lootTags.end()) {
-		if (itr->second.lootCreatureId == lootCreatureId) {
+		if (itr->second.lootCreatureId == lootCreatureId && itr->second.itemId == itemId) {
 			std::map<int, LootTag>::iterator toErase = itr;
 			++itr;
 			lootTags.erase(toErase);
@@ -648,6 +655,17 @@ void ActiveParty :: RemoveTagsForLootCreatureId(int lootCreatureId)
 			++itr;
 		}
 	}
+}
+
+bool ActiveParty:: HasTags(int itemId)
+{
+	typedef std::map<int, LootTag>::iterator it_type;
+	for(it_type iterator = lootTags.begin(); iterator != lootTags.end(); ++iterator) {
+		if(iterator->second.itemId == itemId) {
+			return true;
+		}
+	}
+	return false;
 }
 
 void ActiveParty :: RemoveCreatureTags(int itemId, int creatureId)

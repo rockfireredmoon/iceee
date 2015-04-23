@@ -1,18 +1,130 @@
+#name Lighthouse_Instance
+#speed 25
+#queue_jumps call
+#flag report_all 1
+
+#location LOC_BOSS_ROOM 228 491 643 980
+
+#symbol CDEF_MADVINE_ADD1 7782
+#symbol CDEF_MADVINE_ADD2 7783
+#symbol CDEF_ANGLOR 1995
+
+set CID_ANGLOR 0
+set CID_MADVINE_ADD1 0
+set CID_MADVINE_ADD2 0
+set STAGE 0
+
 ; Anglor Dren (boss spawn)
 
 :init
-set killcount 0
-end
+	set killcount 0
+		queue_event "eventAnglorSearch" 1000
+
+:main
+	exec_queue
+	wait 100
+	goto main
+
+:eventAnglorSearch
+	if CID_ANGLOR != 0
+		return
+	endif
+	scan_npc_cid_for LOC_BOSS_ROOM RESULTARRAY CDEF_ANGLOR
+	iarrsize RESULTARRAY TEMPSIZE
+	if TEMPSIZE > 0
+		iarrvalue RESULTARRAY 0 CID_ANGLOR
+		queue_event "eventAnglorHealth" 2000
+	else
+		queue_event "eventAnglorSearch" 5000
+	endif
+	return
+
+:eventAdd1Search
+	scan_npc_cid_for LOC_BOSS_ROOM RESULTARRAY CDEF_MADVINE_ADD1
+	iarrsize RESULTARRAY TEMPSIZE
+	if TEMPSIZE > 0
+		iarrvalue RESULTARRAY 0 CID_MADVINE_ADD1
+		get_target CID_ANGLOR TARGET
+		if TARGET != 0
+			set_target CID_MADVINE_ADD1 TARGET
+			ai_script_jump CID_MADVINE_ADD1 "tryMelee"
+		endif
+	else
+		queue_event "eventAdd1Search" 5000
+	endif
+	return
+
+:eventAdd2Search
+	scan_npc_cid_for LOC_BOSS_ROOM RESULTARRAY CDEF_MADVINE_ADD2
+	iarrsize RESULTARRAY TEMPSIZE
+	if TEMPSIZE > 0
+		iarrvalue RESULTARRAY 0 CID_MADVINE_ADD2
+		get_target CID_ANGLOR TARGET
+		if TARGET != 0
+			set_target CID_MADVINE_ADD2 TARGET
+			ai_script_jump CID_MADVINE_ADD2 "tryMelee"
+		endif
+	else
+		queue_event "eventAdd2Search" 5000
+	endif
+	return
+
+:spawnAdd1
+	spawn_flag 1126667 CDEF_MADVINE_ADD1 32
+	queue_event "eventAdd1Search" 1000
+   	return
+
+:spawnAdd2
+	spawn_flag 1126668 CDEF_MADVINE_ADD2 32
+	queue_event "eventAdd2Search" 1000
+   	return
+
+:eventAnglorHealth
+	if CID_ANGLOR = 0
+		return
+	endif
+
+	if STAGE = 99
+		return
+	endif
+
+	get_health_percent CID_ANGLOR TEMP
+	
+	if STAGE = 0
+		if TEMP <= 80
+			call spawnAdd1
+			set STAGE 1
+		endif
+		queue_event "eventAnglorHealth" 3000
+		return
+	endif
+
+	 if STAGE = 1
+		if TEMP <= 60
+			call spawnAdd2
+			set STAGE 2
+		endif
+		queue_event "eventAnglorHealth" 3000
+		return
+	endif
+	;
+	; Queue another health check in 3 seconds
+	;
+	queue_event "eventAnglorHealth" 3000
+	return
 
 :onKill_1993
 :onKill_1994
-inc killcount
-if killcount >= 6
-  spawn 1291845744
-endif
-end
+	if CID_ANGLOR = 0
+		inc killcount
+		if killcount >= 6
+			spawn 1291845744
+		endif
+	endif
+	return
 
 ; Anglor Dren's chest
 :onKill_1995
-spawn 1291845811
-end
+	set STAGE 99
+	spawn 1291845811
+   	end

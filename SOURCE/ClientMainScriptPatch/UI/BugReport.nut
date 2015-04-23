@@ -145,19 +145,22 @@ class this.Screens.BugReport extends this.GUI.Frame
 		local req = this.XMLHttpRequest();
 		req.onreadystatechange = function () : ( category, summ, desc )
 		{
+			print("READY STATE: " + this.readyState);
+			print("REPSONSE: " + this.responseText);
+			print("STATUS: " + this.status);
+			print("READY STATE: " + this.readyState);
 			if (this.readyState == 4)
 			{
-				if (this.status == 200)
+				if (this.status == 201)
 				{
 					local text = this.responseText;
-					local indexStart = text.find("<value>") + 7;
-					local indexEnd = text.find("</value>");
-					local auth = text.slice(indexStart, indexEnd);
-					this.CreateJiraTask(auth, category, summ, desc);
+					local mb = ::GUI.MessageBox.show("Thank you! Your bug report has been submitted.");
+					mb.setOverlay("GUI/BugReportOverlay");
+					this.setVisible(false);
 				}
 				else
 				{
-					local mb = ::GUI.MessageBox.show("Cannot connect to the server. Please try again later.");
+					local mb = ::GUI.MessageBox.show("Cannot contact the server. Please try again. " + this.responseText + " /" + this.status);
 					mb.setOverlay("GUI/BugReportOverlay");
 				}
 
@@ -165,63 +168,28 @@ class this.Screens.BugReport extends this.GUI.Frame
 			}
 		};
 		
-		summ = stringReplace(summ, "\n", "\\n");
-		summ = stringReplace(summ, "\"", "\\\"");
-		desc = stringReplace(desc, "\n", "\\n");
-		desc = stringReplace(desc, "\"", "\\\"");
+		summ = _prepare(summ);
+		desc = _prepare("Category: " + category + "\n\n" + desc);
 		
 		local txt = "{\n" + 
 			" \"title\": \"" + summ + "\",\n" + 
-			" \"body\": \"Category: " + category + "\n\n" + desc + "\",\n" + 
+			" \"body\": \" + desc "\",\n" + 
 			" \"labels\": [ \"bug\" ]\n" +
 			"}\n";
 		req.setRequestHeader("Content-Type", "application/json");
 		req.setRequestHeader("Authorization", "token 5d296bbcc111e6bdbb3a15beaeb53170fc560748");
-		req.open("POST", "http://api.github.com/repos/rockfireredmoon/issues");
+		req.open("POST", "http://api.github.com/repos/rockfireredmoon/iceee/issues");
+		print("REQ: " + txt);
 		req.send(txt);
-		this.setVisible(false);
-	}
-	
-	function stringReplace(string, original, replacement)
-	{
-	  // make a regexp that will match the substring to be replaced
-	  //
-	  local expression = regexp(original);
-	
-	  local result = "";
-	  local position = 0;
-	
-	  // find the first match
-	  //
-	  local captures = expression.capture(string);
-	
-	  while (captures != null)
-	  {
-	    foreach (i, capture in captures)
-	    {
-	      // copy from the current position to the start of the match
-	      //
-	      result += string.slice(position, capture.begin);
-	
-	      // add the replacement substring instead of the original
-	      //
-	      result += replacement;
-	
-	      position = capture.end;
-	    }
-	
-	    // find the next match
-	    //
-	    captures = expression.capture(string, position);
-	  }
-	
-	  // add any remaining part of the string after the last match
-	  //
-	  result += string.slice(position);
-	
-	  return result;
 	}
 
+	function _prepare(text) {
+		text = this.Util.replace(text, "\r\n", "\\n");
+		text = this.Util.replace(text, "\n", "\\n");
+		text = this.Util.replace(text, "\"", "\\\"");
+		return text;
+	}
+	
 	function setVisible( value )
 	{
 		if (value && !this.isVisible())
@@ -234,31 +202,5 @@ class this.Screens.BugReport extends this.GUI.Frame
 		this.GUI.Frame.setVisible(value);
 	}
 
-}
-
-function CreateJiraTask( auth, category, summ, desc )
-{
-	local req = this.XMLHttpRequest();
-	req.onreadystatechange = function ()
-	{
-		if (this.readyState == 4)
-		{
-			if (this.status == 200)
-			{
-				local mb = ::GUI.MessageBox.show("Thank you! Your bug report has been submitted.");
-				mb.setOverlay("GUI/BugReportOverlay");
-			}
-			else
-			{
-				local mb = ::GUI.MessageBox.show("Cannot connect to the server. Please try again later.");
-				mb.setOverlay("GUI/BugReportOverlay");
-			}
-		}
-	};
-	local text = "Client Version: " + (this.Util.isDevMode() == false ? this.gVersion : "Dev") + "\n" + "Username: " + ::_username + "\n" + "Creature ID: " + (::_avatar != null ? ::_avatar.getID() : "(no creature ID)") + "\n" + "CreatureDef ID: " + (::_avatar != null ? ::_avatar.getCreatureDef().getID() : "(no creature def)") + "\n" + "Persona Name: " + (::_avatar != null ? ::_avatar.getName() : "(no name)") + "\n" + "Position: " + (::_avatar != null ? ::_avatar.getPosition().x + ", " + ::_avatar.getPosition().y + ", " + ::_avatar.getPosition().z : "(no position)") + "\n" + "Zone Def: " + ::_sceneObjectManager.getCurrentZoneDefID().tostring() + "\n" + "Zone ID: " + ::_sceneObjectManager.getCurrentZoneID().tostring() + "\n\n" + desc;
-	local txt = "<?xml version=\"1.0\"?>\n" + "<methodCall>\n" + "\t<methodName>jira1.createIssue</methodName>\n" + "\t<params>\n" + "\t\t<param>\n" + "\t\t\t<value><string>" + auth + "</string></value>\n" + "\t\t</param>\n" + "\t\t<param>\n" + "\t\t\t<value>\n" + "\t\t\t\t<struct>\n" + "\t\t\t\t\t<member>\n" + "\t\t\t\t\t\t<name>project</name>\n" + "\t\t\t\t\t\t<value><string>BUG</string></value>\n" + "\t\t\t\t\t</member>\n" + "\t\t\t\t\t<member>\n" + "\t\t\t\t\t\t<name>type</name>\n" + "\t\t\t\t\t\t<value><int>1</int></value>\n" + "\t\t\t\t\t</member>\n" + "\t\t\t\t\t<member>\n" + "\t\t\t\t\t\t<name>summary</name>\n" + "\t\t\t\t\t\t<value><string> [" + category + "]BUG: " + summ + "</string></value>\n" + "\t\t\t\t\t</member>\n" + "\t\t\t\t\t<member>\n" + "\t\t\t\t\t\t<name>assignee</name>\n" + "\t\t\t\t\t\t<value><string>admin</string></value>\n" + "\t\t\t\t\t</member>\n" + "\t\t\t\t\t<member>\n" + "\t\t\t\t\t\t<name>priority</name>\n" + "\t\t\t\t\t\t<value><string>3</string></value>\n" + "\t\t\t\t\t</member>\n" + "\t\t\t\t\t<member>\n" + "\t\t\t\t\t\t<name>description</name>\n" + "\t\t\t\t\t\t<value><string>" + text + "</string></value>\n" + "\t\t\t\t\t</member>\n" + "\t\t\t\t</struct>\n" + "\t\t\t</value>\n" + "\t\t</param>\n" + "\t</params>\n" + "</methodCall>";
-	req.setRequestHeader("Content-Type", "text/xml");
-	req.open("POST", "https://jira.sparkplaymedia.com/rpc/xmlrpc");
-	req.send(txt);
 }
 

@@ -166,6 +166,7 @@ public:
 	int SceneryAuditDelay;          //Time, in MS, to delay pending scenery audits from being written.
 	bool SceneryAuditAllow;         //If false, scenery audits are globally disabled.
 
+	bool MegaLootParty;					//For fun and testing, when 1, everything always drops, usually more than once.
 	int LootMaxRandomizedLevel;         //The randomizer cannot generate loot above this level for typical mobs.
 	int LootMaxRandomizedSpecialLevel;  //The randomizer cannot generate loot above this level for "special" mobs
 	bool LootNamedMobSpecial;           //If true, named mobs are considered for the special item level cap.
