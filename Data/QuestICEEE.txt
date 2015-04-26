@@ -122,7 +122,6 @@ QuestGiverID=1200
 QuestEnderID=1200
 sGiver=58436,790,66951,5002
 sEnder=58436,790,66951,5002
-Heroism=10
 
 [ACT]
 Act.BodyText=Collect ten Organ-Culler Organs, Limb-Culler Limbs and Bone-Culler Bones at the undead camps west of Redeemer's Hall.
