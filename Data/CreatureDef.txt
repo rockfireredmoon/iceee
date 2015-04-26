@@ -375,6 +375,7 @@ level=15
 display_name=Priestess Claira
 sub_name=Thornbringer
 profession=5
+rarity=1
 creature_category=Mortal
 ai_package=druid_mystic_brave_6
 total_size=5
@@ -864,6 +865,7 @@ will_regen=1
 might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
+
 
 
 channeling_break_chance=500
@@ -2122,6 +2124,7 @@ ID=83
 strength=41
 dexterity=34
 constitution=41
+
 psyche=28
 spirit=28
 base_damage_melee=41
@@ -2246,6 +2249,7 @@ offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
 appearance=c2:{["a"]=[{["type"]="Armor-Cloth-Low1-Helmet",["node"]="helmet",["colors"]=["6A2269","7F7F7F","8C771E"]},{["type"]="Item-Wand-Medium2",["node"]="right_hand"}],["c"]={["boots"]={["type"]="Armor-Cloth-Mid1",["colors"]=["6c087f","947d20","949494","a68456","54573b"]},["chest"]={["type"]="Armor-Cloth-Mid1",["colors"]=["6c087f","947d20","949494","a68456","54573b"]},["leggings"]={["type"]="Armor-Cloth-Mid1",["colors"]=["6c087f","947d20","949494","a68456","54573b"]},["belt"]={["type"]="Armor-Cloth-Mid1",["colors"]=["6c087f","947d20","949494","a68456","54573b"]},["collar"]={["type"]="Armor-Cloth-Mid1",["colors"]=["6c087f","947d20","949494","a68456","54573b"]},["arms"]={["type"]="Armor-Cloth-Mid1",["colors"]=["6c087f","947d20","949494","a68456","54573b"]}},["b"]="n",["sk"]={["feet"]="AA54A9",["eye_lid"]="C6AC92",["ear_tips"]="000000",["base"]="AA54A9",["inner_ear"]="B59A7F",["eye"]="FF00FD",["eye_white"]="FFEAD5",["nose"]="7F7F7F",["chest"]="949494"},["sz"]="1.2",["h"]=0,["g"]="f",["r"]="b"}
+
 level=21
 display_name=Summoner
 sub_name=Faerie-Sworn
@@ -2806,6 +2810,7 @@ creature_category=Magical
 ai_package=example
 
 [ENTRY]
+
 ID=109
 strength=35
 dexterity=29
@@ -8181,6 +8186,7 @@ ID=347
 strength=92
 dexterity=79
 constitution=92
+
 psyche=63
 spirit=63
 base_damage_melee=112
@@ -9674,6 +9680,7 @@ base_damage_melee=45
 damage_resist_melee=1148
 damage_resist_fire=656
 damage_resist_frost=656
+
 damage_resist_mystic=656
 damage_resist_death=656
 will_regen=1
@@ -10454,6 +10461,7 @@ ai_package=melee_creature_brave_6
 [ENTRY]
 ID=435
 strength=66
+
 dexterity=66
 constitution=94
 psyche=81
@@ -10698,6 +10706,7 @@ casting_setback_chance=500
 channeling_break_chance=500
 appearance=c2:{["a"]=[{["type"]="Armor-Cloth-Epic3-Helmet",["node"]="helmet",["colors"]=["8F8577","3F3634","944D0D","940000"]},{["type"]="Item-1hMace-Medium5",["node"]="right_hand"}],["c"]={["leggings"]={["type"]="Armor-Medium-High1",["colors"]=["947d07","67553b","947d07","f7941d","f7941d","4c3930"]},["collar"]={["type"]="Armor-Medium-Low1",["colors"]=["67553b","947d07","f7941d","6d7f69"]},["belt"]={["type"]="Armor-Light-Mid4",["colors"]=["f7941d","67553b","6d7f69","947d07","7c6c63"]},["gloves"]={["type"]="Armor-Medium-Low1",["colors"]=["67553b","f7941d","6d7f69","947d07"]}},["b"]="n",["sk"]={["hands_feet"]="6A6A6A",["goatee"]="AA0F0F",["eye_white"]="000000",["snout"]="7F2222",["horns"]="E96A6A",["face_highlight"]="AAAAAA",["eye"]="940D0D",["hoves"]="7F7F7F",["eye_lid"]="7F2222",["base"]="7F1100"},["sz"]="1.3",["h"]=1,["g"]="m",["r"]="c"}
 level=25
+rarity=1
 display_name=Frietz Splithoof
 sub_name=Witchdoctor
 profession=5
@@ -12704,6 +12713,7 @@ casting_setback_chance=500
 channeling_break_chance=500
 appearance=c2:{["a"]=[{["type"]="Armor-Medium-Mid3-Right_Pauldron",["node"]="right_shoulder",["colors"]=["E9C533","3B7699","DEC972","B3665E","B1B39F","DFBA6A"]},{["type"]="Armor-Medium-Mid3-Left_Pauldron",["node"]="left_shoulder",["colors"]=["FFD737","3B7699","DEC972","B3665E","B1B39F","DFBA6A"]},{["type"]="Item-2hSword-Medium4",["node"]="right_hand"}],["c"]={["boots"]={["type"]="Armor-Light-Low1",["colors"]=["e97a14","934c13","6a6a6a","94702e"]},["chest"]={["type"]="Armor-Heavy-Mid3",["colors"]=["934c13","e97a14","6a6a6a","94702e","feb22b","2c4661"]},["arms"]={["type"]="Armor-Heavy-Mid3",["colors"]=["e97a14","934c13","6a6a6a","94702e"]},["leggings"]={["type"]="Armor-Light-Low1",["colors"]=["e97a14","934c13","6a6a6a","94702e"]},["collar"]={["type"]="Armor-Heavy-Low2",["colors"]=["e97a14","934c13","6a6a6a","94702e"]},["belt"]={["type"]="Armor-Light-Low1",["colors"]=["e97a14","934c13","6a6a6a","94702e"]},["gloves"]={["type"]="Armor-Heavy-Mid3",["colors"]=["6a6a6a","934c13","e97a14","94702e"]}},["b"]="n",["sk"]={["shoulders_head"]="D4D4D4",["hands_feet"]="D4D4D4",["eye_white"]="C5C4C4",["snout"]="887C60",["base"]="887C60",["nails"]="2F2313",["eye"]="91A220",["inner_ear"]="550000",["nose"]="887C60",["outer_ear"]="675E48"},["sz"]="1.5",["h"]=1,["g"]="m",["r"]="f"}
 level=28
+rarity=1
 display_name=Baron VonGruber
 profession=2
 creature_category=Mortal
@@ -13391,6 +13401,7 @@ strength=47
 dexterity=41
 constitution=47
 psyche=32
+
 spirit=32
 base_damage_melee=57
 damage_resist_melee=1380
@@ -13963,6 +13974,7 @@ damage_resist_mystic=1280
 damage_resist_death=1280
 base_health=231
 will_regen=1
+
 might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
@@ -15788,6 +15800,7 @@ will_regen=1
 might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
+
 channeling_break_chance=500
 appearance=n4:{["sk"]={["fur3"]="BFA129",["fur2"]="946624",["fur1"]="7F570B",["beak"]="BFA129",["feathers"]="BFA129",["legs"]="D79475",["eye"]="FF1717",["eyeball"]="00033F",["crest"]="D43939"},["c"]="Horde-Guinea_Fowl",["sz"]="1.2"}
 level=34
@@ -21060,6 +21073,7 @@ ai_package=custom_henge_glow
 
 [ENTRY]
 ID=881
+
 Effects=INVINCIBLE,HENGE,IS_USABLE,UNATTACKABLE
 will_regen=1
 might_regen=1
@@ -25189,6 +25203,7 @@ appearance=n4:{["sk"]={["vines"]="1C2711",["base"]="776B50",["eye"]="FF0000",["h
 level=33
 display_name=Sinoak
 profession=5
+rarity=1
 creature_category=Magical
 ai_package=melee_creature_brave_6
 total_size=2
@@ -26433,6 +26448,7 @@ will_regen=1
 might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
+
 channeling_break_chance=500
 appearance=c2:{["a"]=[{["type"]="Armor-Cloth-High1-Left_Pauldron",["node"]="left_shoulder",["colors"]=["7613AA","7F0000","5A6268"]},{["type"]="Armor-Cloth-High1-Right_Pauldron",["node"]="right_shoulder",["colors"]=["7613AA","7F0000","5A6268"]}],["c"]={["boots"]={["type"]="Armor-Heavy-Mid2",["colors"]=["7613aa","2a2a2a","7f0000"]},["chest"]={["type"]="Armor-Light-Epic2",["colors"]=["7613aa","2a2a2a","7f0000","7f0000","fdd823","fdd823"]},["arms"]={["type"]="Armor-Heavy-Mid2",["colors"]=["7613aa","2a2a2a","7f0000"]},["leggings"]={["type"]="Armor-Cloth-Mid5",["colors"]=["7613aa","2a2a2a","7f0000","7f0000","6c6c6c"]},["collar"]={["type"]="Armor-Heavy-Mid2",["colors"]=["7613aa","2a2a2a","7f0000"]},["belt"]={["type"]="Armor-Heavy-Mid2",["colors"]=["7613aa","2a2a2a","7f0000"]},["gloves"]={["type"]="Armor-Heavy-Mid2",["colors"]=["7613aa","2a2a2a","7f0000"]}},["b"]="n",["sk"]={["fingers_hooves"]="B69E89",["snout"]="D3C2AB",["eye_symbol"]="BCAD98",["base"]="CF9B65",["horns"]="B08557",["eye"]="99CBD9",["eye_white"]="FFFFFF",["nose"]="69502D",["inner_ear"]="E7D4BB"},["sz"]="1",["h"]=1,["g"]="m",["r"]="h"}
 level=41
@@ -41015,6 +41031,7 @@ damage_resist_melee=802
 damage_resist_fire=458
 damage_resist_frost=458
 damage_resist_mystic=458
+
 damage_resist_death=458
 will_regen=1
 might_regen=1
@@ -41358,6 +41375,7 @@ damage_resist_melee=802
 damage_resist_fire=458
 damage_resist_frost=458
 damage_resist_mystic=458
+
 damage_resist_death=458
 will_regen=1
 might_regen=1
@@ -41830,6 +41848,7 @@ sub_name=Knights of Avalon
 profession=2
 creature_category=Mortal
 ai_package=knight_brave_6
+
 total_size=5
 
 [ENTRY]
@@ -42347,6 +42366,7 @@ sub_name=Weapon Merchant
 profession=2
 creature_category=Mortal
 rarity=2
+
 ai_package=example
 total_size=5
 
@@ -45767,7 +45787,7 @@ ID=1995
 ExtraData=namedmob=1
 strength=9
 dexterity=11
-constitution=9
+constitution=18
 psyche=14
 spirit=14
 base_damage_melee=9
@@ -47547,6 +47567,7 @@ damage_resist_death=287
 will_regen=1
 might_regen=1
 offhand_weapon_damage=500
+
 casting_setback_chance=500
 channeling_break_chance=500
 appearance=n4:{["sk"]={["plates"]="555555",["skin"]="6A5917",["eye"]="E9E800",["nose_glow"]="6A3030",["nails"]="555555",["nose"]="6A0000"},["c"]="Horde-Vulcan_Walker",["sz"]="2.5"}
@@ -48101,6 +48122,7 @@ rarity=2
 ai_package=example
 
 [ENTRY]
+
 defHints=2
 ID=2087
 strength=92
@@ -52232,6 +52254,7 @@ strength=27
 dexterity=31
 constitution=41
 psyche=38
+
 spirit=50
 base_damage_melee=52
 damage_resist_melee=1300
@@ -58301,6 +58324,7 @@ constitution=41
 psyche=33
 spirit=33
 base_damage_melee=53
+
 damage_resist_melee=1342
 damage_resist_fire=767
 damage_resist_frost=767
@@ -60436,6 +60460,7 @@ total_size=19.2
 [ENTRY]
 ID=2649
 ExtraData=namedmob=1
+
 strength=122
 dexterity=163
 constitution=116
@@ -60757,6 +60782,7 @@ total_size=12
 ID=2661
 strength=55
 dexterity=71
+
 constitution=53
 psyche=42
 spirit=42
@@ -69737,6 +69763,7 @@ profession=1
 creature_category=Inanimate
 ai_package=nothing
 
+
 [ENTRY]
 ID=3112
 will_regen=1
@@ -74381,7 +74408,7 @@ sub_name=The Plague Bringer
 profession=4
 creature_category=Demon
 ai_package=mage_frost_brave_6
-rarity=0
+rarity=3
 total_size=8
 
 [ENTRY]
