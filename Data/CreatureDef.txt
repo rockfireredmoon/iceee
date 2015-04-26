@@ -28195,7 +28195,7 @@ level=41
 display_name=Limb-Culler
 profession=3
 creature_category=Unliving
-ai_package=example
+ai_package=rogue_brave_6
 
 [ENTRY]
 ID=1205

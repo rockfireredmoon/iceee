@@ -1078,7 +1078,11 @@ void RunMessageListQueue(void)
 			SetText = true;
 		}
 #else //
+	#ifdef WINDOWS_PLATFORM
 		printf("%s\r\n", buf);
+	#else
+		printf("%s\n", buf);
+	#endif
 #endif //USE_WINDOWS_GUI
 
 	}
