@@ -98,19 +98,7 @@ Obj.0.markerLocations=44487.2,224.503,65150,81;
 [ENTRY]
 ID=1100
 Title=Behemoth Assembly
-BodyText=The Lady Jana Burnfell was very effective with her curse against the Outcasts, causing generations of infertility and an almost-dead race. What you will note here in Grunes Tal that we have the largest population of Outcasts you will ever encounter - just step outside Redeemer's Hall and you will be greeted with undead, many of which were alive at the time of the Burnfells.
-
-Forget your notions of shuffling zombies, and remember that these are conniving predators. It will help keep you alive!
-
-We have questioned a few unlucky enough to have been captured, and discovered that they are now laboring under Abidan to construct a Behemoth - a massive zombie constructed of spare parts.
-
-We have nothing to defend against this - unless we construct a behemoth of our own!
-
-There are three camps west of here, inhabited by several types of zombies: Limb-Cullers, Organ-Cullers, and Bone-Cullers. We know that Abidan is grooming these particular undead for their "good parts" to construct a Behemoth.
-
-Travel to these undead camps, and harvest ten each of used limbs, organs and bones from the Organ-Cullers, Bone-Cullers and Limb-Cullers.
-
-We will not only hinder Abidan's efforts, but may create a powerful ally in the process! 
+BodyText=The Lady Jana Burnfell was very effective with her curse against the Outcasts, causing generations of infertility and an almost-dead race. What you will note here in Grunes Tal that we have the largest population of Outcasts you will ever encounter - just step outside Redeemer's Hall and you will be greeted with undead, many of which were alive at the time of the Burnfells. Forget your notions of shuffling zombies, and remember that these are conniving predators. It will help keep you alive! We have questioned a few unlucky enough to have been captured, and discovered that they are now laboring under Abidan to construct a Behemoth - a massive zombie constructed of spare parts. We have nothing to defend against this - unless we construct a behemoth of our own! There are three camps west of here, inhabited by several types of zombies: Limb-Cullers, Organ-Cullers, and Bone-Cullers. We know that Abidan is grooming these particular undead for their "good parts" to construct a Behemoth.Travel to these undead camps, and harvest ten each of used limbs, organs and bones from the Organ-Cullers, Bone-Cullers and Limb-Cullers. We will not only hinder Abidan's efforts, but may create a powerful ally in the process! 
 Level=41
 Suggested=41
 Exp=7232
@@ -122,7 +110,7 @@ QuestGiverID=1200
 QuestEnderID=1200
 sGiver=58436,790,66951,5002
 sEnder=58436,790,66951,5002
-
+Heroism=10
 [ACT]
 Act.BodyText=Collect ten Organ-Culler Organs, Limb-Culler Limbs and Bone-Culler Bones at the undead camps west of Redeemer's Hall.
 Obj.0.type=kill
@@ -152,7 +140,6 @@ Obj.2.myCreatureDefID=
 Obj.2.myItemID=
 Obj.2.completeText=
 Obj.2.markerLocations=55666,912.313,65599.5,5002;
-
 [ACT]
 Act.BodyText=Return to Moris Banner with the body parts.
 Obj.0.type=talk
@@ -162,5 +149,5 @@ Obj.0.description=Return to Moris Banner
 Obj.0.complete=0
 Obj.0.myCreatureDefID=1200
 Obj.0.myItemID=
-Obj.0.completeText=Yes, these will do nicely! Excellent work."
+Obj.0.completeText=Yes, these will do nicely! Excellent work.
 Obj.0.markerLocations=58436,790,66951,5002;
