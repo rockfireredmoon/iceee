@@ -1,17 +1,18 @@
 [ENTRY]
+ID=1127475
+Asset=Prop-Boulder_Scary#Prop-Boulder_Scary4
+Name=
+Pos=50259.9,682.814,66327.4
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
 ID=151028548
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=50847.8,780.315,66209
 Orient=0,0,0,1
 Scale=1,1,1
 links_count=1
 link=151028547,1
-
-[ENTRY]
-ID=151058514
-Asset=CL-UndeadBoulder6#CL-UndeadBoulder6
-Pos=50286.2,753.323,66312.2
-Orient=-0.166701,0.880726,0.0867228,0.434755
-Scale=1,1,1
-Flags=1
 
