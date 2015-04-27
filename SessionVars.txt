@@ -1,7 +1,0 @@
-; This file stores session settings and is automatically saved on exit.
-SceneryAdditive=0
-NextCharacterID=-400000000
-NextZoneID=5000
-NextAccountID=1
-NextVirtualItemID=5000000
-
