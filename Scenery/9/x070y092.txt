@@ -1,6 +1,7 @@
 [ENTRY]
 ID=151016993
 Asset=CL-Graveyard1#CL-Graveyard1
+Name=Untitled
 Pos=52630.8,559.54,69147
 Orient=0,0,0,1
 Scale=1.825,1.825,1.825
@@ -9,6 +10,7 @@ Flags=1
 [ENTRY]
 ID=151017035
 Asset=Prop-Crypt
+Name=Untitled
 Pos=52828.2,750.755,69476
 Orient=0,0,0.174108,0.984727
 Scale=3,3,3
@@ -17,6 +19,7 @@ Flags=1
 [ENTRY]
 ID=151017036
 Asset=Prop-Dungeon_Entrance-Crypt#Prop-Dungeon_Entrance-Crypt
+Name=Untitled
 Pos=52563.2,930.946,69678
 Orient=0,0.955101,0,0.296281
 Scale=1.225,1.225,1.225
@@ -25,14 +28,16 @@ Flags=1
 [ENTRY]
 ID=151017037
 Asset=Prop-Crypt
+Name=Untitled
 Pos=52917.8,667.53,69293
-Orient=-8.935e-008,0.232843,2.38905e-007,0.972514
+Orient=-8.935e-08,0.232843,2.38905e-07,0.972514
 Scale=3.35,3.35,3.35
 Flags=1
 
 [ENTRY]
 ID=151017038
 Asset=Prop-Crypt_Statue1#Prop-Crypt_Statue1
+Name=Untitled
 Pos=52527.8,708.751,69429
 Orient=0,-0.757842,0,0.652438
 Scale=2.075,2.075,2.075
@@ -41,6 +46,7 @@ Flags=1
 [ENTRY]
 ID=151017039
 Asset=Prop-Crypt_Coffin
+Name=Untitled
 Pos=52538,559.413,69222
 Orient=0,-0.947396,0,0.320063
 Scale=1,1,1
@@ -49,6 +55,7 @@ Flags=1
 [ENTRY]
 ID=151026648
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=52515.4,547.942,69002
 Orient=0,0,0,1
 Scale=1,1,1
@@ -59,72 +66,72 @@ link=151026649,1
 [ENTRY]
 ID=151026670
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=52704.8,561.32,69163
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_irh_risenCorpse_r_42
-outerRadius=1
 
 [ENTRY]
 ID=151026671
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=52513,551.461,69086
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_irh_risenCorpse_r_42
-outerRadius=1
 
 [ENTRY]
 ID=151026674
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=52743,567.849,69001
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_irh_risenCorpse_r_42
-outerRadius=1
 
 [ENTRY]
 ID=151026706
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=52574.3,552.377,69072
 Orient=0,0.741297,0,0.671178
 Scale=1,1,1
 spawnPackage=11_irh_cryptDigger
-outerRadius=1
 
 [ENTRY]
 ID=151026775
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=52804.6,830.359,69455
 Orient=0,0.699716,0,0.714421
 Scale=1,1,1
 spawnPackage=11_irh_fleshScavenger_r_42
-outerRadius=1
 
 [ENTRY]
 ID=151028050
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=52674.4,556.754,69071
 Orient=0,0.710353,0,0.703845
 Scale=1,1,1
 spawnPackage=11_rh_02_constructAltar
-outerRadius=1
 
 [ENTRY]
 ID=151028053
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=52624.7,554.845,69091
 Orient=0,0.659385,0,0.751806
 Scale=1,1,1
 spawnPackage=11_rh_02_quiltedConstruct_k_41
-outerRadius=1
 
 [ENTRY]
 ID=151028274
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=53099.6,620.636,69034
 Orient=0,0.114747,0,0.993395
 Scale=1,1,1
 spawnPackage=11_irh_vampiderCamp_42_43
-outerRadius=1
 

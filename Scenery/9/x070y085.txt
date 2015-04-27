@@ -1,6 +1,7 @@
 [ENTRY]
 ID=151017110
 Asset=CL-UndeadTree1#CL-UndeadTree1
+Name=Untitled
 Pos=52746.3,789.964,64433
 Orient=0,0,0,1
 Scale=1.725,1.725,1.725
@@ -8,6 +9,7 @@ Scale=1.725,1.725,1.725
 [ENTRY]
 ID=151017111
 Asset=Prop-Burnt_Pine1
+Name=Untitled
 Pos=52618.1,809.907,64485
 Orient=0.00998971,0.00044984,0.0449825,0.998938
 Scale=3.85,3.85,3.85
@@ -16,15 +18,16 @@ Flags=1
 [ENTRY]
 ID=151028363
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=53147.3,789.321,64425
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_irh_risenCorpse_r_42
-outerRadius=10
 
 [ENTRY]
 ID=151028372
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=52665.7,860.044,64267
 Orient=0,0,0,1
 Scale=1,1,1
@@ -34,6 +37,7 @@ link=151028371,1
 [ENTRY]
 ID=151059496
 Asset=CL-UndeadBoulder3#CL-UndeadBoulder3
+Name=Untitled
 Pos=52920.1,379.37,63824.1
 Orient=0,0,0,1
 Scale=1.75,1.75,1.75

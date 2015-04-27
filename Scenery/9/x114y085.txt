@@ -1,0 +1,16 @@
+[ENTRY]
+ID=1105070
+Asset=Snowy Field
+Name=
+Pos=85766.9,186.088,64042.5
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
+ID=1105073
+Asset=Snowy Pine Forest
+Name=
+Pos=85888,215.918,64316.3
+Orient=0,-0.99794,0,-0.0641596
+Scale=1,1,1
+

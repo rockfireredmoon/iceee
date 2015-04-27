@@ -1,0 +1,16 @@
+[ENTRY]
+ID=1105089
+Asset=Cav-Room_Wall?ATS=ATS-Cave_Cold
+Name=
+Pos=86397.1,195.086,62692.4
+Orient=0,0.720831,0,0.693111
+Scale=5,5,5
+
+[ENTRY]
+ID=1105094
+Asset=Cav-Room_Wall?ATS=ATS-Cave_Cold
+Name=
+Pos=86399.7,123.553,62736.5
+Orient=0,-0.710353,0,0.703845
+Scale=5.4,5.4,5.4
+

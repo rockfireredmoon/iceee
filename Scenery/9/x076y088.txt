@@ -1,6 +1,7 @@
 [ENTRY]
 ID=151015089
 Asset=CL-UndeadTree1#CL-UndeadTree1
+Name=Untitled
 Pos=57568.2,613.056,66101
 Orient=0,0,0,1
 Scale=1,1,1

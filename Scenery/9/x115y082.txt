@@ -1,0 +1,8 @@
+[ENTRY]
+ID=1105091
+Asset=Cav-Room_Wall?ATS=ATS-Cave_Cold
+Name=
+Pos=86358.5,197.802,61804.6
+Orient=0,0.710353,0,0.703845
+Scale=5,5,5
+

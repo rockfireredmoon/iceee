@@ -1,6 +1,7 @@
 [ENTRY]
 ID=151016371
 Asset=CL-UndeadBoulder2#CL-UndeadBoulder2
+Name=Untitled
 Pos=59001.6,1110.32,64629
 Orient=0,0.29552,0,0.955337
 Scale=1,1,1
@@ -8,6 +9,7 @@ Scale=1,1,1
 [ENTRY]
 ID=151016372
 Asset=CL-UndeadBoulder4
+Name=Untitled
 Pos=59161.7,1110.32,64732
 Orient=0,0,0,1
 Scale=1,1,1
@@ -15,6 +17,7 @@ Scale=1,1,1
 [ENTRY]
 ID=151016419
 Asset=Prop-Bush-Burnt_Large2
+Name=Untitled
 Pos=58632.2,1012.21,64643
 Orient=-0.15438,0,0,0.988012
 Scale=1.95,1.95,1.95
@@ -23,6 +26,7 @@ Flags=1
 [ENTRY]
 ID=151016424
 Asset=Prop-Bush-Burnt_Small1
+Name=Untitled
 Pos=58626.6,1005.96,64533
 Orient=0,0,0,1
 Scale=1,1,1
@@ -30,6 +34,7 @@ Scale=1,1,1
 [ENTRY]
 ID=151016515
 Asset=Prop-Scarecrow
+Name=Untitled
 Pos=58561.2,1006.62,64586
 Orient=0.00889775,-0.84492,-0.0120759,-0.534682
 Scale=3.425,3.425,3.425
@@ -37,6 +42,7 @@ Scale=3.425,3.425,3.425
 [ENTRY]
 ID=151027598
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=58676.5,1005.95,64587
 Orient=0,0,0,1
 Scale=1,1,1
@@ -47,6 +53,7 @@ link=151027603,1
 [ENTRY]
 ID=151027603
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=58620,1005.67,64618
 Orient=0,0,0,1
 Scale=1,1,1
@@ -58,38 +65,38 @@ link=151027649,1
 [ENTRY]
 ID=151027649
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=58573.9,1011.93,64655
 Orient=0,0.13459,0,0.990901
 Scale=1,1,1
+spawnPackage=11_dth_undeadFarmhand_r_43
 links_count=1
 link=151027603,1
-spawnPackage=11_dth_undeadFarmhand_r_43
-outerRadius=1
 
 [ENTRY]
 ID=151027669
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=58627.2,1005.94,64588
 Orient=0,0.164252,0,0.986418
 Scale=1,1,1
 spawnPackage=11_dth_spitefulLanterneye_m_42
-outerRadius=1
 
 [ENTRY]
 ID=151028815
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=59159,1000.63,65106
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_dth_wilds_41_42
-outerRadius=10
 
 [ENTRY]
 ID=151029003
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=58738.3,1006.08,64519
 Orient=0,0.773915,0,0.63329
 Scale=1,1,1
 spawnPackage=11_obji_rh_08_ale-BatteredGloom-Spite
-outerRadius=1
 

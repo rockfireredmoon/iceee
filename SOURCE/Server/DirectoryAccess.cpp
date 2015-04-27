@@ -165,6 +165,15 @@ const char* Platform::FixPaths(std::string &pathName)
 	return pathName.c_str();
 }
 
+bool Platform::FileExists(const char *path)
+{
+	FILE *input = fopen(path, "rb");
+	if(input == NULL)
+		return false;
+	fclose(input);
+	return true;
+}
+
 void Platform::MakeDirectory(const char *path)
 {
 #ifdef WINDOWS_PLATFORM

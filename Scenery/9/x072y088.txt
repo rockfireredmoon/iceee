@@ -1,17 +1,19 @@
 [ENTRY]
 ID=151028595
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=54627.8,802.197,66207
 Orient=0,0.995881,0,0.0906716
 Scale=0.9,0.9,0.9
+spawnPackage=11_dth_wilds_41_42
+loyaltyRadius=25
 links_count=1
 link=151028598,1
-spawnPackage=11_dth_wilds_41_42
-outerRadius=10
 
 [ENTRY]
 ID=151028598
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=54306.2,725.236,66215
 Orient=0,0,0,1
 Scale=1,1,1
@@ -22,7 +24,8 @@ link=151028602,1
 [ENTRY]
 ID=151028602
 Asset=Manipulator-PathNode
-Pos=54167.2,709.364,66503
+Name=Untitled
+Pos=54290,766.778,66485
 Orient=0,0,0,1
 Scale=1,1,1
 links_count=1
@@ -31,6 +34,7 @@ link=151028598,1
 [ENTRY]
 ID=151040921
 Asset=CL-UndeadTree3#CL-UndeadTree3
+Name=Untitled
 Pos=54429.9,725.183,66155
 Orient=0,0,0,1
 Scale=1,1,1

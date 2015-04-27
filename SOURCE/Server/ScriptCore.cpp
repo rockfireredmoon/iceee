@@ -3,11 +3,331 @@
 #include <stdarg.h>
 #include <string.h>
 #include "StringList.h"
+#include "Simulator.h"
+#include <sqrat.h>
 
 extern unsigned long g_ServerTime;
 
+
+void PrintFunc(HSQUIRRELVM v, const SQChar *s, ...) {
+	va_list vl;
+	va_start(vl, s);
+	vfprintf(stdout, s, vl);
+	va_end(vl);
+}
+
+void Errorfunc(HSQUIRRELVM v, const SQChar *s, ...) {
+	va_list vl;
+	va_start(vl, s);
+	vfprintf(stderr, s, vl);
+	va_end(vl);
+}
+
+
 namespace ScriptCore
 {
+	ScriptParam::ScriptParam() {
+		type = OPT_INT;
+		iValue = 0;
+		fValue = 0;
+		strValue = "";
+		bValue = false;
+	}
+	ScriptParam::ScriptParam(int v) {
+		type = OPT_INT;
+		iValue = v;
+		fValue = 0;
+		strValue = "";
+		bValue = false;
+	}
+	ScriptParam::ScriptParam(float v) {
+		type = OPT_FLOAT;
+		iValue = 0;
+		fValue = v;
+		strValue = "";
+		bValue = false;
+	}
+	ScriptParam::ScriptParam(std::string v) {
+		type = OPT_STR;
+		iValue = 0;
+		fValue = 0;
+		strValue = v;
+		bValue = false;
+	}
+	ScriptParam::ScriptParam(bool v) {
+		type = OPT_BOOL;
+		iValue = 0;
+		fValue = 0;
+		strValue = "";
+		bValue = v;
+	}
+
+	NutDef::NutDef() {
+		mSourceFile = "";
+		mFlags = 0;
+		queueCallStyle = 0;
+		queueExternalJumps = false;
+		scriptIdleSpeed = 0;
+		scriptSpeed = 1;
+	}
+
+	NutDef::~NutDef() {
+
+	}
+
+	void NutDef::ClearBase(void) {
+		scriptName.clear();
+		ClearDerived();
+	}
+
+	// Stub function, if additional members are defined in a derived class, then override this function
+	// to clear the new members.
+	void NutDef::ClearDerived(void) {
+	}
+
+	bool NutDef :: HasFlag(unsigned int flag)
+	{
+		return ((mFlags & flag) != 0);
+	}
+
+	void NutDef::Initialize(const char *sourceFile) {
+		g_Log.AddMessageFormat("Compiling Squirrel script '%s'", sourceFile);
+		mSourceFile = sourceFile;
+	}
+
+	NutPlayer::NutPlayer() {
+		vm = NULL;
+		def = NULL;
+		curInst = 0;
+		active = false;
+		nextFire = 0;
+		mHasScript = false;
+		mHalt = false;
+		int x= queue.size();
+
+		g_Log.AddMessageFormat(" '%d'", x);
+	}
+
+	NutPlayer::~NutPlayer() {
+		queue.clear();
+	}
+
+	void NutPlayer::Initialize(NutDef *defPtr) {
+		def = defPtr;
+		vm = sq_open(1024); // creates a VM with initial stack size 1024
+		mHalt = false;
+
+		// Register functions needed in scripts
+		RegisterFunctions();
+		sq_pushroottable(vm);
+		sqstd_register_stringlib(vm);
+		sq_pop(vm,1);
+
+		sqstd_seterrorhandlers(vm); //registers the default error handlers
+		sq_setprintfunc(vm, PrintFunc, Errorfunc); //sets the print function
+		sq_pushroottable(vm); //push the root table(were the globals of the script will be stored)
+		g_Log.AddMessageFormat("Processing Squirrel script '%s'", def->mSourceFile);
+		if (SQ_SUCCEEDED(sqstd_dofile(vm, _SC(def->mSourceFile), SQFalse, SQTrue))) // also prints syntax errors if any
+				{
+
+			mHasScript = true;
+			g_Log.AddMessageFormat("Squirrel script  %s processed", def->mSourceFile);
+			active = true;
+
+		}
+
+		sq_pop(vm, 1); //pops the root table
+		//sq_close(vm);
+
+		if(mHalt) {
+			HaltExecution();
+		}
+
+	}
+	// Override this to register functions for use in script
+	void NutPlayer::RegisterDerivedFunctions()	{
+	}
+
+	void NutPlayer::RegisterFunctions() {
+
+		Sqrat::DefaultVM::Set(vm);
+
+		Sqrat::Class<NutPlayer> core;
+		Sqrat::RootTable().Bind(_SC("Core"), core);
+
+		core.Func(_SC("queue"), &NutPlayer::Queue);
+		core.Func(_SC("broadcast"), &NutPlayer::Broadcast);
+		core.Func(_SC("halt"), &NutPlayer::Halt);
+
+		Sqrat::RootTable().SetInstance(_SC("core"), this);
+		RegisterDerivedFunctions();
+	}
+	void NutPlayer :: FullReset(void)
+	{
+		if(def == NULL)
+		{
+			active = false;
+			return;
+		}
+
+		curInst = 0;
+		active = true;
+		nextFire = 0;
+
+		// TODO somehow reset state of script
+
+		queue.clear();
+	}
+
+	void NutPlayer::RunScript(void) {
+	}
+
+	bool NutPlayer::Tick(void) {
+		if(active) {
+			ExecQueue();
+		}
+		return true;
+	}
+
+	void NutPlayer::Halt(void) {
+		mHalt = true;
+	}
+
+	bool NutPlayer::HasScript(void) {
+		return mHasScript;
+	}
+
+	bool NutPlayer::CanRunIdle(void) {
+		return true;
+	}
+
+	bool NutPlayer::JumpToLabel(const char *name) {
+		return true;
+	}
+
+	void NutPlayer :: HaltDerivedExecution(void)
+	{
+
+	}
+
+	void NutPlayer :: HaltExecution(void)
+	{
+		if(active) {
+			vector<ScriptParam> v;
+			mHalt = false;
+			HaltDerivedExecution();
+			RunFunction("onFinish", v);
+			active = false;
+			queue.clear();
+			sq_close(vm);
+			if(def->HasFlag(NutDef::FLAG_REPORT_END))
+				PrintMessage("Script [%s] has ended", def->scriptName.c_str());
+		}
+	}
+
+	bool NutPlayer::IsWaiting(void) {
+		return false;
+	}
+
+	bool NutPlayer::RunFunction(const char *name, std::vector<ScriptParam> parms) {
+		SQInteger top = sq_gettop(vm);
+		sq_pushroottable(vm);
+		sq_pushstring(vm,_SC(name),-1);
+		if(SQ_SUCCEEDED(sq_get(vm,-2))) {
+			sq_pushroottable(vm);
+			std::vector<ScriptCore::ScriptParam>::iterator it;
+			for(it = parms.begin(); it != parms.end(); ++it)
+			{
+				switch(it->type) {
+				case OPT_INT:
+					sq_pushinteger(vm,it->iValue);
+					break;
+				case OPT_FLOAT:
+					sq_pushfloat(vm,it->fValue);
+					break;
+				case OPT_STR:
+					sq_pushstring(vm,_SC(it->strValue.c_str()), it->strValue.size());
+					break;
+				default:
+					g_Log.AddMessageFormat("Unsupport parameter type for Squirrel script. %d", it->type);
+					break;
+				}
+			}
+			sq_call(vm,parms.size() + 1,SQFalse,SQTrue); //calls the function
+		}
+		sq_settop(vm,top);
+		if(mHalt) {
+			HaltExecution();
+			return false;
+		}
+		return true;
+	}
+
+
+	bool NutPlayer :: ExecQueue(void)
+	{
+		for(size_t i = 0; i < queue.size(); i++)
+		{
+			if(g_ServerTime >= queue[i].mFireTime)
+			{
+				vector<ScriptParam> p;
+				ulong currentFireTime = queue[i].mFireTime;
+				if(RunFunction(queue[i].mLabel.c_str(), p) && currentFireTime == queue[i].mFireTime && !queue.empty()) {
+					/* If the fire time changes while running this function, the function
+					 * queued the same event again
+					 */
+					queue.erase(queue.begin() + i);
+				}
+				return true;
+			}
+		}
+		return false;
+	}
+
+	void NutPlayer::Queue(const char *labelName, int fireDelay)
+	{
+		if(queue.size() >= MAX_QUEUE_SIZE)
+		{
+			PrintMessage("[ERROR] Script error: QueueEvent() list is full [script: %s]", def->scriptName.c_str());
+			return;
+		}
+
+		unsigned long fireTime = g_ServerTime + fireDelay;
+
+		//If a event label is already registered, just update the fire time.
+		for(size_t i = 0; i < queue.size(); i++)
+		{
+			if(queue[i].mLabel.compare(labelName) == 0)
+			{
+				queue[i].mFireTime = fireTime;
+				return;
+			}
+		}
+
+		//Not found, add a new event.
+		queue.push_back(ScriptEvent(labelName, fireTime));
+	}
+
+	void NutPlayer::Broadcast(const char *message)
+	{
+		g_SimulatorManager.BroadcastMessage(message);
+	}
+
+	void PrintMessage(const char *format, ...) {
+		char messageBuf[2048];
+
+		va_list args;
+		va_start(args, format);
+		vsnprintf(messageBuf, sizeof(messageBuf) - 1, format, args);
+		va_end(args);
+
+		g_Log.AddMessageFormat("%s", messageBuf);
+	}
+
+
+
+
+
 OpCodeInfo defCoreOpCode[] = {
 	{ "nop",          OP_NOP,          0, {OPT_NONE,   OPT_NONE,   OPT_NONE  }},
 	{ "end",          OP_END,          0, {OPT_NONE,   OPT_NONE,   OPT_NONE  }},
@@ -90,6 +410,10 @@ ScriptDef :: ScriptDef()
 	queueExternalJumps = false;
 	queueCallStyle = CALLSTYLE_CALL;
 	mFlags = FLAG_DEFAULT;
+}
+
+ScriptDef :: ~ScriptDef()
+{
 }
 
 void ScriptDef :: ClearBase(void)
@@ -178,6 +502,7 @@ void ScriptDef :: CompileLine(char *line, ScriptCompiler &compileData)
 					{
 					case OPT_VAR: PushOpCode(OP_PUSHVAR, vright, 0); break;
 					case OPT_INT: PushOpCode(OP_PUSHINT, vright, 0); break;
+					case OPT_FLOAT: PushOpCode(OP_PUSHFLOAT, vright, 0); break;
 					case OPT_APPINT: PushOpCode(OP_PUSHAPPVAR, vright, 0); break;
 					default: PrintMessage("Invalid operator [%s] for IF statement [%s line %d]", tokens[3].c_str(), compileData.mSourceFile, compileData.mLineNumber); valid = false; break;
 					}
@@ -186,6 +511,7 @@ void ScriptDef :: CompileLine(char *line, ScriptCompiler &compileData)
 					{
 					case OPT_VAR: PushOpCode(OP_PUSHVAR, vleft, 0); break;
 					case OPT_INT: PushOpCode(OP_PUSHINT, vleft, 0); break;
+					case OPT_FLOAT: PushOpCode(OP_PUSHFLOAT, vleft, 0); break;
 					case OPT_APPINT: PushOpCode(OP_PUSHAPPVAR, vleft, 0); break;
 					default: PrintMessage("Invalid operator [%s] for IF statement [%s line %d]", tokens[1].c_str(), compileData.mSourceFile, compileData.mLineNumber); valid = false; break;
 					}
@@ -392,6 +718,7 @@ bool ScriptDef :: Expect(const char *token, int paramType)
 	case OPT_LABEL: return (GetLabelIndex(token) >= 0);
 	case OPT_STR: return true;
 	case OPT_INT: return true;
+	case OPT_FLOAT: return true;
 	case OPT_VAR: return (GetVariableIndex(token) >= 0);
 	case OPT_APPINT: return true;
 	case OPT_INTSTK: return true;
@@ -410,6 +737,7 @@ const char* ScriptDef :: GetExpectedDetail(int paramType)
 	case OPT_LABEL: return "label";
 	case OPT_STR: return "string";
 	case OPT_INT: return "integer";
+	case OPT_FLOAT: return "float";
 	case OPT_VAR: return "variable";
 	case OPT_APPINT: return "property name";
 	case OPT_INTSTK: return "resolvable integer result";
@@ -431,6 +759,8 @@ int ScriptDef :: ResolveOperand(int paramType, const char *token, int &pushType)
 		return CreateLabel(token, -1);
 	case OPT_STR:
 		return CreateString(token);
+	case OPT_FLOAT:
+		return atof(token);
 	case OPT_INT:
 		return atoi(token);
 	case OPT_VAR:
@@ -457,6 +787,8 @@ int ScriptDef :: ConvertParamTypeToPushType(int paramType)
 	{
 	case OPT_INT:
 		return OP_PUSHINT;
+	case OPT_FLOAT:
+		return OP_PUSHFLOAT;
 	case OPT_VAR:
 		return OP_PUSHVAR;
 	case OPT_APPINT: return OP_PUSHAPPVAR;
@@ -785,6 +1117,12 @@ int ScriptDef :: ResolveOperandType(const char *token, int &value)
 		value = var;
 		return OPT_VAR;
 	}
+	const char *pPosition = strchr(token, '.');
+	if(pPosition != NULL)
+	{
+		value = atof(token);
+		return OPT_FLOAT;
+	}
 	value = atoi(token);
 	return OPT_INT;
 }
@@ -919,6 +1257,7 @@ ScriptPlayer :: ScriptPlayer()
 	active = false;
 	nextFire = 0;
 	advance = 0;
+	mHasScript = false;
 }
 
 ScriptPlayer :: ~ScriptPlayer()
@@ -929,6 +1268,11 @@ void ScriptPlayer :: Initialize(ScriptDef *defPtr)
 {
 	def = defPtr;
 	FullReset();
+	mHasScript = true;
+}
+
+bool ScriptPlayer :: HasScript() {
+	return mHasScript;
 }
 
 void ScriptPlayer :: RunScript(void)
@@ -964,8 +1308,7 @@ bool ScriptPlayer :: RunSingleInstruction(void)
 		breakScript = true;
 		break;
 	case OP_GOTO:
-		//printf("Jumping:\n");
-		//g_Log.AddMessageFormat("Jump Before/After: %d to %d", curInst, def->instr[curInst].param1);
+		//printf("Jumping:\n");c
 		curInst = instr->param1;
 		advance = 0;
 		/*
@@ -1395,19 +1738,6 @@ bool ScriptPlayer :: IsWaiting(void)
 {
 	return (g_ServerTime > nextFire);
 }
-
-void PrintMessage(const char *format, ...)
-{
-	char messageBuf[2048];
-
-	va_list args;
-	va_start (args, format);
-	vsnprintf(messageBuf, sizeof(messageBuf) - 1, format, args);
-	va_end (args);
-
-		g_Log.AddMessageFormat("%s", messageBuf);
-}
-
 
 BlockData::BlockData()
 {

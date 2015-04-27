@@ -1,0 +1,10 @@
+noinst_LIBRARIES = libsqstdlib.a
+AM_CPPFLAGS = -I../include
+libsqstdlib_a_SOURCES = sqstdaux.cpp \
+	sqstdblob.cpp \
+	sqstdio.cpp \
+	sqstdmath.cpp \
+	sqstdrex.cpp \
+	sqstdstream.cpp \
+	sqstdstring.cpp \
+	sqstdsystem.cpp

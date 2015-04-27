@@ -27818,12 +27818,11 @@ offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
 appearance=n4:{["a"]=[{["type"]="Item-Shovel",["node"]="right_hand"}],["c"]="Horde-Zombie",["sk"]={["bone"]="FFFED4",["skin"]="7F7F3F",["blood"]="AA8E76",["pants"]="AA7429",["shirt"]="8A8ED4",["detail"]="5F617A",["hair"]="716664"},["sz"]="1"}
-level=42
+level=43
 display_name=Crypt Digger
 profession=2
 creature_category=Unliving
-ai_package=example
-
+ai_package=knight_brave_6
 [ENTRY]
 ID=1188
 strength=92
@@ -27918,11 +27917,11 @@ offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
 appearance=n4:{["a"]=[{["type"]="Item-1hAxe-Basic3",["node"]="right_hand",["colors"]=["6A5949","D46C30","C0E9C3"]}],["c"]="Horde-Zombie_Golgothan",["sk"]={["bone"]="D4B373",["skin"]="AFD4B1",["blood"]="7F2222",["pants"]="6A5939",["shirt"]="94653A",["detail"]="48552F",["hair"]="BFBE7E"},["sz"]="1"}
-level=42
+level=43
 display_name=Risen Corpse
 profession=3
 creature_category=Unliving
-ai_package=example
+ai_package=rogue_brave_6
 total_size=5
 
 [ENTRY]
@@ -28036,7 +28035,7 @@ ID=1196
 ExtraData=namedmob=1
 strength=75
 dexterity=91
-constitution=75
+constitution=104
 psyche=107
 spirit=107
 base_damage_melee=131
@@ -28050,7 +28049,7 @@ might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
-level=42
+level=43
 display_name=Sythrex the Overseer
 profession=4
 creature_category=Unliving
@@ -28151,7 +28150,7 @@ appearance=c2:{["a"]=[{["type"]="Armor-Warrior-Redeemer_Captain-Left_Pauldron",[
 ID=1203
 strength=71
 dexterity=71
-constitution=61
+constitution=100
 psyche=49
 spirit=49
 base_damage_melee=101
@@ -28166,11 +28165,11 @@ offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
 appearance=n4:{["c"]="Horde-Vulture",["sk"]={["collar"]="D073FF",["mouth"]="863633",["skin"]="AB7E05",["neck"]="585D59",["eye"]="624E4E",["pinfeathers"]="605348",["claws"]="5E6262",["base"]="8F7C69"}}
-level=41
+level=43
 display_name=Putrid Avian
 profession=3
 creature_category=Animal
-ai_package=example
+ai_package=custom_heathendel_rogue40
 
 [ENTRY]
 ID=1204
@@ -28191,12 +28190,11 @@ offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
 appearance=n4:{["a"]=[{["type"]="Item-1hAxe-Basic4",["node"]="right_hand",["colors"]=["55382C","3F352C","D4684B"]},{["type"]="Item-Dagger-Basic7",["node"]="left_hand",["colors"]=["55382C","552626","94634E"]}],["c"]="Horde-Carrionite",["sk"]={["base"]="83BFA3",["tips"]="83BFA3",["accent"]="AEFFDA",["beak"]="83BFA3",["head"]="486A5A",["belt"]="3F2B19",["eye"]="E9E9E9"},["sz"]="1.1"}
-level=41
+level=43
 display_name=Limb-Culler
 profession=3
 creature_category=Unliving
 ai_package=rogue_brave_6
-
 [ENTRY]
 ID=1205
 strength=57
@@ -28216,11 +28214,11 @@ offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
 appearance=n4:{["a"]=[{["type"]="Item-Spear-Basic2",["node"]="right_hand",["colors"]=["799494","3F2105","28552B"]}],["c"]="Horde-Carrionite_Shaman",["sk"]={["feet"]="7F7F3F",["head"]="949462",["base"]="555446",["bandages"]="3F0505",["eye"]="9D9FBF",["color2"]="3F0000",["collar"]="7D9469",["color1"]="94634E"},["sz"]="1.1"}
-level=41
+level=43
 display_name=Organ-Culler
 profession=5
 creature_category=Unliving
-ai_package=example
+ai_package=knight_brave_6
 total_size=5
 
 [ENTRY]
@@ -28242,11 +28240,11 @@ offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
 appearance=n4:{["a"]=[{["type"]="Item-2hAxe-Basic4",["node"]="right_hand",["colors"]=["464755","2A1603","41A4BF"]}],["c"]="Horde-Carrionite2",["sk"]={["trim"]="2B4955",["beak"]="62A4BF",["clothes"]="5A6A3B",["nails"]="2A1603",["base"]="62A4BF",["accent"]="AEDAFF",["skin"]="91B5D4",["head"]="485A6A"},["sz"]="1.1"}
-level=41
+level=43
 display_name=Bone-Culler
 profession=2
 creature_category=Unliving
-ai_package=example
+ai_package=rogue_brave_6
 
 [ENTRY]
 ID=1207
@@ -28271,7 +28269,7 @@ level=43
 display_name=Undead Chirurgeon
 profession=5
 creature_category=Unliving
-ai_package=example
+ai_package=knight_brave_6
 total_size=5
 
 ; NOTE: Added appearance. Changed level from 43 to 44.
@@ -28297,7 +28295,7 @@ level=44
 display_name=Undead Chirurgeon
 profession=3
 creature_category=Unliving
-ai_package=example
+ai_package=knight_brave_6
 total_size=5
 appearance=n4:{["a"]=[{["type"]="Item-1hAxe-Basic7",["node"]="right_hand"}],["c"]="Horde-Zombie_Destroyer",["sk"]={["bone"]="584544",["trim"]="AA5726",["skin"]="838E78",["blood"]="A95D52",["pants"]="3F2B19",["shirt"]="3F3522",["hair"]="565070",["detail"]="943208"},["sz"]="1.0216"}
 
@@ -28333,11 +28331,11 @@ offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
 appearance=n4:{["sk"]={["base"]="2A2A2A",["leaf"]="68D451",["root"]="3F2105"},["c"]="Horde-Jack_o_Lantern",["sz"]="0.5"}
-level=42
+level=44
 display_name=Spiteful Lanterneye
 profession=5
 creature_category=Magical
-ai_package=example
+ai_package=druid_mystic_brave_6
 
 [ENTRY]
 ID=1211
@@ -28361,7 +28359,7 @@ level=43
 display_name=Undead Farmhand
 profession=3
 creature_category=Unliving
-ai_package=example
+ai_package=rogue_brave_6
 appearance=n4:{["a"]=[{["type"]="Item-Bucket",["node"]="right_hand"},{["type"]="Armor-Warrior-Midgaardian-Left_Pauldron",["node"]="left_shoulder",["colors"]=["944D0D","7F7F7F","365B6A","3F3F3F","151515"]},{["type"]="Armor-Warrior-Midgaardian-Right_Pauldron",["node"]="right_shoulder",["colors"]=["944D0D","85835F","365B6A","3F3F3F","151515"]}],["c"]="Horde-Zombie",["sk"]={["bone"]="15363F",["skin"]="365B6A",["blood"]="00AA0A",["pants"]="21AB4F",["shirt"]="20363F",["detail"]="552C07",["hair"]="D46F12"},["sz"]="1"}
 
 ; NOTE: placeholder stats
@@ -28369,7 +28367,7 @@ appearance=n4:{["a"]=[{["type"]="Item-Bucket",["node"]="right_hand"},{["type"]="
 ID=1212
 will_regen=1
 might_regen=1
-level=42
+level=44
 display_name=Enslaved Zombie
 profession=1
 creature_category=Unliving
@@ -28410,7 +28408,7 @@ level=43
 display_name=Bodiccea Bonethrall
 profession=2
 creature_category=Unliving
-ai_package=example
+ai_package=rogue_brave_6
 appearance=n4:{["a"]=[{["type"]="Armor-Warrior-Athenian-Helmet",["node"]="helmet",["colors"]=["3F3F3F","BFA10A","2A2A2A","2A2A2A"]},{["type"]="Item-Talisman-Bone",["node"]="right_hand",["colors"]=["BFA876"]},{["type"]="Item-Talisman-Bone",["node"]="left_hand",["colors"]=["BFA876"]},{["type"]="Armor-Warrior-Midgaardian-Left_Pauldron",["node"]="left_shoulder",["colors"]=["BF0000","7F6B06","71695E","926C54","B19167"]},{["type"]="Armor-Warrior-Midgaardian-Right_Pauldron",["node"]="right_shoulder",["colors"]=["BF1111","7F6B06","71695E","926C54","B19167"]}],["c"]="Horde-Skeleton",["sk"]={["bone"]="2A2A2A",["armor"]="20363F",["trim"]="554704",["metal"]="7D92A0",["loincloth"]="151515",["straps"]="AA0F0F"},["sz"]="1"}
 
 [ENTRY]
@@ -28431,11 +28429,11 @@ might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
-level=43
+level=44
 display_name=Bodiccea Frostthrall
 profession=4
 creature_category=Unliving
-ai_package=example
+ai_package=mage_frost_brave_6
 appearance=n4:{["a"]=[{["type"]="Armor-Warrior-Athenian-Helmet",["node"]="helmet",["colors"]=["3F3F3F","AA8F09","2A2A2A","2A2A2A"]},{["type"]="Item-Wand-High3",["node"]="right_hand",["colors"]=["555555","FF2300","D41D00"]}],["c"]="Horde-Skeleton_Spellcaster",["sk"]={["bone"]="2A2A2A",["collar"]="941400",["wrist_guard"]="FFD70D",["collar_skull"]="868F93",["wrist_wrap"]="555555",["armor_details"]="274B6A",["belt"]="245B6A",["robe"]="555555",["boots"]="2A2A2A"},["sz"]="1"}
 
 ; NOTE: ai_package was originally "example"
@@ -28444,7 +28442,7 @@ ID=1215
 ExtraData=namedmob=1
 strength=79
 dexterity=98
-constitution=79
+constitution=125
 psyche=114
 spirit=114
 base_damage_melee=141
@@ -28497,7 +28495,7 @@ ID=1217
 ExtraData=namedmob=1
 strength=107
 dexterity=91
-constitution=107
+constitution=125
 psyche=75
 spirit=75
 base_damage_melee=131
@@ -28701,7 +28699,7 @@ ID=1225
 ExtraData=namedmob=1
 strength=75
 dexterity=75
-constitution=107
+constitution=125
 psyche=91
 spirit=107
 base_damage_melee=131
@@ -28715,7 +28713,7 @@ might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
-level=42
+level=43
 display_name=Cucur
 profession=5
 creature_category=Magical
@@ -28727,7 +28725,7 @@ appearance=n4:{["sk"]={["base"]="1D4955",["leaf"]="D400D3",["root"]="3F2105"},["
 ID=1226
 strength=66
 dexterity=66
-constitution=56
+constitution=104
 psyche=46
 spirit=46
 will_regen=1
@@ -28735,12 +28733,12 @@ might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
-level=42
+level=43
 display_name=Putrid Avien
 profession=1
 creature_category=Mortal
 rarity=1
-ai_package=example
+ai_package=custom_heathendel_rogue40
 appearance=n4:{["sk"]={["collar"]="485A6A",["mouth"]="55472E",["skin"]="AA8F5C",["neck"]="3A4855",["eye"]="7F3E2D",["pinfeathers"]="576D7F",["claws"]="6A5939",["base"]="3A4855"},["c"]="Horde-Vulture",["sz"]="1.00"}
 
 [ENTRY]
@@ -28785,11 +28783,11 @@ might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
-level=42
+level=43
 display_name=Wrath Stag
 profession=2
 creature_category=Animal
-ai_package=example
+ai_package=rogue_brave_6
 appearance=n4:{["sk"]={["antlers"]="3F3518",["hooves"]="000000",["eyes"]="000000",["body"]="606394",["tail"]="8C8EAA",["chest"]="55473B"},["c"]="Horde-Stag",["sz"]="1.0216"}
 total_size=5
 
@@ -28811,11 +28809,11 @@ might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
-level=43
+level=44
 display_name=Wrath Stag
 profession=2
 creature_category=Animal
-ai_package=example
+ai_package=rogue_brave_6
 appearance=n4:{["sk"]={["fur"]="292055",["hooves"]="000000",["main"]="6CAAAA",["markings"]="5D49BF",["horns"]="7F6B58",["eyes"]="000000",["nose"]="AAAAAA",["teeth"]="DEDEDE"},["c"]="Horde-Devil_Stag",["sz"]="1.1"}
 total_size=5
 
@@ -28837,11 +28835,11 @@ might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
-level=41
+level=43
 display_name=Torpid Slimer
 profession=5
 creature_category=Magical
-ai_package=example
+ai_package=druid_death_brave_6
 appearance=n4:{["sk"]={["pupil"]="940000",["main"]="256A39",["eye_color"]="D4D4D4",["eye_white"]="B8B8B8",["spots"]="949449",["underbelly"]="90AA43"},["c"]="Horde-Giant_Slug",["sz"]="2.0216"}
 total_size=5
 
@@ -28863,11 +28861,11 @@ might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
-level=42
+level=44
 display_name=Torpid Slimer
 profession=5
 creature_category=Mortal
-ai_package=example
+ai_package=druid_death_brave_6
 appearance=n4:{["sk"]={["pupil"]="000000",["main"]="212C3F",["eye_color"]="001504",["eye_white"]="B8B8B8",["spots"]="276A4B",["underbelly"]="03193F"},["c"]="Horde-Giant_Slug",["sz"]="1.6"}
 total_size=5
 
@@ -28878,7 +28876,7 @@ ID=1232
 ExtraData=namedmob=1
 strength=123
 dexterity=160
-constitution=91
+constitution=125
 psyche=75
 spirit=75
 base_damage_melee=117
@@ -28892,7 +28890,7 @@ might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
-level=43
+level=44
 display_name=Bahmut
 profession=3
 creature_category=Animal
@@ -28976,11 +28974,11 @@ might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
-level=42
+level=43
 display_name=Shady Deathcrawler
 profession=3
 creature_category=Animal
-ai_package=example
+ai_package=death_creature_brave_6
 appearance=n4:{["sk"]={["base"]="051515",["trim"]="474554",["eye"]="00FF0F",["shell"]="172D3F",["hair"]="292A3C",["webbing"]="473A6A"},["c"]="Horde-Vampider",["sz"]="0.8"}
 
 [ENTRY]
@@ -29001,11 +28999,11 @@ might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
-level=43
+level=44
 display_name=Shady Deathcrawler
 profession=3
 creature_category=Mortal
-ai_package=nothing
+ai_package=death_creature_brave_6
 appearance=n4:{["sk"]={["base"]="051515",["trim"]="474554",["eye"]="AA0000",["shell"]="172D3F",["hair"]="292A3C",["webbing"]="473A6A"},["c"]="Horde-Vampider",["sz"]="1"}
 
 [ENTRY]
@@ -29026,11 +29024,11 @@ might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
-level=41
+level=43
 display_name=Haunt Hound
 profession=3
 creature_category=Animal
-ai_package=example
+ai_package=rogue_brave_6
 appearance=n4:{["sk"]={["bone"]="C5AB90",["base"]="000000",["blood"]="940000",["eye1"]="A78252",["nose"]="000000",["eye2"]="15E21A"},["c"]="Horde-Undead_Wolf",["sz"]="1.0216"}
 total_size=5
 
@@ -29052,11 +29050,11 @@ might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
-level=42
+level=44
 display_name=Haunt Hound
 profession=3
 creature_category=Animal
-ai_package=example
+ai_package=rogue_brave_6
 appearance=n4:{["sk"]={["bone"]="C5AB90",["base"]="343F3F",["blood"]="AA351D",["eye1"]="A78252",["nose"]="6A6A6A",["eye2"]="E97A14"},["c"]="Horde-Undead_Wolf",["sz"]="1.1"}
 total_size=5
 
@@ -29078,11 +29076,11 @@ might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
-level=41
+level=43
 display_name=Grunes Deathweaver
 profession=5
 creature_category=Animal
-ai_package=example
+ai_package=druid_death_brave_6
 appearance=n4:{["sk"]={["body_detail"]="000000",["tips"]="2A031D",["color"]="142A10",["body"]="000000",["highlight"]="24022A",["color_detail"]="36043F"},["c"]="Horde-Spider",["sz"]="1"}
 total_size=5
 
@@ -29104,11 +29102,11 @@ might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
-level=42
+level=44
 display_name=Grunes Deathweaver
 profession=5
 creature_category=Animal
-ai_package=example
+ai_package=druid_death_brave_6
 appearance=n4:{["sk"]={["body_detail"]="212C3F",["tips"]="565A69",["color"]="15242A",["body"]="172D3F",["highlight"]="AC9D9C",["color_detail"]="417F6D"},["c"]="Horde-Spider",["sz"]="1"}
 total_size=5
 
@@ -29130,7 +29128,7 @@ ID=1242
 ExtraData=namedmob=1
 strength=104
 dexterity=89
-constitution=104
+constitution=125
 psyche=72
 spirit=72
 base_damage_melee=127
@@ -29283,7 +29281,7 @@ might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
-level=42
+level=44
 display_name=Folkirk Gardener
 profession=5
 creature_category=Unliving
@@ -29308,7 +29306,7 @@ might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
-level=42
+level=43
 display_name=Folkirk Groundskeeper
 profession=2
 creature_category=Unliving
@@ -29333,7 +29331,7 @@ might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
-level=43
+level=44
 display_name=Folkirk Groundskeeper
 profession=2
 creature_category=Unliving
@@ -29358,7 +29356,7 @@ might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
-level=42
+level=43
 display_name=Grave Looter
 profession=3
 creature_category=Mortal
@@ -29383,7 +29381,7 @@ might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
-level=43
+level=44
 display_name=Grave Looter
 profession=3
 creature_category=Mortal
@@ -29408,11 +29406,11 @@ might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
-level=41
+level=43
 display_name=Nefarious Hare
 profession=3
 creature_category=Unliving
-ai_package=example
+ai_package=knight_brave_6
 appearance=n4:{["sk"]={["base"]="151500",["eye"]="AA0000",["nose_ear"]="3F3F3F",["highlight"]="6A6A58",["teeth"]="3F3F35"},["c"]="Horde-Rabbit",["sz"]="1.5216"}
 
 [ENTRY]
@@ -29433,11 +29431,11 @@ might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
-level=42
+level=44
 display_name=Nefarious Hare
 profession=3
 creature_category=Unliving
-ai_package=example
+ai_package=rogue_brave_6
 appearance=n4:{["sk"]={["base"]="2A2A1C",["eye"]="AAA900",["nose_ear"]="1E3F20",["highlight"]="6A6A58",["teeth"]="947D50"},["c"]="Horde-Rabbit",["sz"]="1.5216"}
 
 ; Note: Original mob indicated a gather objective, but quest seems to indicate it
@@ -29515,7 +29513,7 @@ might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
-level=46
+level=45
 display_name=Vengeance Singer
 profession=4
 creature_category=Unliving
@@ -29691,7 +29689,7 @@ level=44
 display_name=Crag Crawler
 profession=2
 creature_category=Animal
-ai_package=example
+ai_package=knight_brave_6
 appearance=n4:{["sk"]={["eyeball"]="7F420B",["rock"]="AA8E76",["dark_rock"]="55473B",["iris"]="E94F0D"},["c"]="Horde-Stalagmite",["sz"]="1.0"}
 
 [ENTRY]
@@ -29716,7 +29714,7 @@ level=45
 display_name=Crag Crawler
 profession=2
 creature_category=Animal
-ai_package=example
+ai_package=knight_brave_6
 appearance=n4:{["sk"]={["eyeball"]="00E9E9",["rock"]="212C3F",["dark_rock"]="151515",["iris"]="417371"},["c"]="Horde-Stalagmite",["sz"]="1"}
 
 [ENTRY]
@@ -29741,7 +29739,7 @@ level=44
 display_name=Shoreline Twister
 profession=4
 creature_category=Elemental
-ai_package=example
+ai_package=mage_frost_brave_6
 appearance=n4:{["sk"]={["armor"]="555555",["main2"]="482155",["main"]="1D042A",["eye"]="D46C30",["main3"]="905EAA",["armor_marking"]="4008BA"},["c"]="Horde-Elemental_Air",["sz"]="1"}
 
 [ENTRY]
@@ -29776,7 +29774,7 @@ level=45
 display_name=Shoreline Twister
 profession=4
 creature_category=Elemental
-ai_package=example
+ai_package=mage_frost_brave_6
 appearance=n4:{["a"]=[{["type"]="Item-Particle-Elemental_Air_Base2",["node"]="base"}],["c"]="Horde-Elemental_Air",["sk"]={["armor"]="36193F",["main2"]="AAAAAA",["main"]="555555",["eye"]="D46C30",["main3"]="E9E9E9",["armor_marking"]="4008BA"},["sz"]="1"}
 
 [ENTRY]
@@ -29811,7 +29809,7 @@ level=45
 display_name=Zombie Soulgazer
 profession=5
 creature_category=Unliving
-ai_package=FailsafeAI
+ai_package=druid_death_brave_6
 appearance=n4:{["a"]=[{["type"]="Item-Wand-High5",["node"]="right_hand",["colors"]=["6E72AA","366A5B","486A5A"]}],["c"]="Horde-Zombie_Golgothan",["sk"]={["bone"]="D3C8B2",["skin"]="6E72AA",["blood"]="002A02",["pants"]="6E72AA",["shirt"]="FFFFFF",["detail"]="FF0000",["hair"]="687F7F"},["sz"]="1"}
 total_size=5
 
@@ -29837,7 +29835,7 @@ level=46
 display_name=Mai Bonecaster
 profession=5
 creature_category=Magical
-ai_package=example
+ai_package=mage_fire_brave_6
 appearance=n4:{["a"]=[{["type"]="Item-Wand-Epic7",["node"]="right_hand",["colors"]=["FFFFFF","368EFF"]}],["c"]="Horde-Yeti_Icecaster",["sk"]={["trim3"]="C2BF3A",["fur"]="FFFFFF",["trim1"]="9F8C6B",["trim2"]="AE3723",["pattern1"]="4A73CD",["pattern2"]="6B3F98",["trim4"]="CD8517",["trim5"]="3B4415",["hair"]="D2D5FF"},["sz"]="0.9"}
 
 [ENTRY]

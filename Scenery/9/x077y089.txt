@@ -1,16 +1,302 @@
 [ENTRY]
 ID=1029460
-PlacedBy=-400000000
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=58295,796.255,67109
-Orient=0,1,0,7.54979e-008
+Orient=0,1,0,7.54979e-08
 Scale=1,1,1
 spawnPackage=z9_eur_gen_Hans_Longstrider
 
 [ENTRY]
+ID=1030337
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=Untitled
+Pos=58229.2,801.255,67155
+Orient=0,0.707107,0,0.707107
+Scale=1,1,1
+spawnPackage=z9_eur_Shar_Zaris
+
+[ENTRY]
+ID=1030338
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=Untitled
+Pos=58298,790.683,66901.5
+Orient=0,5.96046e-08,0,1
+Scale=1,1,1
+spawnPackage=z9_eur_Lanternkeeper_Lumin
+
+[ENTRY]
+ID=1030339
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=Untitled
+Pos=58292.1,789.07,66833.6
+Orient=0,-5.96046e-08,0,1
+Scale=1,1,1
+spawnPackage=z9_eur_Lanternkeeper_Rosco
+
+[ENTRY]
+ID=1030341
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=Untitled
+Pos=57953.4,799.389,67040.2
+Orient=0,0.92388,0,0.382683
+Scale=1,1,1
+spawnPackage=#F1246
+
+[ENTRY]
+ID=1030342
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=Untitled
+Pos=57909.6,807.965,66821
+Orient=0,-0.139543,0,0.990216
+Scale=1,1,1
+spawnPackage=#F1197
+
+[ENTRY]
+ID=1083020
+Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
+Pos=58224.2,795.987,67062.7
+Orient=0,0,0,1
+Scale=1,1,1
+links_count=1
+link=1083105,1
+
+[ENTRY]
+ID=1083023
+Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
+Pos=58133.3,782.667,66904.7
+Orient=0,0,0,1
+Scale=1,1,1
+links_count=4
+link=1083104,1
+link=1083024,1
+
+[ENTRY]
+ID=1083024
+Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
+Pos=58105.9,785.738,66873.7
+Orient=0,0,0,1
+Scale=1,1,1
+links_count=4
+link=1083023,1
+link=1083025,1
+
+[ENTRY]
+ID=1083025
+Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
+Pos=58012.5,797.984,66895.1
+Orient=0,0,0,1
+Scale=1,1,1
+links_count=4
+link=1083024,1
+link=1083026,1
+
+[ENTRY]
+ID=1083026
+Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
+Pos=57883.5,806.824,66885.6
+Orient=0,0,0,1
+Scale=1,1,1
+links_count=4
+link=1083025,1
+link=1083027,1
+
+[ENTRY]
+ID=1083027
+Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
+Pos=57792.9,801.677,66958
+Orient=0,0,0,1
+Scale=1,1,1
+links_count=4
+link=1083026,1
+link=1083116,1
+
+[ENTRY]
+ID=1083096
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=Untitled
+Pos=58157.5,784.161,66844.3
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#F3664
+links_count=1
+link=1083097,1
+
+[ENTRY]
+ID=1083097
+Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
+Pos=58224.8,787.647,66844.6
+Orient=0,0,0,1
+Scale=1,1,1
+links_count=3
+link=1083096,1
+link=1083098,1
+
+[ENTRY]
+ID=1083098
+Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
+Pos=58236.7,789.765,66881.1
+Orient=0,0,0,1
+Scale=1,1,1
+links_count=3
+link=1083097,1
+link=1083099,1
+
+[ENTRY]
+ID=1083099
+Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
+Pos=58310.6,789.623,66867.8
+Orient=0,0,0,1
+Scale=1,1,1
+links_count=3
+link=1083098,1
+link=1083100,1
+
+[ENTRY]
+ID=1083100
+Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
+Pos=58435.3,787.052,66876.5
+Orient=0,0,0,1
+Scale=1,1,1
+links_count=3
+link=1083099,1
+link=1083101,1
+
+[ENTRY]
+ID=1083101
+Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
+Pos=58486.5,783.443,66836.6
+Orient=0,0,0,1
+Scale=1,1,1
+links_count=3
+link=1083100,1
+link=1083102,1
+
+[ENTRY]
+ID=1083104
+Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
+Pos=58145.8,786.566,66936
+Orient=0,0,0,1
+Scale=1,1,1
+links_count=3
+link=1083105,1
+link=1083023,1
+
+[ENTRY]
+ID=1083105
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=Untitled
+Pos=58211.5,792.371,66937
+Orient=0,-0.992098,0,0.125465
+Scale=1,1,1
+spawnPackage=#F3664
+links_count=3
+link=1083020,1
+link=1083104,1
+
+[ENTRY]
+ID=1083116
+Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
+Pos=57772.7,801.07,66999.7
+Orient=0,0,0,1
+Scale=1,1,1
+links_count=3
+link=1083027,1
+link=1083029,1
+
+[ENTRY]
+ID=1083124
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=Untitled
+Pos=58094.5,806.586,66763.2
+Orient=0,-0.886627,0,0.462485
+Scale=1,1,1
+spawnPackage=#F1199
+
+[ENTRY]
+ID=1083125
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=Untitled
+Pos=58436.9,790.459,66951.7
+Orient=0,0.531186,0,0.847255
+Scale=1,1,1
+spawnPackage=#F1200
+
+[ENTRY]
+ID=1084174
+Asset=Prop-Sanctuary_Stone#Prop-Sanctuary_Stone
+Name=Untitled
+Pos=57781.8,802.854,66779.7
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
+ID=1091449
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=Untitled
+Pos=58187.8,784.134,66879.9
+Orient=0,0.688921,0,0.724836
+Scale=1,1,1
+spawnPackage=#F1247
+
+[ENTRY]
+ID=1103988
+Asset=CL-GrunsBush_5
+Name=Untitled
+Pos=58201.7,788.625,66754.4
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
+ID=1103995
+Asset=Prop-Bush_AridDead3
+Name=Untitled
+Pos=58221.7,788.929,66758.8
+Orient=0,-0.271547,0,0.962425
+Scale=0.7,0.7,0.7
+
+[ENTRY]
+ID=1104197
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=Untitled
+Pos=58196.8,792.719,67024.5
+Orient=0,0.670587,0,0.741831
+Scale=1,1,1
+spawnPackage=#F3664
+
+[ENTRY]
+ID=1104198
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=Untitled
+Pos=58247.7,792.986,67022.5
+Orient=0,0.713864,0,0.700285
+Scale=1,1,1
+spawnPackage=#F3664
+
+[ENTRY]
+ID=1104200
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=Untitled
+Pos=58164.4,801.255,67118.6
+Orient=0,0.75128,0,0.659983
+Scale=1,1,1
+spawnPackage=#1132
+
+[ENTRY]
 ID=151017313
-PlacedBy=0
 Asset=Bldg-Grand-Temple1#Bldg-Grand-Temple1?ATS=ATS-Church
 Name=Untitled
 Pos=58224.7,786.262,67114
@@ -20,7 +306,6 @@ Flags=1
 
 [ENTRY]
 ID=151017316
-PlacedBy=0
 Asset=CL-Graveyard3#CL-Graveyard3
 Name=Untitled
 Pos=58477.8,787.271,67080
@@ -30,7 +315,6 @@ Flags=1
 
 [ENTRY]
 ID=151017330
-PlacedBy=0
 Asset=CL-ThornPumpkins1#CL-ThornPumpkins1
 Name=Untitled
 Pos=58266.8,792.799,66987
@@ -40,7 +324,6 @@ Flags=1
 
 [ENTRY]
 ID=151017332
-PlacedBy=0
 Asset=Prop-Lamp_Post_Undead#Prop-Lamp_Post_Undead2
 Name=Untitled
 Pos=58282,789.205,66833
@@ -50,7 +333,6 @@ Flags=1
 
 [ENTRY]
 ID=151017333
-PlacedBy=0
 Asset=Prop-Lamp_Post_Undead1#Prop-Lamp_Post_Undead1
 Name=Untitled
 Pos=58289,790.445,66901
@@ -60,7 +342,6 @@ Flags=1
 
 [ENTRY]
 ID=151017334
-PlacedBy=0
 Asset=Prop-Lamp_Post_Undead#Prop-Lamp_Post_Undead3
 Name=Untitled
 Pos=58088.2,794.292,66832
@@ -70,7 +351,6 @@ Flags=1
 
 [ENTRY]
 ID=151017335
-PlacedBy=0
 Asset=Prop-Lamp_Post_Undead#Prop-Lamp_Post_Undead4
 Name=Untitled
 Pos=58260.9,792.84,67015
@@ -80,7 +360,6 @@ Flags=1
 
 [ENTRY]
 ID=151017336
-PlacedBy=0
 Asset=Prop-Lamp_Post_Undead4
 Name=Untitled
 Pos=58183.4,792.496,67016
@@ -90,7 +369,6 @@ Flags=1
 
 [ENTRY]
 ID=151017337
-PlacedBy=0
 Asset=Prop-Lamp_Post_Undead1
 Name=Untitled
 Pos=58089.1,786.476,66924
@@ -100,7 +378,6 @@ Flags=1
 
 [ENTRY]
 ID=151017338
-PlacedBy=0
 Asset=Prop-Bush_Rotted6#Prop-Bush_Rotted6
 Name=Untitled
 Pos=58104.6,789.927,67014
@@ -110,7 +387,6 @@ Flags=1
 
 [ENTRY]
 ID=151017346
-PlacedBy=0
 Asset=Prop-Bush_Rotted2
 Name=Untitled
 Pos=57928.8,802.874,67116
@@ -120,7 +396,6 @@ Flags=1
 
 [ENTRY]
 ID=151017350
-PlacedBy=0
 Asset=Prop-Bush_Rotted4#Prop-Bush_Rotted4
 Name=Untitled
 Pos=58081.2,787.589,66918
@@ -130,7 +405,6 @@ Flags=1
 
 [ENTRY]
 ID=151017352
-PlacedBy=0
 Asset=Prop-Bush_Rotted3#Prop-Bush_Rotted3
 Name=Untitled
 Pos=58392.9,789.843,67385
@@ -140,7 +414,6 @@ Flags=1
 
 [ENTRY]
 ID=151017362
-PlacedBy=0
 Asset=CL-UndeadBoulder6#CL-UndeadBoulder6
 Name=Untitled
 Pos=57853.5,808.693,66750
@@ -150,7 +423,6 @@ Flags=1
 
 [ENTRY]
 ID=151017363
-PlacedBy=0
 Asset=CL-Junk3
 Name=Untitled
 Pos=58064.8,791.31,67046
@@ -160,7 +432,6 @@ Flags=1
 
 [ENTRY]
 ID=151017364
-PlacedBy=0
 Asset=CL-Junk2
 Name=Untitled
 Pos=58370.2,787.667,67030
@@ -170,7 +441,6 @@ Flags=1
 
 [ENTRY]
 ID=151017381
-PlacedBy=0
 Asset=Prop-Tombstone#Prop-Tombstone_Large1
 Name=Untitled
 Pos=58186.7,785.557,66896
@@ -180,7 +450,6 @@ Flags=1
 
 [ENTRY]
 ID=151017382
-PlacedBy=0
 Asset=Prop-Bush_AridDead2#Prop-Bush_AridDead2
 Name=Untitled
 Pos=58173.4,783.563,66887
@@ -190,7 +459,6 @@ Flags=1
 
 [ENTRY]
 ID=151017383
-PlacedBy=0
 Asset=Prop-Cart
 Name=Untitled
 Pos=58331.6,788.571,67004
@@ -200,7 +468,6 @@ Flags=1
 
 [ENTRY]
 ID=151017384
-PlacedBy=0
 Asset=Prop-Wagon
 Name=Untitled
 Pos=57992.8,797.208,67050
@@ -210,7 +477,6 @@ Flags=1
 
 [ENTRY]
 ID=151017421
-PlacedBy=0
 Asset=Prop-Tribal_Lamp1
 Name=Untitled
 Pos=57951,802.133,66945
@@ -220,7 +486,6 @@ Flags=1
 
 [ENTRY]
 ID=151017422
-PlacedBy=0
 Asset=Prop-Tribal_Lamp1
 Name=Untitled
 Pos=57957.3,799.325,67023
@@ -230,7 +495,6 @@ Flags=1
 
 [ENTRY]
 ID=151017423
-PlacedBy=0
 Asset=Prop-Tribal_Lamp1
 Name=Untitled
 Pos=57957.9,799.366,67021
@@ -240,7 +504,6 @@ Flags=1
 
 [ENTRY]
 ID=151017436
-PlacedBy=0
 Asset=Prop-Tribal_Lamp1
 Name=Untitled
 Pos=58302.5,788.644,66813
@@ -250,7 +513,6 @@ Flags=1
 
 [ENTRY]
 ID=151017437
-PlacedBy=0
 Asset=Prop-Tribal_Lamp1
 Name=Untitled
 Pos=58420.6,783.064,66855
@@ -260,7 +522,6 @@ Flags=1
 
 [ENTRY]
 ID=151017438
-PlacedBy=0
 Asset=Prop-Tribal_Lamp1
 Name=Untitled
 Pos=58418.6,782.95,66855
@@ -270,7 +531,6 @@ Flags=1
 
 [ENTRY]
 ID=151017444
-PlacedBy=0
 Asset=CL-Camp_Raider1#CL-Camp_Raider1
 Name=Untitled
 Pos=58444.5,787.261,66951
@@ -280,7 +540,6 @@ Flags=1
 
 [ENTRY]
 ID=151017445
-PlacedBy=0
 Asset=CL-Camp_Raider2#CL-Camp_Raider2
 Name=Untitled
 Pos=58012.9,805.607,66823
@@ -290,7 +549,6 @@ Flags=1
 
 [ENTRY]
 ID=151017446
-PlacedBy=0
 Asset=Prop-Redeemer_Banners#Prop-Redeemer_Banner3
 Name=Untitled
 Pos=58222.2,937.006,67025
@@ -300,7 +558,6 @@ Flags=1
 
 [ENTRY]
 ID=151017448
-PlacedBy=0
 Asset=Prop-Redeemer_Banners#Prop-Redeemer_Banner1
 Name=Untitled
 Pos=58186.5,847.731,66892
@@ -310,7 +567,6 @@ Flags=1
 
 [ENTRY]
 ID=151017450
-PlacedBy=0
 Asset=Light-Large?COLOR=6666FF
 Name=Untitled
 Pos=58185.6,878.798,66885
@@ -319,7 +575,6 @@ Scale=4.55,4.55,4.55
 
 [ENTRY]
 ID=151017451
-PlacedBy=0
 Asset=Light-Large?COLOR=FF9933
 Name=Untitled
 Pos=57830.1,894.442,66945
@@ -328,8 +583,7 @@ Scale=4.55,4.55,4.55
 
 [ENTRY]
 ID=151017452
-PlacedBy=0
-Asset=Light-Large?COLOR=FF9933
+Asset=Light-Intense?COLOR=FF9933
 Name=Untitled
 Pos=58412.1,876.215,66878
 Orient=0,0,0,1
@@ -337,7 +591,6 @@ Scale=4.55,4.55,4.55
 
 [ENTRY]
 ID=151017454
-PlacedBy=0
 Asset=Light-Large
 Name=Untitled
 Pos=58224,833.717,67123

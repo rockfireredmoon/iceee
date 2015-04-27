@@ -1,6 +1,7 @@
 [ENTRY]
 ID=151015273
 Asset=CL-UndeadTree4#CL-UndeadTree4
+Name=Untitled
 Pos=53450.6,805.8,64948
 Orient=0,0.300293,0,0.953847
 Scale=1,1,1
@@ -9,34 +10,34 @@ Flags=1
 [ENTRY]
 ID=151028361
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=53258,793.239,64710
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_irh_risenCorpse_r_42
-outerRadius=10
 
 [ENTRY]
 ID=151028554
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=53699.7,786.565,65208
 Orient=0,0,0,1
 Scale=1,1,1
-innerRadius=95
 spawnPackage=11_dth_wilds_41_42
-outerRadius=100
 
 [ENTRY]
 ID=151028555
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=53677.8,800.864,64913
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_dth_wilds_41_42
-outerRadius=10
 
 [ENTRY]
 ID=151028563
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=53683.7,781.997,64535
 Orient=0,0,0,1
 Scale=1,1,1
@@ -46,27 +47,28 @@ link=151028562,1
 [ENTRY]
 ID=151028570
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=53983,915.221,65032
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_dth_wilds_41_42
-outerRadius=10
 
 [ENTRY]
 ID=151029047
 Asset=Manipulator-SpawnPoint
-Pos=53319.3,786.569,64523
+Name=Untitled
+Pos=53319.3,786.571,64523
 Orient=0,-0.950549,0,0.310574
 Scale=1,1,1
+spawnPackage=11_dth_gooran
 links_count=2
 link=151029048,1
 link=151029053,1
-spawnPackage=11_dth_gooran
-outerRadius=1
 
 [ENTRY]
 ID=151029048
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=53293,803.467,64845
 Orient=0,0,0,1
 Scale=1,1,1

@@ -810,7 +810,7 @@ void SpawnTile :: RemoveSpawnPointCreature(ActiveSpawner *spawner, int creatureI
 void SpawnTile :: Despawn(int CreatureID)
 {
 	SPAWN_MAP::iterator it;
-	for(it = activeSpawn.begin(); it != activeSpawn.end(); it++)
+	for(it = activeSpawn.begin(); it != activeSpawn.end(); ++it)
 	{
 		RemoveSpawnPointCreature(&it->second, CreatureID);
 	}
@@ -837,7 +837,7 @@ bool SpawnTile :: QualifyDelete(void)
 		return false;
 
 	SPAWN_MAP::iterator it;
-	for(it = activeSpawn.begin(); it != activeSpawn.end(); it++)
+	for(it = activeSpawn.begin(); it != activeSpawn.end(); ++it)
 	{
 		if((it->second.nextSpawn != PlatformTime::MAX_TIME) && (g_ServerTime < it->second.nextSpawn))
 		{
@@ -1095,7 +1095,7 @@ void SpawnManager :: Despawn(int CreatureID)
 {
 	ActiveSpawner *obj = NULL;
 	std::list<SpawnTile>::iterator it;
-	for(it = spawnTiles.begin(); it != spawnTiles.end(); it++)
+	for(it = spawnTiles.begin(); it != spawnTiles.end(); ++it)
 	{
 		g_Log.AddMessageFormat("[DEBUG] Checking for despawn of %d on %d,%d", CreatureID, it->TileX, it->TileY);
 		it->Despawn(CreatureID);

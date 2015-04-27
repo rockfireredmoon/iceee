@@ -67,6 +67,7 @@ this.ProtocolDef <- {
 		[71] = "_handleItemDefUpdateMsg",
 		[80] = "_handlePVPStatUpdateMessage",
 		[90] = "_handleHeartbeatMessage",
+		[98] = "_handleSceneryEffectMsg",
 		[99] = "_handleGuildUpdateMsg",
 		inspectCreatureDef = 0,
 		updateVelocity = 1,
@@ -2917,15 +2918,82 @@ class this.Connection extends this.MessageBroadcaster
 		}
 	}
 	
+	function _handleSceneryEffectMsg(data)
+	{
+		local type = data.getByte();
+		switch(type)
+		{
+		case 1:
+			// Type 1 - Scenery affect creation
+			
+			local sceneryId = data.getInteger();
+			local effectType = data.getInteger();
+			local effectTag = data.getInteger();
+			local scenery = this.mSceneObjectManager.getSceneryByID(sceneryId);
+			if(scenery) {
+				local effectName = data.getStringUTF();
+				// TODO implement these as offsets from the prop
+				local effectX = data.getFloat();
+				local effectY = data.getFloat();
+				local effectZ = data.getFloat();
+				local size = data.getFloat();
+				print("ICE: attach effect: " + effectName + " " + effectTag + " " + sceneryId + " " + effectX + "," + effectY + "," + effectZ);
+				if(effectType == 1) {
+				
+					// Effect Type 1 - Add a particle effect to the prop				
+					scenery.attachParticleSystem(effectName, effectTag, size)
+				}
+				else if(effectType == 2) {
+					// TODO store the old asset somewhere
+					// TODO handle multiple asset changes
+					this.log.debug("Scenery update: " + scenery + ", " + effectName);
+					scenery.setScale(this.Vector3(size, size, size));
+					local a = this.AssetReference(effectName);
+					local ass = a.getAsset();
+					if (ass == "")
+					{
+						this.IGIS.error("Invalid asset string, please copy this and bug it!!: " + asset);
+						return;
+					}
+					if (scenery.setType(a.getAsset(), a.getVars()))
+					{
+						scenery.reassemble();
+					}
+					scenery.fireUpdate();
+				}
+			}
+			else {
+				print("ICE: No scenery with ID of " + sceneryId + " (" + effectTag + ")");
+			}
+			break;
+		case 2:
+			local sceneryId = data.getInteger();
+			local effectType = data.getInteger();
+			local effectTag = data.getInteger();
+			local scenery = this.mSceneObjectManager.getSceneryByID(sceneryId);
+			if(scenery) {
+				if(effectType == 1) {
+					scenery.detachParticleSystem(effectTag)
+				}
+				print("ICE: remove effect: " + effectTag + " " + sceneryId);
+			}
+			else {
+				print("ICE: No scenery with ID of " + sceneryId + " (" + effectTag + ")");
+			}
+			break;
+		default:
+			print("ICE: Unknown effect message message type " + type);
+			break;
+		}
+	}
+	
 	function _handleGuildUpdateMsg( data )
 	{
 		local type = data.getByte();
-		print("ICE! _handleGuildUpdateMsg " + type);
 		switch(type)
 		{
 		case 1:
 			local defId = data.getInteger();
-			print("ICE! def " + defId);
 			this.broadcastMessage("onGuildChange", defId);
 			break;
 		}

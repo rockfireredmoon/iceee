@@ -1,6 +1,7 @@
 [ENTRY]
 ID=151061829
 Asset=Prop-Marker_Medium
+Name=Untitled
 Pos=90943,1065.82,54452.9
 Orient=0.34759,0,0,0.937647
 Scale=20,20,20
@@ -8,6 +9,7 @@ Scale=20,20,20
 [ENTRY]
 ID=151061830
 Asset=Prop-Marker_Medium
+Name=Untitled
 Pos=91378.9,1052.16,54484.8
 Orient=0.34759,0,0,0.937647
 Scale=20,20,20

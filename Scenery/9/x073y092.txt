@@ -1,6 +1,15 @@
 [ENTRY]
+ID=1082961
+Asset=Light-Large?Group=1&COLOR=FF00FD
+Name=Untitled
+Pos=55462.1,659.854,69403.6
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
 ID=151016129
 Asset=CL-Undead_Camp2#CL-Undead_Camp2
+Name=Untitled
 Pos=55292.7,609.711,69598
 Orient=0,0.98545,0,0.169968
 Scale=1.275,1.275,1.275
@@ -8,6 +17,7 @@ Scale=1.275,1.275,1.275
 [ENTRY]
 ID=151016130
 Asset=Prop-Tombstone#Prop-Tombstone3
+Name=Untitled
 Pos=55151.9,608.406,69427
 Orient=0,0.466208,0,0.884675
 Scale=2.7,2.7,2.7
@@ -15,6 +25,7 @@ Scale=2.7,2.7,2.7
 [ENTRY]
 ID=151016131
 Asset=Prop-Tombstone#Prop-Tombstone1
+Name=Untitled
 Pos=55137.9,610.177,69505
 Orient=0,-0.978899,0,0.204347
 Scale=1.95,1.95,1.95
@@ -22,6 +33,7 @@ Scale=1.95,1.95,1.95
 [ENTRY]
 ID=151016132
 Asset=Prop-Tombstone1
+Name=Untitled
 Pos=55067.7,616.822,69516
 Orient=0,0.932039,0,0.362358
 Scale=2.35,2.35,2.35
@@ -29,6 +41,7 @@ Scale=2.35,2.35,2.35
 [ENTRY]
 ID=151016133
 Asset=Prop-Tombstone1
+Name=Untitled
 Pos=54992.5,625.47,69481
 Orient=0,0.91071,0,0.413046
 Scale=2.05,2.05,2.05
@@ -36,6 +49,7 @@ Scale=2.05,2.05,2.05
 [ENTRY]
 ID=151016134
 Asset=Prop-Tombstone1
+Name=Untitled
 Pos=54958.5,627.099,69451
 Orient=0,-0.955572,0,-0.294759
 Scale=1.975,1.975,1.975
@@ -43,6 +57,7 @@ Scale=1.975,1.975,1.975
 [ENTRY]
 ID=151017068
 Asset=CL-UndeadTree4#CL-UndeadTree4
+Name=Untitled
 Pos=55019.6,583.633,69276
 Orient=0,-0.971148,0,0.238476
 Scale=1,1,1
@@ -51,6 +66,7 @@ Flags=1
 [ENTRY]
 ID=151017561
 Asset=Prop-Lamp_Post_Undead#Prop-Lamp_Post_Undead2
+Name=Untitled
 Pos=55465.2,633.289,69403
 Orient=0,0,0,1
 Scale=1.65,1.65,1.65
@@ -58,78 +74,79 @@ Scale=1.65,1.65,1.65
 [ENTRY]
 ID=151027408
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=55312.5,610.632,69604
 Orient=0,0.973485,0,0.228753
 Scale=1,1,1
 spawnPackage=11_irh_undeadChirurgeon
-outerRadius=1
 
 [ENTRY]
 ID=151027409
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=55308,610.894,69582
 Orient=0,0.937923,0,-0.346844
 Scale=1,1,1
 spawnPackage=11_irh_undeadChirurgeon
-outerRadius=1
 
 [ENTRY]
 ID=151027410
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=55297.8,609.466,69621
 Orient=0,0.720831,0,0.693111
 Scale=1,1,1
 spawnPackage=11_irh_undeadChirurgeon
-outerRadius=1
 
 [ENTRY]
 ID=151027411
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=55286,609.67,69576
 Orient=0,-0.568762,0,0.822502
 Scale=1,1,1
 spawnPackage=11_irh_undeadChirurgeon
-outerRadius=1
 
 [ENTRY]
 ID=151027412
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=55271.3,608.632,69593
 Orient=0,-0.0149994,0,0.999888
 Scale=1,1,1
 spawnPackage=11_irh_undeadChirurgeon
-outerRadius=1
 
 [ENTRY]
 ID=151027413
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=55278.3,608.557,69615
 Orient=0,0.40776,0,0.913089
 Scale=1,1,1
 spawnPackage=11_irh_undeadChirurgeon
-outerRadius=1
 
 [ENTRY]
 ID=151027414
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=55421.1,618.96,69638
 Orient=0,0.991458,0,0.130424
 Scale=1,1,1
 spawnPackage=11_irh_undeadChirurgeon
-outerRadius=1
 
 [ENTRY]
 ID=151027415
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=55469,626.194,69582
 Orient=0,0.496879,0,0.86782
 Scale=1,1,1
 spawnPackage=11_irh_undeadChirurgeon
-outerRadius=1
 
 [ENTRY]
 ID=151027417
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=55390.5,616.318,69612
 Orient=0,0,0,1
 Scale=1,1,1
@@ -140,6 +157,7 @@ link=151027418,1
 [ENTRY]
 ID=151027418
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=55415.8,623.673,69499
 Orient=0,0,0,1
 Scale=1,1,1
@@ -149,26 +167,27 @@ link=151027417,1
 [ENTRY]
 ID=151027419
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=55068.3,611.403,69440
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_irh_undeadChirurgeon
-outerRadius=1
 
 [ENTRY]
 ID=151027420
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=55095.6,605.165,69589
 Orient=0,0.361615,0,0.932327
 Scale=1,1,1
+spawnPackage=11_irh_undeadChirurgeon
 links_count=1
 link=151027421,1
-spawnPackage=11_irh_undeadChirurgeon
-outerRadius=1
 
 [ENTRY]
 ID=151027421
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=55242.4,610.81,69437
 Orient=0,0,0,1
 Scale=1,1,1
@@ -179,6 +198,7 @@ link=151027422,1
 [ENTRY]
 ID=151027422
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=55173.4,607.878,69311
 Orient=0,0,0,1
 Scale=1,1,1
@@ -189,6 +209,7 @@ link=151027423,1
 [ENTRY]
 ID=151027423
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=55055.9,582.018,69113
 Orient=0,0,0,1
 Scale=1,1,1
@@ -198,35 +219,36 @@ link=151027422,1
 [ENTRY]
 ID=151027424
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=55201.7,603.362,69691
 Orient=0,0.492535,0,0.870293
 Scale=1,1,1
 spawnPackage=11_irh_undeadChirurgeon
-outerRadius=1
 
 [ENTRY]
 ID=151027425
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=55255.6,604.293,69707
 Orient=0,0.696135,0,0.717911
 Scale=1,1,1
 spawnPackage=11_irh_undeadChirurgeon
-outerRadius=1
 
 [ENTRY]
 ID=151027426
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=55329.8,608.914,69695
 Orient=0,0.969944,0,0.243329
 Scale=1,1,1
+spawnPackage=11_irh_undeadChirurgeon
 links_count=1
 link=151027427,1
-spawnPackage=11_irh_undeadChirurgeon
-outerRadius=1
 
 [ENTRY]
 ID=151027427
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=55181.6,603.995,69640
 Orient=0,0,0,1
 Scale=1,1,1
@@ -237,6 +259,7 @@ link=151027428,1
 [ENTRY]
 ID=151027428
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=55138,604.403,69587
 Orient=0,0,0,1
 Scale=1,1,1
@@ -246,35 +269,36 @@ link=151027427,1
 [ENTRY]
 ID=151027431
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=54977.3,614.776,69427
 Orient=0,0.894989,0,-0.446087
 Scale=1,1,1
 spawnPackage=11_irh_undeadChirurgeon
-outerRadius=1
 
 [ENTRY]
 ID=151027432
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=54987.1,588.87,69212
 Orient=0,0.827702,0,0.561168
 Scale=1,1,1
 spawnPackage=11_irh_undeadChirurgeon
-outerRadius=1
 
 [ENTRY]
 ID=151027433
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=55029.5,582.025,69046
 Orient=0,-0.942489,0,0.334238
 Scale=1,1,1
+spawnPackage=11_irh_undeadChirurgeon
 links_count=1
 link=151027434,1
-spawnPackage=11_irh_undeadChirurgeon
-outerRadius=1
 
 [ENTRY]
 ID=151027434
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=54770,606.263,69270
 Orient=0,0,0,1
 Scale=1,1,1
@@ -285,6 +309,7 @@ link=151027435,1
 [ENTRY]
 ID=151027435
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=54902.9,627.545,69492
 Orient=0,0,0,1
 Scale=1,1,1
@@ -295,6 +320,7 @@ link=151027436,1
 [ENTRY]
 ID=151027436
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=55042.3,614.561,69556
 Orient=0,0,0,1
 Scale=1,1,1
@@ -304,42 +330,43 @@ link=151027435,1
 [ENTRY]
 ID=151027440
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=55311.8,612.348,69495
 Orient=0,0.0749297,0,0.997189
 Scale=1,1,1
 spawnPackage=11_irh_undeadChirurgeon
-outerRadius=1
 
 [ENTRY]
 ID=151027441
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=55189,608.114,69537
 Orient=0,0.953607,0,0.301053
 Scale=1,1,1
 spawnPackage=11_irh_undeadChirurgeon
-outerRadius=1
 
 [ENTRY]
 ID=151028176
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=54766.6,622.188,69374
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_irh_undeadChirurgeon
-outerRadius=1
 
 [ENTRY]
 ID=151028177
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=54831.2,582.644,69140
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_irh_undeadChirurgeon
-outerRadius=1
 
 [ENTRY]
 ID=151028189
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=54880.7,644.175,69560
 Orient=0,0,0,1
 Scale=1,1,1
@@ -350,6 +377,7 @@ link=151028190,1
 [ENTRY]
 ID=151028190
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=55156.9,602.964,69714
 Orient=0,0,0,1
 Scale=1,1,1
@@ -359,6 +387,7 @@ link=151028189,1
 [ENTRY]
 ID=151041185
 Asset=CL-UndeadTree5#CL-UndeadTree5
+Name=Untitled
 Pos=54819.8,577.62,69045
 Orient=0,-0.109778,0,0.993956
 Scale=0.875,0.875,0.875
@@ -367,6 +396,7 @@ Flags=1
 [ENTRY]
 ID=151041191
 Asset=Prop-Burnt_Pines#Prop-Burnt_Pine3
+Name=Untitled
 Pos=54974.7,599.913,69553
 Orient=0,0,0,1
 Scale=3.05,3.05,3.05
@@ -375,6 +405,7 @@ Flags=1
 [ENTRY]
 ID=151041192
 Asset=Prop-Burnt_Pines#Prop-Burnt_Pine4
+Name=Untitled
 Pos=55050.7,576.196,69013
 Orient=0.100702,-0.955543,-0.0290443,0.275595
 Scale=2.45,2.45,2.45

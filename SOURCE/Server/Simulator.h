@@ -560,6 +560,7 @@ public:
 	
 	void AddPendingDisconnect(SimulatorThread *callObject);
 	void AddPendingPacketData(SimulatorThread *callObject);
+	void BroadcastMessage(const char *message);
 
 	//CreatureInstance* GetPlayerByID(int CreatureID);
 

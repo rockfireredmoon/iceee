@@ -1,6 +1,18 @@
 [ENTRY]
+ID=1091259
+Asset=Manipulator#Manipulator-PathNode
+Name=
+Pos=76399.7,964.329,50200
+Orient=0,0,0,1
+Scale=1,1,1
+links_count=2
+link=1091258,1
+link=1091260,1
+
+[ENTRY]
 ID=151023999
 Asset=CL-Junk1
+Name=Untitled
 Pos=76475,978.265,49956
 Orient=0,0,0,1
 Scale=1.675,1.675,1.675
@@ -8,6 +20,7 @@ Scale=1.675,1.675,1.675
 [ENTRY]
 ID=151024003
 Asset=Prop-Wagon_Wheel#Prop-Wagon_Wheel
+Name=Untitled
 Pos=76448,977.947,49954
 Orient=-0.204824,-0.690778,-0.165589,0.67339
 Scale=1.475,1.475,1.475
@@ -15,6 +28,7 @@ Scale=1.475,1.475,1.475
 [ENTRY]
 ID=151024016
 Asset=CL-Sick-Pine6#CL-Sick-Pine6
+Name=Untitled
 Pos=76300,968.54,50155
 Orient=0,-0.492535,0,0.870293
 Scale=2.025,2.025,2.025

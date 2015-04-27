@@ -1,6 +1,15 @@
 [ENTRY]
+ID=1084612
+Asset=Light-Large?Group=1&COLOR=FF00FD
+Name=
+Pos=55162.9,668.007,68555.8
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
 ID=151017560
 Asset=Prop-Lamp_Post_Undead1#Prop-Lamp_Post_Undead1
+Name=Untitled
 Pos=55160.2,635.779,68558
 Orient=0,0,0,1
 Scale=1.825,1.825,1.825
@@ -8,26 +17,27 @@ Scale=1.825,1.825,1.825
 [ENTRY]
 ID=151028178
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=54806,571.359,68851
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_irh_undeadChirurgeon
-outerRadius=10
 
 [ENTRY]
 ID=151028185
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=54802,563.012,68596
 Orient=0,-0.999526,0,0.0307915
 Scale=1,1,1
+spawnPackage=11_irh_undeadChirurgeon
 links_count=1
 link=151028186,1
-spawnPackage=11_irh_undeadChirurgeon
-outerRadius=10
 
 [ENTRY]
 ID=151028666
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=55423.8,668.976,68435
 Orient=0,0,0,1
 Scale=1,1,1
@@ -38,6 +48,7 @@ link=151028668,1
 [ENTRY]
 ID=151028668
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=55466.1,668.029,68814
 Orient=0,0,0,1
 Scale=1,1,1
@@ -47,6 +58,7 @@ link=151028666,1
 [ENTRY]
 ID=151041183
 Asset=CL-UndeadTree2#CL-UndeadTree2
+Name=Untitled
 Pos=55314.6,658.634,68448
 Orient=0,-0.593177,0,0.805072
 Scale=1.15,1.15,1.15
@@ -55,6 +67,7 @@ Flags=1
 [ENTRY]
 ID=151041184
 Asset=CL-UndeadTree3#CL-UndeadTree3
+Name=Untitled
 Pos=55387.7,653.522,68606
 Orient=0,-0.593177,0,0.805072
 Scale=1.75,1.75,1.75
@@ -63,6 +76,7 @@ Flags=1
 [ENTRY]
 ID=151041186
 Asset=CL-UndeadTree3#CL-UndeadTree3
+Name=Untitled
 Pos=54893.7,576.783,68789
 Orient=0,0,0,1
 Scale=1,1,1
@@ -71,6 +85,7 @@ Flags=1
 [ENTRY]
 ID=151060580
 Asset=Prop-Pine-Sick_Tree#Prop-Pine-Sick_Tree1
+Name=Untitled
 Pos=54752.4,599.049,68515.6
 Orient=0,0,0,1
 Scale=4.65,4.65,4.65

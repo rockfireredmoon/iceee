@@ -1,6 +1,7 @@
 [ENTRY]
 ID=151061734
-Asset=Bldg-Urban-Med_House1?ATS=ATS-Wooden
+Asset=Bldg-Urban-Med_House1?ATS=ATS-Undead
+Name=Untitled
 Pos=96174.2,1239.24,61639.7
 Orient=0,0,0,1
 Scale=1,1,1

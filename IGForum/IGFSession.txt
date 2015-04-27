@@ -1,0 +1,4 @@
+NextCategoryID=2
+NextThreadID=1
+NextPostID=1
+PlatformLaunchMinute=23833099

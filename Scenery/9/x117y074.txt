@@ -1,6 +1,15 @@
 [ENTRY]
+ID=1125553
+Asset=Basic Pine Forest?d=0.25&s=3&sz=1000
+Name=
+Pos=87872.6,1216.71,56046.9
+Orient=0,-0.338197,0,0.941076
+Scale=1,1,1
+
+[ENTRY]
 ID=151061821
 Asset=Prop-Marker_Medium
+Name=Untitled
 Pos=87975.2,1244.68,55945.8
 Orient=0.34759,0,0,0.937647
 Scale=20,20,20
@@ -8,6 +17,7 @@ Scale=20,20,20
 [ENTRY]
 ID=151061822
 Asset=Prop-Marker_Medium
+Name=Untitled
 Pos=88318.5,1225.53,55601.7
 Orient=0.34759,0,0,0.937647
 Scale=20,20,20

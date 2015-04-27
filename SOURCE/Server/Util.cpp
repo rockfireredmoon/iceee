@@ -2567,6 +2567,14 @@ void TrimWhitespace(std::string &modify)
 		modify.erase(pos + 1, modify.length());
 }
 
+bool HasEnding (std::string const &fullString, std::string const &ending) {
+    if (fullString.length() >= ending.length()) {
+        return (0 == fullString.compare (fullString.length() - ending.length(), ending.length(), ending));
+    } else {
+        return false;
+    }
+}
+
 float StringToFloat(const std::string &str)
 {
 	return static_cast<float>(atof(str.c_str()));

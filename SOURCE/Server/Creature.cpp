@@ -412,7 +412,7 @@ void CreatureInstance :: RemoveFromSpawner(bool wasKilled)
 
 			if(actInst->spawnsys.NotifyKill(spawnGen, CreatureID) == true || notifyKill == true)
 				if(wasKilled == true)
-					actInst->ScriptCallKill(CreatureDefID);
+					actInst->ScriptCallKill(CreatureDefID, CreatureID);
 
 			spawnGen = NULL;
 			spawnTile = NULL;

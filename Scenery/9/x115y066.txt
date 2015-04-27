@@ -1,0 +1,16 @@
+[ENTRY]
+ID=1125496
+Asset=Prop-Wooden_Tower
+Name=
+Pos=86815.7,1009.06,49591.7
+Orient=0,-0.757843,0,0.652438
+Scale=1,1,1
+
+[ENTRY]
+ID=1125497
+Asset=Prop-Wooden_Tower
+Name=
+Pos=86748.8,979.452,49815.9
+Orient=0,-0.9001,0,0.435682
+Scale=1,1,1
+

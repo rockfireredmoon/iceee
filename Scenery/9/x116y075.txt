@@ -1,0 +1,8 @@
+[ENTRY]
+ID=1125552
+Asset=Basic Pine Forest?d=0.25&s=1&sz=1000
+Name=
+Pos=87185.9,1215.46,56252.5
+Orient=0,0,0,1
+Scale=1,1,1
+

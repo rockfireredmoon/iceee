@@ -979,3 +979,28 @@ function InputCommands::SaveChat(args)
 	::IGIS.info( "Chat log saved to clipboard (" + messages + " messages in " + tabs + " tabs).");
 }
 
+// Particles attached to props
+this.SceneObject.mParticleAttachments <- {};
+this.SceneObject.detachParticleSystem <- function(tag)
+{
+	if(tag in this.mParticleAttachments)
+	{
+		local particles = this.mParticleAttachments[tag];
+		particles[0].destroy();
+		particles[1].destroy();
+		delete this.mParticleAttachments[tag];
+	}
+}
+this.SceneObject.attachParticleSystem <- function(name, tag, size)
+{
+		// TODO make more unique
+		local uniqueName = this.mNode.getName() + "/" + name;
+		local particle = ::_scene.createParticleSystem(uniqueName, name);
+		particle.setVisibilityFlags(this.VisibilityFlags.ANY);
+		local particleNode = this.mNode.createChildSceneNode();
+		particleNode.attachObject(particle);
+		particleNode.setScale(this.Vector3(size, size, size));
+		particle.setVisible(this.mAssembled);
+		this.mParticleAttachments[tag] <- [particle, particleNode];
+		return uniqueName;
+}

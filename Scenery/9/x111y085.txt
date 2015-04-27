@@ -1,0 +1,8 @@
+[ENTRY]
+ID=1105077
+Asset=Prop-Snow#Prop-Snow_Drift2
+Name=
+Pos=83298.9,619.535,63799.8
+Orient=0.342898,0,0,0.939373
+Scale=4,4,4
+

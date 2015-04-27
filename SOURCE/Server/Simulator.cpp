@@ -406,6 +406,27 @@ void SimulatorManager :: FlushHangingSimulators(void)
 	}
 }
 
+void SimulatorManager :: BroadcastMessage(const char *message)
+{
+	g_Log.AddMessageFormat("Broadcast message '%s'", message);
+	SIMULATOR_IT it;
+	for(it = Simulator.begin(); it != Simulator.end(); ++it)
+	{
+		if(it->ProtocolState == 0)
+		{
+			continue;
+		}
+
+		if(it->isConnected == false)
+			continue;
+
+		if(it->pld.charPtr == NULL)
+			continue;
+
+		it->BroadcastMessage(message);
+	}
+}
+
 SimulatorThread * SimulatorManager :: CreateSimulator(void)
 {
 	SimulatorThread *simPtr = NULL;
@@ -1214,27 +1235,8 @@ void SimulatorThread :: ClearAuxBuffers(void)
 void SimulatorThread :: BroadcastMessage(const char *message)
 {
 	LogMessageL(MSG_SHOW, "Broadcast message '%s'", message);
-
 	int wpos = PrepExt_Broadcast(SendBuf, message);
-
-	SIMULATOR_IT it;
-	for(it = Simulator.begin(); it != Simulator.end(); ++it)
-	{
-
-		if(it->ProtocolState == 0)
-		{
-			//LogMessageL(MSG_ERROR, "[WARNING] Cannot not send chat to lobby protocol simulator");
-			continue;
-		}
-
-		if(it->isConnected == false)
-			continue;
-
-		if(it->pld.charPtr == NULL)
-			continue;
-
-		it->AttemptSend(SendBuf, wpos);
-	}
+	AttemptSend(SendBuf, wpos);
 }
 
 void SimulatorThread :: SendInfoMessage(const char *message, char eventID)
@@ -9616,30 +9618,27 @@ int SimulatorThread :: handle_query_script_save(void)
 	Util::SafeFormat(tempStrBuf, sizeof(tempStrBuf), "Instance\\%d", creatureInst->actInst->mZone);
 	Platform::FixPaths(tempStrBuf);
 	Platform::MakeDirectory(tempStrBuf);
-	Util::SafeFormat(tempStrBuf, sizeof(tempStrBuf), "Instance\\%d\\Script.txt.tmp", creatureInst->actInst->mZone);
-	Platform::FixPaths(tempStrBuf);
-	char strBuf[100];
-	Util::SafeFormat(strBuf, sizeof(strBuf), "Instance\\%d\\Script.txt", creatureInst->actInst->mZone);
-	Platform::FixPaths(strBuf);
-
-	std::ofstream out(tempStrBuf);
+	string path = InstanceScript::InstanceNutDef::GetInstanceScriptPath(creatureInst->actInst->mZone, true);
+	string tpath = path;
+	tpath.append(".tmp");
+	std::ofstream out(tpath.c_str());
 	out << query.args[0];
 	out.close();
 
 	// If we wrote OK, delete the old file and swap in the new one
-	if(remove(strBuf) == 0) {
-		if(rename(tempStrBuf, strBuf) == 0) {
+	if(remove(path.c_str()) == 0) {
+		if(rename(tpath.c_str(), path.c_str()) == 0) {
 			Util::SafeFormat(Aux1, sizeof(Aux1), "Script for %d save.", creatureInst->actInst->mZone);
 			SendInfoMessage(Aux1, INFOMSG_INFO);
 			return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
 		}
 		else {
-			LogMessageL(MSG_WARN, "[WARNING] Failed to rename %s to %s, old script will no longer be available, neither will new", tempStrBuf, strBuf);
+			LogMessageL(MSG_WARN, "[WARNING] Failed to rename %s to %s, old script will no longer be available, neither will new", tpath.c_str(), path.c_str());
 			return PrepExt_QueryResponseError(SendBuf, query.ID, "Failed to rename new file, the script may now be missing!");
 		}
 	}
 	else {
-		LogMessageL(MSG_WARN, "[WARNING] Failed to remove %, new script will not be available.", strBuf);
+		LogMessageL(MSG_WARN, "[WARNING] Failed to remove %, new script will not be available.", path.c_str());
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Failed to delete old script file, new one not swapped in.");
 	}
 
@@ -9666,12 +9665,15 @@ int SimulatorThread :: handle_query_script_load(void)
 	wpos += PutInteger(&SendBuf[wpos], query.ID);  //Query response index
 
 	char strBuf[100];
-	Util::SafeFormat(strBuf, sizeof(strBuf), "Instance\\%d\\Script.txt", creatureInst->actInst->mZone);
-	Platform::FixPaths(strBuf);
+	string path = InstanceScript::InstanceNutDef::GetInstanceScriptPath(creatureInst->actInst->mZone, false);
+	if(path.length() == 0) {
+		LogMessageL(MSG_WARN, "[WARNING] Load script query unable to open script for zone: %d", creatureInst->actInst->mZone);
+		return 0;
+	}
 	FileReader lfr;
-	if(lfr.OpenText(strBuf) != Err_OK)
+	if(lfr.OpenText(path.c_str()) != Err_OK)
 	{
-		LogMessageL(MSG_WARN, "[WARNING] Load script query unable to open file: %s", strBuf);
+		LogMessageL(MSG_WARN, "[WARNING] Load script query unable to open file: %s", path.c_str());
 		return 0;
 	}
 
@@ -9689,7 +9691,12 @@ int SimulatorThread :: handle_query_script_load(void)
 
 	// The last record contains info about the instance itself for the editor UI
 	wpos += PutByte(&SendBuf[wpos], 2);
-	wpos += PutStringUTF(&SendBuf[wpos], creatureInst->actInst->scriptPlayer.active ? "true" : "false"); // active
+	if(creatureInst->actInst->nutScriptPlayer.HasScript()) {
+		wpos += PutStringUTF(&SendBuf[wpos], creatureInst->actInst->nutScriptPlayer.active ? "true" : "false"); // active
+	}
+	else {
+		wpos += PutStringUTF(&SendBuf[wpos], creatureInst->actInst->scriptPlayer.active ? "true" : "false"); // active
+	}
 	sprintf(Aux1, "%d", creatureInst->actInst->mZone);
 	wpos += PutStringUTF(&SendBuf[wpos], Aux1);
 
@@ -9711,12 +9718,10 @@ int SimulatorThread :: handle_query_script_kill(void)
 	if(!ok)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
 
-	if(!creatureInst->actInst->scriptPlayer.active)
-		return PrepExt_QueryResponseError(SendBuf, query.ID, "Script not running.");
-
-
 	LogMessageL(MSG_SHOW, "Handling kill script request");
-	creatureInst->actInst->KillScript();
+	if(!creatureInst->actInst->KillScript()) {
+		return PrepExt_QueryResponseError(SendBuf, query.ID, "Script not running.");
+	}
 	Util::SafeFormat(Aux1, sizeof(Aux1), "Script for %d killed.", creatureInst->actInst->mZone);
 	SendInfoMessage(Aux1, INFOMSG_INFO);
 	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
@@ -9736,18 +9741,13 @@ int SimulatorThread :: handle_query_script_run(void)
 	if(!ok)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
 
-	if(creatureInst->actInst->scriptPlayer.active)
-		return PrepExt_QueryResponseError(SendBuf, query.ID, "Script already running.");
-
-
 	LogMessageL(MSG_SHOW, "Handling script run");
 	if(creatureInst->actInst->RunScript()) {
 		Util::SafeFormat(Aux1, sizeof(Aux1), "Script for %d now running.", creatureInst->actInst->mZone);
 		SendInfoMessage(Aux1, INFOMSG_INFO);
 	}
 	else {
-		Util::SafeFormat(Aux1, sizeof(Aux1), "Failed to run script for %d .", creatureInst->actInst->mZone);
-		SendInfoMessage(Aux1, INFOMSG_ERROR);
+		return PrepExt_QueryResponseError(SendBuf, query.ID, "Script already running.");
 	}
 	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
 }

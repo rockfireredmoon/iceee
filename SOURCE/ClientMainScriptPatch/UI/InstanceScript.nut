@@ -102,7 +102,7 @@ class this.Screens.InstanceScript extends this.GUI.Frame
 	{	
 		try
 		{
-			this.mScript.setText(this.unserialize(::System.getClipboard()));
+			this.mScript.setText(this.unserialize(this.System.getClipboard()));
 		}
 		catch( err )
 		{
@@ -157,7 +157,7 @@ class this.Screens.InstanceScript extends this.GUI.Frame
 				}
 				else 
 				{
-					if(r != "") {
+					if(str != "") {
 						str += "\n";
 					}
 					str = str + _expandTabs(r[0]);

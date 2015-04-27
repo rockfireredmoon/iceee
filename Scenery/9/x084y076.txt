@@ -1,6 +1,16 @@
 [ENTRY]
+ID=1083264
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=Untitled
+Pos=63725.2,775.629,57247.3
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#F1355
+
+[ENTRY]
 ID=151024633
 Asset=Prop-Boulder_Arid#Prop-Boulder_Arid4
+Name=Untitled
 Pos=63648.3,764.395,57219
 Orient=0,0.846832,0,0.531861
 Scale=5.85,5.85,5.85
@@ -9,6 +19,7 @@ Flags=1
 [ENTRY]
 ID=151047564
 Asset=CL-AridBush3#CL-AridBush3
+Name=Untitled
 Pos=63195,1049.85,57148
 Orient=0,0,0,1
 Scale=1,1,1
@@ -17,6 +28,7 @@ Flags=1
 [ENTRY]
 ID=151047565
 Asset=CL-AridBush4#CL-AridBush4
+Name=Untitled
 Pos=63198.5,1047.97,57185
 Orient=0,0,0,1
 Scale=1,1,1

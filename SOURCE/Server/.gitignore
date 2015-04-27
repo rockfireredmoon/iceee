@@ -1,1 +1,6 @@
 *.o
+/.deps/
+/.libs/
+/Makefile.in
+/Makefile
+/planetforeverd

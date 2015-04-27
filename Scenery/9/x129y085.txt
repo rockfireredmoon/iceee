@@ -1,0 +1,8 @@
+[ENTRY]
+ID=151061731
+Asset=Bldg-Castle-Med_Castle2#Bldg-Castle-Med_Castle2?ATS=ATS-Evil_Castle
+Name=Untitled
+Pos=97405.7,1467.33,64285.6
+Orient=0,0.139543,0,0.990216
+Scale=2.1,2.1,2.1
+

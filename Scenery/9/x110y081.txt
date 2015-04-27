@@ -1,0 +1,8 @@
+[ENTRY]
+ID=1105035
+Asset=CL-Snowy#CL-Snowy4
+Name=
+Pos=83247.1,1187.96,61441.6
+Orient=0,0,0,1
+Scale=1,1,1
+

@@ -1,0 +1,8 @@
+[ENTRY]
+ID=1105105
+Asset=Snowy Field?d=0.15&s=1&sz=1920
+Name=
+Pos=85126.2,338.371,64412.5
+Orient=0,0,0,1
+Scale=1,1,1
+

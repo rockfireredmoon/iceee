@@ -21,6 +21,31 @@ class CreatureSpawnDef;
 
 */
 
+
+enum SceneryEffectType {
+	PARTICLE_EFFECT = 1,
+	ASSET_UPDATE = 2
+};
+
+/* Effects can be attached to scenery items by scripts. This
+ * happens at the Instance level, each piece of scenery having
+ * a list of scenery effects attached to them
+ */
+class SceneryEffect
+{
+public:
+	int tag;
+	SceneryEffectType type;
+	int propID;
+	float scale;
+	float offsetX;
+	float offsetY;
+	float offsetZ;
+	const char *effect;
+
+	SceneryEffect() { type = PARTICLE_EFFECT, tag = 0; propID = 0; scale = 1.0; offsetX = 0; offsetY = 0 ; offsetZ = 0 ; effect = ""; }
+};
+
 struct GlobalSceneryVars
 {
 	int BaseSceneryID;
@@ -58,7 +83,7 @@ public:
 
 	//The following data is used in the client
 	int ID;
-	
+
 	char Asset[128];   //Asset file
 	char Name[32];    //Arbitrary object name
 
@@ -110,7 +135,6 @@ public:
 	const char *GetSpawnPackageName(void);
 	bool ExtractATS(std::string& outputStr) const;
 };
-
 
 
 //Used as a key for storing and retrieving pages from a zone.
@@ -255,7 +279,9 @@ public:
 
 	void EnumPropsInRange(int zoneID, int posX, int posZ, int radius, std::vector<SceneryObject*>& searchResults);
 	
-
+	// Utilities
+	static int WriteAttachParticles(char *outbuf, const char *itemDefName, char roll, const char *bidder);
+	static int WriteDetachParticles(char *outbuf, const char *lootTag, const char *originalTag, const char *winner, int creatureId, int slotIndex);
 
 	//Thread delegation for loading scenery.
 	static void ThreadProc(SceneryManager *object);

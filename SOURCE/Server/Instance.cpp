@@ -48,6 +48,7 @@ unsigned long CREATURE_DELETE_RECHECK = 60000; //Delay between rescanning for de
 #include "Chat.h"
 #include "PartyManager.h"
 #include "InstanceScale.h"
+#include "ScriptCore.h"
 
 extern char GSendBuf[32767];
 extern char GAuxBuf[1024];
@@ -450,9 +451,10 @@ void ActiveInstance :: Clear(void)
 	mNextCreatureDeleteScan = 0;
 	mExpireTime = 0;
 
+	mSceneryEffects.clear();
 	PlayerList.clear();
 	PlayerListPtr.clear();
-
+	mNextEffectTag = 0;
 	uniqueSpawnManager.Clear();
 
 	size_t a;
@@ -914,6 +916,13 @@ int ActiveInstance :: ProcessMessage(MessageComponent *msg)
 	}
 
 	return 0;
+}
+
+void ActiveInstance :: BroadcastMessage(const char *message)
+{
+	for(size_t i = 0; i < RegSim.size(); i++)
+		if((RegSim[i]->CheckStateGameplayProtocol() == true))
+			RegSim[i]->BroadcastMessage(message);
 }
 
 int ActiveInstance :: LSendToAllSimulator(const char *buffer, int length, int ignoreIndex)
@@ -1502,6 +1511,13 @@ CreatureInstance * ActiveInstance :: GetNPCInstanceByCDefID(int CDefID)
 	return NULL;
 }
 
+void ActiveInstance :: GetNPCInstancesByCDefID(int CDefID, vector<int> cids)
+{
+	for(size_t i = 0; i < NPCListPtr.size(); i++)
+		if(NPCListPtr[i]->CreatureDefID == CDefID)
+			cids.push_back(NPCListPtr[i]->CreatureID);
+}
+
 void ActiveInstance :: ResolveCreatureDef(int CreatureInstanceID, int *responsePtr)
 {
 #ifndef CREATUREMAP
@@ -1674,7 +1690,7 @@ CreatureInstance* ActiveInstance :: SpawnCreate(CreatureInstance * sourceActor, 
 	return retPtr;
 }
 
-CreatureInstance* ActiveInstance :: SpawnGeneric(int CDefID, int x, int y, int z, int facing)
+CreatureInstance* ActiveInstance :: SpawnGeneric(int CDefID, int x, int y, int z, int facing, int SpawnFlags)
 {
 	// Generic spawn, do not assign any internal links to spawn tiles or such.
 	CreatureDefinition *cdef = CreatureDef.GetPointerByCDef(CDefID);
@@ -1715,9 +1731,49 @@ CreatureInstance* ActiveInstance :: SpawnGeneric(int CDefID, int x, int y, int z
 		for(size_t i = 0; i < cdef->DefaultEffects.size(); i++)
 			retPtr->_AddStatusList(cdef->DefaultEffects[i], -1);
 
-		retPtr->_AddStatusList(StatusEffects::UNATTACKABLE, -1);
-		retPtr->_AddStatusList(StatusEffects::INVINCIBLE, -1);
-		retPtr->Faction = FACTION_PLAYERFRIENDLY;
+		int aggro = 0;
+
+		if(SpawnFlags & SpawnPackageDef::FLAG_FRIENDLY)
+		{
+			retPtr->Faction = FACTION_PLAYERFRIENDLY;
+			retPtr->_AddStatusList(StatusEffects::INVINCIBLE, -1);
+			retPtr->_AddStatusList(StatusEffects::UNATTACKABLE, -1);
+			aggro = 0;
+		}
+		if(SpawnFlags & SpawnPackageDef::FLAG_FRIENDLY_ATTACK)
+		{
+			retPtr->Faction = FACTION_PLAYERFRIENDLY;
+			retPtr->_AddStatusList(StatusEffects::UNATTACKABLE, -1);
+			aggro = 0;
+		}
+		if(SpawnFlags & SpawnPackageDef::FLAG_NEUTRAL)
+		{
+			retPtr->SetServerFlag(ServerFlags::NeutralInactive, true);
+			aggro = 0;
+		}
+		if(SpawnFlags & SpawnPackageDef::FLAG_ENEMY)
+		{
+			retPtr->Faction = FACTION_PLAYERHOSTILE;
+			aggro = 1;
+		}
+
+		//if(cdef->css.eq_appearance[0] != 0)
+		//{
+			short visw = 0;
+			if(SpawnFlags & SpawnPackageDef::FLAG_VISWEAPON_MELEE)
+				visw = 1;
+			if(SpawnFlags & SpawnPackageDef::FLAG_VISWEAPON_RANGED)
+				visw = 2;
+			retPtr->css.vis_weapon = visw;
+		//}
+
+		if(SpawnFlags & SpawnPackageDef::FLAG_HIDEMAP)
+			retPtr->css.hide_minimap = 1;
+
+		if(aggro == 1 && (cdef->css.ai_package[0] == 0 && retPtr->css.ai_package[0] == 0))
+			aggro = 0;
+
+		retPtr->css.aggro_players = aggro;
 	}
 
 	RebuildNPCList();
@@ -2059,14 +2115,23 @@ void ActiveInstance :: InitializeData(void)
 	//Important, need to set base pointer for the spawning system trackbacks.
 	spawnsys.SetInstancePointer(this);
 
-	//Load the script system.
-	char buffer[256];
-	Util::SafeFormat(buffer, sizeof(buffer), "Instance\\%d\\Script.txt", mZone);
-	Platform::FixPaths(buffer);
-	scriptDef.CompileFromSource(buffer);
-	scriptPlayer.Initialize(&scriptDef);
-	scriptPlayer.SetInstancePointer(this);
-	scriptPlayer.JumpToLabel("init");
+	//Load the new script system
+	std::string path = InstanceScript::InstanceNutDef::GetInstanceScriptPath(mZone, false);
+	if(Util::HasEnding(path, ".nut")) {
+		nutScriptDef.Initialize(path.c_str());
+		nutScriptPlayer.SetInstancePointer(this);
+		nutScriptPlayer.Initialize(&nutScriptDef);
+	}
+	else if(Util::HasEnding(path, ".text")) {
+		scriptDef.CompileFromSource(path.c_str());
+		scriptPlayer.Initialize(&scriptDef);
+		scriptPlayer.SetInstancePointer(this);
+		scriptPlayer.JumpToLabel("init");
+	}
+	else {
+		g_Log.AddMessageFormat("No Squirrel script for instance %d", mZone);
+	}
+
 
 	/*  log debug disassembly
 	FILE *output = fopen("instance_disassembly.txt", "wb");
@@ -2075,6 +2140,7 @@ void ActiveInstance :: InitializeData(void)
 	*/
 
 	//Load essence shop data.
+	char buffer[256];
 	Util::SafeFormat(buffer, sizeof(buffer), "Instance\\%d\\EssenceShop.txt", mZone);
 	Platform::FixPaths(buffer);
 	essenceShopList.LoadFromFile(buffer);
@@ -2484,6 +2550,68 @@ int ActiveInstance :: SidekickParty(CreatureInstance* host, char *outBuf)
 	return wpos;
 }
 
+int ActiveInstance :: DetachSceneryEffect(char *outBuf, int sceneryId, int effectType, int tag)
+{
+	int wpos = 0;
+	wpos += PutByte(&outBuf[wpos], 98);       //_handleInfoMsg
+	wpos += PutShort(&outBuf[wpos], 0);      //Placeholder for size
+
+	wpos += PutByte(&outBuf[wpos], 2);
+	wpos += PutInteger(&outBuf[wpos], sceneryId);
+	wpos += PutInteger(&outBuf[wpos], effectType);
+	wpos += PutInteger(&outBuf[wpos], tag);
+	PutShort(&outBuf[1], wpos - 3);
+	return wpos;
+}
+
+int ActiveInstance :: AddSceneryEffect(char *outbuf, SceneryEffect *effect)
+{
+	int wpos = 0;
+	wpos += PutByte(&outbuf[wpos], 98);       //_handleSceneryEffectMsg
+	wpos += PutShort(&outbuf[wpos], 0);      //Placeholder for size
+
+	wpos += PutByte(&outbuf[wpos], 1); //Event
+	wpos += PutInteger(&outbuf[wpos], effect->propID);
+	wpos += PutInteger(&outbuf[wpos], effect->type);
+	wpos += PutInteger(&outbuf[wpos], effect->tag);
+	wpos += PutStringUTF(&outbuf[wpos], effect->effect);
+	wpos += PutFloat(&outbuf[wpos], effect->offsetX);
+	wpos += PutFloat(&outbuf[wpos], effect->offsetY);
+	wpos += PutFloat(&outbuf[wpos], effect->offsetZ);
+	wpos += PutFloat(&outbuf[wpos], effect ->scale);
+	PutShort(&outbuf[1], wpos - 3);
+
+	return wpos;
+}
+
+SceneryEffect* ActiveInstance :: RemoveSceneryEffect(int PropID, int tag)
+{
+	SceneryEffectMap::iterator it = mSceneryEffects.find(PropID);
+	if(it != mSceneryEffects.end()) {
+		for(std::vector<SceneryEffect>::size_type i = 0; i != it->second.size(); i++)
+		{
+			SceneryEffect *sceneryEffect = &it->second[i];
+			if(sceneryEffect->tag == tag)
+			{
+				it->second.erase(it->second.begin() + i);
+				if(it->second.size() == 0)
+					mSceneryEffects.erase(i);
+				return sceneryEffect;
+			}
+		}
+	}
+	return NULL;
+}
+
+SceneryEffectList* ActiveInstance :: GetSceneryEffectList(int PropID)
+{
+	SceneryEffectMap::iterator it = mSceneryEffects.find(PropID);
+	if(it == mSceneryEffects.end()) {
+		return &mSceneryEffects.insert(SceneryEffectMap::value_type(PropID, SceneryEffectList())).first->second;
+	}
+	return &it->second;
+}
+
 int ActiveInstance :: PartyAll(CreatureInstance* host, char *outBuf)
 {
 	int wpos = 0;
@@ -2772,7 +2900,10 @@ void ActiveInstance :: RunProcessingCycle(void)
 #endif
 
 	//scriptPlayer.RunUntilWait();
-	scriptPlayer.RunAtSpeed(25);
+	if(scriptPlayer.HasScript())
+		scriptPlayer.RunAtSpeed(25);
+	else if(nutScriptPlayer.HasScript())
+		nutScriptPlayer.Tick();
 	SendActors();
 	UpdateCreatureLocalStatus();
 
@@ -2812,18 +2943,28 @@ void ActiveInstance :: UpdateEnvironmentCycle(const char *timeOfDay)
 }
 
 //Calls a script with a particular kill event.
-void ActiveInstance :: ScriptCallKill(int CreatureDefID)
+void ActiveInstance :: ScriptCallKill(int CreatureDefID, int CreatureID)
 {
-	//Checks for a scripted event for a kill of this creature type.
+	if(nutScriptPlayer.HasScript() && nutScriptPlayer.active)
+	{
+		std::vector<ScriptCore::ScriptParam> parms;
+		parms.push_back(ScriptCore::ScriptParam(CreatureDefID));
+		parms.push_back(ScriptCore::ScriptParam(CreatureID));
+		nutScriptPlayer.RunFunction("onKill", parms);
+	}
+	else if(scriptPlayer.HasScript())
+	{
+		//Checks for a scripted event for a kill of this creature type.
 
-	char buffer[64];
+		char buffer[64];
 
-	Util::SafeFormat(buffer, sizeof(buffer), "onKill_%d", CreatureDefID);
+		Util::SafeFormat(buffer, sizeof(buffer), "onKill_%d", CreatureDefID);
 
-	//Need to run the script now, otherwise a simultaneous action may interrupt
-	//the script, which could prevent certain instructions from firing or cause
-	//problem with multi-instruction tasks like IF comparison.
-	ScriptCall(buffer);
+		//Need to run the script now, otherwise a simultaneous action may interrupt
+		//the script, which could prevent certain instructions from firing or cause
+		//problem with multi-instruction tasks like IF comparison.
+		ScriptCall(buffer);
+	}
 }
 
 void ActiveInstance :: ScriptCallUse(int CreatureDefID)
@@ -2850,37 +2991,56 @@ void ActiveInstance :: ScriptCallUseFinish(int CreatureDefID)
 //Calls a script jump label.  Can be used for any generic purpose.
 void ActiveInstance :: ScriptCall(const char *name)
 {
-	if(scriptPlayer.JumpToLabel(name) == true)
+	if(scriptPlayer.HasScript() && scriptPlayer.JumpToLabel(name) == true)
 		scriptPlayer.RunUntilWait();
 }
 
 bool ActiveInstance :: RunScript()
 {
-	if(scriptPlayer.active) {
+	if((scriptPlayer.HasScript() && scriptPlayer.active) || (nutScriptPlayer.HasScript() && nutScriptPlayer.active)) {
 		g_Log.AddMessageFormat("Request to run script for %d when it is already running", mZone);
 		return false;
 	}
-	char buffer[256];
-	Util::SafeFormat(buffer, sizeof(buffer), "Instance\\%d\\Script.txt", mZone);
-	Platform::FixPaths(buffer);
-	scriptDef.CompileFromSource(buffer);
-	scriptPlayer.Initialize(&scriptDef);
-	scriptPlayer.SetInstancePointer(this);
-	scriptPlayer.JumpToLabel("init");
+
+	//Load the new script system
+	std::string path = InstanceScript::InstanceNutDef::GetInstanceScriptPath(mZone, false);
+	if(Util::HasEnding(path, ".nut")) {
+		nutScriptDef.Initialize(path.c_str());
+		nutScriptPlayer.SetInstancePointer(this);
+		nutScriptPlayer.Initialize(&nutScriptDef);
+	}
+	else if(Util::HasEnding(path, ".text")) {
+		scriptDef.CompileFromSource(path.c_str());
+		scriptPlayer.Initialize(&scriptDef);
+		scriptPlayer.SetInstancePointer(this);
+		scriptPlayer.JumpToLabel("init");
+	}
+	else {
+		g_Log.AddMessageFormat("No Squirrel script for instance %d", mZone);
+		return false;
+	}
 	return true;
 }
 
 bool ActiveInstance :: KillScript()
 {
-	if(scriptPlayer.active) {
+	bool ok = false;
+	if(scriptPlayer.HasScript() && scriptPlayer.active) {
 		g_Log.AddMessageFormat("Killing script for %d", mZone);
 		scriptPlayer.HaltExecution();
-		return true;
+		ok = true;
 	}
-	else {
-		g_Log.AddMessageFormat("Request to kill inactive script %d", mZone);
-		return false;
+	else if(nutScriptPlayer.HasScript()) {
+		if(nutScriptPlayer.active) {
+			g_Log.AddMessageFormat("Killing squirrel script for %d", mZone);
+			nutScriptPlayer.HaltExecution();
+			ok = true;
+		}
 	}
+	if(!ok) {
+		g_Log.AddMessageFormat("Request to kill inactive squirrel script %d", mZone);
+	}
+	return ok;
 }
 
 void ActiveInstance :: FetchNearbyCreatures(SimulatorThread *simPtr, CreatureInstance *player)
@@ -2993,7 +3153,7 @@ void ActiveInstance :: LoadStaticObjects(const char *filename)
 			int y = lfr.BlockToIntC(2);
 			int z = lfr.BlockToIntC(3);
 			int facing = lfr.BlockToIntC(4);
-			SpawnGeneric(CDefID, x, y, z, facing);
+			SpawnGeneric(CDefID, x, y, z, facing, 0);
 		}
 	}
 	lfr.CloseCurrent();

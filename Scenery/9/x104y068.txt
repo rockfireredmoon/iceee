@@ -1,6 +1,15 @@
 [ENTRY]
+ID=1109376
+Asset=Prop-Tree_Platforms#Prop-Tree_Platform_Drop_Bridge
+Name=
+Pos=78354.3,755.214,51550.2
+Orient=-0.0495626,0.998324,0.00643954,-0.029163
+Scale=1,1,1
+
+[ENTRY]
 ID=151018015
 Asset=Arid_Clutter?d=0.9&s=8756453&sz=800
+Name=Untitled
 Pos=78081,643.405,51737
 Orient=0,0,0,1
 Scale=1,1,1

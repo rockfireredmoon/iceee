@@ -1,2 +1,14 @@
 /EEServer36
 /scratch/
+/autom4te.cache/
+*.log
+/configure
+/config.sub
+/config.status
+/config.guess
+/compile
+*.m4
+/config/
+/Makefile
+/libtool
+*.in

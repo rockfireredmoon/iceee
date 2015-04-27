@@ -1,0 +1,8 @@
+[ENTRY]
+ID=1105101
+Asset=Snowy Pine Forest
+Name=
+Pos=85259.3,639.709,61945.9
+Orient=0,0,0,1
+Scale=1,1,1
+

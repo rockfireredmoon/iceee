@@ -1,6 +1,7 @@
 [ENTRY]
 ID=151017785
 Asset=CL-Burnt-Pine6#CL-Burnt-Pine6
+Name=Untitled
 Pos=77663.2,552.944,51431.8
 Orient=0,0.999415,0,-0.034197
 Scale=2.9,2.9,2.9
@@ -9,6 +10,7 @@ Flags=1
 [ENTRY]
 ID=151018930
 Asset=CL-Burnt-Pine5#CL-Burnt-Pine5
+Name=Untitled
 Pos=77496,535.259,51599.5
 Orient=0,0.999415,0,-0.034197
 Scale=1.725,1.725,1.725
@@ -17,6 +19,7 @@ Flags=1
 [ENTRY]
 ID=151018931
 Asset=CL-Sick-Pine1
+Name=Untitled
 Pos=77562,555.286,51412
 Orient=0,0,0,1
 Scale=2.175,2.175,2.175

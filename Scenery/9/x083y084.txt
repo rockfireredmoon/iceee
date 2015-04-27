@@ -1,6 +1,16 @@
 [ENTRY]
+ID=1104164
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=62999.5,1263.87,63020
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#1260
+
+[ENTRY]
 ID=151028398
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=62904.7,1260.01,63188
 Orient=0,0,0,1
 Scale=1,1,1
@@ -11,6 +21,7 @@ link=151028399,1
 [ENTRY]
 ID=151028399
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=62840.7,1257.72,63002
 Orient=0,0,0,1
 Scale=1,1,1
@@ -21,33 +32,34 @@ link=151028400,1
 [ENTRY]
 ID=151029055
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=62282,756.1,63312
 Orient=0,0.681639,0,0.731689
 Scale=1,1,1
 spawnPackage=11_dth_enslavedZombie
-outerRadius=1
 
 [ENTRY]
 ID=151029056
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=62312.1,748.769,63217
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_dth_enslavedZombie
-outerRadius=1
 
 [ENTRY]
 ID=151029061
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=62357.1,751.449,63067
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_dth_enslavedZombie
-outerRadius=1
 
 [ENTRY]
 ID=151031299
 Asset=Prop-Cooking_Meat
+Name=Untitled
 Pos=62264.2,754.105,63074
 Orient=0,0,0,1
 Scale=1.675,1.675,1.675
@@ -55,6 +67,7 @@ Scale=1.675,1.675,1.675
 [ENTRY]
 ID=151031307
 Asset=Par-Bugs1-Emitter
+Name=Untitled
 Pos=62265.6,753.981,63074
 Orient=0,0,0,1
 Scale=1.7,1.7,1.7
@@ -62,6 +75,7 @@ Scale=1.7,1.7,1.7
 [ENTRY]
 ID=151031311
 Asset=Prop-Skull_Pile
+Name=Untitled
 Pos=62349.9,749.971,63134
 Orient=0,0,0,1
 Scale=1.825,1.825,1.825
@@ -69,6 +83,7 @@ Scale=1.825,1.825,1.825
 [ENTRY]
 ID=151040179
 Asset=Prop-Burnt_Pines#Prop-Burnt_Pine1
+Name=Untitled
 Pos=62272.4,774.619,63371
 Orient=-0.18028,-0.195279,-0.0365445,0.963343
 Scale=3.5,3.5,3.5
@@ -77,6 +92,7 @@ Flags=1
 [ENTRY]
 ID=151040180
 Asset=CL-GrunsBush_5#CL-GrunsBush_5
+Name=Untitled
 Pos=62258.6,773.772,63370
 Orient=0,0,0,1
 Scale=1.85,1.85,1.85
@@ -85,6 +101,7 @@ Flags=1
 [ENTRY]
 ID=151040181
 Asset=Prop-Burnt_Pines#Prop-Burnt_Pine4
+Name=Untitled
 Pos=62319.3,762.327,63336
 Orient=-0.105653,0.0298099,0.269906,0.956608
 Scale=2.25,2.25,2.25

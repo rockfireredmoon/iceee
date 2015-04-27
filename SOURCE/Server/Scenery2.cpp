@@ -52,6 +52,7 @@ void SceneryObject :: Clear(void)
 	Util::ClearString(Asset, sizeof(Asset));
 	Util::ClearString(Name, sizeof(Name));
 
+
 	LocationX = 0.0F;
 	LocationY = 0.0F;
 	LocationZ = 0.0F;
@@ -574,7 +575,8 @@ bool SceneryPage::SaveFile(const char *fileName)
 	SCENERY_IT it;
 	for(it = mSceneryList.begin(); it != mSceneryList.end(); ++it)
 	{
-		it->second.WriteToStream(output);
+		g_Log.AddMessageFormat("Saving prop [%d]", it->second.ID);
+			it->second.WriteToStream(output);
 	}
 	fclose(output);
 	g_Log.AddMessageFormat("Saved [%s]", fileName);

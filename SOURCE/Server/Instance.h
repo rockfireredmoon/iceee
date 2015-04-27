@@ -38,6 +38,10 @@ extern unsigned long CREATURE_DELETE_RECHECK;
 extern const int FACTION_PLAYERFRIENDLY;
 extern const int FACTION_PLAYERHOSTILE;
 
+typedef std::vector<SceneryEffect>      SceneryEffectList;
+typedef std::pair<int, SceneryEffectList> SceneryEffectPair;
+typedef std::map<int, SceneryEffectList> SceneryEffectMap;
+
 struct MapDefInfo
 {
 	string Name;
@@ -205,6 +209,11 @@ public:
 	static const int DEFAULT_CREATURE_ID = 3000000;
 	int GetNewActorID(void);
 
+
+	int mNextEffectTag;
+
+	SceneryEffectMap mSceneryEffects;
+
 	typedef std::map<int, CreatureInstance> CREATURE_MAP;
 	typedef std::pair<int, CreatureInstance> CREATURE_PAIR;
 	typedef std::map<int, CreatureInstance>::iterator CREATURE_IT;
@@ -227,6 +236,8 @@ public:
 	SpawnManager spawnsys;
 	InstanceScript::InstanceScriptDef scriptDef;
 	InstanceScript::InstanceScriptPlayer scriptPlayer;
+	InstanceScript::InstanceNutDef nutScriptDef;
+	InstanceScript::InstanceNutPlayer nutScriptPlayer;
 	//std::list<InstanceScript::ScriptPlayer> mConcurrentInstanceScripts;   DISABLED, NOT FINISHED
 
 	EssenceShopContainer essenceShopList;
@@ -257,6 +268,7 @@ public:
 	int RemovePlayerByID(int creatureID);
 
 	int ProcessMessage(MessageComponent *msg);
+	void BroadcastMessage(const char *message);
 	int LSendToAllSimulator(const char *buffer, int length, int ignoreIndex);
 	void LSendToLocalSimulator(const char *buffer, int length, int x, int z, int ignoreIndex = -1);
 	int LSendToOneSimulator(const char *buffer, int length, int simIndex);
@@ -264,6 +276,11 @@ public:
 
 	void SendActors(void);  //Updates all NPC objects and sends updates to each active simulator
 	void UpdateCreatureLocalStatus(void);  //Scans NPCs to determine which ones should stay active for detailed processing
+
+	int AddSceneryEffect(char *outbuf, SceneryEffect *effect);
+	int DetachSceneryEffect(char *outBuf, int sceneryId, int effectType, int tag);
+	SceneryEffectList * GetSceneryEffectList(int PropID);
+	SceneryEffect * RemoveSceneryEffect(int PropID, int tag);
 
 	static int GetBoxRange(CreatureInstance *obj1, CreatureInstance *obj2);
 	static int GetPlaneRange(CreatureInstance *obj1, CreatureInstance *obj2, int threshold);
@@ -273,6 +290,7 @@ public:
 	static int ActivateAbility(CreatureInstance *cInst, short ability, int ActionType, ActiveAbilityInfo *abInfo);
 	CreatureInstance * GetInstanceByCID(int CID);
 	CreatureInstance * GetNPCInstanceByCID(int CID);
+	void GetNPCInstancesByCDefID(int CDefID, vector<int> cids);
 	CreatureInstance * GetNPCInstanceByCDefID(int CDefID);
 	void ResolveCreatureDef(int CreatureInstanceID, int *responsePtr);
 
@@ -280,7 +298,7 @@ public:
 	void RebuildNPCList(void);
 
 	CreatureInstance* SpawnCreate(CreatureInstance * sourceActor, int CDefID);
-	CreatureInstance* SpawnGeneric(int CDefID, int x, int y, int z, int facing);
+	CreatureInstance* SpawnGeneric(int CDefID, int x, int y, int z, int facing, int flags);
 	void SpawnAtProp(int CDefID, int PropID, int duration, int elevationOffset);
 	void CreatureDelete(int CreatureID);
 
@@ -325,7 +343,7 @@ public:
 	void UpdateEnvironmentCycle(const char *timeOfDay);
 	bool KillScript();
 	bool RunScript();
-	void ScriptCallKill(int CreatureDefID);
+	void ScriptCallKill(int CreatureDefID, int CreatureID);
 	void ScriptCallUse(int CreatureDefID);
 	void ScriptCallUseHalt(int CreatureDefID);
 	void ScriptCallUseFinish(int CreatureDefID);

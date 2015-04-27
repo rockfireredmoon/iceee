@@ -59,6 +59,7 @@ public:
 	int activateY;
 	int activateZ;
 
+	void ClearDerived();
 	void Clear(void);
 	void TriggerFinished(void);          //Signals the script that a quest interaction has finished successfully.
 	void TriggerAbort(void);             //Triggers that a script should be canceled.  

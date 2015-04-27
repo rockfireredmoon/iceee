@@ -66,6 +66,7 @@ namespace Platform
     char * GenerateFilePath(char *resultBuffer, const char *folderName, const char *fileName);
 	void GenerateFilePath(std::string& resultStr, const char *folderName, const char *fileName);
 	int FileCopy(const char *sourceFile, const char *destFile);
+    bool FileExists(const char *sourceFile);
 }
 
 #endif //DIRECTORYACCESS_H
