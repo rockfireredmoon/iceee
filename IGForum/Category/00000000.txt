@@ -1,8 +1,0 @@
-[ENTRY]
-ID=1
-Title=root
-ParentCategory=0
-Locked=0
-Flags=0
-LastUpdateTime=0
-

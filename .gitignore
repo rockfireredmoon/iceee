@@ -12,3 +12,5 @@
 /Makefile
 /libtool
 *.in
+/ServerLog.txt
+/SessionVars.txt
