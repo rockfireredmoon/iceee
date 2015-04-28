@@ -1,0 +1,576 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>AI Script Commands</title>
+<link rel="stylesheet" type="text/css" href="../main.css">
+</head>
+<body>
+
+<div>
+
+<h2>AI Script Commands</h2>
+
+This file documents the commands and features used to control AI Scripts.
+<p>
+AI Scripts augment the base <a href="../Generic/ScriptCore.html">Script Core</a> system.  Refer there for basic understanding of labels, conditionals, calls, variables, strings, etc.  This document will describe new commands and other things specific to the AI Script subsystem.
+<p>
+
+<div class="spacer"></div>
+
+<p>
+In this document:
+<p>
+<a href="#commandref">Detailed Command Reference</a><br>
+<a href="#metadata">Metadata Information</a><br>
+<a href="#reservedlabels">Reserved Label Names</a><br>
+<a href="#quickreference">Brief Command Reference</a>
+
+<div class="spacer"></div>
+
+<a name="commandref"></a>
+<h2>Command Reference</h2>
+<p>
+Additional functions available to AI Scripts.
+<p>
+
+<span class="scriptdoc">use [integer]</span>
+<br>
+Perform an ability activation.  The value used is the Ability ID.  Consult the Ability Table to retrieve the ID.
+<p>
+Example:<br>
+<span class="script">
+; Performs the NPC version of Firebolt
+use 5173
+</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">getwill [variable]</span>
+<br>
+Retrieve the object's current Will amount, and store in a variable.
+<p>
+Example:<br>
+<span class="script">
+getwill WILL<br>
+</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">getwillcharge [variable]</span>
+<br>
+Retrieve the object's current Will Charge count, and store in a variable.
+<p>
+Example:<br>
+<span class="script">
+getwillcharge WILLCH<br>
+</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">getmight [variable]</span>
+<br>
+Retrieve the object's current Might amount, and store in a variable.
+<p>
+Example:<br>
+<span class="script">
+getmight MIGHT<br>
+</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">getmightcharge [variable]</span>
+<br>
+Retrieve the object's current Might Charge count, and store in a variable.
+<p>
+Example:<br>
+<span class="script">
+getmightcharge MIGHTCH<br>
+</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">has_target [variable]</span>
+<br>
+Check whether the object has a currently selected target.  If it does, [variable] will be set to 1.  If no target, it will be set to 0.
+<p>
+Example:<br>
+<span class="script">
+has_target var<br>
+</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">getlevel [variable]</span>
+<br>
+Retrieve the object's level, and store in a variable.
+<p>
+Example:<br>
+<span class="script">
+getlevel var<br>
+</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">debugprint [string:text]</span>
+<br>
+Same as <b>print</b>.  Prints a message to the server log.
+<p>
+Example:<br>
+<span class="script">debugprint "Reached a checkpoint!"</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">getcooldown [string] [variable]</span>
+<br>
+Determine whether the object is currently waiting on a cooldown category to finish.  This is useful if you want to determine whether a skill with a long cooldown is available to cast again.  If not you may wish to conditionally perform some other effect.
+<p>
+Cooldown categories are specified by string name.  Refer to the ability table to see which cooldown categories are used by a particular skill.  If waiting on a cooldown, the variable will be set to 1.  If not in cooldown, it will set to 0.
+<p>
+Example:<br>
+<span class="script">getcooldown "Concussion" var</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">is_busy [variable]</span>
+<br>
+Determine if an ability is currently being performed.  Channels and casting warmups take time to finish, so you may not want to interrupt a cast with another ability.
+<p>
+If an ability is currently active, sets the variable to 1.  If not, sets to 0.
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">count_enemy_near [integer:range] [variable]</span>
+<br>
+Count the number of valid enemy targets around the object, and store the result in a variable.  This is useful if you want to determine whether to cast an Area of Effect ability that will hit multiple targets.
+<p>
+The integer takes the maximum range, in game units.  Note: 10 units = 1 meter.
+<p>
+Example:<br>
+<span class="script">count_enemy_near 150 TCOUNT</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">count_enemy_at [integer:range] [variable]</span>
+<br>
+Like count_enemy_near, but performs a search around the target creature, if there is a target.  If there isn't a target, it defaults to searching around itself.
+<p>
+The integer takes the maximum range, in game units.  Note: 10 units = 1 meter.
+<p>
+Example:<br>
+<span class="script">count_enemy_at 100 TCOUNT</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">health_percent [variable]</span>
+<br>
+Retrieves the object's health percentage (a value from 0 to 100) and stores the result in a variable.
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">target_health_percent [variable]</span>
+<br>
+Retrieves the selected target's health percentage (a value from 0 to 100) and stores the result in a variable.  If there is no target, the result will always be 0.
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">set_elapsed_time [variable]</span>
+<br>
+Retrieves the amount of time, in milliseconds, since the server was launched.  Stores the result in a variable.
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">time_offset [variable:elapsed] [variable:destination]</span>
+<br>
+Calculates the current time difference (in milliseconds) with a variable holding a time (which should previously have been set using set_elapsed_time).  The time difference is stored in the destination variable.
+<p>
+Example:<br>
+<span class="script">
+time_offset LASTABILITY<br>
+; ... (any code that happens as time passes)<br>
+time_offset LASTABILITY ELAPSEDTIME<br>
+if ELAPSEDTIME > 30000<br>
+&nbsp;&nbsp;; do something<br>
+endif<br>
+</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">visual_effect [string]</span>
+<br>
+Sends a visual effect to the object.  This plays an animation in the client but has no effect on gameplay.
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">visual_effect_t [string]</span>
+<br>
+Sends a visual effect to the selected target.  This plays an animation in the client but has no effect on gameplay.  If the object does not have a target, the animation plays on itself.
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">say [string]</span>
+<br>
+Sends a /say message as speech and appears to all local players within chat range.
+<p>
+Example:<br>
+<span class="script">say "Furries ruined Sparkplay."</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">instance_call [string:label]</span>
+<br>
+Performs an unconditional jump in the zone's instance script (not AI Script).  The label is not checked for accuracy so make sure it exists in the instance script.
+<p>
+This is necessary for boss scripts that spawn minions.
+<p>
+Example:<br>
+<span class="script">instance_call "spawnmobs"</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">get_idle_mob [integer:CDefID] [variable]</span>
+<br>
+Search the instance for any idle mob of a particular CreatureDef ID type.  Updates the variable with the Creature Instance ID  if found, or 0 if not found.
+<p>
+Note that this searches the entire instance, regardless of range.  Should only be used within small areas, and on specific creature spawns.  The search ends on the first creature found.
+<p>
+Example:<br>
+<span class="script">get_idle_mob 3632 ALLY</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">get_target [variable]</span>
+<br>
+Set the variable to the current target's Creature Instance ID.  Will be 0 if no target is found.
+<p>
+Example:<br>
+<span class="script">get_target TARGET</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">get_self [variable]</span>
+<br>
+Set the variable to the actor's own Creature Instance ID.
+<p>
+Example:<br>
+<span class="script">get_self SELF</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">set_other_target [variable:first] [variable:second]</span>
+<br>
+The first creature will set the second creature as an active target.
+<p>
+Both variables must contain Creature Instance IDs, retrieved by using commands like get_idle_mob, get_target, get_self, or similar.
+<p>
+Example:<br>
+<span class="script">
+get_idle_mob 3631 ALLY
+if ALLY > 0
+&nbsp;&nbsp;get_self TARGET
+&nbsp;&nbsp;set_other_target ALLY TARGET
+endif
+</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">aiscript_call [variable] [label]</span>
+<br>
+Modify a different creature's actions by forcing it to jump to a specific label in its own AI Script.  This can be used to allow a boss to give some rudimentary control over specially scripted minions.
+<p>
+The current script state of the target will be interrupted and reset, resuming operation at the specified label, if it exists.  The label in the associated script is responsible for having commands that direct it back to normal operational flow.  The target's call stack is erased so it will require an explicit <b>goto</b> back to its main loop.
+<p>
+The variable must contain a Creature Instance ID.
+<p>
+Example:<br>
+<span class="script">aiscript_call TARGET "extOnSummon"</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">is_target_enemy [variable]</span>
+<br>
+Determine if the object's current target is an attackable enemy (and alive).  Sets the variable to 1 if an active enemy, 0 if not.
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">is_target_friendly [variable]</span>
+<br>
+Determine if the object's current target is a friend (and alive).  Sets the variable to 1 if an active friend, 0 if not.
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">set_speed [integer]</span>
+<br>
+Forcibly set the object's current walk/run speed.  This is untested and may cause movement glitches.  The AI movement control may also reset the speed to particular values which cannot be influenced by the script.
+<p>
+Note that 100 is normal movement speed.
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">get_target_cdef [variable]</span>
+<br>
+Place the current target's CreatureDef ID into the variable.
+<p>
+This is used to determine if the target is of a certain type, like a boss, to perform actions based on that specific type.
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">get_property [string] [variable]</span>
+<br>
+Retrieve a stat value from the creature, placing the result in a variable.  Refer to <a href="../DataSets/Stats.html">Character Stats</a> for valid properties.  Property names must be lower case.  Only works to retrieve integer values.
+<p>
+Example:<br>
+<span class="script">get_property "strength" var</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">get_target_property [string] [variable]</span>
+<br>
+Retrieve a stat value from the current target, placing the result in a variable.  Refer to <a href="../DataSets/Stats.html">Character Stats</a> for valid properties.  Property names must be lower case.  Only works to retrieve integer values.
+<p>
+Example:<br>
+<span class="script">get_target_property "strength" var</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">dispel_target_property [string] [integer]</span>
+<br>
+Indiscriminately purge all buffs to a particular stat from the target.  Only erases buffs that were granted by abilities.  Note that this includes passive gains, so use carefully and only for particular stats.
+<p>
+Refer to <a href="../DataSets/Stats.html">Character Stats</a> for valid properties.
+<p>
+The integer is a sign value, must be either 1 or -1.  Most buffs (like strength) are based on positive gains, but some like channeling_break_chance have negative values (counting down from 50%).
+<p>
+Example:<br>
+<span class="script">dispel_target_property "bonus_health" 1</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">randomize [integer] [variable]</span>
+<br>
+Generate a random number from 1 to [integer] (inclusive) and store the result.
+<p>
+Example:<br>
+<span class="script">randomize 3 CHOICE</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">find_cdef [integer] [variable]</span>
+<br>
+Search the instance for the first creature matching a particular CreatureDef ID.  If found, store its Creature Instance ID.  Sets to 0 if not found.
+<p>
+Note that this searches the entire active instance, regardless of range.  Should only be used for very specific, unique creatures like bosses or NPCs.
+<p>
+Example:<br>
+<span class="script">find_cdef 3636 TARGET</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">play_sound [string]</span>
+<br>
+Notify the client to play a sound effect.  The sound string is composed of 2 parts, separated by a pipe (|).  The first part is the package archive (.CAR file) to load and play from.  The second part is the actual sound file to play (must be .OGG format).
+<p>
+Example:<br>
+<span class="script">play_sound "Sound-ModSound|Sound-Example.ogg"</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">get_buff_tier [int:AbilityGroupID] [var:dest]</span>
+<br>
+Search the creature for a buff with the given Ability Group ID (refer to the ability table), and return the tier (1 = lev1, 2 = lev6, 3=lev20, etc).  Returns zero for no buff found.
+<p>
+Useful to search if a buff ability has been activated.
+<p>
+Example:<br>
+<span class="script">;See if we have Vigor of Sargon active<br>get_buff_tier 38 RESULT</span>
+<div class="spacer"></div>
+
+<span class="scriptdoc">get_target_buff_tier [int:AbilityGroupID] [var:dest]</span>
+<br>
+Search the creature's target for a buff with the given Ability Group ID (refer to the ability table), and return the tier (1 = lev1, 2 = lev6, 3=lev20, etc).  Returns zero for no buff found.
+<p>
+Useful to search if a buff ability has been activated.
+<p>
+Example:<br>
+<span class="script">get_target_buff_tier 38 RESULT</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">target_in_range [int:Distance] [var:dest]</span>
+<br>
+Determine if the currently selected target is in range.  Distance is expressed in game units.  1 meter = 10 units.  Melee range is 30 units.
+<p>
+The destination variable will hold the result.  0 = out of range, 1 = in range.
+<p>
+Example:<br>
+<span class="script">target_in_range RESULT</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">get_target_range [var:dest]</span>
+<br>
+Get the current distance from the currently selected target.  Distance is expressed in game units.  1 meter = 10 units.  Melee range is 30 units.
+<p>
+The destination variable will hold the result.  If no target is selected, the result will be 0.  It is recommended to ensure a target exists before using this function.
+<p>
+Example:<br>
+<span class="script">get_target_range RESULT</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">set_gtae</span>
+<br>
+Sets the location for ground target area-of-effect abilities to the currently selected target, or to current standing location if no target.  This is required for GTAE abilities.  When players cast such abilities, they have a large targeting circle on the ground.  Abilities like Swarm, Frost Storm, and similar.
+<p>
+Make sure to use this before casting a GTAE ability, or it may fail.
+<p>
+Example:<br>
+<span class="script">
+set_gtae
+use 215 &nbsp; ; Swarm
+</span>
+<div class="spacer"></div>
+
+<span class="scriptdoc">get_speed [var:CID] [var:dest]</span>
+<br>
+Look up the CID object and retrieve its current movement speed, placing the result in the destination variable.  If the result is 0, the target is stationary.<p>
+Example:<br>
+<span class="script">
+get_target TARGID
+get_speed TARGID RESULT
+</span>
+<div class="spacer"></div>
+
+<span class="scriptdoc">cid_is_busy [var:CID] [var:dest]</span>
+<br>
+Look up the CID object and determine if it's busy casting an ability.  Only reliable to detect casting warmups or channels.  Places the result in the destination variable.  0 = not busy, 1 = busy.<p>
+Example:<br>
+<span class="script">
+get_target TARGID
+cid_is_busy TARGID RESULT
+</span>
+<div class="spacer"></div>
+
+
+
+<a name="metadata"></a>
+<h2>Metadata Information</h2>
+<p>
+Some properties are of particular importance to AI Scripts.
+<p>
+<span class="scriptdoc">#name [string]</span>
+<br>
+Identifies the script by giving it a name.  For easy organization, the name should match the file name of the AI Script.  This property is especially important to AI Scripts because the <a href="../DataSets/Stats.html">CreatureDef ai_package</a> property must correspond to an existing script name.
+<p>
+Example:<br>
+<span class="script">#name 4_druid_melee_30</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">#speed [integer]</span>
+<br>
+Sets the execution speed of a script, as instructions per frame.
+<p>
+This is especially useful for AI Scripts because complex scripts with several <b>if</b> commands and <b>call</b> blocks, will require many frames to complete a full loop in the AI logic.  Every cycle (or frame) of the server will iterate over every active NPC in the instance for processing.
+<p>
+Complex scripts will be slower to trigger multiple parts, and will appear less responsive if the speed is too slow.  However, don't set the speed too high or it may degrade server performance by increasing CPU use, especially if several mobs in the instance use the same complex scripts.
+<p>
+Example:<br>
+<span class="script">#speed 10</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">#idlespeed [integer]</span>
+<br>
+Like #speed, but sets the idle execution speed.  The default idle speed is zero, which means NPCs will not run scripts when idle (not in combat).
+<p>
+This may be important for some boss scripts to keep mobs in a certain state of awareness.  Also useful for inanimate objects to provide effects or animations.
+<p>
+Idle creatures don't necessarily require real-time responsiveness so the idle speed can usually be kept to a small amount, like 1 (one instruction per server frame).
+<p>
+Keep in mind that if too many mobs are performing additional commands and calculations when idle, server performance may be affected by higher CPU use.
+<p>
+Example:<br>
+<span class="script">#idlespeed 1</span>
+<div class="spacer"></div>
+
+
+<a name="reservedlabels"></a>
+<h2>Reserved Labels</h2>
+<span class="scriptdoc">:onDeath</span>
+<br>
+Normally a creature's script will not run if it's dead.  This label is specially called when a creature dies, then several instructions are allowed to run.  Scripts do not need this label unless a special death action is required.
+<p>
+There should be an explicit <span class="script">end</span> command in the control flow to halt the script once death processing is finished.  Don't loop back to the standard attack script.
+<p>
+Example:<br>
+<span class="script">
+:onDeath
+say "I'm not dying, I'm just going to nap here for a while."
+end
+</span>
+<div class="spacer"></div>
+
+
+<a name="quickreference"></a>
+<h2>Quick Command Reference</h2>
+A brief overview of the commands.  Here is an explanation of abbreviations here:<br>
+var = Variable<br>
+int = Integer<br>
+dest = The destination variable where a result is stored.<br>
+CDefID = Creature Definition ID (base creature type).<br>
+CID = Creature Instance ID (specific active creature).<br>
+<p>
+
+<div class="script">
+use [int:AbilityID]
+getwill [var:dest]
+getwillcharge [var:dest]
+getmight [var:dest]
+getmightcharge [var:dest]
+has_target [var:dest]
+getlevel [var:dest]
+debugprint [string]
+getcooldown [string:Cooldown Name] [var:dest]
+is_busy [var:dest]
+count_enemy_near [int:range (10 units=1 meter)] [var:dest]
+count_enemy_at [int:range (10 units=1 meter)] [var:dest]
+health_percent [var:dest]
+target_health_percent [var:dest]
+set_elapsed_time [var:dest]
+time_offset [var:Elapsed Time (ms)] [var:dest Time Since Elapsed (ms)]
+visual_effect [string]
+visual_effect_t [string]
+say [string]
+instance_call [string]
+get_idle_mob [int:CDefID] [var:dest]
+get_target [var:dest CID]
+get_self [var:dest CID]
+set_other_target [var:CID to Modify] [var:CID to Target]
+aiscript_call [var:CID] [label]
+is_target_enemy [var:dest]
+is_target_friendly [var:dest]
+set_speed [integer]
+get_target_cdef [var:dest]
+get_property [string:Stat Name] [var:dest]
+get_target_property [string:Stat Name] [var:dest]
+dispel_target_property [string:Stat Name] [int:Sign]
+randomize [int:Max Value] [var:dest]
+find_cdef [int:CDefID] [var:dest]
+play_sound [str:Package|FileName.ogg]
+get_buff_tier [int:AbilityGroupID] [var:dest]
+get_target_buff_tier [int:AbilityGroupID] [var:dest]
+target_in_range [int:range (10 units=1 meter)] [var:dest]
+get_target_range [var:dest]
+set_gtae
+get_speed [var:CID] [var:dest]
+cid_is_busy [var:CID] [var:dest]
+</div>
+
+<div class="footer"></div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,238 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Reference: QuestScript.txt</title>
+<link rel="stylesheet" type="text/css" href="../main.css">
+</head>
+<body>
+
+<div>
+
+<h2>Reference: QuestScript.txt</h2>
+
+<div class="spacer"></div>
+<h2>Purpose</h2>
+Controls advanced player interaction with quests in ways that the QuestDef information does not.  This file contains all scripting to all quests, if applicable.  This system was implemented before Extended Quest Actions and is fairly crude.
+<p>
+Each player in the server will independently run their own instructions from this script.
+<p>
+Quest Scripts augment the base <a href="../Generic/ScriptCore.html">Script Core</a> system.  Refer there for basic understanding of labels, conditionals, calls, variables, strings, etc.  This document will describe new commands and other things specific to the AI Script subsystem.
+<p>
+
+
+<div class="spacer"></div>
+<h2>File Format</h2>
+Script file.  Uses simple commands.  Each line may have one command.<br>
+Comment character: semicolon (;)<br>
+Labels begin with a colon (:) and are required for jumps.<br>
+Command parameters must be separated by a space.<br>
+Strings for particular commands must be enclosed in quotation marks (Ex: "This is a string").<br>
+
+<p>
+
+<div class="spacer"></div>
+<h2>Command Argument Types</h2>
+
+<table frame=box rules=all>
+  <tr class="header">
+    <td><b>Type</b></td>
+    <td><b>Description</b></td>
+  </tr>
+  <tr>
+    <td>None</td>
+    <td>Is ignored or unused.</td>
+  </tr>
+  <tr>
+    <td>Label</td>
+    <td>A target for jumps and calls.  A label must begin with a colon (:).  Example:<br><span class="mono">:begin</span></td>
+  </tr>
+  <tr>
+    <td>String</td>
+    <td>A string constant.  Must be enclosed in quotation marks.  Example:<br><span class="mono">"This is a string"</span></td>
+  </tr>
+  <tr>
+    <td>Integer</td>
+    <td>A plain 4 byte signed integer.</td>
+  </tr>
+</table>
+
+<div class="spacer"></div>
+
+<h2>Command Reference</h2>
+<p>
+Additional functions available to Quest Scripts.
+<p>
+
+<span class="scriptdoc">info [string]</span>
+<br>
+Display an info message to the player.
+<p>
+Example:
+<span class="script">
+info "You found the thing!"
+</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">effect [string]</span>
+<br>
+When interacting with an object, this perform a visual ability effect on the object.  Must be a valid effect name.  Effects are packaged within EarthEternal.car, in the Effects folder.
+<p>
+Example:
+<span class="script">
+effect "PyroblastHit"
+</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">wait_finish</span>
+<br>
+When interacting with an object, halts execution of the script until the interaction has finished.
+<p>
+Example:
+<span class="script">
+:onActivate_295_2
+wait_finish
+; ... other stuff
+</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">npcunusable [int:time]</span>
+<br>
+A somewhat obsolete command.  Not recommended for use.  When interacting with an object, makes it unusable to further interactions.  If the argument is nonzero, it specifies the millisecond delay before the object is considered dead, and will soon be removed from the game and require a respawn.
+<p>
+Example:
+<span class="script">
+npcunusable 5000
+</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">npcremove</span>
+<br>
+Remove the interacted NPC object from the server.  If attached to a spawner, it will respawn if the SpawnPoint allows it.
+<p>
+Example:
+<span class="script">
+npcremove
+</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">require_cdef [int:CDefID]</span>
+<br>
+End the script if the interacted object's CreatureDef ID does not match this.
+<p>
+Example:
+<span class="script">
+require_cdef 1599
+</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">spawn [int:PropID]</span>
+<br>
+Force a SpawnPoint to generate a spawn.  Must match the Scenery Object ID of the SpawnPoint.
+<p>
+Example:
+<span class="script">
+spawn 151056259
+</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">spawn_at [int:CDefID] [int:PropID]</span>
+<br>
+Force a specific creature to spawn at the location of a Scenery Object ID.  The first parameter is the CreatureDef ID to spawn, the second is the Scenery ID.  Note that this will use additional parameters of the most recently used <span class="mono">setvar</span> command.
+<p>
+Example:
+<span class="script">
+setvar 0 120000          ; Spawn property: duration (milliseconds)
+setvar 1 16              ; Spawn property: elevation modifier (for brazier prop)
+spawn_at 1144 151056221
+</span>
+<div class="spacer"></div>
+
+  
+<span class="scriptdoc">warp_zone [int:ZoneID]</span>
+<br>
+Immediately warp the player to the specified Zone ID.  The player will appear in the zone's default entrance location.
+<p>
+Example:
+<span class="script">
+warp_zone 58     ;warp to Corsica
+</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">jmp_cdef [int:CDefID] [label]</span>
+<br>
+Check if the player is interacting with a particular CreatureDef ID.  If so, jump to a label in the script.  Operates like a <span class="script">goto</span> command.
+<p>
+Example:
+<span class="script">
+jmp_cdef 456 sub_406_456
+</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">setvar [int:index] [int:value]</span>
+<br>
+Set an internal variable for use by specific commands.  The first integer is an index of the variable.  The index must be either 0 or 1.  The second integer is the value to give it.<p>Only used by the <span class="script">spawn_at</span> command.
+<p>
+Technical note: this is part of the old system before Script Core was implemented, but was retained to allow the script file to function as it was without rewriting anything.
+<p>
+Example:
+<br>
+Refer to the example provided for the <span class="script">spawn_at</span> command.
+<div class="spacer"></div>
+  
+
+<span class="scriptdoc">emote [string]</span>
+<br>
+Force the player to perform an emote effect.  For a list of possible emotes, use the <span class="script">/pose</span> command in the client.  
+<p>
+Example:
+<span class="script">
+emote "Hit_Two_Handed"
+</span>
+<div class="spacer"></div>
+
+
+
+
+<div class="spacer"></div>
+<h2>Triggered Labels</h2>
+When the player performs an interaction with a quest object (activate or gather objective) then a specific label string is generated.  If the exact label is present in the script, execution will immediately jump to that point.
+<p>
+
+Format:<br>
+<span class="script">:onActivate_%1_%2</span><br>
+<p>
+
+Parameters:<br>
+%1 is the QuestDef ID<br>
+%2 is The quest act index (The first act has an index of 0).<br>
+<p>
+
+Example:<br>
+<span class="script">:onActivate_238_1</span>
+<p>
+
+<div class="spacer"></div>
+<h2>Linear Execution</h2>
+Each player runs their own script.  Scripts can only perform one command at a time.  If a player interrupts an interaction with a new script call, execution will immediately jump to the new call and the old one will not finish.
+
+<div class="spacer"></div>
+<h2>Notes</h2>
+This script system is admittedly very limited, but manages to fulfill its purpose for the required actions.  Some of the commands were hacky solutions to emulate particular requirements of the official quest gameplay.
+
+<div class="footer"></div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Reference: Creatures.txt</title>
+<link rel="stylesheet" type="text/css" href="../main.css">
+</head>
+<body>
+
+<div>
+
+<h2>Reference: Creatures.txt</h2>
+<div class="spacer"></div>
+<h3>Purpose</h3>
+Defines sets which are attached to a specific CreatureDef type for drop consideration.
+<p>
+When that creature is killed, a list of potential sets will be generated, then iterate through them to roll for drops.  Insignificant sets like crafting materials are rolled individually, for as many sets as applicable, so it's possible to find multiple kinds of materials from a single kill.
+<p>
+Drop rates for armor and weapons are hardcoded and are kept as a separate category of drops with their own rates.
+<p>
+
+<div class="spacer"></div>
+<h3>File Format</h3>
+Table file.  Tab separated values.<br>
+Comment character: semicolon (;)<br>
+First line is always ignored (assumed as header).<br>
+
+<p>
+
+<div class="spacer"></div>
+
+<h2>Table Columns</h2>
+
+<table frame=box rules=all>
+<tr>
+<td>CreatureDefID</td>
+<td>Integer.  Corresponds to <a href="../Data/CreatureDef.html">CreatureDef ID</a></td>
+</tr>
+
+<tr>
+<td>Explicit</td>
+<td>Boolean.  Obsolete and mostly left at zero.  If set to true, this disables level-based sets for that creature (level-based sets are defined in <a href="Packages.html">Packages.txt</a>) and instead only use sets listed in this table entry.</td>
+</tr>
+
+<tr>
+<td>PackageList</td>
+<td>String.  A list of sets (but also accepts package names), separated by commas.  When selecting drops, package names are resolved into a list of sets.  Typically this field normally lists sets.  Refer to <a href="Sets.html">Sets.txt</a> for set definitions.</td>
+</tr>
+
+<tr>
+<td>Name</td>
+<td>Not loaded or used by the server.  Just serves as documentation info within the file.</td>
+</tr>
+</table>
+
+<div class="footer"></div>
+
+</div>
+</body>
+</html>

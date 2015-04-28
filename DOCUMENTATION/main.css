@@ -1,0 +1,187 @@
+body
+{
+  background-image: url(DefaultSkin-Black-BG.png);
+  background-color:#000000;
+  color:#CCCCCC;
+  font-family:"Arial";
+  font-size:12px;
+  padding-left: 100px;
+}
+table
+{
+  border-color:#CCCCCC;
+  font-size:12px;
+  width:600px;
+}
+.widetable
+{
+  width:740px;
+}
+td
+{
+  padding-left:6px;
+  padding-right:6px;
+  padding:8px;
+}
+div
+{
+  font-size: 12px;
+  width:540px;
+}
+.widepage
+{
+  font-size: 12px;
+  width:740px;
+}
+a, .link
+{
+  color:#00CCFF;
+}
+.notice
+{
+  font-weight: bold;
+  color:#FF0000;
+}
+.highlight
+{
+  font-weight:bold;
+  color:#FFFF00;
+}
+.hwhite
+{
+  font-weight:bold;
+  color:#FFFFFF;
+}
+.hbold
+{
+  font-weight:bold;
+  color:#CCCCEE;
+}
+.string,
+.command
+{
+  font-size:12px;
+  color:#00FFFF;
+}
+.script
+{
+  font-size:12px;
+  font-family:Courier;
+  color:#DDDDDD;
+  white-space:pre;
+}
+.scriptex
+{
+  font-size:12px;
+  font-family:Courier;
+  color:#DDDDFF;
+  white-space:pre;
+}
+.scriptdoc
+{
+  font-size:16px;
+  font-family:Courier;
+  color:#FFFFFF
+}
+.mono
+{
+  font-family:Courier;
+}
+.monolink
+{
+  font-family:Courier;
+  color:#00CCFF;
+}
+.commandspace
+{
+  color:#00FFFF;
+  padding-right:40px;
+}
+.indent
+{
+  padding-left:40px;
+  width:500px;
+}
+.spacer
+{
+  padding-top:40px;
+}
+.spacerlg
+{
+  padding-top:80px;
+}
+.footer
+{
+  padding-top:80px;
+}
+.widecell
+{
+  width:30%;
+}
+.header
+{
+  font-size:18px;
+  font-weight:bold;
+  text-align:center;
+  color:#00CCFF;
+  padding-top:30px;
+  padding-bottom:30px;
+}
+.estitle
+{
+  padding-top:20px;
+  color:#FFFF00;
+  font-weight:bold;
+}
+.ebody
+{
+  padding-left:40px;
+  width:500px;
+}
+.important
+{
+  color:#FFFF00;
+  font-weight:bold;
+  width:500px;
+}
+.new
+{
+  color:#00FF00;
+}
+.tdn
+{
+  width:30%;
+}
+.tdw
+{
+  width:80%;
+}
+
+.itembound
+{
+  color:#FF0000;
+}
+.itemcraft
+{
+  color:#FFFFFF;
+  font-style:italic;
+}
+.itemuncommon
+{
+  color:#00FF00;
+  font-weight:bold;
+}
+.itemrare
+{
+  color:#3b93ff;
+  font-weight:bold;
+}
+.itemepic
+{
+  color:#c14dff;
+  font-weight:bold;
+}
+.nowrap
+{
+  white-space: nowrap;
+}

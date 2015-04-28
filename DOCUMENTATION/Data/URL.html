@@ -1,0 +1,38 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Reference: URL.txt</title>
+<link rel="stylesheet" type="text/css" href="../main.css">
+</head>
+<body>
+
+<div>
+
+<h2>Reference: URL.txt</h2>
+
+<div class="spacer"></div>
+<h2>Purpose</h2>
+Certain modded GUI panels in the client will attempt to open webpages.  Some of these URL calls were redesigned to be fetched from the server, to be configurable rather than hardcoded in the client.
+<p>
+The client will ask for this list of URLs, which the server will provide.
+
+
+<div class="spacer"></div>
+<h2>File Format</h2>
+List file of Key=Value pairs.<br>
+Comment character: semicolon (;)<br>
+Each line is split at the first "=" symbol.
+<p>
+Format:<br>
+<span class="mono">Name=URL</span><br>
+<p>
+Where Name is an internal identifier of the page, and URL is the address.  The Name is hardcoded in the client, so they must be exact.
+
+<div class="footer"></div>
+
+</div>
+</body>
+</html>

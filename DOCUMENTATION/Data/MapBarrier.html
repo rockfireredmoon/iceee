@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Reference: MapBarrier.txt</title>
+<link rel="stylesheet" type="text/css" href="../main.css">
+</head>
+<body>
+
+<div>
+
+<h2>Reference: MapBarrier.txt</h2>
+
+<div class="spacer"></div>
+<h2>Purpose</h2>
+Sets up bounding boxes that players are not allowed to enter, pushing them out to the nearest edge if they intrude.  This is used to wall off Grunes Tal and Swineland.
+<p>
+Players will rubberband back outside the boundary.  Adjacent edges or overlapping boxes may cause some buggy movement along the line between them.
+
+<div class="spacer"></div>
+<h2>File Format</h2>
+<p>
+Resembles INI format with structured blocks.<br>
+Comment character: semicolon (;)<br>
+Each line is split into tokens using the "=" or "," symbols.
+
+
+<div class="spacer"></div>
+<h2>Block Format</h2>
+
+<table frame=box rules=all>
+  <tr class="header">
+    <td><b>Property</b></td>
+    <td><b>Parameters</b></td>
+    <td><b>Description</b></td>
+  </tr>
+  <tr>
+    <td>Zone</td>
+    <td>Integer</td>
+    <td>Special case.  Sets the ZoneDef ID for all entries following this line until another zone is specified elsewhere in the file.</td>
+  </tr>
+  <tr>
+    <td>[ENTRY]</td>
+    <td>N/A</td>
+    <td>Begin a new block.</td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>Integer,Integer</td>
+    <td>Sets the X,Y coordinates of the top left corner of the bounding box, in game units.</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td>Integer,Integer</td>
+    <td>Sets the X,Y coordinates of the bottom right corner of the bounding box, in game units.</td>
+  </tr>
+</table>
+
+
+<div class="spacer"></div>
+
+<h2>How it works</h2>
+When a player moves throughout the zone, it periodically compares the player's current location against this list.  If a player is inside any of these boxes, their position will automatically snap to the nearest edge.  It's crude, but mostly works.  Could potentially slow down the server if there are too many entries.
+<p>
+Game units are the coordinates present in game when using the /debug command.
+
+<div class="footer"></div>
+
+</div>
+</body>
+</html>

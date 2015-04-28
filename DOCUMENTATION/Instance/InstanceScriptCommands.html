@@ -1,0 +1,353 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Instance Script Commands</title>
+<link rel="stylesheet" type="text/css" href="../main.css">
+</head>
+<body>
+
+<div>
+
+<h2>Instance Script Commands</h2>
+
+This file documents the commands and features used to control Instance Scripts.
+<p>
+Instance Scripts augment the base <a href="../Generic/ScriptCore.html">Script Core</a> system.  Refer to that for basic understanding of labels, conditionals, calls, variables, strings, etc.  This document will describe new commands and other things relevant to AI Scripts.
+<p>
+
+<div class="spacer"></div>
+
+<a href="#commandref">Detailed Command Reference</a><br>
+<a href="#metadata">Metadata Information</a><br>
+<a href="#reservedlabels">Reserved Label Names</a><br>
+<a href="#quickreference">Brief Command Reference</a>
+
+<div class="spacer"></div>
+
+<a name="commandref"></a>
+<h2>Command Reference</h2>
+<p>
+Additional functions available to Instance Scripts
+<p>
+
+<span class="scriptdoc">spawn [int:PropID]</span>
+<br>
+Force a SpawnPoint to activate.  Use the build tool to determine the SpawnPoint's prop ID.
+<p>
+Example:<br>
+<span class="script">spawn 1056964748</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">spawn_at [int:PropID] [int:CDefID]</span>
+<br>
+Force a SpawnPoint to activate.  Use the build tool to determine the SpawnPoint's prop ID.
+<p>
+Takes an extra parameter to force a particular creature type to activate.  If set to zero, it will choose according to the SpawnPoint's spawn package.
+<p>
+Example:<br>
+<span class="script">spawn_at 1358960407 1690</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">countalive [int:CDefID] [var:dest]</span>
+<br>
+Search the instance to count all (alive) creatures of a particular CDefID.  Place the result in the destination variable.  If none are found, the result will be zero.
+<p>
+Example:<br>
+<span class="script">countalive 2074 result</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">spawnloc [int:CDefID] [int:x] [int:y] [int:z]</span>
+<br>
+Deprecated.  Do not use.
+<p>
+Spawns a creature at a specific coordinate.
+<p>
+Example:<br>
+<pre class="script">
+spawnloc 1639 41387 640 66185
+</pre>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">get_npc_id [int:CDefID] [var:dest]</span>
+<br>
+Search the entire instance to find the first creature of a particular type.  This was only meant to find single unique spawns like bosses.  This command is not useful for finding common spawns, because the instance list is not sorted and the returned mob could be anywhere.
+<p>
+It will place the Creature Instance ID (CID) into the destination variable.  If the creature was not found, the result will be zero.
+<p>
+Example:<br>
+<span class="script">get_npc_id 3630 BOSSID</span>
+<div class="spacer"></div>
+
+<span class="scriptdoc">set_target [var:CDefIDSource] [var:CDefIDTarget]</span>
+<br>
+Forcibly assigns a target creature to the source creature.  No distinction is made between friend/foe, so write scripts accordingly to cast appropriate abilities like attacks or heals.
+<p>
+Example:<br>
+<span class="script">set_target ALLYID BOSSID</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">scan_npc_cid [str:location name] [intarr:dest]</span>
+<br>
+Scans the instance for all NPCs, filling an Integer Array with the CIDs of the result.
+<p>
+The location name must be supplied by the <b>#location</b> directive, which is used to define rectangular locations within a map.
+<p>
+Example:<br>
+<pre class="script">
+#location BOSSROOM 3200 3800 3700 4200
+...
+scan_npc_cid BOSSROOM MOBLIST
+</pre>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">get_cdef [var:CID] [var:destCDefID]</span>
+<br>
+Looks up the creature with the given CID, and places its CDefID into the destination variable.  This may be useful to filter out a specific creature from an Integer Array.
+<p>
+Example:<br>
+<span class="script">
+get_cdef TEMPCID TEMPCDEF
+</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">get_health_percent [var:CID] [var:dest]</span>
+<br>
+Looks up the current health of an NPC CID, placing the result into a destination variable.  The result will be an integer between 0 and 100.  If the creature is not found, it will return zero.
+<p>
+Example:<br>
+<span class="script">
+get_health_percent CID TEMP
+</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">order_walk [var:CID] [int:X] [int:Z]</span>
+<br>
+Looks up an NPC CID, and orders it to walk to the X,Z coordinates at 20% speed.  The Y coordinate is elevation, and not changed.
+<p>
+This was recently added an experimental command for an unreleased dungeon and may not work correctly.
+<p>
+Example:<br>
+<span class="script">
+order_walk CID 3300 3800
+</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">get_target [var:CID] [var:dest]</span>
+<br>
+Looks up an NPC CID, and places its current target CID in the destination variable.  If the NPC does not have a target, the result will be zero.
+<p>
+Example:<br>
+<span class="script">
+get_target CID TEMP
+</span>
+<div class="spacer"></div>
+
+<span class="scriptdoc">ai_script_jump [var:CID] [str:label name]</span>
+<br>
+Looks up an NPC CID, then forces that creature's AI script to perform an external jump to a certain label.  It will perform as a goto or call, depending on how the AI script is set to handle external jumps.  Refer to the <a href="../Generic/ScriptCore.html">ScriptCore Reference</a>, <b>exec_queue</b> command, and the <b>#queue_jumps</b> directive for more information.
+<p>
+This may be used to trigger certain interactive behaviors between specially scripted creatures.
+<p>
+Example:<br>
+<span class="script">
+ai_script_jump CID "extTryCastShield"
+</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">info [str]</span>
+<br>
+Sends a yellow information message to all players in the instance.
+<p>
+Example:<br>
+<span class="script">
+info "A harmless foe has appeared."
+</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">chat [str:name] [str:channel] [str:message]</span>
+<br>
+Sends an arbitrary chat message to all players in the instance.  The message will not be attached to a particular creature or player.
+<p>
+Example:<br>
+<span class="script">
+chat "conRed" "Instance" "It worked!"
+</span>
+<div class="spacer"></div>
+
+
+
+
+<div class="spacer"></div>
+
+
+
+<a name="metadata"></a>
+<h2>Metadata Information</h2>
+<p>
+Some new directives are available to instance scripts.
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">#location [str:name] [int:X1] [int:Z1] [int:X2] [int:Z2]</span>
+<br>
+Defines a rectangular location spanning from the top left corner X1,Z1 to the bottom right corner X2,Z2.
+<p>
+Locations are used by the <b>scan_npc_cid</b> command.
+<p>
+Example:<br>
+<span class="script">
+#location LOC_BOSS_ROOM  1800 2700  2400 3200
+</span>
+<div class="spacer"></div>
+
+<span class="scriptdoc">#location_br [str:name] [int:X] [int:Z] [int:radius]</span>
+<br>
+Defines a square location centered over the X,Z coordinates and has a box radius of a particular width.  So if the radius is 100, it will span 100 units east/west/north/south for a total coverage of 200x200 units.
+<p>
+Locations are used by the <b>scan_npc_cid</b> command.
+<p>
+Example:<br>
+<span class="script">
+#location_br LOC_BRAZIER_1  1900 3000  140
+</span>
+<div class="spacer"></div>
+
+
+
+
+
+<a name="reservedlabels"></a>
+<h2>Reserved Labels</h2>
+<span class="scriptdoc">:onKill_%d</span>
+<br>
+This label is called when an NPC dies, but only if the SpawnPoint allows it.
+<p>
+If the SpawnPoint <b>Sequential</b> property is set to <b>true</b>, then the label will be called directly.
+<p>
+If the mob was spawned by a SpawnPackage, and <b>SpawnPackage::ScriptCall</b> is enabled, it won't call "onKill" but instead a label with exact package name.
+<p>
+%d will reflect the CDefID of the creature that was killed.
+<p>
+Labels will fall through other labels so you can trap kills from multiple types to accomplish a trigger.
+<p>
+Example:
+<pre class="scriptex">
+:init
+set killcount 0
+end
+
+:onKill_1993
+:onKill_1994
+inc killcount
+if killcount >= 6
+  spawn 1291845744
+endif
+end
+
+; Anglor Dren's chest
+:onKill_1995
+spawn 1291845811
+end
+</pre>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">:onUse_%d</span>
+<br>
+Called whenever a player begins interacting with an object (except for henges).  Interact objects change the mouse cursor to a paw when you hover over them.  These objects are typically from quests with an activate or gather objective.  
+<p>
+%d will reflect the CDefID of object.
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">:onUseHalt_%d</span>
+<br>
+Called whenever a player breaks interacting, or is interrupted while attempting to use an object.
+<p>
+%d will reflect the CDefID of object.
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">:onUseFinish_%d</span>
+<br>
+Called whenever a player successfully finishes using an object.
+<p>
+%d will reflect the CDefID of object.
+<div class="spacer"></div>
+
+
+
+<a name="quickreference"></a>
+<h2>Quick Command Reference</h2>
+A brief overview of the commands.  Here is an explanation of abbreviations here:<br>
+var = Variable<br>
+int = Integer<br>
+dest = The destination variable where a result is stored.<br>
+CDefID = Creature Definition ID (base creature type).<br>
+CID = Creature Instance ID (specific active creature).<br>
+<p>
+
+<pre class="script">
+use [int:AbilityID]
+getwill [var:dest]
+getwillcharge [var:dest]
+getmight [var:dest]
+getmightcharge [var:dest]
+has_target [var:dest]
+getlevel [var:dest]
+debugprint [string]
+getcooldown [string:Cooldown Name] [var:dest]
+is_busy [var:dest]
+count_enemy_near [int:range (10 units=1 meter)] [var:dest]
+count_enemy_at [int:range (10 units=1 meter)] [var:dest]
+health_percent [var:dest]
+target_health_percent [var:dest]
+set_elapsed_time [var:dest]
+time_offset [var:Elapsed Time (ms)] [var:dest Time Since Elapsed (ms)]
+visual_effect [string]
+visual_effect_t [string]
+say [string]
+instance_call [string]
+get_idle_mob [int:CDefID] [var:dest]
+get_target [var:dest CID]
+get_self [var:dest CID]
+set_other_target [var:CID to Modify] [var:CID to Target]
+aiscript_call [var:CID] [label]
+is_target_enemy [var:dest]
+is_target_friendly [var:dest]
+set_speed [integer]
+get_target_cdef [var:dest]
+get_property [string:Stat Name] [var:dest]
+get_target_property [string:Stat Name] [var:dest]
+dispel_target_property [string:Stat Name] [int:Sign]
+randomize [int:Max Value] [var:dest]
+find_cdef [int:CDefID] [var:dest]
+play_sound [str:Package|FileName.ogg]
+get_buff_tier [int:AbilityGroupID] [var:dest]
+get_target_buff_tier [int:AbilityGroupID] [var:dest]
+target_in_range [int:range (10 units=1 meter)] [var:dest]
+get_target_range [var:dest]
+set_gtae
+get_speed [var:CID] [var:dest]
+cid_is_busy [var:CID] [var:dest]
+</pre>
+
+<div class="footer"></div>
+
+</div>
+</body>
+</html>

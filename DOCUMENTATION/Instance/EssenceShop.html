@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>EssenceShop.txt</title>
+<link rel="stylesheet" type="text/css" href="../main.css">
+</head>
+<body>
+
+<div>
+
+<h2>EssenceShop.txt</h2>
+
+This file defines contents of essence chests (any chest that exchanges essences/tokens/keys/etc for items).
+<p>
+Resembles INI format with structured blocks.<br>
+Comment character: semicolon (;)<br>
+Each line is split into a key=value pair on the first "=" symbol.
+
+<p>
+<div class="spacer"></div>
+
+<h2>Block Format</h2>
+<table frame=box rules=all>
+  <tr class="header">
+    <td><b>Property</b></td>
+    <td><b>Description</b></td>
+  </tr>
+  <tr>
+    <td>[ENTRY]</td>
+    <td>Begins a new vendor definition.</td>
+  </tr>
+  <tr>
+    <td>CreatureDefID</td>
+    <td>Integer.  The ID of the creature this vendor is attached to.  Make sure the CreatureDef <b>defHints</b> property is set to <b>8</b> (CDEF_HINT_ESSENCE_VENDOR).</td>
+  </tr>
+  <tr>
+    <td>EssenceID</td>
+    <td>Integer.  The ItemDef ID of the token that must be exchanged to acquire these items.</td>
+  </tr>
+  <tr>
+    <td>Item</td>
+    <td>Two integers, separated by a comma.  The first is an ItemDef ID of the item.  The second is the number of tokens that must be exchanged to acquire this item.
+<p>
+Limit one item per line.  Maximum number of items is unlimited, but is recommended to keep a reasonable amount (no more than a few pages worth of items in the client browser).
+<p>
+Example:<br><span class="script">Item=142449,1</span></td>
+  </tr>
+
+</table>
+
+
+<div class="footer"></div>
+
+</div>
+</body>
+</html>

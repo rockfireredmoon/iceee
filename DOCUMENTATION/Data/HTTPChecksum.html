@@ -1,0 +1,49 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Reference: HTTPChecksum.txt</title>
+<link rel="stylesheet" type="text/css" href="../main.css">
+</head>
+<body>
+
+<div>
+
+<h2>Reference: HTTPChecksum.txt</h2>
+
+<div class="spacer"></div>
+
+<h2>Purpose</h2>
+Use this file if any CAR files have been modified and need to be patched into the game client.
+<p>
+The client always checks the server for every .CAR asset file it needs to open.  If the client already has the file in question, it includes an MD5 checksum in the HTTP header.  If the checksum does not match the file, it needs to be re-downloaded.
+<p>
+If a checksum does exist, the path and filename of the request is compared to the entries in the file.  If it doesn't exist in the list, the file is always assumed to be up to date.
+<p>
+If the checksums do not match, the server begins offering a fresh download.
+<p>
+
+<h2>Format</h2>
+List file.  Each line contains a data entry.<br>
+Uses a Key=Value format.<br>
+Comment character: semicolon (;)<br>
+
+<p>
+
+The line is split at the first equals sign [=].<br>
+The left side is a path and file name.  Requires internet URL/unix style forward slashes.<br>
+The right side is the expected MD5 checksum of the file, wrapped in quotation marks.<br>
+Empty lines are ignored.<br>
+<p>
+Example:<br>
+<span class="mono">
+/Release/Current/Media/Catalogs.car="1134e04f17870ef8f79583d79a2c382b"
+</span>
+
+<div class="footer"></div>
+
+</div>
+</body>
+</html>

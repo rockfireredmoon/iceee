@@ -1,0 +1,287 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+<head>
+<title>StatusEffect</title>
+<style type="text/css">
+body
+{
+  background-color:#000000;
+  color:#CCCCCC;
+  font-family:"Arial";
+  font-size:12px;
+}
+table
+{
+  border-color:#CCCCCC;
+  font-size:12px;
+}
+
+td
+{
+  padding-left:4px;
+  padding-right:4px;
+}
+.header
+{
+  color:#FFFFFF;
+}
+</style>
+</head>
+<body>
+<div>
+<table frame=box rules=all>
+  <tr class="header">
+    <td><b>Status Effect</b>      </td>
+    <td><b>Notes</b>      </td>
+  </tr>
+  <tr>
+    <td>DEAD      </td>
+    <td>Not alive.      </td>
+  </tr>
+  <tr>
+    <td>SILENCE      </td>
+    <td>Cannot cast spells.      </td>
+  </tr>
+  <tr>
+    <td>DISARM      </td>
+    <td>Cannot use physical damage abilities.      </td>
+  </tr>
+  <tr>
+    <td>STUN      </td>
+    <td>Cannot use any abilities.  Mobs won't move, but players can since client 0.8.6 does not restrict movement.      </td>
+  </tr>
+  <tr>
+    <td>DAZE      </td>
+    <td>Cannot use any abilities. Status is removed if attacked.      </td>
+  </tr>
+  <tr>
+    <td>CHARM      </td>
+    <td>Not used.      </td>
+  </tr>
+  <tr>
+    <td>FEAR      </td>
+    <td>Not used.      </td>
+  </tr>
+  <tr>
+    <td>ROOT      </td>
+    <td>Cannot move.      </td>
+  </tr>
+  <tr>
+    <td>LOCKED      </td>
+    <td>Not used.      </td>
+  </tr>
+  <tr>
+    <td>BROKEN      </td>
+    <td>Not used.      </td>
+  </tr>
+  <tr>
+    <td>CAN_USE_WEAPON_2H      </td>
+    <td>Not used server side, uses class check instead.      </td>
+  </tr>
+  <tr>
+    <td>CAN_USE_WEAPON_1H      </td>
+    <td>Not used server side, uses class check instead.      </td>
+  </tr>
+  <tr>
+    <td>CAN_USE_WEAPON_SMALL      </td>
+    <td>Not used server side, uses class check instead.      </td>
+  </tr>
+  <tr>
+    <td>CAN_USE_WEAPON_POLE      </td>
+    <td>Not used server side, uses class check instead.      </td>
+  </tr>
+  <tr>
+    <td>CAN_USE_WEAPON_BOW      </td>
+    <td>Not used server side, uses class check instead.      </td>
+  </tr>
+  <tr>
+    <td>CAN_USE_WEAPON_THROWN      </td>
+    <td>Not used server side, uses class check instead.      </td>
+  </tr>
+  <tr>
+    <td>CAN_USE_WEAPON_WAND      </td>
+    <td>Not used server side, uses class check instead.      </td>
+  </tr>
+  <tr>
+    <td>CAN_USE_DUAL_WIELD      </td>
+  </tr>
+  <tr>
+    <td>CAN_USE_PARRY      </td>
+  </tr>
+  <tr>
+    <td>CAN_USE_BLOCK      </td>
+  </tr>
+  <tr>
+    <td>CAN_USE_ARMOR_CLOTH      </td>
+    <td>Not used.      </td>
+  </tr>
+  <tr>
+    <td>CAN_USE_ARMOR_LIGHT      </td>
+    <td>Not used.      </td>
+  </tr>
+  <tr>
+    <td>CAN_USE_ARMOR_MEDIUM      </td>
+    <td>Not used.      </td>
+  </tr>
+  <tr>
+    <td>CAN_USE_ARMOR_HEAVY      </td>
+    <td>Not used.      </td>
+  </tr>
+  <tr>
+    <td>INVISIBLE      </td>
+    <td>Mage invisibility is active.      </td>
+  </tr>
+  <tr>
+    <td>ALL_SEEING      </td>
+    <td>Not used.      </td>
+  </tr>
+  <tr>
+    <td>IN_COMBAT_STAND      </td>
+    <td>Shows idle combat stance.      </td>
+  </tr>
+  <tr>
+    <td>INVINCIBLE      </td>
+    <td>Nameboard shows green in the client (like a friendly NPC).  Cannot be attacked.      </td>
+  </tr>
+  <tr>
+    <td>FLEE      </td>
+    <td>Not used.      </td>
+  </tr>
+  <tr>
+    <td>NO_AGGRO_GAINED      </td>
+    <td>Not used.      </td>
+  </tr>
+  <tr>
+    <td>UNATTACKABLE      </td>
+    <td>Nameboard shows green in the client (like a friendly NPC).  Cannot be attacked.      </td>
+  </tr>
+  <tr>
+    <td>IS_USABLE      </td>
+    <td>Requests usability status from the server.      </td>
+  </tr>
+  <tr>
+    <td>CLIENT_LOADING      </td>
+    <td>Not used.      </td>
+  </tr>
+  <tr>
+    <td>IMMUNE_INTERRUPT      </td>
+    <td>Not used.      </td>
+  </tr>
+  <tr>
+    <td>IMMUNE_SILENCE      </td>
+    <td>Not used.      </td>
+  </tr>
+  <tr>
+    <td>IMMUNE_DISARM      </td>
+    <td>Not used.      </td>
+  </tr>
+  <tr>
+    <td>IMMUNE_BLEED      </td>
+    <td>Not used.      </td>
+  </tr>
+  <tr>
+    <td>IMMUNE_DAMAGE_FIRE      </td>
+    <td>Not used.      </td>
+  </tr>
+  <tr>
+    <td>IMMUNE_DAMAGE_FROST      </td>
+    <td>Not used.      </td>
+  </tr>
+  <tr>
+    <td>IMMUNE_DAMAGE_MYSTIC      </td>
+    <td>Not used.      </td>
+  </tr>
+  <tr>
+    <td>IMMUNE_DAMAGE_DEATH      </td>
+    <td>Not used.      </td>
+  </tr>
+  <tr>
+    <td>IMMUNE_DAMAGE_MELEE      </td>
+    <td>Not used.      </td>
+  </tr>
+  <tr>
+    <td>DISABLED      </td>
+    <td>Not used.      </td>
+  </tr>
+  <tr>
+    <td>AUTO_ATTACK      </td>
+    <td>Melee autoattack enabled.      </td>
+  </tr>
+  <tr>
+    <td>AUTO_ATTACK_RANGED      </td>
+    <td>Ranged autoattack enabled.      </td>
+  </tr>
+  <tr>
+    <td>CARRYING_RED_FLAG      </td>
+    <td>Not implemented.      </td>
+  </tr>
+  <tr>
+    <td>CARRYING_BLUE_FLAG      </td>
+    <td>Not implemented.      </td>
+  </tr>
+  <tr>
+    <td>HENGE      </td>
+    <td>Henge destination selection interact.      </td>
+  </tr>
+  <tr>
+    <td>TRANSFORMER      </td>
+    <td>Refashioner.      </td>
+  </tr>
+  <tr>
+    <td>PVPABLE      </td>
+    <td>Can target in PvP.  Must be mutual.      </td>
+  </tr>
+  <tr>
+    <td>IN_COMBAT      </td>
+    <td>Considered in combat.  Can't interact with objects, regenerates health slower.      </td>
+  </tr>
+  <tr>
+    <td>WALK_IN_SHADOWS      </td>
+    <td>Rogue Walk in Shadows is active.      </td>
+  </tr>
+  <tr>
+    <td>EVADE      </td>
+    <td>Not used.      </td>
+  </tr>
+  <tr>
+    <td>TAUNTED      </td>
+    <td>Not used.      </td>
+  </tr>
+  <tr>
+    <td>XP_BOOST      </td>
+    <td>Not implemented.      </td>
+  </tr>
+  <tr>
+    <td>REAGENT_GENERATOR      </td>
+    <td>Not implemented.      </td>
+  </tr>
+  <tr>
+    <td>RES_PENALTY      </td>
+    <td>Not used.      </td>
+  </tr>
+  <tr>
+    <td>IMMUNE_STUN      </td>
+    <td>Not used.      </td>
+  </tr>
+  <tr>
+    <td>IMMUNE_DAZE      </td>
+    <td>Not used.      </td>
+  </tr>
+  <tr>
+    <td>GM_FROZEN      </td>
+    <td>Not implemented.      </td>
+  </tr>
+  <tr>
+    <td>GM_INVISIBLE      </td>
+    <td>Administrative invisibility to players.  Doesn't work in all cases.  May still be revealed when logging in, changing zones, altering stats, or using skills.      </td>
+  </tr>
+  <tr>
+    <td>GM_SILENCED      </td>
+    <td>Not implemented.      </td>
+  </tr>
+</table>
+</div>
+</body>
+</html>

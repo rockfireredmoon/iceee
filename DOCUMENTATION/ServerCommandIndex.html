@@ -1,0 +1,1014 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Reference: PF Server Command Index</title>
+<link rel="stylesheet" type="text/css" href="main.css">
+</head>
+<body>
+
+<div>
+
+<h2>Reference: PF Server Command Index</h2>
+Documentation of all server slash commands that can be typed into the chat box.
+<p>
+Some commands have optional or alternate parameters.  Parameters marked in brackets [] are optional.  Parameters marked in braces {} usually accept only those values.
+<p>
+Many commands require special account permissions to function.  Refer to <a href="Accounts/AccountPermissions.html">Account Permissions</a> for a list of permissions.
+
+<div class="spacer"></div>
+Jump to <a href="#quickref">Quick Command Reference</a>
+<p>
+
+<div class="spacer"></div>
+<h2>Quick Command Reference</h2>
+
+
+<span class="scriptdoc">/unstick</span>
+<br>
+Performs the unstick command, returning to the nearest sanctuary.
+<div class="spacer"></div>
+
+
+
+<span class="scriptdoc">/pose emoteName [speed] [loop]</span>
+<br>
+Perform an emote, with optional effects.  The emote name is case sensitive and must match an emote recognized by the client for that model (whether biped or creature).  Speed is a multiplier for the animation's playback rate (for example, 0.5 is half speed, 2 is double speed).  Loop determines whether the animation should be repeated  indefinitely (use 1 to loop).  Note that some animations may play corresponding sound effects, which could be annoying if looped.
+<p>
+Examples:
+<span class="script">
+/pose Applaud
+/pose Applaud 0.5
+/pose Applaud 0.5 1
+</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">/pose2 emoteName [speed]</span>
+<br>
+Works the same as <span class="script">/pose</span> but will command a pet to emote.
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">/esay emoteName ["text"]</span>
+<br>
+Performs an emote and optionally speaks a message into the local /say channel at the same.  The text message must be enclosed in quotation marks.
+<p>
+Examples:
+<span class="script">
+/esay Wave
+/esay Wave "Hello everyone"
+</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">/warp {n,e,s,w} [distance]</span><br>
+<span class="scriptdoc">/warp x z</span><br>
+<span class="scriptdoc">/warp "Character Name"</span><br>
+<span class="scriptdoc">/warp x,y,z</span>
+<br>
+Requires the 'debug' permission if not in a grove.
+<p>
+Has four possible modes.  The first provides directional warping.  If distance is not specified, it will move 200 units (20 meters).<br>
+The second form warps to specific X and Z coordinates.<br>
+The third form warps to a specific character, if they are logged in.<br>
+The fourth form allows x,y,z coordinates, for convenience when copying and pasting coordinate locations.<br>
+<p>
+Examples:
+<span class="script">
+/warp n
+/warp e 1000
+/warp "Character Name"
+/warp 1000,200,1000
+</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">/warpi instanceName</span>
+<br>
+Requires the 'debug' permission if not in a grove.
+<p>
+Warps to an instance or grove by its name.
+<p>
+Example:
+<span class="script">
+/warpi grove1
+</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">/warpt x y</span>
+<br>
+Requires the 'debug' permission if not in a grove.
+<p>
+Warps to a scenery tile.
+<p>
+Example:
+<span class="script">
+/warpt 10 20
+</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">/warpp "Character Name"</span>
+<br>
+Requires the 'sage' permission.
+<p>
+Warps a player to your standing location.  Should only be used when in the same instance, otherwise they may end up in a weird place. 
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">/warpg groveName [x] [z]</span>
+<br>
+Warps to a grove.  This command emulates warp used by the <span class="mono">/grove</span> command.  Warp restrictions apply.  Optionally, destination coordinates may be provided.
+<p>
+Examples:
+<span class="script">
+/warpg grove1
+/warpg grove1 2000 3000
+</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">/warpextoff "Character Name" zoneID [x z] [y]</span>
+<br>
+Requires the 'sage' permission.
+<p>
+Warps an offline character to a zone.  Optionally takes the X and Z coordinates for the target location, including Y axis if necessary.
+<p>
+Examples:
+<span class="script">
+/warpextoff "Character Name" 81
+/warpextoff "Character Name" 81 43330 67880 
+/warpextoff "Character Name" 81 43330 67880 263
+</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">/warpext "Character Name" zoneID</span>
+<br>
+Requires the 'sage' permission.
+<p>
+Warps a character to a zone.  They must be online.  They will appear at the default starting location for that zone.
+<p>
+Example:
+<span class="script">
+/warpext "Character Name" 81
+</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">/health amount</span>
+<br>
+Requires the 'debug' permission.
+<p>
+Arbitrarily sets your current hitpoints.  Cannot set more than max health.
+<p>
+Example:
+<span class="script">
+/health 1
+</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">/speed amount</span>
+<br>
+Requires the 'debug' permission.
+<p>
+Arbitrarily sets your bonus running speed (specifically the mod_movement stat).  This is the bonus, so if you set to zero you will return to normal run speed.
+<p>
+Examples:
+<span class="script">
+/speed 0
+/speed 200
+</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">/fa ID</span>
+<span class="scriptdoc">/fa ID [ground]</span>
+<span class="scriptdoc">/fa ID [x z]</span>
+<br>
+Requires the 'debug' permission, 'admin' permission required for IDs 26000 to 26100.
+<p>
+Forces an ability ID to activate, regardless of the player's class, level, and whether or not they have the ability.
+<p>
+The ability must exist in the abilities table.  The second form indicates a ground target (GTAE) ability, which will be casted at the location of the target, or self if no target is selected.  The third form casts a GTAE ability at specific coordinates.
+<p>
+Examples:
+<span class="script">
+/fa 240
+/fa 215 1
+/fa 215 2000 2500
+</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">/skadd CDefID</span>
+<br>
+Requires the 'debug' permission.
+<p>
+Adds a sidekick (pet) by it's CreatureDef ID.
+<p>
+Example:
+<span class="script">
+/skadd 350
+</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">/skremove</span>
+<br>
+<p>
+Removes a sidekick (pet).  It must be selected.
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">/skremoveall</span>
+<br>
+<p>
+Removes all sidekicks (pets).
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">/skattack</span>
+<br>
+<p>
+Order all sidekicks to attack your current target (if they can).
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">/skcall</span>
+<br>
+<p>
+Call all sidekicks to return to you.
+<div class="spacer"></div>
+
+<span class="scriptdoc">/skwarp</span>
+<br>
+<p>
+Warps all sidekicks to a random position around you.
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">/skscatter</span>
+<br>
+<p>
+Cause all sidekicks to move to a random position around you.
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">/sklow [threshold]</span>
+<br>
+<p>
+Select the sidekick with the lowest current health percentage.  Optionally you may specify a health ratio from 1 to 99.  If selected, it will replace your current target.
+<p>
+Example:
+<span class="script">
+/sklow
+/sklow 50
+</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">/skparty</span>
+<br>
+<p>
+Creates a "virtual party" where your sidekick's health bar will display on screen as if they were assigned to your party.  This not an actual party, and has no effect on gameplay.  Should not be used if you are in a real party.
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">/partylowest</span>
+<br>
+<p>
+Selects the party member with the lowest health ratio.  Your current target will change.  Potentially useful for healers.
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">/who</span>
+<br>
+<p>
+List all players currently logged in, their profession, level, and location name.  Will not show players with the GM_INVISIBLE status effect.
+<p>
+Extended information is available if the 'debug' permission is set.  This will show their coordinates instead of profession and level.
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">/gmwho</span>
+<br>
+Requires the 'admin' permission.
+<p>
+List all players currently logged in, their account name and account ID.
+<div class="spacer"></div>
+
+
+
+<span class="scriptdoc">/chwho [channel]</span>
+<br>
+<p>
+List all players using a private chat channel, if you are in the channel.  Optionally a specific channel name can be provided.
+<p>
+Examples:
+<span class="script">
+/chwho
+/chwho "frown"
+</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">/give "Item Name"</span>
+<br>
+Requires the 'itemgive' permission.
+<p>
+Gives yourself an item.  Searches the item database for the first partial occurrence of the given name.  Case sensitive.  It must be a static item defined in the ItemDef files.  Does not give generated items.
+<p>
+Example:
+<span class="script">
+/give "Dragonscale Backpack"
+</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">/giveid itemID [count]</span>
+<br>
+Requires the 'admin' permission.
+<p>
+Gives yourself an item by referencing it's specific ItemDef ID.  If the item is stackable, a stack count may be provided.
+<p>
+This is the only command that can be used to give generated items.  <b>WARNING!</b>  If a generated item is destroyed (dropped from inventory, pushed out of buyback, removed by crafting/disassembling), it will be removed from the database.  If another player has this item while a duplicate is destroyed, it will no longer be available.  Use /deleteabove to remove items without destroying them.  Because this command is potentially destructive, the admin permission is required.
+<p>
+Example:
+<span class="script">
+/giveid 40053
+/giveid 40053 20
+</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">/giveall "Search Name"</span>
+<br>
+Requires the 'itemgive' permission.
+<p>
+Gives yourself all items that at least partially match the search term.  Case sensitive.  This may potentially consume remaining inventory space.  The /deleteabove or /deleteall commands may be helpful here.
+<p>
+This command is sometimes helpful for giving set items, although some items have typos or inconsistent spelling so you may need to search the ItemDef files manually.
+<p>
+Example:
+<span class="script">
+/giveall "Planeswalker"
+</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">/giveapp equipID "Appearance"</span>
+<br>
+Requires the 'itemgive' permission.
+<p>
+Gives yourself all items that have a partial match of their ItemDef mAppearance data.  Case sensitive.
+<p>
+equipID corresponds to <a href="Generic/StatRef.html#mEquipType">ItemDef mEquipType</a>.  Leave zero to allow any item type, or set to a particular value to filter specific equipment types.
+<p>
+This may potentially consume remaining inventory space.  The /deleteabove or /deleteall commands may be helpful here.
+<p>
+Examples:
+<span class="script">
+/giveapp 0 Armor-Cloth-Mid5
+/giveapp 15 Armor-Cloth-Mid5
+</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">/deleteall</span>
+<br>
+Requires the 'itemgive' permission.
+<p>
+Remove all items from your backpack inventory.  This does not "destroy" items, so generated items will still exist in the database.
+<div class="spacer"></div>
+
+<span class="scriptdoc">/deleteabove slotNum</span>
+<br>
+Remove items from your backpack inventory if their slot index is greater than or equal to the given amount.  Slots begin counting at zero, in the top-left corner of the inventory grid.  This does not "destroy" items, so generated items will still exist in the database.
+<p>
+Inventory slot index arrangement:<br>
+<pre class="mono">
+  0   1   2   3   4   5   6   7
+  8   9  10  11  12  13  14  15
+ 16  ...
+ 24  ...
+</pre>
+<p>
+Example:
+<span class="script">
+/deleteabove 8
+</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">/grove</span>
+<br>
+Returns a list of player-owned groves that the player may select to warp to.  The player must be in a free warp zone (grove, PvP arena, near sanctuary) to warp.
+<div class="spacer"></div>
+
+
+<span class="pvp">grove</span>
+<br>
+Returns a list of Player vs Player combat arenas that the player may warp to.  The player must be in a free warp zone (grove, PvP arena, near sanctuary) to warp.
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">/complete</span>
+<br>
+Requires the 'admin' permission.
+<p>
+Completes all objectives of the current act of all currently active quests.  Quests will proceed to the next act (next set of objectives).
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">/refashion [verify]</span>
+<br>
+On-demand refashioning.  Intended for refashioning weapons (of the same category).  It is recommended to use the standard refashioner NPCs for armor.  Be careful when using this command.  It operates on the first two slots in your backpack inventory (top left).
+<p>
+The first slot must contain the item with the stats you want to keep.
+<p>
+The second item contains the new look.  <b>This item will be erased from your inventory if the refashion is successful.</b>  Cost will be deducted automatically.
+<p>
+Examples:
+<span class="script">
+/refashion
+/refashion 1 
+</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">/backup</span>
+<br>
+Requires the 'debug' permission.
+<p>
+Saves a backup of your current character appearance.
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">/restore1</span>
+<p>
+Restores your character appearance from when it was saved using /backup.
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">/god {0,1}</span>
+<br>
+Requires the 'debug' permission.
+<p>
+Turns invincibility on or off (The INVINCIBLE status effect).
+Examples:
+<span class="script">
+/god 0
+/god 1
+</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">/setstat statName value</span>
+<br>
+Requires the 'admin' permission.
+<p>
+Adjusts a stat on the selected target (or self if none selected).  Note: this does not replace any buffs, so applying or removing buffs may recalculate a stat back into something else.  statName may be any <a href="Generic/StatRef.html#stats">Character Stat</a> (lowercase only).
+<p>
+This command is helpful for debugging abilities by refilling might/will and charges, giving spare ability points, and changing profession (needs respec).
+<p>
+It has a practical use for changing clan sub-text, or altering coin and credit amounts, or changing someone's class if they request (will need to respec).
+<p>
+This is not an effective way to change character names.  It's best to update the character file manually, and change the entry in <a href="Dynamic/UsedNames.html">UsedNames.txt</a>
+<p>
+Use the /health and /speed commands for an easier way to change those stats for yourself.
+<p>
+If using a text value that needs spaces, enclose the value in quotation marks.
+<p>
+Examples:
+<span class="script">
+/setstat sub_name "Resident Complainer"
+/setstat might_charges 5
+</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">/adjustexp amount</span>
+<br>
+Requires the 'admin' permission.
+<p>
+Adds experience.  Will not exceed the server's maximum character level.  Negative values may reduce experience and levels, but will not remove ability points.
+<p>
+Example:
+<span class="script">
+/adjustexp 10000
+</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">/scale propID amount</span><br>
+<span class="scriptdoc">/scale propID x y z</span>
+<p>
+Directly edits the scale of a prop.  The first form will set all axis values to a particular amount.  The second form will set individual axis scales.
+<p>
+<b>Note: props that have been irregularly scaled can have unpredictable visual glitches, especially if they have been rotated. Sometimes they won't glitch right away, only after future edits like position changes. Use custom scaling at your own risk (frustration).</b>
+<p>
+Bug 1: The most common bug is that props will disappear from your screen, although they still exist both in the client and on the server in their original locations. Use the scenery browser to select them.
+<p>
+Bug 2: In rare cases, the prop may appear elsewhere in the world. Sometimes they can be directly selected for editing. If not, use the scenery browser to select them. Since the location is being misreported by the client, you may need to increase the search distance beyond what you'd expect.
+<p>
+Glitched props can be repaired by setting all axis scales to the same value.
+<p>
+Use the Scenery Browser or Build Tool to determine a prop's ID number.
+<p>
+Examples:
+<span class="script">
+/scale 1000000 1.5 2.0 3.2
+/scale 1000000 2.5
+</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">/partyall</span>
+<br>
+Requires the 'debug' permission.
+<p>
+Simulates a virtual party with all characters in the instance.  Their health bars will appear on your screen, but it is not a real party.  No party chat, no shared experience, etc.  Should not be used when in a real party as it may replace the health bars.
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">/partyquit</span>
+<br>
+Leave a party, potentially disbanding it.  Also removes the health bars of a virtual party.
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">/ccc</span>
+<br>
+Requires the 'debug' permission.
+<p>
+Clears all active cooldown categories.  Useful when debugging abilities with cooldowns.
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">/ban "Character Name" duration [denomination]</span>
+<br>
+Requires the 'admin' permission.
+<p>
+Bans a character (their account) for the specified duration, which defaults to minutes unless denomination is specified.  Use lowercase letters {h,d,w,y} for hours, days, weeks, or years (effectively perma-ban).  The character must be logged in.
+<p>
+Examples:
+<span class="script">
+/ban "Annoying Person" 7 d
+/ban "Annoying Person" 1 w
+</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">/unban accountName</span>
+<br>
+Requires the 'admin' permission.
+<p>
+Clears an account ban.
+<p>
+Example:
+<span class="script">
+/unban HerpDerp123
+</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">/setpermission accountName permissionName value</span>
+<br>
+Requires the 'admin' permission.
+<p>
+Sets or clears an account permission.  Account permissions apply to all characters on the account.
+<p>
+Refer to <a href="Accounts/AccountPermissions.html">Account Permissions</a> for a list of permissions.  They must be lowercase.
+<p>
+Value can be 0 to disable, 1 to enable.
+<p>
+Most useful for enabling one-time password resets for an account, or disabling region chat.
+<p>
+Examples:
+<span class="script">
+/setpermission HerpDerp101 regionchat 0
+/setpermission HerpDerp101 passwordreset 1
+</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">/setpermissionc "Character Name" permissionName value</span>
+<br>
+Requires the 'admin' permission.
+<p>
+Applies an account permission to a single character without affecting the entire account.  Most permission checks will check against the account first, then character.
+<p>
+Refer to <a href="Accounts/AccountPermissions.html">Account Permissions</a> for a list of permissions.  They must be lowercase.
+<p>
+Value can be 0 to disable, 1 to enable.
+<p>
+Cannot be used for password resets.
+<p>
+Example:
+<span class="script">
+/setpermissionc "Annoying Person" regionchat 0
+</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">/setbehavior bit state</span>
+<br>
+Requires the 'admin' permission.
+<p>
+This system is deprecated.  Sets or clears an internal server behavior flag.
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">/deriveset</span>
+<br>
+Requires the 'admin' permission.
+<p>
+Gives the Refashionable item set, based on the appearance of the selected target.  Refashionable items are basic level 1 items with no cost.  Using this command will generate the items in the backpack inventory, preset to look like the equivalent armor types from the selected player, and can be used to transfer appearances of particular items without giving the item in question.
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">/igstatus statusEffect flag [target]</span>
+<br>
+Requires the 'admin' permission.
+<p>
+Sets or clears a status effect.  Normally applies to self, but if the last parameter is present, it will apply to the selected target.
+<p>
+The status effect is permanent until manually cleared.
+<p>
+Refer to <a href="Generic/StatRef.html#StatusEffects">Status Effects</a>.  The names must be uppercase.
+<p>
+Examples:
+<span class="script">
+/igstatus ROOT 1
+/igstatus ROOT 0
+/igstatus ROOT 1 1
+/igstatus ROOT 0 1
+</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">/partyzap</span>
+<br>
+Requires the 'admin' permission.
+<p>
+Disband all active parties.
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">/partyinvite "Character Name"</span>
+<br>
+Sends a party invite to a player without having to meet them locally.
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">/roll</span>
+<br>
+Rolls a random number (1 to 100) for each party member, and sends the results to everyone in the party.
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">/forumlock {0,1}</span>
+<br>
+Requires the 'admin' permission.
+<p>
+Locks or unlocks the In-Game Forum.  When locked, posting and editing is disabled.
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">/zonename type{0,1} name</span>
+<br>
+Requires the 'admin' permission.
+<p>
+Changes the Name or Shard of the current zone's ZoneDef entry.  Intended for groves.  The minimap displays the location formatted as: <b>Name (Shard)</b>
+<p>
+If the name contains spaces, enclose in quotation marks.
+<p>
+If type is 0, <b>Name</b> is changed.  If type is 1, <b>Shard</b> is changed.
+<p>
+Example:
+<span class="script">
+/zonename 1 "Blah's Grove"
+</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">/dtrig action [...]</span>
+<br>
+Requires the 'admin' permission.
+<p>
+Originally used to trigger certain offline debugging tools, other useful functions were added to the same function for lazy convenience.
+<p>
+Each action takes its own parameters.
+
+<p>
+/dtrig 11<br>
+Marks FunChatReplace.txt as unloaded so it will be reloaded when next used (allows making changes to the file).
+
+<p>
+/dtrig 15 "name"<br>
+Searches the instance for a creature by partial name match.  If found, attempts to warp there.
+
+<p>
+/dtrig 17 [distance]<br>
+Counts all SpawnPoints around the current standing coordinates, tallying usage counts for each spawn package in use.  Distance defaults to 200 units if omitted.  Prints the results in the server log.  Recommended only for Windows builds since they have easy access to the log in real-time.
+
+<p>
+/dtrig 19<br>
+Prints details of the current target to the server log.  Details include name, aggro status, ai package, faction, server flags, and active status effects.
+
+<p>
+/dtrig 24<br>
+Flush inactive instances that don't have any players in them.  Schedules an instance check to happen immediately to remove them.
+
+
+<p>
+/dtrig 50 {0,1}<br>
+Sets the April Fools flag on/off.  If enabled, it intercepts and overrides the information sent to the character selection screen so that everyone sees a level 1 character in generic newbie armor.
+
+<p>
+/dtrig 51 "name"<br>
+Sets the April Fools name.
+
+<p>
+/dtrig 52 accountID<br>
+Sets which account that the April Fools name will work on (set zero to turn off).  Any incoming chat message sent by that account will have their character name replaced with the April Fools name. 
+
+<p>
+/dtrig 100<br>
+Instantly deals 99999 point of raw damage to the current target, likely killing it.
+
+<p>
+/dtrig 110 "Character Name" [effect] [value{0,1}]<br>
+Enable or disable a status effect on a character.  They must be logged in.  The status effect remains until they log out, or specifically disabled.  Refer to <a href="Generic/StatRef.html#StatusEffects">Status Effects</a>.  The status effect name must be uppercase.
+
+<p>
+/dtrig 900 x1 y1 x2 y2<br>
+Copies scenery tiles from the current zone to a new folder "SceneryCopy".  Only the tiles that occupy the banding box of the provided world coordinates will be copied.  This can be used to backup specific areas of a zone.
+
+<p>
+/dtrig 901 zoneID accountID warpName groveName [simID]<br>
+Pokes a new grove index entry, or modifies an existing one.
+<p>
+zoneID is the ZoneDef ID of the zone index to create or modify.  The zone's account owner, warp name, and grove name will be set to the provided values.
+<p>
+In order to create a new index, the simulator ID must be provided (check the admin panels for active players and their simulator IDs).
+
+<p>
+/dtrig 902 filename merge{0,1}<br>
+Recommended to use while offline.  Loads scenery from a file.  If merge is set to 1, any incoming props that match a scenery ID of an existing (already loaded and resident in memory) will replace the existing prop.
+<p>
+This function can theoretically be used to import non-paged scenery into a zone where it will be sorted into the proper scenery tiles.  Before merging, it may be necessary to combine the contents of multiple scenery tiles into one large file, to handle everything at once.
+<p>
+
+<p>
+/dtrig 903<br>
+Reloads CraftDef.txt
+
+<p>
+/dtrig 904<br>
+Reloads ScaledDifficulties.txt
+
+<p>
+/dtrig 906<br>
+Reloads DropRateProfile.txt
+
+<p>
+/dtrig 909 package sound<br>
+Sends a message to the client to play a sound effect from a particular asset package.
+
+<p>
+/dtrig 1000 [state{0,1}] [range]<br>
+Enables or disables PvP status for all players in range.  Range defaults to 960 units if omitted.  State defaults to disable if omitted. 
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">/sdiag {0,1}</span>
+<br>
+Obsolete.  Enables or disables ability self-diagnostics (via the 'selfdiag' account permission).  This was meant to determine if an ability was not firing because of a cooldown problem, and inform the player.  The bug originally responsible for this was fixed long ago.
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">/sping [timeMS]</span>
+<br>
+If used with no parameter, sends a ping report to the client of collected ping counts, the highest and lowest ping time, and collective average.
+<p>
+Time is a threshold, in milliseconds, to automatically altert the player if it detects a ping time that meets or exceeds the threshold.
+<p>
+Use a time of 0 (zero) to turn off ping notification.  Use a negative time to reset statistics.
+<p>
+Examples:
+<span class="script">
+/sping
+/sping 250
+/sping 0
+/sping -1
+</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">/info category</span>
+<br>
+Requires the 'admin' permission.
+<p>
+Returns a small amount of information depending on what is requested.  Use "spawntile" to return the spawn tile coordinates of the standing location.  Use "scenerytile" to return the scenery tile (based on ZoneDef page size).
+<p>
+Example:
+<span class="script">
+/info spawntile
+/info scenerytile
+</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">/grovesetting action [data] </span>
+<br>
+Sets privacy settings for a grove, blocking certain players from entering the grove.  Can only be used within a grove.  Your account must match the grove's account owner.  Performs different tasks depending on which action is supplied.
+<p>
+/grovesetting filtertype {0,1,2}<br>
+Sets the player filter type.  0 for no filter.  1 for whitelist (allow only specific players).  2 for blacklist (block only specific players).
+<p>
+/grovesetting filteradd "Character Name"<br>
+Adds a character to the filter list.
+<p>
+/grovesetting filterremove "Character Name"<br>
+Remove a character from the filter list.
+<p>
+/grovesetting filterclear<br>
+Remove all players from the filter list.
+<p>
+/grovesetting filterlist<br>
+Returns the list of players currently in the list.
+<p>
+Example (sets a privacy filter and adds someone):
+<span class="script">
+/grovesetting filtertype 2
+/grovesetting filteradd "Annoying Person"
+</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">/grovepermission action [data]</span>
+<br>
+Sets additional build permissions for a grove, to give other players build access.  Can only be used within a grove.  Your account must match the grove's account owner.  Performs different tasks depending on which action is supplied.
+<p>
+This command is not user friendly since it requires specific input data which isn't exposed to players.
+<p>
+/grovepermission add CDefID x1 y1 x2 y2
+Adds a build permission for the specified player CreatureDef ID.  IDs can be retrieved from the admin panel.
+<p>
+/grovepermission delete index<br>
+Removes build permissions for a particular entry index (refer to the ZoneDef file to see a list of permissions).  Note that indexes begin at zero.
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">/dngscale [profileName]</span>
+<br>
+Sets the player's chosen dungeon scaling profile to increase creature difficulty.  This function can be called manually, but normally works through the client /dng command where the player can select a profile from the list.
+<p>
+If the profile name exists, it will be set for that character.  If that character is the party leader or instance owner, the dungeon will be scaled to their chosen profile.
+<p>
+Refer to <a href="Data/ScaledDifficulties.html">ScaledDifficulties.txt</a> for a list of profiles.
+<p>
+Example:
+<span class="script">
+/dngscale Bonus1
+</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">/pathlinks [radius]</span>
+<br>
+Converts all SpawnPoint links to pathing links (blue lines in the client) instead of loyalty links (pink lines).  Can only be used within a grove.  Your account must match the grove's account owner.  May need a relog to refresh the client view.
+<p>
+Radius defaults to 300 units (30 meters) if not supplied.  A large radius may not cover the entire zone if the player has not explored that location recently (thus loading the scenery into the server's memory).
+<p>
+Example:
+<span class="script">
+/pathlinks 500
+</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">/targ</span>
+<br>
+Requires the 'debug' permission.
+<p>
+Sends information text to the client about the currently selected target.  Includes: name, level, instance ID, CreatureDef ID, current health, and distance.
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">/elev amount</span>
+<br>
+Requires the 'debug' permission.
+<p>
+Alters your Y axis elevation.
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">/cycle</span>
+<br>
+Requires the 'debug' permission.
+<p>
+Immediately advances one step in the day/night environment cycle.
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">/instance</span>
+<br>
+Returns some information about the current zone/instance.  Total mobs killed, drop rate bonus.  If a dungeon instance, displays the party leader or instance creator.  If a scaled dungeon, it will show the scaler name used.
+<p>
+If the 'debug' permission is set, shows the drop rate profile.
+<div class="spacer"></div>
+
+
+<div class="spacer"></div>
+<a name="quickref"></a>
+<h2>Quick Command Reference</h2>
+<span class="script">
+/unstick
+/pose emoteName [speed] [loop]
+/pose2 emoteName [speed]
+/esay emoteName ["text"]
+/warp {n,e,s,w} [distance]
+/warp x z
+/warp "Character Name"
+/warp x,y,z
+/warpi instanceName
+/warpt x y
+/warpp "Character Name"
+/warpg groveName [x] [z]
+/warpextoff "Character Name" zoneID [x z] [y]
+/warpext "Character Name" zoneID
+/health amount
+/speed amount
+/fa ID
+/fa ID [ground]
+/fa ID [x z]
+/skadd CDefID
+/skremove
+/skremoveall
+/skattack
+/skcall
+/skwarp
+/skscatter
+/sklow [threshold]
+/skparty
+/partylowest
+/who
+/gmwho
+/chwho [channel]
+/give "Item Name"
+/giveid itemID [count]
+/giveall "Search Name"
+/giveapp equipID "Appearance"
+/deleteall
+/deleteabove slotNum
+/grove
+/complete
+/refashion [verify]
+/backup
+/restore1
+/god {0,1}
+/setstat statName value
+/adjustexp amount
+/scale propID amount
+/scale propID x y z
+/partyall
+/partyquit
+/ccc
+/ban "Character Name" duration [denomination]
+/unban accountName
+/setpermission accountName permissionName value
+/setpermissionc "Character Name" permissionName value
+/setbehavior bit state
+/deriveset
+/igstatus statusEffect flag [target]
+/partyzap
+/partyinvite "Character Name"
+/roll
+/forumlock {0,1}
+/zonename type{0,1} name
+/dtrig action [...]
+/sdiag {0,1}
+/sping [timeMS]
+/info category
+/grovesetting action [data] 
+/grovepermission action [data]
+/dngscale [profileName]
+/pathlinks [radius]
+/targ
+/elev amount
+/cycle
+/instance
+</span>
+
+
+</div>
+</body>
+</html>

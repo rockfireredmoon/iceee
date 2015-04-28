@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Reference: Remote Server Tools</title>
+<link rel="stylesheet" type="text/css" href="main.css">
+</head>
+<body>
+
+<div>
+
+<h2>Reference: Remote Server Tools</h2>
+
+<div class="spacer"></div>
+<h2>Purpose</h2>
+This admin panel is accessed via web browser, at the same port that the server is running its HTTP service.
+<p>
+Example URL: <a href="http://localhost/RemoteServerTools.html">
+http://localhost/RemoteServerTools.html
+</a>
+<p>
+Input the authorization token in the edit box.  Refer to <span class="script">RemoteAuthenticationPassword</span> in <a href="ServerConfig.html">ServerConfig.txt</a> to view or change the password.
+<p>
+Some of the information displayed from particular reports is outdated or unused debugging stuff.
+
+<div class="spacer"></div>
+
+<h3>Refresh Threads</h3>
+Displays basic information, simulators in use, uptime, active HTTP and simulator thread connections, internal bandwidth totals, etc.
+<div class="spacer"></div>
+
+<h3>Refresh Time</h3>
+Displays active instances and ZoneDef objects, some related information like player counts and instance owner, and the instance expire time.  Before editing grove ZoneDef files in the <a href="ZoneDef/FolderZoneDef.html">ZoneDef</a> Folder, make sure the associated instance ID isn't in this list.
+<div class="spacer"></div>
+
+<h3>Refresh Mods</h3>
+Displays character stat and target information.  Before using, enter the appropriate simulator ID into the edit box.  Simulator IDs for active players can be viewed using the Refresh Players button.
+<div class="spacer"></div>
+
+<h3>Refresh Players</h3>
+Displays a list of active players, their simulator IDs, character names, and location.
+<div class="spacer"></div>
+
+<h3>Refresh Instance</h3>
+Displays a list of active instances, their player and creature totals, kill count and drop multiplier, and a somewhat detailed list of creature entities.  The creature details may be incomplete as the server report is limited to a certain length.
+<div class="spacer"></div>
+
+<h3>Refresh Hate Profile</h3>
+Displays a list of active instances and all associated hate information, if a mob has any.  Hate is generated and tracked when players attack mobs.
+<div class="spacer"></div>
+
+<h3>Refresh Character</h3>
+Displays a list of active characters and their CreatureDefIDs.  Before editing character files manually in the <a href="Characters/FolderCharacters.html">Characters</a> folder, make sure it is not present in this list.
+<div class="spacer"></div>
+
+<h3>Refresh Sim Data</h3>
+Displays a list of all active simulators and various values and state information associated with it.  Somewhat useful for debugging.
+<div class="spacer"></div>
+
+<h3>Set MOTD</h3>
+Sets the Message of the Day.  Enter the message into the Input Data box.
+<div class="spacer"></div>
+
+<h3>Reload Checksum</h3>
+Reload the HTTP file checksums from <a href="Data/HTTPChecksum.html">Data/HTTPChecksum.txt</a>.  Checksums will need to be reloaded if any CAR files were modified.  The server will not calculate checksums, you must use an external application for that and update <b>HTTPChecksum.txt</b> accordingly.
+<div class="spacer"></div>
+
+<h3>Reload Config</h3>
+Reloads <a href="ServerConfig.html">ServerConfig.txt</a>.  Useful if you need to change any variables while the server is running.
+<div class="spacer"></div>
+
+<h3>Import Keys</h3>
+Loads <a href="ImportKeys.html">ImportKeys.txt</a>.  Use this to import new registration keys while the server is running.
+<div class="spacer"></div>
+
+<h3>Refresh Profiles</h3>
+Displays a running total of all gameplay operations messages and client queries received by the server during this session.  Displays two numbers for each message, the first is the total count, the second is the time in milliseconds spent processing them.
+<div class="spacer"></div>
+
+<h3>Refresh Item</h3>
+Displays a list of items on the target player's character.  Before using, input the Simulator ID of the player into the edit box.
+<div class="spacer"></div>
+
+<h3>Refresh Item (Detailed)</h3>
+Displays a list of items on the target player's character, including more detailed stat readouts.  Before using, input the Simulator ID of the player into the edit box.
+<div class="spacer"></div>
+
+<h3>Refresh Packet</h3>
+Provides information on sockets and packet information accumulated during this session.  It will provide a list of date and times when there was some kind of operations trouble like delayed packets.  Not really useful for anything anymore.
+<div class="spacer"></div>
+
+<h3>Reload Elite</h3>
+Erases and reloads the data tables for elite mobs from these files:
+<a href="Data/EliteType.html">Data/EliteType.txt</a> and
+<a href="Data/EliteAffix.html">Data/EliteAffix.txt</a>.
+<div class="spacer"></div>
+
+
+<div class="footer"></div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Reference: RarityConfig.txt</title>
+<link rel="stylesheet" type="text/css" href="../main.css">
+</head>
+<body>
+
+<div>
+
+<h2>Reference: RarityConfig.txt</h2>
+
+<div class="spacer"></div>
+<h2>Purpose</h2>
+Defines some of the basic parameters of items, such as drop quality, drop rate, and potential stat totals.
+
+<div class="spacer"></div>
+<h2>File Format</h2>
+INI format.  Key=Value pairs.<br>
+Comment character: semicolon (;)<br>
+Each line is split at the first "=" symbol.
+<p>
+<h3>Properties</h3>
+<table frame=box rules=all>
+  <tr class="header">
+    <td><b>Property</b></td>
+    <td><b>Description</b></td>
+  </tr>
+  <tr>
+    <td>[ENTRY]</td>
+    <td>Begins a new rarity block.  There are only a limited number of blocks, determined one for each possible <span class="script">mQualityLevel</span> rating.  The system is designed to use only quality levels 2 (uncommon) through 6 (artifact).</td>
+  </tr>
+  <tr>
+    <td>mQualityLevel</td>
+    <td>Integer.  Corresponds to the ItemDef <span class="script">mQualityLevel</span> property.  All configuration properties in this [ENTRY] will be applied to this quality level.</td>
+  </tr>
+  <tr>
+    <td>Level</td>
+    <td>Integer.  The minimum level required to spawn this quality.  The level of a generated item generally matches the level of the creature that dropped it.</td>
+  </tr>
+  <tr>
+    <td>Chance</td>
+    <td>Integer.  The drop chance for an item of this quality, expressed as a denominator.  A chance of 100 evaluates to 1/100, or 1% chance on any given kill.</td>
+  </tr>
+  <tr>
+    <td>StatMax</td>
+    <td>Integer.  The maximum number of core stats that may spawn on an item.  Core points are distributed into core stats.  Which core stats are chosen purely at random.  Core stats are strength, dexterity, constitution, psyche, and spirit.<p>Example: if StatMax is 2, then only two of those 5 possibilities may be chosen to receive points.</td>
+  </tr>
+  <tr>
+    <td>ModMax</td>
+    <td>Integer.  The maximum number of stats and modifiers that may spawn on an item.  This includes core stats, plus any pre-determined and bonus modifiers.  This can be extended further by LevelBonus.</td>
+  </tr>
+  <tr>
+    <td>LevelBonus</td>
+    <td>Float.  Helps determine the number of bonus modifiers that may spawn on an item (exceeding ModMax).
+<p>
+For example, if this bonus is 1.5, then a level 40 item has 40 * 1.5 = 60, which translates into an 60% chance of increasing ModMax by 1 for that item.
+<p>
+If the calculated level bonus is greater than 100, say 250%, then it increases ModMax by +2 then a 50% chance to increase another +1.</td>
+  </tr>
+  <tr>
+    <td>RollMin</td>
+    <td>Float.  The minimum ratio of total core stat points that may be allocated into a single stat.  Also see RollMax.</td>
+  </tr>
+  <tr>
+    <td>RollMax</td>
+    <td>Float.  The maximum ratio of total core stat points that may be allocated into a single stat.  Both RollMin and RollMax allow items to spawn with multiple stats like both strength and dexterity with relative percentages.  If StatMax has been reached, all remaining unallocated points will be dumped into the final chosen stat regardless of the maximum ratio.</td>
+  </tr>
+  <tr>
+    <td>NullMod</td>
+    <td>Integer.  The percent chance that any given bonus modifier slot will roll as nothing.  Bonus modifiers are rolled after the item's "intrinsic" and "always" modifiers have been applied.  The number of total slots is based on ModMax and LevelBonus.  This can help widen the scope of randomness, allowing potential for much better items while balancing the odds with weaker items.</td>
+  </tr>
+  <tr>
+    <td>StatPointMult</td>
+    <td>Float.  The multiplier to the total number of core stat points that are allocated to an item (only applies to str/dex/con/psy/spi).  This allows tweaking the core power of each quality level without having to tediously edit or re-scale the core stat tables.</td>
+  </tr>
+</table>
+
+<div class="footer"></div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Reference: Packages.txt</title>
+<link rel="stylesheet" type="text/css" href="../main.css">
+</head>
+<body>
+
+<div>
+
+<h2>Reference: Packages.txt</h2>
+<div class="spacer"></div>
+<h3>Purpose</h3>
+Defines packages, which are lists of sets.  This file is mostly used for assigning armor sets to drop from creatures of a particular level.
+<p>
+
+<div class="spacer"></div>
+<h3>File Format</h3>
+Table file.  Tab separated values.<br>
+Comment character: semicolon (;)<br>
+First line is always ignored (assumed as header).<br>
+
+<p>
+
+<div class="spacer"></div>
+
+<h2>Table Columns</h2>
+
+<table frame=box rules=all>
+<tr>
+<td>PackageName</td>
+<td>String.  The name for this package.  For lookup purposes, packages and sets should not share any names.</td>
+</tr>
+
+<tr>
+<td>Auto</td>
+<td>Integer.  If nonzero, this corresponds to a creature level.  If a creature matching this level is killed, the sets within this package will automatically be included for drop consideration.</td>
+</tr>
+
+<tr>
+<td>Flags</td>
+<td>String.  Mostly obsolete.  This was intended to allow extra drop considerations based on the mob's CreatureDef rarity.  <b>This feature was unused, and not tested.</b>  Be sure to test, and don't be surprised if it doesn't work correctly (or not at all).
+<p>
+Allows a combination of the following characters.
+
+<pre class="script">
+Char   Description
+  *    (asterisk)    Enables all flags (DEFAULT, RECOMMENDED)
+  +    (plus sign)   Enable only the specified flags.
+  -    (minus sign)  Enable all, but exclude the specified flags.
+
+  a    All non-named mobs, any rarity (equivalent to 'nhel')
+  A    All named mobs, any rarity     (equivalent to 'NHEL')
+
+  n    Non-named normal mobs    (rarity=0)
+  N    Named normal mobs        (rarity=0)
+
+  h    Non-named heroic mobs    (rarity=1)
+  H    Named heroic mobs        (rarity=1)
+
+  e    Non-named epic mobs      (rarity=2)
+  E    Named epic mobs          (rarity=2)
+
+  l    Non-named legendary mobs (rarity=3)
+  L    Named legendary mobs     (rarity=3)
+</pre>
+<p>
+Examples:
+<pre class="script">
++A             Only drop from named mobs.
++hHeElL        Only drop from heroics and higher.
+-nN            Inverse, equivalent to: +hHeElL
+</pre>
+</td>
+</tr>
+
+<tr>
+<td>SetList</td>
+<td>String.  A list of set names, separated by commas.  Sets are defined in <a href="Sets.html">Sets.txt</a></td>
+</tr>
+</table>
+
+<div class="footer"></div>
+
+</div>
+</body>
+</html>

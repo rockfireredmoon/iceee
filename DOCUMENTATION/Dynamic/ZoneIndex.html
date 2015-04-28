@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Reference: ZoneIndex.txt</title>
+<link rel="stylesheet" type="text/css" href="../main.css">
+</head>
+<body>
+
+<div>
+
+<h2>Reference: ZoneIndex.txt</h2>
+
+<div class="spacer"></div>
+<h2>Purpose</h2>
+The master list of all zones (including overworld, dungeons, groves, and any others).  This associates warp names and optional account owners to each zone ID.  This list is used when searching for groves belonging to a player, and for determining the target Zone ID for warp commands.
+
+<div class="spacer"></div>
+<h2>Special Notes</h2>
+If a new grove is manually added to a player, it must have a corresponding entry here.
+<p>
+The applicable information from all the entries present in <a href="../Data/ZoneDef.html">ZoneDef.txt</a> are imported into this index on server start.  Any new non-grove zones (such as new dungeons) don't necessarily have to manually updated here.
+
+<div class="spacer"></div>
+<h2>File Format</h2>
+
+Table file.  Delimiter separated values.  Delimiter: semicolon (;)<br>
+Comment character: none<br>
+No header.
+
+<p>
+
+Each line contains 4 values separated by the delimiter.  They appear in this order:
+<p>
+
+<table frame=box rules=all>
+<tr>
+<td>Zone ID</td>
+<td>Integer.  Used as the table key.  The Zone ID must be unique.</td>
+</tr>
+<tr>
+<td>Account ID</td>
+<td>Integer.  For groves, this is the Account ID of the owner.  This property is used for enumerating groves via the <span class="string">/grove</span> command.</td>
+</tr>
+<tr>
+<td>Warp Name</td>
+<td>String.  The full warp name of this zone, as when using the <span class="string">/warpi</span> command.  Case sensitive.</td>
+</tr>
+<tr>
+<td>Grove Name</td>
+<td>String.  For groves only.  This should match the player account's grove name (see <a href="AccountList.html">AccountList.txt</a>)</td>
+</tr>
+</table>
+
+
+<div class="footer"></div>
+
+</div>
+</body>
+</html>

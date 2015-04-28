@@ -1,0 +1,36 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Reference: ImportKeys.txt</title>
+<link rel="stylesheet" type="text/css" href="main.css">
+</head>
+<body>
+
+<div>
+
+<h2>Reference: ImportKeys.txt</h2>
+
+<div class="spacer"></div>
+<h2>Purpose</h2>
+Use this file to import new registration keys into the server while the server is running.  You may use the <a href="ToolKeyGen.html">Key Generator Tool</a> to generate a list of randomly generated keys, or your own randomizer as long as the keys are not too long (35 characters + plus null terminator).
+<p>
+If the server is currently running, copy and paste the keys into <b>ImportKeys.txt</b> and use the web panel.  The keys will be individually compared to make sure there are no duplicates to existing keys.  Each key that passes inspection will be added to the list and autosaved to <a href="Dynamic/RegistrationKeys.html">Dynamic/RegistrationKeys.txt</a>
+<p>
+<p>
+If the program is NOT running, you may add keys directly to the <a href="Dynamic/RegistrationKeys.html">Dynamic/RegistrationKeys.txt</a> file.  They will be loaded when the server is next launched.
+<p>
+
+<div class="spacer"></div>
+<h2>File Format</h2>
+List file.  One entry per line.<br>
+No comment character.<br>
+No header.
+
+<div class="footer"></div>
+
+</div>
+</body>
+</html>

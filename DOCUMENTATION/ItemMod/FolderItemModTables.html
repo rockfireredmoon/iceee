@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Reference: ItemMod/Tables (Folder Index)</title>
+<link rel="stylesheet" type="text/css" href="../main.css">
+</head>
+<body>
+
+<div>
+
+<h2>Reference: ItemMod/Tables (Folder Index)</h2>
+
+<div class="spacer"></div>
+<h3>Purpose</h3>
+Contains all files with the attribute range tables for various attribute types and equipment types.
+<p>
+The server internally refers to these items as Virtual Items, as they are not present in the ItemDef files and are fully generated to mimic the behavior of real items.
+<p>
+Each table file is a .CVS file (comma separated values) with 11 columns and 71 rows.
+<p>
+<div class="spacer"></div>
+<h3>File Format</h3>
+Table file.  Comma separated values.  All numbers are short integers (-32,768 to 32,767) .<br>
+Comment character: semicolon (;)<br>
+First line is always ignored (assumed as header).<br>
+
+<p>
+General layout: each table has 11 columns, and 71 rows (header, plus 70 lines for levels 1-70)
+<p>
+<pre class="script">
+level,2min,2max,3min,3max,4min,4max,5min,5max,6min,6max
+1,0,0,0,0,0,0,1,1,1,1
+2,0,0,0,0,1,1,1,1,1,1
+3,0,0,1,1,1,1,1,1,1,1
+4,1,1,1,1,2,2,2,2,2,2
+5,1,1,2,2,2,2,2,2,2,2
+...
+68,20,20,32,32,40,40,50,50,62,62
+69,20,20,32,32,41,41,51,51,63,63
+70,20,20,33,33,41,41,51,51,63,63
+</pre>
+
+<div class="spacer"></div>
+<h3>Table Columns</h3>
+<table frame=box rules=all>
+  <tr class="header">
+    <td><b>Property</b></td>
+    <td><b>Description</b></td>
+  </tr>
+  <tr>
+    <td>level</td>
+    <td>Short.  The item level, which corresponds to mob level.  Every table holds data for levels 1 to 70.  70 is an arbitrary level limit in the client (as per the experience table) so the tables were designed to allow theoretical items of any level up to 70.</td>
+  </tr>
+  <tr>
+    <td>2min,2max</td>
+    <td>Short Integer.  These two columns set the minimum and maximum values for a particular attribute type that can spawn on Uncommon (green color) items, for which ItemDef <span class="script">mQualityLevel=2</span></td>
+  </tr>
+  <tr>
+    <td>3min,3max</td>
+    <td>Short Integers.  Min/max for Rare (blue). ItemDef <span class="script">mQualityLevel=3</span></td>
+  </tr>
+  <tr>
+    <td>4min,4max</td>
+    <td>Short Integers.  Min/max for Epic (purple). ItemDef <span class="script">mQualityLevel=4</span></td>
+  </tr>
+   <tr>
+    <td>5min,5max</td>
+    <td>Short Integers.  Min/max for Legendary (yellow). ItemDef <span class="script">mQualityLevel=5</span></td>
+  </tr>
+  <tr>
+    <td>6min,6max</td>
+    <td>Short Integers.  Min/max for Artifact (orange). ItemDef <span class="script">mQualityLevel=6</span></td>
+  </tr>
+</table>
+
+
+<div class="footer"></div>
+
+</div>
+</body>
+</html>
+

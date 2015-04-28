@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Reference: MapLocations.txt</title>
+<link rel="stylesheet" type="text/css" href="../main.css">
+</head>
+<body>
+
+<div>
+
+<h2>Reference: MapLocations.txt</h2>
+
+<div class="spacer"></div>
+<h2>Purpose</h2>
+Associates spans of tiles (rows, columns, or boxes) with region names.  This allows the server to select which region the player is in, and relay that to the client so that the client can display the proper world region map.
+
+<div class="spacer"></div>
+<h2>File Format</h2>
+Mostly works as a list file.  Each line in the file will set a property, or name a span of tiles.<br>
+Comment character: semicolon (;)<br>
+Each line is split into tokens using the "=" and "," symbols.
+
+<div class="spacer"></div>
+<h2>Block Format</h2>
+
+<table frame=box rules=all>
+  <tr class="header">
+    <td><b>Property</b></td>
+    <td><b>Parameters</b></td>
+    <td><b>Description</b></td>
+  </tr>
+  <tr>
+    <td>ZoneID</td>
+    <td>ID</td>
+    <td>Sets the active zone.  All subsequent tiles will be applied to this zone, unless the ZoneID is changed again.</td>
+  </tr>
+  <tr>
+    <td>HT</td>
+    <td>Location,x,y,length</td>
+    <td>Maps a horizontal row of tiles at coordinate (x,y) of 'length' tiles to identify as 'location'.</td>
+  </tr>
+  <tr>
+    <td>VT</td>
+    <td>Location,x,y,length</td>
+    <td>Maps a vertical column of tiles at coordinate (x,y) of 'length' tiles to identify as 'location'.</td>
+  </tr>
+  <tr>
+    <td>RT</td>
+    <td>Location,x,y,xlen,ylen</td>
+    <td>Maps a rectangular span of tiles.  The top left corner is at position (x,y) and will cover a span of (xlen,ylen) tiles.</td>
+  </tr>
+</table>
+
+
+<div class="spacer"></div>
+
+<h2>How it works</h2>
+This file allows the server to map tile locations with region names.  When characters move, their current position in the overworld is compared to the definitions here to find a matching region name.
+<p>
+Map region names are defined in <a href="MapDef.html">MapDef.txt</a>, under the <b>Name</b> field.  The <b>location</b> parameters in this file should match those names.
+<p>
+All other parameters to HT, VT, and RT lines are otherwise integers referring to <b>terrain tiles</b> that are 1920 units wide.  Not scenery tiles, which can have zone-dependent sizes.
+
+<div class="footer"></div>
+
+</div>
+</body>
+</html>

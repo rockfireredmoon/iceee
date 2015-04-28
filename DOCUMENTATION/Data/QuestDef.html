@@ -1,0 +1,424 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Reference: QuestDef.txt</title>
+<link rel="stylesheet" type="text/css" href="../main.css">
+</head>
+<body>
+
+<div>
+
+<h2>Reference: QuestDef.txt</h2>
+
+<div class="spacer"></div>
+<h2>Purpose</h2>
+Stores all quest data.  For convenience, they may be stored in multiple files.  If a new file is added, add the filename to <b>Packages/QuestPack.txt</b>.
+
+
+<div class="spacer"></div>
+<h2>File Format</h2>
+Resembles INI format with structured blocks.<br>
+Comment character: double slash (//)<br>
+Each line is generally split at the first "=" symbol.
+
+<div class="spacer"></div>
+<h2>Block Format</h2>
+
+<table frame=box rules=all>
+  <tr class="header">
+    <td><b>Property</b></td>
+    <td><b>Type</b></td>
+    <td><b>Description</b></td>
+  </tr>
+  <tr>
+    <td>[ENTRY]</td>
+    <td>N/A</td>
+    <td>Begins a new quest entry.</td>
+  </tr>
+  <tr>
+    <td>Requires</td>
+    <td>Integer</td>
+    <td>Optional.  The Quest ID of a single prior quest that must be completed in order for this quest to be available to the player.</td>
+  </tr>
+  <tr>
+    <td>Profession</td>
+    <td>Integer</td>
+    <td>Optional.  If present, this quest can only be accepted by players of this class.  Possible values are (1=Knight, 2=Rogue, 3=Mage, 4=Druid).  Corresponds to the CreatureDef 'profession' property.</td>
+  </tr>
+  <tr>
+    <td>ID</td>
+    <td>Integer</td>
+    <td>The quest ID for this entry.  Must be unique.</td>
+  </tr>
+  <tr>
+    <td>Title</td>
+    <td>String</td>
+    <td>The name used in the quest journal and display trackers.</td>
+  </tr>
+  <tr>
+    <td>BodyText</td>
+    <td>String</td>
+    <td>The text displayed when reading a quest before accepting it.  This may span multiple lines in the file.  Any following line in the file that does not have a property field token will be appended into this field.</td>
+  </tr>
+  <tr>
+    <td>CompleteText</td>
+    <td>String</td>
+    <td>The response text when reading a quest after turning it in.  Like BodyText, this may span multiple lines.</td>
+  </tr>
+  <tr>
+    <td>Level</td>
+    <td>Integer OR Integer,Integer</td>
+    <td>The minimum level required to accept the quest.  Optionally you may supply a second value, separated by a comma, which specifies the maximum level required to accept the quest (like Bounty Boards).  The 'Level' or 'Suggested' properties should appear immediately after the BodyText and CompleteText fields.</td>
+  </tr>
+  <tr>
+    <td>Suggested</td>
+    <td>Integer</td>
+    <td>The level displayed as the suggested level in the client.  The 'Level' or 'Suggested' properties should appear immediately after the BodyText and CompleteText fields. </td>
+  </tr>
+  <tr>
+    <td>Exp</td>
+    <td>Integer</td>
+    <td>Experience points given upon completion.</td>
+  </tr>
+  <tr>
+    <td>PartySize</td>
+    <td>Integer</td>
+    <td>The recommended party size as displayed in the client.  No effect on the server side.</td>
+  </tr>
+  <tr>
+    <td>NumRewards</td>
+    <td>Integer</td>
+    <td>If optional reward items are present, this is the exact number of items that must be selected to redeem the quest.  Optional items are distinct in that they require the player to select them (the item icons will have a checkbox for the player to decide).</td>
+  </tr>
+  <tr>
+    <td>Coin</td>
+    <td>Integer</td>
+    <td>The amount of copper to give upon completion.</td>
+  </tr>
+  <tr>
+    <td>Unabandon</td>
+    <td>Bool</td>
+    <td>If set to 1, the player cannot use the quest journal to abandon this quest.  Usually only needed for the first starting zone quest.</td>
+  </tr>
+  <tr>
+    <td>QuestGiverID</td>
+    <td>Integer</td>
+    <td>The CreatureDef ID of the NPC that gives the quest.  Important!  The creature's defHints value must have CDEF_HINT_QUEST_GIVER bitmask enabled, or it will not display a quest icon.  See CreatureDef defHints for more information.</td>
+  </tr>
+  <tr>
+    <td>QuestEnderID</td>
+    <td>Integer</td>
+    <td>The CreatureDef ID of the NPC that redeems the quest (who the player must return to).  Important!  The creature's defHints value must have CDEF_HINT_QUEST_ENDER bitmask enabled.  See CreatureDef defHints for more information.</td>
+  </tr>
+  <tr>
+    <td>Repeat</td>
+    <td>Bool</td>
+    <td>If set to 1, this quest may be repeated indefinitely.  Important!  This is mostly intended for bounty boards, although it could be used for other quests as well.  Consider providing a maximum player level in the 'Level' property.  Repeatable quests will never be added to the player's list of completed quests.</td>
+  </tr>
+  <tr>
+    <td>RepeatDelay</td>
+    <td>String</td>
+    <td>Optional.  This is completely distinct from the 'Repeat' property above.  This controls a completely separate mechanism in which a completed quest can be moved back into the available list after a certain amount of time.  This is developed for use by event quests so that they can be repeated at a later date.  Normally if a quest is completed, it cannot be accepted again, which poses a problem where the Quest ID of yearly event quests would need to be changed every year.<p>Requires a string prefixed with a character denoting a unit of time, followed by a number.  The following units are recognized (M=Minute, H=Hour, D=Day) and are not case sensitive.  For example, 'M60' is equivalent to 'H1'</td>
+  </tr>
+  <tr>
+    <td>sGiver</td>
+    <td>String</td>
+    <td>Specifies the location and zone of where the quest giver NPC may be found.  This is a string that must contain 4 numerical values (Float,Float,Float,Integer) separated by commas.  The first three (the floats) are the X,Y,Z coordinates of the quest giver.  The final value is the ZoneDef ID.  This influences the 'available quest' icons in the client minimap/world map.</td>
+  </tr>
+  <tr>
+    <td>sEnder</td>
+    <td>String</td>
+    <td>Same format as sGiver, but for the quest ender.</td>
+  </tr>
+  <tr>
+    <td>Heroism</td>
+    <td>Integer</td>
+    <td>A new reward not present in the original game.  The amount of heroism points granted to the player upon completing quests.  Subject to over-level penalties.  See the HeroismQuestLevelTolerance and HeroismQuestLevelPenalty properties in <a href="../ServerConfig.html">ServerConfig.txt</a>.<p>Note that heroism operates on a scale from 0 to 1000.  1 point of heroism equals 0.5 points of luck.</td>
+  </tr>
+  <tr>
+    <td>ScriptAcceptCondition</td>
+    <td>String</td>
+    <td>A list of extended conditions required to accept the quest.  See <a href="#extendedaction">Extended Quest Actions</a> below.</td>
+  </tr>
+  <tr>
+    <td>ScriptAcceptAction</td>
+    <td>String</td>
+    <td>A list of extended actions to perform when the quest is accepted.  See <a href="#extendedaction">Extended Quest Actions</a> below.</td>
+  </tr>
+  <tr>
+    <td>ScriptCompleteCondition</td>
+    <td>String</td>
+    <td>A list of extended conditions required in order to redeem a quest.  See <a href="#extendedaction">Extended Quest Actions</a> below.</td>
+  </tr>
+  <tr>
+    <td>ScriptCompleteAction</td>
+    <td>String</td>
+    <td>A list of extended actions to perform when a quest is redeemed.  See <a href="#extendedaction">Extended Quest Actions</a> below.</td>
+  </tr>
+  <tr>
+    <td>[ACT]</td>
+    <td>N/A</td>
+    <td>Begins a new act.  Each act must have at least 1 objective (maximum 3 objectives).  Objectives within an act may be completed in any order.  Once all objectives within the act are completed, the player proceeds to the next act.  For example, one act may require the player to kill a number of mobs, and the final act is to return to the quest giver NPC.  Quests may have an arbitrary number of acts.  All objective sub-properties use an Obj.X prefix where X is a number (0, 1, or 2) identifying the objective index.</td>
+  </tr>
+  <tr>
+    <td>Act.BodyText</td>
+    <td>String</td>
+    <td>This is the description text present for the current act when a player views the quest journal of a quest in progress.  Like BodyText and CompleteText, it can span multiple lines in the file.</td>
+  </tr>
+  <tr>
+    <td>Obj.0.type<br>Obj.1.type<br>Obj.2.type</td>
+    <td>String</td>
+    <td>The objective type.  Acceptable values are (none, kill, travel, activate, gather, talk, emote).  The acceptable values in the 'data1' and 'data2' fields will vary depending on the type.  See the <a href="#objectivetype">Objective Type Table</a> below for a full list of types and examples.</td>
+  </tr>
+  <tr>
+    <td>Obj.0.data1</td>
+    <td>Integer [,Integer...]</td>
+    <td>A list of integers, separated by commas.  Usage varies depending on the objective type.</td>
+  </tr>
+  <tr>
+    <td>Obj.0.data2</td>
+    <td>Integer</td>
+    <td>A single integer.  Usage varies depending on the objective type.</td>
+  </tr>
+  <tr>
+    <td>Obj.0.ActivateTime</td>
+    <td>Integer</td>
+    <td>For 'activate' and 'gather' quests, this is the number of milliseconds required to interact with the object.  Typical gather quests use a value of 2000 (2 seconds).</td>
+  </tr>
+  <tr>
+    <td>Obj.0.ActivateText</td>
+    <td>String</td>
+    <td>For 'activate' and 'gather' quests, this is the text displayed in the timer bar in the client when the player is interacting with the object.</td>
+  </tr>
+  <tr>
+    <td>Obj.0.description</td>
+    <td>String</td>
+    <td>The objective text as it appears in the quest tracker overlay in the client screen.</td>
+  </tr>
+  <tr>
+    <td>Obj.0.complete</td>
+    <td>Bool</td>
+    <td>Not required in quest definitions.  Leave as zero.</td>
+  </tr>
+  <tr>
+    <td>Obj.0.myCreatureDefID</td>
+    <td>Integer</td>
+    <td>Used only for 'talk' objective types, this is the CreatureDef ID of the NPC to return to.  Should be identical to QuestEnderID.</td>
+  </tr>
+  <tr>
+    <td>Obj.0.myItemID</td>
+    <td>Integer</td>
+    <td>Used in the quest briefing and journal screens, this is the ItemDef mID to use.  This allows the item icon to be used in the objective panels.  For example, a gather quest might have a quest item entry with a flower icon.  In the official item table, these entries usually start around ID 500001.</td>
+  </tr>
+  <tr>
+    <td>Obj.0.completeText</td>
+    <td>String</td>
+    <td>The initial status of a particular objective, displayed in parenthesis in the quest tracker.  For example (0 of 10).</td>
+  </tr>
+  <tr>
+    <td>Obj.0.markerLocations</td>
+    <td>String</td>
+    <td>Similar to the sGiver and sEnder fields (x,y,z,zoneID;) format.  This string has 4 values separated by commas.  The first 3 are floats, the last an integer.  Typically has a semicolon at the end.  For example: <span class="script">Obj.0.markerLocations=39110.0,236.412,51319.0,9;</span></td>
+  </tr>
+  <tr>
+    <td>RewardItem.0<br>RewardItem.1<br>RewardItem.2<br>RewardItem.3</td>
+    <td>String</td>
+    <td>These control the items displayed in the reward slot.  A maximum of 4 items are allowed.  Takes 3 properties, separated by commas (ItemDefID,ItemCount,Required).  The ItemDef ID is the item for that particular reward.  ItemCount is the number of items to give.  Should be just 1 unless stacked items like potions are offered instead.  If Required is left at 0, the player must select between the available rewards (see the NumRewards field).  If set to 1, the item will always be granted to the player.</td>
+  </tr>
+</table>
+
+
+
+<div class="spacer"></div>
+<a name="objectivetype"></a>
+<h2>Objective Types</h2>
+
+<table frame=box rules=all>
+  <tr class="header">
+    <td><b>Objective Type</b></td>
+    <td><b>Description</b></td>
+    <td><b>Example</b></td>
+  </tr>
+  <tr>
+    <td>none</td>
+    <td>Server default for an improper quest objective.  Should not be used.</td>
+    <td>N/A</td>
+  </tr>
+  <tr>
+    <td>kill</td>
+    <td>The player must kill a certain number of acceptable creatures.<p>data1: The list of CreatureDef IDs whos kills apply toward the kill count.<p>data2: The total number of kills to reach.<p>  Note that completeText should be initially set to reflect the starting progress.</td>
+    <td>
+Obj.0.type=kill<br>
+Obj.0.data1=362,363,364<br>
+Obj.0.data2=10<br>
+Obj.0.description=Collect 10 Unikorn Horns<br>
+Obj.0.complete=0<br>
+Obj.0.myCreatureDefID=<br>
+Obj.0.myItemID=500037<br>
+Obj.0.completeText=0 of 10<br>
+Obj.0.markerLocations=40559.0,195.788,52296.0,9;<br>
+    </td>
+  </tr>
+  <tr>
+    <td>travel</td>
+    <td>The player must travel within a certain radius of a coordinate location within a specific zone.<p>data1: x,y,z,ZoneID of the target location.<p>data2: Trigger range, in game units (10 units = 1 meter) that the player must stand within.  Locations are usually scanned every few movement steps by players, so the general area should be large enough so that the player can see the objective while still being able to walk into the location at a brisk pace (like with Bounder Dash activated).</td>
+    <td>
+Obj.0.type=travel<br>
+Obj.0.data1=47333,373,45735,9<br>
+Obj.0.data2=300<br>
+Obj.0.description=Travel to the Roc nesting grounds<br>
+Obj.0.complete=0<br>
+Obj.0.myCreatureDefID=<br>
+Obj.0.myItemID=<br>
+Obj.0.completeText=<br>
+Obj.0.markerLocations=47333.9,373.709,45735.0,9;<br>
+    </td>
+  </tr>
+  <tr>
+    <td>gather<p>-OR-<p>activate</td>
+    <td>Both of these behave in the same way except for one small difference.  Activate will leave the object in place, but gather will remove the item and require a respawn (Practical use: activate a device, but gather flowers).<p>
+data1: a list of CreatureDef IDs that count toward the total required activations for that objective.<p>data2: Number of objects that must be activated.<p>Note that ActivateTime and ActivateText are also used for these objective types.</td>
+    <td>
+Obj.0.type=gather<br>
+Obj.0.data1=467<br>
+Obj.0.data2=12<br>
+Obj.0.description=Gather 12 Jali Blooms<br>
+Obj.0.complete=0<br>
+Obj.0.myCreatureDefID=<br>
+Obj.0.myItemID=500057<br>
+Obj.0.completeText=0 of 12<br>
+Obj.0.markerLocations=37261.6,184.14,54898.0,9;<br>
+Obj.0.ActivateTime=2000<br>
+Obj.0.ActivateText=Gathering Jali Bloom...<br>
+    </td>
+  </tr>
+  <tr>
+    <td>talk</td>
+    <td>The player must speak to an NPC.  This is typically the final act of a quest to redeem the quest.<p>data1: Unused.<p>data2: Unused<p>Note: myCreatureDefID is used instead of the data properties.  This value should be the CreatureDef ID of the NPC to return to.  Note that QuestEnderID should be the same value.  The CreatureDef entry itself should also have the CDEF_HINT_QUEST_ENDER bitmask enabled to see the quest redeem icon, and to allow the player to click on it.<p>Usually the marker location and sEnder fields should be the same, too.</td>
+    <td>
+QuestEnderID=2208<br>
+sEnder=39113.0,236.0,51324.0,9<br>
+<p>
+Obj.0.type=talk<br>
+Obj.0.data1=0<br>
+Obj.0.data2=0<br>
+Obj.0.description=Travel to Karee Windtail<br>
+Obj.0.complete=0<br>
+Obj.0.myCreatureDefID=2208<br>
+Obj.0.myItemID=<br>
+Obj.0.completeText=<br>
+Obj.0.markerLocations=39110.0,236.412,51319.0,9;<br>
+    </td>
+  </tr>
+
+  <tr>
+    <td>emote</td>
+    <td>The player must perform an emote within a specific location.  data1 and data2 operate the same way as the travel objective.<p>data1: x,y,z,ZoneID of the target location.<p>data2: Range, in game units (10 units = 1 meter) that the player must emote within.<p>ActivateText: this field is used to identify the /emote that must be performed (case sensitive).</td>
+    <td>
+Obj.0.type=emote<br>
+Obj.0.data1=69024,630,34362,9<br>
+Obj.0.data2=30<br>
+Obj.0.description=Worship at the Flame near the Temple<br>
+Obj.0.complete=0<br>
+Obj.0.myCreatureDefID=<br>
+Obj.0.myItemID=<br>
+Obj.0.completeText=<br>
+Obj.0.markerLocations=69024.0,630.686,34362.0,9;<br>
+Obj.0.ActivateText=Worship<br>
+    </td>
+  </tr>
+</table>
+
+
+<div class="spacer"></div>
+<a name="extendedaction"></a>
+<h2>Extended Quest Actions</h2>
+These operate as a form of mini script.  All statements must be on a single line.  Each statement is separated by a semicolon (;) and each token is separated by a space.
+<p>
+Here are some examples:<br>
+<span class="script">
+ScriptAcceptCondition=heroism &gt;= 400;has_item 7066 1
+ScriptAcceptAction=change_heroism -400
+ScriptCompleteCondition=has_item 7066 1
+ScriptCompleteAction=remove_item 7066 1
+</span>
+<p>
+For conditions, a quest cannot be accepted or redeemed unless all conditions in the line are met.
+<p>
+<table frame=box rules=all>
+  <tr class="header">
+    <td style="width:35%"><b>Statement</b></td>
+    <td><b>Type / Description / Example</b></td>
+  </tr>
+  <tr>
+    <td>heroism (comparator) (amount)</td>
+    <td>Condition.<br>
+The player must have a certain amount of heroism.<br>
+Valid comparators: { =, !=, &gt;, &gt;=, &lt;, &lt;= }<br>
+<span class="script">heroism &gt;= 400</span>
+</td>
+  </tr>
+  <tr>
+    <td>has_item (Item ID) (amount)</td>
+    <td>Condition.<br>
+The player must have a certain amount of items in their backpack inventory.  The Item ID must correspond to an ItemDef mID.<br>
+<span class="script">has_item 7066 1</span>
+</td>
+  </tr>
+  <tr>
+    <td>change_heroism (amount)</td>
+    <td>Action.<br>
+Changes the player's heroism.  Use a negative value for loss.  The resulting heroism will not be less than zero or greater than 1000.<br>
+<span class="script">change_heroism -400</span></td>
+  </tr>
+  <tr>
+    <td>remove_item (Item ID) (amount)</td>
+    <td>Action.<br>
+Removes a certain number of a player's items from their backpack inventory.  The Item ID must correspond to an ItemDef mID.<br>
+<span class="script">remove_item 7066 1</span></td>
+  </tr>
+  <tr>
+    <td>send_text "text"</td>
+    <td>Action.<br>
+Sends an information message (yellow text) that will appear on screen.  The text should be enclosed in quotation marks.<br>
+<span class="script">send_text "You have upgraded your ring!"</span></td>
+  </tr>
+  <tr>
+    <td>play_sound "package|effect"</td>
+    <td>Action.<br>
+Plays a sound effect.  The sound string should be enclosed in quotation marks.  There is a pipe (|) in the sound name that indicates to the client how to load the sound.  It requires both a package name (archive) and effect (of the .ogg file format) to play.<br>
+<span class="script">play_sound Sound-ModSound|Sound-ExampleEffect.ogg</span></td>
+  </tr>
+</table>
+
+<div class="spacer"></div>
+
+<h2>Other Notes</h2>
+Each quest is is divided into any number of acts.  Each of those acts can have up to 3 individual objectives which may be accomplished in any order.  Once all objectives within an act are finished, the quest proceeds to the next act.  Quests are usually finalized with an act containing a single talk objective, the NPC where the quest is redeemed.
+<p>
+The best way to create new quests is to find a quest that behaves similarly, then copy and paste it as a new entry, updating all the fields as appropriate.  Make sure it has a unique ID.  Copying acts with similar objectives is also helpful.
+<p>
+For simple talk-only quests, the official quests typically offer half the experience and coin rewards as other quests.
+<p>
+Some examples of item rewards:
+<p>
+A bounty board offers a single item that is always given to the player.  NumRewards is left at zero since that field is for choice rewards only, and they cannot opt out of this reward.  The RewardItem's last property (the 'Required' property) is set to 1 to always give that item.
+<span class="script">
+NumRewards=0
+RewardItem.0=21337,1,1
+</span>
+<p>
+In this quest, the player is presented with a choice between two items.  NumRewards is set to 1 because they must choose exactly 1 item from the available 2 rewards.  The 'Required' property is set to zero on both items since they are both optional.
+<span class="script">
+NumRewards=1
+RewardItem.0=5329,1,0
+RewardItem.1=5328,1,0
+</span>
+<div class="footer"></div>
+
+</div>
+</body>
+</html>

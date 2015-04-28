@@ -1,0 +1,64 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Reference: ResCost.txt</title>
+<link rel="stylesheet" type="text/css" href="../main.css">
+</head>
+<body>
+
+<div>
+
+<h2>Reference: ResCost.txt</h2>
+
+<div class="spacer"></div>
+<h2>Purpose</h2>
+Determines how much the resurrect options will cost when a player dies.
+
+<div class="spacer"></div>
+<h2>File Format</h2>
+Table file.  Tab separated values.<br>
+Comment character: semicolon (;)<br>
+First line is always ignored (assumed as header).<br>
+
+
+<div class="spacer"></div>
+<h2>Table Columns</h2>
+
+<table frame=box rules=all>
+<tr>
+<td>Level</td>
+<td>Must have one line for each possible level, or else the cost won't be retrieved.</td>
+</tr>
+
+<tr>
+<td>Option2</td>
+<td>The cost (in copper) of the second option in the resurrect screen.</td>
+</tr>
+
+<tr>
+<td>Option3</td>
+<td>The cost of the third option in the resurrect screen.</td>
+</tr>
+</table>
+
+<div class="spacer"></div>
+
+<p>
+<h2>How It Works</h2>
+<p>
+When a player dies, the server looks up the player's level in the table, returning the cost amounts for Option2 and Option3.
+<p>
+Option1 is not included in this file because it must always remain zero.  Otherwise players with zero coin could find themselves in a situation where they are unable to revive.
+<p>
+Unless otherwise altered, these are the formulas that were used to determine the cost:<br>
+Option2 : (Level ^ 3) / 7.5<br>
+Option3 : (Level ^ 3) / 2.5<br>
+
+<div class="footer"></div>
+
+</div>
+</body>
+</html>

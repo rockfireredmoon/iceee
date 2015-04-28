@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+<head>
+<title>DefHints</title>
+<style type="text/css">
+body
+{
+  background-color:#000000;
+  color:#CCCCCC;
+  font-family:"Arial";
+  font-size:12px;
+}
+table
+{
+  border-color:#CCCCCC;
+  font-size:12px;
+}
+
+td
+{
+  padding-left:4px;
+  padding-right:4px;
+}
+.header
+{
+  color:#FFFFFF;
+}
+</style>
+</head>
+<body>
+<div>
+defHints work as a bitmask.  To combine them, add their numerical values together.
+<p>
+<table frame=box rules=all>
+  <tr class="header">
+    <td><b>Internal Constant Name</b>      </td>
+    <td><b>Bit Mask</b>      </td>
+    <td><b>Notes</b>      </td>
+  </tr>
+  <tr>
+    <td>CDEF_HINT_PERSONA      </td>
+    <td>1      </td>
+    <td>Player characters only.      </td>
+  </tr>
+  <tr>
+    <td>CDEF_HINT_COPPER_SHOPKEEPER      </td>
+    <td>2      </td>
+    <td>Standard vendor minimap icons and interacts.      </td>
+  </tr>
+  <tr>
+    <td>CDEF_HINT_CREDIT_SHOPKEEPER      </td>
+    <td>4      </td>
+    <td>Doesn't seem to be used.      </td>
+  </tr>
+  <tr>
+    <td>CDEF_HINT_ESSENCE_VENDOR      </td>
+    <td>8      </td>
+    <td>All chests which trade tokens or essences for loot.      </td>
+  </tr>
+  <tr>
+    <td>CDEF_HINT_QUEST_GIVER      </td>
+    <td>16      </td>
+    <td>Must be set on any NPCs that give quests, otherwise the icon won't show.  Keep this in mind if making quests for new NPCs.      </td>
+  </tr>
+  <tr>
+    <td>CDEF_HINT_QUEST_ENDER      </td>
+    <td>32      </td>
+    <td>It's used, but not sure if technically needed.      </td>
+  </tr>
+  <tr>
+    <td>CDEF_HINT_CRAFTER      </td>
+    <td>64      </td>
+    <td>For crafting of weapon/armor plans.  See the TRANSFORMER status effect for refashioners.      </td>
+  </tr>
+  <tr>
+    <td>CDEF_HINT_CLANREGISTRAR      </td>
+    <td>128      </td>
+    <td>Clans are currently not implemented.      </td>
+  </tr>
+  <tr>
+    <td>CDEF_HINT_VAULT      </td>
+    <td>256      </td>
+    <td>Item vault.  Definition present from 0.8.6+      </td>
+  </tr>
+  <tr>
+    <td>CDEF_HINT_CREDIT_SHOP      </td>
+    <td>512      </td>
+    <td>Not used in the official creature list.  Definition present from 0.8.6+      </td>
+  </tr>
+</table>
+</div>
+</body>
+</html>

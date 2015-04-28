@@ -1,0 +1,42 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+<head>
+<title>TSV to HTML Table</title>
+<script type="text/javascript">
+function ShowResult(form)
+{
+  var inputstr = form.input.value;
+  var lines = inputstr.split('\n');
+  var outstr = "";
+  for(i = 0; i < lines.length; i++)
+  {
+     var tabs = lines[i].split('\t');
+     outstr += "<tr>\r\n";
+     for(t = 0; t < tabs.length; t++)
+     {
+       outstr += "  <td>" + tabs[t] + "</td>\r\n";
+     }
+     outstr += "</tr>\r\n";
+  }
+    
+  form.output.value = outstr;
+}
+
+</script>
+</head>
+<body style="background:#000000">
+<div style="color:#FFFFFF">
+Convert a tab separated list of lines into HTML table code.  Does not verify if all lines have the same number of columns.  Check for empty rows in the output, if the input contains empty lines or newlines.
+</div>
+<p>
+<form name="form" action="">
+<p>
+<textarea cols=60 rows=10 name="input"></textarea>
+<textarea cols=60 rows=10 name="output"></textarea>
+<p>
+<input type="button" value="Convert" name="check" onClick="ShowResult(form);">
+</form>
+</body>
+</html>

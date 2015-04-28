@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Reference: AccountList.txt</title>
+<link rel="stylesheet" type="text/css" href="../main.css">
+</head>
+<body>
+
+<div>
+
+<h2>Reference: AccountList.txt</h2>
+
+<div class="spacer"></div>
+<h2>Purpose</h2>
+A central index of all registered accounts.  This index is used to lookup account IDs, login info, and grove names.
+<p>
+If any of this data is manually altered, the corresponding account file should also be changed to match.
+
+<div class="spacer"></div>
+<h2>File Format</h2>
+Table file.  Fields are separated by a semicolon (;)<br>
+No comment character.<br>
+No header.
+
+<p>
+
+Every line expects 5 values in order:
+
+<table frame=box rules=all>
+<tr>
+<td>Account ID</td>
+<td>Integer.  Table key.  Must be unique.</td>
+</tr>
+<tr>
+<td>Account Name</td>
+<td>String.  Should be unique.</td>
+</tr>
+<tr>
+<td>Authorization Hash</td>
+<td>String.  The hashed password.  Used for login authentication.</td>
+</tr>
+<tr>
+<td>Registration Key</td>
+<td>String.  The key that was used to register the account.</td>
+</tr>
+<tr>
+<td>Grove Name</td>
+<td>String.  The grove tag name that was chosen during account creation.  Should be unique.</td>
+</tr>
+
+
+</table>
+
+
+<div class="footer"></div>
+
+</div>
+</body>
+</html>

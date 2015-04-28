@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Reference: Sets.txt</title>
+<link rel="stylesheet" type="text/css" href="../main.css">
+</head>
+<body>
+
+<div>
+
+<h2>Reference: Sets.txt</h2>
+<div class="spacer"></div>
+<h3>Purpose</h3>
+Defines sets, which can be used for single items (crafting materials, dungeon tokens, etc), or collections of items (armor sets, etc).  Any item dropped by the static loot system requires an associated set.
+<p>
+When a creature is killed, the drop system determines which sets it is capable of dropping.  Each set is rolled independently, and may successfully roll multiple sets.  There is one exception, see the <b>Rarity</b> column.
+<p>
+Once a set is rolled, a single item is chosen from its item list.
+<p>
+Drop rates in this file are <b>not</b> affected by any drop rate bonuses (named mob, mob rarity, elite, scaled dungeon, etc).  Those bonuses only apply to generated items, refer to the ItemMod folder and related files.  
+<p>
+
+<div class="spacer"></div>
+<h3>File Format</h3>
+Table file.  Tab separated values.<br>
+Comment character: semicolon (;)<br>
+First line is always ignored (assumed as header).<br>
+
+<p>
+
+<div class="spacer"></div>
+
+<h2>Table Columns</h2>
+
+<table frame=box rules=all>
+<tr>
+<td>SetName</td>
+<td>String.  The internal name of the set, as required for <a href="Creatures.html">Creatures.txt</a> or <a href="Packages.html">Packages.txt</a>.  The name should not contain spaces.</td>
+</tr>
+
+<tr>
+<td>Rarity</td>
+<td>Integer.  Determines how the Rate column is interpreted for calculating drop rates.
+<p>
+If set to -1 or zero, the Rarity column is used.
+<p>
+If set to an ItemDef mQualityLevel (2 to 6), Rate is not used.  It will instead use the hardcoded drop chances for that quality level.  These hardcoded drop rates include additional calculations to skew drop rates higher for low levels, then get progressively rarer up until level 35 when the the flat chance is used instead.  The chance to drop is based by looking at the level of the player and mob, whichever is highest.  This grants a heavy drop bias for starting low level players.
+<p>
+
+<pre class="script">
+Rarity   Rate
+ -1     Rate is a denominator (1/x chance)
+  0     Rate is a flat percent (1-100, or higher)
+
+  2     Use Uncommon (green) hardcoded drop rate at 1/75 chance
+  3     Use Rare (blue) at 1/300 chance
+  4     Use Epic (purple) at 1/1200 chance
+  5     Use Legendary (yellow) at 1/25000 chance
+  6     Use Artifact (orange) at 1/250000 chance
+</pre>
+</tr>
+
+<tr>
+<td>Rate</td>
+<td>Integer.  Determines the drop rate for this set, but only if Rarity is 0 or -1.
+<p>
+If Rarity is <b>0</b>, Rate is a flat percent chance.  Best used for semi-common items like tokens and boss essences.  Every 100 points of chance is guaranteed to drop an item.  For example, if Rate is set to 250, it will guarantee two drops, with a 50% chance to drop a third.
+<p>
+If Rarity <b>-1</b>, Rate is the denominator in the fraction (1/x).  A rate of 50 would then mean 1/50, or 2% chance.  This is useful for fine-tuning rarer drops in ways that the flat percent method cannot.
+<p>
+Rate is ignored for any other Rarity value.
+<p>
+</td>
+</tr>
+
+<tr>
+<td>ItemList</td>
+<td>Integer(s).  A list of ItemDef IDs, separated by commas.  If the drop chance for this set rolls successful, one of these items will be randomly selected to drop.</td>
+</tr>
+</table>
+
+<div class="footer"></div>
+
+</div>
+</body>
+</html>

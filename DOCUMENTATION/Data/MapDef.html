@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Reference: MapDef.txt</title>
+<link rel="stylesheet" type="text/css" href="../main.css">
+</head>
+<body>
+
+<div>
+
+<h2>Reference: MapDef.txt</h2>
+
+<div class="spacer"></div>
+<h2>Purpose</h2>
+A list of regions within the game, and the data associated with presenting the world map.  The client has its own source file with this exact information, so many properties in this file are ignored by the server.
+<p>
+At the time, the data's purpose in the client wasn't known.  There was also no other reference mapping player coordinates to regions.  The single bounding box here is not accurate, (most regions in game are irregularly shaped, after all) but was all that existed.  With nothing better, this was used.
+<p>
+The server code related to this file is very old, poorly written, and poorly implemented.  The data as it related to tiles was not understood so the server-side calculations are most likely garbage.
+<p>
+These bounding boxes are only used as a fallback approach if there are no regions defined elsewhere (see <a href="MapLocations.html">MapLocations.txt</a>), but the region names defined in this file hold some significance for that file as well.
+<p>
+
+
+
+<div class="spacer"></div>
+<h2>File Format</h2>
+Resembles INI format with structured blocks.<br>
+Comment character: semicolon (;)<br>
+Each line is split into Key=Value pairs at the first "=" symbol.
+
+
+<div class="spacer"></div>
+<h2>Block Format</h2>
+
+<table frame=box rules=all>
+  <tr class="header">
+    <td><b>Property</b></td>
+    <td><b>Parameters</b></td>
+    <td><b>Description</b></td>
+  </tr>
+  <tr>
+    <td>[ENTRY]</td>
+    <td>N/A</td>
+    <td>Begin a new block.</td>
+  </tr>
+  <tr>
+    <td>Name</td>
+    <td>String</td>
+    <td>Sets the internal name of the region.  The value is sent to the client as part of the zone's map information.</td>
+  </tr>
+  <tr>
+    <td>Primary</td>
+    <td>String</td>
+    <td>Parent map of the region (when zoomed out).</td>
+  </tr>
+  <tr>
+    <td>Type</td>
+    <td>String</td>
+    <td>Should be one of the following three values (Region, World, Local).</td>
+  </tr>
+  <tr>
+    <td>image</td>
+    <td>String</td>
+    <td>Name of the image resource that the client uses.  This value is sent to the client as part of the zone's map information.</td>
+  </tr>
+  <tr>
+    <td>parentMapImage</td>
+    <td>String</td>
+    <td>Name of the image resource that the client uses for the parent map (when zoomed out). Not used by the server.</td>
+  </tr>
+  <tr>
+    <td>numPagesAcross</td>
+    <td>Float</td>
+    <td>Determines how many "tiles" span the bounding box coordinates below.  Note that these tiles are arbitrary and are NOT related to scenery or terrain tiles.  Instead, these tiles determine marker locations on the minimap.  Not used by the server.</td>
+  </tr>
+  <tr>
+    <td>numPagesDown</td>
+    <td>Float</td>
+    <td>Determines how many "tiles" span the bounding box coordinates below.  Note that these tiles are arbitrary and are NOT related to scenery or terrain tiles.  Instead, these tiles determine marker locations on the minimap.  Not used by the server.</td>
+  </tr>
+  <tr>
+    <td>u0</td>
+    <td>Integer</td>
+    <td>Left edge (X coordinate) of the bounding box.</td>
+  </tr>
+  <tr>
+    <td>v0</td>
+    <td>Integer</td>
+   <td>Top edge (Z coordinate) of the bounding box.</td>
+  </tr>
+  <tr>
+    <td>u1</td>
+    <td>Integer</td>
+   <td>Right edge (X coordinate) of the bounding box.</td>
+  </tr>
+  <tr>
+    <td>v1</td>
+    <td>Integer</td>
+   <td>Bottom edge (Z coordinate) of the bounding box.</td>
+  </tr>
+  <tr>
+    <td>priority</td>
+    <td>Integer</td>
+   <td>Helps determine which region to use when the player's position is inside multiple bounding boxes.  Higher values mean lower priority for consideration.</td>
+  </tr>
+  <tr>
+    <td>scale_width</td>
+    <td>Float</td>
+   <td>Unknown.  Not used by the server.</td>
+  </tr>
+  <tr>
+    <td>scale_height</td>
+    <td>Float</td>
+   <td>Unknown.  Not used by the server.</td>
+  </tr>
+</table>
+
+
+<div class="footer"></div>
+
+</div>
+</body>
+</html>

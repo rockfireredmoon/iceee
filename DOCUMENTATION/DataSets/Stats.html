@@ -1,0 +1,787 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+<head>
+<title>Stats</title>
+<style type="text/css">
+body
+{
+  background-color:#000000;
+  color:#CCCCCC;
+  font-family:"Arial";
+  font-size:12px;
+}
+table
+{
+  border-color:#CCCCCC;
+  font-size:12px;
+}
+
+td
+{
+  padding-left:4px;
+  padding-right:4px;
+}
+.header
+{
+  color:#FFFFFF;
+}
+</style>
+</head>
+<body>
+<div>
+<table frame=box rules=all>
+  <tr class="header">
+    <td><b>Stat</b>      </td>
+    <td><b>Data Type</b>      </td>
+    <td><b>Label</b>      </td>
+    <td><b>Notes</b>      </td>
+  </tr>
+  <tr>
+    <td>appearance      </td>
+    <td>string      </td>
+    <td>Appearance      </td>
+    <td>All body parameters for players and NPCs (include race and gender if applicable), or assets for interact props.      </td>
+  </tr>
+  <tr>
+    <td>eq_appearance      </td>
+    <td>string      </td>
+    <td>Equipment Appearance      </td>
+    <td>This is only present on characters with equipped items.  Maps an item ID to an equipped slot.  If this field is present, clothing and attachments in the appearance field above may be ignored.      </td>
+  </tr>
+  <tr>
+    <td>level      </td>
+    <td>short      </td>
+    <td>Level      </td>
+  </tr>
+  <tr>
+    <td>display_name      </td>
+    <td>String[64]      </td>
+    <td>Display Name      </td>
+  </tr>
+  <tr>
+    <td>strength      </td>
+    <td>short      </td>
+    <td>Strength      </td>
+  </tr>
+  <tr>
+    <td>dexterity      </td>
+    <td>short      </td>
+    <td>Dexterity      </td>
+  </tr>
+  <tr>
+    <td>constitution      </td>
+    <td>short      </td>
+    <td>Constitution      </td>
+  </tr>
+  <tr>
+    <td>psyche      </td>
+    <td>short      </td>
+    <td>Psyche      </td>
+  </tr>
+  <tr>
+    <td>spirit      </td>
+    <td>short      </td>
+    <td>Spirit      </td>
+  </tr>
+  <tr>
+    <td>armor_rating      </td>
+    <td>short      </td>
+    <td>Armor Rating      </td>
+    <td>Not used.      </td>
+  </tr>
+  <tr>
+    <td>melee_attack_speed      </td>
+    <td>short      </td>
+    <td>Melee Attack Speed      </td>
+    <td>Autoattack speed modifier.  See abilities like Haste and Concussion.  100 units = 10% speed.      </td>
+  </tr>
+  <tr>
+    <td>magic_attack_speed      </td>
+    <td>short      </td>
+    <td>Magic Attack Speed      </td>
+    <td>Casting speed modifier.  See abilities like Arcane Acceleration and Concussion. 100 units = 10%.      </td>
+  </tr>
+  <tr>
+    <td>base_damage_melee      </td>
+    <td>short      </td>
+    <td>Melee Damage      </td>
+    <td>Added damage for autoattacks.  Used to simulate weapon damage for NPCs.      </td>
+  </tr>
+  <tr>
+    <td>base_damage_fire      </td>
+    <td>short      </td>
+    <td>Fire Damage      </td>
+    <td>Added damage for autoattacks.  See the Blazing ability.      </td>
+  </tr>
+  <tr>
+    <td>base_damage_frost      </td>
+    <td>short      </td>
+    <td>Frost Damage      </td>
+    <td>Added damage for autoattacks.  See the Frozen ability.      </td>
+  </tr>
+  <tr>
+    <td>base_damage_mystic      </td>
+    <td>short      </td>
+    <td>Mystic Damage      </td>
+    <td>Added damage for autoattacks.  See the Mystical ability.      </td>
+  </tr>
+  <tr>
+    <td>base_damage_death      </td>
+    <td>short      </td>
+    <td>Death Damage      </td>
+    <td>Added damage for autoattacks.  See the Deathly ability.      </td>
+  </tr>
+  <tr>
+    <td>damage_resist_melee      </td>
+    <td>short      </td>
+    <td>Melee Defense Rating      </td>
+    <td>Armor against physical damage.      </td>
+  </tr>
+  <tr>
+    <td>damage_resist_fire      </td>
+    <td>short      </td>
+    <td>Fire Defense Rating      </td>
+    <td>Armor against fire damage.      </td>
+  </tr>
+  <tr>
+    <td>damage_resist_frost      </td>
+    <td>short      </td>
+    <td>Frost Defense Rating      </td>
+    <td>Armor against frost damage.      </td>
+  </tr>
+  <tr>
+    <td>damage_resist_mystic      </td>
+    <td>short      </td>
+    <td>Mystic Defense Rating      </td>
+    <td>Armor against mystic damage.      </td>
+  </tr>
+  <tr>
+    <td>damage_resist_death      </td>
+    <td>short      </td>
+    <td>Death Defense Rating      </td>
+    <td>Armor against death damage.      </td>
+  </tr>
+  <tr>
+    <td>base_movement      </td>
+    <td>short      </td>
+    <td>Movement      </td>
+    <td>Not used.      </td>
+  </tr>
+  <tr>
+    <td>base_luck      </td>
+    <td>short      </td>
+    <td>Luck      </td>
+    <td>Auto adjusted whenever heroism changes.  Ranges from 0 to 500.      </td>
+  </tr>
+  <tr>
+    <td>base_health      </td>
+    <td>short      </td>
+    <td>Health      </td>
+    <td>Bonus to health.  See the Vigor of Sargon ability.      </td>
+  </tr>
+  <tr>
+    <td>will_max      </td>
+    <td>short      </td>
+    <td>Willpower Max      </td>
+    <td>Not used.      </td>
+  </tr>
+  <tr>
+    <td>will_regen      </td>
+    <td>float      </td>
+    <td>Willpower Regen      </td>
+    <td>Regeneration rate for Will.  1.0 = 100% (normal) speed.  See the Wolf Spirit or Shadow Spirit abilities.      </td>
+  </tr>
+  <tr>
+    <td>might_max      </td>
+    <td>short      </td>
+    <td>Might Max      </td>
+    <td>Not used.      </td>
+  </tr>
+  <tr>
+    <td>might_regen      </td>
+    <td>float      </td>
+    <td>Might Regen      </td>
+    <td>Regeneration rate for Might.  1.0 = 100% (normal) speed.  See the Wolf Spirit or Shadow Spirit abilities.      </td>
+  </tr>
+  <tr>
+    <td>base_dodge      </td>
+    <td>short      </td>
+    <td>Dodge      </td>
+    <td>Dodge chance.  10 units = 1% chance.  See the Elusiveness, Untouchable abilities.      </td>
+  </tr>
+  <tr>
+    <td>base_deflect      </td>
+    <td>short      </td>
+    <td>Deflect      </td>
+    <td>Not used.      </td>
+  </tr>
+  <tr>
+    <td>base_parry      </td>
+    <td>short      </td>
+    <td>Parry      </td>
+    <td>Parry chance.  10 units = 1% chance.  See the Impenetrable ability.      </td>
+  </tr>
+  <tr>
+    <td>base_block      </td>
+    <td>short      </td>
+    <td>Blocking      </td>
+    <td>Block chance.  10 units = 1% chance.  See the Shield Mastery ability.      </td>
+  </tr>
+  <tr>
+    <td>base_melee_to_hit      </td>
+    <td>short      </td>
+    <td>Melee To-Hit      </td>
+    <td>Not used.      </td>
+  </tr>
+  <tr>
+    <td>base_melee_critical      </td>
+    <td>short      </td>
+    <td>Melee Critical      </td>
+    <td>Not used.      </td>
+  </tr>
+  <tr>
+    <td>base_magic_success      </td>
+    <td>short      </td>
+    <td>Magic Success      </td>
+    <td>Not used.      </td>
+  </tr>
+  <tr>
+    <td>base_magic_critical      </td>
+    <td>short      </td>
+    <td>Magic Critical      </td>
+    <td>Not used.      </td>
+  </tr>
+  <tr>
+    <td>offhand_weapon_damage      </td>
+    <td>short      </td>
+    <td>Off-Hand Weapon Damage      </td>
+    <td>Offhand mastery.  10 units = 1%.  Default is 500 (50%).  See the Balance ability.      </td>
+  </tr>
+  <tr>
+    <td>casting_setback_chance      </td>
+    <td>short      </td>
+    <td>Casting Setback Chance      </td>
+    <td>Chance that casting will be set back when taking damage.  10 units = 1%.  Default is 500 (50%).  See the Concentration ability.      </td>
+  </tr>
+  <tr>
+    <td>channeling_break_chance      </td>
+    <td>short      </td>
+    <td>Channeling Break Chance      </td>
+    <td>Chance that channels will be interrupted when taking damage.  10 units = 1%.  Default is 500 (50%).  See the Discipline ability.      </td>
+  </tr>
+  <tr>
+    <td>base_healing      </td>
+    <td>short      </td>
+    <td>Healing      </td>
+    <td>Multiplier to healing spells.  10 units = 1%.  See the Healing Specialization ability.      </td>
+  </tr>
+  <tr>
+    <td>aggro_radius_mod      </td>
+    <td>short      </td>
+    <td>Aggro Radius      </td>
+    <td>Not used.      </td>
+  </tr>
+  <tr>
+    <td>hate_gain_rate      </td>
+    <td>short      </td>
+    <td>Hatred Gain Rate      </td>
+    <td>Bonus to hate generated by attacks.  1 unit = 1%.   See the Turtle, Hit Me abilities.      </td>
+  </tr>
+  <tr>
+    <td>experience_gain_rate      </td>
+    <td>short      </td>
+    <td>XP Gain Rate      </td>
+    <td>Bonus to experience generated to players on a mob kill.  1 unit = 1%.      </td>
+  </tr>
+  <tr>
+    <td>coin_gain_rate      </td>
+    <td>short      </td>
+    <td>Coin Gain Rate      </td>
+    <td>Not used.      </td>
+  </tr>
+  <tr>
+    <td>magic_loot_drop_rate      </td>
+    <td>short      </td>
+    <td>Magical Item Drops      </td>
+    <td>Bonus drop chance for randomized items.  1 unit = 1%.      </td>
+  </tr>
+  <tr>
+    <td>inventory_capacity      </td>
+    <td>short      </td>
+    <td>Inventory Capacity      </td>
+    <td>Not used.      </td>
+  </tr>
+  <tr>
+    <td>vis_weapon      </td>
+    <td>short      </td>
+    <td>Visible Weapon      </td>
+    <td>Determines which weapon is visible.  Affects client animations only.  Must have a valid eq_appearance.  Typically only used by players.  Possible values: {0, 1, 2}      </td>
+  </tr>
+  <tr>
+    <td>sub_name      </td>
+    <td>String[64]      </td>
+    <td>Sub Name      </td>
+    <td>The title or clan name subtext.      </td>
+  </tr>
+  <tr>
+    <td>alternate_idle_anim      </td>
+    <td>String[32]      </td>
+    <td>Idle Animation      </td>
+    <td>Not used.      </td>
+  </tr>
+  <tr>
+    <td>selective_eq_override      </td>
+    <td>String[32]      </td>
+    <td>Selective Equipment Override      </td>
+    <td>Not used.      </td>
+  </tr>
+  <tr>
+    <td>health      </td>
+    <td>short      </td>
+    <td>Health      </td>
+    <td>Only accepts values from 0 to 32767.  Negative values are interpreted as death and cause interaction problems in the client.<p><b>NOTE: </b> If using a Planet Forever modified client, and if UseIntegerHealth=1 (in ServerConfig.txt) then this will be interpreted as an integer (accepts values from 0 to 2147483647)</td>
+  </tr>
+  <tr>
+    <td>will      </td>
+    <td>short      </td>
+    <td>Will      </td>
+    <td>Current Will (0 to 10).      </td>
+  </tr>
+  <tr>
+    <td>will_charges      </td>
+    <td>short      </td>
+    <td>Will Charges      </td>
+    <td>Current Will Charges (0 to 5).      </td>
+  </tr>
+  <tr>
+    <td>might      </td>
+    <td>short      </td>
+    <td>Might      </td>
+    <td>Current Might (0 to 10).      </td>
+  </tr>
+  <tr>
+    <td>might_charges      </td>
+    <td>short      </td>
+    <td>Might Charges      </td>
+    <td>Current Might Charges (0 to 5).      </td>
+  </tr>
+  <tr>
+    <td>size      </td>
+    <td>short      </td>
+    <td>Size      </td>
+    <td>Not used.      </td>
+  </tr>
+  <tr>
+    <td>profession      </td>
+    <td>short      </td>
+    <td>Profession      </td>
+    <td>Character class (0=None, 1=Knight, 2=Rogue, 3=Mage, 4=Druid, 5=Mob).  Only used by players for ability trees and base stats for level.      </td>
+  </tr>
+  <tr>
+    <td>weapon_damage_2h      </td>
+    <td>short      </td>
+    <td>Weapon Damage: Two-Handed      </td>
+    <td>Weapon specialization. 10 units = 1%.  See the Two Hand Weapon Specialization ability.      </td>
+  </tr>
+  <tr>
+    <td>weapon_damage_1h      </td>
+    <td>short      </td>
+    <td>Weapon Damage: One-Handed      </td>
+    <td>Weapon specialization. 10 units = 1%.  See the One Hand Weapon Specialization ability.      </td>
+  </tr>
+  <tr>
+    <td>weapon_damage_pole      </td>
+    <td>short      </td>
+    <td>Weapon Damage: Pole      </td>
+    <td>Weapon specialization. 10 units = 1%.  See the Pole Weapon Specialization ability.      </td>
+  </tr>
+  <tr>
+    <td>weapon_damage_small      </td>
+    <td>short      </td>
+    <td>Weapon Damage: Small      </td>
+    <td>Weapon specialization. 10 units = 1%.  See the Small Weapon Specialization ability.      </td>
+  </tr>
+  <tr>
+    <td>weapon_damage_bow      </td>
+    <td>short      </td>
+    <td>Weapon Damage: Bow      </td>
+    <td>Weapon specialization. 10 units = 1%.  See the Bow Weapon Specialization ability.      </td>
+  </tr>
+  <tr>
+    <td>weapon_damage_thrown      </td>
+    <td>short      </td>
+    <td>Weapon Damage: Thrown      </td>
+    <td>Weapon specialization. 10 units = 1%.  See the Thrown Weapon Specialization ability.      </td>
+  </tr>
+  <tr>
+    <td>weapon_damage_wand      </td>
+    <td>short      </td>
+    <td>Weapon Damage: Wand      </td>
+    <td>Weapon specialization. 10 units = 1%.  See the Wand Weapon Specialization ability.      </td>
+  </tr>
+  <tr>
+    <td>extra_damage_fire      </td>
+    <td>short      </td>
+    <td>Extra Damage: Fire      </td>
+    <td>Not used.      </td>
+  </tr>
+  <tr>
+    <td>extra_damage_frost      </td>
+    <td>short      </td>
+    <td>Extra Damage: Frost      </td>
+    <td>Not used.      </td>
+  </tr>
+  <tr>
+    <td>extra_damage_mystic      </td>
+    <td>short      </td>
+    <td>Extra Damage: Mystic      </td>
+    <td>Not used.      </td>
+  </tr>
+  <tr>
+    <td>extra_damage_death      </td>
+    <td>short      </td>
+    <td>Extra Damage: Death      </td>
+    <td>Not used.      </td>
+  </tr>
+  <tr>
+    <td>appearance_override      </td>
+    <td>string      </td>
+    <td>Appearance Override      </td>
+    <td>Replaces the mob appearance.  Only used by the loot system to turn mobs into tombstones or loot bags/chests.      </td>
+  </tr>
+  <tr>
+    <td>invisibility_distance      </td>
+    <td>float      </td>
+    <td>Invisibility Distance      </td>
+    <td>Remaining travel distance until invisibility effects expire.  10 units = 1 meter.      </td>
+  </tr>
+  <tr>
+    <td>translocate_destination      </td>
+    <td>string      </td>
+    <td>Translocate Destination      </td>
+    <td>The location name in the Portal: Bind ability tooltip.  Information only.  Actual bind location data is stored separately in player character files.      </td>
+  </tr>
+  <tr>
+    <td>lootable_player_ids      </td>
+    <td>string      </td>
+    <td>Lootable Player ID's      </td>
+    <td>Generated by the server on loot generation.  A comma separated list of player creature definition IDs that may loot a corpse.      </td>
+  </tr>
+  <tr>
+    <td>master      </td>
+    <td>short      </td>
+    <td>Master      </td>
+    <td>Not used.      </td>
+  </tr>
+  <tr>
+    <td>rez_pending      </td>
+    <td>short      </td>
+    <td>Pending Resurrection Offer      </td>
+    <td>Not used.      </td>
+  </tr>
+  <tr>
+    <td>loot_seeable_player_ids      </td>
+    <td>string      </td>
+    <td>Loot Seeable Player ID's      </td>
+    <td>Generated by the server on loot generation.  A comma separated list of player creature definition IDs that may see a loot bag/chest on a corpse.  Everyone else sees a corpse/tombstone.      </td>
+  </tr>
+  <tr>
+    <td>loot      </td>
+    <td>String[64]      </td>
+    <td>Loot      </td>
+    <td>Not used.      </td>
+  </tr>
+  <tr>
+    <td>base_stats      </td>
+    <td>String[64]      </td>
+    <td>Base Stats      </td>
+    <td>A comma separated list of 5 integer values (Str,Dex,Con,Psy,Spi) derived from class and level.  Automatically generated by the server.  Only used for players.      </td>
+  </tr>
+  <tr>
+    <td>health_mod      </td>
+    <td>short      </td>
+    <td>Health Mod      </td>
+    <td>Additional bonus health provided by heroism.      </td>
+  </tr>
+  <tr>
+    <td>heroism      </td>
+    <td>short      </td>
+    <td>Heroism      </td>
+    <td>Main heroism stat.  Ranges from 0 to 1000.  base_luck is calculated directly from this by dividing it by 2.      </td>
+  </tr>
+  <tr>
+    <td>experience      </td>
+    <td>int      </td>
+    <td>Experience Points      </td>
+    <td>Total experience points gained by the character over their lifetime.      </td>
+  </tr>
+  <tr>
+    <td>total_ability_points      </td>
+    <td>short      </td>
+    <td>Total Ability Points      </td>
+    <td>Total ability points, calculated by level and event reward points.      </td>
+  </tr>
+  <tr>
+    <td>current_ability_points      </td>
+    <td>short      </td>
+    <td>Current Ability Points      </td>
+    <td>Unused ability points that are available to spend on skills.      </td>
+  </tr>
+  <tr>
+    <td>copper      </td>
+    <td>int      </td>
+    <td>Copper      </td>
+    <td>Coin.  Vendor currency.      </td>
+  </tr>
+  <tr>
+    <td>credits      </td>
+    <td>int      </td>
+    <td>Credits      </td>
+    <td>Credit shop currency.      </td>
+  </tr>
+  <tr>
+    <td>ai_module      </td>
+    <td>String[64]      </td>
+    <td>AI Module      </td>
+    <td>Not used.      </td>
+  </tr>
+  <tr>
+    <td>creature_category      </td>
+    <td>String[32]      </td>
+    <td>Creature Category      </td>
+    <td>Only used by the client.  Determines the icon portrait used in the target bar when selecting the object, and minimap dot colors in version 0.8.6 and earlier.  Available types: { Animal, Demon, Divine, Dragonkin, Elemental, Magical, Mortal, Unliving } </td>
+  </tr>
+  <tr>
+    <td>rarity      </td>
+    <td>short      </td>
+    <td>Rarity      </td>
+    <td>Creature rarity.  Controls maximum health and rarity icon color.  (0=Normal, 1=Heroic, 2=Epic, 3=Legendary)      </td>
+  </tr>
+  <tr>
+    <td>spawn_table_points      </td>
+    <td>short      </td>
+    <td>Spawn Table Points      </td>
+    <td>Not used.      </td>
+  </tr>
+  <tr>
+    <td>ai_package      </td>
+    <td>String[64]      </td>
+    <td>AI Package      </td>
+    <td>The AI script name to use.  Scripts must be present in the AIScript folder and defined in script_list.txt      </td>
+  </tr>
+  <tr>
+    <td>bonus_health      </td>
+    <td>short      </td>
+    <td>Bonus Health      </td>
+    <td>Damage shield points.  See the Frost Shield ability.      </td>
+  </tr>
+  <tr>
+    <td>dr_mod_melee      </td>
+    <td>int      </td>
+    <td>Melee Damage Reduction      </td>
+    <td>Multiplier to physical defense when calculating final damage reductions.  10 units = 1%.  See the Berserk and Turtle abilities.      </td>
+  </tr>
+  <tr>
+    <td>dr_mod_fire      </td>
+    <td>int      </td>
+    <td>Fire Damage Reduction      </td>
+    <td>Multiplier to fire defense when calculating final damage reductions.  10 units = 1%.  See the Berserk and Turtle abilities.      </td>
+  </tr>
+  <tr>
+    <td>dr_mod_frost      </td>
+    <td>int      </td>
+    <td>Frost Damage Reduction      </td>
+    <td>Multiplier to frost defense when calculating final damage reductions.  10 units = 1%.  See the Berserk and Turtle abilities.      </td>
+  </tr>
+  <tr>
+    <td>dr_mod_mystic      </td>
+    <td>int      </td>
+    <td>Mystic Damage Reduction      </td>
+    <td>Multiplier to mystic defense when calculating final damage reductions.  10 units = 1%.  See the Berserk and Turtle abilities.      </td>
+  </tr>
+  <tr>
+    <td>dr_mod_death      </td>
+    <td>int      </td>
+    <td>Death Damage Reduction      </td>
+    <td>Multiplier to death defense when calculating final damage reductions.  10 units = 1%.  See the Berserk and Turtle abilities.      </td>
+  </tr>
+  <tr>
+    <td>dmg_mod_melee      </td>
+    <td>int      </td>
+    <td>Melee Damage Modifier      </td>
+    <td>Multiplier to outgoing physical damage.  10 units = 1%.  See the Turtle, Berserk, and Overstrike abilities.      </td>
+  </tr>
+  <tr>
+    <td>dmg_mod_fire      </td>
+    <td>int      </td>
+    <td>Fire Damage Modifier      </td>
+    <td>Multiplier to outgoing fire damage.  10 units = 1%.  See the Fire Specialization ability.      </td>
+  </tr>
+  <tr>
+    <td>dmg_mod_frost      </td>
+    <td>int      </td>
+    <td>Frost Damage Modifier      </td>
+    <td>Multiplier to outgoing frost damage.  10 units = 1%.  See the Frost Specialization ability.      </td>
+  </tr>
+  <tr>
+    <td>dmg_mod_mystic      </td>
+    <td>int      </td>
+    <td>Mystic Damage Modifier      </td>
+    <td>Multiplier to outgoing mystic damage.  10 units = 1%.  See the Mystic Specialization ability.      </td>
+  </tr>
+  <tr>
+    <td>dmg_mod_death      </td>
+    <td>int      </td>
+    <td>Death Damage Modifier      </td>
+    <td>Multiplier to outgoing death damage.  10 units = 1%.  See the Death Specialization ability.      </td>
+  </tr>
+  <tr>
+    <td>pvp_team      </td>
+    <td>short      </td>
+    <td>PvP Team      </td>
+    <td>PvP is not properly supported in the server.  In the client this appears to control the team color.  (0=None, 1=Red, 2=Blue, 3=Yellow, 4=Green)      </td>
+  </tr>
+  <tr>
+    <td>pvp_kills      </td>
+    <td>int      </td>
+    <td>PvP Kills      </td>
+    <td>Not used by the server.  Used in the client PvP score screen.      </td>
+  </tr>
+  <tr>
+    <td>pvp_deaths      </td>
+    <td>int      </td>
+    <td>PvP Deaths      </td>
+    <td>Not used by the server.  Used in the client PvP score screen.      </td>
+  </tr>
+  <tr>
+    <td>pvp_state      </td>
+    <td>String[32]      </td>
+    <td>PvP State      </td>
+    <td>Not used by the server.  Unknown or unused in the client.      </td>
+  </tr>
+  <tr>
+    <td>pvp_flag_captures      </td>
+    <td>integer      </td>
+    <td>PvP Flag Captures      </td>
+    <td>Not used by the server.  Used in the client PvP score screen.      </td>
+  </tr>
+  <tr>
+    <td>mod_melee_to_hit      </td>
+    <td>float      </td>
+    <td>Mod Melee To Hit      </td>
+    <td>Not used.      </td>
+  </tr>
+  <tr>
+    <td>mod_melee_to_crit      </td>
+    <td>float      </td>
+    <td>Mod Melee To Crit      </td>
+    <td>The server computes this value as an additive for critical chance on physical damage. 10 units = 1%.  The original devs probably intended this to be computed a different way.      </td>
+  </tr>
+  <tr>
+    <td>mod_magic_to_hit      </td>
+    <td>float      </td>
+    <td>Mod Magic To Hit      </td>
+    <td>Not used.      </td>
+  </tr>
+  <tr>
+    <td>mod_magic_to_crit      </td>
+    <td>float      </td>
+    <td>Mod Magic To Crit      </td>
+    <td>The server computes this value as an additive for critical chance on elemental damage. 10 units = 1%.   The original devs probably intended this to be computed a different way.      </td>
+  </tr>
+  <tr>
+    <td>mod_parry      </td>
+    <td>float      </td>
+    <td>Mod Parry      </td>
+    <td>Not used.      </td>
+  </tr>
+  <tr>
+    <td>mod_block      </td>
+    <td>float      </td>
+    <td>Mod Block      </td>
+    <td>Not used.      </td>
+  </tr>
+  <tr>
+    <td>mod_movement      </td>
+    <td>int      </td>
+    <td>Mod Movement      </td>
+    <td>Additive bonus to movement speed percent.  1 unit = 1% speed.  See the Bounder Dash ability.      </td>
+  </tr>
+  <tr>
+    <td>mod_health_regen      </td>
+    <td>float      </td>
+    <td>Mod Health Regen      </td>
+    <td>The server uses this as a flat additive bonus to health regeneration.  The original devs seemed to imagine this stat as a percentage multiplier in the outdated/abandoned stat panel.      </td>
+  </tr>
+  <tr>
+    <td>mod_attack_speed      </td>
+    <td>float      </td>
+    <td>Mod Attack Speed      </td>
+    <td>Not used by the server.  Default is set to the minimum a floating point value can hold.  Seems to be used in client legacy calculations of DPS.  (1.4013e-045)      </td>
+  </tr>
+  <tr>
+    <td>mod_casting_speed      </td>
+    <td>float      </td>
+    <td>Mod Casting Speed      </td>
+    <td>Not used by the server.  Default is set to the minimum a floating point value can hold.  Seems to be used in client legacy calculations of DPS.  (1.4013e-045)      </td>
+  </tr>
+  <tr>
+    <td>mod_healing      </td>
+    <td>float      </td>
+    <td>Mod Healing      </td>
+    <td>Not used by the server.  Seems to be used in client legacy calculations of DPS.   (1.4013e-045)      </td>
+  </tr>
+  <tr>
+    <td>total_size      </td>
+    <td>float      </td>
+    <td>Total Size      </td>
+    <td>Additional size for range purposes.  Expressed in game units (10 units = 1 meter).  Makes fighting physically large mobs on screen (like dragons) more intuitive, especially for melee players so they don't have to stand directly under them.  </td>
+  </tr>
+  <tr>
+    <td>aggro_players      </td>
+    <td>short      </td>
+    <td>Aggro Players      </td>
+    <td>If set to 0, the creature's name-board is set to a neutral color.  If set to 1, it is red.  If not present (important for player characters) is it white.      </td>
+  </tr>
+  <tr>
+    <td>mod_luck      </td>
+    <td>float      </td>
+    <td>Mod Luck      </td>
+    <td>Percentage modifier to luck.  1 unit = 1%.  See the Lady Luck ability.      </td>
+  </tr>
+  <tr>
+    <td>health_regen      </td>
+    <td>short      </td>
+    <td>Health Regen      </td>
+    <td>Not used.      </td>
+  </tr>
+  <tr>
+    <td>bleeding      </td>
+    <td>short      </td>
+    <td>Bleeding      </td>
+    <td>Not used.      </td>
+  </tr>
+  <tr>
+    <td>damage_shield      </td>
+    <td>int      </td>
+    <td>Damage Shield      </td>
+    <td>Damage reflect.  See the Reflective Ward ability.      </td>
+  </tr>
+  <tr>
+    <td>hide_nameboard      </td>
+    <td>short      </td>
+    <td>Hide Nameboard      </td>
+    <td>Not sure which client version started using this.  The server sets to 1 while objects are dead.      </td>
+  </tr>
+  <tr>
+    <td>hide_minimap      </td>
+    <td>short      </td>
+    <td>Hide Minimap      </td>
+    <td>Exists in clients later than 0.8.6.  If nonzero, the minimap dot is not drawn for this creature.      </td>
+  </tr>
+</table>
+</div>
+</body>
+</html>

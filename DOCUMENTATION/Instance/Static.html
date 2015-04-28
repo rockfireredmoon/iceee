@@ -1,0 +1,67 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Reference: Static.txt</title>
+<link rel="stylesheet" type="text/css" href="../main.css">
+</head>
+<body>
+
+<div>
+
+<h2>Reference: Static.txt</h2>
+
+Defines static (stationary) spawns for NPCs, without the need for adding SpawnPoints to a zone.  Static spawns will always be spawned as friendly, neutral, stationary, and invincible.  Ideal for certain quest-givers and reward chests.
+<p>
+Static spawns are global and are always resident within a zone, even if players are far away.  Every NPC in a region will contribute a negligable amount of server overhead for processing, so it is recommended to avoid excessive use of static spawns.
+<p>
+Overworld regions include some static NPCs for holiday themed events.  Comment their lines to disable them, or uncomment to enable.
+<p>
+List file.  One entry per line.  Delimiters: equal sign (=) and comma (,).<br>
+Comment character: semicolon (;)<br>
+No header.
+
+<div class="spacer"></div>
+
+<h2>Line Format</h2>
+<p>
+Template:
+<span class="scriptex">
+CDefID=X,Y,Z,Facing
+</span>
+<p>
+<table frame=box rules=all>
+  <tr class="header">
+    <td><b>Property</b></td>
+    <td><b>Description</b></td>
+  </tr>
+  <tr>
+    <td>CDefID</td>
+    <td>Integer.  Creature type to spawn.  Must be defined in a loaded CreatureDef file.</td>
+  </tr>
+  <tr>
+    <td>X</td>
+    <td>Integer.  Coordinate to spawn.</td>
+  </tr>
+  <tr>
+    <td>Y</td>
+    <td>Integer.  Coordinate to spawn.</td>
+  </tr>
+  <tr>
+    <td>Z</td>
+    <td>Integer.  Coordinate to spawn.</td>
+  </tr>
+  <tr>
+    <td>Facing</td>
+    <td>Integer.  The angle to rotate.  Facing operates with values from 0 to 255.  A value of 64 corresponds to 90 degrees, 128 is ~180 degrees, 192 is ~270 degrees, 255 is ~360 degrees, almost full circle.  Anything else inbetween is acceptable too.</td>
+  </tr>
+</table>
+
+
+<div class="footer"></div>
+
+</div>
+</body>
+</html>

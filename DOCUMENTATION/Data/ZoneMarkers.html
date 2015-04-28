@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Reference: ZoneMarkers.txt</title>
+<link rel="stylesheet" type="text/css" href="../main.css">
+</head>
+<body>
+
+<div>
+
+<h2>Reference: ZoneMarkers.txt</h2>
+
+<div class="spacer"></div>
+<h2>Purpose</h2>
+Contains a listing of all special zone coordinates, particularly sanctuaries.
+
+
+<div class="spacer"></div>
+<h2>File Format</h2>
+Resembles INI format with structured blocks.<br>
+Comment character: semicolon (;)<br>
+Each line is split into tokens at the "=" and "," symbols.
+
+
+<div class="spacer"></div>
+<h2>Block Format</h2>
+
+<table frame=box rules=all>
+  <tr class="header">
+    <td><b>Property</b></td>
+    <td><b>Type</b></td>
+    <td><b>Description</b></td>
+  </tr>
+  <tr>
+    <td>[ENTRY]</td>
+    <td>N/A</td>
+    <td>Begins a new entry.</td>
+  </tr>
+  <tr>
+    <td>ZoneID</td>
+    <td>Integer</td>
+    <td>Special case.  Subsequent entries will be loaded into this zone, until changed by a new ZoneID line.</td>
+  </tr>
+  <tr>
+    <td>Sanctuary</td>
+    <td>Float,Float,Float,String,String</td>
+    <td>Marks a sanctuary location.  The first three floats are the X,Y,Z coordinates of the sanctuary.<p>The first string is a descriptive name for the location that will appear as your bind location.<p>The last string is optional, and indicates a filter of map regions.  This sanctuary will only be considered as a respawn point if the player is within that region.  Multiple regions may be used by separating them with a pipe "|" character (although current detection only uses a simple substring find).<p>For region names, refer to the <a href="MapDef.html">MapDef.txt Name</a> property.  Note that the actual tile considerations for regions are defined in <a href="MapLocations.html">MapLocations.txt.</a></td>
+  </tr>
+</table>
+
+<div class="spacer"></div>
+<div class="footer"></div>
+
+</div>
+</body>
+</html>

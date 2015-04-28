@@ -1,0 +1,190 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Reference: Ability Error Codes</title>
+<link rel="stylesheet" type="text/css" href="../main.css">
+</head>
+<body>
+
+<div>
+
+<h2>Reference: Ability Error Codes</h2>
+
+<div class="spacer"></div>
+<h3>Purpose</h3>
+A listing of ability error codes.  Consult this char if <a href="../Base/ServerConfig.html">ServerConfig.txt</a> DebugLogAIScriptUse is enabled, to determine why an ability may not be activating.
+<p>
+Codes 0 through 4 are used for internal states and core error handling (like if the ability doesn't exist).
+<p>
+Codes 5 and beyond are usually a failure to pass the required activation conditions (facing target, in range, enough might, etc).
+<p>
+<div class="spacer"></div>
+<h3>Return Codes</h3>
+<table frame=box rules=all>
+<tr>
+  <td>ABILITY_SUCCESS</td>
+  <td>0</td>
+  <td>No error code.</td>
+</tr>
+<tr>
+  <td>ABILITY_NOT_FOUND</td>
+  <td>1</td>
+  <td>The ability was not found in the loaded ability table.</td>
+</tr>
+<tr>
+  <td>ABILITY_BAD_EVENT</td>
+  <td>2</td>
+  <td>The ability has an invalid event type.</td>
+</tr>
+<tr>
+  <td>ABILITY_NOT_SPECIAL</td>
+  <td>3</td>
+  <td>The ability does not have a hack for special internal processing.</td>
+</tr>
+<tr>
+  <td>ABILITY_SPECIAL</td>
+  <td>4</td>
+  <td>The ability does have a hack for special internal processing (special case just needs to have a different value than ABILITY_NOT_SPECIAL for comparison purposes).</td>
+</tr>
+<tr>
+  <td>ABILITY_GENERIC</td>
+  <td>5</td>
+  <td>Non-specific failure.</td>
+</tr>
+<tr>
+  <td>ABILITY_NO_TARGET</td>
+  <td>6</td>
+  <td>No targets found.</td>
+</tr>
+<tr>
+  <td>ABILITY_COOLDOWN</td>
+  <td>7</td>
+  <td>Ability is still on cooldown and can't be used yet.</td>
+</tr>
+<tr>
+  <td>ABILITY_PENDING</td>
+  <td>8</td>
+  <td>An ability is already being processed.</td>
+</tr>
+<tr>
+  <td>ABILITY_FACING</td>
+  <td>9</td>
+  <td>Not facing target.</td>
+</tr>
+<tr>
+  <td>ABILITY_INRANGE</td>
+  <td>10</td>
+  <td>Not within range of target.</td>
+</tr>
+<tr>
+  <td>ABILITY_NOTSILENCED</td>
+  <td>11</td>
+  <td>The caster is silenced.</td>
+</tr>
+<tr>
+  <td>ABILITY_MIGHT</td>
+  <td>12</td>
+  <td>Not enough might to cast.</td>
+</tr>
+<tr>
+  <td>ABILITY_WILL</td>
+  <td>13</td>
+  <td>Not enough will to cast.</td>
+</tr>
+<tr>
+  <td>ABILITY_MIGHT_CHARGE</td>
+  <td>14</td>
+  <td>Not enough might charges to cast.</td>
+</tr>
+<tr>
+  <td>ABILITY_WILL_CHARGE</td>
+  <td>15</td>
+  <td>Not enough will charges to cast.</td>
+</tr>
+<tr>
+  <td>ABILITY_HASMAINHAND</td>
+  <td>16</td>
+  <td>No mainhand weapon equipped.</td>
+</tr>
+<tr>
+  <td>ABILITY_HASOFFHAND</td>
+  <td>17</td>
+  <td>No offhand weapon equipped.</td>
+</tr>
+<tr>
+  <td>ABILITY_HASMELEE</td>
+  <td>18</td>
+  <td>No melee weapon equipped.</td>
+</tr>
+<tr>
+  <td>ABILITY_HASSHIELD</td>
+  <td>19</td>
+  <td>No shield equipped.</td>
+</tr>
+<tr>
+  <td>ABILITY_HASBOW</td>
+  <td>20</td>
+  <td>No bow equipped.</td>
+</tr>
+<tr>
+  <td>ABILITY_HAS2HORPOLE</td>
+  <td>21</td>
+  <td>No two-hand or pole weapon equipped.</td>
+</tr>
+<tr>
+  <td>ABILITY_HASWAND</td>
+  <td>22</td>
+  <td>No wand equipped.</td>
+</tr>
+<tr>
+  <td>ABILITY_STATUS</td>
+  <td>23</td>
+  <td>The status effect condition does not match the requirement (commonly HasStatus() or NotStatus() functions)</td>
+</tr>
+<tr>
+  <td>ABILITY_HEALTH_TOO_LOW</td>
+  <td>24</td>
+  <td>The caster does not have enough health to use the ability.</td>
+</tr>
+<tr>
+  <td>ABILITY_BEHIND</td>
+  <td>25</td>
+  <td>The caster is not behind its target.</td>
+</tr>
+<tr>
+  <td>ABILITY_NEARBY_SANCTUARY</td>
+  <td>26</td>
+  <td>The caster is not near a sanctuary.</td>
+</tr>
+<tr>
+  <td>ABILITY_DISARM</td>
+  <td>27</td>
+  <td>The caster is disarmed and cannot perform physical attacks.</td>
+</tr>
+<tr>
+  <td>ABILITY_STUN</td>
+  <td>28</td>
+  <td>The caster is stunned.</td>
+</tr>
+<tr>
+  <td>ABILITY_DAZE </td>
+  <td>29</td>
+  <td>The caster is dazed.</td>
+</tr>
+<tr>
+  <td>ABILITY_DEAD </td>
+  <td>30</td>
+  <td>The caster is dead.</td>
+</tr>
+
+</table>
+
+
+<div class="footer"></div>
+
+</div>
+</body>
+</html>

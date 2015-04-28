@@ -1,0 +1,181 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Reference: SpawnPackageFile Format</title>
+<link rel="stylesheet" type="text/css" href="../main.css">
+</head>
+<body>
+
+<div>
+
+<h2>Reference: SpawnPackageFile Format</h2>
+
+<div class="spacer"></div>
+<h2>Purpose</h2>
+Defines spawn packages names, their associated spawn lists and spawn data.
+
+<div class="spacer"></div>
+<h2>File Format</h2>
+INI format.  Delimiters: equals (=) and comma (,)<br>
+Comment character: semicolon (;)<br>
+<p>
+<h3>Properties</h3>
+<table frame=box rules=all>
+  <tr class="header">
+    <td><b>Property</b></td>
+    <td><b>Description</b></td>
+  </tr>
+  <tr>
+    <td>DefaultFlags</td>
+    <td>Integer.  Special case.  Sets the default <span class="script">Flags</span> property for all subsequent <span class="script">[ENTRY]</span> until DefaultFlags is redefined, or the end of file is reached.  Refer to <span class="script">Flags</span> for a list of possible values.</td>
+  </tr>
+  <tr>
+    <td>Zone</td>
+    <td>Integer.  Unused feature.  Specifies the ZoneDef ID for all entries in this file.</td>
+  </tr>
+  <tr>
+    <td>[ENTRY]</td>
+    <td>Begins a new entry.</td>
+  </tr>
+  <tr>
+    <td>Name</td>
+    <td>String.  The internal name of the package.  Should not contain spaces.  Cannot exceed 56 characters (including null terminator).</td>
+  </tr>
+  <tr>
+    <td>Spawn</td>
+    <td>Integer,Integer.  Adds a creature to the spawn list.  When a SpawnPoint spawns a creature, it will randomly select one from the list.  The spawn list can hold a maximum of 12 possible types.
+<p>
+The first integer is the CreatureDef ID.  This is actually an unsigned short integer (only accepts values from 0 to 65535).
+<p>
+The second integer is the spawn chance, in shares.  Shares should not be less than 1.</td>
+  </tr>
+  <tr>
+    <td>Shares</td>
+    <td>Integer.  Sets the maximum shares when rolling drop rates.  This should be set equal to the total share chances of all spawn options.</td>
+  </tr>
+  <tr>
+    <td>Flags</td>
+    <td>Integer.  Sets optional flags.  Refer to the chart for the flags and their associated values.  To set multiple flags, add their values together.  The "SP" column describes the equivalent <a href="../Scenery/SceneryObject.html">SpawnPoint spawnPackage</a> modifier attribute (like <span class="script">#F1954</span>)
+<pre class="script">
+Flag                  Value   SP     Purpose
+FLAG_FRIENDLY            1     F     Friendly, unattackable.
+FLAG_HIDEMAP             2     H     Hide the minimap dot.
+FLAG_NEUTRAL             4     N     Spawn neutral.
+FLAG_INVINCIBLE          8           Obsolete, unused.
+FLAG_FRIENDLY_ATTACK    16     A     Friendly, attackable by mobs.
+FLAG_ENEMY              32     E     Spawn hostile.
+FLAG_VISWEAPON_MELEE    64     M     Sets visible weapon to melee.
+FLAG_VISWEAPON_RANGED  128     R     Sets visible weapon to ranged.
+</pre>
+<b>Further notes:</b>
+<p>
+FLAG_FRIENDLY: Typically used for all NPCs.
+<p>
+FLAG_HIDEMAP: May only work in client 0.8.8 or later.
+<p>
+FLAG_NEUTRAL: Neutral mobs have yellow/orange names and will not aggro unless attacked.
+<p>
+FLAG_FRIENDLY_ATTACK: Allows hostile mobs to aggro and attack them.
+<p>
+FLAG_ENEMY: This is not needed if CreatureDef <span class="script">aggro_players=1</span>
+<p>
+FLAG_VISWEAPON_MELEE and FLAG_VISWEAPON_RANGED: Will only work if the CreatureDef <span class="script">eq_appearance</span> property is set.  Normally this property is only used by players (since it describes which items are equipped).  These flags were intended to allow spawning museum players with their weapons in hand.
+</td>
+  </tr>
+  <tr>
+    <td>Divide</td>
+    <td>Integers(3).  Format:<br><span class="script">Divide=Location,Orient,ShareThreshold</span>
+<p>
+Added as a hack to get certain SPM spawns to work correctly.  This sets an arbitrary dividing line (north/south or east/west) which will divide a map into two areas.  One set of mobs will spawn on one side, while a different set will spawn on another.
+<p>
+Location: this is the coordinate, either X or Z, to split the map.<br>
+<p>
+Orient: the orientation of the division line (1 = vertical, 2 = horizontal).  If vertical, Location is the X coordinate to split the zone into east/west sides.  If horizontal, Location is the Z coordinate to split north/south.
+<p>
+ShareThreshold: The minimum randomizer value to guarantee a spawn on the second half of the divider.  That is east (right) or south (down) from the line.
+
+<p>
+Example SpawnPoint (taken from Europe):
+<p>
+<pre>
+[ENTRY]
+Name=2a_rhl_sectionA8_general
+wanderRadius=100
+Shares=80
+Divide=71000,1,41
+Spawn=2291,10  ;Bristle Boar (26)
+Spawn=2292,10  ;Bristle Boar (27)
+Spawn=2293,10  ;Slag Worm (26)
+Spawn=2294,10  ;Slag Worm (27)
+Spawn=566,10  ;Attercop (28)
+Spawn=567,10  ;Attercop (27)
+Spawn=2326,10  ;Slider (27)
+Spawn=2327,10  ;Slider (28)
+</pre>
+Note that the total shares adds up to 80, and is appropriately set with <span class="script">Shares=80</span>.  The divider is set to divide the map vertically into left/right, east/west sides at coordinate (X=71000).  Because there are 80 shares, the spawner would normally generate a random number from 1 to 80.  However, on the left side it will now roll from 1 to 40 (the first 4 mob types in the list).  On the right side it will roll from 41 to 80 (the last 4 mob types in the list).
+  </tr>
+  <tr>
+    <td>loyaltyRadius</td>
+    <td>Integer.  Sets the loyalty radius.  Any creature attacked will automatically pull any other mobs within that range.  10 units = 1 meter.</td>
+  </tr>
+  <tr>
+    <td>spawnDelay</td>
+    <td>Integer.  The respawn delay, in seconds.  If the SpawnPoint has an explicit respawn delay, that will be used instead of this package default.</td>
+  </tr>
+  <tr>
+    <td>wanderRadius</td>
+    <td>Integer.  If the creature is idle (has no target) then it will randomly walk around its SpawnPoint up to this far away.  10 units = 1 meter.  If the SpawnPoint has an explicit wander radius, that will be used instead of this package default.</td>
+  </tr>
+  <tr>
+    <td>ScriptCall</td>
+    <td>Bool.  If set to <b>1</b>, the instance script will be notified when a creature spawned by this package is killed.  This is useful to trigger step-up spawns or boss chests.<p>
+For example, if the package is named<br>
+<span class="script">Name=2a_rhl_sectionA8_general</span>
+<p>
+then your instance script will need to have the label<br>
+<span class="script">:2a_rhl_sectionA8_general</span>
+<p>
+Refer to the <a href="../Instance/FolderInstance.html">Instance Folder</a> and 
+<a href="../Instance/InstanceScriptCommands.html">Instance Scripting Commands</a> for details on scripts.
+</td>
+  </tr>
+  <tr>
+    <td>Sequential</td>
+    <td>Bool.  This feature was made obsolete by <span class="script">ScriptCall</span>, but is still available for use.  If set to <b>1</b>, this simulates the SpawnPoint Sequential property.  the instance script will be notified when a creature spawned by this package is killed.  This is useful to trigger step-up spawns or boss chests.  
+<p>
+For example, if you need to handle a kill, and the package spawns this:<br>
+<span class="script">Spawn=735,100</span>
+<p>
+then your instance script will need to have the label<br>
+<span class="script">:onKill_735</span>
+<p>
+Refer to the <a href="../Instance/FolderInstance.html">Instance Folder</a> and 
+<a href="../Instance/InstanceScriptCommands.html">Instance Scripting Commands</a> for details on scripts.
+</td>
+  </tr>
+  <tr>
+    <td>PointOverride</td>
+    <td>Integer,Integer.  Line format:<br><span class="script">PointOverride=PropID,CreatureDefID</span><p>
+Defines a special case where a specific SpawnPoint (referenced by its ID) will always spawn a certain creature.
+<p>
+This was implemented basically as a hack to get some Down Below miniboss SpawnPoints to work correctly without modifying the official scenery data.  It is normally recommended to edit the SpawnPoint with appropriate spawn data (or use a separate spawn package) instead.
+<p>
+Use multiple lines for multiple overrides.  There is a hardcoded limit of two point overrides for each package.</td>
+  </tr>
+  <tr>
+    <td>UniquePoints</td>
+    <td>Integer.  Use this to randomize a spawn (such as a boss) between one of several possible locations.  This value should be set to match exactly how many SpawnPoints are using this package.
+</td>
+
+
+</table>
+
+
+<div class="footer"></div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,1023 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Reference: Server (Main Index)</title>
+<link rel="stylesheet" type="text/css" href="main.css">
+</head>
+<body>
+
+<div>
+
+<h2>Reference: Server (Main Index)</h2>
+
+<div class="spacer"></div>
+<h3>General Documentation</h3>
+This collection of files describes how the various features and data sets work.
+<p>
+Documentation for specific server files are organized into separate folders of the same name.
+<p>
+There's a lot of stuff here.  At least read over the table of contents, since there are links to most things you'll need to know.
+
+<div class="spacer"></div>
+<h2>Table of contents</h2>
+<a href="#intro">Introduction</a><br>
+<a href="#installserver">Installing the Server Assets</a><br>
+<a href="#installclient">Installing the Client Assets</a><br>
+<p>
+<a href="#edit">How To Edit Server Text Files</a> -- Tips and warnings<br>
+<a href="#configserver">Configuring The Server</a> -- Important settings to change for public or private use.<br>
+<a href="#regkeys">Adding Registration Keys</a><br>
+<a href="#serverfirstlog">Server Log: First Launch</a> -- When launching for the first time, these warnings and errors are normal.<br>
+
+<p>
+<a href="#configclient">Launching the Client</a> -- Creating a BAT or shortcut link.<br>
+<p>
+<a href="ServerCommandIndex.html">Server Command Index</a> -- Documentation of server /commands, including debug/admin features.<br>
+<p>
+<a href="#devmode">Local Dev Client Mode</a> -- Advanced: using dev mode with terrain editing.<br>
+<a href="#fastloading">Faster loading time with localhost</a> -- Reduces duration of loading screens.<br>
+<a href="#multiserver">Running multiple server instances</a> -- Advanced: dual server instances at once<br>
+<p>
+<a href="#windowsui">Windows GUI Documentation</a> -- Administrative/debugging tools<br>
+<a href="RemoteServerTools.html">RemoteServerTools.html</a> -- Administrative web panel and debugging tools.<br>
+<p>
+<a href="#client089">Requirements for version 0.8.9 (EER)</a> -- Notes specific to that version.<br>
+<p>
+<a href="#howadmin">How to create an administrator account</a><br>
+<a href="#howconnection">How router/simulator/HTTP connections work</a><br>
+<a href="#howpatchclient">How to patch client CAR files</a><br>
+<a href="#howevent">How to implement Winter Dawning and Harvest Fest events</a><br>
+<a href="#howfindaccount">How to find which account a character belongs to</a><br>
+<a href="#howuserdata">How to backup and restore userdata</a><br>
+<a href="#howgrove">How to create new groves</a><br>
+<a href="#howgrovename">How to change grove names</a><br>
+<a href="#howpassword">How to reset passwords</a><br>
+<a href="#howregkey">How to reset registration keys</a><br>
+<a href="#howcharname">How to change character names</a><br>
+<a href="#howaccountchar">How to add or remove characters from an account</a><br>
+<a href="#howrestoredel">How to restore an accidentally deleted character</a><br>
+<p>
+<a href="Generic/ClientArchives.html">Client Archives</a> -- Documents important CAR files.<br>
+<a href="#folders">Folder Structure</a> -- Documents all important server files and folders.<br>
+
+
+<div class="spacer"></div>
+<a name="intro"></a>
+<h2>Introduction</h2>
+If you want to run a server, even if just for private use, you'll probably need to learn and understand at least a few things to set one up.  This document will try to explain the basic steps necessary to launch the game, or host  elsewhere.
+<p>
+It's all quite easy.  No programming experience required.  Notepad (or any text editor) will suffice for editing most server files.  A spreadsheet application will be helpful for editing larger tables.
+
+
+<div class="spacer"></div>
+<a name="installserver"></a>
+<h2>Installing the Server Assets</h2>
+If you're reading this, you've probably already unzipped the contents of the server application.  That's the first step.  No official installation is necessary.  The server is designed to be portable and will run from any folder you launch it from.
+<p>
+The server is initially configured to run on localhost (your machine).  If you change nothing else, and the server is able to launch its HTTP service, you will be able to access the following files in your web browser as long as the server is online.
+<p>
+<a href="http://localhost/Account.html">http://localhost/Account.html</a><br>
+For creating an account.  See <a href="#regkeys">Adding Registration Keys</a>.
+<p>
+<a href="http://localhost/RemoteServerTools.html">http://localhost/RemoteServerTools.html</a><br>
+For administrative tools.  The default password is <span class="script">admin</span> so you'll probably want to change it.  See <a href="#configserver">Configuring The Server</a>, specifically the <span class="script">RemoteAuthenticationPassword</span> property.
+<p>
+<a href="http://localhost/ResetPassword.html">http://localhost/ResetPassword.html</a><br>
+For password resets.  See <a href="#howpassword">How to reset passwords</a>.
+
+
+<div class="spacer"></div>
+<a name="installclient"></a>
+<h2>Installing the Client Assets</h2>
+You will not be able to launch your game client, or play the game unless the client has all necessary assets.  These are .CAR files, downloaded while you play.  If the server does not have these .CAR files, the client will not be able to download them, and the client will not be able to proceed.
+<p>
+<b>Step 1:</b> If you are able, try to connect to an existing server.  At the login screen, press the <b>Download All</b> button.
+<p>
+<b>Step 2:</b> When the download is finished, go to the folder your client is installed (where <b>Spark.exe</b> is located).  There will be a <b>cache</b> folder.  Inside that folder is the file <b>EarthEternal.archive</b>.  This is important.
+<p>
+<b>Step 3:</b> Copy the archive extractor utility (<b>ArchiveExtract.exe</b>) to the same folder as <b>EarthEternal.archive</b>.  Run the extractor.
+<p>
+<b>Step 4:</b>
+Client CAR files typically exist in the following folder structure.  You may need to create the folders yourself:<br>
+<span class="script">/Release/Current/Media</span>
+<p>
+All CAR files should be moved to the <b>Media</b> folder.  There is one exception.  <b>EarthEternal.car</b> should be moved to <b>Current</b>
+<p>
+<b>Step 5:</b> In the server folder, there is a folder called <b>asset</b>.  Move <b>Release</b> folder (and everything within it) to its new home in the <b>asset</b> folder.  Optional: if you want, you can specify a different folder than <b>asset</b> by changing the <span class="mono">HTTPBaseFolder</span> field in <a href="ServerConfig.html">ServerConfig.txt</a>.
+<p>
+<span class="important">Important!</span> If you extract CAR files from any version other than 0.8.6 (Planet Forever) then you will need to recalculate the checksums and update <span class="script">Data/HTTPChecksum.txt</span>.  See instructions in <a href="#howpatchclient">How to patch client CAR files</a> for details.
+<p>
+<span class="important">Important!</span> Also if you use any version other than 0.8.6, the terrain tiles for Corsica and Earthrise will be different.  Scenery won't conform properly to the terrain.  Quests from 0.8.8 or 0.8.9 have not been restored.
+
+
+
+<div class="spacer"></div>
+<a name="configclient"></a>
+<h2>Launching the Client</h2>
+When you launch the game client <b>Spark.exe</b>, it needs a command line argument with the URL of the filename to launch.  For example:<br>
+<span class="mono">
+Spark.exe http://planetforevergame.com/Release/Current/EarthEternal.car
+</span>
+<p>
+You may use any domain or IP address as a target.  Localhost, LAN, or Internet addresses are all acceptable.  Here are some examples:
+<p>
+<span class="mono">
+Spark.exe http://localhost/Release/Current/EarthEternal.car<br>
+Spark.exe http://192.168.1.5/Release/Current/EarthEternal.car<br>
+Spark.exe http://planetforevergame.com/Release/Current/EarthEternal.car<br>
+</span>
+<p>
+If you're using a Planet Forever modified client, you may additionally specify an HTTP port as part of the URL.  For example:
+<p>
+<span class="mono">Spark.exe http://localhost:81/Release/Current/EarthEternal.car</span><br>
+<p>
+Note that if you're using a custom port, you will need to change the <span class="mono">HTTPListenPort</span> field in <a href="ServerConfig.html">ServerConfig.txt</a>.
+<p>
+<h3>Launching with a batch file</h3>
+If you're using a console batch file (.BAT extension) to launch the game, you may use the <b>START</b> command to launch the game and hide the console, for example:<p>
+<span class="mono">START Spark.exe http://localhost/Release/Current/EarthEternal.car</span><br>
+<p>
+NOTE: Version 0.8.9 (Ikimonogatari/EER) requires a different launch target.  See <a href="#client089">Version 0.8.9 Notes</a> for more information.
+<p>
+<h3>Launching with a shortcut link</h3>
+If you're using a Windows shortcut, you'll need to create one if it doesn't exist.  Right click <b>Spark.exe</b> and click <b>Create shortcut</b>.  This will create a new file.  Now right click <b>Spark.exe - Shortcut</b> and click <b>Properties</b>.  In the <b>Target</b> edit box, add a space, then enter the URL for EarthEternal.car.  The <b>Target</b> box should now contain something like this:<br>
+<pre class="mono">C:\Whatever Folder\Spark.exe http://localhost/Release/Current/EarthEternal.car</pre>
+Now click the <b>Apply</b> and <b>OK</b> buttons.
+
+
+<div class="spacer"></div>
+<a name="configserver"></a>
+<h2>Configuring The Server</h2>
+If you're launching the server or need to configure the server for a particular client version, here are some things to note.
+
+<h3>-- ServerConfig.txt --</h3>
+All of these options reside in <a href="ServerConfig.html">ServerConfig.txt</a>.
+<p>
+
+<span class="script">SimulatorAddress</span> -- Must target the URL or IP address that is hosting the server.  Some examples:
+<span class="script">
+SimulatorAddress=localhost
+SimulatorAddress=127.0.0.1
+SimulatorAddress=planetforevergame.com
+</span>
+<p>
+<span class="script">ProtocolVersion</span> -- Must match the client version.  See the ServerConfig documentation for more versions, but typically this will be <b>33</b> for 0.8.6 or <b>37</b> for 0.8.8.  Example:
+<span class="script">
+ProtocolVersion=33
+</span>
+<p>
+<span class="script">RemoteAuthenticationPassword</span> -- <span class="important">Important!</span>  If hosting the server for public use, change this password.  Make sure the server files are not accessible to the internet.  For slightly more security you may rename <b>RemoteServerTools.html</b> to something unlikely to be guessed and bookmark it in your web browser.
+<p>
+<span class="script">HTTPBaseFolder</span> -- If hosting CAR files for download, this property must be changed to designate which folder to find them.  Do not include the ending slash.  Use "this" or "." without the quotes to target the current working directory that the server program is launched from.  Examples:
+<span class="script">
+HTTPBaseFolder=F:\EEAsset\86
+HTTPBaseFolder=asset
+HTTPBaseFolder=this
+HTTPBaseFolder=.
+</span>
+<p>
+<span class="script">RouterPort, SimulatorPort, HTTPListenPort</span> -- All three of these must be set up correctly.  Normally you can leave defaults.  If hosting a server over the internet or network, make sure your network is configured for port forwarding (for each port), or other computers will not be able to connect.  There are many tutorials and instructions for port forwarding on the internet.
+<p>
+Note: Some ISPs may block port 80.  Some programs like Skype may use port 80 as well.  Configure those programs to use a different port or set <span class="script">HTTPListenPort</span> to use something other than port 80.
+<p>
+<span class="script">RouterPort</span> is typically hardcoded in the client.  Most versions (like 0.8.6) use 4242, but some old versions may use 4241.  The router port should not be changed to anything else unless using the router override hack of a modded client (Planet Forever).
+<p>
+<span class="script">HTTP404Header</span> -- Optional.  You can customize an HTTP 404 response error here.
+<p>
+
+<a name="moddedclient"></a>
+<b>Modded Client</b> refers specifically to a Planet Forever modified client.  If you are using an original SPM/EER unmodified version of EarthEternal.car, you cannot use any features that require a modded client.  If you do, buffer underflow or overflow errors will occur in the client and freeze its network buffer, causing the client to stop responding to the server.
+<p>
+If not using a modified client, make sure all following properties are disabled:
+<span class="script">
+SendLobbyHeartbeat=0
+UseIntegerHealth=0
+UseMessageBox=0
+UseStopSwim=0
+</span>
+<p>
+Also, if mobs appear as pink shroomies and the health bars are not working properly, <span class="script">UseIntegerHealth</span> may not be set correctly.  Switching it on or off and try again.
+<span class="script">
+UseIntegerHealth=0
+</span>
+<p>
+
+<h3>-- URL.txt --</h3>
+If hosting a public server, you may want to edit <a href="Data/URL.html">URL.txt</a> to change the links to new webpages.
+
+<h3>-- Web Assets --</h3>
+This refers to files that communicate with the server via an HTML webpage.  HTML files can be opened in any web browser.
+<p>
+In the server's <b>assets</b> folder (or whichever folder is configured for <span class="script">HTTPBaseFolder</span> in ServerConfig.txt), there should be some HTML files: <b>Account.html</b>, <b>RemoteServerTools.html</b>, and <b>ResetPassword.html</b>
+<p>
+If you attempt to use these files and they are unresponsive, stuck waiting indefinitely on a response, then the server is offline or frozen, or the target address is not set correctly.
+<p>
+In order for these files to communicate properly with the server, the target address must be correctly specified.  For security reasons, browsers cannot communicate outside of the domain/IP address and port of the machine that served the HTML page.
+<p>
+Open <span class="script">targetAddress.js</span> in a text editor.  Change the URL in the following line to match the URL or IP address of the server's HTTP port.  The port should match <span class="script">HTTPListenPort</span> in ServerConfig.txt.  Examples:
+<span class="script">
+var targetAddress = "http://localhost:80/";
+
+var targetAddress = "http://planetforevergame.com:80/";
+</span>
+
+
+
+<div class="spacer"></div>
+<a name="regkeys"></a>
+<h2>Adding Registration Keys</h2>
+<p>
+The server installation begins with a list of keys in <span class="script">Dynamic/RegistrationKeys.txt</span>.  If you're hosting a public server, you'll probably want to delete them and generate a unique batch.
+<p>
+Use the <a href="ToolKeyGen.html">Key Generator Tool</a> to generate a list of random keys.
+<p>
+If the server is currently running, copy and paste the keys into <a href="ImportKeys.html">ImportKeys.txt</a>, then open the admin panel (<a href="RemoteServerTools.html">RemoteServerTools.html</a>) in a web browser and click <b>Import Keys</b>.
+<p>
+If the server is not running, copy and paste the keys into <a href="Dynamic/RegistrationKeys.html">Dynamic/RegistrationKeys.txt</a>
+<p>
+<span class="important">Important!</span> It is recommended to copy these keys, and maintain a separate file with a list of all available keys, and who you have given them to.  That way you'll be able to tell whether any accounts were actually registered.  Not everyone will go through with the registration process, or won't register right away.  So even though their key may still be available, you don't want to give it out to another person.  When your records indicate you've run out of keys, then it's time to import another batch, even if some keys in <span class="script">Dynamic/RegistrationKeys.txt</span> are still remaining.
+
+
+
+
+<div class="spacer"></div>
+<a name="client089"></a>
+<h2>Requirements for version 0.8.9 (EER)</h2>
+Due to some of the UI changes in Ikimonogatari/Earth Eternal Reborn, some of the Planet Forever modifications don't work in EER.  The code in <b>ModSettings.nut</b> regarding "UI/LoadScreen" and "LoadScreenManager" will fail to execute and prevent the file from loading.  They will need to be removed from the source and compiled again.  Some other errors may arise as well.  Most critical errors are logged in <b>Player.log</b> so refer there if something may be be wrong.
+<p>
+The original version of <b>EarthEternal.car</b> should work correctly, but it won't have PF modifications.  If using the original, be sure make sure ServerConfig.txt is updated with the appropriate changes.  See <a href="#moddedclient">Modded Client</a> for details on which settings must be disabled for the original version.
+<p>
+You may also need to update the checksums in <a href="Data/HTTPChecksum.txt">HTTPChecksum.txt</a> to correspond to the 0.8.9 assets.
+<p>
+This version contains the revamped Corsica/Earthrise maps so the classic 0.8.6 scenery data will not align properly to the terrain.
+<p>
+The client may fail with checksum errors.  The original <b>Catalogs.car</b> contains a file with a checksum table.  Convert to a ZIP file, then delete <b>MediaExpectations.cnut</b> from the archive.  Convert back into a CAR, then copy the updated CAR into the <b>Media</b> assets folder.  Also modify <a href="Data/HTTPChecksum.html">HTTPChecksum.txt</a> if necessary.  The new Catalogs file should now prevent any checksum errors. 
+<p>
+The included download pack will not include all CAR files.  You may need to substitute any missing files from a previous version.  Assets from 0.8.8 are preferred, but 0.8.6 might be acceptable too.  Most of the missing files are typically terrain tiles, item, or character models and should be compatible between all modern versions.
+<p>
+EER uses a separate launch target with different parameters than earlier versions.  Use this line if launching from a BAT file, or update your Spark.exe shortcut accordingly.  Adjust the URLs as appropriate.
+<span class="mono nowrap">start Spark.exe /arg:server=localhost /arg:locale=en http://localhost/Release/Current/EarthEternal.car</span>
+<p>
+
+
+
+<div class="spacer"></div>
+<a name="devmode"></a>
+<h2>Local Dev Client Mode</h2>
+The client's dev mode loads files directly from your computer.  It does not use <b>EarthEternal.car</b> but instead requires the individual CAR files to be extracted into folders.  In this manner, all assets can be freely modified.  This is the only mode that terrain sculpting and texturing is supported in the build tool, because those files are saved and loaded directly to and from their target folders.
+<p>
+Refer to <a href="#fastloading">Faster loading time with localhost</a> on how you can set up a server locally on your machine to connect to an external server for actual gameplay.  Note that since the local client is freely modified, it's easy to hack or exploit client-side behaviors.
+<p>
+Instead of loading from CAR files, it loads from folders of the same name (minus the .car extension).  Files are accessed with relational paths.  Asset collections like Prop, CL, Terrain must all be grouped into a common base folder as well.  Also note all terrain tiles of a particular template must be extracted into the base template  folder.
+Examples:
+<span class="script">
+/Release/EarthEternal/...
+/Media/Armor/Armor-Base3B/...
+/Media/ATS/ATS-Bremen/...
+/Media/Biped/Biped-Anim-Combat/...
+/Media/Bldg/Bldg-Bastion1/...
+/Media/Terrain/Terrain-Blend/Blend_Base_x0y0.jpg
+</span>
+And so on...
+<p>
+Note that the launcher still requires a CAR file, but all other media is loaded from the folders.  When launching the client, use the following BAT method:
+<span class="script">START Spark.exe file:///Release/Current/EarthEternal.car?dev=2</span>
+<p>
+Also note that /Release/Current/ is important because the client automatically searches for files two levels below that location (<span class="script">../../Media/</span>)
+
+
+<div class="spacer"></div>
+<a name="edit"></a>
+<h2>How To Edit Server .txt Files</h2>
+All files can be opened and edited in a standard text editor like Notepad.
+<p>
+Table files can be imported into a spreadsheet application like LibreOffice Calc.
+<p>
+<span class="important">IMPORTANT!</span> Make sure your text editor and spreadsheet application use ASCII quotation marks ("").  LibreOffice Calc (and some word processors) use separate characters as opening and closing quotation marks.  They will not be loaded correctly by the server.
+<div class="indent">
+Note: The bad quotation marks will look like this:<br>
+<span style="font-size:48px">&#8220;Wrong!&#8221;</span><br>
+
+<p>
+When instead they should look like this:<br>
+<span style="font-size:48px">"Correct"</span><br>
+</div>
+<p>
+
+Wrong quotation marks are especially problematic when editing <a href="Data/AbilityTable.html">AbilityTable.txt</a>  in LibreOffice.  If necessary, you can do a find and replace to make sure that all are fixed.
+<p>
+An example of loading a file in LibreOffice:
+<div class="indent">
+Select the file to open.  The <b>Text Import</b> panel should pop up.<br>
+Look under <b>Separator options</b>.  Check the box for <b>Tab</b> and clear all the other checkboxes if any are marked.  If the file uses a separator other than Tab, select them as appropriate.  <b>Merge delimiters</b> should not be checked.  <b>Text delimiter</b> should be empty.
+<p>
+Now click <b>OK</b> to open the file.
+<p>
+When you save the file, use the same text settings it was opened with.
+</div>
+
+<div class="spacer"></div>
+<b>Character Codes</b><br>
+All older clients only support ASCII character codes up to decimal 127.  Extended ASCII characters (like accented characters), Unicode, or extended UTF+8 characters may crash the client.  Keep this in mind when writing quest text, creature names, item names, etc.
+<p>
+Only Ikimogatari/EER version 0.8.9 which utilizes the new UI software supports Unicode characters.
+<p>
+
+<p>
+Newline formats are expected to be Carriage Return + Linefeed.  Also known as CR LF, <span class="mono">"\r\n"</span> in programming-style formatting, and <span class="mono">0D 0A</span> in hexadecimal.
+<p>
+CR LF is the default in Windows.  For the most part you shouldn't encounter any problems there.  Linux text editors might save LF by default.  If the server is not loading files properly, try making sure they are saved as CR LF.  In very rare cases single lines in a file may prevent something from being loaded properly.
+<p>
+
+
+
+<a name="windowsui"></a>
+<h2>Windows UI Documentation</h2>
+The server was initially developed in Windows with a GUI for interaction.  Some of the debugging tools were never transitioned to the Web panel.  It's most useful to run the server in Windows for offline tests since these few tools are easily accessible when needed.
+<p>
+<h3>-- Main Tab --</h3>
+The large status panel holds the output of any new log messages.  It only holds up to a certain amount of text.  All messages are still logged to ServerLog.txt.
+<p>
+<b>Clear status</b>: This button clears the text in the status panel.  Very useful prior to debugging particular actions.
+<p>
+<b>Edit Box</b> : The small edit box at the top right of the screen allows entering a simulator ID, which is used by some operations in the <b>Tools</b> and <b>Stats</b> tabs for presenting player-specific data.
+<p>
+
+<h3>-- Tools Tab --</h3>
+The batch of edit boxes on the left half is mostly a relic from the early alpha days.  You can select a few actions from the dropdown list, and it will change the description of the edit boxes above.  The Cue Effect tool sends a visual effect message to a particular creature entity.
+<p>
+<b>Save Items</b> : Dumps the stats from the item database in a simplified table (ItemTable2.txt) for casual view.
+<p>
+<b>Disassemble Scripts</b> : Dumps AI script disassembly to file (script_disassembly.txt) which can be useful to see if scripts are being loaded correctly.  The instruction index can also be useful to determine where a creature's script may be stuck.
+<p>
+<b>Test Crash</b> : Crashes the server.
+<p>
+<b>Variable Dump</b> : Dumps account, character, and instance data to file (crash_dump.txt).  Not really useful anymore.
+<p>
+<b>Flush Log File</b> : Forces the operating system to flush the contents of the current write buffer, ensuring ServerLog.txt is accurate in real-time if you need to view the file immediately.
+<p>
+<b>Reload Quests</b> : Clears the loaded QuestScript and QuestDef data.  Reloads the files.  This is useful to reload minor quest changes when debugging quests.  Recommended for offline use only.  Data corruption or crashes may occur if players are actively running quests, since existing quest references may unexpectedly change or disappear when the table is reloaded.
+<p>
+<b>Reload HTTP Checksums</b> : Reloads <a href="Data/HTTPChecksum.html">HTTPChecksum.txt</a>.  Useful when modifying CAR files for testing without requiring a server restart.
+<p>
+<b>Reload Abilities</b> : Reloads the ability table.  See <a href="Data/AbilityTable.html">AbilityTable.txt</a>.  Useful for tweaking abilities for testing without requiring a server restart.
+<p>
+<b>Damage Test</b> : Crunches some ability damage formulas for the simulator index selected in the <b>Main Tab</b>.  Dumps information to file (debug_ability_dump.txt).  This feature was unfinished.  Not recommended for use.
+<p>
+<b>INITIATE SUPER FUN MODE</b>: Forget about it.  Earth Eternal does not support this feature.  If you're wondering, this was a joke from the early alpha.
+
+<p>
+<h3>-- Stats Tab --</h3>
+Some extra information in these reports are useless, left over from testing stuff long ago that no longer requires debugging.
+<p>
+<b>Refresh Threads</b> : Generates a report on server uptime, network connections, bandwidth, etc.<p>
+<b>Refresh Props</b> : Generates a report on loaded props and pending changes.  Not really useful anymore.<p>
+<b>Refresh Players</b> : Refresh a list of active players, their simulator ID and location.<p>
+<b>Prefs</b> : Refresh a list of a character's client preference data.  Must select a simulator ID from the Main Tab.  Not really useful anymore.<p>
+<b>Inv.</b> : Refresh a list of a character's inventory data.  Must select a simulator ID from the Main Tab.<p>
+<b>Sp Pkg.</b> : Refresh a list of loaded spawn packages.  Not really useful anymore.<p>
+<b>Quests</b> : Refresh a list of active, available, and completed quests for a particular character.  This can be helpful for debugging QuestDef IDs to see which ones are in use.  Must select a simulator ID from the Main Tab.<p>
+<b>Mods</b> : Refresh a list of current stats, modifiers, and status effects for a particular character.  Must select a simulator ID from the Main Tab.<p>
+<b>Hate</b> : Refresh a list of instances and creatures who have generated hate toward players.<p>
+<b>Pr</b> : Refresh a list of information collected by the Debug Profiler.  The profiler counts incoming messages and queries, tallying their numbers and time (in milliseconds) spent processing them.<p>
+<b>Refresh AI Scripts</b> : Refresh a list of loaded scripts and provides debugging information for active scripts.<p>
+<b>Time</b> : Refresh a list of active players and their time spent logged in.  Not really useful anymore.<p>
+<b>Party</b> : Refresh a list of info of any active player parties and their members.<p>
+<b>Ptr</b> : Refresh some information of active instances and players.  Not really useful anymore.<p>
+<b>Inst</b> : Refresh a detailed report of active player and NPC entities in the instance.  Not really useful anymore.<p>
+<b>Spawn</b> : Refresh a list of active spawn tiles.  Not really useful anymore.<p>
+<b>Char</b> : Refresh a list of loaded characters.  If manually editing character files, wait until they are unloaded and no longer in this list.<p>
+
+<p>
+<h3>-- Chat Tab --</h3>
+Can be used to send arbitrary chat message to the server.  The chat log function was disabled long ago since it was no longer useful or required, especially for the Linux build (doesn't have the GUI).
+
+
+<div class="spacer"></div>
+<a name="fastloading"></a>
+<h2>Faster loading time with localhost</h2>
+The game client pings the server for file requests to make sure files are up to date.  If the server is hosted over the internet, this introduces much more latency time.  To speed up the process, you can launch a copy of the server on your own machine to host files, then bounce gameplay to a different server on the internet.
+<p>
+Advantages: Faster loading times.  <br>
+Neutral: Can easily alter resources or create hacks without server detection.  Good or bad?  You decide.<br>
+Disadvantages: Will not automatically receive new CAR files if there's an update.<br>
+<p>
+To accomplish this, download, extract, and set up the CAR asset folders as described here: <a href="#installclient">Installing the Client Assets</a>
+<p>
+In ServerConfig.txt, edit the following lines to target the server's domain (or IP address) and port of its gameplay connection.  Example:
+<span class="script">
+SimulatorAddress=planetforevergame.com
+SimulatorPort=4300
+</span>
+<p>
+Launch the server on your computer.  Then launch your client targeting the following URL:<br>
+<span class="script">Spark.exe http://localhost/Release/Current/EarthEternal.car</span>
+<p>
+When you launch the client, it will now check the server on your machine for CAR files.  At the login screen, the actual gameplay connection will be sent to the other server over the internet.
+<p>
+
+
+<div class="spacer"></div>
+<a name="multiserver"></a>
+<h2>Running multiple server instances</h2>
+It is possible to run two servers instances on the same machine, but there are additional technical requirements.  
+<p>
+They must not access or share the same server files.  They cannot share accounts or characters.  They may not be able to share client CAR files either.  Testing may be needed to ensure no access violations occur if they both attempt to open the same file at once.  Copy the entire base server folder and keep them separate.
+<p>
+<h3>-- ServerConfig.txt --</h3>
+Obviously they can't use the same ports, so <a href="ServerConfig.html">ServerConfig.txt</a> will need to be different between both instances.
+<p>
+For example, Server #1 might have:
+<span class="script">
+SimulatorAddress=localhost
+HTTPBaseFolder=asset1
+RouterPort=4242
+SimulatorPort=4300
+HTTPListenPort=80
+</span>
+<p>
+And Server #2 might have:
+<span class="script">
+SimulatorAddress=localhost
+HTTPBaseFolder=asset2
+RouterPort=4241
+SimulatorPort=4301
+HTTPListenPort=81
+</span>
+<p>
+<h3>-- targetAddress.js --</h3>
+In your web assets folder (in these examples: asset1 or asset2), open <span class="script">targetAddress.js</span> in a text editor.  Change the URL to match the URL and and port to the server's HTTP port.  The port should match <span class="script">HTTPListenPort</span> in ServerConfig.txt.
+<p>
+Server #1 might have:
+<span class="script">
+var targetAddress = "http://localhost:80/";
+</span>
+<p>
+And Server #2:
+<span class="script">
+var targetAddress = "http://localhost:81/";
+</span>
+<p>
+<h3>-- Client Launcher (plus Router Hack) --</h3>
+The biggest hurdle will be launching the clients and informing players what they need to do.  The client will need to be a Planet Forever modded client.  If Server #1 and Server #2 are hosting different client versions (such as 0.8.6 vs 0.8.8) then the player will need to use the correct core client files (Spark.exe) since they are not fully compatible.  If Spark.exe was designed for 0.8.6, it may crash if it tries to load an 0.8.8 version of EarthEternal.car.  Keep the core files separate (such as C:\Games\EEClient86 and C:\Games\EEClient88).
+<p>
+In any case, they'll need to use separate launchers to target the different ports.
+<p>
+For example, a .BAT launcher to Server #1 might have:
+<span class="script">
+START Spark.exe http://localhost/Release/Current/EarthEternal.car
+</span>
+<p>
+And the launcher to Server #2:
+<span class="script">
+START Spark.exe http://localhost:81/Release/Current/EarthEternal.car
+</span>
+<p>
+But there is an additional problem.  The client is hardcoded to use port 4242 (some versions may be hardcoded to use 4241).  To force the client to target a specific router port, it will need a hack file.
+<p>
+Go to the client folder where Spark.exe is located. If you have attempted to launch the game at least once before, there will be a cache folder. In the cache folder will be subfolders for each hosting domain that you tried to log into, like planetforevergame.com or localhost if launching locally.
+<p>
+Side note: If you launched using a custom port, it will have something extra in the folder's domain name, like localhost Q. This is because the client does not natively support launching to a URL with a specific port (like <span class="script">http://localhost:81/Release/Current/EarthEternal.car</span>). The extra letter is the ASCII representation of the port number (P, Q, etc correspond to port 80, 81, etc)
+<p>
+In the domain subfolder, create a new file called Router (case sensitive). It must be a plain-text file, but make sure it doesn't have a filename extension (you may need to set your operating system to always show file name extensions, or use console commands to remove the extension). Alternatively you can copy an existing cookie file, rename it Router, and delete the contents.
+<p>
+Open the new file Router in a Notepad, and paste in the following line:
+<span class="script">
+{["mod.router"]=4241}
+</span>
+<p>
+Or choose whatever different port if not using 4241. Close and save. Now launch the client again. It will now try to make the router connection using that port. Note that as long as this file exists, the router hack will be working behind the scenes (regardless of which launcher you're using). If the hack is no longer necessary, delete the Router cookie file.
+
+
+<div class="spacer"></div>
+<a name="howadmin"></a>
+<h2>How to create an administrator account</h2>
+If you don't have an account, create one via the webpage (Account.html) like anyone else.  You will need to edit your account file to add the necessary permissions.  Make sure your account is offline before editing permissions.
+<p>
+Open the file <span class="script">Dynamic/AccountList.txt</span> and search for your username.  Note the account ID (the first number of each line).
+<p>
+Now go to the <b>Accounts</b> folder and look for a file named with the matching account ID.  Open the account file.  On the <span class="script">Permissions</span> line, add the <span class="script">admin</span> permission.  You can add other permissions this way too.  Refer to <a href="Accounts/AccountPermissions.html">Account Permissions</a> for a list of options and debug permissions.
+<p>
+Save and close the file.  If your account was offline when you edited the file, it should work.
+<p>
+Once you have admin permission, you can use the <span class="script">/setpermission</span> command in game to add or remove permissions for yourself or other users.  Refer to <a href="ServerCommandIndex.html">Server Command Index</a> for details and command syntax.
+
+
+
+
+<div class="spacer"></div>
+<a name="howconnection"></a>
+<h2>How router/simulator/HTTP connections work</h2>
+This describes how all the connections are made.
+<p>
+<b>-- The HTTP Phase --</b><br>
+<p>
+When you launch the client, you use a target URL like this:<br>
+<span class="script">Spark.exe http://localhost/Release/Current/EarthEternal.car</span>
+<p>
+The client will attempt to connect to the domain (in this case localhost) on HTTP port 80 (unless otherwise specified).  The client must target the same port as <span class="script">HTTPListenPort</span> in ServerConfig.txt).
+<p>
+The client will continue to access this domain and port for all CAR files needed during the gameplay session.
+<p>
+<p>
+Once EarthEternal.car is deemed up to date, the client proceeds to the login screen.  Then the router phase begins.
+<p>
+<b>-- The Router Phase --</b><br>
+
+<p>
+When you enter your username and password and attempt to log in, the client attempts to connect to the "router" address at the same domain as EarthEternal.car (in this case localhost) but on port 4242 (sometimes 4241 in other client versions).
+<p>
+The server will be listening at that address (see <span class="script">RouterPort</span> in ServerConfig.txt).
+<p>
+Once the router connection is established, the server sends back the address and port of the simulator connection, then closes the router connection.  (see <span class="script">SimulatorAddress</span> and <span class="script">SimulatorPort</span> in ServerConfig.txt).  Then the simulator phase begins.
+<p>
+<b>-- The Simulator Phase --</b><br>
+<p>
+The client has now received the address and port of the final connection.  Note that this address can be a completely different domain or website than where the CAR files are hosted.
+<p>
+The client now connects to the address and port provided.  This is the simulator connection, and will process your actual login attempt.  If your login is successful, you'll proceed to character selection.
+
+
+<div class="spacer"></div>
+<a name="howpatchclient"></a>
+<h2>How to patch client CAR files</h2>
+If you have not done so already, extract CAR files from <b>EarthEternal.car</b>.  Instructions can be found here: <a href="#installclient">Installing the Client Assets</a>.
+<p>
+Use <b>CARDecode.exe</b> to convert a CAR file to a ZIP file.
+<p>
+Modify the contents of the ZIP file as you see fit.  You can update existing scripts or resources, or add entirely new resource to a file.  For compiled Squirrel script files (.CNUT format) you can simply add them into the archive.  If they are properly written, the existing files and features will be augmented by the new scripts when the client loads.
+<p>
+If you're creating new game entities like new creature models, new item models, new props, you'll need to modify or augment the proper files in <b>Catalogs.car</b>.  See <a href="Generic/ClientArchives.html">Client Archives</a> for more information what each catalog table file is for.<br>
+<p>
+Once you've updated the ZIP file, use <b>CARDecode.exe</b> to convert back into a CAR file.
+<p>
+Recalculate the MD5 checksum of the new CAR file.  A crude command line program <b>MD5.exe</b> is provided (Windows only) but other programs may be available online.  If using this program, you'll need to use something like the following following command lines:<br>
+<span class="script">
+md5 EarthEternal.car \Release\Current &gt; NewChecksum.txt
+md5 Catalogs.car \Release\Current\Media &gt;&gt; NewChecksum.txt
+</span>
+<p>
+NOTE: In Windows, using "&gt;" outputs to a new file, overwriting if necessary.  Using "&gt;&gt;" appends further lines to an existing file.
+<p>
+Take the generated hash (from NewChecksum.txt if using the above method) and copy and paste the updated lines into <a href="Data\HTTPChecksum.html">Data\HTTPChecksum.txt</a>.
+<p>
+<p>
+Copy the CAR files into their proper asset folders so that the server can distribute them.
+<p>
+RECOMMENDED: Create a command line script (like a BAT file) to process all MD5 hashes of all modified project files.  Output directly into HTTPChecksum.txt.  At the same time copy all updated CAR files into the proper asset folders.  Then everything stays up to date and synchronized all at once.
+<p>
+Once the files are updated and copied, restart the server.  If only updating the CAR checksums, then alternatively use the Reload Checksum tool in the server's administrative panel, which does not require a restart.
+<p>
+Restart the client. If all steps were correct, it should now download the updated CAR files, as synchronized with the server.
+<p>
+NOTE: If a file always re-downloads every time the client launches, there's probably an incorrect hash entry in Data\HTTPChecksum.txt.
+
+
+<div class="spacer"></div>
+<a name="howevent"></a>
+<h2>How to implement Winter Dawning and Harvest Fest events</h2>
+<p>
+Two zones have modifications to scenery, spawn packages, static spawns, and quests.  Affected zones are Anglorum (ZoneDef ID 81) and Europe (ID 9).
+<p>
+<b>Scenery:</b> Backups of modified scenery files are present in the <b>Scenery</b> folder.  Note that these ZIP files contain <b>the entire zone</b>.  Make sure to backup the existing Scenery folders <span class="script">Scenery/81</span> and <span class="script">Scenery/9</span> before unzipping the event versions.  Look for these files with the event modifications:
+<span class="script">
+9 Harvest Fest 2013.zip
+9 Winter Dawning 2013.zip
+81 Harvest Fest 2013.zip
+81 Winter Dawning 2013.zip
+</span>
+<p>
+<b>Spawn Packages:</b> You will need to enable mobs for the event SpawnPoints by editing some of their spawn packages.  The scenery already contains necessary SpawnPoints.  Open these files and edit the spawn packages.  They will have lines commented out with a semicolon.  Uncomment or comment their respective lines to enable or disable the associated spawns.
+<span class="script">
+SpawnPackages/9_Europe.txt
+SpawnPackages/81_Anglorum.txt
+</span>
+<p>
+<b>Static spawns:</b> These are event-specific quest givers and reward chests.  Modify their respective <a href="Instance/Static.html">Instance/.../Static.txt</a> files.  They will have lines commented out with a semicolon.  Uncomment or comment their respective lines to enable or disable those NPCs.
+<span class="script">
+Instance/9/Static.txt
+Instance/81/Static.txt
+</span>
+<p>
+<b>Quests:</b> to implement the quests, open <span class="script">Packages/QuestPack.txt</span>.  There will be lines commented out with a semicolon.  Uncomment or comment their respective lines to enable or disable those QuestDef files from loading.  NOTE: The actual quests have a delay time of 60 days before they can be repeated again (QuestDef <span class="script">RepeatDelay=D60</span>), so you may want to disable them in QuestPack.txt and restart the server before the time is up.
+<p>
+When everything is ready, restart the server.
+
+
+
+
+
+<div class="spacer"></div>
+<a name="howfindaccount"></a>
+<h2>How to find which account a character belongs to</h2>
+If they're online, use the <span class="script">/gmwho</span> command.  The admin panels may also reveal either the account name or CreatureDef ID.
+<p>
+To search manually, first find the CreatureDef ID.  Open <a href="Dynamic/UsedNames.html">Dynamic/UsedNames.txt</a> and search for the character name.  Note the corresponding ID.
+<p>
+Now look for CreatureDef ID in the <b>Characters</b> folder.
+<p>
+Open the character file and look for <span class="script">AccountID</span>.  You can then find the account file in the <b>Accounts</b> folder.
+
+
+<div class="spacer"></div>
+<a name="howuserdata"></a>
+<h2>How to Backup and Restore userdata</h2>
+Userdata encompasses all files which are created or modified by newly registered or active players.  Accounts, characters, groves, etc.
+<p>
+To backup userdata, copy or ZIP the necessary files and folders keep them in a safe place.
+<p>
+To restore userdata, simply copy the backup files into their respective locations, overwriting existing files and folders.
+<p>
+Userdata is the following folders, plus one file:
+<pre>
+  /Accounts
+  /Characters
+  /Deleted
+  /Dynamic
+  /Grove
+  /IGForum
+  /VirtualItems
+  /ZoneDef
+  SessionVars.txt
+</pre>
+
+
+<div class="spacer"></div>
+<a name="howgrove"></a>
+<h2>How to create new groves</h2>
+Determine a new ZoneDef ID for the grove.  Groves begin at ID 5000.  Accounts are created with a single default grove, plus space for 7 more.  The IDs between accounts are typically 8 IDs apart.  So the first account will have ID 5000, the next account will have 5008, etc.
+<p>
+Example: Say the player owns grove 5000 and wants a new grove.  5001 is a reasonable ID.  The remaining steps will describe the process using 5001.
+<p>
+In the <a href="ZoneDef/FolderZoneDef.html">ZoneDef</a> folder, copy or create a new file called <b>5001.txt</b>.  It's best to copy a ZoneDef file that matches an existing terrain template, this makes things easier.
+<p>
+Open the new ZoneDef file (5001.txt) and edit any applicable properties.  Make sure that <span class="script">ID</span> is changed to reflect the new zone.  In this case, we'll need <span class="script">ID=5001</span>
+<p>
+Make sure <span class="script">ACCOUNTID</span> matches the account owner.
+<p>
+Create a new <span class="script">WarpName</span> such as <span class="script">WarpName=grove2</span>
+<p>
+Change <span class="script">TERRAINCONFIG</span> and <span class="script">ENVIRONMENTTYPE</span> to whatever template and sky environment you want to use.  Refer to <a href="Data/GroveTemplate.html">Data/GroveTemplate.txt</a> for a list of templates.  You may also refer to existing gameplay zones in <a href="Data/ZoneDef.html">Data/ZoneDef.txt</a>
+<p>
+If using a different template or account owner, you can delete the <span class="script">BuildPermission</span> line if it exists.  A new permission will automatically be created by the server when it sees that none exists.
+<p>
+Finally, create a new grove index entry.  If the server is offline, manually edit <a href="Dynamic/ZoneIndex.html">Dynamic/ZoneIndex.txt</a>.  It's best to copy and paste a new entry alongside the old grove from the account.  For example, if the first grove is <span class="script">5000;1;grove1;grove</span> then create a new entry <span class="script">5001;1;grove2;grove</span>
+<p>
+If the server is running, use the following command:<br>
+<span class="script">/dtrig 901 zoneID accountID warpName groveName [simID]</span>
+<p>
+These should match the ZoneDef <b>ID</b>, <b>ACCOUNTID</b>, <b>WarpName</b> and <b>GroveName</b> properties.  Find the simulator ID of your connection.  So in this example, we'll need a command like:<br>
+<span class="script">/dtrig 901 5001 1 grove2 grove 27</span><br>
+<p>
+Or whatever the necessary simulator ID is.
+
+
+<div class="spacer"></div>
+<a name="howgrovename"></a>
+<h2>How to change grove names</h2>
+Use the <span class="script">/zonename</span> command.
+<p>
+Refer to the <a href="ServerCommandIndex.html">Server Command Index</a>
+
+
+<div class="spacer"></div>
+<a name="howpassword"></a>
+<h2>How to reset passwords</h2>
+The account that needs the reset must be given the <span class="script">passwordreset</span> permission.  You can edit the account file <span class="script">Permissions</span> line manually if they're offline.
+<p>
+The permission offers a one-time reset.  The permission will be removed when the password is changed.
+<p>
+Or within the game, use the <span class="script">/setpermission</span> command.  For example:<br>
+<span class="script">/setpermission HerpDerp101 passwordreset 1</span>
+<p>
+The player will need to be given a link to the password reset form (ResetPassword.html).  They must supply their username, registration key, and new password.
+
+
+<div class="spacer"></div>
+<a name="howregkey"></a>
+<h2>How to reset registration keys</h2>
+This applies to accounts that have already been registered.  Requires manually editing files.  The registration key cannot be properly changed unless the server is offline.
+<p>
+To manually assign a completely new registration key to an account (assuming one has been generated), open their account file when they're offline.  Copy and paste the registration key into the <span class="script">RegKey=</span> line.  Delete the existing <span class="script">RecoveryKeys</span> entry since it will no longer be valid.
+<p>
+Now find the account entry in <a href="Dynamic/AccountList.html">Dynamic/AccountList.txt</a> and copy and paste the key into the correct spot.
+
+
+<div class="spacer"></div>
+<a name="howcharname"></a>
+<h2>How to change character names</h2>
+Requires manually editing files.  Character names cannot be properly changed unless the server is offline.
+<p>
+Character names should be unique.  If two characters share the same name, certain operations that use lookups by name may not return the correct player.
+<p>
+Open the character file, and look for the <span class="script">display_name</span> property.  Change it, save and close.
+<p>
+Now find the former character name entry in <a href="Dynamic/UsedNames.html">Dynamic/UsedNames.txt</a>.  Replace it with the new name.
+
+
+<div class="spacer"></div>
+<a name="howaccountchar"></a>
+<h2>How to add or remove characters from an account</h2>
+Look for the account file in the <b>Accounts</b> folder.  Open the account file and look for the <span class="script">Characters</span> line.  Add or remove the CreatureDef ID there.  Note that the <span class="script">[CHARACTERCACHE]</span> section is for display purposes only at the character selection screen.  If you're removing a character, you can delete the corresponding cache entry.  If adding the character, you can leave as is.  The cache is automatically updated when the player logs out.
+<p>
+Characters should not be assigned to multiple accounts at once.  If both characters log in at the same time, data corruption or crashes may occur.
+
+
+<div class="spacer"></div>
+<a name="howrestoredel"></a>
+<h2>How to restore an accidentally deleted character</h2>
+Characters that are deleted by the player (from the character selection screen) are still available.  The character file will be moved to the <b>Deleted</b> folder.  Move the character file out of the Deleted folder and back into the <b>Characters</b> folder.
+<p>
+Open the player's account file, look for the <span class="script">Characters</span> line, and add the CreatureDef ID into the list.  The account must not be logged in.
+<p>
+The name will be available for new character creations unless you add it back to the list.  The server must be offline for this step.  Open <a href="Dynamic/UsedNames.html">Dynamic/UsedNames.txt</a> and add the character name and CreatureDef ID back in. 
+<p>
+Characters should not be assigned to multiple accounts at once.  If both characters log in at the same time, data corruption or crashes may occur.
+<p>
+NOTE: It's a good idea to keep regular daily backups of userdata.  See <a href="#howuserdata">How to backup and restore userdata</a>.
+
+
+<div class="spacer"></div>
+<a name="serverfirstlog"></a>
+<h2>Server Log: First Launch</h2>
+This is normal for the server when first launching.
+<p>
+The ability errors (malformed event, and verification) are normal.  Those abilities are unused.
+<p>
+The errors when attempting to load these Dynamic file are normal, because on an empty server with no accounts, the data doesn't exist yet.
+<span class="script">
+Dynamic\AccountList.txt
+Dynamic\UsedNames.txt
+Dynamic\ZoneIndex.txt
+Dynamic\FriendList.txt
+Dynamic\FriendNetwork.txt
+</span>
+<p>
+The files <span class="script">Data\ItemSet.txt</span>, and <span class="script">Data\ItemSetScript.txt</span> were never finished or tested.  They have been renamed with underscores to <span class="script">Data\_ItemSet.txt</span> and <span class="script">Data\_ItemSetScript.txt</span>.  Remove the underscore and relaunch the server to implement them.
+<p>
+
+<div class="spacer"></div>
+<b>Contents of ServerLog.txt</b><br>
+<pre class="script">
+19:52:59 Loaded session file.
+19:52:59 Loaded 5 checksums.
+19:52:59 Loaded 17377 items.
+19:52:59 [ERROR] Could not open file [Data\ItemSet.txt]
+19:52:59 [WARNING] InstanceScript::CompileFromSource() unable to open file: Data\ItemSetScript.txt
+19:52:59 Loaded 0 Item Sets
+19:52:59 Loaded 69 ModTables.
+19:52:59 Loaded 20 ModTemplates.
+19:52:59 Loaded 54 EquipAppearance.
+19:52:59 Loaded 1427 EquipIconAppearance.
+19:52:59 Loaded 20 EquipTable.
+19:52:59 Loaded 1020 Name Templates.
+19:52:59 Loaded 47 NameMods
+19:52:59 Loaded 29 NameWeight
+19:52:59 Loaded 501 Drop Sets.
+19:52:59 Loaded 46 Drop Packages.
+19:52:59 Loaded 993 Drop Creatures.
+19:52:59 Resolved 46 Drop Levels.
+19:52:59 [WARNING] Ability:11 malformed event []
+19:52:59 [WARNING] Ability:12 malformed event []
+19:52:59 [WARNING] Ability:13 malformed event []
+19:52:59 [WARNING] Ability:14 malformed event []
+19:52:59 [WARNING] Ability:15 malformed event []
+19:52:59 [WARNING] Ability:83 malformed event []
+19:52:59 [WARNING] Ability:84 malformed event []
+19:52:59 [WARNING] Ability:85 malformed event []
+19:52:59 [WARNING] Ability:313 malformed event []
+19:52:59 [WARNING] Ability:32759 malformed event []
+19:52:59 Loaded ability file [Data\AbilityTable.txt], 1012 abilities loaded.
+19:52:59 Loaded ability file [Data\AbilityTableAdmin.txt], 10 abilities loaded.
+19:52:59 Registered 62 Buff Categories
+19:52:59 Registered 97 Cooldown Categories
+19:52:59 Ability [10003] verification failed (1 errors)
+19:52:59   Formula token is not a recognized variable: [target_REZ_PENDING]
+19:52:59 Ability [32762] verification failed (1 errors)
+19:52:59   Undefined function [SummonPet]
+19:52:59 Ability [32767] verification failed (1 errors)
+19:52:59   Undefined function [Jump]
+19:52:59 Loaded 3895 CreatureDefs.
+19:52:59 Loaded 113 PetDefs.
+19:52:59 [ERROR] Unable to open file: Dynamic\AccountList.txt
+19:52:59 [ERROR] Could not open file [Dynamic\UsedNames.txt]
+19:52:59 Loaded 23 Gamble definitions.
+19:52:59 Loaded zone file [Data\ZoneDef.txt]
+19:52:59 [ERROR] LoadIndex() could not open file [Dynamic\ZoneIndex.txt]
+19:52:59 Loaded 101 ZoneDef.
+19:52:59 Loaded 0 ZoneIndex.
+19:52:59 Loaded 31 Grove Templates
+19:52:59 Loaded 12 MapBarrier.
+19:52:59 Loaded 46 zones with marker data.
+19:52:59 Loaded 25 MapDef.
+19:52:59 Loaded 2 MapLocation zones.
+19:52:59 Marked 52 valid ATS files.
+19:52:59 Loaded 53 Spawn Package lists.
+19:52:59 Loaded 423 Quests.
+19:52:59 Loaded 156 InteractDef.
+19:52:59 Loaded 56 crafting recipes.
+19:52:59 Loaded 3 EliteType
+19:52:59 Loaded 76 EliteAffix
+19:52:59 Loaded 8 instance scaling profiles
+19:52:59 Loaded 5 drop rate profiles
+19:52:59 Loaded 0 Friend Social Entries
+19:52:59 Loaded 0 Friend Network Entries
+19:52:59 Loaded 59 AI Scripts
+19:52:59 PacketManager::LaunchThread: successful 
+19:52:59 SceneryManager::LaunchThread: successful 
+19:52:59 Server data has finished loading.
+19:52:59 [HTTP] Server created, awaiting connection on port 80 (socket:264).
+19:52:59 [Router] Server created, awaiting connection on port 4242 (socket:268)
+19:52:59 [SimB] Server created, awaiting connection on port 4300 (socket:244).
+</pre>
+
+
+
+<div class="spacer"></div>
+<a name="folders"></a>
+<h2>Folder Structure</h2>
+This is an overview of the folder structure that comes with the server.  Click the links 
+for each folder, or particular file names for more information.
+<p>
+<b>All of these subfolders must exist, even if they are empty.</b>
+<p>
+Some files like ItemDef or CreatureDef files have multiple filenames.  They all have the same format, so refer to the base file of that type for documentation.
+<p>
+Some subfolders (like the ones present within IGForum) and their individual files are not terribly important, so their documention is included in the [Folder] files.
+<p>
+Base Folder
+<ul>
+ <li><a href="Accounts/FolderAccounts.html">[Accounts]</a></li>
+ 
+ <li><a href="AIScript/FolderAIScript.html">[AIScript]</a>
+  <ul>
+  <li><a href="AIScript/script_list.html">script_list.txt</a></li>
+  <li>[other script files]</li>
+  </ul>
+ </li>
+
+ <li><a href="Characters/FolderCharacters.html">[Characters]</a>
+  <ul>
+  <li><a href="Characters/Default_0.html">0.txt</a></li>
+  </ul>
+ </li>
+
+ <li><a href="Data/FolderData.html">[Data]</a>
+  <ul>
+  <li><a href="Data/AbilityTable.html">AbilityTable.txt</a></li>
+  <li>AbilityTableAdmin.txt</li>
+  <li><a href="Data/CraftDef.html">CraftDef.txt</a></li>
+  <li><a href="Data/CreatureDef.html">CreatureDef.txt</a></li>
+  <li>CreatureDef_Custom.txt</li>
+  <li>CreatureDef_Pets.txt</li>
+  <li>CreatureDef_Players88.txt</li>
+  <li>CreatureDef_Restored.txt</li>
+  <li><a href="Data/DropRateProfile.html">DropRateProfile.txt</a></li>
+  <li><a href="Data/EliteAffix.html">EliteAffix.txt</a></li>
+  <li><a href="Data/EliteType.html">EliteType.txt</a></li>
+  <li><a href="Data/Gamble.html">Gamble.txt</a></li>
+  <li><a href="Data/GroveTemplate.html">GroveTemplate.txt</a></li>
+  <li><a href="Data/HTTPChecksum.html">HTTPChecksum.txt</a></li>
+  <li><a href="Data/InteractDef.html">InteractDef.txt</a></li>
+  <li><a href="Data/ItemDef.html">ItemDef.txt</a></li>
+  <li>ItemDef_CraftOverride.txt</li>
+  <li>ItemDef_CSOverride.txt</li>
+  <li>ItemDef_Custom.txt</li>
+  <li>ItemDef_CustomSets.txt</li>
+  <li>ItemDef_Gamble.txt</li>
+  <li>ItemDef_GreysunOverride.txt</li>
+  <li>ItemDef_Legacy.txt</li>
+  <li>ItemDef_NewPotions.txt</li>
+  <li>ItemDef_NewQuest.txt</li>
+  <li>ItemDef_OverrideMasterPlans.txt</li>
+  <li>ItemDef_OverridePatch.txt</li>
+  <li>ItemDef_Pets.txt</li>
+  <li>ItemDef_Refashionable.txt</li>
+  <li>ItemDef_SkillOrb.txt</li>
+  <li><a href="Data/MapBarrier.html">MapBarrier.txt</a></li>
+  <li><a href="Data/MapDef.html">MapDef.txt</a></li>
+  <li><a href="Data/MapLocations.html">MapLocations.txt</a></li>
+  <li><a href="Data/Pets.html">Pets.txt</a></li>
+  <li><a href="Data/QuestDef.html">QuestAnglorum.txt</a></li>
+  <li>QuestBeta.txt</li>
+  <li>QuestCorsica.txt</li>
+  <li>QuestDownBelow.txt</li>
+  <li>QuestEarthrise.txt</li>
+  <li>QuestEurope.txt</li>
+  <li>QuestEuropeExt.txt</li>
+  <li>QuestEventHarvestFest.txt</li>
+  <li>QuestEventSummer.txt</li>
+  <li>QuestEventWinterDawning.txt</li>
+  <li>QuestGrunesTalSwineland.txt</li>
+  <li>QuestMushroomIsle.txt</li>
+  <li><a href="Data/QuestScript.html">QuestScript.txt</a></li>
+  <li><a href="Data/ResCost.html">ResCost.txt</a></li>
+  <li><a href="Data/ScaledDifficulties.html">ScaledDifficulties.txt</a></li>
+  <li><a href="Data/URL.html">URL.txt</a></li>
+  <li><a href="Data/Valid_ATS.html">Valid_ATS.txt</a></li>
+  <li><a href="Data/ZoneDef.html">ZoneDef.txt</a></li>
+  <li><a href="Data/ZoneMarkers.html">ZoneMarkers.txt</a></li>
+  </ul>
+ </li>
+ 
+ <li><a href="Characters/FolderDeleted.html">[Deleted]</a></li>
+
+ <li><a href="Dynamic/FolderDynamic.html">[Dynamic]</a>
+   <ul>
+   <li><a href="Dynamic/AccountList.html">AccountList.txt</a></li>
+   <li><a href="Dynamic/FriendList.html">FriendList.txt</a></li>
+   <li><a href="Dynamic/FriendNetwork.html">FriendNetwork.txt</a></li>
+   <li><a href="Dynamic/RegistrationKeys.html">RegistrationKeys.txt</a></li>
+   <li><a href="Dynamic/UsedNames.html">UsedNames.txt</a></li>
+   <li><a href="Dynamic/ZoneIndex.html">ZoneIndex.txt</a></li>
+   </ul>
+</li>
+ 
+ <li><a href="Grove/FolderGrove.html">[Grove]</a></li>
+
+ <li><a href="IGForum/FolderIGForum.html">[IGForum]</a>
+  <ul>
+  <li>[Category]</li>
+  <li>[Post]</li>
+  <li>[Thread]</li>
+  <li>IGFSession.txt</li>
+  </ul>
+ </li>
+ 
+<li><a href="Instance/FolderInstance.html">[Instance]</a>
+  <ul>
+  <li><a href="Instance/InstanceScriptCommands.html">Script.txt</a></li>
+  <li><a href="Instance/EssenceShop.html">EssenceShop.txt</a></li>
+  <li><a href="Instance/Shop.html">Shop.txt</a></li>
+  <li><a href="Instance/Static.html">Static.txt</a></li>
+  </ul>
+</li>
+
+ <li><a href="ItemMod/FolderItemMod.html">[ItemMod]</a>
+  <ul>
+  <li><a href="ItemMod/FolderItemModTables.html">[Tables]</a></li>
+  <li><a href="ItemMod/Appearances.html">Appearances.txt</a></li>
+  <li><a href="ItemMod/EquipTable.html">EquipTable.txt</a></li>
+  <li><a href="ItemMod/Icons.html">Icons.txt</a></li>
+  <li><a href="ItemMod/ModTables.html">ModTables.txt</a></li>
+  <li><a href="ItemMod/ModTemplates.html">ModTemplates.txt</a></li>
+  <li><a href="ItemMod/NameMod.html">NameMod.txt</a></li>
+  <li><a href="ItemMod/Names.html">Names.txt</a></li>
+  <li><a href="ItemMod/NameWeight.html">NameWeight.txt</a></li>
+  <li><a href="ItemMod/RarityConfig.html">RarityConfig.txt</a></li>
+  </ul>
+ </li>
+
+ <li><a href="Loot/FolderLoot.html">[Loot]</a>
+  <ul>
+  <li><a href="Loot/Creatures.html">Creatures.txt</a></li>
+  <li><a href="Loot/Packages.html">Packages.txt</a></li>
+  <li><a href="Loot/Sets.html">Sets.txt</a></li>
+  </ul>
+ </li>
+
+ <li><a href="Packages/FolderPackages.html">[Packages]</a>
+  <ul>
+  <li><a href="Packages/CreaturePack.html">CreaturePack.txt</a></li>
+  <li><a href="Packages/ItemPack.html">ItemPack.txt</a></li>
+  <li><a href="Packages/ItemPackOverride.html">ItemPackOverride.txt</a></li>
+  <li><a href="Packages/QuestPack.html">QuestPack.txt</a></li>
+  </ul>
+ </li>
+
+ <li><a href="Scenery/FolderScenery.html">[Scenery]</a></li>
+
+ <li><a href="SpawnPackages/FolderSpawnPackages.html">[SpawnPackages]</a>
+  <ul>
+  <li><a href="SpawnPackages/SpawnPackageList.html">SpawnPackageList.txt</a></li>
+  <li><a href="SpawnPackages/SpawnPackageFile.html">SpawnPackageFile.txt</a> (...)</li>
+  </ul>
+ </li>
+
+ <li><a href="VirtualItems/FolderVirtualItems.html">[VirtualItems]</a></li>
+
+ <li><a href="ZoneDef/FolderZoneDef.html">[ZoneDef]</a></li>
+</ul>
+<p>
+<ul>
+ <li><a href="CheatLog.html">CheatLog.log</a></li>
+ <li>crash_dump.txt (generated on a server crash)</li>
+ <li><a href="EventLog.html">EventLog.log</a></li>
+ <li><a href="FunChatReplace.html">FunChatReplace.txt</a></li>
+ <li><a href="ImportKeys.html">ImportKeys.txt</a></li>
+ <li><a href="RegionChat.html">RegionChat.log</a></li>
+ <li>script_disassembly.txt (generated by a debugging tool)</li>
+ <li><a href="ServerConfig.html">ServerConfig.txt</a></li>
+ <li><a href="ServerLog.html">ServerLog.txt</a></li>
+ <li><a href="SessionVars.html">SessionVars.txt</a></li>
+</ul>
+
+
+<div class="footer"></div>
+
+</div>
+</body>
+</html>

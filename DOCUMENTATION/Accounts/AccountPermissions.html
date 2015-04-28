@@ -1,0 +1,136 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Reference: Account Permissions</title>
+<link rel="stylesheet" type="text/css" href="../main.css">
+</head>
+<body>
+
+<div>
+
+<h2>Reference: Account Permissions</h2>
+
+<div class="spacer"></div>
+<h3>Purpose</h3>
+These permission sets can be applied to accounts.  If necessary, they can also be applied to specific characters.
+<p>
+<table frame=box rules=all>
+<tr class="header">
+<td>Permission</td>
+<td>Description</td>
+</tr>
+<tr>
+<td>tweakother</td>
+<td>Allows server-side editing of other player character appearances via CreatureTweak.  Effects are permanent (saved in the character file).</td>
+</tr>
+<tr>
+<td>tweakself</td>
+<td>Allows server-side editing of your own character appearances via CreatureTweak.  Effects are permanent (saved in the character file).</td>
+</tr>
+<tr>
+<td>tweaknpc</td>
+<td>Allows server-side editing of NPC appearances via CreatureTweak.  Changes are not saved.  A server restart will restore them to their original CreatureDef appearances.</td>
+</tr>
+<tr>
+<td>tweakclient</td>
+<td>Allows client-side editing of any appearance via CreatureTweak.  Changes are only visible to that player.  Changes will be lost when they close the game client.</td>
+</tr>
+<tr>
+<td>syschat</td>
+<td>Allows sending /syschat [SysChat] messages.  Visible to all players.</td>
+</tr>
+<tr>
+<td>gmchat</td>
+<td>Allows sending /gm [EarthSage] messages.  Visible to all players.</td>
+</tr>
+<tr>
+<td>regionchat</td>
+<td>Allows sending /region [Region] messages.  Visible to all players.  This is a default permission granted to all new accounts.</td>
+</tr>
+<tr>
+<td>forumpost</td>
+<td>Allows posting in the In-Game Forum.  This is a default permission granted to all new accounts.</td>
+</tr>
+<tr>
+<td>forumadmin</td>
+<td>Allows administrative control and editing of the In-Game Forum.  The <b>admin</b> permission also grants such control.</td>
+</tr>
+<tr>
+<td>itemgive</td>
+<td>Allows use of the /give, /giveall, /giveapp, and /deleteall commands.</td>
+</tr>
+<tr>
+<td>debug</td>
+<td>Unlocks administrative features in the client like opening the build tool anywhere, and increasing run speed at will.
+<p>
+Disables movement verification.
+<p>
+Allow casting of any ability regardless of restrictions.
+<p>
+Allow warping outside of groves.
+<p>
+Shows coordinates when using /who.  Allows the /elev, /cycle, /health, /speed, /fa, /skadd, /backup, /god, /partyall, /ccc, and /go commands.
+<p>
+Allows using /creaturebrowse to spawn creatures.
+<p>Shows drop rate bonus and drop rate profile when using the /instance command.</td>
+</tr>
+<tr>
+<td>sage</td>
+<td>Allows use of the /warpp, /warpextoff, and /warpext commands to warp other players.</td>
+</tr>
+<tr>
+<td>fastload</td>
+<td>Enables fast loading of scenery tiles.  Reduces duration of load screens in the client when entering new areas.  NOTE: the load screen may end before scenery has loaded, allowing players to pass through walls and objects before they become visible.  If the player is inside an object when it loads, they may become stuck.</td>
+</tr>
+<tr>
+<td>admin</td>
+<td>Allows highest security administrative features:
+<p>
+Allows IGF posting in locked sections, and all IGF editing and moderating tools.
+<p>
+Allows logging in multiple characters on the same account.
+<p>
+Allows warping to any zone, even private groves.
+<p>
+Allows the /gmwho, /complete, /setstat, /adjustexp, /ban, /unban, /setpermission, /setpermissionc, /setbehavior, /deriveset, /igstatus, /partyzap, /zonename, /forumlock, /dtrig, and /info commands.
+<p>
+Allows the /giveid command (Can give existing virtual items, but be careful.  You must use /deleteall to safely remove the item, otherwise it may be destroyed.  If the item is destroyed, it is removed from the database.  Any player who has that item will lose it.)
+<p>
+Allows using vendors in groves.
+</td>
+</tr>
+<tr>
+<td>passwordreset</td>
+<td>Allows a password reset on the account.</td>
+</tr>
+<tr>
+<td>invisible</td>
+<td>Enables GM_INVISIBLE status effect when logging in.  Administrative invisibility. There will be no login or friend list notification broadcasted to other players. Also hidden from the /who command.<p>NOTE: Some actions may reveal you to other players since they broadcast updates locally to nearby players regardless of invisibility status. These include zone placement (from logging in, changing zones, or entering instances), using skills, or using commands that update the player's position or stats (and in turn broadcast those changes). Revealed characters will disappear from the screens of other players if enough time passes. The client erases inactive characters from view after 30 seconds.</td>
+</tr>
+<tr>
+<td>selfdiag</td>
+<td>Enables reporting of cooldown messages to the player.</td>
+</tr>
+<tr>
+<td>troll</td>
+<td>Can only see daylight.  No environment cycling effect.</td>
+</tr>
+<tr>
+<td>trollchat</td>
+<td>Replaces words or phrases in region chat by using substitutions defined in the <i>FunChatReplace.txt</i> file.</td>
+</tr>
+<tr>
+<td>fullset</td>
+<td>Shortcut to grant all server permission flags.</td>
+</tr>
+</table>
+
+<div class="footer"></div>
+
+</div>
+</body>
+</html>
+

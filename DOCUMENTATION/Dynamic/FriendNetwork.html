@@ -1,0 +1,38 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Reference: FriendNetwork.txt</title>
+<link rel="stylesheet" type="text/css" href="../main.css">
+</head>
+<body>
+
+<div>
+
+<h2>Reference: FriendNetwork.txt</h2>
+
+<div class="spacer"></div>
+<h2>Purpose</h2>
+A cache file.  This tracks the friends assigned to a particular character.  Entries are updated (or created if not already existing) when a friend is added or removed.  This network is used to determine if friendship status is mutual between players.  This is used by the chat system when sending messages to friends only.
+
+<div class="spacer"></div>
+<h2>File Format</h2>
+
+List file.  Delimiters: equal sign (=) and comma (,).<br>
+Comment character: semicolon (;)<br>
+No header.
+
+<p>
+
+All values in the file are CreatureDef IDs of the player character.<br>
+The first value in a line is the CDefID of the source player character.<br>
+The remaining comma separated values on the line are CDefIDs of other player characters who are assigned as friends to the source character.<br>
+The total list of friends can be spread out along multiple lines as long as the source CDefID is the same.  For readability, the server limits output to 10 friends per line.<br>
+
+<div class="footer"></div>
+
+</div>
+</body>
+</html>

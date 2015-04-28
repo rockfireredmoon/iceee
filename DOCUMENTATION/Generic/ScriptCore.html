@@ -1,0 +1,549 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Script Core Commands</title>
+<link rel="stylesheet" type="text/css" href="../main.css">
+</head>
+<body>
+
+<div>
+
+<h2>Script Core Commands</h2>
+
+This file documents the core commands and features available to various scripting subsystems (AI scripts, instance scripts, quest scripts).
+<p>
+The script system is extremely simple and executes instructions based on preprogrammed commands which perform a specific task.  A few conditional features are provided, but complex control structures may be difficult to achieve.
+<p>
+
+<a href="#commandref">Detailed Command Reference</a><br>
+<a href="#metadata">Directives and Metadata</a><br>
+<a href="#quickreference">Brief Command Reference</a>
+
+<div class="spacer"></div>
+<h3>Comments</h3>
+The semicolon (;) is used as a comment character.  For any line of text, the first presence of a semicolon indicates that any following text is to be ignored by the compiler.
+
+<div class="spacer"></div>
+<h3>Statements</h3>
+Only one command is allowed per line.  Each command is divided into tokens (words, symbols, numbers).  Each token must be separated by at least one space.  Tokens themselves may not contain spaces.  In special cases, strings are enclosed in double quotation marks (").  Strings may contain spaces, and count as a single token.
+
+<div class="spacer"></div>
+<h3>Commands</h3>
+All instructions are created by specific commands.  Commands have a limited number of parameters which are required to be a specific type.  Instructions take only a few rudimentary values: <b>integer</b>, <b>string</b>, <b>variable</b>, <b>integer list</b>, and <b>label</b>.
+<p>
+Strings, variables, integer lists, and labels are typically assigned when encountered by the compiler and can be used in further instructions.
+<p>
+
+<div class="spacer"></div>
+<h3>Integer</h3>
+Integer values must be explicitly written in the script as a number.  Variables cannot be used here.  They are compiled directly into the instruction.
+
+<div class="spacer"></div>
+<h3>Strings</h3>
+Strings are a line of text enclosed by quotation marks (").  Once loaded, strings cannot be changed.
+
+<div class="spacer"></div>
+<a name="variables"></a>
+<h3>Variables</h3>
+Scripts only support very basic integer variables for storing information.
+<p>
+Variable names should not contain punctuation.
+<p>
+It is good practice to initialize them at the beginning of a script using the <span class="script">set</span> command.
+<p>
+Variables are case sensitive.  If call one <span class="script">VAR</span> and another <span class="script">var</span>, they are not the same.
+<p>
+Example:<br>
+<span class="script">
+set var 0
+set varb 4
+</span>
+
+
+<div class="spacer"></div>
+<a name="integerlist"></a>
+<h3>Integer List</h3>
+Normally these are not used, except by a few specific commands.  These contain a list of integers as an array.  They follow the same naming and usage convention as <b>variables</b> but they are not interchangeable.  If a command parameter asks for a variable, you may not use an integer list, or vice versa.
+
+<div class="spacer"></div>
+<a name="labels"></a>
+<h3>Labels</h3>
+Labels are used for the <span class="script">goto</span> and <span class="script">call</span> commands.
+<p>
+When defining labels in the script, prepend a colon (:).  Leave out the colon when using the label in a command.
+<p>
+Example:<br>
+<span class="script">
+:begin
+; ... other stuff here
+goto begin
+</span>
+
+
+<div class="spacer"></div>
+<h3>History</h3>
+The Script Core system was heavily revised around June 2014 with the intention of expanding operations further, and unifying behavior across all subsystems.  Previously it was a fragmented implementation of copy/pasted duplicate code, where each subsystem had its own modifications.  Since development of the server halted shortly after, the changes hadn't been updated to the live server and did not receive large-scale testing.
+<p>
+Some of the new features added may not be fully functional, so be sure to thoroughly test any scripts which use them.
+<p>
+This includes the following commands: else (if/else/endif), iarrappend, iarrdelete, iarrvalue, iarrclear, iarrsize, queue_event, exec_queue.
+<br>
+And includes the following directives: #symbol, #queue_jumps.
+<p>
+Integer Arrays aren't really useful on their own, but were implemented because some augmented script commands required them, like creature searches that needed to return multiple results.
+
+<div class="spacer"></div>
+
+<a name="commandref"></a>
+<h2>Command Reference</h2>
+<span class="scriptdoc">end</span>
+<br>
+Halts the script.  This command takes no parameters.
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">goto [label]</span>
+<br>
+Unconditional jump.  See <a href="#labels">labels</a> for information on how to create and use labels.
+<br>
+<span class="script">
+:begin
+goto begin
+</span>
+<div class="spacer"></div>
+
+<span class="scriptdoc">reset_goto [label]</span>
+<br>
+Similar to <span class="mono">goto</span>, but erases the call stack and var stack.  Be mindful of any subsequent <span class="mono">return</span> operations as these will no longer work.
+<p>
+This command can be useful to reset execution and jump out of deeply nested control statements and <span class="mono">call</span> operations.
+<br>
+<span class="script">
+:begin
+reset_goto begin
+</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">print [string:text]</span>
+<br>
+Print a line of text to the server log.  Can be useful for debugging scripts by providing a messages in the log.  Useful to evaluate the chain of logic if the script is halting or not firing conditional statements properly.
+<br>
+<span class="script">print "Checkpoint!"</span><br>
+<div class="spacer"></div>
+
+<span class="scriptdoc">printvar [variable]</span>
+<br>
+Prints the variable name and its current value in the server log.
+<br>
+<span class="script">set trigger 5
+printvar trigger</span>
+<div class="spacer"></div>
+
+<span class="scriptdoc">printappvar [string]</span>
+<br>
+Rarely used.  Prints an application variable in the server log.  These are special internal variables which are programmed directly into the server, specific to a scripting system.
+<br>
+<span class="script">printappvar "var"</span><br>
+<div class="spacer"></div>
+
+<span class="scriptdoc">printintarr [intarr]</span>
+<br>
+Prints the contents of an integer array variable in the server log.
+<br>
+<span class="script">iarrappend array 1</span><br>
+<span class="script">printintarr array</span><br>
+<div class="spacer"></div>
+
+<span class="scriptdoc">wait [integer:milliseconds]</span>
+<br>
+Delays execution of the script for a certain amount of time.
+<br>
+<span class="script">wait 1000</span><br>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">inc [variable]</span>
+<br>
+Increments the value of a variable by 1.
+<br>
+<span class="script">inc VAR</span><br>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">dec [variable]</span>
+<br>
+Decrements the value of a variable by 1.
+<br>
+<span class="script">dec VAR</span><br>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">set [variable] [integer]</span>
+<br>
+Set a variable to hold a specific integer value.  Also useful for variable initialization near the beginning of a script.
+<br>
+<span class="script">set VAR 0</span><br>
+<div class="spacer"></div>
+
+<span class="scriptdoc">copyvar [variable:src] [variable:dest]</span>
+<br>
+Assign the value of the source variable to the destination variable.
+<br>
+<span class="script">set VARA 0</span><br>
+<span class="script">set VARB 5</span><br>
+<span class="script">copyvar VARA VARB</span><br>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">getappvar [string] [variable:dest]</span>
+<br>
+Cannot be used unless the script system is preprogrammed to support it.
+<p>
+Retrieves the value of an internal server variable and place the result into the destination variable.
+<br>
+<span class="script">getappvar "somevar" var</span><br>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">call [label]</span>
+<br>
+Unconditional jump to a label.  The current instruction position is pushed into the stack.  Use the <span class="string">return</span> command to return to last call position, and that position is removed from the stack.
+<p>
+Call commands may be nested to facilitate implementation of more complex logic or pseudo-functions.  The stack is limited to hold a maximum of 16 return positions.
+<p>
+Every block of code jumped to by <b>call</b> must encounter a <b>return</b> command.  It is strongly recommended that you do not use <b>goto</b> to leave the block.  It may cause a stack overflow if a call is never completed.
+<p>
+In the event of a stack overflow or corrupted stack, script execution may become erratic or halt entirely.
+<p>
+Example:<br>
+<span class="script">
+:begin
+call subroutine      ; stack +1
+
+; safely returns to the beginning, since the call stack is empty.
+goto begin
+
+:subroutine
+; do stuff
+return               ;stack -1
+
+</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">return [label]</span>
+<br>
+Return control to next command following the previous <b>call</b> command.
+<p>
+See the <span class="script">call</span> command for an explanation and example.
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">if [value] [comparator] [value]</span>
+<br>
+Compare two values for a conditional jump.  You may only compare between integers or variable names.
+<p>
+The following mathematical comparators are allowed: {<span class="script">=,!=,&lt;,&lt;=,&gt;,&gt;=</span>}
+<p>
+Use <span class="script">endif</span> to close an <b>if</b> block.
+<p>
+Recent changes Script Core allow nested <b>if</b> statements.  Each one must be closed by a corresponding <b>endif</b>.
+<p>
+Also new, optionally you may use the <span class="script">else</span> keyword to separate blocks for true or false.  Only use one <span class="script">else</span> per <span class="script">if</span> block.
+<p>
+Other parameter types and complex expressions are not supported.
+<p>
+Example:<br>
+<span class="script">
+inc var
+if var >= 5
+  print "blah!"
+else
+  print "nope"
+endif
+</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">endif</span>
+<br>
+Closes the most recent <b>if</b> block.  Each <b>if</b> should have a matching <b>endif</b> or else the script may not compile and run properly.
+<p>
+See the example for the <b>if</b> command.
+<div class="spacer"></div>
+
+<span class="scriptdoc">iarrappend [intarr] [intstk]</span>
+<br>
+[intstk] is a special parameter type which can be either an integer or a variable.
+<p>
+Appends a value to an integer array.
+<p>
+Example:<br>
+<span class="script">
+set VAR 2
+iarrappend iarr 1
+iarrappend iarr VAR
+</span>
+<p>
+Produces an array of [1,2]
+<div class="spacer"></div>
+
+<span class="scriptdoc">iarrdelete [intarr] [intstk]</span>
+<br>
+[intstk] is a special parameter type which can be either an integer or a variable.
+<p>
+Removes an index (not a specific value) from an integer array.  Arrays are indexed beginning at zero, so [0] is the first item, [1] is the second, etc.
+<p>
+Example:<br>
+<span class="script">
+iarrappend iarr 10
+iarrappend iarr 20
+iarrappend iarr 30
+iarrdelete iarr 0
+</span>
+<p>
+Produces an array of [20,30].
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">iarrvalue [intarr] [intstk] [variable]</span>
+<br>
+[intstk] is a special parameter type which can be either an integer or a variable.
+<p>
+Find the of an integer array, at a specific index (zero based) and place the result into a variable.
+<p>
+Example:<br>
+<span class="script">
+iarrappend iarr 10
+iarrappend iarr 20
+iarrvalue iarr 1 VAR
+</span>
+<p>
+VAR will now hold the value of 20.
+<div class="spacer"></div>
+
+<span class="scriptdoc">iarrclear [intarr]</span>
+<br>
+Erase all values in an integer array.  The array will now have zero entries.
+<div class="spacer"></div>
+
+<span class="scriptdoc">iarrsize [intarr] [variable]</span>
+<br>
+Retrieve the size (number of elements) in an integer array.  Place the result in a variable.
+<div class="spacer"></div>
+
+<span class="scriptdoc">queue_event [string] [integer]</span>
+<br>
+Queue an event for firing.  The string is the label name to perform a jump or call to.  The integer is time delay, in milliseconds, to wait before processing the jump.  Use a time of zero for no wait.  Make sure to use <span class="script">exec_queue</span> to perform the actual jumps.
+<p>
+The queue has a hardcoded maximum of 16 events.
+<p>
+Example:<br>
+<span class="script">
+queue_event "Something" 0<br>
+</span>
+<div class="spacer"></div>
+
+<span class="scriptdoc">exec_queue</span>
+<br>
+Step through the list of any queued events, calling the first one that is available.  Execution will immediately shift to that location.  If there are multiple events ready to fire, only one will be triggered.  This function is best used in the main loop.
+<p>
+Example:<br>
+<span class="script">
+queue_event "event" 5000
+
+:main
+exec_queue
+goto main
+
+:event
+queue_event "event" 5000
+return
+</span>
+<p>
+This example initially queues up an event to trigger in 5 seconds.  When the event is called, it adds itself back to the queue, triggering it every 5 seconds indefinitely as long as the script is running.
+<div class="spacer"></div>
+
+<span class="scriptdoc">pushvar [variable]</span>
+<br>
+Push the value of a variable to the stack.  Normally this command is used internally, but is available for specific use.  You must use <span class="script">pop</span> to remove the item from the stack, or else it will remain resident and possibly cause problems down the line.
+<p>
+The stack only holds 16 elements, and other functions like <span class="script">if</span> use the stack as well.
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">pushint [integer]</span>
+<br>
+Push an integer value to the stack.  See notes for <span class="script">pushvar</span>.
+<div class="spacer"></div>
+
+<span class="scriptdoc">pop [variable]</span>
+<br>
+Remove the last element from the stack and place its value into a variable.
+<p>
+Example:<br>
+<span class="script">
+pushint 5
+pop VAR
+</span>
+<p>
+VAR will now be 5.
+<div class="spacer"></div>
+
+
+
+
+<a name="metadata"></a>
+<h2>Directives and Metadata Information</h2>
+<p>
+These are not instructions, but signal certain global features that are assigned during the compilation phase.  They help control how the script compiles or executes, in the ways that the server program itself accesses and controls the scripts from outside the script itself.
+
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">#name [string]</span>
+<br>
+Identifies the script by giving it a name.  For easy organization, the name should match the file name.  Use this name when assigning AI scripts to creatures via the <a href="../Data/CreatureDef.html">CreatureDef ai_package</a> property.
+<p>
+Example:<br>
+<span class="script">#name 4_druid_melee_30</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">#symbol [string:alias] [string:actual]</span>
+<br>
+Creates a compile-time symbol alias.  When the compiler reads a line, it will compare each token to the symbol table.  If the match is found in the symbol table, it will replace that token with associated actual token.
+<p>
+Example:<br>
+<span class="script">
+#symbol BASH 288
+
+use BASH
+</span>
+<p>
+This example is used in the context of an AI script.  When the compiler encounters BASH, it will automatically substitute 288 (the ability ID).  So the lines<br>
+<span class="script">
+  use BASH
+  use 288
+</span>
+compile into the same instruction.
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">#speed [integer]</span>
+<br>
+Sets the execution speed of a script, as instructions per frame.
+<p>
+Every cycle (or frame) of the server will process a certain number of instructions to avoid consuming too much CPU power, especially in the case of infinite loops.
+<p>
+This is most commonly used in more intricate scripts that contain heavy use of conditional branches, jumps and calls.  The common <b>if</b> command compiles into three instructions which set up the data before the comparison is made.  These conditionals can have a major impact on the total number of instructions, and thus increase the number of server frames which are required to run a full cycle of the script.  Detailed AI scripts in particular will run noticeably slower, and will require a higher #speed allocation to help them run more smoothly, and react faster.
+<p>
+Example:<br>
+<span class="script">#speed 10</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">#idlespeed [integer]</span>
+<br>
+Like #speed, but sets the idle execution speed.  The default is set to zero (the script will not run when idle).
+<p>
+This field is of particular use to AI Scripts.  Refer to the AI Script documentation for details.
+<p>
+Example:<br>
+<span class="script">#idlespeed 1</span>
+<div class="spacer"></div>
+
+<span class="scriptdoc">#queue_jumps [string]</span>
+<br>
+This controls how external jumps are handled by the script.  This is important when using the <b>queue_event</b> and <b>exec_queue</b> instructions.
+<p>
+The string can be one of two things "call" or "goto".  Using <b>call</b> means that <b>exec_queue</b> will interpret the jump as a <b>call</b> instruction to the appropriate label, requiring a <b>return</b> to unwind.  Using <b>goto</b> means that the jump will be interpreted as <b>goto</b> and will require another <b>goto</b> to jump back.
+<p>
+By default, queued jumps are set to false and the call style is set to "call".  Using <b>queue_jumps</b> sets queued jumps to true.  Queued jumps determine how the server handles explicit jumps to labels within the script.
+<p>
+For instance scripts, when mobs are killed it will generate a label name based from the mob type.  If the label is found in the script, the script will jump to that label to perform any creature-specific processing, like tracking step-up spawns.
+<p>
+If queued jumps are false (the default state), then the jump will be abrupt, interrupting any prior execution chain, and clearing and the variable and call stacks.
+<p>
+If queued jumps are enabled, the script will resume execution as normal (finishing whatever operation it was currently doing).  However, the script must have <b>exec_queue</b> in its main loop to process the jump, otherwise nothing will happen.
+<p>
+A maximum of 16 events may be queued at once.
+<p>
+Examples:<br>
+<span class="script">#queue_jumps goto</span>
+<br> OR <br>
+<span class="script">#queue_jumps call</span>
+<div class="spacer"></div>
+
+
+<span class="scriptdoc">#flag [string] [integer]</span>
+<br>
+Enabled debug flags for script execution.  The string can be one of the following properties:
+<p>
+<span class="script">
+report_end
+report_label
+report_all
+</span>
+<p>
+The value can be set to <b>1</b> to enable, or <b>0</b> to disable, although flags are disabled by default.
+<p>
+If report_end is activated, a debug message will be printed when the script ends.<br>
+If report_label is activated, a debug message will be printed if a requested jump label doesn't exist in the script.<br>
+report_all will activate both flags.
+<p>
+Example:<br>
+<span class="script">#flag report_end 1</span>
+<div class="spacer"></div>
+
+
+
+
+<a name="quickreference"></a>
+<h2>Quick Command Reference</h2>
+A brief overview of the commands.  Here is an explanation of abbreviations here:<br>
+var = Variable Name<br>
+int = Integer<br>
+intarr = Integer Array Name<br>
+str = String ("enclosed in double quotation marks")<br>
+label = Label Name<br>
+intstk = Integer value, accepted either as a [var] name or plain [int] number.<br>
+<p>
+
+<div class="script">
+end
+goto [label]
+reset_goto [label]
+print [str]
+printvar [var]
+printappvar [str]
+printintarr [intarr]
+wait [int:time in milliseconds]
+inc [var]
+dec [var]
+set [var] [int:value]
+copyvar [var:source] [var:destination]
+getappvar [string:name] [var:destination]
+call [label]
+return
+iarrappend [intarr] [intstk:value]
+iarrdelete [intarr] [intstk:index]
+iarrvalue [intarr] [intstk:index] [var:destination]
+iarrclear [intarr]
+iarrsize [intarr] [var:destination]
+queue_event [string:label name] [int:delay in milliseconds]
+exec_queue
+pushvar [var]
+pushint [int]
+pop [var:destination]
+</div>
+
+<div class="footer"></div>
+
+</div>
+</body>
+</html>

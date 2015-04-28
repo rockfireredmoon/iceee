@@ -1,0 +1,45 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Reference: FunChatReplace.txt</title>
+<link rel="stylesheet" type="text/css" href="main.css">
+</head>
+<body>
+
+<div>
+
+<h2>Reference: FunChatReplace.txt</h2>
+
+<div class="spacer"></div>
+<h2>Purpose</h2>
+This was a bonus feature implemented for fun and possible trolling, but never actually used during official server operation.  May require testing to make sure it actually works.
+<p>
+To activate this feature, add the <span class="script">trollchat</span> permission to an  account or character.
+<p>
+This file contains a listing of words or phrases, and their replacement words or phrases.  If the feature is activated for a player, their incoming region chat messages will be compared to the list.  If a word/phase is found anywhere in the message, that part of the message will be replaced by the replacement word/phrase.  Everyone on the server will then see the modified message.
+<p>
+Phrase lookups use a lower-case conversion of the incoming message.
+<p>
+
+<div class="spacer"></div>
+<h2>File Format</h2>
+List file.  One entry per line.<br>
+Key;value pairs separated at the first semicolon (;)<br>
+No comment character.<br>
+No header.
+
+<p>
+Line format:
+
+<span class="scriptex">
+phrase text;replacement text
+</span>
+
+<div class="footer"></div>
+
+</div>
+</body>
+</html>

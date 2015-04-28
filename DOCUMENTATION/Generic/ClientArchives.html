@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Reference: Client Archives</title>
+<link rel="stylesheet" type="text/css" href="../main.css">
+</head>
+<body>
+
+<div>
+
+<h2>Reference: Client Archives</h2>
+
+<div class="spacer"></div>
+<h3>EarthEternal.car</h3>
+Contains all client scripting, which performs all client/server interaction, defines and display UI elements and panels, visual effect scripts, handles user input, etc.  Also contains some core image resources.
+<p>
+All scripts are written and compiled using the Squirrel scripting language.
+<p>Refer to <a href="http://www.squirrel-lang.org/">http://www.squirrel-lang.org/</a> for downloading the compiler or language reference.  <b>Squirrel version 2.x stable</b> appears to work correctly with the game.  Squirrel 3.x has not been tested.  Also note that Squirrel Standard Libraries are an extra component to Squirrel, and don't appear to have been enabled in the client.  You can test them to be sure, but don't be surprised if the code doesn't work.
+<p>
+Notable files in this archive:
+<p>
+Connection.nut : Most client/server information handling.
+<p>
+InputCommands.nut : Defines custom /commands and what they do.  If a command is not handled by this class, it is sent to the server as a generic query.
+<p>
+Globals.nut & Constants.nut & ServerConstants.nut : Contains some global variables and tables.  Some of the data in these tables have been coded into the server.  If any of these globals are modified in the server then the corresponding globals in the client should be updated to match, and vice versa.
+
+<div class="spacer"></div>
+<h3>Catalogs.car</h3>
+Contains several global resource lists.
+<p>
+Notable Files in this archive:
+<p>
+Abilities.cnut : A table of all abilities.  The client uses this table for all information present in the ability screen.  Also controls how abilities are performed client side (casting time, visual effects, etc).  All changes made to this file should be reflected in the server, and vice versa.  See <a href="../Data/AbilityTable.html">AbilityTable.txt</a> for the server-side ability list.
+<p>
+AssetDependencies.cnut : Associates CAR assets with a list of other CAR resources that must be loaded first.  This allows decorative scenery to be re-used in other collective types like CL, Dng, or similar components.
+<p>
+Attachable.cnut : Defines character attachable entities and optionally maps to the archive that contains them.  Attachables include helmets, weapons, etc.  This is distinct from clothing,  which conforms to the underlying model.
+<p>
+Clothing.cnut : Defines a list of clothing assets that may be used to decorate player models.
+<p>
+Components.cnut : A list of all prop objects, associating prop names with the media archives that that contain them.  New props will need to be added to this list before they can be placed.  Note that each component must have a corresponding <b>.csm.xml</b> file within the CAR archive.
+<p>
+Creatures.cnut : A list of all creature models.
+<p>
+Media.cnut : A list of all CAR files.  The associated file sizes aren't really important. The <b>Download All</b> feature will include all files in this archive, plus some from TerrainPages.cnut.
+<p>
+MediaExpectations.cnut : <b>Version 0.8.9 (Ikimonogatari/EER) only.</b>  Contains checksums for each CAR asset.  If the downloaded CAR does not match the checksum in this list, the client will fail with a checksum error.  This file can be safely deleted to avoid download problems.
+<p>
+TerrainPages.cnut : Defines a list of terrain page files that exist for loading.
+
+<div class="spacer"></div>
+<h3>Catalogs.car Extensions</h3>
+Planet Forever mods use additional script files ending with the <b>Ex</b> suffix to merge additional entries into their respective catalogs without having to disassemble or compile the original lists.  This helps portability between client versions.
+<p>
+AssetDependenciesEx.cnut<br>
+CreaturesEx.cnut<br>
+MediaEx.cnut<br>
+AttachableEx.cnut<br>
+ComponentsEx.cnut<br>
+
+
+<div class="spacer"></div>
+<h3>Effects.car</h3>
+Contains particle effects and their associated graphics and Ogre engine scripts.
+
+<div class="spacer"></div>
+<h3>Environments.car</h3>
+Contains environment skybox effects and their associated scripts and graphics.  Scripts help define lighting and music tracks for particular environments.
+
+
+<div class="footer"></div>
+
+
+
+</div>
+</body>
+</html>

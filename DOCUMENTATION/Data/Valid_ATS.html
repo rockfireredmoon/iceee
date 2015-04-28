@@ -1,0 +1,34 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Reference: Valid_ATS.txt</title>
+<link rel="stylesheet" type="text/css" href="../main.css">
+</head>
+<body>
+
+<div>
+
+<h2>Reference: Valid_ATS.txt</h2>
+
+<div class="spacer"></div>
+<h2>Purpose</h2>
+When a Scenery Object's Asset field is edited, the server attempts to extract the ATS field from the Asset name.  The ATS name is then compared to this list.  If there is a matching ATS entry in the list, the ATS asset is considered valid and will proceed with the edit.
+<p>
+If the ATS is not valid, the edit will be rejected.
+<p>
+This system is used because if the client is unable to download a missing ATS file, the client will fail with an error and need to be restarted.  The server rejects the edit to safeguard the asset so that invalid "client-crashing" asset names are not saved and distributed by the server.
+
+
+<div class="spacer"></div>
+<h2>File Format</h2>
+List file, each line contains a single name.<br>
+Comment character: semicolon (;)<br>
+
+<div class="footer"></div>
+
+</div>
+</body>
+</html>

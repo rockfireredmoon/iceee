@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Reference: Names.txt</title>
+<link rel="stylesheet" type="text/css" href="../main.css">
+</head>
+<body>
+
+<div>
+
+<h2>Reference: Names.txt</h2>
+
+<div class="spacer"></div>
+<h2>Purpose</h2>
+Defines the base name for a generated item, depending on which equipment type, weapon type, and visual model asset was chosen.
+
+<div class="spacer"></div>
+<h2>File Format</h2>
+INI format.  Token delimiters: equals (=) and comma (,)<br>
+Comment character: semicolon (;)<br>
+<p>
+<h3>Properties</h3>
+<table frame=box rules=all>
+  <tr class="header">
+    <td><b>Property</b></td>
+    <td><b>Description</b></td>
+  </tr>
+  <tr>
+    <td>[ENTRY]</td>
+    <td>Begins a new block.  Each block has three essential properties (asset, mEquipType, mWeaponType).  Collectively, no other block should be exactly the same in all three of those properties.
+<p>
+When an item is rolled, it attempts to find a block that matches all three properties.  Then it rolls randomly for any one of the names defined for that block.
+</td>
+  </tr>
+   <tr>
+    <td>asset</td>
+    <td>String.  The asset name that will be used to filter what names may apply to this item.  If an item is chosen with an asset model that looks like a metal plate helmet, it probably shouldn't have an name of a feather headband.
+<p>
+When a new item is generated, it selects an appearance (see <a href="Appearances.html">Appearances.txt</a> then determines the asset.
+<p>
+Those mAppearance strings may contain parts like:
+<span class="script">["type"]="Armor-Light-Low1-Helmet"</span>
+<p>
+Where the resulting asset type is <span class="script">Armor-Light-Low1-Helmet</span>
+<p>
+Note that multiple types of equipment (helmet, chest, leggings, etc) may reference the same asset model archive.
+</td>
+  </tr>
+  <tr>
+    <td>mEquipType</td>
+    <td>Integer.  Corresponds to ItemDef mEquipType.</td>
+  </tr>
+  <tr>
+    <td>mWeaponType</td>
+    <td>Integer.  Corresponds to ItemDef mWeaponType.  Leave zero if not a weapon.</td>
+  </tr>
+   <tr>
+    <td>name</td>
+    <td>Two properties separated by a comma.  Line format:<br><span class="script">name=Text,Shares</span>
+<p>
+Text is a string and defines a possible base name for the item.
+<p>
+Shares is an integer and defines the weighted chance that a particular name will be chosen, if multiple possible names are supplied.
+<p>
+Use multiple <span class="script">name</span> lines to add more choices.
+<p>
+Note: the file was originally written to have shares totaling 100, but this is not actually required.  Maximum shares are calculated after a block is loaded, and that maximum will be used in random number generation.
+<p>
+  </tr>
+</table>
+
+<div class="footer"></div>
+
+</div>
+</body>
+</html>
