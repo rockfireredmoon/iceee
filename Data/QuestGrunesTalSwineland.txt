@@ -1497,9 +1497,378 @@ Obj.0.description=Return to Moris Banner
 Obj.0.complete=0
 Obj.0.myCreatureDefID=1200
 Obj.0.myItemID=
-Obj.0.completeText=Yes, these will do nicely! Excellent work.
+Obj.0.completeText=Hand over the body parts.
 Obj.0.markerLocations=58436,790,66951,9;
 RewardItem.0=7062,1,0
 RewardItem.1=7063,1,0
 RewardItem.2=7064,1,0
 RewardItem.3=7065,1,0
+
+[Entry]
+ID=818
+Title=The Shadowfield
+BodyText=While our main duties are to stem the tide of the Vampire Palatine Drakul's forces which have already reached deep into Swineland to the northeast, those of us stationed here have a secondary duty to beastkind. Here, deep in the heart of Grunes Tal, we have long held back the advancing forces of Abidan which have spilled out of the underrealm and laid waste to this entire region.
+
+Grunes Tal was once a thriving mining region that prospered through the ores excavated from the mountains here. Chief among the towns that grew wealthy from the ore was Alpenhold. The iron mines of Alpenhold were said to be among the largest in the region and the city became a famous centre of trade.
+
+Unfortunately, this attracted our old foes the Outcasts which set off a series of conflicts today known simply as 'The Outcast Wars'. For years, the beasts of Grunes Tal staved off the Outcasts to protect their mines and wealth; however, little did they know, a much greater threat would soon cast its shadow upon the land.
+
+
+
+It happened in the largest of the mines in the Iron Hills situated to the east near Alpenhold itself. As the miners delved ever deeper into the earth seeking that which made their people rich, they eventually broke through into a previously unknown cavern deep underground. 
+
+Curiosity overcoming caution, the miners began to explore this newly discovered cavern. Finding nothing save that it stretched on and on, they returned to the surface to report what they had discovered.
+
+
+
+Unbeknownst to those unfortunate miners, the cavern they had dug into led into the Underrealm itself. Before long, the agents of Abidan began to pour forth out of the mine, quickly surrounding Alpenhold. All efforts to hold them back failed and, eventually, the great city of Alpenhold fell to the onslaught of the Legions of Sheol.
+
+The survivors who fled the Undead assault retreated west to the fertile lands of the Greenfeld, occupied by both Beast and Outcast alike.  A few notable families, unfortunately, were stubborn in their ways and refused to give up on Alpenhold. Among those families was the now-infamous House of Folkirk. The Folkirks, a wealthy noble family, refused to relocate far from Alpenhold and instead headed north, settling on a hill just south of the Junderlund where they built their new home, Folkirk Manor.
+
+For a number of years, the beasts of the Greenfeld struggled between fighting the Undead threat that continued to spread throughout Grunes Tal and the Outcasts who still remained in the region. 
+
+Unfortunately, it was only a matter of time before the Undead gained enough strength to overcome even the strongest defenses. Around two hundred years past, the Legions of Sheol finally overwhelmed the people living in the Greenfeld and neither Beast nor Outcast got far before falling before the Undead might. Before long, those that did not flee to the neighboring lands were killed.
+
+In these final days of prosperity, Redeemer's Hall was built by some of our members who had been sent West to aid the people of Grunes Tal and it soon became the final bastion of beast life within Grunes Tal. Even today, we, the Redeemers, have done our utmost to make certain the Legions of Sheol have been unable to fully invade other Beast lands still largely untouched by Abidan's forces. As for the Greenfeld, it has become darkened and is now known as the Shadowfield named so in testament to the many losses incurred there.
+
+Now friend, if you truly wish to aid our forces, then here your first task.
+
+Northwest of here lies what was once Greenfeld City. Now called Shadowfield City, it is inhabited by the unliving remains of those who were there when it fell. South of the city there is a series of farms whose undead residents still roam the land. Your task is to open the road by eliminating Taskmaster Glutt. As his name suggests, he is leader of the Farmhands that still tend the farms. Recent intel suggests he has been recently organizing them for a much more sinister purpose and so we want him taken out. While you are there, eliminate a dozen of those Farmhands as well. Without Glutt to lead them, the Farmhands should prove to be easy targets. Return to me with the Taskmaster's Spade as proof that these deeds have been carried out and I will see to it that you are rewarded for your efforts.
+CompleteText=Excellent work! Without Glutt to lead them and their numbers thinned a bit, the remaining Farmhands should be more disorganized and easy to pick off. As promised, here is your reward.
+Level=42
+Suggested=43
+Exp=7438
+PartySize=1
+NumRewards=0
+Coin=1291
+Unabandon=0
+QuestGiverID=1293
+QuestEnderID=1293
+Repeat=0
+sGiver=58221,792.103,67113,9
+sEnder=58221,792.103,67113,9
+[ACT]
+Act.BodyText=Kill Taskmaster Glutt and a dozen Undead Farmhands at the Farms south of Shadowfield City.
+
+Obj.0.type=kill
+Obj.0.data1=1211
+Obj.0.data2=12
+Obj.0.description=Kill 12 Undead Farmhands
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 12
+Obj.0.markerLocations=58625.6,901.005,64018.8,9
+Obj.1.type=kill
+Obj.1.data1=1217
+Obj.1.data2=1
+Obj.1.description=Kill TaskMaster Glutt
+Obj.1.complete=0
+Obj.1.myCreatureDefID=
+Obj.1.myItemID=
+Obj.1.completeText=0 of 1
+Obj.1.markerLocations=58625.6,901.005,64018.8,9
+[ACT]
+Act.BodyText=Return to Shar Zaris
+Obj.0.type=talk
+Obj.0.data1=
+Obj.0.data2=
+Obj.0.description=Return to Shar Zaris
+Obj.0.complete=0
+Obj.0.myCreatureDefID=1293
+Obj.0.myItemID=
+Obj.0.completeText=Excellent work! Without Glutt to lead them and their numbers thinned a bit, the remaining Farmhands should be more disorganized and easy to pick off. As promised, here is your reward.
+Obj.0.markerLocations=58221,792.103,67113,9
+
+[Entry]
+ID=818
+Title=The Shadowfield
+BodyText=While our main duties are to stem the tide of the Vampire Palatine Drakul's forces which have already reached deep into Swineland to the northeast, those of us stationed here have a secondary duty to beastkind. Here, deep in the heart of Grunes Tal, we have long held back the advancing forces of Abidan which have spilled out of the underrealm and laid waste to this entire region.
+
+Grunes Tal was once a thriving mining region that prospered through the ores excavated from the mountains here. Chief among the towns that grew wealthy from the ore was Alpenhold. The iron mines of Alpenhold were said to be among the largest in the region and the city became a famous centre of trade.
+
+Unfortunately, this attracted our old foes the Outcasts which set off a series of conflicts today known simply as 'The Outcast Wars'. For years, the beasts of Grunes Tal staved off the Outcasts to protect their mines and wealth; however, little did they know, a much greater threat would soon cast its shadow upon the land.
+
+
+
+It happened in the largest of the mines in the Iron Hills situated to the east near Alpenhold itself. As the miners delved ever deeper into the earth seeking that which made their people rich, they eventually broke through into a previously unknown cavern deep underground. 
+
+Curiosity overcoming caution, the miners began to explore this newly discovered cavern. Finding nothing save that it stretched on and on, they returned to the surface to report what they had discovered.
+
+
+
+Unbeknownst to those unfortunate miners, the cavern they had dug into led into the Underrealm itself. Before long, the agents of Abidan began to pour forth out of the mine, quickly surrounding Alpenhold. All efforts to hold them back failed and, eventually, the great city of Alpenhold fell to the onslaught of the Legions of Sheol.
+
+The survivors who fled the Undead assault retreated west to the fertile lands of the Greenfeld, occupied by both Beast and Outcast alike.  A few notable families, unfortunately, were stubborn in their ways and refused to give up on Alpenhold. Among those families was the now-infamous House of Folkirk. The Folkirks, a wealthy noble family, refused to relocate far from Alpenhold and instead headed north, settling on a hill just south of the Junderlund where they built their new home, Folkirk Manor.
+
+For a number of years, the beasts of the Greenfeld struggled between fighting the Undead threat that continued to spread throughout Grunes Tal and the Outcasts who still remained in the region. 
+
+Unfortunately, it was only a matter of time before the Undead gained enough strength to overcome even the strongest defenses. Around two hundred years past, the Legions of Sheol finally overwhelmed the people living in the Greenfeld and neither Beast nor Outcast got far before falling before the Undead might. Before long, those that did not flee to the neighboring lands were killed.
+
+In these final days of prosperity, Redeemer's Hall was built by some of our members who had been sent West to aid the people of Grunes Tal and it soon became the final bastion of beast life within Grunes Tal. Even today, we, the Redeemers, have done our utmost to make certain the Legions of Sheol have been unable to fully invade other Beast lands still largely untouched by Abidan's forces. As for the Greenfeld, it has become darkened and is now known as the Shadowfield named so in testament to the many losses incurred there.
+
+Now friend, if you truly wish to aid our forces, then here your first task.
+
+Northwest of here lies what was once Greenfeld City. Now called Shadowfield City, it is inhabited by the unliving remains of those who were there when it fell. South of the city there is a series of farms whose undead residents still roam the land. Your task is to open the road by eliminating Taskmaster Glutt. As his name suggests, he is leader of the Farmhands that still tend the farms. Recent intel suggests he has been recently organizing them for a much more sinister purpose and so we want him taken out. While you are there, eliminate a dozen of those Farmhands as well. Without Glutt to lead them, the Farmhands should prove to be easy targets. Return to me with the Taskmaster's Spade as proof that these deeds have been carried out and I will see to it that you are rewarded for your efforts.
+CompleteText=Excellent work! Without Glutt to lead them and their numbers thinned a bit, the remaining Farmhands should be more disorganized and easy to pick off. As promised, here is your reward.
+Level=42
+Suggested=43
+Exp=7438
+PartySize=1
+NumRewards=0
+Coin=1291
+Unabandon=0
+QuestGiverID=1293
+QuestEnderID=1293
+Repeat=0
+sGiver=58221,792.103,67113,9
+sEnder=58221,792.103,67113,9
+[ACT]
+Act.BodyText=Kill Taskmaster Glutt and a dozen Undead Farmhands at the Farms south of Shadowfield City.
+
+Obj.0.type=kill
+Obj.0.data1=1211
+Obj.0.data2=12
+Obj.0.description=Kill 12 Undead Farmhands
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 12
+Obj.0.markerLocations=58625.6,901.005,64018.8,9
+Obj.1.type=kill
+Obj.1.data1=1217
+Obj.1.data2=1
+Obj.1.description=Kill TaskMaster Glutt
+Obj.1.complete=0
+Obj.1.myCreatureDefID=
+Obj.1.myItemID=
+Obj.1.completeText=0 of 1
+Obj.1.markerLocations=58625.6,901.005,64018.8,9
+[ACT]
+Act.BodyText=Return to Shar Zaris
+Obj.0.type=talk
+Obj.0.data1=
+Obj.0.data2=
+Obj.0.description=Return to Shar Zaris
+Obj.0.complete=0
+Obj.0.myCreatureDefID=1293
+Obj.0.myItemID=
+Obj.0.completeText=0
+Obj.0.markerLocations=58221,792.103,67113,9
+
+[Entry]
+Requires=818
+ID=819
+Title=General Bodiccea
+BodyText=Now that Glutt is out of the way, we can move on Shadowfield itself. Be warned though, that the city will not be taken so easily. Stationed within the city is a warrior with a tragic story.
+
+General Bodiccea was once a warrior of great reknown and a highly respected beast. 
+
+Legend has it Bodiccea and her troops were able to hold back the Undead for several years before this region fell to their onslaught. Her last stand was in Greenfeld City, now called Shadowfield, where she and her forces fought to the last beast while the citizens were evacuated. The story goes that after several days of battle, the Undead finally infiltrated the city and slaughtered all who remained, including Bodiccea and her troops. Even in death, Bodiccea was not to be deterred and she continues to guard the Shadowfield to this very day.
+
+While her cause in life was selfless and noble, Bodiccea and her troops now fight mindlessly, forever trapped in bodies long since robbed of life. 
+
+Your task is to enter Shadowfield City and put to rest Bodiccea and her followers once and for all. Return to me once you have freed the General and her troops from their pain and restored those tragic heroes to Gaia's embrace.
+CompleteText=You have again returned safely! With Shadowfield City removed as a threat, we can now move supplies to and from our allies in Swineland much easier. I truly hope Bodiccea is now at peace, along with those who died with her while defending beastkind in their darkest hour here in Grunes Tal. Thank you for finally putting them to rest at last.
+Level=43
+Suggested=43
+Exp=7724
+PartySize=1
+NumRewards=0
+Coin=1297
+Unabandon=0
+QuestGiverID=1293
+QuestEnderID=1293
+Repeat=0
+sGiver=58221,792.103,67113,9
+sEnder=58221,792.103,67113,9
+[ACT]
+Act.BodyText=Kill General Bodiccea's Hordes and weaken her footholdon the Shadowfields
+Obj.0.type=kill
+Obj.0.data1=1213
+Obj.0.data2=20
+Obj.0.description=Kill 20 Bodiccea Bonethrall
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 20
+Obj.0.markerLocations=58834.1,976.883,63182.6,9
+Obj.1.type=kill
+Obj.1.data1=1214
+Obj.1.data2=20
+Obj.1.description=Kill 20 Bodiccea Frostthrall
+Obj.1.complete=0
+Obj.1.myCreatureDefID=
+Obj.1.myItemID=
+Obj.1.completeText=0 of 20
+Obj.1.markerLocations=58834.1,976.883,63182.6,9
+[ACT]
+Act.BodyText=Kill General Bodiccea 
+Obj.0.type=kill
+Obj.0.data1=1215
+Obj.0.data2=1
+Obj.0.description=Kill General Bodiccea
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 1
+Obj.0.markerLocations=58834.1,976.883,63182.6,9
+[ACT]
+Act.BodyText=Return to Shar Zaris
+Obj.0.type=talk
+Obj.0.data1=
+Obj.0.data2=
+Obj.0.description=Return to Shar Zaris
+Obj.0.complete=0
+Obj.0.myCreatureDefID=1293
+Obj.0.myItemID=
+Obj.0.completeText=0
+Obj.0.markerLocations=58221,792.103,67113,9
+
+[ENTRY]
+ID=820
+Title=Everlasting Regernation
+BodyText=Listen not to the others here who scorn me, and label me vain - I am here for profit, and nothing is more profitable than taking advantage of other beasts' vanity!
+
+Note the undead you will encounter in this area. Yes, they are a constant menace, but they carry on quite well and keep their facilities about them rather nicely. Of utmost importance to me however, is the distilling of whatever essence they hold which keeps that wee spark of life within them. If I could harness that without all the unsightly side effects of undead life, I could make a mint!
+
+Travel south of Redeemer's Hall, and you will find a small encampment of undead which serves as the "clinic" for any zombies needing repair. The Undead Chirurgeons within that medical camp carry upon them Scrolls of Everlasting Regeneration. I have seen those scrolls repair years of damage, and even attach severed limbs! Can you imagine what that would do for a few wrinkles?
+
+Gather fifteen Everlasting Regeneration Scrolls from Undead Chirurgeons, and soon I will be able to begin my life of luxury!
+CompleteText=You have them? Excellent! Give them to me! Yes, yes! Now I can finally enjoy a long and luxurious life without worry of the effects of aging or any malady out there! What? No, you cannot have them for yourself! Take this bit of coin and be off with you!
+Level=43
+Suggested=44
+Exp=7258
+PartySize=1
+NumRewards=0
+Coin=1127
+Unabandon=0
+QuestGiverID=1246
+QuestEnderID=1246
+Repeat=0
+sGiver=57917.6,802.236,67007.5,9
+sEnder=57917.6,802.236,67007.5,9
+[ACT]
+Act.BodyText=Travel to the undead camps south of Redeemer's Hall and collect fifteen Everlasting Regeneration Scrolls from the Undead Chiurgeons there.
+Obj.0.type=kill
+Obj.0.data1=1207,1208
+Obj.0.data2=15
+Obj.0.description=Collect Everlasting Regeneration Scroll (0 of 15)
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 15
+Obj.0.markerLocations=55361,613.183,69635,9
+[ACT]
+Act.BodyText=Return to Hayden Illsnor
+Obj.0.type=talk
+Obj.0.data1=
+Obj.0.data2=
+Obj.0.description=Return to Hayden Illsnor
+Obj.0.complete=0
+Obj.0.myCreatureDefID=1246
+Obj.0.myItemID=
+Obj.0.completeText=0
+Obj.0.markerLocations=57917.6,802.236,67007.5,9
+
+[ENTRY]
+Requires=807
+ID=821
+Title=It Lives
+BodyText=Now that you have a good collection of usable parts, bring them to the Construct Altar outside the Wailing Crypt to the south of Redeemer's Hall.
+
+Use the altar, and bring life to the undead hodgepodge you have stitched together!
+CompleteText=What?! Your creation turned on you?! Oh this is terrible. I should have known dabbling in such dark things would turn out badly. At least you were able to destroy the thing before it got out of hand. Still though, with Abidan's forces creating one of their own, we will be hard pressed to fight the thing should it be completed. At any rate, I do thank you for doing this for me. Please accept one of these as a thanks for your assistance
+Level=42
+Suggested=43
+Exp=7232
+PartySize=2
+NumRewards=0
+Coin=2093
+Unabandon=0
+QuestGiverID=1200
+QuestEnderID=1200
+Repeat=0
+sGiver=58394.5,789.211,66939.2,9
+sEnder=58394.5,789.211,66939.2,9
+[ACT]
+Act.BodyText=Travel to the Construct Altar near the Wailing Crypt and construct your new Behemoth!
+Obj.0.type=talk
+Obj.0.data1=
+Obj.0.data2=
+Obj.0.description=Use the Altar and Construct your Behemoth
+Obj.0.complete=0
+Obj.0.myCreatureDefID=1241
+Obj.0.myItemID=
+Obj.0.completeText=0
+Obj.0.markerLocations=52607.3,549.758,68996.9,9
+[ACT]
+Act.BodyText=Defeat the newly created Stitched Behemoth.
+Obj.0.type=kill
+Obj.0.data1=1242
+Obj.0.data2=1
+Obj.0.description=Defeat the newly created Stitched Behemoth. (0 of 1)
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 1
+Obj.0.markerLocations=52607.3,549.758,68996.9,9
+[ACT]
+Act.BodyText=Return to Moris Banner
+Obj.0.type=talk
+Obj.0.data1=
+Obj.0.data2=
+Obj.0.description=Return to Moris Banner
+Obj.0.complete=0
+Obj.0.myCreatureDefID=1200
+Obj.0.myItemID=
+Obj.0.completeText=0
+Obj.0.markerLocations=58394.5,789.211,66939.2,9
+
+[ENTRY]
+ID=822
+Title=Ale-Battered Gloom Spites
+BodyText=Come closer, beast-friend! I promise not to bite, really!
+
+Truly, I mean you no harm but wish only to munch upon my favorite snack - Ale-Battered Gloom-Spites!
+
+Ahhh  - the spicy, succulent taste of Gloom-Spites brings happiness even to my long-dead palate! Lustrous, obsidian wings provide the perfect crunchy compliment to the fat Gloom-Spite bellies when tenderly smoked over a campfire. But - I prattle on, and here I have a potential ally and fellow  "foody" who might be able to assist me?
+
+The folk embedded in Redeemer's Hall seem to have a "kill on sight" policy with those of us living the rotted half of un-life;  and this quite puts a damper on my ability to procure my favored snack. Will you collect these tasty treasures for me? Gloom-Spites flock amidst the Spiteful Lanterneyes in the blighted fields of Shadowfield.
+
+Collect ten of them for me, and I shall reward you with my secret recipe!
+CompleteText= You got them! Thank you! heres your reward I have no need for money in my state but Gloom Sprite *eats* mmmmm Delicious...
+Level=42
+Suggested=43
+Exp=7232
+PartySize=1
+NumRewards=0
+Coin=2093
+Unabandon=0
+QuestGiverID=3522
+QuestEnderID=3522
+Repeat=0
+sGiver=59178.3,1109.91,64102.6,9
+sEnder=59178.3,1109.91,64102.6,9
+[ACT]
+Act.BodyText=Gather Gloom Spites for MJ Price
+Obj.0.type=kill
+Obj.0.data1=1257
+Obj.0.data2=10
+Obj.0.description=Gather Gloom Spites (0 of 10)
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 10
+Obj.0.markerLocations=58548.4,900.435,64172.8,9
+[ACT]
+Act/BodyText=Return to MJ Price
+Obj.0.type=talk
+Obj.0.data1=
+Obj.0.data2=
+Obj.0.description=Return to MJ Price
+Obj.0.complete=0
+Obj.0.myCreatureDefID=1257
+Obj.0.myItemID=
+Obj.0.completeText=0
+Obj.0.markerLocations=59178.3,1109.91,64102.6,9
