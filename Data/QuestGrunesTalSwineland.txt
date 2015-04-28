@@ -1874,3 +1874,63 @@ Obj.0.myCreatureDefID=1257
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=59178.3,1109.91,64102.6,9
+
+[ENTRY]
+ID=823
+Title=Misguided Intentions
+BodyText=
+Geoffry Thistlefur was always one of those "quiet" beasts, one who kept out of everybody else's  business well enough, never caused trouble and whatnot. But now - I think to myself - it really IS always the "quiet ones" you need to watch out for now, is it not?
+
+I followed Geoffry on one of his far-ranging "walks" one eve, and stumbled upon his dirty little secret: He has been collecting undead and trying to re-train them as servants to beast-kind!
+
+This will not end well if we let it continue, as the undead are conniving and bear an eternal ember of hatred for beast-kind.
+
+Look within Shadowfield for where Geoffry has hidden these Enslaved Zombies, by travelling from the blighted town of Shadowfield and heading east toward Haunted Hill.
+
+Exterminate the Enslaved Zombies, about six of them I believe, as well as Geoffry Thistlefur. 
+CompleteText=Poor Geoffry. He might have meant well, but, sometimes one must stop and consider the consequences before attempting such a foolish task as what he was trying to accomplish. I am sorry you had to kill him, though it was unavoidable as I knew he would try to protect his 'investment' as it were. Perhaps other beasts will learn from Geoffry's mistake and not attempt such a thing in the future.
+Level=43
+Suggested=44
+Exp=7532
+PartySize=1
+NumRewards=0
+Coin=2205
+Unabandon=0
+QuestGiverID=1209
+QuestEnderID=1209
+Repeat=0
+sGiver=58419.4,781.591,66801.9,9
+sEnder=58419.4,781.591,66801.9,9
+[ACT]
+Act.BodyText=Kill 6 Enslaved Zombies and put a end to this wretched experiement
+Obj.0.type=kill
+Obj.0.data1=1212
+Obj.0.data2=6
+Obj.0.description=Kill 6 Enslaved Zombies
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 6
+Obj.0.markerLocations=62180.2,750.44,63087.8,9
+[ACT]
+Act.BodtText=Kill Geoffry Thistlefur
+Obj.1.type=kill
+Obj.1.data1=3452
+Obj.1.data2=1
+Obj.1.description=Kill Geoffry Thistlefur
+Obj.1.complete=0
+Obj.1.myCreatureDefID=
+Obj.1.myItemID=
+Obj.1.completeText=0 of 1
+Obj.1.markerLocations=62058.2,965.544,64770.5,9
+[ACT]
+Act.BodyText=Return to Garus Greyson
+Obj.0.type=talk
+Obj.0.data1=
+Obj.0.data2=
+Obj.0.description=Return to Gasrus Greyson
+Obj.0.complete=0
+Obj.0.myCreatureDefID=1209
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=58419.4,781.591,66801.9,9
