@@ -42,6 +42,33 @@ typedef std::vector<SceneryEffect>      SceneryEffectList;
 typedef std::pair<int, SceneryEffectList> SceneryEffectPair;
 typedef std::map<int, SceneryEffectList> SceneryEffectMap;
 
+
+class WorldMarker {
+public:
+	char Name[128];
+	char Comment[1024];
+	float X, Y, Z;
+	WorldMarker();
+	void Clear(void);
+};
+
+
+
+class WorldMarkerContainer
+{
+public:
+	WorldMarkerContainer();
+	~WorldMarkerContainer();
+	char *mFilename;
+
+	void Clear(void);
+
+	std::vector<WorldMarker> WorldMarkerList;
+	void Save();
+	void LoadFromFile(char *filename);
+
+};
+
 struct MapDefInfo
 {
 	string Name;
@@ -252,6 +279,8 @@ public:
 	ArenaRuleset arenaRuleset;
 
 	UniqueSpawnManager uniqueSpawnManager;
+
+	WorldMarkerContainer worldMarkers;
 
 	CreatureInstance * GetPlayerByID(int id);  //Searches PlayerList for a character ID, return pointer
 	CreatureInstance * GetPlayerByCDefID(int CDefID);  //All player characters have unique creatureDefs.

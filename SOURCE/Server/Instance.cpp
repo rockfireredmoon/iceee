@@ -58,6 +58,116 @@ MapDefContainer MapDef;
 MapLocationHandler MapLocation;
 ActiveInstanceManager g_ActiveInstanceManager;
 
+WorldMarker::WorldMarker() {
+	Clear();
+}
+
+void WorldMarker::Clear() {
+	Name[0] = 0;
+	Comment[0] = 0;
+	X = 0;
+	Y = 0;
+	Z = 0;
+}
+
+
+WorldMarkerContainer::WorldMarkerContainer()
+{
+	Clear();
+}
+
+WorldMarkerContainer::~WorldMarkerContainer()
+{
+	WorldMarkerList.empty();
+}
+
+void WorldMarkerContainer::Clear()
+{
+	WorldMarkerList.empty();
+}
+
+void WorldMarkerContainer::Save()
+{
+	FILE *output = fopen(mFilename, "wb");
+	if(output == NULL)
+	{
+		g_Log.AddMessageFormat("[ERROR] Saving world markers could not open: %s", mFilename);
+		return;
+	}
+
+	vector<WorldMarker>::iterator it;
+	for (it = WorldMarkerList.begin(); it != WorldMarkerList.end();) {
+		fprintf(output, "[ENTRY]\r\n");
+		fprintf(output, "Name=%s\r\n", it->Name);
+		fprintf(output, "Comment=%s\r\n", it->Comment);
+		fprintf(output, "Position=%f %f %f\r\n", it->X, it->Y, it->Z);
+		fprintf(output, "\r\n");
+	}
+
+	fflush(output);
+	fclose(output);
+}
+
+void WorldMarkerContainer::LoadFromFile(char *filename)
+{
+	mFilename = filename;
+	FileReader lfr;
+	if(lfr.OpenText(filename) != Err_OK)
+	{
+		g_Log.AddMessageFormat("[NOTICE] EssenceShop file [%s] not found.", filename);
+		return;
+	}
+
+	WorldMarker newItem;
+
+	lfr.CommentStyle = Comment_Semi;
+	int r;
+	while(lfr.FileOpen() == true)
+	{
+		r = lfr.ReadLine();
+		lfr.SingleBreak("=");
+		lfr.BlockToStringC(0, Case_Upper);
+		if(r > 0)
+		{
+			if(strcmp(lfr.SecBuffer, "[ENTRY]") == 0)
+			{
+				if(newItem.Name[0] != 0)
+				{
+					WorldMarkerList.push_back(newItem);
+					newItem.Clear();
+				}
+			}
+			else if(strcmp(lfr.SecBuffer, "NAME") == 0)
+			{
+				Util::SafeCopy(newItem.Name, lfr.BlockToStringC(1, 0), sizeof(newItem.Name));
+			}
+			else if(strcmp(lfr.SecBuffer, "POSITION") == 0)
+			{
+				STRINGLIST locData;
+				string str = lfr.BlockToStringC(1, 0);
+				Util::Split(str.c_str(), ",", locData);
+				if(locData.size() < 3)
+				{
+					g_Log.AddMessageFormat("[WARNING] WorldMarker:%s has incomplete Position string (%s)", newItem.Name, str.c_str());
+				}
+				else
+				{
+					newItem.X = static_cast<float>(strtof(locData[0].c_str(), NULL));
+					newItem.Y = static_cast<float>(strtof(locData[1].c_str(), NULL));
+					newItem.Z = static_cast<float>(strtof(locData[2].c_str(), NULL));
+				}
+			}
+			else if(strcmp(lfr.SecBuffer, "COMMENT") == 0)
+			{
+				Util::SafeCopy(newItem.Comment, lfr.BlockToStringC(1, 0), sizeof(newItem.Comment));
+			}
+		}
+	}
+	lfr.CloseCurrent();
+	if(newItem.Name[0] != 0)
+		WorldMarkerList.push_back(newItem);
+}
+
 MapDefContainer :: MapDefContainer()
 {
 
@@ -456,6 +566,8 @@ void ActiveInstance :: Clear(void)
 	PlayerListPtr.clear();
 	mNextEffectTag = 0;
 	uniqueSpawnManager.Clear();
+	worldMarkers.Clear();
+
 
 	size_t a;
 
@@ -2157,6 +2269,13 @@ void ActiveInstance :: InitializeData(void)
 	Util::SafeFormat(buffer, sizeof(buffer), "Instance\\%d\\Static.txt", mZone);
 	Platform::FixPaths(buffer);
 	LoadStaticObjects(buffer);
+
+	//World markers (for devs)
+	Util::SafeFormat(buffer, sizeof(buffer), "Instance\\%d\\WorldMarkers.txt", mZone);
+	Platform::FixPaths(buffer);
+	worldMarkers.LoadFromFile(buffer);
+	if(worldMarkers.WorldMarkerList.size() > 0)
+		g_Log.AddMessageFormatW(MSG_DIAG, "Loaded %d world markers.", worldMarkers.WorldMarkerList.size());
 
 	//retPtr->SetScaleConfig(scaleConfigSetting, 47);
 	if(mZoneDefPtr->mArena == true)

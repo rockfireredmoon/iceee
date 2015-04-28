@@ -1,0 +1,9 @@
+[ENTRY]
+Name=Redeemer Camp
+Comment=The first map marker
+Position=58394.5,789.211,66939.2
+
+[ENTRY]
+Name=Behemoth
+Comment=D-i-y life
+Position=52607.3,549.758,68996.9

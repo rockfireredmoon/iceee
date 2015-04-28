@@ -2563,6 +2563,14 @@ bool SimulatorThread :: HandleQuery(int &PendingData)
 		PendingData = handle_query_clan_list();
 	else if(query.name.compare("guild.info") == 0)
 		PendingData = handle_query_guild_info();
+	else if(query.name.compare("marker.list") == 0)
+		PendingData = handle_query_marker_list();
+	else if(query.name.compare("marker.edit") == 0)
+		PendingData = handle_query_marker_edit();
+	else if(query.name.compare("marker.comment") == 0)
+		PendingData = handle_query_marker_comment();
+	else if(query.name.compare("marker.del") == 0)
+		PendingData = handle_query_marker_del();
 	else if(query.name.compare("script.load") == 0)
 		PendingData = handle_query_script_load();
 	else if(query.name.compare("script.save") == 0)
@@ -9750,6 +9758,107 @@ int SimulatorThread :: handle_query_script_run(void)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Script already running.");
 	}
 	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
+}
+
+int SimulatorThread :: handle_query_marker_comment(void)
+{
+	if(!CheckPermissionSimple(Perm_Account, Permission_Admin))
+		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
+	vector<WorldMarker>::iterator it;
+	for(it = creatureInst->actInst->worldMarkers.WorldMarkerList.begin(); it != creatureInst->actInst->worldMarkers.WorldMarkerList.end(); ++it)
+	{
+		if(it->Name == query.args[0].c_str()) {
+			sprintf(Aux1, "%s", it->Comment);
+			return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
+		}
+	}
+	return PrepExt_QueryResponseString(SendBuf, query.ID, "");
+}
+
+int SimulatorThread :: handle_query_marker_del(void)
+{
+	if(!CheckPermissionSimple(Perm_Account, Permission_Admin))
+		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
+	vector<WorldMarker>::iterator it;
+	for (it = creatureInst->actInst->worldMarkers.WorldMarkerList.begin(); it != creatureInst->actInst->worldMarkers.WorldMarkerList.end();) {
+		if(it->Name == query.args[0].c_str()) {
+			cs.Enter("SimulatorThread::UpdateWorldMarkers");
+			it = creatureInst->actInst->worldMarkers.WorldMarkerList.erase(it);
+			creatureInst->actInst->worldMarkers.Save();
+			cs.Leave();
+			break;
+		}
+		else
+			++it;
+	}
+	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
+}
+
+int SimulatorThread :: handle_query_marker_edit(void)
+{
+	if(!CheckPermissionSimple(Perm_Account, Permission_Admin))
+		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
+	vector<WorldMarker>::iterator it;
+	for (it = creatureInst->actInst->worldMarkers.WorldMarkerList.begin(); it != creatureInst->actInst->worldMarkers.WorldMarkerList.end();) {
+		if(it->Name == query.args[0].c_str()) {
+			cs.Enter("SimulatorThread::UpdateWorldMarkers");
+			Util::SafeCopy(it->Name, query.args[2].c_str(), sizeof(it->Name));
+			Util::SafeCopy(it->Comment, query.args[4].c_str(), sizeof(it->Comment));
+			it->X = creatureInst->CurrentX;
+			it->Y = creatureInst->CurrentY;
+			it->Z = creatureInst->CurrentZ;
+			creatureInst->actInst->worldMarkers.Save();
+			cs.Leave();
+			return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
+		}
+		else
+			++it;
+	}
+	WorldMarker wm;
+	cs.Enter("SimulatorThread::UpdateWorldMarkers");
+	Util::SafeCopy(wm.Name, query.args[2].c_str(), sizeof(wm.Name));
+	Util::SafeCopy(wm.Comment, query.args[4].c_str(), sizeof(wm.Comment));
+	wm.X = creatureInst->CurrentX;
+	wm.Y = creatureInst->CurrentY;
+	wm.Z = creatureInst->CurrentZ;
+	creatureInst->actInst->worldMarkers.Save();
+	cs.Leave();
+	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
+}
+
+int SimulatorThread :: handle_query_marker_list(void)
+{
+	if(!CheckPermissionSimple(Perm_Account, Permission_Admin))
+		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
+	if(query.args[0] == "zone") {
+		int wpos = 0;
+		wpos += PutByte(&SendBuf[wpos], 1);       //_handleQueryResultMsg
+		wpos += PutShort(&SendBuf[wpos], 0);      //Message size
+		wpos += PutInteger(&SendBuf[wpos], query.ID);  //Query response index
+
+		wpos += PutShort(&SendBuf[wpos], creatureInst->actInst->worldMarkers.WorldMarkerList.size());
+		vector<WorldMarker>::iterator it;
+
+		for(it = creatureInst->actInst->worldMarkers.WorldMarkerList.begin(); it != creatureInst->actInst->worldMarkers.WorldMarkerList.end(); ++it)
+		{
+			wpos += PutByte(&SendBuf[wpos], 4);
+			sprintf(Aux1, "%s", it->Name);
+			wpos += PutStringUTF(&SendBuf[wpos], Aux1);
+			sprintf(Aux1, "%d", creatureInst->actInst->mZone);
+			wpos += PutStringUTF(&SendBuf[wpos], Aux1);
+			sprintf(Aux1, "%f %f %f", it->X,it->Y,it->Z);
+			wpos += PutStringUTF(&SendBuf[wpos], Aux1);
+			sprintf(Aux1, "%s", it->Comment);
+			wpos += PutStringUTF(&SendBuf[wpos], Aux1);
+		}
+
+		PutShort(&SendBuf[1], wpos - 3);
+		return wpos;
+	}
+	else {
+		g_Log.AddMessageFormat("TODO Implement non-zone marker list query. %s", query.args[0].c_str());
+	}
+	return 0;
 }
 
 int SimulatorThread :: handle_query_guild_info(void)
