@@ -9,7 +9,14 @@ A small team of players started used this to try to continue Greth's amazing wor
 Compiling .. for the impatient
 ==============================
 
-The usual chant .. 
+Preparation
+===========
+
+If you have cloned the repository from Git, run the following to generate the configuration scripts. You can skip this if you are using a stable release of the server as this is already done for you and include as part of the archive.
+
+./autogen.sh
+
+Then the usual chant .. 
 
 ./configure
 make
