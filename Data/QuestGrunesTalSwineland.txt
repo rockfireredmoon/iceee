@@ -654,11 +654,11 @@ Repeat=0
 sGiver=58298,790.683,66901.5,9
 sGiver=58298,790.683,66901.5,9
 [ACT]
-Act.BodyText=Collect 16 vials of Lanterneye Eye Fluid from the local Spiteful Lanterneyes that roam around the farms outside the Shadowfield.
+Act.BodyText=Collect 15 vials of Lanterneye Eye Fluid from the local Spiteful Lanterneyes that roam around the farms outside the Shadowfield.
 Obj.0.type=kill
 Obj.0.data1=1210
 Obj.0.data2=15
-Obj.0.description=Gather 16 Spiteful Lanterneyes
+Obj.0.description=Gather 15 Lanterneye eye fluid vials 
 Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=10000
