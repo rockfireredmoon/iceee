@@ -1793,15 +1793,17 @@ sGiver=58394.5,789.211,66939.2,9
 sEnder=58394.5,789.211,66939.2,9
 [ACT]
 Act.BodyText=Travel to the Construct Altar near the Wailing Crypt and construct your new Behemoth!
-Obj.0.type=talk
-Obj.0.data1=
+Obj.0.type=activate
+Obj.0.data1=1241
 Obj.0.data2=
 Obj.0.description=Use the Altar and Construct your Behemoth
 Obj.0.complete=0
-Obj.0.myCreatureDefID=1241
+Obj.0.myCreatureDefID=
 Obj.0.myItemID=
-Obj.0.completeText=0
+Obj.0.completeText=0 of 1
 Obj.0.markerLocations=52607.3,549.758,68996.9,9
+Obj.0.ActivateTime=5000
+Obj.0.ActivateText=You lay the body parts on the altar and start to chant
 [ACT]
 Act.BodyText=Defeat the newly created Stitched Behemoth.
 Obj.0.type=kill
