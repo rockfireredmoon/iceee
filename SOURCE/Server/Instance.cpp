@@ -78,29 +78,29 @@ WorldMarkerContainer::WorldMarkerContainer()
 
 WorldMarkerContainer::~WorldMarkerContainer()
 {
-	WorldMarkerList.empty();
+	WorldMarkerList.clear();
 }
 
 void WorldMarkerContainer::Clear()
 {
-	WorldMarkerList.empty();
+	WorldMarkerList.clear();
 }
 
 void WorldMarkerContainer::Save()
 {
-	FILE *output = fopen(mFilename, "wb");
+	FILE *output = fopen(mFilename.c_str(), "wb");
 	if(output == NULL)
 	{
-		g_Log.AddMessageFormat("[ERROR] Saving world markers could not open: %s", mFilename);
+		g_Log.AddMessageFormat("[ERROR] Saving world markers could not open: %s", mFilename.c_str());
 		return;
 	}
 
 	vector<WorldMarker>::iterator it;
-	for (it = WorldMarkerList.begin(); it != WorldMarkerList.end();) {
+	for (it = WorldMarkerList.begin(); it != WorldMarkerList.end(); ++it) {
 		fprintf(output, "[ENTRY]\r\n");
 		fprintf(output, "Name=%s\r\n", it->Name);
 		fprintf(output, "Comment=%s\r\n", it->Comment);
-		fprintf(output, "Position=%f %f %f\r\n", it->X, it->Y, it->Z);
+		fprintf(output, "Position=%1.1f,%1.1f,%1.1f\r\n", it->X, it->Y, it->Z);
 		fprintf(output, "\r\n");
 	}
 
@@ -108,13 +108,13 @@ void WorldMarkerContainer::Save()
 	fclose(output);
 }
 
-void WorldMarkerContainer::LoadFromFile(char *filename)
+void WorldMarkerContainer::Reload()
 {
-	mFilename = filename;
+	Clear();
 	FileReader lfr;
-	if(lfr.OpenText(filename) != Err_OK)
+	if(lfr.OpenText(mFilename.c_str()) != Err_OK)
 	{
-		g_Log.AddMessageFormat("[NOTICE] EssenceShop file [%s] not found.", filename);
+		g_Log.AddMessageFormat("[NOTICE] WorldMarker file [%s] not found.", mFilename.c_str());
 		return;
 	}
 
@@ -166,6 +166,13 @@ void WorldMarkerContainer::LoadFromFile(char *filename)
 	lfr.CloseCurrent();
 	if(newItem.Name[0] != 0)
 		WorldMarkerList.push_back(newItem);
+}
+
+
+void WorldMarkerContainer::LoadFromFile(char *filename)
+{
+	mFilename = string(filename);
+	Reload();
 }
 
 MapDefContainer :: MapDefContainer()

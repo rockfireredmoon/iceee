@@ -2567,8 +2567,6 @@ bool SimulatorThread :: HandleQuery(int &PendingData)
 		PendingData = handle_query_marker_list();
 	else if(query.name.compare("marker.edit") == 0)
 		PendingData = handle_query_marker_edit();
-	else if(query.name.compare("marker.comment") == 0)
-		PendingData = handle_query_marker_comment();
 	else if(query.name.compare("marker.del") == 0)
 		PendingData = handle_query_marker_del();
 	else if(query.name.compare("script.load") == 0)
@@ -9760,48 +9758,41 @@ int SimulatorThread :: handle_query_script_run(void)
 	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
 }
 
-int SimulatorThread :: handle_query_marker_comment(void)
-{
-	if(!CheckPermissionSimple(Perm_Account, Permission_Admin))
-		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
-	vector<WorldMarker>::iterator it;
-	for(it = creatureInst->actInst->worldMarkers.WorldMarkerList.begin(); it != creatureInst->actInst->worldMarkers.WorldMarkerList.end(); ++it)
-	{
-		if(it->Name == query.args[0].c_str()) {
-			sprintf(Aux1, "%s", it->Comment);
-			return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-		}
-	}
-	return PrepExt_QueryResponseString(SendBuf, query.ID, "");
-}
-
 int SimulatorThread :: handle_query_marker_del(void)
 {
-	if(!CheckPermissionSimple(Perm_Account, Permission_Admin))
+	bool ok = CheckPermissionSimple(Perm_Account, Permission_Admin);
+	if(!ok) {
+		if(pld.zoneDef->mGrove == true && pld.zoneDef->mAccountID != pld.accPtr->ID)
+			ok = true;
+	}
+	if(!ok)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
 	vector<WorldMarker>::iterator it;
-	for (it = creatureInst->actInst->worldMarkers.WorldMarkerList.begin(); it != creatureInst->actInst->worldMarkers.WorldMarkerList.end();) {
-		if(it->Name == query.args[0].c_str()) {
-			cs.Enter("SimulatorThread::UpdateWorldMarkers");
-			it = creatureInst->actInst->worldMarkers.WorldMarkerList.erase(it);
+	for (it = creatureInst->actInst->worldMarkers.WorldMarkerList.begin(); it != creatureInst->actInst->worldMarkers.WorldMarkerList.end(); ++it) {
+		if(strcmp(it->Name, query.args[0].c_str()) == 0) {
+			cs.Enter("SimulatorThread::WorldMarkers");
+			creatureInst->actInst->worldMarkers.WorldMarkerList.erase(it);
 			creatureInst->actInst->worldMarkers.Save();
 			cs.Leave();
 			break;
 		}
-		else
-			++it;
 	}
 	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
 }
 
 int SimulatorThread :: handle_query_marker_edit(void)
 {
-	if(!CheckPermissionSimple(Perm_Account, Permission_Admin))
+	bool ok = CheckPermissionSimple(Perm_Account, Permission_Admin);
+	if(!ok) {
+		if(pld.zoneDef->mGrove == true && pld.zoneDef->mAccountID != pld.accPtr->ID)
+			ok = true;
+	}
+	if(!ok)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
 	vector<WorldMarker>::iterator it;
-	for (it = creatureInst->actInst->worldMarkers.WorldMarkerList.begin(); it != creatureInst->actInst->worldMarkers.WorldMarkerList.end();) {
-		if(it->Name == query.args[0].c_str()) {
-			cs.Enter("SimulatorThread::UpdateWorldMarkers");
+	for (it = creatureInst->actInst->worldMarkers.WorldMarkerList.begin(); it != creatureInst->actInst->worldMarkers.WorldMarkerList.end(); ++it) {
+		if(strcmp(it->Name, query.args[0].c_str()) == 0) {
+			cs.Enter("SimulatorThread::WorldMarkers");
 			Util::SafeCopy(it->Name, query.args[2].c_str(), sizeof(it->Name));
 			Util::SafeCopy(it->Comment, query.args[4].c_str(), sizeof(it->Comment));
 			it->X = creatureInst->CurrentX;
@@ -9811,8 +9802,6 @@ int SimulatorThread :: handle_query_marker_edit(void)
 			cs.Leave();
 			return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
 		}
-		else
-			++it;
 	}
 	WorldMarker wm;
 	cs.Enter("SimulatorThread::UpdateWorldMarkers");
@@ -9831,6 +9820,11 @@ int SimulatorThread :: handle_query_marker_list(void)
 	if(!CheckPermissionSimple(Perm_Account, Permission_Admin))
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
 	if(query.args[0] == "zone") {
+		// Do a reload so we get external updates too
+		cs.Enter("SimulatorThread::WorldMarkers");
+		creatureInst->actInst->worldMarkers.Reload();
+		cs.Leave();
+
 		int wpos = 0;
 		wpos += PutByte(&SendBuf[wpos], 1);       //_handleQueryResultMsg
 		wpos += PutShort(&SendBuf[wpos], 0);      //Message size

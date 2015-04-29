@@ -59,12 +59,13 @@ class WorldMarkerContainer
 public:
 	WorldMarkerContainer();
 	~WorldMarkerContainer();
-	char *mFilename;
+	std::string mFilename;
 
 	void Clear(void);
 
 	std::vector<WorldMarker> WorldMarkerList;
 	void Save();
+	void Reload();
 	void LoadFromFile(char *filename);
 
 };

@@ -6,12 +6,12 @@ class this.Screens.MarkerTweakScreen extends this.GUI.Frame
 	mScreenInitialized = false;
 	mRefreshButton = null;
 	mNewButton = null;
+	mSaveButton = null;
 	mDelButton = null;
 	mGoButton = null;
 	mList = null;
 	mNameEdit = null;
 	mComment = null;
-	mEditTimer = null;
 	mMarkers = [];
 	mCurrentMarker = null;
 	constructor()
@@ -21,16 +21,13 @@ class this.Screens.MarkerTweakScreen extends this.GUI.Frame
 		this.mNewButton = this._createButton("New", "onNewMarker");
 		this.mDelButton = this._createButton("Del", "onDeleteMarker");
 		this.mGoButton = this._createButton("Go", "onGoToMarker");
+		this.mSaveButton = this._createButton("Save", "onSaveMarker");
 		this.mMarkers = [];
-		this.mEditTimer = this.GUI.Timer("_submitEdit");
-		this.mEditTimer.addListener(this);
 		this.mList = this.GUI.ColumnList();
 		this.mList.addColumn("Marker", 150);
 		this.mList.addActionListener(this);
 		this.mComment = this.GUI.InputArea();
-		this.mComment.addActionListener(this);
 		this.mNameEdit = this.GUI.InputArea();
-		this.mNameEdit.addActionListener(this);
 		local top = this.GUI.Container();
 		top.getLayoutManager().setGaps(2, 1);
 		top.add(this.mRefreshButton);
@@ -40,6 +37,7 @@ class this.Screens.MarkerTweakScreen extends this.GUI.Frame
 		local bottom = this.GUI.Container(this.GUI.BorderLayout());
 		bottom.add(this.GUI.LabelContainer("Marker:", this.mNameEdit), this.GUI.BorderLayout.NORTH);
 		bottom.add(this.GUI.ScrollPanel(this.mComment), this.GUI.BorderLayout.CENTER);
+		bottom.add(this.mSaveButton, this.GUI.BorderLayout.SOUTH);
 		bottom.insets.top += 5;
 		local cmain = this.GUI.Container(this.GUI.BorderLayout());
 		cmain.setInsets(5);
@@ -68,21 +66,24 @@ class this.Screens.MarkerTweakScreen extends this.GUI.Frame
 		]);
 	}
 
-	function onTextChanged( input )
+	function onComment(field) 
 	{
-		this.mEditTimer.setDelay(10000);
 	}
 
 	function onRefresh( button )
 	{
 		this.refresh();
 	}
+	
+	function onSaveMarker( button )
+	{
+		this._doSubmit();
+	}
 
 	function onNewMarker( button )
 	{
 		this.mNameEdit.setText("[New Marker name]");
 		this.mComment.setText("[Comment here]");
-		this.mEditTimer.cancel();
 	}
 
 	function onDeleteMarker( button )
@@ -112,10 +113,8 @@ class this.Screens.MarkerTweakScreen extends this.GUI.Frame
 		}
 		else
 		{
-			this._submitEdit();
 			this.mNameEdit.setText("");
 			this.mComment.setText("");
-			this.mEditTimer.cancel();
 		}
 	}
 
@@ -125,8 +124,8 @@ class this.Screens.MarkerTweakScreen extends this.GUI.Frame
 		{
 			if (qa.args[0] == "zone")
 			{
-				this._submitEdit();
 				this.mMarkers = [];
+				local mCurrentMarkerName = this.mCurrentMarker == null ? null : this.mCurrentMarker.name;
 				this.mCurrentMarker = null;
 				this.mList.removeAllRows();
 				rows.sort(function ( a, b )
@@ -134,6 +133,8 @@ class this.Screens.MarkerTweakScreen extends this.GUI.Frame
 					return this.strcasecmp(a[0], b[0]);
 				});
 				local row;
+				local selIdx = -1;
+				local idx = 0;
 
 				foreach( row in rows )
 				{
@@ -146,55 +147,49 @@ class this.Screens.MarkerTweakScreen extends this.GUI.Frame
 					};
 
 					// Em - 'addStaticSticker' does not seem to exist. Is this a native bound method
-					//if (::_minimap)
-					//{
-					//	local xyz = this.split(m.position, " ");
-					//	::_minimap.addStaticSticker(m.name, "red_paw", xyz[0].tofloat(), xyz[2].tofloat());
-					//}
+					if (::_minimap)
+					{
+						try {
+							local xyz = this.split(m.position, " ");
+							::_minimap.addStaticSticker(m.name, "red_paw", xyz[0].tofloat(), xyz[2].tofloat());
+						}
+						catch(ex) {
+							print("ICE! FAILED marker: " + ex);
+						}						
+					}
 
 					this.mMarkers.append(m);
 
-					//if (m.comment != "")
-					//{
-					//	this.mList.addRow([
-					//		m.comment
-					//	]);
-					//}
-					//else
-					//{
-					//	this.mList.addRow([
-					//		m.name
-					//	]);
-					//}
+					this.mList.addRow([
+						m.name
+					]);
+					
+					if(m.name == mCurrentMarkerName) {
+						this.mComment.setText(m.comment);
+						selIdx = idx;
+					}
+					idx++;
 				}
-			}
-			else if (this.mCurrentMarker && this.mCurrentMarker.name == rows[0][0])
-			{
-				this.mCurrentMarker.fullComment <- rows[0][3];
-				this.mComment.setText(this.mCurrentMarker.fullComment);
-				this.mEditTimer.cancel();
+				if(selIdx != -1) {
+					this.mList.setSelectedRows(selIdx);
+				}
 			}
 		}
 		else if (qa.query == "marker.edit")
 		{
 			local index = this._findMarker(qa.args[0]);
-
 			if (index == null)
 			{
 				return;
 			}
-
 			local m = this.mMarkers[index];
-			m.name = qa.args[2];
-			m.comment = qa.args[4];
-			m.fullComment = qa.args[4];
+			m.name = this.mNameEdit.getText();
+			m.comment =  this.mComment.getText();
 			this.mList.removeRow(m.index);
-			this.mList.insertRow(m.index, m);
-
-			if (this.mCurrentMarker && this.mCurrentMarker.name == m.name)
-			{
-				this.mList.selectRow(m.index);
-			}
+			this.mList.insertRow(m.index, [
+				m.name
+			]);
+			this.mList.setSelectedRows(m.index);
 		}
 		else if (qa.query == "marker.del")
 		{
@@ -213,21 +208,6 @@ class this.Screens.MarkerTweakScreen extends this.GUI.Frame
 				this.mCurrentMarker = null;
 				this.mComment.setText("");
 				this.mNameEdit.setText("");
-				this.mEditTimer.cancel();
-			}
-		}
-		else if(qa.query == "marker.comment") 
-		{
-			local index = this._findMarker(qa.args[0]);
-			if (index == null)
-			{
-				return;
-			}
-			local m = this.mMarkers[index];
-			this.mList.removeRow(m.index);
-			if (this.mCurrentMarker == m)
-			{
-				this.mComment.setText(rows[0][0]);
 			}
 		}
 	}
@@ -250,39 +230,26 @@ class this.Screens.MarkerTweakScreen extends this.GUI.Frame
 
 	function _setCurrentMarker( index )
 	{
-		this._submitEdit();
 		this.mCurrentMarker = this.mMarkers[index];
 		this.mNameEdit.setText(this.mCurrentMarker.name);
-
-		if ("fullComment" in this.mCurrentMarker)
-		{
-			this.mComment.setText(this.mCurrentMarker.fullComment);
-		}
-		else
-		{
-			this.mComment.setText("Fetching full comment...");
-			this.mEditTimer.cancel();
-			local args = [];
-			args.append(this.mCurrentMarker.name);
-			this._Connection.sendQuery("marker.comment", this, args);
-		}
+		this.mComment.setText(this.mCurrentMarker.comment);
 	}
 
-	function _submitEdit()
+	
+	function _doSubmit()
 	{
-		if (this.mCurrentMarker == null || this.mEditTimer.getTimeUntilFire() == null)
+		if (this.mCurrentMarker == null)
 		{
 			return;
 		}
-
-		this.mEditTimer.cancel();
+		
 		local args = [];
 		args.append(this.mCurrentMarker.name);
 		args.append("n");
 		args.append(this.mNameEdit.getText());
 		args.append("c");
 		args.append(this.mComment.getText());
-		this._Connection.sendQuery("marker.edit", {}, args);
+		this._Connection.sendQuery("marker.edit", this, args);
 	}
 
 	function setVisible( value )
