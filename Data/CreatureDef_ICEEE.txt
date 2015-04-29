@@ -766,3 +766,29 @@ display_name=Withering Madvine
 profession=4
 creature_category=Magical
 ai_package=frost_creature_brave_6
+
+[ENTRY]
+defHints=4
+ID=7784
+will_regen=1
+might_regen=1
+appearance=p1:{["a"]="Prop-Loot-Boss_Chest1"}
+level=1
+display_name=The Wailers Essence Chest
+profession=1
+creature_category=Inanimate
+ai_package=nothing
+
+[ENTRY]
+defHints=7
+ID=7785
+will_regen=1
+might_regen=1
+appearance=c2:{["a"]=[{["type"]="Item-Staff-Medium4",["node"]="right_hand",["colors"]=["FFFFFF","E9C4A2","FFFFFF"]}],["c"]={["chest"]={["type"]="Armor-Warrior-Redeemer_Captain",["colors"]=["7c66a1","817b89","e1c18e","3c3432","a06e4b","c2bdb7","2a2a23"]},["leggings"]={["type"]="Armor-Cloth-Epic3",["colors"]=["3f3634","d4b293","9c8c94","e9c57f","ffffff","594b6a"]},["collar"]={["type"]="Armor-Cloth-Epic1",["colors"]=["f1b86a","aa2974","312f3d","f7a72a","ffffff","8f78aa"]},["belt"]={["type"]="Armor-Cloth-Female-Fancy2",["colors"]=["bb2e7c","f2d756","6955ac","594b6a","d43392","ffffff","aa2974","ffffff"]},["arms"]={["type"]="Armor-Cloth-Epic2",["colors"]=["7c80bf","7d6994","e9c57f","ffffff","e9c57f","2a416d"]}},["b"]="m",["sk"]={["fingers_hooves"]="BFBFBF",["snout"]="D3C2AB",["eye_symbol"]="BCAD98",["base"]="2A2A2A",["eye"]="00D40D",["eye_white"]="FFFFFF",["nose"]="69502D",["inner_ear"]="E7D4BB"},["sz"]="1",["h"]=0,["g"]="f",["r"]="h"}
+level=45
+display_name=Zahn Meris
+profession=1
+creature_category=Mortal
+rarity=3
+ai_package=example
+total_size=5

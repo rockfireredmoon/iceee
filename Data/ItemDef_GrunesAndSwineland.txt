@@ -23,7 +23,7 @@ mQualityLevel=1
 [ENTRY]
 mID=10002
 mType=3
-mDisplayName=Essence Of The Wailer
+mDisplayName=Wailing Amulet
 mIcon=Icon-32-Amulet3.png|Icon-32-BG-Blue.png
 mLevel=48
 mBindingType=2
@@ -42,7 +42,7 @@ mMinUseLevel=48
 [ENTRY]
 mID=10003
 mType=3
-mDisplayName=Essence Of The Wailer
+mDisplayName=Wailing Amulet
 mIcon=Icon-32-Amulet8.png|Icon-32-BG-Blue.png
 mLevel=48
 mBindingType=2
@@ -61,7 +61,7 @@ mMinUseLevel=48
 [ENTRY]
 mID=10004
 mType=3
-mDisplayName=Essence Of The Wailer
+mDisplayName=Wailing Amulet
 mIcon=Icon-32-Amulet2.png|Icon-32-BG-Blue.png
 mLevel=48
 mBindingType=2
@@ -80,7 +80,7 @@ mMinUseLevel=48
 [ENTRY]
 mID=10005
 mType=3
-mDisplayName=Essence Of The Wailer
+mDisplayName=Wailing Amulet
 mIcon=Icon-32-Amulet9.png|Icon-32-BG-Blue.png
 mLevel=48
 mBindingType=2
@@ -182,3 +182,18 @@ mBindingType=2
 mBonusPsyche=28
 mBonusConstitution=28
 mArmorType=3
+
+[ENTRY]
+mID=10011
+mType=7
+mDisplayName=Essence of the Wailer
+mIcon=Icon-Unliving-Portrait.png|Icon-32-BG-Green.png
+mIvType1=1
+mIvMax1=20
+mIvType2=8
+mIvMax2=1
+mLevel=1
+mBindingType=1
+mValue=1
+mQualityLevel=2
+mMinUseLevel=1

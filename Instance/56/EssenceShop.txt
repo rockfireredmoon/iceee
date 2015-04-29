@@ -1,0 +1,9 @@
+﻿; Wailing Crypt, The Wailers Chest 
+[ENTRY]
+CreatureDefID=7784
+EssenceID=10011  ; Wailing Essence
+Item=10002,1  ; Essence of the Wailer
+Item=10003,1  ; Essence of the Wailer
+Item=10004,1  ; Essence of the Wailer
+Item=10005,1  ; Essence of the Wailer 
+

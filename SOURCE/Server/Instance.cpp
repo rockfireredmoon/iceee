@@ -2248,7 +2248,7 @@ void ActiveInstance :: InitializeData(void)
 		nutScriptPlayer.SetInstancePointer(this);
 		nutScriptPlayer.Initialize(&nutScriptDef);
 	}
-	else if(Util::HasEnding(path, ".text")) {
+	else if(Util::HasEnding(path, ".txt")) {
 		scriptDef.CompileFromSource(path.c_str());
 		scriptPlayer.Initialize(&scriptDef);
 		scriptPlayer.SetInstancePointer(this);
