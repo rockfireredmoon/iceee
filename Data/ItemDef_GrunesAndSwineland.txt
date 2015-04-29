@@ -8,3 +8,14 @@ mIvMax1=301
 mSv1=Gathering fluid!
 mValue=1
 mQualityLevel=1
+
+[ENTRY]
+mID=10001
+mType=9
+mDisplayName=Lanterneye Eye Fluid 
+mIcon=Icon-32-Eye_Green.png|Icon-32-BG-Green.png
+mIvType1=5
+mIvMax1=301
+mSv1=Gathering fluid!
+mValue=1
+mQualityLevel=1
