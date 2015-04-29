@@ -151,6 +151,7 @@ namespace Util
 	bool HasEnding (std::string const &fullString, std::string const &ending);
 	void TrimWhitespace(std::string &modify);
 	float StringToFloat(const std::string &str);
+	void ReplaceAll(std::string& str, const std::string& from, const std::string& to);
 
 	int GetInteger(const STRINGLIST &strList, size_t index);
 	int GetInteger(const std::string &str);

@@ -27,6 +27,7 @@ class this.Screens.MarkerTweakScreen extends this.GUI.Frame
 		this.mList.addColumn("Marker", 150);
 		this.mList.addActionListener(this);
 		this.mComment = this.GUI.InputArea();
+		this.mComment.setMultiLine(true);
 		this.mNameEdit = this.GUI.InputArea();
 		local top = this.GUI.Container();
 		top.getLayoutManager().setGaps(2, 1);
@@ -82,6 +83,7 @@ class this.Screens.MarkerTweakScreen extends this.GUI.Frame
 
 	function onNewMarker( button )
 	{
+		this.mCurrentMarker = null;
 		this.mNameEdit.setText("[New Marker name]");
 		this.mComment.setText("[Comment here]");
 	}
@@ -180,6 +182,7 @@ class this.Screens.MarkerTweakScreen extends this.GUI.Frame
 			local index = this._findMarker(qa.args[0]);
 			if (index == null)
 			{
+				this.refresh();
 				return;
 			}
 			local m = this.mMarkers[index];
@@ -238,13 +241,13 @@ class this.Screens.MarkerTweakScreen extends this.GUI.Frame
 	
 	function _doSubmit()
 	{
-		if (this.mCurrentMarker == null)
+		if (this.mNameEdit.getText().len() == 0)
 		{
 			return;
 		}
 		
 		local args = [];
-		args.append(this.mCurrentMarker.name);
+		args.append(this.mCurrentMarker == null ? "" : this.mCurrentMarker.name);
 		args.append("n");
 		args.append(this.mNameEdit.getText());
 		args.append("c");

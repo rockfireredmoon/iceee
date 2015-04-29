@@ -80,18 +80,18 @@ InstanceNutDef::~InstanceNutDef()
 }
 
 
-std::string InstanceNutDef::GetInstanceScriptPath(int zoneID, bool pathIfNotExists) {
+std::string InstanceNutDef::GetInstanceScriptPath(int zoneID, bool pathIfNotExists, bool grove) {
 	char strBuf[100];
-	Util::SafeFormat(strBuf, sizeof(strBuf), "Instance\\%d\\Script.nut", zoneID);
+	Util::SafeFormat(strBuf, sizeof(strBuf), "%s\\%d\\Script.nut", grove ? "Grove" : "Instance", zoneID);
 	Platform::FixPaths(strBuf);
 	if(!Platform::FileExists(strBuf)) {
-		Util::SafeFormat(strBuf, sizeof(strBuf), "Instance\\%d\\Script.txt", zoneID);
+		Util::SafeFormat(strBuf, sizeof(strBuf), "%s\\%d\\Script.txt", grove ? "Grove" : "Instance", zoneID);
 		Platform::FixPaths(strBuf);
 		if(!Platform::FileExists(strBuf) && !pathIfNotExists) {
 			return "";
 		}
 		if(pathIfNotExists) {
-			Util::SafeFormat(strBuf, sizeof(strBuf), "Instance\\%d\\Script.nut", zoneID);
+			Util::SafeFormat(strBuf, sizeof(strBuf), "%s\\%d\\Script.nut", grove ? "Grove" : "Instance", zoneID);
 			Platform::FixPaths(strBuf);
 		}
 	}

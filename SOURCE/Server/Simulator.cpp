@@ -9624,7 +9624,7 @@ int SimulatorThread :: handle_query_script_save(void)
 	Util::SafeFormat(tempStrBuf, sizeof(tempStrBuf), "Instance\\%d", creatureInst->actInst->mZone);
 	Platform::FixPaths(tempStrBuf);
 	Platform::MakeDirectory(tempStrBuf);
-	string path = InstanceScript::InstanceNutDef::GetInstanceScriptPath(creatureInst->actInst->mZone, true);
+	string path = InstanceScript::InstanceNutDef::GetInstanceScriptPath(creatureInst->actInst->mZone, true, creatureInst->actInst->mZoneDefPtr->mGrove);
 	string tpath = path;
 	tpath.append(".tmp");
 	std::ofstream out(tpath.c_str());
@@ -9671,7 +9671,7 @@ int SimulatorThread :: handle_query_script_load(void)
 	wpos += PutInteger(&SendBuf[wpos], query.ID);  //Query response index
 
 	char strBuf[100];
-	string path = InstanceScript::InstanceNutDef::GetInstanceScriptPath(creatureInst->actInst->mZone, false);
+	string path = InstanceScript::InstanceNutDef::GetInstanceScriptPath(creatureInst->actInst->mZone, false, creatureInst->actInst->mZoneDefPtr->mGrove);
 	if(path.length() == 0) {
 		LogMessageL(MSG_WARN, "[WARNING] Load script query unable to open script for zone: %d", creatureInst->actInst->mZone);
 		return 0;
@@ -9803,6 +9803,7 @@ int SimulatorThread :: handle_query_marker_edit(void)
 			return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
 		}
 	}
+	g_Log.AddMessageFormat("Creating new marker %s in zone %d at %s.", query.args[2].c_str(), creatureInst->actInst->mZone, query.args[4].c_str());
 	WorldMarker wm;
 	cs.Enter("SimulatorThread::UpdateWorldMarkers");
 	Util::SafeCopy(wm.Name, query.args[2].c_str(), sizeof(wm.Name));
@@ -9810,6 +9811,7 @@ int SimulatorThread :: handle_query_marker_edit(void)
 	wm.X = creatureInst->CurrentX;
 	wm.Y = creatureInst->CurrentY;
 	wm.Z = creatureInst->CurrentZ;
+	creatureInst->actInst->worldMarkers.WorldMarkerList.push_back(wm);
 	creatureInst->actInst->worldMarkers.Save();
 	cs.Leave();
 	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");

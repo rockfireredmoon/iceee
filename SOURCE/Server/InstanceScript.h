@@ -27,7 +27,7 @@ class InstanceNutDef: public ScriptCore::NutDef {
 
 public:
 	virtual ~InstanceNutDef();
-	static std::string GetInstanceScriptPath(int zoneID, bool pathIfNotExists);
+	static std::string GetInstanceScriptPath(int zoneID, bool pathIfNotExists, bool grove);
 
 private:
 	std::map<std::string, InstanceLocation> mLocationDef;

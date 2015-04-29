@@ -88,6 +88,7 @@ void WorldMarkerContainer::Clear()
 
 void WorldMarkerContainer::Save()
 {
+	g_Log.AddMessageFormat("Saving world markers to %s.", mFilename.c_str());
 	FILE *output = fopen(mFilename.c_str(), "wb");
 	if(output == NULL)
 	{
@@ -99,7 +100,10 @@ void WorldMarkerContainer::Save()
 	for (it = WorldMarkerList.begin(); it != WorldMarkerList.end(); ++it) {
 		fprintf(output, "[ENTRY]\r\n");
 		fprintf(output, "Name=%s\r\n", it->Name);
-		fprintf(output, "Comment=%s\r\n", it->Comment);
+		string r = it->Comment;
+		Util::ReplaceAll(r, "\r\n", "\\r\\n");
+		Util::ReplaceAll(r, "\n", "\\n");
+		fprintf(output, "Comment=%s\r\n", r.c_str());
 		fprintf(output, "Position=%1.1f,%1.1f,%1.1f\r\n", it->X, it->Y, it->Z);
 		fprintf(output, "\r\n");
 	}
@@ -159,7 +163,10 @@ void WorldMarkerContainer::Reload()
 			}
 			else if(strcmp(lfr.SecBuffer, "COMMENT") == 0)
 			{
-				Util::SafeCopy(newItem.Comment, lfr.BlockToStringC(1, 0), sizeof(newItem.Comment));
+				string r = lfr.BlockToStringC(1, 0);
+				Util::ReplaceAll(r, "\\r\\n", "\r\n");
+				Util::ReplaceAll(r, "\\n", "\n");
+				Util::SafeCopy(newItem.Comment, r.c_str(), sizeof(newItem.Comment));
 			}
 		}
 	}
@@ -2235,7 +2242,7 @@ void ActiveInstance :: InitializeData(void)
 	spawnsys.SetInstancePointer(this);
 
 	//Load the new script system
-	std::string path = InstanceScript::InstanceNutDef::GetInstanceScriptPath(mZone, false);
+	std::string path = InstanceScript::InstanceNutDef::GetInstanceScriptPath(mZone, false, mZoneDefPtr->mGrove);
 	if(Util::HasEnding(path, ".nut")) {
 		nutScriptDef.Initialize(path.c_str());
 		nutScriptPlayer.SetInstancePointer(this);
@@ -2260,25 +2267,25 @@ void ActiveInstance :: InitializeData(void)
 
 	//Load essence shop data.
 	char buffer[256];
-	Util::SafeFormat(buffer, sizeof(buffer), "Instance\\%d\\EssenceShop.txt", mZone);
+	Util::SafeFormat(buffer, sizeof(buffer), "%s\\%d\\EssenceShop.txt", mZoneDefPtr->mGrove ? "Grove" : "Instance", mZone);
 	Platform::FixPaths(buffer);
 	essenceShopList.LoadFromFile(buffer);
 	if(essenceShopList.EssenceShopList.size() > 0)
 		g_Log.AddMessageFormatW(MSG_DIAG, "Loaded %d essence shops.", essenceShopList.EssenceShopList.size());
 
-	Util::SafeFormat(buffer, sizeof(buffer), "Instance\\%d\\Shop.txt", mZone);
+	Util::SafeFormat(buffer, sizeof(buffer), "%s\\%d\\Shop.txt", mZoneDefPtr->mGrove ? "Grove" : "Instance", mZone);
 	Platform::FixPaths(buffer);
 	itemShopList.LoadFromFile(buffer);
 	if(itemShopList.EssenceShopList.size() > 0)
 		g_Log.AddMessageFormatW(MSG_DIAG, "Loaded %d item shops.", itemShopList.EssenceShopList.size());
 
 
-	Util::SafeFormat(buffer, sizeof(buffer), "Instance\\%d\\Static.txt", mZone);
+	Util::SafeFormat(buffer, sizeof(buffer), "%s\\%d\\Static.txt", mZoneDefPtr->mGrove ? "Grove" : "Instance", mZone);
 	Platform::FixPaths(buffer);
 	LoadStaticObjects(buffer);
 
 	//World markers (for devs)
-	Util::SafeFormat(buffer, sizeof(buffer), "Instance\\%d\\WorldMarkers.txt", mZone);
+	Util::SafeFormat(buffer, sizeof(buffer), "%s\\%d\\WorldMarkers.txt", mZoneDefPtr->mGrove ? "Grove" : "Instance", mZone);
 	Platform::FixPaths(buffer);
 	worldMarkers.LoadFromFile(buffer);
 	if(worldMarkers.WorldMarkerList.size() > 0)
@@ -3129,7 +3136,7 @@ bool ActiveInstance :: RunScript()
 	}
 
 	//Load the new script system
-	std::string path = InstanceScript::InstanceNutDef::GetInstanceScriptPath(mZone, false);
+	std::string path = InstanceScript::InstanceNutDef::GetInstanceScriptPath(mZone, false, mZoneDefPtr->mGrove);
 	if(Util::HasEnding(path, ".nut")) {
 		nutScriptDef.Initialize(path.c_str());
 		nutScriptPlayer.SetInstancePointer(this);
