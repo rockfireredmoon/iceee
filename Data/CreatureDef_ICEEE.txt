@@ -780,7 +780,7 @@ creature_category=Inanimate
 ai_package=nothing
 
 [ENTRY]
-defHints=7
+defHints=8
 ID=7785
 will_regen=1
 might_regen=1

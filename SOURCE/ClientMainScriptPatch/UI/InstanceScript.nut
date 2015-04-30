@@ -102,7 +102,7 @@ class this.Screens.InstanceScript extends this.GUI.Frame
 	{	
 		try
 		{
-			this.mScript.setText(this.unserialize(this.System.getClipboard()));
+			this.mScript.setText(this.System.getClipboard());
 		}
 		catch( err )
 		{
