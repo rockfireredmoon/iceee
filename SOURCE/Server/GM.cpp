@@ -50,9 +50,8 @@ bool PetitionManager::Take(int petitionId, int sageCharacterId) {
 	Platform::FixPaths(tempStrBuf);
 	Util::SafeFormat(tempStrBuf2, sizeof(tempStrBuf2), "Petitions\\%d\\%d.txt", sageCharacterId, petitionId);
 	Platform::FixPaths(tempStrBuf2);
-	if(Platform::FileCopy(tempStrBuf, tempStrBuf2) == 0)
-		if(remove(tempStrBuf))
-			return true;
+	if(Platform::FileCopy(tempStrBuf, tempStrBuf2) == 0 && remove(tempStrBuf) == 0)
+		return true;
 	g_Log.AddMessageFormat("[ERROR] Failed to take petition to %s", tempStrBuf);
 	return false;
 }
@@ -63,9 +62,8 @@ bool PetitionManager::Untake(int petitionId, int sageCharacterId) {
 	Platform::FixPaths(tempStrBuf);
 	Util::SafeFormat(tempStrBuf2, sizeof(tempStrBuf2), "Petitions\\Pending\\%d.txt", petitionId);
 	Platform::FixPaths(tempStrBuf2);
-	if(Platform::FileCopy(tempStrBuf, tempStrBuf2) == 0)
-		if(remove(tempStrBuf))
-			return true;
+	if(Platform::FileCopy(tempStrBuf, tempStrBuf2) == 0 && remove(tempStrBuf) == 0)
+		return true;
 	g_Log.AddMessageFormat("[ERROR] Failed to untake petition to %s", tempStrBuf);
 	return false;
 }
@@ -76,9 +74,8 @@ bool PetitionManager::Close(int petitionId, int sageCharacterId) {
 	Platform::FixPaths(tempStrBuf);
 	Util::SafeFormat(tempStrBuf2, sizeof(tempStrBuf2), "Petitions\\Closed\\%d.txt", petitionId);
 	Platform::FixPaths(tempStrBuf2);
-	if(Platform::FileCopy(tempStrBuf, tempStrBuf2) == 0)
-		if(remove(tempStrBuf))
-			return true;
+	if(Platform::FileCopy(tempStrBuf, tempStrBuf2) == 0 && remove(tempStrBuf) == 0)
+		return true;
 	g_Log.AddMessageFormat("[ERROR] Failed to close petition to %s", tempStrBuf);
 	return false;
 }

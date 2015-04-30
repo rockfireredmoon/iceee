@@ -36,6 +36,7 @@ planetforeverd_SOURCES = md5.cc \
 	Gamble.cpp \
 	Globals.cpp \
 	Guilds.cpp \
+	GM.cpp \
 	HTTPBase.cpp \
 	HTTPDistribute.cpp \
 	IGForum.cpp \
@@ -108,6 +109,7 @@ planetforeverd_SOURCES = md5.cc \
 	Gamble.h \
 	Globals.h \
 	Guilds.h \
+	GM.h \
 	HTTPBase.h \
 	HTTPDistribute.h \
 	IGForum.h \
