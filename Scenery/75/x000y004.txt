@@ -667,14 +667,15 @@ Scale=1,1,1
 ID=1114855
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=Untitled
-Pos=1573.18,500,8113.64
-Orient=0,0.737931,0,0.674876
+Pos=1572.25,500,8113.64
+Orient=0,0.998444,0,0.0557678
 Scale=1,1,1
+spawnPackage=#F7789
 
 [ENTRY]
 ID=1114858
 Asset=Light-Huge?Group=1&COLOR=FF8516
-Name=
+Name=Untitled
 Pos=1558.76,517.318,8050.78
 Orient=0,0,0,1
 Scale=1,1,1
