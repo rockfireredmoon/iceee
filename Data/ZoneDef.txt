@@ -982,6 +982,14 @@ ShardName=Starting Zone
 WarpName=Bastion
 DefLoc=10994,546,12401
 
+[ENTRY]
+ID=93
+NAME=Boss Hawg's
+ENVIRONMENTTYPE=Dungeon1
+ShardName=Europe 1
+WarpName=Boss-Hawgs
+DefLoc=2531,296,2527
+PageSize=1000
 
 [ENTRY]
 ID=1059

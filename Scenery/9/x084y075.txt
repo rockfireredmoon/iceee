@@ -8,6 +8,15 @@ Scale=1,1,1
 spawnPackage=#F1355
 
 [ENTRY]
+ID=1126556
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=63747.4,794.368,56555.6
+Orient=0,0.439462,0,0.898261
+Scale=1,1,1
+spawnPackage=#F7790
+
+[ENTRY]
 ID=151016714
 Asset=Bldg-Stone_Lion_Fort#Bldg-Stone_Lion_Fort?ATS=ATS-Warpig
 Name=Untitled

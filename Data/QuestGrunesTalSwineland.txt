@@ -1978,3 +1978,60 @@ Obj.0.myCreatureDefID=1248
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=64157.2,779.793,56624.6,9
+
+[ENTRY]
+ID=831
+Title=Haunted Hill
+BodyText=There is a slouching peak northeast of here - its true name lost to time, called now "Haunted Hill."
+
+You think it trite? When you see the horrors that the earth vomits forth there, you willl be as bereft of description as the rest of us!
+
+Even before the rise of the undead, there was the Outcast Wars  - which ended and began at once a new era in which we cower from hordes of the pustulent undead. The Beasts here fought for their lives, or fled. A few however, tried to "ride the storm out". This, like many things here, did not end well.
+
+
+At the end of the resistance, less than one hundred beasts remained who could claim nativity to the once-bountiful Grunes Tal. Among those who survived was a noble family, the Folkirks. They made their fortune in the mining business, and having earned their wealth from The Iron Maw generations ago, not a single one of them had ever worked. That, friend, is what miners, and often slaves were for.
+
+The remaining Beasts, knowing the Folkirk Manor to be a veritable fortress, decided to fall back and wait out the undead army.
+
+The Folkirk family however, was not amused. Not a single Beast was let inside the manor doors, and legend has it that the family members could be seen watching their comrades being ripped to shreds by zombies right outside their windows.
+
+Most of the resistance died within a week, if they could flee, less if not. Their vengeance-hungry ghosts still haunt that hill outside the manor to this day, but there is some justice in that the Folkirk family seems to have been "turned" into undead as well.
+
+I cannot bear the anguished cries the wind carries any longer! Please, travel to Haunted Hill north of Redeemer's Camp. Put the Vengance-Singers out of their misery by freeing eleven of them from this realm.
+CompleteText=Ah, at last, the anguished cries on the wind are no more! After you left I heard the cries of the Singers again for a short time, yet soon all went quiet. I was certain the sudden silence was your handiwork and I was right! Finally I can have some peace around here, not that there is much peace in a land filled with undead mind you, yet I will take what I can get!
+
+At any rate, I can only hope those poor souls are finally at peace. I wish upon no beast the horrible fate they had to endure. Thanks again for your help!
+Level=44
+Suggested=44
+Exp=7842
+PartySize=1
+NumRewards=0
+Coin=2318
+Unabandon=0
+QuestGiverID=1199
+QuestEnderID=1199
+Repeat=0
+sGiver=58079.8,803.302,66771.8,9
+sEnder=58079.8,803.302,66771.8,9
+[ACT]
+Act.BodyText=Travel to Haunted Hill and silence eleven Vengeance Singers outside the Folkirk Manor.
+Obj.0.type=kill
+Obj.0.data1=1260
+Obj.0.data2=11
+Obj.0.description=Kill Vengeance Singer
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 11
+Obj.0.markerLocations=63157,1263.87,62944,9;
+[ACT]
+Act.BodyText=Return to Shayne Twitchtail
+Obj.0.type=talk
+Obj.0.data1=
+Obj.0.data2=
+Obj.0.description=Return to Shayne Twitchtail
+Obj.0.complete=0
+Obj.0.myCreatureDefID=1199
+Obj.0.myItemID=
+Obj.0.completeText=Return to Shayne Twitchtail
+Obj.0.markerLocations=58079.8,803.302,66771.8,9;

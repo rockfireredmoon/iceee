@@ -1356,3 +1356,17 @@ Type=warp
 ObjectID=7789
 WarpTo=63068,1263,63101,9
 Message=Exiting The Wailing Crypt
+
+[ENTRY]
+Name=grunes_to_boss_hawgs
+Type=warp
+ObjectID=7790
+WarpTo=2535,296,2526,93
+Message=Entering Boss Hawg's
+
+[ENTRY]
+Name=boss_hawgs_to_grunes
+Type=warp
+ObjectID=7791
+WarpTo=63798,780,56598,9
+Message=Exiting Boss Hawg's
