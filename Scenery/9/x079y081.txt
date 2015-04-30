@@ -1,26 +1,37 @@
 [ENTRY]
+ID=1127539
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=59902.8,902.824,60932.8
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=11_jld_junderbroodWorkskrill_k_43
+wanderRadius=100
+
+[ENTRY]
 ID=151027237
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=59308.2,923.123,61017
 Orient=0,-0.636537,0,0.771246
 Scale=1,1,1
+spawnPackage=11_jld_junderbroodSkrillmix_43
 links_count=1
 link=151027245,1
-spawnPackage=11_jld_junderbroodSkrillmix_43
-outerRadius=10
 
 [ENTRY]
 ID=151027240
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=59385.5,925.163,61027
 Orient=0,-0.655617,0,0.755093
 Scale=1,1,1
 spawnPackage=11_jld_junderbroodSkrillmix_43
-outerRadius=10
 
 [ENTRY]
 ID=151027245
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=59314.9,916.76,61082
 Orient=0,0,0,1
 Scale=1,1,1
@@ -31,6 +42,7 @@ link=151027246,1
 [ENTRY]
 ID=151027246
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=59542.3,914.891,61030
 Orient=0,0,0,1
 Scale=1,1,1
@@ -41,6 +53,7 @@ link=151027247,1
 [ENTRY]
 ID=151027247
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=59696.2,910.964,60898
 Orient=0,0,0,1
 Scale=1,1,1
@@ -51,6 +64,7 @@ link=151027248,1
 [ENTRY]
 ID=151027248
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=59860.2,909.478,60845
 Orient=0,0,0,1
 Scale=1,1,1
@@ -61,6 +75,7 @@ link=151027249,1
 [ENTRY]
 ID=151027960
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=59650.9,911.457,61037
 Orient=0,0,0,1
 Scale=1,1,1
@@ -70,6 +85,7 @@ link=151027961,1
 [ENTRY]
 ID=151027961
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=59542,914.774,61081
 Orient=0,0,0,1
 Scale=1,1,1
@@ -80,6 +96,7 @@ link=151027962,1
 [ENTRY]
 ID=151027962
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=59406.6,918.532,61108
 Orient=0,0,0,1
 Scale=1,1,1
@@ -90,6 +107,7 @@ link=151027963,1
 [ENTRY]
 ID=151027963
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=59263.8,909.874,61153
 Orient=0,0,0,1
 Scale=1,1,1
@@ -101,6 +119,7 @@ link=151027964,1
 [ENTRY]
 ID=151040321
 Asset=CL-GrunsBush_3#CL-GrunsBush_3
+Name=Untitled
 Pos=59907.6,830.878,61474
 Orient=0,0,0,1
 Scale=2.925,2.925,2.925
@@ -108,6 +127,7 @@ Scale=2.925,2.925,2.925
 [ENTRY]
 ID=151040323
 Asset=CL-GrunsBush_5#CL-GrunsBush_5
+Name=Untitled
 Pos=59357,883.431,61246
 Orient=0,0,0,1
 Scale=1.475,1.475,1.475
@@ -115,6 +135,7 @@ Scale=1.475,1.475,1.475
 [ENTRY]
 ID=151040324
 Asset=CL-AridBush4#CL-AridBush4
+Name=Untitled
 Pos=59663.8,910.924,60781
 Orient=0,0,0,1
 Scale=1,1,1
@@ -122,6 +143,7 @@ Scale=1,1,1
 [ENTRY]
 ID=151040325
 Asset=CL-AridBush3#CL-AridBush3
+Name=Untitled
 Pos=59999.4,884.806,60973
 Orient=0,0,0,1
 Scale=2.275,2.275,2.275
@@ -129,6 +151,7 @@ Scale=2.275,2.275,2.275
 [ENTRY]
 ID=151040327
 Asset=CL-AridBush5#CL-AridBush5
+Name=Untitled
 Pos=59262.1,919.308,61004
 Orient=0,0,0,1
 Scale=1,1,1
@@ -136,6 +159,7 @@ Scale=1,1,1
 [ENTRY]
 ID=151040331
 Asset=Prop-Boulder_Arid#Prop-Boulder_Arid3
+Name=Untitled
 Pos=59702.7,808.492,61334
 Orient=0,-0.448423,0,0.893822
 Scale=1.65,1.65,1.65

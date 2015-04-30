@@ -1,10 +1,45 @@
 [ENTRY]
-Name=Redeemer Camp Blah
-Comment=The first map marker
-Position=58637.0,781.0,66766.0
+Name=The Tent
+Comment=A weird tent
+Position=63800.0,875.0,64967.0
 
 [ENTRY]
-Name=Behemoth
-Comment=D-i-y life
-Position=58348.0,784.0,66805.0
+Name=Standing here
+Comment=[Comment here]
+Position=63678.0,852.0,64930.0
+
+[ENTRY]
+Name=Grunes Tal -  North Warpig Town
+Comment=Next to Entrance to swineline
+Position=64156.0,780.0,56858.0
+
+[ENTRY]
+Name=Grunes Tal - NE Marker
+Comment=move as needed
+Position=66775.0,760.0,56753.0
+
+[ENTRY]
+Name=Grunes Tal - SE Marker
+Comment=[Comment here]
+Position=63272.0,1288.0,70889.0
+
+[ENTRY]
+Name=Grunes Tal SW Marker
+Comment=[Comment here]
+Position=50817.0,1277.0,70052.0
+
+[ENTRY]
+Name=Grune Marker NW
+Comment=[Comment here]
+Position=56369.0,684.0,57910.0
+
+[ENTRY]
+Name=GT -West Midland North
+Comment=[Comment here]
+Position=56354.0,684.0,57918.0
+
+[ENTRY]
+Name=Wailing Crypt Entrance
+Comment=[Comment here]
+Position=52544.0,677.0,68411.0
 

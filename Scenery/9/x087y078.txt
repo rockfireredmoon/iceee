@@ -1,6 +1,7 @@
 [ENTRY]
 ID=151015227
 Asset=Prop-Sick-Forest_Tree#Prop-Sick-Forest_Tree3
+Name=Untitled
 Pos=65674,523.689,58965
 Orient=0,0,0,1
 Scale=1,1,1
@@ -9,6 +10,7 @@ Flags=1
 [ENTRY]
 ID=151017412
 Asset=Prop-Lamp_Post_Junk#Prop-Lamp_Post_Junk2
+Name=Untitled
 Pos=65335.4,580.146,58781
 Orient=0.0192447,-0.953084,0.0620378,0.295655
 Scale=1.55,1.55,1.55
@@ -17,6 +19,7 @@ Flags=1
 [ENTRY]
 ID=151027593
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=65876,731.945,59225
 Orient=0,0,0,1
 Scale=1,1,1
@@ -24,38 +27,22 @@ links_count=1
 link=151027592,1
 
 [ENTRY]
-ID=151027848
-Asset=Manipulator-SpawnPoint
-Pos=65330.3,596.845,58532
-Orient=0,0,0,1
-Scale=1,1,1
-spawnPackage=11_jld_HogcatcherMix_43_44
-outerRadius=60
-
-[ENTRY]
 ID=151027851
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=65528,543.002,59064
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_jld_HogcatcherMix_43_44
-outerRadius=60
-
-[ENTRY]
-ID=151027852
-Asset=Manipulator-SpawnPoint
-Pos=65489,590.456,58878
-Orient=0,0,0,1
-Scale=1,1,1
-spawnPackage=11_jld_HogcatcherMix_43_44
-outerRadius=60
+wanderRadius=60
 
 [ENTRY]
 ID=151027853
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=65786,542.172,58803
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_jld_HogcatcherMix_43_44
-outerRadius=60
+wanderRadius=100
 

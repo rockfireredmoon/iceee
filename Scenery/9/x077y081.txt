@@ -1,6 +1,7 @@
 [ENTRY]
 ID=151027195
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=58108,527.165,60970
 Orient=0,0,0,1
 Scale=1,1,1
@@ -11,6 +12,7 @@ link=151027220,1
 [ENTRY]
 ID=151027196
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=57972.1,532.845,60924
 Orient=0,0,0,1
 Scale=1,1,1
@@ -22,6 +24,7 @@ link=151027222,1
 [ENTRY]
 ID=151027197
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=57880.3,549.919,61014
 Orient=0,0,0,1
 Scale=1,1,1
@@ -33,57 +36,58 @@ link=151027224,1
 [ENTRY]
 ID=151027220
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=58122,518.255,60948
 Orient=0,0.548024,0,0.836463
 Scale=1,1,1
+spawnPackage=11_jld_junderbroodSoldierskrill_k_44
 links_count=1
 link=151027195,1
-spawnPackage=11_jld_junderbroodSoldierskrill_k_44
-outerRadius=10
 
 [ENTRY]
 ID=151027221
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=58044.9,528.464,60918
 Orient=0,0.601198,0,0.7991
 Scale=1,1,1
 spawnPackage=11_jld_junderbroodSoldierskrill_k_44
-outerRadius=10
 
 [ENTRY]
 ID=151027222
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=57971.1,536.13,60903
 Orient=0,0.699716,0,0.714421
 Scale=1,1,1
+spawnPackage=11_jld_junderbroodSoldierskrill_k_44
 links_count=1
 link=151027196,1
-spawnPackage=11_jld_junderbroodSoldierskrill_k_44
-outerRadius=10
 
 [ENTRY]
 ID=151027223
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=57912.9,544.315,60939
 Orient=0,0.854714,0,0.519099
 Scale=1,1,1
 spawnPackage=11_jld_junderbroodSoldierskrill_k_44
-outerRadius=10
 
 [ENTRY]
 ID=151027224
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=57866.4,550.019,60990
 Orient=0,0.741297,0,0.671178
 Scale=1,1,1
+spawnPackage=11_jld_junderbroodSoldierskrill_k_44
 links_count=1
 link=151027197,1
-spawnPackage=11_jld_junderbroodSoldierskrill_k_44
-outerRadius=10
 
 [ENTRY]
 ID=151027260
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=58406.6,903.129,61314
 Orient=0,0,0,1
 Scale=1,1,1
@@ -94,6 +98,7 @@ link=151027261,1
 [ENTRY]
 ID=151027261
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=58176.2,893.033,61285
 Orient=0,0,0,1
 Scale=1,1,1
@@ -104,6 +109,7 @@ link=151027262,1
 [ENTRY]
 ID=151027262
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=58018.5,883.883,61302
 Orient=0,0,0,1
 Scale=1,1,1
@@ -114,7 +120,8 @@ link=151027263,1
 [ENTRY]
 ID=151027263
 Asset=Manipulator#Manipulator-PathNode
-Pos=57871.8,843.648,61354
+Name=Untitled
+Pos=57959.2,854.387,61477.7
 Orient=0,0,0,1
 Scale=1,1,1
 links_count=1
@@ -123,6 +130,7 @@ link=151027262,1
 [ENTRY]
 ID=151027968
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=58422.7,898.908,61341
 Orient=0,0,0,1
 Scale=1,1,1
@@ -133,6 +141,7 @@ link=151027969,1
 [ENTRY]
 ID=151027969
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=58168.9,890.009,61341
 Orient=0,0,0,1
 Scale=1,1,1
@@ -140,44 +149,55 @@ links_count=1
 link=151027968,1
 
 [ENTRY]
-ID=151027978
+ID=151027976
 Asset=Manipulator-SpawnPoint
-Pos=57969.8,778.624,61499
-Orient=0,0.997606,0,-0.0691484
+Name=Untitled
+Pos=57769.5,759.887,61272.1
+Orient=0,0.413771,0,-0.910381
 Scale=1,1,1
 spawnPackage=11_jld_junderbroodSkrillmix_43
-outerRadius=10
+
+[ENTRY]
+ID=151027978
+Asset=Manipulator-SpawnPoint
+Name=Untitled
+Pos=58153.4,874.113,61329.8
+Orient=0,0.60247,0,-0.798141
+Scale=1,1,1
+spawnPackage=11_jld_junderbroodSkrillmix_43
+wanderRadius=100
 
 [ENTRY]
 ID=151027979
 Asset=Manipulator-SpawnPoint
-Pos=57961.4,777.197,61466
-Orient=0,-0.946814,0,0.321782
+Name=Untitled
+Pos=57861,792.959,61169.8
+Orient=0,-0.723035,0,0.690812
 Scale=1,1,1
 spawnPackage=11_jld_junderbroodSkrillmix_43
-outerRadius=10
 
 [ENTRY]
 ID=151027980
 Asset=Manipulator-SpawnPoint
-Pos=57959.8,778.433,61432
-Orient=0,0.935616,0,0.353019
+Name=Untitled
+Pos=57924.5,783.388,61323.5
+Orient=0,0.999983,0,0.00579593
 Scale=1,1,1
 spawnPackage=11_jld_junderbroodSkrillmix_43
-outerRadius=10
 
 [ENTRY]
 ID=151027981
 Asset=Manipulator-SpawnPoint
-Pos=57981.2,785.937,61413
-Orient=0,-0.944672,0,-0.328017
+Name=Untitled
+Pos=57934.3,789.849,61237.7
+Orient=0,-0.997248,0,-0.0741355
 Scale=1,1,1
 spawnPackage=11_jld_junderbroodSkrillmix_43
-outerRadius=10
 
 [ENTRY]
 ID=151040328
 Asset=CL-AridBush6#CL-AridBush6
+Name=Untitled
 Pos=58432,904.952,61250
 Orient=0,-0.324043,0,0.946042
 Scale=1.725,1.725,1.725
@@ -185,6 +205,7 @@ Scale=1.725,1.725,1.725
 [ENTRY]
 ID=151040329
 Asset=Prop-Boulder_Arid#Prop-Boulder_Arid1
+Name=Untitled
 Pos=58443,893.32,61224
 Orient=0,0,0,1
 Scale=1.475,1.475,1.475
@@ -192,6 +213,7 @@ Scale=1.475,1.475,1.475
 [ENTRY]
 ID=151045316
 Asset=Prop-Boulder_Arid#Prop-Boulder_Arid2
+Name=Untitled
 Pos=58261.3,540.542,60799
 Orient=0,0,0,1
 Scale=2,2,2
@@ -200,6 +222,7 @@ Flags=1
 [ENTRY]
 ID=151045317
 Asset=CL-AridBush1#CL-AridBush1
+Name=Untitled
 Pos=58212.8,537.576,60827
 Orient=0,0,0,1
 Scale=1.775,1.775,1.775

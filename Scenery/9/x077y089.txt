@@ -29,8 +29,8 @@ spawnPackage=z9_eur_Lanternkeeper_Lumin
 ID=1030339
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=Untitled
-Pos=58292.1,789.07,66833.6
-Orient=0,-5.96046e-08,0,1
+Pos=58292.7,789.07,66833.6
+Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=z9_eur_Lanternkeeper_Rosco
 

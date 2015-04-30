@@ -93,3 +93,4 @@ Obj.0.myCreatureDefID=7779
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=44487.2,224.503,65150,81;
+

@@ -1,4 +1,13 @@
 [ENTRY]
+ID=1127474
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=58783.5,945.071,63548.3
+Orient=0,0.995881,0,0.0906716
+Scale=1,1,1
+spawnPackage=11_dth_shadowfieldCity
+
+[ENTRY]
 ID=151016234
 Asset=Bldg-Urban-Inn1b?ATS=ATS-Undead
 Name=Untitled
@@ -505,6 +514,7 @@ Pos=58999.3,995.852,63021
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_dth_shadowfieldCity
+wanderRadius=50
 
 [ENTRY]
 ID=151028872
@@ -555,6 +565,7 @@ Pos=59096,977.111,63461
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_dth_shadowfieldCity
+wanderRadius=50
 
 [ENTRY]
 ID=151028882

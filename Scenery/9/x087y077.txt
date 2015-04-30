@@ -84,6 +84,16 @@ link=151027447,1
 link=151027449,1
 
 [ENTRY]
+ID=151027848
+Asset=Manipulator-SpawnPoint
+Name=Untitled
+Pos=65270,613.424,58420
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=11_jld_HogcatcherMix_43_44
+wanderRadius=60
+
+[ENTRY]
 ID=151027856
 Asset=Manipulator-SpawnPoint
 Name=Untitled

@@ -10,11 +10,33 @@ spawnPackage=#2870
 [ENTRY]
 ID=1091129
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=65129,572.116,57773.6
 Orient=0,0.816314,0,0.577609
 Scale=1,1,1
 spawnPackage=#2831
+
+[ENTRY]
+ID=1127521
+Asset=Manipulator#Manipulator-PathNode
+Name=
+Pos=64770,550.184,58450
+Orient=0,0,0,1
+Scale=1,1,1
+links_count=2
+link=151027850,1
+link=1127520,1
+
+[ENTRY]
+ID=1127522
+Asset=Manipulator#Manipulator-PathNode
+Name=
+Pos=64905,541.103,58415
+Orient=0,0,0,1
+Scale=1,1,1
+links_count=2
+link=151027850,1
+link=1127520,1
 
 [ENTRY]
 ID=151015228
@@ -71,15 +93,6 @@ Scale=3.275,3.275,3.275
 Flags=1
 
 [ENTRY]
-ID=151027849
-Asset=Manipulator-SpawnPoint
-Name=Untitled
-Pos=65191.8,608.636,58273
-Orient=0,0,0,1
-Scale=1,1,1
-spawnPackage=11_jld_HogcatcherMix_43_44
-
-[ENTRY]
 ID=151027850
 Asset=Manipulator-SpawnPoint
 Name=Untitled
@@ -87,6 +100,10 @@ Pos=64937.1,543.004,58493
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_jld_HogcatcherMix_43_44
+links_count=3
+link=1127522,1
+link=1127521,1
+link=1127520,1
 
 [ENTRY]
 ID=151028886

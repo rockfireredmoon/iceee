@@ -5167,3 +5167,11 @@ Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=56_wacr_FullMix
 
+[ENTRY]
+ID=1127691
+Asset=Prop-Instance_Entrance#Prop-Instance_Entrance
+Name=
+Pos=2124.47,680.003,541.307
+Orient=0,0.720831,0,0.693111
+Scale=1,1,1
+
