@@ -1,0 +1,5 @@
+[ENTRY]
+Name=Entrance
+Comment=Start of dungeon
+Position=1564.0,500.0,8060.0
+

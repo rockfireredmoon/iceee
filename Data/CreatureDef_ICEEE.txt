@@ -792,3 +792,47 @@ creature_category=Mortal
 rarity=3
 ai_package=example
 total_size=5
+
+[ENTRY]
+ID=7786
+will_regen=1
+might_regen=1
+appearance=p1:{["a"]="Prop-Interact_Rectangle",["sz"]="1"}
+level=1
+display_name=The Wailing Crypt Entrance
+profession=1
+creature_category=Inanimate
+ai_package=nothing
+
+[ENTRY]
+ID=7787
+will_regen=1
+might_regen=1
+appearance=p1:{["a"]="Prop-Interact_Rectangle",["sz"]="1"}
+level=1
+display_name=Exit To Grunes Tal
+profession=1
+creature_category=Inanimate
+ai_package=nothing
+
+[ENTRY]
+ID=7788
+will_regen=1
+might_regen=1
+appearance=p1:{["a"]="Prop-Interact_Rectangle",["sz"]="1"}
+level=1
+display_name=Folkirk Manor Entrance
+profession=1
+creature_category=Inanimate
+ai_package=nothing
+
+[ENTRY]
+ID=7789
+will_regen=1
+might_regen=1
+appearance=p1:{["a"]="Prop-Interact_Rectangle",["sz"]="1"}
+level=1
+display_name=Exit To Grunes Tal
+profession=1
+creature_category=Inanimate
+ai_package=nothing

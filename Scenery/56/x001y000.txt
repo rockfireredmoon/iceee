@@ -1,12 +1,4 @@
 [ENTRY]
-ID=939754
-Asset=Prop-Instance_Entrance
-Name=Scenery/80031
-Pos=2125.23,682.671,555.879
-Orient=0,-0.714978,0,-0.699147
-Scale=1.25,1.25,1.25
-
-[ENTRY]
 ID=939755
 Asset=Light-Medium?COLOR=33FFFF
 Name=Scenery/80032
@@ -5103,6 +5095,15 @@ Scale=1,1,1
 spawnPackage=56_wacr_FullMix
 
 [ENTRY]
+ID=1126557
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=2125.64,656.997,545.357
+Orient=0,-0.999991,0,-0.00420359
+Scale=1,1,1
+spawnPackage=#F7787
+
+[ENTRY]
 ID=1127166
 Asset=Prop-Battlefield1#Prop-Battlefield_Skeleton1
 Name=Untitled
@@ -5170,7 +5171,7 @@ spawnPackage=56_wacr_FullMix
 [ENTRY]
 ID=1127691
 Asset=Prop-Instance_Entrance#Prop-Instance_Entrance
-Name=
+Name=Untitled
 Pos=2124.47,680.003,541.307
 Orient=0,0.720831,0,0.693111
 Scale=1,1,1

@@ -24,15 +24,15 @@ link=1104000,1
 [ENTRY]
 ID=1125672
 Asset=Prop-Instance_Entrance#Prop-Instance_Entrance
-Name=
-Pos=52571.9,703.461,68415.8
+Name=Untitled
+Pos=52571.9,703.461,68417.5
 Orient=0,0,0,1
 Scale=1,1,1
 
 [ENTRY]
 ID=1125675
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=52520.4,679.473,68469.7
 Orient=0,0,0,1
 Scale=0.925,0.925,0.925
@@ -43,13 +43,22 @@ link=1125676,1
 [ENTRY]
 ID=1125678
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=52518.6,683.7,68516.6
 Orient=0,0,0,1
 Scale=1,1,1
 links_count=2
 link=1125677,1
 link=151028336,1
+
+[ENTRY]
+ID=1126556
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=52575.8,687.984,68418.6
+Orient=0,-0.724287,0,0.689498
+Scale=1,1,1
+spawnPackage=#F7786
 
 [ENTRY]
 ID=151016960

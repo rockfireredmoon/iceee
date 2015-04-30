@@ -43,3 +43,8 @@ Name=Wailing Crypt Entrance
 Comment=[Comment here]
 Position=52544.0,677.0,68411.0
 
+[ENTRY]
+Name=Folkirk Manor
+Comment=Instance entrance
+Position=63068.0,214.0,63101.0
+

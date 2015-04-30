@@ -1328,7 +1328,7 @@ Cost=5300
 [ENTRY]
 Name=grunes_to_wailingcrypt
 Type=warp
-ObjectID=1125672
+ObjectID=7786
 WarpTo=2125,660,597,56
 Message=Entering The Wailing Crypt
 ;Need quest ID for this
@@ -1337,6 +1337,22 @@ Message=Entering The Wailing Crypt
 [ENTRY]
 Name=wailingcrypt_to_grunes
 Type=warp
-ObjectID=1127691
-WarpTo=52543,677,68422,9
+ObjectID=7787
+WarpTo=52517,677,68409,9
+Message=Exiting The Wailing Crypt
+
+[ENTRY]
+Name=grunes_to_folkirk_manor
+Type=warp
+ObjectID=7788
+WarpTo=1570,500,8069,75
+Message=Entering The Wailing Crypt
+;Need quest ID for this
+;Quest=821
+
+[ENTRY]
+Name=folkirk_manor_to_grunes
+Type=warp
+ObjectID=7789
+WarpTo=63068,1263,63101,9
 Message=Exiting The Wailing Crypt
