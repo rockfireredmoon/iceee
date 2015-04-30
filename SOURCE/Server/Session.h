@@ -5,6 +5,7 @@
 #include "Account.h"
 #include "FileReader.h"
 #include "Item.h"
+#include "GM.h"
 
 int SaveSession(const char *filename)
 {
@@ -53,6 +54,8 @@ int LoadSession(const char *filename)
 				g_ZoneDefManager.NextZoneID = lfr.BlockToInt(1);
 			else if(strcmp(NameBlock, "NextAccountID") == 0)
 				g_AccountManager.NextAccountID = lfr.BlockToInt(1);
+			else if(strcmp(NameBlock, "NextPetitionID") == 0)
+				g_PetitionManager.NextPetitionID = lfr.BlockToInt(1);
 			else if(strcmp(NameBlock, "NextVirtualItemID") == 0)
 				g_ItemManager.nextVirtualItemID = lfr.BlockToInt(1);
 			else

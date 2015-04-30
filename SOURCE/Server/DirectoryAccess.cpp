@@ -165,6 +165,17 @@ const char* Platform::FixPaths(std::string &pathName)
 	return pathName.c_str();
 }
 
+bool Platform::DirExists(const char *path)
+{
+	DIR *dir;
+	if ((dir = opendir(path)) != NULL) {
+		closedir(dir);
+		return true;
+	}
+	else
+		return false;
+}
+
 bool Platform::FileExists(const char *path)
 {
 	FILE *input = fopen(path, "rb");

@@ -858,3 +858,16 @@ display_name=Exit To Grunes Tal
 profession=1
 creature_category=Inanimate
 ai_package=nothing
+
+[ENTRY]
+ID=7792
+Effects=INVINCIBLE,HENGE,IS_USABLE,UNATTACKABLE
+will_regen=1
+might_regen=1
+appearance=p1:{["a"]="Prop-Interact_Cylinder",["sz"]="3"}
+level=1
+display_name=Frost Peak Henge
+profession=1
+creature_category=Mortal
+ai_package=nothing
+ai_package=custom_henge_glow

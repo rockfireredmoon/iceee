@@ -2,6 +2,7 @@
 #include <math.h>
 #include <fstream>
 #include <string>
+#include <time.h>
 
 #include "Simulator.h"
 #include "StringList.h"
@@ -30,6 +31,7 @@
 #include "InstanceScale.h"
 #include "Combat.h"
 #include "ConfigString.h"
+#include "GM.h"
 
 
 //This is the main function of the simulator thread.  A thread must be created for each port
@@ -2563,6 +2565,12 @@ bool SimulatorThread :: HandleQuery(int &PendingData)
 		PendingData = handle_query_clan_list();
 	else if(query.name.compare("guild.info") == 0)
 		PendingData = handle_query_guild_info();
+	else if(query.name.compare("petition.send") == 0)
+		PendingData = handle_query_petition_send();
+	else if(query.name.compare("petition.list") == 0)
+		PendingData = handle_query_petition_list();
+	else if(query.name.compare("petition.doaction") == 0)
+		PendingData = handle_query_petition_doaction();
 	else if(query.name.compare("marker.list") == 0)
 		PendingData = handle_query_marker_list();
 	else if(query.name.compare("marker.edit") == 0)
@@ -9756,6 +9764,126 @@ int SimulatorThread :: handle_query_script_run(void)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Script already running.");
 	}
 	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
+}
+
+int SimulatorThread :: handle_query_petition_list(void)
+{
+	if(!CheckPermissionSimple(Perm_Account, Permission_Sage))
+		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
+
+	int wpos = 0;
+	wpos += PutByte(&SendBuf[wpos], 1);       //_handleQueryResultMsg
+	wpos += PutShort(&SendBuf[wpos], 0);      //Message size
+	wpos += PutInteger(&SendBuf[wpos], query.ID);  //Query response index
+
+	vector<Petition> pets = g_PetitionManager.GetPetitions(pld.charPtr->cdef.CreatureDefID);
+	vector<Petition>::iterator it;
+	wpos += PutShort(&SendBuf[wpos], pets.size());
+	struct tm * timeinfo;
+	for(it = pets.begin(); it != pets.end(); ++it)
+	{
+		wpos += PutByte(&SendBuf[wpos], 8);
+		wpos += PutStringUTF(&SendBuf[wpos], it->status == PENDING ? "pending" : "mine");
+		CharacterData *petitioner = g_CharacterManager.GetPointerByID(it->petitionerCDefID);
+		if(petitioner == NULL)
+			wpos += PutStringUTF(&SendBuf[wpos], "<Deleted>");
+		else
+			wpos += PutStringUTF(&SendBuf[wpos], petitioner->cdef.css.display_name);
+		sprintf(Aux1, "%d", it->petitionId);
+		wpos += PutStringUTF(&SendBuf[wpos], Aux1);
+		if(petitioner == NULL)
+			wpos += PutStringUTF(&SendBuf[wpos], "");
+		else {
+			AccountData * accData = g_AccountManager.FetchIndividualAccount(petitioner->AccountID);
+			if(accData == NULL)
+				wpos += PutStringUTF(&SendBuf[wpos], "<Missing account>");
+			else
+			{
+				int c = 0;
+				sprintf(Aux1, "");
+				for(uint i = 0 ; i < accData->MAX_CHARACTER_SLOTS; i++) {
+					if(accData->CharacterSet[i] != 0 && accData->CharacterSet[i] != petitioner->cdef.CreatureDefID) {
+						CharacterData *other = g_CharacterManager.RequestCharacter(accData->CharacterSet[i], true);
+						if(other != NULL)
+						{
+							if(c > 0)
+								strcat(Aux1, ",");
+							g_Log.AddMessageFormat("REMOVEME Adding other char %s (now %s", other->cdef.css.display_name, Aux1);
+							strcat(Aux1, other->cdef.css.display_name);
+							c++;
+						}
+					}
+				}
+				wpos += PutStringUTF(&SendBuf[wpos], Aux1);
+			}
+		}
+		sprintf(Aux1, "%d", it->category);
+		wpos += PutStringUTF(&SendBuf[wpos], Aux1);
+		wpos += PutStringUTF(&SendBuf[wpos], it->description);
+		wpos += PutStringUTF(&SendBuf[wpos], "0");  // TODO score
+		time_t ts;
+		timeinfo = localtime (&ts);
+		sprintf(Aux1, "%s", asctime(timeinfo));
+		wpos += PutStringUTF(&SendBuf[wpos], Aux1);
+	}
+
+	PutShort(&SendBuf[1], wpos - 3);
+	return wpos;
+}
+
+int SimulatorThread :: handle_query_petition_doaction(void)
+{
+	if(!CheckPermissionSimple(Perm_Account, Permission_Sage))
+		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
+
+	vector<Petition> pets = g_PetitionManager.GetPetitions(pld.charPtr->cdef.CreatureDefID);
+	vector<Petition>::iterator it;
+	int id = atoi(query.args[0].c_str());
+	if(query.args[1].compare("take") == 0) {
+		if(g_PetitionManager.Take(id, pld.CreatureDefID)) {
+			return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
+		} else {
+			return PrepExt_QueryResponseError(SendBuf, query.ID, "Failed to take petition.");
+		}
+	}
+	else if(query.args[1].compare("untake") == 0) {
+		if(g_PetitionManager.Untake(id, pld.CreatureDefID)) {
+			return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
+		} else {
+			return PrepExt_QueryResponseError(SendBuf, query.ID, "Failed to untake petition.");
+		}
+	}
+	else if(query.args[1].compare("close") == 0) {
+		if(g_PetitionManager.Close(id, pld.CreatureDefID)) {
+			return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
+		} else {
+			return PrepExt_QueryResponseError(SendBuf, query.ID, "Failed to close petition.");
+		}
+	}
+	else {
+		return PrepExt_QueryResponseError(SendBuf, query.ID, "Unknown petition op.");
+	}
+
+}
+
+int SimulatorThread :: handle_query_petition_send(void)
+{
+	int pet = g_PetitionManager.NewPetition(pld.CreatureDefID, atoi(query.args[0].c_str()), query.args[1].c_str());
+	if(pet > -1) {
+		Util::SafeFormat(Aux1, sizeof(Aux1), "**%s has submitted petition %d, could the next available Earthsage please take the petition**",
+				pld.charPtr->cdef.css.display_name, pet);
+		char buffer[4096];
+		int wpos = PrepExt_GenericChatMessage(buffer, 0, "Petition Manager", "gm/earthsages", Aux1);
+		SIMULATOR_IT it;
+		for(it = Simulator.begin(); it != Simulator.end(); ++it)
+			if(it->isConnected == true && it->ProtocolState == 1 && it->pld.accPtr->HasPermission(Perm_Account, Permission_Sage))
+				it->AttemptSend(buffer, wpos);
+		return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
+	}
+	else {
+		g_Log.AddMessageFormat("Failed to create petition.");
+		return PrepExt_QueryResponseString(SendBuf, query.ID, "Failed"); //??
+	}
 }
 
 int SimulatorThread :: handle_query_marker_del(void)

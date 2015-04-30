@@ -31,14 +31,6 @@ Orient=0,0.470626,0,0.882333
 Scale=1,1,1
 
 [ENTRY]
-ID=1085252
-Asset=Prop-Interact1#Prop-Interact_Rectangle
-Name=Untitled
-Pos=71661.3,941.94,63252.7
-Orient=0,-0.884303,0,0.466913
-Scale=1.2,1.2,1.2
-
-[ENTRY]
 ID=1085261
 Asset=Prop-Snowy_Grass#Prop-Snowy_Grass1
 Name=Untitled
@@ -233,7 +225,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1088632
 Asset=Prop-Rock2
-Name=
+Name=Untitled
 Pos=71735.4,946.539,63081.8
 Orient=-0.788928,0.601512,-0.0584732,0.111161
 Scale=5,5,5
@@ -241,7 +233,7 @@ Scale=5,5,5
 [ENTRY]
 ID=1088633
 Asset=Prop-Rock1
-Name=
+Name=Untitled
 Pos=71620.9,931.41,63072.1
 Orient=-0.622044,0.781892,0.0386161,0.0146858
 Scale=3,3,3
@@ -249,7 +241,7 @@ Scale=3,3,3
 [ENTRY]
 ID=1088634
 Asset=Prop-Snow_Drift1
-Name=
+Name=Untitled
 Pos=71621.1,926.382,63216.1
 Orient=-0.341349,0.440068,-0.00793505,0.830517
 Scale=1,1,1
@@ -257,7 +249,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1088635
 Asset=Prop-Snowy_Grass1
-Name=
+Name=Untitled
 Pos=71555.2,932.904,63101.8
 Orient=-0.00426656,0.0195378,-0.213305,0.976781
 Scale=1.5,1.5,1.5
@@ -265,7 +257,7 @@ Scale=1.5,1.5,1.5
 [ENTRY]
 ID=1088636
 Asset=Prop-Snowy_Grass1
-Name=
+Name=Untitled
 Pos=71666.1,937.964,63053.7
 Orient=0.000100002,0.019998,0.00499876,0.999788
 Scale=1.5,1.5,1.5
@@ -273,7 +265,7 @@ Scale=1.5,1.5,1.5
 [ENTRY]
 ID=1088637
 Asset=Prop-Rock3
-Name=
+Name=Untitled
 Pos=71757.5,952.235,63006.5
 Orient=-0.617274,0.347792,0.5812,-0.400275
 Scale=1,1,1
@@ -281,7 +273,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1088641
 Asset=Prop-Snow_Drift1
-Name=
+Name=Untitled
 Pos=71621.1,926.382,63216.1
 Orient=-0.341349,0.440068,-0.00793505,0.830517
 Scale=1,1,1
@@ -289,10 +281,27 @@ Scale=1,1,1
 [ENTRY]
 ID=1088642
 Asset=Prop-Rock2
-Name=
+Name=Untitled
 Pos=71668.2,941.147,63072.8
 Orient=-0.650599,0.719216,-0.15673,0.186775
 Scale=5,5,5
+
+[ENTRY]
+ID=1126556
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=71666.3,943.17,63247.8
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
+ID=1126557
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=71663.9,942.847,63252
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#F7792
 
 [ENTRY]
 ID=151019340

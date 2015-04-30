@@ -1370,3 +1370,12 @@ Type=warp
 ObjectID=7791
 WarpTo=63798,780,56598,9
 Message=Exiting Boss Hawg's
+
+[ENTRY]
+Name=henge_frostpeak
+Type=henge
+ObjectID=7792
+WarpTo=71586,932,63326,9
+Facing=124
+Message=Frost Peak
+Cost=5547

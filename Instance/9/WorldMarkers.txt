@@ -53,3 +53,8 @@ Name=Boss Hawgs Front Door
 Comment=Outside instance
 Position=63798.0,779.0,56586.0
 
+[ENTRY]
+Name=Frost Peak Henge
+Comment=[Comment here]
+Position=71586.0,932.0,63326.0
+
