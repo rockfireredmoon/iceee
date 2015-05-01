@@ -40,6 +40,7 @@ set BRAZIER_1_LIT 0
 set BRAZIER_2_LIT 0
 
 set STAGE 0
+set SHIELD_CAST 0
 
 ; Just need this label, the entry point for instance scripts.
 
@@ -222,6 +223,13 @@ set STAGE 0
         call findResultArrayCDEF
         pop TEMPWAILER
         if TEMPWAILER = 0
+        
+        	; Only show the message once
+        	if SHIELD_CAST = 0
+    			broadcast "The air chills and the wailer fades from view!"
+        		set SHIELD_CAST 1
+        	endif
+        
             call tryCastShield
             return
         endif
@@ -296,7 +304,7 @@ set STAGE 0
     if STAGE = 1
         if TEMP <= 70
             set STAGE 2
-
+			set SHIELD_CAST 0
             queue_event "eventWailerHealth" 3000
             return
         endif
@@ -328,6 +336,7 @@ set STAGE 0
     if STAGE = 3
         if TEMP <= 50
             set STAGE 4
+			set SHIELD_CAST 0
 
             queue_event "eventWailerHealth" 3000
             return
@@ -360,6 +369,7 @@ set STAGE 0
     if STAGE = 5
         if TEMP <= 30
             set STAGE 6
+			set SHIELD_CAST 0
 
             queue_event "eventWailerHealth" 3000
             return
@@ -391,6 +401,7 @@ set STAGE 0
     if STAGE = 7
         if TEMP <= 10
             set STAGE 8
+			set SHIELD_CAST 0
             queue_event "eventWailerHealth" 3000
             return
         endif

@@ -636,12 +636,12 @@ level=47
 display_name=Forgotten Soul
 rarity=0
 appearance=n4:{["a"]=[{["type"]="Armor-Base1A-Right_Pauldron",["node"]="right_shoulder",["colors"]=["2A2A2A","949494","BFBF9F"]},{["type"]="Armor-Base1A-Left_Pauldron",["node"]="left_shoulder",["colors"]=["2A2A2A","949494","BFBF9F"]},{["type"]="Item-1hAxe-Basic7",["node"]="left_hand"},{["type"]="Item-Katar-Basic4",["node"]="right_hand"}],["c"]="Horde-Zombie_Destroyer",["sk"]={["bone"]="92908C",["trim"]="B08B62",["skin"]="838E78",["blood"]="A95D52",["pants"]="3C4431",["shirt"]="3F4A60",["hair"]="565070",["detail"]="8B4D41"},["sz"]="1.2"}
-strength=125
-dexterity=125
-constitution=225
-psyche=100
-spirit=100
-base_damage_melee=150
+strength=105
+dexterity=105
+constitution=205
+psyche=80
+spirit=80
+base_damage_melee=120
 damage_resist_melee=1500
 damage_resist_fire=1500
 damage_resist_frost=1500
@@ -843,7 +843,7 @@ will_regen=1
 might_regen=1
 appearance=p1:{["a"]="Prop-Interact_Rectangle",["sz"]="2"}
 level=1
-display_name=Boss Hawg's Front Door
+display_name=Protectorate's Compound
 profession=1
 creature_category=Inanimate
 ai_package=nothing
@@ -871,3 +871,25 @@ profession=1
 creature_category=Mortal
 ai_package=nothing
 ai_package=custom_henge_glow
+
+[ENTRY]
+ID=7793
+will_regen=1
+might_regen=1
+appearance=p1:{["a"]="Prop-Interact_Rectangle",["sz"]="1"}
+level=1
+display_name=Lower Floor
+profession=1
+creature_category=Inanimate
+ai_package=nothing
+
+[ENTRY]
+ID=7794
+will_regen=1
+might_regen=1
+appearance=p1:{["a"]="Prop-Interact_Rectangle",["sz"]="1"}
+level=1
+display_name=Upper Floor
+profession=1
+creature_category=Inanimate
+ai_package=nothing

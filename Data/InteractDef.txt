@@ -1358,18 +1358,18 @@ WarpTo=63068,1263,63101,9
 Message=Exiting The Wailing Crypt
 
 [ENTRY]
-Name=grunes_to_boss_hawgs
+Name=grunes_to_protectorates_compound
 Type=warp
 ObjectID=7790
 WarpTo=2535,296,2526,93
-Message=Entering Boss Hawg's
+Message=Entering Protectorate's Compound
 
 [ENTRY]
-Name=boss_hawgs_to_grunes
+Name=protectorates_compound_to_grunes
 Type=warp
 ObjectID=7791
 WarpTo=63798,780,56598,9
-Message=Exiting Boss Hawg's
+Message=Exiting Protectorate's Compound
 
 [ENTRY]
 Name=henge_frostpeak
@@ -1379,3 +1379,19 @@ WarpTo=71586,932,63326,9
 Facing=124
 Message=Frost Peak
 Cost=5547
+
+[ENTRY]
+Name=folkirk_manor_upper_to_lower
+Type=warp
+ObjectID=7793
+WarpTo=3478,600,3232,75
+Message=Entering lower floor
+;Need quest ID for this
+;Quest=821
+
+[ENTRY]
+Name=folkirk_manor_lower_to_upper
+Type=warp
+ObjectID=7794
+WarpTo=1678,424,8212,75
+Message=Entering upper floor

@@ -59,6 +59,7 @@ set TEMPCID 0
 set TEMPCDEF 0
 set TEMP 0
 set TARGET 0
+set DISTANT_MESG 0
 set CID_GRUNDY 0
 set CID_MOLDYFORK 0
 set CID_MOLDYFORK_REINFORCE 0
@@ -121,8 +122,10 @@ set CID_CRUELLA_REINFORCE 0
 	return
 
 :eventSpawnMinibosses
+	set DISTANT_MESG 0
 	spawn SPAWNPOINT_MOLDYFORK
 	spawn SPAWNPOINT_CRUELLA
+	info "Oh no, here comes the family ...."
 	queue_event "eventMoldyforkSearch" 0
 	queue_event "eventCruellaSearch" 0
 	return
@@ -154,6 +157,10 @@ set CID_CRUELLA_REINFORCE 0
 		iarrvalue RESULTARRAY 0 CID_CRUELLA_REINFORCE
 		get_target CID_GRUNDY TARGET
 		if TARGET != 0
+			if DISTANT_MESG = 0
+				info "Now it's a real family reunion!"
+				set DISTANT_MESG 1
+			endif
 			set_target CID_CRUELLA_REINFORCE TARGET			
 		  	ai_script_jump CID_CRUELLA_REINFORCE "tryMelee"
 		endif
@@ -170,9 +177,10 @@ set CID_CRUELLA_REINFORCE 0
 		get_target CID_GRUNDY TARGET
 		print "Looking for grundy target"
 		if TARGET != 0
-			print "Found target!"
-			printvar TARGET
-			printvar CID_MOLDYFORK_REINFORCE
+			if DISTANT_MESG = 0
+				info "Now it's a real family reunion!"
+				set DISTANT_MESG 1
+			endif
 			set_target CID_MOLDYFORK_REINFORCE TARGET			
 		  	ai_script_jump CID_MOLDYFORK_REINFORCE "tryMelee"
 		endif

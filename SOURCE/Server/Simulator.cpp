@@ -2571,6 +2571,14 @@ bool SimulatorThread :: HandleQuery(int &PendingData)
 		PendingData = handle_query_petition_list();
 	else if(query.name.compare("petition.doaction") == 0)
 		PendingData = handle_query_petition_doaction();
+	else if(query.name.compare("itemdef.contents") == 0)
+		PendingData = handle_query_itemdef_contents();
+	else if(query.name.compare("itemdef.delete") == 0)
+		PendingData = handle_query_itemdef_delete();
+	else if(query.name.compare("util.addFunds") == 0)
+		PendingData = handle_query_util_addfunds();
+	else if(query.name.compare("item.create") == 0)
+		PendingData = handle_query_item_create();
 	else if(query.name.compare("marker.list") == 0)
 		PendingData = handle_query_marker_list();
 	else if(query.name.compare("marker.edit") == 0)
@@ -9780,6 +9788,7 @@ int SimulatorThread :: handle_query_petition_list(void)
 	vector<Petition>::iterator it;
 	wpos += PutShort(&SendBuf[wpos], pets.size());
 	struct tm * timeinfo;
+	g_CharacterManager.GetThread("SimulatorThread::PetitionList");
 	for(it = pets.begin(); it != pets.end(); ++it)
 	{
 		wpos += PutByte(&SendBuf[wpos], 8);
@@ -9803,9 +9812,7 @@ int SimulatorThread :: handle_query_petition_list(void)
 				sprintf(Aux1, "");
 				for(uint i = 0 ; i < accData->MAX_CHARACTER_SLOTS; i++) {
 					if(accData->CharacterSet[i] != 0 && accData->CharacterSet[i] != petitioner->cdef.CreatureDefID) {
-						g_CharacterManager.GetThread("SimulatorThread::PetitionList");
 						CharacterCacheEntry *cce = accData->characterCache.ForceGetCharacter(accData->CharacterSet[i]);
-						g_CharacterManager.ReleaseThread();
 						if(cce != NULL)
 						{
 							if(c > 0)
@@ -9828,9 +9835,153 @@ int SimulatorThread :: handle_query_petition_list(void)
 		sprintf(Aux1, "%s", asctime(timeinfo));
 		wpos += PutStringUTF(&SendBuf[wpos], Aux1);
 	}
+	g_CharacterManager.ReleaseThread();
 
 	PutShort(&SendBuf[1], wpos - 3);
 	return wpos;
+}
+
+int SimulatorThread :: handle_query_itemdef_contents(void)
+{
+	if(!CheckPermissionSimple(Perm_Account, Permission_Sage))
+		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
+
+
+	int wpos = 0;
+	wpos += PutByte(&SendBuf[wpos], 1);       //_handleQueryResultMsg
+	wpos += PutShort(&SendBuf[wpos], 0);      //Message size
+	wpos += PutInteger(&SendBuf[wpos], query.ID);  //Query response index
+	wpos += PutShort(&SendBuf[wpos], 0);
+	int id = atoi(query.args[0].c_str());
+	g_CharacterManager.GetThread("SimulatorThread::PetitionList");
+	CreatureInstance *creature = creatureInst->actInst->GetPlayerByID(id);
+	int count = 0;
+	if(creature != NULL)
+	{
+		CharacterData *cdata = creature->charPtr;
+		int size = cdata->inventory.containerList[INV_CONTAINER].size();
+		int a;
+		WritePos = 0;
+		for(a = 0; a < size; a++)
+		{
+			InventorySlot *slot = &cdata->inventory.containerList[INV_CONTAINER][a];
+			if(slot != NULL) {
+				wpos += PutByte(&SendBuf[wpos], 1);
+				Util::SafeFormat(Aux1, sizeof(Aux1), "%d", slot->IID);
+				wpos += PutStringUTF(&SendBuf[wpos], Aux1);
+				count++;
+			}
+		}
+	}
+	g_CharacterManager.ReleaseThread();
+	PutShort(&SendBuf[7], count);
+	PutShort(&SendBuf[1], wpos - 3);
+	return wpos;
+}
+
+int SimulatorThread :: handle_query_itemdef_delete(void)
+{
+	if(!CheckPermissionSimple(Perm_Account, Permission_Sage))
+			return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
+	int itemID = atoi(query.args[0].c_str());
+	int targetID = atoi(query.args[1].c_str());
+	g_CharacterManager.GetThread("SimulatorThread::ItemCreate");
+	CreatureInstance *creature = creatureInst->actInst->GetPlayerByID(targetID);
+	if(creature != NULL) {
+		ItemDef * item;
+		if(itemID == 0) {
+			item = g_ItemManager.GetSafePointerByPartialName(query.args[0].c_str());
+		}
+		else {
+			item = g_ItemManager.GetSafePointerByID(itemID);
+		}
+		if(item != NULL) {
+
+			CharacterData *cdata = creature->charPtr;
+			int size = cdata->inventory.containerList[INV_CONTAINER].size();
+			int a;
+			for(a = 0; a < size; a++)
+			{
+				InventorySlot *slot = &cdata->inventory.containerList[INV_CONTAINER][a];
+				if(slot != NULL) {
+					if(slot->IID == item->mID)
+					{
+						g_Log.AddMessageFormat("[SAGE] %s removed %s from %s because '%s'", pld.charPtr->cdef.css.display_name, item->mDisplayName.c_str(), creature->charPtr->cdef.css.display_name, query.args[2].c_str());
+						int wpos = RemoveItemUpdate(&Aux1[0], Aux2, slot);
+						g_CharacterManager.ReleaseThread();
+						creature->simulatorPtr->AttemptSend(Aux1, wpos);
+						cdata->inventory.RemItem(slot->CCSID);
+						return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
+					}
+				}
+			}
+		}
+	}
+	g_CharacterManager.ReleaseThread();
+	return PrepExt_QueryResponseError(SendBuf, query.ID, "Failed to delete item.");
+}
+
+int SimulatorThread :: handle_query_util_addfunds() {
+//	::_Connection.sendQuery("util.addFunds", this, [
+//		"COPPER",
+//		copperAmount,
+//		this.mCopperReasonPopup.getText(),
+//		creatureName
+//	]);
+	if(query.args[0].compare("COPPER") == 0) {
+		int amount = atoi(query.args[1].c_str());
+		g_CharacterManager.GetThread("SimulatorThread::AddFunds");
+		CreatureInstance *creature = creatureInst->actInst->GetPlayerByName(query.args[3].c_str());
+		if(creature != NULL) {
+			creature->AdjustCopper(amount);
+			g_Log.AddMessageFormat("[SAGE] %s gave %s %d copper because '%s'",
+					pld.charPtr->cdef.css.display_name, creature->charPtr->cdef.css.display_name, amount, query.args[2].c_str());
+			g_CharacterManager.ReleaseThread();
+			return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
+		}
+		else {
+			SendInfoMessage("Player must be logged on to receive funds.", INFOMSG_ERROR);
+		}
+		g_CharacterManager.ReleaseThread();
+	}
+	return PrepExt_QueryResponseError(SendBuf, query.ID, "Failed to add funds.");
+}
+
+int SimulatorThread :: handle_query_item_create(void)
+{
+	if(!CheckPermissionSimple(Perm_Account, Permission_Sage))
+		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
+	int itemID = atoi(query.args[0].c_str());
+	int targetID = atoi(query.args[1].c_str());
+	g_CharacterManager.GetThread("SimulatorThread::ItemCreate");
+	CreatureInstance *creature = creatureInst->actInst->GetPlayerByID(targetID);
+	if(creature != NULL) {
+		ItemDef * item;
+		if(itemID == 0) {
+			item = g_ItemManager.GetSafePointerByPartialName(query.args[0].c_str());
+		}
+		else {
+			item = g_ItemManager.GetSafePointerByID(itemID);
+		}
+		if(item != NULL) {
+			int slot = pld.charPtr->inventory.GetFreeSlot(INV_CONTAINER);
+			if(slot != -1)
+			{
+				InventorySlot *sendSlot = creature->charPtr->inventory.AddItem_Ex(INV_CONTAINER, item->mID, 1);
+				if(sendSlot != NULL)
+				{
+					g_Log.AddMessageFormat("[SAGE] %s gave %s to %s because '%s'", pld.charPtr->cdef.css.display_name, item->mDisplayName.c_str(), creature->charPtr->cdef.css.display_name, query.args[2].c_str());
+					int wpos = AddItemUpdate(&Aux1[0], Aux2, sendSlot);
+					g_CharacterManager.ReleaseThread();
+					creature->simulatorPtr->AttemptSend(Aux1, wpos);
+					return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
+				}
+			}
+
+		}
+	}
+	g_CharacterManager.ReleaseThread();
+	return PrepExt_QueryResponseError(SendBuf, query.ID, "Failed to give item.");
 }
 
 int SimulatorThread :: handle_query_petition_doaction(void)
@@ -9838,8 +9989,6 @@ int SimulatorThread :: handle_query_petition_doaction(void)
 	if(!CheckPermissionSimple(Perm_Account, Permission_Sage))
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
 
-	vector<Petition> pets = g_PetitionManager.GetPetitions(pld.charPtr->cdef.CreatureDefID);
-	vector<Petition>::iterator it;
 	int id = atoi(query.args[0].c_str());
 	if(query.args[1].compare("take") == 0) {
 		if(g_PetitionManager.Take(id, pld.CreatureDefID)) {

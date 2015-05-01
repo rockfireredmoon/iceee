@@ -274,6 +274,10 @@ public:
 	int handle_query_persona_resCost(void);
 	int handle_query_petition_send(void);
 	int handle_query_petition_doaction(void);
+	int handle_query_itemdef_contents(void);
+	int handle_query_itemdef_delete(void);
+	int handle_query_item_create(void);
+	int handle_query_util_addfunds();
 	int handle_query_petition_list(void);
 	int handle_query_marker_list(void);
 	int handle_query_marker_edit(void);

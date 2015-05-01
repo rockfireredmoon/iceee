@@ -2572,9 +2572,10 @@ link=1108977,1
 ID=1114852
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=Untitled
-Pos=3471.14,600,3283.61
-Orient=0,0.747971,0,0.663731
+Pos=3471.14,600,3284.36
+Orient=0,0.999991,0,-0.00420378
 Scale=1,1,1
+spawnPackage=#F7794
 
 [ENTRY]
 ID=1114853
@@ -2597,4 +2598,12 @@ spawnPackage=75_foma_DistantRelative
 maxActive=0
 links_count=1
 link=1104027,0
+
+[ENTRY]
+ID=1126556
+Asset=Prop-Instance_Entrance#Prop-Instance_Entrance
+Name=Untitled
+Pos=3468.98,624.771,3279.15
+Orient=0,-0.703279,0,0.710914
+Scale=1,1,1
 
