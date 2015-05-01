@@ -9803,13 +9803,15 @@ int SimulatorThread :: handle_query_petition_list(void)
 				sprintf(Aux1, "");
 				for(uint i = 0 ; i < accData->MAX_CHARACTER_SLOTS; i++) {
 					if(accData->CharacterSet[i] != 0 && accData->CharacterSet[i] != petitioner->cdef.CreatureDefID) {
-						CharacterData *other = g_CharacterManager.RequestCharacter(accData->CharacterSet[i], true);
-						if(other != NULL)
+						g_CharacterManager.GetThread("SimulatorThread::PetitionList");
+						CharacterCacheEntry *cce = accData->characterCache.ForceGetCharacter(accData->CharacterSet[i]);
+						g_CharacterManager.ReleaseThread();
+						if(cce != NULL)
 						{
 							if(c > 0)
 								strcat(Aux1, ",");
-							g_Log.AddMessageFormat("REMOVEME Adding other char %s (now %s", other->cdef.css.display_name, Aux1);
-							strcat(Aux1, other->cdef.css.display_name);
+							g_Log.AddMessageFormat("REMOVEME Adding other char %s (now %s", cce->display_name.c_str(), Aux1);
+							strcat(Aux1, cce->display_name.c_str());
 							c++;
 						}
 					}
