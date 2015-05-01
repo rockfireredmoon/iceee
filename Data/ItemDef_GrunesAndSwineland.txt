@@ -33,7 +33,7 @@ mArmorResistFrost=0
 mArmorResistMystic=0
 mArmorResistDeath=0
 mBonusStrength=20
-BonusConstitution=10
+mBonusConstitution=10
 mMeleeCritMod=2.5
 mValue=9413
 mQualityLevel=4
@@ -100,7 +100,7 @@ mMinUseLevel=48
 mID=10006
 mType=2
 mDisplayName=Grundy's Organic Hammer
-mAppearance=[{["a"]=[{["type"]="Item-Leg_of_Meat",["node"]="right_hand",["colors"]=["0D233F","2A0000"]}},null]
+mAppearance={["a"]=[{["type"]="Item-Leg_of_Meat",["node"]="right_hand",["colors"]=["0D233F","2A0000"]}}
 mIcon=Icon-32-Hamhock.png|Icon-32-BG-Purple.png
 mLevel=47
 mBindingType=1
@@ -118,7 +118,7 @@ mMinUseLevel=47
 mID=10007
 mType=3
 mDisplayName=Grundy's Headband
-mAppearance=[{["a"]=[{["type"]="Armor-Light-Low3-Helmet",["node"]="hat",["colors"]=["1F6A24","946624","944D0D","0A5503"]}},null]
+mAppearance={["a"]=[{["type"]="Armor-Light-Low3-Helmet",["node"]="hat",["colors"]=["1F6A24","946624","944D0D","0A5503"]}}
 mIcon=Icon-32-C_Armor-Head02.png|Icon-32-BG-Blue.png
 mLevel=47
 mValue=6743
@@ -134,7 +134,7 @@ mArmorType=1
 mID=10008
 mType=3
 mDisplayName=Kyshf's Hide Helmet
-mAppearance=[{["a"]=[{["type"]="Armor-Heavy-High1-Helmet",["node"]="helmet",["colors"]=["3F352C","7AA3E9","D4B0D4"]}},null]
+mAppearance={["a"]=[{["type"]="Armor-Heavy-High1-Helmet",["node"]="helmet",["colors"]=["3F352C","7AA3E9","D4B0D4"]}}
 mIcon=Icon-32-H_Armor-Head05.png|Icon-32-BG-Blue.png
 mLevel=47
 mValue=6281
@@ -152,7 +152,7 @@ mArmorResistDeath=150
 [ENTRY]
 mID=10009
 mType=2
-mAppearance=[{["a"]=[{["type"]="Item-Bow-Medium3",["node"]="left_hand",["colors"]=["151515","E9E9E9","BF3434"]}},null]
+mAppearance={["a"]=[{["type"]="Item-Bow-Medium3",["node"]="left_hand",["colors"]=["151515","E9E9E9","BF3434"]}}
 mDisplayName=Velvet Wrapped Bow
 mIcon=Icon-32-Bow5.png|Icon-32-BG-Purple.png
 mLevel=47
@@ -171,7 +171,7 @@ mWeaponDamageMax=59
 mID=10010
 mType=3
 mDisplayName=Soulweaver Kilt
-mAppearance=[{["h"]=0,["c"]={["leggings"]={["type"]="Armor-Medium-Epic3",["colors"]=["d4b293","bfbfbf","d4b293","3e307f","2a0223","ff00fd"]}},null]
+mAppearance={["c"]={["type"]="Armor-Light-Low6",["colors"]=["19551d","aa7429","7f6b45","947d50"]}}
 mIcon=Icon-32-M_Armor-Legs02.png|Icon-32-BG-Blue.png
 mLevel=47
 mValue=5844
