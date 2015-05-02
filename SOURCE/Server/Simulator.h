@@ -245,6 +245,7 @@ public:
 	int handle_query_quest_getquestoffer(void);
 	int handle_query_quest_genericdata(void);
 	int handle_query_quest_join(void);
+	int handle_query_quest_hack(void);
 	int handle_query_quest_list(void);
 	int handle_query_quest_data(void);
 	int handle_query_quest_getcompletequest(void);

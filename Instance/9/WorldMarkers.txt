@@ -58,3 +58,33 @@ Name=Frost Peak Henge
 Comment=[Comment here]
 Position=71586.0,932.0,63326.0
 
+[ENTRY]
+Name=Dambat Pass
+Comment=Swineland
+Position=79356.0,711.0,56438.0
+
+[ENTRY]
+Name=Grunes - Swineland Bridge
+Comment=[Comment here]
+Position=67429.0,668.0,58240.0
+
+[ENTRY]
+Name=Lurkers Entrance
+Comment=[Comment here]
+Position=81877.0,790.0,54388.0
+
+[ENTRY]
+Name=Unknown Destroyed Town
+Comment=Swineland
+Position=73826.0,878.0,60023.0
+
+[ENTRY]
+Name=Skrill Hive
+Comment=Swineland
+Position=71235.0,1153.0,44793.0
+
+[ENTRY]
+Name=North Swineland Junction
+Comment=For map alignment
+Position=68515.0,797.0,48005.0
+

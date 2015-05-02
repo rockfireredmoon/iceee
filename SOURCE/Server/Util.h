@@ -48,7 +48,7 @@ int PrepExt_GeneralMoveUpdate(char *buffer, CreatureInstance *cInst);  //General
 int PrepExt_UpdateElevation(char *buffer, CreatureInstance *cInst);
 int PrepExt_UpdateFullPosition(char *buffer, CreatureInstance *cInst);
 int PrepExt_SetAvatar(char *buffer, int creatureID);
-int PrepExt_SetMap(char *buffer, CharacterServerData *pldata);
+int PrepExt_SetMap(char *buffer, CharacterServerData *pldata, int x, int z);
 int PrepExt_SetTimeOfDay(char *buffer, char *envType);
 int PrepExt_UpdateScenery(char *buffer, SceneryObject *so);
 int PrepExt_AbilityActivate(char *buffer, CreatureInstance *cInst, ActiveAbilityInfo *ability, int aevent, bool ground = false);
@@ -97,7 +97,7 @@ int PrepExt_TradeItemOffer(char *buffer, char *convBuf, int offeringPlayerID, st
 int PrepExt_QuestCompleteMessage(char *buffer, int questID, int objectiveIndex);
 int PrepExt_CreatureEventPortalRequest(char *buffer, int actorID, const char *casterName, const char *locationName);
 int PrepExt_CreatureEventVaultSize(char *buffer, int actorID, int vaultSize);
-int PrepExt_SendEnvironmentUpdateMsg(char *buffer, const char *zoneIDString, const ZoneDefInfo *zoneDef);
+int PrepExt_SendEnvironmentUpdateMsg(char *buffer, const char *zoneIDString, ZoneDefInfo *zoneDef, int x, int z);
 int PrepExt_SendTimeOfDayMsg(char *buffer, const char *envType);
 int PrepExt_Broadcast(char *buffer, const char *message);
 

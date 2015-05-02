@@ -2016,6 +2016,69 @@ Obj.0.completeText=
 Obj.0.markerLocations=64157.2,779.793,56624.6,9
 
 [ENTRY]
+ID=826
+Title= Just Havin' A Laugh
+BodyText=Hey! You got business up here with one o' my boys, eh? Or are you lookin' to be the tough guy that thinks ''es gonna make Dirty Thunder look bad again to Boss Hawg?
+
+Don't think I don't  know what you're up to! Yeahhhh - I'm watching you. Gots eyes in the back o' my head, I do!
+
+Listen here, I'm gonna tell you what you're gonna do, kapeesh? You see, Boss Hawg had himself a pretty sweet deal goin' on for quite some time, and things -  they was peaceful. Then, he collaborates with freakin' Vampires and lets some shady characters in where they ain't got no business. So some of us, we decided we'd show him we were a little upset at this, if you know what I mean.
+
+To make a long story short, I took his Tee-Vee. That's right, buddy-ol-pal! That was ME! The workin' one with the "snow music disco" screen.
+
+Things was fine for a while then, and I had my laugh. I was even gonna give it back if his lazy butt was ever gonna travel my way, ye know? But that's not good enough for Boss Hawg. He sends 'is boys down here to take his Tee-Vee back, and now there's talk of war!
+
+Hey - me? - I was just havin' Old fart can't take a joke anymore, I swear!
+
+Anyways, there's a few camps 'round this Warpig Camp where Hawg's Boys are hangin' about. Now, I need you to get in there all sneaky-like or bashin-like,I gots no preference as to that matter, and takes this Tee-Vee back for me.
+
+I ain't got the time to do this myself, no disrespect. So's if you could get a move on, that'd be great! Don't let the door hit yer behind on the way out! HA!
+CompleteText=
+Level=44
+Suggested=45
+Exp=8165
+PartySize=1
+NumRewards=0
+Coin=2430
+Unabandon=0
+QuestGiverID=3684
+QuestEnderID=3684
+Repeat=0
+sGiver=2142.8,266.536,2676.8,93
+sEnder=2142.8,266.536,2676.8,93
+[ACT]
+Act.BodyText=Travel to the Hogcatcher Camps outside the Warpig Camp and deliver Boss Hawg's TV to his followers.
+Obj.0.type=kill
+Obj.0.data1=1216,1218,1219,1220,1221,1222,1223,1224
+Obj.0.data2=10
+Obj.0.description=Kill 10 Hogcatchers
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 10
+Obj.0.markerLocations=65902.2,820.963,59745.7,9
+Obj.1.type=gather
+Obj.1.data1=
+Obj.1.data2=
+Obj.1.description=Deliver Boss Hawg's TV
+Obj.1.complete=0
+Obj.1.myCreatureDefID=
+Obj.1.myItemID=
+Obj.1.completeText=Deliver the Tv to Hogcatchers
+Obj.1.markerLocations=65902.2,820.963,59745.7,9
+[Act]
+ActBodyText=Return to Dirty Thunder
+Obj.0.type=talk
+Obj.0.data1=
+Obj.0.data2=
+Obj.0.description=Return to Dirty Thunder
+Obj.0.complete=0
+Obj.0.myCreatureDefID=3684
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=2142.8,266.536,2676.8,93
+
+[ENTRY]
 ID=831
 Title=Haunted Hill
 BodyText=There is a slouching peak northeast of here - its true name lost to time, called now "Haunted Hill."

@@ -598,36 +598,36 @@ int PrepExt_SetAvatar(char *buffer, int creatureID)
 	return wpos;
 }
 
-int PrepExt_SetMap(char *buffer, ZoneDefInfo *zoneDef, const char *instanceZoneString)
-{
-	int wpos = 0;
+//int PrepExt_SetMap(char *buffer, ZoneDefInfo *zoneDef, const char *instanceZoneString)
+//{
+//	int wpos = 0;
+//
+//	wpos += PutByte(&buffer[wpos], 42);   //_handleEnvironmentUpdateMsg
+//	wpos += PutShort(&buffer[wpos], 0);
+//
+//	wpos += PutByte(&buffer[wpos], 0);   //Mask
+//
+//	/*
+//	wpos += PutStringUTF(&buffer[wpos], pldata->CurrentZone);    //zoneID
+//	wpos += PutInteger(&buffer[wpos], g_ZoneDefID);   //zoneDefID
+//	wpos += PutShort(&buffer[wpos], g_ZonePageSize);  //zonePageSize
+//	wpos += PutStringUTF(&buffer[wpos], g_Terrain);   //Terrain
+//	wpos += PutStringUTF(&buffer[wpos], g_EnvType);   //envtype
+//	wpos += PutStringUTF(&buffer[wpos], g_MapName);   //mapName
+//	*/
+//
+//	wpos += PutStringUTF(&buffer[wpos], instanceZoneString);    //zoneID
+//	wpos += PutInteger(&buffer[wpos], zoneDef->mID);   //zoneDefID
+//	wpos += PutShort(&buffer[wpos], zoneDef->mPageSize);  //zonePageSize
+//	wpos += PutStringUTF(&buffer[wpos], zoneDef->mTerrainConfig.c_str());   //Terrain
+//	wpos += PutStringUTF(&buffer[wpos], zoneDef->mEnvironmentType.c_str());   //envtype
+//	wpos += PutStringUTF(&buffer[wpos], zoneDef->mMapName.c_str());   //mapName
+//
+//	PutShort(&buffer[1], wpos - 3);       //Set message size
+//	return wpos;
+//}
 
-	wpos += PutByte(&buffer[wpos], 42);   //_handleEnvironmentUpdateMsg
-	wpos += PutShort(&buffer[wpos], 0);
-
-	wpos += PutByte(&buffer[wpos], 0);   //Mask
-
-	/*
-	wpos += PutStringUTF(&buffer[wpos], pldata->CurrentZone);    //zoneID
-	wpos += PutInteger(&buffer[wpos], g_ZoneDefID);   //zoneDefID
-	wpos += PutShort(&buffer[wpos], g_ZonePageSize);  //zonePageSize
-	wpos += PutStringUTF(&buffer[wpos], g_Terrain);   //Terrain
-	wpos += PutStringUTF(&buffer[wpos], g_EnvType);   //envtype
-	wpos += PutStringUTF(&buffer[wpos], g_MapName);   //mapName
-	*/
-
-	wpos += PutStringUTF(&buffer[wpos], instanceZoneString);    //zoneID
-	wpos += PutInteger(&buffer[wpos], zoneDef->mID);   //zoneDefID
-	wpos += PutShort(&buffer[wpos], zoneDef->mPageSize);  //zonePageSize
-	wpos += PutStringUTF(&buffer[wpos], zoneDef->mTerrainConfig.c_str());   //Terrain
-	wpos += PutStringUTF(&buffer[wpos], zoneDef->mEnvironmentType.c_str());   //envtype
-	wpos += PutStringUTF(&buffer[wpos], zoneDef->mMapName.c_str());   //mapName
-
-	PutShort(&buffer[1], wpos - 3);       //Set message size
-	return wpos;
-}
-
-int PrepExt_SetMap(char *buffer, CharacterServerData *csd)
+int PrepExt_SetMap(char *buffer, CharacterServerData *csd, int x, int z)
 {
 	int wpos = 0;
 	wpos += PutByte(&buffer[wpos], 42);   //_handleEnvironmentUpdateMsg
@@ -639,7 +639,7 @@ int PrepExt_SetMap(char *buffer, CharacterServerData *csd)
 	wpos += PutInteger(&buffer[wpos], csd->zoneDef->mID);      //zoneDefID
 	wpos += PutShort(&buffer[wpos], csd->zoneDef->mPageSize);  //zonePageSize
 	wpos += PutStringUTF(&buffer[wpos], csd->zoneDef->mTerrainConfig.c_str());   //Terrain
-	wpos += PutStringUTF(&buffer[wpos], csd->zoneDef->mEnvironmentType.c_str());   //envtype
+	wpos += PutStringUTF(&buffer[wpos], csd->zoneDef->GetTileEnvironment(x,z)->c_str());   //envtype
 	wpos += PutStringUTF(&buffer[wpos], csd->zoneDef->mMapName.c_str());   //mapName
 
 	PutShort(&buffer[1], wpos - 3);       //Set message size
@@ -1755,7 +1755,7 @@ int PrepExt_CreatureEventVaultSize(char *buffer, int actorID, int vaultSize)
 	return wpos;
 }
 
-int PrepExt_SendEnvironmentUpdateMsg(char *buffer, const char *zoneIDString, const ZoneDefInfo *zoneDef)
+int PrepExt_SendEnvironmentUpdateMsg(char *buffer, const char *zoneIDString, ZoneDefInfo *zoneDef, int x, int z)
 {
 	int wpos = 0;
 	wpos += PutByte(&buffer[wpos], 42);   //_handleEnvironmentUpdateMsg
@@ -1767,7 +1767,7 @@ int PrepExt_SendEnvironmentUpdateMsg(char *buffer, const char *zoneIDString, con
 	wpos += PutInteger(&buffer[wpos], zoneDef->mID);
 	wpos += PutShort(&buffer[wpos], zoneDef->mPageSize);
 	wpos += PutStringUTF(&buffer[wpos], zoneDef->mTerrainConfig.c_str());
-	wpos += PutStringUTF(&buffer[wpos], zoneDef->mEnvironmentType.c_str());
+	wpos += PutStringUTF(&buffer[wpos], zoneDef->GetTileEnvironment(x, z)->c_str());
 	wpos += PutStringUTF(&buffer[wpos], zoneDef->mMapName.c_str());
 
 	PutShort(&buffer[1], wpos - 3);       //Set message size

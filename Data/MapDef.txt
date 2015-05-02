@@ -257,14 +257,14 @@ Name=Swineland
 Primary=Maps-Europe
 Type=Region
 numPagesAcross=13
-numPagesDown=14
+numPagesDown=12.70
 parentMapImage=MapWorldBG
 image=Europe_Map_Region_Swineland
 priority=13
-u0=59520
-v0=42240
-u1=84480
-v1=69120
+u0=60120
+v0=41540
+u1=85080
+v1=65930
 
 
 [ENTRY]
@@ -346,15 +346,15 @@ v1=69120
 Name=GrunesTal
 Primary=Maps-Europe
 Type=Region
-numPagesAcross=10
-numPagesDown=9
+numPagesAcross=9.57
+numPagesDown=7.57
 parentMapImage=MapWorldBG
 image=Europe_Map_Region_Grunes_Tal
 priority=6
-u0=48000
-v0=53760
-u1=67200
-v1=71040
+u0=50820
+v0=55500
+u1=69200
+v1=70052
 
 
 [ENTRY]

@@ -253,6 +253,7 @@ public:
 	int CreatureUse_Confirmed(char *buffer, int CreatureDefID);
 	int CheckTravelLocations(char *buffer, int x, int y, int z, int zone);
 	int CheckQuestTalk(char *buffer, int CreatureDefID, int CreatureInstID);
+	int ForceComplete(int QuestID, char *buffer);
 	int ForceAllComplete(char *buffer);
 	void QuestLeave(int QuestID);
 	int FilterEmote(char *outbuf, const char *message, int xpos, int zpos, int zoneID);
@@ -469,6 +470,7 @@ public:
 
 	void Clear(void);
 	QuestDefinition* GetQuestDefPtrByID(int id);
+	QuestDefinition* GetQuestDefPtrByName(const char *name);
 	void LoadQuestPackages(const char *filename);
 	void ResolveQuestMarkers(void);
 
