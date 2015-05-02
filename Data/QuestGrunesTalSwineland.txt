@@ -1506,7 +1506,7 @@ RewardItem.3=7065,1,0
 
 [ENTRY]
 Requires=831
-ID=816
+ID=816/
 Title=The True Form Of Nobility
 BodyText=If you have spoken to my friend Shayne, then you know the atrocities which occurred at Haunted Hill. I would send you within the Folkirk Manor itself, to eliminate an ancient Beast family so evil, I believe that they were not turned by any invading zombie to their home. Instead, their dust-filled veins simply took on their true forms when the undead invvaded!
 
