@@ -226,6 +226,7 @@ void ZoneDefInfo :: Clear(void)
 
 	mNextAuditSave = 0;
 	mZoneAudit.Clear();
+	mTileEnvironment.clear();
 }
 
 void ZoneDefInfo :: CopyFrom(const ZoneDefInfo& other)
@@ -263,6 +264,9 @@ void ZoneDefInfo :: CopyFrom(const ZoneDefInfo& other)
 	mDropRateProfile = other.mDropRateProfile;
 
 	mEditPermissions.assign(other.mEditPermissions.begin(), other.mEditPermissions.end());
+
+	mTileEnvironment.clear();
+	mTileEnvironment.insert(other.mTileEnvironment.begin(), other.mTileEnvironment.end());
 
 	PendingChanges = other.PendingChanges;
 }
@@ -402,11 +406,34 @@ void ZoneDefInfo :: SaveToStream(FILE *output)
 	Util::WriteIntegerIfNot(output, "PlayerFilterType", mPlayerFilterType, 0);
 	Util::WriteIntegerList(output, "PlayerFilterID", mPlayerFilterID);
 
+	std::map<std::string, string>::iterator it;
+	for (it = mTileEnvironment.begin(); it != mTileEnvironment.end(); ++it)
+		fprintf(output, "TileEnvironment=%s,%s\r\n", it->first.c_str(), it->second.c_str());
+
 	for(size_t i = 0; i < mEditPermissions.size(); i++)
 		mEditPermissions[i].SaveToStream(output);
 
 	fprintf(output, "DefLoc=%d,%d,%d\r\n", DefX, DefY, DefZ);
 	fprintf(output, "\r\n");
+}
+
+std::string * ZoneDefInfo :: GetTileEnvironment(int x, int y)
+{
+	// Convert to scenery tile (use /info scenerytile to help with this)
+	int px = x / mPageSize;
+	int py = y / mPageSize;
+	if(x >= 0 && y >= 0) {
+		char key[10];
+		Util::SafeFormat(key, sizeof(key), "%d,%d", px, py);
+		std::map<std::string, string>::iterator it;
+		it = mTileEnvironment.find(key);
+		if(it != mTileEnvironment.end()) {
+			g_Log.AddMessageFormat("Returning tile environment %s for %d/%d (%d/%d)", it->second.c_str(),x,y,px,py);
+			return &it->second;
+		}
+	}
+	g_Log.AddMessageFormat("Returning default environment %s for %d/%d (%d/%d)", mEnvironmentType.c_str(),x,y,px,py);
+	return &mEnvironmentType;
 }
 
 void ZoneDefInfo :: AddPlayerFilterID(int CreatureDefID, bool loadStage)
@@ -737,6 +764,15 @@ int ZoneDefManager :: LoadFile(const char *fileName)
 					perm.LoadFromConfig(lfr.BlockToStringC(1, 0));
 					if(perm.IsValid() == true)
 						newItem.mEditPermissions.push_back(perm);
+				}
+				else if(strcmp(lfr.SecBuffer, "TILEENVIRONMENT") == 0)
+				{
+					lfr.MultiBreak("=,"); //Re-split for this particular data.
+					int tx = lfr.BlockToIntC(1);
+					int ty = lfr.BlockToIntC(2);
+					char buf[10];
+					Util::SafeFormat(buf, sizeof(buf), "%d,%d", tx, ty);
+					newItem.mTileEnvironment.insert(std::pair<string, string>(buf, lfr.BlockToStringC(3, 0)));
 				}
 				else
 					g_Log.AddMessageFormat("Unknown identifier [%s] while reading from file %s.", lfr.SecBuffer, fileName);

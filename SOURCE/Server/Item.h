@@ -31,15 +31,15 @@ public:
 	int mID;  //Used internally for ItemDef lookups
 
 	char mType;
-	string mDisplayName;
-	string mAppearance;
-	string mIcon;
+	std::string mDisplayName;
+	std::string mAppearance;
+	std::string mIcon;
 
 	char mIvType1;
 	short mIvMax1;
 	char mIvType2;
 	short mIvMax2;
-	string mSv1;
+	std::string mSv1;
 
 	int _mCopper;  //OBSOLETE     if(g_ProtocolVersion < 5)
 

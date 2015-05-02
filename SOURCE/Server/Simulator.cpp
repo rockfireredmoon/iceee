@@ -2276,7 +2276,7 @@ void SimulatorThread :: SendZoneInfo(void)
 		return;
 	}
 
-	int wpos = PrepExt_SendEnvironmentUpdateMsg(SendBuf, pld.CurrentZone, pld.zoneDef);
+	int wpos = PrepExt_SendEnvironmentUpdateMsg(SendBuf, pld.CurrentZone, pld.zoneDef, creatureInst->CurrentX, creatureInst->CurrentZ);
 	AttemptSend(SendBuf, wpos);
 
 	SendTimeOfDay(NULL);
@@ -2370,6 +2370,16 @@ void SimulatorThread :: CheckMapUpdate(bool force)
 
 			SendInfoMessage(pld.zoneDef->mName.c_str(), INFOMSG_LOCATION);
 			SendInfoMessage(pld.zoneDef->mShardName.c_str(), INFOMSG_SHARD);
+		}
+
+		// EM - Added this for tile specific environments, the message always gets sent,
+		// hopefully the client will ignore it if the environment is already correct
+		if(creatureInst != NULL) {
+			std::string * tEnv = pld.zoneDef->GetTileEnvironment(creatureInst->CurrentX, creatureInst->CurrentZ);
+			if(strcmp(tEnv->c_str(), pld.CurrentEnv) != 0) {
+				g_Log.AddMessageFormat("Sending environment change to %s", tEnv->c_str());
+				SendSetMap();
+			}
 		}
 	}
 }
@@ -2647,6 +2657,8 @@ bool SimulatorThread :: HandleQuery(int &PendingData)
 		PendingData = handle_query_quest_complete();
 	else if(query.name.compare("quest.leave") == 0)
 		PendingData = handle_query_quest_leave();
+	else if(query.name.compare("quest.hack") == 0)
+		PendingData = handle_query_quest_hack();
 	else if(query.name.compare("henge.setDest") == 0)
 		PendingData = handle_query_henge_setDest();
 	else if(query.name.compare("portal.acceptRequest") == 0)
@@ -3044,8 +3056,11 @@ void SimulatorThread :: SendSetMap(void)
 	wpos += PutInteger(&SendBuf[wpos], pld.zoneDef->mID);      //zoneDefID
 	wpos += PutShort(&SendBuf[wpos], pld.zoneDef->mPageSize);  //zonePageSize
 	wpos += PutStringUTF(&SendBuf[wpos], pld.zoneDef->mTerrainConfig.c_str());   //Terrain
-	wpos += PutStringUTF(&SendBuf[wpos], pld.zoneDef->mEnvironmentType.c_str());   //envtype
+	std::string * tEnv = pld.zoneDef->GetTileEnvironment(creatureInst->CurrentX, creatureInst->CurrentZ);
+	wpos += PutStringUTF(&SendBuf[wpos], tEnv->c_str());   //envtype
 	wpos += PutStringUTF(&SendBuf[wpos], pld.zoneDef->mMapName.c_str());   //mapName
+
+	strcpy(pld.CurrentEnv, tEnv->c_str());
 
 	PutShort(&SendBuf[1], wpos - 3);       //Set message size
 	AttemptSend(SendBuf, wpos);
@@ -3150,7 +3165,12 @@ void SimulatorThread :: handle_query_client_loading(void)
 
 	if(LoadStage == LOADSTAGE_LOADED)
 	{
-		WritePos += PrepExt_SetMap(&SendBuf[WritePos], &pld);
+		if(creatureInst == NULL) {
+			WritePos += PrepExt_SetMap(&SendBuf[WritePos], &pld, -1, -1);
+		}
+		else {
+			WritePos += PrepExt_SetMap(&SendBuf[WritePos], &pld, creatureInst->CurrentX, creatureInst->CurrentZ);
+		}
 		LoadStage = LOADSTAGE_GAMEPLAY;
 
 		if(pld.charPtr->PrivateChannelName.size() > 0)
@@ -8476,6 +8496,58 @@ int SimulatorThread :: handle_query_quest_leave(void)
 	return PrepExt_QueryResponseString(SendBuf, query.ID, Aux1);
 }
 
+int SimulatorThread :: handle_query_quest_hack(void)
+{
+
+	if(!CheckPermissionSimple(Perm_Account, Permission_Sage))
+		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
+
+	QuestDefinition *qdef;
+	int QuestID = query.GetInteger(1);
+	if(QuestID == 0) {
+		qdef = QuestDef.GetQuestDefPtrByName(query.GetString(1));
+	}
+	else {
+		qdef = QuestDef.GetQuestDefPtrByID(QuestID);
+	}
+	if(qdef == NULL)
+		return PrepExt_QueryResponseError(SendBuf, query.ID, "Quest does not exist.");
+
+	g_CharacterManager.GetThread("SimulatorThread::QuestHack");
+	CreatureInstance *creature = creatureInst->actInst->GetPlayerByCDefID(query.GetInteger(2));
+	if(creature == NULL) {
+		g_Log.AddMessageFormat("No creature for  quest hack op for quest %s and creature %s.", query.GetString(1), query.GetString(2));
+		WritePos = PrepExt_QueryResponseError(SendBuf, query.ID, "Selected creature does not exist.");
+	}
+	else if(query.args[0].compare("add") == 0) {
+		if(qdef->mScriptAcceptCondition.ExecuteAllCommands(this) < 0)
+			return PrepExt_QueryResponseError(SendBuf, query.ID, "Cannot accept the quest yet (pre-conditions failed).");
+		qdef->mScriptAcceptAction.ExecuteAllCommands(this);
+		LogMessageL(MSG_DIAGV, "[SAGE] Quest join (QuestID: %d, CID: %d)", QuestID, creature->CreatureID);
+		WritePos = PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
+		int wpos = creature->charPtr->questJournal.QuestJoin(&Aux1[0], QuestID, query.ID);
+		creature->simulatorPtr->AttemptSend(Aux1, wpos);
+	}
+	else if(query.args[0].compare("remove") == 0) {
+		LogMessageL(MSG_DIAGV, "[SAGE] Quest remove (QuestID: %d, CID: %d)", QuestID, creature->CreatureID);
+		WritePos = PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
+		creature->charPtr->questJournal.QuestLeave(QuestID);
+		// TODO does the selection need an update
+	}
+	else if(query.args[0].compare("complete") == 0) {
+		LogMessageL(MSG_DIAGV, "[SAGE] Quest complete (QuestID: %d, CID: %d)", QuestID, creature->CreatureID);
+		WritePos = PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
+		int wpos = pld.charPtr->questJournal.ForceComplete(QuestID, &Aux1[0]);
+		creature->simulatorPtr->AttemptSend(Aux1, wpos);
+	}
+	else {
+		g_Log.AddMessageFormat("Unknown quest hack op for quest %s and creature %s.", query.GetString(1), query.GetString(2));
+		WritePos = PrepExt_QueryResponseError(SendBuf, query.ID, "Unknown quest hack op.");
+	}
+	g_CharacterManager.ReleaseThread();
+	return WritePos;
+}
+
 int SimulatorThread :: handle_command_complete(void)
 {
 	/*  Query: complete
@@ -9866,9 +9938,10 @@ int SimulatorThread :: handle_query_itemdef_contents(void)
 		{
 			InventorySlot *slot = &cdata->inventory.containerList[INV_CONTAINER][a];
 			if(slot != NULL) {
-				wpos += PutByte(&SendBuf[wpos], 1);
+				wpos += PutByte(&SendBuf[wpos], 2);
 				Util::SafeFormat(Aux1, sizeof(Aux1), "%d", slot->IID);
 				wpos += PutStringUTF(&SendBuf[wpos], Aux1);
+				wpos += PutStringUTF(&SendBuf[wpos], slot->dataPtr->mDisplayName.c_str());
 				count++;
 			}
 		}
@@ -10047,6 +10120,7 @@ int SimulatorThread :: handle_query_marker_del(void)
 	if(!ok)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
 	vector<WorldMarker>::iterator it;
+
 	for (it = creatureInst->actInst->worldMarkers.WorldMarkerList.begin(); it != creatureInst->actInst->worldMarkers.WorldMarkerList.end(); ++it) {
 		if(strcmp(it->Name, query.args[0].c_str()) == 0) {
 			cs.Enter("SimulatorThread::WorldMarkers");
@@ -11733,7 +11807,7 @@ int SimulatorThread :: handle_query_mod_setenvironment(void)
 	g_ZoneDefManager.NotifyConfigurationChange();
 	SendInfoMessage("Environment type changed.", INFOMSG_INFO);
 
-	int wpos = PrepExt_SendEnvironmentUpdateMsg(SendBuf, pld.CurrentZone, pld.zoneDef);
+	int wpos = PrepExt_SendEnvironmentUpdateMsg(SendBuf, pld.CurrentZone, pld.zoneDef, -1, -1);
 	wpos += PrepExt_SendTimeOfDayMsg(&SendBuf[wpos], GetTimeOfDay());
 	creatureInst->actInst->LSendToAllSimulator(SendBuf, wpos, -1);
 

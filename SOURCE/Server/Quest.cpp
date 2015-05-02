@@ -1113,6 +1113,16 @@ int QuestDefinitionContainer :: GetTypeByName(char *name)
 	return TypeVar[0];
 }
 
+QuestDefinition* QuestDefinitionContainer :: GetQuestDefPtrByName(const char *name)
+{
+	//TODO: not thread safe?
+	ITERATOR it;
+	for(it = mQuests.begin(); it != mQuests.end(); ++it)
+		if(strcmp(it->second.title.c_str(), name) == 0)
+			return &it->second;
+	return NULL;
+}
+
 QuestDefinition* QuestDefinitionContainer :: GetQuestDefPtrByID(int id)
 {
 	ITERATOR it = mQuests.find(id);
@@ -1946,57 +1956,64 @@ int QuestJournal :: CheckQuestTalk(char *buffer, int CreatureDefID, int Creature
 	return wpos;
 }
 
-int QuestJournal :: ForceAllComplete(char *buffer)
+int QuestJournal :: ForceComplete(int QuestID, char *buffer)
 {
 	//Cheat to instantly complete the current act of all quests.
 	int wpos = 0;
 	for(size_t a = 0; a < activeQuests.itemList.size(); a++)
 	{
 		QuestReference &qref = activeQuests.itemList[a];
-		QuestDefinition *qdef = qref.GetQuestPointer();
-		if(qdef == NULL)
-			continue;
-		int act = qref.CurAct;
-		for(int b = 0; b < 3; b++)
-		{
-			int count = 0;
-			switch(qdef->actList[act].objective[b].type)
+		if(QuestID == -1 || qref.QuestID == QuestID) {
+			QuestDefinition *qdef = qref.GetQuestPointer();
+			if(qdef == NULL)
+				continue;
+			int act = qref.CurAct;
+			for(int b = 0; b < 3; b++)
 			{
-			case QuestObjective::OBJECTIVE_TYPE_ACTIVATE:
-			case QuestObjective::OBJECTIVE_TYPE_KILL:
-				count = qdef->actList[act].objective[b].data2;
-				break;
-			case QuestObjective::OBJECTIVE_TYPE_TALK:
-				count = 1;
-				break;
-			case QuestObjective::OBJECTIVE_TYPE_TRAVEL:
-				count = 1;
-				break;
-			default:
-				count = 0;
-			}
+				int count = 0;
+				switch(qdef->actList[act].objective[b].type)
+				{
+				case QuestObjective::OBJECTIVE_TYPE_ACTIVATE:
+				case QuestObjective::OBJECTIVE_TYPE_KILL:
+					count = qdef->actList[act].objective[b].data2;
+					break;
+				case QuestObjective::OBJECTIVE_TYPE_TALK:
+					count = 1;
+					break;
+				case QuestObjective::OBJECTIVE_TYPE_TRAVEL:
+					count = 1;
+					break;
+				default:
+					count = 0;
+				}
 
-			if(count > 0)
-			{
-				qref.ObjComplete[b] = 1;
-				qref.ObjCounter[b] = count;
-				int tpos = wpos;
-				wpos += PutByte(&buffer[wpos], 7);  //_handleQuestEventMsg
-				wpos += PutShort(&buffer[wpos], 0); //Size
-				wpos += PutInteger(&buffer[wpos], qdef->questID); //Quest ID
-				wpos += PutByte(&buffer[wpos], QuestObjective::EVENTMSG_STATUS);
-				wpos += PutByte(&buffer[wpos], b);
-				wpos += PutByte(&buffer[wpos], 1);
-				wpos += PutStringUTF(&buffer[wpos], "Complete");
-				PutShort(&buffer[tpos + 1], wpos - tpos - 3);
+				if(count > 0)
+				{
+					qref.ObjComplete[b] = 1;
+					qref.ObjCounter[b] = count;
+					int tpos = wpos;
+					wpos += PutByte(&buffer[wpos], 7);  //_handleQuestEventMsg
+					wpos += PutShort(&buffer[wpos], 0); //Size
+					wpos += PutInteger(&buffer[wpos], qdef->questID); //Quest ID
+					wpos += PutByte(&buffer[wpos], QuestObjective::EVENTMSG_STATUS);
+					wpos += PutByte(&buffer[wpos], b);
+					wpos += PutByte(&buffer[wpos], 1);
+					wpos += PutStringUTF(&buffer[wpos], "Complete");
+					PutShort(&buffer[tpos + 1], wpos - tpos - 3);
 
-				wpos += qref.AdvanceAct(&buffer[wpos], qdef);
-				if(qref.CurAct > qdef->actCount - 1)
-					qref.CurAct = qdef->actCount - 1;
+					wpos += qref.AdvanceAct(&buffer[wpos], qdef);
+					if(qref.CurAct > qdef->actCount - 1)
+						qref.CurAct = qdef->actCount - 1;
+				}
 			}
 		}
 	}
 	return wpos;
+}
+
+int QuestJournal :: ForceAllComplete(char *buffer)
+{
+	return ForceComplete(-1, buffer);
 }
 
 void QuestJournal :: QuestLeave(int QuestID)

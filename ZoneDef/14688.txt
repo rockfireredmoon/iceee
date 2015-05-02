@@ -1,0 +1,13 @@
+[ENTRY]
+ID=14688
+ACCOUNTID=1213
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=emeraldtwo
+GroveName=emeraldtwo
+WarpName=emeraldtwo1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

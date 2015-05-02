@@ -62,6 +62,7 @@ struct CharacterServerData
 	short CurrentMapInt;    //Internal Mapdef index
 	short LastMapTick;      //Current tick of the map changing system
 	char PortalRequestDest[32];
+	char CurrentEnv[40]; //Internal current environment
 
 	int DeltaY;
 	bool bFalling;
