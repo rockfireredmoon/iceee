@@ -1,14 +1,4 @@
 [ENTRY]
-ID=1127671
-Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
-Pos=64463,1026.38,62296
-Orient=0,0,0,1
-Scale=1,1,1
-links_count=2
-link=1127663,1
-
-[ENTRY]
 ID=1127679
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
@@ -21,7 +11,7 @@ link=151028453,1
 [ENTRY]
 ID=1127686
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=64476.1,1008.63,62458.2
 Orient=0,0,0,1
 Scale=1,1,1

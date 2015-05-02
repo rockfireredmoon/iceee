@@ -2629,8 +2629,8 @@ link=1108332,1
 ID=1108347
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=Untitled
-Pos=2461.13,480.295,2777.9
-Orient=0,0.261909,0,0.965092
+Pos=2496.58,480.295,2777.9
+Orient=0,0.261909,0,0.965093
 Scale=1,1,1
 spawnPackage=56_wacr_FullMix
 
@@ -2858,7 +2858,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1127658
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=2125.09,515.584,3132.37
 Orient=0,0.699716,0,0.714421
 Scale=1,1,1

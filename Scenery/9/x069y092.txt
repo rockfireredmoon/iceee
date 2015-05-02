@@ -20,10 +20,11 @@ spawnPackage=11_irh_daemonStagCamp
 ID=151028164
 Asset=Manipulator-SpawnPoint
 Name=Untitled
-Pos=52154.8,603.752,69066
+Pos=52140.3,627.127,69033.2
 Orient=0,0.963558,0,0.267499
 Scale=1,1,1
 spawnPackage=11_irh_daemonStagCamp
+wanderRadius=100
 links_count=1
 link=151028165,1
 

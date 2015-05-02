@@ -34,6 +34,17 @@ links_count=1
 link=1127668,1
 
 [ENTRY]
+ID=1127666
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=64477.2,1000.05,62117.6
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=11_dth_wilds_42_43
+links_count=1
+link=1127682,1
+
+[ENTRY]
 ID=1127668
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
@@ -56,17 +67,6 @@ links_count=1
 link=1127668,1
 
 [ENTRY]
-ID=1127670
-Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
-Pos=64401.3,1008.87,62158
-Orient=0,0,0,1
-Scale=1,1,1
-links_count=2
-link=1127667,1
-link=1127671,1
-
-[ENTRY]
 ID=1127673
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
@@ -79,19 +79,20 @@ link=1127666,1
 [ENTRY]
 ID=1127682
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=64405,988.953,62094.9
 Orient=0,0,0,1
 Scale=0.975,0.975,0.975
-links_count=3
+links_count=4
 link=1127663,1
 link=1127683,1
 link=1127685,1
+link=1127666,1
 
 [ENTRY]
 ID=1127683
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=64318.3,982.975,62069.5
 Orient=0,0,0,1
 Scale=1,1,1
@@ -103,7 +104,7 @@ link=1127684,1
 [ENTRY]
 ID=1127684
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=64157.9,846.168,61701.1
 Orient=0,0,0,1
 Scale=1,1,1
@@ -208,7 +209,7 @@ link=151028339,1
 ID=151028457
 Asset=Manipulator-SpawnPoint
 Name=Untitled
-Pos=64386.5,1005.3,62167
+Pos=64345.4,1009.05,62206.4
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_dth_wilds_42_43

@@ -54,11 +54,21 @@ link=151028336,1
 [ENTRY]
 ID=1126556
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=52575.8,687.984,68418.6
 Orient=0,-0.724287,0,0.689498
 Scale=1,1,1
 spawnPackage=#F7786
+
+[ENTRY]
+ID=1127769
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=53163.9,618.645,68921.5
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=11_irh_vampiderCamp_42_43
+wanderRadius=100
 
 [ENTRY]
 ID=151016960
@@ -370,15 +380,6 @@ Name=Untitled
 Pos=53229.7,616.665,68747
 Orient=0,0,0,1
 Scale=1.175,1.175,1.175
-Flags=1
-
-[ENTRY]
-ID=151041199
-Asset=CL-UndeadTree3#CL-UndeadTree3
-Name=Untitled
-Pos=53212.4,617.418,68602
-Orient=0,0,0,1
-Scale=0.575,0.575,0.575
 Flags=1
 
 [ENTRY]

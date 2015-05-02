@@ -7,6 +7,16 @@ Orient=0,0,0,1
 Scale=1,1,1
 
 [ENTRY]
+ID=1127775
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=Untitled
+Pos=55401.6,636.773,69121.6
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=11_irh_undeadChirurgeon
+wanderRadius=100
+
+[ENTRY]
 ID=151016129
 Asset=CL-Undead_Camp2#CL-Undead_Camp2
 Name=Untitled
@@ -346,22 +356,14 @@ Scale=1,1,1
 spawnPackage=11_irh_undeadChirurgeon
 
 [ENTRY]
-ID=151028176
-Asset=Manipulator-SpawnPoint
-Name=Untitled
-Pos=54766.6,622.188,69374
-Orient=0,0,0,1
-Scale=1,1,1
-spawnPackage=11_irh_undeadChirurgeon
-
-[ENTRY]
 ID=151028177
 Asset=Manipulator-SpawnPoint
 Name=Untitled
-Pos=54831.2,582.644,69140
+Pos=54752,585.306,69195.3
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_irh_undeadChirurgeon
+wanderRadius=100
 
 [ENTRY]
 ID=151028189

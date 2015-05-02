@@ -1,10 +1,20 @@
 [ENTRY]
 ID=1084612
 Asset=Light-Large?Group=1&COLOR=FF00FD
-Name=
+Name=Untitled
 Pos=55162.9,668.007,68555.8
 Orient=0,0,0,1
 Scale=1,1,1
+
+[ENTRY]
+ID=1127774
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=55384.4,660.919,68882.1
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=11_irh_undeadChirurgeon
+wanderRadius=200
 
 [ENTRY]
 ID=151017560

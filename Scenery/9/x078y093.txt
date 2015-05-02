@@ -1,6 +1,7 @@
 [ENTRY]
 ID=151015157
 Asset=CL-UndeadBoulder2#CL-UndeadBoulder2
+Name=Untitled
 Pos=58694.5,597.436,70358
 Orient=0,-0.624897,0,0.780707
 Scale=2.525,2.525,2.525
@@ -9,17 +10,18 @@ Flags=1
 [ENTRY]
 ID=151029301
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=58990,785.211,70016
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=11_alp_zombieSoulgazer
 links_count=1
 link=151029322,1
-spawnPackage=11_alp_zombieSoulgazer
-outerRadius=1
 
 [ENTRY]
 ID=151029319
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=58811.6,844.58,69765
 Orient=0,0,0,1
 Scale=1,1,1
@@ -30,6 +32,7 @@ link=151029320,1
 [ENTRY]
 ID=151029320
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=58868.3,809.865,69941
 Orient=0,0,0,1
 Scale=1,1,1
@@ -40,6 +43,7 @@ link=151029321,1
 [ENTRY]
 ID=151029321
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=58962.9,789.357,70006
 Orient=0,0,0,1
 Scale=1,1,1
@@ -49,6 +53,7 @@ link=151029320,1
 [ENTRY]
 ID=151029322
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=59236.9,712.834,70115
 Orient=0,0,0,1
 Scale=1,1,1
@@ -59,15 +64,17 @@ link=151029323,1
 [ENTRY]
 ID=151029335
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=59003.1,650.321,70404
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_alp_ZombieMix_44_45
-outerRadius=10
+wanderRadius=100
 
 [ENTRY]
 ID=151041066
 Asset=CL-UndeadBoulder6#CL-UndeadBoulder6
+Name=Untitled
 Pos=58769.2,643.732,70157
 Orient=0,0,0,1
 Scale=2.125,2.125,2.125
@@ -75,6 +82,7 @@ Scale=2.125,2.125,2.125
 [ENTRY]
 ID=151041067
 Asset=CL-UndeadBoulder5#CL-UndeadBoulder5
+Name=Untitled
 Pos=58749,673.552,70093
 Orient=0,0,0,1
 Scale=1.95,1.95,1.95
@@ -83,6 +91,7 @@ Flags=1
 [ENTRY]
 ID=151041069
 Asset=CL-UndeadBoulder4#CL-UndeadBoulder4
+Name=Untitled
 Pos=58646.5,732.837,69996
 Orient=0,0,0,1
 Scale=2.75,2.75,2.75
@@ -90,6 +99,7 @@ Scale=2.75,2.75,2.75
 [ENTRY]
 ID=151041094
 Asset=Prop-Burnt_Pines#Prop-Burnt_Pine4
+Name=Untitled
 Pos=59096.1,737.031,70186
 Orient=0.111298,-0.963537,-0.0279212,0.241722
 Scale=4,4,4
@@ -98,6 +108,7 @@ Flags=1
 [ENTRY]
 ID=151041095
 Asset=Prop-Burnt_Pines#Prop-Burnt_Pine5
+Name=Untitled
 Pos=58965.1,849.37,69881
 Orient=0,0,0.0998334,0.995004
 Scale=4.725,4.725,4.725
@@ -106,6 +117,7 @@ Flags=1
 [ENTRY]
 ID=151041096
 Asset=Prop-Burnt_Pines#Prop-Burnt_Pine3
+Name=Untitled
 Pos=59133.7,719.322,70142
 Orient=0,0,0,1
 Scale=2.325,2.325,2.325
@@ -114,6 +126,7 @@ Flags=1
 [ENTRY]
 ID=151041097
 Asset=CL-GrunsBush_4
+Name=Untitled
 Pos=59140.4,712.339,70154
 Orient=0,0,0,1
 Scale=1.875,1.875,1.875

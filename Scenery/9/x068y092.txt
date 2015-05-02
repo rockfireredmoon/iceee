@@ -1,62 +1,63 @@
 [ENTRY]
 ID=151028132
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=51433.3,719.621,69039
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_irh_daemonStagCamp
-outerRadius=10
 
 [ENTRY]
 ID=151028133
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=51148.8,688.803,69104
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_irh_daemonStagCamp
-outerRadius=10
 
 [ENTRY]
 ID=151028134
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=51237.5,589.764,69379
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_irh_daemonStagCamp
-outerRadius=10
 
 [ENTRY]
 ID=151028135
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=51526,617.575,69233
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_irh_daemonStagCamp
-outerRadius=10
 
 [ENTRY]
 ID=151028154
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=51425.5,472.315,69552
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_irh_daemonStagCamp
-outerRadius=10
 
 [ENTRY]
 ID=151028155
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=51131,484.36,69642
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=11_irh_daemonStagCamp
 links_count=1
 link=151028156,1
-spawnPackage=11_irh_daemonStagCamp
-outerRadius=10
 
 [ENTRY]
 ID=151028156
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=51029.7,580.906,69389
 Orient=0,0,0,1
 Scale=1,1,1
@@ -67,6 +68,7 @@ link=151028157,1
 [ENTRY]
 ID=151028157
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=51051.9,663.908,69167
 Orient=0,0,0,1
 Scale=1,1,1
@@ -76,19 +78,20 @@ link=151028156,1
 [ENTRY]
 ID=151028311
 Asset=Manipulator-SpawnPoint
-Pos=51601,554.917,69334
+Name=Untitled
+Pos=51601,732.806,69334
 Orient=0,-0.991458,0,0.130424
 Scale=1,1,1
+spawnPackage=11_irh_bahmut
 links_count=2
 link=151028313,1
 link=151028319,1
-spawnPackage=11_irh_bahmut
-outerRadius=10
 
 [ENTRY]
 ID=151028313
 Asset=Manipulator#Manipulator-PathNode
-Pos=51202.6,523.415,69501
+Name=Untitled
+Pos=51202.6,749.101,69501
 Orient=0,0,0,1
 Scale=1,1,1
 links_count=2
@@ -98,7 +101,8 @@ link=151028314,1
 [ENTRY]
 ID=151028314
 Asset=Manipulator-PathNode
-Pos=51093.6,616.727,69325
+Name=Untitled
+Pos=51093.6,699.858,69325
 Orient=0,0,0,1
 Scale=1,1,1
 links_count=2
@@ -108,6 +112,7 @@ link=151028315,1
 [ENTRY]
 ID=151028319
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=51718.1,614.773,69158
 Orient=0,0,0,1
 Scale=1,1,1
@@ -118,6 +123,7 @@ link=151028318,1
 [ENTRY]
 ID=151040970
 Asset=CL-UndeadTree4#CL-UndeadTree4
+Name=Untitled
 Pos=51174.6,696.764,69168
 Orient=0,-0.34759,0,0.937647
 Scale=0.825,0.825,0.825
@@ -126,6 +132,7 @@ Flags=1
 [ENTRY]
 ID=151040971
 Asset=CL-UndeadTree5#CL-UndeadTree5
+Name=Untitled
 Pos=51368,687.616,69310
 Orient=0,-0.999816,0,-0.019202
 Scale=0.9,0.9,0.9
@@ -134,6 +141,7 @@ Flags=1
 [ENTRY]
 ID=151040986
 Asset=Prop-Mining_Cart#Prop-Mine-Cart
+Name=Untitled
 Pos=51493.2,715.955,69561
 Orient=0,0,-0.989391,0.14528
 Scale=1.8,1.8,1.8
@@ -142,6 +150,7 @@ Flags=1
 [ENTRY]
 ID=151040987
 Asset=CL-GrunsBush_1#CL-GrunsBush_1
+Name=Untitled
 Pos=51473.5,693.818,69564
 Orient=0,0,0,1
 Scale=1,1,1
@@ -150,6 +159,7 @@ Flags=1
 [ENTRY]
 ID=151040989
 Asset=CL-GrunsBush_2#CL-GrunsBush_2
+Name=Untitled
 Pos=51536,720.251,69556
 Orient=0,0,0,1
 Scale=1.875,1.875,1.875
@@ -158,6 +168,7 @@ Flags=1
 [ENTRY]
 ID=151040994
 Asset=CL-GrunsBush_2#CL-GrunsBush_2
+Name=Untitled
 Pos=51005.1,706.293,69589
 Orient=0,0.00999983,0,0.99995
 Scale=2.075,2.075,2.075
@@ -166,6 +177,7 @@ Flags=1
 [ENTRY]
 ID=151040995
 Asset=CL-GrunsBush_3#CL-GrunsBush_3
+Name=Untitled
 Pos=51283.9,698.623,69391
 Orient=0,0,0,1
 Scale=2.425,2.425,2.425
@@ -174,6 +186,7 @@ Flags=1
 [ENTRY]
 ID=151040999
 Asset=CL-GrunsBush_4#CL-GrunsBush_4
+Name=Untitled
 Pos=51182,693.559,69521
 Orient=0,0,0,1
 Scale=2.525,2.525,2.525
@@ -181,6 +194,7 @@ Scale=2.525,2.525,2.525
 [ENTRY]
 ID=151041000
 Asset=CL-GrunsBush_5#CL-GrunsBush_5
+Name=Untitled
 Pos=51327,700.825,69126
 Orient=0,0.183947,0,0.982936
 Scale=1.825,1.825,1.825
