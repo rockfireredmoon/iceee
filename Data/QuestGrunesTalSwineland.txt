@@ -2529,7 +2529,7 @@ sEnder=64056.2,780.404,56918.8,9
 [ACT]
 Act.BodyText=Search for the missing Redeemer envoy from Redeemer's Hall
 Obj.0.type=gather
-Obj.0.data1=
+Obj.0.data1=7796
 Obj.0.data2=1
 Obj.0.description=Collect the Redeemers documents
 Obj.0.complete=0
