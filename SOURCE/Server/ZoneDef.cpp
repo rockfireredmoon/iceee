@@ -406,9 +406,9 @@ void ZoneDefInfo :: SaveToStream(FILE *output)
 	Util::WriteIntegerIfNot(output, "PlayerFilterType", mPlayerFilterType, 0);
 	Util::WriteIntegerList(output, "PlayerFilterID", mPlayerFilterID);
 
-	std::map<std::string, string>::iterator it;
+	std::map<EnvironmentTileKey, string>::iterator it;
 	for (it = mTileEnvironment.begin(); it != mTileEnvironment.end(); ++it)
-		fprintf(output, "TileEnvironment=%s,%s\r\n", it->first.c_str(), it->second.c_str());
+		fprintf(output, "TileEnvironment=%d,%d,%s\r\n", it->first.x, it->first.y, it->second.c_str());
 
 	for(size_t i = 0; i < mEditPermissions.size(); i++)
 		mEditPermissions[i].SaveToStream(output);
@@ -423,10 +423,11 @@ std::string * ZoneDefInfo :: GetTileEnvironment(int x, int y)
 	int px = x / mPageSize;
 	int py = y / mPageSize;
 	if(x >= 0 && y >= 0) {
-		char key[10];
-		Util::SafeFormat(key, sizeof(key), "%d,%d", px, py);
-		std::map<std::string, string>::iterator it;
-		it = mTileEnvironment.find(key);
+		std::map<EnvironmentTileKey, string>::iterator it;
+		EnvironmentTileKey etk;
+		etk.x = px;
+		etk.y = py;
+		it = mTileEnvironment.find(etk);
 		if(it != mTileEnvironment.end()) {
 			g_Log.AddMessageFormat("Returning tile environment %s for %d/%d (%d/%d)", it->second.c_str(),x,y,px,py);
 			return &it->second;
@@ -768,11 +769,29 @@ int ZoneDefManager :: LoadFile(const char *fileName)
 				else if(strcmp(lfr.SecBuffer, "TILEENVIRONMENT") == 0)
 				{
 					lfr.MultiBreak("=,"); //Re-split for this particular data.
+					EnvironmentTileKey etk;
+					etk.x = lfr.BlockToIntC(1);
+					etk.y = lfr.BlockToIntC(2);
+					newItem.mTileEnvironment[etk] = lfr.BlockToStringC(3, 0);
+				}
+				else if(strcmp(lfr.SecBuffer, "AREAENVIRONMENT") == 0)
+				{
+					lfr.MultiBreak("=,"); //Re-split for this particular data.
 					int tx = lfr.BlockToIntC(1);
 					int ty = lfr.BlockToIntC(2);
-					char buf[10];
-					Util::SafeFormat(buf, sizeof(buf), "%d,%d", tx, ty);
-					newItem.mTileEnvironment.insert(std::pair<string, string>(buf, lfr.BlockToStringC(3, 0)));
+					int tw = lfr.BlockToIntC(3);
+					int th = lfr.BlockToIntC(4);
+					for(int iy = 0; iy < th ; iy++)
+					{
+						for(int ix = 0; ix < tw ; ix++)
+						{
+							EnvironmentTileKey etk;
+							etk.x = tx + ix;
+							etk.y = ty + iy;
+
+							newItem.mTileEnvironment[etk] = lfr.BlockToStringC(3, 0);newItem.mTileEnvironment[etk] = lfr.BlockToStringC(5, 0);
+						}
+					}
 				}
 				else
 					g_Log.AddMessageFormat("Unknown identifier [%s] while reading from file %s.", lfr.SecBuffer, fileName);
