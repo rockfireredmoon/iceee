@@ -282,6 +282,13 @@ class this.QuestManager extends this.DefaultQueryHandler
 			this.Screens.close("QuestGiver");
 		}
 	}
+	
+	function onQuestRemoteAbandoned(questId) 
+	{
+		this.requestQuestList();
+		this._removeQuestData(questId);
+		::QuestIndicator.updateCreatureIndicators();
+	}
 
 	function _handleQuestObjectiveMessage( objective )
 	{

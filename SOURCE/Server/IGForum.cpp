@@ -165,7 +165,7 @@ void IGFThreadPage :: SaveFile(const char *filename)
 		return;
 	}
 	THREADENTRY::iterator it;
-	for(it = mEntries.begin(); it != mEntries.end(); ++it)
+	for(it = mEntries.begin(); it != mEntries.end(); it++)
 	{
 		fprintf(output, "[ENTRY]\r\n");
 		fprintf(output, "ID=%d\r\n", it->second.mID);
@@ -283,7 +283,7 @@ void IGFPostPage :: SaveFile(const char *filename)
 		return;
 	}
 	POSTENTRY::iterator it;
-	for(it = mEntries.begin(); it != mEntries.end(); ++it)
+	for(it = mEntries.begin(); it != mEntries.end(); it++)
 	{
 		fprintf(output, "[ENTRY]\r\n");
 		fprintf(output, "ID=%d\r\n", it->second.mID);

@@ -267,6 +267,7 @@ public:
 	void LoadUsedNameList(const char *fileName);
 	void RunUpdateCycle(bool force);
 	bool AcceptingLogins(void);
+	int ValidateNameParts(const std::string &first, const std::string &last);
 
 	enum ErrorCode
 	{

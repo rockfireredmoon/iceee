@@ -43,6 +43,27 @@ private:
 	const char *GetTypeNameByID(int ID);
 };
 
+
+struct EnvironmentTileKey
+{
+	int x;
+	int y;
+	EnvironmentTileKey() { x = 0; y = 0; }
+	EnvironmentTileKey(int setX, int setY) { x = setX; y = setY; }
+	bool Compare(const EnvironmentTileKey& other) const
+	{
+		return ((x == other.x) && (y == other.y));
+	}
+	bool operator <(const EnvironmentTileKey& other) const
+	{
+		if(x < other.x)
+			return true;
+		else if(x == other.x)
+			return (y < other.y);
+		return false;
+	}
+};
+
 class ZoneDefInfo
 {
 public:
@@ -80,7 +101,7 @@ public:
 	std::vector<int> mPlayerFilterID;  //Creature Def IDs of the players to filter.
 
 	std::string mDropRateProfile;
-	std::map<string, string> mTileEnvironment; // Use a specific environment for certain tiles (the key is a string "<x>,<y>")
+	std::map<EnvironmentTileKey, string> mTileEnvironment; // Use a specific environment for certain tiles (the key is a string "<x>,<y>")
 	
 	int PendingChanges;  //Used internally to track whether this zone needs to be saved back to file.
 

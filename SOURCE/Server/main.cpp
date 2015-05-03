@@ -27,7 +27,30 @@
      -Grethnefar
 */
 
+/*
 
+The story continues.
+
+Around March 2015, myself and a small team of remaining players took Greth's generous release
+of his server source, data, and extensive documentation and have started to bolt new things on,
+add new content and generally mess with things.
+
+Our goal is to get the incomplete Grunes Tal and Swineland regions open (which has proved a lot of
+work for everyone involved, it's made me appreciate even me more what Greth did).
+
+I AM a professional programmer, although have never used C++ before, so expect bad habits,
+stupid ideas, and mis-understanding of original ideas. However, it does work, and adds some fun
+new things and future possibilities.
+
+PS Greth's disclaimer stands. No guarantees of anything :)
+
+For now I am developing on Linux only, with the intention of revisiting Windows to make sure it
+all still compiles (probably not). The project has been converted to autotools format, which
+should be familiar to most GCC developers.
+
+- Emerald Icemoon
+
+ */
 
 /*	NOTES ON COMPILING:
 

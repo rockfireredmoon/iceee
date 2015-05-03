@@ -88,3 +88,8 @@ Name=North Swineland Junction
 Comment=For map alignment
 Position=68515.0,797.0,48005.0
 
+[ENTRY]
+Name=Grunes side of Bridge
+Comment=[Comment here]
+Position=66634.0,667.0,58258.0
+
