@@ -2079,6 +2079,98 @@ Obj.0.completeText=
 Obj.0.markerLocations=2142.8,266.536,2676.8,93
 
 [ENTRY]
+ID=827
+Title=Felled Mushrooms
+BodyText=Hey! Youze there! Yea youze, come 'ere! 'Ave I got a task for ya, if'n yer interested! Ya are? Well, then, lissen up!
+
+Back in th' days of my dear ol' Grandsire, there used ta be this here massive forest of mushrooms that covered the entire no'thern spanse of the Junderlund. Was a b-ea-utiful site to see! I can still remember my sire takin' me there as a lad.
+
+Then, a few years ago, here come the dambugs outta the ground. Tons of em! In no time at all, th' dambugs laid waste to the entire Junderlund whilst abuildin' their hives. Was all us warpigs could do just to keep em from overtakin' our town! Well, we've held 'em back this long, but, th' blasted dambugs done gone and chopped up th' entire mushroom forest west o' here! Th' memories of many a warpig such as myself, gone!
+
+I want payback, but, th' Protectorate refuses ta budge. Youse looks to be quite th' strong one. Youse do me this favor and smite those dambugs fer me and I'll pay ya good. Whaddya say?
+CompleteText=Back already eh? I knew youse could do it! Least now I gots some consolation knowin' them dambugs got whats they deserved! Alright, I'se a warpig of my word, so here's th' payment I promised ya!
+Level=44
+Suggested=44
+Exp=8215
+PartySize=1
+NumRewards=0
+Coin=2510
+Unabandon=0
+QuestGiverID=3681
+QuestEnderID=3681
+Repeat=0
+sGiver=64447.2,799.739,56807.4,9
+sEnder=64447.2,799.739,56807.4,9
+[ACT]
+Act.BodyText=Kill 15 Junderbrood Workskrills in the fallen mushroom forest in northern Junderlund
+Obj.0.type=kill
+Obj.0.data1=1186
+Obj.0.data2=15
+Obj.0.description=Kill 15 Junderbrood Workskrill
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 15
+Obj.0.markerLocations=59924.8,591.578,55377.3,9
+[ACT]
+ActBodyText= Return to Rheskor
+Obj.0.type=talk
+Obj.0.data1=
+Obj.0.data2=
+Obj.0.description=Return to Rheskor
+Obj.0.complete=0
+Obj.0.myCreatureDefID=3681
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=64447.2,799.739,56807.4,9
+[ENTRY]
+Requires=825
+ID=828
+Title=A Hot Bowl of Soup
+BodyText=You ate them bug wings right proper an' ya didn't even cry! I'se impressed I am. By proving you'se ain't a panzy, I'll reward ya with another recipe o' mine!
+
+I wants youse to try a pot o' my momma's special mushroom soup! If'n there's a one thing she was good at, it was th' heavenly taste o' her soup! Made a warpig cry ever time it did!
+
+I'se a bit low on th' mushrooms, though, so, make yerself useful and go git me some more! Th' recipe calls fer a special type o' mushroom and it only grows in th' giant forest west o' here! 
+
+Git me a proper fifteen chunks o' those mushrooms an' hurry back here! Don't want th' soup t' get cold b'fore the main ingredient is added! Oh and don't mind th' dambugs whilst yer out there, just get me th' mushrooms!
+CompleteText=Youse right handy you is! Now, have a bowl o' my momma's special soup! No cryin' over it though!
+Level=44
+Suggested=44
+Exp=8250
+PartySize=1
+NumRewards=0
+Coin=2510
+Unabandon=0
+QuestGiverID=1248
+QuestEnderID=1248
+Repeat=0
+sGiver=64137.3,780.062,56620.3,9
+sEnder=64137.3,780.062,56620.3,9
+[ACT]
+Act.BodyText=Kill 15 Junderbrood Workskrills in the fallen mushroom forest in northern Junderlund
+Obj.0.type=gather
+Obj.0.data1=0
+Obj.0.data2=
+Obj.0.description=gather 15 Mushroom Chunks
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=1543
+Obj.0.completeText=0 of 15
+Obj.0.markerLocations=59900,591.671,55525.1,9
+[ACT]
+ActBodyText= Return to Billko
+Obj.0.type=talk
+Obj.0.data1=
+Obj.0.data2=
+Obj.0.description=Return to Billko
+Obj.0.complete=0
+Obj.0.myCreatureDefID=1248
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=64137.3,780.062,56620.3,9
+
+[ENTRY]
 ID=831
 Title=Haunted Hill
 BodyText=There is a slouching peak northeast of here - its true name lost to time, called now "Haunted Hill."

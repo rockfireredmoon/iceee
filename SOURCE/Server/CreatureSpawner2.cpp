@@ -837,7 +837,7 @@ bool SpawnTile :: QualifyDelete(void)
 		return false;
 
 	SPAWN_MAP::iterator it;
-	for(it = activeSpawn.begin(); it != activeSpawn.end(); ++it)
+	for(it = activeSpawn.begin(); it != activeSpawn.end(); it++)
 	{
 		if((it->second.nextSpawn != PlatformTime::MAX_TIME) && (g_ServerTime < it->second.nextSpawn))
 		{

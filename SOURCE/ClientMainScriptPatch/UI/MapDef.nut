@@ -299,11 +299,11 @@ this.MapDef <- {
 				GrunesTal = {
 					image = "Europe_Map_Region_Grunes_Tal",
 					u0 = 50820,
-					v0 = 55500,
-					u1 = 69200,
+					v0 = 52000,
+					u1 = 70000,
 					v1 = 70052,
-					numPagesAcross = 9.57,
-					numPagesDown = 7.57,
+					numPagesAcross = 9.98,
+					numPagesDown =9.40,
 					priority = 6,
 					parentMapImage = "MapWorldBG",
 					extraMarkers = [

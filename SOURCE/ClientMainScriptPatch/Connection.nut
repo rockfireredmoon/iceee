@@ -1140,6 +1140,7 @@ class this.Connection extends this.MessageBroadcaster
 			break;
 
 		case 4:
+			this.broadcastMessage("onQuestRemoteAbandoned", questId);
 			this.broadcastMessage("onQuestAbandoned", questId);
 			break;
 
