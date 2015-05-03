@@ -346,15 +346,15 @@ v1=69120
 Name=GrunesTal
 Primary=Maps-Europe
 Type=Region
-numPagesAcross=9.98
-numPagesDown=9.40
+numPagesAcross=12.91
+numPagesDown=12.18
 parentMapImage=MapWorldBG
 image=Europe_Map_Region_Grunes_Tal
 priority=6
-u0=50820
-v0=52000
-u1=70000
-v1=70052
+u0=46000
+v0=50900
+u1=70800
+v1=74300
 
 
 [ENTRY]

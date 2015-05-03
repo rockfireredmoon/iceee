@@ -7,14 +7,6 @@ Orient=0,-0.757842,0,0.652438
 Scale=1,1,1
 
 [ENTRY]
-ID=151048110
-Asset=Prop-Boulder_Scary#Prop-Boulder_Scary1
-Name=Untitled
-Pos=49972.4,556.317,66263
-Orient=0,0,0,1
-Scale=1,1,1
-
-[ENTRY]
 ID=151048111
 Asset=Prop-Boulder_Scary#Prop-Boulder_Scary5
 Name=Untitled

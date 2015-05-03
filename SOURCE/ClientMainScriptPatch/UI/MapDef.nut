@@ -298,24 +298,44 @@ this.MapDef <- {
 				},
 				GrunesTal = {
 					image = "Europe_Map_Region_Grunes_Tal",
-					u0 = 50820,
-					v0 = 52000,
-					u1 = 70000,
-					v1 = 70052,
-					numPagesAcross = 9.98,
-					numPagesDown =9.40,
+					u0 = 46000,
+					v0 = 50900,
+					u1 = 70800,
+					v1 = 74300,
+					numPagesAcross = 12.91,
+					numPagesDown =12.18,
 					priority = 6,
 					parentMapImage = "MapWorldBG",
 					extraMarkers = [
 						{
-							name = "1 Stub",
-							x = 350,
-							y = 100
+							name = "The Wailing Crypt",
+							x = 201,
+							y = 406
 						},
 						{
-							name = "2 Stub",
+							name = "Redeemer Camp",
 							x = 400,
-							y = 150
+							y = 370
+						},
+						{
+							name = "Folkirk Manor",
+							x = 538,
+							y = 280
+						},
+						{
+							name = "Skrill Camp",
+							x = 395,
+							y = 217
+						},
+						{
+							name = "Skrill Camp",
+							x = 425,
+							y = 112
+						},
+						{
+							name = "Hogcatcher's Camp",
+							x = 600,
+							y = 177
 						}
 					]
 				},
