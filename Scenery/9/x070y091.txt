@@ -63,7 +63,7 @@ spawnPackage=#F7786
 [ENTRY]
 ID=1127769
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=53163.9,618.645,68921.5
 Orient=0,0,0,1
 Scale=1,1,1
@@ -172,7 +172,7 @@ link=151026652,1
 ID=151026652
 Asset=Manipulator-PathNode
 Name=Untitled
-Pos=52699.4,675.495,68640
+Pos=52522.1,679.105,68596.6
 Orient=0,0,0,1
 Scale=1,1,1
 links_count=2
@@ -183,7 +183,7 @@ link=151026653,1
 ID=151026653
 Asset=Manipulator-PathNode
 Name=Untitled
-Pos=52708.5,678.309,68311
+Pos=52535.4,678.309,68311
 Orient=0,0,0,1
 Scale=1,1,1
 links_count=2
@@ -217,7 +217,7 @@ link=1103998,1
 ID=151026673
 Asset=Manipulator-SpawnPoint
 Name=Untitled
-Pos=52634.3,679.885,68371
+Pos=52605.3,679.951,68351.4
 Orient=0,0.674288,0,0.738469
 Scale=1,1,1
 spawnPackage=11_irh_risenCorpse_r_42
@@ -252,6 +252,15 @@ Scale=1,1,1
 spawnPackage=11_irh_risenCorpse_r_42
 links_count=1
 link=151026650,1
+
+[ENTRY]
+ID=151026709
+Asset=Manipulator-SpawnPoint
+Name=Untitled
+Pos=52524.9,545.469,68958.3
+Orient=0,-0.655617,0,0.755093
+Scale=1,1,1
+spawnPackage=11_irh_cryptDigger
 
 [ENTRY]
 ID=151028200

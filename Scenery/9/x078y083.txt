@@ -1,7 +1,7 @@
 [ENTRY]
 ID=1127468
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=59017.2,982.44,62711.7
 Orient=0,0,0,1
 Scale=1,1,1
@@ -11,7 +11,7 @@ wanderRadius=50
 [ENTRY]
 ID=1127469
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=59117,984.496,62759.4
 Orient=0,0,0,1
 Scale=1,1,1
@@ -21,7 +21,7 @@ wanderRadius=50
 [ENTRY]
 ID=1127470
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=59173,992.112,62684.2
 Orient=0,0,0,1
 Scale=1,1,1
@@ -31,17 +31,17 @@ wanderRadius=50
 [ENTRY]
 ID=1127471
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=58868.7,951.45,62489.8
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_dth_shadowfieldCity
-wanderRadius=50
+wanderRadius=100
 
 [ENTRY]
 ID=1127472
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=58658.2,951.381,62393.8
 Orient=0,0,0,1
 Scale=1,1,1
@@ -190,6 +190,7 @@ Pos=58865.1,944.289,62259
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_dth_wilds_42_43
+wanderRadius=100
 
 [ENTRY]
 ID=151028843
@@ -363,6 +364,7 @@ Pos=58743.3,976.654,62641
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_dth_shadowfieldCity
+wanderRadius=59
 
 [ENTRY]
 ID=151028881

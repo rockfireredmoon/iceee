@@ -1,4 +1,24 @@
 [ENTRY]
+ID=1127807
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=53558.8,785.734,64728.3
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=11_dth_wilds_41_42
+wanderRadius=100
+
+[ENTRY]
+ID=1127814
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=53855.9,813.69,64516
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=11_dth_wilds_41_42
+wanderRadius=200
+
+[ENTRY]
 ID=151015273
 Asset=CL-UndeadTree4#CL-UndeadTree4
 Name=Untitled
@@ -14,16 +34,18 @@ Name=Untitled
 Pos=53258,793.239,64710
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=11_irh_risenCorpse_r_42
+spawnPackage=11_dth_slimerCamp
+wanderRadius=100
 
 [ENTRY]
 ID=151028554
 Asset=Manipulator-SpawnPoint
 Name=Untitled
-Pos=53699.7,786.565,65208
+Pos=53698.2,788.992,65166.4
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_dth_wilds_41_42
+wanderRadius=100
 
 [ENTRY]
 ID=151028555
@@ -33,6 +55,7 @@ Pos=53677.8,800.864,64913
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_dth_wilds_41_42
+wanderRadius=100
 
 [ENTRY]
 ID=151028563
@@ -48,10 +71,11 @@ link=151028562,1
 ID=151028570
 Asset=Manipulator-SpawnPoint
 Name=Untitled
-Pos=53983,915.221,65032
+Pos=53907.3,876.595,65018.5
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_dth_wilds_41_42
+wanderRadius=100
 
 [ENTRY]
 ID=151029047

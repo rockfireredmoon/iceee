@@ -1,4 +1,14 @@
 [ENTRY]
+ID=1127808
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=53197.2,793.364,64378.1
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=11_dth_slimerCamp
+wanderRadius=100
+
+[ENTRY]
 ID=151017110
 Asset=CL-UndeadTree1#CL-UndeadTree1
 Name=Untitled
@@ -19,10 +29,11 @@ Flags=1
 ID=151028363
 Asset=Manipulator-SpawnPoint
 Name=Untitled
-Pos=53147.3,789.321,64425
+Pos=52953.8,783.801,64418.6
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=11_irh_risenCorpse_r_42
+spawnPackage=11_dth_slimerCamp
+wanderRadius=100
 
 [ENTRY]
 ID=151028372

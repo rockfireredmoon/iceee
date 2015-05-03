@@ -9,7 +9,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1127774
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=55384.4,660.919,68882.1
 Orient=0,0,0,1
 Scale=1,1,1
@@ -45,21 +45,10 @@ links_count=1
 link=151028186,1
 
 [ENTRY]
-ID=151028666
-Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
-Pos=55423.8,668.976,68435
-Orient=0,0,0,1
-Scale=1,1,1
-links_count=2
-link=151028664,1
-link=151028668,1
-
-[ENTRY]
 ID=151028668
 Asset=Manipulator-PathNode
 Name=Untitled
-Pos=55466.1,668.029,68814
+Pos=55460.4,677.005,68485.7
 Orient=0,0,0,1
 Scale=1,1,1
 links_count=1

@@ -5097,7 +5097,7 @@ spawnPackage=56_wacr_FullMix
 [ENTRY]
 ID=1126557
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=2125.64,656.997,545.357
 Orient=0,-0.999991,0,-0.00420359
 Scale=1,1,1
@@ -5152,14 +5152,6 @@ Orient=0,0,0,1
 Scale=1.2,1.2,1.2
 
 [ENTRY]
-ID=1127371
-Asset=Prop-Crypt_Props#Prop-Crypt_CoffinB
-Name=Untitled
-Pos=3428.55,605.429,832.646
-Orient=0,0,0,1
-Scale=1,1,1
-
-[ENTRY]
 ID=1127372
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=Untitled
@@ -5175,4 +5167,13 @@ Name=Untitled
 Pos=2124.47,680.003,541.307
 Orient=0,0.720831,0,0.693111
 Scale=1,1,1
+
+[ENTRY]
+ID=1127912
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=3415.17,605.429,834.273
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#PCrypt_CoffinB
 

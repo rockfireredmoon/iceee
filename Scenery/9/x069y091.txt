@@ -277,8 +277,8 @@ wanderRadius=45
 ID=151026682
 Asset=Manipulator-SpawnPoint
 Name=Untitled
-Pos=52099.6,740.671,68273
-Orient=0,0.624897,0,0.780707
+Pos=52099.6,740.671,68271.3
+Orient=0,0.706825,0,0.707389
 Scale=1,1,1
 spawnPackage=#1196
 links_count=1
@@ -290,15 +290,6 @@ Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=52362.4,677.625,68401
 Orient=0,-0.0449848,0,0.998988
-Scale=1,1,1
-spawnPackage=11_irh_cryptDigger
-
-[ENTRY]
-ID=151026709
-Asset=Manipulator-SpawnPoint
-Name=Untitled
-Pos=52487.2,548.509,68948
-Orient=0,-0.655617,0,0.755093
 Scale=1,1,1
 spawnPackage=11_irh_cryptDigger
 
@@ -337,7 +328,7 @@ link=151028165,1
 ID=151028318
 Asset=Manipulator-PathNode
 Name=Untitled
-Pos=51772,682.94,68855
+Pos=51879.5,682.711,68923
 Orient=0,0,0,1
 Scale=1,1,1
 links_count=2

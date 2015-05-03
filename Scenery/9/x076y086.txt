@@ -45,10 +45,11 @@ spawnPackage=11_dth_wilds_42_43
 ID=151028800
 Asset=Manipulator-SpawnPoint
 Name=Untitled
-Pos=57023,884.756,64824
+Pos=57059.3,884.756,64824
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_dth_wilds_42_43
+wanderRadius=100
 links_count=1
 link=151028802,1
 

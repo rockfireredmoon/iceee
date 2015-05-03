@@ -25,6 +25,16 @@ Orient=0,-0.232843,0,0.972514
 Scale=1,1,1
 
 [ENTRY]
+ID=1127907
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=58322,635.455,66049.3
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=11_dth_wilds_41_42
+wanderRadius=100
+
+[ENTRY]
 ID=151015094
 Asset=CL-UndeadTree5#CL-UndeadTree5
 Name=Untitled

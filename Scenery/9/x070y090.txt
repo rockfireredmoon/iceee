@@ -88,7 +88,7 @@ Name=Untitled
 Pos=52718.3,737.164,68118
 Orient=0,-0.881958,0,0.471328
 Scale=1,1,1
-spawnPackage=11_irh_sythrexTheOverseer_m_42
+spawnPackage=11_irh_risenCorpse_r_42
 
 [ENTRY]
 ID=151026687
@@ -130,6 +130,7 @@ Pos=53071.1,617.941,67875
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_irh_vampiderCamp_32_33
+wanderRadius=100
 
 [ENTRY]
 ID=151028197

@@ -8,6 +8,16 @@ Scale=1,1,1
 Flags=1
 
 [ENTRY]
+ID=151028132
+Asset=Manipulator-SpawnPoint
+Name=Untitled
+Pos=51402.8,718.522,68889.7
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=11_irh_daemonStagCamp
+wanderRadius=60
+
+[ENTRY]
 ID=151028137
 Asset=Manipulator-SpawnPoint
 Name=Untitled
@@ -29,8 +39,8 @@ spawnPackage=11_irh_daemonStagCamp
 ID=151028139
 Asset=Manipulator-SpawnPoint
 Name=Untitled
-Pos=51690.9,703.565,68595.7
-Orient=0,0,0,1
+Pos=51608.9,703.075,68587.3
+Orient=0,0.999526,0,0.0307915
 Scale=1,1,1
 spawnPackage=11_irh_daemonStagCamp
 
@@ -39,7 +49,7 @@ ID=151028140
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=51542.7,763.229,68442.9
-Orient=0,0,0,1
+Orient=0,-0.846832,0,0.531861
 Scale=1,1,1
 spawnPackage=11_irh_daemonStagCamp
 
@@ -136,10 +146,11 @@ link=151028152,1
 ID=151028158
 Asset=Manipulator-SpawnPoint
 Name=Untitled
-Pos=51571.1,706.61,68762
+Pos=51677.3,706.48,68788.7
 Orient=0,0.593177,0,0.805072
 Scale=1,1,1
 spawnPackage=11_irh_daemonStagCamp
+wanderRadius=80
 
 [ENTRY]
 ID=151028159
@@ -165,6 +176,15 @@ Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=51292,722.031,68766
 Orient=0,0.720831,0,0.693111
+Scale=1,1,1
+spawnPackage=11_irh_daemonStagCamp
+
+[ENTRY]
+ID=151028162
+Asset=Manipulator-SpawnPoint
+Name=Untitled
+Pos=51718.3,688.116,68497.6
+Orient=0,-0.991458,0,0.130424
 Scale=1,1,1
 spawnPackage=11_irh_daemonStagCamp
 

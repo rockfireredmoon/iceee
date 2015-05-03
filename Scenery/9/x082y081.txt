@@ -1,7 +1,7 @@
 [ENTRY]
 ID=1127641
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=62051.8,800.477,60781.1
 Orient=0,0,0,1
 Scale=1,1,1
@@ -9,13 +9,24 @@ spawnPackage=11_jld_junderbroodWorkskrill_k_43
 wanderRadius=100
 
 [ENTRY]
-ID=151029247
-Asset=Manipulator-SpawnPoint
-Name=Untitled
-Pos=61508,825.422,61430
+ID=1127866
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=61667.6,827.981,61337.7
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_dth_wilds_42_43
+wanderRadius=100
+
+[ENTRY]
+ID=1127867
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=62174,802.957,61499.7
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=11_dth_wilds_42_43
+wanderRadius=100
 
 [ENTRY]
 ID=151040316

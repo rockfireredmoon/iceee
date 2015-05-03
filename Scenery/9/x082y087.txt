@@ -1,13 +1,4 @@
 [ENTRY]
-ID=1127675
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=
-Pos=62231.7,763.702,65348.1
-Orient=0,-0.488177,0,0.872745
-Scale=1,1,1
-spawnPackage=11_dth_wilds_44_45_north
-
-[ENTRY]
 ID=151040357
 Asset=CL-GrunsBush_3#CL-GrunsBush_3
 Name=Untitled

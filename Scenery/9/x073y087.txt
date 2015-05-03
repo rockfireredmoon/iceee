@@ -95,7 +95,7 @@ link=151027242,1
 ID=151028573
 Asset=Manipulator-PathNode
 Name=Untitled
-Pos=54957.9,1015.38,65260
+Pos=54946.9,1041.51,65362.3
 Orient=0,0,0,1
 Scale=1,1,1
 links_count=1
@@ -105,7 +105,7 @@ link=151028572,1
 ID=151028592
 Asset=Manipulator-SpawnPoint
 Name=Untitled
-Pos=54770,822.805,65945
+Pos=54767.6,822.805,65854.7
 Orient=0,0.699716,0,0.714421
 Scale=1,1,1
 spawnPackage=11_dth_wilds_41_42
@@ -138,7 +138,7 @@ link=151028621,1
 ID=151028707
 Asset=Manipulator-SpawnPoint
 Name=Untitled
-Pos=54905.8,875,65842
+Pos=55001.7,875,65753.7
 Orient=0,0,0,1
 Scale=0.925,0.925,0.925
 spawnPackage=11_dth_wilds_41_42
@@ -155,6 +155,27 @@ Orient=0,-0.0499792,0,0.99875
 Scale=0.925,0.925,0.925
 links_count=2
 link=151028707,1
+link=151028711,1
+
+[ENTRY]
+ID=151028711
+Asset=Manipulator-PathNode
+Name=Untitled
+Pos=55274.9,933.288,65952.8
+Orient=0,-0.0499792,0,0.99875
+Scale=0.925,0.925,0.925
+links_count=2
+link=151028708,1
+link=151028713,1
+
+[ENTRY]
+ID=151028713
+Asset=Manipulator-PathNode
+Name=Untitled
+Pos=55247.5,932.355,65821
+Orient=0,-0.0499792,0,0.99875
+Scale=0.925,0.925,0.925
+links_count=1
 link=151028711,1
 
 [ENTRY]

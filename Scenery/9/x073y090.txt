@@ -118,22 +118,24 @@ Scale=1,1,1
 spawnPackage=11_irh_vampiderCamp_42_43
 
 [ENTRY]
-ID=151028662
-Asset=Manipulator-SpawnPoint
-Name=Untitled
-Pos=55483.5,648.094,67793
-Orient=0,0,0,1
-Scale=1,1,1
-spawnPackage=11_dth_wilds_41_42
-
-[ENTRY]
 ID=151028664
 Asset=Manipulator-SpawnPoint
 Name=Untitled
-Pos=55456.4,681.064,68084
+Pos=55197.4,632.443,67919.9
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_dth_wilds_41_42
 links_count=1
 link=151028666,1
+
+[ENTRY]
+ID=151028666
+Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
+Pos=55439.2,678.247,68050.3
+Orient=0,0,0,1
+Scale=1,1,1
+links_count=2
+link=151028664,1
+link=151028668,1
 

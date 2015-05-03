@@ -11,7 +11,7 @@ Position=63678.0,852.0,64930.0
 [ENTRY]
 Name=Grunes Tal -  North Warpig Town
 Comment=Next to Entrance to swineline
-Position=64156.0,780.0,56858.0
+Position=60178.0,595.0,55121.0
 
 [ENTRY]
 Name=Grunes Tal - NE Marker
@@ -21,7 +21,7 @@ Position=66775.0,760.0,56753.0
 [ENTRY]
 Name=Grunes Tal - SE Marker
 Comment=[Comment here]
-Position=63272.0,1288.0,70889.0
+Position=52517.0,677.0,68409.0
 
 [ENTRY]
 Name=Grunes Tal SW Marker

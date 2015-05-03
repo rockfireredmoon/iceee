@@ -1,11 +1,38 @@
 [ENTRY]
 ID=1104164
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=62999.5,1263.87,63020
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=#1260
+
+[ENTRY]
+ID=1127878
+Asset=Manipulator#Manipulator-PathNode
+Name=
+Pos=62410.3,750.809,63165.9
+Orient=0,0,0,1
+Scale=1,1,1
+links_count=1
+link=1127877,1
+
+[ENTRY]
+ID=1127886
+Asset=Prop-Fog#Prop-Fog_Green_Ground
+Name=
+Pos=62257.7,750.285,63044.6
+Orient=0,0,0,1
+Scale=1.3,1.3,1.3
+Flags=1
+
+[ENTRY]
+ID=1127890
+Asset=Light-Intense?Group=1&COLOR=00D40D
+Name=
+Pos=62293.5,750.405,63045.6
+Orient=0,0,0,1
+Scale=1,1,1
 
 [ENTRY]
 ID=151028398
@@ -46,15 +73,17 @@ Pos=62312.1,748.769,63217
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_dth_enslavedZombie
+wanderRadius=50
 
 [ENTRY]
 ID=151029061
 Asset=Manipulator-SpawnPoint
 Name=Untitled
-Pos=62357.1,751.449,63067
+Pos=62339.2,751.082,63062.6
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_dth_enslavedZombie
+wanderRadius=50
 
 [ENTRY]
 ID=151031299
@@ -105,4 +134,5 @@ Name=Untitled
 Pos=62319.3,762.327,63336
 Orient=-0.105653,0.0298099,0.269906,0.956608
 Scale=2.25,2.25,2.25
+Flags=1
 

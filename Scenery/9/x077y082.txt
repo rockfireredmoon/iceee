@@ -1,20 +1,12 @@
 [ENTRY]
-ID=151028772
+ID=151028766
 Asset=Manipulator-SpawnPoint
 Name=Untitled
-Pos=57990.5,977.459,62068
+Pos=57810.6,940.408,62249.2
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_dth_wilds_42_43
-
-[ENTRY]
-ID=151028774
-Asset=Manipulator-SpawnPoint
-Name=Untitled
-Pos=58494.6,959.584,62117
-Orient=0,0,0,1
-Scale=1,1,1
-spawnPackage=11_dth_wilds_42_43
+wanderRadius=100
 
 [ENTRY]
 ID=151040199

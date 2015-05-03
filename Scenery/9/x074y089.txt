@@ -7,6 +7,16 @@ Orient=0,0,0,1
 Scale=1,1,1
 
 [ENTRY]
+ID=1127786
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=55722.8,690.297,67328
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=11_dth_wilds_41_42
+wanderRadius=100
+
+[ENTRY]
 ID=151017536
 Asset=Prop-Lamp_Post_Undead#Prop-Lamp_Post_Undead2
 Name=Untitled

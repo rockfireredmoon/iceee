@@ -1,16 +1,17 @@
 [ENTRY]
-ID=151028766
-Asset=Manipulator-SpawnPoint
-Pos=57633.7,940.369,62151
+ID=1127841
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=57213.9,740.767,61535.5
 Orient=0,0,0,1
 Scale=1,1,1
-innerRadius=95
-spawnPackage=11_dth_wilds_42_43
-outerRadius=100
+spawnPackage=11_dth_wilds_41_42
+wanderRadius=200
 
 [ENTRY]
 ID=151040200
 Asset=CL-GrunsBush_4#CL-GrunsBush_4
+Name=Untitled
 Pos=57492.8,804.899,61891
 Orient=0,-0.849481,0,0.52762
 Scale=3.075,3.075,3.075
@@ -19,6 +20,7 @@ Flags=1
 [ENTRY]
 ID=151040201
 Asset=CL-GrunsBush_5#CL-GrunsBush_5
+Name=Untitled
 Pos=57280.6,757.57,61640
 Orient=0,0,0,1
 Scale=1.75,1.75,1.75

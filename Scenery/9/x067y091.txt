@@ -1,6 +1,7 @@
 [ENTRY]
 ID=151028143
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=50903.1,689.789,68702
 Orient=0,0,0,1
 Scale=1,1,1
@@ -10,15 +11,16 @@ link=151028142,1
 [ENTRY]
 ID=151028295
 Asset=Manipulator-SpawnPoint
-Pos=50892.5,714.557,68575
-Orient=0,0,0,1
+Name=Untitled
+Pos=50854.4,780.465,68429.4
+Orient=0,-0.609159,0,0.793048
 Scale=1,1,1
 spawnPackage=11_irh_daemonStagCamp
-outerRadius=10
 
 [ENTRY]
 ID=151040964
 Asset=Prop-Dungeon-Entrance-Mine1#Prop-Dungeon-Entrance-Mine1
+Name=Untitled
 Pos=50830.7,708.261,68346
 Orient=0,0,0,1
 Scale=1.35,1.35,1.35
@@ -26,6 +28,7 @@ Scale=1.35,1.35,1.35
 [ENTRY]
 ID=151040981
 Asset=Prop-Burnt_Pines#Prop-Burnt_Pine3
+Name=Untitled
 Pos=50873.9,623.773,68609
 Orient=-0.114747,0,0,0.993395
 Scale=3.45,3.45,3.45
@@ -34,6 +37,7 @@ Flags=1
 [ENTRY]
 ID=151040984
 Asset=Prop-Burnt_Pines#Prop-Burnt_Pine5
+Name=Untitled
 Pos=50970.8,618.21,68773
 Orient=-0.0149003,-0.00172113,-0.114734,0.993283
 Scale=2.35,2.35,2.35
@@ -42,6 +46,7 @@ Flags=1
 [ENTRY]
 ID=151041001
 Asset=CL-GrunsBush_5#CL-GrunsBush_5
+Name=Untitled
 Pos=50767,669.281,68558
 Orient=0,-0.993303,0,0.115538
 Scale=2.05,2.05,2.05
@@ -50,6 +55,7 @@ Flags=1
 [ENTRY]
 ID=151041002
 Asset=CL-GrunsBush_4#CL-GrunsBush_4
+Name=Untitled
 Pos=50878.3,691.839,68414
 Orient=0,0,0,1
 Scale=1,1,1
@@ -57,6 +63,7 @@ Scale=1,1,1
 [ENTRY]
 ID=151041004
 Asset=CL-GrunsBush_2#CL-GrunsBush_2
+Name=Untitled
 Pos=50985.6,621.89,68716
 Orient=0,0,0,1
 Scale=2.45,2.45,2.45
@@ -65,6 +72,7 @@ Flags=1
 [ENTRY]
 ID=151041026
 Asset=Prop-Boulder_Scary#Prop-Boulder_Scary5
+Name=Untitled
 Pos=50828.6,697.013,68367
 Orient=0,0.492535,0,0.870293
 Scale=0.425,0.425,0.425

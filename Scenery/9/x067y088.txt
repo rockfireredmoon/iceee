@@ -1,6 +1,17 @@
 [ENTRY]
+ID=151028539
+Asset=Manipulator-SpawnPoint
+Name=Untitled
+Pos=50997.1,780.11,66073.9
+Orient=0,0.0998334,0,0.995004
+Scale=1.125,1.125,1.125
+spawnPackage=11_dth_wilds_41_42
+wanderRadius=150
+
+[ENTRY]
 ID=151028548
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=50847.8,780.315,66209
 Orient=0,0,0,1
 Scale=1,1,1
@@ -10,6 +21,7 @@ link=151028547,1
 [ENTRY]
 ID=151058514
 Asset=CL-UndeadBoulder6#CL-UndeadBoulder6
+Name=Untitled
 Pos=50286.2,753.323,66312.2
 Orient=-0.166701,0.880726,0.0867228,0.434755
 Scale=1,1,1
