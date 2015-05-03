@@ -208,3 +208,14 @@ mIvMax1=844
 mSv1=Foresight Of The Elders
 mValue=1
 mQualityLevel=1
+
+[ENTRY]
+mID=10013
+mType=9
+mDisplayName=Missing Documents
+mIcon=Icon-32-Scroll2.png|Icon-32-BG-Green.png
+mIvType1=5
+mIvMax1=847
+mSv1=The Missing Envoy
+mValue=1
+mQualityLevel=1

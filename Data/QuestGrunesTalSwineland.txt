@@ -2329,9 +2329,7 @@ During the Outcast Wars, the Elders located one of these relics and stashed it a
 After the Undead invaded and emptied the lands of Grunes Tal of most anything living, few if any with breath still in them have been near that crypt. Yet with the Undead presence, it is quite likely that anyone resting within that place has long since been revived.
 
 We here at Redeemer's Hall feel the time has come to retrieve the relic Mason had buried with him and fulfill the purpose for which it was originally obtained. Thus, I task you with entering the Crypt and locating Mason Stromfeld's tomb. Inside you should find the relic among his bones. If the forces of Abidan have indeed revived him, there is a chance you will have to destroy him before claiming the item. We know not what exactly this relic is, yet Mason's tomb is it's resting place. Once you have it, return to me. Now hurry up and get out of here!
-CompleteText=o, you survived did you? And you have the relic? Good, let me see it!
-
-...
+CompleteText=So, you survived did you? And you have the relic? Good, let me see it!
 
 ...
 
@@ -2500,3 +2498,55 @@ Obj.0.myCreatureDefID=1245
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=63956.4,781.573,56691.6,9;2216.55,286.536,2523.62,93
+
+[ENTRY]
+ID=847
+Title=The Missing Envoy
+BodyText=Hello there. It's nice to see a friendly face among so many ruffians! Don't misunderstand, our collaboration with the warpigs both here and in Swineland has been invaluable even if a bit on rocky terms. Even still, I never expected to be hung up here!
+
+*Sigh* I apologize friend. It would seem my temper has gotten the better of me of late. You see I have a problem. Several days ago I was sent from the Redeemer's Camp in Swineland to meet up with an envoy from our fellow Redeemers here in Grunes Tal. We were supposed to meet here at the Warpig Protectorate Camp at the borders of Swineland, but, my contact has not arrived.
+
+I am full aware of the dangers of the Undead hordes that infest this land and would rather not stay too long; however, the person I have been sent to meet was carrying information that would greatly assist the Redeemers against both the Undead here and the Vampires in Swineland. It has been almost a week now and I have become worried that something has happened to my contact.
+
+Since you appear to be strong, would you do me this favor and look for the envoy sent from the Hall? If you happen to find the envoy alive, please inform them that their contact is waiting at the Warpig encampment. If the worst has happened and they have fallen victim to the vile forces of Abidan, then please retrieve the documents I was sent to collect in their stead.
+
+I shall wait here in the meantime.
+CompleteText=You return. And the Envoy? ...I see. So, you found his camp and he was already dead? That is sad news indeed.
+
+Were you able to at least locate the documents? ...Yes, these appear to be the items I was sent to retrieve. While I am indeed saddened that a fellow Redeemer has met such a terrible end, I am at least grateful that all was not lost and you were able to complete the mission in their stead. Thank you for delivering these to me along with the news of my contact's fate.
+Level=44
+Suggested=44
+Exp=7842
+PartySize=1
+NumRewards=0
+Coin=2418
+Unabandon=0
+QuestGiverID=7785
+QuestEnderID=7785
+Repeat=0
+sGiver=64056.2,780.404,56918.8,9
+sEnder=64056.2,780.404,56918.8,9
+[ACT]
+Act.BodyText=Search for the missing Redeemer envoy from Redeemer's Hall
+Obj.0.type=gather
+Obj.0.data1=
+Obj.0.data2=1
+Obj.0.description=Collect the Redeemers documents
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=10013
+Obj.0.completeText=
+Obj.0.markerLocations=61868.1,970.533,64975,9
+Obj.0.ActivateTime=4000
+Obj.0.ActivateText=Taking the documents...
+[ACT]
+ActBodyText=Return to Zahn Meris
+Obj.0.type=talk
+Obj.0.data1=
+Obj.0.data2=
+Obj.0.description=Return to Zahn Meris
+Obj.0.complete=0
+Obj.0.myCreatureDefID=7785
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=64056.2,780.404,56918.8,9
