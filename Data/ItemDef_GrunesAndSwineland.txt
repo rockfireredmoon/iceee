@@ -197,3 +197,14 @@ mBindingType=1
 mValue=1
 mQualityLevel=2
 mMinUseLevel=1
+
+[ENTRY]
+mID=10012
+mType=9
+mDisplayName=Age Of Man Relic 
+mIcon=Icon-32-Metal_Tube.png|Icon-32-BG-Green.png
+mIvType1=5
+mIvMax1=844
+mSv1=Foresight Of The Elders
+mValue=1
+mQualityLevel=1

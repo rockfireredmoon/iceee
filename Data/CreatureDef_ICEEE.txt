@@ -893,3 +893,14 @@ display_name=Upper Floor
 profession=1
 creature_category=Inanimate
 ai_package=nothing
+
+[ENTRY]
+ID=7795
+will_regen=1
+might_regen=1
+appearance=p1:{["a"]="Prop-Crypt_CoffinB"}
+level=1
+display_name=Age Of Man Relic
+profession=1
+creature_category=Inanimate
+ai_package=

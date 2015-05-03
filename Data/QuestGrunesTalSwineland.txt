@@ -2349,16 +2349,27 @@ Repeat=0
 sGiver=58209.1,787.832,66820.6,9
 sEnder=58209.1,787.832,66820.6,9
 [ACT]
-Act.BodyText=Travel into the Wailing Crypt
+Act.BodyText=Travel to the Wailing Crypt
 Obj.0.type=travel
-Obj.0.data1=250
-Obj.0.data2=1
-Obj.0.description=Enter the Wailing Crypt
+Obj.0.data1=52248,652,68636,9
+Obj.0.data2=250
+Obj.0.description=Travel to the Wailing Crypt
 Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=52248,652.907,68636.1,9
+[ACT]
+Act.BodyText=Enter the Wailing Crypt
+Obj.0.type=travel
+Obj.0.data1=2125,660,597,56
+Obj.0.data2=250
+Obj.0.description=Enter the Wailing Crypt
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.1.markerLocations=2125.0,660.0,597.0,56
 [ACT]
 Act.BodyText=Find Mason Stromfeld and take the Age of Man Relic from his coffin
 Obj.0.type=kill
@@ -2370,17 +2381,21 @@ Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=0 of 1
 Obj.0.markerLocations=3306.31,600,791.158,56
-Obj.1.type=gather
-Obj.1.data1=3306.31,600,791.158,56
-Obj.1.data2=1
-Obj.1.description=Retrieve the Relic
-Obj.1.complete=0
-Obj.1.myCreatureDefID=
-Obj.1.myItemID=
-Obj.1.completeText=0 of 1
-Obj.1.markerLocations=3306.31,600,791.158,56
 [ACT]
-ActBodyText= Return to Sarayn Nexsol
+Act.BodyText=Take the unguarded relic from it's hiding place in the coffin.
+Obj.0.type=gather
+Obj.0.data1=7795
+Obj.0.data2=1
+Obj.0.description=Take the unguarded relic
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=10012
+Obj.0.completeText=0 of 1
+Obj.0.markerLocations=3306.31,600,791.158,56
+Obj.0.ActivateTime=4000
+Obj.0.ActivateText=Taking the relic...
+[ACT]
+Act.BodyText= Return to Sarayn Nexsol
 Obj.0.type=talk
 Obj.0.data1=
 Obj.0.data2=
@@ -2390,3 +2405,98 @@ Obj.0.myCreatureDefID=1247
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=58209.1,787.832,66820.6,9
+
+[ENTRY]
+Requires=844
+ID=845
+Title=A Gift With a Prices
+BodyText=As I have mentioned before, there is nothing a Warpig cherishes more than the relics from the Age of Man. They are somewhat - interesting - creatures, and we have let them be for the time we have been here in Redeemer's Hall. Yet I tell you, our Elders knew there would come a time when we could need their assistance, and secreted this relic away,  "for a rainy day".
+
+Give this matter the utmost importance, comrade, and take the relic north with all haste to Norris. He is the Chief Warpig Protectorate for the Warpig Camp here in Grunes Tal.
+
+Away with you! 
+CompleteText=What's this? Who d'ya think you're in th' presence of? Kneel before th' great Norris, Chief Protectorate and leader of this 'ere Warpig town!
+Level=44
+Suggested=44
+Exp=7842
+PartySize=1
+NumRewards=0
+Coin=2318
+Unabandon=0
+QuestGiverID=1247
+QuestEnderID=1245
+Repeat=0
+sGiver=58209.1,787.832,66820.6,9
+sEnder=2216.55,286.536,2523.62,93
+[ACT]
+Act.BodyText=Travel to the Warpig Camp in the northeast of Grunes Tal and present the Relic to Norris the Chief Warpig Protectorate.
+Obj.0.type=travel
+Obj.0.data1=63898,781,56666,9
+Obj.0.data2=250
+Obj.0.description=Enter the Protectorate Compound
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=63898,781.821,56666.8,9
+[ACT]
+ActBodyText= Speak with Norris
+Obj.0.type=talk
+Obj.0.data1=
+Obj.0.data2=
+Obj.0.description=Speak with Norris
+Obj.0.complete=0
+Obj.0.myCreatureDefID=1245
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=2216.55,286.536,2523.62,93
+
+[ENTRY]
+Requires=845
+ID=846
+Title=Hawg's Hogcatchers
+BodyText=Youze wants us warpigs to aid th' Redeemer's at their fancy Hall down south o' here? ...a supply route to th' 'Deemer camp in Swineland eh? I gets it now. This here 'token of appreciation' is more or less a 'tempt by th' Redeemers to get us to helps em!
+
+Well, since you came all th' way here and brought me this nice 'n fancy object, I'll sees what I can do else my name ain't Norris th' Warpig Chief Protectorate! Before I'se agree to any deals, though, I have a job fer ya. Consider it a test, if'n you will, to see if youse worth yer weight in salt! Do this here favor for me, an' I'll sees what I can do abouts helpin' out th' Redeemers.
+
+Th' job? Well, it's simple. I wants youse to get rid o' Boss Hawg's boys fer me. Awhile back, Hawg an' his boys from th' Haz'ard Crew over in the Swineland went all crazy like and invited th' dang dambats inta the place like it was nobody's business. Since then, those dambats have been stirrin' up trouble over there an' many a warpig was forced ta leave their homes!
+
+Now some of em, they come over here fer refuge from both th' dambats and Boss Hawg himself. Youse see, some of us warpigs, we don't care fer Hawg's business and want 'im removed. A bunch o' warpigs been tryin' for some time now to deal with him, but, haven't been that successful. Now, I'se come to learn ol' Dirty Thunder got under Hawg's skin recently over some misunderstandin' an' Hawg, he sent his boys over here ta deal with th' problem.
+
+Now, I can't have Hawg stickin his snout in where it ain't his business! This here warpig camp is mine an' Boss Hawg aint' got no a'thority on this side o' th' river. So, if'n you an' the Redeemer's are a wantin' my help, head outside an' get rid o' Hawg's boys. Hogcatchers is what he calls em! They're like his enforcers, ya see. They've set up several camps round my town see? I wants em eliminated or sent back ta Hawg or both! Matters not how youse handle em, just get rid of em!
+CompleteText=Well now, ain't youse somethin'! I'se could hear ol' Hawg's boys a squealin' fer mercy from here! That oughta teach em' not ta go a messin' in 'nother warpig's business when they ain't got no business bein' here! Well, I'm a warpig of my word, so, youse tell them Redeemers ol' Norris'll sees whats he can do 'bout assistin' em as agreed!
+Level=44
+Suggested=44
+Exp=8042
+PartySize=1
+NumRewards=0
+Coin=2318
+Unabandon=0
+QuestGiverID=1245
+QuestEnderID=1245
+Repeat=0
+sGiver=2216.55,286.536,2523.62,93
+sEnder=2216.55,286.536,2523.62,93
+[ACT]
+Act.BodyText=Kill 25 Hogcatcher Mages, Hogcatcher Rogues, Hogcatcher Druids and Hogcatcher Knights in the Hogcatcher camps
+
+Obj.0.type=kill
+Obj.0.data1=1216,1218,1219,1220,1221,1222,1223,1224
+Obj.0.data2=25
+Obj.0.description=Kill 25 Hogcatchers
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 25
+Obj.0.markerLocations=66596.1,614.328,57510,9
+[ACT]
+ActBodyText= Speak with Norris
+Obj.0.type=talk
+Obj.0.data1=
+Obj.0.data2=
+Obj.0.description=Speak with Norris
+Obj.0.complete=0
+Obj.0.myCreatureDefID=1245
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=63956.4,781.573,56691.6,9;2216.55,286.536,2523.62,93
