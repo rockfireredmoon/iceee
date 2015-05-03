@@ -776,14 +776,6 @@ Orient=0,0,0,1
 Scale=1.5,1.5,1.5
 
 [ENTRY]
-ID=940135
-Asset=Prop-Crypt_CoffinB
-Name=Scenery/80412
-Pos=3396.81,600,975.365
-Orient=0,-0.998248,0,-0.0591691
-Scale=2,2,2
-
-[ENTRY]
 ID=940156
 Asset=Prop-Chunks1
 Name=Scenery/80433
@@ -875,7 +867,7 @@ Scale=1.2,1.2,1.2
 ID=940232
 Asset=Prop-Chunks2
 Name=Scenery/80509
-Pos=3405.59,600,974.145
+Pos=3477.98,600.469,974.145
 Orient=0,0,0,1
 Scale=1,1,1
 
@@ -923,9 +915,9 @@ Scale=10,10,10
 ID=940238
 Asset=Prop-Crypt_Plinth
 Name=Scenery/80515
-Pos=3415.73,539.1,822.825
+Pos=3397.81,564.267,972.743
 Orient=0,0,0,1
-Scale=7.25,7.25,7.25
+Scale=4,4,4
 
 [ENTRY]
 ID=940239
@@ -5171,9 +5163,18 @@ Scale=1,1,1
 [ENTRY]
 ID=1127912
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=3415.17,605.429,834.273
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=#PCrypt_CoffinB
+
+[ENTRY]
+ID=1127913
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=3387.73,599.457,973.169
+Orient=0,0.644218,0,0.764842
+Scale=1,1,1
+spawnPackage=#F7795
 

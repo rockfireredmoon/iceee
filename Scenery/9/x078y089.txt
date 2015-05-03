@@ -264,7 +264,7 @@ Flags=1
 ID=151017453
 Asset=Light-Large?COLOR=FF9933
 Name=Untitled
-Pos=58760.5,869.829,66878
+Pos=58760.5,835.884,66878
 Orient=0,0,0,1
 Scale=4.55,4.55,4.55
 

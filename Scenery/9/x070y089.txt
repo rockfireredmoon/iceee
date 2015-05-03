@@ -1,4 +1,14 @@
 [ENTRY]
+ID=1127934
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=52816.8,640.051,67050.3
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=11_dth_wilds_41_42
+wanderRadius=100
+
+[ENTRY]
 ID=151015266
 Asset=CL-UndeadBoulder6#CL-UndeadBoulder6
 Name=Untitled
@@ -69,7 +79,7 @@ spawnPackage=11_dth_nefariousHareCamp
 ID=151028535
 Asset=Manipulator-SpawnPoint
 Name=Untitled
-Pos=52859.3,628.053,67007
+Pos=52859.3,628.053,66886.4
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_dth_nefariousHareCamp

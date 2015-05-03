@@ -2744,7 +2744,7 @@ link=1108350,1
 ID=1126556
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=Untitled
-Pos=2309.5,495.214,2767.04
+Pos=2309.5,495.779,2767.04
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=56_wacr_ThawingBrazier
@@ -2835,7 +2835,7 @@ link=1127132,1
 ID=1127155
 Asset=Prop-Braziers#Prop-Brazier_Unlit
 Name=Untitled
-Pos=2308.77,475.422,2767.44
+Pos=2308.77,476.716,2767.44
 Orient=0,0,0,1
 Scale=1.5,1.5,1.5
 
@@ -2843,7 +2843,7 @@ Scale=1.5,1.5,1.5
 ID=1127157
 Asset=Prop-Brazier_Unlit
 Name=Untitled
-Pos=1947.21,475.422,2767.44
+Pos=1947.21,477.32,2767.44
 Orient=0,0,0,1
 Scale=1.5,1.5,1.5
 
@@ -2864,4 +2864,20 @@ Orient=0,0.699716,0,0.714421
 Scale=1,1,1
 spawnPackage=#F7784
 maxActive=0
+
+[ENTRY]
+ID=1127915
+Asset=Prop-Crypt_Plinth
+Name=
+Pos=2308.48,466.939,2767.47
+Orient=0,0,0,1
+Scale=1.5,1.5,1.5
+
+[ENTRY]
+ID=1127916
+Asset=Prop-Crypt_Plinth
+Name=
+Pos=1947.58,466.939,2767.28
+Orient=0,0,0,1
+Scale=1.5,1.5,1.5
 

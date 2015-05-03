@@ -1,7 +1,7 @@
 [ENTRY]
 ID=1127660
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=64131.3,833.904,64221.6
 Orient=0,0,0,1
 Scale=1,1,1
@@ -11,7 +11,7 @@ wanderRadius=100
 [ENTRY]
 ID=1127661
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=63953.5,854.582,64451.3
 Orient=0,0,0,1
 Scale=1,1,1
@@ -21,12 +21,20 @@ wanderRadius=100
 [ENTRY]
 ID=1127688
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
-Pos=63829.5,875.486,64075.2
+Name=Untitled
+Pos=63802.5,871.101,64132.1
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_dth_wilds_42_43
 wanderRadius=150
+
+[ENTRY]
+ID=1127911
+Asset=Prop-Sanctuary_Stone#Prop-Sanctuary_Stone
+Name=
+Pos=63782.3,902.156,63883.8
+Orient=0,0,0,1
+Scale=1,1,1
 
 [ENTRY]
 ID=151015239
@@ -45,7 +53,7 @@ Pos=64066,890.822,63969
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_dth_wilds_42_43
-wanderRadius=100
+wanderRadius=75
 
 [ENTRY]
 ID=151040368

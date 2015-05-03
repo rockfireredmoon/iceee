@@ -53,7 +53,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1127861
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=58916.4,860.467,65251
 Orient=0,0,0,1
 Scale=1,1,1
@@ -63,12 +63,20 @@ wanderRadius=200
 [ENTRY]
 ID=1127862
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=58885.9,834.594,65707.1
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=#1239
 wanderRadius=100
+
+[ENTRY]
+ID=1127922
+Asset=CL-Undead#CL-UndeadTree4
+Name=
+Pos=58733,803.721,65661.7
+Orient=-0.119712,0,0,0.992809
+Scale=1,1,1
 
 [ENTRY]
 ID=151028807

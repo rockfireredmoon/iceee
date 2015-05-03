@@ -296,6 +296,22 @@ Scale=1,1,1
 spawnPackage=#1132
 
 [ENTRY]
+ID=1127917
+Asset=Light-Intense?Group=1&COLOR=FF00FD
+Name=Untitled
+Pos=58257.3,846.325,66896.3
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
+ID=1127918
+Asset=Light-Large?COLOR=6666FF
+Name=
+Pos=58012.7,854.302,66957.6
+Orient=0,0,0,1
+Scale=4.55,4.55,4.55
+
+[ENTRY]
 ID=151017313
 Asset=Bldg-Grand-Temple1#Bldg-Grand-Temple1?ATS=ATS-Church
 Name=Untitled
@@ -569,7 +585,7 @@ Flags=1
 ID=151017450
 Asset=Light-Large?COLOR=6666FF
 Name=Untitled
-Pos=58185.6,878.798,66885
+Pos=58450.6,852.817,66885
 Orient=0,0,0,1
 Scale=4.55,4.55,4.55
 
@@ -585,7 +601,7 @@ Scale=4.55,4.55,4.55
 ID=151017452
 Asset=Light-Intense?COLOR=FF9933
 Name=Untitled
-Pos=58412.1,876.215,66878
+Pos=58301.7,834.675,66878
 Orient=0,0,0,1
 Scale=4.55,4.55,4.55
 
