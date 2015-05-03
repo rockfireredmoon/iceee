@@ -2381,7 +2381,7 @@ Obj.0.completeText=0 of 1
 Obj.0.markerLocations=3306.31,600,791.158,56
 [ACT]
 Act.BodyText=Take the unguarded relic from it's hiding place in the coffin.
-Obj.0.type=gather
+Obj.0.type=activate
 Obj.0.data1=7795
 Obj.0.data2=1
 Obj.0.description=Take the unguarded relic
@@ -2528,7 +2528,7 @@ sGiver=64056.2,780.404,56918.8,9
 sEnder=64056.2,780.404,56918.8,9
 [ACT]
 Act.BodyText=Search for the missing Redeemer envoy from Redeemer's Hall
-Obj.0.type=gather
+Obj.0.type=activate
 Obj.0.data1=7796
 Obj.0.data2=1
 Obj.0.description=Collect the Redeemers documents
