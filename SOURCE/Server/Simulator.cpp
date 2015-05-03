@@ -2585,6 +2585,8 @@ bool SimulatorThread :: HandleQuery(int &PendingData)
 		PendingData = handle_query_itemdef_delete();
 	else if(query.name.compare("util.addFunds") == 0)
 		PendingData = handle_query_util_addfunds();
+	else if(query.name.compare("validate.name") == 0)
+		PendingData = handle_query_validate_name();
 	else if(query.name.compare("item.create") == 0)
 		PendingData = handle_query_item_create();
 	else if(query.name.compare("marker.list") == 0)
@@ -6569,10 +6571,34 @@ int SimulatorThread :: handle_query_creature_def_edit(void)
 			   [...]
     */
 
+	//::_Connection.sendQuery("creature.def.edit", this, [
+	//				"REASON",
+//					this.mRenameReasonPopup.getText(),
+//					targetId,
+//					"name",
+//					name
+//				]);
+//				::_Connection.sendQuery("creature.def.edit", this, [
+//					"REASON",
+//					this.mRenameReasonPopup.getText(),
+//					targetId,
+//					"DISPLAY_NAME",
+//					name
+//				]);
+
 	if(HasQueryArgs(1) == false)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Invalid query.");
 
-	int CDefID = atoi(query.args[0].c_str());
+
+	// Em - If the first argument is 'REASON', then this is a character rename
+	// from the GM screen. Weird they overloaded this
+	int argOffset = 0;
+	if(strcmp(query.GetString(0), "REASON") == 0) {
+		argOffset = 2;
+	}
+
+	int CDefID = atoi(query.args[argOffset].c_str());
+
 
 	CreatureInstance* cInst = NULL;
 	CreatureDefinition* cDef = NULL;
@@ -6600,57 +6626,70 @@ int SimulatorThread :: handle_query_creature_def_edit(void)
 		return PrepExt_QueryResponseNull(SendBuf, query.ID);
 	}
 
-	if(CheckPermissionSimple(0, Permission_TweakClient) == true)
-	{
-		const char *appearance = NULL;
-		for(int i = 1; i < query.argCount; i += 2)
-		{
-			const char *name = query.args[i].c_str();
-			const char *value = query.args[i + 1].c_str();
-			if(strcmp(name, "appearance") == 0)
-			{
-				appearance = value;
-				break;
-			}
-		}
-		int size = 0;
-		if(appearance != NULL)
-		{
-			std::vector<short> statID;
-			statID.push_back(STAT::APPEARANCE);
-			CharacterStatSet data;
-			//Util::SafeCopy(data.appearance, appearance, sizeof(data.appearance));
-			data.SetAppearance(appearance);
-			size = PrepExt_UpdateCreatureDef(SendBuf, CDefID, cDef->DefHints, statID, &data);
-		}
-	    size += PrepExt_QueryResponseString(&SendBuf[size], query.ID, "OK");
-		return size;
-	}
 
-	if(pld.CreatureDefID == CDefID)
+
+	if(argOffset > 0)
 	{
-		if(CheckPermissionSimple(0, Permission_TweakSelf) == false)
+		// A character rename, so sage permissions needed
+		if(CheckPermissionSimple(0, Permission_Sage) == false)
 		{
-			SendInfoMessage("Permission denied: cannot edit self.", INFOMSG_ERROR);
+			SendInfoMessage("Permission denied: Only sages can rename characters.", INFOMSG_ERROR);
 			return PrepExt_QueryResponseNull(SendBuf, query.ID);
 		}
 	}
 	else
 	{
-		if(charData != NULL)
+		if(CheckPermissionSimple(0, Permission_TweakClient) == true)
 		{
-			if(CheckPermissionSimple(0, Permission_TweakOther) == false)
+			const char *appearance = NULL;
+			for(int i = 1 + argOffset; i < query.argCount; i += 2)
 			{
-				SendInfoMessage("Permission denied: cannot edit other players.", INFOMSG_ERROR);
+				const char *name = query.args[i].c_str();
+				const char *value = query.args[i + 1].c_str();
+				if(strcmp(name, "appearance") == 0)
+				{
+					appearance = value;
+					break;
+				}
+			}
+			int size = 0;
+			if(appearance != NULL)
+			{
+				std::vector<short> statID;
+				statID.push_back(STAT::APPEARANCE);
+				CharacterStatSet data;
+				//Util::SafeCopy(data.appearance, appearance, sizeof(data.appearance));
+				data.SetAppearance(appearance);
+				size = PrepExt_UpdateCreatureDef(SendBuf, CDefID, cDef->DefHints, statID, &data);
+			}
+			size += PrepExt_QueryResponseString(&SendBuf[size], query.ID, "OK");
+			return size;
+		}
+		if(pld.CreatureDefID == CDefID)
+		{
+			if(CheckPermissionSimple(0, Permission_TweakSelf) == false)
+			{
+				SendInfoMessage("Permission denied: cannot edit self.", INFOMSG_ERROR);
 				return PrepExt_QueryResponseNull(SendBuf, query.ID);
 			}
 		}
 		else
 		{
-			if(CheckPermissionSimple(0, Permission_TweakNPC) == false)
+			if(charData != NULL)
 			{
-				SendInfoMessage("Permission denied: cannot edit creatures.", INFOMSG_ERROR);
-				return PrepExt_QueryResponseNull(SendBuf, query.ID);
+				if(CheckPermissionSimple(0, Permission_TweakOther) == false)
+				{
+					SendInfoMessage("Permission denied: cannot edit other players.", INFOMSG_ERROR);
+					return PrepExt_QueryResponseNull(SendBuf, query.ID);
+				}
+			}
+			else
+			{
+				if(CheckPermissionSimple(0, Permission_TweakNPC) == false)
+				{
+					SendInfoMessage("Permission denied: cannot edit creatures.", INFOMSG_ERROR);
+					return PrepExt_QueryResponseNull(SendBuf, query.ID);
+				}
 			}
 		}
 	}
@@ -6661,15 +6700,40 @@ int SimulatorThread :: handle_query_creature_def_edit(void)
 	//and value.  The key specifies which item to change,
 	//(appearance so far), and the value contains the information
 	//to apply.
-	for(int i = 1; i < query.argCount; i += 2)
+	for(int i = 1 + argOffset; i < query.argCount; i += 2)
 	{
-		const char *name = query.args[i].c_str();
+		std::string n = query.args[i];
+		std::transform(n.begin(), n.end(), n.begin(), ::tolower);
+		const char *name = n.c_str();
 		const char *value = query.args[i + 1].c_str();
 
 		LogMessageL(MSG_DIAGV, "  Name: %s", name);
 		LogMessageL(MSG_DIAGV, "  Value: %s", value);
 
-		if(strcmp(name, "appearance") == 0)
+		if(strcmp(name, "name") == 0)
+		{
+			if(charData == NULL)
+			{
+				SendInfoMessage("Error setting name, no character data.", INFOMSG_ERROR);
+				return PrepExt_QueryResponseNull(SendBuf, query.ID);
+			}
+			AccountData * acc = g_AccountManager.FetchIndividualAccount(charData->AccountID);
+			if(acc == NULL)
+			{
+				SendInfoMessage("Error setting name. Missing account", INFOMSG_ERROR);
+				return PrepExt_QueryResponseNull(SendBuf, query.ID);
+			}
+			CharacterCacheEntry *ce = acc->characterCache.GetCacheCharacter(cInst->CreatureDefID);
+			if(ce == NULL)
+			{
+				SendInfoMessage("Error setting name. Missing cache entry", INFOMSG_ERROR);
+				return PrepExt_QueryResponseNull(SendBuf, query.ID);
+			}
+			ce->display_name = value;
+			acc->PendingMinorUpdates++;
+		}
+		else if(strcmp(name, "appearance") == 0 ||
+		   strcmp(name, "display_name") == 0)
 		{
 			int wr = WriteStatToSetByName(name, value, css);
 			if(wr == -1)
@@ -6685,6 +6749,11 @@ int SimulatorThread :: handle_query_creature_def_edit(void)
 		cInst->css.CopyFrom(css);
 
 	AddMessage((long)cDef, 0, BCM_UpdateCreatureDef);
+
+	if(argOffset > 0 && cInst != NULL) {
+		// If update from a sage, sent the updates to the target as well
+		cInst->simulatorPtr->AddMessage((long)cDef, 0, BCM_UpdateCreatureDef);
+	}
 
 	if(pld.CreatureDefID == CDefID)
 	{
@@ -11054,6 +11123,17 @@ int SimulatorThread :: handle_query_util_addfunds() {
 		g_CharacterManager.ReleaseThread();
 	}
 	return PrepExt_QueryResponseError(SendBuf, query.ID, "Failed to add funds.");
+}
+
+int SimulatorThread :: handle_query_validate_name() {
+	int res = g_AccountManager.ValidateNameParts(query.args[0].c_str(), query.args[1].c_str());
+	if(res == AccountManager::CHARACTER_SUCCESS) {
+		return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
+	}
+	else {
+		Util::SafeFormat(Aux1, sizeof(Aux1), "Renamed to %s %s returned error %d", query.args[0].c_str(), query.args[1].c_str(), res);
+		return PrepExt_QueryResponseError(SendBuf, query.ID, Aux1);
+	}
 }
 
 int SimulatorThread :: handle_query_item_create(void)

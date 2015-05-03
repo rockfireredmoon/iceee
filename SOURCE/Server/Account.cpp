@@ -1153,6 +1153,28 @@ bool AccountManager :: ValidCharacterName(const std::string &name)
 	return true;
 }
 
+int AccountManager :: ValidateNameParts(const std::string &first, const std::string &last)
+{
+	if(first.size() == 0) return CHARACTER_FIRSTSHORT;
+	if(first.size() > 16) return CHARACTER_FIRSTLONG;
+	if(last.size() == 0)	return CHARACTER_LASTSHORT;
+	if(last.size() > 16) return CHARACTER_LASTLONG;
+
+	if(ValidCharacterName(first) == 0)
+		return CHARACTER_FIRSTINV;
+
+	if(ValidCharacterName(last) == 0)
+		return CHARACTER_LASTINV;
+
+	char buffer[3072];
+	sprintf(buffer, "%s %s", first.c_str(), last.c_str());
+	//Check character name
+	if(HasUsedCharacterName(buffer) == true)
+		return CHARACTER_NAMEEXIST;
+
+	return CHARACTER_SUCCESS;
+}
+
 int AccountManager :: CreateCharacter(STRINGLIST &args, AccountData *accPtr)
 {
 	// Safeguard to make sure the query is valid.
@@ -1163,22 +1185,10 @@ int AccountManager :: CreateCharacter(STRINGLIST &args, AccountData *accPtr)
 	int r = accPtr->GetFreeCharacterSlot();
 	if(r >= 0)
 	{
-		if(args[0].size() == 0) return CHARACTER_FIRSTSHORT;
-		if(args[0].size() > 16) return CHARACTER_FIRSTLONG;
-		if(args[1].size() == 0)	return CHARACTER_LASTSHORT;
-		if(args[1].size() > 16) return CHARACTER_LASTLONG;
-
-		if(ValidCharacterName(args[0]) == 0)
-			return CHARACTER_FIRSTINV;
-
-		if(ValidCharacterName(args[1]) == 0)
-			return CHARACTER_LASTINV;
-
-		char buffer[3072];
-		sprintf(buffer, "%s %s", args[0].c_str(), args[1].c_str());
-		//Check character name
-		if(HasUsedCharacterName(buffer) == true)
-			return CHARACTER_NAMEEXIST;
+		int rr = ValidateNameParts(args[0], args[1]);
+		if(rr != CHARACTER_SUCCESS) {
+			return rr;
+		}
 
 		int newID = GetNewCharacterID();
 		accPtr->CharacterSet[r] = newID;
@@ -1191,6 +1201,7 @@ int AccountManager :: CreateCharacter(STRINGLIST &args, AccountData *accPtr)
 		newChar.SetExpireTime();
 
 		//Character name is in buffer, from above
+		char buffer[3072];
 		Util::SafeCopy(newChar.cdef.css.display_name, buffer, sizeof(newChar.cdef.css.display_name));
 
 		static const char *RaceNames[4] = {"Knight", "Rogue", "Mage", "Druid"};
