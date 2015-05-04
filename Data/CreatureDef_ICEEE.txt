@@ -934,7 +934,7 @@ display_name=Anexima
 sub_name=The Dragon Lich
 creature_category=Unliving
 rarity=3
-appearance=c2:{["h"]=0,["c"]={["boots"]={["type"]="Armor-Light-Low1",["colors"]=[]},["chest"]={["type"]="Armor-Light-Low1",["colors"]=[]},["arms"]={["type"]="Armor-Light-Low1",["colors"]=[]},["leggings"]={["type"]="Armor-Light-Low1",["colors"]=[]},["collar"]={["type"]="Armor-Light-Low1",["colors"]=[]},["belt"]={["type"]="Armor-Light-Low1",["colors"]=[]},["gloves"]={["type"]="Armor-Light-Low1",["colors"]=[]}},["b"]="n",["sk"]={["eye_whites"]="FFFBFB",["highlights"]="00FF0F",["shade"]="FFFFFF",["face_highlights"]="FFFFFF",["base"]="000000",["eye"]="007F07",["nose"]="00FF0F",["tips"]="000000"},["r"]="d",["g"]="f",["sz"]="1.5"}
+appearance=n4:{["sk"]={["bone"]="92908C",["plate"]="A3A39E",["claw"]="676667",["wing"]="5D3E32",["horn"]="6E5747"},["c"]="Boss-Anexima",["sz"]="1.5"}
 strength=425
 dexterity=400
 constitution=550
