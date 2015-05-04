@@ -915,3 +915,14 @@ display_name=Missing Envoy
 profession=1
 creature_category=Inanimate
 ai_package=
+
+[ENTRY]
+ID=7797
+will_regen=1
+might_regen=1
+appearance=p1:{["a"]="Prop-Small_Mushroom4",["sz"]="0.5"}
+level=1
+display_name=Mushroom Chunks
+profession=1
+creature_category=Inanimate
+ai_package=nothing

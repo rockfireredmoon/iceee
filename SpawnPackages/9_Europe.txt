@@ -3000,3 +3000,8 @@ Spawn=3628,100  ; Hell "Twelve"
 [ENTRY]
 Name=z9_custom_To_The_Void
 Spawn=3634,100  ; Hell "Twelve"
+
+[ENTRY]
+Flags=3
+Name=gt01_mushroomChunks
+Spawn=7797,100  ;Mushroom Chunks
