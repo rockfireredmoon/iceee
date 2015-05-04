@@ -1347,7 +1347,7 @@ Type=warp
 ObjectID=7788
 WarpTo=1570,500,8069,75
 Message=Entering The Wailing Crypt
-Quest=824
+Quest=816
 
 [ENTRY]
 Name=folkirk_manor_to_grunes

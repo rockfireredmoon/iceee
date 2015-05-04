@@ -1506,7 +1506,7 @@ RewardItem.3=7065,1,0
 
 [ENTRY]
 Requires=831
-ID=816/
+ID=816
 Title=The True Form Of Nobility
 BodyText=If you have spoken to my friend Shayne, then you know the atrocities which occurred at Haunted Hill. I would send you within the Folkirk Manor itself, to eliminate an ancient Beast family so evil, I believe that they were not turned by any invading zombie to their home. Instead, their dust-filled veins simply took on their true forms when the undead invvaded!
 
@@ -2113,7 +2113,7 @@ Obj.0.myItemID=
 Obj.0.completeText=0 of 15
 Obj.0.markerLocations=59924.8,591.578,55377.3,9
 [ACT]
-ActBodyText= Return to Rheskor
+ActBodyText=sReturn to Rheskor
 Obj.0.type=talk
 Obj.0.data1=
 Obj.0.data2=
@@ -2149,7 +2149,7 @@ Repeat=0
 sGiver=64137.3,780.062,56620.3,9
 sEnder=64137.3,780.062,56620.3,9
 [ACT]
-Act.BodyText=Kill 15 Junderbrood Workskrills in the fallen mushroom forest in northern Junderlund
+Act.BodyText=Gather 15 Mushroom Chunks for a bow of momma's soup 
 Obj.0.type=gather
 Obj.0.data1=7797
 Obj.0.data2=15
