@@ -60,7 +60,9 @@ echo "// DO NOT EDIT, THIS IS A GENERATED FILE
 gVersion <- \"${FULL_VERSION}\"" > "${SCRATCH}/content/Version.nut";
 
 pushd "${SCRATCH}/content"
+echo "*******************************************************"
 echo "Compiling all scripts"
+echo "*******************************************************"
 find . -name '*.nut'|while read line ; do
 	echo "Compiling ${line} to "$(dirname ${line})/$(basename ${line} .nut).cnut
 	if wine ${base}/UTILITIES/sq.exe -o $(dirname ${line})/$(basename ${line} .nut).cnut -c ${line} ; then
@@ -70,38 +72,49 @@ find . -name '*.nut'|while read line ; do
 		exit 1
     fi
 done
+echo "*******************************************************"
 echo "Decompressing original scripts (only those that don't already exist)"
+echo "*******************************************************"
 unzip -qn "${SCRATCH}/archives/EarthEternal.zip"
 count=$(find -name '*.nut'|wc -l|awk '{ print $1 }')
 if [ $count -gt 0 ]; then
 	echo "There are .nut files remaining, this might mean the script failed." >&2
 	exit 1
 fi
+echo "*******************************************************"
 echo "Compressing earth eternal"
+echo "*******************************************************"
 zip -dg -q -r "${SCRATCH}/archives/EarthEternal.zip" *
 popd
 
+echo "*******************************************************"
 echo "Archiving earth eternal"
+echo "*******************************************************"
 wine UTILITIES/CARDecode.exe "${SCRATCH}/archives/EarthEternal.zip"
 
 rm -fr "${SCRATCH}/content"
 mkdir -p "${SCRATCH}/content"
 
+echo "*******************************************************"
 echo "Extracting PF sound mods"
+echo "*******************************************************"
 cp SOURCE/CAR/Sound-ModSound.car "${SCRATCH}/archives"
 wine UTILITIES/CARDecode.exe "${SCRATCH}/archives/Sound-ModSound.car"
 
+echo "*******************************************************"
 echo "Decompressing PF sounds mods"
-pushd "${SCRATCH}/content"
+echo "*******************************************************"
+pushd "${SCRATCH}/content" >/dev/null
 unzip -q "${SCRATCH}/archives/Sound-ModSound.zip"
-popd
+popd >/dev/null
 
+echo "*******************************************************"
 echo "Copying in new sounds"
-pushd SOURCE/ExtraSounds
+echo "*******************************************************"
+pushd SOURCE/ExtraSounds >/dev/null
 for i in $(find .) ; do
 	target="${SCRATCH}/content/"$(dirname ${i})
 	mkdir -p "${target}"
-	echo "FILE: $i $(file $i)"
 	case "${i}" in
 		*".wav") out="${target}/$(basename $i .wav).ogg"
 				echo "Converting ${i} from Wav to ${out}"
@@ -119,44 +132,89 @@ for i in $(find .) ; do
 			 cp "${i}" "${target}" ;; 
 	esac
 done
-popd
-pushd "${SCRATCH}/content"
+popd >/dev/null
+pushd "${SCRATCH}/content" >/dev/null
+echo "*******************************************************"
 echo "Compressing sounds"
+echo "*******************************************************"
 zip -dg -q -r "${SCRATCH}/archives/Sound-ModSound.zip" *
-popd
+popd >/dev/null
 
+echo "*******************************************************"
 echo "Archiving sounds"
+echo "*******************************************************"
 wine UTILITIES/CARDecode.exe "${SCRATCH}/archives/Sound-ModSound.zip"
 
+rm -fr "${SCRATCH}/ap"
+mkdir "${SCRATCH}/ap"
+cp -Rp SOURCE/AssetPatches/* "${SCRATCH}/ap"
+pushd "${SCRATCH}/ap" >/dev/null
+echo "*******************************************************"
+echo "Compiling patch scripts"
+echo "*******************************************************"
+for line in $(find . -type f) ; do
+	dn=$(dirname ${line})
+	bn=$(basename ${line})
+	pushd "${dn}" >/dev/null
+	case "${bn}" in
+		*".nut")	echo "Compiling asset patch script ${line}"
+					if ! wine ${base}/UTILITIES/sq.exe -o $(basename $bn .nut).cnut -c ${bn} ; then
+						echo "$0: Failed to compile $bn" >&2
+						exit 1
+					else rm ${bn}
+					fi ;;
+		*".wav") 	out="$(basename $bn .wav).ogg"
+					echo "Converting ${bn} from Wav to ${out}"
+					if ! oggenc -Q "${bn}" -o "${out}" ; then
+						echo "Failed to encode ${bn}" >&2
+						exit 1
+					else rm ${bn}
+					fi ;;
+		*".mp3") 	out="$(basename $bn .mp3).ogg"
+					echo "Converting ${bn} from MP3 to ${out}"
+					if ! ffmpeg -v 0 -i "${bn}" -acodec libvorbis "${out}" ; then
+						echo "Failed to encode ${line}" >&2
+						exit 1
+					else rm ${bn}
+					fi ;;
+	esac
+	popd >/dev/null
+done
+popd >/dev/null
+echo "*******************************************************"
 echo "Other Asset patches"
-for i in SOURCE/AssetPatches/*; do
+echo "*******************************************************"
+for i in ${SCRATCH}/ap/*; do
 	if [ -d "${i}" ] ; then
 		carbase=$(basename ${i}).car
 		carfile=${base}/asset/Release/Current/Media/${carbase}
-		if [ ! -f "${carfile}" ]; then
-			echo "$0: No car ${carfile} for ${i}" >&2
-			exit 1
-		fi 	
-		cp "${carfile}" "${SCRATCH}/archives"
-		wine UTILITIES/CARDecode.exe "${SCRATCH}/archives/${carbase}"
 		rm -fr "${SCRATCH}/content"
 		mkdir -p "${SCRATCH}/content"
-		pushd "${SCRATCH}/content"
-		zipbase=$(basename ${i}).zip
-		unzip -q "${SCRATCH}/archives/${zipbase}"
-		popd
-		pushd "${i}"
+			zipbase=$(basename ${i}).zip
+		if [ ! -f "${carfile}" ]; then
+			echo "New car file for ${i}"
+		else
+			echo "Add to car file for ${i}"			
+			cp "${carfile}" "${SCRATCH}/archives"
+			wine UTILITIES/CARDecode.exe "${SCRATCH}/archives/${carbase}"
+			pushd "${SCRATCH}/content" >/dev/null
+			unzip -q "${SCRATCH}/archives/${zipbase}"
+			popd >/dev/null
+		fi		
+		pushd "${i}" >/dev/null
 		find . | cpio -updm "${SCRATCH}/content"
-		popd
-		pushd "${SCRATCH}/content"
-		echo "Compressing earth eternal"
+		popd >/dev/null
+		pushd "${SCRATCH}/content" >/dev/null
+		echo "Compressing ${zipbase}"
 		zip -dg -q -r "${SCRATCH}/archives/${zipbase}" *
-		popd
+		popd >/dev/null
 		wine UTILITIES/CARDecode.exe "${SCRATCH}/archives/${zipbase}"
 	fi
 done
 
+echo "*******************************************************"
 echo "Others"
+echo "*******************************************************"
 for i in SOURCE/CAR/*.car ; do
 	if [ ! -f "${SCRATCH}/archives/$(basename $i)" ] ;then
 		cp "${i}" "${SCRATCH}/archives"
@@ -165,7 +223,9 @@ for i in SOURCE/CAR/*.car ; do
 done
 
 
+echo "*******************************************************"
 echo "Checksumming"
+echo "*******************************************************"
 rm -f "${SCRATCH}/HTTPChecksum.txt"
  
 echo "/Release/Current/EarthEternal.car=\""$(wine UTILITIES/MD5.exe "${SCRATCH}/archives/EarthEternal.car"|tr -d '\r')"\"" >> "${SCRATCH}/HTTPChecksum.txt"
@@ -178,6 +238,9 @@ done
 #echo "/Release/Current/Media/Prop-ModAddons1.car="$(wine UTILITIES/MD5.exe "SOURCE/CAR/Prop-ModAddons1.car"|tr -d '\r') >> "${SCRATCH}/HTTPChecksum.txt"
 #echo "/Release/Current/Media/Sound-ModSound.car="$(wine UTILITIES/MD5.exe "${SCRATCH}/archives/Sound-ModSound.car"|tr -d '\r') >> "${SCRATCH}/HTTPChecksum.txt"
 
+echo "*******************************************************"
+echo "Done!"
+echo "*******************************************************"
 if [ -d asset -a -d Data ]; then
 	echo -n "Install to assets dir? y/n: "
 	read yesno

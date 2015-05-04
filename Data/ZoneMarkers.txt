@@ -212,6 +212,10 @@ Sanctuary=60325.2,404.414,43756.7,New Badari: East Bridge,NewBadari
 Sanctuary=65093.4,420.641,34078.6,New Badari: Seascape,NewBadari
 Sanctuary=67749,424.811,37044,New Badari: Bremen,NewBadari
 Sanctuary=77682.9,440.637,39260,New Badari: Rolsburg,NewBadari
+Sanctuary=50863.1,739.994,67641,Grunes Tal: Undead area
+Sanctuary=57781.8,802.854,66779.7,Grunes Tal: Redeemer Camp
+Sanctuary=63782.3,902.156,63883.8,Grunes Tal: Folkirk
+Sanctuary=65495.8,574.755,57431.3,Grunes Tal: Hogcatchers
 
 [ENTRY]
 ZoneID=89

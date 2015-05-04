@@ -177,7 +177,7 @@ class this.Screens.BugReport extends this.GUI.Frame
 		
 		local txt = "{\n" + 
 			" \"title\": \"" + summ + "\",\n" + 
-			" \"body\": \" + desc "\",\n" + 
+			" \"body\": \"" + desc + "\",\n" + 
 			" \"labels\": [ \"bug\" ]\n" +
 			"}\n";
 		local TOKEN = "5d296bbcc111e6bdbb3a15beaeb53170fc560748";
