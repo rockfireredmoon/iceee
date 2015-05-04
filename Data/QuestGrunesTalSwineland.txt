@@ -1549,6 +1549,17 @@ Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=3478,600,3232,75
 [ACT]
+Act.BodyText=Kill the Family Pet, Scraps
+Obj.0.type=kill
+Obj.0.data1=3657
+Obj.0.data2=1
+Obj.0.description=Kill Scraps
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 1
+Obj.0.markerLocations=4377.0,540,4226.0,75
+[ACT]
 Act.BodyText=Kill the Family Folkirk
 Obj.0.type=kill
 Obj.0.data1=1263
@@ -1586,7 +1597,7 @@ Obj.0.description=Return to Quintus Lunarsong
 Obj.0.complete=0
 Obj.0.myCreatureDefID=1198
 Obj.0.myItemID=
-Obj.0.completeText=So those vile Folkirks have finally met the end they so long ago deserved? That is good news indeed. At long last those whose lives were lost because of them have the vengeance they have long cried for. Friend, your deeds have closed the book on one of the most tragic stories ever to come from this now-blighted region. Please take one of these items with you before you go and may Gaia watch over you. Farewell.
+Obj.0.completeText=The Folkirks are dead!
 Obj.0.markerLocations=58044.5,806.452,66701.1,9
 
 [Entry]
