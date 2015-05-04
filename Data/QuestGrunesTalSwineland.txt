@@ -1550,15 +1550,6 @@ Obj.0.completeText=
 Obj.0.markerLocations=3478,600,3232,75
 [ACT]
 Act.BodyText=Kill the Family Folkirk
-;Obj.0.type=kill
-;Obj.0.data1=3657
-;Obj.0.data2=1
-;Obj.0.description=Kill Scraps
-;Obj.0.complete=0
-;Obj.0.myCreatureDefID=
-;Obj.0.myItemID=
-;Obj.0.completeText=0 of 1
-;Obj.0.markerLocations=4377.0,540,4226.0,75
 Obj.0.type=kill
 Obj.0.data1=1263
 Obj.0.data2=1
