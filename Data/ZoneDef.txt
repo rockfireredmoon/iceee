@@ -217,8 +217,7 @@ AreaEnvironment=74,72,10,10,Swineland
 AreaEnvironment=84,74,5,9,Swineland
 AreaEnvironment=74,82,15,1,GrunesUndead
 AreaEnvironment=73,83,14,1,GrunesUndead
-AreaEnvironment=67,84,20,8,GrunesUndead
-AreaEnvironment=74,92,10,2,GrunesUndead
+AreaEnvironment=67,84,20,10,GrunesUndead
 
 [ENTRY]
 ID=10

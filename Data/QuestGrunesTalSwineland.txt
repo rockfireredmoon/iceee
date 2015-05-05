@@ -2612,3 +2612,165 @@ Obj.0.myCreatureDefID=7785
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=64056.2,780.404,56918.8,9
+
+[ENTRY]
+ID=848
+Title=The Wailing Crypt
+BodyText=There are crypts south of Redeemer's Hall, which were built as respectful places of rememberance by the Beast-Founders of Grunes Tal years ago. Yes, there are graveyards aplenty which surround us, but these crypts bear all-too-familiar family names. The surviving members of the famlies have a vested interest in making sure their relatives' remains sleep soundly, and never make it to the Village Crier's List of shocking undead murderers. You can also assume that they will pay handsomely for this task, and for your discretion.
+
+The largest crypt within the graveyard has been reported as having caused a spot of trouble. There is a pitiful wailing coming from within, which has lured some beasts inside to investigate the source of the sound - never to return. I doubt now that the cries come from a wounded or lost child, as it may sound like at first.
+
+At any rate, you will need to eliminate any likely witnesses, in case The Wailer hails from a family of note. Travel to The Crypts far south of Redeemer's Hall within Iron Hils, and eliminate six Crypt Diggers as well as eight Risen Corpses.
+
+The Crypt is the home of a Revenant called the Wailer. This crypt is the largest and most evil looking in all of The Crypts. It is made of stone and lavishly decorated. 
+CompleteText=So, there are no more witnesses to the Wailer's incessant noise? Good. At least now whoever's family the Wailer comes from will not have their loved one's...actions exposed.
+Level=44
+Suggested=44
+Exp=8012
+PartySize=2
+NumRewards=0
+Coin=2318
+Unabandon=0
+QuestGiverID=1202
+QuestEnderID=1202
+Repeat=0
+sGiver=58956.5,776.751,67025.6,9
+sEnder=58956.5,776.751,67025.6,9
+[ACT]
+Act.BodyText=Defeat six Crypt Diggers and eight Risen Corpses outside the Wailing Crypt at the graveyard in the Iron Hills.
+Obj.0.type=kill
+Obj.0.data1=1187
+Obj.0.data2=6
+Obj.0.description=Kill 6 Crypt Digger
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 6
+Obj.0.markerLocations=52306.5,678.496,68384.1,9
+Obj.1.type=kill
+Obj.1.data1=1191
+Obj.1.data2=8
+Obj.1.description=Kill 8 Risen Corpses
+Obj.1.complete=0
+Obj.1.myCreatureDefID=
+Obj.1.myItemID=
+Obj.1.completeText=0 of 8
+Obj.1.markerLocations=52306.5,678.496,68384.1,9
+[ACT]
+ActBodyText=Return to Derk Vilander
+Obj.0.type=talk
+Obj.0.data1=
+Obj.0.data2=s
+Obj.0.description=Return to Derk Vilander
+Obj.0.complete=0
+Obj.0.myCreatureDefID=1202
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=58956.5,776.751,67025.6,9
+
+[ENTRY]
+Requires=848
+ID=849
+Title=Sythrex the Overseer
+BodyText=Now that that's taken care of we can move on the next step.  The Overseer.  These Lich like beings seem to keep reanimating corpses from the graveyard it's literally a breeding ground for Abidan's forces! Eliminate the Overseer and his Putrid and report back to me when your finished!
+CompleteText=Ah you've returned! It's taken of then I assume?  Good, Now I have a even more important matter that requires your attention.
+Level=45
+Suggested=45
+Exp=8212
+PartySize=2
+NumRewards=0
+Coin=2418
+Unabandon=0
+QuestGiverID=1202
+QuestEnderID=1202
+Repeat=0
+sGiver=58956.5,776.751,67025.6,9
+sEnder=58956.5,776.751,67025.6,9
+[ACT]
+Act.BodyText=Travel to the Iron Hills and defeat Sythrex the Overseer and his Putrid Avien
+Obj.0.type=kill
+Obj.0.data1=1196
+Obj.0.data2=1
+Obj.0.description=Kill Sythrex The Overseer 
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 1
+Obj.0.markerLocations=52132.9,734.057,68157.2,9
+Obj.1.type=kill
+Obj.1.data1=1203,1226,1227
+Obj.1.data2=1
+Obj.1.description=Kill Putrid Avien
+Obj.1.complete=0
+Obj.1.myCreatureDefID=
+Obj.1.myItemID=
+Obj.1.completeText=0 of 1
+Obj.1.markerLocations=52132.9,734.057,68157.2,9
+[ACT]
+ActBodyText= Return to Derk Vilander
+Obj.0.type=talk
+Obj.0.data1=
+Obj.0.data2=
+Obj.0.description=Return to Derk Vilander
+Obj.0.complete=0
+Obj.0.myCreatureDefID=1202
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=58956.5,776.751,67025.6,9
+
+[ENTRY]
+ID=849
+Title=A Word To The Wise
+BodyText=Hey! Wait ..... you over there! 
+
+I am sorry, I couldn't but help overhearing your conversation with Derk. Before you go, there is something you must know.
+
+I myself ventured into that place *shivers*, and ... barely made it out alive. The rest of my party were not so lucky. But maybe ... just maybe ... some good of their misfortune may yet come.
+
+Deep inside the crypt where the wailer wails, there are two strange braziers of unknown origin, that source of heat we could produce would light. The scholar in our party deduced that a sacrifice may spark their coals, releasing ancient magic to take effect and bind the Wailer to our realm.
+
+Alas, my comrades were destroyed before we could test this theory, by two of the most powerful inhabitants of the crypt ironically, the very two sacrifices we hoped would help us finish our task. Maybe with this information, you will fare better. 
+CompleteText=I knew you could do it, there was a look of determination in your eyes. So my friends' deaths were not in vain, that would be of some comfort to them .. Some ....
+Level=45
+Suggested=46
+Exp=6278
+PartySize=3
+NumRewards=0
+Coin=1879
+Unabandon=0
+QuestGiverID=7803
+QuestEnderID=7803
+Repeat=0
+sGiver=59097.6,774.803,67046.6,9
+sEnder=59097.6,774.803,67046.6,9
+[ACT]
+Act.BodyText=Sacrifice Alabaster and Kyshf 
+Obj.0.type=kill
+Obj.0.data1=3649
+Obj.0.data2=1
+Obj.0.description=Sacrafice Alabaster
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 1
+Obj.0.markerLocations=3638,600,1801,56 
+Obj.1.type=kill
+Obj.1.data1=3648
+Obj.1.data2=1
+Obj.1.description=Sacrafice Kyshf
+Obj.1.complete=0
+Obj.1.myCreatureDefID=
+Obj.1.myItemID=
+Obj.1.completeText=0 of 1
+Obj.1.markerLocations=924.927,600,887.955,56
+[ACT]
+Act.BodyText=Return to Emaa Wargriver
+Obj.0.type=talk
+Obj.0.data1=
+Obj.0.data2=
+Obj.0.description=Emaa Wargriver
+Obj.0.complete=0
+Obj.0.myCreatureDefID=7803
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=59097.6,774.803,67046.6,9
