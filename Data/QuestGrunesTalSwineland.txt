@@ -2724,9 +2724,11 @@ BodyText=Hey! Wait ..... you over there!
 
 I am sorry, I couldn't but help overhearing your conversation with Derk. Before you go, there is something you must know.
 
-I myself ventured into that place *shivers*, and ... barely made it out alive. The rest of my party were not so lucky. But maybe ... just maybe ... some good of their misfortune may yet come.
+I myself ventured into that place *shivers*, and ... barely made it out alive.
 
-Deep inside the crypt where the wailer wails, there are two strange braziers of unknown origin, that source of heat we could produce would light. The scholar in our party deduced that a sacrifice may spark their coals, releasing ancient magic to take effect and bind the Wailer to our realm.
+The rest of my party were not so lucky. But maybe ... just maybe ... some good of their misfortune may yet come.
+
+Deep inside the crypt where the wailer wails, there are two strange braziers of unknown origin. The scholar in our party deduced that a sacrifice may spark their coals, releasing ancient magic to take effect and bind the Wailer to our realm.
 
 Alas, my comrades were destroyed before we could test this theory, by two of the most powerful inhabitants of the crypt ironically, the very two sacrifices we hoped would help us finish our task. Maybe with this information, you will fare better. 
 CompleteText=I knew you could do it, there was a look of determination in your eyes. So my friends' deaths were not in vain, that would be of some comfort to them .. Some ....
