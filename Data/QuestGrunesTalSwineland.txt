@@ -2719,7 +2719,7 @@ Obj.0.completeText=
 Obj.0.markerLocations=58956.5,776.751,67025.6,9
 
 [ENTRY]
-ID=849
+ID=850
 Title=A Word To The Wise
 BodyText=Hey! Wait ..... you over there! 
 
@@ -2774,3 +2774,70 @@ Obj.0.myCreatureDefID=7803
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=59097.6,774.803,67046.6,9
+
+[ENTRY]
+Requires=849
+ID=851
+Title=The Revenant
+BodyText=Now that there will be no more.. how shall we say... 'witnesses' to The Wailer's...well, wailing... it is time to deal with the creature itself and silence it once and for all. Return to the graveyard, friend, and enter the Wailing Crypt itself. While I know not what unsightly horrors lie within that place, intel has claimed that the wails from this revenant seem to come from deep inside the Crypt. I have also been told the Elders of Grunes Tal at times added little puzzles for would-be looters to try and solve if they dared to disturb their resting places.
+
+Be wary when in the Crypt, though. More than a few would-be adventurers, and even a few groups we here at the Hall have assembled, have entered that place, yet none have returned. Perhaps there is more to these 'puzzles' than most know. While searching for The Wailer's 'resting' place, be on the lookout for clues on how to get past the Elders' Crypt puzzles. Surely some of these will help solve the mystery of the Wailer's existence.
+
+Return to me once you have taken care of The Wailer and have put it's obviously restless soul to a final peace.
+CompleteYou return safely friend! The Wailer has been put to rest? Excellent. Remember friend, keep The Wailer's identity to yourself for the sake of the family it belonged to. It is scandal enough that the creature was even causing problems. By eliminating that revenant as an issue, the families who's loved ones rest in that crypt can be rest assured their good names will not be tainted by this incident. Please accept one of these as thanks from both myself and the families whose reputations you have preserved. They, themselves, might not wish to say it, but I do. Take care and good fortune in your travels!
+Level=45
+Suggested=46
+Exp=8512
+PartySize=3
+NumRewards=0
+Coin=2718
+Unabandon=0
+QuestGiverID=1202
+QuestEnderID=1202
+Repeat=0
+sGiver=58956.5,776.751,67025.6,9
+sEnder=58956.5,776.751,67025.6,9
+[ACT]
+Act.BodyText=Travel to the Wailing Crypt
+Obj.0.type=travel
+Obj.0.data1=7786,525116797866824379
+Obj.0.data2=250
+Obj.0.description=Travel to the Wailing Crypt
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=52511,679.786,68243.7,9
+[ACT]
+Act.BodyText=Enter the Wailing Crypt
+Obj.0.type=travel
+Obj.0.data1=7786,525116797866824379
+Obj.0.data2=250
+Obj.0.description=Enter the Wailing Crypt
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=52511,679.786,68243.7,9
+[ACT]
+Act.BodyText=Kill The Revenant known as The Wailer
+Obj.0.type=kill
+Obj.0.data1=1259
+Obj.0.data2=1
+Obj.0.description=Kill The Wailer
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 1
+Obj.0.markerLocations=2125,480,2802,56
+[ACT]
+ActBodyText= Return to Derk Vilander
+Obj.0.type=talk
+Obj.0.data1=
+Obj.0.data2=
+Obj.0.description=Return to Derk Vilander
+Obj.0.complete=0
+Obj.0.myCreatureDefID=1202
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=58956.5,776.751,67025.6,9
