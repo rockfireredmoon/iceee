@@ -2743,6 +2743,7 @@ QuestEnderID=7803
 Repeat=0
 sGiver=59097.6,774.803,67046.6,9
 sEnder=59097.6,774.803,67046.6,9
+ScriptAcceptCondition=has_quest 848
 [ACT]
 Act.BodyText=Sacrifice Alabaster and Kyshf 
 Obj.0.type=kill

@@ -22,6 +22,7 @@ const QuestScriptCommandDef* ExtendedQuestAction :: GetCommandDef(const std::str
 		//Conditions
 		{"heroism",     CONDITION_HEROISM, 2, CommandParam::COMPARE, CommandParam::INTEGER, CommandParam::NONE },
 		{"has_item",    CONDITION_HAS_ITEM, 2, CommandParam::INTEGER, CommandParam::INTEGER, CommandParam::NONE },
+		{"has_quest",    CONDITION_HAS_QUEST, 1, CommandParam::INTEGER, CommandParam::NONE, CommandParam::NONE },
 		{"transformed", CONDITION_TRANSFORMED, 1, CommandParam::INTEGER, CommandParam::NONE, CommandParam::NONE },
 		{"untransformed", CONDITION_UNTRANSFORMED, 0, CommandParam::NONE, CommandParam::NONE, CommandParam::NONE },
 		
@@ -213,6 +214,14 @@ int QuestActionContainer :: ExecuteSingleCommand(SimulatorThread *caller, Extend
 			if(count >= itemCount)
 				return 0;
 			caller->SendInfoMessage("You don't have the required items in your backpack inventory.", INFOMSG_ERROR);
+			return -1;
+		}
+		break;
+	case CONDITION_HAS_QUEST:
+		{
+			int questID = e.param[0];
+			if(caller->pld.charPtr->questJournal.activeQuests.HasQuestID(questID) > -1)
+				return 0;
 			return -1;
 		}
 		break;
