@@ -2596,7 +2596,7 @@ sEnder=58956.5,776.751,67025.6,9
 [ACT]
 Act.BodyText=Travel to the Wailing Crypt
 Obj.0.type=travel
-Obj.0.data1=7786,525116797866824379
+Obj.0.data1=52491,677,68426,9
 Obj.0.data2=250
 Obj.0.description=Travel to the Wailing Crypt
 Obj.0.complete=0
@@ -2607,7 +2607,7 @@ Obj.0.markerLocations=52511,679.786,68243.7,9
 [ACT]
 Act.BodyText=Enter the Wailing Crypt
 Obj.0.type=travel
-Obj.0.data1=7786,525116797866824379
+Obj.0.data1=2125,660,597,56
 Obj.0.data2=250
 Obj.0.description=Enter the Wailing Crypt
 Obj.0.complete=0
