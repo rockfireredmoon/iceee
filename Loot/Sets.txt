@@ -153,6 +153,7 @@ essence_rottednursery_witherroot	0	100	21282		 Wither Root's Essence
 essence_spibearlair_denmotherursarach	0	150	21291		 Denmother Ursarach's Essence
 essence_underhenge_bramblebane	0	150	20873		 Bramblebane's Essence
 essence_vespinlair_hivequeenfrelon	0	100	20531		 Frelon's Essence
+essence_wailingcrypt_wailer	0	300	10011		 The Wailers's Essence
 essence_wilhelmscrypt_kingwilhelm	0	250	20872		 Willhelm's Essence
 essence_zhushislair_zhushi	0	100	20781		 Zhushi's Essence
 token_abandonedmonastery	0	20	21253		 Abandoned Monastery Token
@@ -173,6 +174,7 @@ token_rottedmaze	0	20	21274		 Rotted Maze Token
 token_rottednursery	0	20	21271		 Rotted Nursery Token
 token_spibearlair	0	20	21257		 Spibear Lair Token
 token_underhenge	0	20	21250		 Underhenge Token
+token_wailingcrypt	0	20	8102		 Wailing Crypt Token
 token_wilhelmscrypt	0	20	21252		 Wilhelm's Crypt Token
 CraftComponent_FineWool	-1	20	20942		 Fine Wool
 CraftComponent_PolishedStone	-1	20	20943		 Polished Stone

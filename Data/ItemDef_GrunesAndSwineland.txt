@@ -10,17 +10,6 @@ mValue=1
 mQualityLevel=1
 
 [ENTRY]
-mID=10001
-mType=9
-mDisplayName=Lanterneye Eye Fluid 
-mIcon=Icon-32-Eye_Green.png|Icon-32-BG-Green.png
-mIvType1=5
-mIvMax1=301
-mSv1=Gathering fluid!
-mValue=1
-mQualityLevel=1
-
-[ENTRY]
 mID=10002
 mType=3
 mDisplayName=Wailing Amulet
@@ -100,7 +89,7 @@ mMinUseLevel=48
 mID=10006
 mType=2
 mDisplayName=Grundy's Organic Hammer
-mAppearance={["a"]=[{["type"]="Item-Leg_of_Meat",["node"]="right_hand",["colors"]=["0D233F","2A0000"]}}
+mAppearance=[{["a"]={["type"]="Item-Leg_of_Meat",["colors"]=["0D233F","2A0000"]}},null]
 mIcon=Icon-32-Hamhock.png|Icon-32-BG-Purple.png
 mLevel=47
 mBindingType=1
@@ -118,7 +107,7 @@ mMinUseLevel=47
 mID=10007
 mType=3
 mDisplayName=Grundy's Headband
-mAppearance={["a"]=[{["type"]="Armor-Light-Low3-Helmet",["node"]="hat",["colors"]=["1F6A24","946624","944D0D","0A5503"]}}
+mAppearance=[{["a"]={["type"]="Armor-Light-Low3-Helmet",["node"]="hat",["colors"]=["1F6A24","946624","944D0D","0A5503"]}},null]
 mIcon=Icon-32-C_Armor-Head02.png|Icon-32-BG-Blue.png
 mLevel=47
 mValue=6743
@@ -134,7 +123,7 @@ mArmorType=1
 mID=10008
 mType=3
 mDisplayName=Kyshf's Hide Helmet
-mAppearance={["a"]=[{["type"]="Armor-Heavy-High1-Helmet",["node"]="helmet",["colors"]=["3F352C","7AA3E9","D4B0D4"]}}
+mAppearance=[{["a"]={["type"]="Armor-Heavy-High1-Helmet",["node"]="helmet",["colors"]=["3F352C","7AA3E9","D4B0D4"]}},null]
 mIcon=Icon-32-H_Armor-Head05.png|Icon-32-BG-Blue.png
 mLevel=47
 mValue=6281
@@ -152,7 +141,7 @@ mArmorResistDeath=150
 [ENTRY]
 mID=10009
 mType=2
-mAppearance={["a"]=[{["type"]="Item-Bow-Medium3",["node"]="left_hand",["colors"]=["151515","E9E9E9","BF3434"]}}
+mAppearance=[{["a"]={["type"]="Item-Bow-Medium3",["node"]="left_hand",["colors"]=["151515","E9E9E9","BF3434"]}},null]
 mDisplayName=Velvet Wrapped Bow
 mIcon=Icon-32-Bow5.png|Icon-32-BG-Purple.png
 mLevel=47
@@ -171,7 +160,7 @@ mWeaponDamageMax=59
 mID=10010
 mType=3
 mDisplayName=Soulweaver Kilt
-mAppearance={["c"]={["type"]="Armor-Light-Low6",["colors"]=["19551d","aa7429","7f6b45","947d50"]}}
+mAppearance=[{["c"]={["type"]="Armor-Light-Low6",["colors"]=["19551d","aa7429","7f6b45","947d50"]}}, null]
 mIcon=Icon-32-M_Armor-Legs02.png|Icon-32-BG-Blue.png
 mLevel=47
 mValue=5844

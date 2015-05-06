@@ -66,7 +66,7 @@ public:
 	std::vector<WorldMarker> WorldMarkerList;
 	void Save();
 	void Reload();
-	void LoadFromFile(char *filename);
+	void LoadFromFile(const char *filename);
 
 };
 

@@ -176,9 +176,9 @@ void WorldMarkerContainer::Reload()
 }
 
 
-void WorldMarkerContainer::LoadFromFile(char *filename)
+void WorldMarkerContainer::LoadFromFile(const char *filename)
 {
-	mFilename = string(filename);
+	mFilename = filename;
 	Reload();
 }
 

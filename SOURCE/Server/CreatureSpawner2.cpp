@@ -1093,13 +1093,9 @@ void SpawnManager :: RemoveSpawnPoint(int PropID)
 
 void SpawnManager :: Despawn(int CreatureID)
 {
-	ActiveSpawner *obj = NULL;
 	std::list<SpawnTile>::iterator it;
 	for(it = spawnTiles.begin(); it != spawnTiles.end(); ++it)
-	{
-		g_Log.AddMessageFormat("[DEBUG] Checking for despawn of %d on %d,%d", CreatureID, it->TileX, it->TileY);
 		it->Despawn(CreatureID);
-	}
 }
 
 int SpawnManager :: TriggerSpawn(int PropID, int forceCreatureDef, int forceFlags)
@@ -1271,7 +1267,6 @@ int SpawnPackageList :: LoadFromFile(const char *filename)
 
 	SpawnPackageDef newItem;
 	int r;
-	int shortOffset = 0;
 	unsigned long DefaultFlags = 0;
 	while(lfr.FileOpen() == true)
 	{
@@ -1283,7 +1278,6 @@ int SpawnPackageList :: LoadFromFile(const char *filename)
 			if(strcmp(lfr.SecBuffer, "[ENTRY]") == 0)
 			{
 				AddIfValid(newItem);
-				shortOffset = 0;
 				newItem.SpawnFlags = static_cast<unsigned char>(DefaultFlags);
 			}
 			else if(strcmp(lfr.SecBuffer, "Name") == 0)

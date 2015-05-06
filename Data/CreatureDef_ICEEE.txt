@@ -768,15 +768,16 @@ creature_category=Magical
 ai_package=frost_creature_brave_6
 
 [ENTRY]
-defHints=4
+defHints=8
 ID=7784
 will_regen=1
 might_regen=1
 appearance=p1:{["a"]="Prop-Loot-Boss_Chest1"}
 level=1
-display_name=The Wailers Essence Chest
+display_name=The Wailers Treasure
 profession=1
 creature_category=Inanimate
+rarity=1
 ai_package=nothing
 
 [ENTRY]
@@ -1050,3 +1051,16 @@ creature_category=Mortal
 rarity=2
 ai_package=example
 appearance=c2:{["a"]=[{["type"]="Item-Staff-Basic3",["node"]="right_hand",["colors"]=["2A1603","E9E9E9","AAAAAA"]}],["c"]={["boots"]={["type"]="Armor-Warrior-Redeemer_Ranger",["colors"]=[]},["chest"]={["type"]="Armor-Medium-Mid4",["colors"]=[]},["arms"]={["type"]="Armor-Warrior-Redeemer_Ranger",["colors"]=["552b13","7a5e48","2a2a2a","7e5224","6a3618","736871"]},["leggings"]={["type"]="Armor-Warrior-Redeemer_Ranger",["colors"]=["6a4829","7a5e48","2a1d0a","7e5224","c3bfbe","2a2a2a"]},["collar"]={["type"]="Armor-Warrior-Athenian",["colors"]=[]},["belt"]={["type"]="Armor-Light-Low6",["colors"]=["fffed4","7a5e48","7f7f6a","7e5224","c3bfbe","2a2a2a"]},["gloves"]={["type"]="Armor-Warrior-Redeemer_Ranger",["colors"]=["6a3425","7a5e48","2a2a2a","7e5224","553a14","736871"]}},["b"]="n",["sk"]={["hair"]="FFFED4",["tusks"]="CCCCCC",["eye_white"]="FBF2BC",["snout"]="705F4A",["base"]="917C61",["thigh_patches"]="863825",["eye"]="835B7A",["arm_patches"]="B14B33",["wrist_patches"]="9A432E",["nails"]="61281A"},["sz"]="1.02",["h"]=0,["g"]="f",["r"]="k"}
+
+[ENTRY]
+defHints=8
+ID=7804
+will_regen=1
+might_regen=1
+appearance=p1:{["a"]="Prop-Loot-Boss_Chest1"}
+level=1
+display_name=Dungeon Loot
+sub_name=The Wailing Crypt
+profession=1
+creature_category=Inanimate
+ai_package=nothing

@@ -564,11 +564,6 @@ Item=143399,1  ;Blackwell Mirror
 Item=143397,1  ;Kingslayer Wand
 Item=143395,1  ;Kingslayer Rend-Axe
 
-
-
-
-
-
 ; Chanticleer's Chest (restored from Oso Loco's spreadsheet)
 [ENTRY]
 CreatureDefID=2624
@@ -582,3 +577,9 @@ Item=5227,1
 Item=143331,1
 Item=143332,1
 
+; Wailing Crypt Dungeon Loot
+[ENTRY]
+CreatureDefID=7804
+EssenceID=8102
+Item=10008,10
+Item=10009,10
