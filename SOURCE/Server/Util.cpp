@@ -1991,6 +1991,7 @@ bool StringWrite :: Overflow(void)
 
 ChangeData :: ChangeData()
 {
+	FirstChange = 0;
 	PendingChanges = 0;
 	LastChange = 0;
 }

@@ -2730,7 +2730,7 @@ The rest of my party were not so lucky. But maybe ... just maybe ... some good o
 
 Deep inside the crypt where the wailer wails, there are two strange braziers of unknown origin. The scholar in our party deduced that a sacrifice may spark their coals, releasing ancient magic to take effect and bind the Wailer to our realm.
 
-Alas, my comrades were destroyed before we could test this theory, by two of the most powerful inhabitants of the crypt ironically, the very two sacrifices we hoped would help us finish our task. Maybe with this information, you will fare better. 
+Alas, my comrades were destroyed before we could test this theory by two of the most powerful inhabitants of the crypt. Ironically by the very two sacrifices we hoped would help us finish our task. Maybe with this information, you will fare better. 
 CompleteText=I knew you could do it, there was a look of determination in your eyes. So my friends' deaths were not in vain, that would be of some comfort to them .. Some ....
 Level=45
 Suggested=46
@@ -2769,7 +2769,7 @@ Act.BodyText=Return to Emaa Wargriver
 Obj.0.type=talk
 Obj.0.data1=
 Obj.0.data2=
-Obj.0.description=Emaa Wargriver
+Obj.0.description=Return to Emaa Wargriver
 Obj.0.complete=0
 Obj.0.myCreatureDefID=7803
 Obj.0.myItemID=

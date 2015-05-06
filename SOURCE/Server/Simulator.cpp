@@ -6055,6 +6055,7 @@ int SimulatorThread :: protected_helper_query_scenery_edit(void)
 		//New prop, give it an ID.
 		newProp = true;
 		prop.ID = g_SceneryVars.BaseSceneryID + g_SceneryVars.SceneryAdditive++;
+		SessionVarsChangeData.AddChange();
 		//LogMessageL(MSG_SHOW, "[DEBUG] scenery.edit: (new) %d", prop.ID);
 	}
 
