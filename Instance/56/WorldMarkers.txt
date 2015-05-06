@@ -1,0 +1,20 @@
+[ENTRY]
+Name=Kyshf
+Comment=[Comment here]
+Position=836.0,600.0,777.0
+
+[ENTRY]
+Name=Alabaster
+Comment=[Comment here]
+Position=3689.0,600.0,1856.0
+
+[ENTRY]
+Name=The Wailer
+Comment=[Comment here]
+Position=2124.0,480.0,2763.0
+
+[ENTRY]
+Name=Entrance
+Comment=[Comment here]
+Position=2126.0,660.0,641.0
+

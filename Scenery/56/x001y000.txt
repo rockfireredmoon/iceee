@@ -2403,6 +2403,7 @@ Pos=3597.23,605.429,1916.16
 Orient=0,0.17903,0,0.983844
 Scale=1,1,1
 spawnPackage=56_wacr_Alabaster
+sequential=1
 
 [ENTRY]
 ID=1104017
@@ -5172,7 +5173,7 @@ spawnPackage=#PCrypt_CoffinB
 [ENTRY]
 ID=1127913
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=3387.73,599.457,973.169
 Orient=0,0.644218,0,0.764842
 Scale=1,1,1

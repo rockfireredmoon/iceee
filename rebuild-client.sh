@@ -20,9 +20,27 @@ unzip -q "${SCRATCH}/archives/Catalogs.zip"
 echo "Generating abilities"
 cp ${base}/Data/AbilityTable.txt .
 wine ${base}/UTILITIES/EEUtilAbilityTable.exe
-echo "Compiling abilities"
-wine ${base}/UTILITIES/sq.exe -o Abilities.cnut -c AbilityTable.nut
-rm AbilityTable.nut
+ls
+popd
+echo "Copying other catalog patches"
+pushd ${base}/SOURCE/CatalogPatches
+find . -name '*.nut' | cpio -updm "${SCRATCH}/content"
+popd
+pushd "${SCRATCH}/content"
+echo "Compiling catalogs"
+find . -name '*.nut'|while read script ; do
+	output=$(basename $script .nut).cnut
+	if [ "${script}" = "./AbilityTable.nut" ] ; then
+		echo "Using Abilities.cnut instead of AbilityTable.cnut"
+		output="./Abilities.cnut"
+	fi
+	echo "Compiling ${script} to ${output}"
+	if ! wine ${base}/UTILITIES/sq.exe -o ${output} -c ${script} ; then
+		echo "$0: Failed to compile ${script}" >&2
+		exit 1
+	else rm ${script}
+	fi
+done
 zip -dg -q -r "${SCRATCH}/archives/Catalogs.zip" *
 popd
 

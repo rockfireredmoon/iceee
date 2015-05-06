@@ -1,0 +1,6 @@
+<?xml version="1.0" ?>
+<Component id="Prop-Crystal_Yellow_Small3" xmlns="http://ee.ironrealms.com/CMS_XML.xsd">
+  <LOD dist="" mesh=""/>
+  <Entity mesh="Prop-Crystal_Yellow_Small3.mesh"/>
+  <Entity mesh="Prop-Crystal_Yellow_Small3-Blocking.mesh" qf="4" vf="2"/>
+</Component>

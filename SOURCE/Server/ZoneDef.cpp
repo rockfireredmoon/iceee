@@ -429,11 +429,9 @@ std::string * ZoneDefInfo :: GetTileEnvironment(int x, int y)
 		etk.y = py;
 		it = mTileEnvironment.find(etk);
 		if(it != mTileEnvironment.end()) {
-			g_Log.AddMessageFormat("Returning tile environment %s for %d/%d (%d/%d)", it->second.c_str(),x,y,px,py);
 			return &it->second;
 		}
 	}
-	g_Log.AddMessageFormat("Returning default environment %s for %d/%d (%d/%d)", mEnvironmentType.c_str(),x,y,px,py);
 	return &mEnvironmentType;
 }
 

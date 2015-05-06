@@ -1,0 +1,9 @@
+; Wailers Essence Chest
+[ENTRY]
+CreatureDefID=7784
+EssenceID=10001   ; The Wailer's Essence
+Item=10002,3  ; Wailing Amulet
+Item=10003,3  ; Wailing Amulet
+Item=10004,3  ; Wailing Amulet
+Item=10005,3  ; Wailing Amulet
+
