@@ -392,8 +392,6 @@ Obj.0.completeText=
 Obj.0.markerLocations=36267,601,67146,81;
 
 
-
-
 [ENTRY]
 Requires=785
 ID=786
@@ -502,135 +500,6 @@ Obj.0.myCreatureDefID=1293
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=58229,801,67155,9;
-
-
-
-[ENTRY]
-Requires=787
-ID=788
-Title=Death's Hollow
-BodyText=Hello friend and welcome to Redeemer's Hall. While our main duties are to stem the tide of the Vampire Palatine Drakul's forces, which have already reached deep into Swineland to the northeast, those of us stationed here have a secondary duty to beastkind. Here, deep in the heart of Grunes Tal, we have long held back the advancing forces of Abidan which have spilled out of the underrealm and laid waste to this entire region.
-
-Grunes Tal was once a thriving mining region that prospered through the ores excavated from the mountains here. Chief among the towns that grew wealthy from the ore was Alpenhold. The iron mines of Alpenhold were said to be among the largest in the region and the city became a famous centre of trade.
-
-Unfortunately, this attracted our old foes the Outcasts which set off a series of conflicts today known simply as 'The Outcast Wars'. For years, the beasts of Grunes Tal staved off the Outcasts to protect their mines and wealth; however, little did they know, a much greater threat would soon cast its shadow upon the land.
-
-It happened in one of the mines in the Iron Hills to the east near Alpenhold itself. As the miners delved ever deeper into the earth seeking that which made their people rich, they eventually broke through into a previously unknown cavern deep underground. Curiosity overcoming caution, the miners began to explore this newly discovered cavern. Finding nothing save that it stretched on and on, they returned to the surface to report what they had discovered.
-
-Unbeknownst to those unfortunate miners, the cavern they had dug into led into the Underrealm itself. Before long, the agents of Abidan began to pour forth out of the mine, quickly surrounding Alpenhold. All efforts to hold them back failed and, soon, the great city of Alpenhold fell to the onslaught of the Legions of Sheol.
-
-The survivors who fled the Undead assault, retreated west to the fertile lands of the Greenfeld, occupied by both Beast and Outcast alike.  A few notable families, unfortunately, were stubborn in their ways and refused to give up on Alpenhold. Among those families was the now-infamous House of Folkirk. The Folkirks, a wealthy noble family, refused to relocate far from Alpenhold and instead headed north, settling on a hill just south of the Junderlund where they built their new home, Folkirk Manor.
-
-For a number of years, the beasts of the Greenfeld struggled between fighting the Undead threat that continued to spread throughout Grunes Tal and the Outcasts who still remained in the region. Unfortunately, it was only a matter of time before the Undead gained enough strength to overcome even the strongest defenses. Around two hundred years past, the Legions of Sheol finally overwhelmed the people living in the Greenfeld and neither Beast nor Outcast got far before falling before the Undead might. Folkirk Manor had been one of the early losses and before long, those that did not flee to the neighboring lands were killed.
-
-In these final days of prosperity, Redeemer's Hall was built by some of our members who had been sent West to aid the people of Grunes Tal and it soon became the final bastion of beast life within Grunes Tal. Even today, we, the Redeemers, have done our utmost to make certain the Legions of Sheol have been unable to fully invade other Beast lands still largely untouched by Abidan's forces. As for the Greenfeld, it has become darkened and is now known as Death's Hollow  -- named so in testament to the many losses incurred there.
-
-Northwest of here lies what was once Greenfeld City. Now called Shadowfield City, it is inhabited by the unliving remains of those who were there when it fell. South of the city there is a series of farms whose undead residents still roam the land. Your task is to open the road by eliminating Taskmaster Glutt. As his name suggests, he is leader of the Farmhands that still tend the farms. Recent intel suggests he has been recently organizing them for a much more sinister purpose and so we want him taken out. Once he is out of the way, the disorganized Farmhands should prove to be easy targets. Return to me with the Taskmaster's Rake as proof of his demise and I will see to it that you are rewarded for your efforts.
-CompleteText=Excellent work! Without Glutt to lead them, those undead farmhands should be more disorganized and easy to pick off. As promised, here is your reward with my thanks.
-Level=42
-Suggested=43
-Exp=3921
-PartySize=1
-NumRewards=0
-Coin=1159
-Unabandon=0
-QuestGiverID=1293
-QuestEnderID=1293
-Repeat=0
-sGiver=58229,801,67155,9
-sEnder=58229,801,67155,9
-[ACT]
-Act.BodyText=Kill Taskmaster Glutt at the Farms south of Shadowfield City.
-Obj.0.type=kill
-Obj.0.data1=1217
-Obj.0.data2=1
-Obj.0.description=Kill Taskmaster Glutt
-Obj.0.complete=0
-Obj.0.myCreatureDefID=
-Obj.0.myItemID=
-Obj.0.completeText=0 of 1
-Obj.0.markerLocations=58795.3,976.883,63127.7,9;
-[ACT]
-Act.BodyText=Return to Shar Zaris.
-Obj.0.type=talk
-Obj.0.data1=0
-Obj.0.data2=0
-Obj.0.description=Return to Shar Zaris
-Obj.0.complete=0
-Obj.0.myCreatureDefID=1293
-Obj.0.myItemID=
-Obj.0.completeText=
-Obj.0.markerLocations=58229,801,67155,9;
-
-
-
-
-
-[ENTRY]
-Requires=788
-ID=789
-Title=General Bodiccea
-BodyText=Now that Glutt is out of the way, we can move on Shadowfield itself. Be warned though, that the city will not be taken so easily. Stationed within the city is a warrior with a tragic story.
-
-General Bodiccea was once a warrior of great reknown and a highly respected beast. Legend has it Bodiccea and her troops were able to hold back the Undead for several years before this region fell to their onslaught. Her last stand was in Greenfeld City, now called Shadowfield, where she and her forces fought to the last beast while the citizens were evacuated. The story goes that after several days of battle, the Undead finally infiltrated the city and slaughtered all who remained, including Bodiccea and her troops. Even in death, Bodiccea was not to be deterred and she continues to guard the Shadowfield to this very day.
-
-While her cause in life was selfless and noble, Bodiccea and her troops now fight mindlessly, forever trapped in bodies long since robbed of life. Your task is to enter Shadowfield City and put to rest Bodiccea and her followers once and for all. Return to me once you have freed the General and her troops from their pain and restored those tragic heroes to Gaia's embrace.
-CompleteText=You have again returned safely! With Shadowfield City removed as a threat, we can now move supplies to and from our allies in Swineland much easier. I truly hope Bodiccea is now at peace, along with those who died with her while defending beastkind in their darkest hour here in Grunes Tal. Thank you for finally putting them to rest at last.
-Level=42
-Suggested=43
-Exp=3921
-PartySize=1
-NumRewards=0
-Coin=1159
-Unabandon=0
-QuestGiverID=1293
-QuestEnderID=1293
-Repeat=0
-sGiver=58229,801,67155,9
-sEnder=58229,801,67155,9
-[ACT]
-Act.BodyText=NEED ACT TEXT
-Obj.0.type=kill
-Obj.0.data1=1213
-Obj.0.data2=8
-Obj.0.description=Kill 8 Bodiccea Bonethralls
-Obj.0.complete=0
-Obj.0.myCreatureDefID=
-Obj.0.myItemID=
-Obj.0.completeText=0 of 8
-Obj.0.markerLocations=58749,976.654,63074.1,9;
-Obj.1.type=kill
-Obj.1.data1=1214
-Obj.1.data2=8
-Obj.1.description=Kill 8 Bodiccea Frostthralls
-Obj.1.complete=0
-Obj.1.myCreatureDefID=
-Obj.1.myItemID=
-Obj.1.completeText=0 of 8
-Obj.1.markerLocations=58749,976.654,63074.1,9;
-Obj.2.type=kill
-Obj.2.data1=1215
-Obj.2.data2=1
-Obj.2.description=Kill General Bodiccea
-Obj.2.complete=0
-Obj.2.myCreatureDefID=
-Obj.2.myItemID=
-Obj.2.completeText=0 of 1
-Obj.2.markerLocations=58749,976.654,63074.1,9;
-[ACT]
-Act.BodyText=Return to Shar Zaris.
-Obj.0.type=talk
-Obj.0.data1=0
-Obj.0.data2=0
-Obj.0.description=Return to Shar Zaris
-Obj.0.complete=0
-Obj.0.myCreatureDefID=1293
-Obj.0.myItemID=
-Obj.0.completeText=
-Obj.0.markerLocations=58229,801,67155,9;
-
-
-
 
 [ENTRY]
 ID=790
@@ -1451,7 +1320,7 @@ Level=42
 Suggested=43
 Exp=7232
 PartySize=1
-NumRewards=1
+NumRewards=0
 Coin=293
 Unabandon=0
 QuestGiverID=1200
@@ -1499,10 +1368,6 @@ Obj.0.myCreatureDefID=1200
 Obj.0.myItemID=
 Obj.0.completeText=Hand over the body parts.
 Obj.0.markerLocations=58436,790,66951,9;
-RewardItem.0=7062,1,0
-RewardItem.1=7063,1,0
-RewardItem.2=7064,1,0
-RewardItem.3=7065,1,0
 
 [ENTRY]
 Requires=831
@@ -1601,6 +1466,7 @@ Obj.0.markerLocations=58044.5,806.452,66701.1,9
 
 [Entry]
 ID=818
+Requires=787
 Title=The Shadowfield
 BodyText=While our main duties are to stem the tide of the Vampire Palatine Drakul's forces which have already reached deep into Swineland to the northeast, those of us stationed here have a secondary duty to beastkind. Here, deep in the heart of Grunes Tal, we have long held back the advancing forces of Abidan which have spilled out of the underrealm and laid waste to this entire region.
 
@@ -1676,6 +1542,7 @@ Obj.0.completeText=
 Obj.0.markerLocations=58221,792.103,67113,9
 
 [Entry]
+Requires=788
 Requires=818
 ID=819
 Title=General Bodiccea
@@ -1802,7 +1669,7 @@ Level=42
 Suggested=43
 Exp=7232
 PartySize=2
-NumRewards=0
+NumRewards=1
 Coin=2093
 Unabandon=0
 QuestGiverID=1200
@@ -1845,6 +1712,10 @@ Obj.0.myCreatureDefID=1200
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=58394.5,789.211,66939.2,9
+RewardItem.0=7062,1,0
+RewardItem.1=7063,1,0
+RewardItem.2=7064,1,0
+RewardItem.3=7065,1,0
 
 [ENTRY]
 ID=822
