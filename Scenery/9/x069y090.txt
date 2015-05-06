@@ -23,7 +23,7 @@ link=151026698,1
 [ENTRY]
 ID=1127931
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=51866.7,698.304,68146.7
 Orient=0,0,0,1
 Scale=1,1,1
@@ -33,7 +33,7 @@ wanderRadius=50
 [ENTRY]
 ID=1127933
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=52286.6,638.55,67526.1
 Orient=0,0,0,1
 Scale=1,1,1

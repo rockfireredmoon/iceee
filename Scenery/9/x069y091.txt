@@ -96,6 +96,26 @@ links_count=1
 link=1125680,1
 
 [ENTRY]
+ID=1128003
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=52101,740.673,68269.7
+Orient=0,0.624897,0,0.780707
+Scale=1,1,1
+spawnPackage=#E1196
+loyaltyRadius=100
+
+[ENTRY]
+ID=1128005
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=52095.7,828.716,68291.1
+Orient=0,0.636537,0,0.771246
+Scale=1,1,1
+spawnPackage=11_irh_fleshScavenger_r_42
+loyaltyRadius=100
+
+[ENTRY]
 ID=151016954
 Asset=Prop-Crypt-Skull_Pile_Large#Prop-Crypt-Skull_Pile_Large
 Name=Untitled
@@ -274,17 +294,6 @@ spawnPackage=11_irh_risenCorpse_r_42
 wanderRadius=45
 
 [ENTRY]
-ID=151026682
-Asset=Manipulator-SpawnPoint
-Name=Untitled
-Pos=52099.6,740.671,68271.3
-Orient=0,0.706825,0,0.707389
-Scale=1,1,1
-spawnPackage=#1196
-links_count=1
-link=151026765,0
-
-[ENTRY]
 ID=151026693
 Asset=Manipulator-SpawnPoint
 Name=Untitled
@@ -292,17 +301,6 @@ Pos=52362.4,677.625,68401
 Orient=0,-0.0449848,0,0.998988
 Scale=1,1,1
 spawnPackage=11_irh_cryptDigger
-
-[ENTRY]
-ID=151026765
-Asset=Manipulator-SpawnPoint
-Name=Untitled
-Pos=52096.4,824.477,68306
-Orient=0,0.576959,0,0.816773
-Scale=1,1,1
-spawnPackage=11_irh_fleshScavenger_r_42
-links_count=1
-link=151026682,0
 
 [ENTRY]
 ID=151028165

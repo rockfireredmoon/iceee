@@ -1,11 +1,10 @@
 [ENTRY]
-ID=151017977
-Asset=CL-Sick-Pine4#CL-Sick-Pine4
-Name=Untitled
+ID=1127959
+Asset=CL-Sick-Pine4
+Name=
 Pos=67711,652.069,58471
 Orient=0,0.356949,0,0.934124
 Scale=3.125,3.125,3.125
-Flags=1
 
 [ENTRY]
 ID=151017978

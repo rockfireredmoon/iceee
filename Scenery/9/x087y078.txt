@@ -17,6 +17,15 @@ Scale=1.55,1.55,1.55
 Flags=1
 
 [ENTRY]
+ID=151017977
+Asset=CL-Sick-Pine4#CL-Sick-Pine4
+Name=Untitled
+Pos=65960.4,633.211,58527.7
+Orient=0,0.356949,0,0.934124
+Scale=3.125,3.125,3.125
+Flags=1
+
+[ENTRY]
 ID=151027593
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled

@@ -103,7 +103,7 @@ Flags=1
 ID=151017604
 Asset=Prop-Burnt_Pines#Prop-Burnt_Pine1
 Name=Untitled
-Pos=64301,1044.1,62833
+Pos=64301,1033.83,62833
 Orient=0,0,0,1
 Scale=1,1,1
 

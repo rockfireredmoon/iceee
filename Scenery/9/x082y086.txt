@@ -23,6 +23,15 @@ Orient=0,0,0,1
 Scale=1,1,1
 
 [ENTRY]
+ID=1127940
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=61859.3,968.782,64994
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#F7796
+
+[ENTRY]
 ID=151040406
 Asset=CL-GrunsBush_4#CL-GrunsBush_4
 Name=Untitled
@@ -52,10 +61,9 @@ Flags=1
 ID=151040655
 Asset=Prop-Campfires#Prop-Campfire_Unlit
 Name=Untitled
-Pos=61910.5,970.698,64903
+Pos=61910.5,965.942,64903
 Orient=0,0,0,1
 Scale=1,1,1
-Flags=1
 
 [ENTRY]
 ID=151040656
@@ -74,12 +82,4 @@ Pos=61858.7,971.45,64996
 Orient=0,-0.862404,0,0.50622
 Scale=1,1,1
 Flags=1
-
-[ENTRY]
-ID=151040658
-Asset=Prop-Battlefield_Skeletons#Prop-Battlefield_Skeleton4
-Name=Untitled
-Pos=61858.1,971.708,64993
-Orient=0,0.452886,0,0.891568
-Scale=1.55,1.55,1.55
 

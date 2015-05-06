@@ -2,7 +2,7 @@
 ID=1084324
 Asset=Prop-Sanctuary_Stone#Prop-Sanctuary_Stone
 Name=Untitled
-Pos=50863.1,739.994,67641
+Pos=50863.1,739.327,67641
 Orient=0,0.989391,0,0.14528
 Scale=1,1,1
 

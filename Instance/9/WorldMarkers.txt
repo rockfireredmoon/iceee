@@ -93,3 +93,8 @@ Name=Grunes side of Bridge
 Comment=[Comment here]
 Position=66634.0,667.0,58258.0
 
+[ENTRY]
+Name=Mushrooms
+Comment=Grunes
+Position=59987.0,595.0,55540.0
+
