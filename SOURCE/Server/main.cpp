@@ -241,6 +241,7 @@ void segfault_sigaction(int signum, siginfo_t *si, void *arg)
 	fprintf(stderr, "Forcing auto save.\n");
 	fflush(stderr);
 	CheckCharacterAutosave(true);
+	SaveSession("SessionVars.txt");
 
 	fprintf(stderr, "Debug::LastAbility: %d\r\n", Debug::LastAbility);
 	fprintf(stderr, "Debug::CreatureDefID: %d\r\n", Debug::CreatureDefID);
@@ -314,6 +315,7 @@ void InstallSignalHandler(void)
 	sigaction(SIGBUS, &sa, NULL);
 	sigaction(SIGABRT, &sa, NULL);
 	sigaction(SIGINT, &sa, NULL);
+	sigaction(SIGTERM, &sa, NULL);
 }
 
 /*
