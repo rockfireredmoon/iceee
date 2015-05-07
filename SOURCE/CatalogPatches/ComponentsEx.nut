@@ -103,6 +103,22 @@ ComponentIndex["Prop-Crystal_Orange_Small2"] <- "Prop-Crystals";
 ComponentIndex["Prop-Crystal_Orange_Small3"] <- "Prop-Crystals";
 ComponentIndex["Prop-Crystal_Orange_Small4"] <- "Prop-Crystals";
 
+ComponentIndex["Prop-Crystal_Red_Huge1"] <- "Prop-Crystals";
+ComponentIndex["Prop-Crystal_Red_Huge2"] <- "Prop-Crystals";
+ComponentIndex["Prop-Crystal_Red_Huge3"] <- "Prop-Crystals";
+ComponentIndex["Prop-Crystal_Red_Med1"] <- "Prop-Crystals";
+ComponentIndex["Prop-Crystal_Red_Med2"] <- "Prop-Crystals";
+ComponentIndex["Prop-Crystal_Red_Med3"] <- "Prop-Crystals";
+ComponentIndex["Prop-Crystal_Red_Med4"] <- "Prop-Crystals";
+ComponentIndex["Prop-Crystal_Red_Med5"] <- "Prop-Crystals";
+ComponentIndex["Prop-Crystal_Red_Pipe1"] <- "Prop-Crystals";
+ComponentIndex["Prop-Crystal_Red_Pipe2"] <- "Prop-Crystals";
+ComponentIndex["Prop-Crystal_Red_Pipe3"] <- "Prop-Crystals";
+ComponentIndex["Prop-Crystal_Red_Small1"] <- "Prop-Crystals";
+ComponentIndex["Prop-Crystal_Red_Small2"] <- "Prop-Crystals";
+ComponentIndex["Prop-Crystal_Red_Small3"] <- "Prop-Crystals";
+ComponentIndex["Prop-Crystal_Red_Small4"] <- "Prop-Crystals";
+
 ComponentIndex["Prop-Crystal_RaisedPurples_Huge1"] <- "Prop-Crystals";
 ComponentIndex["Prop-Crystal_RaisedPurples_Huge2"] <- "Prop-Crystals";
 ComponentIndex["Prop-Crystal_RaisedPurples_Huge3"] <- "Prop-Crystals";
