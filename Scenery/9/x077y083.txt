@@ -9,6 +9,17 @@ spawnPackage=11_dth_shadowfieldCity
 wanderRadius=50
 
 [ENTRY]
+ID=1128118
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=58449.5,1013.84,62767
+Orient=0,-0.366273,0,0.930508
+Scale=1,1,1
+spawnPackage=11_dth_shadowfieldCity
+links_count=1
+link=1128119,1
+
+[ENTRY]
 ID=151016229
 Asset=Bldg-Urban-Medium_Facade2b?ATS=ATS-Undead
 Name=Untitled
@@ -69,7 +80,7 @@ Name=Untitled
 Pos=58047,1028.39,62893
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=11_dth_undeadFarmhand_r_43
+spawnPackage=11_dth_shadowfieldCity
 links_count=1
 link=151027556,1
 

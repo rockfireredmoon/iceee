@@ -26,7 +26,7 @@ Position=52517.0,677.0,68409.0
 [ENTRY]
 Name=Grunes Tal SW Marker
 Comment=[Comment here]
-Position=50817.0,1277.0,70052.0
+Position=29560.0,214.0,65552.0
 
 [ENTRY]
 Name=Grune Marker NW
@@ -97,4 +97,9 @@ Position=66634.0,667.0,58258.0
 Name=Mushrooms
 Comment=Grunes
 Position=59987.0,595.0,55540.0
+
+[ENTRY]
+Name=Redeemers Camp
+Comment=[Comment here]
+Position=58229.0,787.0,66856.0
 
