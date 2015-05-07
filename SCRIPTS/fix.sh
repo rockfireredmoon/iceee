@@ -3,8 +3,8 @@
 # Fix the serializer version so meshes can be converted
 #
 
-cd "$(dirname $0)"/..
-base=$(pwd)
+base=$(dirname $0)/..
+base=$(realpath ${base})
 
 if [ "$1" = "-u" ] ; then 
 	op=UNFIX 
@@ -17,4 +17,4 @@ else
 	exit 2
 fi 
 
-java -classpath ${base}/UTILITIES/icetools.jar org.icetools.modelman.Fixer $*
+java -classpath ${base}/UTILITIES/icetools.jar org.icetools.modelman.Fixer ${op} $*

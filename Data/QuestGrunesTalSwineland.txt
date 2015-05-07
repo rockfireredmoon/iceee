@@ -1672,7 +1672,6 @@ Level=42
 Suggested=43
 Exp=7232
 PartySize=2
-NumRewards=1
 Coin=2093
 Unabandon=0
 QuestGiverID=1200
@@ -1715,10 +1714,6 @@ Obj.0.myCreatureDefID=1200
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=58394.5,789.211,66939.2,9
-RewardItem.0=7062,1,0
-RewardItem.1=7063,1,0
-RewardItem.2=7064,1,0
-RewardItem.3=7065,1,0
 
 [ENTRY]
 ID=822
