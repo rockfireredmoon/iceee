@@ -801,3 +801,23 @@ Item=40120  ;Constitution Potion: Level 30
 Item=40121  ;Constitution Potion: Level 40
 Item=40125  ;Armor Boost Potion: Level 30
 Item=40126  ;Armor Boost Potion: Level 40
+
+; Redeemer Camp (Planetforever / IceEE)
+[ENTRY]
+CreatureDefID=7807
+Item=20522
+Item=20523
+Item=20524
+Item=20525
+Item=20526
+; NEW/ADDED POTIONS
+Item=40114  ;Speed Potion
+Item=40115  ;Greater Speed Potion
+Item=40116  ;Energy Drink
+Item=40117  ;Agility Potion
+Item=40055  ;Basic Health Potion: Level 30
+Item=40056  ;Basic Health Potion: Level 40
+Item=40120  ;Constitution Potion: Level 30
+Item=40121  ;Constitution Potion: Level 40
+Item=40125  ;Armor Boost Potion: Level 30
+Item=40126  ;Armor Boost Potion: Level 40

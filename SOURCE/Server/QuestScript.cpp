@@ -13,6 +13,7 @@ namespace QuestScript
 OpCodeInfo extCoreOpCode[] = {
 	// Implemenation-Specific commands.
 	{ "info",          OP_INFO,         1, {OPT_STR,   OPT_NONE,  OPT_NONE }},
+	{ "uinfo",         OP_UINFO,        1, {OPT_STR,   OPT_NONE,  OPT_NONE }},
 	{ "effect",        OP_EFFECT,       1, {OPT_STR,   OPT_NONE,  OPT_NONE }},
 	{ "wait_finish",   OP_WAITFINISH,   0, {OPT_NONE,  OPT_NONE,  OPT_NONE }},
 	{ "npcunusable",   OP_NPCUNUSABLE,  1, {OPT_INT,   OPT_NONE,  OPT_NONE }},
@@ -63,6 +64,27 @@ void QuestScriptPlayer::RunImplementationCommands(int opcode)
 	switch(instr->opCode)
 	{
 	case OP_INFO:
+		{
+			char Buffer[1024];
+			int size = PrepExt_SendInfoMessage(Buffer, def->stringList[instr->param1].c_str(), INFOMSG_INFO);
+
+			CreatureInstance * cInst = actInst->GetInstanceByCID(sourceID);
+			if(cInst == NULL || cInst->PartyID == 0)
+				// Just sent to player same as OP_INFO
+				simCall->AttemptSend(Buffer, size);
+			else
+			{
+				ActiveParty * party = g_PartyManager.GetPartyByID(cInst->PartyID);
+				if(party == NULL)
+					simCall->AttemptSend(Buffer, size);
+				else
+					for(uint i = 0 ; i < party->mMemberList.size(); i++)
+						party->mMemberList[i].mCreaturePtr->actInst->LSendToOneSimulator(Buffer, size, party->mMemberList[i].mCreaturePtr->simulatorPtr);
+
+			}
+		}
+		break;
+	case OP_UINFO:
 		{
 		char Buffer[1024];
 		int size = PrepExt_SendInfoMessage(Buffer, def->stringList[instr->param1].c_str(), INFOMSG_INFO);

@@ -1542,7 +1542,6 @@ Obj.0.completeText=
 Obj.0.markerLocations=58221,792.103,67113,9
 
 [Entry]
-Requires=788
 Requires=818
 ID=819
 Title=General Bodiccea
@@ -1560,7 +1559,7 @@ Level=43
 Suggested=43
 Exp=7724
 PartySize=1
-NumRewards=0
+NumRewards=1
 Coin=1297
 Unabandon=0
 QuestGiverID=1293
@@ -1610,6 +1609,10 @@ Obj.0.myCreatureDefID=1293
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=58221,792.103,67113,9
+RewardItem.0=10016,1,0
+RewardItem.1=10017,1,0
+RewardItem.2=10018,1,0
+RewardItem.3=10019,1,0
 
 [ENTRY]
 ID=820
@@ -2070,7 +2073,7 @@ Obj.0.markerLocations=57964.9,809.567,66777.6,9
 [Entry]
 Requires=829
 ID=830
-Title= Bahmut the Red Nosed Wrath Stag
+Title=Bahmut the Red Nosed Wrath Stag
 BodyText=Thank you again for helping with the Wrath Stags I just wish my idea would have worked.  You were right about Bahmut, he's an Alpha Wrath Stag as long as he's around the Wrath Stags will stay put and remain a threat to us while we try to restore order in Grunes Tal.  You don't owe me anything you've helped us so much but if you can find it in yourself to travel back and eliminate Bahmut.  You could be saving dozens of potential lives!
 CompleteText= You did it! My reports have said that the Wrath Stags have become a bit more timid and aren't showing as much aggression now that you cut the head off the snake.  I can't thank you enough! I know it's not much but here take this coin and take this too it was my fathers, but I want you to have it.
 Level=44
@@ -2107,10 +2110,10 @@ Obj.0.myCreatureDefID=1197
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=57964.9,809.567,66777.6,9
-RewardItem.0=7062,1,0
-RewardItem.1=7063,1,0
-RewardItem.2=7064,1,0
-RewardItem.3=7065,1,0
+RewardItem.0=10020,1,0
+RewardItem.1=10021,1,0
+RewardItem.2=10022,1,0
+RewardItem.3=10023,1,0
 
 [ENTRY]
 ID=831

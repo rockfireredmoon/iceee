@@ -1090,3 +1090,20 @@ profession=1
 creature_category=Inanimate
 rarity=1
 ai_package=nothing
+
+[ENTRY]
+defHints=2
+ID=7807
+will_regen=1
+might_regen=1
+appearance=c2:{["h"]=2,["c"]={["boots"]={["type"]="Armor-Cloth-Low4",["colors"]=["947b94","aaaaaa","d4d4d4","aaa954","555555"]},["chest"]={["type"]="Armor-Cloth-Low4",["colors"]=["947b94","aa6c6c","d4d4d4","d4d48c","e9e9e9"]},["arms"]={["type"]="Armor-Cloth-Low4",["colors"]=["947b94","aa6c6c","d4d4d4","6a586a","6a6a58"]},["leggings"]={["type"]="Armor-Cloth-Low4",["colors"]=["947b94","aa6c6c","d4d4d4","6a6a6a","3f3f3f"]},["collar"]={["type"]="Armor-Light-Low5",["colors"]=["947b94","aa6c6c","afd4b1","aaa954","465547","eddfd2","6e4f23","5d5b57"]},["belt"]={["type"]="Armor-Cloth-High3",["colors"]=["947b94","aa6c6c","d4d4d4","aaa954","555555","d4d4d4"]},["gloves"]={["type"]="Armor-Heavy-High2",["colors"]=["947b94","aa6c6c","555555","aaa954","7f7f7f","eddfd2","576a58","47553c"]}},["b"]="m",["sk"]={["hair"]="8F735E",["hands_feet"]="8F735E",["inner_ear"]="9F9984",["snout"]="8E8976",["base"]="576D7F",["eye_white"]="E2D8BD",["eye"]="BE4E4B",["shoulders"]="8E8976",["nails"]="473224",["eye_lid"]="B87F53"},["r"]="c",["g"]="f",["sz"]="1"}
+level=45
+display_name=Marie Hoffstaader
+sub_name=General Merchant
+profession=1
+creature_category=Mortal
+rarity=2
+ai_package=example
+total_size=9
+
+

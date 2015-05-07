@@ -100,7 +100,7 @@ public:
 	std::vector<int> craftItemDefId;   //needs to be variable depending on <numberOfItems>
 
 	//if(g_ProtocolVersion >= 9)
-	string mFlavorText;
+	std::string mFlavorText;
 
 	//if(g_ProtocolVersion >= 18)
 	char mSpecialItemType;

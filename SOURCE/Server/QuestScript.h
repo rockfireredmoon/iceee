@@ -17,7 +17,8 @@ enum QuestScriptExtOpCodes
 	OP_NOP = OP_MAXCOREOPCODE,  //The first instruction must begin where the default ScriptCore opcodes leave off.
 
 	// Implemenation-Specific commands.
-	OP_INFO,		  //info <text>
+	OP_INFO,		  //info <text> (like uinfo but sends to whole party)
+	OP_UINFO,		  //uinfo <text> (like info, but only send to the player, not whole party)
 	OP_EFFECT,        //Plays an effect for the target object.
 	OP_WAITFINISH,    //Waits for the script "Finished" flag to be true.
 	OP_NPCUNUSABLE,   //Disables creature usability for the target creature linked to this script.

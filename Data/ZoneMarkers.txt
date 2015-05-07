@@ -233,3 +233,11 @@ Sanctuary=2712.59,313.264,4761.07,Heathendel's Arena
 [ENTRY]
 ZoneID=112
 Sanctuary=5603.66,18.3835,2583.26,Shadow Void
+
+[ENTRY]
+ZoneID=56
+Sanctuary=2188.64,670,584.545,Wailing Crypt
+
+[ENTRY]
+ZoneID=75
+Sanctuary=1528.67,507,8096.74,Folkirk Manor
