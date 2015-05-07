@@ -386,7 +386,7 @@ mArmorResistDeath=54
 mID=10023
 mType=3
 mDisplayName=Darkened Leather Sash
-mAppearance=[{["c"]={["type"]="Armor-Cloth-Epic1",["colors"]=["151515","5f534e","9c8c94","d2ffd5","e9e800","151515"]}},null]
+smAppearance=[{["c"]={["type"]="Armor-Cloth-Epic1",["colors"]=["151515","5f534e","9c8c94","d2ffd5","e9e800","151515"]}},null]
 mIcon=Icon-32-Armor-Belts01.png|Icon-32-BG-Blue.png
 mLevel=43
 mValue=2657
@@ -402,3 +402,68 @@ mArmorResistFire=54
 mArmorResistFrost=54
 mArmorResistMystic=54
 mArmorResistDeath=54
+
+[ENTRY]
+mID=10024
+mType=3
+mDisplayName=Returning Spirits Vestment
+mAppearance=[{["c"]={["type"]="Armor-Cloth-High3",["colors"]=["151515","2a2a2a","000000","550054","ffffff","ffffff"]}},null]
+mIcon=Icon-32-H_Armor-Chest01.png|Icon-32-BG-Blue.png
+mLevel=43
+mValue=5203
+mMinUseLevel=43
+mQualityLevel=3
+mEquipType=11
+mBindingType=2
+mBonusSpirit=20
+mArmorType=1
+mArmorResistMelee=139
+
+[ENTRY]
+mID=10025
+mType=3
+mDisplayName=Returning Spirits Jerkin
+mAppearance=[{["c"]={["type"]="Armor-Medium-High3",["colors"]=["151515","2a2a2a","000000","550054","ffffff","ffffff"]}},null]
+mIcon=Icon-32-H_Armor-Chest01.png|Icon-32-BG-Blue.png
+mLevel=43
+mValue=5203
+mMinUseLevel=43
+mQualityLevel=3
+mEquipType=11
+mBindingType=2
+mBonusPsyche=20
+mArmorType=1
+mArmorResistMelee=139
+
+[ENTRY]
+mID=10026
+mType=3
+mDisplayName=Returning Spirits Chestguard
+mAppearance=[{["c"]={["type"]="Armor-Heavy-Mid2",["colors"]=["2a2a2a","2a002a","2a002a"]}},null]
+mIcon=Icon-32-H_Armor-Chest01.png|Icon-32-BG-Blue.png
+mLevel=43
+mValue=5203
+mMinUseLevel=43
+mQualityLevel=3
+mEquipType=11
+mBindingType=2
+mBonusStrength=20
+mArmorType=1
+mArmorResistMelee=139
+
+[ENTRY]
+mID=10027
+mType=3
+mDisplayName=Returning Spirits Jacket
+mAppearance=[{["c"]={["type"]="Armor-Light-High2",["colors"]=["2a2a2a","2a002a","2a002a","493c37","151515"]}},null]
+mIcon=Icon-32-H_Armor-Chest01.png|Icon-32-BG-Blue.png
+mLevel=43
+mValue=5203
+mMinUseLevel=43
+mQualityLevel=3
+mEquipType=11
+mBindingType=2
+mBonusDexterity=20
+mArmorType=1
+mArmorResistMelee=139
+
