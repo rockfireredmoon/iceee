@@ -14,6 +14,7 @@ ComponentIndex["Prop-Painting2"] <- "Prop-ModAddons1";
 ComponentIndex["Prop-Painting2a"] <- "Prop-ModAddons1";
 ComponentIndex["Prop-Painting3a"] <- "Prop-ModAddons1";
 ComponentIndex["Prop-Rug_Teal"] <- "Prop-ModAddons1";
+ComponentIndex["Item-IceEEBeta_Flag"] <- "Item-IceEEBeta_Flag";
 
 ComponentIndex["CL-LitCandle1"] <- "Prop-ModAddons1";
 ComponentIndex["CL-LitCandle2"] <- "Prop-ModAddons1";

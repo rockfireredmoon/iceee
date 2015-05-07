@@ -1169,6 +1169,7 @@ DefID	Explicit	PackageList	Name
 1431	0	essence_cazadortunnel_thothmes	;General Thothmes
 1841	0	essence_coldstormcavern_cyclona	;Stormwitch Cyclona
 975	0	essence_darkdepths_vitiator	;Aram Norr
+1261	0	essence_folkirkmanor_fathergrundy	;Father Grundy 
 940	0	essence_direwolfden_foulfur	;Foul Fur
 711	0	essence_djinntemple_lordafrott	;Lord A'Frott
 2756	0	essence_fangarianslair_grimfrost	;Grimfrost

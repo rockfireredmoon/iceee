@@ -1064,3 +1064,29 @@ sub_name=The Wailing Crypt
 profession=1
 creature_category=Inanimate
 ai_package=nothing
+
+[ENTRY]
+defHints=8
+ID=7805
+will_regen=1
+might_regen=1
+appearance=p1:{["a"]="Prop-Loot-Boss_Chest1"}
+level=1
+display_name=Dungeon Loot
+sub_name=Folkirk Manor
+profession=1
+creature_category=Inanimate
+ai_package=nothing
+
+[ENTRY]
+defHints=8
+ID=7806
+will_regen=1
+might_regen=1
+appearance=p1:{["a"]="Prop-Loot-Boss_Chest1"}
+level=1
+display_name=Father Grundy's Treasure
+profession=1
+creature_category=Inanimate
+rarity=1
+ai_package=nothing

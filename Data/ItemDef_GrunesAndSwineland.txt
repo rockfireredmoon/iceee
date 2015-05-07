@@ -219,3 +219,18 @@ mIvMax1=828
 mSv1=A Hot Bowl of Soup
 mValue=1
 mQualityLevel=1
+
+[ENTRY]
+mID=10015
+mType=7
+mDisplayName=Father Grundy's Essence
+mIcon=Icon-Icon-32-Wall_Torch1.png|Icon-32-BG-Green.png
+mIvType1=1
+mIvMax1=20
+mIvType2=8
+mIvMax2=1
+mLevel=1
+mBindingType=1
+mValue=1
+mQualityLevel=2
+mMinUseLevel=1

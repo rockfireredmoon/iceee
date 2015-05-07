@@ -166,6 +166,7 @@ ComponentIndex["Prop-Crystal_Yellow_Small1"] <- "Prop-Crystals";
 ComponentIndex["Prop-Crystal_Yellow_Small2"] <- "Prop-Crystals";
 ComponentIndex["Prop-Crystal_Yellow_Small3"] <- "Prop-Crystals";
 ComponentIndex["Prop-Crystal_Yellow_Small4"] <- "Prop-Crystals";
+
 /* 0.8.8+ */
 
 /*  Bldg-Hall_Of_Bones1 doesn't seem to work in 0.8.6.

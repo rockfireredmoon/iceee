@@ -134,6 +134,7 @@ essence_cazadortunnel_thothmes	0	100	20771		 Thothmes' Essence
 essence_coldstormcavern_cyclona	0	100	20875		 Cyclona's Essence
 essence_darkdepths_vitiator	0	100	20532		 Vitiator's Essence
 essence_direwolfden_foulfur	0	100	20778		 Foul Fur's Essence
+essence_folkirkmanor_fathergrundy	0	300	10015		 Father Grundys Essence
 essence_djinntemple_lordafrott	0	100	20769		 Lord A'Frott's Essence
 essence_fangarianslair_grimfrost	0	110	21299		 Grimfrost's Essence
 essence_forestcavern_frietzsplithoof	0	100	21285		 Frietz Splithoof's Essence

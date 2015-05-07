@@ -74,7 +74,10 @@ set CID_CRUELLA_REINFORCE 0
 	exec_queue
 	wait 100
 	goto main
-
+	
+:onKill_1261
+    spawn 1500000
+    return
 
 :findInResultArray
 	pop TEMPCDEF
