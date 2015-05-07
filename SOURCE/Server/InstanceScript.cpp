@@ -145,6 +145,7 @@ void InstanceNutPlayer::RegisterDerivedFunctions()
 	instance.Func(_SC("healthPercent"), &InstanceNutPlayer::GetHealthPercent);
 	instance.Func(_SC("orderWalk"), &InstanceNutPlayer::OrderWalk);
 	instance.Func(_SC("chat"), &InstanceNutPlayer::Chat);
+	instance.Func(_SC("creatureChat"), &InstanceNutPlayer::CreatureChat);
 	instance.Func(_SC("despawn"), &InstanceNutPlayer::Despawn);
 	instance.Func(_SC("despawnAll"), &InstanceNutPlayer::DespawnAll);
 	instance.Func(_SC("particleAttach"), &InstanceNutPlayer::ParticleAttach);
@@ -222,6 +223,14 @@ void InstanceNutPlayer::Chat(const char *name, const char *channel, const char *
 	char buffer[4096];
 	int wpos = PrepExt_GenericChatMessage(buffer, 0, name, channel, message);
 	actInst->LSendToAllSimulator(buffer, wpos, -1);
+}
+void InstanceNutPlayer::CreatureChat(int CID, const char *channel, const char *message) {
+	char buffer[4096];
+	CreatureInstance *ci = GetNPCPtr(CID);
+	if(ci != NULL)
+		actInst->LSendToAllSimulator(buffer, PrepExt_GenericChatMessage(buffer, CID, ci->css.display_name, channel, message), -1);
+	else
+		g_Log.AddMessageFormat("Could not find creature with ID %d in this instance to communicate.", CID);
 }
 
 void InstanceNutPlayer::OrderWalk(int CID, float destX, float destY, int speed, int range) {

@@ -52,6 +52,7 @@ public:
 	int ParticleAttach(int propID, const char *effect, float scale, float offsetX, float offsetY, float offsetZ);
 	std::vector<int> GetAllCIDForCDefID(int CDefID);
 	void Chat(const char *name, const char *channel, const char *message);
+	void CreatureChat(int cid, const char *channel, const char *message);
 	int CDefIDForCID(int cid);
 	bool Despawn(int CID);
 	int DespawnAll(int CDefID);
