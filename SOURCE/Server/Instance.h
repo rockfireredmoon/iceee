@@ -320,7 +320,7 @@ public:
 	static int ActivateAbility(CreatureInstance *cInst, short ability, int ActionType, ActiveAbilityInfo *abInfo);
 	CreatureInstance * GetInstanceByCID(int CID);
 	CreatureInstance * GetNPCInstanceByCID(int CID);
-	void GetNPCInstancesByCDefID(int CDefID, vector<int> cids);
+	void GetNPCInstancesByCDefID(int CDefID, vector<int> *cids);
 	CreatureInstance * GetNPCInstanceByCDefID(int CDefID);
 	void ResolveCreatureDef(int CreatureInstanceID, int *responsePtr);
 
@@ -390,7 +390,7 @@ public:
 	void SetAllPlayerPVPStatus(int x, int z, int range, bool state);
 	void NotifyKill(int mobRarity);
 
-	void Script_ScanNPCCID(InstanceLocation *location, std::vector<int>& destResult);
+	void Script_ScanNPCCID(ScriptObjects::InstanceLocation *location, std::vector<int>& destResult);
 };
 
 class ActiveInstanceManager

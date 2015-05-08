@@ -4,6 +4,7 @@
 #include <string.h>
 #include "StringList.h"
 #include "Simulator.h"
+#include "Util.h"
 #include <sqrat.h>
 
 extern unsigned long g_ServerTime;
@@ -133,7 +134,10 @@ namespace ScriptCore
 			mHasScript = true;
 			g_Log.AddMessageFormat("Squirrel script  %s processed", def->mSourceFile);
 			active = true;
-
+		}
+		else
+		{
+			active = false;
 		}
 
 		sq_pop(vm, 1); //pops the root table
@@ -158,6 +162,11 @@ namespace ScriptCore
 		core.Func(_SC("queue"), &NutPlayer::Queue);
 		core.Func(_SC("broadcast"), &NutPlayer::Broadcast);
 		core.Func(_SC("halt"), &NutPlayer::Halt);
+		core.Func(_SC("rand"), &NutPlayer::Rand);
+		core.Func(_SC("randint"), &NutPlayer::RandInt);
+		core.Func(_SC("randmod"), &NutPlayer::RandMod);
+		core.Func(_SC("randmodrng"), &NutPlayer::RandModRng);
+		core.Func(_SC("randdbl"), &NutPlayer::RandDbl);
 
 		Sqrat::RootTable().SetInstance(_SC("core"), this);
 		RegisterDerivedFunctions();
@@ -187,6 +196,26 @@ namespace ScriptCore
 			ExecQueue();
 		}
 		return true;
+	}
+
+	int NutPlayer::Rand(int max) {
+		return randint(1, max);
+	}
+
+	int NutPlayer::RandInt(int min, int max) {
+		return randint(min, max);
+	}
+
+	int NutPlayer::RandMod(int max) {
+		return randmod(max);
+	}
+
+	int NutPlayer::RandModRng(int min, int max) {
+		return randmodrng(min, max);
+	}
+
+	int NutPlayer::RandDbl(double min, double max) {
+		return randdbl(min, max);
 	}
 
 	void NutPlayer::Halt(void) {
@@ -268,6 +297,14 @@ namespace ScriptCore
 	{
 		for(size_t i = 0; i < queue.size(); i++)
 		{
+			if(queue[i].mCondition != NULL && queue[i].mCondition->Execute()) {
+				vector<ScriptParam> p;
+				if(RunFunction(queue[i].mLabel.c_str(), p)) {
+					queue.erase(queue.begin() + i);
+				}
+				return true;
+			}
+
 			if(g_ServerTime >= queue[i].mFireTime)
 			{
 				vector<ScriptParam> p;
@@ -1920,10 +1957,25 @@ void IntArray::DebugPrintContents(void)
 	PrintMessage("IntArray[%s]=%s", name.c_str(), str.c_str());
 }
 
+ScriptEvent::ScriptEvent()
+{
+	mLabel = "";
+	mFireTime = 0;
+	mCondition = NULL;
+}
+
+ScriptEvent::ScriptEvent(const char *label, cCallback *condition)
+{
+	mLabel = label;
+	mFireTime = 0;
+	mCondition = condition;
+}
+
 ScriptEvent::ScriptEvent(const char *label, unsigned long fireTime)
 {
 	mLabel = label;
 	mFireTime = fireTime;
+	mCondition = NULL;
 }
 
 //namespace ScriptCore

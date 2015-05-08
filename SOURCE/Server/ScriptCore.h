@@ -9,6 +9,7 @@
 #include <sqstdio.h>
 #include <sqstdaux.h>
 #include <sqstdstring.h>
+#include "Callback.h"
 
 void PrintFunc(HSQUIRRELVM v, const SQChar *s, ...);
 void Errorfunc(HSQUIRRELVM v, const SQChar *s, ...);
@@ -144,6 +145,9 @@ class ScriptEvent {
 public:
 	std::string mLabel;              //Label to jump to.
 	unsigned long mFireTime;         //Time to fire this event.
+	cCallback *mCondition; //Condition callback
+	ScriptEvent();
+	ScriptEvent(const char *label, cCallback *condition);
 	ScriptEvent(const char *label, unsigned long fireTime);
 };
 
@@ -418,6 +422,12 @@ public:
 	void Broadcast(const char *message);
 	void Queue(const char *labelName, int fireDelay);
 	bool ExecQueue(void);
+	int Rand(int max);
+	int RandInt(int min, int max);
+	int RandMod(int max);
+	int RandModRng(int min, int max);
+	int RandDbl(double min, double max);
+
 
 protected:
 	static const size_t MAX_QUEUE_SIZE = 16;

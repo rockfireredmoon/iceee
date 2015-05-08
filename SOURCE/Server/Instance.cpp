@@ -1637,11 +1637,11 @@ CreatureInstance * ActiveInstance :: GetNPCInstanceByCDefID(int CDefID)
 	return NULL;
 }
 
-void ActiveInstance :: GetNPCInstancesByCDefID(int CDefID, vector<int> cids)
+void ActiveInstance :: GetNPCInstancesByCDefID(int CDefID, vector<int> *cids)
 {
 	for(size_t i = 0; i < NPCListPtr.size(); i++)
 		if(NPCListPtr[i]->CreatureDefID == CDefID)
-			cids.push_back(NPCListPtr[i]->CreatureID);
+			cids->push_back(NPCListPtr[i]->CreatureID);
 }
 
 void ActiveInstance :: ResolveCreatureDef(int CreatureInstanceID, int *responsePtr)

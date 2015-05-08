@@ -125,8 +125,19 @@ void InstanceNutPlayer::RegisterDerivedFunctions()
 {
 	Sqrat::DefaultVM::Set(vm);
 
-	Sqrat::Class<InstanceLocation> instanceLocation;
+	// Instance Location Object, X1/Z1,X2/Z2 location defining a rectangle
+	Sqrat::Class<ScriptObjects::InstanceLocation> instanceLocation;
 	Sqrat::RootTable().Bind(_SC("InstanceLocation"), instanceLocation);
+	instanceLocation.Var("x1", &ScriptObjects::InstanceLocation::mX1);
+	instanceLocation.Var("x2", &ScriptObjects::InstanceLocation::mX2);
+	instanceLocation.Var("y1", &ScriptObjects::InstanceLocation::mY1);
+	instanceLocation.Var("y2", &ScriptObjects::InstanceLocation::mY2);
+
+	// Point Object, X/Z location
+	Sqrat::Class<ScriptObjects::Point> point;
+	Sqrat::RootTable().Bind(_SC("Point"), point);
+	point.Var("x", &ScriptObjects::Point::mX);
+	point.Var("z", &ScriptObjects::Point::mZ);
 
 	Sqrat::Class<InstanceNutPlayer> instance;
 	Sqrat::RootTable().Bind(_SC("Instance"), instance);
@@ -136,7 +147,6 @@ void InstanceNutPlayer::RegisterDerivedFunctions()
 	instance.Func(_SC("spawn"), &InstanceNutPlayer::Spawn);
 	instance.Func(_SC("spawnAt"), &InstanceNutPlayer::SpawnAt);
 	instance.Func(_SC("cdef"), &InstanceNutPlayer::CDefIDForCID);
-	instance.Func(_SC("cids"), &InstanceNutPlayer::GetAllCIDForCDefID);
 	instance.Func(_SC("scanForNPCByCDefID"), &InstanceNutPlayer::ScanForNPCByCDefID);
 	instance.Func(_SC("getTarget"), &InstanceNutPlayer::GetTarget);
 	instance.Func(_SC("setTarget"), &InstanceNutPlayer::SetTarget);
@@ -151,6 +161,10 @@ void InstanceNutPlayer::RegisterDerivedFunctions()
 	instance.Func(_SC("particleAttach"), &InstanceNutPlayer::ParticleAttach);
 	instance.Func(_SC("particleDetach"), &InstanceNutPlayer::DetachSceneryEffect);
 	instance.Func(_SC("asset"), &InstanceNutPlayer::Asset);
+	instance.Func(_SC("emote"), &InstanceNutPlayer::Emote);
+
+	// Functions that return arrays or tables have to be dealt with differently
+	instance.SquirrelFunc(_SC("cids"), &InstanceNutPlayer::CIDs);
 
 	Sqrat::RootTable().SetInstance(_SC("inst"), this);
 }
@@ -224,6 +238,16 @@ void InstanceNutPlayer::Chat(const char *name, const char *channel, const char *
 	int wpos = PrepExt_GenericChatMessage(buffer, 0, name, channel, message);
 	actInst->LSendToAllSimulator(buffer, wpos, -1);
 }
+
+void InstanceNutPlayer::Emote(int CID, const char *emotion) {
+	char buffer[4096];
+	CreatureInstance *ci = GetNPCPtr(CID);
+	if(ci != NULL)
+		actInst->LSendToAllSimulator(buffer, PrepExt_GenericChatMessage(buffer, CID, ci->css.display_name, "emote", emotion), -1);
+	else
+		g_Log.AddMessageFormat("Could not find creature with ID %d in this instance to emote.", CID);
+}
+
 void InstanceNutPlayer::CreatureChat(int CID, const char *channel, const char *message) {
 	char buffer[4096];
 	CreatureInstance *ci = GetNPCPtr(CID);
@@ -233,7 +257,7 @@ void InstanceNutPlayer::CreatureChat(int CID, const char *channel, const char *m
 		g_Log.AddMessageFormat("Could not find creature with ID %d in this instance to communicate.", CID);
 }
 
-void InstanceNutPlayer::OrderWalk(int CID, float destX, float destY, int speed, int range) {
+void InstanceNutPlayer::OrderWalk(int CID, ScriptObjects::Point point, int speed, int range, const char *labelName) {
 
 	CreatureInstance *ci = GetNPCPtr(CID);
 	if(ci)
@@ -241,19 +265,19 @@ void InstanceNutPlayer::OrderWalk(int CID, float destX, float destY, int speed, 
 		ci->SetServerFlag(ServerFlags::ScriptMovement, true);
 		ci->previousPathNode = 0;   //Disable any path links.
 		ci->nextPathNode = 0;
-		ci->tetherNodeX = destX;
-		ci->tetherNodeZ = destY;
-		ci->CurrentTarget.DesLocX = destX;
-		ci->CurrentTarget.DesLocZ = destY;
+		ci->tetherNodeX = point.mX;
+		ci->tetherNodeZ = point.mZ;
+		ci->CurrentTarget.DesLocX = point.mX;
+		ci->CurrentTarget.DesLocZ = point.mX;
 		ci->CurrentTarget.desiredRange = range;
 		ci->Speed = speed;
-	}
-}
 
-vector<int> InstanceNutPlayer::GetAllCIDForCDefID(int CDefID) {
-	vector<int> v;
-	actInst->GetNPCInstancesByCDefID(CDefID, v);
-	return v;
+		if(labelName != NULL) {
+			OrderWalkScriptCondition sc = OrderWalkScriptCondition(ci);
+			ScriptCore::ScriptEvent evt = ScriptCore::ScriptEvent(labelName, &sc.cb);
+			queue.push_back(evt);
+		}
+	}
 }
 
 bool InstanceNutPlayer::Despawn(int CID)
@@ -333,7 +357,7 @@ bool InstanceNutPlayer::SetTarget(int CDefID, int targetCDefID)
 	return false;
 }
 
-vector<int> InstanceNutPlayer::ScanForNPCByCDefID(InstanceLocation *location, int CDefID) {
+vector<int> InstanceNutPlayer::ScanForNPCByCDefID(ScriptObjects::InstanceLocation *location, int CDefID) {
 	vector<int> v;
 	v.clear();
 	if(actInst == NULL || location == NULL)
@@ -402,6 +426,45 @@ CreatureInstance* InstanceNutPlayer::GetNPCPtr(int CID)
 	return actInst->GetNPCInstanceByCID(CID);
 }
 
+
+SQInteger InstanceNutPlayer::CIDs(HSQUIRRELVM v)
+{
+    if (sq_gettop(v) == 2) {
+        Sqrat::Var<InstanceNutPlayer&> left(v, 1);
+        if (!Sqrat::Error::Instance().Occurred(v)) {
+            Sqrat::Var<int> right(v, 2);
+        	std::vector<int> vv;
+        	left.value.actInst->GetNPCInstancesByCDefID(right.value, &vv);
+            sq_newarray(v, vv.size());
+            for (std::size_t i = 0; i < vv.size(); ++i) {
+                Sqrat::PushVar(v, i);
+                Sqrat::PushVar(v, vv[i]);
+                sq_rawset(v, -3);
+            }
+            return 1;
+        }
+        return sq_throwerror(v, Sqrat::Error::Instance().Message(v).c_str());
+    }
+    return sq_throwerror(v, _SC("wrong number of parameters"));
+}
+
+OrderWalkScriptCondition::OrderWalkScriptCondition(CreatureInstance *creatureInstance)
+{
+	cb.SetCallback(this, &OrderWalkScriptCondition::Execute);
+	cInst = creatureInstance;
+}
+
+bool OrderWalkScriptCondition::Execute()
+{
+	if(cInst->CurrentTarget.DesLocX == 0 &&
+	   cInst->CurrentTarget.DesLocZ == 0 &&
+	   cInst->CurrentTarget.desiredRange == 0) {
+		return true;
+	}
+	return false;
+}
+
+
 //
 //
 //
@@ -420,7 +483,7 @@ void InstanceScriptDef :: SetMetaDataDerived(const char *opname, ScriptCore::Scr
 		//#location name x1 y1 x2 y2
 		if(compileData.ExpectTokens(6, "#location", "str:name int:x1 int:z1 int:x2 int:z2") == true)
 		{
-			InstanceLocation &loc = mLocationDef[tokens[1]];
+			ScriptObjects::InstanceLocation &loc = mLocationDef[tokens[1]];
 			loc.mX1 = Util::GetInteger(tokens, 2);
 			loc.mY1 = Util::GetInteger(tokens, 3);
 			loc.mX2 = Util::GetInteger(tokens, 4);
@@ -431,7 +494,7 @@ void InstanceScriptDef :: SetMetaDataDerived(const char *opname, ScriptCore::Scr
 	{
 		if(compileData.ExpectTokens(5, "location_br", "str:name int:x int:z int:radius") == true)
 		{
-			InstanceLocation &loc = mLocationDef[tokens[1]];
+			ScriptObjects::InstanceLocation &loc = mLocationDef[tokens[1]];
 			int x = Util::GetInteger(tokens, 2);
 			int y = Util::GetInteger(tokens, 3);
 			int r = Util::GetInteger(tokens, 4);
@@ -471,9 +534,9 @@ bool InstanceScriptDef::HandleAdvancedCommand(const char *commandToken, ScriptCo
 	return retVal;
 }
 
-InstanceLocation* InstanceScriptDef::GetLocationByName(const char *location)
+ScriptObjects::InstanceLocation* InstanceScriptDef::GetLocationByName(const char *location)
 {
-	std::map<std::string, InstanceLocation>::iterator it;
+	std::map<std::string, ScriptObjects::InstanceLocation>::iterator it;
 	it = mLocationDef.find(location);
 	if(it == mLocationDef.end())
 		return NULL;
@@ -593,7 +656,7 @@ void InstanceScriptPlayer::RunImplementationCommands(int opcode)
 
 	case OP_SCAN_NPC_CID:
 		{
-			InstanceLocation *loc = GetLocationByName(GetStringPtr(instr->param1));
+			ScriptObjects::InstanceLocation *loc = GetLocationByName(GetStringPtr(instr->param1));
 			int index = VerifyIntArrayIndex(instr->param2);
 			if(index >= 0)
 				ScanNPCCID(loc, intArray[index].arrayData);
@@ -601,7 +664,7 @@ void InstanceScriptPlayer::RunImplementationCommands(int opcode)
 		break;
 	case OP_SCAN_NPC_CID_FOR:
 		{
-			InstanceLocation *loc = GetLocationByName(GetStringPtr(instr->param1));
+			ScriptObjects::InstanceLocation *loc = GetLocationByName(GetStringPtr(instr->param1));
 			int index = VerifyIntArrayIndex(instr->param2);
 			if(index >= 0)
 				ScanNPCCIDFor(loc, instr->param3, intArray[index].arrayData);
@@ -704,7 +767,7 @@ void InstanceScriptPlayer::SetInstancePointer(ActiveInstance *parent)
 	actInst = parent;
 }
 
-InstanceLocation* InstanceScriptPlayer::GetLocationByName(const char *name)
+ScriptObjects::InstanceLocation* InstanceScriptPlayer::GetLocationByName(const char *name)
 {
 	if(name == NULL)
 		return NULL;
@@ -712,7 +775,7 @@ InstanceLocation* InstanceScriptPlayer::GetLocationByName(const char *name)
 	return thisDef->GetLocationByName(name);
 }
 
-void InstanceScriptPlayer::ScanNPCCIDFor(InstanceLocation *location, int CDefID, std::vector<int>& destResult)
+void InstanceScriptPlayer::ScanNPCCIDFor(ScriptObjects::InstanceLocation *location, int CDefID, std::vector<int>& destResult)
 {
 	destResult.clear();
 	if(actInst == NULL || location == NULL)
@@ -734,7 +797,7 @@ void InstanceScriptPlayer::ScanNPCCIDFor(InstanceLocation *location, int CDefID,
 	}
 }
 
-void InstanceScriptPlayer::ScanNPCCID(InstanceLocation *location, std::vector<int>& destResult)
+void InstanceScriptPlayer::ScanNPCCID(ScriptObjects::InstanceLocation *location, std::vector<int>& destResult)
 {
 	destResult.clear();
 	if(actInst == NULL || location == NULL)
