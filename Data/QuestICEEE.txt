@@ -105,9 +105,9 @@ Beta Beast Box.
 
 We hope you stick around, there will be a reward at the end for your hard work.   
 CompleteText=Oh, didn't I say? You have to use the keys on that chest next to me. Only take one item at a time, or bad things will happen!
-Level=43
-Suggested=43
-Exp=8042
+Level=1
+Suggested=1
+Exp=0
 PartySize=1
 NumRewards=0
 Coin=1000000
