@@ -1106,4 +1106,16 @@ rarity=2
 ai_package=example
 total_size=9
 
+[ENTRY]
+defHints=8
+ID=7808
+will_regen=1
+might_regen=1
+appearance=p1:{["a"]="Prop-Loot-Boss_Chest1"}
+level=1
+display_name=Beta Beast Box
+profession=1
+creature_category=Inanimate
+rarity=1
+ai_package=nothing
 

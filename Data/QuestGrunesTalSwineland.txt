@@ -1366,7 +1366,7 @@ Obj.0.description=Return to Moris Banner
 Obj.0.complete=0
 Obj.0.myCreatureDefID=1200
 Obj.0.myItemID=
-Obj.0.completeText=Hand over the body parts.
+Obj.0.completeText=
 Obj.0.markerLocations=58436,790,66951,9;
 
 [ENTRY]
@@ -1461,7 +1461,7 @@ Obj.0.description=Return to Quintus Lunarsong
 Obj.0.complete=0
 Obj.0.myCreatureDefID=1198
 Obj.0.myItemID=
-Obj.0.completeText=The Folkirks are dead!
+Obj.0.completeText=
 Obj.0.markerLocations=58044.5,806.452,66701.1,9
 
 [Entry]
@@ -1758,7 +1758,7 @@ Obj.0.data1=
 Obj.0.data2=
 Obj.0.description=Return to MJ Price
 Obj.0.complete=0
-Obj.0.myCreatureDefID=1257
+Obj.0.myCreatureDefID=3522
 Obj.0.myItemID=
 Obj.0.completeText=0
 Obj.0.markerLocations=59178.3,1109.91,64102.6,9
@@ -2164,7 +2164,7 @@ Obj.0.description=Return to Shayne Twitchtail
 Obj.0.complete=0
 Obj.0.myCreatureDefID=1199
 Obj.0.myItemID=
-Obj.0.completeText=Return to Shayne Twitchtail
+Obj.0.completeText=
 Obj.0.markerLocations=58079.8,803.302,66771.8,9;
 
 [ENTRY]
@@ -2639,3 +2639,84 @@ RewardItem.0=10024,1,0
 RewardItem.1=10025,1,0
 RewardItem.2=10026,1,0
 RewardItem.3=10027,1,0
+
+[ENTRY]
+ID=854
+Title=Creatures of Grunes Tal...
+BodyText=Greetings good beast, it's nice to see another reach the Redeemer camp.  These days that's a rare sight.  Especially due to the increasing threat of the feral creatures of Grunes Tal. They seem to breeding Rather quick and now are starting to wander into our camp threatening lives.  You seem like you can handle yourself, would you take care of them? 
+CompleteText=Fantastic! You've done it, but there are more beasts of the wild that need handling if your up for it?
+Level=43
+Suggested=43
+Exp=8042
+PartySize=1
+NumRewards=0
+Coin=2318
+Unabandon=0
+QuestGiverID=3521
+QuestEnderID=3521
+Repeat=0
+sGiver=58337,789.456,66885.7,9
+sEnder=58337,789.456,66885.7,9
+[ACT]
+Act.BodyText=Kill 15 Haunt Hounds
+Obj.0.type=kill
+Obj.0.data1=1237,1238
+Obj.0.data2=15
+Obj.0.description=Kill 15 Haunt Hounds
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 15
+Obj.0.markerLocations=56914.6,884.166,64884.3,9
+[ACT]
+Act.BodyText=Return to Lanternkeeper Rosco
+Obj.0.type=talk
+Obj.0.data1=
+Obj.0.data2=
+Obj.0.description=Return to Lanternkeeper Rosco
+Obj.0.complete=0
+Obj.0.myCreatureDefID=3521
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=58337,789.456,66885.7,9
+
+[ENTRY]
+Requires=854
+ID=855
+Title=Creatures of Grunes Tal... Part 2
+BodyText=The wolves packs may decreasing in size but those massize Deathweaving spiders are everywhere. Go finish a few of them off and ill once again reward you.
+CompleteText=Those spiders didnt have a chance did they?! Excellent, there are a few more creatures that need dealing with though
+Level=43
+Suggested=43
+Exp=8042
+PartySize=1
+NumRewards=0
+Coin=2318
+Unabandon=0
+QuestGiverID=3521
+QuestEnderID=3521
+Repeat=0
+sGiver=58337,789.456,66885.7,9
+sEnder=58337,789.456,66885.7,9
+[ACT]
+Act.BodyText=Kill 15 Grunes Deathweaver
+Obj.0.type=kill
+Obj.0.data1=1239,1240
+Obj.0.data2=15
+Obj.0.description=Kill 15 Grunes Deathweavers
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 15
+Obj.0.markerLocations=58947.5,826.188,65413.7,9
+[ACT]
+Act.BodyText=Return to Lanternkeeper Rosco
+Obj.0.type=talk
+Obj.0.data1=
+Obj.0.data2=
+Obj.0.description=Return to Lanternkeeper Rosco
+Obj.0.complete=0
+Obj.0.myCreatureDefID=3521
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=58337,789.456,66885.7,9

@@ -1,0 +1,9 @@
+﻿; Beta Beast Box
+[ENTRY]
+CreatureDefID=7808
+EssenceID=8103  ; Key
+Item=50001,1  ; Rotted Wolf Transform 
+Item=900021,1  ; Speed Tome 
+Item=900019,1  ; Exp Tome 
+Item=900014,1  ; Grinder
+
