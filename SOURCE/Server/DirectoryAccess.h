@@ -68,6 +68,12 @@ namespace Platform
 	int FileCopy(const char *sourceFile, const char *destFile);
     bool FileExists(const char *sourceFile);
     bool DirExists(const char *path);
+    const char * Dirname(const char *path);
+    const char * Filename(const char *path);
+    const char * Extension(const char *path);
+    const char * Basename(const char *path);
+    unsigned long GetLastModified(const char *path);
+    int SetLastModified(const char *path, unsigned long lastModified);
 }
 
 #endif //DIRECTORYACCESS_H

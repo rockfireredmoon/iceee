@@ -19,7 +19,7 @@ public:
 	static std::string GetInstanceScriptPath(int zoneID, bool pathIfNotExists, bool grove);
 
 private:
-	std::map<std::string, ScriptObjects::InstanceLocation> mLocationDef;
+	std::map<std::string, ScriptObjects::Area> mLocationDef;
 };
 
 class InstanceNutPlayer: public ScriptCore::NutPlayer {
@@ -48,12 +48,13 @@ public:
 	bool Despawn(int CID);
 	int DespawnAll(int CDefID);
 	int GetHealthPercent(int cid);
-	void OrderWalk(int CID, ScriptObjects::Point point, int speed, int range, const char *labelName);
+	void Walk(int CID, ScriptObjects::Point point, int speed, int range);
+	void WalkThen(int CID, ScriptObjects::Point point, int speed, int range, Sqrat::Function onArrival);
 	int Spawn(int propID, int creatureID, int flags);
 	int SpawnAt(int creatureID, float x, float y, float z, int facing, int flags);
 	int GetTarget(int CDefID);
 	bool SetTarget(int CDefID, int targetCDefID);
-	std::vector<int> ScanForNPCByCDefID(ScriptObjects::InstanceLocation *location, int CDefID);
+	std::vector<int> ScanForNPCByCDefID(ScriptObjects::Area *location, int CDefID);
 
 private:
 	ActiveInstance *actInst;
@@ -61,12 +62,20 @@ private:
 
 };
 
+class WalkCondition : public ScriptCore::NutCondition
+{
+public:
+	CreatureInstance *cInst;
+	WalkCondition(CreatureInstance *c);
+	virtual bool CheckCondition();
+};
+
 class InstanceScriptDef: public ScriptCore::ScriptDef {
 public:
-	ScriptObjects::InstanceLocation *GetLocationByName(const char *location);
+	ScriptObjects::Area *GetLocationByName(const char *location);
 
 private:
-	std::map<std::string, ScriptObjects::InstanceLocation> mLocationDef;
+	std::map<std::string, ScriptObjects::Area> mLocationDef;
 	virtual void GetExtendedOpCodeTable(OpCodeInfo **arrayStart,
 			size_t &arraySize);
 	virtual void SetMetaDataDerived(const char *opname,
@@ -83,23 +92,14 @@ private:
 	ActiveInstance *actInst;
 	virtual void RunImplementationCommands(int opcode);
 
-	ScriptObjects::InstanceLocation* GetLocationByName(const char *name);
+	ScriptObjects::Area* GetLocationByName(const char *name);
 
 	//Script helper functions, often utilizing the Instance for lookups.
-	void ScanNPCCID(ScriptObjects::InstanceLocation *location, std::vector<int>& destResult);
-	void ScanNPCCIDFor(ScriptObjects::InstanceLocation *location, int CDefId,
+	void ScanNPCCID(ScriptObjects::Area *location, std::vector<int>& destResult);
+	void ScanNPCCIDFor(ScriptObjects::Area *location, int CDefId,
 			std::vector<int>& destResult);
 	CreatureInstance* GetNPCPtr(int CID);
 };
-
-class OrderWalkScriptCondition {
-public:
-	CreatureInstance *cInst;
-	TCallback<OrderWalkScriptCondition> cb;
-	OrderWalkScriptCondition(CreatureInstance *creatureInstance);
-	bool Execute();
-};
-
 
 
 }  //namespace InstanceScript

@@ -10942,9 +10942,18 @@ int SimulatorThread :: handle_query_script_run(void)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
 
 	LogMessageL(MSG_SHOW, "Handling script run");
-	if(creatureInst->actInst->RunScript()) {
-		Util::SafeFormat(Aux1, sizeof(Aux1), "Script for %d now running.", creatureInst->actInst->mZone);
-		SendInfoMessage(Aux1, INFOMSG_INFO);
+
+
+	std::string errors;
+	if(creatureInst->actInst->RunScript(errors)) {
+		if(errors.length() > 0) {
+			Util::SafeFormat(Aux1, sizeof(Aux1), "Failed to run script for %d. %s", creatureInst->actInst->mZone, errors.c_str());
+			SendInfoMessage(Aux1, INFOMSG_ERROR);
+		}
+		else {
+			Util::SafeFormat(Aux1, sizeof(Aux1), "Script for %d now running.", creatureInst->actInst->mZone);
+			SendInfoMessage(Aux1, INFOMSG_INFO);
+		}
 	}
 	else {
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Script already running.");

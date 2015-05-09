@@ -10,6 +10,7 @@
 #include <sqstdaux.h>
 #include <sqstdstring.h>
 #include "Callback.h"
+#include "sqrat.h"
 
 void PrintFunc(HSQUIRRELVM v, const SQChar *s, ...);
 void Errorfunc(HSQUIRRELVM v, const SQChar *s, ...);
@@ -140,14 +141,12 @@ struct IntArray {
 	static const int MAX_ARRAY_DATA_SIZE = 64;
 };
 
+
 //Holds a triggered event.  If it is ready to fire, the label name will be called.
 class ScriptEvent {
 public:
 	std::string mLabel;              //Label to jump to.
 	unsigned long mFireTime;         //Time to fire this event.
-	cCallback *mCondition; //Condition callback
-	ScriptEvent();
-	ScriptEvent(const char *label, cCallback *condition);
 	ScriptEvent(const char *label, unsigned long fireTime);
 };
 
@@ -391,14 +390,32 @@ private:
 
 };
 
+class NutCondition {
+public:
+	NutCondition();
+	virtual ~NutCondition();
+	virtual bool CheckCondition() =0;
+};
+
+//Holds a triggered event.  If it is ready to fire, the label name will be called.
+class NutScriptEvent {
+public:
+	Sqrat::Function mFunction;		//Function to jump to
+	unsigned long mFireTime;         //Time to fire this event.
+	NutCondition *mCondition;
+	NutScriptEvent(Sqrat::Function &function, unsigned long fireTime);
+	NutScriptEvent(Sqrat::Function &function, NutCondition *condition);
+};
+
 class NutPlayer {
 public:
+
 	HSQUIRRELVM vm;
 	NutDef *def; //Pointer to the script definition that this player is executing.
 	int curInst;                         //Index of the current instruction.
 	bool active; //If true, the script is considered to be running (has not terminated).
 	unsigned long nextFire; //Time when the next instruction can run.  Used for waits.
-	std::vector<ScriptEvent> queue;
+	std::vector<NutScriptEvent> queue;
 	bool mHasScript;
 	bool mHalt;
 
@@ -409,7 +426,7 @@ public:
 	void RegisterFunctions();
 	virtual void HaltDerivedExecution();
 	virtual void RegisterDerivedFunctions();
-	void Initialize(NutDef *defPtr);
+	void Initialize(NutDef *defPtr, std::string &errors);
 	bool Tick(void);     //Run a single instruction.
 	void RunScript(void);                //Run the script until it ends.
 	bool JumpToLabel(const char *name); //Immediately jump script execution to the beginning of a specific label.
@@ -420,7 +437,7 @@ public:
 	void HaltExecution(void);
 	bool RunFunction(const char *name, std::vector<ScriptParam> parms);
 	void Broadcast(const char *message);
-	void Queue(const char *labelName, int fireDelay);
+	void Queue(Sqrat::Function function, int fireDelay);
 	bool ExecQueue(void);
 	int Rand(int max);
 	int RandInt(int min, int max);

@@ -56,11 +56,11 @@ const int MAX_SPAWNLIST = 75;  //Maximum number of items that can be returned by
 double ARMOR_VARIATION_MIN = -0.05;  //Variation on the percentage resist when calculated from armor rating
 double ARMOR_VARIATION_MAX = 0.05;  //Variation on the percentage resist when calculated from armor rating
 
-extern int g_ProtocolVersion;
-extern unsigned long g_ServerTime;
-
 const double Cone_180 = 1.57079633;
 const double Cone_90 = 0.785398163;
+
+extern int g_ProtocolVersion;
+extern unsigned long g_ServerTime;
 
 CreatureDefManager CreatureDef;
 PendingOperation pendingOperations;
@@ -4412,6 +4412,10 @@ void CreatureInstance :: CheckPathLocation(void)
 	//the mob to appear stuck there.
 	CurrentY = (int)newWaypoint->LocationY;
 	
+	// *********************************
+	// REMOVE THIS COMMENT - JUST EXPERIMENTING VVVVVV
+	//*********************************
+
 	Speed = CREATURE_WALK_SPEED;
 }
 

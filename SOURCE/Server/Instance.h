@@ -372,7 +372,7 @@ public:
 	void RunProcessingCycle(void);
 	void UpdateEnvironmentCycle(const char *timeOfDay);
 	bool KillScript();
-	bool RunScript();
+	bool RunScript(std::string &errors);
 	void ScriptCallKill(int CreatureDefID, int CreatureID);
 	void ScriptCallUse(int CreatureDefID);
 	void ScriptCallUseHalt(int CreatureDefID);
@@ -390,7 +390,7 @@ public:
 	void SetAllPlayerPVPStatus(int x, int z, int range, bool state);
 	void NotifyKill(int mobRarity);
 
-	void Script_ScanNPCCID(ScriptObjects::InstanceLocation *location, std::vector<int>& destResult);
+	void Script_ScanNPCCID(ScriptObjects::Area *location, std::vector<int>& destResult);
 };
 
 class ActiveInstanceManager

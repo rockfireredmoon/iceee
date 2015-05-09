@@ -253,21 +253,28 @@ public:
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         if (SQ_FAILED(sq_get(vm, -2))) {
             sq_pop(vm, 1);
-            Error::Instance().Throw(vm, _SC("illegal index"));
+            SQTHROW(vm, _SC("illegal index"));
             return SharedPtr<T>();
         }
 #else
         sq_get(vm, -2);
 #endif
+        SQTRY()
         Var<SharedPtr<T> > entry(vm, -1);
-#if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        SQCATCH_NOEXCEPT(vm) {
             sq_pop(vm, 2);
             return SharedPtr<T>();
         }
-#endif
         sq_pop(vm, 2);
         return entry.value;
+        SQCATCH(vm) {
+#if defined (SCRAT_USE_EXCEPTIONS)
+            SQUNUSED(e); // avoid "unreferenced local variable" warning
+#endif
+            sq_pop(vm, 2);
+            SQRETHROW(vm);
+        }
+        return SharedPtr<T>(); // avoid "not all control paths return a value" warning
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -291,21 +298,28 @@ public:
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         if (SQ_FAILED(sq_get(vm, -2))) {
             sq_pop(vm, 1);
-            Error::Instance().Throw(vm, _SC("illegal index"));
+            SQTHROW(vm, _SC("illegal index"));
             return SharedPtr<T>();
         }
 #else
         sq_get(vm, -2);
 #endif
+        SQTRY()
         Var<SharedPtr<T> > entry(vm, -1);
-#if !defined (SCRAT_NO_ERROR_CHECKING)
-        if (Error::Instance().Occurred(vm)) {
+        SQCATCH_NOEXCEPT(vm) {
             sq_pop(vm, 2);
             return SharedPtr<T>();
         }
-#endif
         sq_pop(vm, 2);
         return entry.value;
+        SQCATCH(vm) {
+#if defined (SCRAT_USE_EXCEPTIONS)
+            SQUNUSED(e); // avoid "unreferenced local variable" warning
+#endif
+            sq_pop(vm, 2);
+            SQRETHROW(vm);
+        }
+        return SharedPtr<T>(); // avoid "not all control paths return a value" warning
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -381,7 +395,7 @@ public:
     /// Default constructor (null)
     ///
     /// \remarks
-    /// The Table is invalid until it is given a VM to exist in
+    /// The Table is invalid until it is given a VM to exist in.
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     Table() {
@@ -488,7 +502,7 @@ struct Var<Table> {
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         SQObjectType value_type = sq_gettype(vm, idx);
         if (value_type != OT_TABLE) {
-            Error::Instance().Throw(vm, Sqrat::Error::FormatTypeError(vm, idx, _SC("table")));
+            SQTHROW(vm, FormatTypeError(vm, idx, _SC("table")));
         }
 #endif
     }
@@ -500,7 +514,7 @@ struct Var<Table> {
     /// \param value Value to push on to the VM's stack
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    static void push(HSQUIRRELVM vm, const Table & value) {
+    static void push(HSQUIRRELVM vm, const Table& value) {
         HSQOBJECT obj;
         sq_resetobject(&obj);
         obj = value.GetObject();

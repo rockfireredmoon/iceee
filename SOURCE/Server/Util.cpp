@@ -1871,6 +1871,10 @@ int randmodrng(int min, int max) {
 	return(rand()%(max-min)+min);
 }
 
+int randi(int max) {
+	return randint(1, max);
+}
+
 int randint(int min, int max)
 {
 	//Returning <max> is possible, but highly unlikely compared to the individual
@@ -2081,6 +2085,17 @@ FILE * OpenSaveFile(const char *filename)
 	if(file == NULL)
 		g_Log.AddMessageFormatW(MSG_ERROR, "[ERROR] Could not open file [%s] for writing.", filename);
 	return file;
+}
+
+void Join(std::vector<std::string> &src, const char *delim, std::string &dest)
+{
+	std::string s = delim;
+	dest.clear();
+	for(uint i = 0 ; i < src.size(); i++) {
+		if(i > 0)
+			dest.append(s);
+		dest.append(src[i]);
+	}
 }
 
 int Split(const std::string &source, const char *delim, std::vector<std::string> &dest)

@@ -2246,7 +2246,10 @@ void ActiveInstance :: InitializeData(void)
 	if(Util::HasEnding(path, ".nut")) {
 		nutScriptDef.Initialize(path.c_str());
 		nutScriptPlayer.SetInstancePointer(this);
-		nutScriptPlayer.Initialize(&nutScriptDef);
+		std::string errors;
+		nutScriptPlayer.Initialize(&nutScriptDef, errors);
+		if(errors.length() > 0)
+			g_Log.AddMessageFormat("Failed to compile. %s", errors.c_str());
 	}
 	else if(Util::HasEnding(path, ".txt")) {
 		scriptDef.CompileFromSource(path.c_str());
@@ -3128,7 +3131,7 @@ void ActiveInstance :: ScriptCall(const char *name)
 		scriptPlayer.RunUntilWait();
 }
 
-bool ActiveInstance :: RunScript()
+bool ActiveInstance :: RunScript(std::string &errors)
 {
 	if((scriptPlayer.HasScript() && scriptPlayer.active) || (nutScriptPlayer.HasScript() && nutScriptPlayer.active)) {
 		g_Log.AddMessageFormat("Request to run script for %d when it is already running", mZone);
@@ -3140,7 +3143,7 @@ bool ActiveInstance :: RunScript()
 	if(Util::HasEnding(path, ".nut")) {
 		nutScriptDef.Initialize(path.c_str());
 		nutScriptPlayer.SetInstancePointer(this);
-		nutScriptPlayer.Initialize(&nutScriptDef);
+		nutScriptPlayer.Initialize(&nutScriptDef, errors);
 	}
 	else if(Util::HasEnding(path, ".text")) {
 		scriptDef.CompileFromSource(path.c_str());

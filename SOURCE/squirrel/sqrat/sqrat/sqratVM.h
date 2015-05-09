@@ -30,10 +30,10 @@
 
 #include <squirrel.h>
 #include <sqrat.h>
-#include <map>
 
 #include <iostream>
 #include <stdarg.h>
+#include <stdio.h>
 
 #include <sqstdio.h>
 #include <sqstdblob.h>
@@ -52,11 +52,14 @@ namespace Sqrat
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// Helper class that wraps a Squirrel virtual machine in a C++ API
+///
+/// \remarks
+/// This class is not currently thread-safe for the case of different VMs running in different threads (all others are)
+///
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 class SqratVM
 {
 private:
-    //static std::map<HSQUIRRELVM, SqratVM*> ms_sqratVMs;
 
     HSQUIRRELVM m_vm;
     Sqrat::RootTable* m_rootTable;
@@ -65,34 +68,27 @@ private:
 
     static void s_addVM(HSQUIRRELVM vm, SqratVM* sqratvm)
     {
-        //TODO: use mutex to lock ms_sqratVMs
-        (*ms_sqratVMs()).insert(std::make_pair(vm, sqratvm));
+        // TODO for user: use mutex to lock ms_sqratVMs if necessary for your uses
+        ms_sqratVMs().insert(std::make_pair(vm, sqratvm));
     }
 
     static void s_deleteVM(HSQUIRRELVM vm)
     {
-        //TODO: use mutex to lock ms_sqratVMs
-        (*ms_sqratVMs()).erase(vm);
+        // TODO for user: use mutex to lock ms_sqratVMs if necessary for your uses
+        ms_sqratVMs().erase(vm);
     }
 
     static SqratVM* s_getVM(HSQUIRRELVM vm)
     {
-        //TODO: use mutex to lock ms_sqratVMs
-        return  (*ms_sqratVMs())[vm];
+        // TODO for user: use mutex to lock ms_sqratVMs if necessary for your uses
+        return ms_sqratVMs()[vm];
     }
-
 
 private:
 
-    static std::map<HSQUIRRELVM, SqratVM*> *ms_sqratVMs()
-    {
-        static std::map<HSQUIRRELVM, SqratVM*> *ms = 0;
-        if (ms == 0)
-            ms = new std::map<HSQUIRRELVM, SqratVM*> ;
-        return ms;
-    }
+    static SQRAT_API unordered_map<HSQUIRRELVM, SqratVM*>::type& ms_sqratVMs();
 
-    static void printFunc(HSQUIRRELVM v, const SQChar *s, ...)
+    static void printFunc(HSQUIRRELVM /*v*/, const SQChar *s, ...)
     {
         va_list vl;
         va_start(vl, s);
@@ -108,14 +104,11 @@ private:
             Sqrat::string& errStr = s_getVM(v)->m_lastErrorMsg;
             if(SQ_SUCCEEDED(sq_getstring(v, 2, &sErr)))
             {
-                //scprintf(_SC("RuntimeError: %s\n"), sErr);
-                //errStr = _SC("RuntimeError: ") + sErr;
                 errStr = sErr;
             }
             else
             {
-                //scprintf(_SC("An Unknown RuntimeError Occured.\n"));
-                errStr = _SC("An Unknown RuntimeError Occured.");
+                errStr = _SC("an unknown runtime error has occured");
             }
         }
         return 0;
@@ -127,14 +120,14 @@ private:
                                      SQInteger line,
                                      SQInteger column)
     {
-        //scprintf(_SC("%s(%d:%d): %s\n"), source, line, column, desc);
         SQChar buf[512];
-        scsprintf(buf, _SC("%s(%d:%d): %s"), source, (int) line, (int) column, desc);
+        scsprintf(buf, _SC("%s:%d:%d: %s"), source, (int) line, (int) column, desc);
         buf[sizeof(buf) - 1] = 0;
         s_getVM(v)->m_lastErrorMsg = buf;
     }
 
 public:
+
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /// Enumeration representing the different types of errors that may occur within a SqratVM
     ///
@@ -251,7 +244,7 @@ public:
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /// Sets the print function of the virtual machine
+    /// Sets the print function of the virtual machine (a default one is set in the constructor)
     ///
     /// \param printFunc A pointer to the print func or NULL to disable the output
     /// \param errFunc   A pointer to the error func or NULL to disable the output
@@ -266,7 +259,7 @@ public:
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /// Sets the Squirrel error handlers
+    /// Sets the Squirrel error handlers (both are set to defaults in the constructor)
     ///
     /// \param runErr A pointer to the runtime error handler func
     /// \param comErr A pointer to the compile error handler func
@@ -343,7 +336,12 @@ public:
 
 };
 
-//std::map<HSQUIRRELVM, SqratVM*> SqratVM::ms_sqratVMs;
+#if !defined(SCRAT_IMPORT)
+inline unordered_map<HSQUIRRELVM, SqratVM*>::type& SqratVM::ms_sqratVMs() {
+    static unordered_map<HSQUIRRELVM, SqratVM*>::type ms;
+    return ms;
+}
+#endif
 
 }
 

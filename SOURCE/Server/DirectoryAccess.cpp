@@ -10,9 +10,11 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <dirent.h>
+#include <utime.h>
 #endif
 
 #include <stdio.h>
+#include "Util.h"
 
 Platform_DirectoryReader :: Platform_DirectoryReader()
 {
@@ -185,6 +187,28 @@ bool Platform::FileExists(const char *path)
 	return true;
 }
 
+unsigned long Platform::GetLastModified(const char *path) {
+	struct stat attrib;
+	if(stat(path, &attrib) < 0) {
+		return 0;
+	}
+	return attrib.st_mtim.tv_sec;
+}
+
+int Platform::SetLastModified(const char *path, unsigned long lastModifiedSec) {
+	struct utimbuf new_times;
+	struct stat attrib;
+	if(stat(path, &attrib) < 0) {
+		return 0;
+	}
+	new_times.actime = attrib.st_atime;
+	new_times.modtime = lastModifiedSec;
+	if (utime(path, &new_times) < 0) {
+	    return 1;
+	}
+	return 1;
+}
+
 void Platform::MakeDirectory(const char *path)
 {
 #ifdef WINDOWS_PLATFORM
@@ -198,6 +222,66 @@ char * Platform::GenerateFilePath(char *resultBuffer, const char *folderName, co
 {
 	sprintf(resultBuffer, "%s%c%s", folderName, PLATFORM_FOLDERVALID, fileName);
 	return resultBuffer;
+}
+
+const char * Platform::Filename(const char *path)
+{
+	STRINGLIST v;
+	const std::string p = path;
+	const std::string d(1, PLATFORM_FOLDERVALID);
+	Util::Split(p, d.c_str(), v);
+	if(v.size() == 0)
+		return "";
+	else
+		return v[v.size() - 1].c_str();
+}
+
+const char * Platform::Basename(const char *path)
+{
+	STRINGLIST v;
+	const std::string p = Filename(path);
+	const std::string d(1, PLATFORM_FOLDERVALID);
+	Util::Split(p, ".", v);
+	if(v.size() == 0)
+		return "";
+	else {
+		std::string t;
+		v.erase(v.end() - 1);
+		Util::Join(v, d.c_str(), t);
+		return t.c_str();
+	}
+}
+
+const char * Platform::Extension(const char *path)
+{
+	STRINGLIST v;
+	const std::string p = Filename(path);
+	const std::string d(1, PLATFORM_FOLDERVALID);
+	Util::Split(p, ".", v);
+	if(v.size() == 0)
+		return "";
+	else if(v.size() == 1)
+		return v[0].c_str();
+	else
+		return v[v.size() - 1].c_str();
+}
+
+const char * Platform::Dirname(const char *path)
+{
+	STRINGLIST v;
+	const std::string p = path;
+	const std::string d(1, PLATFORM_FOLDERVALID);
+	Util::Split(p, d.c_str(), v);
+	if(v.size() == 0)
+		return "";
+	else if(v.size() == 1)
+		return ".";
+	else {
+		std::string t;
+		v.erase(v.end() - 1);
+		Util::Join(v, d.c_str(), t);
+		return t.c_str();
+	}
 }
 
 void Platform :: GenerateFilePath(std::string& resultStr, const char *folderName, const char *fileName)

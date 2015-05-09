@@ -107,6 +107,7 @@ int SendToOneSimulator(char *buffer, int length, SimulatorThread *simPtr);
 int SendToFriendSimulator(char *buffer, int length, int CDefID);
 int randint(int min, int max);
 int randmod(int max);
+int randi(int max);
 int randmodrng(int min, int max);
 double randdbl(double min, double max);
 
@@ -124,6 +125,7 @@ namespace Util
 	void WriteAutoSaveHeader(FILE *output);
 	FILE * OpenSaveFile(const char *filename);
 	int Split(const std::string &source, const char *delim, std::vector<std::string> &dest);
+	void Join(std::vector<std::string> &source, const char *delim, std::string &dest);
 	void Replace(std::string &source, char find, char replace);
 	void SafeCopy(char *dest, const char *source, int destSize);
 	void SafeCopyN(char *dest, const char *source, int destSize, int copySize);

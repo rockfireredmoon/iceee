@@ -83,12 +83,10 @@ struct popAsInt
         case OT_FLOAT:
             SQFloat sqValuef;
             sq_getfloat(vm, idx, &sqValuef);
-            value = static_cast<T>(sqValuef);
+			value = static_cast<T>(static_cast<int>(sqValuef));
             break;
         default:
-#if !defined (SCRAT_NO_ERROR_CHECKING)
-            Error::Instance().Throw(vm, Sqrat::Error::FormatTypeError(vm, idx, _SC("integer")));
-#endif
+            SQTHROW(vm, FormatTypeError(vm, idx, _SC("integer")));
             value = static_cast<T>(0);
             break;
         }
@@ -129,9 +127,7 @@ struct popAsFloat
             value = static_cast<T>(sqValuef);
             break;
         default:
-#if !defined (SCRAT_NO_ERROR_CHECKING)
-            Error::Instance().Throw(vm, Sqrat::Error::FormatTypeError(vm, idx, _SC("float")));
-#endif
+            SQTHROW(vm, FormatTypeError(vm, idx, _SC("float")));
             value = 0;
             break;
         }
@@ -144,6 +140,9 @@ struct popAsFloat
 /// Used to get and push class instances to and from the stack as copies
 ///
 /// \tparam T Type of instance (usually doesnt need to be defined explicitly)
+///
+/// \remarks
+/// This specialization requires T to have a default constructor.
 ///
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<class T>
@@ -162,25 +161,29 @@ struct Var {
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     Var(HSQUIRRELVM vm, SQInteger idx) {
+        SQTRY()
+        T* ptr = ClassType<T>::GetInstance(vm, idx);
+        if (ptr != NULL) {
+            value = *ptr;
 #if !defined (SCRAT_NO_ERROR_CHECKING)
-        // don't want to override previous errors
-        if (!Sqrat::Error::Instance().Occurred(vm)) {
+        } else if (is_convertible<T, SQInteger>::YES) { /* value is likely of integral type like enums */
+            SQCLEAR(vm); // clear the previous error
+            value = popAsInt<T, is_convertible<T, SQInteger>::YES>(vm, idx).value;
 #endif
-            // check if return is NULL here because copying (not referencing)
-            T* ptr = ClassType<T>::GetInstance(vm, idx, true);
-            if (ptr != NULL) {
-                value = *ptr;
-#if !defined (SCRAT_NO_ERROR_CHECKING)
-            } else if (is_convertible<T, SQInteger>::YES) { /* value is likely of integral type like enums */
-                Sqrat::Error::Instance().Clear(vm);
-                value = popAsInt<T, is_convertible<T, SQInteger>::YES>(vm, idx).value;
-            } else
-                // initialize value to avoid warnings
-                value = popAsInt<T, is_convertible<T, SQInteger>::YES>(vm, idx).value;
-#endif
-        } else
+        } else {
             // initialize value to avoid warnings
             value = popAsInt<T, is_convertible<T, SQInteger>::YES>(vm, idx).value;
+        }
+        SQCATCH(vm) {
+#if defined (SCRAT_USE_EXCEPTIONS)
+            SQUNUSED(e); // avoid "unreferenced local variable" warning
+#endif
+            if (is_convertible<T, SQInteger>::YES) { /* value is likely of integral type like enums */
+                value = popAsInt<T, is_convertible<T, SQInteger>::YES>(vm, idx).value;
+            } else {
+                SQRETHROW(vm);
+            }
+        }
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -191,16 +194,18 @@ struct Var {
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     static void push(HSQUIRRELVM vm, const T& value) {
-        if (ClassType<T>::hasClassTypeData(vm))
+        if (ClassType<T>::hasClassData(vm))
             ClassType<T>::PushInstanceCopy(vm, value);
         else /* try integral type */
-            pushAsInt<T, is_convertible<T, SQInteger>::YES>().push(vm, (value));
+            pushAsInt<T, is_convertible<T, SQInteger>::YES>().push(vm, value);
     }
 
 private:
+
     template <class T2, bool b>
     struct pushAsInt {
         void push(HSQUIRRELVM vm, const T2& /*value*/) {
+            assert(false); // fails because called before a Sqrat::Class for T exists and T is not convertible to SQInteger
             sq_pushnull(vm);
         }
     };
@@ -245,8 +250,28 @@ struct Var<T&> {
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     static void push(HSQUIRRELVM vm, T& value) {
-        ClassType<T>::PushInstance(vm, &value);
+        if (ClassType<T>::hasClassData(vm))
+            ClassType<T>::PushInstance(vm, &value);
+        else /* try integral type */
+            pushAsInt<T, is_convertible<T, SQInteger>::YES>().push(vm, value);
     }
+
+private:
+
+    template <class T2, bool b>
+    struct pushAsInt {
+        void push(HSQUIRRELVM vm, const T2& /*value*/) {
+            assert(false); // fails because called before a Sqrat::Class for T exists and T is not convertible to SQInteger
+            sq_pushnull(vm);
+        }
+    };
+
+    template <class T2>
+    struct pushAsInt<T2, true> {
+        void push(HSQUIRRELVM vm, const T2& value) {
+            sq_pushinteger(vm, static_cast<SQInteger>(value));
+        }
+    };
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -435,6 +460,7 @@ struct Var<const T* const> {
 /// \tparam T Type of instance (usually doesnt need to be defined explicitly)
 ///
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+template<class T> void PushVarR(HSQUIRRELVM vm, T& value);
 template<class T>
 struct Var<SharedPtr<T> > {
 
@@ -453,13 +479,10 @@ struct Var<SharedPtr<T> > {
     Var(HSQUIRRELVM vm, SQInteger idx) {
         if (sq_gettype(vm, idx) != OT_NULL) {
             Var<T> instance(vm, idx);
-#if !defined (SCRAT_NO_ERROR_CHECKING)
-            if (!Error::Instance().Occurred(vm)) {
-#endif
-                value.Init(new T(instance.value));
-#if !defined (SCRAT_NO_ERROR_CHECKING)
+            SQCATCH_NOEXCEPT(vm) {
+                return;
             }
-#endif
+            value.Init(new T(instance.value));
         }
     }
 
@@ -470,7 +493,7 @@ struct Var<SharedPtr<T> > {
     /// \param value Value to push on to the VM's stack
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    static void push(HSQUIRRELVM vm, SharedPtr<T>& value) {
+    static void push(HSQUIRRELVM vm, const SharedPtr<T>& value) {
         PushVarR(vm, *value);
     }
 };
@@ -487,17 +510,6 @@ struct Var<SharedPtr<T> > {
          sq_pushinteger(vm, static_cast<SQInteger>(value)); \
      } \
  };\
- \
- template<> \
- struct Var<const type> { \
-     type value; \
-     Var(HSQUIRRELVM vm, SQInteger idx) { \
-         value = popAsInt<type, true>(vm, idx).value; \
-     } \
-     static void push(HSQUIRRELVM vm, const type& value) { \
-         sq_pushinteger(vm, static_cast<SQInteger>(value)); \
-     } \
- }; \
  \
  template<> \
  struct Var<const type&> { \
@@ -542,16 +554,6 @@ SCRAT_INTEGER(signed __int64)
  }; \
  \
  template<> \
- struct Var<const type> { \
-     type value; \
-     Var(HSQUIRRELVM vm, SQInteger idx) { \
-         value = popAsFloat<type>(vm, idx).value; \
-     } \
-     static void push(HSQUIRRELVM vm, const type& value) { \
-         sq_pushfloat(vm, static_cast<SQFloat>(value)); \
-     } \
- }; \
- template<> \
  struct Var<const type&> { \
      type value; \
      Var(HSQUIRRELVM vm, SQInteger idx) { \
@@ -570,39 +572,6 @@ SCRAT_FLOAT(double)
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<>
 struct Var<bool> {
-
-    bool value; ///< The actual value of get operations
-
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /// Attempts to get the value off the stack at idx as a bool
-    ///
-    /// \param vm  Target VM
-    /// \param idx Index trying to be read
-    ///
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    Var(HSQUIRRELVM vm, SQInteger idx) {
-        SQBool sqValue;
-        sq_tobool(vm, idx, &sqValue);
-        value = (sqValue != 0);
-    }
-
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /// Called by Sqrat::PushVar to put a bool on the stack
-    ///
-    /// \param vm    Target VM
-    /// \param value Value to push on to the VM's stack
-    ///
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    static void push(HSQUIRRELVM vm, const bool& value) {
-        sq_pushbool(vm, static_cast<SQBool>(value));
-    }
-};
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// Used to get and push const bools to and from the stack
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-template<>
-struct Var<const bool> {
 
     bool value; ///< The actual value of get operations
 
@@ -710,10 +679,11 @@ public:
     ///
     /// \param vm    Target VM
     /// \param value Value to push on to the VM's stack
+    /// \param len   Length of the string (defaults to finding the length by searching for a terminating null-character)
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    static void push(HSQUIRRELVM vm, const SQChar* value) {
-        sq_pushstring(vm, value, -1);
+    static void push(HSQUIRRELVM vm, const SQChar* value, SQInteger len = -1) {
+        sq_pushstring(vm, value, len);
     }
 };
 
@@ -763,10 +733,11 @@ public:
     ///
     /// \param vm    Target VM
     /// \param value Value to push on to the VM's stack
+    /// \param len   Length of the string (defaults to finding the length by searching for a terminating null-character)
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    static void push(HSQUIRRELVM vm, const SQChar* value) {
-        sq_pushstring(vm, value, -1);
+    static void push(HSQUIRRELVM vm, const SQChar* value, SQInteger len = -1) {
+        sq_pushstring(vm, value, len);
     }
 };
 
@@ -789,7 +760,7 @@ struct Var<string> {
         const SQChar* ret;
         sq_tostring(vm, idx);
         sq_getstring(vm, -1, &ret);
-        value = string(ret);
+        value = string(ret, sq_getsize(vm, -1));
         sq_pop(vm,1);
     }
 
@@ -800,8 +771,8 @@ struct Var<string> {
     /// \param value Value to push on to the VM's stack
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    static void push(HSQUIRRELVM vm, const string & value) {
-        sq_pushstring(vm, value.c_str(), -1);
+    static void push(HSQUIRRELVM vm, const string& value) {
+        sq_pushstring(vm, value.c_str(), value.size());
     }
 };
 
@@ -824,7 +795,7 @@ struct Var<const string&> {
         const SQChar* ret;
         sq_tostring(vm, idx);
         sq_getstring(vm, -1, &ret);
-        value = string(ret);
+        value = string(ret, sq_getsize(vm, -1));
         sq_pop(vm,1);
     }
 
@@ -835,8 +806,8 @@ struct Var<const string&> {
     /// \param value Value to push on to the VM's stack
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    static void push(HSQUIRRELVM vm, const string & value) {
-        sq_pushstring(vm, value.c_str(), -1);
+    static void push(HSQUIRRELVM vm, const string& value) {
+        sq_pushstring(vm, value.c_str(), value.size());
     }
 };
 
@@ -860,7 +831,7 @@ struct Var<std::string> {
         const SQChar* ret;
         sq_tostring(vm, idx);
         sq_getstring(vm, -1, &ret);
-        value = wstring_to_string(string(ret));
+        value = wstring_to_string(string(ret, sq_getsize(vm, -1)));
         sq_pop(vm,1);
     }
 
@@ -871,8 +842,9 @@ struct Var<std::string> {
     /// \param value Value to push on to the VM's stack
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    static void push(HSQUIRRELVM vm, const std::string & value) {
-        sq_pushstring(vm, string_to_wstring(value).c_str(), -1);
+    static void push(HSQUIRRELVM vm, const std::string& value) {
+        std::wstring s = string_to_wstring(value);
+        sq_pushstring(vm, s.c_str(), s.size());
     }
 };
 
@@ -895,7 +867,7 @@ struct Var<const std::string&> {
         const SQChar* ret;
         sq_tostring(vm, idx);
         sq_getstring(vm, -1, &ret);
-        value = wstring_to_string(string(ret));
+        value = wstring_to_string(string(ret, sq_getsize(vm, -1)));
         sq_pop(vm,1);
     }
 
@@ -906,8 +878,9 @@ struct Var<const std::string&> {
     /// \param value Value to push on to the VM's stack
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    static void push(HSQUIRRELVM vm, const std::string & value) {
-        sq_pushstring(vm, string_to_wstring(value).c_str(), -1);
+    static void push(HSQUIRRELVM vm, const std::string& value) {
+        std::wstring s = string_to_wstring(value);
+        sq_pushstring(vm, s.c_str(), s.size());
     }
 };
 
@@ -962,10 +935,11 @@ public:
     ///
     /// \param vm    Target VM
     /// \param value Value to push on to the VM's stack
+    /// \param len   Length of the string (defaults to finding the length by searching for a terminating null-character)
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    static void push(HSQUIRRELVM vm, const char* value) {
-        sq_pushstring(vm, string_to_wstring(std::string(value)).c_str(), -1);
+    static void push(HSQUIRRELVM vm, const char* value, SQInteger len = -1) {
+        sq_pushstring(vm, string_to_wstring(std::string(value)).c_str(), len);
     }
 };
 
@@ -1020,10 +994,11 @@ public:
     ///
     /// \param vm    Target VM
     /// \param value Value to push on to the VM's stack
+    /// \param len   Length of the string (defaults to finding the length by searching for a terminating null-character)
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    static void push(HSQUIRRELVM vm, const char* value) {
-        sq_pushstring(vm, string_to_wstring(std::string(value)).c_str(), -1);
+    static void push(HSQUIRRELVM vm, const char* value, SQInteger len = -1) {
+        sq_pushstring(vm, string_to_wstring(std::string(value)).c_str(), len);
     }
 };
 #endif
@@ -1077,19 +1052,46 @@ SCRAT_MAKE_NONREFERENCABLE(std::string)
 ///
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<class T>
-inline void PushVar(HSQUIRRELVM vm, T value) {
+inline void PushVar(HSQUIRRELVM vm, T* value) {
+    Var<T*>::push(vm, value);
+}
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// Pushes a value on to a given VM's stack
+///
+/// \param vm    VM that the variable will be pushed on to the stack of
+/// \param value The actual value being pushed
+///
+/// \tparam T Type of value (usually doesnt need to be defined explicitly)
+///
+/// \remarks
+/// What this function does is defined by Sqrat::Var template specializations,
+/// and thus you can create custom functionality for it by making new template specializations.
+/// When making a custom type that is not referencable, you must use SCRAT_MAKE_NONREFERENCABLE( type )
+///
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+template<class T>
+inline void PushVar(HSQUIRRELVM vm, const T& value) {
     Var<T>::push(vm, value);
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 /// @cond DEV
-/// special version for enum values
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-template<>
-inline void PushVar<int>(HSQUIRRELVM vm, int value) {
-    Var<int>::push(vm, value);
-}
+template<class T, bool b>
+struct PushVarR_helper {
+    inline static void push(HSQUIRRELVM vm, T value) {
+        PushVar<T>(vm, value);
+    }
+};
+template<class T>
+struct PushVarR_helper<T, false> {
+    inline static void push(HSQUIRRELVM vm, const T& value) {
+        PushVar<const T&>(vm, value);
+    }
+};
 /// @endcond
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// Pushes a reference on to a given VM's stack (some types cannot be referenced and will be copied instead)
@@ -1110,7 +1112,7 @@ inline void PushVarR(HSQUIRRELVM vm, T& value) {
     if (!is_pointer<T>::value && is_referencable<typename remove_cv<T>::type>::value) {
         Var<T&>::push(vm, value);
     } else {
-        PushVar(vm, value);
+        PushVarR_helper<T, is_pointer<T>::value>::push(vm, value);
     }
 }
 

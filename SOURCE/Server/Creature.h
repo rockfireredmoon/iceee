@@ -30,6 +30,9 @@ class ReportBuffer;
 
 #define MAXTARGET   8
 
+extern const int CREATURE_WALK_SPEED;
+extern const int CREATURE_JOG_SPEED;
+extern const int CREATURE_RUN_SPEED;
 extern const int AGGRO_ELEV_RANGE;
 extern const int AGGRO_DEFAULT_RANGE;
 extern const int AGGRO_MAXIMUM_RANGE;

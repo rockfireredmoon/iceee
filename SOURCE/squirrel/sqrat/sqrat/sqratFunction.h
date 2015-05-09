@@ -38,11 +38,14 @@ namespace Sqrat {
 /// Represents a function in Squirrel
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 class Function  {
+
     friend class TableBase;
     friend class Table;
     friend class ArrayBase;
     friend struct Var<Function>;
+
 private:
+
     HSQUIRRELVM vm;
     HSQOBJECT env, obj;
 
@@ -86,7 +89,7 @@ public:
         SQObjectType value_type = so.GetType();
         if (value_type != OT_CLOSURE && value_type != OT_NATIVECLOSURE && value_type != OT_CLASS) {
             // Note that classes can also be considered functions in Squirrel
-            Error::Instance().Throw(vm, _SC("function not found in slot"));
+            SQTHROW(vm, _SC("function not found in slot"));
         }
 #endif
     }
@@ -141,6 +144,16 @@ public:
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Gets the Squirrel environment object for this Function (copy)
+    ///
+    /// \return Squirrel object representing the Function environment
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    HSQOBJECT GetEnv() const {
+        return env;
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /// Gets the Squirrel environment object for this Function (reference)
     ///
     /// \return Squirrel object representing the Function environment
@@ -151,6 +164,16 @@ public:
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Gets the Squirrel function object for this Function (copy)
+    ///
+    /// \return Squirrel object representing the Function
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    HSQOBJECT GetFunc() const {
+        return obj;
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /// Gets the Squirrel function object for this Function (reference)
     ///
     /// \return Squirrel object representing the Function
@@ -158,6 +181,16 @@ public:
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     HSQOBJECT& GetFunc() {
         return obj;
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Gets the Squirrel VM for this Function (copy)
+    ///
+    /// \return Squirrel VM associated with the Function
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    HSQUIRRELVM GetVM() const {
+        return vm;
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -196,6 +229,8 @@ public:
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class R>
     SharedPtr<R> Evaluate() {
+        SQInteger top = sq_gettop(vm);
+
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
@@ -205,16 +240,16 @@ public:
 
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 1)) {
             sq_pop(vm, 2);
-            Error::Instance().Throw(vm, _SC("wrong number of parameters"));
+            SQTHROW(vm, _SC("wrong number of parameters"));
             return SharedPtr<R>();
         }
 
         SQRESULT result = sq_call(vm, 1, true, ErrorHandling::IsEnabled());
 
         //handle an error: pop the stack and throw the exception
-        if(SQ_FAILED(result)) {
-            sq_pop(vm, 2);
-            Error::Instance().Throw(vm, LastErrorString(vm));
+        if (SQ_FAILED(result)) {
+            sq_settop(vm, top);
+            SQTHROW(vm, LastErrorString(vm));
             return SharedPtr<R>();
         }
 #else
@@ -222,7 +257,7 @@ public:
 #endif
 
         SharedPtr<R> ret = Var<SharedPtr<R> >(vm, -1).value;
-        sq_pop(vm, 2);
+        sq_settop(vm, top);
         return ret;
     }
 
@@ -242,6 +277,8 @@ public:
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class R, class A1>
     SharedPtr<R> Evaluate(A1 a1) {
+        SQInteger top = sq_gettop(vm);
+
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
@@ -251,7 +288,7 @@ public:
 
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 2)) {
             sq_pop(vm, 2);
-            Error::Instance().Throw(vm, _SC("wrong number of parameters"));
+            SQTHROW(vm, _SC("wrong number of parameters"));
             return SharedPtr<R>();
         }
 #endif
@@ -262,9 +299,9 @@ public:
         SQRESULT result = sq_call(vm, 2, true, ErrorHandling::IsEnabled());
 
         //handle an error: pop the stack and throw the exception
-        if(SQ_FAILED(result)) {
-            sq_pop(vm, 2);
-            Error::Instance().Throw(vm, LastErrorString(vm));
+        if (SQ_FAILED(result)) {
+            sq_settop(vm, top);
+            SQTHROW(vm, LastErrorString(vm));
             return SharedPtr<R>();
         }
 #else
@@ -272,7 +309,7 @@ public:
 #endif
 
         SharedPtr<R> ret = Var<SharedPtr<R> >(vm, -1).value;
-        sq_pop(vm, 2);
+        sq_settop(vm, top);
         return ret;
     }
 
@@ -294,6 +331,8 @@ public:
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class R, class A1, class A2>
     SharedPtr<R> Evaluate(A1 a1, A2 a2) {
+        SQInteger top = sq_gettop(vm);
+
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
@@ -303,7 +342,7 @@ public:
 
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 3)) {
             sq_pop(vm, 2);
-            Error::Instance().Throw(vm, _SC("wrong number of parameters"));
+            SQTHROW(vm, _SC("wrong number of parameters"));
             return SharedPtr<R>();
         }
 #endif
@@ -315,9 +354,9 @@ public:
         SQRESULT result = sq_call(vm, 3, true, ErrorHandling::IsEnabled());
 
         //handle an error: pop the stack and throw the exception
-        if(SQ_FAILED(result)) {
-            sq_pop(vm, 2);
-            Error::Instance().Throw(vm, LastErrorString(vm));
+        if (SQ_FAILED(result)) {
+            sq_settop(vm, top);
+            SQTHROW(vm, LastErrorString(vm));
             return SharedPtr<R>();
         }
 #else
@@ -325,7 +364,7 @@ public:
 #endif
 
         SharedPtr<R> ret = Var<SharedPtr<R> >(vm, -1).value;
-        sq_pop(vm, 2);
+        sq_settop(vm, top);
         return ret;
     }
 
@@ -349,6 +388,8 @@ public:
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class R, class A1, class A2, class A3>
     SharedPtr<R> Evaluate(A1 a1, A2 a2, A3 a3) {
+        SQInteger top = sq_gettop(vm);
+
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
@@ -357,7 +398,7 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 4)) {
             sq_pop(vm, 2);
-            Error::Instance().Throw(vm, _SC("wrong number of parameters"));
+            SQTHROW(vm, _SC("wrong number of parameters"));
             return SharedPtr<R>();
         }
 #endif
@@ -370,9 +411,9 @@ public:
         SQRESULT result = sq_call(vm, 4, true, ErrorHandling::IsEnabled());
 
         //handle an error: pop the stack and throw the exception
-        if(SQ_FAILED(result)) {
-            sq_pop(vm, 2);
-            Error::Instance().Throw(vm, LastErrorString(vm));
+        if (SQ_FAILED(result)) {
+            sq_settop(vm, top);
+            SQTHROW(vm, LastErrorString(vm));
             return SharedPtr<R>();
         }
 #else
@@ -380,7 +421,7 @@ public:
 #endif
 
         SharedPtr<R> ret = Var<SharedPtr<R> >(vm, -1).value;
-        sq_pop(vm, 2);
+        sq_settop(vm, top);
         return ret;
     }
 
@@ -406,6 +447,8 @@ public:
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class R, class A1, class A2, class A3, class A4>
     SharedPtr<R> Evaluate(A1 a1, A2 a2, A3 a3, A4 a4) {
+        SQInteger top = sq_gettop(vm);
+
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
@@ -414,7 +457,7 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 5)) {
             sq_pop(vm, 2);
-            Error::Instance().Throw(vm, _SC("wrong number of parameters"));
+            SQTHROW(vm, _SC("wrong number of parameters"));
             return SharedPtr<R>();
         }
 #endif
@@ -428,9 +471,9 @@ public:
         SQRESULT result = sq_call(vm, 5, true, ErrorHandling::IsEnabled());
 
         //handle an error: pop the stack and throw the exception
-        if(SQ_FAILED(result)) {
-            sq_pop(vm, 2);
-            Error::Instance().Throw(vm, LastErrorString(vm));
+        if (SQ_FAILED(result)) {
+            sq_settop(vm, top);
+            SQTHROW(vm, LastErrorString(vm));
             return SharedPtr<R>();
         }
 #else
@@ -438,7 +481,7 @@ public:
 #endif
 
         SharedPtr<R> ret = Var<SharedPtr<R> >(vm, -1).value;
-        sq_pop(vm, 2);
+        sq_settop(vm, top);
         return ret;
     }
 
@@ -466,6 +509,8 @@ public:
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class R, class A1, class A2, class A3, class A4, class A5>
     SharedPtr<R> Evaluate(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5) {
+        SQInteger top = sq_gettop(vm);
+
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
@@ -474,7 +519,7 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 6)) {
             sq_pop(vm, 2);
-            Error::Instance().Throw(vm, _SC("wrong number of parameters"));
+            SQTHROW(vm, _SC("wrong number of parameters"));
             return SharedPtr<R>();
         }
 #endif
@@ -489,9 +534,9 @@ public:
         SQRESULT result = sq_call(vm, 6, true, ErrorHandling::IsEnabled());
 
         //handle an error: pop the stack and throw the exception
-        if(SQ_FAILED(result)) {
-            sq_pop(vm, 2);
-            Error::Instance().Throw(vm, LastErrorString(vm));
+        if (SQ_FAILED(result)) {
+            sq_settop(vm, top);
+            SQTHROW(vm, LastErrorString(vm));
             return SharedPtr<R>();
         }
 #else
@@ -499,7 +544,7 @@ public:
 #endif
 
         SharedPtr<R> ret = Var<SharedPtr<R> >(vm, -1).value;
-        sq_pop(vm, 2);
+        sq_settop(vm, top);
         return ret;
     }
 
@@ -529,6 +574,8 @@ public:
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class R, class A1, class A2, class A3, class A4, class A5, class A6>
     SharedPtr<R> Evaluate(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6) {
+        SQInteger top = sq_gettop(vm);
+
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
@@ -538,7 +585,7 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 7)) {
             sq_pop(vm, 2);
-            Error::Instance().Throw(vm, _SC("wrong number of parameters"));
+            SQTHROW(vm, _SC("wrong number of parameters"));
             return SharedPtr<R>();
         }
 #endif
@@ -554,9 +601,9 @@ public:
         SQRESULT result = sq_call(vm, 7, true, ErrorHandling::IsEnabled());
 
         //handle an error: pop the stack and throw the exception
-        if(SQ_FAILED(result)) {
-            sq_pop(vm, 2);
-            Error::Instance().Throw(vm, LastErrorString(vm));
+        if (SQ_FAILED(result)) {
+            sq_settop(vm, top);
+            SQTHROW(vm, LastErrorString(vm));
             return SharedPtr<R>();
         }
 #else
@@ -564,7 +611,7 @@ public:
 #endif
 
         SharedPtr<R> ret = Var<SharedPtr<R> >(vm, -1).value;
-        sq_pop(vm, 2);
+        sq_settop(vm, top);
         return ret;
     }
 
@@ -596,6 +643,8 @@ public:
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class R, class A1, class A2, class A3, class A4, class A5, class A6, class A7>
     SharedPtr<R> Evaluate(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7) {
+        SQInteger top = sq_gettop(vm);
+
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
@@ -604,7 +653,7 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 8)) {
             sq_pop(vm, 2);
-            Error::Instance().Throw(vm, _SC("wrong number of parameters"));
+            SQTHROW(vm, _SC("wrong number of parameters"));
             return SharedPtr<R>();
         }
 #endif
@@ -621,9 +670,9 @@ public:
         SQRESULT result = sq_call(vm, 8, true, ErrorHandling::IsEnabled());
 
         //handle an error: pop the stack and throw the exception
-        if(SQ_FAILED(result)) {
-            sq_pop(vm, 2);
-            Error::Instance().Throw(vm, LastErrorString(vm));
+        if (SQ_FAILED(result)) {
+            sq_settop(vm, top);
+            SQTHROW(vm, LastErrorString(vm));
             return SharedPtr<R>();
         }
 #else
@@ -631,7 +680,7 @@ public:
 #endif
 
         SharedPtr<R> ret = Var<SharedPtr<R> >(vm, -1).value;
-        sq_pop(vm, 2);
+        sq_settop(vm, top);
         return ret;
     }
 
@@ -665,6 +714,8 @@ public:
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class R, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8>
     SharedPtr<R> Evaluate(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8) {
+        SQInteger top = sq_gettop(vm);
+
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
@@ -673,7 +724,7 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 9)) {
             sq_pop(vm, 2);
-            Error::Instance().Throw(vm, _SC("wrong number of parameters"));
+            SQTHROW(vm, _SC("wrong number of parameters"));
             return SharedPtr<R>();
         }
 #endif
@@ -691,9 +742,9 @@ public:
         SQRESULT result = sq_call(vm, 9, true, ErrorHandling::IsEnabled());
 
         //handle an error: pop the stack and throw the exception
-        if(SQ_FAILED(result)) {
-            sq_pop(vm, 2);
-            Error::Instance().Throw(vm, LastErrorString(vm));
+        if (SQ_FAILED(result)) {
+            sq_settop(vm, top);
+            SQTHROW(vm, LastErrorString(vm));
             return SharedPtr<R>();
         }
 #else
@@ -701,7 +752,7 @@ public:
 #endif
 
         SharedPtr<R> ret = Var<SharedPtr<R> >(vm, -1).value;
-        sq_pop(vm, 2);
+        sq_settop(vm, top);
         return ret;
     }
 
@@ -737,6 +788,8 @@ public:
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class R, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9>
     SharedPtr<R> Evaluate(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9) {
+        SQInteger top = sq_gettop(vm);
+
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
@@ -745,7 +798,7 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 10)) {
             sq_pop(vm, 2);
-            Error::Instance().Throw(vm, _SC("wrong number of parameters"));
+            SQTHROW(vm, _SC("wrong number of parameters"));
             return SharedPtr<R>();
         }
 #endif
@@ -764,9 +817,9 @@ public:
         SQRESULT result = sq_call(vm, 10, true, ErrorHandling::IsEnabled());
 
         //handle an error: pop the stack and throw the exception
-        if(SQ_FAILED(result)) {
-            sq_pop(vm, 2);
-            Error::Instance().Throw(vm, LastErrorString(vm));
+        if (SQ_FAILED(result)) {
+            sq_settop(vm, top);
+            SQTHROW(vm, LastErrorString(vm));
             return SharedPtr<R>();
         }
 #else
@@ -774,7 +827,7 @@ public:
 #endif
 
         SharedPtr<R> ret = Var<SharedPtr<R> >(vm, -1).value;
-        sq_pop(vm, 2);
+        sq_settop(vm, top);
         return ret;
     }
 
@@ -812,6 +865,8 @@ public:
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class R, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10>
     SharedPtr<R> Evaluate(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9, A10 a10) {
+        SQInteger top = sq_gettop(vm);
+
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
@@ -820,7 +875,7 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 11)) {
             sq_pop(vm, 2);
-            Error::Instance().Throw(vm, _SC("wrong number of parameters"));
+            SQTHROW(vm, _SC("wrong number of parameters"));
             return SharedPtr<R>();
         }
 #endif
@@ -840,9 +895,9 @@ public:
         SQRESULT result = sq_call(vm, 11, true, ErrorHandling::IsEnabled());
 
         //handle an error: pop the stack and throw the exception
-        if(SQ_FAILED(result)) {
-            sq_pop(vm, 2);
-            Error::Instance().Throw(vm, LastErrorString(vm));
+        if (SQ_FAILED(result)) {
+            sq_settop(vm, top);
+            SQTHROW(vm, LastErrorString(vm));
             return SharedPtr<R>();
         }
 #else
@@ -850,7 +905,7 @@ public:
 #endif
 
         SharedPtr<R> ret = Var<SharedPtr<R> >(vm, -1).value;
-        sq_pop(vm, 2);
+        sq_settop(vm, top);
         return ret;
     }
 
@@ -890,6 +945,8 @@ public:
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class R, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11>
     SharedPtr<R> Evaluate(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9, A10 a10, A11 a11) {
+        SQInteger top = sq_gettop(vm);
+
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
@@ -898,7 +955,7 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 12)) {
             sq_pop(vm, 2);
-            Error::Instance().Throw(vm, _SC("wrong number of parameters"));
+            SQTHROW(vm, _SC("wrong number of parameters"));
             return SharedPtr<R>();
         }
 #endif
@@ -919,9 +976,9 @@ public:
         SQRESULT result = sq_call(vm, 12, true, ErrorHandling::IsEnabled());
 
         //handle an error: pop the stack and throw the exception
-        if(SQ_FAILED(result)) {
-            sq_pop(vm, 2);
-            Error::Instance().Throw(vm, LastErrorString(vm));
+        if (SQ_FAILED(result)) {
+            sq_settop(vm, top);
+            SQTHROW(vm, LastErrorString(vm));
             return SharedPtr<R>();
         }
 #else
@@ -929,7 +986,7 @@ public:
 #endif
 
         SharedPtr<R> ret = Var<SharedPtr<R> >(vm, -1).value;
-        sq_pop(vm, 2);
+        sq_settop(vm, top);
         return ret;
     }
 
@@ -971,6 +1028,8 @@ public:
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class R, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12>
     SharedPtr<R> Evaluate(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9, A10 a10, A11 a11, A12 a12) {
+        SQInteger top = sq_gettop(vm);
+
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
@@ -979,7 +1038,7 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 13)) {
             sq_pop(vm, 2);
-            Error::Instance().Throw(vm, _SC("wrong number of parameters"));
+            SQTHROW(vm, _SC("wrong number of parameters"));
             return SharedPtr<R>();
         }
 #endif
@@ -1001,9 +1060,9 @@ public:
         SQRESULT result = sq_call(vm, 13, true, ErrorHandling::IsEnabled());
 
         //handle an error: pop the stack and throw the exception
-        if(SQ_FAILED(result)) {
-            sq_pop(vm, 2);
-            Error::Instance().Throw(vm, LastErrorString(vm));
+        if (SQ_FAILED(result)) {
+            sq_settop(vm, top);
+            SQTHROW(vm, LastErrorString(vm));
             return SharedPtr<R>();
         }
 #else
@@ -1011,7 +1070,7 @@ public:
 #endif
 
         SharedPtr<R> ret = Var<SharedPtr<R> >(vm, -1).value;
-        sq_pop(vm, 2);
+        sq_settop(vm, top);
         return ret;
     }
 
@@ -1055,6 +1114,8 @@ public:
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class R, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12, class A13>
     SharedPtr<R> Evaluate(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9, A10 a10, A11 a11, A12 a12, A13 a13) {
+        SQInteger top = sq_gettop(vm);
+
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
@@ -1063,7 +1124,7 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 14)) {
             sq_pop(vm, 2);
-            Error::Instance().Throw(vm, _SC("wrong number of parameters"));
+            SQTHROW(vm, _SC("wrong number of parameters"));
             return SharedPtr<R>();
         }
 #endif
@@ -1086,9 +1147,9 @@ public:
         SQRESULT result = sq_call(vm, 14, true, ErrorHandling::IsEnabled());
 
         //handle an error: pop the stack and throw the exception
-        if(SQ_FAILED(result)) {
-            sq_pop(vm, 2);
-            Error::Instance().Throw(vm, LastErrorString(vm));
+        if (SQ_FAILED(result)) {
+            sq_settop(vm, top);
+            SQTHROW(vm, LastErrorString(vm));
             return SharedPtr<R>();
         }
 #else
@@ -1096,7 +1157,7 @@ public:
 #endif
 
         SharedPtr<R> ret = Var<SharedPtr<R> >(vm, -1).value;
-        sq_pop(vm, 2);
+        sq_settop(vm, top);
         return ret;
     }
 
@@ -1142,6 +1203,8 @@ public:
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class R, class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12, class A13, class A14>
     SharedPtr<R> Evaluate(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9, A10 a10, A11 a11, A12 a12, A13 a13, A14 a14) {
+        SQInteger top = sq_gettop(vm);
+
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
@@ -1150,7 +1213,7 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 15)) {
             sq_pop(vm, 2);
-            Error::Instance().Throw(vm, _SC("wrong number of parameters"));
+            SQTHROW(vm, _SC("wrong number of parameters"));
             return SharedPtr<R>();
         }
 #endif
@@ -1174,9 +1237,9 @@ public:
         SQRESULT result = sq_call(vm, 15, true, ErrorHandling::IsEnabled());
 
         //handle an error: pop the stack and throw the exception
-        if(SQ_FAILED(result)) {
-            sq_pop(vm, 2);
-            Error::Instance().Throw(vm, LastErrorString(vm));
+        if (SQ_FAILED(result)) {
+            sq_settop(vm, top);
+            SQTHROW(vm, LastErrorString(vm));
             return SharedPtr<R>();
         }
 #else
@@ -1184,7 +1247,7 @@ public:
 #endif
 
         SharedPtr<R> ret = Var<SharedPtr<R> >(vm, -1).value;
-        sq_pop(vm, 2);
+        sq_settop(vm, top);
         return ret;
     }
 
@@ -1196,6 +1259,8 @@ public:
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     void Execute() {
+        SQInteger top = sq_gettop(vm);
+
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
@@ -1204,21 +1269,21 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 1)) {
             sq_pop(vm, 2);
-            Error::Instance().Throw(vm, _SC("wrong number of parameters"));
+            SQTHROW(vm, _SC("wrong number of parameters"));
             return;
         }
 
         SQRESULT result = sq_call(vm, 1, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 1);
+        sq_settop(vm, top);
 
         //handle an error: throw the exception
-        if(SQ_FAILED(result)) {
-            Error::Instance().Throw(vm, LastErrorString(vm));
+        if (SQ_FAILED(result)) {
+            SQTHROW(vm, LastErrorString(vm));
             return;
         }
 #else
         sq_call(vm, 1, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 1);
+        sq_settop(vm, top);
 #endif
     }
 
@@ -1235,6 +1300,8 @@ public:
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class A1>
     void Execute(A1 a1) {
+        SQInteger top = sq_gettop(vm);
+
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
@@ -1243,7 +1310,7 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 2)) {
             sq_pop(vm, 2);
-            Error::Instance().Throw(vm, _SC("wrong number of parameters"));
+            SQTHROW(vm, _SC("wrong number of parameters"));
             return;
         }
 #endif
@@ -1252,16 +1319,16 @@ public:
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 2, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 1);
+        sq_settop(vm, top);
 
         //handle an error: throw the exception
-        if(SQ_FAILED(result)) {
-            Error::Instance().Throw(vm, LastErrorString(vm));
+        if (SQ_FAILED(result)) {
+            SQTHROW(vm, LastErrorString(vm));
             return;
         }
 #else
         sq_call(vm, 2, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 1);
+        sq_settop(vm, top);
 #endif
     }
 
@@ -1280,6 +1347,8 @@ public:
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class A1, class A2>
     void Execute(A1 a1, A2 a2) {
+        SQInteger top = sq_gettop(vm);
+
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
@@ -1288,7 +1357,7 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 3)) {
             sq_pop(vm, 2);
-            Error::Instance().Throw(vm, _SC("wrong number of parameters"));
+            SQTHROW(vm, _SC("wrong number of parameters"));
             return;
         }
 #endif
@@ -1298,16 +1367,16 @@ public:
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 3, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 1);
+        sq_settop(vm, top);
 
         //handle an error: throw the exception
-        if(SQ_FAILED(result)) {
-            Error::Instance().Throw(vm, LastErrorString(vm));
+        if (SQ_FAILED(result)) {
+            SQTHROW(vm, LastErrorString(vm));
             return;
         }
 #else
         sq_call(vm, 3, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 1);
+        sq_settop(vm, top);
 #endif
     }
 
@@ -1328,6 +1397,8 @@ public:
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class A1, class A2, class A3>
     void Execute(A1 a1, A2 a2, A3 a3) {
+        SQInteger top = sq_gettop(vm);
+
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
@@ -1336,7 +1407,7 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 4)) {
             sq_pop(vm, 2);
-            Error::Instance().Throw(vm, _SC("wrong number of parameters"));
+            SQTHROW(vm, _SC("wrong number of parameters"));
             return;
         }
 #endif
@@ -1347,16 +1418,16 @@ public:
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 4, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 1);
+        sq_settop(vm, top);
 
         //handle an error: throw the exception
-        if(SQ_FAILED(result)) {
-            Error::Instance().Throw(vm, LastErrorString(vm));
+        if (SQ_FAILED(result)) {
+            SQTHROW(vm, LastErrorString(vm));
             return;
         }
 #else
         sq_call(vm, 4, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 1);
+        sq_settop(vm, top);
 #endif
     }
 
@@ -1379,6 +1450,8 @@ public:
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class A1, class A2, class A3, class A4>
     void Execute(A1 a1, A2 a2, A3 a3, A4 a4) {
+        SQInteger top = sq_gettop(vm);
+
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
@@ -1387,7 +1460,7 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 5)) {
             sq_pop(vm, 2);
-            Error::Instance().Throw(vm, _SC("wrong number of parameters"));
+            SQTHROW(vm, _SC("wrong number of parameters"));
             return;
         }
 #endif
@@ -1399,16 +1472,16 @@ public:
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 5, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 1);
+        sq_settop(vm, top);
 
         //handle an error: throw the exception
-        if(SQ_FAILED(result)) {
-            Error::Instance().Throw(vm, LastErrorString(vm));
+        if (SQ_FAILED(result)) {
+            SQTHROW(vm, LastErrorString(vm));
             return;
         }
 #else
         sq_call(vm, 5, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 1);
+        sq_settop(vm, top);
 #endif
     }
 
@@ -1433,6 +1506,8 @@ public:
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class A1, class A2, class A3, class A4, class A5>
     void Execute(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5) {
+        SQInteger top = sq_gettop(vm);
+
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
@@ -1441,7 +1516,7 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 6)) {
             sq_pop(vm, 2);
-            Error::Instance().Throw(vm, _SC("wrong number of parameters"));
+            SQTHROW(vm, _SC("wrong number of parameters"));
             return;
         }
 #endif
@@ -1454,16 +1529,16 @@ public:
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 6, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 1);
+        sq_settop(vm, top);
 
         //handle an error: throw the exception
-        if(SQ_FAILED(result)) {
-            Error::Instance().Throw(vm, LastErrorString(vm));
+        if (SQ_FAILED(result)) {
+            SQTHROW(vm, LastErrorString(vm));
             return;
         }
 #else
         sq_call(vm, 6, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 1);
+        sq_settop(vm, top);
 #endif
     }
 
@@ -1490,6 +1565,8 @@ public:
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class A1, class A2, class A3, class A4, class A5, class A6>
     void Execute(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6) {
+        SQInteger top = sq_gettop(vm);
+
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
@@ -1498,7 +1575,7 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 7)) {
             sq_pop(vm, 2);
-            Error::Instance().Throw(vm, _SC("wrong number of parameters"));
+            SQTHROW(vm, _SC("wrong number of parameters"));
             return;
         }
 #endif
@@ -1512,16 +1589,16 @@ public:
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 7, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 1);
+        sq_settop(vm, top);
 
         //handle an error: throw the exception
-        if(SQ_FAILED(result)) {
-            Error::Instance().Throw(vm, LastErrorString(vm));
+        if (SQ_FAILED(result)) {
+            SQTHROW(vm, LastErrorString(vm));
             return;
         }
 #else
         sq_call(vm, 7, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 1);
+        sq_settop(vm, top);
 #endif
     }
 
@@ -1550,6 +1627,8 @@ public:
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7>
     void Execute(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7) {
+        SQInteger top = sq_gettop(vm);
+
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
@@ -1558,7 +1637,7 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 8)) {
             sq_pop(vm, 2);
-            Error::Instance().Throw(vm, _SC("wrong number of parameters"));
+            SQTHROW(vm, _SC("wrong number of parameters"));
             return;
         }
 #endif
@@ -1573,16 +1652,16 @@ public:
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 8, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 1);
+        sq_settop(vm, top);
 
         //handle an error: throw the exception
-        if(SQ_FAILED(result)) {
-            Error::Instance().Throw(vm, LastErrorString(vm));
+        if (SQ_FAILED(result)) {
+            SQTHROW(vm, LastErrorString(vm));
             return;
         }
 #else
         sq_call(vm, 8, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 1);
+        sq_settop(vm, top);
 #endif
     }
 
@@ -1613,6 +1692,8 @@ public:
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8>
     void Execute(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8) {
+        SQInteger top = sq_gettop(vm);
+
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
@@ -1621,7 +1702,7 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 9)) {
             sq_pop(vm, 2);
-            Error::Instance().Throw(vm, _SC("wrong number of parameters"));
+            SQTHROW(vm, _SC("wrong number of parameters"));
             return;
         }
 #endif
@@ -1637,16 +1718,16 @@ public:
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 9, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 1);
+        sq_settop(vm, top);
 
         //handle an error: throw the exception
-        if(SQ_FAILED(result)) {
-            Error::Instance().Throw(vm, LastErrorString(vm));
+        if (SQ_FAILED(result)) {
+            SQTHROW(vm, LastErrorString(vm));
             return;
         }
 #else
         sq_call(vm, 9, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 1);
+        sq_settop(vm, top);
 #endif
     }
 
@@ -1679,6 +1760,8 @@ public:
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9>
     void Execute(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9) {
+        SQInteger top = sq_gettop(vm);
+
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
@@ -1687,7 +1770,7 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 10)) {
             sq_pop(vm, 2);
-            Error::Instance().Throw(vm, _SC("wrong number of parameters"));
+            SQTHROW(vm, _SC("wrong number of parameters"));
             return;
         }
 #endif
@@ -1704,16 +1787,16 @@ public:
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 10, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 1);
+        sq_settop(vm, top);
 
         //handle an error: throw the exception
-        if(SQ_FAILED(result)) {
-            Error::Instance().Throw(vm, LastErrorString(vm));
+        if (SQ_FAILED(result)) {
+            SQTHROW(vm, LastErrorString(vm));
             return;
         }
 #else
         sq_call(vm, 10, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 1);
+        sq_settop(vm, top);
 #endif
     }
 
@@ -1748,6 +1831,8 @@ public:
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10>
     void Execute(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9, A10 a10) {
+        SQInteger top = sq_gettop(vm);
+
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
@@ -1756,7 +1841,7 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 11)) {
             sq_pop(vm, 2);
-            Error::Instance().Throw(vm, _SC("wrong number of parameters"));
+            SQTHROW(vm, _SC("wrong number of parameters"));
             return;
         }
 #endif
@@ -1774,16 +1859,16 @@ public:
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 11, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 1);
+        sq_settop(vm, top);
 
         //handle an error: throw the exception
-        if(SQ_FAILED(result)) {
-            Error::Instance().Throw(vm, LastErrorString(vm));
+        if (SQ_FAILED(result)) {
+            SQTHROW(vm, LastErrorString(vm));
             return;
         }
 #else
         sq_call(vm, 11, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 1);
+        sq_settop(vm, top);
 #endif
     }
 
@@ -1820,6 +1905,8 @@ public:
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11>
     void Execute(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9, A10 a10, A11 a11) {
+        SQInteger top = sq_gettop(vm);
+
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
@@ -1828,7 +1915,7 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 12)) {
             sq_pop(vm, 2);
-            Error::Instance().Throw(vm, _SC("wrong number of parameters"));
+            SQTHROW(vm, _SC("wrong number of parameters"));
             return;
         }
 #endif
@@ -1847,16 +1934,16 @@ public:
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 12, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 1);
+        sq_settop(vm, top);
 
         //handle an error: throw the exception
-        if(SQ_FAILED(result)) {
-            Error::Instance().Throw(vm, LastErrorString(vm));
+        if (SQ_FAILED(result)) {
+            SQTHROW(vm, LastErrorString(vm));
             return;
         }
 #else
         sq_call(vm, 12, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 1);
+        sq_settop(vm, top);
 #endif
     }
 
@@ -1895,6 +1982,8 @@ public:
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12>
     void Execute(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9, A10 a10, A11 a11, A12 a12) {
+        SQInteger top = sq_gettop(vm);
+
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
@@ -1904,7 +1993,7 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 13)) {
             sq_pop(vm, 2);
-            Error::Instance().Throw(vm, _SC("wrong number of parameters"));
+            SQTHROW(vm, _SC("wrong number of parameters"));
             return;
         }
 #endif
@@ -1924,16 +2013,16 @@ public:
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 13, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 1);
+        sq_settop(vm, top);
 
         //handle an error: throw the exception
-        if(SQ_FAILED(result)) {
-            Error::Instance().Throw(vm, LastErrorString(vm));
+        if (SQ_FAILED(result)) {
+            SQTHROW(vm, LastErrorString(vm));
             return;
         }
 #else
         sq_call(vm, 13, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 1);
+        sq_settop(vm, top);
 #endif
     }
 
@@ -1974,6 +2063,8 @@ public:
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12, class A13>
     void Execute(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9, A10 a10, A11 a11, A12 a12, A13 a13) {
+        SQInteger top = sq_gettop(vm);
+
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
@@ -1982,7 +2073,7 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 14)) {
             sq_pop(vm, 2);
-            Error::Instance().Throw(vm, _SC("wrong number of parameters"));
+            SQTHROW(vm, _SC("wrong number of parameters"));
             return;
         }
 #endif
@@ -2003,16 +2094,16 @@ public:
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 14, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 1);
+        sq_settop(vm, top);
 
         //handle an error: throw the exception
-        if(SQ_FAILED(result)) {
-            Error::Instance().Throw(vm, LastErrorString(vm));
+        if (SQ_FAILED(result)) {
+            SQTHROW(vm, LastErrorString(vm));
             return;
         }
 #else
         sq_call(vm, 14, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 1);
+        sq_settop(vm, top);
 #endif
     }
 
@@ -2055,6 +2146,8 @@ public:
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class A1, class A2, class A3, class A4, class A5, class A6, class A7, class A8, class A9, class A10, class A11, class A12, class A13, class A14>
     void Execute(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9, A10 a10, A11 a11, A12 a12, A13 a13, A14 a14) {
+        SQInteger top = sq_gettop(vm);
+
         sq_pushobject(vm, obj);
         sq_pushobject(vm, env);
 
@@ -2063,7 +2156,7 @@ public:
         SQUnsignedInteger nfreevars;
         if (SQ_SUCCEEDED(sq_getclosureinfo(vm, -2, &nparams, &nfreevars)) && (nparams != 15)) {
             sq_pop(vm, 2);
-            Error::Instance().Throw(vm, _SC("wrong number of parameters"));
+            SQTHROW(vm, _SC("wrong number of parameters"));
             return;
         }
 #endif
@@ -2085,16 +2178,16 @@ public:
 
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         SQRESULT result = sq_call(vm, 15, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 1);
+        sq_settop(vm, top);
 
         //handle an error: throw the exception
-        if(SQ_FAILED(result)) {
-            Error::Instance().Throw(vm, LastErrorString(vm));
+        if (SQ_FAILED(result)) {
+            SQTHROW(vm, LastErrorString(vm));
             return;
         }
 #else
         sq_call(vm, 15, false, ErrorHandling::IsEnabled());
-        sq_pop(vm, 1);
+        sq_settop(vm, top);
 #endif
     }
 
@@ -2546,7 +2639,7 @@ struct Var<Function> {
 #if !defined (SCRAT_NO_ERROR_CHECKING)
         SQObjectType value_type = sq_gettype(vm, idx);
         if (value_type != OT_CLOSURE && value_type != OT_NATIVECLOSURE) {
-            Error::Instance().Throw(vm, Sqrat::Error::FormatTypeError(vm, idx, _SC("closure")));
+            SQTHROW(vm, FormatTypeError(vm, idx, _SC("closure")));
         }
 #endif
     }
@@ -2558,7 +2651,7 @@ struct Var<Function> {
     /// \param value Value to push on to the VM's stack
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    static void push(HSQUIRRELVM vm, Function& value) {
+    static void push(HSQUIRRELVM vm, const Function& value) {
         sq_pushobject(vm, value.GetFunc());
     }
 };

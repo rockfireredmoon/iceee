@@ -29,18 +29,127 @@
 #define _SCRAT_UTIL_H_
 
 #include <cassert>
+#include <map>
 #include <squirrel.h>
 #include <string.h>
 
+#if defined(SCRAT_USE_CXX11_OPTIMIZATIONS)
+#include <unordered_map>
+#endif
+
 namespace Sqrat {
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// @cond DEV
-/// removes unused variable warnings in a way that Doxygen can understand
+
+#if defined(SCRAT_USE_CXX11_OPTIMIZATIONS)
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Define an unordered map for Sqrat to use based on whether SCRAT_USE_CXX11_OPTIMIZATIONS is defined or not
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    template<class Key, class T>
+    struct unordered_map {
+        typedef std::unordered_map<Key, T> type;
+    };
+#else
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Define an unordered map for Sqrat to use based on whether SCRAT_USE_CXX11_OPTIMIZATIONS is defined or not
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    template<class Key, class T>
+    struct unordered_map {
+        typedef std::map<Key, T> type;
+    };
+#endif
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// Define an inline function to avoid MSVC's "conditional expression is constant" warning
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#ifdef _MSC_VER
+    template <typename T>
+    inline T _c_def(T value) { return value; }
+    #define SQRAT_CONST_CONDITION(value) _c_def(value)
+#else
+    #define SQRAT_CONST_CONDITION(value) value
+#endif
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Define helpers to create portable import / export macros
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#if defined(SCRAT_EXPORT)
+    #if defined(_WIN32)
+        // Windows compilers need a specific keyword for export
+        #define SQRAT_API __declspec(dllexport)
+    #else
+        #if __GNUC__ >= 4
+            // GCC 4 has special keywords for showing/hiding symbols,
+            // the same keyword is used for both importing and exporting
+            #define SQRAT_API __attribute__ ((__visibility__ ("default")))
+        #else
+            // GCC < 4 has no mechanism to explicitly hide symbols, everything's exported
+            #define SQRAT_API
+
+        #endif
+    #endif
+#elif defined(SCRAT_IMPORT)
+    #if defined(_WIN32)
+        // Windows compilers need a specific keyword for import
+        #define SQRAT_API __declspec(dllimport)
+    #else
+        #if __GNUC__ >= 4
+            // GCC 4 has special keywords for showing/hiding symbols,
+            // the same keyword is used for both importing and exporting
+            #define SQRAT_API __attribute__ ((__visibility__ ("default")))
+        #else
+            // GCC < 4 has no mechanism to explicitly hide symbols, everything's exported
+            #define SQRAT_API
+        #endif
+    #endif
+#else
+    #define SQRAT_API
+#endif
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// Define macros for internal error handling
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#if defined (SCRAT_NO_ERROR_CHECKING)
+    #define SQCATCH(vm)          if (SQRAT_CONST_CONDITION(false))
+    #define SQCATCH_NOEXCEPT(vm) if (SQRAT_CONST_CONDITION(false))
+    #define SQCLEAR(vm)
+    #define SQRETHROW(vm)
+    #define SQTHROW(vm, err)
+    #define SQTRY()
+    #define SQWHAT(vm)           _SC("")
+    #define SQWHAT_NOEXCEPT(vm)  _SC("")
+#elif defined (SCRAT_USE_EXCEPTIONS)
+    #define SQCATCH(vm)          } catch (const Sqrat::Exception& e)
+    #define SQCATCH_NOEXCEPT(vm) if (SQRAT_CONST_CONDITION(false))
+    #define SQCLEAR(vm)
+    #ifdef _MSC_VER // avoid MSVC's "unreachable code" warning
+        #define SQRETHROW(vm)      if (SQRAT_CONST_CONDITION(true)) throw
+        #define SQTHROW(vm, err)   if (SQRAT_CONST_CONDITION(true)) throw Sqrat::Exception(err)
+    #else
+        #define SQRETHROW(vm)      throw
+        #define SQTHROW(vm, err)   throw Sqrat::Exception(err)
+    #endif
+    #define SQTRY()              try {
+    #define SQWHAT(vm)           e.Message().c_str()
+    #define SQWHAT_NOEXCEPT(vm)  _SC("")
+#else
+    #define SQCATCH(vm)          if (SQRAT_CONST_CONDITION(false))
+    #define SQCATCH_NOEXCEPT(vm) if (Error::Occurred(vm))
+    #define SQCLEAR(vm)          Error::Clear(vm)
+    #define SQRETHROW(vm)
+    #define SQTHROW(vm, err)     Error::Throw(vm, err)
+    #define SQTRY()
+    #define SQWHAT(vm)           _SC("")
+    #define SQWHAT_NOEXCEPT(vm)  Error::Message(vm).c_str()
+#endif
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// Removes unused variable warnings in a way that Doxygen can understand
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template <typename T>
-void UNUSED(const T&) {
+void SQUNUSED(const T&) {
 }
+
 /// @endcond
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -55,7 +164,7 @@ typedef std::basic_string<SQChar> string;
 /**
 * Convert a std::string into a std::wstring
 */
-static std::wstring ascii_string_to_wstring(const std::string& str)
+static std::wstring string_to_wstring(const std::string& str)
 {
     return std::wstring(str.begin(), str.end());
 }
@@ -63,14 +172,19 @@ static std::wstring ascii_string_to_wstring(const std::string& str)
 /**
 * Convert a std::wstring into a std::string
 */
-static std::string ascii_wstring_to_string(const std::wstring& wstr)
+static std::string wstring_to_string(const std::wstring& wstr)
 {
     return std::string(wstr.begin(), wstr.end());
 }
 
-static std::wstring (*string_to_wstring)(const std::string& str) = ascii_string_to_wstring;
-static std::string (*wstring_to_string)(const std::wstring& wstr) = ascii_wstring_to_string;
 #endif // SQUNICODE
+
+template <class T>
+class SharedPtr;
+
+template <class T>
+class WeakPtr;
+
 /// @endcond
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -78,11 +192,14 @@ static std::string (*wstring_to_string)(const std::wstring& wstr) = ascii_wstrin
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 class DefaultVM {
 private:
+
     static HSQUIRRELVM& staticVm() {
         static HSQUIRRELVM vm;
         return vm;
     }
+
 public:
+
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /// Gets the default VM
     ///
@@ -104,18 +221,24 @@ public:
     }
 };
 
-#if !defined (SCRAT_NO_ERROR_CHECKING)
+#if !defined (SCRAT_NO_ERROR_CHECKING) && !defined (SCRAT_USE_EXCEPTIONS)
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// The class that must be used to deal with errors that Sqrat has
 ///
 /// \remarks
 /// When documentation in Sqrat says, "This function MUST have its error handled if it occurred," that
 /// means that after the function has been run, you must call Error::Occurred to see if the function
-/// ran successfully. If the function did not run successfully, then you must either call Error::Clear
+/// ran successfully. If the function did not run successfully, then you MUST either call Error::Clear
 /// or Error::Message to clear the error buffer so new ones may occur and Sqrat does not get confused.
 ///
 /// \remarks
-/// Any error thrown inside of a bound C++ function will be also thrown in the given Squirrel VM.
+/// Any error thrown inside of a bound C++ function will be thrown in the given Squirrel VM and
+/// automatically handled.
+///
+/// \remarks
+/// If compiling with SCRAT_USE_EXCEPTIONS defined, Sqrat will throw exceptions instead of using this
+/// class to handle errors. This means that functions must be enclosed in try blocks that catch
+/// Sqrat::Exception instead of checking for errors with Error::Occurred.
 ///
 /// \remarks
 /// If compiling with SCRAT_NO_ERROR_CHECKING defined, Sqrat will run significantly faster,
@@ -125,41 +248,6 @@ public:
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 class Error {
 public:
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /// Gets the Error instance (this class uses a singleton pattern)
-    ///
-    /// \return Error instance
-    ///
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    static Error& Instance() {
-        static Error instance;
-        return instance;
-    }
-
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /// Returns a string that has been formatted to give a nice type error message (for usage with Class::SquirrelFunc)
-    ///
-    /// \param vm           VM the error occurred with
-    /// \param idx          Index on the stack of the argument that had a type error
-    /// \param expectedType The name of the type that the argument should have been
-    ///
-    /// \return String containing a nice type error message
-    ///
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    static string FormatTypeError(HSQUIRRELVM vm, SQInteger idx, const string& expectedType) {
-        string err = _SC("wrong type (") + expectedType + _SC(" expected");
-        if (SQ_SUCCEEDED(sq_typeof(vm, idx))) {
-            const SQChar* actualType;
-            sq_tostring(vm, -1);
-            sq_getstring(vm, -1, &actualType);
-            sq_pop(vm, 1);
-            err = err + _SC(", got ") + actualType + _SC(")");
-        } else {
-            err = err + _SC(", got unknown)");
-        }
-        sq_pop(vm, 1);
-        return err;
-    }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /// Clears the error associated with a given VM
@@ -167,9 +255,11 @@ public:
     /// \param vm Target VM
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void Clear(HSQUIRRELVM vm) {
-        //TODO: use mutex to lock errMap in multithreaded environment
-        errMap.erase(vm);
+    static void Clear(HSQUIRRELVM vm) {
+        sq_pushregistrytable(vm);
+        sq_pushstring(vm, "__error", -1);
+        sq_rawdeleteslot(vm, -2, false);
+        sq_pop(vm, 1);
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -180,11 +270,23 @@ public:
     /// \return String containing a nice error message
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    string Message(HSQUIRRELVM vm) {
-        //TODO: use mutex to lock errMap in multithreaded environment
-        string err = errMap[vm];
-        errMap.erase(vm);
-        return err;
+    static string Message(HSQUIRRELVM vm) {
+        sq_pushregistrytable(vm);
+        sq_pushstring(vm, "__error", -1);
+        if (SQ_SUCCEEDED(sq_rawget(vm, -2))) {
+            string** ud;
+            sq_getuserdata(vm, -1, (SQUserPointer*)&ud, NULL);
+            sq_pop(vm, 1);
+            string err = **ud;
+            sq_pushstring(vm, "__error", -1);
+            sq_rawdeleteslot(vm, -2, false);
+            sq_pop(vm, 1);
+            return err;
+        }
+        sq_pushstring(vm, "__error", -1);
+        sq_rawdeleteslot(vm, -2, false);
+        sq_pop(vm, 1);
+        return string(_SC("an unknown error has occurred"));
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -195,9 +297,15 @@ public:
     /// \return True if an error has occurred, otherwise false
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    bool Occurred(HSQUIRRELVM vm) {
-        //TODO: use mutex to lock errMap in multithreaded environment
-        return errMap.find(vm) != errMap.end();
+    static bool Occurred(HSQUIRRELVM vm) {
+        sq_pushregistrytable(vm);
+        sq_pushstring(vm, "__error", -1);
+        if (SQ_SUCCEEDED(sq_rawget(vm, -2))) {
+            sq_pop(vm, 2);
+            return true;
+        }
+        sq_pop(vm, 1);
+        return false;
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -207,17 +315,31 @@ public:
     /// \param err A nice error message
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void Throw(HSQUIRRELVM vm, const string& err) {
-        //TODO: use mutex to lock errMap in multithreaded environment
-        if (errMap.find(vm) == errMap.end()) {
-            errMap[vm] = err;
+    static void Throw(HSQUIRRELVM vm, const string& err) {
+        sq_pushregistrytable(vm);
+        sq_pushstring(vm, "__error", -1);
+        if (SQ_FAILED(sq_rawget(vm, -2))) {
+            sq_pushstring(vm, "__error", -1);
+            string** ud = reinterpret_cast<string**>(sq_newuserdata(vm, sizeof(string*)));
+            *ud = new string(err);
+            sq_setreleasehook(vm, -1, &error_cleanup_hook);
+            sq_rawset(vm, -3);
+            sq_pop(vm, 1);
+            return;
         }
+        sq_pop(vm, 2);
     }
 
 private:
+
     Error() {}
 
-    std::map< HSQUIRRELVM, string > errMap;
+    static SQInteger error_cleanup_hook(SQUserPointer ptr, SQInteger size) {
+        SQUNUSED(size);
+        string** ud = reinterpret_cast<string**>(ptr);
+        delete *ud;
+        return 0;
+    }
 };
 #endif
 
@@ -230,11 +352,14 @@ private:
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 class ErrorHandling {
 private:
+
     static bool& errorHandling() {
         static bool eh = true;
         return eh;
     }
+
 public:
+
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /// Returns whether Squirrel error handling is enabled
     ///
@@ -255,6 +380,75 @@ public:
         errorHandling() = enable;
     }
 };
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// Sqrat exception class
+///
+/// \remarks
+/// Used only when SCRAT_USE_EXCEPTIONS is defined (see Sqrat::Error)
+///
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+class Exception {
+public:
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Constructs an exception
+    ///
+    /// \param msg A nice error message
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    Exception(const string& msg) : message(msg) {}
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Copy constructor
+    ///
+    /// \param ex Exception to copy
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    Exception(const Exception& ex) : message(ex.message) {}
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Returns a string identifying the exception
+    ///
+    /// \return A nice error message
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    const string& Message() const {
+        return message;
+    }
+
+private:
+
+    string message;
+};
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// Returns a string that has been formatted to give a nice type error message (for usage with Class::SquirrelFunc)
+///
+/// \param vm           VM the error occurred with
+/// \param idx          Index on the stack of the argument that had a type error
+/// \param expectedType The name of the type that the argument should have been
+///
+/// \return String containing a nice type error message
+///
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+inline string FormatTypeError(HSQUIRRELVM vm, SQInteger idx, const string& expectedType) {
+    string err = _SC("wrong type (") + expectedType + _SC(" expected");
+#if (SQUIRREL_VERSION_NUMBER>= 200) && (SQUIRREL_VERSION_NUMBER < 300) // Squirrel 2.x
+    err = err + _SC(")");
+#else // Squirrel 3.x
+    if (SQ_SUCCEEDED(sq_typeof(vm, idx))) {
+        const SQChar* actualType;
+        sq_tostring(vm, -1);
+        sq_getstring(vm, -1, &actualType);
+        sq_pop(vm, 2);
+        err = err + _SC(", got ") + actualType + _SC(")");
+    } else {
+        err = err + _SC(", got unknown)");
+    }
+#endif
+    return err;
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// Returns the last error that occurred with a Squirrel VM (not associated with Sqrat errors)
@@ -292,17 +486,25 @@ inline string LastErrorString(HSQUIRRELVM vm) {
 template <class T>
 class SharedPtr
 {
+    template <class U>
+    friend class WeakPtr;
+
 private:
+
     T*            m_Ptr;
     unsigned int* m_RefCount;
+    unsigned int* m_RefCountRefCount;
+
 public:
+
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /// Constructs a new SharedPtr
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     SharedPtr() :
-    m_Ptr     (NULL),
-    m_RefCount(NULL)
+    m_Ptr             (NULL),
+    m_RefCount        (NULL),
+    m_RefCountRefCount(NULL)
     {
 
     }
@@ -314,8 +516,9 @@ public:
     ///
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     SharedPtr(T* ptr) :
-    m_Ptr     (NULL),
-    m_RefCount(NULL)
+    m_Ptr             (NULL),
+    m_RefCount        (NULL),
+    m_RefCountRefCount(NULL)
     {
         Init(ptr);
     }
@@ -330,8 +533,9 @@ public:
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template <class U>
     SharedPtr(U* ptr) :
-    m_Ptr     (NULL),
-    m_RefCount(NULL)
+    m_Ptr             (NULL),
+    m_RefCount        (NULL),
+    m_RefCountRefCount(NULL)
     {
         Init(ptr);
     }
@@ -346,15 +550,18 @@ public:
     {
         if (copy.Get() != NULL)
         {
-            m_Ptr = copy.Get();
+            m_Ptr              = copy.Get();
+            m_RefCount         = copy.m_RefCount;
+            m_RefCountRefCount = copy.m_RefCountRefCount;
 
-            m_RefCount = copy.m_RefCount;
-            *m_RefCount += 1;
+            *m_RefCount         += 1;
+            *m_RefCountRefCount += 1;
         }
         else
         {
-            m_Ptr      = NULL;
-            m_RefCount = NULL;
+            m_Ptr              = NULL;
+            m_RefCount         = NULL;
+            m_RefCountRefCount = NULL;
         }
     }
 
@@ -371,15 +578,46 @@ public:
     {
         if (copy.Get() != NULL)
         {
-            m_Ptr = static_cast<T*>(copy.Get());
+            m_Ptr              = static_cast<T*>(copy.Get());
+            m_RefCount         = copy.m_RefCount;
+            m_RefCountRefCount = copy.m_RefCountRefCount;
 
-            m_RefCount = copy.m_RefCount;
-            *m_RefCount += 1;
+            *m_RefCount         += 1;
+            *m_RefCountRefCount += 1;
         }
         else
         {
-            m_Ptr      = NULL;
-            m_RefCount = NULL;
+            m_Ptr              = NULL;
+            m_RefCount         = NULL;
+            m_RefCountRefCount = NULL;
+        }
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Copy constructor
+    ///
+    /// \param copy WeakPtr to copy
+    ///
+    /// \tparam U Type of copy (usually doesnt need to be defined explicitly)
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    template <class U>
+    SharedPtr(const WeakPtr<U>& copy)
+    {
+        if (copy.m_Ptr != NULL)
+        {
+            m_Ptr              = static_cast<T*>(copy.m_Ptr);
+            m_RefCount         = copy.m_RefCount;
+            m_RefCountRefCount = copy.m_RefCountRefCount;
+
+            *m_RefCount         += 1;
+            *m_RefCountRefCount += 1;
+        }
+        else
+        {
+            m_Ptr              = NULL;
+            m_RefCount         = NULL;
+            m_RefCountRefCount = NULL;
         }
     }
 
@@ -408,15 +646,12 @@ public:
 
             if (copy.Get() != NULL)
             {
-                m_Ptr = copy.Get();
+                m_Ptr              = copy.Get();
+                m_RefCount         = copy.m_RefCount;
+                m_RefCountRefCount = copy.m_RefCountRefCount;
 
-                m_RefCount = copy.m_RefCount;
-                *m_RefCount += 1;
-            }
-            else
-            {
-                m_Ptr      = NULL;
-                m_RefCount = NULL;
+                *m_RefCount         += 1;
+                *m_RefCountRefCount += 1;
             }
         }
 
@@ -440,15 +675,12 @@ public:
 
         if (copy.Get() != NULL)
         {
-            m_Ptr = static_cast<T*>(copy.Get());
+            m_Ptr              = static_cast<T*>(copy.Get());
+            m_RefCount         = copy.m_RefCount;
+            m_RefCountRefCount = copy.m_RefCountRefCount;
 
-            m_RefCount = copy.m_RefCount;
-            *m_RefCount += 1;
-        }
-        else
-        {
-            m_Ptr      = NULL;
-            m_RefCount = NULL;
+            *m_RefCount         += 1;
+            *m_RefCountRefCount += 1;
         }
 
         return *this;
@@ -468,6 +700,9 @@ public:
 
         m_RefCount = new unsigned int;
         *m_RefCount = 1;
+
+        m_RefCountRefCount = new unsigned int;
+        *m_RefCountRefCount = 1;
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -487,6 +722,9 @@ public:
 
         m_RefCount = new unsigned int;
         *m_RefCount = 1;
+
+        m_RefCountRefCount = new unsigned int;
+        *m_RefCountRefCount = 1;
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -497,16 +735,23 @@ public:
     {
         if (m_Ptr != NULL)
         {
-            if (*m_RefCount == 1)
+            *m_RefCount         -= 1;
+            *m_RefCountRefCount -= 1;
+
+            if (*m_RefCount == 0)
             {
                 delete m_Ptr;
-                delete m_RefCount;
-
-                m_Ptr      = NULL;
-                m_RefCount = NULL;
             }
-            else
-                *m_RefCount -= 1;
+
+            if (*m_RefCountRefCount == 0)
+            {
+                delete m_RefCount;
+                delete m_RefCountRefCount;
+            }
+
+            m_Ptr              = NULL;
+            m_RefCount         = NULL;
+            m_RefCountRefCount = NULL;
         }
     }
 
@@ -639,7 +884,7 @@ public:
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     T& operator*() const
     {
-        assert(m_Ptr != NULL);
+        assert(m_Ptr != NULL); // fails when dereferencing a null SharedPtr
         return *m_Ptr;
     }
 
@@ -649,7 +894,7 @@ public:
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     T* operator->() const
     {
-        assert(m_Ptr != NULL);
+        assert(m_Ptr != NULL); // fails when dereferencing a null SharedPtr
         return m_Ptr;
     }
 
@@ -666,9 +911,269 @@ public:
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// A smart pointer that retains a non-owning ("weak") reference to an object that is managed by SharedPtr (see std::weak_ptr)
+///
+/// \tparam T Type of pointer
+///
+/// \remarks
+/// WeakPtr exists for when an object that may be deleted at any time needs to be accessed if it exists.
+///
+/// \remarks
+/// std::weak_ptr was not used because it is a C++11 feature.
+///
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+template <class T>
+class WeakPtr
+{
+    template <class U>
+    friend class SharedPtr;
+
+private:
+
+    T*            m_Ptr;
+    unsigned int* m_RefCount;
+    unsigned int* m_RefCountRefCount;
+
+public:
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Constructs a new WeakPtr
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    WeakPtr() :
+    m_Ptr             (NULL),
+    m_RefCount        (NULL),
+    m_RefCountRefCount(NULL)
+    {
+
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Copy constructor
+    ///
+    /// \param copy WeakPtr to copy
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    WeakPtr(const WeakPtr<T>& copy)
+    {
+        if (copy.m_Ptr != NULL)
+        {
+            m_Ptr              = copy.m_Ptr;
+            m_RefCount         = copy.m_RefCount;
+            m_RefCountRefCount = copy.m_RefCountRefCount;
+
+            *m_RefCountRefCount += 1;
+        }
+        else
+        {
+            m_Ptr              = NULL;
+            m_RefCount         = NULL;
+            m_RefCountRefCount = NULL;
+        }
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Copy constructor
+    ///
+    /// \param copy WeakPtr to copy
+    ///
+    /// \tparam U Type of copy (usually doesnt need to be defined explicitly)
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    template <class U>
+    WeakPtr(const WeakPtr<U>& copy)
+    {
+        if (copy.m_Ptr != NULL)
+        {
+            m_Ptr              = static_cast<T*>(copy.m_Ptr);
+            m_RefCount         = copy.m_RefCount;
+            m_RefCountRefCount = copy.m_RefCountRefCount;
+
+            *m_RefCountRefCount += 1;
+        }
+        else
+        {
+            m_Ptr              = NULL;
+            m_RefCount         = NULL;
+            m_RefCountRefCount = NULL;
+        }
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Copy constructor
+    ///
+    /// \param copy SharedPtr to copy
+    ///
+    /// \tparam U Type of copy (usually doesnt need to be defined explicitly)
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    template <class U>
+    WeakPtr(const SharedPtr<U>& copy)
+    {
+        if (copy.Get() != NULL)
+        {
+            m_Ptr              = static_cast<T*>(copy.Get());
+            m_RefCount         = copy.m_RefCount;
+            m_RefCountRefCount = copy.m_RefCountRefCount;
+
+            *m_RefCountRefCount += 1;
+        }
+        else
+        {
+            m_Ptr              = NULL;
+            m_RefCount         = NULL;
+            m_RefCountRefCount = NULL;
+        }
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Destructs the WeakPtr but has no influence on the object that was managed
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ~WeakPtr()
+    {
+        Reset();
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Assigns the WeakPtr
+    ///
+    /// \param copy WeakPtr to copy
+    ///
+    /// \return The WeakPtr itself
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    WeakPtr<T>& operator=(const WeakPtr<T>& copy)
+    {
+        if (this != &copy)
+        {
+            Reset();
+
+            if (copy.m_Ptr != NULL)
+            {
+                m_Ptr              = copy.m_Ptr;
+                m_RefCount         = copy.m_RefCount;
+                m_RefCountRefCount = copy.m_RefCountRefCount;
+
+                *m_RefCountRefCount += 1;
+            }
+        }
+
+        return *this;
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Assigns the WeakPtr
+    ///
+    /// \param copy WeakPtr to copy
+    ///
+    /// \tparam U Type of copy (usually doesnt need to be defined explicitly)
+    ///
+    /// \return The WeakPtr itself
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    template <class U>
+    WeakPtr<T>& operator=(const WeakPtr<U>& copy)
+    {
+        Reset();
+
+        if (copy.m_Ptr != NULL)
+        {
+            m_Ptr              = static_cast<T*>(copy.m_Ptr);
+            m_RefCount         = copy.m_RefCount;
+            m_RefCountRefCount = copy.m_RefCountRefCount;
+
+            *m_RefCountRefCount += 1;
+        }
+
+        return *this;
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Assigns the WeakPtr
+    ///
+    /// \param copy SharedPtr to copy
+    ///
+    /// \tparam U Type of copy (usually doesnt need to be defined explicitly)
+    ///
+    /// \return The WeakPtr itself
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    template <class U>
+    WeakPtr<T>& operator=(const SharedPtr<U>& copy)
+    {
+        Reset();
+
+        if (copy.Get() != NULL)
+        {
+            m_Ptr              = static_cast<T*>(copy.Get());
+            m_RefCount         = copy.m_RefCount;
+            m_RefCountRefCount = copy.m_RefCountRefCount;
+
+            *m_RefCountRefCount += 1;
+        }
+
+        return *this;
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Checks whether the managed object exists
+    ///
+    /// \return True if the managed object does not exist, false otherwise
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    bool Expired() const
+    {
+        return (m_Ptr == NULL || *m_RefCount == 0);
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Creates a new SharedPtr that shares ownership of the managed object
+    ///
+    /// \return A SharedPtr which shares ownership of the managed object
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    SharedPtr<T> Lock() const
+    {
+        SharedPtr<T> other;
+        if (m_Ptr != NULL)
+        {
+            other.m_Ptr              = m_Ptr;
+            other.m_RefCount         = m_RefCount;
+            other.m_RefCountRefCount = m_RefCountRefCount;
+
+            *m_RefCount         += 1;
+            *m_RefCountRefCount += 1;
+        }
+        return other;
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Clears the associated object for this WeakPtr
+    ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    void Reset()
+    {
+        if (m_Ptr != NULL)
+        {
+            *m_RefCountRefCount -= 1;
+
+            if (*m_RefCountRefCount == 0)
+            {
+                delete m_RefCount;
+                delete m_RefCountRefCount;
+            }
+
+            m_Ptr              = NULL;
+            m_RefCount         = NULL;
+            m_RefCountRefCount = NULL;
+        }
+    }
+};
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// @cond DEV
-/// used internally to get and manipulate the underlying type of variables
-/// retrieved from cppreference.com
+/// Used internally to get and manipulate the underlying type of variables - retrieved from cppreference.com
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<class T> struct remove_const                                                {typedef T type;};
 template<class T> struct remove_const<const T>                                       {typedef T type;};
@@ -678,6 +1183,7 @@ template<class T> struct remove_cv                                              
 template<class T> struct is_pointer_helper                                           {static const bool value = false;};
 template<class T> struct is_pointer_helper<T*>                                       {static const bool value = true;};
 template<class T> struct is_pointer_helper<SharedPtr<T> >                            {static const bool value = true;};
+template<class T> struct is_pointer_helper<WeakPtr<T> >                              {static const bool value = true;};
 template<class T> struct is_pointer : is_pointer_helper<typename remove_cv<T>::type> {};
 template<class T> struct is_reference                                                {static const bool value = false;};
 template<class T> struct is_reference<T&>                                            {static const bool value = true;};

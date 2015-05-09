@@ -6,7 +6,10 @@
 class cCallback
 {
     public:
-		virtual ~cCallback() {};
+		virtual ~cCallback() {
+			int x = 1;
+			x++;
+		};
         virtual bool Execute() const =0;
 };
 
