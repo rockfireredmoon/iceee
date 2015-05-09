@@ -80,7 +80,12 @@ InstanceNutDef::~InstanceNutDef()
 {
 }
 
-
+std::string InstanceNutDef::GetInstanceNutScriptPath(int zoneID, bool grove) {
+	char strBuf[100];
+	Util::SafeFormat(strBuf, sizeof(strBuf), "%s\\%d\\Script.nut", grove ? "Grove" : "Instance", zoneID);
+	Platform::FixPaths(strBuf);
+	return strBuf;
+}
 std::string InstanceNutDef::GetInstanceScriptPath(int zoneID, bool pathIfNotExists, bool grove) {
 	char strBuf[100];
 	Util::SafeFormat(strBuf, sizeof(strBuf), "%s\\%d\\Script.nut", grove ? "Grove" : "Instance", zoneID);
@@ -488,6 +493,14 @@ SQInteger InstanceNutPlayer::CIDs(HSQUIRRELVM v)
 //
 //
 //
+
+
+std::string InstanceScriptDef::GetInstanceTslScriptPath(int zoneID, bool grove) {
+	char strBuf[100];
+	Util::SafeFormat(strBuf, sizeof(strBuf), "%s\\%d\\Script.txt", grove ? "Grove" : "Instance", zoneID);
+	Platform::FixPaths(strBuf);
+	return strBuf;
+}
 
 void InstanceScriptDef::GetExtendedOpCodeTable(OpCodeInfo **arrayStart, size_t &arraySize)
 {

@@ -10808,38 +10808,64 @@ int SimulatorThread :: handle_query_script_save(void)
 	if(!ok)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
 
+	std::string scriptText = query.args[0];
 
 	int wpos = 0;
 	wpos += PutByte(&SendBuf[wpos], 1);       //_handleQueryResultMsg
 	wpos += PutShort(&SendBuf[wpos], 0);      //Message size
 	wpos += PutInteger(&SendBuf[wpos], query.ID);  //Query response index
 
+	// Create the directory
 	char tempStrBuf[100];
-	Util::SafeFormat(tempStrBuf, sizeof(tempStrBuf), "Instance\\%d", creatureInst->actInst->mZone);
+	Util::SafeFormat(tempStrBuf, sizeof(tempStrBuf), "%s\\%d",
+			creatureInst->actInst->mZoneDefPtr->mGrove ? "Instance" : "Grove", creatureInst->actInst->mZone);
 	Platform::FixPaths(tempStrBuf);
 	Platform::MakeDirectory(tempStrBuf);
-	string path = InstanceScript::InstanceNutDef::GetInstanceScriptPath(creatureInst->actInst->mZone, true, creatureInst->actInst->mZoneDefPtr->mGrove);
+
+	std::string nutHeader = "#!/bin/sq";
+	std::string tslHeader = "#!/bin/tsl";
+
+	// Determine the path to save as. If the script has a header, that will be used, otherwise .nut has priority
+	string path;
+	if(scriptText.substr(0, nutHeader.size()) == nutHeader)
+		path = InstanceScript::InstanceNutDef::GetInstanceNutScriptPath(creatureInst->actInst->mZone, creatureInst->actInst->mZoneDefPtr->mGrove);
+	else if(scriptText.substr(0, nutHeader.size()) == nutHeader)
+		path = InstanceScript::InstanceScriptDef::GetInstanceTslScriptPath(creatureInst->actInst->mZone, creatureInst->actInst->mZoneDefPtr->mGrove);
+	else
+		path = InstanceScript::InstanceNutDef::GetInstanceScriptPath(creatureInst->actInst->mZone, true, creatureInst->actInst->mZoneDefPtr->mGrove);
+
+	// Save to temporary file first in case the save fails (leaving some hope of recovery)
 	string tpath = path;
 	tpath.append(".tmp");
-	std::ofstream out(tpath.c_str());
-	out << query.args[0];
-	out.close();
 
-	// If we wrote OK, delete the old file and swap in the new one
-	if(remove(path.c_str()) == 0) {
-		if(rename(tpath.c_str(), path.c_str()) == 0) {
-			Util::SafeFormat(Aux1, sizeof(Aux1), "Script for %d save.", creatureInst->actInst->mZone);
-			SendInfoMessage(Aux1, INFOMSG_INFO);
-			return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-		}
-		else {
-			LogMessageL(MSG_WARN, "[WARNING] Failed to rename %s to %s, old script will no longer be available, neither will new", tpath.c_str(), path.c_str());
-			return PrepExt_QueryResponseError(SendBuf, query.ID, "Failed to rename new file, the script may now be missing!");
-		}
+	// If the script is empty, delete it
+	if(scriptText.length() == 0) {
+		Platform::Delete(tpath.c_str());
+		Util::SafeFormat(Aux1, sizeof(Aux1), "Script for %d deleted.", creatureInst->actInst->mZone);
+		SendInfoMessage(Aux1, INFOMSG_INFO);
+		return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
 	}
 	else {
-		LogMessageL(MSG_WARN, "[WARNING] Failed to remove %, new script will not be available.", path.c_str());
-		return PrepExt_QueryResponseError(SendBuf, query.ID, "Failed to delete old script file, new one not swapped in.");
+		std::ofstream out(tpath.c_str());
+		out << scriptText;
+		out.close();
+
+		// If we wrote OK, delete the old file and swap in the new one
+		if(remove(path.c_str()) == 0) {
+			if(rename(tpath.c_str(), path.c_str()) == 0) {
+				Util::SafeFormat(Aux1, sizeof(Aux1), "Script for %d saved.", creatureInst->actInst->mZone);
+				SendInfoMessage(Aux1, INFOMSG_INFO);
+				return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
+			}
+			else {
+				LogMessageL(MSG_WARN, "[WARNING] Failed to rename %s to %s, old script will no longer be available, neither will new", tpath.c_str(), path.c_str());
+				return PrepExt_QueryResponseError(SendBuf, query.ID, "Failed to rename new file, the script may now be missing!");
+			}
+		}
+		else {
+			LogMessageL(MSG_WARN, "[WARNING] Failed to remove %, new script will not be available.", path.c_str());
+			return PrepExt_QueryResponseError(SendBuf, query.ID, "Failed to delete old script file, new one not swapped in.");
+		}
 	}
 
 }
@@ -10864,7 +10890,6 @@ int SimulatorThread :: handle_query_script_load(void)
 	wpos += PutShort(&SendBuf[wpos], 0);      //Message size
 	wpos += PutInteger(&SendBuf[wpos], query.ID);  //Query response index
 
-	char strBuf[100];
 	string path = InstanceScript::InstanceNutDef::GetInstanceScriptPath(creatureInst->actInst->mZone, false, creatureInst->actInst->mZoneDefPtr->mGrove);
 	if(path.length() == 0) {
 		LogMessageL(MSG_WARN, "[WARNING] Load script query unable to open script for zone: %d", creatureInst->actInst->mZone);

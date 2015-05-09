@@ -2242,7 +2242,7 @@ void ActiveInstance :: InitializeData(void)
 	spawnsys.SetInstancePointer(this);
 
 	//Load the new script system
-	std::string path = InstanceScript::InstanceNutDef::GetInstanceScriptPath(mZone, false, mZoneDefPtr->mGrove);
+	std::string path = InstanceScript::InstanceNutDef::GetInstanceScriptPath(mZoneDefPtr->mID, false, mZoneDefPtr->mGrove);
 	if(Util::HasEnding(path, ".nut")) {
 		nutScriptDef.Initialize(path.c_str());
 		nutScriptPlayer.SetInstancePointer(this);
@@ -3139,20 +3139,20 @@ bool ActiveInstance :: RunScript(std::string &errors)
 	}
 
 	//Load the new script system
-	std::string path = InstanceScript::InstanceNutDef::GetInstanceScriptPath(mZone, false, mZoneDefPtr->mGrove);
+	std::string path = InstanceScript::InstanceNutDef::GetInstanceScriptPath(mZoneDefPtr->mID, false, mZoneDefPtr->mGrove);
 	if(Util::HasEnding(path, ".nut")) {
 		nutScriptDef.Initialize(path.c_str());
 		nutScriptPlayer.SetInstancePointer(this);
 		nutScriptPlayer.Initialize(&nutScriptDef, errors);
 	}
-	else if(Util::HasEnding(path, ".text")) {
+	else if(Util::HasEnding(path, ".txt")) {
 		scriptDef.CompileFromSource(path.c_str());
 		scriptPlayer.Initialize(&scriptDef);
 		scriptPlayer.SetInstancePointer(this);
 		scriptPlayer.JumpToLabel("init");
 	}
 	else {
-		g_Log.AddMessageFormat("No Squirrel script for instance %d", mZone);
+		g_Log.AddMessageFormat("No script for instance %d", mZone);
 		return false;
 	}
 	return true;

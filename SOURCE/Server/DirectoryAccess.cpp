@@ -178,6 +178,11 @@ bool Platform::DirExists(const char *path)
 		return false;
 }
 
+bool Platform::Delete(const char *path)
+{
+	return remove(path) == 0;
+}
+
 bool Platform::FileExists(const char *path)
 {
 	FILE *input = fopen(path, "rb");
