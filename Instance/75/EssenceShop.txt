@@ -4,4 +4,5 @@ CreatureDefID=7806
 EssenceID=10015   ; Father Grundy's Essence
 Item=10006,1  ; Grundy's Organic Hammer 
 Item=10007,1  ; Grundys head band
-
+Item=10028,1  ; Scraps Putrid Collar
+Item=10032,1  ; Cruel Gloves
