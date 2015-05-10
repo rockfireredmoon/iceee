@@ -65,7 +65,6 @@ namespace ScriptCore
 	}
 
 	NutDef::NutDef() {
-		mSourceFile = "";
 		mFlags = 0;
 		queueCallStyle = 0;
 		queueExternalJumps = false;
@@ -95,6 +94,7 @@ namespace ScriptCore
 	void NutDef::Initialize(const char *sourceFile) {
 		g_Log.AddMessageFormat("Compiling Squirrel script '%s'", sourceFile);
 		mSourceFile = sourceFile;
+		scriptName = Platform::Basename(mSourceFile.c_str());
 	}
 
 	NutCondition::NutCondition()
@@ -104,6 +104,15 @@ namespace ScriptCore
 	NutCondition::~NutCondition()
 	{
 	}
+
+	NutCallback::NutCallback()
+	{
+	}
+
+	NutCallback::~NutCallback()
+	{
+	}
+
 	bool NutCondition::CheckCondition()
 	{
 		return false;
@@ -112,18 +121,17 @@ namespace ScriptCore
 	NutPlayer::NutPlayer() {
 		vm = NULL;
 		def = NULL;
-		curInst = 0;
 		active = false;
-		nextFire = 0;
 		mHasScript = false;
 		mHalt = false;
-		int x= queue.size();
-
-		g_Log.AddMessageFormat(" '%d'", x);
+		mExecuting = false;
+		assert(mQueue.size() == 0);
+		assert(mQueueQueue.size() == 0);
 	}
 
 	NutPlayer::~NutPlayer() {
-		queue.clear();
+		mQueue.clear();
+		mQueueQueue.clear();
 	}
 
 	void NutPlayer::Initialize(NutDef *defPtr, std::string &errors) {
@@ -141,15 +149,15 @@ namespace ScriptCore
 		sqstd_seterrorhandlers(vm); //registers the default error handlers
 		sq_setprintfunc(vm, PrintFunc, Errorfunc); //sets the print function
 //		sq_pushroottable(vm); //push the root table(were the globals of the script will be stored)
-		g_Log.AddMessageFormat("Processing Squirrel script '%s'", def->mSourceFile);
+		g_Log.AddMessageFormat("Processing Squirrel script '%s'", def->mSourceFile.c_str());
 
 
 		/* Look for the compiled NUT file (.cnut). If it exists, test if the modification
 		 * time is the same as the .nut file. If it isn't (or the .cnut doesn't exist at all),
 		 * then compile AND write the bytecode
 		 */
-		std::string base = Platform::Basename(def->mSourceFile);
-		std::string dir = Platform::Dirname(def->mSourceFile);
+		std::string base = Platform::Basename(def->mSourceFile.c_str());
+		std::string dir = Platform::Dirname(def->mSourceFile.c_str());
 		STRINGLIST v;
 		const std::string d(1, PLATFORM_FOLDERVALID);
 		std::string cnut;
@@ -158,12 +166,12 @@ namespace ScriptCore
 		Util::Join(v, d.c_str(), cnut);
 		cnut.append(".cnut");
 		unsigned long cnutMod = Platform::GetLastModified(cnut.c_str());
-		unsigned long nutMod = Platform::GetLastModified(def->mSourceFile);
+		unsigned long nutMod = Platform::GetLastModified(def->mSourceFile.c_str());
 
 		Sqrat::Script script(vm);
 
 		if(cnutMod != nutMod) {
-			g_Log.AddMessageFormat("Recompiling Squirrel script '%s'", def->mSourceFile);
+			g_Log.AddMessageFormat("Recompiling Squirrel script '%s'", def->mSourceFile.c_str());
 			script.CompileFile(_SC(def->mSourceFile), errors);
 		}
 		else {
@@ -173,16 +181,16 @@ namespace ScriptCore
 
 		if (Sqrat::Error::Occurred(vm)) {
 			errors.append(Sqrat::Error::Message(vm).c_str());
-			g_Log.AddMessageFormat("Squirrel script  %s failed to compile. %s", def->mSourceFile, Sqrat::Error::Message(vm).c_str());
+			g_Log.AddMessageFormat("Squirrel script  %s failed to compile. %s", def->mSourceFile.c_str(), Sqrat::Error::Message(vm).c_str());
 		}
 		else {
 			if(cnutMod != nutMod) {
-				g_Log.AddMessageFormat("Writing Squirrel script bytecode for '%s' to '%s'", def->mSourceFile, cnut.c_str());
+				g_Log.AddMessageFormat("Writing Squirrel script bytecode for '%s' to '%s'", def->mSourceFile.c_str(), cnut.c_str());
 				try {
 					script.WriteCompiledFile(cnut);
 				}
 				catch(int e) {
-					g_Log.AddMessageFormat("Failed to write Squirrel script bytecode for '%s' to '%s'. Err %d", def->mSourceFile, cnut.c_str(), e);
+					g_Log.AddMessageFormat("Failed to write Squirrel script bytecode for '%s' to '%s'. Err %d", def->mSourceFile.c_str(), cnut.c_str(), e);
 				}
 				Platform::SetLastModified(cnut.c_str(), nutMod);
 			}
@@ -191,7 +199,7 @@ namespace ScriptCore
 			script.Run();
 			if (Sqrat::Error::Occurred(vm)) {
 				errors.append(Sqrat::Error::Message(vm).c_str());
-				g_Log.AddMessageFormat("Squirrel script  %s failed to run. %s", def->mSourceFile, Sqrat::Error::Message(vm).c_str());
+				g_Log.AddMessageFormat("Squirrel script  %s failed to run. %s", def->mSourceFile.c_str(), Sqrat::Error::Message(vm).c_str());
 			}
 			else {
 				active = true;
@@ -220,28 +228,18 @@ namespace ScriptCore
 		}
 
 	}
-	// Override this to register functions for use in script
-	void NutPlayer::RegisterDerivedFunctions()	{
-	}
 
-	void NutPlayer::RegisterFunctions() {
+	void NutPlayer::RegisterFunctions() { }
 
-		Sqrat::Class<NutPlayer> core(vm, "Core");
-		Sqrat::RootTable(vm).Bind(_SC("Core"), core);
+	void NutPlayer::RegisterCoreFunctions(NutPlayer *instance, Sqrat::Class<NutPlayer> *clazz) {
 
 		Sqrat::RootTable(vm).Func("randmodrng", &randmodrng);
 		Sqrat::RootTable(vm).Func("randmod", &randmod);
 		Sqrat::RootTable(vm).Func("randint", &randint);
 		Sqrat::RootTable(vm).Func("randdbl", &randdbl);
 		Sqrat::RootTable(vm).Func("rand", &randi);
-
-		core.Func(_SC("queue"), &NutPlayer::Queue);
-		core.Func(_SC("broadcast"), &NutPlayer::Broadcast);
-		core.Func(_SC("halt"), &NutPlayer::Halt);
-
-		Sqrat::RootTable(vm).SetInstance(_SC("core"), this);
-		RegisterDerivedFunctions();
 	}
+
 	void NutPlayer :: FullReset(void)
 	{
 		if(def == NULL)
@@ -250,13 +248,12 @@ namespace ScriptCore
 			return;
 		}
 
-		curInst = 0;
 		active = true;
-		nextFire = 0;
 
 		// TODO somehow reset state of script
 
-		queue.clear();
+		mQueue.clear();
+		mQueueQueue.clear();
 	}
 
 	void NutPlayer::RunScript(void) {
@@ -305,10 +302,7 @@ namespace ScriptCore
 		return true;
 	}
 
-	void NutPlayer :: HaltDerivedExecution(void)
-	{
-
-	}
+	void NutPlayer :: HaltDerivedExecution(void) { }
 
 	void NutPlayer :: HaltExecution(void)
 	{
@@ -318,7 +312,8 @@ namespace ScriptCore
 			HaltDerivedExecution();
 			RunFunction("onFinish", v);
 			active = false;
-			queue.clear();
+			mQueue.clear();
+			mQueueQueue.clear();
 			sq_close(vm);
 			if(def->HasFlag(NutDef::FLAG_REPORT_END))
 				PrintMessage("Script [%s] has ended", def->scriptName.c_str());
@@ -327,6 +322,11 @@ namespace ScriptCore
 
 	bool NutPlayer::IsWaiting(void) {
 		return false;
+	}
+
+	bool NutPlayer::RunFunction(const char *name) {
+		std::vector<ScriptParam> parms;
+		return RunFunction(name, parms);
 	}
 
 	bool NutPlayer::RunFunction(const char *name, std::vector<ScriptParam> parms) {
@@ -366,53 +366,102 @@ namespace ScriptCore
 
 	bool NutPlayer :: ExecQueue(void)
 	{
+		if(mExecuting) {
+			g_Log.AddMessageFormat("Already executing. Something tried to executing the queue while it was already executing.");
+			return true;
+		}
+		bool ok = false;
+		mExecuting = true;
 		ulong currentFireTime;
-		for(size_t i = 0; i < queue.size(); i++)
+
+//		PrintMessage("[ERROR] BEFORE LOOP MQS: %d", mQueueQueue.size());
+//		PrintMessage("[ERROR] BEFORE LOOP QS: %d", mQueue.size());
+
+		for(size_t i = 0; i < mQueue.size(); i++)
 		{
-			currentFireTime = queue[i].mFireTime;
+			currentFireTime = mQueue[i].mFireTime;
 			if(currentFireTime == 0)
 			{
 				// Condition based
-				NutCondition *cnd = queue[i].mCondition;
+				NutCondition *cnd = mQueue[i].mCondition;
 				if(cnd->CheckCondition()) {
 
-					Sqrat::Function oFunc = queue[i].mFunction;
-					Sqrat::SharedPtr<bool> ptr = oFunc.Evaluate<bool>();
+					Sqrat::Function *oFunc = &mQueue[i].mFunction;
+					Sqrat::SharedPtr<bool> ptr = oFunc->Evaluate<bool>();
 					bool res = ptr.Get() == NULL || ptr.Get();
-					if(res)
-						queue.erase(queue.begin() + i);
-					return true;
+					if(!res)
+						mQueueQueue.push_back(mQueue[i]);
+					mQueue.erase(mQueue.begin() + i);
+					ok = true;
+					break;
 				}
 			}
 
 			else if(currentFireTime > 0 && g_ServerTime >= currentFireTime)
 			{
 				// Traditional timer
-				Sqrat::Function oFunc = queue[i].mFunction;
+				Sqrat::Function *oFunc = &mQueue[i].mFunction;
 
-				Sqrat::SharedPtr<bool> ptr = oFunc.Evaluate<bool>();
+				Sqrat::SharedPtr<bool> ptr = oFunc->Evaluate<bool>();
 				bool res = ptr.Get() == NULL || ptr.Get();
+
+				PrintMessage("[ERROR] DURING LOOP MQS: %d", mQueueQueue.size());
+				PrintMessage("[ERROR] DURING LOOP QS: %d", mQueue.size());
 
 				/* If the fire time changes while running this function, the function
 				 * queued the same event again
 				 */
-				if(res && currentFireTime == queue[i].mFireTime && !queue.empty())
-					queue.erase(queue.begin() + i);
-				return true;
+				if(!res)
+					mQueueQueue.push_back(mQueue[i]);
+				mQueue.erase(mQueue.begin() + i);
+				ok = true;
+				break;
 			}
 		}
-		return false;
+		mQueue.insert(mQueue.end(), mQueueQueue.begin(), mQueueQueue.end());
+		mQueueQueue.clear();
+		mExecuting = false;
+		return ok;
 	}
 
-	void NutPlayer::Queue(Sqrat::Function function, int fireDelay)
+	void NutPlayer::DoQueue(NutScriptEvent evt)
 	{
-		if(queue.size() >= MAX_QUEUE_SIZE)
+		if(mExecuting)
 		{
-			PrintMessage("[ERROR] Script error: QueueEvent() list is full [script: %s]", def->scriptName.c_str());
-			return;
-		}
+			PrintMessage("[ERROR] QS: %d", mQueueQueue.size());
+			if(mQueueQueue.size() >= MAX_QUEUE_SIZE)
+			{
+				PrintMessage("[ERROR] Script error: Deferred QueueEvent() list is full %d of %d", mQueueQueue.size(), MAX_QUEUE_SIZE);
+//								PrintMessage("[ERROR] Script error: QueueEvent() list is full [script: %s]", def->mSourceFile.c_str());
+				return;
+			}
+			mQueueQueue.push_back(evt);
+		} else
+		{
 
+			if(mQueue.size() >= MAX_QUEUE_SIZE)
+			{
+				PrintMessage("[ERROR] Script error: QueueEvent() list is full %d of %d", mQueueQueue.size(), MAX_QUEUE_SIZE);
+				PrintMessage("[ERROR] Script error: QueueEvent() list is full [script: %s]", def->scriptName.c_str());
+				return;
+			}
+			mQueue.push_back(evt);
+		}
+	}
+
+	void NutPlayer::DoQueue(Sqrat::Function function, int fireDelay)
+	{
 		unsigned long fireTime = g_ServerTime + fireDelay;
+		DoQueue(NutScriptEvent(function, fireTime));
+//		std::vector<NutScriptEvent> q = mExecuting ? mQueueQueue : queue;
+//
+//		if(q.size() >= MAX_QUEUE_SIZE)
+//		{
+//			PrintMessage("[ERROR] Script error: QueueEvent() list is full [script: %s]", def->scriptName.c_str());
+//			return;
+//		}
+//
+//		unsigned long fireTime = g_ServerTime + fireDelay;
 
 		//If a event label is already registered, just update the fire time.
 //		for(size_t i = 0; i < queue.size(); i++)
@@ -425,7 +474,7 @@ namespace ScriptCore
 //		}
 
 		//Not found, add a new event.
-		queue.push_back(NutScriptEvent(function, fireTime));
+//		q.push_back(NutScriptEvent(function, fireTime));
 	}
 
 	void NutPlayer::Broadcast(const char *message)
@@ -433,12 +482,19 @@ namespace ScriptCore
 		g_SimulatorManager.BroadcastMessage(message);
 	}
 
+	NutScriptEvent::NutScriptEvent(NutCallback *callback, unsigned long fireTime)
+	{
+		mFireTime = fireTime;
+		mCondition = NULL;
+		mCallback = callback;
+	}
 
 	NutScriptEvent::NutScriptEvent(Sqrat::Function &function, NutCondition *condition)
 	{
 		mFunction = function;
 		mFireTime = 0;
 		mCondition = condition;
+		mCallback = NULL;
 	}
 
 	NutScriptEvent::NutScriptEvent(Sqrat::Function &function, unsigned long fireTime)
@@ -446,6 +502,17 @@ namespace ScriptCore
 		mFunction = function;
 		mFireTime = fireTime;
 		mCondition = NULL;
+		mCallback = NULL;
+	}
+
+	NutScriptEvent::~NutScriptEvent() {
+		// TODO these were created with new .. do I need to clean them up somewhere?
+//		if(mCondition != NULL) {
+//			delete mCondition;
+//		}
+//		if(mCallback != NULL) {
+//			delete mCallback;
+//		}
 	}
 
 

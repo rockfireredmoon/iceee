@@ -40,6 +40,7 @@ unsigned long CREATURE_DELETE_RECHECK = 60000; //Delay between rescanning for de
 #include "Creature.h"
 #include "Ability2.h"
 #include "AIScript.h"  //For script resolution
+#include "AIScript2.h"
 #include "DebugTracer.h"
 #include "DirectoryAccess.h"
 #include "ZoneDef.h"

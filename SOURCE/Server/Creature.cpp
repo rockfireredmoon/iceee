@@ -9,6 +9,7 @@
 #include "Util.h"
 #include "Globals.h"  //For combat globals
 #include "AIScript.h"
+#include "AIScript2.h"
 #include "DebugTracer.h"
 #include "Simulator.h"
 #include "Item.h"  //For quest item rewards
@@ -242,6 +243,7 @@ CreatureInstance :: CreatureInstance()
 	//Need this because the Clear function will check for non-Null and attempt
 	//to delete it.
 	aiScript = NULL;
+	aiNut = NULL;
 	hateProfilePtr = NULL;
 	activeLootID = 0;
 
@@ -263,6 +265,12 @@ CreatureInstance :: ~CreatureInstance()
 
 void CreatureInstance :: Clear(void)
 {
+	if(aiNut != NULL)
+	{
+		aiNutManager.RemoveActiveScript(aiNut);
+		aiNut = NULL;
+
+	}
 	if(aiScript != NULL)
 	{
 		aiScriptManager.RemoveActiveScript(aiScript);
@@ -355,6 +363,11 @@ void CreatureInstance :: UnloadResources(void)
 	{
 		aiScriptManager.RemoveActiveScript(aiScript);
 		aiScript = NULL;
+	}
+	if(aiNut != NULL)
+	{
+		aiNutManager.RemoveActiveScript(aiNut);
+		aiNut = NULL;
 	}
 	RemoveAttachedHateProfile();
 	if(serverFlags & ServerFlags::IsPlayer)
@@ -531,11 +544,16 @@ void CreatureInstance :: Instantiate(void)
 		if(scriptName[0] == 0)
 			scriptName = cdef->css.ai_package;
 
-		aiScript = aiScriptManager.AddActiveScript(scriptName);
-		if(aiScript == NULL)
-			g_Log.AddMessageFormatW(MSG_SHOW, "[WARNING] Could not find script [%s] for instantiated creature [%s]", cdef->css.ai_package, cdef->css.display_name);
-		else
-			aiScript->attachedCreature = this;
+		aiNut = aiNutManager.AddActiveScript(scriptName);
+		if(aiNut == NULL)
+		{
+			aiScript = aiScriptManager.AddActiveScript(scriptName);
+			if(aiScript == NULL)
+				g_Log.AddMessageFormatW(MSG_SHOW, "[WARNING] Could not find script [%s] for instantiated creature [%s]", scriptName, cdef->css.display_name);
+			else
+				aiScript->attachedCreature = this;
+		}
+
 	}
 
 	//Need this or else spawned props may retain aggro status
@@ -969,7 +987,7 @@ void CreatureInstance :: RegisterHostility(CreatureInstance *attacker, int hosti
 
 	CreatureInstance *oldTarget = CurrentTarget.targ;
 
-	if(aiScript != NULL)
+	if(aiScript != NULL || aiNut != NULL)
 	{
 		if(((serverFlags & ServerFlags::CalledBack) == false) && ((serverFlags & ServerFlags::LeashRecall) == false))
 		{
@@ -2480,6 +2498,11 @@ void CreatureInstance :: ProcessDeath(void)
 	//Processes a dead creature, finalizing stats, applying loot, distributing
 	//experience and quests for players.
 
+	if(aiNut != NULL)
+	{
+		aiNut->RunFunction("onDeath");
+		aiNut->FullReset();
+	}
 	if(aiScript != NULL)
 	{
 		if(aiScript->JumpToLabel("onDeath") == true)
@@ -3986,15 +4009,25 @@ int CreatureInstance :: RemoveCreatureReference(CreatureInstance *target)
 
 void CreatureInstance :: RunAIScript(void)
 {
-	if(aiScript == NULL)
-		return;
-
-	if(CurrentTarget.targ != NULL)
-		aiScript->RunAtSpeed(5);
-	else
+	if(aiScript != NULL)
 	{
-		if(aiScript->CanRunIdle() == true)
-			aiScript->RunSingleInstruction();
+		if(CurrentTarget.targ != NULL)
+			aiScript->RunAtSpeed(5);
+		else
+		{
+			if(aiScript->CanRunIdle() == true)
+				aiScript->RunSingleInstruction();
+		}
+	}
+	else if(aiNut != NULL) {
+		aiNut->ExecQueue();
+		// TODO how to emulate these optimisations
+//			if(CurrentTarget.targ != NULL)
+//		else
+//		{
+//			if(aiScript->CanRunIdle() == true)
+//				aiScript->RunSingleInstruction();
+//		}
 	}
 }
 
@@ -4302,7 +4335,7 @@ void CreatureInstance :: RunProcessingCycle(void)
 		}
 		else if(serverFlags & ServerFlags::IsSidekick)
 		{
-			if(aiScript != NULL)
+			if(aiScript != NULL || aiNut != NULL)
 				if(CurrentTarget.targ != NULL)
 					RunAIScript();
 
@@ -5562,6 +5595,10 @@ void CreatureInstance :: AIOtherCallLabel(int creatureID, const char *aiScriptLa
 	CreatureInstance *obj = actInst->GetNPCInstanceByCID(creatureID);
 	if(obj != NULL)
 	{
+		if(obj->aiNut != NULL)
+		{
+			obj->aiNut->RunFunction(aiScriptLabel);
+		}
 		if(obj->aiScript != NULL)
 		{
 			obj->aiScript->JumpToLabel(aiScriptLabel);
@@ -7400,6 +7437,12 @@ void CreatureInstance :: DebugGenerateReport(ReportBuffer &report)
 			implicitActions[i].abilityGroup);
 	}
 
+	if(aiNut != NULL)
+	{
+		report.AddLine(NULL);
+		report.AddLine("AI NUT");
+		aiNut->DebugGenerateReport(report);
+	}
 	if(aiScript != NULL)
 	{
 		report.AddLine(NULL);

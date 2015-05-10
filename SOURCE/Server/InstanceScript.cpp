@@ -1,5 +1,6 @@
 #include "InstanceScript.h"
 #include "AIScript.h"
+#include "AIScript2.h"
 #include "Instance.h"
 #include "CommonTypes.h"
 #include "StringList.h"
@@ -127,8 +128,28 @@ void InstanceNutPlayer::HaltDerivedExecution()
 	spawned.clear();
 }
 
-void InstanceNutPlayer::RegisterDerivedFunctions()
+void InstanceNutPlayer::RegisterFunctions() {
+	Sqrat::Class<NutPlayer> nutClass(vm, _SC("Core"), true);
+	Sqrat::RootTable(vm).Bind(_SC("Core"), nutClass);
+	RegisterCoreFunctions(this, &nutClass);
+	Sqrat::DerivedClass<InstanceNutPlayer, NutPlayer> instanceClass(vm, _SC("Instance"));
+	Sqrat::RootTable(vm).Bind(_SC("Instance"), instanceClass);
+	RegisterInstanceFunctions(this, &instanceClass);
+	Sqrat::RootTable(vm).SetInstance(_SC("inst"), this);
+}
+
+void InstanceNutPlayer::RegisterInstanceFunctions(NutPlayer *instance, Sqrat::DerivedClass<InstanceNutPlayer, NutPlayer> *instanceClass)
 {
+	/* Have to register the functions with THIS class, or the wrong instance will be
+		 * invoked from Squirrel
+		 *
+		 * TODO it might be ok to move these 3 back to the core. Seems my theory was wrong.
+		 * Leave them here till the actual cause is found
+		 */
+	instanceClass->Func(_SC("queue"), &InstanceNutPlayer::Queue);
+	instanceClass->Func(_SC("broadcast"), &InstanceNutPlayer::Broadcast);
+	instanceClass->Func(_SC("halt"), &InstanceNutPlayer::Halt);
+
 	// Instance Location Object, X1/Z1,X2/Z2 location defining a rectangle
 	Sqrat::Class<ScriptObjects::Area> areaClass(vm, "Area", true);
 	areaClass.Ctor<int,int,int,int>();
@@ -147,40 +168,36 @@ void InstanceNutPlayer::RegisterDerivedFunctions()
 	pointClass.Var("x", &ScriptObjects::Point::mX);
 	pointClass.Var("z", &ScriptObjects::Point::mZ);
 
-	Sqrat::Class<InstanceNutPlayer> instance(vm, "Instance", true);
-	Sqrat::RootTable(vm).Bind(_SC("Instance"), instance);
-
-	instance.Func(_SC("broadcast"), &InstanceNutPlayer::Broadcast);
-	instance.Func(_SC("info"), &InstanceNutPlayer::Info);
-	instance.Func(_SC("spawn"), &InstanceNutPlayer::Spawn);
-	instance.Func(_SC("spawnAt"), &InstanceNutPlayer::SpawnAt);
-	instance.Func(_SC("cdef"), &InstanceNutPlayer::CDefIDForCID);
-	instance.Func(_SC("scanForNPCByCDefID"), &InstanceNutPlayer::ScanForNPCByCDefID);
-	instance.Func(_SC("getTarget"), &InstanceNutPlayer::GetTarget);
-	instance.Func(_SC("setTarget"), &InstanceNutPlayer::SetTarget);
-	instance.Func(_SC("ai"), &InstanceNutPlayer::AI);
-	instance.Func(_SC("countAlive"), &InstanceNutPlayer::CountAlive);
-	instance.Func(_SC("healthPercent"), &InstanceNutPlayer::GetHealthPercent);
-	instance.Func(_SC("walk"), &InstanceNutPlayer::Walk);
-	instance.Func(_SC("walkThen"), &InstanceNutPlayer::WalkThen);
-	instance.Func(_SC("chat"), &InstanceNutPlayer::Chat);
-	instance.Func(_SC("creatureChat"), &InstanceNutPlayer::CreatureChat);
-	instance.Func(_SC("despawn"), &InstanceNutPlayer::Despawn);
-	instance.Func(_SC("despawnAll"), &InstanceNutPlayer::DespawnAll);
-	instance.Func(_SC("particleAttach"), &InstanceNutPlayer::ParticleAttach);
-	instance.Func(_SC("particleDetach"), &InstanceNutPlayer::DetachSceneryEffect);
-	instance.Func(_SC("asset"), &InstanceNutPlayer::Asset);
-	instance.Func(_SC("emote"), &InstanceNutPlayer::Emote);
+	instanceClass->Func(_SC("broadcast"), &InstanceNutPlayer::Broadcast);
+	instanceClass->Func(_SC("info"), &InstanceNutPlayer::Info);
+	instanceClass->Func(_SC("spawn"), &InstanceNutPlayer::Spawn);
+	instanceClass->Func(_SC("spawnAt"), &InstanceNutPlayer::SpawnAt);
+	instanceClass->Func(_SC("cdef"), &InstanceNutPlayer::CDefIDForCID);
+	instanceClass->Func(_SC("scanForNPCByCDefID"), &InstanceNutPlayer::ScanForNPCByCDefID);
+	instanceClass->Func(_SC("getTarget"), &InstanceNutPlayer::GetTarget);
+	instanceClass->Func(_SC("setTarget"), &InstanceNutPlayer::SetTarget);
+	instanceClass->Func(_SC("ai"), &InstanceNutPlayer::AI);
+	instanceClass->Func(_SC("countAlive"), &InstanceNutPlayer::CountAlive);
+	instanceClass->Func(_SC("healthPercent"), &InstanceNutPlayer::GetHealthPercent);
+	instanceClass->Func(_SC("walk"), &InstanceNutPlayer::Walk);
+	instanceClass->Func(_SC("walkThen"), &InstanceNutPlayer::WalkThen);
+	instanceClass->Func(_SC("chat"), &InstanceNutPlayer::Chat);
+	instanceClass->Func(_SC("creatureChat"), &InstanceNutPlayer::CreatureChat);
+	instanceClass->Func(_SC("despawn"), &InstanceNutPlayer::Despawn);
+	instanceClass->Func(_SC("despawnAll"), &InstanceNutPlayer::DespawnAll);
+	instanceClass->Func(_SC("particleAttach"), &InstanceNutPlayer::ParticleAttach);
+	instanceClass->Func(_SC("particleDetach"), &InstanceNutPlayer::DetachSceneryEffect);
+	instanceClass->Func(_SC("asset"), &InstanceNutPlayer::Asset);
+	instanceClass->Func(_SC("emote"), &InstanceNutPlayer::Emote);
 
 	// Functions that return arrays or tables have to be dealt with differently
-	instance.SquirrelFunc(_SC("cids"), &InstanceNutPlayer::CIDs);
+	instanceClass->SquirrelFunc(_SC("cids"), &InstanceNutPlayer::CIDs);
 
 	// Some constants
 	Sqrat::ConstTable(vm).Const(_SC("CREATURE_WALK_SPEED"), CREATURE_WALK_SPEED);
 	Sqrat::ConstTable(vm).Const(_SC("CREATURE_JOG_SPEED"), CREATURE_JOG_SPEED);
 	Sqrat::ConstTable(vm).Const(_SC("CREATURE_RUN_SPEED"), CREATURE_RUN_SPEED);
 
-	Sqrat::RootTable(vm).SetInstance(_SC("inst"), this);
 }
 
 void InstanceNutPlayer::SetInstancePointer(ActiveInstance *parent)
@@ -300,8 +317,13 @@ void InstanceNutPlayer::WalkThen(int CID, ScriptObjects::Point point, int speed,
 		ci->Speed = speed;
 
 		WalkCondition *wc = new WalkCondition(ci);
-		queue.push_back(ScriptCore::NutScriptEvent(onArrival, wc));
+		InstanceNutPlayer::DoQueue(ScriptCore::NutScriptEvent(onArrival, wc));
 	}
+}
+
+void InstanceNutPlayer::Queue(Sqrat::Function function, int fireDelay)
+{
+	DoQueue(function, fireDelay);
 }
 
 void InstanceNutPlayer::Walk(int CID, ScriptObjects::Point point, int speed, int range) {
@@ -371,7 +393,9 @@ int InstanceNutPlayer::CountAlive(int CDefID)
 bool InstanceNutPlayer::AI(int CID, const char *label)
 {
 	CreatureInstance *ci = GetNPCPtr(CID);
-	return ci && ci->aiScript && ci->aiScript->JumpToLabel(label);
+	return
+			ci && ( ( ci->aiScript && ci->aiScript->JumpToLabel(label) ) ||
+					( ci->aiNut && ci->aiNut->RunFunction(label) ) );
 }
 
 int InstanceNutPlayer::GetTarget(int CDefID)

@@ -33,9 +33,12 @@ public:
 	static SQInteger CIDs(HSQUIRRELVM v);
 
 	void SetInstancePointer(ActiveInstance *parent);
-	void RegisterFunctions();
+	virtual void RegisterFunctions();
+	void RegisterInstanceFunctions(NutPlayer *instance, Sqrat::DerivedClass<InstanceNutPlayer, NutPlayer> *instanceClass);
 	virtual void HaltDerivedExecution();
-	virtual void RegisterDerivedFunctions();
+
+	// Exposed to scripts
+	void Queue(Sqrat::Function function, int fireDelay);
 	void Info(const char *message);
 	bool AI(int CID, const char *label);
 	void Broadcast(const char *message);

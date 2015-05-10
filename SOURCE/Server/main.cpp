@@ -155,6 +155,7 @@ If using Code::Blocks on LINUX
 #include "ItemSet.h"
 #include "Creature.h"
 #include "AIScript.h"
+#include "AIScript2.h"
 #include "Ability2.h"
 #include "CreatureSpawner2.h"
 #include "Interact.h"
@@ -508,6 +509,7 @@ int main(int argc, char *argv[])
 	g_FriendListManager.LoadAllData();
 
 	aiScriptManager.LoadScripts();
+	aiNutManager.LoadScripts();
 
 #ifdef WINDOWS_PLATFORM
 	WSAData wsaData;
@@ -1278,6 +1280,10 @@ void Debug_OutputCharacter(FILE *output, int index, CreatureInstance *cInst)
 	if(cInst->aiScript != NULL)
 	{
 		fprintf(output, "    AIScript Ptr: %p (%s) curInst: %d\r\n", cInst->aiScript, cInst->aiScript->def->scriptName.c_str(), cInst->aiScript->curInst);
+	}
+	if(cInst->aiNut != NULL)
+	{
+		fprintf(output, "    AINut Ptr: %p (%s)\r\n", cInst->aiScript, cInst->aiScript->def->scriptName.c_str());
 	}
 	fprintf(output, "    Target: %s (Ptr: %p)\r\n", (cInst->CurrentTarget.targ != NULL) ? cInst->CurrentTarget.targ->css.display_name : "null", cInst->CurrentTarget.targ);
 	fprintf(output, "    Might: %d (%d), Will: %d (%d)\r\n", cInst->css.might, cInst->css.might_charges, cInst->css.will, cInst->css.will_charges);

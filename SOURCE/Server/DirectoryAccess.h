@@ -25,6 +25,7 @@ public:
     void Clear();
     void ReadDirectories();
     void ReadFiles(void);
+    const char * GetDirectory();
     void SetDirectory(const char *path);
     int FileCount(void);
     bool CheckInvalidDir(const char *filename);

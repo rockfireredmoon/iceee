@@ -360,7 +360,7 @@ public:
 	NutDef();
 	virtual ~NutDef();
 	void ClearBase(void); //Initialize all data to their reset state.  It will call ClearDerived()
-	void Initialize(const char *sourceFile);
+	void Initialize(const char *source);
 	virtual void ClearDerived();
 	bool HasFlag(unsigned int flag);
 
@@ -370,7 +370,7 @@ private:
 	bool queueExternalJumps;
 	int queueCallStyle;
 	unsigned int mFlags;
-	const char* mSourceFile;
+	std::string mSourceFile;
 
 	static const int DEFAULT_INSTRUCTIONS_PER_CYCLE = 1;
 	static const int DEFAULT_INSTRUCTIONS_PER_IDLE_CYCLE = 0;
@@ -390,6 +390,13 @@ private:
 
 };
 
+class NutCallback {
+public:
+	NutCallback();
+	virtual ~NutCallback();
+	virtual void Execute() = 0;
+};
+
 class NutCondition {
 public:
 	NutCondition();
@@ -403,6 +410,9 @@ public:
 	Sqrat::Function mFunction;		//Function to jump to
 	unsigned long mFireTime;         //Time to fire this event.
 	NutCondition *mCondition;
+	NutCallback *mCallback;;
+	~NutScriptEvent();
+	NutScriptEvent(NutCallback *callback, unsigned long fireTime);
 	NutScriptEvent(Sqrat::Function &function, unsigned long fireTime);
 	NutScriptEvent(Sqrat::Function &function, NutCondition *condition);
 };
@@ -412,20 +422,19 @@ public:
 
 	HSQUIRRELVM vm;
 	NutDef *def; //Pointer to the script definition that this player is executing.
-	int curInst;                         //Index of the current instruction.
 	bool active; //If true, the script is considered to be running (has not terminated).
-	unsigned long nextFire; //Time when the next instruction can run.  Used for waits.
-	std::vector<NutScriptEvent> queue;
 	bool mHasScript;
 	bool mHalt;
+	bool mExecuting;
 
 	NutPlayer();
 	virtual ~NutPlayer();
 
 	bool HasScript();
-	void RegisterFunctions();
+	virtual void RegisterFunctions();
+	void RegisterCoreFunctions(NutPlayer *instance, Sqrat::Class<NutPlayer> *clazz);
 	virtual void HaltDerivedExecution();
-	virtual void RegisterDerivedFunctions();
+	void HaltExecution();
 	void Initialize(NutDef *defPtr, std::string &errors);
 	bool Tick(void);     //Run a single instruction.
 	void RunScript(void);                //Run the script until it ends.
@@ -434,17 +443,22 @@ public:
 	bool IsWaiting(void);
 	bool CanRunIdle(void);
 	void Halt(void);
-	void HaltExecution(void);
+	bool RunFunction(const char *name);
 	bool RunFunction(const char *name, std::vector<ScriptParam> parms);
 	void Broadcast(const char *message);
-	void Queue(Sqrat::Function function, int fireDelay);
+	void DoQueue(NutScriptEvent evt);
+	void DoQueue(Sqrat::Function function, int fireDelay);
 	bool ExecQueue(void);
+
+	// Exposed to scripts
 	int Rand(int max);
 	int RandInt(int min, int max);
 	int RandMod(int max);
 	int RandModRng(int min, int max);
 	int RandDbl(double min, double max);
 
+	std::vector<NutScriptEvent> mQueue;
+	std::vector<NutScriptEvent> mQueueQueue;
 
 protected:
 	static const size_t MAX_QUEUE_SIZE = 16;

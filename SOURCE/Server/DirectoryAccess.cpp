@@ -58,6 +58,13 @@ void Platform_DirectoryReader :: SetDirectory(const char *path)
     PLATFORM_CHDIR(path);
 }
 
+const char * Platform_DirectoryReader :: GetDirectory()
+{
+//	string cwd;
+//	PLATFORM_GETCWD(cwd.c_str());
+	return get_current_dir_name();
+}
+
 int Platform_DirectoryReader :: FileCount(void)
 {
     return fileList.size();

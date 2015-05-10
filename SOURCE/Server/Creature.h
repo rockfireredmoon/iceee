@@ -22,6 +22,7 @@ class SimulatorThread;
 
 class CreatureInstance;  //Forward declaration for a pointer in the SelectedObject structure
 class AIScriptPlayer;    //Forward declaration for AI script
+class AINutPlayer;    //Forward declaration for AI nuts
 struct QuestObjective;   //Need for integration with quest system.
 class InteractObject;
 class QuestItemReward;
@@ -312,6 +313,7 @@ public:
 	SelectedObject CurrentTarget;
 
 	AIScriptPlayer *aiScript;
+	AINutPlayer *aiNut;
 
 	union
 	{

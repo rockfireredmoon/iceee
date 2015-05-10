@@ -100,7 +100,7 @@ mWeaponDamageMax=111
 mBonusConstitution=10
 mBonusStrength=14
 mValue=6743
-mQualityLevel=2
+mQualityLevel=3
 mMinUseLevel=44
 mMeleeCritMod=3
 mArmorResistMelee=77
@@ -118,7 +118,7 @@ mIcon=Icon-32-C_Armor-Head02.png|Icon-32-BG-Blue.png
 mLevel=44
 mValue=6743
 mMinUseLevel=47
-mQualityLevel=2
+mQualityLevel=3
 mEquipType=8
 mBindingType=1
 mBonusDexterity=14
@@ -138,34 +138,35 @@ mDisplayName=Kyshf's Hide Helmet
 mAppearance=[{["a"]={["type"]="Armor-Heavy-High1-Helmet",["node"]="helmet",["colors"]=["3F352C","7AA3E9","D4B0D4"]}},null]
 mIcon=Icon-32-H_Armor-Head05.png|Icon-32-BG-Blue.png
 mLevel=47
-mValue=6281
+mValue=6299
 mMinUseLevel=47
-mQualityLevel=2
+mQualityLevel=3
 mEquipType=8
-mBindingType=1
-mBonusConstitution=35
+mBindingType=2
+mBonusConstitution=8
+mBonusStrength=21
 mArmorType=1
-mArmorResistFire=100
-mArmorResistFrost=100
-mArmorResistMystic=100
-mArmorResistDeath=150
+mArmorResistMelee=115
+mArmorResistFire=115
+mArmorResistFrost=115
+mArmorResistMystic=115
+mArmorResistDeath=115
 
 [ENTRY]
 mID=10009
 mType=2
 mAppearance=[{["a"]={["type"]="Item-Bow-Medium3",["node"]="left_hand",["colors"]=["151515","E9E9E9","BF3434"]}},null]
 mDisplayName=Deathchanter Bow
-mLevel=43
-mValue=3569
-mMinUseLevel=43
+mLevel=46
+mValue=4177
+mMinUseLevel=46
 mQualityLevel=3
 mEquipType=6
 mBindingType=2
-mBonusSpirit=5
-mBonusStrength=10
+mBonusSpirit=14
 mWeaponType=6
-mWeaponDamageMin=38
-mWeaponDamageMax=646
+mWeaponDamageMin=52
+mWeaponDamageMax=87
 
 [ENTRY]
 mID=10010
@@ -174,14 +175,21 @@ mDisplayName=Soulweaver Kilt
 mAppearance=[{["c"]={["type"]="Armor-Light-Low6",["colors"]=["19551d","aa7429","7f6b45","947d50"]}}, null]
 mIcon=Icon-32-M_Armor-Legs02.png|Icon-32-BG-Blue.png
 mLevel=47
-mValue=5844
+mValue=6299
 mMinUseLevel=47
-mQualityLevel=2
+mQualityLevel=3
 mEquipType=15
 mBindingType=2
-mBonusPsyche=28
-mBonusConstitution=28
-mArmorType=3
+mBonusPsyche=25
+mBonusConstitution=2
+mArmorType=1
+mArmorResistMelee=152
+mArmorResistFire=152
+mArmorResistFrost=152
+mArmorResistMystic=152
+mArmorResistDeath=152
+
+
 
 [ENTRY]
 mID=10011
@@ -235,7 +243,7 @@ mQualityLevel=1
 mID=10015
 mType=7
 mDisplayName=Father Grundy's Essence
-mIcon=Icon-Icon-32-Wall_Torch1.png|Icon-32-BG-Green.png
+mIcon=Icon-32-Corpse_Marker.png/|Icon-32-BG-Green.png
 mIvType1=1
 mIvMax1=20
 mIvType2=8
@@ -486,7 +494,7 @@ mAppearance=[{["c"]={["type"]="Armor-Medium-Low1",["colors"]=["2d3548","7a1000",
 mIcon=Icon-32-Armor-Neck04.png|Icon-32-BG-Blue.png
 mLevel=44
 mValue=2767
-mMinUseLevel=43
+mMinUseLevel=44
 mQualityLevel=3
 mEquipType=9
 mBindingType=2
@@ -505,16 +513,20 @@ mType=3
 mDisplayName=Superfluous Boots of The Lich
 mAppearance=[{["c"]={["type"]="Armor-CC-Clothing1",["colors"]=["7f4355","2a0e02","4831e9"]}},null]
 mIcon=Icon-32-H_Armor-Feet04.png|Icon-32-BG-Blue.png
-mLevel=43
-mValue=3231
-mMinUseLevel=45
+mLevel=47
+mValue=6299
+mMinUseLevel=47
 mQualityLevel=3
 mEquipType=16
 mBindingType=2
 mBonusConstitution=8
-mBonusPsyche=8
+mBonusSpirit=13
 mArmorType=1
-mArmorResistMelee=77
+mArmorResistMelee=85
+mArmorResistFire=85
+mArmorResistFrost=85
+mArmorResistMystic=85
+mArmorResistDeath=85
 
 [ENTRY]
 mID=10030
@@ -522,17 +534,16 @@ mType=2
 mDisplayName=Ossuary Relic
 mAppearance=[{["a"]={["type"]="Item-Talisman-Medium3",["node"]="right_hand",["colors"]=["BFBFBF","000000","AAAAAA"]}},null]
 mIcon=Icon-32-Talisman_Bottle.png|Icon-32-BG-Blue.png
-mLevel=43
-mValue=4003
-mMinUseLevel=43
+mLevel=46
+mValue=4177
+mMinUseLevel=46
 mQualityLevel=3
 mEquipType=1
 mBindingType=2
-mBonusConstitution=5
-mBonusPsyche=16
-mWeaponType=8
-mWeaponDamageMin=48
-mWeaponDamageMax=80
+mBonusPsyche=14
+mWeaponType=2
+mWeaponDamageMin=52
+mWeaponDamageMax=87
 
 [ENTRY]
 mID=10031
@@ -540,16 +551,16 @@ mType=2
 mDisplayName=Rusted Burial Sword
 mAppearance=[{["a"]={["type"]="Item-1hSword-Basic13",["colors"]=["D46C30","947D67","151515"]}},null]
 mIcon=Icon-32-Sword9.png|Icon-32-BG-Blue.png
-mLevel=44
-mValue=4208
-mMinUseLevel=44
+mLevel=46
+mValue=4177
+mMinUseLevel=46
 mQualityLevel=3
 mEquipType=1
 mBindingType=2
-mBonusConstitution=17
-mWeaponType=2
+mBonusStrength=14
+mWeaponType=1
 mWeaponDamageMin=52
-mWeaponDamageMax=83
+mWeaponDamageMax=87
 
 [ENTRY]
 mID=10032
@@ -571,3 +582,41 @@ mArmorResistFire=77
 mArmorResistFrost=77
 mArmorResistMystic=77
 mArmorResistDeath=77
+
+[ENTRY]
+mID=10033
+mType=2
+mDisplayName=Rusted Burial Knives
+mAppearance=[{["a"]={["type"]="Item-1hThrown-Knife1",["colors"]=["94634E","FFFFFF","2A0303"]}},null]
+mIcon=Icon-32-Dagger3.png|Icon-32-BG-Blue.png
+mLevel=46
+mValue=4177
+mMinUseLevel=44
+mQualityLevel=3
+mEquipType=6
+mBindingType=2
+mBonusDexterity=14
+mWeaponType=7
+mWeaponDamageMin=52
+mWeaponDamageMax=87
+
+[ENTRY]
+mID=10034
+mType=3
+mDisplayName=Spiderhide Pauldrons
+mAppearance=[{["a"]={["type"]="Armor-Light-Low3-Left_Pauldron",["colors"]=["2A2A2A","3F1503"]}},{["a"]={["type"]="Armor-Light-Low3-Right_Pauldron",["colors"]=["2A2A2A","3F1503"]}}]
+mIcon=Icon-32-C_Armor-Shldr03.png|Icon-32-BG-Blue.png
+mLevel=47
+mValue=6299
+mMinUseLevel=47
+mQualityLevel=3
+mEquipType=10
+mBindingType=2
+mBonusConstitution=8
+mBonusSpirit=13
+mArmorType=1
+mArmorResistMelee=90
+mArmorResistFire=90
+mArmorResistFrost=90
+mArmorResistMystic=90
+mArmorResistDeath=90
