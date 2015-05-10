@@ -9,6 +9,7 @@ planetforeverd_SOURCES = md5.cc \
 	Account.cpp \
 	ActiveCharacter.cpp \
 	AIScript.cpp \
+	AIScript2.cpp \
 	Arena.cpp \
 	Audit.cpp \
 	BroadCast.cpp \
@@ -77,6 +78,7 @@ planetforeverd_SOURCES = md5.cc \
 	Account.h \
 	ActiveCharacter.h \
 	AIScript.h \
+	AIScript2.h \
 	Arena.h \
 	Audit.h \
 	BroadCast.h \
