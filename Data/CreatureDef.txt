@@ -28371,7 +28371,7 @@ level=44
 display_name=Enslaved Zombie
 profession=1
 creature_category=Unliving
-rarity=1
+rarity=0
 ai_package=custom_heathendel_knight40
 appearance=n4:{["a"]=[{["type"]="Item-1hAxe-Basic3",["node"]="right_hand"}],["c"]="Horde-Zombie",["sk"]={["bone"]="AAA98D",["skin"]="AEDAFF",["blood"]="AA0000",["pants"]="D4B373",["shirt"]="947D38",["detail"]="AA8F5C",["hair"]="716664"},["sz"]="1.0216"}
 strength=60
@@ -29517,7 +29517,7 @@ level=45
 display_name=Vengeance Singer
 profession=4
 creature_category=Unliving
-rarity=1
+rarity=0
 ai_package=4_mage_30
 appearance=c2:{["a"]=[{["type"]="Item-Wand-Basic3",["node"]="right_hand",["colors"]=["151515","2A0000"]},{["type"]="Item-Particle-Wolf_Ice_Goliath_Mist",["node"]="right_hand",["colors"]=["151515","2A0000"]}],["c"]={["boots"]={["type"]="Armor-Medium-Mid3",["colors"]=["151511","2a2a2a","001501","2a0000","150000","151515"]},["chest"]={["type"]="Armor-Medium-Low4",["colors"]=["151511","2a2a2a","15150e","2a0000","150000","151515","2a0000","755b3a"]},["arms"]={["type"]="Armor-Medium-Mid3",["colors"]=["151511","2a2a2a","001501","2a0000","150000","151515"]},["leggings"]={["type"]="Armor-Cloth-Epic2",["colors"]=["151511","2a2a2a","15150e","2a0000","150000","151515"]},["collar"]={["type"]="Armor-Medium-Mid3",["colors"]=["151511","2a2a2a","15150e","2a0000","150000","151515"]},["belt"]={["type"]="Armor-Medium-Mid3",["colors"]=["151511","2a2a2a","001501","2a0000","150000","151515"]},["gloves"]={["type"]="Armor-Medium-Mid3",["colors"]=["151511","2a2a2a","001501","2a0000","150000","151515"]}},["b"]="n",["sk"]={["hair"]="15242A",["tusks"]="CCCCCC",["eye_white"]="FBF2BC",["snout"]="151515",["base"]="555555",["thigh_patches"]="2A2A2A",["eye"]="FF0000",["arm_patches"]="15242A",["wrist_patches"]="949494",["nails"]="FF1717"},["sz"]="1.08",["h"]=0,["g"]="f",["r"]="k"}
 

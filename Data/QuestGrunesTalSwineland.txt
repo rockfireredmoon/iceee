@@ -508,7 +508,7 @@ BodyText=Friend! Yes, you there! If you are headed out to the farms around Shado
 
 As for your task? Yes, well, you see... over the long years, it was discovered that the glowing iridescence within the eyes of the local Spiteful Lanterneyes lit up the night rather well. Further research discovered that this iridescence was to be found within the fluid in the eyes. Over time, some of us Redeemers found a way to preserve this fluid so that it could be used as a source of natural light. Every few months to a year or so, we go out and hunt the Lanterneyes for their eye fluid until we have a good size supply to last us for a good while. Once again, our stores of Lanterneye Eye Fluid has begun to run low and unfortunately, due to the recent activity in the area, we have been unable to go out and collect the fluid ourselves.
 
-This is where you come in! All we ask is that you gather a good... let's say...thirty...yes, thirty vials of fluid sounds good enough... of the eye fluid from the Spiteful Lanterneyes. Once you have them, return to me and I shall pay you a fair sum for the lot.
+This is where you come in! All we ask is that you gather a good... let's say...thirty...yes, fifteen vials of fluid sounds good enough... of the eye fluid from the Spiteful Lanterneyes. Once you have them, return to me and I shall pay you a fair sum for the lot.
 CompleteText=You have the vials of Eye Fluid! Friend, if only you knew how much time you have spared us in our already thankless task here in these dark lands. As promised, here is your reward and our thanks for your help.
 Level=42
 Suggested=43
@@ -1378,12 +1378,13 @@ BodyText=If you have spoken to my friend Shayne, then you know the atrocities wh
 Enter the Manor, friend, and have no fear of the sort of parlour tricks, tickling spiders or creaking doorways  within. Focus on the family Folkirk and eliminate their existance from Gaia's sight! Search for the Uncle Moldyfork, Father Grundy, Mother Cruella and their little dog too! Scraps, I think, is the name of their killer hound. 
 CompleteText=So those vile Folkirks have finally met the end they so long ago deserved? That is good news indeed.
 
-At long last those whose lives were lost because of them have the vengeance they have long cried for. Friend, your deeds have closed the book on one of the most tragic stories ever to come from this now-blighted region. Please take one of these items with you before you go and may Gaia watch over you. Farewell.
+At long last those whose lives were lost because of them have the vengeance they have long cried for. Friend, your deeds have closed the book on one of the most tragic stories ever to come from this now-blighted region.Please take one of these items with you before you go and may Gaia watch over you. Farewell.
 Level=45
 Suggested=46
 Exp=8122
 PartySize=3
 Coin=2318
+NumRewards=1
 Unabandon=0
 QuestGiverID=1198
 QuestEnderID=1198
@@ -1463,6 +1464,10 @@ Obj.0.myCreatureDefID=1198
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=58044.5,806.452,66701.1,9
+RewardItem.0=10035,1,0
+RewardItem.1=10036,1,0
+RewardItem.2=10037,1,0
+RewardItem.3=10038,1,0
 
 [Entry]
 ID=818
@@ -2028,8 +2033,8 @@ Obj.0.markerLocations=64137.3,780.062,56620.3,9
 [ENTRY]
 ID=829
 Title=Unholy Night
-BodyText=You! Could I speak to you for just a moment? Excellent thank you.  You seem to be helping everyone around here, quite the explorer quite the dare I say Hero? Enough flattery I wonder if you can help me with a little hunting.  We have been trying to solve the Wailing Crypt problem and restore that part of Grunes Tal to a bit of a more welcoming environment... But these damn Wrath Stags are every near the Crypt.  They'll attack on sight and arent as jolly as you'd think. If could take a few of them out for us just enough to maybe scare them off or give us an advantage of numbers I'll reward you for your efforts of course!
-CompleteText=Amazing! you made quick of those vermin thank you.  What?! a Alpha you say? Ah yes I think I've heard rumours of Bahmut.  Anyways here's your reward as promised.
+BodyText=You! Could I speak to you for just a moment? Excellent thank you.  You seem to be helping everyone around here, quite the explorer, quite the... dare I say... Hero? Enough flattery. I wonder if you can help me with a little hunting.  We have been trying to solve the Wailing Crypt problem and restore that part of Grunes Tal to a bit of a more welcoming environment... But these damn Wrath Stags are every near the Crypt.  They'll attack on sight and arent as jolly as you'd think. If could take a few of them out for us just enough to maybe scare them off or give us an advantage of numbers I'll reward you for your efforts of course!
+CompleteText=Amazing! you made quick of those vermin thank you.  What?! An Alpha you say? Ah yes I think I've heard rumours of Bahmut.  Anyways here's your reward as promised.
 Level=44
 Suggested=44
 Exp=8076
@@ -2069,8 +2074,8 @@ Obj.0.markerLocations=57964.9,809.567,66777.6,9
 Requires=829
 ID=830
 Title=Bahmut the Red Nosed Wrath Stag
-BodyText=Thank you again for helping with the Wrath Stags I just wish my idea would have worked.  You were right about Bahmut, he's an Alpha Wrath Stag as long as he's around the Wrath Stags will stay put and remain a threat to us while we try to restore order in Grunes Tal.  You don't owe me anything you've helped us so much but if you can find it in yourself to travel back and eliminate Bahmut.  You could be saving dozens of potential lives!
-CompleteText= You did it! My reports have said that the Wrath Stags have become a bit more timid and aren't showing as much aggression now that you cut the head off the snake.  I can't thank you enough! I know it's not much but here take this coin and take this too it was my fathers, but I want you to have it.
+BodyText=Thank you again for helping with the Wrath Stags, I just wish my idea would have worked.  You were right about Bahmut, he's an Alpha Wrath Stag. As long as he's around, the Wrath Stags will stay put, remaining a threat to us while we try to restore order in Grunes Tal.  You don't owe me anything, you've helped us so much, but if you can find it in yourself to travel back and eliminate Bahmut, you could be saving dozens of potential lives!
+CompleteText=You did it! My reports have said that the Wrath Stags have become a bit more timid and aren't showing as much aggression now that you cut the head off the snake.  I can't thank you enough! I know it's not much but here take this coin, and take this too. It was my fathers, but I want you to have it.
 Level=44
 Suggested=45
 Exp=8127
@@ -2419,7 +2424,7 @@ CompleteText=So, there are no more witnesses to the Wailer's incessant noise? Go
 Level=44
 Suggested=44
 Exp=8012
-PartySize=2
+PartySize=1
 NumRewards=0
 Coin=2318
 Unabandon=0
@@ -2465,7 +2470,7 @@ Requires=848
 ID=849
 Title=Sythrex the Overseer
 BodyText=Now that that's taken care of we can move on the next step.  The Overseer.  These Lich like beings seem to keep reanimating corpses from the graveyard it's literally a breeding ground for Abidan's forces! Eliminate the Overseer and his Putrid and report back to me when your finished!
-CompleteText=Ah you've returned! It's taken of then I assume?  Good, Now I have a even more important matter that requires your attention.
+CompleteText=Ah you've returned! It's taken of then I assume? Good, now I have a even more important matter that requires your attention.
 Level=45
 Suggested=45
 Exp=8212
@@ -2542,7 +2547,7 @@ Act.BodyText=Sacrifice Alabaster and Kyshf
 Obj.0.type=kill
 Obj.0.data1=3649
 Obj.0.data2=1
-Obj.0.description=Sacrafice Alabaster
+Obj.0.description=Sacrifice Alabaster
 Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
@@ -2551,7 +2556,7 @@ Obj.0.markerLocations=3638,600,1801,56
 Obj.1.type=kill
 Obj.1.data1=3648
 Obj.1.data2=1
-Obj.1.description=Sacrafice Kyshf
+Obj.1.description=Sacrifice Kyshf
 Obj.1.complete=0
 Obj.1.myCreatureDefID=
 Obj.1.myItemID=
@@ -2578,7 +2583,7 @@ BodyText=Now that there will be no more.. how shall we say... 'witnesses' to The
 Be wary when in the Crypt, though. More than a few would-be adventurers, and even a few groups we here at the Hall have assembled, have entered that place, yet none have returned. Perhaps there is more to these 'puzzles' than most know. While searching for The Wailer's 'resting' place, be on the lookout for clues on how to get past the Elders' Crypt puzzles. Surely some of these will help solve the mystery of the Wailer's existence.
 
 Return to me once you have taken care of The Wailer and have put it's obviously restless soul to a final peace.
-CompleteYou return safely friend! The Wailer has been put to rest? Excellent. Remember friend, keep The Wailer's identity to yourself for the sake of the family it belonged to. It is scandal enough that the creature was even causing problems. By eliminating that revenant as an issue, the families who's loved ones rest in that crypt can be rest assured their good names will not be tainted by this incident. Please accept one of these as thanks from both myself and the families whose reputations you have preserved. They, themselves, might not wish to say it, but I do. Take care and good fortune in your travels!
+Complete=You return safely friend! The Wailer has been put to rest? Excellent. Remember friend, keep The Wailer's identity to yourself for the sake of the family it belonged to. It is scandal enough that the creature was even causing problems. By eliminating that revenant as an issue, the families whose loved ones rest in that crypt can be rest assured their good names will not be tainted by this incident. Please accept one of these as thanks from both myself and the families whose reputations you have preserved. They, themselves, might not wish to say it, but I do. Take care and good fortune in your travels!
 Level=45
 Suggested=46
 Exp=8512
@@ -2643,8 +2648,8 @@ RewardItem.3=10027,1,0
 [ENTRY]
 ID=854
 Title=Creatures of Grunes Tal...
-BodyText=Greetings good beast, it's nice to see another reach the Redeemer camp.  These days that's a rare sight.  Especially due to the increasing threat of the feral creatures of Grunes Tal. They seem to breeding Rather quick and now are starting to wander into our camp threatening lives.  You seem like you can handle yourself, would you take care of them? 
-CompleteText=Fantastic! You've done it, but there are more beasts of the wild that need handling if your up for it?
+BodyText=Greetings good beast, it's nice to see another reach the Redeemer camp.  These days that's a rare sight.  Especially due to the increasing threat of the feral creatures of Grunes Tal. They seem to be breeding rather quick and now are starting to wander into our camp, threatening lives.  You seem like you can handle yourself, would you take care of them? 
+CompleteText=Fantastic! You've done it, but there are more beasts of the wild that need handling if you're up for it.
 Level=43
 Suggested=43
 Exp=8042
@@ -2684,8 +2689,8 @@ Obj.0.markerLocations=58337,789.456,66885.7,9
 Requires=854
 ID=855
 Title=Creatures of Grunes Tal... Part 2
-BodyText=The wolves packs may decreasing in size but those massize Deathweaving spiders are everywhere. Go finish a few of them off and ill once again reward you.
-CompleteText=Those spiders didnt have a chance did they?! Excellent, there are a few more creatures that need dealing with though
+BodyText=The wolf packs may be decreasing in size but those massive Deathweaving spiders are everywhere. Go exterminate a few of them off and I'll once again reward you.
+CompleteText=Those spiders didnt have a chance did they?! Excellent, there are a few more creatures that need dealing with though.
 Level=43
 Suggested=43
 Exp=8042

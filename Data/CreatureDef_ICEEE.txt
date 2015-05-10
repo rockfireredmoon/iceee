@@ -1119,3 +1119,34 @@ creature_category=Inanimate
 rarity=1
 ai_package=nothing
 
+[ENTRY]
+ID=7809
+appearance=n4:{["sk"]={["marking2"]="623F28",["fur"]="623F28",["muzzle"]="E79C66",["eye"]="FF0000",["marking1"]="623F28",["mouth"]="AB0000",["noseclaws"]="1B0B05"},["c"]="Horde-Bear",["sz"]="1.0824"}
+level=4
+display_name=Bear Form
+creature_category=Magical
+constitution=1
+
+[ENTRY]
+ID=7810
+appearance=n4:{["sk"]={["antlers"]="C19946",["hooves"]="B37C4B",["eyes"]="CDCDCD",["body"]="AA8E76",["tail"]="AA8B8B",["chest"]="DCA978"},["c"]="Horde-Stag",["sz"]="1.0824"}
+level=4
+display_name=Stag Form
+creature_category=Magical
+constitution=1
+
+[ENTRY]
+ID=7811
+appearance=n4:{["sk"]={["fur"]="6A6A58",["ear"]="A87764",["eye"]="A16430",["highlight"]="D4ADAD",["claws"]="F8E5C0",["mouth"]="461A17"},["c"]="Horde-Wolf",["sz"]="1.0824"}
+level=4
+display_name=Wolf Form
+creature_category=Magical
+constitution=1
+
+[ENTRY]
+ID=7812
+appearance=n4:{["sk"]={["tail"]="F2AC4D",["mane_highlight"]="FCCD50",["tail_highlight"]="FFCE4D",["mane"]="FF8516",["body"]="7F6B30",["eye"]="000AAA",["markings"]="060715"},["c"]="Horde-Lion",["sz"]="1.0824"}
+level=4
+display_name=Cougar Form
+creature_category=Magical
+constitution=1
