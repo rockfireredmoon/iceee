@@ -476,7 +476,7 @@ BodyText=Hmm... Yes, I see... Old Ironbirch was wise to have this taken out of t
 For years my family have been experts on the handling of the Undead and we have learned various ways of purifying and disposing of various objects related to them. As such, I shall take the Lich's hand and see what can be done to destroy it. Though, there is the chance darker forces are involved. If this is the case, merely destroying this thing would be just the beginning.
 
 In the meantime, friend, as you have probably noticed we at Redeemer's Hall are at constant odds with the Undead threat here in Grunes Tal. If you would like to join in our fight to halt the advance of the Legions of Sheol, please talk to Captain Zaris, he is the officer in charge here at the Hall. Any assistance in the fight against Abidan's forces is always welcome.
-CompleteText=NEED RESPONSE TEXT
+CompleteText=Speak up! Huh, so Hans sent you did he.
 Level=42
 Suggested=43
 Exp=3921
@@ -1765,7 +1765,7 @@ Obj.0.description=Return to MJ Price
 Obj.0.complete=0
 Obj.0.myCreatureDefID=3522
 Obj.0.myItemID=
-Obj.0.completeText=0
+Obj.0.completeText=
 Obj.0.markerLocations=59178.3,1109.91,64102.6,9
 
 [ENTRY]
@@ -1832,7 +1832,7 @@ ID=825
 Title=Hot Bug-Wings
 BodyText=I betcha yer such a pansy, you couldn't eat one of my hot bug-wings and not cry like a little girl!
 
-Git-outta/-here! Bring me a proper dozen Bug-Wings from The Bugs found west of here, and I'll let you use my special hot sauce to prove yerself worthy.
+Git-outta-here! Bring me a proper dozen Bug-Wings from The Bugs found west of here, and I'll let you use my special hot sauce to prove yerself worthy.
 
 And don't skimp on the size with those wings, got it?
 CompleteText=You got them Bug Wings yet? Yeah, those'll do right nicely! Now just give me a moment and I'll let ya have a plate!
@@ -2266,7 +2266,7 @@ Obj.0.markerLocations=58209.1,787.832,66820.6,9
 [ENTRY]
 Requires=844
 ID=845
-Title=A Gift With a Prices
+Title=A Gift With A Price
 BodyText=As I have mentioned before, there is nothing a Warpig cherishes more than the relics from the Age of Man. They are somewhat - interesting - creatures, and we have let them be for the time we have been here in Redeemer's Hall. Yet I tell you, our Elders knew there would come a time when we could need their assistance, and secreted this relic away,  "for a rainy day".
 
 Give this matter the utmost importance, comrade, and take the relic north with all haste to Norris. He is the Chief Warpig Protectorate for the Warpig Camp here in Grunes Tal.
@@ -2347,7 +2347,7 @@ Obj.0.myItemID=
 Obj.0.completeText=0 of 25
 Obj.0.markerLocations=66596.1,614.328,57510,9
 [ACT]
-Act.BodyText= Speak with Norris
+Act.BodyText=Speak with Norris
 Obj.0.type=talk
 Obj.0.data1=
 Obj.0.data2=
@@ -2647,7 +2647,7 @@ RewardItem.3=10027,1,0
 
 [ENTRY]
 ID=854
-Title=Creatures of Grunes Tal...
+Title=Creatures of Grunes Tal
 BodyText=Greetings good beast, it's nice to see another reach the Redeemer camp.  These days that's a rare sight.  Especially due to the increasing threat of the feral creatures of Grunes Tal. They seem to be breeding rather quick and now are starting to wander into our camp, threatening lives.  You seem like you can handle yourself, would you take care of them? 
 CompleteText=Fantastic! You've done it, but there are more beasts of the wild that need handling if you're up for it.
 Level=43

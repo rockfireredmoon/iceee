@@ -989,10 +989,10 @@ DefLoc=10994,546,12401
 
 [ENTRY]
 ID=93
-NAME=Boss Hawg's
+NAME=Protectorates' Compound
 ENVIRONMENTTYPE=Dungeon1
 ShardName=Europe 1
-WarpName=Boss-Hawgs
+WarpName=Protectorate-Compound
 DefLoc=2531,296,2527
 PageSize=1000
 

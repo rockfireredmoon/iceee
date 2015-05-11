@@ -255,6 +255,7 @@ public:
 	int CheckQuestTalk(char *buffer, int CreatureDefID, int CreatureInstID);
 	int ForceComplete(int QuestID, char *buffer);
 	int ForceAllComplete(char *buffer);
+	void QuestClear(int QuestID);
 	void QuestLeave(int QuestID);
 	int FilterEmote(char *outbuf, const char *message, int xpos, int zpos, int zoneID);
 

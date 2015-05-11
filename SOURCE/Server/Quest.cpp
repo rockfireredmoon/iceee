@@ -2036,6 +2036,23 @@ void QuestJournal :: QuestLeave(int QuestID)
 	}
 }
 
+void QuestJournal :: QuestClear(int QuestID)
+{
+	QuestLeave(QuestID);
+	int r = completedQuests.HasQuestID(QuestID);
+	if(r >= 0)
+	{
+		completedQuests.itemList[r].Reset();
+		QuestDefinition *qDef = QuestDef.GetQuestDefPtrByID(QuestID);
+		if(qDef != NULL)
+		{
+			availableQuests.AddItem(completedQuests.itemList[r]);
+			availableQuests.Sort();
+		}
+		completedQuests.RemoveIndex(r);
+	}
+}
+
 int QuestJournal :: FilterEmote(char *outbuf, const char *message, int xpos, int zpos, int zoneID)
 {
 	int wpos = 0;

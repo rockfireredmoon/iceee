@@ -781,7 +781,7 @@ rarity=1
 ai_package=nothing
 
 [ENTRY]
-defHints=8
+defHints=2
 ID=7785
 will_regen=1
 might_regen=1

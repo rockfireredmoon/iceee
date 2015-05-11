@@ -1361,14 +1361,14 @@ Name=grunes_to_protectorates_compound
 Type=warp
 ObjectID=7790
 WarpTo=2535,296,2526,93
-Message=Entering Protectorate's Compound
+Message=Entering Protectorates' Compound
 
 [ENTRY]
 Name=protectorates_compound_to_grunes
 Type=warp
 ObjectID=7791
 WarpTo=63798,780,56598,9
-Message=Exiting Protectorate's Compound
+Message=Exiting Protectorates' Compound
 
 [ENTRY]
 Name=henge_frostpeak

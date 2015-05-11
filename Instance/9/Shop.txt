@@ -821,3 +821,42 @@ Item=40120  ;Constitution Potion: Level 30
 Item=40121  ;Constitution Potion: Level 40
 Item=40125  ;Armor Boost Potion: Level 30
 Item=40126  ;Armor Boost Potion: Level 40
+
+; Protectorate Compound (Planetforever / IceEE)
+[ENTRY]
+CreatureDefID=3679
+Item=20522
+Item=20523
+Item=20524
+Item=20525
+Item=20526
+
+; Protectorate Compound (Planetforever / IceEE)
+[ENTRY]
+CreatureDefID=3667
+Item=40114  ;Speed Potion
+Item=40115  ;Greater Speed Potion
+Item=40116  ;Energy Drink
+Item=40117  ;Agility Potion
+Item=40055  ;Basic Health Potion: Level 30
+Item=40056  ;Basic Health Potion: Level 40
+Item=40120  ;Constitution Potion: Level 30
+Item=40121  ;Constitution Potion: Level 40
+Item=40125  ;Armor Boost Potion: Level 30
+Item=40126  ;Armor Boost Potion: Level 40
+Item=20526
+
+; Protectorate Compound (Planetforever / IceEE)
+[ENTRY]
+CreatureDefID=3666
+Item=2835  ;Plain Belt
+Item=2859  ;Plain Pauldrons
+Item=2893  ;Plain Helm
+Item=2933  ;Plain Boots
+Item=2973  ;Plain Leggings
+Item=3014  ;Plain Armbands
+Item=3055  ;Plain Gloves
+Item=3095  ;Plain Chestpiece
+Item=3135  ;Plain Collar
+Item=3154  ;Plain Shield
+

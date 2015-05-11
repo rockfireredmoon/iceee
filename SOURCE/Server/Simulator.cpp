@@ -8434,7 +8434,7 @@ int SimulatorThread :: handle_query_quest_hack(void)
 	else if(query.args[0].compare("remove") == 0) {
 		LogMessageL(MSG_DIAGV, "[SAGE] Quest remove (QuestID: %d, CID: %d)", qdef->questID, creature->CreatureID);
 		WritePos = PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-		creature->charPtr->questJournal.QuestLeave(qdef->questID);
+		creature->charPtr->questJournal.QuestClear(qdef->questID);
 		int wpos = PutByte(&Aux1[0], 7);  //_handleQuestEventMsg
 		wpos += PutShort(&Aux1[wpos], 0); //Size
 		wpos += PutInteger(&Aux1[wpos], qdef->questID); //Quest ID
