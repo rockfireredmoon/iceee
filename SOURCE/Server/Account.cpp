@@ -1191,6 +1191,7 @@ int AccountManager :: CreateCharacter(STRINGLIST &args, AccountData *accPtr)
 		}
 
 		int newID = GetNewCharacterID();
+		SessionVarsChangeData.AddChange();
 		accPtr->CharacterSet[r] = newID;
 
 		CharacterData newChar;
@@ -1202,6 +1203,7 @@ int AccountManager :: CreateCharacter(STRINGLIST &args, AccountData *accPtr)
 
 		//Character name is in buffer, from above
 		char buffer[3072];
+		sprintf(buffer, "%s %s", args[0].c_str(), args[1].c_str());
 		Util::SafeCopy(newChar.cdef.css.display_name, buffer, sizeof(newChar.cdef.css.display_name));
 
 		static const char *RaceNames[4] = {"Knight", "Rogue", "Mage", "Druid"};
