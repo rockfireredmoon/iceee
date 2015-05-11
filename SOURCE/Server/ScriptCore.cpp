@@ -125,6 +125,7 @@ namespace ScriptCore
 		mHasScript = false;
 		mHalt = false;
 		mExecuting = false;
+		mProcessingTime = 0;
 		assert(mQueue.size() == 0);
 		assert(mQueueQueue.size() == 0);
 	}
@@ -135,6 +136,9 @@ namespace ScriptCore
 	}
 
 	void NutPlayer::Initialize(NutDef *defPtr, std::string &errors) {
+
+		unsigned long started = g_PlatformTime.getMilliseconds();
+
 		def = defPtr;
 		vm = sq_open(1024); // creates a VM with initial stack size 1024
 		mHalt = false;
@@ -227,6 +231,9 @@ namespace ScriptCore
 			HaltExecution();
 		}
 
+
+		unsigned long time = g_PlatformTime.getMilliseconds() - started;
+		mInitTime = time;
 	}
 
 	void NutPlayer::RegisterFunctions() { }
@@ -370,12 +377,10 @@ namespace ScriptCore
 			g_Log.AddMessageFormat("Already executing. Something tried to executing the queue while it was already executing.");
 			return true;
 		}
+		unsigned long now = g_PlatformTime.getMilliseconds();
 		bool ok = false;
 		mExecuting = true;
 		ulong currentFireTime;
-
-//		PrintMessage("[ERROR] BEFORE LOOP MQS: %d", mQueueQueue.size());
-//		PrintMessage("[ERROR] BEFORE LOOP QS: %d", mQueue.size());
 
 		for(size_t i = 0; i < mQueue.size(); i++)
 		{
@@ -405,9 +410,6 @@ namespace ScriptCore
 				Sqrat::SharedPtr<bool> ptr = oFunc->Evaluate<bool>();
 				bool res = ptr.Get() == NULL || ptr.Get();
 
-				PrintMessage("[ERROR] DURING LOOP MQS: %d", mQueueQueue.size());
-				PrintMessage("[ERROR] DURING LOOP QS: %d", mQueue.size());
-
 				/* If the fire time changes while running this function, the function
 				 * queued the same event again
 				 */
@@ -421,6 +423,7 @@ namespace ScriptCore
 		mQueue.insert(mQueue.end(), mQueueQueue.begin(), mQueueQueue.end());
 		mQueueQueue.clear();
 		mExecuting = false;
+		mProcessingTime += g_PlatformTime.getMilliseconds() - now;
 		return ok;
 	}
 
@@ -428,7 +431,6 @@ namespace ScriptCore
 	{
 		if(mExecuting)
 		{
-			PrintMessage("[ERROR] QS: %d", mQueueQueue.size());
 			if(mQueueQueue.size() >= MAX_QUEUE_SIZE)
 			{
 				PrintMessage("[ERROR] Script error: Deferred QueueEvent() list is full %d of %d", mQueueQueue.size(), MAX_QUEUE_SIZE);

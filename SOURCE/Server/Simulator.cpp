@@ -12,6 +12,7 @@
 #include "Globals.h"
 #include "PartyManager.h"
 #include "Account.h"
+#include "AIScript2.h"
 #include "Chat.h"
 #include "Instance.h"
 #include "Item.h"
@@ -2791,6 +2792,9 @@ bool SimulatorThread :: HandleQuery(int &PendingData)
 		PendingData = handle_query_instance();
 	else if(query.name.compare("go") == 0)
 		PendingData = handle_query_go();
+	else if(query.name.compare("script.time") == 0){
+		PendingData = handle_query_script_time();
+	}
 	else {
 		g_Log.AddMessageFormat("Unhandled query '%s'.", query.name.c_str());
 		return false;
@@ -13368,6 +13372,37 @@ int SimulatorThread :: handle_query_instance(void)
 	}
 	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
 }
+
+int SimulatorThread :: handle_query_script_time(void)
+{
+	ActiveInstance *inst = creatureInst->actInst;
+	if(inst != NULL)
+	{
+		double seconds;
+		if(inst->nutScriptPlayer.HasScript())
+		{
+			seconds = (double)inst->nutScriptPlayer.mProcessingTime / 1000.0;
+			Util::SafeFormat(Aux1, sizeof(Aux1), "Instance script: %4.3f (%4d). %s", seconds,
+					inst->nutScriptPlayer.mInitTime, inst->nutScriptPlayer.active ? "Active" : "Inactive");
+			SendInfoMessage(Aux1, INFOMSG_INFO);
+		}
+
+		ActiveInstance::CREATURE_IT it;
+		for(it = inst->NPCList.begin(); it != inst->NPCList.end(); ++it)
+		{
+			AINutPlayer *player = it->second.aiNut;
+			if(player != NULL)
+			{
+				seconds = (double)player->mProcessingTime / 1000.0;
+				Util::SafeFormat(Aux1, sizeof(Aux1), "CID: %d (%s) %4.3f (%4d)",
+						it->first, it->second.css.display_name, seconds, player->mInitTime);
+				SendInfoMessage(Aux1, INFOMSG_INFO);
+			}
+		}
+	}
+	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
+}
+
 
 int SimulatorThread :: handle_query_go(void)
 {

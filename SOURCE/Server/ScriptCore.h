@@ -426,6 +426,8 @@ public:
 	bool mHasScript;
 	bool mHalt;
 	bool mExecuting;
+	unsigned long mProcessingTime;
+	unsigned long mInitTime;
 
 	NutPlayer();
 	virtual ~NutPlayer();

@@ -3128,6 +3128,8 @@ void ActiveInstance :: ScriptCallUseFinish(int CreatureDefID)
 //Calls a script jump label.  Can be used for any generic purpose.
 void ActiveInstance :: ScriptCall(const char *name)
 {
+	if(nutScriptPlayer.HasScript())
+		nutScriptPlayer.RunFunction(name);
 	if(scriptPlayer.HasScript() && scriptPlayer.JumpToLabel(name) == true)
 		scriptPlayer.RunUntilWait();
 }

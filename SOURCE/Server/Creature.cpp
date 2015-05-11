@@ -544,7 +544,7 @@ void CreatureInstance :: Instantiate(void)
 		if(scriptName[0] == 0)
 			scriptName = cdef->css.ai_package;
 
-		aiNut = aiNutManager.AddActiveScript(scriptName);
+		aiNut = aiNutManager.AddActiveScript(this, scriptName);
 		if(aiNut == NULL)
 		{
 			aiScript = aiScriptManager.AddActiveScript(scriptName);
@@ -4020,7 +4020,7 @@ void CreatureInstance :: RunAIScript(void)
 		}
 	}
 	else if(aiNut != NULL) {
-		aiNut->ExecQueue();
+		aiNut->Tick();
 		// TODO how to emulate these optimisations
 //			if(CurrentTarget.targ != NULL)
 //		else
