@@ -206,16 +206,8 @@ namespace ScriptCore
 	}
 
 	NutScriptEvent::~NutScriptEvent() {
-//		delete mCallback;
-//		delete mCondition;
-
-		// TODO these were created with new .. do I need to clean them up somewhere?
-//		if(mCondition != NULL) {
-//			delete mCondition;
-//		}
-//		if(mCallback != NULL) {
-//			delete mCallback;
-//		}
+		delete mCallback;
+		delete mCondition;
 	}
 
 	//
@@ -223,6 +215,7 @@ namespace ScriptCore
 	//
 
 	NutPlayer::NutPlayer() {
+		mInitTime = 0;
 		vm = NULL;
 		def = NULL;
 		active = false;
@@ -495,9 +488,14 @@ namespace ScriptCore
 		 * If the VM wasn't suspended while handling this event, and the
 		 * event returned false, then we requeue this event for retry
 		 */
-		if(sq_getvmstate(vm) != SQ_VMSTATE_SUSPENDED && !res)
+		if(sq_getvmstate(vm) != SQ_VMSTATE_SUSPENDED && !res) {
 			mQueueQueue.push_back(nse);
-		mQueue.erase(mQueue.begin() + index);
+			mQueue.erase(mQueue.begin() + index);
+		}
+		else {
+			mQueue.erase(mQueue.begin() + index);
+			delete nse;
+		}
 
 		mProcessingTime += g_PlatformTime.getMilliseconds() - now;
 		return res;
