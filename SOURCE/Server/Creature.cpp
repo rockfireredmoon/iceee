@@ -2500,7 +2500,7 @@ void CreatureInstance :: ProcessDeath(void)
 
 	if(aiNut != NULL)
 	{
-		aiNut->RunFunction("onDeath");
+		aiNut->RunFunction("on_death");
 		aiNut->FullReset();
 	}
 	if(aiScript != NULL)

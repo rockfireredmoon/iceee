@@ -3087,7 +3087,7 @@ void ActiveInstance :: ScriptCallKill(int CreatureDefID, int CreatureID)
 		std::vector<ScriptCore::ScriptParam> parms;
 		parms.push_back(ScriptCore::ScriptParam(CreatureDefID));
 		parms.push_back(ScriptCore::ScriptParam(CreatureID));
-		nutScriptPlayer.RunFunction("onKill", parms);
+		nutScriptPlayer.RunFunction("on_kill", parms);
 	}
 	else if(scriptPlayer.HasScript())
 	{

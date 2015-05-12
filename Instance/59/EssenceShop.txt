@@ -2,8 +2,11 @@
 [ENTRY]
 CreatureDefID=7808
 EssenceID=8103  ; Key
-Item=50001,1  ; Rotted Wolf Transform 
 Item=900021,1  ; Speed Tome 
 Item=900019,1  ; Exp Tome 
-Item=900014,1  ; Grinder
+Item=900014,1  ; Grinder 
+Item=50002,1  ; Transform Pot.
+Item=50004,1  ; Transform Pot.
+Item=50005,1  ; Transform Pot.
+Item=50006,1  ; Transform Pot.
 

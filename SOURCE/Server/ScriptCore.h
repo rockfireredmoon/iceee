@@ -469,6 +469,7 @@ private:
 
 protected:
 	static const size_t MAX_QUEUE_SIZE = 16;
+	void ClearQueue();
 
 };
 

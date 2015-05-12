@@ -228,6 +228,11 @@ namespace ScriptCore
 	}
 
 	NutPlayer::~NutPlayer() {
+		ClearQueue();
+	}
+
+	void NutPlayer::ClearQueue() {
+		// TODO delete objects
 		mQueue.clear();
 		mQueueQueue.clear();
 	}
@@ -355,9 +360,7 @@ namespace ScriptCore
 		active = true;
 
 		// TODO somehow reset state of script
-
-		mQueue.clear();
-		mQueueQueue.clear();
+		ClearQueue();
 	}
 
 	void NutPlayer::RunScript(void) {
@@ -414,10 +417,16 @@ namespace ScriptCore
 			vector<ScriptParam> v;
 			mHalt = false;
 			HaltDerivedExecution();
-			RunFunction("onFinish", v);
+
+			// Wake the VM up if it is suspend so the onFinish can be run
+			if(sq_getvmstate(vm) == SQ_VMSTATE_SUSPENDED) {
+				g_Log.AddMessageFormat("Waking up VM to run finish.");
+				sq_wakeupvm(vm, false, false, false, true);
+			}
+
+			RunFunction("on_finish", v);
 			active = false;
-			mQueue.clear();
-			mQueueQueue.clear();
+			ClearQueue();
 			sq_close(vm);
 			if(def->HasFlag(NutDef::FLAG_REPORT_END))
 				PrintMessage("Script [%s] has ended", def->scriptName.c_str());

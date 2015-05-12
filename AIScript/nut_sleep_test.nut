@@ -1,3 +1,7 @@
+function on_death() {
+	print("I died :(");
+}
+
 function on_target_acquired(cid) {
 	have_target();
 }
