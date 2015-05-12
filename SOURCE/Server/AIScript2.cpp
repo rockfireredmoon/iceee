@@ -14,14 +14,11 @@
 #include "Config.h"
 #include "DirectoryAccess.h"
 
-const int USE_FAIL_DELAY = 250;  //Milliseconds to wait before retrying a failed script "use" command.
-
+const int USE_FAIL_DELAY = 250; //Milliseconds to wait before retrying a failed script "use" command.
 
 AINutManager aiNutManager;
 
-
-AINutDef::~AINutDef()
-{
+AINutDef::~AINutDef() {
 }
 
 UseCallback::UseCallback(AINutPlayer *aiNut, int abilityID) {
@@ -31,26 +28,25 @@ UseCallback::UseCallback(AINutPlayer *aiNut, int abilityID) {
 UseCallback::~UseCallback() {
 }
 
-void UseCallback::Execute() {
+bool UseCallback::Execute() {
 	mAiNut->Use(mAbilityID);
+	return true;
 }
 
-AINutPlayer::AINutPlayer()
-{
+AINutPlayer::AINutPlayer() {
 	attachedCreature = NULL;
 }
 
-AINutPlayer::~AINutPlayer()
-{
+AINutPlayer::~AINutPlayer() {
 }
 
-void AINutPlayer::Initialize(CreatureInstance *creature, AINutDef *defPtr, std::string &errors) {
+void AINutPlayer::Initialize(CreatureInstance *creature, AINutDef *defPtr,
+		std::string &errors) {
 	attachedCreature = creature;
 	NutPlayer::Initialize(defPtr, errors);
 }
 
-void AINutPlayer::HaltDerivedExecution()
-{
+void AINutPlayer::HaltDerivedExecution() {
 }
 
 bool AINutPlayer::HasTarget() {
@@ -59,34 +55,35 @@ bool AINutPlayer::HasTarget() {
 
 void AINutPlayer::Use(int abilityID) {
 
-	if(attachedCreature->ab[0].bPending == false)
-	{
+	if (attachedCreature->ab[0].bPending == false) {
 		//DEBUG OUTPUT
-		if(g_Config.DebugLogAIScriptUse == true)
-		{
-			const Ability2::AbilityEntry2* abptr = g_AbilityManager.GetAbilityPtrByID(abilityID);
-			g_Log.AddMessageFormat("Using: %s", abptr->GetRowAsCString(Ability2::ABROW::NAME));
+		if (g_Config.DebugLogAIScriptUse == true) {
+			const Ability2::AbilityEntry2* abptr =
+					g_AbilityManager.GetAbilityPtrByID(abilityID);
+			g_Log.AddMessageFormat("Using: %s",
+					abptr->GetRowAsCString(Ability2::ABROW::NAME));
 		}
 		//END DEBUG OUTPUT
 
-		int r = attachedCreature->CallAbilityEvent(abilityID, EventType::onRequest);
-		if(r != 0)
-		{
+		int r = attachedCreature->CallAbilityEvent(abilityID,
+				EventType::onRequest);
+		if (r != 0) {
 			//Notify the creature we failed, may need a distance check.
 			//The script should wait and retry soon.
 			attachedCreature->AICheckAbilityFailure(r);
 
-			if(g_Config.DebugLogAIScriptUse == true)
-			{
-				const Ability2::AbilityEntry2* abptr = g_AbilityManager.GetAbilityPtrByID(abilityID);
-				g_Log.AddMessageFormat("Using: %s   Failed: %d", abptr->GetRowAsCString(Ability2::ABROW::NAME), g_AbilityManager.GetAbilityErrorCode(r));
+			if (g_Config.DebugLogAIScriptUse == true) {
+				const Ability2::AbilityEntry2* abptr =
+						g_AbilityManager.GetAbilityPtrByID(abilityID);
+				g_Log.AddMessageFormat("Using: %s   Failed: %d",
+						abptr->GetRowAsCString(Ability2::ABROW::NAME),
+						g_AbilityManager.GetAbilityErrorCode(r));
 			}
 
-			if(attachedCreature->AIAbilityFailureAllowRetry(r) == true)
-			{
-				UseCallback *cb = new UseCallback(this, abilityID);
-				AINutPlayer::DoQueue(ScriptCore::NutScriptEvent(cb, USE_FAIL_DELAY));
-			}
+			if (attachedCreature->AIAbilityFailureAllowRetry(r) == true)
+				DoQueue(new ScriptCore::NutScriptEvent(
+							new ScriptCore::TimeCondition(USE_FAIL_DELAY),
+							new UseCallback(this, abilityID)));
 		}
 	}
 }
@@ -121,16 +118,17 @@ bool AINutPlayer::IsBusy() {
 }
 
 short AINutPlayer::CountEnemyNear(int range) {
-	return attachedCreature->AICountEnemyNear(range, (float)attachedCreature->CurrentX, (float)attachedCreature->CurrentZ);
+	return attachedCreature->AICountEnemyNear(range,
+			(float) attachedCreature->CurrentX,
+			(float) attachedCreature->CurrentZ);
 }
 
 short AINutPlayer::CountEnemyAt(int range) {
-	float x = (float)attachedCreature->CurrentX;
-	float z = (float)attachedCreature->CurrentZ;
-	if(attachedCreature->CurrentTarget.targ != NULL)
-	{
-		x = (float)attachedCreature->CurrentTarget.targ->CurrentX;
-		z = (float)attachedCreature->CurrentTarget.targ->CurrentZ;
+	float x = (float) attachedCreature->CurrentX;
+	float z = (float) attachedCreature->CurrentZ;
+	if (attachedCreature->CurrentTarget.targ != NULL) {
+		x = (float) attachedCreature->CurrentTarget.targ->CurrentX;
+		z = (float) attachedCreature->CurrentTarget.targ->CurrentZ;
 	}
 	return attachedCreature->AICountEnemyNear(range, x, z);
 }
@@ -141,8 +139,10 @@ short AINutPlayer::HealthPercent() {
 
 short AINutPlayer::TargetHealthPercent() {
 	short health = 0;
-	if(attachedCreature->CurrentTarget.targ != NULL)
-		health = static_cast<int>(attachedCreature->CurrentTarget.targ->GetHealthRatio() * 100.0F);
+	if (attachedCreature->CurrentTarget.targ != NULL)
+		health =
+				static_cast<int>(attachedCreature->CurrentTarget.targ->GetHealthRatio()
+						* 100.0F);
 	return health;
 }
 
@@ -156,7 +156,7 @@ void AINutPlayer::VisualEffect(const char *effect) {
 
 void AINutPlayer::TargetVisualEffect(const char *effect) {
 	int targID = 0;
-	if(attachedCreature->CurrentTarget.targ != NULL)
+	if (attachedCreature->CurrentTarget.targ != NULL)
 		targID = attachedCreature->CurrentTarget.targ->CreatureID;
 	attachedCreature->SendEffect(effect, targID);
 }
@@ -174,7 +174,8 @@ int AINutPlayer::GetIdleMob(int CDefID) {
 }
 
 int AINutPlayer::GetTarget() {
-	return attachedCreature->CurrentTarget.targ != NULL ? attachedCreature->CurrentTarget.targ->CreatureID : 0;
+	return attachedCreature->CurrentTarget.targ != NULL ?
+			attachedCreature->CurrentTarget.targ->CreatureID : 0;
 }
 
 int AINutPlayer::GetSelf() {
@@ -198,7 +199,8 @@ void AINutPlayer::SetSpeed(int speed) {
 }
 
 int AINutPlayer::GetTargetCDefID() {
-	return attachedCreature->CurrentTarget.targ != NULL ? attachedCreature->CurrentTarget.targ->CreatureDefID : 0;
+	return attachedCreature->CurrentTarget.targ != NULL ?
+			attachedCreature->CurrentTarget.targ->CreatureDefID : 0;
 }
 
 int AINutPlayer::GetProperty(const char *name) {
@@ -214,15 +216,15 @@ void AINutPlayer::DispelTargetProperty(const char *name, int sign) {
 }
 
 int AINutPlayer::FindCID(int CDefID) {
-	CreatureInstance *targ = attachedCreature->actInst->GetNPCInstanceByCDefID(CDefID);
+	CreatureInstance *targ = attachedCreature->actInst->GetNPCInstanceByCDefID(
+			CDefID);
 	return targ == NULL ? 0 : targ->CreatureID;
 }
 
 void AINutPlayer::PlaySound(const char *name) {
 	STRINGLIST sub;
 	Util::Split(name, "|", sub);
-	while(sub.size() < 2)
-	{
+	while (sub.size() < 2) {
 		sub.push_back("");
 	}
 	attachedCreature->SendPlaySound(sub[0].c_str(), sub[1].c_str());
@@ -255,7 +257,7 @@ int AINutPlayer::GetSpeed(int CID) {
 
 bool AINutPlayer::IsCIDBusy(int CID) {
 	CreatureInstance *targ = ResolveCreatureInstance(CID);
-		return targ == NULL ? 0 : targ->AICheckIfAbilityBusy();
+	return targ == NULL ? 0 : targ->AICheckIfAbilityBusy();
 }
 
 void AINutPlayer::RegisterFunctions() {
@@ -268,8 +270,8 @@ void AINutPlayer::RegisterFunctions() {
 	Sqrat::RootTable(vm).SetInstance(_SC("ai"), this);
 }
 
-void AINutPlayer::RegisterAIFunctions(NutPlayer *instance, Sqrat::DerivedClass<AINutPlayer, NutPlayer> *clazz)
-{
+void AINutPlayer::RegisterAIFunctions(NutPlayer *instance,
+		Sqrat::DerivedClass<AINutPlayer, NutPlayer> *clazz) {
 	/* Have to register the functions with THIS class, or the wrong instance will be
 	 * invoked from Squirrel
 	 *
@@ -279,6 +281,7 @@ void AINutPlayer::RegisterAIFunctions(NutPlayer *instance, Sqrat::DerivedClass<A
 	clazz->Func(_SC("queue"), &AINutPlayer::Queue);
 	clazz->Func(_SC("broadcast"), &AINutPlayer::Broadcast);
 	clazz->Func(_SC("halt"), &AINutPlayer::Halt);
+	clazz->SquirrelFunc(_SC("sleep"), &AINutPlayer::Sleep);
 
 	clazz->Func(_SC("has_target"), &AINutPlayer::HasTarget);
 	clazz->Func(_SC("use"), &AINutPlayer::Use);
@@ -308,7 +311,8 @@ void AINutPlayer::RegisterAIFunctions(NutPlayer *instance, Sqrat::DerivedClass<A
 	clazz->Func(_SC("get_target_cdef_id"), &AINutPlayer::GetTargetCDefID);
 	clazz->Func(_SC("get_target"), &AINutPlayer::GetProperty);
 	clazz->Func(_SC("get_target_property"), &AINutPlayer::GetTargetProperty);
-	clazz->Func(_SC("dispel_target_property"), &AINutPlayer::DispelTargetProperty);
+	clazz->Func(_SC("dispel_target_property"),
+			&AINutPlayer::DispelTargetProperty);
 	clazz->Func(_SC("find_cid"), &AINutPlayer::FindCID);
 	clazz->Func(_SC("play_sound"), &AINutPlayer::PlaySound);
 	clazz->Func(_SC("get_buff_tier"), &AINutPlayer::GetBuffTier);
@@ -321,37 +325,31 @@ void AINutPlayer::RegisterAIFunctions(NutPlayer *instance, Sqrat::DerivedClass<A
 
 }
 
-CreatureInstance* AINutPlayer :: ResolveCreatureInstance(int CreatureInstanceID)
-{
-	if(attachedCreature == NULL)
+CreatureInstance* AINutPlayer::ResolveCreatureInstance(int CreatureInstanceID) {
+	if (attachedCreature == NULL)
 		return NULL;
-	if(attachedCreature->actInst == NULL)
+	if (attachedCreature->actInst == NULL)
 		return NULL;
 	return attachedCreature->actInst->GetInstanceByCID(CreatureInstanceID);
 }
 
-void AINutPlayer :: DebugGenerateReport(ReportBuffer &report)
-{
-	if(def != NULL)
-	{
+void AINutPlayer::DebugGenerateReport(ReportBuffer &report) {
+	if (def != NULL) {
 		report.AddLine("Name:%s", def->scriptName.c_str());
 	}
 	report.AddLine("active:%d", static_cast<int>(active));
 	report.AddLine(NULL);
 }
 
-AINutManager :: AINutManager()
-{
+AINutManager::AINutManager() {
 }
 
-AINutManager :: ~AINutManager()
-{
+AINutManager::~AINutManager() {
 	aiDef.clear();
 	aiAct.clear();
 }
 
-int AINutManager :: LoadScripts(void)
-{
+int AINutManager::LoadScripts(void) {
 	Platform_DirectoryReader r;
 	string dir = r.GetDirectory();
 	r.SetDirectory("AIScript");
@@ -359,9 +357,9 @@ int AINutManager :: LoadScripts(void)
 	r.SetDirectory(dir.c_str());
 
 	vector<std::string>::iterator it;
-	for(it = r.fileList.begin(); it != r.fileList.end(); ++it) {
+	for (it = r.fileList.begin(); it != r.fileList.end(); ++it) {
 		std::string p = *it;
-		if(Util::HasEnding(p, ".nut")) {
+		if (Util::HasEnding(p, ".nut")) {
 			// TODO delete this when finished with
 			AINutDef *def = new AINutDef();
 			aiDef.push_back(def);
@@ -375,48 +373,46 @@ int AINutManager :: LoadScripts(void)
 	return 0;
 }
 
-AINutDef * AINutManager :: GetScriptByName(const char *name)
-{
-	if(aiDef.size() == 0)
+AINutDef * AINutManager::GetScriptByName(const char *name) {
+	if (aiDef.size() == 0)
 		return NULL;
 	list<AINutDef*>::iterator it;
-	for(it = aiDef.begin(); it != aiDef.end(); ++it)
-	{
+	for (it = aiDef.begin(); it != aiDef.end(); ++it) {
 		AINutDef *ai = *it;
-		if(ai->scriptName.compare(name) == 0)
+		if (ai->scriptName.compare(name) == 0)
 			return *it;
 	}
 	return NULL;
 }
 
-void AINutPlayer::Queue(Sqrat::Function function, int fireDelay)
-{
-	DoQueue(function, fireDelay);
+void AINutPlayer::Queue(Sqrat::Function function, int fireDelay) {
+
+	DoQueue(new ScriptCore::NutScriptEvent(
+				new ScriptCore::TimeCondition(fireDelay),
+				new ScriptCore::SquirrelFunctionCallback(this, function)));
 }
 
-AINutPlayer * AINutManager :: AddActiveScript(CreatureInstance *creature, const char *name)
-{
+AINutPlayer * AINutManager::AddActiveScript(CreatureInstance *creature,
+		const char *name) {
 	AINutDef *def = GetScriptByName(name);
-	if(def == NULL)
+	if (def == NULL)
 		return NULL;
 
 	AINutPlayer * player = new AINutPlayer();
 	std::string errors;
 	player->Initialize(creature, def, errors);
-	if(errors.length() > 0)
-		g_Log.AddMessageFormat("Failed to compile %s. %s",def->scriptName.c_str(), errors.c_str());
+	if (errors.length() > 0)
+		g_Log.AddMessageFormat("Failed to compile %s. %s",
+				def->scriptName.c_str(), errors.c_str());
 	aiAct.push_back(player);
 	return player;
 }
 
-void AINutManager :: RemoveActiveScript(AINutPlayer *registeredPtr)
-{
+void AINutManager::RemoveActiveScript(AINutPlayer *registeredPtr) {
 	list<AINutPlayer*>::iterator it;
-	for(it = aiAct.begin(); it != aiAct.end(); ++it)
-	{
-		if(*it == registeredPtr)
-		{
-			delete(*it);
+	for (it = aiAct.begin(); it != aiAct.end(); ++it) {
+		if (*it == registeredPtr) {
+			delete (*it);
 			aiAct.erase(it);
 			break;
 		}

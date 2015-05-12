@@ -5420,6 +5420,13 @@ void CreatureInstance :: SelectTarget(CreatureInstance *newTarget)
 {
 	if(newTarget != CurrentTarget.targ)
 	{
+		// Inform the AI script a target was lost
+		if(CurrentTarget.targ != NULL && aiNut != NULL) {
+			std::vector<ScriptCore::ScriptParam> p;
+			p.push_back(CurrentTarget.targ->CreatureID);
+			aiNut->RunFunction("on_target_lost", p);
+		}
+
 		if(newTarget != NULL)
 		{
 			if(HasStatus(StatusEffects::DEAD))
@@ -5469,7 +5476,15 @@ void CreatureInstance :: SelectTarget(CreatureInstance *newTarget)
 			if(ab[0].bPending == true)
 				CancelPending_Ex(&ab[0]);
 		}
+
+
 		CurrentTarget.targ = newTarget;
+
+		if(aiNut != NULL && CurrentTarget.targ != NULL) {
+			std::vector<ScriptCore::ScriptParam> p;
+			p.push_back(CurrentTarget.targ->CreatureID);
+			aiNut->RunFunction("on_target_acquired", p);
+		}
 	}
 }
 

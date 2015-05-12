@@ -90,7 +90,7 @@ public:
 
 	UseCallback(AINutPlayer *aiNut, int abilityID);
 	~UseCallback();
-	void Execute();
+	bool Execute();
 };
 
 extern AINutManager aiNutManager;

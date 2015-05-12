@@ -1,12 +1,28 @@
 #include "ScriptCore.h"
-#include "FileReader.h"
+
+#include <sqrat/sqratClass.h>
+#include <sqrat/sqratFunction.h>
+#include <sqrat/sqratScript.h>
+#include <sqrat/sqratTable.h>
+#include <sqrat/sqratUtil.h>
 #include <stdarg.h>
+#include <stddef.h>
 #include <string.h>
-#include "StringList.h"
+#include <sys/types.h>
+#include <cassert>
+#include <cstdio>
+#include <cstdlib>
+#include <iterator>
+#include <utility>
+
+#include "../squirrel/squirrel/sqvm.h"
+#include "CommonTypes.h"
+#include "Components.h"
+#include "DirectoryAccess.h"
+#include "FileReader.h"
 #include "Simulator.h"
+#include "StringList.h"
 #include "Util.h"
-#include "Callback.h"
-#include <sqrat.h>
 
 extern unsigned long g_ServerTime;
 
@@ -97,6 +113,10 @@ namespace ScriptCore
 		scriptName = Platform::Basename(mSourceFile.c_str());
 	}
 
+	//
+	// Abstract condition implementation
+	//
+
 	NutCondition::NutCondition()
 	{
 	}
@@ -104,6 +124,15 @@ namespace ScriptCore
 	NutCondition::~NutCondition()
 	{
 	}
+
+	bool NutCondition::CheckCondition()
+	{
+		return false;
+	}
+
+	//
+	// Abstract callback implementation
+	//
 
 	NutCallback::NutCallback()
 	{
@@ -113,10 +142,85 @@ namespace ScriptCore
 	{
 	}
 
-	bool NutCondition::CheckCondition()
+	//
+	// 'Time' condition implementation. Is true when the current server time reaches
+	// the fireTime
+	//
+
+	TimeCondition::TimeCondition(unsigned long delay)
 	{
-		return false;
+		mFireTime = g_PlatformTime.getElapsedMilliseconds() + delay;
 	}
+	TimeCondition::~TimeCondition() {}
+
+	bool TimeCondition::CheckCondition() {
+		return g_PlatformTime.getElapsedMilliseconds() >= mFireTime;
+	}
+
+	//
+	// 'Resume' callback implementation. Resumes a suspended Squirrel VM, probably
+	// suspended as the result of a sleep() call.
+	//
+	ResumeCallback::ResumeCallback(NutPlayer *nut)
+	{
+		mNut = nut;
+	}
+
+	ResumeCallback::~ResumeCallback()
+	{
+	}
+
+	bool ResumeCallback::Execute()
+	{
+		sq_wakeupvm(mNut->vm, false, false, false, false);
+		return true;
+	}
+
+	//
+	// Squirrel function callback. Used by queue() script function to queue execution of
+	// a scripted function
+	//
+	SquirrelFunctionCallback::SquirrelFunctionCallback(NutPlayer *nut, Sqrat::Function function) {
+		mNut = nut;
+		mFunction = function;
+	}
+
+	SquirrelFunctionCallback::~SquirrelFunctionCallback() {
+	}
+
+	bool SquirrelFunctionCallback::Execute()
+	{
+		Sqrat::SharedPtr<bool> ptr = mFunction.Evaluate<bool>();
+		return ptr.Get() == NULL || ptr.Get();
+	}
+
+	//
+	// Each event stores a callback and a condition. When the condition is met, the callback
+	// is executed.
+	//
+	NutScriptEvent::NutScriptEvent(NutCondition *condition, NutCallback *callback)
+	{
+		mCondition = condition;
+		mCallback = callback;
+		mRunWhenSuspended = false;
+	}
+
+	NutScriptEvent::~NutScriptEvent() {
+//		delete mCallback;
+//		delete mCondition;
+
+		// TODO these were created with new .. do I need to clean them up somewhere?
+//		if(mCondition != NULL) {
+//			delete mCondition;
+//		}
+//		if(mCallback != NULL) {
+//			delete mCallback;
+//		}
+	}
+
+	//
+	// Abstract squirrel script player.
+	//
 
 	NutPlayer::NutPlayer() {
 		vm = NULL;
@@ -337,6 +441,14 @@ namespace ScriptCore
 	}
 
 	bool NutPlayer::RunFunction(const char *name, std::vector<ScriptParam> parms) {
+
+		if(sq_getvmstate(vm) == SQ_VMSTATE_SUSPENDED) {
+			// TODO if suspended, should we interrupt the sleep? and just executed what is here, erroring the sleep?
+			g_Log.AddMessageFormat("[WARNING] VM was suspended, can't run function.");
+			return false;
+		}
+
+
 		SQInteger top = sq_gettop(vm);
 		sq_pushroottable(vm);
 		sq_pushstring(vm,_SC(name),-1);
@@ -356,11 +468,14 @@ namespace ScriptCore
 					sq_pushstring(vm,_SC(it->strValue.c_str()), it->strValue.size());
 					break;
 				default:
-					g_Log.AddMessageFormat("Unsupport parameter type for Squirrel script. %d", it->type);
+					g_Log.AddMessageFormat("Unsupported parameter type for Squirrel script. %d", it->type);
 					break;
 				}
 			}
 			sq_call(vm,parms.size() + 1,SQFalse,SQTrue); //calls the function
+			if(sq_getvmstate(vm) == SQ_VMSTATE_SUSPENDED) {
+				g_Log.AddMessageFormat("VM was suspended during function execution.");
+			}
 		}
 		sq_settop(vm,top);
 		if(mHalt) {
@@ -370,6 +485,23 @@ namespace ScriptCore
 		return true;
 	}
 
+	bool NutPlayer :: ExecEvent(NutScriptEvent *nse, int index)
+	{
+		unsigned long now = g_PlatformTime.getMilliseconds();
+		NutCallback *cb = nse->mCallback;
+		bool res = cb->Execute();
+
+		/*
+		 * If the VM wasn't suspended while handling this event, and the
+		 * event returned false, then we requeue this event for retry
+		 */
+		if(sq_getvmstate(vm) != SQ_VMSTATE_SUSPENDED && !res)
+			mQueueQueue.push_back(nse);
+		mQueue.erase(mQueue.begin() + index);
+
+		mProcessingTime += g_PlatformTime.getMilliseconds() - now;
+		return res;
+	}
 
 	bool NutPlayer :: ExecQueue(void)
 	{
@@ -377,45 +509,20 @@ namespace ScriptCore
 			g_Log.AddMessageFormat("Already executing. Something tried to executing the queue while it was already executing.");
 			return true;
 		}
-		unsigned long now = g_PlatformTime.getMilliseconds();
 		bool ok = false;
 		mExecuting = true;
-		ulong currentFireTime;
-
 		for(size_t i = 0; i < mQueue.size(); i++)
 		{
-			currentFireTime = mQueue[i].mFireTime;
-			if(currentFireTime == 0)
-			{
-				// Condition based
-				NutCondition *cnd = mQueue[i].mCondition;
-				if(cnd->CheckCondition()) {
+			NutScriptEvent *nse = mQueue[i];
 
-					Sqrat::Function *oFunc = &mQueue[i].mFunction;
-					Sqrat::SharedPtr<bool> ptr = oFunc->Evaluate<bool>();
-					bool res = ptr.Get() == NULL || ptr.Get();
-					if(!res)
-						mQueueQueue.push_back(mQueue[i]);
-					mQueue.erase(mQueue.begin() + i);
-					ok = true;
-					break;
-				}
-			}
+			// If the VM is suspended, ignore events that dont have mRunWhenSuspended = true. In
+			// practice, this is currently only the ResumeCallback
+			if(sq_getvmstate(vm) == SQ_VMSTATE_SUSPENDED && !nse->mRunWhenSuspended)
+				continue;
 
-			else if(currentFireTime > 0 && g_ServerTime >= currentFireTime)
-			{
-				// Traditional timer
-				Sqrat::Function *oFunc = &mQueue[i].mFunction;
-
-				Sqrat::SharedPtr<bool> ptr = oFunc->Evaluate<bool>();
-				bool res = ptr.Get() == NULL || ptr.Get();
-
-				/* If the fire time changes while running this function, the function
-				 * queued the same event again
-				 */
-				if(!res)
-					mQueueQueue.push_back(mQueue[i]);
-				mQueue.erase(mQueue.begin() + i);
+			NutCondition *cnd = nse->mCondition;
+			if(cnd->CheckCondition()) {
+				ExecEvent(nse, i);
 				ok = true;
 				break;
 			}
@@ -423,18 +530,16 @@ namespace ScriptCore
 		mQueue.insert(mQueue.end(), mQueueQueue.begin(), mQueueQueue.end());
 		mQueueQueue.clear();
 		mExecuting = false;
-		mProcessingTime += g_PlatformTime.getMilliseconds() - now;
 		return ok;
 	}
 
-	void NutPlayer::DoQueue(NutScriptEvent evt)
+	void NutPlayer::DoQueue(NutScriptEvent *evt)
 	{
 		if(mExecuting)
 		{
 			if(mQueueQueue.size() >= MAX_QUEUE_SIZE)
 			{
 				PrintMessage("[ERROR] Script error: Deferred QueueEvent() list is full %d of %d", mQueueQueue.size(), MAX_QUEUE_SIZE);
-//								PrintMessage("[ERROR] Script error: QueueEvent() list is full [script: %s]", def->mSourceFile.c_str());
 				return;
 			}
 			mQueueQueue.push_back(evt);
@@ -443,7 +548,6 @@ namespace ScriptCore
 
 			if(mQueue.size() >= MAX_QUEUE_SIZE)
 			{
-				PrintMessage("[ERROR] Script error: QueueEvent() list is full %d of %d", mQueueQueue.size(), MAX_QUEUE_SIZE);
 				PrintMessage("[ERROR] Script error: QueueEvent() list is full [script: %s]", def->scriptName.c_str());
 				return;
 			}
@@ -451,70 +555,27 @@ namespace ScriptCore
 		}
 	}
 
-	void NutPlayer::DoQueue(Sqrat::Function function, int fireDelay)
-	{
-		unsigned long fireTime = g_ServerTime + fireDelay;
-		DoQueue(NutScriptEvent(function, fireTime));
-//		std::vector<NutScriptEvent> q = mExecuting ? mQueueQueue : queue;
-//
-//		if(q.size() >= MAX_QUEUE_SIZE)
-//		{
-//			PrintMessage("[ERROR] Script error: QueueEvent() list is full [script: %s]", def->scriptName.c_str());
-//			return;
-//		}
-//
-//		unsigned long fireTime = g_ServerTime + fireDelay;
-
-		//If a event label is already registered, just update the fire time.
-//		for(size_t i = 0; i < queue.size(); i++)
-//		{
-//			if(&queue[i].mFunction == &function)
-//			{
-//				queue[i].mFireTime = fireTime;
-//				return;
-//			}
-//		}
-
-		//Not found, add a new event.
-//		q.push_back(NutScriptEvent(function, fireTime));
-	}
-
 	void NutPlayer::Broadcast(const char *message)
 	{
 		g_SimulatorManager.BroadcastMessage(message);
 	}
 
-	NutScriptEvent::NutScriptEvent(NutCallback *callback, unsigned long fireTime)
+	SQInteger NutPlayer::Sleep(HSQUIRRELVM v)
 	{
-		mFireTime = fireTime;
-		mCondition = NULL;
-		mCallback = callback;
-	}
-
-	NutScriptEvent::NutScriptEvent(Sqrat::Function &function, NutCondition *condition)
-	{
-		mFunction = function;
-		mFireTime = 0;
-		mCondition = condition;
-		mCallback = NULL;
-	}
-
-	NutScriptEvent::NutScriptEvent(Sqrat::Function &function, unsigned long fireTime)
-	{
-		mFunction = function;
-		mFireTime = fireTime;
-		mCondition = NULL;
-		mCallback = NULL;
-	}
-
-	NutScriptEvent::~NutScriptEvent() {
-		// TODO these were created with new .. do I need to clean them up somewhere?
-//		if(mCondition != NULL) {
-//			delete mCondition;
-//		}
-//		if(mCallback != NULL) {
-//			delete mCallback;
-//		}
+	    if (sq_gettop(v) == 2) {
+	        Sqrat::Var<NutPlayer&> left(v, 1);
+	        if (!Sqrat::Error::Occurred(v)) {
+	            Sqrat::Var<unsigned long> right(v, 2);
+	        	std::vector<int> vv;
+	        	ResumeCallback *cb = new ResumeCallback(&left.value);
+	        	NutScriptEvent *nse = new NutScriptEvent(new TimeCondition (right.value), cb);
+	        	nse->mRunWhenSuspended = true;
+	        	left.value.DoQueue(nse);
+	            return sq_suspendvm(v);
+	        }
+	        return sq_throwerror(v, Sqrat::Error::Message(v).c_str());
+	    }
+	    return sq_throwerror(v, _SC("wrong number of parameters"));
 	}
 
 

@@ -149,6 +149,8 @@ void InstanceNutPlayer::RegisterInstanceFunctions(NutPlayer *instance, Sqrat::De
 	instanceClass->Func(_SC("queue"), &InstanceNutPlayer::Queue);
 	instanceClass->Func(_SC("broadcast"), &InstanceNutPlayer::Broadcast);
 	instanceClass->Func(_SC("halt"), &InstanceNutPlayer::Halt);
+	// Functions that return arrays or tables have to be dealt with differently
+	instanceClass->SquirrelFunc(_SC("sleep"), &InstanceNutPlayer::Sleep);
 
 	// Instance Location Object, X1/Z1,X2/Z2 location defining a rectangle
 	Sqrat::Class<ScriptObjects::Area> areaClass(vm, "Area", true);
@@ -316,14 +318,19 @@ void InstanceNutPlayer::WalkThen(int CID, ScriptObjects::Point point, int speed,
 		ci->CurrentTarget.desiredRange = range;
 		ci->Speed = speed;
 
-		WalkCondition *wc = new WalkCondition(ci);
-		InstanceNutPlayer::DoQueue(ScriptCore::NutScriptEvent(onArrival, wc));
+		DoQueue(new ScriptCore::NutScriptEvent(
+				new WalkCondition(ci),
+				new ScriptCore::SquirrelFunctionCallback(this, onArrival)
+				));
 	}
 }
 
 void InstanceNutPlayer::Queue(Sqrat::Function function, int fireDelay)
 {
-	DoQueue(function, fireDelay);
+
+	DoQueue(new ScriptCore::NutScriptEvent(
+				new ScriptCore::TimeCondition(fireDelay),
+				new ScriptCore::SquirrelFunctionCallback(this, function)));
 }
 
 void InstanceNutPlayer::Walk(int CID, ScriptObjects::Point point, int speed, int range) {

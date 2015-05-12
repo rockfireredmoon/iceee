@@ -394,7 +394,7 @@ class NutCallback {
 public:
 	NutCallback();
 	virtual ~NutCallback();
-	virtual void Execute() = 0;
+	virtual bool Execute() = 0;
 };
 
 class NutCondition {
@@ -404,17 +404,14 @@ public:
 	virtual bool CheckCondition() =0;
 };
 
-//Holds a triggered event.  If it is ready to fire, the label name will be called.
+//Holds a triggered event.
 class NutScriptEvent {
 public:
-	Sqrat::Function mFunction;		//Function to jump to
-	unsigned long mFireTime;         //Time to fire this event.
 	NutCondition *mCondition;
-	NutCallback *mCallback;;
+	NutCallback *mCallback;
+	bool mRunWhenSuspended;
 	~NutScriptEvent();
-	NutScriptEvent(NutCallback *callback, unsigned long fireTime);
-	NutScriptEvent(Sqrat::Function &function, unsigned long fireTime);
-	NutScriptEvent(Sqrat::Function &function, NutCondition *condition);
+	NutScriptEvent(NutCondition *condition, NutCallback *callback);
 };
 
 class NutPlayer {
@@ -448,23 +445,62 @@ public:
 	bool RunFunction(const char *name);
 	bool RunFunction(const char *name, std::vector<ScriptParam> parms);
 	void Broadcast(const char *message);
-	void DoQueue(NutScriptEvent evt);
-	void DoQueue(Sqrat::Function function, int fireDelay);
+	void DoQueue(NutScriptEvent *evt);
+//	void DoQueue(Sqrat::Function function, int fireDelay);
 	bool ExecQueue(void);
 
-	// Exposed to scripts
+	// Exposed to scripts (instance)
+
+	static SQInteger Sleep(HSQUIRRELVM v);
+//	void Sleep(unsigned long time);
+
+	// Exposed to scripts (globals)
 	int Rand(int max);
 	int RandInt(int min, int max);
 	int RandMod(int max);
 	int RandModRng(int min, int max);
 	int RandDbl(double min, double max);
 
-	std::vector<NutScriptEvent> mQueue;
-	std::vector<NutScriptEvent> mQueueQueue;
+	std::vector<NutScriptEvent*> mQueue;
+	std::vector<NutScriptEvent*> mQueueQueue;
+
+private:
+	bool ExecEvent(NutScriptEvent *nse, int index);
 
 protected:
 	static const size_t MAX_QUEUE_SIZE = 16;
 
+};
+
+
+class TimeCondition : public NutCondition
+{
+public:
+	unsigned long mFireTime;         //Time to fire this event.
+	TimeCondition(unsigned long delay);
+	~TimeCondition();
+
+	bool CheckCondition();
+};
+
+class SquirrelFunctionCallback : public NutCallback
+{
+public:
+	NutPlayer* mNut;
+	Sqrat::Function mFunction;		//Function to jump to
+	SquirrelFunctionCallback(NutPlayer *nut, Sqrat::Function function);
+	~SquirrelFunctionCallback ();
+	bool Execute();
+};
+
+class ResumeCallback : public NutCallback
+{
+public:
+	NutPlayer* mNut;
+
+	ResumeCallback(NutPlayer *nut);
+	~ResumeCallback();
+	bool Execute();
 };
 
 }
