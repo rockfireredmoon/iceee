@@ -14,6 +14,7 @@ Pos=46464.3,105.906,66004.4
 Orient=-0.309816,0,0,0.950796
 Scale=1,1,1
 spawnPackage=#F7780
+maxActive=0
 
 [ENTRY]
 ID=1126560
@@ -23,6 +24,7 @@ Pos=46942.8,69.4333,66345.3
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=#F7780
+maxActive=0
 
 [ENTRY]
 ID=1358955429

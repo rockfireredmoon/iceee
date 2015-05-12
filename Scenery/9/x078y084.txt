@@ -10,7 +10,7 @@ spawnPackage=11_dth_shadowfieldCity
 [ENTRY]
 ID=1128112
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=58724.1,976.883,63190.8
 Orient=0,0.699716,0,0.714421
 Scale=1,1,1
@@ -19,7 +19,7 @@ spawnPackage=11_dth_shadowfieldCity
 [ENTRY]
 ID=1128113
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=58625.3,976.883,63144.5
 Orient=0,0,0,1
 Scale=1,1,1
@@ -28,7 +28,7 @@ spawnPackage=11_dth_shadowfieldCity
 [ENTRY]
 ID=1128114
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=58628,976.797,63100.8
 Orient=0,0,0,1
 Scale=1,1,1
@@ -37,7 +37,7 @@ spawnPackage=11_dth_shadowfieldCity
 [ENTRY]
 ID=1128117
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=58714,950.424,63489.6
 Orient=0,-0.786425,0,0.617686
 Scale=1,1,1
@@ -46,7 +46,7 @@ spawnPackage=11_dth_shadowfieldCity
 [ENTRY]
 ID=1128131
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=58959.1,983.856,63085.9
 Orient=0,0.706825,0,0.707388
 Scale=1,1,1

@@ -79,7 +79,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1127942
 Asset=Light-Intense?Group=1&COLOR=FF00FD
-Name=
+Name=Untitled
 Pos=63537.8,1255.54,63055.5
 Orient=0,0,0,1
 Scale=1,1,1
@@ -87,7 +87,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1127943
 Asset=Light-Intense?Group=1&COLOR=FF00FD
-Name=
+Name=Untitled
 Pos=63719.7,1187.88,63161.1
 Orient=0,0,0,1
 Scale=1,1,1
@@ -399,7 +399,7 @@ Name=Untitled
 Pos=63264.5,1262.86,63144
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=11_dth_CarrioniteGraveLooter_r_42_43
+spawnPackage=#1260
 links_count=1
 link=151028395,1
 

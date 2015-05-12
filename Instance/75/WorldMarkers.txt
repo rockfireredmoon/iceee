@@ -11,7 +11,7 @@ Position=1678.0,424.0,8212.0
 [ENTRY]
 Name=Father Grundy
 Comment=[Comment here]
-Position=3449.0,480.0,3906.0
+Position=1558.0,500.0,8060.0
 
 [ENTRY]
 Name=Entrance To Upper Floor

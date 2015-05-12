@@ -31,6 +31,14 @@ Orient=0,-0.34759,0,0.937647
 Scale=1,1,1
 
 [ENTRY]
+ID=1128296
+Asset=Light-Large?Group=1&COLOR=FF00FD
+Name=
+Pos=56333.9,786.911,66001.1
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
 ID=151015188
 Asset=CL-UndeadTree4#CL-UndeadTree4
 Name=Untitled

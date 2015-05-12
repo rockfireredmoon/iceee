@@ -7,7 +7,9 @@ ENVIRONMENTTYPE=AutumnSunset
 ShardName=chudco
 GroveName=chudco
 WarpName=chudco1
+DropRateProfile=standard
 Grove=1
 EnvironmentCycle=1
+BuildPermission=account,192,0,0,3,3
 DefLoc=3045,261,3943
 

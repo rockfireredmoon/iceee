@@ -1,7 +1,7 @@
 [ENTRY]
 ID=1127848
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=59558.9,1090.57,63087.7
 Orient=0,0,0,1
 Scale=1,1,1
@@ -24,6 +24,16 @@ Pos=59252.2,1093.28,63605
 Orient=0,0,0,1
 Scale=1,1,1
 Flags=1
+
+[ENTRY]
+ID=151028780
+Asset=Manipulator-SpawnPoint
+Name=Untitled
+Pos=59868.2,1096.55,63058.1
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=11_dth_wilds_42_43
+wanderRadius=50
 
 [ENTRY]
 ID=151028782

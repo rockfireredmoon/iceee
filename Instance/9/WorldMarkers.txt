@@ -51,7 +51,7 @@ Position=63068.0,214.0,63101.0
 [ENTRY]
 Name=Protectorate Compound
 Comment=Outside instance
-Position=52119.0,922.0,66074.0
+Position=63782.0,779.0,56576.0
 
 [ENTRY]
 Name=Frost Peak Henge
@@ -102,4 +102,9 @@ Position=59987.0,595.0,55540.0
 Name=Redeemers Camp
 Comment=[Comment here]
 Position=58229.0,787.0,66856.0
+
+[ENTRY]
+Name=Ironbirch
+Comment=[Comment here]
+Position=52805.0,696.0,77818.0
 

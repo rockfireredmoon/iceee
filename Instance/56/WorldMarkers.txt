@@ -18,3 +18,8 @@ Name=Entrance
 Comment=[Comment here]
 Position=2126.0,660.0,641.0
 
+[ENTRY]
+Name=Mason Stromfeld
+Comment=[Comment here]
+Position=3307.0,600.0,751.0
+

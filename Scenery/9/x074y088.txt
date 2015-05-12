@@ -1,4 +1,12 @@
 [ENTRY]
+ID=1128295
+Asset=Light-Large?Group=1&COLOR=FF00FD
+Name=
+Pos=56225.2,690.395,66465.9
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
 ID=151015191
 Asset=CL-UndeadTree5#CL-UndeadTree5
 Name=Untitled

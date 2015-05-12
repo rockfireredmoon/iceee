@@ -1,7 +1,7 @@
 [ENTRY]
 ID=1126556
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=46464.6,100.911,65998.9
 Orient=0,0,0,1
 Scale=1,1,1
@@ -9,11 +9,12 @@ Scale=1,1,1
 [ENTRY]
 ID=1126559
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=46870.5,74.5049,65921.3
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=#F7780
+maxActive=0
 
 [ENTRY]
 ID=1358966580

@@ -8,15 +8,6 @@ Scale=1,1,1
 spawnPackage=#F3667
 
 [ENTRY]
-ID=1083210
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=Untitled
-Pos=64401.3,784.791,56630.3
-Orient=0,-0.827702,0,0.561168
-Scale=1,1,1
-spawnPackage=#F3666
-
-[ENTRY]
 ID=1083229
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=Untitled
@@ -72,7 +63,7 @@ spawnPackage=#F3676
 [ENTRY]
 ID=1127939
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=63950.6,780.194,56920
 Orient=0,0,0,1
 Scale=1,1,1

@@ -10,7 +10,7 @@ spawnPackage=#1260
 [ENTRY]
 ID=1127878
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=62410.3,750.809,63165.9
 Orient=0,0,0,1
 Scale=1,1,1
@@ -20,7 +20,7 @@ link=1127877,1
 [ENTRY]
 ID=1127886
 Asset=Prop-Fog#Prop-Fog_Green_Ground
-Name=
+Name=Untitled
 Pos=62257.7,750.285,63044.6
 Orient=0,0,0,1
 Scale=1.3,1.3,1.3
@@ -29,7 +29,7 @@ Flags=1
 [ENTRY]
 ID=1127890
 Asset=Light-Intense?Group=1&COLOR=00D40D
-Name=
+Name=Untitled
 Pos=62293.5,750.405,63045.6
 Orient=0,0,0,1
 Scale=1,1,1
