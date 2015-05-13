@@ -944,7 +944,7 @@ spirit=400
 base_damage_melee=325
 damage_resist_melee=6500
 damage_resist_fire=6500
-damage_resist_frost6500
+damage_resist_frost=6500
 damage_resist_mystic=6500
 damage_resist_death=6500
 profession=2
@@ -966,7 +966,7 @@ spirit=350
 base_damage_melee=275
 damage_resist_melee=6000
 damage_resist_fire=6000
-damage_resist_frost6000
+damage_resist_frost=6000
 damage_resist_mystic=6000
 damage_resist_death=6000
 profession=2
@@ -988,7 +988,7 @@ spirit=350
 base_damage_melee=275
 damage_resist_melee=6000
 damage_resist_fire=6000
-damage_resist_frost6000
+damage_resist_frost=6000
 damage_resist_mystic=6000
 damage_resist_death=6000
 profession=2
@@ -1010,7 +1010,7 @@ spirit=350
 base_damage_melee=275
 damage_resist_melee=6000
 damage_resist_fire=6000
-damage_resist_frost6000
+damage_resist_frost=6000
 damage_resist_mystic=6000
 damage_resist_death=6000
 profession=2
@@ -1032,7 +1032,7 @@ spirit=200
 base_damage_melee=350
 damage_resist_melee=6000
 damage_resist_fire=6000
-damage_resist_frost6000
+damage_resist_frost=6000
 damage_resist_mystic=6000
 damage_resist_death=6000
 profession=2

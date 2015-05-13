@@ -287,3 +287,18 @@ mBindingType=1
 mValue=1
 mQualityLevel=2
 mMinUseLevel=1
+
+[ENTRY]
+mID=8104
+mType=3
+mDisplayName=Admin Belt
+mAppearance=[{["c"]={["type"]="Armor-Heavy-Epic4",["colors"]=["d4c098","486877","58524c","b28100","443838","bf9c9c","942915"]}},{["a"]={["type"]="Item-IceEESage_Crystal",["point_override"]="base"}}]
+mIcon=Icon-32-Armor-Belts03.png|Icon-IGIS-Alert-Glow.png
+mLevel=1
+mBindingType=1
+mEquipType=14
+mArmorType=1
+mValue=69
+mFlavorText=All your shinies are belong to us.
+mQualityLevel=5
+mMinUseLevel=1
