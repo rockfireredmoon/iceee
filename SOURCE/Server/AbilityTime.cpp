@@ -87,6 +87,21 @@ void ActiveBuffManager :: CopyFrom(const ActiveBuffManager &source)
 	buffList.assign(source.buffList.begin(), source.buffList.end());
 }
 
+void ActiveBuffManager :: SaveToStream(FILE *output)
+{
+	for(size_t i = 0; i < buffList.size(); i++)
+	{
+		long remain = buffList[i].castEndTimeMS - g_ServerTime;
+		if(remain > 0) {
+			g_Log.AddMessageFormat("Saving abilitly %d,%d,%d,%d,%l\r\n", buffList[i].tier,
+					buffList[i].buffType, buffList[i].abID, buffList[i].abgID, remain);
+			fprintf(output, "Active=%d,%d,%d,%d,%lu\r\n", buffList[i].tier,
+					buffList[i].buffType, buffList[i].abID, buffList[i].abgID, remain);
+		}
+	}
+}
+
+
 void ActiveBuffManager :: Clear(void)
 {
 	buffList.clear();

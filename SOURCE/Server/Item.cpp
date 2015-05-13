@@ -549,6 +549,7 @@ void ItemDef :: ProcessParams(void)
 				case STAT::BASE_PARRY: formatStr = "+%g%% Parry Chance", value /= 10.0F; break;
 				case STAT::BASE_DODGE: formatStr = "+%g%% Dodge Chance", value /= 10.0F; break;
 				case STAT::MOD_MOVEMENT: formatStr = "+%g%% Movement Speed"; break;  //INT
+				case STAT::EXPERIENCE_GAIN_RATE: formatStr = "+%g%% Experience Gain"; break;  //INT
 				case STAT::MELEE_ATTACK_SPEED: formatStr = "+%g%% Increased Attack Speed", value /= 10.0F; break;
 				case STAT::MAGIC_ATTACK_SPEED: formatStr = "+%g%% Increased Cast Rate", value /= 10.0F; break;
 				case STAT::DMG_MOD_FIRE: formatStr = "+%g%% Fire Specialization", value /= 10.0F; break;

@@ -102,7 +102,26 @@ public:
 	//if(g_ProtocolVersion >= 9)
 	std::string mFlavorText;
 
-	//if(g_ProtocolVersion >= 18)
+	//this.SpecialItemType <- {
+	//	NONE = 0,
+	//	REAGENT_GENERATOR = 1,
+	//	ITEM_GRINDER = 2,
+	//	XP_BOOST = 3
+	//};
+	//this.SpecialItemTypeNameMapping <- {
+	//	[this.SpecialItemType.NONE] = {
+	//		name = "NONE"
+	//	},
+	//	[this.SpecialItemType.REAGENT_GENERATOR] = {
+	//		name = "REAGENT_GENERATOR"
+	//	},
+	//	[this.SpecialItemType.ITEM_GRINDER] = {
+	//		name = "ITEM_GRINDER"
+	//	},
+	//	[this.SpecialItemType.XP_BOOST] = {
+	//		name = "XP_BOOST"
+	//	}
+	//};
 	char mSpecialItemType;
 
 	//if(g_ProtocolVersion >= 30)

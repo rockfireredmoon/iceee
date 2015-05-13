@@ -2,9 +2,13 @@
 [ENTRY]
 CreatureDefID=7808
 EssenceID=8103  ; Key
-Item=7,1  ; Speed Tome 
-Item=900019,1  ; Exp Tome 
-Item=900014,1  ; Grinder 
+;Item=7,1  ; Speed Tome 
+;Item=900019,1  ; Exp Tome 
+;Item=900014,1  ; Grinder
+Item=40072,1  ; 
+Item=8105,1   ; Beta-beast strong box
+Item=5573,1	  ; Beta-beast banner
+Item=40059,1  ; Stonehenge Gate Scroll
 Item=50002,1  ; Transform Pot.
 Item=50004,1  ; Transform Pot.
 Item=50005,1  ; Transform Pot.

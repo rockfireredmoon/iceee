@@ -6751,7 +6751,7 @@ void CreatureInstance :: SetLevel(int newLevel)
 
 	char sbuffer[256];
 	Util::SafeFormat(sbuffer, sizeof(sbuffer), "%s is now level %d!", css.display_name, css.level);
-	simulatorPtr->BroadcastMessage(sbuffer);
+	g_SimulatorManager.BroadcastMessage(sbuffer);
 
 	std::vector<short> statList;
 	RemoveStatModsBySource(BuffSource::ITEM);

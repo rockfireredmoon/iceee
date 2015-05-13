@@ -409,6 +409,12 @@ void LoadConfig(const char *filename)
 				g_Config.VerifyMovement = lfr.BlockToBool(1);
 			else if(strcmp(NameBlock, "DebugLogAIScriptUse") == 0)
 				g_Config.DebugLogAIScriptUse = lfr.BlockToBool(1);
+			else if(strcmp(NameBlock, "SquirrelGCCallCount") == 0)
+				g_Config.SquirrelGCCallCount = lfr.BlockToIntC(1);
+			else if(strcmp(NameBlock, "SquirrelGCDelay") == 0)
+				g_Config.SquirrelGCDelay = lfr.BlockToIntC(1);
+			else if(strcmp(NameBlock, "SquirrelGCMaxDelay") == 0)
+				g_Config.SquirrelGCMaxDelay = lfr.BlockToIntC(1);
 			else
 			{
 				g_Log.AddMessageFormatW(MSG_SHOW, "Unknown identifier [%s] in config file [%s]", lfr.BlockToString(0), filename);
@@ -604,6 +610,10 @@ GlobalConfigData :: GlobalConfigData()
 
 	VerifyMovement = false;
 	DebugLogAIScriptUse = false;
+
+	SquirrelGCCallCount = 1000;
+	SquirrelGCDelay = 10000;
+	SquirrelGCMaxDelay = 60000;
 
 	InvalidLoginMessage = "Account not found.  Check username and password.";
 }

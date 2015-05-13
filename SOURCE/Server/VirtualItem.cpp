@@ -295,6 +295,7 @@ void VirtualItem :: GenerateFlavorText(void)
 		else if(modpair[0].compare("base_parry") == 0) sprintf(buffer, "+%g%% Parry Chance", (float)value / 10.0F);
 		else if(modpair[0].compare("base_dodge") == 0) sprintf(buffer, "+%g%% Dodge Chance", (float)value / 10.0F);
 		else if(modpair[0].compare("mod_movement") == 0) sprintf(buffer, "+%d%% Movement Speed", value);
+		else if(modpair[0].compare("experience_gain_rate") == 0) sprintf(buffer, "+%d%% Experience Gain", value);
 		else if(modpair[0].compare("melee_attack_speed") == 0) sprintf(buffer, "+%g%% Increased Attack Speed", (float)value / 10.0F);
 		else if(modpair[0].compare("magic_attack_speed") == 0) sprintf(buffer, "+%g%% Increased Cast Rate", (float)value / 10.0F);
 		else if(modpair[0].compare("dmg_mod_fire") == 0) sprintf(buffer, "+%g%% Fire Specialization", (float)value / 10.0F);

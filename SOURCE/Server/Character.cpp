@@ -1640,6 +1640,7 @@ void CharacterData :: OnFinishedLoading(void)
 	cdef.css.mod_magic_to_crit = 0.0F;
 	cdef.css.mod_attack_speed = 0;
 	cdef.css.mod_movement = 0;
+	cdef.css.experience_gain_rate = 0;
 	cdef.css.base_movement = 0;
 	cdef.css.weapon_damage_1h = 0;
 	cdef.css.weapon_damage_2h = 0;
@@ -2075,6 +2076,7 @@ enum CharacterDataFileSections
 	CDFS_Inv,
 	CDFS_Quest,
 	CDFS_Cooldown,
+	CDFS_Abilities
 };
 
 int CheckSection_General(FileReader &fr, CharacterData &cd, const char *debugFilename)
@@ -2472,6 +2474,26 @@ int CheckSection_Cooldown(FileReader &fr, CharacterData &cd, const char *debugFi
 	return 0;
 }
 
+int CheckSection_Abilties(FileReader &fr, CharacterData &cd, const char *debugFilename)
+{
+	//Expected formats:
+	//  Ability=tier,buffType,ability ID,ability group ID,remain
+
+	if(fr.BlockPos[1] > 0)
+		fr.DataBuffer[fr.BlockPos[1] - 1] = '=';
+	fr.MultiBreak("=,");
+
+	unsigned char tier = fr.BlockToInt(1);
+	unsigned char buffType = fr.BlockToInt(2);
+	short abID = fr.BlockToInt(3);
+	short abgID = fr.BlockToInt(4);
+	unsigned long remain = fr.BlockToULongC(5);
+	double remainS = remain / 1000.0;
+	cd.buffManager.AddBuff(tier, buffType, abID, abgID, remainS);
+
+	return 0;
+}
+
 int LoadCharacterFromStream(FileReader &fr, CharacterData &cd, const char *debugFilename)
 {
 	//Return codes:
@@ -2537,6 +2559,10 @@ int LoadCharacterFromStream(FileReader &fr, CharacterData &cd, const char *debug
 			{
 				Section = CDFS_Cooldown;
 			}
+			else if(strcmp(fr.SecBuffer, "[ABILITIES]") == 0)
+			{
+				Section = CDFS_Abilities;
+			}
 			else
 			{
 				if(Section == CDFS_General)
@@ -2551,6 +2577,8 @@ int LoadCharacterFromStream(FileReader &fr, CharacterData &cd, const char *debug
 					CheckSection_Quest(fr, cd, debugFilename);
 				else if(Section == CDFS_Cooldown)
 					CheckSection_Cooldown(fr, cd, debugFilename);
+				else if(Section == CDFS_Abilities)
+					CheckSection_Abilties(fr, cd, debugFilename);
 			}
 		}
 	}
@@ -2756,6 +2784,12 @@ void SaveCharacterToStream(FILE *output, CharacterData &cd)
 
 	fprintf(output, "\r\n[COOLDOWN]\r\n");
 	cd.cooldownManager.SaveToStream(output);
+
+	// TODO not yet
+//	fprintf(output, "\r\n[ABILITIES]\r\n");
+//	cd.buffManager.SaveToStream(output);
+
+
 	fprintf(output, "\r\n");
 }
 

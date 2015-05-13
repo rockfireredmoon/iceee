@@ -344,6 +344,7 @@ public:
 	int handle_query_instance(void);
 	int handle_query_go(void);
 	int handle_query_script_time(void);
+	int handle_query_script_gc(void);
 
 	int protected_CheckDistanceBetweenCreatures(CreatureInstance *sourceCreatureInst, int creatureID);
 	int protected_CheckDistanceBetweenCreaturesFor(CreatureInstance *sourceCreatureInst, int creatureID, int range);

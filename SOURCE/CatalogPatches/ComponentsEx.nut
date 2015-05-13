@@ -183,6 +183,9 @@ ComponentIndex["Prop-Crystal_Yellow_Small2"] <- "Prop-Crystals";
 ComponentIndex["Prop-Crystal_Yellow_Small3"] <- "Prop-Crystals";
 ComponentIndex["Prop-Crystal_Yellow_Small4"] <- "Prop-Crystals";
 
+ComponentIndex["Item-IceEESage_Crystal"] <- "Item-IceEESage_Crystal";
+ComponentIndex["Item-IceEEBeta_Flag"] <- "Item-IceEEBeta_Flag";
+
 /* 0.8.8+ */
 
 /*  Bldg-Hall_Of_Bones1 doesn't seem to work in 0.8.6.

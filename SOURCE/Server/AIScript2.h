@@ -27,7 +27,7 @@ public:
 	void Initialize(CreatureInstance *creature, AINutDef *defPtr, std::string &errors);
 
 	// Exposed to scripts
-	void Queue(Sqrat::Function function, int fireDelay);
+//	void Queue(Sqrat::Function function, int fireDelay);
 	bool HasTarget();
 	void Use(int abilityID);
 	short GetWill();

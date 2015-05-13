@@ -12,6 +12,7 @@
 #include "Globals.h"
 #include "PartyManager.h"
 #include "Account.h"
+#include "AIScript.h"
 #include "AIScript2.h"
 #include "Chat.h"
 #include "Instance.h"
@@ -69,6 +70,7 @@ void FormatStat(int statID, const char *valueStr, std::string &output)
 		{ STAT::BASE_PARRY, "+%g%% Parry Chance", StatFormat::TYPE_PINT },
 		{ STAT::BASE_DODGE, "+%g%% Dodge Chance", StatFormat::TYPE_PINT },
 		{ STAT::MOD_MOVEMENT, "+%g%% Movement Speed", StatFormat::TYPE_INT },
+		{ STAT::EXPERIENCE_GAIN_RATE, "+%g%% Experience Gain", StatFormat::TYPE_INT },
 		{ STAT::MELEE_ATTACK_SPEED, "+%g%% Increased Attack Speed", StatFormat::TYPE_PINT },
 		{ STAT::MAGIC_ATTACK_SPEED, "+%g%% Increased Cast Rate", StatFormat::TYPE_PINT },
 		{ STAT::DMG_MOD_FIRE, "+%g%% Fire Specialization", StatFormat::TYPE_PINT },
@@ -2124,6 +2126,7 @@ void SimulatorThread :: LoadCharacterSession(void)
 	defcInst.Rotation = pld.charPtr->activeData.CurRotation;
 	defcInst.Heading = pld.charPtr->activeData.CurRotation;
 	defcInst.cooldownManager.CopyFrom(pld.charPtr->cooldownManager);
+	defcInst.buffManager.CopyFrom(pld.charPtr->buffManager);
 }
 
 void SimulatorThread :: ChangeProtocol(int newProto)
@@ -2792,9 +2795,10 @@ bool SimulatorThread :: HandleQuery(int &PendingData)
 		PendingData = handle_query_instance();
 	else if(query.name.compare("go") == 0)
 		PendingData = handle_query_go();
-	else if(query.name.compare("script.time") == 0){
+	else if(query.name.compare("script.time") == 0)
 		PendingData = handle_query_script_time();
-	}
+	else if(query.name.compare("script.gc") == 0)
+			PendingData = handle_query_script_gc();
 	else {
 		g_Log.AddMessageFormat("Unhandled query '%s'.", query.name.c_str());
 		return false;
@@ -6556,6 +6560,7 @@ void SimulatorThread :: SaveCharacterStats(void)
 		WriteValueToStat(creatureInst->baseStats[i].StatID, value, &pld.charPtr->cdef.css);
 	}
 	pld.charPtr->cooldownManager.CopyFrom(creatureInst->cooldownManager);
+	pld.charPtr->buffManager.CopyFrom(creatureInst->buffManager);
 }
 
 void SimulatorThread :: SetAccountCharacterCache(void)
@@ -13373,6 +13378,32 @@ int SimulatorThread :: handle_query_instance(void)
 	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
 }
 
+int SimulatorThread :: handle_query_script_gc(void)
+{
+	ActiveInstance *inst = creatureInst->actInst;
+	if(inst != NULL)
+	{
+		if(inst->nutScriptPlayer.HasScript())
+		{
+			Util::SafeFormat(Aux1, sizeof(Aux1), "Instance script collected %d objects", inst->nutScriptPlayer.GC());
+			SendInfoMessage(Aux1, INFOMSG_INFO);
+		}
+
+		ActiveInstance::CREATURE_IT it;
+		for(it = inst->NPCList.begin(); it != inst->NPCList.end(); ++it)
+		{
+			AINutPlayer *player = it->second.aiNut;
+			if(player != NULL)
+			{
+				Util::SafeFormat(Aux1, sizeof(Aux1), "CID: %d (%s) collected",
+						it->first, it->second.css.display_name, player->GC());
+				SendInfoMessage(Aux1, INFOMSG_INFO);
+			}
+		}
+	}
+	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
+}
+
 int SimulatorThread :: handle_query_script_time(void)
 {
 	ActiveInstance *inst = creatureInst->actInst;
@@ -13382,8 +13413,15 @@ int SimulatorThread :: handle_query_script_time(void)
 		if(inst->nutScriptPlayer.HasScript())
 		{
 			seconds = (double)inst->nutScriptPlayer.mProcessingTime / 1000.0;
-			Util::SafeFormat(Aux1, sizeof(Aux1), "Instance script: %4.3f (%4d). %s", seconds,
-					inst->nutScriptPlayer.mInitTime, inst->nutScriptPlayer.active ? "Active" : "Inactive");
+			Util::SafeFormat(Aux1, sizeof(Aux1), "S Instance: %4.3f (%ul,%u,%ul). %s", seconds,
+					inst->nutScriptPlayer.mInitTime, inst->nutScriptPlayer.mCalls, inst->nutScriptPlayer.mGCTime, inst->nutScriptPlayer.active ? "Active" : "Inactive");
+			SendInfoMessage(Aux1, INFOMSG_INFO);
+		}
+		if(inst->scriptPlayer.HasScript())
+		{
+			seconds = (double)inst->scriptPlayer.mProcessingTime / 1000.0;
+			Util::SafeFormat(Aux1, sizeof(Aux1), "T Instance: %4.3f. %s", seconds,
+					inst->scriptPlayer.active ? "Active" : "Inactive");
 			SendInfoMessage(Aux1, INFOMSG_INFO);
 		}
 
@@ -13394,8 +13432,17 @@ int SimulatorThread :: handle_query_script_time(void)
 			if(player != NULL)
 			{
 				seconds = (double)player->mProcessingTime / 1000.0;
-				Util::SafeFormat(Aux1, sizeof(Aux1), "CID: %d (%s) %4.3f (%4d)",
-						it->first, it->second.css.display_name, seconds, player->mInitTime);
+				Util::SafeFormat(Aux1, sizeof(Aux1), "S CID: %d (%s) %4.3f (%ul,%u,%ul)",
+						it->first, it->second.css.display_name, seconds, player->mInitTime,player->mCalls, player->mGCTime);
+				SendInfoMessage(Aux1, INFOMSG_INFO);
+			}
+
+			AIScriptPlayer *tPlayer = it->second.aiScript;
+			if(tPlayer != NULL)
+			{
+				seconds = (double)tPlayer->mProcessingTime / 1000.0;
+				Util::SafeFormat(Aux1, sizeof(Aux1), "T CID: %d (%s) %4.3f",
+						it->first, it->second.css.display_name, seconds);
 				SendInfoMessage(Aux1, INFOMSG_INFO);
 			}
 		}

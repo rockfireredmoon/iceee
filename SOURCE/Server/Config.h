@@ -187,6 +187,10 @@ public:
 	bool VerifyMovement;                     //If true, attempt to validate client movement and report unexpected speeds, coordinates, and update intervals.  May issues some false reports, check for consistency.  Accounts with the 'admin' permission are never validated due to conflicts with the speed command. 
 	bool DebugLogAIScriptUse;                //If true, AI Script ability use requests are printed to the log file to help determine which abilities are used.  May cause heavy log spam.
 
+	unsigned int SquirrelGCCallCount;				 //How many function calls must be performed before Garbage Collection is triggered
+	unsigned int SquirrelGCDelay;				 	 //How long the queue must be idle for before GC can go ahead.
+	unsigned int SquirrelGCMaxDelay;				 	 //How long after reaching call count before GC is forced.
+
 	unsigned long debugAdministrativeBehaviorFlags;
 	void SetAdministrativeBehaviorFlag(unsigned long bitValue, bool state);
 	bool HasAdministrativeBehaviorFlag(unsigned long bitValue);

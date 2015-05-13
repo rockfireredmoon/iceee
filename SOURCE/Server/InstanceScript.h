@@ -38,7 +38,7 @@ public:
 	virtual void HaltDerivedExecution();
 
 	// Exposed to scripts
-	void Queue(Sqrat::Function function, int fireDelay);
+//	void Queue(Sqrat::Function function, int fireDelay);
 	void Info(const char *message);
 	bool AI(int CID, const char *label);
 	void Broadcast(const char *message);

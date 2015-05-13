@@ -21,6 +21,7 @@ struct ActiveBuffManager
 	int HasBuff(unsigned char tier, unsigned char buffType);
 	int HasBuffNot(unsigned char tier, unsigned char buffType, int abilityGroup);
 	void UpdateBuff(unsigned char tier, unsigned char buffType, short abID, short abgID, double duration);
+	void SaveToStream(FILE *output);
 	void AddBuff(unsigned char tier, unsigned char buffType, short abID, short abgID, double duration);
 	void RemoveBuff(int abilityID);
 	void DebugLogBuffs(const char *label);

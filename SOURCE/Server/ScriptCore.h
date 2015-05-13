@@ -291,6 +291,7 @@ public:
 	bool active; //If true, the script is considered to be running (has not terminated).
 	unsigned long nextFire; //Time when the next instruction can run.  Used for waits.
 	bool mHasScript;
+	unsigned long mProcessingTime;
 
 	ScriptPlayer();
 	virtual ~ScriptPlayer();
@@ -423,8 +424,13 @@ public:
 	bool mHasScript;
 	bool mHalt;
 	bool mExecuting;
+	unsigned int long mCalls; // Total number of calls (including initial, events and all external function calls)
+	unsigned int long mGCCounter; // Increased at same times as mCalls, but when it reaches a predefined limit, GC is performed
+	unsigned long mMaybeGC; // When the number of calls was reached, but before any delays have been reached
+	unsigned long mForceGC; // When to force GC
 	unsigned long mProcessingTime;
 	unsigned long mInitTime;
+	unsigned long mGCTime; // How much time GC has taken
 
 	NutPlayer();
 	virtual ~NutPlayer();
@@ -442,10 +448,12 @@ public:
 	bool IsWaiting(void);
 	bool CanRunIdle(void);
 	void Halt(void);
+	int GC(void);
 	bool RunFunction(const char *name);
 	bool RunFunction(const char *name, std::vector<ScriptParam> parms);
 	void Broadcast(const char *message);
 	void DoQueue(NutScriptEvent *evt);
+	void Queue(Sqrat::Function function, int fireDelay);
 //	void DoQueue(Sqrat::Function function, int fireDelay);
 	bool ExecQueue(void);
 

@@ -140,17 +140,6 @@ void InstanceNutPlayer::RegisterFunctions() {
 
 void InstanceNutPlayer::RegisterInstanceFunctions(NutPlayer *instance, Sqrat::DerivedClass<InstanceNutPlayer, NutPlayer> *instanceClass)
 {
-	/* Have to register the functions with THIS class, or the wrong instance will be
-		 * invoked from Squirrel
-		 *
-		 * TODO it might be ok to move these 3 back to the core. Seems my theory was wrong.
-		 * Leave them here till the actual cause is found
-		 */
-	instanceClass->Func(_SC("queue"), &InstanceNutPlayer::Queue);
-	instanceClass->Func(_SC("broadcast"), &InstanceNutPlayer::Broadcast);
-	instanceClass->Func(_SC("halt"), &InstanceNutPlayer::Halt);
-	// Functions that return arrays or tables have to be dealt with differently
-	instanceClass->SquirrelFunc(_SC("sleep"), &InstanceNutPlayer::Sleep);
 
 	// Instance Location Object, X1/Z1,X2/Z2 location defining a rectangle
 	Sqrat::Class<ScriptObjects::Area> areaClass(vm, "Area", true);
@@ -325,13 +314,13 @@ void InstanceNutPlayer::WalkThen(int CID, ScriptObjects::Point point, int speed,
 	}
 }
 
-void InstanceNutPlayer::Queue(Sqrat::Function function, int fireDelay)
-{
-
-	DoQueue(new ScriptCore::NutScriptEvent(
-				new ScriptCore::TimeCondition(fireDelay),
-				new ScriptCore::SquirrelFunctionCallback(this, function)));
-}
+//void InstanceNutPlayer::Queue(Sqrat::Function function, int fireDelay)
+//{
+//
+//	DoQueue(new ScriptCore::NutScriptEvent(
+//				new ScriptCore::TimeCondition(fireDelay),
+//				new ScriptCore::SquirrelFunctionCallback(this, function)));
+//}
 
 void InstanceNutPlayer::Walk(int CID, ScriptObjects::Point point, int speed, int range) {
 
@@ -488,7 +477,7 @@ void InstanceNutPlayer::Broadcast(const char *message)
 		actInst->LSendToAllSimulator(buffer, wpos, -1);
 	}
 	else
-		g_SimulatorManager.BroadcastMessage(message);
+		NutPlayer::Broadcast(message);
 }
 
 CreatureInstance* InstanceNutPlayer::GetNPCPtr(int CID)

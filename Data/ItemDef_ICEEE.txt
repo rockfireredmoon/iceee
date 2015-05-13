@@ -302,3 +302,19 @@ mValue=69
 mFlavorText=All your shinies are belong to us.
 mQualityLevel=5
 mMinUseLevel=1
+
+[ENTRY]
+mID=8105
+mType=5
+mDisplayName=Beta Beast Strong Box
+mAppearance=[{}]
+mIcon=Icon-32-Chest1.png|Icon-32-BG-Blue.png
+mIvType1=1
+mIvMax1=1
+mLevel=1
+mBindingType=1
+mValue=1
+mFlavorText=Double click to open! Use to buy vault space and more abilities
+mQualityLevel=3
+mMinUseLevel=10
+Params=credits=400&abilitypoints=50

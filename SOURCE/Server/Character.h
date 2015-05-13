@@ -309,6 +309,7 @@ public:
 	std::string InstanceScaler;
 
 	ActiveCooldownManager cooldownManager;
+	ActiveBuffManager buffManager;
 	std::vector<ActiveStatMod> offlineStatMods;
 
 	//short equipStat[Stat_MaxRow][Stat_MaxCol];

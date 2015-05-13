@@ -855,6 +855,7 @@ StatInfoDisplay statInfoDisplay[] = {
 	{  STAT::BASE_PARRY,   "Parry Chance",        StatInfoDisplay::PLUSINTP  },
 	{  STAT::BASE_DODGE,   "Dodge Chance",        StatInfoDisplay::PLUSINTP  },
 	{  STAT::MOD_MOVEMENT,   "Movement Speed",        StatInfoDisplay::PLUSPERCENT  },
+	{  STAT::EXPERIENCE_GAIN_RATE,   "Experience Gain",        StatInfoDisplay::PLUSPERCENT  },
 	{  STAT::DMG_MOD_FIRE,   "Fire Specialization",        StatInfoDisplay::PLUSINTP  },
 	{  STAT::DMG_MOD_FROST,   "Frost Specialization",        StatInfoDisplay::PLUSINTP  },
 	{  STAT::DMG_MOD_MYSTIC,   "Mystic Specialization",        StatInfoDisplay::PLUSINTP  },

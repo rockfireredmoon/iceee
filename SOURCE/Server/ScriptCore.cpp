@@ -23,6 +23,7 @@
 #include "Simulator.h"
 #include "StringList.h"
 #include "Util.h"
+#include "Config.h"
 
 extern unsigned long g_ServerTime;
 
@@ -223,6 +224,11 @@ namespace ScriptCore
 		mHalt = false;
 		mExecuting = false;
 		mProcessingTime = 0;
+		mGCCounter = 0;
+		mMaybeGC = 0;
+		mForceGC = 0;
+		mGCTime = 0;
+		mCalls = 0;
 		assert(mQueue.size() == 0);
 		assert(mQueueQueue.size() == 0);
 	}
@@ -231,15 +237,35 @@ namespace ScriptCore
 		ClearQueue();
 	}
 
+	int NutPlayer::GC() {
+		return sq_collectgarbage(vm);
+	}
+
 	void NutPlayer::ClearQueue() {
-		// TODO delete objects
+		std::vector<ScriptCore::NutScriptEvent*>::iterator it;
+		for(it = mQueue.begin(); it != mQueue.end(); ++it)
+			delete *it;
+		for(it = mQueueQueue.begin(); it != mQueueQueue.end(); ++it)
+			delete *it;
 		mQueue.clear();
 		mQueueQueue.clear();
 	}
 
 	void NutPlayer::Initialize(NutDef *defPtr, std::string &errors) {
+		//
+		// TODO!!!
+		//
+		// MUST add garbage collection
+		//		//
+		//		 There are 2 possible compile time options:
+		//
+		//    The default configuration consists in RC plus a mark and sweep garbage collector. The host program can call the function sq_collectgarbage() and perform a garbage collection cycle during the program execution. The garbage collector isn’t invoked by the VM and has to be explicitly called by the host program.
+		//
+		//    The second a situation consists in RC only(define NO_GARBAGE_COLLECTOR); in this case is impossible for the VM to detect reference cycles, so is the programmer that has to solve them explicitly in order to avoid memory leaks.
 
 		unsigned long started = g_PlatformTime.getMilliseconds();
+
+//		sq_collectgarbage(vm);
 
 		def = defPtr;
 		vm = sq_open(1024); // creates a VM with initial stack size 1024
@@ -336,11 +362,23 @@ namespace ScriptCore
 
 		unsigned long time = g_PlatformTime.getMilliseconds() - started;
 		mInitTime = time;
+		mCalls++;
+		mGCCounter++;
+	}
+
+	void NutPlayer::Queue(Sqrat::Function function, int fireDelay) {
+		DoQueue(new ScriptCore::NutScriptEvent(
+					new ScriptCore::TimeCondition(fireDelay),
+					new ScriptCore::SquirrelFunctionCallback(this, function)));
 	}
 
 	void NutPlayer::RegisterFunctions() { }
 
 	void NutPlayer::RegisterCoreFunctions(NutPlayer *instance, Sqrat::Class<NutPlayer> *clazz) {
+		clazz->Func(_SC("queue"), &NutPlayer::Queue);
+		clazz->Func(_SC("broadcast"), &NutPlayer::Broadcast);
+		clazz->Func(_SC("halt"), &NutPlayer::Halt);
+		clazz->SquirrelFunc(_SC("sleep"), &Sleep);
 
 		Sqrat::RootTable(vm).Func("randmodrng", &randmodrng);
 		Sqrat::RootTable(vm).Func("randmod", &randmod);
@@ -417,14 +455,7 @@ namespace ScriptCore
 			vector<ScriptParam> v;
 			mHalt = false;
 			HaltDerivedExecution();
-
-			// Wake the VM up if it is suspend so the onFinish can be run
-			if(sq_getvmstate(vm) == SQ_VMSTATE_SUSPENDED) {
-				g_Log.AddMessageFormat("Waking up VM to run finish.");
-				sq_wakeupvm(vm, false, false, false, true);
-			}
-
-			RunFunction("on_finish", v);
+			//RunFunction("on_finish", v);
 			active = false;
 			ClearQueue();
 			sq_close(vm);
@@ -444,12 +475,11 @@ namespace ScriptCore
 
 	bool NutPlayer::RunFunction(const char *name, std::vector<ScriptParam> parms) {
 
+		// Wake the VM up if it is suspend so the onFinish can be run
 		if(sq_getvmstate(vm) == SQ_VMSTATE_SUSPENDED) {
-			// TODO if suspended, should we interrupt the sleep? and just executed what is here, erroring the sleep?
-			g_Log.AddMessageFormat("[WARNING] VM was suspended, can't run function.");
-			return false;
+			g_Log.AddMessageFormat("Waking up VM to run %s.", name);
+			sq_wakeupvm(vm, false, false, false, true);
 		}
-
 
 		SQInteger top = sq_gettop(vm);
 		sq_pushroottable(vm);
@@ -475,9 +505,6 @@ namespace ScriptCore
 				}
 			}
 			sq_call(vm,parms.size() + 1,SQFalse,SQTrue); //calls the function
-			if(sq_getvmstate(vm) == SQ_VMSTATE_SUSPENDED) {
-				g_Log.AddMessageFormat("VM was suspended during function execution.");
-			}
 		}
 		sq_settop(vm,top);
 		if(mHalt) {
@@ -505,7 +532,8 @@ namespace ScriptCore
 			mQueue.erase(mQueue.begin() + index);
 			delete nse;
 		}
-
+		mCalls++;
+		mGCCounter++;
 		mProcessingTime += g_PlatformTime.getMilliseconds() - now;
 		return res;
 	}
@@ -537,6 +565,30 @@ namespace ScriptCore
 		mQueue.insert(mQueue.end(), mQueueQueue.begin(), mQueueQueue.end());
 		mQueueQueue.clear();
 		mExecuting = false;
+
+		// If nothing was executed, and the GC counter has been reached
+		if(!ok && mGCCounter > g_Config.SquirrelGCCallCount) {
+			unsigned long now = g_PlatformTime.getElapsedMilliseconds();
+			if(mForceGC == 0) {
+				mForceGC = now + g_Config.SquirrelGCMaxDelay;
+			}
+			if(mMaybeGC == 0) {
+				mMaybeGC = now;
+			}
+			if(now >= mMaybeGC + g_Config.SquirrelGCDelay || now >= mForceGC) {
+				int objs = GC();
+				unsigned long took = g_PlatformTime.getElapsedMilliseconds() - now;
+				g_Log.AddMessageFormat("GC performed because callcount reached %d and returned %d objects taking %ul ms", mGCCounter, took, objs);
+				mGCTime += took;
+				mGCCounter = 0;
+				mForceGC = 0;
+				mMaybeGC = 0;
+			}
+		}
+		else {
+			mMaybeGC = 0;
+		}
+
 		return ok;
 	}
 
@@ -1529,6 +1581,7 @@ ScriptPlayer :: ScriptPlayer()
 	nextFire = 0;
 	advance = 0;
 	mHasScript = false;
+	mProcessingTime = 0;
 }
 
 ScriptPlayer :: ~ScriptPlayer()
@@ -1567,6 +1620,7 @@ bool ScriptPlayer :: RunSingleInstruction(void)
 	if(g_ServerTime < nextFire)
 		return true;
 
+	unsigned long now = g_PlatformTime.getElapsedMilliseconds();
 	bool breakScript = false;
 	advance = 1;
 
@@ -1722,6 +1776,7 @@ bool ScriptPlayer :: RunSingleInstruction(void)
 	}
 
 	curInst += advance;
+	mProcessingTime += g_PlatformTime.getElapsedMilliseconds() - now;
 	return breakScript;
 }
 

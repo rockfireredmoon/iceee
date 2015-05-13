@@ -24,12 +24,14 @@
         Activate_Music = [
                 "Music-Hyperfun.ogg"
         ],
-        Ambient_Music = [],
+        Ambient_Music = [
+                "Music-Hyperfun.ogg"
+        ],
         Ambient_Noise = [
                 "Sound-Ambient-Taverncrowds.ogg"
         ],
         Ambient_Sound = [
                 "Sound-Ambient-Citytavern.ogg"
         ],
-        Ambient_Music_Delay = 40
+        Ambient_Music_Delay = 640
 };

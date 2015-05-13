@@ -268,21 +268,22 @@ void AINutPlayer::RegisterFunctions() {
 	Sqrat::RootTable(vm).Bind(_SC("AI"), aiClass);
 	RegisterAIFunctions(this, &aiClass);
 	Sqrat::RootTable(vm).SetInstance(_SC("ai"), this);
+
+	if(attachedCreature != NULL && attachedCreature->actInst != NULL) {
+//		InstanceScript::InstanceNutPlayer *player = &attachedCreature->actInst->nutScriptPlayer;
+//		if(player->active) {
+//			Sqrat::RootTable rt = Sqrat::RootTable(player->vm);
+//			Sqrat::DerivedClass<InstanceScript::InstanceNutPlayer, NutPlayer> instanceClass(vm, _SC("Instance"));
+//			player->RegisterInstanceFunctions(player, &instanceClass);
+////			Sqrat::RootTable(vm).SetInstance(_SC("inst"), player);
+//			Sqrat::RootTable(vm).Bind(_SC("inst"), rt);
+//		}
+	}
+
 }
 
 void AINutPlayer::RegisterAIFunctions(NutPlayer *instance,
 		Sqrat::DerivedClass<AINutPlayer, NutPlayer> *clazz) {
-	/* Have to register the functions with THIS class, or the wrong instance will be
-	 * invoked from Squirrel
-	 *
-	 * TODO it might be ok to move these 3 back to the core. Seems my theory was wrong.
-	 * Leave them here till the actual cause is found
-	 */
-	clazz->Func(_SC("queue"), &AINutPlayer::Queue);
-	clazz->Func(_SC("broadcast"), &AINutPlayer::Broadcast);
-	clazz->Func(_SC("halt"), &AINutPlayer::Halt);
-	clazz->SquirrelFunc(_SC("sleep"), &AINutPlayer::Sleep);
-
 	clazz->Func(_SC("has_target"), &AINutPlayer::HasTarget);
 	clazz->Func(_SC("use"), &AINutPlayer::Use);
 	clazz->Func(_SC("get_will"), &AINutPlayer::GetWill);
@@ -385,12 +386,12 @@ AINutDef * AINutManager::GetScriptByName(const char *name) {
 	return NULL;
 }
 
-void AINutPlayer::Queue(Sqrat::Function function, int fireDelay) {
-
-	DoQueue(new ScriptCore::NutScriptEvent(
-				new ScriptCore::TimeCondition(fireDelay),
-				new ScriptCore::SquirrelFunctionCallback(this, function)));
-}
+//void AINutPlayer::Queue(Sqrat::Function function, int fireDelay) {
+//
+//	DoQueue(new ScriptCore::NutScriptEvent(
+//				new ScriptCore::TimeCondition(fireDelay),
+//				new ScriptCore::SquirrelFunctionCallback(this, function)));
+//}
 
 AINutPlayer * AINutManager::AddActiveScript(CreatureInstance *creature,
 		const char *name) {

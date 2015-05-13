@@ -1,5 +1,6 @@
 function on_death() {
 	print("I died :(");
+	::inst.aiDied();
 }
 
 function on_target_acquired(cid) {
@@ -9,8 +10,24 @@ function on_target_acquired(cid) {
 function have_target() {
 	print("Target acquired!\n");
 	print("Sleeping 10000!\n");
-	ai.sleep(10000);
+	
+	/*
+	 * Wait for 10 seconds. The try/catch here is for handling when the sleep is 'interrupted'.
+  	 * This might be caused by by an external function call.
+	 * These might come from instance scripts, or on death of this creature, or
+	 * if targets change. A well behaved script should catch this and deal with
+	 * it appropriately. It should never sleep again (this may be prevented in 
+	 * future versions). 
+	 */
+	try {
+		ai.sleep(10000);
+	}
+	catch(err) {
+		 print("Interrupt " + err);
+	}
+	
 	print("Slept 10000!\n");
+	
 	if(ai.has_target()) {
 		print("Still have target, requeue\n");
 		ai.queue(have_target, 5000);
