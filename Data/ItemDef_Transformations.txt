@@ -76,7 +76,7 @@ mMinUseLevel=10
 [ENTRY]
 mID=50007
 mType=5
-mDisplayName=Reusable Skill Scroll: Bears' Form
+mDisplayName=Reusable Scroll: Bears' Form
 mIcon=Icon-32-Scroll2.png|Icon-32-BG-Divine.png
 mIvType1=0
 mIvMax1=0
@@ -86,12 +86,13 @@ mValue=1
 mValueType=1
 mQualityLevel=4
 mMinUseLevel=1
+mFlavorText=A Reusable skill scroll that transforms you into a feral form, increasing movement speed by 50% for 10 minutes. Drag the item to your ability bars to use. 
 Params=verifycast=1&keep=1
 
 [ENTRY]
 mID=50008
 mType=5
-mDisplayName=Reusable Skill Scroll: Stags' Form
+mDisplayName=Reusable Scroll: Stags' Form
 mIcon=Icon-32-Scroll2.png|Icon-32-BG-Divine.png
 mIvType1=0
 mIvMax1=0
@@ -101,12 +102,13 @@ mValue=1
 mValueType=1
 mQualityLevel=4
 mMinUseLevel=1
+mFlavorText=A Reusable skill scroll that transforms you into a feral form, increasing movement speed by 50% for 10 minutes. Drag the item to your ability bars to use.
 Params=verifycast=1&keep=1
 
 [ENTRY]
 mID=50009
 mType=5
-mDisplayName=Reusable Skill Scroll: Wolfs' Form
+mDisplayName=Reusable Scroll: Wolfs' Form
 mIcon=Icon-32-Scroll2.png|Icon-32-BG-Divine.png
 mIvType1=0
 mIvMax1=0
@@ -116,12 +118,13 @@ mValue=1
 mValueType=1
 mQualityLevel=4
 mMinUseLevel=1
+mFlavorText=A Reusable skill scroll that transforms you into a feral form, increasing movement speed by 50% for 10 minutes. Drag the item to your ability bars to use.
 Params=verifycast=1&keep=1
 
 [ENTRY]
 mID=50010
 mType=5
-mDisplayName=Reusable Skill Scroll: Felines' Form
+mDisplayName=Reusable Scroll: Felines' Form
 mIcon=Icon-32-Scroll2.png|Icon-32-BG-Divine.png
 mIvType1=0
 mIvMax1=0
@@ -131,5 +134,6 @@ mValue=1
 mValueType=1
 mQualityLevel=4
 mMinUseLevel=1
+mFlavorText=A Reusable skill scroll that transforms you into a feral form, increasing movement speed by 50% for 10 minutes. Drag the item to your ability bars to use.
 Params=verifycast=1&keep=1
 
