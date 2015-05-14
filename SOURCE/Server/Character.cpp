@@ -2474,7 +2474,7 @@ int CheckSection_Cooldown(FileReader &fr, CharacterData &cd, const char *debugFi
 	return 0;
 }
 
-int CheckSection_Abilties(FileReader &fr, CharacterData &cd, const char *debugFilename)
+int CheckSection_Abilities(FileReader &fr, CharacterData &cd, const char *debugFilename)
 {
 	//Expected formats:
 	//  Ability=tier,buffType,ability ID,ability group ID,remain
@@ -2490,7 +2490,7 @@ int CheckSection_Abilties(FileReader &fr, CharacterData &cd, const char *debugFi
 		short abgID = fr.BlockToInt(4);
 		unsigned long remain = fr.BlockToULongC(5);
 		double remainS = remain / 1000.0;
-		cd.buffManager.AddBuff(tier, buffType, abID, abgID, remainS);
+		cd.buffManager.AddPersistentBuff(tier, buffType, abID, abgID, remainS);
 	}
 
 	return 0;
@@ -2580,7 +2580,7 @@ int LoadCharacterFromStream(FileReader &fr, CharacterData &cd, const char *debug
 				else if(Section == CDFS_Cooldown)
 					CheckSection_Cooldown(fr, cd, debugFilename);
 				else if(Section == CDFS_Abilities)
-					CheckSection_Abilties(fr, cd, debugFilename);
+					CheckSection_Abilities(fr, cd, debugFilename);
 			}
 		}
 	}

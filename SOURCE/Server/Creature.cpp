@@ -91,7 +91,6 @@ bool SelectedObject :: hasTargetCDef(int CDefID)
 	return (targ->CreatureDefID == CDefID);
 }
 
-
 void ActiveAbilityInfo :: Duration(int seconds)
 {
 	//Set the duration to the number of seconds.
@@ -1366,9 +1365,11 @@ int CreatureInstance :: Add(unsigned char tier, unsigned char buffCategory, int 
 	}
 
 	RemoveAbilityBuffTypeExcept(buffCategory, abID, abgID);
-	buffManager.UpdateBuff(tier, buffCategory, abID, abgID, durationSec);
+
+
+	ActiveBuff *activeBuff = buffManager.UpdateBuff(tier, buffCategory, abID, abgID, durationSec);
 	
-	AddBuff(BuffSource::ABILITY, buffCategory, tier, abID, abgID, statID, calcAmount, descAmount, durationSec);
+	AddBuff(BuffSource::ABILITY, buffCategory, tier, abID, abgID, statID, calcAmount, descAmount, activeBuff->durationS);
 
 	//HACK: the Pierce ability needs to update the stats immediately because it depends on the
 	//updated value immediately in within the calling block.

@@ -15,10 +15,8 @@ phrases <- [
 ];
 
 function say_something() {
-print("Say somethin\n");
 	local cid = inst.cids(ACTOR_CDEFID)[0];
 	if(randmodrng(0, 100) <= SPEAK_CHANCE) {
-	   print("Saying\n");
 		inst.queue(function() {
 			inst.emote(cid, ANIMATION);
 			inst.creatureChat(cid, "s/", phrases[randmodrng(0, phrases.len())]);

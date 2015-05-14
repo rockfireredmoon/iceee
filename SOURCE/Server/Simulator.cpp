@@ -1965,13 +1965,13 @@ void SimulatorThread :: SetPersona(int personaIndex)
 	BroadcastShardChanged();
 
 	UpdateEqAppearance();
-
+	ActivatePassiveAbilities();
 	//Since the character has been loaded into an instance and has acquired
 	//a character instance, run processing for abilities.
 	if(g_Config.PersistentBuffs) {
 		ActivateSavedAbilities();
 	}
-	ActivatePassiveAbilities();
+
 	LogMessageL(MSG_DIAG, "Persona set to index:%d, (ID: %d, CDef: %d) (%s)", personaIndex, pld.CreatureID, pld.CreatureDefID, pld.charPtr->cdef.css.display_name);
 
 	//Hack to reset an empty quickbar preference.
@@ -3130,14 +3130,13 @@ void SimulatorThread :: UpdateEqAppearance(void)
 
 void SimulatorThread :: ActivateSavedAbilities(void)
 {
-	for(size_t i = 0; i < pld.charPtr->buffManager.buffList.size(); i++)
-	{
-		int abID = pld.charPtr->buffManager.buffList[i].abID;
-
-		//Need request to fill the target data, then run activation.
-		creatureInst->CallAbilityEvent(abID, EventType::onRequest);
-		creatureInst->CallAbilityEvent(abID, EventType::onActivate);
+	std::vector<ActiveBuff>::iterator it;
+	pld.charPtr->buffManager.SetInitialising(true);
+	for(it = pld.charPtr->buffManager.buffList.begin(); it != pld.charPtr->buffManager.buffList.end(); ++it) {
+		creatureInst->CallAbilityEvent(it->abID, EventType::onRequest);
+		creatureInst->CallAbilityEvent(it->abID, EventType::onActivate);
 	}
+	pld.charPtr->buffManager.SetInitialising(false);
 }
 
 void SimulatorThread :: ActivatePassiveAbilities(void)

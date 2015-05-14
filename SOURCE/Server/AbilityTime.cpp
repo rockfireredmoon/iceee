@@ -5,6 +5,23 @@
 
 extern unsigned long g_ServerTime;
 
+void ActiveBuffManager :: SetInitialising(bool initialising) {
+	mInitialising = initialising;
+}
+
+ActiveBuff * ActiveBuffManager :: GetPersistentBuff(unsigned char tier, short abID)
+{
+
+	for(size_t i = 0; i < persistentBuffList.size(); i++)
+	{
+		if(persistentBuffList[i].abID == abID && tier >= persistentBuffList[i].tier)
+		{
+			return &persistentBuffList[i];
+		}
+	}
+	return NULL;
+}
+
 int ActiveBuffManager :: HasBuff(unsigned char tier, unsigned char buffType)
 {
 	for(size_t i = 0; i < buffList.size(); i++)
@@ -28,7 +45,7 @@ int ActiveBuffManager :: HasBuff(unsigned char tier, unsigned char buffType)
 	return -1;
 }
 
-void ActiveBuffManager :: UpdateBuff(unsigned char tier, unsigned char buffType, short abID, short abgID, double duration)
+ActiveBuff * ActiveBuffManager :: UpdateBuff(unsigned char tier, unsigned char buffType, short abID, short abgID, double duration)
 {
 	int r = HasBuff(tier, buffType);
 	if(r >= 0)
@@ -36,16 +53,30 @@ void ActiveBuffManager :: UpdateBuff(unsigned char tier, unsigned char buffType,
 		buffList[r].tier = tier;
 		buffList[r].abID = abID;
 		buffList[r].abgID = abgID;
-		buffList[r].durationS = (int)duration;
+
+		if(mInitialising)
+		{
+			ActiveBuff *persistentBuff = GetPersistentBuff(tier, abID);
+			if(persistentBuff != NULL) {
+				g_Log.AddMessageFormat("Overriding duration of %d of with %d for ability %d because there was an active ability on logout", duration,
+						persistentBuff->durationS, abID);
+				buffList[r].durationS = (int)persistentBuff ->durationS;
+			}
+			else
+				buffList[r].durationS = (int)duration;
+		}
+		else
+			buffList[r].durationS = (int)duration;
 		buffList[r].castEndTimeMS = g_ServerTime + (buffList[r].durationS * 1000);
+		return &buffList[r];
 	}
 	else
 	{
-		AddBuff(tier, buffType, abID, abgID, duration);
+		return AddBuff(tier, buffType, abID, abgID, duration);
 	}
 }
 
-void ActiveBuffManager :: AddBuff(unsigned char tier, unsigned char buffType, short abID, short abgID, double duration)
+ActiveBuff * ActiveBuffManager :: AddPersistentBuff(unsigned char tier, unsigned char buffType, short abID, short abgID, double duration)
 {
 	ActiveBuff buff;
 	buff.tier = tier;
@@ -54,7 +85,32 @@ void ActiveBuffManager :: AddBuff(unsigned char tier, unsigned char buffType, sh
 	buff.abgID = abgID;
 	buff.durationS = (int)duration;
 	buff.castEndTimeMS = g_ServerTime + (buff.durationS * 1000);
+	persistentBuffList.push_back(buff);
+	return &persistentBuffList.back();
+}
+
+ActiveBuff * ActiveBuffManager :: AddBuff(unsigned char tier, unsigned char buffType, short abID, short abgID, double duration)
+{
+	ActiveBuff buff;
+	buff.tier = tier;
+	buff.buffType = buffType;
+	buff.abID = abID;
+	buff.abgID = abgID;
+	buff.durationS = (int)duration;
+
+	if(mInitialising)
+	{
+		ActiveBuff *persistentBuff = GetPersistentBuff(tier, abID);
+		if(persistentBuff != NULL) {
+			g_Log.AddMessageFormat("Overriding duration of %d of with %d for ability %d because there was an active ability on logout", duration,
+					persistentBuff->durationS, abID);
+			buff.durationS = (int)persistentBuff ->durationS;
+		}
+	}
+
+	buff.castEndTimeMS = g_ServerTime + (buff.durationS * 1000);
 	buffList.push_back(buff);
+	return &buffList.back();
 }
 
 // Remove a buff from the list, probably from an ability cancel.  Otherwise lower tier buffs
@@ -85,6 +141,7 @@ void ActiveBuffManager :: DebugLogBuffs(const char *label)
 void ActiveBuffManager :: CopyFrom(const ActiveBuffManager &source)
 {
 	buffList.assign(source.buffList.begin(), source.buffList.end());
+	persistentBuffList.assign(source.persistentBuffList.begin(), source.persistentBuffList.end());
 }
 
 void ActiveBuffManager :: SaveToStream(FILE *output)
@@ -93,7 +150,7 @@ void ActiveBuffManager :: SaveToStream(FILE *output)
 	{
 		long remain = buffList[i].castEndTimeMS - g_ServerTime;
 		if(remain > 0) {
-			g_Log.AddMessageFormat("Saving abilitly %d,%d,%d,%d,%l\r\n", buffList[i].tier,
+			g_Log.AddMessageFormat("Saving ability %d,%d,%d,%d,%lu\r\n", buffList[i].tier,
 					buffList[i].buffType, buffList[i].abID, buffList[i].abgID, remain);
 			fprintf(output, "Active=%d,%d,%d,%d,%lu\r\n", buffList[i].tier,
 					buffList[i].buffType, buffList[i].abID, buffList[i].abgID, remain);
@@ -105,6 +162,11 @@ void ActiveBuffManager :: SaveToStream(FILE *output)
 void ActiveBuffManager :: Clear(void)
 {
 	buffList.clear();
+}
+
+void ActiveBuffManager :: ClearPersistent(void)
+{
+	persistentBuffList.clear();
 }
 
 int ActiveCooldown :: GetRemainTimeMS(void)

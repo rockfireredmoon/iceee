@@ -70,21 +70,21 @@ class this.States.LoginState extends this.State
 		this.mMenu.container.setLayoutManager(this.GUI.BoxLayout(this.GUI.BoxLayout.VERTICAL));
 		this.Screen.setOverlayVisible("GUI/Overlay2", true);
 		this.mMenu.container.setOverlay("GUI/Overlay2");
-		this.mMenu.faqButton <- ::GUI.BigButton("Customer Support");
+		this.mMenu.faqButton <- ::GUI.BigButton("Disqus");
 		this.mMenu.container.add(this.mMenu.faqButton);
 		this.mMenu.faqButton.addActionListener({
 			function onActionPerformed( b )
 			{
-				this.System.openURL("http://armouree.vm.bytemark.co.uk/dokuwiki/doku.php?id=iceee:players:introduction");
+				this.System.openURL("http://armouree.vm.bytemark.co.uk/dokuwiki/doku.php?id=start");
 			}
 
 		});
-		this.mMenu.privacyButton <- ::GUI.BigButton("Privacy");
+		this.mMenu.privacyButton <- ::GUI.BigButton("Project");
 		this.mMenu.container.add(this.mMenu.privacyButton);
 		this.mMenu.privacyButton.addActionListener({
 			function onActionPerformed( b )
 			{
-				this.System.openURL("http://www.eartheternal.com/privacy_policy");
+				this.System.openURL("https://github.com/rockfireredmoon/iceee/");
 			}
 
 		});
@@ -93,7 +93,7 @@ class this.States.LoginState extends this.State
 		this.mMenu.forParents.addActionListener({
 			function onActionPerformed( b )
 			{
-				this.System.openURL("http://www.eartheternal.com/parents_guide");
+				this.System.openURL("http://armouree.vm.bytemark.co.uk/dokuwiki/doku.php?id=iceee:development:betatesters");
 			}
 
 		});
@@ -111,7 +111,7 @@ class this.States.LoginState extends this.State
 		this.mMenu.manageAccount.addActionListener({
 			function onActionPerformed( b )
 			{
-				this.System.openURL("http://www.eartheternal.com/account");
+				this.System.openURL("http://iceee.servegame.com/Account.html");
 			}
 
 		});
@@ -136,7 +136,7 @@ class this.States.LoginState extends this.State
 					}
 
 				};
-				local message = "Earth Eternal will stream necessary content in the background" + " while playing, but for users with slower connections it may be desirable" + " to download all required media packages while outside the game to ensure optimal performance.";
+				local message = "Planet Forever will stream necessary content in the background" + " while playing, but for users with slower connections it may be desirable" + " to download all required media packages while outside the game to ensure optimal performance.";
 				local askMessage = this.GUI.MessageBox.showYesNo(message + " Are you sure you want to download all media?", callback);
 			}
 

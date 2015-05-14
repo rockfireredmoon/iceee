@@ -114,6 +114,7 @@ struct ActiveAbilityInfo
 	float x;
 	float y;
 	float z;
+	unsigned long duration;	  // Used when ability activated from a saved session
 
 	char willChargesSpent;   //Charges spent using the ability.  Notifies the client to assist with charge-based animations.  Should not be used for calculations.
 	char mightChargesSpent;  //Charges spent using the ability.  Notifies the client to assist with charge-based animations.  Should not be used for calculations.

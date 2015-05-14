@@ -166,13 +166,13 @@ class this.LoadScreen.GUI extends this.GUI.Component
 		this.mTip.setSize(624, 34);
 		this.mTip.setPreferredSize(624, 34);
 		this.mTip.addActionListener(this);
-		this.mTip.setText("Welcome to Earth Eternal!");
+		this.mTip.setText("Welcome to Planet Forever - IceEE!");
 		tipComp.add(this.mTip);
 		this.mAnnouncementTexts = [
-			"Welcome to Earth Eternal!"
+			"Welcome to Planet Forever - IceEE!"
 		];
 		this.mTipTexts = [
-			"Welcome to Earth Eternal!"
+			"Welcome to Planet Forever - IceEE!"
 		];
 		this.validate();
 		this.setVisible(true);
