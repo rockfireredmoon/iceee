@@ -452,6 +452,7 @@ public:
 	bool RunFunction(const char *name);
 	bool RunFunction(const char *name, std::vector<ScriptParam> parms);
 	void Broadcast(const char *message);
+	unsigned long GetServerTime();
 	void DoQueue(NutScriptEvent *evt);
 	void Queue(Sqrat::Function function, int fireDelay);
 //	void DoQueue(Sqrat::Function function, int fireDelay);

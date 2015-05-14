@@ -1968,6 +1968,7 @@ void SimulatorThread :: SetPersona(int personaIndex)
 
 	//Since the character has been loaded into an instance and has acquired
 	//a character instance, run processing for abilities.
+	ActivateSavedAbilities();
 	ActivatePassiveAbilities();
 	LogMessageL(MSG_DIAG, "Persona set to index:%d, (ID: %d, CDef: %d) (%s)", personaIndex, pld.CreatureID, pld.CreatureDefID, pld.charPtr->cdef.css.display_name);
 
@@ -3123,6 +3124,18 @@ void SimulatorThread :: UpdateEqAppearance(void)
 	pld.charPtr->UpdateEquipStats(creatureInst);
 
 	creatureInst->OnEquipmentChange(oldHealthRatio);
+}
+
+void SimulatorThread :: ActivateSavedAbilities(void)
+{
+	for(size_t i = 0; i < pld.charPtr->buffManager.buffList.size(); i++)
+	{
+		int abID = pld.charPtr->buffManager.buffList[i].abID;
+
+		//Need request to fill the target data, then run activation.
+		creatureInst->CallAbilityEvent(abID, EventType::onRequest);
+		creatureInst->CallAbilityEvent(abID, EventType::onActivate);
+	}
 }
 
 void SimulatorThread :: ActivatePassiveAbilities(void)
@@ -6867,6 +6880,13 @@ int SimulatorThread :: UseItem(unsigned int CCSID)
 			}
 			else
 			{
+
+				int keep = cfg.GetValueInt("keep");
+				if(keep != 0)
+				{
+					removeOnUse = false;
+				}
+
 				pld.mItemUseInProgress = false;
 				pld.mItemUseCCSID = 0;
 			}

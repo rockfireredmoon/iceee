@@ -9,8 +9,8 @@ Item=40072,1  ;
 Item=8105,1   ; Beta-beast strong box
 Item=5573,1	  ; Beta-beast banner
 Item=40059,1  ; Stonehenge Gate Scroll
-Item=50002,1  ; Transform Pot.
-Item=50004,1  ; Transform Pot.
-Item=50005,1  ; Transform Pot.
-Item=50006,1  ; Transform Pot.
+Item=50007,1  ; Reusable Skill Scroll : Bears' Form.
+Item=50008,1  ; Reusable Skill Scroll : Stags' Form.
+Item=50009,1  ; Reusable Skill Scroll : Wolfs' Form.
+Item=50010,1  ; Reusable Skill Scroll : Felines' Form.
 

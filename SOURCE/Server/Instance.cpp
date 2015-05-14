@@ -3088,6 +3088,10 @@ void ActiveInstance :: ScriptCallKill(int CreatureDefID, int CreatureID)
 		parms.push_back(ScriptCore::ScriptParam(CreatureDefID));
 		parms.push_back(ScriptCore::ScriptParam(CreatureID));
 		nutScriptPlayer.RunFunction("on_kill", parms);
+
+		char buffer[64];
+		Util::SafeFormat(buffer, sizeof(buffer), "on_kill_%d", CreatureDefID);
+		ScriptCall(buffer);
 	}
 	else if(scriptPlayer.HasScript())
 	{
@@ -3104,24 +3108,49 @@ void ActiveInstance :: ScriptCallKill(int CreatureDefID, int CreatureID)
 	}
 }
 
+void ActiveInstance :: ScriptCallPackageKill(const char *name)
+{
+	if(nutScriptPlayer.HasScript() && nutScriptPlayer.active)
+	{
+		std::vector<ScriptCore::ScriptParam> parms;
+		parms.push_back(ScriptCore::ScriptParam(std::string(name)));
+		nutScriptPlayer.RunFunction("on_package_kill", parms);
+
+		char buffer[64];
+		Util::SafeFormat(buffer, sizeof(buffer), "on_package_kill_%s", name);
+		nutScriptPlayer.RunFunction(buffer);
+	}
+	else if(scriptPlayer.HasScript())
+		ScriptCall(name);
+}
+
 void ActiveInstance :: ScriptCallUse(int CreatureDefID)
 {
 	char buffer[64];
-	Util::SafeFormat(buffer, sizeof(buffer), "onUse_%d", CreatureDefID);
+	if(nutScriptPlayer.HasScript())
+		Util::SafeFormat(buffer, sizeof(buffer), "on_use_%d", CreatureDefID);
+	else
+		Util::SafeFormat(buffer, sizeof(buffer), "onUse_%d", CreatureDefID);
 	ScriptCall(buffer);
 }
 
 void ActiveInstance :: ScriptCallUseHalt(int CreatureDefID)
 {
 	char buffer[64];
-	Util::SafeFormat(buffer, sizeof(buffer), "onUseHalt_%d", CreatureDefID);
+	if(nutScriptPlayer.HasScript())
+		Util::SafeFormat(buffer, sizeof(buffer), "on_use_halt_%d", CreatureDefID);
+	else
+		Util::SafeFormat(buffer, sizeof(buffer), "onUseHalt_%d", CreatureDefID);
 	ScriptCall(buffer);
 }
 
 void ActiveInstance :: ScriptCallUseFinish(int CreatureDefID)
 {
 	char buffer[64];
-	Util::SafeFormat(buffer, sizeof(buffer), "onUseFinish_%d", CreatureDefID);
+	if(nutScriptPlayer.HasScript())
+		Util::SafeFormat(buffer, sizeof(buffer), "on_use_finish_%d", CreatureDefID);
+	else
+		Util::SafeFormat(buffer, sizeof(buffer), "onUseFinish_%d", CreatureDefID);
 	ScriptCall(buffer);
 }
 

@@ -146,10 +146,6 @@ short AINutPlayer::TargetHealthPercent() {
 	return health;
 }
 
-unsigned long AINutPlayer::GetServerTime() {
-	return g_PlatformTime.getElapsedMilliseconds();
-}
-
 void AINutPlayer::VisualEffect(const char *effect) {
 	attachedCreature->SendEffect(effect, 0);
 }
@@ -297,7 +293,7 @@ void AINutPlayer::RegisterAIFunctions(NutPlayer *instance,
 	clazz->Func(_SC("count_enemy_near"), &AINutPlayer::CountEnemyNear);
 	clazz->Func(_SC("health_pc"), &AINutPlayer::HealthPercent);
 	clazz->Func(_SC("target_health_pc"), &AINutPlayer::TargetHealthPercent);
-	clazz->Func(_SC("get_server_time"), &AINutPlayer::GetServerTime);
+	clazz->Func(_SC("play_sound"), &AINutPlayer::PlaySound);
 	clazz->Func(_SC("visual_effect"), &AINutPlayer::VisualEffect);
 	clazz->Func(_SC("target_visual_effect"), &AINutPlayer::TargetVisualEffect);
 	clazz->Func(_SC("say"), &AINutPlayer::Say);
@@ -315,7 +311,6 @@ void AINutPlayer::RegisterAIFunctions(NutPlayer *instance,
 	clazz->Func(_SC("dispel_target_property"),
 			&AINutPlayer::DispelTargetProperty);
 	clazz->Func(_SC("find_cid"), &AINutPlayer::FindCID);
-	clazz->Func(_SC("play_sound"), &AINutPlayer::PlaySound);
 	clazz->Func(_SC("get_buff_tier"), &AINutPlayer::GetBuffTier);
 	clazz->Func(_SC("get_target_buff_tier"), &AINutPlayer::GetTargetBuffTier);
 	clazz->Func(_SC("is_target_in_range"), &AINutPlayer::IsTargetInRange);

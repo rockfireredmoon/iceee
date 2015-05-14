@@ -413,6 +413,7 @@ public:
 	void SendSetMap(void);
 	void SetPosition(int xpos, int ypos, int zpos, int update);
 	void UpdateEqAppearance(void);
+	void ActivateSavedAbilities(void);
 	void ActivatePassiveAbilities(void);
 	void CheckSpawnTileUpdate(bool force);
 

@@ -373,6 +373,7 @@ public:
 	void UpdateEnvironmentCycle(const char *timeOfDay);
 	bool KillScript();
 	bool RunScript(std::string &errors);
+	void ScriptCallPackageKill(const char *name);
 	void ScriptCallKill(int CreatureDefID, int CreatureID);
 	void ScriptCallUse(int CreatureDefID);
 	void ScriptCallUseHalt(int CreatureDefID);

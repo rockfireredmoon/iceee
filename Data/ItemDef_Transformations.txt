@@ -16,7 +16,7 @@ mMinUseLevel=10
 [ENTRY]
 mID=50002
 mType=5
-mDisplayName=Potion of The Bear's Form
+mDisplayName=Potion of The Bears' Form
 mIcon=Icon-32-Potion_Short_Green.png|Icon-32-BG-Red.png
 mIvType1=1
 mIvMax1=20
@@ -31,7 +31,7 @@ mMinUseLevel=10
 [ENTRY]
 mID=50004
 mType=5
-mDisplayName=Potion of The Stag's Form
+mDisplayName=Potion of The Stags' Form
 mIcon=Icon-32-Potion_Short_Green.png|Icon-32-BG-Red.png
 mIvType1=1
 mIvMax1=20
@@ -46,7 +46,7 @@ mMinUseLevel=10
 [ENTRY]
 mID=50005
 mType=5
-mDisplayName=Potion of The Wolf's Form
+mDisplayName=Potion of The Wolfs' Form
 mIcon=Icon-32-Potion_Short_Green.png|Icon-32-BG-Red.png
 mIvType1=1
 mIvMax1=20
@@ -61,7 +61,7 @@ mMinUseLevel=10
 [ENTRY]
 mID=50006
 mType=5
-mDisplayName=Potion of The Feline's Form
+mDisplayName=Potion of The Felines' Form
 mIcon=Icon-32-Potion_Short_Green.png|Icon-32-BG-Red.png
 mIvType1=1
 mIvMax1=20
@@ -72,3 +72,64 @@ mValue=800
 mFlavorText=Transforms you into a feral form, increasing movement speed by 50% for 10 minutes. 
 mQualityLevel=1
 mMinUseLevel=10
+
+[ENTRY]
+mID=50007
+mType=5
+mDisplayName=Reusable Skill Scroll: Bears' Form
+mIcon=Icon-32-Scroll2.png|Icon-32-BG-Divine.png
+mIvType1=0
+mIvMax1=0
+mLevel=1
+mUseAbilityId=27001
+mValue=1
+mValueType=1
+mQualityLevel=4
+mMinUseLevel=1
+Params=verifycast=1&keep=1
+
+[ENTRY]
+mID=50008
+mType=5
+mDisplayName=Reusable Skill Scroll: Stags' Form
+mIcon=Icon-32-Scroll2.png|Icon-32-BG-Divine.png
+mIvType1=0
+mIvMax1=0
+mLevel=1
+mUseAbilityId=27002
+mValue=1
+mValueType=1
+mQualityLevel=4
+mMinUseLevel=1
+Params=verifycast=1&keep=1
+
+[ENTRY]
+mID=50009
+mType=5
+mDisplayName=Reusable Skill Scroll: Wolfs' Form
+mIcon=Icon-32-Scroll2.png|Icon-32-BG-Divine.png
+mIvType1=0
+mIvMax1=0
+mLevel=1
+mUseAbilityId=27003
+mValue=1
+mValueType=1
+mQualityLevel=4
+mMinUseLevel=1
+Params=verifycast=1&keep=1
+
+[ENTRY]
+mID=50010
+mType=5
+mDisplayName=Reusable Skill Scroll: Felines' Form
+mIcon=Icon-32-Scroll2.png|Icon-32-BG-Divine.png
+mIvType1=0
+mIvMax1=0
+mLevel=1
+mUseAbilityId=27004
+mValue=1
+mValueType=1
+mQualityLevel=4
+mMinUseLevel=1
+Params=verifycast=1&keep=1
+

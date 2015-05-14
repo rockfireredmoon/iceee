@@ -132,6 +132,7 @@ RewardItem.0=8103,5,1
 
 [ENTRY]
 ID=854
+Requires=853
 Title=On The Fast Track
 BodyText=Bark! No time to stop and look at the scenery! You are here to work. 
 

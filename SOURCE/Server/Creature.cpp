@@ -418,7 +418,7 @@ void CreatureInstance :: RemoveFromSpawner(bool wasKilled)
 			if(spawnGen->spawnPackage != NULL)
 			{
 				if(spawnGen->spawnPackage->isScriptCall == true && wasKilled == true)
-					actInst->ScriptCall(spawnGen->spawnPackage->packageName);
+					actInst->ScriptCallPackageKill(spawnGen->spawnPackage->packageName);
 				if(spawnGen->spawnPackage->isSequential == true)
 					notifyKill = true;
 			}

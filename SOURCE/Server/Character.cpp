@@ -2785,10 +2785,8 @@ void SaveCharacterToStream(FILE *output, CharacterData &cd)
 	fprintf(output, "\r\n[COOLDOWN]\r\n");
 	cd.cooldownManager.SaveToStream(output);
 
-	// TODO not yet
-//	fprintf(output, "\r\n[ABILITIES]\r\n");
-//	cd.buffManager.SaveToStream(output);
-
+	fprintf(output, "\r\n[ABILITIES]\r\n");
+	cd.buffManager.SaveToStream(output);
 
 	fprintf(output, "\r\n");
 }

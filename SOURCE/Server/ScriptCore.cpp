@@ -378,6 +378,7 @@ namespace ScriptCore
 		clazz->Func(_SC("queue"), &NutPlayer::Queue);
 		clazz->Func(_SC("broadcast"), &NutPlayer::Broadcast);
 		clazz->Func(_SC("halt"), &NutPlayer::Halt);
+		clazz->Func(_SC("get_server_time"), &NutPlayer::GetServerTime);
 		clazz->SquirrelFunc(_SC("sleep"), &Sleep);
 
 		Sqrat::RootTable(vm).Func("randmodrng", &randmodrng);
@@ -385,6 +386,10 @@ namespace ScriptCore
 		Sqrat::RootTable(vm).Func("randint", &randint);
 		Sqrat::RootTable(vm).Func("randdbl", &randdbl);
 		Sqrat::RootTable(vm).Func("rand", &randi);
+	}
+
+	unsigned long NutPlayer::GetServerTime() {
+		return g_PlatformTime.getElapsedMilliseconds();
 	}
 
 	void NutPlayer :: FullReset(void)

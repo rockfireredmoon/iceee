@@ -41,7 +41,6 @@ public:
 	short CountEnemyAt(int range);
 	short HealthPercent();
 	short TargetHealthPercent();
-	unsigned long GetServerTime();
 	void VisualEffect(const char *effect);
 	void TargetVisualEffect(const char *effect);
 	void Say(const char *effect);
