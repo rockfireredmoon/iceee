@@ -2478,18 +2478,20 @@ int CheckSection_Abilties(FileReader &fr, CharacterData &cd, const char *debugFi
 {
 	//Expected formats:
 	//  Ability=tier,buffType,ability ID,ability group ID,remain
+	if(g_Config.PersistentBuffs) {
 
-	if(fr.BlockPos[1] > 0)
-		fr.DataBuffer[fr.BlockPos[1] - 1] = '=';
-	fr.MultiBreak("=,");
+		if(fr.BlockPos[1] > 0)
+			fr.DataBuffer[fr.BlockPos[1] - 1] = '=';
+		fr.MultiBreak("=,");
 
-	unsigned char tier = fr.BlockToInt(1);
-	unsigned char buffType = fr.BlockToInt(2);
-	short abID = fr.BlockToInt(3);
-	short abgID = fr.BlockToInt(4);
-	unsigned long remain = fr.BlockToULongC(5);
-	double remainS = remain / 1000.0;
-	cd.buffManager.AddBuff(tier, buffType, abID, abgID, remainS);
+		unsigned char tier = fr.BlockToInt(1);
+		unsigned char buffType = fr.BlockToInt(2);
+		short abID = fr.BlockToInt(3);
+		short abgID = fr.BlockToInt(4);
+		unsigned long remain = fr.BlockToULongC(5);
+		double remainS = remain / 1000.0;
+		cd.buffManager.AddBuff(tier, buffType, abID, abgID, remainS);
+	}
 
 	return 0;
 }
@@ -2785,8 +2787,10 @@ void SaveCharacterToStream(FILE *output, CharacterData &cd)
 	fprintf(output, "\r\n[COOLDOWN]\r\n");
 	cd.cooldownManager.SaveToStream(output);
 
-	fprintf(output, "\r\n[ABILITIES]\r\n");
-	cd.buffManager.SaveToStream(output);
+	if(g_Config.PersistentBuffs) {
+		fprintf(output, "\r\n[ABILITIES]\r\n");
+		cd.buffManager.SaveToStream(output);
+	}
 
 	fprintf(output, "\r\n");
 }

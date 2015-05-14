@@ -415,6 +415,8 @@ void LoadConfig(const char *filename)
 				g_Config.SquirrelGCDelay = lfr.BlockToIntC(1);
 			else if(strcmp(NameBlock, "SquirrelGCMaxDelay") == 0)
 				g_Config.SquirrelGCMaxDelay = lfr.BlockToIntC(1);
+			else if(strcmp(NameBlock, "PersistentBuffs") == 0)
+				g_Config.PersistentBuffs = lfr.BlockToBool(1);
 			else
 			{
 				g_Log.AddMessageFormatW(MSG_SHOW, "Unknown identifier [%s] in config file [%s]", lfr.BlockToString(0), filename);
@@ -614,6 +616,8 @@ GlobalConfigData :: GlobalConfigData()
 	SquirrelGCCallCount = 1000;
 	SquirrelGCDelay = 10000;
 	SquirrelGCMaxDelay = 60000;
+
+	PersistentBuffs = false;
 
 	InvalidLoginMessage = "Account not found.  Check username and password.";
 }

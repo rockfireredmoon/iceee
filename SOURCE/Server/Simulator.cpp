@@ -1968,7 +1968,9 @@ void SimulatorThread :: SetPersona(int personaIndex)
 
 	//Since the character has been loaded into an instance and has acquired
 	//a character instance, run processing for abilities.
-	ActivateSavedAbilities();
+	if(g_Config.PersistentBuffs) {
+		ActivateSavedAbilities();
+	}
 	ActivatePassiveAbilities();
 	LogMessageL(MSG_DIAG, "Persona set to index:%d, (ID: %d, CDef: %d) (%s)", personaIndex, pld.CreatureID, pld.CreatureDefID, pld.charPtr->cdef.css.display_name);
 
