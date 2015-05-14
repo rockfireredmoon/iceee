@@ -87,7 +87,7 @@ link=1127479,1
 ID=1128376
 Asset=Prop-Market_Signs#Prop-Market_Sign-Vault
 Name=
-Pos=64243.3,847.178,57115.5
+Pos=64243.3,847.177,57115.2
 Orient=0,0.514477,0,0.857504
 Scale=1,1,1
 
@@ -130,7 +130,7 @@ Asset=CL-VaultKeeper1#CL-VaultKeeper1
 Name=
 Pos=64223.4,792.592,57151.9
 Orient=0,0,0,1
-Scale=1,1,1
+Scale=1.2,1.2,1.2
 
 [ENTRY]
 ID=1128385
@@ -155,6 +155,14 @@ Name=
 Pos=64254.1,799.993,57130.6
 Orient=0,0.971148,0,0.238476
 Scale=0.5,0.5,0.5
+
+[ENTRY]
+ID=1128388
+Asset=Prop-Desk_Set#Prop-Ink_Pot
+Name=
+Pos=64248.2,800.044,57128.1
+Orient=0,-0.281157,0,0.959662
+Scale=0.3,0.3,0.3
 
 [ENTRY]
 ID=151016745
