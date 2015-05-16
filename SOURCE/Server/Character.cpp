@@ -2586,6 +2586,9 @@ int LoadCharacterFromStream(FileReader &fr, CharacterData &cd, const char *debug
 	}
 	fr.CloseCurrent();
 
+
+	cd.buffManager.DebugLogBuffs("OnLoad");
+
 	//g_Log.AddMessageFormat("Loaded %d characters.", CharList.UsedCount);
 	return 1;
 }

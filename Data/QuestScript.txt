@@ -541,3 +541,8 @@ spawn 151028053
 wait 2000
 info "Uh oh ..."
 end
+
+:onActivate_826_1
+info "Chewing gum for the eyes .."
+spawn 1128357
+wait 20000

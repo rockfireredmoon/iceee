@@ -118,6 +118,14 @@ InstanceNutPlayer::~InstanceNutPlayer()
 
 void InstanceNutPlayer::HaltDerivedExecution()
 {
+	UnremoveProps();
+
+	std::vector<SceneryEffect> effectsToRemove;
+	effectsToRemove.insert(effectsToRemove.begin(), activeEffects.begin(), activeEffects.end());
+	std::vector<SceneryEffect>::iterator eit;
+	for(eit = effectsToRemove.begin(); eit != effectsToRemove.end(); ++eit)
+		DetachSceneryEffect(eit->propID, eit->tag);
+
 	std::vector<int>::iterator it;
 	for(it = spawned.begin(); it != spawned.end(); ++it)
 	{
@@ -162,6 +170,7 @@ void InstanceNutPlayer::RegisterInstanceFunctions(NutPlayer *instance, Sqrat::De
 	instanceClass->Func(_SC("broadcast"), &InstanceNutPlayer::Broadcast);
 	instanceClass->Func(_SC("info"), &InstanceNutPlayer::Info);
 	instanceClass->Func(_SC("spawn"), &InstanceNutPlayer::Spawn);
+	instanceClass->Func(_SC("play_sound"), &InstanceNutPlayer::PlaySound);
 	instanceClass->Func(_SC("spawnAt"), &InstanceNutPlayer::SpawnAt);
 	instanceClass->Func(_SC("cdef"), &InstanceNutPlayer::CDefIDForCID);
 	instanceClass->Func(_SC("scanForNPCByCDefID"), &InstanceNutPlayer::ScanForNPCByCDefID);
@@ -180,6 +189,9 @@ void InstanceNutPlayer::RegisterInstanceFunctions(NutPlayer *instance, Sqrat::De
 	instanceClass->Func(_SC("particleDetach"), &InstanceNutPlayer::DetachSceneryEffect);
 	instanceClass->Func(_SC("asset"), &InstanceNutPlayer::Asset);
 	instanceClass->Func(_SC("emote"), &InstanceNutPlayer::Emote);
+	instanceClass->Func(_SC("remove_prop"), &InstanceNutPlayer::RemoveProp);
+	instanceClass->Func(_SC("unremove_prop"), &InstanceNutPlayer::UnremoveProp);
+	instanceClass->Func(_SC("unremove_props"), &InstanceNutPlayer::UnremoveProps);
 
 	// Functions that return arrays or tables have to be dealt with differently
 	instanceClass->SquirrelFunc(_SC("cids"), &InstanceNutPlayer::CIDs);
@@ -196,6 +208,88 @@ void InstanceNutPlayer::SetInstancePointer(ActiveInstance *parent)
 	actInst = parent;
 }
 
+
+void InstanceNutPlayer::UnremoveProps()
+{
+	std::list<int>::iterator it;
+	for(it = actInst->RemovedProps.begin(); it != actInst->RemovedProps.end(); ++it)
+		DoUnremoveProp(*it);
+	actInst->RemovedProps.clear();
+}
+
+void InstanceNutPlayer::UnremoveProp(int propID)
+{
+	std::list<int>::iterator found = std::find(actInst->RemovedProps.begin(), actInst->RemovedProps.end(), propID);
+	if(found != actInst->RemovedProps.end()) {
+		DoUnremoveProp(propID);
+		actInst->RemovedProps.erase(found);
+	}
+}
+
+void InstanceNutPlayer::DoUnremoveProp(int propID)
+{
+	SceneryObject *propPtr = NULL;
+	g_SceneryManager.GetThread("InstanceNutPlayer::DoUnremoveProp");
+	propPtr = g_SceneryManager.GlobalGetPropPtr(actInst->mZone, propID, NULL);
+	g_SceneryManager.ReleaseThread();
+	if(propPtr == NULL)
+		return;
+
+	bool isSpawnPoint = propPtr->IsSpawnPoint();
+
+	if(isSpawnPoint == true)
+		actInst->spawnsys.UpdateSpawnPoint(propPtr);
+
+	char SendBuf[512];
+	int wpos = PrepExt_UpdateScenery(SendBuf, propPtr);
+	actInst->LSendToLocalSimulator(SendBuf, wpos, propPtr->LocationX, propPtr->LocationZ);
+}
+
+bool InstanceNutPlayer::RemoveProp(int propID)
+{
+	/* This doesn't physically delete the prop, but will send delete events to all local simulators.
+	 * It also adds the prop to a list that is maintained in the instance of props that have been
+	 * deleted, to prevent the prop from being sent to the client again until the instance is
+	 * removed or the script stopped (at which point the prop will be re-added)
+	 */
+
+	SceneryObject *propPtr = NULL;
+	g_SceneryManager.GetThread("InstanceNutPlayer::RemoveProp");
+	propPtr = g_SceneryManager.GlobalGetPropPtr(actInst->mZone, propID, NULL);
+	g_SceneryManager.ReleaseThread();
+	if(propPtr == NULL)
+		return false;
+
+	//Spawn point must be deactivated before it is deleted, otherwise pointers
+	//will be invalidated and it may crash.
+	actInst->spawnsys.RemoveSpawnPoint(propID);
+
+	//Generate a bare prop that only has the necessary data for a delete
+	//operation.
+	SceneryObject prop;
+	prop.ID = propID;
+	prop.Asset[0] = 0;
+	char SendBuf[512];
+	int wpos = PrepExt_UpdateScenery(SendBuf, &prop);
+	actInst->LSendToLocalSimulator(SendBuf, wpos, propPtr->LocationX, propPtr->LocationZ);
+
+	/* Mark the prop as removed in the instance so it doesn't get sent again until either
+	 * the prop(s) are 'unremoved' or the script is stopped.
+	 */
+	actInst->RemovedProps.push_back(propID);
+
+	return true;
+}
+
+void InstanceNutPlayer::PlaySound(const char *name) {
+	STRINGLIST sub;
+	Util::Split(name, "|", sub);
+	while (sub.size() < 2) {
+		sub.push_back("");
+	}
+	actInst->SendPlaySound(sub[0].c_str(), sub[1].c_str());
+}
+
 int InstanceNutPlayer::Asset(int propID, const char *newAsset, float scale) {
 	char buffer[256];
 	SceneryObject *propPtr = g_SceneryManager.GlobalGetPropPtr(actInst->mZone, propID, NULL);
@@ -209,6 +303,7 @@ int InstanceNutPlayer::Asset(int propID, const char *newAsset, float scale) {
 		l.effect = newAsset;
 		l.scale = scale;
 		effectList->push_back(l);
+		activeEffects.push_back(l);
 		int wpos = actInst->AddSceneryEffect(buffer, &l);
 		actInst->LSendToAllSimulator(buffer, wpos, -1);
 		g_Log.AddMessageFormat("Create effect tag %d for prop %d.", l.tag, propID);
@@ -226,6 +321,12 @@ void InstanceNutPlayer::DetachSceneryEffect(int propID, int tag) {
 	{
 		int wpos = actInst->DetachSceneryEffect(buffer, tagObj->propID, tagObj->type, tag);
 		actInst->LSendToAllSimulator(buffer, wpos, -1);
+	    for(std::vector<SceneryEffect>::iterator it = activeEffects.begin() ; it != activeEffects.end(); ++it) {
+	    	if(it->propID == propID && it->tag == tag) {
+	    		activeEffects.erase(it);
+	            return;
+	        }
+	    }
 	}
 }
 
@@ -245,6 +346,7 @@ int InstanceNutPlayer::ParticleAttach(int propID, const char *effect, float scal
 		l.offsetY = offsetY;
 		l.offsetZ = offsetZ;
 		effectList->push_back(l);
+		activeEffects.push_back(l);
 		int wpos = actInst->AddSceneryEffect(buffer, &l);
 		actInst->LSendToAllSimulator(buffer, wpos, -1);
 		g_Log.AddMessageFormat("Create effect tag %d for prop %d.", l.tag, propID);
@@ -307,7 +409,7 @@ void InstanceNutPlayer::WalkThen(int CID, ScriptObjects::Point point, int speed,
 		ci->CurrentTarget.desiredRange = range;
 		ci->Speed = speed;
 
-		DoQueue(new ScriptCore::NutScriptEvent(
+		QueueAdd(new ScriptCore::NutScriptEvent(
 				new WalkCondition(ci),
 				new ScriptCore::SquirrelFunctionCallback(this, onArrival)
 				));

@@ -81,7 +81,7 @@ void AINutPlayer::Use(int abilityID) {
 			}
 
 			if (attachedCreature->AIAbilityFailureAllowRetry(r) == true)
-				DoQueue(new ScriptCore::NutScriptEvent(
+				QueueAdd(new ScriptCore::NutScriptEvent(
 							new ScriptCore::TimeCondition(USE_FAIL_DELAY),
 							new UseCallback(this, abilityID)));
 		}

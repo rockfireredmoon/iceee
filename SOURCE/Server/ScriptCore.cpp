@@ -178,6 +178,24 @@ namespace ScriptCore
 	}
 
 	//
+	// 'Halt' callback implementation. Halts a script.
+	//
+	HaltCallback::HaltCallback(NutPlayer *nut)
+	{
+		mNut = nut;
+	}
+
+	HaltCallback::~HaltCallback()
+	{
+	}
+
+	bool HaltCallback::Execute()
+	{
+		mNut->HaltExecution();
+		return true;
+	}
+
+	//
 	// Squirrel function callback. Used by queue() script function to queue execution of
 	// a scripted function
 	//
@@ -221,7 +239,6 @@ namespace ScriptCore
 		def = NULL;
 		active = false;
 		mHasScript = false;
-		mHalt = false;
 		mExecuting = false;
 		mProcessingTime = 0;
 		mGCCounter = 0;
@@ -269,7 +286,6 @@ namespace ScriptCore
 
 		def = defPtr;
 		vm = sq_open(1024); // creates a VM with initial stack size 1024
-		mHalt = false;
 //	   Sqrat::DefaultVM::Set(vm);
 
 		// Register functions needed in scripts
@@ -355,11 +371,6 @@ namespace ScriptCore
 //		sq_pop(vm, 1); //pops the root table
 		//sq_close(vm);
 
-		if(mHalt) {
-			HaltExecution();
-		}
-
-
 		unsigned long time = g_PlatformTime.getMilliseconds() - started;
 		mInitTime = time;
 		mCalls++;
@@ -367,7 +378,7 @@ namespace ScriptCore
 	}
 
 	void NutPlayer::Queue(Sqrat::Function function, int fireDelay) {
-		DoQueue(new ScriptCore::NutScriptEvent(
+		QueueAdd(new ScriptCore::NutScriptEvent(
 					new ScriptCore::TimeCondition(fireDelay),
 					new ScriptCore::SquirrelFunctionCallback(this, function)));
 	}
@@ -437,7 +448,10 @@ namespace ScriptCore
 	}
 
 	void NutPlayer::Halt(void) {
-		mHalt = true;
+    	HaltCallback *cb = new HaltCallback(this);
+    	NutScriptEvent *nse = new NutScriptEvent(new TimeCondition (0), cb);
+    	nse->mRunWhenSuspended = true;
+    	QueueInsert(nse);
 	}
 
 	bool NutPlayer::HasScript(void) {
@@ -458,9 +472,8 @@ namespace ScriptCore
 	{
 		if(active) {
 			vector<ScriptParam> v;
-			mHalt = false;
 			HaltDerivedExecution();
-			//RunFunction("on_finish", v);
+			RunFunction("on_finish", v);
 			active = false;
 			ClearQueue();
 			sq_close(vm);
@@ -479,6 +492,10 @@ namespace ScriptCore
 	}
 
 	bool NutPlayer::RunFunction(const char *name, std::vector<ScriptParam> parms) {
+		if(!active) {
+			g_Log.AddMessageFormat("[WARNING] Attempt to run function on inactive script %s.", name);
+			return false;
+		}
 
 		// Wake the VM up if it is suspend so the onFinish can be run
 		if(sq_getvmstate(vm) == SQ_VMSTATE_SUSPENDED) {
@@ -512,10 +529,6 @@ namespace ScriptCore
 			sq_call(vm,parms.size() + 1,SQFalse,SQTrue); //calls the function
 		}
 		sq_settop(vm,top);
-		if(mHalt) {
-			HaltExecution();
-			return false;
-		}
 		return true;
 	}
 
@@ -523,20 +536,30 @@ namespace ScriptCore
 	{
 		unsigned long now = g_PlatformTime.getMilliseconds();
 		NutCallback *cb = nse->mCallback;
-		bool res = cb->Execute();
 
-		/*
-		 * If the VM wasn't suspended while handling this event, and the
-		 * event returned false, then we requeue this event for retry
-		 */
-		if(sq_getvmstate(vm) != SQ_VMSTATE_SUSPENDED && !res) {
-			mQueueQueue.push_back(nse);
-			mQueue.erase(mQueue.begin() + index);
+		bool res = true;
+		try {
+			res = cb->Execute();
 		}
-		else {
-			mQueue.erase(mQueue.begin() + index);
-			delete nse;
+		catch(int e) {
+			g_Log.AddMessageFormat("Callback failed. %d", e);
 		}
+
+		if(mQueue.size() > 0) {
+			/*
+			 * If the VM wasn't suspended while handling this event, and the
+			 * event returned false, then we requeue this event for retry
+			 */
+			if(sq_getvmstate(vm) != SQ_VMSTATE_SUSPENDED && !res) {
+				mQueueQueue.push_back(nse);
+				mQueue.erase(mQueue.begin() + index);
+			}
+			else {
+				mQueue.erase(mQueue.begin() + index);
+				delete nse;
+			}
+		}
+
 		mCalls++;
 		mGCCounter++;
 		mProcessingTime += g_PlatformTime.getMilliseconds() - now;
@@ -597,7 +620,28 @@ namespace ScriptCore
 		return ok;
 	}
 
-	void NutPlayer::DoQueue(NutScriptEvent *evt)
+	void NutPlayer::QueueInsert(NutScriptEvent *evt)
+	{
+		if(mExecuting)
+		{
+			if(mQueueQueue.size() >= MAX_QUEUE_SIZE)
+			{
+				PrintMessage("[ERROR] Script error: Deferred QueueEvent() list is full %d of %d", mQueueQueue.size(), MAX_QUEUE_SIZE);
+				return;
+			}
+			mQueueQueue.insert(mQueueQueue.begin(), evt);
+		} else
+		{
+
+			if(mQueue.size() >= MAX_QUEUE_SIZE)
+			{
+				PrintMessage("[ERROR] Script error: QueueEvent() list is full [script: %s]", def->scriptName.c_str());
+				return;
+			}
+			mQueue.insert(mQueue.begin(), evt);
+		}
+	}
+	void NutPlayer::QueueAdd(NutScriptEvent *evt)
 	{
 		if(mExecuting)
 		{
@@ -634,7 +678,7 @@ namespace ScriptCore
 	        	ResumeCallback *cb = new ResumeCallback(&left.value);
 	        	NutScriptEvent *nse = new NutScriptEvent(new TimeCondition (right.value), cb);
 	        	nse->mRunWhenSuspended = true;
-	        	left.value.DoQueue(nse);
+	        	left.value.QueueAdd(nse);
 	            return sq_suspendvm(v);
 	        }
 	        return sq_throwerror(v, Sqrat::Error::Message(v).c_str());

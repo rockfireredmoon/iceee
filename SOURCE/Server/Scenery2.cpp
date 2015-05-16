@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <errno.h>
+#include <algorithm>
 
 SceneryManager g_SceneryManager;
 GlobalSceneryVars g_SceneryVars;
@@ -1178,7 +1179,7 @@ void SceneryManager :: NotifyChangedProp(int zoneID, int propID)
 	page->NotifyAccess(true);
 }
 
-void SceneryManager::AddPageRequest(int socket, int queryID, int zone, int x, int y, bool skipQuery)
+void SceneryManager::AddPageRequest(int socket, int queryID, int zone, int x, int y, bool skipQuery, std::list<int> excludedProps)
 {
 	SceneryPageRequest newItem;
 	newItem.socket = socket;
@@ -1187,6 +1188,7 @@ void SceneryManager::AddPageRequest(int socket, int queryID, int zone, int x, in
 	newItem.x = x;
 	newItem.y = y;
 	newItem.skipQuery = skipQuery;
+	newItem.excludedProps.insert(newItem.excludedProps.begin(), excludedProps.begin(), excludedProps.end());
 	mPendingPageRequest.push_back(newItem);
 }
 
@@ -1263,6 +1265,10 @@ void SceneryManager::SendPageRequest(const SceneryPageRequest& request, std::lis
 	SceneryPage::SCENERY_IT it;
 	for(it = page->mSceneryList.begin(); it != page->mSceneryList.end(); ++it)
 	{
+		if( (std::find(request.excludedProps.begin(), request.excludedProps.end(), it->second.ID) != request.excludedProps.end()))
+			// Excluded prop, probably excluded as the result of a script prop removal
+			continue;
+
 		//Build the list of scenery ID strings to form the response to the scenery.list query.
 		//No need to save row data unless the query is required.
 		if(request.skipQuery == false)
