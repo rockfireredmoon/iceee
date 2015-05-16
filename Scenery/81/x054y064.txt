@@ -1,6 +1,31 @@
 [ENTRY]
+ID=1128401
+Asset=Manipulator#Manipulator-PathNode
+Name=
+Pos=54243.8,148.832,64290.4
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
+ID=1128402
+Asset=Manipulator#Manipulator-PathNode
+Name=
+Pos=54164.7,147.71,64428.4
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
+ID=1128404
+Asset=Manipulator#Manipulator-PathNode
+Name=
+Pos=54004.6,143.666,64814.3
+Orient=0,0,0,1
+Scale=1,1,1
+links_count=1
+link=1128400,1
+
+[ENTRY]
 ID=10000151
-PlacedBy=1020040
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=54878,561,64513
@@ -11,7 +36,6 @@ spawnPackage=#F204
 
 [ENTRY]
 ID=10000153
-PlacedBy=1020040
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=54785,419,64092
@@ -22,7 +46,6 @@ spawnPackage=#F172
 
 [ENTRY]
 ID=10000154
-PlacedBy=1020040
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=54786,437,64156
@@ -33,7 +56,6 @@ spawnPackage=#F171
 
 [ENTRY]
 ID=1358955319
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=54061.6,145.896,64123
@@ -45,7 +67,6 @@ link=1358955321,1
 
 [ENTRY]
 ID=1358955342
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=54845.1,472.823,64272
@@ -57,7 +78,6 @@ link=1358955356,1
 
 [ENTRY]
 ID=1358955343
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=54917.8,513.45,64397
@@ -69,7 +89,6 @@ link=1358955345,1
 
 [ENTRY]
 ID=1358955344
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=54870.2,484.64,64295
@@ -78,7 +97,6 @@ Scale=1,1,1
 
 [ENTRY]
 ID=1358955356
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=54856.6,372.072,64000
@@ -90,7 +108,6 @@ link=1358955357,1
 
 [ENTRY]
 ID=1358955369
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=54052.4,148.496,64356
@@ -101,7 +118,6 @@ link=1358955368,1
 
 [ENTRY]
 ID=1358955418
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=54143.6,146.18,64102
@@ -113,7 +129,6 @@ link=1358955419,1
 
 [ENTRY]
 ID=1358955419
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=54151.9,148.856,64329
@@ -125,7 +140,6 @@ link=1358955420,1
 
 [ENTRY]
 ID=1358962924
-PlacedBy=0
 Asset=Prop-Forest_Tree1
 Name=Untitled
 Pos=54417.1,205.491,64560.8
@@ -134,7 +148,6 @@ Scale=0.65,0.65,0.65
 
 [ENTRY]
 ID=1358964532
-PlacedBy=0
 Asset=Prop-Banner-Camelot3#Prop-Banner-Camelot3
 Name=Untitled
 Pos=54904.7,592.151,64615
@@ -144,7 +157,6 @@ Flags=1
 
 [ENTRY]
 ID=1358964579
-PlacedBy=0
 Asset=Light-Huge?Group=2
 Name=Untitled
 Pos=54073.9,239.792,64224
@@ -154,7 +166,6 @@ Flags=1
 
 [ENTRY]
 ID=1358964587
-PlacedBy=0
 Asset=Light-Large?Group=2
 Name=Untitled
 Pos=54845.1,447.977,64069.1
@@ -164,7 +175,6 @@ Flags=1
 
 [ENTRY]
 ID=1358964590
-PlacedBy=0
 Asset=Light-Large?Group=2
 Name=Untitled
 Pos=54975.2,578.634,64416.6
@@ -174,7 +184,6 @@ Flags=1
 
 [ENTRY]
 ID=1358964594
-PlacedBy=0
 Asset=Light-Medium?Group=1
 Name=Untitled
 Pos=54874.7,588.825,64567.9
@@ -184,7 +193,6 @@ Flags=1
 
 [ENTRY]
 ID=1358964597
-PlacedBy=0
 Asset=Prop-Lamp_Post2#Prop-Lamp_Post2
 Name=Untitled
 Pos=54013,149.566,64514
@@ -194,7 +202,6 @@ Flags=1
 
 [ENTRY]
 ID=1358964612
-PlacedBy=0
 Asset=Prop-Bush-Hedge4
 Name=Untitled
 Pos=54974.4,544.495,64546
@@ -204,7 +211,6 @@ Flags=1
 
 [ENTRY]
 ID=1358964614
-PlacedBy=0
 Asset=Prop-Bush-Hedge3
 Name=Untitled
 Pos=54846.8,536.854,64480
@@ -214,7 +220,6 @@ Flags=1
 
 [ENTRY]
 ID=1358964615
-PlacedBy=0
 Asset=Prop-Flowers-BabysBreath
 Name=Untitled
 Pos=54792.2,533.482,64464
@@ -224,7 +229,6 @@ Flags=1
 
 [ENTRY]
 ID=1358964619
-PlacedBy=0
 Asset=CL-Hills_Tree5#CL-Hills_Tree5
 Name=Untitled
 Pos=54411.4,143.961,64165
@@ -234,7 +238,6 @@ Flags=1
 
 [ENTRY]
 ID=1358964622
-PlacedBy=0
 Asset=Prop-Lamp_Post2#Prop-Lamp_Post2
 Name=Untitled
 Pos=54197.2,145.871,64089
@@ -244,7 +247,6 @@ Flags=1
 
 [ENTRY]
 ID=1358964639
-PlacedBy=0
 Asset=Prop-Bush#Prop-Bush-Hedge1
 Name=Untitled
 Pos=54830.7,538.634,64491
@@ -254,7 +256,6 @@ Flags=1
 
 [ENTRY]
 ID=1358964640
-PlacedBy=0
 Asset=Prop-Bush#Prop-Bush-Hedge3
 Name=Untitled
 Pos=54813.5,535.745,64505
@@ -264,7 +265,6 @@ Flags=1
 
 [ENTRY]
 ID=1358964642
-PlacedBy=-400000056
 Asset=Prop-Wooden_Furniture#Prop-Bench2
 Name=Untitled
 Pos=54804.5,537.165,64465
@@ -274,7 +274,6 @@ Flags=1
 
 [ENTRY]
 ID=1358964710
-PlacedBy=0
 Asset=Prop-Banner_Post2#Prop-Banner_Post2
 Name=Untitled
 Pos=54768.4,387.874,64075
@@ -284,7 +283,6 @@ Flags=1
 
 [ENTRY]
 ID=1358964713
-PlacedBy=0
 Asset=Prop-Banner-Camelot4#Prop-Banner-Camelot4
 Name=Untitled
 Pos=54783.1,457.43,64075
@@ -294,7 +292,6 @@ Flags=1
 
 [ENTRY]
 ID=1358964739
-PlacedBy=0
 Asset=Prop-Banner-Camelot3#Prop-Banner-Camelot3
 Name=Untitled
 Pos=54187.4,264.41,64423
@@ -304,7 +301,6 @@ Flags=1
 
 [ENTRY]
 ID=1358965665
-PlacedBy=0
 Asset=Bldg-Camelot1?ATS=ATS-Camelot
 Name=Untitled
 Pos=54256.4,140.558,64602
@@ -314,7 +310,6 @@ Flags=1
 
 [ENTRY]
 ID=1358966946
-PlacedBy=0
 Asset=Prop-Lamp_Post2#Prop-Lamp_Post2
 Name=Untitled
 Pos=54819.4,421.307,64109.1
@@ -323,7 +318,6 @@ Scale=1,1,1
 
 [ENTRY]
 ID=1358966948
-PlacedBy=0
 Asset=Prop-Lamp_Post2
 Name=Untitled
 Pos=54901,529.209,64450
@@ -332,7 +326,6 @@ Scale=1,1,1
 
 [ENTRY]
 ID=1358968603
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=54949.7,538.462,64554.4
@@ -342,7 +335,6 @@ spawnPackage=HOLIDAY_Easter_Egg
 
 [ENTRY]
 ID=1358968604
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=54805.1,537.228,64516.2
@@ -352,7 +344,6 @@ spawnPackage=HOLIDAY_Easter_Egg
 
 [ENTRY]
 ID=1358968606
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=54487.3,154.005,64204.8
@@ -362,7 +353,6 @@ spawnPackage=HOLIDAY_Easter_Egg
 
 [ENTRY]
 ID=1358968611
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=54411.1,142.919,64899

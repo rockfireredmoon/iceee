@@ -7,7 +7,9 @@ ENVIRONMENTTYPE=CloudyDay
 ShardName=grovestreet
 GroveName=grovestreet
 WarpName=grovestreet1
+DropRateProfile=standard
 Grove=1
 EnvironmentCycle=0
+BuildPermission=account,721,0,0,3,3
 DefLoc=2958,260,3821
 

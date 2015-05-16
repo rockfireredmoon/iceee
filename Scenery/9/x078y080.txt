@@ -1,12 +1,20 @@
 [ENTRY]
 ID=1127549
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=59228.9,511.519,60306
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_jld_junderbroodWorkskrill_k_43
 wanderRadius=200
+
+[ENTRY]
+ID=1128420
+Asset=Prop-Instance_Entrance#Prop-Instance_Entrance
+Name=
+Pos=58677.6,586.032,60062.7
+Orient=-0.332998,0.718856,0.176933,0.583998
+Scale=1,1,1
 
 [ENTRY]
 ID=151026981
