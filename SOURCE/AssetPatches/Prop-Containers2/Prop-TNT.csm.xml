@@ -1,0 +1,6 @@
+<?xml version="1.0" ?>
+<Component id="Prop-TNT" xmlns="http://ee.ironrealms.com/CMS_XML.xsd">
+  <Entity mesh="Prop-TNT.mesh"/>
+  <Entity mesh="Prop-TNT-WalkMesh.mesh" qf="2" vf="2"/>
+  <Entity mesh="Prop-TNT-Blocking.mesh" qf="4" vf="2"/>
+</Component>

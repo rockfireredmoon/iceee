@@ -4,6 +4,8 @@ cd "$(dirname $0)"/..
 base=$(pwd)
 
 SCRATCH="${base}/scratch"
+BASE_ASSETS="${base}/SOURCE/Base"
+TARGET_ASSETS="${base}/asset"
 
 rm -fr "${SCRATCH}"
 mkdir -p "${SCRATCH}"
@@ -175,6 +177,14 @@ for line in $(find . -type f) ; do
 	bn=$(basename ${line})
 	pushd "${dn}" >/dev/null
 	case "${bn}" in
+		*".mesh")	echo "Unfixing ${bn}"
+					${base}/SCRIPTS/fix.sh -u ${bn} ;;
+	*".mesh.xml")	echo "Converting XML mesh"
+					${base}/SCRIPTS/convert.sh ${bn}
+					rm ${bn} ;; 
+*".skeleton.xml")	echo "Converting XML skeleton mesh"
+					${base}/SCRIPTS/convert.sh ${bn}
+					rm  ${bn} ;;
 		*".nut")	echo "Compiling asset patch script ${line}"
 					if ! wine ${base}/UTILITIES/sq.exe -o $(basename $bn .nut).cnut -c ${bn} ; then
 						echo "$0: Failed to compile $bn" >&2
@@ -198,6 +208,7 @@ for line in $(find . -type f) ; do
 	esac
 	popd >/dev/null
 done
+find . -name OgreXMLConverter.log -exec rm {} \;
 popd >/dev/null
 echo "*******************************************************"
 echo "Other Asset patches"
@@ -205,7 +216,7 @@ echo "*******************************************************"
 for i in ${SCRATCH}/ap/*; do
 	if [ -d "${i}" ] ; then
 		carbase=$(basename ${i}).car
-		carfile=${base}/asset/Release/Current/Media/${carbase}
+		carfile=${BASE_ASSETS}/${carbase}
 		rm -fr "${SCRATCH}/content"
 		mkdir -p "${SCRATCH}/content"
 			zipbase=$(basename ${i}).zip
@@ -260,15 +271,15 @@ echo "*******************************************************"
 echo "Done!"
 echo "*******************************************************"
 if [ -d asset -a -d Data ]; then
-	echo -n "Install to assets dir? y/n: "
+	echo -n "Install to target assets dir? y/n: "
 	read yesno
 	case "${yesno}" in
 		y|Y|yes|Yes) :
-			cp "${SCRATCH}/archives/EarthEternal.car" ${base}/asset/Release/Current
+			cp "${SCRATCH}/archives/EarthEternal.car" ${TARGET_ASSETS}/Release/Current
 			echo "Copied EarthEternal.car"
 			for i in ${SCRATCH}/archives/*.car; do
 				if [ $(basename $i) != "EarthEternal.car" ] ; then
-					cp "${i}" ${base}/asset/Release/Current/Media
+					cp "${i}" ${TARGET_ASSETS}/Release/Current/Media
 					echo "Copied $(basename ${i})"
 				fi
 			done

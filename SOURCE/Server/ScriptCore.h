@@ -422,7 +422,6 @@ public:
 	NutDef *def; //Pointer to the script definition that this player is executing.
 	bool active; //If true, the script is considered to be running (has not terminated).
 	bool mHasScript;
-	bool mHalt;
 	bool mExecuting;
 	unsigned int long mCalls; // Total number of calls (including initial, events and all external function calls)
 	unsigned int long mGCCounter; // Increased at same times as mCalls, but when it reaches a predefined limit, GC is performed
@@ -453,7 +452,8 @@ public:
 	bool RunFunction(const char *name, std::vector<ScriptParam> parms);
 	void Broadcast(const char *message);
 	unsigned long GetServerTime();
-	void DoQueue(NutScriptEvent *evt);
+	void QueueAdd(NutScriptEvent *evt);
+	void QueueInsert(NutScriptEvent *evt);
 	void Queue(Sqrat::Function function, int fireDelay);
 //	void DoQueue(Sqrat::Function function, int fireDelay);
 	bool ExecQueue(void);
@@ -500,6 +500,16 @@ public:
 	Sqrat::Function mFunction;		//Function to jump to
 	SquirrelFunctionCallback(NutPlayer *nut, Sqrat::Function function);
 	~SquirrelFunctionCallback ();
+	bool Execute();
+};
+
+class HaltCallback : public NutCallback
+{
+public:
+	NutPlayer* mNut;
+
+	HaltCallback(NutPlayer *nut);
+	~HaltCallback();
 	bool Execute();
 };
 

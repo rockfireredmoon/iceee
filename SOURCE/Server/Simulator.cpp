@@ -1964,13 +1964,13 @@ void SimulatorThread :: SetPersona(int personaIndex)
 	UpdateSocialEntry(true, true);
 	BroadcastShardChanged();
 
-	UpdateEqAppearance();
-	ActivatePassiveAbilities();
 	//Since the character has been loaded into an instance and has acquired
 	//a character instance, run processing for abilities.
 	if(g_Config.PersistentBuffs) {
 		ActivateSavedAbilities();
 	}
+	ActivatePassiveAbilities();
+	UpdateEqAppearance();
 
 	LogMessageL(MSG_DIAG, "Persona set to index:%d, (ID: %d, CDef: %d) (%s)", personaIndex, pld.CreatureID, pld.CreatureDefID, pld.charPtr->cdef.css.display_name);
 
@@ -2800,8 +2800,10 @@ bool SimulatorThread :: HandleQuery(int &PendingData)
 		PendingData = handle_query_go();
 	else if(query.name.compare("script.time") == 0)
 		PendingData = handle_query_script_time();
+	else if(query.name.compare("script.exec") == 0)
+		PendingData = handle_query_script_exec();
 	else if(query.name.compare("script.gc") == 0)
-			PendingData = handle_query_script_gc();
+		PendingData = handle_query_script_gc();
 	else {
 		g_Log.AddMessageFormat("Unhandled query '%s'.", query.name.c_str());
 		return false;
@@ -3131,12 +3133,20 @@ void SimulatorThread :: UpdateEqAppearance(void)
 void SimulatorThread :: ActivateSavedAbilities(void)
 {
 	std::vector<ActiveBuff>::iterator it;
-	pld.charPtr->buffManager.SetInitialising(true);
-	for(it = pld.charPtr->buffManager.buffList.begin(); it != pld.charPtr->buffManager.buffList.end(); ++it) {
+
+	/* First copy active buffs to persistent buffs. This is done because is the player logs out
+	 * and in again quickly, the character won't have been reloaded yet. If they had buffs
+	 * active at the time, just treat them as persitent.
+	 */
+	pld.charPtr->buffManager.ActiveToPersistent();
+
+	creatureInst->initialisingAbilities = true;
+	for(it = pld.charPtr->buffManager.persistentBuffList.begin(); it != pld.charPtr->buffManager.persistentBuffList.end(); ++it) {
 		creatureInst->CallAbilityEvent(it->abID, EventType::onRequest);
 		creatureInst->CallAbilityEvent(it->abID, EventType::onActivate);
 	}
-	pld.charPtr->buffManager.SetInitialising(false);
+	creatureInst->ab[0].bPending = false;
+	creatureInst->initialisingAbilities = false;
 }
 
 void SimulatorThread :: ActivatePassiveAbilities(void)
@@ -3390,7 +3400,16 @@ int SimulatorThread :: handle_query_scenery_list(void)
 		skipQuery = true;
 
 	g_SceneryManager.GetThread("SimulatorThread::handle_query_scenery_list");
-	g_SceneryManager.AddPageRequest(sc.ClientSocket, query.ID, zone, x, y, skipQuery);
+	std::list<int> excludedProps;
+
+	/* If this is a request for the players current zone and active instance, retrieve the list
+	 * of props to exclude (that may be the result of script prop removal)
+	 */
+	if(creatureInst != NULL && creatureInst->actInst != NULL && creatureInst->actInst->mZone == zone) {
+		excludedProps.insert(excludedProps.begin(), creatureInst->actInst->RemovedProps.begin(), creatureInst->actInst->RemovedProps.end());
+	}
+
+	g_SceneryManager.AddPageRequest(sc.ClientSocket, query.ID, zone, x, y, skipQuery, excludedProps);
 	g_SceneryManager.ReleaseThread();
 
 	if(skipQuery == true)
@@ -10881,7 +10900,7 @@ int SimulatorThread :: handle_query_script_save(void)
 		out.close();
 
 		// If we wrote OK, delete the old file and swap in the new one
-		if(remove(path.c_str()) == 0) {
+		if(!Platform::FileExists(path.c_str()) || remove(path.c_str()) == 0) {
 			if(rename(tpath.c_str(), path.c_str()) == 0) {
 				Util::SafeFormat(Aux1, sizeof(Aux1), "Script for %d saved.", creatureInst->actInst->mZone);
 				SendInfoMessage(Aux1, INFOMSG_INFO);
@@ -10893,7 +10912,7 @@ int SimulatorThread :: handle_query_script_save(void)
 			}
 		}
 		else {
-			LogMessageL(MSG_WARN, "[WARNING] Failed to remove %, new script will not be available.", path.c_str());
+			LogMessageL(MSG_WARN, "[WARNING] Failed to remove %s, new script will not be available.", path.c_str());
 			return PrepExt_QueryResponseError(SendBuf, query.ID, "Failed to delete old script file, new one not swapped in.");
 		}
 	}
@@ -10926,17 +10945,20 @@ int SimulatorThread :: handle_query_script_load(void)
 		return 0;
 	}
 	FileReader lfr;
-	if(lfr.OpenText(path.c_str()) != Err_OK)
-	{
-		LogMessageL(MSG_WARN, "[WARNING] Load script query unable to open file: %s", path.c_str());
-		return 0;
-	}
-
 	std::vector<std::string> lines;
-	while(lfr.FileOpen() == true)
+	if(Platform::FileExists(path.c_str()))
 	{
-		lfr.ReadLine();
-		lines.push_back(lfr.DataBuffer);
+		if(lfr.OpenText(path.c_str()) != Err_OK) {
+
+			LogMessageL(MSG_WARN, "[WARNING] Load script query unable to open file: %s", path.c_str());
+			return 0;
+		}
+
+		while(lfr.FileOpen() == true)
+		{
+			lfr.ReadLine();
+			lines.push_back(lfr.DataBuffer);
+		}
 	}
 	wpos += PutShort(&SendBuf[wpos], lines.size() + 1);
 	for(uint i = 0 ; i < lines.size() ; i++) {
@@ -13421,6 +13443,32 @@ int SimulatorThread :: handle_query_script_gc(void)
 				SendInfoMessage(Aux1, INFOMSG_INFO);
 			}
 		}
+	}
+	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
+}
+
+int SimulatorThread :: handle_query_script_exec(void)
+{
+	bool ok = CheckPermissionSimple(Perm_Account, Permission_Admin);
+	if(!ok) {
+		if(pld.zoneDef->mGrove == true && pld.zoneDef->mAccountID != pld.accPtr->ID)
+			ok = true;
+	}
+	if(!ok)
+		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
+	ActiveInstance *inst = creatureInst->actInst;
+	if(inst != NULL && query.argCount > 0)
+	{
+		const char *funcName = query.GetString(0);
+		if(inst->nutScriptPlayer.HasScript())
+		{
+			inst->nutScriptPlayer.RunFunction(funcName);
+		}
+	}
+	else
+	{
+		Util::SafeFormat(Aux1, sizeof(Aux1), "No function name provided.");
+		SendInfoMessage(Aux1, INFOMSG_ERROR);
 	}
 	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
 }

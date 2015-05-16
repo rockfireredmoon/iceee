@@ -410,6 +410,9 @@ public:
 	int lastIdleZ;          //If aggro, this is the previous idle location.
 	int tetherNodeX;        //The anchor point of the current tether location.
 	int tetherNodeZ;        //The anchor point of the current tether location.
+
+	bool initialisingAbilities; // Set to true when persistent abilities are being set up
+
 	void CheckPathLocation(void);
 	void CheckLeashMovement(void);
 

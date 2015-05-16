@@ -1204,3 +1204,15 @@ profession=3
 creature_category=Animal
 ai_package=melee_creature_brave_6
 total_size=16
+
+[ENTRY]
+ID=7815
+will_regen=1
+might_regen=1
+appearance=p1:{["a"]="Prop-Interact_Rectangle",["sz"]="1"}
+level=1
+display_name=Tee-Vee Stand
+profession=1
+creature_category=Inanimate
+ai_package=nothing
+

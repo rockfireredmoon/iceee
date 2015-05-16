@@ -1367,7 +1367,7 @@ int CreatureInstance :: Add(unsigned char tier, unsigned char buffCategory, int 
 	RemoveAbilityBuffTypeExcept(buffCategory, abID, abgID);
 
 
-	ActiveBuff *activeBuff = buffManager.UpdateBuff(tier, buffCategory, abID, abgID, durationSec);
+	ActiveBuff *activeBuff = buffManager.UpdateBuff(tier, buffCategory, abID, abgID, durationSec, initialisingAbilities);
 	
 	AddBuff(BuffSource::ABILITY, buffCategory, tier, abID, abgID, statID, calcAmount, descAmount, activeBuff->durationS);
 

@@ -28,15 +28,15 @@ Scale=1,1,1
 [ENTRY]
 ID=1128354
 Asset=Prop-Wooden_Furniture#Prop-Table5
-Name=
-Pos=66051.4,821.481,59748.8
+Name=Untitled
+Pos=66051.4,821.481,59748.5
 Orient=0,0,0,1
 Scale=1,1,1
 
 [ENTRY]
 ID=1128356
 Asset=Prop-Interact1#Prop-Interact_Rectangle
-Name=
+Name=Untitled
 Pos=66059.2,829.919,59748.6
 Orient=0,0,0.707107,0.707107
 Scale=0.45,0.45,0.45
@@ -44,7 +44,7 @@ Scale=0.45,0.45,0.45
 [ENTRY]
 ID=1128357
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=66050.5,829.124,59750.7
 Orient=0,0.996457,0,-0.0841042
 Scale=1,1,1
@@ -54,10 +54,19 @@ maxActive=0
 [ENTRY]
 ID=1128358
 Asset=Light-Small
-Name=
+Name=Untitled
 Pos=66049.6,846.06,59670
 Orient=0,0,0,1
 Scale=1,1,1
+
+[ENTRY]
+ID=1500032
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=Untitled
+Pos=66048.9,827.248,59748.8
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#F7815
 
 [ENTRY]
 ID=151016631

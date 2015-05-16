@@ -20,21 +20,19 @@ struct ActiveBuffManager
 	std::vector<ActiveBuff> buffList;
 	std::vector<ActiveBuff> persistentBuffList;
 
-	void SetInitialising(bool initialising);
+	void ActiveToPersistent();
 	int HasBuff(unsigned char tier, unsigned char buffType);
 	int HasBuffNot(unsigned char tier, unsigned char buffType, int abilityGroup);
-	ActiveBuff * UpdateBuff(unsigned char tier, unsigned char buffType, short abID, short abgID, double duration);
+	ActiveBuff * UpdateBuff(unsigned char tier, unsigned char buffType, short abID, short abgID, double duration, bool initialising);
 	void SaveToStream(FILE *output);
 	ActiveBuff * GetPersistentBuff(unsigned char tier, short abID);
 	ActiveBuff * AddPersistentBuff(unsigned char tier, unsigned char buffType, short abID, short abgID, double duration);
-	ActiveBuff * AddBuff(unsigned char tier, unsigned char buffType, short abID, short abgID, double duration);
+	ActiveBuff * AddBuff(unsigned char tier, unsigned char buffType, short abID, short abgID, double duration, bool initialising);
 	void RemoveBuff(int abilityID);
 	void DebugLogBuffs(const char *label);
 	void CopyFrom(const ActiveBuffManager &source);
 	void Clear(void);
 	void ClearPersistent(void);
-private:
-	bool mInitialising;
 };
 
 struct ActiveCooldown

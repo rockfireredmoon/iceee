@@ -6,6 +6,7 @@
 #include <vector>
 #include "ScriptObjects.h"
 #include "Callback.h"
+#include "Scenery2.h"
 
 class ActiveInstance;
 class CreatureInstance;
@@ -39,6 +40,10 @@ public:
 
 	// Exposed to scripts
 //	void Queue(Sqrat::Function function, int fireDelay);
+	void UnremoveProps();
+	void UnremoveProp(int propID);
+	bool RemoveProp(int propID);
+	void PlaySound(const char *name);
 	void Info(const char *message);
 	bool AI(int CID, const char *label);
 	void Broadcast(const char *message);
@@ -63,7 +68,9 @@ public:
 
 private:
 	ActiveInstance *actInst;
+	std::vector<SceneryEffect> activeEffects;
 	CreatureInstance* GetNPCPtr(int CID);
+	void DoUnremoveProp(int propID);
 
 };
 

@@ -5,8 +5,11 @@
 
 extern unsigned long g_ServerTime;
 
-void ActiveBuffManager :: SetInitialising(bool initialising) {
-	mInitialising = initialising;
+void ActiveBuffManager :: ActiveToPersistent()
+{
+	persistentBuffList.clear();
+	persistentBuffList.assign(buffList.begin(), buffList.end());
+	buffList.clear();
 }
 
 ActiveBuff * ActiveBuffManager :: GetPersistentBuff(unsigned char tier, short abID)
@@ -45,7 +48,7 @@ int ActiveBuffManager :: HasBuff(unsigned char tier, unsigned char buffType)
 	return -1;
 }
 
-ActiveBuff * ActiveBuffManager :: UpdateBuff(unsigned char tier, unsigned char buffType, short abID, short abgID, double duration)
+ActiveBuff * ActiveBuffManager :: UpdateBuff(unsigned char tier, unsigned char buffType, short abID, short abgID, double duration, bool initialising)
 {
 	int r = HasBuff(tier, buffType);
 	if(r >= 0)
@@ -54,7 +57,7 @@ ActiveBuff * ActiveBuffManager :: UpdateBuff(unsigned char tier, unsigned char b
 		buffList[r].abID = abID;
 		buffList[r].abgID = abgID;
 
-		if(mInitialising)
+		if(initialising)
 		{
 			ActiveBuff *persistentBuff = GetPersistentBuff(tier, abID);
 			if(persistentBuff != NULL) {
@@ -72,7 +75,7 @@ ActiveBuff * ActiveBuffManager :: UpdateBuff(unsigned char tier, unsigned char b
 	}
 	else
 	{
-		return AddBuff(tier, buffType, abID, abgID, duration);
+		return AddBuff(tier, buffType, abID, abgID, duration, initialising);
 	}
 }
 
@@ -89,7 +92,7 @@ ActiveBuff * ActiveBuffManager :: AddPersistentBuff(unsigned char tier, unsigned
 	return &persistentBuffList.back();
 }
 
-ActiveBuff * ActiveBuffManager :: AddBuff(unsigned char tier, unsigned char buffType, short abID, short abgID, double duration)
+ActiveBuff * ActiveBuffManager :: AddBuff(unsigned char tier, unsigned char buffType, short abID, short abgID, double duration, bool initialising)
 {
 	ActiveBuff buff;
 	buff.tier = tier;
@@ -98,7 +101,7 @@ ActiveBuff * ActiveBuffManager :: AddBuff(unsigned char tier, unsigned char buff
 	buff.abgID = abgID;
 	buff.durationS = (int)duration;
 
-	if(mInitialising)
+	if(initialising)
 	{
 		ActiveBuff *persistentBuff = GetPersistentBuff(tier, abID);
 		if(persistentBuff != NULL) {
@@ -134,7 +137,13 @@ void ActiveBuffManager :: DebugLogBuffs(const char *label)
 	for(size_t i = 0; i < buffList.size(); i++)
 	{
 		const char *cat = g_AbilityManager.ResolveBuffCategoryName(buffList[i].buffType);
-		g_Log.AddMessageFormat("ab:%d,abgid:%d,tier:%d,cat:%s,timeleft:%d", buffList[i].abID, buffList[i].abgID, buffList[i].tier, cat, buffList[i].castEndTimeMS - g_ServerTime);
+		g_Log.AddMessageFormat("ab:%d,abgid:%d,tier:%d,cat:%s,timeleft:%d", buffList[i].abID, buffList[i].abgID, buffList[i].tier, cat, ( buffList[i].castEndTimeMS - g_ServerTime) / 1000);
+	}
+	g_Log.AddMessageFormat("Persistent Active ability buffs (%s)", label);
+	for(size_t i = 0; i < persistentBuffList.size(); i++)
+	{
+		const char *cat = g_AbilityManager.ResolveBuffCategoryName(persistentBuffList[i].buffType);
+		g_Log.AddMessageFormat("ab:%d,abgid:%d,tier:%d,cat:%s,timeleft:%d", persistentBuffList[i].abID, persistentBuffList[i].abgID, persistentBuffList[i].tier, cat, ( persistentBuffList[i].castEndTimeMS - g_ServerTime) / 1000);
 	}
 }
 
@@ -142,6 +151,7 @@ void ActiveBuffManager :: CopyFrom(const ActiveBuffManager &source)
 {
 	buffList.assign(source.buffList.begin(), source.buffList.end());
 	persistentBuffList.assign(source.persistentBuffList.begin(), source.persistentBuffList.end());
+	DebugLogBuffs("CopyFrom");
 }
 
 void ActiveBuffManager :: SaveToStream(FILE *output)
@@ -149,7 +159,9 @@ void ActiveBuffManager :: SaveToStream(FILE *output)
 	for(size_t i = 0; i < buffList.size(); i++)
 	{
 		long remain = buffList[i].castEndTimeMS - g_ServerTime;
-		if(remain > 0) {
+		const Ability2::AbilityEntry2* abEntry = g_AbilityManager.GetAbilityPtrByID(buffList[i].abID);
+		// Only save abilities that have remaining time and are not passive
+		if(abEntry != NULL && remain > 0 && !abEntry->IsPassive()) {
 			g_Log.AddMessageFormat("Saving ability %d,%d,%d,%d,%lu\r\n", buffList[i].tier,
 					buffList[i].buffType, buffList[i].abID, buffList[i].abgID, remain);
 			fprintf(output, "Active=%d,%d,%d,%d,%lu\r\n", buffList[i].tier,

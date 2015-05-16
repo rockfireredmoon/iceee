@@ -3067,6 +3067,13 @@ void ActiveInstance :: RunProcessingCycle(void)
 	RemoveDeadCreatures();
 }
 
+void ActiveInstance :: SendPlaySound(const char *assetPackage, const char *soundFile)
+{
+	for(size_t i = 0; i < RegSim.size(); i++)
+		if((RegSim[i]->CheckStateGameplayProtocol() == true))
+			RegSim[i]->SendPlaySound(assetPackage, soundFile);
+}
+
 void ActiveInstance :: UpdateEnvironmentCycle(const char *timeOfDay)
 {
 	if(timeOfDay == NULL)

@@ -183,6 +183,10 @@ ComponentIndex["Prop-Crystal_Yellow_Small2"] <- "Prop-Crystals";
 ComponentIndex["Prop-Crystal_Yellow_Small3"] <- "Prop-Crystals";
 ComponentIndex["Prop-Crystal_Yellow_Small4"] <- "Prop-Crystals";
 
+ComponentIndex["Prop-TNT"] <- "Prop-Containers2";
+
+ComponentIndex["Par-BigExplosion"] <- "Prop-SpecialFX";
+
 ComponentIndex["Item-IceEESage_Crystal"] <- "Item-IceEESage_Crystal";
 ComponentIndex["Item-IceEEBeta_Flag"] <- "Item-IceEEBeta_Flag";
 

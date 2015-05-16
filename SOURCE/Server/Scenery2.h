@@ -237,7 +237,8 @@ struct SceneryPageRequest
 	int zone;      //Zone to fetch scenery from.
 	int x;         //Tile coordinate to fetch scenery from.
 	int y;         //Tile coordinate to fetch scenery from.
-	bool skipQuery;  //Don't compile a query response.  
+	bool skipQuery;  //Don't compile a query response.
+	std::list<int> excludedProps; //A list of prop IDs that should be excluded
 };
 
 //The root container for all scenery objects, subdivided into zones.
@@ -272,7 +273,7 @@ public:
 	bool UpdateLink(int zoneID, int propID1, int propID2, int type);
 	void NotifyChangedProp(int zoneID, int propID);
 	
-	void AddPageRequest(int socket, int queryID, int zone, int x, int y, bool skipQuery);
+	void AddPageRequest(int socket, int queryID, int zone, int x, int y, bool skipQuery, std::list<int> excludedProps);
 
 	bool IsGarbageCheckReady(void);
 	void TransferActiveLocations(const ActiveLocation::CONTAINER& source);

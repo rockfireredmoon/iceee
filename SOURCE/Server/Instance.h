@@ -258,6 +258,8 @@ public:
 	vector<SimulatorThread*> RegSim;
 	list<QuestScript::QuestScriptPlayer> questScriptList;
 
+	list<int> RemovedProps;
+
 	HateProfileContainer hateProfiles;
 	WorldLootContainer lootsys;
 	TradeManager tradesys;
@@ -307,6 +309,7 @@ public:
 	void SendActors(void);  //Updates all NPC objects and sends updates to each active simulator
 	void UpdateCreatureLocalStatus(void);  //Scans NPCs to determine which ones should stay active for detailed processing
 
+	void SendPlaySound(const char *assetPackage, const char *soundFile);
 	int AddSceneryEffect(char *outbuf, SceneryEffect *effect);
 	int DetachSceneryEffect(char *outBuf, int sceneryId, int effectType, int tag);
 	SceneryEffectList * GetSceneryEffectList(int PropID);

@@ -343,6 +343,7 @@ public:
 	int handle_query_updateContent(void);
 	int handle_query_instance(void);
 	int handle_query_go(void);
+	int handle_query_script_exec(void);
 	int handle_query_script_time(void);
 	int handle_query_script_gc(void);
 
