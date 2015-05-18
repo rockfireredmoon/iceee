@@ -1,7 +1,7 @@
 [ENTRY]
 ID=1127872
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=62235.2,733.795,62353.8
 Orient=0,0,0,1
 Scale=1,1,1
@@ -10,7 +10,7 @@ spawnPackage=11_dth_wilds_42_43
 [ENTRY]
 ID=1127875
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=62025.5,738.402,62862.5
 Orient=0,0,0,1
 Scale=1,1,1
@@ -21,7 +21,7 @@ link=1127876,1
 [ENTRY]
 ID=1127876
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=62133.9,746.726,62802.6
 Orient=0,0,0,1
 Scale=1,1,1
@@ -32,7 +32,7 @@ link=1127877,1
 [ENTRY]
 ID=1127880
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=62026.2,746.005,62937.8
 Orient=0,0,0,1
 Scale=1,1,1
@@ -42,7 +42,7 @@ link=1127879,1
 [ENTRY]
 ID=1127882
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=62022.6,745.276,62931.9
 Orient=0,0.974616,0,0.223883
 Scale=1,1,1
@@ -51,7 +51,7 @@ spawnPackage=11_dth_enslavedZombie
 [ENTRY]
 ID=1127884
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=62145.1,749.729,62880.6
 Orient=0,0,0,1
 Scale=1,1,1
@@ -61,7 +61,7 @@ wanderRadius=100
 [ENTRY]
 ID=1127887
 Asset=Light-Intense?Group=1&COLOR=00D40D
-Name=
+Name=Untitled
 Pos=62012.3,770.585,62992.9
 Orient=0,0,0,1
 Scale=2,2,2
@@ -69,10 +69,19 @@ Scale=2,2,2
 [ENTRY]
 ID=1127888
 Asset=Light-Intense?Group=1&COLOR=00D40D
-Name=
+Name=Untitled
 Pos=62017.8,761.246,62936.8
 Orient=0,0,0,1
 Scale=2,2,2
+
+[ENTRY]
+ID=151029054
+Asset=Manipulator-SpawnPoint
+Name=Untitled
+Pos=61955.5,750.487,62879.3
+Orient=0,0.149438,0,0.988771
+Scale=1,1,1
+spawnPackage=11_rh_05_geoffryThistlefur_m_42
 
 [ENTRY]
 ID=151029063

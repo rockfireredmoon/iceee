@@ -2,16 +2,27 @@
 ID=1104163
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=Untitled
-Pos=63051.1,1263.87,63079.4
-Orient=0,0.886627,0,0.462485
+Pos=63024.1,1258.12,63097.2
+Orient=0,0.305059,0,0.952334
 Scale=1,1,1
 spawnPackage=#1260
+
+[ENTRY]
+ID=1104167
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=Untitled
+Pos=63040.5,1263.87,63023.3
+Orient=0,0.252245,0,0.967663
+Scale=1,1,1
+spawnPackage=#1260
+links_count=1
+link=1104171,1
 
 [ENTRY]
 ID=1104168
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=Untitled
-Pos=63216.5,1263.87,63033.6
+Pos=63369.2,1245.91,63041.7
 Orient=0,0.271547,0,0.962425
 Scale=1,1,1
 spawnPackage=#1260
@@ -20,7 +31,7 @@ spawnPackage=#1260
 ID=1104169
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=Untitled
-Pos=63166.2,1263.87,63136
+Pos=63195.1,1258.33,63200.1
 Orient=0,0.188859,0,0.982004
 Scale=1,1,1
 spawnPackage=#1260
@@ -31,7 +42,7 @@ link=1104170,1
 ID=1104170
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=Untitled
-Pos=63255,1263.87,63066.6
+Pos=63332.9,1254.64,63084.2
 Orient=0,0.927097,0,-0.374821
 Scale=1,1,1
 spawnPackage=75_foma_VengeanceSinger
@@ -43,7 +54,7 @@ link=1104169,1
 ID=1104188
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=Untitled
-Pos=63072.9,1263.87,63035.2
+Pos=63132.9,1263.87,63000.3
 Orient=0,0.995881,0,0.0906716
 Scale=1,1,1
 spawnPackage=#1260

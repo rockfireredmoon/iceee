@@ -98,7 +98,7 @@ link=1125680,1
 [ENTRY]
 ID=1128003
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=52101,740.673,68269.7
 Orient=0,0.624897,0,0.780707
 Scale=1,1,1
@@ -108,7 +108,7 @@ loyaltyRadius=100
 [ENTRY]
 ID=1128005
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=52095.7,828.716,68291.1
 Orient=0,0.636537,0,0.771246
 Scale=1,1,1

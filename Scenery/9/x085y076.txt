@@ -86,7 +86,7 @@ link=1127479,1
 [ENTRY]
 ID=1128376
 Asset=Prop-Market_Signs#Prop-Market_Sign-Vault
-Name=
+Name=Untitled
 Pos=64243.3,847.177,57115.2
 Orient=0,0.514477,0,0.857504
 Scale=1,1,1
@@ -94,7 +94,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1128379
 Asset=Prop-Market1#Prop-Market_Stall1
-Name=
+Name=Untitled
 Pos=64248.9,793.036,57141
 Orient=0,0.976807,0,0.214122
 Scale=1,1,1
@@ -103,7 +103,7 @@ Flags=1
 [ENTRY]
 ID=1128380
 Asset=Prop-Loot1#Prop-Loot-Silver_Chest1
-Name=
+Name=Untitled
 Pos=64232.3,800.101,57129.6
 Orient=0,0,0,1
 Scale=1,1,1
@@ -111,7 +111,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1128381
 Asset=Prop-Loot1#Prop-Loot-Metal_Chest1
-Name=
+Name=Untitled
 Pos=64268,800.101,57147.1
 Orient=0,0.556361,0,0.830941
 Scale=1,1,1
@@ -119,7 +119,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1128382
 Asset=Prop-Loot1#Prop-Loot-Crate1
-Name=
+Name=Untitled
 Pos=64242.3,800.101,57124.2
 Orient=0,-0.183947,0,0.982936
 Scale=0.6,0.6,0.6
@@ -127,7 +127,7 @@ Scale=0.6,0.6,0.6
 [ENTRY]
 ID=1128384
 Asset=CL-VaultKeeper1#CL-VaultKeeper1
-Name=
+Name=Untitled
 Pos=64223.4,792.592,57151.9
 Orient=0,0,0,1
 Scale=1.2,1.2,1.2
@@ -135,7 +135,7 @@ Scale=1.2,1.2,1.2
 [ENTRY]
 ID=1128385
 Asset=Prop-Lamp_Posts1#Prop-Lantern1
-Name=
+Name=Untitled
 Pos=64266.1,799.845,57136.8
 Orient=0,0,0,1
 Scale=0.6,0.6,0.6
@@ -143,7 +143,7 @@ Scale=0.6,0.6,0.6
 [ENTRY]
 ID=1128386
 Asset=Lights#Light-Tiny
-Name=
+Name=Untitled
 Pos=64265.9,801.268,57136.9
 Orient=0,0,0,1
 Scale=1,1,1
@@ -151,7 +151,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1128387
 Asset=Prop-Desk_Set#Prop-Paper
-Name=
+Name=Untitled
 Pos=64254.1,799.993,57130.6
 Orient=0,0.971148,0,0.238476
 Scale=0.5,0.5,0.5
@@ -159,10 +159,19 @@ Scale=0.5,0.5,0.5
 [ENTRY]
 ID=1128388
 Asset=Prop-Desk_Set#Prop-Ink_Pot
-Name=
+Name=Untitled
 Pos=64248.2,800.044,57128.1
 Orient=0,-0.281157,0,0.959662
 Scale=0.3,0.3,0.3
+
+[ENTRY]
+ID=1128574
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=64249.8,792.95,57138.5
+Orient=0,0.597195,0,0.802096
+Scale=1,1,1
+spawnPackage=#F3330
 
 [ENTRY]
 ID=151016745

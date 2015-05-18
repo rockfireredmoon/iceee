@@ -2,8 +2,8 @@
 ID=1104164
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=Untitled
-Pos=62999.5,1263.87,63020
-Orient=0,0,0,1
+Pos=62986.8,1257.04,63044.9
+Orient=0,0.416871,0,0.908966
 Scale=1,1,1
 spawnPackage=#1260
 

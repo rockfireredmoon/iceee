@@ -1,6 +1,15 @@
 [ENTRY]
+ID=1128579
+Asset=Prop-Interact_Rectangle
+Name=
+Pos=64831,758.978,54726
+Orient=0.614349,0.303659,-0.34217,0.642873
+Scale=30,30,30
+
+[ENTRY]
 ID=151017810
 Asset=CL-Sick-Pine1#CL-Sick-Pine1
+Name=Untitled
 Pos=64669.4,679.112,54317
 Orient=0,0,0,1
 Scale=2.85,2.85,2.85
@@ -9,6 +18,7 @@ Flags=1
 [ENTRY]
 ID=151017811
 Asset=CL-Sick-Pine2#CL-Sick-Pine2
+Name=Untitled
 Pos=64552.8,676.511,54285
 Orient=0,0,0,1
 Scale=1.35,1.35,1.35
@@ -17,29 +27,27 @@ Flags=1
 [ENTRY]
 ID=151030493
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=65080.2,688.452,54486
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_wpg_Wilds_44_45
-outerRadius=200
 
 [ENTRY]
 ID=151030497
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=64859.9,687.687,54513
 Orient=0,0,0,1
 Scale=1,1,1
-innerRadius=50
 spawnPackage=12_wpg_Wilds_44_45
-outerRadius=60
 
 [ENTRY]
 ID=151030499
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=64591.5,686.304,54466
 Orient=0,0,0,1
 Scale=1,1,1
-innerRadius=50
 spawnPackage=12_wpg_Wilds_44_45
-outerRadius=60
 

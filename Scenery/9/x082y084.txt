@@ -36,15 +36,6 @@ Orient=0,0,-0.159318,0.987227
 Scale=1.725,1.725,1.725
 
 [ENTRY]
-ID=151029054
-Asset=Manipulator-SpawnPoint
-Name=Untitled
-Pos=61978.7,750.487,63038.3
-Orient=0,0.149438,0,0.988771
-Scale=1,1,1
-spawnPackage=11_rh_05_geoffryThistlefur_m_42
-
-[ENTRY]
 ID=151029057
 Asset=Manipulator-SpawnPoint
 Name=Untitled

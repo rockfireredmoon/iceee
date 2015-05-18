@@ -306,7 +306,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1127918
 Asset=Light-Large?COLOR=6666FF
-Name=
+Name=Untitled
 Pos=58012.7,854.302,66957.6
 Orient=0,0,0,1
 Scale=4.55,4.55,4.55

@@ -460,6 +460,7 @@ Pos=2140.52,266.536,2722.69
 Orient=0,0.670587,0,0.741831
 Scale=1,1,1
 spawnPackage=#F3684
+maxActive=0
 
 [ENTRY]
 ID=1109978
@@ -498,7 +499,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1126557
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=2570.86,292.672,2528.47
 Orient=0,0.714978,0,-0.699147
 Scale=1,1,1
