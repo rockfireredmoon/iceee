@@ -1,0 +1,15 @@
+[ENTRY]
+ID=14712
+ACCOUNTID=1215
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=wildroo
+GroveName=wildroo
+WarpName=wildroo1
+DropRateProfile=standard
+Grove=1
+EnvironmentCycle=0
+BuildPermission=account,1215,0,0,3,3
+DefLoc=2958,260,3821
+

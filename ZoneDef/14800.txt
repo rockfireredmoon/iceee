@@ -1,0 +1,13 @@
+[ENTRY]
+ID=14800
+ACCOUNTID=1226
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=shaxsa
+GroveName=shaxsa
+WarpName=shaxsa1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

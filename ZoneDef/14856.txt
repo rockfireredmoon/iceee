@@ -1,0 +1,13 @@
+[ENTRY]
+ID=14856
+ACCOUNTID=1233
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=gatehouse
+GroveName=gatehouse
+WarpName=gatehouse1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

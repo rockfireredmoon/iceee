@@ -1,0 +1,13 @@
+[ENTRY]
+ID=14728
+ACCOUNTID=1217
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=mishaa
+GroveName=mishaa
+WarpName=mishaa1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

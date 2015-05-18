@@ -1,0 +1,13 @@
+[ENTRY]
+ID=14920
+ACCOUNTID=1241
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=sautemeunierre
+GroveName=sautemeunierre
+WarpName=sautemeunierre1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

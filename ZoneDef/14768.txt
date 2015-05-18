@@ -1,0 +1,13 @@
+[ENTRY]
+ID=14768
+ACCOUNTID=1222
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=sevenstar
+GroveName=sevenstar
+WarpName=sevenstar1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

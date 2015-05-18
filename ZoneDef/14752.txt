@@ -1,0 +1,13 @@
+[ENTRY]
+ID=14752
+ACCOUNTID=1220
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=remnant
+GroveName=remnant
+WarpName=remnant1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

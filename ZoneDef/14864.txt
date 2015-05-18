@@ -1,0 +1,13 @@
+[ENTRY]
+ID=14864
+ACCOUNTID=1234
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=jeesullivan
+GroveName=jeesullivan
+WarpName=jeesullivan1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

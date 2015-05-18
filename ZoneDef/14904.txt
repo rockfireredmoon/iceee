@@ -1,0 +1,13 @@
+[ENTRY]
+ID=14904
+ACCOUNTID=1239
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=eviltown
+GroveName=eviltown
+WarpName=eviltown1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+

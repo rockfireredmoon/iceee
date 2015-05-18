@@ -1,0 +1,13 @@
+[ENTRY]
+ID=14824
+ACCOUNTID=1229
+NAME=Grove
+TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=extrablue
+GroveName=extrablue
+WarpName=extrablue1
+Grove=1
+EnvironmentCycle=0
+DefLoc=2958,260,3821
+
