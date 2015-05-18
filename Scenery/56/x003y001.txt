@@ -1,0 +1,8 @@
+[ENTRY]
+ID=1127912
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=6221.45,0,3432.04
+Orient=0,0,0,1
+Scale=1,1,1
+

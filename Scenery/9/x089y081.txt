@@ -1,0 +1,16 @@
+[ENTRY]
+ID=1127527
+Asset=Prop-Interact1#Prop-Interact_Rectangle
+Name=Untitled
+Pos=67140.9,349.017,61394.7
+Orient=0,0.674288,0,0.738469
+Scale=50,50,50
+
+[ENTRY]
+ID=1127893
+Asset=Prop-Warpig_Walls#Prop-Warpig_Wall1
+Name=Untitled
+Pos=66963,654.853,61267.2
+Orient=0,0,0,1
+Scale=4.4,4.4,4.4
+

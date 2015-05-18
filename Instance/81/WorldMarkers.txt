@@ -1,0 +1,105 @@
+[ENTRY]
+Name=Lighthouse
+Comment=[Comment here]
+Position=44497.0,225.0,65168.0
+
+[ENTRY]
+Name=Monastery
+Comment=[Comment here]
+Position=32895.0,407.0,61117.0
+
+[ENTRY]
+Name=Bath
+Comment=[Comment here]
+Position=39151.0,303.0,54112.0
+
+[ENTRY]
+Name=Crossroads Inn
+Comment=[Comment here]
+Position=43904.0,308.0,50272.0
+
+[ENTRY]
+Name=Southsheild
+Comment=[Comment here]
+Position=42530.0,184.0,43591.0
+
+[ENTRY]
+Name=Hollow Tree
+Comment=[Comment here]
+Position=46837.0,212.0,46042.0
+
+[ENTRY]
+Name=Coldstorm Cavern
+Comment=Gloom Witches
+Position=48069.0,97.0,47931.0
+
+[ENTRY]
+Name=Nottingham
+Comment=[Comment here]
+Position=53298.0,161.0,48901.0
+
+[ENTRY]
+Name=Tall Grass Farm
+Comment=[Comment here]
+Position=56893.0,213.0,57592.0
+
+[ENTRY]
+Name=Wilhelms Crypt
+Comment=on the hill by the Quest Giver NPC's
+Position=57626.0,363.0,61865.0
+
+[ENTRY]
+Name=Camelot
+Comment=it is only a model
+Position=54915.0,153.0,63149.0
+
+[ENTRY]
+Name=Broken Tower
+Comment=[Comment here]
+Position=55720.0,197.0,59774.0
+
+[ENTRY]
+Name=Alimat
+Comment=[Comment here]
+Position=48455.0,294.0,57181.0
+
+[ENTRY]
+Name=Milita House
+Comment=[Comment here]
+Position=50038.0,177.0,66276.0
+
+[ENTRY]
+Name=Fort Stonehenge
+Comment=[Comment here]
+Position=43774.0,181.0,65679.0
+
+[ENTRY]
+Name=Ironstone Watch
+Comment=[Comment here]
+Position=36626.0,541.0,66819.0
+
+[ENTRY]
+Name=Grimfrost
+Comment=[Comment here]
+Position=27889.0,399.0,69643.0
+
+[ENTRY]
+Name=Robin Hood Camp
+Comment=[Comment here]
+Position=48304.0,221.0,44446.0
+
+[ENTRY]
+Name=Treasure Map - Hand Grasping
+Comment=
+Position=30094.0,95.0,59655.0
+
+[ENTRY]
+Name=Avalonian Isle
+Comment=[Comment here]
+Position=47594.0,83.0,62877.0
+
+[ENTRY]
+Name=Stonehenge
+Comment=[Comment here]
+Position=43339.0,262.0,67738.0
+
