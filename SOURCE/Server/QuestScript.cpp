@@ -3,12 +3,375 @@
 #include "Simulator.h"
 #include "Util.h"
 #include "Instance.h"
+#include "Item.h"
 #include "CommonTypes.h"
+#include <algorithm>
 
 QuestScript::QuestScriptDef g_QuestScript;
+QuestScript::QuestNutManager g_QuestNutManager;
 
 namespace QuestScript
 {
+
+//
+// New script system
+//
+
+QuestNutDef::QuestNutDef(int questID)
+{
+	mQuestID = questID;
+	char strBuf[100];
+	Util::SafeFormat(strBuf, sizeof(strBuf), "QuestScripts\\%d.nut", mQuestID);
+	Platform::FixPaths(strBuf);
+	mSourceFile = string(strBuf);
+	scriptName = std::string(Platform::Basename(mSourceFile.c_str()));
+}
+
+QuestNutDef::~QuestNutDef()
+{
+
+}
+std::string QuestNutDef::GetQuestNutScriptPath() {
+	return mSourceFile;
+}
+
+QuestNutManager::QuestNutManager() {
+}
+
+QuestNutManager::~QuestNutManager() {
+	questDef.clear();
+	questAct.clear();
+}
+
+QuestNutDef * QuestNutManager::GetScriptByID(int questID) {
+	std::map<int, QuestNutDef*>::iterator it = questDef.find(questID);
+	if(it == questDef.end()) {
+		// Create script def
+		QuestNutDef *d = new QuestNutDef(questID);
+		if(Platform::FileExists(d->GetQuestNutScriptPath().c_str())) {
+			questDef[questID] = d;
+			return d;
+		}
+		else {
+			/* No script for this quest, but insert a NULL map entry so
+			 * we don't create a new def next time this is called. Def's
+			 * can live the life of the server (or until they are
+			 * edited when this feature is added)			 */
+
+			questDef[questID] = NULL;
+			return NULL;
+		}
+
+	}
+	return it->second;
+}
+
+std::list<QuestNutPlayer*> QuestNutManager::GetActiveScripts(int CID)
+{
+	return questAct[CID];
+}
+
+std::list<QuestNutPlayer*> QuestNutManager::GetActiveQuestScripts(int questID)
+{
+	// TODO make this faster, maintain a map keyed by quest ID
+	std::list<QuestNutPlayer*> l;
+	std::map<int, std::list<QuestNutPlayer*> >::iterator it;
+	it = questAct.begin();
+	std::list<QuestNutPlayer*>::iterator eit;
+	for(; it != questAct.end(); ++ it) {
+		std::list<QuestNutPlayer*> p;
+		p = it->second;
+		eit = p.begin();
+		for(; eit != p.end(); ++ eit) {
+			QuestNutPlayer *player = *eit;
+			if(player->GetQuestID() == questID) {
+				l.push_back(player);
+			}
+		}
+	}
+	return l;
+}
+
+QuestNutPlayer * QuestNutManager::GetActiveScript(int CID, int questID)
+{
+
+	std::list<QuestNutPlayer*> l = questAct[CID];
+	list<QuestNutPlayer*>::iterator it;
+	for (it = l.begin(); it != l.end(); ++it) {
+		QuestNutPlayer *pl = *it;
+		if(pl->GetQuestID() == questID) {
+			return *it;
+		}
+	}
+	return NULL;
+
+}
+
+QuestNutPlayer * QuestNutManager::GetOrAddActiveScript(CreatureInstance *creature, int questID) {
+	QuestNutPlayer * player = GetActiveScript(creature->CreatureID, questID);
+	if(player == NULL) {
+		return AddActiveScript(creature, questID);
+	}
+	return player;
+}
+
+QuestNutPlayer * QuestNutManager::AddActiveScript(CreatureInstance *creature, int questID) {
+	QuestNutDef *def = GetScriptByID(questID);
+	if (def == NULL)
+		return NULL;
+
+	g_Log.AddMessageFormat("Compiling quest script %d", questID);
+	QuestNutPlayer * player = new QuestNutPlayer();
+	std::string errors;
+	player->source = creature;
+	creature->actInst->questNutScriptList.push_back(player);
+
+	player->Initialize(def, errors);
+	if (errors.length() > 0)
+		g_Log.AddMessageFormat("Failed to compile %s. %s",
+				def->scriptName.c_str(), errors.c_str());
+
+	std::list<QuestNutPlayer*> l;
+	l.push_back(player);
+
+	questAct[creature->CreatureID] = l;
+
+	return player;
+}
+
+void QuestNutManager::RemoveActiveScripts(int CID) {
+	std::list<QuestNutPlayer*> l = questAct[CID];
+	for (list<QuestNutPlayer*>::iterator it = l.begin(); it != l.end(); ++it) {
+		QuestNutPlayer* player = *it;
+		if(player->source != NULL && player->source->actInst != NULL)
+			player->source->actInst->questNutScriptList.erase(
+					std::remove(player->source->actInst->questNutScriptList.begin(), player->source->actInst->questNutScriptList.end(), player), player->source->actInst->questNutScriptList.end());
+		player->HaltExecution();
+		delete (*it);
+	}
+	l.clear();
+	questAct.erase(questAct.find(CID));
+}
+
+void QuestNutManager::RemoveActiveScript(QuestNutPlayer *registeredPtr) {
+	std::list<QuestNutPlayer*> l = questAct[registeredPtr->source->CreatureID];
+	list<QuestNutPlayer*>::iterator it;
+	for (it = l.begin(); it != l.end(); ++it) {
+		if (*it == registeredPtr) {
+			QuestNutPlayer* player = *it;
+			if(player->source != NULL && player->source->actInst != NULL)
+				player->source->actInst->questNutScriptList.erase(
+						std::remove(player->source->actInst->questNutScriptList.begin(), player->source->actInst->questNutScriptList.end(), player), player->source->actInst->questNutScriptList.end());
+			player->HaltExecution();
+			delete player;
+			l.erase(it);
+			break;
+		}
+	}
+	if(l.size() == 0) {
+		questAct.erase(questAct.find(registeredPtr->source->CreatureID));
+	}
+}
+
+QuestNutPlayer::QuestNutPlayer()
+{
+	activate = ScriptObjects::Vector3(0,0,0);
+	source = NULL;
+	target = NULL;
+	activateEvent = NULL;
+	RunFlags = 0;
+	QuestAct = 0;
+}
+
+QuestNutPlayer::~QuestNutPlayer()
+{
+}
+
+void QuestNutPlayer::HaltDerivedExecution()
+{
+}
+
+void QuestNutPlayer::RegisterFunctions() {
+	Sqrat::Class<NutPlayer> nutClass(vm, _SC("Core"), true);
+	Sqrat::RootTable(vm).Bind(_SC("Core"), nutClass);
+	RegisterCoreFunctions(this, &nutClass);
+	Sqrat::DerivedClass<QuestNutPlayer, NutPlayer> questClass(vm, _SC("Quest"));
+	Sqrat::RootTable(vm).Bind(_SC("Quest"), questClass);
+	RegisterQuestFunctions(this, &questClass);
+	Sqrat::RootTable(vm).SetInstance(_SC("quest"), this);
+}
+
+void QuestNutPlayer::RegisterQuestFunctions(NutPlayer *instance, Sqrat::DerivedClass<QuestNutPlayer, NutPlayer> *instanceClass)
+{
+	instanceClass->Func(_SC("info"), &QuestNutPlayer::Info);
+	instanceClass->Func(_SC("uinfo"), &QuestNutPlayer::Info);
+	instanceClass->Func(_SC("effect"), &QuestNutPlayer::Effect);
+	instanceClass->Func(_SC("trigger_delete"), &QuestNutPlayer::TriggerDelete);
+	instanceClass->Func(_SC("despawn"), &QuestNutPlayer::Despawn);
+	instanceClass->Func(_SC("get_target"), &QuestNutPlayer::GetTarget);
+	instanceClass->Func(_SC("spawn"), &QuestNutPlayer::Spawn);
+	instanceClass->Func(_SC("spawn_at"), &QuestNutPlayer::SpawnAt);
+	instanceClass->Func(_SC("warp_zone"), &QuestNutPlayer::WarpZone);
+	instanceClass->Func(_SC("is_interacting"), &QuestNutPlayer::IsInteracting);
+	instanceClass->Func(_SC("emote"), &QuestNutPlayer::Emote);
+	instanceClass->Func(_SC("heroism"), &QuestNutPlayer::Heroism);
+	instanceClass->Func(_SC("has_item"), &QuestNutPlayer::HasItem);
+	instanceClass->Func(_SC("has_quest"), &QuestNutPlayer::HasQuest);
+	instanceClass->Func(_SC("get_transformed"), &QuestNutPlayer::GetTransformed);
+	instanceClass->Func(_SC("change_heroism"), &QuestNutPlayer::ChangeHeroism);
+	instanceClass->Func(_SC("remove_item"), &QuestNutPlayer::RemoveItem);
+	instanceClass->Func(_SC("transform"), &QuestNutPlayer::Transform);
+	instanceClass->Func(_SC("untransform"), &QuestNutPlayer::Untransform);
+	instanceClass->Func(_SC("join_guild"), &QuestNutPlayer::JoinGuild);
+
+}
+
+int QuestNutPlayer::Heroism() {
+	return source->css.heroism;;
+}
+
+bool QuestNutPlayer::HasItem(int itemID) {
+	return source->charPtr->inventory.GetItemCount(INV_CONTAINER, itemID);;
+}
+
+bool QuestNutPlayer::HasQuest(int questID) {
+	return source->charPtr->questJournal.activeQuests.HasQuestID(questID) > -1;
+}
+
+int QuestNutPlayer::GetTransformed() {
+	return source->IsTransformed() ? source->transformCreatureId : 0;
+}
+
+void QuestNutPlayer::ChangeHeroism(int amount) {
+	source->css.heroism += amount;
+	source->OnHeroismChange();
+}
+void QuestNutPlayer::RemoveItem(int itemID, int itemCount) {
+	char buffer[2048];
+	int len = source->charPtr->inventory.RemoveItemsAndUpdate(INV_CONTAINER, itemID, itemCount, buffer);
+	if(len > 0)
+		source->simulatorPtr->AttemptSend(buffer, len);
+}
+
+void QuestNutPlayer::Transform(int cdefID) {
+	g_Log.AddMessageFormat("Transform: %d", cdefID);
+	source->CAF_Transform(cdefID);
+}
+
+void QuestNutPlayer::Untransform() {
+	g_Log.AddMessageFormat("Untransform");
+	source->Untransform();
+}
+
+void QuestNutPlayer::JoinGuild(int guildDefID) {
+	GuildDefinition *gDef = g_GuildManager.GetGuildDefinition(guildDefID);
+	if(gDef == NULL)
+		source->simulatorPtr->SendInfoMessage("Hrmph. This guild does not exist, please report a bug!", INFOMSG_INFO);
+	else {
+		source->simulatorPtr->SendInfoMessage("Joining guild ..", INFOMSG_INFO);
+		source->simulatorPtr->JoinGuild(gDef, 0);
+		char buffer[64];
+		Util::SafeFormat(buffer, sizeof(buffer), "You have joined %s", gDef->defName);
+		source->simulatorPtr->SendInfoMessage(buffer, INFOMSG_INFO);
+	}
+}
+
+void QuestNutPlayer::InterruptInteraction()
+{
+	char buf[128];
+	if(activateEvent != NULL) {
+		QueueRemove(activateEvent);
+		activateEvent = NULL;
+	}
+	Util::SafeFormat(buf, sizeof(buf), "on_interrupt_%d", QuestAct);
+	RunFunction(buf);
+}
+
+void QuestNutPlayer::Info(const char *message)
+{
+	char Buffer[1024];
+	int size = PrepExt_SendInfoMessage(Buffer, message, INFOMSG_INFO);
+
+	if(source->PartyID == 0)
+		// Just sent to player same as OP_INFO
+		source->simulatorPtr->AttemptSend(Buffer, size);
+	else
+	{
+		ActiveParty * party = g_PartyManager.GetPartyByID(source->PartyID);
+		if(party == NULL)
+			source->simulatorPtr->AttemptSend(Buffer, size);
+		else
+			for(uint i = 0 ; i < party->mMemberList.size(); i++)
+				party->mMemberList[i].mCreaturePtr->actInst->LSendToOneSimulator(Buffer, size, party->mMemberList[i].mCreaturePtr->simulatorPtr);
+
+	}
+}
+
+void QuestNutPlayer::UInfo(const char *message)
+{
+	char Buffer[1024];
+	int size = PrepExt_SendInfoMessage(Buffer, message, INFOMSG_INFO);
+	source->simulatorPtr->AttemptSend(Buffer, size);
+}
+
+void QuestNutPlayer::Effect(const char *effect) {
+	char Buffer[1024];
+	int size = PrepExt_SendEffect(Buffer, target->CreatureID, effect, 0);
+	source->actInst->LSendToAllSimulator(Buffer, size, -1);
+}
+void QuestNutPlayer::TriggerDelete(int CID, unsigned long ms) {
+	CreatureInstance *targ;
+	targ = source->actInst->GetNPCInstanceByCID(CID);
+	if(targ != NULL)
+	{
+		targ->SetServerFlag(ServerFlags::IsUnusable, true);
+		//Trigger for deletion
+		if(ms != 0)
+		{
+			//targ->_AddStatusList(StatusEffects::DEAD, -1);
+			targ->SetServerFlag(ServerFlags::TriggerDelete, true);
+			targ->deathTime = g_ServerTime + ms;
+		}
+	}
+}
+
+int QuestNutPlayer::GetQuestID() {
+	return ((QuestNutDef*)def)->mQuestID;
+}
+
+int QuestNutPlayer::GetTarget() {
+	return target == NULL ? -1 : target->CreatureID;
+}
+
+void QuestNutPlayer::Despawn(int CID) {
+	source->actInst->RemoveNPCInstance(CID);
+}
+
+int QuestNutPlayer::Spawn(int propID) {
+	return source->actInst->spawnsys.TriggerSpawn(propID, 0, 0);
+}
+
+int QuestNutPlayer::SpawnAt(int propID, int cdefID, unsigned long duration, int elevation) {
+	return source->actInst->SpawnAtProp(propID, cdefID, duration, elevation);
+}
+
+void QuestNutPlayer::WarpZone(int zoneID) {
+	source->simulatorPtr->MainCallSetZone(zoneID, 0, true);
+}
+
+bool QuestNutPlayer::IsInteracting(int cdefID) {
+	return target != NULL && target->CreatureDefID == cdefID;
+}
+
+void QuestNutPlayer::Emote(const char *emotion) {
+	char Buffer[1024];
+	int size = PrepExt_GenericChatMessage(Buffer, source->CreatureID, "", "emote", emotion);
+	source->actInst->LSendToAllSimulator(Buffer, size, -1);
+}
+
+//
+// Old script system
+//
 
 OpCodeInfo extCoreOpCode[] = {
 	// Implemenation-Specific commands.

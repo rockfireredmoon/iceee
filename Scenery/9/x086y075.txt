@@ -1,13 +1,4 @@
 [ENTRY]
-ID=1083257
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=Untitled
-Pos=64537.2,793.735,56672.7
-Orient=0,-0.884303,0,0.466913
-Scale=1,1,1
-spawnPackage=#F3681
-
-[ENTRY]
 ID=1091135
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=Untitled
@@ -54,6 +45,16 @@ Scale=1,1,1
 spawnPackage=#F1355
 links_count=1
 link=1128318,1
+
+[ENTRY]
+ID=1500034
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=64540.9,792.838,56670.4
+Orient=0,-0.908634,0,0.417594
+Scale=1,1,1
+spawnPackage=#F3681
+aiModule=nothing
 
 [ENTRY]
 ID=151016824

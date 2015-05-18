@@ -1666,6 +1666,7 @@ void CharacterData :: OnFinishedLoading(void)
 	inventory.FixBuyBack();
 	BackupAppearance();
 	BuildAvailableQuests(QuestDef);
+
 	questJournal.ResolveLoadedQuests();
 	inventory.CountInventorySlots();
 	

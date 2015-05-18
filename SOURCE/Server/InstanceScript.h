@@ -3,8 +3,8 @@
 #define INSTANCESCRIPT_H
 
 #include "ScriptCore.h"
-#include <vector>
 #include "ScriptObjects.h"
+#include <vector>
 #include "Callback.h"
 #include "Scenery2.h"
 

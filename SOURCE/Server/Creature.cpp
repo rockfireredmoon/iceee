@@ -358,6 +358,8 @@ void CreatureInstance :: UnloadResources(void)
 	if(actInst == NULL)
 		g_Log.AddMessageFormat("[CRITICAL] UnloadResources() called for creature without an instance.");
 
+	g_QuestNutManager.RemoveActiveScripts(CreatureID);
+
 	if(aiScript != NULL)
 	{
 		aiScriptManager.RemoveActiveScript(aiScript);
@@ -3032,12 +3034,27 @@ void CreatureInstance :: CancelPending_Ex(ActiveAbilityInfo *ability)
 			QuestScript::QuestScriptPlayer *script;
 			if(simulatorPtr == NULL)
 				break;
+
+			std::list<QuestScript::QuestNutPlayer*> l = g_QuestNutManager.GetActiveScripts(CreatureID);
+			std::list<QuestScript::QuestNutPlayer*>::iterator it = l.begin();
+			for(; it != l.end(); ++it) {
+				QuestScript::QuestNutPlayer *player = *it;
+				player->InterruptInteraction();
+			}
+
 			script = actInst->GetSimulatorQuestScript(simulatorPtr);
 			if(script != NULL)
 				script->TriggerAbort();
 
 			//Fall through since all quest/object interactions need to notify the client to
 			//cancel the event timer.
+			break;
+		}
+
+		switch(ability->abilityID)
+		{
+		case ABILITYID_QUEST_INTERACT_OBJECT:  //intentional fallthrough
+		case ABILITYID_QUEST_GATHER_OBJECT:
 		case ABILITYID_INTERACT_OBJECT:
 			actInst->ScriptCallUseHalt(LastUseDefID);
 			int wpos;
@@ -6342,7 +6359,7 @@ void CreatureInstance :: CheckQuestKill(CreatureInstance *target)
 	if(!(serverFlags & ServerFlags::IsPlayer))
 		return;
 
-	int wpos = charPtr->questJournal.CheckQuestObjective(GSendBuf, QuestObjective::OBJECTIVE_TYPE_KILL, target->CreatureDefID);
+	int wpos = charPtr->questJournal.CheckQuestObjective(CreatureID, GSendBuf, QuestObjective::OBJECTIVE_TYPE_KILL, target->CreatureDefID);
 	if(wpos > 0)
 	{
 		//TODO: Simulator revamp
@@ -6494,7 +6511,7 @@ void CreatureInstance :: CheckQuestInteract(int CreatureDefID)
 	if(simulatorPtr == NULL)
 		return;
 
-	int wpos = charPtr->questJournal.CreatureUse_Confirmed(GSendBuf, CreatureDefID);
+	int wpos = charPtr->questJournal.CreatureUse_Confirmed(CreatureID, GSendBuf, CreatureDefID);
 	if(wpos > 0)
 	{
 		simulatorPtr->AttemptSend(GSendBuf, wpos);

@@ -34,6 +34,7 @@
 #include "Combat.h"
 #include "ConfigString.h"
 #include "GM.h"
+#include "QuestScript.h"
 
 
 //This is the main function of the simulator thread.  A thread must be created for each port
@@ -2088,7 +2089,7 @@ bool SimulatorThread :: MainCallSetZone(int newZoneID, int newInstanceID, bool s
 
 	BroadcastShardChanged();  //Let friends know we changed shards.
 
-	int r = pld.charPtr->questJournal.CheckTravelLocations(Aux1, creatureInst->CurrentX, creatureInst->CurrentY, creatureInst->CurrentZ, pld.CurrentZoneID);
+	int r = pld.charPtr->questJournal.CheckTravelLocations(creatureInst->CreatureID, Aux1, creatureInst->CurrentX, creatureInst->CurrentY, creatureInst->CurrentZ, pld.CurrentZoneID);
 	if(r > 0)
 		AttemptSend(Aux1, r);
 
@@ -3105,7 +3106,7 @@ void SimulatorThread :: SetPosition(int xpos, int ypos, int zpos, int update)
 			creatureInst->actInst->LSendToLocalSimulator(SendBuf, size, creatureInst->CurrentX, creatureInst->CurrentZ);
 		}
 
-		int r = pld.charPtr->questJournal.CheckTravelLocations(Aux1, creatureInst->CurrentX, creatureInst->CurrentY, creatureInst->CurrentZ, pld.CurrentZoneID);
+		int r = pld.charPtr->questJournal.CheckTravelLocations(creatureInst->CreatureID, Aux1, creatureInst->CurrentX, creatureInst->CurrentY, creatureInst->CurrentZ, pld.CurrentZoneID);
 		if(r > 0)
 			AttemptSend(Aux1, r);
 	}
@@ -3737,7 +3738,7 @@ void SimulatorThread :: handle_updateVelocity(void)
 		//The movement counter will help us check every other step instead as a small optimization.
 		if((pld.PendingMovement & 1) && (pld.charPtr != NULL))
 		{
-			int r = pld.charPtr->questJournal.CheckTravelLocations(Aux1, creatureInst->CurrentX, creatureInst->CurrentY, creatureInst->CurrentZ, pld.CurrentZoneID);
+			int r = pld.charPtr->questJournal.CheckTravelLocations(creatureInst->CreatureID, Aux1, creatureInst->CurrentX, creatureInst->CurrentY, creatureInst->CurrentZ, pld.CurrentZoneID);
 			if(r > 0)
 				AttemptSend(Aux1, r);
 		}
@@ -4269,7 +4270,7 @@ void SimulatorThread :: handle_communicate(void)
 		}
 		if(strcmp(channel, "emote") == 0)
 		{
-			int size = pld.charPtr->questJournal.FilterEmote(SendBuf, message, creatureInst->CurrentX, creatureInst->CurrentZ, pld.CurrentZoneID);
+			int size = pld.charPtr->questJournal.FilterEmote(creatureInst->CreatureID, SendBuf, message, creatureInst->CurrentX, creatureInst->CurrentZ, pld.CurrentZoneID);
 			if(size > 0)
 				AttemptSend(SendBuf, size);
 		}
@@ -8104,29 +8105,56 @@ int SimulatorThread :: handle_query_creature_use(void)
 		if(creatureInst->CurrentTarget.targ != NULL)
 		{
 			creatureInst->LastUseDefID = CDef;
-			questScript.def = &g_QuestScript;
-			questScript.simCall = this;
-			int wpos = creatureInst->QuestInteractObject(qo);
-			sprintf(Aux1, "onActivate_%d_%d", QuestID, QuestAct);
-			if(questScript.JumpToLabel(Aux1) == true)
+
+			QuestScript::QuestNutPlayer *questNutScript = g_QuestNutManager.GetActiveScript(creatureInst->CreatureID, QuestID);
+			if(questNutScript == NULL )
 			{
-				questScript.active = true;
-				questScript.nextFire = 0;
-				questScript.sourceID = creatureInst->CreatureID;
-				questScript.targetID = CID;
-				questScript.targetCDef = CDef;
-				questScript.QuestID = QuestID;
-				questScript.QuestAct = QuestAct;
-				questScript.actInst = creatureInst->actInst;
-				questScript.RunFlags = 0;
-				questScript.activateX = target->CurrentX;
-				questScript.activateY = target->CurrentY;
-				questScript.activateZ = target->CurrentZ;
-				//questScript.RunScript();
-				creatureInst->actInst->questScriptList.push_back(questScript);
+				// Old script system
+				questScript.def = &g_QuestScript;
+				questScript.simCall = this;
+				int wpos = creatureInst->QuestInteractObject(qo);
+				sprintf(Aux1, "onActivate_%d_%d", QuestID, QuestAct);
+				if(questScript.JumpToLabel(Aux1) == true)
+				{
+					questScript.active = true;
+					questScript.nextFire = 0;
+					questScript.sourceID = creatureInst->CreatureID;
+					questScript.targetID = CID;
+					questScript.targetCDef = CDef;
+					questScript.QuestID = QuestID;
+					questScript.QuestAct = QuestAct;
+					questScript.actInst = creatureInst->actInst;
+					questScript.RunFlags = 0;
+					questScript.activateX = target->CurrentX;
+					questScript.activateY = target->CurrentY;
+					questScript.activateZ = target->CurrentZ;
+					//questScript.RunScript();
+					creatureInst->actInst->questScriptList.push_back(questScript);
+				}
+				//creatureInst->actInst->ScriptCallUse(CDef);
+				AttemptSend(GSendBuf, wpos);
 			}
-			//creatureInst->actInst->ScriptCallUse(CDef);
-			AttemptSend(GSendBuf, wpos);
+			else
+			{
+				// New script system
+				int wpos = creatureInst->QuestInteractObject(qo);
+				questNutScript->target = target;
+				questNutScript->QuestAct = QuestAct;
+				questNutScript->activate.Set(target->CurrentX, target->CurrentY, target->CurrentZ);
+				sprintf(Aux1, "on_activate_%d", QuestAct);
+				questNutScript->RunFunction(Aux1);
+				AttemptSend(GSendBuf, wpos);
+
+				// Queue up the on_activated as well, this MIGHT not be get called if the activation is interrupted
+				sprintf(Aux1, "on_activated_%d", QuestAct);
+				questNutScript->activateEvent  =
+						new ScriptCore::NutScriptEvent(
+								new ScriptCore::TimeCondition(qo->ActivateTime),
+								new ScriptCore::RunFunctionCallback(
+										questNutScript, Aux1));
+				questNutScript->QueueAdd(questNutScript->activateEvent);
+
+			}
 		}
 	}
 	else
@@ -8257,7 +8285,11 @@ int SimulatorThread :: handle_query_quest_join(void)
 	qdef->mScriptAcceptAction.ExecuteAllCommands(this);
 
 	LogMessageL(MSG_DIAGV, "  Request quest.join (QuestID: %d, CID: %d)", QuestID, CID);
-	return pld.charPtr->questJournal.QuestJoin(SendBuf, QuestID, query.ID);
+	int wpos = pld.charPtr->questJournal.QuestJoin(SendBuf, QuestID, query.ID);
+
+	g_QuestNutManager.AddActiveScript(creatureInst, QuestID);
+
+	return wpos;
 }
 
 int SimulatorThread :: handle_query_quest_list(void)
@@ -8363,6 +8395,12 @@ int SimulatorThread :: handle_query_quest_complete(void)
 		return ErrorMessageAndQueryOK(SendBuf, "Cannot redeem the quest yet.");
 	qd->mScriptCompleteAction.ExecuteAllCommands(this);
 
+	QuestScript::QuestNutPlayer *player =  g_QuestNutManager.GetActiveScript(creatureInst->CreatureID, QID);
+	if(player != NULL) {
+		player->RunFunction("on_complete");
+		g_QuestNutManager.RemoveActiveScript(player);
+	}
+
 
 	/* OBSOLETE
 	int questindex = QuestDef.GetQuestByID(QID);
@@ -8430,7 +8468,7 @@ int SimulatorThread :: handle_query_quest_leave(void)
 			QID = 0;  //Set to zero so it's not actually removed in the server or the client.
 		}
 	}
-	pld.charPtr->questJournal.QuestLeave(QID);
+	pld.charPtr->questJournal.QuestLeave(pld.CreatureID, QID);
 	sprintf(Aux1, "%d", QID);
 
 	return PrepExt_QueryResponseString(SendBuf, query.ID, Aux1);
@@ -8474,12 +8512,13 @@ int SimulatorThread :: handle_query_quest_hack(void)
 		LogMessageL(MSG_DIAGV, "[SAGE] Quest join (QuestID: %d, CID: %d)", qdef->questID, creature->CreatureID);
 		WritePos = PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
 		int wpos = creature->charPtr->questJournal.QuestJoin(&Aux1[0], qdef->questID, query.ID);
+		g_QuestNutManager.AddActiveScript(creature, qdef->questID);
 		creature->simulatorPtr->AttemptSend(Aux1, wpos);
 	}
 	else if(query.args[0].compare("remove") == 0) {
 		LogMessageL(MSG_DIAGV, "[SAGE] Quest remove (QuestID: %d, CID: %d)", qdef->questID, creature->CreatureID);
 		WritePos = PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-		creature->charPtr->questJournal.QuestClear(qdef->questID);
+		creature->charPtr->questJournal.QuestClear(creature->CreatureID, qdef->questID);
 		int wpos = PutByte(&Aux1[0], 7);  //_handleQuestEventMsg
 		wpos += PutShort(&Aux1[wpos], 0); //Size
 		wpos += PutInteger(&Aux1[wpos], qdef->questID); //Quest ID
@@ -8490,7 +8529,7 @@ int SimulatorThread :: handle_query_quest_hack(void)
 	else if(query.args[0].compare("complete") == 0) {
 		LogMessageL(MSG_DIAGV, "[SAGE] Quest complete (QuestID: %d, CID: %d)", qdef->questID, creature->CreatureID);
 		WritePos = PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-		int wpos = creature->charPtr->questJournal.ForceComplete(qdef->questID, &Aux1[0]);
+		int wpos = creature->charPtr->questJournal.ForceComplete(creature->CreatureID, qdef->questID, &Aux1[0]);
 		creature->simulatorPtr->AttemptSend(Aux1, wpos);
 	}
 	else {
@@ -8510,7 +8549,7 @@ int SimulatorThread :: handle_command_complete(void)
 	if(CheckPermissionSimple(0, Permission_Admin) == false)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission Denied");
 
-	int wpos = pld.charPtr->questJournal.ForceAllComplete(SendBuf);
+	int wpos = pld.charPtr->questJournal.ForceAllComplete(creatureInst->CreatureID, SendBuf);
 	wpos += PrepExt_QueryResponseString(&SendBuf[wpos], query.ID, "OK");
 	return wpos;
 }
@@ -11499,7 +11538,7 @@ int SimulatorThread :: handle_query_guild_leave(void)
 					SendInfoMessage("You cannot abandon that quest.", INFOMSG_ERROR);
 					QID = 0;  //Set to zero so it's not actually removed in the server or the client.
 				}
-				pld.charPtr->questJournal.QuestLeave(QID);
+				pld.charPtr->questJournal.QuestLeave(pld.CreatureID, QID);
 			}
 		}
 	}

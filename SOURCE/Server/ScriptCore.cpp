@@ -14,6 +14,7 @@
 #include <cstdlib>
 #include <iterator>
 #include <utility>
+#include <algorithm>
 
 #include "../squirrel/squirrel/sqvm.h"
 #include "CommonTypes.h"
@@ -22,6 +23,7 @@
 #include "FileReader.h"
 #include "Simulator.h"
 #include "StringList.h"
+#include "ScriptObjects.h"
 #include "Util.h"
 #include "Config.h"
 
@@ -214,6 +216,22 @@ namespace ScriptCore
 	}
 
 	//
+	// Run a named function.
+	//
+	RunFunctionCallback::RunFunctionCallback(NutPlayer *nut, const char * functionName) {
+		mNut = nut;
+		mFunctionName = functionName;
+	}
+
+	RunFunctionCallback::~RunFunctionCallback() {
+	}
+
+	bool RunFunctionCallback::Execute()
+	{
+		return mNut->RunFunction(mFunctionName);
+	}
+
+	//
 	// Each event stores a callback and a condition. When the condition is met, the callback
 	// is executed.
 	//
@@ -222,11 +240,16 @@ namespace ScriptCore
 		mCondition = condition;
 		mCallback = callback;
 		mRunWhenSuspended = false;
+		mCancelled = false;
 	}
 
 	NutScriptEvent::~NutScriptEvent() {
 		delete mCallback;
 		delete mCondition;
+	}
+
+	void NutScriptEvent::Cancel() {
+		mCancelled = true;
 	}
 
 	//
@@ -246,8 +269,6 @@ namespace ScriptCore
 		mForceGC = 0;
 		mGCTime = 0;
 		mCalls = 0;
-		assert(mQueue.size() == 0);
-		assert(mQueueQueue.size() == 0);
 	}
 
 	NutPlayer::~NutPlayer() {
@@ -262,10 +283,14 @@ namespace ScriptCore
 		std::vector<ScriptCore::NutScriptEvent*>::iterator it;
 		for(it = mQueue.begin(); it != mQueue.end(); ++it)
 			delete *it;
-		for(it = mQueueQueue.begin(); it != mQueueQueue.end(); ++it)
+		for(it = mQueueAdd.begin(); it != mQueueAdd.end(); ++it)
+			delete *it;
+		for(it = mQueueInsert.begin(); it != mQueueInsert.end(); ++it)
 			delete *it;
 		mQueue.clear();
-		mQueueQueue.clear();
+		mQueueAdd.clear();
+		mQueueInsert.clear();
+		mQueueRemove.clear();
 	}
 
 	void NutPlayer::Initialize(NutDef *defPtr, std::string &errors) {
@@ -386,6 +411,34 @@ namespace ScriptCore
 	void NutPlayer::RegisterFunctions() { }
 
 	void NutPlayer::RegisterCoreFunctions(NutPlayer *instance, Sqrat::Class<NutPlayer> *clazz) {
+
+		// Instance Location Object, X1/Z1,X2/Z2 location defining a rectangle
+		Sqrat::Class<ScriptObjects::Area> areaClass(vm, "Area", true);
+		areaClass.Ctor<int,int,int,int>();
+		areaClass.Ctor();
+		Sqrat::RootTable(vm).Bind(_SC("Area"), areaClass);
+		areaClass.Var("x1", &ScriptObjects::Area::mX1);
+		areaClass.Var("x2", &ScriptObjects::Area::mX2);
+		areaClass.Var("y1", &ScriptObjects::Area::mY1);
+		areaClass.Var("y2", &ScriptObjects::Area::mY2);
+
+		// Point Object, X/Z location
+		Sqrat::Class<ScriptObjects::Point> pointClass(vm, "Point", true);
+		pointClass.Ctor<int,int>();
+		pointClass.Ctor();
+		Sqrat::RootTable(vm).Bind(_SC("Point"), pointClass);
+		pointClass.Var("x", &ScriptObjects::Point::mX);
+		pointClass.Var("z", &ScriptObjects::Point::mZ);
+
+		// Vector3 Object, X/Y/Z location
+		Sqrat::Class<ScriptObjects::Vector3> vector3Class(vm, "Vector3", true);
+		vector3Class.Ctor<int,int, int>();
+		vector3Class.Ctor();
+		Sqrat::RootTable(vm).Bind(_SC("Vector3"), vector3Class);
+		vector3Class.Var("x", &ScriptObjects::Vector3::mX);
+		vector3Class.Var("y", &ScriptObjects::Vector3::mY);
+		vector3Class.Var("z", &ScriptObjects::Vector3::mZ);
+
 		clazz->Func(_SC("queue"), &NutPlayer::Queue);
 		clazz->Func(_SC("broadcast"), &NutPlayer::Broadcast);
 		clazz->Func(_SC("halt"), &NutPlayer::Halt);
@@ -473,7 +526,7 @@ namespace ScriptCore
 		if(active) {
 			vector<ScriptParam> v;
 			HaltDerivedExecution();
-			RunFunction("on_finish", v);
+			RunFunction("on_halt", v);
 			active = false;
 			ClearQueue();
 			sq_close(vm);
@@ -538,11 +591,13 @@ namespace ScriptCore
 		NutCallback *cb = nse->mCallback;
 
 		bool res = true;
-		try {
-			res = cb->Execute();
-		}
-		catch(int e) {
-			g_Log.AddMessageFormat("Callback failed. %d", e);
+		if(!nse->mCancelled) {
+			try {
+				res = cb->Execute();
+			}
+			catch(int e) {
+				g_Log.AddMessageFormat("Callback failed. %d", e);
+			}
 		}
 
 		if(mQueue.size() > 0) {
@@ -551,7 +606,7 @@ namespace ScriptCore
 			 * event returned false, then we requeue this event for retry
 			 */
 			if(sq_getvmstate(vm) != SQ_VMSTATE_SUSPENDED && !res) {
-				mQueueQueue.push_back(nse);
+				mQueueAdd.push_back(nse);
 				mQueue.erase(mQueue.begin() + index);
 			}
 			else {
@@ -590,8 +645,21 @@ namespace ScriptCore
 				break;
 			}
 		}
-		mQueue.insert(mQueue.end(), mQueueQueue.begin(), mQueueQueue.end());
-		mQueueQueue.clear();
+
+		// Apply any changes to the queue made while running the queued event
+		for(size_t i = 0; i < mQueueRemove.size(); i++)	{
+			NutScriptEvent *nse = mQueueRemove[i];
+			mQueue.erase(std::remove(mQueue.begin(), mQueue.end(), nse), mQueue.end());
+			mQueueAdd.erase(std::remove(mQueue.begin(), mQueue.end(), nse), mQueue.end());
+			mQueueInsert.erase(std::remove(mQueue.begin(), mQueue.end(), nse), mQueue.end());
+		}
+		mQueue.insert(mQueue.end(), mQueueAdd.begin(), mQueueAdd.end());
+		mQueue.insert(mQueue.begin(), mQueueInsert.begin(), mQueueInsert.end());
+		mQueueAdd.clear();
+		mQueueInsert.clear();
+		mQueueRemove.clear();
+
+		// All done
 		mExecuting = false;
 
 		// If nothing was executed, and the GC counter has been reached
@@ -624,12 +692,12 @@ namespace ScriptCore
 	{
 		if(mExecuting)
 		{
-			if(mQueueQueue.size() >= MAX_QUEUE_SIZE)
+			if(mQueueInsert.size() >= MAX_QUEUE_SIZE)
 			{
-				PrintMessage("[ERROR] Script error: Deferred QueueEvent() list is full %d of %d", mQueueQueue.size(), MAX_QUEUE_SIZE);
+				PrintMessage("[ERROR] Script error: Deferred QueueEvent() list is full %d of %d", mQueueInsert.size(), MAX_QUEUE_SIZE);
 				return;
 			}
-			mQueueQueue.insert(mQueueQueue.begin(), evt);
+			mQueueInsert.insert(mQueueInsert.begin(), evt);
 		} else
 		{
 
@@ -641,16 +709,29 @@ namespace ScriptCore
 			mQueue.insert(mQueue.begin(), evt);
 		}
 	}
+
+	void NutPlayer::QueueRemove(NutScriptEvent *evt)
+	{
+		if(mExecuting)
+		{
+			mQueueRemove.insert(mQueueRemove.begin(), evt);
+		}
+		else
+		{
+			mQueue.erase(std::find(mQueue.begin(), mQueue.end(), evt));
+		}
+	}
+
 	void NutPlayer::QueueAdd(NutScriptEvent *evt)
 	{
 		if(mExecuting)
 		{
-			if(mQueueQueue.size() >= MAX_QUEUE_SIZE)
+			if(mQueueAdd.size() >= MAX_QUEUE_SIZE)
 			{
-				PrintMessage("[ERROR] Script error: Deferred QueueEvent() list is full %d of %d", mQueueQueue.size(), MAX_QUEUE_SIZE);
+				PrintMessage("[ERROR] Script error: Deferred QueueEvent() list is full %d of %d", mQueueAdd.size(), MAX_QUEUE_SIZE);
 				return;
 			}
-			mQueueQueue.push_back(evt);
+			mQueueAdd.push_back(evt);
 		} else
 		{
 

@@ -3,14 +3,95 @@
 #define QUESTSCRIPT_H
 
 #include "ScriptCore.h"
+#include "ScriptObjects.h"
+#include "Creature.h"
 #include <vector>
 #include <string>
+#include <list>
 
 class ActiveInstance;
 class SimulatorThread;
 
 namespace QuestScript
 {
+
+//
+// Squirrel script system
+//
+
+class QuestNutDef: public ScriptCore::NutDef {
+
+public:
+	QuestNutDef(int questID);
+	int mQuestID;
+	std::string GetQuestNutScriptPath();
+	virtual ~QuestNutDef();
+};
+
+class QuestNutPlayer: public ScriptCore::NutPlayer {
+public:
+	//Variables used by the script.
+	unsigned short RunFlags;
+	static const unsigned short FLAG_FINISHED = 1;
+	CreatureInstance *source;
+	CreatureInstance *target;
+	ScriptCore::NutScriptEvent *activateEvent;
+	int QuestAct;
+	ScriptObjects::Vector3 activate;
+	QuestNutPlayer();
+	virtual ~QuestNutPlayer();
+
+	virtual void RegisterFunctions();
+	void RegisterQuestFunctions(NutPlayer *instance, Sqrat::DerivedClass<QuestNutPlayer, NutPlayer> *instanceClass);
+	virtual void HaltDerivedExecution();
+	int GetQuestID();
+	void InterruptInteraction();
+
+	// Exposed to scripts
+
+	int GetTarget();
+	void Info(const char *message);
+	void UInfo(const char *message);
+	void Effect(const char *effect);
+	void TriggerDelete(int targetCID, unsigned long delay);
+	void Despawn(int targetCID);
+	int Spawn(int propID);
+	int SpawnAt(int propID, int cdefID, unsigned long duration, int elevation);
+	void WarpZone(int zoneID);
+	bool IsInteracting(int cdefID);
+	void Emote(const char *emotion);
+	int Heroism();
+	bool HasItem(int itemID);
+	bool HasQuest(int questID);
+	int GetTransformed();
+	void ChangeHeroism(int amount);
+	void RemoveItem(int itemID, int itemCount);
+	void Transform(int cdefID);
+	void Untransform();
+	void JoinGuild(int guildDefID);
+};
+
+class QuestNutManager
+{
+public:
+	QuestNutManager();
+	~QuestNutManager();
+	std::map<int, QuestNutDef*> questDef;
+	std::map<int, std::list<QuestNutPlayer*> > questAct;
+	std::list<QuestNutPlayer*> GetActiveScripts(int CID);
+	std::list<QuestNutPlayer*> GetActiveQuestScripts(int questID);
+	QuestNutPlayer * GetOrAddActiveScript(CreatureInstance *creature,  int questID);
+	QuestNutPlayer * GetActiveScript(int CID, int questID);
+	QuestNutPlayer * AddActiveScript(CreatureInstance *creature, int questID);
+	void RemoveActiveScript(QuestNutPlayer *registeredPtr);
+	void RemoveActiveScripts(int CID);
+private:
+	QuestNutDef* GetScriptByID(int questID);
+};
+
+//
+// Old script system
+//
 
 enum QuestScriptExtOpCodes
 {
@@ -75,6 +156,8 @@ void ClearQuestScripts(void);
 //namespace QuestScript
 }
 
+
+extern QuestScript::QuestNutManager g_QuestNutManager;
 extern QuestScript::QuestScriptDef g_QuestScript;
 
 #endif //#define QUESTSCRIPT_H

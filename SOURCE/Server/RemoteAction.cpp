@@ -18,6 +18,7 @@
 #include "NPC.h"
 #include "Instance.h"
 #include "InstanceScale.h"
+#include "QuestScript.h"
 #include "ZoneDef.h"
 #include "Account.h"
 #include "Util.h"
@@ -78,6 +79,11 @@ int RunRemoteAction(ReportBuffer &report, MULTISTRING &header, MULTISTRING &para
 	else if(strcmp(action, "refreshinstance") == 0)
 	{
 		Report::RefreshInstance(report);
+		return REMOTE_REPORT;
+	}
+	else if(strcmp(action, "refreshscripts") == 0)
+	{
+		Report::RefreshScripts(report);
 		return REMOTE_REPORT;
 	}
 	else if(strcmp(action, "refreshhateprofile") == 0)
@@ -372,6 +378,44 @@ void Helper_OutputCreature(ReportBuffer &report, int index, CreatureInstance *ob
 		report.AddLine("  Officer: %p (%s)\r\n", obj->AnchorObject, obj->AnchorObject->css.display_name);
 		report.AddLine("  Position: %d, %d, %d (MovT: %d)\r\n", obj->CurrentX, obj->CurrentY, obj->CurrentZ, obj->movementTime - g_ServerTime);
 	}
+}
+
+void RefreshScripts(ReportBuffer &report)
+{
+	report.AddLine("Quest Scripts");
+	std::map<int, std::list<QuestScript::QuestNutPlayer *> >::iterator it = g_QuestNutManager.questAct.begin();
+	double seconds;
+	for(; it != g_QuestNutManager.questAct.end(); ++it) {
+		std::list<QuestScript::QuestNutPlayer *> l = it->second;
+		report.AddLine("+-Creature %d", it->first);
+		for(std::list<QuestScript::QuestNutPlayer *>::iterator lit = l.begin(); lit != l.end(); ++lit) {
+			QuestScript::QuestNutPlayer *player = *lit;
+			seconds = (double)player->mProcessingTime / 1000.0;
+			report.AddLine("%-50s %4.4f %5d %5d %5d %-10s", player->def->mSourceFile.c_str(), seconds,
+						player->mInitTime, player->mCalls, player->mGCTime, player->active ? "Active" : "Inactive");
+
+			if(report.WasTruncated())
+				break;
+		}
+
+		if(report.WasTruncated())
+			break;
+	}
+	report.AddLine("Instance Scripts");
+	size_t a;
+	for(a = 0; a < g_ActiveInstanceManager.instListPtr.size(); a++)
+	{
+		ActiveInstance *ainst = g_ActiveInstanceManager.instListPtr[a];
+		InstanceScript::InstanceNutPlayer player = ainst->nutScriptPlayer;
+		if(player.HasScript()) {
+			report.AddLine("%-50s %4.4f %5d %5d %5d %-10s", player.def->mSourceFile.c_str(), seconds,
+					player.mInitTime, player.mCalls, player.mGCTime, player.active ? "Active" : "Inactive");
+		}
+
+		if(report.WasTruncated())
+			break;
+	}
+
 }
 
 void RefreshInstance(ReportBuffer &report)

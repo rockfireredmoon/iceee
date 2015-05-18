@@ -1,3 +1,7 @@
+#pragma once
+#ifndef SCRIPTOBJECTS_H
+#define SCRIPTOBJECTS_H
+
 /**
  * Self contained objects and structs that are used for server side Squirrel scripting
  */
@@ -39,7 +43,6 @@ public:
 	int mX;
 	int mZ;
 
-
 	Point(int x, int z) {
 		mX = x;
 		mZ = z;
@@ -50,4 +53,37 @@ public:
 		mZ = 0;
 	}
 };
+
+
+
+/**
+ * Defines a single point with XYZ coordinates.
+ */
+class Vector3 {
+public:
+	int mX;
+	int mY;
+	int mZ;
+
+	Vector3(int x, int y, int z) {
+		mX = x;
+		mY = y;
+		mZ = z;
+	}
+
+	Vector3() {
+		mX = 0;
+		mY = 0;
+		mZ = 0;
+	}
+
+	void Set(int x, int y, int z) {
+		mX = x;
+		mY = y;
+		mZ = z;
+	}
+};
+
+
 }
+#endif //#define SCRIPTOBJECTS_H

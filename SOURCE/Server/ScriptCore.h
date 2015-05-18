@@ -357,6 +357,7 @@ class NutDef {
 public:
 	typedef std::vector<std::string> STRINGLIST;
 	std::string scriptName;            //Internal name of the script.
+	std::string mSourceFile;
 
 	NutDef();
 	virtual ~NutDef();
@@ -371,7 +372,6 @@ private:
 	bool queueExternalJumps;
 	int queueCallStyle;
 	unsigned int mFlags;
-	std::string mSourceFile;
 
 	static const int DEFAULT_INSTRUCTIONS_PER_CYCLE = 1;
 	static const int DEFAULT_INSTRUCTIONS_PER_IDLE_CYCLE = 0;
@@ -394,6 +394,7 @@ private:
 class NutCallback {
 public:
 	NutCallback();
+
 	virtual ~NutCallback();
 	virtual bool Execute() = 0;
 };
@@ -411,8 +412,10 @@ public:
 	NutCondition *mCondition;
 	NutCallback *mCallback;
 	bool mRunWhenSuspended;
+	bool mCancelled;
 	~NutScriptEvent();
 	NutScriptEvent(NutCondition *condition, NutCallback *callback);
+	void Cancel();
 };
 
 class NutPlayer {
@@ -452,6 +455,7 @@ public:
 	bool RunFunction(const char *name, std::vector<ScriptParam> parms);
 	void Broadcast(const char *message);
 	unsigned long GetServerTime();
+	void QueueRemove(NutScriptEvent *evt);
 	void QueueAdd(NutScriptEvent *evt);
 	void QueueInsert(NutScriptEvent *evt);
 	void Queue(Sqrat::Function function, int fireDelay);
@@ -471,7 +475,9 @@ public:
 	int RandDbl(double min, double max);
 
 	std::vector<NutScriptEvent*> mQueue;
-	std::vector<NutScriptEvent*> mQueueQueue;
+	std::vector<NutScriptEvent*> mQueueAdd;
+	std::vector<NutScriptEvent*> mQueueInsert;
+	std::vector<NutScriptEvent*> mQueueRemove;
 
 private:
 	bool ExecEvent(NutScriptEvent *nse, int index);
@@ -491,6 +497,16 @@ public:
 	~TimeCondition();
 
 	bool CheckCondition();
+};
+
+class RunFunctionCallback : public NutCallback
+{
+public:
+	NutPlayer* mNut;
+	const char *mFunctionName;		//Function to jump to
+	RunFunctionCallback(NutPlayer *nut, const char *mFunctionName);
+	~RunFunctionCallback ();
+	bool Execute();
 };
 
 class SquirrelFunctionCallback : public NutCallback

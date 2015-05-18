@@ -149,24 +149,6 @@ void InstanceNutPlayer::RegisterFunctions() {
 void InstanceNutPlayer::RegisterInstanceFunctions(NutPlayer *instance, Sqrat::DerivedClass<InstanceNutPlayer, NutPlayer> *instanceClass)
 {
 
-	// Instance Location Object, X1/Z1,X2/Z2 location defining a rectangle
-	Sqrat::Class<ScriptObjects::Area> areaClass(vm, "Area", true);
-	areaClass.Ctor<int,int,int,int>();
-	areaClass.Ctor();
-	Sqrat::RootTable(vm).Bind(_SC("Area"), areaClass);
-	areaClass.Var("x1", &ScriptObjects::Area::mX1);
-	areaClass.Var("x2", &ScriptObjects::Area::mX2);
-	areaClass.Var("y1", &ScriptObjects::Area::mY1);
-	areaClass.Var("y2", &ScriptObjects::Area::mY2);
-
-	// Point Object, X/Z location
-	Sqrat::Class<ScriptObjects::Point> pointClass(vm, "Point", true);
-	pointClass.Ctor<int,int>();
-	pointClass.Ctor();
-	Sqrat::RootTable(vm).Bind(_SC("Point"), pointClass);
-	pointClass.Var("x", &ScriptObjects::Point::mX);
-	pointClass.Var("z", &ScriptObjects::Point::mZ);
-
 	instanceClass->Func(_SC("broadcast"), &InstanceNutPlayer::Broadcast);
 	instanceClass->Func(_SC("info"), &InstanceNutPlayer::Info);
 	instanceClass->Func(_SC("spawn"), &InstanceNutPlayer::Spawn);
@@ -185,8 +167,10 @@ void InstanceNutPlayer::RegisterInstanceFunctions(NutPlayer *instance, Sqrat::De
 	instanceClass->Func(_SC("creatureChat"), &InstanceNutPlayer::CreatureChat);
 	instanceClass->Func(_SC("despawn"), &InstanceNutPlayer::Despawn);
 	instanceClass->Func(_SC("despawnAll"), &InstanceNutPlayer::DespawnAll);
+	// TODO deprecated
 	instanceClass->Func(_SC("particleAttach"), &InstanceNutPlayer::ParticleAttach);
-	instanceClass->Func(_SC("particleDetach"), &InstanceNutPlayer::DetachSceneryEffect);
+	instanceClass->Func(_SC("effect"), &InstanceNutPlayer::ParticleAttach);
+	instanceClass->Func(_SC("restore"), &InstanceNutPlayer::DetachSceneryEffect);
 	instanceClass->Func(_SC("asset"), &InstanceNutPlayer::Asset);
 	instanceClass->Func(_SC("emote"), &InstanceNutPlayer::Emote);
 	instanceClass->Func(_SC("remove_prop"), &InstanceNutPlayer::RemoveProp);

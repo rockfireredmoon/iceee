@@ -24,6 +24,7 @@ namespace Report
 	void RefreshPlayers(ReportBuffer &report);
 	void Helper_OutputCreature(ReportBuffer &report, int index, CreatureInstance *obj);
 	void RefreshInstance(ReportBuffer &report);
+	void RefreshScripts(ReportBuffer &report);
 	void RefreshHateProfile(ReportBuffer &report);
 	void RefreshCharacter(ReportBuffer &report);
 	void RefreshSim(ReportBuffer &report);

@@ -1,4 +1,5 @@
 #include "Quest.h"
+#include "QuestScript.h"
 #include "StringList.h"
 #include "FileReader.h"
 
@@ -35,7 +36,7 @@ bool QuestRepeatDelay :: IsAvailable(void)
 	return false;
 }
 
-int QuestReference :: CheckQuestObjective(char *buffer, int type, int CDefID)
+int QuestReference :: CheckQuestObjective(int CID, char *buffer, int type, int CDefID)
 {
 	static char ConvBuf[64];
 	static char completeStr[] = "Complete";
@@ -94,13 +95,34 @@ int QuestReference :: CheckQuestObjective(char *buffer, int type, int CDefID)
 		PutShort(&buffer[tsize + 1], wpos - tsize - 3);
 		tsize += (wpos - tsize);
 
+		QuestScript::QuestNutPlayer* player = g_QuestNutManager.GetActiveScript(CID, qd->questID);
+
+		// Run on_objective_incr functions for the quest script
+		if(player != NULL) {
+			Util::SafeFormat(ConvBuf, sizeof(ConvBuf), "on_objective_incr_%d_%d",CurAct,obj);
+			player->RunFunction(ConvBuf);
+		}
+
 		if(ObjComplete[obj] == 1)
 		{
+			RunObjectiveCompleteScripts(CID, CurAct, obj);
+
 			if(CheckCompletedAct(&qd->actList[CurAct]) == 1)
-				tsize += AdvanceAct(&buffer[tsize], qd);
+				tsize += AdvanceAct(CID, &buffer[tsize], qd);
 		}
 	}
 	return tsize;
+}
+
+void QuestReference :: RunObjectiveCompleteScripts(int CID, int act, int obj)
+{
+	QuestScript::QuestNutPlayer* player = g_QuestNutManager.GetActiveScript(CID, QuestID);
+	// Run on_objective_complete functions for the quest script
+	char ConvBuf[256];
+	if(player != NULL) {
+		Util::SafeFormat(ConvBuf, sizeof(ConvBuf), "on_objective_complete_%d_%d",act,obj);
+		player->RunFunction(ConvBuf);
+	}
 }
 
 int QuestReference :: CheckCompletedAct(QuestAct *defAct)
@@ -172,7 +194,7 @@ void QuestReference :: ClearObjectiveData(void)
 	memset(ObjComplete, 0, sizeof(ObjComplete));
 }
 
-int QuestReference :: AdvanceAct(char *buffer, QuestDefinition *questDef)
+int QuestReference :: AdvanceAct(int CID, char *buffer, QuestDefinition *questDef)
 {
 	int wpos = 0;
 	wpos += PutByte(&buffer[wpos], 7);  //_handleQuestEventMsg
@@ -196,6 +218,17 @@ int QuestReference :: AdvanceAct(char *buffer, QuestDefinition *questDef)
 		//Objective[2] = 0;
 		Complete = 0;
 	}
+
+	QuestScript::QuestNutPlayer* player = g_QuestNutManager.GetActiveScript(CID, questDef->questID);
+
+	// Run on_advance_act functions for the quest script
+	if(player != NULL) {
+		char ConvBuf[128];
+		Util::SafeFormat(ConvBuf, sizeof(ConvBuf), "on_advance_act_%d",CurAct);
+		player->RunFunction(ConvBuf);
+	}
+
+
 	//if(CurAct == questDef->actCount - 1)
 	//Complete = 1;
 	//g_Log.AddMessageFormat("[DEBUG] Objective set completed, new act: %d", CurAct);
@@ -341,7 +374,6 @@ int QuestJournal :: QuestJoin_Helper(int questID)
 
 	activeQuests.AddItem(availableQuests.itemList[r]);
 	activeQuests.Sort();
-
 	
 	//Repeatable quests must not be removed from the available list.  If a
 	//bounty board quest is removed from the available list, returning to
@@ -397,15 +429,14 @@ const char * QuestJournal :: GetQuestShareErrorString(int errCode)
 	return "Unknown error";
 }
 
-
-int QuestJournal :: CheckQuestObjective(char *buffer, int type, int CDefID)
+int QuestJournal :: CheckQuestObjective(int CID, char *buffer, int type, int CDefID)
 {
 	//This function is activated by the query.  Intercept an activation type
 	//to determine if the character needs to process the activation.
 	int tsize = 0;
 	for(size_t a = 0; a < activeQuests.itemList.size(); a++)
 		if(activeQuests.itemList[a].Complete == 0)
-			tsize += activeQuests.itemList[a].CheckQuestObjective(&buffer[tsize], type, CDefID);
+			tsize += activeQuests.itemList[a].CheckQuestObjective(CID, &buffer[tsize], type, CDefID);
 
 	return tsize;
 }
@@ -1206,6 +1237,15 @@ void QuestReferenceContainer :: Free(void)
 	itemList.clear();
 }
 
+void QuestReferenceContainer :: StartScript(CreatureInstance *instance)
+{
+
+	std::vector<QuestReference>::iterator it = itemList.begin();
+	for(; it != itemList.end(); ++it) {
+		g_QuestNutManager.AddActiveScript(instance, it->QuestID);
+	}
+}
+
 void QuestReferenceContainer :: AddItem(int newQuestID, QuestDefinition *qdef)
 {
 	QuestReference newItem;
@@ -1837,12 +1877,12 @@ QuestObjective * QuestJournal :: CreatureUse(int CreatureDefID, int &QuestID, in
 	return NULL;
 }
 
-int QuestJournal :: CreatureUse_Confirmed(char *buffer, int CreatureDefID)
+int QuestJournal :: CreatureUse_Confirmed(int CID, char *buffer, int CreatureDefID)
 {
-	return CheckQuestObjective(buffer, QuestObjective::OBJECTIVE_TYPE_ACTIVATE, CreatureDefID);
+	return CheckQuestObjective(CID, buffer, QuestObjective::OBJECTIVE_TYPE_ACTIVATE, CreatureDefID);
 }
 
-int QuestJournal :: CheckTravelLocations(char *buffer, int x, int y, int z, int zone)
+int QuestJournal :: CheckTravelLocations(int CID, char *buffer, int x, int y, int z, int zone)
 {
 	int wpos = 0;
 	for(size_t i = 0; i < activeQuests.itemList.size(); i++)
@@ -1870,8 +1910,22 @@ int QuestJournal :: CheckTravelLocations(char *buffer, int x, int y, int z, int 
 				resPtr = &resultText;
 			}
 			wpos += PrepExt_SendInfoMessage(&buffer[wpos], resPtr->c_str(), INFOMSG_INFO);
+
+			// Run on_objective_complete functions for the quest script
+			std::list<QuestScript::QuestNutPlayer*> l = g_QuestNutManager.GetActiveQuestScripts(qr.QuestID);
+			if(l.size() > 0) {
+				char ConvBuf[256];
+				Util::SafeFormat(ConvBuf, sizeof(ConvBuf), "on_objective_complete_%d_%d",qr.CurAct,r);
+				for(std::list<QuestScript::QuestNutPlayer*>::iterator it = l.begin() ; it != l.end(); ++it) {
+					QuestScript::QuestNutPlayer *player = *it;
+					player->RunFunction(ConvBuf);
+				}
+			}
+
+			qr.RunObjectiveCompleteScripts(CID, qr.CurAct, r);
+
 			if(qr.CheckCompletedAct(&qdef->actList[qr.CurAct]) == 1)
-				wpos += qr.AdvanceAct(&buffer[wpos], qdef);
+				wpos += qr.AdvanceAct(CID, &buffer[wpos], qdef);
 		}
 	}
 	return wpos;
@@ -1956,7 +2010,7 @@ int QuestJournal :: CheckQuestTalk(char *buffer, int CreatureDefID, int Creature
 	return wpos;
 }
 
-int QuestJournal :: ForceComplete(int QuestID, char *buffer)
+int QuestJournal :: ForceComplete(int CID, int QuestID, char *buffer)
 {
 	//Cheat to instantly complete the current act of all quests.
 	int wpos = 0;
@@ -1991,6 +2045,9 @@ int QuestJournal :: ForceComplete(int QuestID, char *buffer)
 				{
 					qref.ObjComplete[b] = 1;
 					qref.ObjCounter[b] = count;
+
+					qref.RunObjectiveCompleteScripts(CID, act, b);
+
 					int tpos = wpos;
 					wpos += PutByte(&buffer[wpos], 7);  //_handleQuestEventMsg
 					wpos += PutShort(&buffer[wpos], 0); //Size
@@ -2001,7 +2058,7 @@ int QuestJournal :: ForceComplete(int QuestID, char *buffer)
 					wpos += PutStringUTF(&buffer[wpos], "Complete");
 					PutShort(&buffer[tpos + 1], wpos - tpos - 3);
 
-					wpos += qref.AdvanceAct(&buffer[wpos], qdef);
+					wpos += qref.AdvanceAct(CID, &buffer[wpos], qdef);
 					if(qref.CurAct > qdef->actCount - 1)
 						qref.CurAct = qdef->actCount - 1;
 				}
@@ -2011,16 +2068,23 @@ int QuestJournal :: ForceComplete(int QuestID, char *buffer)
 	return wpos;
 }
 
-int QuestJournal :: ForceAllComplete(char *buffer)
+int QuestJournal :: ForceAllComplete(int CID, char *buffer)
 {
-	return ForceComplete(-1, buffer);
+	return ForceComplete(CID, -1, buffer);
 }
 
-void QuestJournal :: QuestLeave(int QuestID)
+void QuestJournal :: QuestLeave(int CID, int QuestID)
 {
 	int r = activeQuests.HasQuestID(QuestID);
 	if(r >= 0)
 	{
+		QuestScript::QuestNutPlayer * player = g_QuestNutManager.GetActiveScript(CID, QuestID);
+		if(player != NULL) {
+			player->RunFunction("on_leave");
+			player->HaltExecution();
+			g_QuestNutManager.RemoveActiveScript(player);
+		}
+
 		activeQuests.itemList[r].Reset();
 
 		QuestDefinition *qDef = QuestDef.GetQuestDefPtrByID(QuestID);
@@ -2036,9 +2100,9 @@ void QuestJournal :: QuestLeave(int QuestID)
 	}
 }
 
-void QuestJournal :: QuestClear(int QuestID)
+void QuestJournal :: QuestClear(int CID, int QuestID)
 {
-	QuestLeave(QuestID);
+	QuestLeave(CID, QuestID);
 	int r = completedQuests.HasQuestID(QuestID);
 	if(r >= 0)
 	{
@@ -2053,7 +2117,7 @@ void QuestJournal :: QuestClear(int QuestID)
 	}
 }
 
-int QuestJournal :: FilterEmote(char *outbuf, const char *message, int xpos, int zpos, int zoneID)
+int QuestJournal :: FilterEmote(int CID, char *outbuf, const char *message, int xpos, int zpos, int zoneID)
 {
 	int wpos = 0;
 	for(size_t i = 0; i < activeQuests.itemList.size(); i++)
@@ -2089,6 +2153,8 @@ int QuestJournal :: FilterEmote(char *outbuf, const char *message, int xpos, int
 			qr->ObjComplete[obj] = 1;
 			qr->ObjCounter[obj] = 1;
 
+			qr->RunObjectiveCompleteScripts(CID, qr->CurAct,obj);
+
 			std::string resultText;
 			std::string *resPtr = &resultText;
 			wpos += PrepExt_QuestCompleteMessage(&outbuf[wpos], qdef->questID, obj);
@@ -2096,8 +2162,9 @@ int QuestJournal :: FilterEmote(char *outbuf, const char *message, int xpos, int
 			resultText.append(qdef->actList[act].objective[obj].description);
 
 			wpos += PrepExt_SendInfoMessage(&outbuf[wpos], resPtr->c_str(), INFOMSG_INFO);
+
 			if(qr->CheckCompletedAct(&qdef->actList[act]) == 1)
-				wpos += qr->AdvanceAct(&outbuf[wpos], qdef);
+				wpos += qr->AdvanceAct(CID, &outbuf[wpos], qdef);
 		}
 	}
 	return wpos;

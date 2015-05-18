@@ -35,6 +35,7 @@ When you accept the quest, the client sends several queries.
 #include <map>
 #include "QuestAction.h"
 #include "CommonTypes.h"
+#include "Creature.h"
 
 class QuestDefinitionContainer;
 class QuestDefinition;
@@ -158,11 +159,13 @@ struct QuestReference
 		DefPtr = questDef;
 		Reset();
 	}
-	int CheckQuestObjective(char *buffer, int type, int CDefID);
+
+	void RunObjectiveCompleteScripts(int CID, int act, int obj);
+	int CheckQuestObjective(int CID, char *buffer, int type, int CDefID);
 	int CheckCompletedAct(QuestAct *defAct);
 	int CheckTravelLocation(int x, int y, int z, int zone);
 	void ClearObjectiveData(void);
-	int AdvanceAct(char *buffer, QuestDefinition *questDef);
+	int AdvanceAct(int CID, char *buffer, QuestDefinition *questDef);
 	void Reset(void);
 	QuestDefinition* GetQuestPointer(void); 
 	bool operator < (const QuestReference &compare) const { return QuestID < compare.QuestID; }
@@ -188,6 +191,7 @@ public:
 	void AddItem(int newQuestID, QuestDefinition *qdef);
 	void AddItem(QuestReference &newItem);
 	void Sort(void);
+	void StartScript(CreatureInstance *creature);
 	int HasQuestID(int searchVal);
 	int HasCreatureDef(int searchVal);
 	void RemoveIndex(size_t index);
@@ -229,7 +233,7 @@ public:
 	int CheckQuestShare(int questID);
 	static const char * GetQuestShareErrorString(int errCode);
 
-	int CheckQuestObjective(char *buffer, int type, int CDefID);
+	int CheckQuestObjective(int CID, char *buffer, int type, int CDefID);
 	int GetCurrentAct(int questID);
 
 	/* DISABLED, NEVER FINISHED
@@ -250,14 +254,14 @@ public:
 	int QuestGetCompleteQuest_Helper(int creatureDefID);
 	int QuestComplete(int QuestID);
 	QuestObjective* CreatureUse(int CreatureDefID, int &QuestID, int &CurrentAct);
-	int CreatureUse_Confirmed(char *buffer, int CreatureDefID);
-	int CheckTravelLocations(char *buffer, int x, int y, int z, int zone);
+	int CreatureUse_Confirmed(int CID, char *buffer, int CreatureDefID);
+	int CheckTravelLocations(int CID, char *buffer, int x, int y, int z, int zone);
 	int CheckQuestTalk(char *buffer, int CreatureDefID, int CreatureInstID);
-	int ForceComplete(int QuestID, char *buffer);
-	int ForceAllComplete(char *buffer);
-	void QuestClear(int QuestID);
-	void QuestLeave(int QuestID);
-	int FilterEmote(char *outbuf, const char *message, int xpos, int zpos, int zoneID);
+	int ForceComplete(int CID, int QuestID, char *buffer);
+	int ForceAllComplete(int CID, char *buffer);
+	void QuestClear(int CID, int QuestID);
+	void QuestLeave(int CID, int QuestID);
+	int FilterEmote(int CID, char *outbuf, const char *message, int xpos, int zpos, int zoneID);
 
 	static int WriteQuestJoin(char *buffer, int questID);
 

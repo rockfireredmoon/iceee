@@ -1032,12 +1032,12 @@ appearance=n4:{["sk"]={["bone"]="BFA085",["skin"]="945E5E",["cloth"]="944C21",["
 
 [ENTRY]
 ID=3681
+defHints=48
 level=50
 display_name=Rheskor
 creature_category=Mortal
 rarity=2
 appearance=n4:{["sk"]={["bone"]="BFA085",["skin"]="AA7159",["cloth"]="944C21",["eye"]="D4684B",["trim"]="363F19",["armor"]="E9A038",["leather"]="464755"},["c"]="Horde-Warpig",["sz"]="1"}
-
 
 [ENTRY]
 ID=3682

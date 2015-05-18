@@ -1,987 +1,2299 @@
-/*
-
-MOD FILE FOR PLANET FOREVER
-
-*/
-
-/* NOTE  When hex editing the States/CharacterSelectionState.cnut file for increased character slots,
-  Modify these addresses:
-00001DD0: 04 05
-00001E18: 04 05
-
-Squirrel instructions
-Inst#  Offset      8 bytes of args
-0369:00001DC8:0000007E 01 04 00 00  :      LOAD  [4] = MAX_CHARACTERS
-0379:00001E18:00000004 02 05 00 00  :   LOADINT _loc5 = 4
-*/
-
-
-require("Tools/PlayTool");
-require("Util");
-require("InputCommands");
-require("Constants");
-require("Globals");
-require("ServerConstants");  //For Stat.HEALTH type hack.
-require("Connection");
-
-//Hack to make Health use integer values instead of shorts.
-Stat[Stat.HEALTH]["type"] <- "int";
-
-//gServerListenDistance <- 1200.0;  //This is the destroy distance, don't want to alter this.
-//gCreatureVisibleRange <- 900.0;
-
-//Hack to assist detection of idle connections during the load phase.
-//If a server's simulator connection has not received a message recently,
-//it will send a heartbeat message to ping the client.  The acknowledgement
-//phase will send back a dummy response so the server can recognize at least
-//one recent incoming packet.
-ProtocolDef[0][90] <- "_handleHeartbeatMessage";
-ProtocolDef[0][100] <- "_handleModMessage";
-ProtocolDef[0]["acknowledgeHeartbeat"] <- 20;
-ProtocolDef[1][100] <- "_handleModMessage";
-ProtocolDef[1]["acknowledgeHeartbeat"] <- 20;
-
-//Hack for diagnostic pings.
-ProtocolDef[1]["debugServerPing"] <- 19;
-ProtocolDef[1][119] <- "_handleDebugServerPing";
-
-WeaponTypeClassRestrictions <-
+::_avatar <- null;
+::_loadNode <- null;
+this.PageState <- {
+	FETCHREQUEST = 0,
+	FETCHED = 1,
+	PENDINGREQUEST = 2,
+	REQUESTED = 3,
+	REQUESTEDLINKS = 4,
+	LOADING = 5,
+	READY = 6,
+	ERRORED = 7
+};
+this.FloorAlignMode <- {
+	NONE = 0,
+	WHILE_ASCENDING_DESCENDING = 1,
+	ALWAYS = 2
+};
+this.ForcedQuestMarkerYPosition <- {
+	["Prop-Notice_Board"] = 20
+};
+this.AlwaysVisible <- {
+	["Horde-Anubian_Catapult"] = true,
+	["Horde-Invisible_Biped"] = true
+};
+class this.SceneryLinkListHandler 
 {
-[WeaponType.NONE] 	= {none = false, knight = false, rogue = false, mage = false, druid = false},
-[WeaponType.SMALL]	= {none = false, knight = false, rogue = true,  mage = true,  druid = false},
-[WeaponType.ONE_HAND]	= {none = false, knight = true,	 rogue = true,  mage = false, druid = true},
-[WeaponType.TWO_HAND]	= {none = false, knight = true,	 rogue = false, mage = false, druid = false},
-[WeaponType.POLE]	= {none = false, knight = false, rogue = false, mage = true, druid = true},   //mage was false
-[WeaponType.WAND]	= {none = false, knight = false, rogue = false, mage = true,  druid = true},  //druid was false
-[WeaponType.BOW]	= {none = false, knight = true,	 rogue = true, mage = false, druid = true},   //rogue was false
-[WeaponType.THROWN]	= {none = false, knight = true,  rogue = true,  mage = true, druid = false},  //knight and mage false
-[WeaponType.ARCANE_TOTEM]={none = false, knight = true,	 rogue = true,  mage = true,  druid = true},
-}
-
-function PlayTool::_increaseAvatarSpeed()
-{
-	if(Util.hasSpeedPermission())
-		_avatar.getController().onIncreaseAvatarSpeed();
-}
-
-function PlayTool::_decreaseAvatarSpeed()
-{
-	if(Util.hasSpeedPermission())
-		_avatar.getController().onDecreaseAvatarSpeed();
-}
-
-
-function Util::hasPermission(permission)
-{
-	return true;
-}
-
-function Util::hasSpeedPermission()
-{
-	return ::_accountPermissionGroup == "admin";
-}
-
-function Util::hasBuildPermission()
-{
-	if(Util.hasSpeedPermission())
-		return true;
-
-	local zonePart = Util.split(::_avatar.mZoneID, "-");
-	if(zonePart.len() < 2)
-		return false;
-	if(zonePart[1].tointeger() >= 5000)
-		return true;
-
-	return false;
-}
-
-
-function InputCommands::togglePreview_mod(args)
-{
-	if(Util.hasBuildPermission() == false)
-		IGIS.error("You may not use that here.");
-	else
-		_togglePreview(args);
-}
-
-function InputCommands::toggleBuilding_mod(args)
-{
-
-	if(Util.hasBuildPermission() == false)
-		IGIS.error("You may not use that here.");
-	else
-		_toggleBuilding(args);
-}
-
-::InputCommands["_togglePreview"] <- ::InputCommands["togglePreview"];
-::InputCommands["togglePreview"] <- ::InputCommands["togglePreview_mod"];
-
-::InputCommands["_toggleBuilding"] <- ::InputCommands["toggleBuilding"];
-::InputCommands["toggleBuilding"] <- ::InputCommands["toggleBuilding_mod"];
-
-
-class Screens.ModPanel extends GUI.Frame
-{
-	static mClassName = "Screens.ModPanel";
-
-	mButtonGroveTools = null;
-	mButtonPropSearch = null;
-	mButtonPropGenerator = null;
-	mButtonEasyATS = null;
-
-	mButtonModSettings = null;
-	mButtonIGF = null;
-	mButtonItemPreview = null;
-	mButtonInstanceScript = null;
-	mButtonEmoteBrowser = null;
-	mButtonPetBrowser = null;
-
-	constructor()
+	mPage = null;
+	mObjects = null;
+	constructor( page, objects )
 	{
-		GUI.Frame.constructor("Mod Panel");
-
-		local cmain = GUI.Container(GUI.BoxLayoutV());
-
-		mButtonGroveTools = _createButton("Grove Tools");
-		mButtonGroveTools.setTooltip(_createTooltip("/GT", "Ctrl+F5"));
-
-		mButtonPropSearch = _createButton("Prop Search");
-		mButtonPropSearch.setTooltip(_createTooltip("/PS", "Ctrl+F6"));
-
-		mButtonPropGenerator = _createButton("Prop Generator");
-		mButtonPropGenerator.setTooltip(_createTooltip("/PG", "Ctrl+F7"));
-
-		mButtonEasyATS = _createButton("Easy ATS");
-		mButtonEasyATS.setTooltip(_createTooltip("/EATS", "Ctrl+F8"));
-
-		mButtonModSettings = _createButton("Mod Settings");
-		mButtonModSettings.setTooltip(_createTooltip("/chatMod"));
-
-		mButtonIGF = _createButton("In-Game Forum");
-		mButtonIGF.setTooltip(_createTooltip("/IGF", "Ctrl+F9"));
-
-		mButtonItemPreview = _createButton("Item Preview");
-		mButtonItemPreview.setTooltip(_createTooltip("Ctrl+F10"));
-
-		mButtonInstanceScript = _createButton("Instance Script");
-		mButtonInstanceScript.setTooltip(_createTooltip("/iscript"));
-
-		mButtonEmoteBrowser = _createButton("Emote Browser");
-		mButtonEmoteBrowser.setTooltip(_createTooltip("/pose"));
-
-		mButtonPetBrowser = _createButton("Pet Browser");
-		mButtonPetBrowser.setTooltip(_createTooltip("/pet"));
-
-		cmain.add(GUI.Spacer(0, 10));
-		cmain.add(GUI.Label("Hover to see shortcut command."));
-		cmain.add(GUI.Spacer(0, 10));
-		cmain.add(mButtonGroveTools);
-		cmain.add(mButtonPropSearch);
-		cmain.add(mButtonPropGenerator);
-		cmain.add(mButtonEasyATS);
-		cmain.add(mButtonInstanceScript);
-		cmain.add(GUI.Spacer(0, 15));
-		cmain.add(mButtonModSettings);
-		cmain.add(GUI.Spacer(0, 15));
-		cmain.add(mButtonIGF);
-		cmain.add(mButtonItemPreview);
-		cmain.add(GUI.Spacer(0, 15));
-		cmain.add(mButtonEmoteBrowser);
-		cmain.add(mButtonPetBrowser);
-
-		setContentPane(cmain);
-		setSize(200, 430);
-		centerOnScreen();
+		this.mPage = page;
+		this.mObjects = objects;
 	}
-	function _highlightWrapper(text)
+
+	function onQueryComplete( qa, results )
 	{
-		return "<font color=\"00FFFF\"><b>" + text + "</b></font>";
-	}
-	function _createTooltip(shortcut, ...)
-	{
-		local text = "<font size=\"24\">";
-		text += "Shortcut: " + _highlightWrapper(shortcut);
-		for(local i = 0; i < vargc; i++)
+		this.log.debug("Received server links for page " + this.mPage.getX() + ", " + this.mPage.getZ());
+
+		foreach( r in results )
 		{
-			text += " OR " + _highlightWrapper(vargv[i]);
+			this._scene.addLink("Scenery/" + r[0], "Scenery/" + r[1], this.Color(1.0, 0.0, 1.0, 1.0));
 		}
 
-		text += "</font>"
-		return text;
-	}
-	function _createButton(name)
-	{
-		local button = GUI.NarrowButton(name);
-		button.setFixedSize(160, 32);
-		button.addActionListener(this);
-		button.setReleaseMessage("onButtonPressed");
-		return button;
-	}
-	function onButtonPressed(button)
-	{
-		if(button == mButtonGroveTools)
-			Screens.show("GroveTools");
-		else if(button == mButtonPropSearch)
-			Screens.show("PropSearch");
-		else if(button == mButtonPropGenerator)
-			Screens.show("PropGenerator");
-		else if(button == mButtonEasyATS)
-			Screens.show("EasyATS");
-		else if(button == mButtonModSettings)
-			Screens.show("ModSettings");
-		else if(button == mButtonIGF)
-			Screens.show("IGForum");
-		else if(button == mButtonItemPreview)
-			Screens.show("PreviewItem");
-		else if(button == mButtonEmoteBrowser)
-			Screens.show("EmoteBrowser");
-		else if(button == mButtonPetBrowser)
-			Screens.show("PetScreen");
-	}
-}
-
-function InputCommands::mod(args)
-{
-	Screens.show("ModPanel");
-}
-
-function InputCommands::tb(args)
-{
-	toggleBuilding(args);
-}
-
-function InputCommands::sb(args)
-{
-	Screens.show("SceneryObjectBrowser");
-}
-
-function InputCommands::sc(args)
-{
-	showCollision(args);
-}
-
-function InputCommands::cb(args)
-{
-	creatureBrowse(args);
-}
-
-
-
-// Hack to set the proper domain domain name when connecting to an arbitrary
-// port (other than HTTP port 80).
-// Ex: http://example.com:81/Release/Current/EarthEternal.car
-// Originally it doesn't support arbitrary port numbers.
-// Derived from code used in the original attemptToConnect() function.
-// Also allows a router port override hack.
-function ModGetCustomRouterPort()
-{
-	if("router" in ::_args)
-	{
-		return ::_args["router"].tointeger();
+		this.mPage.setState(this.PageState.LOADING);
 	}
 
-	try
+	function onQueryError( qa, error )
 	{
-		local t = unserialize( _cache.getCookie("Router") );
-		if(t)
+		this.mPage.setState(this.PageState.LOADING);
+	}
+
+	function onQueryTimeout( qa )
+	{
+		::_Connection.sendQuery("scenery.link.list", this.SceneryLinkListHandler(this.mPage, this.mObjects), this.mObjects);
+	}
+
+}
+
+class this.SceneryListHandler 
+{
+	mZoneID = 0;
+	mX = 0;
+	mZ = 0;
+	constructor( zoneID, x, z )
+	{
+		this.mZoneID = zoneID;
+		this.mX = x;
+		this.mZ = z;
+	}
+
+	function onQueryComplete( qa, results )
+	{
+		this.log.debug("Received server objects for page " + this.mX + ", " + this.mZ);
+		local page = ::_sceneObjectManager.getSceneryPage(this.mZoneID, this.mX, this.mZ);
+
+		if (page != null)
 		{
-			if("mod.router" in t)
-				return t["mod.router"].tointeger();
-		}
-	}
-	catch(e)
-	{
-	}
-	
-	return 4242;   //Corresponds to hardcoded default.
-}
+			if (page.getState() != this.PageState.REQUESTED)
+			{
+				throw this.Exception("Scenery query logic error!");
+			}
 
-function Connection::attemptToConnectHack()
-{
-	local domain = _cache.getBaseURL();
-	local custom = false;
+			foreach( i in results )
+			{
+				page.addScenery(i[0].tointeger());
+			}
 
-	//Base URL will look something like this
-	//http://localhost/Release/Current
-
-	if( domain.find("://") != null )
-	{
-		domain = Util.split(domain, "://")[1];
-		
-		if( domain.find("@") != null )
-		{
-			domain = Util.split(domain, "@")[1];
-		}
-		
-		if( domain.find("/") != null )
-		{
-			domain = Util.split(domain, "/")[0];
-		}
-		
-		if(domain.find(":") != null)
-		{
-			custom = true;
-			domain = Util.split(domain, ":")[0];
-		}
-
-		local routerPort = ModGetCustomRouterPort();
-
-		if(custom == true)
-		{
-			mCurrentHost = domain + ":" + routerPort;
-			
-			log.info( "Connecting to " + mCurrentHost );
-			log.info( "[MOD] Custom domain port detected.");
-			if(routerPort != 4242)
-				log.info( "[MOD] Custom router port detected.");
-				
-			if( Util.isDevMode() )
-				Screen.setTitle("Earth Eternal (" + mCurrentHost + ")");
-			socket.connect(domain, routerPort, 0);
-			return;
-		}
-	}
-	
-	//Hack didn't work, call original
-	attemptToConnectOriginal();
-}
-
-::Connection["attemptToConnectOriginal"] <- ::Connection["attemptToConnect"];
-::Connection["attemptToConnect"] <- ::Connection["attemptToConnectHack"];
-
-
-
-
-
-
-function Connection::_handleProtocolChangedMsg_hack(data)
-{
-	// This is just a convenient place to intercept a loading point in the game
-	// to load our custom preferences.
-	_ModPackage.mFirstLoadScreen = false;
-	::_ModPackage.LoadPref();
-	_handleProtocolChangedMsg_old(data);
-}
-
-::Connection["_handleProtocolChangedMsg_old"] <- ::Connection["_handleProtocolChangedMsg"];
-::Connection["_handleProtocolChangedMsg"] <- ::Connection["_handleProtocolChangedMsg_hack"];
-
-
-function GetVector(args)
-{
-	if(typeof args != "array")
-		args = [1.0];
-
-	local sizex = 1.0;
-	local sizey = 1.0;
-	local sizez = 1.0;
-	if(args.len() == 1)
-	{
-		local n = args[0].tofloat();
-		sizex = n;
-		sizey = n;
-		sizez = n;
-	}
-	else if(args.len() >= 3)
-	{
-		sizex = args[0].tofloat();
-		sizey = args[1].tofloat();
-		sizez = args[2].tofloat();
-	}
-	return Vector3(sizex, sizey, sizez)
-}
-
-
-function InputCommands::TailSize(args)
-{
-	local nscale = GetVector(args);
-	local asm = ::_avatar.getAssembler();
-	foreach(i, d in asm.mDetails)
-	{
-		if(d.point == "tail")
-			d["scale"] <- nscale;
-	}
-	::_avatar.reassemble();
-}
-
-function InputCommands::EarSize(args)
-{
-	local nscale = GetVector(args);
-	local asm = ::_avatar.getAssembler();
-	foreach(i, d in asm.mDetails)
-	{
-		if(d.point == "left_ear" || d.point == "right_ear")
-			d["scale"] <- nscale;
-	}
-	::_avatar.reassemble();
-}
-
-function InputCommands::SaveSize(args)
-{
-	//Format:
-	/*
-	["sizepref"] = {
-		[charid]={tail=[x,y,z], ear=[x,y,z]},
-		[charid]={...},
-		...
-	};
-	*/
-
-	local fullPref = _ModPackage.GetPref("body_customize");
-	if(!fullPref)
-		fullPref = {};
-
-	local thisPref = {};
-
-	local asm = ::_avatar.getAssembler();
-	foreach(i, d in asm.mDetails)
-	{
-		if(d.point == "tail")
-		{
-			if("scale" in d)
-				thisPref["tail"] <- [d.scale.x, d.scale.y, d.scale.z];
-		}
-		else if(d.point == "left_ear")
-		{
-			if("scale" in d)
-				thisPref["ear"] <- [d.scale.x, d.scale.y, d.scale.z];
-		}
-	}
-	local cdefid = ::_avatar.getType();
-	fullPref[cdefid] <- thisPref;
-
-	_ModPackage.SetPref("body_customize", fullPref);
-
-	IGIS.info("Saved.");
-}
-
-function InputCommands::RemoveSize(args)
-{
-	local fullPref = _ModPackage.GetPref("body_customize");
-	if(!fullPref)
-		fullPref = {};
-	local cdefid = ::_avatar.getType();
-	local found = false;
-	foreach(i, d in fullPref)
-	{
-		if(i == cdefid)
-		{
-			delete fullPref[i];
-			//fullPref.remove(i);
-			found = true;
-			break;
+			page.mTotalScenery = results.len();
+			page.setState(this.PageState.LOADING);
 		}
 	}
 
-	_ModPackage.SetPref("body_customize", fullPref);
+	function onQueryError( qa, error )
+	{
+		this.log.debug("" + qa.query + " failed: " + error);
+		local page = ::_sceneObjectManager.getSceneryPage(this.mZoneID, this.mX, this.mZ);
 
-	if(found == true)
-		IGIS.info("Removed this character's saved body customization. It will be normal when you next restart the client.");
-	else
-		IGIS.info("This character does not have a saved body customization.");
+		if (page != null)
+		{
+			page.setState(this.PageState.PENDINGREQUEST);
+		}
+	}
+
+	function onQueryTimeout( qa )
+	{
+		this.log.debug("" + qa.query + " timed out. Requesting scenery again...");
+		local page = ::_sceneObjectManager.getSceneryPage(this.mZoneID, this.mX, this.mZ);
+
+		if (page != null)
+		{
+			page.setState(this.PageState.PENDINGREQUEST);
+		}
+	}
+
 }
 
-
-
-function Connection::_handleModMessage(data)
+class this.SceneryPreloadHandler 
 {
-	local event = data.getByte();
-	switch(event)
+	static nextPackageName = 0;
+	mPriority = 0;
+	constructor( priority )
 	{
-	case 1:
-		if(::_ModPackage.mSettingSupercritDisabled == false)
-			::_playTool.addShaky(::_avatar.getPosition(), 100, 0.5, 100);
-		break;
-	case 2:
-		local actorID = data.getInteger();
-	 	local emoteName = data.getStringUTF();
-	 	local emoteSpeed = data.getFloat();
-	 	local loop = (data.getByte() != 0);
-	 	local c = ::_sceneObjectManager.hasCreature(actorID);
-        if( c )
-        {
-        	local animHandler = c.getAnimationHandler( );
-    		if ( animHandler )
-       			animHandler.onFF( emoteName, emoteSpeed, loop );
-        }
-        break;
-	case 3:
-		local actorID = data.getInteger();
-		local event = data.getByte();
+		this.mPriority = priority;
+	}
 
-	 	local c = ::_sceneObjectManager.hasCreature(actorID);
-        if( c )
-        {
-        	local animHandler = c.getAnimationHandler( );
-    		if ( animHandler )
-    		{
-    			if(event == 1)
-					animHandler.fullStop();
-				else if(event == 2)
+	function onQueryComplete( qa, results )
+	{
+		local assets = [];
+		::_sceneObjectManager.mRetrievingZoneQuery = false;
+
+		foreach( s in results )
+		{
+			::_contentLoader.load(s[0], this.mPriority, "SceneryPreload_" + this.nextPackageName++, null);
+		}
+	}
+
+	function onQueryError( qa, error )
+	{
+	}
+
+}
+
+class this.PageEntry 
+{
+	mState = this.PageState.PENDINGREQUEST;
+	mCreatures = [];
+	mScenery = [];
+	mTotalScenery = 0;
+	mZoneID = null;
+	mX = 0;
+	mZ = 0;
+	constructor( zoneID, pageX, pageZ )
+	{
+		this.mState = this.PageState.PENDINGREQUEST;
+		this.mZoneID = zoneID;
+		this.mCreatures = [];
+		this.mScenery = [];
+		this.mX = pageX;
+		this.mZ = pageZ;
+	}
+
+	function updatePendingScenery()
+	{
+		local nl = [];
+
+		foreach( e in this.mScenery )
+		{
+			if (::_sceneObjectManager.hasScenery(e))
+			{
+				local s = ::_sceneObjectManager.getSceneryByID(e);
+
+				if (!s.isAssembled() && s.getAssemblerError() == null)
 				{
-					animHandler.mEntity.getAnimationUnit(0).setTimeScaleFactor(0.000001);
-					animHandler.mPaused = true;
+					nl.append(e);
 				}
-    		}
-        }
-        break;
-	case 4:
-		local assetPkg = data.getStringUTF();
-		local soundFile = data.getStringUTF();
-		::Audio.playArchiveSound(assetPkg, soundFile);
-		break;
-	case 20:
-		local time = data.getInteger();
-		_DiagnosticPings.Start(time);
-		break;
-	case 21:
-		_DiagnosticPings.Stop();
-		break;
-	case 22:
-		_DiagnosticPings.QueryStatistics();
-		break;
-	case 23:  //The server is asking for a generic response.  Very simplistic way of checking for client info.
-		local reqStr = data.getStringUTF();
-		local response = [];
-		response.append(reqStr);
-		if(::_avatar)
-		{
-			response.append(::_avatar.getStat(Stat.DISPLAY_NAME, true));
-			response.append(::_avatar.getStat(Stat.LEVEL, true));
-		}
-		::_Connection.sendQuery("mod.genericResponse", NullQueryHandler(), response);
-		break;
-	case 30:   //Display a message box to the user.
-		local msg = data.getStringUTF();
-		GUI.MessageBox.show(msg);
-		break;
-	case 40:  //Force stop swimming.  This helps prevent the glitch of teleporting out of a high elevation body of water, to swim over lower terrain.
-		if(::_avatar)
-		{
-			::_avatar.mSwimming = false;
-			::_avatar.mController.onStopSwimming();
-		}
-		break;
-	}
-}
-
-
-// Hack to the heartbeat function to return a response message to the server.
-// The server needs a better way to detect when the client has dropped.
-function Connection::_handleHeartbeatMessage(data)
-{
-	local timeElapsed = data.getInteger();
-	::_gameTime.updateGameTime(timeElapsed);
-
-	_beginSend("acknowledgeHeartbeat");
-	_send();
-}
-
-function Connection::_handleCommunicationMsg_mod(data)
-{
-	if(::_ModPackage.mSettingChatSoundEnabled == true)
-	{
-		local speakerID = data.getInteger();
-	 	local speakerName = data.getStringUTF();
-
-		local creature = ::_sceneObjectManager.getCreatureByID(speakerID);
-		if(speakerName == null)
-		{
-			if(creature != null)
-				speakerName = creature.getName();
-		}
-		if(speakerID != ::_avatar.getID())
-			if(Util.isInIgnoreList(speakerName) == false)
-				::_avatar.playSound(::_ModPackage.mSettingChatSoundFile);
-
-		data.rewind();
-	}
-	_handleCommunicationMsg_old(data);
-}
-
-
-// DIAGNOSTIC PINGS
-function Connection::_handleDebugServerPing(data)
-{
-	//If we get this message, the client must respond to a ping initiated by the server.
-	local MessageID = data.getInteger();
- 	local InitialSendTime = data.getInteger();
-
-	_beginSend("debugServerPing");
-	mOutBuf.putInteger(MessageID);
-	mOutBuf.putInteger(InitialSendTime);
-	_send();
-}
-
-class DiagnosticPings
-{
-	//Controls operation of the pinging system
-	mOperational = false;
-	mFireDelay = 1.0;
-	mWarningTime = 0;
-
-	//Tracking info
-	mPingID = 0;
-	mSuccessCount = 0;
-	mFailCount = 0;
-	mTimeoutCount = 0;
-
-	mLowestTime = 0;
-	mHighestTime = 0;
-	mTotalTime = 0;
-	mReceivedCount = 0;
-
-	function Start(iTimeMS)
-	{
-		if(mOperational == true)
-			return;
-
-		mOperational = true;
-		mFireDelay = iTimeMS / 1000.0;
-		Trigger();
-	}
-	function Stop()
-	{
-		mOperational = false;
-	}
-	function Trigger()
-	{
-		if(mOperational == false)
-			return;
-
-		if(::_Connection.isConnected() == false)
-		{
-			mOperational = false;
-			return;
-		}
-		if(::_Connection.isPlaying() == false)
-		{
-			mOperational = false;
-			return;
-		}
-		::_eventScheduler.fireIn(mFireDelay, this, "Trigger");
-
-		//The server is already set up to respond to regular pings used elsewhere.
-		::_Connection.sendQuery( "util.pingsim", this, [++mPingID, System.currentTimeMillis()]);
-	}
-	function onQueryComplete(qa, results)
-	{
-		mSuccessCount++;
-		local timeDiff = System.currentTimeMillis() - qa.args[1].tointeger();
-		if((mLowestTime == 0) || (timeDiff < mLowestTime))
-			mLowestTime = timeDiff;
-		else if((mHighestTime == 0) || (timeDiff > mHighestTime))
-			mHighestTime = timeDiff;
-
-		if((mWarningTime != 0) && (timeDiff > mWarningTime))
-			IGIS.info("Client detected a ping of " + timeDiff + " ms.");
-
-		mTotalTime += timeDiff;
-		mReceivedCount++;
-	}
-	function onQueryError(qa, error)
-	{
-		mFailCount++;
-		mReceivedCount++;
-	}
-	function onQueryTimeout(qa)
-	{
-		mTimeoutCount++;
-	}
-	function QueryStatistics()
-	{
-		::_Connection.sendQuery( "mod.ping.statistics", NullQueryHandler(), [mPingID, mSuccessCount, mFailCount, mTimeoutCount, mLowestTime, mHighestTime, mTotalTime, mReceivedCount]);
-	}
-	function WriteStatistic(sString, sLabel, iValue)
-	{
-		if(sString.len() != 0)
-			sString += "  ";
-		sString += sLabel + ":" + iValue;
-		return sString;
-	}
-	function PrintStatistics()
-	{
-		local str = "";
-		local average = 0;
-		if(mReceivedCount != 0)
-			average = mTotalTime / mReceivedCount;
-		str = WriteStatistic(str, "Pings", mPingID);
-		str = WriteStatistic(str, "Lowest", mLowestTime);
-		str = WriteStatistic(str, "Highest", mHighestTime);
-		str = WriteStatistic(str, "Avg", average);
-		if(mFailCount != 0)
-			str = WriteStatistic(str, "Failed", mFailCount);
-		if(mTimeoutCount != 0)
-			str = WriteStatistic(str, "Timed Out", mTimeoutCount);
-		IGIS.info(str);
-	}
-	function SetWarning(iTimeMS)
-	{
-		if(iTimeMS >= 0)
-		{
-			mWarningTime = iTimeMS;
-			if(mWarningTime == 0)
-				IGIS.info("Client ping time notification is now off.");
+			}
 			else
-				IGIS.info("Client ping time notification set to " + mWarningTime + " ms.");
+			{
+				nl.append(e);
+			}
 		}
-		else
-		{
-			mPingID = 0;
-			mSuccessCount = 0;
-			mFailCount = 0;
-			mTimeoutCount = 0;
 
-			mLowestTime = 0;
-			mHighestTime = 0;
-			mTotalTime = 0;
-			mReceivedCount = 0;
-			IGIS.info("Client ping statistics cleared.");
-		}
+		this.mScenery = nl;
+		return nl;
 	}
+
+	function removeScenery( objectID )
+	{
+		local l = [];
+
+		foreach( s in this.mScenery )
+		{
+			if (s != objectID)
+			{
+				l.append(s);
+			}
+		}
+
+		this.mScenery = l;
+	}
+
+	function setState( value )
+	{
+		this.mState = value;
+	}
+
+	function getState()
+	{
+		return this.mState;
+	}
+
+	function addScenery( id )
+	{
+		this.mScenery.append(id);
+	}
+
+	function getScenery()
+	{
+		return this.mScenery;
+	}
+
+	function setZoneID( id )
+	{
+		this.mZoneID = id;
+	}
+
+	function getZoneID()
+	{
+		return this.mZoneID;
+	}
+
+	function getX()
+	{
+		return this.mX;
+	}
+
+	function getZ()
+	{
+		return this.mZ;
+	}
+
+	function getPendingSceneryCount()
+	{
+		return this.mScenery.len();
+	}
+
+	function _tostring()
+	{
+		return "SceneryPage[" + this.mX + "," + this.mZ + "](State: " + this.mState + ", Pending: " + this.Util.join(this.mScenery, ", ") + ")";
+	}
+
 }
 
-_DiagnosticPings <- DiagnosticPings();
-
-function InputCommands::cping(args)
+class this.SceneObjectUpdater extends this.MessageBroadcaster
 {
-	if(args.len() == 0)
-		_DiagnosticPings.PrintStatistics();
-	else
-		_DiagnosticPings.SetWarning(args[0].tointeger());
-}
-
-// END DIAGNOSTIC PINGS
-
-
-::Connection["_handleCommunicationMsg_old"] <- ::Connection["_handleCommunicationMsg"];
-::Connection["_handleCommunicationMsg"] <- ::Connection["_handleCommunicationMsg_mod"];
-
-
-
-
-class URLManager
-{
-	mLoaded = false;
-	mURLs = {};
-	mQueryCalled = false;
-	mPendingTag = "";
-
 	constructor()
 	{
+		this.MessageBroadcaster.constructor();
+		this._nextFrameRelay.addListener(this);
 	}
-	function LaunchURL(tagName)
+
+	function onNextFrame()
 	{
-		if(mLoaded == false)
+		this.broadcastMessage("onEnterFrame");
+	}
+
+	function onEnterFrame()
+	{
+		this.broadcastMessage("onEnterFrame");
+	}
+
+	function _pump()
+	{
+		this.broadcastMessage("onEnterFrame");
+	}
+
+}
+
+class this.SceneObjectManager extends this.MessageBroadcaster
+{
+	mLoadedTerrain = {};
+	mRandom = null;
+	mPages = [];
+	mCreatures = {};
+	mScenery = {};
+	mCurrentPage = null;
+	mUnassembledIndex = {};
+	mCurrentZoneId = 0;
+	mCurrentZoneDefId = 0;
+	mCurrentZonePageSize = 2000.0;
+	mLoadedTerrainTiles = null;
+	mAssemblyQueueQuota = 100;
+	mAssemblyQueue = [];
+	mCreatureQueue = [];
+	mAssemblingCreature = null;
+	mDestroyQueue = [];
+	mZoneQueriesQueue = [];
+	mRetrievingZoneQuery = false;
+	mCurrentTerrain = null;
+	mCurrentTerrainBase = null;
+	mCurrentLocationName = "Unknown";
+	mUpdater = null;
+	mBuildingCSMs = {};
+	NEARBY_LOD = 1;
+	mPendingAssemblyCount = 0;
+	static rxSceneObjectNode = this.regexp("^([^/]+)/(\\d+)$");
+	constructor()
+	{
+		::MessageBroadcaster.constructor();
+		this.mRandom = this.Random();
+		this.mPages = [];
+		this.mBuildingCSMs = {};
+		this.mLoadedTerrain = {};
+		this.mCreatures = {};
+		this.mScenery = {};
+		this.mZoneQueriesQueue = [];
+		this.mRetrievingZoneQuery = false;
+		this.mUnassembledIndex = {};
+		this._enterFrameRelay.addListener(this);
+		this._exitFrameRelay.addListener(this);
+		this._csmReadyRelay.addListener(this);
+		this._nextFrameRelay.addListener(this);
+		this._scene.addListener(this);
+		this._eventScheduler.repeatIn(0.5, 0.5, this, "_detectGarbageCreatures");
+		this._eventScheduler.repeatIn(15.0, 15.0, this, "_flushUnusedAssemblers");
+		this.mUpdater = this.SceneObjectUpdater();
+		this.reset();
+	}
+
+	function _flushUnusedAssemblers()
+	{
+		::Assembler.flush(false);
+	}
+
+	function addUpdateListener( so )
+	{
+		this.mUpdater.addListener(so);
+	}
+
+	function removeUpdateListener( so )
+	{
+		this.mUpdater.removeListener(so);
+	}
+
+	function getCreatures()
+	{
+		return this.mCreatures;
+	}
+
+	function getScenery()
+	{
+		return this.mScenery;
+	}
+
+	function setCurrentTerrain( terrain )
+	{
+		if (this.mCurrentTerrain != terrain)
 		{
-			LoadURLs();
-			mPendingTag = tagName;
-			return;
+			if (typeof terrain == "string" && terrain.len() > 0)
+			{
+				local a = this.AssetReference(terrain);
+				this.mCurrentTerrain = terrain;
+				this.mCurrentTerrainBase = this.File.basename(a.getAsset(), ".cfg");
+				::_scene.setWorldGeometry(null);
+				::_scene.setClutterEnabled(false);
+				::_scene.setPageLoadingPattern(this.mCurrentTerrainBase);
+				this._contentLoader.load(this.mCurrentTerrainBase, this.ContentLoader.PRIORITY_REQUIRED, "Terrain", {
+					som = this,
+					t = terrain,
+					base = this.mCurrentTerrainBase,
+					function onPackageComplete( name )
+					{
+						if (this.t == this.som.mCurrentTerrain)
+						{
+							::_scene.setWorldGeometry(this.base + ".cfg");
+							::_scene.setClutterConfig("TerrainClutter.cfg");
+							::_scene.setClutterEnabled(true);
+
+							if (!(this.som.mCurrentTerrainBase in ::TerrainEnvDef))
+							{
+								::TerrainEnvDef[this.som.mCurrentTerrainBase] <- ::TerrainPageDef;
+							}
+
+							::TerrainPageDef = {};
+						}
+					}
+
+					function onPackageError( name, reason )
+					{
+						this.som.mCurrentTerrain = null;
+						this.som.mCurrentTerrainBase = null;
+						::TerrainPageDef = {};
+					}
+
+				});
+			}
+			else
+			{
+				this.mCurrentTerrain = null;
+				this.mCurrentTerrainBase = null;
+				::_scene.setClutterEnabled(false);
+				::_scene.setWorldGeometry(null);
+			}
+		}
+	}
+
+	function getCurrentTerrainBase()
+	{
+		return this.mCurrentTerrainBase;
+	}
+
+	function getSceneryPage( zoneID, x, z )
+	{
+		if (zoneID != this.mCurrentZoneId)
+		{
+			return null;
 		}
 
-		if(tagName in mURLs)
+		foreach( p in this.mPages )
 		{
-			System.openURL(mURLs[tagName]);
+			if (p.getZoneID() == zoneID && p.getX() == x && p.getZ() == z)
+			{
+				return p;
+			}
+		}
+
+		return null;
+	}
+
+	function getTerrainReady( x, z )
+	{
+		local terrain = this.getCurrentTerrainBase();
+
+		if (terrain == null)
+		{
+			return true;
+		}
+
+		if (::_scene.isTerrainReady(x, z, this.mCurrentZonePageSize))
+		{
+			return true;
+		}
+
+		return false;
+	}
+
+	function getPageEntry( x, z )
+	{
+		foreach( page in this.mPages )
+		{
+			if (page.mX == x && page.mZ == z)
+			{
+				return page;
+			}
+		}
+
+		return null;
+	}
+
+	function getPages()
+	{
+		return this.mPages;
+	}
+
+	function getTerrainPageState( x, z )
+	{
+		local extents = this._root.getTerrainExtents();
+
+		if (x > extents.x || z > extents.z || x < 0 || z < 0)
+		{
+			return false;
+		}
+
+		if (x + "_" + z in this.mLoadedTerrain)
+		{
+			return this.mLoadedTerrain[x + "_" + z].mode;
 		}
 		else
 		{
-			if(mLoaded == true)
+			return false;
+		}
+	}
+
+	function isSceneryPageReady( x, z )
+	{
+		local pageReady = true;
+		pageReady = this._singleCheckPageReady(x, z);
+
+		if (!pageReady)
+		{
+			return false;
+		}
+
+		pageReady = this._singleCheckPageReady(x - 1, z + 1);
+
+		if (!pageReady)
+		{
+			return false;
+		}
+
+		pageReady = this._singleCheckPageReady(x, z + 1);
+
+		if (!pageReady)
+		{
+			return false;
+		}
+
+		pageReady = this._singleCheckPageReady(x + 1, z + 1);
+
+		if (!pageReady)
+		{
+			return false;
+		}
+
+		pageReady = this._singleCheckPageReady(x - 1, z);
+
+		if (!pageReady)
+		{
+			return false;
+		}
+
+		pageReady = this._singleCheckPageReady(x + 1, z);
+
+		if (!pageReady)
+		{
+			return false;
+		}
+
+		pageReady = this._singleCheckPageReady(x - 1, z - 1);
+
+		if (!pageReady)
+		{
+			return false;
+		}
+
+		pageReady = this._singleCheckPageReady(x, z - 1);
+
+		if (!pageReady)
+		{
+			return false;
+		}
+
+		pageReady = this._singleCheckPageReady(x + 1, z - 1);
+
+		if (!pageReady)
+		{
+			return false;
+		}
+
+		return true;
+	}
+
+	function _singleCheckPageReady( x, z )
+	{
+		foreach( p in this.mPages )
+		{
+			if (p.getX() == x && p.getZ() == z)
 			{
-				GUI.MessageBox.show("The server administrator has not provided a URL for:<br>" + tagName);
+				if (p.getState() == this.PageState.READY || p.getState() == this.PageState.ERRORED)
+				{
+					return true;
+				}
+				else
+				{
+					return false;
+				}
+			}
+		}
+
+		return true;
+	}
+
+	function getSceneryPageState( zoneID, x, z )
+	{
+		if (zoneID == 0)
+		{
+			return false;
+		}
+
+		foreach( p in this.mPages )
+		{
+			if (p.getZoneID() == zoneID && p.getX() == x && p.getZ() == z)
+			{
+				return p.getState();
+			}
+		}
+
+		return false;
+	}
+
+	function isPageRequested( zoneID, x, z )
+	{
+		foreach( p in this.mPages )
+		{
+			if (p.getZoneID() == zoneID && p.getX() == x && p.getZ() == z)
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	function getUnassembledPageCount()
+	{
+		local count = 0;
+
+		foreach( p in this.mPages )
+		{
+			if (p.getState() != this.PageState.READY)
+			{
+				count++;
+			}
+		}
+
+		return count;
+	}
+
+	function setLocationName( location )
+	{
+		this.mCurrentLocationName = location;
+	}
+
+	function getLocationName()
+	{
+		return this.mCurrentLocationName;
+	}
+
+	function updatePendingPages()
+	{
+		foreach( p in this.mPages )
+		{
+			if (p.getState() == this.PageState.LOADING)
+			{
+				local list = p.updatePendingScenery();
+
+				if (list.len() == 0)
+				{
+					this._root.updateMiniMapBackground();
+					p.setState(this.PageState.READY);
+				}
+				else
+				{
+				}
 			}
 		}
 	}
 
-	function onProtocolChanged(newProto)
+	function getCreatureReady( so )
 	{
-		GUI.MessageBox.show("TEST");
-		if(newProto == "Play" )
+		if (this.mCurrentZoneDefId == 0)
 		{
-			IGIS.info("PROTOCOL:" + newProto);
-			if(mLoaded == false)
-				LoadURLs();
+			return true;
 		}
-	}
-	function LoadURLs()
-	{
-		if(mURLs == null)
-			mURLs = {};
 
-		FetchURLs();
-	}
-	function FetchURLs()
-	{
-		if(mQueryCalled == false)
-		{
-			::_Connection.sendQuery("mod.getURL", this, []);
-			mQueryCalled = true;
-		}
+		local cpage = so.getSceneryPageCoords();
+		return this.isSceneryPageReady(cpage.x, cpage.z);
 	}
 
-	function onQueryComplete(qa, results)
+	function reset()
 	{
-		if(mURLs == null)
-			mURLs = {};
-		foreach(row in results)
+		foreach( val in clone this.mCreatures )
 		{
-			if(row.len() >= 2)
+			val.destroy();
+		}
+
+		this.mCreatures = {};
+
+		foreach( val in clone this.mScenery )
+		{
+			val.destroy();
+		}
+
+		this.mScenery = {};
+		this.mCurrentZoneId = 0;
+		this.mCurrentZoneDefId = 0;
+		this.mCurrentPage = null;
+		this.mCreatureQueue = [];
+		this.mAssemblyQueue = [];
+		this.mAssemblingCreature = null;
+		this.mPages = [];
+		this.mLoadedTerrain = {};
+		this.mUnassembledIndex = {};
+		this.mBuildingCSMs = {};
+		this.mPendingAssemblyCount = 0;
+		this.mCurrentPage = null;
+		this.setCurrentTerrain(null);
+		::_creatureDefManager.reset();
+		::Assembler.flush(true);
+	}
+
+	function onCSMReady( name )
+	{
+		if (name in this.mBuildingCSMs)
+		{
+			delete this.mBuildingCSMs[name];
+		}
+	}
+
+	function onCSMDestroyed( name )
+	{
+		this._cancelCSMBuild(name);
+	}
+
+	function _notifyCSMBuilding( name )
+	{
+		this.mBuildingCSMs[name] <- true;
+	}
+
+	function _isCSMBuilding( name )
+	{
+		return name in this.mBuildingCSMs;
+	}
+
+	function _cancelCSMBuild( name )
+	{
+		if (name in this.mBuildingCSMs)
+		{
+			delete this.mBuildingCSMs[name];
+		}
+	}
+
+	function _nextSceneryListQuery()
+	{
+		if (this.mZoneQueriesQueue.len() > 0 && !this.mRetrievingZoneQuery)
+		{
+			local query = this.mZoneQueriesQueue[0];
+			this.mZoneQueriesQueue.remove(0);
+			this.mRetrievingZoneQuery = true;
+			::_Connection.sendQuery("scenery.list", query.callback, [
+				query.zoneID,
+				query.x,
+				query.z,
+				query.mode
+			]);
+		}
+	}
+
+	function getPageAssets( x, z, ... )
+	{
+		if (x < 0 || z < 0)
+		{
+			return;
+		}
+
+		local fetchcallback;
+
+		if (vargc > 0)
+		{
+			fetchcallback = vargv[0];
+		}
+
+		local assets = [];
+
+		if (fetchcallback)
+		{
+			this.mZoneQueriesQueue.append({
+				zoneID = this.mCurrentZoneDefId,
+				x = x,
+				z = z,
+				mode = "a",
+				callback = fetchcallback
+			});
+			return;
+		}
+		else
+		{
+			foreach( s in this.mScenery )
 			{
-				mURLs[row[0]] <- row[1];
+				local tpos = s.getTerrainPageCoords();
+
+				if (tpos.x == x && tpos.z == z)
+				{
+					if (this.Util.indexOf(assets, s.getType()) == null)
+					{
+						assets.push(s.getType());
+					}
+				}
 			}
 		}
-		mLoaded = true;
-		if(mPendingTag != "")
+
+		return assets;
+	}
+
+	function findSceneryObjects( Radius )
+	{
+		if (::_buildTool == null || ::_buildTool.mBuildNode == null)
 		{
-			LaunchURL(mPendingTag);
-			mPendingTag = "";
+			this.log.error("The Scenery Object Browser tool can only be used in Build Mode");
+			return null;
 		}
-	}
-	function onQueryError(qa, error)
-	{
-	}
-}
 
-_URLManager <- URLManager();
-
-function SortItemArray(a, b)
-{
-	if(a.intId > b.intId) return 1;
-	else if(a.intId < b.intId) return -1;
-	return 0;
-}
-
-function InputCommands::ItemLinks(args)
-{
-	local notFound = false;
-	if(args.len() > 0)
-	{
-		if(!(args[0] in ::InventoryMapping))
-			notFound = true;
+		return this.getAssetsAroundRadius(this._buildTool.mBuildNode.getWorldPosition(), Radius);
 	}
-	if(args.len() == 0 || notFound == true)
+
+	function getAssetsAroundRadius( AvatarPosition, Radius )
 	{
-		local ostr = "";
-		foreach(i, d in ::InventoryMapping)
+		local assets = [];
+
+		foreach( object in this.mScenery )
 		{
-			if(ostr.len() > 0)
-				ostr += ",";
-			ostr += i;
-		}
-		IGIS.info("No container specified. Use [" + ostr + "]");
-		return;
-	}
+			local Node = object.getNode();
 
-	local container = ::_ItemDataManager.getContents(args[0]);
-	if(!container.hasAllItems() )
-		return;
-
-	local extraData = false;
-	if(args.len() > 1)
-		extraData = true;
-
-	local arr = [];
-
-	local resultStr = "";
-	local count = 0;
-	foreach(itemId in container.mContents)
-	{
-		// The iterator, itemId, is a hex string of the inventory container/slot data
-		// for that item.  Because string sorts don't work properly, convert to integer.
-		// But keep it associated to its hex ID so we can use it to look up the item.
-
-		local tableEntry = {intId = ::atoi(itemId, 16), hexId = itemId};
-		arr.append(tableEntry);
-	}
-	arr.sort(SortItemArray);
-	if(args[0] == "buyback")
-		arr.reverse();
-
-	local ostr = "";
-	local count = 0;
-	foreach(i, d in arr)
-	{
-		// The ItemData() object returned by getItem() contains the information of a
-		// particular inventory slot, including look ID (refashioned) bind status,
-		// stack count, etc.
-		// The ItemDefData() object returned by getItemDef() contains the server
-		// properties of a specific item.  Name, flavor text, armor, damage,
-		// strength, etc.
-
-		local slotId = d.hexId;
-		local itemData = ::_ItemDataManager.getItem(slotId);
-		local itemDef = ::_ItemDataManager.getItemDef(itemData.mItemDefId);
-
-		// Fill out the [item] tag information from ID, Display Name, and Look ID.
-
-		local itemStr = "[item]" + itemDef.mID + ":" + itemDef.mDisplayName;
-		if(itemData.mItemLookDefId != 0)
-			itemStr += ":" + itemData.mItemLookDefId;
-		itemStr += "[/item]";
-
-		if(extraData == true)
-		{
-			itemStr += " Lv:" + itemDef.mLevel;
-			local qlev = itemDef.mQualityLevel;
-			switch(itemDef.mQualityLevel)
+			if (Node == null)
 			{
-			case 3: itemStr += " Rare"; break;
-			case 4: itemStr += " Epic"; break;
-			case 5: itemStr += " Legendary"; break;
-			case 6: itemStr += " Artifact"; break;
+				continue;
+			}
+
+			local SceneryNodePosition = Node.getPosition();
+			local Distance = AvatarPosition - SceneryNodePosition;
+
+			if (Distance.length() <= Radius.tofloat())
+			{
+				assets.push(object);
 			}
 		}
-		ostr += itemStr + "\r\n";
-		count++;
-	}
-	if(count > 0)
-	{
-		::System.setClipboard(ostr);
-		::IGIS.info( "Copied " + count + " item entries to clipboard.");
-	}
-	else
-	{
-		IGIS.info("No items in container.");
-	}
-}
 
-function InputCommands::SaveChat(args)
-{
-	local tabname = "none";
-	if(args.len() >= 1)
-		tabname = args[0].tostring().tolower();
+		return assets;
+	}
 
-	local ostr = "";
-	local tabs = 0;
-	local messages = 0;
-	ostr = "<html>\r\n<head><title>Chat Log</title></head>\r\n";
-	ostr += "<body style=\"color:#FFFFFF; background-color:#000000\">\r\n";
-	foreach( i, x in ::_ChatWindow.mTabContents )
+	function prefetchPages( node, dist, priority )
 	{
-		if(tabname == "none" || x.mName.tolower() == tabname)
+		if (::_avatar == null || ::_avatar.getNode() == null)
 		{
-		tabs++;
-
-		ostr += "<h1>" + x.mName + "</h1>\r\n";
-		foreach(li, ld in x.mLog)
-		{
-			local color = _ChatManager.getColor(ld.channel);
-			ostr += "<div style=\"color:#" + color + "\">";
-
-			ostr += ld.message + "</div>\r\n";
-			messages++;
+			return;
 		}
-		ostr += "<br><br><br>\r\n";
 
-		} //End tab check
+		local apos = ::_avatar.getNode().getPosition();
+		local tpos = {
+			x = (apos.x / this.mCurrentZonePageSize).tointeger(),
+			z = (apos.z / this.mCurrentZonePageSize).tointeger()
+		};
+
+		foreach( d in dist )
+		{
+			if (d > 0)
+			{
+				for( local x = -d; x <= d; x++ )
+				{
+					for( local y = -d; y <= d; y++ )
+					{
+						if (this.abs(x) == d || this.abs(y) == d)
+						{
+							this.getPageAssets(tpos.x + x, tpos.z + y, this.SceneryPreloadHandler(priority));
+						}
+					}
+				}
+			}
+			else if (dist == 0)
+			{
+				this.getPageAssets(tpos.x, tpos.z, this.SceneryPreloadHandler(priority));
+			}
+		}
 	}
-	ostr += "</body>\r\n</html>\r\n";
-	::System.setClipboard( ostr );
-	::IGIS.info( "Chat log saved to clipboard (" + messages + " messages in " + tabs + " tabs).");
-}
 
-//
-// EM - Trying to decompile Second Object fully ...
-//
+	function getPendingRequiredAssemblyCount()
+	{
+		local offsets = [
+			[
+				1,
+				1
+			],
+			[
+				-1,
+				-1
+			],
+			[
+				1,
+				0
+			],
+			[
+				0,
+				1
+			],
+			[
+				-1,
+				0
+			],
+			[
+				0,
+				-1
+			],
+			[
+				-1,
+				1
+			],
+			[
+				1,
+				-1
+			],
+			[
+				0,
+				0
+			]
+		];
+		local pending = 0;
+
+		if (::_avatar == null || ::_avatar.getNode() == null || this.mCurrentPage == null)
+		{
+			return null;
+		}
+
+		if (!this._avatar.isAssembled())
+		{
+			pending += 1;
+		}
+
+		local pending = 0;
+
+		foreach( o in offsets )
+		{
+			local x = this.mCurrentPage.x + o[0];
+			local z = this.mCurrentPage.z + o[1];
+			local state = this.PageState.FETCHREQUEST;
+			local page = this.getSceneryPage(this.mCurrentZoneId, x, z);
+
+			if (page)
+			{
+				state = page.getState();
+			}
+
+			switch(state)
+			{
+			case this.PageState.ERRORED:
+			case this.PageState.FETCHED:
+			case this.PageState.LOADING:
+				local n = page.getPendingSceneryCount();
+				pending += n;
+				break;
+
+			case this.PageState.READY:
+				break;
+
+			case this.PageState.FETCHREQUEST:
+				return null;
+				break;
+
+			default:
+				pending += 150;
+			}
+		}
+
+		return pending;
+	}
+
+	function prefetchAssets( node )
+	{
+		if (node == null)
+		{
+			return;
+		}
+
+		local page = this.Util.getTerrainPageName(node.getPosition());
+
+		if (page == null)
+		{
+			return;
+		}
+
+		local dist = this.getSceneryLoadPageRange();
+		local required_dists = [
+			0,
+			1
+		];
+		local low_dists = [];
+
+		for( local a = 2; a <= dist; a++ )
+		{
+			low_dists.append(a);
+		}
+
+		local fetch_dists = [];
+		fetch_dists = [
+			dist + 1,
+			dist + 2
+		];
+		this.log.debug("Prefetching assets for " + page + "...");
+	}
+
+	static function _lookup( table, id, kind )
+	{
+		local safeId;
+
+		if (!id)
+		{
+			return null;
+		}
+
+		safeId = id.tointeger();
+
+		if (safeId == 0)
+		{
+			this.log.warn("lookup of invalid " + kind + "id: " + id);
+			return null;
+		}
+
+		if (safeId in table)
+		{
+			return table[safeId];
+		}
+
+		table[safeId] <- this.SceneObject(safeId, kind);
+		return this.SceneObject(safeId, kind);
+	}
+
+	function getCreatureByName( name )
+	{
+		foreach( id, creature in this.mCreatures )
+		{
+			if (creature.getName() == name)
+			{
+				return creature;
+			}
+		}
+
+		return null;
+	}
+
+	function getCreatureByID( id )
+	{
+		return this._lookup(this.mCreatures, id, "Creature");
+	}
+
+	function getSceneryByID( id )
+	{
+		return this._lookup(this.mScenery, id, "Scenery");
+	}
+
+	function peekCreatureByID( id )
+	{
+		if (id in this.mCreatures)
+		{
+			return this.mCreatures[id];
+		}
+
+		return null;
+	}
+
+	function peekSceneryByID( id )
+	{
+		if (id in this.mScenery)
+		{
+			return this.mScenery[id];
+		}
+
+		return null;
+	}
+
+	function hasObject( type, id )
+	{
+		if (type == "Creature")
+		{
+			return id in this.mCreatures ? this.mCreatures[id] : null;
+		}
+
+		if (type == "Scenery")
+		{
+			return id in this.mScenery ? this.mScenery[id] : null;
+		}
+
+		if (type == "Assembling")
+		{
+			return id in this.mCreatures ? this.mCreatures[id] : null;
+		}
+
+		throw this.Exception("Invalid scene object type: " + type);
+	}
+
+	function hasCreature( id )
+	{
+		return this.hasObject("Creature", id);
+	}
+
+	function hasScenery( id )
+	{
+		return this.hasObject("Scenery", id);
+	}
+
+	function _remove( so )
+	{
+		local id = so.getID();
+
+		if (so in this.mUnassembledIndex)
+		{
+			delete this.mUnassembledIndex[so];
+		}
+
+		local index;
+		index = this.Util.indexOf(this.mAssemblyQueue, so);
+
+		if (index != null)
+		{
+			this.mAssemblyQueue.remove(index);
+		}
+
+		index = this.Util.indexOf(this.mCreatureQueue, so);
+
+		if (index != null)
+		{
+			this.mCreatureQueue.remove(index);
+		}
+
+		if (so == this.mAssemblingCreature)
+		{
+			this.mAssemblingCreature = null;
+		}
+
+		index = this.Util.indexOf(this.mDestroyQueue, so);
+
+		if (index != null)
+		{
+			this.mDestroyQueue.remove(index);
+		}
+
+		if (so.mObjectClass == "Creature" && id in this.mCreatures)
+		{
+			delete this.mCreatures[id];
+
+			foreach( i, s in this.mCreatures )
+			{
+				s.onOtherDestroy(so);
+			}
+		}
+		else if (so.mObjectClass == "Scenery" && id in this.mScenery)
+		{
+			delete this.mScenery[id];
+		}
+
+		if (so.isScenery())
+		{
+			foreach( p in this.mPages )
+			{
+				p.removeScenery(id);
+			}
+		}
+	}
+
+	function pickSceneObject( x, y, ... )
+	{
+		local flags = this.QueryFlags.ANY;
+
+		if (vargc > 0)
+		{
+			flags = vargv[0];
+		}
+
+		local canSelectLocked = false;
+
+		if (vargc > 1)
+		{
+			canSelectLocked = vargv[1];
+		}
+
+		local ray = this.Screen.getViewportRay(x, y);
+		local hits = this._scene.rayQuery(ray.origin, ray.dir, flags, true, false);
+		local so;
+		local h;
+
+		foreach( h in hits )
+		{
+			so = this.findSceneObject(h.object);
+
+			if (so && (!so.isLocked() || canSelectLocked))
+			{
+				return so;
+			}
+		}
+
+		return null;
+	}
+
+	function pickCreature( x, y, ... )
+	{
+		local excludeAvatar = false;
+
+		if (vargc > 0)
+		{
+			excludeAvatar = vargv[0];
+		}
+
+		local rate = 16;
+		local subrate = rate / 2;
+		local subrate2 = rate / 4;
+		local offsets = [
+			[
+				0,
+				0
+			],
+			[
+				-subrate2,
+				-subrate2
+			],
+			[
+				subrate2
+				subrate2
+			],
+			[
+				-subrate2,
+				subrate2
+			],
+			[
+				subrate2,
+				-subrate2
+			],
+			[
+				-subrate2,
+				0
+			],
+			[
+				subrate2,
+				0
+			],
+			[
+				0,
+				subrate2
+			],
+			[
+				0,
+				-subrate2
+			],
+			[
+				-subrate,
+				-subrate
+			],
+			[
+				subrate
+				subrate
+			],
+			[
+				-subrate,
+				subrate
+			],
+			[
+				subrate,
+				-subrate
+			],
+			[
+				-subrate,
+				0
+			],
+			[
+				subrate,
+				0
+			],
+			[
+				0,
+				subrate
+			],
+			[
+				0,
+				-subrate
+			]
+		];
+
+		foreach( o in offsets )
+		{
+			local ray = this.Screen.getViewportRay(x + o[0], y + o[1]);
+			local hits = this._scene.rayQuery(ray.origin, ray.dir, this.QueryFlags.ANY, false, false, 0, null, false);
+
+			foreach( h in hits )
+			{
+				local so = this.findSceneObject(h.object);
+
+				if (so && so.isCreature())
+				{
+					if (!excludeAvatar || so != ::_avatar)
+					{
+						return so;
+					}
+				}
+			}
+		}
+
+		return null;
+	}
+
+	function findSceneObject( movableObject )
+	{
+		if (!movableObject)
+		{
+			return null;
+		}
+
+		local so;
+		local node = movableObject.getParentSceneNode();
+
+		while (node != null && so == null)
+		{
+			local name = node.getName();
+			local loc = name.find("/");
+
+			if (loc)
+			{
+				local type = name.slice(0, loc);
+				local id = name.slice(loc + 1, name.len());
+
+				try
+				{
+					so = this.hasObject(type, id.tointeger());
+
+					if (so)
+					{
+						  // [038]  OP_POPTRAP        1      0    0    0
+						return so;
+					}
+				}
+				catch( err )
+				{
+				}
+			}
+
+			node = node.getParent();
+		}
+
+		return so;
+	}
+
+	function getAssemblyQueueSize()
+	{
+		return this.mAssemblyQueue.len();
+	}
+
+	function _calcDebugStatus( table )
+	{
+		local aCount = 0;
+		local uCount = 0;
+		local aItems = {};
+		local uItems = {};
+		local lods = [
+			0,
+			0,
+			0,
+			0,
+			0,
+			0
+		];
+
+		foreach( so in table )
+		{
+			local ass = so.mAssembler ? so.mAssembler.getAssemblerDesc() : "null";
+			local items;
+			local lod = so.getLOD();
+
+			if (lod == -1)
+			{
+				lod = 5;
+			}
+
+			lods[lod] += 1;
+
+			if (so.isAssembled())
+			{
+				aCount++;
+				items = aItems;
+			}
+			else
+			{
+				if (lod >= 4)
+				{
+					continue;
+				}
+
+				uCount++;
+				items = uItems;
+			}
+
+			if (ass in items)
+			{
+				items[ass] += 1;
+			}
+			else
+			{
+				items[ass] <- 1;
+			}
+		}
+
+		return {
+			aitems = aItems,
+			acount = aCount,
+			uitems = uItems,
+			ucount = uCount,
+			lods = lods
+		};
+	}
+
+	function getSceneryAssemblyStatus()
+	{
+		return this._calcDebugStatus(this.mScenery);
+	}
+
+	function getDebugStatusText( ... )
+	{
+		local str;
+		local s_status = this._calcDebugStatus(this.mScenery);
+		local c_status = this._calcDebugStatus(this.mCreatures);
+		str = "  --- Stats ---\n";
+		str += "    Scenery " + s_status.acount + " of " + this.mScenery.len() + " LOD=[" + this.Util.join(s_status.lods, ", ") + "]\n" + "    Creatures " + c_status.acount + " of " + this.mCreatures.len() + " LOD=[" + this.Util.join(c_status.lods, ", ") + "]\n";
+
+		if (vargc == 0 && !this.varcv[0])
+		{
+			return str;
+		}
+
+		if (s_status.uitems.len() > 0)
+		{
+			str += "  --- Unassembled Scenery ---\n";
+			local count = 0;
+
+			foreach( k, v in s_status.uitems )
+			{
+				count++;
+
+				if (count == 5)
+				{
+					if (vargv[0] == "brief")
+					{
+						str += "    ...";
+						break;
+					}
+
+					str += "\n";
+					count = 0;
+				}
+
+				if (vargv[0] == "brief")
+				{
+					str += "    " + k + " x " + v + "\n";
+				}
+				else
+				{
+					str += "    " + k + " x " + v;
+				}
+			}
+
+			str += "\n";
+		}
+
+		if (c_status.uitems.len() > 0)
+		{
+			str += "  --- Unassembled Creatures ---\n";
+			local count = 0;
+
+			foreach( k, v in c_status.uitems )
+			{
+				count++;
+
+				if (count == 5)
+				{
+					if (vargv[0] == "brief")
+					{
+						str += "...";
+						break;
+					}
+
+					str += "\n";
+					count = 0;
+				}
+
+				if (vargv[0] == "brief")
+				{
+					str += "    " + k + " x " + v + "\n";
+				}
+				else
+				{
+					str += "    " + k + " x " + v;
+				}
+			}
+
+			str += "\n";
+		}
+
+		return str;
+	}
+
+	mUnassembledScenery = [];
+	function getPendingAssemblyCount()
+	{
+		return this.mPendingAssemblyCount;
+	}
+
+	function getTotalAssemblyCount()
+	{
+		local total = 0;
+
+		foreach( p in this.mPages )
+		{
+			total += p.mTotalScenery;
+		}
+
+		return total;
+	}
+
+	function auditPendingAssemblyCount()
+	{
+		local count = 0;
+		this.mUnassembledScenery = [];
+
+		foreach( s in this.mScenery )
+		{
+			if (!s.mAssembled && s.mLODLevel <= 1)
+			{
+				local assembler = s.mAssembler;
+
+				if (assembler && assembler.getArchiveError() == null)
+				{
+					this.mUnassembledScenery.append(s);
+					count++;
+				}
+			}
+		}
+
+		if (this.mPendingAssemblyCount != count)
+		{
+			this.log.warn("SceneObjectManager.PendingAssemblyCount was incorrect! (" + this.mPendingAssemblyCount + " should be " + count + ")");
+		}
+
+		this.mPendingAssemblyCount = count;
+		return this.mPendingAssemblyCount;
+	}
+
+	function setAvatar( pID )
+	{
+		if (this._avatar)
+		{
+			this._avatar.setController("Creature");
+		}
+
+		::_tools.setActiveTool(::_playTool);
+		::gToolMode = "play";
+		::_avatar <- this.getCreatureByID(pID);
+		::_scene.setSoundListener(::_avatar.getNode());
+		::_avatar.onSetAvatar();
+		this.broadcastMessage("onAvatarSet");
+		::_avatar.setController("Avatar2");
+
+		if (this.gAvatar.headLight)
+		{
+			::_avatar.setHeadLight(true);
+		}
+	}
+
+	function queueAssembly( so, ... )
+	{
+		if (so.mAssemblyQueueTime != null)
+		{
+			return;
+		}
+
+		if (so == ::_avatar)
+		{
+			return;
+		}
+
+		if (so.getAssemblerError() != null)
+		{
+			return;
+		}
+
+		if (so.isCreature())
+		{
+			this.mCreatureQueue.append(so);
+		}
+		else
+		{
+			this.mAssemblyQueue.append(so);
+		}
+
+		so.mAssemblyQueueTime = this.System.currentTimeMillis();
+
+		if (vargc > 0)
+		{
+			so.mAssemblyQueueTime += vargv[0];
+		}
+	}
+
+	function _queueDestroy( so, destroy )
+	{
+		if (destroy)
+		{
+			this.mDestroyQueue.append(so);
+		}
+		else
+		{
+			local index = this.Util.indexOf(this.mDestroyQueue, so);
+
+			if (index != null)
+			{
+				this.mDestroyQueue.remove(index);
+			}
+		}
+	}
+
+	function _getNextCreatureToAssemble()
+	{
+		local a = ::_avatar;
+
+		if (this.mAssemblingCreature != null)
+		{
+			local assemblingAssembler = this.mAssemblingCreature.getAssembler();
+
+			if (assemblingAssembler)
+			{
+				if (!this.mAssemblingCreature.isAssembled() && assemblingAssembler.getReady() && this.mAssemblingCreature.getAssemblerError() == null)
+				{
+					return this.mAssemblingCreature;
+				}
+			}
+		}
+
+		local t = this.System.currentTimeMillis();
+		local apos = a ? a.getPosition() : null;
+		local readyList = [];
+
+		foreach( c in this.mCreatureQueue )
+		{
+			local assembler = c.getAssembler();
+			local hasNode = c.getNode() != null;
+			local timeGood = c.getAssemblyQueueTime() <= t;
+			local assemblerReady = assembler != null && assembler.getReady() != false;
+			local aposNull = apos == null;
+			local alwaysVisible = c.isAlwaysVisible();
+			local cpos = c.getPosition();
+			local distGood = false;
+
+			if (apos && hasNode && cpos)
+			{
+				local avatarToCreatureDistance = apos - cpos;
+				avatarToCreatureDistance = avatarToCreatureDistance.length();
+				distGood = avatarToCreatureDistance <= this.gCreatureVisibleRange;
+			}
+
+			if (assembler != null && hasNode && timeGood && assemblerReady && (aposNull || alwaysVisible || distGood))
+			{
+				readyList.append(c);
+			}
+		}
+
+		if (a)
+		{
+			if (!a.isAssembled() && a.mAssemblyQueueTime <= t)
+			{
+				this.mAssemblingCreature = a;
+				this.mAssemblingCreature.mAssemblyQueueTime = null;
+				local idx = this.Util.indexOf(this.mCreatureQueue, this.mAssemblingCreature);
+
+				if (idx >= 0)
+				{
+					this.mCreatureQueue.remove(idx);
+				}
+
+				return a;
+			}
+
+			local avatarPos = ::_avatar.getPosition();
+			local f = function ( c1, c2 ) : ( avatarPos )
+			{
+				if (c1 == c2)
+				{
+					return 0;
+				}
+
+				local pos1 = c1.getPosition();
+				local pos2 = c2.getPosition();
+
+				if (pos1 == null || pos2 == null || avatarPos == null)
+				{
+					return 0;
+				}
+
+				local dist1 = pos1.squaredDistance(avatarPos);
+				local dist2 = pos2.squaredDistance(avatarPos);
+
+				if (dist1 < dist2)
+				{
+					return -1;
+				}
+
+				if (dist1 > dist2)
+				{
+					return 1;
+				}
+
+				return 0;
+			};
+			this.Util.bubbleSort(readyList, f);
+		}
+
+		if (readyList.len() == 0)
+		{
+			this.mAssemblingCreature = null;
+			return null;
+		}
+
+		this.mAssemblingCreature = readyList[0];
+		this.mAssemblingCreature.mAssemblyQueueTime = null;
+		this.mCreatureQueue.remove(this.Util.indexOf(this.mCreatureQueue, this.mAssemblingCreature));
+		return this.mAssemblingCreature;
+	}
+
+	function assembleCreature( ignoreCreature )
+	{
+		if (this.mAssemblyQueueQuota > 0)
+		{
+			local t0 = this.System.currentTimeMillis();
+			local creature = this._getNextCreatureToAssemble();
+
+			if (!creature || creature == ignoreCreature)
+			{
+				return null;
+			}
+
+			local assembler = creature.getAssembler();
+
+			if (assembler == null)
+			{
+				this.mAssemblingCreature = null;
+			}
+			else if (assembler.assemble(creature) == true || creature.getAssemblerError() != null)
+			{
+				if (creature.getAssemblerError() != null)
+				{
+					this.log.warn("******************************************************");
+					this.log.warn("***>> assembler error " + creature.getAssemblerError());
+					this.log.warn("******************************************************");
+				}
+
+				this.mAssemblingCreature = null;
+			}
+
+			local assembleTime = this.System.currentTimeMillis() - t0;
+
+			if (assembleTime >= 10)
+			{
+				this.log.warn("*** A creature took a long time to assemble: " + creature.getName() + " (" + assembleTime + " ms)");
+			}
+
+			this.mAssemblyQueueQuota -= assembleTime > 0 ? assembleTime : 1;
+			return creature;
+		}
+
+		return null;
+	}
+
+	
+	function assembleCreatures()
+	{
+		local lastCreatureAssembled = null;
+
+		// Assemble creatures until we run out of creatures or run out of quota:
+		while( mAssemblyQueueQuota > 0 )
+		{
+			local newLastCreatureAssembled = assembleCreature(lastCreatureAssembled);
+						
+			if(!newLastCreatureAssembled || lastCreatureAssembled==newLastCreatureAssembled)
+				return;
+			
+			lastCreatureAssembled = newLastCreatureAssembled;
+		}	
+	}
+
+	function updateAssemblyQueue()
+	{
+		local state = ::_stateManager.peekCurrentState();
+		local currentState = "mClassName" in state ? state.mClassName : "";
+
+		if (this.LoadScreen.isVisible())
+		{
+			this.mAssemblyQueueQuota = 75;
+		}
+		else if (currentState == "CharacterSelectionState")
+		{
+			this.mAssemblyQueueQuota = 10;
+		}
+		else if (this.gToolMode == "build")
+		{
+			this.mAssemblyQueueQuota = 10;
+		}
+		else
+		{
+			this.mAssemblyQueueQuota = this.Math.clamp(this.mAssemblyQueueQuota + 1, -25, 1);
+		}
+
+		if (this.mAssemblyQueueQuota < 5)
+		{
+			this.mAssemblyQueueQuota = 5;
+		}
+
+		local retries = [];
+		local startQuota = this.mAssemblyQueueQuota;
+		local startQueueLen = this.mAssemblyQueue.len();
+		this.assembleCreatures();
+
+		while (this.mAssemblyQueueQuota > 0 && this.mAssemblyQueue.len() > 0)
+		{
+			local t0 = this.System.currentTimeMillis();
+			local so = this.mAssemblyQueue[0];
+			this.mAssemblyQueue.remove(0);
+
+			if (so != ::_avatar)
+			{
+				if (!so.getNode())
+				{
+					so.mAssemblyQueueTime = null;
+				}
+				else if (so.mAssemblyQueueTime > t0)
+				{
+					retries.append(so);
+				}
+				else
+				{
+					so.mAssemblyQueueTime = null;
+					local res = so.reassemble(true);
+
+					if (typeof res == "integer")
+					{
+						so.mAssemblyQueueTime = t0 + res;
+						retries.append(so);
+					}
+					else if (!res && so.getAssemblerError() == null)
+					{
+						local delay = 250 + this.mRandom.nextInt(150);
+						so.mAssemblyQueueTime = t0 + delay;
+						retries.append(so);
+					}
+
+					local t = this.System.currentTimeMillis();
+					local assembleTime = t - t0;
+					this.mAssemblyQueueQuota -= assembleTime > 0 ? assembleTime : 1;
+
+					if (assembleTime >= 10)
+					{
+						this.log.warn("An object took a long time to assemble: " + so.getName() + " (" + assembleTime + " ms) - " + so);
+					}
+				}
+			}
+		}
+
+		foreach( so in retries )
+		{
+			if (typeof so.mAssemblyQueueTime != "integer")
+			{
+				throw this.Exception("Whoops, internal scheduling error");
+			}
+
+			this.mAssemblyQueue.append(so);
+		}
+	}
+
+	function onEnterFrame()
+	{
+		this.pushNextSceneryRequest();
+		this.updateAssemblyQueue();
+		this.updatePendingPages();
+		this.loadNearbyObjects();
+		this._nextSceneryListQuery();
+	}
+
+	function unloadSceneryInZone( zoneX, zoneZ )
+	{
+		local removeList = [];
+
+		foreach( k, v in this.mScenery )
+		{
+			local coords = v.getSceneryPageCoords();
+
+			if (coords.x == zoneX && coords.z == zoneZ)
+			{
+				::_sceneObjectManager._queueDestroy(v, true);
+			}
+		}
+	}
+
+	function getSceneryLoadPageRange()
+	{
+		local pagedistance = (this._CameraObject.getFarClipDistance() / this.mCurrentZonePageSize).tointeger();
+		pagedistance = pagedistance > 1 ? pagedistance : 1;
+		pagedistance = pagedistance < 4 ? pagedistance : 4;
+		return pagedistance;
+	}
+
+	function getSceneryUnloadPageRange()
+	{
+		return this.getSceneryLoadPageRange() + 1;
+	}
+
+	function getSceneryPageIndex( pos )
+	{
+		if (pos.x < 0 || pos.z < 0)
+		{
+			local breakhere;
+		}
+
+		return {
+			x = this.floor(pos.x / this.mCurrentZonePageSize).tointeger(),
+			z = this.floor(pos.z / this.mCurrentZonePageSize).tointeger()
+		};
+	}
+
+	function unloadFarPages()
+	{
+		local maxdist = this.getSceneryUnloadPageRange();
+		local pages = [];
+
+		foreach( p in this.mPages )
+		{
+			local zoneX = p.getX();
+			local zoneZ = p.getZ();
+			local xdist = this.abs(zoneX - this.mCurrentPage.x);
+			local zdist = this.abs(zoneZ - this.mCurrentPage.z);
+
+			if (xdist > maxdist || zdist > maxdist)
+			{
+				this.log.debug("Unloading page " + zoneX + ", " + zoneZ + "...");
+				this.unloadSceneryInZone(zoneX, zoneZ);
+			}
+			else
+			{
+				pages.append(p);
+			}
+		}
+
+		this.mPages = pages;
+	}
+
+	function getSceneryInRange( scenery )
+	{
+		if (this.mCurrentPage == null)
+		{
+			return false;
+		}
+
+		local coords = scenery.getSceneryPageCoords();
+
+		if (!coords || !this.mCurrentPage)
+		{
+			return false;
+		}
+
+		local maxdist = this.getSceneryUnloadPageRange();
+		local xdist = this.abs(coords.x - this.mCurrentPage.x);
+		local zdist = this.abs(coords.z - this.mCurrentPage.z);
+
+		if (xdist > maxdist || zdist > maxdist)
+		{
+			return false;
+		}
+
+		return true;
+	}
+
+	function loadNearbyObjects()
+	{
+		local node;
+
+		if (::_loadNode == null)
+		{
+			if (::_avatar == null)
+			{
+				return;
+			}
+
+			node = ::_avatar.getNode();
+		}
+		else
+		{
+			node = ::_loadNode;
+		}
+
+		local coord = this.getSceneryPageIndex(node.getPosition());
+		local pagedistance = this.getSceneryLoadPageRange();
+		local a = ::_avatar;
+
+		if (::_avatar != null && ::_avatar.mLastServerUpdate != null && (this.mCurrentPage == null || coord.x != this.mCurrentPage.x || coord.z != this.mCurrentPage.z))
+		{
+			this.mCurrentPage = coord;
+			this.unloadFarPages();
+
+			for( local x = coord.x - pagedistance; x <= coord.x + pagedistance; x++ )
+			{
+				for( local z = coord.z - pagedistance; z <= coord.z + pagedistance; z++ )
+				{
+					this.queryScenery(x, z);
+				}
+			}
+
+			local buildScreen = this.Screens.get("BuildScreen", false);
+
+			if (buildScreen)
+			{
+				if (::_buildTool)
+				{
+					local buildNode = ::_buildTool.getBuildNode();
+
+					if (buildNode)
+					{
+						buildScreen.updateEnvironmentFromSceneNode(buildNode);
+					}
+				}
+			}
+
+			this.prefetchAssets(node);
+		}
+	}
+
+	function _detectGarbageCreatures()
+	{
+		if (::_avatar == null)
+		{
+			return;
+		}
+
+		local apos = ::_avatar.getPosition();
+
+		foreach( c in this.mCreatures )
+		{
+			if (c == ::_avatar)
+			{
+				continue;
+			}
+
+			if (::partyManager.isCreaturePartyMember(c))
+			{
+				continue;
+			}
+
+			if (c != ::_avatar && c.getZoneID() != this.mCurrentZoneId)
+			{
+				c.destroy();
+				continue;
+			}
+
+			local serverDistance = this.Math.manhattanDistanceXZ(apos, c.getPosition());
+
+			if (serverDistance > this.gServerListenDistance)
+			{
+				c.destroy();
+			}
+		}
+	}
+
+	function onNextFrame()
+	{
+		local t0 = this.System.currentTimeMillis();
+
+		for( local timeQuota = 5; this.mDestroyQueue.len() > 0;  )
+		{
+			local t = this.System.currentTimeMillis();
+
+			if (t - t0 > timeQuota)
+			{
+				break;
+			}
+
+			local so = this.mDestroyQueue[0];
+			this.mDestroyQueue.remove(0);
+			so.destroy();
+		}
+	}
+
+	function onExitFrame()
+	{
+	}
+
+	function onZoneUpdate( newZoneId, zoneDefId, zonePageSize, mask )
+	{
+		if (mask & this.ZoneUpdateFlags.ENTERING_ZONE)
+		{
+			::_loadScreenManager.setLoadScreenVisible(true, true);
+
+			if (::_avatar)
+			{
+				::_avatar.setTargetObject(null);
+				::_avatar.setVisibleWeapon(this.VisibleWeaponSet.NONE, false);
+				local anim_handler = ::_avatar.getAnimationHandler();
+
+				if (anim_handler)
+				{
+					anim_handler.reset();
+				}
+			}
+
+			if (zonePageSize == 0)
+			{
+				this.gPreSimWaiting = true;
+				return false;
+			}
+		}
+
+		this.gPreSimWaiting = false;
+
+		if (this.mCurrentZoneId == newZoneId)
+		{
+			return false;
+		}
+
+		this.mCurrentZoneId = newZoneId;
+		this.mCurrentZoneDefId = zoneDefId;
+		this.mCurrentZonePageSize = zonePageSize;
+
+		if (mask & this.ZoneUpdateFlags.PARTITION_TRANSFER)
+		{
+			foreach( p in this.mPages )
+			{
+				p.setZoneID(this.mCurrentZoneId);
+			}
+
+			return;
+		}
+		else
+		{
+			this.mCurrentPage = null;
+			this.mPages = [];
+		}
+
+		this.log.debug("Zone set to " + newZoneId + ", destroying everything in " + this.mCurrentZoneId);
+		this.mCreatureQueue = [];
+		this.mAssemblingCreature = null;
+
+		if ("setTerrainBufferDistance" in this.Scene)
+		{
+			this._scene.setTerrainBufferDistance(zonePageSize + 350);
+		}
+
+		local list = [];
+		local id;
+		local so;
+
+		foreach( id, so in this.mScenery )
+		{
+			list.append(so);
+		}
+
+		foreach( id, so in this.mCreatures )
+		{
+			if (so != this._avatar)
+			{
+				list.append(so);
+			}
+		}
+
+		// Avatar needs to be reassembled to ensure they won't clip through props.
+		//::_avatar.reassemble();
+
+		foreach( so in list )
+		{
+			so.destroy();
+		}
+
+		this.Assert.isEqual(this.mScenery.len(), 0);
+		this.Assert.isEqual(this.mCreatures.len(), ::_avatar == null ? 0 : 1);
+		::_tutorialManager.onZoneUpdate(zoneDefId);
+		this.broadcastMessage("onZoneUpdate", newZoneId, zoneDefId);
+		return true;
+	}
+
+	function _updateLodBucket( so, oldLod, newLod )
+	{
+		if (so.mAssembled || so.getAssemblerError() != null || so.getObjectClass() != "Scenery")
+		{
+			return;
+		}
+
+		if (oldLod <= this.NEARBY_LOD && newLod > this.NEARBY_LOD)
+		{
+			this.mPendingAssemblyCount--;
+		}
+		else if (oldLod > this.NEARBY_LOD && newLod <= this.NEARBY_LOD)
+		{
+			this.mPendingAssemblyCount++;
+		}
+	}
+
+	function _updateAssemblyStatus( so, status )
+	{
+		this.log.debug("Assembly of " + so + " <- " + status);
+
+		if (so.getObjectClass() == "Scenery")
+		{
+			if (status)
+			{
+				if (so.getLOD() <= this.NEARBY_LOD)
+				{
+					this.mPendingAssemblyCount--;
+				}
+			}
+			else if (so.getLOD() <= this.NEARBY_LOD)
+			{
+				this.mPendingAssemblyCount++;
+			}
+		}
+	}
+
+	function _terrainPageName( pageX, pageZ )
+	{
+		local terrain = this.getCurrentTerrainBase();
+		return terrain + "_x" + pageX + "y" + pageZ;
+	}
+
+	function pushNextSceneryRequest()
+	{
+		local page;
+
+		foreach( p in this.mPages )
+		{
+			if (p.getState() == this.PageState.REQUESTED)
+			{
+				return;
+			}
+
+			if (p.getState() == this.PageState.PENDINGREQUEST)
+			{
+				page = p;
+			}
+		}
+
+		if (page == null)
+		{
+			return;
+		}
+
+		local pageX = page.getX();
+		local pageZ = page.getZ();
+		this.log.debug("Requesting objects for page " + pageX + ", " + pageZ + " from server...");
+		::_Connection.sendQuery("scenery.list", this.SceneryListHandler(this.mCurrentZoneId, pageX, pageZ), [
+			this.mCurrentZoneDefId,
+			pageX,
+			pageZ
+		]);
+		page.setState(this.PageState.REQUESTED);
+	}
+
+	function queryScenery( pageX, pageZ )
+	{
+		if (this.isPageRequested(this.mCurrentZoneId, pageX, pageZ))
+		{
+			return;
+		}
+
+		this.mPages.append(this.PageEntry(this.mCurrentZoneId, pageX, pageZ));
+	}
+
+	function onTerrainPageLoaded( pageX, pageZ, bounds )
+	{
+		this.mLoadedTerrain[pageX + "_" + pageZ] <- {
+			x = pageX,
+			z = pageZ,
+			mode = "Loaded"
+		};
+		this._root.updateMiniMapBackground();
+	}
+
+	function onTerrainPageError( pageX, pageZ )
+	{
+		local name = pageX + "_" + pageZ;
+
+		if (name in this.mLoadedTerrain)
+		{
+			return;
+		}
+
+		this.mLoadedTerrain[name] <- {
+			x = pageX,
+			z = pageZ,
+			mode = "Error"
+		};
+	}
+
+	function onTerrainPageUnloaded( pageX, pageZ, bounds )
+	{
+		local name = pageX + "_" + pageZ;
+
+		if (name in this.mLoadedTerrain)
+		{
+			delete this.mLoadedTerrain[name];
+		}
+	}
+
+	function onTerrainTileLoaded( pageX, pageZ, tileX, tileZ, bounds )
+	{
+	}
+
+	function onTerrainTileUnloaded( pageX, pageZ, tileX, tileZ, bounds )
+	{
+	}
+
+	function getCurrentZoneID()
+	{
+		return this.mCurrentZoneId;
+	}
+
+	function getCurrentZoneDefID()
+	{
+		return this.mCurrentZoneDefId;
+	}
+
+}
 
 class this.SceneObject extends this.MessageBroadcaster
 {
@@ -5954,30 +7266,128 @@ class this.SceneObject extends this.MessageBroadcaster
 
 }
 
-// Particles attached to props
-this.SceneObject.mParticleAttachments <- {};
-this.SceneObject.detachParticleSystem <- function(tag)
+class this.SceneObjectSelection extends this.MessageBroadcaster
 {
-	if(tag in this.mParticleAttachments)
+	constructor()
 	{
-		local particles = this.mParticleAttachments[tag];
-		particles[0].destroy();
-		particles[1].destroy();
-		delete this.mParticleAttachments[tag];
+		this.MessageBroadcaster.constructor();
+		this.mObjects = [];
 	}
-}
-this.SceneObject.attachParticleSystem <- function(name, tag, size)
-{
-		// TODO make more unique
-		local uniqueName = this.mNode.getName() + "/" + name;
-		local particle = ::_scene.createParticleSystem(uniqueName, name);
-		particle.setVisibilityFlags(this.VisibilityFlags.ANY);
-		local particleNode = this.mNode.createChildSceneNode();
-		particleNode.attachObject(particle);
-		particleNode.setScale(this.Vector3(size, size, size));
-		particle.setVisible(this.mAssembled);
-		this.mParticleAttachments[tag] <- [particle, particleNode];
-		return uniqueName;
-}
 
+	function len()
+	{
+		return this.mObjects.len();
+	}
+
+	function objects( ... )
+	{
+		if (vargc == 0)
+		{
+			return clone this.mObjects;
+		}
+
+		local objectClass = vargv[0];
+		local so;
+		local result = [];
+
+		foreach( so in this.mObjects )
+		{
+			if (so.getObjectClass() == objectClass)
+			{
+				result.append(so);
+			}
+		}
+
+		return result;
+	}
+
+	function contains( so )
+	{
+		return this.indexOf(so) != null;
+	}
+
+	function indexOf( so )
+	{
+		local idx;
+		local o;
+
+		if (typeof so == "integer")
+		{
+			foreach( idx, o in this.mObjects )
+			{
+				if (o.getID() == so)
+				{
+					return idx;
+				}
+			}
+		}
+		else if (typeof so == "string")
+		{
+			foreach( idx, o in this.mObjects )
+			{
+				if (o.getNodeName() == so)
+				{
+					return idx;
+				}
+			}
+		}
+		else
+		{
+			foreach( idx, o in this.mObjects )
+			{
+				if (o == so)
+				{
+					return idx;
+				}
+			}
+		}
+
+		return null;
+	}
+
+	function add( so )
+	{
+		local idx = this.indexOf(so);
+
+		if (idx != null)
+		{
+			return;
+		}
+
+		this.mObjects.append(so);
+		this.Util.setNodeShowBoundingBox(so.getNode(), true);
+		this.broadcastMessage("objectAdded", this, so);
+	}
+
+	function remove( so )
+	{
+		local idx = this.indexOf(so);
+
+		if (idx == null)
+		{
+			return null;
+		}
+
+		so = this.mObjects[idx];
+		this.mObjects.remove(idx);
+		this.Util.setNodeShowBoundingBox(so.getNode(), false);
+		this.broadcastMessage("objectRemoved", this, so);
+		return so;
+	}
+
+	function clear()
+	{
+		local so;
+
+		foreach( so in this.mObjects )
+		{
+			this.broadcastMessage("objectRemoved", this, so);
+			this.Util.setNodeShowBoundingBox(so.getNode(), false);
+		}
+
+		this.mObjects = [];
+	}
+
+	mObjects = null;
+}
 

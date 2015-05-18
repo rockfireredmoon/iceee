@@ -257,6 +257,7 @@ public:
 
 	vector<SimulatorThread*> RegSim;
 	list<QuestScript::QuestScriptPlayer> questScriptList;
+	list<QuestScript::QuestNutPlayer*> questNutScriptList;
 
 	list<int> RemovedProps;
 
@@ -332,7 +333,7 @@ public:
 
 	CreatureInstance* SpawnCreate(CreatureInstance * sourceActor, int CDefID);
 	CreatureInstance* SpawnGeneric(int CDefID, int x, int y, int z, int facing, int flags);
-	void SpawnAtProp(int CDefID, int PropID, int duration, int elevationOffset);
+	int SpawnAtProp(int CDefID, int PropID, int duration, int elevationOffset);
 	void CreatureDelete(int CreatureID);
 
 	void EraseAllCreatureReference(CreatureInstance *object);

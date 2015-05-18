@@ -747,7 +747,12 @@ CreatureInstance * ActiveInstance :: LoadPlayer(CreatureInstance *source, Simula
 		PlayerList.back()._AddStatusList(StatusEffects::DEAD, -1);
 
 	//SimList.push_back(SimIndex);
+
+	//Now we can active the new Squirrel quest scripts in this
+	newItem.charPtr->questJournal.activeQuests.StartScript(&PlayerList.back());
+
 	RebuildPlayerList();
+
 
 	//Notify the spawn management system to activate these tiles.
 	int tx = source->CurrentX / SpawnTile::SPAWN_TILE_SIZE;
@@ -1907,13 +1912,13 @@ CreatureInstance* ActiveInstance :: SpawnGeneric(int CDefID, int x, int y, int z
 	return retPtr;
 }
 
-void ActiveInstance :: SpawnAtProp(int CDefID, int PropID, int duration, int elevationOffset)
+int ActiveInstance :: SpawnAtProp(int CDefID, int PropID, int duration, int elevationOffset)
 {
 	CreatureDefinition *cdef = CreatureDef.GetPointerByCDef(CDefID);
 	if(cdef == NULL)
 	{
 		g_Log.AddMessageFormat("[ERROR] SpawnAtProp() creature def not found: %d", CDefID);
-		return;
+		return -1;
 	}
 
 	/*
@@ -1939,7 +1944,7 @@ void ActiveInstance :: SpawnAtProp(int CDefID, int PropID, int duration, int ele
 	if(so == NULL)
 	{
 		g_Log.AddMessageFormat("[ERROR] SpawnAtProp() prop not found: %d", PropID);
-		return;
+		return -1;
 	}
 
 	CreatureInstance newItem;
@@ -1976,11 +1981,13 @@ void ActiveInstance :: SpawnAtProp(int CDefID, int PropID, int duration, int ele
 
 	int size = PrepExt_GeneralMoveUpdate(GSendBuf, add);
 	LSendToLocalSimulator(GSendBuf, size, x, z);
+	return newItem.CreatureID;
 }
 
 
 void ActiveInstance :: EraseAllCreatureReference(CreatureInstance *object)
 {
+
 	object->UnloadResources();
 	pendingOperations.UpdateList_Remove(object);
 	pendingOperations.DeathList_Remove(object);
@@ -2852,6 +2859,27 @@ void ActiveInstance :: RunScripts(void)
 				questScriptList.erase(it++);
 		}
 	}
+
+	if(questNutScriptList.empty() == false)
+	{
+		std::list<QuestScript::QuestNutPlayer*>::iterator it;
+		it = questNutScriptList.begin();
+		while(it != questNutScriptList.end())
+		{
+			QuestScript::QuestNutPlayer * p = *it;
+			if(p->active == true)
+			{
+				p->ExecQueue();
+				++it;
+			}
+			else
+			{
+				g_QuestNutManager.RemoveActiveScript(p);
+				questNutScriptList.erase(it++);
+			}
+		}
+	}
+
 
 	/* DISABLED, NOT FINISHED
 	if(mConcurrentInstanceScripts.empty() == false)

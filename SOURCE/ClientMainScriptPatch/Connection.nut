@@ -2938,7 +2938,7 @@ class this.Connection extends this.MessageBroadcaster
 				local effectY = data.getFloat();
 				local effectZ = data.getFloat();
 				local size = data.getFloat();
-				print("ICE: attach effect: " + effectName + " " + effectTag + " " + sceneryId + " " + effectX + "," + effectY + "," + effectZ);
+				print("ICE: attach effect: " + effectName + " " + effectTag + " " + sceneryId + " " + effectX + "," + effectY + "," + effectZ + "\n");
 				if(effectType == 1) {
 				
 					// Effect Type 1 - Add a particle effect to the prop				
@@ -2947,8 +2947,12 @@ class this.Connection extends this.MessageBroadcaster
 				else if(effectType == 2) {
 					// TODO store the old asset somewhere
 					// TODO handle multiple asset changes
-					this.log.debug("Scenery update: " + scenery + ", " + effectName);
-					scenery.setScale(this.Vector3(size, size, size));
+					local previousAsset = scenery.mPreviousAsset;
+					if(previousAsset == null) {
+						scenery.mPreviousAsset = scenery.getTypeString();
+						scenery.mPreviousScale = scenery.getScale();
+					}
+					this.log.debug("Scenery update: " + scenery + ", " + effectName + " (" + previousAsset + ")\n");
 					local a = this.AssetReference(effectName);
 					local ass = a.getAsset();
 					if (ass == "")
@@ -2960,11 +2964,12 @@ class this.Connection extends this.MessageBroadcaster
 					{
 						scenery.reassemble();
 					}
+					scenery.setScale(this.Vector3(size, size, size));
 					scenery.fireUpdate();
 				}
 			}
 			else {
-				print("ICE: No scenery with ID of " + sceneryId + " (" + effectTag + ")");
+				print("ICE: No scenery with ID of " + sceneryId + " (" + effectTag + ")\n");
 			}
 			break;
 		case 2:
@@ -2975,6 +2980,19 @@ class this.Connection extends this.MessageBroadcaster
 			if(scenery) {
 				if(effectType == 1) {
 					scenery.detachParticleSystem(effectTag)
+				}
+				else {
+					local previousAsset = scenery.mPreviousAsset;
+					if(previousAsset != null) {
+					
+						print("ICE: Restoring asset of  scenery with ID of " + sceneryId + " to " + effectTag + ")\n");
+						if (scenery.setTypeFromString(previousAsset))
+						{
+							scenery.reassemble();
+						}
+						scenery.setScale(scenery.mPreviousScale);
+						scenery.fireUpdate();
+					}
 				}
 				print("ICE: remove effect: " + effectTag + " " + sceneryId);
 			}
