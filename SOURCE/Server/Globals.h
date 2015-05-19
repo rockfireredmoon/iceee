@@ -74,7 +74,9 @@ enum CDefHintEnum
 	CDEF_HINT_CRAFTER				= 64,
 	CDEF_HINT_CLANREGISTRAR			= 128,
 	CDEF_HINT_VAULT					= 256,  //From 0.8.6+
-	CDEF_HINT_CREDIT_SHOP			= 512   //From 0.8.6+
+	CDEF_HINT_CREDIT_SHOP			= 512,   //From 0.8.6+
+	CDEF_HINT_USABLE				= 1024,  //From 0.8.6+ IceEE  //From 0.8.6+
+	CDEF_HINT_USABLE_SPARKLY		= 2048  //From 0.8.6+ IceEE
 };
 
 struct VisibleWeaponSet

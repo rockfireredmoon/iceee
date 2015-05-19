@@ -5996,7 +5996,14 @@ void SimulatorThread :: handle_query_creature_isusable(void)
 
 				status = (hasReq == true) ? "Y" : "N";
 			}
-			if(target->HasStatus(StatusEffects::HENGE))
+
+
+			CreatureDefinition *cdef = CreatureDef.GetPointerByCDef(target->CreatureDefID);
+			if(cdef != NULL && (cdef->DefHints & CDEF_HINT_USABLE))
+				status = "Y";
+			else if(cdef != NULL && (cdef->DefHints & CDEF_HINT_USABLE_SPARKLY))
+				status = "Q";
+			else if(target->HasStatus(StatusEffects::HENGE))
 				status = "Y";
 		}
 		WritePos = PrepExt_QueryResponseString(SendBuf, query.ID, status);
@@ -8042,7 +8049,7 @@ int SimulatorThread :: handle_query_creature_use(void)
 	}
 
 	//For any other interact besides henge, notify the instance on the off chance that it needs to do something.
-	creatureInst->actInst->ScriptCallUse(CDef);
+	creatureInst->actInst->ScriptCallUse(creatureInst->CreatureID, CDef);
 
 	int QuestID = 0;
 	int QuestAct = 0;
@@ -8088,6 +8095,7 @@ int SimulatorThread :: handle_query_creature_use(void)
 					}
 				}
 			}
+
 			creatureInst->LastUseDefID = CDef;
 			int size = creatureInst->NormalInteractObject(SendBuf, intObj);
 			if(size > 0)
@@ -8095,6 +8103,12 @@ int SimulatorThread :: handle_query_creature_use(void)
 
 			return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
 		}
+
+
+		CreatureDefinition *cdef = CreatureDef.GetPointerByCDef(target->CreatureDefID);
+		if(cdef != NULL && ((cdef->DefHints & CDEF_HINT_USABLE) ||(cdef->DefHints & CDEF_HINT_USABLE_SPARKLY)))
+			return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
+
 
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Cannot use object.");
 	}

@@ -190,6 +190,10 @@ ComponentIndex["Par-BigExplosion"] <- "Prop-SpecialFX";
 ComponentIndex["Item-IceEESage_Crystal"] <- "Item-IceEESage_Crystal";
 ComponentIndex["Item-IceEEBeta_Flag"] <- "Item-IceEEBeta_Flag";
 
+ComponentIndex["Prop-CTF_Red"] <- "Prop-CTF";
+ComponentIndex["Prop-CTF_Blue"] <- "Prop-CTF";
+
+
 /* 0.8.8+ */
 
 /*  Bldg-Hall_Of_Bones1 doesn't seem to work in 0.8.6.

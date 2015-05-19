@@ -40,6 +40,8 @@ public:
 
 	// Exposed to scripts
 //	void Queue(Sqrat::Function function, int fireDelay);
+	void RestoreOriginalAppearance(int CID);
+	void AttachItem(int CID, const char *type, const char *node);
 	void UnremoveProps();
 	void UnremoveProp(int propID);
 	bool RemoveProp(int propID);
@@ -70,6 +72,7 @@ private:
 	ActiveInstance *actInst;
 	std::vector<SceneryEffect> activeEffects;
 	CreatureInstance* GetNPCPtr(int CID);
+	CreatureInstance* GetCreaturePtr(int CID);
 	void DoUnremoveProp(int propID);
 
 };

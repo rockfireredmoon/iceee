@@ -1394,3 +1394,56 @@ Type=warp
 ObjectID=7794
 WarpTo=1678,424,8212,75
 Message=Entering upper floor
+
+;
+; CTF - Redemption
+;
+
+[ENTRY]
+Name=redemption_red_base_flag
+Type=script
+ObjectID=7838
+UseTime=500
+Message=Taking the red flag
+ScriptFunction=red_flag_taken
+
+[ENTRY]
+Name=redemption_red_base_enemy_flag
+Type=script
+ObjectID=7842
+UseTime=500
+Message=Flying the blue flag!
+ScriptFunction=blue_flag_won
+
+[ENTRY]
+Name=redemption_blue_base_flag
+Type=script
+ObjectID=7839
+UseTime=500
+Message=Taking the blue flag
+ScriptFunction=blue_flag_taken
+
+[ENTRY]
+Name=redemption_blue_base_enemy_flag
+Type=script
+ObjectID=7843
+UseTime=500
+Message=Flying the red flag!
+ScriptFunction=red_flag_won
+
+[ENTRY]
+Name=redemption_steal_red_flag
+Type=script
+ObjectID=7840
+UseTime=500
+Message=Stealing the red flag
+ScriptFunction=red_flag_stolen
+
+[ENTRY]
+Name=redemption_steal_blue_flag
+Type=script
+ObjectID=7841
+UseTime=500
+Message=Stealing the blue flag
+ScriptFunction=blue_flag_stolen
+

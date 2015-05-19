@@ -1,0 +1,5 @@
+<?xml version="1.0" ?>
+<Component id="Prop-CTF_Blue" xmlns="http://ee.ironrealms.com/CMS_XML.xsd">
+  <LOD dist="" mesh=""/>
+  <Entity mesh="Prop-CTF_Blue.mesh" batch="false" />
+</Component>

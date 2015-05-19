@@ -379,9 +379,9 @@ public:
 	bool RunScript(std::string &errors);
 	void ScriptCallPackageKill(const char *name);
 	void ScriptCallKill(int CreatureDefID, int CreatureID);
-	void ScriptCallUse(int CreatureDefID);
-	void ScriptCallUseHalt(int CreatureDefID);
-	void ScriptCallUseFinish(int CreatureDefID);
+	void ScriptCallUse(int sourceCreatureID, int usedCreatureDefID);
+	void ScriptCallUseHalt(int sourceCreatureID, int usedCreatureDefID);
+	void ScriptCallUseFinish(int sourceCreatureID, int usedCreatureDefID);
 	void ScriptCall(const char *name);
 	void FetchNearbyCreatures(SimulatorThread *simPtr, CreatureInstance *player);
 	void RunObjectInteraction(SimulatorThread *simPtr, int CDef);

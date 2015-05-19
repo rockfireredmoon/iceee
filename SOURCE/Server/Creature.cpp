@@ -12,6 +12,7 @@
 #include "AIScript2.h"
 #include "DebugTracer.h"
 #include "Simulator.h"
+#include "Squirrel.h"
 #include "Item.h"  //For quest item rewards
 #include "Interact.h"  //For interactions with non-quest objects (like warps)
 #include "Components.h"
@@ -3056,7 +3057,7 @@ void CreatureInstance :: CancelPending_Ex(ActiveAbilityInfo *ability)
 		case ABILITYID_QUEST_INTERACT_OBJECT:  //intentional fallthrough
 		case ABILITYID_QUEST_GATHER_OBJECT:
 		case ABILITYID_INTERACT_OBJECT:
-			actInst->ScriptCallUseHalt(LastUseDefID);
+			actInst->ScriptCallUseHalt(CreatureID, LastUseDefID);
 			int wpos;
 			wpos = PrepExt_CancelUseEvent(GSendBuf, CreatureID);
 			SendToOneSimulator(GSendBuf, wpos, simulatorPtr);
@@ -7016,6 +7017,67 @@ int CreatureInstance :: CAF_RegisterTargetSidekick(int abGroupID)
 }
 
 
+void CreatureInstance :: AttachItem(const char *type, const char *node)
+{
+	//
+	string currentAppearance = css.appearance;
+	size_t pos = currentAppearance.find(":");
+	if(pos == string::npos)	{
+		g_Log.AddMessageFormat("Could not parse exist appearance. %s", currentAppearance.c_str());
+		return;
+	}
+	string prefix = currentAppearance.substr(0, pos + 1);
+	currentAppearance = "this.a <- " + currentAppearance.substr(pos + 1, currentAppearance.size()) + ";";
+
+	// TODO shared vm
+	HSQUIRRELVM vm = sq_open(g_Config.SquirrelVMStackSize);
+	Sqrat::Script script(vm);
+
+	g_Log.AddMessageFormat("Adjusting appearance. %s", currentAppearance.c_str());
+
+	script.CompileString(_SC(currentAppearance.c_str()));
+	if (Sqrat::Error::Occurred(vm)) {
+		g_Log.AddMessageFormat("Failed to compile appearance. %s", Sqrat::Error::Message(vm).c_str());
+		return;
+	}
+	script.Run();
+
+	Sqrat::RootTable rootTable = Sqrat::RootTable(vm);
+	Sqrat::Object placeholderObject = rootTable.GetSlot(_SC("a"));
+	Sqrat::Table table = placeholderObject.Cast<Sqrat::Table>();
+
+	Sqrat::Object attachments = table.GetSlot(_SC("a"));
+	if(attachments.IsNull()) {
+		// No existing attachments
+		Sqrat::Array arr(vm);
+		table.SetValue(_SC("a"), arr);
+		attachments = table.GetSlot(_SC("a"));
+	}
+	Sqrat::Array attachmentsArr = attachments.Cast<Sqrat::Array>();
+	Sqrat::Table item(vm);
+	item.SetValue(_SC("type"), _SC(type));
+	item.SetValue(_SC("node"), _SC(node));
+	attachmentsArr.Append(item);
+
+	if(originalAppearance.size() == 0)
+		originalAppearance = css.appearance;
+
+	Squirrel::Printer printer;
+	std::string newAppearance = prefix;
+	printer.PrintTable(&newAppearance, table);
+	g_Log.AddMessageFormat("Attaching item. New appearance is. %s", newAppearance.c_str());
+	css.SetAppearance(newAppearance.c_str());
+}
+
+void CreatureInstance :: RestoreAppearance()
+{
+	if(originalAppearance.size() != 0)
+	{
+		css.SetAppearance(originalAppearance.c_str());
+		originalAppearance.clear();
+	}
+}
+
 void CreatureInstance :: AppearanceTransform(const char *newAppearance)
 {
 	if(originalAppearance.size() == 0)
@@ -7028,11 +7090,9 @@ void CreatureInstance :: AppearanceUnTransform(void)
 {
 	if(originalAppearance.size() > 0)
 	{
-		//Util::SafeCopy(css.appearance, originalAppearance.c_str(), sizeof(css.appearance));
-		css.SetAppearance(originalAppearance.c_str());
-		originalAppearance.clear();
 		_ClearStatusFlag(StatusEffects::TRANSFORMED);
 		SetServerFlag(ServerFlags::IsTransformed, false);
+		RestoreAppearance();
 	}
 }
 

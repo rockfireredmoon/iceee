@@ -148,7 +148,8 @@ void InstanceNutPlayer::RegisterFunctions() {
 
 void InstanceNutPlayer::RegisterInstanceFunctions(NutPlayer *instance, Sqrat::DerivedClass<InstanceNutPlayer, NutPlayer> *instanceClass)
 {
-
+	instanceClass->Func(_SC("attach_item"), &InstanceNutPlayer::AttachItem);
+	instanceClass->Func(_SC("restore_original_appearance"), &InstanceNutPlayer::RestoreOriginalAppearance);
 	instanceClass->Func(_SC("broadcast"), &InstanceNutPlayer::Broadcast);
 	instanceClass->Func(_SC("info"), &InstanceNutPlayer::Info);
 	instanceClass->Func(_SC("spawn"), &InstanceNutPlayer::Spawn);
@@ -192,6 +193,25 @@ void InstanceNutPlayer::SetInstancePointer(ActiveInstance *parent)
 	actInst = parent;
 }
 
+void InstanceNutPlayer::AttachItem(int CID, const char *type, const char *node)
+{
+	CreatureInstance *ci = GetCreaturePtr(CID);
+	if(ci != NULL) {
+		ci->AttachItem(type, node);
+	}
+	else
+		g_Log.AddMessageFormat("Could not find creature with ID %d in this instance to attach item %s (%s) to.", CID, type, node);
+}
+
+void InstanceNutPlayer::RestoreOriginalAppearance(int CID)
+{
+	CreatureInstance *ci = GetCreaturePtr(CID);
+	if(ci != NULL) {
+		ci->RestoreAppearance();
+	}
+	else
+		g_Log.AddMessageFormat("Could not find creature with ID %d in this instance restore appearance for.");
+}
 
 void InstanceNutPlayer::UnremoveProps()
 {
@@ -571,6 +591,18 @@ CreatureInstance* InstanceNutPlayer::GetNPCPtr(int CID)
 	if(actInst == NULL)
 		return NULL;
 	return actInst->GetNPCInstanceByCID(CID);
+}
+
+
+CreatureInstance* InstanceNutPlayer::GetCreaturePtr(int CID)
+{
+	if(actInst == NULL)
+		return NULL;
+	CreatureInstance *ci = GetNPCPtr(CID);
+	if(ci == NULL) {
+		ci = actInst->GetPlayerByID(CID);
+	}
+	return ci;
 }
 
 
