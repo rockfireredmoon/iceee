@@ -653,7 +653,9 @@ public:
 	int CAF_SummonSidekick(int CDefID, int maxSummon, short abGroupID);
 	void CAF_RunSidekickStatFilter(int abGroupID);
 	int CAF_RegisterTargetSidekick(int abGroupID);
+	void RestoreAppearance();
 	void AppearanceTransform(const char *newAppearance);
+	void AttachItem(const char *type, const char *node);
 	void AppearanceUnTransform(void);
 	void StatScaleToLevel(int statID, int targetLevel);
 

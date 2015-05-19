@@ -1698,3 +1698,99 @@ damage_resist_mystic=4000
 damage_resist_death=4000
 profession=2
 ai_package=example
+
+[ENTRY]
+ID=7838
+will_regen=1
+might_regen=1
+appearance=p1:{["a"]="Prop-CTF_Red",["sz"]="1"}
+level=1
+display_name=Red Flag - Safe
+profession=1
+creature_category=Inanimate
+ai_package=
+
+[ENTRY]
+ID=7839
+will_regen=1
+might_regen=1
+appearance=p1:{["a"]="Prop-CTF_Blue",["sz"]="1"}
+level=1
+display_name=Blue Flag - Safe
+profession=1
+creature_category=Inanimate
+ai_package=
+
+[ENTRY]
+ID=7840
+will_regen=1
+might_regen=1
+appearance=p1:{["a"]="Prop-CTF_Red",["sz"]="1"}
+level=1
+display_name=Red Flag - Unguarded
+profession=1
+creature_category=Inanimate
+ai_package=
+
+[ENTRY]
+ID=7841
+will_regen=1
+might_regen=1
+appearance=p1:{["a"]="Prop-CTF_Blue",["sz"]="1"}
+level=1
+display_name=Blue Flag - Unguarded
+profession=1
+creature_category=Inanimate
+ai_package=
+
+[ENTRY]
+ID=7842
+will_regen=1
+might_regen=1
+appearance=p1:{["a"]="Prop-Interact_Rectangle",["sz"]="1"}
+level=1
+display_name=Enemy Red Flag Stand
+profession=1
+creature_category=Inanimate
+ai_package=nothing
+
+[ENTRY]
+ID=7843
+will_regen=1
+might_regen=1
+appearance=p1:{["a"]="Prop-Interact_Rectangle",["sz"]="1"}
+level=1
+display_name=Enemy Blue Flag Stand
+profession=1
+creature_category=Inanimate
+ai_package=nothing
+
+[ENTRY]
+ID=7844
+defHints=1024
+will_regen=1
+might_regen=1
+appearance=c2:{["h"]=0,["c"]={["boots"]={["type"]="Armor-Cloth-Town_Crier",["colors"]=[]},["leggings"]={["type"]="Armor-Cloth-Town_Crier",["colors"]=[]},["collar"]={["type"]="Armor-Cloth-Town_Crier",["colors"]=[]},["chest"]={["type"]="Armor-Cloth-Male-Fancy2",["colors"]=["2b2d33","e2e7e9","910b08","f3bd50","e2e7e9","3f3f3f","f5d29d","5d1b01"]}},["b"]="n",["sk"]={["chest_ankles"]="805A30",["spots"]="9B8E61",["beak"]="E48828",["beard"]="A29058",["nails"]="745F56",["mask"]="AD6E2C",["base"]="9B6D3A",["eye_lid"]="8A7B4B",["neck_belly"]="817650",["eye"]="00AA0A",["eye_brows"]="A97B4E",["head_top"]="C94125",["hands"]="AD6E2C"},["g"]="m",["r"]="n"}
+level=45
+display_name=Jonaton Binkins
+sub_name=Red Team Registrar
+profession=1
+creature_category=Mortal
+rarity=3
+ai_package=example
+total_size=5
+
+[ENTRY]
+ID=7845
+defHints=1024
+will_regen=1
+might_regen=1
+appearance=c2:{["h"]=0,["c"]={["boots"]={["type"]="Armor-Cloth-Town_Crier",["colors"]=[]},["leggings"]={["type"]="Armor-Cloth-Town_Crier",["colors"]=[]},["collar"]={["type"]="Armor-Cloth-Town_Crier",["colors"]=[]},["chest"]={["type"]="Armor-Cloth-Male-Fancy2",["colors"]=["2b2d33","e2e7e9","910b08","f3bd50","e2e7e9","3f3f3f","f5d29d","5d1b01"]}},["b"]="n",["sk"]={["chest_ankles"]="805A30",["spots"]="9B8E61",["beak"]="E48828",["beard"]="A29058",["nails"]="745F56",["mask"]="AD6E2C",["base"]="9B6D3A",["eye_lid"]="8A7B4B",["neck_belly"]="817650",["eye"]="00AA0A",["eye_brows"]="A97B4E",["head_top"]="C94125",["hands"]="AD6E2C"},["g"]="m",["r"]="n"}
+level=45
+display_name=Lars Binkins
+sub_name=Blue Team Registrar
+profession=1
+creature_category=Mortal
+rarity=3
+ai_package=example
+total_size=5

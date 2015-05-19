@@ -3159,33 +3159,50 @@ void ActiveInstance :: ScriptCallPackageKill(const char *name)
 		ScriptCall(name);
 }
 
-void ActiveInstance :: ScriptCallUse(int CreatureDefID)
+void ActiveInstance :: ScriptCallUse(int sourceCreatureID, int usedCreatureDefID)
 {
 	char buffer[64];
-	if(nutScriptPlayer.HasScript())
-		Util::SafeFormat(buffer, sizeof(buffer), "on_use_%d", CreatureDefID);
+	if(nutScriptPlayer.HasScript()) {
+		std::vector<ScriptCore::ScriptParam> p;
+		p.push_back(ScriptCore::ScriptParam(sourceCreatureID));
+		p.push_back(ScriptCore::ScriptParam(usedCreatureDefID));
+		nutScriptPlayer.RunFunction("on_use", p);
+		Util::SafeFormat(buffer, sizeof(buffer), "on_use_%d", usedCreatureDefID);
+	}
 	else
-		Util::SafeFormat(buffer, sizeof(buffer), "onUse_%d", CreatureDefID);
+		Util::SafeFormat(buffer, sizeof(buffer), "onUse_%d", usedCreatureDefID);
 	ScriptCall(buffer);
 }
 
-void ActiveInstance :: ScriptCallUseHalt(int CreatureDefID)
+void ActiveInstance :: ScriptCallUseHalt(int sourceCreatureID, int usedCreatureDefID)
 {
 	char buffer[64];
-	if(nutScriptPlayer.HasScript())
-		Util::SafeFormat(buffer, sizeof(buffer), "on_use_halt_%d", CreatureDefID);
+	if(nutScriptPlayer.HasScript()) {
+		std::vector<ScriptCore::ScriptParam> p;
+		p.push_back(ScriptCore::ScriptParam(sourceCreatureID));
+		p.push_back(ScriptCore::ScriptParam(usedCreatureDefID));
+		nutScriptPlayer.RunFunction("on_use_halt", p);
+
+		Util::SafeFormat(buffer, sizeof(buffer), "on_use_halt_%d", usedCreatureDefID);
+	}
 	else
-		Util::SafeFormat(buffer, sizeof(buffer), "onUseHalt_%d", CreatureDefID);
+		Util::SafeFormat(buffer, sizeof(buffer), "onUseHalt_%d", usedCreatureDefID);
 	ScriptCall(buffer);
 }
 
-void ActiveInstance :: ScriptCallUseFinish(int CreatureDefID)
+void ActiveInstance :: ScriptCallUseFinish(int sourceCreatureID, int usedCreatureDefID)
 {
 	char buffer[64];
-	if(nutScriptPlayer.HasScript())
-		Util::SafeFormat(buffer, sizeof(buffer), "on_use_finish_%d", CreatureDefID);
+	if(nutScriptPlayer.HasScript()) {
+		std::vector<ScriptCore::ScriptParam> p;
+		p.push_back(ScriptCore::ScriptParam(sourceCreatureID));
+		p.push_back(ScriptCore::ScriptParam(usedCreatureDefID));
+		nutScriptPlayer.RunFunction("on_use_finish", p);
+
+		Util::SafeFormat(buffer, sizeof(buffer), "on_use_finish_%d", usedCreatureDefID);
+	}
 	else
-		Util::SafeFormat(buffer, sizeof(buffer), "onUseFinish_%d", CreatureDefID);
+		Util::SafeFormat(buffer, sizeof(buffer), "onUseFinish_%d", usedCreatureDefID);
 	ScriptCall(buffer);
 }
 
@@ -3304,7 +3321,17 @@ void ActiveInstance :: RunObjectInteraction(SimulatorThread *simPtr, int CDef)
 			simPtr->MainCallSetZone(zone, 0, false);
 			simPtr->SetPosition(x, y, z, 1);
 		}
-		ScriptCallUseFinish(CDef);
+		else if(intObj->opType == InteractObject::TYPE_SCRIPT)
+		{
+			if(nutScriptPlayer.HasScript()) {
+				std::vector<ScriptCore::ScriptParam> p;
+				p.push_back(ScriptCore::ScriptParam(simPtr->creatureInst->CreatureID));
+				p.push_back(ScriptCore::ScriptParam(CDef));
+				nutScriptPlayer.RunFunction(intObj->scriptFunction, p);
+			}
+		}
+
+		ScriptCallUseFinish(simPtr->creatureInst->CreatureID,  CDef);
 	}
 }
 

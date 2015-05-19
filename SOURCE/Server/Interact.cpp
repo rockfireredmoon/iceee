@@ -19,6 +19,7 @@ void InteractObject :: Clear(void)
 {
 	memset(internalName, 0, sizeof(internalName));
 	memset(useMessage, 0, sizeof(useMessage));
+	memset(scriptFunction, 0, sizeof(scriptFunction));
 
 	useTime = DEFAULT_USE_TIME;
 	CreatureDefID = 0;
@@ -39,7 +40,7 @@ void InteractObject :: Clear(void)
 
 void InteractObject :: SetName(char *str)
 {
-	int len = strlen(str);
+	uint len = strlen(str);
 	if(len > sizeof(internalName) - 1)
 	{
 		g_Log.AddMessageFormat("[WARNING] InteractObject::SetName string size is too long [%s]", str);
@@ -68,13 +69,24 @@ void InteractObject :: SetType(char *str)
 
 void InteractObject :: SetMessage(char *str)
 {
-	int len = strlen(str);
+	uint len = strlen(str);
 	if(len > sizeof(useMessage) - 1)
 	{
 		g_Log.AddMessageFormat("[WARNING] InteractObject::SetMessage string size is too long [%s]", str);
 		len = sizeof(useMessage) - 1;
 	}
 	strncpy(useMessage, str, len);
+}
+
+void InteractObject :: SetScriptFunction(char *str)
+{
+	uint len = strlen(str);
+	if(len > sizeof(scriptFunction) - 1)
+	{
+		g_Log.AddMessageFormat("[WARNING] InteractObject::SetScriptFunction string size is too long [%s]", str);
+		len = sizeof(scriptFunction) - 1;
+	}
+	strncpy(scriptFunction, str, len);
 }
 
 InteractObjectContainer :: InteractObjectContainer()
@@ -186,6 +198,8 @@ void InteractObjectContainer :: LoadFromFile(char *filename)
 				newItem.cost = lfr.BlockToIntC(1);
 			else if(strcmp(lfr.SecBuffer, "Zone") == 0)
 				newItem.zoneReq = lfr.BlockToIntC(1);
+			else if(strcmp(lfr.SecBuffer, "ScriptFunction") == 0)
+				newItem.SetScriptFunction(lfr.BlockToStringC(1, 0));
 			else
 				g_Log.AddMessageFormat("[WARNING] Unknown identifier [%s] in file [%s] on line [%d]", lfr.SecBuffer, filename, lfr.LineNumber);
 		}

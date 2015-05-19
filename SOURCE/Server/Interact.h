@@ -12,6 +12,7 @@ public:
 	void SetName(char *str);
 	void SetType(char *str);
 	void SetMessage(char *str);
+	void SetScriptFunction(char *str);
 
 	char internalName[64];
 	char useMessage[64];  //Message to display in the client interact bar.
@@ -23,6 +24,7 @@ public:
 	int zoneReq;     //The interact may only be used in this zone.  If zero, may be used in any standard gameplay (non grove) zone.
 	short facing;    //Directional facing to set the player after they use the interact (0 to 255).
 	int cost;        //Cost to use, if a hange.
+	char scriptFunction[128]; // Function in instance script to call when interacted with
 
 	static const int TYPE_NONE = 0;
 	static const int TYPE_WARP = 1;
