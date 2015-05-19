@@ -61,6 +61,7 @@ planetforeverd_SOURCES = md5.cc \
 	Report.cpp \
 	Router.cpp \
 	Scenery2.cpp \
+	Squirrel.cpp \
 	ScriptCore.cpp \
 	SimulatorBase.cpp \
 	Simulator.cpp \
@@ -135,6 +136,7 @@ planetforeverd_SOURCES = md5.cc \
 	Report.h \
 	RotatingList.h \
 	Router.h \
+	Squirrel.h \
 	Scenery2.h \
 	ScriptCore.h \
 	Session.h \
