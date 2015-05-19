@@ -68,7 +68,6 @@ Pos=63950.6,780.194,56920
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=#7785
-maxActive=0
 
 [ENTRY]
 ID=151016770

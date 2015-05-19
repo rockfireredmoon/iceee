@@ -6,7 +6,6 @@ Pos=44471.7,224.429,65144.1
 Orient=0,-0.25708,0,0.96639
 Scale=1,1,1
 spawnPackage=#F7779
-maxActive=0
 
 [ENTRY]
 ID=10000054

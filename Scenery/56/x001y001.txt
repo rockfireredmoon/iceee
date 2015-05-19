@@ -2863,12 +2863,11 @@ Pos=2125.09,515.584,3132.37
 Orient=0,0.699716,0,0.714421
 Scale=1,1,1
 spawnPackage=#F7784
-maxActive=0
 
 [ENTRY]
 ID=1127915
 Asset=Prop-Crypt_Plinth
-Name=
+Name=Untitled
 Pos=2308.48,466.939,2767.47
 Orient=0,0,0,1
 Scale=1.5,1.5,1.5
@@ -2876,7 +2875,7 @@ Scale=1.5,1.5,1.5
 [ENTRY]
 ID=1127916
 Asset=Prop-Crypt_Plinth
-Name=
+Name=Untitled
 Pos=1947.58,466.939,2767.28
 Orient=0,0,0,1
 Scale=1.5,1.5,1.5

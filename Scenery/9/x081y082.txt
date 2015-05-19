@@ -1,7 +1,7 @@
 [ENTRY]
 ID=1127863
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=60784.6,816.89,61578.4
 Orient=0,0,0,1
 Scale=1,1,1
@@ -11,7 +11,7 @@ wanderRadius=80
 [ENTRY]
 ID=1127896
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=60875.5,912.517,62238.3
 Orient=0,0,0,1
 Scale=1,1,1
@@ -54,7 +54,7 @@ link=151029246,1
 ID=151029246
 Asset=Manipulator-PathNode
 Name=Untitled
-Pos=61380.1,1059.56,62172
+Pos=61367.4,1204.38,61956.4
 Orient=0,0,0,1
 Scale=1,1,1
 links_count=1
