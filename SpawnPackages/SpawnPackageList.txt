@@ -69,6 +69,7 @@
 
 ; ORIGINALLY UNRELEASED DUNGEONS, NOW COMPLETED
 56_WailingCrypt.txt
+50_IronMaw.txt
 75_FolkirkManor.txt
 85_KerakurasLair.txt
 
