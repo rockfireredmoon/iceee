@@ -3,6 +3,7 @@
 /autom4te.cache/
 *.log
 /configure
+/crash_dump.txt
 /config.sub
 /config.status
 /config.guess
