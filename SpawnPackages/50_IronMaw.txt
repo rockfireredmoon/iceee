@@ -1,0 +1,42 @@
+[ENTRY]
+Name=50_maw_Anexima
+Spawn=7816,100  ;Anexima (50)
+
+[ENTRY]
+Name=50_maw_Drakkar
+Spawn=7817,100  ;Drakker Zol (50)
+
+[ENTRY]
+Name=50_maw_Valkalth
+Spawn=7818,100  ;Valkalth (50)
+
+[ENTRY]
+Name=50_maw_Karayan
+Spawn=7819,100  ;Karayan (50)
+
+[ENTRY]
+Name=50_maw_Braakurk
+Spawn=7820,100  ;Karayan (50)
+
+[ENTRY]
+Name=50_maw_Mix1
+Spawn=7821,100  ;Undead Miner (50)
+Spawn=7822,100  ;Undead Miner (50)
+Spawn=7823,100  ;Stolen Corpse (49)
+Spawn=7824,100  ;Stolen Corpse (50)
+Spawn=7825,100  ;Murdered Foreman (50)
+Spawn=7826,100  ;Skeletel Digger (49)
+Spawn=7827,100  ;Sheol Tunneler (49)
+Spawn=7828,100  ;Sheol Tunneler (50)
+Spawn=7829,100  ;Skeletel Digger (50)
+Spawn=7830,100  ;Mummified Necromancer (49)
+Spawn=7831,100  ;Mummified Necromancer (50)
+
+[ENTRY]
+Name=50_maw_Mix2
+Spawn=7832,100  ;Stagnant Air (50)
+Spawn=7833,100  ;Life Ember (50)
+Spawn=7834,100  ;Subterranean Crawler (49)
+Spawn=7835,100  ;Subterranean Crawler (49)
+Spawn=7836,105  ;Krostakin (49)
+Spawn=7837,105  ;Krostakin (50)

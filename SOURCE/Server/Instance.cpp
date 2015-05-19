@@ -3153,7 +3153,7 @@ void ActiveInstance :: ScriptCallPackageKill(const char *name)
 
 		char buffer[64];
 		Util::SafeFormat(buffer, sizeof(buffer), "on_package_kill_%s", name);
-		nutScriptPlayer.RunFunction(buffer);
+		nutScriptPlayer.RunFunction(string(buffer));
 	}
 	else if(scriptPlayer.HasScript())
 		ScriptCall(name);
@@ -3193,7 +3193,7 @@ void ActiveInstance :: ScriptCallUseFinish(int CreatureDefID)
 void ActiveInstance :: ScriptCall(const char *name)
 {
 	if(nutScriptPlayer.HasScript())
-		nutScriptPlayer.RunFunction(name);
+		nutScriptPlayer.RunFunction(string(name));
 	if(scriptPlayer.HasScript() && scriptPlayer.JumpToLabel(name) == true)
 		scriptPlayer.RunUntilWait();
 }

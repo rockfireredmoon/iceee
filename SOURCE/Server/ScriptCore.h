@@ -358,6 +358,9 @@ public:
 	typedef std::vector<std::string> STRINGLIST;
 	std::string scriptName;            //Internal name of the script.
 	std::string mSourceFile;
+	std::string mAuthor;
+	std::string mDescription;
+	bool mQueueEvents;
 
 	NutDef();
 	virtual ~NutDef();
@@ -426,6 +429,7 @@ public:
 	bool active; //If true, the script is considered to be running (has not terminated).
 	bool mHasScript;
 	bool mExecuting;
+
 	unsigned int long mCalls; // Total number of calls (including initial, events and all external function calls)
 	unsigned int long mGCCounter; // Increased at same times as mCalls, but when it reaches a predefined limit, GC is performed
 	unsigned long mMaybeGC; // When the number of calls was reached, but before any delays have been reached
@@ -445,14 +449,12 @@ public:
 	void Initialize(NutDef *defPtr, std::string &errors);
 	bool Tick(void);     //Run a single instruction.
 	void RunScript(void);                //Run the script until it ends.
-	bool JumpToLabel(const char *name); //Immediately jump script execution to the beginning of a specific label.
 	void FullReset(void);
-	bool IsWaiting(void);
-	bool CanRunIdle(void);
 	void Halt(void);
 	int GC(void);
-	bool RunFunction(const char *name);
-	bool RunFunction(const char *name, std::vector<ScriptParam> parms);
+	bool RunFunction(std::string name);
+	bool RunFunction(std::string name, std::vector<ScriptParam> parms);
+	bool RunFunction(std::string name, std::vector<ScriptParam> parms, bool time);
 	void Broadcast(const char *message);
 	unsigned long GetServerTime();
 	void QueueRemove(NutScriptEvent *evt);
@@ -503,8 +505,10 @@ class RunFunctionCallback : public NutCallback
 {
 public:
 	NutPlayer* mNut;
-	const char *mFunctionName;		//Function to jump to
-	RunFunctionCallback(NutPlayer *nut, const char *mFunctionName);
+	std::string mFunctionName;		//Function to jump to
+	std::vector<ScriptParam> mArgs;
+	RunFunctionCallback(NutPlayer *nut, std::string mFunctionName);
+	RunFunctionCallback(NutPlayer *nut, std::string mFunctionName, std::vector<ScriptParam> args);
 	~RunFunctionCallback ();
 	bool Execute();
 };

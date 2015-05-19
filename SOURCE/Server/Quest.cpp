@@ -121,7 +121,7 @@ void QuestReference :: RunObjectiveCompleteScripts(int CID, int act, int obj)
 	char ConvBuf[256];
 	if(player != NULL) {
 		Util::SafeFormat(ConvBuf, sizeof(ConvBuf), "on_objective_complete_%d_%d",act,obj);
-		player->RunFunction(ConvBuf);
+		player->RunFunction(string(ConvBuf));
 	}
 }
 

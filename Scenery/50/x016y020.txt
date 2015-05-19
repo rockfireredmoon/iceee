@@ -1,0 +1,16 @@
+[ENTRY]
+ID=1104743
+Asset=Prop-Dvergar_Accessories#Prop-Dvergar_Contraption
+Name=
+Pos=16778.9,1597.83,20095.1
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
+ID=1104744
+Asset=Prop-Dvergar_Accessories#Prop-Dvergar_Scaffolding
+Name=
+Pos=16838.8,1585.58,20122
+Orient=0,0,0,1
+Scale=1,1,1
+

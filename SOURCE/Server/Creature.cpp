@@ -5630,7 +5630,7 @@ void CreatureInstance :: AIOtherCallLabel(int creatureID, const char *aiScriptLa
 	{
 		if(obj->aiNut != NULL)
 		{
-			obj->aiNut->RunFunction(aiScriptLabel);
+			obj->aiNut->RunFunction(string(aiScriptLabel));
 		}
 		if(obj->aiScript != NULL)
 		{

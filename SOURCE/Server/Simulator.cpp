@@ -8142,7 +8142,7 @@ int SimulatorThread :: handle_query_creature_use(void)
 				questNutScript->QuestAct = QuestAct;
 				questNutScript->activate.Set(target->CurrentX, target->CurrentY, target->CurrentZ);
 				sprintf(Aux1, "on_activate_%d", QuestAct);
-				questNutScript->RunFunction(Aux1);
+				questNutScript->RunFunction(string(Aux1));
 				AttemptSend(GSendBuf, wpos);
 
 				// Queue up the on_activated as well, this MIGHT not be get called if the activation is interrupted
@@ -8151,7 +8151,7 @@ int SimulatorThread :: handle_query_creature_use(void)
 						new ScriptCore::NutScriptEvent(
 								new ScriptCore::TimeCondition(qo->ActivateTime),
 								new ScriptCore::RunFunctionCallback(
-										questNutScript, Aux1));
+										questNutScript, string(Aux1)));
 				questNutScript->QueueAdd(questNutScript->activateEvent);
 
 			}
@@ -13498,7 +13498,7 @@ int SimulatorThread :: handle_query_script_exec(void)
 	ActiveInstance *inst = creatureInst->actInst;
 	if(inst != NULL && query.argCount > 0)
 	{
-		const char *funcName = query.GetString(0);
+		string funcName = query.GetString(0);
 		if(inst->nutScriptPlayer.HasScript())
 		{
 			inst->nutScriptPlayer.RunFunction(funcName);

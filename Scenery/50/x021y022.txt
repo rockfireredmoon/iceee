@@ -1,0 +1,8 @@
+[ENTRY]
+ID=1105170
+Asset=Prop-Water_Planes#Prop-Water_Plane2
+Name=
+Pos=21939,221.341,22057.4
+Orient=0,0,0,1
+Scale=1,1,1
+

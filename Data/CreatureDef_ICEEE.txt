@@ -1241,7 +1241,7 @@ ai_package=custom_heathendel_anexima
 ID=7817
 level=50
 display_name=Drakkar Zol
-sub_name=The Relentless
+sub_name=The Relentless 
 creature_category=Unliving
 rarity=2
 appearance=n4:{["sk"]={["bone"]="705C41",["trim"]="7F0B0B",["straps"]="B96464",["horns"]="463749",["armortrim"]="AAA937",["robe"]="000000",["armor"]="3F0000"},["c"]="Horde-Lich",["sz"]="1.0824"}

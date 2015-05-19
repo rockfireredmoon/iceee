@@ -284,7 +284,7 @@ void QuestNutPlayer::InterruptInteraction()
 		activateEvent = NULL;
 	}
 	Util::SafeFormat(buf, sizeof(buf), "on_interrupt_%d", QuestAct);
-	RunFunction(buf);
+	RunFunction(string(buf));
 }
 
 void QuestNutPlayer::Info(const char *message)

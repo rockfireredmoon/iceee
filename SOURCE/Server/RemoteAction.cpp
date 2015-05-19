@@ -391,7 +391,7 @@ void RefreshScripts(ReportBuffer &report)
 		for(std::list<QuestScript::QuestNutPlayer *>::iterator lit = l.begin(); lit != l.end(); ++lit) {
 			QuestScript::QuestNutPlayer *player = *lit;
 			seconds = (double)player->mProcessingTime / 1000.0;
-			report.AddLine("%-50s %4.4f %5d %5d %5d %-10s", player->def->mSourceFile.c_str(), seconds,
+			report.AddLine("%-50s %-20s %-20s %4.4f %5d %5d %5d %-10s", player->def->mSourceFile.c_str(), player->def->scriptName.c_str(), player->def->mAuthor.c_str(), seconds,
 						player->mInitTime, player->mCalls, player->mGCTime, player->active ? "Active" : "Inactive");
 
 			if(report.WasTruncated())
@@ -408,7 +408,7 @@ void RefreshScripts(ReportBuffer &report)
 		ActiveInstance *ainst = g_ActiveInstanceManager.instListPtr[a];
 		InstanceScript::InstanceNutPlayer player = ainst->nutScriptPlayer;
 		if(player.HasScript()) {
-			report.AddLine("%-50s %4.4f %5d %5d %5d %-10s", player.def->mSourceFile.c_str(), seconds,
+			report.AddLine("%-50s %-20s %-20s %4.4f %5d %5d %5d %-10s", player.def->mSourceFile.c_str(), player.def->scriptName.c_str(), player.def->mAuthor.c_str(), seconds,
 					player.mInitTime, player.mCalls, player.mGCTime, player.active ? "Active" : "Inactive");
 		}
 

@@ -415,6 +415,8 @@ void LoadConfig(const char *filename)
 				g_Config.SquirrelGCDelay = lfr.BlockToIntC(1);
 			else if(strcmp(NameBlock, "SquirrelGCMaxDelay") == 0)
 				g_Config.SquirrelGCMaxDelay = lfr.BlockToIntC(1);
+			else if(strcmp(NameBlock, "SquirrelVMStackSize") == 0)
+				g_Config.SquirrelVMStackSize = lfr.BlockToIntC(1);
 			else if(strcmp(NameBlock, "PersistentBuffs") == 0)
 				g_Config.PersistentBuffs = lfr.BlockToBool(1);
 			else
@@ -616,6 +618,7 @@ GlobalConfigData :: GlobalConfigData()
 	SquirrelGCCallCount = 1000;
 	SquirrelGCDelay = 10000;
 	SquirrelGCMaxDelay = 60000;
+	SquirrelVMStackSize = 512;
 
 	PersistentBuffs = false;
 

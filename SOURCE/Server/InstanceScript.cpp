@@ -477,7 +477,7 @@ bool InstanceNutPlayer::AI(int CID, const char *label)
 	CreatureInstance *ci = GetNPCPtr(CID);
 	return
 			ci && ( ( ci->aiScript && ci->aiScript->JumpToLabel(label) ) ||
-					( ci->aiNut && ci->aiNut->RunFunction(label) ) );
+					( ci->aiNut && ci->aiNut->RunFunction(string(label)) ) );
 }
 
 int InstanceNutPlayer::GetTarget(int CDefID)

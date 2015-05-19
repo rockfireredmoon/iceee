@@ -1,0 +1,16 @@
+[ENTRY]
+ID=1076049
+Asset=Bldg-Iron_Maw2?ATS=ATS-Castle_Underground
+Name=Untitled
+Pos=17912.3,1526.82,17884.3
+Orient=0,0.998248,0,-0.0591691
+Scale=1,1,1
+
+[ENTRY]
+ID=1104411
+Asset=CL-Roof#CL-Roof5
+Name=Untitled
+Pos=17946.5,1367.74,17788.8
+Orient=0,0,0,1
+Scale=1,1,1
+

@@ -460,7 +460,6 @@ Pos=2140.52,266.536,2722.69
 Orient=0,0.670587,0,0.741831
 Scale=1,1,1
 spawnPackage=#F3684
-maxActive=0
 
 [ENTRY]
 ID=1109978

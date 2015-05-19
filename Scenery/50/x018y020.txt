@@ -1,0 +1,8 @@
+[ENTRY]
+ID=1104406
+Asset=CL-Roof#CL-Roof10
+Name=
+Pos=18821.1,1778.8,20393.4
+Orient=0,0,0,1
+Scale=2,2,2
+

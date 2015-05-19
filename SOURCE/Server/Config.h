@@ -190,6 +190,7 @@ public:
 	unsigned int SquirrelGCCallCount;				 //How many function calls must be performed before Garbage Collection is triggered
 	unsigned int SquirrelGCDelay;				 	 //How long the queue must be idle for before GC can go ahead.
 	unsigned int SquirrelGCMaxDelay;				 	 //How long after reaching call count before GC is forced.
+	int SquirrelVMStackSize;						// Initial VM stack size
 
 	bool PersistentBuffs;              //If true, active buffs will be saved and restored on next login
 

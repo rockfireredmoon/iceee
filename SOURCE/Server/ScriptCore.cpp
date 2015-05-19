@@ -84,6 +84,7 @@ namespace ScriptCore
 	}
 
 	NutDef::NutDef() {
+		mQueueEvents = true;
 		mFlags = 0;
 		queueCallStyle = 0;
 		queueExternalJumps = false;
@@ -218,17 +219,23 @@ namespace ScriptCore
 	//
 	// Run a named function.
 	//
-	RunFunctionCallback::RunFunctionCallback(NutPlayer *nut, const char * functionName) {
+	RunFunctionCallback::RunFunctionCallback(NutPlayer *nut, std::string functionName) {
 		mNut = nut;
 		mFunctionName = functionName;
 	}
+	RunFunctionCallback::RunFunctionCallback(NutPlayer *nut, std::string functionName, std::vector<ScriptParam> args) {
+		mNut = nut;
+		mFunctionName = functionName;
+		mArgs = args;
+	}
+
 
 	RunFunctionCallback::~RunFunctionCallback() {
 	}
 
 	bool RunFunctionCallback::Execute()
 	{
-		return mNut->RunFunction(mFunctionName);
+		return mNut->RunFunction(mFunctionName, mArgs, false);
 	}
 
 	//
@@ -294,24 +301,10 @@ namespace ScriptCore
 	}
 
 	void NutPlayer::Initialize(NutDef *defPtr, std::string &errors) {
-		//
-		// TODO!!!
-		//
-		// MUST add garbage collection
-		//		//
-		//		 There are 2 possible compile time options:
-		//
-		//    The default configuration consists in RC plus a mark and sweep garbage collector. The host program can call the function sq_collectgarbage() and perform a garbage collection cycle during the program execution. The garbage collector isn’t invoked by the VM and has to be explicitly called by the host program.
-		//
-		//    The second a situation consists in RC only(define NO_GARBAGE_COLLECTOR); in this case is impossible for the VM to detect reference cycles, so is the programmer that has to solve them explicitly in order to avoid memory leaks.
-
 		unsigned long started = g_PlatformTime.getMilliseconds();
 
-//		sq_collectgarbage(vm);
-
 		def = defPtr;
-		vm = sq_open(1024); // creates a VM with initial stack size 1024
-//	   Sqrat::DefaultVM::Set(vm);
+		vm = sq_open(g_Config.SquirrelVMStackSize);
 
 		// Register functions needed in scripts
 		RegisterFunctions();
@@ -321,7 +314,6 @@ namespace ScriptCore
 
 		sqstd_seterrorhandlers(vm); //registers the default error handlers
 		sq_setprintfunc(vm, PrintFunc, Errorfunc); //sets the print function
-//		sq_pushroottable(vm); //push the root table(were the globals of the script will be stored)
 		g_Log.AddMessageFormat("Processing Squirrel script '%s'", def->mSourceFile.c_str());
 
 
@@ -376,6 +368,27 @@ namespace ScriptCore
 			}
 			else {
 				active = true;
+			}
+
+			// The script might have provided an info table
+			Sqrat::Object infoObject = Sqrat::RootTable(vm).GetSlot(_SC("info"));
+			if(!infoObject.IsNull()) {
+				Sqrat::Object name = infoObject.GetSlot("name");
+				if(!name.IsNull()) {
+					def->scriptName = name.Cast<std::string>();
+				}
+				Sqrat::Object author = infoObject.GetSlot("author");
+				if(!author.IsNull()) {
+					def->mAuthor = author.Cast<std::string>();
+				}
+				Sqrat::Object description = infoObject.GetSlot("description");
+				if(!description.IsNull()) {
+					def->mAuthor = description.Cast<std::string>();
+				}
+				Sqrat::Object queueEvents = infoObject.GetSlot("queue_events");
+				if(!queueEvents.IsNull()) {
+					def->mQueueEvents = description.Cast<bool>();
+				}
 			}
 		}
 
@@ -511,14 +524,6 @@ namespace ScriptCore
 		return mHasScript;
 	}
 
-	bool NutPlayer::CanRunIdle(void) {
-		return true;
-	}
-
-	bool NutPlayer::JumpToLabel(const char *name) {
-		return true;
-	}
-
 	void NutPlayer :: HaltDerivedExecution(void) { }
 
 	void NutPlayer :: HaltExecution(void)
@@ -535,30 +540,37 @@ namespace ScriptCore
 		}
 	}
 
-	bool NutPlayer::IsWaiting(void) {
-		return false;
-	}
-
-	bool NutPlayer::RunFunction(const char *name) {
+	bool NutPlayer::RunFunction(std::string name) {
 		std::vector<ScriptParam> parms;
 		return RunFunction(name, parms);
 	}
 
-	bool NutPlayer::RunFunction(const char *name, std::vector<ScriptParam> parms) {
+	bool NutPlayer::RunFunction(std::string name, std::vector<ScriptParam> parms) {
+		if(def->mQueueEvents) {
+			QueueAdd(new NutScriptEvent(new TimeCondition(0), new RunFunctionCallback(this, name, parms)));
+			return true;
+		}
+		else {
+			return RunFunction(name, parms, true);
+		}
+	}
+
+	bool NutPlayer::RunFunction(std::string name, std::vector<ScriptParam> parms, bool time) {
 		if(!active) {
-			g_Log.AddMessageFormat("[WARNING] Attempt to run function on inactive script %s.", name);
+			g_Log.AddMessageFormat("[WARNING] Attempt to run function on inactive script %s.", name.c_str());
 			return false;
 		}
+		unsigned long now = g_PlatformTime.getMilliseconds();
 
 		// Wake the VM up if it is suspend so the onFinish can be run
 		if(sq_getvmstate(vm) == SQ_VMSTATE_SUSPENDED) {
-			g_Log.AddMessageFormat("Waking up VM to run %s.", name);
+			g_Log.AddMessageFormat("Waking up VM to run %s.", name.c_str());
 			sq_wakeupvm(vm, false, false, false, true);
 		}
 
 		SQInteger top = sq_gettop(vm);
 		sq_pushroottable(vm);
-		sq_pushstring(vm,_SC(name),-1);
+		sq_pushstring(vm,_SC(name.c_str()),-1);
 		if(SQ_SUCCEEDED(sq_get(vm,-2))) {
 			sq_pushroottable(vm);
 			std::vector<ScriptCore::ScriptParam>::iterator it;
@@ -582,6 +594,13 @@ namespace ScriptCore
 			sq_call(vm,parms.size() + 1,SQFalse,SQTrue); //calls the function
 		}
 		sq_settop(vm,top);
+
+		if(time) {
+			mCalls++;
+			mGCCounter++;
+			mProcessingTime += g_PlatformTime.getMilliseconds() - now;
+		}
+
 		return true;
 	}
 

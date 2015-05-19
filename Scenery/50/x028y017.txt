@@ -1,0 +1,8 @@
+[ENTRY]
+ID=1076029
+Asset=Bldg-Iron_Maw2?ATS=ATS-Castle
+Name=Untitled
+Pos=28026.7,1523.52,17918.8
+Orient=0,-0.999574,0,-0.0291996
+Scale=1,1,1
+
