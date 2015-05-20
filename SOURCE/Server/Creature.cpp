@@ -2514,6 +2514,7 @@ void CreatureInstance :: ProcessDeath(void)
 		aiScript->FullReset();
 	}
 
+	actInst->RunDeath(this);
 	actInst->EraseIndividualReference(this);
 	ab[0].Clear("CreatureInstance :: ProcessDeath");
 
@@ -5804,9 +5805,6 @@ void CreatureInstance :: _RemoveStatusList(int statusID)
 		{
 			SetServerFlag(ServerFlags::IsTransformed, false);
 			AppearanceUnTransform();
-			int wpos = PrepExt_UpdateAppearance(GSendBuf, this);
-			//actInst->LSendToAllSimulator(GSendBuf, wpos, -1);
-			actInst->LSendToLocalSimulator(GSendBuf, wpos, CurrentX, CurrentZ);
 		}
 		activeStatusEffect.erase(activeStatusEffect.begin() + r);
 		_ClearStatusFlag(statusID);
@@ -7067,6 +7065,10 @@ void CreatureInstance :: AttachItem(const char *type, const char *node)
 	printer.PrintTable(&newAppearance, table);
 	g_Log.AddMessageFormat("Attaching item. New appearance is. %s", newAppearance.c_str());
 	css.SetAppearance(newAppearance.c_str());
+
+	int wpos = PrepExt_UpdateAppearance(GSendBuf, this);
+	//actInst->LSendToAllSimulator(GSendBuf, wpos, -1);
+	actInst->LSendToLocalSimulator(GSendBuf, wpos, CurrentX, CurrentZ);
 }
 
 void CreatureInstance :: RestoreAppearance()
@@ -7075,6 +7077,10 @@ void CreatureInstance :: RestoreAppearance()
 	{
 		css.SetAppearance(originalAppearance.c_str());
 		originalAppearance.clear();
+		g_Log.AddMessageFormat("Restoring original appearance to %s", css.appearance.c_str());
+		int wpos = PrepExt_UpdateAppearance(GSendBuf, this);
+		//actInst->LSendToAllSimulator(GSendBuf, wpos, -1);
+		actInst->LSendToLocalSimulator(GSendBuf, wpos, CurrentX, CurrentZ);
 	}
 }
 
@@ -7092,7 +7098,11 @@ void CreatureInstance :: AppearanceUnTransform(void)
 	{
 		_ClearStatusFlag(StatusEffects::TRANSFORMED);
 		SetServerFlag(ServerFlags::IsTransformed, false);
-		RestoreAppearance();
+		if(originalAppearance.size() != 0)
+		{
+			css.SetAppearance(originalAppearance.c_str());
+			originalAppearance.clear();
+		}
 	}
 }
 

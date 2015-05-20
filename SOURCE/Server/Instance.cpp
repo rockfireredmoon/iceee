@@ -24,6 +24,7 @@ unsigned long INSTANCE_DELETE_RECHECK = 60000;  //Recheck delay between scanning
 unsigned long CREATURE_DELETE_RECHECK = 60000; //Delay between rescanning for dead creatures and deleting them from the instance.
 
 #include <math.h>
+#include <algorithm>
 
 #include "Instance.h"
 
@@ -799,12 +800,27 @@ int ActiveInstance :: RemovePlayerByID(int creatureID)
 	{
 		if(it->CreatureID == creatureID)
 		{
+			if(nutScriptPlayer.HasScript()) {
+				std::vector<ScriptCore::ScriptParam> p;
+				p.push_back(creatureID);
+				// Don't queue this, it's like the script will want to clean up before actual removal
+				nutScriptPlayer.RunFunction("on_remove", p, true);
+			}
+
 			int size = PrepExt_RemoveCreature(GSendBuf, it->CreatureID);
 			LSendToLocalSimulator(GSendBuf, size, it->CurrentX, it->CurrentZ);
 			EraseAllCreatureReference(&*it);
 			g_Log.AddMessageFormat("PLAYER REMOVED (%s) at (%p)", it->css.display_name, &*it);
 			PlayerList.erase(it);
 			RebuildPlayerList();
+
+			if(nutScriptPlayer.HasScript()) {
+				std::vector<ScriptCore::ScriptParam> p;
+				p.push_back(creatureID);
+				// Don't queue this, it's like the script will want to clean up before actual removal
+				nutScriptPlayer.RunFunction("on_removed", p, true);
+			}
+
 			return 1;
 		}
 	}
@@ -1864,7 +1880,11 @@ CreatureInstance* ActiveInstance :: SpawnGeneric(int CDefID, int x, int y, int z
 			retPtr->_AddStatusList(cdef->DefaultEffects[i], -1);
 
 		int aggro = 0;
-
+		if((SpawnFlags & SpawnPackageDef::FLAG_USABLE) || (cdef->DefHints & CDEF_HINT_USABLE ) || (cdef->DefHints & CDEF_HINT_USABLE_SPARKLY ))
+		{
+			retPtr->_AddStatusList(StatusEffects::IS_USABLE, -1);
+			aggro = 0;
+		}
 		if(SpawnFlags & SpawnPackageDef::FLAG_FRIENDLY)
 		{
 			retPtr->Faction = FACTION_PLAYERFRIENDLY;
@@ -1909,6 +1929,8 @@ CreatureInstance* ActiveInstance :: SpawnGeneric(int CDefID, int x, int y, int z
 	}
 
 	RebuildNPCList();
+	spawnsys.genericSpawns.push_back(retPtr->CreatureID);
+
 	return retPtr;
 }
 
@@ -1998,6 +2020,21 @@ void ActiveInstance :: EraseAllCreatureReference(CreatureInstance *object)
 		pendingOperations.UpdateList_Remove(object);
 		pendingOperations.DeathList_Remove(object);
 	};
+}
+
+void ActiveInstance :: RunDeath(CreatureInstance *object)
+{
+	if(nutScriptPlayer.HasScript()) {
+		std::vector<CreatureInstance*>::iterator it = std::find(PlayerListPtr.begin(), PlayerListPtr.end(), object);
+		std::vector<ScriptCore::ScriptParam> p;
+		p.push_back(object->CreatureID);
+		if(it != PlayerListPtr.end()) {
+			nutScriptPlayer.RunFunction("on_player_death", p);
+		}
+		else {
+			nutScriptPlayer.RunFunction("on_death", p);
+		}
+	}
 }
 
 int ActiveInstance :: EraseIndividualReference(CreatureInstance *object)
@@ -3209,6 +3246,7 @@ void ActiveInstance :: ScriptCallUseFinish(int sourceCreatureID, int usedCreatur
 //Calls a script jump label.  Can be used for any generic purpose.
 void ActiveInstance :: ScriptCall(const char *name)
 {
+	g_Log.AddMessageFormat("Script call %s in %d", name, mZone);
 	if(nutScriptPlayer.HasScript())
 		nutScriptPlayer.RunFunction(string(name));
 	if(scriptPlayer.HasScript() && scriptPlayer.JumpToLabel(name) == true)

@@ -1212,3 +1212,12 @@ Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=#F7843
 
+[ENTRY]
+ID=1500048
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=13486.8,172.351,11097.4
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#E56
+

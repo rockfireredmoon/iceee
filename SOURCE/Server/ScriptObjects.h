@@ -84,6 +84,33 @@ public:
 	}
 };
 
+/**
+ * Defines a single point with XYZ coordinates.
+ */
+class Vector3F {
+public:
+	float mX;
+	float mY;
+	float mZ;
+
+	Vector3F() {
+		mX = 0;
+		mY = 0;
+		mZ = 0;
+	}
+
+	Vector3F(float x, float y, float z) {
+		mX = x;
+		mY = y;
+		mZ = z;
+	}
+
+	void Set(float x, float y, float z) {
+		mX = x;
+		mY = y;
+		mZ = z;
+	}
+};
 
 }
 #endif //#define SCRIPTOBJECTS_H

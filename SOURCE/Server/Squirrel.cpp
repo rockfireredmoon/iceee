@@ -15,7 +15,7 @@ namespace Squirrel {
 			result->append("[\"");
 			Sqrat::Object o(it.getKey(), table.GetVM());
 			result->append(o.Cast<std::string>());
-			result->append("\"] = ");
+			result->append("\"]=");
 			Sqrat::Object obj(it.getValue(), table.GetVM());
 			PrintValue(result, obj);
 			i++;
@@ -49,7 +49,7 @@ namespace Squirrel {
 			}
 			else if(object.GetType() == OT_INTEGER) {
 				char number[32];
-				Util::SafeFormat(number, sizeof(number), "%ul", object.Cast<unsigned long>());
+				Util::SafeFormat(number, sizeof(number), "%lu", object.Cast<unsigned long>());
 				result->append(number);
 			}
 			else if(object.GetType() == OT_STRING) {

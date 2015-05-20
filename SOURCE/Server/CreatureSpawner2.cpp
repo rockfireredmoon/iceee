@@ -5,6 +5,7 @@
 #include "FileReader.h"
 #include "Util.h"
 #include <math.h>
+#include <algorithm>
 #include "Globals.h"
 #include "EliteMob.h"
 
@@ -874,6 +875,7 @@ SpawnManager :: ~SpawnManager()
 void SpawnManager :: Clear(void)
 {
 	spawnTiles.clear();
+	genericSpawns.clear();
 }
 
 void SpawnManager :: SetInstancePointer(ActiveInstance *ptr)
@@ -1096,6 +1098,11 @@ void SpawnManager :: Despawn(int CreatureID)
 	std::list<SpawnTile>::iterator it;
 	for(it = spawnTiles.begin(); it != spawnTiles.end(); ++it)
 		it->Despawn(CreatureID);
+	std::list<int>::iterator cit = std::find(genericSpawns.begin(), genericSpawns.end(), CreatureID);
+	if(cit != genericSpawns.end()) {
+		actInst->RemoveNPCInstance(CreatureID);
+		genericSpawns.erase(cit);
+	}
 }
 
 int SpawnManager :: TriggerSpawn(int PropID, int forceCreatureDef, int forceFlags)
