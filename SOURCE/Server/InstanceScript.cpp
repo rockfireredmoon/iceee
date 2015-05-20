@@ -109,6 +109,7 @@ InstanceNutPlayer::InstanceNutPlayer()
 {
 	actInst = NULL;
 	spawned.clear();
+	genericSpawned.clear();
 }
 
 InstanceNutPlayer::~InstanceNutPlayer()
@@ -151,13 +152,18 @@ void InstanceNutPlayer::RegisterInstanceFunctions(NutPlayer *instance, Sqrat::De
 	instanceClass->Func(_SC("attach_item"), &InstanceNutPlayer::AttachItem);
 	instanceClass->Func(_SC("restore_original_appearance"), &InstanceNutPlayer::RestoreOriginalAppearance);
 	instanceClass->Func(_SC("broadcast"), &InstanceNutPlayer::Broadcast);
+	instanceClass->Func(_SC("local_broadcast"), &InstanceNutPlayer::LocalBroadcast);
 	instanceClass->Func(_SC("info"), &InstanceNutPlayer::Info);
 	instanceClass->Func(_SC("spawn"), &InstanceNutPlayer::Spawn);
 	instanceClass->Func(_SC("play_sound"), &InstanceNutPlayer::PlaySound);
-	instanceClass->Func(_SC("spawnAt"), &InstanceNutPlayer::SpawnAt);
+	instanceClass->Func(_SC("get_display_name"), &InstanceNutPlayer::GetDisplayName);
+	instanceClass->Func(_SC("spawnAt"), &InstanceNutPlayer::OLDSpawnAt);
+	instanceClass->Func(_SC("spawn_at"), &InstanceNutPlayer::SpawnAt);
 	instanceClass->Func(_SC("cdef"), &InstanceNutPlayer::CDefIDForCID);
 	instanceClass->Func(_SC("scanForNPCByCDefID"), &InstanceNutPlayer::ScanForNPCByCDefID);
 	instanceClass->Func(_SC("getTarget"), &InstanceNutPlayer::GetTarget);
+	instanceClass->Func(_SC("get_location"), &InstanceNutPlayer::GetLocation);
+	instanceClass->Func(_SC("get_party_id"), &InstanceNutPlayer::GetPartyID);
 	instanceClass->Func(_SC("setTarget"), &InstanceNutPlayer::SetTarget);
 	instanceClass->Func(_SC("ai"), &InstanceNutPlayer::AI);
 	instanceClass->Func(_SC("countAlive"), &InstanceNutPlayer::CountAlive);
@@ -376,6 +382,28 @@ void InstanceNutPlayer::Emote(int CID, const char *emotion) {
 		g_Log.AddMessageFormat("Could not find creature with ID %d in this instance to emote.", CID);
 }
 
+int InstanceNutPlayer::GetPartyID(int CID) {
+	CreatureInstance *ci = GetCreaturePtr(CID);
+	return ci != NULL ? ci->PartyID : -1;
+}
+
+ScriptObjects::Vector3 InstanceNutPlayer::GetLocation(int CID) {
+	CreatureInstance *ci = GetCreaturePtr(CID);
+	if(ci != NULL) {
+		return ScriptObjects::Vector3(ci->CurrentX, ci->CurrentY, ci->CurrentZ);
+	}
+	return ScriptObjects::Vector3(0,0,0);
+
+}
+
+const char * InstanceNutPlayer::GetDisplayName(int CID) {
+	CreatureInstance *ci = GetCreaturePtr(CID);
+	if(ci != NULL)
+		return ci->css.display_name;
+	else
+		return "Unknown";
+}
+
 void InstanceNutPlayer::CreatureChat(int CID, const char *channel, const char *message) {
 	char buffer[4096];
 	CreatureInstance *ci = GetNPCPtr(CID);
@@ -447,9 +475,12 @@ void InstanceNutPlayer::Walk(int CID, ScriptObjects::Point point, int speed, int
 
 bool InstanceNutPlayer::Despawn(int CID)
 {
+	g_Log.AddMessageFormat("[DEBUG] Despawning %d", CID);
 	CreatureInstance *source = actInst->GetNPCInstanceByCID(CID);
-	if(source == NULL)
+	if(source == NULL) {
+		g_Log.AddMessageFormat("[DEBUG] No spawn %d", CID);
 		return false;
+	}
 	spawned.erase(std::remove(spawned.begin(), spawned.end(), CID), spawned.end());
 	actInst->spawnsys.Despawn(CID);
 	return true;
@@ -556,13 +587,26 @@ int InstanceNutPlayer::Spawn(int propID, int creatureID, int flags)
 	return res;
 }
 
-int InstanceNutPlayer::SpawnAt(int creatureID, float x, float y, float z, int facing, int flags)
+int InstanceNutPlayer::SpawnAt(int creatureID, ScriptObjects::Vector3 location, int facing, int flags)
 {
-	CreatureInstance *creature = actInst->SpawnGeneric(creatureID, x, y, z, facing, flags);
-	if(def == NULL )
+	CreatureInstance *creature = actInst->SpawnGeneric(creatureID, location.mX, location.mY, location.mZ, facing, flags);
+	if(creature == NULL )
 		return -1;
 	else {
-		spawned.push_back(creature->CreatureID);
+		genericSpawned.push_back(creature->CreatureID);
+		g_Log.AddMessageFormat("Spawn at returned temp creature ID of %d", creature->CreatureID);
+		return creature->CreatureID;
+	}
+}
+
+int InstanceNutPlayer::OLDSpawnAt(int creatureID, float x, float y, float z, int facing, int flags)
+{
+	CreatureInstance *creature = actInst->SpawnGeneric(creatureID, x, y, z, facing, flags);
+	if(creature == NULL )
+		return -1;
+	else {
+		genericSpawned.push_back(creature->CreatureID);
+		g_Log.AddMessageFormat("Spawn at returned temp creature ID of %d", creature->CreatureID);
 		return creature->CreatureID;
 	}
 }
@@ -584,6 +628,11 @@ void InstanceNutPlayer::Broadcast(const char *message)
 	}
 	else
 		NutPlayer::Broadcast(message);
+}
+
+void InstanceNutPlayer::LocalBroadcast(const char *message)
+{
+	actInst->BroadcastMessage(message);
 }
 
 CreatureInstance* InstanceNutPlayer::GetNPCPtr(int CID)

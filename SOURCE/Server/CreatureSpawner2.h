@@ -186,6 +186,7 @@ public:
 	static const int FLAG_VISWEAPON_MELEE = 64;
 	static const int FLAG_VISWEAPON_RANGED = 128;
 	static const int FLAG_ALLBITS = 0xFF;
+	static const int FLAG_USABLE = 512;
 
 	static const int MAX_SPAWNCOUNT = 12;
 	static const int DEFAULT_MAXSHARES = 100;
@@ -268,6 +269,7 @@ class SpawnManager
 	typedef std::vector<TILE_COORD> TILELIST_CONT;
 public:
 	std::list<SpawnTile> spawnTiles;
+	std::list<int> genericSpawns;
 	SpawnTile *GetTile(int tilePageX, int tilePageY);
 	ActiveInstance *actInst;
 	SpawnManager();

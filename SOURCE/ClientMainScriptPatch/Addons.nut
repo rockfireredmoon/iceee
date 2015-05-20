@@ -5979,5 +5979,3 @@ this.SceneObject.attachParticleSystem <- function(name, tag, size)
 		this.mParticleAttachments[tag] <- [particle, particleNode];
 		return uniqueName;
 }
-
-

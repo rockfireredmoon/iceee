@@ -67,6 +67,7 @@ set STAGE 0
 ; ability will only be activated if both braziers are lit.
 ;
 :onKill_3649
+	print "onKill_3649"
     spawn 1126558
     set BRAZIER_1_LIT 1
 	queue_event "brazierSearch" 1000
@@ -78,6 +79,7 @@ set STAGE 0
 ; ability will only be activated if both braziers are lit.
 ;  
 :onKill_3648
+	print "onKill_3648"
 	spawn 1126556
     set BRAZIER_2_LIT 1
 	queue_event "brazierSearch" 1000

@@ -28,6 +28,7 @@ private:
 class InstanceNutPlayer: public ScriptCore::NutPlayer {
 public:
 	std::vector<int> spawned;
+	std::vector<int> genericSpawned;
 	InstanceNutPlayer();
 	virtual ~InstanceNutPlayer();
 
@@ -48,7 +49,11 @@ public:
 	void PlaySound(const char *name);
 	void Info(const char *message);
 	bool AI(int CID, const char *label);
+	int GetPartyID(int CID);
+	ScriptObjects::Vector3 GetLocation(int CID);
+	void LocalBroadcast(const char *message);
 	void Broadcast(const char *message);
+	const char *GetDisplayName(int CID);
 	int Asset(int propID, const char *newAsset, float scale);
 	int CountAlive(int CDefID);
 	void DetachSceneryEffect(int propID, int tag);
@@ -63,7 +68,8 @@ public:
 	void Walk(int CID, ScriptObjects::Point point, int speed, int range);
 	void WalkThen(int CID, ScriptObjects::Point point, int speed, int range, Sqrat::Function onArrival);
 	int Spawn(int propID, int creatureID, int flags);
-	int SpawnAt(int creatureID, float x, float y, float z, int facing, int flags);
+	int SpawnAt(int creatureID, ScriptObjects::Vector3 location, int facing, int flags);
+	int OLDSpawnAt(int creatureID, float x, float y, float z, int facing, int flags);
 	int GetTarget(int CDefID);
 	bool SetTarget(int CDefID, int targetCDefID);
 	std::vector<int> ScanForNPCByCDefID(ScriptObjects::Area *location, int CDefID);

@@ -1727,7 +1727,7 @@ will_regen=1
 might_regen=1
 appearance=p1:{["a"]="Prop-CTF_Red",["sz"]="1"}
 level=1
-display_name=Red Flag - Unguarded
+display_name=Red Flag
 profession=1
 creature_category=Inanimate
 ai_package=
@@ -1738,7 +1738,7 @@ will_regen=1
 might_regen=1
 appearance=p1:{["a"]="Prop-CTF_Blue",["sz"]="1"}
 level=1
-display_name=Blue Flag - Unguarded
+display_name=Blue Flag
 profession=1
 creature_category=Inanimate
 ai_package=
@@ -1794,3 +1794,27 @@ creature_category=Mortal
 rarity=3
 ai_package=example
 total_size=5
+
+[ENTRY]
+ID=7846
+defHints=1024
+will_regen=1
+might_regen=1
+appearance=p1:{["a"]="Prop-CTF_Red",["sz"]="0.5"}
+level=1
+display_name=Red Flag
+profession=1
+creature_category=Inanimate
+ai_package=
+
+[ENTRY]
+ID=7847
+defHints=1024
+will_regen=1
+might_regen=1
+appearance=p1:{["a"]="Prop-CTF_Blue",["sz"]="0.5"}
+level=1
+display_name=Blue Flag
+profession=1
+creature_category=Inanimate
+ai_package=

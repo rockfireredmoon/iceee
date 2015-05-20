@@ -339,6 +339,8 @@ public:
 	void EraseAllCreatureReference(CreatureInstance *object);
 	int EraseIndividualReference(CreatureInstance *object);
 
+	void RunDeath(CreatureInstance *object);
+
 	int RemoveNPCInstance(int CreatureID);
 	void UnHate(int CreatureDefID);
 

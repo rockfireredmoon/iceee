@@ -452,6 +452,15 @@ namespace ScriptCore
 		vector3Class.Var("y", &ScriptObjects::Vector3::mY);
 		vector3Class.Var("z", &ScriptObjects::Vector3::mZ);
 
+		// Vector3F Object, floating point X/Y/Z location
+		Sqrat::Class<ScriptObjects::Vector3F> vector3FClass(vm, "Vector3F", true);
+		vector3FClass.Ctor<float,float, float>();
+		vector3FClass.Ctor();
+		Sqrat::RootTable(vm).Bind(_SC("Vector3F"), vector3FClass);
+		vector3FClass.Var("x", &ScriptObjects::Vector3F::mX);
+		vector3FClass.Var("y", &ScriptObjects::Vector3F::mY);
+		vector3FClass.Var("z", &ScriptObjects::Vector3F::mZ);
+
 		clazz->Func(_SC("queue"), &NutPlayer::Queue);
 		clazz->Func(_SC("broadcast"), &NutPlayer::Broadcast);
 		clazz->Func(_SC("halt"), &NutPlayer::Halt);
@@ -531,7 +540,7 @@ namespace ScriptCore
 		if(active) {
 			vector<ScriptParam> v;
 			HaltDerivedExecution();
-			RunFunction("on_halt", v);
+			RunFunction("on_halt", v, true);
 			active = false;
 			ClearQueue();
 			sq_close(vm);
