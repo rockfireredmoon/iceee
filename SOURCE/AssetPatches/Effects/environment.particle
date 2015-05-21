@@ -1239,6 +1239,70 @@ particle_system Par-Flame_Green
 }
 
 
+particle_system Par-Flame_Red
+{
+	quota	500
+	material	Particles/Fireball
+	particle_width	15
+	particle_height	15
+	cull_each	false
+	renderer	billboard
+	sorted	false
+	local_space	true
+	iteration_interval	0
+	nonvisible_update_timeout	0
+	billboard_type	point
+	billboard_origin	center
+	billboard_rotation_type	texcoord
+	common_up_vector	0 1 0
+	point_rendering	false
+	accurate_facing	false
+
+	emitter Box
+	{
+		angle	1
+		colour	1 0 0.151961 1
+		colour_range_start	1 0 0.1501961 1
+		colour_range_end	1 0 0.05098 1
+		direction	0 1 0
+		emission_rate	8
+		position	0 0 0
+		velocity	8
+		velocity_min	8
+		velocity_max	9
+		time_to_live	3
+		time_to_live_min	3
+		time_to_live_max	3
+		duration	0
+		duration_min	0
+		duration_max	0
+		repeat_delay	0
+		repeat_delay_min	0
+		repeat_delay_max	0
+		width	3
+		height	3
+		depth	3
+	}
+
+	affector Scaler
+	{
+		rate	-5
+	}
+
+	affector ColourFader2
+	{
+		red1	0.25
+		green1	0
+		blue1	0.01
+		alpha1	0
+		red2	-1
+		green2	-1
+		blue2	-1
+		alpha2	0
+		state_change	0.8
+	}
+}
+
 particle_system Par-Flame_Purple
 {
 	quota	500

@@ -5979,3 +5979,32 @@ this.SceneObject.attachParticleSystem <- function(name, tag, size)
 		this.mParticleAttachments[tag] <- [particle, particleNode];
 		return uniqueName;
 }
+
+this.Assembler.Creature.original_applyEquipment <- this.Assembler.Creature.applyEquipment;
+this.Assembler.Creature.applyEquipment <- function(table) {
+	local tableCopy = original_applyEquipment(table);
+	if ("a" in table)
+	{
+		print("ICE! adding a bunch of additional attachments\n");
+		foreach(attachment in table.a) {
+			print("ICE! attachment: " + attachment + "\n");
+			if("node" in attachment) {
+				print("ICE! attachment node: " + attachment.node + "\n");
+				local entry = {
+					node = attachment.node,
+					type = attachment.type,
+				};
+				print("ICE! attachment type: " + attachment.type + "\n");
+				if ("colors" in attachment)
+					entry.colors <- attachment.colors;
+
+				if ("effect" in attachment)
+					entry.effect <- attachment.effect;
+
+				attachments.append(entry);
+			}
+		}
+	}
+	return tableCopy;
+}
+

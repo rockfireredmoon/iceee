@@ -5,6 +5,7 @@
 #include <vector>
 #include <map>
 #include <string>
+#include <stack>
 
 using namespace std;
 
@@ -262,6 +263,31 @@ struct ImplicitAction
 	short abilityGroup;    //Ability that this ID is registered by
 };
 
+//Stacks of appearance transforms manage the current appearance after any transformations have been applie
+class AppearanceModifier
+{
+public:
+	virtual ~AppearanceModifier();
+	virtual std::string Modify(std::string source) =0;
+};
+
+class ReplaceAppearanceModifier : public AppearanceModifier {
+public:
+	std::string mReplacement;
+	ReplaceAppearanceModifier(std::string replacement);
+	~ReplaceAppearanceModifier();
+	std::string Modify(std::string source);
+};
+
+class AddAttachmentModifier : public AppearanceModifier {
+public:
+	std::string mType;
+	std::string mNode;
+	AddAttachmentModifier(std::string type,std::string node);
+	~AddAttachmentModifier();
+	std::string Modify(std::string source);
+};
+
 class CreatureInstance
 {
 public:
@@ -310,6 +336,7 @@ public:
 	int PartyID;
 	unsigned long serverFlags;
 	int transformCreatureId;
+	AppearanceModifier *transformModifier;
 
 	SelectedObject CurrentTarget;
 
@@ -335,7 +362,9 @@ public:
 	vector<ActiveStatMod> activeStatMod;
 	vector<ActiveStatusEffect> activeStatusEffect;
 	vector<ImplicitAction> implicitActions;
-	std::string originalAppearance;
+
+	std::vector<AppearanceModifier*> appearanceModifiers;
+	std::vector<AddAttachmentModifier*> attachments;
 
 	ActiveBuffManager buffManager;
 	ActiveCooldownManager cooldownManager;
@@ -343,6 +372,13 @@ public:
 	int LastUseDefID;            //Used for players, necessary for communicating script control with instances.
 
 	vector<BaseStatData> baseStats;  //Base stats.  New entries are saved to this list when a unique Add() is made.
+	void AttachItem(const char *type, const char *node);
+	void DetachItem(const char *type, const char *node);
+	void PushAppearanceModifier(AppearanceModifier *modifier);
+	void RemoveAppearanceModifier(AppearanceModifier *modifier);
+	void ClearAppearanceModifiers();
+	void PopAppearance();
+	std::string PeekAppearance();
 	int _GetBaseStatModIndex(int statID);
 	int _GetExistingModIndex(int type, int groupID, int statID);
 	void SendUpdatedBuffs(void);
@@ -354,7 +390,6 @@ public:
 	void AddBaseStatMod(int statID, float amount);
 	void SubtractBaseStatMod(int statID, float amount);
 	void UpdateBaseStatMinimum(int statID, float amount);
-	void Untransform();
 	void RemoveBuffsFromAbility(int abilityID, bool send);
 	void RemoveBuffIndex(size_t index);
 	void RemoveAllBuffs(bool send);
@@ -649,14 +684,11 @@ public:
 
 	//Custom Ability Functions, called through the ability system to handle special operations
 	bool IsTransformed();
-	void CAF_Transform(int CDefID);
+	bool CAF_Transform(int CDefID);
+	bool CAF_Untransform();
 	int CAF_SummonSidekick(int CDefID, int maxSummon, short abGroupID);
 	void CAF_RunSidekickStatFilter(int abGroupID);
 	int CAF_RegisterTargetSidekick(int abGroupID);
-	void RestoreAppearance();
-	void AppearanceTransform(const char *newAppearance);
-	void AttachItem(const char *type, const char *node);
-	void AppearanceUnTransform(void);
 	void StatScaleToLevel(int statID, int targetLevel);
 
 	void BroadcastUpdateElevationSelf(void);

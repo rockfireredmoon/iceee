@@ -70,7 +70,6 @@ PendingOperation pendingOperations;
 extern char GSendBuf[];
 extern char GAuxBuf[];
 
-
 SelectedObject :: SelectedObject()
 {
 	Clear(true);
@@ -178,6 +177,78 @@ bool ActiveAbilityInfo :: IsBusy(void)
 		return true;
 
 	return false;
+}
+
+//**************************************************
+//               Appearance Modifiers
+//**************************************************
+AppearanceModifier::~AppearanceModifier() {}
+
+ReplaceAppearanceModifier::ReplaceAppearanceModifier(std::string replacement) {
+	mReplacement = replacement;
+}
+
+ReplaceAppearanceModifier::~ReplaceAppearanceModifier() {}
+
+
+std::string ReplaceAppearanceModifier::Modify(std::string source) {
+	return mReplacement;
+}
+
+AddAttachmentModifier::AddAttachmentModifier(std::string type, std::string node) {
+	mType = type;
+	mNode = node;
+}
+AddAttachmentModifier::~AddAttachmentModifier() {}
+
+std::string AddAttachmentModifier::Modify(std::string source) {
+
+	string currentAppearance = source;
+	size_t pos = currentAppearance.find(":");
+	if(pos == string::npos)	{
+		g_Log.AddMessageFormat("Could not parse exist appearance. %s", currentAppearance.c_str());
+		return source;
+	}
+	string prefix = currentAppearance.substr(0, pos + 1);
+	currentAppearance = "this.a <- " + currentAppearance.substr(pos + 1, currentAppearance.size()) + ";";
+
+
+	// TODO shared vm
+	HSQUIRRELVM vm = sq_open(g_Config.SquirrelVMStackSize);
+	Sqrat::Script script(vm);
+
+	g_Log.AddMessageFormat("Adjusting appearance. %s", currentAppearance.c_str());
+
+	script.CompileString(_SC(currentAppearance.c_str()));
+	if (Sqrat::Error::Occurred(vm)) {
+		g_Log.AddMessageFormat("Failed to compile appearance. %s", Sqrat::Error::Message(vm).c_str());
+		return source;
+	}
+	script.Run();
+
+	Sqrat::RootTable rootTable = Sqrat::RootTable(vm);
+	Sqrat::Object placeholderObject = rootTable.GetSlot(_SC("a"));
+	Sqrat::Table table = placeholderObject.Cast<Sqrat::Table>();
+
+	Sqrat::Object attachments = table.GetSlot(_SC("a"));
+	if(attachments.IsNull()) {
+		// No existing attachments
+		Sqrat::Array arr(vm);
+		table.SetValue(_SC("a"), arr);
+		attachments = table.GetSlot(_SC("a"));
+	}
+	Sqrat::Array attachmentsArr = attachments.Cast<Sqrat::Array>();
+	Sqrat::Table item(vm);
+	item.SetValue(_SC("type"), _SC(mType));
+	item.SetValue(_SC("node"), _SC(mNode));
+	attachmentsArr.Append(item);
+
+	Squirrel::Printer printer;
+	std::string newAppearance = prefix;
+	printer.PrintTable(&newAppearance, table);
+	g_Log.AddMessageFormat("Attaching item. New appearance is. %s", newAppearance.c_str());
+
+	return newAppearance;
 }
 
 //**************************************************
@@ -340,7 +411,8 @@ void CreatureInstance :: Clear(void)
 	lastIdleZ = 0;
 	tetherNodeX = 0;
 	tetherNodeZ = 0;
-	originalAppearance.clear();
+	appearanceModifiers.clear();
+	attachments.clear();
 
 	LastUseDefID = 0;
 }
@@ -353,6 +425,8 @@ void CreatureInstance :: UnloadResources(void)
 	//Prepares this for safe de-allocation.  Should be explicitly called before deleting a
 	//creature from the list.
 	
+	ClearAppearanceModifiers();
+
 	//Note: the AI Script may be assigned to temporary instances.
 	//Temporary instances are local to a function, and are used for initializing
 	//data before they are added into the official creature list (via push_back())
@@ -503,7 +577,8 @@ void CreatureInstance :: CopyFrom(CreatureInstance *source)
 	cooldownManager.CopyFrom(source->cooldownManager);
 	buffManager.CopyFrom(source->buffManager);
 
-	originalAppearance = source->originalAppearance;
+	appearanceModifiers.assign(source->appearanceModifiers.begin(), source->appearanceModifiers.end());
+	attachments.assign(source->attachments.begin(), source->attachments.end());
 	LastUseDefID = source->LastUseDefID;
 }
 
@@ -1687,12 +1762,6 @@ void CreatureInstance :: RemoveBuffIndex(size_t index)
 
 	SubtractBaseStatMod(activeStatMod[index].modStatID, activeStatMod[index].amount);
 	activeStatMod.erase(activeStatMod.begin() + index);
-}
-
-void CreatureInstance :: Untransform()
-{
-	transformCreatureId = 0;
-	_RemoveStatusList(StatusEffects::TRANSFORMED);
 }
 
 
@@ -5802,10 +5871,7 @@ void CreatureInstance :: _RemoveStatusList(int statusID)
 	if(r >= 0)
 	{
 		if(statusID == StatusEffects::TRANSFORMED)
-		{
-			SetServerFlag(ServerFlags::IsTransformed, false);
-			AppearanceUnTransform();
-		}
+			CAF_Untransform();
 		activeStatusEffect.erase(activeStatusEffect.begin() + r);
 		_ClearStatusFlag(statusID);
 		pendingOperations.UpdateList_Add(CREATURE_UPDATE_MOD, this, 0);
@@ -6671,7 +6737,7 @@ void  CreatureInstance :: CreateLoot(int finderLevel)
 	//if applicable.
 
 	//Hack to prevent unfinished/unimplemented (null appearance) creatures from dropping anything.
-	if(css.appearance.size() == 0)
+	if(PeekAppearance().size() == 0)
 		return;
 
 	// Players and sidekicks cannot be looted.
@@ -6867,8 +6933,28 @@ bool CreatureInstance :: IsTransformed()
 	return serverFlags & ServerFlags::IsTransformed;
 }
 
-void CreatureInstance :: CAF_Transform(int CDefID)
+bool CreatureInstance :: CAF_Untransform()
 {
+	if(transformCreatureId == 0) {
+		g_Log.AddMessageFormat("%d not transformed into %d", CreatureDefID);
+		return false;
+	}
+	transformCreatureId = 0;
+	g_Log.AddMessageFormat("Untransforming %d into %d", CreatureDefID, transformCreatureId);
+	_ClearStatusFlag(StatusEffects::TRANSFORMED);
+	SetServerFlag(ServerFlags::IsTransformed, false);
+	RemoveAppearanceModifier(transformModifier);
+	transformModifier = NULL;
+	return true;
+}
+
+bool CreatureInstance :: CAF_Transform(int CDefID)
+{
+	if(transformCreatureId != 0) {
+		g_Log.AddMessageFormat("%d already transformed into %d", CreatureDefID, transformCreatureId);
+		return false;
+	}
+
 	g_Log.AddMessageFormat("Transforming %d into %d", CreatureDefID, CDefID);
 	_AddStatusList(StatusEffects::TRANSFORMED, -1);
 	SetServerFlag(ServerFlags::IsTransformed, true);
@@ -6876,21 +6962,16 @@ void CreatureInstance :: CAF_Transform(int CDefID)
 	CreatureDefinition *cdef = CreatureDef.GetPointerByCDef(CDefID);
 	if(cdef != NULL)
 	{
-		AppearanceTransform(cdef->css.appearance.c_str());
+		transformModifier = new ReplaceAppearanceModifier(
+				cdef->css.appearance.c_str());
+		PushAppearanceModifier(transformModifier);
 		transformCreatureId = CDefID;
+		return true;
 	}
 	else
 		transformCreatureId = 0;
+	return false;
 
-	/*
-	int r = CreatureDef.GetIndex(15008);
-	if(r >= 0)
-		AppearanceTransform(CreatureDef.NPC[r].css.appearance);
-	*/
-
-	int wpos = PrepExt_UpdateAppearance(GSendBuf, this);
-	//actInst->LSendToAllSimulator(GSendBuf, wpos, -1);
-	actInst->LSendToLocalSimulator(GSendBuf, wpos, CurrentX, CurrentZ);
 }
 
 int CreatureInstance :: CAF_SummonSidekick(int CDefID, int maxSummon, short abGroupID)
@@ -7014,96 +7095,60 @@ int CreatureInstance :: CAF_RegisterTargetSidekick(int abGroupID)
 	return count;
 }
 
-
-void CreatureInstance :: AttachItem(const char *type, const char *node)
-{
-	//
-	string currentAppearance = css.appearance;
-	size_t pos = currentAppearance.find(":");
-	if(pos == string::npos)	{
-		g_Log.AddMessageFormat("Could not parse exist appearance. %s", currentAppearance.c_str());
-		return;
-	}
-	string prefix = currentAppearance.substr(0, pos + 1);
-	currentAppearance = "this.a <- " + currentAppearance.substr(pos + 1, currentAppearance.size()) + ";";
-
-	// TODO shared vm
-	HSQUIRRELVM vm = sq_open(g_Config.SquirrelVMStackSize);
-	Sqrat::Script script(vm);
-
-	g_Log.AddMessageFormat("Adjusting appearance. %s", currentAppearance.c_str());
-
-	script.CompileString(_SC(currentAppearance.c_str()));
-	if (Sqrat::Error::Occurred(vm)) {
-		g_Log.AddMessageFormat("Failed to compile appearance. %s", Sqrat::Error::Message(vm).c_str());
-		return;
-	}
-	script.Run();
-
-	Sqrat::RootTable rootTable = Sqrat::RootTable(vm);
-	Sqrat::Object placeholderObject = rootTable.GetSlot(_SC("a"));
-	Sqrat::Table table = placeholderObject.Cast<Sqrat::Table>();
-
-	Sqrat::Object attachments = table.GetSlot(_SC("a"));
-	if(attachments.IsNull()) {
-		// No existing attachments
-		Sqrat::Array arr(vm);
-		table.SetValue(_SC("a"), arr);
-		attachments = table.GetSlot(_SC("a"));
-	}
-	Sqrat::Array attachmentsArr = attachments.Cast<Sqrat::Array>();
-	Sqrat::Table item(vm);
-	item.SetValue(_SC("type"), _SC(type));
-	item.SetValue(_SC("node"), _SC(node));
-	attachmentsArr.Append(item);
-
-	if(originalAppearance.size() == 0)
-		originalAppearance = css.appearance;
-
-	Squirrel::Printer printer;
-	std::string newAppearance = prefix;
-	printer.PrintTable(&newAppearance, table);
-	g_Log.AddMessageFormat("Attaching item. New appearance is. %s", newAppearance.c_str());
-	css.SetAppearance(newAppearance.c_str());
-
-	int wpos = PrepExt_UpdateAppearance(GSendBuf, this);
-	//actInst->LSendToAllSimulator(GSendBuf, wpos, -1);
-	actInst->LSendToLocalSimulator(GSendBuf, wpos, CurrentX, CurrentZ);
-}
-
-void CreatureInstance :: RestoreAppearance()
-{
-	if(originalAppearance.size() != 0)
-	{
-		css.SetAppearance(originalAppearance.c_str());
-		originalAppearance.clear();
-		g_Log.AddMessageFormat("Restoring original appearance to %s", css.appearance.c_str());
-		int wpos = PrepExt_UpdateAppearance(GSendBuf, this);
-		//actInst->LSendToAllSimulator(GSendBuf, wpos, -1);
-		actInst->LSendToLocalSimulator(GSendBuf, wpos, CurrentX, CurrentZ);
-	}
-}
-
-void CreatureInstance :: AppearanceTransform(const char *newAppearance)
-{
-	if(originalAppearance.size() == 0)
-		originalAppearance = css.appearance;
-	css.SetAppearance(newAppearance);
-	//Util::SafeCopy(css.appearance, newAppearance, sizeof(css.appearance));
-}
-
-void CreatureInstance :: AppearanceUnTransform(void)
-{
-	if(originalAppearance.size() > 0)
-	{
-		_ClearStatusFlag(StatusEffects::TRANSFORMED);
-		SetServerFlag(ServerFlags::IsTransformed, false);
-		if(originalAppearance.size() != 0)
-		{
-			css.SetAppearance(originalAppearance.c_str());
-			originalAppearance.clear();
+void CreatureInstance :: DetachItem(const char *type, const char *node) {
+	for(std::vector<AddAttachmentModifier*>::iterator it = attachments.begin(); it != attachments.end(); ++it) {
+		AddAttachmentModifier *mod = *it;
+		if(mod->mType == type && mod->mNode == node) {
+			attachments.erase(it);
+			RemoveAppearanceModifier(mod);
+			break;
 		}
 	}
+}
+
+void CreatureInstance :: AttachItem(const char *type, const char *node) {
+	AddAttachmentModifier *mod = new AddAttachmentModifier(type, node);
+	attachments.push_back(mod);
+	PushAppearanceModifier(attachments.back());
+}
+
+void CreatureInstance :: ClearAppearanceModifiers()
+{
+	std::vector<AppearanceModifier*>::iterator it = appearanceModifiers.begin();
+	for(; it != appearanceModifiers.end(); ++it)
+		delete *it;
+	appearanceModifiers.clear();
+	actInst->LSendToLocalSimulator(GSendBuf, PrepExt_UpdateAppearance(GSendBuf, this), CurrentX, CurrentZ);
+}
+
+void CreatureInstance :: RemoveAppearanceModifier(AppearanceModifier *modifier)
+{
+	std::vector<AppearanceModifier*>::iterator it = appearanceModifiers.begin();
+	for(; it != appearanceModifiers.end(); ++it) {
+		AppearanceModifier *app = *it;
+		if(app == modifier) {
+			delete *it;
+			appearanceModifiers.erase(it);
+			break;
+		}
+	}
+	actInst->LSendToLocalSimulator(GSendBuf, PrepExt_UpdateAppearance(GSendBuf, this), CurrentX, CurrentZ);
+}
+
+std::string CreatureInstance :: PeekAppearance()
+{
+	std::string appearance = css.appearance;
+	std::vector<AppearanceModifier*>::iterator it = appearanceModifiers.begin();
+	for(; it != appearanceModifiers.end(); ++it)
+		appearance = (*it)->Modify(appearance);
+	return appearance;
+}
+
+void CreatureInstance :: PushAppearanceModifier(AppearanceModifier *modifier)
+{
+	appearanceModifiers.push_back(modifier);
+	int wpos = PrepExt_UpdateAppearance(GSendBuf, this);
+	actInst->LSendToLocalSimulator(GSendBuf, wpos, CurrentX, CurrentZ);
 }
 
 void CreatureInstance :: NotifySuperCrit(int TargetCreatureID)

@@ -467,6 +467,7 @@ public:
 	// Exposed to scripts (instance)
 
 	static SQInteger Sleep(HSQUIRRELVM v);
+
 //	void Sleep(unsigned long time);
 
 	// Exposed to scripts (globals)

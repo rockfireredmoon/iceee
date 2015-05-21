@@ -42,11 +42,16 @@ public:
 	// Exposed to scripts
 //	void Queue(Sqrat::Function function, int fireDelay);
 	void RestoreOriginalAppearance(int CID);
+	void DetachItem(int CID, const char *type, const char *node);
 	void AttachItem(int CID, const char *type, const char *node);
 	void UnremoveProps();
 	void UnremoveProp(int propID);
 	bool RemoveProp(int propID);
 	void PlaySound(const char *name);
+	void Message(const char *message, int type);
+	void Error(const char *message);
+	void Unhate(int CID);
+	void ClearTarget(int CID);
 	void Info(const char *message);
 	bool AI(int CID, const char *label);
 	int GetPartyID(int CID);
@@ -63,6 +68,8 @@ public:
 	void CreatureChat(int cid, const char *channel, const char *message);
 	int CDefIDForCID(int cid);
 	bool Despawn(int CID);
+	int LoadSpawnTileFor(ScriptObjects::Point location);
+	int LoadSpawnTile(ScriptObjects::Point location);
 	int DespawnAll(int CDefID);
 	int GetHealthPercent(int cid);
 	void Walk(int CID, ScriptObjects::Point point, int speed, int range);
@@ -70,9 +77,11 @@ public:
 	int Spawn(int propID, int creatureID, int flags);
 	int SpawnAt(int creatureID, ScriptObjects::Vector3 location, int facing, int flags);
 	int OLDSpawnAt(int creatureID, float x, float y, float z, int facing, int flags);
-	int GetTarget(int CDefID);
-	bool SetTarget(int CDefID, int targetCDefID);
-	std::vector<int> ScanForNPCByCDefID(ScriptObjects::Area *location, int CDefID);
+	int GetTarget(int CID);
+	bool SetTarget(int CID, int targetCID);
+	std::vector<int>  Scan(ScriptObjects::Area *location);
+	int ScanNPC(ScriptObjects::Area *location, int CDefID);
+	std::vector<int> ScanNPCs(ScriptObjects::Area *location, int CDefID);
 
 private:
 	ActiveInstance *actInst;

@@ -1,0 +1,5 @@
+<?xml version="1.0" ?>
+<Component id="Par-Flame_Green-Emitter" xmlns="http://ee.ironrealms.com/CMS_XML.xsd">
+  <Entity mesh="emitter-helper.mesh" vf="4"/>
+  <ParticleSystem template="Par-Flame_Green" p="0 0 0" s="1 1 1"/>
+</Component>

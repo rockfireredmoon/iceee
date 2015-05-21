@@ -61,7 +61,7 @@ function grunes_lay_tnt() {
 function grunes_light_fuse() {	
 	if(grunes_tnt_steam.len() == 0) {
 		foreach(prop in grunes_tnt_props) 
-	    	grunes_tnt_steam.append(inst.particleAttach(prop,"Par-Steam",5,0,10,0));
+	    	grunes_tnt_steam.append(inst.effect(prop,"Par-Steam",5,0,10,0));
 	    inst.play_sound("Sound-ModSound|Sound-timebomb.ogg");
 	    inst.queue(grunes_explode, 5000);
 	}
@@ -71,7 +71,7 @@ function grunes_light_fuse() {
 function grunes_explode() {	
 	if(grunes_tnt_explosion.len() == 0) {
 		foreach(prop in grunes_rocks) 
-	    	grunes_tnt_explosion.append(inst.particleAttach(prop,"Par-BigExplosion",5,0,10,0));
+	    	grunes_tnt_explosion.append(inst.effect(prop,"Par-BigExplosion",5,0,10,0));
 	    
 	    inst.queue(grunes_remove_tnt_and_steam, 1000);
 	    inst.queue(grunes_remove_boulders, 5000);

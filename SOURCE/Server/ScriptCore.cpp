@@ -428,12 +428,15 @@ namespace ScriptCore
 		// Instance Location Object, X1/Z1,X2/Z2 location defining a rectangle
 		Sqrat::Class<ScriptObjects::Area> areaClass(vm, "Area", true);
 		areaClass.Ctor<int,int,int,int>();
+		areaClass.Ctor<int,int,int>();
 		areaClass.Ctor();
 		Sqrat::RootTable(vm).Bind(_SC("Area"), areaClass);
 		areaClass.Var("x1", &ScriptObjects::Area::mX1);
+		areaClass.Var("radius", &ScriptObjects::Area::mRadius);
 		areaClass.Var("x2", &ScriptObjects::Area::mX2);
 		areaClass.Var("y1", &ScriptObjects::Area::mY1);
 		areaClass.Var("y2", &ScriptObjects::Area::mY2);
+		areaClass.Func("point", &ScriptObjects::Area::ToPoint);
 
 		// Point Object, X/Z location
 		Sqrat::Class<ScriptObjects::Point> pointClass(vm, "Point", true);

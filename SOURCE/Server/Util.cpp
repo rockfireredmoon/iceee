@@ -253,7 +253,19 @@ int PrepExt_UpdateAppearance(char *buffer, CreatureInstance *cInst)
 
 	int spos = wpos;
 	wpos += PutShort(&buffer[wpos], 0);    //Placeholder for number of stats
+
+	/* Temporary set appearance stat to the appearance on the top of the stack.
+	 * We don't want to ever store this appearance so it is changed back after
+	 * the update buffer has been built
+	 */
+	std::string currentAppearance = cInst->css.appearance;
+	cInst->css.SetAppearance(cInst->PeekAppearance().c_str());
+
 	int r = WriteCharacterStats(&cInst->css, buffer, wpos, SUT_Appearance);
+
+	// And set it back
+	cInst->css.SetAppearance(currentAppearance.c_str());
+
 	PutShort(&buffer[spos], r);           //Write number of stats
 
 	PutShort(&buffer[1], wpos - 3);       //Set message size

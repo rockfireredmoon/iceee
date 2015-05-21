@@ -1342,6 +1342,7 @@ class this.Assembler.Creature extends this.Assembler.Factory
 		
 		
 		// ICEEE - Allow appearances to contain attachments to that get added as well
+		/*
 		if ("a" in table)
 		{
 			print("ICE! adding a bunch of additional attachments\n");
@@ -1364,6 +1365,7 @@ class this.Assembler.Creature extends this.Assembler.Factory
 				}
 			}
 		}
+		*/
 
 		print("ICE! applyEq: existing attach: " + attachments.len() + "\n");
 		tableCopy.a <- attachments;

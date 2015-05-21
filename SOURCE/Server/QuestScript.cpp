@@ -260,7 +260,7 @@ void QuestNutPlayer::Transform(int cdefID) {
 
 void QuestNutPlayer::Untransform() {
 	g_Log.AddMessageFormat("Untransform");
-	source->Untransform();
+	source->CAF_Untransform();
 }
 
 void QuestNutPlayer::JoinGuild(int guildDefID) {

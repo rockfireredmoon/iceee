@@ -6591,7 +6591,7 @@ void SimulatorThread :: SaveCharacterStats(void)
 	//Need to copy the stats to the character definition, otherwise the updated
 	//information won't save out.
 	//First restore any transformed appearances.
-	creatureInst->AppearanceUnTransform();
+//	creatureInst->AppearanceUnTransform();
 	pld.charPtr->cdef.css.CopyFrom(&creatureInst->css);
 
 	//Restore originals from any active stat mods.
