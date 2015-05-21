@@ -6001,7 +6001,7 @@ this.Assembler.Creature.applyEquipment <- function(table) {
 				if ("effect" in attachment)
 					entry.effect <- attachment.effect;
 
-				attachments.append(entry);
+				tableCopy.attachments.append(entry);
 			}
 		}
 	}
