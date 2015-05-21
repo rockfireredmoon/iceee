@@ -150,32 +150,39 @@ void InstanceNutPlayer::RegisterFunctions() {
 void InstanceNutPlayer::RegisterInstanceFunctions(NutPlayer *instance, Sqrat::DerivedClass<InstanceNutPlayer, NutPlayer> *instanceClass)
 {
 	instanceClass->Func(_SC("attach_item"), &InstanceNutPlayer::AttachItem);
-	instanceClass->Func(_SC("restore_original_appearance"), &InstanceNutPlayer::RestoreOriginalAppearance);
+	instanceClass->Func(_SC("detach_item"), &InstanceNutPlayer::DetachItem);
 	instanceClass->Func(_SC("broadcast"), &InstanceNutPlayer::Broadcast);
 	instanceClass->Func(_SC("local_broadcast"), &InstanceNutPlayer::LocalBroadcast);
 	instanceClass->Func(_SC("info"), &InstanceNutPlayer::Info);
+	instanceClass->Func(_SC("unhate"), &InstanceNutPlayer::Unhate);
+	instanceClass->Func(_SC("clear_target"), &InstanceNutPlayer::ClearTarget);
+	instanceClass->Func(_SC("error"), &InstanceNutPlayer::Error);
+	instanceClass->Func(_SC("message"), &InstanceNutPlayer::Message);
 	instanceClass->Func(_SC("spawn"), &InstanceNutPlayer::Spawn);
 	instanceClass->Func(_SC("play_sound"), &InstanceNutPlayer::PlaySound);
 	instanceClass->Func(_SC("get_display_name"), &InstanceNutPlayer::GetDisplayName);
-	instanceClass->Func(_SC("spawnAt"), &InstanceNutPlayer::OLDSpawnAt);
+	instanceClass->Func(_SC("load_spawn_tile"), &InstanceNutPlayer::LoadSpawnTile);
+	instanceClass->Func(_SC("load_spawn_tile_for"), &InstanceNutPlayer::LoadSpawnTileFor);
 	instanceClass->Func(_SC("spawn_at"), &InstanceNutPlayer::SpawnAt);
 	instanceClass->Func(_SC("cdef"), &InstanceNutPlayer::CDefIDForCID);
-	instanceClass->Func(_SC("scanForNPCByCDefID"), &InstanceNutPlayer::ScanForNPCByCDefID);
+	instanceClass->Func(_SC("scan_npcs"), &InstanceNutPlayer::ScanNPCs);
+	instanceClass->Func(_SC("scan_npc"), &InstanceNutPlayer::ScanNPC);
+	instanceClass->Func(_SC("scan"), &InstanceNutPlayer::Scan);
 	instanceClass->Func(_SC("getTarget"), &InstanceNutPlayer::GetTarget);
+	instanceClass->Func(_SC("get_target"), &InstanceNutPlayer::GetTarget);
 	instanceClass->Func(_SC("get_location"), &InstanceNutPlayer::GetLocation);
 	instanceClass->Func(_SC("get_party_id"), &InstanceNutPlayer::GetPartyID);
-	instanceClass->Func(_SC("setTarget"), &InstanceNutPlayer::SetTarget);
+	instanceClass->Func(_SC("set_target"), &InstanceNutPlayer::SetTarget);
 	instanceClass->Func(_SC("ai"), &InstanceNutPlayer::AI);
-	instanceClass->Func(_SC("countAlive"), &InstanceNutPlayer::CountAlive);
-	instanceClass->Func(_SC("healthPercent"), &InstanceNutPlayer::GetHealthPercent);
+	instanceClass->Func(_SC("count_alive"), &InstanceNutPlayer::CountAlive);
+	instanceClass->Func(_SC("get_health_pc"), &InstanceNutPlayer::GetHealthPercent);
 	instanceClass->Func(_SC("walk"), &InstanceNutPlayer::Walk);
-	instanceClass->Func(_SC("walkThen"), &InstanceNutPlayer::WalkThen);
+	instanceClass->Func(_SC("walk_then"), &InstanceNutPlayer::WalkThen);
 	instanceClass->Func(_SC("chat"), &InstanceNutPlayer::Chat);
-	instanceClass->Func(_SC("creatureChat"), &InstanceNutPlayer::CreatureChat);
 	instanceClass->Func(_SC("despawn"), &InstanceNutPlayer::Despawn);
-	instanceClass->Func(_SC("despawnAll"), &InstanceNutPlayer::DespawnAll);
+	instanceClass->Func(_SC("despawn_all"), &InstanceNutPlayer::DespawnAll);
+	instanceClass->Func(_SC("creature_chat"), &InstanceNutPlayer::CreatureChat);
 	// TODO deprecated
-	instanceClass->Func(_SC("particleAttach"), &InstanceNutPlayer::ParticleAttach);
 	instanceClass->Func(_SC("effect"), &InstanceNutPlayer::ParticleAttach);
 	instanceClass->Func(_SC("restore"), &InstanceNutPlayer::DetachSceneryEffect);
 	instanceClass->Func(_SC("asset"), &InstanceNutPlayer::Asset);
@@ -192,11 +199,42 @@ void InstanceNutPlayer::RegisterInstanceFunctions(NutPlayer *instance, Sqrat::De
 	Sqrat::ConstTable(vm).Const(_SC("CREATURE_JOG_SPEED"), CREATURE_JOG_SPEED);
 	Sqrat::ConstTable(vm).Const(_SC("CREATURE_RUN_SPEED"), CREATURE_RUN_SPEED);
 
+
 }
 
 void InstanceNutPlayer::SetInstancePointer(ActiveInstance *parent)
 {
 	actInst = parent;
+}
+
+void InstanceNutPlayer::ClearTarget(int CID)
+{
+	CreatureInstance *ci = GetCreaturePtr(CID);
+	if(ci != NULL) {
+		ci->SelectTarget(NULL);
+		ci->SetAutoAttack(NULL, 0);
+	}
+	else
+		g_Log.AddMessageFormat("Could not find creature with ID %d in this instance to clear targets from.", CID);
+}
+
+void InstanceNutPlayer::Unhate(int CID)
+{
+	CreatureInstance *ci = GetCreaturePtr(CID);
+	if(ci != NULL)
+		ci->UnHate();
+	else
+		g_Log.AddMessageFormat("Could not find creature with ID %d in this instance to unhate.", CID);
+}
+
+void InstanceNutPlayer::DetachItem(int CID, const char *type, const char *node)
+{
+	CreatureInstance *ci = GetCreaturePtr(CID);
+	if(ci != NULL) {
+		ci->DetachItem(type, node);
+	}
+	else
+		g_Log.AddMessageFormat("Could not find creature with ID %d in this instance to detach item %s (%s) from.", CID, type, node);
 }
 
 void InstanceNutPlayer::AttachItem(int CID, const char *type, const char *node)
@@ -207,16 +245,6 @@ void InstanceNutPlayer::AttachItem(int CID, const char *type, const char *node)
 	}
 	else
 		g_Log.AddMessageFormat("Could not find creature with ID %d in this instance to attach item %s (%s) to.", CID, type, node);
-}
-
-void InstanceNutPlayer::RestoreOriginalAppearance(int CID)
-{
-	CreatureInstance *ci = GetCreaturePtr(CID);
-	if(ci != NULL) {
-		ci->RestoreAppearance();
-	}
-	else
-		g_Log.AddMessageFormat("Could not find creature with ID %d in this instance restore appearance for.");
 }
 
 void InstanceNutPlayer::UnremoveProps()
@@ -531,10 +559,10 @@ bool InstanceNutPlayer::AI(int CID, const char *label)
 					( ci->aiNut && ci->aiNut->RunFunction(string(label)) ) );
 }
 
-int InstanceNutPlayer::GetTarget(int CDefID)
+int InstanceNutPlayer::GetTarget(int CID)
 {
 	int targetID = 0;
-	CreatureInstance *ci = GetNPCPtr(CDefID);
+	CreatureInstance *ci = GetNPCPtr(CID);
 	if(ci)
 	{
 		if(ci->CurrentTarget.targ != NULL)
@@ -543,10 +571,10 @@ int InstanceNutPlayer::GetTarget(int CDefID)
 	return targetID;
 }
 
-bool InstanceNutPlayer::SetTarget(int CDefID, int targetCDefID)
+bool InstanceNutPlayer::SetTarget(int CID, int targetCID)
 {
-	CreatureInstance *source = actInst->GetInstanceByCID(CDefID);
-	CreatureInstance *target = actInst->GetInstanceByCID(targetCDefID);
+	CreatureInstance *source = actInst->GetInstanceByCID(CID);
+	CreatureInstance *target = actInst->GetInstanceByCID(targetCID);
 	if(source != NULL && target != NULL)
 	{
 		source->SelectTarget(target);
@@ -555,7 +583,33 @@ bool InstanceNutPlayer::SetTarget(int CDefID, int targetCDefID)
 	return false;
 }
 
-vector<int> InstanceNutPlayer::ScanForNPCByCDefID(ScriptObjects::Area *location, int CDefID) {
+int InstanceNutPlayer::ScanNPC(ScriptObjects::Area *location, int CDefID) {
+	vector<int> v = ScanNPCs(location, CDefID);
+	return v.size() == 0 ? 0 : v[0];
+}
+
+vector<int> InstanceNutPlayer::Scan(ScriptObjects::Area *location) {
+	vector<int> v;
+	v.clear();
+	if(actInst == NULL || location == NULL)
+		return v;
+	for(size_t i = 0; i < actInst->NPCListPtr.size(); i++)
+	{
+		CreatureInstance *ci = actInst->NPCListPtr[i];
+		if(ci->CurrentX < location->mX1)
+			continue;
+		if(ci->CurrentX > location->mX2)
+			continue;
+		if(ci->CurrentZ < location->mY1)
+			continue;
+		if(ci->CurrentZ > location->mY2)
+			continue;
+		v.push_back(ci->CreatureID);
+	}
+	return v;
+}
+
+vector<int> InstanceNutPlayer::ScanNPCs(ScriptObjects::Area *location, int CDefID) {
 	vector<int> v;
 	v.clear();
 	if(actInst == NULL || location == NULL)
@@ -576,6 +630,17 @@ vector<int> InstanceNutPlayer::ScanForNPCByCDefID(ScriptObjects::Area *location,
 		v.push_back(ci->CreatureID);
 	}
 	return v;
+}
+
+int InstanceNutPlayer::LoadSpawnTile(ScriptObjects::Point location)
+{
+	actInst->spawnsys.GenerateTile(location.mX, location.mZ);
+	return 1;
+}
+
+int InstanceNutPlayer::LoadSpawnTileFor(ScriptObjects::Point location)
+{
+	return LoadSpawnTile(ScriptObjects::Point(location.mX / SpawnTile::SPAWN_TILE_SIZE,location.mZ / SpawnTile::SPAWN_TILE_SIZE));
 }
 
 int InstanceNutPlayer::Spawn(int propID, int creatureID, int flags)
@@ -613,8 +678,19 @@ int InstanceNutPlayer::OLDSpawnAt(int creatureID, float x, float y, float z, int
 
 void InstanceNutPlayer::Info(const char *message)
 {
+	Message(message, INFOMSG_INFO);
+}
+
+void InstanceNutPlayer::Error(const char *message)
+{
+	Message(message, INFOMSG_ERROR);
+}
+
+void InstanceNutPlayer::Message(const char *message, int type)
+{
+
 	char buffer[4096];
-	int wpos = PrepExt_SendInfoMessage(buffer, message, INFOMSG_INFO);
+	int wpos = PrepExt_SendInfoMessage(buffer, message, type);
 	actInst->LSendToAllSimulator(buffer, wpos, -1);
 }
 

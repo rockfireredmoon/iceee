@@ -3132,7 +3132,7 @@ int AbilityCalculator :: Transform(ARGUMENT_LIST args)
 int AbilityCalculator :: Untransform(ARGUMENT_LIST args)
 {
 	g_Log.AddMessageFormat("Untransform");
-	ciSource->Untransform();
+	ciSource->CAF_Untransform();
 	return ABILITY_SUCCESS;
 }
 

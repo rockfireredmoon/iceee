@@ -81,7 +81,7 @@ function detach_flags() {
 		// Queued to try and work around a problem with updating appearance while switching instances
 		local w = has_red_flag;
 		inst.queue(function() {
-			inst.restore_original_appearance(w);
+			inst.detach_item(sourceCId, "Item-CTF_Red", "ctf");
 		}, 500);
 		has_red_flag = 0;
 	}
@@ -89,7 +89,7 @@ function detach_flags() {
 		// Queued to try and work around a problem with updating appearance while switching instances
 		local w = has_blue_flag;
 		inst.queue(function() {
-			inst.restore_original_appearance(w);
+			inst.detach_item(sourceCId, "Item-CTF_Blue", "ctf");
 		}, 500);
 		has_blue_flag = 0;
 	}
@@ -148,16 +148,14 @@ function check_team(taker) {
 }
 
 function drop_red_flag() {
-	inst.restore_original_appearance(has_red_flag);
+	inst.detach_item(has_red_flag, "Item-CTF_Red", "ctf");
 	cid_red_flag_unguarded = inst.spawn_at(CDEFID_RED_FLAG_UNGUARDED, inst.get_location(has_red_flag), 0, 1);
-	print("Unguarded RED is : " + cid_red_flag_unguarded + "\n"); 
 	has_red_flag = 0;
 }
 
 function drop_blue_flag() {
-	inst.restore_original_appearance(has_blue_flag);
+	inst.detach_item(has_blue_flag, "Item-CTF_Blue", "ctf");
 	cid_blue_flag_unguarded = inst.spawn_at(CDEFID_BLUE_FLAG_UNGUARDED, inst.get_location(has_blue_flag), 0, 1);
-	print("Unguarded BLUE is : " + cid_blue_flag_unguarded + "\n"); 
 	has_blue_flag = 0;
 }
 
@@ -183,13 +181,13 @@ function on_remove(cid) {
 	print(cid + " LEFT THE INSTANCE!\n"); 
 
 	if(cid == has_red_flag) {
-		inst.restore_original_appearance(cid);		
+		inst.detach_item(cid, "Item-CTF_Red", "ctf");		
 		cid_red_flag_unguarded = inst.spawn_at(CDEFID_RED_FLAG, inst.get_location(cid), 0, 2048);
 		has_red_flag = 0;
 	}
 	
 	if(cid == has_blue_flag) {
-		inst.restore_original_appearance(cid);		
+		inst.detach_item(cid, "Item-CTF_Blue", "ctf");
 		cid_blue_flag_unguarded = inst.spawn_at(CDEFID_BLUE_FLAG, inst.get_location(cid), 0, 2048);
 		has_blue_flag = 0;
 	}
@@ -276,7 +274,8 @@ function red_flag_won(winner, flagBaseCDefID) {
 			}
 		}, 5000);
 
-		inst.restore_original_appearance(winner);
+		inst.detach_item(winner, "Item-CTF_Red", "ctf");
+
 		if(blue_score == MAX_FLAGS) {
 			inst.broadcast(inst.get_display_name(winner) + " landed the winning flag for the Blue Team!  " + blue_score + " to " + red_score + ".");
 			stop_ctf();
@@ -306,14 +305,14 @@ function blue_flag_won(winner, flagBaseCDefID) {
 			}
 		}, 5000);
 	
-		inst.restore_original_appearance(winner);
+		inst.detach_item(winner, "Item-CTF_Blue", "ctf");
 		
 		if(red_score == MAX_FLAGS) {
-			inst.broadcast(inst.get_display_name(winner) + " landed the winning flag for the Blue Team!  " + blue_score + " to " + red_score + ".");
+			inst.broadcast(inst.get_display_name(winner) + " landed the winning flag for the Red Team!  " + red_score + " to " + red_score + ".");
 			stop_ctf();
 		}
 		else {
-			inst.local_broadcast(inst.get_display_name(winner) + " on the Blue Team scores! They now have " + blue_score + " flags");
+			inst.local_broadcast(inst.get_display_name(winner) + " on the Red Team scores! They now have " + red_score + " flags");
 		}
 		has_blue_flag = 0;
 	}

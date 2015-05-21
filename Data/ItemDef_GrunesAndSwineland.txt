@@ -244,7 +244,7 @@ mQualityLevel=1
 mID=10015
 mType=7
 mDisplayName=Father Grundy's Essence
-mIcon=Icon-32-Corpse_Marker.png/|Icon-32-BG-Green.png
+mIcon=Icon-32-Corpse_Marker.png|Icon-32-BG-Green.png
 mIvType1=1
 mIvMax1=20
 mIvType2=8
@@ -697,3 +697,23 @@ mArmorResistFire=100
 mArmorResistFrost=100
 mArmorResistMystic=100
 mArmorResistDeath=100
+
+
+[ENTRY]
+mID=10039
+mType=3
+mDisplayName=Mohicoon
+mAppearance=[{["a"]={["type"]="Armor-Heavy-High1-Helmet",["node"]="helmet",["colors"]=["3F352C","7AA3E9","D4B0D4"]}},null]
+mIcon=Icon-32-H_Armor-Head05.png|Icon-32-BG-Blue.png
+mLevel=1
+mValue=0
+mMinUseLevel=1
+mQualityLevel=3
+mEquipType=8
+mBindingType=2
+mArmorType=1
+mArmorResistMelee=1
+mArmorResistFire=1
+mArmorResistFrost=1
+mArmorResistMystic=1
+mArmorResistDeath=1

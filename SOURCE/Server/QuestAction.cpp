@@ -308,7 +308,7 @@ int QuestActionContainer :: ExecuteSingleCommand(SimulatorThread *caller, Extend
 	case ACTION_UNTRANSFORM:
 		{
 			g_Log.AddMessageFormat("Untransform");
-			cInst->Untransform();
+			cInst->CAF_Untransform();
 		}
 		break;
 	default:

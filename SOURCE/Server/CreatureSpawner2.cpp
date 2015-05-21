@@ -1126,9 +1126,11 @@ int SpawnManager :: TriggerSpawn(int PropID, int forceCreatureDef, int forceFlag
 
 				return inst->CreatureID;
 			}
+			g_Log.AddMessageFormat("Found spawner, but no creature for spawn of %d (%d, %d)", PropID, forceCreatureDef, forceFlags);
 			return -1;
 		}
 	}
+	g_Log.AddMessageFormat("No spawn of %d (%d, %d) because no active spawners found (maybe the prop is not in a tile that is yet loaded)", PropID, forceCreatureDef, forceFlags);
 	return -1;
 }
 
