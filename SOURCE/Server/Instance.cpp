@@ -773,6 +773,14 @@ int ActiveInstance :: UnloadPlayer(SimulatorThread *callSim)
 		g_Log.AddMessageFormatW(MSG_ERROR, "[ERROR] UnloadPlayer Sim:%d not found.", callSim->InternalIndex);
 		return -1;
 	}
+
+	if(nutScriptPlayer.HasScript() && callSim->creatureInst != NULL) {
+		std::vector<ScriptCore::ScriptParam> p;
+		p.push_back(callSim->creatureInst->CreatureID);
+		// Don't queue this, it's like the script will want to clean up before actual removal
+		nutScriptPlayer.RunFunction("on_unload", p, true);
+	}
+
 	RegSim.erase(RegSim.begin() + r);
 
 	int creatureID = callSim->creatureInst->CreatureID;
@@ -789,6 +797,14 @@ int ActiveInstance :: UnloadPlayer(SimulatorThread *callSim)
 
 	RemovePlayerByID(creatureID);
 	AdjustPlayerCount(-1);
+
+
+	if(nutScriptPlayer.HasScript() && callSim->creatureInst != NULL) {
+		std::vector<ScriptCore::ScriptParam> p;
+		p.push_back(callSim->creatureInst->CreatureID);
+		// Don't queue this, it's like the script will want to clean up before actual removal
+		nutScriptPlayer.RunFunction("on_unloaded", p, true);
+	}
 	
 	return 1;
 }

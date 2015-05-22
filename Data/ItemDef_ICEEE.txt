@@ -318,3 +318,16 @@ mFlavorText=Double click to open! Use to buy vault space and more abilities
 mQualityLevel=3
 mMinUseLevel=10
 Params=credits=400&abilitypoints=50
+
+[ENTRY]
+mID=8106
+mType=3
+mDisplayName=Rivers' Mohawk
+mAppearance=[{["a"]={["type"]="Item-Hat-Mohawk",["colors"]=["7F5632"]}},null]
+mIcon=Icon-32-Fur.png|Icon-32-BG-Red.png
+mBindingType=1
+mEquipType=8
+mArmorType=1
+mValue=1
+mValueType=1
+mQualityLevel=4

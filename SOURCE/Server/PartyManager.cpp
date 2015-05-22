@@ -358,7 +358,35 @@ void PartyManager :: BroadcastAddMember(CreatureInstance* member)
 	party->BroadCastExcept(WriteBuf, wpos, member->CreatureDefID);
 }
 
-void PartyManager :: DoQuit(CreatureInstance* member)
+bool PartyManager :: DoDisband(int PartyID)
+{
+	ActiveParty *party = GetPartyByID(PartyID);
+	if(party == NULL)
+		return false;
+
+	// Quit all the members first
+	std::vector<PartyMember> tempMemberList;
+	tempMemberList.assign(party->mMemberList.begin(),party->mMemberList.end());
+
+	for(std::vector<PartyMember>::iterator it = tempMemberList.begin(); it != tempMemberList.end(); ++it) {
+		PartyMember p = *it;
+		if(p.mCreatureID != party->mLeaderID) {
+			party->RemoveMember(p.mCreatureDefID);
+			int wpos = WriteRemoveMember(WriteBuf, p.mCreatureID);
+			party->BroadCast(WriteBuf, wpos);
+			if(party->UpdateLeaderDropped(p.mCreatureID) == true)
+			{
+				wpos = PartyManager::WriteInCharge(WriteBuf, party);
+				party->BroadCast(WriteBuf, wpos);
+			}
+		}
+	}
+	if(party->mMemberList.size() == 0)
+		DeletePartyByID(PartyID);
+	return true;
+}
+
+bool PartyManager :: DoQuit(CreatureInstance* member)
 {
 	//Save the ID locally and remove the party just in case the other stuff fails.
 	int PartyID = member->PartyID;
@@ -366,7 +394,7 @@ void PartyManager :: DoQuit(CreatureInstance* member)
 
 	ActiveParty *party = GetPartyByID(PartyID);
 	if(party == NULL)
-		return;
+		return false;
 
 	party->RemoveMember(member->CreatureDefID);
 
@@ -374,7 +402,7 @@ void PartyManager :: DoQuit(CreatureInstance* member)
 	{
 		party->Disband(WriteBuf);
 		DeletePartyByID(PartyID);
-		return;
+		return true;
 	}
 
 	int wpos = WriteRemoveMember(WriteBuf, member->CreatureID);
@@ -388,6 +416,8 @@ void PartyManager :: DoQuit(CreatureInstance* member)
 
 	if(party->mMemberList.size() == 0)
 		DeletePartyByID(PartyID);
+
+	return true;
 }
 
 void PartyManager :: DoRejectInvite(int leaderDefID, const char* nameDenied)

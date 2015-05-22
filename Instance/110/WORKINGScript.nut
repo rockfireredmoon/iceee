@@ -44,8 +44,8 @@ has_blue_flag <- 0;
 red_score <- 0;
 blue_score <- 0;
 
-red_party <- 0;
-blue_party <- 0;
+red_team <- [];
+blue_team <- [];
 
 // 
 
@@ -77,16 +77,12 @@ function stop_ctf() {
 	red_score = 0;
 	blue_score = 0;
 
-	if(red_party > 0) 
-		inst.disband_party(red_party);
-	red_party = 0;
-	
-	if(blue_party > 0) 
-		inst.disband_party(blue_party);
-	blue_party = 0;
+	red_team.clear();
+	blue_team.clear();
 }
 
 function on_halt() {
+	print("Halted\n");
 	stop_ctf();
 }
 
@@ -150,17 +146,14 @@ function despawn_blue_flag() {
 }
 
 function check_team(taker) {
-	local taker_party = inst.get_party_id(taker);
-	if(taker_party > 0) {
-		if(taker_party == red_party) {
-			inst.info("You are already in the red team.");
-			return false;
-		}
-		else if(taker_party == blue_party) {
-			inst.info("You are already in the blue team.");
-			return false;
-		}  
+	if(red_team.find(taker) >= 0) {
+		inst.info("You are already in the red team.");
+		return false;
 	}
+	else if(blue_team.find(taker) >= 0) {
+		inst.info("You are already in the blue team.");
+		return false;
+	}  
 	return true;
 }
 
@@ -188,19 +181,26 @@ function on_player_death(cid) {
 }
 
 /*
- * Called when player is unloaded from the instance for whatever
- * reason
+ * Called when player leaves the instance for whatever
+ * reason.
  */
-function on_unload(cid) {
-	local party_id = inst.get_party_id(cid);
-	if(party_id == red_party || party_id == blue_party) 
-		inst.quit_party(cid); 
-
-	if(cid == has_red_flag)
-		drop_red_flag();
+function on_remove(cid) {
+	/* If the player the left was carrying the flag, return it to the appropriate base */
 	
-	if(cid == has_blue_flag) 
-		drop_blue_flag();
+	// TODO drop the flag from where they left instead (at least for a time)
+	print(cid + " LEFT THE INSTANCE!\n"); 
+
+	if(cid == has_red_flag) {
+		inst.detach_item(cid, "Item-CTF_Red", "ctf");		
+		cid_red_flag_unguarded = inst.spawn_at(CDEFID_RED_FLAG, inst.get_location(cid), 0, 2048);
+		has_red_flag = 0;
+	}
+	
+	if(cid == has_blue_flag) {
+		inst.detach_item(cid, "Item-CTF_Blue", "ctf");
+		cid_blue_flag_unguarded = inst.spawn_at(CDEFID_BLUE_FLAG, inst.get_location(cid), 0, 2048);
+		has_blue_flag = 0;
+	}
 }
 
 function on_use(sourceCId, targetCDefId) {
@@ -212,20 +212,12 @@ function on_use(sourceCId, targetCDefId) {
 			}
 			else {		
 				inst.local_broadcast(inst.get_display_name(sourceCId) + " joins the red team");
-				if(red_party == 0) 
-					red_party = inst.create_party(sourceCId);
-				else
-					inst.add_to_party(red_party, sourceCId);
-					
-				print("RED PARTY ID: " +red_party + " red has = " + 
-					inst.get_party_size(red_party) + " blue has = " + 
-					inst.get_party_size(blue_party) + "\n");
-				
-				//if(inst.get_party_size(red_party) == 1)
+				red_team.append(sourceCId);
+				//if(red_team.len() == 1)
 					//cid_red_safe = spawn_retry(PROP_RED_FLAG_SAFE);
 				
 				// Spawn both for now so testing is easier	
-				if(inst.get_party_size(red_party) == 1 && inst.get_party_size(blue_party) == 0) {
+				if(red_team.len() == 1 && blue_team.len() == 0) {
 					cid_blue_safe = spawn_retry(PROP_BLUE_FLAG_SAFE);			
 					cid_red_safe = spawn_retry(PROP_RED_FLAG_SAFE);
 				}
@@ -240,16 +232,12 @@ function on_use(sourceCId, targetCDefId) {
 			}
 			else {
 				inst.local_broadcast(inst.get_display_name(sourceCId) + " joins the blue team");
-				if(blue_party == 0) 
-					blue_party = inst.create_party(sourceCId);
-				else
-					inst.add_to_party(blue_party, sourceCId);
-				
-				//if(inst.get_party_size(blue_party) == 1)
+				blue_team.append(sourceCId);
+				//if(blue_team.len() == 1)
 					//cid_blue_safe = spawn_retry(PROP_BLUE_FLAG_SAFE);
 				
 				// Spawn both for now so testing is easier	
-				if(inst.get_party_size(blue_party) == 1 && inst.get_party_size(red_party) == 0) {
+				if(blue_team.len() == 1 && red_team.len() == 0) {
 					cid_blue_safe = spawn_retry(PROP_BLUE_FLAG_SAFE);			
 					cid_red_safe = spawn_retry(PROP_RED_FLAG_SAFE);
 				}
@@ -258,12 +246,12 @@ function on_use(sourceCId, targetCDefId) {
 	}
 	
 	if(targetCDefId == CDEFID_RED_FLAG_UNGUARDED) {
-		if(inst.get_party_id(sourceCId) == red_party) {
+		if(red_team.find(sourceCId) >= 0) {
 			inst.info(inst.get_display_name(sourceCId) + " returned the Red team's flag");
 			cid_blue_safe = inst.spawn(PROP_RED_FLAG_SAFE, 0,0);
 			despawn_red_flag_unguarded();
 		}
-		else if(inst.get_party_id(sourceCId) == blue_party) {
+		else if(blue_team.find(sourceCId) >= 0) {
 			inst.local_broadcast("Red flag found by " + inst.get_display_name(sourceCId));
 			has_red_flag = sourceCId;
 			despawn_red_flag_unguarded();
@@ -274,12 +262,12 @@ function on_use(sourceCId, targetCDefId) {
 	}
 	
 	if(targetCDefId == CDEFID_BLUE_FLAG_UNGUARDED) {
-		if(inst.get_party_id(sourceCId) == blue_party) {
+		if(blue_team.find(sourceCId) >= 0) {
 			inst.info(inst.get_display_name(sourceCId) + " returned the Blue team's flag");
 			cid_blue_safe = inst.spawn(PROP_BLUE_FLAG_SAFE, 0,0);
 			despawn_blue_flag_unguarded();
 		}
-		else if(inst.get_party_id(sourceCId) == red_party) {
+		else if(red_team.find(sourceCId) >= 0) {
 			inst.local_broadcast("Blue flag found by " + inst.get_display_name(sourceCId));
 			has_blue_flag = sourceCId;
 			despawn_blue_flag_unguarded();
@@ -357,9 +345,9 @@ function blue_flag_won(winner, flagBaseCDefID) {
 }
 
 function red_flag_taken(taker, taken) {
-	if(inst.get_party_id(taker) == red_party)
+	if(red_team.find(taker) >= 0) 
 		inst.info("You can't take your own flag!");
-	else if(inst.get_party_id(taker) == blue_party) {
+	else if(blue_team.find(taker) >= 0) {
 		inst.local_broadcast("Red flag taken by " + inst.get_display_name(taker));
 		has_red_flag = taker;
 		despawn_red_flag();
@@ -371,9 +359,10 @@ function red_flag_taken(taker, taken) {
 }
 
 function blue_flag_taken(taker, taken) {
-	if(inst.get_party_id(taker) == blue_party)
+	if(blue_team.find(taker) >= 0) {
 		inst.info("You can't take your own flag!");
-	else if(inst.get_party_id(taker) == red_party) {
+	}
+	else if(red_team.find(taker) >= 0) {
 		inst.local_broadcast("Blue flag taken by " + inst.get_display_name(taker));
 		has_blue_flag = taker;
 		despawn_blue_flag();

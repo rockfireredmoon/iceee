@@ -175,6 +175,26 @@ SpawnTile :: ~SpawnTile()
 	activeSpawn.clear();
 }
 
+void SpawnTile :: LoadPropSpawnPoint(int zone, int sceneryPageX, int sceneryPageY, int PropID)
+{
+	g_SceneryManager.GetThread("SpawnTile::LoadPropSpawnPoint");
+	SceneryPage *page = g_SceneryManager.GetOrCreatePage(zone, sceneryPageX, sceneryPageY);
+	g_SceneryManager.ReleaseThread();
+	if(page == NULL)
+		return;
+
+	SPAWN_MAP::iterator lastInsert = activeSpawn.begin();
+	SceneryPage::SCENERY_IT it;
+	for(it = page->mSceneryList.begin(); it != page->mSceneryList.end(); ++it)
+	{
+		SceneryObject *so = &it->second;
+		if(so->ID != PropID)
+			continue;
+		if(AddSpawnerFromProp(lastInsert, &it->second) == true)
+			return;
+	}
+}
+
 void SpawnTile :: LoadTileSpawnPoints(int zone, int sceneryPageX, int sceneryPageY, int x1, int y1, int x2, int y2)
 {
 	//Loads the spawn points from a scenery page with the given page coordinates.
@@ -902,12 +922,12 @@ SpawnTile* SpawnManager :: GetTile(int tilePageX, int tilePageY)
 }
 
 // Makes sure a tile is loaded.
-void SpawnManager :: GenerateTile(int tilePageX, int tilePageY)
+SpawnTile * SpawnManager :: GenerateTile(int tilePageX, int tilePageY)
 {
 	SpawnTile *tile = GetTile(tilePageX, tilePageY);
 
 	if(tile == NULL)
-		return;
+		return NULL;
 
 	tile->releaseTime = g_ServerTime + GARBAGE_CHECK_DELAY;
 
@@ -938,6 +958,8 @@ void SpawnManager :: GenerateTile(int tilePageX, int tilePageY)
 
 		tile->sceneryLoaded = true;
 	}
+
+	return tile;
 }
 
 void SpawnManager :: GenerateAreaTile(int tilePageX, int tilePageY)
@@ -1130,6 +1152,7 @@ int SpawnManager :: TriggerSpawn(int PropID, int forceCreatureDef, int forceFlag
 			return -1;
 		}
 	}
+
 	g_Log.AddMessageFormat("No spawn of %d (%d, %d) because no active spawners found (maybe the prop is not in a tile that is yet loaded)", PropID, forceCreatureDef, forceFlags);
 	return -1;
 }

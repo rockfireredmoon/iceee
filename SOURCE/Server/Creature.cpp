@@ -230,12 +230,12 @@ std::string AddAttachmentModifier::Modify(std::string source) {
 	Sqrat::Object placeholderObject = rootTable.GetSlot(_SC("a"));
 	Sqrat::Table table = placeholderObject.Cast<Sqrat::Table>();
 
-	Sqrat::Object attachments = table.GetSlot(_SC("a"));
+	Sqrat::Object attachments = table.GetSlot(_SC("ea"));
 	if(attachments.IsNull()) {
 		// No existing attachments
 		Sqrat::Array arr(vm);
-		table.SetValue(_SC("a"), arr);
-		attachments = table.GetSlot(_SC("a"));
+		table.SetValue(_SC("ea"), arr);
+		attachments = table.GetSlot(_SC("ea"));
 	}
 	Sqrat::Array attachmentsArr = attachments.Cast<Sqrat::Array>();
 	Sqrat::Table item(vm);
@@ -6935,7 +6935,7 @@ bool CreatureInstance :: IsTransformed()
 
 bool CreatureInstance :: CAF_Untransform()
 {
-	if(transformCreatureId == 0) {
+	if(transformCreatureId == 0 || transformModifier == NULL) {
 		g_Log.AddMessageFormat("%d not transformed into %d", CreatureDefID);
 		return false;
 	}

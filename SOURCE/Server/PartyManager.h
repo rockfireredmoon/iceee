@@ -132,7 +132,8 @@ struct PartyManager
 	int AcceptInvite(CreatureInstance* member, CreatureInstance* leader);
 
 	void BroadcastAddMember(CreatureInstance* member);
-	void DoQuit(CreatureInstance* member);
+	bool DoDisband(int partyID);
+	bool DoQuit(CreatureInstance* member);
 	void DoRejectInvite(int leaderDefID, const char* nameDenied);
 	void DoSetLeader(CreatureInstance *callMember, int newLeaderID);
 	void DoKick(CreatureInstance *caller, int memberID);
