@@ -1,6 +1,7 @@
 #include "AbilityTime.h"
 #include "Ability2.h"
 #include "StringList.h"
+#include "Config.h"
 #include <string.h>
 
 extern unsigned long g_ServerTime;
@@ -139,18 +140,22 @@ void ActiveBuffManager :: DebugLogBuffs(const char *label)
 		const char *cat = g_AbilityManager.ResolveBuffCategoryName(buffList[i].buffType);
 		g_Log.AddMessageFormat("ab:%d,abgid:%d,tier:%d,cat:%s,timeleft:%d", buffList[i].abID, buffList[i].abgID, buffList[i].tier, cat, ( buffList[i].castEndTimeMS - g_ServerTime) / 1000);
 	}
-	g_Log.AddMessageFormat("Persistent Active ability buffs (%s)", label);
-	for(size_t i = 0; i < persistentBuffList.size(); i++)
-	{
-		const char *cat = g_AbilityManager.ResolveBuffCategoryName(persistentBuffList[i].buffType);
-		g_Log.AddMessageFormat("ab:%d,abgid:%d,tier:%d,cat:%s,timeleft:%d", persistentBuffList[i].abID, persistentBuffList[i].abgID, persistentBuffList[i].tier, cat, ( persistentBuffList[i].castEndTimeMS - g_ServerTime) / 1000);
+	if(g_Config.PersistentBuffs) {
+		g_Log.AddMessageFormat("Persistent Active ability buffs (%s)", label);
+		for(size_t i = 0; i < persistentBuffList.size(); i++)
+		{
+			const char *cat = g_AbilityManager.ResolveBuffCategoryName(persistentBuffList[i].buffType);
+			g_Log.AddMessageFormat("ab:%d,abgid:%d,tier:%d,cat:%s,timeleft:%d", persistentBuffList[i].abID, persistentBuffList[i].abgID, persistentBuffList[i].tier, cat, ( persistentBuffList[i].castEndTimeMS - g_ServerTime) / 1000);
+		}
 	}
 }
 
 void ActiveBuffManager :: CopyFrom(const ActiveBuffManager &source)
 {
 	buffList.assign(source.buffList.begin(), source.buffList.end());
-	persistentBuffList.assign(source.persistentBuffList.begin(), source.persistentBuffList.end());
+	if(g_Config.PersistentBuffs) {
+		persistentBuffList.assign(source.persistentBuffList.begin(), source.persistentBuffList.end());
+	}
 	DebugLogBuffs("CopyFrom");
 }
 

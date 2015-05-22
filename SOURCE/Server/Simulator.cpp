@@ -3139,15 +3139,17 @@ void SimulatorThread :: ActivateSavedAbilities(void)
 	 * and in again quickly, the character won't have been reloaded yet. If they had buffs
 	 * active at the time, just treat them as persitent.
 	 */
-	pld.charPtr->buffManager.ActiveToPersistent();
+	if(g_Config.PersistentBuffs) {
+		pld.charPtr->buffManager.ActiveToPersistent();
 
-	creatureInst->initialisingAbilities = true;
-	for(it = pld.charPtr->buffManager.persistentBuffList.begin(); it != pld.charPtr->buffManager.persistentBuffList.end(); ++it) {
-		creatureInst->CallAbilityEvent(it->abID, EventType::onRequest);
-		creatureInst->CallAbilityEvent(it->abID, EventType::onActivate);
+		creatureInst->initialisingAbilities = true;
+		for(it = pld.charPtr->buffManager.persistentBuffList.begin(); it != pld.charPtr->buffManager.persistentBuffList.end(); ++it) {
+			creatureInst->CallAbilityEvent(it->abID, EventType::onRequest);
+			creatureInst->CallAbilityEvent(it->abID, EventType::onActivate);
+		}
+		creatureInst->ab[0].bPending = false;
+		creatureInst->initialisingAbilities = false;
 	}
-	creatureInst->ab[0].bPending = false;
-	creatureInst->initialisingAbilities = false;
 }
 
 void SimulatorThread :: ActivatePassiveAbilities(void)
