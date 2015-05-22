@@ -1187,10 +1187,10 @@ class this.Assembler.Creature extends this.Assembler.Factory
 		{
 			return table;
 		}
-
-		local tableCopy = clone table;
 		local attachments = [];
 		local clothing = {};
+
+		local tableCopy = clone table;
 
 		foreach( k, v in this.mRequestedItems )
 		{

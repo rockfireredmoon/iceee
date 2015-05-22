@@ -42,6 +42,13 @@ public:
 	// Exposed to scripts
 //	void Queue(Sqrat::Function function, int fireDelay);
 	void RestoreOriginalAppearance(int CID);
+	int CreateVirtualParty(int leaderCID);
+	bool DisbandVirtualParty(int partyID);
+	bool AddToVirtualParty(int partyID, int CID);
+	int GetVirtualPartySize(int partyID);
+	bool QuitParty(int CID);
+	std::vector<int> GetVirtualPartyMembers(int partyID);
+	int GetVirtualPartyLeader(int partyID);
 	void DetachItem(int CID, const char *type, const char *node);
 	void AttachItem(int CID, const char *type, const char *node);
 	void UnremoveProps();

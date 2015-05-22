@@ -149,6 +149,13 @@ void InstanceNutPlayer::RegisterFunctions() {
 
 void InstanceNutPlayer::RegisterInstanceFunctions(NutPlayer *instance, Sqrat::DerivedClass<InstanceNutPlayer, NutPlayer> *instanceClass)
 {
+	instanceClass->Func(_SC("create_party"), &InstanceNutPlayer::CreateVirtualParty);
+	instanceClass->Func(_SC("disband_party"), &InstanceNutPlayer::DisbandVirtualParty);
+	instanceClass->Func(_SC("add_to_party"), &InstanceNutPlayer::AddToVirtualParty);
+	instanceClass->Func(_SC("quit_party"), &InstanceNutPlayer::QuitParty);
+	instanceClass->Func(_SC("get_party_members"), &InstanceNutPlayer::GetVirtualPartyMembers);
+	instanceClass->Func(_SC("get_party_size"), &InstanceNutPlayer::GetVirtualPartySize);
+	instanceClass->Func(_SC("get_leader"), &InstanceNutPlayer::GetVirtualPartyLeader);
 	instanceClass->Func(_SC("attach_item"), &InstanceNutPlayer::AttachItem);
 	instanceClass->Func(_SC("detach_item"), &InstanceNutPlayer::DetachItem);
 	instanceClass->Func(_SC("broadcast"), &InstanceNutPlayer::Broadcast);
@@ -201,6 +208,117 @@ void InstanceNutPlayer::RegisterInstanceFunctions(NutPlayer *instance, Sqrat::De
 
 
 }
+
+bool InstanceNutPlayer::DisbandVirtualParty(int partyID)
+{
+	return g_PartyManager.DoDisband(partyID);
+}
+
+bool InstanceNutPlayer::AddToVirtualParty(int partyID, int CID)
+{
+	ActiveParty * party = g_PartyManager.GetPartyByID(partyID);
+	if(party == NULL)
+		g_Log.AddMessageFormat("Cannot add %d to party with ID %d because it doesn't exist.", CID, partyID);
+	else {
+		CreatureInstance *ci = GetCreaturePtr(CID);
+		if(ci == NULL)
+			g_Log.AddMessageFormat("Cannot add %d to party with ID %d because they CID doesn't exist.", CID, partyID);
+		else {
+			char WriteBuf[512];
+			party->AddMember(ci);
+			party->RebroadCastMemberList(WriteBuf);
+			return true;
+		}
+	}
+	return false;
+}
+
+int InstanceNutPlayer::GetVirtualPartySize(int partyID)
+{
+	ActiveParty * party = g_PartyManager.GetPartyByID(partyID);
+	return party == NULL ? 0 : party->mMemberList.size();
+}
+
+std::vector<int> InstanceNutPlayer::GetVirtualPartyMembers(int partyID)
+{
+	ActiveParty * party = g_PartyManager.GetPartyByID(partyID);
+	std::vector<int> p;
+	if(party == NULL)
+		g_Log.AddMessageFormat("Cannot get party members for ID %d because it doesn't exist.", partyID);
+	else
+		for(size_t i = 0; i < party->mMemberList.size(); i++)
+			p.push_back(party->mMemberList[i].mCreatureID);
+	return p;
+}
+
+int InstanceNutPlayer::GetVirtualPartyLeader(int partyID)
+{
+	ActiveParty * party = g_PartyManager.GetPartyByID(partyID);
+	return party == NULL ? 0 : party->mLeaderID;
+}
+
+bool InstanceNutPlayer::QuitParty(int CID)
+{
+	CreatureInstance *ci = GetCreaturePtr(CID);
+	if(ci == NULL)
+		g_Log.AddMessageFormat("Cannot add quit %d from party as the CID doesn't exist.", CID);
+	else {
+		g_PartyManager.DoQuit(ci);
+		return true;
+	}
+	return false;
+}
+
+int InstanceNutPlayer::CreateVirtualParty(int leaderCID)
+{
+	CreatureInstance *ci = GetCreaturePtr(leaderCID);
+	if(ci != NULL) {
+		ActiveParty * party = g_PartyManager.CreateParty(ci);
+		if(party != NULL)
+		{
+			party->mPartyID = g_PartyManager.GetNextPartyID();  //leader->CreatureDefID;
+			char WriteBuf[512];
+			party->AddMember(ci);
+			party->RebroadCastMemberList(WriteBuf);
+			return party->mPartyID;
+		}
+	}
+	g_Log.AddMessageFormat("Failed to create party %d.", leaderCID);
+	return -1;
+}
+
+
+//int PartyManager :: AcceptInvite(CreatureInstance* member, CreatureInstance* leader)
+//{
+//	ActiveParty *party = GetPartyByLeader(leader->CreatureDefID);
+//	if(party == NULL)
+//	{
+//		party = CreateParty(leader);
+//		if(party != NULL)
+//		{
+//			party->mPartyID = GetNextPartyID();  //leader->CreatureDefID;
+//			party->AddMember(leader);
+//			party->AddMember(member);
+//			party->RebroadCastMemberList(WriteBuf);
+//			return 1;
+//		}
+//	}
+//	else
+//	{
+//		party->AddMember(member);
+//		return 2;
+//	}
+//	return 0;
+//
+//	/*
+//	//A player has accepted a party invitation.
+//	ActiveParty *party = GetPartyByLeader(leader->CreatureDefID);
+//	if(party == NULL)
+//		return 0;
+//	party->AddMember(member);
+//	return party->mPartyID;
+//	*/
+//}
 
 void InstanceNutPlayer::SetInstancePointer(ActiveInstance *parent)
 {
@@ -517,15 +635,12 @@ bool InstanceNutPlayer::Despawn(int CID)
 int InstanceNutPlayer::DespawnAll(int CDefID)
 {
 	int despawned = 0;
-	while(true) {
-		CreatureInstance *source = actInst->GetNPCInstanceByCDefID(CDefID);
-		if(source == NULL)
-			break;
-		else {
-			actInst->spawnsys.Despawn(source->CreatureID);
-			spawned.erase(std::remove(spawned.begin(), spawned.end(), source->CreatureID), spawned.end());
-			despawned++;
-		}
+	std::vector<int> v;
+	actInst->GetNPCInstancesByCDefID(CDefID, &v);
+	for(std::vector<int>::iterator it = v.begin(); it != v.end() ; ++it) {
+		actInst->spawnsys.Despawn(*it);
+		spawned.erase(std::remove(spawned.begin(), spawned.end(), *it), spawned.end());
+		despawned++;
 	}
 	return despawned;
 }

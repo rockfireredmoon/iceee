@@ -16,6 +16,8 @@ Inst#  Offset      8 bytes of args
 */
 
 
+require("Assemblers/Assembler");
+require("Assemblers/CreatureAssembler");
 require("Tools/PlayTool");
 require("Util");
 require("InputCommands");
@@ -5980,13 +5982,15 @@ this.SceneObject.attachParticleSystem <- function(name, tag, size)
 		return uniqueName;
 }
 
+
 this.Assembler.Creature.original_applyEquipment <- this.Assembler.Creature.applyEquipment;
 this.Assembler.Creature.applyEquipment <- function(table) {
-	local tableCopy = original_applyEquipment(table);
-	if ("a" in table)
+	local tableCopy = this.original_applyEquipment(table);
+	if ("ea" in table)
 	{
 		print("ICE! adding a bunch of additional attachments\n");
-		foreach(attachment in table.a) {
+		local attachment;
+		foreach(attachment in table.ea) {
 			print("ICE! attachment: " + attachment + "\n");
 			if("node" in attachment) {
 				print("ICE! attachment node: " + attachment.node + "\n");
@@ -6001,10 +6005,9 @@ this.Assembler.Creature.applyEquipment <- function(table) {
 				if ("effect" in attachment)
 					entry.effect <- attachment.effect;
 
-				tableCopy.attachments.append(entry);
+				tableCopy.a.append(entry);
 			}
 		}
 	}
 	return tableCopy;
 }
-

@@ -25,10 +25,13 @@ const CDEF_GUARDIAN = 7778;
 
 const PROP_BRAZIER_1 = 1126558;
 const PROP_BRAZIER_2 = 1126556;
+const PROP_LIGHT_1 = 1500051;
+const PROP_LIGHT_2 = 1500050;
+const PROP_ESSENCE_CHEST = 1127658;
 
 // The locations of the room and braziers
-loc_brazier_1 <- Area(2306, 2766, 35);
-loc_brazier_2 <- Area(1948, 2766, 35);
+loc_brazier_1 <- Area(1948, 2766, 35);
+loc_brazier_2 <- Area(2306, 2766, 35);
 loc_wailer_room <- Area(1859, 2702, 2393, 3234);
 
 // The current stage the fight is at
@@ -45,6 +48,8 @@ use_brazier <- 0;
 // Tags used for asset changing effect (GREED/RED brazier fire)
 brazier_1_tag <- 0;
 brazier_2_tag <- 0;
+light_1_tag <- 0;
+light_2_tag <- 0;
 
 wailer_message_shown <- false;
 brazier_message_shown <- false;
@@ -54,8 +59,12 @@ brazier_message_shown <- false;
  * health
  */
 function on_kill_1259() {
+	set_brazier(0);
 	inst.broadcast("The Wailer wails no more!");
 	kill_minions();
+	inst.despawn(cid_brazier_1);
+	inst.despawn(cid_brazier_2);
+	inst.spawn(PROP_ESSENCE_CHEST, 0, 0);
 	cid_wailer = 0;
 }
 
@@ -64,12 +73,12 @@ function on_kill_1259() {
  * ability will only be activated if both braziers are lit.
  */
 function on_kill_3649() {
-	// Ensure the spawner is availble as this is a prop spawn
-	inst.load_spawn_tile(loc_brazier_1.point());
-	
 	cid_brazier_1 = inst.spawn(PROP_BRAZIER_1, 0, 0);
-	if(cid_brazier_1 < 0)
-		inst.error("Failed to spawn brazier 1");
+	if(cid_brazier_1 < 0) 
+		/* Keep trying until we can spawn this (probably because no player
+		 * is yet in the spawn tile
+		 */
+		inst.queue(on_kill_3649, 5000);
 }
 
 /*
@@ -78,15 +87,12 @@ function on_kill_3649() {
  * ability will only be activated if both braziers are lit.
  */  
 function on_kill_3648() {
-	// Ensure the spawner is available as this is a prop spawn
-	inst.load_spawn_tile(loc_brazier_2.point());
-	
 	cid_brazier_2 = inst.spawn(PROP_BRAZIER_2, 0, 0);
 	if(cid_brazier_2 < 0)
-		inst.error("Failed to spawn brazier 2");
-}
-
-function brazier_1() {
+		/* Keep trying until we can spawn this (probably because no player
+		 * is yet in the spawn tile
+		 */
+		inst.queue(on_kill_3648, 5000);
 }
 
 function kill_minions() {
@@ -117,24 +123,26 @@ function wailer_shield() {
 	if(cid_wailer == 0) 
 		return;
 	
-	local in_range = inst.scan_npc(loc_brazier_1, CDEF_WAILER) > 0 || inst.scan_npc(loc_brazier_2, CDEF_WAILER) > 0; 
+	local in_range_1 = inst.scan_npc(loc_brazier_1, CDEF_WAILER) > 0;
+	local in_range_2 = inst.scan_npc(loc_brazier_2, CDEF_WAILER) > 0;
+	local in_range = in_range_1 || in_range_2; 
 		
-	print("IN RANG TEST: " + in_range + " cid br 1 " + cid_brazier_1 + " cid br 2 "  + cid_brazier_2 + "\n");
+	print("IN RANG TEST: " + in_range_1 + "/" + in_range_2 + " cid br 1 " + cid_brazier_1 + " cid br 2 "  + cid_brazier_2 + "\n");
 		
-	if(!in_range) {
+	if( ( use_brazier == 1 && !in_range_1 ) || ( use_brazier == 2 && !in_range_2 )) {
 		if(!wailer_message_shown) {
-			wailer_message_shown = false;
+			wailer_message_shown = true;
 			inst.info("The Wailer shimmers as he hides in his chilly realm");
 		}	
 		inst.ai(cid_wailer, "extTryCastShield");
 	}
 	
-	if(in_range && cid_brazier_1 > 0 && use_brazier == 1) {	
+	if(in_range_1 && cid_brazier_1 > 0 && use_brazier == 1) {	
 		inst.set_target(cid_brazier_1, cid_wailer);
 		inst.ai(cid_brazier_1, "tryWarm");
 	}
 	
-	if(in_range && cid_brazier_2 > 0 && use_brazier == 2) {
+	if(in_range_2 && cid_brazier_2 > 0 && use_brazier == 2) {
 		inst.set_target(cid_brazier_2, cid_wailer);
 		inst.ai(cid_brazier_2, "tryWarm");
 	}
@@ -155,12 +163,18 @@ function set_brazier(to_use) {
 	if(brazier_1_tag > 0) {
 		inst.restore(PROP_BRAZIER_1, brazier_1_tag);
 		brazier_1_tag = 0; 
+		inst.restore(PROP_LIGHT_1, light_1_tag);
+		light_1_tag = 0; 
 	}	
 	if(brazier_2_tag > 0) {
 		inst.restore(PROP_BRAZIER_2, brazier_2_tag);
-		brazier_2_tag = 0;  
+		brazier_2_tag = 0; 
+		inst.restore(PROP_LIGHT_2, light_2_tag);
+		light_2_tag = 0;   
 	}	
 	if(use_brazier > 0) {	
+		light_1_tag = inst.asset(PROP_LIGHT_1, use_brazier == 1 ? "Light-Intense?Group=1&COLOR=00FF00" : "Light-Intense?Group=1&COLOR=FF0000", 1);	
+		light_2_tag = inst.asset(PROP_LIGHT_2, use_brazier == 2 ? "Light-Intense?Group=1&COLOR=00FF00" : "Light-Intense?Group=1&COLOR=FF0000", 1);
 		brazier_1_tag = inst.asset(PROP_BRAZIER_1, use_brazier == 1 ? "Par-Flame_Green-Emitter" : "Par-Flame_Red-Emitter", 1);			
 		brazier_2_tag = inst.asset(PROP_BRAZIER_2, use_brazier == 2 ? "Par-Flame_Green-Emitter" : "Par-Flame_Red-Emitter", 1);
 	}
@@ -193,6 +207,7 @@ function wailer_health() {
 		 * dismiss the adds and return to the waiting for the first phase
 		 */
 		 kill_minions();
+		 set_brazier(0);
 		 stage = 0;
 		 inst.queue(wailer_health, 3000);
 		 return;
@@ -228,9 +243,11 @@ function wailer_health() {
 			set_brazier(0);
 			spawn_minions();
 			stage = 3;
-			wailer_message_shown = false;			
+			wailer_message_shown = false;	
+			inst.queue(wailer_health, 3000);
+			return;
 		}
-		inst.queue(wailer_health, 3000);
+		inst.queue(wailer_shield, 3000);
 		return; 
 	}
 	
@@ -254,8 +271,10 @@ function wailer_health() {
 			spawn_minions();
 			stage = 5;
 			wailer_message_shown = false;
+			inst.queue(wailer_health, 3000);
+			return;
 		}
-		inst.queue(wailer_health, 3000);
+		inst.queue(wailer_shield, 3000);
 		return; 
 	}
 	
@@ -279,8 +298,10 @@ function wailer_health() {
 			set_brazier(0);
 			wailer_message_shown = false;
 			stage = 7;
+			inst.queue(wailer_health, 3000);
+			return;
 		}
-		inst.queue(wailer_health, 3000);
+		inst.queue(wailer_shield, 3000);
 		return; 
 	}
 	

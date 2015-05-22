@@ -361,13 +361,12 @@ namespace ScriptCore
 			}
 
 			mHasScript = true;
+			active = true;
 			script.Run();
 			if (Sqrat::Error::Occurred(vm)) {
+				active = false;
 				errors.append(Sqrat::Error::Message(vm).c_str());
 				g_Log.AddMessageFormat("Squirrel script  %s failed to run. %s", def->mSourceFile.c_str(), Sqrat::Error::Message(vm).c_str());
-			}
-			else {
-				active = true;
 			}
 
 			// The script might have provided an info table
@@ -721,6 +720,10 @@ namespace ScriptCore
 
 	void NutPlayer::QueueInsert(NutScriptEvent *evt)
 	{
+		if(!active) {
+			PrintMessage("[WARNING] Script event when not active");
+			return;
+		}
 		if(mExecuting)
 		{
 			if(mQueueInsert.size() >= MAX_QUEUE_SIZE)
@@ -755,6 +758,11 @@ namespace ScriptCore
 
 	void NutPlayer::QueueAdd(NutScriptEvent *evt)
 	{
+		if(!active) {
+			PrintMessage("[WARNING] Script event when not active");
+			return;
+		}
+
 		if(mExecuting)
 		{
 			if(mQueueAdd.size() >= MAX_QUEUE_SIZE)

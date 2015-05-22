@@ -2880,3 +2880,19 @@ Pos=1947.58,466.939,2767.28
 Orient=0,0,0,1
 Scale=1.5,1.5,1.5
 
+[ENTRY]
+ID=1500050
+Asset=Lights#Light-Intense?Group=1&COLOR=000000
+Name=
+Pos=2310.2,514.179,2767.11
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
+ID=1500051
+Asset=Lights#Light-Intense?Group=1&COLOR=000000
+Name=
+Pos=1947.03,514.179,2769.26
+Orient=0,0,0,1
+Scale=1,1,1
+

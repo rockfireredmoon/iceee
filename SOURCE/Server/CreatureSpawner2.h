@@ -152,6 +152,7 @@ public:
 
 	SpawnTile();
 	~SpawnTile();
+	void LoadPropSpawnPoint(int zone, int sceneryPageX, int sceneryPageY, int PropID);
 	void LoadTileSpawnPoints(int zone, int sceneryPageX, int sceneryPageY, int x1, int y1, int x2, int y2);
 	bool AddSpawnerFromProp(SPAWN_MAP::iterator &position, SceneryObject *prop);
 	void RunProcessing(ActiveInstance *inst);
@@ -276,7 +277,7 @@ public:
 	~SpawnManager();
 	void Clear(void);
 	void SetInstancePointer(ActiveInstance *ptr);
-	void GenerateTile(int tilePageX, int tilePageY);
+	SpawnTile * GenerateTile(int tilePageX, int tilePageY);
 	void GenerateAreaTile(int tilePageX, int tilePageY);
 	void RunProcessing(bool force);
 	bool NotifyKill(ActiveSpawner *sourceSpawner, int creatureID);

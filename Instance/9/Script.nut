@@ -33,7 +33,8 @@ function on_package_kill_4_Trailblazer_StepUp() {
 }
 
 function on_kill_1098() {
-		inst.spawn(PAWL_BABE_SPAWNER_PROP_ID,1099,0);
+	if(inst.spawn(PAWL_BABE_SPAWNER_PROP_ID,1099,0) < 1) 
+		inst.queue(on_kill_1098, 5000);
 }
 
 /*
@@ -89,14 +90,14 @@ function grunes_remove_boulders() {
 // Remove explosion
 function grunes_clear_explosion() {
 	for(local a = 0 ; a < grunes_tnt_explosion.len(); a++) 
-		inst.particleDetach(grunes_rocks[a], grunes_tnt_explosion[a]);
+		inst.restore(grunes_rocks[a], grunes_tnt_explosion[a]);
 	grunes_tnt_explosion.clear();
 }
 
 // Remove TNT and steam
 function grunes_remove_tnt_and_steam() {
 	for(local a = 0 ; a < grunes_tnt_steam.len(); a++) 
-		inst.particleDetach(grunes_tnt_props[a], grunes_tnt_steam[a]);		 
+		inst.restore(grunes_tnt_props[a], grunes_tnt_steam[a]);		 
 	foreach(cid in grunes_tnt_cids)
 		inst.despawn(cid);
 	grunes_tnt_cids.clear();
