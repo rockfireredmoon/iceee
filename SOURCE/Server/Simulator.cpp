@@ -35,6 +35,7 @@
 #include "ConfigString.h"
 #include "GM.h"
 #include "QuestScript.h"
+#include "CreditShop.h"
 
 
 //This is the main function of the simulator thread.  A thread must be created for each port
@@ -2597,6 +2598,10 @@ bool SimulatorThread :: HandleQuery(int &PendingData)
 		PendingData = handle_query_validate_name();
 	else if(query.name.compare("item.create") == 0)
 		PendingData = handle_query_item_create();
+	else if(query.name.compare("item.market.list") == 0)
+		PendingData = handle_query_item_market_list();
+	else if(query.name.compare("item.market.buy") == 0)
+		PendingData = handle_query_item_market_buy();
 	else if(query.name.compare("marker.list") == 0)
 		PendingData = handle_query_marker_list();
 	else if(query.name.compare("marker.edit") == 0)
@@ -5713,7 +5718,7 @@ int SimulatorThread :: protected_helper_query_loot_item(void)
 		return QueryErrorMsg::LOOTMISSING;
 
 	// Check if already waiting on rolls
-	if(partyLootable && party->HasTags(ItemID)) {
+	if(partyLootable && party->HasTags(PlayerCDefID, ItemID)) {
 		LogMessageL(MSG_SHOW, "Denying loot. Already looting %d", ItemID);
 		return QueryErrorMsg::LOOTDENIED;
 	}
@@ -5775,39 +5780,39 @@ int SimulatorThread :: protected_helper_query_loot_need_greed_pass(void)
 
 	ActiveInstance *aInst = creatureInst->actInst;
 	int lootTag = atoi(query.args[1].c_str());
-	LootTag *tag = &party->lootTags[lootTag];
+	LootTag *tag = party->lootTags[lootTag];
 	if(tag == NULL)
 	{
 		LogMessageL(MSG_SHOW, "loot tag missing %d", lootTag);
 		return QueryErrorMsg::INVALIDITEM;
 	}
-	ActiveLootContainer *loot = &aInst->lootsys.creatureList[tag->lootCreatureId];
+	ActiveLootContainer *loot = &aInst->lootsys.creatureList[tag->mLootCreatureId];
 	if(tag == NULL)
 	{
-		LogMessageL(MSG_SHOW, "loot container missing %d", tag->lootCreatureId);
+		LogMessageL(MSG_SHOW, "loot container missing %d", tag->mLootCreatureId);
 		return QueryErrorMsg::INVALIDITEM;
 	}
-	LogMessageL(MSG_SHOW, "%d is choosing on %d (%d)", creatureInst->CreatureID, lootTag, tag->itemId, tag->creatureId);
-	if(loot->HasAnyDecided(creatureInst->CreatureID))
+	LogMessageL(MSG_SHOW, "%d is choosing on %d (%d / %d)", creatureInst->CreatureID, lootTag, tag->mItemId, tag->mCreatureId, tag->mLootCreatureId);
+	if(loot->HasAnyDecided(tag->mItemId, creatureInst->CreatureID))
 	{
-		LogMessageL(MSG_SHOW, "%d has already made loot decision on %d", creatureInst->CreatureID, tag->itemId);
+		LogMessageL(MSG_SHOW, "%d has already made loot decision on %d", creatureInst->CreatureID, tag->mItemId);
 		return QueryErrorMsg::LOOTDENIED;
 	}
-	if(tag->creatureId != creatureInst->CreatureID)
+	if(tag->mCreatureId != creatureInst->CreatureID)
 	{
-		LogMessageL(MSG_SHOW, "Loot tag %d is for a different creature. The tag said %d, but this player is %d.", lootTag, tag->creatureId, creatureInst->CreatureID);
+		LogMessageL(MSG_SHOW, "Loot tag %d is for a different creature. The tag said %d, but this player is %d.", lootTag, tag->mCreatureId, creatureInst->CreatureID);
 		return QueryErrorMsg::LOOTDENIED;
 	}
 
 	const char *command = query.args[0].c_str();
 	if(strcmp(command, "loot.need") == 0)	{
-		loot->Need(tag->itemId, tag->creatureId);
+		loot->Need(tag->mItemId, tag->mCreatureId);
 	}
 	else if(strcmp(command, "loot.greed") == 0)	{
-		loot->Greed(tag->itemId, tag->creatureId);
+		loot->Greed(tag->mItemId, tag->mCreatureId);
 	}
 	else if(strcmp(command, "loot.pass") == 0)	{
-		loot->Pass(tag->itemId, tag->creatureId);
+		loot->Pass(tag->mItemId, tag->mCreatureId);
 	}
 	CheckIfLootReadyToDistribute(loot, tag);
 	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
@@ -11428,6 +11433,138 @@ int SimulatorThread :: handle_query_marker_edit(void)
 	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
 }
 
+
+int SimulatorThread :: handle_query_item_market_buy(void)
+{
+	int id = query.GetInteger(0);
+	CS::CreditShopItem * csItem = g_CSManager.GetItem(id);
+	if(csItem == NULL) {
+		return PrepExt_QueryResponseError(SendBuf, query.ID, "No such item.");
+	}
+	else {
+
+		if(csItem->mQuantityLimit != 0 && (csItem->mQuantityLimit - csItem->mQuantitySold) < 1) {
+			return PrepExt_QueryResponseError(SendBuf, query.ID, "Sold out!");
+		}
+
+		if(csItem->mPriceCurrency == Currency::COPPER && creatureInst->css.copper < csItem->mPriceAmount) {
+			return PrepExt_QueryResponseError(SendBuf, query.ID, "You do not have enough copper!");
+		}
+		else if(csItem->mPriceCurrency == Currency::CREDITS && creatureInst->css.credits < csItem->mPriceAmount) {
+			return PrepExt_QueryResponseError(SendBuf, query.ID, "You do not have enough credits!");
+		}
+
+		if(csItem->mStartDate !=0 && g_ServerTime < (csItem->mStartDate * 1000UL)) {
+			return PrepExt_QueryResponseError(SendBuf, query.ID, "This item is not yet available!");
+		}
+
+		if(csItem->mEndDate !=0 && g_ServerTime >= (csItem->mEndDate * 1000UL)) {
+			return PrepExt_QueryResponseError(SendBuf, query.ID, "This item is no longer available!");
+		}
+
+		ItemDef * item= g_ItemManager.GetSafePointerByID(csItem->mItemId);
+		if(item == NULL) {
+			return PrepExt_QueryResponseError(SendBuf, query.ID, "No such item!");
+		}
+		int slot = pld.charPtr->inventory.GetFreeSlot(INV_CONTAINER);
+		if(slot == -1)
+			return PrepExt_QueryResponseError(SendBuf, query.ID, "You do not have enough slots in your inventory!");
+
+
+		InventorySlot *sendSlot = creatureInst->charPtr->inventory.AddItem_Ex(INV_CONTAINER, item->mID, 1);
+		if(sendSlot == NULL)
+			return PrepExt_QueryResponseError(SendBuf, query.ID, "Failed to add item to inventory.");
+
+		if(csItem->mPriceCurrency == Currency::COPPER) {
+			creatureInst->css.copper -= csItem->mPriceAmount;
+			creatureInst->SendStatUpdate(STAT::COPPER);
+		}
+		else if(csItem->mPriceCurrency == Currency::CREDITS) {
+			creatureInst->css.credits -= csItem->mPriceAmount;
+			creatureInst->SendStatUpdate(STAT::CREDITS);
+		}
+
+		// TODO for quantity limited items, decrease quantities and save
+		int wpos = 0;
+		wpos += AddItemUpdate(&SendBuf[wpos], Aux2, sendSlot);
+		wpos += PrepExt_QueryResponseString(&SendBuf[wpos], query.ID, "OK");
+
+		return wpos;
+	}
+}
+
+int SimulatorThread :: handle_query_item_market_list(void)
+{
+	int wpos = 0;
+	wpos += PutByte(&SendBuf[wpos], 1);       //_handleQueryResultMsg
+	wpos += PutShort(&SendBuf[wpos], 0);      //Message size
+	wpos += PutInteger(&SendBuf[wpos], query.ID);  //Query response index
+
+	wpos += PutShort(&SendBuf[wpos], 0);
+
+	uint count = 0;
+	for(std::map<int, CS::CreditShopItem*>::iterator it = g_CSManager.mItems.begin(); it != g_CSManager.mItems.end(); ++it)
+	{
+		if(g_ServerTime < (it->second->mStartDate * 1000UL))
+			// Not available yet
+			continue;
+
+		ItemDef * item= g_ItemManager.GetSafePointerByID(it->second->mItemId);
+		if(item != NULL)
+		{
+
+			wpos += PutByte(&SendBuf[wpos], 12);
+
+
+			sprintf(Aux1, "%d", it->second->mId);
+			wpos += PutStringUTF(&SendBuf[wpos], Aux1);
+
+			sprintf(Aux1, "%s", it->second->mTitle.c_str());
+			wpos += PutStringUTF(&SendBuf[wpos], Aux1);
+
+			sprintf(Aux1, "%s", it->second->mDescription.c_str());
+			wpos += PutStringUTF(&SendBuf[wpos], Aux1);
+
+			sprintf(Aux1, "%s", Status::GetNameByID(it->second->mStatus));
+			wpos += PutStringUTF(&SendBuf[wpos], Aux1);
+
+			sprintf(Aux1, "%s", Category::GetNameByID(it->second->mCategory));
+			wpos += PutStringUTF(&SendBuf[wpos], Aux1);
+
+			sprintf(Aux1, "%s", it->second->mStartDate == 0 ? "" :
+							 Util::FormatDate(&it->second->mEndDate).c_str());
+			wpos += PutStringUTF(&SendBuf[wpos], Aux1);
+
+			sprintf(Aux1, "%s", it->second->mEndDate == 0 ? "" :
+					( g_ServerTime >= ( it->second->mEndDate * 1000UL ) ?
+							"Expired" : Util::FormatDate(&it->second->mEndDate).c_str()));
+			wpos += PutStringUTF(&SendBuf[wpos], Aux1);
+
+			sprintf(Aux1, "%lu", it->second->mPriceAmount);
+			wpos += PutStringUTF(&SendBuf[wpos], Aux1);
+
+			sprintf(Aux1, "%s", Currency::GetNameByID(it->second->mPriceCurrency));
+			wpos += PutStringUTF(&SendBuf[wpos], Aux1);
+
+			sprintf(Aux1, "%d", it->second->mQuantityLimit);
+			wpos += PutStringUTF(&SendBuf[wpos], Aux1);
+
+			sprintf(Aux1, "%d", it->second->mQuantitySold);
+			wpos += PutStringUTF(&SendBuf[wpos], Aux1);
+
+			sprintf(Aux1, "%d:0:%d", it->second->mItemId, it->second->mItemAmount);
+			wpos += PutStringUTF(&SendBuf[wpos], Aux1);
+
+			count++;
+
+		}
+	}
+	PutShort(&SendBuf[7], count);
+	PutShort(&SendBuf[1], wpos - 3);
+	return wpos;
+}
+
+
 int SimulatorThread :: handle_query_marker_list(void)
 {
 	if(!CheckPermissionSimple(Perm_Account, Permission_Admin))
@@ -11592,10 +11729,10 @@ int SimulatorThread :: OfferLoot(int mode, ActiveLootContainer *loot, ActivePart
 		loot->robinID = robin->mCreatureID;
 
 		// Offer to the robin first
-		LootTag tag = party->TagItem(ItemID, robin->mCreaturePtr->CreatureID, CID);
+		LootTag * tag = party->TagItem(ItemID, robin->mCreaturePtr->CreatureID, CID);
 		int slot = robin->mCreaturePtr->charPtr->inventory.GetFreeSlot(INV_CONTAINER);
-		tag.slotIndex = slot;
-		Util::SafeFormat(Aux3, sizeof(Aux3), "%d", tag.lootTag);
+		tag->mSlotIndex = slot;
+		Util::SafeFormat(Aux3, sizeof(Aux3), "%d", tag->lootTag);
 		WriteIdx = PartyManager::OfferLoot(SendBuf, ItemID, Aux3, false);
 		robin->mCreaturePtr->actInst->LSendToOneSimulator(SendBuf, WriteIdx, robin->mCreaturePtr->simulatorPtr);
 		return 1;
@@ -11605,10 +11742,10 @@ int SimulatorThread :: OfferLoot(int mode, ActiveLootContainer *loot, ActivePart
 		LogMessageL(MSG_SHOW, "Offer Loot Master");
 		// Offer to the leader first
 		PartyMember *leader = party->GetMemberByID(party->mLeaderID);
-		LootTag tag = party->TagItem(ItemID, leader->mCreaturePtr->CreatureID, CID);
+		LootTag * tag = party->TagItem(ItemID, leader->mCreaturePtr->CreatureID, CID);
 		int slot = leader->mCreaturePtr->charPtr->inventory.GetFreeSlot(INV_CONTAINER);
-		tag.slotIndex = slot;
-		Util::SafeFormat(Aux3, sizeof(Aux3), "%d", tag.lootTag);
+		tag->mSlotIndex = slot;
+		Util::SafeFormat(Aux3, sizeof(Aux3), "%d", tag->lootTag);
 		WriteIdx = PartyManager::OfferLoot(SendBuf, ItemID, Aux3, false);
 		leader->mCreaturePtr->actInst->LSendToOneSimulator(SendBuf, WriteIdx, leader->mCreaturePtr->simulatorPtr);
 		return 1;
@@ -11624,8 +11761,8 @@ int SimulatorThread :: OfferLoot(int mode, ActiveLootContainer *loot, ActivePart
 			int distCheck = protected_CheckDistanceBetweenCreaturesFor(party->mMemberList[i].mCreaturePtr, CID, PARTY_LOOT_RANGE);
 			if(distCheck == 0)
 			{
-				LootTag tag = party->TagItem(ItemID, party->mMemberList[i].mCreaturePtr->CreatureID, CID);
-				Util::SafeFormat(Aux3, sizeof(Aux3), "%d", tag.lootTag);
+				LootTag * tag = party->TagItem(ItemID, party->mMemberList[i].mCreaturePtr->CreatureID, CID);
+				Util::SafeFormat(Aux3, sizeof(Aux3), "%d", tag->lootTag);
 				g_Log.AddMessageFormat("[LOOT] Sending offer of %d to %d using tag %s", ItemID, party->mMemberList[i].mCreatureID, Aux3);
 				WriteIdx = PartyManager::OfferLoot(SendBuf, ItemID, Aux3, needOrGreed);
 				party->mMemberList[i].mCreaturePtr->actInst->LSendToOneSimulator(SendBuf, WriteIdx, party->mMemberList[i].mCreaturePtr->simulatorPtr);
@@ -11642,9 +11779,9 @@ int SimulatorThread :: OfferLoot(int mode, ActiveLootContainer *loot, ActivePart
 	if(mode > -1)
 	{
 		LogMessageL(MSG_SHOW, "Offering loot to looter");
-		LootTag tag = party->TagItem(ItemID, receivingCreature->CreatureID, CID);
+		LootTag * tag = party->TagItem(ItemID, receivingCreature->CreatureID, CID);
 		int slot = receivingCreature->charPtr->inventory.GetFreeSlot(INV_CONTAINER);
-		tag.slotIndex = slot;
+		tag->mSlotIndex = slot;
 		offers++;
 
 		STRINGLIST qresponse;
@@ -11652,7 +11789,7 @@ int SimulatorThread :: OfferLoot(int mode, ActiveLootContainer *loot, ActivePart
 		sprintf(Aux3, "%d", conIndex);
 		qresponse.push_back(Aux3);
 		WriteIdx= PrepExt_QueryResponseStringList(&SendBuf[WriteIdx], query.ID, qresponse);
-		Util::SafeFormat(Aux3, sizeof(Aux3), "%d", tag.lootTag);
+		Util::SafeFormat(Aux3, sizeof(Aux3), "%d", tag->lootTag);
 		g_Log.AddMessageFormat("[LOOT] Sending offer of %d to original looter (%d) using tag %s", ItemID, receivingCreature->CreatureID, Aux3);
 		WriteIdx+= PartyManager::OfferLoot(SendBuf, ItemID, Aux3, needOrGreed);
 		receivingCreature->actInst->LSendToOneSimulator(SendBuf, WriteIdx, receivingCreature->simulatorPtr);
@@ -13707,11 +13844,23 @@ PartyMember * SimulatorThread :: RollForPartyLoot(ActiveParty *party, std::set<i
 	return maxRoller;
 }
 
-void SimulatorThread :: ResetLoot(ActiveLootContainer *loot, ActiveParty *party, LootTag *lootTag)
+void SimulatorThread :: ClearLoot(ActiveParty *party, ActiveLootContainer *loot)
 {
-	party->RemoveTagsForLootCreatureId(lootTag -> lootCreatureId, lootTag->itemId);
+	party->RemoveTagsForLootCreatureId(loot->CreatureID, 0, 0);
 	loot->RemoveAllRolls();
-	loot->stage2 = false;
+}
+
+void SimulatorThread :: ResetLoot(ActiveParty *party, ActiveLootContainer *loot, int itemId)
+{
+	party->RemoveTagsForLootCreatureId(loot->CreatureID, itemId, 0);
+	loot->RemoveCreatureRolls(itemId, 0);
+}
+
+void SimulatorThread :: UndoLoot(ActiveParty *party, ActiveLootContainer *loot, int itemId, int creatureId)
+{
+	party->RemoveTagsForLootCreatureId(loot->CreatureID, itemId, creatureId);
+	loot->RemoveCreatureRolls(itemId, creatureId);
+
 }
 
 void SimulatorThread :: CheckIfLootReadyToDistribute(ActiveLootContainer *loot, LootTag *lootTag)
@@ -13724,19 +13873,19 @@ void SimulatorThread :: CheckIfLootReadyToDistribute(ActiveLootContainer *loot, 
 	// has been processed or not
 	uint requiredDecisions = party->mMemberList.size();
 	if((party->mLootMode == ROUND_ROBIN || party->mLootMode == LOOT_MASTER)) {
-		if(loot->stage2) {
+		if(loot->IsStage2(lootTag->mItemId)) {
 			requiredDecisions = party->mMemberList.size() - 1;
 		}
 		else {
 			requiredDecisions = 1;
 		}
 	}
-	uint decisions = (uint)loot->CountDecisions(lootTag->itemId);
-	LogMessageL(MSG_SHOW, "Loot requires %d decisions, we have %d", decisions, requiredDecisions);
+	uint decisions = (uint)loot->CountDecisions(lootTag->mItemId);
+	LogMessageL(MSG_SHOW, "Loot requires %d decisions, we have %d", requiredDecisions, decisions);
 
 	if(decisions >= requiredDecisions)
 	{
-		LogMessageL(MSG_SHOW, "Loot %d is ready to distribute", lootTag->itemId);
+		LogMessageL(MSG_SHOW, "Loot %d is ready to distribute", lootTag->mItemId);
 
 		CreatureInstance *receivingCreature = NULL;
 
@@ -13745,22 +13894,22 @@ void SimulatorThread :: CheckIfLootReadyToDistribute(ActiveLootContainer *loot, 
 		 * either give them the item, or offer again to the rest of the party depending
 		 * on whether they needed or not
 		 */
-		if(!loot->stage2 && party->mLootMode == LOOT_MASTER && party->mLeaderID == creatureInst->CreatureID) {
-			LogMessageL(MSG_SHOW, "Got loot roll from party leader %d for %d", party->mLeaderID, lootTag->itemId);
-			if(loot->IsNeeded(lootTag->itemId, creatureInst->CreatureID) || loot->IsGreeded(lootTag->itemId, creatureInst->CreatureID)) {
-				LogMessageL(MSG_SHOW, "Leader %d needed for %d", party->mLeaderID, lootTag->itemId);
+		if(!loot->IsStage2(lootTag->mItemId) && party->mLootMode == LOOT_MASTER && party->mLeaderID == creatureInst->CreatureID) {
+			LogMessageL(MSG_SHOW, "Got loot roll from party leader %d for %d", party->mLeaderID, lootTag->mItemId);
+			if(loot->IsNeeded(lootTag->mItemId, creatureInst->CreatureID) || loot->IsGreeded(lootTag->mItemId, creatureInst->CreatureID)) {
+				LogMessageL(MSG_SHOW, "Leader %d needed for %d", party->mLeaderID, lootTag->mItemId);
 				receivingCreature = creatureInst;
 			}
 			else {
 				// Offer again to the rest of the party
-				LogMessageL(MSG_SHOW, "Offering %d to rest of party", lootTag->itemId);
-				loot->stage2 = true;
-				loot->RemoveCreatureRolls(lootTag->itemId, lootTag->creatureId);
-				party->RemoveCreatureTags(lootTag->itemId, lootTag->creatureId);
-				if(OfferLoot(-1, loot, party, creatureInst, lootTag->itemId, needOrGreed, lootTag->lootCreatureId, 0) == 0) {
+				LogMessageL(MSG_SHOW, "Offering %d to rest of party", lootTag->mItemId);
+				loot->SetStage2(lootTag->mItemId, true);
+				loot->RemoveCreatureRolls(lootTag->mItemId, lootTag->mCreatureId);
+				party->RemoveCreatureTags(lootTag->mItemId, lootTag->mCreatureId);
+				if(OfferLoot(-1, loot, party, creatureInst, lootTag->mItemId, needOrGreed, lootTag->mLootCreatureId, 0) == 0) {
 					// Nobody to offer to, clean up as if the item had never been looted
-					LogMessageL(MSG_SHOW, "Nobody to offer loot in %d to, cleaning up as if not yet looted.", lootTag->lootCreatureId);
-					ResetLoot(loot, party, lootTag);
+					LogMessageL(MSG_SHOW, "Nobody to offer loot in %d to, cleaning up as if not yet looted.", lootTag->mLootCreatureId);
+					ResetLoot(party, loot, lootTag->mItemId);
 				}
 				return;
 			}
@@ -13771,22 +13920,22 @@ void SimulatorThread :: CheckIfLootReadyToDistribute(ActiveLootContainer *loot, 
 		 * either give them the item, or offer again to the rest of the party depending
 		 * on whether they needed or not
 		 */
-		if(!loot->stage2 && party->mLootMode == ROUND_ROBIN && loot->robinID == creatureInst->CreatureID) {
-			LogMessageL(MSG_SHOW, "Got loot roll from robin %d for %d", loot->robinID, lootTag->itemId);
-			if(loot->IsNeeded(lootTag->itemId, creatureInst->CreatureID) || loot->IsGreeded(lootTag->itemId, creatureInst->CreatureID)) {
-				LogMessageL(MSG_SHOW, "Robin %d needed or greeded for %d", loot->robinID, lootTag->itemId);
+		if(!loot->IsStage2(lootTag->mItemId) && party->mLootMode == ROUND_ROBIN && loot->robinID == creatureInst->CreatureID) {
+			LogMessageL(MSG_SHOW, "Got loot roll from robin %d for %d", loot->robinID, lootTag->mItemId);
+			if(loot->IsNeeded(lootTag->mItemId, creatureInst->CreatureID) || loot->IsGreeded(lootTag->mItemId, creatureInst->CreatureID)) {
+				LogMessageL(MSG_SHOW, "Robin %d needed or greeded for %d", loot->robinID, lootTag->mItemId);
 				receivingCreature = creatureInst;
 			}
 			else {
 				// Offer again to the rest of the party
-				LogMessageL(MSG_SHOW, "Offering %d to rest of party", lootTag->itemId);
-				loot->stage2 = true;
-				loot->RemoveCreatureRolls(lootTag->itemId, lootTag->creatureId);
-				party->RemoveCreatureTags(lootTag->itemId, lootTag->creatureId);
-				if(OfferLoot(-1, loot, party, creatureInst, lootTag->itemId, needOrGreed, lootTag->lootCreatureId, 0) == 0) {
+				LogMessageL(MSG_SHOW, "Offering %d to rest of party", lootTag->mItemId);
+				loot->SetStage2(lootTag->mItemId, true);
+				loot->RemoveCreatureRolls(lootTag->mItemId, lootTag->mCreatureId);
+				party->RemoveCreatureTags(lootTag->mItemId, lootTag->mCreatureId);
+				if(OfferLoot(-1, loot, party, creatureInst, lootTag->mItemId, needOrGreed, lootTag->mLootCreatureId, 0) == 0) {
 					// Nobody to offer to, clean up as if the item had never been looted
-					LogMessageL(MSG_SHOW, "Nobody to offer loot in %d to, cleaning up as if not yet looted.", lootTag->lootCreatureId);
-					ResetLoot(loot, party, lootTag);
+					LogMessageL(MSG_SHOW, "Nobody to offer loot in %d to, cleaning up as if not yet looted.", lootTag->mLootCreatureId);
+					ResetLoot(party, loot, lootTag->mItemId);
 				}
 				return;
 			}
@@ -13795,51 +13944,56 @@ void SimulatorThread :: CheckIfLootReadyToDistribute(ActiveLootContainer *loot, 
 
 		if(receivingCreature == NULL) {
 			// No specific creature, first pick one of the needers if any
-			set<int> needers = loot->needed[lootTag->itemId];
+			set<int> needers = loot->needed[lootTag->mItemId];
 			if(needers.size() > 0) {
 				LogMessageL(MSG_SHOW, "Rolling for %d needers", needers.size());
-				receivingCreature = RollForPartyLoot(party, needers, "Need", lootTag->itemId)->mCreaturePtr;
+				receivingCreature = RollForPartyLoot(party, needers, "Need", lootTag->mItemId)->mCreaturePtr;
 			}
 			else {
-				set<int> greeders = loot->greeded[lootTag->itemId];
+				set<int> greeders = loot->greeded[lootTag->mItemId];
 				if(greeders.size() > 0) {
 					LogMessageL(MSG_SHOW, "Rolling for %d greeders", greeders.size());
-					receivingCreature = RollForPartyLoot(party, greeders, "Greed", lootTag->itemId)->mCreaturePtr;
+					receivingCreature = RollForPartyLoot(party, greeders, "Greed", lootTag->mItemId)->mCreaturePtr;
 				}
 			}
 		}
 
 		if(receivingCreature == NULL) {
-			LogMessageL(MSG_WARN, "Everybody passed on loot %d", lootTag->itemId);
+			LogMessageL(MSG_WARN, "Everybody passed on loot %d", lootTag->mItemId);
 			// Send a winner with a tag of '0'. This will close the window
 			for(uint i = 0 ; i < party->mMemberList.size(); i++) {
 				// Skip the loot master or robin
 
-				LootTag *tag = party->GetTag(lootTag->itemId, party->mMemberList[i].mCreaturePtr->CreatureID);
+				LootTag *tag = party->GetTag(lootTag->mItemId, party->mMemberList[i].mCreaturePtr->CreatureID);
 				if(tag != NULL)
 				{
-					Util::SafeFormat(Aux2, sizeof(Aux2), "%d:%d", tag->creatureId, tag->slotIndex);
+					Util::SafeFormat(Aux2, sizeof(Aux2), "%d:%d", tag->mCreatureId, tag->mSlotIndex);
 					Util::SafeFormat(Aux3, sizeof(Aux3), "%d", 0);
-					WritePos = PartyManager::WriteLootWin(SendBuf, Aux2, "0", "Nobody", lootTag->creatureId, 999);
+					WritePos = PartyManager::WriteLootWin(SendBuf, Aux2, "0", "Nobody", lootTag->mCreatureId, 999);
 				}
 			}
-			ResetLoot(loot, party, lootTag);
+			ResetLoot(party, loot, lootTag->mItemId);
 			return;
 		}
 
 		InventorySlot *newItem = NULL;
 
 		// Send the actual winner to all of the party that have a tag
-		LootTag *winnerTag = party->GetTag(lootTag->itemId, receivingCreature->CreatureID);
+		LootTag *winnerTag = party->GetTag(lootTag->mItemId, receivingCreature->CreatureID);
 		for(uint i = 0 ; i < party->mMemberList.size(); i++)
 		{
-			LootTag *tag = party->GetTag(lootTag->itemId, party->mMemberList[i].mCreaturePtr->CreatureID);
+			LogMessageL(MSG_WARN, "Informing %d of the winner (%d)", party->mMemberList[i].mCreaturePtr->CreatureID, lootTag->mCreatureId);
+			LootTag *tag = party->GetTag(lootTag->mItemId, party->mMemberList[i].mCreaturePtr->CreatureID);
 			if(tag != NULL)
 			{
-				Util::SafeFormat(Aux2, sizeof(Aux2), "%d:%d", tag->creatureId, tag->slotIndex);
+				Util::SafeFormat(Aux2, sizeof(Aux2), "%d:%d", tag->mCreatureId, tag->mSlotIndex);
 				Util::SafeFormat(Aux3, sizeof(Aux3), "%d", tag->lootTag);
-				WritePos = PartyManager::WriteLootWin(SendBuf, Aux2, Aux3, receivingCreature->css.display_name, lootTag->creatureId, 999);
+				WritePos = PartyManager::WriteLootWin(SendBuf, Aux2, Aux3, receivingCreature->css.display_name, lootTag->mCreatureId, 999);
 				party->mMemberList[i].mCreaturePtr->actInst->LSendToOneSimulator(SendBuf, WritePos, party->mMemberList[i].mCreaturePtr->simulatorPtr);
+			}
+			else
+			{
+				LogMessageL(MSG_WARN, "No tag for item %d for a player %d to be informed", lootTag->mItemId, party->mMemberList[i].mCreaturePtr->CreatureID);
 			}
 		}
 
@@ -13852,34 +14006,38 @@ void SimulatorThread :: CheckIfLootReadyToDistribute(ActiveLootContainer *loot, 
 			Util::SafeFormat(Aux3, sizeof(Aux3), "%s doesn't have enough space. Starting bidding again", receivingCreature->css.display_name);
 			party->BroadcastInfoMessageToAllMembers(Aux3);
 			LogMessageL(MSG_WARN, "Receive (%d) has no slots.", receivingCreature->CreatureID);
-			ResetLoot(loot, party, lootTag);
+			ResetLoot(party, loot, lootTag->mItemId);
 			return;
 		}
 		else
 		{
-			newItem = charData->inventory.AddItem_Ex(INV_CONTAINER, winnerTag->itemId, 1);
+			newItem = charData->inventory.AddItem_Ex(INV_CONTAINER, winnerTag->mItemId, 1);
 			if(newItem == NULL)
 			{
-				LogMessageL(MSG_WARN, "Item to loot (%d) has disappeared.", winnerTag->itemId);
-				ResetLoot(loot, party, lootTag);
+				LogMessageL(MSG_WARN, "Item to loot (%d) has disappeared.", winnerTag->mItemId);
+				ResetLoot(party, loot, lootTag->mItemId);
 				return;
 			}
 		}
 
-		int conIndex = loot->HasItem(lootTag->itemId);
+		int conIndex = loot->HasItem(lootTag->mItemId);
 		if(conIndex == -1)
 		{
-			LogMessageL(MSG_WARN, "Item to loot (%d) missing.", lootTag->itemId);
+			LogMessageL(MSG_WARN, "Item to loot (%d) missing.", lootTag->mItemId);
 		}
 		else
 		{
 			// Remove the loot from the container
 			loot->RemoveItem(conIndex);
 
+			LogMessageL(MSG_WARN, "There is now %d items in loot container %d.", loot->itemList.size(), loot->CreatureID);
+
 			if(loot->itemList.size() == 0)
 			{
+				ClearLoot(party, loot);
+
 				// Loot container now empty, remove it
-				CreatureInstance *lootCreature = creatureInst->actInst->GetNPCInstanceByCID(lootTag->lootCreatureId);
+				CreatureInstance *lootCreature = creatureInst->actInst->GetNPCInstanceByCID(lootTag->mLootCreatureId);
 				if(lootCreature != NULL)
 				{
 					lootCreature->activeLootID = 0;
@@ -13891,7 +14049,10 @@ void SimulatorThread :: CheckIfLootReadyToDistribute(ActiveLootContainer *loot, 
 					WritePos = PrepExt_SendSpecificStats(SendBuf, lootCreature, &statList[0], 3);
 					creatureInst->actInst->LSendToLocalSimulator(SendBuf, WritePos, creatureInst->CurrentX, creatureInst->CurrentZ);
 				}
-				creatureInst->actInst->lootsys.RemoveCreature(lootTag->lootCreatureId);
+				creatureInst->actInst->lootsys.RemoveCreature(lootTag->mLootCreatureId);
+
+				LogMessageL(MSG_WARN, "Loot %d is now empty (%d tags now in the party).",
+						loot->CreatureID, party->lootTags.size());
 			}
 
 			if(newItem != NULL && receivingCreature != NULL)
@@ -13902,11 +14063,11 @@ void SimulatorThread :: CheckIfLootReadyToDistribute(ActiveLootContainer *loot, 
 			}
 
 			// Reset the loot tags etc, we don't need them anymore
-			ResetLoot(loot, party, lootTag);
+			ResetLoot(party, loot, lootTag->mItemId);
 		}
 	}
 	else {
-		LogMessageL(MSG_SHOW, "Loot %d not ready yet to distribute", lootTag->itemId);
+		LogMessageL(MSG_SHOW, "Loot %d not ready yet to distribute", lootTag->mItemId);
 	}
 }
 

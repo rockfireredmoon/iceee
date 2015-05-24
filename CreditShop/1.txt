@@ -1,0 +1,22 @@
+;CONSUMABLES 
+;CHARMS
+;ARMOR
+;BAGS
+;RECIPES
+;NEW
+
+[ENTRY]
+ID=0
+Title=
+Description=This brew has an interesting effect ..
+;Status=HOT
+Status=NEW
+Category=CONSUMABLES
+;BeginDate=01/01/2015
+;EndDate=01/01/2016
+PriceAmount=100
+;PriceCurrency=CREDITS
+PriceCurrency=COPPER
+QuantityLimit=100
+QuantitySold=0
+ItemID=50011

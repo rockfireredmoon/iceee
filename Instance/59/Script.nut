@@ -19,7 +19,7 @@ function say_something() {
 	if(randmodrng(0, 100) <= SPEAK_CHANCE) {
 		inst.queue(function() {
 			inst.emote(cid, ANIMATION);
-			inst.creatureChat(cid, "s/", phrases[randmodrng(0, phrases.len())]);
+			inst.creature_chat(cid, "s/", phrases[randmodrng(0, phrases.len())]);
 		}, 1000);
 	}
 	inst.queue(say_something, 10000);

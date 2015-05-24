@@ -175,8 +175,10 @@ If using Code::Blocks on LINUX
 #include "EliteMob.h"
 #include "Crafting.h"
 #include "InstanceScale.h"
+#include "CreditShop.h"
+#include "Guilds.h"
 
-extern GuildManager g_GuildManager;
+//extern GuildManager g_GuildManager;
 
 ChangeData g_AutoSaveTimer;
 
@@ -469,6 +471,9 @@ int main(int argc, char *argv[])
 
 	g_GuildManager.LoadFile(Platform::GenerateFilePath(GAuxBuf, "Data", "GuildDef.txt"));
 	g_Log.AddMessageFormat("Loaded %d Guild definitions.", g_GuildManager.GetStandardCount());
+
+	g_CSManager.LoadItems();
+	g_Log.AddMessageFormat("Loaded %d Credit Shop items.", g_CSManager.mItems.size());
 
 	g_ZoneDefManager.LoadData();
 	g_GroveTemplateManager.LoadData();

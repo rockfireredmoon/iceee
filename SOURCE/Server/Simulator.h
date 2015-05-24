@@ -182,7 +182,10 @@ public:
 	void LoadAccountCharacters(AccountData *accPtr);
 	void JoinGuild(GuildDefinition *gDef, int startValour);
 
-	void ResetLoot(ActiveLootContainer *loot, ActiveParty *party, LootTag *lootTag);
+	void ClearLoot(ActiveParty *party, ActiveLootContainer *loot);
+	void ResetLoot(ActiveParty *party, ActiveLootContainer *loot, int itemId);
+	void UndoLoot(ActiveParty *party, ActiveLootContainer *loot, int itemId, int creatureId);
+
 	int OfferLoot(int mode, ActiveLootContainer *loot, ActiveParty *party, CreatureInstance *receivingCreature, int ItemID, bool needOrGreed, int CID, int conIndex);
 	void CheckIfLootReadyToDistribute(ActiveLootContainer *loot, LootTag *lootTag);
 	PartyMember * RollForPartyLoot(ActiveParty *party, std::set<int> creatureIds, const char *rollType, int itemId);
@@ -279,6 +282,8 @@ public:
 	int handle_query_itemdef_contents(void);
 	int handle_query_itemdef_delete(void);
 	int handle_query_item_create(void);
+	int handle_query_item_market_list(void);
+	int handle_query_item_market_buy(void);
 	int handle_query_util_addfunds();
 	int handle_query_validate_name();
 	int handle_query_petition_list(void);

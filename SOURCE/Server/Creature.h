@@ -20,6 +20,7 @@ class SimulatorThread;
 #include "AbilityTime.h"
 #include "Arena.h"
 #include "DropTable.h"
+#include "sqrat.h"
 
 class CreatureInstance;  //Forward declaration for a pointer in the SelectedObject structure
 class AIScriptPlayer;    //Forward declaration for AI script
@@ -263,12 +264,25 @@ struct ImplicitAction
 	short abilityGroup;    //Ability that this ID is registered by
 };
 
-//Stacks of appearance transforms manage the current appearance after any transformations have been applie
+//Stacks of appearance transforms manage the current appearance after any transformations have been applied
 class AppearanceModifier
 {
 public:
 	virtual ~AppearanceModifier();
 	virtual std::string Modify(std::string source) =0;
+	virtual std::string ModifyEq(std::string source) =0;
+};
+
+class AbstractAppearanceModifier : public AppearanceModifier {
+public:
+	AbstractAppearanceModifier();
+	virtual ~AbstractAppearanceModifier();
+	std::string Modify(std::string source);
+	std::string ModifyEq(std::string source);
+	virtual void ProcessTable(Sqrat::Table *table) =0;
+	virtual void ProcessTableEq(Sqrat::Table *table) =0;
+private:
+	std::string DoModify(std::string source, bool eq);
 };
 
 class ReplaceAppearanceModifier : public AppearanceModifier {
@@ -277,15 +291,25 @@ public:
 	ReplaceAppearanceModifier(std::string replacement);
 	~ReplaceAppearanceModifier();
 	std::string Modify(std::string source);
+	std::string ModifyEq(std::string source);
 };
 
-class AddAttachmentModifier : public AppearanceModifier {
+class NudifyAppearanceModifier : public AppearanceModifier {
+public:
+	NudifyAppearanceModifier();
+	~NudifyAppearanceModifier();
+	std::string Modify(std::string source);
+	std::string ModifyEq(std::string source);
+};
+
+class AddAttachmentModifier : public AbstractAppearanceModifier {
 public:
 	std::string mType;
 	std::string mNode;
 	AddAttachmentModifier(std::string type,std::string node);
 	~AddAttachmentModifier();
-	std::string Modify(std::string source);
+	void ProcessTable(Sqrat::Table *table);
+	void ProcessTableEq(Sqrat::Table *table);
 };
 
 class CreatureInstance
@@ -377,7 +401,7 @@ public:
 	void PushAppearanceModifier(AppearanceModifier *modifier);
 	void RemoveAppearanceModifier(AppearanceModifier *modifier);
 	void ClearAppearanceModifiers();
-	void PopAppearance();
+	std::string PeekAppearanceEq();
 	std::string PeekAppearance();
 	int _GetBaseStatModIndex(int statID);
 	int _GetExistingModIndex(int type, int groupID, int statID);
@@ -684,6 +708,7 @@ public:
 
 	//Custom Ability Functions, called through the ability system to handle special operations
 	bool IsTransformed();
+	bool CAF_Nudify();
 	bool CAF_Transform(int CDefID);
 	bool CAF_Untransform();
 	int CAF_SummonSidekick(int CDefID, int maxSummon, short abGroupID);

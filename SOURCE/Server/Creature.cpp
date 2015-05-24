@@ -190,19 +190,30 @@ ReplaceAppearanceModifier::ReplaceAppearanceModifier(std::string replacement) {
 
 ReplaceAppearanceModifier::~ReplaceAppearanceModifier() {}
 
-
 std::string ReplaceAppearanceModifier::Modify(std::string source) {
 	return mReplacement;
 }
 
-AddAttachmentModifier::AddAttachmentModifier(std::string type, std::string node) {
-	mType = type;
-	mNode = node;
+std::string ReplaceAppearanceModifier::ModifyEq(std::string source) {
+	return source;
 }
-AddAttachmentModifier::~AddAttachmentModifier() {}
 
-std::string AddAttachmentModifier::Modify(std::string source) {
+//
 
+AbstractAppearanceModifier::AbstractAppearanceModifier() {
+}
+
+AbstractAppearanceModifier::~AbstractAppearanceModifier() {}
+
+std::string AbstractAppearanceModifier::Modify(std::string source) {
+	return DoModify(source, false);
+}
+
+std::string AbstractAppearanceModifier::ModifyEq(std::string source) {
+	return DoModify(source, true);
+}
+
+std::string AbstractAppearanceModifier::DoModify(std::string source, bool eq) {
 	string currentAppearance = source;
 	size_t pos = currentAppearance.find(":");
 	if(pos == string::npos)	{
@@ -230,18 +241,10 @@ std::string AddAttachmentModifier::Modify(std::string source) {
 	Sqrat::Object placeholderObject = rootTable.GetSlot(_SC("a"));
 	Sqrat::Table table = placeholderObject.Cast<Sqrat::Table>();
 
-	Sqrat::Object attachments = table.GetSlot(_SC("ea"));
-	if(attachments.IsNull()) {
-		// No existing attachments
-		Sqrat::Array arr(vm);
-		table.SetValue(_SC("ea"), arr);
-		attachments = table.GetSlot(_SC("ea"));
-	}
-	Sqrat::Array attachmentsArr = attachments.Cast<Sqrat::Array>();
-	Sqrat::Table item(vm);
-	item.SetValue(_SC("type"), _SC(mType));
-	item.SetValue(_SC("node"), _SC(mNode));
-	attachmentsArr.Append(item);
+	if(eq)
+		ProcessTableEq(&table);
+	else
+		ProcessTable(&table);
 
 	Squirrel::Printer printer;
 	std::string newAppearance = prefix;
@@ -249,6 +252,45 @@ std::string AddAttachmentModifier::Modify(std::string source) {
 	g_Log.AddMessageFormat("Attaching item. New appearance is. %s", newAppearance.c_str());
 
 	return newAppearance;
+}
+
+//
+
+AddAttachmentModifier::AddAttachmentModifier(std::string type, std::string node) {
+	mType = type;
+	mNode = node;
+}
+AddAttachmentModifier::~AddAttachmentModifier() {}
+
+void AddAttachmentModifier::ProcessTable(Sqrat::Table *table) {
+	Sqrat::Object attachments = table->GetSlot(_SC("ea"));
+	if(attachments.IsNull()) {
+		// No existing attachments
+		Sqrat::Array arr(table->GetVM());
+		table->SetValue(_SC("ea"), arr);
+		attachments = table->GetSlot(_SC("ea"));
+	}
+	Sqrat::Array attachmentsArr = attachments.Cast<Sqrat::Array>();
+	Sqrat::Table item(table->GetVM());
+	item.SetValue(_SC("type"), _SC(mType));
+	item.SetValue(_SC("node"), _SC(mNode));
+	attachmentsArr.Append(item);
+}
+
+void AddAttachmentModifier::ProcessTableEq(Sqrat::Table *table) {
+}
+
+//
+
+NudifyAppearanceModifier::NudifyAppearanceModifier() {}
+NudifyAppearanceModifier::~NudifyAppearanceModifier() {}
+
+std::string NudifyAppearanceModifier::Modify(std::string source) {
+	return source;
+}
+
+std::string NudifyAppearanceModifier::ModifyEq(std::string source) {
+	return "{}";
 }
 
 //**************************************************
@@ -413,6 +455,8 @@ void CreatureInstance :: Clear(void)
 	tetherNodeZ = 0;
 	appearanceModifiers.clear();
 	attachments.clear();
+	transformModifier = NULL;
+	transformCreatureId = 0;
 
 	LastUseDefID = 0;
 }
@@ -6935,12 +6979,12 @@ bool CreatureInstance :: IsTransformed()
 
 bool CreatureInstance :: CAF_Untransform()
 {
-	if(transformCreatureId == 0 || transformModifier == NULL) {
-		g_Log.AddMessageFormat("%d not transformed into %d", CreatureDefID);
+	if(transformModifier == NULL) {
+		g_Log.AddMessageFormat("%d not transformed", CreatureDefID);
 		return false;
 	}
 	transformCreatureId = 0;
-	g_Log.AddMessageFormat("Untransforming %d into %d", CreatureDefID, transformCreatureId);
+	g_Log.AddMessageFormat("Untransforming %d", CreatureDefID);
 	_ClearStatusFlag(StatusEffects::TRANSFORMED);
 	SetServerFlag(ServerFlags::IsTransformed, false);
 	RemoveAppearanceModifier(transformModifier);
@@ -6948,9 +6992,24 @@ bool CreatureInstance :: CAF_Untransform()
 	return true;
 }
 
+bool CreatureInstance :: CAF_Nudify()
+{
+	if(transformModifier != NULL) {
+		g_Log.AddMessageFormat("%d already transformed", CreatureDefID);
+		return false;
+	}
+
+	g_Log.AddMessageFormat("Nudifying %d", CreatureDefID);
+
+	transformModifier = new NudifyAppearanceModifier();
+	PushAppearanceModifier(transformModifier);
+	return true;
+
+}
+
 bool CreatureInstance :: CAF_Transform(int CDefID)
 {
-	if(transformCreatureId != 0) {
+	if(transformModifier != NULL) {
 		g_Log.AddMessageFormat("%d already transformed into %d", CreatureDefID, transformCreatureId);
 		return false;
 	}
@@ -7133,6 +7192,15 @@ void CreatureInstance :: RemoveAppearanceModifier(AppearanceModifier *modifier)
 		}
 	}
 	actInst->LSendToLocalSimulator(GSendBuf, PrepExt_UpdateAppearance(GSendBuf, this), CurrentX, CurrentZ);
+}
+
+std::string CreatureInstance :: PeekAppearanceEq()
+{
+	std::string appearance = css.eq_appearance;
+	std::vector<AppearanceModifier*>::iterator it = appearanceModifiers.begin();
+	for(; it != appearanceModifiers.end(); ++it)
+		appearance = (*it)->ModifyEq(appearance);
+	return appearance;
 }
 
 std::string CreatureInstance :: PeekAppearance()

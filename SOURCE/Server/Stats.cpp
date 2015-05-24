@@ -423,6 +423,7 @@ void CharacterStatSet :: SetEqAppearance(const char *data)
 {
 	eq_appearance = data;
 }
+
 void CharacterStatSet :: SetAIPackage(const char *data)
 {
 	Util::SafeCopy(ai_package, data, sizeof(ai_package));

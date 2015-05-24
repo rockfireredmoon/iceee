@@ -45,13 +45,13 @@ class LootTag
 {
 public:
 	int lootTag;
-	int itemId;
-	int creatureId;
-	int lootCreatureId;
-	int slotIndex;
+	int mItemId;
+	int mCreatureId;
+	int mLootCreatureId;
+	int mSlotIndex;
 	bool needed;
 
-	LootTag();
+	LootTag(int itemId, int creatureId, int lootCreatureId);
 	void Clear(void);
 };
 
@@ -66,13 +66,14 @@ public:
 	uint mNextToGetLoot;
 	std::string mLeaderName;
 	std::vector<PartyMember> mMemberList;
-	std::map<int, LootTag> lootTags;
+	std::map<int, LootTag*> lootTags;
 	ActiveParty();
+	~ActiveParty();
 	LootTag * GetTag(int itemId, int creatureId);
-	void RemoveTagsForLootCreatureId(int lootCreatureId, int itemId);
+	void RemoveTagsForLootCreatureId(int lootCreatureId, int itemId, int creatureId);
 	void RemoveCreatureTags(int itemId, int creatureId);
-	LootTag TagItem(int itemId, int creatureId, int lootCreatureId);
-	bool HasTags(int itemId);
+	LootTag * TagItem(int itemId, int creatureId, int lootCreatureId);
+	bool HasTags(int lootCreatureId, int itemId);
 	void Dump();
 	void AddMember(CreatureInstance* member);
 	bool HasMember(int memberDefID);

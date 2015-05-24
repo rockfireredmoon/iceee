@@ -8,19 +8,15 @@
 PartyManager g_PartyManager;
 
 static int lootSeq = 0;
+typedef std::map<int, LootTag*>::iterator it_type;
 
-LootTag :: LootTag()
+LootTag :: LootTag(int itemId, int creatureId, int lootCreatureId)
 {
-	Clear();
-}
-
-void LootTag :: Clear(void)
-{
-	slotIndex = 0;
-	itemId = 0;
-	creatureId = 0;
-	lootCreatureId = 0;
-	lootTag = 0;
+	lootTag = ++lootSeq;
+	mCreatureId = creatureId;
+	mItemId = itemId;
+	mLootCreatureId = lootCreatureId;
+	mSlotIndex = 0;
 	needed = false;
 }
 
@@ -50,6 +46,8 @@ bool ActiveParty :: HasMember(int memberDefID)
 
 void ActiveParty :: RemoveMember(int memberDefID)
 {
+	// TODO need to clear up loot tags too
+
 	for(size_t i = 0; i < mMemberList.size(); i++)
 	{
 		if(mMemberList[i].mCreatureDefID == memberDefID)
@@ -268,6 +266,12 @@ ActiveParty :: ActiveParty() {
 	mNextToGetLoot = 0;
 	mLootFlags = 0;
 	mLootMode = FREE_FOR_ALL;
+	lootTags.clear();
+}
+
+ActiveParty :: ~ActiveParty() {
+	for(it_type iterator = lootTags.begin(); iterator != lootTags.end(); ++iterator)
+		delete iterator->second;
 	lootTags.clear();
 }
 
@@ -664,34 +668,34 @@ int PartyManager :: WriteLootRoll(char *outbuf, const char *itemDefName, char ro
 
 LootTag * ActiveParty :: GetTag(int itemId, int creatureId)
 {
-	typedef std::map<int, LootTag>::iterator it_type;
 	for(it_type iterator = lootTags.begin(); iterator != lootTags.end(); ++iterator) {
-		if(iterator->second.itemId == itemId && iterator->second.creatureId == creatureId) {
-			return &iterator->second;
+		if((*iterator->second).mItemId == itemId && (*iterator->second).mCreatureId == creatureId) {
+			return iterator->second;
 		}
 	}
 	return NULL;
 }
 
-void ActiveParty :: RemoveTagsForLootCreatureId(int lootCreatureId, int itemId)
+void ActiveParty :: RemoveTagsForLootCreatureId(int lootCreatureId, int itemId, int creatureId)
 {
-	std::map<int, LootTag>::iterator itr = lootTags.begin();
+	g_Log.AddMessageFormat("Removing loot tags for loot creature ID %d and item ID %d", lootCreatureId, itemId);
+	std::map<int, LootTag*>::iterator itr = lootTags.begin();
 	while (itr != lootTags.end()) {
-		if (itr->second.lootCreatureId == lootCreatureId && itr->second.itemId == itemId) {
-			std::map<int, LootTag>::iterator toErase = itr;
-			++itr;
-			lootTags.erase(toErase);
-		} else {
-			++itr;
+		if ((*itr->second).mLootCreatureId == lootCreatureId && (itemId == 0 || (*itr->second).mItemId == itemId)
+				&& (creatureId == 0 || (*itr->second).mCreatureId == creatureId)) {
+			delete itr->second;
+			lootTags.erase(itr++);
 		}
+		else
+			++itr;
 	}
 }
 
-bool ActiveParty:: HasTags(int itemId)
+bool ActiveParty:: HasTags(int lootCreatureID, int itemId)
 {
-	typedef std::map<int, LootTag>::iterator it_type;
+	typedef std::map<int, LootTag*>::iterator it_type;
 	for(it_type iterator = lootTags.begin(); iterator != lootTags.end(); ++iterator) {
-		if(iterator->second.itemId == itemId) {
+		if((*iterator->second).mLootCreatureId == lootCreatureID && (*iterator->second).mItemId == itemId) {
 			return true;
 		}
 	}
@@ -700,27 +704,21 @@ bool ActiveParty:: HasTags(int itemId)
 
 void ActiveParty :: RemoveCreatureTags(int itemId, int creatureId)
 {
-	std::map<int, LootTag>::iterator itr = lootTags.begin();
+	std::map<int, LootTag*>::iterator itr = lootTags.begin();
 	while (itr != lootTags.end()) {
-		if (itr->second.itemId == itemId && itr->second.creatureId == creatureId) {
-			std::map<int, LootTag>::iterator toErase = itr;
+		if ((*itr->second).mItemId == itemId && (*itr->second).mCreatureId == creatureId) {
+			delete itr->second;
+			lootTags.erase(itr++);
+		} else
 			++itr;
-			lootTags.erase(toErase);
-		} else {
-			++itr;
-		}
 	}
 }
 
-LootTag ActiveParty :: TagItem(int itemId, int creatureId, int lootCreatureId)
+LootTag * ActiveParty :: TagItem(int itemId, int creatureId, int lootCreatureId)
 {
-	LootTag tag;
-	tag.lootTag = ++lootSeq;
-	tag.creatureId = creatureId;
-	tag.itemId = itemId;
-	tag.lootCreatureId = lootCreatureId;
-	lootTags[tag.lootTag] = tag;
-	g_Log.AddMessageFormat("Tagged item %d for loot creature %d to creature %d. Tag is %d", tag.itemId, tag.lootCreatureId, tag.creatureId, tag.lootTag);
+	LootTag *tag = new LootTag(itemId, creatureId, lootCreatureId);
+	lootTags[tag->lootTag] = tag;
+	g_Log.AddMessageFormat("Tagged item %d for loot creature %d to creature %d. Tag is %d", tag->mItemId, tag->mLootCreatureId, tag->mCreatureId, tag->lootTag);
 	return tag;
 }
 
