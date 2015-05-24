@@ -111,6 +111,7 @@ TopHated(10)                                 Unknown effect (unknown parameter).
 Translocate()                                Transports to bind location.  Only used for [Portal: Bind]
 UnHate()                                     Remove all hate generated against you.
 WalkInShadows(120,A_DEXTERITY*1.0)           Limited unseen movement (duration_sec, movementCounter?)
+Nudify()							 	 	 Removes all clothes
 Transform(CDefID)							 Transform into a creature
 Untransform()								 Revert to natural appearance
 
@@ -1211,12 +1212,15 @@ void AbilityManager2 :: InitFunctionTables(void)
 	InsertFunction("DisplayEffect", &AbilityCalculator::DisplayEffect);
 	InsertFunction("InterruptChance", &AbilityCalculator::InterruptChance);
 	InsertFunction("Transform", &AbilityCalculator::Transform);
+	InsertFunction("Nudify", &AbilityCalculator::Nudify);
 	InsertFunction("Untransform", &AbilityCalculator::Untransform);
+	InsertFunction("NotTransformed", &AbilityCalculator::NotTransformed);
 	
 	//The verifier indicates which argument indexes should be flagged for examination
 	//as valid expressions.
 	InsertVerifier("Status",  ABVerifier(ABVerifier::EFFECT, ABVerifier::TIME));  //Status(statusEffect, time)
 	InsertVerifier("NotSilenced", ABVerifier());                          //NotSilenced()
+	InsertVerifier("NotTransformed", ABVerifier());                          //NotTransformed()
 	InsertVerifier("HasStatus", ABVerifier(ABVerifier::EFFECT));          //HasStatus(effectName)
 	InsertVerifier("NotStatus", ABVerifier(ABVerifier::EFFECT));          //NotStatus(effectName)
 	InsertVerifier("Interrupt", ABVerifier());                            //Interrupt()
@@ -3116,6 +3120,22 @@ int AbilityCalculator :: DisplayEffect(ARGUMENT_LIST args)
 	const char *effect = args.GetString(0);
 	g_Log.AddMessageFormat("Display Effect: %s", effect);
 	ciSource->SimulateEffect(effect, ciTarget);
+	return ABILITY_SUCCESS;
+}
+
+//Action.  Condition.  True when no transform is in place.
+int AbilityCalculator :: NotTransformed(ARGUMENT_LIST args)
+{
+	if(ciSource->transformModifier == NULL)
+		return ABILITY_SUCCESS;
+	return ABILITY_GENERIC;
+}
+
+//Action.  New to this server.  Removes all clothes (but keeps stats)
+int AbilityCalculator :: Nudify(ARGUMENT_LIST args)
+{
+	g_Log.AddMessageFormat("Nudify");
+	ciSource->CAF_Nudify();
 	return ABILITY_SUCCESS;
 }
 

@@ -5983,28 +5983,49 @@ this.SceneObject.attachParticleSystem <- function(name, tag, size)
 }
 
 
+	
+/*
+ * Override the 'setViaContentDef2' assembly to support 'ts' and 'es' for tail size and ear size
+ * respectively
+ */
+ 
+this.Assembler.Creature.original_setViaContentDef2 <- this.Assembler.Creature.setViaContentDef2;
+this.Assembler.Creature.setViaContentDef2 <- function(c) {
+	local r = this.original_setViaContentDef2(c);
+	if("ts" in c && mDetails != null) {
+		foreach(i, d in mDetails)
+			if(d.point == "tail")
+				d["scale"] <- Vector3(c.ts.tofloat(),c.ts.tofloat(),c.ts.tofloat());
+	}
+	if("es" in c && mDetails != null) { 
+		foreach(i, d in mDetails)
+			if(d.point == "left_ear" || d.point == "right_ear")
+				d["scale"] <- Vector3(c.ts.tofloat(),c.ts.tofloat(),c.ts.tofloat());
+	}
+	return r;
+}
+	
+/*
+ * Override the 'applyEquipment' assembly to support 'ea', which is a list of extra
+ * attachments (used for example in CTF script)
+ */
 this.Assembler.Creature.original_applyEquipment <- this.Assembler.Creature.applyEquipment;
 this.Assembler.Creature.applyEquipment <- function(table) {
 	local tableCopy = this.original_applyEquipment(table);
 	if ("ea" in table)
 	{
-		print("ICE! adding a bunch of additional attachments\n");
 		local attachment;
 		foreach(attachment in table.ea) {
-			print("ICE! attachment: " + attachment + "\n");
 			if("node" in attachment) {
-				print("ICE! attachment node: " + attachment.node + "\n");
 				local entry = {
 					node = attachment.node,
 					type = attachment.type,
 				};
-				print("ICE! attachment type: " + attachment.type + "\n");
 				if ("colors" in attachment)
 					entry.colors <- attachment.colors;
 
 				if ("effect" in attachment)
 					entry.effect <- attachment.effect;
-
 				tableCopy.a.append(entry);
 			}
 		}

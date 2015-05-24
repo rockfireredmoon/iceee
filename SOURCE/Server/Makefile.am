@@ -23,6 +23,7 @@ planetforeverd_SOURCES = md5.cc \
 	ConfigString.cpp \
 	Crafting.cpp \
 	Creature.cpp \
+	CreditShop.cpp \
 	CreatureSpawner2.cpp \
 	Debug.cpp \
 	DebugProfiler.cpp \
@@ -88,6 +89,7 @@ planetforeverd_SOURCES = md5.cc \
 	ChatChannel.h \
 	Chat.h \
 	Combat.h \
+	CreditShop.h \
 	CommonTypes.h \
 	Components.h \
 	Config.h \

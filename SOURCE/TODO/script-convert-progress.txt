@@ -5,7 +5,7 @@
 ./AdvCraft.nut
 ./AnimationHandler.nut
 ./Assemblers
-./Assemblers/Assembler.nut
+****./Assemblers/Assembler.nut
 ./Assemblers/AttachmentAssembler.nut
 ./Assemblers/CreatureAssembler.nut
 ./Assemblers/SceneryAssembler.nut
@@ -172,7 +172,7 @@
 ./Effects/Restoration.nut
 ./Effects/RogueCore.nut
 ./Effects/RogueCross.nut
-./Effects/Special.nut
+****./Effects/Special.nut
 ./Effects/Temp.nut
 ./Effects/Travel.nut
 ./EmitterPoints.nut
@@ -244,7 +244,7 @@
 ./GUI/ListLayoutManager.nut
 ./GUI/Manager.nut
 ./GUI/MessageBox.nut
-./GUI/MiniMap.nut
+****./GUI/MiniMap.nut
 ./GUI/MiniMapSticker.nut
 ./GUI/MiniMapTile.nut
 ./GUI/NarrowButton.nut
@@ -252,12 +252,11 @@
 ./GUI/Padder.nut
 ./GUI/PageComponent.nut
 ./GUI/Panel.nut
-./GUI/PopupInputBox.nut
 ./GUI/PopupMenu.nut
 ./GUI/PopupQuestionBox.nut
 ./GUI/ProgressBar.nut
 ./GUI/PropertySheet.nut
-./GUI/QuestComponents.nut
+****./GUI/QuestComponents.nut
 ./GUI/QuestionWindow.nut
 ./GUI/RadioGroup.nut
 ./GUI/SceneNodeHolder.nut
@@ -283,7 +282,7 @@
 ./HelperFunction.nut
 ./IGForum.nut
 ./IGIS
-./IGIS/IGIS.nut
+****./IGIS/IGIS.nut
 ./IGIS/PopUpWindow.nut
 ./IGIS/RTRWindow.nut
 ./_init_.nut
@@ -322,14 +321,14 @@
 ./SceneObject.nut
 ./ServerConstants.nut
 ./States
-./States/BootstrapState.nut
+****./States/BootstrapState.nut
 ./States/CharacterSelectionStateHack.nut
-./States/CharacterSelectionState.nut
+****./States/CharacterSelectionState.nut
 ./States/EULAState.nut
 ./States/GameState.nut
 ./States/LoadState.nut
 ./States/LoginStateHack.nut
-./States/LoginState.nut
+****./States/LoginState.nut
 ./States/MessageState.nut
 ./States/QueueState.nut
 ./States/StateManager.nut

@@ -259,12 +259,15 @@ int PrepExt_UpdateAppearance(char *buffer, CreatureInstance *cInst)
 	 * the update buffer has been built
 	 */
 	std::string currentAppearance = cInst->css.appearance;
+	std::string currentEqAppearance = cInst->css.eq_appearance;
 	cInst->css.SetAppearance(cInst->PeekAppearance().c_str());
+	cInst->css.SetEqAppearance(cInst->PeekAppearanceEq().c_str());
 
 	int r = WriteCharacterStats(&cInst->css, buffer, wpos, SUT_Appearance);
 
 	// And set it back
 	cInst->css.SetAppearance(currentAppearance.c_str());
+	cInst->css.SetEqAppearance(currentEqAppearance.c_str());
 
 	PutShort(&buffer[spos], r);           //Write number of stats
 
@@ -2616,6 +2619,27 @@ bool HasEnding (std::string const &fullString, std::string const &ending) {
 float StringToFloat(const std::string &str)
 {
 	return static_cast<float>(atof(str.c_str()));
+}
+
+std::string FormatDate(time_t *time)
+{
+	char buff[20];
+	struct tm *timeinfo = localtime(time);
+	strftime(buff, 20, "%d/%m/%Y", timeinfo);
+	return buff;
+}
+
+int ParseDate(const std::string &str, time_t &time)
+{
+	char buf[128];
+	struct tm ptime;
+	if(sscanf(str.c_str(), "%2d/%2d/%4d",
+		&ptime.tm_mday,
+		&ptime.tm_mon,
+		&ptime.tm_year) != 3)
+		return 0;
+	time = mktime(&ptime);
+	return 1;
 }
 
 int GetInteger(const STRINGLIST &strList, size_t index)

@@ -5,6 +5,7 @@
 #include "ByteBuffer.h"
 #include "Util.h" //For randint()
 #include "Item.h"
+#include <algorithm>
 
 
 DropTableManager g_DropTableManager;
@@ -91,14 +92,12 @@ ActiveLootContainer :: ActiveLootContainer()
 {
 	CreatureID = 0;
 	robinID = 0;
-	stage2 = false;
 }
 
 ActiveLootContainer :: ActiveLootContainer(int creatureID)
 {
 	CreatureID = creatureID;
 	robinID = 0;
-	stage2 = false;
 }
 
 ActiveLootContainer :: ~ActiveLootContainer()
@@ -107,6 +106,20 @@ ActiveLootContainer :: ~ActiveLootContainer()
 	greeded.clear();
 	needed.clear();
 	passed.clear();
+}
+
+bool ActiveLootContainer :: IsStage2(int itemID)
+{
+	return stage2Map.find(itemID) != stage2Map.end();
+}
+
+void ActiveLootContainer :: SetStage2(int itemID, bool stage2)
+{
+	bool b = IsStage2(itemID);
+	if(!stage2 && b)
+		stage2Map.erase(stage2Map.find(itemID));
+	else if(stage2 && !b)
+		stage2Map[itemID] = true;
 }
 
 void ActiveLootContainer :: AddItem(int itemID)
@@ -204,101 +217,106 @@ void ActiveLootContainer :: CopyLootContents(const ActiveLootContainer &source)
 	passed.insert(source.passed.begin(), source.passed.end());
 }
 
-void ActiveLootContainer :: Greed(int itemId, int creatureId)
+void ActiveLootContainer :: Greed(int itemId, int looterCreatureId)
 {
 	if(greeded.count(itemId) == 0) {
 		set<int> a;
 		greeded[itemId] = a;
 	}
-	greeded[itemId].insert(creatureId);
+	greeded[itemId].insert(looterCreatureId);
+	g_Log.AddMessageFormat("Creature %d greeded item %d, meaning there are now %d decisions on this item", looterCreatureId, itemId, Count(itemId, &greeded));
 }
 
-void ActiveLootContainer :: Need(int itemId, int creatureId)
+void ActiveLootContainer :: Need(int itemId, int looterCreatureId)
 {
 	if(needed.count(itemId) == 0) {
 		set<int> a;
 		needed[itemId] = a;
 	}
-	needed[itemId].insert(creatureId);
+	needed[itemId].insert(looterCreatureId);
+	g_Log.AddMessageFormat("Creature %d needed item %d, meaning there are now %d decisions on this item", looterCreatureId, itemId, Count(itemId, &needed));
 }
 
-void ActiveLootContainer :: Pass(int itemId, int creatureId)
+void ActiveLootContainer :: Pass(int itemId, int looterCreatureId)
 {
 	if(passed.count(itemId) == 0) {
 		set<int> a;
 		passed[itemId] = a;
 	}
-	passed[itemId].insert(creatureId);
+	passed[itemId].insert(looterCreatureId);
+	g_Log.AddMessageFormat("Creature %d passed item %d, meaning there are now %d decisions on this item", looterCreatureId, itemId, Count(itemId, &passed));
 }
 
-bool ActiveLootContainer :: IsPassed(int itemId, int creatureId)
+bool ActiveLootContainer :: IsPassed(int itemId, int looterCreatureId)
 {
-	return passed.count(itemId) >0 && passed[itemId].count(creatureId) > 0;
+	return passed.count(itemId) >0 && passed[itemId].count(looterCreatureId) > 0;
 }
 
-bool ActiveLootContainer :: IsNeeded(int itemId, int creatureId)
+bool ActiveLootContainer :: IsNeeded(int itemId, int looterCreatureId)
 {
-	return needed.count(itemId) >0 && needed[itemId].count(creatureId) > 0;
+	return needed.count(itemId) >0 && needed[itemId].count(looterCreatureId) > 0;
 }
 
-bool ActiveLootContainer :: IsGreeded(int itemId, int creatureId)
+bool ActiveLootContainer :: IsGreeded(int itemId, int looterCreatureId)
 {
-	return greeded.count(itemId) >0 && greeded[itemId].count(creatureId) > 0;
+	return greeded.count(itemId) >0 && greeded[itemId].count(looterCreatureId) > 0;
 }
 
-bool ActiveLootContainer :: HasAnyDecided(int creatureId)
+bool ActiveLootContainer :: HasAnyDecided(int itemId, int looterCreatureId)
 {
-	return Decided(creatureId, greeded) || Decided(creatureId, needed) || Decided(creatureId, passed);
+	return Decided(itemId, looterCreatureId, &greeded) ||
+			Decided(itemId, looterCreatureId, &needed) ||
+			Decided(itemId, looterCreatureId, &passed);
 }
 
-bool ActiveLootContainer :: Decided(int creatureId, std::map<int, std::set<int> > map)
+bool ActiveLootContainer :: Decided(int itemId,  int looterCreatureId, std::map<int, std::set<int> > * map)
 {
-	return map.count(creatureId) > 0;
-}
-
-int ActiveLootContainer :: CountNeeds(int itemId)
-{
-	return needed.count(itemId) > 0 ? needed[itemId].size() : 0;
+	std::map<int, std::set<int> >::iterator it = map->find(itemId);
+	return it != map->end() && (it->second).find(looterCreatureId) != (it->second).end();
 }
 
 int ActiveLootContainer :: CountDecisions(int itemId)
 {
-	return ( greeded.count(itemId) > 0 ? greeded[itemId].size() : 0 ) +
-			( needed.count(itemId) > 0 ? needed[itemId].size() : 0 ) +
-			( passed.count(itemId) > 0 ? passed[itemId].size() : 0 );
+	return Count(itemId, &greeded) + Count(itemId, &needed) + Count(itemId, &passed);
 }
 
-int ActiveLootContainer :: Count(int itemId, std::map<int, int> map)
+int ActiveLootContainer :: Count(int itemId, std::map<int, std::set<int> > * map)
 {
-	int count = 0;
-	typedef std::map<int, int>::iterator it_type;
-	for(it_type iterator = map.begin(); iterator != map.end(); ++iterator) {
-		if(iterator->first == itemId) {
-			count++;
-		}
-	}
-	return count;
+	std::map<int, set<int> >::iterator it = map->find(itemId);
+	return it == map->end() ? 0 : it->second.size();
 }
 
 void ActiveLootContainer :: RemoveAllRolls()
 {
+	g_Log.AddMessageFormat("Removing all rolls for loot creature %d", CreatureID);
 	greeded.clear();
 	needed.clear();
 	passed.clear();
+	stage2Map.clear();
 }
 
-void ActiveLootContainer :: RemoveCreatureRolls(int itemId, int creatureId)
+void ActiveLootContainer :: RemoveCreatureRolls(int itemId, int looterCreatureId)
 {
-	RemoveCreatureRollsFromMap(itemId, creatureId, greeded);
-	RemoveCreatureRollsFromMap(itemId, creatureId, needed);
-	RemoveCreatureRollsFromMap(itemId, creatureId, passed);
+	RemoveCreatureRollsFromMap(itemId, looterCreatureId, &greeded);
+	RemoveCreatureRollsFromMap(itemId, looterCreatureId, &needed);
+	RemoveCreatureRollsFromMap(itemId, looterCreatureId, &passed);
+	// TODO remove stage 2?
+	// TODO undo stage 2 if there are now no tags at all in a creature
+	//loot->SetStage2(lootTag->mItemId, false);
 }
 
 
-void ActiveLootContainer ::  RemoveCreatureRollsFromMap(int itemId, int creatureId, std::map<int, std::set<int> > map)
+void ActiveLootContainer ::  RemoveCreatureRollsFromMap(int itemId, int looterCreatureId, std::map<int, std::set<int> > *map)
 {
-	if(map.count(itemId) > 0)
-		map[itemId].erase(map[itemId].find(creatureId));
+	g_Log.AddMessageFormat("Removing rolls for item %d on creature %d", itemId, looterCreatureId);
+	std::map<int, set<int> >::iterator it = map->find(itemId);
+	if(it != map->end()) {
+		if(looterCreatureId == 0)
+			map->erase(it);
+		else
+			if(it->second.find(looterCreatureId) != it->second.end())
+				it->second.erase(it->second.find(looterCreatureId));
+	}
 }
 
 WorldLootContainer :: WorldLootContainer()
