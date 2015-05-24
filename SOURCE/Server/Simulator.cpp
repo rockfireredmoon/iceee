@@ -2600,6 +2600,8 @@ bool SimulatorThread :: HandleQuery(int &PendingData)
 		PendingData = handle_query_item_create();
 	else if(query.name.compare("item.market.list") == 0)
 		PendingData = handle_query_item_market_list();
+	else if(query.name.compare("item.market.reload") == 0)
+		PendingData = handle_query_item_market_reload();
 	else if(query.name.compare("item.market.buy") == 0)
 		PendingData = handle_query_item_market_buy();
 	else if(query.name.compare("marker.list") == 0)
@@ -11491,6 +11493,13 @@ int SimulatorThread :: handle_query_item_market_buy(void)
 
 		return wpos;
 	}
+}
+int SimulatorThread :: handle_query_item_market_reload(void)
+{
+	g_CharacterManager.GetThread("SimulatorThread::MarketReload");
+	g_CSManager.LoadItems();
+	g_CharacterManager.ReleaseThread();
+	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
 }
 
 int SimulatorThread :: handle_query_item_market_list(void)

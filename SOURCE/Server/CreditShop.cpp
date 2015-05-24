@@ -182,6 +182,7 @@ CreditShopItem * CreditShopManager::LoadItem(int id) {
 }
 
 int CreditShopManager::LoadItems(void) {
+	mItems.clear();
 	Platform_DirectoryReader r;
 	std::string dir = r.GetDirectory();
 	r.SetDirectory("CreditShop");
