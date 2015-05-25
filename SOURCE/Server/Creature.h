@@ -429,6 +429,7 @@ public:
 	void RemoveNoncombatantStatus(const char *debugCaller);
 	int GetKillExperience(int attackerLevel);
 	void AddValour(int amount, int guildDefId);
+	void AddCredits(int amount);
 	void AddExperience(int amount);
 	void AddHeroism(int amount);
 	void AddHeroismForQuest(int amount, int questLevel);

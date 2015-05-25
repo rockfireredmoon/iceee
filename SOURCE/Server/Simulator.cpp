@@ -1005,8 +1005,8 @@ void SimulatorThread :: HandleReceivedMessage2(void)
 	if(isConnected == false)
 	{
 		g_Log.AddMessageFormat("[CRITICAL] Should not be processing data (size: %d)", procData.mData.size());
-		procData.Clear();
 		return;
+		procData.Clear();
 	}
 
 	if(procData.mData.size() == 0)
@@ -2600,6 +2600,8 @@ bool SimulatorThread :: HandleQuery(int &PendingData)
 		PendingData = handle_query_item_create();
 	else if(query.name.compare("item.market.list") == 0)
 		PendingData = handle_query_item_market_list();
+	else if(query.name.compare("item.market.edit") == 0)
+		PendingData = handle_query_item_market_edit();
 	else if(query.name.compare("item.market.reload") == 0)
 		PendingData = handle_query_item_market_reload();
 	else if(query.name.compare("item.market.buy") == 0)
@@ -11249,12 +11251,8 @@ int SimulatorThread :: handle_query_itemdef_delete(void)
 }
 
 int SimulatorThread :: handle_query_util_addfunds() {
-//	::_Connection.sendQuery("util.addFunds", this, [
-//		"COPPER",
-//		copperAmount,
-//		this.mCopperReasonPopup.getText(),
-//		creatureName
-//	]);
+	if(!CheckPermissionSimple(Perm_Account, Permission_Sage))
+			return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
 	if(query.args[0].compare("COPPER") == 0) {
 		int amount = atoi(query.args[1].c_str());
 		g_CharacterManager.GetThread("SimulatorThread::AddFunds");
@@ -11438,8 +11436,11 @@ int SimulatorThread :: handle_query_marker_edit(void)
 
 int SimulatorThread :: handle_query_item_market_buy(void)
 {
+	if(query.args.size() < 1)
+		return PrepExt_QueryResponseError(SendBuf, query.ID, "Invalid query.");
 	int id = query.GetInteger(0);
 	CS::CreditShopItem * csItem = g_CSManager.GetItem(id);
+	g_CharacterManager.GetThread("SimulatorThread::MarketReload");
 	if(csItem == NULL) {
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "No such item.");
 	}
@@ -11477,6 +11478,8 @@ int SimulatorThread :: handle_query_item_market_buy(void)
 		if(sendSlot == NULL)
 			return PrepExt_QueryResponseError(SendBuf, query.ID, "Failed to add item to inventory.");
 
+		g_CharacterManager.GetThread("Simulator::MarketBuy");
+
 		if(csItem->mPriceCurrency == Currency::COPPER) {
 			creatureInst->css.copper -= csItem->mPriceAmount;
 			creatureInst->SendStatUpdate(STAT::COPPER);
@@ -11486,10 +11489,16 @@ int SimulatorThread :: handle_query_item_market_buy(void)
 			creatureInst->SendStatUpdate(STAT::CREDITS);
 		}
 
-		// TODO for quantity limited items, decrease quantities and save
+		if(csItem->mQuantityLimit > 0) {
+			csItem->mQuantitySold++;
+			g_CSManager.SaveItem(csItem);
+		}
+
 		int wpos = 0;
 		wpos += AddItemUpdate(&SendBuf[wpos], Aux2, sendSlot);
 		wpos += PrepExt_QueryResponseString(&SendBuf[wpos], query.ID, "OK");
+
+		g_CharacterManager.ReleaseThread();
 
 		return wpos;
 	}
@@ -11500,6 +11509,75 @@ int SimulatorThread :: handle_query_item_market_reload(void)
 	g_CSManager.LoadItems();
 	g_CharacterManager.ReleaseThread();
 	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
+}
+
+int SimulatorThread :: handle_query_item_market_edit(void)
+{
+	if(query.args.size() < 1)
+		return PrepExt_QueryResponseError(SendBuf, query.ID, "Invalid query.");
+
+	if(!CheckPermissionSimple(Perm_Account, Permission_Sage))
+			return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
+
+	g_Log.AddMessageFormat("REMOVEME! op: %s  %d", query.GetString(0), query.args.size() );
+
+	if(strcmp(query.GetString(0), "DELETE") == 0 && query.args.size() > 1) {
+		int id = query.GetInteger(1);
+		CS::CreditShopItem *item = g_CSManager.GetItem(id);
+		if(item == NULL)
+			return PrepExt_QueryResponseError(SendBuf, query.ID, "Invalid item.");
+		else {
+			// TODO remove
+			if(g_CSManager.RemoveItem(id)) {
+				g_Log.AddMessageFormat("Removed credit shop item %d", item->mId);
+				return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
+			}
+			return PrepExt_QueryResponseError(SendBuf, query.ID, "Failed to remove.");
+		}
+	}
+	else if(query.args.size() > 22) {
+		CS::CreditShopItem * csItem;
+		bool isNew = strcmp(query.GetString(0), "NEW") == 0;
+		if(isNew) {
+			csItem = new CS::CreditShopItem();
+			csItem->mId = g_CSManager.nextMarketItemID++;
+			SessionVarsChangeData.AddChange();
+			Util::SafeFormat(Aux3, sizeof(Aux3), "Created market csItem %d", csItem->mId);
+		}
+		else {
+			csItem = g_CSManager.GetItem(query.GetInteger(0));
+			if(csItem == NULL)
+				return PrepExt_QueryResponseError(SendBuf, query.ID, "Invalid item.");
+			Util::SafeFormat(Aux3, sizeof(Aux3), "Save market csItem %d", csItem->mId);
+		}
+		csItem->mTitle = query.GetString(2);
+		csItem->mDescription = query.GetString(4);
+		csItem->mCategory = Category::GetIDByName(query.GetString(6));
+		csItem->mStatus = Status::GetIDByName(query.GetString(8));
+		Util::ParseDate(query.GetString(10), csItem->mStartDate);
+		Util::ParseDate(query.GetString(12), csItem->mEndDate);
+		csItem->mPriceAmount = query.GetInteger(14);
+		csItem->mPriceCurrency = Currency::GetIDByName(query.GetString(16));
+		csItem->mQuantityLimit = query.GetInteger(18);
+		csItem->mQuantitySold = query.GetInteger(20);
+		csItem->ParseItemProto(query.GetString(22));
+
+		// Check the item
+		ItemDef * item= g_ItemManager.GetSafePointerByID(csItem->mItemId);
+		if(item == NULL) {
+			if(isNew)
+				delete csItem;
+			return PrepExt_QueryResponseError(SendBuf, query.ID, "No such item!");
+		}
+		if(csItem->mTitle.compare(item->mDisplayName) == 0)
+			csItem->mTitle = "";
+
+		g_CSManager.SaveItem(csItem);
+		g_CSManager.mItems[csItem->mId] = csItem;
+		g_Log.AddMessageFormat("Created credit shop csItem %d", csItem->mId);
+		return PrepExt_QueryResponseString(SendBuf, query.ID, Aux3);
+	}
+	return PrepExt_QueryResponseError(SendBuf, query.ID, "Invalid sub-query.");
 }
 
 int SimulatorThread :: handle_query_item_market_list(void)
@@ -11527,8 +11605,10 @@ int SimulatorThread :: handle_query_item_market_list(void)
 
 			sprintf(Aux1, "%d", it->second->mId);
 			wpos += PutStringUTF(&SendBuf[wpos], Aux1);
-
-			sprintf(Aux1, "%s", it->second->mTitle.c_str());
+			if(it->second->mTitle.size() == 0)
+				sprintf(Aux1, "%s", item->mDisplayName.c_str());
+			else
+				sprintf(Aux1, "%s", it->second->mTitle.c_str());
 			wpos += PutStringUTF(&SendBuf[wpos], Aux1);
 
 			sprintf(Aux1, "%s", it->second->mDescription.c_str());
@@ -11561,7 +11641,7 @@ int SimulatorThread :: handle_query_item_market_list(void)
 			sprintf(Aux1, "%d", it->second->mQuantitySold);
 			wpos += PutStringUTF(&SendBuf[wpos], Aux1);
 
-			sprintf(Aux1, "%d:0:%d", it->second->mItemId, it->second->mItemAmount);
+			sprintf(Aux1, "%d:%d:%d:%d", it->second->mItemId, it->second->mLookId, it->second->mIv1, it->second->mIv2);
 			wpos += PutStringUTF(&SendBuf[wpos], Aux1);
 
 			count++;

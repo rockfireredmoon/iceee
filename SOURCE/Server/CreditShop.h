@@ -8,7 +8,6 @@
 #include <stdarg.h>
 #include "CommonTypes.h"
 
-
 namespace Category
 {
 	enum
@@ -74,19 +73,31 @@ public:
 	int mQuantityLimit;
 	int mQuantitySold;
 	int mItemId;
-	int mItemAmount;
+	int mLookId;
+	int mIv1;
+	int mIv2;
+
+	void ParseItemProto(std::string proto);
+
+//	this.mItemProtoEntry.setText("item" + defId + ":" + (lookId != defId ? lookId : 0) + ":" + itemID.mItemData.mIv1 + ":" + itemID.mItemData.mIv2);
 	
 };
 
 class CreditShopManager
 {
 public:
+	int nextMarketItemID;
+
 	CreditShopManager();
 	~CreditShopManager();
 	std::map<int, CreditShopItem*> mItems;
 	CreditShopItem* LoadItem(int id);
 	int LoadItems(void);
 	CreditShopItem* GetItem(int id);
+	bool RemoveItem(int id);
+	std::string GetPath(int id);
+	bool SaveItem(CreditShopItem * item);
+
 };
 
 } //namespace CS

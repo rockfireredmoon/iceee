@@ -150,6 +150,7 @@ namespace Util
 	void SanitizeClientString(char *string);
 	void RemoveStringsFrom(const char *search, std::string& operativeString);
 	void ToLowerCase(std::string &input);
+	bool HasBeginning(std::string const &fullString, std::string const &ending);
 	bool HasEnding (std::string const &fullString, std::string const &ending);
 	void TrimWhitespace(std::string &modify);
 	float StringToFloat(const std::string &str);

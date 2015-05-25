@@ -175,6 +175,9 @@ struct CharacterStatSet
 	short hide_nameboard;
 	short hide_minimap;
 
+	//ICEEE
+	short credit_drops;
+
 	CharacterStatSet();
 	void CopyFrom(CharacterStatSet *source);
 	void Clear(void);
@@ -398,6 +401,9 @@ namespace STAT
 
 	//New ones found in 8.8, not sure about between versions
 	HIDE_MINIMAP             = 159,
+
+	//Credit drops
+	CREDIT_DROPS             = 160
 	};
 }
 
@@ -561,8 +567,8 @@ extern const int MAX_LEVEL;
 extern short LevelBaseStats[71][3];
 extern short ProfBaseStats[6][5];
 
-const int NumStats = 125;
-extern StatDefinition StatList[125];
+const int NumStats = 126;
+extern StatDefinition StatList[126];
 
 int GetStatIndex(short StatID);
 int GetStatIndexByName(const char *name);

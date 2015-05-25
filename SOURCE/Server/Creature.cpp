@@ -2676,6 +2676,32 @@ void CreatureInstance :: ProcessDeath(void)
 
 		CreateLoot(highestLev);
 
+		// Calculate how many credits should be awarded if the creature 'drops' them.
+		int credits = 0;
+		char buf[256];
+		if(css.credit_drops > 0) {
+			double totalPlayerLevel = 0;
+			double alivePlayers = 0;
+			for(size_t i = 0; i < attackerList.size(); i++)
+			{
+				CreatureInstance *attacker = attackerList[i].ptr;
+				if(attacker->HasStatus(StatusEffects::DEAD) == false) {
+					totalPlayerLevel += attacker->css.level;
+					alivePlayers++;
+				}
+			}
+			int avgPlayerLevel = (int)ceil(totalPlayerLevel / alivePlayers);
+			int levelDiff = ( css.level - avgPlayerLevel ) + 1;
+			credits = levelDiff * css.rarity * alivePlayers;
+			if(credits == 1)
+				Util::SafeFormat(buf, sizeof(buf), "Your party earned 1 credit each");
+			else if(credits > 1)
+				Util::SafeFormat(buf, sizeof(buf), "Your party earned %d credits each", credits);
+
+			g_Log.AddMessageFormat("This mob drops credits. The team earned %d (average player level %d, difference %d, alive %d, total %d)", credits, avgPlayerLevel, levelDiff, alivePlayers, totalPlayerLevel);
+
+		}
+
 		for(size_t i = 0; i < attackerList.size(); i++)
 		{	
 			//ResolveAttackers() performs creature lookups, so the pointer is valid.
@@ -2695,6 +2721,12 @@ void CreatureInstance :: ProcessDeath(void)
 						exp = 1;
 
 				attacker->AddExperience(exp);
+				if(credits > 0) {
+					attacker->AddCredits(credits);
+					int wpos = PrepExt_SendInfoMessage(GSendBuf, buf, INFOMSG_INFO);
+					attacker->simulatorPtr->AttemptSend(GSendBuf, wpos);
+				}
+
 				if(attackerList[i].attacked == 1)
 					attacker->AddHeroismForKill(css.level, css.rarity);
 			}
@@ -6312,6 +6344,17 @@ void CreatureInstance :: AddValour(int GuildDefID, int amount)
 
 }
 
+void CreatureInstance :: AddCredits(int amount)
+{
+	if(actInst == NULL)
+	{
+		g_Log.AddMessageFormat("[ERROR] AddCredits() active instance is NULL.");
+		return;
+	}
+	css.credits += amount;
+	if(serverFlags & ServerFlags::IsPlayer)
+		SendStatUpdate(STAT::CREDITS);
+}
 
 void CreatureInstance :: AddExperience(int amount)
 {

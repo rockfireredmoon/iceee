@@ -2608,6 +2608,10 @@ void TrimWhitespace(std::string &modify)
 		modify.erase(pos + 1, modify.length());
 }
 
+bool HasBeginning (std::string const &fullString, std::string const &beginning) {
+	return fullString.size() >= beginning.size() ? fullString.substr(0, beginning.size()) == beginning : false;
+}
+
 bool HasEnding (std::string const &fullString, std::string const &ending) {
     if (fullString.length() >= ending.length()) {
         return (0 == fullString.compare (fullString.length() - ending.length(), ending.length(), ending));

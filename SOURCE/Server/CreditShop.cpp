@@ -103,19 +103,85 @@ CreditShopItem::CreditShopItem() {
 	mTitle = "";
 	mDescription = "";
 	mItemId = 0;
-	mItemAmount = 0;
+	mLookId = 0;
+	mIv1 = 0;
+	mIv2 = 0;
+}
+CreditShopItem::~CreditShopItem() {}
+
+void CreditShopItem::ParseItemProto(std::string proto) {
+
+	std::vector<std::string> p;
+	Util::Split(proto.c_str(), ":", p);
+	if(Util::HasBeginning(proto, "item")) {
+		proto = proto.substr(0, 4);
+	}
+	if(p.size() > 0) {
+		mItemId = atoi(p[0].c_str());
+		if(p.size() > 1) {
+			mLookId = atoi(p[1].c_str());
+			if(p.size() > 2) {
+				mIv1 = atoi(p[2].c_str());
+				if(p.size() > 3) {
+					mIv2 = atoi(p[3].c_str());
+				}
+			}
+		}
+	}
 }
 
 CreditShopManager::CreditShopManager() {
+	nextMarketItemID = 1;
 }
 
 CreditShopManager::~CreditShopManager() {
 }
 
+bool CreditShopManager::SaveItem(CreditShopItem * item) {
+	std::string path = GetPath(item->mId);
+	g_Log.AddMessageFormat("Saving credit shop item to %s.", path.c_str());
+	FILE *output = fopen(path.c_str(), "wb");
+	if (output == NULL) {
+		g_Log.AddMessageFormat("[ERROR] Saving petition could not open: %s",
+				path.c_str());
+		return false;
+	}
+
+	fprintf(output, "[ENTRY]\r\n");
+	if(item->mTitle.compare("") != 0)
+		fprintf(output, "Title=%s\r\n", item->mTitle.c_str());
+	if(item->mDescription.compare("") != 0)
+		fprintf(output, "Description=%s\r\n", item->mDescription.c_str());
+	if(item->mStartDate > 0)
+		fprintf(output, "BeginDate=%s\r\n", Util::FormatDate(&item->mStartDate).c_str());
+	if(item->mEndDate > 0)
+		fprintf(output, "EndDate=%s\r\n", Util::FormatDate(&item->mEndDate).c_str());
+	fprintf(output, "PriceCurrency=%s\r\n", Currency::GetNameByID(item->mPriceCurrency));
+	fprintf(output, "PriceAmount=%lu\r\n", item->mPriceAmount);
+	fprintf(output, "ItemID=%d\r\n", item->mItemId);
+	if(item->mIv1 > 0)
+		fprintf(output, "Iv1=%d\r\n", item->mIv1);
+	if(item->mIv2 > 0)
+		fprintf(output, "Iv2=%d\r\n", item->mIv2);
+	if(item->mLookId > 0)
+		fprintf(output, "LookId=%d\r\n", item->mLookId);
+	fprintf(output, "Category=%s\r\n", Category::GetNameByID(item->mCategory));
+	fprintf(output, "Status=%s\r\n", Status::GetNameByID(item->mStatus));
+	if(item->mQuantityLimit > 0)
+		fprintf(output, "QuantityLimit=%d\r\n", item->mQuantityLimit);
+	if(item->mQuantitySold > 0)
+		fprintf(output, "QuantitySold=%d\r\n", item->mQuantitySold);
+
+	fprintf(output, "\r\n");
+
+	fflush(output);
+	fclose(output);
+
+	return true;
+}
+
 CreditShopItem * CreditShopManager::LoadItem(int id) {
-	char buf[128];
-	Util::SafeFormat(buf, sizeof(buf), "CreditShop/%d.txt", id);
-	Platform::FixPaths(buf);
+	const char * buf = GetPath(id).c_str();
 	if (!Platform::FileExists(buf)) {
 		g_Log.AddMessageFormat("No file for CS item [%s]", buf);
 		return NULL;
@@ -160,8 +226,12 @@ CreditShopItem * CreditShopManager::LoadItem(int id) {
 				item->mPriceAmount = lfr.BlockToIntC(1);
 			else if (strcmp(lfr.SecBuffer, "ITEMID") == 0)
 				item->mItemId = lfr.BlockToIntC(1);
-			else if (strcmp(lfr.SecBuffer, "ITEMAMOUNT") == 0)
-				item->mItemAmount = lfr.BlockToIntC(1);
+			else if (strcmp(lfr.SecBuffer, "ITEMAMOUNT") == 0 || strcmp(lfr.SecBuffer, "IV1") == 0)
+				item->mIv1 = lfr.BlockToIntC(1);
+			else if (strcmp(lfr.SecBuffer, "IV2") == 0)
+				item->mIv2 = lfr.BlockToIntC(1);
+			else if (strcmp(lfr.SecBuffer, "LOOKID") == 0)
+				item->mLookId = lfr.BlockToIntC(1);
 			else if (strcmp(lfr.SecBuffer, "CATEGORY") == 0)
 				item->mCategory =Category::GetIDByName(lfr.BlockToStringC(1, 0));
 			else if (strcmp(lfr.SecBuffer, "STATUS") == 0)
@@ -181,8 +251,42 @@ CreditShopItem * CreditShopManager::LoadItem(int id) {
 	return item;
 }
 
+
+bool CreditShopManager::RemoveItem(int id) {
+	const char * path = GetPath(id).c_str();
+	if (!Platform::FileExists(path)) {
+		g_Log.AddMessageFormat("No file for CS item [%s] to remove", path);
+		return false;
+	}
+	std::map<int, CreditShopItem*>::iterator it = mItems.find(id);
+	if(it != mItems.end()) {
+		delete it->second;
+		mItems.erase(it);
+	}
+	char buf[128];
+	Util::SafeFormat(buf, sizeof(buf), "CreditShop/%d.del", id);
+	Platform::FixPaths(buf);
+	if(!Platform::FileExists(buf) || remove(buf) == 0) {
+		if(!rename(path, buf) == 0) {
+			g_Log.AddMessageFormat("Failed to remove credit shop item %d", id);
+			return false;
+		}
+	}
+	return true;
+}
+
+std::string CreditShopManager::GetPath(int id) {
+	char buf[128];
+	Util::SafeFormat(buf, sizeof(buf), "CreditShop/%d.txt", id);
+	Platform::FixPaths(buf);
+	return buf;
+}
+
 int CreditShopManager::LoadItems(void) {
+	for(std::map<int, CreditShopItem*>::iterator it = mItems.begin(); it != mItems.end(); ++it)
+		delete it->second;
 	mItems.clear();
+
 	Platform_DirectoryReader r;
 	std::string dir = r.GetDirectory();
 	r.SetDirectory("CreditShop");

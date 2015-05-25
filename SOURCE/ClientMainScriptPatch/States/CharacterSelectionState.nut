@@ -1165,15 +1165,21 @@ class States.CharacterSelectionState extends State
 		@param - slider - the slider for the body size when it gets passed in
 	*/
 	function onSliderUpdated( slider )	{
-		local number = slider.getValue();
-
-		if (mNewAppearance && ("sz" in mNewAppearance) && mNewAppearance.sz == number)
-			return;
-
-		this.alterAppearance({
-			sz = number
-		});
-		this.mPaperDoll.setScale(mDefaultSizeMultiplier * number);
+		if(slider == mEarSlider) {
+		}
+		else if(slider == mTailSlider) {
+		}
+		else {		
+			local number = slider.getValue();
+	
+			if (mNewAppearance && ("sz" in mNewAppearance) && mNewAppearance.sz == number)
+				return;
+	
+			this.alterAppearance({
+				sz = number
+			});
+			this.mPaperDoll.setScale(mDefaultSizeMultiplier * number);
+		}
 	}
 	
 	/** Creates the initial clothing and name screen */
@@ -1460,7 +1466,7 @@ class States.CharacterSelectionState extends State
 		earsLabel.getLayoutManager().setAlignment("center");
 		mOtherDetails.add(earsLabel);
 		
-		mEarSlider = GUI.Slider(this.gHORIZONTAL_SLIDER, 0, 200, 2);
+		mEarSlider = GUI.Slider(this.gHORIZONTAL_SLIDER, 0, 200, 1);
 		mEarSlider.addChangeListener(this);
 		mEarSlider.setValue(100);		
 		mOtherDetails.add(mEarSlider);
@@ -1469,7 +1475,7 @@ class States.CharacterSelectionState extends State
 		tailLabel.getLayoutManager().setAlignment("center");
 		mOtherDetails.add(tailLabel);
 		
-		mTailSlider = GUI.Slider(this.gHORIZONTAL_SLIDER, 0, 200, 2);
+		mTailSlider = GUI.Slider(this.gHORIZONTAL_SLIDER, 0, 200, 1);
 		mTailSlider.addChangeListener(this);
 		mTailSlider.setValue(100);		
 		mOtherDetails.add(mTailSlider);
