@@ -1,136 +1,137 @@
 [ENTRY]
 ID=10000095
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=52792,875,77670
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=59
-sceneryName=generated_spawn
 spawnPackage=z9_eur_gen_Mikki_Sootbellower_1081
 
 [ENTRY]
 ID=10000096
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=52764,875,77920
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=89
-sceneryName=generated_spawn
 spawnPackage=z9_eur_gen_Boomslang_Skye_1084
 
 [ENTRY]
 ID=10000097
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=52760,875,77733
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=25
-sceneryName=generated_spawn
 spawnPackage=z9_eur_gen_Auryn_Willowbourne_1080
 
 [ENTRY]
 ID=10000126
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=52885,708,77737
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=242
-sceneryName=generated_spawn
 spawnPackage=z9_eur_gen_Matthew_Ravensheen_1106
 
 [ENTRY]
 ID=10000128
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=52936,875,77670
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=246
-sceneryName=generated_spawn
 spawnPackage=z9_eur_gen_Anom_Ghostpaw_1086
 
 [ENTRY]
 ID=10000129
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=52635,695,77737
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=38
-sceneryName=generated_spawn
 spawnPackage=z9_eur_gen_Morrigan_Shadowstar_1087
 
 [ENTRY]
 ID=10000303
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=52970,875,77652
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=36
-sceneryName=generated_spawn
 spawnPackage=z9_eur_gen_Bounty_Board_2829
 
 [ENTRY]
 ID=10000304
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=52755,700,77888
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=110
-sceneryName=generated_spawn
 spawnPackage=z9_eur_gen_Bounty_Board_2830
 
 [ENTRY]
 ID=10000305
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=52970,710,77709
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=24
-sceneryName=generated_spawn
 spawnPackage=z9_eur_gen_Bounty_Board_2831
 
 [ENTRY]
 ID=10000324
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=52731,699,77877
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=46
-sceneryName=generated_spawn
 spawnPackage=z9_eur_gen_Bounty_Chest__Ironbirch_Camp_2870
 
 [ENTRY]
 ID=10000325
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=52984,875,77634
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=243
-sceneryName=generated_spawn
 spawnPackage=z9_eur_gen_Bounty_Chest__Ironbirch_Camp_2870
 
 [ENTRY]
 ID=10000328
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=52987,710,77695
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=219
-sceneryName=generated_spawn
 spawnPackage=z9_eur_gen_Bounty_Chest__Ironbirch_Camp_2870
 
 [ENTRY]
 ID=10000383
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=53039,875,77835
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=179
-sceneryName=generated_spawn
 spawnPackage=z9_eur_gen_Emilio_Verkos_1495
 
 [ENTRY]
 ID=151018105
 Asset=Prop-Forest_Tree5
+Name=Untitled
 Pos=52959.5,720.811,77614
 Orient=0,0.744643,0,0.667463
 Scale=1.65,1.65,1.65
@@ -139,6 +140,7 @@ Flags=1
 [ENTRY]
 ID=151018107
 Asset=Prop-Ground_Plant1#Prop-Ground_Plant1
+Name=Untitled
 Pos=52583.2,625.494,77475
 Orient=0,0,0,1
 Scale=6.35,6.35,6.35
@@ -147,6 +149,7 @@ Flags=1
 [ENTRY]
 ID=151018108
 Asset=Prop-Ground_Plant2#Prop-Ground_Plant2
+Name=Untitled
 Pos=53150.9,714.283,77670
 Orient=0,0,0,1
 Scale=5.875,5.875,5.875
@@ -155,6 +158,7 @@ Flags=1
 [ENTRY]
 ID=151018109
 Asset=Prop-Ground_Plant3#Prop-Ground_Plant3
+Name=Untitled
 Pos=52818.6,684.205,77604
 Orient=0,0,0,1
 Scale=6.45,6.45,6.45
@@ -163,6 +167,7 @@ Flags=1
 [ENTRY]
 ID=151018110
 Asset=Prop-Bush-Large1#Prop-Bush-Large1
+Name=Untitled
 Pos=52528.1,634.681,77504
 Orient=-0.124519,-0.0495893,-0.00623115,0.990958
 Scale=2.85,2.85,2.85
@@ -171,6 +176,7 @@ Flags=1
 [ENTRY]
 ID=151018111
 Asset=Prop-Bush-Large2#Prop-Bush-Large2
+Name=Untitled
 Pos=52835,682.037,77566
 Orient=0,0,0,1
 Scale=2.625,2.625,2.625
@@ -179,6 +185,7 @@ Flags=1
 [ENTRY]
 ID=151018113
 Asset=Prop-Bush-Med1#Prop-Bush-Med1
+Name=Untitled
 Pos=52853.9,702.54,77724
 Orient=0,0,0,1
 Scale=2.5,2.5,2.5
@@ -187,6 +194,7 @@ Flags=1
 [ENTRY]
 ID=151018118
 Asset=Prop-Bush-Small3#Prop-Bush-Small3
+Name=Untitled
 Pos=53132,740.847,77864
 Orient=0,-0.271547,0,0.962425
 Scale=3.075,3.075,3.075
@@ -195,6 +203,7 @@ Flags=1
 [ENTRY]
 ID=151018122
 Asset=Prop-Boulder4
+Name=Untitled
 Pos=53238.3,726.837,77859
 Orient=0,0,0,1
 Scale=2.1,2.1,2.1
@@ -203,6 +212,7 @@ Flags=1
 [ENTRY]
 ID=151018123
 Asset=Prop-Boulder5
+Name=Untitled
 Pos=52555.5,626.817,77488
 Orient=0,0,0,1
 Scale=1.55,1.55,1.55
@@ -211,6 +221,7 @@ Flags=1
 [ENTRY]
 ID=151018124
 Asset=Prop-Vine_Hanging#Prop-Vine_Hanging
+Name=Untitled
 Pos=53075.4,1056.86,77707
 Orient=0,0,0,1
 Scale=1,1,1
@@ -219,6 +230,7 @@ Flags=1
 [ENTRY]
 ID=151018127
 Asset=Prop-Bush-Large3
+Name=Untitled
 Pos=53007.3,644.335,77324
 Orient=0,-0.40319,0,0.915116
 Scale=2.55,2.55,2.55
@@ -227,6 +239,7 @@ Flags=1
 [ENTRY]
 ID=151018139
 Asset=Prop-Ground_Accents1#Prop-Ground_Flower2
+Name=Untitled
 Pos=52554.9,669.904,77636
 Orient=-0.114747,0,0,0.993395
 Scale=2.125,2.125,2.125
@@ -235,6 +248,7 @@ Flags=1
 [ENTRY]
 ID=151018140
 Asset=Prop-Ground_Accents1#Prop-Ground_Flower3
+Name=Untitled
 Pos=52789.5,708.548,77969
 Orient=0,0,0,1
 Scale=1.925,1.925,1.925
@@ -243,6 +257,7 @@ Flags=1
 [ENTRY]
 ID=151018244
 Asset=Prop-Mushroom_Trees#Prop-Mushroom_Tree1
+Name=Untitled
 Pos=53085.1,727.912,77866
 Orient=0.0679667,-0.552201,-0.0925832,0.825762
 Scale=1.175,1.175,1.175
@@ -251,6 +266,7 @@ Flags=1
 [ENTRY]
 ID=151018246
 Asset=Prop-Giant_Mushroom#Prop-Giant_Mushroom-Glowing1
+Name=Untitled
 Pos=53110,737.191,77845
 Orient=0,0.859862,0,0.510526
 Scale=1.625,1.625,1.625
@@ -259,6 +275,7 @@ Flags=1
 [ENTRY]
 ID=151018270
 Asset=Prop-Giant_Mushroom#Prop-Giant_Mushroom-Glowing2
+Name=Untitled
 Pos=52564.7,682.357,77669
 Orient=0,0.859862,0,0.510526
 Scale=0.925,0.925,0.925
@@ -267,6 +284,7 @@ Flags=1
 [ENTRY]
 ID=151018271
 Asset=Effects#Par-FireFlies1
+Name=Untitled
 Pos=52729.9,710.182,77462
 Orient=0,0,0,1
 Scale=1,1,1
@@ -275,6 +293,7 @@ Flags=1
 [ENTRY]
 ID=151018272
 Asset=Par-FireFlies1
+Name=Untitled
 Pos=52704.7,783.312,77780
 Orient=0,0,0,1
 Scale=1,1,1
@@ -283,6 +302,7 @@ Flags=1
 [ENTRY]
 ID=151018273
 Asset=Par-FireFlies1
+Name=Untitled
 Pos=53090.1,778.125,77990
 Orient=0,0,0,1
 Scale=1,1,1
@@ -291,6 +311,7 @@ Flags=1
 [ENTRY]
 ID=151018277
 Asset=Prop-Bush-Med2
+Name=Untitled
 Pos=52514.1,669.338,77620
 Orient=0,-0.640385,0,0.768054
 Scale=2.325,2.325,2.325
@@ -299,6 +320,7 @@ Flags=1
 [ENTRY]
 ID=151018278
 Asset=Prop-Giant_Mushroom#Prop-Giant_Mushroom-Glowing3
+Name=Untitled
 Pos=52516.8,677.485,77655
 Orient=0,0.974971,0,-0.22233
 Scale=1.225,1.225,1.225
@@ -307,6 +329,7 @@ Flags=1
 [ENTRY]
 ID=151018279
 Asset=Prop-Ground_Plant1
+Name=Untitled
 Pos=52601,618.142,77463
 Orient=-0.000745554,-0.860525,0.203374,0.467049
 Scale=3.975,3.975,3.975
@@ -315,6 +338,7 @@ Flags=1
 [ENTRY]
 ID=151018280
 Asset=Prop-Mushroom_Trees#Prop-Mushroom_Tree2
+Name=Untitled
 Pos=52840.8,699.696,77687
 Orient=0,-0.813415,0,0.581683
 Scale=2.2,2.2,2.2
@@ -323,6 +347,7 @@ Flags=1
 [ENTRY]
 ID=151018281
 Asset=Prop-Mushroom_Trees#Prop-Mushroom_Tree3
+Name=Untitled
 Pos=52836.6,697.777,77680
 Orient=0,-0.893464,0,0.449135
 Scale=1.575,1.575,1.575
@@ -331,6 +356,7 @@ Flags=1
 [ENTRY]
 ID=151018282
 Asset=Prop-Ground_Plant3
+Name=Untitled
 Pos=52560.8,666.667,77648
 Orient=0,0,0,1
 Scale=4.9,4.9,4.9
@@ -339,6 +365,7 @@ Flags=1
 [ENTRY]
 ID=151018299
 Asset=Prop-Mushroom_Trees#Prop-Mushroom_Tree2
+Name=Untitled
 Pos=53082.1,726.211,77863
 Orient=0.14897,-0.985671,0.0118237,-0.0782323
 Scale=0.775,0.775,0.775
@@ -347,6 +374,7 @@ Flags=1
 [ENTRY]
 ID=151018306
 Asset=Effects#Par-Falling_Leaves2-Emitter
+Name=Untitled
 Pos=52928.9,709.379,77745
 Orient=0,0,0,1
 Scale=1,1,1
@@ -355,6 +383,7 @@ Flags=1
 [ENTRY]
 ID=151018310
 Asset=Prop-Water_Plants#Prop-Water_Plant1
+Name=Untitled
 Pos=53212.4,731.018,77937
 Orient=0,0,0,1
 Scale=1,1,1
@@ -363,6 +392,7 @@ Flags=1
 [ENTRY]
 ID=151018311
 Asset=Prop-Swamp-Rushes1#Prop-Swamp-Rushes1
+Name=Untitled
 Pos=53205.1,734.013,77889
 Orient=0,0.822049,0,0.569417
 Scale=2.1,2.1,2.1
@@ -371,6 +401,7 @@ Flags=1
 [ENTRY]
 ID=151018544
 Asset=Prop-Swamp-Rushes1
+Name=Untitled
 Pos=53215.4,732.369,77909
 Orient=0,0.492535,0,0.870293
 Scale=1.325,1.325,1.325
@@ -379,6 +410,7 @@ Flags=1
 [ENTRY]
 ID=151018551
 Asset=Prop-Bush-Swamp_Med3#Prop-Bush-Swamp_Med3
+Name=Untitled
 Pos=53195.7,734.591,77865
 Orient=0,0,0,1
 Scale=2.15,2.15,2.15
@@ -387,6 +419,7 @@ Flags=1
 [ENTRY]
 ID=151018554
 Asset=Prop-Bush-Swamp_Med2#Prop-Bush-Swamp_Med2
+Name=Untitled
 Pos=53074.9,727.011,77850
 Orient=0,0,0,1
 Scale=1,1,1
@@ -395,6 +428,7 @@ Flags=1
 [ENTRY]
 ID=151018567
 Asset=Prop-Water_Plants#Prop-Lily_Pads2
+Name=Untitled
 Pos=53227.3,730.6,77923
 Orient=0,-0.789504,0,0.613746
 Scale=1.9,1.9,1.9
@@ -403,6 +437,7 @@ Flags=1
 [ENTRY]
 ID=151018569
 Asset=Prop-Ground_Plant1
+Name=Untitled
 Pos=53237.4,746.167,77850
 Orient=0.108964,0.154255,0.132168,0.973069
 Scale=6.35,6.35,6.35
@@ -411,6 +446,7 @@ Flags=1
 [ENTRY]
 ID=151018574
 Asset=Prop-Bush-Small3#Prop-Bush-Small3
+Name=Untitled
 Pos=53004.6,710.446,77647
 Orient=0,0,0,1
 Scale=3.025,3.025,3.025
@@ -419,6 +455,7 @@ Flags=1
 [ENTRY]
 ID=151018608
 Asset=Prop-Giant_Mushroom-Glowing1
+Name=Untitled
 Pos=52930.9,640.014,77273
 Orient=0,-0.152806,0,-0.988256
 Scale=1.2,1.2,1.2
@@ -427,6 +464,7 @@ Flags=1
 [ENTRY]
 ID=151018609
 Asset=Prop-Giant_Mushroom#Prop-Giant_Mushroom-Glowing3
+Name=Untitled
 Pos=52965.1,640.764,77277
 Orient=0.017534,-0.151797,0.113399,-0.981729
 Scale=0.6,0.6,0.6
@@ -435,6 +473,7 @@ Flags=1
 [ENTRY]
 ID=151018612
 Asset=Prop-Mushroom_Tree3
+Name=Untitled
 Pos=52835.8,669.234,77523
 Orient=0,-0.893464,0,0.449135
 Scale=2.025,2.025,2.025
@@ -443,6 +482,7 @@ Flags=1
 [ENTRY]
 ID=151018613
 Asset=Prop-Mushroom_Tree3
+Name=Untitled
 Pos=52829.7,662.808,77511
 Orient=0,-0.92896,0,-0.37018
 Scale=1.325,1.325,1.325
@@ -451,6 +491,7 @@ Flags=1
 [ENTRY]
 ID=151018648
 Asset=Prop-Forest_Tree4
+Name=Untitled
 Pos=52706.7,699.225,77956
 Orient=0,-0.677972,0,0.735088
 Scale=1.65,1.65,1.65
@@ -459,6 +500,7 @@ Flags=1
 [ENTRY]
 ID=151018660
 Asset=CL-Platform-Quad#CL-Platform-Quad
+Name=Untitled
 Pos=52834.6,875.199,77763
 Orient=0,-0.29552,0,0.955337
 Scale=1,1,1
@@ -467,6 +509,7 @@ Flags=1
 [ENTRY]
 ID=151018684
 Asset=Prop-Tree_Platforms#Prop-Tree_Platform_Drop_Bridge
+Name=Untitled
 Pos=52938.5,871.894,77948
 Orient=0,-0.747971,0,0.663731
 Scale=1,1,1
@@ -475,6 +518,7 @@ Flags=1
 [ENTRY]
 ID=151018690
 Asset=Prop-Mushroom_Tree1
+Name=Untitled
 Pos=53149.9,734.987,77860
 Orient=0.0679667,-0.552201,-0.0925832,0.825762
 Scale=0.675,0.675,0.675
@@ -483,6 +527,7 @@ Flags=1
 [ENTRY]
 ID=151018692
 Asset=Par-FireFlies1
+Name=Untitled
 Pos=52963.1,917.299,77916
 Orient=0,0,0,1
 Scale=1,1,1
@@ -491,6 +536,7 @@ Flags=1
 [ENTRY]
 ID=151018694
 Asset=Prop-Willow_Tree#Prop-Willow_Tree3
+Name=Untitled
 Pos=53087.6,734.51,77456
 Orient=0,-0.0349937,0,0.999388
 Scale=2.475,2.475,2.475
@@ -499,6 +545,7 @@ Flags=1
 [ENTRY]
 ID=151018696
 Asset=Prop-Boulder3
+Name=Untitled
 Pos=53050.7,646.951,77404
 Orient=0,-0.902268,0,0.431176
 Scale=5.425,5.425,5.425
@@ -507,6 +554,7 @@ Flags=1
 [ENTRY]
 ID=151018701
 Asset=Prop-Low_Boxes#Prop-Garden_Box3
+Name=Untitled
 Pos=52881.5,866.75,77646
 Orient=0,0,0,1
 Scale=1.75,1.75,1.75
@@ -515,6 +563,7 @@ Flags=1
 [ENTRY]
 ID=151018702
 Asset=Prop-Garden_Box
+Name=Untitled
 Pos=52792.5,866.02,77815
 Orient=0,0,0,1
 Scale=2.025,2.025,2.025
@@ -523,6 +572,7 @@ Flags=1
 [ENTRY]
 ID=151018704
 Asset=Prop-Low_Boxes#Prop-Garden_Box2
+Name=Untitled
 Pos=52726.7,875.199,77910
 Orient=0,0.548024,0,0.836463
 Scale=1,1,1
@@ -531,6 +581,7 @@ Flags=1
 [ENTRY]
 ID=151018705
 Asset=Prop-Garden_Box
+Name=Untitled
 Pos=52932.3,867.097,77823
 Orient=0,0,0,1
 Scale=2.025,2.025,2.025
@@ -539,6 +590,7 @@ Flags=1
 [ENTRY]
 ID=151018706
 Asset=Prop-Garden_Box
+Name=Untitled
 Pos=52736.1,866.958,77691
 Orient=0,0,0,1
 Scale=2.025,2.025,2.025
@@ -547,6 +599,7 @@ Flags=1
 [ENTRY]
 ID=151018710
 Asset=Prop-Teddy_Bear#Prop-Teddy_Bear
+Name=Untitled
 Pos=52962.5,875.199,77858
 Orient=0,0,0,1
 Scale=1,1,1
@@ -555,6 +608,7 @@ Flags=1
 [ENTRY]
 ID=151018711
 Asset=Prop-Bush-Large3
+Name=Untitled
 Pos=52795.3,879.141,77822
 Orient=-0.13265,-0.0227703,0.167643,0.976617
 Scale=2.4,2.4,2.4
@@ -563,6 +617,7 @@ Flags=1
 [ENTRY]
 ID=151018713
 Asset=Prop-Bush-Large1#Prop-Bush-Large1
+Name=Untitled
 Pos=52929.7,880.218,77824
 Orient=0,0.00852249,0,0.999964
 Scale=2.325,2.325,2.325
@@ -571,6 +626,7 @@ Flags=1
 [ENTRY]
 ID=151018714
 Asset=Prop-Bush-Swamp_Med3
+Name=Untitled
 Pos=52956.7,880.012,77830
 Orient=0,0,0,1
 Scale=2.15,2.15,2.15
@@ -579,6 +635,7 @@ Flags=1
 [ENTRY]
 ID=151018719
 Asset=Prop-Small_Mushrooms#Prop-Small_Mushroom2
+Name=Untitled
 Pos=52755.9,879.75,77712
 Orient=0,0,0,1
 Scale=1,1,1
@@ -587,6 +644,7 @@ Flags=1
 [ENTRY]
 ID=151018726
 Asset=Prop-Ground_Flower1
+Name=Untitled
 Pos=52728.1,882.974,77911
 Orient=0,0.221553,0,-0.975148
 Scale=1.45,1.45,1.45
@@ -595,6 +653,7 @@ Flags=1
 [ENTRY]
 ID=151018727
 Asset=Prop-Small_Mushrooms#Prop-Small_Mushroom1
+Name=Untitled
 Pos=52820.9,878.812,77812
 Orient=0,0,0,1
 Scale=1,1,1
@@ -603,6 +662,7 @@ Flags=1
 [ENTRY]
 ID=151018728
 Asset=Prop-Bush-Med1
+Name=Untitled
 Pos=52795.9,879.004,77793
 Orient=0,0,0,1
 Scale=1.925,1.925,1.925
@@ -611,6 +671,7 @@ Flags=1
 [ENTRY]
 ID=151018729
 Asset=Prop-Bush-Large1
+Name=Untitled
 Pos=52881.5,878.755,77647
 Orient=0,0.00852249,0,0.999964
 Scale=0.8,0.8,0.8
@@ -619,6 +680,7 @@ Flags=1
 [ENTRY]
 ID=151018732
 Asset=Prop-Flowers-Nasturtium#Prop-Flowers-Nasturtium
+Name=Untitled
 Pos=52720,883.299,77905
 Orient=0,0,0,1
 Scale=1,1,1
@@ -627,6 +689,7 @@ Flags=1
 [ENTRY]
 ID=151018733
 Asset=Prop-Flowers-Dahlia#Prop-Flowers-Dahlia
+Name=Untitled
 Pos=52734.6,883.299,77913
 Orient=0,0,0,1
 Scale=1,1,1
@@ -635,6 +698,7 @@ Flags=1
 [ENTRY]
 ID=151018737
 Asset=Prop-Bird2#Prop-Bird2
+Name=Untitled
 Pos=53016.8,971.436,77855
 Orient=0,0,0,1
 Scale=1,1,1
@@ -642,6 +706,7 @@ Scale=1,1,1
 [ENTRY]
 ID=151018743
 Asset=Prop-Bird2#Prop-Bird2
+Name=Untitled
 Pos=52810.5,779.573,77787
 Orient=0,0.356949,0,0.934124
 Scale=1,1,1
@@ -649,6 +714,7 @@ Scale=1,1,1
 [ENTRY]
 ID=151018747
 Asset=Prop-Bird2#Prop-Bird2
+Name=Untitled
 Pos=52810.5,779.573,77787
 Orient=0,0.237703,0,0.971338
 Scale=1,1,1
@@ -657,6 +723,7 @@ Flags=1
 [ENTRY]
 ID=151018751
 Asset=Prop-Boulder3
+Name=Untitled
 Pos=52511,692.555,77879
 Orient=0,-0.764329,0,0.644826
 Scale=3.45,3.45,3.45
@@ -665,6 +732,7 @@ Flags=1
 [ENTRY]
 ID=151018752
 Asset=Prop-Bush-Med2
+Name=Untitled
 Pos=52552,699.359,77831
 Orient=0,-0.640385,0,0.768054
 Scale=2.325,2.325,2.325
@@ -673,6 +741,7 @@ Flags=1
 [ENTRY]
 ID=151040096
 Asset=Prop-Smithing-Forge#Prop-Smithing-Forge-Large_Stone
+Name=Untitled
 Pos=52738.4,884.019,77690
 Orient=0,0.526943,0,0.849901
 Scale=1.175,1.175,1.175
@@ -681,6 +750,7 @@ Flags=1
 [ENTRY]
 ID=151040097
 Asset=Prop-Anvil
+Name=Untitled
 Pos=52790.6,875.199,77704
 Orient=0,0,0,1
 Scale=1,1,1
@@ -689,6 +759,7 @@ Flags=1
 [ENTRY]
 ID=151040098
 Asset=Prop-Dvergar_Props#Prop-Dvergar_Hammer
+Name=Untitled
 Pos=52791.7,882.142,77705
 Orient=0,-0.333487,0,0.942755
 Scale=1,1,1
@@ -697,6 +768,7 @@ Flags=1
 [ENTRY]
 ID=151040747
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=53078.1,710.425,77624
 Orient=0,0,0,1
 Scale=1,1,1
@@ -707,6 +779,7 @@ link=151040748,1
 [ENTRY]
 ID=151040748
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=52951,711.88,77820
 Orient=0,0,0,1
 Scale=1,1,1
@@ -717,6 +790,7 @@ link=151040749,1
 [ENTRY]
 ID=151040749
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=52724.5,681.166,77677
 Orient=0,0,0,1
 Scale=1,1,1
@@ -727,6 +801,7 @@ link=151040750,1
 [ENTRY]
 ID=151040750
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=52717.5,602.353,77344
 Orient=0,0,0,1
 Scale=1,1,1
@@ -737,6 +812,7 @@ link=151040751,1
 [ENTRY]
 ID=151040751
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=52540.1,545.934,77388
 Orient=0,0,0,1
 Scale=1,1,1
@@ -747,6 +823,7 @@ link=151040752,1
 [ENTRY]
 ID=151040760
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=53175.8,734.455,77903
 Orient=0,-0.932039,0,0.362358
 Scale=1,1,1
@@ -755,6 +832,7 @@ spawnPackage=4_npc_gfo_wanderguards
 [ENTRY]
 ID=151040765
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=52938.9,875.116,77945
 Orient=0,0,0,1
 Scale=1,1,1
@@ -765,6 +843,7 @@ link=151040767,1
 [ENTRY]
 ID=151040767
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=53009.4,875.199,77837
 Orient=0,0,0,1
 Scale=1,1,1
@@ -775,6 +854,7 @@ link=151040769,1
 [ENTRY]
 ID=151040769
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=52951,875.199,77749
 Orient=0,0,0,1
 Scale=1,1,1
@@ -785,6 +865,7 @@ link=151040770,1
 [ENTRY]
 ID=151040770
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=52839.3,875.199,77715
 Orient=0,0,0,1
 Scale=1,1,1
@@ -796,6 +877,7 @@ link=151040780,1
 [ENTRY]
 ID=151040771
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=52716.2,875.199,77765
 Orient=0,-0.29074,0,0.956802
 Scale=1,1,1
@@ -806,6 +888,7 @@ link=151040773,1
 [ENTRY]
 ID=151040773
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=52749.8,875.199,77886
 Orient=0,-0.29074,0,0.956802
 Scale=1,1,1
@@ -816,6 +899,7 @@ link=151040774,1
 [ENTRY]
 ID=151040774
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=52941.3,875.199,77899
 Orient=0.0525976,-0.2903,0.0159826,0.955355
 Scale=1,1,1
@@ -826,10 +910,11 @@ link=151040775,1
 [ENTRY]
 ID=151040780
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=52825,875.199,77742
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=4_npc_gfo_wanderguards
 links_count=1
 link=151040770,1
-spawnPackage=4_npc_gfo_wanderguards
 

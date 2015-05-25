@@ -1,7 +1,7 @@
 [ENTRY]
 Name=Kyshf
 Comment=[Comment here]
-Position=836.0,600.0,777.0
+Position=2132.0,660.0,617.0
 
 [ENTRY]
 Name=Alabaster

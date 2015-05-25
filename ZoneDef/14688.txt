@@ -3,13 +3,13 @@ ID=14688
 ACCOUNTID=1212
 NAME=Grove
 TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
-ENVIRONMENTTYPE=CloudyDay
+ENVIRONMENTTYPE=SwinelandDeadNight
 ShardName=supergrovie
 GroveName=supergrovie
 WarpName=supergrovie1
 DropRateProfile=standard
 Grove=1
-EnvironmentCycle=0
+EnvironmentCycle=1
 BuildPermission=account,1212,0,0,3,3
 DefLoc=2958,260,3821
 
