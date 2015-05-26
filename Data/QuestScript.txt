@@ -525,19 +525,3 @@ require_cdef 1528
 wait_finish
 info "You take a skeletal hand from the chest."
 end
-
-;
-; IceEE Grunes Tal and Swineland quests
-
-:onActivate_821_0
-;require_cdef 1788
-info "The altar starts to shake ..."
-wait 5000
-info "Your creations' stitched limbs start to twitch"
-wait 5000
-wait_finish
-info "It's alive!"
-spawn 151028053
-wait 2000
-info "Uh oh ..."
-end

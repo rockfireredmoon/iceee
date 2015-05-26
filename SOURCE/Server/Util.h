@@ -94,7 +94,7 @@ int PrepExt_SendEmoteControl(char *buffer, int creatureID, int emoteEvent);
 int PrepExt_ModStopSwimFlag(char *buffer);
 int PrepExt_TradeCurrencyOffer(char *buffer, int offeringPlayerID, int tradeAmount);
 int PrepExt_TradeItemOffer(char *buffer, char *convBuf, int offeringPlayerID, std::vector<InventorySlot>& itemList);
-int PrepExt_QuestCompleteMessage(char *buffer, int questID, int objectiveIndex);
+int PrepExt_QuestStatusMessage(char *buffer, int questID, int objectiveIndex, bool complete, std::string message);
 int PrepExt_CreatureEventPortalRequest(char *buffer, int actorID, const char *casterName, const char *locationName);
 int PrepExt_CreatureEventVaultSize(char *buffer, int actorID, int vaultSize);
 int PrepExt_SendEnvironmentUpdateMsg(char *buffer, const char *zoneIDString, ZoneDefInfo *zoneDef, int x, int z);

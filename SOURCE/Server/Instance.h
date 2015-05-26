@@ -257,7 +257,7 @@ public:
 
 	vector<SimulatorThread*> RegSim;
 	list<QuestScript::QuestScriptPlayer> questScriptList;
-	list<QuestScript::QuestNutPlayer*> questNutScriptList;
+	vector<QuestScript::QuestNutPlayer*> questNutScriptList;
 
 	list<int> RemovedProps;
 
@@ -375,6 +375,7 @@ public:
 	void SendLoyaltyAggro(CreatureInstance *instigator, CreatureInstance *target, int loyaltyRadius);
 	void SendLoyaltyLinks(CreatureInstance *instigator, CreatureInstance *target, SceneryObject *spawnPoint);
 	QuestScript::QuestScriptPlayer* GetSimulatorQuestScript(SimulatorThread *simulatorPtr);
+	QuestScript::QuestNutPlayer* GetSimulatorQuestNutScript(SimulatorThread *simulatorPtr);
 	void RunProcessingCycle(void);
 	void UpdateEnvironmentCycle(const char *timeOfDay);
 	bool KillScript();

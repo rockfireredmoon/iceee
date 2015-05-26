@@ -426,9 +426,11 @@ public:
 
 	HSQUIRRELVM vm;
 	NutDef *def; //Pointer to the script definition that this player is executing.
-	bool active; //If true, the script is considered to be running (has not terminated).
+	bool mActive; //If true, the script is considered to be running (has not terminated).
+	bool mHalting; //If true, the script is currently halting (subsequent halts will do nothing).
 	bool mHasScript;
 	bool mExecuting;
+	bool mRunning; //If true, a function call is currently running (will make halts be queued)
 
 	unsigned int long mCalls; // Total number of calls (including initial, events and all external function calls)
 	unsigned int long mGCCounter; // Increased at same times as mCalls, but when it reaches a predefined limit, GC is performed
@@ -445,6 +447,7 @@ public:
 	virtual void RegisterFunctions();
 	void RegisterCoreFunctions(NutPlayer *instance, Sqrat::Class<NutPlayer> *clazz);
 	virtual void HaltDerivedExecution();
+	virtual void HaltedDerived();
 	void HaltExecution();
 	void Initialize(NutDef *defPtr, std::string &errors);
 	bool Tick(void);     //Run a single instruction.

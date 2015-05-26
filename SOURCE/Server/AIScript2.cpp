@@ -46,8 +46,8 @@ void AINutPlayer::Initialize(CreatureInstance *creature, AINutDef *defPtr,
 	NutPlayer::Initialize(defPtr, errors);
 }
 
-void AINutPlayer::HaltDerivedExecution() {
-}
+void AINutPlayer::HaltedDerived() {}
+void AINutPlayer::HaltDerivedExecution() {}
 
 bool AINutPlayer::HasTarget() {
 	return attachedCreature->CurrentTarget.targ != NULL;
@@ -333,7 +333,7 @@ void AINutPlayer::DebugGenerateReport(ReportBuffer &report) {
 	if (def != NULL) {
 		report.AddLine("Name:%s", def->scriptName.c_str());
 	}
-	report.AddLine("active:%d", static_cast<int>(active));
+	report.AddLine("active:%d", static_cast<int>(mActive));
 	report.AddLine(NULL);
 }
 

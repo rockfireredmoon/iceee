@@ -271,6 +271,7 @@ public:
 	virtual ~AppearanceModifier();
 	virtual std::string Modify(std::string source) =0;
 	virtual std::string ModifyEq(std::string source) =0;
+	virtual AppearanceModifier * Clone() =0;
 };
 
 class AbstractAppearanceModifier : public AppearanceModifier {
@@ -281,6 +282,7 @@ public:
 	std::string ModifyEq(std::string source);
 	virtual void ProcessTable(Sqrat::Table *table) =0;
 	virtual void ProcessTableEq(Sqrat::Table *table) =0;
+	virtual AppearanceModifier * Clone() =0;
 private:
 	std::string DoModify(std::string source, bool eq);
 };
@@ -292,6 +294,7 @@ public:
 	~ReplaceAppearanceModifier();
 	std::string Modify(std::string source);
 	std::string ModifyEq(std::string source);
+	AppearanceModifier * Clone();
 };
 
 class NudifyAppearanceModifier : public AppearanceModifier {
@@ -300,6 +303,7 @@ public:
 	~NudifyAppearanceModifier();
 	std::string Modify(std::string source);
 	std::string ModifyEq(std::string source);
+	AppearanceModifier * Clone();
 };
 
 class AddAttachmentModifier : public AbstractAppearanceModifier {
@@ -310,6 +314,7 @@ public:
 	~AddAttachmentModifier();
 	void ProcessTable(Sqrat::Table *table);
 	void ProcessTableEq(Sqrat::Table *table);
+	AppearanceModifier * Clone();
 };
 
 class CreatureInstance

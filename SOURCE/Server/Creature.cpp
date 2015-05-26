@@ -198,6 +198,10 @@ std::string ReplaceAppearanceModifier::ModifyEq(std::string source) {
 	return source;
 }
 
+AppearanceModifier * ReplaceAppearanceModifier::Clone() {
+	return new ReplaceAppearanceModifier(mReplacement);
+}
+
 //
 
 AbstractAppearanceModifier::AbstractAppearanceModifier() {
@@ -280,6 +284,10 @@ void AddAttachmentModifier::ProcessTable(Sqrat::Table *table) {
 void AddAttachmentModifier::ProcessTableEq(Sqrat::Table *table) {
 }
 
+AppearanceModifier * AddAttachmentModifier::Clone() {
+	return new AddAttachmentModifier(mType, mNode);
+}
+
 //
 
 NudifyAppearanceModifier::NudifyAppearanceModifier() {}
@@ -292,6 +300,10 @@ std::string NudifyAppearanceModifier::Modify(std::string source) {
 std::string NudifyAppearanceModifier::ModifyEq(std::string source) {
 	return "{}";
 }
+AppearanceModifier * NudifyAppearanceModifier::Clone() {
+	return new NudifyAppearanceModifier();
+}
+
 
 //**************************************************
 //               CreatureDefinition
@@ -621,8 +633,11 @@ void CreatureInstance :: CopyFrom(CreatureInstance *source)
 	cooldownManager.CopyFrom(source->cooldownManager);
 	buffManager.CopyFrom(source->buffManager);
 
-	appearanceModifiers.assign(source->appearanceModifiers.begin(), source->appearanceModifiers.end());
-	attachments.assign(source->attachments.begin(), source->attachments.end());
+	for(std::vector<AppearanceModifier*>::iterator it = source->appearanceModifiers.begin(); it != source->appearanceModifiers.end(); ++it)
+		appearanceModifiers.push_back((*it)->Clone());
+	for(std::vector<AddAttachmentModifier*>::iterator it = source->attachments.begin(); it != source->attachments.end(); ++it)
+		attachments.push_back(dynamic_cast<AddAttachmentModifier*>((*it)->Clone()));
+
 	LastUseDefID = source->LastUseDefID;
 }
 
@@ -2627,6 +2642,9 @@ void CreatureInstance :: ProcessDeath(void)
 		aiScript->FullReset();
 	}
 
+	CREATURE_SEARCH attackerList;
+	ResolveAttackers(attackerList);
+
 	actInst->RunDeath(this);
 	actInst->EraseIndividualReference(this);
 	ab[0].Clear("CreatureInstance :: ProcessDeath");
@@ -2669,8 +2687,6 @@ void CreatureInstance :: ProcessDeath(void)
 		if(hateProfilePtr != NULL)
 			highestLev = hateProfilePtr->GetHighestLevel();
 
-		CREATURE_SEARCH attackerList;
-		ResolveAttackers(attackerList);
 		if(attackerList.size() > 0)
 			highestLev = GetHighestLevel(attackerList);
 
@@ -3138,6 +3154,20 @@ void CreatureInstance :: CancelPending(void)
 			if(script != NULL)
 				script->active = false;
 
+			QuestScript::QuestNutPlayer *nut = actInst->GetSimulatorQuestNutScript(simulatorPtr);
+			if(nut != NULL) {
+				char buffer[64];
+				Util::SafeFormat(buffer, sizeof(buffer), "on_use_cancel_%d", CreatureDefID);
+				nut->RunFunction(buffer);
+			}
+
+			break;
+		}
+
+		switch(ab[0].abilityID)
+		{
+		case ABILITYID_QUEST_INTERACT_OBJECT:
+		case ABILITYID_QUEST_GATHER_OBJECT:
 		case ABILITYID_INTERACT_OBJECT:
 			int wpos;
 			wpos = 0;
@@ -3192,6 +3222,13 @@ void CreatureInstance :: CancelPending_Ex(ActiveAbilityInfo *ability)
 			script = actInst->GetSimulatorQuestScript(simulatorPtr);
 			if(script != NULL)
 				script->TriggerAbort();
+
+			QuestScript::QuestNutPlayer *nut = actInst->GetSimulatorQuestNutScript(simulatorPtr);
+			if(nut != NULL) {
+				char buffer[64];
+				Util::SafeFormat(buffer, sizeof(buffer), "on_use_abort_%d", CreatureDefID);
+				nut->RunFunction(buffer);
+			}
 
 			//Fall through since all quest/object interactions need to notify the client to
 			//cancel the event timer.
@@ -6670,6 +6707,14 @@ void CreatureInstance :: CheckQuestInteract(int CreatureDefID)
 		QuestScript::QuestScriptPlayer *script = actInst->GetSimulatorQuestScript(simulatorPtr);
 		if(script != NULL)
 			script->TriggerFinished();
+
+		QuestScript::QuestNutPlayer *nut = actInst->GetSimulatorQuestNutScript(simulatorPtr);
+		if(nut != NULL) {
+			char buffer[64];
+			Util::SafeFormat(buffer, sizeof(buffer), "on_use_finish_%d", CreatureDefID);
+			nut->RunFunction(buffer);
+		}
+
 		//actInst->ScriptCallUseFinish(LastUseDefID);
 	}
 }

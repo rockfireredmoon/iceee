@@ -44,12 +44,17 @@ public:
 	virtual void RegisterFunctions();
 	void RegisterQuestFunctions(NutPlayer *instance, Sqrat::DerivedClass<QuestNutPlayer, NutPlayer> *instanceClass);
 	virtual void HaltDerivedExecution();
+	virtual void HaltedDerived();
 	int GetQuestID();
 	void InterruptInteraction();
 
 	// Exposed to scripts
 
 	int GetTarget();
+	int GetSource();
+	bool ResetObjective(int objective);
+	bool Abandon();
+	bool Join(int questID);
 	void Info(const char *message);
 	void UInfo(const char *message);
 	void Effect(const char *effect);

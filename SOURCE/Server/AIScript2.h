@@ -24,6 +24,7 @@ public:
 	void DebugGenerateReport(ReportBuffer &report);
 	void RegisterAIFunctions(NutPlayer *instance, Sqrat::DerivedClass<AINutPlayer, NutPlayer> *clazz);
 	virtual void HaltDerivedExecution();
+	virtual void HaltedDerived();
 	void Initialize(CreatureInstance *creature, AINutDef *defPtr, std::string &errors);
 
 	// Exposed to scripts

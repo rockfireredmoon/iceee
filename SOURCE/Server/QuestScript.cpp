@@ -5,6 +5,7 @@
 #include "Instance.h"
 #include "Item.h"
 #include "CommonTypes.h"
+#include "ByteBuffer.h"
 #include <algorithm>
 
 QuestScript::QuestScriptDef g_QuestScript;
@@ -146,7 +147,8 @@ void QuestNutManager::RemoveActiveScripts(int CID) {
 		if(player->source != NULL && player->source->actInst != NULL)
 			player->source->actInst->questNutScriptList.erase(
 					std::remove(player->source->actInst->questNutScriptList.begin(), player->source->actInst->questNutScriptList.end(), player), player->source->actInst->questNutScriptList.end());
-		player->HaltExecution();
+		if(player->mActive)
+			player->HaltExecution();
 		delete (*it);
 	}
 	l.clear();
@@ -162,7 +164,6 @@ void QuestNutManager::RemoveActiveScript(QuestNutPlayer *registeredPtr) {
 			if(player->source != NULL && player->source->actInst != NULL)
 				player->source->actInst->questNutScriptList.erase(
 						std::remove(player->source->actInst->questNutScriptList.begin(), player->source->actInst->questNutScriptList.end(), player), player->source->actInst->questNutScriptList.end());
-			player->HaltExecution();
 			delete player;
 			l.erase(it);
 			break;
@@ -187,8 +188,9 @@ QuestNutPlayer::~QuestNutPlayer()
 {
 }
 
-void QuestNutPlayer::HaltDerivedExecution()
-{
+void QuestNutPlayer::HaltDerivedExecution(){}
+
+void QuestNutPlayer::HaltedDerived() {
 }
 
 void QuestNutPlayer::RegisterFunctions() {
@@ -203,12 +205,17 @@ void QuestNutPlayer::RegisterFunctions() {
 
 void QuestNutPlayer::RegisterQuestFunctions(NutPlayer *instance, Sqrat::DerivedClass<QuestNutPlayer, NutPlayer> *instanceClass)
 {
+	instanceClass->Func(_SC("abandon"), &QuestNutPlayer::Abandon);
+	instanceClass->Func(_SC("reset_objective"), &QuestNutPlayer::ResetObjective);
+	instanceClass->Func(_SC("join"), &QuestNutPlayer::Join);
+	instanceClass->Func(_SC("info"), &QuestNutPlayer::Info);
 	instanceClass->Func(_SC("info"), &QuestNutPlayer::Info);
 	instanceClass->Func(_SC("uinfo"), &QuestNutPlayer::Info);
 	instanceClass->Func(_SC("effect"), &QuestNutPlayer::Effect);
 	instanceClass->Func(_SC("trigger_delete"), &QuestNutPlayer::TriggerDelete);
 	instanceClass->Func(_SC("despawn"), &QuestNutPlayer::Despawn);
 	instanceClass->Func(_SC("get_target"), &QuestNutPlayer::GetTarget);
+	instanceClass->Func(_SC("get_source"), &QuestNutPlayer::GetSource);
 	instanceClass->Func(_SC("spawn"), &QuestNutPlayer::Spawn);
 	instanceClass->Func(_SC("spawn_at"), &QuestNutPlayer::SpawnAt);
 	instanceClass->Func(_SC("warp_zone"), &QuestNutPlayer::WarpZone);
@@ -335,12 +342,30 @@ void QuestNutPlayer::TriggerDelete(int CID, unsigned long ms) {
 	}
 }
 
+bool QuestNutPlayer::Join(int questID) {
+	if(questID == GetQuestID())
+		return false;
+	source->simulatorPtr->QuestJoin(questID);
+	return true;}
+
+bool QuestNutPlayer::ResetObjective(int objective) {
+	return source->simulatorPtr->QuestResetObjectives(((QuestNutDef*)def)->mQuestID, objective);
+}
+
+bool QuestNutPlayer::Abandon() {
+	return source->simulatorPtr->QuestClear(((QuestNutDef*)def)->mQuestID);
+}
+
 int QuestNutPlayer::GetQuestID() {
 	return ((QuestNutDef*)def)->mQuestID;
 }
 
 int QuestNutPlayer::GetTarget() {
 	return target == NULL ? -1 : target->CreatureID;
+}
+
+int QuestNutPlayer::GetSource() {
+	return source == NULL ? -1 : source->CreatureID;
 }
 
 void QuestNutPlayer::Despawn(int CID) {

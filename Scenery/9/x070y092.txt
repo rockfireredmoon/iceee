@@ -126,6 +126,7 @@ Orient=0,0.659385,0,0.751806
 Scale=1,1,1
 spawnPackage=11_rh_02_quiltedConstruct_k_41
 maxActive=0
+despawnTime=1
 
 [ENTRY]
 ID=151028274

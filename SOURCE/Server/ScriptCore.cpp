@@ -267,7 +267,7 @@ namespace ScriptCore
 		mInitTime = 0;
 		vm = NULL;
 		def = NULL;
-		active = false;
+		mActive = false;
 		mHasScript = false;
 		mExecuting = false;
 		mProcessingTime = 0;
@@ -276,6 +276,7 @@ namespace ScriptCore
 		mForceGC = 0;
 		mGCTime = 0;
 		mCalls = 0;
+		mRunning = false;
 	}
 
 	NutPlayer::~NutPlayer() {
@@ -361,10 +362,12 @@ namespace ScriptCore
 			}
 
 			mHasScript = true;
-			active = true;
+			mActive = true;
+			mRunning = true;
 			script.Run();
+			mRunning = false;
 			if (Sqrat::Error::Occurred(vm)) {
-				active = false;
+				mActive = false;
 				errors.append(Sqrat::Error::Message(vm).c_str());
 				g_Log.AddMessageFormat("Squirrel script  %s failed to run. %s", def->mSourceFile.c_str(), Sqrat::Error::Message(vm).c_str());
 			}
@@ -484,11 +487,11 @@ namespace ScriptCore
 	{
 		if(def == NULL)
 		{
-			active = false;
+			mActive = false;
 			return;
 		}
 
-		active = true;
+		mActive = true;
 
 		// TODO somehow reset state of script
 		ClearQueue();
@@ -498,7 +501,7 @@ namespace ScriptCore
 	}
 
 	bool NutPlayer::Tick(void) {
-		if(active) {
+		if(mActive) {
 			ExecQueue();
 		}
 		return true;
@@ -535,19 +538,31 @@ namespace ScriptCore
 		return mHasScript;
 	}
 
+	void NutPlayer :: HaltedDerived(void) { }
+
 	void NutPlayer :: HaltDerivedExecution(void) { }
 
 	void NutPlayer :: HaltExecution(void)
 	{
-		if(active) {
+		if(mRunning) {
+			/* If we reached here via a script function, we already executing and don't want to close the VM.
+			 * In this case the halt is queued instance
+			 */
+			Halt();
+			return;
+		}
+		if(mActive && !mHalting) {
+			mHalting = true;
 			vector<ScriptParam> v;
-			HaltDerivedExecution();
 			RunFunction("on_halt", v, true);
-			active = false;
+			HaltDerivedExecution();
+			mActive = false;
 			ClearQueue();
 			sq_close(vm);
 			if(def->HasFlag(NutDef::FLAG_REPORT_END))
 				PrintMessage("Script [%s] has ended", def->scriptName.c_str());
+			mHalting = false;
+			HaltedDerived();
 		}
 	}
 
@@ -567,11 +582,12 @@ namespace ScriptCore
 	}
 
 	bool NutPlayer::RunFunction(std::string name, std::vector<ScriptParam> parms, bool time) {
-		if(!active) {
+		if(!mActive) {
 			g_Log.AddMessageFormat("[WARNING] Attempt to run function on inactive script %s.", name.c_str());
 			return false;
 		}
 		unsigned long now = g_PlatformTime.getMilliseconds();
+		mRunning = true;
 
 		// Wake the VM up if it is suspend so the onFinish can be run
 		if(sq_getvmstate(vm) == SQ_VMSTATE_SUSPENDED) {
@@ -611,6 +627,8 @@ namespace ScriptCore
 			mGCCounter++;
 			mProcessingTime += g_PlatformTime.getMilliseconds() - now;
 		}
+
+		mRunning = false;
 
 		return true;
 	}
@@ -720,7 +738,7 @@ namespace ScriptCore
 
 	void NutPlayer::QueueInsert(NutScriptEvent *evt)
 	{
-		if(!active) {
+		if(!mActive) {
 			PrintMessage("[WARNING] Script event when not active");
 			return;
 		}
@@ -758,7 +776,7 @@ namespace ScriptCore
 
 	void NutPlayer::QueueAdd(NutScriptEvent *evt)
 	{
-		if(!active) {
+		if(!mActive) {
 			PrintMessage("[WARNING] Script event when not active");
 			return;
 		}

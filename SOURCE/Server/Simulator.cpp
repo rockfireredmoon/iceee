@@ -8423,7 +8423,7 @@ int SimulatorThread :: handle_query_quest_complete(void)
 	QuestScript::QuestNutPlayer *player =  g_QuestNutManager.GetActiveScript(creatureInst->CreatureID, QID);
 	if(player != NULL) {
 		player->RunFunction("on_complete");
-		g_QuestNutManager.RemoveActiveScript(player);
+		player->HaltExecution();
 	}
 
 
@@ -8531,25 +8531,14 @@ int SimulatorThread :: handle_query_quest_hack(void)
 		WritePos = PrepExt_QueryResponseError(SendBuf, query.ID, "Selected creature does not exist.");
 	}
 	else if(query.args[0].compare("add") == 0) {
-		if(qdef->mScriptAcceptCondition.ExecuteAllCommands(this) < 0)
-			return PrepExt_QueryResponseError(SendBuf, query.ID, "Cannot accept the quest yet (pre-conditions failed).");
-		qdef->mScriptAcceptAction.ExecuteAllCommands(this);
 		LogMessageL(MSG_DIAGV, "[SAGE] Quest join (QuestID: %d, CID: %d)", qdef->questID, creature->CreatureID);
+		creature->simulatorPtr->QuestJoin(qdef->questID);
 		WritePos = PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-		int wpos = creature->charPtr->questJournal.QuestJoin(&Aux1[0], qdef->questID, query.ID);
-		g_QuestNutManager.AddActiveScript(creature, qdef->questID);
-		creature->simulatorPtr->AttemptSend(Aux1, wpos);
 	}
 	else if(query.args[0].compare("remove") == 0) {
 		LogMessageL(MSG_DIAGV, "[SAGE] Quest remove (QuestID: %d, CID: %d)", qdef->questID, creature->CreatureID);
 		WritePos = PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-		creature->charPtr->questJournal.QuestClear(creature->CreatureID, qdef->questID);
-		int wpos = PutByte(&Aux1[0], 7);  //_handleQuestEventMsg
-		wpos += PutShort(&Aux1[wpos], 0); //Size
-		wpos += PutInteger(&Aux1[wpos], qdef->questID); //Quest ID
-		wpos += PutByte(&Aux1[wpos], QuestObjective::EVENTMSG_ABANDONED);
-		PutShort(&Aux1[1], wpos - 3);
-		creature->simulatorPtr->AttemptSend(Aux1, wpos);
+		creature->simulatorPtr->QuestClear(qdef->questID);
 	}
 	else if(query.args[0].compare("complete") == 0) {
 		LogMessageL(MSG_DIAGV, "[SAGE] Quest complete (QuestID: %d, CID: %d)", qdef->questID, creature->CreatureID);
@@ -11033,7 +11022,7 @@ int SimulatorThread :: handle_query_script_load(void)
 	// The last record contains info about the instance itself for the editor UI
 	wpos += PutByte(&SendBuf[wpos], 2);
 	if(creatureInst->actInst->nutScriptPlayer.HasScript()) {
-		wpos += PutStringUTF(&SendBuf[wpos], creatureInst->actInst->nutScriptPlayer.active ? "true" : "false"); // active
+		wpos += PutStringUTF(&SendBuf[wpos], creatureInst->actInst->nutScriptPlayer.mActive ? "true" : "false"); // active
 	}
 	else {
 		wpos += PutStringUTF(&SendBuf[wpos], creatureInst->actInst->scriptPlayer.active ? "true" : "false"); // active
@@ -11805,6 +11794,53 @@ int SimulatorThread :: handle_query_guild_leave(void)
 	creatureInst->SendStatUpdate(STAT::SUB_NAME);
 
 	return 0;
+}
+
+//
+// Helper functions
+//
+
+bool SimulatorThread :: QuestJoin(int QuestID)
+{
+	if(creatureInst == NULL | creatureInst->charPtr == NULL)
+		return false;
+	QuestDefinition *qdef = QuestDef.GetQuestDefPtrByID(QuestID);
+	if(qdef == NULL)
+		return false;
+	if(qdef->mScriptAcceptCondition.ExecuteAllCommands(this) < 0)
+		return false;
+	qdef->mScriptAcceptAction.ExecuteAllCommands(this);
+	int wpos = creatureInst->charPtr->questJournal.QuestJoin(&Aux1[0], QuestID, query.ID);
+	g_QuestNutManager.AddActiveScript(creatureInst, QuestID);
+	AttemptSend(Aux1, wpos);
+	return true;
+}
+
+bool SimulatorThread :: QuestResetObjectives(int QuestID, int objective)
+{
+	if(creatureInst == NULL || creatureInst->charPtr == NULL)
+		return false;
+	QuestDefinition *qdef = QuestDef.GetQuestDefPtrByID(QuestID);
+	if(qdef == NULL)
+		return false;
+	creatureInst->charPtr->questJournal.QuestResetObjectives(creatureInst->CreatureID, QuestID);
+	int wpos = PrepExt_QuestStatusMessage(Aux1, QuestID, objective, false, qdef->actList[creatureInst->charPtr->questJournal.GetCurrentAct(QuestID)].objective[objective].completeText);
+	AttemptSend(Aux1, wpos);
+	return true;
+}
+
+bool SimulatorThread :: QuestClear(int QuestID)
+{
+	if(creatureInst == NULL || creatureInst->charPtr == NULL)
+		return false;
+	creatureInst->charPtr->questJournal.QuestClear(creatureInst->CreatureID, QuestID);
+	int wpos = PutByte(&Aux1[0], 7);  //_handleQuestEventMsg
+	wpos += PutShort(&Aux1[wpos], 0); //Size
+	wpos += PutInteger(&Aux1[wpos], QuestID); //Quest ID
+	wpos += PutByte(&Aux1[wpos], QuestObjective::EVENTMSG_ABANDONED);
+	PutShort(&Aux1[1], wpos - 3);
+	AttemptSend(Aux1, wpos);
+	return true;
 }
 
 int SimulatorThread :: OfferLoot(int mode, ActiveLootContainer *loot, ActiveParty *party, CreatureInstance *receivingCreature, int ItemID, bool needOrGreed, int CID, int conIndex)
@@ -13764,7 +13800,7 @@ int SimulatorThread :: handle_query_script_time(void)
 		{
 			seconds = (double)inst->nutScriptPlayer.mProcessingTime / 1000.0;
 			Util::SafeFormat(Aux1, sizeof(Aux1), "S Instance: %4.3f (%ul,%u,%ul). %s", seconds,
-					inst->nutScriptPlayer.mInitTime, inst->nutScriptPlayer.mCalls, inst->nutScriptPlayer.mGCTime, inst->nutScriptPlayer.active ? "Active" : "Inactive");
+					inst->nutScriptPlayer.mInitTime, inst->nutScriptPlayer.mCalls, inst->nutScriptPlayer.mGCTime, inst->nutScriptPlayer.mActive ? "Active" : "Inactive");
 			SendInfoMessage(Aux1, INFOMSG_INFO);
 		}
 		if(inst->scriptPlayer.HasScript())

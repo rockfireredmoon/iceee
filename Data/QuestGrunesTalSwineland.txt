@@ -1697,17 +1697,15 @@ Obj.0.completeText=0 of 1
 Obj.0.markerLocations=52607.3,549.758,68996.9,9
 Obj.0.ActivateTime=5000
 Obj.0.ActivateText=Constructing your Behemoth
-[ACT]
-Act.BodyText=Defeat the newly created Stitched Behemoth.
-Obj.0.type=kill
-Obj.0.data1=1242
-Obj.0.data2=1
-Obj.0.description=Defeat the newly created Stitched Behemoth. (0 of 1)
-Obj.0.complete=0
-Obj.0.myCreatureDefID=
-Obj.0.myItemID=
-Obj.0.completeText=0 of 1
-Obj.0.markerLocations=52607.3,549.758,68996.9,9
+Obj.1.type=kill
+Obj.1.data1=1242
+Obj.1.data2=1
+Obj.1.description=Defeat the newly created Stitched Behemoth.
+Obj.1.complete=0
+Obj.1.myCreatureDefID=
+Obj.1.myItemID=
+Obj.1.completeText=0 of 1
+Obj.1.markerLocations=52607.3,549.758,68996.9,9
 [ACT]
 Act.BodyText=Return to Moris Banner
 Obj.0.type=talk

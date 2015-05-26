@@ -166,6 +166,7 @@ struct QuestReference
 	int CheckTravelLocation(int x, int y, int z, int zone);
 	void ClearObjectiveData(void);
 	int AdvanceAct(int CID, char *buffer, QuestDefinition *questDef);
+	void ResetObjectives(void);
 	void Reset(void);
 	QuestDefinition* GetQuestPointer(void); 
 	bool operator < (const QuestReference &compare) const { return QuestID < compare.QuestID; }
@@ -259,6 +260,7 @@ public:
 	int CheckQuestTalk(char *buffer, int CreatureDefID, int CreatureInstID);
 	int ForceComplete(int CID, int QuestID, char *buffer);
 	int ForceAllComplete(int CID, char *buffer);
+	void QuestResetObjectives(int CID, int QuestID);
 	void QuestClear(int CID, int QuestID);
 	void QuestLeave(int CID, int QuestID);
 	int FilterEmote(int CID, char *outbuf, const char *message, int xpos, int zpos, int zoneID);
