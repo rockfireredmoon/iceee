@@ -25,9 +25,17 @@ Scale=1.5,1.5,1.5
 [ENTRY]
 ID=1105841
 Asset=Prop-Dungeon_Accents1#Prop-Dungeon-Cobwebs1
-Name=
+Name=Untitled
 Pos=79462.7,1412.22,52989.2
 Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
+ID=1129216
+Asset=Prop-Instance_Entrance#Prop-Instance_Entrance
+Name=
+Pos=79425.5,1337.99,53100.5
+Orient=0,-0.859862,0,0.510526
 Scale=1,1,1
 
 [ENTRY]

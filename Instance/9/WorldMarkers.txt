@@ -41,7 +41,7 @@ Position=56354.0,684.0,57918.0
 [ENTRY]
 Name=Wailing Crypt Entrance
 Comment=[Comment here]
-Position=29689.0,217.0,65535.0
+Position=52550.0,677.0,68412.0
 
 [ENTRY]
 Name=Folkirk Manor

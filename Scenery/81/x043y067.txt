@@ -17,14 +17,6 @@ Scale=1,1,1
 spawnPackage=#F7814
 
 [ENTRY]
-ID=1129215
-Asset=Prop-Interact1#Prop-Interact_Cylinder
-Name=
-Pos=43365.5,262.733,67641.1
-Orient=0,0,0,1
-Scale=0.1,0.1,0.1
-
-[ENTRY]
 ID=10000159
 Asset=Manipulator-SpawnPoint
 Name=Untitled
