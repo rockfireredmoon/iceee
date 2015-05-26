@@ -38,6 +38,7 @@ public:
 	virtual void RegisterFunctions();
 	void RegisterInstanceFunctions(NutPlayer *instance, Sqrat::DerivedClass<InstanceNutPlayer, NutPlayer> *instanceClass);
 	virtual void HaltDerivedExecution();
+	virtual void HaltedDerived();
 
 	// Exposed to scripts
 //	void Queue(Sqrat::Function function, int fireDelay);

@@ -198,6 +198,10 @@ std::string ReplaceAppearanceModifier::ModifyEq(std::string source) {
 	return source;
 }
 
+AppearanceModifier * ReplaceAppearanceModifier::Clone() {
+	return new ReplaceAppearanceModifier(mReplacement);
+}
+
 //
 
 AbstractAppearanceModifier::AbstractAppearanceModifier() {
@@ -280,6 +284,10 @@ void AddAttachmentModifier::ProcessTable(Sqrat::Table *table) {
 void AddAttachmentModifier::ProcessTableEq(Sqrat::Table *table) {
 }
 
+AppearanceModifier * AddAttachmentModifier::Clone() {
+	return new AddAttachmentModifier(mType, mNode);
+}
+
 //
 
 NudifyAppearanceModifier::NudifyAppearanceModifier() {}
@@ -292,6 +300,10 @@ std::string NudifyAppearanceModifier::Modify(std::string source) {
 std::string NudifyAppearanceModifier::ModifyEq(std::string source) {
 	return "{}";
 }
+AppearanceModifier * NudifyAppearanceModifier::Clone() {
+	return new NudifyAppearanceModifier();
+}
+
 
 //**************************************************
 //               CreatureDefinition
@@ -621,8 +633,11 @@ void CreatureInstance :: CopyFrom(CreatureInstance *source)
 	cooldownManager.CopyFrom(source->cooldownManager);
 	buffManager.CopyFrom(source->buffManager);
 
-	appearanceModifiers.assign(source->appearanceModifiers.begin(), source->appearanceModifiers.end());
-	attachments.assign(source->attachments.begin(), source->attachments.end());
+	for(std::vector<AppearanceModifier*>::iterator it = source->appearanceModifiers.begin(); it != source->appearanceModifiers.end(); ++it)
+		appearanceModifiers.push_back((*it)->Clone());
+	for(std::vector<AddAttachmentModifier*>::iterator it = source->attachments.begin(); it != source->attachments.end(); ++it)
+		attachments.push_back(dynamic_cast<AddAttachmentModifier*>((*it)->Clone()));
+
 	LastUseDefID = source->LastUseDefID;
 }
 
@@ -2627,6 +2642,9 @@ void CreatureInstance :: ProcessDeath(void)
 		aiScript->FullReset();
 	}
 
+	CREATURE_SEARCH attackerList;
+	ResolveAttackers(attackerList);
+
 	actInst->RunDeath(this);
 	actInst->EraseIndividualReference(this);
 	ab[0].Clear("CreatureInstance :: ProcessDeath");
@@ -2669,12 +2687,36 @@ void CreatureInstance :: ProcessDeath(void)
 		if(hateProfilePtr != NULL)
 			highestLev = hateProfilePtr->GetHighestLevel();
 
-		CREATURE_SEARCH attackerList;
-		ResolveAttackers(attackerList);
 		if(attackerList.size() > 0)
 			highestLev = GetHighestLevel(attackerList);
 
 		CreateLoot(highestLev);
+
+		// Calculate how many credits should be awarded if the creature 'drops' them.
+		int credits = 0;
+		char buf[256];
+		if(css.credit_drops > 0) {
+			double totalPlayerLevel = 0;
+			double alivePlayers = 0;
+			for(size_t i = 0; i < attackerList.size(); i++)
+			{
+				CreatureInstance *attacker = attackerList[i].ptr;
+				if(attacker->HasStatus(StatusEffects::DEAD) == false) {
+					totalPlayerLevel += attacker->css.level;
+					alivePlayers++;
+				}
+			}
+			int avgPlayerLevel = (int)ceil(totalPlayerLevel / alivePlayers);
+			int levelDiff = ( css.level - avgPlayerLevel ) + 1;
+			credits = levelDiff * css.rarity * alivePlayers;
+			if(credits == 1)
+				Util::SafeFormat(buf, sizeof(buf), "Your party earned 1 credit each");
+			else if(credits > 1)
+				Util::SafeFormat(buf, sizeof(buf), "Your party earned %d credits each", credits);
+
+			g_Log.AddMessageFormat("This mob drops credits. The team earned %d (average player level %d, difference %d, alive %d, total %d)", credits, avgPlayerLevel, levelDiff, alivePlayers, totalPlayerLevel);
+
+		}
 
 		for(size_t i = 0; i < attackerList.size(); i++)
 		{	
@@ -2695,6 +2737,12 @@ void CreatureInstance :: ProcessDeath(void)
 						exp = 1;
 
 				attacker->AddExperience(exp);
+				if(credits > 0) {
+					attacker->AddCredits(credits);
+					int wpos = PrepExt_SendInfoMessage(GSendBuf, buf, INFOMSG_INFO);
+					attacker->simulatorPtr->AttemptSend(GSendBuf, wpos);
+				}
+
 				if(attackerList[i].attacked == 1)
 					attacker->AddHeroismForKill(css.level, css.rarity);
 			}
@@ -3106,6 +3154,20 @@ void CreatureInstance :: CancelPending(void)
 			if(script != NULL)
 				script->active = false;
 
+			QuestScript::QuestNutPlayer *nut = actInst->GetSimulatorQuestNutScript(simulatorPtr);
+			if(nut != NULL) {
+				char buffer[64];
+				Util::SafeFormat(buffer, sizeof(buffer), "on_use_cancel_%d", CreatureDefID);
+				nut->RunFunction(buffer);
+			}
+
+			break;
+		}
+
+		switch(ab[0].abilityID)
+		{
+		case ABILITYID_QUEST_INTERACT_OBJECT:
+		case ABILITYID_QUEST_GATHER_OBJECT:
 		case ABILITYID_INTERACT_OBJECT:
 			int wpos;
 			wpos = 0;
@@ -3160,6 +3222,13 @@ void CreatureInstance :: CancelPending_Ex(ActiveAbilityInfo *ability)
 			script = actInst->GetSimulatorQuestScript(simulatorPtr);
 			if(script != NULL)
 				script->TriggerAbort();
+
+			QuestScript::QuestNutPlayer *nut = actInst->GetSimulatorQuestNutScript(simulatorPtr);
+			if(nut != NULL) {
+				char buffer[64];
+				Util::SafeFormat(buffer, sizeof(buffer), "on_use_abort_%d", CreatureDefID);
+				nut->RunFunction(buffer);
+			}
 
 			//Fall through since all quest/object interactions need to notify the client to
 			//cancel the event timer.
@@ -6312,6 +6381,17 @@ void CreatureInstance :: AddValour(int GuildDefID, int amount)
 
 }
 
+void CreatureInstance :: AddCredits(int amount)
+{
+	if(actInst == NULL)
+	{
+		g_Log.AddMessageFormat("[ERROR] AddCredits() active instance is NULL.");
+		return;
+	}
+	css.credits += amount;
+	if(serverFlags & ServerFlags::IsPlayer)
+		SendStatUpdate(STAT::CREDITS);
+}
 
 void CreatureInstance :: AddExperience(int amount)
 {
@@ -6627,6 +6707,14 @@ void CreatureInstance :: CheckQuestInteract(int CreatureDefID)
 		QuestScript::QuestScriptPlayer *script = actInst->GetSimulatorQuestScript(simulatorPtr);
 		if(script != NULL)
 			script->TriggerFinished();
+
+		QuestScript::QuestNutPlayer *nut = actInst->GetSimulatorQuestNutScript(simulatorPtr);
+		if(nut != NULL) {
+			char buffer[64];
+			Util::SafeFormat(buffer, sizeof(buffer), "on_use_finish_%d", CreatureDefID);
+			nut->RunFunction(buffer);
+		}
+
 		//actInst->ScriptCallUseFinish(LastUseDefID);
 	}
 }

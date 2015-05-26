@@ -6032,3 +6032,15 @@ this.Assembler.Creature.applyEquipment <- function(table) {
 	}
 	return tableCopy;
 }
+
+/*
+ * Item market editor
+ */
+ 
+
+function InputCommands::MarketEdit(args)
+{
+	local frame = this.Screens.ItemMarketEditScreen();
+	frame.setVisible(true);
+}
+ 

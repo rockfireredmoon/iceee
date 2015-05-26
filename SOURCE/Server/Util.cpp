@@ -1725,7 +1725,7 @@ int PrepExt_TradeItemOffer(char *buffer, char *convBuf, int offeringPlayerID, st
 	return wpos;
 }
 
-int PrepExt_QuestCompleteMessage(char *buffer, int questID, int objectiveIndex)
+int PrepExt_QuestStatusMessage(char *buffer, int questID, int objectiveIndex, bool complete, std::string message)
 {
 	int wpos = 0;
 	wpos += PutByte(&buffer[wpos], 7);  //_handleQuestEventMsg
@@ -1733,8 +1733,8 @@ int PrepExt_QuestCompleteMessage(char *buffer, int questID, int objectiveIndex)
 	wpos += PutInteger(&buffer[wpos], questID); //Quest ID
 	wpos += PutByte(&buffer[wpos], QuestObjective::EVENTMSG_STATUS);
 	wpos += PutByte(&buffer[wpos], objectiveIndex);
-	wpos += PutByte(&buffer[wpos], 1);
-	wpos += PutStringUTF(&buffer[wpos], "Complete");
+	wpos += PutByte(&buffer[wpos], complete ? 1 : 0);
+	wpos += PutStringUTF(&buffer[wpos], message.c_str());
 	PutShort(&buffer[1], wpos - 3);
 	return wpos;
 }
@@ -2606,6 +2606,10 @@ void TrimWhitespace(std::string &modify)
 	pos = modify.find_last_not_of(search);
 	if(pos != std::string::npos)
 		modify.erase(pos + 1, modify.length());
+}
+
+bool HasBeginning (std::string const &fullString, std::string const &beginning) {
+	return fullString.size() >= beginning.size() ? fullString.substr(0, beginning.size()) == beginning : false;
 }
 
 bool HasEnding (std::string const &fullString, std::string const &ending) {

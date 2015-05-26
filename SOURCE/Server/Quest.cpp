@@ -247,10 +247,15 @@ QuestDefinition* QuestReference :: GetQuestPointer(void)
 	return DefPtr;
 }
 
-void QuestReference :: Reset(void)
+void QuestReference :: ResetObjectives(void)
 {
 	memset(ObjCounter, 0, sizeof(ObjCounter));
 	memset(ObjComplete, 0, sizeof(ObjComplete));
+}
+
+void QuestReference :: Reset(void)
+{
+	ResetObjectives();
 	Complete = 0;
 	CurAct = 0;
 }
@@ -1900,7 +1905,7 @@ int QuestJournal :: CheckTravelLocations(int CID, char *buffer, int x, int y, in
 
 			std::string resultText;
 			std::string *resPtr = &resultText;
-			wpos += PrepExt_QuestCompleteMessage(&buffer[wpos], qdef->questID, r);
+			wpos += PrepExt_QuestStatusMessage(&buffer[wpos], qdef->questID, r, true, "Complete");
 			if(qdef->actList[qr.CurAct].objective[r].ActivateText.size() > 0)
 				resPtr = &qdef->actList[qr.CurAct].objective[r].ActivateText;
 			else
@@ -2078,12 +2083,6 @@ void QuestJournal :: QuestLeave(int CID, int QuestID)
 	int r = activeQuests.HasQuestID(QuestID);
 	if(r >= 0)
 	{
-		QuestScript::QuestNutPlayer * player = g_QuestNutManager.GetActiveScript(CID, QuestID);
-		if(player != NULL) {
-			player->RunFunction("on_leave");
-			player->HaltExecution();
-			g_QuestNutManager.RemoveActiveScript(player);
-		}
 
 		activeQuests.itemList[r].Reset();
 
@@ -2097,6 +2096,21 @@ void QuestJournal :: QuestLeave(int CID, int QuestID)
 			}
 		}
 		activeQuests.RemoveIndex(r);
+
+		QuestScript::QuestNutPlayer * player = g_QuestNutManager.GetActiveScript(CID, QuestID);
+		if(player != NULL) {
+			player->RunFunction("on_leave");
+			player->HaltExecution();
+		}
+	}
+}
+
+void QuestJournal :: QuestResetObjectives(int CID, int QuestID)
+{
+	int r = activeQuests.HasQuestID(QuestID);
+	if(r >= 0)
+	{
+		activeQuests.itemList[r].ResetObjectives();
 	}
 }
 
@@ -2157,7 +2171,7 @@ int QuestJournal :: FilterEmote(int CID, char *outbuf, const char *message, int 
 
 			std::string resultText;
 			std::string *resPtr = &resultText;
-			wpos += PrepExt_QuestCompleteMessage(&outbuf[wpos], qdef->questID, obj);
+			wpos += PrepExt_QuestStatusMessage(&outbuf[wpos], qdef->questID, obj, true, "Complete");
 			resultText = "Objective complete: ";
 			resultText.append(qdef->actList[act].objective[obj].description);
 

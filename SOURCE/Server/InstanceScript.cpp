@@ -117,6 +117,9 @@ InstanceNutPlayer::~InstanceNutPlayer()
 //	sqbind_method(def->v, "broadcast"). )
 }
 
+
+void InstanceNutPlayer::HaltedDerived() {}
+
 void InstanceNutPlayer::HaltDerivedExecution()
 {
 	UnremoveProps();

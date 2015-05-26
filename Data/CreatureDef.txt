@@ -29488,6 +29488,7 @@ channeling_break_chance=500
 level=48
 display_name=The Wailer
 profession=4
+credit_drops=1
 creature_category=Unliving
 rarity=2
 ai_package=custom_heathendel_epicmagefrost40

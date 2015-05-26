@@ -191,6 +191,9 @@ StatDefinition StatList[] =
 
 	//Note: Does not exist in 0.8.6.  Does exist in 0.8.8.
 	{STAT::HIDE_MINIMAP                , StatType::SHORT,    "short",  "hide_minimap",      "Hide Minimap",      NULL, 0, msizeof(CharacterStatSet, hide_minimap), offsetof(CharacterStatSet, hide_minimap), SUT_CDefExt },
+
+	//ICEEE
+	{STAT::CREDIT_DROPS                , StatType::SHORT,    "short",  "credit_drops",          "Credit Drops",  NULL, 0, msizeof(CharacterStatSet, credit_drops), offsetof(CharacterStatSet, credit_drops), SUT_All }
 };
 const int MaxStatList = sizeof(StatList) / sizeof(StatList[0]);
 

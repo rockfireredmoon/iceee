@@ -123,3 +123,8 @@ Name=Grunes Entrance
 Comment=[Comment here]
 Position=50137.0,639.0,66364.0
 
+[ENTRY]
+Name=Behemoth
+Comment=[Comment here]
+Position=52607.0,788.0,68996.0
+

@@ -2046,10 +2046,19 @@ void ActiveInstance :: RunDeath(CreatureInstance *object)
 		p.push_back(object->CreatureID);
 		if(it != PlayerListPtr.end()) {
 			nutScriptPlayer.RunFunction("on_player_death", p);
+			QuestScript::QuestNutPlayer *nut = GetSimulatorQuestNutScript(object->simulatorPtr);
+			if(nut != NULL) {
+				nut->RunFunction("on_player_death", p);
+			}
 		}
 		else {
 			nutScriptPlayer.RunFunction("on_death", p);
+			QuestScript::QuestNutPlayer *nut = GetSimulatorQuestNutScript(object->simulatorPtr);
+			if(nut != NULL) {
+				nut->RunFunction("on_death", p);
+			}
 		}
+
 	}
 }
 
@@ -2915,21 +2924,15 @@ void ActiveInstance :: RunScripts(void)
 
 	if(questNutScriptList.empty() == false)
 	{
-		std::list<QuestScript::QuestNutPlayer*>::iterator it;
-		it = questNutScriptList.begin();
-		while(it != questNutScriptList.end())
-		{
-			QuestScript::QuestNutPlayer * p = *it;
-			if(p->active == true)
-			{
+		/* A for loop is used here as the script list may change while the queue is
+		 * being execute (e.g. a halt instruction, or new quest opened).
+		 */
+		for(uint i = 0 ; i < questNutScriptList.size(); i++) {
+			QuestScript::QuestNutPlayer * p = questNutScriptList[i];
+			if(p->mActive)
 				p->ExecQueue();
-				++it;
-			}
 			else
-			{
 				g_QuestNutManager.RemoveActiveScript(p);
-				questNutScriptList.erase(it++);
-			}
 		}
 	}
 
@@ -3094,6 +3097,17 @@ void ActiveInstance :: SendLoyaltyLinks(CreatureInstance *instigator, CreatureIn
 	}
 }
 
+QuestScript::QuestNutPlayer* ActiveInstance :: GetSimulatorQuestNutScript(SimulatorThread *simulatorPtr)
+{
+	std::vector<QuestScript::QuestNutPlayer*>::iterator it;
+	for(it = questNutScriptList.begin(); it != questNutScriptList.end(); ++it) {
+		QuestScript::QuestNutPlayer* q = *it;
+		if(q->source != NULL && simulatorPtr == q->source->simulatorPtr)
+			return q;
+	}
+	return NULL;
+}
+
 QuestScript::QuestScriptPlayer* ActiveInstance :: GetSimulatorQuestScript(SimulatorThread *simulatorPtr)
 {
 	std::list<QuestScript::QuestScriptPlayer>::iterator it;
@@ -3170,7 +3184,7 @@ void ActiveInstance :: UpdateEnvironmentCycle(const char *timeOfDay)
 //Calls a script with a particular kill event.
 void ActiveInstance :: ScriptCallKill(int CreatureDefID, int CreatureID)
 {
-	if(nutScriptPlayer.HasScript() && nutScriptPlayer.active)
+	if(nutScriptPlayer.HasScript() && nutScriptPlayer.mActive)
 	{
 		std::vector<ScriptCore::ScriptParam> parms;
 		parms.push_back(ScriptCore::ScriptParam(CreatureDefID));
@@ -3198,7 +3212,7 @@ void ActiveInstance :: ScriptCallKill(int CreatureDefID, int CreatureID)
 
 void ActiveInstance :: ScriptCallPackageKill(const char *name)
 {
-	if(nutScriptPlayer.HasScript() && nutScriptPlayer.active)
+	if(nutScriptPlayer.HasScript() && nutScriptPlayer.mActive)
 	{
 		std::vector<ScriptCore::ScriptParam> parms;
 		parms.push_back(ScriptCore::ScriptParam(std::string(name)));
@@ -3271,7 +3285,7 @@ void ActiveInstance :: ScriptCall(const char *name)
 
 bool ActiveInstance :: RunScript(std::string &errors)
 {
-	if((scriptPlayer.HasScript() && scriptPlayer.active) || (nutScriptPlayer.HasScript() && nutScriptPlayer.active)) {
+	if((scriptPlayer.HasScript() && scriptPlayer.active) || (nutScriptPlayer.HasScript() && nutScriptPlayer.mActive)) {
 		g_Log.AddMessageFormat("Request to run script for %d when it is already running", mZone);
 		return false;
 	}
@@ -3305,7 +3319,7 @@ bool ActiveInstance :: KillScript()
 		ok = true;
 	}
 	else if(nutScriptPlayer.HasScript()) {
-		if(nutScriptPlayer.active) {
+		if(nutScriptPlayer.mActive) {
 			g_Log.AddMessageFormat("Killing squirrel script for %d", mZone);
 			nutScriptPlayer.HaltExecution();
 			ok = true;

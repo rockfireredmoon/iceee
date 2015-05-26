@@ -6,6 +6,7 @@
 #include "FileReader.h"
 #include "Item.h"
 #include "GM.h"
+#include "CreditShop.h"
 
 int SaveSession(const char *filename)
 {
@@ -23,6 +24,8 @@ int SaveSession(const char *filename)
 	fprintf(output, "NextZoneID=%d\r\n", g_ZoneDefManager.NextZoneID);
 	fprintf(output, "NextAccountID=%d\r\n", g_AccountManager.NextAccountID);
 	fprintf(output, "NextVirtualItemID=%d\r\n", g_ItemManager.nextVirtualItemID);
+	fprintf(output, "NextMarketItemID=%d\r\n", g_CSManager.nextMarketItemID);
+	fprintf(output, "NextPetitionID=%d\r\n", g_PetitionManager.NextPetitionID);
 	fprintf(output, "\r\n");
 	fclose(output);
 	LogMessage("Saved session file.", filename);
@@ -58,6 +61,8 @@ int LoadSession(const char *filename)
 				g_PetitionManager.NextPetitionID = lfr.BlockToInt(1);
 			else if(strcmp(NameBlock, "NextVirtualItemID") == 0)
 				g_ItemManager.nextVirtualItemID = lfr.BlockToInt(1);
+			else if(strcmp(NameBlock, "NextMarketItemID") == 0)
+				g_CSManager.nextMarketItemID = lfr.BlockToInt(1);
 			else
 				g_Log.AddMessageFormat("[ERROR] Unknown identifier [%s] in file [%s]", NameBlock, filename);
 		}

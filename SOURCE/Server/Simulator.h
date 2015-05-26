@@ -283,6 +283,7 @@ public:
 	int handle_query_itemdef_delete(void);
 	int handle_query_item_create(void);
 	int handle_query_item_market_list(void);
+	int handle_query_item_market_edit(void);
 	int handle_query_item_market_buy(void);
 	int handle_query_item_market_reload(void);
 	int handle_query_util_addfunds();
@@ -501,7 +502,11 @@ public:
 	int handle_command_pathlinks(void);
 	int handle_command_partyinvite(void);
 	int handle_command_roll(void);
-	
+
+	bool QuestResetObjectives(int QuestID, int objective);
+	bool QuestJoin(int QuestID);
+	bool QuestClear(int QuestID);
+
 	int AddSidekick(int CDefID);
 	void AddPet(int CDefID);
 	void DoWarp(int zoneID, int instanceID, int xpos, int ypos, int zpos);
