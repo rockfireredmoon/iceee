@@ -494,6 +494,8 @@ public:
 	int handle_command_forumlock(void);
 	int handle_command_dtrig(void);
 	int handle_command_sdiag(void);
+	int handle_command_set_earsize(void);
+	int handle_command_set_tailsize(void);
 	int handle_command_sping(void);
 	int handle_command_info(void);
 	int handle_command_grovesetting(void);

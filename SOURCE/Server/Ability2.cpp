@@ -3144,7 +3144,7 @@ int AbilityCalculator :: Transform(ARGUMENT_LIST args)
 {
 	int creatureDefID = args.GetInteger(0);
 	g_Log.AddMessageFormat("Transform: %d", creatureDefID);
-	ciSource->CAF_Transform(creatureDefID);
+	ciSource->CAF_Transform(creatureDefID, mAbilityEntry->mAbilityID);
 	return ABILITY_SUCCESS;
 }
 

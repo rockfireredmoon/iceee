@@ -1402,7 +1402,19 @@ this.Stat <- {
 		type = "short",
 		name = "hide_nameboard",
 		prettyName = "Hide Nameboard"
-	}
+	},
+	HIDE_MINIMAP = 159,
+	[159] = {
+		type = "short",
+		name = "hide_minimap",
+		prettyName = "Hide Nameboard"
+	},
+	CREDIT_DROPS = 160,
+	[160] = {
+		type = "short",
+		name = "credit_drops",
+		prettyName = "Credit Drops"
+	}	
 };
 this.StatusEffects <- {
 	DEAD = 0,

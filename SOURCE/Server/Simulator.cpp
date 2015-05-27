@@ -2983,6 +2983,10 @@ bool SimulatorThread :: HandleCommand(int &PendingData)
 			g_EnvironmentCycleManager.EndCurrentCycle();
 		PendingData = PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
 	}
+	else if(query.name.compare("searsize") == 0)
+		PendingData = handle_command_set_earsize();
+	else if(query.name.compare("stailsize") == 0)
+		PendingData = handle_command_set_tailsize();
 	else
 		return false;
 
@@ -11134,7 +11138,6 @@ int SimulatorThread :: handle_query_petition_list(void)
 						{
 							if(c > 0)
 								strcat(Aux1, ",");
-							g_Log.AddMessageFormat("REMOVEME Adding other char %s (now %s", cce->display_name.c_str(), Aux1);
 							strcat(Aux1, cce->display_name.c_str());
 							c++;
 						}
@@ -11507,8 +11510,6 @@ int SimulatorThread :: handle_query_item_market_edit(void)
 
 	if(!CheckPermissionSimple(Perm_Account, Permission_Sage))
 			return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
-
-	g_Log.AddMessageFormat("REMOVEME! op: %s  %d", query.GetString(0), query.args.size() );
 
 	if(strcmp(query.GetString(0), "DELETE") == 0 && query.args.size() > 1) {
 		int id = query.GetInteger(1);
@@ -13104,6 +13105,49 @@ void SimulatorThread :: LogPingStatistics(bool server, bool client)
 			pld.DebugPingClientTimeoutCount);
 	}
 	*/
+}
+
+int SimulatorThread :: handle_command_set_earsize(void)
+{
+	if(!CheckPermissionSimple(Perm_Account, Permission_Sage))
+		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
+	CreatureInstance *creature = creatureInst->CurrentTarget.targ;
+	if(creature == NULL)
+		creature = creatureInst;
+
+	float val = 0;
+	if(query.argCount > 0)
+		val = atof(query.args[0].c_str());
+	char buf[10];
+	Util::SafeFormat(buf, sizeof(buf), "%1.1f", val);
+	CreatureAttributeModifier mod("es", buf);
+	creature->charPtr->originalAppearance = mod.Modify(creature->charPtr->originalAppearance);
+	creature->css.SetAppearance(mod.Modify(creature->css.appearance).c_str());
+	creature->charPtr->pendingChanges++;
+	int wpos = PrepExt_UpdateAppearance(SendBuf, creature);
+	creature->actInst->LSendToLocalSimulator(SendBuf, wpos, creature->CurrentX, creature->CurrentZ);
+	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
+}
+
+int SimulatorThread :: handle_command_set_tailsize(void)
+{
+	if(!CheckPermissionSimple(Perm_Account, Permission_Sage))
+		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
+	CreatureInstance *creature = creatureInst->CurrentTarget.targ;
+	if(creature == NULL)
+		creature = creatureInst;
+	float val = 0;
+	if(query.argCount > 0)
+		val = atof(query.args[0].c_str());
+	char buf[10];
+	Util::SafeFormat(buf, sizeof(buf), "%1.1f", val);
+	CreatureAttributeModifier mod("ts", buf);
+	creature->css.SetAppearance(mod.Modify(creature->css.appearance).c_str());
+	creature->charPtr->originalAppearance = mod.Modify(creature->charPtr->originalAppearance);
+	creature->charPtr->pendingChanges++;
+	int wpos = PrepExt_UpdateAppearance(SendBuf, creature);
+	creature->actInst->LSendToLocalSimulator(SendBuf, wpos, creature->CurrentX, creature->CurrentZ);
+	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
 }
 
 int SimulatorThread :: handle_command_sdiag(void)

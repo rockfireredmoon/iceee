@@ -402,7 +402,7 @@ namespace STAT
 	//New ones found in 8.8, not sure about between versions
 	HIDE_MINIMAP             = 159,
 
-	//Credit drops
+	//ICEEE - Credit drops
 	CREDIT_DROPS             = 160
 	};
 }

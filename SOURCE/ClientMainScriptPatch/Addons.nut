@@ -6000,7 +6000,7 @@ this.Assembler.Creature.setViaContentDef2 <- function(c) {
 	if("es" in c && mDetails != null) { 
 		foreach(i, d in mDetails)
 			if(d.point == "left_ear" || d.point == "right_ear")
-				d["scale"] <- Vector3(c.ts.tofloat(),c.ts.tofloat(),c.ts.tofloat());
+				d["scale"] <- Vector3(c.es.tofloat(),c.es.tofloat(),c.es.tofloat());
 	}
 	return r;
 }

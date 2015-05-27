@@ -306,6 +306,18 @@ public:
 	AppearanceModifier * Clone();
 };
 
+
+class CreatureAttributeModifier : public AbstractAppearanceModifier {
+public:
+	std::string mAttribute;
+	std::string mValue;
+	CreatureAttributeModifier(std::string attribute,std::string value);
+	~CreatureAttributeModifier();
+	void ProcessTable(Sqrat::Table *table);
+	void ProcessTableEq(Sqrat::Table *table);
+	AppearanceModifier * Clone();
+};
+
 class AddAttachmentModifier : public AbstractAppearanceModifier {
 public:
 	std::string mType;
@@ -365,6 +377,7 @@ public:
 	int PartyID;
 	unsigned long serverFlags;
 	int transformCreatureId;
+	int transformAbilityId;
 	AppearanceModifier *transformModifier;
 
 	SelectedObject CurrentTarget;
@@ -715,7 +728,7 @@ public:
 	//Custom Ability Functions, called through the ability system to handle special operations
 	bool IsTransformed();
 	bool CAF_Nudify();
-	bool CAF_Transform(int CDefID);
+	bool CAF_Transform(int CDefID, int abId);
 	bool CAF_Untransform();
 	int CAF_SummonSidekick(int CDefID, int maxSummon, short abGroupID);
 	void CAF_RunSidekickStatFilter(int abGroupID);

@@ -331,3 +331,44 @@ mArmorType=1
 mValue=1
 mValueType=1
 mQualityLevel=4
+
+[ENTRY]
+mID=8107
+mType=2
+mDisplayName=Shimmering Throwing Axe
+mAppearance=[{["a"]={["type"]="Item-1hAxe-Med1",["effect"]="Par-WE-1hAxe-Death",["colors"]=["2A002A","150015","7F066B"]}},null]
+mIcon=Icon-32-Axe1.png|Icon-32-BG-Purple.png
+mLevel=1
+mEquipType=6
+mWeaponType=7
+mWeaponDamageMin=1
+mWeaponDamageMax=1
+mValue=31
+mQualityLevel=1
+mMinUseLevel=10
+
+[ENTRY]
+mID=8108
+mType=3
+mDisplayName=Em's Jogging Top
+mAppearance=[{["c"]={["type"]="Armor-Cloth-Female-Underwear",["colors"]=["006a06"]}}]
+mIcon=Icon-32-C_Armor-Chest01.png|Icon-32-BG-Green.png
+mLevel=16
+mValue=0
+mQualityLevel=4
+mEquipType=11
+mBindingType=0
+mArmorType=2
+
+[ENTRY]
+mID=8109
+mType=3
+mDisplayName=Em's Jogging Shorts
+mAppearance=[{["c"]={["type"]="Armor-Cloth-Female-Underwear",["colors"]=["006a06"]}},null]
+mIcon=Icon-32-C_Armor-Legs01.png|Icon-32-BG-Green.png
+mLevel=16
+mValue=0
+mQualityLevel=4
+mEquipType=15
+mBindingType=0
+mArmorType=2

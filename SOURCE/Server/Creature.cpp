@@ -259,6 +259,26 @@ std::string AbstractAppearanceModifier::DoModify(std::string source, bool eq) {
 }
 
 //
+CreatureAttributeModifier::CreatureAttributeModifier(std::string attribute, std::string value) {
+	mAttribute = attribute;
+	mValue = value;
+}
+CreatureAttributeModifier::~CreatureAttributeModifier() {}
+
+void CreatureAttributeModifier::ProcessTable(Sqrat::Table *table) {
+	g_Log.AddMessageFormat("Setting attr '%s' to '%s'", mAttribute.c_str(), mValue.c_str());
+	table->SetValue(_SC(mAttribute.c_str()), _SC(mValue.c_str()));
+}
+
+void CreatureAttributeModifier::ProcessTableEq(Sqrat::Table *table) {
+}
+
+AppearanceModifier * CreatureAttributeModifier::Clone() {
+	return new CreatureAttributeModifier(mAttribute, mValue);
+}
+
+
+//
 
 AddAttachmentModifier::AddAttachmentModifier(std::string type, std::string node) {
 	mType = type;
@@ -467,8 +487,10 @@ void CreatureInstance :: Clear(void)
 	tetherNodeZ = 0;
 	appearanceModifiers.clear();
 	attachments.clear();
+
 	transformModifier = NULL;
 	transformCreatureId = 0;
+	transformAbilityId = 0;
 
 	LastUseDefID = 0;
 }
@@ -633,10 +655,19 @@ void CreatureInstance :: CopyFrom(CreatureInstance *source)
 	cooldownManager.CopyFrom(source->cooldownManager);
 	buffManager.CopyFrom(source->buffManager);
 
-	for(std::vector<AppearanceModifier*>::iterator it = source->appearanceModifiers.begin(); it != source->appearanceModifiers.end(); ++it)
-		appearanceModifiers.push_back((*it)->Clone());
+	for(std::vector<AppearanceModifier*>::iterator it = source->appearanceModifiers.begin(); it != source->appearanceModifiers.end(); ++it) {
+		AppearanceModifier *ap = *it;
+		AppearanceModifier *cap = (*it)->Clone();
+		if(ap == source->transformModifier) {
+			transformModifier = cap;
+		}
+		appearanceModifiers.push_back(cap);
+	}
 	for(std::vector<AddAttachmentModifier*>::iterator it = source->attachments.begin(); it != source->attachments.end(); ++it)
 		attachments.push_back(dynamic_cast<AddAttachmentModifier*>((*it)->Clone()));
+
+	transformAbilityId = source->transformAbilityId;
+	transformCreatureId = source->transformCreatureId;
 
 	LastUseDefID = source->LastUseDefID;
 }
@@ -1163,6 +1194,12 @@ void CreatureInstance :: SetCombatStatus(void)
 		return;
 	Status(StatusEffects::IN_COMBAT, 5);
 	Status(StatusEffects::IN_COMBAT_STAND, 5);
+	if(transformCreatureId != 0) {
+		if(transformAbilityId != 0)
+			RemoveBuffsFromAbility(transformAbilityId, true);
+		else
+			CAF_Untransform();
+	}
 }
 
 
@@ -7076,6 +7113,7 @@ bool CreatureInstance :: CAF_Untransform()
 	_ClearStatusFlag(StatusEffects::TRANSFORMED);
 	SetServerFlag(ServerFlags::IsTransformed, false);
 	RemoveAppearanceModifier(transformModifier);
+	transformAbilityId = 0;
 	transformModifier = NULL;
 	return true;
 }
@@ -7095,7 +7133,7 @@ bool CreatureInstance :: CAF_Nudify()
 
 }
 
-bool CreatureInstance :: CAF_Transform(int CDefID)
+bool CreatureInstance :: CAF_Transform(int CDefID, int abID)
 {
 	if(transformModifier != NULL) {
 		g_Log.AddMessageFormat("%d already transformed into %d", CreatureDefID, transformCreatureId);
@@ -7113,10 +7151,13 @@ bool CreatureInstance :: CAF_Transform(int CDefID)
 				cdef->css.appearance.c_str());
 		PushAppearanceModifier(transformModifier);
 		transformCreatureId = CDefID;
+		transformAbilityId = abID;
 		return true;
 	}
-	else
+	else {
 		transformCreatureId = 0;
+		transformAbilityId= 0;
+	}
 	return false;
 
 }

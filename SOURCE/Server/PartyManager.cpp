@@ -681,10 +681,12 @@ void ActiveParty :: RemoveTagsForLootCreatureId(int lootCreatureId, int itemId, 
 	g_Log.AddMessageFormat("Removing loot tags for loot creature ID %d and item ID %d", lootCreatureId, itemId);
 	std::map<int, LootTag*>::iterator itr = lootTags.begin();
 	while (itr != lootTags.end()) {
+		g_Log.AddMessageFormat("  ---> remove %d - %d ?", (*itr->second).lootTag, (*itr->second).mCreatureId,  (*itr->second).mItemId);
 		if ((*itr->second).mLootCreatureId == lootCreatureId && (itemId == 0 || (*itr->second).mItemId == itemId)
 				&& (creatureId == 0 || (*itr->second).mCreatureId == creatureId)) {
 			delete itr->second;
 			lootTags.erase(itr++);
+			g_Log.AddMessageFormat("  ---> yes!");
 		}
 		else
 			++itr;
