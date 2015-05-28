@@ -485,8 +485,8 @@ void CreatureInstance :: Clear(void)
 	lastIdleZ = 0;
 	tetherNodeX = 0;
 	tetherNodeZ = 0;
-	appearanceModifiers.clear();
-	attachments.clear();
+
+	ClearAppearanceModifiers();
 
 	transformModifier = NULL;
 	transformCreatureId = 0;
@@ -655,17 +655,18 @@ void CreatureInstance :: CopyFrom(CreatureInstance *source)
 	cooldownManager.CopyFrom(source->cooldownManager);
 	buffManager.CopyFrom(source->buffManager);
 
+	// TODO - Em - why the need to clear? this implies it is getting called twice when copying
+	ClearAppearanceModifiers();
+	g_Log.AddMessageFormat("Copying appearance modifiers from a list of %d to a list of %d for %d", source->appearanceModifiers.size(), appearanceModifiers.size(), CreatureID);
 	for(std::vector<AppearanceModifier*>::iterator it = source->appearanceModifiers.begin(); it != source->appearanceModifiers.end(); ++it) {
 		AppearanceModifier *ap = *it;
 		AppearanceModifier *cap = (*it)->Clone();
 		if(ap == source->transformModifier) {
 			transformModifier = cap;
 		}
+		g_Log.AddMessageFormat("Copied 1 appearance modifiers");
 		appearanceModifiers.push_back(cap);
 	}
-	for(std::vector<AddAttachmentModifier*>::iterator it = source->attachments.begin(); it != source->attachments.end(); ++it)
-		attachments.push_back(dynamic_cast<AddAttachmentModifier*>((*it)->Clone()));
-
 	transformAbilityId = source->transformAbilityId;
 	transformCreatureId = source->transformCreatureId;
 
@@ -3931,7 +3932,11 @@ int CreatureInstance :: RequestAbilityActivation(int abilityID)
 		if((serverFlags & ServerFlags::IsPlayer) && (simulatorPtr != NULL))
 		{
 			int errorCode = Ability2::AbilityManager2::GetAbilityErrorCode(result);
+			g_Log.AddMessageFormat("Failed to activate ability because error code %d (%d).", errorCode, result);
 			simulatorPtr->SendAbilityErrorMessage(errorCode);
+		}
+		else {
+			g_Log.AddMessageFormat("Non-success result %d.", result);
 		}
 
 		//Other processing may require conditional processing based on return value.
@@ -6020,11 +6025,11 @@ void CreatureInstance :: _RemoveStatusList(int statusID)
 	int r = _HasStatusList(statusID);
 	if(r >= 0)
 	{
-		if(statusID == StatusEffects::TRANSFORMED)
-			CAF_Untransform();
 		activeStatusEffect.erase(activeStatusEffect.begin() + r);
 		_ClearStatusFlag(statusID);
 		pendingOperations.UpdateList_Add(CREATURE_UPDATE_MOD, this, 0);
+		if(statusID == StatusEffects::TRANSFORMED)
+			CAF_Untransform();
 	}
 }
 
@@ -7099,7 +7104,8 @@ int CreatureInstance :: GetAggroRange(CreatureInstance *target)
 
 bool CreatureInstance :: IsTransformed()
 {
-	return serverFlags & ServerFlags::IsTransformed;
+//	return serverFlags & ServerFlags::IsTransformed;
+	return transformCreatureId != 0;
 }
 
 bool CreatureInstance :: CAF_Untransform()
@@ -7108,11 +7114,10 @@ bool CreatureInstance :: CAF_Untransform()
 		g_Log.AddMessageFormat("%d not transformed", CreatureDefID);
 		return false;
 	}
-	transformCreatureId = 0;
 	g_Log.AddMessageFormat("Untransforming %d", CreatureDefID);
 	_ClearStatusFlag(StatusEffects::TRANSFORMED);
-	SetServerFlag(ServerFlags::IsTransformed, false);
 	RemoveAppearanceModifier(transformModifier);
+	transformCreatureId = 0;
 	transformAbilityId = 0;
 	transformModifier = NULL;
 	return true;
@@ -7284,10 +7289,9 @@ int CreatureInstance :: CAF_RegisterTargetSidekick(int abGroupID)
 }
 
 void CreatureInstance :: DetachItem(const char *type, const char *node) {
-	for(std::vector<AddAttachmentModifier*>::iterator it = attachments.begin(); it != attachments.end(); ++it) {
-		AddAttachmentModifier *mod = *it;
-		if(mod->mType == type && mod->mNode == node) {
-			attachments.erase(it);
+	for(uint i = 0 ; i < appearanceModifiers.size(); i++) {
+		AddAttachmentModifier *mod = dynamic_cast<AddAttachmentModifier*>(appearanceModifiers[i]);
+		if(mod && mod->mType == type && mod->mNode == node) {
 			RemoveAppearanceModifier(mod);
 			break;
 		}
@@ -7295,26 +7299,26 @@ void CreatureInstance :: DetachItem(const char *type, const char *node) {
 }
 
 void CreatureInstance :: AttachItem(const char *type, const char *node) {
-	AddAttachmentModifier *mod = new AddAttachmentModifier(type, node);
-	attachments.push_back(mod);
-	PushAppearanceModifier(attachments.back());
+	PushAppearanceModifier(new AddAttachmentModifier(type, node));
 }
 
 void CreatureInstance :: ClearAppearanceModifiers()
 {
+	g_Log.AddMessageFormat("Clearing appearance modifiers for %d", CreatureID);
 	std::vector<AppearanceModifier*>::iterator it = appearanceModifiers.begin();
 	for(; it != appearanceModifiers.end(); ++it)
 		delete *it;
 	appearanceModifiers.clear();
-	actInst->LSendToLocalSimulator(GSendBuf, PrepExt_UpdateAppearance(GSendBuf, this), CurrentX, CurrentZ);
 }
 
 void CreatureInstance :: RemoveAppearanceModifier(AppearanceModifier *modifier)
 {
+	g_Log.AddMessageFormat("Removing an appearance modifier for %d from a list of %d", CreatureID, appearanceModifiers.size());
 	std::vector<AppearanceModifier*>::iterator it = appearanceModifiers.begin();
 	for(; it != appearanceModifiers.end(); ++it) {
 		AppearanceModifier *app = *it;
 		if(app == modifier) {
+			g_Log.AddMessageFormat("Removing a modifier");
 			delete *it;
 			appearanceModifiers.erase(it);
 			break;
@@ -7343,6 +7347,8 @@ std::string CreatureInstance :: PeekAppearance()
 
 void CreatureInstance :: PushAppearanceModifier(AppearanceModifier *modifier)
 {
+	g_Log.AddMessageFormat("Pushing an appearance modifier to %d in a list of %d, now %d",
+			CreatureID, appearanceModifiers.size(), appearanceModifiers.size() + 1);
 	appearanceModifiers.push_back(modifier);
 	int wpos = PrepExt_UpdateAppearance(GSendBuf, this);
 	actInst->LSendToLocalSimulator(GSendBuf, wpos, CurrentX, CurrentZ);

@@ -406,7 +406,6 @@ public:
 	vector<ImplicitAction> implicitActions;
 
 	std::vector<AppearanceModifier*> appearanceModifiers;
-	std::vector<AddAttachmentModifier*> attachments;
 
 	ActiveBuffManager buffManager;
 	ActiveCooldownManager cooldownManager;
