@@ -11,7 +11,7 @@ struct ActiveBuff
 	unsigned char buffType;
 	short abID;
 	short abgID;
-	int durationS;
+	double durationS;
 	unsigned long castEndTimeMS;
 };
 

@@ -815,9 +815,6 @@ class this.AbilityManager extends this.DefaultQueryHandler
 			ab.setBuffCategory(buffCategory);
 			ab.setValid(true);
 			
-			
-			print("ICE! Ability update: " + id + " '" + description + "' dur: " + duration + "\n");
-			
 			this.mMessageBroadcaster.broadcastMessage("onAbilityUpdate", this.mAbilities);
 		}
 
@@ -1415,23 +1412,24 @@ class this.Ability extends this.Action
 
 			if (fn_name in this.RequirementTable)
 			{
-				// TODO - Em, not sure about this
-				
-				//return res;
-				  // [044]  OP_POPTRAP        1      0    0    0
-				  // [045]  OP_JMP            0      9    0    0
-				//this.log.debug("Error evaluating: " + req;
-				//return $[stack offset 5] + " " + req;
-				
-				
-				this.log.debug("Error evaluating: " + req);
-				
-				if (fn_name in this.EquipmentRequirementsTable)
+				try
 				{
-					this.mEquipRequirements.append(this.EquipmentRequirementsTable[fn_name]);
+					//If function in the status requirements table add it to it
+					if(fn_name in StatusRequirementsTable)
+					{
+						mStatusRequirements.append(req);
+					}
+					
+					local res = eval("return " + req + ";", RequirementTable);
+					return res;
 				}
-
-				return this.RequirementTable[fn_name];
+				catch(err)
+				{
+						
+					log.debug("Error evaluating: " + req);
+					
+					return err + " " + req;
+				}
 				
 			}
 			else
@@ -2469,45 +2467,40 @@ class this.Ability extends this.Action
 		return this.mStatusRequirements;
 	}
 
+	
+	/*
+	 * Checks to see if player has the all the status requirements in order to activate the abilities
+	 */
 	function hasStatusRequirements()
 	{
-		foreach( req in this.mStatusRequirements )
-		{
+		//Go through all the status requirements needed, and check if player
+		//has the requirements to activate their ability
+		foreach( req in mStatusRequirements )	{
 			try
 			{
 				local percentHealthTag = "PercentMaxHealth";
 
-				if (req.find(percentHealthTag) != null)
-				{
+				if (req.find(percentHealthTag) != null)	{
 					local data = ::Util.replace(req, percentHealthTag + "(", "");
 					data = ::Util.replace(data, ")", "");
 					local percentile = data.tofloat();
 
-					if (!this._hasPercentileHealth(percentile))
-					{
-						  // [035]  OP_POPTRAP        1      0    0    0
+					if (!_hasPercentileHealth(percentile))
 						return false;
-					}
 				}
-				else
-				{
-					if (!this.StatusRequirementsTable.avatar && ::_avatar)
-					{
-						this.StatusRequirementsTable.avatar <- this._avatar;
-					}
+				else {
+					//If Avatar is null, reset avatar
+					if (!StatusRequirementsTable.avatar && ::_avatar)
+						StatusRequirementsTable.avatar <- _avatar;
 
 					local rule = ::Util.replace(req, ")", ",avatar)");
 
-					if (!this.eval("return " + rule + ";", this.StatusRequirementsTable))
-					{
-						  // [066]  OP_POPTRAP        1      0    0    0
+					if (!eval("return " + rule + ";", StatusRequirementsTable))
 						return false;
-					}
 				}
 			}
-			catch( err )
-			{
-				this.log.debug("Error evaluating: " + req + " errMessage: " + err);
+			catch( err ) {
+				log.debug("Error evaluating: " + req + " errMessage: " + err);
 				return false;
 			}
 		}

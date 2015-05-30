@@ -137,7 +137,6 @@ class this.CreditShopManager extends this.DefaultQueryHandler
 
 	function _handleItemMarkerList( qa, results )
 	{
-		print("ICE! Got credit shop update\n");
 		this.clearItemList();
 
 		foreach( item in results )
@@ -158,11 +157,6 @@ class this.CreditShopManager extends this.DefaultQueryHandler
 			local isExpired = false;
 			
 			
-			print("ICE! ID: " + id + " Title: " + title + " Desc: " + description + 
-				" status: " + status + " Cat: " + category + " Begin: " + beginDate + 
-				" End: " + endDate + " Amt: " + priceAmount + " Cur: " + priceCurrency +
-				 " Lim: " + quantityLimit + " Sold:" + quantitySold + " Proto: " + itemProto);  
-
 			if (endDate != "")
 			{
 				local date = this.Util.split(endDate, ":");

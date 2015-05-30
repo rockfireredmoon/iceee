@@ -2489,8 +2489,7 @@ int CheckSection_Abilities(FileReader &fr, CharacterData &cd, const char *debugF
 		unsigned char buffType = fr.BlockToInt(2);
 		short abID = fr.BlockToInt(3);
 		short abgID = fr.BlockToInt(4);
-		unsigned long remain = fr.BlockToULongC(5);
-		double remainS = remain / 1000.0;
+		double remainS = (double)fr.BlockToULongC(5) / 1000.0;
 		cd.buffManager.AddPersistentBuff(tier, buffType, abID, abgID, remainS);
 	}
 

@@ -1966,12 +1966,13 @@ void SimulatorThread :: SetPersona(int personaIndex)
 	UpdateSocialEntry(true, true);
 	BroadcastShardChanged();
 
+
 	//Since the character has been loaded into an instance and has acquired
 	//a character instance, run processing for abilities.
-	if(g_Config.PersistentBuffs) {
-		ActivateSavedAbilities();
-	}
+	creatureInst->ActivateSavedAbilities();
 	ActivatePassiveAbilities();
+
+	UpdateEqAppearance();
 	UpdateEqAppearance();
 
 	LogMessageL(MSG_DIAG, "Persona set to index:%d, (ID: %d, CDef: %d) (%s)", personaIndex, pld.CreatureID, pld.CreatureDefID, pld.charPtr->cdef.css.display_name);
@@ -2197,10 +2198,14 @@ void SimulatorThread :: SendSetAvatar(int CreatureID)
 
 void SimulatorThread :: MainCallHelperInstanceUnregister(void)
 {
+	if(creatureInst->actInst != NULL)
+		creatureInst->actInst->UnregisterPlayer(this);
+
 	g_PartyManager.RemovePlayerReferences(creatureInst->CreatureDefID, false);
 
 	if(creatureInst->actInst == NULL)
 		return;
+
 
 	int wpos = PrepExt_RemoveCreature(SendBuf, creatureInst->CreatureID);
 	creatureInst->actInst->LSendToAllSimulator(SendBuf, wpos, InternalIndex);
@@ -2489,6 +2494,19 @@ void SimulatorThread :: handle_game_query(void)
 	{
 		if(HandleCommand(PendingData) == false)
 		{
+			// See if the instance script will handle the command
+			if(creatureInst != NULL && creatureInst->actInst != NULL && creatureInst->actInst->nutScriptPlayer.HasScript()) {
+				std::vector<ScriptCore::ScriptParam> p;
+				p.push_back(creatureInst->CreatureID);
+				p.insert(p.end(), query.args.begin(), query.args.end());
+				Util::SafeFormat(Aux1, sizeof(Aux1), "on_command_%s", query.name.c_str());
+				if(creatureInst->actInst->nutScriptPlayer.RunFunction(Aux1, p, true)) {
+					WritePos = PrepExt_QueryResponseString(SendBuf, query.ID, "OK.");
+					PendingSend = true;
+					return;
+				}
+			}
+
 			LogMessageL(MSG_WARN, "[WARNING] Unhandled query in game: %s", query.name.c_str());
 			for(int i = 0; i < query.argCount; i++)
 				LogMessageL(MSG_WARN, "  [%d]=[%s]", i, query.args[i].c_str());
@@ -3001,22 +3019,36 @@ void SimulatorThread :: handle_inspectCreatureDef(void)
 	CharacterData *charData = g_CharacterManager.GetPointerByID(CDefID);
 	g_CharacterManager.ReleaseThread();
 
-	CreatureDefinition *target = NULL;
-	if(charData != NULL)
-	{
-		target = &charData->cdef;
+	if(charData != NULL) {
+		/* Is a player, is it for a player in the current active instance? If so, we need
+		 * appearance modifiers so use the creature instance's calculated appearance.
+		 *
+		 * TODO Em - I don't really like this. It makes me wonder if modifiers should
+		 * be on the creature def.
+		 */
+		CreatureInstance* cInst = creatureInst == NULL || creatureInst->actInst == NULL ? NULL : creatureInst->actInst->GetPlayerByCDefID(charData->cdef.CreatureDefID);
+		if(cInst != NULL) {
+
+			std::string currentAppearance = charData->cdef.css.appearance;
+			std::string currentEqAppearance = charData->cdef.css.eq_appearance;
+			charData->cdef.css.SetAppearance(cInst->PeekAppearance().c_str());
+			charData->cdef.css.SetEqAppearance(cInst->PeekAppearanceEq().c_str());
+
+			AttemptSend(SendBuf, PrepExt_CreatureDef(SendBuf, &charData->cdef));
+
+			charData->cdef.css.SetAppearance(currentAppearance.c_str());
+			charData->cdef.css.SetEqAppearance(currentEqAppearance.c_str());
+		}
+		else
+			AttemptSend(SendBuf, PrepExt_CreatureDef(SendBuf, &charData->cdef));
 	}
-	else
-	{
-		target = CreatureDef.GetPointerByCDef(CDefID);
+	else {
+		CreatureDefinition *target = CreatureDef.GetPointerByCDef(CDefID);
+		if(target != NULL)
+			AttemptSend(SendBuf, PrepExt_CreatureDef(SendBuf, target));
+		else
+			LogMessageL(MSG_WARN, "[WARNING] inspectCreatureDef: could not find ID [%d]", CDefID);
 	}
-	if(target != NULL)
-	{
-		int size = PrepExt_CreatureDef(SendBuf, target);
-		AttemptSend(SendBuf, size);
-	}
-	else
-		LogMessageL(MSG_WARN, "[WARNING] inspectCreatureDef: could not find ID [%d]", CDefID);
 }
 
 void SimulatorThread :: handle_inspectCreature(void)
@@ -3131,7 +3163,7 @@ void SimulatorThread :: UpdateEqAppearance(void)
 	//Util::SafeCopy(creatureInst->css.eq_appearance, pld.charPtr->cdef.css.eq_appearance, sizeof(creatureInst->css.eq_appearance));
 	creatureInst->css.SetEqAppearance(pld.charPtr->cdef.css.eq_appearance.c_str());
 
-	int wpos = PrepExt_SendEqAppearance(SendBuf, pld.CreatureDefID, creatureInst->css.eq_appearance.c_str());
+	int wpos = PrepExt_SendEqAppearance(SendBuf, pld.CreatureDefID, creatureInst->PeekAppearanceEq().c_str());
 	creatureInst->BroadcastLocal(SendBuf, wpos);
 
 	//Stats
@@ -3142,27 +3174,6 @@ void SimulatorThread :: UpdateEqAppearance(void)
 	pld.charPtr->UpdateEquipStats(creatureInst);
 
 	creatureInst->OnEquipmentChange(oldHealthRatio);
-}
-
-void SimulatorThread :: ActivateSavedAbilities(void)
-{
-	std::vector<ActiveBuff>::iterator it;
-
-	/* First copy active buffs to persistent buffs. This is done because is the player logs out
-	 * and in again quickly, the character won't have been reloaded yet. If they had buffs
-	 * active at the time, just treat them as persitent.
-	 */
-	if(g_Config.PersistentBuffs) {
-		pld.charPtr->buffManager.ActiveToPersistent();
-
-		creatureInst->initialisingAbilities = true;
-		for(it = pld.charPtr->buffManager.persistentBuffList.begin(); it != pld.charPtr->buffManager.persistentBuffList.end(); ++it) {
-			creatureInst->CallAbilityEvent(it->abID, EventType::onRequest);
-			creatureInst->CallAbilityEvent(it->abID, EventType::onActivate);
-		}
-		creatureInst->ab[0].bPending = false;
-		creatureInst->initialisingAbilities = false;
-	}
 }
 
 void SimulatorThread :: ActivatePassiveAbilities(void)
@@ -4768,7 +4779,10 @@ int SimulatorThread :: handle_command_warpi(void)
 			return PrepExt_QueryResponseError(SendBuf, query.ID, GetGenericErrorString(errCode));
 
 		//If the avatar is running, it will glitch the position.
-		SetPosition(targZone->DefX, targZone->DefY, targZone->DefZ, 1);
+
+		// EM - Is this really needed?
+//		SetPosition(targZone->DefX, targZone->DefY, targZone->DefZ, 1);
+
 		if(ProtectedSetZone(targZone->mID, 0) == false)
 		{
 			ForceErrorMessage("Critical error while changing zones.", INFOMSG_ERROR);

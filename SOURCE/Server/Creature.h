@@ -436,6 +436,7 @@ public:
 	void RemoveAllBuffs(bool send);
 	void RemoveAbilityBuffTypeExcept(int buffCategory, int abilityID, int abilityGroupID);
 	bool RemoveAbilityBuffWithStat(int statID, float sign);
+	void ActivateSavedAbilities(void);
 
 	void Clear(void);         //Clear all data
 	void CopyFrom(CreatureInstance *source);
@@ -475,6 +476,7 @@ public:
 	void _AddStatusList(int statusID, long msDuration);
 	void _RemoveStatusList(int statusID);
 	void CheckActiveStatusEffects(void);
+	int GetStatDurationSec(int index);
 	
 	//Active ability processing
 	ActiveAbilityInfo ab[2];

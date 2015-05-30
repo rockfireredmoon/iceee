@@ -1821,7 +1821,7 @@ ai_package=
 
 [ENTRY]
 defHints=256
-ID=7847
+ID=7848
 will_regen=1
 might_regen=1
 appearance=c2:{["a"]=[{["type"]="Armor-Cloth-Female-Casual1-Hat",["node"]="hat",["colors"]=["D4D300","00FF0F","FFFFFF","BFBE00","EABE45","3F3522","FFF8E6"]}],["c"]={["boots"]={["type"]="Armor-Cloth-Female-Fancy2",["colors"]=["007f07","f2d756","fffd00","fffd00","df8336","d4d48c","ad5152","ffffff"]},["chest"]={["type"]="Armor-Cloth-Female-Fancy2",["colors"]=["007f07","f2d756","fffd00","fffd00","df8336","d4d48c","ad5152","ffffff"]},["leggings"]={["type"]="Armor-Cloth-Female-Fancy2",["colors"]=["007f07","f2d756","fffd00","fffd00","df8336","d4d48c","ad5152","ffffff"]},["belt"]={["type"]="Armor-Cloth-Female-Fancy2",["colors"]=["007f07","f2d756","fffd00","7f7f54","df8336","d4d48c","ad5152","ffffff"]},["collar"]={["type"]="Armor-Cloth-Female-Fancy2",["colors"]=["007f07","f2d756","fffd00","fffd00","df8336","d4d48c","ad5152","ffffff"]},["arms"]={["type"]="Armor-Cloth-Female-Fancy2",["colors"]=["007f07","f2d756","fffd00","fffd00","df8336","d4d48c","ad5152","ffffff"]}},["b"]="m",["sk"]={["feet"]="E9E9E9",["eye_lid"]="C6AC92",["ear_tips"]="2A1C16",["base"]="94653A",["inner_ear"]="AA4273",["eye"]="6C3D26",["eye_white"]="FFEAD5",["nose"]="151515",["chest"]="FFFFFF"},["sz"]="1",["h"]=0,["g"]="f",["r"]="b"}

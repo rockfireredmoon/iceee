@@ -55,6 +55,7 @@ planetforeverd_SOURCES = md5.cc \
 	Packet.cpp \
 	PartyManager.cpp \
 	Preferences.cpp \
+	PVP.cpp \
 	QuestAction.cpp \
 	Quest.cpp \
 	QuestScript.cpp \
@@ -130,7 +131,7 @@ planetforeverd_SOURCES = md5.cc \
 	Packet.h \
 	PartyManager.h \
 	Preferences.h \
-	PvP.h \
+	PVP.h \
 	QuestAction.h \
 	Quest.h \
 	QuestScript.h \

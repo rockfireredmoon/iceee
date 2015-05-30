@@ -152,6 +152,8 @@ void InstanceNutPlayer::RegisterFunctions() {
 
 void InstanceNutPlayer::RegisterInstanceFunctions(NutPlayer *instance, Sqrat::DerivedClass<InstanceNutPlayer, NutPlayer> *instanceClass)
 {
+	instanceClass->Func(_SC("pvp_start"), &InstanceNutPlayer::PVPStart);
+	instanceClass->Func(_SC("pvp_stop"), &InstanceNutPlayer::PVPStop);
 	instanceClass->Func(_SC("create_party"), &InstanceNutPlayer::CreateVirtualParty);
 	instanceClass->Func(_SC("disband_party"), &InstanceNutPlayer::DisbandVirtualParty);
 	instanceClass->Func(_SC("add_to_party"), &InstanceNutPlayer::AddToVirtualParty);
@@ -214,7 +216,16 @@ void InstanceNutPlayer::RegisterInstanceFunctions(NutPlayer *instance, Sqrat::De
 
 bool InstanceNutPlayer::DisbandVirtualParty(int partyID)
 {
-	return g_PartyManager.DoDisband(partyID);
+	ActiveParty *party = g_PartyManager.GetPartyByID(partyID);
+	if(party != NULL ) {
+		g_PartyManager.DoDisband(partyID);
+		PartyMember *leader = party->GetMemberByID(party->mLeaderID);
+		if(leader != NULL) {
+			g_PartyManager.DoQuit(leader->mCreaturePtr);
+		}
+		return true;
+	}
+	return false;
 }
 
 bool InstanceNutPlayer::AddToVirtualParty(int partyID, int CID)
@@ -270,6 +281,17 @@ bool InstanceNutPlayer::QuitParty(int CID)
 		return true;
 	}
 	return false;
+}
+
+int InstanceNutPlayer::PVPStart()
+{
+	PVPGame * game = actInst->StartPVP();
+	return game != NULL ? game->mId : 0;
+}
+
+bool InstanceNutPlayer::PVPStop()
+{
+	return actInst->StopPVP();
 }
 
 int InstanceNutPlayer::CreateVirtualParty(int leaderCID)
@@ -533,7 +555,7 @@ void InstanceNutPlayer::Emote(int CID, const char *emotion) {
 
 int InstanceNutPlayer::GetPartyID(int CID) {
 	CreatureInstance *ci = GetCreaturePtr(CID);
-	return ci != NULL ? ci->PartyID : -1;
+	return ci != NULL ? ci->PartyID : 0;
 }
 
 ScriptObjects::Vector3 InstanceNutPlayer::GetLocation(int CID) {

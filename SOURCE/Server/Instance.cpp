@@ -584,6 +584,7 @@ void ActiveInstance :: Clear(void)
 	uniqueSpawnManager.Clear();
 	worldMarkers.Clear();
 
+	StopPVP();
 
 	size_t a;
 
@@ -631,6 +632,28 @@ void ActiveInstance :: Clear(void)
 
 	essenceShopList.Clear();
 	itemShopList.Clear();
+}
+
+bool ActiveInstance :: StopPVP()
+{
+	if(pvpGame != NULL) {
+		g_Log.AddMessageFormat("Stopping PVP game %d in %d", mZone, pvpGame->mId);
+		g_PVPManager.ReleaseGame(pvpGame->mId);
+		pvpGame = NULL;
+		return true;
+	}
+	return false;
+}
+
+PVPGame * ActiveInstance :: StartPVP()
+{
+	if(pvpGame != NULL) {
+		g_Log.AddMessageFormat("Already in PVP game %d for %d", pvpGame->mId, mZone);
+		return NULL;
+	}
+	pvpGame = g_PVPManager.NewGame();
+	g_Log.AddMessageFormat("New PVP game %d for %d", pvpGame->mId, mZone);
+	return pvpGame;
 }
 
 int ActiveInstance :: GetNewActorID(void)
@@ -763,6 +786,17 @@ CreatureInstance * ActiveInstance :: LoadPlayer(CreatureInstance *source, Simula
 	//activityManager.UpdatePlayer(source->CreatureID, tx, tz);
 
 	return &PlayerList.back();
+}
+
+int ActiveInstance :: UnregisterPlayer(SimulatorThread *callSim)
+{
+	if(nutScriptPlayer.HasScript() && callSim->creatureInst != NULL) {
+		std::vector<ScriptCore::ScriptParam> p;
+		p.push_back(callSim->creatureInst->CreatureID);
+		// Don't queue this, it's like the script will want to clean up before actual removal
+		nutScriptPlayer.RunFunction("on_unregister", p, true);
+	}
+	return 0;
 }
 
 int ActiveInstance :: UnloadPlayer(SimulatorThread *callSim)

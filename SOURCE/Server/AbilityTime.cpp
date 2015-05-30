@@ -8,6 +8,7 @@ extern unsigned long g_ServerTime;
 
 void ActiveBuffManager :: ActiveToPersistent()
 {
+	g_Log.AddMessageFormat("Moving active %d buffs to persistent buffs (replacing %d)", buffList.size(), persistentBuffList.size());
 	persistentBuffList.clear();
 	persistentBuffList.assign(buffList.begin(), buffList.end());
 	buffList.clear();
@@ -62,7 +63,7 @@ ActiveBuff * ActiveBuffManager :: UpdateBuff(unsigned char tier, unsigned char b
 		{
 			ActiveBuff *persistentBuff = GetPersistentBuff(tier, abID);
 			if(persistentBuff != NULL) {
-				g_Log.AddMessageFormat("Overriding duration of %d of with %d for ability %d because there was an active ability on logout", duration,
+				g_Log.AddMessageFormat("Overriding duration of %f with %d for ability %d because there was an active ability on logout", duration,
 						persistentBuff->durationS, abID);
 				buffList[r].durationS = (int)persistentBuff ->durationS;
 			}
@@ -106,7 +107,7 @@ ActiveBuff * ActiveBuffManager :: AddBuff(unsigned char tier, unsigned char buff
 	{
 		ActiveBuff *persistentBuff = GetPersistentBuff(tier, abID);
 		if(persistentBuff != NULL) {
-			g_Log.AddMessageFormat("Overriding duration of %d of with %d for ability %d because there was an active ability on logout", duration,
+			g_Log.AddMessageFormat("Overriding duration of %f of with %d for ability %d because there was an active ability on logout", duration,
 					persistentBuff->durationS, abID);
 			buff.durationS = (int)persistentBuff ->durationS;
 		}

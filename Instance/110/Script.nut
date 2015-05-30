@@ -47,17 +47,26 @@ blue_score <- 0;
 red_party <- 0;
 blue_party <- 0;
 
-// 
+pvp_id <- 0;
+
+// Special commands
+function on_command_startctf(cid) {
+	start_ctf();
+} 
+
+//
 
 /*
  * Start the game
  */
 function start_ctf() {
+	pvp_id = inst.pvp_start();
 	cid_red_registrar = spawn_retry(PROP_RED_TEAM_REGISTRAR);
 	cid_blue_registrar = spawn_retry(PROP_BLUE_TEAM_REGISTRAR);
 }
 
 function spawn_retry(prop) {
+	print("Spawning on prop "+ prop + "\n");
 	local cid = inst.spawn(prop, 0,0);
 	if(cid < 1) {
 		print("Retrying spawn " + prop + " in 5 seconds\n");
@@ -67,6 +76,8 @@ function spawn_retry(prop) {
 }
 
 function stop_ctf() {
+	inst.pvp_stop();
+
 	despawn_red_flag();
 	despawn_blue_flag();
 	despawn_registrars();
@@ -92,19 +103,11 @@ function on_halt() {
 
 function detach_flags() {
 	if(has_red_flag > 0) {
-		// Queued to try and work around a problem with updating appearance while switching instances
-		local w = has_red_flag;
-		inst.queue(function() {
-			inst.detach_item(sourceCId, "Item-CTF_Red", "ctf");
-		}, 500);
+		inst.detach_item(has_red_flag, "Item-CTF_Red", "ctf");
 		has_red_flag = 0;
 	}
 	if(has_blue_flag > 0) {
-		// Queued to try and work around a problem with updating appearance while switching instances
-		local w = has_blue_flag;
-		inst.queue(function() {
-			inst.detach_item(sourceCId, "Item-CTF_Blue", "ctf");
-		}, 500);
+		inst.detach_item(has_blue_flag, "Item-CTF_Blue", "ctf");
 		has_blue_flag = 0;
 	}
 }
@@ -191,16 +194,20 @@ function on_player_death(cid) {
  * Called when player is unloaded from the instance for whatever
  * reason
  */
-function on_unload(cid) {
-	local party_id = inst.get_party_id(cid);
-	if(party_id == red_party || party_id == blue_party) 
-		inst.quit_party(cid); 
+function on_unregister(cid) {
 
 	if(cid == has_red_flag)
 		drop_red_flag();
 	
 	if(cid == has_blue_flag) 
 		drop_blue_flag();
+		
+	local party_id = inst.get_party_id(cid);
+	if(party_id == red_party || party_id == blue_party)  {
+		inst.quit_party(cid);
+		if(inst.get_party_size(party_id) == 0)
+			stop_ctf(); 
+	} 
 }
 
 function on_use(sourceCId, targetCDefId) {
@@ -216,10 +223,6 @@ function on_use(sourceCId, targetCDefId) {
 					red_party = inst.create_party(sourceCId);
 				else
 					inst.add_to_party(red_party, sourceCId);
-					
-				print("RED PARTY ID: " +red_party + " red has = " + 
-					inst.get_party_size(red_party) + " blue has = " + 
-					inst.get_party_size(blue_party) + "\n");
 				
 				//if(inst.get_party_size(red_party) == 1)
 					//cid_red_safe = spawn_retry(PROP_RED_FLAG_SAFE);

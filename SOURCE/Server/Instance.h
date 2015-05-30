@@ -22,6 +22,7 @@
 #include "QuestScript.h"
 #include "InstanceScript.h"
 #include "Arena.h"
+#include "PVP.h"
 using namespace std;
 
 class SimulatorThread;
@@ -280,6 +281,8 @@ public:
 	float mDropRateBonusMultiplier;   //Progressive drop rate multiplier, increased slightly per mob kill.  Only applies to dungeons.
 	int mKillCount;                   //Total kill count of the dungeon.  No purpose than some generic tracking.
 	
+	PVPGame *pvpGame;
+
 	ArenaRuleset arenaRuleset;
 
 	UniqueSpawnManager uniqueSpawnManager;
@@ -297,6 +300,7 @@ public:
 	int SimExist(SimulatorThread *simPtr);
 
 	CreatureInstance * LoadPlayer(CreatureInstance *source, SimulatorThread *simCall);
+	int UnregisterPlayer(SimulatorThread *callSim);
 	int UnloadPlayer(SimulatorThread *callSim);
 	int RemovePlayerByID(int creatureID);
 
@@ -397,6 +401,9 @@ public:
 	CreatureInstance* GetMatchingSidekick(CreatureInstance *host, int searchID);
 	void SetAllPlayerPVPStatus(int x, int z, int range, bool state);
 	void NotifyKill(int mobRarity);
+
+	bool StopPVP();
+	PVPGame * StartPVP();
 
 	void Script_ScanNPCCID(ScriptObjects::Area *location, std::vector<int>& destResult);
 };

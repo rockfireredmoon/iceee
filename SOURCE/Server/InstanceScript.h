@@ -42,6 +42,8 @@ public:
 
 	// Exposed to scripts
 //	void Queue(Sqrat::Function function, int fireDelay);
+	int PVPStart();
+	bool PVPStop();
 	void RestoreOriginalAppearance(int CID);
 	int CreateVirtualParty(int leaderCID);
 	bool DisbandVirtualParty(int partyID);

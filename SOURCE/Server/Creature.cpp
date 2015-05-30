@@ -1,5 +1,6 @@
 #include <math.h>   //For atan2()
 #include <algorithm>  //For STL sort
+#include <limits>
 
 #include "Ability2.h"
 #include "Creature.h"
@@ -22,7 +23,6 @@
 #include "PartyManager.h"
 #include "Config.h"
 #include "Quest.h"
-#include "PvP.h"
 #include "Combat.h"
 #include "InstanceScale.h"
 #include "VirtualItem.h"
@@ -1582,7 +1582,7 @@ void CreatureInstance :: AddBuff(int buffSource, int buffCategory, int abTier, i
 
 	//Calculate the internal expiration time.  -1 indicates infinite duration.
 	if(Util::DoubleEquivalent(durationSec, -1.0F) == false)
-		expireTimeMS = g_ServerTime + static_cast<int>(durationSec * 1000);
+		expireTimeMS = g_ServerTime + ( ( unsigned long)durationSec * 1000UL);
 	else
 		expireTimeMS = PlatformTime::MAX_TIME;
 
@@ -3494,7 +3494,14 @@ bool CreatureInstance :: CanPVPTarget(CreatureInstance *target)
 			if(actInst->mZoneDefPtr != NULL)
 			{
 				if(actInst->mZoneDefPtr->IsPVPArena() == true)
+				{
+					// In an arena, party members are members of the same, so
+					// should be unattackable
+					if(PartyID > 0 && PartyID == target->PartyID)
+						return false;
+
 					return true;
+				}
 			}
 		}
 
@@ -4202,6 +4209,35 @@ void CreatureInstance :: SendAutoAttack(int abilityID, int targetID)
 	actInst->LSendToLocalSimulator(GSendBuf, wpos, CurrentX, CurrentZ);
 	*/
 }
+
+void CreatureInstance :: ActivateSavedAbilities(void)
+{
+	std::vector<ActiveBuff>::iterator it;
+	if(g_Config.PersistentBuffs) {
+		if(buffManager.buffList.size() > 0)
+			/* First copy active buffs to persistent buffs. This is done because is the player logs out
+			 * and in again quickly, the character won't have been reloaded yet. If they had buffs
+			 * active at the time, just treat them as persistent.
+			 */
+			buffManager.ActiveToPersistent();
+		else
+			g_Log.AddMessageFormat("No active buffs, %d persistent buffs", buffManager.persistentBuffList.size());
+
+		initialisingAbilities = true;
+
+		// Target self
+		ab[0].TargetCount = 1;
+		ab[0].TargetList[0] = this;
+
+		for(it = buffManager.persistentBuffList.begin(); it != buffManager.persistentBuffList.end(); ++it) {
+//			CallAbilityEvent(it->abID, EventType::onRequest);
+			CallAbilityEvent(it->abID, EventType::onActivate);
+		}
+		ab[0].bPending = false;
+		initialisingAbilities = false;
+	}
+}
+
 
 int CreatureInstance :: RemoveCreatureReference(CreatureInstance *target)
 {
@@ -6033,6 +6069,19 @@ void CreatureInstance :: _RemoveStatusList(int statusID)
 	}
 }
 
+int CreatureInstance :: GetStatDurationSec(int index)
+{
+	if(activeStatMod[index].expireTime == PlatformTime::MAX_TIME)
+		return std::numeric_limits<int>::max();
+	else {
+		int x = ((activeStatMod[index].expireTime - g_ServerTime ) / 1000UL);
+		if(x < 0) {
+			return std::numeric_limits<int>::max();
+		}
+		return x;
+	}
+}
+
 void CreatureInstance :: CheckActiveStatusEffects(void)
 {
 	//Check status effects for time expirations.
@@ -7304,7 +7353,7 @@ void CreatureInstance :: AttachItem(const char *type, const char *node) {
 
 void CreatureInstance :: ClearAppearanceModifiers()
 {
-	g_Log.AddMessageFormat("Clearing appearance modifiers for %d", CreatureID);
+	g_Log.AddMessageFormat("Clearing %d appearance modifiers for %d", appearanceModifiers.size(), CreatureID);
 	std::vector<AppearanceModifier*>::iterator it = appearanceModifiers.begin();
 	for(; it != appearanceModifiers.end(); ++it)
 		delete *it;

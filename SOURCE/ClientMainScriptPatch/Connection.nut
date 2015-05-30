@@ -2240,6 +2240,7 @@ class this.Connection extends this.MessageBroadcaster
 				{
 					description = data.getStringUTF();
 				}
+				local duration2 = duration * 1000;
 
 				local statusModifier;
 				statusModifier = this.StatusModifier(id, abilityId, amount, duration, description);
@@ -2938,7 +2939,6 @@ class this.Connection extends this.MessageBroadcaster
 				local effectY = data.getFloat();
 				local effectZ = data.getFloat();
 				local size = data.getFloat();
-				print("ICE: attach effect: " + effectName + " " + effectTag + " " + sceneryId + " " + effectX + "," + effectY + "," + effectZ + "\n");
 				if(effectType == 1) {
 				
 					// Effect Type 1 - Add a particle effect to the prop				

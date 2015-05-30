@@ -61,7 +61,6 @@ int WriteCharacterStats(CharacterStatSet *css, char *buffer, int &wpos, int flag
 	{
 		if(StatList[a].updflag & flagMask)
 		{
-
 			void *data = &TableAddr[StatList[a].offset];
 			switch(StatList[a].etype)
 			{
@@ -325,7 +324,8 @@ int PrepExt_CreatureInstance(char *buffer, CreatureInstance *cInst)
 				wpos += PutShort(&buffer[wpos], cInst->activeStatMod[a].abilityID);  //Ability ID
 				wpos += PutShort(&buffer[wpos], static_cast<short>(cInst->activeStatMod[a].clientAmount));  //amount
 			}
-			wpos += PutInteger(&buffer[wpos], (int)((cInst->activeStatMod[a].expireTime - g_ServerTime) / 1000));  //duration
+//			wpos += PutInteger(&buffer[wpos], (int)((cInst->activeStatMod[a].expireTime - g_ServerTime) / 1000));  //duration
+			wpos += PutInteger(&buffer[wpos], cInst->GetStatDurationSec(a));  //duration
 			if(g_ProtocolVersion >= 24)
 			{
 				wpos += PutStringUTF(&buffer[wpos], ""); //Description?
@@ -347,7 +347,22 @@ int PrepExt_CreatureInstance(char *buffer, CreatureInstance *cInst)
 		if(cInst->serverFlags & ServerFlags::IsPlayer)
 			StatFlags -= SUT_NonPlayer;  //Remove NPC-only stats like aggro
 
+		/* Temporary set appearance stat to the appearance on the top of the stack.
+		 * We don't want to ever store this appearance so it is changed back after
+		 * the update buffer has been built
+		 */
+		std::string currentAppearance = cInst->css.appearance;
+		std::string currentEqAppearance = cInst->css.eq_appearance;
+		cInst->css.SetAppearance(cInst->PeekAppearance().c_str());
+		cInst->css.SetEqAppearance(cInst->PeekAppearanceEq().c_str());
+
 		int r = WriteCharacterStats(&cInst->css, buffer, wpos, StatFlags);
+
+		// And set it back
+		cInst->css.SetAppearance(currentAppearance.c_str());
+		cInst->css.SetEqAppearance(currentEqAppearance.c_str());
+
+
 		PutShort(&buffer[spos], r);           //Write number of stats
 	}
 
@@ -358,6 +373,7 @@ int PrepExt_CreatureInstance(char *buffer, CreatureInstance *cInst)
 
 int PrepExt_CreatureFullInstance(char *buffer, CreatureInstance *cInst)
 {
+
 	TIMETRACK("PrepExt_CreatureFullInstance");
 	int wpos = 0;
 	wpos += PutByte(&buffer[wpos], 0x05);      //_handleCreatureUpdateMsg
@@ -415,7 +431,8 @@ int PrepExt_CreatureFullInstance(char *buffer, CreatureInstance *cInst)
 				wpos += PutShort(&buffer[wpos], cInst->activeStatMod[a].abilityID);  //Ability ID
 				wpos += PutShort(&buffer[wpos], static_cast<short>(cInst->activeStatMod[a].clientAmount));  //amount
 			}
-			wpos += PutInteger(&buffer[wpos], (int)((cInst->activeStatMod[a].expireTime - g_ServerTime) / 1000));  //duration
+//			wpos += PutInteger(&buffer[wpos], (int)((cInst->activeStatMod[a].expireTime - g_ServerTime) / 1000));  //duration
+			wpos += PutInteger(&buffer[wpos], cInst->GetStatDurationSec(a));  //duration
 			if(g_ProtocolVersion >= 24)
 			{
 				wpos += PutStringUTF(&buffer[wpos], ""); //Description?
@@ -438,7 +455,22 @@ int PrepExt_CreatureFullInstance(char *buffer, CreatureInstance *cInst)
 
 		int spos = wpos;
 		wpos += PutShort(&buffer[wpos], 0);    //Placeholder for stats
+
+		/* Temporary set appearance stat to the appearance on the top of the stack.
+		 * We don't want to ever store this appearance so it is changed back after
+		 * the update buffer has been built
+		 */
+		std::string currentAppearance = cInst->css.appearance;
+		std::string currentEqAppearance = cInst->css.eq_appearance;
+		cInst->css.SetAppearance(cInst->PeekAppearance().c_str());
+		cInst->css.SetEqAppearance(cInst->PeekAppearanceEq().c_str());
+
 		int r = WriteCharacterStats(&cInst->css, buffer, wpos, StatFlags);
+
+		// And set it back
+		cInst->css.SetAppearance(currentAppearance.c_str());
+		cInst->css.SetEqAppearance(currentEqAppearance.c_str());
+
 		PutShort(&buffer[spos], r);           //Write number of stats
 	}
 
@@ -1184,7 +1216,8 @@ int PrepExt_UpdateMods(char *buffer, CreatureInstance *cInst)
 				wpos += PutShort(&buffer[wpos], cInst->activeStatMod[a].abilityID);  //Ability ID
 				wpos += PutShort(&buffer[wpos], static_cast<short>(cInst->activeStatMod[a].clientAmount));  //amount
 			}
-			wpos += PutInteger(&buffer[wpos], (int)((cInst->activeStatMod[a].expireTime - g_ServerTime) / 1000));  //duration
+//			wpos += PutInteger(&buffer[wpos], (int)((cInst->activeStatMod[a].expireTime - g_ServerTime) / 1000));  //duration
+			wpos += PutInteger(&buffer[wpos], cInst->GetStatDurationSec(a));  //duration
 			if(g_ProtocolVersion >= 24)
 			{
 				wpos += PutStringUTF(&buffer[wpos], ""); //Description?

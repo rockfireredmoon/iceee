@@ -173,7 +173,6 @@ class this.GUI.CreditShopItem extends this.GUI.Component
 
 	function updateItem( creditItem )
 	{
-		print("ICE! Updating credit item " + creditItem + "\n");
 		this.mCreditItem = creditItem;
 		local visible = false;
 
@@ -183,19 +182,16 @@ class this.GUI.CreditShopItem extends this.GUI.Component
 			local titleText = creditItem.getTitle();
 			local descriptionText = creditItem.getDescription();
 			local itemDefId = creditItem.getItemDefId();
-			print("ICE!     " + titleText + " / " + itemDefId);
 			local numStacks = creditItem.getNumCount();
 			local creditAmount = creditItem.getPriceAmount();
 			this.mItemDefId = itemDefId;
 
 			if (itemDefId)
 			{
-				print("ICE! looking up " + itemDefId);
 				local itemDef = ::_ItemDataManager.getItemDef(itemDefId);
 
 				if (itemDef)
 				{
-					print("ICE! found  " + itemDefId + " ( " + itemDef.getIcon() + " )");
 					this.mItemImage.setImage(itemDef.getIcon());
 					this.mItemImage.updateItemDefId(itemDefId);
 				}
