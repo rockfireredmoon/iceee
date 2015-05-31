@@ -6,5 +6,5 @@ ItemID=50011
 Category=CONSUMABLES
 Status=NEW
 QuantityLimit=100
-QuantitySold=1
+QuantitySold=39
 

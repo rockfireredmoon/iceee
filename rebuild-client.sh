@@ -34,6 +34,7 @@ find . -name '*.nut'|while read script ; do
 	output=$(basename $script .nut).cnut
 	if [ "${script}" = "./AbilityTable.nut" ] ; then
 		echo "Using Abilities.cnut instead of AbilityTable.cnut"
+		cp ${script} ${base}/scratch 
 		output="./Abilities.cnut"
 	fi
 	echo "Compiling ${script} to ${output}"

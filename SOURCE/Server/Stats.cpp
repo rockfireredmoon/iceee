@@ -276,6 +276,12 @@ StatusEffectBitInfo StatusEffectBitData[] = {
 
 	{StatusEffects::GM_INVISIBLE,          1, (1 << 28), "GM_INVISIBLE" },
 	{StatusEffects::GM_SILENCED,           1, (1 << 29), "GM_SILENCED" },
+
+	{StatusEffects::UNKILLABLE,            1, (1 << 30), "UNKILLABLE" },
+	{StatusEffects::TRANSFORMED,           1, (1 << 31), "TRANSFORMED" },
+
+	// New array index
+	{StatusEffects::INVISIBLE_EQUIPMENT,   2, (1 << 0), "INVISIBLE_EQUIPMENT" },
 };
 const int MAX_STATUSEFFECT = sizeof(StatusEffectBitData) / sizeof(StatusEffectBitInfo);
 
@@ -773,8 +779,9 @@ float GetStatValueByID(int statID, CharacterStatSet *css)
 int WriteValueToStat(int StatID, float value, CharacterStatSet *css)
 {
 	int r = GetStatIndex(StatID);
-	if(r == -1)
+	if(r == -1) {
 		return -1;
+	}
 
 	char *base = (char*)css + StatList[r].offset;
 	switch(StatList[r].etype)

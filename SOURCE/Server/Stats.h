@@ -475,7 +475,9 @@ namespace StatusEffects
 		GM_SILENCED = 61,
 
 		//Custom modded status effects
-		TRANSFORMED = 62
+		UNKILLABLE = 62,
+		TRANSFORMED = 63,
+		INVISIBLE_EQUIPMENT = 64
 	};
 }
 
@@ -561,7 +563,7 @@ namespace StatManager
 }
 
 extern StatusEffectBitInfo StatusEffectBitData[];
-#define MAX_STATUSEFFECTBYTES  2
+#define MAX_STATUSEFFECTBYTES  3
 
 extern const int MAX_LEVEL;
 extern short LevelBaseStats[71][3];

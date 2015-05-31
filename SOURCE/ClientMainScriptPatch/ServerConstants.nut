@@ -1794,6 +1794,18 @@ this.StatusEffects <- {
 		prettyName = "Unkillable",
 		icon = "",
 		type = ""
+	},
+	TRANSFORMED = 63,
+	[63] = {
+		prettyName = "You are transformed into a feral form.",
+		icon = "",
+		type = "Buff"
+	},
+	INVISIBLE_EQUIPMENT = 64,
+	[64] = {
+		prettyName = "Your equipment is invisible.",
+		icon = "",
+		type = "Buff"
 	}
 };
 this.AbilityUseType <- {

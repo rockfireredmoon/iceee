@@ -302,7 +302,7 @@ int QuestActionContainer :: ExecuteSingleCommand(SimulatorThread *caller, Extend
 		{
 			int creatureDefID = e.param[0];
 			g_Log.AddMessageFormat("Transform: %d", creatureDefID);
-			cInst->CAF_Transform(creatureDefID, 0);
+			cInst->CAF_Transform(creatureDefID, 0, -1);
 		}
 		break;
 	case ACTION_UNTRANSFORM:

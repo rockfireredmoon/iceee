@@ -2240,7 +2240,6 @@ class this.Connection extends this.MessageBroadcaster
 				{
 					description = data.getStringUTF();
 				}
-				local duration2 = duration * 1000;
 
 				local statusModifier;
 				statusModifier = this.StatusModifier(id, abilityId, amount, duration, description);
