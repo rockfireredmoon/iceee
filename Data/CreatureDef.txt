@@ -7042,6 +7042,7 @@ profession=3
 creature_category=Mortal
 rarity=2
 ai_package=rogue_brave_6
+credit_drops=1
 
 [ENTRY]
 ID=291
@@ -37102,6 +37103,7 @@ profession=3
 creature_category=Animal
 ai_package=melee_creature_brave_6
 total_size=9.6
+credit_drops=1
 
 [ENTRY]
 ID=1619

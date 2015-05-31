@@ -3018,7 +3018,6 @@ void SimulatorThread :: handle_inspectCreatureDef(void)
 	g_CharacterManager.GetThread("SimulatorThread::handle_inspectCreatureDef");
 	CharacterData *charData = g_CharacterManager.GetPointerByID(CDefID);
 	g_CharacterManager.ReleaseThread();
-
 	if(charData != NULL) {
 		/* Is a player, is it for a player in the current active instance? If so, we need
 		 * appearance modifiers so use the creature instance's calculated appearance.
@@ -3028,16 +3027,21 @@ void SimulatorThread :: handle_inspectCreatureDef(void)
 		 */
 		CreatureInstance* cInst = creatureInst == NULL || creatureInst->actInst == NULL ? NULL : creatureInst->actInst->GetPlayerByCDefID(charData->cdef.CreatureDefID);
 		if(cInst != NULL) {
+			CreatureDefinition cd(charData->cdef);
+			cd.css.SetAppearance(cInst->PeekAppearance().c_str());
+			cd.css.SetEqAppearance(cInst->PeekAppearanceEq().c_str());
+			AttemptSend(SendBuf, PrepExt_CreatureDef(SendBuf, &cd));
 
-			std::string currentAppearance = charData->cdef.css.appearance;
-			std::string currentEqAppearance = charData->cdef.css.eq_appearance;
-			charData->cdef.css.SetAppearance(cInst->PeekAppearance().c_str());
-			charData->cdef.css.SetEqAppearance(cInst->PeekAppearanceEq().c_str());
 
-			AttemptSend(SendBuf, PrepExt_CreatureDef(SendBuf, &charData->cdef));
-
-			charData->cdef.css.SetAppearance(currentAppearance.c_str());
-			charData->cdef.css.SetEqAppearance(currentEqAppearance.c_str());
+//			std::string currentAppearance = charData->cdef.css.appearance;
+//			std::string currentEqAppearance = charData->cdef.css.eq_appearance;
+//			charData->cdef.css.SetAppearance(cInst->PeekAppearance().c_str());
+//			charData->cdef.css.SetEqAppearance(cInst->PeekAppearanceEq().c_str());
+//
+//			AttemptSend(SendBuf, PrepExt_CreatureDef(SendBuf, &charData->cdef));
+//
+//			charData->cdef.css.SetAppearance(currentAppearance.c_str());
+//			charData->cdef.css.SetEqAppearance(currentEqAppearance.c_str());
 		}
 		else
 			AttemptSend(SendBuf, PrepExt_CreatureDef(SendBuf, &charData->cdef));

@@ -928,6 +928,11 @@ this.RequirementTable <- {
 		}
 	}
 
+	function NotTransformed()
+	{
+		return "the player not to be transformed";
+	}
+
 	function NotStatus( status )
 	{
 		return "the player not to be " + status;

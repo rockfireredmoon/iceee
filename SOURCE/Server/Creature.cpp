@@ -1662,6 +1662,28 @@ void CreatureInstance :: RemoveStatModsBySource(int buffSource)
 		SendUpdatedBuffs();
 }
 
+ActiveBuff * CreatureInstance :: AddMod(unsigned char tier, int buffCategory, short abID, short abgID, double durationSec)
+{
+	ActiveStatMod newMod;
+	newMod.sourceType = BuffSource::ABILITY;
+	newMod.abilityID = abID;
+	newMod.priority = 1;
+	newMod.amount = 0;
+	newMod.clientAmount = newMod.amount;
+
+	ActiveBuff * buff = buffManager.UpdateBuff(tier, buffCategory, abID, abgID, durationSec, initialisingAbilities);
+
+	// Set the expire time now, the active buff may have come from a persistent buff
+	newMod.expireTime = buff->castEndTimeMS;
+
+	// Signal update of status effects
+	activeStatMod.push_back(newMod);
+	pendingOperations.UpdateList_Add(CREATURE_UPDATE_MOD, this, 0);
+
+	return buff;
+}
+
+
 void CreatureInstance :: AddItemStatMod(int itemID, int statID, float amount)
 {
 	ActiveStatMod newMod;
@@ -2734,25 +2756,31 @@ void CreatureInstance :: ProcessDeath(void)
 		int credits = 0;
 		char buf[256];
 		if(css.credit_drops > 0) {
-			double totalPlayerLevel = 0;
+			double maxPlayerLevel = 0;
 			double alivePlayers = 0;
 			for(size_t i = 0; i < attackerList.size(); i++)
 			{
 				CreatureInstance *attacker = attackerList[i].ptr;
 				if(attacker->HasStatus(StatusEffects::DEAD) == false) {
-					totalPlayerLevel += attacker->css.level;
+					if(attacker->css.level > maxPlayerLevel)
+						maxPlayerLevel = attacker->css.level;
 					alivePlayers++;
 				}
 			}
-			int avgPlayerLevel = (int)ceil(totalPlayerLevel / alivePlayers);
-			int levelDiff = ( css.level - avgPlayerLevel ) + 1;
+			int levelDiff = ( css.level - maxPlayerLevel ) + 1;
 			credits = levelDiff * css.rarity * alivePlayers;
-			if(credits == 1)
-				Util::SafeFormat(buf, sizeof(buf), "Your party earned 1 credit each");
-			else if(credits > 1)
-				Util::SafeFormat(buf, sizeof(buf), "Your party earned %d credits each", credits);
+			if(credits < 0) {
+				g_Log.AddMessageFormat("Party earned no credits as level difference too great or nobody was left alive");
+			}
+			else {
+				if(credits == 1)
+					Util::SafeFormat(buf, sizeof(buf), "Your party earned 1 credit each");
+				else if(credits > 1)
+					Util::SafeFormat(buf, sizeof(buf), "Your party earned %d credits each", credits);
 
-			g_Log.AddMessageFormat("This mob drops credits. The team earned %d (average player level %d, difference %d, alive %d, total %d)", credits, avgPlayerLevel, levelDiff, alivePlayers, totalPlayerLevel);
+				g_Log.AddMessageFormat("This mob drops credits. The team earned %d (max player level %d, difference %d, alive %d)", credits, maxPlayerLevel, levelDiff, alivePlayers);
+			}
+
 
 		}
 
@@ -2767,6 +2795,11 @@ void CreatureInstance :: ProcessDeath(void)
 			{
 				attacker->CheckQuestKill(this);
 				int exp = GetKillExperience(highestLev);
+
+				// Adjust for tomes etc
+				if(attacker->css.experience_gain_rate > 0) {
+					exp += Util::GetAdditiveFromIntegralPercent100(exp, attacker->css.experience_gain_rate);
+				}
 
 				//If a party member, don't give experience if players are too far
 				//below the mob level.
@@ -3939,7 +3972,7 @@ int CreatureInstance :: RequestAbilityActivation(int abilityID)
 		if((serverFlags & ServerFlags::IsPlayer) && (simulatorPtr != NULL))
 		{
 			int errorCode = Ability2::AbilityManager2::GetAbilityErrorCode(result);
-			g_Log.AddMessageFormat("Failed to activate ability because error code %d (%d).", errorCode, result);
+			g_Log.AddMessageFormat("Failed to activate ability %d because error code %d (%d).", abilityID, errorCode, result);
 			simulatorPtr->SendAbilityErrorMessage(errorCode);
 		}
 		else {
@@ -7163,8 +7196,10 @@ bool CreatureInstance :: CAF_Untransform()
 		g_Log.AddMessageFormat("%d not transformed", CreatureDefID);
 		return false;
 	}
-	g_Log.AddMessageFormat("Untransforming %d", CreatureDefID);
+	g_Log.AddMessageFormat("Untransforming %d (app is %s)", CreatureDefID, css.appearance.c_str());
 	_ClearStatusFlag(StatusEffects::TRANSFORMED);
+	_ClearStatusFlag(StatusEffects::INVISIBLE_EQUIPMENT);
+	SetServerFlag(ServerFlags::IsTransformed, false);
 	RemoveAppearanceModifier(transformModifier);
 	transformCreatureId = 0;
 	transformAbilityId = 0;
@@ -7172,22 +7207,21 @@ bool CreatureInstance :: CAF_Untransform()
 	return true;
 }
 
-bool CreatureInstance :: CAF_Nudify()
+bool CreatureInstance :: CAF_Nudify(int durationS)
 {
 	if(transformModifier != NULL) {
 		g_Log.AddMessageFormat("%d already transformed", CreatureDefID);
 		return false;
 	}
-
-	g_Log.AddMessageFormat("Nudifying %d", CreatureDefID);
-
+	g_Log.AddMessageFormat("Nudifying %d (app is %s)", CreatureDefID, css.appearance.c_str());
 	transformModifier = new NudifyAppearanceModifier();
+	_AddStatusList(StatusEffects::INVISIBLE_EQUIPMENT, durationS);
 	PushAppearanceModifier(transformModifier);
 	return true;
 
 }
 
-bool CreatureInstance :: CAF_Transform(int CDefID, int abID)
+bool CreatureInstance :: CAF_Transform(int CDefID, int abID, int durationS)
 {
 	if(transformModifier != NULL) {
 		g_Log.AddMessageFormat("%d already transformed into %d", CreatureDefID, transformCreatureId);
@@ -7195,7 +7229,7 @@ bool CreatureInstance :: CAF_Transform(int CDefID, int abID)
 	}
 
 	g_Log.AddMessageFormat("Transforming %d into %d", CreatureDefID, CDefID);
-	_AddStatusList(StatusEffects::TRANSFORMED, -1);
+	_AddStatusList(StatusEffects::TRANSFORMED, durationS);
 	SetServerFlag(ServerFlags::IsTransformed, true);
 
 	CreatureDefinition *cdef = CreatureDef.GetPointerByCDef(CDefID);

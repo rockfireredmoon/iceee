@@ -257,16 +257,11 @@ int PrepExt_UpdateAppearance(char *buffer, CreatureInstance *cInst)
 	 * We don't want to ever store this appearance so it is changed back after
 	 * the update buffer has been built
 	 */
-	std::string currentAppearance = cInst->css.appearance;
-	std::string currentEqAppearance = cInst->css.eq_appearance;
-	cInst->css.SetAppearance(cInst->PeekAppearance().c_str());
-	cInst->css.SetEqAppearance(cInst->PeekAppearanceEq().c_str());
+	CharacterStatSet css2(cInst->css);
+	css2.SetAppearance(cInst->PeekAppearance().c_str());
+	css2.SetEqAppearance(cInst->PeekAppearanceEq().c_str());
 
-	int r = WriteCharacterStats(&cInst->css, buffer, wpos, SUT_Appearance);
-
-	// And set it back
-	cInst->css.SetAppearance(currentAppearance.c_str());
-	cInst->css.SetEqAppearance(currentEqAppearance.c_str());
+	int r = WriteCharacterStats(&css2, buffer, wpos, SUT_Appearance);
 
 	PutShort(&buffer[spos], r);           //Write number of stats
 
@@ -351,17 +346,11 @@ int PrepExt_CreatureInstance(char *buffer, CreatureInstance *cInst)
 		 * We don't want to ever store this appearance so it is changed back after
 		 * the update buffer has been built
 		 */
-		std::string currentAppearance = cInst->css.appearance;
-		std::string currentEqAppearance = cInst->css.eq_appearance;
-		cInst->css.SetAppearance(cInst->PeekAppearance().c_str());
-		cInst->css.SetEqAppearance(cInst->PeekAppearanceEq().c_str());
+		CharacterStatSet css2(cInst->css);
+		css2.SetAppearance(cInst->PeekAppearance().c_str());
+		css2.SetEqAppearance(cInst->PeekAppearanceEq().c_str());
 
-		int r = WriteCharacterStats(&cInst->css, buffer, wpos, StatFlags);
-
-		// And set it back
-		cInst->css.SetAppearance(currentAppearance.c_str());
-		cInst->css.SetEqAppearance(currentEqAppearance.c_str());
-
+		int r = WriteCharacterStats(&css2, buffer, wpos, StatFlags);
 
 		PutShort(&buffer[spos], r);           //Write number of stats
 	}
@@ -460,16 +449,11 @@ int PrepExt_CreatureFullInstance(char *buffer, CreatureInstance *cInst)
 		 * We don't want to ever store this appearance so it is changed back after
 		 * the update buffer has been built
 		 */
-		std::string currentAppearance = cInst->css.appearance;
-		std::string currentEqAppearance = cInst->css.eq_appearance;
-		cInst->css.SetAppearance(cInst->PeekAppearance().c_str());
-		cInst->css.SetEqAppearance(cInst->PeekAppearanceEq().c_str());
+		CharacterStatSet css2(cInst->css);
+		css2.SetAppearance(cInst->PeekAppearance().c_str());
+		css2.SetEqAppearance(cInst->PeekAppearanceEq().c_str());
 
-		int r = WriteCharacterStats(&cInst->css, buffer, wpos, StatFlags);
-
-		// And set it back
-		cInst->css.SetAppearance(currentAppearance.c_str());
-		cInst->css.SetEqAppearance(currentEqAppearance.c_str());
+		int r = WriteCharacterStats(&css2, buffer, wpos, StatFlags);
 
 		PutShort(&buffer[spos], r);           //Write number of stats
 	}
@@ -1225,8 +1209,9 @@ int PrepExt_UpdateMods(char *buffer, CreatureInstance *cInst)
 		}
 
 		wpos += PutShort(&buffer[wpos], cInst->activeStatusEffect.size());
-		for(a = 0; a < (int)cInst->activeStatusEffect.size(); a++)
+		for(a = 0; a < (int)cInst->activeStatusEffect.size(); a++) {
 			wpos += PutShort(&buffer[wpos], cInst->activeStatusEffect[a].modStatusID);
+		}
 	}
 
 	if(mask & CREATURE_UPDATE_STAT)

@@ -3135,7 +3135,10 @@ int AbilityCalculator :: NotTransformed(ARGUMENT_LIST args)
 int AbilityCalculator :: Nudify(ARGUMENT_LIST args)
 {
 	g_Log.AddMessageFormat("Nudify");
-	ciSource->CAF_Nudify();
+	int timeSec = static_cast<int>(args.GetEvaluation(0, &g_AbilityManager));
+	int buffType = ResolveBuffCategoryID(mAbilityEntry->GetRowAsCString(ABROW::BUFF_CATEGORY));
+	ActiveBuff * buff = ciTarget->AddMod(mAbilityEntry->mTier, buffType, mAbilityEntry->mAbilityID, mAbilityEntry->mAbilityGroupID, timeSec);
+	ciSource->CAF_Nudify(buff->durationS);
 	return ABILITY_SUCCESS;
 }
 
@@ -3144,7 +3147,10 @@ int AbilityCalculator :: Transform(ARGUMENT_LIST args)
 {
 	int creatureDefID = args.GetInteger(0);
 	g_Log.AddMessageFormat("Transform: %d", creatureDefID);
-	ciSource->CAF_Transform(creatureDefID, mAbilityEntry->mAbilityID);
+	int timeSec = static_cast<int>(args.GetEvaluation(1, &g_AbilityManager));
+	int buffType = ResolveBuffCategoryID(mAbilityEntry->GetRowAsCString(ABROW::BUFF_CATEGORY));
+	ActiveBuff * buff = ciTarget->AddMod(mAbilityEntry->mTier, buffType, mAbilityEntry->mAbilityID, mAbilityEntry->mAbilityGroupID, timeSec);
+	ciSource->CAF_Transform(creatureDefID, mAbilityEntry->mAbilityID, buff->durationS);
 	return ABILITY_SUCCESS;
 }
 

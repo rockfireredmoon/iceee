@@ -262,7 +262,7 @@ void QuestNutPlayer::RemoveItem(int itemID, int itemCount) {
 
 void QuestNutPlayer::Transform(int cdefID) {
 	g_Log.AddMessageFormat("Transform: %d", cdefID);
-	source->CAF_Transform(cdefID, 0);
+	source->CAF_Transform(cdefID, 0, -1);
 }
 
 void QuestNutPlayer::Untransform() {

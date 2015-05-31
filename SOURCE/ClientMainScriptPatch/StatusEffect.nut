@@ -16,7 +16,7 @@ class this.BuffDebuff extends this.Action
 		this.mCreature = creature;
 		this.mAbilitySource = statusMod.getAbilityID();
 		this.mDuration = statusMod.getDuration();
-		this.mRecievedAt = ::_gameTime.getGameTimeMiliseconds();
+		this.mRecievedAt = ::_gameTime.getGameTimeMiliseconds() / 1000.0;
 		this.addStatusModifier(statusMod);
 		this.Action.constructor("", image);
 	}
@@ -37,6 +37,7 @@ class this.BuffDebuff extends this.Action
 		container.getLayoutManager().setAlignment(0.0);
 		container.setSize(150, 125);
 		local abilityInfo = ::_AbilityManager.getAbilityById(this.mAbilitySource);
+		
 		local percentMultiplier = [
 			128,
 			129,
@@ -183,7 +184,8 @@ class this.BuffDebuff extends this.Action
 			spacer.setAppearance("ColumnList/HeadingDivider");
 			container.add(spacer);
 			local currentGameTime = ::_gameTime.getGameTimeMiliseconds() / 1000;
-			local timeRemaining = this.mDuration - (currentGameTime - this.mRecievedAt / 1000);
+			local runningFor = currentGameTime - this.mRecievedAt;
+			local timeRemaining = this.mDuration - runningFor.tointeger();
 			local timeTable = this.Util.paraseSecToTable(timeRemaining);
 			local timeText = "Duration: ";
 
@@ -207,6 +209,8 @@ class this.BuffDebuff extends this.Action
 				timeText += timeTable.s + "s ";
 			}
 
+			//print("ICE! Tooltip (" + this.mAbilitySource + "): running for: " + runningFor + " current game time: " + currentGameTime + " receivedAt: " + this.mRecievedAt + " dur: " + this.mDuration + " timeRem: " + timeRemaining + " = " + timeText + "\n");
+			
 			local timeLeftLabel = this.GUI.Label(timeText);
 			container.add(timeLeftLabel);
 		}
