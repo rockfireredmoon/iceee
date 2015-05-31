@@ -1,7 +1,7 @@
 [ENTRY]
 ID=1127659
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=63791.4,851.633,64947.4
 Orient=0,0.895699,0,0.444662
 Scale=1,1,1
@@ -10,7 +10,7 @@ spawnPackage=11_dth_wilds_42_43
 [ENTRY]
 ID=1127692
 Asset=Prop-Dead-Forest-Tree#Prop-Dead-Forest-Tree2
-Name=
+Name=Untitled
 Pos=63973.8,762.044,65150.3
 Orient=0,0,0,1
 Scale=1,1,1
@@ -18,11 +18,19 @@ Scale=1,1,1
 [ENTRY]
 ID=1127700
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=63797.3,761.273,65210.9
 Orient=0,-0.659385,0,0.751806
 Scale=1,1,1
 spawnPackage=11_dth_wilds_44_45_north
+
+[ENTRY]
+ID=1129261
+Asset=Prop-Interact_Rectangle
+Name=
+Pos=64413.9,968.986,64675.6
+Orient=0.668016,-0.152892,0.162482,0.709915
+Scale=11,11,11
 
 [ENTRY]
 ID=151040367

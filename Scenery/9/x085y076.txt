@@ -167,11 +167,11 @@ Scale=0.3,0.3,0.3
 [ENTRY]
 ID=1128574
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=64249.8,792.95,57138.5
 Orient=0,0.597195,0,0.802096
 Scale=1,1,1
-spawnPackage=#F3330
+spawnPackage=#F7847
 
 [ENTRY]
 ID=151016745
