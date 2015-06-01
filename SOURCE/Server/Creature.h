@@ -553,6 +553,7 @@ public:
 	void _OnStun(void);
 	void OnDaze(void);
 	void OnUnstick(void);
+	void ProcessPVPGoal(void);
 	void ProcessDeath(void);
 	void AddCreaturePointer(CREATURE_SEARCH& output, CreatureInstance* ptr, int attacked);
 	void ResolveAttackers(CREATURE_SEARCH& results);

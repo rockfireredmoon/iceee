@@ -152,9 +152,13 @@ void InstanceNutPlayer::RegisterFunctions() {
 
 void InstanceNutPlayer::RegisterInstanceFunctions(NutPlayer *instance, Sqrat::DerivedClass<InstanceNutPlayer, NutPlayer> *instanceClass)
 {
+	instanceClass->Func(_SC("pvp_goal"), &InstanceNutPlayer::PVPGoal);
+	instanceClass->Func(_SC("set_status_effect"), &InstanceNutPlayer::SetStatusEffect);
+	instanceClass->Func(_SC("remove_status_effect"), &InstanceNutPlayer::RemoveStatusEffect);
 	instanceClass->Func(_SC("pvp_start"), &InstanceNutPlayer::PVPStart);
 	instanceClass->Func(_SC("pvp_stop"), &InstanceNutPlayer::PVPStop);
-	instanceClass->Func(_SC("create_party"), &InstanceNutPlayer::CreateVirtualParty);
+	instanceClass->Func(_SC("create_party"), &InstanceNutPlayer::CreateParty);
+	instanceClass->Func(_SC("create_team"), &InstanceNutPlayer::CreateTeam);
 	instanceClass->Func(_SC("disband_party"), &InstanceNutPlayer::DisbandVirtualParty);
 	instanceClass->Func(_SC("add_to_party"), &InstanceNutPlayer::AddToVirtualParty);
 	instanceClass->Func(_SC("quit_party"), &InstanceNutPlayer::QuitParty);
@@ -283,10 +287,21 @@ bool InstanceNutPlayer::QuitParty(int CID)
 	return false;
 }
 
-int InstanceNutPlayer::PVPStart()
+int InstanceNutPlayer::PVPStart(int type)
 {
-	PVPGame * game = actInst->StartPVP();
+	PVP::PVPGame * game = actInst->StartPVP(type);
 	return game != NULL ? game->mId : 0;
+}
+
+bool InstanceNutPlayer::PVPGoal(int cid)
+{
+	CreatureInstance *ci = GetCreaturePtr(cid);
+	if(ci != NULL) {
+		ci->ProcessPVPGoal();
+		return true;
+	}
+	g_Log.AddMessageFormat("Failed to increase goal for %d, creature instance not found.", cid);
+	return false;
 }
 
 bool InstanceNutPlayer::PVPStop()
@@ -294,22 +309,48 @@ bool InstanceNutPlayer::PVPStop()
 	return actInst->StopPVP();
 }
 
-int InstanceNutPlayer::CreateVirtualParty(int leaderCID)
+
+int InstanceNutPlayer::CreateParty(int leaderCID)
+{
+	ActiveParty * party = DoCreateParty(leaderCID, -1);
+	return party == NULL ? -1 : party->mPartyID;
+}
+
+int InstanceNutPlayer::CreateTeam(int leaderCID, int team)
+{
+	if(actInst->pvpGame == NULL) {
+		g_Log.AddMessageFormat("Request to create team when there is no PVP game opened.");
+		return -1;
+	}
+	ActiveParty * party =  DoCreateParty(leaderCID, team);
+	if(party == NULL)
+		return -1;
+	actInst->pvpGame->mTeams[team] = party;
+	return party->mPartyID;
+}
+
+ActiveParty * InstanceNutPlayer::DoCreateParty(int leaderCID, int team)
 {
 	CreatureInstance *ci = GetCreaturePtr(leaderCID);
 	if(ci != NULL) {
+		if(ci->PartyID != 0) {
+			g_Log.AddMessageFormat("%d is already in party %d.", leaderCID, ci->PartyID);
+			return NULL;
+		}
 		ActiveParty * party = g_PartyManager.CreateParty(ci);
 		if(party != NULL)
 		{
+			if(team > -1)
+				party->mPVPTeam = team;
 			party->mPartyID = g_PartyManager.GetNextPartyID();  //leader->CreatureDefID;
 			char WriteBuf[512];
 			party->AddMember(ci);
 			party->RebroadCastMemberList(WriteBuf);
-			return party->mPartyID;
+			return party;
 		}
 	}
 	g_Log.AddMessageFormat("Failed to create party %d.", leaderCID);
-	return -1;
+	return NULL;
 }
 
 
@@ -642,6 +683,39 @@ void InstanceNutPlayer::Walk(int CID, ScriptObjects::Point point, int speed, int
 		ci->CurrentTarget.desiredRange = range;
 		ci->Speed = speed;
 	}
+}
+
+
+bool InstanceNutPlayer::SetStatusEffect(int CID, const char *effect, long durationMS)
+{
+	CreatureInstance *ci = GetCreaturePtr(CID);
+	if(ci)
+	{
+		int EffectID = GetStatusIDByName(effect);
+		if(EffectID != -1)
+		{
+			ci->_AddStatusList(EffectID, durationMS);
+			return true;
+		}
+
+	}
+	return false;
+}
+
+bool InstanceNutPlayer::RemoveStatusEffect(int CID, const char *effect)
+{
+	CreatureInstance *ci = GetCreaturePtr(CID);
+	if(ci)
+	{
+		int EffectID = GetStatusIDByName(effect);
+		if(EffectID != -1)
+		{
+			ci->_RemoveStatusList(EffectID);
+			return true;
+		}
+
+	}
+	return false;
 }
 
 bool InstanceNutPlayer::Despawn(int CID)

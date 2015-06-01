@@ -3662,6 +3662,9 @@ class this.Connection extends this.MessageBroadcaster
 	{
 		local updateType = data.getInteger();
 		local gameType = data.getByte();
+		
+		print("ICE! PVP: " + updateType + " GT:  " + gameType + "\n");
+		
 		local pvpScreen;
 
 		switch(gameType)
@@ -3688,9 +3691,14 @@ class this.Connection extends this.MessageBroadcaster
 		if (updateType & this.PVP_STATE_UPDATE)
 		{
 			local gameState = data.getByte();
+			print("ICE! PVP STATE UPD: " + gameState + "\n");
 
 			if (pvpScreen)
 			{
+				if(gameState == this.PVPGameState.WAITING_TO_START)
+				{
+					Screens.show("CTFScreen");
+				}
 				pvpScreen.updateState(gameState);
 			}
 		}

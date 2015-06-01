@@ -60,17 +60,20 @@ function on_command_startctf(cid) {
  * Start the game
  */
 function start_ctf() {
-	pvp_id = inst.pvp_start();
-	cid_red_registrar = spawn_retry(PROP_RED_TEAM_REGISTRAR);
-	cid_blue_registrar = spawn_retry(PROP_BLUE_TEAM_REGISTRAR);
+	pvp_id = inst.pvp_start(4);
+	spawn_retry(PROP_RED_TEAM_REGISTRAR, function(id) { cid_red_registrar = id; });
+	spawn_retry(PROP_BLUE_TEAM_REGISTRAR, function(id) { cid_blue_registrar = id; });
 }
 
-function spawn_retry(prop) {
+function spawn_retry(prop, callback) {
 	print("Spawning on prop "+ prop + "\n");
 	local cid = inst.spawn(prop, 0,0);
 	if(cid < 1) {
 		print("Retrying spawn " + prop + " in 5 seconds\n");
-		inst.queue(function() { spawn_retry(prop); }, 5000);
+		inst.queue(function() { spawn_retry(prop, callback); }, 5000);
+	}
+	else {
+		callback(cid);
 	}
 	return cid;
 }
@@ -170,12 +173,14 @@ function check_team(taker) {
 function drop_red_flag() {
 	inst.detach_item(has_red_flag, "Item-CTF_Red", "ctf");
 	cid_red_flag_unguarded = inst.spawn_at(CDEFID_RED_FLAG_UNGUARDED, inst.get_location(has_red_flag), 0, 1);
+	//inst.set_status_effect(cid_red_flag_unguarded, "USABLE_BY_COMBATANT", -1);
 	has_red_flag = 0;
 }
 
 function drop_blue_flag() {
 	inst.detach_item(has_blue_flag, "Item-CTF_Blue", "ctf");
 	cid_blue_flag_unguarded = inst.spawn_at(CDEFID_BLUE_FLAG_UNGUARDED, inst.get_location(has_blue_flag), 0, 1);
+	//inst.set_status_effect(cid_blue_flag_unguarded, "USABLE_BY_COMBATANT", -1);
 	has_blue_flag = 0;
 }
 
@@ -220,17 +225,18 @@ function on_use(sourceCId, targetCDefId) {
 			else {		
 				inst.local_broadcast(inst.get_display_name(sourceCId) + " joins the red team");
 				if(red_party == 0) 
-					red_party = inst.create_party(sourceCId);
+					red_party = inst.create_team(sourceCId, 1);
 				else
 					inst.add_to_party(red_party, sourceCId);
 				
 				//if(inst.get_party_size(red_party) == 1)
+					//spawn_retry(PROP_RED_FLAG_SAFE, function(id) { cid_red_safe = id; });
 					//cid_red_safe = spawn_retry(PROP_RED_FLAG_SAFE);
 				
 				// Spawn both for now so testing is easier	
 				if(inst.get_party_size(red_party) == 1 && inst.get_party_size(blue_party) == 0) {
-					cid_blue_safe = spawn_retry(PROP_BLUE_FLAG_SAFE);			
-					cid_red_safe = spawn_retry(PROP_RED_FLAG_SAFE);
+					spawn_retry(PROP_BLUE_FLAG_SAFE, function(id) { cid_blue_safe = id; });
+					spawn_retry(PROP_RED_FLAG_SAFE, function(id) { cid_red_safe = id; });
 				}
 			}
 		}
@@ -244,17 +250,18 @@ function on_use(sourceCId, targetCDefId) {
 			else {
 				inst.local_broadcast(inst.get_display_name(sourceCId) + " joins the blue team");
 				if(blue_party == 0) 
-					blue_party = inst.create_party(sourceCId);
+					blue_party = inst.create_team(sourceCId, 2);
 				else
 					inst.add_to_party(blue_party, sourceCId);
 				
 				//if(inst.get_party_size(blue_party) == 1)
+					//spawn_retry(PROP_BLUE_FLAG_SAFE, function(id) { cid_blue_safe = id; });
 					//cid_blue_safe = spawn_retry(PROP_BLUE_FLAG_SAFE);
 				
 				// Spawn both for now so testing is easier	
 				if(inst.get_party_size(blue_party) == 1 && inst.get_party_size(red_party) == 0) {
-					cid_blue_safe = spawn_retry(PROP_BLUE_FLAG_SAFE);			
-					cid_red_safe = spawn_retry(PROP_RED_FLAG_SAFE);
+					spawn_retry(PROP_BLUE_FLAG_SAFE, function(id) { cid_blue_safe = id; });
+					spawn_retry(PROP_RED_FLAG_SAFE, function(id) { cid_red_safe = id; });
 				}
 			}
 		}
@@ -316,6 +323,7 @@ function red_flag_won(winner, flagBaseCDefID) {
 		}, 5000);
 
 		inst.detach_item(winner, "Item-CTF_Red", "ctf");
+		inst.pvp_goal(winner);
 
 		if(blue_score == MAX_FLAGS) {
 			inst.broadcast(inst.get_display_name(winner) + " landed the winning flag for the Blue Team!  " + blue_score + " to " + red_score + ".");
@@ -347,6 +355,7 @@ function blue_flag_won(winner, flagBaseCDefID) {
 		}, 5000);
 	
 		inst.detach_item(winner, "Item-CTF_Blue", "ctf");
+		inst.pvp_goal(winner);
 		
 		if(red_score == MAX_FLAGS) {
 			inst.broadcast(inst.get_display_name(winner) + " landed the winning flag for the Red Team!  " + red_score + " to " + red_score + ".");

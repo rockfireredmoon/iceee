@@ -645,14 +645,19 @@ bool ActiveInstance :: StopPVP()
 	return false;
 }
 
-PVPGame * ActiveInstance :: StartPVP()
+PVP::PVPGame * ActiveInstance :: StartPVP(int type)
 {
 	if(pvpGame != NULL) {
 		g_Log.AddMessageFormat("Already in PVP game %d for %d", pvpGame->mId, mZone);
 		return NULL;
 	}
 	pvpGame = g_PVPManager.NewGame();
+	pvpGame->mGameType = type;
 	g_Log.AddMessageFormat("New PVP game %d for %d", pvpGame->mId, mZone);
+
+	char buf[64];
+	int wpos = PrepExt_PVPStateUpdate(buf, pvpGame);
+	LSendToAllSimulator(buf, wpos, -1);
 	return pvpGame;
 }
 

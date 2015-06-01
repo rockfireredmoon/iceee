@@ -12,6 +12,11 @@ struct PartyMember
 	std::string mDisplayName;
 	CreatureInstance *mCreaturePtr;
 	int mSocket;
+
+	// PVP scores (a team is a party)
+	int mPVPKills;
+	int mPVPDeaths;
+	int mPVPGoals;
 };
 
 
@@ -55,6 +60,8 @@ public:
 	void Clear(void);
 };
 
+class ActiveInstance;
+
 class ActiveParty
 {
 public:
@@ -67,6 +74,13 @@ public:
 	std::string mLeaderName;
 	std::vector<PartyMember> mMemberList;
 	std::map<int, LootTag*> lootTags;
+
+	// PVP scores (a team is a party)
+	int mPVPTeam;
+	int mPVPKills;
+	int mPVPDeaths;
+	int mPVPGoals;
+
 	ActiveParty();
 	~ActiveParty();
 	LootTag * GetTag(int itemId, int creatureId);

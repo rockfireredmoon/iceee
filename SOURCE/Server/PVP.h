@@ -5,78 +5,46 @@
 #include <vector>
 #include <map>
 #include <string>
-#include "Creature.h"
+#include "PartyManager.h"
 
-class PVPTeamMember {
-public:
-	int mCID;
-	int mKills;
-	int mDeaths;
-	int mObjectivesComplete;
-	int mFailedObjectives;
+namespace PVP {
+
+namespace PVPGameType {
+	enum {
+		NONE = 0,
+		MILLEAGE = 1,
+		MASSACRE = 2,
+		TEAMSLAYER = 3,
+		CTF = 4,
+		DEATHMATCH = 5
+	};
 };
 
-class PVPTeam {
-public:
-	int mPartyID;
-	std::map<int, PVPTeamMember> mMembers;
-	int mWins;
-	int mLosses;
+struct PVPUpdateFlag {
+	enum Flags {
+		PVP_STATE_UPDATE = 1,
+		PVP_TEAM_UPDATED = 2,
+		PVP_STAT_UPDATED = 4,
+		PVP_TIME_UPDATED = 8,
+		PVP_FLAG_EVENT = 16
+	};
 };
 
-class PVPGame {
-public:
-	int mId;
-	PVPGame(int id);
-	~PVPGame();
-	std::map<int, PVPTeam> mTeams;
+struct PVPGameState {
+	enum State {
+		WAITING_TO_START = 0,
+		WAITING_TO_CONTINUE = 1,
+		PLAYING = 2,
+		POST_GAME_LOBBY = 3
+	};
 };
 
-class PVPManager {
-public:
-	PVPManager();
-	~PVPManager();
-	int mNextPVPGameId;
-	std::map<int, PVPGame*> mGames;
-	PVPGame * NewGame();
-	PVPGame * GetGame(int gameId);
-	void ReleaseGame(int id);
+struct PVPTeams {
+	enum Team {
+		NONE = 0, RED = 1, BLUE = 2, YELLOW = 3, GREEN = 4
+	};
 };
 
-//struct PVPUpdateFlag
-//{
-//	enum Flags
-//	{
-//		PVP_STATE_UPDATE = 1,
-//		PVP_TEAM_UPDATED = 2,
-//		PVP_STAT_UPDATED = 4,
-//		PVP_TIME_UPDATED = 8,
-//		PVP_FLAG_EVENT   = 16
-//	};
-//};
-//
-//struct PVPGameState
-//{
-//	enum
-//	{
-//		WAITING_TO_START = 0,
-//		WAITING_TO_CONTINUE = 1,
-//		PLAYING = 2,
-//		POST_GAME_LOBBY = 3
-//	};
-//};
-//
-//struct PVPTeams
-//{
-//	enum
-//	{
-//		NONE = 0,
-//		RED = 1,
-//		BLUE = 2,
-//		YELLOW = 3,
-//		GREEN = 4
-//	};
-//};
 //
 //struct FlagType
 //{
@@ -157,6 +125,37 @@ public:
 //	return true;
 //}
 
-extern PVPManager g_PVPManager;
+class PVPGame {
+public:
+	int mId;
+	int mGameType;
+	PVPGameState::State mGameState;
+	PVPGame(int id);
+	~PVPGame();
+	bool HasTeam(int teamID);
+	std::map<int, ActiveParty*> mTeams;
+	ActiveParty * GetTeamForPlayer(int CreatureID);
+};
+
+class PVPManager {
+public:
+	PVPManager();
+	~PVPManager();
+	int mNextPVPGameId;
+	std::map<int, PVPGame*> mGames;
+	PVPGame * NewGame();
+	PVPGame * GetGame(int gameId);
+	PVPGame * GetGameForTeam(int teamID);
+	void ReleaseGame(int id);
+};
+}
+
+int PrepExt_PVPTimeUpdate(char *buffer, PVP::PVPGame *game, long timeRemaining);
+int PrepExt_PVPStatUpdate(char *buffer, PVP::PVPGame *game, PartyMember *teamMember);
+int PrepExt_PVPTeamRemove(char *buffer, PVP::PVPGame *game, int playerID);
+int PrepExt_PVPTeamAdd(char *buffer, PVP::PVPGame *game, const char * playerName, int playerID, int team);
+int PrepExt_PVPStateUpdate(char *buffer, PVP::PVPGame *game);
+
+extern PVP::PVPManager g_PVPManager;
 
 #endif //#define PVP_H
