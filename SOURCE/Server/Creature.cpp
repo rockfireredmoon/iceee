@@ -2685,6 +2685,22 @@ void CreatureInstance :: OnDaze(void)
 	Interrupt();
 }
 
+void CreatureInstance :: ProcessPVPGoal()
+{
+	if(actInst != NULL && actInst->pvpGame != NULL)
+	{
+		ActiveParty * team = actInst->pvpGame->GetTeamForPlayer(CreatureID);
+		if(team != NULL) {
+			team->mPVPGoals++;
+			PartyMember * member = team->GetMemberByID(CreatureID);
+			if(member != NULL) {
+				member->mPVPGoals++;
+				actInst->LSendToLocalSimulator(GSendBuf, PrepExt_PVPStatUpdate(GSendBuf, actInst->pvpGame, member), CurrentX, CurrentZ);
+			}
+		}
+	}
+}
+
 void CreatureInstance :: ProcessDeath(void)
 {
 	//Processes a dead creature, finalizing stats, applying loot, distributing
@@ -2735,6 +2751,42 @@ void CreatureInstance :: ProcessDeath(void)
 	SendStatUpdate(STAT::HEALTH);
 
 	actInst->UnHate(CreatureDefID);
+
+	//Process PVP
+	if(actInst->pvpGame != NULL)
+	{
+		ActiveParty * team = actInst->pvpGame->GetTeamForPlayer(CreatureID);
+		if(team != NULL) {
+			team->mPVPDeaths++;
+			PartyMember * member = team->GetMemberByID(CreatureID);
+			if(member != NULL) {
+				member->mPVPDeaths++;
+				actInst->LSendToLocalSimulator(GSendBuf, PrepExt_PVPStatUpdate(GSendBuf, actInst->pvpGame, member), CurrentX, CurrentZ);
+			}
+
+			// Now add a kill for the all the attackers
+			std::vector<int> teamsCredited;
+
+			for(size_t i = 0; i < attackerList.size(); i++)
+			{
+				CreatureInstance *attacker = attackerList[i].ptr;
+				ActiveParty * attackerTeam = actInst->pvpGame->GetTeamForPlayer(attacker->CreatureID);
+				if(attackerTeam != NULL) {
+					std::vector<int>::iterator it = std::find(teamsCredited.begin(), teamsCredited.end(), attackerTeam->mPartyID);
+					if(it == teamsCredited.end()) {
+						attackerTeam->mPVPKills++;
+						teamsCredited.push_back(attackerTeam->mPartyID);
+					}
+					PartyMember * attackerMember = team->GetMemberByID(attacker->CreatureID);
+					if(attackerMember != NULL) {
+						attackerMember->mPVPKills++;
+						actInst->LSendToLocalSimulator(GSendBuf, PrepExt_PVPStatUpdate(GSendBuf, actInst->pvpGame, attackerMember), CurrentX, CurrentZ);
+					}
+				}
+			}
+		}
+
+	}
 
 	//Process experience and quest objectives.
 	if(actInst->mZoneDefPtr->mGrove == false)

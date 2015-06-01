@@ -477,7 +477,9 @@ namespace StatusEffects
 		//Custom modded status effects
 		UNKILLABLE = 62,
 		TRANSFORMED = 63,
-		INVISIBLE_EQUIPMENT = 64
+		INVISIBLE_EQUIPMENT = 64,
+		USABLE_BY_COMBATANT = 65
+
 	};
 }
 

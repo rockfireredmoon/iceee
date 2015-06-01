@@ -1,6 +1,7 @@
 ::_avatar <- null;
 ::_loadNode <- null;
-this.PageState <- {
+
+PageState <- {
 	FETCHREQUEST = 0,
 	FETCHED = 1,
 	PENDINGREQUEST = 2,
@@ -10,132 +11,132 @@ this.PageState <- {
 	READY = 6,
 	ERRORED = 7
 };
-this.FloorAlignMode <- {
+
+FloorAlignMode <- {
 	NONE = 0,
 	WHILE_ASCENDING_DESCENDING = 1,
 	ALWAYS = 2
 };
-this.ForcedQuestMarkerYPosition <- {
+
+ForcedQuestMarkerYPosition <- {
 	["Prop-Notice_Board"] = 20
 };
-this.AlwaysVisible <- {
+
+AlwaysVisible <- {
 	["Horde-Anubian_Catapult"] = true,
 	["Horde-Invisible_Biped"] = true
 };
-class this.SceneryLinkListHandler 
-{
+
+class SceneryLinkListHandler {
 	mPage = null;
 	mObjects = null;
-	constructor( page, objects )
-	{
-		this.mPage = page;
-		this.mObjects = objects;
+	constructor( page, objects ) {
+		mPage = page;
+		mObjects = objects;
 	}
 
-	function onQueryComplete( qa, results )
-	{
-		this.log.debug("Received server links for page " + this.mPage.getX() + ", " + this.mPage.getZ());
+	function onQueryComplete( qa, results )	{
+		this.log.debug("Received server links for page " + mPage.getX() + ", " + mPage.getZ());
 
+		// Add the links to the visualizer
+		
 		foreach( r in results )
-		{
-			this._scene.addLink("Scenery/" + r[0], "Scenery/" + r[1], this.Color(1.0, 0.0, 1.0, 1.0));
-		}
+			_scene.addLink("Scenery/" + r[0], "Scenery/" + r[1], Color(1.0, 0.0, 1.0, 1.0));
 
-		this.mPage.setState(this.PageState.LOADING);
+		// Change state to LOADING. This will make the page
+		// wait until all scenery has been assembled.
+		
+		mPage.setState(this.PageState.LOADING);
 	}
 
-	function onQueryError( qa, error )
-	{
-		this.mPage.setState(this.PageState.LOADING);
+	function onQueryError( qa, error ) {
+		// Just set the page to the loading state
+		mPage.setState(PageState.LOADING);
 	}
 
-	function onQueryTimeout( qa )
-	{
-		::_Connection.sendQuery("scenery.link.list", this.SceneryLinkListHandler(this.mPage, this.mObjects), this.mObjects);
+	function onQueryTimeout( qa ) {
+		// Ask for the links from the server again
+		::_Connection.sendQuery("scenery.link.list", SceneryLinkListHandler(mPage, mObjects), mObjects);
 	}
 
 }
 
-class this.SceneryListHandler 
+class SceneryListHandler 
 {
 	mZoneID = 0;
 	mX = 0;
 	mZ = 0;
-	constructor( zoneID, x, z )
-	{
-		this.mZoneID = zoneID;
-		this.mX = x;
-		this.mZ = z;
+	constructor( zoneID, x, z )	{
+		mZoneID = zoneID;
+		mX = x;
+		mZ = z;
 	}
 
-	function onQueryComplete( qa, results )
-	{
-		this.log.debug("Received server objects for page " + this.mX + ", " + this.mZ);
-		local page = ::_sceneObjectManager.getSceneryPage(this.mZoneID, this.mX, this.mZ);
+	function onQueryComplete( qa, results )	{
+		log.debug("Received server objects for page " + mX + ", " + mZ);
+		local page = ::_sceneObjectManager.getSceneryPage(mZoneID, mX, mZ);
 
-		if (page != null)
-		{
-			if (page.getState() != this.PageState.REQUESTED)
-			{
-				throw this.Exception("Scenery query logic error!");
-			}
+		if (page != null) {
+			// Make sure the page is still in the requested state.
+			if (page.getState() != PageState.REQUESTED)
+				throw Exception("Scenery query logic error!");
 
+			// Add the scenery to the page
+			
 			foreach( i in results )
-			{
 				page.addScenery(i[0].tointeger());
-			}
 
+			
+			// Store the total so the loadscreen can be accurate.
+			
 			page.mTotalScenery = results.len();
-			page.setState(this.PageState.LOADING);
+			
+						
+			// Change state to LOADING. This will make the page
+			// wait until all scenery has been assembled.
+			
+			page.setState(PageState.LOADING);
 		}
 	}
 
-	function onQueryError( qa, error )
-	{
-		this.log.debug("" + qa.query + " failed: " + error);
-		local page = ::_sceneObjectManager.getSceneryPage(this.mZoneID, this.mX, this.mZ);
-
+	function onQueryError( qa, error )	{
+		log.debug("" + qa.query + " failed: " + error);
+		
+		// Set the page to error state
+		
+		local page = ::_sceneObjectManager.getSceneryPage(mZoneID, mX, mZ);
 		if (page != null)
-		{
-			page.setState(this.PageState.PENDINGREQUEST);
-		}
+			page.setState(PageState.PENDINGREQUEST);
 	}
 
-	function onQueryTimeout( qa )
-	{
-		this.log.debug("" + qa.query + " timed out. Requesting scenery again...");
-		local page = ::_sceneObjectManager.getSceneryPage(this.mZoneID, this.mX, this.mZ);
-
+	function onQueryTimeout( qa ) {
+		log.debug("" + qa.query + " timed out. Requesting scenery again...");
+		
+		// Set the page to pending state so it will be requested again
+		
+		local page = ::_sceneObjectManager.getSceneryPage(mZoneID, mX, mZ);
 		if (page != null)
-		{
-			page.setState(this.PageState.PENDINGREQUEST);
-		}
+			page.setState(PageState.PENDINGREQUEST);
 	}
 
 }
 
-class this.SceneryPreloadHandler 
-{
+class SceneryPreloadHandler {
 	static nextPackageName = 0;
 	mPriority = 0;
-	constructor( priority )
-	{
-		this.mPriority = priority;
+	constructor( priority )	{
+		mPriority = priority;
 	}
 
-	function onQueryComplete( qa, results )
-	{
+	function onQueryComplete( qa, results )	{
 		local assets = [];
 		::_sceneObjectManager.mRetrievingZoneQuery = false;
 
 		foreach( s in results )
-		{
-			::_contentLoader.load(s[0], this.mPriority, "SceneryPreload_" + this.nextPackageName++, null);
-		}
+			::_contentLoader.load(s[0], mPriority, "SceneryPreload_" + nextPackageName++, null);
 	}
 
-	function onQueryError( qa, error )
-	{
+	function onQueryError( qa, error ) {
 	}
 
 }
@@ -999,8 +1000,7 @@ class this.SceneObjectManager extends this.MessageBroadcaster
 			return table[safeId];
 		}
 
-		table[safeId] <- this.SceneObject(safeId, kind);
-		return this.SceneObject(safeId, kind);
+		return table[safeId] <- SceneObject(safeId, kind);
 	}
 
 	function getCreatureByName( name )
@@ -1274,38 +1274,44 @@ class this.SceneObjectManager extends this.MessageBroadcaster
 		return null;
 	}
 
+	
+	/**
+		Attempt to find the scene object associated with this movable
+		object. This will traverse up the object's heirarchy as needed
+		in order to find an encompassing scene object. It stops on the
+		first one found (if it's part of a deep hierarchy).
+		
+		@return The SceneObject that contains this MovableObject or
+			<tt>null</tt> if none could be found.
+	*/
 	function findSceneObject( movableObject )
 	{
 		if (!movableObject)
-		{
 			return null;
-		}
 
-		local so;
+	 	// Note we use getParentSceneNode since we may be
+	 	// starting with a bone attachment and we want to
+	 	// break out of that heirarchy and into the entity.
+		local so = null;
+		
 		local node = movableObject.getParentSceneNode();
 
-		while (node != null && so == null)
-		{
+		while (node != null && so == null) {
 			local name = node.getName();
 			local loc = name.find("/");
 
-			if (loc)
-			{
+			if (loc) {
+	 			// Found one that matches, let's just make sure
 				local type = name.slice(0, loc);
 				local id = name.slice(loc + 1, name.len());
 
-				try
-				{
-					so = this.hasObject(type, id.tointeger());
-
-					if (so)
-					{
-						  // [038]  OP_POPTRAP        1      0    0    0
+				try	{
+					so = hasObject(type, id.tointeger());
+					if (so)	
 						return so;
-					}
 				}
-				catch( err )
-				{
+				catch( err ) { 
+					// Invalid object type, try again.
 				}
 			}
 
@@ -1315,9 +1321,8 @@ class this.SceneObjectManager extends this.MessageBroadcaster
 		return so;
 	}
 
-	function getAssemblyQueueSize()
-	{
-		return this.mAssemblyQueue.len();
+	function getAssemblyQueueSize()	{
+		return mAssemblyQueue.len();
 	}
 
 	function _calcDebugStatus( table )
@@ -1645,7 +1650,7 @@ class this.SceneObjectManager extends this.MessageBroadcaster
 
 				if (idx >= 0)
 				{
-					this.mCreatureQueue.remove(idx);
+					this.mCreatureQueue.remove();
 				}
 
 				return a;
@@ -1741,7 +1746,6 @@ class this.SceneObjectManager extends this.MessageBroadcaster
 		return null;
 	}
 
-	
 	function assembleCreatures()
 	{
 		local lastCreatureAssembled = null;
@@ -2138,8 +2142,7 @@ class this.SceneObjectManager extends this.MessageBroadcaster
 			}
 		}
 
-		// Avatar needs to be reassembled to ensure they won't clip through props.
-		//::_avatar.reassemble();
+		::_avatar.reassemble();
 
 		foreach( so in list )
 		{
@@ -2423,6 +2426,7 @@ class this.SceneObject extends this.MessageBroadcaster
 	mIsScenery = false;
 	mPreviousAsset = null;
 	mPreviousScale = null;
+	mParticleAttachments = {};
 	
 	constructor( pID, objectClass )
 	{
@@ -3483,7 +3487,7 @@ class this.SceneObject extends this.MessageBroadcaster
 			{
 				if (alt == "Ok")
 				{
-					if (!::_avatar.hasStatusEffect(this.StatusEffects.IN_COMBAT))
+					if (creature.hasStatusEffect(this.StatusEffects.USABLE_BY_COMBATANT) || !::_avatar.hasStatusEffect(this.StatusEffects.IN_COMBAT))
 					{
 						if (::_useableCreatureManager.isUseable(this.creature.getID()))
 						{
@@ -3536,6 +3540,31 @@ class this.SceneObject extends this.MessageBroadcaster
 		usableDistance *= usableDistance;
 		usableDistance += this.MAX_USE_DISTANCE_SQ;
 		return sqDistance <= usableDistance;
+	}
+
+	function detachParticleSystem (tag)
+	{
+		if(tag in this.mParticleAttachments)
+		{
+			local particles = this.mParticleAttachments[tag];
+			particles[0].destroy();
+			particles[1].destroy();
+			delete this.mParticleAttachments[tag];
+		}
+	}
+	
+	function attachParticleSystem(name, tag, size)
+	{
+			// TODO make more unique
+			local uniqueName = this.mNode.getName() + "/" + name;
+			local particle = ::_scene.createParticleSystem(uniqueName, name);
+			particle.setVisibilityFlags(this.VisibilityFlags.ANY);
+			local particleNode = this.mNode.createChildSceneNode();
+			particleNode.attachObject(particle);
+			particleNode.setScale(this.Vector3(size, size, size));
+			particle.setVisible(this.mAssembled);
+			this.mParticleAttachments[tag] <- [particle, particleNode];
+			return uniqueName;
 	}
 
 	function useCreature( so )
@@ -3758,7 +3787,7 @@ class this.SceneObject extends this.MessageBroadcaster
 			}
 			else if (::_useableCreatureManager.isUseable(so.getID()))
 			{
-				if (!::_avatar.hasStatusEffect(this.StatusEffects.IN_COMBAT))
+				if (so.hasStatusEffect(this.StatusEffects.USABLE_BY_COMBATANT) || !::_avatar.hasStatusEffect(this.StatusEffects.IN_COMBAT))
 				{
 					::_Connection.sendQuery("creature.use", this, so.getID());
 					useageType = "UseCreature";

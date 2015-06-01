@@ -1806,6 +1806,12 @@ this.StatusEffects <- {
 		prettyName = "Your equipment is invisible.",
 		icon = "",
 		type = "Buff"
+	},
+	USABLE_BY_COMBATANT = 65,
+	[65] = {
+		prettyName = "Maybe interacted with by someone in combat.",
+		icon = "",
+		type = "Buff"
 	}
 };
 this.AbilityUseType <- {

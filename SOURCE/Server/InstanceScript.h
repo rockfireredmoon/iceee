@@ -7,6 +7,7 @@
 #include <vector>
 #include "Callback.h"
 #include "Scenery2.h"
+#include "PartyManager.h"
 
 class ActiveInstance;
 class CreatureInstance;
@@ -42,10 +43,14 @@ public:
 
 	// Exposed to scripts
 //	void Queue(Sqrat::Function function, int fireDelay);
-	int PVPStart();
+	int PVPStart(int type);
+	bool PVPGoal(int cid);
 	bool PVPStop();
+	bool SetStatusEffect(int CID, const char *effect, long durationMS);
+	bool RemoveStatusEffect(int CID, const char *effect);
 	void RestoreOriginalAppearance(int CID);
-	int CreateVirtualParty(int leaderCID);
+	int CreateParty(int leaderCID);
+	int CreateTeam(int leaderCID, int team);
 	bool DisbandVirtualParty(int partyID);
 	bool AddToVirtualParty(int partyID, int CID);
 	int GetVirtualPartySize(int partyID);
@@ -99,6 +104,7 @@ private:
 	CreatureInstance* GetNPCPtr(int CID);
 	CreatureInstance* GetCreaturePtr(int CID);
 	void DoUnremoveProp(int propID);
+	ActiveParty * DoCreateParty(int leaderCID, int team);
 
 };
 

@@ -1709,6 +1709,7 @@ display_name=Red Flag - Safe
 profession=1
 creature_category=Inanimate
 ai_package=
+Effects=INVINCIBLE,IS_USABLE,UNATTACKABLE,USABLE_BY_COMBATANT
 
 [ENTRY]
 ID=7839
@@ -1720,6 +1721,7 @@ display_name=Blue Flag - Safe
 profession=1
 creature_category=Inanimate
 ai_package=
+Effects=INVINCIBLE,IS_USABLE,UNATTACKABLE,USABLE_BY_COMBATANT
 
 [ENTRY]
 ID=7840
@@ -1731,6 +1733,7 @@ display_name=Red Flag
 profession=1
 creature_category=Inanimate
 ai_package=
+Effects=INVINCIBLE,IS_USABLE,UNATTACKABLE,USABLE_BY_COMBATANT
 
 [ENTRY]
 ID=7841
@@ -1742,6 +1745,7 @@ display_name=Blue Flag
 profession=1
 creature_category=Inanimate
 ai_package=
+Effects=INVINCIBLE,IS_USABLE,UNATTACKABLE,USABLE_BY_COMBATANT
 
 [ENTRY]
 ID=7842
@@ -1753,6 +1757,7 @@ display_name=Enemy Red Flag Stand
 profession=1
 creature_category=Inanimate
 ai_package=nothing
+Effects=INVINCIBLE,IS_USABLE,UNATTACKABLE,USABLE_BY_COMBATANT
 
 [ENTRY]
 ID=7843
@@ -1764,6 +1769,7 @@ display_name=Enemy Blue Flag Stand
 profession=1
 creature_category=Inanimate
 ai_package=nothing
+Effects=INVINCIBLE,IS_USABLE,UNATTACKABLE,USABLE_BY_COMBATANT
 
 [ENTRY]
 ID=7844
@@ -1779,6 +1785,7 @@ creature_category=Mortal
 rarity=3
 ai_package=example
 total_size=5
+Effects=INVINCIBLE,IS_USABLE,UNATTACKABLE,USABLE_BY_COMBATANT
 
 [ENTRY]
 ID=7845
@@ -1794,6 +1801,7 @@ creature_category=Mortal
 rarity=3
 ai_package=example
 total_size=5
+Effects=INVINCIBLE,IS_USABLE,UNATTACKABLE,USABLE_BY_COMBATANT
 
 [ENTRY]
 ID=7846
@@ -1806,6 +1814,7 @@ display_name=Red Flag
 profession=1
 creature_category=Inanimate
 ai_package=
+Effects=INVINCIBLE,IS_USABLE,UNATTACKABLE,USABLE_BY_COMBATANT
 
 [ENTRY]
 ID=7847
@@ -1818,6 +1827,7 @@ display_name=Blue Flag
 profession=1
 creature_category=Inanimate
 ai_package=
+Effects=INVINCIBLE,IS_USABLE,UNATTACKABLE,USABLE_BY_COMBATANT
 
 [ENTRY]
 defHints=256

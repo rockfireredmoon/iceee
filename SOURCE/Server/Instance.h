@@ -281,7 +281,7 @@ public:
 	float mDropRateBonusMultiplier;   //Progressive drop rate multiplier, increased slightly per mob kill.  Only applies to dungeons.
 	int mKillCount;                   //Total kill count of the dungeon.  No purpose than some generic tracking.
 	
-	PVPGame *pvpGame;
+	PVP::PVPGame *pvpGame;
 
 	ArenaRuleset arenaRuleset;
 
@@ -403,7 +403,7 @@ public:
 	void NotifyKill(int mobRarity);
 
 	bool StopPVP();
-	PVPGame * StartPVP();
+	PVP::PVPGame * StartPVP(int type);
 
 	void Script_ScanNPCCID(ScriptObjects::Area *location, std::vector<int>& destResult);
 };

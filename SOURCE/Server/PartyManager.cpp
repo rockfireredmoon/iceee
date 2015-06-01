@@ -4,6 +4,7 @@
 #include "StringList.h"
 #include "Util.h"
 #include "Globals.h"
+#include "Instance.h"
 
 PartyManager g_PartyManager;
 
@@ -34,6 +35,18 @@ void ActiveParty :: AddMember(CreatureInstance* member)
 	mMemberList.push_back(newMember);
 
 	member->PartyID = mPartyID;
+
+	// If the party member is in an instance that has an active PVP game, update the teams
+	if(member->actInst->pvpGame != NULL && mPVPTeam != PVP::PVPTeams::NONE) {
+		g_Log.AddMessageFormat("[REMOVEME] Party member %d is in an active PVP instance (%d), so will be added to team (%d)",
+				member->CreatureID, member->actInst->mZone);
+
+		char buf[64];
+		int wpos = PrepExt_PVPTeamAdd(buf, member->actInst->pvpGame, member->css.display_name, member->CreatureID, mPVPTeam);
+		member->actInst->LSendToAllSimulator(buf, wpos, -1);
+
+//
+	}
 }
 
 bool ActiveParty :: HasMember(int memberDefID)
@@ -53,7 +66,20 @@ void ActiveParty :: RemoveMember(int memberDefID)
 		if(mMemberList[i].mCreatureDefID == memberDefID)
 		{
 			if(mMemberList[i].mCreaturePtr != NULL)
+			{
+
+				// If the party member is in an instance that has an active PVP game, update the teams
+				if(mMemberList[i].mCreaturePtr->actInst->pvpGame != NULL && mPVPTeam != PVP::PVPTeams::NONE) {
+					g_Log.AddMessageFormat("[REMOVEME] Party member %d is in an active PVP instance (%d), so will be remove from team too (%d)",
+							mMemberList[i].mCreaturePtr->CreatureID, mMemberList[i].mCreaturePtr->actInst->mZone);
+
+					char buf[64];
+					int wpos = PrepExt_PVPTeamRemove(buf, mMemberList[i].mCreaturePtr->actInst->pvpGame, mMemberList[i].mCreaturePtr->CreatureID);
+					mMemberList[i].mCreaturePtr->actInst->LSendToAllSimulator(buf, wpos, -1);
+				}
+
 				mMemberList[i].mCreaturePtr->PartyID = 0;
+			}
 
 			mMemberList.erase(mMemberList.begin() + i);
 			return;
@@ -265,6 +291,7 @@ ActiveParty :: ActiveParty() {
 	mPartyID = 0;
 	mNextToGetLoot = 0;
 	mLootFlags = 0;
+	mPVPTeam = 0;
 	mLootMode = FREE_FOR_ALL;
 	lootTags.clear();
 }
@@ -364,6 +391,7 @@ void PartyManager :: BroadcastAddMember(CreatureInstance* member)
 
 bool PartyManager :: DoDisband(int PartyID)
 {
+
 	ActiveParty *party = GetPartyByID(PartyID);
 	if(party == NULL)
 		return false;
@@ -508,6 +536,9 @@ void PartyManager :: DoQuestInvite(CreatureInstance *caller, const char *questNa
 
 void PartyManager :: DeletePartyByID(int partyID)
 {
+	// Remove any PVP team for this party too
+	PVP::PVPGame * game = g_PVPManager.GetGameForTeam(partyID);
+
 	for(size_t i = 0; i < mPartyList.size(); i++)
 	{
 		if(mPartyList[i].mPartyID == partyID)
