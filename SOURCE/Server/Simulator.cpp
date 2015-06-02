@@ -2495,12 +2495,12 @@ void SimulatorThread :: handle_game_query(void)
 		if(HandleCommand(PendingData) == false)
 		{
 			// See if the instance script will handle the command
-			if(creatureInst != NULL && creatureInst->actInst != NULL && creatureInst->actInst->nutScriptPlayer.HasScript()) {
+			if(creatureInst != NULL && creatureInst->actInst != NULL && creatureInst->actInst->nutScriptPlayer != NULL) {
 				std::vector<ScriptCore::ScriptParam> p;
 				p.push_back(creatureInst->CreatureID);
 				p.insert(p.end(), query.args.begin(), query.args.end());
 				Util::SafeFormat(Aux1, sizeof(Aux1), "on_command_%s", query.name.c_str());
-				if(creatureInst->actInst->nutScriptPlayer.RunFunction(Aux1, p, true)) {
+				if(creatureInst->actInst->nutScriptPlayer->RunFunction(Aux1, p, true)) {
 					WritePos = PrepExt_QueryResponseString(SendBuf, query.ID, "OK.");
 					PendingSend = true;
 					return;
@@ -11043,8 +11043,8 @@ int SimulatorThread :: handle_query_script_load(void)
 
 	// The last record contains info about the instance itself for the editor UI
 	wpos += PutByte(&SendBuf[wpos], 2);
-	if(creatureInst->actInst->nutScriptPlayer.HasScript()) {
-		wpos += PutStringUTF(&SendBuf[wpos], creatureInst->actInst->nutScriptPlayer.mActive ? "true" : "false"); // active
+	if(creatureInst->actInst->nutScriptPlayer != NULL) {
+		wpos += PutStringUTF(&SendBuf[wpos], creatureInst->actInst->nutScriptPlayer->mActive ? "true" : "false"); // active
 	}
 	else {
 		wpos += PutStringUTF(&SendBuf[wpos], creatureInst->actInst->scriptPlayer.active ? "true" : "false"); // active
@@ -13805,9 +13805,9 @@ int SimulatorThread :: handle_query_script_gc(void)
 	ActiveInstance *inst = creatureInst->actInst;
 	if(inst != NULL)
 	{
-		if(inst->nutScriptPlayer.HasScript())
+		if(inst->nutScriptPlayer != NULL)
 		{
-			Util::SafeFormat(Aux1, sizeof(Aux1), "Instance script collected %d objects", inst->nutScriptPlayer.GC());
+			Util::SafeFormat(Aux1, sizeof(Aux1), "Instance script collected %d objects", inst->nutScriptPlayer->GC());
 			SendInfoMessage(Aux1, INFOMSG_INFO);
 		}
 
@@ -13839,10 +13839,8 @@ int SimulatorThread :: handle_query_script_exec(void)
 	if(inst != NULL && query.argCount > 0)
 	{
 		string funcName = query.GetString(0);
-		if(inst->nutScriptPlayer.HasScript())
-		{
-			inst->nutScriptPlayer.RunFunction(funcName);
-		}
+		if(inst->nutScriptPlayer != NULL)
+			inst->nutScriptPlayer->RunFunction(funcName);
 	}
 	else
 	{
@@ -13858,11 +13856,11 @@ int SimulatorThread :: handle_query_script_time(void)
 	if(inst != NULL)
 	{
 		double seconds;
-		if(inst->nutScriptPlayer.HasScript())
+		if(inst->nutScriptPlayer != NULL)
 		{
-			seconds = (double)inst->nutScriptPlayer.mProcessingTime / 1000.0;
+			seconds = (double)inst->nutScriptPlayer->mProcessingTime / 1000.0;
 			Util::SafeFormat(Aux1, sizeof(Aux1), "S Instance: %4.3f (%ul,%u,%ul). %s", seconds,
-					inst->nutScriptPlayer.mInitTime, inst->nutScriptPlayer.mCalls, inst->nutScriptPlayer.mGCTime, inst->nutScriptPlayer.mActive ? "Active" : "Inactive");
+					inst->nutScriptPlayer->mInitTime, inst->nutScriptPlayer->mCalls, inst->nutScriptPlayer->mGCTime, inst->nutScriptPlayer->mActive ? "Active" : "Inactive");
 			SendInfoMessage(Aux1, INFOMSG_INFO);
 		}
 		if(inst->scriptPlayer.HasScript())

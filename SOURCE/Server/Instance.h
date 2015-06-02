@@ -12,6 +12,7 @@
 #include "BroadCast.h"
 #include "ActiveCharacter.h" //For CharacterServerData class definition
 #include "Creature.h"
+#include "Components.h"
 //#include "CreatureSpawner.h"
 #include "CreatureSpawner2.h"
 #include "NPC.h"
@@ -269,7 +270,7 @@ public:
 	InstanceScript::InstanceScriptDef scriptDef;
 	InstanceScript::InstanceScriptPlayer scriptPlayer;
 	InstanceScript::InstanceNutDef nutScriptDef;
-	InstanceScript::InstanceNutPlayer nutScriptPlayer;
+	InstanceScript::InstanceNutPlayer *nutScriptPlayer;
 	//std::list<InstanceScript::ScriptPlayer> mConcurrentInstanceScripts;   DISABLED, NOT FINISHED
 
 	EssenceShopContainer essenceShopList;
@@ -422,6 +423,8 @@ public:
 	static const int MAX_INSTANCE_ID = 32767;
 	int NextInstanceID;
 	
+	Platform_CriticalSection cs;
+
 	void RebuildAccessList(void);
 	ActiveInstance * CreateInstance(int zoneID, PlayerInstancePlacementData &pd);
 	ActiveInstance * GetPtrByZoneOwner(int zoneID, int ownerDefID);

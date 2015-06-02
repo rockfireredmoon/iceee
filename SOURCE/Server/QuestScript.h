@@ -5,6 +5,7 @@
 #include "ScriptCore.h"
 #include "ScriptObjects.h"
 #include "Creature.h"
+#include "Components.h"
 #include <vector>
 #include <string>
 #include <list>
@@ -85,6 +86,7 @@ public:
 	std::map<int, std::list<QuestNutPlayer*> > questAct;
 	std::list<QuestNutPlayer*> GetActiveScripts(int CID);
 	std::list<QuestNutPlayer*> GetActiveQuestScripts(int questID);
+	Platform_CriticalSection cs;
 	QuestNutPlayer * GetOrAddActiveScript(CreatureInstance *creature,  int questID);
 	QuestNutPlayer * GetActiveScript(int CID, int questID);
 	QuestNutPlayer * AddActiveScript(CreatureInstance *creature, int questID);

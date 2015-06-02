@@ -120,6 +120,7 @@ QuestNutPlayer * QuestNutManager::AddActiveScript(CreatureInstance *creature, in
 	QuestNutDef *def = GetScriptByID(questID);
 	if (def == NULL)
 		return NULL;
+	cs.Enter("QuestNutManager::AddActiveScript");
 
 	g_Log.AddMessageFormat("Compiling quest script %d", questID);
 	QuestNutPlayer * player = new QuestNutPlayer();
@@ -137,10 +138,12 @@ QuestNutPlayer * QuestNutManager::AddActiveScript(CreatureInstance *creature, in
 
 	questAct[creature->CreatureID] = l;
 
+	cs.Leave();
 	return player;
 }
 
 void QuestNutManager::RemoveActiveScripts(int CID) {
+	cs.Enter("QuestNutManager::RemoveActiveScript");
 	std::list<QuestNutPlayer*> l = questAct[CID];
 	for (list<QuestNutPlayer*>::iterator it = l.begin(); it != l.end(); ++it) {
 		QuestNutPlayer* player = *it;
@@ -153,9 +156,11 @@ void QuestNutManager::RemoveActiveScripts(int CID) {
 	}
 	l.clear();
 	questAct.erase(questAct.find(CID));
+	cs.Leave();
 }
 
 void QuestNutManager::RemoveActiveScript(QuestNutPlayer *registeredPtr) {
+	cs.Enter("QuestNutManager::RemoveActiveScript");
 	std::list<QuestNutPlayer*> l = questAct[registeredPtr->source->CreatureID];
 	list<QuestNutPlayer*>::iterator it;
 	for (it = l.begin(); it != l.end(); ++it) {
@@ -172,6 +177,7 @@ void QuestNutManager::RemoveActiveScript(QuestNutPlayer *registeredPtr) {
 	if(l.size() == 0) {
 		questAct.erase(questAct.find(registeredPtr->source->CreatureID));
 	}
+	cs.Leave();
 }
 
 QuestNutPlayer::QuestNutPlayer()

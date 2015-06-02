@@ -60,7 +60,6 @@ function on_command_startctf(cid) {
  * Start the game
  */
 function start_ctf() {
-	pvp_id = inst.pvp_start(4);
 	spawn_retry(PROP_RED_TEAM_REGISTRAR, function(id) { cid_red_registrar = id; });
 	spawn_retry(PROP_BLUE_TEAM_REGISTRAR, function(id) { cid_blue_registrar = id; });
 }
@@ -184,6 +183,11 @@ function drop_blue_flag() {
 	has_blue_flag = 0;
 }
 
+function start_pvp() {
+	if(pvp_id == 0) 
+		pvp_id = inst.pvp_start(4);
+}
+
 //
 // Generic Interact Events
 //
@@ -223,6 +227,8 @@ function on_use(sourceCId, targetCDefId) {
 				inst.info("You cannot already be in a party to join a PvP team");
 			}
 			else {		
+				start_pvp();
+				
 				inst.local_broadcast(inst.get_display_name(sourceCId) + " joins the red team");
 				if(red_party == 0) 
 					red_party = inst.create_team(sourceCId, 1);
@@ -247,7 +253,9 @@ function on_use(sourceCId, targetCDefId) {
 			if(inst.get_party_id(sourceCId) > 0) {
 				inst.info("You cannot already be in a party to join a PvP team");
 			}
-			else {
+			else {		
+				start_pvp();
+				
 				inst.local_broadcast(inst.get_display_name(sourceCId) + " joins the blue team");
 				if(blue_party == 0) 
 					blue_party = inst.create_team(sourceCId, 2);

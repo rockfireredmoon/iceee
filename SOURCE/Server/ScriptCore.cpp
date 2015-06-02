@@ -268,7 +268,6 @@ namespace ScriptCore
 		vm = NULL;
 		def = NULL;
 		mActive = false;
-		mHasScript = false;
 		mExecuting = false;
 		mProcessingTime = 0;
 		mGCCounter = 0;
@@ -361,7 +360,6 @@ namespace ScriptCore
 				Platform::SetLastModified(cnut.c_str(), nutMod);
 			}
 
-			mHasScript = true;
 			mActive = true;
 			mRunning = true;
 			script.Run();
@@ -532,10 +530,6 @@ namespace ScriptCore
     	NutScriptEvent *nse = new NutScriptEvent(new TimeCondition (0), cb);
     	nse->mRunWhenSuspended = true;
     	QueueInsert(nse);
-	}
-
-	bool NutPlayer::HasScript(void) {
-		return mHasScript;
 	}
 
 	void NutPlayer :: HaltedDerived(void) { }

@@ -552,6 +552,8 @@ int MapLocationHandler :: LoadFile(const char *filename)
 
 ActiveInstance :: ActiveInstance()
 {
+	nutScriptPlayer = NULL;
+
 	Clear();
 }
 
@@ -632,6 +634,11 @@ void ActiveInstance :: Clear(void)
 
 	essenceShopList.Clear();
 	itemShopList.Clear();
+
+	if(nutScriptPlayer != NULL) {
+		delete nutScriptPlayer;
+		nutScriptPlayer = NULL;
+	}
 }
 
 bool ActiveInstance :: StopPVP()
@@ -795,11 +802,11 @@ CreatureInstance * ActiveInstance :: LoadPlayer(CreatureInstance *source, Simula
 
 int ActiveInstance :: UnregisterPlayer(SimulatorThread *callSim)
 {
-	if(nutScriptPlayer.HasScript() && callSim->creatureInst != NULL) {
+	if(nutScriptPlayer != NULL && callSim->creatureInst != NULL) {
 		std::vector<ScriptCore::ScriptParam> p;
 		p.push_back(callSim->creatureInst->CreatureID);
 		// Don't queue this, it's like the script will want to clean up before actual removal
-		nutScriptPlayer.RunFunction("on_unregister", p, true);
+		nutScriptPlayer->RunFunction("on_unregister", p, true);
 	}
 	return 0;
 }
@@ -813,11 +820,11 @@ int ActiveInstance :: UnloadPlayer(SimulatorThread *callSim)
 		return -1;
 	}
 
-	if(nutScriptPlayer.HasScript() && callSim->creatureInst != NULL) {
+	if(nutScriptPlayer != NULL && callSim->creatureInst != NULL) {
 		std::vector<ScriptCore::ScriptParam> p;
 		p.push_back(callSim->creatureInst->CreatureID);
 		// Don't queue this, it's like the script will want to clean up before actual removal
-		nutScriptPlayer.RunFunction("on_unload", p, true);
+		nutScriptPlayer->RunFunction("on_unload", p, true);
 	}
 
 	RegSim.erase(RegSim.begin() + r);
@@ -838,11 +845,11 @@ int ActiveInstance :: UnloadPlayer(SimulatorThread *callSim)
 	AdjustPlayerCount(-1);
 
 
-	if(nutScriptPlayer.HasScript() && callSim->creatureInst != NULL) {
+	if(nutScriptPlayer != NULL && callSim->creatureInst != NULL) {
 		std::vector<ScriptCore::ScriptParam> p;
 		p.push_back(callSim->creatureInst->CreatureID);
 		// Don't queue this, it's like the script will want to clean up before actual removal
-		nutScriptPlayer.RunFunction("on_unloaded", p, true);
+		nutScriptPlayer->RunFunction("on_unloaded", p, true);
 	}
 	
 	return 1;
@@ -855,11 +862,11 @@ int ActiveInstance :: RemovePlayerByID(int creatureID)
 	{
 		if(it->CreatureID == creatureID)
 		{
-			if(nutScriptPlayer.HasScript()) {
+			if(nutScriptPlayer != NULL) {
 				std::vector<ScriptCore::ScriptParam> p;
 				p.push_back(creatureID);
 				// Don't queue this, it's like the script will want to clean up before actual removal
-				nutScriptPlayer.RunFunction("on_remove", p, true);
+				nutScriptPlayer->RunFunction("on_remove", p, true);
 			}
 
 			int size = PrepExt_RemoveCreature(GSendBuf, it->CreatureID);
@@ -869,11 +876,11 @@ int ActiveInstance :: RemovePlayerByID(int creatureID)
 			PlayerList.erase(it);
 			RebuildPlayerList();
 
-			if(nutScriptPlayer.HasScript()) {
+			if(nutScriptPlayer != NULL) {
 				std::vector<ScriptCore::ScriptParam> p;
 				p.push_back(creatureID);
 				// Don't queue this, it's like the script will want to clean up before actual removal
-				nutScriptPlayer.RunFunction("on_removed", p, true);
+				nutScriptPlayer->RunFunction("on_removed", p, true);
 			}
 
 			return 1;
@@ -2079,19 +2086,19 @@ void ActiveInstance :: EraseAllCreatureReference(CreatureInstance *object)
 
 void ActiveInstance :: RunDeath(CreatureInstance *object)
 {
-	if(nutScriptPlayer.HasScript()) {
+	if(nutScriptPlayer != NULL) {
 		std::vector<CreatureInstance*>::iterator it = std::find(PlayerListPtr.begin(), PlayerListPtr.end(), object);
 		std::vector<ScriptCore::ScriptParam> p;
 		p.push_back(object->CreatureID);
 		if(it != PlayerListPtr.end()) {
-			nutScriptPlayer.RunFunction("on_player_death", p);
+			nutScriptPlayer->RunFunction("on_player_death", p);
 			QuestScript::QuestNutPlayer *nut = GetSimulatorQuestNutScript(object->simulatorPtr);
 			if(nut != NULL) {
 				nut->RunFunction("on_player_death", p);
 			}
 		}
 		else {
-			nutScriptPlayer.RunFunction("on_death", p);
+			nutScriptPlayer->RunFunction("on_death", p);
 			QuestScript::QuestNutPlayer *nut = GetSimulatorQuestNutScript(object->simulatorPtr);
 			if(nut != NULL) {
 				nut->RunFunction("on_death", p);
@@ -2326,9 +2333,10 @@ ActiveInstance * ActiveInstanceManager :: CreateInstance(int zoneID, PlayerInsta
 			newItem.dropRateProfile = &g_DropRateProfileManager.GetProfileByName(newItem.scaleProfile->mDropRateProfileName);
 	}
 	
-
+	cs.Enter("ActiveInstanceManager::CreateInstance");
 	instList.push_back(newItem);
 	RebuildAccessList();
+	cs.Leave();
 
 	ActiveInstance *retPtr = &instList.back();
 	retPtr->InitializeData();
@@ -2354,9 +2362,10 @@ void ActiveInstance :: InitializeData(void)
 	std::string path = InstanceScript::InstanceNutDef::GetInstanceScriptPath(mZoneDefPtr->mID, false, mZoneDefPtr->mGrove);
 	if(Util::HasEnding(path, ".nut")) {
 		nutScriptDef.Initialize(path.c_str());
-		nutScriptPlayer.SetInstancePointer(this);
+		nutScriptPlayer = new InstanceScript::InstanceNutPlayer();
+		nutScriptPlayer->SetInstancePointer(this);
 		std::string errors;
-		nutScriptPlayer.Initialize(&nutScriptDef, errors);
+		nutScriptPlayer->Initialize(&nutScriptDef, errors);
 		if(errors.length() > 0)
 			g_Log.AddMessageFormat("Failed to compile. %s", errors.c_str());
 	}
@@ -3173,8 +3182,8 @@ void ActiveInstance :: RunProcessingCycle(void)
 	//scriptPlayer.RunUntilWait();
 	if(scriptPlayer.HasScript())
 		scriptPlayer.RunAtSpeed(25);
-	else if(nutScriptPlayer.HasScript())
-		nutScriptPlayer.Tick();
+	else if(nutScriptPlayer != NULL)
+		nutScriptPlayer->Tick();
 	SendActors();
 	UpdateCreatureLocalStatus();
 
@@ -3223,12 +3232,12 @@ void ActiveInstance :: UpdateEnvironmentCycle(const char *timeOfDay)
 //Calls a script with a particular kill event.
 void ActiveInstance :: ScriptCallKill(int CreatureDefID, int CreatureID)
 {
-	if(nutScriptPlayer.HasScript() && nutScriptPlayer.mActive)
+	if(nutScriptPlayer != NULL && nutScriptPlayer->mActive)
 	{
 		std::vector<ScriptCore::ScriptParam> parms;
 		parms.push_back(ScriptCore::ScriptParam(CreatureDefID));
 		parms.push_back(ScriptCore::ScriptParam(CreatureID));
-		nutScriptPlayer.RunFunction("on_kill", parms);
+		nutScriptPlayer->RunFunction("on_kill", parms);
 
 		char buffer[64];
 		Util::SafeFormat(buffer, sizeof(buffer), "on_kill_%d", CreatureDefID);
@@ -3251,15 +3260,15 @@ void ActiveInstance :: ScriptCallKill(int CreatureDefID, int CreatureID)
 
 void ActiveInstance :: ScriptCallPackageKill(const char *name)
 {
-	if(nutScriptPlayer.HasScript() && nutScriptPlayer.mActive)
+	if(nutScriptPlayer != NULL && nutScriptPlayer->mActive)
 	{
 		std::vector<ScriptCore::ScriptParam> parms;
 		parms.push_back(ScriptCore::ScriptParam(std::string(name)));
-		nutScriptPlayer.RunFunction("on_package_kill", parms);
+		nutScriptPlayer->RunFunction("on_package_kill", parms);
 
 		char buffer[64];
 		Util::SafeFormat(buffer, sizeof(buffer), "on_package_kill_%s", name);
-		nutScriptPlayer.RunFunction(string(buffer));
+		nutScriptPlayer->RunFunction(string(buffer));
 	}
 	else if(scriptPlayer.HasScript())
 		ScriptCall(name);
@@ -3268,11 +3277,11 @@ void ActiveInstance :: ScriptCallPackageKill(const char *name)
 void ActiveInstance :: ScriptCallUse(int sourceCreatureID, int usedCreatureDefID)
 {
 	char buffer[64];
-	if(nutScriptPlayer.HasScript()) {
+	if(nutScriptPlayer != NULL) {
 		std::vector<ScriptCore::ScriptParam> p;
 		p.push_back(ScriptCore::ScriptParam(sourceCreatureID));
 		p.push_back(ScriptCore::ScriptParam(usedCreatureDefID));
-		nutScriptPlayer.RunFunction("on_use", p);
+		nutScriptPlayer->RunFunction("on_use", p);
 		Util::SafeFormat(buffer, sizeof(buffer), "on_use_%d", usedCreatureDefID);
 	}
 	else
@@ -3283,11 +3292,11 @@ void ActiveInstance :: ScriptCallUse(int sourceCreatureID, int usedCreatureDefID
 void ActiveInstance :: ScriptCallUseHalt(int sourceCreatureID, int usedCreatureDefID)
 {
 	char buffer[64];
-	if(nutScriptPlayer.HasScript()) {
+	if(nutScriptPlayer != NULL) {
 		std::vector<ScriptCore::ScriptParam> p;
 		p.push_back(ScriptCore::ScriptParam(sourceCreatureID));
 		p.push_back(ScriptCore::ScriptParam(usedCreatureDefID));
-		nutScriptPlayer.RunFunction("on_use_halt", p);
+		nutScriptPlayer->RunFunction("on_use_halt", p);
 
 		Util::SafeFormat(buffer, sizeof(buffer), "on_use_halt_%d", usedCreatureDefID);
 	}
@@ -3299,11 +3308,11 @@ void ActiveInstance :: ScriptCallUseHalt(int sourceCreatureID, int usedCreatureD
 void ActiveInstance :: ScriptCallUseFinish(int sourceCreatureID, int usedCreatureDefID)
 {
 	char buffer[64];
-	if(nutScriptPlayer.HasScript()) {
+	if(nutScriptPlayer != NULL) {
 		std::vector<ScriptCore::ScriptParam> p;
 		p.push_back(ScriptCore::ScriptParam(sourceCreatureID));
 		p.push_back(ScriptCore::ScriptParam(usedCreatureDefID));
-		nutScriptPlayer.RunFunction("on_use_finish", p);
+		nutScriptPlayer->RunFunction("on_use_finish", p);
 
 		Util::SafeFormat(buffer, sizeof(buffer), "on_use_finish_%d", usedCreatureDefID);
 	}
@@ -3316,15 +3325,15 @@ void ActiveInstance :: ScriptCallUseFinish(int sourceCreatureID, int usedCreatur
 void ActiveInstance :: ScriptCall(const char *name)
 {
 	g_Log.AddMessageFormat("Script call %s in %d", name, mZone);
-	if(nutScriptPlayer.HasScript())
-		nutScriptPlayer.RunFunction(string(name));
+	if(nutScriptPlayer != NULL)
+		nutScriptPlayer->RunFunction(string(name));
 	if(scriptPlayer.HasScript() && scriptPlayer.JumpToLabel(name) == true)
 		scriptPlayer.RunUntilWait();
 }
 
 bool ActiveInstance :: RunScript(std::string &errors)
 {
-	if((scriptPlayer.HasScript() && scriptPlayer.active) || (nutScriptPlayer.HasScript() && nutScriptPlayer.mActive)) {
+	if((scriptPlayer.HasScript() && scriptPlayer.active) || (nutScriptPlayer != NULL && nutScriptPlayer->mActive)) {
 		g_Log.AddMessageFormat("Request to run script for %d when it is already running", mZone);
 		return false;
 	}
@@ -3333,8 +3342,9 @@ bool ActiveInstance :: RunScript(std::string &errors)
 	std::string path = InstanceScript::InstanceNutDef::GetInstanceScriptPath(mZoneDefPtr->mID, false, mZoneDefPtr->mGrove);
 	if(Util::HasEnding(path, ".nut")) {
 		nutScriptDef.Initialize(path.c_str());
-		nutScriptPlayer.SetInstancePointer(this);
-		nutScriptPlayer.Initialize(&nutScriptDef, errors);
+		nutScriptPlayer = new InstanceScript::InstanceNutPlayer();
+		nutScriptPlayer->SetInstancePointer(this);
+		nutScriptPlayer->Initialize(&nutScriptDef, errors);
 	}
 	else if(Util::HasEnding(path, ".txt")) {
 		scriptDef.CompileFromSource(path.c_str());
@@ -3357,10 +3367,12 @@ bool ActiveInstance :: KillScript()
 		scriptPlayer.HaltExecution();
 		ok = true;
 	}
-	else if(nutScriptPlayer.HasScript()) {
-		if(nutScriptPlayer.mActive) {
+	else if(nutScriptPlayer != NULL) {
+		if(nutScriptPlayer->mActive) {
 			g_Log.AddMessageFormat("Killing squirrel script for %d", mZone);
-			nutScriptPlayer.HaltExecution();
+			nutScriptPlayer->HaltExecution();
+			delete nutScriptPlayer;
+			nutScriptPlayer = NULL;
 			ok = true;
 		}
 	}
@@ -3430,11 +3442,11 @@ void ActiveInstance :: RunObjectInteraction(SimulatorThread *simPtr, int CDef)
 		}
 		else if(intObj->opType == InteractObject::TYPE_SCRIPT)
 		{
-			if(nutScriptPlayer.HasScript()) {
+			if(nutScriptPlayer != NULL) {
 				std::vector<ScriptCore::ScriptParam> p;
 				p.push_back(ScriptCore::ScriptParam(simPtr->creatureInst->CreatureID));
 				p.push_back(ScriptCore::ScriptParam(CDef));
-				nutScriptPlayer.RunFunction(intObj->scriptFunction, p);
+				nutScriptPlayer->RunFunction(intObj->scriptFunction, p);
 			}
 		}
 
@@ -3749,6 +3761,7 @@ void ActiveInstanceManager :: CheckActiveInstances(void)
 	std::list<ActiveInstance>::iterator it;
 	int delCount = 0;
 	it = instList.begin();
+	cs.Enter("ActiveInstanceManager :: CheckActiveInstances");
 	while(it != instList.end())
 	{
 		if(it->QualifyDelete() == true)
@@ -3766,6 +3779,7 @@ void ActiveInstanceManager :: CheckActiveInstances(void)
 
 	if(delCount > 0)
 		RebuildAccessList();
+	cs.Leave();
 }
 
 //All instances with zero players will be triggered for immediate deletion on the next cycle.
