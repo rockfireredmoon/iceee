@@ -383,6 +383,7 @@ void Helper_OutputCreature(ReportBuffer &report, int index, CreatureInstance *ob
 void RefreshScripts(ReportBuffer &report)
 {
 	report.AddLine("Quest Scripts");
+	g_QuestNutManager.cs.Enter("RemoteAction::RefreshScripts");
 	std::map<int, std::list<QuestScript::QuestNutPlayer *> >::iterator it = g_QuestNutManager.questAct.begin();
 	double seconds;
 	for(; it != g_QuestNutManager.questAct.end(); ++it) {
@@ -401,20 +402,23 @@ void RefreshScripts(ReportBuffer &report)
 		if(report.WasTruncated())
 			break;
 	}
+	g_QuestNutManager.cs.Leave();
 	report.AddLine("Instance Scripts");
+	g_ActiveInstanceManager.cs.Enter("RemoteAction::RefreshScripts");
 	size_t a;
 	for(a = 0; a < g_ActiveInstanceManager.instListPtr.size(); a++)
 	{
 		ActiveInstance *ainst = g_ActiveInstanceManager.instListPtr[a];
-		InstanceScript::InstanceNutPlayer player = ainst->nutScriptPlayer;
-		if(player.HasScript()) {
-			report.AddLine("%-50s %-20s %-20s %4.4f %5d %5d %5d %-10s", player.def->mSourceFile.c_str(), player.def->scriptName.c_str(), player.def->mAuthor.c_str(), seconds,
-					player.mInitTime, player.mCalls, player.mGCTime, player.mActive ? "Active" : "Inactive");
+		InstanceScript::InstanceNutPlayer * player = ainst->nutScriptPlayer;
+		if(player != NULL) {
+			report.AddLine("%-50s %-20s %-20s %4.4f %5d %5d %5d %-10s", player->def->mSourceFile.c_str(), player->def->scriptName.c_str(), player->def->mAuthor.c_str(), seconds,
+					player->mInitTime, player->mCalls, player->mGCTime, player->mActive ? "Active" : "Inactive");
 		}
 
 		if(report.WasTruncated())
 			break;
 	}
+	g_ActiveInstanceManager.cs.Leave();
 
 }
 
