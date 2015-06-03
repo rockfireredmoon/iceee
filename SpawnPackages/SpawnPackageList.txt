@@ -64,6 +64,9 @@
 65_RolsburgMine.txt
 60_Chunnel.txt
 
+; 0.8.7+
+92_Bastion.txt
+
 ; EER
 1076_SouthendPassage.txt
 

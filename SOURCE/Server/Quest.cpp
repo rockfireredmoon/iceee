@@ -1439,12 +1439,14 @@ const char * QuestJournal :: CreatureIsusable(int CreatureDefID)
 	//"D" is default-usable, and will not have a shimmer effect.
 	
 	int r = activeQuests.HasCreatureReturn(CreatureDefID);
-	if(r >= 0)
+	if(r >= 0) {
 		return responseStr[1];
+	}
 
 	r = activeQuests.HasObjectInteraction(CreatureDefID);
-	if(r >= 0)
+	if(r >= 0) {
 		return responseStr[2];
+	}
 
 	return responseStr[0];
 }

@@ -159,7 +159,7 @@ Name=Untitled
 Pos=11709.6,446.116,12184.3
 Orient=0,-0.859863,0,0.510525
 Scale=1,1,1
-spawnPackage=#3146
+spawnPackage=obji_bastion_catapult1
 
 [ENTRY]
 ID=1028372
@@ -168,7 +168,7 @@ Name=Untitled
 Pos=11833.5,426.218,12244
 Orient=0,0.885046,0,-0.465504
 Scale=1,1,1
-spawnPackage=#3146
+spawnPackage=obji_bastion_catapult1
 
 [ENTRY]
 ID=1028377
@@ -177,7 +177,7 @@ Name=Untitled
 Pos=11563.4,457.716,12129.6
 Orient=0,-0.822049,0,0.569417
 Scale=1,1,1
-spawnPackage=#3146
+spawnPackage=obji_bastion_catapult1
 
 [ENTRY]
 ID=1028379
@@ -186,7 +186,7 @@ Name=Untitled
 Pos=11993.9,406.829,12319
 Orient=0,0.952576,0,-0.3043
 Scale=1,1,1
-spawnPackage=#3146
+spawnPackage=obji_bastion_catapult1
 
 [ENTRY]
 ID=1028384

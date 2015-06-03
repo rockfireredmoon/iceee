@@ -1,0 +1,212 @@
+[ENTRY]
+ID=900
+Title=The Anubian War
+BodyText=Ah you must be the new recruit! You've come just in time the Anubians have pushed us back to camp, we're losing this battle! Go Speak to Sergeant Bors. He's got a plan to send these creatures back to the ocean!
+CompleteText=About time you got here recruit! We need to get back in this fight are you ready?!
+Level=1
+Suggested=1
+Exp=324
+PartySize=1
+NumRewards=0
+Coin=75
+Unabandon=0
+QuestGiverID=3161
+QuestEnderID=3137
+Repeat=0
+sGiver=10876.9,568.124,12163.1,92
+sEnder=10867.8,568.911,12169.2,92
+[ACT]
+Act.BodyText=Speak to <rightclick> Sergeant Bors
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=3137
+Obj.0.description=Speak to <rightclick> Sergeant Bors
+Obj.0.complete=0
+Obj.0.myCreatureDefID=3137
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=10867.8,568.911,12169.2,92;
+
+[ENTRY]
+Requires=900
+ID=901
+Title=The Anubian War
+BodyText=Here's your objective recruit! These Anubian bastards are right on our door step I need you to get down there and even the odds up a bit! Kill as many as you can then report back to me!
+CompleteText=HAHA you showed them! excellent work recruit but were not out of the water yet!
+Level=1
+Suggested=1
+Exp=412
+PartySize=1
+NumRewards=0
+Coin=100
+Unabandon=0
+QuestGiverID=3137
+QuestEnderID=3137
+Repeat=0
+sGiver=10867.8,568.911,12169.2,92
+sEnder=10867.8,568.911,12169.2,92
+[ACT]
+Act.BodyText=Kill 6 Anubian forces and report back to Sergeant Bors
+Obj.0.type=kill
+Obj.0.data1=3132,3134,3140,3141
+Obj.0.data2=6
+Obj.0.description=Kill 6 Anubian forces
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 6
+Obj.0.markerLocations=11144,501.824,11989.8,92
+[ACT]
+Act.BodyText=Report back to Sergeant Bors
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Report back to Sergeant Bors
+Obj.0.complete=0
+Obj.0.myCreatureDefID=3137
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=10867.8,568.911,12169.2,92;
+
+[ENTRY]
+Requires=901
+ID=902
+Title=Speak to Sir Lancelot
+BodyText=I've just received word that our commanding officer, Sir Lancelot is in need of assistance. He's being pinned down by catapult fire just southeast of here! Go see what you can do to help!
+CompleteText=Look sharp recruit! Bastion needs your help!
+Level=1
+Suggested=2
+Exp=356
+PartySize=1
+NumRewards=0
+Coin=75
+Unabandon=0
+QuestGiverID=3137
+QuestEnderID=3230
+Repeat=0
+sGiver=10867.8,568.911,12169.2,92
+sEnder=11372.2,567.216,12637.4,92
+[ACT]
+Act.BodyText=Speak to Sir Lancelot
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=3230
+Obj.0.description=Speak to Sir Lancelot
+Obj.0.myCreatureDefID=3230
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=11372.2,567.216,12637.4,92;
+
+
+[ENTRY]
+Requires=902
+ID=903
+Title=Destroy The Catapults
+BodyText=The Evil Archmage Ramses has sent his troops to wipe us out. We cannot let that happen! We need to deal a blow to the Anubian catapult barrage in order to clear a path to the enemy warlord's encampment. Destroy some of those catapults so we can get troops to the warlord's camp!
+CompleteText=I could see the black smoke rising through the air from here. Well done recruit!
+Level=1
+Suggested=2
+Exp=435
+PartySize=1
+NumRewards=0
+Coin=100
+Unabandon=0
+QuestGiverID=3230
+QuestEnderID=3230
+Repeat=0
+sGiver=11372.2,567.216,12637.4,92
+sEnder=11372.2,567.216,12637.4,92
+[ACT]
+Act.BodyText=Destroy a catapult
+Obj.0.type=activate
+Obj.0.data1=3146
+Obj.0.data2=1
+Obj.0.description=Destroy a catapult
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=11562.5,457.332,12136.5,92,92;
+Obj.0.ActivateTime=2000
+Obj.0.ActivateText=Burning catapult
+[ACT]
+Act.BodyText=Return to Sir Lancelot
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Sir Lancelot
+Obj.0.myCreatureDefID=3230
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=11372.2,567.216,12637.4,92;
+
+[ENTRY]
+Requires=903
+ID=904
+Title=Defeat Warlord Scarrus
+BodyText=We've crippled the Anubians' manpower and firepower. Now we must deliver the final blow and kill their field general.  Warlord Scarrus .  He is one of Archmage Ramses' most trusted advisors.  To eliminate him would not only mean victory today but would be a deep cut in the Anubian command! You must not fail.. 
+CompleteText=Excellent work recruit! Without their general it's only a matter of time before we fully retake Bastion.
+Level=1
+Suggested=3
+Exp=465
+PartySize=1
+NumRewards=0
+Coin=120
+Unabandon=0
+QuestGiverID=3230
+QuestEnderID=3230
+Repeat=0
+sGiver=11372.2,567.216,12637.4,92
+sEnder=11372.2,567.216,12637.4,92
+[ACT]
+Act.BodyText=Kill Warlord Scarrus
+Obj.0.type=kill
+Obj.0.data1=3142
+Obj.0.data2=1
+Obj.0.description=Kill Warlord Scarrus
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=11868,654.975,11473.1,92;
+[ACT]
+Act.BodyText=Return to Sir Lancelot
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Sir Lancelot
+Obj.0.complete=0
+Obj.0.myCreatureDefID=3230
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=11372.2,567.216,12637.4,92
+
+[ENTRY]
+Requires=905
+ID=906
+Title=Travel to Corsica
+BodyText=You've shown great potential today recruit! We couldn't have done it without you.  Don't get to comfortable though because I want you on the front line in this war.  I need you to sail to Corsica.  News has reach me that the Anubians have launched a full on invasion there.  Hopefully we aren't too late.  I want you to take the battle directly to Archmage Ramses! We need to put a end to this conflict ! there's a boat down the road here speak to Captain Karl he'll bring you to Corsica
+CompleteText=Ahoy! Sir Lancelot told me everything.  Let me know when yer ready to set sail! Don't ya take too long though theirs Anubian ships everywhere!
+Level=1
+Suggested=3
+Exp=325
+PartySize=1
+NumRewards=0
+Coin=90
+Unabandon=0
+QuestGiverID=3230
+QuestEnderID=3147
+Repeat=0
+sGiver=11372.2,567.216,12637.4,92
+sEnder=11512.6,408.08,13635.4,92
+[ACT]
+Act.BodyText=Speak to Captain Karl
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Speak to Captain Karl
+Obj.0.complete=0
+Obj.0.myCreatureDefID=3147
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=11512.6,408.08,13635.4,92;

@@ -1,0 +1,4 @@
+[ENTRY]
+Flags=3
+Name=obji_bastion_catapult1
+Spawn=3146,100  ;Avalonian Boat (1) at 0

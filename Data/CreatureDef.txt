@@ -70425,6 +70425,7 @@ ai_package=nothing
 
 [ENTRY]
 ID=3146
+defHints=3072
 will_regen=1
 might_regen=1
 appearance=n4:{["sk"]={["first"]="790000"},["c"]="Horde-Anubian_Catapult",["sz"]="1"}
@@ -70433,6 +70434,17 @@ display_name=Catapult
 profession=1
 creature_category=Inanimate
 ai_package=nothing
+
+;[ENTRY]
+;ID=3146
+;will_regen=1
+;might_regen=1
+;appearance=p1:{["a"]="Prop-Interact_Sphere",["sz"]="3"}
+;level=1
+;display_name=Catapult
+;profession=1
+;creature_category=Inanimate
+;ai_package=nothing
 
 [ENTRY]
 defHints=32

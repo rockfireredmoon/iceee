@@ -629,6 +629,274 @@ int PrepExt_SetAvatar(char *buffer, int creatureID)
 	return wpos;
 }
 
+int PrepExt_DamageInfo(char *buffer, int sourceCID, std::string damagerString, std::string abilityName, bool crit, int absorbed)
+{
+	int wpos = 0;
+	wpos += PutInteger(&buffer[wpos], sourceCID);
+
+
+	return wpos;
+
+//	amageType <- {
+//		MELEE = 0,
+//		FIRE = 1,
+//		FROST = 2,
+//		MYSTIC = 3,
+//		DEATH = 4,
+//		UNBLOCKABLE = 5
+//	};
+//	this.DamageTypeNameMapping <- {
+//		[this.DamageType.MELEE] = "Physical",
+//		[this.DamageType.FIRE] = "Fire",
+//		[this.DamageType.FROST] = "Frost",
+//		[this.DamageType.MYSTIC] = "Mystic",
+//		[this.DamageType.DEATH] = "Death",
+//		[this.DamageType.UNBLOCKABLE] = "Unblockable"
+//	};
+//	this.DamageTypeNameMappingLower <- {
+//		[this.DamageType.MELEE] = "physical",
+//		[this.DamageType.FIRE] = "fire",
+//		[this.DamageType.FROST] = "frost",
+//		[this.DamageType.MYSTIC] = "mystic",
+//		[this.DamageType.DEATH] = "death",
+//		[this.DamageType.UNBLOCKABLE] = "unblockable"
+//	};
+
+//	local target = this.mSceneObjectManager.getCreatureByID(id);
+//	local source = this.mSceneObjectManager.getCreatureByID(data.getInteger());
+//	local damageString = data.getStringUTF();
+//	local abilityName = data.getStringUTF();
+//	local criticalHit = data.getByte();
+//	local absorbedDamage = 0;
+//
+//	if (this.mProtocolVersionId >= 21)
+//	{
+//		absorbedDamage = data.getInteger();
+//	}
+//
+//	local damage = this.array(this.DamageType.len(), 0);
+//	local immunity = this.array(this.DamageType.len(), false);
+//	local splitDamageString = this.Util.split(damageString, "|");
+//	local damageOutputString = "";
+//	local targetHasSomeImmunity = false;
+//
+//	foreach( damgeType in splitDamageString )
+//	{
+//		if (damgeType == "")
+//		{
+//			continue;
+//		}
+//
+//		if (damageOutputString != "")
+//		{
+//			damageOutputString += ", ";
+//		}
+//
+//		local splitString = this.Util.split(damgeType, ":");
+//		local damageType = splitString[0].tointeger();
+//
+//		if (splitString[1] == "IMMUNE")
+//		{
+//			immunity[damageType] = true;
+//			damage[damageType] = 0;
+//			targetHasSomeImmunity = true;
+//		}
+//		else
+//		{
+//			damage[damageType] = splitString[1].tointeger();
+//		}
+//
+//		damageOutputString += damage[damageType] + " points of " + this.DamageTypeNameMappingLower[damageType];
+//	}
+//
+//	local totalDamage = 0;
+//
+//	for( local i = 0; i < damage.len(); i++ )
+//	{
+//		totalDamage += damage[i];
+//	}
+//
+//	local criticalHitModifier = " ";
+//	local hitPunctuation = ".";
+//
+//	if (criticalHit == 1)
+//	{
+//		criticalHitModifier = " critically ";
+//		hitPunctuation = "!";
+//
+//		if (target)
+//		{
+//			if (target == ::_avatar)
+//			{
+//				this.IGIS.floatie("Critical", this.IGIS.FLOATIE_STATUS_ORANGE_BIG, target);
+//			}
+//			else
+//			{
+//				this.IGIS.floatie("Critical", this.IGIS.FLOATIE_STATUS_YELLOW_BIG, target);
+//			}
+//		}
+//	}
+//
+//	local abilityDamage = true;
+//
+//	if (abilityName == "melee" || abilityName == "ranged_melee")
+//	{
+//		abilityDamage = false;
+//	}
+//
+//	local recipientIsNPC = false;
+//
+//	if (target.mCreatureDef != null)
+//	{
+//		recipientIsNPC = !target.mCreatureDef.getMeta("persona");
+//	}
+//
+//	if (targetHasSomeImmunity)
+//	{
+//		this.IGIS.floatie("Immune", this.IGIS.FLOATIE_STATUS_RED, target);
+//	}
+//
+//	if (target && totalDamage > 0)
+//	{
+//		target.addFloatie("-" + totalDamage.tostring(), target == ::_avatar ? this.IGIS.FLOATIE_STATUS_RED : this.IGIS.FLOATIE_STATUS_WHITE);
+//	}
+//
+//	local playerId = ::_avatar.getID();
+//	local channelName = "";
+//	local combatMessage = "";
+//	local immunityMessage = "";
+//
+//	if (source == ::_avatar)
+//	{
+//		for( local i = 0; i < immunity.len(); i++ )
+//		{
+//			if (immunity[i] == true)
+//			{
+//				immunityMessage += " " + target.getName() + " is immune to " + this.DamageTypeNameMappingLower[i] + "!";
+//			}
+//		}
+//
+//		if (!abilityDamage)
+//		{
+//			combatMessage = "You" + criticalHitModifier + "hit " + target.getName() + " for " + damageOutputString + " damage";
+//		}
+//		else
+//		{
+//			combatMessage = "You perform " + abilityName + criticalHitModifier + "hitting " + target.getName() + " for " + damageOutputString + " damage";
+//		}
+//
+//		channelName = "mco";
+//		local dpsScreen = this.Screens.get("DPSMeter", false);
+//
+//		if (dpsScreen)
+//		{
+//			dpsScreen.addDamageOut(this.meleeDamage, damage[this.DamageType.MELEE]);
+//			dpsScreen.addDamageOut(this.fireDamage, damage[this.DamageType.FIRE]);
+//			dpsScreen.addDamageOut(this.frostDamage, damage[this.DamageType.FROST]);
+//			dpsScreen.addDamageOut(this.mysticDamage, damage[this.DamageType.MYSTIC]);
+//			dpsScreen.addDamageOut(this.deathDamage, damage[this.DamageType.DEATH]);
+//			dpsScreen.addDamageOut(this.unblockableDamage, damage[this.DamageType.UNBLOCKABLE]);
+//			dpsScreen.addSwingOut(true);
+//		}
+//	}
+//	else if (target == ::_avatar)
+//	{
+//		for( local i = 0; i < immunity.len(); i++ )
+//		{
+//			if (immunity[i] == true)
+//			{
+//				immunityMessage += " You are immune to " + this.DamageTypeNameMappingLower[i] + "!";
+//			}
+//		}
+//
+//		if (!abilityDamage)
+//		{
+//			combatMessage = source.getName() + criticalHitModifier + "hits you for " + damageOutputString + " damage";
+//		}
+//		else
+//		{
+//			combatMessage = source.getName() + " performs " + abilityName + criticalHitModifier + "hitting you for " + damageOutputString + " damage";
+//		}
+//
+//		local currentTarget = ::_avatar.getTargetObject();
+//
+//		if (!currentTarget)
+//		{
+//			::_avatar.setResetTabTarget(true);
+//			::_avatar.setTargetObject(source);
+//			::_Connection.sendSelectTarget(source.getID());
+//		}
+//
+//		local dpsScreen = this.Screens.get("DPSMeter", false);
+//
+//		if (dpsScreen)
+//		{
+//			dpsScreen.addDamageIn(this.meleeDamage, damage[this.DamageType.MELEE]);
+//			dpsScreen.addDamageIn(this.fireDamage, damage[this.DamageType.FIRE]);
+//			dpsScreen.addDamageIn(this.frostDamage, damage[this.DamageType.FROST]);
+//			dpsScreen.addDamageIn(this.mysticDamage, damage[this.DamageType.MYSTIC]);
+//			dpsScreen.addDamageIn(this.deathDamage, damage[this.DamageType.DEATH]);
+//			dpsScreen.addDamageIn(this.unblockableDamage, damage[this.DamageType.UNBLOCKABLE]);
+//			dpsScreen.addSwingIn(true);
+//		}
+//
+//		channelName = "mci";
+//	}
+//	else if (recipientIsNPC)
+//	{
+//		for( local i = 0; i < immunity.len(); i++ )
+//		{
+//			if (immunity[i] == true)
+//			{
+//				immunityMessage += " " + target.getName() + " is immune to " + this.DamageTypeNameMappingLower[i] + "!";
+//			}
+//		}
+//
+//		if (!abilityDamage)
+//		{
+//			combatMessage = source.getName() + criticalHitModifier + "hits " + target.getName() + " for " + damageOutputString + " damage";
+//		}
+//		else
+//		{
+//			combatMessage = source.getName() + " performs " + abilityName + criticalHitModifier + "hitting " + target.getName() + " for " + damageOutputString + " damage";
+//		}
+//
+//		channelName = "oco";
+//	}
+//	else
+//	{
+//		for( local i = 0; i < immunity.len(); i++ )
+//		{
+//			if (immunity[i] == true)
+//			{
+//				immunityMessage += " " + target.getName() + " is immune to " + this.DamageTypeNameMappingLower[i] + "!";
+//			}
+//		}
+//
+//		if (!abilityDamage)
+//		{
+//			combatMessage = source.getName() + criticalHitModifier + "hits " + target.getName() + " for " + damageOutputString + " damage";
+//		}
+//		else
+//		{
+//			combatMessage = source.getName() + " performs " + abilityName + criticalHitModifier + "hitting " + target.getName() + " for " + damageOutputString + " damage";
+//		}
+//
+//		channelName = "oci";
+//	}
+//
+//	if (absorbedDamage > 0)
+//	{
+//		combatMessage += " (absorbed " + absorbedDamage + ")";
+//	}
+//
+//	combatMessage += hitPunctuation;
+//	combatMessage += immunityMessage;
+//	target.addCombatMessage(channelName, combatMessage);
+//	break;
+
+}
+
 //int PrepExt_SetMap(char *buffer, ZoneDefInfo *zoneDef, const char *instanceZoneString)
 //{
 //	int wpos = 0;

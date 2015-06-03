@@ -31,14 +31,6 @@ Orient=0,-0.461779,0,0.886995
 Scale=7,7,7
 
 [ENTRY]
-ID=1076358
-Asset=Prop-Redeemer_Banner1
-Name=Untitled
-Pos=13678.9,450.578,11516.4
-Orient=0,-0.999942,0,0.0107957
-Scale=7,7,7
-
-[ENTRY]
 ID=1076359
 Asset=Prop-Redeemer_Banner1
 Name=Untitled
@@ -292,14 +284,6 @@ Asset=Prop-Redeemer_Banner1
 Name=Untitled
 Pos=14285.7,450.578,11469.9
 Orient=0,-0.935616,0,0.353019
-Scale=7,7,7
-
-[ENTRY]
-ID=1076813
-Asset=Prop-Redeemer_Banner1
-Name=Untitled
-Pos=13968.8,450.578,11516.4
-Orient=0,-0.999875,0,0.015795
 Scale=7,7,7
 
 [ENTRY]

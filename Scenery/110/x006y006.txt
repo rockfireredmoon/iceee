@@ -1,0 +1,8 @@
+[ENTRY]
+ID=1500060
+Asset=Prop-Tree_Platform
+Name=
+Pos=13401.8,259.488,11588.1
+Orient=0,0.704411,0,-0.709793
+Scale=1,1,1
+
