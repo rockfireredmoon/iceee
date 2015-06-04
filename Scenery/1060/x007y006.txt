@@ -361,7 +361,7 @@ patrolEvent=
 [ENTRY]
 ID=1029141
 PlacedBy=0
-Asset=Environment-Marker?type=Corsica-Northbeach
+Asset=Environment-Marker?type=Bastion
 Name=Untitled
 PX=14813.8
 PY=1262.04

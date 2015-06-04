@@ -103,15 +103,12 @@ DefLoc=15463,1160,13639
 ID=1060
 NAME=NewCorsica
 TERRAINCONFIG=Terrain-NewCorsica#Terrain-NewCorsica.cfg
-ENVIRONMENTTYPE=NightSky
+ENVIRONMENTTYPE=Bastion
 MAPNAME=Maps-Corsica
 REGIONS=Terrain-NewCorsica/NewCorsica_Regions.png
 ShardName=Corsica 1
 WarpName=NewCorsica
-Persist=1
-DefLoc=15907,1111,12567
-PageSize=1000
-EnvironmentCycle=1
+DefLoc=15739,1117,13201
 
 [ENTRY]
 DESC=Fix Cor
