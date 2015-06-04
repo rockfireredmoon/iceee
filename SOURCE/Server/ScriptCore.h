@@ -394,6 +394,13 @@ private:
 
 };
 
+class NutScriptCallStringParser {
+public:
+	std::string mScriptName;
+	std::vector<std::string> mArgs;
+	NutScriptCallStringParser(std::string string);
+};
+
 class NutCallback {
 public:
 	NutCallback();
@@ -430,6 +437,8 @@ public:
 	bool mHalting; //If true, the script is currently halting (subsequent halts will do nothing).
 	bool mExecuting;
 	bool mRunning; //If true, a function call is currently running (will make halts be queued)
+
+	std::vector<std::string> mArgs; // Scripts may be called with arguments. This vector should be set before initialising the player
 
 	unsigned int long mCalls; // Total number of calls (including initial, events and all external function calls)
 	unsigned int long mGCCounter; // Increased at same times as mCalls, but when it reaches a predefined limit, GC is performed

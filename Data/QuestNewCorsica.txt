@@ -182,8 +182,8 @@ Obj.0.completeText=
 Obj.0.markerLocations=11372.2,567.216,12637.4,92
 
 [ENTRY]
-Requires=905
-ID=906
+Requires=904
+ID=905
 Title=Travel to Corsica
 BodyText=You've shown great potential today recruit! We couldn't have done it without you.  Don't get to comfortable though because I want you on the front line in this war.  I need you to sail to Corsica.  News has reach me that the Anubians have launched a full on invasion there.  Hopefully we aren't too late.  I want you to take the battle directly to Archmage Ramses! We need to put a end to this conflict ! there's a boat down the road here speak to Captain Karl he'll bring you to Corsica
 CompleteText=Ahoy! Sir Lancelot told me everything.  Let me know when yer ready to set sail! Don't ya take too long though theirs Anubian ships everywhere!

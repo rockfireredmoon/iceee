@@ -484,6 +484,7 @@ public:
 	int handle_command_ccc(void);
 	int handle_command_ban(void);
 	int handle_command_unban(void);
+	int handle_command_setbuildpermission(void);
 	int handle_command_setpermission(void);
 	int handle_command_setpermissionc(void);
 	int handle_command_setbehavior(void);

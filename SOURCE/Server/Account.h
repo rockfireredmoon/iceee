@@ -68,7 +68,7 @@ public:
 	~AccountData();
 
 	static const int EXPIRE_TIME = 5000;
-	static const int MAX_CHARACTER_SLOTS = 7;  //Absolute maximum number of characters an account can have (0.8.9 supports 8 slots, 0.8.8 and earlier only have room in the selection screen for 7 slots)
+	static const int MAX_CHARACTER_SLOTS = 20;  //Absolute maximum number of characters an account can have (0.8.9 supports 8 slots, 0.8.8 and earlier only have room in the selection screen for 7 slots)
 
 	int ID;
 	char Name[48];

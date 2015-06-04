@@ -2940,6 +2940,8 @@ bool SimulatorThread :: HandleCommand(int &PendingData)
 		PendingData = handle_command_unban();
 	else if(query.name.compare("setpermission") == 0)
 		PendingData = handle_command_setpermission();
+	else if(query.name.compare("setbuildpermission") == 0)
+		PendingData = handle_command_setbuildpermission();
 	else if(query.name.compare("setpermissionc") == 0)
 		PendingData = handle_command_setpermissionc();
 	else if(query.name.compare("setbehavior") == 0)
@@ -10690,6 +10692,80 @@ int SimulatorThread :: handle_command_unban(void)
 	accPtr->AdjustSessionLoginCount(0);  //Force refresh.
 
 	SendInfoMessage("Ban cleared.", INFOMSG_INFO);
+	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
+}
+
+int SimulatorThread :: handle_command_setbuildpermission(void)
+{
+	if(CheckPermissionSimple(Perm_Account, Permission_Admin) == false)
+		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
+
+	//[0] = Account name
+	//[1] = permission name
+	//[2] = flag state (set or clear)
+
+	if(query.argCount != 2 && query.argCount != 6)
+		return PrepExt_QueryResponseError(SendBuf, query.ID, "Usage: /setbuildpermission name instance [x1,y1,x2,y2]");
+
+	int zoneID = query.GetInteger(1);
+	g_AccountManager.cs.Enter("SimulatorThread::handle_command_setbuildpermission");
+	AccountData *accPtr = g_AccountManager.FetchAccountByUsername(query.args[0].c_str());
+	if(accPtr == NULL) {
+		g_AccountManager.cs.Leave();
+		return PrepExt_QueryResponseError(SendBuf, query.ID, "Could not find user.");
+	}
+
+	if(query.argCount == 2) {
+		// Remove
+		bool found = false;
+		for(std::vector<BuildPermissionArea>::iterator it = accPtr->BuildPermissionList.begin(); it != accPtr->BuildPermissionList.end() ; ++it) {
+			BuildPermissionArea pa = *it;
+			if(pa.ZoneID == zoneID) {
+				accPtr->BuildPermissionList.erase(it);
+				Util::SafeFormat(Aux1, sizeof(Aux1), "Removed permission for %s in zone %d (%d,%d,%d,%d)",
+						accPtr->Name, zoneID, pa.x1, pa.y1, pa.x2, pa.y2);
+				SendInfoMessage(Aux1, INFOMSG_INFO);
+				found = true;
+				break;
+			}
+		}
+		if(!found) {
+			Util::SafeFormat(Aux1, sizeof(Aux1), "Could not find permission for %s in zone %d",accPtr->Name, zoneID);
+			SendInfoMessage(Aux1, INFOMSG_ERROR);
+		}
+	}
+	else {
+		// Add / update
+		bool found = false;
+		for(std::vector<BuildPermissionArea>::iterator it = accPtr->BuildPermissionList.begin(); it != accPtr->BuildPermissionList.end() ; ++it) {
+			BuildPermissionArea pa = *it;
+			if(pa.ZoneID == zoneID) {
+				pa.x1 = query.GetInteger(2);
+				pa.y1 = query.GetInteger(3);
+				pa.x2 = query.GetInteger(4);
+				pa.y2 = query.GetInteger(5);
+				found = true;
+				Util::SafeFormat(Aux1, sizeof(Aux1), "Updated permission for %s in zone %d (%d,%d,%d,%d)",
+						accPtr->Name, pa.ZoneID, pa.x1, pa.y1, pa.x2, pa.y2);
+				SendInfoMessage(Aux1, INFOMSG_INFO);
+				break;
+			}
+		}
+		if(!found) {
+			BuildPermissionArea pa;
+			pa.ZoneID = zoneID;
+			pa.x1 = query.GetInteger(2);
+			pa.y1 = query.GetInteger(3);
+			pa.x2 = query.GetInteger(4);
+			pa.y2 = query.GetInteger(5);
+			accPtr->BuildPermissionList.push_back(pa);
+			Util::SafeFormat(Aux1, sizeof(Aux1), "Added permission for %s in zone %d (%d,%d,%d,%d)",
+					accPtr->Name, pa.ZoneID, pa.x1, pa.y1, pa.y1, pa.y2);
+			SendInfoMessage(Aux1, INFOMSG_INFO);
+		}
+	}
+	accPtr->PendingMinorUpdates++;
+	g_AccountManager.cs.Leave();
 	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
 }
 

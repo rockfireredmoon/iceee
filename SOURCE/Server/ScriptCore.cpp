@@ -83,6 +83,25 @@ namespace ScriptCore
 		bValue = v;
 	}
 
+
+	//
+	// Parses script names from things such as AIPackages to allow parameters to
+	// be passed to those scripts. This allows much better script reuse, and the
+	// possibility of groves customising scripts for the creatures they use
+	//
+
+	NutScriptCallStringParser::NutScriptCallStringParser(std::string callString) {
+		int idx = callString.find('(');
+		if(idx != -1) {
+			mScriptName = callString.substr(0, idx);
+			Util::Split(callString.substr(idx + 1, callString.find_last_not_of(')')), ",", mArgs);
+			callString.find_last_not_of(')');
+		}
+		else {
+			mScriptName = callString;
+		}
+	}
+
 	NutDef::NutDef() {
 		mQueueEvents = true;
 		mFlags = 0;
@@ -276,6 +295,7 @@ namespace ScriptCore
 		mGCTime = 0;
 		mCalls = 0;
 		mRunning = false;
+		mHalting = false;
 	}
 
 	NutPlayer::~NutPlayer() {
@@ -373,10 +393,6 @@ namespace ScriptCore
 			// The script might have provided an info table
 			Sqrat::Object infoObject = Sqrat::RootTable(vm).GetSlot(_SC("info"));
 			if(!infoObject.IsNull()) {
-				Sqrat::Object name = infoObject.GetSlot("name");
-				if(!name.IsNull()) {
-					def->scriptName = name.Cast<std::string>();
-				}
 				Sqrat::Object author = infoObject.GetSlot("author");
 				if(!author.IsNull()) {
 					def->mAuthor = author.Cast<std::string>();
@@ -475,6 +491,14 @@ namespace ScriptCore
 		Sqrat::RootTable(vm).Func("randint", &randint);
 		Sqrat::RootTable(vm).Func("randdbl", &randdbl);
 		Sqrat::RootTable(vm).Func("rand", &randi);
+
+		// Add in the script arguments
+		Sqrat::RootTable(vm).SetValue(_SC("__argc"), SQInteger(mArgs.size()));
+		Sqrat::Array arr(vm, mArgs.size());
+		int idx = 0;
+		for(std::vector<std::string>::iterator it = mArgs.begin(); it != mArgs.end(); ++it)
+			arr.SetValue(idx++, _SC(*it));
+		Sqrat::RootTable(vm).SetValue(_SC("__argv"), arr);
 	}
 
 	unsigned long NutPlayer::GetServerTime() {

@@ -112,7 +112,7 @@ class GUI.CharacterSelectionListObject extends GUI.Component {
 	}
 
 	function _buildDisplayString() {
-		mNameLabel.setFont(::GUI.Font("Maiandra", 32, true));
+		mNameLabel.setFont(::GUI.Font("Maiandra", 24, true));
 		mNameLabel.setText(this.mName);
 		mNameLabel.setFontColor("ffffff");
 		mNameLabel.setAutoFit(true);
@@ -212,6 +212,7 @@ StageBits <- {
 
 class States.CharacterSelectionState extends State
 {
+	static MAX_CHARACTERS = 20;
 	static mClassName = "CharacterSelectionState";
 	
 	mCard = null;
@@ -283,7 +284,7 @@ class States.CharacterSelectionState extends State
 	mClassDefaultImageButton = null;
 	
 	mCurrentSelection = 0;
-	mMaxCharacters = 7;
+	mMaxCharacters = 20;
 	
 	mUseBackground = true;
 	mBackground = "Prop-CharSelect_BG";
@@ -298,7 +299,6 @@ class States.CharacterSelectionState extends State
 	static DEFAULT_LEGGING_CLOTHES = 0;
 	static DEFAULT_BOOT_CLOTHES = 0;
 	static DEFAULT_TITLE_BG = "CC_Title_BG";
-	static MAX_CHARACTERS = 4;
 	static APPEARANCE_NUM = 2;
 	static EQUIPMENT_NUM = 3;
 	
@@ -710,16 +710,27 @@ class States.CharacterSelectionState extends State
 		bigFrame.setMovable(false);
 		
 		local selectCharacterPanel = GUI.Panel(GUI.GridLayout(2, 1));
-		selectCharacterPanel.getLayoutManager().setRows("*", 52);
+		selectCharacterPanel.getLayoutManager().setRows("*", 42);
 		selectCharacterPanel.getLayoutManager().setColumns(359);
 		selectCharacterPanel.setInsets(10, 10, 5, 10);
 		bigFrame.setContentPane(selectCharacterPanel);
 		
 		local listComp = GUI.InnerPanel(GUI.GridLayout(1, 1));
-		listComp.getLayoutManager().setRows(448);
+		listComp.getLayoutManager().setRows(370);
 		listComp.getLayoutManager().setColumns("*");
 		listComp.setInsets(10, 10, 10, 10);
+		
+		//selectCharacterPanel.add(listComp);
+		
 		selectCharacterPanel.add(listComp);
+		
+		
+		// 
+		//local scroller = GUI.ScrollPanel();
+		//scroller.attach(list);
+		//scroller.setPreferredSize(336, 370);
+		//listComp.setPreferredSize(336, 370);
+		//listComp.add(scroller);
 		
 		local list = mCharacterList = GUI.CharacterSelectionList();
 		list.setAppearance(null);
@@ -729,6 +740,8 @@ class States.CharacterSelectionState extends State
 
 		foreach( i, x in results )
 			displayPersona(x);
+
+
 
 		listComp.add(list);
 		topComp.add(bigFrame);
@@ -740,6 +753,7 @@ class States.CharacterSelectionState extends State
 		local createCharacterButton = mStartCreation = GUI.NarrowButton("Create Character");
 		createCharacterButton.setFixedSize(174, 32);
 
+		print("ICE: " + results.len() + " characters for a max of " + mMaxCharacters); 
 		if (results.len() == mMaxCharacters)
 			createCharacterButton.setEnabled(false);
 		else

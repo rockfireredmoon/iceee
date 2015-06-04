@@ -29,5 +29,5 @@ function have_target() {
 		ai.sleep(2000);
 	}
 	if(ai.has_target())
-		ai.queue(have_target, 0);
+		ai.queue(have_target, 100);
 }

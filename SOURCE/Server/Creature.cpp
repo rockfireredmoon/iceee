@@ -712,14 +712,24 @@ void CreatureInstance :: Instantiate(void)
 		if(scriptName[0] == 0)
 			scriptName = cdef->css.ai_package;
 
-		aiNut = aiNutManager.AddActiveScript(this, scriptName);
-		if(aiNut == NULL)
+		ScriptCore::NutScriptCallStringParser p(scriptName);
+
+		AINutDef *def = aiNutManager.GetScriptByName(p.mScriptName.c_str());
+		if(def == NULL)
 		{
 			aiScript = aiScriptManager.AddActiveScript(scriptName);
 			if(aiScript == NULL)
-				g_Log.AddMessageFormatW(MSG_SHOW, "[WARNING] Could not find script [%s] for instantiated creature [%s]", scriptName, cdef->css.display_name);
+				g_Log.AddMessageFormatW(MSG_SHOW, "[WARNING] Could not find script [%s] for instantiated creature [%s]", p.mScriptName.c_str(), cdef->css.display_name);
 			else
 				aiScript->attachedCreature = this;
+		}
+		else
+		{
+			aiNut = aiNutManager.AddActiveScript(this, def, p.mArgs);
+			if(aiNut == NULL)
+			{
+				g_Log.AddMessageFormatW(MSG_SHOW, "[WARNING] While the script %s for instantiated creature [%s] was found, it did not start." , p.mScriptName.c_str(), cdef->css.display_name);
+			}
 		}
 
 	}

@@ -1,6 +1,7 @@
 #include <list>
 
 #include "ScriptCore.h"
+#include "InstanceScript.h"
 
 class CreatureInstance;
 class ReportBuffer;
@@ -12,7 +13,7 @@ public:
 
 };
 
-class AINutPlayer: public ScriptCore::NutPlayer {
+class AINutPlayer: public InstanceScript::InstanceNutPlayer {
 public:
 	CreatureInstance *attachedCreature;
 
@@ -22,7 +23,7 @@ public:
 	CreatureInstance *ResolveCreatureInstance(int CreatureInstanceID);
 	virtual void RegisterFunctions();
 	void DebugGenerateReport(ReportBuffer &report);
-	void RegisterAIFunctions(NutPlayer *instance, Sqrat::DerivedClass<AINutPlayer, NutPlayer> *clazz);
+	void RegisterAIFunctions(NutPlayer *instance, Sqrat::DerivedClass<AINutPlayer, InstanceScript::InstanceNutPlayer> *clazz);
 	virtual void HaltDerivedExecution();
 	virtual void HaltedDerived();
 	void Initialize(CreatureInstance *creature, AINutDef *defPtr, std::string &errors);
@@ -66,6 +67,7 @@ public:
 	void SetGTAE();
 	int GetSpeed(int CID);
 	bool IsCIDBusy(int CID);
+	void Speak(const char *message);
 };
 
 class AINutManager
@@ -77,7 +79,7 @@ public:
 	std::list<AINutPlayer*> aiAct;
 	int LoadScripts(void);
 	AINutDef* GetScriptByName(const char *name);
-	AINutPlayer *AddActiveScript(CreatureInstance *creature, const char *name);
+	AINutPlayer *AddActiveScript(CreatureInstance *creature, AINutDef *def, std::vector<std::string> args);
 	void RemoveActiveScript(AINutPlayer *registeredPtr);
 };
 

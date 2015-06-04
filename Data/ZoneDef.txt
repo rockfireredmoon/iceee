@@ -1003,7 +1003,7 @@ MAPNAME=Maps-Bastion
 REGIONS=Terrain-Starting_Zone2/Starting_Zone2_Regions.png
 ShardName=Starting Zone
 WarpName=Bastion
-DefLoc=10994,546,12401
+DefLoc=10391,624,12615
 
 [ENTRY]
 ID=93

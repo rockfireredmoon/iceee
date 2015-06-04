@@ -105,9 +105,132 @@ std::string InstanceNutDef::GetInstanceScriptPath(int zoneID, bool pathIfNotExis
 	return strBuf;
 }
 
+//
+// Abstract player class for scripts that run in instances. This includes instance scripts
+// and AI scripts
+//
+AbstractInstanceNutPlayer::AbstractInstanceNutPlayer() {
+	actInst = NULL;
+}
+
+AbstractInstanceNutPlayer::~AbstractInstanceNutPlayer() {
+
+}
+
+
+void AbstractInstanceNutPlayer::Info(const char *message)
+{
+	Message(message, INFOMSG_INFO);
+}
+
+void AbstractInstanceNutPlayer::CreatureChat(int CID, const char *channel, const char *message) {
+	char buffer[4096];
+	CreatureInstance *ci = GetNPCPtr(CID);
+	if(ci != NULL)
+		actInst->LSendToAllSimulator(buffer, PrepExt_GenericChatMessage(buffer, CID, ci->css.display_name, channel, message), -1);
+	else
+		g_Log.AddMessageFormat("Could not find creature with ID %d in this instance to communicate.", CID);
+}
+
+void AbstractInstanceNutPlayer::Chat(const char *name, const char *channel, const char *message) {
+	char buffer[4096];
+	int wpos = PrepExt_GenericChatMessage(buffer, 0, name, channel, message);
+	actInst->LSendToAllSimulator(buffer, wpos, -1);
+}
+
+void AbstractInstanceNutPlayer::Error(const char *message)
+{
+	Message(message, INFOMSG_ERROR);
+}
+
+void AbstractInstanceNutPlayer::Message(const char *message, int type)
+{
+
+	char buffer[4096];
+	int wpos = PrepExt_SendInfoMessage(buffer, message, type);
+	actInst->LSendToAllSimulator(buffer, wpos, -1);
+}
+
+void AbstractInstanceNutPlayer::Broadcast(const char *message)
+{
+	char buffer[4096];
+	if(actInst->mZoneDefPtr->mGrove)
+	{
+		int wpos = PrepExt_SendInfoMessage(buffer, message, INFOMSG_INFO);
+		actInst->LSendToAllSimulator(buffer, wpos, -1);
+	}
+	else
+		NutPlayer::Broadcast(message);
+}
+
+void AbstractInstanceNutPlayer::LocalBroadcast(const char *message)
+{
+	actInst->BroadcastMessage(message);
+}
+
+int AbstractInstanceNutPlayer::GetCIDForPropID(int propID)
+{
+	return actInst->spawnsys.GetCIDForProp(propID);
+}
+
+int AbstractInstanceNutPlayer::GetNPCID(int CDefID) {
+	CreatureInstance *targ = actInst->GetNPCInstanceByCDefID(
+			CDefID);
+	return targ == NULL ? 0 : targ->CreatureID;
+}
+
+SQInteger AbstractInstanceNutPlayer::CIDs(HSQUIRRELVM v)
+{
+    if (sq_gettop(v) == 2) {
+        Sqrat::Var<InstanceNutPlayer&> left(v, 1);
+        if (!Sqrat::Error::Occurred(v)) {
+            Sqrat::Var<int> right(v, 2);
+        	std::vector<int> vv;
+        	left.value.actInst->GetNPCInstancesByCDefID(right.value, &vv);
+            sq_newarray(v, vv.size());
+            for (std::size_t i = 0; i < vv.size(); ++i) {
+                Sqrat::PushVar(v, i);
+                Sqrat::PushVar(v, vv[i]);
+                sq_rawset(v, -3);
+            }
+            return 1;
+        }
+        return sq_throwerror(v, Sqrat::Error::Message(v).c_str());
+    }
+    return sq_throwerror(v, _SC("wrong number of parameters"));
+}
+
+void AbstractInstanceNutPlayer::SetInstancePointer(ActiveInstance *parent)
+{
+	actInst = parent;
+}
+
+CreatureInstance* AbstractInstanceNutPlayer::GetNPCPtr(int CID)
+{
+	if(actInst == NULL)
+		return NULL;
+	return actInst->GetNPCInstanceByCID(CID);
+}
+
+
+CreatureInstance* AbstractInstanceNutPlayer::GetCreaturePtr(int CID)
+{
+	if(actInst == NULL)
+		return NULL;
+	CreatureInstance *ci = GetNPCPtr(CID);
+	if(ci == NULL) {
+		ci = actInst->GetPlayerByID(CID);
+	}
+	return ci;
+}
+
+
+//
+// Main player class for instance scripts
+//
+
 InstanceNutPlayer::InstanceNutPlayer()
 {
-	actInst = NULL;
 	spawned.clear();
 	genericSpawned.clear();
 }
@@ -144,13 +267,15 @@ void InstanceNutPlayer::RegisterFunctions() {
 	Sqrat::Class<NutPlayer> nutClass(vm, _SC("Core"), true);
 	Sqrat::RootTable(vm).Bind(_SC("Core"), nutClass);
 	RegisterCoreFunctions(this, &nutClass);
-	Sqrat::DerivedClass<InstanceNutPlayer, NutPlayer> instanceClass(vm, _SC("Instance"));
+
+	Sqrat::DerivedClass<AbstractInstanceNutPlayer, NutPlayer> abstractInstanceClass(vm, _SC("AbstractInstance"));
+	Sqrat::DerivedClass<InstanceNutPlayer, AbstractInstanceNutPlayer> instanceClass(vm, _SC("Instance"));
 	Sqrat::RootTable(vm).Bind(_SC("Instance"), instanceClass);
 	RegisterInstanceFunctions(this, &instanceClass);
 	Sqrat::RootTable(vm).SetInstance(_SC("inst"), this);
 }
 
-void InstanceNutPlayer::RegisterInstanceFunctions(NutPlayer *instance, Sqrat::DerivedClass<InstanceNutPlayer, NutPlayer> *instanceClass)
+void InstanceNutPlayer::RegisterInstanceFunctions(NutPlayer *instance, Sqrat::DerivedClass<InstanceNutPlayer, AbstractInstanceNutPlayer> *instanceClass)
 {
 	instanceClass->Func(_SC("pvp_goal"), &InstanceNutPlayer::PVPGoal);
 	instanceClass->Func(_SC("set_status_effect"), &InstanceNutPlayer::SetStatusEffect);
@@ -167,13 +292,8 @@ void InstanceNutPlayer::RegisterInstanceFunctions(NutPlayer *instance, Sqrat::De
 	instanceClass->Func(_SC("get_leader"), &InstanceNutPlayer::GetVirtualPartyLeader);
 	instanceClass->Func(_SC("attach_item"), &InstanceNutPlayer::AttachItem);
 	instanceClass->Func(_SC("detach_item"), &InstanceNutPlayer::DetachItem);
-	instanceClass->Func(_SC("broadcast"), &InstanceNutPlayer::Broadcast);
-	instanceClass->Func(_SC("local_broadcast"), &InstanceNutPlayer::LocalBroadcast);
-	instanceClass->Func(_SC("info"), &InstanceNutPlayer::Info);
 	instanceClass->Func(_SC("unhate"), &InstanceNutPlayer::Unhate);
 	instanceClass->Func(_SC("clear_target"), &InstanceNutPlayer::ClearTarget);
-	instanceClass->Func(_SC("error"), &InstanceNutPlayer::Error);
-	instanceClass->Func(_SC("message"), &InstanceNutPlayer::Message);
 	instanceClass->Func(_SC("spawn"), &InstanceNutPlayer::Spawn);
 	instanceClass->Func(_SC("play_sound"), &InstanceNutPlayer::PlaySound);
 	instanceClass->Func(_SC("get_display_name"), &InstanceNutPlayer::GetDisplayName);
@@ -194,10 +314,8 @@ void InstanceNutPlayer::RegisterInstanceFunctions(NutPlayer *instance, Sqrat::De
 	instanceClass->Func(_SC("get_health_pc"), &InstanceNutPlayer::GetHealthPercent);
 	instanceClass->Func(_SC("walk"), &InstanceNutPlayer::Walk);
 	instanceClass->Func(_SC("walk_then"), &InstanceNutPlayer::WalkThen);
-	instanceClass->Func(_SC("chat"), &InstanceNutPlayer::Chat);
 	instanceClass->Func(_SC("despawn"), &InstanceNutPlayer::Despawn);
 	instanceClass->Func(_SC("despawn_all"), &InstanceNutPlayer::DespawnAll);
-	instanceClass->Func(_SC("creature_chat"), &InstanceNutPlayer::CreatureChat);
 	// TODO deprecated
 	instanceClass->Func(_SC("effect"), &InstanceNutPlayer::ParticleAttach);
 	instanceClass->Func(_SC("restore"), &InstanceNutPlayer::DetachSceneryEffect);
@@ -206,9 +324,20 @@ void InstanceNutPlayer::RegisterInstanceFunctions(NutPlayer *instance, Sqrat::De
 	instanceClass->Func(_SC("remove_prop"), &InstanceNutPlayer::RemoveProp);
 	instanceClass->Func(_SC("unremove_prop"), &InstanceNutPlayer::UnremoveProp);
 	instanceClass->Func(_SC("unremove_props"), &InstanceNutPlayer::UnremoveProps);
+	instanceClass->Func(_SC("get_npc_id"), &InstanceNutPlayer::GetNPCID);
 
 	// Functions that return arrays or tables have to be dealt with differently
 	instanceClass->SquirrelFunc(_SC("cids"), &InstanceNutPlayer::CIDs);
+
+	// Common instance functions (TODO register in abstract class somehow)
+	instanceClass->Func(_SC("broadcast"), &InstanceNutPlayer::Broadcast);
+	instanceClass->Func(_SC("local_broadcast"), &InstanceNutPlayer::LocalBroadcast);
+	instanceClass->Func(_SC("info"), &InstanceNutPlayer::Info);
+	instanceClass->Func(_SC("message"), &InstanceNutPlayer::Message);
+	instanceClass->Func(_SC("error"), &InstanceNutPlayer::Error);
+	instanceClass->Func(_SC("get_cid_for_prop"), &InstanceNutPlayer::GetCIDForPropID);
+	instanceClass->Func(_SC("chat"), &InstanceNutPlayer::Chat);
+	instanceClass->Func(_SC("creature_chat"), &InstanceNutPlayer::CreatureChat);
 
 	// Some constants
 	Sqrat::ConstTable(vm).Const(_SC("CREATURE_WALK_SPEED"), CREATURE_WALK_SPEED);
@@ -385,12 +514,6 @@ ActiveParty * InstanceNutPlayer::DoCreateParty(int leaderCID, int team)
 //	return party->mPartyID;
 //	*/
 //}
-
-void InstanceNutPlayer::SetInstancePointer(ActiveInstance *parent)
-{
-	actInst = parent;
-}
-
 void InstanceNutPlayer::ClearTarget(int CID)
 {
 	CreatureInstance *ci = GetCreaturePtr(CID);
@@ -579,12 +702,6 @@ int InstanceNutPlayer::ParticleAttach(int propID, const char *effect, float scal
 	return -1;
 }
 
-void InstanceNutPlayer::Chat(const char *name, const char *channel, const char *message) {
-	char buffer[4096];
-	int wpos = PrepExt_GenericChatMessage(buffer, 0, name, channel, message);
-	actInst->LSendToAllSimulator(buffer, wpos, -1);
-}
-
 void InstanceNutPlayer::Emote(int CID, const char *emotion) {
 	char buffer[4096];
 	CreatureInstance *ci = GetNPCPtr(CID);
@@ -614,15 +731,6 @@ const char * InstanceNutPlayer::GetDisplayName(int CID) {
 		return ci->css.display_name;
 	else
 		return "Unknown";
-}
-
-void InstanceNutPlayer::CreatureChat(int CID, const char *channel, const char *message) {
-	char buffer[4096];
-	CreatureInstance *ci = GetNPCPtr(CID);
-	if(ci != NULL)
-		actInst->LSendToAllSimulator(buffer, PrepExt_GenericChatMessage(buffer, CID, ci->css.display_name, channel, message), -1);
-	else
-		g_Log.AddMessageFormat("Could not find creature with ID %d in this instance to communicate.", CID);
 }
 
 WalkCondition::WalkCondition(CreatureInstance *c)
@@ -888,82 +996,6 @@ int InstanceNutPlayer::OLDSpawnAt(int creatureID, float x, float y, float z, int
 		g_Log.AddMessageFormat("Spawn at returned temp creature ID of %d", creature->CreatureID);
 		return creature->CreatureID;
 	}
-}
-
-void InstanceNutPlayer::Info(const char *message)
-{
-	Message(message, INFOMSG_INFO);
-}
-
-void InstanceNutPlayer::Error(const char *message)
-{
-	Message(message, INFOMSG_ERROR);
-}
-
-void InstanceNutPlayer::Message(const char *message, int type)
-{
-
-	char buffer[4096];
-	int wpos = PrepExt_SendInfoMessage(buffer, message, type);
-	actInst->LSendToAllSimulator(buffer, wpos, -1);
-}
-
-void InstanceNutPlayer::Broadcast(const char *message)
-{
-	char buffer[4096];
-	if(actInst->mZoneDefPtr->mGrove)
-	{
-		int wpos = PrepExt_SendInfoMessage(buffer, message, INFOMSG_INFO);
-		actInst->LSendToAllSimulator(buffer, wpos, -1);
-	}
-	else
-		NutPlayer::Broadcast(message);
-}
-
-void InstanceNutPlayer::LocalBroadcast(const char *message)
-{
-	actInst->BroadcastMessage(message);
-}
-
-CreatureInstance* InstanceNutPlayer::GetNPCPtr(int CID)
-{
-	if(actInst == NULL)
-		return NULL;
-	return actInst->GetNPCInstanceByCID(CID);
-}
-
-
-CreatureInstance* InstanceNutPlayer::GetCreaturePtr(int CID)
-{
-	if(actInst == NULL)
-		return NULL;
-	CreatureInstance *ci = GetNPCPtr(CID);
-	if(ci == NULL) {
-		ci = actInst->GetPlayerByID(CID);
-	}
-	return ci;
-}
-
-
-SQInteger InstanceNutPlayer::CIDs(HSQUIRRELVM v)
-{
-    if (sq_gettop(v) == 2) {
-        Sqrat::Var<InstanceNutPlayer&> left(v, 1);
-        if (!Sqrat::Error::Occurred(v)) {
-            Sqrat::Var<int> right(v, 2);
-        	std::vector<int> vv;
-        	left.value.actInst->GetNPCInstancesByCDefID(right.value, &vv);
-            sq_newarray(v, vv.size());
-            for (std::size_t i = 0; i < vv.size(); ++i) {
-                Sqrat::PushVar(v, i);
-                Sqrat::PushVar(v, vv[i]);
-                sq_rawset(v, -3);
-            }
-            return 1;
-        }
-        return sq_throwerror(v, Sqrat::Error::Message(v).c_str());
-    }
-    return sq_throwerror(v, _SC("wrong number of parameters"));
 }
 
 

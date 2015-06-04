@@ -1127,6 +1127,19 @@ void SpawnManager :: Despawn(int CreatureID)
 	}
 }
 
+int SpawnManager :: GetCIDForProp(int PropID)
+{
+	ActiveSpawner *obj = NULL;
+	std::list<SpawnTile>::iterator it;
+	for(it = spawnTiles.begin(); it != spawnTiles.end(); ++it)
+	{
+		obj = it->GetActiveSpawner(PropID);
+		if(obj != NULL)
+			return obj->spawnCount > 0 ? obj->attachedCreatureID[0] : -1;
+	}
+	return -1;
+}
+
 int SpawnManager :: TriggerSpawn(int PropID, int forceCreatureDef, int forceFlags)
 {
 	//Used by the quest script system, forces a prop to spawn.

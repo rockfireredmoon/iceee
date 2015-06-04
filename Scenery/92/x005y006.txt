@@ -206,6 +206,7 @@ Name=Untitled
 Pos=11309,682.39,12742.2
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=#E3397
 
 [ENTRY]
 ID=1028400
@@ -963,6 +964,7 @@ Name=Untitled
 Pos=10345,598.998,12170
 Orient=0,-0.437394,0,0.89927
 Scale=1,1,1
+spawnPackage=#F3153
 
 [ENTRY]
 ID=1028585
@@ -972,6 +974,7 @@ Pos=10411.1,600.151,12265.3
 Orient=0,0.877201,0,0.480124
 Scale=1,1,1
 spawnPackage=#F3149
+aiModule=Bastion_NPC_GuardBowAnimation(1028584)
 
 [ENTRY]
 ID=1028586
@@ -981,7 +984,7 @@ Pos=10455.6,599.688,12235.7
 Orient=0,0.857299,0,0.514819
 Scale=1,1,1
 spawnPackage=#F3150
-aiModule=Bastion_NPC_GuardBowAnimation1
+aiModule=Bastion_NPC_GuardBowAnimation(1028587)
 sequential=1
 
 [ENTRY]
@@ -991,6 +994,7 @@ Name=Untitled
 Pos=10395,600.096,12140
 Orient=0,-0.477405,0,0.878683
 Scale=1,1,1
+spawnPackage=#F3153
 aiModule=Bastion_NPC_GuardBowAnimation2
 
 [ENTRY]
@@ -1021,6 +1025,7 @@ Pos=10507.9,597.767,12310.7
 Orient=0,0.21823,0,0.975898
 Scale=1,1,1
 spawnPackage=#F3162
+aiModule=Bastion_NPC_GuardBowAnimation()
 
 [ENTRY]
 ID=1028592
@@ -2217,22 +2222,6 @@ Orient=0,0.276356,0,0.961055
 Scale=1.5,1.5,1.5
 
 [ENTRY]
-ID=1129335
-Asset=Prop-Target1#Prop-Target1
-Name=Untitled
-Pos=10394.4,598.989,12135.5
-Orient=0,0.188859,0,0.982004
-Scale=1,1,1
-
-[ENTRY]
-ID=1129336
-Asset=Prop-Target1#Prop-Target1
-Name=Untitled
-Pos=10343.5,596.665,12163.2
-Orient=0,0.257081,0,0.96639
-Scale=1,1,1
-
-[ENTRY]
 ID=1129338
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
@@ -2250,4 +2239,13 @@ Pos=11433.9,564.439,12642.8
 Orient=0,0.98545,0,0.169967
 Scale=1,1,1
 spawnPackage=#F3230
+
+[ENTRY]
+ID=1500068
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=Untitled
+Pos=11338.8,471.716,12505.5
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#E3397
 

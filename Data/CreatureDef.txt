@@ -70435,17 +70435,6 @@ profession=1
 creature_category=Inanimate
 ai_package=nothing
 
-;[ENTRY]
-;ID=3146
-;will_regen=1
-;might_regen=1
-;appearance=p1:{["a"]="Prop-Interact_Sphere",["sz"]="3"}
-;level=1
-;display_name=Catapult
-;profession=1
-;creature_category=Inanimate
-;ai_package=nothing
-
 [ENTRY]
 defHints=32
 ID=3147
@@ -73898,7 +73887,7 @@ level=1
 display_name=Anubian Catapult
 profession=1
 creature_category=Mortal
-ai_package=Earthrise_flavor_catapultfiring1
+ai_package=Bastion_NPC_CatapultFiringAnimation
 
 [ENTRY]
 ID=3397

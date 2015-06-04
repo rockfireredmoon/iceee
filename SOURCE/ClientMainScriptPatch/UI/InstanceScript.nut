@@ -1,101 +1,140 @@
-this.require("UI/Screens");
-this.require("UI/ActionContainer");
-class this.Screens.InstanceScript extends this.GUI.Frame
+require("UI/Screens");
+require("UI/ActionContainer");
+
+class Screens.InstanceScript extends GUI.Frame
 {
 	static mScreenName = "InstanceScript";
 	mScript = null;
 	mInfo = null;
+	mRefresh = null;
+	mSubmit = null;
+	mRun = null;
+	mKill = null;
+	mType = null;
 	tabstop = 4;
 	
 	constructor()
 	{
-		this.GUI.Frame.constructor("Instance Script");
+		GUI.Frame.constructor("Script Editor");
 		
 		// Info
-		this.mInfo = ::GUI.HTML("<font size=\"22\">Instances script editor. See Wiki for help.</font>");
-		this.mInfo.setResize(true);
-		this.mInfo.setMaximumSize(500, null);
-		this.mInfo.setInsets(0, 4, 0, 4);
+		mInfo = ::GUI.HTML("<font size=\"22\">Instances script editor. See Wiki for help.</font>");
+		mInfo.setResize(true);
+		mInfo.setMaximumSize(500, null);
+		mInfo.setInsets(0, 4, 0, 4);
 		
 		// Script
-		this.mScript = ::GUI.InputArea("");
-		this.mScript.setMultiLine(true);
+		mScript = ::GUI.InputArea("");
+		mScript.setMultiLine(true);
+		mScript.addActionListener(this);
 		
 		// Container
-		local container = this.GUI.Container(this.GUI.GridLayout(1, 1));
+		local container = GUI.Container(this.GUI.GridLayout(1, 1));
 		container.getLayoutManager().setColumns(460);
 		container.getLayoutManager().setRows(310);
 		container.getLayoutManager().setGaps(0, 4);
 		container.setInsets(4, 8, 8, 4);
-		container.add(this.mScript);
+		container.add(mScript);
 		
 		// Refresh
-		local refresh = this.GUI.Button("Refresh");
-		refresh.setReleaseMessage("onRefreshPressed");
-		refresh.addActionListener(this);
+		mRefresh = GUI.Button("Refresh");
+		mRefresh.setReleaseMessage("onRefreshPressed");
+		mRefresh.addActionListener(this);
 		
 		// Submit
-		local submit = this.GUI.Button("Submit");
-		submit.setReleaseMessage("onSubmitPressed");
-		submit.addActionListener(this);
+		mSubmit = GUI.Button("Submit");
+		mSubmit.setReleaseMessage("onSubmitPressed");
+		mSubmit.addActionListener(this);
 		
 		// Kill
-		local kill = this.GUI.Button("Stop Script");
-		kill.setReleaseMessage("onKillPressed");
-		kill.addActionListener(this);
+		mKill = GUI.Button("Stop Script");
+		mKill.setReleaseMessage("onKillPressed");
+		mKill.addActionListener(this);
 		
 		// Run
-		local runScript = this.GUI.Button("Run Script");
-		runScript.setReleaseMessage("onRunScriptPressed");
-		runScript.addActionListener(this);
+		mRun = GUI.Button("Run Script");
+		mRun.setReleaseMessage("onRunScriptPressed");
+		mRun.addActionListener(this);
 		
 		// Copy
-		local copy = this.GUI.Button("Copy All");
+		local copy = GUI.Button("Copy All");
 		copy.setTooltip("Copy ENTIRE script with contents of clipboard");
 		copy.setReleaseMessage("onCopyPressed");
 		copy.addActionListener(this);
 		
 		// Paste
-		local paste = this.GUI.Button("Paste All");
+		local paste = GUI.Button("Paste All");
 		paste.setTooltip("Replace ENTIRE script with contents of clipboard");
 		paste.setReleaseMessage("onPastePressed");
 		paste.addActionListener(this);
 		
 		
 		// Buttons
-		local buttons = this.GUI.Container(this.GUI.BoxLayout());
+		local buttons = GUI.Container(GUI.BoxLayout());
 		buttons.getLayoutManager().setPackAlignment(0.5);
-		buttons.add(submit);
-		buttons.add(refresh);
-		buttons.add(runScript);
-		buttons.add(kill);
+		buttons.add(mSubmit);
+		buttons.add(mRefresh);
+		buttons.add(mRun);
+		buttons.add(mKill);
 		buttons.add(copy);
 		buttons.add(paste);
 		buttons.setInsets(0, 0, 4, 0);
 		
+		// Type
+		mType = GUI.DropDownList();
+		mType.addChoice("Instance script");
+		mType.addChoice("Quest script");
+		mType.addChoice("AI script");
+		mType.addSelectionChangeListener({
+			t = this,
+			function onSelectionChange( list ) {
+				this.t.resetState();
+			}
+		});
+		
+		// Top
+		local top = GUI.Container(GUI.BorderLayout());
+		top.setInsets(3, 3, 3, 3);
+		top.add(mInfo, GUI.BorderLayout.CENTER);
+		top.add(mType, GUI.BorderLayout.WEST);
+		
 		// Content
-		local content = this.GUI.Container(this.GUI.BoxLayoutV());
-		content.add(this.mInfo);
+		local content = GUI.Container(GUI.BoxLayoutV());
+		content.add(top);
 		content.setInsets(4, 4, 4, 4);
 		content.add(container);
 		content.add(buttons);
 		
 		// This
-		this.setContentPane(content);
-		this.setInsets(4, 4, 4, 4);
-		this.setSize(500, 415);
-		this.center();
+		setContentPane(content);
+		setInsets(4, 4, 4, 4);
+		setSize(500, 415);
+		center();
 		
 		// Init
-		this.mScript.setText("");
+		mScript.setText("");
 		::_root.setKeysEnabled(true);
-		this._refresh();
+		_refresh();
+	}
+	
+	function resetState() {	
+		mSubmit.setEnabled(false);
+		mRefresh.setText("Refresh");
+		mRun.setEnabled(true);
+		mKill.setEnabled(true);
+	}
+	
+	function onTextChanged( text ) {
+		mSubmit.setEnabled(true);
+		mRefresh.setText("Cancel");
+		mRun.setEnabled(false);
+		mKill.setEnabled(false);
 	}
 
 	function onCopyPressed( button )
 	{	
-		this.System.setClipboard(this.mScript.getText());
-		this.log.info("Saved script to clipboard.");
+		System.setClipboard(mScript.getText());
+		log.info("Saved script to clipboard.");
 	}
 
 	function onPastePressed( button )
@@ -168,6 +207,8 @@ class this.Screens.InstanceScript extends this.GUI.Frame
 			this.mScript.mCursorEnd = 0;
 			this.mScript.buildRows();
 			this.mScript.updateCursorPosition();
+			
+			resetState();
 		}
 		else if (qa.query == "script.run" || qa.query == "script.kill" || qa.query == "script.save")
 		{		

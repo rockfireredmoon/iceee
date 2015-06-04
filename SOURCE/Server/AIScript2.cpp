@@ -43,6 +43,7 @@ AINutPlayer::~AINutPlayer() {
 void AINutPlayer::Initialize(CreatureInstance *creature, AINutDef *defPtr,
 		std::string &errors) {
 	attachedCreature = creature;
+	SetInstancePointer(attachedCreature->actInst);
 	NutPlayer::Initialize(defPtr, errors);
 }
 
@@ -211,12 +212,6 @@ void AINutPlayer::DispelTargetProperty(const char *name, int sign) {
 	attachedCreature->AIDispelTargetProperty(name, sign);
 }
 
-int AINutPlayer::FindCID(int CDefID) {
-	CreatureInstance *targ = attachedCreature->actInst->GetNPCInstanceByCDefID(
-			CDefID);
-	return targ == NULL ? 0 : targ->CreatureID;
-}
-
 void AINutPlayer::PlaySound(const char *name) {
 	STRINGLIST sub;
 	Util::Split(name, "|", sub);
@@ -246,6 +241,10 @@ void AINutPlayer::SetGTAE() {
 	attachedCreature->AISetGTAE();
 }
 
+void AINutPlayer::Speak(const char *message) {
+	CreatureChat(attachedCreature->CreatureID, "s/", message);
+}
+
 int AINutPlayer::GetSpeed(int CID) {
 	CreatureInstance *targ = ResolveCreatureInstance(CID);
 	return targ == NULL ? 0 : targ->Speed;
@@ -260,7 +259,9 @@ void AINutPlayer::RegisterFunctions() {
 	Sqrat::Class<NutPlayer> nutClass(vm, _SC("Core"), true);
 	Sqrat::RootTable(vm).Bind(_SC("Core"), nutClass);
 	RegisterCoreFunctions(this, &nutClass);
-	Sqrat::DerivedClass<AINutPlayer, NutPlayer> aiClass(vm, _SC("AI"));
+	Sqrat::DerivedClass<InstanceScript::AbstractInstanceNutPlayer, NutPlayer> abstractInstanceClass(vm, _SC("AbstractInstance"));
+	Sqrat::DerivedClass<InstanceScript::InstanceNutPlayer, AbstractInstanceNutPlayer> instanceClass(vm, _SC("Instance"));
+	Sqrat::DerivedClass<AINutPlayer, InstanceScript::InstanceNutPlayer> aiClass(vm, _SC("AI"));
 	Sqrat::RootTable(vm).Bind(_SC("AI"), aiClass);
 	RegisterAIFunctions(this, &aiClass);
 	Sqrat::RootTable(vm).SetInstance(_SC("ai"), this);
@@ -279,7 +280,7 @@ void AINutPlayer::RegisterFunctions() {
 }
 
 void AINutPlayer::RegisterAIFunctions(NutPlayer *instance,
-		Sqrat::DerivedClass<AINutPlayer, NutPlayer> *clazz) {
+		Sqrat::DerivedClass<AINutPlayer, InstanceScript::InstanceNutPlayer> *clazz) {
 	clazz->Func(_SC("has_target"), &AINutPlayer::HasTarget);
 	clazz->Func(_SC("use"), &AINutPlayer::Use);
 	clazz->Func(_SC("get_will"), &AINutPlayer::GetWill);
@@ -310,7 +311,6 @@ void AINutPlayer::RegisterAIFunctions(NutPlayer *instance,
 	clazz->Func(_SC("get_target_property"), &AINutPlayer::GetTargetProperty);
 	clazz->Func(_SC("dispel_target_property"),
 			&AINutPlayer::DispelTargetProperty);
-	clazz->Func(_SC("find_cid"), &AINutPlayer::FindCID);
 	clazz->Func(_SC("get_buff_tier"), &AINutPlayer::GetBuffTier);
 	clazz->Func(_SC("get_target_buff_tier"), &AINutPlayer::GetTargetBuffTier);
 	clazz->Func(_SC("is_target_in_range"), &AINutPlayer::IsTargetInRange);
@@ -318,6 +318,21 @@ void AINutPlayer::RegisterAIFunctions(NutPlayer *instance,
 	clazz->Func(_SC("set_gtae"), &AINutPlayer::SetGTAE);
 	clazz->Func(_SC("get_speed"), &AINutPlayer::GetSpeed);
 	clazz->Func(_SC("is_cid_busy"), &AINutPlayer::IsCIDBusy);
+	clazz->Func(_SC("get_npc_id"), &AINutPlayer::GetNPCID);
+	clazz->Func(_SC("speak"), &AINutPlayer::Speak);
+
+	// Common instance functions (TODO register in abstract class somehow)
+	clazz->Func(_SC("broadcast"), &AINutPlayer::Broadcast);
+	clazz->Func(_SC("local_broadcast"), &AINutPlayer::LocalBroadcast);
+	clazz->Func(_SC("info"), &AINutPlayer::Info);
+	clazz->Func(_SC("message"), &AINutPlayer::Message);
+	clazz->Func(_SC("error"), &AINutPlayer::Error);
+	clazz->Func(_SC("get_cid_for_prop"), &AINutPlayer::GetCIDForPropID);
+	clazz->Func(_SC("chat"), &AINutPlayer::Chat);
+	clazz->Func(_SC("creature_chat"), &AINutPlayer::CreatureChat);
+
+	// Functions that return arrays or tables have to be dealt with differently
+	clazz->SquirrelFunc(_SC("cids"), &AINutPlayer::CIDs);
 
 }
 
@@ -389,12 +404,9 @@ AINutDef * AINutManager::GetScriptByName(const char *name) {
 //}
 
 AINutPlayer * AINutManager::AddActiveScript(CreatureInstance *creature,
-		const char *name) {
-	AINutDef *def = GetScriptByName(name);
-	if (def == NULL)
-		return NULL;
-
+		AINutDef *def, std::vector<std::string> args) {
 	AINutPlayer * player = new AINutPlayer();
+	player->mArgs = args;
 	std::string errors;
 	player->Initialize(creature, def, errors);
 	if (errors.length() > 0)

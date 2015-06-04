@@ -26,18 +26,36 @@ private:
 	std::map<std::string, ScriptObjects::Area> mLocationDef;
 };
 
-class InstanceNutPlayer: public ScriptCore::NutPlayer {
+
+class AbstractInstanceNutPlayer: public ScriptCore::NutPlayer {
+public:
+	AbstractInstanceNutPlayer();
+	virtual ~AbstractInstanceNutPlayer();
+	void SetInstancePointer(ActiveInstance *parent);
+	static SQInteger CIDs(HSQUIRRELVM v);
+	int GetNPCID(int CDefID);
+	int GetCIDForPropID(int propID);
+	void Info(const char *message);
+	void Message(const char *message, int type);
+	void LocalBroadcast(const char *message);
+	void Broadcast(const char *message);
+	void Error(const char *message);
+	void Chat(const char *name, const char *channel, const char *message);
+	void CreatureChat(int cid, const char *channel, const char *message);
+protected:
+	CreatureInstance* GetNPCPtr(int CID);
+	CreatureInstance* GetCreaturePtr(int CID);
+	ActiveInstance *actInst;
+};
+
+class InstanceNutPlayer: public AbstractInstanceNutPlayer {
 public:
 	std::vector<int> spawned;
 	std::vector<int> genericSpawned;
 	InstanceNutPlayer();
 	virtual ~InstanceNutPlayer();
-
-	static SQInteger CIDs(HSQUIRRELVM v);
-
-	void SetInstancePointer(ActiveInstance *parent);
 	virtual void RegisterFunctions();
-	void RegisterInstanceFunctions(NutPlayer *instance, Sqrat::DerivedClass<InstanceNutPlayer, NutPlayer> *instanceClass);
+	void RegisterInstanceFunctions(NutPlayer *instance, Sqrat::DerivedClass<InstanceNutPlayer, AbstractInstanceNutPlayer> *instanceClass);
 	virtual void HaltDerivedExecution();
 	virtual void HaltedDerived();
 
@@ -63,24 +81,17 @@ public:
 	void UnremoveProp(int propID);
 	bool RemoveProp(int propID);
 	void PlaySound(const char *name);
-	void Message(const char *message, int type);
-	void Error(const char *message);
 	void Unhate(int CID);
 	void ClearTarget(int CID);
-	void Info(const char *message);
 	bool AI(int CID, const char *label);
 	int GetPartyID(int CID);
 	ScriptObjects::Vector3 GetLocation(int CID);
-	void LocalBroadcast(const char *message);
-	void Broadcast(const char *message);
 	const char *GetDisplayName(int CID);
 	int Asset(int propID, const char *newAsset, float scale);
 	int CountAlive(int CDefID);
 	void DetachSceneryEffect(int propID, int tag);
 	int ParticleAttach(int propID, const char *effect, float scale, float offsetX, float offsetY, float offsetZ);
 	void Emote(int cid, const char *emotion);
-	void Chat(const char *name, const char *channel, const char *message);
-	void CreatureChat(int cid, const char *channel, const char *message);
 	int CDefIDForCID(int cid);
 	bool Despawn(int CID);
 	int LoadSpawnTileFor(ScriptObjects::Point location);
@@ -99,10 +110,7 @@ public:
 	std::vector<int> ScanNPCs(ScriptObjects::Area *location, int CDefID);
 
 private:
-	ActiveInstance *actInst;
 	std::vector<SceneryEffect> activeEffects;
-	CreatureInstance* GetNPCPtr(int CID);
-	CreatureInstance* GetCreaturePtr(int CID);
 	void DoUnremoveProp(int propID);
 	ActiveParty * DoCreateParty(int leaderCID, int team);
 

@@ -78,6 +78,13 @@ for i in *.car ; do
 	
 	rm -f ${bn}.zip 
 done
+echo
+echo "Snippet for TerrainPages.nut"
+echo "---------------------------------------------"
+ls -d Terrain-${name}_*|awk '{ print "\t[\"" $0 "\"] = true," '}
+
+echo
+echo "Snippet for MediaEx.nut"
+echo "---------------------------------------------"
+
 popd >/dev/null
-
-

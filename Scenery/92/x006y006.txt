@@ -235,6 +235,8 @@ Name=Untitled
 Pos=11526.3,677.8,12808.6
 Orient=0,0,0,1
 Scale=1,1,1
+spawnName=Target
+spawnPackage=#E3397
 
 [ENTRY]
 ID=1028409
@@ -360,7 +362,7 @@ Scale=1.35,1.35,1.35
 ID=1028432
 Asset=CL-Battlefield2
 Name=Untitled
-Pos=11543,683.42,12825.9
+Pos=11550.7,691.739,12847.2
 Orient=-0.181922,-0.253634,0.0940439,0.945373
 Scale=2.425,2.425,2.425
 
@@ -608,7 +610,7 @@ Name=Untitled
 Pos=11698.1,644.282,11941.9
 Orient=0,-0.819192,0,0.57352
 Scale=1,1,1
-spawnPackage=#3396
+spawnPackage=#E3396
 aiModule=Bastion_NPC_CatapultFiringAnimation
 
 [ENTRY]
@@ -618,7 +620,7 @@ Name=Untitled
 Pos=11774.8,653.457,11963.4
 Orient=0,-0.754571,0,0.656219
 Scale=1,1,1
-spawnPackage=#3396
+spawnPackage=#E3396
 aiModule=Bastion_NPC_CatapultFiringAnimation
 
 [ENTRY]

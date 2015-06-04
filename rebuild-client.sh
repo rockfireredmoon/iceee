@@ -7,6 +7,14 @@ SCRATCH="${base}/scratch"
 BASE_ASSETS="${base}/SOURCE/Base"
 TARGET_ASSETS="${base}/asset"
 
+#
+# Functions
+#
+#
+# Main Body
+#
+
+
 rm -fr "${SCRATCH}"
 mkdir -p "${SCRATCH}"
 mkdir -p "${SCRATCH}/archives"

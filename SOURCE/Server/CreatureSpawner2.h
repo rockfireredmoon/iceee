@@ -294,6 +294,7 @@ public:
 	void RunGarbageCheck(TILELIST_CONT &activeTileList);
 	void UpdateSpawnPoint(SceneryObject *prop);
 	void RemoveSpawnPoint(int PropID);
+	int GetCIDForProp(int PropID);
 	int TriggerSpawn(int PropID, int forceCreatureDef, int forceFlags);
 	void Despawn(int CreatureID);
 
