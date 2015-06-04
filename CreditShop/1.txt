@@ -1,10 +1,8 @@
 [ENTRY]
-Description=This brew has an interesting effect ..
+Title=New Offer
 PriceCurrency=COPPER
 PriceAmount=100
-ItemID=50011
+ItemID=0
 Category=CONSUMABLES
 Status=NEW
-QuantityLimit=100
-QuantitySold=42
 
