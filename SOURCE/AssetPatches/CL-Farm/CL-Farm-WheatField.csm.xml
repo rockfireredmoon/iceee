@@ -1,0 +1,99 @@
+<?xml version="1.0" ?>
+<Component id="CL-Farm-WheatField" xmlns="http://ee.ironrealms.com/CMS_XML.xsd">
+  <XRef cref="Prop-Haystack" p="-126.113 2.14 -77.5739" floorAnchor="2"/>
+  <XRef cref="Prop-Fence_Piece1" p="-24.1655 -0.211708 -95.6662" q="0.994430298401704 -0.00918593935131876 0.104995238648688 -1.89327950169846e-007" floorAnchor="2"/>
+  <XRef cref="Prop-Fence_Piece2" p="-2.95206 -0.23765 -100.016" floorAnchor="2"/>
+  <XRef cref="Prop-Fence_Piece1" p="62.3737 -3.84985 -94.06" q="0.990795950202258 -0.00018399723432229 0.10539629999194 0.0849409863130395" floorAnchor="2"/>
+  <XRef cref="Prop-Fence_Piece2" p="79.3253 -0.93548 -98.3973" q="0.98965138681967 2.27324443523197e-017 -0.00476638203631999 -0.143413437892644" floorAnchor="2"/>
+  <XRef cref="Prop-Fence_Piece2" p="165.748 -0.0661013 -97.2279" floorAnchor="2"/>
+  <XRef cref="Prop-Fence_Piece1" p="186.777 -0.75618 -98.7447" q="0.703404146505277 0.12316885019602 -0.697242953619753 -0.0624844352473239" floorAnchor="2"/>
+  <XRef cref="Prop-Fence_Piece2" p="155.254 -0.289492 113.024" q="0.142086182247115 4.71022560060042e-017 0.989776208490554 -0.0124327760577879" floorAnchor="2"/>
+  <XRef cref="Prop-Fence_Piece1" p="176.95 -0.175755 113.27" q="-6.03683769639929e-016 0.0 0.999999999998374 -1.80320510339445e-006" floorAnchor="2"/>
+  <XRef cref="Prop-Fence_Piece1" p="134.976 -0.26729 107.362" q="-0.10499523864886 4.36109870838845e-019 0.99443031496422 0.0091841461895148" floorAnchor="2"/>
+  <XRef cref="Prop-Fence_Piece2" p="113.762 -0.293232 111.711" q="-6.03683769639929e-016 0.0 0.999999999998374 -1.80320510339445e-006" floorAnchor="2"/>
+  <XRef cref="Prop-Fence_Piece2" p="70.2146 -0.319665 111.666" q="0.142086182247114 5.69608677281912e-017 0.989776208490554 -0.0124327760577879" floorAnchor="2"/>
+  <XRef cref="Prop-Fence_Piece2" p="-14.6888 -4.93219 110.056" q="0.142624534215223 0.0785179984449443 0.986656934907405 -0.00112203351759078" floorAnchor="2"/>
+  <XRef cref="Prop-Fence_Piece1" p="-32.5997 -2.28241 104.028" q="-0.101009157803935 -0.0857596533618063 0.991019620152719 0.0179595202431265" floorAnchor="2"/>
+  <XRef cref="Prop-Fence_Piece2" p="-139.976 -1.10186 107.567" q="-6.03683769639929e-016 0.0 0.999999999998374 -1.80320510339445e-006" floorAnchor="2"/>
+  <XRef cref="Prop-Fence_Piece1" p="-161.011 -0.778711 108.036" q="0.703315703927404 -7.3994799190032e-017 0.708209446224647 -0.0615337377970775" floorAnchor="2"/>
+  <XRef cref="Prop-Fence_Piece2" p="-160.524 -0.483257 85.8279" q="0.799776868486971 0.0563927134123701 0.597617861237206 0.00545109506713445" floorAnchor="2"/>
+  <XRef cref="Prop-Fence_Piece1" p="-154.74 -0.395884 66.5686" q="0.625039813857464 4.44060922204843e-017 0.778674976302774 -0.0546855773755899" floorAnchor="2"/>
+  <XRef cref="Prop-Fence_Piece2" p="-159.159 -0.0179308 45.7981" q="0.704935565050607 0.022863115696758 0.70784034625546 -0.0387965369636114" floorAnchor="2"/>
+  <XRef cref="Prop-Fence_Piece1" p="184.654 -0.41034 -14.2746" q="0.707106781186548 0.0 -0.707106781185397 1.27505855648041e-006" floorAnchor="2"/>
+  <XRef cref="Prop-Fence_Piece2" p="185.281 -0.698071 6.3006" q="0.596653488880629 0.06528365628677 -0.799134685722929 -0.0335620694075905" floorAnchor="2"/>
+  <XRef cref="Prop-Fence_Piece1" p="178.4 -0.479278 25.971" q="0.76619335072314 0.03670405857513 -0.616012925210744 -0.179244629947628" floorAnchor="2"/>
+  <XRef cref="Prop-Fence_Post" p="-160.007 -0.449662 25.0248" q="0.991393814677185 -0.00204897735392208 0.0110361810057731 -0.130431240967915" floorAnchor="2"/>
+  <XRef cref="Prop-Fence_Piece1" p="-153.287 -0.452047 -19.6958" q="0.703315703927404 -7.3994799190032e-017 0.708209446224647 -0.0615337377970775" floorAnchor="2"/>
+  <XRef cref="Prop-Fence_Piece2" p="-152.8 -1.41659 -41.904" q="0.799776868486972 0.0563927134123701 0.597617861237206 0.00545109506713444" floorAnchor="2"/>
+  <XRef cref="Prop-Fence_Piece1" p="-146.999 -0.820447 -61.6058" q="0.624942319347958 -0.00137440858874887 0.778673761355496 -0.0557887252543891" floorAnchor="2"/>
+  <XRef cref="Prop-Wheat_Row2" p="54.5611 -0.166563 -69.3898" s="1 2 1" floorAnchor="2"/>
+  <XRef cref="Prop-Wheat_Row1" p="25.6248 2.08737 -67.1461" q="0.999196980699501 0.0 -0.0400673652864356 7.22496775641878e-008" floorAnchor="2"/>
+  <XRef cref="Prop-Wheat_Row1" p="83.4228 0.275284 -73.8791" s="1 2 1.29645" floorAnchor="2"/>
+  <XRef cref="Prop-Wheat_Row2" p="111.157 -2.04656 -72.6082" q="0.998236651634369 0.0 -0.0593598124474058 1.07037916741874e-007" s="1.02418 2.01878 1.015" floorAnchor="2"/>
+  <XRef cref="Prop-Wheat_Row2" p="-92.9737 -2.04656 -71.2187" s="1 2 1" floorAnchor="2"/>
+  <XRef cref="Prop-Wheat_Row1" p="-65.7972 2.01087 -73.8791" s="1 2 1.85392" floorAnchor="2"/>
+  <XRef cref="Prop-Wheat_Row2" p="-35.5189 -0.166563 -69.3898" s="1 2 1" floorAnchor="2"/>
+  <XRef cref="Prop-Wheat_Row2" p="146.714 -0.423715 -68.4131" s="1 2 1" floorAnchor="2"/>
+  <XRef cref="Prop-Wheat_Row1" p="-66.5322 1.61884 53.1822" s="1 2 1" floorAnchor="2"/>
+  <XRef cref="Prop-Wheat_Row1" p="-129.445 2.25884 47.7392" q="0.999573362564086 0.0 -0.0292077532912589 5.26675697935698e-008" s="1.0058 2.00455 1.00362" floorAnchor="2"/>
+  <XRef cref="Prop-Wheat_Row2" p="-36.687 -0.0382022 26.4426" s="1 2 1" floorAnchor="2"/>
+  <XRef cref="Prop-Wheat_Row2" p="-3.24144 4.84412 58.6482" s="1 2 1.85392" floorAnchor="2"/>
+  <XRef cref="Prop-Wheat_Row2" p="-38.1959 -0.0382022 89.1673" s="1 2 1" floorAnchor="2"/>
+  <XRef cref="Prop-Wheat_Row2" p="-3.67456 -0.295355 27.4193" s="1 2 1" floorAnchor="2"/>
+  <XRef cref="Prop-Wheat_Row2" p="-5.18354 0.108311 90.1441" s="1 2 1.29645" floorAnchor="2"/>
+  <XRef cref="Prop-Wheat_Row2" p="-38.2638 -0.261163 58.0314" floorAnchor="2"/>
+  <XRef cref="Prop-Wheat_Row1" p="-127.614 -0.0382022 84.6781" s="1 2 1" floorAnchor="2"/>
+  <XRef cref="Prop-Wheat_Row1" p="-126.105 -0.0382022 21.9533" s="1 2 1" floorAnchor="2"/>
+  <XRef cref="Prop-Wheat_Row1" p="-66.9653 -0.0382022 21.9533" s="1 2 1" floorAnchor="2"/>
+  <XRef cref="Prop-Wheat_Row2" p="-95.3938 1.61884 51.7114" s="1 2 1" floorAnchor="2"/>
+  <XRef cref="Prop-Wheat_Row2" p="-99.3459 -1.9182 86.8073" s="1 2 1" floorAnchor="2"/>
+  <XRef cref="Prop-Wheat_Row1" p="18.8453 2.25884 59.6511" q="0.999573362564086 0.0 -0.0292077532912589 5.26675697935698e-008" s="1.0058 2.00455 1.00362" floorAnchor="2"/>
+  <XRef cref="Prop-Wheat_Row2" p="145.169 1.36168 58.6482" s="1 2 1" floorAnchor="2"/>
+  <XRef cref="Prop-Wheat_Row2" p="105.812 -0.361029 86.7537" q="0.999573362564086 0.0 -0.0292077532912589 5.26675697935698e-008" s="1.0058 2.00455 1.00362" floorAnchor="2"/>
+  <XRef cref="Prop-Wheat_Row2" p="144.735 0.108311 27.4193" s="1 2 1.29645" floorAnchor="2"/>
+  <XRef cref="Prop-Wheat_Row2" p="143.226 0.987994 90.1441" s="1 2 1.43" floorAnchor="2"/>
+  <XRef cref="Prop-Wheat_Row2" p="112.156 3.72529 57.6714" floorAnchor="2"/>
+  <XRef cref="Prop-Wheat_Row1" p="20.7957 -0.0382022 84.6781" s="1 2 1" floorAnchor="2"/>
+  <XRef cref="Prop-Wheat_Row2" p="52.583 -0.0382022 26.4426" s="1 2 1" floorAnchor="2"/>
+  <XRef cref="Prop-Wheat_Row1" p="22.3047 -0.0382022 21.9533" s="1 2 1" floorAnchor="2"/>
+  <XRef cref="Prop-Wheat_Row1" p="81.4447 0.441696 21.9533" floorAnchor="2"/>
+  <XRef cref="Prop-Wheat_Row2" p="51.0741 -0.0382022 89.1673" s="1 2 1" floorAnchor="2"/>
+  <XRef cref="Prop-Wheat_Row1" p="81.8778 1.61884 53.1822" s="1 2 1" floorAnchor="2"/>
+  <XRef cref="Prop-Wheat_Row2" p="140.096 -0.295355 -8.33703" s="1 2 1" floorAnchor="2"/>
+  <XRef cref="Prop-Wheat_Row1" p="17.6652 -0.0382022 -13.803" s="1 2 1" floorAnchor="2"/>
+  <XRef cref="Prop-Wheat_Row1" p="76.8052 -0.0382022 -13.803" s="1 2 1" floorAnchor="2"/>
+  <XRef cref="Prop-Wheat_Row2" p="-8.31405 -0.295355 -8.33703" s="1 2 1" floorAnchor="2"/>
+  <XRef cref="Prop-Wheat_Row2" p="-100.466 1.35572 -9.31381" s="1 2 1.43" floorAnchor="2"/>
+  <XRef cref="Prop-Wheat_Row1" p="-132.755 -1.9182 -6.20303" s="1 2 1" floorAnchor="2"/>
+  <XRef cref="Prop-Wheat_Row1" p="-73.6148 -1.9182 -6.20303" s="1 2 1" floorAnchor="2"/>
+  <XRef cref="Prop-Wheat_Row2" p="107.084 0.441696 -9.31381" s="1 2 1.29645" floorAnchor="2"/>
+  <XRef cref="Prop-Wheat_Row2" p="55.0045 -0.0382022 -39.1892" floorAnchor="2"/>
+  <XRef cref="Prop-Wheat_Row1" p="83.8661 -0.0382022 -43.6784" s="1 2 1" floorAnchor="2"/>
+  <XRef cref="Prop-Wheat_Row2" p="147.157 -0.295355 -38.2124" s="1 2 1" floorAnchor="2"/>
+  <XRef cref="Prop-Wheat_Row2" p="-34.2655 -0.0382022 -39.1892" s="1 2 1" floorAnchor="2"/>
+  <XRef cref="Prop-Wheat_Row2" p="-1.25315 -0.295355 -38.2124" s="1 2 1" floorAnchor="2"/>
+  <XRef cref="Prop-Wheat_Row2" p="-93.4055 -0.0382022 -39.1892" s="1 2 1" floorAnchor="2"/>
+  <XRef cref="Prop-Wheat_Row1" p="-123.684 0.441696 -43.6784" s="1 2 1.29645" floorAnchor="2"/>
+  <XRef cref="Prop-Wheat_Row1" p="-1.93717 -0.166563 -73.8791" s="1 2 1" floorAnchor="2"/>
+  <XRef cref="Prop-Scarecrow" p="4.29823 -0.653413 -5.90842" q="0.784226605540852 0.0867538304059783 0.614289914342165 0.0105026286832365" s="1.47266 2.30425 1.6256" floorAnchor="2"/>
+  <XRef cref="Prop-Fence_Post" p="-72.7238 -1.99 -95.6485" floorAnchor="2"/>
+  <XRef cref="Prop-Fence_Post" p="-108.585 -0.844891 -94.1865" floorAnchor="2"/>
+  <XRef cref="Prop-Fence_Post" p="-130.012 -0.695418 -94.9483" floorAnchor="2"/>
+  <XRef cref="Prop-Fence_Post" p="-151.662 -0.87108 -82.4429" floorAnchor="2"/>
+  <XRef cref="Prop-Fence_Post" p="-48.9362 -1.88077 -96.4899" floorAnchor="2"/>
+  <XRef cref="Prop-Fence_Post" p="38.8255 -4.81646 -94.3852" floorAnchor="2"/>
+  <XRef cref="Prop-Fence_Post" p="121.2 -1.9783 -98.0231" floorAnchor="2"/>
+  <XRef cref="Prop-Fence_Post" p="141.383 -0.836455 -98.1208" floorAnchor="2"/>
+  <XRef cref="Prop-Fence_Post" p="186.975 -1.82675 -75.6497" q="0.99144486137381 -0.130402054296931 0.00569131712401262 -1.026261208094e-008" floorAnchor="2"/>
+  <XRef cref="Prop-Fence_Post" p="184.208 -2.93669 -53.7748" q="0.986714314719825 6.6202729521361e-017 -0.00564756475949466 -0.162366764269271" floorAnchor="2"/>
+  <XRef cref="Prop-Fence_Post" p="183.691 -4.81646 47.4025" floorAnchor="2"/>
+  <XRef cref="Prop-Fence_Post" p="184.208 -2.93669 -32.0548" q="0.986714314719825 6.6202729521361e-017 -0.00564756475949466 -0.162366764269271" floorAnchor="2"/>
+  <XRef cref="Prop-Fence_Post" p="99.9739 -6.05312 -98.6988" q="0.99495552624183 3.35082482830753e-018 -0.00348719370196758 -0.100256372769655" floorAnchor="2"/>
+  <XRef cref="Prop-Fence_Post" p="18.2055 -0.795259 -99.7813" floorAnchor="2"/>
+  <XRef cref="Prop-Fence_Post" p="-53.5515 -4.81194 108.936" q="0.997564050259824 7.42822384250172e-009 -0.00271629514468808 0.0697035678419822" floorAnchor="2"/>
+  <XRef cref="Prop-Fence_Post" p="-79.3692 -4.81646 108.936" floorAnchor="2"/>
+  <XRef cref="Prop-Fence_Post" p="51.2437 -1.53497 105.846" q="0.994957045198425 1.06809473902504e-008 -0.00390572580626353 0.100225862510362" floorAnchor="2"/>
+  <XRef cref="Prop-Fence_Post" p="15.6411 -4.81646 108.266" floorAnchor="2"/>
+  <XRef cref="Prop-Fence_Post" p="92.4384 -1.00646 111.702" floorAnchor="2"/>
+  <XRef cref="Prop-Fence_Post" p="184.208 -2.93669 88.1752" q="0.986714314719825 6.6202729521361e-017 -0.00564756475949466 -0.162366764269271" floorAnchor="2"/>
+</Component>

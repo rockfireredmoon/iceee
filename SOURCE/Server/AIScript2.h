@@ -79,7 +79,7 @@ public:
 	std::list<AINutPlayer*> aiAct;
 	int LoadScripts(void);
 	AINutDef* GetScriptByName(const char *name);
-	AINutPlayer *AddActiveScript(CreatureInstance *creature, AINutDef *def, std::vector<std::string> args);
+	AINutPlayer *AddActiveScript(CreatureInstance *creature, AINutDef *def, std::vector<std::string> args, std::string &errors);
 	void RemoveActiveScript(AINutPlayer *registeredPtr);
 };
 

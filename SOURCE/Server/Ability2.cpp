@@ -7,6 +7,7 @@
 #include "Creature.h"
 #include "Formula.h"
 #include "StringList.h"
+#include "Simulator.h"
 #include "Util.h"
 #include "Instance.h"
 #include "Stats.h"
@@ -1156,6 +1157,7 @@ void AbilityManager2 :: InitFunctionTables(void)
 	InsertFunction("Status", &AbilityCalculator::Status);
 	InsertFunction("Amp", &AbilityCalculator::Amp);
 	InsertFunction("Add", &AbilityCalculator::Add);
+	InsertFunction("AddSlot", &AbilityCalculator::AddSlot);
 	InsertFunction("AmpCore", &AbilityCalculator::AmpCore);
 	InsertFunction("Nullify", &AbilityCalculator::Nullify);
 	InsertFunction("CheckBuffLimits", &AbilityCalculator::CheckBuffLimits);
@@ -2534,6 +2536,15 @@ int AbilityCalculator :: Amp(ARGUMENT_LIST args)
 
 	ciTarget->Amp(mAbilityEntry->mTier, buffType, mAbilityEntry->mAbilityID, mAbilityEntry->mAbilityGroupID, StatID, percent, timeSec);
 	return ABILITY_SUCCESS;
+}
+
+int AbilityCalculator :: AddSlot(ARGUMENT_LIST args)
+{
+	if(ciTarget->simulatorPtr->pld.accPtr->ExpandCharacterSlots())
+		ciTarget->simulatorPtr->SendInfoMessage("You have a new character slot!", INFOMSG_INFO);
+	else
+		ciTarget->simulatorPtr->SendInfoMessage("You have the maximum allowed characters!", INFOMSG_ERROR);
+	return NO_RETURN_VALUE;
 }
 
 int AbilityCalculator :: Add(ARGUMENT_LIST args)

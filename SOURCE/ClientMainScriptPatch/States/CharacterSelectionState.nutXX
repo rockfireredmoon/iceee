@@ -212,7 +212,7 @@ StageBits <- {
 
 class States.CharacterSelectionState extends State
 {
-	static MAX_CHARACTERS = 8;
+	static MAX_CHARACTERS = 20;
 	static mClassName = "CharacterSelectionState";
 	
 	mCard = null;
@@ -284,7 +284,7 @@ class States.CharacterSelectionState extends State
 	mClassDefaultImageButton = null;
 	
 	mCurrentSelection = 0;
-	mMaxCharacters = 8;
+	mMaxCharacters = 20;
 	
 	mUseBackground = true;
 	mBackground = "Prop-CharSelect_BG";
@@ -1099,7 +1099,7 @@ class States.CharacterSelectionState extends State
 		local topSkinComp = GUI.Component(GUI.GridLayout(1, 2));
 		topSkinComp.getLayoutManager().setRows(525);
 		topSkinComp.getLayoutManager().setColumns(this.LEFT_PANEL_WIDTH, "*");
-		//topSkinComp.setInsets(-5, 0, 15, 30);
+		topSkinComp.setInsets(-5, 0, 15, 30);
 		skinComp.add(topSkinComp);
 		
 		local leftComp = GUI.Component(GUI.BoxLayoutV());
@@ -1116,25 +1116,23 @@ class States.CharacterSelectionState extends State
 		local detailPanel = GUI.Panel(GUI.BoxLayoutV());
 		colorBigFrame.setContentPane(detailPanel);
 		
-		local topDetailPanel = GUI.Component(GUI.BoxLayout());
-		//topDetailPanel.getLayoutManager().setGap(10);
+		mOtherDetails = GUI.InnerPanel(GUI.FlowLayout());
 		
-		local otherComp = mOtherDetails = GUI.InnerPanel(GUI.FlowLayout());
-		otherComp.setInsets(12,0,0,0);
-		otherComp.getLayoutManager().setAlignment("center");
-		otherComp.setPreferredSize(300, 48);
-		
-		local mainDetailPanel = GUI.Panel(GUI.BorderLayout());
-		mainDetailPanel.add(topDetailPanel, GUI.BorderLayout.CENTER);
-		mainDetailPanel.add(otherComp, GUI.BorderLayout.SOUTH);
-		detailPanel.add(mainDetailPanel);
+		local bodySizeComp = GUI.InnerPanel(GUI.BoxLayoutV());
+		local heightTitle = GUI.HTML("<font color=\"fff77f\" size=\"32\">Height</font>");
+		bodySizeComp.add(heightTitle);
 		
 		local colorpanel = GUI.InnerPanel(GUI.GridLayout(1, 1));
 		colorpanel.setInsets(5, 0, 5, 20);
-		colorpanel.setPreferredSize(250, 350);
 		colorpanel.getLayoutManager().setRows("*");
 		colorpanel.getLayoutManager().setColumns(250);		
 		topDetailPanel.add(colorpanel);
+		
+		local mainDetailPanel = GUI.Panel(GUI.BorderLayout());
+		mainDetailPanel.add(colorpanel, GUI.BorderLayout.CENTER);
+		mainDetailPanel.add(mOtherDetails, GUI.BorderLayout.SOUTH);
+		mainDetailPanel.add(bodySizeComp, GUI.BorderLayout.EAST);
+		detailPanel.add(mainDetailPanel);
 		
 		// Ugh.  A GUI.BoxLayoutV inside a GridLayout won't expadn properly.
 		// So, lets get stupid!
@@ -1143,18 +1141,10 @@ class States.CharacterSelectionState extends State
 		colors.setSize(colors.getPreferredSize());
 		colorpanel.add(colors);
 		
-		local bodySizeComp = GUI.InnerPanel(GUI.BoxLayoutV());
-		bodySizeComp.setSize(80, 350);
-		bodySizeComp.setPreferredSize(80, 350);
-		topDetailPanel.add(bodySizeComp);
-		
-		local heightTitle = GUI.HTML("<font color=\"fff77f\" size=\"32\">Height</font>");
-		bodySizeComp.add(heightTitle);
-		
 		local DIFFERENCE = 0.1;
 		local START_BODY_SIZE = 1;
 		
-		local slider = GUI.Slider(this.gVERTICAL_SLIDER, START_BODY_SIZE + DIFFERENCE, START_BODY_SIZE - DIFFERENCE, 230);
+		local slider = GUI.Slider(this.gVERTICAL_SLIDER, START_BODY_SIZE + DIFFERENCE, START_BODY_SIZE - DIFFERENCE, 250);
 		slider.addChangeListener(this);
 		slider.setValue(START_BODY_SIZE);		
 		bodySizeComp.add(slider);
@@ -1197,7 +1187,7 @@ class States.CharacterSelectionState extends State
 			if (mNewAppearance && ("ts" in mNewAppearance) && mNewAppearance.ts == number)
 				return;
 			this.alterAppearance({
-				ts = number
+				es = number
 			});
 			local app = this.serializeAppearance(this.mNewAppearance);
 			this._configureChar(app);
@@ -1499,7 +1489,7 @@ class States.CharacterSelectionState extends State
 		earsLabel.getLayoutManager().setAlignment("center");
 		mOtherDetails.add(earsLabel);
 		
-		mEarSlider = GUI.Slider(this.gHORIZONTAL_SLIDER, 0, 10, 40);
+		mEarSlider = GUI.Slider(this.gHORIZONTAL_SLIDER, 0, 10, 200);
 		mEarSlider.addChangeListener(this);
 		mEarSlider.setValue(5);
 		mOtherDetails.add(mEarSlider);
@@ -1508,7 +1498,7 @@ class States.CharacterSelectionState extends State
 		tailLabel.getLayoutManager().setAlignment("center");
 		mOtherDetails.add(tailLabel);
 		
-		mTailSlider = GUI.Slider(this.gHORIZONTAL_SLIDER, 0, 10, 40);
+		mTailSlider = GUI.Slider(this.gHORIZONTAL_SLIDER, 0, 10, 200);
 		mTailSlider.addChangeListener(this);
 		mTailSlider.setValue(5);		
 		mOtherDetails.add(mTailSlider);
@@ -1875,9 +1865,7 @@ class States.CharacterSelectionState extends State
 
 		this.alterAppearance({
 			g = "m",
-			r = "a",
-			es = "1.0",
-			ts = "1.0"
+			r = "a"
 		});
 		this.mGenderRadio.setSelected(this.mGenderDefault);
 		this.mRaceRadio.setSelected(this.mRaceDefault);
@@ -2139,9 +2127,7 @@ class States.CharacterSelectionState extends State
 			0.85000002,
 			this.DEFAULT_CHEST_CLOTHES,
 			this.DEFAULT_LEGGING_CLOTHES,
-			this.DEFAULT_BOOT_CLOTHES,
-			1.0,
-			1.0
+			this.DEFAULT_BOOT_CLOTHES
 		];
 
 		if ("r" in appearance)

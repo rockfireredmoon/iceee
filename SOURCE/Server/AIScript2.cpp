@@ -404,10 +404,9 @@ AINutDef * AINutManager::GetScriptByName(const char *name) {
 //}
 
 AINutPlayer * AINutManager::AddActiveScript(CreatureInstance *creature,
-		AINutDef *def, std::vector<std::string> args) {
+		AINutDef *def, std::vector<std::string> args, std::string &errors) {
 	AINutPlayer * player = new AINutPlayer();
 	player->mArgs = args;
-	std::string errors;
 	player->Initialize(creature, def, errors);
 	if (errors.length() > 0)
 		g_Log.AddMessageFormat("Failed to compile %s. %s",

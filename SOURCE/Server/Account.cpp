@@ -84,6 +84,7 @@ void AccountData :: ClearAll(void)
 
 	SuspendDurationSec = 0;
 	SuspendTimeSec = 0;
+	MaxCharacters = DEFAULT_CHARACTER_SLOTS;
 
 	SessionLoginCount = 0;
 	ExpireTime = 0;
@@ -171,7 +172,7 @@ bool AccountData :: HasPermission(short permissionSet, unsigned int permissionFl
 
 int AccountData :: GetFreeCharacterSlot(void)
 {
-	for(int a = 0; a < MAX_CHARACTER_SLOTS; a++)
+	for(int a = 0; a < MaxCharacters; a++)
 		if(CharacterSet[a] == 0)
 			return a;
 	return -1;
@@ -251,6 +252,17 @@ void AccountData :: SetBan(int minutes)
 	PendingMinorUpdates++;
 }
 
+
+bool AccountData ::ExpandCharacterSlots()
+{
+	 if(MaxCharacters < MAX_CHARACTER_SLOTS) {
+		 MaxCharacters++;
+		 PendingMinorUpdates++;
+		 return true;
+	 }
+	 return false;
+}
+
 void AccountData :: ClearBan(void)
 {
 	SuspendDurationSec = 0;
@@ -285,6 +297,8 @@ void AccountData :: SaveToStream(FILE *output)
 	fprintf(output, "Name=%s\r\n", Name);
 	fprintf(output, "Auth=%s\r\n", AuthData);
 	fprintf(output, "RegKey=%s\r\n", RegKey);
+	if(MaxCharacters != DEFAULT_CHARACTER_SLOTS)
+		fprintf(output, "MaxCharacters=%d\r\n", MaxCharacters);
 	fprintf(output, "RecoveryKeys=%s\r\n", RecoveryKeys.c_str());
 	if(SuspendTimeSec >= 0)
 	{
@@ -292,7 +306,7 @@ void AccountData :: SaveToStream(FILE *output)
 		fprintf(output, "SuspendDuration=%lu\r\n", SuspendDurationSec);
 	}
 	fprintf(output, "Characters=");
-	for(int a = 0; a < MAX_CHARACTER_SLOTS; a++)
+	for(int a = 0; a < MaxCharacters; a++)
 	{
 		if(CharacterSet[a] == 0)
 			continue;
@@ -551,6 +565,12 @@ void AccountManager :: LoadSectionGeneral(FileReader &fr, AccountData &ad, const
 	}
 	else if(strcmp(NameBlock, "SUSPENDTIME") == 0)
 		ad.SuspendTimeSec = fr.BlockToULongC(1);
+	else if(strcmp(NameBlock, "MAXCHARACTERS") == 0) {
+		ad.MaxCharacters = fr.BlockToULongC(1);
+		if(ad.MaxCharacters < AccountData::DEFAULT_CHARACTER_SLOTS) {
+			ad.MaxCharacters = AccountData::DEFAULT_CHARACTER_SLOTS;
+		}
+	}
 	else if(strcmp(NameBlock, "SUSPENDDURATION") == 0)
 		ad.SuspendDurationSec = fr.BlockToULongC(1);
 	else if(strcmp(NameBlock, "CHARACTERS") == 0)
@@ -569,6 +589,8 @@ void AccountManager :: LoadSectionGeneral(FileReader &fr, AccountData &ad, const
 				break;
 			}
 		}
+		if(NumChar > ad.MaxCharacters)
+			ad.MaxCharacters = NumChar;
 	}
 	else if(strcmp(NameBlock, "PERMISSIONS") == 0)
 	{
@@ -1465,7 +1487,7 @@ void AccountManager :: LoadUsedNameList(const char *fileName)
 
 void AccountManager :: DeleteCharacter(int index, AccountData *accPtr)
 {
-	if(index < 0 || index >= AccountData::MAX_CHARACTER_SLOTS)
+	if(index < 0 || index >= accPtr->MAX_CHARACTER_SLOTS)
 		return;
 
 	int CDefID = accPtr->CharacterSet[index];
@@ -1474,7 +1496,7 @@ void AccountManager :: DeleteCharacter(int index, AccountData *accPtr)
 
 	cs.Enter("AccountManager::DeleteCharacter");
 
-	for(int i = index; i < AccountData::MAX_CHARACTER_SLOTS - 1; i++)
+	for(int i = AccountData::MAX_CHARACTER_SLOTS - 2; i >= index; i--)
 		accPtr->CharacterSet[i] = accPtr->CharacterSet[i + 1];
 	accPtr->CharacterSet[AccountData::MAX_CHARACTER_SLOTS - 1] = 0;
 	accPtr->characterCache.RemoveCharacter(CDefID);

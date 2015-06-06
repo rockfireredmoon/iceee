@@ -11072,25 +11072,72 @@ int SimulatorThread :: handle_query_script_save(void)
 
 int SimulatorThread :: handle_query_script_load(void)
 {
+
 	/*  Query: script.load
 		Get a script (instance script etc)
-		Args: [none]
+		Args: [type]
+
+		0 = Instance
+		1 = Quest
+		2 = AI
 	*/
+	if(query.argCount < 1)
+		return PrepExt_QueryResponseError(SendBuf, query.ID, "Incorrect arguments, require type.");
+
+	int type = query.GetInteger(0);
+	if(type < 0 || type > 2)
+		return PrepExt_QueryResponseError(SendBuf, query.ID, "Invalid type.");
+
 	bool ok = CheckPermissionSimple(Perm_Account, Permission_Admin);
 	if(!ok) {
-		if(pld.zoneDef->mGrove == true && pld.zoneDef->mAccountID != pld.accPtr->ID)
+		// Players can edit their own grove scripts (some commands will be restricted)
+		if(type == 0 && pld.zoneDef->mGrove == true && pld.zoneDef->mAccountID != pld.accPtr->ID)
 			ok = true;
 	}
 	if(!ok)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
 
 
-	int wpos = 0;
-	wpos += PutByte(&SendBuf[wpos], 1);       //_handleQueryResultMsg
-	wpos += PutShort(&SendBuf[wpos], 0);      //Message size
-	wpos += PutInteger(&SendBuf[wpos], query.ID);  //Query response index
+	string path;
+	ScriptCore::NutPlayer *player = NULL;
+	ScriptCore::ScriptPlayer *oldPlayer = NULL;
 
-	string path = InstanceScript::InstanceNutDef::GetInstanceScriptPath(creatureInst->actInst->mZone, false, creatureInst->actInst->mZoneDefPtr->mGrove);
+	switch(type) {
+	case 0:
+		// Instance script
+		path = InstanceScript::InstanceNutDef::GetInstanceScriptPath(creatureInst->actInst->mZone, false, creatureInst->actInst->mZoneDefPtr->mGrove);
+		player = creatureInst->actInst->nutScriptPlayer;
+		oldPlayer = &creatureInst->actInst->scriptPlayer;
+		break;
+	case 1:
+		// TODO quest script
+		return PrepExt_QueryResponseError(SendBuf, query.ID, "Not yet supported.");
+	case 2:
+		// AI script
+		CreatureInstance * target = creatureInst->CurrentTarget.targ;
+		if(target == NULL)
+			return PrepExt_QueryResponseError(SendBuf, query.ID, "Must select a creature to edit.");
+
+		const char *scriptName = target->css.ai_package;
+		if(scriptName[0] == 0)
+			scriptName = target->charPtr->cdef.css.ai_package;
+
+		ScriptCore::NutScriptCallStringParser p(scriptName);
+
+		AINutDef *def = aiNutManager.GetScriptByName(p.mScriptName.c_str());
+		if(def == NULL) {
+			AIScriptDef * oldDef = aiScriptManager.GetScriptByName(p.mScriptName.c_str());
+			path = oldDef->scriptName;
+		}
+		else
+			path = def->mSourceFile;
+		player = target->aiNut;
+		oldPlayer = target->aiScript;
+
+		break;
+	}
+
+
 	if(path.length() == 0) {
 		LogMessageL(MSG_WARN, "[WARNING] Load script query unable to open script for zone: %d", creatureInst->actInst->mZone);
 		return 0;
@@ -11111,6 +11158,11 @@ int SimulatorThread :: handle_query_script_load(void)
 			lines.push_back(lfr.DataBuffer);
 		}
 	}
+
+	int wpos = 0;
+	wpos += PutByte(&SendBuf[wpos], 1);       //_handleQueryResultMsg
+	wpos += PutShort(&SendBuf[wpos], 0);      //Message size
+	wpos += PutInteger(&SendBuf[wpos], query.ID);  //Query response index
 	wpos += PutShort(&SendBuf[wpos], lines.size() + 1);
 	for(uint i = 0 ; i < lines.size() ; i++) {
 		wpos += PutByte(&SendBuf[wpos], 1);
@@ -11119,13 +11171,25 @@ int SimulatorThread :: handle_query_script_load(void)
 
 	// The last record contains info about the instance itself for the editor UI
 	wpos += PutByte(&SendBuf[wpos], 2);
-	if(creatureInst->actInst->nutScriptPlayer != NULL) {
-		wpos += PutStringUTF(&SendBuf[wpos], creatureInst->actInst->nutScriptPlayer->mActive ? "true" : "false"); // active
+	if(player != NULL)
+		wpos += PutStringUTF(&SendBuf[wpos], player->mActive ? "true" : "false"); // active
+	else if(oldPlayer != NULL)
+		wpos += PutStringUTF(&SendBuf[wpos], oldPlayer->active ? "true" : "false"); // active
+	else
+		wpos += PutStringUTF(&SendBuf[wpos], "false"); // active
+
+	switch(type) {
+		case 0:
+			sprintf(Aux1, "%d", creatureInst->actInst->mZone);
+			break;
+		case 1:
+			// TODO quest ID
+			sprintf(Aux1, "%d", 0);
+			break;
+		case 2:
+			sprintf(Aux1, "%d", creatureInst->CurrentTarget.targ->CreatureDefID);
+			break;
 	}
-	else {
-		wpos += PutStringUTF(&SendBuf[wpos], creatureInst->actInst->scriptPlayer.active ? "true" : "false"); // active
-	}
-	sprintf(Aux1, "%d", creatureInst->actInst->mZone);
 	wpos += PutStringUTF(&SendBuf[wpos], Aux1);
 
 	PutShort(&SendBuf[1], wpos - 3);
@@ -11134,10 +11198,21 @@ int SimulatorThread :: handle_query_script_load(void)
 
 int SimulatorThread :: handle_query_script_kill(void)
 {
+
 	/*  Query: script.load
 		Get a script (instance script etc)
 		Args: [none]
+		0 = Instance
+		1 = Quest
+		2 = AI
 	*/
+	if(query.argCount < 1)
+		return PrepExt_QueryResponseError(SendBuf, query.ID, "Incorrect arguments, require type.");
+
+	int type = query.GetInteger(0);
+	if(type < 0 || type > 2)
+		return PrepExt_QueryResponseError(SendBuf, query.ID, "Invalid type.");
+
 	bool ok = CheckPermissionSimple(Perm_Account, Permission_Admin);
 	if(!ok) {
 		if(pld.zoneDef->mGrove == true && pld.zoneDef->mAccountID != pld.accPtr->ID)
@@ -11147,10 +11222,29 @@ int SimulatorThread :: handle_query_script_kill(void)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
 
 	LogMessageL(MSG_SHOW, "Handling kill script request");
-	if(!creatureInst->actInst->KillScript()) {
-		return PrepExt_QueryResponseError(SendBuf, query.ID, "Script not running.");
+
+	switch(type) {
+	case 0:
+		if(!creatureInst->actInst->KillScript()) {
+			return PrepExt_QueryResponseError(SendBuf, query.ID, "Script not running.");
+		}
+		Util::SafeFormat(Aux1, sizeof(Aux1), "Script for %d killed.", creatureInst->actInst->mZone);
+		break;
+	case 1:
+		// TODO quest script
+		return PrepExt_QueryResponseError(SendBuf, query.ID, "Not yet supported.");
+	default:
+		// AI script
+		CreatureInstance * target = creatureInst->CurrentTarget.targ;
+		if(target == NULL)
+			return PrepExt_QueryResponseError(SendBuf, query.ID, "Must select a creature.");
+		if(!target->KillAI()) {
+			return PrepExt_QueryResponseError(SendBuf, query.ID, "Script not running.");
+		}
+		Util::SafeFormat(Aux1, sizeof(Aux1), "Script for %d killed.", target->CreatureID);
+		break;
 	}
-	Util::SafeFormat(Aux1, sizeof(Aux1), "Script for %d killed.", creatureInst->actInst->mZone);
+
 	SendInfoMessage(Aux1, INFOMSG_INFO);
 	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
 }
@@ -11159,8 +11253,18 @@ int SimulatorThread :: handle_query_script_run(void)
 {
 	/*  Query: script.load
 		Get a script (instance script etc)
-		Args: [none]
+		0 = Instance
+		1 = Quest
+		2 = AI
 	*/
+	if(query.argCount < 1)
+		return PrepExt_QueryResponseError(SendBuf, query.ID, "Incorrect arguments, require type.");
+
+	int type = query.GetInteger(0);
+	if(type < 0 || type > 2)
+		return PrepExt_QueryResponseError(SendBuf, query.ID, "Invalid type.");
+
+
 	bool ok = CheckPermissionSimple(Perm_Account, Permission_Admin);
 	if(!ok) {
 		if(pld.zoneDef->mGrove == true && pld.zoneDef->mAccountID != pld.accPtr->ID)
@@ -11171,21 +11275,36 @@ int SimulatorThread :: handle_query_script_run(void)
 
 	LogMessageL(MSG_SHOW, "Handling script run");
 
-
 	std::string errors;
-	if(creatureInst->actInst->RunScript(errors)) {
-		if(errors.length() > 0) {
-			Util::SafeFormat(Aux1, sizeof(Aux1), "Failed to run script for %d. %s", creatureInst->actInst->mZone, errors.c_str());
-			SendInfoMessage(Aux1, INFOMSG_ERROR);
-		}
-		else {
-			Util::SafeFormat(Aux1, sizeof(Aux1), "Script for %d now running.", creatureInst->actInst->mZone);
-			SendInfoMessage(Aux1, INFOMSG_INFO);
-		}
+
+	switch(type) {
+	case 0:
+		if(!creatureInst->actInst->RunScript(errors))
+			return PrepExt_QueryResponseError(SendBuf, query.ID, "Script already running.");
+		break;
+	case 1:
+		// TODO quest script
+		return PrepExt_QueryResponseError(SendBuf, query.ID, "Not yet supported.");
+	default:
+		// AI script
+		CreatureInstance * target = creatureInst->CurrentTarget.targ;
+		if(target == NULL)
+			return PrepExt_QueryResponseError(SendBuf, query.ID, "Must select a creature.");
+		if(!target->StartAI(errors))
+			return PrepExt_QueryResponseError(SendBuf, query.ID, "Script already running.");
+		break;
+	}
+
+
+	if(errors.length() > 0) {
+		Util::SafeFormat(Aux1, sizeof(Aux1), "Failed to run script %s", errors.c_str());
+		SendInfoMessage(Aux1, INFOMSG_ERROR);
 	}
 	else {
-		return PrepExt_QueryResponseError(SendBuf, query.ID, "Script already running.");
+		Util::SafeFormat(Aux1, sizeof(Aux1), "Script now running.");
+		SendInfoMessage(Aux1, INFOMSG_INFO);
 	}
+
 	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
 }
 

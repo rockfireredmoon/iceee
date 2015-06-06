@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+<Component id="CL-Farm-BurnedField1" xmlns="http://ee.ironrealms.com/CMS_XML.xsd">
+  <XRef cref="Prop-Fence_Post" p="25.9431 -0.444317 -84.7024" q="0.950607419502836 0.0466323405785209 -0.196738192548605 -0.235510174708093" floorAnchor="2"/>
+  <XRef cref="Prop-Fence_Piece2" p="-20.5931 -0.9 -82.0333" q="0.999742609322698 0.0 -0.0226873335727439 4.09099156808506e-008" floorAnchor="2"/>
+  <XRef cref="Prop-Fence_Piece1" p="-2.55032 -0.953339 -81.1998" q="0.980036677898661 -0.0198546781017637 0.12389938360312 -0.154216874801682" s="1.11 1.12 1" floorAnchor="2"/>
+  <XRef cref="Prop-Bush-Burnt_Med1" p="-17.472 0 -50.4537" floorAnchor="2"/>
+  <XRef cref="Prop-Bush-Burnt_Large3" p="-20.845 -0.879214 -0.102385" floorAnchor="2"/>
+  <XRef cref="Prop-Bush-Burnt_Med1" p="73.6603 0 2.53473" floorAnchor="2"/>
+  <XRef cref="Prop-Bush-Burnt_Med3" p="22.1332 0 -56.9131" floorAnchor="2"/>
+  <XRef cref="Prop-Rock2" p="70.6739 0.585208 -65.7127" floorAnchor="2"/>
+  <XRef cref="Prop-Vampire_Tree3" p="78.3868 -1.74283 -75.7694" s="1.35 1.39 1.5" floorAnchor="2"/>
+  <XRef cref="Prop-Fence_Post" p="135.275 -2.79264 -14.8952" q="0.950357718610215 -0.051863213978673 -0.213254659785475 0.220573941782728" floorAnchor="2"/>
+  <XRef cref="Prop-Bush-Burnt_Med3" p="-1.71522 0 0.977033" floorAnchor="2"/>
+  <XRef cref="Prop-Bush-Burnt_Med1" p="56.158 5.63993e-017 -55.9337" floorAnchor="2"/>
+  <XRef cref="Prop-Bush-Burnt_Large3" p="77.555 -0.879214 -54.8755" s="1 0.68 1" floorAnchor="2"/>
+</Component>

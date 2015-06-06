@@ -372,3 +372,19 @@ mQualityLevel=4
 mEquipType=15
 mBindingType=0
 mArmorType=2
+
+[ENTRY]
+mID=8110
+mType=5
+mDisplayName=New Character Slot
+mAppearance=[{}]
+mIcon=Icon-32-Chest1.png|Icon-32-BG-Blue.png
+mIvType1=1
+mIvMax1=1
+mLevel=1
+mBindingType=1
+mValue=1
+mFlavorText=Double click to open!
+mQualityLevel=3
+mMinUseLevel=10
+mUseAbilityId=27007

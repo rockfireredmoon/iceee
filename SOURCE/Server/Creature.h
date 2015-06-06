@@ -337,6 +337,8 @@ public:
 	typedef std::vector<CreatureSearch> CREATURE_SEARCH;
 	typedef std::vector<CreatureInstance*> CREATURE_PTR_SEARCH;
 	void UnloadResources(void);
+	bool KillAI(void);
+	bool StartAI(std::string &errors);
 	void RemoveAttachedHateProfile(void);
 
 	int CreatureDefID;   //Associated Creature Def ID

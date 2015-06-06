@@ -495,6 +495,26 @@ void CreatureInstance :: Clear(void)
 	LastUseDefID = 0;
 }
 
+bool CreatureInstance :: KillAI(void)
+{
+	bool killed = false;
+	if(aiScript != NULL)
+	{
+		killed = aiScript->HasScript();
+		aiScript->HaltExecution();
+		aiScriptManager.RemoveActiveScript(aiScript);
+		aiScript = NULL;
+	}
+	if(aiNut != NULL)
+	{
+		aiNut->HaltExecution();
+		aiNutManager.RemoveActiveScript(aiNut);
+		aiNut = NULL;
+		killed = true;
+	}
+	return killed;
+}
+
 void CreatureInstance :: UnloadResources(void)
 {
 	//NOTE: Should only be called by the main thread.
@@ -513,16 +533,7 @@ void CreatureInstance :: UnloadResources(void)
 
 	g_QuestNutManager.RemoveActiveScripts(CreatureID);
 
-	if(aiScript != NULL)
-	{
-		aiScriptManager.RemoveActiveScript(aiScript);
-		aiScript = NULL;
-	}
-	if(aiNut != NULL)
-	{
-		aiNutManager.RemoveActiveScript(aiNut);
-		aiNut = NULL;
-	}
+	KillAI();
 	RemoveAttachedHateProfile();
 	if(serverFlags & ServerFlags::IsPlayer)
 	{
@@ -683,28 +694,12 @@ void CreatureInstance :: CopyBuffsFrom(CreatureInstance *source)
 	buffManager.CopyFrom(source->buffManager);
 }
 
-void CreatureInstance :: Instantiate(void)
+bool CreatureInstance :: StartAI(std::string &errors)
 {
-	//Initializes certain values based on CSS fields or global
-	//defaults.
-	//Note: the client won't process NPC movement unless it has health.
-	if(css.constitution <= 0)
-	{
-		css.constitution = 1;
-	}
-	css.health = GetMaxHealth(true);
+	if(aiNut != NULL || (aiScript != NULL && aiScript->HasScript()))
+		return false;
 
-	//int cdef = CreatureDef.GetIndex(CreatureDefID);
 	CreatureDefinition *cdef = CreatureDef.GetPointerByCDef(CreatureDefID);
-
-	if((strlen(css.ai_package) == 0) || (strcmp(css.ai_package, "nothing") == 0))
-		SetServerFlag(ServerFlags::NeutralInactive, true);
-	if(css.IsPropAppearance() == true)
-	{
-		SetServerFlag(ServerFlags::NeutralInactive, true);
-		SetServerFlag(ServerFlags::Noncombatant, true);
-	}
-
 	//if(cdef != NULL && (strncmp(css.appearance,  "p1:", 3) != 0)) // && (!(serverFlags & ServerFlags::NeutralInactive)))
 	if((cdef != NULL) )//&& !(serverFlags & ServerFlags::Noncombatant))
 	{
@@ -725,14 +720,43 @@ void CreatureInstance :: Instantiate(void)
 		}
 		else
 		{
-			aiNut = aiNutManager.AddActiveScript(this, def, p.mArgs);
+			aiNut = aiNutManager.AddActiveScript(this, def, p.mArgs, errors);
 			if(aiNut == NULL)
 			{
 				g_Log.AddMessageFormatW(MSG_SHOW, "[WARNING] While the script %s for instantiated creature [%s] was found, it did not start." , p.mScriptName.c_str(), cdef->css.display_name);
 			}
 		}
 
+
+		return true;
 	}
+
+	return false;
+}
+
+void CreatureInstance :: Instantiate(void)
+{
+	//Initializes certain values based on CSS fields or global
+	//defaults.
+	//Note: the client won't process NPC movement unless it has health.
+	if(css.constitution <= 0)
+	{
+		css.constitution = 1;
+	}
+	css.health = GetMaxHealth(true);
+
+	//int cdef = CreatureDef.GetIndex(CreatureDefID);
+
+	if((strlen(css.ai_package) == 0) || (strcmp(css.ai_package, "nothing") == 0))
+		SetServerFlag(ServerFlags::NeutralInactive, true);
+	if(css.IsPropAppearance() == true)
+	{
+		SetServerFlag(ServerFlags::NeutralInactive, true);
+		SetServerFlag(ServerFlags::Noncombatant, true);
+	}
+
+	std::string errors;
+	StartAI(errors);
 
 	//Need this or else spawned props may retain aggro status
 	if(serverFlags & ServerFlags::NeutralInactive)

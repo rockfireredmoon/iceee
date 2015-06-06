@@ -68,7 +68,8 @@ public:
 	~AccountData();
 
 	static const int EXPIRE_TIME = 5000;
-	static const int MAX_CHARACTER_SLOTS = 20;  //Absolute maximum number of characters an account can have (0.8.9 supports 8 slots, 0.8.8 and earlier only have room in the selection screen for 7 slots)
+	static const int MAX_CHARACTER_SLOTS = 8;  //Absolute maximum number of characters an account can have
+	static const int DEFAULT_CHARACTER_SLOTS = 4;  //Absolute maximum number of characters an account can have
 
 	int ID;
 	char Name[48];
@@ -95,8 +96,11 @@ public:
 	CharacterCacheManager characterCache;
 	std::string GroveName;
 	std::vector<BuildPermissionArea> BuildPermissionList;
+	int MaxCharacters;
+
 	bool HasBuildZone(BuildPermissionArea &bpa);
 
+	bool ExpandCharacterSlots();
 	void ClearAll(void);
 	void FillAuthorizationHash(const char *hash);
 	void FillRegistrationKey(const char *key);

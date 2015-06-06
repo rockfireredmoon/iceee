@@ -122,6 +122,7 @@ class Screens.InstanceScript extends GUI.Frame
 		mRefresh.setText("Refresh");
 		mRun.setEnabled(true);
 		mKill.setEnabled(true);
+		mType.setEnabled(true);
 	}
 	
 	function onTextChanged( text ) {
@@ -129,6 +130,7 @@ class Screens.InstanceScript extends GUI.Frame
 		mRefresh.setText("Cancel");
 		mRun.setEnabled(false);
 		mKill.setEnabled(false);
+		mType.setEnabled(false);
 	}
 
 	function onCopyPressed( button )
@@ -151,12 +153,12 @@ class Screens.InstanceScript extends GUI.Frame
 
 	function onRunScriptPressed( button )
 	{	
-		::_Connection.sendQuery("script.run", this, []);
+		::_Connection.sendQuery("script.run", this, [ mType.getCurrentIndex() ]);
 	}
 
 	function onKillPressed( button )
 	{	
-		::_Connection.sendQuery("script.kill", this, []);
+		::_Connection.sendQuery("script.kill", this, [ mType.getCurrentIndex() ]);
 	}
 
 	function onRefreshPressed( button )
@@ -166,7 +168,7 @@ class Screens.InstanceScript extends GUI.Frame
 
 	function onSubmitPressed( button )
 	{
-		::_Connection.sendQuery("script.save", this, [this._collapseTabs(this.mScript.getText())]);
+		::_Connection.sendQuery("script.save", this, [mType.getCurrentIndex(), this._collapseTabs(this.mScript.getText())]);
 	}
 	
 	function setVisible( value )
@@ -174,7 +176,7 @@ class Screens.InstanceScript extends GUI.Frame
 		if (value && !this.isVisible())
 		{
 			this.mScript.setText("");
-			::_Connection.sendQuery("script.load", this, []);
+			::_Connection.sendQuery("script.load", this, [ mType.getCurrentIndex() ]);
 		}
 
 		this.GUI.Frame.setVisible(value);
@@ -189,8 +191,13 @@ class Screens.InstanceScript extends GUI.Frame
 			{
 				if(r.len() == 2) 
 				{					
-					this.mInfo.setText("<font size=\"22\">Instances script for " + r[1] + 
-						". Script is " + ( r[0] == "true" ? 
+					local scriptMeta = "Zone";
+					if(mType.getCurrentIndex() == 1)
+						scriptMeta = "Quest ID";
+					else if(mType.getCurrentIndex() == 2)
+						scriptMeta = "CDefID";
+					this.mInfo.setText("<font size=\"22\">" + scriptMeta + " " + r[1] + 
+						" " + ( r[0] == "true" ? 
 							"<font color=\"00ff00\">Active</font>" : 
 							"<font color=\"ff0000\">Inactive</font>"));
 				}
@@ -278,7 +285,7 @@ class Screens.InstanceScript extends GUI.Frame
 
 	function _refresh() 
 	{
-		::_Connection.sendQuery("script.load", this, []);
+		::_Connection.sendQuery("script.load", this, [ mType.getCurrentIndex() ]);
 	}
 }
 
