@@ -388,7 +388,8 @@ void AIScriptPlayer :: DebugGenerateReport(ReportBuffer &report)
 	{
 		report.AddLine("Name:%s", def->scriptName.c_str());
 	}
-	report.AddLine("active:%d", static_cast<int>(active));
+	report.AddLine("active:%d", static_cast<int>(mActive));
+	report.AddLine("executing:%d", static_cast<int>(mExecuting));
 	report.AddLine("curInst:%d", curInst);
 	report.AddLine("nextFire:%lu", nextFire);
 	report.AddLine(NULL);

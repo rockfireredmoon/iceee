@@ -100,7 +100,7 @@ int QuestReference :: CheckQuestObjective(int CID, char *buffer, int type, int C
 		// Run on_objective_incr functions for the quest script
 		if(player != NULL) {
 			Util::SafeFormat(ConvBuf, sizeof(ConvBuf), "on_objective_incr_%d_%d",CurAct,obj);
-			player->RunFunction(ConvBuf);
+			player->JumpToLabel(ConvBuf);
 		}
 
 		if(ObjComplete[obj] == 1)
@@ -121,7 +121,7 @@ void QuestReference :: RunObjectiveCompleteScripts(int CID, int act, int obj)
 	char ConvBuf[256];
 	if(player != NULL) {
 		Util::SafeFormat(ConvBuf, sizeof(ConvBuf), "on_objective_complete_%d_%d",act,obj);
-		player->RunFunction(string(ConvBuf));
+		player->JumpToLabel(ConvBuf);
 	}
 }
 
@@ -225,7 +225,7 @@ int QuestReference :: AdvanceAct(int CID, char *buffer, QuestDefinition *questDe
 	if(player != NULL) {
 		char ConvBuf[128];
 		Util::SafeFormat(ConvBuf, sizeof(ConvBuf), "on_advance_act_%d",CurAct);
-		player->RunFunction(ConvBuf);
+		player->JumpToLabel(ConvBuf);
 	}
 
 
@@ -1925,7 +1925,7 @@ int QuestJournal :: CheckTravelLocations(int CID, char *buffer, int x, int y, in
 				Util::SafeFormat(ConvBuf, sizeof(ConvBuf), "on_objective_complete_%d_%d",qr.CurAct,r);
 				for(std::list<QuestScript::QuestNutPlayer*>::iterator it = l.begin() ; it != l.end(); ++it) {
 					QuestScript::QuestNutPlayer *player = *it;
-					player->RunFunction(ConvBuf);
+					player->JumpToLabel(ConvBuf);
 				}
 			}
 
@@ -2101,7 +2101,7 @@ void QuestJournal :: QuestLeave(int CID, int QuestID)
 
 		QuestScript::QuestNutPlayer * player = g_QuestNutManager.GetActiveScript(CID, QuestID);
 		if(player != NULL) {
-			player->RunFunction("on_leave");
+			player->RunFunction("on_leave", std::vector<ScriptCore::ScriptParam>(), false);
 			player->HaltExecution();
 		}
 	}

@@ -272,7 +272,7 @@ private:
 		FLAG_REPORT_ALL = 0x0FFFFFFF,
 		FLAG_BITS = 0xFFFFFFFF,
 
-		FLAG_DEFAULT = 0
+		FLAG_DEFAULT = FLAG_REPORT_ALL
 	};
 
 	enum CallStyle {
@@ -288,9 +288,9 @@ class ScriptPlayer {
 public:
 	ScriptDef *def; //Pointer to the script definition that this player is executing.
 	int curInst;                         //Index of the current instruction.
-	bool active; //If true, the script is considered to be running (has not terminated).
+	bool mActive; //If true, the script is not idle.
+	bool mExecuting; //If true, the script is considered to be actively running (has not terminated).
 	unsigned long nextFire; //Time when the next instruction can run.  Used for waits.
-	bool mHasScript;
 	unsigned long mProcessingTime;
 
 	ScriptPlayer();
@@ -299,7 +299,6 @@ public:
 	std::vector<IntArray> intArray;      //An array of integer arrays.
 	std::vector<ScriptEvent> scriptEventQueue;
 
-	bool HasScript();
 	void Initialize(ScriptDef *defPtr);
 	bool RunSingleInstruction(void);     //Run a single instruction.
 	virtual void RunImplementationCommands(int opcode);
@@ -310,7 +309,7 @@ public:
 	void FullReset(void);
 	bool IsWaiting(void);
 	bool CanRunIdle(void);
-	void HaltExecution(void);
+	void EndExecution(void);
 
 protected:
 	static const size_t MAX_STACK_SIZE = 16;
@@ -366,12 +365,13 @@ public:
 	virtual ~NutDef();
 	void ClearBase(void); //Initialize all data to their reset state.  It will call ClearDerived()
 	void Initialize(const char *source);
+	bool CanIdle();
 	virtual void ClearDerived();
 	bool HasFlag(unsigned int flag);
 
 private:
-	int scriptSpeed;
-	int scriptIdleSpeed;
+	int mScriptSpeed;
+	int mScriptIdleSpeed;
 	bool queueExternalJumps;
 	int queueCallStyle;
 	unsigned int mFlags;
@@ -462,8 +462,8 @@ public:
 	void FullReset(void);
 	void Halt(void);
 	int GC(void);
-	bool RunFunction(std::string name);
-	bool RunFunction(std::string name, std::vector<ScriptParam> parms);
+	bool JumpToLabel(const char *name);
+	bool JumpToLabel(const char *name, std::vector<ScriptParam> parms);
 	bool RunFunction(std::string name, std::vector<ScriptParam> parms, bool time);
 	void Broadcast(const char *message);
 	unsigned long GetServerTime();

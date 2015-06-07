@@ -107,8 +107,8 @@ namespace ScriptCore
 		mFlags = 0;
 		queueCallStyle = 0;
 		queueExternalJumps = false;
-		scriptIdleSpeed = 0;
-		scriptSpeed = 1;
+		mScriptIdleSpeed = 0;
+		mScriptSpeed = 10;
 	}
 
 	NutDef::~NutDef() {
@@ -123,6 +123,10 @@ namespace ScriptCore
 	// Stub function, if additional members are defined in a derived class, then override this function
 	// to clear the new members.
 	void NutDef::ClearDerived(void) {
+	}
+
+	bool NutDef :: CanIdle() {
+		return mScriptIdleSpeed > 0;
 	}
 
 	bool NutDef :: HasFlag(unsigned int flag)
@@ -379,7 +383,6 @@ namespace ScriptCore
 				}
 				Platform::SetLastModified(cnut.c_str(), nutMod);
 			}
-
 			mActive = true;
 			mRunning = true;
 			script.Run();
@@ -405,6 +408,14 @@ namespace ScriptCore
 				if(!queueEvents.IsNull()) {
 					def->mQueueEvents = description.Cast<bool>();
 				}
+				Sqrat::Object idleSpeed = infoObject.GetSlot("idle_speed");
+				if(!idleSpeed.IsNull()) {
+					def->mScriptIdleSpeed = idleSpeed.Cast<int>();
+				}
+				Sqrat::Object speed = infoObject.GetSlot("speed");
+				if(!speed.IsNull()) {
+					def->mScriptSpeed = speed.Cast<int>();
+				}
 			}
 		}
 
@@ -429,6 +440,22 @@ namespace ScriptCore
 		mInitTime = time;
 		mCalls++;
 		mGCCounter++;
+	}
+
+	bool NutPlayer::JumpToLabel(const char *name)
+	{
+		return JumpToLabel(name, std::vector<ScriptParam>());
+	}
+
+	bool NutPlayer::JumpToLabel(const char *name, std::vector<ScriptParam> parms)
+	{
+		if(def->mQueueEvents) {
+			QueueAdd(new NutScriptEvent(new TimeCondition(0), new RunFunctionCallback(this, name, parms)));
+			return true;
+		}
+		else {
+			return RunFunction(name, parms, true);
+		}
 	}
 
 	void NutPlayer::Queue(Sqrat::Function function, int fireDelay) {
@@ -584,26 +611,12 @@ namespace ScriptCore
 		}
 	}
 
-	bool NutPlayer::RunFunction(std::string name) {
-		std::vector<ScriptParam> parms;
-		return RunFunction(name, parms);
-	}
-
-	bool NutPlayer::RunFunction(std::string name, std::vector<ScriptParam> parms) {
-		if(def->mQueueEvents) {
-			QueueAdd(new NutScriptEvent(new TimeCondition(0), new RunFunctionCallback(this, name, parms)));
-			return true;
-		}
-		else {
-			return RunFunction(name, parms, true);
-		}
-	}
-
 	bool NutPlayer::RunFunction(std::string name, std::vector<ScriptParam> parms, bool time) {
 		if(!mActive) {
 			g_Log.AddMessageFormat("[WARNING] Attempt to run function on inactive script %s.", name.c_str());
 			return false;
 		}
+		g_Log.AddMessageFormat("RunFunction(%s)", name.c_str());
 		unsigned long now = g_PlatformTime.getMilliseconds();
 		mRunning = true;
 
@@ -1782,10 +1795,9 @@ ScriptPlayer :: ScriptPlayer()
 {
 	def = NULL;
 	curInst = 0;
-	active = false;
+	mActive = false;
 	nextFire = 0;
 	advance = 0;
-	mHasScript = false;
 	mProcessingTime = 0;
 }
 
@@ -1795,31 +1807,27 @@ ScriptPlayer :: ~ScriptPlayer()
 
 void ScriptPlayer :: Initialize(ScriptDef *defPtr)
 {
+	g_Log.AddMessageFormat("Initialising TSL script %s", defPtr->scriptName.c_str());
 	def = defPtr;
 	FullReset();
-	mHasScript = true;
-}
-
-bool ScriptPlayer :: HasScript() {
-	return mHasScript;
 }
 
 void ScriptPlayer :: RunScript(void)
 {
-	while(active == true)
+	while(mExecuting && mActive)
 		RunSingleInstruction();
 }
 
 bool ScriptPlayer :: RunSingleInstruction(void)
 {
 	//Return true if the script is interrupted or terminated.
-	if(active == false)
+	if(!mExecuting)
 		return true;
 
 	if(curInst >= (int)def->instr.size())
 	{
 		PrintMessage("[ERROR] Instruction past end of script (%d of %d)", curInst, def->instr.size());
-		active = false;
+		mExecuting = false;
 		return true;
 	}
 	if(g_ServerTime < nextFire)
@@ -1831,10 +1839,12 @@ bool ScriptPlayer :: RunSingleInstruction(void)
 
 	OpData *instr = &def->instr[curInst];
 
+	g_Log.AddMessageFormat("[REMOVEME] RUNSINGLE %d", instr->opCode);
+
 	switch(instr->opCode)
 	{
 	case OP_END:
-		HaltExecution();
+		EndExecution();
 		breakScript = true;
 		break;
 	case OP_GOTO:
@@ -1999,7 +2009,7 @@ void ScriptPlayer :: RunImplementationCommands(int opcode)
 
 void ScriptPlayer :: RunUntilWait(void)
 {
-	while(active == true && (g_ServerTime >= nextFire))
+	while(mExecuting && mActive && (g_ServerTime >= nextFire))
 	{
 		if(RunSingleInstruction() == true)
 			break;
@@ -2013,7 +2023,7 @@ void ScriptPlayer :: RunAtSpeed(int maxCommands)
 		maxCount = def->scriptSpeed;
 
 	int count = 0;
-	while(active == true && (g_ServerTime >= nextFire))
+	while(mExecuting == true && mActive && (g_ServerTime >= nextFire))
 	{
 		if(RunSingleInstruction() == true)
 			break;
@@ -2044,7 +2054,7 @@ bool ScriptPlayer::PerformJumpRequest(const char *name, int callStyle)
 	if(index >= 0)
 	{
 		//Make sure we're still running.
-		active = true;
+		mExecuting = true;
 		if(callStyle == ScriptDef::CALLSTYLE_GOTO)
 		{
 			ResetGoto(def->label[index].instrOffset);
@@ -2064,15 +2074,15 @@ bool ScriptPlayer::PerformJumpRequest(const char *name, int callStyle)
 		//an event queue, it probably needs to be stopped.
 		if(def->UseEventQueue() == false)
 		{
-			HaltExecution();
+			EndExecution();
 		}
 	}
 	return false;
 }
 
-void ScriptPlayer :: HaltExecution(void)
+void ScriptPlayer :: EndExecution(void)
 {
-	active = false;
+	mExecuting = false;
 	scriptEventQueue.clear();
 	if(def->HasFlag(ScriptDef::FLAG_REPORT_END))
 		PrintMessage("Script [%s] has ended", def->scriptName.c_str());
@@ -2241,12 +2251,14 @@ void ScriptPlayer :: FullReset(void)
 {
 	if(def == NULL)
 	{
-		active = false;
+		mActive = false;
+		mExecuting = false;
 		return;
 	}
 
 	curInst = 0;
-	active = true;
+	mActive = true;
+	mExecuting = true;
 	nextFire = 0;
 
 	varStack.clear();

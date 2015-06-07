@@ -1,4 +1,0 @@
-; Grimfrost boss chest
-:onKill_2756
-spawn 402653612
-end

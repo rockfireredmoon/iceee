@@ -1,6 +1,0 @@
-; Akaz's Treasure
-:onKill_739
-spawn 1056964748
-end
-
-

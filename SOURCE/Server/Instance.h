@@ -268,7 +268,7 @@ public:
 	TradeManager tradesys;
 	SpawnManager spawnsys;
 	InstanceScript::InstanceScriptDef scriptDef;
-	InstanceScript::InstanceScriptPlayer scriptPlayer;
+	InstanceScript::InstanceScriptPlayer *scriptPlayer;
 	InstanceScript::InstanceNutDef nutScriptDef;
 	InstanceScript::InstanceNutPlayer *nutScriptPlayer;
 	//std::list<InstanceScript::ScriptPlayer> mConcurrentInstanceScripts;   DISABLED, NOT FINISHED
@@ -407,6 +407,8 @@ public:
 	PVP::PVPGame * StartPVP(int type);
 
 	void Script_ScanNPCCID(ScriptObjects::Area *location, std::vector<int>& destResult);
+private:
+	void ClearScriptObjects();
 };
 
 class ActiveInstanceManager

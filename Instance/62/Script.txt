@@ -1,6 +1,0 @@
-; Pular's Treasure
-:onKill_778
-spawn 1040187606
-end
-
-

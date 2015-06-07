@@ -553,6 +553,8 @@ int MapLocationHandler :: LoadFile(const char *filename)
 ActiveInstance :: ActiveInstance()
 {
 	nutScriptPlayer = NULL;
+	scriptPlayer = NULL;
+	pvpGame = NULL;
 
 	Clear();
 }
@@ -635,10 +637,7 @@ void ActiveInstance :: Clear(void)
 	essenceShopList.Clear();
 	itemShopList.Clear();
 
-	if(nutScriptPlayer != NULL) {
-		delete nutScriptPlayer;
-		nutScriptPlayer = NULL;
-	}
+	ClearScriptObjects();
 }
 
 bool ActiveInstance :: StopPVP()
@@ -2091,17 +2090,17 @@ void ActiveInstance :: RunDeath(CreatureInstance *object)
 		std::vector<ScriptCore::ScriptParam> p;
 		p.push_back(object->CreatureID);
 		if(it != PlayerListPtr.end()) {
-			nutScriptPlayer->RunFunction("on_player_death", p);
+			nutScriptPlayer->JumpToLabel("on_player_death", p);
 			QuestScript::QuestNutPlayer *nut = GetSimulatorQuestNutScript(object->simulatorPtr);
 			if(nut != NULL) {
-				nut->RunFunction("on_player_death", p);
+				nut->JumpToLabel("on_player_death", p);
 			}
 		}
 		else {
-			nutScriptPlayer->RunFunction("on_death", p);
+			nutScriptPlayer->JumpToLabel("on_death", p);
 			QuestScript::QuestNutPlayer *nut = GetSimulatorQuestNutScript(object->simulatorPtr);
 			if(nut != NULL) {
-				nut->RunFunction("on_death", p);
+				nut->JumpToLabel("on_death", p);
 			}
 		}
 
@@ -2371,9 +2370,10 @@ void ActiveInstance :: InitializeData(void)
 	}
 	else if(Util::HasEnding(path, ".txt")) {
 		scriptDef.CompileFromSource(path.c_str());
-		scriptPlayer.Initialize(&scriptDef);
-		scriptPlayer.SetInstancePointer(this);
-		scriptPlayer.JumpToLabel("init");
+		scriptPlayer = new InstanceScript::InstanceScriptPlayer();
+		scriptPlayer->Initialize(&scriptDef);
+		scriptPlayer->SetInstancePointer(this);
+		scriptPlayer->JumpToLabel("init");
 	}
 	else {
 		g_Log.AddMessageFormat("No Squirrel script for instance %d", mZone);
@@ -2960,7 +2960,7 @@ void ActiveInstance :: RunScripts(void)
 		it = questScriptList.begin();
 		while(it != questScriptList.end())
 		{
-			if(it->active == true)
+			if(it->mExecuting == true)
 			{
 				it->RunSingleInstruction();
 				++it;
@@ -3180,8 +3180,8 @@ void ActiveInstance :: RunProcessingCycle(void)
 #endif
 
 	//scriptPlayer.RunUntilWait();
-	if(scriptPlayer.HasScript())
-		scriptPlayer.RunAtSpeed(25);
+	if(scriptPlayer != NULL)
+		scriptPlayer->RunAtSpeed(25);
 	else if(nutScriptPlayer != NULL)
 		nutScriptPlayer->Tick();
 	SendActors();
@@ -3237,13 +3237,13 @@ void ActiveInstance :: ScriptCallKill(int CreatureDefID, int CreatureID)
 		std::vector<ScriptCore::ScriptParam> parms;
 		parms.push_back(ScriptCore::ScriptParam(CreatureDefID));
 		parms.push_back(ScriptCore::ScriptParam(CreatureID));
-		nutScriptPlayer->RunFunction("on_kill", parms);
+		nutScriptPlayer->JumpToLabel("on_kill", parms);
 
 		char buffer[64];
 		Util::SafeFormat(buffer, sizeof(buffer), "on_kill_%d", CreatureDefID);
 		ScriptCall(buffer);
 	}
-	else if(scriptPlayer.HasScript())
+	else if(scriptPlayer && scriptPlayer->mActive)
 	{
 		//Checks for a scripted event for a kill of this creature type.
 
@@ -3264,13 +3264,13 @@ void ActiveInstance :: ScriptCallPackageKill(const char *name)
 	{
 		std::vector<ScriptCore::ScriptParam> parms;
 		parms.push_back(ScriptCore::ScriptParam(std::string(name)));
-		nutScriptPlayer->RunFunction("on_package_kill", parms);
+		nutScriptPlayer->JumpToLabel("on_package_kill", parms);
 
 		char buffer[64];
 		Util::SafeFormat(buffer, sizeof(buffer), "on_package_kill_%s", name);
-		nutScriptPlayer->RunFunction(string(buffer));
+		nutScriptPlayer->JumpToLabel(buffer);
 	}
-	else if(scriptPlayer.HasScript())
+	else if(scriptPlayer != NULL && scriptPlayer->mActive)
 		ScriptCall(name);
 }
 
@@ -3281,7 +3281,7 @@ void ActiveInstance :: ScriptCallUse(int sourceCreatureID, int usedCreatureDefID
 		std::vector<ScriptCore::ScriptParam> p;
 		p.push_back(ScriptCore::ScriptParam(sourceCreatureID));
 		p.push_back(ScriptCore::ScriptParam(usedCreatureDefID));
-		nutScriptPlayer->RunFunction("on_use", p);
+		nutScriptPlayer->JumpToLabel("on_use", p);
 		Util::SafeFormat(buffer, sizeof(buffer), "on_use_%d", usedCreatureDefID);
 	}
 	else
@@ -3296,7 +3296,7 @@ void ActiveInstance :: ScriptCallUseHalt(int sourceCreatureID, int usedCreatureD
 		std::vector<ScriptCore::ScriptParam> p;
 		p.push_back(ScriptCore::ScriptParam(sourceCreatureID));
 		p.push_back(ScriptCore::ScriptParam(usedCreatureDefID));
-		nutScriptPlayer->RunFunction("on_use_halt", p);
+		nutScriptPlayer->JumpToLabel("on_use_halt", p);
 
 		Util::SafeFormat(buffer, sizeof(buffer), "on_use_halt_%d", usedCreatureDefID);
 	}
@@ -3312,7 +3312,7 @@ void ActiveInstance :: ScriptCallUseFinish(int sourceCreatureID, int usedCreatur
 		std::vector<ScriptCore::ScriptParam> p;
 		p.push_back(ScriptCore::ScriptParam(sourceCreatureID));
 		p.push_back(ScriptCore::ScriptParam(usedCreatureDefID));
-		nutScriptPlayer->RunFunction("on_use_finish", p);
+		nutScriptPlayer->JumpToLabel("on_use_finish", p);
 
 		Util::SafeFormat(buffer, sizeof(buffer), "on_use_finish_%d", usedCreatureDefID);
 	}
@@ -3324,33 +3324,61 @@ void ActiveInstance :: ScriptCallUseFinish(int sourceCreatureID, int usedCreatur
 //Calls a script jump label.  Can be used for any generic purpose.
 void ActiveInstance :: ScriptCall(const char *name)
 {
-	g_Log.AddMessageFormat("Script call %s in %d", name, mZone);
-	if(nutScriptPlayer != NULL)
-		nutScriptPlayer->RunFunction(string(name));
-	if(scriptPlayer.HasScript() && scriptPlayer.JumpToLabel(name) == true)
-		scriptPlayer.RunUntilWait();
+	bool called = false;
+	if(nutScriptPlayer != NULL) {
+
+		if(nutScriptPlayer->JumpToLabel(name) == true) {
+			g_Log.AddMessageFormat("Squirrel Script call %s in %d", name, mZone);
+			//scriptPlayer->RunUntilWait();
+			called = true;
+		}
+		else {
+			g_Log.AddMessageFormat("Squirrel Refused to jump %s", name);
+		}
+	}
+	if(scriptPlayer != NULL) {
+		if(scriptPlayer->JumpToLabel(name) == true) {
+			g_Log.AddMessageFormat("TSL Script call %s in %d", name, mZone);
+			scriptPlayer->RunUntilWait();
+			called = true;
+		}
+		else {
+			g_Log.AddMessageFormat("TSL Refused to jump %s", name);
+		}
+	}
+	if(!called) {
+		g_Log.AddMessageFormat("Nothing handled script %s", name);
+	}
 }
 
 bool ActiveInstance :: RunScript(std::string &errors)
 {
-	if((scriptPlayer.HasScript() && scriptPlayer.active) || (nutScriptPlayer != NULL && nutScriptPlayer->mActive)) {
+	if((scriptPlayer != NULL && scriptPlayer->mActive) || (nutScriptPlayer != NULL && nutScriptPlayer->mActive)) {
 		g_Log.AddMessageFormat("Request to run script for %d when it is already running", mZone);
 		return false;
 	}
 
+	if(scriptPlayer != NULL)
+		delete scriptPlayer;
+	if(nutScriptPlayer != NULL)
+		delete nutScriptPlayer;
+
 	//Load the new script system
 	std::string path = InstanceScript::InstanceNutDef::GetInstanceScriptPath(mZoneDefPtr->mID, false, mZoneDefPtr->mGrove);
 	if(Util::HasEnding(path, ".nut")) {
+		g_Log.AddMessageFormat("Running Squirrel script %s", path.c_str());
 		nutScriptDef.Initialize(path.c_str());
 		nutScriptPlayer = new InstanceScript::InstanceNutPlayer();
 		nutScriptPlayer->SetInstancePointer(this);
 		nutScriptPlayer->Initialize(&nutScriptDef, errors);
 	}
 	else if(Util::HasEnding(path, ".txt")) {
+		g_Log.AddMessageFormat("Running TSL script %s", path.c_str());
 		scriptDef.CompileFromSource(path.c_str());
-		scriptPlayer.Initialize(&scriptDef);
-		scriptPlayer.SetInstancePointer(this);
-		scriptPlayer.JumpToLabel("init");
+		scriptPlayer = new InstanceScript::InstanceScriptPlayer();
+		scriptPlayer->Initialize(&scriptDef);
+		scriptPlayer->SetInstancePointer(this);
+		scriptPlayer->JumpToLabel("init");
 	}
 	else {
 		g_Log.AddMessageFormat("No script for instance %d", mZone);
@@ -3359,23 +3387,33 @@ bool ActiveInstance :: RunScript(std::string &errors)
 	return true;
 }
 
+void ActiveInstance :: ClearScriptObjects() {
+	if(scriptPlayer != NULL) {
+		delete scriptPlayer;
+		scriptPlayer = NULL;
+	}
+	if(nutScriptPlayer != NULL) {
+		delete nutScriptPlayer;
+		nutScriptPlayer = NULL;
+	}
+}
+
 bool ActiveInstance :: KillScript()
 {
 	bool ok = false;
-	if(scriptPlayer.HasScript() && scriptPlayer.active) {
+	if(scriptPlayer != NULL && scriptPlayer->mActive) {
 		g_Log.AddMessageFormat("Killing script for %d", mZone);
-		scriptPlayer.HaltExecution();
+		scriptPlayer->EndExecution();
 		ok = true;
 	}
 	else if(nutScriptPlayer != NULL) {
 		if(nutScriptPlayer->mActive) {
 			g_Log.AddMessageFormat("Killing squirrel script for %d", mZone);
 			nutScriptPlayer->HaltExecution();
-			delete nutScriptPlayer;
-			nutScriptPlayer = NULL;
 			ok = true;
 		}
 	}
+	ClearScriptObjects();
 	if(!ok) {
 		g_Log.AddMessageFormat("Request to kill inactive squirrel script %d", mZone);
 	}
@@ -3446,7 +3484,7 @@ void ActiveInstance :: RunObjectInteraction(SimulatorThread *simPtr, int CDef)
 				std::vector<ScriptCore::ScriptParam> p;
 				p.push_back(ScriptCore::ScriptParam(simPtr->creatureInst->CreatureID));
 				p.push_back(ScriptCore::ScriptParam(CDef));
-				nutScriptPlayer->RunFunction(intObj->scriptFunction, p);
+				nutScriptPlayer->JumpToLabel(intObj->scriptFunction, p);
 			}
 		}
 

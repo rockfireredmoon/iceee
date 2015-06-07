@@ -49,7 +49,7 @@ Scale=3.5,3.5,3.5
 [ENTRY]
 ID=1030441
 Asset=Prop-Interact_Rectangle
-Name=
+Name=Untitled
 Pos=2287.28,950,1985
 Orient=0,0,0.707107,0.707107
 Scale=40,40,40
@@ -57,7 +57,7 @@ Scale=40,40,40
 [ENTRY]
 ID=1030442
 Asset=Prop-Interact_Rectangle
-Name=
+Name=Untitled
 Pos=2212.89,1050,1985
 Orient=0,0,-0.707107,0.707107
 Scale=40,40,40
@@ -575,7 +575,7 @@ ID=402653601
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=2587.09,627.515,1458.48
-Orient=0,-1,0,7.54979e-008
+Orient=0,-1,0,7.54979e-08
 Scale=1,1,1
 spawnPackage=1a_dng_gfl_yetis_46_47
 

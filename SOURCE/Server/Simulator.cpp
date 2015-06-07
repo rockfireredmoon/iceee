@@ -8165,7 +8165,7 @@ int SimulatorThread :: handle_query_creature_use(void)
 				sprintf(Aux1, "onActivate_%d_%d", QuestID, QuestAct);
 				if(questScript.JumpToLabel(Aux1) == true)
 				{
-					questScript.active = true;
+					questScript.mActive = true;
 					questScript.nextFire = 0;
 					questScript.sourceID = creatureInst->CreatureID;
 					questScript.targetID = CID;
@@ -8191,7 +8191,7 @@ int SimulatorThread :: handle_query_creature_use(void)
 				questNutScript->QuestAct = QuestAct;
 				questNutScript->activate.Set(target->CurrentX, target->CurrentY, target->CurrentZ);
 				sprintf(Aux1, "on_activate_%d", QuestAct);
-				questNutScript->RunFunction(string(Aux1));
+				questNutScript->JumpToLabel(Aux1);
 				AttemptSend(GSendBuf, wpos);
 
 				// Queue up the on_activated as well, this MIGHT not be get called if the activation is interrupted
@@ -8446,7 +8446,7 @@ int SimulatorThread :: handle_query_quest_complete(void)
 
 	QuestScript::QuestNutPlayer *player =  g_QuestNutManager.GetActiveScript(creatureInst->CreatureID, QID);
 	if(player != NULL) {
-		player->RunFunction("on_complete");
+		player->RunFunction("on_complete", std::vector<ScriptCore::ScriptParam>(), false);
 		player->HaltExecution();
 	}
 
@@ -11107,7 +11107,7 @@ int SimulatorThread :: handle_query_script_load(void)
 		// Instance script
 		path = InstanceScript::InstanceNutDef::GetInstanceScriptPath(creatureInst->actInst->mZone, false, creatureInst->actInst->mZoneDefPtr->mGrove);
 		player = creatureInst->actInst->nutScriptPlayer;
-		oldPlayer = &creatureInst->actInst->scriptPlayer;
+		oldPlayer = creatureInst->actInst->scriptPlayer;
 		break;
 	case 1:
 		// TODO quest script
@@ -11174,7 +11174,7 @@ int SimulatorThread :: handle_query_script_load(void)
 	if(player != NULL)
 		wpos += PutStringUTF(&SendBuf[wpos], player->mActive ? "true" : "false"); // active
 	else if(oldPlayer != NULL)
-		wpos += PutStringUTF(&SendBuf[wpos], oldPlayer->active ? "true" : "false"); // active
+		wpos += PutStringUTF(&SendBuf[wpos], oldPlayer->mActive ? "true" : "false"); // active
 	else
 		wpos += PutStringUTF(&SendBuf[wpos], "false"); // active
 
@@ -14034,8 +14034,13 @@ int SimulatorThread :: handle_query_script_exec(void)
 	if(inst != NULL && query.argCount > 0)
 	{
 		string funcName = query.GetString(0);
-		if(inst->nutScriptPlayer != NULL)
-			inst->nutScriptPlayer->RunFunction(funcName);
+		if(inst->nutScriptPlayer != NULL) {
+			std::vector<ScriptCore::ScriptParam> p;
+			for(uint i = 1 ; i < query.argCount; i++) {
+				p.push_back(ScriptCore::ScriptParam(query.GetString(i)));
+			}
+			inst->nutScriptPlayer->JumpToLabel(funcName.c_str(), p);
+		}
 	}
 	else
 	{
@@ -14058,11 +14063,11 @@ int SimulatorThread :: handle_query_script_time(void)
 					inst->nutScriptPlayer->mInitTime, inst->nutScriptPlayer->mCalls, inst->nutScriptPlayer->mGCTime, inst->nutScriptPlayer->mActive ? "Active" : "Inactive");
 			SendInfoMessage(Aux1, INFOMSG_INFO);
 		}
-		if(inst->scriptPlayer.HasScript())
+		if(inst->scriptPlayer != NULL)
 		{
-			seconds = (double)inst->scriptPlayer.mProcessingTime / 1000.0;
+			seconds = (double)inst->scriptPlayer->mProcessingTime / 1000.0;
 			Util::SafeFormat(Aux1, sizeof(Aux1), "T Instance: %4.3f. %s", seconds,
-					inst->scriptPlayer.active ? "Active" : "Inactive");
+					inst->scriptPlayer->mActive ? "Active" : "Inactive");
 			SendInfoMessage(Aux1, INFOMSG_INFO);
 		}
 

@@ -297,7 +297,7 @@ void QuestNutPlayer::InterruptInteraction()
 		activateEvent = NULL;
 	}
 	Util::SafeFormat(buf, sizeof(buf), "on_interrupt_%d", QuestAct);
-	RunFunction(string(buf));
+	JumpToLabel(buf);
 }
 
 void QuestNutPlayer::Info(const char *message)
@@ -516,7 +516,7 @@ void QuestScriptPlayer::RunImplementationCommands(int opcode)
 		break;
 	case OP_REQUIRECDEF:
 		if(targetCDef != instr->param1)
-			active = false;
+			mExecuting = false;
 		break;
 	case OP_SPAWN:
 		actInst->spawnsys.TriggerSpawn(instr->param1, 0, 0);
@@ -560,7 +560,7 @@ void QuestScriptPlayer::TriggerFinished(void)
 void QuestScriptPlayer::TriggerAbort(void)
 {
 	if(!(RunFlags & FLAG_FINISHED))
-		active = false;
+		mExecuting = false;
 }
 
 

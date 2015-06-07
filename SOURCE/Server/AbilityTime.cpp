@@ -157,7 +157,6 @@ void ActiveBuffManager :: CopyFrom(const ActiveBuffManager &source)
 	if(g_Config.PersistentBuffs) {
 		persistentBuffList.assign(source.persistentBuffList.begin(), source.persistentBuffList.end());
 	}
-	DebugLogBuffs("CopyFrom");
 }
 
 void ActiveBuffManager :: SaveToStream(FILE *output)

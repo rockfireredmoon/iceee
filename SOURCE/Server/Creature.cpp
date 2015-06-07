@@ -500,10 +500,10 @@ bool CreatureInstance :: KillAI(void)
 	bool killed = false;
 	if(aiScript != NULL)
 	{
-		killed = aiScript->HasScript();
-		aiScript->HaltExecution();
+		aiScript->EndExecution();
 		aiScriptManager.RemoveActiveScript(aiScript);
 		aiScript = NULL;
+		killed = true;
 	}
 	if(aiNut != NULL)
 	{
@@ -668,7 +668,6 @@ void CreatureInstance :: CopyFrom(CreatureInstance *source)
 
 	// TODO - Em - why the need to clear? this implies it is getting called twice when copying
 	ClearAppearanceModifiers();
-	g_Log.AddMessageFormat("Copying appearance modifiers from a list of %d to a list of %d for %d", source->appearanceModifiers.size(), appearanceModifiers.size(), CreatureID);
 	for(std::vector<AppearanceModifier*>::iterator it = source->appearanceModifiers.begin(); it != source->appearanceModifiers.end(); ++it) {
 		AppearanceModifier *ap = *it;
 		AppearanceModifier *cap = (*it)->Clone();
@@ -696,7 +695,7 @@ void CreatureInstance :: CopyBuffsFrom(CreatureInstance *source)
 
 bool CreatureInstance :: StartAI(std::string &errors)
 {
-	if(aiNut != NULL || (aiScript != NULL && aiScript->HasScript()))
+	if(aiNut != NULL || aiScript != NULL)
 		return false;
 
 	CreatureDefinition *cdef = CreatureDef.GetPointerByCDef(CreatureDefID);
@@ -2742,7 +2741,8 @@ void CreatureInstance :: ProcessDeath(void)
 
 	if(aiNut != NULL)
 	{
-		aiNut->RunFunction("on_death");
+		if(aiNut->JumpToLabel("on_death") == true)
+			aiNut->Tick();
 		aiNut->FullReset();
 	}
 	if(aiScript != NULL)
@@ -3309,13 +3309,13 @@ void CreatureInstance :: CancelPending(void)
 				break;
 			script = actInst->GetSimulatorQuestScript(simulatorPtr);
 			if(script != NULL)
-				script->active = false;
+				script->mExecuting = false;
 
 			QuestScript::QuestNutPlayer *nut = actInst->GetSimulatorQuestNutScript(simulatorPtr);
 			if(nut != NULL) {
 				char buffer[64];
 				Util::SafeFormat(buffer, sizeof(buffer), "on_use_cancel_%d", CreatureDefID);
-				nut->RunFunction(buffer);
+				nut->JumpToLabel(buffer);
 			}
 
 			break;
@@ -3384,7 +3384,7 @@ void CreatureInstance :: CancelPending_Ex(ActiveAbilityInfo *ability)
 			if(nut != NULL) {
 				char buffer[64];
 				Util::SafeFormat(buffer, sizeof(buffer), "on_use_abort_%d", CreatureDefID);
-				nut->RunFunction(buffer);
+				nut->JumpToLabel(buffer);
 			}
 
 			//Fall through since all quest/object interactions need to notify the client to
@@ -4419,14 +4419,13 @@ void CreatureInstance :: RunAIScript(void)
 		}
 	}
 	else if(aiNut != NULL) {
-		aiNut->Tick();
-		// TODO how to emulate these optimisations
-//			if(CurrentTarget.targ != NULL)
-//		else
-//		{
-//			if(aiScript->CanRunIdle() == true)
-//				aiScript->RunSingleInstruction();
-//		}
+		if(CurrentTarget.targ != NULL)
+			aiNut->Tick();
+		else
+		{
+			if(aiNut->def->CanIdle())
+				aiNut->Tick();
+		}
 	}
 }
 
@@ -5823,7 +5822,7 @@ void CreatureInstance :: SelectTarget(CreatureInstance *newTarget)
 		if(CurrentTarget.targ != NULL && aiNut != NULL) {
 			std::vector<ScriptCore::ScriptParam> p;
 			p.push_back(CurrentTarget.targ->CreatureID);
-			aiNut->RunFunction("on_target_lost", p);
+			aiNut->JumpToLabel("on_target_lost", p);
 		}
 
 		if(newTarget != NULL)
@@ -5882,7 +5881,7 @@ void CreatureInstance :: SelectTarget(CreatureInstance *newTarget)
 		if(aiNut != NULL && CurrentTarget.targ != NULL) {
 			std::vector<ScriptCore::ScriptParam> p;
 			p.push_back(CurrentTarget.targ->CreatureID);
-			aiNut->RunFunction("on_target_acquired", p);
+			aiNut->JumpToLabel("on_target_acquired", p);
 		}
 	}
 }
@@ -6011,7 +6010,7 @@ void CreatureInstance :: AIOtherCallLabel(int creatureID, const char *aiScriptLa
 	{
 		if(obj->aiNut != NULL)
 		{
-			obj->aiNut->RunFunction(string(aiScriptLabel));
+			obj->aiNut->JumpToLabel(aiScriptLabel);
 		}
 		if(obj->aiScript != NULL)
 		{
@@ -6922,7 +6921,7 @@ void CreatureInstance :: CheckQuestInteract(int CreatureDefID)
 		if(nut != NULL) {
 			char buffer[64];
 			Util::SafeFormat(buffer, sizeof(buffer), "on_use_finish_%d", CreatureDefID);
-			nut->RunFunction(buffer);
+			nut->JumpToLabel(buffer);
 		}
 
 		//actInst->ScriptCallUseFinish(LastUseDefID);
@@ -7473,7 +7472,6 @@ void CreatureInstance :: AttachItem(const char *type, const char *node) {
 
 void CreatureInstance :: ClearAppearanceModifiers()
 {
-	g_Log.AddMessageFormat("Clearing %d appearance modifiers for %d", appearanceModifiers.size(), CreatureID);
 	std::vector<AppearanceModifier*>::iterator it = appearanceModifiers.begin();
 	for(; it != appearanceModifiers.end(); ++it)
 		delete *it;
