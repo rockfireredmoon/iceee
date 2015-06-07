@@ -55,12 +55,15 @@ public:
 	int GetSource();
 	bool ResetObjective(int objective);
 	bool Abandon();
+	int AddSidekick(int cdefID, bool pet);
+	int RemoveSidekick(int sidekickID);
 	bool Join(int questID);
 	void Info(const char *message);
 	void UInfo(const char *message);
 	void Effect(const char *effect);
 	void TriggerDelete(int targetCID, unsigned long delay);
 	void Despawn(int targetCID);
+	int ThisZone();
 	int Spawn(int propID);
 	int SpawnAt(int propID, int cdefID, unsigned long duration, int elevation);
 	void WarpZone(int zoneID);

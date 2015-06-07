@@ -1842,3 +1842,43 @@ profession=1
 creature_category=Mortal
 ai_package=example
 total_size=5
+
+
+[ENTRY]
+defHints=48
+ID=7849
+will_regen=1
+might_regen=1
+appearance=n4:{["sk"]={["fur"]="3F3F3F",["eye"]="00FFFF",["highlight"]="555555",["claws"]="151515",["mouth"]="7F7F7F"},["c"]="Horde-Wolf",["sz"]=".8"}
+level=50
+display_name=Taiga Wolf
+sub_name=Sidekick Trainer
+profession=3
+creature_category=Mortal
+ai_package=example
+total_size=5
+
+[ENTRY]
+ID=7850
+strength=9
+dexterity=7
+constitution=9
+psyche=6
+spirit=6
+base_damage_melee=5
+damage_resist_melee=71
+damage_resist_fire=71
+damage_resist_frost=71
+damage_resist_mystic=71
+damage_resist_death=71
+will_regen=1
+might_regen=1
+offhand_weapon_damage=500
+casting_setback_chance=500
+channeling_break_chance=500
+appearance=c2:{["a"]=[{["type"]="Item-Bow-High1",["node"]="left_hand",["colors"]=["DDA546","BFA129","083F0B","00A651","BFBF9F"]}],["c"]={["boots"]={["type"]="Armor-CC-Warrior",["colors"]=["dda546","ffffff","dda546"]},["chest"]={["type"]="Armor-CC-Warrior",["colors"]=["ffffff","dda546","dda546"]},["arms"]={["type"]="Armor-Heavy-Epic1",["colors"]=["a77d19","12941a","ffffff","12941a"]},["leggings"]={["type"]="Armor-CC-Warrior",["colors"]=["ffffff","dda546","ffffff"]},["collar"]={["type"]="Armor-Heavy-Epic1",["colors"]=["dda546","a77d19","a77d19","4c485f"]},["belt"]={["type"]="Armor-Heavy-Epic1",["colors"]=["12941a","ffffff","dda546","e90000"]},["gloves"]={["type"]="Armor-Heavy-Epic2",["colors"]=["dda546","ffffff","ffffff","e90000"]}},["b"]="n",["sk"]={["fingers_hooves"]="B69E89",["snout"]="D3C2AB",["eye_symbol"]="BCAD98",["base"]="CF9B65",["horns"]="B08557",["eye"]="99CBD9",["eye_white"]="FFFFFF",["nose"]="69502D",["inner_ear"]="E7D4BB"},["sz"]="1.1",["h"]=2,["g"]="m",["r"]="h"}
+level=3
+display_name=Test Sidekick
+profession=2
+creature_category=Mortal
+ai_package=Newb_Knight

@@ -107,7 +107,7 @@ namespace ScriptCore
 		mFlags = 0;
 		queueCallStyle = 0;
 		queueExternalJumps = false;
-		mScriptIdleSpeed = 0;
+		mScriptIdleSpeed = 1;
 		mScriptSpeed = 10;
 	}
 
@@ -1838,8 +1838,6 @@ bool ScriptPlayer :: RunSingleInstruction(void)
 	advance = 1;
 
 	OpData *instr = &def->instr[curInst];
-
-	g_Log.AddMessageFormat("[REMOVEME] RUNSINGLE %d", instr->opCode);
 
 	switch(instr->opCode)
 	{

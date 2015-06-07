@@ -144,6 +144,7 @@ QuestNutPlayer * QuestNutManager::AddActiveScript(CreatureInstance *creature, in
 
 void QuestNutManager::RemoveActiveScripts(int CID) {
 	cs.Enter("QuestNutManager::RemoveActiveScript");
+	g_Log.AddMessageFormat("Removing active scripts for %d", CID);
 	std::list<QuestNutPlayer*> l = questAct[CID];
 	for (list<QuestNutPlayer*>::iterator it = l.begin(); it != l.end(); ++it) {
 		QuestNutPlayer* player = *it;
@@ -211,9 +212,12 @@ void QuestNutPlayer::RegisterFunctions() {
 
 void QuestNutPlayer::RegisterQuestFunctions(NutPlayer *instance, Sqrat::DerivedClass<QuestNutPlayer, NutPlayer> *instanceClass)
 {
+	instanceClass->Func(_SC("add_sidekick"), &QuestNutPlayer::AddSidekick);
+	instanceClass->Func(_SC("remove_sidekick"), &QuestNutPlayer::RemoveSidekick);
 	instanceClass->Func(_SC("abandon"), &QuestNutPlayer::Abandon);
 	instanceClass->Func(_SC("reset_objective"), &QuestNutPlayer::ResetObjective);
 	instanceClass->Func(_SC("join"), &QuestNutPlayer::Join);
+	instanceClass->Func(_SC("this_zone"), &QuestNutPlayer::ThisZone);
 	instanceClass->Func(_SC("info"), &QuestNutPlayer::Info);
 	instanceClass->Func(_SC("info"), &QuestNutPlayer::Info);
 	instanceClass->Func(_SC("uinfo"), &QuestNutPlayer::Info);
@@ -237,6 +241,10 @@ void QuestNutPlayer::RegisterQuestFunctions(NutPlayer *instance, Sqrat::DerivedC
 	instanceClass->Func(_SC("untransform"), &QuestNutPlayer::Untransform);
 	instanceClass->Func(_SC("join_guild"), &QuestNutPlayer::JoinGuild);
 
+}
+
+int QuestNutPlayer::ThisZone() {
+	return source->actInst->mZone;
 }
 
 int QuestNutPlayer::Heroism() {
@@ -346,6 +354,32 @@ void QuestNutPlayer::TriggerDelete(int CID, unsigned long ms) {
 			targ->deathTime = g_ServerTime + ms;
 		}
 	}
+}
+
+
+int QuestNutPlayer::AddSidekick(int cdefID, bool pet) {
+	int type = pet ? SidekickObject::PET : SidekickObject::QUEST;
+	int exist = source->charPtr->CountSidekick(type);
+
+	g_Log.AddMessageFormat("[REMOVEME] Have %d sidekicks, adding %d", exist, cdefID);
+
+	SidekickObject skobj(cdefID);
+	skobj.summonType = type;
+	skobj.summonParam = SIDEKICK_ABILITY_GROUP_ID;
+
+//	source->charPtr->AddSidekick(skobj);
+	int r = source->actInst->CreateSidekick(source, skobj);
+	if(r == -1) {
+		g_Log.AddMessageFormat("Failed to add sidekick %d", cdefID);
+		return -1;
+	}
+	return r;
+}
+
+int QuestNutPlayer::RemoveSidekick(int sidekickID) {
+	if(sidekickID < 1 || source->actInst->SidekickRemove(source, &source->charPtr->SidekickList, sidekickID) == 1)
+		return 0;
+	return sidekickID;
 }
 
 bool QuestNutPlayer::Join(int questID) {

@@ -360,6 +360,7 @@ public:
 	std::string mAuthor;
 	std::string mDescription;
 	bool mQueueEvents;
+	int mScriptIdleSpeed;
 
 	NutDef();
 	virtual ~NutDef();
@@ -371,7 +372,6 @@ public:
 
 private:
 	int mScriptSpeed;
-	int mScriptIdleSpeed;
 	bool queueExternalJumps;
 	int queueCallStyle;
 	unsigned int mFlags;

@@ -7387,7 +7387,7 @@ void CreatureInstance :: CAF_RunSidekickStatFilter(int abGroupID)
 
 	switch(abGroupID)
 	{
-	case 549:
+	case SIDEKICK_ABILITY_GROUP_ID:
 		StatScaleToLevel(STAT::STRENGTH, AnchorObject->css.level);
 		StatScaleToLevel(STAT::DEXTERITY, AnchorObject->css.level);
 		StatScaleToLevel(STAT::CONSTITUTION, AnchorObject->css.level);
@@ -7430,6 +7430,7 @@ int CreatureInstance :: CAF_RegisterTargetSidekick(int abGroupID)
 	{
 		if(count == MAXTARGET)
 			break;
+
 
 		if(charPtr->SidekickList[i].summonType != SidekickObject::ABILITY)
 			continue;

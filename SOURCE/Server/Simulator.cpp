@@ -5255,11 +5255,8 @@ int SimulatorThread :: AddSidekick(int CDefID)
 	pld.charPtr->AddSidekick(skobj);
 	int r = creatureInst->actInst->CreateSidekick(creatureInst, skobj);
 	if(r == -1)
-	{
 		SendInfoMessage("Server error: Invalid Creature ID for sidekick.", INFOMSG_ERROR);
-		return -1;
-	}
-	return 0;
+	return r;
 
 	/*
 	if((int)pld.charPtr->SidekickList.size() >= pld.charPtr->MaxSidekicks)

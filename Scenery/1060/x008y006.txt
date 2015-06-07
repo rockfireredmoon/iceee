@@ -189,8 +189,17 @@ Scale=1,1,1
 [ENTRY]
 ID=1129632
 Asset=Prop-Nordic_Props#Prop-Boat-Fishing
-Name=
+Name=Untitled
 Pos=15826,1099.43,13213.3
 Orient=0,0.252245,0,0.967663
 Scale=1,1,1
+
+[ENTRY]
+ID=1500076
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=15655.5,1125.17,13224
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#7849
 

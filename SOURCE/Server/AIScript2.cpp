@@ -256,6 +256,8 @@ bool AINutPlayer::IsCIDBusy(int CID) {
 }
 
 void AINutPlayer::RegisterFunctions() {
+	// AI scripts should by default run when idle
+
 	Sqrat::Class<NutPlayer> nutClass(vm, _SC("Core"), true);
 	Sqrat::RootTable(vm).Bind(_SC("Core"), nutClass);
 	RegisterCoreFunctions(this, &nutClass);

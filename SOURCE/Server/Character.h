@@ -24,6 +24,8 @@ struct ChangeData;
 #define MAX_PROFESSION   5
 #define MAX_SIDEKICK     1
 
+#define SIDEKICK_ABILITY_GROUP_ID	549
+
 //This class is responsible for maintaining a list of ability identifiers.
 //It is nothing more than a list of ability IDs that are available to a player.
 class AbilityContainer
@@ -98,14 +100,16 @@ struct SidekickObject
 	static const int GENERIC = 0;
 	static const int ABILITY = 1;
 	static const int PET     = 2;
+	static const int QUEST   = 3;
 
 	int CDefID;           //Creature Definition this sidekick is derived from
 	char summonType;      //Type of summon (GENERIC, ABILITY, PET)
 	short summonParam;    //For Type:ABILITY, this is the ability group ID that summoned this object
+	int CID;			  //The CID of the instantiated sidekick
 	SidekickObject() { Clear(); };
-	SidekickObject(int cdefid) { CDefID = cdefid; summonType = GENERIC; summonParam = 0; }
-	SidekickObject(int cdefid, char type, short param) { CDefID = cdefid; summonType = type; summonParam = param; }
-	void Clear(void) { CDefID = 0; summonType = GENERIC; summonParam = 0; }
+	SidekickObject(int cdefid) { CDefID = cdefid; summonType = GENERIC; summonParam = 0; CID = 0; }
+	SidekickObject(int cdefid, char type, short param) { CDefID = cdefid; summonType = type; summonParam = param; CID = 0; }
+	void Clear(void) { CDefID = 0; summonType = GENERIC; summonParam = 0; CID = 0; }
 };
 
 

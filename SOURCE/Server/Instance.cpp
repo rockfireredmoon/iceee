@@ -806,6 +806,13 @@ int ActiveInstance :: UnregisterPlayer(SimulatorThread *callSim)
 		p.push_back(callSim->creatureInst->CreatureID);
 		// Don't queue this, it's like the script will want to clean up before actual removal
 		nutScriptPlayer->RunFunction("on_unregister", p, true);
+		if(questNutScriptList.empty() == false)
+		{
+			for(uint i = 0 ; i < questNutScriptList.size(); i++) {
+				QuestScript::QuestNutPlayer * p = questNutScriptList[i];
+				p->RunFunction("on_unregister", std::vector<ScriptCore::ScriptParam>(), true);
+			}
+		}
 	}
 	return 0;
 }
@@ -2474,9 +2481,13 @@ CreatureInstance* ActiveInstance :: InstantiateSidekick(CreatureInstance *host, 
 
 	if(skobj.summonType == SidekickObject::ABILITY)
 		newItem.CAF_RunSidekickStatFilter(skobj.summonParam);
+	else if(skobj.summonType == SidekickObject::QUEST)
+		newItem.CAF_RunSidekickStatFilter(skobj.summonParam);
 	else if(skobj.summonType == SidekickObject::PET)
 		newItem.SetServerFlag(ServerFlags::Noncombatant, true);
 	
+	skobj.CID = newItem.CreatureID;
+
 	SidekickList.push_back(newItem);
 	SidekickList.back().Instantiate();
 	SidekickList.back()._AddStatusList(StatusEffects::INVINCIBLE, -1);
@@ -2490,11 +2501,40 @@ int ActiveInstance :: CreateSidekick(CreatureInstance* host, SidekickObject &sko
 	if(skobj.CDefID <= 0)
 		return -1;
 
-	if(InstantiateSidekick(host, skobj, 0) == NULL)
+	CreatureInstance *cInst = InstantiateSidekick(host, skobj, 0);
+
+	if(cInst == NULL)
 		return -1;
 
 	RebuildSidekickList();
-	return 1;
+	return cInst->CreatureID;
+}
+
+int ActiveInstance :: SidekickRemove(CreatureInstance* host, vector<SidekickObject> *sidekickList, int CID)
+{
+	int size = 0;
+	list<CreatureInstance>::iterator it;
+	for(it = SidekickList.begin(); it != SidekickList.end(); ++it)
+	{
+		if(it->CreatureID == CID)
+		{
+			for(size_t i = 0; i < sidekickList->size(); i++)
+			{
+				if(sidekickList->at(i).CID == it->CreatureID)
+				{
+					sidekickList->erase(sidekickList->begin() + i);
+					break;
+				}
+			}
+			size = PrepExt_RemoveCreature(GAuxBuf, CID);
+			LSendToLocalSimulator(GAuxBuf, size, host->CurrentX, host->CurrentZ);
+			EraseAllCreatureReference(&*it);
+			SidekickList.erase(it);
+			RebuildSidekickList();
+			return 1;
+		}
+	}
+	return -1;
 }
 
 int ActiveInstance :: SidekickRemoveOne(CreatureInstance* host, vector<SidekickObject> *sidekickList)
