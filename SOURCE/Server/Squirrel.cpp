@@ -48,9 +48,8 @@ namespace Squirrel {
 				PrintArray(result, object.Cast<Sqrat::Array>());
 			}
 			else if(object.GetType() == OT_INTEGER) {
-				char number[32];
-				Util::SafeFormat(number, sizeof(number), "%lu", object.Cast<unsigned long>());
-				result->append(number);
+				Util::SafeFormat(mPrintBuffer, sizeof(mPrintBuffer), "%lu", object.Cast<unsigned long>());
+				result->append(mPrintBuffer);
 			}
 			else if(object.GetType() == OT_STRING) {
 				result->append("\"" + object.Cast<std::string>() + "\"");
@@ -59,9 +58,16 @@ namespace Squirrel {
 				result->append(object.Cast<bool>() ? "true" : "false");
 			}
 			else if(object.GetType() == OT_FLOAT) {
-				char number[32];
-				Util::SafeFormat(number, sizeof(number), "%f", object.Cast<double>());
-				result->append(number);
+				Util::SafeFormat(mPrintBuffer, sizeof(mPrintBuffer), "%f", object.Cast<double>());
+				result->append(mPrintBuffer);
+			}
+			else {
+				Vector3 *vec3 = object.Cast<Vector3*>();
+				if(vec3 != NULL) {
+					Util::SafeFormat(mPrintBuffer, sizeof(mPrintBuffer), "Vector3(%f,%f,%f)", vec3->mX, vec3->mY, vec3->mZ);
+					result->append(mPrintBuffer);
+				}
+
 			}
 		}
 	}

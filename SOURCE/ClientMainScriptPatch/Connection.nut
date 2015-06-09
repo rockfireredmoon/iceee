@@ -2966,6 +2966,11 @@ class this.Connection extends this.MessageBroadcaster
 					scenery.setScale(this.Vector3(size, size, size));
 					scenery.fireUpdate();
 				}
+				else if (effectType == 3) {
+					print("ICE! Transform for " + sceneryId + " : " + effectName + "\n");
+					scenery.setTransformationSequence(unserialize(effectName));
+					scenery.fireUpdate();
+				}
 			}
 			else {
 				print("ICE: No scenery with ID of " + sceneryId + " (" + effectTag + ")\n");
@@ -2980,7 +2985,7 @@ class this.Connection extends this.MessageBroadcaster
 				if(effectType == 1) {
 					scenery.detachParticleSystem(effectTag)
 				}
-				else {
+				else if(effectType == 2) {
 					local previousAsset = scenery.mPreviousAsset;
 					if(previousAsset != null) {
 					
@@ -2992,6 +2997,9 @@ class this.Connection extends this.MessageBroadcaster
 						scenery.setScale(scenery.mPreviousScale);
 						scenery.fireUpdate();
 					}
+				} else if(effectType == 3) {
+					// TODO allow multiple sequences
+					scenery.stopTransformationSequence();
 				}
 				print("ICE: remove effect: " + effectTag + " " + sceneryId);
 			}

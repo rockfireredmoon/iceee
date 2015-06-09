@@ -183,7 +183,7 @@ void QuestNutManager::RemoveActiveScript(QuestNutPlayer *registeredPtr) {
 
 QuestNutPlayer::QuestNutPlayer()
 {
-	activate = ScriptObjects::Vector3(0,0,0);
+	activate = Squirrel::Vector3I(0,0,0);
 	source = NULL;
 	target = NULL;
 	activateEvent = NULL;

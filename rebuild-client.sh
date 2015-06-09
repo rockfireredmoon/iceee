@@ -10,6 +10,29 @@ TARGET_ASSETS="${base}/asset"
 #
 # Functions
 #
+function compile_sq() {
+	script="${1}"
+	case "${script}" in
+		*.nut) : ;;
+			*) 	echo "Can only compile .nut files to Squirrel. ${script}" >&2
+				tput bel
+				return 1 ;;
+	esac
+	output="$(dirname "$1")/$(basename "$1" .nut).cnut"
+	rm -f "${output}"
+	if ! wine ${base}/UTILITIES/sq.exe -o "${output}" -c "${script}" ; then
+		echo "$0: Failed to compile ${script}" >&2
+		tput bel
+		return 1
+	fi
+	if [ ! -f "${output}" ] ; then
+		echo "$0: No output ${output} for ${script}. Failed to compile?" >&2
+		tput bel
+		return 1
+	fi	
+	return 0
+}
+
 #
 # Main Body
 #
@@ -46,7 +69,7 @@ find . -name '*.nut'|while read script ; do
 		output="./Abilities.cnut"
 	fi
 	echo "Compiling ${script} to ${output}"
-	if ! wine ${base}/UTILITIES/sq.exe -o ${output} -c ${script} ; then
+	if ! compile_sq "${script}" ; then
 		echo "$0: Failed to compile ${script}" >&2
 		exit 1
 	else rm ${script}
@@ -92,15 +115,21 @@ pushd "${SCRATCH}/content"
 echo "*******************************************************"
 echo "Compiling all scripts"
 echo "*******************************************************"
+rm -f /tmp/scrfailed$$
 find . -name '*.nut'|while read line ; do
 	echo "Compiling ${line} to "$(dirname ${line})/$(basename ${line} .nut).cnut
-	if wine ${base}/UTILITIES/sq.exe -o $(dirname ${line})/$(basename ${line} .nut).cnut -c ${line} ; then
+	if compile_sq "${line}" ; then
 		rm "${line}"
 	else
 		echo "Failed to compile ${line}" >&2
-		exit 1
+		touch /tmp/scrfailed$$
+		exit
     fi
 done
+if [ -f /tmp/scrfailed$$ ]; then
+	rm -f /tmp/scrfailed$$
+	exit 1
+fi
 echo "*******************************************************"
 echo "Decompressing original scripts (only those that don't already exist)"
 echo "*******************************************************"
@@ -195,7 +224,7 @@ for line in $(find . -type f) ; do
 					${base}/SCRIPTS/convert.sh ${bn}
 					rm  ${bn} ;;
 		*".nut")	echo "Compiling asset patch script ${line}"
-					if ! wine ${base}/UTILITIES/sq.exe -o $(basename $bn .nut).cnut -c ${bn} ; then
+					if ! compile_sq "${bn}" ; then
 						echo "$0: Failed to compile $bn" >&2
 						exit 1
 					else rm ${bn}

@@ -24,6 +24,7 @@
 #include "InstanceScript.h"
 #include "Arena.h"
 #include "PVP.h"
+#include "Squirrel.h"
 using namespace std;
 
 class SimulatorThread;
@@ -407,7 +408,6 @@ public:
 	bool StopPVP();
 	PVP::PVPGame * StartPVP(int type);
 
-	void Script_ScanNPCCID(ScriptObjects::Area *location, std::vector<int>& destResult);
 private:
 	void ClearScriptObjects();
 };

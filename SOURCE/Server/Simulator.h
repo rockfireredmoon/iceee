@@ -294,10 +294,7 @@ public:
 	int handle_query_marker_del(void);
 	int handle_query_guild_info(void);
 	int handle_query_guild_leave(void);
-	int handle_query_script_save(void);
-	int handle_query_script_load(void);
-	int handle_query_script_kill(void);
-	int handle_query_script_run(void);
+	int handle_query_script_op(int op);
 	int handle_query_clan_info(void);
 	int handle_query_clan_list(void);
 	int handle_query_spawn_list(void);

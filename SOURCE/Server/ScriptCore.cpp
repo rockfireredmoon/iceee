@@ -23,7 +23,6 @@
 #include "FileReader.h"
 #include "Simulator.h"
 #include "StringList.h"
-#include "ScriptObjects.h"
 #include "Util.h"
 #include "Config.h"
 
@@ -469,43 +468,43 @@ namespace ScriptCore
 	void NutPlayer::RegisterCoreFunctions(NutPlayer *instance, Sqrat::Class<NutPlayer> *clazz) {
 
 		// Instance Location Object, X1/Z1,X2/Z2 location defining a rectangle
-		Sqrat::Class<ScriptObjects::Area> areaClass(vm, "Area", true);
+		Sqrat::Class<Squirrel::Area> areaClass(vm, "Area", true);
 		areaClass.Ctor<int,int,int,int>();
 		areaClass.Ctor<int,int,int>();
 		areaClass.Ctor();
 		Sqrat::RootTable(vm).Bind(_SC("Area"), areaClass);
-		areaClass.Var("x1", &ScriptObjects::Area::mX1);
-		areaClass.Var("radius", &ScriptObjects::Area::mRadius);
-		areaClass.Var("x2", &ScriptObjects::Area::mX2);
-		areaClass.Var("y1", &ScriptObjects::Area::mY1);
-		areaClass.Var("y2", &ScriptObjects::Area::mY2);
-		areaClass.Func("point", &ScriptObjects::Area::ToPoint);
+		areaClass.Var("x1", &Squirrel::Area::mX1);
+		areaClass.Var("radius", &Squirrel::Area::mRadius);
+		areaClass.Var("x2", &Squirrel::Area::mX2);
+		areaClass.Var("y1", &Squirrel::Area::mY1);
+		areaClass.Var("y2", &Squirrel::Area::mY2);
+		areaClass.Func("point", &Squirrel::Area::ToPoint);
 
 		// Point Object, X/Z location
-		Sqrat::Class<ScriptObjects::Point> pointClass(vm, "Point", true);
+		Sqrat::Class<Squirrel::Point> pointClass(vm, "Point", true);
 		pointClass.Ctor<int,int>();
 		pointClass.Ctor();
 		Sqrat::RootTable(vm).Bind(_SC("Point"), pointClass);
-		pointClass.Var("x", &ScriptObjects::Point::mX);
-		pointClass.Var("z", &ScriptObjects::Point::mZ);
+		pointClass.Var("x", &Squirrel::Point::mX);
+		pointClass.Var("z", &Squirrel::Point::mZ);
 
 		// Vector3 Object, X/Y/Z location
-		Sqrat::Class<ScriptObjects::Vector3> vector3Class(vm, "Vector3", true);
+		Sqrat::Class<Squirrel::Vector3I> vector3Class(vm, "Vector3I", true);
 		vector3Class.Ctor<int,int, int>();
 		vector3Class.Ctor();
-		Sqrat::RootTable(vm).Bind(_SC("Vector3"), vector3Class);
-		vector3Class.Var("x", &ScriptObjects::Vector3::mX);
-		vector3Class.Var("y", &ScriptObjects::Vector3::mY);
-		vector3Class.Var("z", &ScriptObjects::Vector3::mZ);
+		Sqrat::RootTable(vm).Bind(_SC("Vector3I"), vector3Class);
+		vector3Class.Var("x", &Squirrel::Vector3I::mX);
+		vector3Class.Var("y", &Squirrel::Vector3I::mY);
+		vector3Class.Var("z", &Squirrel::Vector3I::mZ);
 
 		// Vector3F Object, floating point X/Y/Z location
-		Sqrat::Class<ScriptObjects::Vector3F> vector3FClass(vm, "Vector3F", true);
+		Sqrat::Class<Squirrel::Vector3> vector3FClass(vm, "Vector3", true);
 		vector3FClass.Ctor<float,float, float>();
 		vector3FClass.Ctor();
-		Sqrat::RootTable(vm).Bind(_SC("Vector3F"), vector3FClass);
-		vector3FClass.Var("x", &ScriptObjects::Vector3F::mX);
-		vector3FClass.Var("y", &ScriptObjects::Vector3F::mY);
-		vector3FClass.Var("z", &ScriptObjects::Vector3F::mZ);
+		Sqrat::RootTable(vm).Bind(_SC("Vector3"), vector3FClass);
+		vector3FClass.Var("x", &Squirrel::Vector3::mX);
+		vector3FClass.Var("y", &Squirrel::Vector3::mY);
+		vector3FClass.Var("z", &Squirrel::Vector3::mZ);
 
 		clazz->Func(_SC("queue"), &NutPlayer::Queue);
 		clazz->Func(_SC("broadcast"), &NutPlayer::Broadcast);

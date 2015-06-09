@@ -290,7 +290,7 @@ function red_flag_won(winner, flagBaseCDefID) {
 		blue_score++;
 		
 		// Spawn a temporary red flag to show its been won
-		local temp_flag_cid = inst.spawn_at(CDEFID_RED_FLAG, Vector3(14240, 183, 11086), 0, 0);
+		local temp_flag_cid = inst.spawn_at(CDEFID_RED_FLAG, Vector3I(14240, 183, 11086), 0, 0);
 		inst.queue(function() {
 			inst.despawn(temp_flag_cid);
 			
@@ -321,7 +321,7 @@ function blue_flag_won(winner, flagBaseCDefID) {
 		red_score++;
 		
 		// Spawn a temporary blue flag to show its been won
-		local temp_flag_cid = inst.spawn_at(CDEFID_BLUE_FLAG, Vector3(13546, 182,11239), 0, 0);
+		local temp_flag_cid = inst.spawn_at(CDEFID_BLUE_FLAG, Vector3I(13546, 182,11239), 0, 0);
 		inst.queue(function() {
 			inst.despawn(temp_flag_cid);
 			

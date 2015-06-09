@@ -3,10 +3,10 @@
 #define INSTANCESCRIPT_H
 
 #include "ScriptCore.h"
-#include "ScriptObjects.h"
 #include <vector>
 #include "Callback.h"
 #include "Scenery2.h"
+#include "Squirrel.h"
 #include "PartyManager.h"
 
 class ActiveInstance;
@@ -23,7 +23,7 @@ public:
 	static std::string GetInstanceScriptPath(int zoneID, bool pathIfNotExists, bool grove);
 
 private:
-	std::map<std::string, ScriptObjects::Area> mLocationDef;
+	std::map<std::string, Squirrel::Area> mLocationDef;
 };
 
 
@@ -85,8 +85,9 @@ public:
 	void ClearTarget(int CID);
 	bool AI(int CID, const char *label);
 	int GetPartyID(int CID);
-	ScriptObjects::Vector3 GetLocation(int CID);
+	Squirrel::Vector3I GetLocation(int CID);
 	const char *GetDisplayName(int CID);
+	int Transform(int propID, Sqrat::Table transformation);
 	int Asset(int propID, const char *newAsset, float scale);
 	int CountAlive(int CDefID);
 	void DetachSceneryEffect(int propID, int tag);
@@ -94,20 +95,20 @@ public:
 	void Emote(int cid, const char *emotion);
 	int CDefIDForCID(int cid);
 	bool Despawn(int CID);
-	int LoadSpawnTileFor(ScriptObjects::Point location);
-	int LoadSpawnTile(ScriptObjects::Point location);
+	int LoadSpawnTileFor(Squirrel::Point location);
+	int LoadSpawnTile(Squirrel::Point location);
 	int DespawnAll(int CDefID);
 	int GetHealthPercent(int cid);
-	void Walk(int CID, ScriptObjects::Point point, int speed, int range);
-	void WalkThen(int CID, ScriptObjects::Point point, int speed, int range, Sqrat::Function onArrival);
+	void Walk(int CID, Squirrel::Point point, int speed, int range);
+	void WalkThen(int CID, Squirrel::Point point, int speed, int range, Sqrat::Function onArrival);
 	int Spawn(int propID, int creatureID, int flags);
-	int SpawnAt(int creatureID, ScriptObjects::Vector3 location, int facing, int flags);
+	int SpawnAt(int creatureID, Squirrel::Vector3I location, int facing, int flags);
 	int OLDSpawnAt(int creatureID, float x, float y, float z, int facing, int flags);
 	int GetTarget(int CID);
 	bool SetTarget(int CID, int targetCID);
-	std::vector<int>  Scan(ScriptObjects::Area *location);
-	int ScanNPC(ScriptObjects::Area *location, int CDefID);
-	std::vector<int> ScanNPCs(ScriptObjects::Area *location, int CDefID);
+	std::vector<int>  Scan(Squirrel::Area *location);
+	int ScanNPC(Squirrel::Area *location, int CDefID);
+	std::vector<int> ScanNPCs(Squirrel::Area *location, int CDefID);
 
 private:
 	std::vector<SceneryEffect> activeEffects;
@@ -127,10 +128,10 @@ public:
 class InstanceScriptDef: public ScriptCore::ScriptDef {
 public:
 	static std::string GetInstanceTslScriptPath(int zoneID, bool grove);
-	ScriptObjects::Area *GetLocationByName(const char *location);
+	Squirrel::Area *GetLocationByName(const char *location);
 
 private:
-	std::map<std::string, ScriptObjects::Area> mLocationDef;
+	std::map<std::string, Squirrel::Area> mLocationDef;
 	virtual void GetExtendedOpCodeTable(OpCodeInfo **arrayStart,
 			size_t &arraySize);
 	virtual void SetMetaDataDerived(const char *opname,
@@ -147,11 +148,11 @@ private:
 	ActiveInstance *actInst;
 	virtual void RunImplementationCommands(int opcode);
 
-	ScriptObjects::Area* GetLocationByName(const char *name);
+	Squirrel::Area* GetLocationByName(const char *name);
 
 	//Script helper functions, often utilizing the Instance for lookups.
-	void ScanNPCCID(ScriptObjects::Area *location, std::vector<int>& destResult);
-	void ScanNPCCIDFor(ScriptObjects::Area *location, int CDefId,
+	void ScanNPCCID(Squirrel::Area *location, std::vector<int>& destResult);
+	void ScanNPCCIDFor(Squirrel::Area *location, int CDefId,
 			std::vector<int>& destResult);
 	CreatureInstance* GetNPCPtr(int CID);
 };

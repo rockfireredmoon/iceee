@@ -100,7 +100,6 @@ int PrepExt_CreatureEventVaultSize(char *buffer, int actorID, int vaultSize);
 int PrepExt_SendEnvironmentUpdateMsg(char *buffer, const char *zoneIDString, ZoneDefInfo *zoneDef, int x, int z);
 int PrepExt_SendTimeOfDayMsg(char *buffer, const char *envType);
 int PrepExt_Broadcast(char *buffer, const char *message);
-int PrepExt_DamageInfo();
 
 int SendToAllSimulator(char *buffer, int length, int ignoreIndex);
 int SendToOneSimulator(char *buffer, int length, int simIndex);

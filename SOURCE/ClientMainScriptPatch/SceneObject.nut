@@ -304,6 +304,7 @@ class this.SceneObjectManager extends this.MessageBroadcaster
 	mBuildingCSMs = {};
 	NEARBY_LOD = 1;
 	mPendingAssemblyCount = 0;
+	mTransforming = [];
 	static rxSceneObjectNode = this.regexp("^([^/]+)/(\\d+)$");
 	constructor()
 	{
@@ -1857,6 +1858,10 @@ class this.SceneObjectManager extends this.MessageBroadcaster
 		this.updatePendingPages();
 		this.loadNearbyObjects();
 		this._nextSceneryListQuery();
+		
+		foreach(transform in mTransforming) {
+			transform.updateTransformationSequences();
+		}
 	}
 
 	function unloadSceneryInZone( zoneX, zoneZ )
@@ -2427,6 +2432,8 @@ class this.SceneObject extends this.MessageBroadcaster
 	mPreviousAsset = null;
 	mPreviousScale = null;
 	mParticleAttachments = {};
+	mCurrentTransformationSequence = null;
+	mCurrentTransformationFrame = null;
 	
 	constructor( pID, objectClass )
 	{
@@ -5052,6 +5059,171 @@ class this.SceneObject extends this.MessageBroadcaster
 
 		return false;
 	}
+	
+	/*
+	 * Takes a table that defines a sequence of transformations that should be
+	 * applied to this object over a period of time.
+	 *
+	 * @param sequence table of transformations
+	 */
+	function setTransformationSequence(sequence)
+	{
+		if(mCurrentTransformationSequence != null)
+			stopTransformationSequence();
+			
+		mCurrentTransformationSequence = sequence;
+		mCurrentTransformationSequence.startPosition <- Vector3(getPosition().x, getPosition().y, getPosition().z);;
+		mCurrentTransformationSequence.startScale <- Vector3(getScale().x, getScale().y, getScale().z);
+		//mCurrentTransformationSequence.startRotation <- clone getRotation();
+		
+		::_sceneObjectManager.mTransforming.append(this);
+		
+		return nextTransformationFrame();
+	}
+	
+	/*
+	 * Moves to next frame in transformation sequence
+	 */
+	function nextTransformationFrame() {	
+		if(!("index" in mCurrentTransformationSequence)) {		
+			// Starting sequence
+			mCurrentTransformationSequence.previousForceUpdate <- mForceUpdate;
+			mCurrentTransformationSequence.index <- 0;
+		}
+		else
+			mCurrentTransformationSequence.index++;
+			
+		print("ICE! Index is now " + mCurrentTransformationSequence.index); 
+			
+		if(!("frames" in mCurrentTransformationSequence)) {
+			print("ICE! No frames in sequence");
+			return false;
+		}
+		
+		local frames = mCurrentTransformationSequence.frames;
+		if(mCurrentTransformationSequence.index >= frames.len()) {
+			print("ICE! At end of sequence at " + mCurrentTransformationSequence.index);
+			mCurrentTransformationFrame = null;
+			mForceUpdate = mCurrentTransformationSequence.previousForceUpdate;
+			return false;
+		}
+		
+		mCurrentTransformationFrame = frames[mCurrentTransformationSequence.index];
+		
+		if(!("transforms" in mCurrentTransformationFrame)) {
+			print("ICE! No transforms in frame " + mCurrentTransformationSequence.index);
+			return nextTransformationFrame();
+		}
+		
+		mCurrentTransformationFrame.startScale <- Vector3(getScale().x, getScale().y, getScale().z);	
+		mCurrentTransformationFrame.started <- System.currentTimeMillis();
+		mCurrentTransformationFrame.durationMs <- ( ("duration" in mCurrentTransformationFrame) ? mCurrentTransformationFrame.duration : 1 ) * 1000;  
+		mCurrentTransformationFrame.end <- mCurrentTransformationFrame.started + mCurrentTransformationFrame.durationMs;
+			
+		print("ICE! Frame " + mCurrentTransformationSequence.index + " will run from " + mCurrentTransformationFrame.started + " to " + mCurrentTransformationFrame.end);
+		
+		mForceUpdate = true;
+		print("ICE! Scenery: " + mIsScenery + " Should render: " + shouldRender() + " mForceUpdate = " + mForceUpdate);
+			
+		return true;	
+	}
+	
+	/*
+	 * Stops a transformation sequence, return the object to the state it was in before
+	 * the transformations were started.
+	 */
+	function stopTransformationSequence() 
+	{
+		if(mCurrentTransformationSequence != null) {
+						
+			this.mNode.setScale(mCurrentTransformationSequence.startScale);
+			this.mNode.setPosition(mCurrentTransformationSequence.startPosition);
+			// TODO rotation
+			
+			mCurrentTransformationSequence = null;
+			mCurrentTransformationFrame = null;
+			
+			local index = Util.indexOf(::_sceneObjectManager.mTransforming, this);
+			if (index != null)
+				::_sceneObjectManager.mTransforming.remove(index);
+		}
+	}
+	
+	/*
+	 * Update any current active transformation sequences.
+	 */
+	function updateTransformationSequences()
+	{
+		if (mGone || mCurrentTransformationFrame == null)
+			return;
+			
+		// Work how out how along the transformation we are
+		local now = System.currentTimeMillis();
+		local progress = now - mCurrentTransformationFrame.started;
+		local pc = mCurrentTransformationFrame.durationMs == 0 ? 1 : progress / mCurrentTransformationFrame.durationMs;
+		
+		print("ICE! updateTransformationSequences() " + now + " / " + progress + " " + pc + "\n");
+		
+		if(pc > 1)
+			pc = 1.0;
+			
+		/* Apply each of the transformation (using the state of the object before the
+		 * frame started as a base) and interpolate using the current progress
+		 */
+		local tType = null;  
+		foreach(transform in mCurrentTransformationFrame.transforms) {
+			tType = "type" in transform ? transform.type : "unknown"; 
+			if(tType == "scale") {
+				// Scale				
+				if(!("start" in transform))
+					transform.start <- Vector3(getScale().x, getScale().y, getScale().z);
+				local amtV = interpolatedTransformation(transform, pc);
+				print("ICE! Scaling to " + amtV);
+				this.mNode.setScale(amtV);
+			}
+			else if(tType == "rotate") {
+				// Rotate
+				//if(!("start" in transform))
+					//transform.start <- clone this.mRotation;
+				local amtV = interpolatedTransformation(transform, pc);
+				print("ICE! Rotating to " + amtV);
+				//this.mNode.rotate(amtV, this.mRotation);
+				this.mNode.rotate(amtV);
+			}
+			else if(tType == "translate") {
+				// Translate
+				if(!("start" in transform))
+					transform.start <- Vector3(getPosition().x, getPosition().y, getPosition().z);
+				local amtV = interpolatedTransformation(transform, pc) + transform.start;
+				print("ICE! Translated to " + amtV);
+				this.mNode.setPosition(amtV);
+			}
+		}
+		
+		if(pc >= 1) {
+			if(!nextTransformationFrame()) {
+				// Stop the updates
+				local index = Util.indexOf(::_sceneObjectManager.mTransforming, this);
+				if (index != null)
+					::_sceneObjectManager.mTransforming.remove(index);
+			}
+		}
+	}
+	
+	function interpolatedTransformation(transform, pc) {
+		local toV = arrayToVector3(transform.to);
+		local fromV = ("from" in transform) ? arrayToVector3(transform.from) : ( "start" in transform ? transform.start : Vector3(0.0,0.0,0.0) );
+		return Vector3(fromV.x + ( ( toV.x - fromV.x ) * pc ),
+			fromV.y + ( ( toV.y - fromV.y ) * pc ),
+			fromV.z + ( ( toV.z - fromV.z ) * pc ));
+	}
+	
+	function arrayToVector3(arr) {
+		if(typeof arr != "array")
+			return Vector3(arr.tofloat(), arr.tofloat(), arr.tofloat());
+		else
+			return Vector3(arr[0],arr[1],arr[2]);
+	}
 
 	function updateFade()
 	{
@@ -5316,6 +5488,10 @@ class this.SceneObject extends this.MessageBroadcaster
 	function onEnterFrame()
 	{
 		this._checkTimeout();
+		
+		/*if(mCurrentTransformationFrame != null) {
+			print("ICE! UPDATE Asm: " + this.mAssembled + " ambling: " + this.mAssemblingNode + " Scenery: " + mIsScenery + " Should render: " + shouldRender() + " mForceUpdate = " + mForceUpdate + " gone: " + mGone);
+		}*/
 
 		if (!this.mAssembled && !this.mAssemblingNode)
 		{
@@ -5363,6 +5539,8 @@ class this.SceneObject extends this.MessageBroadcaster
 		{
 			this.mAnimationHandler.onEnterFrame();
 		}
+		
+		//this.updateTransformationSequences();
 
 		if (!this.isPlayer() && !this.mForceUpdate && this.mDistanceToFloor < 0.25)
 		{

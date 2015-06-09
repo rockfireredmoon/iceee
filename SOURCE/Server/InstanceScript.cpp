@@ -5,6 +5,7 @@
 #include "CommonTypes.h"
 #include "StringList.h"
 #include "Simulator.h"
+#include "Squirrel.h"
 #include "Creature.h"
 #include <stdlib.h>
 #include <sqrat.h>
@@ -277,6 +278,7 @@ void InstanceNutPlayer::RegisterFunctions() {
 
 void InstanceNutPlayer::RegisterInstanceFunctions(NutPlayer *instance, Sqrat::DerivedClass<InstanceNutPlayer, AbstractInstanceNutPlayer> *instanceClass)
 {
+	instanceClass->Func(_SC("transform"), &InstanceNutPlayer::Transform);
 	instanceClass->Func(_SC("pvp_goal"), &InstanceNutPlayer::PVPGoal);
 	instanceClass->Func(_SC("set_status_effect"), &InstanceNutPlayer::SetStatusEffect);
 	instanceClass->Func(_SC("remove_status_effect"), &InstanceNutPlayer::RemoveStatusEffect);
@@ -635,6 +637,35 @@ void InstanceNutPlayer::PlaySound(const char *name) {
 	actInst->SendPlaySound(sub[0].c_str(), sub[1].c_str());
 }
 
+int InstanceNutPlayer::Transform(int propID, Sqrat::Table transformation) {
+	char buffer[256];
+	SceneryObject *propPtr = g_SceneryManager.GlobalGetPropPtr(actInst->mZone, propID, NULL);
+	if(propPtr != NULL)
+	{
+		SceneryEffectList *effectList = actInst->GetSceneryEffectList(propID);
+		SceneryEffect l;
+		l.type = TRANSFORMATION;
+		l.tag = ++actInst->mNextEffectTag;
+		l.propID = propID;
+
+		Squirrel::Printer printer;
+		std::string transformString;
+		printer.PrintTable(&transformString, transformation);
+
+		l.effect = transformString.c_str();
+
+		effectList->push_back(l);
+		activeEffects.push_back(l);
+		int wpos = actInst->AddSceneryEffect(buffer, &l);
+		actInst->LSendToAllSimulator(buffer, wpos, -1);
+		g_Log.AddMessageFormat("Create effect tag %d for prop %d.", l.tag, propID);
+		return l.tag;
+	}
+	else
+		g_Log.AddMessageFormat("Could not find prop with ID %d in this instance.", propID);
+	return -1;
+}
+
 int InstanceNutPlayer::Asset(int propID, const char *newAsset, float scale) {
 	char buffer[256];
 	SceneryObject *propPtr = g_SceneryManager.GlobalGetPropPtr(actInst->mZone, propID, NULL);
@@ -716,12 +747,12 @@ int InstanceNutPlayer::GetPartyID(int CID) {
 	return ci != NULL ? ci->PartyID : 0;
 }
 
-ScriptObjects::Vector3 InstanceNutPlayer::GetLocation(int CID) {
+Squirrel::Vector3I InstanceNutPlayer::GetLocation(int CID) {
 	CreatureInstance *ci = GetCreaturePtr(CID);
 	if(ci != NULL) {
-		return ScriptObjects::Vector3(ci->CurrentX, ci->CurrentY, ci->CurrentZ);
+		return Squirrel::Vector3I(ci->CurrentX, ci->CurrentY, ci->CurrentZ);
 	}
-	return ScriptObjects::Vector3(0,0,0);
+	return Squirrel::Vector3I(0,0,0);
 
 }
 
@@ -746,7 +777,7 @@ bool WalkCondition::CheckCondition() {
 	return false;
 }
 
-void InstanceNutPlayer::WalkThen(int CID, ScriptObjects::Point point, int speed, int range, Sqrat::Function onArrival) {
+void InstanceNutPlayer::WalkThen(int CID, Squirrel::Point point, int speed, int range, Sqrat::Function onArrival) {
 
 	CreatureInstance *ci = GetNPCPtr(CID);
 	if(ci)
@@ -776,7 +807,7 @@ void InstanceNutPlayer::WalkThen(int CID, ScriptObjects::Point point, int speed,
 //				new ScriptCore::SquirrelFunctionCallback(this, function)));
 //}
 
-void InstanceNutPlayer::Walk(int CID, ScriptObjects::Point point, int speed, int range) {
+void InstanceNutPlayer::Walk(int CID, Squirrel::Point point, int speed, int range) {
 
 	CreatureInstance *ci = GetNPCPtr(CID);
 	if(ci)
@@ -905,12 +936,12 @@ bool InstanceNutPlayer::SetTarget(int CID, int targetCID)
 	return false;
 }
 
-int InstanceNutPlayer::ScanNPC(ScriptObjects::Area *location, int CDefID) {
+int InstanceNutPlayer::ScanNPC(Squirrel::Area *location, int CDefID) {
 	vector<int> v = ScanNPCs(location, CDefID);
 	return v.size() == 0 ? 0 : v[0];
 }
 
-vector<int> InstanceNutPlayer::Scan(ScriptObjects::Area *location) {
+vector<int> InstanceNutPlayer::Scan(Squirrel::Area *location) {
 	vector<int> v;
 	v.clear();
 	if(actInst == NULL || location == NULL)
@@ -931,7 +962,7 @@ vector<int> InstanceNutPlayer::Scan(ScriptObjects::Area *location) {
 	return v;
 }
 
-vector<int> InstanceNutPlayer::ScanNPCs(ScriptObjects::Area *location, int CDefID) {
+vector<int> InstanceNutPlayer::ScanNPCs(Squirrel::Area *location, int CDefID) {
 	vector<int> v;
 	v.clear();
 	if(actInst == NULL || location == NULL)
@@ -954,15 +985,15 @@ vector<int> InstanceNutPlayer::ScanNPCs(ScriptObjects::Area *location, int CDefI
 	return v;
 }
 
-int InstanceNutPlayer::LoadSpawnTile(ScriptObjects::Point location)
+int InstanceNutPlayer::LoadSpawnTile(Squirrel::Point location)
 {
 	actInst->spawnsys.GenerateTile(location.mX, location.mZ);
 	return 1;
 }
 
-int InstanceNutPlayer::LoadSpawnTileFor(ScriptObjects::Point location)
+int InstanceNutPlayer::LoadSpawnTileFor(Squirrel::Point location)
 {
-	return LoadSpawnTile(ScriptObjects::Point(location.mX / SpawnTile::SPAWN_TILE_SIZE,location.mZ / SpawnTile::SPAWN_TILE_SIZE));
+	return LoadSpawnTile(Squirrel::Point(location.mX / SpawnTile::SPAWN_TILE_SIZE,location.mZ / SpawnTile::SPAWN_TILE_SIZE));
 }
 
 int InstanceNutPlayer::Spawn(int propID, int creatureID, int flags)
@@ -974,7 +1005,7 @@ int InstanceNutPlayer::Spawn(int propID, int creatureID, int flags)
 	return res;
 }
 
-int InstanceNutPlayer::SpawnAt(int creatureID, ScriptObjects::Vector3 location, int facing, int flags)
+int InstanceNutPlayer::SpawnAt(int creatureID, Squirrel::Vector3I location, int facing, int flags)
 {
 	CreatureInstance *creature = actInst->SpawnGeneric(creatureID, location.mX, location.mY, location.mZ, facing, flags);
 	if(creature == NULL )
@@ -1025,7 +1056,7 @@ void InstanceScriptDef :: SetMetaDataDerived(const char *opname, ScriptCore::Scr
 		//#location name x1 y1 x2 y2
 		if(compileData.ExpectTokens(6, "#location", "str:name int:x1 int:z1 int:x2 int:z2") == true)
 		{
-			ScriptObjects::Area &loc = mLocationDef[tokens[1]];
+			Squirrel::Area &loc = mLocationDef[tokens[1]];
 			loc.mX1 = Util::GetInteger(tokens, 2);
 			loc.mY1 = Util::GetInteger(tokens, 3);
 			loc.mX2 = Util::GetInteger(tokens, 4);
@@ -1036,7 +1067,7 @@ void InstanceScriptDef :: SetMetaDataDerived(const char *opname, ScriptCore::Scr
 	{
 		if(compileData.ExpectTokens(5, "location_br", "str:name int:x int:z int:radius") == true)
 		{
-			ScriptObjects::Area &loc = mLocationDef[tokens[1]];
+			Squirrel::Area &loc = mLocationDef[tokens[1]];
 			int x = Util::GetInteger(tokens, 2);
 			int y = Util::GetInteger(tokens, 3);
 			int r = Util::GetInteger(tokens, 4);
@@ -1076,9 +1107,9 @@ bool InstanceScriptDef::HandleAdvancedCommand(const char *commandToken, ScriptCo
 	return retVal;
 }
 
-ScriptObjects::Area* InstanceScriptDef::GetLocationByName(const char *location)
+Squirrel::Area* InstanceScriptDef::GetLocationByName(const char *location)
 {
-	std::map<std::string, ScriptObjects::Area>::iterator it;
+	std::map<std::string, Squirrel::Area>::iterator it;
 	it = mLocationDef.find(location);
 	if(it == mLocationDef.end())
 		return NULL;
@@ -1198,7 +1229,7 @@ void InstanceScriptPlayer::RunImplementationCommands(int opcode)
 
 	case OP_SCAN_NPC_CID:
 		{
-			ScriptObjects::Area *loc = GetLocationByName(GetStringPtr(instr->param1));
+			Squirrel::Area *loc = GetLocationByName(GetStringPtr(instr->param1));
 			int index = VerifyIntArrayIndex(instr->param2);
 			if(index >= 0)
 				ScanNPCCID(loc, intArray[index].arrayData);
@@ -1206,7 +1237,7 @@ void InstanceScriptPlayer::RunImplementationCommands(int opcode)
 		break;
 	case OP_SCAN_NPC_CID_FOR:
 		{
-			ScriptObjects::Area *loc = GetLocationByName(GetStringPtr(instr->param1));
+			Squirrel::Area *loc = GetLocationByName(GetStringPtr(instr->param1));
 			int index = VerifyIntArrayIndex(instr->param2);
 			if(index >= 0)
 				ScanNPCCIDFor(loc, instr->param3, intArray[index].arrayData);
@@ -1309,7 +1340,7 @@ void InstanceScriptPlayer::SetInstancePointer(ActiveInstance *parent)
 	actInst = parent;
 }
 
-ScriptObjects::Area* InstanceScriptPlayer::GetLocationByName(const char *name)
+Squirrel::Area* InstanceScriptPlayer::GetLocationByName(const char *name)
 {
 	if(name == NULL)
 		return NULL;
@@ -1317,7 +1348,7 @@ ScriptObjects::Area* InstanceScriptPlayer::GetLocationByName(const char *name)
 	return thisDef->GetLocationByName(name);
 }
 
-void InstanceScriptPlayer::ScanNPCCIDFor(ScriptObjects::Area *location, int CDefID, std::vector<int>& destResult)
+void InstanceScriptPlayer::ScanNPCCIDFor(Squirrel::Area *location, int CDefID, std::vector<int>& destResult)
 {
 	destResult.clear();
 	if(actInst == NULL || location == NULL)
@@ -1339,7 +1370,7 @@ void InstanceScriptPlayer::ScanNPCCIDFor(ScriptObjects::Area *location, int CDef
 	}
 }
 
-void InstanceScriptPlayer::ScanNPCCID(ScriptObjects::Area *location, std::vector<int>& destResult)
+void InstanceScriptPlayer::ScanNPCCID(Squirrel::Area *location, std::vector<int>& destResult)
 {
 	destResult.clear();
 	if(actInst == NULL || location == NULL)

@@ -3,8 +3,8 @@
 #define QUESTSCRIPT_H
 
 #include "ScriptCore.h"
-#include "ScriptObjects.h"
 #include "Creature.h"
+#include "Squirrel.h"
 #include "Components.h"
 #include <vector>
 #include <string>
@@ -38,7 +38,7 @@ public:
 	CreatureInstance *target;
 	ScriptCore::NutScriptEvent *activateEvent;
 	int QuestAct;
-	ScriptObjects::Vector3 activate;
+	Squirrel::Vector3I activate;
 	QuestNutPlayer();
 	virtual ~QuestNutPlayer();
 

@@ -161,19 +161,6 @@ AbilityManager core
 
 class AbilityManager2;
 
-struct DamageType
-{
-	enum Enum
-	{
-		MELEE       = 0,
-		FIRE        = 1,
-		FROST       = 2,
-		MYSTIC      = 3,
-		DEATH       = 4,
-		UNBLOCKABLE = 5
-	};
-};
-
 class AbilityVerify
 {
 public:

@@ -6,19 +6,23 @@ class Screens.InstanceScript extends GUI.Frame
 	static mScreenName = "InstanceScript";
 	mScript = null;
 	mInfo = null;
-	mRefresh = null;
-	mSubmit = null;
 	mRun = null;
+	mSubmit = null;
+	mLoad  = null;
+	mDefault  = null;
+	mCancel  = null;
 	mKill = null;
 	mType = null;
+	mParameter = null;
 	tabstop = 4;
+	mStatus = "unknown";
 	
 	constructor()
 	{
 		GUI.Frame.constructor("Script Editor");
 		
 		// Info
-		mInfo = ::GUI.HTML("<font size=\"22\">Instances script editor. See Wiki for help.</font>");
+		mInfo = ::GUI.HTML("<font size=\"22\">Script editor</font>");
 		mInfo.setResize(true);
 		mInfo.setMaximumSize(500, null);
 		mInfo.setInsets(0, 4, 0, 4);
@@ -36,10 +40,20 @@ class Screens.InstanceScript extends GUI.Frame
 		container.setInsets(4, 8, 8, 4);
 		container.add(mScript);
 		
-		// Refresh
-		mRefresh = GUI.Button("Refresh");
-		mRefresh.setReleaseMessage("onRefreshPressed");
-		mRefresh.addActionListener(this);
+		// Load
+		mLoad = GUI.Button("Load");
+		mLoad.setReleaseMessage("onLoadPressed");
+		mLoad.addActionListener(this);
+		
+		// Default
+		mDefault = GUI.Button("Default");
+		mDefault.setReleaseMessage("onDefaultPressed");
+		mDefault.addActionListener(this);
+		
+		// Load
+		mCancel = GUI.Button("Cancel");
+		mCancel.setReleaseMessage("onLoadPressed");
+		mCancel.addActionListener(this);
 		
 		// Submit
 		mSubmit = GUI.Button("Submit");
@@ -72,13 +86,14 @@ class Screens.InstanceScript extends GUI.Frame
 		// Buttons
 		local buttons = GUI.Container(GUI.BoxLayout());
 		buttons.getLayoutManager().setPackAlignment(0.5);
+		buttons.add(mCancel);
 		buttons.add(mSubmit);
-		buttons.add(mRefresh);
 		buttons.add(mRun);
 		buttons.add(mKill);
 		buttons.add(copy);
 		buttons.add(paste);
 		buttons.setInsets(0, 0, 4, 0);
+		buttons.setSize(500, 32);
 		
 		// Type
 		mType = GUI.DropDownList();
@@ -91,11 +106,28 @@ class Screens.InstanceScript extends GUI.Frame
 				this.t.resetState();
 			}
 		});
+				
+		// Parameter
+		mParameter = ::GUI.InputArea("");
+		mParameter.setWidth(128);
+		
+		// Top buttons
+		local topButtons = GUI.Container(GUI.BoxLayout());
+		topButtons.getLayoutManager().setPackAlignment(0.5);
+		topButtons.add(mLoad);
+		topButtons.add(mDefault);
+		
+		// Top Right
+		local topRight = GUI.Container(GUI.BorderLayout());
+		topRight.setInsets(3, 3, 3, 3);
+		topRight.add(mInfo, GUI.BorderLayout.WEST);
+		topRight.add(mParameter, GUI.BorderLayout.CENTER);
+		topRight.add(topButtons, GUI.BorderLayout.EAST);
 		
 		// Top
 		local top = GUI.Container(GUI.BorderLayout());
 		top.setInsets(3, 3, 3, 3);
-		top.add(mInfo, GUI.BorderLayout.CENTER);
+		top.add(topRight, GUI.BorderLayout.CENTER);
 		top.add(mType, GUI.BorderLayout.WEST);
 		
 		// Content
@@ -108,7 +140,7 @@ class Screens.InstanceScript extends GUI.Frame
 		// This
 		setContentPane(content);
 		setInsets(4, 4, 4, 4);
-		setSize(500, 415);
+		setSize(500, 425);
 		center();
 		
 		// Init
@@ -117,17 +149,25 @@ class Screens.InstanceScript extends GUI.Frame
 		_refresh();
 	}
 	
-	function resetState() {	
+	function resetState() {
+		mParameter.setEnabled(true);
 		mSubmit.setEnabled(false);
-		mRefresh.setText("Refresh");
-		mRun.setEnabled(true);
-		mKill.setEnabled(true);
+		mCancel.setEnabled(false);
+		mLoad.setEnabled(true);
+		mParameter.setEnabled(true);
+		mDefault.setEnabled(true);
+		mRun.setEnabled(true && mStatus == "inactive");
+		mKill.setEnabled(true && mStatus == "active");
 		mType.setEnabled(true);
 	}
 	
 	function onTextChanged( text ) {
+		mParameter.setEnabled(false);
 		mSubmit.setEnabled(true);
-		mRefresh.setText("Cancel");
+		mCancel.setEnabled(true);
+		mParameter.setEnabled(false);
+		mDefault.setEnabled(false);
+		mLoad.setEnabled(false);
 		mRun.setEnabled(false);
 		mKill.setEnabled(false);
 		mType.setEnabled(false);
@@ -153,22 +193,27 @@ class Screens.InstanceScript extends GUI.Frame
 
 	function onRunScriptPressed( button )
 	{	
-		::_Connection.sendQuery("script.run", this, [ mType.getCurrentIndex() ]);
+		::_Connection.sendQuery("script.run", this, [ mType.getCurrentIndex(), mParameter.getText() ]);
 	}
 
 	function onKillPressed( button )
 	{	
-		::_Connection.sendQuery("script.kill", this, [ mType.getCurrentIndex() ]);
+		::_Connection.sendQuery("script.kill", this, [ mType.getCurrentIndex(), mParameter.getText() ]);
 	}
 
-	function onRefreshPressed( button )
+	function onLoadPressed( button )
 	{	
 		this._refresh();
 	}
 
+	function onDefaultPressed( button )
+	{	
+		::_Connection.sendQuery("script.load", this, [ mType.getCurrentIndex(), "" ]);
+	}
+
 	function onSubmitPressed( button )
 	{
-		::_Connection.sendQuery("script.save", this, [mType.getCurrentIndex(), this._collapseTabs(this.mScript.getText())]);
+		::_Connection.sendQuery("script.save", this, [mType.getCurrentIndex(), mParameter.getText(), this._collapseTabs(this.mScript.getText())]);
 	}
 	
 	function setVisible( value )
@@ -176,7 +221,7 @@ class Screens.InstanceScript extends GUI.Frame
 		if (value && !this.isVisible())
 		{
 			this.mScript.setText("");
-			::_Connection.sendQuery("script.load", this, [ mType.getCurrentIndex() ]);
+			::_Connection.sendQuery("script.load", this, [ mType.getCurrentIndex(), mParameter.getText() ]);
 		}
 
 		this.GUI.Frame.setVisible(value);
@@ -192,14 +237,22 @@ class Screens.InstanceScript extends GUI.Frame
 				if(r.len() == 2) 
 				{					
 					local scriptMeta = "Zone";
+					this.mParameter.setText(r[1]);
 					if(mType.getCurrentIndex() == 1)
 						scriptMeta = "Quest ID";
 					else if(mType.getCurrentIndex() == 2)
-						scriptMeta = "CDefID";
-					this.mInfo.setText("<font size=\"22\">" + scriptMeta + " " + r[1] + 
-						" " + ( r[0] == "true" ? 
-							"<font color=\"00ff00\">Active</font>" : 
-							"<font color=\"ff0000\">Inactive</font>"));
+						scriptMeta = "AIScript";
+					local statusText = "<font color=\"00ff00\">Active</font>";
+					mStatus = "active";
+					if(r[0] == "false") { 
+						statusText = "<font color=\"ff0000\">Inactive</font>";
+						mStatus = "inactive";
+					} 
+					else if(r[0] == "unknown") { 
+						statusText = "<font color=\"ffff00\">Unknown</font>";
+						mStatus = "unknown";
+					} 					
+					this.mInfo.setText("<font size=\"22\">" + statusText + " " + scriptMeta + "</font>");
 				}
 				else 
 				{
@@ -285,7 +338,7 @@ class Screens.InstanceScript extends GUI.Frame
 
 	function _refresh() 
 	{
-		::_Connection.sendQuery("script.load", this, [ mType.getCurrentIndex() ]);
+		::_Connection.sendQuery("script.load", this, [ mType.getCurrentIndex(), mParameter.getText() ]);
 	}
 }
 

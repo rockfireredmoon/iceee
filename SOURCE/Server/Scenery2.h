@@ -24,7 +24,8 @@ class CreatureSpawnDef;
 
 enum SceneryEffectType {
 	PARTICLE_EFFECT = 1,
-	ASSET_UPDATE = 2
+	ASSET_UPDATE = 2,
+	TRANSFORMATION = 3
 };
 
 /* Effects can be attached to scenery items by scripts. This
