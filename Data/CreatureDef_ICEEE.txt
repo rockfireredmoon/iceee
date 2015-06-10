@@ -1882,3 +1882,103 @@ display_name=Test Sidekick
 profession=2
 creature_category=Mortal
 ai_package=Newb_Knight
+
+[ENTRY]
+ID=7851
+will_regen=1
+might_regen=1
+appearance=c2:{["a"]=[{["type"]="Item-Spear-Basic4",["node"]="right_hand",["colors"]=["AA8E76","55382C"]},{["type"]="Item-Bow-Basic2",["node"]="back_2",["colors"]=["3F2A21","FF502C","FFFFFF"]},{["type"]="Armor-Heavy-High2-Left_Pauldron",["node"]="left_shoulder",["colors"]=["ffffff","DDA546","942E1A","ffffff"]},{["type"]="Armor-Heavy-High2-Right_Pauldron",["node"]="right_shoulder",["colors"]=["ffffff","DDA546","942E1A","ffffff"]}],["c"]={["boots"]={["type"]="Armor-Heavy-High2",["colors"]=["dda546","ffffff","bfbfbf","ffffff","ffffff","ffffff","ffffff","ffffff"]},["chest"]={["type"]="Armor-Medium-Low5",["colors"]=["d4d4d4","dda546","ffffff","aa7342","7f2816","ffffff"]},["arms"]={["type"]="Armor-Medium-Low5",["colors"]=["949494","dda546","ffffff","ffffff","ffffff","7f2816"]},["leggings"]={["type"]="Armor-Medium-Low5",["colors"]=["d4d4d4","dda546","7f2816","ffffff","ffffff","aa7342"]},["collar"]={["type"]="Armor-Heavy-Mid3",["colors"]=["7f7f7f","ffffff","ffffff","ffffff","DDA546","ffffff"]},["belt"]={["type"]="Armor-Heavy-High2",["colors"]=["dda546","ffffff","d4d4d4","ffffff","ffffff","ffffff","7f2816","ffffff"]},["gloves"]={["type"]="Armor-Heavy-High2",["colors"]=["dda546","ffffff","aaaaaa","ffffff","ffffff","7f2816","ffffff","ffffff"]}},["b"]="n",["sk"]={["fingers_hooves"]="D4B293",["snout"]="AA8E76",["eye_symbol"]="FFFFFF",["base"]="E9E9C2",["horns"]="3F2B19",["eye"]="57DBFF",["eye_white"]="FFFFFF",["nose"]="553921",["inner_ear"]="AA8E76"},["sz"]="1",["h"]=0,["g"]="m",["r"]="h"}
+level=1
+display_name=Recruit Jacob
+profession=1
+creature_category=Mortal
+ai_package=nothing
+
+[ENTRY]
+ID=7852
+will_regen=1
+might_regen=1
+appearance=c2:{["a"]=[{["type"]="Armor-Medium-High2-Left_Pauldron",["node"]="left_shoulder",["colors"]=["ffffff","DDA546"]},{["type"]="Armor-Medium-High2-Right_Pauldron",["node"]="right_shoulder",["colors"]=["ffffff","DDA546"]},{["type"]="Item-Claw-Medium3",["node"]="right_hand",["colors"]=["942E1A","ffffff","DDA546"]},{["type"]="Item-Claw-Medium3",["node"]="left_hand",["colors"]=["942E1A","ffffff","DDA546"]}],["c"]={["boots"]={["type"]="Armor-Heavy-High2",["colors"]=["dda546","ffffff","bfbfbf","ffffff","ffffff","ffffff","ffffff","ffffff"]},["chest"]={["type"]="Armor-Medium-Low5",["colors"]=["d4d4d4","dda546","ffffff","aa7342","7f2816","ffffff"]},["arms"]={["type"]="Armor-Medium-Low5",["colors"]=["949494","dda546","ffffff","ffffff","ffffff","7f2816"]},["leggings"]={["type"]="Armor-Medium-Low5",["colors"]=["d4d4d4","dda546","7f2816","ffffff","ffffff","aa7342"]},["collar"]={["type"]="Armor-Heavy-Mid3",["colors"]=["7f7f7f","ffffff","ffffff","ffffff","DDA546","ffffff"]},["belt"]={["type"]="Armor-Heavy-High2",["colors"]=["dda546","ffffff","d4d4d4","ffffff","ffffff","ffffff","7f2816","ffffff"]},["gloves"]={["type"]="Armor-Heavy-High2",["colors"]=["dda546","ffffff","aaaaaa","ffffff","ffffff","7f2816","ffffff","ffffff"]}},["b"]="n",["sk"]={["hands_feet"]="AA8E76",["goatee"]="BF400A",["eye_white"]="DCDCDC",["snout"]="AA3909",["horns"]="3F2A21",["face_highlight"]="551C04",["eye"]="B0FF44",["hoves"]="551C04",["eye_lid"]="AA8E76",["base"]="7F2B07"},["sz"]="1",["h"]=1,["g"]="m",["r"]="c"}
+level=1
+display_name=Recruit Ares
+profession=1
+creature_category=Mortal
+ai_package=nothing
+
+[ENTRY]
+ID=7853
+will_regen=1
+might_regen=1
+appearance=c2:{["a"]=[{["type"]="Armor-Medium-Low3-Left_Pauldron",["node"]="left_shoulder",["colors"]=["BFBFBF","DDA546","942E1A"]},{["type"]="Armor-Medium-Low3-Right_Pauldron",["node"]="right_shoulder",["colors"]=["BFBFBF","DDA546","942E1A"]},{["type"]="Item-1hSword-Medium5",["node"]="right_hand",["colors"]=["7F7F7F","DDA546","942E1A"]}],["c"]={["boots"]={["type"]="Armor-Heavy-High2",["colors"]=["dda546","ffffff","bfbfbf","ffffff","ffffff","ffffff","ffffff","ffffff"]},["chest"]={["type"]="Armor-Medium-Low5",["colors"]=["d4d4d4","dda546","ffffff","aa7342","7f2816","ffffff"]},["arms"]={["type"]="Armor-Medium-Low5",["colors"]=["949494","dda546","ffffff","ffffff","ffffff","7f2816"]},["leggings"]={["type"]="Armor-Medium-Low5",["colors"]=["d4d4d4","dda546","7f2816","ffffff","ffffff","aa7342"]},["collar"]={["type"]="Armor-Heavy-Mid3",["colors"]=["7f7f7f","ffffff","ffffff","ffffff","DDA546","ffffff"]},["belt"]={["type"]="Armor-Heavy-High2",["colors"]=["dda546","ffffff","d4d4d4","ffffff","ffffff","ffffff","7f2816","ffffff"]},["gloves"]={["type"]="Armor-Heavy-High2",["colors"]=["dda546","ffffff","aaaaaa","ffffff","ffffff","7f2816","ffffff","ffffff"]}},["b"]="n",["sk"]={["joints"]="6E6E6E",["brass"]="9B7C29",["wood_2"]="705D3C",["eye"]="929AA6",["wood_1"]="9F8C6B"},["sz"]="1",["h"]=0,["g"]="m",["r"]="w"}
+level=1
+display_name=Recruit Base
+profession=1
+creature_category=Mortal
+ai_package=nothing
+
+[ENTRY]
+ID=7854
+will_regen=1
+might_regen=1
+appearance=c2:{["a"]=[{["type"]="Armor-Medium-Low3-Left_Pauldron",["node"]="left_shoulder",["colors"]=["BFBFBF","DDA546","942E1A"]},{["type"]="Armor-Medium-Low3-Right_Pauldron",["node"]="right_shoulder",["colors"]=["BFBFBF","DDA546","942E1A"]},{["type"]="Item-1hSword-Medium5",["node"]="right_hand",["colors"]=["7F7F7F","DDA546","942E1A"]},{["type"]="Item-Shield-Basic2",["node"]="left_hand",["colors"]=["FFFFFF","942E1A","DDA546"]}],["c"]={["boots"]={["type"]="Armor-Heavy-High2",["colors"]=["dda546","ffffff","bfbfbf","ffffff","ffffff","ffffff","ffffff","ffffff"]},["chest"]={["type"]="Armor-Medium-Low5",["colors"]=["d4d4d4","dda546","ffffff","aa7342","7f2816","ffffff"]},["arms"]={["type"]="Armor-Medium-Low5",["colors"]=["949494","dda546","ffffff","ffffff","ffffff","7f2816"]},["leggings"]={["type"]="Armor-Medium-Low5",["colors"]=["d4d4d4","dda546","7f2816","ffffff","ffffff","aa7342"]},["collar"]={["type"]="Armor-Heavy-Mid3",["colors"]=["7f7f7f","ffffff","ffffff","ffffff","DDA546","ffffff"]},["belt"]={["type"]="Armor-Heavy-High2",["colors"]=["dda546","ffffff","d4d4d4","ffffff","ffffff","ffffff","7f2816","ffffff"]},["gloves"]={["type"]="Armor-Heavy-High2",["colors"]=["dda546","ffffff","aaaaaa","ffffff","ffffff","7f2816","ffffff","ffffff"]}},["b"]="n",["sk"]={["hands_feet"]="BFA167",["eye_white"]="DDD7D2",["snout"]="D4B373",["teeth"]="E9E9C2",["tail"]="6A3425",["base"]="55473B",["eye_lid"]="D4B373",["nails"]="D4D4D4",["eye"]="2750D4",["inner_ear"]="D48787",["nose"]="7F3939",["chest"]="D4B373"},["sz"]="1",["h"]=2,["g"]="m",["r"]="o"}
+level=1
+display_name=Recruit Tank 
+profession=1
+creature_category=Mortal
+ai_package=nothing
+
+[ENTRY]
+ID=7855
+will_regen=1
+might_regen=1
+appearance=c2:{["a"]=[{["type"]="Item-Spear-Basic4",["node"]="right_hand",["colors"]=["527F55","55382C"]},{["type"]="Item-Bow-Basic2",["node"]="back_2",["colors"]=["3F2A21","FF502C","FFFFFF"]},{["type"]="Armor-Heavy-High2-Left_Pauldron",["node"]="left_shoulder",["colors"]=["ffffff","DDA546","942E1A","ffffff"]},{["type"]="Armor-Heavy-High2-Right_Pauldron",["node"]="right_shoulder",["colors"]=["ffffff","DDA546","942E1A","ffffff"]}],["c"]={["boots"]={["type"]="Armor-Heavy-High2",["colors"]=["dda546","ffffff","bfbfbf","ffffff","ffffff","ffffff","ffffff","ffffff"]},["chest"]={["type"]="Armor-Medium-Low5",["colors"]=["d4d4d4","dda546","ffffff","aa7342","7f2816","ffffff"]},["arms"]={["type"]="Armor-Medium-Low5",["colors"]=["949494","dda546","ffffff","ffffff","ffffff","7f2816"]},["leggings"]={["type"]="Armor-Medium-Low5",["colors"]=["d4d4d4","dda546","7f2816","ffffff","ffffff","aa7342"]},["collar"]={["type"]="Armor-Heavy-Mid3",["colors"]=["7f7f7f","ffffff","ffffff","ffffff","DDA546","ffffff"]},["belt"]={["type"]="Armor-Heavy-High2",["colors"]=["dda546","ffffff","d4d4d4","ffffff","ffffff","ffffff","7f2816","ffffff"]},["gloves"]={["type"]="Armor-Heavy-High2",["colors"]=["dda546","ffffff","aaaaaa","ffffff","ffffff","7f2816","ffffff","ffffff"]}},["b"]="n",["sk"]={["hair"]="1A5B7F",["body_tats"]="527F55",["arm_tats"]="154C6A",["skin"]="527F55",["head_spots"]="1A5B7F",["eyeball"]="BFBF9F",["horn"]="34B6FF",["eye_color"]="FFFD00",["head_tattoos"]="375539",["body_spots"]="527F55",["teeth"]="BFBF9F"},["sz"]="1",["h"]=1,["g"]="m",["r"]="p"}
+level=1
+display_name=Recruit Healer
+profession=1
+creature_category=Mortal
+ai_package=nothing
+
+[ENTRY]
+ID=7856
+will_regen=1
+might_regen=1
+appearance=c2:{["a"]=[{["type"]="Armor-Medium-High2-Left_Pauldron",["node"]="left_shoulder",["colors"]=["ffffff","DDA546"]},{["type"]="Armor-Medium-High2-Right_Pauldron",["node"]="right_shoulder",["colors"]=["ffffff","DDA546"]},{["type"]="Item-Claw-Medium3",["node"]="right_hand",["colors"]=["942E1A","ffffff","DDA546"]},{["type"]="Item-Claw-Medium3",["node"]="left_hand",["colors"]=["942E1A","ffffff","DDA546"]}],["c"]={["boots"]={["type"]="Armor-Heavy-High2",["colors"]=["dda546","ffffff","bfbfbf","ffffff","ffffff","ffffff","ffffff","ffffff"]},["chest"]={["type"]="Armor-Medium-Low5",["colors"]=["d4d4d4","dda546","ffffff","aa7342","7f2816","ffffff"]},["arms"]={["type"]="Armor-Medium-Low5",["colors"]=["949494","dda546","ffffff","ffffff","ffffff","7f2816"]},["leggings"]={["type"]="Armor-Medium-Low5",["colors"]=["d4d4d4","dda546","7f2816","ffffff","ffffff","aa7342"]},["collar"]={["type"]="Armor-Heavy-Mid3",["colors"]=["7f7f7f","ffffff","ffffff","ffffff","DDA546","ffffff"]},["belt"]={["type"]="Armor-Heavy-High2",["colors"]=["dda546","ffffff","d4d4d4","ffffff","ffffff","ffffff","7f2816","ffffff"]},["gloves"]={["type"]="Armor-Heavy-High2",["colors"]=["dda546","ffffff","aaaaaa","ffffff","ffffff","7f2816","ffffff","ffffff"]}},["b"]="n",["sk"]={["feet"]="D4ADAD",["eye_lid"]="BF5EBE",["ear_tips"]="7F411D",["base"]="7F411D",["inner_ear"]="FFD0D0",["eye"]="7F297F",["eye_white"]="FFD4FE",["nose"]="FFA2A2",["chest"]="BF9C9C"},["sz"]="1",["h"]=0,["g"]="f",["r"]="b"}
+level=1
+display_name=Recruit Melee
+profession=1
+creature_category=Mortal
+ai_package=nothing
+
+[ENTRY]
+ID=7857
+will_regen=1
+might_regen=1
+appearance=c2:{["a"]=[{["type"]="Armor-Medium-Mid3-Left_Pauldron",["node"]="left_shoulder",["colors"]=["DDA546","90AA43","DDA546","FFFFFF","942E1A","FFFD00"]},{["type"]="Armor-Medium-Mid3-Right_Pauldron",["node"]="right_shoulder",["colors"]=["DDA546","90AA43","DDA546","FFFFFF","942E1A","FFFD00"]},{["type"]="Item-Wand-Basic2",["node"]="left_hand",["colors"]=["DDA546","ffffff","942E1A"]},{["type"]="Item-Talisman-Basic3",["node"]="right_hip",["colors"]=["DDA546","3A5548","942E1A"]}],["c"]={["boots"]={["type"]="Armor-Heavy-High2",["colors"]=["dda546","ffffff","bfbfbf","ffffff","ffffff","ffffff","ffffff","ffffff"]},["chest"]={["type"]="Armor-Medium-Low5",["colors"]=["d4d4d4","dda546","ffffff","aa7342","7f2816","ffffff"]},["arms"]={["type"]="Armor-Medium-Low5",["colors"]=["949494","dda546","ffffff","ffffff","ffffff","7f2816"]},["leggings"]={["type"]="Armor-Medium-Low5",["colors"]=["d4d4d4","dda546","7f2816","ffffff","ffffff","aa7342"]},["collar"]={["type"]="Armor-Heavy-Mid3",["colors"]=["7f7f7f","ffffff","ffffff","ffffff","DDA546","ffffff"]},["belt"]={["type"]="Armor-Heavy-High2",["colors"]=["dda546","ffffff","d4d4d4","ffffff","ffffff","ffffff","7f2816","ffffff"]},["gloves"]={["type"]="Armor-Heavy-High2",["colors"]=["dda546","ffffff","aaaaaa","ffffff","ffffff","7f2816","ffffff","ffffff"]}},["b"]="n",["sk"]={["eye_brows"]="7F2816",["beak"]="7F3E2D",["head"]="6A3425",["nails"]="FFD6B1",["mask"]="E9C4A2",["base"]="BFA085",["neck_belly"]="BFA085",["eye"]="2DD476",["eye_white"]="FFFFFF",["chest_legs"]="6A3425"},["sz"]="1",["h"]=0,["g"]="f",["r"]="n"}
+level=1
+display_name=Recruit Ranged
+profession=1
+creature_category=Mortal
+ai_package=nothing
+
+[ENTRY]
+ID=7858
+will_regen=1
+might_regen=1
+appearance=c2:{["a"]=[{["type"]="Armor-Medium-Low3-Left_Pauldron",["node"]="left_shoulder",["colors"]=["BFBFBF","DDA546","942E1A"]},{["type"]="Armor-Medium-Low3-Right_Pauldron",["node"]="right_shoulder",["colors"]=["BFBFBF","DDA546","942E1A"]},{["type"]="Item-1hSword-Medium5",["node"]="right_hand",["colors"]=["7F7F7F","DDA546","942E1A"]}],["c"]={["boots"]={["type"]="Armor-Heavy-High2",["colors"]=["dda546","ffffff","bfbfbf","ffffff","ffffff","ffffff","ffffff","ffffff"]},["chest"]={["type"]="Armor-Medium-Low5",["colors"]=["d4d4d4","dda546","ffffff","aa7342","7f2816","ffffff"]},["arms"]={["type"]="Armor-Medium-Low5",["colors"]=["949494","dda546","ffffff","ffffff","ffffff","7f2816"]},["leggings"]={["type"]="Armor-Medium-Low5",["colors"]=["d4d4d4","dda546","7f2816","ffffff","ffffff","aa7342"]},["collar"]={["type"]="Armor-Heavy-Mid3",["colors"]=["7f7f7f","ffffff","ffffff","ffffff","DDA546","ffffff"]},["belt"]={["type"]="Armor-Heavy-High2",["colors"]=["dda546","ffffff","d4d4d4","ffffff","ffffff","ffffff","7f2816","ffffff"]},["gloves"]={["type"]="Armor-Heavy-High2",["colors"]=["dda546","ffffff","aaaaaa","ffffff","ffffff","7f2816","ffffff","ffffff"]}},["b"]="n",["sk"]={["joints"]="6E6E6E",["brass"]="9B7C29",["wood_2"]="705D3C",["eye"]="929AA6",["wood_1"]="9F8C6B"},["sz"]="1",["h"]=0,["g"]="m",["r"]="w"}
+level=1
+display_name=Recruit Base (sword)
+profession=1
+creature_category=Mortal
+ai_package=nothing
+
+[ENTRY]
+ID=7859
+will_regen=1
+might_regen=1
+appearance=c2:{["a"]=[{["type"]="Armor-Light-Epic1-Left_Pauldron",["node"]="left_shoulder",["colors"]=["940D0D","E9E9E9","DDA546"]},{["type"]="Armor-Light-Epic1-Right_Pauldron",["node"]="right_shoulder",["colors"]=["940D0D","E9E9E9","DDA546"]},{["type"]="Item-Spear-Medium1",["node"]="back_sheathe",["colors"]=["940D0D","552B13","DDA546"]}],["c"]={["boots"]={["type"]="Armor-Heavy-Epic6",["colors"]=["dda546","ffffff","000000","000000","000000"]},["chest"]={["type"]="Armor-Cloth-Epic2",["colors"]=["e9e9e9","000000","dda546","940d0d","000000","000000"]},["arms"]={["type"]="Armor-Heavy-Mid2",["colors"]=["940d0d","ffffff","dda546"]},["leggings"]={["type"]="Armor-Heavy-Epic6",["colors"]=["ffffff","000000","dda546","000000","000000"]},["collar"]={["type"]="Armor-Heavy-High2",["colors"]=["dda546","000000","000000","000000","940d0d","000000","000000","000000"]},["belt"]={["type"]="Armor-Warrior-Athenian",["colors"]=["000000","000000","000000","000000","940d0d","000000","000000","dda546"]},["gloves"]={["type"]="Armor-Heavy-Epic4",["colors"]=["dda546","940d0d","000000","000000","000000","000000","000000"]}},["b"]="n",["sk"]={["hands_feet"]="BF3434",["eye_white"]="FFFFFF",["nails"]="FFFFFF",["ear_tips"]="BF3434",["base"]="D4480C",["eye"]="AA8F5C",["inner_ear"]="FFFFFF",["nose"]="464755",["head_highlight"]="D49233"},["sz"]="1.25",["h"]=1,["g"]="f",["r"]="x"}
+level=1
+display_name=Captain Angelica
+profession=1
+creature_category=Mortal
+ai_package=nothing
+

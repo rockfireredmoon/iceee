@@ -4,7 +4,6 @@
 ./AnimationHandler.nut
 ./Assemblers
 ./Assemblers/CreatureAssembler.nut
-./Assemblers/SceneryAssembler.nut
 ./AssetDependencies.nut
 ./AttachmentPoints.nut
 ./Bean.nut

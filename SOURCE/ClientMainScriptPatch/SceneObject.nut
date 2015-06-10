@@ -5070,11 +5070,14 @@ class this.SceneObject extends this.MessageBroadcaster
 	{
 		if(mCurrentTransformationSequence != null)
 			stopTransformationSequence();
-			
+
+		// Store the state at the state of the transformation			
 		mCurrentTransformationSequence = sequence;
 		mCurrentTransformationSequence.startPosition <- Vector3(getPosition().x, getPosition().y, getPosition().z);;
 		mCurrentTransformationSequence.startScale <- Vector3(getScale().x, getScale().y, getScale().z);
-		//mCurrentTransformationSequence.startRotation <- clone getRotation();
+		local q = getOrientation();
+		mCurrentTransformationSequence.startRotation <- Quaternion(q.w, q.x, q.y, q.z);
+		mCurrentTransformationSequence.startOpacity <- getOpacity();
 		
 		::_sceneObjectManager.mTransforming.append(this);
 		
@@ -5084,10 +5087,31 @@ class this.SceneObject extends this.MessageBroadcaster
 	/*
 	 * Moves to next frame in transformation sequence
 	 */
-	function nextTransformationFrame() {	
+	function nextTransformationFrame() {
+		/* Reset / remove any state from the current frame (if any) so
+		 * if the frame is repeated it will process from the start
+		 */
+		if(mCurrentTransformationFrame != null) {
+			foreach(transform in mCurrentTransformationFrame.transforms) {
+				local tType = "type" in transform ? transform.type : "unknown"; 
+				if(tType == "scale" || tType == "rotate" || tType == "translate" || tType == "opacity") {
+					if("start" in transform)
+						delete transform.start
+				}
+				else if(tType == "playAudio") {
+					if("played" in transform) 
+						delete transform.played;
+				}
+				else if(tType == "stopAudio") {
+					if("stopped" in transform) 
+						delete transform.stopped;
+				}
+			}
+		}  
+	
+		
 		if(!("index" in mCurrentTransformationSequence)) {		
 			// Starting sequence
-			mCurrentTransformationSequence.previousForceUpdate <- mForceUpdate;
 			mCurrentTransformationSequence.index <- 0;
 		}
 		else
@@ -5104,7 +5128,6 @@ class this.SceneObject extends this.MessageBroadcaster
 		if(mCurrentTransformationSequence.index >= frames.len()) {
 			print("ICE! At end of sequence at " + mCurrentTransformationSequence.index);
 			mCurrentTransformationFrame = null;
-			mForceUpdate = mCurrentTransformationSequence.previousForceUpdate;
 			return false;
 		}
 		
@@ -5117,7 +5140,7 @@ class this.SceneObject extends this.MessageBroadcaster
 		
 		mCurrentTransformationFrame.startScale <- Vector3(getScale().x, getScale().y, getScale().z);	
 		mCurrentTransformationFrame.started <- System.currentTimeMillis();
-		mCurrentTransformationFrame.durationMs <- ( ("duration" in mCurrentTransformationFrame) ? mCurrentTransformationFrame.duration : 1 ) * 1000;  
+		mCurrentTransformationFrame.durationMs <- ( ( ("duration" in mCurrentTransformationFrame) ? mCurrentTransformationFrame.duration.tofloat() : 1.0 ) * 1000).tointeger();  
 		mCurrentTransformationFrame.end <- mCurrentTransformationFrame.started + mCurrentTransformationFrame.durationMs;
 			
 		print("ICE! Frame " + mCurrentTransformationSequence.index + " will run from " + mCurrentTransformationFrame.started + " to " + mCurrentTransformationFrame.end);
@@ -5136,9 +5159,12 @@ class this.SceneObject extends this.MessageBroadcaster
 	{
 		if(mCurrentTransformationSequence != null) {
 						
-			this.mNode.setScale(mCurrentTransformationSequence.startScale);
-			this.mNode.setPosition(mCurrentTransformationSequence.startPosition);
-			// TODO rotation
+			if(!mGone) {
+				this.mNode.setScale(mCurrentTransformationSequence.startScale);
+				this.mNode.setPosition(mCurrentTransformationSequence.startPosition);
+				this.mNode.setOrientation(mCurrentTransformationSequence.startRotation);
+				setOpacity(mCurrentTransformationSequence.startOpacity);
+			}
 			
 			mCurrentTransformationSequence = null;
 			mCurrentTransformationFrame = null;
@@ -5160,43 +5186,96 @@ class this.SceneObject extends this.MessageBroadcaster
 		// Work how out how along the transformation we are
 		local now = System.currentTimeMillis();
 		local progress = now - mCurrentTransformationFrame.started;
-		local pc = mCurrentTransformationFrame.durationMs == 0 ? 1 : progress / mCurrentTransformationFrame.durationMs;
-		
-		print("ICE! updateTransformationSequences() " + now + " / " + progress + " " + pc + "\n");
+		local pc = mCurrentTransformationFrame.durationMs == 0 ? 1.0 : progress.tofloat() / mCurrentTransformationFrame.durationMs.tofloat();
 		
 		if(pc > 1)
 			pc = 1.0;
 			
-		/* Apply each of the transformation (using the state of the object before the
+		/* Apply each of the transformations (using the state of the object before the
 		 * frame started as a base) and interpolate using the current progress
 		 */
 		local tType = null;  
 		foreach(transform in mCurrentTransformationFrame.transforms) {
 			tType = "type" in transform ? transform.type : "unknown"; 
-			if(tType == "scale") {
+			if(tType == "opacity") {
+				// Scale				
+				if(!("start" in transform))
+					transform.start <- getOpacity();
+				local amtV = interpolatedTransformation(transform, pc);
+				Util.setNodeOpacity(mNode, amtV.x);				
+			}
+			else if(tType == "scale") {
 				// Scale				
 				if(!("start" in transform))
 					transform.start <- Vector3(getScale().x, getScale().y, getScale().z);
 				local amtV = interpolatedTransformation(transform, pc);
-				print("ICE! Scaling to " + amtV);
-				this.mNode.setScale(amtV);
+				mNode.setScale(amtV);
 			}
 			else if(tType == "rotate") {
 				// Rotate
-				//if(!("start" in transform))
-					//transform.start <- clone this.mRotation;
+				if(!("start" in transform)) {
+					local q = mNode.getOrientation();
+					transform.start <- Quaternion(q.w, q.x, q.y, q.z);
+				}
+				
 				local amtV = interpolatedTransformation(transform, pc);
-				print("ICE! Rotating to " + amtV);
-				//this.mNode.rotate(amtV, this.mRotation);
-				this.mNode.rotate(amtV);
+				
+				// Need amounts in radians
+				amtV.x = Math.deg2rad(amtV.x);
+				amtV.y = Math.deg2rad(amtV.y);
+				amtV.z = Math.deg2rad(amtV.z);
+				
+				local qx = this.Quaternion(amtV.x, Vector3(1.0, 0.0, 0.0));
+				local qy = this.Quaternion(amtV.y, Vector3(0.0, 1.0, 0.0));
+				local qz = this.Quaternion(amtV.z, Vector3(0.0, 0.0, 1.0));
+				local quat = qz * qy * qx;
+				
+				mNode.setOrientation(quat);
 			}
 			else if(tType == "translate") {
 				// Translate
 				if(!("start" in transform))
 					transform.start <- Vector3(getPosition().x, getPosition().y, getPosition().z);
-				local amtV = interpolatedTransformation(transform, pc) + transform.start;
-				print("ICE! Translated to " + amtV);
-				this.mNode.setPosition(amtV);
+				mNode.setPosition(interpolatedTransformation(transform, pc) + transform.start);
+			}
+			else if(tType == "goto") {
+				// Jump to a different frame
+				if(!("to" in transform)) {
+					transform.to <- 0;
+				}
+				
+				mCurrentTransformationSequence.index = transform.to.tointeger() - 1;
+				nextTransformationFrame();
+				return;
+				
+			}
+			else if(tType == "playAudio") {
+				// Play an audio asset
+				if("played" in transform) 
+					continue;
+					
+				if(!("asset" in transform)) {
+					print("ICE! No audio asset in transform");
+					continue; 
+				}
+				
+				if(!("delay" in transform) || progress >= ( transform.delay.tofloat() * 1000)) {
+					Audio.playMusic(transform.asset, ( "channel" in transform ) ? transform.channel : Audio.DEFAULT_CHANNEL);
+					transform.played <- true;
+				}
+			}
+			else if(tType == "stopAudio") {
+				// Play an audio asset
+				if("stopped" in transform) 
+					continue;
+					
+				if(!("delay" in transform) || progress >= ( transform.delay.tofloat() * 1000)) {
+					if("fadeSpeed" in transform) 
+						Audio.stopMusic(( "channel" in transform ) ? transform.channel : Audio.DEFAULT_CHANNEL, transform.fadeSpeed);
+					else 
+						Audio.stopMusic(( "channel" in transform ) ? transform.channel : Audio.DEFAULT_CHANNEL);
+					transform.stopped <- true;
+				}
 			}
 		}
 		
@@ -5222,7 +5301,7 @@ class this.SceneObject extends this.MessageBroadcaster
 		if(typeof arr != "array")
 			return Vector3(arr.tofloat(), arr.tofloat(), arr.tofloat());
 		else
-			return Vector3(arr[0],arr[1],arr[2]);
+			return Vector3(arr[0].tofloat(),arr[1].tofloat(),arr[2].tofloat());
 	}
 
 	function updateFade()
