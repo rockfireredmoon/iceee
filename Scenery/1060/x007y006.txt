@@ -8,14 +8,6 @@ Scale=2.875,2.875,2.875
 Flags=1
 
 [ENTRY]
-ID=1029141
-Asset=Environment-Marker?type=Bastion
-Name=Untitled
-Pos=14813.8,1262.04,13416.3
-Orient=0,0,0,1
-Scale=14,14,14
-
-[ENTRY]
 ID=1029144
 Asset=Prop-Palm-Tree2
 Name=Untitled

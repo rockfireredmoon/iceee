@@ -3427,7 +3427,7 @@ int SimulatorThread :: handle_query_scenery_list(void)
 	int x = query.GetInteger(1);
 	int y = query.GetInteger(2);
 	
-	//LogMessageL(MSG_SHOW, "[DEBUG] scenery.list: %d, %d, %d", zone, x, y);
+	LogMessageL(MSG_SHOW, "[DEBUG] scenery.list: %d, %d, %d", zone, x, y);
 
 	bool skipQuery = false;
 	if(g_Config.ProperSceneryList == 0 || (CheckPermissionSimple(Perm_Account, Permission_FastLoad) == true))
@@ -3593,6 +3593,9 @@ void SimulatorThread :: handle_updateVelocity(void)
 	creatureInst->Heading = GetByte(&readPtr[ReadPos], ReadPos);
 	creatureInst->Rotation = GetByte(&readPtr[ReadPos], ReadPos);
 	int speed = GetByte(&readPtr[ReadPos], ReadPos);
+
+
+	LogMessageL(MSG_WARN, "REMOVEME %d,%d,%d : heading %d rot: %d speed: %d", x, z, y, creatureInst->Heading, creatureInst->Rotation, speed);
 
 	//LogMessageL(MSG_SHOW, "Heading:%d, Rot:%d, Spd:%d", creatureInst->Heading, creatureInst->Rotation, speed);
 

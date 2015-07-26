@@ -1,0 +1,15 @@
+[ENTRY]
+ID=500324
+Asset=Prop-Bridge_a#Prop-Bridge_Broken
+Pos=18276.2,1652.48,22624.1
+Orient=0,-0.994924,0,0.100626
+Scale=1.75,1.75,1.75
+
+[ENTRY]
+ID=500325
+Asset=Prop-Dungeon_Entrance
+Pos=18798.7,1434.71,22799.7
+Orient=0,0.92269,0,0.385543
+Scale=1,1,1
+Flags=1
+

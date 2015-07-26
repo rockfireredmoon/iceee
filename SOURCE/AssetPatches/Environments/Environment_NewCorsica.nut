@@ -51,9 +51,7 @@
 		]
 	],
 	Ambient_Music = [
-		"Music-Corsica_Ambient1.ogg",
-        "Music-Corsica_Ambient2.ogg",
-        "Music-Corsica_Ambient3.ogg"
+		"Music-Northbeach.ogg"
 	],
 	Ambient_Noise = [
 		"Sound-Ambient-Bastion.ogg"

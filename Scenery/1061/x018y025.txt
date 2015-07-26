@@ -1,0 +1,14 @@
+[ENTRY]
+ID=500329
+Asset=Prop-Lamp_Post_NB1
+Pos=18554,1546.8,25937.1
+Orient=0,-0.501213,0,0.865324
+Scale=1,1,1
+
+[ENTRY]
+ID=500330
+Asset=Prop-Lamp_Post_NB1
+Pos=18107.2,1535.68,25455.7
+Orient=0,-0.501213,0,0.865324
+Scale=1,1,1
+

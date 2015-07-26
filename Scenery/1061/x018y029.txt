@@ -1,0 +1,16 @@
+[ENTRY]
+ID=500335
+Asset=Manipulator-SpawnPoint
+Pos=18613.7,1571.3,29882.9
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=def_1392509512
+
+[ENTRY]
+ID=500336
+Asset=Manipulator-SpawnPoint
+Pos=18854.6,1573.53,29764
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=def_1392509512
+

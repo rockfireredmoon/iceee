@@ -161,6 +161,8 @@ class this.States.BootstrapState extends this.State
 	function onXmlAttribute( key, value )
 	{
 		local ovalue = value;
+		
+		print("ICE! " + key + " = " + value);
 
 		if (key == "cref" || key == "mesh")
 		{
@@ -199,6 +201,8 @@ class this.States.BootstrapState extends this.State
 					value = value.slice(0, dm);
 				}
 			}
+			
+			print("ICE! GetArchiveName " + value);
 
 			local archive = this.GetArchiveName(value);
 

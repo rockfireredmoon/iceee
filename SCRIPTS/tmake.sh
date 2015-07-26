@@ -1,7 +1,7 @@
 #!/bin/bash
 # 
 # For copying and renaming texture asset archives. Takes an 
-# exist terrain template and gives it a new name, renaming all
+# existing terrain template and gives it a new name, renaming all
 # images and config files and contents. 
 #
 

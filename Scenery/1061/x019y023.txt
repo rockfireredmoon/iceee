@@ -1,0 +1,16 @@
+[ENTRY]
+ID=500354
+Asset=Prop-Boulder#Prop-Waterfall_Rock
+Pos=19168.5,1624.86,23001
+Orient=0,0,0,1
+Scale=3.3,3.3,3.3
+Flags=1
+
+[ENTRY]
+ID=500355
+Asset=Effects#Par-Splash2-Emitter
+Pos=19127.1,1673.26,23027.7
+Orient=0,0,0,1
+Scale=2,2,2
+Flags=1
+

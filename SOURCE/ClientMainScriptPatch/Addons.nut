@@ -1040,4 +1040,13 @@ function InputCommands::MarketEdit(args)
 	local frame = this.Screens.ItemMarketEditScreen();
 	frame.setVisible(true);
 }
+
+function InputCommands::DumpBipedAnims(args) 
+{
+	print("{\n");
+	foreach(k, v in ::BipedAnimationDef) {		
+		print("[\"" + k + "\"] = " + serialize(v) + "\n");
+	}
+	print("}\n");
+}
  

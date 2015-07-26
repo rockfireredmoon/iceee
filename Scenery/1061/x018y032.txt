@@ -1,0 +1,8 @@
+[ENTRY]
+ID=500337
+Asset=Prop-Lamp_Post_NB1
+Pos=18974.2,1170.95,32706.5
+Orient=0,-0.710353,0,0.703845
+Scale=1.225,1.225,1.225
+Flags=1
+

@@ -1,0 +1,15 @@
+[ENTRY]
+ID=500151
+Asset=CL-Earthrise_Forest3#CL-Earthrise_Forest3
+Pos=15191.3,1174.65,32528
+Orient=0.0653623,-0.969958,0.0885845,-0.216937
+Scale=0.4,0.4,0.4
+
+[ENTRY]
+ID=500152
+Asset=CL-Earthrise_Forest1#CL-Earthrise_Forest1
+Pos=15006.7,1221.04,32947
+Orient=0.09956,-0.821212,0.115892,0.549788
+Scale=0.7,0.7,0.7
+Flags=1
+

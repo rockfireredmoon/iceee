@@ -1263,6 +1263,8 @@ void SceneryManager::SendPageRequest(const SceneryPageRequest& request, std::lis
 	}
 
 	SceneryPage::SCENERY_IT it;
+	g_Log.AddMessageFormat("[REMOVEME!] Sending scenery %d,%d (%d)", page->mTileX, page->mTileY, page->mZone);
+
 	for(it = page->mSceneryList.begin(); it != page->mSceneryList.end(); ++it)
 	{
 		if( (std::find(request.excludedProps.begin(), request.excludedProps.end(), it->second.ID) != request.excludedProps.end()))
@@ -1278,6 +1280,8 @@ void SceneryManager::SendPageRequest(const SceneryPageRequest& request, std::lis
 		}
 		
 		wpos += PrepExt_UpdateScenery(&prepBuf[wpos], &it->second);
+
+
 		if(wpos > Global::MAX_SEND_CHUNK_SIZE)
 		{
 			data.Assign(prepBuf, wpos);
@@ -1297,8 +1301,10 @@ void SceneryManager::SendPageRequest(const SceneryPageRequest& request, std::lis
 	ReleaseThread();
 
 	//Now build the query response if the client has requested it.
-	if(request.skipQuery == true)
+	if(request.skipQuery == true) {
+		g_Log.AddMessageFormat("[REMOVEME!] Skipping query for scenery %d,%d (%d)", page->mTileX, page->mTileY, page->mZone);
 		return;
+	}
 
 	//Reset the packet buffer and data.
 	wpos = 0;
@@ -1306,6 +1312,8 @@ void SceneryManager::SendPageRequest(const SceneryPageRequest& request, std::lis
 
 	//Get the size of the response
 	int sizeReq = 6;  //Query ID (4 bytes) + row count (2 bytes)
+
+	g_Log.AddMessageFormat("[REMOVEME!] Rows for scenery %d,%d (%d) = %d", page->mTileX, page->mTileY, page->mZone, queryRows.size());
 	for(size_t s = 0; s < queryRows.size(); s++)
 	{
 		sizeReq++;  //1 string per row

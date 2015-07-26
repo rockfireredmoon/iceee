@@ -1,0 +1,8 @@
+[ENTRY]
+ID=500338
+Asset=Prop-Anubian_Tent1
+Pos=18905.4,1449.07,33834.9
+Orient=0,0.174108,0,0.984727
+Scale=1,1,1
+Flags=1
+

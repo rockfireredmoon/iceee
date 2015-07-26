@@ -1,0 +1,16 @@
+[ENTRY]
+ID=500154
+Asset=Manipulator-SpawnPoint
+Pos=15473.7,1252.91,34363
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=def_1392509178
+
+[ENTRY]
+ID=500155
+Asset=Earthrise Forest?d=1.0&amp;s=5668125&amp;sz=800
+Pos=15074.8,1241.44,34649.1
+Orient=0,0.183947,0,0.982936
+Scale=1,1,1
+Flags=1
+
