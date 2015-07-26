@@ -1,4 +1,12 @@
 [ENTRY]
+ID=1130290
+Asset=Prop-Loot1#Prop-Loot-Wood_Chest1
+Name=
+Pos=55169.5,551.766,64602.2
+Orient=0,0.276356,0,0.961055
+Scale=1,1,1
+
+[ENTRY]
 ID=10000044
 Asset=Manipulator-SpawnPoint
 Name=Untitled

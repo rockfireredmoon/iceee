@@ -1,6 +1,39 @@
 [ENTRY]
+ID=1130305
+Asset=Prop-Willow_Tree#Prop-Willow_Tree5
+Name=Untitled
+Pos=59347.6,705.565,47329.1
+Orient=0,0,0,1
+Scale=2,2,2
+
+[ENTRY]
+ID=1130306
+Asset=Prop-Accessories1#Prop-Vine_Hanging
+Name=Untitled
+Pos=59353.8,804.434,47431
+Orient=0,0,0,1
+Scale=0.5,0.5,0.5
+
+[ENTRY]
+ID=1130307
+Asset=Prop-Accessories1#Prop-Vine_Hanging
+Name=Untitled
+Pos=59266.4,875.584,47266.6
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
+ID=1130308
+Asset=Prop-Accessories1#Prop-Vine_Hanging
+Name=Untitled
+Pos=59462.9,851.222,47282
+Orient=0,0,0,1
+Scale=0.8,0.8,0.8
+
+[ENTRY]
 ID=151024470
 Asset=Prop-Water_Planes#Prop-Water_Plane1
+Name=Untitled
 Pos=59438.7,708.614,47293
 Orient=0,-0.144492,0,0.989506
 Scale=1.075,1.075,1.075
@@ -9,6 +42,7 @@ Flags=1
 [ENTRY]
 ID=151058350
 Asset=Prop-Water_Plants#Prop-Lily_Pads1
+Name=Untitled
 Pos=59540.6,708.279,47601
 Orient=0,-0.971148,0,0.238476
 Scale=1.65,1.65,1.65
@@ -17,6 +51,7 @@ Flags=1
 [ENTRY]
 ID=151058352
 Asset=Prop-Lily_Pads1
+Name=Untitled
 Pos=59411.9,708.279,47296
 Orient=0,0.568762,0,0.822502
 Scale=1.65,1.65,1.65
@@ -25,6 +60,7 @@ Flags=1
 [ENTRY]
 ID=151058353
 Asset=Prop-Lily_Pads1
+Name=Untitled
 Pos=59338.4,708.279,47608
 Orient=0,-0.605186,0,0.796084
 Scale=2.325,2.325,2.325
@@ -33,6 +69,7 @@ Flags=1
 [ENTRY]
 ID=151058354
 Asset=Prop-Lily_Pads1
+Name=Untitled
 Pos=59623,708.279,47722
 Orient=0,0,0,1
 Scale=1.65,1.65,1.65
@@ -41,6 +78,7 @@ Flags=1
 [ENTRY]
 ID=151058355
 Asset=Prop-Lily_Pads1
+Name=Untitled
 Pos=59623,708.279,47368
 Orient=0,0,0,1
 Scale=1.65,1.65,1.65
@@ -49,6 +87,7 @@ Flags=1
 [ENTRY]
 ID=151058366
 Asset=Par-Ground_Fog1
+Name=Untitled
 Pos=59355.8,709.559,47332.9
 Orient=0,0,0,1
 Scale=2.5,2.5,2.5
@@ -57,6 +96,7 @@ Flags=1
 [ENTRY]
 ID=151058367
 Asset=Prop-Lily_Pads1
+Name=Untitled
 Pos=59547.7,708.049,47773
 Orient=0,0,0,1
 Scale=2.425,2.425,2.425
@@ -65,6 +105,7 @@ Flags=1
 [ENTRY]
 ID=151058368
 Asset=Prop-Lily_Pads1
+Name=Untitled
 Pos=59671.1,708.164,47691
 Orient=0,-0.75128,0,0.659983
 Scale=1.575,1.575,1.575
@@ -73,6 +114,7 @@ Flags=1
 [ENTRY]
 ID=151058369
 Asset=Prop-Lily_Pads1
+Name=Untitled
 Pos=59665.2,708.049,47669
 Orient=0,0,0,1
 Scale=2.425,2.425,2.425
@@ -81,6 +123,7 @@ Flags=1
 [ENTRY]
 ID=151058435
 Asset=CL-Swamp-BullRushes2
+Name=Untitled
 Pos=59769.8,715.136,47433.9
 Orient=0,-0.514136,0,0.857709
 Scale=1.825,1.825,1.825
@@ -89,6 +132,7 @@ Flags=1
 [ENTRY]
 ID=151058436
 Asset=CL-Swamp-BullRushes2
+Name=Untitled
 Pos=59430.2,712.476,47695.3
 Orient=0,-0.514136,0,0.857709
 Scale=1.825,1.825,1.825
@@ -97,6 +141,7 @@ Flags=1
 [ENTRY]
 ID=151060047
 Asset=Prop-Boulder2
+Name=Untitled
 Pos=59269.6,697.618,47266.7
 Orient=0,-0.66687,0,0.745174
 Scale=1.9,1.9,1.9
@@ -104,6 +149,7 @@ Scale=1.9,1.9,1.9
 [ENTRY]
 ID=151060049
 Asset=Prop-Boulder2
+Name=Untitled
 Pos=59279.8,703.557,47377.8
 Orient=0,0,0,1
 Scale=1,1,1
@@ -111,6 +157,7 @@ Scale=1,1,1
 [ENTRY]
 ID=151060050
 Asset=Prop-Boulder2
+Name=Untitled
 Pos=59468.2,705.172,47285.1
 Orient=0,0,0,1
 Scale=1.55,1.55,1.55
@@ -118,6 +165,7 @@ Scale=1.55,1.55,1.55
 [ENTRY]
 ID=151060051
 Asset=Prop-Boulder2
+Name=Untitled
 Pos=59426.2,706.016,47391.4
 Orient=0,0.777072,0,0.629412
 Scale=1,1,1
@@ -125,6 +173,7 @@ Scale=1,1,1
 [ENTRY]
 ID=151060052
 Asset=Prop-Boulder2
+Name=Untitled
 Pos=59347.4,705.102,47426.9
 Orient=0,0.696135,0,0.717911
 Scale=1,1,1

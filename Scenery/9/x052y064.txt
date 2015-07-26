@@ -1,76 +1,77 @@
 [ENTRY]
 ID=10000170
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=39708,172,48274
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=193
-sceneryName=generated_spawn
 spawnPackage=z9_eur_gen_Bran_Kirger_2935
 
 [ENTRY]
 ID=10000228
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=39101,165,48221
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=127
-sceneryName=generated_spawn
 spawnPackage=z9_eur_gen_Chunnel_Entrance_2424
 
 [ENTRY]
 ID=10000330
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=39465,166,48132
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=244
-sceneryName=generated_spawn
 spawnPackage=z9_eur_gen_Reni_Sparda_2207
 
 [ENTRY]
 ID=10000360
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=39571,177,48705
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=87
-sceneryName=generated_spawn
 spawnPackage=z9_eur_gen_Rondo_Hardhide_2215
 
 [ENTRY]
 ID=10000362
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=39413,169,48413
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=70
-sceneryName=generated_spawn
 spawnPackage=z9_eur_gen_Ob_Liette_2217
 
 [ENTRY]
 ID=10000363
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=39605,178,48716
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=104
-sceneryName=generated_spawn
 spawnPackage=z9_eur_gen_Bender_Ferro_2218
 
 [ENTRY]
 ID=10000364
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=39559,177,48689
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=93
-sceneryName=generated_spawn
 spawnPackage=z9_eur_gen_Piet_Riposte_2219
 
 [ENTRY]
 ID=151000466
 Asset=Bldg-Urban-Small_Facade2?ATS=ATS-Camelot
+Name=Untitled
 Pos=39489,165.147,48006
 Orient=0,0.724287,0,0.689498
 Scale=1,1,1
@@ -79,6 +80,7 @@ Flags=1
 [ENTRY]
 ID=151000472
 Asset=CL-Fountain1
+Name=Untitled
 Pos=39561.1,170.74,48374
 Orient=0,0,0,1
 Scale=1.5,1.5,1.5
@@ -87,6 +89,7 @@ Flags=1
 [ENTRY]
 ID=151000488
 Asset=Prop-Lamp_Post2#Prop-Lamp_Post2
+Name=Untitled
 Pos=39588.2,166.154,48108
 Orient=0,-0.407761,0,0.913089
 Scale=1,1,1
@@ -95,6 +98,7 @@ Flags=1
 [ENTRY]
 ID=151000496
 Asset=Prop-Henge-SarsenStone#Prop-Henge-BlueStone
+Name=Untitled
 Pos=39471.3,176.488,48598
 Orient=0,0.00499998,0,0.999987
 Scale=1,1,1
@@ -103,6 +107,7 @@ Flags=1
 [ENTRY]
 ID=151000502
 Asset=CL-Wooden_Fence1#CL-Wooden_Fence1
+Name=Untitled
 Pos=39612.7,166.52,48110
 Orient=0,-0.0599639,0,0.998201
 Scale=1,1,1
@@ -111,6 +116,7 @@ Flags=1
 [ENTRY]
 ID=151000509
 Asset=Prop-Cart
+Name=Untitled
 Pos=39400,165.783,48292
 Orient=0,0.149438,0,0.988771
 Scale=1,1,1
@@ -119,6 +125,7 @@ Flags=1
 [ENTRY]
 ID=151000743
 Asset=Light-Large?GROUP=2
+Name=Untitled
 Pos=39539.8,229.319,48152.7
 Orient=0,0,0,1
 Scale=1,1,1
@@ -127,6 +134,7 @@ Flags=1
 [ENTRY]
 ID=151000744
 Asset=Light-Large?GROUP=2
+Name=Untitled
 Pos=39687.1,251.816,48658.5
 Orient=0,0,0,1
 Scale=1,1,1
@@ -135,6 +143,7 @@ Flags=1
 [ENTRY]
 ID=151011746
 Asset=CL-Wooden_Fence1
+Name=Untitled
 Pos=39464.3,169.552,48122
 Orient=0,-0.994924,0,0.100626
 Scale=1,1,1
@@ -143,6 +152,7 @@ Flags=1
 [ENTRY]
 ID=151011747
 Asset=CL-Market_Stall-Wares1#CL-Market_Stall-Wares1
+Name=Untitled
 Pos=39410,169.726,48413
 Orient=0,0.761095,0,0.64864
 Scale=1,1,1
@@ -151,6 +161,7 @@ Flags=1
 [ENTRY]
 ID=151011748
 Asset=CL-Market_Stall-Utility#CL-Market_Stall-Utility
+Name=Untitled
 Pos=39414.6,169.842,48470
 Orient=0,0.706825,0,0.707388
 Scale=1,1,1
@@ -159,6 +170,7 @@ Flags=1
 [ENTRY]
 ID=151011750
 Asset=CL-Market_Stall-Weapons#CL-Market_Stall-Weapons
+Name=Untitled
 Pos=39567.5,177.31,48695
 Orient=0,0.914795,0,0.403919
 Scale=1,1,1
@@ -166,6 +178,7 @@ Scale=1,1,1
 [ENTRY]
 ID=151011751
 Asset=Prop-Lamp_Post2
+Name=Untitled
 Pos=39421.8,169.954,48441
 Orient=0,0,0,1
 Scale=1,1,1
@@ -174,6 +187,7 @@ Flags=1
 [ENTRY]
 ID=151011752
 Asset=Prop-Lamp_Post2
+Name=Untitled
 Pos=39410.4,166.154,48297
 Orient=0,-0.0948572,0,0.995491
 Scale=1,1,1
@@ -182,6 +196,7 @@ Flags=1
 [ENTRY]
 ID=151011754
 Asset=CL-Wooden_Fence1
+Name=Untitled
 Pos=39562.3,166.52,48110
 Orient=0,0.0449849,0,0.998988
 Scale=1,1,1
@@ -190,6 +205,7 @@ Flags=1
 [ENTRY]
 ID=151011755
 Asset=Prop-Lamp_Post2
+Name=Untitled
 Pos=39438.3,166.154,48129
 Orient=0,-0.0948572,0,0.995491
 Scale=1,1,1
@@ -198,6 +214,7 @@ Flags=1
 [ENTRY]
 ID=151011756
 Asset=CL-Wooden_Fence1
+Name=Untitled
 Pos=39410.6,167.406,48323
 Orient=0,-0.713864,0,0.700285
 Scale=1,1,1
@@ -206,6 +223,7 @@ Flags=1
 [ENTRY]
 ID=151011757
 Asset=CL-Wooden_Fence1
+Name=Untitled
 Pos=39730.8,170.039,48438
 Orient=0,-0.713864,0,0.700285
 Scale=1,1,1
@@ -214,6 +232,7 @@ Flags=1
 [ENTRY]
 ID=151011760
 Asset=Prop-Henge-BlueStone
+Name=Untitled
 Pos=39424.2,170.03,48547
 Orient=0,-0.522687,0,0.852525
 Scale=1,1,1
@@ -222,6 +241,7 @@ Flags=1
 [ENTRY]
 ID=151011761
 Asset=Prop-Henge-BlueStone
+Name=Untitled
 Pos=39360.3,223.068,48728
 Orient=0.126198,0.344427,-0.0467823,0.929115
 Scale=1,1,1
@@ -230,6 +250,7 @@ Flags=1
 [ENTRY]
 ID=151011762
 Asset=Prop-Henge-BlueStone
+Name=Untitled
 Pos=39293.6,226.931,48715
 Orient=0,-0.942489,0,0.334238
 Scale=1,1,1
@@ -238,6 +259,7 @@ Flags=1
 [ENTRY]
 ID=151011777
 Asset=Prop-Signpost-Bremen#Prop-Signpost-Bremen
+Name=Untitled
 Pos=39738.6,175.468,48547
 Orient=0,0,0,1
 Scale=1,1,1
@@ -246,6 +268,7 @@ Flags=1
 [ENTRY]
 ID=151011778
 Asset=CL-Market_Sign-Goods
+Name=Untitled
 Pos=39738.6,206.64,48546
 Orient=0,-0.999899,0,-0.0142031
 Scale=0.5,0.5,0.5
@@ -254,6 +277,7 @@ Flags=1
 [ENTRY]
 ID=151040254
 Asset=Prop-Boulder3
+Name=Untitled
 Pos=39203.9,278.73,48050
 Orient=0.487764,-0.508462,-0.144387,0.69477
 Scale=2.95,2.95,2.95
@@ -261,6 +285,7 @@ Scale=2.95,2.95,2.95
 [ENTRY]
 ID=151040255
 Asset=Prop-Boulder8
+Name=Untitled
 Pos=39103.2,287.334,48379
 Orient=0.0141575,0.822699,-0.522376,0.223807
 Scale=1.95,1.95,1.95
@@ -268,6 +293,7 @@ Scale=1.95,1.95,1.95
 [ENTRY]
 ID=151040257
 Asset=Prop-Boulder#Prop-Boulder8
+Name=Untitled
 Pos=39222.3,319.995,48412
 Orient=-0.154102,-0.00925728,0.0592453,0.986234
 Scale=1.875,1.875,1.875
@@ -275,6 +301,7 @@ Scale=1.875,1.875,1.875
 [ENTRY]
 ID=151040258
 Asset=Prop-Boulder8
+Name=Untitled
 Pos=39264.9,229.912,48037
 Orient=0.487764,-0.508462,-0.144387,0.69477
 Scale=1.95,1.95,1.95
@@ -282,6 +309,7 @@ Scale=1.95,1.95,1.95
 [ENTRY]
 ID=151040497
 Asset=Bldg-Chunnel_Entrance2#Bldg-Chunnel_Entrance2?ATS=ATS-Castle
+Name=Untitled
 Pos=39190.8,165,48223
 Orient=0,0,0,1
 Scale=1,1,1
@@ -290,6 +318,7 @@ Flags=1
 [ENTRY]
 ID=151040502
 Asset=Prop-Boulder8
+Name=Untitled
 Pos=39245.9,278.889,48060
 Orient=0,0,-0.104807,0.994493
 Scale=1.875,1.875,1.875
@@ -297,6 +326,7 @@ Scale=1.875,1.875,1.875
 [ENTRY]
 ID=151040503
 Asset=Prop-Boulder#Prop-Boulder8
+Name=Untitled
 Pos=39192.6,335.974,48097
 Orient=0,0,0,1
 Scale=1,1,1
@@ -304,6 +334,7 @@ Scale=1,1,1
 [ENTRY]
 ID=151040504
 Asset=Bldg-Chunnel_Entrance?ATS=ATS-Cave_Subway
+Name=Untitled
 Pos=39190.8,165.306,48223
 Orient=0,0,0,1
 Scale=1,1,1
@@ -312,6 +343,7 @@ Flags=1
 [ENTRY]
 ID=151053444
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=39547.1,170.213,48310
 Orient=0,0,0,1
 Scale=1,1,1
@@ -322,6 +354,7 @@ link=151053452,1
 [ENTRY]
 ID=151053445
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=39519.3,169.929,48327
 Orient=0,0,0,1
 Scale=1,1,1
@@ -333,6 +366,7 @@ link=151054100,1
 [ENTRY]
 ID=151053446
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=39502.4,169.317,48360
 Orient=0,0,0,1
 Scale=1,1,1
@@ -344,6 +378,7 @@ link=151054099,1
 [ENTRY]
 ID=151053447
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=39504.3,170.203,48398
 Orient=0,0,0,1
 Scale=1,1,1
@@ -354,6 +389,7 @@ link=151053448,1
 [ENTRY]
 ID=151053448
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=39544.3,171.403,48434
 Orient=0,0,0,1
 Scale=1,1,1
@@ -365,6 +401,7 @@ link=151054098,1
 [ENTRY]
 ID=151053449
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=39593.3,171.206,48426
 Orient=0,0,0,1
 Scale=1,1,1
@@ -375,6 +412,7 @@ link=151053450,1
 [ENTRY]
 ID=151053450
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=39616.6,171.333,48392
 Orient=0,0,0,1
 Scale=1,1,1
@@ -385,6 +423,7 @@ link=151053451,1
 [ENTRY]
 ID=151053451
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=39618.3,171.257,48351
 Orient=0,0,0,1
 Scale=1,1,1
@@ -395,6 +434,7 @@ link=151053452,1
 [ENTRY]
 ID=151053452
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=39592.3,170.461,48319
 Orient=0,0,0,1
 Scale=1,1,1
@@ -405,6 +445,7 @@ link=151053451,1
 [ENTRY]
 ID=151053453
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=39495.7,170.559,48541
 Orient=0,0,0,1
 Scale=1,1,1
@@ -415,6 +456,7 @@ link=151054102,1
 [ENTRY]
 ID=151053454
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=39415.4,185.517,48599
 Orient=0,0,0,1
 Scale=1,1,1
@@ -425,6 +467,7 @@ link=151053455,1
 [ENTRY]
 ID=151053455
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=39347.6,221.117,48705
 Orient=0,0,0,1
 Scale=1,1,1
@@ -435,6 +478,7 @@ link=151053458,1
 [ENTRY]
 ID=151053495
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=39394.9,166.091,48246
 Orient=0,0,0,1
 Scale=1,1,1
@@ -444,6 +488,7 @@ link=151053496,1
 [ENTRY]
 ID=151053496
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=39481.3,169.869,48253
 Orient=0,0,0,1
 Scale=1,1,1
@@ -454,6 +499,7 @@ link=151053497,1
 [ENTRY]
 ID=151053497
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=39592.1,170.339,48285
 Orient=0,0,0,1
 Scale=1,1,1
@@ -464,6 +510,7 @@ link=151053498,1
 [ENTRY]
 ID=151053498
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=39650,171.803,48351
 Orient=0,0,0,1
 Scale=1,1,1
@@ -474,6 +521,7 @@ link=151053500,1
 [ENTRY]
 ID=151053500
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=39635.8,171.473,48439
 Orient=0,0,0,1
 Scale=1,1,1
@@ -484,6 +532,7 @@ link=151053501,1
 [ENTRY]
 ID=151053501
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=39612.6,170.795,48498
 Orient=0,0,0,1
 Scale=1,1,1
@@ -494,6 +543,7 @@ link=151053503,1
 [ENTRY]
 ID=151053503
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=39615,173.13,48587
 Orient=0,0,0,1
 Scale=1,1,1
@@ -504,6 +554,7 @@ link=151053508,1
 [ENTRY]
 ID=151053509
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=39394.7,165.881,48197
 Orient=0,0,0,1
 Scale=1,1,1
@@ -514,6 +565,7 @@ link=151054104,1
 [ENTRY]
 ID=151053511
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=39478.8,169.669,48205
 Orient=0,0,0,1
 Scale=1,1,1
@@ -525,6 +577,7 @@ link=151053513,1
 [ENTRY]
 ID=151053512
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=39532.2,166.572,48105
 Orient=0,0,0,1
 Scale=1,1,1
@@ -534,6 +587,7 @@ link=151053511,1
 [ENTRY]
 ID=151053513
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=39587,170.04,48238
 Orient=0,0,0,1
 Scale=1,1,1
@@ -545,6 +599,7 @@ link=151053516,1
 [ENTRY]
 ID=151053515
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=39676.5,170.41,48186
 Orient=0,0,0,1
 Scale=1,1,1
@@ -554,6 +609,7 @@ link=151053513,1
 [ENTRY]
 ID=151053516
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=39659.1,171.323,48286
 Orient=0,0,0,1
 Scale=1,1,1
@@ -564,6 +620,7 @@ link=151053517,1
 [ENTRY]
 ID=151053517
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=39687.3,173.163,48345
 Orient=0,0,0,1
 Scale=1,1,1
@@ -574,6 +631,7 @@ link=151053519,1
 [ENTRY]
 ID=151053519
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=39683.5,172.023,48429
 Orient=0,0,0,1
 Scale=1,1,1
@@ -584,6 +642,7 @@ link=151053520,1
 [ENTRY]
 ID=151053520
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=39698.6,173.311,48572
 Orient=0,0,0,1
 Scale=1,1,1
@@ -594,6 +653,7 @@ link=151053521,1
 [ENTRY]
 ID=151054098
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=39525.6,175.873,48623
 Orient=0,0,0,1
 Scale=1,1,1
@@ -603,6 +663,7 @@ link=151053448,1
 [ENTRY]
 ID=151054099
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=39415.2,167.594,48361
 Orient=0,0,0,1
 Scale=1,1,1
@@ -612,36 +673,40 @@ link=151053446,1
 [ENTRY]
 ID=151054100
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=39519.8,174.952,48325
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=3_npc_mid_guards
 links_count=1
 link=151053445,1
-spawnPackage=3_npc_mid_guards
 
 [ENTRY]
 ID=151054102
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=39498.7,175.587,48541
 Orient=0,0.864124,0,-0.503279
 Scale=1,1,1
+spawnPackage=3_npc_mid_guards
 links_count=1
 link=151053453,1
-spawnPackage=3_npc_mid_guards
 
 [ENTRY]
 ID=151054104
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=39394.6,170.899,48198
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=3_npc_mid_guards
 links_count=1
 link=151053509,1
-spawnPackage=3_npc_mid_guards
 
 [ENTRY]
 ID=151054111
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=39423.1,175.477,48529
 Orient=0,0,0,1
 Scale=1,1,1
@@ -650,6 +715,7 @@ spawnPackage=3_npc_mid_guards
 [ENTRY]
 ID=151059500
 Asset=Prop-Instance_Entrance
+Name=Untitled
 Pos=39109.4,221.996,48220.1
 Orient=0,-0.999942,0,0.0107967
 Scale=3.15,3.15,3.15
@@ -657,6 +723,7 @@ Scale=3.15,3.15,3.15
 [ENTRY]
 ID=151059501
 Asset=Light-Medium?COLOR=33FFFF
+Name=Untitled
 Pos=39156.2,222.761,48220.7
 Orient=0,-0.688921,0,0.724836
 Scale=1,1,1
@@ -664,6 +731,7 @@ Scale=1,1,1
 [ENTRY]
 ID=151061991
 Asset=Prop-Market_Signs#Prop-Market_Sign-Refashion
+Name=Untitled
 Pos=39598.5,245.869,48738
 Orient=-0.0454082,0.68736,-0.026332,0.724418
 Scale=1,1,1

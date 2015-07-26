@@ -14,7 +14,8 @@ const CDEFID_TARGET = 3397;
 info <- {
 	enabled = true,
 	author = "Emerald Icemoon",
-	description = ""
+	description = "",
+	idle_speed = 1
 }
 
 function attack_target() {

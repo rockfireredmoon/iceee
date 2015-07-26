@@ -1,10 +1,11 @@
 [ENTRY]
 ID=151056240
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=48421.1,286.524,63923
 Orient=0,0,0,1
 Scale=1,1,1
-links_count=2
+links_count=3
 link=151056239,1
 link=151056241,1
 

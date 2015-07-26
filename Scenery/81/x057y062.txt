@@ -1,16 +1,22 @@
 [ENTRY]
 ID=1029366
-PlacedBy=-400000000
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=57500,92,62460
 Orient=0,0.92388,0,0.382683
 Scale=1,1,1
 spawnPackage=#F2698
 
 [ENTRY]
+ID=1130288
+Asset=Prop-Loot1#Prop-Loot-Metal_Chest1
+Name=
+Pos=57881.2,284.973,62352
+Orient=0,0,0,1
+Scale=2,2,2
+
+[ENTRY]
 ID=10000104
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=57458,93,62514
@@ -21,7 +27,6 @@ spawnPackage=#1563
 
 [ENTRY]
 ID=1358954663
-PlacedBy=0
 Asset=CL-Vampire_Roadside1
 Name=Untitled
 Pos=57899.3,128.592,62003
@@ -30,7 +35,6 @@ Scale=1.5,1.5,1.5
 
 [ENTRY]
 ID=1358954664
-PlacedBy=0
 Asset=CL-Vampire_Roadside1#CL-Vampire_Roadside1
 Name=Untitled
 Pos=57949.3,125.626,62064
@@ -39,7 +43,6 @@ Scale=1.5,1.5,1.5
 
 [ENTRY]
 ID=1358954665
-PlacedBy=0
 Asset=CL-Vampire_Roadside1
 Name=Untitled
 Pos=57539,105.339,62210
@@ -48,7 +51,6 @@ Scale=1.5,1.5,1.5
 
 [ENTRY]
 ID=1358954666
-PlacedBy=0
 Asset=CL-Vampire_Roadside1
 Name=Untitled
 Pos=57665.8,103.796,62197
@@ -57,7 +59,6 @@ Scale=1.5,1.5,1.5
 
 [ENTRY]
 ID=1358954667
-PlacedBy=0
 Asset=CL-Vampire_Roadside1#CL-Vampire_Roadside1
 Name=Untitled
 Pos=57628.2,103.809,62276
@@ -66,7 +67,6 @@ Scale=1.5,1.5,1.5
 
 [ENTRY]
 ID=1358954678
-PlacedBy=0
 Asset=CL-UndeadTree2#CL-UndeadTree2
 Name=Untitled
 Pos=57890.4,110.713,62187
@@ -75,7 +75,6 @@ Scale=1,1,1
 
 [ENTRY]
 ID=1358957685
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=57276.7,108.802,62453
@@ -85,7 +84,6 @@ spawnPackage=1a_obji_cam06_graveLillies
 
 [ENTRY]
 ID=1358957686
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=57368.1,111.501,62292
@@ -95,7 +93,6 @@ spawnPackage=1a_obji_cam06_graveLillies
 
 [ENTRY]
 ID=1358957692
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=57466.7,108.14,62400
@@ -105,7 +102,6 @@ spawnPackage=1a_obji_cam06_graveLillies
 
 [ENTRY]
 ID=1358961605
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=57987.4,127.687,62082
@@ -117,7 +113,6 @@ link=1358961606,1
 
 [ENTRY]
 ID=1358961620
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=57908,124.998,62060
@@ -129,7 +124,6 @@ link=1358961625,1
 
 [ENTRY]
 ID=1358961623
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=57805.4,117.806,62177
@@ -140,7 +134,6 @@ link=1358961624,1
 
 [ENTRY]
 ID=1358961624
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=57652.9,101.931,62240
@@ -152,7 +145,6 @@ link=1358961629,1
 
 [ENTRY]
 ID=1358961625
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=57823.2,124.001,62145
@@ -164,7 +156,6 @@ link=1358961620,1
 
 [ENTRY]
 ID=1358961626
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=57450,92.0119,62280
@@ -174,7 +165,6 @@ spawnPackage=1a_thornbringerCamp02_general
 
 [ENTRY]
 ID=1358961629
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=57450,92.0119,62280
@@ -186,7 +176,6 @@ link=1358961624,1
 
 [ENTRY]
 ID=1358961631
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=57102.2,137.082,62019
@@ -198,7 +187,6 @@ link=1358961634,1
 
 [ENTRY]
 ID=1358961634
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=57184.8,110.01,62264
@@ -210,7 +198,6 @@ link=1358961631,1
 
 [ENTRY]
 ID=1358961700
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=57771.5,112.761,62192
@@ -222,7 +209,6 @@ link=1358961707,1
 
 [ENTRY]
 ID=1358961701
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=57512.5,95.6984,62257
@@ -234,7 +220,6 @@ link=1358961702,1
 
 [ENTRY]
 ID=1358961702
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=57358.2,97.1038,62206
@@ -246,7 +231,6 @@ link=1358961703,1
 
 [ENTRY]
 ID=1358961703
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=57130.7,104.726,62265
@@ -258,7 +242,6 @@ link=1358961702,1
 
 [ENTRY]
 ID=1358961707
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=57903.2,124.656,62075
@@ -270,7 +253,6 @@ link=1358961706,1
 
 [ENTRY]
 ID=1358963131
-PlacedBy=0
 Asset=Light-Medium?COLOR=cc6600
 Name=Untitled
 Pos=57070.7,91.6296,62346
@@ -279,7 +261,6 @@ Scale=1,1,1
 
 [ENTRY]
 ID=1358963132
-PlacedBy=0
 Asset=Light-Medium?COLOR=cc6600
 Name=Untitled
 Pos=57289.1,107.045,62152
@@ -288,7 +269,6 @@ Scale=1,1,1
 
 [ENTRY]
 ID=1358964194
-PlacedBy=0
 Asset=CL-Rock-Clutter#CL-Rock-Clutter
 Name=Untitled
 Pos=57213.3,199.327,62039
@@ -298,7 +278,6 @@ Flags=1
 
 [ENTRY]
 ID=1358964494
-PlacedBy=0
 Asset=CL-Graveyard2#CL-Graveyard2
 Name=Untitled
 Pos=57450.3,90.2905,62507
@@ -308,7 +287,6 @@ Flags=1
 
 [ENTRY]
 ID=1358964498
-PlacedBy=0
 Asset=Effects#Par-Ground_Fog1
 Name=Untitled
 Pos=57352.3,96.7503,62419
@@ -318,7 +296,6 @@ Flags=1
 
 [ENTRY]
 ID=1358965126
-PlacedBy=0
 Asset=Prop-Torture_Equipment#Prop-Dungeon-Iron_Maiden
 Name=Untitled
 Pos=57020.8,162.611,62323
@@ -328,7 +305,6 @@ Flags=1
 
 [ENTRY]
 ID=1358965138
-PlacedBy=0
 Asset=Prop-Crypt
 Name=Untitled
 Pos=57336.7,96.3768,62132
@@ -338,7 +314,6 @@ Flags=1
 
 [ENTRY]
 ID=1358965139
-PlacedBy=0
 Asset=Prop-Vampire_Tree3
 Name=Untitled
 Pos=57450.3,91.9229,62607
@@ -348,7 +323,6 @@ Flags=1
 
 [ENTRY]
 ID=1358965142
-PlacedBy=0
 Asset=Prop-Vampire_Tree#Prop-Vampire_Tree2
 Name=Untitled
 Pos=57283.3,114.547,62077
@@ -358,7 +332,6 @@ Flags=1
 
 [ENTRY]
 ID=1358965143
-PlacedBy=0
 Asset=Prop-Vampire_Tree#Prop-Vampire_Tree1
 Name=Untitled
 Pos=57002.2,97.5166,62335
@@ -368,7 +341,6 @@ Flags=1
 
 [ENTRY]
 ID=1358965146
-PlacedBy=0
 Asset=Prop-Tombstone#Prop-Tombstone_Large2
 Name=Untitled
 Pos=57247.8,92.1001,62543
@@ -378,7 +350,6 @@ Flags=1
 
 [ENTRY]
 ID=1358965147
-PlacedBy=0
 Asset=Prop-Tombstone#Prop-Tombstone_Large1
 Name=Untitled
 Pos=57506.5,92.4828,62317
@@ -388,7 +359,6 @@ Flags=1
 
 [ENTRY]
 ID=1358965148
-PlacedBy=0
 Asset=Prop-Crypt
 Name=Untitled
 Pos=57047.6,91.5945,62392
@@ -398,7 +368,6 @@ Flags=1
 
 [ENTRY]
 ID=1358965149
-PlacedBy=0
 Asset=Prop-Crypt-Skull_Pile_Large#Prop-Crypt-Skull_Pile_Large
 Name=Untitled
 Pos=57309.2,104.146,62151
@@ -408,7 +377,6 @@ Flags=1
 
 [ENTRY]
 ID=1358965150
-PlacedBy=0
 Asset=Prop-Crypt_Coffin
 Name=Untitled
 Pos=57244.9,120.445,62060
@@ -418,7 +386,6 @@ Flags=1
 
 [ENTRY]
 ID=1358965162
-PlacedBy=0
 Asset=Prop-Tribal_Lamp1
 Name=Untitled
 Pos=57295.9,105.184,62132
@@ -428,7 +395,6 @@ Flags=1
 
 [ENTRY]
 ID=1358965163
-PlacedBy=0
 Asset=Prop-Tribal_Lamp1
 Name=Untitled
 Pos=57320.2,105.198,62167
@@ -438,7 +404,6 @@ Flags=1
 
 [ENTRY]
 ID=1358965164
-PlacedBy=0
 Asset=Prop-Tribal_Lamp1
 Name=Untitled
 Pos=57319.9,103.024,62167
@@ -448,7 +413,6 @@ Flags=1
 
 [ENTRY]
 ID=1358965166
-PlacedBy=0
 Asset=Prop-Tribal_Lamp1
 Name=Untitled
 Pos=57046.5,92.4961,62355
@@ -458,7 +422,6 @@ Flags=1
 
 [ENTRY]
 ID=1358965171
-PlacedBy=0
 Asset=Prop-Bush-Burnt_Large2
 Name=Untitled
 Pos=57005,97.7878,62316
@@ -468,7 +431,6 @@ Flags=1
 
 [ENTRY]
 ID=1358965172
-PlacedBy=0
 Asset=Prop-Tribal_Lamp1
 Name=Untitled
 Pos=57069.6,91.075,62358
@@ -478,7 +440,6 @@ Flags=1
 
 [ENTRY]
 ID=1358965173
-PlacedBy=0
 Asset=Prop-Tribal_Lamp1
 Name=Untitled
 Pos=57044.9,92.6177,62355
@@ -488,7 +449,6 @@ Flags=1
 
 [ENTRY]
 ID=1358965178
-PlacedBy=0
 Asset=Environment-Marker?type=Undead
 Name=Untitled
 Pos=57335.7,93.2448,62437
@@ -497,7 +457,6 @@ Scale=5.9,5.9,5.9
 
 [ENTRY]
 ID=1358965183
-PlacedBy=0
 Asset=Prop-Iron_Fence
 Name=Untitled
 Pos=57016.7,126.045,62057
@@ -507,7 +466,6 @@ Flags=1
 
 [ENTRY]
 ID=1358965186
-PlacedBy=0
 Asset=Prop-Bird1#Prop-Bird1
 Name=Untitled
 Pos=57071.3,237.129,62162
@@ -517,7 +475,6 @@ Flags=1
 
 [ENTRY]
 ID=1358966103
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=57343.3,92.1927,62543
@@ -527,7 +484,6 @@ spawnPackage=1_thornbringer_camps_12_13
 
 [ENTRY]
 ID=1358966104
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=57259.6,92.0639,62440
@@ -537,7 +493,6 @@ spawnPackage=1_thornbringer_camps_12_13
 
 [ENTRY]
 ID=1358966105
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=57387,93.8888,62287
@@ -547,7 +502,6 @@ spawnPackage=1_thornbringer_camps_12_13
 
 [ENTRY]
 ID=1358966106
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=57260,110.018,62145
@@ -557,7 +511,6 @@ spawnPackage=1_thornbringer_camps_12_13
 
 [ENTRY]
 ID=1358966107
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=57061.9,92.7015,62333
@@ -567,7 +520,6 @@ spawnPackage=1_thornbringer_camps_12_13
 
 [ENTRY]
 ID=1358966109
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=57090,119.722,62134
@@ -577,7 +529,6 @@ spawnPackage=1_thornbringer_camps_12_13
 
 [ENTRY]
 ID=1358966113
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=57470.7,92.0119,62391
@@ -587,7 +538,6 @@ spawnPackage=1_thornbringer_camps_12_13
 
 [ENTRY]
 ID=1358966254
-PlacedBy=0
 Asset=Light-Medium?COLOR=cc6600
 Name=Untitled
 Pos=57347.2,93.7147,62402
@@ -596,7 +546,6 @@ Scale=1,1,1
 
 [ENTRY]
 ID=1358966881
-PlacedBy=0
 Asset=Prop-Instance_Entrance#Prop-Instance_Entrance
 Name=Untitled
 Pos=57456.6,115.532,62512.7

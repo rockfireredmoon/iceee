@@ -1,8 +1,10 @@
 [ENTRY]
-Title=New Offer
+Title=New Character Slot
+Description=Buy a new character slot for your account
 PriceCurrency=COPPER
 PriceAmount=100
-ItemID=0
+ItemID=8110
 Category=CONSUMABLES
 Status=NEW
+
 

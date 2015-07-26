@@ -24,7 +24,8 @@ target_cid <- 0;
 info <- {
 	enabled = true,
 	author = "Emerald Icemoon",
-	description = "Fires arrows at a target"
+	description = "Fires arrows at a target",
+	idle_speed = 1
 }
 
 // Phrases

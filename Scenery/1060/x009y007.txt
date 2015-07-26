@@ -1,19 +1,11 @@
 [ENTRY]
-ID=1028774
-Asset=Environment-Marker?type=Rotted
-Name=Untitled
-Pos=17938.4,1172.77,15247.9
-Orient=0,0,0,1
-Scale=9.3,9.3,9.3
-Flags=2
-
-[ENTRY]
 ID=1028776
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=17887.9,1176.04,15007
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=#3191
 
 [ENTRY]
 ID=1028779
@@ -46,6 +38,7 @@ Name=Untitled
 Pos=17295.7,1223.19,15116.9
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=#3191
 
 [ENTRY]
 ID=1028791
@@ -54,6 +47,7 @@ Name=Untitled
 Pos=17980.4,1189.18,15290.1
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=#3191
 
 [ENTRY]
 ID=1028795
@@ -62,6 +56,7 @@ Name=Untitled
 Pos=17760.1,1177.37,15231.7
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=#3191
 
 [ENTRY]
 ID=1028796
@@ -70,6 +65,16 @@ Name=Untitled
 Pos=17614.2,1198.76,15203.4
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=#3191
+
+[ENTRY]
+ID=1028797
+Asset=Manipulator-SpawnPoint
+Name=Untitled
+Pos=17372.7,1193.22,15031.2
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#3191
 
 [ENTRY]
 ID=1028801
@@ -88,20 +93,13 @@ Orient=0,0,0,1
 Scale=1,1,1
 
 [ENTRY]
-ID=1028809
-Asset=Manipulator-SpawnPoint
-Name=Untitled
-Pos=17914.5,1186.25,15296.5
-Orient=0,0,0,1
-Scale=1,1,1
-
-[ENTRY]
 ID=1028813
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=17428.7,1197.87,15166.5
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=#3191
 
 [ENTRY]
 ID=1028814
@@ -110,6 +108,7 @@ Name=Untitled
 Pos=17718.8,1184.24,15058.2
 Orient=0,0,0,1
 Scale=0.925,0.925,0.925
+spawnPackage=#3191
 
 [ENTRY]
 ID=1028820
@@ -142,6 +141,7 @@ Name=Untitled
 Pos=17872.1,1211.35,14716.4
 Orient=0,-0.589145,0,0.808028
 Scale=1,1,1
+spawnPackage=#3191
 
 [ENTRY]
 ID=1028824
@@ -182,6 +182,7 @@ Name=Untitled
 Pos=17867.5,1205.42,14788.6
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=#3191
 
 [ENTRY]
 ID=1028829
@@ -190,6 +191,7 @@ Name=Untitled
 Pos=17373.2,1211.7,14825.6
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=#3191
 
 [ENTRY]
 ID=1028830
@@ -198,6 +200,7 @@ Name=Untitled
 Pos=17304.8,1218.69,14881.8
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=#3191
 
 [ENTRY]
 ID=1028831
@@ -206,6 +209,7 @@ Name=Untitled
 Pos=17310.4,1211.04,14923.4
 Orient=0,0,0,1
 Scale=0.975,0.975,0.975
+spawnPackage=#3191
 
 [ENTRY]
 ID=1028832
@@ -254,6 +258,7 @@ Name=Untitled
 Pos=17563.8,1197.09,14922.7
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=#3191
 
 [ENTRY]
 ID=1028838

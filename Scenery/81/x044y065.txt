@@ -9,6 +9,14 @@ spawnPackage=#F7779
 maxActive=0
 
 [ENTRY]
+ID=1130299
+Asset=Prop-Loot1#Prop-Loot-Crate1
+Name=
+Pos=44094.7,193.862,65727.2
+Orient=0,-0.543835,0,0.839192
+Scale=1,1,1
+
+[ENTRY]
 ID=10000054
 Asset=Manipulator-SpawnPoint
 Name=Untitled

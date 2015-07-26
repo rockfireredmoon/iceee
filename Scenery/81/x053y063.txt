@@ -1,6 +1,14 @@
 [ENTRY]
+ID=1130835
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=53998.3,214.009,63486.4
+Orient=0,0.846832,0,0.531861
+Scale=1,1,1
+spawnPackage=#F1283
+
+[ENTRY]
 ID=10000055
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=53835,153,63797
@@ -11,7 +19,6 @@ spawnPackage=#3333
 
 [ENTRY]
 ID=10000056
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=53840,153,63765
@@ -22,7 +29,6 @@ spawnPackage=#3334
 
 [ENTRY]
 ID=10000070
-PlacedBy=1020040
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=53963,143,63679
@@ -33,7 +39,6 @@ spawnPackage=#F3432
 
 [ENTRY]
 ID=1358960268
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=53841.9,163.439,63028
@@ -43,7 +48,6 @@ spawnPackage=1a_hedgehog/warthogCamp01_general
 
 [ENTRY]
 ID=1358960273
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=53502.7,160.41,63406
@@ -53,7 +57,6 @@ spawnPackage=1a_hedgehog/warthogCamp01_general
 
 [ENTRY]
 ID=1358960282
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=53470.9,203.401,63851
@@ -63,7 +66,6 @@ spawnPackage=1a_hedgehog/warthogCamp01_general
 
 [ENTRY]
 ID=1358960283
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=53129.7,226.364,63722.9
@@ -73,7 +75,6 @@ spawnPackage=1a_hedgehog/warthogCamp01_general
 
 [ENTRY]
 ID=1358962893
-PlacedBy=0
 Asset=CL-Hills_Tree2
 Name=Untitled
 Pos=53618,144.459,63489
@@ -82,7 +83,6 @@ Scale=0.8,0.8,0.8
 
 [ENTRY]
 ID=1358962894
-PlacedBy=0
 Asset=CL-Junk_Crate-Misc-Stack1#CL-Junk_Crate-Misc-Stack1
 Name=Untitled
 Pos=53824.1,144.633,63460
@@ -91,7 +91,6 @@ Scale=1,1,1
 
 [ENTRY]
 ID=1358963974
-PlacedBy=0
 Asset=Bldg-Camelot12#Bldg-Camelot12?ATS=ATS-Camelot
 Name=Untitled
 Pos=53821,143.98,63950
@@ -101,7 +100,6 @@ Flags=1
 
 [ENTRY]
 ID=1358964421
-PlacedBy=0
 Asset=CL-Hills_RockGiant2#CL-Hills_RockGiant2
 Name=Untitled
 Pos=53154.3,179.499,63223
@@ -111,7 +109,6 @@ Flags=1
 
 [ENTRY]
 ID=1358964432
-PlacedBy=0
 Asset=CL-Hills_Rock5
 Name=Untitled
 Pos=53242.3,183.164,63522
@@ -121,7 +118,6 @@ Flags=1
 
 [ENTRY]
 ID=1358964433
-PlacedBy=0
 Asset=CL-Hills_Rock5
 Name=Untitled
 Pos=53203.7,215.885,63526.6
@@ -130,7 +126,6 @@ Scale=1,1,1
 
 [ENTRY]
 ID=1358964435
-PlacedBy=0
 Asset=CL-Hills_Bush6
 Name=Untitled
 Pos=53207.2,221.902,63627
@@ -139,7 +134,6 @@ Scale=1,1,1
 
 [ENTRY]
 ID=1358964461
-PlacedBy=0
 Asset=CL-Hills_Rock4
 Name=Untitled
 Pos=53766.8,144.023,63453
@@ -149,7 +143,6 @@ Flags=1
 
 [ENTRY]
 ID=1358964738
-PlacedBy=0
 Asset=Prop-Banner-Camelot3#Prop-Banner-Camelot3
 Name=Untitled
 Pos=53948.6,283.827,63792
@@ -159,7 +152,6 @@ Flags=1
 
 [ENTRY]
 ID=1358965447
-PlacedBy=-400000056
 Asset=Bldg-Wall18_Camelot?ATS=ATS-Castle_Camelot
 Name=Untitled
 Pos=53695.1,161.872,63637
@@ -169,7 +161,6 @@ Flags=1
 
 [ENTRY]
 ID=1358965448
-PlacedBy=-400000056
 Asset=Bldg-Wall18_Camelot?ATS=ATS-Castle_Camelot
 Name=Untitled
 Pos=53865.7,148.298,63314
@@ -179,7 +170,6 @@ Flags=1
 
 [ENTRY]
 ID=1358966638
-PlacedBy=0
 Asset=Environment-Marker?type=Citytavern
 Name=Untitled
 Pos=53970.2,214.321,63302.4
@@ -189,7 +179,6 @@ Flags=1
 
 [ENTRY]
 ID=1358966639
-PlacedBy=0
 Asset=Environment-Marker?type=Citytavern
 Name=Untitled
 Pos=53929.3,216.597,63352.5
@@ -199,7 +188,6 @@ Flags=1
 
 [ENTRY]
 ID=1358966640
-PlacedBy=0
 Asset=Environment-Marker?type=Citytavern
 Name=Untitled
 Pos=53960,214.009,63412.1
@@ -209,7 +197,6 @@ Flags=1
 
 [ENTRY]
 ID=1358966641
-PlacedBy=0
 Asset=Environment-Marker?type=Citytavern
 Name=Untitled
 Pos=53978.8,214.009,63453.2
@@ -219,7 +206,6 @@ Flags=1
 
 [ENTRY]
 ID=1358967170
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=53392.2,193.378,63238.6
@@ -231,7 +217,6 @@ link=1358967171,1
 
 [ENTRY]
 ID=1358967171
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=53112.6,202.822,63438.9
@@ -242,7 +227,6 @@ link=1358967170,1
 
 [ENTRY]
 ID=1358967186
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=53381.2,171.917,63636
@@ -252,7 +236,6 @@ spawnPackage=HOLIDAY_turkatrice_15_16
 
 [ENTRY]
 ID=1358967221
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=53592.5,144.184,63572.9
@@ -264,7 +247,6 @@ link=1358967222,1
 
 [ENTRY]
 ID=1358967222
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=53733.8,148.98,63454.2
@@ -276,7 +258,6 @@ link=1358967224,1
 
 [ENTRY]
 ID=1358967224
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=53712.3,162.142,63314.6
@@ -287,7 +268,6 @@ link=1358967222,1
 
 [ENTRY]
 ID=1358967604
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=53302.8,184.259,63397.3
@@ -299,7 +279,6 @@ link=1358967605,1
 
 [ENTRY]
 ID=1358967610
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=53609.3,175.155,63055.6
@@ -309,7 +288,6 @@ spawnPackage=HOLIDAY_wf09_snowmen_15_16
 
 [ENTRY]
 ID=1358967644
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=53278.4,189.926,63724.4
@@ -321,7 +299,6 @@ link=1358967646,1
 
 [ENTRY]
 ID=1358968607
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=53856.3,146.189,63439.6

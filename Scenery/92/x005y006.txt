@@ -1025,7 +1025,6 @@ Pos=10507.9,597.767,12310.7
 Orient=0,0.21823,0,0.975898
 Scale=1,1,1
 spawnPackage=#F3162
-aiModule=Bastion_NPC_GuardBowAnimation()
 
 [ENTRY]
 ID=1028592

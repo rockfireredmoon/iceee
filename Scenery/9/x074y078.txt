@@ -1,18 +1,26 @@
 [ENTRY]
+ID=1130313
+Asset=Prop-Loot1#Prop-Loot-Metal_Chest1
+Name=
+Pos=55948.3,362.149,58552.1
+Orient=0,0.568762,0,0.822502
+Scale=1.5,1.5,1.5
+
+[ENTRY]
 ID=151052752
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=55566.5,173.546,58549
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=3a_blightedWoods_general
-outerRadius=1
 
 [ENTRY]
 ID=151052754
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=55515,204.384,58849
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=3a_blightedWoods_general
-outerRadius=1
 

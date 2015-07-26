@@ -8,14 +8,6 @@ Scale=2.875,2.875,2.875
 Flags=1
 
 [ENTRY]
-ID=1029141
-Asset=Environment-Marker?type=Bastion
-Name=Untitled
-Pos=14813.8,1262.04,13416.3
-Orient=0,0,0,1
-Scale=14,14,14
-
-[ENTRY]
 ID=1029144
 Asset=Prop-Palm-Tree2
 Name=Untitled
@@ -309,4 +301,15 @@ Name=Untitled
 Pos=14990.1,1270.63,13421.1
 Orient=0,-0.997495,0,0.0707373
 Scale=0.7,0.7,0.7
+
+[ENTRY]
+ID=1130261
+Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
+Pos=15338.9,1164.88,13373.6
+Orient=0,0,0,1
+Scale=1,1,1
+links_count=2
+link=1130260,1
+link=1129613,1
 

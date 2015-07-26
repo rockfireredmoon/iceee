@@ -1,6 +1,15 @@
 [ENTRY]
+ID=1130310
+Asset=Prop-Loot1#Prop-Loot-Silver_Chest1
+Name=
+Pos=40826.8,393.895,61417.8
+Orient=0,0,0,1
+Scale=1.5,1.5,1.5
+
+[ENTRY]
 ID=151023065
 Asset=Prop-Willow_Tree#Prop-Willow_Tree1
+Name=Untitled
 Pos=40723.3,181.828,60969
 Orient=0,0.862404,0,0.50622
 Scale=1.7,1.7,1.7
@@ -9,6 +18,7 @@ Flags=1
 [ENTRY]
 ID=151023066
 Asset=Prop-Willow_Tree#Prop-Willow_Tree4
+Name=Untitled
 Pos=40685.2,199.087,61333
 Orient=0,0.394019,0,0.919102
 Scale=2.5,2.5,2.5
@@ -17,6 +27,7 @@ Flags=1
 [ENTRY]
 ID=151040262
 Asset=Prop-Dock3#Prop-Dock3
+Name=Untitled
 Pos=41244,26.4852,61041
 Orient=0,-0.188859,0,0.982004
 Scale=1.975,1.975,1.975
@@ -25,6 +36,7 @@ Flags=1
 [ENTRY]
 ID=151047566
 Asset=Prop-Cave_Entrance1#Prop-Cave_Entrance1
+Name=Untitled
 Pos=40987.9,231.519,61488
 Orient=0,-0.0249974,0,0.999687
 Scale=3,3,3
@@ -32,6 +44,7 @@ Scale=3,3,3
 [ENTRY]
 ID=151047568
 Asset=Prop-WaterFall#Prop-WaterFall_WideLong
+Name=Untitled
 Pos=40985.9,47.5607,61391
 Orient=0,0.996738,0,0.0807084
 Scale=1.125,1.125,1.125
@@ -39,6 +52,7 @@ Scale=1.125,1.125,1.125
 [ENTRY]
 ID=151047570
 Asset=Prop-WaterFall_WideLong
+Name=Untitled
 Pos=40982.9,214.589,61408
 Orient=-0.0340114,0.903912,0.420036,0.0731921
 Scale=0.925,0.925,0.925

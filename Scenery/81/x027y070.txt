@@ -1,35 +1,45 @@
 [ENTRY]
+ID=1130267
+Asset=Prop-Loot1#Prop-Loot-Gold_Chest1
+Name=
+Pos=27168.2,828.07,70106.4
+Orient=0,0.297041,0,-0.954865
+Scale=2,2,2
+
+[ENTRY]
 ID=10000046
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=27723,324,70048
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=245
-sceneryName=generated_Grimfrost_s_Lair
 spawnPackage=#2759
 
 [ENTRY]
 ID=1358957554
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=27825.3,324.46,70063
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=1a_yetiCamp01_sentry
 links_count=1
 link=1358957553,1
-spawnPackage=1a_yetiCamp01_sentry
 
 [ENTRY]
 ID=1358957583
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=27982.5,319.013,70109
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=1a_yetiCamp01_general
-outerRadius=1
 
 [ENTRY]
 ID=1358964643
 Asset=Prop-Battlefield_Skeletons#Prop-Battlefield_Skeleton3
+Name=Untitled
 Pos=27862.3,326.025,70019
 Orient=0,0,0,1
 Scale=1,1,1
@@ -38,6 +48,7 @@ Flags=1
 [ENTRY]
 ID=1358964644
 Asset=Prop-Battlefield_Skeletons#Prop-Battlefield_Skeleton2
+Name=Untitled
 Pos=27839.3,327.551,70001
 Orient=0,0.924606,0,0.380925
 Scale=1,1,1
@@ -46,6 +57,7 @@ Flags=1
 [ENTRY]
 ID=1358964648
 Asset=Prop-Battlefield_Skeletons#Prop-Battlefield_Skull3
+Name=Untitled
 Pos=27888,324.652,70002
 Orient=0,0,0,1
 Scale=1,1,1
@@ -54,6 +66,7 @@ Flags=1
 [ENTRY]
 ID=1358964649
 Asset=Prop-Battlefield_Skeletons#Prop-Battlefield_Skeleton4
+Name=Untitled
 Pos=27876.9,320.228,70097
 Orient=0,0,0,1
 Scale=1,1,1
@@ -62,6 +75,7 @@ Flags=1
 [ENTRY]
 ID=1358964651
 Asset=Prop-Tribal_Lamp1
+Name=Untitled
 Pos=27834.7,327.525,70001
 Orient=0,0,0,1
 Scale=2.25,2.25,2.25
@@ -70,6 +84,7 @@ Flags=1
 [ENTRY]
 ID=1358964652
 Asset=Prop-Tribal_Lamp1
+Name=Untitled
 Pos=27838.2,319.296,70121
 Orient=-0.0646297,0.0064846,-0.0996226,0.992903
 Scale=2.25,2.25,2.25
@@ -78,6 +93,7 @@ Flags=1
 [ENTRY]
 ID=1358964653
 Asset=Prop-Tribal_Lamp1
+Name=Untitled
 Pos=27835.6,319.461,70123
 Orient=0.0874025,0.0288637,-0.0179221,0.995593
 Scale=2.25,2.25,2.25
@@ -86,6 +102,7 @@ Flags=1
 [ENTRY]
 ID=1358964658
 Asset=Prop-Cave_Entrance1#Prop-Cave_Entrance1
+Name=Untitled
 Pos=27689.6,322.137,70039
 Orient=0,-0.724287,0,0.689498
 Scale=5,5,5
@@ -94,6 +111,7 @@ Flags=1
 [ENTRY]
 ID=1358966309
 Asset=Prop-Crystals_Blue#Prop-Crystal_Blue_Med3
+Name=Untitled
 Pos=27704.1,528.989,70005
 Orient=0,0,-0.0799147,0.996802
 Scale=1,1,1
@@ -102,6 +120,7 @@ Flags=1
 [ENTRY]
 ID=1358966310
 Asset=Prop-Crystals_Blue#Prop-Crystal_Blue_Huge2
+Name=Untitled
 Pos=27694.7,402.024,70199
 Orient=0.0945538,0.00758048,-0.0795543,0.992307
 Scale=1,1,1
@@ -110,6 +129,7 @@ Flags=1
 [ENTRY]
 ID=1358966312
 Asset=Par-Snow1-Emitter
+Name=Untitled
 Pos=27824.4,321.92,70112
 Orient=0,-0.0499792,0,0.99875
 Scale=1,1,1
@@ -118,6 +138,7 @@ Flags=1
 [ENTRY]
 ID=1358966313
 Asset=Effects#Par-Snow1-Emitter
+Name=Untitled
 Pos=27861.2,326.547,70008
 Orient=0,-0.0799147,0,0.996802
 Scale=1,1,1
@@ -126,6 +147,7 @@ Flags=1
 [ENTRY]
 ID=1358966316
 Asset=Par-Snow1-Emitter
+Name=Untitled
 Pos=27775,324.506,70051
 Orient=0,-0.0199987,0,0.9998
 Scale=1,1,1
@@ -134,6 +156,7 @@ Flags=1
 [ENTRY]
 ID=1358966728
 Asset=Prop-Instance_Entrance
+Name=Untitled
 Pos=27750.9,390.309,70048.8
 Orient=0,-0.993486,0,-0.113955
 Scale=2.975,2.975,2.975
@@ -141,6 +164,7 @@ Scale=2.975,2.975,2.975
 [ENTRY]
 ID=1358966729
 Asset=Light-Medium?COLOR=33FFFF
+Name=Untitled
 Pos=27780.9,378.352,70048
 Orient=0,-0.734548,0,0.678557
 Scale=1,1,1
