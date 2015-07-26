@@ -1,0 +1,15 @@
+[ENTRY]
+ID=500078
+Asset=Manipulator-PathNode
+Pos=12685.9,1114.22,26950.6
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
+ID=500079
+Asset=Manipulator-SpawnPoint
+Pos=12718.3,1113.69,26999.3
+Orient=0,0.893464,0,0.449134
+Scale=1,1,1
+spawnPackage=def_1392509316
+

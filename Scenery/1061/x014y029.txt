@@ -1,0 +1,15 @@
+[ENTRY]
+ID=500089
+Asset=Manipulator-SpawnPoint
+Pos=14603,1523.73,29738.6
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=def_1392508954
+
+[ENTRY]
+ID=500090
+Asset=Prop-Lamp_Post_NB1
+Pos=14969.6,1503.22,29818.4
+Orient=0,0,0,1
+Scale=1,1,1
+

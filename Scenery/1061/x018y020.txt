@@ -1,0 +1,14 @@
+[ENTRY]
+ID=500318
+Asset=Prop-Palm-Tree#Prop-Palm-Tree1
+Pos=18092.4,1609.1,20894.4
+Orient=0,0,0,1
+Scale=2.425,2.425,2.425
+
+[ENTRY]
+ID=500319
+Asset=Prop-Palm-Tree#Prop-Palm-Tree3
+Pos=18474.2,1659.46,20818
+Orient=0,0,0,1
+Scale=3,3,3
+

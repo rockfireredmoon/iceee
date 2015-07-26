@@ -988,7 +988,12 @@ class this.SceneObjectManager extends this.MessageBroadcaster
 			return null;
 		}
 
-		safeId = id.tointeger();
+		try {
+			safeId = id.tointeger();
+		} catch(e) {			
+			this.log.warn("lookup of " + kind + "id: " + id + " is not an integer");
+			return null;
+		}
 
 		if (safeId == 0)
 		{
@@ -5145,8 +5150,16 @@ class this.SceneObject extends this.MessageBroadcaster
 			
 		print("ICE! Frame " + mCurrentTransformationSequence.index + " will run from " + mCurrentTransformationFrame.started + " to " + mCurrentTransformationFrame.end);
 		
-		mForceUpdate = true;
 		print("ICE! Scenery: " + mIsScenery + " Should render: " + shouldRender() + " mForceUpdate = " + mForceUpdate);
+			
+		// Setup the interpolators for all of the transforms			
+		foreach(transform in mCurrentTransformationFrame.transforms) {
+			if("interpolation" in transform)
+				transform.interpolator <- Interpolator.interpolate(transform.interpolation);
+			else 
+				transform.interpolator <- Interpolator.INTERPOLATION_LINEAR;
+		}
+			
 			
 		return true;	
 	}
@@ -5290,11 +5303,19 @@ class this.SceneObject extends this.MessageBroadcaster
 	}
 	
 	function interpolatedTransformation(transform, pc) {
+	
+	
 		local toV = arrayToVector3(transform.to);
 		local fromV = ("from" in transform) ? arrayToVector3(transform.from) : ( "start" in transform ? transform.start : Vector3(0.0,0.0,0.0) );
-		return Vector3(fromV.x + ( ( toV.x - fromV.x ) * pc ),
+		/*return Vector3(fromV.x + ( ( toV.x - fromV.x ) * pc ),
 			fromV.y + ( ( toV.y - fromV.y ) * pc ),
-			fromV.z + ( ( toV.z - fromV.z ) * pc ));
+			fromV.z + ( ( toV.z - fromV.z ) * pc ));*/
+			
+		//function apply(start, end, a) {
+		
+		return Vector3(transform.interpolator.apply(fromV.x, toV.x, pc ),
+						transform.interpolator.apply(fromV.y, toV.y, pc ),
+						transform.interpolator.apply(fromV.z, toV.z, pc ));
 	}
 	
 	function arrayToVector3(arr) {

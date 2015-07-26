@@ -1,0 +1,7 @@
+[ENTRY]
+ID=500181
+Asset=Bldg-Earthend_Wall1?ATS=ATS-Roman
+Pos=15530.2,1315.49,38035.8
+Orient=0,0.476433,0,-0.879211
+Scale=1,1,1
+
