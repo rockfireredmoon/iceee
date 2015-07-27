@@ -1,0 +1,4 @@
+<?xml version="1.0" ?>
+<Component id="Prop-Clutter-crRock1" xmlns="http://ee.ironrealms.com/CMS_XML.xsd">
+  <Entity mesh="Prop-Clutter-crRock1.mesh"/>
+</Component>

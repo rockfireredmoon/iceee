@@ -1,0 +1,6 @@
+<?xml version="1.0" ?>
+<Component id="Prop-Mother_Shard" xmlns="http://ee.ironrealms.com/CMS_XML.xsd">
+  <LOD dist="" mesh=""/>
+  <Entity mesh="Prop-Mother_Shard.mesh" boundingBox=""/>
+  <Entity mesh="Prop-Mother_Shard-Blocking.mesh" qf="4" vf="2"/>
+</Component>

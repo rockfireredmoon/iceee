@@ -198,6 +198,19 @@ ComponentIndex["Item-IceEEBeta_Flag"] <- "Item-IceEEBeta_Flag";
 ComponentIndex["Prop-CTF_Red"] <- "Prop-CTF";
 ComponentIndex["Prop-CTF_Blue"] <- "Prop-CTF";
 
+/* Copied from EER */
+
+ComponentIndex["Prop-Battlefield_Stone2"] <- "Prop-Battlefield1";
+ComponentIndex["Prop-Clutter-crRock1"] <- "Prop-Clutter1";
+ComponentIndex["Prop-Clutter-crRock2"] <- "Prop-Clutter1";
+ComponentIndex["Prop-Clutter-crRock3"] <- "Prop-Clutter1";
+ComponentIndex["Prop-Mother_Shard"] <- "Prop-Crystals";
+ComponentIndex["Prop-Fence_Sticks1"] <- "Prop-Fences";
+ComponentIndex["Prop-Fence_Sticks2"] <- "Prop-Fences";
+ComponentIndex["Prop-Garden_Raised_Bed_Round"] <- "Prop-Gardens";
+ComponentIndex["Prop-Tree_Platform_Bridge_Endcap"] <- "Prop-Tree_Platforms";
+ComponentIndex["Prop-Archery_Platform"] <- "Prop-Walls";
+
 
 /* 0.8.8+ */
 
