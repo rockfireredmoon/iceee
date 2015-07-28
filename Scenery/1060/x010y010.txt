@@ -1,0 +1,16 @@
+[ENTRY]
+ID=1130022
+Asset=Prop-Palm-Tree#Prop-Palm-Tree1
+Name=
+Pos=19386.2,1283.28,19727
+Orient=0,0,0,1
+Scale=2,2,2
+
+[ENTRY]
+ID=1130024
+Asset=Prop-Palm-Tree#Prop-Palm-Tree3
+Name=
+Pos=19511.2,1316.55,20280
+Orient=0,0,0,1
+Scale=2,2,2
+

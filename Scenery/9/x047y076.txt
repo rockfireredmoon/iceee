@@ -1,0 +1,8 @@
+[ENTRY]
+ID=1130311
+Asset=Prop-Loot1#Prop-Loot-Silver_Chest1
+Name=
+Pos=35411.5,977.915,57324.2
+Orient=0,0,0,1
+Scale=2,2,2
+
