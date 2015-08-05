@@ -1080,3 +1080,13 @@ GuildHall=1
 WarpName=The Lighthouse Keepers Guild Hall
 EnvironmentCycle=1
 DefLoc=2686,312,4786
+
+[ENTRY]
+ID=201
+NAME=Earth's Ending
+ENVIRONMENTTYPE=Dungeon1
+ShardName=Corisca
+WarpName=earthsending
+DefLoc=0,0,0
+Instance=1
+PageSize=1000
