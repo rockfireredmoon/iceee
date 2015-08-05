@@ -279,6 +279,7 @@ Name=Untitled
 Pos=14507.4,1297.35,13691.9
 Orient=0.129354,-0.989416,-0.00852336,0.0651945
 Scale=1.95,1.95,1.95
+Flags=1
 
 [ENTRY]
 ID=1029145
@@ -295,6 +296,7 @@ Name=Untitled
 Pos=15266.2,1166.3,13734.4
 Orient=0,0.996024,0,-0.0890854
 Scale=1.3,1.3,1.3
+Flags=1
 
 [ENTRY]
 ID=1129357
@@ -303,6 +305,7 @@ Name=Untitled
 Pos=15279.5,1161.16,13645.9
 Orient=0,0.999816,0,-0.0192024
 Scale=1.3,1.3,1.3
+Flags=1
 
 [ENTRY]
 ID=1129358
@@ -311,6 +314,7 @@ Name=Untitled
 Pos=15286.8,1161.63,13565.5
 Orient=0,0.997495,0,0.0707372
 Scale=1.3,1.3,1.3
+Flags=1
 
 [ENTRY]
 ID=1129361
@@ -319,6 +323,7 @@ Name=Untitled
 Pos=15316,1166.37,13494.1
 Orient=0,0,0,1
 Scale=3,3,3
+Flags=1
 
 [ENTRY]
 ID=1129362
@@ -343,6 +348,7 @@ Name=Untitled
 Pos=15276.3,1161.13,13637.4
 Orient=0,0,0,1
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1129400
@@ -351,6 +357,7 @@ Name=Untitled
 Pos=14913.3,1253.5,13834
 Orient=0,-0.754571,0,0.656219
 Scale=1.5,1.5,1.5
+Flags=1
 
 [ENTRY]
 ID=1129401
@@ -359,6 +366,7 @@ Name=Untitled
 Pos=15035.9,1249.91,13696
 Orient=0,0,0.49688,0.867819
 Scale=1.7,1.7,1.7
+Flags=1
 
 [ENTRY]
 ID=1129405
@@ -385,6 +393,7 @@ Name=Untitled
 Pos=15099,1266.41,13522.1
 Orient=0,0,0,1
 Scale=5,5,5
+Flags=1
 
 [ENTRY]
 ID=1129434
@@ -401,6 +410,7 @@ Name=Untitled
 Pos=14588.6,1169.07,13892.8
 Orient=0,0,-0.585097,0.810963
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1129453
@@ -409,6 +419,7 @@ Name=Untitled
 Pos=14607.7,1185.75,13889.9
 Orient=0,0,0,1
 Scale=3,3,3
+Flags=1
 
 [ENTRY]
 ID=1129463
@@ -425,6 +436,7 @@ Name=Untitled
 Pos=14999.4,1249.88,13594.4
 Orient=0,0,0,1
 Scale=2,2,2
+Flags=1
 
 [ENTRY]
 ID=1129465
@@ -433,6 +445,7 @@ Name=Untitled
 Pos=15279.2,1166.25,13795.7
 Orient=0,0.706825,0,0.707388
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1129466
@@ -441,6 +454,7 @@ Name=Untitled
 Pos=15279.8,1164.21,13849.3
 Orient=0,0.713864,0,0.700285
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1129467
@@ -473,6 +487,7 @@ Name=Untitled
 Pos=15257,1131.83,13950.8
 Orient=0,-0.852108,0,0.523366
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1129472
@@ -489,6 +504,7 @@ Name=Untitled
 Pos=14688.9,1157.53,13981.3
 Orient=-0.0781247,-0.395549,0.177319,0.897773
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1129475
@@ -497,6 +513,7 @@ Name=Untitled
 Pos=14745.5,1165.84,13936
 Orient=0,0.609159,0,0.793048
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1129484

@@ -5,6 +5,7 @@ Name=Untitled
 Pos=17869.7,1296.48,17542.9
 Orient=0,0.301812,0,-0.953368
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1129492
@@ -13,6 +14,7 @@ Name=Untitled
 Pos=18058,1309.35,17505.6
 Orient=0,0.461779,0,0.886995
 Scale=0.8,0.8,0.8
+Flags=1
 
 [ENTRY]
 ID=1129493
@@ -21,6 +23,7 @@ Name=Untitled
 Pos=17444,1320.44,17438.8
 Orient=-0.0628355,0.585791,-0.0777361,0.804275
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1129495
@@ -29,6 +32,7 @@ Name=Untitled
 Pos=17526.7,1209.02,17302.6
 Orient=0,0,0,1
 Scale=2,2,2
+Flags=1
 
 [ENTRY]
 ID=1129497
@@ -37,6 +41,7 @@ Name=Untitled
 Pos=17646.2,1322.81,17443.9
 Orient=-0.114747,0,0,0.993395
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1129498
@@ -45,6 +50,7 @@ Name=Untitled
 Pos=17503.4,1373.82,17703.9
 Orient=0,-0.92269,0,0.385543
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1129499
@@ -53,6 +59,7 @@ Name=Untitled
 Pos=17687.7,1327.52,17785.9
 Orient=0.00598641,-0.0996538,-0.0596644,0.993214
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1129500
@@ -61,6 +68,7 @@ Name=Untitled
 Pos=18127.8,1317.27,17534.1
 Orient=0,0,0,1
 Scale=2,2,2
+Flags=1
 
 [ENTRY]
 ID=1129501
@@ -69,6 +77,7 @@ Name=Untitled
 Pos=18136.2,1299.12,17332.4
 Orient=0,0,0,1
 Scale=1.3,1.3,1.3
+Flags=1
 
 [ENTRY]
 ID=1129503
@@ -85,6 +94,7 @@ Name=Untitled
 Pos=17485.4,1401.3,17780.9
 Orient=0,0,0,1
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1129505
@@ -93,6 +103,7 @@ Name=Untitled
 Pos=17466,1378.51,17580.6
 Orient=0,0.983082,0,-0.183164
 Scale=2.5,2.5,2.5
+Flags=1
 
 [ENTRY]
 ID=1129508
@@ -101,6 +112,7 @@ Name=Untitled
 Pos=17650,1356.81,17676.6
 Orient=-0.0914574,-0.732979,-0.0853008,0.668657
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1129509
@@ -109,6 +121,7 @@ Name=Untitled
 Pos=17565.7,1369.04,17644.2
 Orient=0,-0.897911,0,0.440177
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1129510
@@ -117,6 +130,7 @@ Name=Untitled
 Pos=17982.6,1308.21,17328.2
 Orient=0,0.452886,0,0.891568
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1129512
@@ -125,6 +139,7 @@ Name=Untitled
 Pos=17744.6,1300.53,17425.3
 Orient=0,0,0,1
 Scale=1.5,1.5,1.5
+Flags=1
 
 [ENTRY]
 ID=1129513
@@ -141,6 +156,7 @@ Name=Untitled
 Pos=17951.2,1310.45,17426.8
 Orient=0,0,0,1
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1129515
@@ -149,6 +165,7 @@ Name=Untitled
 Pos=17995.3,1316.76,17468.3
 Orient=0,-0.49688,0,0.867819
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1129516
@@ -157,6 +174,7 @@ Name=Untitled
 Pos=17936.2,1310.75,17488.8
 Orient=0,0.996738,0,0.0807084
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1129517
@@ -234,6 +252,7 @@ Name=Untitled
 Pos=17520.7,1243.19,18954.3
 Orient=0,0.188859,0,0.982004
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1129901
@@ -242,6 +261,7 @@ Name=Untitled
 Pos=17281.1,1248.66,19093.5
 Orient=0,-0.916803,0,0.39934
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1129902
@@ -250,6 +270,7 @@ Name=Untitled
 Pos=17404.6,1249.09,19011.4
 Orient=0,-0.967462,0,0.253016
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1129916
@@ -290,6 +311,7 @@ Name=Untitled
 Pos=18273.4,999.23,19177.7
 Orient=0,0.989391,0,0.14528
 Scale=2,2,2
+Flags=1
 
 [ENTRY]
 ID=1129942
@@ -298,6 +320,7 @@ Name=Untitled
 Pos=18324.9,1097.48,19186.1
 Orient=0,0.613117,0,0.789992
 Scale=2,2,2
+Flags=1
 
 [ENTRY]
 ID=1130185
@@ -327,7 +350,7 @@ spawnPackage=#F3336
 [ENTRY]
 ID=1130532
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=17388.8,1245.64,19132.1
 Orient=0,0,0,1
 Scale=1,1,1
@@ -338,7 +361,7 @@ link=1130533,1
 [ENTRY]
 ID=1130533
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=17362.2,1243.6,19085.4
 Orient=0,0,0,1
 Scale=1,1,1
@@ -349,7 +372,7 @@ link=1130532,1
 [ENTRY]
 ID=1130535
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=17317.6,1245.4,19076.3
 Orient=0,0.930216,0,0.367013
 Scale=1,1,1
@@ -358,7 +381,7 @@ spawnPackage=58_corsica_southendsentry_a
 [ENTRY]
 ID=1130538
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=17376.5,1244.65,19034.7
 Orient=0,0.872355,0,0.488872
 Scale=1,1,1
@@ -367,7 +390,7 @@ spawnPackage=58_corsica_southendsentry_a
 [ENTRY]
 ID=1130554
 Asset=Prop-Wooden_Barricade1
-Name=
+Name=Untitled
 Pos=17297.2,1244.9,19048
 Orient=-0.212431,0.346005,0.0966831,0.908739
 Scale=1,1,1

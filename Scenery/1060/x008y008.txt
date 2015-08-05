@@ -100,6 +100,7 @@ Name=Untitled
 Pos=15842.4,1161.65,15902.7
 Orient=0.292609,0.652942,-0.124125,0.687488
 Scale=1.7,1.7,1.7
+Flags=1
 
 [ENTRY]
 ID=1028871
@@ -108,6 +109,7 @@ Name=Untitled
 Pos=16771.8,1202.08,15535.2
 Orient=0,-0.044986,0,0.998988
 Scale=1.1,1.1,1.1
+Flags=1
 
 [ENTRY]
 ID=1028873
@@ -374,6 +376,7 @@ Name=Untitled
 Pos=16631.1,1176.24,15675.5
 Orient=0,1,0,7.54979e-08
 Scale=0.7,0.7,0.7
+Flags=1
 
 [ENTRY]
 ID=1129767
@@ -382,6 +385,7 @@ Name=Untitled
 Pos=16643.2,1200.17,15684.2
 Orient=0,0.707107,0,0.707107
 Scale=0.7,0.7,0.7
+Flags=1
 
 [ENTRY]
 ID=1129768
@@ -390,6 +394,7 @@ Name=Untitled
 Pos=16641.8,1199.66,15668
 Orient=0,0,0,1
 Scale=7,7,7
+Flags=1
 
 [ENTRY]
 ID=1129772
@@ -398,6 +403,7 @@ Name=Untitled
 Pos=16443.1,1213.82,16027.4
 Orient=0,-0.361615,0,0.932327
 Scale=0.6,0.6,0.6
+Flags=1
 
 [ENTRY]
 ID=1129774
@@ -472,6 +478,7 @@ Name=Untitled
 Pos=16193.9,1221.41,15360.4
 Orient=0,0,0,1
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1129789
@@ -496,6 +503,7 @@ Name=Untitled
 Pos=16072.3,1311.66,16362.4
 Orient=0,0,0,1
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1129798
@@ -536,6 +544,7 @@ Name=Untitled
 Pos=16493,1213.22,15919.6
 Orient=0,0,0,1
 Scale=3,3,3
+Flags=1
 
 [ENTRY]
 ID=1129815
@@ -544,6 +553,7 @@ Name=Untitled
 Pos=16652.4,1199.85,15525.9
 Orient=0.0549723,0,0,0.998488
 Scale=2,2,2
+Flags=1
 
 [ENTRY]
 ID=1129816
@@ -552,6 +562,7 @@ Name=Untitled
 Pos=16634.1,1203.32,15521.8
 Orient=-0.710615,0.699575,-0.0679424,0.0317207
 Scale=2,2,2
+Flags=1
 
 [ENTRY]
 ID=1129817
@@ -560,6 +571,7 @@ Name=Untitled
 Pos=16661,1202.05,15502.6
 Orient=-0.110163,-0.579703,0.249186,0.767929
 Scale=2,2,2
+Flags=1
 
 [ENTRY]
 ID=1129818
@@ -576,6 +588,7 @@ Name=Untitled
 Pos=16278,1202.16,15639.9
 Orient=0,0,0,1
 Scale=2,2,2
+Flags=1
 
 [ENTRY]
 ID=1129820
@@ -592,6 +605,7 @@ Name=Untitled
 Pos=16471.4,1213.76,15803.4
 Orient=0,0,0,1
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1129822
@@ -600,6 +614,7 @@ Name=Untitled
 Pos=16761,1205.53,15381.8
 Orient=0,0.119712,0,0.992809
 Scale=2,2,2
+Flags=1
 
 [ENTRY]
 ID=1129823
@@ -632,6 +647,7 @@ Name=Untitled
 Pos=16959.7,1233.28,16331.2
 Orient=0,0.375559,0,0.926798
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1129829
@@ -640,6 +656,7 @@ Name=Untitled
 Pos=17036.9,1206.16,16246
 Orient=0,-0.926499,0,0.376297
 Scale=1.3,1.3,1.3
+Flags=1
 
 [ENTRY]
 ID=1129830
@@ -648,6 +665,7 @@ Name=Untitled
 Pos=17120.2,1191.78,16147.4
 Orient=-0.227475,0.317802,0.0843251,0.916595
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1129831
@@ -656,6 +674,7 @@ Name=Untitled
 Pos=17158.1,1200.62,16121.6
 Orient=-0.208158,0.293055,0.0655329,0.930857
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1129832
@@ -664,6 +683,7 @@ Name=Untitled
 Pos=17121.5,1190.63,16175
 Orient=0,0.281157,0,0.959662
 Scale=2,2,2
+Flags=1
 
 [ENTRY]
 ID=1129833
@@ -672,6 +692,7 @@ Name=Untitled
 Pos=17168.6,1191.9,16144.9
 Orient=0,0.271547,0,0.962425
 Scale=2,2,2
+Flags=1
 
 [ENTRY]
 ID=1129834
@@ -680,6 +701,7 @@ Name=Untitled
 Pos=17239.7,1174.2,16390.5
 Orient=0,-0.324043,0,0.946042
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1129871
@@ -688,6 +710,7 @@ Name=Untitled
 Pos=15668.4,1130.96,16286.3
 Orient=0,0.425939,0,0.904752
 Scale=1.3,1.3,1.3
+Flags=1
 
 [ENTRY]
 ID=1129888
@@ -696,6 +719,7 @@ Name=Untitled
 Pos=15554.8,1133.32,16224.1
 Orient=-0.00353924,0.25734,0.00611532,0.966295
 Scale=0.6,0.6,0.6
+Flags=1
 
 [ENTRY]
 ID=1129892
@@ -720,6 +744,7 @@ Name=Untitled
 Pos=15582.1,1132.87,16168
 Orient=0,-0.266731,0,0.963771
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1129897
@@ -728,6 +753,7 @@ Name=Untitled
 Pos=15437.5,1127.95,16247.3
 Orient=0,-0.535416,0,0.844588
 Scale=1.725,1.725,1.725
+Flags=1
 
 [ENTRY]
 ID=1129900
@@ -768,6 +794,7 @@ Name=Untitled
 Pos=15737.7,1130.49,15907.4
 Orient=0,0,0,1
 Scale=1.5,1.5,1.5
+Flags=1
 
 [ENTRY]
 ID=1129919
@@ -776,6 +803,7 @@ Name=Untitled
 Pos=15769.9,1139.23,16079.3
 Orient=0,0,0,1
 Scale=1.5,1.5,1.5
+Flags=1
 
 [ENTRY]
 ID=1129922
@@ -784,6 +812,7 @@ Name=Untitled
 Pos=15847.5,1160.84,16040.4
 Orient=0.236843,0.644163,-0.278929,0.671683
 Scale=1.7,1.7,1.7
+Flags=1
 
 [ENTRY]
 ID=1129923
@@ -792,6 +821,7 @@ Name=Untitled
 Pos=15605.4,1130.21,16180.3
 Orient=0,-0.266731,0,0.963771
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1129935
@@ -800,6 +830,7 @@ Name=Untitled
 Pos=16742.4,1250.22,16155.4
 Orient=0,0,0,1
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1129979
@@ -1286,6 +1317,7 @@ Name=Untitled
 Pos=16716.4,1205.55,15387.5
 Orient=0,-0.696135,0,0.717911
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1130470
@@ -1302,6 +1334,7 @@ Name=Untitled
 Pos=16780.7,1205.46,15443.8
 Orient=0,0,0,1
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1130474
@@ -1310,6 +1343,7 @@ Name=Untitled
 Pos=16825.1,1209.84,15471.6
 Orient=0,0.674288,0,0.738469
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1130475
@@ -1318,6 +1352,7 @@ Name=Untitled
 Pos=16784.3,1205.32,15430.7
 Orient=0,0,0,1
 Scale=0.5,0.5,0.5
+Flags=1
 
 [ENTRY]
 ID=1130476

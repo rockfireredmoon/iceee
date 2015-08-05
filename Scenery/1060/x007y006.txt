@@ -23,6 +23,7 @@ Name=Untitled
 Pos=15079.4,1260.69,13323.9
 Orient=0,0.659385,0,0.751806
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1129407
@@ -40,6 +41,7 @@ Name=Untitled
 Pos=15087.4,1270.62,13379.2
 Orient=0,0.518418,0,0.855127
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1129413
@@ -48,6 +50,7 @@ Name=Untitled
 Pos=15087.6,1270.62,13339.6
 Orient=0,-0.80162,0,0.597834
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1129415
@@ -56,6 +59,7 @@ Name=Untitled
 Pos=14996.1,1300.62,13257.8
 Orient=0,0.930216,0,0.367013
 Scale=6,6,6
+Flags=1
 
 [ENTRY]
 ID=1129418
@@ -64,6 +68,7 @@ Name=Untitled
 Pos=15301.1,1205.71,13122.4
 Orient=0.190827,0.397282,-0.130353,0.888122
 Scale=2,2,2
+Flags=1
 
 [ENTRY]
 ID=1129419
@@ -72,6 +77,7 @@ Name=Untitled
 Pos=15317.5,1218.87,13048.3
 Orient=0.09377,0.710829,-0.0965492,0.690368
 Scale=1.5,1.5,1.5
+Flags=1
 
 [ENTRY]
 ID=1129435
@@ -80,6 +86,7 @@ Name=Untitled
 Pos=15032.2,1360.64,13106.8
 Orient=0,0,0,1
 Scale=2,2,2
+Flags=1
 
 [ENTRY]
 ID=1129436
@@ -96,6 +103,7 @@ Name=Untitled
 Pos=14990.4,1255.99,13168.9
 Orient=0,0,0,1
 Scale=4,4,4
+Flags=1
 
 [ENTRY]
 ID=1129438
@@ -104,6 +112,7 @@ Name=Untitled
 Pos=15066.9,1485.97,13351.7
 Orient=0,0,0,1
 Scale=3,3,3
+Flags=1
 
 [ENTRY]
 ID=1129439
@@ -117,7 +126,7 @@ Scale=1,1,1
 ID=1129440
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=Untitled
-Pos=15028.8,1519.72,13358.2
+Pos=15027.8,1519.72,13358.2
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=#E3397
@@ -129,6 +138,7 @@ Name=Untitled
 Pos=14899.9,1270.62,13384.1
 Orient=0,0.66687,0,0.745175
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1129442
@@ -137,6 +147,7 @@ Name=Untitled
 Pos=14906.4,1270.62,13331
 Orient=0,0.66687,0,0.745174
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1129443
@@ -145,6 +156,7 @@ Name=Untitled
 Pos=15034.7,1270.63,13423.8
 Orient=0,0.995881,0,0.0906716
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1129444
@@ -285,6 +297,7 @@ Name=Untitled
 Pos=15129.4,1253.47,13315.3
 Orient=-0.0749297,0,0,0.997189
 Scale=1.5,1.5,1.5
+Flags=1
 
 [ENTRY]
 ID=1129480
@@ -293,6 +306,7 @@ Name=Untitled
 Pos=14931.2,1270.63,13414
 Orient=0,-0.059964,0,0.998201
 Scale=0.5,0.5,0.5
+Flags=1
 
 [ENTRY]
 ID=1129481
@@ -301,6 +315,7 @@ Name=Untitled
 Pos=14990.1,1270.63,13421.1
 Orient=0,-0.997495,0,0.0707373
 Scale=0.7,0.7,0.7
+Flags=1
 
 [ENTRY]
 ID=1130261

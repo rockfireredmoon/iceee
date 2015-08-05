@@ -133,6 +133,7 @@ Name=Untitled
 Pos=16579.8,1116.98,18411.5
 Orient=0,-0.13459,0,0.990901
 Scale=1.4,1.4,1.4
+Flags=1
 
 [ENTRY]
 ID=1129547
@@ -141,6 +142,7 @@ Name=Untitled
 Pos=16777.1,1155.28,17715.3
 Orient=0,0,0,1
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1129548
@@ -149,6 +151,7 @@ Name=Untitled
 Pos=16665.5,1133.23,17952.3
 Orient=0,0,0,1
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1129549
@@ -157,6 +160,7 @@ Name=Untitled
 Pos=16707.9,1119.77,18467.1
 Orient=0,0,0,1
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1129550
@@ -181,6 +185,7 @@ Name=Untitled
 Pos=16664.6,1121.19,18435.5
 Orient=0,-0.29074,0,0.956802
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1129553
@@ -205,6 +210,7 @@ Name=Untitled
 Pos=16584.2,1106.54,18234.3
 Orient=0,0.505533,0,0.862807
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1129556
@@ -213,6 +219,7 @@ Name=Untitled
 Pos=16545.4,1103.8,17995.9
 Orient=0,-0.394019,0,0.919102
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1129557
@@ -221,6 +228,7 @@ Name=Untitled
 Pos=16603.3,1106.36,18161.3
 Orient=0,0.677972,0,0.735088
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1129558
@@ -229,6 +237,7 @@ Name=Untitled
 Pos=16600.9,1110.82,18073.7
 Orient=0,0.813416,0,0.581683
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1129559
@@ -253,6 +262,7 @@ Name=Untitled
 Pos=16504.1,1102.86,17970.6
 Orient=0,0,0,1
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1129562
@@ -293,6 +303,7 @@ Name=Untitled
 Pos=16248,1119.79,17838.1
 Orient=0,0,0,1
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1129567
@@ -301,6 +312,7 @@ Name=Untitled
 Pos=16097.6,1123.98,17986.9
 Orient=0,-0.0249974,0,0.999687
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1129569
@@ -309,6 +321,7 @@ Name=Untitled
 Pos=16170.3,1119.21,18088.7
 Orient=0,-0.66687,0,0.745174
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1129573
@@ -557,6 +570,7 @@ Name=Untitled
 Pos=17169.5,1167.43,17291.3
 Orient=0,0,0,1
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1129866
@@ -565,6 +579,7 @@ Name=Untitled
 Pos=17194.6,1166.84,17282.9
 Orient=0,0,0,1
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1129867
@@ -573,6 +588,7 @@ Name=Untitled
 Pos=16947.5,1147.78,17634.6
 Orient=0,0,0,1
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1129868
@@ -581,6 +597,7 @@ Name=Untitled
 Pos=16666.4,1133.64,17626.9
 Orient=0,0,0,1
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1129869
@@ -589,6 +606,7 @@ Name=Untitled
 Pos=16724.7,1107.35,18195.1
 Orient=0,0,0,1
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1129870
@@ -597,6 +615,7 @@ Name=Untitled
 Pos=16443,1114.56,18371.3
 Orient=0,0,0,1
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1129872
@@ -621,6 +640,7 @@ Name=Untitled
 Pos=16685.7,1152.09,17665.5
 Orient=0,0,0,1
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1129875
@@ -637,6 +657,7 @@ Name=Untitled
 Pos=16411.6,1113.44,18362.9
 Orient=0,0,0,1
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1129878
@@ -645,6 +666,7 @@ Name=Untitled
 Pos=16746,1105.7,18233.6
 Orient=0,0,0,1
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1129879
@@ -677,6 +699,7 @@ Name=Untitled
 Pos=16798.7,1134.58,17942
 Orient=0,0,0,1
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1129889
@@ -685,6 +708,7 @@ Name=Untitled
 Pos=16135.4,1123.67,18365
 Orient=0,0,0,1
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1129890
@@ -693,6 +717,7 @@ Name=Untitled
 Pos=16732.9,1141.76,18772.8
 Orient=-0.270625,0.190685,-0.322265,0.886875
 Scale=3,3,3
+Flags=1
 
 [ENTRY]
 ID=1129891
@@ -701,6 +726,7 @@ Name=Untitled
 Pos=16923.9,1199.06,18540.2
 Orient=-0.175433,0.819651,0.431942,0.332901
 Scale=1.2,1.2,1.2
+Flags=1
 
 [ENTRY]
 ID=1129893
@@ -733,6 +759,7 @@ Name=Untitled
 Pos=17108.2,1238.4,19046.8
 Orient=0,0.380188,0,0.924909
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1129929
@@ -757,6 +784,7 @@ Name=Untitled
 Pos=17069.2,1220.4,18881.7
 Orient=0,0,0,1
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1129932
@@ -765,6 +793,7 @@ Name=Untitled
 Pos=17205.3,1254.1,19073.9
 Orient=0,0,0,1
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1129934
@@ -773,6 +802,7 @@ Name=Untitled
 Pos=17254.5,1242.89,18934.5
 Orient=0,0,0,1
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1130644
@@ -871,6 +901,7 @@ Name=Untitled
 Pos=16421.1,1102.96,17694.1
 Orient=0,0,0,1
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1130654
@@ -887,6 +918,7 @@ Name=Untitled
 Pos=16149.6,1111.04,17825.8
 Orient=-0.0171468,-0.285438,0.0574601,0.95652
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1130656
@@ -984,6 +1016,7 @@ Name=Untitled
 Pos=16216.1,1126.91,18391.4
 Orient=0,0.0449848,0,0.998988
 Scale=3.5,3.5,3.5
+Flags=1
 
 [ENTRY]
 ID=1130671
@@ -992,6 +1025,7 @@ Name=Untitled
 Pos=16135.7,1130.14,18272.9
 Orient=0,0,0,1
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1130672
