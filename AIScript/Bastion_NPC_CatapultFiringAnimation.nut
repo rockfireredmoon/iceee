@@ -9,7 +9,9 @@
  */
  
 const AB_CATAPULT = 5421;
-const CDEFID_TARGET = 3397;
+
+/* This script takes a single argument, the CreatureDefID of the target
+target_cdefid <- __argc > 0 ? __argv[0].tointeger() : 0;
 
 info <- {
 	enabled = true,
@@ -19,7 +21,7 @@ info <- {
 }
 
 function attack_target() {
-	local target_cids = ai.cids(CDEFID_TARGET);
+	local target_cids = ai.cids(target_cdefid);
 	local cid = target_cids.len() == 0 ? 0 : target_cids[randmod(target_cids.len())];
 	if(cid > 0) {
 		ai.set_other_target(ai.get_self(), cid);
@@ -29,4 +31,8 @@ function attack_target() {
 }
 
 
-ai.queue(attack_target, randmod(5000));
+
+if(target_propid == 0)  
+	ai.error("Error! AI script Bastion_NPC_CatapultFiringAnimation script called without any parameter. Requires propID of the target's spawner");
+else  
+	ai.queue(attack_target, randmod(5000));
