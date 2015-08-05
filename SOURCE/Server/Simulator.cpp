@@ -1627,163 +1627,8 @@ void SimulatorThread :: handle_inspectItemDef(void)
 {
 	int itemID = GetInteger(&readPtr[ReadPos], ReadPos);
 	//LogMessageL(MSG_SHOW, "inspectItemDef requested for %d", itemID);
-
 	ItemDef *item = g_ItemManager.GetSafePointerByID(itemID);
-	WritePos = 0;
-
-	//_handleItemDefUpdateMsg is [4] for lobby, [71] for play (most common) protocol
-	char message = 71;
-	if(ProtocolState == 0)
-		message = 4;
-
-	WritePos += PutByte(&SendBuf[WritePos], message);
-	WritePos += PutShort(&SendBuf[WritePos], 0);      //Message size
-
-	WritePos += PutInteger(&SendBuf[WritePos], itemID);
-
-	//Fill the item properties
-	WritePos += PutByte(&SendBuf[WritePos], item->mType);
-	WritePos += PutStringUTF(&SendBuf[WritePos], item->mDisplayName.c_str());
-	WritePos += PutStringUTF(&SendBuf[WritePos], item->mAppearance.c_str());
-	WritePos += PutStringUTF(&SendBuf[WritePos], item->mIcon.c_str());
-
-	WritePos += PutByte(&SendBuf[WritePos], item->mIvType1);
-	WritePos += PutShort(&SendBuf[WritePos], item->mIvMax1);
-	WritePos += PutByte(&SendBuf[WritePos], item->mIvType2);
-	WritePos += PutShort(&SendBuf[WritePos], item->mIvMax2);
-	WritePos += PutStringUTF(&SendBuf[WritePos], item->mSv1.c_str());
-
-	if(g_ProtocolVersion < 5)
-		WritePos += PutInteger(&SendBuf[WritePos], item->_mCopper);
-
-	WritePos += PutShort(&SendBuf[WritePos], item->mContainerSlots);
-	WritePos += PutByte(&SendBuf[WritePos], item->mAutoTitleType);
-	WritePos += PutShort(&SendBuf[WritePos], item->mLevel);
-	WritePos += PutByte(&SendBuf[WritePos], item->mBindingType);
-	WritePos += PutByte(&SendBuf[WritePos], item->mEquipType);
-
-	WritePos += PutByte(&SendBuf[WritePos], item->mWeaponType);
-	if(item->mWeaponType != 0)
-	{
-		if(g_ProtocolVersion == 7)
-		{
-			WritePos += PutByte(&SendBuf[WritePos], item->mWeaponDamageMin);
-			WritePos += PutByte(&SendBuf[WritePos], item->mWeaponDamageMax);
-			WritePos += PutByte(&SendBuf[WritePos], item->_mSpeed);
-			WritePos += PutByte(&SendBuf[WritePos], item->mWeaponExtraDamangeRating);
-			WritePos += PutByte(&SendBuf[WritePos], item->mWeaponExtraDamageType);
-		}
-		else
-		{
-			WritePos += PutInteger(&SendBuf[WritePos], item->mWeaponDamageMin);
-			WritePos += PutInteger(&SendBuf[WritePos], item->mWeaponDamageMax);
-			WritePos += PutByte(&SendBuf[WritePos], item->mWeaponExtraDamangeRating);
-			WritePos += PutByte(&SendBuf[WritePos], item->mWeaponExtraDamageType);
-		}
-	}
-
-	WritePos += PutInteger(&SendBuf[WritePos], item->mEquipEffectId);
-	WritePos += PutInteger(&SendBuf[WritePos], item->mUseAbilityId);
-	WritePos += PutInteger(&SendBuf[WritePos], item->mActionAbilityId);
-	WritePos += PutByte(&SendBuf[WritePos], item->mArmorType);
-	if(item->mArmorType != 0)
-	{
-		if(g_ProtocolVersion == 7)
-		{
-			WritePos += PutByte(&SendBuf[WritePos], item->mArmorResistMelee);
-			WritePos += PutByte(&SendBuf[WritePos], item->mArmorResistFire);
-			WritePos += PutByte(&SendBuf[WritePos], item->mArmorResistFrost);
-			WritePos += PutByte(&SendBuf[WritePos], item->mArmorResistMystic);
-			WritePos += PutByte(&SendBuf[WritePos], item->mArmorResistDeath);
-		}
-		else
-		{
-			WritePos += PutInteger(&SendBuf[WritePos], item->mArmorResistMelee);
-			WritePos += PutInteger(&SendBuf[WritePos], item->mArmorResistFire);
-			WritePos += PutInteger(&SendBuf[WritePos], item->mArmorResistFrost);
-			WritePos += PutInteger(&SendBuf[WritePos], item->mArmorResistMystic);
-			WritePos += PutInteger(&SendBuf[WritePos], item->mArmorResistDeath);
-		}
-	}
-	if(g_ProtocolVersion == 7)
-	{
-		WritePos += PutByte(&SendBuf[WritePos], item->mBonusStrength);
-		WritePos += PutByte(&SendBuf[WritePos], item->mBonusDexterity);
-		WritePos += PutByte(&SendBuf[WritePos], item->mBonusConstitution);
-		WritePos += PutByte(&SendBuf[WritePos], item->mBonusPsyche);
-		WritePos += PutByte(&SendBuf[WritePos], item->mBonusSpirit);
-		WritePos += PutByte(&SendBuf[WritePos], item->_mBonusHealth);
-		WritePos += PutByte(&SendBuf[WritePos], item->mBonusWill);
-	}
-	else
-	{
-		WritePos += PutInteger(&SendBuf[WritePos], item->mBonusStrength);
-		WritePos += PutInteger(&SendBuf[WritePos], item->mBonusDexterity);
-		WritePos += PutInteger(&SendBuf[WritePos], item->mBonusConstitution);
-		WritePos += PutInteger(&SendBuf[WritePos], item->mBonusPsyche);
-		WritePos += PutInteger(&SendBuf[WritePos], item->mBonusSpirit);
-
-		if(g_ProtocolVersion < 32)
-			WritePos += PutInteger(&SendBuf[WritePos], item->_mBonusHealth);
-		WritePos += PutInteger(&SendBuf[WritePos], item->mBonusWill);
-	}
-
-	if(g_ProtocolVersion >= 4)
-	{
-		WritePos += PutByte(&SendBuf[WritePos], item->isCharm);
-		if(item->isCharm != 0)
-		{
-			WritePos += PutFloat(&SendBuf[WritePos], item->mMeleeHitMod);
-			WritePos += PutFloat(&SendBuf[WritePos], item->mMeleeCritMod);
-			WritePos += PutFloat(&SendBuf[WritePos], item->mMagicHitMod);
-			WritePos += PutFloat(&SendBuf[WritePos], item->mMagicCritMod);
-			WritePos += PutFloat(&SendBuf[WritePos], item->mParryMod);
-			WritePos += PutFloat(&SendBuf[WritePos], item->mBlockMod);
-			WritePos += PutFloat(&SendBuf[WritePos], item->mRunSpeedMod);
-			WritePos += PutFloat(&SendBuf[WritePos], item->mRegenHealthMod);
-			WritePos += PutFloat(&SendBuf[WritePos], item->mAttackSpeedMod);
-			WritePos += PutFloat(&SendBuf[WritePos], item->mCastSpeedMod);
-			WritePos += PutFloat(&SendBuf[WritePos], item->mHealingMod);
-		}
-	}
-
-	if(g_ProtocolVersion >= 5)
-	{
-		WritePos += PutInteger(&SendBuf[WritePos], item->mValue);
-		WritePos += PutByte(&SendBuf[WritePos], item->mValueType);
-	}
-
-	bool ItemUpdateDefMsgCraft = false;
-	if(g_ProtocolVersion >= 7)
-		ItemUpdateDefMsgCraft = true;
-	if(ItemUpdateDefMsgCraft == true)
-	{
-		WritePos += PutInteger(&SendBuf[WritePos], item->resultItemId);
-		WritePos += PutInteger(&SendBuf[WritePos], item->keyComponentId);
-		WritePos += PutInteger(&SendBuf[WritePos], item->numberOfItems);
-		for(size_t i = 0; i < item->craftItemDefId.size(); i++)
-			WritePos += PutInteger(&SendBuf[WritePos], item->craftItemDefId[i]);
-
-		if(item->numberOfItems != item->craftItemDefId.size())
-			g_Log.AddMessageFormatW(MSG_WARN, "[ERROR] Crafting material item count mismatch for ID: %d", item->mID);
-	}
-
-	if(g_ProtocolVersion >= 9)
-		WritePos += PutStringUTF(&SendBuf[WritePos], item->mFlavorText.c_str());
-
-	if(g_ProtocolVersion >= 18)
-		WritePos += PutByte(&SendBuf[WritePos], item->mSpecialItemType);
-
-	if(g_ProtocolVersion >= 30)
-		WritePos += PutByte(&SendBuf[WritePos], item->mOwnershipRestriction);
-
-	if(g_ProtocolVersion >= 31)
-	{
-		WritePos += PutByte(&SendBuf[WritePos], item->mQualityLevel);
-		WritePos += PutShort(&SendBuf[WritePos], item->mMinUseLevel);
-	}
-
-	PutShort(&SendBuf[1], WritePos - 3);
+	WritePos = PrepExt_ItemDef(SendBuf, item, ProtocolState);
 	PendingSend = true;
 }
 
@@ -3594,8 +3439,6 @@ void SimulatorThread :: handle_updateVelocity(void)
 	creatureInst->Rotation = GetByte(&readPtr[ReadPos], ReadPos);
 	int speed = GetByte(&readPtr[ReadPos], ReadPos);
 
-
-	LogMessageL(MSG_WARN, "REMOVEME %d,%d,%d : heading %d rot: %d speed: %d", x, z, y, creatureInst->Heading, creatureInst->Rotation, speed);
 
 	//LogMessageL(MSG_SHOW, "Heading:%d, Rot:%d, Spd:%d", creatureInst->Heading, creatureInst->Rotation, speed);
 
@@ -5753,10 +5596,16 @@ int SimulatorThread :: protected_helper_query_loot_item(void)
 	}
 
 	// Offer the loot instead if appropriate
-	bool offered = partyLootable && !( party->mLootMode == FREE_FOR_ALL && !needOrGreed ) && OfferLoot(party->mLootMode, loot, party, receivingCreature, ItemID, needOrGreed, CID, conIndex) > 0;
+	if(partyLootable && !( party->mLootMode == FREE_FOR_ALL && !needOrGreed )) {
+		LogMessageL(MSG_SHOW, "Trying party loot for %d", ItemID);
+		WritePos = OfferLoot(party->mLootMode, loot, party, receivingCreature, ItemID, needOrGreed, CID, conIndex);
+		if(WritePos < 0) {
+			return WritePos;
+		}
+	}
+	else {
+		LogMessageL(MSG_SHOW, "An ordinary single player loot %d", ItemID);
 
-	if(!offered)
-	{
 		// Either there is no party, or the loot rules decided that the looter just gets the item
 
 		int slot = charData->inventory.GetFreeSlot(INV_CONTAINER);
@@ -5786,6 +5635,7 @@ int SimulatorThread :: protected_helper_query_loot_item(void)
 		}
 
 		WritePos = AddItemUpdate(SendBuf, Aux3, newItem);
+
 	}
 
 	// Always response to the looter
@@ -5795,7 +5645,7 @@ int SimulatorThread :: protected_helper_query_loot_item(void)
 	qresponse.push_back(Aux3);
 	WritePos += PrepExt_QueryResponseStringList(&SendBuf[WritePos], query.ID, qresponse);
 
-	return WritePos;
+	return QueryErrorMsg::NONE;
 }
 
 int SimulatorThread :: protected_helper_query_loot_need_greed_pass(void)
@@ -5877,9 +5727,9 @@ void SimulatorThread :: handle_query_loot_item(void)
 
 	WritePos = 0;
 
-	WritePos = protected_helper_query_loot_item();
-	if(WritePos <= 0)
-		WritePos = PrepExt_QueryResponseString2(SendBuf, query.ID, "FAIL", GetErrorString(WritePos));
+	int result = protected_helper_query_loot_item();
+	if(result < 0)
+		WritePos = PrepExt_QueryResponseString2(SendBuf, query.ID, "FAIL", GetErrorString(result));
 	PendingSend = true;
 }
 
@@ -12145,12 +11995,23 @@ int SimulatorThread :: OfferLoot(int mode, ActiveLootContainer *loot, ActivePart
 
 		// Offer to the robin first
 		LootTag * tag = party->TagItem(ItemID, robin->mCreaturePtr->CreatureID, CID);
-		int slot = robin->mCreaturePtr->charPtr->inventory.GetFreeSlot(INV_CONTAINER);
-		tag->mSlotIndex = slot;
+//		int slot = robin->mCreaturePtr->charPtr->inventory.GetFreeSlot(INV_CONTAINER);
+//		tag->mSlotIndex = slot;
 		Util::SafeFormat(Aux3, sizeof(Aux3), "%d", tag->lootTag);
 		WriteIdx = PartyManager::OfferLoot(SendBuf, ItemID, Aux3, false);
-		robin->mCreaturePtr->actInst->LSendToOneSimulator(SendBuf, WriteIdx, robin->mCreaturePtr->simulatorPtr);
-		return 1;
+		if(receivingCreature->CreatureID == robin->mCreaturePtr->CreatureID) {
+			LogMessageL(MSG_SHOW, "Sending Offer Loot Round Robin to looter, so returning with this response");
+			return WriteIdx;
+		}
+		else {
+			LogMessageL(MSG_SHOW, "Sending Offer Loot Round Robin to someone other than looter, so returning on its simulator");
+
+//			ItemDef *item = g_ItemManager.GetSafePointerByID(tag->mItemId);
+//			WritePos = PrepExt_ItemDef(SendBuf, item, ProtocolState);
+
+			robin->mCreaturePtr->actInst->LSendToOneSimulator(&SendBuf[WritePos], WriteIdx, robin->mCreaturePtr->simulatorPtr);
+			return QueryErrorMsg::NONE;
+		}
 	}
 
 	if(mode == LOOT_MASTER) {
@@ -12162,14 +12023,22 @@ int SimulatorThread :: OfferLoot(int mode, ActiveLootContainer *loot, ActivePart
 		tag->mSlotIndex = slot;
 		Util::SafeFormat(Aux3, sizeof(Aux3), "%d", tag->lootTag);
 		WriteIdx = PartyManager::OfferLoot(SendBuf, ItemID, Aux3, false);
-		leader->mCreaturePtr->actInst->LSendToOneSimulator(SendBuf, WriteIdx, leader->mCreaturePtr->simulatorPtr);
-		return 1;
+
+		if(receivingCreature->CreatureID == leader->mCreaturePtr->CreatureID) {
+			LogMessageL(MSG_SHOW, "Sending Offer Loot Master to looter, so returning with this response");
+			return WriteIdx;
+		}
+		else {
+			LogMessageL(MSG_SHOW, "Sending Offer Loot Master to someone other than looter, so returning on its simulator");
+			leader->mCreaturePtr->actInst->LSendToOneSimulator(SendBuf, WriteIdx, leader->mCreaturePtr->simulatorPtr);
+			return QueryErrorMsg::NONE;
+		}
 	}
 
 
 	// First tags for other party members
-	int offers = 0;
 	LogMessageL(MSG_SHOW, "Offering to %d party member", party->mMemberList.size());
+	int offers = 0;
 	for(uint i = 0 ; i < party->mMemberList.size(); i++) {
 		if(receivingCreature == NULL || party->mMemberList[i].mCreatureID != receivingCreature->CreatureID) {
 			// Only send offer to players in range
@@ -12191,7 +12060,7 @@ int SimulatorThread :: OfferLoot(int mode, ActiveLootContainer *loot, ActivePart
 	}
 
 	// Now the tag for the looting creature. We send the slot with this one
-	if(mode > -1)
+	if(mode > -1 && receivingCreature != NULL)
 	{
 		LogMessageL(MSG_SHOW, "Offering loot to looter");
 		LootTag * tag = party->TagItem(ItemID, receivingCreature->CreatureID, CID);
@@ -12199,18 +12068,22 @@ int SimulatorThread :: OfferLoot(int mode, ActiveLootContainer *loot, ActivePart
 		tag->mSlotIndex = slot;
 		offers++;
 
-		STRINGLIST qresponse;
-		qresponse.push_back("OK");
-		sprintf(Aux3, "%d", conIndex);
-		qresponse.push_back(Aux3);
-		WriteIdx= PrepExt_QueryResponseStringList(&SendBuf[WriteIdx], query.ID, qresponse);
+//		STRINGLIST qresponse;
+//		qresponse.push_back("OK");
+//		sprintf(Aux3, "%d", conIndex);
+//		qresponse.push_back(Aux3);
+//		WriteIdx= PrepExt_QueryResponseStringList(&SendBuf[WriteIdx], query.ID, qresponse);
 		Util::SafeFormat(Aux3, sizeof(Aux3), "%d", tag->lootTag);
 		g_Log.AddMessageFormat("[LOOT] Sending offer of %d to original looter (%d) using tag %s", ItemID, receivingCreature->CreatureID, Aux3);
-		WriteIdx+= PartyManager::OfferLoot(SendBuf, ItemID, Aux3, needOrGreed);
-		receivingCreature->actInst->LSendToOneSimulator(SendBuf, WriteIdx, receivingCreature->simulatorPtr);
+		return PartyManager::OfferLoot(SendBuf, ItemID, Aux3, needOrGreed);
 	}
 
-	return offers;
+	if(offers == 0) {
+		return QueryErrorMsg::GENERIC;
+	}
+	else {
+		return QueryErrorMsg::NONE;
+	}
 }
 
 void SimulatorThread :: RunTranslocate(void)
@@ -14363,14 +14236,17 @@ void SimulatorThread :: CheckIfLootReadyToDistribute(ActiveLootContainer *loot, 
 			}
 			else {
 				// Offer again to the rest of the party
-				LogMessageL(MSG_SHOW, "Offering %d to rest of party", lootTag->mItemId);
-				loot->SetStage2(lootTag->mItemId, true);
-				loot->RemoveCreatureRolls(lootTag->mItemId, lootTag->mCreatureId);
-				party->RemoveCreatureTags(lootTag->mItemId, lootTag->mCreatureId);
-				if(OfferLoot(-1, loot, party, creatureInst, lootTag->mItemId, needOrGreed, lootTag->mLootCreatureId, 0) == 0) {
+				int iid = lootTag->mItemId;
+				int cid = lootTag->mCreatureId;
+				int lcid = lootTag->mLootCreatureId;
+				LogMessageL(MSG_SHOW, "Offering %d to rest of party", iid);
+				loot->SetStage2(iid, true);
+				loot->RemoveCreatureRolls(iid, cid);
+				party->RemoveCreatureTags(iid, cid);
+				if(OfferLoot(-1, loot, party, creatureInst, iid, needOrGreed, lcid, 0) == QueryErrorMsg::GENERIC) {
 					// Nobody to offer to, clean up as if the item had never been looted
-					LogMessageL(MSG_SHOW, "Nobody to offer loot in %d to, cleaning up as if not yet looted.", lootTag->mLootCreatureId);
-					ResetLoot(party, loot, lootTag->mItemId);
+					LogMessageL(MSG_SHOW, "Nobody to offer loot in %d to, cleaning up as if not yet looted.", lcid);
+					ResetLoot(party, loot, iid);
 				}
 				return;
 			}
@@ -14389,14 +14265,17 @@ void SimulatorThread :: CheckIfLootReadyToDistribute(ActiveLootContainer *loot, 
 			}
 			else {
 				// Offer again to the rest of the party
-				LogMessageL(MSG_SHOW, "Offering %d to rest of party", lootTag->mItemId);
-				loot->SetStage2(lootTag->mItemId, true);
-				loot->RemoveCreatureRolls(lootTag->mItemId, lootTag->mCreatureId);
-				party->RemoveCreatureTags(lootTag->mItemId, lootTag->mCreatureId);
-				if(OfferLoot(-1, loot, party, creatureInst, lootTag->mItemId, needOrGreed, lootTag->mLootCreatureId, 0) == 0) {
+				int iid = lootTag->mItemId;
+				int cid = lootTag->mCreatureId;
+				int lcid = lootTag->mLootCreatureId;
+				LogMessageL(MSG_SHOW, "Robin passed, offering %d to rest of party", iid);
+				loot->SetStage2(iid, true);
+				loot->RemoveCreatureRolls(iid, cid);
+				party->RemoveCreatureTags(iid, cid);
+				if(OfferLoot(-1, loot, party, creatureInst, iid, needOrGreed, lcid, 0) == QueryErrorMsg::GENERIC) {
 					// Nobody to offer to, clean up as if the item had never been looted
-					LogMessageL(MSG_SHOW, "Nobody to offer loot in %d to, cleaning up as if not yet looted.", lootTag->mLootCreatureId);
-					ResetLoot(party, loot, lootTag->mItemId);
+					LogMessageL(MSG_SHOW, "Nobody to offer loot in %d to, cleaning up as if not yet looted.", lcid);
+					ResetLoot(party, loot, iid);
 				}
 				return;
 			}

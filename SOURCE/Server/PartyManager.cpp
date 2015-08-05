@@ -38,8 +38,6 @@ void ActiveParty :: AddMember(CreatureInstance* member)
 
 	// If the party member is in an instance that has an active PVP game, update the teams
 	if(member->actInst->pvpGame != NULL && mPVPTeam != PVP::PVPTeams::NONE) {
-		g_Log.AddMessageFormat("[REMOVEME] Party member %d is in an active PVP instance (%d), so will be added to team (%d)",
-				member->CreatureID, member->actInst->mZone);
 
 		char buf[64];
 		int wpos = PrepExt_PVPTeamAdd(buf, member->actInst->pvpGame, member->css.display_name, member->CreatureID, mPVPTeam);
@@ -70,8 +68,6 @@ void ActiveParty :: RemoveMember(int memberDefID)
 
 				// If the party member is in an instance that has an active PVP game, update the teams
 				if(mMemberList[i].mCreaturePtr->actInst->pvpGame != NULL && mPVPTeam != PVP::PVPTeams::NONE) {
-					g_Log.AddMessageFormat("[REMOVEME] Party member %d is in an active PVP instance (%d), so will be remove from team too (%d)",
-							mMemberList[i].mCreaturePtr->CreatureID, mMemberList[i].mCreaturePtr->actInst->mZone);
 
 					char buf[64];
 					int wpos = PrepExt_PVPTeamRemove(buf, mMemberList[i].mCreaturePtr->actInst->pvpGame, mMemberList[i].mCreaturePtr->CreatureID);

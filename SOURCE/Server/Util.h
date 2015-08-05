@@ -92,6 +92,7 @@ int PrepExt_SendHeartbeatMessage(char *buffer, unsigned int elapsedMilliseconds)
 int PrepExt_SendAdvancedEmote(char *buffer, int creatureID, const char *emoteName, float emoteSpeed, int loop);
 int PrepExt_SendEmoteControl(char *buffer, int creatureID, int emoteEvent);
 int PrepExt_ModStopSwimFlag(char *buffer);
+int PrepExt_ItemDef(char *SendBuf, ItemDef *item, int ProtocolState);
 int PrepExt_TradeCurrencyOffer(char *buffer, int offeringPlayerID, int tradeAmount);
 int PrepExt_TradeItemOffer(char *buffer, char *convBuf, int offeringPlayerID, std::vector<InventorySlot>& itemList);
 int PrepExt_QuestStatusMessage(char *buffer, int questID, int objectiveIndex, bool complete, std::string message);

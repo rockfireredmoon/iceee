@@ -361,8 +361,6 @@ int QuestNutPlayer::AddSidekick(int cdefID, bool pet) {
 	int type = pet ? SidekickObject::PET : SidekickObject::QUEST;
 	int exist = source->charPtr->CountSidekick(type);
 
-	g_Log.AddMessageFormat("[REMOVEME] Have %d sidekicks, adding %d", exist, cdefID);
-
 	SidekickObject skobj(cdefID);
 	skobj.summonType = type;
 	skobj.summonParam = SIDEKICK_ABILITY_GROUP_ID;
