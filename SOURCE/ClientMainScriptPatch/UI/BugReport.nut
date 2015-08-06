@@ -171,21 +171,17 @@ class this.Screens.BugReport extends this.GUI.Frame
 		summ = _prepare(summ);
 		desc = _prepare("Category: " + category + "\n\n" + desc);
 		
-		//  <token>:x-oauth-basic 
-		//Authorization: Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==
-		// 5d296bbcc111e6bdbb3a15beaeb53170fc560748
-		
 		local txt = "{\n" + 
 			" \"title\": \"" + summ + "\",\n" + 
 			" \"body\": \"" + desc + "\",\n" + 
-			" \"labels\": [ \"bug\" ]\n" +
+			" \"labels\": [ \"bug\", \"in game\" ]\n" +
 			"}\n";
-		local TOKEN = "5d296bbcc111e6bdbb3a15beaeb53170fc560748";
+		local TOKEN = "bcde35d934b42e1f2c0682c2de40ff926f77adc2";
 		local userpw = TOKEN + ":x-oauth-basic";
 		req.setRequestHeader("Content-Type", "application/json");
+		req.setRequestHeader("User-Agent", "PlanetForeverIceEE");
 		req.setRequestHeader("Authorization", "Basic " + this.base64_encode(userpw));
-		req.open("POST", "http://api.github.com/repos/rockfireredmoon/iceee/issues");
-		print("REQ: " + txt);
+		req.open("POST", "https://api.github.com/repos/rockfireredmoon/iceee/issues");
 		req.send(txt);
 	}
 

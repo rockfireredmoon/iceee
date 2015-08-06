@@ -421,6 +421,11 @@ void LoadConfig(const char *filename)
 				g_Config.PersistentBuffs = lfr.BlockToBool(1);
 			else if(strcmp(NameBlock, "DailyCreditsPerAccount") == 0)
 				g_Config.DailyCreditsPerAccount = lfr.BlockToIntC(1);
+			else if(strcmp(NameBlock, "WeeklyCreditsPerAccount") == 0)
+				g_Config.WeeklyCreditsPerAccount = lfr.BlockToIntC(1);
+			else if(strcmp(NameBlock, "RewardWeekDays") == 0)
+				g_Config.RewardWeekDays = lfr.BlockToIntC(1);
+
 			else
 			{
 				g_Log.AddMessageFormatW(MSG_SHOW, "Unknown identifier [%s] in config file [%s]", lfr.BlockToString(0), filename);
@@ -623,6 +628,7 @@ GlobalConfigData :: GlobalConfigData()
 	SquirrelVMStackSize = 512;
 
 	PersistentBuffs = false;
+	RewardWeekDays = 7;
 
 	InvalidLoginMessage = "Account not found.  Check username and password.";
 }

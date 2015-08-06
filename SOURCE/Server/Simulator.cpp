@@ -1984,7 +1984,19 @@ void SimulatorThread :: LoadCharacterSession(void)
 		pld.accPtr->DueDailyRewards = strcmp(thisDate[0].c_str(), lastLogonDate[0].c_str()) != 0;
 	}
 	if(pld.accPtr->DueDailyRewards) {
+		LogMessageL(MSG_SHOW, "%s is logging on for the first time today", pld.accPtr->Name);
 		strcpy(pld.accPtr->LastLogOn, pld.charPtr->LastLogOn);
+
+		// Is this a consecutive day?
+		unsigned long lastLoginDay = pld.accPtr->LastLogOnTimeSec / 86400;
+		pld.accPtr->LastLogOnTimeSec = time(NULL);
+		unsigned long today =  pld.accPtr->LastLogOnTimeSec / 86400;
+		if(lastLoginDay == 0 || today == lastLoginDay + 1) {
+			// It is!
+			pld.accPtr->ConsecutiveDaysLoggedIn++;
+			LogMessageL(MSG_SHOW, "%s has now logged in %d consecutive days.", pld.accPtr->Name, pld.accPtr->ConsecutiveDaysLoggedIn);
+		}
+
 		pld.accPtr->PendingMinorUpdates++;
 	}
 
@@ -3213,7 +3225,18 @@ void SimulatorThread :: SetLoadingStatus(bool status, bool shutdown)
 			if(pld.accPtr->DueDailyRewards) {
 				pld.accPtr->DueDailyRewards = false;
 				pld.accPtr->PendingMinorUpdates++;
-				if(g_Config.DailyCreditsPerAccount > 0) {
+
+				if(g_Config.WeeklyCreditsPerAccount > 0 && pld.accPtr->ConsecutiveDaysLoggedIn == g_Config.RewardWeekDays) {
+					// Weekly reward
+					creatureInst->AddCredits(g_Config.WeeklyCreditsPerAccount);
+					char buf[256];
+					Util::SafeFormat(buf, sizeof(buf), "Extra Credits! You earned %d credits for logging in %d days in a row.", g_Config.WeeklyCreditsPerAccount, g_Config.RewardWeekDays);
+					AttemptSend(SendBuf, PrepExt_SendInfoMessage(SendBuf, buf, INFOMSG_INFO));
+
+					// Reset to day1
+					pld.accPtr->ConsecutiveDaysLoggedIn = 1;
+				}
+				else if(g_Config.DailyCreditsPerAccount > 0) {
 					creatureInst->AddCredits(g_Config.DailyCreditsPerAccount);
 					char buf[256];
 					Util::SafeFormat(buf, sizeof(buf), "You earned %d credits, just by logging on today. Keep it up :)", g_Config.DailyCreditsPerAccount);

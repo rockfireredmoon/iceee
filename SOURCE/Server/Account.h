@@ -88,6 +88,8 @@ public:
 	unsigned long SuspendTimeSec;      //Time when the ban was first set
 
 	char LastLogOn[32];      //Date and time of last login of any character in the account.
+	unsigned long LastLogOnTimeSec; //Last login time in seconds since epoch
+	int ConsecutiveDaysLoggedIn; // The number of consecutive days the account has logged in
 
 	/* User data  */
 	std::vector<InventorySlot> vaultInventory;

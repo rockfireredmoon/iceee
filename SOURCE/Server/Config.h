@@ -194,7 +194,9 @@ public:
 
 	bool PersistentBuffs;              //If true, active buffs will be saved and restored on next login
 
-	int DailyCreditsPerAccount;			// Number of credits that should be given in on each account login per day (to the first character to login)
+	int DailyCreditsPerAccount;		   // Number of credits that should be given in on each account login per day (to the first character to login)
+	int WeeklyCreditsPerAccount;	   // Number of credits that should be given if a player logs in every day for a week
+	int RewardWeekDays;				   // The number of days in week (wrt rewards)
 
 	unsigned long debugAdministrativeBehaviorFlags;
 	void SetAdministrativeBehaviorFlag(unsigned long bitValue, bool state);
