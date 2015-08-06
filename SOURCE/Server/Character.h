@@ -270,7 +270,7 @@ public:
 	unsigned long SecondsLogged;  //Cumulative time count of seconds logged in.
 	int SessionsLogged;      //Cumulative number of sessions logged in.
 	char TimeLogged[32];     //Human readable format of SecondsLogged (hh:mm:ss format)
-	char LastSession[32];    //Time logged during the last game session (hh:mm:ss format) 
+	char LastSession[32];    //Time logged during the last game session (hh:mm:ss format)
 	char LastLogOn[32];      //Date and time of last login.
 	char LastLogOff[32];     //Data and time of last logoff.
 

@@ -87,6 +87,7 @@ public:
 	unsigned long SuspendDurationSec;  //Duration of ban
 	unsigned long SuspendTimeSec;      //Time when the ban was first set
 
+	char LastLogOn[32];      //Date and time of last login of any character in the account.
 
 	/* User data  */
 	std::vector<InventorySlot> vaultInventory;
@@ -97,6 +98,9 @@ public:
 	std::string GroveName;
 	std::vector<BuildPermissionArea> BuildPermissionList;
 	int MaxCharacters;
+
+	// Transient stuff (not store in character data)
+	bool DueDailyRewards;	// When set to true, when login has completely finished the player will be given their daily rewards
 
 	bool HasBuildZone(BuildPermissionArea &bpa);
 

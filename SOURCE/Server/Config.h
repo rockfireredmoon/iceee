@@ -194,6 +194,8 @@ public:
 
 	bool PersistentBuffs;              //If true, active buffs will be saved and restored on next login
 
+	int DailyCreditsPerAccount;			// Number of credits that should be given in on each account login per day (to the first character to login)
+
 	unsigned long debugAdministrativeBehaviorFlags;
 	void SetAdministrativeBehaviorFlag(unsigned long bitValue, bool state);
 	bool HasAdministrativeBehaviorFlag(unsigned long bitValue);

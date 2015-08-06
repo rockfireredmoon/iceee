@@ -1970,6 +1970,24 @@ void SimulatorThread :: LoadCharacterSession(void)
 	time_t curtime;
 	time(&curtime);
 	strftime(pld.charPtr->LastLogOn, sizeof(pld.charPtr->LastLogOn), "%Y-%m-%d, %I:%M %p", localtime(&curtime));
+
+	// Determine if we should give a daily reward for the account
+	if(pld.accPtr->LastLogOn[0] == 0) {
+		pld.accPtr->DueDailyRewards = true;
+	}
+	else {
+		// Test on the date portion only
+		STRINGLIST thisDate;
+		STRINGLIST lastLogonDate;
+		Util::Split(pld.accPtr->LastLogOn, ",", thisDate);
+		Util::Split(pld.charPtr->LastLogOn, ",", lastLogonDate);
+		pld.accPtr->DueDailyRewards = strcmp(thisDate[0].c_str(), lastLogonDate[0].c_str()) != 0;
+	}
+	if(pld.accPtr->DueDailyRewards) {
+		strcpy(pld.accPtr->LastLogOn, pld.charPtr->LastLogOn);
+		pld.accPtr->PendingMinorUpdates++;
+	}
+
 	pld.charPtr->SessionsLogged++;
 
 	defcInst.CurrentX = pld.charPtr->activeData.CurX;
@@ -3189,6 +3207,21 @@ void SimulatorThread :: SetLoadingStatus(bool status, bool shutdown)
 
 			g_PartyManager.CheckMemberLogin(creatureInst);
 			AddMessage(0, 0, BCM_Notice_MOTD);
+
+
+			// Handle daily rewards
+			if(pld.accPtr->DueDailyRewards) {
+				pld.accPtr->DueDailyRewards = false;
+				pld.accPtr->PendingMinorUpdates++;
+				if(g_Config.DailyCreditsPerAccount > 0) {
+					creatureInst->AddCredits(g_Config.DailyCreditsPerAccount);
+					char buf[256];
+					Util::SafeFormat(buf, sizeof(buf), "You earned %d credits, just by logging on today. Keep it up :)", g_Config.DailyCreditsPerAccount);
+					AttemptSend(SendBuf, PrepExt_SendInfoMessage(SendBuf, buf, INFOMSG_INFO));
+				}
+			}
+
+
 			LoadStage = LOADSTAGE_LOADED;  //Initial loading screen is finished, players should be able to control their characters.
 		}
 	}
