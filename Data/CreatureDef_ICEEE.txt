@@ -1982,3 +1982,13 @@ profession=1
 creature_category=Mortal
 ai_package=nothing
 
+[ENTRY]
+ID=7860
+will_regen=1
+might_regen=1
+appearance=n4:{["sk"]={["main"]="104AC1"},["c"]="Horde-Invisible_Biped",["sz"]="1"}
+level=1
+display_name=Target
+profession=1
+creature_category=Mortal
+ai_package=example
