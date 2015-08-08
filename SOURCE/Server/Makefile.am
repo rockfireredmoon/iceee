@@ -130,7 +130,6 @@ planetforeverd_SOURCES = md5.cc \
 	Item.h \
 	ItemSet.h \
 	MainWindow.h \
-	meta.h \
 	NPC.h \
 	Packet.h \
 	PartyManager.h \

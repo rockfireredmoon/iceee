@@ -8,7 +8,6 @@
          INCLUDES
   ========================*/
 #include "restclient.h"
-#include "meta.h"
 
 #include <curl/curl.h>
 #include <cstring>
@@ -17,7 +16,7 @@
 #include <map>
 
 /** initialize user agent string */
-const char* RestClient::user_agent = "restclient-cpp/" VERSION;
+const char* RestClient::user_agent = "PlanetForever";
 /** initialize authentication variable */
 std::string RestClient::user_pass =  std::string();
 /** Authentication Methods implementation */
