@@ -7126,17 +7126,17 @@ void CreatureInstance :: PlayerLoot(int level, DailyProfile *profile)
 	//New drop system.  Uses the drop tables found in the Loot subfolder.
 	//Roll the drops then merge them into the single container that will be assigned
 	//to the creature.
-	std::vector<int> itemList;
-	DropRollParameters drp;
-	drp.mCreatureDefID = CreatureDefID;
-	drp.mCreatureLevel = level;
-	drp.mPlayerLevel = level;
-	g_DropTableManager.RollDrops(drp, itemList);
-
-	for(size_t i = 0; i < itemList.size(); i++)
-	{
-		loot.AddItem(itemList[i]);
-	}
+//	std::vector<int> itemList;
+//	DropRollParameters drp;
+//	drp.mCreatureDefID = CreatureDefID;
+//	drp.mCreatureLevel = level;
+//	drp.mPlayerLevel = level;
+//	g_DropTableManager.RollDrops(drp, itemList);
+//
+//	for(size_t i = 0; i < itemList.size(); i++)
+//	{
+//		loot.AddItem(itemList[i]);
+//	}
 
 	activeLootID = actInst->lootsys.AttachLootToCreature(loot, CreatureID);
 }

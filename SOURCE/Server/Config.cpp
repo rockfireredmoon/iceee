@@ -423,12 +423,6 @@ void LoadConfig(const char *filename)
 				g_Config.PersistentBuffs = lfr.BlockToBool(1);
 			else if(strcmp(NameBlock, "AccountCredits") == 0)
 				g_Config.AccountCredits = lfr.BlockToBool(1);
-			else if(strcmp(NameBlock, "DailyCreditsPerAccount") == 0)
-				g_Config.DailyCreditsPerAccount = lfr.BlockToIntC(1);
-			else if(strcmp(NameBlock, "WeeklyCreditsPerAccount") == 0)
-				g_Config.WeeklyCreditsPerAccount = lfr.BlockToIntC(1);
-			else if(strcmp(NameBlock, "RewardWeekDays") == 0)
-				g_Config.RewardWeekDays = lfr.BlockToIntC(1);
 
 			else
 			{
@@ -632,7 +626,6 @@ GlobalConfigData :: GlobalConfigData()
 	SquirrelVMStackSize = 512;
 
 	PersistentBuffs = false;
-	RewardWeekDays = 7;
 
 	AccountCredits = true;
 
