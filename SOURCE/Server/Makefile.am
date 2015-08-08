@@ -2,7 +2,7 @@ bin_PROGRAMS = planetforeverd
 AM_CPPFLAGS= -I../squirrel/include -I../squirrel/sqrat
 
 planetforeverd_LDADD = ../squirrel/squirrel/libsquirrel.a ../squirrel/sqstdlib/libsqstdlib.a
-planetforeverd_LDFLAGS = -lpthread -lrt
+planetforeverd_LDFLAGS = -lpthread -lrt -lcurl
 planetforeverd_SOURCES = md5.cc \
 	Ability2.cpp \
 	AbilityTime.cpp \
@@ -25,6 +25,7 @@ planetforeverd_SOURCES = md5.cc \
 	Creature.cpp \
 	CreditShop.cpp \
 	CreatureSpawner2.cpp \
+	Daily.cpp \
 	Debug.cpp \
 	DebugProfiler.cpp \
 	DebugTracer.cpp \
@@ -60,6 +61,7 @@ planetforeverd_SOURCES = md5.cc \
 	Quest.cpp \
 	QuestScript.cpp \
 	RemoteAction.cpp \
+	restclient.cpp \
 	Report.cpp \
 	Router.cpp \
 	Scenery2.cpp \
@@ -99,6 +101,7 @@ planetforeverd_SOURCES = md5.cc \
 	Crafting.h \
 	Creature.h \
 	CreatureSpawner2.h \
+	Daily.h \
 	Debug.h \
 	DebugProfiler.h \
 	DebugTracer.h \
@@ -127,6 +130,7 @@ planetforeverd_SOURCES = md5.cc \
 	Item.h \
 	ItemSet.h \
 	MainWindow.h \
+	meta.h \
 	NPC.h \
 	Packet.h \
 	PartyManager.h \
@@ -135,6 +139,7 @@ planetforeverd_SOURCES = md5.cc \
 	QuestAction.h \
 	Quest.h \
 	QuestScript.h \
+	restclient.h \
 	RemoteAction.h \
 	Report.h \
 	RotatingList.h \

@@ -286,6 +286,7 @@ public:
 	int handle_query_item_market_edit(void);
 	int handle_query_item_market_buy(void);
 	int handle_query_item_market_reload(void);
+	int handle_query_bug_report(void);
 	int handle_query_util_addfunds();
 	int handle_query_validate_name();
 	int handle_query_petition_list(void);
@@ -371,6 +372,7 @@ public:
 	bool CanMoveItems(void);
 
 	void SetLoadingStatus(bool status, bool shutdown);
+	void ProcessDailyRewards(void);
 	void SetPersona(int personaIndex);
 	void SaveCharacterStats(void);
 	bool CheckWriteFlush(int &curPos);

@@ -141,7 +141,23 @@ class this.Screens.BugReport extends this.GUI.Frame
 			mb.setOverlay("GUI/BugReportOverlay");
 			return;
 		}
+		
+		::_Connection.sendQuery("bug.report", this, [
+			summ,
+			category,
+			desc
+		]);
+		
+		local mb = ::GUI.MessageBox.show("Thank you! Your bug report has been submitted.");
+		mb.setOverlay("GUI/BugReportOverlay");
+		this.setVisible(false);
 
+		/*
+		
+		summ = _prepare(summ);
+		desc = _prepare("Category: " + category + "\n\n" + desc);
+		
+		
 		local req = this.XMLHttpRequest();
 		req.onreadystatechange = function () : ( category, summ, desc )
 		{
@@ -168,9 +184,6 @@ class this.Screens.BugReport extends this.GUI.Frame
 			}
 		};
 		
-		summ = _prepare(summ);
-		desc = _prepare("Category: " + category + "\n\n" + desc);
-		
 		local txt = "{\n" + 
 			" \"title\": \"" + summ + "\",\n" + 
 			" \"body\": \"" + desc + "\",\n" + 
@@ -183,14 +196,18 @@ class this.Screens.BugReport extends this.GUI.Frame
 		req.setRequestHeader("Authorization", "Basic " + this.base64_encode(userpw));
 		req.open("POST", "https://api.github.com/repos/rockfireredmoon/iceee/issues");
 		req.send(txt);
+		
+		*/
 	}
 
+/*
 	function _prepare(text) {
 		text = this.Util.replace(text, "\r\n", "\\n");
 		text = this.Util.replace(text, "\n", "\\n");
 		text = this.Util.replace(text, "\"", "\\\"");
 		return text;
 	}
+	*/
 	
 	function setVisible( value )
 	{

@@ -75,6 +75,8 @@ const char *GetNameByID(int id) {
 		return "CREDITS";
 	case COPPER:
 		return "COPPER";
+	case COPPER_CREDITS:
+		return "COPPER+CREDITS";
 	}
 	return "<undefined>";
 }
@@ -84,6 +86,8 @@ int GetIDByName(const std::string &name) {
 		return COPPER;
 	if (name.compare("CREDITS") == 0)
 		return CREDITS;
+	if (name.compare("COPPER+CREDITS") == 0)
+		return COPPER_CREDITS;
 	return UNDEFINED;
 }
 
@@ -97,7 +101,8 @@ CreditShopItem::CreditShopItem() {
 	mId = 0;
 	mStartDate = 0;
 	mEndDate = 0;
-	mPriceAmount = 0;
+	mPriceCopper = 0;
+	mPriceCredits = 0;
 	mQuantityLimit = 0;
 	mQuantitySold = 0;
 	mTitle = "";
@@ -157,7 +162,8 @@ bool CreditShopManager::SaveItem(CreditShopItem * item) {
 	if(item->mEndDate > 0)
 		fprintf(output, "EndDate=%s\r\n", Util::FormatDate(&item->mEndDate).c_str());
 	fprintf(output, "PriceCurrency=%s\r\n", Currency::GetNameByID(item->mPriceCurrency));
-	fprintf(output, "PriceAmount=%lu\r\n", item->mPriceAmount);
+	fprintf(output, "PriceCopper=%lu\r\n", item->mPriceCopper);
+	fprintf(output, "PriceCredits=%lu\r\n", item->mPriceCredits);
 	fprintf(output, "ItemID=%d\r\n", item->mItemId);
 	if(item->mIv1 > 0)
 		fprintf(output, "Iv1=%d\r\n", item->mIv1);
@@ -201,6 +207,7 @@ CreditShopItem * CreditShopManager::LoadItem(int id) {
 
 	lfr.CommentStyle = Comment_Semi;
 	int r = 0;
+	long amt = -1;
 	while (lfr.FileOpen() == true) {
 		r = lfr.ReadLine();
 		lfr.SingleBreak("=");
@@ -223,7 +230,11 @@ CreditShopItem * CreditShopManager::LoadItem(int id) {
 			else if (strcmp(lfr.SecBuffer, "PRICECURRENCY") == 0)
 				item->mPriceCurrency =Currency::GetIDByName(lfr.BlockToStringC(1, 0));
 			else if (strcmp(lfr.SecBuffer, "PRICEAMOUNT") == 0)
-				item->mPriceAmount = lfr.BlockToIntC(1);
+				amt = lfr.BlockToIntC(1);
+			else if (strcmp(lfr.SecBuffer, "PRICECOPPER") == 0)
+				item->mPriceCopper = lfr.BlockToIntC(1);
+			else if (strcmp(lfr.SecBuffer, "PRICECREDITS") == 0)
+				item->mPriceCredits = lfr.BlockToIntC(1);
 			else if (strcmp(lfr.SecBuffer, "ITEMID") == 0)
 				item->mItemId = lfr.BlockToIntC(1);
 			else if (strcmp(lfr.SecBuffer, "ITEMAMOUNT") == 0 || strcmp(lfr.SecBuffer, "IV1") == 0)
@@ -246,6 +257,15 @@ CreditShopItem * CreditShopManager::LoadItem(int id) {
 		}
 	}
 	lfr.CloseCurrent();
+
+	// For backwards compatibility - will be able to remove once all items resaved or removed
+	if(amt > 0) {
+		if(item->mPriceCurrency == Currency::COPPER)
+			item->mPriceCopper = amt;
+		else if(item->mPriceCurrency == Currency::CREDITS)
+			item->mPriceCredits = amt;
+	}
+
 	mItems[id] = item;
 
 	return item;

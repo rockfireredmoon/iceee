@@ -1,10 +1,9 @@
 [ENTRY]
-Title=New Character Slot
 Description=Buy a new character slot for your account
-PriceCurrency=COPPER
-PriceAmount=100
+PriceCurrency=COPPER+CREDITS
+PriceCopper=2000
+PriceCredits=100
 ItemID=8110
 Category=CONSUMABLES
 Status=NEW
-
 

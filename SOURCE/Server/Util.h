@@ -156,6 +156,7 @@ namespace Util
 	void TrimWhitespace(std::string &modify);
 	float StringToFloat(const std::string &str);
 	int ParseDate(const std::string &str, time_t &time);
+	void EncodeJSONString(std::string& str);
 	std::string FormatDate(time_t *time);
 	void ReplaceAll(std::string& str, const std::string& from, const std::string& to);
 

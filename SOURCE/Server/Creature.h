@@ -21,6 +21,7 @@ class SimulatorThread;
 #include "Arena.h"
 #include "DropTable.h"
 #include "sqrat.h"
+#include "Daily.h"
 
 class CreatureInstance;  //Forward declaration for a pointer in the SelectedObject structure
 class AIScriptPlayer;    //Forward declaration for AI script
@@ -469,6 +470,8 @@ public:
 
 	void SendUpdatedLoot(void);
 	float GetDropRateMultiplier(CreatureDefinition *cdef);
+
+	void PlayerLoot(int level, DailyProfile *profile);
 	void CreateLoot(int finderLevel);
 	void AddLootableID(int newLootableID);
 
@@ -556,6 +559,7 @@ public:
 	void OnDaze(void);
 	void OnUnstick(void);
 	void ProcessPVPGoal(void);
+	void PrepareDeath(void);
 	void ProcessDeath(void);
 	void AddCreaturePointer(CREATURE_SEARCH& output, CreatureInstance* ptr, int attacked);
 	void ResolveAttackers(CREATURE_SEARCH& results);

@@ -36,6 +36,8 @@
 #include "GM.h"
 #include "QuestScript.h"
 #include "CreditShop.h"
+#include "restclient.h"
+#include "Daily.h"
 
 
 //This is the main function of the simulator thread.  A thread must be created for each port
@@ -1767,6 +1769,11 @@ void SimulatorThread :: SetPersona(int personaIndex)
 	creatureInst->css.CopyFrom(&pld.charPtr->cdef.css);
 
 	LoadCharacterSession();
+
+	if(g_Config.AccountCredits) {
+		creatureInst->css.credits = pld.accPtr->Credits;
+	}
+
 	creatureInst->Rotation = pld.charPtr->activeData.CurRotation;
 	creatureInst->Heading = pld.charPtr->activeData.CurRotation;
 
@@ -2500,6 +2507,8 @@ bool SimulatorThread :: HandleQuery(int &PendingData)
 		PendingData = handle_query_item_market_reload();
 	else if(query.name.compare("item.market.buy") == 0)
 		PendingData = handle_query_item_market_buy();
+	else if(query.name.compare("bug.report") == 0)
+		PendingData = handle_query_bug_report();
 	else if(query.name.compare("marker.list") == 0)
 		PendingData = handle_query_marker_list();
 	else if(query.name.compare("marker.edit") == 0)
@@ -3220,33 +3229,52 @@ void SimulatorThread :: SetLoadingStatus(bool status, bool shutdown)
 			g_PartyManager.CheckMemberLogin(creatureInst);
 			AddMessage(0, 0, BCM_Notice_MOTD);
 
-
-			// Handle daily rewards
-			if(pld.accPtr->DueDailyRewards) {
-				pld.accPtr->DueDailyRewards = false;
-				pld.accPtr->PendingMinorUpdates++;
-
-				if(g_Config.WeeklyCreditsPerAccount > 0 && pld.accPtr->ConsecutiveDaysLoggedIn == g_Config.RewardWeekDays) {
-					// Weekly reward
-					creatureInst->AddCredits(g_Config.WeeklyCreditsPerAccount);
-					char buf[256];
-					Util::SafeFormat(buf, sizeof(buf), "Extra Credits! You earned %d credits for logging in %d days in a row.", g_Config.WeeklyCreditsPerAccount, g_Config.RewardWeekDays);
-					AttemptSend(SendBuf, PrepExt_SendInfoMessage(SendBuf, buf, INFOMSG_INFO));
-
-					// Reset to day1
-					pld.accPtr->ConsecutiveDaysLoggedIn = 1;
-				}
-				else if(g_Config.DailyCreditsPerAccount > 0) {
-					creatureInst->AddCredits(g_Config.DailyCreditsPerAccount);
-					char buf[256];
-					Util::SafeFormat(buf, sizeof(buf), "You earned %d credits, just by logging on today. Keep it up :)", g_Config.DailyCreditsPerAccount);
-					AttemptSend(SendBuf, PrepExt_SendInfoMessage(SendBuf, buf, INFOMSG_INFO));
-				}
-			}
-
+			ProcessDailyRewards();
 
 			LoadStage = LOADSTAGE_LOADED;  //Initial loading screen is finished, players should be able to control their characters.
 		}
+	}
+}
+
+void SimulatorThread :: ProcessDailyRewards(void)
+{
+
+	// Handle daily rewards
+	if(pld.accPtr->DueDailyRewards) {
+		pld.accPtr->DueDailyRewards = false;
+		pld.accPtr->PendingMinorUpdates++;
+
+		DailyProfile profile = g_DailyProfileManager.GetProfileByDayNumber(pld.accPtr->ConsecutiveDaysLoggedIn);
+		if(!profile.hasData) {
+			// Reset to day1
+			pld.accPtr->ConsecutiveDaysLoggedIn = 1;
+			profile = g_DailyProfileManager.GetProfileByDayNumber(pld.accPtr->ConsecutiveDaysLoggedIn);
+		}
+
+		if(profile.hasData) {
+			char buf[256];
+			Util::SafeFormat(buf, sizeof(buf), "This is day %d of a maximum of %d consecutive login days. You earned :-", pld.accPtr->ConsecutiveDaysLoggedIn, g_DailyProfileManager.GetNumberOfProfiles());
+			AttemptSend(SendBuf, PrepExt_SendInfoMessage(SendBuf, buf, INFOMSG_INFO));
+
+			if(profile.credits > 0) {
+				creatureInst->AddCredits(profile.credits);
+				Util::SafeFormat(buf, sizeof(buf), " * %d credits to spend in the shop", profile.credits);
+				AttemptSend(SendBuf, PrepExt_SendInfoMessage(SendBuf, buf, INFOMSG_INFO));
+			}
+
+			if(profile.dropRateProfileName.length() > 0) {
+				CreatureInstance* lootInst = creatureInst->actInst->SpawnGeneric(profile.itemID, creatureInst->CurrentX, creatureInst->CurrentY, creatureInst->CurrentZ, 0, 0);
+				lootInst->PrepareDeath();
+				lootInst->PlayerLoot(creatureInst->css.level, &profile);
+				lootInst->AddLootableID(creatureInst->CreatureDefID);
+				if(lootInst->activeLootID != 0) {
+					Util::SafeFormat(buf, sizeof(buf), " * A special item reward", profile.credits);
+					AttemptSend(SendBuf, PrepExt_SendInfoMessage(SendBuf, buf, INFOMSG_INFO));
+					lootInst->SendUpdatedLoot();
+				}
+			}
+		}
+
 	}
 }
 
@@ -6877,7 +6905,15 @@ int SimulatorThread :: UseItem(unsigned int CCSID)
 			int abPoints = cfg.GetValueInt("abilitypoints");
 			if(credits > 0)
 			{
+				if(g_Config.AccountCredits) {
+					creatureInst->css.credits = pld.accPtr->Credits;
+				}
 				creatureInst->css.credits += credits;
+				if(g_Config.AccountCredits) {
+					pld.accPtr->Credits = creatureInst->css.credits;
+					pld.accPtr->PendingMinorUpdates++;
+				}
+
 				Util::SafeFormat(Aux1, sizeof(Aux1), "You gain %d credits.", credits);
 				SendInfoMessage(Aux1, INFOMSG_INFO);
 				creatureInst->SendStatUpdate(STAT::CREDITS);
@@ -10136,12 +10172,21 @@ int SimulatorThread :: handle_query_vault_expand(void)
 
 	if(pld.charPtr->VaultIsMaximumCapacity() == true)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Your vault space is at maximum capacity.");
+
+	if(g_Config.AccountCredits) {
+		creatureInst->css.credits = pld.accPtr->Credits;
+	}
 	if(creatureInst->css.credits < CharacterData::VAULT_EXPAND_CREDIT_COST)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "You do not have enough credits.");
 
 	pld.charPtr->VaultDoPurchaseExpand();
 	int newSize = pld.charPtr->VaultGetTotalCapacity();
 	creatureInst->css.credits -= CharacterData::VAULT_EXPAND_CREDIT_COST;
+
+	if(g_Config.AccountCredits) {
+		pld.accPtr->Credits = creatureInst->css.credits;
+		pld.accPtr->PendingMinorUpdates++;
+	}
 	
 	creatureInst->SendStatUpdate(STAT::CREDITS);
 
@@ -11637,11 +11682,17 @@ int SimulatorThread :: handle_query_item_market_buy(void)
 			return PrepExt_QueryResponseError(SendBuf, query.ID, "Sold out!");
 		}
 
-		if(csItem->mPriceCurrency == Currency::COPPER && creatureInst->css.copper < csItem->mPriceAmount) {
+		if(( csItem->mPriceCurrency == Currency::COPPER || csItem->mPriceCurrency == Currency::COPPER_CREDITS) && creatureInst->css.copper < csItem->mPriceCopper) {
 			return PrepExt_QueryResponseError(SendBuf, query.ID, "You do not have enough copper!");
 		}
-		else if(csItem->mPriceCurrency == Currency::CREDITS && creatureInst->css.credits < csItem->mPriceAmount) {
-			return PrepExt_QueryResponseError(SendBuf, query.ID, "You do not have enough credits!");
+
+		if(csItem->mPriceCurrency == Currency::CREDITS || csItem->mPriceCurrency == Currency::COPPER_CREDITS) {
+			if(g_Config.AccountCredits) {
+				creatureInst->css.credits = pld.accPtr->Credits;
+			}
+			if(creatureInst->css.credits < csItem->mPriceCredits) {
+				return PrepExt_QueryResponseError(SendBuf, query.ID, "You do not have enough credits!");
+			}
 		}
 
 		if(csItem->mStartDate !=0 && g_ServerTime < (csItem->mStartDate * 1000UL)) {
@@ -11667,12 +11718,17 @@ int SimulatorThread :: handle_query_item_market_buy(void)
 
 		g_CharacterManager.GetThread("Simulator::MarketBuy");
 
-		if(csItem->mPriceCurrency == Currency::COPPER) {
-			creatureInst->css.copper -= csItem->mPriceAmount;
+		if(csItem->mPriceCurrency == Currency::COPPER || csItem->mPriceCurrency == Currency::COPPER_CREDITS) {
+			creatureInst->css.copper -= csItem->mPriceCopper;
 			creatureInst->SendStatUpdate(STAT::COPPER);
 		}
-		else if(csItem->mPriceCurrency == Currency::CREDITS) {
-			creatureInst->css.credits -= csItem->mPriceAmount;
+
+		if(csItem->mPriceCurrency == Currency::CREDITS || csItem->mPriceCurrency == Currency::COPPER_CREDITS) {
+			creatureInst->css.credits -= csItem->mPriceCredits;
+			if(g_Config.AccountCredits) {
+				pld.accPtr->Credits = creatureInst->css.credits;
+				pld.accPtr->PendingMinorUpdates++;
+			}
 			creatureInst->SendStatUpdate(STAT::CREDITS);
 		}
 
@@ -11735,14 +11791,35 @@ int SimulatorThread :: handle_query_item_market_edit(void)
 				return PrepExt_QueryResponseError(SendBuf, query.ID, "Invalid item.");
 			Util::SafeFormat(Aux3, sizeof(Aux3), "Save market csItem %d", csItem->mId);
 		}
+
+		int currency = Currency::GetIDByName(query.GetString(16));
+		unsigned long priceCopper = 0;
+		unsigned long priceCredits = 0;
+		STRINGLIST priceElements;
+		Util::Split(query.GetString(14), "+", priceElements);
+		if(currency == Currency::COPPER) {
+			priceCopper = atoi(priceElements[0].c_str());
+		}
+		else if(currency == Currency::CREDITS) {
+			priceCredits = atoi(priceElements[0].c_str());
+		}
+		else if(currency == Currency::COPPER_CREDITS) {
+			if(priceElements.size() != 2) {
+				return PrepExt_QueryResponseError(SendBuf, query.ID, "COPPER+CREDITS require two costs, <copperCost>+<creditCost>.");
+			}
+			priceCopper = atoi(priceElements[0].c_str());
+			priceCredits = atoi(priceElements[1].c_str());
+		}
+
 		csItem->mTitle = query.GetString(2);
 		csItem->mDescription = query.GetString(4);
 		csItem->mCategory = Category::GetIDByName(query.GetString(6));
 		csItem->mStatus = Status::GetIDByName(query.GetString(8));
 		Util::ParseDate(query.GetString(10), csItem->mStartDate);
 		Util::ParseDate(query.GetString(12), csItem->mEndDate);
-		csItem->mPriceAmount = query.GetInteger(14);
-		csItem->mPriceCurrency = Currency::GetIDByName(query.GetString(16));
+		csItem->mPriceCopper = priceCopper;
+		csItem->mPriceCredits = priceCredits;
+		csItem->mPriceCurrency = currency;
 		csItem->mQuantityLimit = query.GetInteger(18);
 		csItem->mQuantitySold = query.GetInteger(20);
 		csItem->ParseItemProto(query.GetString(22));
@@ -11814,7 +11891,14 @@ int SimulatorThread :: handle_query_item_market_list(void)
 							"Expired" : Util::FormatDate(&it->second->mEndDate).c_str()));
 			wpos += PutStringUTF(&SendBuf[wpos], Aux1);
 
-			sprintf(Aux1, "%lu", it->second->mPriceAmount);
+			if(it->second->mPriceCurrency == Currency::COPPER)
+				sprintf(Aux1, "%lu", it->second->mPriceCopper);
+			else if(it->second->mPriceCurrency == Currency::CREDITS)
+				sprintf(Aux1, "%lu", it->second->mPriceCredits);
+			else if(it->second->mPriceCurrency == Currency::COPPER_CREDITS)
+				sprintf(Aux1, "%lu+%lu", it->second->mPriceCopper, it->second->mPriceCredits);
+			else
+				sprintf(Aux1, "999999");
 			wpos += PutStringUTF(&SendBuf[wpos], Aux1);
 
 			sprintf(Aux1, "%s", Currency::GetNameByID(it->second->mPriceCurrency));
@@ -11877,6 +11961,25 @@ int SimulatorThread :: handle_query_marker_list(void)
 		g_Log.AddMessageFormat("TODO Implement non-zone marker list query. %s", query.args[0].c_str());
 	}
 	return 0;
+}
+
+
+int SimulatorThread :: handle_query_bug_report(void)
+{
+	RestClient::setAuth(g_Config.GitHubToken, "x-oauth-basic");
+	char json[2048];
+	std::string summary = query.GetString(0);
+	std::string desc = query.GetString(2);
+	Util::EncodeJSONString(summary);
+	Util::EncodeJSONString(desc);
+	Util::SafeFormat(json, sizeof(json), "{ \"title\": \"%s\", \"body\": \"Category: %s\\n\\n%s\", \"labels\": [ \"bug\", \"in game\" ] }", summary.c_str(), query.GetString(1), desc.c_str());
+	g_Log.AddMessageFormat("Posting bug report with summary %s and category of %s", query.GetString(0), query.GetString(2));
+	RestClient::response r = RestClient::post("https://api.github.com/repos/rockfireredmoon/iceee/issues", "text/json", json);
+	g_Log.AddMessageFormat("GitHub responds with %d", r.code);
+	if(r.code != 200) {
+		return PrepExt_QueryResponseError(SendBuf, query.ID, "GitHub refused Bug Report.");
+	}
+	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
 }
 
 int SimulatorThread :: handle_query_guild_info(void)

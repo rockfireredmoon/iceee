@@ -45,6 +45,7 @@ namespace Currency
 		UNDEFINED = -1,
 		COPPER = 0,
 		CREDITS = 1,
+		COPPER_CREDITS = 2,
 		MAX
 	};
 	const char *GetNameByID(int eventID);
@@ -68,7 +69,8 @@ public:
 	int mCategory;
 	time_t mStartDate;
 	time_t mEndDate;
-	unsigned long mPriceAmount;
+	unsigned long mPriceCopper;
+	unsigned long mPriceCredits;
 	int mPriceCurrency;
 	int mQuantityLimit;
 	int mQuantitySold;

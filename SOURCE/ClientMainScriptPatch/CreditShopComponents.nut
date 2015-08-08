@@ -38,13 +38,14 @@ class this.GUI.CreditShopItem extends this.GUI.Component
 	static BASE_WIDTH = 246;
 	static BASE_HEIGHT = 138;
 	static DESCRIPTION_WIDTH = 175;
-	static DESCRIPTION_HEIGHT = 115;
+	static DESCRIPTION_HEIGHT = 90;
 	mCreditItem = null;
 	mItemDefId = null;
 	mItemTitle = null;
 	mItemImageContainer = null;
 	mItemLabel = null;
 	mCredits = null;
+	mCopper = null;
 	mDescription = null;
 	mMessageBroadcaster = null;
 	mItemImage = null;
@@ -86,7 +87,15 @@ class this.GUI.CreditShopItem extends this.GUI.Component
 		itemContainer.add(this.mItemLabel);
 		this.mCredits = this.GUI.Credits(99999);
 		this.mCredits.setFontColor(this.Colors.white);
-		leftItemSide.add(this.mCredits);
+		
+		this.mCopper = this.GUI.Currency(99999);
+		this.mCopper.setFontColor(this.Colors.white);
+		
+		local currencyContainer = this.GUI.Container(this.GUI.BoxLayout());
+		currencyContainer.getLayoutManager().setGap(5);
+		currencyContainer.add(this.mCredits);
+		currencyContainer.add(this.mCopper);
+		
 		this.mBuyButton = this.GUI.NarrowButton("BUY");
 		this.mBuyButton.setFixedSize(62, 32);
 		this.mBuyButton.addActionListener(this);
@@ -97,7 +106,13 @@ class this.GUI.CreditShopItem extends this.GUI.Component
 		this.mDescription.setPreferredSize(this.DESCRIPTION_WIDTH, this.DESCRIPTION_HEIGHT);
 		this.mDescription.setFont(::GUI.Font("Maiandra", 22, false));
 		this.mDescription.setFontColor(this.Colors["GUI Gold"]);
-		centerComp.add(this.mDescription);
+		
+		local descComp = this.GUI.Container(this.GUI.BoxLayoutV());
+		descComp.getLayoutManager().setGap(5);
+		descComp.add(this.mDescription);
+		descComp.add(currencyContainer);
+		
+		centerComp.add(descComp);
 		::_ItemDataManager.addListener(this);
 		this.mMessageBroadcaster = this.MessageBroadcaster();
 		this.setVisible(this.mPreviousVisible);
@@ -183,7 +198,9 @@ class this.GUI.CreditShopItem extends this.GUI.Component
 			local descriptionText = creditItem.getDescription();
 			local itemDefId = creditItem.getItemDefId();
 			local numStacks = creditItem.getNumCount();
-			local creditAmount = creditItem.getPriceAmount();
+			local copperAmount = creditItem.getPriceCopper();
+			local creditAmount = creditItem.getPriceCredits();
+			local currency = creditItem.getPriceCurrency();
 			this.mItemDefId = itemDefId;
 
 			if (itemDefId)
@@ -199,7 +216,7 @@ class this.GUI.CreditShopItem extends this.GUI.Component
 				this.mItemImage.updateCount(numStacks);
 				this._updateTitle(titleText.tostring());
 				this._updateDescription(descriptionText.tostring());
-				this._updateCredits(creditAmount);
+				this._updateCost(copperAmount, creditAmount, currency);
 				this._updateLabelType(labelType);
 				visible = true;
 			}
@@ -222,9 +239,12 @@ class this.GUI.CreditShopItem extends this.GUI.Component
 		this.mDescription.setText(description);
 	}
 
-	function _updateCredits( amount )
+	function _updateCost(copperAmount, creditAmount, currency)
 	{
-		this.mCredits.setCurrentValue(amount);
+		this.mCopper.setCurrentValue(copperAmount);
+		this.mCredits.setCurrentValue(creditAmount);
+		this.mCopper.setVisible(currency == 0 || currency == 2);
+		this.mCredits.setVisible(currency == 1 || currency == 2);
 	}
 
 	function _updateLabelType( type )
@@ -841,7 +861,7 @@ class this.GUI.CreditNameChangePanel extends this.GUI.Component
 		this.mCredits.setSize(156, 24);
 		this.mCredits.setPreferredSize(156, 24);
 		centerContainer.add(this.mCredits);
-		this.updateCredits(1000);
+		this._updateCost(1000, 1000, 2);
 
 		if (::_avatar && ::_avatar.getStat(this.Stat.CREDITS) != null)
 		{
@@ -865,11 +885,6 @@ class this.GUI.CreditNameChangePanel extends this.GUI.Component
 	function updateApprovalText( text )
 	{
 		this.mApprovalText.setText(text);
-	}
-
-	function updateCredits( amount )
-	{
-		this.mCredits.setCurrentValue(amount);
 	}
 
 	function onInputComplete( inputbox )

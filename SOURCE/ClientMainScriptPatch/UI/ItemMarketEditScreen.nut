@@ -84,8 +84,9 @@ class Screens.ItemMarketEditScreen extends GUI.Frame {
 		mPriceAmountEntry.addActionListener(this);
 		
 		mPriceCurrencyEntry = GUI.DropDownList();
-		mPriceCurrencyEntry.addChoice("CREDITS");
 		mPriceCurrencyEntry.addChoice("COPPER");
+		mPriceCurrencyEntry.addChoice("CREDITS");
+		mPriceCurrencyEntry.addChoice("COPPER+CREDITS");
 		mPriceCurrencyEntry.addSelectionChangeListener(this);
 		
 		mQuantityLimitEntry = GUI.InputArea();

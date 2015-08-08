@@ -198,6 +198,11 @@ public:
 	int WeeklyCreditsPerAccount;	   // Number of credits that should be given if a player logs in every day for a week
 	int RewardWeekDays;				   // The number of days in week (wrt rewards)
 
+	bool AccountCredits;				// If true, credits will be stored at the account level rather than per character and shared across all characters
+
+
+	std::string GitHubToken;			// GitHub personal access token for bug reports
+
 	unsigned long debugAdministrativeBehaviorFlags;
 	void SetAdministrativeBehaviorFlag(unsigned long bitValue, bool state);
 	bool HasAdministrativeBehaviorFlag(unsigned long bitValue);

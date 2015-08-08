@@ -177,6 +177,7 @@ If using Code::Blocks on LINUX
 #include "InstanceScale.h"
 #include "CreditShop.h"
 #include "Guilds.h"
+#include "Daily.h"
 
 //extern GuildManager g_GuildManager;
 
@@ -511,6 +512,9 @@ int main(int argc, char *argv[])
 
 	g_InstanceScaleManager.LoadData();
 	g_DropRateProfileManager.LoadData();
+
+	g_DailyProfileManager.LoadData();
+	g_Log.AddMessageFormat("Loaded %d Daily Profiles.", g_DailyProfileManager.GetNumberOfProfiles());
 
 	g_FriendListManager.LoadAllData();
 

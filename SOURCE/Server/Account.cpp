@@ -89,6 +89,8 @@ void AccountData :: ClearAll(void)
 	LastLogOnTimeSec = 0;
 	ConsecutiveDaysLoggedIn = 0;
 
+	Credits = 0;
+
 	memset(&LastLogOn, 0, sizeof(LastLogOn));
 
 	SessionLoginCount = 0;
@@ -313,6 +315,7 @@ void AccountData :: SaveToStream(FILE *output)
 	fprintf(output, "LastLogOn=%s\r\n", LastLogOn);
 	fprintf(output, "LastLogOnTime=%lu\r\n", LastLogOnTimeSec);
 	fprintf(output, "ConsecutiveDaysLoggedIn=%d\r\n", ConsecutiveDaysLoggedIn);
+	fprintf(output, "Credits=%d\r\n", Credits);
 	fprintf(output, "Characters=");
 	for(int a = 0; a < MaxCharacters; a++)
 	{
@@ -585,6 +588,8 @@ void AccountManager :: LoadSectionGeneral(FileReader &fr, AccountData &ad, const
 	}
 	else if(strcmp(NameBlock, "CONSECUTIVEDAYSLOGGEDIN") == 0)
 		ad.ConsecutiveDaysLoggedIn = fr.BlockToULongC(1);
+	else if(strcmp(NameBlock, "CREDITS") == 0)
+			ad.Credits = fr.BlockToULongC(1);
 	else if(strcmp(NameBlock, "LASTLOGONTIME") == 0)
 		ad.LastLogOnTimeSec = fr.BlockToULongC(1);
 	else if(strcmp(NameBlock, "SUSPENDDURATION") == 0)

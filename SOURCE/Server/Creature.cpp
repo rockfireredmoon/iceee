@@ -2734,57 +2734,63 @@ void CreatureInstance :: ProcessPVPGoal()
 	}
 }
 
-void CreatureInstance :: ProcessDeath(void)
+void CreatureInstance :: PrepareDeath(void)
 {
 	//Processes a dead creature, finalizing stats, applying loot, distributing
-	//experience and quests for players.
+		//experience and quests for players.
 
-	if(aiNut != NULL)
-	{
-		if(aiNut->JumpToLabel("on_death") == true)
-			aiNut->Tick();
-		aiNut->FullReset();
-	}
-	if(aiScript != NULL)
-	{
-		if(aiScript->JumpToLabel("onDeath") == true)
-			aiScript->RunAtSpeed(50);
-		aiScript->FullReset();
-	}
+		if(aiNut != NULL)
+		{
+			if(aiNut->JumpToLabel("on_death") == true)
+				aiNut->Tick();
+			aiNut->FullReset();
+		}
+		if(aiScript != NULL)
+		{
+			if(aiScript->JumpToLabel("onDeath") == true)
+				aiScript->RunAtSpeed(50);
+			aiScript->FullReset();
+		}
+
+		actInst->RunDeath(this);
+		actInst->EraseIndividualReference(this);
+		ab[0].Clear("CreatureInstance :: ProcessDeath");
+
+		SetAutoAttack(NULL, 0);
+		SelectTarget(NULL);
+
+		_AddStatusList(StatusEffects::DEAD, -1);
+
+		if(ab[0].IsBusy() == true)
+			CancelPending_Ex(&ab[0]);
+
+		//Remove stun one last time since it's possible that other creatures with
+		//pending abilities might have re-stunned after the initial death operation from
+		//the killing blow.
+		if(HasStatus(StatusEffects::STUN))
+			_RemoveStatusList(StatusEffects::STUN);
+
+		//g_Log.AddMessageFormat("Death: %s, %d", ptr->css.display_name, ptr->CreatureID);
+
+		//Run any processing if this creature is attached to spawner.
+		RemoveFromSpawner(true);
+
+		int wpos = PrepExt_UpdateFullPosition(GSendBuf, this);
+		actInst->LSendToLocalSimulator(GSendBuf, wpos, CurrentX, CurrentZ);
+
+		//We need to send the health amount after the DEAD flag has been set, otherwise the client might delay animations by 5 seconds.
+		SendStatUpdate(STAT::HEALTH);
+
+		actInst->UnHate(CreatureDefID);
+}
+
+void CreatureInstance :: ProcessDeath(void)
+{
 
 	CREATURE_SEARCH attackerList;
 	ResolveAttackers(attackerList);
 
-	actInst->RunDeath(this);
-	actInst->EraseIndividualReference(this);
-	ab[0].Clear("CreatureInstance :: ProcessDeath");
-
-	SetAutoAttack(NULL, 0);
-	SelectTarget(NULL);
-
-	_AddStatusList(StatusEffects::DEAD, -1);
-
-	if(ab[0].IsBusy() == true)
-		CancelPending_Ex(&ab[0]);
-
-	//Remove stun one last time since it's possible that other creatures with
-	//pending abilities might have re-stunned after the initial death operation from
-	//the killing blow.
-	if(HasStatus(StatusEffects::STUN))
-		_RemoveStatusList(StatusEffects::STUN);
-
-	//g_Log.AddMessageFormat("Death: %s, %d", ptr->css.display_name, ptr->CreatureID);
-
-	//Run any processing if this creature is attached to spawner.
-	RemoveFromSpawner(true);
-
-	int wpos = PrepExt_UpdateFullPosition(GSendBuf, this);
-	actInst->LSendToLocalSimulator(GSendBuf, wpos, CurrentX, CurrentZ);
-
-	//We need to send the health amount after the DEAD flag has been set, otherwise the client might delay animations by 5 seconds.
-	SendStatUpdate(STAT::HEALTH);
-
-	actInst->UnHate(CreatureDefID);
+	PrepareDeath();
 
 	//Process PVP
 	if(actInst->pvpGame != NULL)
@@ -6597,7 +6603,18 @@ void CreatureInstance :: AddCredits(int amount)
 		g_Log.AddMessageFormat("[ERROR] AddCredits() active instance is NULL.");
 		return;
 	}
+
+	if(g_Config.AccountCredits && simulatorPtr != NULL) {
+		css.credits = simulatorPtr->pld.accPtr->Credits;
+	}
+
 	css.credits += amount;
+
+	if(g_Config.AccountCredits && simulatorPtr != NULL) {
+		simulatorPtr->pld.accPtr->Credits = css.credits;
+		simulatorPtr->pld.accPtr->PendingMinorUpdates++;
+	}
+
 	if(serverFlags & ServerFlags::IsPlayer)
 		SendStatUpdate(STAT::CREDITS);
 }
@@ -7070,6 +7087,58 @@ float CreatureInstance :: GetDropRateMultiplier(CreatureDefinition *cdef)
 
 
 	return dropRateBonus;
+}
+
+void CreatureInstance :: PlayerLoot(int level, DailyProfile *profile)
+{
+	int rarity = profile->minItemRarity;
+	std::string dropRateProfile = profile->dropRateProfileName;
+
+	//Don't fetch a new loot container if it already has one.
+	if(activeLootID != 0)
+		return;
+
+	// *** Basic conditional checks passed, generate the loot. ***
+
+	ActiveLootContainer loot;
+	loot.CreatureID = CreatureID;
+
+	float dropRateBonus = 1;
+
+	//Virtual items.
+	VirtualItemSpawnParams params;
+	if(Util::FloatEquivalent(dropRateBonus, 1.0F) == false)
+		params.SetAllDropMult(dropRateBonus);
+
+	params.level = level;
+	params.rarity = rarity;
+	params.namedMob = false;
+	params.minimumQuality = rarity;
+
+	if(profile->equipTypes.size() > 0) {
+		params.mEquipType = profile->equipTypes[randmod(profile->equipTypes.size())];
+	}
+
+	params.dropRateProfile = &g_DropRateProfileManager.GetProfileByName(dropRateProfile);
+	params.ClampLimits();
+	loot.AddItem(g_ItemManager.RollVirtualItem(params));
+
+	//New drop system.  Uses the drop tables found in the Loot subfolder.
+	//Roll the drops then merge them into the single container that will be assigned
+	//to the creature.
+	std::vector<int> itemList;
+	DropRollParameters drp;
+	drp.mCreatureDefID = CreatureDefID;
+	drp.mCreatureLevel = level;
+	drp.mPlayerLevel = level;
+	g_DropTableManager.RollDrops(drp, itemList);
+
+	for(size_t i = 0; i < itemList.size(); i++)
+	{
+		loot.AddItem(itemList[i]);
+	}
+
+	activeLootID = actInst->lootsys.AttachLootToCreature(loot, CreatureID);
 }
 
 void  CreatureInstance :: CreateLoot(int finderLevel)

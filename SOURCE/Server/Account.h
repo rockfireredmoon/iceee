@@ -90,6 +90,7 @@ public:
 	char LastLogOn[32];      //Date and time of last login of any character in the account.
 	unsigned long LastLogOnTimeSec; //Last login time in seconds since epoch
 	int ConsecutiveDaysLoggedIn; // The number of consecutive days the account has logged in
+	int Credits; // The number of credits the account has (if AccountCredits is on)
 
 	/* User data  */
 	std::vector<InventorySlot> vaultInventory;

@@ -2711,6 +2711,13 @@ void SanitizeClientString(char *string)
 			string[i] = '.';
 }
 
+void EncodeJSONString(std::string& str)
+{
+	ReplaceAll(str, "\n", "\\n");
+	ReplaceAll(str, "\r", "\\r");
+	ReplaceAll(str, "\"", "\\\"");
+}
+
 void ReplaceAll(std::string& str, const std::string& from, const std::string& to)
 {
     size_t start_pos = 0;

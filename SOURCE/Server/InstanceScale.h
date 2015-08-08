@@ -1,3 +1,8 @@
+//Zone Definitions, Map Definitions and World Instances
+
+#ifndef INSTANCESCALE_H
+#define INSTANCESCALE_H
+
 #include <string>
 #include <map>
 #include "CommonTypes.h"
@@ -157,3 +162,5 @@ private:
 
 extern InstanceScaleManager g_InstanceScaleManager;
 extern DropRateProfileManager g_DropRateProfileManager;
+
+#endif  //INSTANCESCALE_H

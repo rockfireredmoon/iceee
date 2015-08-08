@@ -148,12 +148,30 @@ class this.CreditShopManager extends this.DefaultQueryHandler
 			local category = item[4];
 			local beginDate = item[5];
 			local endDate = item[6];
-			local priceAmount = item[7].tointeger();
 			local priceCurrency = item[8];
 			local quantityLimit = item[9].tointeger();
 			local quantitySold = item[10].tointeger();
 			local itemProto = item[11];
-			local creditShopItem = this.CreditShopItem(id, title, description, status, category, beginDate, endDate, priceAmount, priceCurrency, quantityLimit, quantitySold, itemProto);
+			
+			local priceCopper = 0;
+			local priceCredits = 0;
+			if(priceCurrency == "0") {
+				priceCopper = item[7].tointeger();
+			}
+			else if(priceCurrency == "1") {
+				priceCredits  = item[7].tointeger();
+			}
+			else if(priceCurrency == "2") {			
+				local spl = this.Util.split(item[7], "+");
+				priceCopper = spl[0].tointeger();
+				priceCredits = spl[1].tointeger();
+			} 
+			else {
+				priceCopper = 999999;
+				priceCredits = 999999;
+			}
+			
+			local creditShopItem = this.CreditShopItem(id, title, description, status, category, beginDate, endDate, priceCopper, priceCredits, priceCurrency, quantityLimit, quantitySold, itemProto);
 			local isExpired = false;
 			
 			
@@ -231,7 +249,8 @@ class this.CreditShopItem
 	mCategory = null;
 	mBeginDate = null;
 	mEndDate = null;
-	mPriceAmount = null;
+	mPriceCopper = null;
+	mPriceCredits = null;
 	mPriceCurrency = null;
 	mQuantityLimit = null;
 	mQuantitySold = null;
@@ -239,7 +258,7 @@ class this.CreditShopItem
 	mItemDefId = null;
 	mCount = 1;
 	mItemLabelType = this.ItemLabelType.NONE;
-	constructor( id, title, description, status, category, beginDate, endDate, priceAmount, priceCurrency, quantityLimit, quantitySold, itemProto )
+	constructor( id, title, description, status, category, beginDate, endDate, priceCopper, priceCredits, priceCurrency, quantityLimit, quantitySold, itemProto )
 	{
 		this.mCreditItemId = id;
 		this.mTitle = title;
@@ -248,7 +267,8 @@ class this.CreditShopItem
 		this.mCategory = category;
 		this.mBeginDate = beginDate;
 		this.mEndDate = endDate;
-		this.mPriceAmount = priceAmount;
+		this.mPriceCopper = priceCopper;
+		this.mPriceCredits = priceCredits;
 		this.mPriceCurrency = priceCurrency;
 		this.mQuantityLimit = quantityLimit;
 		this.mQuantitySold = quantitySold;
@@ -318,11 +338,17 @@ class this.CreditShopItem
 	{
 		return this.mEndDate;
 	}
-
-	function getPriceAmount()
+	
+	function getPriceCopper()
 	{
-		return this.mPriceAmount;
+		return this.mPriceCopper;
 	}
+
+	function getPriceCredits()
+	{
+		return this.mPriceCredits;
+	}
+
 
 	function getPriceCurrency()
 	{

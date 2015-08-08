@@ -405,6 +405,8 @@ void LoadConfig(const char *filename)
 				g_Config.UseStopSwim = lfr.BlockToBool(1);
 			else if(strcmp(NameBlock, "InvalidLoginMessage") == 0)
 				g_Config.InvalidLoginMessage = lfr.BlockToStringC(1, 0);
+			else if(strcmp(NameBlock, "GitHubToken") == 0)
+				g_Config.GitHubToken = lfr.BlockToStringC(1, 0);
 			else if(strcmp(NameBlock, "VerifyMovement") == 0)
 				g_Config.VerifyMovement = lfr.BlockToBool(1);
 			else if(strcmp(NameBlock, "DebugLogAIScriptUse") == 0)
@@ -419,6 +421,8 @@ void LoadConfig(const char *filename)
 				g_Config.SquirrelVMStackSize = lfr.BlockToIntC(1);
 			else if(strcmp(NameBlock, "PersistentBuffs") == 0)
 				g_Config.PersistentBuffs = lfr.BlockToBool(1);
+			else if(strcmp(NameBlock, "AccountCredits") == 0)
+				g_Config.AccountCredits = lfr.BlockToBool(1);
 			else if(strcmp(NameBlock, "DailyCreditsPerAccount") == 0)
 				g_Config.DailyCreditsPerAccount = lfr.BlockToIntC(1);
 			else if(strcmp(NameBlock, "WeeklyCreditsPerAccount") == 0)
@@ -629,6 +633,8 @@ GlobalConfigData :: GlobalConfigData()
 
 	PersistentBuffs = false;
 	RewardWeekDays = 7;
+
+	AccountCredits = true;
 
 	InvalidLoginMessage = "Account not found.  Check username and password.";
 }

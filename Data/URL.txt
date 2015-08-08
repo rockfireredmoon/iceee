@@ -4,7 +4,8 @@
 ; or different page name.
 ; Each entry has Key=Value format, where the Key is the page name, and Value is the URL.
 
-Homepage=http://planetforevergame.com:81/
+Homepage=http://armouree.vm.bytemark.co.uk
 Reference=http://planetforevergame.com:81/Reference.html
-Advanced Crafting=http://planetforevergame.com:81/AdvancedCrafting.html
+Advanced Crafting=http://iceee.servegame.com/AdvancedCrafting.html
 Chat Channel Colors=http://planetforevergame.com:81/ChatChannelColors.html
+
