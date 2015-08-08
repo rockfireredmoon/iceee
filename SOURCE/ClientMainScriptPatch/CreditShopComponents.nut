@@ -861,13 +861,18 @@ class this.GUI.CreditNameChangePanel extends this.GUI.Component
 		this.mCredits.setSize(156, 24);
 		this.mCredits.setPreferredSize(156, 24);
 		centerContainer.add(this.mCredits);
-		this._updateCost(1000, 1000, 2);
+		this.updateCredits(1000);
 
 		if (::_avatar && ::_avatar.getStat(this.Stat.CREDITS) != null)
 		{
 			local creditAmt = ::_avatar.getStat(this.Stat.CREDITS);
 			this.updatePurchaseButton(creditAmt);
 		}
+	}
+
+	function updateCredits( amount )
+	{
+		this.mCredits.setCurrentValue(amount);
 	}
 
 	function updatePurchaseButton( value )

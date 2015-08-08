@@ -267,6 +267,17 @@ class Screens.ItemMarketEditScreen extends GUI.Frame {
 		mBeginDateEntry.setText(entry.beginDate);
 		mEndDateEntry.setText(entry.endDate);
 		mPriceAmountEntry.setText(entry.priceAmount);
+		switch(entry.priceCurrency) {
+		case 0:
+			mPriceCurrencyEntry.setCurrent("COPPER");
+			break;
+		case 1:
+			mPriceCurrencyEntry.setCurrent("CREDITS");
+			break;
+		case 2:
+			mPriceCurrencyEntry.setCurrent("COPPER+CREDITS");
+			break;
+		}
 		mPriceCurrencyEntry.setCurrent(entry.priceCurrency);
 		mQuantityLimitEntry.setText(entry.quantityLimit);
 		mQuantitySoldEntry.setText(entry.quantitySold);
@@ -307,7 +318,7 @@ class Screens.ItemMarketEditScreen extends GUI.Frame {
 			"priceAmount",
 			mPriceAmountEntry.getText(),
 			"priceCurrency",
-			mPriceCurrencyEntry.getCurrent(),
+			mPriceCurrencyEntry.getCurrentIndex(),
 			"quantityLimit",
 			mQuantityLimitEntry.getText(),
 			"quantitySold",
@@ -345,7 +356,7 @@ class Screens.ItemMarketEditScreen extends GUI.Frame {
 					beginDate = r[5],
 					endDate = r[6],
 					priceAmount = r[7],
-					priceCurrency = r[8],
+					priceCurrency = r[8].tointeger(),
 					quantityLimit = r[9],
 					quantitySold = r[10],
 					itemProto = r[11]

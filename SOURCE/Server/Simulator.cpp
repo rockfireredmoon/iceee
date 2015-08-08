@@ -11792,7 +11792,7 @@ int SimulatorThread :: handle_query_item_market_edit(void)
 			Util::SafeFormat(Aux3, sizeof(Aux3), "Save market csItem %d", csItem->mId);
 		}
 
-		int currency = Currency::GetIDByName(query.GetString(16));
+		int currency = query.GetInteger(16);
 		unsigned long priceCopper = 0;
 		unsigned long priceCredits = 0;
 		STRINGLIST priceElements;
@@ -11901,7 +11901,7 @@ int SimulatorThread :: handle_query_item_market_list(void)
 				sprintf(Aux1, "999999");
 			wpos += PutStringUTF(&SendBuf[wpos], Aux1);
 
-			sprintf(Aux1, "%s", Currency::GetNameByID(it->second->mPriceCurrency));
+			sprintf(Aux1, "%d", it->second->mPriceCurrency);
 			wpos += PutStringUTF(&SendBuf[wpos], Aux1);
 
 			sprintf(Aux1, "%d", it->second->mQuantityLimit);

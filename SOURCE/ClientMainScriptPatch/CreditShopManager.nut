@@ -148,20 +148,20 @@ class this.CreditShopManager extends this.DefaultQueryHandler
 			local category = item[4];
 			local beginDate = item[5];
 			local endDate = item[6];
-			local priceCurrency = item[8];
+			local priceCurrency = item[8].tointeger();
 			local quantityLimit = item[9].tointeger();
 			local quantitySold = item[10].tointeger();
 			local itemProto = item[11];
 			
 			local priceCopper = 0;
 			local priceCredits = 0;
-			if(priceCurrency == "0") {
+			if(priceCurrency == 0) {
 				priceCopper = item[7].tointeger();
 			}
-			else if(priceCurrency == "1") {
+			else if(priceCurrency == 1) {
 				priceCredits  = item[7].tointeger();
 			}
-			else if(priceCurrency == "2") {			
+			else if(priceCurrency == 2) {			
 				local spl = this.Util.split(item[7], "+");
 				priceCopper = spl[0].tointeger();
 				priceCredits = spl[1].tointeger();

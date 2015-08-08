@@ -1,7 +1,7 @@
 [ENTRY]
 Description=Buy a new character slot for your account
 PriceCurrency=COPPER+CREDITS
-PriceCopper=2000
+PriceCopper=999999
 PriceCredits=100
 ItemID=8110
 Category=CONSUMABLES
