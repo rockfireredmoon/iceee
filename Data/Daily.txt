@@ -1,8 +1,68 @@
-Day	ItemID	Credits	MinRarity	Profile	EquipTypes
-1	7861	5	2	standard	19,18
-2	7861	5	2	standard	1,2,3,4,5,6,7
-3	7861	5	2	standard	7,8,9,10,11
-4	7861	5	2	standard	19,18
-5	7861	5	2	standard	1,2,3,4,5,6,7
-6	7861	5	2	standard	7,8,9,10,11
-7	7861	5	3	standard	ANY
+Day	MinLevel	MaxLevel		ItemID	Type	Data
+
+;
+; On day 1, we give out potions appropriate for the tier and 5 credits
+;
+; Level 1-9 	= Brief potion of speed
+; Level 10-MAX 	= Extended potion of speed,Consitution potion, 
+;                 Health Regen Potion, Armor Rating Potion,Health Potion
+;
+1	0	999	7861	CREDITS	5
+1	0	9	7861	ITEM	40027
+1	10	19	7861	ITEM	40028,40029,40035,40041,40047,40053
+1	20	29	7861	ITEM	40028,40030,40036,40042,40048,40054
+1	30	39	7861	ITEM	40028,40031,40037,40043,40049,40055
+1	40	49	7861	ITEM	40028,40032,40038,40044,40050,40056
+1	50	59	7861	ITEM	40028,40033,40039,40045,40051,40057
+1	60	999	7861	ITEM	40028,40034,40040,40046,40052,40057
+
+;
+; On day 2, we give out 5 credits and random ring or amulet for the players
+; level. This uses the 'dailyreward' drop rate profile to determine the rarity
+; and stats, so the item will be ONLY UNCOMMON
+2	0	999	7861	VIRTUAL	2:dailyreward:19,17
+2	0	999	7861	CREDITS	5
+
+;
+; On day 3, we give out potions appropriate for the tier and 5 credits
+;
+; Level 1-9 	= Brief potion of speed
+; Level 10-MAX 	= Extended potion of speed,Consitution potion, 
+;                 Health Regen Potion, Armor Rating Potion,Health Potion
+;
+3	0	999	7861	CREDITS	5
+3	0	9	7861	ITEM	40027
+3	10	19	7861	ITEM	40028,40029,40035,40041,40047,40053
+3	20	29	7861	ITEM	40028,40030,40036,40042,40048,40054
+3	30	39	7861	ITEM	40028,40031,40037,40043,40049,40055
+3	40	49	7861	ITEM	40028,40032,40038,40044,40050,40056
+3	50	59	7861	ITEM	40028,40033,40039,40045,40051,40057
+3	60	999	7861	ITEM	40028,40034,40040,40046,40052,40057
+
+
+;
+; On day 4, we give out 5 credits and random ring or amulet for the players
+; level. This uses the 'dailyreward' drop rate profile to determine the rarity
+; and stats, so the item will be ONLY UNCOMMON
+4	0	999	7861	VIRTUAL	2:dailyreward:19,17
+4	0	999	7861	CREDITS	5
+
+; On day 5, we give out 5 credits, and a random piece of armour for the
+; players level. This uses the 'dailyreward' drop rate profile to determine the rarity
+; and stats.
+
+5	0	999	7861	VIRTUAL	2:dailyreward:7,8,9,10,11,12,13,14,15,16
+5	0	999	7861	CREDITS	5
+
+; On day 6, we give out 5 credits, and a random weapon for the
+; players level. This uses the 'dailyreward' drop rate profile to determine the rarity
+; and stats, so the item will be ONLY UNCOMMON
+
+6	0	999	7861	VIRTUAL	2:dailyreward:1/2,4/8,5/3,5/4,6/5|6|7
+6	0	999	7861	CREDITS	5
+
+; On day 7, we give out 50 credits, and a random item (weapon or armour) for
+; players level. This uses the 'weeklyreward' drop rate profile to determine the rarity
+; and stats. This has a high chance of rare, and a low chance of an epic.
+7	0	999	7861	VIRTUAL	2:weeklyreward:ANY
+7	0	999	7861	CREDITS	50

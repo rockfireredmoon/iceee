@@ -7089,11 +7089,8 @@ float CreatureInstance :: GetDropRateMultiplier(CreatureDefinition *cdef)
 	return dropRateBonus;
 }
 
-void CreatureInstance :: PlayerLoot(int level, DailyProfile *profile)
+void CreatureInstance :: PlayerLoot(int level, std::vector<DailyProfile> profiles)
 {
-	int rarity = profile->minItemRarity;
-	std::string dropRateProfile = profile->dropRateProfileName;
-
 	//Don't fetch a new loot container if it already has one.
 	if(activeLootID != 0)
 		return;
@@ -7103,25 +7100,45 @@ void CreatureInstance :: PlayerLoot(int level, DailyProfile *profile)
 	ActiveLootContainer loot;
 	loot.CreatureID = CreatureID;
 
-	float dropRateBonus = 1;
+	for(std::vector<DailyProfile>::iterator it = profiles.begin(); it != profiles.end(); ++it) {
+		DailyProfile profile = *it;
+		switch(profile.rewardType) {
+		case RewardType::VIRTUAL:
+		{
 
-	//Virtual items.
-	VirtualItemSpawnParams params;
-	if(Util::FloatEquivalent(dropRateBonus, 1.0F) == false)
-		params.SetAllDropMult(dropRateBonus);
 
-	params.level = level;
-	params.rarity = rarity;
-	params.namedMob = false;
-	params.minimumQuality = rarity;
+//			float dropRateBonus = 1;
+//
+//			//Virtual items.
+//			VirtualItemSpawnParams params;
+//			if(Util::FloatEquivalent(dropRateBonus, 1.0F) == false)
+//				params.SetAllDropMult(dropRateBonus);
 
-	if(profile->equipTypes.size() > 0) {
-		params.mEquipType = profile->equipTypes[randmod(profile->equipTypes.size())];
+			VirtualItemSpawnParams params;
+			params.level = level;
+			params.rarity = profile.virtualItemReward.minItemRarity;
+			params.namedMob = false;
+			params.minimumQuality = profile.virtualItemReward.minItemRarity;
+
+			if(profile.virtualItemReward.components.size() > 0) {
+				VirtualItemRewardComponent ei = profile.virtualItemReward.components[randmod(profile.virtualItemReward.components.size())];
+				params.mEquipType = ei.equipType;
+				if(ei.weaponTypes.size() > 0) {
+					params.mWeaponType = ei.weaponTypes[randmod(ei.weaponTypes.size())];
+				}
+			}
+
+			params.dropRateProfile = &g_DropRateProfileManager.GetProfileByName(profile.virtualItemReward.dropRateProfileName);
+			params.ClampLimits();
+			loot.AddItem(g_ItemManager.RollVirtualItem(params));
+
+			break;
+		}
+		case RewardType::ITEM:
+			loot.AddItem(profile.itemReward.itemIDs[randmod(profile.itemReward.itemIDs.size())]);
+			break;
+		}
 	}
-
-	params.dropRateProfile = &g_DropRateProfileManager.GetProfileByName(dropRateProfile);
-	params.ClampLimits();
-	loot.AddItem(g_ItemManager.RollVirtualItem(params));
 
 	//New drop system.  Uses the drop tables found in the Loot subfolder.
 	//Roll the drops then merge them into the single container that will be assigned

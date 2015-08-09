@@ -471,7 +471,7 @@ public:
 	void SendUpdatedLoot(void);
 	float GetDropRateMultiplier(CreatureDefinition *cdef);
 
-	void PlayerLoot(int level, DailyProfile *profile);
+	void PlayerLoot(int level, std::vector<DailyProfile> profiles);
 	void CreateLoot(int finderLevel);
 	void AddLootableID(int newLootableID);
 

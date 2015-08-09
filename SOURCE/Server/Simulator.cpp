@@ -3244,31 +3244,44 @@ void SimulatorThread :: ProcessDailyRewards(void)
 		pld.accPtr->DueDailyRewards = false;
 		pld.accPtr->PendingMinorUpdates++;
 
-		DailyProfile profile = g_DailyProfileManager.GetProfileByDayNumber(pld.accPtr->ConsecutiveDaysLoggedIn);
-		if(!profile.hasData) {
+		std::vector<DailyProfile> profiles = g_DailyProfileManager.GetProfiles(pld.accPtr->ConsecutiveDaysLoggedIn, pld.charPtr->cdef.css.level);
+		if(profiles.size() == 0) {
 			// Reset to day1
 			pld.accPtr->ConsecutiveDaysLoggedIn = 1;
-			profile = g_DailyProfileManager.GetProfileByDayNumber(pld.accPtr->ConsecutiveDaysLoggedIn);
+			profiles = g_DailyProfileManager.GetProfiles(pld.accPtr->ConsecutiveDaysLoggedIn, pld.charPtr->cdef.css.level);
 		}
 
-		if(profile.hasData) {
+		if(profiles.size() > 0) {
 			char buf[256];
-			Util::SafeFormat(buf, sizeof(buf), "This is day %d of a maximum of %d consecutive login days. You earned :-", pld.accPtr->ConsecutiveDaysLoggedIn, g_DailyProfileManager.GetNumberOfProfiles());
+			Util::SafeFormat(buf, sizeof(buf), "This is day %d of a maximum of %d consecutive login days. You earned :-", pld.accPtr->ConsecutiveDaysLoggedIn, g_DailyProfileManager.GetMaxDayNumber());
 			AttemptSend(SendBuf, PrepExt_SendInfoMessage(SendBuf, buf, INFOMSG_INFO));
 
-			if(profile.credits > 0) {
-				creatureInst->AddCredits(profile.credits);
-				Util::SafeFormat(buf, sizeof(buf), " * %d credits to spend in the shop", profile.credits);
-				AttemptSend(SendBuf, PrepExt_SendInfoMessage(SendBuf, buf, INFOMSG_INFO));
+			std::vector<DailyProfile> lootProfiles;
+
+			for(std::vector<DailyProfile>::iterator it = profiles.begin(); it != profiles.end(); ++it) {
+				DailyProfile profile = *it;
+
+				switch(profile.rewardType) {
+				case RewardType::CREDITS:
+					creatureInst->AddCredits(profile.creditReward.credits);
+					Util::SafeFormat(buf, sizeof(buf), " * %d credits to spend in the shop", profile.creditReward.credits);
+					AttemptSend(SendBuf, PrepExt_SendInfoMessage(SendBuf, buf, INFOMSG_INFO));
+					break;
+				case RewardType::VIRTUAL:
+				case RewardType::ITEM:
+					lootProfiles.push_back(profile);
+					break;
+				}
 			}
 
-			if(profile.dropRateProfileName.length() > 0) {
-				CreatureInstance* lootInst = creatureInst->actInst->SpawnGeneric(profile.itemID, creatureInst->CurrentX, creatureInst->CurrentY, creatureInst->CurrentZ, 0, 0);
+
+			if(lootProfiles.size() > 0) {
+				CreatureInstance* lootInst = creatureInst->actInst->SpawnGeneric(lootProfiles[0].spawnCreatureDefID, creatureInst->CurrentX, creatureInst->CurrentY, creatureInst->CurrentZ, 0, 0);
 				lootInst->PrepareDeath();
-				lootInst->PlayerLoot(creatureInst->css.level, &profile);
+				lootInst->PlayerLoot(creatureInst->css.level, lootProfiles);
 				lootInst->AddLootableID(creatureInst->CreatureDefID);
 				if(lootInst->activeLootID != 0) {
-					Util::SafeFormat(buf, sizeof(buf), " * A special item reward", profile.credits);
+					Util::SafeFormat(buf, sizeof(buf), " * A daily reward chest");
 					AttemptSend(SendBuf, PrepExt_SendInfoMessage(SendBuf, buf, INFOMSG_INFO));
 					lootInst->SendUpdatedLoot();
 				}
