@@ -3277,6 +3277,7 @@ void SimulatorThread :: ProcessDailyRewards(void)
 
 			if(lootProfiles.size() > 0) {
 				CreatureInstance* lootInst = creatureInst->actInst->SpawnGeneric(lootProfiles[0].spawnCreatureDefID, creatureInst->CurrentX, creatureInst->CurrentY, creatureInst->CurrentZ, 0, 0);
+				lootInst->deathTime = g_ServerTime;
 				lootInst->PrepareDeath();
 				lootInst->PlayerLoot(creatureInst->css.level, lootProfiles);
 				lootInst->AddLootableID(creatureInst->CreatureDefID);
