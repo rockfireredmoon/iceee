@@ -213,17 +213,14 @@ class this.Screens.LootScreen extends this.GUI.Frame
 				{
 					local id = qa.args[1];
 					local itemDef = ::_ItemDataManager.getItemDef(id);
-					print("ICE! Loot results " + results[0].len()); 
 					if(results[0].len() == 2)
 					{
-						print("ICE! Self "); 
 						this.IGIS.info("You have looted: " + itemDef.getDisplayName());
 						::Audio.playSound("Sound-Loot.ogg");
 						::_tutorialManager.onItemGained(itemDef, id);
 					}
 					else
 					{
-						print("ICE! Other " + results[0][2]);
 						this.IGIS.info("Your " + itemDef.getDisplayName() + " was given to " + results[0][2]);
 						::Audio.playSound("Sound-Loot.ogg");
 					}

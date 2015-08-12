@@ -2639,6 +2639,10 @@ bool SimulatorThread :: HandleQuery(int &PendingData)
 		PendingData = handle_query_vault_expand();
 	else if(query.name.compare("vault.deliverycontents") == 0)
 		PendingData = handle_query_vault_deliverycontents();
+	else if(query.name.compare("vault.lootdeliveryitem") == 0)
+		PendingData = handle_query_vault_lootdeliveryitem();
+	else if(query.name.compare("vault.removedeliveryitem") == 0)
+		PendingData = handle_query_vault_removedeliveryitem();
 	else if(query.name.compare("quest.share") == 0)
 		PendingData = handle_query_quest_share();
 	else if(query.name.compare("mod.emote") == 0)
@@ -3308,6 +3312,7 @@ int SimulatorThread :: handle_query_item_contents(void)
 		LogMessageL(MSG_WARN, "WARNING: invalid [item.contents] container: [%s]", contName);
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Invalid item container.");
 	}
+	LogMessageL(MSG_WARN, "[REMOVEME]: Item contents %s / %d", contName, contID);
 
 	SendInventoryData(pld.charPtr->inventory.containerList[contID]);
 
@@ -10164,7 +10169,8 @@ int SimulatorThread :: handle_query_party(void)
 int SimulatorThread :: handle_query_vault_size(void)
 {
 	sprintf(Aux1, "%d", pld.charPtr->VaultGetTotalCapacity());
-	return PrepExt_QueryResponseString(SendBuf, query.ID, Aux1);
+	sprintf(Aux2, "%d", pld.accPtr->DeliveryBoxSlots);
+	return PrepExt_QueryResponseString2(SendBuf, query.ID, Aux1, Aux2);
 }
 
 int SimulatorThread :: handle_query_vault_expand(void)
@@ -10205,13 +10211,101 @@ int SimulatorThread :: handle_query_vault_expand(void)
 	creatureInst->SendStatUpdate(STAT::CREDITS);
 
 	int wpos = PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-	wpos += PrepExt_CreatureEventVaultSize(&SendBuf[wpos], creatureInst->CreatureID, newSize);
+	wpos += PrepExt_CreatureEventVaultSize(&SendBuf[wpos], creatureInst->CreatureID, newSize, pld.accPtr->DeliveryBoxSlots);
 	return wpos;
+}
+
+
+
+int SimulatorThread :: handle_query_vault_lootdeliveryitem(void)
+{
+	LogMessageL(MSG_WARN, "[REMOVEME] handle_query_vault_lootdeliveryitem / %s / %s", query.GetString(0), query.GetString(1));
+	int slot = query.GetInteger(1);
+
+	// Make sure slot is not already used
+//	for(int i = 0 ; i < AccountData::MAX_DELIVERY_BOX_SLOTS; i++) {
+//		if(pld.accPtr->DeliveryBox[i].characterID != 0 && pld.accPtr->DeliveryBox[i].slot== slot) {
+//			return PrepExt_QueryResponseError(SendBuf, query.ID, "That item is already in your delivery box.");
+//		}
+//	}
+//
+//
+//	for(int i = 0 ; i < AccountData::MAX_DELIVERY_BOX_SLOTS; i++) {
+//		if(pld.accPtr->DeliveryBox[i].characterID == 0) {
+//			// Populate first free slot
+//			pld.accPtr->DeliveryBox[i].characterID = pld.CreatureDefID;
+//			pld.accPtr->DeliveryBox[i].slot = slot;
+//			pld.accPtr->PendingMinorUpdates++;
+//			return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
+//		}
+//	}
+	return PrepExt_QueryResponseError(SendBuf, query.ID, "Delivery box is full.");
+}
+
+int SimulatorThread :: handle_query_vault_removedeliveryitem(void)
+{
+//	LogMessageL(MSG_WARN, "[REMOVEME] handle_query_vault_removedeliveryitem / %s / %s", query.GetString(0), query.GetString(1));
+//	int delSlot = query.GetInteger(1);
+//	for(int i = delSlot + 1 ; i < AccountData::MAX_CHARACTER_SLOTS - 1; i ++) {
+//		pld.accPtr->DeliveryBox[i - 1] = pld.accPtr->DeliveryBox[i];
+//	}
+//	pld.accPtr->DeliveryBox[AccountData::MAX_CHARACTER_SLOTS - 1].characterID = 0;
+//	pld.accPtr->DeliveryBox[AccountData::MAX_CHARACTER_SLOTS - 1].slot = 0;
+//	pld.accPtr->PendingMinorUpdates++;
+	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
 }
 
 int SimulatorThread :: handle_query_vault_deliverycontents(void)
 {
-	return PrepExt_QueryResponseNull(SendBuf, query.ID);
+	//
+	// TODO need to deal with the case where vault slots are rearranged while delivery box is active
+	//   1. Maybe LOCK the items that are in the box (on the client)
+	//   2. Adjust indexes in item.move
+	//   3. Clear clear delivery box when items are moved
+	//
+	//
+
+	LogMessageL(MSG_WARN, "[REMOVEME] handle_query_vault_deliverycontents / %s", query.GetString(0));
+
+	int wpos = 0;
+	wpos += PutByte(&SendBuf[wpos], 1);          //_handleQueryResultMsg
+	wpos += PutShort(&SendBuf[wpos], 0);         //Placeholder for message size
+	wpos += PutInteger(&SendBuf[wpos], query.ID);  //Query response index
+	std::vector<std::string> l;
+//	for(int i = 0 ; i < AccountData::MAX_DELIVERY_BOX_SLOTS; i++) {
+//		if(pld.accPtr->DeliveryBox[i].characterID != 0) {
+//			g_CharacterManager.GetThread("SimulatorThread::deliveryBoxSet");
+//			int slotNo = pld.accPtr->DeliveryBox[i].slot;
+//			CharacterData *cdata = g_CharacterManager.RequestCharacter(pld.accPtr->DeliveryBox[i].characterID, true);
+//			if(cdata == NULL) {
+//				LogMessageL(MSG_WARN, "Delivery box item for a character (%d) that doesn't exist.", pld.accPtr->DeliveryBox[i].characterID);
+//			}
+//			else {
+//				int bankID = GetContainerIDFromName("bank");
+//				int ccsid = cdata->inventory.GetCCSID(bankID, slotNo);
+//				InventorySlot *slot = cdata->inventory.GetItemPtrByCCSID(ccsid);
+//				if(slot == NULL) {
+//					LogMessageL(MSG_WARN, "Delivery box item for a slot (%d) that doesn't exist for character (%d).", pld.accPtr->DeliveryBox[i].characterID, slotNo);
+//				}
+//				else {
+//					Util::SafeFormat(Aux1, sizeof(Aux1), "item%d:%d:%d:%d", slot->IID, slot->customLook, slot->count, slot->secondsRemaining);
+//
+//					LogMessageL(MSG_WARN, "[REMOVEME] STR: %s", Aux1);
+//
+//					l.push_back(Aux1);
+//				}
+//			}
+//			g_CharacterManager.ReleaseThread();
+//		}
+//	}
+	wpos += PutShort(&SendBuf[wpos], pld.accPtr->deliveryInventory.size());         //Number of rows
+	for(std::vector<InventorySlot>::iterator it = pld.accPtr->deliveryInventory.begin(); it != pld.accPtr->deliveryInventory.end() ; ++it) {
+		wpos += PutByte(&SendBuf[wpos], 1);
+		Util::SafeFormat(Aux1, sizeof(Aux1), "item%d:%d:%d:%d", it->IID, it->customLook, it->count, it->secondsRemaining);
+		wpos += PutStringUTF(&SendBuf[wpos],Aux1);
+	}
+	PutShort(&SendBuf[1], wpos - 3);               //Set message size
+	return wpos;
 }
 
 int SimulatorThread :: handle_query_quest_share(void)

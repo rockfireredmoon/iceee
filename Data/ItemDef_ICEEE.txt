@@ -388,3 +388,19 @@ mFlavorText=Double click to open!
 mQualityLevel=3
 mMinUseLevel=10
 mUseAbilityId=27007
+
+[ENTRY]
+mID=8111
+mType=5
+mDisplayName=New Delivery Box
+mAppearance=[{}]
+mIcon=Icon-32-Chest1.png|Icon-32-BG-Blue.png
+mIvType1=1
+mIvMax1=1
+mLevel=1
+mBindingType=1
+mValue=1
+mFlavorText=Double click to open!
+mQualityLevel=3
+mMinUseLevel=10
+mUseAbilityId=27008

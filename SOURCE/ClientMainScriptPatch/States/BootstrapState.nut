@@ -162,8 +162,6 @@ class this.States.BootstrapState extends this.State
 	{
 		local ovalue = value;
 		
-		print("ICE! " + key + " = " + value);
-
 		if (key == "cref" || key == "mesh")
 		{
 			if (value.find("Par-") == 0 || value.find("Light-") == 0 || value.find("Manipulator-") == 0 || value.find("Sound-") == 0 || value.find("-LOD") != null || value.find("$(") != null || value.find("-WalkMesh.mesh") != null || value.find("-Blocking.mesh") != null || value == "")
@@ -202,8 +200,6 @@ class this.States.BootstrapState extends this.State
 				}
 			}
 			
-			print("ICE! GetArchiveName " + value);
-
 			local archive = this.GetArchiveName(value);
 
 			if (archive != this.mArchive)

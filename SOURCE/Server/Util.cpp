@@ -1904,7 +1904,7 @@ int PrepExt_CreatureEventPortalRequest(char *buffer, int actorID, const char *ca
 	return wpos;
 }
 
-int PrepExt_CreatureEventVaultSize(char *buffer, int actorID, int vaultSize)
+int PrepExt_CreatureEventVaultSize(char *buffer, int actorID, int vaultSize, int deliverySlots)
 {
 	int wpos = 0;
 	wpos += PutByte(&buffer[wpos], 4);  //_handleCreatureEventMsg
@@ -1914,6 +1914,7 @@ int PrepExt_CreatureEventVaultSize(char *buffer, int actorID, int vaultSize)
 	wpos += PutByte(&buffer[wpos], 25);             //event to update vault size
 
 	wpos += PutInteger(&buffer[wpos], vaultSize);
+	wpos += PutInteger(&buffer[wpos], deliverySlots);
 
 	PutShort(&buffer[1], wpos - 3);       //Set message size
 	return wpos;

@@ -314,6 +314,8 @@ public:
 	int handle_query_vault_size(void);
 	int handle_query_vault_expand(void);
 	int handle_query_vault_deliverycontents(void);
+	int handle_query_vault_lootdeliveryitem(void);
+	int handle_query_vault_removedeliveryitem(void);
 	int handle_query_shard_set(void);
 
 	int handle_query_mod_setgrovestart(void);

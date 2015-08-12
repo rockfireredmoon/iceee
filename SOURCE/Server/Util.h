@@ -97,7 +97,7 @@ int PrepExt_TradeCurrencyOffer(char *buffer, int offeringPlayerID, int tradeAmou
 int PrepExt_TradeItemOffer(char *buffer, char *convBuf, int offeringPlayerID, std::vector<InventorySlot>& itemList);
 int PrepExt_QuestStatusMessage(char *buffer, int questID, int objectiveIndex, bool complete, std::string message);
 int PrepExt_CreatureEventPortalRequest(char *buffer, int actorID, const char *casterName, const char *locationName);
-int PrepExt_CreatureEventVaultSize(char *buffer, int actorID, int vaultSize);
+int PrepExt_CreatureEventVaultSize(char *buffer, int actorID, int vaultSize, int deliverySlots);
 int PrepExt_SendEnvironmentUpdateMsg(char *buffer, const char *zoneIDString, ZoneDefInfo *zoneDef, int x, int z);
 int PrepExt_SendTimeOfDayMsg(char *buffer, const char *envType);
 int PrepExt_Broadcast(char *buffer, const char *message);

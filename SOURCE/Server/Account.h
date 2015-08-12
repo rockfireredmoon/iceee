@@ -69,7 +69,8 @@ public:
 
 	static const int EXPIRE_TIME = 5000;
 	static const int MAX_CHARACTER_SLOTS = 8;  //Absolute maximum number of characters an account can have
-	static const int DEFAULT_CHARACTER_SLOTS = 4;  //Absolute maximum number of characters an account can have
+	static const int MAX_DELIVERY_BOX_SLOTS = 3;  //Maximum number of delivery box slots allowed
+	static const int DEFAULT_CHARACTER_SLOTS = 4;  //Default number of characters an account can have
 
 	int ID;
 	char Name[48];
@@ -91,6 +92,8 @@ public:
 	unsigned long LastLogOnTimeSec; //Last login time in seconds since epoch
 	int ConsecutiveDaysLoggedIn; // The number of consecutive days the account has logged in
 	int Credits; // The number of credits the account has (if AccountCredits is on)
+	std::vector<InventorySlot> deliveryInventory;
+	int DeliveryBoxSlots;
 
 	/* User data  */
 	std::vector<InventorySlot> vaultInventory;
@@ -108,6 +111,7 @@ public:
 	bool HasBuildZone(BuildPermissionArea &bpa);
 
 	bool ExpandCharacterSlots();
+	bool ExpandDeliveryBoxes();
 	void ClearAll(void);
 	void FillAuthorizationHash(const char *hash);
 	void FillRegistrationKey(const char *key);

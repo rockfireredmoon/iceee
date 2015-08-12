@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "FileReader.h"
 
 #include "Account.h"
@@ -90,6 +91,8 @@ void AccountData :: ClearAll(void)
 	ConsecutiveDaysLoggedIn = 0;
 
 	Credits = 0;
+	DeliveryBoxSlots = 0;
+	deliveryInventory.clear();
 
 	memset(&LastLogOn, 0, sizeof(LastLogOn));
 
@@ -259,6 +262,15 @@ void AccountData :: SetBan(int minutes)
 	PendingMinorUpdates++;
 }
 
+bool AccountData ::ExpandDeliveryBoxes()
+{
+	 if(DeliveryBoxSlots < MAX_DELIVERY_BOX_SLOTS) {
+		 DeliveryBoxSlots++;
+		 PendingMinorUpdates++;
+		 return true;
+	 }
+	 return false;
+}
 
 bool AccountData ::ExpandCharacterSlots()
 {
@@ -316,6 +328,9 @@ void AccountData :: SaveToStream(FILE *output)
 	fprintf(output, "LastLogOnTime=%lu\r\n", LastLogOnTimeSec);
 	fprintf(output, "ConsecutiveDaysLoggedIn=%d\r\n", ConsecutiveDaysLoggedIn);
 	fprintf(output, "Credits=%d\r\n", Credits);
+	fprintf(output, "DeliveryBoxSlots=%d\r\n", DeliveryBoxSlots);
+	fprintf(output, "\r\n");
+
 	fprintf(output, "Characters=");
 	for(int a = 0; a < MaxCharacters; a++)
 	{
@@ -367,6 +382,8 @@ void AccountData :: SaveToStream(FILE *output)
 	//TODO:VAULT fprintf(output, "CurrentVaultSize=%d\r\n", CurrentVaultSize);
 	for(size_t i = 0; i < vaultInventory.size(); i++)
 		vaultInventory[i].SaveToAccountStream("bank", output);
+	for(size_t i = 0; i < deliveryInventory.size(); i++)
+		deliveryInventory[i].SaveToAccountStream("delivery", output);
 
 	characterCache.SaveToStream(output);
 
@@ -592,6 +609,8 @@ void AccountManager :: LoadSectionGeneral(FileReader &fr, AccountData &ad, const
 			ad.Credits = fr.BlockToULongC(1);
 	else if(strcmp(NameBlock, "LASTLOGONTIME") == 0)
 		ad.LastLogOnTimeSec = fr.BlockToULongC(1);
+	else if(strcmp(NameBlock, "DELIVERYBOXSLOTS") == 0)
+		ad.DeliveryBoxSlots = fr.BlockToIntC(1);
 	else if(strcmp(NameBlock, "SUSPENDDURATION") == 0)
 		ad.SuspendDurationSec = fr.BlockToULongC(1);
 	else if(strcmp(NameBlock, "CHARACTERS") == 0)
@@ -668,6 +687,17 @@ void AccountManager :: LoadSectionGeneral(FileReader &fr, AccountData &ad, const
 		slot.bindStatus = fr.BlockToIntC(5);
 		if(slot.VerifyItemExist() == true)
 			ad.vaultInventory.push_back(slot);
+	}
+	else if(strcmp(NameBlock, "DELIVERY") == 0)
+	{
+		InventorySlot slot;
+		slot.CCSID = fr.BlockToIntC(1);
+		slot.IID = fr.BlockToIntC(2);
+		slot.count = fr.BlockToIntC(3);
+		slot.customLook = fr.BlockToIntC(4);
+		slot.bindStatus = fr.BlockToIntC(5);
+		if(slot.VerifyItemExist() == true)
+			ad.deliveryInventory.push_back(slot);
 	}
 	else
 		g_Log.AddMessageFormat("Unknown identifier [%s] in file [%s]", NameBlock, debugFilename);

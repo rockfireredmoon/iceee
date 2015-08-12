@@ -11,7 +11,6 @@ function CLDebug( string )
 
 function GetFullPath( name )
 {
-	print("ICE! GetFullPath " + name);
 	if (this.Util.isDevMode())
 	{
 		local pos = name.find("-");

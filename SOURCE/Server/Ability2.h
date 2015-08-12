@@ -627,6 +627,7 @@ public:
 	int Status(ARGUMENT_LIST args);
 	int Amp(ARGUMENT_LIST args);
 	int Add(ARGUMENT_LIST args);
+	int AddDeliveryBox(ARGUMENT_LIST args);
 	int AddSlot(ARGUMENT_LIST args);
 	int AmpCore(ARGUMENT_LIST args);
 	int Nullify(ARGUMENT_LIST args);
