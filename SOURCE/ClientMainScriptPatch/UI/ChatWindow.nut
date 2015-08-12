@@ -963,10 +963,16 @@ class this.Screens.ChatWindow extends this.GUI.Component
 				
 				// Reconstruct the message
 				if(sidx > 0) {
-					message = message.slice(0, sidx) + newlink + message.slice(eidx + 1);
+					if(eidx == message.len())
+						message = message.slice(0, sidx) + newlink;
+					else
+						message = message.slice(0, sidx) + newlink + message.slice(eidx + 1);
 				}
 				else {
-					message = newlink + message.slice(eidx + 1);
+					if(eidx == message.len())
+						message = newlink;
+					else 
+						message = newlink + message.slice(eidx + 1);
 				}
 					
 				// Next link
