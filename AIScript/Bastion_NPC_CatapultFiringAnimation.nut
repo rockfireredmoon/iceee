@@ -8,10 +8,12 @@
  * a single ability targetted at found creatures and it's own timers
  */
  
-const AB_CATAPULT = 5421;
+const DEFAULT_ABILITY = 5421;
 
-/* This script takes a single argument, the CreatureDefID of the target
+/* This script takes a single argument, the CreatureDefID of the target */
+
 target_cdefid <- __argc > 0 ? __argv[0].tointeger() : 0;
+ability <- __argc > 1 ? __argv[1].tointeger() : DEFAULT_ABILITY;
 
 info <- {
 	enabled = true,
@@ -24,15 +26,16 @@ function attack_target() {
 	local target_cids = ai.cids(target_cdefid);
 	local cid = target_cids.len() == 0 ? 0 : target_cids[randmod(target_cids.len())];
 	if(cid > 0) {
+		//ai.info(ai.get_self() + " targeting and attacking " + cid + " using ability " + ability);
 		ai.set_other_target(ai.get_self(), cid);
-		ai.use(AB_CATAPULT);
+		ai.use(ability);
 	}
 	ai.queue(attack_target, 7500 + randmod(5000));
 }
 
 
 
-if(target_propid == 0)  
+if(target_cdefid == 0)  
 	ai.error("Error! AI script Bastion_NPC_CatapultFiringAnimation script called without any parameter. Requires propID of the target's spawner");
 else  
 	ai.queue(attack_target, randmod(5000));
