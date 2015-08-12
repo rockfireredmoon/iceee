@@ -33,6 +33,7 @@ Pos=16488.2,1344.65,19650.5
 Orient=0,-0.548024,0,0.836463
 Scale=1,1,1
 spawnPackage=#E3396
+aiModule=Bastion_NPC_CatapultFiringAnimation(3397)
 
 [ENTRY]
 ID=1129720
@@ -42,15 +43,17 @@ Pos=16367.6,1344.44,19629.8
 Orient=0,-0.632673,0,0.774419
 Scale=1,1,1
 spawnPackage=#E3396
+aiModule=Bastion_NPC_CatapultFiringAnimation(3397)
 
 [ENTRY]
 ID=1129721
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=Untitled
-Pos=16604.1,1336.63,19656.9
+Pos=16646.9,1348.21,19667.8
 Orient=0,-0.666869,0,0.745175
 Scale=1,1,1
 spawnPackage=#E3396
+aiModule=Bastion_NPC_CatapultFiringAnimation(3397)
 
 [ENTRY]
 ID=1129723
@@ -77,6 +80,7 @@ Name=Untitled
 Pos=15651.6,1051.75,19863
 Orient=0,0,0,1
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1129726
@@ -85,6 +89,7 @@ Name=Untitled
 Pos=15592.5,1050.4,19862.4
 Orient=0,0,0,1
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1129727
@@ -290,6 +295,7 @@ Name=Untitled
 Pos=16487.1,1262.4,20768.9
 Orient=0,-0.731146,0,0.682221
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1130067
@@ -397,6 +403,7 @@ Name=Untitled
 Pos=16495.9,1160.89,19880
 Orient=0,0,0,1
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1130079
@@ -405,6 +412,7 @@ Name=Untitled
 Pos=16542.4,1157.62,19894.3
 Orient=0,0.9871,0,0.160104
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1130080
@@ -598,6 +606,7 @@ Name=Untitled
 Pos=16522.4,1163.64,19834
 Orient=0,0,0,1
 Scale=1,1,1
+Flags=1
 
 [ENTRY]
 ID=1130107
@@ -872,7 +881,7 @@ Scale=1,1,1
 ID=1130140
 Asset=Effects#Par-Flame-Emitter
 Name=Untitled
-Pos=16538.8,1163.92,20114.4
+Pos=16544.3,1164.04,20116.1
 Orient=0,0,0,1
 Scale=5,5,5
 
@@ -1084,7 +1093,7 @@ Pos=17055.5,1440.2,20308.4
 Orient=0,0.939099,0,0.343646
 Scale=1,1,1
 spawnPackage=#F3183
-aiModule=Earthrise_flavor_catapultfiring1
+aiModule=Bastion_NPC_CatapultFiringAnimation(3396,5429)
 
 [ENTRY]
 ID=1130167
@@ -1094,7 +1103,7 @@ Pos=16965.2,1440.05,20356.3
 Orient=0,0.944148,0,0.329521
 Scale=1,1,1
 spawnPackage=#F3183
-aiModule=Earthrise_flavor_catapultfiring1
+aiModule=Bastion_NPC_CatapultFiringAnimation(3396,5429)
 
 [ENTRY]
 ID=1130169
@@ -1163,6 +1172,7 @@ Name=Untitled
 Pos=16753,1615.41,20968
 Orient=0,-0.223106,0,0.974794
 Scale=1.5,1.5,1.5
+Flags=1
 
 [ENTRY]
 ID=1130517
@@ -1995,4 +2005,13 @@ Orient=0,0,0,1
 Scale=1,1,1
 links_count=1
 link=1130832,1
+
+[ENTRY]
+ID=1131663
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=17102.4,1447.21,20374
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#E3397
 
