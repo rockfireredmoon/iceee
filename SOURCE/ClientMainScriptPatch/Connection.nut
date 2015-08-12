@@ -1877,11 +1877,13 @@ class this.Connection extends this.MessageBroadcaster
 
 		case 25:
 			local newSize = data.getInteger();
+			// TODO - Added for ICEE need a way to differentiate between a base protocol 33 and ICE one. need a 'modversion' 
+			local newSlots = data.getInteger();
 			local vault = this.Screens.get("Vault", false);
-
 			if (vault)
 			{
 				vault.setVaultSize(newSize);
+				vault.setDeliveryBoxSlots(newSlots);
 			}
 
 			break;

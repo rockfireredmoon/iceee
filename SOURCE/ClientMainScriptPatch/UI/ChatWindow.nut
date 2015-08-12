@@ -370,7 +370,10 @@ class this.Screens.ChatWindow extends this.GUI.Component
 
 	function onLinkClicked( message, data )
 	{
-		if ("info" in data)
+		if("clickedOnText" in data && this.Util.startsWith(data.clickedOnText, "http://") || this.Util.startsWith(data.clickedOnText, "https://")) {
+			this.System.openURL(data.clickedOnText);
+		} 
+		else if ("info" in data)
 		{
 			switch(data.info)
 			{
@@ -393,20 +396,16 @@ class this.Screens.ChatWindow extends this.GUI.Component
 					{
 					case "Region":
 						this.startChatInputOnChannel("rc/" + ::_Connection.getCurrentRegionChannel());
-						  // [055]  OP_JMP            0     26    0    0
-
+						break;
 					case "Trade":
 						this.startChatInputOnChannel("tc/" + ::_Connection.getCurrentRegionChannel());
-						  // [067]  OP_JMP            0     14    0    0
-
+						break;
 					case "Earthsage":
 						this.startChatInputOnChannel("gm/earthsages");
-						  // [074]  OP_JMP            0      7    0    0
-
+						break;
 					case "Party":
 						this.startChatInputOnChannel("party");
-						  // [081]  OP_JMP            0      0    0    0
-
+						break;
 					default:
 						break;
 					}
@@ -945,6 +944,37 @@ class this.Screens.ChatWindow extends this.GUI.Component
 
 		return parseStr;
 	}
+	
+	function _searchAndReplace(message, searchString, endString, callbackFunction) {
+		local sidx = 0;
+		while(sidx < message.len()) {
+			local fidx = message.find(searchString, sidx);
+			if(fidx == null)
+				break;
+			else {
+				sidx = fidx;
+				local eidx = message.find(endString, sidx + 1);
+				if(eidx == null)
+					eidx = message.len();
+					
+				// Have link start and end position now so extract it and create link HTML
+				local link = message.slice(sidx, eidx);
+				local newlink = callbackFunction(link);
+				
+				// Reconstruct the message
+				if(sidx > 0) {
+					message = message.slice(0, sidx) + newlink + message.slice(eidx + 1);
+				}
+				else {
+					message = newlink + message.slice(eidx + 1);
+				}
+					
+				// Next link
+				sidx = sidx + newlink.len() + 1;
+			}
+		}
+		return message;
+	}
 
 	function _updateDisplayedMessages( tab )
 	{
@@ -960,6 +990,44 @@ class this.Screens.ChatWindow extends this.GUI.Component
 			local channel = this.mTabContents[tab].getLog()[index].channel;
 			local color = this._ChatManager.getColor(channel);
 			local wrapSize = this.getSize().width - 50;
+			
+			// Search for hyperlinks in the text and turn them into clickable links
+			
+			local linkReplace = function(link) {
+				return "<a href=\"" + link + "\"><font color=\"7777ff\">" + link + "</font></a> ";
+			}
+			message = _searchAndReplace(message, "http://", " ", linkReplace);
+			message = _searchAndReplace(message, "https://", " ", linkReplace);
+			local colorReplace = function(color) {
+				if(this.Util.startsWith(color, "#0")) 
+					return "<font color=\"ff0000\">" + color.slice(2) + "</font>";
+				else if(this.Util.startsWith(color, "#1")) 
+					return "<font color=\"ff7f00\">" + color.slice(2) + "</font>";
+				else if(this.Util.startsWith(color, "#2")) 
+					return "<font color=\"ffff00\">" + color.slice(2) + "</font>";
+				else if(this.Util.startsWith(color, "#3")) 
+					return "<font color=\"00ff00\">" + color.slice(2) + "</font>";
+				else if(this.Util.startsWith(color, "#4")) 
+					return "<font color=\"0000ff\">" + color.slice(2) + "</font>";
+				else if(this.Util.startsWith(color, "#5")) 
+					return "<font color=\"ff00ff\">" + color.slice(2) + "</font>";
+				else if(this.Util.startsWith(color, "#6")) 
+					return "<font color=\"ff00ff\">" + color.slice(2) + "</font>";
+				else if(this.Util.startsWith(color, "#7")) 
+					return "<font color=\"00ffff\">" + color.slice(2) + "</font>";
+				else if(this.Util.startsWith(color, "#8")) 
+					return "<font color=\"ffffff\">" + color.slice(2) + "</font>";
+				else if(this.Util.startsWith(color, "#9")) 
+					return "<font color=\"8a5d27\">" + color.slice(2) + "</font>";
+				return color;
+			}
+			message = _searchAndReplace(message, "#", "#", colorReplace);
+			message = _searchAndReplace(message, "{", "}", function(text) {
+				return "<i>" + text.slice(1) + "</i>";
+			});
+			message = _searchAndReplace(message, "\\", "\\", function(text) {
+				return "<b>" + text.slice(1) + "</b>";
+			});
 
 			if (activeHTML.len() <= count)
 			{

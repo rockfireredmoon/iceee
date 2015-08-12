@@ -1158,6 +1158,7 @@ void AbilityManager2 :: InitFunctionTables(void)
 	InsertFunction("Amp", &AbilityCalculator::Amp);
 	InsertFunction("Add", &AbilityCalculator::Add);
 	InsertFunction("AddSlot", &AbilityCalculator::AddSlot);
+	InsertFunction("AddDeliveryBox", &AbilityCalculator::AddDeliveryBox);
 	InsertFunction("AmpCore", &AbilityCalculator::AmpCore);
 	InsertFunction("Nullify", &AbilityCalculator::Nullify);
 	InsertFunction("CheckBuffLimits", &AbilityCalculator::CheckBuffLimits);
@@ -2544,6 +2545,18 @@ int AbilityCalculator :: AddSlot(ARGUMENT_LIST args)
 		ciTarget->simulatorPtr->SendInfoMessage("You have a new character slot!", INFOMSG_INFO);
 	else
 		ciTarget->simulatorPtr->SendInfoMessage("You have the maximum allowed characters!", INFOMSG_ERROR);
+	return NO_RETURN_VALUE;
+}
+
+int AbilityCalculator :: AddDeliveryBox(ARGUMENT_LIST args)
+{
+	if(ciTarget->simulatorPtr->pld.accPtr->ExpandDeliveryBoxes()) {
+		int wpos= PrepExt_CreatureEventVaultSize(GSendBuf, ciTarget->simulatorPtr->pld.CreatureID, ciTarget->simulatorPtr->pld.charPtr->VaultGetTotalCapacity(), ciTarget->simulatorPtr->pld.accPtr->DeliveryBoxSlots);
+		ciTarget->actInst->LSendToLocalSimulator(GSendBuf, wpos, ciTarget->CurrentX, ciTarget->CurrentZ);
+		ciTarget->simulatorPtr->SendInfoMessage("You have a new delivery box slot! You can use this at a vault to transfer items to your other characters", INFOMSG_INFO);
+	}
+	else
+		ciTarget->simulatorPtr->SendInfoMessage("You have the maximum allowed delivery boxes!", INFOMSG_ERROR);
 	return NO_RETURN_VALUE;
 }
 

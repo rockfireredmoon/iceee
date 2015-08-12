@@ -753,7 +753,6 @@ class States.CharacterSelectionState extends State
 		local createCharacterButton = mStartCreation = GUI.NarrowButton("Create Character");
 		createCharacterButton.setFixedSize(174, 32);
 
-		print("ICE: " + results.len() + " characters for a max of " + mMaxCharacters); 
 		if (results.len() == mMaxCharacters)
 			createCharacterButton.setEnabled(false);
 		else

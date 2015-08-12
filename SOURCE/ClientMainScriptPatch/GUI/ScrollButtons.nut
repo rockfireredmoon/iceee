@@ -207,7 +207,6 @@ class GUI.ScrollButtons extends GUI.Component
 			local container = mAttachParent.mParentComponent;
 			local sz = mAttachParent.getSize();
 			local pt = mAttachParent.getPosition();
-			print("ICE! _recalc " + sz.width +  "x" + sz.height +" indent = " + mIndent + " pt: " + pt.x + "," + pt.y + " mgap:" + mGap + "\n");
 			setSize(mWidth, sz.height - mIndent * 2);
 			setPosition(pt.x + sz.width + mGap, pt.y + mIndent);
 		}
@@ -268,7 +267,6 @@ class GUI.ScrollButtons extends GUI.Component
 	function setIndent( pIndent )
 	{
 		mIndent = pIndent;
-		print("ICE! Indent now "+ pIndent + "\n");
 		invalidate();
 	}
 
