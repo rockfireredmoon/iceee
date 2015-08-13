@@ -1453,3 +1453,148 @@ void SceneryManager::EnumPropsInRange(int zoneID, int posX, int posZ, int radius
 	}
 }
 
+
+int PrepExt_UpdateScenery(char *buffer, SceneryObject *so)
+{
+	unsigned char mask = SCENERY_UPDATE_ASSET | SCENERY_UPDATE_POSITION | \
+		SCENERY_UPDATE_ORIENTATION | SCENERY_UPDATE_SCALE | SCENERY_UPDATE_FLAGS;
+
+	/*
+
+	unsigned char mask = SCENERY_UPDATE_ASSET | SCENERY_UPDATE_POSITION | \
+		SCENERY_UPDATE_ORIENTATION | SCENERY_UPDATE_SCALE | SCENERY_UPDATE_FLAGS | \
+		SCENERY_UPDATE_LINKS | SCENERY_UPDATE_PROPERTIES;
+	*/
+
+	if(so->extraData != NULL)
+	{
+		if(so->extraData->linkCount > 0)
+			mask |= SCENERY_UPDATE_LINKS;
+		if(so->extraData->spawnPackage[0] != 0)
+			mask |= SCENERY_UPDATE_PROPERTIES;
+	}
+
+	/*	SCENERY_UPDATE_PROPERTIES; */
+
+	//unsigned char mask = SCENERY_UPDATE_ASSET | SCENERY_UPDATE_POSITION;
+
+	int wpos = 0;
+	wpos += PutByte(&buffer[wpos], 41);  //_handleSceneryUpdateMsg
+	wpos += PutShort(&buffer[wpos], 0);
+
+	wpos += PutInteger(&buffer[wpos], so->ID);  //ID
+	wpos += PutByte(&buffer[wpos], mask);  //Mask
+
+	if(mask & SCENERY_UPDATE_ASSET)
+	{
+		wpos += PutStringUTF(&buffer[wpos], so->Asset);
+		if(g_ProtocolVersion >= 23)
+		{
+			//Layer
+			wpos += PutStringUTF(&buffer[wpos], "");
+		}
+	}
+	if(mask & SCENERY_UPDATE_POSITION)
+	{
+		wpos += PutFloat(&buffer[wpos], so->LocationX);
+		wpos += PutFloat(&buffer[wpos], so->LocationY);
+		wpos += PutFloat(&buffer[wpos], so->LocationZ);
+	}
+
+	if(mask & SCENERY_UPDATE_ORIENTATION)
+	{
+		wpos += PutFloat(&buffer[wpos], so->QuatX);
+		wpos += PutFloat(&buffer[wpos], so->QuatY);
+		wpos += PutFloat(&buffer[wpos], so->QuatZ);
+		wpos += PutFloat(&buffer[wpos], so->QuatW);
+	}
+
+	if(mask & SCENERY_UPDATE_SCALE)
+	{
+		wpos += PutFloat(&buffer[wpos], so->ScaleX);
+		wpos += PutFloat(&buffer[wpos], so->ScaleY);
+		wpos += PutFloat(&buffer[wpos], so->ScaleZ);
+	}
+
+	if(mask & SCENERY_UPDATE_FLAGS)
+	{
+		wpos += PutInteger(&buffer[wpos], so->Flags);
+	}
+
+
+	if(mask & SCENERY_UPDATE_LINKS)
+	{
+		wpos += PutShort(&buffer[wpos], so->extraData->linkCount);  //count
+		for(int a = 0; a < so->extraData->linkCount; a++)
+		{
+			wpos += PutInteger(&buffer[wpos], so->extraData->link[a].propID);
+			wpos += PutByte(&buffer[wpos], so->extraData->link[a].type);
+		}
+	}
+
+	if(mask & SCENERY_UPDATE_PROPERTIES)
+	{
+		//Format:
+		//scenery name [string]
+		//number of properties [int]
+		//[for each property]
+		//  property name [string]
+		//  property type [byte] (PROPERTY_INTEGER, FLOAT, STRING, SCENERY, NULL)
+		//  property data [varies]
+		//    - PROPERTY_INTEGER [int]
+		//    - PROPERTY_FLOAT [float]
+		//    - PROPERTY_STRING [string]
+		//    - PROPERTY_SCENERY [int]
+		//    - PROPERTY_NULL [unknown, unused?)
+
+		//Spawn points always seem to have 3 property listings.
+		//The names and order follow this format, but sometimes
+		//the logged values sometimes use FLOAT instead of INTEGER
+		//property types, although it seems like values can be
+		//expressed with integers without any conflicts.
+		wpos += PutStringUTF(&buffer[wpos], so->extraData->sceneryName);
+		wpos += PutInteger(&buffer[wpos], 3);  //property count
+
+		wpos += PutStringUTF(&buffer[wpos], "innerRadius");
+		wpos += PutByte(&buffer[wpos], PROPERTY_INTEGER);
+		wpos += PutInteger(&buffer[wpos], so->extraData->innerRadius);
+
+		wpos += PutStringUTF(&buffer[wpos], "package");
+		wpos += PutByte(&buffer[wpos], PROPERTY_STRING);
+		wpos += PutStringUTF(&buffer[wpos], so->extraData->spawnPackage);
+
+		wpos += PutStringUTF(&buffer[wpos], "outerRadius");
+		wpos += PutByte(&buffer[wpos], PROPERTY_INTEGER);
+		wpos += PutInteger(&buffer[wpos], so->extraData->outerRadius);
+
+		/*
+		wpos += PutStringUTF(&buffer[wpos], so->extraData->sceneryName);
+		wpos += PutInteger(&buffer[wpos], so->extraData->propCount);
+		for(int a = 0; a < so->extraData->propCount; a++)
+		{
+			wpos += PutStringUTF(&buffer[wpos], so->extraData->prop[a].name);
+			wpos += PutByte(&buffer[wpos], so->extraData->prop[a].type);
+			switch(so->extraData->prop[a].type)
+			{
+			case PROPERTY_INTEGER:
+			case PROPERTY_SCENERY:
+				int iconv;
+				iconv = atoi(so->extraData->prop[a].value);
+				wpos += PutInteger(&buffer[wpos], iconv);
+				break;
+			case PROPERTY_FLOAT:
+				float fconv;
+				fconv = (float)atof(so->extraData->prop[a].value);
+				wpos += PutFloat(&buffer[wpos], fconv);
+				break;
+			case PROPERTY_STRING:
+				wpos += PutStringUTF(&buffer[wpos], so->extraData->prop[a].value);
+				break;
+			}
+		}
+		*/
+	}
+
+	PutShort(&buffer[1], wpos - 3);       //Set message size
+	return wpos;
+}

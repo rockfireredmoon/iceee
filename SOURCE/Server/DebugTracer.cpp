@@ -8,7 +8,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdarg.h>
-#pragma warning(disable: 4996)
+//#pragma warning(disable: 4996)
 
 SimpleTracerCore g_Tracer;
 
@@ -108,7 +108,7 @@ char LogFileName[] = "ServerLog.txt";
 FILE *LogHandle = NULL;
 void Log_Open(void);
 void Log_Close(void);
-void Log_Write(char *text);
+//void Log_Write(char *text);
 void Log_WriteFormat(char *format, ...);
 void Log_Flush(void);
 

@@ -2,10 +2,12 @@
 #include "DropTable.h"
 #include "FileReader.h"
 #include "StringList.h"
+#include "DirectoryAccess.h"
 #include "ByteBuffer.h"
 #include "Util.h" //For randint()
 #include "Item.h"
 #include <algorithm>
+#include <string.h>
 
 
 DropTableManager g_DropTableManager;

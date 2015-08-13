@@ -14,6 +14,7 @@
 #include "ZoneDef.h"
 #include "Util.h"
 #include "ConfigString.h"
+#include "Inventory.h"
 
 #include "md5.hh"
 
@@ -92,7 +93,8 @@ void AccountData :: ClearAll(void)
 
 	Credits = 0;
 	DeliveryBoxSlots = 0;
-	deliveryInventory.clear();
+	inventory.ClearAll();
+//	deliveryInventory.clear();
 
 	memset(&LastLogOn, 0, sizeof(LastLogOn));
 
@@ -379,11 +381,34 @@ void AccountData :: SaveToStream(FILE *output)
 		fprintf(output, "Pref=%s,%s\r\n", preferenceList.PrefList[i].name.c_str(), preferenceList.PrefList[i].value.c_str());
 	fprintf(output, "\r\n");
 
+	int a, b;
+	for(a = 0; a < MAXCONTAINER; a++)
+		{
+			for(b = 0; b < (int)inventory.containerList[a].size(); b++)
+			{
+				InventorySlot *slot = &inventory.containerList[a][b];
+				fprintf(output, "%s=%lu,%d",
+					GetContainerNameFromID((slot->CCSID & CONTAINER_ID) >> 16),
+					slot->CCSID & CONTAINER_SLOT,
+					slot->IID );
+
+				bool extend = false;
+				if(slot->count > 0 || slot->customLook != 0 || slot->bindStatus != 0)
+					extend = true;
+
+				if(extend == true)
+					fprintf(output, ",%d,%d,%d", slot->count, slot->customLook, slot->bindStatus);
+
+				fprintf(output, "\r\n");
+			}
+		}
+
+
 	//TODO:VAULT fprintf(output, "CurrentVaultSize=%d\r\n", CurrentVaultSize);
-	for(size_t i = 0; i < vaultInventory.size(); i++)
-		vaultInventory[i].SaveToAccountStream("bank", output);
-	for(size_t i = 0; i < deliveryInventory.size(); i++)
-		deliveryInventory[i].SaveToAccountStream("delivery", output);
+//	for(size_t i = 0; i < vaultInventory.size(); i++)
+//		vaultInventory[i].SaveToAccountStream("bank", output);
+//	for(size_t i = 0; i < deliveryInventory.size(); i++)
+//		deliveryInventory[i].SaveToAccountStream("delivery", output);
 
 	characterCache.SaveToStream(output);
 
@@ -677,30 +702,33 @@ void AccountManager :: LoadSectionGeneral(FileReader &fr, AccountData &ad, const
 		ad.CurrentVaultSize = fr.BlockToIntC(1);
 	}
 	*/
-	else if(strcmp(NameBlock, "BANK") == 0)
-	{
-		InventorySlot slot;
-		slot.CCSID = fr.BlockToIntC(1);
-		slot.IID = fr.BlockToIntC(2);
-		slot.count = fr.BlockToIntC(3);
-		slot.customLook = fr.BlockToIntC(4);
-		slot.bindStatus = fr.BlockToIntC(5);
-		if(slot.VerifyItemExist() == true)
-			ad.vaultInventory.push_back(slot);
+//	else if(strcmp(NameBlock, "BANK") == 0)
+//	{
+//		InventorySlot slot;
+//		slot.CCSID = fr.BlockToIntC(1);
+//		slot.IID = fr.BlockToIntC(2);
+//		slot.count = fr.BlockToIntC(3);
+//		slot.customLook = fr.BlockToIntC(4);
+//		slot.bindStatus = fr.BlockToIntC(5);
+//		if(slot.VerifyItemExist() == true)
+//			ad.vaultInventory.push_back(slot);
+//	}
+//	else if(strcmp(NameBlock, "DELIVERY") == 0)
+//	{
+//		InventorySlot slot;
+//		slot.CCSID = fr.BlockToIntC(1);
+//		slot.IID = fr.BlockToIntC(2);
+//		slot.count = fr.BlockToIntC(3);
+//		slot.customLook = fr.BlockToIntC(4);
+//		slot.bindStatus = fr.BlockToIntC(5);
+//		if(slot.VerifyItemExist() == true)
+//			ad.deliveryInventory.push_back(slot);
+//	}
+	else {
+		if(CheckSection_Inventory(fr, ad.inventory, debugFilename,  ad.Name, "Account") == -2) {
+			g_Log.AddMessageFormat("Unknown identifier [%s] in file [%s]", NameBlock, debugFilename);
+		}
 	}
-	else if(strcmp(NameBlock, "DELIVERY") == 0)
-	{
-		InventorySlot slot;
-		slot.CCSID = fr.BlockToIntC(1);
-		slot.IID = fr.BlockToIntC(2);
-		slot.count = fr.BlockToIntC(3);
-		slot.customLook = fr.BlockToIntC(4);
-		slot.bindStatus = fr.BlockToIntC(5);
-		if(slot.VerifyItemExist() == true)
-			ad.deliveryInventory.push_back(slot);
-	}
-	else
-		g_Log.AddMessageFormat("Unknown identifier [%s] in file [%s]", NameBlock, debugFilename);
 }
 
 void AccountManager :: LoadSectionCharacterCache(FileReader &fr, AccountData &ad, const char *debugFilename)

@@ -5,6 +5,7 @@
 #include "Item.h"
 #include "FileReader.h"
 #include "StringList.h"
+#include <string.h>
 
 EssenceShopItem :: EssenceShopItem()
 {

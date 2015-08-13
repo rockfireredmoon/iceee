@@ -2,9 +2,10 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include "Util.h"
 
-extern bool g_GlobalLogging;
+//extern bool g_GlobalLogging;
 
 StringList g_Log(100);
 

@@ -2,6 +2,7 @@
 #include "FileReader.h"
 #include "Util.h"
 #include "StringList.h"
+#include <string.h>
 
 GambleManager g_GambleManager;
 

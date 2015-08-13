@@ -281,6 +281,9 @@ int PartyManager :: GetNextPartyID(void)
 }
 
 ActiveParty :: ActiveParty() {
+	mPVPDeaths = 0;
+	mPVPKills = 0;
+	mPVPGoals = 0;
 	mLeaderDefID = 0;
 	mLeaderID = 0;
 	mLeaderName = "";

@@ -22,9 +22,8 @@ struct EquipTemplate;
 struct NameModEntry;
 struct VirtualItemSpawnParams;
 
-class ItemDef
+struct ItemDef
 {
-public:
 	ItemDef();
 	~ItemDef();
 
@@ -523,5 +522,7 @@ private:
 };
 
 extern ItemManager g_ItemManager;
+
+int PrepExt_ItemDef(char *SendBuf, ItemDef *item, int ProtocolState);
 
 #endif //ITEM_H

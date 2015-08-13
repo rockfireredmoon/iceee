@@ -2,6 +2,7 @@
 #include "FileReader.h"
 #include "StringList.h"
 #include "Util.h"
+#include "DirectoryAccess.h"
 
 FriendListManager g_FriendListManager;
 

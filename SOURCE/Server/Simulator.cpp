@@ -65,7 +65,6 @@ void FormatStat(int statID, const char *valueStr, std::string &output)
 	}
 
 	float fvalue = 0.0F;
-	const char *formatStr = NULL;
 
 	static const StatFormat formatArray[] = {
 		{ STAT::MOD_MELEE_TO_CRIT, "+%g%% Physical Critical Chance", StatFormat::TYPE_PINT },
@@ -464,7 +463,7 @@ void SimulatorQuery :: Clear(void)
 	argCount = 0;
 };
 
-bool SimulatorQuery :: ValidArgIndex(int argIndex)
+bool SimulatorQuery :: ValidArgIndex(uint argIndex)
 {
 	if(argIndex < 0 || argIndex >= argCount)
 	{
@@ -474,22 +473,22 @@ bool SimulatorQuery :: ValidArgIndex(int argIndex)
 	return true;
 }
 
-const char* SimulatorQuery :: GetString(int argIndex)
+const char* SimulatorQuery :: GetString(uint argIndex)
 {
 	return ValidArgIndex(argIndex) ? args[argIndex].c_str() : NULL;
 }
 
-int SimulatorQuery :: GetInteger(int argIndex)
+int SimulatorQuery :: GetInteger(uint argIndex)
 {
 	return ValidArgIndex(argIndex) ? atoi(args[argIndex].c_str()) : 0;
 }
 
-float SimulatorQuery :: GetFloat(int argIndex)
+float SimulatorQuery :: GetFloat(uint argIndex)
 {
 	return ValidArgIndex(argIndex) ? static_cast<float>(atof(args[argIndex].c_str())) : 0.0F;
 }
 
-bool SimulatorQuery :: GetBool(int argIndex)
+bool SimulatorQuery :: GetBool(uint argIndex)
 {
 	return ValidArgIndex(argIndex) ? (atoi(args[argIndex].c_str()) != 0) : false;
 }
@@ -906,7 +905,7 @@ void SimulatorThread :: ForceErrorMessage(const char *message, int msgtype)
 	g_PacketManager.ReleaseThread();
 }
 
-int SimulatorThread :: AttemptSend(const char *buffer, int buflen)
+int SimulatorThread :: AttemptSend(const char *buffer, uint buflen)
 {
 #ifdef DEBUG_TIME
 	Debug::TimeTrack("SimulatorThread::AttemptSend");
@@ -943,7 +942,7 @@ void SimulatorThread :: OnConnect(void)
 	);
 	int dpos = 0;
 	int cpos = 0;
-	for(int i = 0; i < sizeof(remotename.sa_data); i++)
+	for(uint i = 0; i < sizeof(remotename.sa_data); i++)
 	{
 		dpos += sprintf(&SendBuf[dpos], "%d.", (unsigned char)remotename.sa_data[i]);
 		int c = remotename.sa_data[i];
@@ -1348,7 +1347,7 @@ void SimulatorThread :: ReadQueryFromMessage(void)
 	//LogMessageL(MSG_DIAGV, "Query [%d]=[%s]", query.ID, Aux1);
 
 	query.argCount = GetByte(&readPtr[ReadPos], ReadPos);
-	for(int i = 0; i < query.argCount; i++)
+	for(uint i = 0; i < query.argCount; i++)
 	{
 		GetStringUTF(&readPtr[ReadPos], Aux1, sizeof(Aux1), ReadPos);
 		query.args.push_back(Aux1);
@@ -1445,7 +1444,7 @@ void SimulatorThread :: handle_query_persona_list(void)
 
 				sprintf(Aux3, "%d", cce->profession);
 				WritePos += PutStringUTF(&SendBuf[WritePos], Aux3);
-				if(WritePos >= sizeof(SendBuf))
+				if(WritePos >= (int)sizeof(SendBuf))
 					g_Log.AddMessageFormatW(MSG_CRIT, "[CRITICAL] Buffer overflow in persona.list");
 			}
 			else
@@ -1462,7 +1461,7 @@ void SimulatorThread :: handle_query_persona_list(void)
 
 				sprintf(Aux3, "%d", cce->profession);
 				WritePos += PutStringUTF(&SendBuf[WritePos], Aux3);
-				if(WritePos >= sizeof(SendBuf))
+				if(WritePos >= (int)sizeof(SendBuf))
 					g_Log.AddMessageFormatW(MSG_CRIT, "[CRITICAL] Buffer overflow in persona.list");
 			}
 		}
@@ -1538,7 +1537,7 @@ void SimulatorThread :: handle_query_pref_setA(void)
 	   Response: Return standard "OK".
 	*/
 
-	for(int i = 0; i < query.argCount; i += 2)
+	for(uint i = 0; i < query.argCount; i += 2)
 		pld.accPtr->preferenceList.SetPref(query.args[i].c_str(), query.args[i + 1].c_str());
 
 	WritePos = PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
@@ -1559,7 +1558,7 @@ void SimulatorThread :: handle_query_pref_set(void)
 	*/
 
 	//The character system needs extra debug steps.
-	for(int i = 0; i < query.argCount; i += 2)
+	for(uint i = 0; i < query.argCount; i += 2)
 	{
 		const char *name = query.args[i].c_str();
 		const char *value = query.args[i + 1].c_str();
@@ -1606,7 +1605,7 @@ void SimulatorThread :: RespondPrefGet(PreferenceContainer *prefSet)
 	//Each preference request will have a matching response field.
 	WritePos += PutShort(&SendBuf[WritePos], query.argCount);
 
-	for(int i = 0; i < query.argCount; i++)
+	for(uint i = 0; i < query.argCount; i++)
 	{
 		const char * pref = prefSet->GetPrefValue(query.args[i].c_str());
 
@@ -2391,7 +2390,7 @@ void SimulatorThread :: handle_game_query(void)
 			}
 
 			LogMessageL(MSG_WARN, "[WARNING] Unhandled query in game: %s", query.name.c_str());
-			for(int i = 0; i < query.argCount; i++)
+			for(uint i = 0; i < query.argCount; i++)
 				LogMessageL(MSG_WARN, "  [%d]=[%s]", i, query.args[i].c_str());
 
 			WritePos = PrepExt_QueryResponseError(SendBuf, query.ID, "Unknown query.");
@@ -2410,7 +2409,7 @@ void SimulatorThread :: handle_game_query(void)
 	if(passTime > 50)
 	{
 		LogMessageL(MSG_SHOW, "[DEBUG] TIME PASS handle_game_query() %d ms for query:%s (ID:%d)", passTime, query.name.c_str(), query.ID);
-		for(int i = 0; i < query.argCount; i++)
+		for(uint i = 0; i < query.argCount; i++)
 			LogMessageL(MSG_SHOW, "  [%d]=%s", i, query.args[i].c_str());
 	}
 
@@ -2639,10 +2638,6 @@ bool SimulatorThread :: HandleQuery(int &PendingData)
 		PendingData = handle_query_vault_expand();
 	else if(query.name.compare("vault.deliverycontents") == 0)
 		PendingData = handle_query_vault_deliverycontents();
-	else if(query.name.compare("vault.lootdeliveryitem") == 0)
-		PendingData = handle_query_vault_lootdeliveryitem();
-	else if(query.name.compare("vault.removedeliveryitem") == 0)
-		PendingData = handle_query_vault_removedeliveryitem();
 	else if(query.name.compare("quest.share") == 0)
 		PendingData = handle_query_quest_share();
 	else if(query.name.compare("mod.emote") == 0)
@@ -3312,7 +3307,6 @@ int SimulatorThread :: handle_query_item_contents(void)
 		LogMessageL(MSG_WARN, "WARNING: invalid [item.contents] container: [%s]", contName);
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Invalid item container.");
 	}
-	LogMessageL(MSG_WARN, "[REMOVEME]: Item contents %s / %d", contName, contID);
 
 	SendInventoryData(pld.charPtr->inventory.containerList[contID]);
 
@@ -3477,7 +3471,7 @@ int SimulatorThread :: handle_query_map_marker(void)
 	if(zoneID != pld.CurrentZoneID)
 		return PrepExt_QueryResponseNull(SendBuf, query.ID);
 	MULTISTRING qRes;
-	for(int i = 1; i < query.argCount; i++)
+	for(uint i = 1; i < query.argCount; i++)
 	{
 		if(query.args[i].compare("QuestGiver") == 0)
 		{
@@ -3928,6 +3922,7 @@ int SimulatorThread :: handle_query_item_move(void)
 	*/
 
 	unsigned long CCSID = strtol(query.args[0].c_str(), NULL, 16);
+
 	int origContainer = (CCSID & CONTAINER_ID) >> 16;
 	int origSlot = CCSID & CONTAINER_SLOT;
 
@@ -3980,28 +3975,45 @@ int SimulatorThread :: handle_query_item_move(void)
 	if(((destContainer == BANK_CONTAINER) || (origContainer == BANK_CONTAINER)) && (pld.accPtr->GetSessionLoginCount() > 1))
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "You cannot use vaults while logged into multiple account characters at once.");
 
-	if( (pld.charPtr->inventory.VerifyContainerSlotBoundary(origContainer, origSlot) == false) ||
-		(pld.charPtr->inventory.VerifyContainerSlotBoundary(destContainer, destSlot) == false) )
+	if(((destContainer == DELIVERY_CONTAINER) || (origContainer == DELIVERY_CONTAINER)) && (pld.accPtr->GetSessionLoginCount() > 1))
+			return PrepExt_QueryResponseError(SendBuf, query.ID, "You cannot use delivery boxes while logged into multiple account characters at once.");
+
+	InventoryManager *origInv = &pld.charPtr->inventory;
+	InventoryManager *destInv = &pld.charPtr->inventory;
+
+	if(destContainer == DELIVERY_CONTAINER) {
+		destInv = &pld.accPtr->inventory;
+	}
+	if(origContainer == DELIVERY_CONTAINER) {
+		origInv = &pld.accPtr->inventory;
+	}
+
+	if( (origInv->VerifyContainerSlotBoundary(origContainer, origSlot) == false) ||
+		(destInv->VerifyContainerSlotBoundary(destContainer, destSlot) == false) )
 	{
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Failed to move item.");
 	}
 
 	if(destContainer == EQ_CONTAINER)
 	{
-		int origItemIndex = pld.charPtr->inventory.GetItemBySlot(origContainer, origSlot);
+		int origItemIndex = origInv->GetItemBySlot(origContainer, origSlot);
 		if(origItemIndex < 0)
 			return PrepExt_QueryResponseError(SendBuf, query.ID, "Invalid item.");
 
-		InventorySlot &source = pld.charPtr->inventory.containerList[origContainer][origItemIndex];
+		InventorySlot &source = origInv->containerList[origContainer][origItemIndex];
 		ItemDef *sourceItem = source.ResolveItemPtr();
-		int res = pld.charPtr->inventory.VerifyEquipItem(sourceItem, destSlot, creatureInst->css.level, creatureInst->css.profession);
+		int res = destInv->VerifyEquipItem(sourceItem, destSlot, creatureInst->css.level, creatureInst->css.profession);
 		if(res != InventoryManager::EQ_ERROR_NONE)
 			return PrepExt_QueryResponseError(SendBuf, query.ID, InventoryManager::GetEqErrorString(res));
 	}
 
-	int mpos = pld.charPtr->inventory.ItemMove(Aux1, Aux3, &creatureInst->css, pld.charPtr->localCharacterVault, origContainer, origSlot, destContainer, destSlot);
+	int mpos = origInv->ItemMove(Aux1, Aux3, &creatureInst->css, pld.charPtr->localCharacterVault, origContainer, origSlot, destInv, destContainer, destSlot);
 	if(mpos > 0)
 	{
+		if(destContainer == DELIVERY_CONTAINER || origContainer == DELIVERY_CONTAINER) {
+			pld.accPtr->PendingMinorUpdates++;
+		}
+
 		AttemptSend(Aux1, mpos);
 		//Send the query response after the item updates.
 		int wpos = PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
@@ -4010,7 +4022,10 @@ int SimulatorThread :: handle_query_item_move(void)
 		if(origContainer == EQ_CONTAINER || destContainer == EQ_CONTAINER)
 		{
 			//Just in case a container was equipped or unequipped, update the max inventory slots
-			pld.charPtr->inventory.CountInventorySlots();
+			origInv->CountInventorySlots();
+			if(origInv != destInv) {
+				destInv->CountInventorySlots();
+			}
 
 			//Update the eq_appearance string and broadcast an update to all other players
 			UpdateEqAppearance();
@@ -5896,7 +5911,7 @@ const char * SimulatorThread :: GetErrorString(int error)
 	return "Server error: undefined";
 }
 
-bool SimulatorThread :: HasQueryArgs(int minCount)
+bool SimulatorThread :: HasQueryArgs(uint minCount)
 {
 	if(query.argCount < minCount)
 	{
@@ -6097,7 +6112,7 @@ int SimulatorThread :: protected_helper_query_scenery_edit(void)
 		LogMessageL(MSG_SHOW, "[DEBUG] scenery.edit: (new) %d", prop.ID);
 	}
 
-	for(int i = 1; i < query.argCount; i += 2)
+	for(uint i = 1; i < query.argCount; i += 2)
 	{
 		const char *field = query.args[i].c_str();
 		const char *data = query.args[i + 1].c_str();
@@ -6682,7 +6697,7 @@ int SimulatorThread :: handle_query_creature_def_edit(void)
 		if(CheckPermissionSimple(0, Permission_TweakClient) == true)
 		{
 			const char *appearance = NULL;
-			for(int i = 1 + argOffset; i < query.argCount; i += 2)
+			for(uint i = 1 + argOffset; i < query.argCount; i += 2)
 			{
 				const char *name = query.args[i].c_str();
 				const char *value = query.args[i + 1].c_str();
@@ -6740,7 +6755,7 @@ int SimulatorThread :: handle_query_creature_def_edit(void)
 	//and value.  The key specifies which item to change,
 	//(appearance so far), and the value contains the information
 	//to apply.
-	for(int i = 1 + argOffset; i < query.argCount; i += 2)
+	for(uint i = 1 + argOffset; i < query.argCount; i += 2)
 	{
 		std::string n = query.args[i];
 		std::transform(n.begin(), n.end(), n.begin(), ::tolower);
@@ -8372,7 +8387,7 @@ int SimulatorThread :: handle_query_quest_complete(void)
 		CID = query.GetInteger(1);
 	if(query.argCount > 2)
 	{
-		for(int i = 2; i < query.argCount; i++)
+		for(uint i = 2; i < query.argCount; i++)
 			selectionList.push_back(query.GetInteger(i));
 	}
 
@@ -8700,7 +8715,7 @@ int SimulatorThread :: protected_helper_query_trade_items(void)
 
 	InventorySlot item;
 	pData->itemList.clear();
-	for(int a = 0; a < query.argCount; a++)
+	for(uint a = 0; a < query.argCount; a++)
 	{
 		unsigned long CCSID = strtol(query.args[a].c_str(), NULL, 16);
 		InventorySlot *itemPtr = pld.charPtr->inventory.GetItemPtrByCCSID(CCSID);
@@ -9729,7 +9744,7 @@ int SimulatorThread :: handle_query_clan_list(void)
 		[4] = Arbitrary Rank Title (ex: "Leader", "Officer")
 	*/
 	
-	int a, b;
+//	int a, b;
 //	for(a = 0; a < g_ClanMemberCount; a++)
 //	{
 //		wpos += PutByte(&SendBuf[wpos], 5);   //Five data items per character
@@ -10216,92 +10231,19 @@ int SimulatorThread :: handle_query_vault_expand(void)
 }
 
 
-
-int SimulatorThread :: handle_query_vault_lootdeliveryitem(void)
-{
-	LogMessageL(MSG_WARN, "[REMOVEME] handle_query_vault_lootdeliveryitem / %s / %s", query.GetString(0), query.GetString(1));
-	int slot = query.GetInteger(1);
-
-	// Make sure slot is not already used
-//	for(int i = 0 ; i < AccountData::MAX_DELIVERY_BOX_SLOTS; i++) {
-//		if(pld.accPtr->DeliveryBox[i].characterID != 0 && pld.accPtr->DeliveryBox[i].slot== slot) {
-//			return PrepExt_QueryResponseError(SendBuf, query.ID, "That item is already in your delivery box.");
-//		}
-//	}
-//
-//
-//	for(int i = 0 ; i < AccountData::MAX_DELIVERY_BOX_SLOTS; i++) {
-//		if(pld.accPtr->DeliveryBox[i].characterID == 0) {
-//			// Populate first free slot
-//			pld.accPtr->DeliveryBox[i].characterID = pld.CreatureDefID;
-//			pld.accPtr->DeliveryBox[i].slot = slot;
-//			pld.accPtr->PendingMinorUpdates++;
-//			return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-//		}
-//	}
-	return PrepExt_QueryResponseError(SendBuf, query.ID, "Delivery box is full.");
-}
-
-int SimulatorThread :: handle_query_vault_removedeliveryitem(void)
-{
-//	LogMessageL(MSG_WARN, "[REMOVEME] handle_query_vault_removedeliveryitem / %s / %s", query.GetString(0), query.GetString(1));
-//	int delSlot = query.GetInteger(1);
-//	for(int i = delSlot + 1 ; i < AccountData::MAX_CHARACTER_SLOTS - 1; i ++) {
-//		pld.accPtr->DeliveryBox[i - 1] = pld.accPtr->DeliveryBox[i];
-//	}
-//	pld.accPtr->DeliveryBox[AccountData::MAX_CHARACTER_SLOTS - 1].characterID = 0;
-//	pld.accPtr->DeliveryBox[AccountData::MAX_CHARACTER_SLOTS - 1].slot = 0;
-//	pld.accPtr->PendingMinorUpdates++;
-	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-}
-
 int SimulatorThread :: handle_query_vault_deliverycontents(void)
 {
-	//
-	// TODO need to deal with the case where vault slots are rearranged while delivery box is active
-	//   1. Maybe LOCK the items that are in the box (on the client)
-	//   2. Adjust indexes in item.move
-	//   3. Clear clear delivery box when items are moved
-	//
-	//
-
-	LogMessageL(MSG_WARN, "[REMOVEME] handle_query_vault_deliverycontents / %s", query.GetString(0));
-
 	int wpos = 0;
 	wpos += PutByte(&SendBuf[wpos], 1);          //_handleQueryResultMsg
 	wpos += PutShort(&SendBuf[wpos], 0);         //Placeholder for message size
 	wpos += PutInteger(&SendBuf[wpos], query.ID);  //Query response index
 	std::vector<std::string> l;
-//	for(int i = 0 ; i < AccountData::MAX_DELIVERY_BOX_SLOTS; i++) {
-//		if(pld.accPtr->DeliveryBox[i].characterID != 0) {
-//			g_CharacterManager.GetThread("SimulatorThread::deliveryBoxSet");
-//			int slotNo = pld.accPtr->DeliveryBox[i].slot;
-//			CharacterData *cdata = g_CharacterManager.RequestCharacter(pld.accPtr->DeliveryBox[i].characterID, true);
-//			if(cdata == NULL) {
-//				LogMessageL(MSG_WARN, "Delivery box item for a character (%d) that doesn't exist.", pld.accPtr->DeliveryBox[i].characterID);
-//			}
-//			else {
-//				int bankID = GetContainerIDFromName("bank");
-//				int ccsid = cdata->inventory.GetCCSID(bankID, slotNo);
-//				InventorySlot *slot = cdata->inventory.GetItemPtrByCCSID(ccsid);
-//				if(slot == NULL) {
-//					LogMessageL(MSG_WARN, "Delivery box item for a slot (%d) that doesn't exist for character (%d).", pld.accPtr->DeliveryBox[i].characterID, slotNo);
-//				}
-//				else {
-//					Util::SafeFormat(Aux1, sizeof(Aux1), "item%d:%d:%d:%d", slot->IID, slot->customLook, slot->count, slot->secondsRemaining);
-//
-//					LogMessageL(MSG_WARN, "[REMOVEME] STR: %s", Aux1);
-//
-//					l.push_back(Aux1);
-//				}
-//			}
-//			g_CharacterManager.ReleaseThread();
-//		}
-//	}
-	wpos += PutShort(&SendBuf[wpos], pld.accPtr->deliveryInventory.size());         //Number of rows
-	for(std::vector<InventorySlot>::iterator it = pld.accPtr->deliveryInventory.begin(); it != pld.accPtr->deliveryInventory.end() ; ++it) {
-		wpos += PutByte(&SendBuf[wpos], 1);
+	wpos += PutShort(&SendBuf[wpos], pld.accPtr->inventory.containerList[DELIVERY_CONTAINER].size());         //Number of rows
+	for(std::vector<InventorySlot>::iterator it = pld.accPtr->inventory.containerList[DELIVERY_CONTAINER].begin(); it != pld.accPtr->inventory.containerList[DELIVERY_CONTAINER].end() ; ++it) {
+		wpos += PutByte(&SendBuf[wpos], 2);
 		Util::SafeFormat(Aux1, sizeof(Aux1), "item%d:%d:%d:%d", it->IID, it->customLook, it->count, it->secondsRemaining);
+		wpos += PutStringUTF(&SendBuf[wpos],Aux1);
+		Util::SafeFormat(Aux1, sizeof(Aux1), "%X", it->CCSID);
 		wpos += PutStringUTF(&SendBuf[wpos],Aux1);
 	}
 	PutShort(&SendBuf[1], wpos - 3);               //Set message size
@@ -11104,7 +11046,6 @@ int SimulatorThread :: handle_query_script_op(int op)
 	{
 		// Instance script
 		if(strcmp(parameter, "") == 0) {
-			g_Log.AddMessageFormat("[REMOVEME] default grove");
 			instance = creatureInst->actInst;
 			instanceId = instance->mZone;
 			player = instance->nutScriptPlayer;
@@ -11132,7 +11073,6 @@ int SimulatorThread :: handle_query_script_op(int op)
 			ownPlayer = false;
 		}
 
-		g_Log.AddMessageFormat("[REMOVEME] using zone %d", instanceId);
 		ZoneDefInfo *zoneDef = g_ZoneDefManager.GetPointerByID(instanceId);
 		path = InstanceScript::InstanceNutDef::GetInstanceScriptPath(instanceId, false, zoneDef != NULL && zoneDef->mGrove);
 		break;
@@ -11157,8 +11097,6 @@ int SimulatorThread :: handle_query_script_op(int op)
 	case 2:
 		// AI script
 		if(strcmp(parameter, "") == 0) {
-			g_Log.AddMessageFormat("[REMOVEME] char AI ");
-
 			targetCreature = creatureInst->CurrentTarget.targ;
 			if(targetCreature == NULL)
 				return PrepExt_QueryResponseError(SendBuf, query.ID, "Must select a creature to edit or provide a CDefID.");
@@ -11223,7 +11161,6 @@ int SimulatorThread :: handle_query_script_op(int op)
 			}
 			FileReader lfr;
 			std::vector<std::string> lines;
-			g_Log.AddMessageFormat("[REMOVEME] loading %s", path.c_str());
 			if(Platform::FileExists(path.c_str()))
 			{
 				if(lfr.OpenText(path.c_str()) != Err_OK) {
@@ -11478,7 +11415,7 @@ int SimulatorThread :: handle_query_petition_list(void)
 			else
 			{
 				int c = 0;
-				sprintf(Aux1, "");
+				memset(&Aux1, 0, sizeof(Aux1));
 				for(uint i = 0 ; i < accData->MAX_CHARACTER_SLOTS; i++) {
 					if(accData->CharacterSet[i] != 0 && accData->CharacterSet[i] != petitioner->cdef.CreatureDefID) {
 						CharacterCacheEntry *cce = accData->characterCache.ForceGetCharacter(accData->CharacterSet[i]);
@@ -11790,7 +11727,7 @@ int SimulatorThread :: handle_query_item_market_buy(void)
 			return PrepExt_QueryResponseError(SendBuf, query.ID, "Sold out!");
 		}
 
-		if(( csItem->mPriceCurrency == Currency::COPPER || csItem->mPriceCurrency == Currency::COPPER_CREDITS) && creatureInst->css.copper < csItem->mPriceCopper) {
+		if(( csItem->mPriceCurrency == Currency::COPPER || csItem->mPriceCurrency == Currency::COPPER_CREDITS) && (unsigned long)creatureInst->css.copper < csItem->mPriceCopper) {
 			return PrepExt_QueryResponseError(SendBuf, query.ID, "You do not have enough copper!");
 		}
 
@@ -11798,7 +11735,7 @@ int SimulatorThread :: handle_query_item_market_buy(void)
 			if(g_Config.AccountCredits) {
 				creatureInst->css.credits = pld.accPtr->Credits;
 			}
-			if(creatureInst->css.credits < csItem->mPriceCredits) {
+			if((unsigned long)creatureInst->css.credits < csItem->mPriceCredits) {
 				return PrepExt_QueryResponseError(SendBuf, query.ID, "You do not have enough credits!");
 			}
 		}
@@ -12209,7 +12146,7 @@ int SimulatorThread :: handle_query_guild_leave(void)
 
 bool SimulatorThread :: QuestJoin(int QuestID)
 {
-	if(creatureInst == NULL | creatureInst->charPtr == NULL)
+	if(creatureInst == NULL || creatureInst->charPtr == NULL)
 		return false;
 	QuestDefinition *qdef = QuestDef.GetQuestDefPtrByID(QuestID);
 	if(qdef == NULL)
@@ -12458,7 +12395,7 @@ int SimulatorThread :: handle_query_ps_join(void)
 
 int SimulatorThread :: handle_query_ps_leave(void)
 {
-	for(int i = 0; i < query.argCount; i++)
+	for(uint i = 0; i < query.argCount; i++)
 		LogMessage("%d=%s", i, query.args[i].c_str());
 
 	const char *name = NULL;
@@ -12595,7 +12532,7 @@ int SimulatorThread :: handle_query_mod_setats(void)
 	int failed = 0;
 	int wpos = 0;
 	g_SceneryManager.GetThread("SimulatorThread::handle_query_mod_setats");
-	for(int i = 1; i < query.argCount; i += 2)
+	for(uint i = 1; i < query.argCount; i += 2)
 	{
 		int propID = atoi(query.args[i].c_str());
 		const char *assetStr = query.args[i + 1].c_str();
@@ -12909,7 +12846,7 @@ int SimulatorThread :: handle_query_mod_itempreview(void)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Server error.");
 
 	std::vector<int> eqArray;
-	for(int i = 2; i < query.argCount; i++)
+	for(uint i = 2; i < query.argCount; i++)
 		eqArray.push_back(atoi(query.args[i].c_str()));
 
 	int targetEquipSlot = 0;
@@ -13707,7 +13644,7 @@ int SimulatorThread :: handle_query_mod_craft(void)
 	//Resolve inputs.
 	std::vector<CraftInputSlot> inputs;
 	std::vector<CraftInputSlot> outputs;
-	for(int i = 0; i < query.argCount; i++)
+	for(uint i = 0; i < query.argCount; i++)
 	{
 		unsigned int CCSID = inv.GetCCSIDFromHexID(query.GetString(i));
 		InventorySlot *slot = inv.GetItemPtrByCCSID(CCSID);
@@ -14679,3 +14616,70 @@ void SimulatorThread :: CheckIfLootReadyToDistribute(ActiveLootContainer *loot, 
 }
 
 
+int SendToOneSimulator(char *buffer, int length, SimulatorThread *simPtr)
+{
+	if(simPtr == NULL)
+		return 0;
+	simPtr->AttemptSend(buffer, length);
+	return 1;
+}
+
+
+int SendToAllSimulator(char *buffer, int length, int ignoreIndex)
+{
+	SIMULATOR_IT it;
+	int success = 0;
+
+	for(it = Simulator.begin(); it != Simulator.end(); ++it)
+	{
+		if(it->isConnected == true && it->InternalID != ignoreIndex)
+		{
+			if(it->ProtocolState == 1)
+			{
+				int res = it->AttemptSend(buffer, length);
+				if(res >= 0)
+					success++;
+			}
+		}
+	}
+	return success;
+}
+
+int SendToOneSimulator(char *buffer, int length, int simIndex)
+{
+	SIMULATOR_IT it;
+	int success = 0;
+
+	for(it = Simulator.begin(); it != Simulator.end(); ++it)
+	{
+		if(it->isConnected == true && it->InternalID == simIndex)
+		{
+			if(it->ProtocolState == 1)
+			{
+				int res = it->AttemptSend(buffer, length);
+				if(res >= 0)
+					success++;
+			}
+		}
+	}
+	return success;
+}
+
+int SendToFriendSimulator(char *buffer, int length, int CDefID)
+{
+	SIMULATOR_IT it;
+	int success = 0;
+	for(it = Simulator.begin(); it != Simulator.end(); ++it)
+	{
+		if(it->isConnected == true && it->ProtocolState == 1)
+		{
+			if(it->pld.charPtr->GetFriendIndex(CDefID) >= 0)
+			{
+				int res = it->AttemptSend(buffer, length);
+				if(res >= 0)
+					success++;
+			}
+		}
+	}
+	return success;
+}

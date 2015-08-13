@@ -11,6 +11,8 @@ default static item database.
 #include <algorithm>
 #include "Debug.h"
 #include "Config.h"
+#include "Stats.h"
+#include "DirectoryAccess.h"
 
 const char *FLAVOR_TEXT_HEADER = "</b></i><font size=\"16\"><b>";
 const char *FLAVOR_TEXT_FOOTER = "</b></font>";

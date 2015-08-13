@@ -2653,7 +2653,7 @@ int ActiveInstance :: SidekickUnregister(CreatureInstance* host)
 {
 	//Unregisters a list of sidekicks from the active instance.  Should be called
 	//whenever a player is removed from an instance.
-	int size = 0;
+	uint size = 0;
 	bool bActive = false;
 	list<CreatureInstance>::iterator it;
 	do
@@ -3078,9 +3078,6 @@ void ActiveInstance :: SendLoyaltyAggro(CreatureInstance *instigator, CreatureIn
 	for(it = NPCList.begin(); it != NPCList.end(); ++it)
 	{
 		CreatureInstance *source = &it->second;
-		int xlen = abs(target->CurrentX - source->CurrentX);
-		int ylen = abs(target->CurrentY - source->CurrentY);
-		int zlen = abs(target->CurrentZ - source->CurrentZ);
 		if(source->css.health <= 0)
 			continue;
 		if(source->CurrentTarget.targ != NULL)

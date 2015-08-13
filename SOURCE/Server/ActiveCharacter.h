@@ -99,4 +99,7 @@ struct CharacterServerData
 	QuestJournal* GetQuestJournal(void);
 };
 
+
+int PrepExt_SetMap(char *buffer, CharacterServerData *pldata, int x, int z);
+
 #endif //ACTIVECHARACTER_H

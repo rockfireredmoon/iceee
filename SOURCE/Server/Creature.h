@@ -812,4 +812,22 @@ public:
 
 extern PendingOperation pendingOperations;
 
+int PrepExt_CreatureDef(char *buffer, CreatureDefinition *cdef);
+int PrepExt_SendSpecificStats(char *buffer, CreatureInstance *cInst, vector<short> &statList);
+int PrepExt_SendSpecificStats(char *buffer, CreatureInstance *cInst, const short *statList, int statCount);
+int PrepExt_UpdateMods(char *buffer, CreatureInstance *cInst);
+int PrepExt_UpdateOrbs(char *buffer, CreatureInstance *cInst);
+int PrepExt_UpdateAppearance(char *buffer, CreatureInstance *cInst);
+int PrepExt_CreatureInstance(char *buffer, CreatureInstance *cInst);
+int PrepExt_CreatureFullInstance(char *buffer, CreatureInstance *cInst);
+int PrepExt_CreaturePos(char *buffer, CreatureInstance *cInst);
+int PrepExt_UpdateVelocity(char *buffer, CreatureInstance *cInst);
+int PrepExt_UpdatePosInc(char *buffer, CreatureInstance *cInst);
+int PrepExt_GeneralMoveUpdate(char *buffer, CreatureInstance *cInst);  //General server movement update (combines 3 flags of data)
+int PrepExt_UpdateElevation(char *buffer, CreatureInstance *cInst);
+int PrepExt_UpdateFullPosition(char *buffer, CreatureInstance *cInst);
+int PrepExt_AbilityActivate(char *buffer, CreatureInstance *cInst, ActiveAbilityInfo *ability, int aevent, bool ground = false);
+int PrepExt_AbilityActivateEmpty(char *buffer, CreatureInstance *cInst, ActiveAbilityInfo *ability, int aevent);
+int PrepExt_UpdateEquipStats(char *buffer, CreatureInstance *cInst);
+
 #endif //CREATURE_H

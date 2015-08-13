@@ -120,17 +120,6 @@ class Screens.Vault extends GUI.BigFrame
 			]);
 		}
 	}
-	function shouldActionButtonBeAdded( container, actionbuttonslot, actionbutton, action )
-	{
-		print("ICE! shouldActionButtonBeAdded( " + container + ","  + actionbuttonslot + "," + actionbutton + "," + action );
-		print("ICE! vaultContainer = " + mVaultContainer + " / " +  mDeliveryBoxAC + " ac = " + actionbuttonslot.getActionContainer() + " prev : " + actionbutton.getPreviousActionContainer());
-		//if (container == mVaultContainer && actionbuttonslot.getActionContainer() == mDeliveryBoxAC)
-		//{
-//			print("ICE! not adding because from delivery box, will remove instead");
-			//return false;
-		//}		
-		return true;
-	}
 
 	function onActionButtonAdded( container, actionbuttonslot, actionbutton, action )
 	{
@@ -259,17 +248,13 @@ class Screens.Vault extends GUI.BigFrame
 	{
 		local abSlot = actionButton.getActionButtonSlot();
 		
-		print("ICE! ABslot " + slot);
-
 		if (abSlot)
 		{
 			local actionContainer = abSlot.getActionContainer();
-			print("ICE! Action container " + actionContainer);
 
 			if (actionContainer == mDeliveryBoxAC)
 			{
 				local slotIndex = mDeliveryBoxAC.getIndexOfSlot(abSlot);
-				print("ICE! Slot index  " + slotIndex);
 
 				if (slotIndex != null)
 				{
@@ -283,7 +268,6 @@ class Screens.Vault extends GUI.BigFrame
 			}
 			else if (actionContainer == mVaultContainer)
 			{
-				print("ICE! VAult drop! ");
 				if (Key.isDown(Key.VK_CONTROL))
 				{
 					local inventory = Screens.get("Inventory", true);
@@ -367,7 +351,6 @@ class Screens.Vault extends GUI.BigFrame
 
 	function onItemMovedInContainer( container, slotIndex, oldSlotsButton )
 	{
-		print("ICE! onItemMovedInContainer " + container + " slot " + slotIndex + " os: " + oldSlotsButton);
 		local item = container.getSlotContents(slotIndex);
 		local itemID = item.getActionButton().getAction().mItemId;
 		local queryArgument = [];
@@ -382,12 +365,28 @@ class Screens.Vault extends GUI.BigFrame
 			oldSlotIndex = previousSlotContainer.getIndexOfSlot(oldActionButtonSlot);
 		}
 		
-		if(container == mDeliveryBoxAC) 
+		if (container == mDeliveryBoxAC)
 		{
-			::_Connection.sendQuery("vault.lootdeliveryitem", this, [
-				mCurrentVaultId,
-				oldSlotIndex
-			]);
+			if (item.getSwapped() == true)
+			{
+				item.setSwapped(false);
+			}
+			else
+			{
+				queryArgument.append(itemID);
+				queryArgument.append("delivery");
+				queryArgument.append(slotIndex);
+
+				if (::_Connection.getProtocolVersionId() >= 19)
+				{
+					queryArgument.append(oldSlotContainerName);
+					queryArgument.append(oldSlotIndex);
+				}
+
+				queryArgument.append(::_avatar.getID());
+				queryArgument.append(mCurrentVaultId);
+				_Connection.sendQuery("item.move", this, queryArgument);
+			}
 		}
 
 		if (container == mVaultContainer)
@@ -483,7 +482,6 @@ class Screens.Vault extends GUI.BigFrame
 		case "vault.size":
 			mCurrentVaultSize = rows[0][0].tointeger();
 			mCurrentDeliveryBoxSlots = rows[0][1].tointeger();
-			print("ICE! Delivery rows : " + rows[0][1].tointeger());
 			_buildNewsAndDelivery();
 			_buildVault();
 			refreshVault();
@@ -493,18 +491,18 @@ class Screens.Vault extends GUI.BigFrame
 			setPreferredSize(ndSize.width + vaultSize.width + 8, ndSize.height + 32);
 			mScreenContainer.setSize(ndSize.width + vaultSize.width, ndSize.height);
 			mScreenContainer.setPreferredSize(ndSize.width + vaultSize.width, ndSize.height);
-			::_Connection.sendQuery("vault.deliverycontents", this, [
-				mCurrentVaultId
-			]);
+			
 			GUI.Frame.setVisible(true);
 			break;
 
 		case "vault.deliverycontents":
 		
-			print("ICE! Vault delivery contents " + rows.len());
 			for( local i = 0; i < rows.len(); i++ )
 			{
-				mDeliveryBoxAC.addAction(ItemProtoAction(rows[i][0]), false);
+				local act = ItemProtoAction(rows[i][0]);
+				// TODO only in ICEEE, protocol check needed
+				act.mItemId = rows[i][1];
+				mDeliveryBoxAC.addAction(act, false);
 			}
 			_checkDeliveryBoxes();
 
@@ -513,7 +511,6 @@ class Screens.Vault extends GUI.BigFrame
 		case "vault.lootdeliveryitem":
 			if (rows[0][0] == "OK")
 			{
-				print("ICE! Vault delivery item" + qa.args[1]);
 				local slotIndex = qa.args[1];
 				mDeliveryBoxAC.removeActionInSlot(slotIndex);
 			}
@@ -585,42 +582,34 @@ class Screens.Vault extends GUI.BigFrame
 		}
 	}
 	
-	function onActionButtonLost( source, slot )
-	{
-		print("ICE! onActionButtonLost " + slot);
-		local slotIndex = mDeliveryBoxAC.getIndexOfSlot(slot);
-		if(slotIndex >= 0) {
-			print("ICE! onActionButtonLost IDX " + slotIndex);
-			::_Connection.sendQuery("vault.removedeliveryitem", this, [
-				mCurrentVaultId,
-				slotIndex
-			]);
-		}
-	}	
-
 	function refreshVault()
 	{
 		local vault = ::_ItemDataManager.getContents("bank");
 		local bags = ::_ItemDataManager.getContents("eq");
 		onContainerUpdated("bank", ::_avatar.getID(), vault);
 		onContainerUpdated("eq", ::_avatar.getID(), bags);
+		
+		mDeliveryBoxAC.removeAllActions();
+		::_Connection.sendQuery("vault.deliverycontents", this, [
+			mCurrentVaultId
+		]);
 	}
 
 	function setContainerMoveProperties()
 	{
 		mVaultContainer.addMovingToProperties("inventory", MoveToProperties(MovementTypes.MOVE));
 		mVaultContainer.addMovingToProperties("vault", MoveToProperties(MovementTypes.MOVE));
-		mVaultContainer.addMovingToProperties("deliveryBox", MoveToProperties(MovementTypes.CLONE));
+		mVaultContainer.addMovingToProperties("deliveryBox", MoveToProperties(MovementTypes.MOVE));
 		mVaultContainer.addAcceptingFromProperties("inventory", AcceptFromProperties(this));
 		mVaultContainer.addAcceptingFromProperties("vault", AcceptFromProperties(this));
 		mVaultContainer.addAcceptingFromProperties("deliveryBox", AcceptFromProperties(this));
 		
 		mDeliveryBoxAC.addMovingToProperties("inventory", MoveToProperties(MovementTypes.MOVE));
-		//mDeliveryBoxAC.addMovingToProperties("deliveryBox", MoveToProperties(MovementTypes.MOVE));
-		mDeliveryBoxAC.addMovingToProperties("vault", MoveToProperties(MovementTypes.DESTROY, this));
-		//mDeliveryBoxAC.addAcceptingFromProperties("inventory", AcceptFromProperties(this));
+		mDeliveryBoxAC.addMovingToProperties("deliveryBox", MoveToProperties(MovementTypes.MOVE));
+		mDeliveryBoxAC.addMovingToProperties("vault", MoveToProperties(MovementTypes.MOVE, this));
+		mDeliveryBoxAC.addAcceptingFromProperties("inventory", AcceptFromProperties(this));
 		mDeliveryBoxAC.addAcceptingFromProperties("vault", AcceptFromProperties(this));
-		//mDeliveryBoxAC.addAcceptingFromProperties("deliveryBox", AcceptFromProperties(this));
+		mDeliveryBoxAC.addAcceptingFromProperties("deliveryBox", AcceptFromProperties(this));
 		
 		
 	}
@@ -674,10 +663,6 @@ class Screens.Vault extends GUI.BigFrame
 			else
 			{
 				GUI.Frame.setVisible(true);
-				mDeliveryBoxAC.removeAllActions();
-				::_Connection.sendQuery("vault.deliverycontents", this, [
-					mCurrentVaultId
-				]);
 			}
 
 			if (!mCheckDistanceEvent)
@@ -816,21 +801,17 @@ class Screens.Vault extends GUI.BigFrame
 	}
 	
 	function _checkDeliveryBoxes() {
-		print("ICE! checking delivery boxes from a total of " + mCurrentDeliveryBoxSlots + " boxes in " + MAX_DELIVERY_SLOTS);
 		
 		local pages = mCurrentDeliveryBoxSlots == 0 ? 0 : ( ( mCurrentDeliveryBoxSlots - 1 )  / 3) + 1;
-		print("ICE! delivery pages = "  +pages);
 		mDeliveryBoxAC.setMaxPages(pages);
 		mDeliveryBoxAC.updateContainer();
 		
 		for(local i = 0 ; i < MAX_DELIVERY_SLOTS; i++) {
 			if(i >= mCurrentDeliveryBoxSlots) {
-				print("ICE! disabling delivery slot " + i);
 				mDeliveryBoxAC.setValidDropSlot(i, false);
 				mDeliveryBoxAC.setSlotsBackgroundMaterial(i, mDisabledSlotMaterial0, true);
 			}
 			else {			
-				print("ICE! enabling delivery slot " + i);
 				mDeliveryBoxAC.setValidDropSlot(i, true);
 				mDeliveryBoxAC.setSlotsBackgroundMaterial(i, mEnabledSlotMaterial0, true);
 			}	
