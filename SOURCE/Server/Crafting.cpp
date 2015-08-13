@@ -6,7 +6,7 @@
 #include "stdio.h"
 #include "FileReader3.h"
 #include <algorithm>
-
+#include "DirectoryAccess.h"
 #include "ScriptCore.h"
 
 /*

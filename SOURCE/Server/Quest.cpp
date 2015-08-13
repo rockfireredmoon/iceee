@@ -2,6 +2,8 @@
 #include "QuestScript.h"
 #include "StringList.h"
 #include "FileReader.h"
+#include "DirectoryAccess.h"
+#include "Character.h"
 
 #include <algorithm>
 #include "Util.h"
@@ -2378,5 +2380,18 @@ int QuestJournal :: GetRepeatDelayIndex(int questID)
 }
 
 
+int PrepExt_QuestStatusMessage(char *buffer, int questID, int objectiveIndex, bool complete, std::string message)
+{
+	int wpos = 0;
+	wpos += PutByte(&buffer[wpos], 7);  //_handleQuestEventMsg
+	wpos += PutShort(&buffer[wpos], 0); //Size
+	wpos += PutInteger(&buffer[wpos], questID); //Quest ID
+	wpos += PutByte(&buffer[wpos], QuestObjective::EVENTMSG_STATUS);
+	wpos += PutByte(&buffer[wpos], objectiveIndex);
+	wpos += PutByte(&buffer[wpos], complete ? 1 : 0);
+	wpos += PutStringUTF(&buffer[wpos], message.c_str());
+	PutShort(&buffer[1], wpos - 3);
+	return wpos;
+}
 
 

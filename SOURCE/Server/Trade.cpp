@@ -6,6 +6,7 @@
 
 #include "StringList.h"
 #include "Util.h"
+#include "Simulator.h"
 
 TradePlayerData :: TradePlayerData()
 {

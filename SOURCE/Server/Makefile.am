@@ -47,6 +47,7 @@ planetforeverd_SOURCES = md5.cc \
 	InstanceScale.cpp \
 	InstanceScript.cpp \
 	Interact.cpp \
+	Inventory.cpp \
 	Item.cpp \
 	ItemSet.cpp \
 	main.cpp \
@@ -127,6 +128,7 @@ planetforeverd_SOURCES = md5.cc \
 	InstanceScript.h \
 	IntArray.h \
 	Interact.h \
+	Inventory.h \
 	Item.h \
 	ItemSet.h \
 	MainWindow.h \

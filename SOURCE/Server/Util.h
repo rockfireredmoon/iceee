@@ -1,8 +1,7 @@
 #ifndef UTIL_H
 #define UTIL_H
 
-#include "Scenery2.h"
-#include "ActiveCharacter.h"
+#include <stdarg.h>
 #include "CommonTypes.h"
 
 const int MODMESSAGE_EVENT_SUPERCRIT = 1;
@@ -35,24 +34,8 @@ enum InfoMsgEnum
 };
 
 
-int WriteCharacterStats(int clIndex, char *buffer, int &wpos, int flagMask);
-int PrepExt_CreatureDef(char *buffer, CreatureDefinition *cdef);
-int PrepExt_UpdateCreatureDef(char *buffer, int CDefID, int defHints, std::vector<short>& statID, CharacterStatSet *css);
-int PrepExt_UpdateAppearance(char *buffer, CreatureInstance *cInst);
-int PrepExt_CreatureInstance(char *buffer, CreatureInstance *cInst);
-int PrepExt_CreatureFullInstance(char *buffer, CreatureInstance *cInst);
-int PrepExt_CreaturePos(char *buffer, CreatureInstance *cInst);
-int PrepExt_UpdateVelocity(char *buffer, CreatureInstance *cInst);
-int PrepExt_UpdatePosInc(char *buffer, CreatureInstance *cInst);
-int PrepExt_GeneralMoveUpdate(char *buffer, CreatureInstance *cInst);  //General server movement update (combines 3 flags of data)
-int PrepExt_UpdateElevation(char *buffer, CreatureInstance *cInst);
-int PrepExt_UpdateFullPosition(char *buffer, CreatureInstance *cInst);
 int PrepExt_SetAvatar(char *buffer, int creatureID);
-int PrepExt_SetMap(char *buffer, CharacterServerData *pldata, int x, int z);
 int PrepExt_SetTimeOfDay(char *buffer, char *envType);
-int PrepExt_UpdateScenery(char *buffer, SceneryObject *so);
-int PrepExt_AbilityActivate(char *buffer, CreatureInstance *cInst, ActiveAbilityInfo *ability, int aevent, bool ground = false);
-int PrepExt_AbilityActivateEmpty(char *buffer, CreatureInstance *cInst, ActiveAbilityInfo *ability, int aevent);
 int PrepExt_AbilityEvent(char *buffer, int creatureID, int abilityID, int abilityEvent);
 int PrepExt_SendAbilityOwn(char *buffer, int CID, int abilityID, int eventID);
 int PrepExt_CancelUseEvent(char *buffer, int CreatureID);
@@ -61,26 +44,12 @@ int PrepExt_RemoveCreature(char *buffer, int actorID);
 int PrepExt_SendInfoMessage(char *buffer, const char *message, unsigned char eventID);
 int PrepExt_SendFallDamage(char *buffer, int damage);
 int PrepExt_GenericChatMessage(char *buffer, int creatureID, const char *name, const char *channel, const char *message);
-int PrepExt_FriendsAdd(char *buffer, CharacterData *charData);
-int PrepExt_FriendsLogStatus(char *buffer, CharacterData *charData, int logStatus);
-
-int AddItemUpdate(char *buffer, char *convBuf, InventorySlot *slot);
-int RemoveItemUpdate(char *buffer, char *convBuf, InventorySlot *slot);
 
 //Specific stat updates
-int PrepExt_SendHealth(char *buffer, long CreatureID, int healthAmount);
-int PrepExt_SendSpecificStats(char *buffer, CreatureInstance *cInst, vector<short> &statList);
-int PrepExt_SendSpecificStats(char *buffer, CreatureInstance *cInst, const short *statList, int statCount);
-int PrepExt_UpdateMods(char *buffer, CreatureInstance *cInst);
-int PrepExt_UpdateOrbs(char *buffer, CreatureInstance *cInst);
-int PrepExt_SendEqAppearance(char *buffer, int creatureDefID, const char *eqAppearance);
-int PrepExt_UpdateEquipStats(char *buffer, CreatureInstance *cInst);
-int PrepExt_SendVisWeapon(char *buffer, int CreatureID, short visWeapon);
 int PrepExt_CooldownExpired(char *buffer, long actor, const char *cooldownCategory);
 int PrepExt_ChangeTarget(char *buffer, int sourceID, int targetID);
 int PrepExt_ExperienceGain(char *buffer, int CreatureID, int ExpAmount);
 int PrepExt_SendValour(char *buffer, int CreatureID, int ValourAmount, int GuildDefID, int rank, int title);
-int PrepExt_SendExperience(char *buffer, int CreatureID, int ExpAmount);
 int PrepExt_QueryResponseNull(char *buffer, int queryIndex);
 int PrepExt_QueryResponseString(char *buffer, int queryIndex, const char *strData);
 int PrepExt_QueryResponseString2(char *buffer, int queryIndex, const char *strData1, const char *strData2);
@@ -92,20 +61,12 @@ int PrepExt_SendHeartbeatMessage(char *buffer, unsigned int elapsedMilliseconds)
 int PrepExt_SendAdvancedEmote(char *buffer, int creatureID, const char *emoteName, float emoteSpeed, int loop);
 int PrepExt_SendEmoteControl(char *buffer, int creatureID, int emoteEvent);
 int PrepExt_ModStopSwimFlag(char *buffer);
-int PrepExt_ItemDef(char *SendBuf, ItemDef *item, int ProtocolState);
 int PrepExt_TradeCurrencyOffer(char *buffer, int offeringPlayerID, int tradeAmount);
-int PrepExt_TradeItemOffer(char *buffer, char *convBuf, int offeringPlayerID, std::vector<InventorySlot>& itemList);
-int PrepExt_QuestStatusMessage(char *buffer, int questID, int objectiveIndex, bool complete, std::string message);
 int PrepExt_CreatureEventPortalRequest(char *buffer, int actorID, const char *casterName, const char *locationName);
 int PrepExt_CreatureEventVaultSize(char *buffer, int actorID, int vaultSize, int deliverySlots);
-int PrepExt_SendEnvironmentUpdateMsg(char *buffer, const char *zoneIDString, ZoneDefInfo *zoneDef, int x, int z);
 int PrepExt_SendTimeOfDayMsg(char *buffer, const char *envType);
 int PrepExt_Broadcast(char *buffer, const char *message);
 
-int SendToAllSimulator(char *buffer, int length, int ignoreIndex);
-int SendToOneSimulator(char *buffer, int length, int simIndex);
-int SendToOneSimulator(char *buffer, int length, SimulatorThread *simPtr);
-int SendToFriendSimulator(char *buffer, int length, int CDefID);
 int randint(int min, int max);
 int randmod(int max);
 int randi(int max);

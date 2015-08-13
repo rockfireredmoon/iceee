@@ -1794,6 +1794,7 @@ ScriptPlayer :: ScriptPlayer()
 {
 	def = NULL;
 	curInst = 0;
+	mExecuting = false;
 	mActive = false;
 	nextFire = 0;
 	advance = 0;

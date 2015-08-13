@@ -317,4 +317,6 @@ private:
 extern SceneryManager g_SceneryManager;
 extern GlobalSceneryVars g_SceneryVars;
 
+int PrepExt_UpdateScenery(char *buffer, SceneryObject *so);
+
 #endif //#ifndef SCENERY2_H

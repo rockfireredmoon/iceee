@@ -535,6 +535,9 @@ GlobalConfigData :: GlobalConfigData()
 	ProperSceneryList = 1;
 	BuybackLimit = 32;
 
+	MegaLootParty = false;
+	CapValourLevel = 0;
+
 	LogLevelHTTPBase = LOG_WARNING;
 	LogLevelSimulatorBase = LOG_WARNING;
 	LogLevelHTTPDistribute = LOG_WARNING;

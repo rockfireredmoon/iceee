@@ -7,6 +7,7 @@
 #include <map>
 #include "Stats.h"
 #include "Components.h"
+#include "Inventory.h"
 #include "Character.h"
 #include "Util.h"  //ChangeData was moved here
 
@@ -92,11 +93,12 @@ public:
 	unsigned long LastLogOnTimeSec; //Last login time in seconds since epoch
 	int ConsecutiveDaysLoggedIn; // The number of consecutive days the account has logged in
 	int Credits; // The number of credits the account has (if AccountCredits is on)
-	std::vector<InventorySlot> deliveryInventory;
 	int DeliveryBoxSlots;
 
 	/* User data  */
-	std::vector<InventorySlot> vaultInventory;
+//	std::vector<InventorySlot> deliveryInventory;
+//	std::vector<InventorySlot> vaultInventory;
+	InventoryManager inventory;
 	//int CurrentVaultSize;
 	/*  End user data. */
 

@@ -8,6 +8,7 @@
 #include <vector>
 #include <map>
 
+#include "Creature.h"
 #include "ScriptCore.h"
 
 class CreatureInstance;

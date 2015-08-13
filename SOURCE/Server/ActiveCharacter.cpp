@@ -84,3 +84,24 @@ QuestJournal* CharacterServerData :: GetQuestJournal(void)
 	}
 	return &charPtr->questJournal;
 }
+
+
+
+int PrepExt_SetMap(char *buffer, CharacterServerData *csd, int x, int z)
+{
+	int wpos = 0;
+	wpos += PutByte(&buffer[wpos], 42);   //_handleEnvironmentUpdateMsg
+	wpos += PutShort(&buffer[wpos], 0);
+
+	wpos += PutByte(&buffer[wpos], 0);   //Mask
+
+	wpos += PutStringUTF(&buffer[wpos], csd->CurrentZone);    //zoneID
+	wpos += PutInteger(&buffer[wpos], csd->zoneDef->mID);      //zoneDefID
+	wpos += PutShort(&buffer[wpos], csd->zoneDef->mPageSize);  //zonePageSize
+	wpos += PutStringUTF(&buffer[wpos], csd->zoneDef->mTerrainConfig.c_str());   //Terrain
+	wpos += PutStringUTF(&buffer[wpos], csd->zoneDef->GetTileEnvironment(x,z)->c_str());   //envtype
+	wpos += PutStringUTF(&buffer[wpos], csd->zoneDef->mMapName.c_str());   //mapName
+
+	PutShort(&buffer[1], wpos - 3);       //Set message size
+	return wpos;
+}

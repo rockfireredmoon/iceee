@@ -504,4 +504,6 @@ struct QuestIndicator
 
 extern QuestDefinitionContainer QuestDef;
 
+int PrepExt_QuestStatusMessage(char *buffer, int questID, int objectiveIndex, bool complete, std::string message);
+
 #endif //QUEST_H

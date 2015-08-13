@@ -319,4 +319,6 @@ extern ZoneBarrierManager g_ZoneBarrierManager;
 extern EnvironmentCycleManager g_EnvironmentCycleManager;
 extern GroveTemplateManager g_GroveTemplateManager;
 
+int PrepExt_SendEnvironmentUpdateMsg(char *buffer, const char *zoneIDString, ZoneDefInfo *zoneDef, int x, int z);
+
 #endif  //ZONEDEF_H

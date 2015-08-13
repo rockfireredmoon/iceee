@@ -28,6 +28,7 @@
 #include "VirtualItem.h"
 #include "ConfigString.h"
 #include "Guilds.h"
+#include "Stats.h"
 
 #include "Debug.h"
 #include "Report.h"
@@ -8382,4 +8383,732 @@ void PendingOperation :: UpdateList_Remove(CreatureInstance *obj)
 	int r = UpdateList_GetExistingObject(obj);
 	if(r >= 0)
 		UpdateList.erase(UpdateList.begin() + r);
+}
+
+
+int PrepExt_CreatureDef(char *buffer, CreatureDefinition *cdef)
+{
+	//Prepares a buffer with the data necessary to update a Creature Definition.
+	//If defHints is nonzero, override the creature definition's defHint with
+	//the given one.
+	int wpos = 0;
+	wpos += PutByte(&buffer[wpos], 5);     //_handleCreatureUpdateMsg
+	wpos += PutShort(&buffer[wpos], 0);  //Placeholder for size
+
+	wpos += PutInteger(&buffer[wpos], 0);     //Leave empty so it knows it's a CreatureDef
+
+	//Mask
+	short mask = CREATURE_UPDATE_TYPE | CREATURE_UPDATE_STAT;
+	if(g_ProtocolVersion < 22)
+		wpos += PutByte(&buffer[wpos], mask);
+	else
+		wpos += PutShort(&buffer[wpos], mask);
+
+	//Because (CreatureDef == 0), need defHints
+	wpos += PutShort(&buffer[wpos], cdef->DefHints);     //defHints (1 = CDEF_HINT_PERSONA)
+	//_ASSERT(cdef->DefHints <= 48);
+	//g_Log.AddMessageFormat("CDef: %d (%s) defHints: %d", cdef->CreatureDefID, cdef->css.display_name, cdef->DefHints);
+
+	if(g_ProtocolVersion > 26)
+		wpos += PutStringUTF(&buffer[wpos], "");   //defHintsExtraData?
+
+	//For CREATURE_UPDATE_TYPE
+	wpos += PutInteger(&buffer[wpos], cdef->CreatureDefID);   //Map to creature type
+
+
+	//For CREATURE_UPDATE_STAT
+	int StatFlags = SUT_All;
+	if(g_ProtocolVersion >= 37)
+		StatFlags |= SUT_CDefExt;
+	if(cdef->DefHints == 1)
+		StatFlags -= SUT_NonPlayer;  //Remove NPC-only stats like aggro
+
+	int spos = wpos;
+	wpos += PutShort(&buffer[wpos], 0);    //Placeholder for number of stats
+	int r = WriteCharacterStats(&cdef->css, buffer, wpos, StatFlags);
+	PutShort(&buffer[spos], r);           //Write number of stats
+
+	PutShort(&buffer[1], wpos - 3);       //Set message size
+
+	return wpos;
+}
+
+
+int PrepExt_SendSpecificStats(char *buffer, CreatureInstance *cInst, vector<short> &statList)
+{
+	//Prepares a buffer with the data necessary to update a Creature Definition.
+	int wpos = 0;
+
+	wpos += PutByte(&buffer[wpos], 5);     //_handleCreatureUpdateMsg
+	wpos += PutShort(&buffer[wpos], 0);    //Placeholder for size
+
+	wpos += PutInteger(&buffer[wpos], cInst->CreatureID);
+
+	//Mask
+	short mask = CREATURE_UPDATE_STAT;
+	if(g_ProtocolVersion < 22)
+		wpos += PutByte(&buffer[wpos], mask);
+	else
+		wpos += PutShort(&buffer[wpos], mask);
+
+	int size = (int)statList.size();
+	wpos += PutShort(&buffer[wpos], size);
+
+	for(int a = 0; a < size; a++)
+	{
+		wpos += PutShort(&buffer[wpos], statList[a]);
+		wpos += WriteCurrentStatToBuffer(&buffer[wpos], statList[a], &cInst->css);
+	}
+
+	PutShort(&buffer[1], wpos - 3);       //Set message size
+	return wpos;
+}
+
+int PrepExt_SendSpecificStats(char *buffer, CreatureInstance *cInst, const short *statList, int statCount)
+{
+	//Prepares a buffer with the data necessary to update a Creature Definition.
+	int wpos = 0;
+
+	wpos += PutByte(&buffer[wpos], 5);     //_handleCreatureUpdateMsg
+	wpos += PutShort(&buffer[wpos], 0);    //Placeholder for size
+
+	wpos += PutInteger(&buffer[wpos], cInst->CreatureID);
+
+	//Mask
+	short mask = CREATURE_UPDATE_STAT;
+	if(g_ProtocolVersion < 22)
+		wpos += PutByte(&buffer[wpos], mask);
+	else
+		wpos += PutShort(&buffer[wpos], mask);
+
+	wpos += PutShort(&buffer[wpos], statCount);
+	for(int a = 0; a < statCount; a++)
+	{
+		wpos += PutShort(&buffer[wpos], statList[a]);
+		wpos += WriteCurrentStatToBuffer(&buffer[wpos], statList[a], &cInst->css);
+	}
+
+	PutShort(&buffer[1], wpos - 3);       //Set message size
+	return wpos;
+}
+
+int PrepExt_UpdateMods(char *buffer, CreatureInstance *cInst)
+{
+	int wpos = 0;
+
+	wpos += PutByte(&buffer[wpos], 0x05);  //_handleCreatureUpdateMsg
+	wpos += PutShort(&buffer[wpos], 0);    //Placeholder for size
+
+	wpos += PutInteger(&buffer[wpos], cInst->CreatureID);   //Update creature
+
+	short mask = CREATURE_UPDATE_MOD | CREATURE_UPDATE_STAT;
+	if(g_ProtocolVersion < 22)
+		wpos += PutByte(&buffer[wpos], mask);
+	else
+		wpos += PutShort(&buffer[wpos], mask);
+
+	if(mask & CREATURE_UPDATE_MOD)
+	{
+		int a;
+		int modCount = (int)cInst->activeStatMod.size();
+		wpos += PutShort(&buffer[wpos], modCount);
+		for(a = 0; a < modCount; a++)
+		{
+			if(g_ProtocolVersion > 15)
+			{
+				int priority = cInst->activeStatMod[a].priority;
+				wpos += PutInteger(&buffer[wpos], priority);  //Priority
+				wpos += PutShort(&buffer[wpos], cInst->activeStatMod[a].modStatID);  //ID
+				wpos += PutShort(&buffer[wpos], cInst->activeStatMod[a].abilityID);  //Ability ID
+
+				if(priority == 1)
+					wpos += PutFloat(&buffer[wpos], cInst->activeStatMod[a].clientAmount);
+				else
+					wpos += PutShort(&buffer[wpos], (short)cInst->activeStatMod[a].clientAmount);
+
+			}
+			else
+			{
+				wpos += PutShort(&buffer[wpos], cInst->activeStatMod[a].modStatID);  //ID
+				wpos += PutShort(&buffer[wpos], cInst->activeStatMod[a].abilityID);  //Ability ID
+				wpos += PutShort(&buffer[wpos], static_cast<short>(cInst->activeStatMod[a].clientAmount));  //amount
+			}
+//			wpos += PutInteger(&buffer[wpos], (int)((cInst->activeStatMod[a].expireTime - g_ServerTime) / 1000));  //duration
+			wpos += PutInteger(&buffer[wpos], cInst->GetStatDurationSec(a));  //duration
+			if(g_ProtocolVersion >= 24)
+			{
+				wpos += PutStringUTF(&buffer[wpos], ""); //Description?
+			}
+		}
+
+		wpos += PutShort(&buffer[wpos], cInst->activeStatusEffect.size());
+		for(a = 0; a < (int)cInst->activeStatusEffect.size(); a++) {
+			wpos += PutShort(&buffer[wpos], cInst->activeStatusEffect[a].modStatusID);
+		}
+	}
+
+	if(mask & CREATURE_UPDATE_STAT)
+	{
+		int spos = wpos;
+		wpos += PutShort(&buffer[wpos], 0);    //Placeholder for number of stats
+		int r = 0;
+
+		for(size_t i = 0; i < cInst->baseStats.size(); i++)
+		{
+			wpos += PutShort(&buffer[wpos], cInst->baseStats[i].StatID);
+			wpos += WriteStatToBuffer(&buffer[wpos], cInst->baseStats[i].StatID, cInst->baseStats[i].fBaseVal + cInst->baseStats[i].fModTotal);
+			r++;
+		}
+		PutShort(&buffer[spos], r);           //Write number of stats
+	}
+
+	PutShort(&buffer[1], wpos - 3);       //Set message size
+	return wpos;
+}
+
+int PrepExt_UpdateOrbs(char *buffer, CreatureInstance *cInst)
+{
+	//Prepares a buffer with the data necessary to update a Creature Definition.
+	int wpos = 0;
+
+	wpos += PutByte(&buffer[wpos], 5);     //_handleCreatureUpdateMsg
+	wpos += PutShort(&buffer[wpos], 0);    //Placeholder for size
+
+	wpos += PutInteger(&buffer[wpos], cInst->CreatureID);
+
+	//Mask
+	short mask = CREATURE_UPDATE_STAT;
+	if(g_ProtocolVersion < 22)
+		wpos += PutByte(&buffer[wpos], mask);
+	else
+		wpos += PutShort(&buffer[wpos], mask);
+
+	wpos += PutShort(&buffer[wpos], 4);   //All orb stats
+	wpos += PutShort(&buffer[wpos], STAT::WILL);
+	wpos += PutShort(&buffer[wpos], cInst->css.will);
+	wpos += PutShort(&buffer[wpos], STAT::WILL_CHARGES);
+	wpos += PutShort(&buffer[wpos], cInst->css.will_charges);
+
+	wpos += PutShort(&buffer[wpos], STAT::MIGHT);
+	wpos += PutShort(&buffer[wpos], cInst->css.might);
+	wpos += PutShort(&buffer[wpos], STAT::MIGHT_CHARGES);
+	wpos += PutShort(&buffer[wpos], cInst->css.might_charges);
+
+	PutShort(&buffer[1], wpos - 3);       //Set message size
+
+	return wpos;
+}
+
+
+
+int PrepExt_UpdateAppearance(char *buffer, CreatureInstance *cInst)
+{
+	//Prepares a buffer with the data necessary to update a Creature Definition.
+	int wpos = 0;
+
+	wpos += PutByte(&buffer[wpos], 5);     //_handleCreatureUpdateMsg
+	wpos += PutShort(&buffer[wpos], 0);    //Placeholder for size
+
+	wpos += PutInteger(&buffer[wpos], 0);     //Leave empty so it knows it's a CreatureDef
+
+	short mask = CREATURE_UPDATE_TYPE | CREATURE_UPDATE_STAT;
+	if(g_ProtocolVersion < 22)
+		wpos += PutByte(&buffer[wpos], mask);
+	else
+		wpos += PutShort(&buffer[wpos], mask);
+
+	wpos += PutShort(&buffer[wpos], 0);     //because ID is 0, needs defHints
+	if(g_ProtocolVersion > 26)
+		wpos += PutStringUTF(&buffer[wpos], "");   //defHintsExtraData?
+
+	wpos += PutInteger(&buffer[wpos], cInst->CreatureDefID);  //Need ID for CREATURE_UPDATE_TYPE
+
+
+	int spos = wpos;
+	wpos += PutShort(&buffer[wpos], 0);    //Placeholder for number of stats
+
+	/* Temporary set appearance stat to the appearance on the top of the stack.
+	 * We don't want to ever store this appearance so it is changed back after
+	 * the update buffer has been built
+	 */
+	CharacterStatSet css2(cInst->css);
+	css2.SetAppearance(cInst->PeekAppearance().c_str());
+	css2.SetEqAppearance(cInst->PeekAppearanceEq().c_str());
+
+	int r = WriteCharacterStats(&css2, buffer, wpos, SUT_Appearance);
+
+	PutShort(&buffer[spos], r);           //Write number of stats
+
+	PutShort(&buffer[1], wpos - 3);       //Set message size
+
+	return wpos;
+}
+
+int PrepExt_CreatureInstance(char *buffer, CreatureInstance *cInst)
+{
+	int wpos = 0;
+	wpos += PutByte(&buffer[wpos], 0x05);      //_handleCreatureUpdateMsg
+	wpos += PutShort(&buffer[wpos], 0);   //Placeholder for size
+
+	wpos += PutInteger(&buffer[wpos], cInst->CreatureID);   //Update the player this time
+	//g_Log.AddMessageFormat("[Debug] CreatureID: %d", cInst->CreatureID);
+
+	short mask = CREATURE_UPDATE_TYPE | CREATURE_UPDATE_STAT | CREATURE_UPDATE_MOD;
+	//short mask = CREATURE_UPDATE_STAT | CREATURE_UPDATE_MOD;
+	if(g_ProtocolVersion < 22)
+		wpos += PutByte(&buffer[wpos], mask);
+	else
+		wpos += PutShort(&buffer[wpos], mask);
+	//g_Log.AddMessageFormat("[Debug] Mask: %d", mask);
+
+
+	if(mask & CREATURE_UPDATE_TYPE)
+		wpos += PutInteger(&buffer[wpos], cInst->CreatureDefID);   //Don't need creature hints, but need an ID for the creaturedef again
+
+
+	//g_Log.AddMessageFormat("[Debug] CreatureDefID: %d", cInst->CreatureDefID);
+
+	//For CREATURE_UPDATE_MOD
+	if(mask & CREATURE_UPDATE_MOD)
+	{
+		int a;
+		int modCount = (int)cInst->activeStatMod.size();
+		wpos += PutShort(&buffer[wpos], modCount);  //modCount
+		for(a = 0; a < modCount; a++)
+		{
+			if(g_ProtocolVersion > 15)
+			{
+				int priority = cInst->activeStatMod[a].priority;
+				wpos += PutInteger(&buffer[wpos], priority);  //Priority
+				wpos += PutShort(&buffer[wpos], cInst->activeStatMod[a].modStatID);  //ID
+				wpos += PutShort(&buffer[wpos], cInst->activeStatMod[a].abilityID);  //Ability ID
+				if(priority == 1)
+					wpos += PutFloat(&buffer[wpos], cInst->activeStatMod[a].clientAmount);
+				else
+					wpos += PutShort(&buffer[wpos], (short)cInst->activeStatMod[a].clientAmount);
+			}
+			else
+			{
+				wpos += PutShort(&buffer[wpos], cInst->activeStatMod[a].modStatID);  //ID
+				wpos += PutShort(&buffer[wpos], cInst->activeStatMod[a].abilityID);  //Ability ID
+				wpos += PutShort(&buffer[wpos], static_cast<short>(cInst->activeStatMod[a].clientAmount));  //amount
+			}
+//			wpos += PutInteger(&buffer[wpos], (int)((cInst->activeStatMod[a].expireTime - g_ServerTime) / 1000));  //duration
+			wpos += PutInteger(&buffer[wpos], cInst->GetStatDurationSec(a));  //duration
+			if(g_ProtocolVersion >= 24)
+			{
+				wpos += PutStringUTF(&buffer[wpos], ""); //Description?
+			}
+		}
+
+		wpos += PutShort(&buffer[wpos], cInst->activeStatusEffect.size());
+		for(a = 0; a < (int)cInst->activeStatusEffect.size(); a++)
+			wpos += PutShort(&buffer[wpos], cInst->activeStatusEffect[a].modStatusID);
+	}
+
+	//For CREATURE_UPDATE_STAT
+	if(mask & CREATURE_UPDATE_STAT)
+	{
+		int spos = wpos;
+		wpos += PutShort(&buffer[wpos], 0);    //Placeholder for stats
+
+		int StatFlags = SUT_All;
+		if(cInst->serverFlags & ServerFlags::IsPlayer)
+			StatFlags -= SUT_NonPlayer;  //Remove NPC-only stats like aggro
+
+		/* Temporary set appearance stat to the appearance on the top of the stack.
+		 * We don't want to ever store this appearance so it is changed back after
+		 * the update buffer has been built
+		 */
+		CharacterStatSet css2(cInst->css);
+		css2.SetAppearance(cInst->PeekAppearance().c_str());
+		css2.SetEqAppearance(cInst->PeekAppearanceEq().c_str());
+
+		int r = WriteCharacterStats(&css2, buffer, wpos, StatFlags);
+
+		PutShort(&buffer[spos], r);           //Write number of stats
+	}
+
+	PutShort(&buffer[1], wpos - 3);       //Set message size
+
+	return wpos;
+}
+
+int PrepExt_CreatureFullInstance(char *buffer, CreatureInstance *cInst)
+{
+
+	TIMETRACK("PrepExt_CreatureFullInstance");
+	int wpos = 0;
+	wpos += PutByte(&buffer[wpos], 0x05);      //_handleCreatureUpdateMsg
+	wpos += PutShort(&buffer[wpos], 0);   //Placeholder for size
+
+	wpos += PutInteger(&buffer[wpos], cInst->CreatureID);   //Update the player this time
+
+	short mask = CREATURE_UPDATE_TYPE | CREATURE_UPDATE_STAT | CREATURE_UPDATE_MOD | CREATURE_UPDATE_ZONE | CREATURE_UPDATE_ELEVATION | CREATURE_UPDATE_VELOCITY;
+	if(g_ProtocolVersion < 22)
+		wpos += PutByte(&buffer[wpos], mask);
+	else
+		wpos += PutShort(&buffer[wpos], mask);
+
+	if(mask & CREATURE_UPDATE_TYPE)
+		wpos += PutInteger(&buffer[wpos], cInst->CreatureDefID);   //Don't need creature hints, but need an ID for the creaturedef again
+
+	if(mask & CREATURE_UPDATE_ZONE)
+	{
+		wpos += PutStringUTF(&buffer[wpos], cInst->ZoneString);
+		//g_Log.AddMessageFormat("Sending Zone [%s] for [%s]", cInst->CurrentZone, cInst->css.display_name);
+		wpos += PutInteger(&buffer[wpos], cInst->CurrentX);   //X
+		wpos += PutInteger(&buffer[wpos], cInst->CurrentZ);   //Z
+	}
+	if(mask & CREATURE_UPDATE_ELEVATION)
+		wpos += PutShort(&buffer[wpos], cInst->CurrentY & 0xFFFF);
+
+	if(mask & CREATURE_UPDATE_VELOCITY)
+	{
+		wpos += PutByte(&buffer[wpos], cInst->Heading);
+		wpos += PutByte(&buffer[wpos], cInst->Rotation);
+		wpos += PutByte(&buffer[wpos], cInst->Speed);
+	}
+
+	if(mask & CREATURE_UPDATE_MOD)
+	{
+		int a;
+		int modCount = (int)cInst->activeStatMod.size();
+		wpos += PutShort(&buffer[wpos], modCount);  //modCount
+		for(a = 0; a < modCount; a++)
+		{
+			if(g_ProtocolVersion > 15)
+			{
+				int priority = cInst->activeStatMod[a].priority;
+				wpos += PutInteger(&buffer[wpos], priority);  //Priority
+				wpos += PutShort(&buffer[wpos], cInst->activeStatMod[a].modStatID);  //ID
+				wpos += PutShort(&buffer[wpos], cInst->activeStatMod[a].abilityID);  //Ability ID
+				if(priority == 1)
+					wpos += PutFloat(&buffer[wpos], cInst->activeStatMod[a].clientAmount);
+				else
+					wpos += PutShort(&buffer[wpos], (short)cInst->activeStatMod[a].clientAmount);
+			}
+			else
+			{
+				wpos += PutShort(&buffer[wpos], cInst->activeStatMod[a].modStatID);  //ID
+				wpos += PutShort(&buffer[wpos], cInst->activeStatMod[a].abilityID);  //Ability ID
+				wpos += PutShort(&buffer[wpos], static_cast<short>(cInst->activeStatMod[a].clientAmount));  //amount
+			}
+//			wpos += PutInteger(&buffer[wpos], (int)((cInst->activeStatMod[a].expireTime - g_ServerTime) / 1000));  //duration
+			wpos += PutInteger(&buffer[wpos], cInst->GetStatDurationSec(a));  //duration
+			if(g_ProtocolVersion >= 24)
+			{
+				wpos += PutStringUTF(&buffer[wpos], ""); //Description?
+			}
+		}
+
+		wpos += PutShort(&buffer[wpos], cInst->activeStatusEffect.size());
+		for(a = 0; a < (int)cInst->activeStatusEffect.size(); a++)
+			wpos += PutShort(&buffer[wpos], cInst->activeStatusEffect[a].modStatusID);
+	}
+
+	//For CREATURE_UPDATE_STAT
+	if(mask & CREATURE_UPDATE_STAT)
+	{
+		int StatFlags = SUT_All;
+		if(g_ProtocolVersion >= 37)
+			StatFlags |= SUT_CDefExt;
+		if(cInst->serverFlags & ServerFlags::IsPlayer)
+			StatFlags -= SUT_NonPlayer;  //Remove NPC-only stats like aggro;
+
+		int spos = wpos;
+		wpos += PutShort(&buffer[wpos], 0);    //Placeholder for stats
+
+		/* Temporary set appearance stat to the appearance on the top of the stack.
+		 * We don't want to ever store this appearance so it is changed back after
+		 * the update buffer has been built
+		 */
+		CharacterStatSet css2(cInst->css);
+		css2.SetAppearance(cInst->PeekAppearance().c_str());
+		css2.SetEqAppearance(cInst->PeekAppearanceEq().c_str());
+
+		int r = WriteCharacterStats(&css2, buffer, wpos, StatFlags);
+
+		PutShort(&buffer[spos], r);           //Write number of stats
+	}
+
+	PutShort(&buffer[1], wpos - 3);       //Set message size
+
+	TIMETRACKF(1);
+	return wpos;
+}
+
+int PrepExt_CreaturePos(char *buffer, CreatureInstance *cInst)
+{
+	int wpos = 0;
+	wpos += PutByte(&buffer[wpos], 0x05);
+	wpos += PutShort(&buffer[wpos], 0x0000);
+
+	wpos += PutInteger(&buffer[wpos], cInst->CreatureID);
+
+	if(g_ProtocolVersion < 22)
+		wpos += PutByte(&buffer[wpos], CREATURE_UPDATE_ZONE);
+	else
+		wpos += PutShort(&buffer[wpos], CREATURE_UPDATE_ZONE);
+
+	wpos += PutStringUTF(&buffer[wpos], cInst->ZoneString);
+	wpos += PutInteger(&buffer[wpos], cInst->CurrentX);
+	wpos += PutInteger(&buffer[wpos], cInst->CurrentZ);
+
+	PutShort(&buffer[1], wpos - 3);       //Set message size
+	return wpos;
+}
+
+int PrepExt_UpdateVelocity(char *buffer, CreatureInstance *cInst)
+{
+	int wpos = 0;
+	wpos += PutByte(&buffer[wpos], 5);  //_handleCreatureUpdateMsg
+	wpos += PutShort(&buffer[wpos], 0);
+
+	wpos += PutInteger(&buffer[wpos], cInst->CreatureID);
+
+	if(g_ProtocolVersion < 22)
+		wpos += PutByte(&buffer[wpos], CREATURE_UPDATE_VELOCITY);
+	else
+		wpos += PutShort(&buffer[wpos], CREATURE_UPDATE_VELOCITY);
+
+	wpos += PutByte(&buffer[wpos], cInst->Heading);
+	wpos += PutByte(&buffer[wpos], cInst->Rotation);
+	wpos += PutByte(&buffer[wpos], cInst->Speed);
+
+	PutShort(&buffer[1], wpos - 3);       //Set message size
+	return wpos;
+}
+
+int PrepExt_UpdatePosInc(char *buffer, CreatureInstance *cInst)
+{
+	int wpos = 0;
+	wpos += PutByte(&buffer[wpos], 5);  //_handleCreatureUpdateMsg
+	wpos += PutShort(&buffer[wpos], 0);
+
+	wpos += PutInteger(&buffer[wpos], cInst->CreatureID);
+
+	if(g_ProtocolVersion < 22)
+		wpos += PutByte(&buffer[wpos], CREATURE_UPDATE_POSITION_INC);
+	else
+		wpos += PutShort(&buffer[wpos], CREATURE_UPDATE_POSITION_INC);
+
+	wpos += PutShort(&buffer[wpos], cInst->CurrentX & 0xFFFF);
+	wpos += PutShort(&buffer[wpos], cInst->CurrentZ & 0xFFFF);
+
+	PutShort(&buffer[1], wpos - 3);       //Set message size
+	return wpos;
+}
+
+
+int PrepExt_UpdateEquipStats(char *buffer, CreatureInstance *cInst)
+{
+	//Prepares a buffer with the data necessary to update the eq_appearance stat
+	int wpos = 0;
+
+	wpos += PutByte(&buffer[wpos], 5);     //_handleCreatureUpdateMsg
+	wpos += PutShort(&buffer[wpos], 0);    //Placeholder for size
+
+	wpos += PutInteger(&buffer[wpos], cInst->CreatureID);
+
+	short mask = CREATURE_UPDATE_STAT;
+	if(g_ProtocolVersion < 22)
+		wpos += PutByte(&buffer[wpos], mask);
+	else
+		wpos += PutShort(&buffer[wpos], mask);
+
+	wpos += PutShort(&buffer[wpos], 13);   //Just one stat
+	wpos += PutShort(&buffer[wpos], STAT::STRENGTH);
+	wpos += PutShort(&buffer[wpos], cInst->css.strength);
+	wpos += PutShort(&buffer[wpos], STAT::DEXTERITY);
+	wpos += PutShort(&buffer[wpos], cInst->css.dexterity);
+	wpos += PutShort(&buffer[wpos], STAT::CONSTITUTION);
+	wpos += PutShort(&buffer[wpos], cInst->css.constitution);
+	wpos += PutShort(&buffer[wpos], STAT::PSYCHE);
+	wpos += PutShort(&buffer[wpos], cInst->css.psyche);
+	wpos += PutShort(&buffer[wpos], STAT::SPIRIT);
+	wpos += PutShort(&buffer[wpos], cInst->css.spirit);
+
+	wpos += PutShort(&buffer[wpos], STAT::HEALTH);   //If con changed, so did max health
+	if(g_Config.UseIntegerHealth == true)
+		wpos += PutInteger(&buffer[wpos], cInst->css.health);
+	else
+		wpos += PutShort(&buffer[wpos], cInst->css.health);
+
+	wpos += PutShort(&buffer[wpos], STAT::HEALTH_MOD);   //If con changed, so did max health
+	wpos += PutShort(&buffer[wpos], cInst->css.health_mod);
+	wpos += PutShort(&buffer[wpos], STAT::BASE_STATS);   //Base stats for good measure
+	wpos += PutStringUTF(&buffer[wpos], cInst->css.base_stats);
+
+	wpos += PutShort(&buffer[wpos], STAT::DAMAGE_RESIST_MELEE);
+	wpos += PutShort(&buffer[wpos], cInst->css.damage_resist_melee);
+	wpos += PutShort(&buffer[wpos], STAT::DAMAGE_RESIST_FIRE);
+	wpos += PutShort(&buffer[wpos], cInst->css.damage_resist_fire);
+	wpos += PutShort(&buffer[wpos], STAT::DAMAGE_RESIST_FROST);
+	wpos += PutShort(&buffer[wpos], cInst->css.damage_resist_frost);
+	wpos += PutShort(&buffer[wpos], STAT::DAMAGE_RESIST_MYSTIC);
+	wpos += PutShort(&buffer[wpos], cInst->css.damage_resist_mystic);
+	wpos += PutShort(&buffer[wpos], STAT::DAMAGE_RESIST_DEATH);
+	wpos += PutShort(&buffer[wpos], cInst->css.damage_resist_death);
+
+	PutShort(&buffer[1], wpos - 3);       //Set message size
+	return wpos;
+}
+
+
+int PrepExt_GeneralMoveUpdate(char *buffer, CreatureInstance *cInst)
+{
+	//Combination of velocity, elevation and short position update.
+	//Meant to emulate official server position updates for mobs.
+	int wpos = 0;
+	wpos += PutByte(&buffer[wpos], 5);  //_handleCreatureUpdateMsg
+	wpos += PutShort(&buffer[wpos], 0);
+
+	wpos += PutInteger(&buffer[wpos], cInst->CreatureID);
+	unsigned char mask = CREATURE_UPDATE_ELEVATION | CREATURE_UPDATE_POSITION_INC | CREATURE_UPDATE_VELOCITY;
+	if(g_ProtocolVersion < 22)
+		wpos += PutByte(&buffer[wpos], mask);
+	else
+		wpos += PutShort(&buffer[wpos], mask);
+
+	//CREATURE_UPDATE_ELEVATION
+	wpos += PutShort(&buffer[wpos], cInst->CurrentY & 0xFFFF);
+
+	//CREATURE_UPDATE_POSITION_INC
+	wpos += PutShort(&buffer[wpos], cInst->CurrentX & 0xFFFF);
+	wpos += PutShort(&buffer[wpos], cInst->CurrentZ & 0xFFFF);
+
+	//CREATURE_UPDATE_VELOCITY
+	wpos += PutByte(&buffer[wpos], cInst->Heading);
+	wpos += PutByte(&buffer[wpos], cInst->Rotation);
+	wpos += PutByte(&buffer[wpos], cInst->Speed);
+
+	PutShort(&buffer[1], wpos - 3);       //Set message size
+	return wpos;
+}
+
+int PrepExt_UpdateElevation(char *buffer, CreatureInstance *cInst)
+{
+	int wpos = 0;
+	wpos += PutByte(&buffer[wpos], 5);  //_handleCreatureUpdateMsg
+	wpos += PutShort(&buffer[wpos], 0);
+
+	wpos += PutInteger(&buffer[wpos], cInst->CreatureID);
+
+	if(g_ProtocolVersion < 22)
+		wpos += PutByte(&buffer[wpos], CREATURE_UPDATE_ELEVATION);
+	else
+		wpos += PutShort(&buffer[wpos], CREATURE_UPDATE_ELEVATION);
+
+	wpos += PutShort(&buffer[wpos], cInst->CurrentY & 0xFFFF);
+
+	PutShort(&buffer[1], wpos - 3);       //Set message size
+	return wpos;
+}
+
+int PrepExt_UpdateFullPosition(char *buffer, CreatureInstance *cInst)
+{
+	int wpos = 0;
+	wpos += PutByte(&buffer[wpos], 5);  //_handleCreatureUpdateMsg
+	wpos += PutShort(&buffer[wpos], 0);
+
+	wpos += PutInteger(&buffer[wpos], cInst->CreatureID);
+
+	short mask = CREATURE_UPDATE_ZONE | CREATURE_UPDATE_ELEVATION;
+	if(g_ProtocolVersion < 22)
+		wpos += PutByte(&buffer[wpos], mask);
+	else
+		wpos += PutShort(&buffer[wpos], mask);
+
+	//For CREATURE_UPDATE_ZONE
+	wpos += PutStringUTF(&buffer[wpos], cInst->ZoneString);
+	wpos += PutInteger(&buffer[wpos], cInst->CurrentX);
+	wpos += PutInteger(&buffer[wpos], cInst->CurrentZ);
+
+	//For CREATURE_UPDATE_ELEVATION
+	wpos += PutShort(&buffer[wpos], cInst->CurrentY & 0xFFFF);
+
+	PutShort(&buffer[1], wpos - 3);       //Set message size
+	return wpos;
+}
+
+
+
+int PrepExt_AbilityActivate(char *buffer, CreatureInstance *cInst, ActiveAbilityInfo *ability, int aevent, bool ground)
+{
+	int wpos = 0;
+	wpos += PutByte(&buffer[wpos], 60);  //_handleAbilityActivationMsg
+	wpos += PutShort(&buffer[wpos], 0);
+
+	wpos += PutInteger(&buffer[wpos], cInst->CreatureID);   //actorID
+	wpos += PutShort(&buffer[wpos], ability->abilityID);     //abId
+	wpos += PutByte(&buffer[wpos], aevent);      //event
+
+	int a;
+
+	if(ability->bSecondary == false)
+	{
+		wpos += PutInteger(&buffer[wpos], ability->TargetCount);   //primary_len
+		for(a = 0; a < ability->TargetCount; a++)
+			wpos += PutInteger(&buffer[wpos], ability->TargetList[a]->CreatureID);   //targets
+
+		wpos += PutInteger(&buffer[wpos], 0);   //secondary_len
+	}
+	else
+	{
+		wpos += PutInteger(&buffer[wpos], 0);   //primary len
+
+		wpos += PutInteger(&buffer[wpos], ability->TargetCount);   //secondary_len
+		for(a = 0; a < ability->TargetCount; a++)
+			wpos += PutInteger(&buffer[wpos], ability->TargetList[a]->CreatureID);   //targets
+	}
+
+	wpos += PutByte(&buffer[wpos], ground);      //has_ground
+	if(ground == true)
+	{
+		wpos += PutFloat(&buffer[wpos], ability->x);     //ground.x
+		wpos += PutFloat(&buffer[wpos], ability->y);     //ground.y
+		wpos += PutFloat(&buffer[wpos], ability->z);     //ground.z
+	}
+
+	if(g_ProtocolVersion > 20)
+	{
+		if(aevent == AbilityStatus::ACTIVATE || aevent == AbilityStatus::CHANNELING)
+		{
+			wpos += PutByte(&buffer[wpos], ability->willChargesSpent);
+			wpos += PutByte(&buffer[wpos], ability->mightChargesSpent);
+		}
+	}
+	else
+	{
+		if(aevent == AbilityStatus::ACTIVATE)
+		{
+			wpos += PutByte(&buffer[wpos], ability->willChargesSpent);
+			wpos += PutByte(&buffer[wpos], ability->mightChargesSpent);
+		}
+	}
+
+	PutShort(&buffer[1], wpos - 3);
+	return wpos;
+}
+
+int PrepExt_AbilityActivateEmpty(char *buffer, CreatureInstance *cInst, ActiveAbilityInfo *ability, int aevent)
+{
+	//Same as AbilityActivate, but target lists and ground are always zero.
+	//Used for the utility messages such as activation requests.
+
+	int wpos = 0;
+	wpos += PutByte(&buffer[wpos], 60);  //_handleAbilityActivationMsg
+	wpos += PutShort(&buffer[wpos], 0);
+
+	wpos += PutInteger(&buffer[wpos], cInst->CreatureID);   //actorID
+	wpos += PutShort(&buffer[wpos], ability->abilityID);     //abId
+	wpos += PutByte(&buffer[wpos], aevent);      //event
+
+	wpos += PutInteger(&buffer[wpos], 0);   //target_len
+	wpos += PutInteger(&buffer[wpos], 0);   //secondary_len
+	wpos += PutByte(&buffer[wpos], 0);      //has_ground
+
+	PutShort(&buffer[1], wpos - 3);
+	return wpos;
 }

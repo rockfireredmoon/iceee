@@ -47,11 +47,11 @@ struct SimulatorQuery
 	~SimulatorQuery();
 	void Clear(void);
 
-	bool ValidArgIndex(int argIndex);
-	const char* GetString(int argIndex);
-	int GetInteger(int argIndex);
-	float GetFloat(int argIndex);
-	bool GetBool(int argIndex);
+	bool ValidArgIndex(uint argIndex);
+	const char* GetString(uint argIndex);
+	int GetInteger(uint argIndex);
+	float GetFloat(uint argIndex);
+	bool GetBool(uint argIndex);
 };
 
 struct QueryErrorMsg
@@ -149,7 +149,7 @@ public:
 	void AddPendingDisconnect(void);
 	void ProcessDisconnect(void);
 	void ForceErrorMessage(const char *message, int msgtype);
-	int AttemptSend(const char *buffer, int buflen);
+	int AttemptSend(const char *buffer, uint buflen);
 	void OnConnect(void);
 
 	bool CheckStateGameplayProtocol(void) const;
@@ -314,8 +314,6 @@ public:
 	int handle_query_vault_size(void);
 	int handle_query_vault_expand(void);
 	int handle_query_vault_deliverycontents(void);
-	int handle_query_vault_lootdeliveryitem(void);
-	int handle_query_vault_removedeliveryitem(void);
 	int handle_query_shard_set(void);
 
 	int handle_query_mod_setgrovestart(void);
@@ -363,7 +361,7 @@ public:
 	int protected_helper_query_scenery_edit(void);
 	int protected_helper_query_scenery_delete(void);
 	const char * GetErrorString(int error);
-	bool HasQueryArgs(int minCount);
+	bool HasQueryArgs(uint minCount);
 	int ResolveEmoteTarget(int target);
 	void JoinPrivateChannel(const char *channelname, const char *password);
 
@@ -648,5 +646,10 @@ typedef std::list<SimulatorThread>::iterator SIMULATOR_IT;
 extern SimulatorManager g_SimulatorManager;
 SimulatorThread * GetSimulatorByID(int ID);
 SimulatorThread * GetSimulatorByCharacterName(const char *name);
+
+int SendToOneSimulator(char *buffer, int length, SimulatorThread *simPtr);
+int SendToAllSimulator(char *buffer, int length, int ignoreIndex);
+int SendToOneSimulator(char *buffer, int length, int simIndex);
+int SendToFriendSimulator(char *buffer, int length, int CDefID);
 
 #endif //SIMULATOR_H

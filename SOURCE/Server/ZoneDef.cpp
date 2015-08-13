@@ -650,6 +650,8 @@ void ZoneDefInfo :: CreateDefaultGrovePermission(void)
 
 ZoneDefManager :: ZoneDefManager()
 {
+	mNextAutosaveTime = 0;
+	mNextZoneUnload = 0;
 	NextZoneID = GROVE_ZONE_ID_DEFAULT;
 	cs.Init();
 	cs.SetDebugName("CS_ZONEDEFMGR");
@@ -1039,7 +1041,7 @@ void ZoneDefManager :: InsertZone(const ZoneDefInfo& newZone, bool createIndex)
 
 int ZoneDefManager :: CheckAutoSave(bool force)
 {
-	if(g_ServerTime < mNextAutosaveTime && force == false)
+	if(g_ServerTime < (unsigned long)mNextAutosaveTime && force == false)
 		return 0;
 
 	int saveOps = 0;  //Number of save operations completed.  The session autosave will want to know if it needs to update in case of zone information.
@@ -1095,7 +1097,7 @@ int ZoneDefManager :: EnumerateGroves(int searchAccountID, int characterDefId, s
 		else
 		{
 			// Check if the zone is a guild hall for a guild the character is in
-			for(int i = 0 ; i < cdata->guildList.size(); i++)
+			for(uint i = 0 ; i < cdata->guildList.size(); i++)
 			{
 				int guildDefID = cdata->guildList[0].GuildDefID;
 				GuildDefinition *gDef = g_GuildManager.GetGuildDefinition(guildDefID);
@@ -1181,7 +1183,7 @@ void ZoneDefManager :: NotifyConfigurationChange(void)
 
 bool ZoneDefManager :: ZoneUnloadReady(void)
 {
-	if(g_ServerTime >= mNextZoneUnload)
+	if(g_ServerTime >= (unsigned long)mNextZoneUnload)
 	{
 		mNextZoneUnload = g_ServerTime + ZONE_UNLOAD_DELAY;
 		return true;
@@ -1608,4 +1610,24 @@ void GroveTemplateManager :: ResolveTerrainMap(void)
 	{
 		mTerrainMap[it->second.mTerrainCfg] = &it->second;
 	}
+}
+
+
+int PrepExt_SendEnvironmentUpdateMsg(char *buffer, const char *zoneIDString, ZoneDefInfo *zoneDef, int x, int z)
+{
+	int wpos = 0;
+	wpos += PutByte(&buffer[wpos], 42);   //_handleEnvironmentUpdateMsg
+	wpos += PutShort(&buffer[wpos], 0);
+
+	wpos += PutByte(&buffer[wpos], 0);   //Mask
+
+	wpos += PutStringUTF(&buffer[wpos], zoneIDString);
+	wpos += PutInteger(&buffer[wpos], zoneDef->mID);
+	wpos += PutShort(&buffer[wpos], zoneDef->mPageSize);
+	wpos += PutStringUTF(&buffer[wpos], zoneDef->mTerrainConfig.c_str());
+	wpos += PutStringUTF(&buffer[wpos], zoneDef->GetTileEnvironment(x, z)->c_str());
+	wpos += PutStringUTF(&buffer[wpos], zoneDef->mMapName.c_str());
+
+	PutShort(&buffer[1], wpos - 3);       //Set message size
+	return wpos;
 }

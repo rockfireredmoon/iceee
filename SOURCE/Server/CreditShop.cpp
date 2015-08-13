@@ -1,7 +1,9 @@
 #include "CreditShop.h"
 #include "Util.h"
 #include "FileReader.h"
+#include "DirectoryAccess.h"
 #include "StringList.h"
+#include <string.h>
 
 using namespace CS;
 

@@ -3,6 +3,8 @@
 #include "Stats.h"
 #include "StringList.h"
 #include "Util.h"
+#include "Config.h"
+#include "Globals.h"
 
 #ifndef WINDOWS_PLATFORM
 #include <stddef.h>
@@ -380,15 +382,122 @@ short ProfBaseStats[6][5] = {
 
 CharacterStatSet :: CharacterStatSet()
 {
+	channeling_break_chance = 0;
+	total_size = 0;
+	casting_setback_chance = 0;
+	level = 0;
+	damage_shield = 0;
+	copper = 0;
+	health_regen = 1;
+	credit_drops = 0;
+	offhand_weapon_damage = 0;
+	magic_attack_speed = 0;
+	magic_loot_drop_rate = 0;
+	inventory_capacity = 0;
+	melee_attack_speed = 0;
+	total_ability_points = 0;
+	bleeding = 0;
+	base_damage_death = 0;
+	current_ability_points = 0;
+	hide_nameboard = 0;
+	vis_weapon = 0;
+	rez_pending = 0;
+	hate_gain_rate = 0;
+	heroism = 0;
+	health = 0;
+	coin_gain_rate = 0;
+	rarity = 0;
+	hide_minimap = 0;
+	master = 0;
+	credits = 0;
+	health_mod = 0;
 	size = 1.0F;
+	base_damage_frost = 0;
+	base_block = 0;
+	base_damage_fire = 0;
+	base_damage_melee = 0;
+	base_damage_mystic = 0;
+	base_deflect = 0;
+	base_dodge = 0;
+	base_healing = 0;
+	base_health = 0;
+	base_luck = 0;
+	base_magic_critical = 0;
+	base_magic_success = 0;
+	base_melee_critical = 0;
+	base_melee_to_hit = 0;
+	base_movement = 0;
+	base_parry = 0;
+	bonus_health = 0;
+	aggro_players = 0;
+	aggro_radius_mod = 0;
+	memset(ai_package,0, sizeof(ai_package));
+	memset(base_stats,0, sizeof(base_stats));
 	damage_resist_frost = 0;
 	damage_resist_fire = 0;
 	damage_resist_death = 0;
 	damage_resist_mystic = 0;
 	damage_resist_melee = 0;
-	will_regen = 1.0F;
-	might_regen = 1.0F;
 	mod_casting_speed = 1.4013e-045F;
+	weapon_damage_1h = 0;
+	weapon_damage_2h = 0;
+	weapon_damage_box = 0;
+	weapon_damage_pole = 0;
+	weapon_damage_small = 0;
+	weapon_damage_thrown = 0;
+	weapon_damage_wand = 0;
+	mod_attack_speed = 0;
+	mod_block = 0;
+	mod_casting_speed = 0;
+	mod_healing = 0;
+	mod_health_regen = 0;
+	mod_luck = 0;
+	mod_magic_to_crit = 0;
+	mod_magic_to_hit = 0;
+	mod_melee_to_crit = 0;
+	mod_melee_to_hit = 0;
+	mod_movement = 0;
+	mod_parry = 0;
+	dr_mod_death = 0;
+	dr_mod_fire = 0;
+	dr_mod_frost = 0;
+	dr_mod_melee = 0;
+	dr_mod_mystic = 0;
+	invisibility_distance = 0;
+	will = 0;
+	will_charges = 0;
+	will_max = 0;
+	will_regen = 1.0F;
+	might = 0;
+	might_charges = 0;
+	might_max = 0;
+	might_regen = 1.0F;
+	experience = 0;
+	experience_gain_rate = 0;
+	extra_damage_death = 0;
+	extra_damage_fire = 0;
+	extra_damage_frost = 0;
+	extra_damage_mystic = 0;
+	dmg_mod_death = 0;
+	dmg_mod_fire = 0;
+	dmg_mod_frost = 0;
+	dmg_mod_melee = 0;
+	dmg_mod_mystic = 0;
+	profession = 0;
+	pvp_deaths = 0;
+	pvp_flag_captures = 0;
+	pvp_kills = 0;
+	pvp_team = 0;
+	memset(pvp_state,0, sizeof(pvp_state));
+	psyche = 0;
+	constitution = 0;
+	strength = 0;
+	spirit = 0;
+	dexterity = 0;
+	spawn_table_points = 0;
+	armor_rating = 0;
+
+
 }
 void CharacterStatSet :: CopyFrom(CharacterStatSet *source)
 {
@@ -451,7 +560,7 @@ void CharacterStatSet :: SetSubName(const char *name)
 
 bool CharacterStatSet :: IsPropAppearance(void)
 {
-	return (appearance.find("p1:") != string::npos);
+	return (appearance.find("p1:") != std::string::npos);
 }
 
 void CharacterStatSet :: ClearLootSeeablePlayerIDs(void)
@@ -919,4 +1028,254 @@ void GeneratePrettyStatTable(MULTISTRING &output, CharacterStatSet *css)
 	}
 }
 
+}
+
+int WriteCharacterStats(CharacterStatSet *css, char *buffer, int &wpos, int flagMask)
+{
+	//Processes all stats in the master stat list, comparing them to the given flags.
+	//For any stats that match, write the data to the output stream.
+	//Returns the number of stats that were written.
+	int stcount = 0;
+	char *TableAddr = (char*) css;
+
+	int a;
+
+	for(a = 0; a < NumStats; a++)
+	{
+		if(StatList[a].updflag & flagMask)
+		{
+			void *data = &TableAddr[StatList[a].offset];
+			switch(StatList[a].etype)
+			{
+			case StatType::SHORT:
+				wpos += PutShort(&buffer[wpos], StatList[a].ID);
+				wpos += PutShort(&buffer[wpos], *(short*)data);
+				break;
+			case StatType::INTEGER:
+				wpos += PutShort(&buffer[wpos], StatList[a].ID);
+				wpos += PutInteger(&buffer[wpos], *(int*)data);
+				break;
+			case StatType::FLOAT:
+				wpos += PutShort(&buffer[wpos], StatList[a].ID);
+				wpos += PutFloat(&buffer[wpos], *(float*)data);
+				break;
+			case StatType::CSTRING:
+				wpos += PutShort(&buffer[wpos], StatList[a].ID);
+				wpos += PutStringUTF(&buffer[wpos], (const char*)data);
+				break;
+			case StatType::STRING:
+				wpos += PutShort(&buffer[wpos], StatList[a].ID);
+				wpos += PutStringUTF(&buffer[wpos], ((std::string*)data)->c_str());
+				break;
+			default:
+				g_Log.AddMessageFormat("[WARNING] Unknown data type [%s] for stat [%s]", StatList[a].type, StatList[a].name);
+				stcount--;
+			}
+			/* OBSOLETE
+			if(strcmp(StatList[a].type, "string") == 0)
+			{
+				wpos += PutShort(&buffer[wpos], StatList[a].ID);
+				wpos += PutStringUTF(&buffer[wpos], &TableAddr[StatList[a].offset]);
+			}
+			else if(strcmp(StatList[a].type, "short") == 0)
+			{
+				short value = 0;
+				memcpy(&value, &TableAddr[StatList[a].offset], sizeof(short));
+				wpos += PutShort(&buffer[wpos], StatList[a].ID);
+				wpos += PutShort(&buffer[wpos], value);
+			}
+			else if(strcmp(StatList[a].type, "int") == 0)
+			{
+				int value = 0;
+				memcpy(&value, &TableAddr[StatList[a].offset], sizeof(int));
+				wpos += PutShort(&buffer[wpos], StatList[a].ID);
+				wpos += PutInteger(&buffer[wpos], value);
+			}
+			else if(strcmp(StatList[a].type, "integer") == 0)
+			{
+				int value = 0;
+				memcpy(&value, &TableAddr[StatList[a].offset], sizeof(int));
+				wpos += PutShort(&buffer[wpos], StatList[a].ID);
+				wpos += PutInteger(&buffer[wpos], value);
+			}
+			else if(strcmp(StatList[a].type, "float") == 0)
+			{
+				float value = 0;
+				memcpy(&value, &TableAddr[StatList[a].offset], sizeof(float));
+				wpos += PutShort(&buffer[wpos], StatList[a].ID);
+				wpos += PutFloat(&buffer[wpos], value);
+			}
+			else
+			{
+				g_Log.AddMessageFormat("[WARNING] Unknown data type [%s] for stat [%s]", StatList[a].type, StatList[a].name);
+				stcount--;
+			}
+			*/
+			stcount++;
+		}
+	}
+	return stcount;
+}
+
+int PrepExt_UpdateCreatureDef(char *buffer, int CDefID, int defHints, std::vector<short>& statID, CharacterStatSet *css)
+{
+	//Prepares a buffer with the data necessary to update a Creature Definition.
+	//If defHints is nonzero, override the creature definition's defHint with
+	//the given one.
+	int wpos = 0;
+	wpos += PutByte(&buffer[wpos], 5);     //_handleCreatureUpdateMsg
+	wpos += PutShort(&buffer[wpos], 0);  //Placeholder for size
+
+	wpos += PutInteger(&buffer[wpos], 0);     //Leave empty so it knows it's a CreatureDef
+
+	//Mask
+	short mask = CREATURE_UPDATE_TYPE | CREATURE_UPDATE_STAT;
+	if(g_ProtocolVersion < 22)
+		wpos += PutByte(&buffer[wpos], mask);
+	else
+		wpos += PutShort(&buffer[wpos], mask);
+
+	wpos += PutShort(&buffer[wpos], defHints);     //defHints (1 = CDEF_HINT_PERSONA)
+
+	if(g_ProtocolVersion > 26)
+		wpos += PutStringUTF(&buffer[wpos], "");   //defHintsExtraData?
+
+	//For CREATURE_UPDATE_TYPE
+	wpos += PutInteger(&buffer[wpos], CDefID);   //Map to creature type
+
+	int spos = wpos;
+	wpos += PutShort(&buffer[wpos], 0);    //Placeholder for number of stats
+	int success = 0;
+	for(size_t i = 0; i < statID.size(); i++)
+	{
+		wpos += PutShort(&buffer[wpos], statID[i]);
+		int res = WriteCurrentStatToBuffer(&buffer[wpos], statID[i], css);
+		if(res > 0)
+		{
+			wpos += res;
+			success++;
+		}
+		else
+			wpos -= 2;  //Undo the PutShort
+	}
+	PutShort(&buffer[spos], success);           //Write number of stats
+	PutShort(&buffer[1], wpos - 3);       //Set message size
+	return wpos;
+}
+
+
+int PrepExt_SendHealth(char *buffer, long CreatureID, int healthAmount)
+{
+	//Prepares a buffer with the data necessary to update a Creature Definition.
+	int wpos = 0;
+
+	wpos += PutByte(&buffer[wpos], 5);     //_handleCreatureUpdateMsg
+	wpos += PutShort(&buffer[wpos], 0);    //Placeholder for size
+
+	wpos += PutInteger(&buffer[wpos], CreatureID);
+
+	//Mask
+	short mask = CREATURE_UPDATE_STAT;
+	if(g_ProtocolVersion < 22)
+		wpos += PutByte(&buffer[wpos], mask);
+	else
+		wpos += PutShort(&buffer[wpos], mask);
+
+	wpos += PutShort(&buffer[wpos], 1);   //Just one stat
+	wpos += PutShort(&buffer[wpos], STAT::HEALTH);
+
+	if(g_Config.UseIntegerHealth == true)
+		wpos += PutInteger(&buffer[wpos], healthAmount);
+	else
+		wpos += PutShort(&buffer[wpos], healthAmount);
+
+	PutShort(&buffer[1], wpos - 3);       //Set message size
+
+	return wpos;
+}
+
+
+
+
+int PrepExt_SendEqAppearance(char *buffer, int creatureDefID, const char *eqAppearance)
+{
+	//Prepares a buffer with the data necessary to update the eq_appearance stat
+	int wpos = 0;
+
+	wpos += PutByte(&buffer[wpos], 5);     //_handleCreatureUpdateMsg
+	wpos += PutShort(&buffer[wpos], 0);    //Placeholder for size
+
+	wpos += PutInteger(&buffer[wpos], 0);
+
+	short mask = CREATURE_UPDATE_TYPE | CREATURE_UPDATE_STAT;
+	if(g_ProtocolVersion < 22)
+		wpos += PutByte(&buffer[wpos], mask);
+	else
+		wpos += PutShort(&buffer[wpos], mask);
+
+	wpos += PutShort(&buffer[wpos], 0);     //because ID is 0, needs defHints
+	if(g_ProtocolVersion > 26)
+		wpos += PutStringUTF(&buffer[wpos], "");   //defHintsExtraData?
+
+	wpos += PutInteger(&buffer[wpos], creatureDefID);  //Need ID for CREATURE_UPDATE_TYPE
+
+	wpos += PutShort(&buffer[wpos], 1);   //Just one stat
+	wpos += PutShort(&buffer[wpos], STAT::EQ_APPEARANCE);
+	wpos += PutStringUTF(&buffer[wpos], eqAppearance);
+
+	PutShort(&buffer[1], wpos - 3);       //Set message size
+	return wpos;
+}
+
+
+
+int PrepExt_SendVisWeapon(char *buffer, int CreatureID, short visWeapon)
+{
+	//Prepares a buffer with the data necessary to update a Visible Weapon.
+	int wpos = 0;
+
+	wpos += PutByte(&buffer[wpos], 5);     //_handleCreatureUpdateMsg
+	wpos += PutShort(&buffer[wpos], 0);    //Placeholder for size
+
+	wpos += PutInteger(&buffer[wpos], CreatureID);
+
+	//Mask
+	short mask = CREATURE_UPDATE_STAT;
+	if(g_ProtocolVersion < 22)
+		wpos += PutByte(&buffer[wpos], mask);
+	else
+		wpos += PutShort(&buffer[wpos], mask);
+
+	wpos += PutShort(&buffer[wpos], 1);   //Just one stat
+	wpos += PutShort(&buffer[wpos], STAT::VIS_WEAPON);
+	wpos += PutShort(&buffer[wpos], visWeapon);
+
+	PutShort(&buffer[1], wpos - 3);       //Set message size
+
+	return wpos;
+}
+
+
+int PrepExt_SendExperience(char *buffer, int CreatureID, int ExpAmount)
+{
+	//Prepares a buffer with the data necessary to update a Creature Definition.
+	int wpos = 0;
+
+	wpos += PutByte(&buffer[wpos], 5);     //_handleCreatureUpdateMsg
+	wpos += PutShort(&buffer[wpos], 0);    //Placeholder for size
+
+	wpos += PutInteger(&buffer[wpos], CreatureID);
+
+	//Mask
+	short mask = CREATURE_UPDATE_STAT;
+	if(g_ProtocolVersion < 22)
+		wpos += PutByte(&buffer[wpos], mask);
+	else
+		wpos += PutShort(&buffer[wpos], mask);
+
+	wpos += PutShort(&buffer[wpos], 1);   //Just one stat
+	wpos += PutShort(&buffer[wpos], STAT::EXPERIENCE);
+	wpos += PutInteger(&buffer[wpos], ExpAmount);
+	PutShort(&buffer[1], wpos - 3);       //Set message size
+	return wpos;
 }

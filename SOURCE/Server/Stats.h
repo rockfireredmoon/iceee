@@ -600,4 +600,11 @@ namespace StatInfo
 	void GeneratePrettyStatTable(MULTISTRING &output, CharacterStatSet *css);
 }
 
+int PrepExt_SendExperience(char *buffer, int CreatureID, int ExpAmount);
+int PrepExt_SendEqAppearance(char *buffer, int creatureDefID, const char *eqAppearance);
+int PrepExt_SendVisWeapon(char *buffer, int CreatureID, short visWeapon);
+int PrepExt_SendHealth(char *buffer, long CreatureID, int healthAmount);
+int PrepExt_UpdateCreatureDef(char *buffer, int CDefID, int defHints, std::vector<short>& statID, CharacterStatSet *css);
+int WriteCharacterStats(CharacterStatSet *clIndex, char *buffer, int &wpos, int flagMask);
+
 #endif // STATS_H

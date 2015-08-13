@@ -1,6 +1,8 @@
 #include "Audit.h"
+#include "DirectoryAccess.h"
 #include "Util.h"
 #include "Config.h"
+#include <stdio.h>
 
 bool ZoneAudit::mFolderCreated = false;
 
