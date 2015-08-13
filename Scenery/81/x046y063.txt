@@ -1,7 +1,7 @@
 [ENTRY]
 ID=1128520
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=46556.3,293.634,63318.5
 Orient=0,0,0,1
 Scale=1,1,1
@@ -13,7 +13,7 @@ link=1128530,1
 [ENTRY]
 ID=1128530
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=46690.3,247.917,63439.7
 Orient=0,0,0,1
 Scale=1,1,1
@@ -25,7 +25,7 @@ link=1128520,1
 [ENTRY]
 ID=1128531
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=46674.5,254.275,63226.3
 Orient=0,0,0,1
 Scale=1,1,1

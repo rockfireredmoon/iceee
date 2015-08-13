@@ -981,6 +981,13 @@ class this.Screens.ChatWindow extends this.GUI.Component
 		}
 		return message;
 	}
+	
+	function _replaceIfStartsWith(startsWith, replaceWith, text) {
+		if(this.Util.startsWith(text, startsWith)) {
+			return replaceWith + text.slice(startsWith.len());
+		}
+		return text;
+	}
 
 	function _updateDisplayedMessages( tab )
 	{
@@ -996,6 +1003,10 @@ class this.Screens.ChatWindow extends this.GUI.Component
 			local channel = this.mTabContents[tab].getLog()[index].channel;
 			local color = this._ChatManager.getColor(channel);
 			local wrapSize = this.getSize().width - 50;
+			
+			message = _replaceIfStartsWith("Http://", "http://", message);
+			message = _replaceIfStartsWith("Https://", "https://", message);
+			message = _replaceIfStartsWith("Forum://", "forum://", message);
 			
 			// Search for hyperlinks in the text and turn them into clickable links
 			
