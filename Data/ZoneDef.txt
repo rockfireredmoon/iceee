@@ -1082,11 +1082,12 @@ EnvironmentCycle=1
 DefLoc=2686,312,4786
 
 [ENTRY]
+"(1,100,37,201)"
 ID=201
 NAME=Earth's Ending
 ENVIRONMENTTYPE=Dungeon1
 ShardName=Corisca
 WarpName=earthsending
-DefLoc=0,0,0
+DefLoc=1,100,37
 Instance=1
 PageSize=1000
