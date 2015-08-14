@@ -128,3 +128,8 @@ Name=Behemoth
 Comment=[Comment here]
 Position=52607.0,788.0,68996.0
 
+[ENTRY]
+Name=Junderbrood Spitterskrill
+Comment=[Comment here]
+Position=57701.0,738.0,61520.0
+

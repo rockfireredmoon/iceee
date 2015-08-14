@@ -1104,7 +1104,6 @@ app=[{["a"]={["colors"]=[],["type"]="Item-1hAxe-Med3"}}]
 app=[{["a"]={["colors"]=[],["type"]="Item-1hAxe-Med4"}}]
 ;REMOVED app=[{["a"]={["colors"]=[],["type"]="Item-1hAxe-MiningPick"}}]
 app=[{["a"]={["colors"]=[],["type"]="Item-1hHammer-Basic1"}}]
-app=[{["a"]={["colors"]=[],["type"]="Item-1hHammer-Medium1"}}]
 app=[{["a"]={["colors"]=[],["type"]="Item-1hMace-Basic1"}}]
 app=[{["a"]={["colors"]=[],["type"]="Item-1hMace-Basic4"}}]
 app=[{["a"]={["colors"]=[],["type"]="Item-1hMace-Basic5"}}]
@@ -1783,7 +1782,6 @@ mWeaponType=2
 mQualityLevel=3
 app=[{["a"]={["colors"]=["000000","7f0000","947d07","7f0000","7e0a94"],["type"]="Item-1hSword-Medium2"}}]
 app=[{["a"]={["colors"]=["262b7f","2a2a2a","555555","7a400a"],["type"]="Item-1hMace-Medium4"}}]
-app=[{["a"]={["colors"]=["2a2a2a","555555"],["type"]="Item-1hHammer-Medium1"}}]
 app=[{["a"]={["colors"]=["2a2a2a","aa750e","754c24","aa750e","00e90e"],["type"]="Item-1hSword-Medium3"}}]
 app=[{["a"]={["colors"]=["2d4849","61565e","754c24","10167f","6a0000"],["type"]="Item-1hSword-Medium4"}}]
 app=[{["a"]={["colors"]=["3f2a21","3f2b19","754c24","3f3522","e91515"],["type"]="Item-1hSword-Medium3"}}]
@@ -1798,7 +1796,7 @@ app=[{["a"]={["colors"]=["5a6268","6e72aa","a77d19"],["type"]="Item-1hSword-High
 app=[{["a"]={["colors"]=["5a6268","7a7c94","3f3f3f"],["type"]="Item-1hSword-Medium9"}}]
 app=[{["a"]={["colors"]=["5a6268","7f0000","ffffff"],["type"]="Item-1hSword-High3"}}]
 app=[{["a"]={["colors"]=["5a6268","f26522","9d0a0e"],["type"]="Item-1hSword-Medium9"}}]
-app=[{["a"]={["colors"]=["5e5e5e","5e402a"],["type"]="Item-1hHammer-Medium1"}}]
+app=[{["a"]={["colors"]=["5e5e5e","5e402a"],["type"]="Item-1hHammer-Basic1"}}]
 app=[{["a"]={["colors"]=["71787e","947d07","555555"],["type"]="Item-1hSword-Medium1"}}]
 app=[{["a"]={["colors"]=["7f0000","151515","55472e","55472e","00e90e"],["type"]="Item-1hSword-Medium2"}}]
 app=[{["a"]={["colors"]=["7f7f7f","262b7f","ff8516"],["type"]="Item-1hSword-Medium6"}}]
@@ -1813,15 +1811,15 @@ app=[{["a"]={["colors"]=["ffffff","bfa10a","555555"],["type"]="Item-1hSword-Medi
 app=[{["a"]={["colors"]=["ffffff","d40000","866637","7f3e2d"],["type"]="Item-1hMace-Medium4"}}]
 app=[{["a"]={["colors"]=["ffffff","d40000","866637","7f3e2d"],["type"]="Item-1hSword-Medium1"}}]
 app=[{["a"]={["colors"]=["ffffff","d40000","866637","7f3e2d"],["type"]="Item-1hSword-Medium3"}}]
-app=[{["a"]={["colors"]=[],["type"]="Item-1hHammer-Medium1"}}]
+app=[{["a"]={["colors"]=[],["type"]="Item-1hHammer-Basic1"}}]
 app=[{["a"]={["colors"]=[],["type"]="Item-1hMace-Medium5"}}]
 app=[{["a"]={["colors"]=[],["type"]="Item-1hSword-Medium1"}}]
-app=[{["a"]={["type"]="Item-1hHammer-Medium1",["colors"]=["551717","57357F"]}},null]
-app=[{["a"]={["type"]="Item-1hHammer-Medium1",["colors"]=["552626","7A7C94"]}},null]
-app=[{["a"]={["type"]="Item-1hHammer-Medium1",["colors"]=["7F6B1B","292A3F"]}},null]
-app=[{["a"]={["type"]="Item-1hHammer-Medium1",["colors"]=["AAAAAA","7F0B0B"]}},null]
+app=[{["a"]={["type"]="Item-1hHammer-Basic1",["colors"]=["551717","57357F"]}},null]
+app=[{["a"]={["type"]="Item-1hHammer-Basic1",["colors"]=["552626","7A7C94"]}},null]
+app=[{["a"]={["type"]="Item-1hHammer-Basic1",["colors"]=["7F6B1B","292A3F"]}},null]
+app=[{["a"]={["type"]="Item-1hHammer-Basic1",["colors"]=["AAAAAA","7F0B0B"]}},null]
 ; Remove at request of Heathendel 2015-08-12
-;app=[{["a"]={["type"]="Item-1hHammer-Medium1",["effect"]="Par-WE-1hMace-Fire",["colors"]=["5E5E5E","D46F12"]}},null]
+;app=[{["a"]={["type"]="Item-1hHammer-Basic1",["effect"]="Par-WE-1hMace-Fire",["colors"]=["5E5E5E","D46F12"]}},null]
 app=[{["a"]={["type"]="Item-1hMace-Medium2",["colors"]=["151500","FFD70D","940000"]}},null]
 app=[{["a"]={["type"]="Item-1hMace-Medium2",["colors"]=["151511","FFFFFF","D49212"]}},null]
 app=[{["a"]={["type"]="Item-1hMace-Medium2",["colors"]=["28552B","B1FF1D","6A5917"]}},null]
@@ -1923,7 +1921,7 @@ app=[{["a"]={["type"]="Item-1hSword-Medium8",["colors"]=["D0FFFF","7F0000","FFFE
 app=[{["a"]={["type"]="Item-1hSword-Medium8",["colors"]=["D0FFFF","AA8F5C","FF0000"]}},null]
 app=[{["a"]={["type"]="Item-1hSword-Medium9",["colors"]=["9D9FBF","553921","947D38"]}},null]
 app=[{["a"]={["type"]="Item-1hSword-Medium9",["colors"]=["ADD4D4","6A5928","019420"]}},null]
-app={["a"]={["type"]="Item-1hHammer-Medium1",["colors"]=["","5E5E5E","D46F12"]}}
+app={["a"]={["type"]="Item-1hHammer-Basic1",["colors"]=["","5E5E5E","D46F12"]}}
 app={["a"]={["type"]="Item-1hMace-Medium2",["colors"]=["28552B","B1FF1D","6A5917"]}}
 app={["a"]={["type"]="Item-1hMace-Medium2",["colors"]=["3A4855","18BF22","942E1A"]}}
 app={["a"]={["type"]="Item-1hMace-Medium2",["colors"]=["566A6A","566A6A","566A6A"]}}

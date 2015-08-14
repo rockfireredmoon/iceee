@@ -363,12 +363,6 @@ mWeaponType=2
 name=Mace,100
 
 [ENTRY]
-asset=Item-1hHammer-Medium1
-mEquipType=1
-mWeaponType=2
-name=Mace,100
-
-[ENTRY]
 asset=Item-1hMace-Basic1
 mEquipType=1
 mWeaponType=2

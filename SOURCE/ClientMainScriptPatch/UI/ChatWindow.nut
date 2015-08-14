@@ -372,7 +372,14 @@ class this.Screens.ChatWindow extends this.GUI.Component
 	{
 		if("clickedOnText" in data && this.Util.startsWith(data.clickedOnText, "http://") || this.Util.startsWith(data.clickedOnText, "https://")) {
 			this.System.openURL(data.clickedOnText);
-		} 
+		}
+		else if("clickedOnText" in data && this.Util.startsWith(data.clickedOnText, "forum://")) {
+			local forumId = data.clickedOnText.slice(8);
+			local igf = Screens.show("IGForum");
+			if(igf) {
+				igf.QueryOpenThread(forumId.tointeger(), 0);
+			}
+		}  
 		else if ("info" in data)
 		{
 			switch(data.info)
@@ -982,13 +989,6 @@ class this.Screens.ChatWindow extends this.GUI.Component
 		return message;
 	}
 	
-	function _replaceIfStartsWith(startsWith, replaceWith, text) {
-		if(this.Util.startsWith(text, startsWith)) {
-			return replaceWith + text.slice(startsWith.len());
-		}
-		return text;
-	}
-
 	function _updateDisplayedMessages( tab )
 	{
 		local totalHTMLComponents = this._countMaxHTMLComponents(tab);
@@ -1004,9 +1004,9 @@ class this.Screens.ChatWindow extends this.GUI.Component
 			local color = this._ChatManager.getColor(channel);
 			local wrapSize = this.getSize().width - 50;
 			
-			message = _replaceIfStartsWith("Http://", "http://", message);
-			message = _replaceIfStartsWith("Https://", "https://", message);
-			message = _replaceIfStartsWith("Forum://", "forum://", message);
+			message = this.Util.replace(message, "Http://", "http://");
+			message = this.Util.replace(message, "Https://", "https://");
+			message = this.Util.replace(message, "Forum://", "forum://");
 			
 			// Search for hyperlinks in the text and turn them into clickable links
 			
@@ -1015,6 +1015,7 @@ class this.Screens.ChatWindow extends this.GUI.Component
 			}
 			message = _searchAndReplace(message, "http://", " ", linkReplace);
 			message = _searchAndReplace(message, "https://", " ", linkReplace);
+			message = _searchAndReplace(message, "forum://", " ", linkReplace);
 			local colorReplace = function(color) {
 				if(this.Util.startsWith(color, "#0")) 
 					return "<font color=\"ff0000\">" + color.slice(2) + "</font>";

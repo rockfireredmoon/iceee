@@ -404,7 +404,7 @@ display_name=Moon Dancer
 sub_name=Thornbringer
 profession=5
 creature_category=Mortal
-ai_package=druid_mystic_brave_6
+ai_package=rogue_brave_6
 total_size=5
 
 [ENTRY]
@@ -8171,7 +8171,7 @@ might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
-appearance=c2:{["a"]=[{["type"]="Armor-Cloth-High1-Left_Pauldron",["node"]="left_shoulder",["colors"]=["3F3F3F","7F2B07","000000"]},{["type"]="Armor-Cloth-High1-Right_Pauldron",["node"]="right_shoulder",["colors"]=["3F3F3F","7F2B07","615F75"]},{["type"]="Item-1hHammer-Medium1",["node"]="left_hip"},{["type"]="Item-1hMace-Medium2",["node"]="right_hip"}],["c"]={["boots"]={["type"]="Armor-Light-Mid4",["colors"]=["4d4646","aa3909","8e7c73","65534b","7c6c63"]},["chest"]={["type"]="Armor-Light-Mid4",["colors"]=["4d4646","aa3909","8e7c73","65534b","7c6c63"]},["arms"]={["type"]="Armor-Light-Mid4",["colors"]=["4d4646","aa3909","8e7c73","65534b","7c6c63"]},["leggings"]={["type"]="Armor-Light-Mid4",["colors"]=["4d4646","aa3909","8e7c73","65534b","7c6c63"]},["collar"]={["type"]="Armor-Light-Mid4",["colors"]=["4d4646","aa3909","aa3909","65534b","7c6c63"]},["belt"]={["type"]="Armor-Light-Mid4",["colors"]=["4d4646","aa3909","8e7c73","65534b","7c6c63"]},["gloves"]={["type"]="Armor-Light-Mid4",["colors"]=["4d4646","4d4646","4d4646","4d4646","4d4646"]}},["b"]="n",["sk"]={["base"]="BF8310",["horns"]="FFFFFF",["nails"]="805836",["eye"]="FF7373",["eye_lid"]="5C4027",["snout"]="5C4027",["eye_white"]="FFFFFF"},["sz"]="1.2",["h"]=1,["g"]="m",["r"]="t"}
+appearance=c2:{["a"]=[{["type"]="Armor-Cloth-High1-Left_Pauldron",["node"]="left_shoulder",["colors"]=["3F3F3F","7F2B07","000000"]},{["type"]="Armor-Cloth-High1-Right_Pauldron",["node"]="right_shoulder",["colors"]=["3F3F3F","7F2B07","615F75"]},{["type"]="Item-1hHammer-Basic1",["node"]="left_hip"},{["type"]="Item-1hMace-Medium2",["node"]="right_hip"}],["c"]={["boots"]={["type"]="Armor-Light-Mid4",["colors"]=["4d4646","aa3909","8e7c73","65534b","7c6c63"]},["chest"]={["type"]="Armor-Light-Mid4",["colors"]=["4d4646","aa3909","8e7c73","65534b","7c6c63"]},["arms"]={["type"]="Armor-Light-Mid4",["colors"]=["4d4646","aa3909","8e7c73","65534b","7c6c63"]},["leggings"]={["type"]="Armor-Light-Mid4",["colors"]=["4d4646","aa3909","8e7c73","65534b","7c6c63"]},["collar"]={["type"]="Armor-Light-Mid4",["colors"]=["4d4646","aa3909","aa3909","65534b","7c6c63"]},["belt"]={["type"]="Armor-Light-Mid4",["colors"]=["4d4646","aa3909","8e7c73","65534b","7c6c63"]},["gloves"]={["type"]="Armor-Light-Mid4",["colors"]=["4d4646","4d4646","4d4646","4d4646","4d4646"]}},["b"]="n",["sk"]={["base"]="BF8310",["horns"]="FFFFFF",["nails"]="805836",["eye"]="FF7373",["eye_lid"]="5C4027",["snout"]="5C4027",["eye_white"]="FFFFFF"},["sz"]="1.2",["h"]=1,["g"]="m",["r"]="t"}
 level=45
 display_name=Gorbi Thunderhoof
 sub_name=Master Hunter
@@ -12607,7 +12607,7 @@ might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
-appearance=c2:{["a"]=[{["type"]="Item-Claw-Medium5",["node"]="left_hand",["colors"]=["6C7B8B","603913","B3CBD4","AA0000"]},{["type"]="Item-1hHammer-Medium1",["node"]="right_hand"}],["h"]=2,["c"]={["boots"]={["type"]="Armor-Cloth-Town_Crier",["colors"]=[]},["leggings"]={["type"]="Armor-Cloth-Town_Crier",["colors"]=[]},["collar"]={["type"]="Armor-Cloth-Town_Crier",["colors"]=["2b2d33","f0b0b1","f3bd50","2a2a2a","e2e7e9","d885b9","f5d29d"]},["chest"]={["type"]="Armor-Cloth-Town_Crier",["colors"]=["2b2d33","2b2d33","f3bd50","910b08","e2e7e9","d885b9","f5d29d"]}},["b"]="m",["sk"]={["shoulders_head"]="552626",["hands_feet"]="6A5949",["eye_white"]="000000",["snout"]="6A5949",["base"]="552626",["nails"]="2A1C10",["eye"]="AA0000",["inner_ear"]="887C60",["nose"]="887C60",["outer_ear"]="6A4738"},["g"]="m",["r"]="f"}
+appearance=c2:{["a"]=[{["type"]="Item-Claw-Medium5",["node"]="left_hand",["colors"]=["6C7B8B","603913","B3CBD4","AA0000"]},{["type"]="Item-1hHammer-Basic1",["node"]="right_hand"}],["h"]=2,["c"]={["boots"]={["type"]="Armor-Cloth-Town_Crier",["colors"]=[]},["leggings"]={["type"]="Armor-Cloth-Town_Crier",["colors"]=[]},["collar"]={["type"]="Armor-Cloth-Town_Crier",["colors"]=["2b2d33","f0b0b1","f3bd50","2a2a2a","e2e7e9","d885b9","f5d29d"]},["chest"]={["type"]="Armor-Cloth-Town_Crier",["colors"]=["2b2d33","2b2d33","f3bd50","910b08","e2e7e9","d885b9","f5d29d"]}},["b"]="m",["sk"]={["shoulders_head"]="552626",["hands_feet"]="6A5949",["eye_white"]="000000",["snout"]="6A5949",["base"]="552626",["nails"]="2A1C10",["eye"]="AA0000",["inner_ear"]="887C60",["nose"]="887C60",["outer_ear"]="6A4738"},["g"]="m",["r"]="f"}
 level=34
 display_name=Twisted Storyteller
 profession=3
@@ -14763,7 +14763,7 @@ might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
-appearance=c2:{["a"]=[{["type"]="Item-1hHammer-Medium1",["node"]="left_hand",["colors"]=["5E5E5E","5E402A"]},{["type"]="Item-1hHammer-Medium1",["node"]="right_hand"}],["h"]=0,["c"]={["leggings"]={["type"]="Armor-Cloth-Town_Crier",["colors"]=[]},["boots"]={["type"]="Armor-Light-High2",["colors"]=["2b2d33","910b08","2b2d33","910b08","2b2d33"]},["belt"]={["type"]="Armor-Cloth-Low3",["colors"]=["910b08","910b08","1f7c46","5f4d39","910b08","69987a","d4b30b","867d75"]}},["b"]="n",["sk"]={["hair"]="AAAAAA",["body_tats"]="3F3F3F",["arm_tats"]="3F3F3F",["skin"]="7F3939",["head_spots"]="7F3939",["eyeball"]="000000",["horn"]="8E8A6E",["eye_color"]="AAAAAA",["head_tattoos"]="7F3939",["body_spots"]="7F3939",["teeth"]="808080"},["g"]="m",["r"]="p"}
+appearance=c2:{["a"]=[{["type"]="Item-1hHammer-Basic1",["node"]="left_hand",["colors"]=["5E5E5E","5E402A"]},{["type"]="Item-1hHammer-Basic1",["node"]="right_hand"}],["h"]=0,["c"]={["leggings"]={["type"]="Armor-Cloth-Town_Crier",["colors"]=[]},["boots"]={["type"]="Armor-Light-High2",["colors"]=["2b2d33","910b08","2b2d33","910b08","2b2d33"]},["belt"]={["type"]="Armor-Cloth-Low3",["colors"]=["910b08","910b08","1f7c46","5f4d39","910b08","69987a","d4b30b","867d75"]}},["b"]="n",["sk"]={["hair"]="AAAAAA",["body_tats"]="3F3F3F",["arm_tats"]="3F3F3F",["skin"]="7F3939",["head_spots"]="7F3939",["eyeball"]="000000",["horn"]="8E8A6E",["eye_color"]="AAAAAA",["head_tattoos"]="7F3939",["body_spots"]="7F3939",["teeth"]="808080"},["g"]="m",["r"]="p"}
 level=35
 display_name=Lunatic
 profession=3
@@ -23820,7 +23820,7 @@ might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
-appearance=c2:{["a"]=[{["type"]="Item-1hHammer-Medium1",["node"]="right_hand",["colors"]=["2A2A2A","555555"]}],["h"]=0,["c"]={["boots"]={["type"]="Armor-CC-Clothing8",["colors"]=["67553b","515161","67553b","515161"]},["leggings"]={["type"]="Armor-CC-Clothing1",["colors"]=["67553b","515161","67553b"]},["gloves"]={["type"]="Armor-Light-Low2",["colors"]=[]},["chest"]={["type"]="Armor-Cloth-Low2",["colors"]=["67553b","515161","67553b"]}},["b"]="n",["sk"]={["hands_feet"]="55473B",["eye_white"]="D40000",["snout"]="55473B",["teeth"]="55473B",["tail"]="55473B",["base"]="91776D",["eye_lid"]="55473B",["nails"]="55473B",["eye"]="D40000",["inner_ear"]="55473B",["nose"]="55473B",["chest"]="55473B"},["g"]="m",["r"]="o"}
+appearance=c2:{["a"]=[{["type"]="Item-1hHammer-Basic1",["node"]="right_hand",["colors"]=["2A2A2A","555555"]}],["h"]=0,["c"]={["boots"]={["type"]="Armor-CC-Clothing8",["colors"]=["67553b","515161","67553b","515161"]},["leggings"]={["type"]="Armor-CC-Clothing1",["colors"]=["67553b","515161","67553b"]},["gloves"]={["type"]="Armor-Light-Low2",["colors"]=[]},["chest"]={["type"]="Armor-Cloth-Low2",["colors"]=["67553b","515161","67553b"]}},["b"]="n",["sk"]={["hands_feet"]="55473B",["eye_white"]="D40000",["snout"]="55473B",["teeth"]="55473B",["tail"]="55473B",["base"]="91776D",["eye_lid"]="55473B",["nails"]="55473B",["eye"]="D40000",["inner_ear"]="55473B",["nose"]="55473B",["chest"]="55473B"},["g"]="m",["r"]="o"}
 level=34
 display_name=Entralled Excavator
 profession=2
@@ -34101,7 +34101,7 @@ display_name=Dustspinner
 sub_name=Brood of Kerakura
 profession=5
 creature_category=Dragonkin
-ai_package=druid_mystic_brave_6
+ai_package=mage_fire_brave_6
 total_size=5
 
 [ENTRY]
@@ -34285,7 +34285,7 @@ might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
-appearance=c2:{["a"]=[{["type"]="Armor-Light-High1-Helmet",["node"]="helmet",["colors"]=["2A2A2A","2A2A2A","AA0000","2A2A2A","000000"]},{["type"]="Item-1hSword-High2",["node"]="left_hip",["colors"]=["5A6268","E9E9E9","3F0505"]},{["type"]="Item-1hHammer-Medium1",["node"]="right_hip",["colors"]=["2A2A2A","550707"]}],["c"]={["boots"]={["type"]="Armor-Light-Epic3",["colors"]=["2a2a2a","482155","7f0000","7f0000","3d3832","482155"]},["chest"]={["type"]="Armor-Light-Epic2",["colors"]=["2a2a2a","482155","7f0000","7f0000","3d3832","482155"]},["arms"]={["type"]="Armor-Light-Epic3",["colors"]=["2a2a2a","482155","7f0000","7f0000","3d3832","482155"]},["leggings"]={["type"]="Armor-Light-Epic3",["colors"]=["2a2a2a","482155","7f0000","7f0000","3d3832","482155"]},["collar"]={["type"]="Armor-Light-Epic3",["colors"]=["2a2a2a","482155","7f0000","7f0000","3d3832","482155"]},["belt"]={["type"]="Armor-Light-Epic3",["colors"]=["2a2a2a","482155","7f0000","7f0000","3d3832","482155"]},["gloves"]={["type"]="Armor-Light-Epic3",["colors"]=["2a2a2a","482155","7f0000","7f0000","3d3832","482155"]}},["b"]="m",["sk"]={["skin"]="7F6B30",["eye_color"]="AA0000",["horn"]="808080",["hair"]="BFBFBF",["eyeball"]="878787"},["sz"]="1.3",["h"]=0,["g"]="m",["r"]="p"}
+appearance=c2:{["a"]=[{["type"]="Armor-Light-High1-Helmet",["node"]="helmet",["colors"]=["2A2A2A","2A2A2A","AA0000","2A2A2A","000000"]},{["type"]="Item-1hSword-High2",["node"]="left_hip",["colors"]=["5A6268","E9E9E9","3F0505"]},{["type"]="Item-1hHammer-Basic1",["node"]="right_hip",["colors"]=["2A2A2A","550707"]}],["c"]={["boots"]={["type"]="Armor-Light-Epic3",["colors"]=["2a2a2a","482155","7f0000","7f0000","3d3832","482155"]},["chest"]={["type"]="Armor-Light-Epic2",["colors"]=["2a2a2a","482155","7f0000","7f0000","3d3832","482155"]},["arms"]={["type"]="Armor-Light-Epic3",["colors"]=["2a2a2a","482155","7f0000","7f0000","3d3832","482155"]},["leggings"]={["type"]="Armor-Light-Epic3",["colors"]=["2a2a2a","482155","7f0000","7f0000","3d3832","482155"]},["collar"]={["type"]="Armor-Light-Epic3",["colors"]=["2a2a2a","482155","7f0000","7f0000","3d3832","482155"]},["belt"]={["type"]="Armor-Light-Epic3",["colors"]=["2a2a2a","482155","7f0000","7f0000","3d3832","482155"]},["gloves"]={["type"]="Armor-Light-Epic3",["colors"]=["2a2a2a","482155","7f0000","7f0000","3d3832","482155"]}},["b"]="m",["sk"]={["skin"]="7F6B30",["eye_color"]="AA0000",["horn"]="808080",["hair"]="BFBFBF",["eyeball"]="878787"},["sz"]="1.3",["h"]=0,["g"]="m",["r"]="p"}
 level=45
 display_name=Murdock Tsoo
 sub_name=Grey Circle
@@ -41924,7 +41924,7 @@ might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
-appearance=c2:{["a"]=[{["type"]="Item-Dagger-Basic4",["node"]="left_hand",["colors"]=["5A6268","F26522","9D0A0E"]},{["type"]="Item-1hHammer-Medium1",["node"]="right_hand"}],["h"]=0,["c"]={["boots"]={["type"]="Armor-Light-Mid1",["colors"]=["515161","7f0000","9c3f2e","3f3c4a","7981ff","ffbb00"]},["chest"]={["type"]="Armor-Light-Mid1",["colors"]=["515161","7f0000","9c3f2e","3f3c4a","7981ff","ffbb00"]},["arms"]={["type"]="Armor-Light-Mid1",["colors"]=["515161","7f0000","9c3f2e","3f3c4a","7981ff","ffbb00"]},["leggings"]={["type"]="Armor-Light-Mid1",["colors"]=["515161","7f0000","9c3f2e","3f3c4a","7981ff","ffbb00"]},["collar"]={["type"]="Armor-Light-Mid1",["colors"]=["515161","7f0000","9c3f2e","3f3c4a","7981ff","ffbb00"]},["belt"]={["type"]="Armor-Light-Mid1",["colors"]=["515161","7f0000","9c3f2e","3f3c4a","7981ff","ffbb00"]},["gloves"]={["type"]="Armor-Light-Mid1",["colors"]=["515161","7f0000","9c3f2e","3f3c4a","7981ff","ffbb00"]}},["b"]="n",["sk"]={["base"]="947D50",["digits"]="6A5928",["spots"]="6A5928",["eye"]="755B3A",["eye_lid"]="6A5928",["highlight"]="DAC496",["eye_white"]="D4D4D4"},["g"]="m",["r"]="a"}
+appearance=c2:{["a"]=[{["type"]="Item-Dagger-Basic4",["node"]="left_hand",["colors"]=["5A6268","F26522","9D0A0E"]},{["type"]="Item-1hHammer-Basic1",["node"]="right_hand"}],["h"]=0,["c"]={["boots"]={["type"]="Armor-Light-Mid1",["colors"]=["515161","7f0000","9c3f2e","3f3c4a","7981ff","ffbb00"]},["chest"]={["type"]="Armor-Light-Mid1",["colors"]=["515161","7f0000","9c3f2e","3f3c4a","7981ff","ffbb00"]},["arms"]={["type"]="Armor-Light-Mid1",["colors"]=["515161","7f0000","9c3f2e","3f3c4a","7981ff","ffbb00"]},["leggings"]={["type"]="Armor-Light-Mid1",["colors"]=["515161","7f0000","9c3f2e","3f3c4a","7981ff","ffbb00"]},["collar"]={["type"]="Armor-Light-Mid1",["colors"]=["515161","7f0000","9c3f2e","3f3c4a","7981ff","ffbb00"]},["belt"]={["type"]="Armor-Light-Mid1",["colors"]=["515161","7f0000","9c3f2e","3f3c4a","7981ff","ffbb00"]},["gloves"]={["type"]="Armor-Light-Mid1",["colors"]=["515161","7f0000","9c3f2e","3f3c4a","7981ff","ffbb00"]}},["b"]="n",["sk"]={["base"]="947D50",["digits"]="6A5928",["spots"]="6A5928",["eye"]="755B3A",["eye_lid"]="6A5928",["highlight"]="DAC496",["eye_white"]="D4D4D4"},["g"]="m",["r"]="a"}
 level=17
 display_name=Marauder
 sub_name=Knights of Avalon
@@ -43921,7 +43921,7 @@ might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
-appearance=n4:{["a"]=[{["type"]="Item-1hHammer-Medium1",["node"]="right_hand"},{["type"]="Item-1hHammer-Medium1",["node"]="left_hand",["colors"]=["5E5E5E","5E402A"]}],["c"]="Horde-Skeleton_Blademaster",["sk"]={["bone"]="AA9D90",["hair"]="8F8960",["cloth"]="2A2A2A",["cape"]="6C087F",["trim"]="BF0000",["leather"]="947D07"},["sz"]="1.5"}
+appearance=n4:{["a"]=[{["type"]="Item-1hHammer-Basic1",["node"]="right_hand"},{["type"]="Item-1hHammer-Basic1",["node"]="left_hand",["colors"]=["5E5E5E","5E402A"]}],["c"]="Horde-Skeleton_Blademaster",["sk"]={["bone"]="AA9D90",["hair"]="8F8960",["cloth"]="2A2A2A",["cape"]="6C087F",["trim"]="BF0000",["leather"]="947D07"},["sz"]="1.5"}
 level=22
 display_name=Nerilix
 profession=3
@@ -44494,7 +44494,7 @@ display_name=Frostbound Marid Hero
 sub_name=Al'zahrazzi
 profession=2
 creature_category=Magical
-ai_package=knight_brave_6
+ai_package=custom_heathendel_rogue40
 total_size=25
 
 [ENTRY]
@@ -55152,7 +55152,7 @@ might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
-appearance=c2:{["a"]=[{["type"]="Armor-Cloth-Mid1-Helmet",["node"]="helmet",["colors"]=["129405","949494","B73232"]},{["type"]="Item-1hHammer-Medium1",["node"]="right_hand"}],["h"]=0,["c"]={["boots"]={["type"]="Armor-Cloth-Low2",["colors"]=["8c5e46","6a1c1c","7f7f7f","7f7f7f"]},["leggings"]={["type"]="Armor-CC-Clothing5",["colors"]=["3e7f30","6a1c1c","7f7f7f","7f7f7f"]},["belt"]={["type"]="Armor-Cloth-Mid1",["colors"]=["7f6b1b","6a1c1c","704525","a68456","54573b"]},["chest"]={["type"]="Armor-CC-Clothing5",["colors"]=["3e7f30","6a1c1c","7f7f7f","7f7f7f"]},["arms"]={["type"]="Armor-Cloth-Low2",["colors"]=["267f2b","6a1c1c","7f7f7f","7f7f7f"]}},["b"]="n",["sk"]={["base"]="997D68",["digits"]="FF9600",["spots"]="8D9942",["eye"]="00ADEF",["eye_lid"]="534741",["highlight"]="DAC496",["eye_white"]="FFE6DB"},["g"]="m",["r"]="a"}
+appearance=c2:{["a"]=[{["type"]="Armor-Cloth-Mid1-Helmet",["node"]="helmet",["colors"]=["129405","949494","B73232"]},{["type"]="Item-1hHammer-Basic1",["node"]="right_hand"}],["h"]=0,["c"]={["boots"]={["type"]="Armor-Cloth-Low2",["colors"]=["8c5e46","6a1c1c","7f7f7f","7f7f7f"]},["leggings"]={["type"]="Armor-CC-Clothing5",["colors"]=["3e7f30","6a1c1c","7f7f7f","7f7f7f"]},["belt"]={["type"]="Armor-Cloth-Mid1",["colors"]=["7f6b1b","6a1c1c","704525","a68456","54573b"]},["chest"]={["type"]="Armor-CC-Clothing5",["colors"]=["3e7f30","6a1c1c","7f7f7f","7f7f7f"]},["arms"]={["type"]="Armor-Cloth-Low2",["colors"]=["267f2b","6a1c1c","7f7f7f","7f7f7f"]}},["b"]="n",["sk"]={["base"]="997D68",["digits"]="FF9600",["spots"]="8D9942",["eye"]="00ADEF",["eye_lid"]="534741",["highlight"]="DAC496",["eye_white"]="FFE6DB"},["g"]="m",["r"]="a"}
 level=14
 display_name=Alchemist
 sub_name=Thornbringer
@@ -55180,7 +55180,7 @@ might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
-appearance=c2:{["a"]=[{["type"]="Armor-Cloth-Mid1-Helmet",["node"]="helmet",["colors"]=["129405","949494","B73232"]},{["type"]="Item-1hHammer-Medium1",["node"]="right_hand"}],["h"]=0,["c"]={["boots"]={["type"]="Armor-Cloth-Low2",["colors"]=["8c5e46","6a1c1c","7f7f7f","7f7f7f"]},["leggings"]={["type"]="Armor-CC-Clothing5",["colors"]=["3e7f30","6a1c1c","7f7f7f","7f7f7f"]},["belt"]={["type"]="Armor-Cloth-Mid1",["colors"]=["7f6b1b","6a1c1c","704525","a68456","54573b"]},["chest"]={["type"]="Armor-CC-Clothing5",["colors"]=["3e7f30","6a1c1c","7f7f7f","7f7f7f"]},["arms"]={["type"]="Armor-Cloth-Low2",["colors"]=["267f2b","6a1c1c","7f7f7f","7f7f7f"]}},["b"]="n",["sk"]={["hands_feet"]="AC735A",["eye_white"]="FFE6DB",["snout"]="B77C62",["ear_tips"]="D58F70",["base"]="997D68",["hair_ears"]="AC735A",["eye_lid"]="534741",["eye"]="00ADEF",["inner_ear"]="AE917C",["nose"]="7C7873",["chest"]="534741"},["g"]="m",["r"]="b"}
+appearance=c2:{["a"]=[{["type"]="Armor-Cloth-Mid1-Helmet",["node"]="helmet",["colors"]=["129405","949494","B73232"]},{["type"]="Item-1hHammer-Basic1",["node"]="right_hand"}],["h"]=0,["c"]={["boots"]={["type"]="Armor-Cloth-Low2",["colors"]=["8c5e46","6a1c1c","7f7f7f","7f7f7f"]},["leggings"]={["type"]="Armor-CC-Clothing5",["colors"]=["3e7f30","6a1c1c","7f7f7f","7f7f7f"]},["belt"]={["type"]="Armor-Cloth-Mid1",["colors"]=["7f6b1b","6a1c1c","704525","a68456","54573b"]},["chest"]={["type"]="Armor-CC-Clothing5",["colors"]=["3e7f30","6a1c1c","7f7f7f","7f7f7f"]},["arms"]={["type"]="Armor-Cloth-Low2",["colors"]=["267f2b","6a1c1c","7f7f7f","7f7f7f"]}},["b"]="n",["sk"]={["hands_feet"]="AC735A",["eye_white"]="FFE6DB",["snout"]="B77C62",["ear_tips"]="D58F70",["base"]="997D68",["hair_ears"]="AC735A",["eye_lid"]="534741",["eye"]="00ADEF",["inner_ear"]="AE917C",["nose"]="7C7873",["chest"]="534741"},["g"]="m",["r"]="b"}
 level=15
 display_name=Alchemist
 sub_name=Thornbringer
@@ -55234,7 +55234,7 @@ might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
-appearance=c2:{["a"]=[{["type"]="Armor-Cloth-Mid1-Helmet",["node"]="helmet",["colors"]=["129405","949494","B73232"]},{["type"]="Item-1hHammer-Medium1",["node"]="right_hand"}],["h"]=0,["c"]={["boots"]={["type"]="Armor-Cloth-Low2",["colors"]=["8c5e46","6a1c1c","7f7f7f","7f7f7f"]},["leggings"]={["type"]="Armor-CC-Clothing5",["colors"]=["3e7f30","6a1c1c","7f7f7f","7f7f7f"]},["belt"]={["type"]="Armor-Cloth-Mid1",["colors"]=["7f6b1b","6a1c1c","704525","a68456","54573b"]},["chest"]={["type"]="Armor-CC-Clothing5",["colors"]=["3e7f30","6a1c1c","7f7f7f","7f7f7f"]},["arms"]={["type"]="Armor-Cloth-Low2",["colors"]=["267f2b","6a1c1c","7f7f7f","7f7f7f"]}},["b"]="n",["sk"]={["hands_feet"]="AC735A",["eye_white"]="FFE6DB",["snout"]="B77C62",["ear_tips"]="D58F70",["base"]="997D68",["hair_ears"]="AC735A",["eye_lid"]="534741",["eye"]="00ADEF",["inner_ear"]="AE917C",["nose"]="7C7873",["chest"]="534741"},["g"]="m",["r"]="b"}
+appearance=c2:{["a"]=[{["type"]="Armor-Cloth-Mid1-Helmet",["node"]="helmet",["colors"]=["129405","949494","B73232"]},{["type"]="Item-1hHammer-Basic1",["node"]="right_hand"}],["h"]=0,["c"]={["boots"]={["type"]="Armor-Cloth-Low2",["colors"]=["8c5e46","6a1c1c","7f7f7f","7f7f7f"]},["leggings"]={["type"]="Armor-CC-Clothing5",["colors"]=["3e7f30","6a1c1c","7f7f7f","7f7f7f"]},["belt"]={["type"]="Armor-Cloth-Mid1",["colors"]=["7f6b1b","6a1c1c","704525","a68456","54573b"]},["chest"]={["type"]="Armor-CC-Clothing5",["colors"]=["3e7f30","6a1c1c","7f7f7f","7f7f7f"]},["arms"]={["type"]="Armor-Cloth-Low2",["colors"]=["267f2b","6a1c1c","7f7f7f","7f7f7f"]}},["b"]="n",["sk"]={["hands_feet"]="AC735A",["eye_white"]="FFE6DB",["snout"]="B77C62",["ear_tips"]="D58F70",["base"]="997D68",["hair_ears"]="AC735A",["eye_lid"]="534741",["eye"]="00ADEF",["inner_ear"]="AE917C",["nose"]="7C7873",["chest"]="534741"},["g"]="m",["r"]="b"}
 level=14
 display_name=Field Alchemist
 sub_name=Thornbringer
@@ -57919,7 +57919,7 @@ might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
-appearance=n4:{["a"]=[{["type"]="Item-Shield-Stop_Sign",["node"]="left_hand"},{["type"]="Item-1hHammer-Medium1",["node"]="right_hand"}],["c"]="Horde-DotC_Bear_Male",["sk"]={["fur"]="3F3F3F",["cloth"]="550B00",["trim"]="947D07",["scar"]="4F2317",["highlight"]="7F570B",["armor"]="6A4829"},["sz"]="1.2"}
+appearance=n4:{["a"]=[{["type"]="Item-Shield-Stop_Sign",["node"]="left_hand"},{["type"]="Item-1hHammer-Basic1",["node"]="right_hand"}],["c"]="Horde-DotC_Bear_Male",["sk"]={["fur"]="3F3F3F",["cloth"]="550B00",["trim"]="947D07",["scar"]="4F2317",["highlight"]="7F570B",["armor"]="6A4829"},["sz"]="1.2"}
 level=49
 display_name=Dominion Outrider
 profession=2
@@ -59012,7 +59012,7 @@ might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
-appearance=c2:{["a"]=[{["type"]="Item-1hHammer-Medium1",["node"]="left_hand",["colors"]=["5E5E5E","5E402A"]},{["type"]="Item-1hHammer-Medium1",["node"]="right_hand"}],["h"]=0,["c"]={["leggings"]={["type"]="Armor-Cloth-Town_Crier",["colors"]=[]},["boots"]={["type"]="Armor-Light-High2",["colors"]=["2b2d33","910b08","2b2d33","910b08","2b2d33"]},["belt"]={["type"]="Armor-Cloth-Low3",["colors"]=["910b08","910b08","1f7c46","5f4d39","910b08","69987a","d4b30b","867d75"]}},["b"]="m",["sk"]={["skin"]="57586A",["tusks"]="CEC151",["eyeball"]="000000",["hair"]="7F0000",["eye"]="E9E9E9"},["g"]="m",["r"]="s"}
+appearance=c2:{["a"]=[{["type"]="Item-1hHammer-Basic1",["node"]="left_hand",["colors"]=["5E5E5E","5E402A"]},{["type"]="Item-1hHammer-Basic1",["node"]="right_hand"}],["h"]=0,["c"]={["leggings"]={["type"]="Armor-Cloth-Town_Crier",["colors"]=[]},["boots"]={["type"]="Armor-Light-High2",["colors"]=["2b2d33","910b08","2b2d33","910b08","2b2d33"]},["belt"]={["type"]="Armor-Cloth-Low3",["colors"]=["910b08","910b08","1f7c46","5f4d39","910b08","69987a","d4b30b","867d75"]}},["b"]="m",["sk"]={["skin"]="57586A",["tusks"]="CEC151",["eyeball"]="000000",["hair"]="7F0000",["eye"]="E9E9E9"},["g"]="m",["r"]="s"}
 level=36
 display_name=Lunatic
 profession=3
@@ -63121,7 +63121,7 @@ might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
-appearance=n4:{["a"]=[{["type"]="Item-Shield-Stop_Sign",["node"]="left_hand"},{["type"]="Item-1hHammer-Medium1",["node"]="right_hand"}],["c"]="Horde-DotC_Bear_Male",["sk"]={["fur"]="3F3F3F",["cloth"]="550B00",["trim"]="947D07",["scar"]="4F2317",["highlight"]="7F570B",["armor"]="6A4829"},["sz"]="1.2"}
+appearance=n4:{["a"]=[{["type"]="Item-Shield-Stop_Sign",["node"]="left_hand"},{["type"]="Item-1hHammer-Basic1",["node"]="right_hand"}],["c"]="Horde-DotC_Bear_Male",["sk"]={["fur"]="3F3F3F",["cloth"]="550B00",["trim"]="947D07",["scar"]="4F2317",["highlight"]="7F570B",["armor"]="6A4829"},["sz"]="1.2"}
 level=49
 display_name=Dominion Outrider
 profession=2

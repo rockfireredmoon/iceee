@@ -91,6 +91,7 @@ public:
 	int FillErrorMessage(int errCode);
 	int FillClientHas(void);
 	int FillClientNeeds(void);
+	int FillAPI(void);
 	bool NeedFile(bool verifyExist, std::string &checksum);
 
 	void CloseFileHandle(void);

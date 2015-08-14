@@ -8,6 +8,7 @@
 #include "RemoteAction.h"
 #include "Account.h"
 #include "Util.h"
+#include "ZoneDef.h"
 #include <stdlib.h>
 #include "FileReader.h"
 
@@ -705,22 +706,32 @@ void HTTPDistribute :: HandleHTTP_GET(char *dataStart, MULTISTRING &header)
 
 	customError = 0;
 	bool need = false;
+	bool api = false;
 	if(IsEmptyFileRequest() == false)
 	{
-		//We don't have the file, so prepare it.
-		if(verifyExist == false)
+		// An API?
+		if(Util::HasBeginning(FileNameRequest, "/api/"))
 		{
-			customError = OpenLocalFileName();
-			need = true;
+			api = true;
 		}
 		else
 		{
-			//If the checksum does not match, we need to update.
-			if(g_FileChecksum.MatchChecksum(FileNameAsset, checksum) == false)
+
+			//We don't have the file, so prepare it.
+			if(verifyExist == false)
 			{
 				customError = OpenLocalFileName();
 				need = true;
-				//LogMessageL("NEED FILE");
+			}
+			else
+			{
+				//If the checksum does not match, we need to update.
+				if(g_FileChecksum.MatchChecksum(FileNameAsset, checksum) == false)
+				{
+					customError = OpenLocalFileName();
+					need = true;
+					//LogMessageL("NEED FILE");
+				}
 			}
 		}
 	}
@@ -735,13 +746,20 @@ void HTTPDistribute :: HandleHTTP_GET(char *dataStart, MULTISTRING &header)
 	//No error, has a file prepared to upload.
 	if(customError == 0)
 	{
-		if(need == true)
+		if(api)
 		{
-			wpos = FillClientNeeds();
-			SendFile = true;
+			wpos = FillAPI();
 		}
 		else
-			wpos = FillClientHas();
+		{
+			if(need == true)
+			{
+				wpos = FillClientNeeds();
+				SendFile = true;
+			}
+			else
+				wpos = FillClientHas();
+		}
 	}
 	else
 	{
@@ -1025,6 +1043,43 @@ int HTTPDistribute :: FillClientHas(void)
 	wpos += sprintf(&SendBuf[wpos], "Last-Modified: Tue, 1 Nov 2011 00:00:00 GMT\r\n");
 	wpos += sprintf(&SendBuf[wpos], "Cache-Control: max-age=0\r\n");
 	wpos += sprintf(&SendBuf[wpos], "\r\n");
+	return wpos;
+}
+
+int HTTPDistribute :: FillAPI(void)
+{
+	int wpos = 0;
+	string response;
+	char buf[256];
+	int no = 0;
+	if(Util::HasEnding(FileNameRequest, "/who")) {
+		response += "{ ";
+		SIMULATOR_IT it;
+		for(it = Simulator.begin(); it != Simulator.end(); ++it)
+		{
+			if(it->isConnected == true && it->ProtocolState == 1 && it->LoadStage == SimulatorThread::LOADSTAGE_GAMEPLAY)
+			{
+				if(it->IsGMInvisible() == true)  //Hide GM Invisibility from the list.
+					continue;
+				CharacterData *cd = it->pld.charPtr;
+				ZoneDefInfo *zd = g_ZoneDefManager.GetPointerByID(it->pld.CurrentZoneID);
+				if(cd != NULL && zd != NULL)
+				{
+					no++;
+					Util::SafeFormat(buf, sizeof(buf), "\"%s\" : { \"zone\": \"%s\", \"shard\": \"%s\" }%s", cd->cdef.css.display_name, zd->mName.c_str(), zd->mShardName.c_str(), no > 1 ? "," : "");
+					response += buf;
+				}
+			}
+		}
+		response += " }";
+	}
+
+	wpos += sprintf(&SendBuf[wpos], "HTTP/1.1 200 OK\r\n");
+	wpos += sprintf(&SendBuf[wpos], "Content-Type: application/json\r\n");
+	wpos += sprintf(&SendBuf[wpos], "Content-Length: %d\r\n", (int)response.size());
+	wpos += sprintf(&SendBuf[wpos], "\r\n");
+	wpos += sprintf(&SendBuf[wpos], "%s", response.c_str());
+
 	return wpos;
 }
 

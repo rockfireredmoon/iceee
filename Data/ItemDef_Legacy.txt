@@ -42749,7 +42749,7 @@ mMinUseLevel=47
 mID=1143523
 mType=2
 mDisplayName=Old The Gavel
-mAppearance={["a"]={["type"]="Item-1hHammer-Medium1",["colors"]=["","5E5E5E","D46F12"]}}
+mAppearance={["a"]={["type"]="Item-1hHammer-Basic1",["colors"]=["","5E5E5E","D46F12"]}}
 mIcon=Icon-32-1hSword_Basic1.png|Icon-32-BG-Purple.png
 mLevel=49
 mQualityLevel=0

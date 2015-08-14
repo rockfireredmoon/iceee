@@ -562,13 +562,13 @@ mWeaponType=2
 app=Icon-32-Mace3.png
 
 [ENTRY]
-asset=Item-1hHammer-Medium1
+asset=Item-1hHammer-Basic1
 mEquipType=1
 mWeaponType=2
 app=Icon-32-Mace3.png
 
 [ENTRY]
-asset=Item-1hHammer-Medium1
+asset=Item-1hHammer-Basic1
 mEquipType=1
 mWeaponType=2
 app=Icon-32-Mace3.png
