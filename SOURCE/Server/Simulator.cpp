@@ -4087,6 +4087,23 @@ int SimulatorThread :: handle_query_item_delete(void)
 	if(itemDef != NULL)
 		LogMessageL(MSG_SHOW, "Deleting item %d [%s]", itemID, itemDef->mDisplayName.c_str());
 
+	//Find the players best (in terms of recoup amount) grinder (if they have one)
+	int invId = GetContainerIDFromName("inv");
+	std::vector<InventorySlot> inv = pld.charPtr->inventory.containerList[invId];
+	ItemDef *grinderDef = NULL;
+	for(std::vector<InventorySlot>::iterator it = inv.begin(); it != inv.end() ; ++it) {
+		InventorySlot sl = *it;
+		ItemDef *grItemDef = g_ItemManager.GetPointerByID(sl.IID);
+		if(grItemDef != NULL && grItemDef->mSpecialItemType == ITEM_GRINDER) {
+			if(grinderDef == NULL || (grinderDef != NULL && grItemDef->mIvMax1 > grinderDef->mIvMax1)) {
+				grinderDef = grItemDef;
+			}
+		}
+	}
+	if(grinderDef != NULL) {
+		int amt = (int)(((double)itemDef->mValue / 100.0) *  grinderDef->mIvMax1);
+		creatureInst->AdjustCopper(amt);
+	}
 
 	//Append a delete notice to the response string
 	int wpos = 0;

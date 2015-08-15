@@ -13,6 +13,14 @@
 #include "Util.h"
 #include "Report.h"  //For debugging
 
+enum SpecialItemType
+{
+	NONE,
+	REAGENT_GENERATOR,
+	ITEM_GRINDER,
+	XP_BOOST
+};
+
 extern const char *FLAVOR_TEXT_HEADER;
 extern const char *FLAVOR_TEXT_FOOTER;
 
