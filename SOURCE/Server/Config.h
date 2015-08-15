@@ -196,7 +196,7 @@ public:
 	bool PersistentBuffs;              //If true, active buffs will be saved and restored on next login
 
 	bool AccountCredits;				// If true, credits will be stored at the account level rather than per character and shared across all characters
-	uint NameChangeCost;					// Number of credits a last name change costs
+	unsigned int NameChangeCost;					// Number of credits a last name change costs
 
 
 	std::string GitHubToken;			// GitHub personal access token for bug reports
