@@ -7042,7 +7042,6 @@ profession=3
 creature_category=Mortal
 rarity=2
 ai_package=rogue_brave_6
-credit_drops=1
 
 [ENTRY]
 ID=291
@@ -29489,7 +29488,6 @@ channeling_break_chance=500
 level=48
 display_name=The Wailer
 profession=4
-credit_drops=1
 creature_category=Unliving
 rarity=2
 ai_package=custom_heathendel_epicmagefrost40
@@ -37103,7 +37101,6 @@ profession=3
 creature_category=Animal
 ai_package=melee_creature_brave_6
 total_size=9.6
-credit_drops=1
 
 [ENTRY]
 ID=1619

@@ -5,6 +5,7 @@ class this.CreditShopManager extends this.DefaultQueryHandler
 	mCharms = null;
 	mArmors = null;
 	mBags = null;
+	mNameChangeCost = 0;
 	mRecipes = null;
 	mNewItems = null;
 	CategoryTypes = null;
@@ -44,6 +45,11 @@ class this.CreditShopManager extends this.DefaultQueryHandler
 				lastPage = 1
 			}
 		};
+	}
+	
+	function getNameChangeCost() 
+	{
+		return mNameChangeCost;
 	}
 
 	function getData( key )
@@ -139,81 +145,90 @@ class this.CreditShopManager extends this.DefaultQueryHandler
 	{
 		this.clearItemList();
 
+		local r = 0;
 		foreach( item in results )
 		{
-			local id = item[0].tointeger();
-			local title = item[1];
-			local description = item[2];
-			local status = item[3];
-			local category = item[4];
-			local beginDate = item[5];
-			local endDate = item[6];
-			local priceCurrency = item[8].tointeger();
-			local quantityLimit = item[9].tointeger();
-			local quantitySold = item[10].tointeger();
-			local itemProto = item[11];
-			
-			local priceCopper = 0;
-			local priceCredits = 0;
-			if(priceCurrency == 0) {
-				priceCopper = item[7].tointeger();
+			if(r == 0) {
+				mNameChangeCost = item[0].tointeger();
 			}
-			else if(priceCurrency == 1) {
-				priceCredits  = item[7].tointeger();
-			}
-			else if(priceCurrency == 2) {			
-				local spl = this.Util.split(item[7], "+");
-				priceCopper = spl[0].tointeger();
-				priceCredits = spl[1].tointeger();
-			} 
-			else {
-				priceCopper = 999999;
-				priceCredits = 999999;
-			}
-			
-			local creditShopItem = this.CreditShopItem(id, title, description, status, category, beginDate, endDate, priceCopper, priceCredits, priceCurrency, quantityLimit, quantitySold, itemProto);
-			local isExpired = false;
-			
-			
-			if (endDate != "")
+			else 
 			{
-				local date = this.Util.split(endDate, ":");
-
-				if (date.len() > 1 && date[0] == "Expired")
+				local id = item[0].tointeger();
+				local title = item[1];
+				local description = item[2];
+				local status = item[3];
+				local category = item[4];
+				local beginDate = item[5];
+				local endDate = item[6];
+				local priceCurrency = item[8].tointeger();
+				local quantityLimit = item[9].tointeger();
+				local quantitySold = item[10].tointeger();
+				local itemProto = item[11];
+				
+				local priceCopper = 0;
+				local priceCredits = 0;
+				if(priceCurrency == 0) {
+					priceCopper = item[7].tointeger();
+				}
+				else if(priceCurrency == 1) {
+					priceCredits  = item[7].tointeger();
+				}
+				else if(priceCurrency == 2) {			
+					local spl = this.Util.split(item[7], "+");
+					priceCopper = spl[0].tointeger();
+					priceCredits = spl[1].tointeger();
+				} 
+				else {
+					priceCopper = 999999;
+					priceCredits = 999999;
+				}
+				
+				local creditShopItem = this.CreditShopItem(id, title, description, status, category, beginDate, endDate, priceCopper, priceCredits, priceCurrency, quantityLimit, quantitySold, itemProto);
+				local isExpired = false;
+				
+				
+				if (endDate != "")
 				{
-					isExpired = true;
+					local date = this.Util.split(endDate, ":");
+	
+					if (date.len() > 1 && date[0] == "Expired")
+					{
+						isExpired = true;
+					}
+				}
+	
+				if (status == "NEW")
+				{
+					local dataHolder = this.CategoryTypes.NEW.dataList;
+					creditShopItem.setItemLabelType(this.ItemLabelType.NEW);
+					dataHolder.append(creditShopItem);
+				}
+				else if (status == "HOT")
+				{
+					creditShopItem.setItemLabelType(this.ItemLabelType.HOT);
+				}
+				else if (quantityLimit > 0)
+				{
+					creditShopItem.setItemLabelType(this.ItemLabelType.LIMITED);
+				}
+	
+				if (quantityLimit > 0 && quantitySold >= quantityLimit)
+				{
+					creditShopItem.setItemLabelType(this.ItemLabelType.SOLD_OUT);
+				}
+				else if (isExpired)
+				{
+					creditShopItem.setItemLabelType(this.ItemLabelType.EXPIRED);
+				}
+	
+				if (category in this.CategoryTypes)
+				{
+					local dataHolder = this.CategoryTypes[category].dataList;
+					dataHolder.append(creditShopItem);
 				}
 			}
-
-			if (status == "NEW")
-			{
-				local dataHolder = this.CategoryTypes.NEW.dataList;
-				creditShopItem.setItemLabelType(this.ItemLabelType.NEW);
-				dataHolder.append(creditShopItem);
-			}
-			else if (status == "HOT")
-			{
-				creditShopItem.setItemLabelType(this.ItemLabelType.HOT);
-			}
-			else if (quantityLimit > 0)
-			{
-				creditShopItem.setItemLabelType(this.ItemLabelType.LIMITED);
-			}
-
-			if (quantityLimit > 0 && quantitySold >= quantityLimit)
-			{
-				creditShopItem.setItemLabelType(this.ItemLabelType.SOLD_OUT);
-			}
-			else if (isExpired)
-			{
-				creditShopItem.setItemLabelType(this.ItemLabelType.EXPIRED);
-			}
-
-			if (category in this.CategoryTypes)
-			{
-				local dataHolder = this.CategoryTypes[category].dataList;
-				dataHolder.append(creditShopItem);
-			}
+			
+			r++;
 		}
 
 		foreach( key, data in this.CategoryTypes )

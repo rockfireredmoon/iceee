@@ -2506,6 +2506,8 @@ bool SimulatorThread :: HandleQuery(int &PendingData)
 		PendingData = handle_query_item_market_reload();
 	else if(query.name.compare("item.market.buy") == 0)
 		PendingData = handle_query_item_market_buy();
+	else if(query.name.compare("item.market.purchase.name") == 0)
+		PendingData = handle_query_item_market_purchase_name();
 	else if(query.name.compare("bug.report") == 0)
 		PendingData = handle_query_bug_report();
 	else if(query.name.compare("marker.list") == 0)
@@ -11791,6 +11793,57 @@ int SimulatorThread :: handle_query_item_market_buy(void)
 		return wpos;
 	}
 }
+
+int SimulatorThread :: handle_query_item_market_purchase_name(void)
+{
+	if(query.args.size() < 2)
+		return PrepExt_QueryResponseError(SendBuf, query.ID, "Invalid query.");
+	string firstName = query.GetString(0);
+	string secondName = query.GetString(1);
+
+	int res = g_AccountManager.ValidateNameParts(firstName.c_str(), secondName.c_str());
+	if(res != AccountManager::CHARACTER_SUCCESS) {
+		Util::SafeFormat(Aux1, sizeof(Aux1), "Renamed to %s %s returned error %d", firstName.c_str(), secondName.c_str(), res);
+		return PrepExt_QueryResponseError(SendBuf, query.ID, Aux1);
+	}
+
+	string fullName = firstName + " " + secondName;
+
+	if(g_Config.AccountCredits) {
+		creatureInst->css.credits = pld.accPtr->Credits;
+	}
+	if((unsigned long)creatureInst->css.credits < g_Config.NameChangeCost) {
+		return PrepExt_QueryResponseError(SendBuf, query.ID, "You do not have enough credits!");
+	}
+
+	g_CharacterManager.GetThread("Simulator::MarketBuy");
+
+	AccountData * acc = g_AccountManager.FetchIndividualAccount(creatureInst->charPtr->AccountID);
+	if(acc == NULL)
+	{
+		return PrepExt_QueryResponseError(SendBuf, query.ID, "Name change failed, missing account.");
+	}
+	CharacterCacheEntry *ce = acc->characterCache.GetCacheCharacter(creatureInst->CreatureDefID);
+	if(ce == NULL)
+	{
+		return PrepExt_QueryResponseError(SendBuf, query.ID, "Name change failed, missing cache entry.");
+	}
+	if(fullName.compare(ce->display_name) == 0) {
+		return PrepExt_QueryResponseError(SendBuf, query.ID, "You have chosen the same name!");
+	}
+	ce->display_name = fullName.c_str();
+	acc->PendingMinorUpdates++;
+	memcpy(creatureInst->css.display_name, fullName.c_str(), fullName.size() + 1);
+	creatureInst->css.credits -= g_Config.NameChangeCost;
+	if(g_Config.AccountCredits) {
+		pld.accPtr->Credits = creatureInst->css.credits;
+		pld.accPtr->PendingMinorUpdates++;
+	}
+	creatureInst->SendStatUpdate(STAT::CREDITS);
+	creatureInst->SendStatUpdate(STAT::DISPLAY_NAME);
+	g_CharacterManager.ReleaseThread();
+	return  PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
+}
 int SimulatorThread :: handle_query_item_market_reload(void)
 {
 	g_CharacterManager.GetThread("SimulatorThread::MarketReload");
@@ -11897,6 +11950,14 @@ int SimulatorThread :: handle_query_item_market_list(void)
 	wpos += PutShort(&SendBuf[wpos], 0);
 
 	uint count = 0;
+
+	// First row has cost of name change
+	wpos += PutByte(&SendBuf[wpos], 1);
+	sprintf(Aux1, "%d", g_Config.NameChangeCost);
+	wpos += PutStringUTF(&SendBuf[wpos], Aux1);
+	count++;
+
+	// Now the actual items
 	for(std::map<int, CS::CreditShopItem*>::iterator it = g_CSManager.mItems.begin(); it != g_CSManager.mItems.end(); ++it)
 	{
 		if(g_ServerTime < (it->second->mStartDate * 1000UL))

@@ -156,6 +156,7 @@ public:
 	float PsyResistDivisor;          //Points of psyche may provide bonus resistance to certain elemental attacks.
 
 	float NamedMobDropMultiplier;    //All mobs marked as named (see "ExtraData" field for CreatureDefinitions) will receive a drop rate bonus for randomized items.
+	int NamedMobCreditDrops;       //All mobs marked as named (see "ExtraData" field for CreatureDefinitions) will drop credits (when the player is at or below level, bonus given for parties).
 
 	int DebugPacketSendTrigger;        //Used only for debugging network issues, the interval of repeatedly unfinished send() attempts before noting a message in the log.
 	int DebugPacketSendDelay;          //Experimental delay before attempting to resend data on a socket that doesn't seem to be operating correctly.
@@ -195,6 +196,7 @@ public:
 	bool PersistentBuffs;              //If true, active buffs will be saved and restored on next login
 
 	bool AccountCredits;				// If true, credits will be stored at the account level rather than per character and shared across all characters
+	uint NameChangeCost;					// Number of credits a last name change costs
 
 
 	std::string GitHubToken;			// GitHub personal access token for bug reports

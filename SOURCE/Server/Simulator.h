@@ -286,6 +286,7 @@ public:
 	int handle_query_item_market_edit(void);
 	int handle_query_item_market_buy(void);
 	int handle_query_item_market_reload(void);
+	int handle_query_item_market_purchase_name(void);
 	int handle_query_bug_report(void);
 	int handle_query_util_addfunds();
 	int handle_query_validate_name();

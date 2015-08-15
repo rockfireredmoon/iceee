@@ -520,6 +520,7 @@ class this.GUI.NineItemPanel extends this.GUI.Component
 			j = j + 1;
 			i++;
 		}
+		
 	}
 
 	function onPreviousButtonPressed( button )
@@ -861,7 +862,7 @@ class this.GUI.CreditNameChangePanel extends this.GUI.Component
 		this.mCredits.setSize(156, 24);
 		this.mCredits.setPreferredSize(156, 24);
 		centerContainer.add(this.mCredits);
-		this.updateCredits(1000);
+		this.updateCredits(::_creditShopManager.getNameChangeCost());
 
 		if (::_avatar && ::_avatar.getStat(this.Stat.CREDITS) != null)
 		{
@@ -953,6 +954,7 @@ class this.GUI.CreditNameChangePanel extends this.GUI.Component
 		switch(qa.query)
 		{
 		case "validate.name":
+			this.updateCredits(::_creditShopManager.getNameChangeCost());
 			this.updateApprovalText("Name Approved");
 			break;
 
@@ -984,7 +986,6 @@ class this.GUI.CreditNameChangePanel extends this.GUI.Component
 		}
 		else
 		{
-			  // [013]  OP_JMP            0      0    0    0
 		}
 	}
 

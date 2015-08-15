@@ -388,6 +388,8 @@ void LoadConfig(const char *filename)
 				g_Config.HeroismQuestLevelPenalty = lfr.BlockToIntC(1);
 			else if(strcmp(NameBlock, "NamedMobDropMultiplier") == 0)
 				g_Config.NamedMobDropMultiplier = static_cast<float>(lfr.BlockToDblC(1));
+			else if(strcmp(NameBlock, "NamedMobCreditDrops") == 0)
+				g_Config.NamedMobCreditDrops = lfr.BlockToIntC(1);
 			else if(strcmp(NameBlock, "ProgressiveDropRateBonusMult") == 0)
 				Util::AssignFloatArrayFromStringSplit(g_Config.ProgressiveDropRateBonusMult, COUNT_ARRAY_ELEMENTS(g_Config.ProgressiveDropRateBonusMult), lfr.BlockToStringC(1, 0));
 			else if(strcmp(NameBlock, "ProgressiveDropRateBonusMultMax") == 0)
@@ -423,7 +425,8 @@ void LoadConfig(const char *filename)
 				g_Config.PersistentBuffs = lfr.BlockToBool(1);
 			else if(strcmp(NameBlock, "AccountCredits") == 0)
 				g_Config.AccountCredits = lfr.BlockToBool(1);
-
+			else if(strcmp(NameBlock, "NameChangeCost") == 0)
+				g_Config.NameChangeCost = lfr.BlockToInt(1);
 			else
 			{
 				g_Log.AddMessageFormatW(MSG_SHOW, "Unknown identifier [%s] in config file [%s]", lfr.BlockToString(0), filename);
@@ -592,6 +595,7 @@ GlobalConfigData :: GlobalConfigData()
 	PsyResistDivisor = 0.0F;
 
 	NamedMobDropMultiplier = 4.0F;
+	NamedMobCreditDrops = 1;
 
 	SceneryAuditDelay = 120000;  //2 minutes;
 	SceneryAuditAllow = true;
@@ -631,6 +635,7 @@ GlobalConfigData :: GlobalConfigData()
 	PersistentBuffs = false;
 
 	AccountCredits = true;
+	NameChangeCost = 300;
 
 	InvalidLoginMessage = "Account not found.  Check username and password.";
 }

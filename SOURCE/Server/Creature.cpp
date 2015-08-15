@@ -2848,7 +2848,20 @@ void CreatureInstance :: ProcessDeath(void)
 		// Calculate how many credits should be awarded if the creature 'drops' them.
 		int credits = 0;
 		char buf[256];
+
+		int creditDrops = 0;
+		CreatureDefinition *cdef = CreatureDef.GetPointerByCDef(CreatureDefID);
+		if(cdef != NULL)
+		{
+			if(cdef->IsNamedMob()) {
+				creditDrops = g_Config.NamedMobCreditDrops;
+			}
+		}
 		if(css.credit_drops > 0) {
+			creditDrops = css.credit_drops;
+		}
+
+		if(creditDrops > 0) {
 			double maxPlayerLevel = 0;
 			double alivePlayers = 0;
 			for(size_t i = 0; i < attackerList.size(); i++)
@@ -2861,7 +2874,7 @@ void CreatureInstance :: ProcessDeath(void)
 				}
 			}
 			int levelDiff = ( css.level - maxPlayerLevel ) + 1;
-			credits = levelDiff * css.rarity * alivePlayers;
+			credits = creditDrops * levelDiff * css.rarity * alivePlayers;
 			if(credits < 0) {
 				g_Log.AddMessageFormat("Party earned no credits as level difference too great or nobody was left alive");
 			}
