@@ -36,8 +36,9 @@
 #include "GM.h"
 #include "QuestScript.h"
 #include "CreditShop.h"
-#include "restclient.h"
+//#include "restclient.h"
 #include "Daily.h"
+#include <curl/curl.h>
 
 
 //This is the main function of the simulator thread.  A thread must be created for each port
@@ -12072,20 +12073,55 @@ int SimulatorThread :: handle_query_marker_list(void)
 
 int SimulatorThread :: handle_query_bug_report(void)
 {
-	RestClient::setAuth(g_Config.GitHubToken, "x-oauth-basic");
-	char json[2048];
 	std::string summary = query.GetString(0);
 	std::string desc = query.GetString(2);
+	std::string auth = g_Config.GitHubToken;
 	Util::EncodeJSONString(summary);
 	Util::EncodeJSONString(desc);
-	Util::SafeFormat(json, sizeof(json), "{ \"title\": \"%s\", \"body\": \"Category: %s\\n\\n%s\", \"labels\": [ \"bug\", \"in game\" ] }", summary.c_str(), query.GetString(1), desc.c_str());
+	Util::SafeFormat(Aux1, sizeof(Aux1), "{ \"title\": \"%s\", \"body\": \"Reported By: %s\\nCategory: %s\\n\\n%s\", \"labels\": [ \"bug\", \"in game\" ] }", summary.c_str(), pld.charPtr->cdef.css.display_name, query.GetString(1), desc.c_str());
 	g_Log.AddMessageFormat("Posting bug report with summary %s and category of %s", query.GetString(0), query.GetString(2));
-	RestClient::response r = RestClient::post("https://api.github.com/repos/rockfireredmoon/iceee/issues", "text/json", json);
-	g_Log.AddMessageFormat("GitHub responds with %d", r.code);
-	if(r.code != 200) {
-		return PrepExt_QueryResponseError(SendBuf, query.ID, "GitHub refused Bug Report.");
+
+	struct curl_slist *headers = NULL;
+	CURL *curl;
+	curl_global_init(CURL_GLOBAL_DEFAULT);
+	curl = curl_easy_init();
+	if(curl) {
+		curl_easy_setopt(curl, CURLOPT_URL, "https://api.github.com/repos/rockfireredmoon/iceee/issues");
+		curl_easy_setopt(curl, CURLOPT_USERAGENT, "PlanetForever");
+
+	    curl_easy_setopt(curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+	    curl_easy_setopt(curl, CURLOPT_USERPWD, auth.c_str());
+
+		headers = curl_slist_append(headers, "Expect:");
+		headers = curl_slist_append(headers, "Content-Type: application/json");
+		curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
+
+		curl_easy_setopt(curl, CURLOPT_POSTFIELDS, Aux1);
+		curl_easy_setopt(curl, CURLOPT_POSTFIELDSIZE, -1L);
+		curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
+
+		// TODO might need config item to disable SSL verification
+		//curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 0L);
+		//curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, 0L);
+
+		CURLcode res;
+		res = curl_easy_perform(curl);
+
+		curl_slist_free_all(headers);
+		curl_easy_cleanup(curl);
+		int wpos;
+		if(res == CURLE_OK) {
+			wpos = PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
+		}
+		else {
+			Util::SafeFormat(Aux1, sizeof(Aux1), "Failed to send bug report to Github. Response code %d", res);
+			wpos = PrepExt_QueryResponseError(SendBuf, query.ID, Aux1);
+		}
+		return wpos;
 	}
-	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
+
+
+	return PrepExt_QueryResponseError(SendBuf, query.ID, "Failed to configure HTTP connection.");
 }
 
 int SimulatorThread :: handle_query_guild_info(void)

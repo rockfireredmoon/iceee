@@ -62,7 +62,6 @@ planetforeverd_SOURCES = md5.cc \
 	Quest.cpp \
 	QuestScript.cpp \
 	RemoteAction.cpp \
-	restclient.cpp \
 	Report.cpp \
 	Router.cpp \
 	Scenery2.cpp \
@@ -140,7 +139,6 @@ planetforeverd_SOURCES = md5.cc \
 	QuestAction.h \
 	Quest.h \
 	QuestScript.h \
-	restclient.h \
 	RemoteAction.h \
 	Report.h \
 	RotatingList.h \
