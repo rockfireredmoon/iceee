@@ -370,11 +370,14 @@ class this.Screens.ChatWindow extends this.GUI.Component
 
 	function onLinkClicked( message, data )
 	{
-		if("clickedOnText" in data && this.Util.startsWith(data.clickedOnText, "http://") || this.Util.startsWith(data.clickedOnText, "https://")) {
-			this.System.openURL(data.clickedOnText);
+		print("ICE! " + data);
+		if("href" in data && this.Util.startsWith(data.href, "http://") || this.Util.startsWith(data.href, "https://")) {
+			print("ICE! OPEN HREF " + data.href);
+			this.System.openURL(data.href);
 		}
-		else if("clickedOnText" in data && this.Util.startsWith(data.clickedOnText, "forum://")) {
-			local forumId = data.clickedOnText.slice(8);
+		else if("href" in data && this.Util.startsWith(data.href, "forum://")) {
+			print("ICE! OPEN FORUM " + data.href);
+			local forumId = data.href.slice(8);
 			local igf = Screens.show("IGForum");
 			if(igf) {
 				igf.QueryOpenThread(forumId.tointeger(), 0);
@@ -965,7 +968,7 @@ class this.Screens.ChatWindow extends this.GUI.Component
 					eidx = message.len();
 					
 				// Have link start and end position now so extract it and create link HTML
-				local link = message.slice(sidx, eidx);
+				local link = message.slice(sidx, eidx == message.len() ? eidx : (eidx + 1));
 				local newlink = callbackFunction(link);
 				
 				// Reconstruct the message
@@ -1000,6 +1003,7 @@ class this.Screens.ChatWindow extends this.GUI.Component
 		while (logLen > 0 && index >= 0 && count <= totalHTMLComponents)
 		{
 			local message = this.mTabContents[tab].getLog()[index].message;
+			
 			local channel = this.mTabContents[tab].getLog()[index].channel;
 			local color = this._ChatManager.getColor(channel);
 			local wrapSize = this.getSize().width - 50;
@@ -1011,42 +1015,62 @@ class this.Screens.ChatWindow extends this.GUI.Component
 			// Search for hyperlinks in the text and turn them into clickable links
 			
 			local linkReplace = function(link) {
-				return "<a href=\"" + link + "\"><font color=\"7777ff\">" + link + "</font></a> ";
+				local ed = Util.endsWith(link, ".");
+				if(ed) {
+					link = link.slice(0, link.len() - 1); 
+				}
+				local es = Util.endsWith(link, " ");
+				if(es) {
+					link = link.slice(0, link.len() - 1);
+				}
+				local linkText = link;				
+				if(linkText.len() > 30) {
+					linkText = linkText.slice(0, 26) + "...";
+				}
+				link = "<a href=\"" + link + "\"><font color=\"7777ff\">" + Util.trim(linkText) + "</font></a>";
+				if(ed) {
+					link += ".";
+				} 
+				else if(es) {
+					link += " ";
+				}
+				return link;
 			}
 			message = _searchAndReplace(message, "http://", " ", linkReplace);
 			message = _searchAndReplace(message, "https://", " ", linkReplace);
 			message = _searchAndReplace(message, "forum://", " ", linkReplace);
 			local colorReplace = function(color) {
+				
 				if(this.Util.startsWith(color, "#0")) 
-					return "<font color=\"ff0000\">" + color.slice(2) + "</font>";
+					return "<font color=\"ff0000\">" + color.slice(2, color.len() - 1) + "</font>";
 				else if(this.Util.startsWith(color, "#1")) 
-					return "<font color=\"ff7f00\">" + color.slice(2) + "</font>";
+					return "<font color=\"ff7f00\">" + color.slice(2, color.len() - 1) + "</font>";
 				else if(this.Util.startsWith(color, "#2")) 
-					return "<font color=\"ffff00\">" + color.slice(2) + "</font>";
+					return "<font color=\"ffff00\">" + color.slice(2, color.len() - 1) + "</font>";
 				else if(this.Util.startsWith(color, "#3")) 
-					return "<font color=\"00ff00\">" + color.slice(2) + "</font>";
+					return "<font color=\"00ff00\">" + color.slice(2, color.len() - 1) + "</font>";
 				else if(this.Util.startsWith(color, "#4")) 
-					return "<font color=\"0000ff\">" + color.slice(2) + "</font>";
+					return "<font color=\"0000ff\">" + color.slice(2, color.len() - 1) + "</font>";
 				else if(this.Util.startsWith(color, "#5")) 
-					return "<font color=\"ff00ff\">" + color.slice(2) + "</font>";
+					return "<font color=\"ff00ff\">" + color.slice(2, color.len() - 1) + "</font>";
 				else if(this.Util.startsWith(color, "#6")) 
-					return "<font color=\"ff00ff\">" + color.slice(2) + "</font>";
+					return "<font color=\"ff00ff\">" + color.slice(2, color.len() - 1) + "</font>";
 				else if(this.Util.startsWith(color, "#7")) 
-					return "<font color=\"00ffff\">" + color.slice(2) + "</font>";
+					return "<font color=\"00ffff\">" + color.slice(2, color.len() - 1) + "</font>";
 				else if(this.Util.startsWith(color, "#8")) 
-					return "<font color=\"ffffff\">" + color.slice(2) + "</font>";
+					return "<font color=\"ffffff\">" + color.slice(2, color.len() - 1) + "</font>";
 				else if(this.Util.startsWith(color, "#9")) 
-					return "<font color=\"8a5d27\">" + color.slice(2) + "</font>";
+					return "<font color=\"8a5d27\">" + color.slice(2, color.len() - 1) + "</font>";
 				return color;
 			}
 			message = _searchAndReplace(message, "#", "#", colorReplace);
 			message = _searchAndReplace(message, "{", "}", function(text) {
-				return "<i>" + text.slice(1) + "</i>";
+				return "<i>" + text.slice(1, text.len() - 1) + "</i>";
 			});
 			message = _searchAndReplace(message, "\\", "\\", function(text) {
-				return "<b>" + text.slice(1) + "</b>";
+				return "<b>" + text.slice(1, text.len() - 1) + "</b>";
 			});
-
+			
 			if (activeHTML.len() <= count)
 			{
 				local html = this.GUI.HTML(message);

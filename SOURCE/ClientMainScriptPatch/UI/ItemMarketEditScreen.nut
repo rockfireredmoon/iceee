@@ -345,28 +345,37 @@ class Screens.ItemMarketEditScreen extends GUI.Frame {
 			local selected = mOutputList.getSelectedRows();
 			mOutputList.removeAllRows();
 			mEntries = [];
-
+			
+			
+			local rr = 0;
 			foreach( r in results ) {
-				local e = {
-					id = r[0],
-					title = r[1],
-					description = r[2],
-					status = r[3],
-					category = r[4],
-					beginDate = r[5],
-					endDate = r[6],
-					priceAmount = r[7],
-					priceCurrency = r[8].tointeger(),
-					quantityLimit = r[9],
-					quantitySold = r[10],
-					itemProto = r[11]
-				};
-				mEntries.append(e);
-				mOutputList.addRow([
-					e.id,
-					e.title,
-					e.category
-				]);
+				if(rr == 0) {
+					// TODO make this detect IceEE server
+					//	Ignore, this is the name change cost
+				}
+				else {
+					local e = {
+						id = r[0],
+						title = r[1],
+						description = r[2],
+						status = r[3],
+						category = r[4],
+						beginDate = r[5],
+						endDate = r[6],
+						priceAmount = r[7],
+						priceCurrency = r[8].tointeger(),
+						quantityLimit = r[9],
+						quantitySold = r[10],
+						itemProto = r[11]
+					};
+					mEntries.append(e);
+					mOutputList.addRow([
+						e.id,
+						e.title,
+						e.category
+					]);
+				}
+				rr++;
 			}
 
 			mOutputList.setSelectedRows(selected);

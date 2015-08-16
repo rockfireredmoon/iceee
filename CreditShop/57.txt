@@ -1,0 +1,9 @@
+[ENTRY]
+Description=Brief Item Grinder
+PriceCurrency=CREDITS
+PriceCopper=0
+PriceCredits=100
+ItemID=900009
+Category=RECEIPES
+Status=NEW
+

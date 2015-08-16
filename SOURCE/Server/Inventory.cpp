@@ -48,6 +48,8 @@ void InventorySlot :: CopyFrom(InventorySlot &source, bool copyCCSID)
 		CCSID = source.CCSID;
 	bindStatus = source.bindStatus;
 	secondsRemaining = source.secondsRemaining;
+	timeLoaded = source.timeLoaded;
+
 }
 
 // Trading needed a new copy function because it would overwrite previous stack counts.
@@ -60,6 +62,7 @@ void InventorySlot :: CopyWithoutCount(InventorySlot &source, bool copyCCSID)
 		CCSID = source.CCSID;
 	bindStatus = source.bindStatus;
 	secondsRemaining = source.secondsRemaining;
+	timeLoaded = source.timeLoaded;
 }
 
 ItemDef * InventorySlot :: ResolveItemPtr(void)
@@ -105,10 +108,12 @@ unsigned short InventorySlot :: GetSlot(void)
 {
 	return (CCSID & CONTAINER_SLOT);
 }
-
-void InventorySlot :: SaveToAccountStream(const char *containerName, FILE *output)
-{
-	fprintf(output, "%s=%d,%d,%d,%d,%d\r\n", containerName, CCSID, IID, count, customLook, bindStatus);
+long InventorySlot :: AdjustTimes() {
+	if(secondsRemaining > -1) {
+		secondsRemaining = GetTimeRemaining();
+	}
+	timeLoaded = g_ServerTime;
+	return secondsRemaining;
 }
 
 bool InventorySlot :: TestEquivalent(InventorySlot &other)
@@ -132,10 +137,19 @@ void InventorySlot :: ApplyItemIntegerType(int IvType, int IvMax)
 }
 int InventorySlot :: GetTimeRemaining(void)
 {
-	if(secondsRemaining > 0)
-		return secondsRemaining;
+	if(secondsRemaining < 0) {
+		return -1;
+	}
+	long s = secondsRemaining - ( ( g_ServerTime - timeLoaded ) / 1000 );
+	if(s < 0) {
+		s = 0;
+	}
+	return s;
+}
 
-	return -1;
+bool InventorySlot :: IsExpired(void)
+{
+	return secondsRemaining == 0;
 }
 
 bool InventorySlot :: VerifyItemExist(void)
@@ -238,10 +252,13 @@ InventorySlot * InventoryManager :: AddItem_Ex(int containerID, int itemID, int 
 		newItem.count = count - 1;
 	else
 		newItem.count = 0;
+	newItem.timeLoaded = g_ServerTime;
 	newItem.IID = itemID;
 	newItem.dataPtr = itemDef;
 	if(itemDef->mBindingType == BIND_ON_PICKUP)
 		newItem.bindStatus = 1;
+
+	newItem.secondsRemaining = -1;
 	newItem.ApplyItemIntegerType(itemDef->mIvType1, itemDef->mIvMax1);
 	newItem.ApplyItemIntegerType(itemDef->mIvType2, itemDef->mIvMax2);
 
@@ -444,6 +461,24 @@ int InventoryManager :: GetFreeSlot(int containerID)
 			return a;
 
 	return -1;
+}
+
+ItemDef * InventoryManager :: GetBestSpecialItem(int invID, char specialItemType)
+{
+	std::vector<InventorySlot> inv = containerList[invID];
+	ItemDef *grinderDef = NULL;
+	for(std::vector<InventorySlot>::iterator it = inv.begin(); it != inv.end() ; ++it) {
+		InventorySlot sl = *it;
+		if(!sl.IsExpired()) {
+			ItemDef *grItemDef = g_ItemManager.GetPointerByID(sl.IID);
+			if(grItemDef != NULL && grItemDef->mSpecialItemType == specialItemType) {
+				if(grinderDef == NULL || (grinderDef != NULL && grItemDef->mIvMax1 > grinderDef->mIvMax1)) {
+					grinderDef = grItemDef;
+				}
+			}
+		}
+	}
+	return grinderDef;
 }
 
 int InventoryManager :: CountFreeSlots(int containerID)
@@ -1101,6 +1136,7 @@ int CheckSection_Inventory(FileReader &fr, InventoryManager &cd, const char *deb
 
 	int count = 0;
 	int customLook = 0;
+	long secondsRemaining = -1;
 	char bindStatus = 0;
 	if(r >= 4)
 		count = fr.BlockToInt(3);
@@ -1108,6 +1144,8 @@ int CheckSection_Inventory(FileReader &fr, InventoryManager &cd, const char *deb
 		customLook = fr.BlockToIntC(4);
 	if(r >= 6)
 		bindStatus = (char)fr.BlockToIntC(5);
+	if(r >= 7)
+		secondsRemaining = fr.BlockToLongC(6);
 
 	InventorySlot newItem;
 	newItem.CCSID = (ContID << 16) | slot;
@@ -1116,6 +1154,8 @@ int CheckSection_Inventory(FileReader &fr, InventoryManager &cd, const char *deb
 	newItem.count = count;
 	newItem.customLook = customLook;
 	newItem.bindStatus = bindStatus;
+	newItem.secondsRemaining = secondsRemaining;
+	newItem.timeLoaded = g_ServerTime;
 	if(cd.AddItem(ContID, newItem) == -1)
 	{
 		g_Log.AddMessageFormat("Warning: %s [%s] failed to add item (container:%s, slot:%d, itemID:%d)", debugType, debugName, fr.BlockToStringC(0, 0), slot, ID);

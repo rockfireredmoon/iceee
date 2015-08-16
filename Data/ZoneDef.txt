@@ -1082,7 +1082,6 @@ EnvironmentCycle=1
 DefLoc=2686,312,4786
 
 [ENTRY]
-"(1,100,37,201)"
 ID=201
 NAME=Earth's Ending
 ENVIRONMENTTYPE=Dungeon1

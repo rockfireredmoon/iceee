@@ -94,6 +94,7 @@ public:
 	int BlockToInt(int block);
 	bool BlockToBool(int block);
 	int BlockToIntC(int block);
+	long BlockToLongC(int block);
 	unsigned long BlockToULongC(int block);
 	bool BlockToBoolC(int block);
 

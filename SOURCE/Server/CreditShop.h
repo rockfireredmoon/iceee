@@ -18,7 +18,6 @@ namespace Category
 		ARMOR = 2,
 		BAGS = 3,
 		RECIPE = 4,
-		NEW = 5,
 		MAX
 	};
 	const char *GetNameByID(int eventID);

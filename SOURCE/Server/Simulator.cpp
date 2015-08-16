@@ -4089,17 +4089,7 @@ int SimulatorThread :: handle_query_item_delete(void)
 
 	//Find the players best (in terms of recoup amount) grinder (if they have one)
 	int invId = GetContainerIDFromName("inv");
-	std::vector<InventorySlot> inv = pld.charPtr->inventory.containerList[invId];
-	ItemDef *grinderDef = NULL;
-	for(std::vector<InventorySlot>::iterator it = inv.begin(); it != inv.end() ; ++it) {
-		InventorySlot sl = *it;
-		ItemDef *grItemDef = g_ItemManager.GetPointerByID(sl.IID);
-		if(grItemDef != NULL && grItemDef->mSpecialItemType == ITEM_GRINDER) {
-			if(grinderDef == NULL || (grinderDef != NULL && grItemDef->mIvMax1 > grinderDef->mIvMax1)) {
-				grinderDef = grItemDef;
-			}
-		}
-	}
+	ItemDef *grinderDef = pld.charPtr->inventory.GetBestSpecialItem(invId, ITEM_GRINDER);
 	if(grinderDef != NULL) {
 		int amt = (int)(((double)itemDef->mValue / 100.0) *  grinderDef->mIvMax1);
 		creatureInst->AdjustCopper(amt);
@@ -10261,7 +10251,7 @@ int SimulatorThread :: handle_query_vault_deliverycontents(void)
 	wpos += PutShort(&SendBuf[wpos], pld.accPtr->inventory.containerList[DELIVERY_CONTAINER].size());         //Number of rows
 	for(std::vector<InventorySlot>::iterator it = pld.accPtr->inventory.containerList[DELIVERY_CONTAINER].begin(); it != pld.accPtr->inventory.containerList[DELIVERY_CONTAINER].end() ; ++it) {
 		wpos += PutByte(&SendBuf[wpos], 2);
-		Util::SafeFormat(Aux1, sizeof(Aux1), "item%d:%d:%d:%d", it->IID, it->customLook, it->count, it->secondsRemaining);
+		Util::SafeFormat(Aux1, sizeof(Aux1), "item%d:%d:%d:%d", it->IID, it->customLook, it->count, it->GetTimeRemaining());
 		wpos += PutStringUTF(&SendBuf[wpos],Aux1);
 		Util::SafeFormat(Aux1, sizeof(Aux1), "%X", it->CCSID);
 		wpos += PutStringUTF(&SendBuf[wpos],Aux1);
@@ -11975,12 +11965,16 @@ int SimulatorThread :: handle_query_item_market_list(void)
 	wpos += PutStringUTF(&SendBuf[wpos], Aux1);
 	count++;
 
+	g_Log.AddMessageFormat("[REMOVEME] Market cost: %d", g_Config.NameChangeCost);
+
 	// Now the actual items
 	for(std::map<int, CS::CreditShopItem*>::iterator it = g_CSManager.mItems.begin(); it != g_CSManager.mItems.end(); ++it)
 	{
 		if(g_ServerTime < (it->second->mStartDate * 1000UL))
 			// Not available yet
 			continue;
+
+		g_Log.AddMessageFormat("[REMOVEME] Market Item ID: %d", it->second->mItemId);
 
 		ItemDef * item= g_ItemManager.GetSafePointerByID(it->second->mItemId);
 		if(item != NULL)

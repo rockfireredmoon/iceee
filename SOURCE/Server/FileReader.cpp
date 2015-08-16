@@ -342,6 +342,13 @@ int FileReader :: BlockToIntC(int block)
 	return atoi(SecBuffer);
 }
 
+
+long FileReader :: BlockToLongC(int block)
+{
+	strncpy(SecBuffer, &DataBuffer[BlockPos[block]], BlockLen[block]);
+	SecBuffer[BlockLen[block]] = 0;
+	return strtol(SecBuffer, NULL, 10);
+}
 unsigned long FileReader :: BlockToULongC(int block)
 {
 	strncpy(SecBuffer, &DataBuffer[BlockPos[block]], BlockLen[block]);

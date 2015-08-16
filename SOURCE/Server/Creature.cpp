@@ -2902,7 +2902,13 @@ void CreatureInstance :: ProcessDeath(void)
 				attacker->CheckQuestKill(this);
 				int exp = GetKillExperience(highestLev);
 
-				// Adjust for tomes etc
+				// Adjust for XP times
+				ItemDef * xpTomeDef = attacker->charPtr->inventory.GetBestSpecialItem(GetContainerIDFromName("inv"), XP_BOOST);
+				if(xpTomeDef != NULL) {
+					exp += Util::GetAdditiveFromIntegralPercent100(exp, xpTomeDef->mIvMax1);
+				}
+
+				// Adjust for other XP bonuses
 				if(attacker->css.experience_gain_rate > 0) {
 					exp += Util::GetAdditiveFromIntegralPercent100(exp, attacker->css.experience_gain_rate);
 				}
@@ -6556,6 +6562,7 @@ int CreatureInstance :: GetKillExperience(int attackerLevel)
 	};
 
 	int adjusted = 100 + bonus;
+
 	if(css.experience_gain_rate > 0)
 		adjusted += Util::GetAdditiveFromIntegralPercent100(adjusted, css.experience_gain_rate);
 	if(adjusted < 1)
@@ -6817,7 +6824,15 @@ int CreatureInstance :: ProcessQuestRewards(int QuestID, const std::vector<Quest
 		return -1;
 
 	AddValour(qd->guildId, qd->valourGiven);
-	AddExperience(qd->experience);
+
+	// Adjust Exp taking tomes into account
+	int exp = qd->experience;
+	ItemDef * xpTomeDef = charPtr->inventory.GetBestSpecialItem(GetContainerIDFromName("inv"), XP_BOOST);
+	if(xpTomeDef != NULL) {
+		exp += Util::GetAdditiveFromIntegralPercent100(exp, xpTomeDef->mIvMax1);
+	}
+
+	AddExperience(exp);
 	AddHeroismForQuest(qd->heroism, qd->levelSuggested);
 	css.copper += qd->coin;
 	short stat = STAT::COPPER;

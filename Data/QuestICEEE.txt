@@ -1,166 +1,166 @@
 
-;[ENTRY]
-;ID=1000
-;Title=Join The Lightkeepers Guild
-;BodyText=SOME STUFF ABOUT THE GUILD
-;CompleteText=SOME STUFF ABOUT HAVING JOINED. 
-;Level=11
-;Suggested=11
-;Exp=0
-;PartySize=1
-;NumRewards=0
-;Coin=0
-;Unabandon=0
-;QuestGiverID=7779
-;QuestEnderID=7779
-;ValourGiven=100
-;sGiver=43644.0,195.418,65700.0,81
-;sEnder=43644.0,195.418,65700.0,81
-;Heroism=6
-;Repeat=1
-;GuildStart=1
-;GuildID=1
-;ScriptCompleteAction=join_guild 1;broadcast "%s now keeps the lights burning!"
+//[ENTRY]
+//ID=1000
+//Title=Join The Lightkeepers Guild
+//BodyText=SOME STUFF ABOUT THE GUILD
+//CompleteText=SOME STUFF ABOUT HAVING JOINED. 
+//Level=11
+//Suggested=11
+//Exp=0
+//PartySize=1
+//NumRewards=0
+//Coin=0
+//Unabandon=0
+//QuestGiverID=7779
+//QuestEnderID=7779
+//ValourGiven=100
+//sGiver=43644.0,195.418,65700.0,81
+//sEnder=43644.0,195.418,65700.0,81
+//Heroism=6
+//Repeat=1
+//GuildStart=1
+//GuildID=1
+//ScriptCompleteAction=join_guild 1;broadcast "%s now keeps the lights burning!"
 
-;[ACT]
-;Act.BodyText=Gather three pieces of shipwreck from the beach.
-;Obj.0.type=gather
-;Obj.0.data1=7780
-;Obj.0.data2=3
-;Obj.0.description=Gather 3 pieces of wreckage
-;Obj.0.complete=0
-;Obj.0.myCreatureDefID=
-;Obj.0.myItemID=8100
-;Obj.0.completeText=0 of 3
-;Obj.0.markerLocations=46837.5,73.8242,65919.8,81;
-;Obj.0.ActivateTime=10000
-;Obj.0.ActivateText=Gathering Wreckage!
-;[ACT]
-;Act.BodyText=Return to Lightkeeper Murdoch.
-;Obj.0.type=talk
-;Obj.0.data1=0
-;Obj.0.data2=0
-;Obj.0.description=Return to Lightkeeper Murdoch
-;Obj.0.complete=0
-;Obj.0.myCreatureDefID=7779
-;Obj.0.myItemID=
-;Obj.0.completeText=
-;Obj.0.markerLocations=44487.2,224.503,65150,81;
+//[ACT]
+//Act.BodyText=Gather three pieces of shipwreck from the beach.
+//Obj.0.type=gather
+//Obj.0.data1=7780
+//Obj.0.data2=3
+//Obj.0.description=Gather 3 pieces of wreckage
+//Obj.0.complete=0
+//Obj.0.myCreatureDefID=
+//Obj.0.myItemID=8100
+//Obj.0.completeText=0 of 3
+//Obj.0.markerLocations=46837.5,73.8242,65919.8,81;
+//Obj.0.ActivateTime=10000
+//Obj.0.ActivateText=Gathering Wreckage!
+//[ACT]
+//Act.BodyText=Return to Lightkeeper Murdoch.
+//Obj.0.type=talk
+//Obj.0.data1=0
+//Obj.0.data2=0
+//Obj.0.description=Return to Lightkeeper Murdoch
+//Obj.0.complete=0
+//Obj.0.myCreatureDefID=7779
+//Obj.0.myItemID=
+//Obj.0.completeText=
+//Obj.0.markerLocations=44487.2,224.503,65150,81;
 
 
-;[ENTRY]
-;ID=1001
-;Title=Do Some Jobs For your Guild
-;BodyText=This is your first guild specific quest blah blah. 
-;CompleteText=Your guild thanks you! 
-;Level=11
-;Suggested=11
-;Exp=0
-;PartySize=1
-;NumRewards=0
-;Coin=0
-;Unabandon=0
-;ValourRequired=100
-;GuildID=1
-;ValourGiven=500
-;QuestGiverID=7779
-;QuestEnderID=7779
-;Repeat=0
-;sGiver=43644.0,195.418,65700.0,81
-;sEnder=43644.0,195.418,65700.0,81
-;Heroism=6
-;[ACT]
-;Act.BodyText=Gather three pieces of shipwreck from the beach.
-;Obj.0.type=gather
-;Obj.0.data1=7780
-;Obj.0.data2=3
-;Obj.0.description=Gather 3 pieces of wreckage
-;Obj.0.complete=0
-;Obj.0.myCreatureDefID=
-;Obj.0.myItemID=8100
-;Obj.0.completeText=0 of 3
-;Obj.0.markerLocations=46837.5,73.8242,65919.8,81;
-;Obj.0.ActivateTime=10000
-;Obj.0.ActivateText=Gathering Wreckage!
-;[ACT]
-;Act.BodyText=Return to Lightkeeper Murdoch.
-;Obj.0.type=talk
-;Obj.0.data1=0
-;Obj.0.data2=0
-;Obj.0.description=Return to Lightkeeper Murdoch
-;Obj.0.complete=0
-;Obj.0.myCreatureDefID=7779
-;Obj.0.myItemID=
-;Obj.0.completeText=
-;Obj.0.markerLocations=44487.2,224.503,65150,81;
+//[ENTRY]
+//ID=1001
+//Title=Do Some Jobs For your Guild
+//BodyText=This is your first guild specific quest blah blah. 
+//CompleteText=Your guild thanks you! 
+//Level=11
+//Suggested=11
+//Exp=0
+//PartySize=1
+//NumRewards=0
+//Coin=0
+//Unabandon=0
+//ValourRequired=100
+//GuildID=1
+//ValourGiven=500
+//QuestGiverID=7779
+//QuestEnderID=7779
+//Repeat=0
+//sGiver=43644.0,195.418,65700.0,81
+//sEnder=43644.0,195.418,65700.0,81
+//Heroism=6
+//[ACT]
+//Act.BodyText=Gather three pieces of shipwreck from the beach.
+//Obj.0.type=gather
+//Obj.0.data1=7780
+//Obj.0.data2=3
+//Obj.0.description=Gather 3 pieces of wreckage
+//Obj.0.complete=0
+//Obj.0.myCreatureDefID=
+//Obj.0.myItemID=8100
+//Obj.0.completeText=0 of 3
+//Obj.0.markerLocations=46837.5,73.8242,65919.8,81;
+//Obj.0.ActivateTime=10000
+//Obj.0.ActivateText=Gathering Wreckage!
+//[ACT]
+//Act.BodyText=Return to Lightkeeper Murdoch.
+//Obj.0.type=talk
+//Obj.0.data1=0
+//Obj.0.data2=0
+//Obj.0.description=Return to Lightkeeper Murdoch
+//Obj.0.complete=0
+//Obj.0.myCreatureDefID=7779
+//Obj.0.myItemID=
+//Obj.0.completeText=
+//Obj.0.markerLocations=44487.2,224.503,65150,81;
 
-;[ENTRY]
-;ID=853
-;Title=Welcome Beta Beast...
-;BodyText=Greetings and welcome to Planet Forver - IceEE. 
-;
-;I hear you volunteered to aid us by boldly stepping in to new lands, paving the way for more beasts 
-;to venture further than ever before. For that we are grateful, and offer you these keys to our 
-;Beta Beast Box. 
-;
-;We hope you stick around, there will be a reward at the end for your hard work.   
-;CompleteText=Oh, didn't I say? You have to use these keys on that chest next to me, pick wisely!
-;Level=1
-;Suggested=1
-;Exp=36000
-;PartySize=1
-;NumRewards=0
-;Coin=0
-;Unabandon=0
-;QuestGiverID=7813
-;QuestEnderID=7813
-;Repeat=0
-;sGiver=5628.72,682.027,5964.53,59
-;sEnder=5628.72,682.027,5964.53,59
-;[ACT]
-;Act.BodyText=Take the beta beast box keys
-;Obj.0.type=talk
-;Obj.0.data1=
-;Obj.0.data2=
-;Obj.0.description=Take the beta beast box keys
-;Obj.0.complete=0
-;Obj.0.myCreatureDefID=7813
-;Obj.0.myItemID=
-;Obj.0.completeText=
-;Obj.0.markerLocations=5628.72,682.027,5964.53,59
-;RewardItem.0=8103,5,1
+//[ENTRY]
+//ID=853
+//Title=Welcome Beta Beast...
+//BodyText=Greetings and welcome to Planet Forver - IceEE. 
+//
+//I hear you volunteered to aid us by boldly stepping in to new lands, paving the way for more beasts 
+//to venture further than ever before. For that we are grateful, and offer you these keys to our 
+//Beta Beast Box. 
+//
+//We hope you stick around, there will be a reward at the end for your hard work.   
+//CompleteText=Oh, didn't I say? You have to use these keys on that chest next to me, pick wisely!
+//Level=1
+//Suggested=1
+//Exp=36000
+//PartySize=1
+//NumRewards=0
+//Coin=0
+//Unabandon=0
+//QuestGiverID=7813
+//QuestEnderID=7813
+//Repeat=0
+//sGiver=5628.72,682.027,5964.53,59
+//sEnder=5628.72,682.027,5964.53,59
+//[ACT]
+//Act.BodyText=Take the beta beast box keys
+//Obj.0.type=talk
+//Obj.0.data1=
+//Obj.0.data2=
+//Obj.0.description=Take the beta beast box keys
+//Obj.0.complete=0
+//Obj.0.myCreatureDefID=7813
+//Obj.0.myItemID=
+//Obj.0.completeText=
+//Obj.0.markerLocations=5628.72,682.027,5964.53,59
+//RewardItem.0=8103,5,1
 
-;[ENTRY]
-;ID=854
-;Requires=853
-;Title=On The Fast Track
-;BodyText=Bark! No time to stop and look at the scenery! You are here to work. 
-;
-;Lets get you trained up as fast as we can.     
-;CompleteText=There we go, you are now ready. Hmm? What do you mean? "Thrown in at the deep end". Bark.
-;Level=10
-;Suggested=1
-;Exp=2445001
-;PartySize=1
-;NumRewards=0
-;Coin=1000000
-;Unabandon=0
-;QuestGiverID=7814
-;QuestEnderID=7814
-;Repeat=0
-;sGiver=43354.2,264.395,67751.1,81
-;sEnder=43354.2,264.395,67751.1,81
-;[ACT]
-;Act.BodyText=Talk to the Wolf again
-;Obj.0.type=talk
-;Obj.0.data1=
-;Obj.0.data2=
-;Obj.0.description=to the Wolf again
-;Obj.0.complete=0
-;Obj.0.myCreatureDefID=7814
-;Obj.0.myItemID=
-;Obj.0.completeText=
-;Obj.0.markerLocations=43354.2,264.395,67751.1,81;
+//[ENTRY]
+//ID=854
+//Requires=853
+//Title=On The Fast Track
+//BodyText=Bark! No time to stop and look at the scenery! You are here to work. 
+//
+//Lets get you trained up as fast as we can.     
+//CompleteText=There we go, you are now ready. Hmm? What do you mean? "Thrown in at the deep end". Bark.
+//Level=10
+//Suggested=1
+//Exp=2445001
+//PartySize=1
+//NumRewards=0
+//Coin=1000000
+//Unabandon=0
+//QuestGiverID=7814
+//QuestEnderID=7814
+//Repeat=0
+//sGiver=43354.2,264.395,67751.1,81
+//sEnder=43354.2,264.395,67751.1,81
+//[ACT]
+//Act.BodyText=Talk to the Wolf again
+//Obj.0.type=talk
+//Obj.0.data1=
+//Obj.0.data2=
+//Obj.0.description=to the Wolf again
+//Obj.0.complete=0
+//Obj.0.myCreatureDefID=7814
+//Obj.0.myItemID=
+//Obj.0.completeText=
+//Obj.0.markerLocations=43354.2,264.395,67751.1,81;
 
 [ENTRY]
 ID=855

@@ -12,7 +12,7 @@
 
 ; 11:45 PM 1/22/2014 Added defHints to Queen Guinevere, Reni Sparda, and Camille Kefir for new custom quests.
 
-[ENTRY]/t
+[ENTRY]
 ID=0
 level=1
 display_name=Null Creature

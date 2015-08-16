@@ -1718,11 +1718,12 @@ void SaveCharacterToStream(FILE *output, CharacterData &cd)
 				slot->IID );
 
 			bool extend = false;
-			if(slot->count > 0 || slot->customLook != 0 || slot->bindStatus != 0)
+			if(slot->count > 0 || slot->customLook != 0 || slot->bindStatus != 0 || slot->secondsRemaining != -1)
 				extend = true;
 
-			if(extend == true)
-				fprintf(output, ",%d,%d,%d", slot->count, slot->customLook, slot->bindStatus);
+			if(extend == true) {
+				fprintf(output, ",%d,%d,%d,%ld", slot->count, slot->customLook, slot->bindStatus, slot->AdjustTimes());
+			}
 
 			fprintf(output, "\r\n");
 		}

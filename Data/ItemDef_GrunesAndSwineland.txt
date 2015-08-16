@@ -406,7 +406,7 @@ mArmorResistDeath=54
 mID=10023
 mType=3
 mDisplayName=Darkened Leather Sash
-smAppearance=[{["c"]={["type"]="Armor-Cloth-Epic1",["colors"]=["151515","5f534e","9c8c94","d2ffd5","e9e800","151515"]}},null]
+mAppearance=[{["c"]={["type"]="Armor-Cloth-Epic1",["colors"]=["151515","5f534e","9c8c94","d2ffd5","e9e800","151515"]}},null]
 mIcon=Icon-32-Armor-Belts01.png|Icon-32-BG-Blue.png
 mLevel=43
 mValue=2657

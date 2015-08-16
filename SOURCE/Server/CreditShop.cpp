@@ -43,8 +43,6 @@ const char *GetNameByID(int id) {
 		return "CHARMS";
 	case CONSUMABLES:
 		return "CONSUMABLES";
-	case NEW:
-		return "NEW";
 	case RECIPE:
 		return "RECIPE";
 	}
@@ -60,8 +58,6 @@ int GetIDByName(const std::string &name) {
 		return CHARMS;
 	if (name.compare("CONSUMABLES") == 0)
 		return CONSUMABLES;
-	if (name.compare("NEW") == 0)
-		return NEW;
 	if (name.compare("RECIPE") == 0)
 		return RECIPE;
 	return UNDEFINED;
@@ -196,7 +192,6 @@ CreditShopItem * CreditShopManager::LoadItem(int id) {
 	}
 
 	CreditShopItem *item = new CreditShopItem();
-	item->mId = id;
 
 	FileReader lfr;
 	if (lfr.OpenText(buf) != Err_OK) {
@@ -216,10 +211,13 @@ CreditShopItem * CreditShopManager::LoadItem(int id) {
 		lfr.BlockToStringC(0, Case_Upper);
 		if (r > 0) {
 			if (strcmp(lfr.SecBuffer, "[ENTRY]") == 0) {
-				if (item->mId != 0)
+				if (item->mId != 0) {
 					g_Log.AddMessageFormat(
 							"[WARNING] %s contains multiple entries. CS items have one entry per file",
 							buf);
+					break;
+				}
+				item->mId = id;
 			}
 			else if (strcmp(lfr.SecBuffer, "TITLE") == 0)
 				item->mTitle = lfr.BlockToStringC(1, 0);

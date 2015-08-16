@@ -19,7 +19,9 @@ struct InventorySlot
 	int count;               //Number of items in this stack.
 	int customLook;          //If refashioned, this is the Item ID of the new look.
 	char bindStatus;         //If true, item is bound to the player.
-	int secondsRemaining;    //If nonzero, this is the active play time left until the item is destroyed (offline doesn't count)
+	long secondsRemaining;    //If nonzero, this is the active play time left until the item is destroyed (offline doesn't count)
+	unsigned long timeLoaded; // In order the calculate the time remaining the time the item was last loaded (or saved) is stored.
+
 	InventorySlot()
 	{
 		CCSID = 0;
@@ -29,7 +31,9 @@ struct InventorySlot
 		customLook = 0;
 		bindStatus = 0;
 		secondsRemaining = -1;
+		timeLoaded = 0;
 	}
+	long AdjustTimes();
 	int GetStackCount(void);
 	int GetMaxStack(void);
 	void CopyFrom(InventorySlot &source, bool copyCCSID);
@@ -39,7 +43,7 @@ struct InventorySlot
 	int GetLookID(void);
 	unsigned short GetContainer(void);
 	unsigned short GetSlot(void);
-	void SaveToAccountStream(const char *containerName, FILE *output);
+	bool IsExpired();
 	bool VerifyItemExist(void);
 	bool TestEquivalent(InventorySlot &other);
 	void ApplyItemIntegerType(int IvType, int IvMax);
@@ -79,6 +83,7 @@ public:
 
 	unsigned char LastError;
 
+	ItemDef * GetBestSpecialItem(int invID, char specialItemType);
 	void SetError(int value);
 	InventorySlot * GetExistingPartialStack(int containerID, ItemDef *itemDef);
 	int AddItem(int containerID, InventorySlot &item);
