@@ -2009,9 +2009,19 @@ link=1130832,1
 [ENTRY]
 ID=1131663
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
-Pos=17102.4,1447.21,20374
+Name=Untitled
+Pos=17269.7,1306.9,20194.3
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#E3397
+spawnPackage=#3397
+
+[ENTRY]
+ID=1131689
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=17071.2,1444.22,20386.5
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#3397
+aiModule=none
 
