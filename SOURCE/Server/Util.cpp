@@ -11,12 +11,6 @@
 #include <math.h>
 #include <stdlib.h>
 
-#ifdef WIN32
-#include <Rpc.h>
-#else
-#include <uuid/uuid.h>
-#endif
-
 ChangeData SessionVarsChangeData;
 
 // For debugging when needed
