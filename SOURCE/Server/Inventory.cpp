@@ -126,6 +126,15 @@ bool InventorySlot :: TestEquivalent(InventorySlot &other)
 	return true;
 }
 
+void InventorySlot :: ApplyFromItemDef(ItemDef *itemDef) {
+	secondsRemaining = -1;
+	ApplyItemIntegerType(itemDef->mIvType1, itemDef->mIvMax1);
+	ApplyItemIntegerType(itemDef->mIvType2, itemDef->mIvMax2);
+	if(secondsRemaining > -1) {
+		timeLoaded = g_ServerTime;
+	}
+}
+
 void InventorySlot :: ApplyItemIntegerType(int IvType, int IvMax)
 {
 	switch(IvType)
@@ -252,15 +261,12 @@ InventorySlot * InventoryManager :: AddItem_Ex(int containerID, int itemID, int 
 		newItem.count = count - 1;
 	else
 		newItem.count = 0;
-	newItem.timeLoaded = g_ServerTime;
 	newItem.IID = itemID;
 	newItem.dataPtr = itemDef;
 	if(itemDef->mBindingType == BIND_ON_PICKUP)
 		newItem.bindStatus = 1;
 
-	newItem.secondsRemaining = -1;
-	newItem.ApplyItemIntegerType(itemDef->mIvType1, itemDef->mIvMax1);
-	newItem.ApplyItemIntegerType(itemDef->mIvType2, itemDef->mIvMax2);
+	newItem.ApplyFromItemDef(itemDef);
 
 	AddItem(containerID, newItem);
 	return &containerList[containerID].back();
@@ -562,7 +568,7 @@ InventorySlot * InventoryManager :: GetFirstItem(int containerID, int itemID)
 	return NULL;
 }
 
-int InventoryManager :: ItemMove(char *buffer, char *convBuf, CharacterStatSet *css, bool localCharacterVault, int origContainer, int origSlot, InventoryManager *destInv, int destContainer, int destSlot)
+int InventoryManager :: ItemMove(char *buffer, char *convBuf, CharacterStatSet *css, bool localCharacterVault, int origContainer, int origSlot, InventoryManager *destInv, int destContainer, int destSlot, bool updateDest)
 {
 	int wpos = 0;
 	int origItemIndex = GetItemBySlot(origContainer, origSlot);
@@ -575,7 +581,7 @@ int InventoryManager :: ItemMove(char *buffer, char *convBuf, CharacterStatSet *
 	int destItemIndex = destInv->GetItemBySlot(destContainer, destSlot);
 
 	//Don't move an item onto itself.  This was causing stacked items to be deleted.
-	if(origContainer == destContainer && origSlot == destSlot)
+	if(origContainer == destContainer && origSlot == destSlot && destInv == this)
 		return -3;
 
 	//Two hacks, one to prevent equipping a new twohand weapon with an existing offhand,
@@ -660,7 +666,9 @@ int InventoryManager :: ItemMove(char *buffer, char *convBuf, CharacterStatSet *
 					//Add entire count of source to destination.
 					//Remove source.
 					dest.count += scount;
-					wpos += destInv->AddItemUpdate(&buffer[wpos], convBuf, &dest);
+					if(updateDest) {
+						wpos += destInv->AddItemUpdate(&buffer[wpos], convBuf, &dest);
+					}
 					wpos += RemoveItemUpdate(&buffer[wpos], convBuf, &source);
 					g_Log.AddMessageFormat("[ITEMMOVE] Stack Erasing: %d", source.IID);
 					containerList[origContainer].erase(containerList[origContainer].begin() + origItemIndex);
@@ -672,7 +680,9 @@ int InventoryManager :: ItemMove(char *buffer, char *convBuf, CharacterStatSet *
 					dest.count += emptyStackSpace;
 					source.count -= emptyStackSpace;
 					wpos += AddItemUpdate(&buffer[wpos], convBuf, &source);
-					wpos += destInv->AddItemUpdate(&buffer[wpos], convBuf, &dest);
+					if(updateDest) {
+						wpos += destInv->AddItemUpdate(&buffer[wpos], convBuf, &dest);
+					}
 				}
 
 				//We're done, nothing left to process.
@@ -686,21 +696,25 @@ int InventoryManager :: ItemMove(char *buffer, char *convBuf, CharacterStatSet *
 		//add item to source slot
 		//add item to dest slot
 		wpos += RemoveItemUpdate(&buffer[wpos], convBuf, &source);
-		wpos += destInv->RemoveItemUpdate(&buffer[wpos], convBuf, &dest);
+		if(updateDest) {
+			wpos += destInv->RemoveItemUpdate(&buffer[wpos], convBuf, &dest);
+		}
 
 		InventorySlot temp;
 		temp.CopyFrom(dest, false);
 		dest.CopyFrom(source, false);
 		source.CopyFrom(temp, false);
 
-		wpos += destInv->AddItemUpdate(&buffer[wpos], convBuf, &dest);
+		if(updateDest) {
+			wpos += destInv->AddItemUpdate(&buffer[wpos], convBuf, &dest);
+		}
 		wpos += AddItemUpdate(&buffer[wpos], convBuf, &source);
 		return wpos;
 	}
 
 	//Check if moving among a single container.  If so, just update the CCSID.
 	//No need to add or erase slots.
-	if(destContainer == origContainer)
+	if(destContainer == origContainer && destInv == this)
 	{
 		InventorySlot temp;
 		InventorySlot &source = containerList[origContainer][origItemIndex];
@@ -719,7 +733,9 @@ int InventoryManager :: ItemMove(char *buffer, char *convBuf, CharacterStatSet *
 	dest.CopyFrom(source, false);
 	dest.CCSID = GetCCSID(destContainer, destSlot);
 	wpos += RemoveItemUpdate(&buffer[wpos], convBuf, &source);
-	wpos += destInv->AddItemUpdate(&buffer[wpos], convBuf, &dest);
+	if(updateDest) {
+		wpos += destInv->AddItemUpdate(&buffer[wpos], convBuf, &dest);
+	}
 	destInv->containerList[destContainer].push_back(dest);
 	g_Log.AddMessageFormat("[ITEMMOVE] Erasing: %d (new dest: %d)", source.IID, dest.IID);
 	containerList[origContainer].erase(containerList[origContainer].begin() + origItemIndex);

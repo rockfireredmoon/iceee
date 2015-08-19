@@ -131,6 +131,7 @@ namespace Util
 
 	void AssignFloatArrayFromStringSplit(float *arrayDest, size_t arraySize, const std::string &strData);
 	void TokenizeByWhitespace(const std::string &input, STRINGLIST &output);
+	std::string RandomStr();
 }
 
 /*

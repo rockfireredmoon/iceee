@@ -217,7 +217,6 @@ int Platform_CreateThread(size_t stackSize, void* ptrRoutine, void* ptrArgs, uns
 {
 	pthread_t thread;
 	pthread_attr_t threadAttr;
-	struct sched_param param;
 	pthread_attr_init(&threadAttr);
 	pthread_attr_setstacksize(&threadAttr, stackSize);
     pthread_attr_setdetachstate(&threadAttr, PTHREAD_CREATE_DETACHED);

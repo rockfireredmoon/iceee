@@ -58,7 +58,6 @@ class this.Screens.CreditShop extends this.GUI.Frame
 		local buyCreditPanel = this._buildbuyCreditsPanel();
 		baseComponent.add(buyCreditPanel);
 		::_creditShopManager.addListener(this);
-		::_creditShopManager.requestItemMarketList();
 		::_Connection.addListener(this);
 		this.addActionListener(this);
 		this.setCached(::Pref.get("video.UICache"));
@@ -83,7 +82,8 @@ class this.Screens.CreditShop extends this.GUI.Frame
 	{
 		if (value)
 		{
-			::_tutorialManager.onScreenOpened("CreditShop");
+			::_tutorialManager.onScreenOpened("CreditShop");			
+			::_creditShopManager.requestItemMarketList();
 			local callback = {
 				previewPanel = this.mPreviewPanel,
 				function onPackageComplete( pkgName )

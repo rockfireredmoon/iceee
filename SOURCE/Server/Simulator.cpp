@@ -2497,6 +2497,8 @@ bool SimulatorThread :: HandleQuery(int &PendingData)
 		PendingData = handle_query_util_addfunds();
 	else if(query.name.compare("validate.name") == 0)
 		PendingData = handle_query_validate_name();
+	else if(query.name.compare("user.auth.reset") == 0)
+		PendingData = handle_query_user_auth_reset();
 	else if(query.name.compare("item.create") == 0)
 		PendingData = handle_query_item_create();
 	else if(query.name.compare("item.market.list") == 0)
@@ -2635,12 +2637,12 @@ bool SimulatorThread :: HandleQuery(int &PendingData)
 		PendingData = handle_query_persona_gm();
 	else if(query.name.compare("party") == 0)
 		PendingData = handle_query_party();
+	else if(query.name.compare("vault.send") == 0)
+		PendingData = handle_query_vault_send();
 	else if(query.name.compare("vault.size") == 0)
 		PendingData = handle_query_vault_size();
 	else if(query.name.compare("vault.expand") == 0)
 		PendingData = handle_query_vault_expand();
-	else if(query.name.compare("vault.deliverycontents") == 0)
-		PendingData = handle_query_vault_deliverycontents();
 	else if(query.name.compare("quest.share") == 0)
 		PendingData = handle_query_quest_share();
 	else if(query.name.compare("mod.emote") == 0)
@@ -3304,6 +3306,8 @@ int SimulatorThread :: handle_query_item_contents(void)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Invalid query.");
 
 	const char *contName = query.args[0].c_str();
+
+
 	int contID = GetContainerIDFromName(contName);
 	if(contID == -1)
 	{
@@ -3311,7 +3315,12 @@ int SimulatorThread :: handle_query_item_contents(void)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Invalid item container.");
 	}
 
-	SendInventoryData(pld.charPtr->inventory.containerList[contID]);
+	InventoryManager inv = pld.charPtr->inventory;
+
+	if(contID == DELIVERY_CONTAINER) {
+		inv = pld.accPtr->inventory;
+	}
+	SendInventoryData(inv.containerList[contID]);
 
 	WritePos = 0;
 
@@ -3320,7 +3329,7 @@ int SimulatorThread :: handle_query_item_contents(void)
 	WritePos += PutInteger(&SendBuf[WritePos], query.ID);  //Query response index
 
 	sprintf(Aux2, "%d", contID);
-	sprintf(Aux3, "%d", (int)pld.charPtr->inventory.containerList[contID].size());
+	sprintf(Aux3, "%d", (int)inv.containerList[contID].size());
 	WritePos += PutShort(&SendBuf[WritePos], 1);      //Array count
 	WritePos += PutByte(&SendBuf[WritePos], 2);       //String count
 	WritePos += PutStringUTF(&SendBuf[WritePos], Aux2);  //ID
@@ -3930,6 +3939,8 @@ int SimulatorThread :: handle_query_item_move(void)
 	int origSlot = CCSID & CONTAINER_SLOT;
 
 	int destContainer = GetContainerIDFromName(query.args[1].c_str());
+	int destSlot = strtol(query.args[2].c_str(), NULL, 10);
+
 	if(destContainer == -1)
 	{
 		LogMessageL(MSG_ERROR, "[ERROR] item.move: unknown destination container [%s] for CCSID [%lu]", query.args[0].c_str(), CCSID);
@@ -3954,7 +3965,6 @@ int SimulatorThread :: handle_query_item_move(void)
 	//End of hack.
 
 
-	int destSlot = strtol(query.args[2].c_str(), NULL, 10);
 
 	//Hack to enforce class restrictions for weapons.
 	/* DEACTIVATED SINCE IT'S NOT SYNCHRONIZED WITH THE CLIENT
@@ -3981,6 +3991,9 @@ int SimulatorThread :: handle_query_item_move(void)
 	if(((destContainer == DELIVERY_CONTAINER) || (origContainer == DELIVERY_CONTAINER)) && (pld.accPtr->GetSessionLoginCount() > 1))
 			return PrepExt_QueryResponseError(SendBuf, query.ID, "You cannot use delivery boxes while logged into multiple account characters at once.");
 
+	if(((destContainer == STAMPS_CONTAINER) || (origContainer == STAMPS_CONTAINER)) && (pld.accPtr->GetSessionLoginCount() > 1))
+			return PrepExt_QueryResponseError(SendBuf, query.ID, "You cannot use stamp boxes while logged into multiple account characters at once.");
+
 	InventoryManager *origInv = &pld.charPtr->inventory;
 	InventoryManager *destInv = &pld.charPtr->inventory;
 
@@ -3997,6 +4010,19 @@ int SimulatorThread :: handle_query_item_move(void)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Failed to move item.");
 	}
 
+	if(destContainer == STAMPS_CONTAINER)
+	{
+		int origItemIndex = origInv->GetItemBySlot(origContainer, origSlot);
+		if(origItemIndex < 0)
+			return PrepExt_QueryResponseError(SendBuf, query.ID, "Invalid item.");
+
+		InventorySlot &source = origInv->containerList[origContainer][origItemIndex];
+		ItemDef *sourceItem = source.ResolveItemPtr();
+		if(sourceItem == NULL || sourceItem->mID != POSTAGE_STAMP_ITEM_ID) {
+			return PrepExt_QueryResponseError(SendBuf, query.ID, "You may only add stamps to a stamp container.");
+		}
+	}
+
 	if(destContainer == EQ_CONTAINER)
 	{
 		int origItemIndex = origInv->GetItemBySlot(origContainer, origSlot);
@@ -4010,7 +4036,7 @@ int SimulatorThread :: handle_query_item_move(void)
 			return PrepExt_QueryResponseError(SendBuf, query.ID, InventoryManager::GetEqErrorString(res));
 	}
 
-	int mpos = origInv->ItemMove(Aux1, Aux3, &creatureInst->css, pld.charPtr->localCharacterVault, origContainer, origSlot, destInv, destContainer, destSlot);
+	int mpos = origInv->ItemMove(Aux1, Aux3, &creatureInst->css, pld.charPtr->localCharacterVault, origContainer, origSlot, destInv, destContainer, destSlot, true);
 	if(mpos > 0)
 	{
 		if(destContainer == DELIVERY_CONTAINER || origContainer == DELIVERY_CONTAINER) {
@@ -4053,8 +4079,14 @@ int SimulatorThread :: handle_query_item_move(void)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "You cannot equip an offhand item while using a two-handed weapon.");
 	else if(mpos == -3)
 		return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");  //Hack to allow movement when the origin and destination is the same.  The request must return successful, otherwise the client will spam retry requests.
-	else if(mpos == -4)
-		return PrepExt_QueryResponseError(SendBuf, query.ID, "Items bound to you cannot be placed into your vault.");
+	else if(mpos == -4) {
+		if(destContainer == DELIVERY_CONTAINER) {
+			return PrepExt_QueryResponseError(SendBuf, query.ID, "Items bound to you cannot be placed into your delivery box.");
+		}
+		else {
+			return PrepExt_QueryResponseError(SendBuf, query.ID, "Items bound to you cannot be placed into your vault.");
+		}
+	}
 	else if(mpos < -100)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, InventoryManager::GetEqErrorString(mpos + 100));
 
@@ -5504,6 +5536,7 @@ int SimulatorThread :: handle_command_giveall(void)
 			slotremain--;
 			newItem.dataPtr = resultList[i];
 			newItem.IID = resultList[i]->mID;
+			newItem.ApplyFromItemDef(resultList[i]);
 			newItem.CCSID = (INV_CONTAINER << 16) | slot;
 			pld.charPtr->inventory.AddItem(INV_CONTAINER, newItem);
 			wpos += AddItemUpdate(&SendBuf[wpos], Aux3, &newItem);
@@ -5564,6 +5597,7 @@ int SimulatorThread :: handle_command_giveapp(void)
 				slotremain--;
 				newItem.dataPtr = resultList[i];
 				newItem.IID = resultList[i]->mID;
+				newItem.ApplyFromItemDef(resultList[i]);
 				newItem.CCSID = (INV_CONTAINER << 16) | slot;
 				pld.charPtr->inventory.AddItem(INV_CONTAINER, newItem);
 				wpos += AddItemUpdate(&SendBuf[wpos], Aux3, &newItem);
@@ -6794,6 +6828,11 @@ int SimulatorThread :: handle_query_creature_def_edit(void)
 				SendInfoMessage("Error setting name. Missing cache entry", INFOMSG_ERROR);
 				return PrepExt_QueryResponseNull(SendBuf, query.ID);
 			}
+
+			// Update used names
+			g_AccountManager.RemoveUsedCharacterName(ce->creatureDefID);
+			g_AccountManager.AddUsedCharacterName(ce->creatureDefID, value);
+
 			ce->display_name = value;
 			acc->PendingMinorUpdates++;
 		}
@@ -10191,6 +10230,139 @@ int SimulatorThread :: handle_query_party(void)
 	*/
 }
 
+int SimulatorThread :: handle_query_vault_send(void)
+{
+	if(query.argCount < 2)
+		return PrepExt_QueryResponseError(SendBuf, query.ID, "Invalid query.");
+
+	/* Make sure there enough stamps in the vault to be able to send each
+	 * item in the delivery box
+	 */
+
+	int items = pld.accPtr->inventory.containerList[DELIVERY_CONTAINER].size();
+	if(items < 1) {
+		return PrepExt_QueryResponseError(SendBuf, query.ID, "You must place the items to send in your delivery box.");
+	}
+
+	// TODO hardcoded
+	int stamps  = pld.charPtr->inventory.GetItemCount(STAMPS_CONTAINER, POSTAGE_STAMP_ITEM_ID);
+	if(items > stamps) {
+		return PrepExt_QueryResponseError(SendBuf, query.ID, "You do not have enough stamps.");
+	}
+
+	/**
+	 * Get the recipient's creature
+	 */
+	int cdefID = g_AccountManager.GetCDefFromCharacterName(query.GetString(1));
+	if(cdefID == -1) {
+		Util::SafeFormat(Aux1, sizeof(Aux1), "Unknown character name '%s'", query.GetString(1));
+		return PrepExt_QueryResponseError(SendBuf, query.ID, Aux1);
+	}
+
+	g_CharacterManager.GetThread("SimulatorThread::VaultSend");
+	g_AccountManager.cs.Enter("SimulatorThread::VaultSend");
+
+	CharacterData *cd = g_CharacterManager.GetPointerByID(cdefID);
+	if(cd == NULL) {
+		// Not active
+		cd = g_CharacterManager.RequestCharacter(cdefID, true);
+	}
+
+	if(cd == NULL) {
+		g_CharacterManager.ReleaseThread();
+		g_AccountManager.cs.Leave();
+		return PrepExt_QueryResponseError(SendBuf, query.ID, "Could not get creature instance.");
+	}
+
+	// Make sure player is not trying to send to their own account
+	if(cd->AccountID == pld.accPtr->ID) {
+		g_CharacterManager.ReleaseThread();
+		g_AccountManager.cs.Leave();
+		return PrepExt_QueryResponseError(SendBuf, query.ID, "You cannot send items to yourself.");
+	}
+
+	// Now we have a creature, we can try and get the account
+	AccountData *acc = g_AccountManager.GetActiveAccountByID(cd->AccountID);
+	if(acc == NULL) {
+		acc = g_AccountManager.LoadAccountID(cd->AccountID);
+	}
+	if(acc == NULL) {
+		g_CharacterManager.ReleaseThread();
+		g_AccountManager.cs.Leave();
+		return PrepExt_QueryResponseError(SendBuf, query.ID, "Could not get account instance.");
+	}
+
+
+	// Now we have an account, we can make sure there are enough free delivery slots
+	int freeSlots = acc->DeliveryBoxSlots - acc->inventory.containerList[DELIVERY_CONTAINER].size();
+	if(freeSlots < items) {
+		if(freeSlots < 1)
+			Util::SafeFormat(Aux1, sizeof(Aux1), "The recipient has no free delivery slots.");
+		else
+			Util::SafeFormat(Aux1, sizeof(Aux1), "The recipient only has %d free delivery slots.", freeSlots);
+		g_CharacterManager.ReleaseThread();
+		g_AccountManager.cs.Leave();
+		return PrepExt_QueryResponseError(SendBuf, query.ID, Aux1);
+	}
+
+	// Notify the recipient if they are online
+	CreatureInstance *inst = g_ActiveInstanceManager.GetPlayerCreatureByDefID(cd->cdef.CreatureDefID);
+
+	// Have got this far, so have enough stamps, and recipient exists and has enough free delivery slots
+	int wpos = 0;
+
+	InventoryManager *origInv = &pld.accPtr->inventory;
+	InventoryManager *destInv = &acc->inventory;
+	std::vector<InventorySlot> l = origInv->containerList[DELIVERY_CONTAINER];
+	int origSlot = 0;
+	int destSlot = destInv->containerList[DELIVERY_CONTAINER].size();
+	int itemsSent = 0;
+
+	pld.accPtr->PendingMinorUpdates++;
+	acc->PendingMinorUpdates++;
+
+	for(std::vector<InventorySlot>::iterator it = l.begin(); it != l.end() ; ++it) {
+
+		if( (origInv->VerifyContainerSlotBoundary(DELIVERY_CONTAINER, origSlot) == false) ||
+			(destInv->VerifyContainerSlotBoundary(DELIVERY_CONTAINER, destSlot) == false) )
+		{
+			wpos += PrepExt_QueryResponseError(&SendBuf[wpos], query.ID, "Failed to move item.");
+			goto exit;
+		}
+
+		int mpos = origInv->ItemMove(&SendBuf[wpos], Aux3, &creatureInst->css, pld.charPtr->localCharacterVault, DELIVERY_CONTAINER, origSlot, destInv, DELIVERY_CONTAINER, destSlot, false);
+		if(mpos > 0)
+		{
+			wpos += mpos;
+			wpos += pld.charPtr->inventory.RemoveItemsAndUpdate(STAMPS_CONTAINER, POSTAGE_STAMP_ITEM_ID, 1, &SendBuf[wpos]);
+			itemsSent++;
+		}
+		else {
+			Util::SafeFormat(Aux1, sizeof(Aux1), "Failed to move item (%d).", mpos);
+			wpos += PrepExt_QueryResponseError(&SendBuf[wpos], query.ID, Aux1);
+			goto exit;
+		}
+
+		origSlot++;
+		destSlot++;
+	}
+
+	wpos += PrepExt_QueryResponseString(&SendBuf[wpos], query.ID, "OK");
+
+exit:
+
+	// Inform the active player if we have one
+	if(inst != NULL && itemsSent > 0) {
+		inst->simulatorPtr->SendInventoryData(destInv->containerList[DELIVERY_CONTAINER]);
+		Util::SafeFormat(Aux1, sizeof(Aux1), "%s just sent you %d item%s to your delivery box. You may collect at any vault.", pld.charPtr->cdef.css.display_name, itemsSent);
+		inst->simulatorPtr->SendInfoMessage(Aux1,  INFOMSG_INFO);
+	}
+
+	g_CharacterManager.ReleaseThread();
+	g_AccountManager.cs.Leave();
+	return wpos;
+}
+
 int SimulatorThread :: handle_query_vault_size(void)
 {
 	sprintf(Aux1, "%d", pld.charPtr->VaultGetTotalCapacity());
@@ -10237,26 +10409,6 @@ int SimulatorThread :: handle_query_vault_expand(void)
 
 	int wpos = PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
 	wpos += PrepExt_CreatureEventVaultSize(&SendBuf[wpos], creatureInst->CreatureID, newSize, pld.accPtr->DeliveryBoxSlots);
-	return wpos;
-}
-
-
-int SimulatorThread :: handle_query_vault_deliverycontents(void)
-{
-	int wpos = 0;
-	wpos += PutByte(&SendBuf[wpos], 1);          //_handleQueryResultMsg
-	wpos += PutShort(&SendBuf[wpos], 0);         //Placeholder for message size
-	wpos += PutInteger(&SendBuf[wpos], query.ID);  //Query response index
-	std::vector<std::string> l;
-	wpos += PutShort(&SendBuf[wpos], pld.accPtr->inventory.containerList[DELIVERY_CONTAINER].size());         //Number of rows
-	for(std::vector<InventorySlot>::iterator it = pld.accPtr->inventory.containerList[DELIVERY_CONTAINER].begin(); it != pld.accPtr->inventory.containerList[DELIVERY_CONTAINER].end() ; ++it) {
-		wpos += PutByte(&SendBuf[wpos], 2);
-		Util::SafeFormat(Aux1, sizeof(Aux1), "item%d:%d:%d:%d", it->IID, it->customLook, it->count, it->GetTimeRemaining());
-		wpos += PutStringUTF(&SendBuf[wpos],Aux1);
-		Util::SafeFormat(Aux1, sizeof(Aux1), "%X", it->CCSID);
-		wpos += PutStringUTF(&SendBuf[wpos],Aux1);
-	}
-	PutShort(&SendBuf[1], wpos - 3);               //Set message size
 	return wpos;
 }
 
@@ -10931,6 +11083,8 @@ int SimulatorThread :: handle_command_deriveset(void)
 						newItem.count = 0;
 						newItem.IID = baseSet[s].ItemID;
 						newItem.customLook = itemDef->mID;
+						newItem.ApplyFromItemDef(itemDef);
+
 						newItem.dataPtr = NULL;
 						pld.charPtr->inventory.AddItem(INV_CONTAINER, newItem);
 						wpos += AddItemUpdate(&SendBuf[wpos], Aux1, &newItem);
@@ -11559,6 +11713,48 @@ int SimulatorThread :: handle_query_util_addfunds() {
 	return PrepExt_QueryResponseError(SendBuf, query.ID, "Failed to add funds.");
 }
 
+int SimulatorThread :: handle_query_user_auth_reset() {
+	if(!CheckPermissionSimple(Perm_Account, Permission_Sage))
+			return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
+
+	if(query.argCount < 1)
+		return PrepExt_QueryResponseError(SendBuf, query.ID, "Incorrect arguments, require account name.");
+
+	std::string accName = query.GetString(0);
+	AccountData * acc = g_AccountManager.FetchAccountByUsername(accName.c_str());
+	if(acc == NULL)
+	{
+		return PrepExt_QueryResponseError(SendBuf, query.ID, "No such account.");
+	}
+
+	// Generate a new recovery key
+	std::string newKey = Util::RandomStr();
+
+	// Remove the existing registration key
+	Util::SafeFormat(acc->RegKey, sizeof(acc->RegKey), "%s", newKey.c_str());
+
+//	// Generate a salt hash for the key
+//	std::string convertedKey;
+//	acc->GenerateSaltedHash(newKey.c_str(), convertedKey);
+
+	// Build a new recovery key
+	ConfigString str(acc->RecoveryKeys);
+	str.SetKeyValue("regkey", "");
+	str.GenerateString(acc->RecoveryKeys);
+
+	Util::SafeFormat(Aux1, sizeof(Aux1), "Give the player this key :-\n   %s\n.. and tell them to visit the password reset URL", newKey.c_str());
+	SendInfoMessage(Aux1, INFOMSG_INFO);
+
+	// Give player password reset permission
+	acc->SetPermission(Perm_Account,"passwordreset", true);
+
+	acc->PendingMinorUpdates++;
+
+	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
+}
+
+
+
 int SimulatorThread :: handle_query_validate_name() {
 	int res = g_AccountManager.ValidateNameParts(query.args[0].c_str(), query.args[1].c_str());
 	if(res == AccountManager::CHARACTER_SUCCESS) {
@@ -11767,7 +11963,7 @@ int SimulatorThread :: handle_query_item_market_buy(void)
 			return PrepExt_QueryResponseError(SendBuf, query.ID, "You do not have enough slots in your inventory!");
 
 
-		InventorySlot *sendSlot = creatureInst->charPtr->inventory.AddItem_Ex(INV_CONTAINER, item->mID, 1);
+		InventorySlot *sendSlot = creatureInst->charPtr->inventory.AddItem_Ex(INV_CONTAINER, item->mID, csItem->mIv1 + 1);
 		if(sendSlot == NULL)
 			return PrepExt_QueryResponseError(SendBuf, query.ID, "Failed to add item to inventory.");
 
@@ -11824,8 +12020,6 @@ int SimulatorThread :: handle_query_item_market_purchase_name(void)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "You do not have enough credits!");
 	}
 
-	g_CharacterManager.GetThread("Simulator::MarketBuy");
-
 	AccountData * acc = g_AccountManager.FetchIndividualAccount(creatureInst->charPtr->AccountID);
 	if(acc == NULL)
 	{
@@ -11842,6 +12036,10 @@ int SimulatorThread :: handle_query_item_market_purchase_name(void)
 	ce->display_name = fullName.c_str();
 	acc->PendingMinorUpdates++;
 	memcpy(creatureInst->css.display_name, fullName.c_str(), fullName.size() + 1);
+
+	g_AccountManager.RemoveUsedCharacterName(pld.CreatureDefID);
+	g_AccountManager.AddUsedCharacterName(pld.CreatureDefID, fullName.c_str());
+
 	creatureInst->css.credits -= g_Config.NameChangeCost;
 	if(g_Config.AccountCredits) {
 		pld.accPtr->Credits = creatureInst->css.credits;
@@ -11849,7 +12047,6 @@ int SimulatorThread :: handle_query_item_market_purchase_name(void)
 	}
 	creatureInst->SendStatUpdate(STAT::CREDITS);
 	creatureInst->SendStatUpdate(STAT::DISPLAY_NAME);
-	g_CharacterManager.ReleaseThread();
 	return  PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
 }
 int SimulatorThread :: handle_query_item_market_reload(void)
@@ -11965,16 +12162,12 @@ int SimulatorThread :: handle_query_item_market_list(void)
 	wpos += PutStringUTF(&SendBuf[wpos], Aux1);
 	count++;
 
-	g_Log.AddMessageFormat("[REMOVEME] Market cost: %d", g_Config.NameChangeCost);
-
 	// Now the actual items
 	for(std::map<int, CS::CreditShopItem*>::iterator it = g_CSManager.mItems.begin(); it != g_CSManager.mItems.end(); ++it)
 	{
 		if(g_ServerTime < (it->second->mStartDate * 1000UL))
 			// Not available yet
 			continue;
-
-		g_Log.AddMessageFormat("[REMOVEME] Market Item ID: %d", it->second->mItemId);
 
 		ItemDef * item= g_ItemManager.GetSafePointerByID(it->second->mItemId);
 		if(item != NULL)

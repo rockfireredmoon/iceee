@@ -1,9 +1,9 @@
 [ENTRY]
-Description=Brief Item Grinder
+Description=Earn gold by destroying items anywhere and save trips to the vendor
 PriceCurrency=CREDITS
 PriceCopper=0
-PriceCredits=100
+PriceCredits=500
 ItemID=900009
-Category=RECEIPES
+Category=RECIPES
 Status=NEW
 

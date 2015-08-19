@@ -1,5 +1,3 @@
-#pragma warning(disable: 4996)
-
 #include <time.h>
 #include "Chat.h"
 #include "RotatingList.h"

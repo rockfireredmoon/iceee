@@ -43,8 +43,8 @@ const char *GetNameByID(int id) {
 		return "CHARMS";
 	case CONSUMABLES:
 		return "CONSUMABLES";
-	case RECIPE:
-		return "RECIPE";
+	case RECIPES:
+		return "RECIPES";
 	}
 	return "<undefined>";
 }
@@ -58,8 +58,8 @@ int GetIDByName(const std::string &name) {
 		return CHARMS;
 	if (name.compare("CONSUMABLES") == 0)
 		return CONSUMABLES;
-	if (name.compare("RECIPE") == 0)
-		return RECIPE;
+	if (name.compare("RECIPES") == 0)
+		return RECIPES;
 	return UNDEFINED;
 }
 
@@ -115,10 +115,10 @@ CreditShopItem::~CreditShopItem() {}
 void CreditShopItem::ParseItemProto(std::string proto) {
 
 	std::vector<std::string> p;
-	Util::Split(proto.c_str(), ":", p);
 	if(Util::HasBeginning(proto, "item")) {
-		proto = proto.substr(0, 4);
+		proto = proto.substr(4);
 	}
+	Util::Split(proto.c_str(), ":", p);
 	if(p.size() > 0) {
 		mItemId = atoi(p[0].c_str());
 		if(p.size() > 1) {

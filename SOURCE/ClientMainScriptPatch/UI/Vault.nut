@@ -29,6 +29,10 @@ class Screens.Vault extends GUI.BigFrame
 	mNewsBox = null;
 	mCheckDistanceEvent = null;
 	mCheckPurchaseEvent = null;
+	mSendButton = null;
+	mRecipient = null;
+	mStampContainer = null;
+	
 	constructor()
 	{
 		GUI.BigFrame.constructor("Vault", true, {
@@ -108,6 +112,16 @@ class Screens.Vault extends GUI.BigFrame
 	function getActionContainer()
 	{
 		return mVaultContainer;
+	}
+
+	function getStampContainer()
+	{
+		return mStampContainer;
+	}
+
+	function getDeliveryBoxContainer()
+	{
+		return mDeliveryBoxAC;
 	}
 
 	function onAcceptExpand( source, value )
@@ -206,6 +220,7 @@ class Screens.Vault extends GUI.BigFrame
 		{
 			return;
 		}
+		
 
 		if (creatureId == ::_avatar.getID())
 		{
@@ -225,8 +240,36 @@ class Screens.Vault extends GUI.BigFrame
 				}
 			}
 			
-			if(containerName == "deliveryBox")
+			if(containerName == "delivery")
 			{
+				if (mDeliveryBoxAC)
+				{
+					mDeliveryBoxAC.removeAllActions();
+
+					foreach( itemId in container.mContents )
+					{
+						local item = ::_ItemManager.getItem(itemId);
+						mDeliveryBoxAC.addAction(item, false, item.mItemData.mContainerSlot);
+					}
+
+					mDeliveryBoxAC.updateContainer();
+				}
+			}
+			
+			if(containerName == "stamps")
+			{
+				if (mStampContainer)
+				{
+					mStampContainer.removeAllActions();
+
+					foreach( itemId in container.mContents )
+					{
+						local item = ::_ItemManager.getItem(itemId);
+						mStampContainer.addAction(item, false, item.mItemData.mContainerSlot);
+					}
+
+					mStampContainer.updateContainer();
+				}
 			}
 		}
 	}
@@ -365,6 +408,29 @@ class Screens.Vault extends GUI.BigFrame
 			oldSlotIndex = previousSlotContainer.getIndexOfSlot(oldActionButtonSlot);
 		}
 		
+		if(container == mStampContainer) {
+			if (item.getSwapped() == true)
+			{
+				item.setSwapped(false);
+			}
+			else
+			{
+				queryArgument.append(itemID);
+				queryArgument.append("stamps");
+				queryArgument.append(slotIndex);
+
+				if (::_Connection.getProtocolVersionId() >= 19)
+				{
+					queryArgument.append(oldSlotContainerName);
+					queryArgument.append(oldSlotIndex);
+				}
+
+				queryArgument.append(::_avatar.getID());
+				queryArgument.append(mCurrentVaultId);
+				_Connection.sendQuery("item.move", this, queryArgument);
+			}
+		}
+		
 		if (container == mDeliveryBoxAC)
 		{
 			if (item.getSwapped() == true)
@@ -475,6 +541,9 @@ class Screens.Vault extends GUI.BigFrame
 	{
 		switch(qa.query)
 		{
+		case "vault.send":
+			IGIS.info("Successfully sent items!");
+			break;
 		case "vault.expand":
 			mCheckPurchaseEvent = ::_eventScheduler.fireIn(2.0, this, "_delayVaultButtonValid");
 			break;
@@ -494,20 +563,7 @@ class Screens.Vault extends GUI.BigFrame
 			
 			GUI.Frame.setVisible(true);
 			break;
-
-		case "vault.deliverycontents":
-		
-			for( local i = 0; i < rows.len(); i++ )
-			{
-				local act = ItemProtoAction(rows[i][0]);
-				// TODO only in ICEEE, protocol check needed
-				act.mItemId = rows[i][1];
-				mDeliveryBoxAC.addAction(act, false);
-			}
-			_checkDeliveryBoxes();
-
-			break;
-
+			
 		case "vault.lootdeliveryitem":
 			if (rows[0][0] == "OK")
 			{
@@ -538,10 +594,7 @@ class Screens.Vault extends GUI.BigFrame
 			mCheckPurchaseEvent = ::_eventScheduler.fireIn(2.0, this, "_delayVaultButtonValid");
 			break;
 		case "vault.lootdeliveryitem":
-			mDeliveryBoxAC.removeAllActions();
-			::_Connection.sendQuery("vault.deliverycontents", this, [
-				mCurrentVaultId
-			]);
+			refreshVault();
 			break;
 		}
 	}
@@ -586,20 +639,29 @@ class Screens.Vault extends GUI.BigFrame
 	{
 		local vault = ::_ItemDataManager.getContents("bank");
 		local bags = ::_ItemDataManager.getContents("eq");
+		local delivery = ::_ItemDataManager.getContents("delivery");
+		local stamps = ::_ItemDataManager.getContents("stamps");
+		
 		onContainerUpdated("bank", ::_avatar.getID(), vault);
 		onContainerUpdated("eq", ::_avatar.getID(), bags);
+		onContainerUpdated("delivery", ::_avatar.getID(), delivery);
+		onContainerUpdated("stamps", ::_avatar.getID(), stamps);
 		
-		mDeliveryBoxAC.removeAllActions();
-		::_Connection.sendQuery("vault.deliverycontents", this, [
-			mCurrentVaultId
-		]);
 	}
 
 	function setContainerMoveProperties()
 	{
+		mStampContainer.addMovingToProperties("vault", MoveToProperties(MovementTypes.MOVE));
+		mStampContainer.addMovingToProperties("inventory", MoveToProperties(MovementTypes.MOVE));
+		mStampContainer.addAcceptingFromProperties("vault", AcceptFromProperties(this));
+		mStampContainer.addAcceptingFromProperties("inventory", AcceptFromProperties(this));
+	
+		mVaultContainer.addMovingToProperties("stamps", MoveToProperties(MovementTypes.MOVE));
 		mVaultContainer.addMovingToProperties("inventory", MoveToProperties(MovementTypes.MOVE));
 		mVaultContainer.addMovingToProperties("vault", MoveToProperties(MovementTypes.MOVE));
 		mVaultContainer.addMovingToProperties("deliveryBox", MoveToProperties(MovementTypes.MOVE));
+		
+		mVaultContainer.addAcceptingFromProperties("stamps", AcceptFromProperties(this));
 		mVaultContainer.addAcceptingFromProperties("inventory", AcceptFromProperties(this));
 		mVaultContainer.addAcceptingFromProperties("vault", AcceptFromProperties(this));
 		mVaultContainer.addAcceptingFromProperties("deliveryBox", AcceptFromProperties(this));
@@ -795,8 +857,8 @@ class Screens.Vault extends GUI.BigFrame
 	{
 		local newsBox = GUI.Panel();
 		newsBox.setAppearance("VaultImage");
-		newsBox.setSize(254, 315);
-		newsBox.setPreferredSize(254, 315);
+		newsBox.setSize(254, 255);
+		newsBox.setPreferredSize(254, 255);
 		return newsBox;
 	}
 	
@@ -822,14 +884,11 @@ class Screens.Vault extends GUI.BigFrame
 
 	function _buildDeliveryBox()
 	{
-		local deliveryBox = GUI.Container(GUI.BorderLayout());
-		local containerHolder = GUI.Panel(GUI.BoxLayoutV());
-		containerHolder.setAppearance("SilverBorder");
 		local titleBar = GUI.TitleBar(null, "Delivery Box", false);
 		titleBar.setAppearance("FrameTopBarSilver");
 		mDeliveryBoxAC = GUI.ActionContainer("deliveryBox", mDeliveryRows, mDeliveryColumns, 0, 0, this);
 		mDeliveryBoxAC.setAllButtonsDraggable(true);
-		mDeliveryBoxAC.setAllowButtonDisownership(true);
+		//mDeliveryBoxAC.setAllowButtonDisownership(true);
 		mDeliveryBoxAC.setItemPanelVisible(true);
 		mDeliveryBoxAC.addListener(this);
 		mDeliveryBoxAC.setCallback(this);
@@ -837,20 +896,100 @@ class Screens.Vault extends GUI.BigFrame
 			hideValue = true,
 			resizeInfoPanel = false
 		});
-		containerHolder.add(mDeliveryBoxAC);
+		
+		// Send To
+		local tempContainer = this.GUI.Container(this.GUI.BoxLayout());
+		tempContainer.setSize(32, 32);
+		tempContainer.setPreferredSize(32, 32);
+		//tempContainer.setPosition(26, 40);
+		tempContainer.setAppearance(null);
+		mStampContainer = this.GUI.ActionContainer("stamps", 1, 1, 0, 0, this, false);
+		mStampContainer.setItemPanelVisible(false);
+		mStampContainer.setAllButtonsDraggable(true);
+		mStampContainer.setValidDropContainer(true);
+		//mStampContainer.setAllowButtonDisownership(true);
+		mStampContainer.addListener(this);
+		tempContainer.add(mStampContainer);
+		
+		// Send Button
+		mSendButton = GUI.Button("Send");
+		mSendButton.setPressMessage("_sendPressed");
+		mSendButton.addActionListener(this);
+		
+		// Recipient name
+		mRecipient = this.GUI.InputArea();
+		mRecipient.setSize(120, 20);
+		mRecipient.setPreferredSize(120, 20);
+		mRecipient.setMaxCharacters(32);
+		mRecipient.addActionListener(this);
+		
+		// Bottom
+		local bottomBox = this.GUI.Container(this.GUI.BoxLayout());		
+		bottomBox.getLayoutManager().mGap = 4;
+		bottomBox.setInsets(5,5,5,5);
+		bottomBox.add(tempContainer);
+		bottomBox.add(mRecipient);
+		bottomBox.add(mSendButton);
+		
+		// Bottom Container
+		local bottomContainer = GUI.Container(GUI.BoxLayoutV());
+		local help = this.GUI.HTML("Either leave the items in your delivery box for your own characters, or use a stamp to send to another character below");
+		help.setWrapText(true, help.getFont(), 220);
+		help.setMaximumSize(220, 48);
+		help.setResize( true );
+		bottomContainer.add(help);
+		bottomContainer.add(bottomBox);
+		
+		// Center
+		local centreBox = GUI.Container(GUI.BorderLayout());
+		centreBox.add(bottomContainer, GUI.BorderLayout.SOUTH);
+		centreBox.add(mDeliveryBoxAC, GUI.BorderLayout.CENTER);
+		
+		// Border
+		local containerHolder = GUI.Panel(GUI.BoxLayoutV());
+		containerHolder.setAppearance("SilverBorder");
+		containerHolder.add(centreBox);
+		
+		// Container
+		local deliveryBox = GUI.Container(GUI.BorderLayout());	
 		deliveryBox.add(titleBar, GUI.BorderLayout.NORTH);
 		deliveryBox.add(containerHolder, GUI.BorderLayout.CENTER);
-		deliveryBox.setPreferredSize(250, 250);
-		deliveryBox.setSize(250, 250);
+		deliveryBox.setPreferredSize(250, 310);
+		deliveryBox.setSize(250, 310);
 		_checkDeliveryBoxes();
 		return deliveryBox;
 	}
+	
+	function sendToRecipient() {		
+		local rec = Util.trim(mRecipient.getText());
+		if(rec.len() == 0) {
+			IGIS.error("You must enter the name of the character your wish to send these items too.");
+			return;
+		}
+		
+		local slots = mDeliveryBoxAC.getAllActionButtons(true);
+		if(slots == 0) {			
+			IGIS.error("There are no items to send!");
+			return;
+		}
+		
+		::_Connection.sendQuery("vault.send", this, [
+			mCurrentVaultId,
+			rec
+		]);
+	}
+	
+	function onInputComplete( entry ) {
+		sendToRecipient();
+	}
 
-	function _removeNotify()
-	{
+	function _removeNotify() {
 		close();
 		GUI.ContainerFrame._removeNotify();
 	}
 
+	function _sendPressed( button )	{
+		sendToRecipient();
+	}
 }
 

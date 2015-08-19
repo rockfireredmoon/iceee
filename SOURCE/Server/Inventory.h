@@ -33,6 +33,8 @@ struct InventorySlot
 		secondsRemaining = -1;
 		timeLoaded = 0;
 	}
+
+	void ApplyFromItemDef(ItemDef *def);
 	long AdjustTimes();
 	int GetStackCount(void);
 	int GetMaxStack(void);
@@ -108,7 +110,7 @@ public:
 	int GetItemCount(int containerID, int itemID);
 	InventorySlot * GetFirstItem(int containerID, int itemID);
 
-	int ItemMove(char *buffer, char *convBuf, CharacterStatSet *css, bool localCharacterVault, int origContainer, int origSlot, InventoryManager *destInv, int destContainer, int destSlot);
+	int ItemMove(char *buffer, char *convBuf, CharacterStatSet *css, bool localCharacterVault, int origContainer, int origSlot, InventoryManager *destInv, int destContainer, int destSlot, bool updateDest);
 	int AddItemUpdate(char *buffer, char *convBuf, InventorySlot *slot);
 	int RemoveItemUpdate(char *buffer, char *convBuf, InventorySlot *slot);
 	int SendItemIDUpdate(char *buffer, char *convBuf, InventorySlot *oldSlot, InventorySlot *newSlot);

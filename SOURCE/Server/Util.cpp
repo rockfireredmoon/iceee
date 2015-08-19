@@ -11,6 +11,12 @@
 #include <math.h>
 #include <stdlib.h>
 
+#ifdef WIN32
+#include <Rpc.h>
+#else
+#include <uuid/uuid.h>
+#endif
+
 ChangeData SessionVarsChangeData;
 
 // For debugging when needed
@@ -1395,5 +1401,26 @@ void TokenizeByWhitespace(const std::string &input, STRINGLIST &output)
 	if(first != -1 && first < (int)len)
 		output.push_back(str.substr(first, len - first + 1));
 }
+
+std::string RandomStr()
+{
+//	static const char alphanum[] =
+//		"0123456789"
+//		"ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+//		"abcdefghijklmnopqrstuvwxyz";
+
+	static const char alphanum[] =
+			"23456789"
+			"ABCDEFGHIJKLMNPQRSTUVWXYZ"
+			"abcdefghjkmnpqrstuvwxyz";
+
+	char str[32];
+	for (unsigned int i = 0; i < sizeof(str); ++i) {
+		str[i] = alphanum[rand() % (sizeof(alphanum) - 1)];
+	}
+	str[sizeof(str) - 1] = 0;
+	return str;
+}
+
 
 } //namespace Util

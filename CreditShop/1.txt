@@ -4,6 +4,6 @@ PriceCurrency=CREDITS
 PriceCopper=0
 PriceCredits=500
 ItemID=8110
-Category=CONSUMABLES
+Category=RECIPES
 Status=NEW
 

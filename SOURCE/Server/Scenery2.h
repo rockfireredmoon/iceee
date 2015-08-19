@@ -292,9 +292,9 @@ public:
 	void ShutdownThread(void);
 	bool bThreadActive;
 
-	static const int GARBAGE_CHECK_EXPIRE_TIME = 3600000;
-	static const int GARBAGE_CHECK_SCAN_DELAY = 300000;
-	static const int GARBAGE_CHECK_TILE_RANGE = 10;
+	static const unsigned int GARBAGE_CHECK_EXPIRE_TIME = 3600000;
+	static const unsigned int GARBAGE_CHECK_SCAN_DELAY = 300000;
+	static const unsigned int GARBAGE_CHECK_TILE_RANGE = 10;
 
 private:
 	Platform_CriticalSection cs;

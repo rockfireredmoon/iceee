@@ -289,6 +289,7 @@ public:
 	int handle_query_item_market_purchase_name(void);
 	int handle_query_bug_report(void);
 	int handle_query_util_addfunds();
+	int handle_query_user_auth_reset();
 	int handle_query_validate_name();
 	int handle_query_petition_list(void);
 	int handle_query_marker_list(void);
@@ -313,8 +314,8 @@ public:
 	int handle_query_party(void);
 	int handle_query_quest_share(void);
 	int handle_query_vault_size(void);
+	int handle_query_vault_send(void);
 	int handle_query_vault_expand(void);
-	int handle_query_vault_deliverycontents(void);
 	int handle_query_shard_set(void);
 
 	int handle_query_mod_setgrovestart(void);
@@ -357,6 +358,7 @@ public:
 	int protected_CheckDistanceBetweenCreatures(CreatureInstance *sourceCreatureInst, int creatureID);
 	int protected_CheckDistanceBetweenCreaturesFor(CreatureInstance *sourceCreatureInst, int creatureID, int range);
 	int protected_CheckDistance(int creatureID);
+	int protected_helper_query_item_move(int origContainer, int origSlot, int destContainer, int destSlot, AccountData *destAccount);
 	int protected_helper_query_loot_item(void);
 	bool HasPropEditPermission(SceneryObject *prop, float x = 0.0F, float z = 0.0F);
 	int protected_helper_query_scenery_edit(void);

@@ -179,6 +179,9 @@ extern char *g_ClanMemberList[3][5];   //If changed, must match Globals.cpp defi
 const double PI = 3.1415926535897932384626433832795;
 const double DOUBLE_PI = PI * 2.0;  //New code references this.
 
+// TODO - This needs to be moved to data
+const int POSTAGE_STAMP_ITEM_ID = 8400;
+
 //extern const int MaxLevel;
 extern const int LevelRequirements[71][2];
 
