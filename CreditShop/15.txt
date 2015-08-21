@@ -1,6 +1,8 @@
 [ENTRY]
-Status=NEW
-Category=ARMOR
-PriceAmount=20000
-PriceCurrency=COPPER
+PriceCurrency=CREDITS
+PriceCopper=0
+PriceCredits=100
 ItemID=5594
+Category=ARMOR
+Status=NEW
+

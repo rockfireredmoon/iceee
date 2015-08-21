@@ -775,7 +775,7 @@ this.IGIS.broadcast <- function ( text )
 {
 	this.log.info(text);
 	this._igisManager.addTransitory(text, this.IGIS.BROADCAST);
-	::Audio.playArchiveSound("Sound-ModSound", "Sound-trick2.ogg");
+	::Audio.playArchiveSound("Sound-ModSound", "Sound-broadcast.ogg");
 };
 this.IGIS.error <- function ( text )
 {

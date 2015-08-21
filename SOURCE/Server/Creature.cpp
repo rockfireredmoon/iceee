@@ -45,7 +45,6 @@ const int CREATURE_RUN_SPEED = 100;
 const int CREATURE_MOVEMENT_COMBAT_FREQUENCY = 500;     //How long between processing movement steps while in combat.
 const int CREATURE_MOVEMENT_NONCOMBAT_FREQUENCY = 1000;  //How long between processing movement steps while out of combat.
 
-const int PARTY_SHARE_DISTANCE = 1920;
 
 const int AGGRO_ELEV_RANGE = 30;      //Only consider targets that are within this vertical range
 const int AGGRO_DEFAULT_RANGE = 130;  //150;
@@ -6986,22 +6985,32 @@ void CreatureInstance :: RunQuestObjectInteraction(CreatureInstance *target, boo
 
 	int instance = actInst->mInstanceID;
 
-	ActiveParty *party = g_PartyManager.GetPartyByID(PartyID);
-	if(party == NULL)
-		CheckQuestInteract(target->CreatureDefID);
-	else
-	{
-		for(size_t i = 0; i < party->mMemberList.size(); i++)
-		{
-			int CDefID = party->mMemberList[i].mCreatureDefID;
-			CreatureInstance *member = actInst->GetPlayerByCDefID(CDefID);
-			if(member == NULL)
-				continue;
-			if(member->actInst->mInstanceID != instance)
-				continue;
-			if(actInst->GetPlaneRange(this, member, PARTY_SHARE_DISTANCE) >= PARTY_SHARE_DISTANCE)
-				continue;
-			member->CheckQuestInteract(target->CreatureDefID);
+	CheckQuestInteract(target->CreatureDefID);
+
+	/* Determine if target creature is Warp interact as well as a Quest object interaction.
+	 * If it is, we don't activate for the rest of the party, they must do it themselves
+	 */
+	InteractObject *ob = g_InteractObjectContainer.GetObjectByID(target->CreatureDefID, target->actInst->mZone);
+	if(ob == NULL || ob->opType != InteractObject::TYPE_WARP) {
+		/*
+		 * Either no interact object, or there is and it isn't a warp, so activate for the party too
+		 */
+		ActiveParty *party = g_PartyManager.GetPartyByID(PartyID);
+		if(party != NULL) {
+			for(size_t i = 0; i < party->mMemberList.size(); i++)
+			{
+				int CDefID = party->mMemberList[i].mCreatureDefID;
+				if(CDefID != CreatureDefID) {
+					CreatureInstance *member = actInst->GetPlayerByCDefID(CDefID);
+					if(member == NULL)
+						continue;
+					if(member->actInst->mInstanceID != instance)
+						continue;
+					if(actInst->GetPlaneRange(this, member, PARTY_SHARE_DISTANCE) >= PARTY_SHARE_DISTANCE)
+						continue;
+					member->CheckQuestInteract(target->CreatureDefID);
+				}
+			}
 		}
 	}
 

@@ -137,9 +137,9 @@ class this.Screens.CreditShop extends this.GUI.Frame
 
 	function _buildSelectionPanel()
 	{
-		local GAP_SIZE = 15;
-		local BUTTON_WIDTH = 72;
-		local BUTTON_HEIGHT = 71;
+		local GAP_SIZE = 12;
+		local BUTTON_WIDTH = 62;
+		local BUTTON_HEIGHT = 61;
 		local bottomSelectPanel = this.GUI.InnerPanel(this.GUI.BoxLayout());
 		bottomSelectPanel.setSize(this.BOTTOM_SELECT_WIDTH, this.BOTTOM_SELECT_HEIGHT);
 		bottomSelectPanel.setPreferredSize(this.BOTTOM_SELECT_WIDTH, this.BOTTOM_SELECT_HEIGHT);

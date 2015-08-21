@@ -15958,7 +15958,7 @@ app=[{["c"]={["type"]="Armor-Cloth-Mid5",["colors"]=[]}},null]
 app=[{["c"]={["type"]="Armor-Heavy-Mid1",["colors"]=["0a0f55","a77d19","060715"]}},null]
 app=[{["c"]={["type"]="Armor-Heavy-Mid1",["colors"]=["0f1e2a","1d112a","5a2a6a"]}},null]
 app=[{["c"]={["type"]="Armor-Heavy-Mid1",["colors"]=["150b0e","6a0000","7f0000"]}},null]
-app=[{["c"]={["type"]="Armor-Heavy-Mid1",["colors"]=["150e05","3f3f35","e9c533"]}},null]
+app=[{["c"]={["type"]="Armor-Heavy-Mid1",["colors"]=["151108","949494","dd8a11"]}},null]
 app=[{["c"]={["type"]="Armor-Heavy-Mid1",["colors"]=["17307f","0c0e2a","3f0505"]}},null]
 app=[{["c"]={["type"]="Armor-Heavy-Mid1",["colors"]=["2c073f","635194","bf85a0"]}},null]
 app=[{["c"]={["type"]="Armor-Heavy-Mid1",["colors"]=["3a1655","550707","ff7d5a"]}},null]
@@ -16146,7 +16146,7 @@ app={["c"]={["type"]="Armor-Cloth-Mid5",["colors"]=["bf8310","6a4909","bf8310","
 app={["c"]={["type"]="Armor-Cloth-Mid5",["colors"]=["c5e9a5","7491aa","8caa8e","8caa8e","6c6c6c"]}}
 app={["c"]={["type"]="Armor-Heavy-Mid1",["colors"]=["000000","8620ff","2c0a55"]}}
 app={["c"]={["type"]="Armor-Heavy-Mid1",["colors"]=["0a0f55","a77d19","060715"]}}
-app={["c"]={["type"]="Armor-Heavy-Mid1",["colors"]=["150e05","3f3f35","e9c533"]}}
+app={["c"]={["type"]="Armor-Heavy-Mid1",["colors"]=["151108","949494","dd8a11"]}}
 app={["c"]={["type"]="Armor-Heavy-Mid1",["colors"]=["151515","a77d19","a77d19"]}}
 app={["c"]={["type"]="Armor-Heavy-Mid1",["colors"]=["17307f","0c0e2a","3f0505"]}}
 app={["c"]={["type"]="Armor-Heavy-Mid1",["colors"]=["2c073f","635194","bf85a0"]}}

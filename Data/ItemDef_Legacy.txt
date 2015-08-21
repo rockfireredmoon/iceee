@@ -74662,6 +74662,7 @@ mMinUseLevel=39
 mID=1002946
 mType=3
 mDisplayName=Old Heraldic Broccan-Crest Boots
+mAppearance=[{["c"]={["type"]="Armor-Heavy-Mid1",["colors"]=["151108","949494","ffaf16"]}},null]
 mAppearance={["c"]={["type"]="Armor-Heavy-Mid1",["colors"]=["150e05","3f3f35","e9c533"]}}
 mIcon=Icon-32-H_Armor-Feet01.png|Icon-32-BG-Blue.png
 mLevel=39

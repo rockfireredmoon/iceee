@@ -1,0 +1,9 @@
+[ENTRY]
+Description=Top of the range bag for all of your shinies!
+PriceCurrency=CREDITS
+PriceCopper=0
+PriceCredits=1000
+ItemID=7
+Category=BAGS
+Status=NEW
+

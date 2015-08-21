@@ -63,6 +63,7 @@ class Screens.ItemMarketEditScreen extends GUI.Frame {
 		mCategoryEntry.addChoice("ARMOR");
 		mCategoryEntry.addChoice("BAGS");
 		mCategoryEntry.addChoice("RECIPES");
+		mCategoryEntry.addChoice("PETS");
 		mCategoryEntry.addSelectionChangeListener(this);
 		
 		mStatusEntry = GUI.DropDownList();

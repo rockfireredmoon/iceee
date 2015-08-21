@@ -41,6 +41,8 @@ extern unsigned long CREATURE_DELETE_RECHECK;
 extern const int FACTION_PLAYERFRIENDLY;
 extern const int FACTION_PLAYERHOSTILE;
 
+extern const int PARTY_SHARE_DISTANCE;
+
 typedef std::vector<SceneryEffect>      SceneryEffectList;
 typedef std::pair<int, SceneryEffectList> SceneryEffectPair;
 typedef std::map<int, SceneryEffectList> SceneryEffectMap;

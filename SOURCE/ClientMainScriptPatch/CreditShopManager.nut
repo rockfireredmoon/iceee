@@ -7,6 +7,7 @@ class this.CreditShopManager extends this.DefaultQueryHandler
 	mBags = null;
 	mNameChangeCost = 0;
 	mRecipes = null;
+	mPets = null;
 	mNewItems = null;
 	CategoryTypes = null;
 	constructor()
@@ -17,6 +18,7 @@ class this.CreditShopManager extends this.DefaultQueryHandler
 		this.mArmors = [];
 		this.mBags = [];
 		this.mRecipes = [];
+		this.mPets = [];
 		this.mNewItems = [];
 		this.CategoryTypes = {};
 		this.CategoryTypes = {
@@ -38,6 +40,10 @@ class this.CreditShopManager extends this.DefaultQueryHandler
 			},
 			RECIPES = {
 				dataList = this.mRecipes,
+				lastPage = 1
+			},
+			PETS = {
+				dataList = this.mPets,
 				lastPage = 1
 			},
 			NEW = {

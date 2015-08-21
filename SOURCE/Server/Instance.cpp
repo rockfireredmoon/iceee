@@ -15,6 +15,8 @@ extern const int DISTANCE_FAILED = 999999;     //If box distance checks are not 
 
 extern const int FACTION_PLAYERFRIENDLY = 0;
 extern const int FACTION_PLAYERHOSTILE = 1;
+extern const int PARTY_SHARE_DISTANCE = 1920;
+
 const bool DEFAULT_PVPSTATE = true;
 
 int InstanceUpdateDelay = 100;  //Milliseconds to delay between general instance updates.  10 frames per second should be fine, although AI scripts might run a bit slow.

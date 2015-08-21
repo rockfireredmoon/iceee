@@ -45,6 +45,8 @@ const char *GetNameByID(int id) {
 		return "CONSUMABLES";
 	case RECIPES:
 		return "RECIPES";
+	case PETS:
+		return "PETS";
 	}
 	return "<undefined>";
 }
@@ -60,6 +62,8 @@ int GetIDByName(const std::string &name) {
 		return CONSUMABLES;
 	if (name.compare("RECIPES") == 0)
 		return RECIPES;
+	if (name.compare("PETS") == 0)
+		return PETS;
 	return UNDEFINED;
 }
 

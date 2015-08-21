@@ -1,0 +1,197 @@
+material DefaultSkin/CreditShop/Consumables
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			scene_blend alpha_blend
+			depth_check off
+			fog_override true
+
+			texture_unit
+			{
+				texture Credit_Shop-Buttons-Consumable.png 0
+
+				tex_address_mode clamp
+				filtering none
+			}
+		}
+	}
+}
+
+material DefaultSkin/CreditShop/Charms
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			scene_blend alpha_blend
+			depth_check off
+			fog_override true
+
+			texture_unit
+			{
+				texture Credit_Shop-Buttons-Charms.png 0
+
+				tex_address_mode clamp
+				filtering none
+			}
+		}
+	}
+}
+
+material DefaultSkin/CreditShop/Armor
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			scene_blend alpha_blend
+			depth_check off
+			fog_override true
+
+			texture_unit
+			{
+				texture Credit_Shop-Buttons-ArmorLooks.png 0
+
+				tex_address_mode clamp
+				filtering none
+			}
+		}
+	}
+}
+
+material DefaultSkin/CreditShop/Bags
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			scene_blend alpha_blend
+			depth_check off
+			fog_override true
+
+			texture_unit
+			{
+				texture Credit_Shop-Buttons-Containers.png 0
+
+				tex_address_mode clamp
+				filtering none
+			}
+		}
+	}
+}
+
+material DefaultSkin/CreditShop/Recipes
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			scene_blend alpha_blend
+			depth_check off
+			fog_override true
+
+			texture_unit
+			{
+				texture Credit_Shop-Buttons-Recipes.png 0
+
+				tex_address_mode clamp
+				filtering none
+			}
+		}
+	}
+}
+
+material DefaultSkin/CreditShop/Pets
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			scene_blend alpha_blend
+			depth_check off
+			fog_override true
+
+			texture_unit
+			{
+				texture Credit_Shop-Buttons-Pets.png 0
+
+				tex_address_mode clamp
+				filtering none
+			}
+		}
+	}
+}
+
+material DefaultSkin/CreditShop/NameText
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			scene_blend alpha_blend
+			depth_check off
+			fog_override true
+
+			texture_unit
+			{
+				texture Credit_Shop-Buttons-NameChange.png 0
+
+				tex_address_mode clamp
+				filtering none
+			}
+		}
+	}
+}
+
+material DefaultSkin/CreditShop/Glow
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			scene_blend alpha_blend
+			depth_check off
+			fog_override true
+
+			texture_unit
+			{
+				texture Credit_Shop-Buttons-Rollover.png 0
+
+				tex_address_mode clamp
+				filtering none
+			}
+		}
+	}
+}
+
+material DefaultSkin/CreditShop/New
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			scene_blend alpha_blend
+			depth_check off
+			fog_override true
+
+			texture_unit
+			{
+				texture Credit_Shop-Buttons-New.png 0
+
+				tex_address_mode clamp
+				filtering none
+			}
+		}
+	}
+}

@@ -1,0 +1,53 @@
+template container Panel(DefaultSkin/CreditShop/Consumables)
+{
+   metrics_mode pixels
+   material DefaultSkin/CreditShop/Consumables
+}
+
+template container Panel(DefaultSkin/CreditShop/Charms)
+{
+   metrics_mode pixels
+   material DefaultSkin/CreditShop/Charms
+}
+
+template container Panel(DefaultSkin/CreditShop/Armor)
+{
+   metrics_mode pixels
+   material DefaultSkin/CreditShop/Armor
+}
+
+template container Panel(DefaultSkin/CreditShop/Bags)
+{
+   metrics_mode pixels
+   material DefaultSkin/CreditShop/Bags
+}
+
+template container Panel(DefaultSkin/CreditShop/Pets)
+{
+   metrics_mode pixels
+   material DefaultSkin/CreditShop/Pets
+}
+
+template container Panel(DefaultSkin/CreditShop/Recipes)
+{
+   metrics_mode pixels
+   material DefaultSkin/CreditShop/Recipes
+}
+
+template container Panel(DefaultSkin/CreditShop/NameText)
+{
+   metrics_mode pixels
+   material DefaultSkin/CreditShop/NameText
+}
+
+template container Panel(DefaultSkin/CreditShop/New)
+{
+   metrics_mode pixels
+   material DefaultSkin/CreditShop/New
+}
+
+template container Panel(DefaultSkin/CreditShop/Glow)
+{
+   metrics_mode pixels
+   material DefaultSkin/CreditShop/Glow
+}
