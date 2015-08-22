@@ -1,0 +1,57 @@
+[ENTRY]
+ID=1130905
+Asset=Earthrise Forest?d=1&s=1&sz=1000
+Name=Untitled
+Pos=19889.4,1455.52,29580.9
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
+ID=1130906
+Asset=Earthrise Forest?d=1&s=2&sz=1000
+Name=Untitled
+Pos=20547,1484.8,29840
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
+ID=1130907
+Asset=Earthrise Forest?d=1&s=2&sz=300
+Name=Untitled
+Pos=20253.3,1502.24,28817.3
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
+ID=1131008
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=Untitled
+Pos=21039.4,1143.31,29068
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#E3397
+
+[ENTRY]
+ID=1131038
+Asset=Bldg-Ruins#Bldg-Ruins-Small_House1?ATS=ATS-Burned
+Name=Untitled
+Pos=21041.6,1123.19,29011.9
+Orient=0,0,-0.0249974,0.999687
+Scale=1,1,1
+
+[ENTRY]
+ID=1131143
+Asset=Earthrise Forest?d=1&s=1&sz=1000
+Name=Untitled
+Pos=19252,1504.06,30382.3
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
+ID=1131433
+Asset=Prop-Marker1#Prop-Monster_Marker
+Name=
+Pos=19938.7,1519.8,29774.7
+Orient=0,0,0,1
+Scale=5,5,5
+

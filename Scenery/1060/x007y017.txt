@@ -1,0 +1,40 @@
+[ENTRY]
+ID=1130868
+Asset=Prop-Mother_Shard#Prop-Mother_Shard
+Name=Untitled
+Pos=14777.7,1223.81,33095.8
+Orient=-0.00225908,-0.112418,-0.712104,0.693012
+Scale=3,3,3
+
+[ENTRY]
+ID=1131432
+Asset=Prop-Marker1#Prop-Monster_Marker
+Name=Untitled
+Pos=14724.1,1300.2,34087
+Orient=0,-0.139543,0,0.990216
+Scale=5,5,5
+
+[ENTRY]
+ID=1131515
+Asset=Earthrise Forest?d=1&s=6&sz=500
+Name=
+Pos=14518.6,1210.25,34246
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
+ID=1131516
+Asset=Earthrise Forest?d=1&s=7&sz=500
+Name=
+Pos=15159.2,1278.39,34017.2
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
+ID=1131518
+Asset=Earthrise Forest?d=1&s=9&sz=500
+Name=
+Pos=14759.8,1205.24,34117.3
+Orient=0,0,0,1
+Scale=1,1,1
+

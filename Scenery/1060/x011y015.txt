@@ -1,0 +1,16 @@
+[ENTRY]
+ID=1131047
+Asset=Prop-Nordic_Props#Prop-Dock1
+Name=
+Pos=21417.3,1027.88,29018.2
+Orient=0,0.968715,0,0.248176
+Scale=1.5,1.5,1.5
+
+[ENTRY]
+ID=1131048
+Asset=Prop-Dock1
+Name=
+Pos=21339,1029.57,28972.3
+Orient=0,0.968715,0,0.248176
+Scale=1.5,1.5,1.5
+

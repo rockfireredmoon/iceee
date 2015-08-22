@@ -1,0 +1,8 @@
+[ENTRY]
+ID=1131731
+Asset=Cav-Corner_Patch?ATS=ATS-Cave_Dvergar
+Name=
+Pos=-31670,100.866,33021.1
+Orient=0,0,0,1
+Scale=0.5,0.5,0.5
+

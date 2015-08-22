@@ -1,0 +1,8 @@
+[ENTRY]
+ID=1130869
+Asset=Prop-Mother_Shard#Prop-Mother_Shard
+Name=
+Pos=15302.9,1104.31,32343
+Orient=0.587515,0.175322,-0.255991,0.747366
+Scale=4,4,4
+

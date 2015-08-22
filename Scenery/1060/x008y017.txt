@@ -1,0 +1,16 @@
+[ENTRY]
+ID=1130866
+Asset=Prop-Mother_Shard#Prop-Mother_Shard
+Name=Untitled
+Pos=16053.9,966.603,33515.8
+Orient=-0.124675,0,0,0.992198
+Scale=7,7,7
+
+[ENTRY]
+ID=1131462
+Asset=Environment-Marker?type=SpookyWoods
+Name=
+Pos=16052.8,1168.7,33417.6
+Orient=0,0,0,1
+Scale=10,10,10
+
