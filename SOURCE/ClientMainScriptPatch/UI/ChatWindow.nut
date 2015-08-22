@@ -370,13 +370,10 @@ class this.Screens.ChatWindow extends this.GUI.Component
 
 	function onLinkClicked( message, data )
 	{
-		print("ICE! " + data);
 		if("href" in data && this.Util.startsWith(data.href, "http://") || this.Util.startsWith(data.href, "https://")) {
-			print("ICE! OPEN HREF " + data.href);
 			this.System.openURL(data.href);
 		}
 		else if("href" in data && this.Util.startsWith(data.href, "forum://")) {
-			print("ICE! OPEN FORUM " + data.href);
 			local forumId = data.href.slice(8);
 			local igf = Screens.show("IGForum");
 			if(igf) {

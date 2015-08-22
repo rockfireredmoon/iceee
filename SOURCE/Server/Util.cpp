@@ -390,8 +390,10 @@ int PrepExt_SendEffect(char *buffer, int sourceID, const char *effectName, int t
 	return wpos;
 }
 
-int PrepExt_SendHeartbeatMessage(char *buffer, unsigned int elapsedMilliseconds)
+int PrepExt_SendHeartbeatMessage(char *buffer, unsigned long elapsedMilliseconds)
 {
+	// TODO i am wondering if this should be sending the amount of time since the last update, not the total
+	g_Log.AddMessageFormat("Sending hearbeat: %d", elapsedMilliseconds);
 	int wpos = 0;
 	wpos += PutByte(&buffer[wpos], 90);   //_handleHeartbeatMessage
 	wpos += PutShort(&buffer[wpos], 0);   //Reserve for size

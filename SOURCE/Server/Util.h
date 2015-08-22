@@ -57,7 +57,7 @@ int PrepExt_QueryResponseStringList(char *buffer, int queryIndex, const STRINGLI
 int PrepExt_QueryResponseMultiString(char *buffer, int queryIndex, const MULTISTRING &strData);
 int PrepExt_QueryResponseError(char *buffer, int queryIndex, const char *message);
 int PrepExt_SendEffect(char *buffer, int sourceID, const char *effectName, int targetID);
-int PrepExt_SendHeartbeatMessage(char *buffer, unsigned int elapsedMilliseconds);
+int PrepExt_SendHeartbeatMessage(char *buffer, unsigned long elapsedMilliseconds);
 int PrepExt_SendAdvancedEmote(char *buffer, int creatureID, const char *emoteName, float emoteSpeed, int loop);
 int PrepExt_SendEmoteControl(char *buffer, int creatureID, int emoteEvent);
 int PrepExt_ModStopSwimFlag(char *buffer);

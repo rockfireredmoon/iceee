@@ -151,24 +151,27 @@ class this.Screens.CreditShop extends this.GUI.Frame
 
 		foreach( key, creditSelectItems in this.CreditSelectInfo )
 		{
-			local button = this.GUI.ImageButton();
-			button.setRadioGroup(pageRadioGroup);
-			button.setData(key);
-			button.setTooltip(creditSelectItems.name);
-			button.setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
-			button.setPreferredSize(BUTTON_WIDTH, BUTTON_HEIGHT);
-			button.setAppearance("CreditShop/" + creditSelectItems.imageName);
-			button.setGlowImageName("CreditShop/Glow");
-			button.addActionListener(this);
-			button.setPressMessage("_selectedIcons");
-
-			if (key == this.CreditSelectType.CONSUMABLES)
-			{
-				button.setSelection(true);
-				this._selectedIcons(button, false);
+			// TODO - Pets are hidden for now
+			if(key != CreditSelectType.PETS) {
+				local button = this.GUI.ImageButton();
+				button.setRadioGroup(pageRadioGroup);
+				button.setData(key);
+				button.setTooltip(creditSelectItems.name);
+				button.setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
+				button.setPreferredSize(BUTTON_WIDTH, BUTTON_HEIGHT);
+				button.setAppearance("CreditShop/" + creditSelectItems.imageName);
+				button.setGlowImageName("CreditShop/Glow");
+				button.addActionListener(this);
+				button.setPressMessage("_selectedIcons");
+	
+				if (key == this.CreditSelectType.CONSUMABLES)
+				{
+					button.setSelection(true);
+					this._selectedIcons(button, false);
+				}
+	
+				bottomSelectPanel.add(button);
 			}
-
-			bottomSelectPanel.add(button);
 		}
 
 		return bottomSelectPanel;

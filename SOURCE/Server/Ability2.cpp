@@ -64,7 +64,7 @@ WillCharge(1,2)                             Active will charges required (min, m
 A_AddMightCharge(1)                          Add a might charge to avatar (amount)
 A_AddWillCharge(1)                           Add a will charge to avatar (amount)
 A_Heal(((A_SPIRIT*1.792+131)*1)/5)           Heal avatar for (formula...)
-Add(BASE_BLOCK,100,-1)                       Add status effect (statName, amount, duration)      [duration is in sections, -1 for no limit?]
+Add(BASE_BLOCK,100,-1)                       Add status effect (statName, amount, duration)      [duration is in seconds, -1 for no limit?]
 AddHate(-100)                                Adjust hate (amount)
 AddWDesc(BLEEDING,1,8,"Shadow Strike")       Display info? (stat,iteration,duration,name)
 Amp(BASE_LUCK,0.05,3600)                     Amplify a stat by a percentage (stat, percent, duration)

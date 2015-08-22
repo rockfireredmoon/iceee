@@ -237,6 +237,21 @@ InventorySlot * InventoryManager :: AddItem_Ex(int containerID, int itemID, int 
 		return NULL;
 	}
 
+
+	if(itemDef->mOwnershipRestriction > 0) {
+		// Make sure there are less
+		int count = GetItemCount(INV_CONTAINER, itemDef->mID);
+		count += GetItemCount(BANK_CONTAINER, itemDef->mID);
+		count += GetItemCount(EQ_CONTAINER, itemDef->mID);
+		count += GetItemCount(DELIVERY_CONTAINER, itemDef->mID);
+		count += GetItemCount(STAMPS_CONTAINER, itemDef->mID);
+		if(count >= itemDef->mOwnershipRestriction) {
+			// Already have the limit of this item
+			SetError(ERROR_LIMIT);
+			return NULL;
+		}
+	}
+
 	//If count is 1, try to increment an existing stack if necessary.
 	InventorySlot *slot = GetExistingPartialStack(containerID, itemDef);
 	if(slot != NULL)
@@ -269,6 +284,7 @@ InventorySlot * InventoryManager :: AddItem_Ex(int containerID, int itemID, int 
 	newItem.ApplyFromItemDef(itemDef);
 
 	AddItem(containerID, newItem);
+
 	return &containerList[containerID].back();
 }
 

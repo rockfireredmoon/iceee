@@ -1047,8 +1047,11 @@ void SendHeartbeatMessages(void)
 		if(it->creatureInst->ab[0].bPending == true)
 			continue;
 
-		if(wpos == 0)   //Prep the buffer once, but only if we need it.
-			wpos = PrepExt_SendHeartbeatMessage(GSendBuf, g_ServerTime - g_ServerLaunchTime);
+		if(wpos == 0) {  //Prep the buffer once, but only if we need it.
+			unsigned long elapsed = ( g_ServerTime - g_ServerLaunchTime);
+			wpos = PrepExt_SendHeartbeatMessage(GSendBuf, elapsed - it->LastHeartbeatSend);
+			it->LastHeartbeatSend = elapsed;
+		}
 
 		it->PendingHeartbeatResponse++;
 		it->AttemptSend(GSendBuf, wpos);

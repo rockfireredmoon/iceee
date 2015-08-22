@@ -136,6 +136,7 @@ public:
 	static const int PROTOCOLSTATE_GAME  = 1;
 	unsigned long LastUpdate;     //The time that a player hard position update was last sent.
 	unsigned long LastRecv;       //The time that the simulator last received a message
+	unsigned long LastHeartbeatSend; //The time that the simulator last sent a heartbeat
 	bool characterCreation;
 
 	int PendingHeartbeatResponse;             //Should equalize to zero if communications are operating normally.
@@ -187,8 +188,11 @@ public:
 	void UndoLoot(ActiveParty *party, ActiveLootContainer *loot, int itemId, int creatureId);
 
 	int OfferLoot(int mode, ActiveLootContainer *loot, ActiveParty *party, CreatureInstance *receivingCreature, int ItemID, bool needOrGreed, int CID, int conIndex);
+
 	void CheckIfLootReadyToDistribute(ActiveLootContainer *loot, LootTag *lootTag);
 	PartyMember * RollForPartyLoot(ActiveParty *party, std::set<int> creatureIds, const char *rollType, int itemId);
+
+	bool ActivateActionAbilities(InventorySlot *slot);
 
 	int handle_query_account_info(void);
 	int handle_query_statuseffect_set(void);

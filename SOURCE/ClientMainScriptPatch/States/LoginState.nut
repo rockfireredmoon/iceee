@@ -70,20 +70,16 @@ class this.States.LoginState extends this.State
 		this.mMenu.container.setLayoutManager(this.GUI.BoxLayout(this.GUI.BoxLayout.VERTICAL));
 		this.Screen.setOverlayVisible("GUI/Overlay2", true);
 		this.mMenu.container.setOverlay("GUI/Overlay2");
-		this.mMenu.faqButton <- ::GUI.BigButton("Disqus");
+		this.mMenu.faqButton <- ::GUI.LtGreenBigButton("Create Account");
 		this.mMenu.container.add(this.mMenu.faqButton);
-		this.mMenu.faqButton.addActionListener({
-			function onActionPerformed( b )
-			{
-				this.System.openURL("http://armouree.vm.bytemark.co.uk/dokuwiki/doku.php?id=start");
-			}
-
-		});
+		this.mMenu.faqButton.setReleaseMessage("onCreateAccount");
+		this.mMenu.faqButton.addActionListener(this);
 		this.mMenu.privacyButton <- ::GUI.BigButton("Project");
 		this.mMenu.container.add(this.mMenu.privacyButton);
 		this.mMenu.privacyButton.addActionListener({
 			function onActionPerformed( b )
 			{
+				//::_URLManager.LaunchURL("Project");
 				this.System.openURL("https://github.com/rockfireredmoon/iceee/");
 			}
 
@@ -92,7 +88,8 @@ class this.States.LoginState extends this.State
 		this.mMenu.container.add(this.mMenu.forParents);
 		this.mMenu.forParents.addActionListener({
 			function onActionPerformed( b )
-			{
+			{			
+				//::_URLManager.LaunchURL("ForTesters");
 				this.System.openURL("http://armouree.vm.bytemark.co.uk/dokuwiki/doku.php?id=iceee:development:betatesters");
 			}
 
@@ -102,6 +99,7 @@ class this.States.LoginState extends this.State
 		this.mMenu.forgotPassword.addActionListener({
 			function onActionPerformed( b )
 			{
+				//::_URLManager.LaunchURL("ForgotPassword");
 				this.System.openURL("http://iceee.servegame.com/ResetPassword.html");
 			}
 
@@ -111,6 +109,7 @@ class this.States.LoginState extends this.State
 		this.mMenu.manageAccount.addActionListener({
 			function onActionPerformed( b )
 			{
+				//::_URLManager.LaunchURL("ManageAccount");
 				this.System.openURL("http://iceee.servegame.com/Account.html");
 			}
 
@@ -149,23 +148,18 @@ class this.States.LoginState extends this.State
 		local baseContainer = mCS.baseContainer <- ::GUI.Container();
 		baseContainer.setLayoutManager( GUI.BorderLayout() );
 		baseContainer.setSticky("center", "center");
-		baseContainer.setPosition( -50, -275);
-		baseContainer.setSize( 425, 530 );
+		baseContainer.setPosition( -50, -43);
+		baseContainer.setSize( 425, 334 );
 		baseContainer.setOverlay("GUI/Overlay2");
-
-		local secondContainer = mCS.secondContainer <- ::GUI.Container();
-		secondContainer.setLayoutManager( GUI.BorderLayout() );
-		secondContainer.setInsets( 10, 0, 0, 0 );
-		baseContainer.add( secondContainer, GUI.BorderLayout.SOUTH );
 
 		local infoPanel = mCS.infoPanel <- ::GUI.Panel();
 		infoPanel.setLayoutManager( GUI.BorderLayout() );
-		infoPanel.setInsets( 10, 10, 10, 10 );
-		infoPanel.setSize( 400, 200 );
-		baseContainer.add( infoPanel, GUI.BorderLayout.CENTER );
+		infoPanel.setInsets( 6, 6, 6, 6 );
+		infoPanel.setSize( 400, 116 );
+		baseContainer.add( infoPanel, GUI.BorderLayout.NORTH );
 		
 		local infoTitle = mCS.infoTitle <- ::GUI.Label("NEWS");
-		infoTitle.setFont( GUI.Font( "Maiandra", 32 ) );
+		infoTitle.setFont( GUI.Font( "Maiandra", 18 ) );
 		infoPanel.add( infoTitle, GUI.BorderLayout.NORTH );
 		
 		local scrollArea = mCS.scrollArea <- GUI.ScrollPanel();
@@ -174,48 +168,28 @@ class this.States.LoginState extends this.State
 		mNews = mCS.infoArea <- ::GUI.HTML();
 		mNews.setAppearance("PaperBackBorder");
 		mNews.setVisible(true);
+		mNews.addActionListener(this);
 		mNews.setLayoutManager(::GUI.FlowLayout());
 		mNews.getLayoutManager().setAlignment("left");
 		mNews.getLayoutManager().setGaps(0.0, 0.0);
 		mNews.setInsets( 10, 10, 10, 10 );
-		mNews.setFont( GUI.Font( "Maiandra", 18 ) );
+		mNews.setFont( GUI.Font( "Maiandra", 16 ) );
 		mNews.setFontColor( "2b1b00" );		
 		mNews.setText("Loading...");
 		scrollArea.attach( mNews );
 
 		fetchNews(); 
 
-		local accountPanel = mCS.accountPanel <- ::GUI.Panel();
-		accountPanel.setLayoutManager( GUI.GridLayout(2, 1) );
-		accountPanel.setSize( 400, 300 );
-		accountPanel.setInsets( 10, 10, 10, 10 );
-		//accountPanel.getLayoutManager().setAlignment( "center" );
-		secondContainer.add( accountPanel, GUI.BorderLayout.NORTH );
-
-		local accountTitle = mCS.accountTitle <- ::GUI.Label("New to Planet Forever - IceEE?");
-		accountTitle.setFont( GUI.Font( "Maiandra", 32 ) );
-		accountTitle.setTextAlignment(0.5, 0.5);
-		accountPanel.add( accountTitle );
-	
-		local accountButtonContainer = mCS.accountButtonContainer <- GUI.Container();
-		accountButtonContainer.setLayoutManager( GUI.BoxLayoutV() );
-		accountButtonContainer.getLayoutManager().setExpand( false );
-		accountPanel.add(accountButtonContainer);
-
-		local accountButton = mCS.accountButton <- ::GUI.BigButton( "Create Account" );
-		accountButton.setReleaseMessage("onCreateAccount");
-		accountButtonContainer.add( accountButton );
-		
 		local thirdContainer = mCS.thirdContainer <- ::GUI.Container();
 		thirdContainer.setLayoutManager( GUI.BorderLayout() );
 		thirdContainer.setInsets( 10, 0, 0, 0 );
-		secondContainer.add( thirdContainer, GUI.BorderLayout.SOUTH );
+		baseContainer.add( thirdContainer, GUI.BorderLayout.SOUTH );
 
 		local loginPanel = mCS.loginPanel <- ::GUI.Panel();		
 		loginPanel.setLayoutManager( GUI.BorderLayout() );
-		loginPanel.setSize( 400, 160 );
-		loginPanel.setInsets( 10, 10, 10, 10 );
-		loginPanel.setFont( GUI.Font( "Maiandra", 32 ) );
+		loginPanel.setSize( 400, 140 );
+		loginPanel.setInsets( 6, 26, 6, 26 );
+		loginPanel.setFont( GUI.Font( "Maiandra", 24 ) );
 		thirdContainer.add( loginPanel, GUI.BorderLayout.SOUTH );
 		
 		local accountText = "Username:";
@@ -273,7 +247,6 @@ class this.States.LoginState extends this.State
 		loginPanel.add(buttonContainer, GUI.BorderLayout.SOUTH);
 
 		mCS.loginButton.addActionListener( this );
-		mCS.accountButton.addActionListener( this );
 
 		local creds = ::Pref.get( "login.Credentials" );
 		if( creds != "" )
@@ -288,6 +261,14 @@ class this.States.LoginState extends this.State
 
 		usernameInput.setTabOrderTarget( passwordInput );
 		passwordInput.setTabOrderTarget( usernameInput );	
+	}
+	
+	
+	function onLinkClicked( message, data )
+	{
+		if("href" in data) {
+			this.System.openURL(data.href);
+		}
 	}
 
 	function setNews( input )
@@ -370,6 +351,7 @@ class this.States.LoginState extends this.State
 		}
 		else
 		{
+			//::_URLManager.LaunchURL("Account");
 			this.System.openURL("http://iceee.servegame.com/Account.html");
 		}
 	}

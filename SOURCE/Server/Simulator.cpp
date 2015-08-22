@@ -539,6 +539,7 @@ SimulatorThread :: SimulatorThread()
 	LoadStage = 0;
 	LastUpdate = 0;
 	LastRecv = 0;
+	LastHeartbeatSend = 0;
 	characterCreation = false;
 
 	PendingHeartbeatResponse = 0;
@@ -1326,6 +1327,8 @@ void SimulatorThread :: handle_lobby_query(void)
 		handle_query_account_tracking();
 	else if(query.name.compare("util.ping") == 0)
 		handle_query_util_ping();
+	else if(query.name.compare("mod.getURL") == 0)
+		handle_query_mod_getURL();
 	else
 		LogMessageL(MSG_WARN, "[WARNING] Unhandled query in lobby: %s", query.name.c_str());
 
@@ -4116,8 +4119,16 @@ int SimulatorThread :: handle_query_item_delete(void)
 
 	//NOTE: FOR DEBUG PURPOSES
 	ItemDef *itemDef = g_ItemManager.GetPointerByID(itemID);
-	if(itemDef != NULL)
+	if(itemDef != NULL) {
 		LogMessageL(MSG_SHOW, "Deleting item %d [%s]", itemID, itemDef->mDisplayName.c_str());
+
+		// If the item provides an always active ability, then it should be removed now
+		if(itemDef->mActionAbilityId > 0) {
+			creatureInst->RemoveBuffsFromAbility(itemDef->mActionAbilityId, true);
+		}
+	}
+
+
 
 	//Find the players best (in terms of recoup amount) grinder (if they have one)
 	int invId = GetContainerIDFromName("inv");
@@ -5449,8 +5460,10 @@ int SimulatorThread :: handle_command_give(void)
 	}
 
 	InventorySlot *sendSlot = pld.charPtr->inventory.AddItem_Ex(INV_CONTAINER, item->mID, 1);
-	if(sendSlot != NULL)
+	if(sendSlot != NULL) {
+		ActivateActionAbilities(sendSlot);
 		wpos += AddItemUpdate(&SendBuf[wpos], Aux1, sendSlot);
+	}
 
 	wpos += PrepExt_QueryResponseString(&SendBuf[wpos], query.ID, "OK");
 	return wpos;
@@ -5495,8 +5508,10 @@ int SimulatorThread :: handle_command_giveid(void)
 	}
 
 	InventorySlot *sendSlot = pld.charPtr->inventory.AddItem_Ex(INV_CONTAINER, item->mID, count);
-	if(sendSlot != NULL)
+	if(sendSlot != NULL) {
+		ActivateActionAbilities(sendSlot);
 		wpos += AddItemUpdate(&SendBuf[wpos], Aux1, sendSlot);
+	}
 
 	wpos += PrepExt_QueryResponseString(&SendBuf[wpos], query.ID, "OK");
 	return wpos;
@@ -5777,6 +5792,8 @@ int SimulatorThread :: protected_helper_query_loot_item(void)
 		InventorySlot *newItem = charData->inventory.AddItem_Ex(INV_CONTAINER, ItemID, 1);
 		if(newItem == NULL)
 			return QueryErrorMsg::INVCREATE;
+
+		ActivateActionAbilities(newItem);
 
 		loot->RemoveItem(conIndex);
 		if(loot->itemList.size() == 0)
@@ -7614,8 +7631,13 @@ int SimulatorThread :: handle_query_trade_shop(void)
 			return PrepExt_QueryResponseString(SendBuf, query.ID, "Server error: item does not exist.");
 		else if(err == InventoryManager::ERROR_SPACE)
 			return PrepExt_QueryResponseString(SendBuf, query.ID, "You do not have any free inventory space.");
+		else if(err == InventoryManager::ERROR_LIMIT)
+			return PrepExt_QueryResponseString(SendBuf, query.ID, "You already the maximum amount of these items.");
 		else
 			return PrepExt_QueryResponseString(SendBuf, query.ID, "Server error: undefined error.");
+	}
+	else {
+		ActivateActionAbilities(newItem);
 	}
 
 	int wpos = PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
@@ -7730,9 +7752,14 @@ int SimulatorThread :: handle_query_trade_essence(void)
 			return PrepExt_QueryResponseString(SendBuf, query.ID, "Server error: item does not exist.");
 		else if(err == InventoryManager::ERROR_SPACE)
 			return PrepExt_QueryResponseString(SendBuf, query.ID, "You do not have any free inventory space.");
+		else if(err == InventoryManager::ERROR_LIMIT)
+			return PrepExt_QueryResponseString(SendBuf, query.ID, "You already the maximum amount of these items.");
 		else
 			return PrepExt_QueryResponseString(SendBuf, query.ID, "Server error: undefined error.");
 	}
+
+	ActivateActionAbilities(newItem);
+
 	STRINGLIST result;
 	result.push_back("OK");
 	sprintf(Aux3, "%d", iptr->EssenceCost);
@@ -9065,6 +9092,7 @@ int SimulatorThread :: protected_helper_query_trade_accept(void)
 			{
 				Debug::Log("[TRADE] From %s to %s (%d)", tradeData->player[1].cInst->css.display_name, tradeData->player[0].cInst->css.display_name, item->IID);
 				item->CopyWithoutCount(tradeData->player[1].itemList[a], false);
+				ActivateActionAbilities(item);
 				wpos += AddItemUpdate(&SendBuf[wpos], Aux3, item);
 			}
 		}
@@ -9086,6 +9114,7 @@ int SimulatorThread :: protected_helper_query_trade_accept(void)
 			{
 				Debug::Log("[TRADE] From %s to %s (%d)", tradeData->player[0].cInst->css.display_name, tradeData->player[1].cInst->css.display_name, item->IID);
 				item->CopyWithoutCount(tradeData->player[0].itemList[a], false);
+				ActivateActionAbilities(item);
 				wpos += AddItemUpdate(&SendBuf[wpos], Aux3, item);
 			}
 		}
@@ -9265,6 +9294,9 @@ int SimulatorThread :: protected_helper_query_craft_create(void)
 	itemPtr = inv.AddItem_Ex(INV_CONTAINER, itemPlan->resultItemId, 1);
 	if(itemPtr == NULL)
 		return QueryErrorMsg::INVCREATE;
+
+
+	ActivateActionAbilities(itemPtr);
 
 	int wpos = AddItemUpdate(SendBuf, Aux3, itemPtr);
 
@@ -11791,6 +11823,7 @@ int SimulatorThread :: handle_query_item_create(void)
 				{
 					g_Log.AddMessageFormat("[SAGE] %s gave %s to %s because '%s'", pld.charPtr->cdef.css.display_name, item->mDisplayName.c_str(), creature->charPtr->cdef.css.display_name, query.args[2].c_str());
 					int wpos = AddItemUpdate(&Aux1[0], Aux2, sendSlot);
+					ActivateActionAbilities(sendSlot);
 					g_CharacterManager.ReleaseThread();
 					creature->simulatorPtr->AttemptSend(Aux1, wpos);
 					return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
@@ -11964,8 +11997,18 @@ int SimulatorThread :: handle_query_item_market_buy(void)
 
 
 		InventorySlot *sendSlot = creatureInst->charPtr->inventory.AddItem_Ex(INV_CONTAINER, item->mID, csItem->mIv1 + 1);
-		if(sendSlot == NULL)
-			return PrepExt_QueryResponseError(SendBuf, query.ID, "Failed to add item to inventory.");
+		if(sendSlot == NULL) {
+			int err = creatureInst->charPtr->inventory.LastError;
+			if(err == InventoryManager::ERROR_ITEM)
+				return PrepExt_QueryResponseError(SendBuf, query.ID, "Server error: item does not exist.");
+			else if(err == InventoryManager::ERROR_SPACE)
+				return PrepExt_QueryResponseError(SendBuf, query.ID, "You do not have any free inventory space.");
+			else if(err == InventoryManager::ERROR_LIMIT)
+				return PrepExt_QueryResponseError(SendBuf, query.ID, "You already the maximum amount of these items.");
+			else
+				return PrepExt_QueryResponseError(SendBuf, query.ID, "Server error: undefined error.");
+		}
+		ActivateActionAbilities(sendSlot);
 
 		g_CharacterManager.GetThread("Simulator::MarketBuy");
 
@@ -13686,8 +13729,10 @@ int SimulatorThread :: handle_query_mod_pet_purchase(void)
 
 	int wpos = 0;
 	InventorySlot *sendSlot = im.AddItem_Ex(INV_CONTAINER, petDef->mItemDefID, 1);
-	if(sendSlot != NULL)
+	if(sendSlot != NULL) {
+		ActivateActionAbilities(sendSlot);
 		wpos += AddItemUpdate(&SendBuf[wpos], Aux1, sendSlot);
+	}
 
 	wpos += PrepExt_QueryResponseString(&SendBuf[wpos], query.ID, "OK");
 	return wpos;
@@ -14006,7 +14051,8 @@ int SimulatorThread :: handle_query_mod_craft(void)
 					msg.append(" ");
 					msg.append(itemDef->mDisplayName);
 					outputMsg.push_back(msg);
-					
+
+					ActivateActionAbilities(newItem);
 					int wpos = AddItemUpdate(Aux1, Aux2, newItem);
 					AttemptSend(Aux1, wpos);
 				}
@@ -14702,6 +14748,21 @@ void SimulatorThread :: UndoLoot(ActiveParty *party, ActiveLootContainer *loot, 
 
 }
 
+bool SimulatorThread :: ActivateActionAbilities(InventorySlot *slot)
+{
+	ItemDef *itemDef = g_ItemManager.GetPointerByID(slot->IID);
+	if(itemDef == NULL)
+	{
+		g_Log.AddMessageFormatW(MSG_WARN, "[WARNING] Item [%d] does not exist. Cannot activate action abilities.", slot->IID);
+		return false;
+	}
+	else {
+		if(itemDef->mActionAbilityId != 0)
+			return creatureInst->RequestAbilityActivation(itemDef->mActionAbilityId) == Ability2::ABILITY_SUCCESS;
+		return true;
+	}
+}
+
 void SimulatorThread :: CheckIfLootReadyToDistribute(ActiveLootContainer *loot, LootTag *lootTag)
 {
 	ActiveParty *party = g_PartyManager.GetPartyByID(creatureInst->PartyID);
@@ -14863,6 +14924,7 @@ void SimulatorThread :: CheckIfLootReadyToDistribute(ActiveLootContainer *loot, 
 				ResetLoot(party, loot, lootTag->mItemId);
 				return;
 			}
+			ActivateActionAbilities(newItem);
 		}
 
 		int conIndex = loot->HasItem(lootTag->mItemId);

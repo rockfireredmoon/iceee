@@ -802,3 +802,21 @@ mIvMax1=40
 mIvType2=8
 mValue=6
 mQualityLevel=1
+
+[ENTRY]
+mID=8500
+mType=8
+mDisplayName=Testers Tome of Experience
+mIcon=Icon-32-Book2.png|Icon-32-Ability-Resto_Healing_Breeze.png
+mIvType1=10
+mIvMax1=50
+mIvType2=9
+mIvMax2=720
+mLevel=1
+mBindingType=1
+mValue=2
+mValueType=1
+mSpecialItemType=3
+mQualityLevel=4
+mMinUseLevel=1
+mUseAbilityId=27005

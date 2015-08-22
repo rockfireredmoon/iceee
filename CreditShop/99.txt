@@ -1,9 +1,9 @@
 [ENTRY]
-Title=New Offer
-PriceCurrency=COPPER
+Description=Increase your movement speed by 40% for 4 hours
+PriceCurrency=CREDITS
 PriceCopper=0
-PriceCredits=0
-ItemID=0
-Category=ARMOR
+PriceCredits=100
+ItemID=900023
+Category=RECIPES
 Status=NEW
 

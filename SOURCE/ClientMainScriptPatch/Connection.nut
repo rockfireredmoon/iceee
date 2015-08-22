@@ -2244,6 +2244,7 @@ class this.Connection extends this.MessageBroadcaster
 				}
 
 				local statusModifier;
+				
 				statusModifier = this.StatusModifier(id, abilityId, amount, duration, description);
 				mods.append(statusModifier);
 			}

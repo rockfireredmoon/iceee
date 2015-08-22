@@ -209,8 +209,6 @@ class this.BuffDebuff extends this.Action
 				timeText += timeTable.s + "s ";
 			}
 
-			//print("ICE! Tooltip (" + this.mAbilitySource + "): running for: " + runningFor + " current game time: " + currentGameTime + " receivedAt: " + this.mRecievedAt + " dur: " + this.mDuration + " timeRem: " + timeRemaining + " = " + timeText + "\n");
-			
 			local timeLeftLabel = this.GUI.Label(timeText);
 			container.add(timeLeftLabel);
 		}

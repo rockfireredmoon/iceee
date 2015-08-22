@@ -2902,10 +2902,11 @@ void CreatureInstance :: ProcessDeath(void)
 				int exp = GetKillExperience(highestLev);
 
 				// Adjust for XP times
+				// Shouldn't be needed now a tome is an ability+time limited item
 				ItemDef * xpTomeDef = attacker->charPtr->inventory.GetBestSpecialItem(GetContainerIDFromName("inv"), XP_BOOST);
-				if(xpTomeDef != NULL) {
-					exp += Util::GetAdditiveFromIntegralPercent100(exp, xpTomeDef->mIvMax1);
-				}
+//				if(xpTomeDef != NULL) {
+//					exp += Util::GetAdditiveFromIntegralPercent100(exp, xpTomeDef->mIvMax1);
+//				}
 
 				// Adjust for other XP bonuses
 				if(attacker->css.experience_gain_rate > 0) {
@@ -6826,10 +6827,12 @@ int CreatureInstance :: ProcessQuestRewards(int QuestID, const std::vector<Quest
 
 	// Adjust Exp taking tomes into account
 	int exp = qd->experience;
-	ItemDef * xpTomeDef = charPtr->inventory.GetBestSpecialItem(GetContainerIDFromName("inv"), XP_BOOST);
-	if(xpTomeDef != NULL) {
-		exp += Util::GetAdditiveFromIntegralPercent100(exp, xpTomeDef->mIvMax1);
-	}
+
+	// TODO should not be needed now tomes are abilities + time limited items
+//	ItemDef * xpTomeDef = charPtr->inventory.GetBestSpecialItem(GetContainerIDFromName("inv"), XP_BOOST);
+//	if(xpTomeDef != NULL) {
+//		exp += Util::GetAdditiveFromIntegralPercent100(exp, xpTomeDef->mIvMax1);
+//	}
 
 	AddExperience(exp);
 	AddHeroismForQuest(qd->heroism, qd->levelSuggested);
@@ -6863,7 +6866,10 @@ int CreatureInstance :: ProcessQuestRewards(int QuestID, const std::vector<Quest
 		}
 
 		InventorySlot *newItem = charPtr->inventory.AddItem_Ex(INV_CONTAINER, itemPtr->mID, count);
-		wpos += AddItemUpdate(&GSendBuf[wpos], GAuxBuf, newItem);
+		if(newItem != NULL) {
+			simulatorPtr->ActivateActionAbilities(newItem);
+			wpos += AddItemUpdate(&GSendBuf[wpos], GAuxBuf, newItem);
+		}
 	}
 
 	if(wpos > 0)

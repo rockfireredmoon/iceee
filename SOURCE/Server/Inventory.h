@@ -76,12 +76,14 @@ public:
 	static const int ERROR_NONE   = 0;   //No error.
 	static const int ERROR_ITEM   = 1;   //Item could not be found in the server item list.
 	static const int ERROR_SPACE  = 2;   //Not enough space for the item.
+	static const int ERROR_LIMIT  = 3;   //The limit of this item type
 
-	static const int EQ_ERROR_NONE       =  0;  //No error.
-	static const int EQ_ERROR_ITEM       = -1;  //The item does not exist.
-	static const int EQ_ERROR_LEVEL      = -2;  //The item cannot be worn by the given character level.
-	static const int EQ_ERROR_PROFESSION = -3;  //The item cannot be worn by the given character class.
-	static const int EQ_ERROR_SLOT       = -4;  //The item cannot be equipped in the given slot.
+	static const int EQ_ERROR_NONE       	 =  0;  //No error.
+	static const int EQ_ERROR_ITEM       	 = -1;  //The item does not exist.
+	static const int EQ_ERROR_LEVEL      	 = -2;  //The item cannot be worn by the given character level.
+	static const int EQ_ERROR_PROFESSION 	 = -3;  //The item cannot be worn by the given character class.
+	static const int EQ_ERROR_SLOT       	 = -4;  //The item cannot be equipped in the given slot.
+
 
 	unsigned char LastError;
 
