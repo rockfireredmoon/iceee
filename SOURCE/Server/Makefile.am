@@ -51,6 +51,7 @@ planetforeverd_SOURCES = md5.cc \
 	Item.cpp \
 	ItemSet.cpp \
 	main.cpp \
+	Mail.cpp \
 	MainWindow.cpp \
 	MainWindow_Event.cpp \
 	NPC.cpp \
@@ -130,6 +131,7 @@ planetforeverd_SOURCES = md5.cc \
 	Inventory.h \
 	Item.h \
 	ItemSet.h \
+	Mail.h \
 	MainWindow.h \
 	NPC.h \
 	Packet.h \
