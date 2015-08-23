@@ -1,13 +1,13 @@
-this.require("UI/UI");
-this.require("UI/ChatManager");
-this.require("Preferences");
-this.require("UI/Screens");
-class this.Screens.ChatWindow extends this.GUI.Component
+require("UI/UI");
+require("UI/ChatManager");
+require("Preferences");
+require("UI/Screens");
+class Screens.ChatWindow extends GUI.Component
 {
-	mIdleBackgroundColor = this.Color(0.0, 0.0, 0.0, 0.0);
+	mIdleBackgroundColor = Color(0.0, 0.0, 0.0, 0.0);
 	mStoredIdleBackgroundColor = null;
-	mIdleTabBackgroundColor = this.Color(0.0, 0.0, 0.0, 0.0);
-	mActiveBackgroundColor = this.Color(0.0, 0.0, 0.0, 0.30000001);
+	mIdleTabBackgroundColor = Color(0.0, 0.0, 0.0, 0.0);
+	mActiveBackgroundColor = Color(0.0, 0.0, 0.0, 0.30000001);
 	mInputArea = null;
 	mInputComponent = null;
 	mTypeChannelLabel = null;
@@ -18,65 +18,65 @@ class this.Screens.ChatWindow extends this.GUI.Component
 	mFilterPopup = null;
 	constructor()
 	{
-		this.GUI.Component.constructor(this.GUI.BorderLayout());
-		this.mTabContents = {};
-		this._buildGUI();
-		local tabList = this.mTabPane.getAllTabs();
-		this.mTabPane.mTabsPane.getLayoutManager().setOffset(25, 6);
+		GUI.Component.constructor(GUI.BorderLayout());
+		mTabContents = {};
+		_buildGUI();
+		local tabList = mTabPane.getAllTabs();
+		mTabPane.mTabsPane.getLayoutManager().setOffset(25, 6);
 
 		foreach( tab in tabList )
 		{
-			tab.button.setBlendColor(this.mIdleTabBackgroundColor);
-			tab.button.setFontColor(this.Color(0.0, 0.0, 0.0, 0.0));
+			tab.button.setBlendColor(mIdleTabBackgroundColor);
+			tab.button.setFontColor(Color(0.0, 0.0, 0.0, 0.0));
 		}
 
-		this.Screen.setOverlayVisible("GUI/ChatWindowOverlay", true);
-		this.setOverlay("GUI/ChatWindowOverlay");
-		this.setPassThru(true);
+		Screen.setOverlayVisible("GUI/ChatWindowOverlay", true);
+		setOverlay("GUI/ChatWindowOverlay");
+		setPassThru(true);
 		::IGIS.addListener(this);
 		::_Connection.addListener(this);
 		::_ChatWindow = this;
 		::Pref.get("chatwindow.color");
 		::Pref.get("chatwindow.chattabs");
-		this.setCached(::Pref.get("video.UICache"));
+		setCached(::Pref.get("video.UICache"));
 	}
 
 	function addChatTab( name, permanent )
 	{
-		local tab = this.mTabPane._findTab(name);
+		local tab = mTabPane._findTab(name);
 
 		if (tab != null)
 		{
-			this.log.debug("addChatTab could not create another tab named " + tab.name);
+			log.debug("addChatTab could not create another tab named " + tab.name);
 			return null;
 		}
 
-		this.mTabContents[name] <- this.ChatTab(permanent);
-		this.mTabContents[name].setName(name);
-		local windowSize = this.getSize();
-		local mp = this.GUI.Panel();
-		this.mTabContents[name].setMainWindow(mp);
+		mTabContents[name] <- ChatTab(permanent);
+		mTabContents[name].setName(name);
+		local windowSize = getSize();
+		local mp = GUI.Panel();
+		mTabContents[name].setMainWindow(mp);
 		mp.setPreferredSize(windowSize.width, windowSize.height);
-		mp.setLayoutManager(this.GUI.StackLayout());
+		mp.setLayoutManager(GUI.StackLayout());
 		mp.setInsets(3, 3, 3, 3);
 		mp.setAppearance("ChatWindow");
-		mp.setBlendColor(this.mIdleBackgroundColor);
-		local s = this.GUI.ScrollPanel(mp, this.GUI.BorderLayout.WEST);
-		this.mTabContents[name].setScrollBar(s);
+		mp.setBlendColor(mIdleBackgroundColor);
+		local s = GUI.ScrollPanel(mp, GUI.BorderLayout.WEST);
+		mTabContents[name].setScrollBar(s);
 		s.setAppearance("Container");
 		s.addActionListener(this);
 		s.setIndent(10);
-		this.mTabPane.addTab(name, s);
-		local tabList = this.mTabPane.getAllTabs();
-		local newTab = this.mTabPane.mTabs[tabList.len() - 1];
-		newTab.button.setBlendColor(this.mActiveBackgroundColor);
+		mTabPane.addTab(name, s);
+		local tabList = mTabPane.getAllTabs();
+		local newTab = mTabPane.mTabs[tabList.len() - 1];
+		newTab.button.setBlendColor(mActiveBackgroundColor);
 		::_ChatManager.addChatListener(name, this);
 		return newTab;
 	}
 
 	function addMessage( channel, message, tab, ... )
 	{
-		tab = this.mTabPane._findTab(tab);
+		tab = mTabPane._findTab(tab);
 
 		if (!tab)
 		{
@@ -96,25 +96,25 @@ class this.Screens.ChatWindow extends this.GUI.Component
 			{
 				tell = true;
 
-				if (speakerName != ::_avatar.getName() && this.mTabPane._findTab(speakerName) == null)
+				if (speakerName != ::_avatar.getName() && mTabPane._findTab(speakerName) == null)
 				{
-					this.addChatTab(speakerName, false);
-					this.addMessage(channel, message, speakerName, speakerName);
+					addChatTab(speakerName, false);
+					addMessage(channel, message, speakerName, speakerName);
 				}
 			}
 		}
 
 		if (!tell || speakerName != tab)
 		{
-			if (!(scope in this.mTabContents[tab].getFilterList()))
+			if (!(scope in mTabContents[tab].getFilterList()))
 			{
 				return;
 			}
 		}
 
-		local oldLen = this.mTabContents[tab].getLog().len();
-		local index = this.mTabContents[tab].getScrollBar().getIndex();
-		this.mTabContents[tab].getLog().append({
+		local oldLen = mTabContents[tab].getLog().len();
+		local index = mTabContents[tab].getScrollBar().getIndex();
+		mTabContents[tab].getLog().append({
 			speakerName = speakerName,
 			message = message,
 			channel = channel
@@ -122,14 +122,14 @@ class this.Screens.ChatWindow extends this.GUI.Component
 
 		if (index == oldLen - 1)
 		{
-			index = this.mTabContents[tab].getLog().len() - 1;
+			index = mTabContents[tab].getLog().len() - 1;
 		}
 
-		if (this.mTabContents[tab].getLog().len() > 500)
+		if (mTabContents[tab].getLog().len() > 500)
 		{
-			this.mTabContents[tab].getLog().remove(0);
+			mTabContents[tab].getLog().remove(0);
 
-			if (index != this.mTabContents[tab].getLog().len())
+			if (index != mTabContents[tab].getLog().len())
 			{
 				index--;
 			}
@@ -140,7 +140,7 @@ class this.Screens.ChatWindow extends this.GUI.Component
 			index = 1;
 		}
 
-		this.mTabContents[tab].getScrollBar().setIndex(index);
+		mTabContents[tab].getScrollBar().setIndex(index);
 	}
 
 	function onQueryComplete( qa, results )
@@ -148,15 +148,15 @@ class this.Screens.ChatWindow extends this.GUI.Component
 		if (qa.query == "util.group.show")
 		{
 			local myResults = results[0];
-			this.addMessage("sys/", "Groups: " + myResults[0], "General");
+			addMessage("sys/", "Groups: " + myResults[0], "General");
 		}
 		else if (qa.query == "util.group.set")
 		{
-			this.addMessage("sys/", "Group permissions set", "General");
+			addMessage("sys/", "Group permissions set", "General");
 		}
 		else
 		{
-			throw this.Exception("Unknown query: " + qa.query);
+			throw Exception("Unknown query: " + qa.query);
 		}
 	}
 
@@ -164,21 +164,21 @@ class this.Screens.ChatWindow extends this.GUI.Component
 	{
 		if (qa.query == "util.group.set")
 		{
-			this.addMessage("err/", error, "General");
+			addMessage("err/", error, "General");
 		}
 		else if (qa.query == "util.group.show")
 		{
-			this.addMessage("err/", error, "General");
+			addMessage("err/", error, "General");
 		}
 		else
 		{
-			this.log.error("Query Error in Chat Window " + error);
+			log.error("Query Error in Chat Window " + error);
 		}
 	}
 
 	function addStringInput( pText )
 	{
-		this.mInputArea.insertText(pText);
+		mInputArea.insertText(pText);
 	}
 
 	function destroy()
@@ -186,35 +186,35 @@ class this.Screens.ChatWindow extends this.GUI.Component
 		::_Connection.removeListener(this);
 		::IGIS.removeListener(this);
 
-		foreach( k, n in this.mTabContents )
+		foreach( k, n in mTabContents )
 		{
 			::_ChatManager.removeChatListener(k);
 		}
 
-		this.Screen.setOverlayVisible("GUI/ChatWindowOverlay", false);
+		Screen.setOverlayVisible("GUI/ChatWindowOverlay", false);
 		::_ChatWindow = null;
-		this.GUI.Component.destroy();
+		GUI.Component.destroy();
 	}
 
 	function getChatFont()
 	{
-		return this.mTabPane.mContentPane.getFont();
+		return mTabPane.mContentPane.getFont();
 	}
 
 	function getChatFontSize()
 	{
-		return this.getChatFont().getHeight();
+		return getChatFont().getHeight();
 	}
 
 	mInResize = false;
 	function handleWindowResized( sizeSelected )
 	{
-		if (this.mInResize == true)
+		if (mInResize == true)
 		{
 			return;
 		}
 
-		this.mInResize = true;
+		mInResize = true;
 		local ChatWindowSizes = {
 			Small = {
 				owner = "ChatWindowSize.Small",
@@ -245,15 +245,15 @@ class this.Screens.ChatWindow extends this.GUI.Component
 		if (sizeSelected in ChatWindowSizes)
 		{
 			local chatSizeData = ChatWindowSizes[sizeSelected];
-			this.setSize(chatSizeData.width, chatSizeData.height);
+			setSize(chatSizeData.width, chatSizeData.height);
 			local x = 5;
-			local y = -this.mHeight - 60;
-			this.setPosition(x, y);
-			this.setChatFontSize(chatSizeData.fontSize);
+			local y = -mHeight - 60;
+			setPosition(x, y);
+			setChatFontSize(chatSizeData.fontSize);
 
-			foreach( i, x in this.mTabContents )
+			foreach( i, x in mTabContents )
 			{
-				this._updateDisplayedMessages(i);
+				_updateDisplayedMessages(i);
 			}
 
 			local optionScreen = ::Screens.get("VideoOptionsScreen", true);
@@ -266,60 +266,60 @@ class this.Screens.ChatWindow extends this.GUI.Component
 			::Pref.set("chatwindow.windowSize", sizeSelected);
 		}
 
-		this.mInResize = false;
+		mInResize = false;
 	}
 
 	function onCreateNewTab( menu )
 	{
 		for( local i = 1; i < 100; i++ )
 		{
-			if (this.mTabPane._findTab("New Tab " + i.tostring()) == null)
+			if (mTabPane._findTab("New Tab " + i.tostring()) == null)
 			{
 				local chatTabName = "New Tab " + i.tostring();
-				this.addChatTab(chatTabName, true);
+				addChatTab(chatTabName, true);
 
-				if (this.mTabContents[this.mLastClickedTab.name].isPermanent())
+				if (mTabContents[mLastClickedTab.name].isPermanent())
 				{
-					local filterList = this.mTabContents[this.mLastClickedTab.name].getFilterList();
+					local filterList = mTabContents[mLastClickedTab.name].getFilterList();
 
 					foreach( filter, value in filterList )
 					{
-						this.mTabContents[chatTabName].addFilter(filter);
+						mTabContents[chatTabName].addFilter(filter);
 					}
 				}
 				else
 				{
-					this.mTabContents[chatTabName].addFilter("Say");
+					mTabContents[chatTabName].addFilter("Say");
 				}
 
 				return;
 			}
 		}
 
-		this.serializeChatTabs();
+		serializeChatTabs();
 	}
 
 	function onChangeFilters( menu )
 	{
-		this.mFilterPopup = this.GUI.ChatFilterSelect();
-		this.GUI.MessageBox.showEx(this.mFilterPopup, [
+		mFilterPopup = GUI.ChatFilterSelect();
+		GUI.MessageBox.showEx(mFilterPopup, [
 			"Accept",
 			"Decline"
 		], this, "onFilterSelected");
-		local filterList = this.mTabContents[this.mLastClickedTab.name].getFilterList();
+		local filterList = mTabContents[mLastClickedTab.name].getFilterList();
 
 		foreach( channel, value in filterList )
 		{
-			this.mFilterPopup.setCategoryChecked(channel);
+			mFilterPopup.setCategoryChecked(channel);
 		}
 	}
 
 	function onChangeOpacity( menu )
 	{
-		local opacityChooser = this.GUI.OpacityChooser();
+		local opacityChooser = GUI.OpacityChooser();
 		opacityChooser.addActionListener(this);
-		opacityChooser.setOpacityValue((this.mStoredIdleBackgroundColor.a.tofloat() * 100).tointeger());
-		this.GUI.MessageBox.showEx(opacityChooser, [
+		opacityChooser.setOpacityValue((mStoredIdleBackgroundColor.a.tofloat() * 100).tointeger());
+		GUI.MessageBox.showEx(opacityChooser, [
 			"Accept",
 			"Decline"
 		], this, "onOpacitySelected");
@@ -327,17 +327,17 @@ class this.Screens.ChatWindow extends this.GUI.Component
 
 	function onChangeWindowSizeLarge( menu )
 	{
-		this.handleWindowResized("Large");
+		handleWindowResized("Large");
 	}
 
 	function onChangeWindowSizeMedium( menu )
 	{
-		this.handleWindowResized("Medium");
+		handleWindowResized("Medium");
 	}
 
 	function onChangeWindowSizeSmall( menu )
 	{
-		this.handleWindowResized("Small");
+		handleWindowResized("Small");
 	}
 
 	function onFilterSelected( messageBox, alt )
@@ -345,18 +345,18 @@ class this.Screens.ChatWindow extends this.GUI.Component
 		switch(alt)
 		{
 		case "Accept":
-			this.mTabContents[this.mLastClickedTab.name].removeAllFilters();
-			local filterList = this.mFilterPopup.getChatFilters();
+			mTabContents[mLastClickedTab.name].removeAllFilters();
+			local filterList = mFilterPopup.getChatFilters();
 
 			foreach( filter in filterList )
 			{
 				if (filter.isChecked())
 				{
-					this.mTabContents[this.mLastClickedTab.name].addFilter(filter.getChatChannelType());
+					mTabContents[mLastClickedTab.name].addFilter(filter.getChatChannelType());
 				}
 			}
 
-			this.serializeChatTabs();
+			serializeChatTabs();
 			break;
 
 		default:
@@ -365,15 +365,15 @@ class this.Screens.ChatWindow extends this.GUI.Component
 			}
 		}
 
-		this.mFilterPopup = null;
+		mFilterPopup = null;
 	}
 
 	function onLinkClicked( message, data )
 	{
-		if("href" in data && this.Util.startsWith(data.href, "http://") || this.Util.startsWith(data.href, "https://")) {
-			this.System.openURL(data.href);
+		if("href" in data && Util.startsWith(data.href, "http://") || Util.startsWith(data.href, "https://")) {
+			System.openURL(data.href);
 		}
-		else if("href" in data && this.Util.startsWith(data.href, "forum://")) {
+		else if("href" in data && Util.startsWith(data.href, "forum://")) {
 			local forumId = data.href.slice(8);
 			local igf = Screens.show("IGForum");
 			if(igf) {
@@ -385,33 +385,33 @@ class this.Screens.ChatWindow extends this.GUI.Component
 			switch(data.info)
 			{
 			case "speakerName":
-				this.startChatInputOnChannel("t/" + "\"" + data.clickedOnText + "\"");
+				startChatInputOnChannel("t/" + "\"" + data.clickedOnText + "\"");
 				break;
 
 			case "chatChannel":
-				local channel = this.Util.replace(data.clickedOnText, "[", "");
-				channel = this.Util.replace(channel, "]", "");
+				local channel = Util.replace(data.clickedOnText, "[", "");
+				channel = Util.replace(channel, "]", "");
 
-				if (this.Util.startsWith(channel, "chan "))
+				if (Util.startsWith(channel, "chan "))
 				{
 					local channelName = channel.slice(5, channel.len());
-					this.startChatInputOnChannel("ch/" + channelName);
+					startChatInputOnChannel("ch/" + channelName);
 				}
 				else
 				{
 					switch(channel)
 					{
 					case "Region":
-						this.startChatInputOnChannel("rc/" + ::_Connection.getCurrentRegionChannel());
+						startChatInputOnChannel("rc/" + ::_Connection.getCurrentRegionChannel());
 						break;
 					case "Trade":
-						this.startChatInputOnChannel("tc/" + ::_Connection.getCurrentRegionChannel());
+						startChatInputOnChannel("tc/" + ::_Connection.getCurrentRegionChannel());
 						break;
 					case "Earthsage":
-						this.startChatInputOnChannel("gm/earthsages");
+						startChatInputOnChannel("gm/earthsages");
 						break;
 					case "Party":
-						this.startChatInputOnChannel("party");
+						startChatInputOnChannel("party");
 						break;
 					default:
 						break;
@@ -425,53 +425,53 @@ class this.Screens.ChatWindow extends this.GUI.Component
 	{
 		if (alt == "Accept")
 		{
-			this.mStoredIdleBackgroundColor = this.Color(this.mIdleBackgroundColor.r, this.mIdleBackgroundColor.g, this.mIdleBackgroundColor.b, this.mIdleBackgroundColor.a);
-			this.serializeColor();
+			mStoredIdleBackgroundColor = Color(mIdleBackgroundColor.r, mIdleBackgroundColor.g, mIdleBackgroundColor.b, mIdleBackgroundColor.a);
+			serializeColor();
 		}
 		else if (alt == "Decline")
 		{
-			this.mIdleBackgroundColor = this.Color(this.mStoredIdleBackgroundColor.r, this.mStoredIdleBackgroundColor.g, this.mStoredIdleBackgroundColor.b, this.mStoredIdleBackgroundColor.a);
+			mIdleBackgroundColor = Color(mStoredIdleBackgroundColor.r, mStoredIdleBackgroundColor.g, mStoredIdleBackgroundColor.b, mStoredIdleBackgroundColor.a);
 
-			foreach( i, x in this.mTabContents )
+			foreach( i, x in mTabContents )
 			{
-				x.getMainWindow().setBlendColor(this.mIdleBackgroundColor);
+				x.getMainWindow().setBlendColor(mIdleBackgroundColor);
 			}
 		}
 	}
 
 	function onOpacityUpdate( value )
 	{
-		this.mIdleBackgroundColor.a = value.tofloat() / 100.0;
+		mIdleBackgroundColor.a = value.tofloat() / 100.0;
 
-		foreach( i, x in this.mTabContents )
+		foreach( i, x in mTabContents )
 		{
-			x.getMainWindow().setBlendColor(this.mIdleBackgroundColor);
+			x.getMainWindow().setBlendColor(mIdleBackgroundColor);
 		}
 	}
 
 	function onMouseEnter( evt )
 	{
-		if (this.mIdleBackgroundColor.a <= 0.1)
+		if (mIdleBackgroundColor.a <= 0.1)
 		{
-			foreach( i, x in this.mTabContents )
+			foreach( i, x in mTabContents )
 			{
-				x.getMainWindow().setBlendColor(this.mActiveBackgroundColor);
+				x.getMainWindow().setBlendColor(mActiveBackgroundColor);
 			}
 		}
 
-		local tabList = this.mTabPane.getAllTabs();
+		local tabList = mTabPane.getAllTabs();
 
 		foreach( tab in tabList )
 		{
-			tab.button.setBlendColor(this.mActiveBackgroundColor);
-			tab.button.setFontColor(this.Color(this.GUI.DefaultButtonFontColor));
+			tab.button.setBlendColor(mActiveBackgroundColor);
+			tab.button.setFontColor(Color(GUI.DefaultButtonFontColor));
 		}
 	}
 
 	function onMouseExit( evt )
 	{
-		local chatSize = this.getSize();
-		local chatPos = this.getScreenPosition();
+		local chatSize = getSize();
+		local chatPos = getScreenPosition();
 		local mouseX = evt.x;
 		local mouseY = evt.y;
 
@@ -481,81 +481,81 @@ class this.Screens.ChatWindow extends this.GUI.Component
 		}
 		else
 		{
-			foreach( i, x in this.mTabContents )
+			foreach( i, x in mTabContents )
 			{
-				x.getMainWindow().setBlendColor(this.mIdleBackgroundColor);
+				x.getMainWindow().setBlendColor(mIdleBackgroundColor);
 			}
 
-			local tabList = this.mTabPane.getAllTabs();
+			local tabList = mTabPane.getAllTabs();
 
 			foreach( tab in tabList )
 			{
-				tab.button.setBlendColor(this.mIdleTabBackgroundColor);
-				tab.button.setFontColor(this.Color(0.0, 0.0, 0.0, 0.0));
+				tab.button.setBlendColor(mIdleTabBackgroundColor);
+				tab.button.setFontColor(Color(0.0, 0.0, 0.0, 0.0));
 			}
 		}
 	}
 
 	function onIGISTransitoryMessage( message, type )
 	{
-		if(type != this.IGIS.BROADCAST)
+		if(type != IGIS.BROADCAST)
 		{
-			this.addMessage(type == this.IGIS.ERROR ? "Err" : "Info", message, "General");
+			addMessage(type == IGIS.ERROR ? "Err" : "Info", message, "General");
 		}
 	}
 
 	function onInputComplete( inputArea )
 	{
-		if (inputArea == this.mInputArea)
+		if (inputArea == mInputArea)
 		{
-			this.mInputArea.setAllowTextEntryOnClick(false);
-			this.mInputComponent.setAppearance("Container");
-			this.mInputComponent.setPassThru(true);
-			this.mTypeChannelLabel.setText("");
+			mInputArea.setAllowTextEntryOnClick(false);
+			mInputComponent.setAppearance("Container");
+			mInputComponent.setPassThru(true);
+			mTypeChannelLabel.setText("");
 		}
-		else if (this.mRenamePopup == inputArea)
+		else if (mRenamePopup == inputArea)
 		{
 			local newTabName = inputArea.getText();
-			local tab = this.mTabPane._findTab(newTabName);
+			local tab = mTabPane._findTab(newTabName);
 
 			if (tab != null)
 			{
-				this.IGIS.error("The tab name: " + newTabName + " already exists. ");
+				IGIS.error("The tab name: " + newTabName + " already exists. ");
 				return;
 			}
 
-			local activeIndex = this.mTabPane.getSelectedIndex();
-			local oldTab = this.mTabContents[this.mLastClickedTab.name];
-			::_ChatManager.removeChatListener(this.mLastClickedTab.name);
-			this.mTabPane.remove(this.mLastClickedTab);
-			delete this.mTabContents[this.mLastClickedTab.name];
+			local activeIndex = mTabPane.getSelectedIndex();
+			local oldTab = mTabContents[mLastClickedTab.name];
+			::_ChatManager.removeChatListener(mLastClickedTab.name);
+			mTabPane.remove(mLastClickedTab);
+			delete mTabContents[mLastClickedTab.name];
 			::_ChatManager.addChatListener(newTabName, this);
-			this.mLastClickedTab.name = newTabName;
-			this.mTabContents[this.mLastClickedTab.name] <- oldTab;
-			this.mTabContents[this.mLastClickedTab.name].setName(newTabName);
-			this.mTabPane.insertTab(this.mLastClickedTab.name, this.mLastClickedTab.component, this.mLastClickedTab.index);
-			this.mTabPane.selectTab(activeIndex);
-			this.mTabContents[this.mLastClickedTab.name].getMainWindow().setBlendColor(this.mIdleBackgroundColor);
-			local tab = this.mTabPane.mTabs[this.mLastClickedTab.index];
-			tab.button.setBlendColor(this.mIdleTabBackgroundColor);
-			tab.button.setFontColor(this.Color(0.0, 0.0, 0.0, 0.0));
+			mLastClickedTab.name = newTabName;
+			mTabContents[mLastClickedTab.name] <- oldTab;
+			mTabContents[mLastClickedTab.name].setName(newTabName);
+			mTabPane.insertTab(mLastClickedTab.name, mLastClickedTab.component, mLastClickedTab.index);
+			mTabPane.selectTab(activeIndex);
+			mTabContents[mLastClickedTab.name].getMainWindow().setBlendColor(mIdleBackgroundColor);
+			local tab = mTabPane.mTabs[mLastClickedTab.index];
+			tab.button.setBlendColor(mIdleTabBackgroundColor);
+			tab.button.setFontColor(Color(0.0, 0.0, 0.0, 0.0));
 			inputArea.hidePopup();
-			this.serializeChatTabs();
+			serializeChatTabs();
 		}
 	}
 
 	function onScrollUpdate( sender )
 	{
-		local tab = this.mTabPane._findTab(sender).name;
+		local tab = mTabPane._findTab(sender).name;
 
 		if (tab == null)
 		{
 			return;
 		}
 
-		local scroll = this.mTabContents[tab].getScrollBar();
+		local scroll = mTabContents[tab].getScrollBar();
 		local index = scroll.getIndex();
-		local log = this.mTabContents[tab].getLog();
+		local log = mTabContents[tab].getLog();
 
 		if (index > log.len() - 1)
 		{
@@ -568,19 +568,19 @@ class this.Screens.ChatWindow extends this.GUI.Component
 			return;
 		}
 
-		this._updateDisplayedMessages(tab);
+		_updateDisplayedMessages(tab);
 	}
 
 	function onRenameTab( menu )
 	{
-		this.mRenamePopup = this.GUI.PopupInputBox("Tab name:");
-		this.mRenamePopup.addActionListener(this);
-		local inputBoxSize = this.mRenamePopup.getSize();
+		mRenamePopup = GUI.PopupInputBox("Tab name:");
+		mRenamePopup.addActionListener(this);
+		local inputBoxSize = mRenamePopup.getSize();
 		local inputBoxPosX = ::Screen.getWidth() / 2 - inputBoxSize.width / 2;
 		local inputBoxPosY = ::Screen.getHeight() / 2 - inputBoxSize.height / 2;
-		this.mRenamePopup.setPosition(inputBoxPosX, inputBoxPosY);
-		this.mRenamePopup.showInputBox();
-		this.mRenamePopup.getInputArea().setMaxCharacters(8);
+		mRenamePopup.setPosition(inputBoxPosX, inputBoxPosY);
+		mRenamePopup.showInputBox();
+		mRenamePopup.getInputArea().setMaxCharacters(8);
 	}
 
 	function startChatInputOnChannel( channel, ... )
@@ -592,62 +592,62 @@ class this.Screens.ChatWindow extends this.GUI.Component
 			ignoredCharacters.append(vargv[0]);
 		}
 
-		this.LastCommand = channel;
+		LastCommand = channel;
 
-		if (this.Util.startsWith(channel, "t/"))
+		if (Util.startsWith(channel, "t/"))
 		{
 			local triggerChannel = channel.slice(2);
-			triggerChannel = this.Util.replace(triggerChannel, "\"", "");
-			this.EchoTrigger = "yt/" + triggerChannel;
+			triggerChannel = Util.replace(triggerChannel, "\"", "");
+			EchoTrigger = "yt/" + triggerChannel;
 		}
 		else
 		{
-			this.EchoTrigger = "";
+			EchoTrigger = "";
 		}
 
-		this.onStartChatInput();
+		onStartChatInput();
 
 		foreach( ignoredCharacter in ignoredCharacters )
 		{
-			this.mInputArea.addIgnoredCharacter(ignoredCharacter);
+			mInputArea.addIgnoredCharacter(ignoredCharacter);
 		}
 	}
 
 	function onStartChatInput()
 	{
-		this.mInputArea.setAllowTextEntryOnClick(true);
-		this.mInputComponent.setAppearance("TextInputFields");
-		this.mInputArea.onStartInput();
-		this.mInputComponent.setPassThru(false);
-		this.mTypeChannelLabel.setText(this._parseChannelStr(this.LastCommand));
+		mInputArea.setAllowTextEntryOnClick(true);
+		mInputComponent.setAppearance("TextInputFields");
+		mInputArea.onStartInput();
+		mInputComponent.setPassThru(false);
+		mTypeChannelLabel.setText(_parseChannelStr(LastCommand));
 		local LEFT_SPACE = 2;
 
-		if (this.mTypeChannelLabel.getText().len() > 0)
+		if (mTypeChannelLabel.getText().len() > 0)
 		{
-			local font = this.mTypeChannelLabel.getFont();
-			local fontMetrics = font.getTextMetrics(this.mTypeChannelLabel.getText());
-			this.mInputComponent.getLayoutManager().setColumns(fontMetrics.width - LEFT_SPACE, "*");
+			local font = mTypeChannelLabel.getFont();
+			local fontMetrics = font.getTextMetrics(mTypeChannelLabel.getText());
+			mInputComponent.getLayoutManager().setColumns(fontMetrics.width - LEFT_SPACE, "*");
 		}
 		else
 		{
-			this.mInputComponent.getLayoutManager().setColumns(-LEFT_SPACE, "*");
+			mInputComponent.getLayoutManager().setColumns(-LEFT_SPACE, "*");
 		}
 	}
 
 	function onTabDelete( menu )
 	{
-		this.removeChatTab(this.mLastClickedTab);
-		this.serializeChatTabs();
+		removeChatTab(mLastClickedTab);
+		serializeChatTabs();
 	}
 
 	function onTabRightClicked( tab )
 	{
-		this.mLastClickedTab = tab;
-		local menu = this.GUI.PopupMenu();
+		mLastClickedTab = tab;
+		local menu = GUI.PopupMenu();
 		menu.addActionListener(this);
 		menu.addMenuOption("Create New Tab", "Create New Tab", "onCreateNewTab");
 
-		if (this.mTabPane.findArrayIndexOfTab(this.mLastClickedTab) == 0)
+		if (mTabPane.findArrayIndexOfTab(mLastClickedTab) == 0)
 		{
 			menu.addMenuOption("Delete Tab", "Delete Tab", "onTabDelete", true, false);
 		}
@@ -656,7 +656,7 @@ class this.Screens.ChatWindow extends this.GUI.Component
 			menu.addMenuOption("Delete Tab", "Delete Tab", "onTabDelete");
 		}
 
-		if (this.mTabContents[this.mLastClickedTab.name].isPermanent())
+		if (mTabContents[mLastClickedTab.name].isPermanent())
 		{
 			menu.addMenuOption("Rename Tab", "Rename Tab", "onRenameTab");
 		}
@@ -671,7 +671,7 @@ class this.Screens.ChatWindow extends this.GUI.Component
 		menu.addMenuOption("ChatWindowSize.Meduim", "Medium", "onChangeWindowSizeMedium");
 		menu.addMenuOption("ChatWindowSize.Large", "Large", "onChangeWindowSizeLarge");
 
-		if (this.mTabContents[this.mLastClickedTab.name].isPermanent())
+		if (mTabContents[mLastClickedTab.name].isPermanent())
 		{
 			menu.addMenuOption("Filters", "Filters", "onChangeFilters");
 		}
@@ -685,14 +685,14 @@ class this.Screens.ChatWindow extends this.GUI.Component
 
 	function setChatFont( font )
 	{
-		this.mTabPane.mContentPane.setFont(font);
+		mTabPane.mContentPane.setFont(font);
 
-		if (!this.mTabContents || this.mTabContents.len() == 0)
+		if (!mTabContents || mTabContents.len() == 0)
 		{
 			return;
 		}
 
-		foreach( i, x in this.mTabContents )
+		foreach( i, x in mTabContents )
 		{
 			if (!x.getActiveHTML() || x.getActiveHTML().len() == 0)
 			{
@@ -704,31 +704,31 @@ class this.Screens.ChatWindow extends this.GUI.Component
 				y.setFont(font);
 			}
 
-			this._updateDisplayedMessages(i);
+			_updateDisplayedMessages(i);
 		}
 	}
 
 	function setChatFontSize( size )
 	{
-		local font = this.getChatFont();
-		this.setChatFont(this.GUI.Font(font.getFace(), size));
+		local font = getChatFont();
+		setChatFont(GUI.Font(font.getFace(), size));
 	}
 
 	function removeChatTab( tab )
 	{
 		::_ChatManager.removeChatListener(tab.name);
-		this.mTabPane.remove(tab);
-		this.mTabContents[tab.name].destroy();
-		delete this.mTabContents[tab.name];
+		mTabPane.remove(tab);
+		mTabContents[tab.name].destroy();
+		delete mTabContents[tab.name];
 	}
 
 	function serializeColor()
 	{
 		local data = {
-			r = this.mIdleBackgroundColor.r,
-			g = this.mIdleBackgroundColor.g,
-			b = this.mIdleBackgroundColor.b,
-			a = this.mIdleBackgroundColor.a
+			r = mIdleBackgroundColor.r,
+			g = mIdleBackgroundColor.g,
+			b = mIdleBackgroundColor.b,
+			a = mIdleBackgroundColor.a
 		};
 		::Pref.set("chatwindow.color", data, true, false);
 	}
@@ -737,7 +737,7 @@ class this.Screens.ChatWindow extends this.GUI.Component
 	{
 		local data = [];
 
-		foreach( tab in this.mTabContents )
+		foreach( tab in mTabContents )
 		{
 			if (tab.isPermanent())
 			{
@@ -750,12 +750,12 @@ class this.Screens.ChatWindow extends this.GUI.Component
 
 	function unserializeColor( data )
 	{
-		this.mIdleBackgroundColor = this.Color(data.r, data.g, data.b, data.a);
-		this.mStoredIdleBackgroundColor = this.Color(data.r, data.g, data.b, data.a);
+		mIdleBackgroundColor = Color(data.r, data.g, data.b, data.a);
+		mStoredIdleBackgroundColor = Color(data.r, data.g, data.b, data.a);
 
-		foreach( i, x in this.mTabContents )
+		foreach( i, x in mTabContents )
 		{
-			x.getMainWindow().setBlendColor(this.mIdleBackgroundColor);
+			x.getMainWindow().setBlendColor(mIdleBackgroundColor);
 		}
 	}
 
@@ -763,8 +763,8 @@ class this.Screens.ChatWindow extends this.GUI.Component
 	{
 		foreach( tab in data )
 		{
-			this.addChatTab(tab.name, true);
-			local chatTab = this.mTabContents[tab.name];
+			addChatTab(tab.name, true);
+			local chatTab = mTabContents[tab.name];
 
 			foreach( filter, value in tab.filters )
 			{
@@ -777,7 +777,7 @@ class this.Screens.ChatWindow extends this.GUI.Component
 	{
 		if (value)
 		{
-			foreach( i, tab in this.mTabContents )
+			foreach( i, tab in mTabContents )
 			{
 				local log = tab.getLog();
 
@@ -785,19 +785,19 @@ class this.Screens.ChatWindow extends this.GUI.Component
 				{
 					local message = logMessage.message;
 
-					if (!(this.Util.startsWith(message, "<b>") && this.Util.endsWith(message, "</b>")))
+					if (!(Util.startsWith(message, "<b>") && Util.endsWith(message, "</b>")))
 					{
 						message = "<b>" + message + "</b>";
 						logMessage.message = message;
 					}
 				}
 
-				this._updateDisplayedMessages(i);
+				_updateDisplayedMessages(i);
 			}
 		}
 		else
 		{
-			foreach( i, tab in this.mTabContents )
+			foreach( i, tab in mTabContents )
 			{
 				local log = tab.getLog();
 
@@ -805,7 +805,7 @@ class this.Screens.ChatWindow extends this.GUI.Component
 				{
 					local message = logMessage.message;
 
-					if (this.Util.startsWith(message, "<b>") && this.Util.endsWith(message, "</b>"))
+					if (Util.startsWith(message, "<b>") && Util.endsWith(message, "</b>"))
 					{
 					}
 
@@ -814,64 +814,64 @@ class this.Screens.ChatWindow extends this.GUI.Component
 					logMessage.message = message;
 				}
 
-				this._updateDisplayedMessages(i);
+				_updateDisplayedMessages(i);
 			}
 		}
 	}
 
 	function _buildGUI()
 	{
-		this.setSticky("left", "bottom");
-		this.setSize(400, 200);
-		this.setPreferredSize(400, 200);
+		setSticky("left", "bottom");
+		setSize(400, 200);
+		setPreferredSize(400, 200);
 		local x = 5;
-		local y = -this.mHeight - 60;
-		this.setPosition(x, y);
-		this.mTabPane = this.GUI.TabbedPane(true);
-		this.mTabPane.addActionListener(this);
-		this.mTabPane.setTabPlacement("top");
-		this.mTabPane.mContentPane.setAppearance("Container");
+		local y = -mHeight - 60;
+		setPosition(x, y);
+		mTabPane = GUI.TabbedPane(true);
+		mTabPane.addActionListener(this);
+		mTabPane.setTabPlacement("top");
+		mTabPane.mContentPane.setAppearance("Container");
 
-		if (this.mTabPane.mTabsPane)
+		if (mTabPane.mTabsPane)
 		{
-			this.mTabPane.mTabsPane.setInsets(0, 5, 0, 10);
+			mTabPane.mTabsPane.setInsets(0, 5, 0, 10);
 		}
 
-		this.setChatFont(this.GUI.Font("Maiandra", 18));
-		this.add(this.mTabPane, this.GUI.BorderLayout.CENTER);
-		this.mInputComponent = this.GUI.Component();
-		this.mInputComponent.setLayoutManager(this.GUI.GridLayout(1, 2));
-		this.mInputComponent.getLayoutManager().setColumns(20, "*");
-		this.mInputComponent.getLayoutManager().setRows("*");
-		this.mInputComponent.setInsets(2, 0, 0, 5);
-		this.mInputComponent.setPassThru(true);
-		this.add(this.mInputComponent, this.GUI.BorderLayout.SOUTH);
-		this.mTypeChannelLabel = this.GUI.Label("");
-		this.mTypeChannelLabel.setFont(this.GUI.Font("Maiandra", 20));
-		this.mInputComponent.add(this.mTypeChannelLabel);
-		this.mInputArea = this.GUI.InputArea();
-		this.mInputArea.setAllowTextEntryOnClick(false);
-		this.mInputArea.setAppearance("Container");
-		this.mInputArea.setFont(this.GUI.Font("Maiandra", 20));
-		this.mInputArea.addActionListener(::_ChatManager);
-		this.mInputArea.addActionListener(this);
-		this.mInputArea.setMaxCharacters(128);
-		this.mInputComponent.add(this.mInputArea);
-		this.setChatFont(this.GUI.Font("MaiandraShadow", this.getChatFontSize()));
+		setChatFont(GUI.Font("Maiandra", 18));
+		add(mTabPane, GUI.BorderLayout.CENTER);
+		mInputComponent = GUI.Component();
+		mInputComponent.setLayoutManager(GUI.GridLayout(1, 2));
+		mInputComponent.getLayoutManager().setColumns(20, "*");
+		mInputComponent.getLayoutManager().setRows("*");
+		mInputComponent.setInsets(2, 0, 0, 5);
+		mInputComponent.setPassThru(true);
+		add(mInputComponent, GUI.BorderLayout.SOUTH);
+		mTypeChannelLabel = GUI.Label("");
+		mTypeChannelLabel.setFont(GUI.Font("Maiandra", 20));
+		mInputComponent.add(mTypeChannelLabel);
+		mInputArea = GUI.InputArea();
+		mInputArea.setAllowTextEntryOnClick(false);
+		mInputArea.setAppearance("Container");
+		mInputArea.setFont(GUI.Font("Maiandra", 20));
+		mInputArea.addActionListener(::_ChatManager);
+		mInputArea.addActionListener(this);
+		mInputArea.setMaxCharacters(128);
+		mInputComponent.add(mInputArea);
+		setChatFont(GUI.Font("MaiandraShadow", getChatFontSize()));
 
-		foreach( i, x in this.mTabContents )
+		foreach( i, x in mTabContents )
 		{
 			x.getMainWindow().setAppearance("ChatWindow");
-			x.getMainWindow().setBlendColor(this.Color(0.0, 0.0, 0.0, 0.0));
-			this._updateDisplayedMessages(i);
+			x.getMainWindow().setBlendColor(Color(0.0, 0.0, 0.0, 0.0));
+			_updateDisplayedMessages(i);
 		}
 	}
 
 	function _countMaxHTMLComponents( tab )
 	{
-		local first = this.GUI.HTML("");
+		local first = GUI.HTML("");
 		first._setHidden(true);
-		local mainPanel = this.mTabContents[tab].getMainWindow();
+		local mainPanel = mTabContents[tab].getMainWindow();
 		local sz = first.getMinimumSize();
 		local height = sz.height + mainPanel.getLayoutManager().mGap;
 		local total = 0;
@@ -879,12 +879,12 @@ class this.Screens.ChatWindow extends this.GUI.Component
 		if (mainPanel.mIsRealized == false)
 		{
 			local mainPanelSize = mainPanel.getPreferredSize();
-			local panelHeight = mainPanelSize.height - this.insets.top - this.insets.bottom;
+			local panelHeight = mainPanelSize.height - insets.top - insets.bottom;
 			total = panelHeight.tointeger() / height.tointeger();
 		}
 		else
 		{
-			local panelHeight = mainPanel.getHeight() - this.insets.top - this.insets.bottom;
+			local panelHeight = mainPanel.getHeight() - insets.top - insets.bottom;
 			total = panelHeight.tointeger() / height.tointeger();
 		}
 
@@ -896,19 +896,19 @@ class this.Screens.ChatWindow extends this.GUI.Component
 		local str = channelStr;
 		local parseStr = "";
 
-		if (this.Util.startsWith(str.tolower(), "*syschat"))
+		if (Util.startsWith(str.tolower(), "*syschat"))
 		{
 			parseStr = "[SysChat]:";
 		}
-		else if (this.Util.startsWith(str.tolower(), "s"))
+		else if (Util.startsWith(str.tolower(), "s"))
 		{
 			parseStr = "";
 		}
-		else if (this.Util.startsWith(str.tolower(), "t/"))
+		else if (Util.startsWith(str.tolower(), "t/"))
 		{
 			local resultsStr = ::Util.replace(str, "t/", "");
 
-			if (this.Util.startsWith(resultsStr, "\""))
+			if (Util.startsWith(resultsStr, "\""))
 			{
 				resultsStr = resultsStr.slice(1, resultsStr.len());
 			}
@@ -920,31 +920,31 @@ class this.Screens.ChatWindow extends this.GUI.Component
 
 			parseStr = "Tell " + resultsStr + ":";
 		}
-		else if (this.Util.startsWith(str.tolower(), "party"))
+		else if (Util.startsWith(str.tolower(), "party"))
 		{
 			parseStr = "Party:";
 		}
-		else if (this.Util.startsWith(str.tolower(), "clan"))
+		else if (Util.startsWith(str.tolower(), "clan"))
 		{
 			parseStr = "Clan:";
 		}
-		else if (this.Util.startsWith(str.tolower(), "emote"))
+		else if (Util.startsWith(str.tolower(), "emote"))
 		{
 			parseStr = "Emote:";
 		}
-		else if (this.Util.startsWith(str.tolower(), "tc/"))
+		else if (Util.startsWith(str.tolower(), "tc/"))
 		{
 			parseStr = "Trade:";
 		}
-		else if (this.Util.startsWith(str.tolower(), "rc/"))
+		else if (Util.startsWith(str.tolower(), "rc/"))
 		{
 			parseStr = "Region:";
 		}
-		else if (this.Util.startsWith(str.tolower(), "gm/"))
+		else if (Util.startsWith(str.tolower(), "gm/"))
 		{
 			parseStr = "Earthsage:";
 		}
-		else if (this.Util.startsWith(str.tolower(), "ch/"))
+		else if (Util.startsWith(str.tolower(), "ch/"))
 		{
 			parseStr = ::Util.replace(str, "ch/", "");
 		}
@@ -991,23 +991,30 @@ class this.Screens.ChatWindow extends this.GUI.Component
 	
 	function _updateDisplayedMessages( tab )
 	{
-		local totalHTMLComponents = this._countMaxHTMLComponents(tab);
-		local logLen = this.mTabContents[tab].getLog().len();
-		local index = this.mTabContents[tab].getScrollBar().getIndex();
+		local totalHTMLComponents = _countMaxHTMLComponents(tab);
+		local logLen = mTabContents[tab].getLog().len();
+		local index = mTabContents[tab].getScrollBar().getIndex();
 		local count = 0;
-		local activeHTML = this.mTabContents[tab].getActiveHTML();
+		local activeHTML = mTabContents[tab].getActiveHTML();
 
 		while (logLen > 0 && index >= 0 && count <= totalHTMLComponents)
 		{
-			local message = this.mTabContents[tab].getLog()[index].message;
+			local message = mTabContents[tab].getLog()[index].message;
 			
-			local channel = this.mTabContents[tab].getLog()[index].channel;
-			local color = this._ChatManager.getColor(channel);
-			local wrapSize = this.getSize().width - 50;
+			local channel = mTabContents[tab].getLog()[index].channel;
+			local color = _ChatManager.getColor(channel);
+			local wrapSize = getSize().width - 50;
 			
-			message = this.Util.replace(message, "Http://", "http://");
-			message = this.Util.replace(message, "Https://", "https://");
-			message = this.Util.replace(message, "Forum://", "forum://");
+			local bolded = Util.startsWith(message, "<b>");
+			if(bolded) {
+				message = message.slice(3, message.len());
+				if(Util.endsWith(message, "</b>")) 
+					message = message.slice(0, message.len() - 4);
+			}
+			
+			message = Util.replace(message, "Http://", "http://");
+			message = Util.replace(message, "Https://", "https://");
+			message = Util.replace(message, "Forum://", "forum://");
 			
 			// Search for hyperlinks in the text and turn them into clickable links
 			
@@ -1038,25 +1045,25 @@ class this.Screens.ChatWindow extends this.GUI.Component
 			message = _searchAndReplace(message, "forum://", " ", linkReplace);
 			local colorReplace = function(color) {
 				
-				if(this.Util.startsWith(color, "#0")) 
+				if(Util.startsWith(color, "#0")) 
 					return "<font color=\"ff0000\">" + color.slice(2, color.len() - 1) + "</font>";
-				else if(this.Util.startsWith(color, "#1")) 
+				else if(Util.startsWith(color, "#1")) 
 					return "<font color=\"ff7f00\">" + color.slice(2, color.len() - 1) + "</font>";
-				else if(this.Util.startsWith(color, "#2")) 
+				else if(Util.startsWith(color, "#2")) 
 					return "<font color=\"ffff00\">" + color.slice(2, color.len() - 1) + "</font>";
-				else if(this.Util.startsWith(color, "#3")) 
+				else if(Util.startsWith(color, "#3")) 
 					return "<font color=\"00ff00\">" + color.slice(2, color.len() - 1) + "</font>";
-				else if(this.Util.startsWith(color, "#4")) 
+				else if(Util.startsWith(color, "#4")) 
 					return "<font color=\"0000ff\">" + color.slice(2, color.len() - 1) + "</font>";
-				else if(this.Util.startsWith(color, "#5")) 
+				else if(Util.startsWith(color, "#5")) 
 					return "<font color=\"ff00ff\">" + color.slice(2, color.len() - 1) + "</font>";
-				else if(this.Util.startsWith(color, "#6")) 
+				else if(Util.startsWith(color, "#6")) 
 					return "<font color=\"ff00ff\">" + color.slice(2, color.len() - 1) + "</font>";
-				else if(this.Util.startsWith(color, "#7")) 
+				else if(Util.startsWith(color, "#7")) 
 					return "<font color=\"00ffff\">" + color.slice(2, color.len() - 1) + "</font>";
-				else if(this.Util.startsWith(color, "#8")) 
+				else if(Util.startsWith(color, "#8")) 
 					return "<font color=\"ffffff\">" + color.slice(2, color.len() - 1) + "</font>";
-				else if(this.Util.startsWith(color, "#9")) 
+				else if(Util.startsWith(color, "#9")) 
 					return "<font color=\"8a5d27\">" + color.slice(2, color.len() - 1) + "</font>";
 				return color;
 			}
@@ -1068,24 +1075,27 @@ class this.Screens.ChatWindow extends this.GUI.Component
 				return "<b>" + text.slice(1, text.len() - 1) + "</b>";
 			});
 			
+			if(bolded) 
+				message = "<b>" + message + "</b>";
+			
 			if (activeHTML.len() <= count)
 			{
-				local html = this.GUI.HTML(message);
+				local html = GUI.HTML(message);
 				html.setLinkStaticColor(color);
 				html.setChangeColorOnHover(false);
 				html.addActionListener(this);
 				html.setResize(true);
 				html._setHidden(true);
 				html.setFontColor(color);
-				html.setWrapText(true, this.getChatFont(), wrapSize);
-				this.mTabContents[tab].getMainWindow().add(html);
+				html.setWrapText(true, getChatFont(), wrapSize);
+				mTabContents[tab].getMainWindow().add(html);
 				activeHTML.append(html);
 			}
 			else
 			{
 				activeHTML[count].setText(message);
 				activeHTML[count].setSize(0, 0);
-				activeHTML[count].setWrapText(true, this.getChatFont(), wrapSize);
+				activeHTML[count].setWrapText(true, getChatFont(), wrapSize);
 				activeHTML[count].setFontColor(color);
 				activeHTML[count].setLinkStaticColor(color);
 			}
@@ -1096,14 +1106,14 @@ class this.Screens.ChatWindow extends this.GUI.Component
 
 		while (count < activeHTML.len())
 		{
-			this.mTabContents[tab].getMainWindow().remove(activeHTML[count]);
+			mTabContents[tab].getMainWindow().remove(activeHTML[count]);
 			activeHTML.remove(count);
 		}
 	}
 
 }
 
-class this.ChatTab 
+class ChatTab 
 {
 	mScrollBar = null;
 	mMainWindow = null;
@@ -1114,110 +1124,110 @@ class this.ChatTab
 	mPermanentTab = true;
 	constructor( permanent )
 	{
-		this.mLog = [];
-		this.mActiveHTML = [];
-		this.mPermanentTab = permanent;
+		mLog = [];
+		mActiveHTML = [];
+		mPermanentTab = permanent;
 
 		if (permanent)
 		{
-			this.mFilters = {};
+			mFilters = {};
 		}
 	}
 
 	function destroy()
 	{
-		this.mScrollBar.destroy();
-		this.mMainWindow.destroy();
+		mScrollBar.destroy();
+		mMainWindow.destroy();
 	}
 
 	function addFilter( channelCategory )
 	{
-		if (this.mPermanentTab)
+		if (mPermanentTab)
 		{
-			this.mFilters[channelCategory] <- true;
+			mFilters[channelCategory] <- true;
 		}
 	}
 
 	function getActiveHTML()
 	{
-		return this.mActiveHTML;
+		return mActiveHTML;
 	}
 
 	function getLog()
 	{
-		return this.mLog;
+		return mLog;
 	}
 
 	function getName()
 	{
-		return this.mName;
+		return mName;
 	}
 
 	function getMainWindow()
 	{
-		return this.mMainWindow;
+		return mMainWindow;
 	}
 
 	function getScrollBar()
 	{
-		return this.mScrollBar;
+		return mScrollBar;
 	}
 
 	function getFilterList()
 	{
-		return this.mFilters;
+		return mFilters;
 	}
 
 	function isPermanent()
 	{
-		return this.mPermanentTab;
+		return mPermanentTab;
 	}
 
 	function removeAllFilters()
 	{
-		if (this.mPermanentTab)
+		if (mPermanentTab)
 		{
-			this.mFilters = {};
+			mFilters = {};
 		}
 	}
 
 	function setActiveHTML( html )
 	{
-		this.mActiveHTML = html;
+		mActiveHTML = html;
 	}
 
 	function setFilterList( filterList )
 	{
-		this.mFilters = filterList;
+		mFilters = filterList;
 	}
 
 	function setLog( log )
 	{
-		this.mLog = log;
+		mLog = log;
 	}
 
 	function setMainWindow( mainWindow )
 	{
-		this.mMainWindow = mainWindow;
+		mMainWindow = mainWindow;
 	}
 
 	function setName( name )
 	{
-		this.mName = name;
+		mName = name;
 	}
 
 	function setScrollBar( scrollBar )
 	{
-		this.mScrollBar = scrollBar;
+		mScrollBar = scrollBar;
 	}
 
 	function serialize()
 	{
-		if (this.mPermanentTab)
+		if (mPermanentTab)
 		{
 			return {
-				name = this.mName,
-				filters = this.mFilters
+				name = mName,
+				filters = mFilters
 			};
 		}
 
