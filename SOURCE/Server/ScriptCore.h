@@ -467,6 +467,7 @@ public:
 	bool RunFunction(std::string name, std::vector<ScriptParam> parms, bool time);
 	void Broadcast(const char *message);
 	unsigned long GetServerTime();
+	void QueueClear();
 	void QueueRemove(NutScriptEvent *evt);
 	void QueueAdd(NutScriptEvent *evt);
 	void QueueInsert(NutScriptEvent *evt);

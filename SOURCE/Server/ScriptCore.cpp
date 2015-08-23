@@ -507,6 +507,7 @@ namespace ScriptCore
 		vector3FClass.Var("z", &Squirrel::Vector3::mZ);
 
 		clazz->Func(_SC("queue"), &NutPlayer::Queue);
+		clazz->Func(_SC("clear_queue"), &NutPlayer::QueueClear);
 		clazz->Func(_SC("broadcast"), &NutPlayer::Broadcast);
 		clazz->Func(_SC("halt"), &NutPlayer::Halt);
 		clazz->Func(_SC("get_server_time"), &NutPlayer::GetServerTime);
@@ -728,8 +729,8 @@ namespace ScriptCore
 		for(size_t i = 0; i < mQueueRemove.size(); i++)	{
 			NutScriptEvent *nse = mQueueRemove[i];
 			mQueue.erase(std::remove(mQueue.begin(), mQueue.end(), nse), mQueue.end());
-			mQueueAdd.erase(std::remove(mQueue.begin(), mQueue.end(), nse), mQueue.end());
-			mQueueInsert.erase(std::remove(mQueue.begin(), mQueue.end(), nse), mQueue.end());
+			mQueueAdd.erase(std::remove(mQueueAdd.begin(), mQueueAdd.end(), nse), mQueueAdd.end());
+			mQueueInsert.erase(std::remove(mQueueInsert.begin(), mQueueInsert.end(), nse), mQueueInsert.end());
 		}
 		mQueue.insert(mQueue.end(), mQueueAdd.begin(), mQueueAdd.end());
 		mQueue.insert(mQueue.begin(), mQueueInsert.begin(), mQueueInsert.end());
@@ -789,6 +790,21 @@ namespace ScriptCore
 				return;
 			}
 			mQueue.insert(mQueue.begin(), evt);
+		}
+	}
+
+	void NutPlayer::QueueClear()
+	{
+		if(mExecuting)
+		{
+			for(size_t i = 0; i < mQueue.size(); i++)	{
+				NutScriptEvent *nse = mQueue[i];
+				mQueueRemove.push_back(nse);
+			}
+		}
+		else
+		{
+			ClearQueue();
 		}
 	}
 
