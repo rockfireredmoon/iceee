@@ -427,6 +427,22 @@ void LoadConfig(const char *filename)
 				g_Config.AccountCredits = lfr.BlockToBool(1);
 			else if(strcmp(NameBlock, "NameChangeCost") == 0)
 				g_Config.NameChangeCost = lfr.BlockToInt(1);
+			else if(strcmp(NameBlock, "SSLVerifyPeer") == 0)
+				g_Config.SSLVerifyPeer = lfr.BlockToBool(1);
+			else if(strcmp(NameBlock, "SSLVerifyHostname") == 0)
+				g_Config.SSLVerifyHostname = lfr.BlockToBool(1);
+			else if(strcmp(NameBlock, "SMTPHost") == 0)
+				g_Config.SMTPHost = lfr.BlockToStringC(1, 0);
+			else if(strcmp(NameBlock, "SMTPUsername") == 0)
+				g_Config.SMTPUsername = lfr.BlockToStringC(1, 0);
+			else if(strcmp(NameBlock, "SMTPPassword") == 0)
+				g_Config.SMTPPassword = lfr.BlockToStringC(1, 0);
+			else if(strcmp(NameBlock, "SMTPPort") == 0)
+				g_Config.SMTPPort = lfr.BlockToInt(1);
+			else if(strcmp(NameBlock, "SMTPSSL") == 0)
+				g_Config.SMTPSSL = lfr.BlockToBool(1);
+			else if(strcmp(NameBlock, "SMTPSender") == 0)
+				g_Config.SMTPSender = lfr.BlockToStringC(1, 0);
 			else
 			{
 				g_Log.AddMessageFormatW(MSG_SHOW, "Unknown identifier [%s] in config file [%s]", lfr.BlockToString(0), filename);
@@ -636,6 +652,16 @@ GlobalConfigData :: GlobalConfigData()
 
 	AccountCredits = true;
 	NameChangeCost = 300;
+
+	SSLVerifyPeer = true;
+	SSLVerifyHostname = true;
+
+	SMTPHost = "";
+	SMTPUsername = "";
+	SMTPPassword = "";
+	SMTPPort = 25;
+	SMTPSSL = false;
+	SMTPSender = "";
 
 	InvalidLoginMessage = "Account not found.  Check username and password.";
 }

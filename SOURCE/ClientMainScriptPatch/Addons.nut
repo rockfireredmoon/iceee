@@ -257,6 +257,11 @@ function InputCommands::sb(args)
 	Screens.show("SceneryObjectBrowser");
 }
 
+function InputCommands::ah(args)
+{
+	Screens.show("AuctionHouse");
+}
+
 function InputCommands::sc(args)
 {
 	showCollision(args);

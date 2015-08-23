@@ -17,7 +17,7 @@ void GambleDefinition :: AddItemSelections(const char *itemList)
 	std::string items = itemList;
 	STRINGLIST subitems;
 	STRINGLIST entry;
-	
+
 	Util::Split(items, ",", subitems);
 	for(size_t i = 0; i < subitems.size(); i++)
 	{
@@ -48,7 +48,7 @@ int GambleDefinition :: GetRandomSelection(void)
 	{
 		maxShares += itemSelection[i].Shares;
 	}
-	
+
 	int base = 1;
 	int rnd = randint(1, maxShares);
 	for(size_t i = 0; i < itemSelection.size(); i++)

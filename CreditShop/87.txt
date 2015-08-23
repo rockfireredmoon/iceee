@@ -1,0 +1,8 @@
+[ENTRY]
+PriceCurrency=CREDITS
+PriceCopper=0
+PriceCredits=1000
+ItemID=5808
+Category=ARMOR
+Status=NEW
+

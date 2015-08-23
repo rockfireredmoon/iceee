@@ -1,0 +1,8 @@
+[ENTRY]
+PriceCurrency=CREDITS
+PriceCopper=0
+PriceCredits=100
+ItemID=5814
+Category=ARMOR
+Status=NEW
+

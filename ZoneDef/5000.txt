@@ -1,15 +1,13 @@
 [ENTRY]
 ID=5000
-ACCOUNTID=1
+ACCOUNTID=1214
 NAME=Grove
 TERRAINCONFIG=Terrain-Blend#Terrain-Blend.cfg
 ENVIRONMENTTYPE=CloudyDay
-ShardName=eld
-GroveName=eld
-WarpName=eld1
-DropRateProfile=standard
+ShardName=zippy
+GroveName=zippy
+WarpName=zippy1
 Grove=1
-EnvironmentCycle=1
-BuildPermission=account,1,0,0,13,23
-DefLoc=3101,266,3723
+EnvironmentCycle=0
+DefLoc=2958,260,3821
 

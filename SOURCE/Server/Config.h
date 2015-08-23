@@ -198,8 +198,19 @@ public:
 	bool AccountCredits;				// If true, credits will be stored at the account level rather than per character and shared across all characters
 	unsigned int NameChangeCost;					// Number of credits a last name change costs
 
-
 	std::string GitHubToken;			// GitHub personal access token for bug reports
+
+	// Global SSL options
+	bool SSLVerifyPeer;					// For SSL, the default for peer verification
+	bool SSLVerifyHostname;				// For SSL, whether to verify hostname
+
+	// Mail
+	std::string SMTPHost;				// For emails, the SMTP host
+	std::string SMTPUsername;			// For emails, the SMTP username
+	std::string SMTPPassword;			// For emails, the SMTP password
+	int SMTPPort;						// For emails, the SMTP port
+	bool SMTPSSL;						// For emails, whether to use SSL
+	std::string SMTPSender;				// For emails, the default sender address
 
 	unsigned long debugAdministrativeBehaviorFlags;
 	void SetAdministrativeBehaviorFlag(unsigned long bitValue, bool state);

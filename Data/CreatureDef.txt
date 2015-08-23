@@ -5669,7 +5669,7 @@ might_regen=1
 appearance=c2:{["a"]=[{["type"]="Armor-Cloth-High3-Left_Pauldron",["node"]="left_shoulder",["colors"]=["FFFFFF","BFA129","12941A","BFA129"]},{["type"]="Armor-Cloth-High3-Right_Pauldron",["node"]="right_shoulder",["colors"]=["FFFFFF","BFA129","12941A","BFA129"]},{["type"]="Item-2hSword-Medium4",["node"]="back_sheathe",["colors"]=["8B9FA7","852E01","FDAA1F"]},{["type"]="Armor-Light-Mid3-Hat",["node"]="hat",["colors"]=["7F5632","766752","846E56"]}],["c"]={["boots"]={["type"]="Armor-Heavy-Epic2",["colors"]=["dda546","ffffff","ffffff","e90000"]},["chest"]={["type"]="Armor-Heavy-High1",["colors"]=["dda546","ffffff","12941a"]},["arms"]={["type"]="Armor-Heavy-Epic1",["colors"]=["dda546","ffffff","12941a","e90000"]},["leggings"]={["type"]="Armor-Heavy-Epic1",["colors"]=["dda546","ffffff","12941a","e90000"]},["collar"]={["type"]="Armor-Heavy-Epic2",["colors"]=["dda546","ffffff","12941a","e90000"]},["belt"]={["type"]="Armor-Heavy-Epic1",["colors"]=["dda546","ffffff","12941a","e90000"]},["gloves"]={["type"]="Armor-Heavy-Epic2",["colors"]=["dda546","ffffff","ffffff","e90000"]}},["b"]="m",["sk"]={["hands_feet"]="534741",["eye_white"]="FFFFFF",["snout"]="AAAAAA",["ear_tips"]="D58F70",["base"]="94947B",["hair_ears"]="FFFFFF",["eye_lid"]="534741",["eye"]="00E90E",["inner_ear"]="AE917C",["nose"]="2A2A2A",["chest"]="FFFFFF"},["sz"]="1.35",["h"]=0,["g"]="m",["r"]="b"}
 level=110
 display_name=Sir Kay
-sub_name=Knight of the Round
+sub_name=Knight of the Round Tablewd
 profession=2
 creature_category=Mortal
 rarity=3
@@ -45581,22 +45581,22 @@ ai_package=melee_creature_brave_6
 
 [ENTRY]
 ID=1987
-strength=10
-dexterity=8
-constitution=10
-psyche=7
-spirit=7
-base_damage_melee=6
-damage_resist_melee=93
-damage_resist_fire=93
-damage_resist_frost=93
-damage_resist_mystic=93
-damage_resist_death=93
+strength=7
+dexterity=6
+constitution=6
+psyche=5
+spirit=5
+base_damage_melee=5
+damage_resist_melee=53
+damage_resist_fire=53
+damage_resist_frost=53
+damage_resist_mystic=53
+damage_resist_death=53
 will_regen=1
 might_regen=1
-offhand_weapon_damage=500
-casting_setback_chance=500
-channeling_break_chance=500
+offhand_weapon_damage=300
+casting_setback_chance=300
+channeling_break_chance=300
 appearance=n4:{["c"]="Horde-Guinea_Fowl",["sk"]={["fur3"]="463731",["fur2"]="D4D4D4",["fur1"]="804A2D",["beak"]="BE8148",["feathers"]="D4D4D4",["legs"]="D79475",["eye"]="D4D300",["eyeball"]="E0D0C0",["crest"]="D03D38"}}
 level=4
 display_name=Guineafowl
