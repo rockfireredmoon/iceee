@@ -174,7 +174,10 @@ class this.States.LoginState extends this.State
 		mNews.getLayoutManager().setGaps(0.0, 0.0);
 		mNews.setInsets( 10, 10, 10, 10 );
 		mNews.setFont( GUI.Font( "Maiandra", 16 ) );
-		mNews.setFontColor( "2b1b00" );		
+		mNews.setFontColor("2b1b00");
+		mNews.setLinkStaticColor("004183");
+		mNews.setLinkHoverColor("007b83");
+		mNews.setChangeColorOnHover(true);
 		mNews.setText("Loading...");
 		scrollArea.attach( mNews );
 
