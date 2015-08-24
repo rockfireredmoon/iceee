@@ -2738,6 +2738,83 @@ material Particles/WE_Yellow
 		}
 	}
 }
+
+material Particles/WE_Cyan
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			depth_write off
+			scene_blend add
+			fog_override true
+
+			texture_unit
+			{
+				texture WE_Cyan.png
+			}
+		}
+	}
+}
+
+material Particles/WE_Red
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			depth_write off
+			scene_blend add
+			fog_override true
+
+			texture_unit
+			{
+				texture WE_Red.png
+			}
+		}
+	}
+}
+
+material Particles/WE_Grey
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			depth_write off
+			scene_blend add
+			fog_override true
+
+			texture_unit
+			{
+				texture WE_Grey.png
+			}
+		}
+	}
+}
+
+material Particles/WE_Purple
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			depth_write off
+			scene_blend add
+			fog_override true
+
+			texture_unit
+			{
+				texture WE_Purple.png
+			}
+		}
+	}
+}
+
 material Particles/WE_Fire
 {
 	technique
