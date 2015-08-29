@@ -299,6 +299,7 @@ public:
 	int handle_query_marker_list(void);
 	int handle_query_marker_edit(void);
 	int handle_query_marker_del(void);
+	int handle_query_gm_spawn(void);
 	int handle_query_guild_info(void);
 	int handle_query_guild_leave(void);
 	int handle_query_script_op(int op);

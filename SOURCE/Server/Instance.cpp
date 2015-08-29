@@ -2004,13 +2004,13 @@ CreatureInstance* ActiveInstance :: SpawnGeneric(int CDefID, int x, int y, int z
 	return retPtr;
 }
 
-int ActiveInstance :: SpawnAtProp(int CDefID, int PropID, int duration, int elevationOffset)
+CreatureInstance* ActiveInstance :: SpawnAtProp(int CDefID, int PropID, int duration, int elevationOffset)
 {
 	CreatureDefinition *cdef = CreatureDef.GetPointerByCDef(CDefID);
 	if(cdef == NULL)
 	{
 		g_Log.AddMessageFormat("[ERROR] SpawnAtProp() creature def not found: %d", CDefID);
-		return -1;
+		return NULL;
 	}
 
 	/*
@@ -2036,7 +2036,7 @@ int ActiveInstance :: SpawnAtProp(int CDefID, int PropID, int duration, int elev
 	if(so == NULL)
 	{
 		g_Log.AddMessageFormat("[ERROR] SpawnAtProp() prop not found: %d", PropID);
-		return -1;
+		return NULL;
 	}
 
 	CreatureInstance newItem;
@@ -2073,7 +2073,7 @@ int ActiveInstance :: SpawnAtProp(int CDefID, int PropID, int duration, int elev
 
 	int size = PrepExt_GeneralMoveUpdate(GSendBuf, add);
 	LSendToLocalSimulator(GSendBuf, size, x, z);
-	return newItem.CreatureID;
+	return add;
 }
 
 

@@ -341,7 +341,7 @@ public:
 
 	CreatureInstance* SpawnCreate(CreatureInstance * sourceActor, int CDefID);
 	CreatureInstance* SpawnGeneric(int CDefID, int x, int y, int z, int facing, int flags);
-	int SpawnAtProp(int CDefID, int PropID, int duration, int elevationOffset);
+	CreatureInstance* SpawnAtProp(int CDefID, int PropID, int duration, int elevationOffset);
 	void CreatureDelete(int CreatureID);
 
 	void EraseAllCreatureReference(CreatureInstance *object);

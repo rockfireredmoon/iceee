@@ -406,6 +406,54 @@ mMinUseLevel=10
 mUseAbilityId=27008
 
 [ENTRY]
+mID=8112
+mType=5
+mDisplayName=New Starter Grove
+mAppearance=[{}]
+mIcon=Icon-32-Grove1.png|Icon-32-BG-Blue.png
+mIvType1=1
+mIvMax1=1
+mLevel=1
+mBindingType=1
+mValue=1
+mFlavorText=Double click to open!
+mQualityLevel=3
+mMinUseLevel=10
+mUseAbilityId=27100
+
+[ENTRY]
+mID=8113
+mType=5
+mDisplayName=New Bastion Grove
+mAppearance=[{}]
+mIcon=Icon-32-Grove2.png|Icon-32-BG-Blue.png
+mIvType1=1
+mIvMax1=1
+mLevel=1
+mBindingType=1
+mValue=1
+mFlavorText=Double click to open!
+mQualityLevel=3
+mMinUseLevel=10
+mUseAbilityId=27101
+
+[ENTRY]
+mID=8114
+mType=5
+mDisplayName=New Haunted Grove
+mAppearance=[{}]
+mIcon=Icon-32-Grove3.png|Icon-32-BG-Blue.png
+mIvType1=1
+mIvMax1=1
+mLevel=1
+mBindingType=1
+mValue=1
+mFlavorText=Double click to open!
+mQualityLevel=3
+mMinUseLevel=10
+mUseAbilityId=27102
+
+[ENTRY]
 mID=8200
 mType=2
 mDisplayName=Searoxinohn

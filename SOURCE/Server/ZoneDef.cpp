@@ -984,6 +984,21 @@ int ZoneDefManager :: GetNewZoneID(void)
 	return rval;
 }
 
+int ZoneDefManager :: CreateZone(ZoneDefInfo &newZone)
+{
+	cs.Enter("ZoneDefManager::CreateZone");
+	int newZoneID = GetNewZoneID();
+
+	newZone.mID = newZoneID;
+	//Flag for the next autosave.
+	newZone.PendingChanges = 1;
+
+	InsertZone(newZone, true);
+
+	cs.Leave();
+	return newZoneID;
+}
+
 int ZoneDefManager :: CreateGrove(int accountID, const char *grovename)
 {
 	cs.Enter("ZoneDefManager::CreateGrove");

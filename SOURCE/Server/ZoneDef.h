@@ -194,6 +194,7 @@ public:
 	static const int GROVE_ZONE_ID_INCREMENT = 8;
 	static const int GROVE_ZONE_ID_DEFAULT = 5000;
 
+	int CreateZone(ZoneDefInfo &newZone);
 	int CreateGrove(int accountID, const char *grovename);
 	int CheckAutoSave(bool force);
 
@@ -211,10 +212,10 @@ public:
 
 	//Special case destinations for warping (such as selecting from the grove list)
 	static const int HENGE_ID_CUSTOMWARP = 1;
+	static const int DEFAULT_GROVE_PAGE_SIZE = 1920;
 private:
 	static const int ZONE_AUTOSAVE_DELAY = 120000;
 	static const int ZONE_UNLOAD_DELAY = 120000;
-	static const int DEFAULT_GROVE_PAGE_SIZE = 1920;
 
 	PlatformTime::TIME_VALUE mNextAutosaveTime;
 	PlatformTime::TIME_VALUE mNextZoneUnload;

@@ -127,7 +127,6 @@ function wailer_shield() {
 	local in_range_2 = inst.scan_npc(loc_brazier_2, CDEF_WAILER) > 0;
 	local in_range = in_range_1 || in_range_2; 
 		
-	print("IN RANG TEST: " + in_range_1 + "/" + in_range_2 + " cid br 1 " + cid_brazier_1 + " cid br 2 "  + cid_brazier_2 + "\n");
 		
 	if( ( use_brazier == 1 && !in_range_1 ) || ( use_brazier == 2 && !in_range_2 )) {
 		if(!wailer_message_shown) {

@@ -1,0 +1,9 @@
+[ENTRY]
+Description=Feral Transformation Potion
+PriceCurrency=CREDITS
+PriceCopper=0
+PriceCredits=5
+ItemID=50006
+Category=CONSUMABLES
+Status=NEW
+

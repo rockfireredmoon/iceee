@@ -2516,6 +2516,8 @@ bool SimulatorThread :: HandleQuery(int &PendingData)
 		PendingData = handle_query_item_market_purchase_name();
 	else if(query.name.compare("bug.report") == 0)
 		PendingData = handle_query_bug_report();
+	else if(query.name.compare("gm.spawn") == 0)
+		PendingData = handle_query_gm_spawn();
 	else if(query.name.compare("marker.list") == 0)
 		PendingData = handle_query_marker_list();
 	else if(query.name.compare("marker.edit") == 0)
@@ -11912,6 +11914,95 @@ int SimulatorThread :: handle_query_marker_del(void)
 	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
 }
 
+int SimulatorThread :: handle_query_gm_spawn(void)
+{
+	bool ok = CheckPermissionSimple(Perm_Account, Permission_Sage);
+	if(!ok) {
+		if(pld.zoneDef->mGrove == true && pld.zoneDef->mAccountID != pld.accPtr->ID)
+			ok = true;
+	}
+	if(!ok)
+		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
+
+
+	if(query.args.size() < 6)
+		return PrepExt_QueryResponseError(SendBuf, query.ID, "Invalid query.");
+
+	int creatureID = query.GetInteger(0);
+	int qty = query.GetInteger(1);
+	int spawnType = query.GetInteger(2);
+	std::string data = query.GetString(3);
+	int flags = query.GetInteger(4);
+	int attackType = query.GetInteger(5);
+	int abilityID = query.GetInteger(6);
+
+	CreatureInstance *c = creatureInst;
+	if(c->CurrentTarget.targ != NULL) {
+		c = c->CurrentTarget.targ;
+	}
+
+	CreatureInstance *s = NULL;
+
+	for (int i = 0; i < qty; i++) {
+		if (spawnType == 0) {
+			// Random position around the players positions
+			int radius = atoi(data.c_str());
+			s = creatureInst->actInst->SpawnGeneric(creatureID,
+								c->CurrentX + randmodrng(1, radius) - ( radius / 2 ),
+								c->CurrentY,
+								c->CurrentZ + randmodrng(1, radius) - ( radius / 2 ),
+								c->Rotation, flags);
+
+		} else {
+			// Random position around the players positions
+			int propID = atoi(data.c_str());
+			s = creatureInst->actInst->SpawnAtProp(creatureID, propID, 99999, flags);
+		}
+
+		if (s == NULL)
+			return PrepExt_QueryResponseError(SendBuf, query.ID,
+					"Failed to spawn.");
+
+		int r;
+		CreatureInstance *targ;
+		std::vector<CreatureInstance*> l;
+
+		switch(attackType) {
+		case 0:
+			s->SelectTarget(c);
+			r = s->CallAbilityEvent(abilityID,
+					EventType::onRequest);
+			if(r != 0)
+				g_Log.AddMessageFormat("Failed to use ability %d on spawn master creature %d", abilityID, creatureID);
+			break;
+		case 1:
+			l = creatureInst->actInst->PlayerListPtr;
+			if(l.size() > 0) {
+				targ = l[randmodrng(0, l.size())];
+				s->SelectTarget(targ);
+				r = s->CallAbilityEvent(abilityID,
+						EventType::onRequest);
+				if(r != 0)
+					g_Log.AddMessageFormat("Failed to use ability %d for spawn master creature %d", abilityID, creatureID);
+			}
+			break;
+		case 2:
+			l = creatureInst->actInst->NPCListPtr;
+			if(l.size() > 0) {
+				targ = l[randmodrng(0, l.size())];
+				s->SelectTarget(targ);
+				r = s->CallAbilityEvent(abilityID, EventType::onRequest);
+				if(r != 0)
+					g_Log.AddMessageFormat("Failed to use ability %d for spawn master creature %d", abilityID, creatureID);
+			}
+			break;
+		}
+	}
+
+
+	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
+}
+
 int SimulatorThread :: handle_query_marker_edit(void)
 {
 	bool ok = CheckPermissionSimple(Perm_Account, Permission_Admin);
@@ -11921,6 +12012,10 @@ int SimulatorThread :: handle_query_marker_edit(void)
 	}
 	if(!ok)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
+
+	if(query.args.size() < 5)
+		return PrepExt_QueryResponseError(SendBuf, query.ID, "Invalid query.");
+
 	vector<WorldMarker>::iterator it;
 	for (it = creatureInst->actInst->worldMarkers.WorldMarkerList.begin(); it != creatureInst->actInst->worldMarkers.WorldMarkerList.end(); ++it) {
 		if(strcmp(it->Name, query.args[0].c_str()) == 0) {

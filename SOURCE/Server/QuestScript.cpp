@@ -415,7 +415,8 @@ int QuestNutPlayer::Spawn(int propID) {
 }
 
 int QuestNutPlayer::SpawnAt(int propID, int cdefID, unsigned long duration, int elevation) {
-	return source->actInst->SpawnAtProp(propID, cdefID, duration, elevation);
+	CreatureInstance *c = source->actInst->SpawnAtProp(propID, cdefID, duration, elevation);
+	return c == NULL ? -1 : c->CreatureID;
 }
 
 void QuestNutPlayer::WarpZone(int zoneID) {

@@ -1967,3 +1967,28 @@ this.Util.addNewTextLine <- function ( textString, title, value, ... )
 	textString = textString + "<b>" + title + ":</b> <font color=\"" + this.Colors[color] + "\">" + value + "</font>" + "<br>";
 	return textString;
 };
+
+
+function Util::hasPermission(permission)
+{
+	return true;
+}
+
+function Util::hasSpeedPermission()
+{
+	return ::_accountPermissionGroup == "admin";
+}
+
+function Util::hasBuildPermission()
+{
+	if(Util.hasSpeedPermission())
+		return true;
+
+	local zonePart = Util.split(::_avatar.mZoneID, "-");
+	if(zonePart.len() < 2)
+		return false;
+	if(zonePart[1].tointeger() >= 5000)
+		return true;
+
+	return false;
+}

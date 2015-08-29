@@ -1159,6 +1159,7 @@ void AbilityManager2 :: InitFunctionTables(void)
 	InsertFunction("Add", &AbilityCalculator::Add);
 	InsertFunction("AddSlot", &AbilityCalculator::AddSlot);
 	InsertFunction("AddDeliveryBox", &AbilityCalculator::AddDeliveryBox);
+	InsertFunction("AddGrove", &AbilityCalculator::AddGrove);
 	InsertFunction("AmpCore", &AbilityCalculator::AmpCore);
 	InsertFunction("Nullify", &AbilityCalculator::Nullify);
 	InsertFunction("CheckBuffLimits", &AbilityCalculator::CheckBuffLimits);
@@ -2545,6 +2546,79 @@ int AbilityCalculator :: AddSlot(ARGUMENT_LIST args)
 		ciTarget->simulatorPtr->SendInfoMessage("You have a new character slot!", INFOMSG_INFO);
 	else
 		ciTarget->simulatorPtr->SendInfoMessage("You have the maximum allowed characters!", INFOMSG_ERROR);
+	return NO_RETURN_VALUE;
+}
+
+int AbilityCalculator :: AddGrove(ARGUMENT_LIST args)
+{
+
+	const char *templateName = args.GetString(0);
+	const GroveTemplate *gt = g_GroveTemplateManager.GetTemplateByShortName(templateName);
+	if(gt == NULL) {
+		ciTarget->simulatorPtr->SendInfoMessage("No such grove template.", INFOMSG_ERROR);
+	}
+	else {
+
+		/* Find the next available grove name. The accounts original grove name is
+		 * used, and a number appended until a grove with that name is not found.
+		 */
+		int index = 2;
+		char name[256];
+		ZoneDefInfo *zoneDef = NULL;
+		while(index < 999) {
+			Util::SafeFormat(name, sizeof(name), "%s%d", ciTarget->simulatorPtr->pld.accPtr->GroveName.c_str(), index);
+			zoneDef = g_ZoneDefManager.GetPointerByExactWarpName(name);
+			if(zoneDef == NULL) {
+				break;
+			}
+			index++;
+		}
+
+
+		if(zoneDef != NULL)
+			ciTarget->simulatorPtr->SendInfoMessage("No free grove names.", INFOMSG_ERROR);
+		else {
+
+			ZoneDefInfo newZone;
+			newZone.mAccountID =  ciTarget->simulatorPtr->pld.accPtr->ID;
+			newZone.mName = "Grove";
+			newZone.mTerrainConfig = gt->mTerrainCfg;
+			newZone.mEnvironmentType = gt->mEnvType;
+			newZone.mPageSize = ZoneDefManager::DEFAULT_GROVE_PAGE_SIZE;
+			newZone.mShardName = gt->mShortName;
+			newZone.mGroveName = ciTarget->simulatorPtr->pld.accPtr->GroveName;
+			newZone.mWarpName = name;
+			newZone.mMapName  = gt->mMapName;
+			newZone.DefX = gt->mDefX;
+			newZone.DefY = gt->mDefY;
+			newZone.DefZ = gt->mDefZ;
+			newZone.mGrove = true;
+			newZone.mGuildHall = false;
+			newZone.mRegions = gt->mRegionsPng;
+
+			//Flag for the next autosave.
+			newZone.PendingChanges = 1;
+
+			BuildPermissionArea bp;
+			bp.ZoneID = g_ZoneDefManager.CreateZone(newZone);;
+			bp.x1 = gt->mTileX1;
+			bp.y1 = gt->mTileY1;
+			bp.x2 = gt->mTileX2;
+			bp.y2 = gt->mTileY2;
+
+			ciTarget->simulatorPtr->pld.accPtr->BuildPermissionList.push_back(bp);
+			ciTarget->simulatorPtr->pld.accPtr->PendingMinorUpdates++;
+
+			char msg[256];
+			Util::SafeFormat(msg, sizeof(msg), "You have a new grove! Type /grove at a sanctuary to travel to it. Your grove's warp name is '%s'.", name);
+			ciTarget->simulatorPtr->SendInfoMessage(msg, INFOMSG_INFO);
+
+			Util::SafeFormat(msg, sizeof(msg), "%s has a new grove!", ciTarget->css.display_name);
+			ciTarget->simulatorPtr->BroadcastMessage(msg);
+		}
+
+	}
+
 	return NO_RETURN_VALUE;
 }
 
