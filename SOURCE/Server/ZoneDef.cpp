@@ -8,6 +8,7 @@
 #include "InstanceScale.h"
 #include "Report.h"
 #include "Character.h"
+#include "Globals.h"
 
 ZoneDefManager g_ZoneDefManager;
 ZoneBarrierManager g_ZoneBarrierManager;
@@ -221,6 +222,8 @@ void ZoneDefInfo :: Clear(void)
 
 	mPlayerFilterType = FILTER_PLAYER_NONE;
 	mPlayerFilterID.clear();
+
+	mMode = GameMode::PVE_ONLY;
 
 	mDropRateProfile.clear();
 

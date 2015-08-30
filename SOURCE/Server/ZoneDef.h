@@ -86,6 +86,7 @@ public:
 	int DefY;                 //Default Y coordinate when entering the region.
 	int DefZ;                 //Default Z coordinate when entering the region.
 	int mPageSize;            //Page size for scenery.
+	int mMode;				  //The default mode for the zone. Current PVP or PVE.
 	int mReturnZone;          //If an instance no longer exists when a character logs in, place the character into this zone instead.
 	bool mPersist;           //If true, an instantiated zone remains resident in memory.
 	bool mInstance;          //If true, this zone is an instance, and spawns will be limited.
@@ -101,7 +102,7 @@ public:
 	std::vector<int> mPlayerFilterID;  //Creature Def IDs of the players to filter.
 
 	std::string mDropRateProfile;
-	std::map<EnvironmentTileKey, string> mTileEnvironment; // Use a specific environment for certain tiles (the key is a string "<x>,<y>")
+	std::map<EnvironmentTileKey, std::string> mTileEnvironment; // Use a specific environment for certain tiles (the key is a string "<x>,<y>")
 	
 	int PendingChanges;  //Used internally to track whether this zone needs to be saved back to file.
 
@@ -113,6 +114,7 @@ public:
 	static const int FILTER_PLAYER_NONE      = 0;   //Allow all players.
 	static const int FILTER_PLAYER_WHITELIST = 1;   //Allow the players on the filter list, and only them.
 	static const int FILTER_PLAYER_BLACKLIST = 2;   //Block the players on the filter list.
+
 
 	std::vector<ZoneEditPermission> mEditPermissions;
 

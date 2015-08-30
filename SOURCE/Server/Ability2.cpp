@@ -2614,7 +2614,7 @@ int AbilityCalculator :: AddGrove(ARGUMENT_LIST args)
 			ciTarget->simulatorPtr->SendInfoMessage(msg, INFOMSG_INFO);
 
 			Util::SafeFormat(msg, sizeof(msg), "%s has a new grove!", ciTarget->css.display_name);
-			ciTarget->simulatorPtr->BroadcastMessage(msg);
+			g_SimulatorManager.BroadcastMessage(msg);
 		}
 
 	}

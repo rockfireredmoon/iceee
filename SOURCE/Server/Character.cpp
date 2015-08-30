@@ -176,6 +176,7 @@ void CharacterData :: ClearAll(void)
 	guildList.clear();
 	SidekickList.clear();
 	MaxSidekicks = MAX_SIDEKICK;
+	Mode = GameMode::PVE;
 
 	//eq.slotList.clear();
 	//inv.slotList.clear();
@@ -217,6 +218,7 @@ void CharacterData :: CopyFrom(CharacterData &source)
 	cdef.Clear();
 
 	MaxSidekicks = source.MaxSidekicks;
+	Mode = source.Mode;
 
 	//Assign the vector lists
 	abilityList.AbilityList.assign(source.abilityList.AbilityList.begin(), source.abilityList.AbilityList.end());
@@ -1328,6 +1330,10 @@ int CheckSection_General(FileReader &fr, CharacterData &cd, const char *debugFil
 	{
 		cd.MaxSidekicks = fr.BlockToIntC(1);
 	}
+	else if(strcmp(fr.SecBuffer, "MODE") == 0)
+	{
+		cd.Mode = fr.BlockToIntC(1);
+	}
 	else if(strcmp(fr.SecBuffer, "PRIVATECHANNELNAME") == 0)
 	{
 		cd.PrivateChannelName = fr.BlockToString(1);
@@ -1652,6 +1658,10 @@ void SaveCharacterToStream(FILE *output, CharacterData &cd)
 
 	//Sidekicks
 	fprintf(output, "MaxSidekicks=%d\r\n", cd.MaxSidekicks);
+
+	//PVP/PVE mode
+	fprintf(output, "Mode=%d\r\n", cd.Mode);
+
 	/*
 	fcount = (int)cd.SidekickList.size();
 	written = 0;

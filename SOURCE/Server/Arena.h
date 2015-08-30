@@ -48,7 +48,7 @@ class ArenaRuleset
 {
 public:
 	bool mEnabled;        //A simple flag to disable processing of arena events for non-arenas.
-	bool mPVPStatus;      //If true, players will be given the PVPABLE status when they log in.
+	int mPVPStatus;      //Players will be given the PVPABLE status when they log in if set to one of the PVP GameMode constants.
 	bool mTurboRunSpeed;
 
 	std::vector<ArenaRule> mRuleList;

@@ -111,6 +111,7 @@ namespace Util
 	bool IntToBool(int value);
 	void SanitizeClientString(char *string);
 	void RemoveStringsFrom(const char *search, std::string& operativeString);
+	bool CaseInsensitiveStringCompare(const std::string& str1, const std::string& str2);
 	void ToLowerCase(std::string &input);
 	bool HasBeginning(std::string const &fullString, std::string const &ending);
 	bool HasEnding (std::string const &fullString, std::string const &ending);

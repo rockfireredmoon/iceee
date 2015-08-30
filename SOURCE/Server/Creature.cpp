@@ -3622,10 +3622,14 @@ bool CreatureInstance :: CanPVPTarget(CreatureInstance *target)
 	if(this == target)
 		return false;
 
-	if(target->HasStatus(StatusEffects::UNATTACKABLE))
+	if(target->HasStatus(StatusEffects::UNATTACKABLE)) {
+//		g_Log.AddMessageFormat("REMOVEME no pvp because unattackable");
 		return false;
-	if(target->HasStatus(StatusEffects::INVINCIBLE))
+	}
+	if(target->HasStatus(StatusEffects::INVINCIBLE)) {
+//		g_Log.AddMessageFormat("REMOVEME no pvp because invincible");
 		return false;
+	}
 
 	//Due to client limitations, both players need PVPABLE status or else one player may not
 	//initiate autoattacks against the other, because target selection is still considered
@@ -3654,9 +3658,26 @@ bool CreatureInstance :: CanPVPTarget(CreatureInstance *target)
 		//This was added so that special events could be done where specific players could be
 		//given PVP status among others instead of creating an environment where everyone can
 		//attack each other.
-		if(css.pvp_team != target->css.pvp_team)
+
+//		g_Log.AddMessageFormat("REMOVEME zone mode is %d, team 1 is %d and team 2 is %d", actInst->mZoneDefPtr->mMode, css.pvp_team, target->css.pvp_team);
+
+		if(actInst->mZoneDefPtr->mMode == GameMode::SPECIAL_EVENT && css.pvp_team != target->css.pvp_team)
 			return true;
+
+
+//		g_Log.AddMessageFormat("REMOVEME no pvp not special event");
+
+		//If we get here, we are not in an area, and not in a team, check the zone itself to see
+		//if PVP is allowed
+		if(actInst != NULL && actInst->mZoneDefPtr != NULL && ( actInst->mZoneDefPtr->mMode == GameMode::PVP || actInst->mZoneDefPtr->mMode == GameMode::PVP_ONLY))
+			return true;
+
+//		g_Log.AddMessageFormat("REMOVEME no pvp not pvp zone");
 	}
+	else {
+//		g_Log.AddMessageFormat("REMOVEME not pvp'ing because either target or source does not have PVP flag");
+	}
+
 
 	/* OLD
 	if(HasStatus(StatusEffects::PVPABLE) == false)
@@ -7899,7 +7920,7 @@ void CreatureInstance :: OnInstanceEnter(const ArenaRuleset &arenaRuleset)
 	if(arenaRuleset.mEnabled == false)
 		return;
 
-	if(arenaRuleset.mPVPStatus == true)
+	if(arenaRuleset.mPVPStatus == GameMode::SPECIAL_EVENT || arenaRuleset.mPVPStatus == GameMode::PVP_ONLY || (arenaRuleset.mPVPStatus != GameMode::PVE_ONLY && charPtr->Mode == GameMode::PVP ) )
 	{
 		_AddStatusList(StatusEffects::PVPABLE, -1);
 
@@ -7916,7 +7937,12 @@ void CreatureInstance :: OnInstanceEnter(const ArenaRuleset &arenaRuleset)
 		simulatorPtr->AttemptSend(GSendBuf, wpos);
 		*/
 	}
+	else
+	{
+		_RemoveStatusList(StatusEffects::PVPABLE);
+	}
 
+	// TODO these mod things seem like a good idea :)
 	return;
 
 	if(arenaRuleset.mTurboRunSpeed == true)
@@ -7963,7 +7989,7 @@ void CreatureInstance :: OnInstanceExit(void)
 {
 	UnHate();
 
-	if(actInst->mZoneDefPtr->mArena == true)
+	if(_HasStatusList(StatusEffects::PVPABLE))
 	{
 		_RemoveStatusList(StatusEffects::PVPABLE);
 		_RemoveStatusList(StatusEffects::UNATTACKABLE);

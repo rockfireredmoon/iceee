@@ -287,6 +287,8 @@ public:
 	
 	PVP::PVPGame *pvpGame;
 
+	int mMode;			// Mode PVP, PVE etc. Defaults to ZoneDef but maybe changed by sage or admin
+
 	ArenaRuleset arenaRuleset;
 
 	UniqueSpawnManager uniqueSpawnManager;

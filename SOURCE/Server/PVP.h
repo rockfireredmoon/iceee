@@ -39,10 +39,12 @@ struct PVPGameState {
 	};
 };
 
-struct PVPTeams {
+namespace PVPTeams {
 	enum Team {
 		NONE = 0, RED = 1, BLUE = 2, YELLOW = 3, GREEN = 4
 	};
+	const char *GetNameByID(int eventID);
+	int GetIDByName(const std::string &eventName);
 };
 
 //

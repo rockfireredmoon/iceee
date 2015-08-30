@@ -1,0 +1,78 @@
+template container Panel(DefaultSkin/MiniMap)
+{
+   metrics_mode pixels
+   material DefaultSkin/MiniMap
+}
+template container Panel(DefaultSkin/MiniMapBorder)
+{
+   metrics_mode pixels
+   material DefaultSkin/MiniMapBorder
+}
+template container Panel(DefaultSkin/MiniMapLocation)
+{
+   metrics_mode pixels
+   material DefaultSkin/MiniMapBackground
+   uv_coords 0.0 0.0 1.0 0.1487
+}
+template container Panel(DefaultSkin/MiniMapPlus)
+{
+   metrics_mode pixels
+   material DefaultSkin/MiniMapPlus
+}
+template container Panel(DefaultSkin/MiniMapMinus)
+{
+   metrics_mode pixels
+   material DefaultSkin/MiniMapMinus
+}
+template container Panel(DefaultSkin/MiniMapPVP)
+{
+   metrics_mode pixels
+   material DefaultSkin/MiniMapPVP
+}
+template container Panel(DefaultSkin/MiniMapPVE)
+{
+   metrics_mode pixels
+   material DefaultSkin/MiniMapPVE
+}
+
+template container Panel(DefaultSkin/MiniMapPVPSelected)
+{
+   metrics_mode pixels
+   material DefaultSkin/MiniMapPVPSelected
+}
+
+template container Panel(DefaultSkin/MiniMapPVESelected)
+{
+   metrics_mode pixels
+   material DefaultSkin/MiniMapPVESelected
+}
+
+template container Panel(DefaultSkin/MiniMapGrove)
+{
+   metrics_mode pixels
+   material DefaultSkin/MiniMapGrove
+}
+
+template container Panel(DefaultSkin/MiniMapGroveSelected)
+{
+   metrics_mode pixels
+   material DefaultSkin/MiniMapGroveSelected
+}
+
+template container Panel(DefaultSkin/MiniMap/MapButtonHolder)
+{
+   metrics_mode pixels
+   material DefaultSkin/MiniMap/MapButtonHolder
+}
+
+template container Panel(DefaultSkin/MiniMap/MapButton)
+{
+   metrics_mode pixels
+   material DefaultSkin/MiniMap/MapButton
+}
+
+template container Panel(DefaultSkin/MiniMap/MapButton/Glow)
+{
+   metrics_mode pixels
+   material DefaultSkin/MiniMap/MapButton/Glow
+}

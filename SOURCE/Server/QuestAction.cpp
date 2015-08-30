@@ -280,7 +280,7 @@ int QuestActionContainer :: ExecuteSingleCommand(SimulatorThread *caller, Extend
 		{
 			char buffer[128];
 			Util::SafeFormat(buffer, sizeof(buffer), e.paramStr.c_str(), cInst->css.display_name);
-			caller->BroadcastMessage(buffer);
+			g_SimulatorManager.BroadcastMessage(buffer);
 		}
 		break;
 	case ACTION_JOIN_GUILD:

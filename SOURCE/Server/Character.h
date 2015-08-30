@@ -176,6 +176,8 @@ public:
 
 	int MaxSidekicks;       //Max number of sidekicks that may be active
 
+	int Mode;				//PVP/PVP mode
+
 	int groveReturnPoint[4];  //x, y, z, zoneID
 	int bindReturnPoint[4];   //x, y, z, zoneID
 	int pvpReturnPoint[4];    //x, y, z, zoneID

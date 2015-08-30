@@ -1,0 +1,305 @@
+material DefaultSkin/MiniMap
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			depth_check off
+			fog_override true
+
+			scene_blend alpha_blend
+
+			texture_unit
+			{
+				texture MiniMap 0
+
+				tex_address_mode clamp
+			}
+
+			texture_unit
+			{
+				texture MiniMapMask.png 0
+				
+				tex_address_mode clamp
+				colour_op modulate
+			}
+		}
+
+	}
+}
+
+material DefaultSkin/MiniMapBorder
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			depth_check off
+			fog_override true
+
+			scene_blend alpha_blend
+
+			texture_unit
+			{
+				texture MainUI-MiniMapBorder.png 0
+				tex_address_mode clamp
+			}
+		}
+	}
+}
+
+material DefaultSkin/MiniMapBackground
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			depth_check off
+			fog_override true
+
+			scene_blend alpha_blend
+
+			texture_unit
+			{
+				texture MainUI-MiniMap.png 0
+				tex_address_mode clamp
+			}
+		}
+	}
+}
+
+material DefaultSkin/MiniMapPlus
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			depth_check off
+			fog_override true
+
+			scene_blend alpha_blend
+
+			texture_unit
+			{
+				texture MainUI-MiniMapZoomIn.png 0
+				tex_address_mode clamp
+			}
+		}
+	}
+}
+
+material DefaultSkin/MiniMapMinus
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			depth_check off
+			fog_override true
+
+			scene_blend alpha_blend
+
+			texture_unit
+			{
+				texture MainUI-MiniMapZoomOut.png 0
+				tex_address_mode clamp
+			}
+		}
+	}
+}
+
+material DefaultSkin/MiniMapPVP
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			depth_check off
+			fog_override true
+
+			scene_blend alpha_blend
+
+			texture_unit
+			{
+				texture MainUI-MiniMapPVP.png 0
+				tex_address_mode clamp
+			}
+		}
+	}
+}
+
+material DefaultSkin/MiniMapPVPSelected
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			depth_check off
+			fog_override true
+
+			scene_blend alpha_blend
+
+			texture_unit
+			{
+				texture MainUI-MiniMapPVPSelected.png 0
+				tex_address_mode clamp
+			}
+		}
+	}
+}
+
+material DefaultSkin/MiniMapPVE
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			depth_check off
+			fog_override true
+
+			scene_blend alpha_blend
+
+			texture_unit
+			{
+				texture MainUI-MiniMapPVE.png 0
+				tex_address_mode clamp
+			}
+		}
+	}
+}
+
+material DefaultSkin/MiniMapPVESelected
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			depth_check off
+			fog_override true
+
+			scene_blend alpha_blend
+
+			texture_unit
+			{
+				texture MainUI-MiniMapPVESelected.png 0
+				tex_address_mode clamp
+			}
+		}
+	}
+}
+
+material DefaultSkin/MiniMapGrove
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			depth_check off
+			fog_override true
+
+			scene_blend alpha_blend
+
+			texture_unit
+			{
+				texture MainUI-MiniMapGrove.png 0
+				tex_address_mode clamp
+			}
+		}
+	}
+}
+
+material DefaultSkin/MiniMapGroveSelected
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			depth_check off
+			fog_override true
+
+			scene_blend alpha_blend
+
+			texture_unit
+			{
+				texture MainUI-MiniMapGroveSelected.png 0
+				tex_address_mode clamp
+			}
+		}
+	}
+}
+
+
+material DefaultSkin/MiniMap/MapButtonHolder
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			depth_check off
+			fog_override true
+
+			scene_blend alpha_blend
+
+			texture_unit
+			{
+				texture MainUI-MiniMap_MapButton_Holder.png 0
+				tex_address_mode clamp
+			}
+		}
+	}
+}
+
+material DefaultSkin/MiniMap/MapButton
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			depth_check off
+			fog_override true
+
+			scene_blend alpha_blend
+
+			texture_unit
+			{
+				texture MainUI-MiniMap_MapButton_Button.png 0
+				tex_address_mode clamp
+			}
+		}
+	}
+}
+
+
+material DefaultSkin/MiniMap/MapButton/Glow
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			depth_check off
+			fog_override true
+
+			scene_blend alpha_blend
+
+			texture_unit
+			{
+				texture MainUI-MiniMap_MapButton_Button_Highlight.png 0
+				tex_address_mode clamp
+			}
+		}
+	}
+}

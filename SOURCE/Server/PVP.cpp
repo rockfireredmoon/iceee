@@ -11,6 +11,38 @@ PVPManager::PVPManager() {
 PVPManager::~PVPManager() {
 }
 
+namespace PVPTeams {
+
+const char *GetNameByID(int id) {
+	switch (id) {
+	case NONE:
+		return "NONE";
+	case RED:
+		return "RED";
+	case BLUE:
+		return "BLUE";
+	case YELLOW:
+		return "YELLOW";
+	case GREEN:
+		return "GREEN";
+	}
+	return "<undefined>";
+}
+
+int GetIDByName(const std::string &name) {
+	if (Util::CaseInsensitiveStringCompare("red", name))
+		return RED;
+	if (Util::CaseInsensitiveStringCompare("blue", name))
+		return BLUE;
+	if (Util::CaseInsensitiveStringCompare("yellow", name))
+		return YELLOW;
+	if (Util::CaseInsensitiveStringCompare("green", name))
+		return GREEN;
+	return NONE;
+}
+
+}
+
 PVPGame * PVPManager::NewGame() {
 	PVPGame * game = new PVPGame(++mNextPVPGameId);
 	mGames[game->mId] = game;

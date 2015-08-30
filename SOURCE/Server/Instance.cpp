@@ -569,6 +569,7 @@ ActiveInstance :: ~ActiveInstance()
 void ActiveInstance :: Clear(void)
 {
 	mZone = 0;
+	mMode = GameMode::PVE;
 	mZoneDefPtr = NULL;
 	mInstanceID = 0;
 	mPlayers = 0;
@@ -2316,6 +2317,7 @@ ActiveInstance * ActiveInstanceManager :: CreateInstance(int zoneID, PlayerInsta
 
 	ActiveInstance newItem;
 	newItem.mInstanceID = GetNewInstanceID();
+	newItem.mMode = zoneDef->mMode;
 	newItem.mZone = zoneDef->mID;
 	newItem.mZoneDefPtr = zoneDef;
 	newItem.dropRateProfile = &zoneDef->GetDropRateProfile();
@@ -2422,9 +2424,13 @@ void ActiveInstance :: InitializeData(void)
 		g_Log.AddMessageFormatW(MSG_DIAG, "Loaded %d world markers.", worldMarkers.WorldMarkerList.size());
 
 	//retPtr->SetScaleConfig(scaleConfigSetting, 47);
+	arenaRuleset.mPVPStatus = mZoneDefPtr->mMode;
 	if(mZoneDefPtr->mArena == true)
 	{
 		arenaRuleset.DebugInit();
+	}
+	if(mZoneDefPtr->mMode != GameMode::PVE_ONLY) {
+		arenaRuleset.mEnabled = true;
 	}
 }
 
@@ -3598,7 +3604,7 @@ void ActiveInstance :: SetAllPlayerPVPStatus(int x, int z, int range, bool state
 {
 	for(size_t i = 0; i < PlayerListPtr.size(); i++)
 	{
-		if(ActiveInstance::GetPointRangeXZ(PlayerListPtr[i], (float)x, (float)z, range) < DISTANCE_FAILED) //Half radius of minimap.
+		if(range == -1 || ActiveInstance::GetPointRangeXZ(PlayerListPtr[i], (float)x, (float)z, range) < DISTANCE_FAILED) //Half radius of minimap.
 		{
 			if(state == true)
 				PlayerListPtr[i]->_AddStatusList(StatusEffects::PVPABLE, -1);

@@ -34,6 +34,7 @@
 #include "Combat.h"
 #include "ConfigString.h"
 #include "GM.h"
+#include "PVP.h"
 #include "QuestScript.h"
 #include "CreditShop.h"
 //#include "restclient.h"
@@ -417,6 +418,8 @@ void SimulatorManager :: FlushHangingSimulators(void)
 
 void SimulatorManager :: BroadcastMessage(const char *message)
 {
+
+	cs.Enter("SimulatorManager::BroadcastMessage");
 	g_Log.AddMessageFormat("Broadcast message '%s'", message);
 	SIMULATOR_IT it;
 	for(it = Simulator.begin(); it != Simulator.end(); ++it)
@@ -434,6 +437,7 @@ void SimulatorManager :: BroadcastMessage(const char *message)
 
 		it->BroadcastMessage(message);
 	}
+	cs.Leave();
 }
 
 SimulatorThread * SimulatorManager :: CreateSimulator(void)
@@ -2726,6 +2730,12 @@ bool SimulatorThread :: HandleQuery(int &PendingData)
 		PendingData = handle_query_script_exec();
 	else if(query.name.compare("script.gc") == 0)
 		PendingData = handle_query_script_gc();
+	else if(query.name.compare("zone.mode") == 0)
+		PendingData = handle_query_zone_mode();
+	else if(query.name.compare("mode") == 0)
+		PendingData = handle_query_mode();
+	else if(query.name.compare("team") == 0)
+		PendingData = handle_query_team();
 	else {
 		g_Log.AddMessageFormat("Unhandled query '%s'.", query.name.c_str());
 		return false;
@@ -2876,7 +2886,7 @@ bool SimulatorThread :: HandleCommand(int &PendingData)
 		if(creatureInst->CurrentTarget.targ != NULL && CheckPermissionSimple(Perm_Account, Permission_Debug) == true)
 		{
 			int dist = ActiveInstance::GetPlaneRange(creatureInst, creatureInst->CurrentTarget.targ, 99999);
-			sprintf(Aux1, "Name: %s (%d), ID: %d, CDef: %d (%d) (D:%d)", creatureInst->CurrentTarget.targ->css.display_name, creatureInst->CurrentTarget.targ->css.level, creatureInst->CurrentTarget.targ->CreatureID, creatureInst->CurrentTarget.targ->CreatureDefID, creatureInst->CurrentTarget.targ->css.health, dist);
+			sprintf(Aux1, "Name: %s (%d), ID: %d, CDef: %d (%d) (D:%d) PVPable: %s", creatureInst->CurrentTarget.targ->css.display_name, creatureInst->CurrentTarget.targ->css.level, creatureInst->CurrentTarget.targ->CreatureID, creatureInst->CurrentTarget.targ->CreatureDefID, creatureInst->CurrentTarget.targ->css.health, dist, creatureInst->CanPVPTarget(creatureInst->CurrentTarget.targ) ? "yes" : "no");
 			wpos += ::PrepExt_SendInfoMessage(SendBuf, Aux1, INFOMSG_INFO);
 		}
 		wpos += PrepExt_QueryResponseString(&SendBuf[wpos], query.ID, "OK");
@@ -13700,7 +13710,7 @@ int SimulatorThread :: handle_command_dtrig(void)
 		if(query.argCount > 1)
 		{
 			const char *message = query.GetString(1);
-			BroadcastMessage(message);
+			g_SimulatorManager.BroadcastMessage(message);
 		}
 		break;
 	case 1000:
@@ -14615,6 +14625,220 @@ int SimulatorThread :: handle_query_script_gc(void)
 	}
 	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
 }
+
+
+
+
+int SimulatorThread :: handle_query_team(void)
+{
+	if(query.argCount > 0) {
+
+		if(pld.accPtr->HasPermission(Perm_Account, Permission_Sage) == false)
+			return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
+
+		CreatureInstance *targ = creatureInst->CurrentTarget.targ;
+		if(targ == NULL) {
+			targ = creatureInst;
+		}
+		else {
+			if(targ->charPtr == NULL)
+				return PrepExt_QueryResponseError(SendBuf, query.ID, "Must select a player.");
+		}
+
+		targ->css.pvp_team = PVP::PVPTeams::GetIDByName(query.GetString(0));
+		if(targ->css.pvp_team == PVP::PVPTeams::NONE)
+			if(targ == creatureInst) {
+				SendInfoMessage("Your are now not in a PVP team.", INFOMSG_INFO);
+			}
+			else {
+				Util::SafeFormat(Aux1, sizeof(Aux1), "%s is now not in PVP team.", targ->css.display_name, PVP::PVPTeams::GetNameByID(targ->css.pvp_team));
+				SendInfoMessage(Aux1, INFOMSG_INFO);
+			}
+		else {
+			if(targ == creatureInst) {
+				Util::SafeFormat(Aux1, sizeof(Aux1), "You are now in the %s team.", PVP::PVPTeams::GetNameByID(targ->css.pvp_team));
+			}
+			else {
+				Util::SafeFormat(Aux1, sizeof(Aux1), "%s is now in the %s team.", targ->css.display_name, PVP::PVPTeams::GetNameByID(targ->css.pvp_team));
+			}
+			SendInfoMessage(Aux1, INFOMSG_INFO);
+		}
+	}
+	else {
+		if(creatureInst->css.pvp_team == PVP::PVPTeams::NONE)
+			SendInfoMessage("Your are not in a PVP team.", INFOMSG_INFO);
+		else {
+			Util::SafeFormat(Aux1, sizeof(Aux1), "You are in the %s team.", PVP::PVPTeams::GetNameByID(creatureInst->css.pvp_team));
+			SendInfoMessage(Aux1, INFOMSG_INFO);
+		}
+	}
+	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
+}
+
+int SimulatorThread :: handle_query_mode(void)
+{
+	if(query.argCount > 0) {
+		if(creatureInst->actInst->mZoneDefPtr->mArena == true)
+			return PrepExt_QueryResponseError(SendBuf, query.ID, "Cannot change PVP mode when in arena.");
+
+
+		if(creatureInst->_HasStatusList(StatusEffects::IN_COMBAT) != -1)
+			return PrepExt_QueryResponseError(SendBuf, query.ID, "Cannot change PVP mode when in combat.");
+
+		std::string mode = query.GetString(0);
+		if(mode.compare("pvp") == 0) {
+			if(creatureInst->actInst->arenaRuleset.mPVPStatus != GameMode::PVE_ONLY) {
+				if(creatureInst->_HasStatusList(StatusEffects::PVPABLE) == -1)
+					creatureInst->_AddStatusList(StatusEffects::PVPABLE, -1);
+			}
+			if(creatureInst->charPtr->Mode == GameMode::PVP) {
+				return PrepExt_QueryResponseError(SendBuf, query.ID, "Default for character is already PVP mode.");
+			}
+			creatureInst->charPtr->Mode = GameMode::PVP;
+			creatureInst->charPtr->pendingChanges++;
+			if(creatureInst->actInst->arenaRuleset.mPVPStatus == GameMode::PVE_ONLY)
+				SendInfoMessage("Default is now PVP mode, but you are in a PVE only zone", INFOMSG_INFO);
+			else
+				SendInfoMessage("Now in PVP mode", INFOMSG_INFO);
+		}
+		else if(mode.compare("pve") == 0) {
+			if(creatureInst->actInst->arenaRuleset.mPVPStatus != GameMode::PVP_ONLY && creatureInst->actInst->arenaRuleset.mPVPStatus != GameMode::SPECIAL_EVENT) {
+				if(creatureInst->_HasStatusList(StatusEffects::PVPABLE) != -1)
+					creatureInst->_RemoveStatusList(StatusEffects::PVPABLE);
+			}
+			if(creatureInst->charPtr->Mode == GameMode::PVE) {
+				return PrepExt_QueryResponseError(SendBuf, query.ID, "Default for character is already PVE mode.");
+			}
+			creatureInst->charPtr->Mode = GameMode::PVE;
+			creatureInst->charPtr->pendingChanges++;
+			if(creatureInst->actInst->arenaRuleset.mPVPStatus == GameMode::PVP_ONLY)
+				SendInfoMessage("Default is now PVE mode, but you are in a PVP only zone so your status will not yet change.", INFOMSG_INFO);
+			else if(creatureInst->actInst->arenaRuleset.mPVPStatus == GameMode::SPECIAL_EVENT)
+				SendInfoMessage("Default is now PVE mode, but a special event is active so your status will not yet change.", INFOMSG_INFO);
+			else
+				SendInfoMessage("Now in PVE mode", INFOMSG_INFO);
+		}
+		else {
+			return PrepExt_QueryResponseError(SendBuf, query.ID, "Invalid parameters.");
+		}
+	}
+	else {
+		if(creatureInst->actInst->mZoneDefPtr->mArena == true)
+			SendInfoMessage("You are in an arena.", INFOMSG_INFO);
+		else {
+			if(creatureInst->actInst->arenaRuleset.mPVPStatus == GameMode::SPECIAL_EVENT) {
+				if(creatureInst->charPtr->Mode == GameMode::PVE) {
+					if(creatureInst->_HasStatusList(StatusEffects::PVPABLE) == -1) {
+						SendInfoMessage("Your are currently in PVE mode and a special event is active.", INFOMSG_INFO);
+					}
+					else {
+						SendInfoMessage("Your are currently in PVE mode during a special event, but have a PVP status.", INFOMSG_INFO);
+					}
+				}
+				else {
+					if(creatureInst->_HasStatusList(StatusEffects::PVPABLE) != -1) {
+						SendInfoMessage("Your are currently in PVP mode during a special event.", INFOMSG_INFO);
+					}
+					else {
+						SendInfoMessage("Your are currently in PVP mode during a special event, but have no PVP status.", INFOMSG_INFO);
+					}
+				}
+			}
+			else {
+				if(creatureInst->charPtr->Mode == GameMode::PVE) {
+					if(creatureInst->_HasStatusList(StatusEffects::PVPABLE) == -1) {
+						SendInfoMessage("Your are currently in PVE mode.", INFOMSG_INFO);
+					}
+					else {
+						SendInfoMessage("Your are currently in PVE mode, but have a PVP status.", INFOMSG_INFO);
+					}
+				}
+				else {
+					if(creatureInst->_HasStatusList(StatusEffects::PVPABLE) != -1) {
+						SendInfoMessage("Your are currently in PVP mode.", INFOMSG_INFO);
+					}
+					else {
+						SendInfoMessage("Your are currently in PVP mode, but have no PVP status.", INFOMSG_INFO);
+					}
+				}
+			}
+		}
+	}
+	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
+}
+
+int SimulatorThread :: handle_query_zone_mode(void)
+{
+	bool ok = CheckPermissionSimple(Perm_Account, Permission_Sage);
+	if(!ok) {
+		if(pld.zoneDef->mGrove == true && pld.zoneDef->mAccountID != pld.accPtr->ID)
+			ok = true;
+	}
+	if(!ok)
+		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
+	ActiveInstance *inst = creatureInst->actInst;
+	if(inst != NULL && query.argCount > 0)
+	{
+		if(inst->mZoneDefPtr->mArena == true)
+			return PrepExt_QueryResponseError(SendBuf, query.ID, "Cannot change area PVP mode.");
+
+		int mode= query.GetInteger(0);
+
+		inst->mZoneDefPtr->mMode = mode;
+		inst->arenaRuleset.mEnabled = inst->mZoneDefPtr->mMode != GameMode::PVE_ONLY;
+		creatureInst->actInst->arenaRuleset.mPVPStatus = mode;
+
+
+		cs.Enter("Simulator::SetZoneMode");
+
+		switch(mode) {
+		case GameMode::PVP:
+			for (std::vector<CreatureInstance*>::iterator it=inst->PlayerListPtr.begin(); it!=inst->PlayerListPtr.end(); ++it) {
+				if((*it)->charPtr->Mode == GameMode::PVP && (*it)->_HasStatusList(StatusEffects::PVPABLE) == -1)
+					(*it)->_AddStatusList(StatusEffects::PVPABLE, -1);
+			}
+			Util::SafeFormat(Aux1, sizeof(Aux1), "%s is now a PVP zone", inst->mZoneDefPtr->mName.c_str());
+			break;
+		case GameMode::PVP_ONLY:
+			for (std::vector<CreatureInstance*>::iterator it=inst->PlayerListPtr.begin(); it!=inst->PlayerListPtr.end(); ++it) {
+				if((*it)->_HasStatusList(StatusEffects::PVPABLE) == -1)
+					(*it)->_AddStatusList(StatusEffects::PVPABLE, -1);
+			}
+			Util::SafeFormat(Aux1, sizeof(Aux1), "%s is now a PVP only zone", inst->mZoneDefPtr->mName.c_str());
+			break;
+		case GameMode::PVE_ONLY:
+			for (std::vector<CreatureInstance*>::iterator it=inst->PlayerListPtr.begin(); it!=inst->PlayerListPtr.end(); ++it) {
+				if((*it)->_HasStatusList(StatusEffects::PVPABLE) != -1)
+					(*it)->_RemoveStatusList(StatusEffects::PVPABLE);
+			}
+			Util::SafeFormat(Aux1, sizeof(Aux1), "%s is now a PVE only zone", inst->mZoneDefPtr->mName.c_str());
+			break;
+		case GameMode::SPECIAL_EVENT:
+			for (std::vector<CreatureInstance*>::iterator it=inst->PlayerListPtr.begin(); it!=inst->PlayerListPtr.end(); ++it) {
+				if((*it)->_HasStatusList(StatusEffects::PVPABLE) == -1)
+					(*it)->_AddStatusList(StatusEffects::PVPABLE, -1);
+			}
+			Util::SafeFormat(Aux1, sizeof(Aux1), "%s is now a special event zone!", inst->mZoneDefPtr->mName.c_str());
+			break;
+		default:
+			for (std::vector<CreatureInstance*>::iterator it=inst->PlayerListPtr.begin(); it!=inst->PlayerListPtr.end(); ++it) {
+				if((*it)->charPtr->Mode == GameMode::PVE && (*it)->_HasStatusList(StatusEffects::PVPABLE) != -1)
+					(*it)->_RemoveStatusList(StatusEffects::PVPABLE);
+			}
+			Util::SafeFormat(Aux1, sizeof(Aux1), "%s is now a PVE zone", inst->mZoneDefPtr->mName.c_str());
+			break;
+		}
+
+		cs.Leave();
+
+		g_SimulatorManager.BroadcastMessage(Aux1);
+
+		return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
+	}
+	else
+		return PrepExt_QueryResponseError(SendBuf, query.ID, "No mode.");
+}
+
 
 int SimulatorThread :: handle_query_script_exec(void)
 {
