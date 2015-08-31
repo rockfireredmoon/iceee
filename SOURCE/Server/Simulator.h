@@ -581,7 +581,7 @@ public:
 
 	//std::vector<SimulatorThread*> regList;
 	std::vector<ThreadRequest*> regList;
-	
+
 	std::list<SimulatorThread> simList;  //List of Simulator objects.
 
 	int nextSimulatorID;

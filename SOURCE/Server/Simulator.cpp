@@ -203,6 +203,7 @@ SimulatorManager :: SimulatorManager()
 	cs.notifyWait = false;
 	cs.Init();
 	nextFlushTime = 0;
+
 }
 
 SimulatorManager :: ~SimulatorManager()
