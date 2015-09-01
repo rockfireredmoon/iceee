@@ -221,6 +221,7 @@ MAPNAME=Maps-Europe
 REGIONS=Terrain-Europe/Europe_Regions.png
 ShardName=Europe 1
 WarpName=Europe
+Mode=1
 Persist=1
 DefLoc=29560,214,65552
 PageSize=750
@@ -890,6 +891,7 @@ Persist=1
 DefLoc=43330,263,67880
 PageSize=1000
 EnvironmentCycle=1
+Mode=1
 
 
 [ENTRY]

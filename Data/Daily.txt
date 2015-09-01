@@ -73,14 +73,14 @@ Day	MinLevel	MaxLevel		ItemID	Type	Data
 8	0	999	7861	VIRTUAL	2:dailyreward:7,8,9,10,11,12,13,14,15,16
 8	0	999	7861	CREDITS	5
 
-; On day 7, we give out 5 credits, and a random weapon for the
+; On day 9, we give out 5 credits, and a random weapon for the
 ; players level. This uses the 'dailyreward' drop rate profile to determine the rarity
 ; and stats, so the item will be ONLY UNCOMMON
 
 9	0	999	7861	VIRTUAL	2:dailyreward:1/2,4/8,5/3,5/4,6/5|6|7
 9	0	999	7861	CREDITS	5
 
-; On day 8, we give out 50 credits, and a random item (weapon or armour) for
+; On day 10, we give out 50 credits, and a random item (weapon or armour) for
 ; players level. This uses the 'weeklyreward' drop rate profile to determine the rarity
 ; and stats. This has a high chance of rare, and a low chance of an epic.
 10	0	999	7861	VIRTUAL	2:weeklyreward:ANY
