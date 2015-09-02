@@ -425,6 +425,10 @@ void LoadConfig(const char *filename)
 				g_Config.PersistentBuffs = lfr.BlockToBool(1);
 			else if(strcmp(NameBlock, "AccountCredits") == 0)
 				g_Config.AccountCredits = lfr.BlockToBool(1);
+			else if(strcmp(NameBlock, "MinPVPPlayerLootItems") == 0)
+				g_Config.MinPVPPlayerLootItems = lfr.BlockToIntC(1);
+			else if(strcmp(NameBlock, "MaxPVPPlayerLootItems") == 0)
+				g_Config.MaxPVPPlayerLootItems = lfr.BlockToIntC(1);
 			else if(strcmp(NameBlock, "NameChangeCost") == 0)
 				g_Config.NameChangeCost = lfr.BlockToInt(1);
 			else if(strcmp(NameBlock, "SSLVerifyPeer") == 0)
@@ -652,6 +656,8 @@ GlobalConfigData :: GlobalConfigData()
 
 	AccountCredits = true;
 	NameChangeCost = 300;
+	MinPVPPlayerLootItems = 0;
+	MaxPVPPlayerLootItems = 0;
 
 	SSLVerifyPeer = true;
 	SSLVerifyHostname = true;

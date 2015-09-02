@@ -197,6 +197,8 @@ public:
 
 	bool AccountCredits;				// If true, credits will be stored at the account level rather than per character and shared across all characters
 	unsigned int NameChangeCost;					// Number of credits a last name change costs
+	unsigned int MinPVPPlayerLootItems;				// Minimum number of items that will be dropped by the player after a PVP fight
+	unsigned int MaxPVPPlayerLootItems;				// Minimum number of items that will be dropped by the player after a PVP fight
 
 	std::string GitHubToken;			// GitHub personal access token for bug reports
 

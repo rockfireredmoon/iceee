@@ -2870,54 +2870,64 @@ void CreatureInstance :: ProcessDeath(void)
 
 				if(pvpAttackers.size() > 0) {
 
-					/* Create a temporary creature for the loot. This allows the loot to live after
-					 * the player has respawned (and some other issues)
-					 */
-					CreatureInstance* lootInst = actInst->SpawnGeneric(7861, CurrentX, CurrentY, CurrentZ, 0, 0);
-					lootInst->deathTime = g_ServerTime;
-					lootInst->PrepareDeath();
-
-					// Pick a random item from the players inventory
-					InventoryManager *origInv = &charPtr->inventory;
-					if(origInv->CountUsedSlots(INV_CONTAINER) == 0) {
-						// Player has nothing to loot
-						g_Log.AddMessageFormat("Player %s has nothing to loot", css.display_name);
-						return;
-					}
-					InventorySlot *slot = origInv->PickRandomItem(INV_CONTAINER);
-
-					int toLoot = 1;
-
-					// If the slot is a stack, pick a random amount to lose, up to the maximum of 16 (which is max in a chest anyway)
-					if(slot->count > 1) {
-						toLoot = randmodrng(0, slot->count);
-						if(toLoot > 16) {
-							toLoot = 16;
-						}
-					}
-
-					ActiveLootContainer loot;
-					loot.CreatureID = lootInst->CreatureID;
-					for(int i = 0 ; i < toLoot; i++)
-						loot.AddItem(slot->IID);
-					lootInst->activeLootID = actInst->lootsys.AttachLootToCreature(loot, lootInst->CreatureID);
-
-					// Add all PVP attackets as looting creatures as well as the player themselves so they can retrieve the loot if the attacker doesn't take
-					lootInst->AddLootableID(CreatureDefID);
-					for(std::vector<CreatureInstance*>::iterator it = pvpAttackers.begin(); it != pvpAttackers.end(); ++it) {
-						lootInst->AddLootableID((*it)->CreatureDefID);
-					}
-
-					// Send loot updates
-					if(lootInst->activeLootID != 0) {
-						lootInst->SendUpdatedLoot();
-					}
-
-					// Remove from player
 					char buffer[2048];
-					int len = origInv->RemoveItemsAndUpdate(INV_CONTAINER, slot->IID, toLoot, buffer);
-					if(len > 0)
-						simulatorPtr->AttemptSend(buffer, len);
+
+					// Pick how many items will be dropped
+					int items = randmodrng(g_Config.MinPVPPlayerLootItems, g_Config.MaxPVPPlayerLootItems + 1);
+
+					if(items > 0) {
+
+						/* Create a temporary creature for the loot. This allows the loot to live after
+						 * the player has respawned (and solves some other issues)
+						 */
+						CreatureInstance* lootInst = actInst->SpawnGeneric(7861, CurrentX, CurrentY, CurrentZ, 0, 0);
+						lootInst->deathTime = g_ServerTime;
+						lootInst->PrepareDeath();
+
+						// Pick a random item from the players inventory
+						InventoryManager *origInv = &charPtr->inventory;
+
+						ActiveLootContainer loot;
+						loot.CreatureID = lootInst->CreatureID;
+
+						for(int i = 0 ; i < items; i++) {
+							if(origInv->CountUsedSlots(INV_CONTAINER) == 0) {
+								// Player has nothing to loot
+								break;
+							}
+							InventorySlot *slot = origInv->PickRandomItem(INV_CONTAINER);
+
+							int toLoot = 1;
+
+							// If the slot is a stack, pick a random amount to lose, up to the maximum of 16 (which is max in a chest anyway)
+							if(slot->count > 1) {
+								toLoot = randmodrng(0, slot->count);
+							}
+
+
+							for(int i = 0 ; i < toLoot && loot.itemList.size() < 16; i++)
+								loot.AddItem(slot->IID);
+
+							// Remove from player
+							int len = origInv->RemoveItemsAndUpdate(INV_CONTAINER, slot->IID, toLoot, buffer);
+							if(len > 0)
+								simulatorPtr->AttemptSend(buffer, len);
+						}
+
+						lootInst->activeLootID = actInst->lootsys.AttachLootToCreature(loot, lootInst->CreatureID);
+
+						// Add all PVP attackets as looting creatures as well as the player themselves so they can retrieve the loot if the attacker doesn't take
+						lootInst->AddLootableID(CreatureDefID);
+						for(std::vector<CreatureInstance*>::iterator it = pvpAttackers.begin(); it != pvpAttackers.end(); ++it) {
+							lootInst->AddLootableID((*it)->CreatureDefID);
+						}
+
+						// Send loot updates
+						if(lootInst->activeLootID != 0) {
+							lootInst->SendUpdatedLoot();
+						}
+
+					}
 
 				}
 			}
