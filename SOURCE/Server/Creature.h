@@ -478,6 +478,8 @@ public:
 	void ApplyRawDamage(int amount);
 	void CheckFallDamage(int elevation);
 
+	bool IsValidForPVP(void);
+
 	//These functions operate on "activeStatusEffect"
 	int _HasStatusList(int statusID);
 	void _AddStatusList(int statusID, long msDuration);

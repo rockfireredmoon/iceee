@@ -569,7 +569,7 @@ ActiveInstance :: ~ActiveInstance()
 void ActiveInstance :: Clear(void)
 {
 	mZone = 0;
-	mMode = GameMode::PVE;
+	mMode = PVP::GameMode::PVE_ONLY;
 	mZoneDefPtr = NULL;
 	mInstanceID = 0;
 	mPlayers = 0;
@@ -2429,7 +2429,7 @@ void ActiveInstance :: InitializeData(void)
 	{
 		arenaRuleset.DebugInit();
 	}
-	if(mZoneDefPtr->mMode != GameMode::PVE_ONLY) {
+	if(mZoneDefPtr->mMode != PVP::GameMode::PVE_ONLY) {
 		arenaRuleset.mEnabled = true;
 	}
 }

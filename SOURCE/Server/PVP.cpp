@@ -43,6 +43,39 @@ int GetIDByName(const std::string &name) {
 
 }
 
+namespace GameMode {
+
+const char *GetNameByID(int id) {
+	switch (id) {
+	case PVE:
+		return "PVE";
+	case PVP:
+		return "PVP";
+	case PVE_ONLY:
+		return "PVE Only";
+	case PVP_ONLY:
+		return "PVP Only";
+	case SPECIAL_EVENT:
+		return "Special Event";
+	}
+	return "<undefined>";
+}
+
+int GetIDByName(const std::string &name) {
+	if (Util::CaseInsensitiveStringCompare("pve", name))
+		return PVE;
+	if (Util::CaseInsensitiveStringCompare("pvp", name))
+		return PVP;
+	if (Util::CaseInsensitiveStringCompare("pveonly", name) || Util::CaseInsensitiveStringCompare("pve_only", name))
+		return PVE_ONLY;
+	if (Util::CaseInsensitiveStringCompare("pvponly", name) || Util::CaseInsensitiveStringCompare("pvp_only", name))
+			return PVP_ONLY;
+	if (Util::CaseInsensitiveStringCompare("special", name))
+		return SPECIAL_EVENT;
+	return PVE_ONLY;
+}
+
+}
 PVPGame * PVPManager::NewGame() {
 	PVPGame * game = new PVPGame(++mNextPVPGameId);
 	mGames[game->mId] = game;

@@ -2,6 +2,7 @@
 #include "Util.h"
 #include "Stats.h"
 #include "Globals.h"
+#include "PVP.h"
 
 ArenaRule :: ArenaRule()
 {
@@ -110,7 +111,7 @@ bool ArenaRule :: GetStatApplyLimits(int inStatID, float &outMin, float &outMax)
 ArenaRuleset :: ArenaRuleset()
 {
 	mEnabled = false;
-	mPVPStatus = GameMode::PVE;
+	mPVPStatus = PVP::GameMode::PVE_ONLY;
 	mTurboRunSpeed = false;
 }
 
@@ -121,7 +122,7 @@ ArenaRuleset :: ~ArenaRuleset()
 void ArenaRuleset :: DebugInit(void)
 {
 	mEnabled = true;
-	mPVPStatus =  GameMode::PVP_ONLY;
+	mPVPStatus =  PVP::GameMode::PVP_ONLY;
 	mTurboRunSpeed = true;
 
 	//mRuleList.push_back(ArenaRule("RULE_MOD_CLASS|KR|psyche|500|APPLY_ADDITIVE"));

@@ -29,18 +29,6 @@ extern const char * StatusPhaseStrings[];
 // TAKEN FROM SERVERVARS.H
 
 
-namespace GameMode
-{
-	enum Enum
-	{
-		PVE = 0,
-		PVP = 1,
-		PVP_ONLY = 2,
-		PVE_ONLY = 3,
-		SPECIAL_EVENT = 4
-	};
-}
-
 enum CreatureUpdateEnum
 {
 	CREATURE_UPDATE_TYPE = 1,

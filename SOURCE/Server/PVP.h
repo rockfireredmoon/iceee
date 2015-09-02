@@ -30,6 +30,20 @@ struct PVPUpdateFlag {
 	};
 };
 
+namespace GameMode
+{
+	enum Enum
+	{
+		PVE = 0,
+		PVP = 1,
+		PVP_ONLY = 2,
+		PVE_ONLY = 3,
+		SPECIAL_EVENT = 4
+	};
+	const char *GetNameByID(int eventID);
+	int GetIDByName(const std::string &eventName);
+}
+
 struct PVPGameState {
 	enum State {
 		WAITING_TO_START = 0,

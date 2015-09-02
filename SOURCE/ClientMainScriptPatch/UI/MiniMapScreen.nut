@@ -21,7 +21,7 @@ class Screens.MiniMapScreen extends GUI.Component
 	mPVEModeButton = null;
 	mCheckDistanceEvent = null;
 	mGroveButton = null;
-	mPVP = false;
+	mPVPRadioGroup = null;
 	
 	static TOOLTIP_SIZE = 10;
 	static LOCATION_HEIGHT = 19;
@@ -88,10 +88,13 @@ class Screens.MiniMapScreen extends GUI.Component
 		mZoomOutButton.setTooltip("Zoom Out");
 		zhack.add(mZoomOutButton);
 		
+		mPVPRadioGroup = this.GUI.RadioGroup();
+		
 		mPVPModeButton = GUI.ImageButton();
+		mPVPModeButton.setRadioGroup(mPVPRadioGroup);
 		mPVPModeButton.setAppearance("MiniMapPVP");
-		mPVPModeButton.setGlowEnabled(false);
-		mPVPModeButton.setPressMessage("onPVP");
+		mPVPModeButton.setGlowImageName("MiniMapPVPSelected");
+		mPVPModeButton.setPressMessage("onPVPPressed");
 		mPVPModeButton.addActionListener(this);
 		mPVPModeButton.setPosition(133, 118);
 		mPVPModeButton.setSize(22, 22);
@@ -99,9 +102,10 @@ class Screens.MiniMapScreen extends GUI.Component
 		zhack.add(mPVPModeButton);
 		
 		mPVEModeButton = GUI.ImageButton();
-		mPVEModeButton.setAppearance("MiniMapPVESelected");
-		mPVEModeButton.setGlowEnabled(false);
-		mPVEModeButton.setPressMessage("onPVE");
+		mPVEModeButton.setRadioGroup(mPVPRadioGroup);
+		mPVEModeButton.setAppearance("MiniMapPVE");
+		mPVEModeButton.setGlowImageName("MiniMapPVESelected");
+		mPVEModeButton.setPressMessage("onPVEPressed");
 		mPVEModeButton.addActionListener(this);
 		mPVEModeButton.setPosition(147, 96);
 		mPVEModeButton.setSize(22, 22);
@@ -151,18 +155,13 @@ class Screens.MiniMapScreen extends GUI.Component
 		setPVP(creature.hasStatusEffect(StatusEffects.PVPABLE));
 	}
 	
+	function isPVP() {
+		return mPVPRadioGroup.getSelected() == mPVPModeButton;
+	}
+	
 	function setPVP(pvp) {
-		if(pvp != mPVP) {
-			mPVP = pvp;
-			if(mPVP) {
-				mPVPModeButton.setAppearance("MiniMapPVPSelected");
-				mPVEModeButton.setAppearance("MiniMapPVE");
-			}
-			else {
-				mPVPModeButton.setAppearance("MiniMapPVP");
-				mPVEModeButton.setAppearance("MiniMapPVESelected");
-			}
-		}
+		print("ICE! Set PVP to " + pvp + " " + isPVP() + "\n");
+		mPVPRadioGroup.setSelected(pvp ? mPVPModeButton : mPVEModeButton);
 	}
 
 	function toggleMode() {
@@ -261,13 +260,15 @@ class Screens.MiniMapScreen extends GUI.Component
 		::_Connection.sendQuery("grove", this, []);
 	}
 
-	function onPVP( pButton ) {
+	function onPVPPressed( pButton ) {
+		print("ICE! Selecting PVP " + pButton  + " against : " + mPVPRadioGroup.getSelected() + " = " + isPVP() + "\n");
 		::_Connection.sendQuery("mode", this, [
 			"pvp"
 		]);
 	}
-
-	function onPVE( pButton ) {
+	
+	function onPVEPressed( pButton ) {
+		print("ICE! Selecting PVE " + pButton  + " against : " + mPVPRadioGroup.getSelected() + " = " + isPVP() + "\n");
 		::_Connection.sendQuery("mode", this, [
 			"pve"
 		]);

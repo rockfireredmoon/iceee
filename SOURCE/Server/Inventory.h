@@ -69,7 +69,7 @@ public:
 	InventoryManager();
 	~InventoryManager();
 	std::vector<InventorySlot> containerList[MAXCONTAINER];
-	int MaxContainerSlot[MAXCONTAINER];
+	unsigned int MaxContainerSlot[MAXCONTAINER];
 
 	int buybackSlot;
 
@@ -107,8 +107,10 @@ public:
 	unsigned int GetCCSIDFromHexID(const char *hexStr);
 
 	int GetFreeSlot(int containerID);
+	int CountUsedSlots(int containerID);
 	int CountFreeSlots(int containerID);
 	void CountInventorySlots(void);
+	InventorySlot * PickRandomItem(int containerID);
 	int GetItemCount(int containerID, int itemID);
 	InventorySlot * GetFirstItem(int containerID, int itemID);
 

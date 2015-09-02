@@ -3,6 +3,7 @@
 #include "FileReader3.h"
 #include "StringList.h"
 #include "Config.h"
+#include "PVP.h"
 #include "Util.h"
 #include "Audit.h"  //For scenery audits.
 #include "InstanceScale.h"
@@ -223,7 +224,7 @@ void ZoneDefInfo :: Clear(void)
 	mPlayerFilterType = FILTER_PLAYER_NONE;
 	mPlayerFilterID.clear();
 
-	mMode = GameMode::PVE_ONLY;
+	mMode = PVP::GameMode::PVE_ONLY;
 
 	mDropRateProfile.clear();
 
@@ -256,6 +257,7 @@ void ZoneDefInfo :: CopyFrom(const ZoneDefInfo& other)
 	mGrove = other.mGrove;
 	mGuildHall = other.mGuildHall;
 	mArena = other.mArena;
+	mMode = other.mMode;
 	mAudit = other.mAudit;
 	mEnvironmentCycle = other.mEnvironmentCycle;
 	mMaxAggroRange = other.mMaxAggroRange;
@@ -391,6 +393,7 @@ void ZoneDefInfo :: SaveToStream(FILE *output)
 	Util::WriteString(output, "ENVIRONMENTTYPE", mEnvironmentType);
 	Util::WriteString(output, "MAPNAME", mMapName);
 	Util::WriteString(output, "REGIONS", mRegions);
+	Util::WriteIntegerIfNot(output, "Mode", mPageSize, PVP::GameMode::PVE_ONLY);
 	Util::WriteString(output, "ShardName", mShardName);
 	Util::WriteString(output, "GroveName", mGroveName);
 	Util::WriteString(output, "WarpName", mWarpName);
@@ -725,6 +728,8 @@ int ZoneDefManager :: LoadFile(const char *fileName)
 					newItem.mGroveName = lfr.BlockToStringC(1, 0);
 				else if(strcmp(lfr.SecBuffer, "WARPNAME") == 0)
 					newItem.mWarpName = lfr.BlockToStringC(1, 0);
+				else if(strcmp(lfr.SecBuffer, "MODE") == 0)
+					newItem.mMode = lfr.BlockToIntC(1);
 				else if(strcmp(lfr.SecBuffer, "PAGESIZE") == 0)
 					newItem.mPageSize = lfr.BlockToIntC(1);
 				else if(strcmp(lfr.SecBuffer, "MAXAGGRORANGE") == 0)

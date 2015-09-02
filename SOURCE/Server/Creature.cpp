@@ -29,6 +29,7 @@
 #include "ConfigString.h"
 #include "Guilds.h"
 #include "Stats.h"
+#include "Util.h"
 
 #include "Debug.h"
 #include "Report.h"
@@ -846,10 +847,15 @@ int CreatureInstance :: GetResistedDamage(int resistRating, int damageAmount)
 	return damageAmount;
 }
 
+bool CreatureInstance :: IsValidForPVP(void)
+{
+	return ( serverFlags & ServerFlags::IsPlayer ) && actInst->mMode != PVP::GameMode::PVE_ONLY && _HasStatusList(StatusEffects::PVPABLE) != -1;
+}
+
 HateProfile* CreatureInstance :: GetHateProfile(void)
 {
 	if(hateProfilePtr == NULL)
-		if(!(serverFlags & ServerFlags::IsPlayer))
+		if(!(serverFlags & ServerFlags::IsPlayer) || IsValidForPVP())
 			hateProfilePtr = actInst->hateProfiles.GetProfile();
 	return hateProfilePtr;
 }
@@ -1015,7 +1021,7 @@ void CreatureInstance :: OnApplyDamage(CreatureInstance *attacker, int amount)
 		return;
 	//Players are not given hate profiles, since they have no use for them.
 	//Experience and objectives are based on enemy kills, not players.
-	if(!(serverFlags & ServerFlags::IsPlayer))
+	if(!(serverFlags & ServerFlags::IsPlayer) || IsValidForPVP())
 	{
 		HateProfile *hprof = GetHateProfile();
 		if(hprof != NULL)
@@ -2790,6 +2796,8 @@ void CreatureInstance :: ProcessDeath(void)
 	CREATURE_SEARCH attackerList;
 	ResolveAttackers(attackerList);
 
+	HateProfile *hate = GetHateProfile();
+
 	PrepareDeath();
 
 	//Process PVP
@@ -2836,28 +2844,107 @@ void CreatureInstance :: ProcessDeath(void)
 
 		//Get highest level from the hate profile.
 		int highestLev = 0;
-		if(hateProfilePtr != NULL)
-			highestLev = hateProfilePtr->GetHighestLevel();
+		if(hate != NULL)
+			highestLev = hate->GetHighestLevel();
 
 		if(attackerList.size() > 0)
 			highestLev = GetHighestLevel(attackerList);
 
-		CreateLoot(highestLev);
+
+		/* Players can only be looted if they are in PVP mode, the attacker is in PVP
+		 * mode and the zone is not an arena
+		 */
+		if(serverFlags & ServerFlags::IsPlayer) {
+			/* This is a player death, determine if they were killed during PVP way. Loot
+			 * is not given in arenas
+			 */
+			std::vector<CreatureInstance*> pvpAttackers;
+
+			if(charPtr->Mode == PVP::GameMode::PVP && !actInst->mZoneDefPtr->mArena) {
+				for(size_t i = 0; i < attackerList.size(); i++)	{
+					CreatureInstance *attacker = attackerList[i].ptr;
+					if(attacker->charPtr->Mode == PVP::GameMode::PVP) {
+						pvpAttackers.push_back(attacker);
+					}
+				}
+
+				if(pvpAttackers.size() > 0) {
+
+					/* Create a temporary creature for the loot. This allows the loot to live after
+					 * the player has respawned (and some other issues)
+					 */
+					CreatureInstance* lootInst = actInst->SpawnGeneric(7861, CurrentX, CurrentY, CurrentZ, 0, 0);
+					lootInst->deathTime = g_ServerTime;
+					lootInst->PrepareDeath();
+
+					// Pick a random item from the players inventory
+					InventoryManager *origInv = &charPtr->inventory;
+					if(origInv->CountUsedSlots(INV_CONTAINER) == 0) {
+						// Player has nothing to loot
+						g_Log.AddMessageFormat("Player %s has nothing to loot", css.display_name);
+						return;
+					}
+					InventorySlot *slot = origInv->PickRandomItem(INV_CONTAINER);
+
+					int toLoot = 1;
+
+					// If the slot is a stack, pick a random amount to lose, up to the maximum of 16 (which is max in a chest anyway)
+					if(slot->count > 1) {
+						toLoot = randmodrng(0, slot->count);
+						if(toLoot > 16) {
+							toLoot = 16;
+						}
+					}
+
+					ActiveLootContainer loot;
+					loot.CreatureID = lootInst->CreatureID;
+					for(int i = 0 ; i < toLoot; i++)
+						loot.AddItem(slot->IID);
+					lootInst->activeLootID = actInst->lootsys.AttachLootToCreature(loot, lootInst->CreatureID);
+
+					// Add all PVP attackets as looting creatures as well as the player themselves so they can retrieve the loot if the attacker doesn't take
+					lootInst->AddLootableID(CreatureDefID);
+					for(std::vector<CreatureInstance*>::iterator it = pvpAttackers.begin(); it != pvpAttackers.end(); ++it) {
+						lootInst->AddLootableID((*it)->CreatureDefID);
+					}
+
+					// Send loot updates
+					if(lootInst->activeLootID != 0) {
+						lootInst->SendUpdatedLoot();
+					}
+
+					// Remove from player
+					char buffer[2048];
+					int len = origInv->RemoveItemsAndUpdate(INV_CONTAINER, slot->IID, toLoot, buffer);
+					if(len > 0)
+						simulatorPtr->AttemptSend(buffer, len);
+
+				}
+			}
+		}
+		else {
+			// Ordinary creature
+			CreateLoot(highestLev);
+		}
 
 		// Calculate how many credits should be awarded if the creature 'drops' them.
 		int credits = 0;
 		char buf[256];
 
 		int creditDrops = 0;
-		CreatureDefinition *cdef = CreatureDef.GetPointerByCDef(CreatureDefID);
-		if(cdef != NULL)
-		{
-			if(cdef->IsNamedMob()) {
-				creditDrops = g_Config.NamedMobCreditDrops;
+
+		// Players don't drop credits
+		if(!(serverFlags & ServerFlags::IsPlayer)) {
+			CreatureDefinition *cdef = CreatureDef.GetPointerByCDef(CreatureDefID);
+			if(cdef != NULL)
+			{
+				if(cdef->IsNamedMob()) {
+					creditDrops = g_Config.NamedMobCreditDrops;
+				}
 			}
-		}
-		if(css.credit_drops > 0) {
-			creditDrops = css.credit_drops;
+			if(css.credit_drops > 0) {
+				creditDrops = css.credit_drops;
+			}
 		}
 
 		if(creditDrops > 0) {
@@ -2899,31 +2986,28 @@ void CreatureInstance :: ProcessDeath(void)
 			if(attacker->HasStatus(StatusEffects::DEAD) == false)
 			{
 				attacker->CheckQuestKill(this);
-				int exp = GetKillExperience(highestLev);
 
-				// Adjust for XP times
-				// Shouldn't be needed now a tome is an ability+time limited item
-				ItemDef * xpTomeDef = attacker->charPtr->inventory.GetBestSpecialItem(GetContainerIDFromName("inv"), XP_BOOST);
-//				if(xpTomeDef != NULL) {
-//					exp += Util::GetAdditiveFromIntegralPercent100(exp, xpTomeDef->mIvMax1);
-//				}
+				if(!(serverFlags & ServerFlags::IsPlayer)) {
+					// Only NPC deaths get experience, not PVP
+					int exp = GetKillExperience(highestLev);
 
-				// Adjust for other XP bonuses
-				if(attacker->css.experience_gain_rate > 0) {
-					exp += Util::GetAdditiveFromIntegralPercent100(exp, attacker->css.experience_gain_rate);
-				}
+					// Adjust for other XP bonuses
+					if(attacker->css.experience_gain_rate > 0) {
+						exp += Util::GetAdditiveFromIntegralPercent100(exp, attacker->css.experience_gain_rate);
+					}
 
-				//If a party member, don't give experience if players are too far
-				//below the mob level.
-				if(attackerList[i].attacked == 0)
-					if(attacker->css.level < css.level - 5)
-						exp = 1;
+					//If a party member, don't give experience if players are too far
+					//below the mob level.
+					if(attackerList[i].attacked == 0)
+						if(attacker->css.level < css.level - 5)
+							exp = 1;
 
-				attacker->AddExperience(exp);
-				if(credits > 0) {
-					attacker->AddCredits(credits);
-					int wpos = PrepExt_SendInfoMessage(GSendBuf, buf, INFOMSG_INFO);
-					attacker->simulatorPtr->AttemptSend(GSendBuf, wpos);
+					attacker->AddExperience(exp);
+					if(credits > 0) {
+						attacker->AddCredits(credits);
+						int wpos = PrepExt_SendInfoMessage(GSendBuf, buf, INFOMSG_INFO);
+						attacker->simulatorPtr->AttemptSend(GSendBuf, wpos);
+					}
 				}
 
 				if(attackerList[i].attacked == 1)
@@ -2969,22 +3053,24 @@ int CreatureInstance :: GetHighestLevel(CREATURE_SEARCH& creatureList)
 
 void CreatureInstance :: ResolveAttackers(CREATURE_SEARCH& results)
 {
+	HateProfile *hate = GetHateProfile();
+
 	//Search the hate profile attached to this creature, building a list of players
 	//that have attacked this creature.  If the player is in a party, search through
 	//party members to see which ones are in range and add those as well.
-	if(hateProfilePtr == NULL)
+	if(hate == NULL)
 		return;
 
 	int instance = actInst->mInstanceID;
 
 	std::vector<int> partyID;
-	for(size_t i = 0; i < hateProfilePtr->hateList.size(); i++)
+	for(size_t i = 0; i < hate->hateList.size(); i++)
 	{
-		int CDefID = hateProfilePtr->hateList[i].CDefID;
+		int CDefID = hate->hateList[i].CDefID;
 		CreatureInstance *lookup = actInst->GetPlayerByCDefID(CDefID);
 		if(lookup == NULL)
 			continue;
-		int attacked = (hateProfilePtr->hateList[i].damage > (lookup->GetMaxHealth(false) / 10));
+		int attacked = (hate->hateList[i].damage > (lookup->GetMaxHealth(false) / 10));
 		AddCreaturePointer(results, lookup, attacked);
 		if(lookup->PartyID == 0)
 			continue;
@@ -3661,7 +3747,7 @@ bool CreatureInstance :: CanPVPTarget(CreatureInstance *target)
 
 //		g_Log.AddMessageFormat("REMOVEME zone mode is %d, team 1 is %d and team 2 is %d", actInst->mZoneDefPtr->mMode, css.pvp_team, target->css.pvp_team);
 
-		if(actInst->mZoneDefPtr->mMode == GameMode::SPECIAL_EVENT && css.pvp_team != target->css.pvp_team)
+		if(actInst->mZoneDefPtr->mMode == PVP::GameMode::SPECIAL_EVENT && css.pvp_team != target->css.pvp_team)
 			return true;
 
 
@@ -3669,7 +3755,7 @@ bool CreatureInstance :: CanPVPTarget(CreatureInstance *target)
 
 		//If we get here, we are not in an area, and not in a team, check the zone itself to see
 		//if PVP is allowed
-		if(actInst != NULL && actInst->mZoneDefPtr != NULL && ( actInst->mZoneDefPtr->mMode == GameMode::PVP || actInst->mZoneDefPtr->mMode == GameMode::PVP_ONLY))
+		if(actInst != NULL && actInst->mZoneDefPtr != NULL && ( actInst->mZoneDefPtr->mMode == PVP::GameMode::PVP || actInst->mZoneDefPtr->mMode == PVP::GameMode::PVP_ONLY))
 			return true;
 
 //		g_Log.AddMessageFormat("REMOVEME no pvp not pvp zone");
@@ -7232,18 +7318,16 @@ void  CreatureInstance :: CreateLoot(int finderLevel)
 	if(PeekAppearance().size() == 0)
 		return;
 
-	// Players and sidekicks cannot be looted.
-	if(serverFlags & ServerFlags::IsPlayer)
-		return;
+	// Sidekicks cannot be looted at all.
 	if(serverFlags & ServerFlags::IsSidekick)
+		return;
+
+	// Player loot comes from their inventory
+	if(serverFlags & ServerFlags::IsPlayer)
 		return;
 
 	//Don't fetch a new loot container if it already has one.
 	if(activeLootID != 0)
-		return;
-
-	CreatureDefinition *cdef = CreatureDef.GetPointerByCDef(CreatureDefID);
-	if(cdef == NULL)
 		return;
 
 	// *** Basic conditional checks passed, generate the loot. ***
@@ -7251,6 +7335,10 @@ void  CreatureInstance :: CreateLoot(int finderLevel)
 
 	ActiveLootContainer loot;
 	loot.CreatureID = CreatureID;
+
+	CreatureDefinition *cdef = CreatureDef.GetPointerByCDef(CreatureDefID);
+	if(cdef == NULL)
+		return;
 
 	float dropRateBonus = GetDropRateMultiplier(cdef);
 
@@ -7920,7 +8008,7 @@ void CreatureInstance :: OnInstanceEnter(const ArenaRuleset &arenaRuleset)
 	if(arenaRuleset.mEnabled == false)
 		return;
 
-	if(arenaRuleset.mPVPStatus == GameMode::SPECIAL_EVENT || arenaRuleset.mPVPStatus == GameMode::PVP_ONLY || (arenaRuleset.mPVPStatus != GameMode::PVE_ONLY && charPtr->Mode == GameMode::PVP ) )
+	if(arenaRuleset.mPVPStatus == PVP::GameMode::SPECIAL_EVENT || arenaRuleset.mPVPStatus == PVP::GameMode::PVP_ONLY || (arenaRuleset.mPVPStatus != PVP::GameMode::PVE_ONLY && charPtr->Mode == PVP::GameMode::PVP ) )
 	{
 		_AddStatusList(StatusEffects::PVPABLE, -1);
 

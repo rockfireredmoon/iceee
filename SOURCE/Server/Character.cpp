@@ -13,6 +13,7 @@
 #include "Util.h"
 #include "Debug.h"
 #include "Globals.h"
+#include "PVP.h"
 #include "InstanceScale.h"
 #include "Inventory.h"
 
@@ -176,7 +177,7 @@ void CharacterData :: ClearAll(void)
 	guildList.clear();
 	SidekickList.clear();
 	MaxSidekicks = MAX_SIDEKICK;
-	Mode = GameMode::PVE;
+	Mode = PVP::GameMode::PVE;
 
 	//eq.slotList.clear();
 	//inv.slotList.clear();

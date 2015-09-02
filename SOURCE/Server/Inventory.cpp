@@ -503,6 +503,28 @@ ItemDef * InventoryManager :: GetBestSpecialItem(int invID, char specialItemType
 	return grinderDef;
 }
 
+int InventoryManager :: CountUsedSlots(int containerID)
+{
+	int size = containerList[containerID].size();
+	std::vector<bool> tempCon;
+	tempCon.resize(MaxContainerSlot[containerID]);
+	int a;
+	for(a = 0; a < size; a++)
+	{
+		int slot = containerList[containerID][a].CCSID & CONTAINER_SLOT;
+		if(slot < MaxContainerSlot[containerID])
+			tempCon[slot] = true;
+	}
+
+	int count = 0;
+	for(a = 0; a < MaxContainerSlot[containerID]; a++)
+		if(tempCon[a] == true)
+			count++;
+
+	return count;
+}
+
+
 int InventoryManager :: CountFreeSlots(int containerID)
 {
 	int size = containerList[containerID].size();
@@ -571,6 +593,24 @@ int InventoryManager :: GetItemCount(int containerID, int itemID)
 		}
 	}
 	return rcount;
+}
+
+InventorySlot * InventoryManager :: PickRandomItem(int containerID) {
+
+	std::vector<int> tempCon;
+	tempCon.resize(MaxContainerSlot[containerID]);
+	unsigned int a;
+	unsigned int c = 0;
+	for(a = 0; a < containerList[containerID].size() && a < MaxContainerSlot[containerID]; a++)
+	{
+		unsigned int slot = containerList[containerID][a].CCSID & CONTAINER_SLOT;
+		if(slot < MaxContainerSlot[containerID]) {
+			tempCon.push_back(a);
+			c++;
+		}
+	}
+	return &containerList[containerID][tempCon[randmodrng(0, c)]];
+
 }
 
 InventorySlot * InventoryManager :: GetFirstItem(int containerID, int itemID)
