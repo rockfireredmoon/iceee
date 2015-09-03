@@ -2916,7 +2916,7 @@ void CreatureInstance :: ProcessDeath(void)
 
 						lootInst->activeLootID = actInst->lootsys.AttachLootToCreature(loot, lootInst->CreatureID);
 
-						// Add all PVP attackets as looting creatures as well as the player themselves so they can retrieve the loot if the attacker doesn't take
+						// Add all PVP attackers as looting creatures as well as the player themselves so they can retrieve the loot if the attacker doesn't take
 						lootInst->AddLootableID(CreatureDefID);
 						for(std::vector<CreatureInstance*>::iterator it = pvpAttackers.begin(); it != pvpAttackers.end(); ++it) {
 							lootInst->AddLootableID((*it)->CreatureDefID);

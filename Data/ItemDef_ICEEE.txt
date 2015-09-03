@@ -558,6 +558,86 @@ mMinUseLevel=50
 mFlavorText=Infused with an unearthly venom Anduril is one of the few crafts on the planet said to be capable of killing a god.  The toxins are so potent anything the blade pierces will die one way or another.
 
 [ENTRY]
+mID=8204
+mType=2
+mDisplayName=Vlad the Impaler
+mAppearance=[{["a"]={["type"]="Item-Spear-High2",["colors"]=["948674","000000","273B75","94947B"],["effect"]="Par-WE-Spear-Death",["node"]="right_hand"}},null]
+mIcon=Icon-32-Polearm10.png|Icon-32-BG-Yellow.png
+mLevel=50
+mBindingType=2
+mEquipType=5
+mWeaponType=4
+mWeaponDamageMin=184
+mWeaponDamageMax=240
+mBonusSpirit=50
+mBonusConstitution=42
+mBonusPsyche=35
+mValue=22651
+mQualityLevel=6
+mMinUseLevel=50
+mFlavorText=This deadly spear shares the same name as its creator, one of the race of humans most brutal killers. Vlad the Impaler used this very spear to slaughter thousands its reputation as a ultimate killing tool is unarguable.
+
+[ENTRY]
+mID=8205
+mType=2
+mDisplayName=Worlds End
+mAppearance=[{["a"]={["type"]="Item-2hMace-Epic2"}},null]
+mIcon=Icon-32-Mace9.png|Icon-32-BG-Yellow.png
+mLevel=50
+mBindingType=2
+mEquipType=5
+mWeaponType=3
+mWeaponDamageMin=184
+mWeaponDamageMax=240
+mBonusStrength=50
+mBonusConstitution=42
+mBonusDexterity=35
+mValue=22651
+mQualityLevel=6
+mMinUseLevel=50
+mFlavorText=Said to be Forged by Hades with one soul purpose... To dethrone his brother Zeus it's said when wielded by a God it has the power to crack the earths crust, however any mortal who can use the massive hammer would have the world at its mercy.
+
+[ENTRY]
+mID=8206
+mType=2
+mDisplayName=Gaia's Grace
+mAppearance=[{["a"]={["type"]="Item-Epic_Axe_Wing",["effect"]="Par-WE-2hAxe_Double-Yellow",["colors"]=["AEAE79","9BA0B3","D2C307","C6AF5D","DADAA8","614721","E2AD1E","F3F1A3"]}},null]
+mIcon=Icon-32-Axe10.png|Icon-32-BG-Yellow.png
+mLevel=50
+mBindingType=2
+mEquipType=5
+mWeaponType=3
+mWeaponDamageMin=184
+mWeaponDamageMax=240
+mBonusSpirit=45
+mBonusConstitution=45
+mBonusStrength=35
+mValue=22651
+mQualityLevel=6
+mMinUseLevel=50
+mFlavorText=Created by the order of Gaia and blessed with her love this weapon contain extrodinary power. It's Glowing halo has the power to blind foes before it even strikes them making it the ultimate tool to drive back the undead.
+
+[ENTRY]
+mID=8206
+mType=2
+mDisplayName=Perfect Storm
+mAppearance=[{["a"]={["type"]="Item-Staff-Epic5",["effect"]="Par-WE-Staff-Green",["colors"]=["555555","3C407F","00FF0F","978F97","009409"]}},null]
+mIcon=Icon-32-Axe10.png|Icon-32-BG-Yellow.png
+mLevel=50
+mBindingType=2
+mEquipType=5
+mWeaponType=3
+mWeaponDamageMin=184
+mWeaponDamageMax=240
+mBonusPsyche=52
+mBonusSpirit=45
+mBonusConstitution=35
+mValue=22651
+mQualityLevel=6
+mMinUseLevel=50
+mFlavorText=A staff of unimaginable power the crystal shards the gravitate around the staff are said to come from a different plain entirely powers from beyond this world pulsate through arcane powerhouse. Rumor has it the wielder of Perfect Storm can control the weather using its power.
+
+[ENTRY]
 mID=8300
 mType=4
 mDisplayName=Temporary Charm of Strength
