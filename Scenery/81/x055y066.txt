@@ -47,6 +47,15 @@ Orient=0,0.382683,0,0.92388
 Scale=1,1,1
 
 [ENTRY]
+ID=10000047
+Asset=Manipulator-SpawnPoint
+Name=Untitled
+Pos=55995.3,355.671,66050
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#2758
+
+[ENTRY]
 ID=1358955038
 Asset=Manipulator-PathNode
 Name=Untitled

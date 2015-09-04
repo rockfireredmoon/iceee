@@ -1,4 +1,5 @@
 [ENTRY]
+Description=SPM Credit Shop Set
 PriceCurrency=CREDITS
 PriceCopper=0
 PriceCredits=100

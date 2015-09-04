@@ -4,5 +4,5 @@ PriceCopper=0
 PriceCredits=100
 ItemID=5778
 Category=ARMOR
-Status=NEW
+Status=<undefined>
 
