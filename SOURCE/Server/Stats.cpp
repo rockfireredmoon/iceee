@@ -195,7 +195,11 @@ StatDefinition StatList[] =
 	{STAT::HIDE_MINIMAP                , StatType::SHORT,    "short",  "hide_minimap",      "Hide Minimap",      NULL, 0, msizeof(CharacterStatSet, hide_minimap), offsetof(CharacterStatSet, hide_minimap), SUT_CDefExt },
 
 	//ICEEE
-	{STAT::CREDIT_DROPS                , StatType::SHORT,    "short",  "credit_drops",          "Credit Drops",  NULL, 0, msizeof(CharacterStatSet, credit_drops), offsetof(CharacterStatSet, credit_drops), SUT_All }
+	{STAT::CREDIT_DROPS                , StatType::SHORT,    "short",  "credit_drops",          "Credit Drops",  NULL, 0, msizeof(CharacterStatSet, credit_drops), offsetof(CharacterStatSet, credit_drops), SUT_All },
+	{STAT::HEROISM_GAIN_RATE           , StatType::SHORT,    "short",  "heroism_gain_rate",     "Heroism Gain Rate",  NULL, 0, msizeof(CharacterStatSet, heroism_gain_rate), offsetof(CharacterStatSet, heroism_gain_rate), SUT_All },
+	{STAT::QUEST_EXP_GAIN_RATE         , StatType::SHORT,    "short",  "quest_exp_gain_rate",   "Quest Experience Gain Rate",  NULL, 0, msizeof(CharacterStatSet, quest_exp_gain_rate), offsetof(CharacterStatSet, quest_exp_gain_rate), SUT_All },
+	{STAT::DROP_GAIN_RATE              , StatType::SHORT,    "short",  "drop_gain_rate",        "Treasure Gain Rate",  NULL, 0, msizeof(CharacterStatSet, drop_gain_rate), offsetof(CharacterStatSet, drop_gain_rate), SUT_All },
+
 };
 const int MaxStatList = sizeof(StatList) / sizeof(StatList[0]);
 
@@ -390,6 +394,9 @@ CharacterStatSet :: CharacterStatSet()
 	copper = 0;
 	health_regen = 1;
 	credit_drops = 0;
+	heroism_gain_rate = 0;
+	drop_gain_rate = 0;
+	quest_exp_gain_rate = 0;
 	offhand_weapon_damage = 0;
 	magic_attack_speed = 0;
 	magic_loot_drop_rate = 0;

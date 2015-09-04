@@ -6,4 +6,3 @@ PriceCredits=500
 ItemID=8110
 Category=RECIPES
 Status=NEW
-

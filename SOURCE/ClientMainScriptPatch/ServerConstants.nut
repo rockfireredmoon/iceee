@@ -1416,7 +1416,25 @@ this.Stat <- {
 		type = "short",
 		name = "credit_drops",
 		prettyName = "Credit Drops"
-	}	
+	},
+	HEROISM_GAIN_RATE = 161,
+	[161] = {
+		type = "short",
+		name = "heroism_gain_rate",
+		prettyName = "Heroism Gain Rate"
+	},
+	QUEST_EXP_GAIN_RATE = 162,
+	[162] = {
+		type = "short",
+		name = "quest_exp_gain_rate",
+		prettyName = "Quest Experience Gain Rate"
+	},
+	DROP_GAIN_RATE = 163,
+	[163] = {
+		type = "short",
+		name = "drop_gain_rate",
+		prettyName = "Treasure Gain Rate"
+	}
 };
 this.StatusEffects <- {
 	DEAD = 0,

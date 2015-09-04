@@ -6832,6 +6832,13 @@ void CreatureInstance :: AddHeroismForQuest(int amount, int questLevel)
 	{
 		amount -= ((css.level - threshold) * g_Config.HeroismQuestLevelPenalty);
 	}
+
+	// Adjust for other bonuses
+	if(css.heroism_gain_rate > 0) {
+		amount += Util::GetAdditiveFromIntegralPercent100(amount, css.heroism_gain_rate);
+	}
+
+
 	AddHeroism(amount);
 }
 
@@ -6853,6 +6860,11 @@ void CreatureInstance :: AddHeroismForKill(int targetLevel, int targetRarity)
 
 	if(points < 0)
 		return;
+
+	// Adjust for other bonuses
+	if(css.heroism_gain_rate > 0) {
+		points += Util::GetAdditiveFromIntegralPercent100(points, css.heroism_gain_rate);
+	}
 
 	AddHeroism(points);
 
@@ -6945,11 +6957,10 @@ int CreatureInstance :: ProcessQuestRewards(int QuestID, const std::vector<Quest
 	// Adjust Exp taking tomes into account
 	int exp = qd->experience;
 
-	// TODO should not be needed now tomes are abilities + time limited items
-//	ItemDef * xpTomeDef = charPtr->inventory.GetBestSpecialItem(GetContainerIDFromName("inv"), XP_BOOST);
-//	if(xpTomeDef != NULL) {
-//		exp += Util::GetAdditiveFromIntegralPercent100(exp, xpTomeDef->mIvMax1);
-//	}
+	// Adjust for other bonuses
+	if(css.quest_exp_gain_rate > 0) {
+		exp += Util::GetAdditiveFromIntegralPercent100(exp, css.quest_exp_gain_rate);
+	}
 
 	AddExperience(exp);
 	AddHeroismForQuest(qd->heroism, qd->levelSuggested);
@@ -7212,6 +7223,12 @@ float CreatureInstance :: GetDropRateMultiplier(CreatureDefinition *cdef)
 			dropRateBonus *= extra;
 	}
 
+
+	if(css.drop_gain_rate > 0) {
+		dropRateBonus += Util::GetAdditiveFromIntegralPercent100(dropRateBonus, css.drop_gain_rate);
+	}
+
+
 	switch(css.rarity)
 	{
 	case CreatureRarityType::HEROIC: dropRateBonus *= 2.5F; break;
@@ -7351,6 +7368,8 @@ void  CreatureInstance :: CreateLoot(int finderLevel)
 		return;
 
 	float dropRateBonus = GetDropRateMultiplier(cdef);
+
+
 
 	//Virtual items.
 	VirtualItemSpawnParams params;

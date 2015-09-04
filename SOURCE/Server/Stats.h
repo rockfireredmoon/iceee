@@ -177,6 +177,9 @@ struct CharacterStatSet
 
 	//ICEEE
 	short credit_drops;
+	short heroism_gain_rate;
+	short quest_exp_gain_rate;
+	short drop_gain_rate;
 
 	CharacterStatSet();
 	void CopyFrom(CharacterStatSet *source);
@@ -402,8 +405,11 @@ namespace STAT
 	//New ones found in 8.8, not sure about between versions
 	HIDE_MINIMAP             = 159,
 
-	//ICEEE - Credit drops
-	CREDIT_DROPS             = 160
+	//ICEEE - Credit drops and bonus gain rates
+	CREDIT_DROPS             = 160,
+	HEROISM_GAIN_RATE        = 161,
+	QUEST_EXP_GAIN_RATE      = 162,
+	DROP_GAIN_RATE      	 = 163,
 	};
 }
 
@@ -571,8 +577,8 @@ extern const int MAX_LEVEL;
 extern short LevelBaseStats[71][3];
 extern short ProfBaseStats[6][5];
 
-const int NumStats = 126;
-extern StatDefinition StatList[126];
+const int NumStats = 129;
+extern StatDefinition StatList[129];
 
 int GetStatIndex(short StatID);
 int GetStatIndexByName(const char *name);

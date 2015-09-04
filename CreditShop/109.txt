@@ -1,0 +1,9 @@
+[ENTRY]
+Description=Gain quest experience faster
+PriceCurrency=CREDITS
+PriceCopper=0
+PriceCredits=500
+ItemID=900024
+Category=RECIPES
+Status=NEW
+
