@@ -52,7 +52,7 @@ bool FileChecksum :: MatchChecksum(const std::string &filename, const std::strin
 
 	//If it doesn't appear in the list, assume it's valid so the client doesn't redownload
 	if(it == mChecksumData.end()) {
-		g_Log.AddMessageFormat("[WARNING] File %s is not in the index, so it's checksum is unknown. Assuming no download required.");
+		g_Log.AddMessageFormat("[WARNING] File %s is not in the index, so it's checksum is unknown. Assuming no download required.", filename.c_str());
 		return true;
 	}
 
