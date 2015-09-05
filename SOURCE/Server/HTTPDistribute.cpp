@@ -52,7 +52,7 @@ bool FileChecksum :: MatchChecksum(const std::string &filename, const std::strin
 
 	//If it doesn't appear in the list, assume it's valid so the client doesn't redownload
 	if(it == mChecksumData.end()) {
-		g_Log.AddMessageFormat("[WARNING] File %s is not in the index, so it's checksum is unknown. Assuming no download required.", filename.c_str());
+		g_Log.AddMessageFormat("[WARNING] File %s is not in the index, so it's checksum is unknown. Assuming no download required.", filename);
 		return true;
 	}
 
@@ -698,11 +698,13 @@ void HTTPDistribute :: HandleHTTP_GET(char *dataStart, MULTISTRING &header)
 		{
 			verifyExist = true;
 			checksum = header[i][1];
+			g_Log.AddMessageFormat("%s If-None-Match %s", FileNameRequest.c_str(), checksum.c_str());
 		}
 		else if(header[i][0].compare("If-Modified-Since:") == 0)
 		{
 			verifyExist = true;
 			checksum = header[i][1];
+			g_Log.AddMessageFormat("%s If-Modified-Since %s", FileNameRequest.c_str(), checksum.c_str());
 		}
 	}
 
@@ -722,6 +724,7 @@ void HTTPDistribute :: HandleHTTP_GET(char *dataStart, MULTISTRING &header)
 			//We don't have the file, so prepare it.
 			if(verifyExist == false)
 			{
+				g_Log.AddMessageFormat("Client doesn't have, downloading %s", FileNameRequest.c_str());
 				customError = OpenLocalFileName();
 				need = true;
 			}
@@ -730,6 +733,7 @@ void HTTPDistribute :: HandleHTTP_GET(char *dataStart, MULTISTRING &header)
 				//If the checksum does not match, we need to update.
 				if(g_FileChecksum.MatchChecksum(FileNameAsset, checksum) == false)
 				{
+					g_Log.AddMessageFormat("Checksum mismatch, downloading %s", FileNameRequest.c_str());
 					customError = OpenLocalFileName();
 					need = true;
 					//LogMessageL("NEED FILE");
