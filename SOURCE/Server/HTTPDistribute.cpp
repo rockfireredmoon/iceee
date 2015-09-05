@@ -683,6 +683,12 @@ void HTTPDistribute :: HandleHTTP_GET(char *dataStart, MULTISTRING &header)
 		{
 			FileNameRequest = header[i][1];
 
+			if(Util::HasBeginning(FileNameRequest, "http://")) {
+				int upos = FileNameRequest.find("/", 8);
+				if(upos > -1)
+					FileNameRequest = FileNameRequest.substr(upos);
+			}
+
 			// Note - Workaround for a bug I introduced in the installer :(
 			Util::ReplaceAll(FileNameRequest, "//", "/");
 
@@ -702,13 +708,11 @@ void HTTPDistribute :: HandleHTTP_GET(char *dataStart, MULTISTRING &header)
 		{
 			verifyExist = true;
 			checksum = header[i][1];
-			g_Log.AddMessageFormat("%s If-None-Match %s", FileNameRequest.c_str(), checksum.c_str());
 		}
 		else if(header[i][0].compare("If-Modified-Since:") == 0)
 		{
 			verifyExist = true;
 			checksum = header[i][1];
-			g_Log.AddMessageFormat("%s If-Modified-Since %s", FileNameRequest.c_str(), checksum.c_str());
 		}
 	}
 

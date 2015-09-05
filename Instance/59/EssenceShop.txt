@@ -1,16 +1,5 @@
-﻿; Beta Beast Box
+﻿; Gift Box
 [ENTRY]
 CreatureDefID=7808
-EssenceID=8103  ; Key
-;Item=7,1  ; Speed Tome 
-;Item=900019,1  ; Exp Tome 
-;Item=900014,1  ; Grinder
-Item=40072,1  ; 
-Item=8105,1   ; Beta-beast strong box
-Item=5573,1	  ; Beta-beast banner
-Item=40059,1  ; Stonehenge Gate Scroll
-Item=50007,1  ; Reusable Scroll : Bears' Form.
-Item=50008,1  ; Reusable Scroll : Stags' Form.
-Item=50009,1  ; Reusable Scroll : Wolfs' Form.
-Item=50010,1  ; Reusable Scroll : Felines' Form.
-
+EssenceID=8116  ; Key
+Item=8117,1   ; Ghastly Purse

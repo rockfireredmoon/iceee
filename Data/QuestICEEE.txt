@@ -190,3 +190,38 @@ Obj.0.myCreatureDefID=7849
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=15657.4,1124.7,13227.1,1060;
+
+
+[ENTRY]
+ID=853
+Title=Welcome Beast...
+BodyText=Greetings and welcome to Earth Eternal - The Scour of Abiban. 
+
+I hear you volunteered to aid us by boldly stepping in to new lands, paving the way for more beasts to venture further than ever before. For that we are grateful, and offer you these keys to our Gift Box. It is nothing really, just a little a little token to get you started.  
+
+We hope you stick around, there will be a reward at the end for your hard work.   
+CompleteText=Oh, didn't I say? You have to use these keys on that chest next to me, pick wisely!
+Level=1
+Suggested=1
+Exp=1
+PartySize=1
+NumRewards=0
+Coin=0
+Unabandon=0
+QuestGiverID=7813
+QuestEnderID=7813
+Repeat=0
+sGiver=5628.72,682.027,5964.53,59
+sEnder=5628.72,682.027,5964.53,59
+[ACT]
+Act.BodyText=Take the gift box key
+Obj.0.type=talk
+Obj.0.data1=
+Obj.0.data2=
+Obj.0.description=Take the gift box key
+Obj.0.complete=0
+Obj.0.myCreatureDefID=7813
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=5628.72,682.027,5964.53,59
+RewardItem.0=8116,1,1
