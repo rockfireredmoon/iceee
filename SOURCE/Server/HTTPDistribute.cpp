@@ -682,6 +682,10 @@ void HTTPDistribute :: HandleHTTP_GET(char *dataStart, MULTISTRING &header)
 		if(header[i][0].compare("GET") == 0)
 		{
 			FileNameRequest = header[i][1];
+
+			// Note - Workaround for a bug I introduced in the installer :(
+			Util::ReplaceAll(FileNameRequest, "//", "/");
+
 			Util::RemoveStringsFrom("~", FileNameRequest);
 			Util::RemoveStringsFrom("*", FileNameRequest);
 			Util::RemoveStringsFrom("..", FileNameRequest);
@@ -724,7 +728,6 @@ void HTTPDistribute :: HandleHTTP_GET(char *dataStart, MULTISTRING &header)
 			//We don't have the file, so prepare it.
 			if(verifyExist == false)
 			{
-				g_Log.AddMessageFormat("Client doesn't have, downloading %s", FileNameRequest.c_str());
 				customError = OpenLocalFileName();
 				need = true;
 			}
@@ -733,7 +736,6 @@ void HTTPDistribute :: HandleHTTP_GET(char *dataStart, MULTISTRING &header)
 				//If the checksum does not match, we need to update.
 				if(g_FileChecksum.MatchChecksum(FileNameAsset, checksum) == false)
 				{
-					g_Log.AddMessageFormat("Checksum mismatch, downloading %s", FileNameRequest.c_str());
 					customError = OpenLocalFileName();
 					need = true;
 					//LogMessageL("NEED FILE");
