@@ -618,7 +618,7 @@ mMinUseLevel=50
 mFlavorText=Created by the order of Gaia and blessed with her love this weapon contain extrodinary power. It's Glowing halo has the power to blind foes before it even strikes them making it the ultimate tool to drive back the undead.
 
 [ENTRY]
-mID=8206
+mID=8207
 mType=2
 mDisplayName=Perfect Storm
 mAppearance=[{["a"]={["type"]="Item-Staff-Epic5",["effect"]="Par-WE-Staff-Green",["colors"]=["555555","3C407F","00FF0F","978F97","009409"]}},null]

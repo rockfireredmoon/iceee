@@ -299,20 +299,17 @@ for i in SOURCE/CAR/*.car ; do
 done
 
 
-echo "*******************************************************"
-echo "Checksumming"
-echo "*******************************************************"
-rm -f "${SCRATCH}/HTTPChecksum.txt"
+#echo "*******************************************************"
+#echo "Checksumming"
+#echo "*******************************************************"
+#rm -f "${SCRATCH}/HTTPChecksum.txt"
  
-echo "/Release/Current/EarthEternal.car=\""$(wine UTILITIES/MD5.exe "${SCRATCH}/archives/EarthEternal.car"|tr -d '\r')"\"" >> "${SCRATCH}/HTTPChecksum.txt"
-for i in ${SCRATCH}/archives/*.car; do
-	if [ $(basename $i) != "EarthEternal.car" ] ; then
-		echo "/Release/Current/Media/$(basename ${i})=\""$(wine UTILITIES/MD5.exe "${i}"|tr -d '\r')"\"" >> "${SCRATCH}/HTTPChecksum.txt"
-	fi
-done
-#echo "/Release/Current/Media/Catalogs.car="$(wine UTILITIES/MD5.exe "${SCRATCH}/archives/Catalogs.car"|tr -d '\r') >> "${SCRATCH}/HTTPChecksum.txt"
-#echo "/Release/Current/Media/Prop-ModAddons1.car="$(wine UTILITIES/MD5.exe "SOURCE/CAR/Prop-ModAddons1.car"|tr -d '\r') >> "${SCRATCH}/HTTPChecksum.txt"
-#echo "/Release/Current/Media/Sound-ModSound.car="$(wine UTILITIES/MD5.exe "${SCRATCH}/archives/Sound-ModSound.car"|tr -d '\r') >> "${SCRATCH}/HTTPChecksum.txt"
+#echo "/Release/Current/EarthEternal.car=\""$(wine UTILITIES/MD5.exe "${SCRATCH}/archives/EarthEternal.car"|tr -d '\r')"\"" >> "${SCRATCH}/HTTPChecksum.txt"
+#for i in ${SCRATCH}/archives/*.car; do
+	#if [ $(basename $i) != "EarthEternal.car" ] ; then
+		#echo "/Release/Current/Media/$(basename ${i})=\""$(wine UTILITIES/MD5.exe "${i}"|tr -d '\r')"\"" >> "${SCRATCH}/HTTPChecksum.txt"
+	#fi
+#done
 
 echo "*******************************************************"
 echo "Done!"
@@ -330,10 +327,14 @@ if [ -d asset -a -d Data ]; then
 					echo "Copied $(basename ${i})"
 				fi
 			done
-			#cp "${SCRATCH}/archives/Catalogs.car" ${base}/asset/Release/Current/Media
-			#cp "SOURCE/CAR/Prop-ModAddons1.car" ${base}/asset/Release/Current/Media
-			#cp "${SCRATCH}/archives/Sound-ModSound.car" ${base}/asset/Release/Current/Media
-			cp "${SCRATCH}/HTTPChecksum.txt" ${base}/Data
+
+			echo "Creating checksums"			
+			pushd ${base}/asset
+			find Release -type f|while read line ; do md5sum $line| \
+				awk '{ print "/" substr($2,1) "=\"" $1 "\"" }' ; done | \
+				sort -u > ${base}/Data/HTTPChecksum.txt
+			popd
+			
 			echo "All files copied for version ${FULL_VERSION}" ;;
 	esac
 fi
