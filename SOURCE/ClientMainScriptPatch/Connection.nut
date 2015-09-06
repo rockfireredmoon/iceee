@@ -266,8 +266,90 @@ class this.Connection extends this.MessageBroadcaster
 		this.mRouterAddress = "";
 		this.attemptToConnect();
 	}
-
+	
+	
+	// Hack to set the proper domain domain name when connecting to an arbitrary
+	// port (other than HTTP port 80).
+	// Ex: http://example.com:81/Release/Current/EarthEternal.car
+	// Originally it doesn't support arbitrary port numbers.
+	// Derived from code used in the original attemptToConnect() function.
+	// Also allows a router port override hack.
+	function ModGetCustomRouterPort()
+	{
+		if("router" in ::_args)
+		{
+			return ::_args["router"].tointeger();
+		}
+	
+		try
+		{
+			local t = unserialize( _cache.getCookie("Router") );
+			if(t)
+			{
+				if("mod.router" in t)
+					return t["mod.router"].tointeger();
+			}
+		}
+		catch(e)
+		{
+		}
+		
+		return 4242;   //Corresponds to hardcoded default.
+	}
+	
 	function attemptToConnect()
+	{
+		local domain = _cache.getBaseURL();
+		local custom = false;
+	
+		//Base URL will look something like this
+		//http://localhost/Release/Current
+	
+		if( domain.find("://") != null )
+		{
+			domain = Util.split(domain, "://")[1];
+			
+			if( domain.find("@") != null )
+			{
+				domain = Util.split(domain, "@")[1];
+			}
+			
+			if( domain.find("/") != null )
+			{
+				domain = Util.split(domain, "/")[0];
+			}
+			
+			if(domain.find(":") != null)
+			{
+				custom = true;
+				domain = Util.split(domain, ":")[0];
+			}
+	
+			local routerPort = ModGetCustomRouterPort();
+	
+			if(custom == true)
+			{
+				mCurrentHost = domain + ":" + routerPort;
+				
+				log.info( "Connecting to " + mCurrentHost );
+				log.info( "[MOD] Custom domain port detected.");
+				if(routerPort != 4242)
+					log.info( "[MOD] Custom router port detected.");
+					
+				if( Util.isDevMode() )
+					Screen.setTitle("Earth Eternal (" + mCurrentHost + ")");
+					
+				socket.connect(domain, routerPort, 0);
+				return;
+			}
+		}
+		
+		//Hack didn't work, call original
+		attemptToConnectOriginal();
+	}
+
+
+	function attemptToConnectOriginal()
 	{
 		this.log.info("Cache URL: " + this._cache.getBaseURL());
 

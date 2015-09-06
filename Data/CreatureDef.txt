@@ -5669,7 +5669,7 @@ might_regen=1
 appearance=c2:{["a"]=[{["type"]="Armor-Cloth-High3-Left_Pauldron",["node"]="left_shoulder",["colors"]=["FFFFFF","BFA129","12941A","BFA129"]},{["type"]="Armor-Cloth-High3-Right_Pauldron",["node"]="right_shoulder",["colors"]=["FFFFFF","BFA129","12941A","BFA129"]},{["type"]="Item-2hSword-Medium4",["node"]="back_sheathe",["colors"]=["8B9FA7","852E01","FDAA1F"]},{["type"]="Armor-Light-Mid3-Hat",["node"]="hat",["colors"]=["7F5632","766752","846E56"]}],["c"]={["boots"]={["type"]="Armor-Heavy-Epic2",["colors"]=["dda546","ffffff","ffffff","e90000"]},["chest"]={["type"]="Armor-Heavy-High1",["colors"]=["dda546","ffffff","12941a"]},["arms"]={["type"]="Armor-Heavy-Epic1",["colors"]=["dda546","ffffff","12941a","e90000"]},["leggings"]={["type"]="Armor-Heavy-Epic1",["colors"]=["dda546","ffffff","12941a","e90000"]},["collar"]={["type"]="Armor-Heavy-Epic2",["colors"]=["dda546","ffffff","12941a","e90000"]},["belt"]={["type"]="Armor-Heavy-Epic1",["colors"]=["dda546","ffffff","12941a","e90000"]},["gloves"]={["type"]="Armor-Heavy-Epic2",["colors"]=["dda546","ffffff","ffffff","e90000"]}},["b"]="m",["sk"]={["hands_feet"]="534741",["eye_white"]="FFFFFF",["snout"]="AAAAAA",["ear_tips"]="D58F70",["base"]="94947B",["hair_ears"]="FFFFFF",["eye_lid"]="534741",["eye"]="00E90E",["inner_ear"]="AE917C",["nose"]="2A2A2A",["chest"]="FFFFFF"},["sz"]="1.35",["h"]=0,["g"]="m",["r"]="b"}
 level=110
 display_name=Sir Kay
-sub_name=Knight of the Round Tablewd
+sub_name=Knight of the Round
 profession=2
 creature_category=Mortal
 rarity=3
