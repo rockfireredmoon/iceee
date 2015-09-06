@@ -40,7 +40,7 @@
 //#include "restclient.h"
 #include "Daily.h"
 #include <curl/curl.h>
-
+#include "md5.hh"
 
 //This is the main function of the simulator thread.  A thread must be created for each port
 //since the connecting function will halt until a connection is established.
@@ -1180,6 +1180,60 @@ void SimulatorThread :: handle_lobby_authenticate(void)
 		g_AccountManager.cs.Enter("SimulatorThread::handle_lobby_authenticate");
 		accPtr = g_AccountManager.GetValidLogin(Aux2, password.c_str());
 		g_AccountManager.cs.Leave();
+
+		if(accPtr == NULL) {
+			/* Now try the integrated website authentication. This expects the site
+			 * to authenticate using HTTP BASIC authentication.
+			 *
+			 * 1. If the user doesn't exist remotely either, auth will be rejected
+			 * 2. If the user exists remotely, but not locally, a new empty account will be created and loged on
+			 * 3. If the user exists remotely and locally, they will be logged on
+			 */
+
+			struct curl_slist *headers = NULL;
+			CURL *curl;
+			curl_global_init(CURL_GLOBAL_DEFAULT);
+			curl = curl_easy_init();
+			if(curl) {
+				curl_easy_setopt(curl, CURLOPT_URL, "http://localhost/pf");
+				curl_easy_setopt(curl, CURLOPT_USERAGENT, "PlanetForever");
+
+				Util::SafeFormat(Aux3, sizeof(Aux3), "%s:%s", Aux2, password.c_str());
+
+				MD5 passwordHash;
+				passwordHash.update((unsigned char*)Aux3, strlen(Aux3));
+				passwordHash.finalize();
+
+				curl_easy_setopt(curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+				curl_easy_setopt(curl, CURLOPT_USERPWD, passwordHash.hex_digest());
+
+//				headers = curl_slist_append(headers, "Expect:");
+//				headers = curl_slist_append(headers, "Content-Type: application/json");
+//				curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
+
+//				curl_easy_setopt(curl, CURLOPT_POSTFIELDS, Aux1);
+//				curl_easy_setopt(curl, CURLOPT_POSTFIELDSIZE, -1L);
+				curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
+
+				// TODO might need config item to disable SSL verification
+				//curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 0L);
+				//curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, 0L);
+
+				CURLcode res;
+				res = curl_easy_perform(curl);
+
+				curl_slist_free_all(headers);
+				curl_easy_cleanup(curl);
+				int wpos;
+				if(res == CURLE_OK) {
+					g_Log.AddMessageFormat("SITE AUTHENTICATED!");
+				}
+				else {
+					g_Log.AddMessageFormat("AUTHENTICATION FAILED!");
+				}
+			}
+
+		}
 	}
 	else
 	{
