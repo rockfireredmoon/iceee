@@ -3,6 +3,9 @@
 
 #include "IntArray.h"
 
+
+#define MAXTARGET   8
+
 //Shared between the servers
 extern const int SleepDelayError;
 extern const int SleepDelayNormal;

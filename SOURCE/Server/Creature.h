@@ -22,6 +22,7 @@ class SimulatorThread;
 #include "DropTable.h"
 #include "sqrat.h"
 #include "Daily.h"
+#include "Globals.h"
 
 class CreatureInstance;  //Forward declaration for a pointer in the SelectedObject structure
 class AIScriptPlayer;    //Forward declaration for AI script
@@ -31,8 +32,6 @@ class InteractObject;
 class QuestItemReward;
 class InstanceScaleProfile;
 class ReportBuffer;
-
-#define MAXTARGET   8
 
 extern const int CREATURE_WALK_SPEED;
 extern const int CREATURE_JOG_SPEED;

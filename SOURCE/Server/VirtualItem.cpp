@@ -961,7 +961,7 @@ void ItemManager :: NotifyDestroy(int itemID, const char *debugReason)
 
 	VItemList.erase(it);
 	g_Log.AddMessageFormat("Destroyed virtual item: %d (%s)", itemID, debugReason);
-	Debug::Log("Destroyed virtual item: %d (%s)", itemID, debugReason);
+	Debug::Log("[DESTROY] Destroyed virtual item: %d (%s)", itemID, debugReason);
 	SessionVarsChangeData.AddChange();
 }
 
