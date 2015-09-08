@@ -138,6 +138,33 @@ this.Util.makeAssetRef <- function ( asset, throwOnError )
 
 	return ref;
 };
+this.Util.extractHostnameAndPortFromUrl <- function ( url )
+{
+	if (url.find("://") != null) {
+		url = this.Util.split(url, "://")[1];
+		if (url.find("@") != null)
+			url = this.Util.split(url, "@")[1];
+
+		if (url.find("/") != null) 
+			url = this.Util.split(url, "/")[0];
+	}
+	return url;
+};
+this.Util.extractHostnameFromUrl <- function ( url )
+{
+	if (url.find("://") != null) {
+		url = this.Util.split(url, "://")[1];
+		if (url.find("@") != null)
+			url = this.Util.split(url, "@")[1];
+
+		if (url.find("/") != null) 
+			url = this.Util.split(url, "/")[0];
+		
+		if(url.find(":") != null)
+			url = Util.split(url, ":")[0];
+	}
+	return url;
+};
 this.Util.fuzzyCmp <- function ( v1, v2 )
 {
 	return this.Math.abs(v1 - v2) < 0.0099999998;

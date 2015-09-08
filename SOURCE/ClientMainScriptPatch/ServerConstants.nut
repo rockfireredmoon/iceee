@@ -1885,7 +1885,8 @@ this.VisibleWeaponSet <- {
 };
 this.AuthMethod <- {
 	EXTERNAL = 0,
-	DEV = 1
+	DEV = 1,
+	SERVICE = 2 
 };
 this.gMinCreatureSize <- 5.0;
 this.gStopAutoAttackId <- 32759;

@@ -204,6 +204,9 @@ SimulatorManager :: SimulatorManager()
 	cs.Init();
 	nextFlushTime = 0;
 
+
+	curl_global_init(CURL_GLOBAL_DEFAULT);
+
 }
 
 SimulatorManager :: ~SimulatorManager()
@@ -967,7 +970,7 @@ void SimulatorThread :: OnConnect(void)
 	wpos += PutShort(&SendBuf[wpos], 0);
 	wpos += PutInteger(&SendBuf[wpos], g_ProtocolVersion);
 	wpos += PutInteger(&SendBuf[wpos], g_AuthMode);
-	wpos += PutStringUTF(&SendBuf[wpos], g_AuthKey);
+	wpos += PutStringUTF(&SendBuf[wpos], g_AuthMode == AuthMethod::SERVICE ? g_Config.ServiceAuthURL.c_str() : g_AuthKey);
 	PutShort(&SendBuf[1], wpos - 3);
 
 	AttemptSend(SendBuf, wpos);
@@ -1156,7 +1159,7 @@ void SimulatorThread :: handle_lobby_authenticate(void)
 {
 	char authMethod = GetByte(&readPtr[ReadPos], ReadPos);
 	GetStringUTF(&readPtr[ReadPos], Aux2, sizeof(Aux2), ReadPos);  //login name
-	GetStringUTF(&readPtr[ReadPos], Aux3, sizeof(Aux3), ReadPos);  //authorization hash
+	GetStringUTF(&readPtr[ReadPos], Aux3, sizeof(Aux3), ReadPos);  //authorization hash or or X-CSRF-Token:sess_id:session_name:uid
 
 	//We want to clear the the buffers when we leave scope, so that the authorization stuff
 	//doesn't stick around in memory.  If the online web panel were compromised, the token could
@@ -1171,48 +1174,39 @@ void SimulatorThread :: handle_lobby_authenticate(void)
 	}
 
 	//Convert client password to server password.
-	std::string password;
-	AccountData::GenerateSaltedHash(Aux3, password);
-
 	AccountData *accPtr = NULL;
-	if(authMethod == AuthMethod::DEV)
-	{
-		g_AccountManager.cs.Enter("SimulatorThread::handle_lobby_authenticate");
-		accPtr = g_AccountManager.GetValidLogin(Aux2, password.c_str());
-		g_AccountManager.cs.Leave();
 
-		if(accPtr == NULL) {
-			/* Now try the integrated website authentication. This expects the site
-			 * to authenticate using HTTP BASIC authentication.
-			 *
-			 * 1. If the user doesn't exist remotely either, auth will be rejected
-			 * 2. If the user exists remotely, but not locally, a new empty account will be created and loged on
-			 * 3. If the user exists remotely and locally, they will be logged on
+	if(authMethod == AuthMethod::SERVICE)
+	{
+		std::vector<std::string> prms;
+		Util::Split(Aux3, ":", prms);
+		if(prms.size() < 4) {
+			g_Log.AddMessageFormat("Unexpected number of elements in login string for SERVICE authentication. %s", Aux3);
+		}
+		else {
+
+			/* Now try the integrated website authentication.
 			 */
 
 			struct curl_slist *headers = NULL;
 			CURL *curl;
-			curl_global_init(CURL_GLOBAL_DEFAULT);
 			curl = curl_easy_init();
 			if(curl) {
-				curl_easy_setopt(curl, CURLOPT_URL, "http://localhost/pf");
-				curl_easy_setopt(curl, CURLOPT_USERAGENT, "PlanetForever");
+				char url[256];
+				char token[256];
+				char cookie[256];
+				Util::SafeFormat(url, sizeof(url), "%s/user/retrieve/%s.json", g_Config.ServiceAuthURL.c_str(), prms[3].c_str());
+				Util::SafeFormat(token, sizeof(token), "X-CSRF-Token: %s", prms[0].c_str());
+				Util::SafeFormat(cookie, sizeof(token), "Cookie: %s:%s", prms[1].c_str(),prms[2].c_str());
 
-				Util::SafeFormat(Aux3, sizeof(Aux3), "%s:%s", Aux2, password.c_str());
+				curl_easy_setopt(curl, CURLOPT_URL, url);
+				curl_easy_setopt(curl, CURLOPT_USERAGENT, "EETAW");
 
-				MD5 passwordHash;
-				passwordHash.update((unsigned char*)Aux3, strlen(Aux3));
-				passwordHash.finalize();
+				headers = curl_slist_append(headers, token);
+				headers = curl_slist_append(headers, cookie);
+				headers = curl_slist_append(headers, "Content-Type: application/json");
+				curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
 
-				curl_easy_setopt(curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-				curl_easy_setopt(curl, CURLOPT_USERPWD, passwordHash.hex_digest());
-
-//				headers = curl_slist_append(headers, "Expect:");
-//				headers = curl_slist_append(headers, "Content-Type: application/json");
-//				curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
-
-//				curl_easy_setopt(curl, CURLOPT_POSTFIELDS, Aux1);
-//				curl_easy_setopt(curl, CURLOPT_POSTFIELDSIZE, -1L);
 				curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
 
 				// TODO might need config item to disable SSL verification
@@ -1224,16 +1218,29 @@ void SimulatorThread :: handle_lobby_authenticate(void)
 
 				curl_slist_free_all(headers);
 				curl_easy_cleanup(curl);
-				int wpos;
 				if(res == CURLE_OK) {
-					g_Log.AddMessageFormat("SITE AUTHENTICATED!");
+					AccountQuickData *aqd = g_AccountManager.GetAccountQuickDataByUsername(Aux2);
+					if(aqd != NULL) {
+						g_Log.AddMessageFormat("External service authenticated %s OK.", Aux2);
+						accPtr = g_AccountManager.FetchIndividualAccount(aqd->mID);
+					}
+					else
+						g_Log.AddMessageFormat("Service authenticated OK, but there was no local account with name %s", Aux2);
 				}
-				else {
-					g_Log.AddMessageFormat("AUTHENTICATION FAILED!");
-				}
+				else
+					g_Log.AddMessageFormat("Service returned error when confirming authentication. Status %d", res);
 			}
-
 		}
+	}
+	else if(authMethod == AuthMethod::DEV)
+	{
+		std::string password;
+		AccountData::GenerateSaltedHash(Aux3, password);
+
+		g_AccountManager.cs.Enter("SimulatorThread::handle_lobby_authenticate");
+		accPtr = g_AccountManager.GetValidLogin(Aux2, password.c_str());
+		g_AccountManager.cs.Leave();
+
 	}
 	else
 	{
@@ -1243,7 +1250,7 @@ void SimulatorThread :: handle_lobby_authenticate(void)
 
 	if(accPtr == NULL)
 	{
-		LogMessageL(MSG_ERROR, "Could not find account: %s:%s", Aux2, password.c_str());
+		LogMessageL(MSG_ERROR, "Could not find account: %s", Aux2);
 		ForceErrorMessage(g_Config.InvalidLoginMessage.c_str(), INFOMSG_ERROR);
 		Disconnect("SimulatorThread::handle_lobby_authenticate");
 		return;
@@ -12490,7 +12497,6 @@ int SimulatorThread :: handle_query_bug_report(void)
 
 	struct curl_slist *headers = NULL;
 	CURL *curl;
-	curl_global_init(CURL_GLOBAL_DEFAULT);
 	curl = curl_easy_init();
 	if(curl) {
 		curl_easy_setopt(curl, CURLOPT_URL, "https://api.github.com/repos/rockfireredmoon/iceee/issues");
