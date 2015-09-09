@@ -5375,7 +5375,7 @@ int SimulatorThread :: handle_command_who(void)
 // or account info for other admin commands.
 int SimulatorThread :: handle_command_gmwho(void)
 {
-	if(CheckPermissionSimple(Perm_Account, Permission_Admin) == false)
+	if(CheckPermissionSimple(Perm_Account, Permission_Sage) == false)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
 
 	int wpos = 0;
