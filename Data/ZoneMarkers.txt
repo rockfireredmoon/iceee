@@ -241,3 +241,7 @@ Sanctuary=2188.64,670,584.545,Wailing Crypt
 [ENTRY]
 ZoneID=75
 Sanctuary=1528.67,507,8096.74,Folkirk Manor
+
+[ENTRY]
+ZoneID=85
+Sanctuary=27301.4,630.152,79634.2,Kerakura's Lair
