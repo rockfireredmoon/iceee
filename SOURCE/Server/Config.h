@@ -202,6 +202,7 @@ public:
 	unsigned int MaxPVPPlayerLootItems;				// Minimum number of items that will be dropped by the player after a PVP fight
 
 	std::string GitHubToken;			// GitHub personal access token for bug reports
+	std::string ServiceAuthURL;			// URL to use for external authentication
 
 	// Global SSL options
 	bool SSLVerifyPeer;					// For SSL, the default for peer verification

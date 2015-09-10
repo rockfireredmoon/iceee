@@ -409,6 +409,8 @@ void LoadConfig(const char *filename)
 				g_Config.InvalidLoginMessage = lfr.BlockToStringC(1, 0);
 			else if(strcmp(NameBlock, "GitHubToken") == 0)
 				g_Config.GitHubToken = lfr.BlockToStringC(1, 0);
+			else if(strcmp(NameBlock, "ServiceAuthURL") == 0)
+				g_Config.ServiceAuthURL = lfr.BlockToStringC(1, 0);
 			else if(strcmp(NameBlock, "VerifyMovement") == 0)
 				g_Config.VerifyMovement = lfr.BlockToBool(1);
 			else if(strcmp(NameBlock, "DebugLogAIScriptUse") == 0)

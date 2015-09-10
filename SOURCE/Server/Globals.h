@@ -99,7 +99,8 @@ namespace AuthMethod
 	enum Enum
 	{
 		EXTERNAL = 0,
-		DEV = 1
+		DEV = 1,
+		SERVICE
 	};
 }
 
