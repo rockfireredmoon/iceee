@@ -228,10 +228,10 @@ ID=1030452
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=Untitled
 Pos=27535.5,618.133,78382.8
-Orient=0,-0.795843,0,0.605503
+Orient=0,-0.852317,0,0.523026
 Scale=1,1,1
-spawnPackage=z85_keku_Kerakura
-aiModule=custom_heathendel_mage40
+spawnPackage=#3690
+aiModule=custom_heathendel_kronos
 links_count=1
 link=1129402,0
 
@@ -242,7 +242,7 @@ Name=Untitled
 Pos=27253.2,654.907,78291.3
 Orient=0,-0.663135,0,0.748499
 Scale=1,1,1
-spawnPackage=z85_keku_Dustspinner
+spawnPackage=#3687
 loyaltyRadius=85
 links_count=1
 link=1030467,1
@@ -254,7 +254,7 @@ Name=Untitled
 Pos=27253.3,656.799,78580
 Orient=0,-0.501213,0,0.865324
 Scale=1,1,1
-spawnPackage=z85_keku_Dustspinner
+spawnPackage=#3687
 loyaltyRadius=85
 links_count=1
 link=1030468,1
@@ -266,7 +266,7 @@ Name=Untitled
 Pos=27440.7,655.999,78099.4
 Orient=0,-0.886627,0,0.462485
 Scale=1,1,1
-spawnPackage=z85_keku_Dustspinner
+spawnPackage=#3687
 loyaltyRadius=85
 links_count=1
 link=1030466,1
@@ -278,7 +278,7 @@ Name=Untitled
 Pos=27748.3,656.772,78121.9
 Orient=0,-0.998531,0,-0.0541771
 Scale=1,1,1
-spawnPackage=z85_keku_Dustspinner
+spawnPackage=#3687
 loyaltyRadius=85
 links_count=1
 link=1030465,1
@@ -290,7 +290,7 @@ Name=Untitled
 Pos=27857.9,654.968,78324.5
 Orient=0,-0.752331,0,-0.658786
 Scale=1,1,1
-spawnPackage=z85_keku_Dustspinner
+spawnPackage=#3687
 loyaltyRadius=85
 links_count=1
 link=1030464,1
@@ -302,7 +302,7 @@ Name=Untitled
 Pos=27825.2,653.076,78602.4
 Orient=0,0.535416,0,0.844589
 Scale=1,1,1
-spawnPackage=z85_keku_Dustspinner
+spawnPackage=#3687
 loyaltyRadius=85
 links_count=1
 link=1030463,1
@@ -371,20 +371,20 @@ link=1030453,1
 ID=1030470
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=Untitled
-Pos=27411.2,631.507,78364.9
+Pos=27445.8,631.507,78364.9
 Orient=0,-0.807558,0,0.589788
 Scale=1,1,1
-spawnPackage=z85_keku_Sandmother
+spawnPackage=#3688
 loyaltyRadius=85
 
 [ENTRY]
 ID=1030471
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=Untitled
-Pos=27658.9,612.919,78425.3
+Pos=27626,612.919,78425.3
 Orient=0,-0.881958,0,0.471329
 Scale=1,1,1
-spawnPackage=z85_keku_Sandmother
+spawnPackage=#3688
 loyaltyRadius=85
 
 [ENTRY]
@@ -394,7 +394,7 @@ Name=Untitled
 Pos=27677.2,669.169,77916.6
 Orient=0,-0.761095,0,0.64864
 Scale=1,1,1
-spawnPackage=z85_keku_Sandmother
+spawnPackage=#3688
 loyaltyRadius=75
 
 [ENTRY]
@@ -404,7 +404,7 @@ Name=Untitled
 Pos=27625.1,657.203,77968.2
 Orient=0,0.266731,0,0.963771
 Scale=1,1,1
-spawnPackage=z85_keku_Sandmother
+spawnPackage=#3688
 links_count=1
 link=1030474,0
 
@@ -415,17 +415,35 @@ Name=Untitled
 Pos=27715.8,657.508,77977
 Orient=0,-0.909298,0,-0.416147
 Scale=1,1,1
-spawnPackage=z85_keku_Sandmother
+spawnPackage=#3688
 links_count=1
 link=1030473,0
 
 [ENTRY]
 ID=1129402
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=27495.4,618.196,78523.4
 Orient=0,0.531186,0,0.847255
 Scale=1,1,1
 links_count=1
 link=1030452,0
+
+[ENTRY]
+ID=1129501
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=27415.7,627.184,78479.4
+Orient=0,-0.783327,0,0.62161
+Scale=1,1,1
+spawnPackage=#3688
+
+[ENTRY]
+ID=1129502
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=27568.8,615.658,78534.7
+Orient=0,-0.836026,0,0.54869
+Scale=1,1,1
+spawnPackage=#3688
 
