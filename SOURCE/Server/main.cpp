@@ -1292,14 +1292,25 @@ void Debug_OutputCharacter(FILE *output, int index, CreatureInstance *cInst)
 	fprintf(output, "    Pos: %d, %d, %d\r\n", cInst->CurrentX, cInst->CurrentY, cInst->CurrentZ);
 	if(cInst->aiScript != NULL)
 	{
-		fprintf(output, "    AIScript Ptr: %p (%s) curInst: %d\r\n", cInst->aiScript, cInst->aiScript->def->scriptName.c_str(), cInst->aiScript->curInst);
+		fprintf(output, "    AI TLS Ptr: %p (%s) curInst: %d\r\n", cInst->aiScript, cInst->aiScript->def->scriptName.c_str(), cInst->aiScript->curInst);
 	}
 	if(cInst->aiNut != NULL)
 	{
-		fprintf(output, "    AINut Ptr: %p (%s)\r\n", cInst->aiScript, cInst->aiScript->def->scriptName.c_str());
+		fprintf(output, "    AI Squirrel Ptr: %p (%s)\r\n", cInst->aiNut, cInst->aiNut->def->scriptName.c_str());
 	}
 	fprintf(output, "    Target: %s (Ptr: %p)\r\n", (cInst->CurrentTarget.targ != NULL) ? cInst->CurrentTarget.targ->css.display_name : "null", cInst->CurrentTarget.targ);
 	fprintf(output, "    Might: %d (%d), Will: %d (%d)\r\n", cInst->css.might, cInst->css.might_charges, cInst->css.will, cInst->css.will_charges);
+	if(cInst->charPtr != NULL) {
+		QuestReferenceContainer act = cInst->charPtr->questJournal.activeQuests;
+		for(std::vector<QuestReference>::iterator it = act.itemList.begin(); it != act.itemList.end(); ++it) {
+			QuestReference ref = *it;
+			fprintf(output, "    Quest: %d (ACT %d)\r\n", ref.QuestID, ref.CurAct);
+			QuestScript::QuestNutPlayer *questScript = g_QuestNutManager.GetActiveScript(cInst->CreatureID, ref.QuestID);
+			if(questScript != NULL && questScript->def != NULL) {
+				fprintf(output, "    Quest Script: %d \r\n", questScript->def->scriptName.c_str());
+			}
+		}
+	}
 	int abi;
 	for(abi = 0; abi <= 1; abi++)
 	{

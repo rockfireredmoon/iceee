@@ -826,7 +826,7 @@ void HTTPDistribute :: HandleHTTP_POST(char *dataStart, MULTISTRING &header)
 				MULTISTRING params;
 				ExtractPairs(dataStart, params);
 
-				ReportBuffer report(65535, ReportBuffer::NEWLINE_WEB);
+				ReportBuffer report(65535, ReportBuffer::NEWLINE_N);
 				int r = RunRemoteAction(report, header, params);
 
 				int wpos = 0;

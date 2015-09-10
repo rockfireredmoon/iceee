@@ -3329,9 +3329,10 @@ void ActiveInstance :: ScriptCallUse(int sourceCreatureID, int usedCreatureDefID
 		nutScriptPlayer->JumpToLabel("on_use", p);
 		Util::SafeFormat(buffer, sizeof(buffer), "on_use_%d", usedCreatureDefID);
 	}
-	else
+	else {
 		Util::SafeFormat(buffer, sizeof(buffer), "onUse_%d", usedCreatureDefID);
-	ScriptCall(buffer);
+		ScriptCall(buffer);
+	}
 }
 
 void ActiveInstance :: ScriptCallUseHalt(int sourceCreatureID, int usedCreatureDefID)
@@ -3345,9 +3346,10 @@ void ActiveInstance :: ScriptCallUseHalt(int sourceCreatureID, int usedCreatureD
 
 		Util::SafeFormat(buffer, sizeof(buffer), "on_use_halt_%d", usedCreatureDefID);
 	}
-	else
+	else {
 		Util::SafeFormat(buffer, sizeof(buffer), "onUseHalt_%d", usedCreatureDefID);
-	ScriptCall(buffer);
+		ScriptCall(buffer);
+	}
 }
 
 void ActiveInstance :: ScriptCallUseFinish(int sourceCreatureID, int usedCreatureDefID)
@@ -3361,9 +3363,10 @@ void ActiveInstance :: ScriptCallUseFinish(int sourceCreatureID, int usedCreatur
 
 		Util::SafeFormat(buffer, sizeof(buffer), "on_use_finish_%d", usedCreatureDefID);
 	}
-	else
+	else {
 		Util::SafeFormat(buffer, sizeof(buffer), "onUseFinish_%d", usedCreatureDefID);
-	ScriptCall(buffer);
+		ScriptCall(buffer);
+	}
 }
 
 //Calls a script jump label.  Can be used for any generic purpose.

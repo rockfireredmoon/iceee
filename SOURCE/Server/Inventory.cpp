@@ -1200,8 +1200,8 @@ int CheckSection_Inventory(FileReader &fr, InventoryManager &cd, const char *deb
 	ItemDef *itemDef = g_ItemManager.GetPointerByID(ID);
 	if(itemDef == NULL)
 	{
-		g_Log.AddMessageFormat("Warning: %s [%s] Item ID [%d] not found for container [%s]", debugType, debugName, ID, fr.BlockToStringC(0, 0));
-		Debug::Log("Warning: %s [%s] Item ID [%d] not found for container [%s]", debugType, debugName, ID, fr.BlockToStringC(0, 0));
+		g_Log.AddMessageFormat("[INVENTORY] Warning: %s [%s] Item ID [%d] not found for container [%s]", debugType, debugName, ID, fr.BlockToStringC(0, 0));
+		Debug::Log("[INVENTORY] Warning: %s [%s] Item ID [%d] not found for container [%s]", debugType, debugName, ID, fr.BlockToStringC(0, 0));
 		return -1;
 	}
 	//tt.Finish();

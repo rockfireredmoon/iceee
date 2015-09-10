@@ -18,6 +18,8 @@
 #include "NPC.h"
 #include "Instance.h"
 #include "InstanceScale.h"
+#include "AIScript.h"
+#include "AIScript2.h"
 #include "QuestScript.h"
 #include "ZoneDef.h"
 #include "Account.h"
@@ -361,6 +363,13 @@ void Helper_OutputCreature(ReportBuffer &report, int index, CreatureInstance *ob
 		obj->css.display_name,
 		obj->CurrentTarget.targ,
 		(obj->CurrentTarget.targ != NULL) ? obj->CurrentTarget.targ->css.display_name : "null");
+
+	if(obj->aiScript != NULL && obj->aiScript->mActive)
+		report.AddLine("TSL %s", obj->aiScript->def->scriptName.c_str());
+	if(obj->aiNut != NULL)
+		report.AddLine("Squirrel %s calls: %lu ptime: %lu itime: %l exec: %s, halting: %s active: %s", obj->aiNut->def->scriptName.c_str(),obj->aiNut->mCalls,
+				obj->aiNut->mProcessingTime, obj->aiNut->mInitTime, obj->aiNut->mExecuting ? "yes" : "no", obj->aiNut->mHalting ? "yes" : "no", obj->aiNut->mActive ? "yes" : "no");
+
 	report.AddLine("%d,%d,%d", obj->CurrentX, obj->CurrentY, obj->CurrentZ);
 	for(d = 0; d < 2; d++)
 	{
@@ -388,7 +397,7 @@ void RefreshScripts(ReportBuffer &report)
 	double seconds;
 	for(; it != g_QuestNutManager.questAct.end(); ++it) {
 		std::list<QuestScript::QuestNutPlayer *> l = it->second;
-		report.AddLine("+-Creature %d", it->first);
+		report.AddLine("+-Quest %d", it->first);
 		for(std::list<QuestScript::QuestNutPlayer *>::iterator lit = l.begin(); lit != l.end(); ++lit) {
 			QuestScript::QuestNutPlayer *player = *lit;
 			seconds = (double)player->mProcessingTime / 1000.0;

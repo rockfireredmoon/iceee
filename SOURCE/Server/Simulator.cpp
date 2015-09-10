@@ -1285,6 +1285,8 @@ void SimulatorThread :: handle_lobby_authenticate(void)
 		}
 	}
 
+	Debug::Log("[CS] Account '%s' logged in", accPtr->Name);
+
 	//If we get here, we can successfully log into the account.
 	accPtr->AdjustSessionLoginCount(1);
 	LogMessageL(MSG_SHOW, "Logging in as: %s [Socket:%d]", accPtr->Name, sc.ClientSocket);
@@ -11810,7 +11812,7 @@ int SimulatorThread :: handle_query_util_addfunds() {
 		CreatureInstance *creature = creatureInst->actInst->GetPlayerByName(query.args[3].c_str());
 		if(creature != NULL) {
 			creature->AdjustCopper(amount);
-			g_Log.AddMessageFormat("[SAGE] %s gave %s %d copper because '%s'",
+			Debug::Log("[SAGE] %s gave %s %d copper because '%s'",
 					pld.charPtr->cdef.css.display_name, creature->charPtr->cdef.css.display_name, amount, query.args[2].c_str());
 			g_CharacterManager.ReleaseThread();
 			return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
@@ -11859,6 +11861,8 @@ int SimulatorThread :: handle_query_user_auth_reset() {
 	acc->SetPermission(Perm_Account,"passwordreset", true);
 
 	acc->PendingMinorUpdates++;
+
+	Debug::Log("[SAGE] User key and password reset for %s by %s", creatureInst->css.display_name, accName.c_str());
 
 	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
 }
@@ -12226,6 +12230,7 @@ int SimulatorThread :: handle_query_item_market_purchase_name(void)
 	}
 
 	string fullName = firstName + " " + secondName;
+	string currentName = creatureInst->css.display_name;
 
 	if(g_Config.AccountCredits) {
 		creatureInst->css.credits = pld.accPtr->Credits;
@@ -12254,6 +12259,9 @@ int SimulatorThread :: handle_query_item_market_purchase_name(void)
 	g_AccountManager.RemoveUsedCharacterName(pld.CreatureDefID);
 	g_AccountManager.AddUsedCharacterName(pld.CreatureDefID, fullName.c_str());
 
+
+	Debug::Log("[CS] Player '%s' changed their name to '%s'", currentName.c_str(), fullName.c_str());
+
 	creatureInst->css.credits -= g_Config.NameChangeCost;
 	if(g_Config.AccountCredits) {
 		pld.accPtr->Credits = creatureInst->css.credits;
@@ -12265,6 +12273,7 @@ int SimulatorThread :: handle_query_item_market_purchase_name(void)
 }
 int SimulatorThread :: handle_query_item_market_reload(void)
 {
+	Debug::Log("[CS] Credit Shop reloaded");
 	g_CharacterManager.GetThread("SimulatorThread::MarketReload");
 	g_CSManager.LoadItems();
 	g_CharacterManager.ReleaseThread();
@@ -12353,7 +12362,8 @@ int SimulatorThread :: handle_query_item_market_edit(void)
 
 		g_CSManager.SaveItem(csItem);
 		g_CSManager.mItems[csItem->mId] = csItem;
-		g_Log.AddMessageFormat("Created credit shop csItem %d", csItem->mId);
+
+		Debug::Log("[CS] Updated Credit shop item %d '%s'", csItem->mId, csItem->mTitle.c_str());
 		return PrepExt_QueryResponseString(SendBuf, query.ID, Aux3);
 	}
 	return PrepExt_QueryResponseError(SendBuf, query.ID, "Invalid sub-query.");
