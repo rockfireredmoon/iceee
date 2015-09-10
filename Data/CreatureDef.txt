@@ -34044,7 +34044,7 @@ channeling_break_chance=500
 appearance=n4:{["sk"]={["rock2"]="E92849",["base"]="7F0000",["eye"]="009409",["snow"]="AA351D",["rock1"]="943208"},["c"]="Horde-Mountain_Goliath",["sz"]="3"}
 level=47
 display_name=Brewtus
-profession=2
+profession=3
 creature_category=Magical
 ai_package=melee_creature_brave_6
 total_size=60
