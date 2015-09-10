@@ -1226,6 +1226,21 @@ WarpTo=8255,278,60829,9
 Facing=136
 Message=Leaving the Shadow Void...
 
+[ENTRY]
+Name=dustshore_to_kerakuraslair
+Type=warp
+ObjectID=3692
+WarpTo=27260,622,79635,85
+Facing=64
+Message=Entering Kerakuras Lair...
+
+[ENTRY]
+Name=kerakuraslair_to_dustshore
+Type=warp
+ObjectID=3693
+WarpTo=27206,609,79799,9
+Facing=90
+Message=Leaving Kerakuras Lair...
 
 [ENTRY]
 ;Zone=75
