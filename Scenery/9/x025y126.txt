@@ -1,16 +1,17 @@
 [ENTRY]
 ID=10000393
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=19112,333,95140
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=166
-sceneryName=generated_spawn
 spawnPackage=z9_eur_gen_Cazador_Tunnel_1450
 
 [ENTRY]
 ID=151028034
 Asset=Prop-Anubian_Camp#Prop-Anubian_Watchtower
+Name=Untitled
 Pos=18855.8,358.272,95025
 Orient=0,-0.380188,0,0.924909
 Scale=3.5,3.5,3.5
@@ -19,6 +20,7 @@ Flags=1
 [ENTRY]
 ID=151028057
 Asset=Prop-Anubian_Palisade
+Name=Untitled
 Pos=19290.3,324.864,95160
 Orient=0.0643535,0.442177,0.0427349,0.893595
 Scale=3.5,3.5,3.5
@@ -27,6 +29,7 @@ Flags=1
 [ENTRY]
 ID=151028058
 Asset=Prop-Anubian_Palisade
+Name=Untitled
 Pos=19367.1,310.706,95049
 Orient=0.082772,0.860679,-0.013721,-0.502187
 Scale=2.925,2.925,2.925
@@ -35,6 +38,7 @@ Flags=1
 [ENTRY]
 ID=151028059
 Asset=Prop-Anubian_Palisade
+Name=Untitled
 Pos=19444.1,294.484,94958
 Orient=0.0805129,0.92495,-0.0570597,-0.367056
 Scale=2.575,2.575,2.575
@@ -43,6 +47,7 @@ Flags=1
 [ENTRY]
 ID=151028060
 Asset=Prop-Anubian_Palisade
+Name=Untitled
 Pos=18955.8,327.497,95048
 Orient=0.0473389,0.704362,0.0610464,0.705625
 Scale=3.5,3.5,3.5
@@ -51,6 +56,7 @@ Flags=1
 [ENTRY]
 ID=151028061
 Asset=Prop-Anubian_Palisade
+Name=Untitled
 Pos=18949,313.409,94906
 Orient=0.0833878,0.691972,0.00927105,-0.717032
 Scale=3,3,3
@@ -59,6 +65,7 @@ Flags=1
 [ENTRY]
 ID=151028062
 Asset=Prop-Anubian_Palisade
+Name=Untitled
 Pos=18937.8,302.112,94782
 Orient=0.0980688,0.631908,-0.0109845,-0.768736
 Scale=2.575,2.575,2.575
@@ -67,6 +74,7 @@ Flags=1
 [ENTRY]
 ID=151028070
 Asset=Prop-Anubian_Camp#Prop-Anubian_Banner1
+Name=Untitled
 Pos=19301.1,335.653,94994.3
 Orient=0,-0.305058,0,0.952334
 Scale=3,3,3
@@ -75,6 +83,7 @@ Flags=1
 [ENTRY]
 ID=151028071
 Asset=Prop-Anubian_Banner1
+Name=Untitled
 Pos=19110.1,333.791,94899.9
 Orient=0,-0.139543,0,0.990216
 Scale=3,3,3
@@ -83,6 +92,7 @@ Flags=1
 [ENTRY]
 ID=151028085
 Asset=Prop-Tribal_Furniture#Prop-Tribal_Lamp1
+Name=Untitled
 Pos=18985.4,359.928,94895
 Orient=0,0,0,1
 Scale=3.225,3.225,3.225
@@ -91,6 +101,7 @@ Flags=1
 [ENTRY]
 ID=151028086
 Asset=Prop-Tribal_Lamp1
+Name=Untitled
 Pos=19314,348.377,95057
 Orient=0,0,0,1
 Scale=3.225,3.225,3.225
@@ -99,6 +110,7 @@ Flags=1
 [ENTRY]
 ID=151028087
 Asset=Prop-Tribal_Lamp1
+Name=Untitled
 Pos=19431.5,365.543,94924
 Orient=0,0,0,1
 Scale=3.225,3.225,3.225
@@ -107,6 +119,7 @@ Flags=1
 [ENTRY]
 ID=151028088
 Asset=Prop-Tribal_Lamp1
+Name=Untitled
 Pos=18968.8,364.682,94703
 Orient=0,0,0,1
 Scale=3.225,3.225,3.225
@@ -115,6 +128,7 @@ Flags=1
 [ENTRY]
 ID=151028118
 Asset=CL-Training_Post1
+Name=Untitled
 Pos=18944.5,369.101,94540
 Orient=0,0.531186,0,0.847255
 Scale=1.65,1.65,1.65
@@ -123,6 +137,7 @@ Flags=1
 [ENTRY]
 ID=151028120
 Asset=Prop-Training_Post
+Name=Untitled
 Pos=18959.7,365.994,94515
 Orient=0,0.203567,0,0.979061
 Scale=1.65,1.65,1.65
@@ -131,6 +146,7 @@ Flags=1
 [ENTRY]
 ID=151028121
 Asset=Prop-Training_Post
+Name=Untitled
 Pos=18932.5,372.333,94570
 Orient=0,0.724287,0,0.689499
 Scale=1.65,1.65,1.65
@@ -139,6 +155,7 @@ Flags=1
 [ENTRY]
 ID=151028122
 Asset=Prop-Battlefield_Skeletons#Prop-Battlefield_Arrows
+Name=Untitled
 Pos=18939.3,369.946,94520
 Orient=0,0,0,1
 Scale=1.25,1.25,1.25
@@ -147,6 +164,7 @@ Flags=1
 [ENTRY]
 ID=151028123
 Asset=Prop-Battlefield_Arrows
+Name=Untitled
 Pos=18933.2,372.213,94566
 Orient=0,0,0,1
 Scale=1.25,1.25,1.25
@@ -155,6 +173,7 @@ Flags=1
 [ENTRY]
 ID=151028124
 Asset=Prop-Battlefield_Arrows
+Name=Untitled
 Pos=19008.3,372.744,94573
 Orient=0,-0.780209,0,0.625519
 Scale=1.25,1.25,1.25
@@ -163,15 +182,16 @@ Flags=1
 [ENTRY]
 ID=151035872
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=19160.1,382.757,94657
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=5_cazadoreEntranceSimian
-outerRadius=10
 
 [ENTRY]
 ID=151035898
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=19341.8,344.086,94720
 Orient=0,0,0,1
 Scale=1,1,1
@@ -181,6 +201,7 @@ link=151035897,1
 [ENTRY]
 ID=151035914
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=18856.1,385.255,94538
 Orient=0,0,0,1
 Scale=1,1,1
@@ -191,6 +212,7 @@ link=151035915,1
 [ENTRY]
 ID=151035915
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=18985.8,362.624,94674
 Orient=0,0,0,1
 Scale=1,1,1
@@ -201,18 +223,19 @@ link=151035914,1
 [ENTRY]
 ID=151035916
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=18872.2,378.855,94660
 Orient=0,-0.685289,0,0.728272
 Scale=0.85,0.85,0.85
+spawnPackage=5_cazadoreEntranceSimian
 links_count=2
 link=151035917,1
 link=151035919,1
-spawnPackage=5_cazadoreEntranceSimian
-outerRadius=10
 
 [ENTRY]
 ID=151035917
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=18890.7,372.289,94831
 Orient=0,0,0,1
 Scale=1,1,1
@@ -223,6 +246,7 @@ link=151035918,1
 [ENTRY]
 ID=151035918
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=18771,386.661,95020
 Orient=0,0,0,1
 Scale=1,1,1
@@ -233,6 +257,7 @@ link=151035919,1
 [ENTRY]
 ID=151035919
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=18853.9,378.336,94814
 Orient=0,0,0,1
 Scale=1,1,1
@@ -243,48 +268,49 @@ link=151035918,1
 [ENTRY]
 ID=151035920
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=19411.6,373.118,95101
 Orient=0,-0.223106,0,0.974794
 Scale=1,1,1
+spawnPackage=5_cazadoreEntranceSimian
 links_count=1
 link=151035921,1
-spawnPackage=5_cazadoreEntranceSimian
-outerRadius=10
 
 [ENTRY]
 ID=151035929
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=19284.7,339.753,94818
 Orient=0,0.539632,0,0.841901
 Scale=1,1,1
 spawnPackage=5_cazadoreEntranceAnubian
-outerRadius=1
 
 [ENTRY]
 ID=151035930
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=19407,366.674,94942
 Orient=0,0.976806,0,0.214125
 Scale=1.025,1.025,1.025
+spawnPackage=5_cazadoreEntranceSimian
 links_count=1
 link=151035933,1
-spawnPackage=5_cazadoreEntranceSimian
-outerRadius=10
 
 [ENTRY]
 ID=151035931
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=18980.1,361.801,94743
 Orient=0,-0.114747,0,0.993395
 Scale=1,1,1
+spawnPackage=5_cazadoreEntranceSimian
 links_count=1
 link=151035932,1
-spawnPackage=5_cazadoreEntranceSimian
-outerRadius=10
 
 [ENTRY]
 ID=151035932
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=19209.6,354.37,94819
 Orient=0,0,0,1
 Scale=1,1,1
@@ -294,6 +320,7 @@ link=151035931,1
 [ENTRY]
 ID=151035933
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=19316.6,358.423,94866
 Orient=0,0,0,1
 Scale=1,1,1
@@ -303,6 +330,7 @@ link=151035930,1
 [ENTRY]
 ID=151050814
 Asset=Prop-Bird1#Prop-Bird1
+Name=Untitled
 Pos=19389.3,512.81,94516
 Orient=0,0,0,1
 Scale=2,2,2
@@ -310,6 +338,7 @@ Scale=2,2,2
 [ENTRY]
 ID=151059598
 Asset=Prop-Dungeon-Entrance-Mine1#Prop-Dungeon-Entrance-Mine1
+Name=Untitled
 Pos=19086.9,352.781,95183.4
 Orient=0,0.972329,0,0.233617
 Scale=4.85,4.85,4.85
@@ -318,6 +347,7 @@ Flags=1
 [ENTRY]
 ID=151059599
 Asset=Prop-Instance_Entrance#Prop-Instance_Entrance
+Name=Untitled
 Pos=19124.6,407.392,95138.6
 Orient=0,-0.886627,0,0.462485
 Scale=1.85,1.85,1.85

@@ -1375,6 +1375,10 @@ Spawn=1519,100  ;Zhushi's Lair (1)
 Name=z9_eur_gen_Bogwahr_Maldar_2351
 Spawn=2351,100  ;Bogwahr Maldar (45)
 
+[ENTRY]
+Name=z9_eur_gen_Kerakuras_Lair_3692
+Spawn=3692,100  ;Kerakuras Lair (1)
+
 ; NOTE: from creature file
 [ENTRY]
 Name=z9_eur_gen_Hans_Longstrider
