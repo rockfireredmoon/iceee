@@ -370,7 +370,7 @@ class Screens.ChatWindow extends GUI.Component
 
 	function onLinkClicked( message, data )
 	{
-		if("href" in data && Util.startsWith(data.href, "http://") || Util.startsWith(data.href, "https://")) {
+		if("href" in data && ( Util.startsWith(data.href, "http://") || Util.startsWith(data.href, "https://"))) {
 			System.openURL(data.href);
 		}
 		else if("href" in data && Util.startsWith(data.href, "forum://")) {
@@ -960,12 +960,12 @@ class Screens.ChatWindow extends GUI.Component
 				break;
 			else {
 				sidx = fidx;
-				local eidx = message.find(endString, sidx + 1);
+				local eidx = message.find(endString, sidx + searchString.len());
 				if(eidx == null)
 					eidx = message.len();
 					
 				// Have link start and end position now so extract it and create link HTML
-				local link = message.slice(sidx, eidx == message.len() ? eidx : (eidx + 1));
+				local link = message.slice(sidx, eidx == message.len() ? eidx : (eidx + endString.len()));
 				local newlink = callbackFunction(link);
 				
 				// Reconstruct the message
@@ -973,13 +973,13 @@ class Screens.ChatWindow extends GUI.Component
 					if(eidx == message.len())
 						message = message.slice(0, sidx) + newlink;
 					else
-						message = message.slice(0, sidx) + newlink + message.slice(eidx + 1);
+						message = message.slice(0, sidx) + newlink + message.slice(eidx + endString.len());
 				}
 				else {
 					if(eidx == message.len())
 						message = newlink;
 					else 
-						message = newlink + message.slice(eidx + 1);
+						message = newlink + message.slice(eidx + endString.len());
 				}
 					
 				// Next link
@@ -1068,11 +1068,11 @@ class Screens.ChatWindow extends GUI.Component
 				return color;
 			}
 			message = _searchAndReplace(message, "#", "#", colorReplace);
-			message = _searchAndReplace(message, "{", "}", function(text) {
-				return "<i>" + text.slice(1, text.len() - 1) + "</i>";
+			message = _searchAndReplace(message, "[i]", "[/i]", function(text) {
+				return "<i>" + text.slice(3, text.len() - 4) + "</i>";
 			});
-			message = _searchAndReplace(message, "\\", "\\", function(text) {
-				return "<b>" + text.slice(1, text.len() - 1) + "</b>";
+			message = _searchAndReplace(message, "[b]", "[/b]", function(text) {
+				return "<b>" + text.slice(3, text.len() - 4) + "</b>";
 			});
 			
 			if(bolded) 

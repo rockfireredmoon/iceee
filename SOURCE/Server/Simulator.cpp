@@ -3246,7 +3246,7 @@ int SimulatorThread :: handle_query_admin_check(void)
 
 int SimulatorThread :: handle_query_persona_gm(void)
 {
-	if(CheckPermissionSimple(Perm_Account, Permission_Admin) == false)
+	if(CheckPermissionSimple(Perm_Account, Permission_Sage) == false)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
 
 	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
@@ -10245,7 +10245,9 @@ int SimulatorThread :: handle_query_party(void)
 	}
 	else if(strcmp(command, "loot.mode") == 0) {
 		ActiveParty *party = g_PartyManager.GetPartyByID(creatureInst->PartyID);
-		if(party == NULL)
+		if(!g_Config.PartyLoot)
+			SendInfoMessage("Party loot modes are currently disabled.", INFOMSG_ERROR);
+		else if(party == NULL)
 			SendInfoMessage("You must be in a party to set loot mode.", INFOMSG_INFO);
 		else {
 
@@ -10275,7 +10277,9 @@ int SimulatorThread :: handle_query_party(void)
 	}
 	else if(strcmp(command, "loot.flags") == 0)	{
 		ActiveParty *party = g_PartyManager.GetPartyByID(creatureInst->PartyID);
-		if(party == NULL)
+		if(!g_Config.PartyLoot)
+			SendInfoMessage("Party loot modes are currently disabled.", INFOMSG_ERROR);
+		else if(party == NULL)
 			SendInfoMessage("You must be in a party to set loot mode.", INFOMSG_INFO);
 		else {
 			if(query.argCount >= 2)

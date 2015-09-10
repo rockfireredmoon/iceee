@@ -194,6 +194,7 @@ public:
 	int SquirrelVMStackSize;						// Initial VM stack size
 
 	bool PersistentBuffs;              //If true, active buffs will be saved and restored on next login
+	bool PartyLoot;						// Whether to allow party loot
 
 	bool AccountCredits;				// If true, credits will be stored at the account level rather than per character and shared across all characters
 	unsigned int NameChangeCost;					// Number of credits a last name change costs
