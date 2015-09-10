@@ -1,6 +1,6 @@
 [ENTRY]
 Name=z85_keku_Exit_to_New_Badari
-;Spawn=2764,100  ;Exit to New Badari (1) at 0
+Spawn=3693,100  ;Exit to New Badari (1) at 0
 
 [ENTRY]
 Name=z85_keku_Dustspinner
