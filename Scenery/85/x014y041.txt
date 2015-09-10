@@ -419,6 +419,8 @@ Pos=27305.9,613.458,79430.3
 Orient=0,-0.761095,0,0.64864
 Scale=1,1,1
 spawnPackage=z85_keku_Scaleblade
+links_count=1
+link=1030446,0
 
 [ENTRY]
 ID=1030446
@@ -428,6 +430,8 @@ Pos=27380.4,612.928,79450
 Orient=0,-0.80162,0,0.597834
 Scale=1,1,1
 spawnPackage=z85_keku_Scaleblade
+links_count=1
+link=1030445,0
 
 [ENTRY]
 ID=1030447
@@ -437,6 +441,8 @@ Pos=27349.3,653.065,78861.2
 Orient=0,-0.707107,0,0.707107
 Scale=1,1,1
 spawnPackage=z85_keku_Scaleblade
+links_count=1
+link=1030448,0
 
 [ENTRY]
 ID=1030448
@@ -446,6 +452,8 @@ Pos=27409.8,652.927,78867.5
 Orient=0,-0.707107,0,0.707107
 Scale=1,1,1
 spawnPackage=z85_keku_Scaleblade
+links_count=1
+link=1030447,0
 
 [ENTRY]
 ID=1030449
@@ -455,6 +463,7 @@ Pos=27376.8,650.405,78876.9
 Orient=0,-0.707107,0,0.707107
 Scale=1,1,1
 spawnPackage=z85_keku_Scaleblade
+loyaltyRadius=85
 links_count=1
 link=1030450,1
 
@@ -476,6 +485,7 @@ Pos=27410.3,654.576,78767.9
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=z85_keku_Dustspinner
+loyaltyRadius=85
 links_count=1
 link=1030461,1
 
@@ -487,6 +497,7 @@ Pos=27654,652.672,78743.2
 Orient=0,0.271547,0,0.962425
 Scale=1,1,1
 spawnPackage=z85_keku_Dustspinner
+loyaltyRadius=85
 links_count=1
 link=1030462,1
 
