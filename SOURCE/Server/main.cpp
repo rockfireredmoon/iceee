@@ -572,7 +572,7 @@ int main(int argc, char *argv[])
 
 	RunUpgradeCheck();
 
-	OpenChatLogFile("RegionChat.log");
+	g_ChatManager.OpenChatLogFile("RegionChat.log");
 	
 
 #ifdef USE_WINDOWS_GUI
@@ -712,8 +712,8 @@ void ShutDown(void)
 {
 	Debug::Shutdown();
 
-	FlushChatLogFile();
-	CloseChatLogFile();
+	g_ChatManager.FlushChatLogFile();
+	g_ChatManager.CloseChatLogFile();
 
 	SaveSession("SessionVars.txt");
 	g_IGFManager.CheckAutoSave(true);
@@ -918,7 +918,7 @@ void RunServerMain(void)
 
 	static Timer logTimer;
 	if(logTimer.ReadyWithUpdate(300000))
-		FlushChatLogFile();
+		g_ChatManager.FlushChatLogFile();
 	Debug::CheckAutoSave(false);
 
 	g_SimulatorManager.RunPendingActions();
@@ -1307,7 +1307,7 @@ void Debug_OutputCharacter(FILE *output, int index, CreatureInstance *cInst)
 			fprintf(output, "    Quest: %d (ACT %d)\r\n", ref.QuestID, ref.CurAct);
 			QuestScript::QuestNutPlayer *questScript = g_QuestNutManager.GetActiveScript(cInst->CreatureID, ref.QuestID);
 			if(questScript != NULL && questScript->def != NULL) {
-				fprintf(output, "    Quest Script: %d \r\n", questScript->def->scriptName.c_str());
+				fprintf(output, "    Quest Script: %s \r\n", questScript->def->scriptName.c_str());
 			}
 		}
 	}

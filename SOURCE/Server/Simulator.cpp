@@ -839,7 +839,7 @@ void SimulatorThread :: ProcessDisconnect(void)
 			{
 
 				sprintf(Aux1, "%s has disconnected.", pld.charPtr->cdef.css.display_name);
-				LogChatMessage(Aux1);
+				g_ChatManager.LogChatMessage(Aux1);
 				WritePos = PrepExt_SendInfoMessage(SendBuf, Aux1, INFOMSG_INFO);
 				SendToAllSimulator(SendBuf, WritePos, InternalID);
 
@@ -4539,7 +4539,7 @@ void SimulatorThread :: handle_communicate(void)
 			Util::SafeFormat(LogBuffer, sizeof(LogBuffer), "%s %s: %s", channelInfo->prefix, pld.charPtr->cdef.css.display_name, message);
 		else
 			Util::SafeFormat(LogBuffer, sizeof(LogBuffer), "%s: %s", pld.charPtr->cdef.css.display_name, message);
-		LogChatMessage(LogBuffer);
+		g_ChatManager.LogChatMessage(LogBuffer);
 	}
 
 	if(tell == true && found == false)

@@ -11,6 +11,7 @@
 #include "ZoneDef.h"
 #include <stdlib.h>
 #include "FileReader.h"
+#include "Chat.h"
 
 PLATFORM_THREADRETURN HTTPDistributeThreadProc(PLATFORM_THREADARGS lpParam);
 
@@ -580,7 +581,7 @@ void HTTPDistribute :: LogInvalidRequest(void)
 
 void HTTPDistribute :: ProcessHTTPRequest(void)
 {
-	//g_Log.AddMessageFormat("[%s]", RecBuf);
+	//g_Log.AddMessageFormat("ProcessHTTPRequest [%s]", RecBuf);
 
 	MULTISTRING extract;
 	//g_Log.AddMessageFormat("[HTTP:%d] ExtractHeader [%s]", InternalIndex, RecBuf);
@@ -1064,6 +1065,36 @@ int HTTPDistribute :: FillAPI(void)
 	string response;
 	char buf[256];
 	int no = 0;
+	g_Log.AddMessageFormat("[REMOVEME] REQ: %s", FileNameRequest.c_str());
+
+	// Extract parameters
+	std::map<string, string> parms;
+	std::vector<string> parmStrings;
+	std::vector<string> parmStringList;
+	std::vector<string> parmValue;
+	Util::Split(FileNameRequest, "?", parmStrings);
+	if(parmStrings.size() > 1) {
+		FileNameRequest = parmStrings[0];
+		g_Log.AddMessageFormat("[REMOVEME] Split: %s", parmStrings[1].c_str());
+		Util::Split(parmStrings[1], "&", parmStringList);
+		for(std::vector<std::string>::iterator it = parmStringList.begin(); it != parmStringList.end(); ++it) {
+			g_Log.AddMessageFormat("[REMOVEME] PS: %s", (*it).c_str());
+			Util::Split(*it, "=", parmValue);
+			if(parmValue.size() == 1) {
+				g_Log.AddMessageFormat("[REMOVEME] Parm: %s", parmValue[0].c_str());
+				parms[parmValue[0]] = "";
+			}
+			else if(parmValue.size() == 2) {
+				g_Log.AddMessageFormat("[REMOVEME] Parm: %s = %s", parmValue[0].c_str(), parmValue[1].c_str());
+				parms[parmValue[0]] = parmValue[1];
+			}
+			else {
+				g_Log.AddMessageFormat("WARNING: URL parameter has too many values. %s", (*it).c_str());
+			}
+		}
+	}
+
+
 	if(Util::HasEnding(FileNameRequest, "/who")) {
 		response += "{ ";
 		SIMULATOR_IT it;
@@ -1077,11 +1108,29 @@ int HTTPDistribute :: FillAPI(void)
 				ZoneDefInfo *zd = g_ZoneDefManager.GetPointerByID(it->pld.CurrentZoneID);
 				if(cd != NULL && zd != NULL)
 				{
+					Util::SafeFormat(buf, sizeof(buf), "%s\"%s\" : { \"zone\": \"%s\", \"shard\": \"%s\" }", no > 1 ? "," : "", cd->cdef.css.display_name, zd->mName.c_str(), zd->mShardName.c_str());
 					no++;
-					Util::SafeFormat(buf, sizeof(buf), "\"%s\" : { \"zone\": \"%s\", \"shard\": \"%s\" }%s", cd->cdef.css.display_name, zd->mName.c_str(), zd->mShardName.c_str(), no > 1 ? "," : "");
 					response += buf;
 				}
 			}
+		}
+		response += " }";
+	}
+	else if(Util::HasEnding(FileNameRequest, "/chat")) {
+		response += "{ ";
+		int count = parms.find("count") == parms.end() ? 10 : atoi(parms.find("count")->second.c_str());
+		std::deque<ChatMessage>::iterator it;
+		int start = g_ChatManager.CircularChatBuffer.size() - 1 - count;
+		if(start < 0)
+			start = 0;
+		for(unsigned int i = start; i < g_ChatManager.CircularChatBuffer.size() ; i++)
+		{
+			ChatMessage cm = g_ChatManager.CircularChatBuffer[i];
+			std::string msg = cm.mMessage;
+			Util::EncodeJSONString(msg);
+			Util::SafeFormat(buf, sizeof(buf), "%s\"%lu\" : { \"message\": \"%s\" }", no > 0 ? "," : "", cm.mTime, msg.c_str());
+			response += buf;
+			no++;
 		}
 		response += " }";
 	}

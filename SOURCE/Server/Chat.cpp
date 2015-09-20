@@ -4,8 +4,8 @@
 #include "Simulator.h"
 #include "ByteBuffer.h"
 
+ChatManager g_ChatManager;
 bool NewChat = false;
-FILE* g_ChatLogFile = NULL;
 
 ChannelCompare ValidChatChannel[] = {
 	{CHAT_SCOPE_NONE,  "NULL", NULL, "NULL", true },
@@ -57,19 +57,23 @@ const int LOCAL_CHAT_RANGE = 750;
 RotatingList<int> ChatLogIndex(100);
 vector<string> ChatLogString(100);
 
-void LogChatMessage(const char *messageStr)
+//
+// ChatManager - Handles external logging of chat and a circular chat buffer for use by external services
+//
+
+ChatManager :: ChatManager()
 {
-	static char timeBuf[256];
-	if(g_ChatLogFile != NULL)
-	{
-		time_t curtime;
-		time(&curtime);
-		strftime(timeBuf, sizeof(timeBuf), "%x %X", localtime(&curtime));
-		fprintf(g_ChatLogFile, "%s : %s\r\n", timeBuf, messageStr);
-	}
+	cs.Init();
+	cs.SetDebugName("CS_ZONEDEFMGR");
+	m_ChatLogFile = NULL;
 }
 
-int handleCommunicationMsg(char *channel, char *message, char *name)
+ChatManager :: ~ChatManager()
+{
+	CircularChatBuffer.clear();
+}
+
+int ChatManager :: handleCommunicationMsg(char *channel, char *message, char *name)
 {
 	//Returns the number of bytes composing the message data.
 
@@ -170,22 +174,44 @@ int handleCommunicationMsg(char *channel, char *message, char *name)
 	return wpos;
 }
 
-void OpenChatLogFile(const char *filename)
+void ChatManager :: OpenChatLogFile(const char *filename)
 {
-	g_ChatLogFile = fopen(filename, "a");
+	m_ChatLogFile = fopen(filename, "a");
 }
 
-void CloseChatLogFile(void)
+void ChatManager :: CloseChatLogFile(void)
 {
-	if(g_ChatLogFile != NULL)
+	if(m_ChatLogFile != NULL)
 	{
-		fclose(g_ChatLogFile);
-		g_ChatLogFile = NULL;
+		fclose(m_ChatLogFile);
+		m_ChatLogFile = NULL;
 	}
 }
 
-void FlushChatLogFile(void)
+void ChatManager :: FlushChatLogFile(void)
 {
-	if(g_ChatLogFile != NULL)
-		fflush(g_ChatLogFile);
+	if(m_ChatLogFile != NULL)
+		fflush(m_ChatLogFile);
 }
+
+void ChatManager :: LogChatMessage(const char *messageStr)
+{
+	cs.Enter("ChatManager::LogChatMessage");
+	ChatMessage cm;
+	cm.mTime = g_ServerTime;
+	cm.mMessage = messageStr;
+	CircularChatBuffer.push_back(cm);
+	while(CircularChatBuffer.size() > MAX_CHAT_BUFFER_SIZE)
+		CircularChatBuffer.pop_front();
+	cs.Leave();
+
+	static char timeBuf[256];
+	if(m_ChatLogFile != NULL)
+	{
+		time_t curtime;
+		time(&curtime);
+		strftime(timeBuf, sizeof(timeBuf), "%x %X", localtime(&curtime));
+		fprintf(m_ChatLogFile, "%s : %s\r\n", timeBuf, messageStr);
+	}
+}
+

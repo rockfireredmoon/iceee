@@ -7,7 +7,9 @@
 
 #include <vector>
 #include <string>
+#include <deque>
 #include "RotatingList.h"
+#include "StringList.h"
 
 using namespace std;
 
@@ -40,8 +42,6 @@ struct ChannelCompare
 	bool name;        //Whether or not the name is included in the message string
 };
 
-extern FILE* g_ChatLogFile;
-
 extern const int LOCAL_CHAT_RANGE;
 
 extern const int NumValidChatChannel;
@@ -51,11 +51,35 @@ const ChannelCompare * GetChatInfoByChannel(const char *channel);
 
 extern bool NewChat;
 
-void LogChatMessage(const char *messageStr);
-int handleCommunicationMsg(char *channel, char *message, char *name);
 
-void OpenChatLogFile(const char *filename);
-void CloseChatLogFile(void);
-void FlushChatLogFile(void);
+class ChatMessage
+{
+public:
+	unsigned long mTime;
+	std::string mMessage;
+};
+
+class ChatManager
+{
+public:
+	ChatManager();
+	~ChatManager();
+
+	deque<ChatMessage> CircularChatBuffer;
+
+	void CloseChatLogFile(void);
+	void FlushChatLogFile(void);
+	void OpenChatLogFile(const char *filename);
+	void LogChatMessage(const char *messageStr);
+	int handleCommunicationMsg(char *channel, char *message, char *name);
+
+private:
+	static const int MAX_CHAT_BUFFER_SIZE = 100;
+
+	FILE* m_ChatLogFile;
+	Platform_CriticalSection cs;  //Needed for circular chat buffer which may be inserted into by many threads
+};
+
+extern ChatManager g_ChatManager;
 
 #endif //CHAT_H

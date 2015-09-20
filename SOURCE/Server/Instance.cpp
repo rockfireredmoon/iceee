@@ -1086,13 +1086,13 @@ int ActiveInstance :: ProcessMessage(MessageComponent *msg)
 		break;
 	case BCM_PlayerLogIn:
 		sprintf(GAuxBuf, "%s has logged in.", ((CharacterData*)msg->param1)->cdef.css.display_name);
-		LogChatMessage(GAuxBuf);
+		g_ChatManager.LogChatMessage(GAuxBuf);
 		size = PrepExt_SendInfoMessage(GSendBuf, GAuxBuf, INFOMSG_INFO);
 		SendToAllSimulator(GSendBuf, size, msg->SimulatorID);
 		break;
 	case BCM_PlayerLogOut:
 		sprintf(GAuxBuf, "%s has disconnected.", ((CharacterData*)msg->param1)->cdef.css.display_name);
-		LogChatMessage(GAuxBuf);
+		g_ChatManager.LogChatMessage(GAuxBuf);
 		size = PrepExt_SendInfoMessage(GSendBuf, GAuxBuf, INFOMSG_INFO);
 		SendToAllSimulator(GSendBuf, size, msg->param2);
 		break;
