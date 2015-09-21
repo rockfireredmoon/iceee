@@ -192,7 +192,7 @@ class this.Screens.GMScreen extends this.GUI.Frame
 		}
 		else if (button == this.mSilenceOnButton)
 		{
-			this.mGMSilenceReasonPopup = this.GUI.PopupInputBox("Reason for deleting applying penalty:");
+			this.mGMSilenceReasonPopup = this.GUI.PopupInputBox("Reason for applying penalty:");
 			this.mGMSilenceReasonPopup.addActionListener(this);
 			local inputBoxPosX = ::Screen.getWidth() / 2 - this.mGMSilenceReasonPopup.getWidth() / 2;
 			local inputBoxPosY = ::Screen.getHeight() / 2 - this.mGMSilenceReasonPopup.getWidth() / 2;
