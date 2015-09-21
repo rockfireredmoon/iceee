@@ -1,1 +1,1 @@
-SUBDIRS = squirrel Server json
+SUBDIRS = squirrel Server

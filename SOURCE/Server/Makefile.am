@@ -1,8 +1,6 @@
 bin_PROGRAMS = planetforeverd
 AM_CPPFLAGS= -I../squirrel/include -I../squirrel/sqrat
 
-SUBDIRS = json
-
 planetforeverd_LDADD = ../squirrel/squirrel/libsquirrel.a ../squirrel/sqstdlib/libsqstdlib.a
 planetforeverd_LDFLAGS = -lpthread -lrt -lcurl
 planetforeverd_SOURCES = md5.cc \
@@ -163,4 +161,6 @@ planetforeverd_SOURCES = md5.cc \
 	Util.h \
 	VirtualItem.h \
 	ZoneDef.h \
-	ZoneObject.h
+	ZoneObject.h \
+	json/json-forwards.h \
+	json/json.h
