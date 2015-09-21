@@ -100,7 +100,7 @@ class this.States.LoginState extends this.State
 			function onActionPerformed( b )
 			{
 				//::_URLManager.LaunchURL("ForgotPassword");
-				this.System.openURL("http://iceee.servegame.com/ResetPassword.html");
+				this.System.openURL("http://www.theanubianwar.com/user/password");
 			}
 
 		});
@@ -110,7 +110,7 @@ class this.States.LoginState extends this.State
 			function onActionPerformed( b )
 			{
 				//::_URLManager.LaunchURL("ManageAccount");
-				this.System.openURL("http://iceee.servegame.com/Account.html");
+				this.System.openURL("http://www.theanubianwar.com/user");
 			}
 
 		});
@@ -310,7 +310,7 @@ class this.States.LoginState extends this.State
 			}
 		};
 		local txt = "";
-		req.open("GET", "http://armouree.vm.bytemark.co.uk/iceee/in_game_news");
+		req.open("GET", "http://www.theanubianwar.com/in_game_news");
 		req.send(txt);
 	}
 
@@ -350,12 +350,12 @@ class this.States.LoginState extends this.State
 	{
 		if (this.System.isBrowserEmbedded())
 		{
-			this.System.openURL("http://www.eartheternal.com/welcome_reg");
+			this.System.openURL("http://www.theanubianwar.com/user/register");
 		}
 		else
 		{
 			//::_URLManager.LaunchURL("Account");
-			this.System.openURL("http://iceee.servegame.com/Account.html");
+			this.System.openURL("http://www.theanubianwar.com/user/register");
 		}
 	}
 
