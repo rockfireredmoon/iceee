@@ -287,7 +287,7 @@ Obj.0.completeText=
 Obj.0.markerLocations=21782.5,597.483,76948.2,9
 
 [ENTRY]
-Require=483
+Requires=483
 ID=484
 Title=The Cult of the Sand Dragon
 BodyText=While you were out taking care of the Sand Goliaths, we in Bazaart received some grave news.
@@ -338,7 +338,7 @@ Obj.0.completeText=
 Obj.0.markerLocations=21782.5,597.483,76948.2,9
 
 [ENTRY]
-Require=484
+Requires=484
 ID=485
 Title=The Dragon's Nest
 BodyText=Now that most of the Brood of Kerakura has been dealt with, it is time to deal the fatal blow.
@@ -368,8 +368,7 @@ Act.BodyText=Kill Kerakura
 Obj.0.type=kill
 Obj.0.data1=3690
 Obj.0.data2=1
-Obj.0.description=Travel to the Dragon's Nest in the Dust Fields of Dustshore
- and kill Kerakura                      
+Obj.0.description=Travel to the Dragon's Nest in the Dust Fields of Dustshore and kill Kerakura                      
 Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
