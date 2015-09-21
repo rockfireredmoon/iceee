@@ -245,3 +245,7 @@ Sanctuary=1528.67,507,8096.74,Folkirk Manor
 [ENTRY]
 ZoneID=85
 Sanctuary=27301.4,630.152,79634.2,Kerakura's Lair
+
+[ENTRY]
+ZoneID=1059
+Sanctuary=5819.58,694.726,5874.88,Museum
