@@ -254,6 +254,7 @@ public:
 	void LoadKeyList(const char *fileName);
 	void ImportKeys(void);
 	int GetRegistrationKey(const char *authKey);
+	int CreateAccountFromService(const char *username);
 	int CreateAccount(const char *username, const char *password, const char *regKey, const char *grovename);
 	int ResetPassword(const char *username, const char *newpassword, const char *regKey);
 	int AccountRecover(const char *username, const char *keypass, const char *type);

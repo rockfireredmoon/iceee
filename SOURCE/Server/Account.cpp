@@ -918,6 +918,48 @@ int AccountManager :: CreateAccount(const char *username, const char *password, 
 	return ACCOUNT_SUCCESS;
 }
 
+int AccountManager :: CreateAccountFromService(const char *username)
+{
+	if(username == NULL)  return ACCOUNT_SIZENAME;
+
+	if(strlen(username) < 3 || strlen(username) > sizeof(AccountData().Name) - 1)
+		return ACCOUNT_SIZENAME;
+	if(ValidString(username) == false)
+		return ACCOUNT_INVNAME;
+
+	if(FetchAccountByUsername(username) != NULL)
+		return ACCOUNT_HASNAME;
+
+	AccountData newAccount;
+
+	if(NextAccountID < (int)accountQuickData.size())
+	{
+		g_Log.AddMessageFormat("[WARNING] NextAccountID is lower than current total (%d of %d)", NextAccountID, accountQuickData.size());
+		NextAccountID = accountQuickData.size();
+	}
+	newAccount.ID = NextAccountID++;
+	Util::SafeCopy(newAccount.Name, username, sizeof(newAccount.Name));
+
+	newAccount.SetPermission(Perm_Account, "regionchat", true);
+	newAccount.SetPermission(Perm_Account, "forumpost", true);
+
+#ifdef PRIVATE_USE_BUILD
+	newAccount.SetPermission(Perm_Account, "debug", true);
+	newAccount.SetPermission(Perm_Account, "tweakself", true);
+	newAccount.SetPermission(Perm_Account, "itemgive", true);
+	newAccount.SetPermission(Perm_Account, "fastload", true);
+	newAccount.SetPermission(Perm_Account, "admin", true);
+#endif
+
+	g_Log.AddMessageFormat("Account created [%s] with %d characters.", newAccount.Name, newAccount.GetCharacterCount());
+
+	newAccount.PendingMinorUpdates++;  //Save at the next available opportunity
+	AccList.push_back(newAccount);
+	AppendQuickData(&newAccount);
+
+	return ACCOUNT_SUCCESS;
+}
+
 // Attempt to reset a password, given the supplied information from the password reset web form.
 int AccountManager :: ResetPassword(const char *username, const char *newpassword, const char *regKey)
 {
@@ -1672,23 +1714,30 @@ void AccountManager :: LoadQuickData(void)
 	}
 	AccountQuickData data;
 	int highestID = 0;
+	int line = 0;
 	while(lfr.FileOpen() == true)
 	{
 		lfr.ReadLine();
+		line++;
 		int r = lfr.MultiBreak(";");
-		if(r == 5)
+		if(r >= 2)
 		{
 			data.mID = lfr.BlockToIntC(0);
 			data.mLoginName = lfr.BlockToStringC(1, 0);
-			data.mLoginAuth = lfr.BlockToStringC(2, 0);
-			data.mRegKey = lfr.BlockToStringC(3, 0);
-			data.mGroveName = lfr.BlockToStringC(4, 0);
+			if(r == 5) {
+				data.mLoginAuth = lfr.BlockToStringC(2, 0);
+				data.mRegKey = lfr.BlockToStringC(3, 0);
+				data.mGroveName = lfr.BlockToStringC(4, 0);
+			}
 
 			if(data.mID > highestID)
 				highestID = data.mID;
 
 			accountQuickData.push_back(data);
 			data.Clear();
+		}
+		else if(r != 0) {
+			g_Log.AddMessageFormat("[WARNING] AccountList.txt invalid data on line %d (has %d elements)", line, r);
 		}
 	}
 	

@@ -1,6 +1,8 @@
 bin_PROGRAMS = planetforeverd
 AM_CPPFLAGS= -I../squirrel/include -I../squirrel/sqrat
 
+SUBDIRS = json
+
 planetforeverd_LDADD = ../squirrel/squirrel/libsquirrel.a ../squirrel/sqstdlib/libsqstdlib.a
 planetforeverd_LDFLAGS = -lpthread -lrt -lcurl
 planetforeverd_SOURCES = md5.cc \
@@ -50,6 +52,7 @@ planetforeverd_SOURCES = md5.cc \
 	Inventory.cpp \
 	Item.cpp \
 	ItemSet.cpp \
+	jsoncpp.cpp \
 	main.cpp \
 	Mail.cpp \
 	MainWindow.cpp \

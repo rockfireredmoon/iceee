@@ -1065,7 +1065,6 @@ int HTTPDistribute :: FillAPI(void)
 	string response;
 	char buf[256];
 	int no = 0;
-	g_Log.AddMessageFormat("[REMOVEME] REQ: %s", FileNameRequest.c_str());
 
 	// Extract parameters
 	std::map<string, string> parms;
@@ -1075,17 +1074,13 @@ int HTTPDistribute :: FillAPI(void)
 	Util::Split(FileNameRequest, "?", parmStrings);
 	if(parmStrings.size() > 1) {
 		FileNameRequest = parmStrings[0];
-		g_Log.AddMessageFormat("[REMOVEME] Split: %s", parmStrings[1].c_str());
 		Util::Split(parmStrings[1], "&", parmStringList);
 		for(std::vector<std::string>::iterator it = parmStringList.begin(); it != parmStringList.end(); ++it) {
-			g_Log.AddMessageFormat("[REMOVEME] PS: %s", (*it).c_str());
 			Util::Split(*it, "=", parmValue);
 			if(parmValue.size() == 1) {
-				g_Log.AddMessageFormat("[REMOVEME] Parm: %s", parmValue[0].c_str());
 				parms[parmValue[0]] = "";
 			}
 			else if(parmValue.size() == 2) {
-				g_Log.AddMessageFormat("[REMOVEME] Parm: %s = %s", parmValue[0].c_str(), parmValue[1].c_str());
 				parms[parmValue[0]] = parmValue[1];
 			}
 			else {
