@@ -7308,7 +7308,11 @@ void CreatureInstance :: PlayerLoot(int level, std::vector<DailyProfile> profile
 
 			params.dropRateProfile = &g_DropRateProfileManager.GetProfileByName(profile.virtualItemReward.dropRateProfileName);
 			params.ClampLimits();
-			loot.AddItem(g_ItemManager.RollVirtualItem(params));
+
+			int itemID = g_ItemManager.RollVirtualItem(params);
+			if(itemID != -1) {
+				loot.AddItem(itemID);
+			}
 
 			break;
 		}
@@ -7333,7 +7337,8 @@ void CreatureInstance :: PlayerLoot(int level, std::vector<DailyProfile> profile
 //		loot.AddItem(itemList[i]);
 //	}
 
-	activeLootID = actInst->lootsys.AttachLootToCreature(loot, CreatureID);
+	if(loot.itemList.size() > 0)
+		activeLootID = actInst->lootsys.AttachLootToCreature(loot, CreatureID);
 }
 
 void  CreatureInstance :: CreateLoot(int finderLevel)
