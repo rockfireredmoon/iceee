@@ -1901,7 +1901,7 @@ InputCommands.copyPos <- function ( args )
 		local pos = node.getPosition();
 		local str = "\"(" + pos.x + "," + pos.y + "," + pos.z + "," + ::_sceneObjectManager.getCurrentZoneDefID() + ")\"";
 		::System.setClipboard(str);
-		::IGIS.info("Position copied to cliboard");
+		::IGIS.info("Position copied to clipboard");
 	}
 	else
 	{
