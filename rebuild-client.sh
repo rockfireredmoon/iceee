@@ -107,6 +107,9 @@ popd
 echo "Copying patch scripts"
 pushd SOURCE/ClientMainScriptPatch
 find . -name '*.nut' | cpio -updm "${SCRATCH}/content"
+find . -name '*.jpg' | cpio -updm "${SCRATCH}/content"
+find . -name '*.jpeg' | cpio -updm "${SCRATCH}/content"
+find . -name '*.png' | cpio -updm "${SCRATCH}/content"
 popd
 
 MAJOR_ICEEE_VERSION=ICE1
