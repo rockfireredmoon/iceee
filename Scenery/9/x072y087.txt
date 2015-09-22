@@ -1,52 +1,52 @@
 [ENTRY]
 ID=1127789
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=54473.7,723.169,65919
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=11_irh_undeadChirurgeon
+spawnPackage=11_dth_limbCuller_r_41
 
 [ENTRY]
 ID=1127790
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=54478.6,723.431,65935.8
 Orient=0,0.416871,0,0.908966
 Scale=1,1,1
-spawnPackage=11_irh_undeadChirurgeon
+spawnPackage=11_dth_limbCuller_r_41
 
 [ENTRY]
 ID=1127791
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=54500.3,725.183,65928.2
 Orient=0,0.98545,0,0.169967
 Scale=1,1,1
-spawnPackage=11_irh_undeadChirurgeon
+spawnPackage=11_dth_limbCuller_r_41
 
 [ENTRY]
 ID=1127792
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=54491.3,724.366,65910.5
 Orient=0,-0.786425,0,0.617686
 Scale=1,1,1
-spawnPackage=11_irh_undeadChirurgeon
+spawnPackage=11_dth_limbCuller_r_41
 
 [ENTRY]
 ID=1127793
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=54381.7,718.48,65922.2
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=11_irh_undeadChirurgeon
+spawnPackage=11_dth_limbCuller_r_41
 
 [ENTRY]
 ID=1127794
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=54485.2,724.275,65839.8
 Orient=0,-0.66687,0,0.745174
 Scale=1,1,1
@@ -54,47 +54,47 @@ Scale=1,1,1
 [ENTRY]
 ID=1127795
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=54280.7,718.218,65929.8
 Orient=0,-0.990105,0,0.140332
 Scale=1,1,1
-spawnPackage=11_irh_undeadChirurgeon
+spawnPackage=11_dth_limbCuller_r_41
 
 [ENTRY]
 ID=1127796
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=54576.3,734.218,65999.6
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=11_irh_undeadChirurgeon
+spawnPackage=11_dth_limbCuller_r_41
 
 [ENTRY]
 ID=1127797
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=54322.8,742.419,65701
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=11_irh_undeadChirurgeon
+spawnPackage=11_dth_limbCuller_r_41
 links_count=1
 link=1127803,1
 
 [ENTRY]
 ID=1127798
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=54222.9,733.231,65788.3
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=11_irh_undeadChirurgeon
+spawnPackage=11_dth_limbCuller_r_41
 links_count=1
 link=1127800,1
 
 [ENTRY]
 ID=1127799
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=54178.4,729.532,65855.1
 Orient=0,0,0,1
 Scale=1,1,1
@@ -102,7 +102,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1127802
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=54443.4,721.6,65941.9
 Orient=0,0,0,1
 Scale=1,1,1
@@ -112,7 +112,7 @@ link=1127801,1
 [ENTRY]
 ID=1127803
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=54379.6,723.444,65835.7
 Orient=0,0,0,1
 Scale=1,1,1
@@ -123,7 +123,7 @@ link=1127797,1
 [ENTRY]
 ID=1127815
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=54012.6,797.256,65314.3
 Orient=0,0,0,1
 Scale=1,1,1
@@ -178,7 +178,7 @@ Name=Untitled
 Pos=54648.7,732.615,65865.5
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=11_irh_undeadChirurgeon
+spawnPackage=11_dth_limbCuller_r_41
 loyaltyRadius=40
 wanderRadius=100
 
