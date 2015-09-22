@@ -9506,7 +9506,7 @@ BodyText=That hand...it is...oh... It is emanating some kind of horrible aura. I
 
 There is a large Redeemer Camp in Grunes Tal. There you will find Hans Longstrider. Take the hand to him. He is an expert in these matters, more so than I.
 
-Ah, but the road to Grunes Tal is blocked by a rock slide. Once it has been cleared, please take the hand to Hans, there is something very terribly wrong with that ... "thing".
+Due to a recent rock slide, the road to Grunes Tal had been blocked up preventing passage by travelers. I hear that after much effort, it has finally been cleared of the rubble and the road is open once again, so, please take the hand to Hans. There is something very terribly wrong with that ... "thing".
 CompleteText=Rose sent you? You must surely be something, then.
 
 Welcome to the land of the unliving.
