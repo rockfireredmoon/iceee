@@ -81,7 +81,28 @@ popd
 echo "Archiving catalog"
 wine ${base}/UTILITIES/CARDecode.exe "${SCRATCH}/archives/Catalogs.zip"
 
+rm -fr "${SCRATCH}/content"
+mkdir -p "${SCRATCH}/content"
 
+
+echo "Doing Preloader"
+pushd SOURCE/Preloader
+find . | cpio -updm "${SCRATCH}/content"
+popd
+pushd "${SCRATCH}/content"
+zip -dg -q -r "${SCRATCH}/archives/Preloader.car" *
+popd
+rm -fr "${SCRATCH}/content"
+mkdir -p "${SCRATCH}/content"
+
+
+echo "Doing Core"
+pushd SOURCE/Core
+find . | cpio -updm "${SCRATCH}/content"
+popd
+pushd "${SCRATCH}/content"
+zip -dg -q -r "${SCRATCH}/archives/Core.car" *
+popd
 rm -fr "${SCRATCH}/content"
 mkdir -p "${SCRATCH}/content"
 

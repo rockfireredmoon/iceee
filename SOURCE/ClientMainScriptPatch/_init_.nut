@@ -56,12 +56,36 @@ function ReplaceDeps()
 }
 
 
+			
+/*
+ * Move the extended args from the temporary cookie into the _args table. These
+ * are setup in the preloader and used as a way to get command line arguments into
+ * the args list on earlier clients (I can't find the 'proper' way to do this).
+ */
+local tmpCache = MediaCache("tmpcache", "http://localhost");
+try {
+	foreach(k, v in unserialize(tmpCache.getCookie("xargs"))) {
+		::_args[k] <- v;
+	}
+}
+catch(e) {
+	print("[WARNING] Could not load extended arguments cache. Web authentication will not be possible.\n");
+}
+
+// Clear the temporary cookie, we don't need it anymore
+try {
+	tmpCache.setCookie("xargs", "");
+}
+catch(e) {
+}
+
 foreach( k, v in ::_args )
 {
 	this.log.debug("ARGS: " + k + ", " + v);
+	print("ICE! ARGS: " + k + ", " + v + "\n");
 }
 
-::Screen.setTitle("Earth Eternal - Planet Forever - IceEE");
+::Screen.setTitle("Earth Eternal - The Anubian War");
 this.System.setLoggingLevel(3);
 this.MovableObject.setDefaultQueryFlags(this.QueryFlags.ANY | this.QueryFlags.LIGHT_OCCLUDER);
 this._scene.setTerrainFlags(this.QueryFlags.ANY | this.QueryFlags.LIGHT_OCCLUDER | this.QueryFlags.FLOOR, this.VisibilityFlags.ANY | this.VisibilityFlags.SCENERY | this.VisibilityFlags.LIGHT_GROUP_0 | this.VisibilityFlags.LIGHT_GROUP_2 | this.VisibilityFlags.LIGHT_GROUP_3);

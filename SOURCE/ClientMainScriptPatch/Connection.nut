@@ -301,6 +301,7 @@ class this.Connection extends this.MessageBroadcaster
 	
 	function attemptToConnect()
 	{
+		
 		local domain = _cache.getBaseURL();
 		local custom = false;
 	
@@ -369,7 +370,7 @@ class this.Connection extends this.MessageBroadcaster
 			{
 				this.Screen.setTitle("Earth Eternal (" + this.mCurrentHost + ")");
 			}
-
+				
 			this.socket.connect(this.gServer.address[this.mServerIndex], this.gServer.port[this.mServerIndex], 0);
 		}
 		else
@@ -403,7 +404,7 @@ class this.Connection extends this.MessageBroadcaster
 			{
 				this.Screen.setTitle("Earth Eternal (" + this.mCurrentHost + ")");
 			}
-
+			
 			this.socket.connect(domain, 4242, 0);
 		}
 	}
@@ -915,13 +916,28 @@ class this.Connection extends this.MessageBroadcaster
 			this.log.debug("AUTH URL: " + auth_data);
 
 			if (this.mAuthToken)
-			{
-				/*req.open("POST", auth_data + "/user/token.json", false);
-				req.send(this.System.encodeVars({
-					web_auth_token = this.mAuthToken,
-					browser = isBrowser
-				}));
-				*/
+			{ 
+				local spl = this.Util.split(this.mAuthToken, ":");
+				local uid = spl[2];
+				local session_name = spl[0];
+				local sessid = spl[1];
+				
+				req.onreadystatechange = function () {
+					if (this.readyState == 4) {
+						 ::_Connection._handleServiceTokenLogin(this);
+					}
+				};
+				
+				// Get the X-CSRF-Token (sent as header on next request)
+				//req.setRequestHeader("Content-Type", "application/json");
+				//req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+				
+				req.setRequestHeader("User-Agent", "EETAW");
+				req.setRequestHeader("Host", Util.extractHostnameAndPortFromUrl(mAuthData));
+				req.setRequestHeader("Cookie", session_name + ": " + Util.replace(sessid, ":", "%3a"));
+				req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+				req.open("GET", mAuthData + "/user/" + uid + ".json", false);
+				req.send();
 			}
 			else
 			{
@@ -1062,6 +1078,52 @@ class this.Connection extends this.MessageBroadcaster
 		}
 	}
 	
+	function _handleServiceTokenLogin(req) {
+	
+		local spl = this.Util.split(this.mAuthToken, ":");
+		local uid = spl[2];
+		local sessid = spl[1];
+		local session_name = spl[0];
+		
+		/* The token supplied to Start.exe must be in the format 
+		 *
+		 * <sessionCookieName>:<sessionCookieValue>:<uid>
+		 *
+		 * Because this didn't come from the API, there will be NO X-CSRF-Token. As with
+		 * username/password authentication, we then pass this on to the server that
+		 * calls back to the website to validate the user (possibly creating the game
+		 * account if it doesn't already exist).
+		 *
+		 */
+		 
+		 
+		local errorMsg = "No user details returned.";
+		this.log.debug("Auth 2nd Result: " + req.status + " " + req.statusText);
+		if (req.status == 200) {
+			
+			local results = ::json(req.responseText);
+			local name = "name" in results ? results.name : "UNKNOWN";
+			local tkn = "NONE:" + sessid + ":" + session_name + ":" + uid;
+			
+			_beginSend("authenticate");
+			if (this.mProtocolVersionId >= 11)
+			{
+				mOutBuf.putByte(this.AuthMethod.SERVICE);
+			}
+
+			mOutBuf.putStringUTF(name);
+			mOutBuf.putStringUTF(tkn);
+			_send();
+			mPersonaSchedule = ::_eventScheduler.fireIn(5.0, this, "requestPersonaList");
+		}
+		else {
+			errorMsg = "Authentication failed (Error Code: " + req.status + ")";
+			this.States.event("AuthFailure", errorMsg);
+			close(false);
+		}
+		 
+	}
+	
 	function _handleServiceLogin(req) {
 		local errorMsg = "No user details returned.";
 		this.log.debug("Auth 2nd Result: " + req.status + " " + req.statusText);
@@ -1069,8 +1131,6 @@ class this.Connection extends this.MessageBroadcaster
 			
 			local results = ::json(req.responseText);
 			local tkn = mXCSRFToken + ":" + results.sessid + ":" + results.session_name + ":" + results.user.uid;
-			
-			print("ICE! Now sending to server (" + tkn + ")\n");
 			
 			_beginSend("authenticate");
 
@@ -3859,9 +3919,6 @@ class this.Connection extends this.MessageBroadcaster
 	{
 		local updateType = data.getInteger();
 		local gameType = data.getByte();
-		
-		print("ICE! PVP: " + updateType + " GT:  " + gameType + "\n");
-		
 		local pvpScreen;
 
 		switch(gameType)
@@ -3888,8 +3945,6 @@ class this.Connection extends this.MessageBroadcaster
 		if (updateType & this.PVP_STATE_UPDATE)
 		{
 			local gameState = data.getByte();
-			print("ICE! PVP STATE UPD: " + gameState + "\n");
-
 			if (pvpScreen)
 			{
 				if(gameState == this.PVPGameState.WAITING_TO_START)

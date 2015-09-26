@@ -1,0 +1,19 @@
+
+float4 grayscale( float4 color )
+{
+	float brightness = (color.r * 0.30) + (color.g * 0.59) + (color.b * 0.11);
+	return float4( brightness, brightness, brightness, 1.0 );	
+}
+
+void main
+(
+	float2 iTexCoord0 : TEXCOORD0,
+	
+	out float4 oColor : COLOR,
+
+	uniform sampler2D diffuseMap0 : register(s0),
+	uniform sampler2D diffuseMap1 : register(s1)
+)
+{        
+	oColor = tex2D( diffuseMap0, iTexCoord0 ) + grayscale( tex2D( diffuseMap1, iTexCoord0 ) );
+}

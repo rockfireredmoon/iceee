@@ -1,0 +1,71 @@
+
+Preloader/Overlay
+{
+   zorder 100
+
+   container Panel(Preloader/Panel)
+	{
+	 	metrics_mode pixels
+      top 10
+		left 10
+		width 350
+		height 47
+//		material Core/StatsBlockBorder
+
+      container Panel(Preloader/InfoPanel)
+		{
+         metrics_mode pixels
+			height 47
+			width 350
+//			material Preloader/ProgressBorder
+
+			element TextArea(Preloader/Task)
+			{
+			 	metrics_mode pixels
+				left 0
+				top 0
+	         caption Awaiting download request...
+				width 350
+				height 14
+				font_name BlueHighway
+				char_height 14
+				colour 0.9 0.9 0.9
+			}
+
+			container BorderPanel(Preloader/ProgressPanel)
+	      {
+			   metrics_mode pixels
+			   left 0
+	         top 15
+	         height 14
+	         width 350
+				border_size 1 1 1 1
+				border_material Preloader/ProgressBorder
+
+				element Panel(Preloader/ProgressBar)
+				{
+   			   metrics_mode pixels
+					left 2
+					top 3
+					width 0
+					height 8
+					material Core/ProgressBar
+				}
+	      }
+
+			element TextArea(Preloader/Comment)
+			{
+			   metrics_mode pixels
+				left 0
+				top 33
+//				caption Awaiting download request...
+				width 350
+				height 14
+				font_name BlueHighway
+				char_height 14
+				colour .9 .9 .9
+			}
+		}
+	}
+}
+

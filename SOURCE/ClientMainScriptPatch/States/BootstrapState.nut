@@ -8,6 +8,9 @@ class this.States.BootstrapState extends this.State
 
 	function onEnter()
 	{
+	
+		print("ICE! ENTER Bootstrap\n");
+		
 		::LoadGate.Require("Login", this);
 		::setLocale("en");
 		local camera = ::_scene.getCamera("Default");
@@ -28,6 +31,8 @@ class this.States.BootstrapState extends this.State
 
 	function onPackageComplete( name )
 	{
+		print("ICE! onPackageComplete " + name + "\n");
+	
 		local asd = ::AssetDependencies;
 		::MediaCaseIndex <- {};
 
@@ -72,6 +77,13 @@ class this.States.BootstrapState extends this.State
 
 		default:
 			local nextState;
+
+			print("ICE! Setting up state");
+
+			foreach(k,v in ::_args) {
+				print("ICE! Arg: " + k);
+				print("ICE! Argv: " + v);
+			}
 
 			if (this.quickLogin())
 			{

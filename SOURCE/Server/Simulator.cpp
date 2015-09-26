@@ -1244,8 +1244,6 @@ void SimulatorThread :: handle_lobby_authenticate(void)
 				curl_easy_cleanup(curl);
 				if(res == CURLE_OK) {
 
-					g_Log.AddMessageFormat("[REMOVEME] JSON: %s", readBuffer.c_str());
-
 					// Parse the JSON response from service.
 
 					Json::Value root;

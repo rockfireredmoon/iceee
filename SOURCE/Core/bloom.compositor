@@ -1,0 +1,74 @@
+
+///////////////////////////////////
+// Fancy-pants bloom effect
+///////////////////////////////////
+
+compositor Bloom
+{
+	technique
+	{
+		texture rt0 target_width target_height PF_A8R8G8B8
+
+		texture blur_X 256 256 PF_A8R8G8B8
+		texture blur_XY 256 256 PF_A8R8G8B8
+
+		target rt0
+		{
+			// A visibility mask of 0 here tells the OGRE compositor
+			// system to use the scene visibility mask
+
+			visibility_mask 0
+
+			// Pull in output from scene render
+
+			input previous
+		}
+
+		target blur_X
+		{
+			// Start clear
+
+			input none
+
+			// Blur the scene
+
+			pass render_quad
+			{
+				material BlurX
+				input 0 rt0
+			}
+		}
+
+		target blur_XY
+		{
+			// Start clear
+
+			input none
+
+			// Blur the scene
+
+			pass render_quad
+			{
+				material BlurY
+				input 0 blur_X
+			}
+		}
+
+		target_output
+		{
+			// Start with clear output
+
+			input none
+
+			// Draw a fullscreen quad with bloom effect
+
+			pass render_quad
+			{
+				material Bloom
+				
+				input 0 rt0
+				input 1 blur_XY
+			}
+		}
+	}
+}
