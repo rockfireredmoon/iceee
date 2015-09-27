@@ -201,7 +201,7 @@ void ChatManager :: LogChatMessage(const char *messageStr)
 	cm.mTime =  time(NULL);
 	cm.mMessage = messageStr;
 	CircularChatBuffer.push_back(cm);
-	while(CircularChatBuffer.size() > MAX_CHAT_BUFFER_SIZE)
+	while(CircularChatBuffer.size() >= MAX_CHAT_BUFFER_SIZE - 1)
 		CircularChatBuffer.pop_front();
 	cs.Leave();
 
