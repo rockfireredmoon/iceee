@@ -1116,6 +1116,7 @@ int HTTPDistribute :: FillAPI(void)
 		response += "{ ";
 		int count = parms.find("count") == parms.end() ? 100 : atoi(parms.find("count")->second.c_str());
 		std::deque<ChatMessage>::iterator it;
+		g_ChatManager.cs.Enter("HTTPDistribute::Chat");
 		int start = g_ChatManager.CircularChatBuffer.size() - 1 - count;
 		if(start < 0)
 			start = 0;
@@ -1133,6 +1134,7 @@ int HTTPDistribute :: FillAPI(void)
 			response += buf;
 			no++;
 		}
+		g_ChatManager.cs.Leave();
 		response += " }";
 	}
 
