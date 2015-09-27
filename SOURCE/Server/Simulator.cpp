@@ -1195,7 +1195,7 @@ void SimulatorThread :: handle_lobby_authenticate(void)
 		Util::ReplaceAll(un, ";", "%3b");
 		Util::ReplaceAll(un, "|", "%7c");
 		Util::ReplaceAll(un, "&", "%26");
-		Util::SafeCopy(Aux2, un.c_str(), un.size());
+		Util::SafeCopy(Aux2, un.c_str(), un.size() + 1);
 
 		std::vector<std::string> prms;
 		Util::Split(Aux3, ":", prms);
