@@ -12,6 +12,7 @@
 #include <stdlib.h>
 #include "FileReader.h"
 #include "Chat.h"
+#include <time.h>
 
 PLATFORM_THREADRETURN HTTPDistributeThreadProc(PLATFORM_THREADARGS lpParam);
 
@@ -1113,7 +1114,7 @@ int HTTPDistribute :: FillAPI(void)
 	}
 	else if(Util::HasEnding(FileNameRequest, "/chat")) {
 		response += "{ ";
-		int count = parms.find("count") == parms.end() ? 10 : atoi(parms.find("count")->second.c_str());
+		int count = parms.find("count") == parms.end() ? 100 : atoi(parms.find("count")->second.c_str());
 		std::deque<ChatMessage>::iterator it;
 		int start = g_ChatManager.CircularChatBuffer.size() - 1 - count;
 		if(start < 0)
@@ -1122,8 +1123,13 @@ int HTTPDistribute :: FillAPI(void)
 		{
 			ChatMessage cm = g_ChatManager.CircularChatBuffer[i];
 			std::string msg = cm.mMessage;
+			struct tm * timeinfo;
+			time_t tt = cm.mTime;
+			timeinfo = localtime(&tt);
+			char tbuf[64];
+			strftime(tbuf, sizeof(tbuf), "%m/%d %H:%M", timeinfo);
 			Util::EncodeJSONString(msg);
-			Util::SafeFormat(buf, sizeof(buf), "%s\"%lu\" : { \"message\": \"%s\" }", no > 0 ? "," : "", cm.mTime, msg.c_str());
+			Util::SafeFormat(buf, sizeof(buf), "%s\"%lu\" : { \"message\": \"%s\", \"time\": \"%s\" }", no > 0 ? "," : "", cm.mTime, msg.c_str(), tbuf);
 			response += buf;
 			no++;
 		}
