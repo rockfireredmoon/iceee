@@ -72,12 +72,12 @@ public:
 	void OpenChatLogFile(const char *filename);
 	void LogChatMessage(const char *messageStr);
 	int handleCommunicationMsg(char *channel, char *message, char *name);
+	Platform_CriticalSection cs;  //Needed for circular chat buffer which may be inserted into by many threads
 
 private:
 	static const int MAX_CHAT_BUFFER_SIZE = 100;
 
 	FILE* m_ChatLogFile;
-	Platform_CriticalSection cs;  //Needed for circular chat buffer which may be inserted into by many threads
 };
 
 extern ChatManager g_ChatManager;
