@@ -1185,6 +1185,17 @@ void SimulatorThread :: handle_lobby_authenticate(void)
 
 	if(authMethod == AuthMethod::SERVICE)
 	{
+		/* The web service has different rules for usernames to the server, so we escape
+		 * the problematic characters, space, comma, semi-colon, pipe and apersand. It should
+		 * be rare we need to decode this (perhaps for some of the new integrate web services)
+		 */
+		std::string un = Aux2;
+		Util::ReplaceAll(un, " ", "%20");
+		Util::ReplaceAll(un, ",", "%2c");
+		Util::ReplaceAll(un, ";", "%3b");
+		Util::ReplaceAll(un, "|", "%7c");
+		Util::ReplaceAll(un, "&", "%26");
+
 		std::vector<std::string> prms;
 		Util::Split(Aux3, ":", prms);
 		if(prms.size() < 4) {
