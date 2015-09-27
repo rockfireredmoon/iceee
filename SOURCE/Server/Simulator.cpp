@@ -1217,7 +1217,7 @@ void SimulatorThread :: handle_lobby_authenticate(void)
 
 				Util::SafeFormat(url, sizeof(url), "%s/user/%s.json", g_Config.ServiceAuthURL.c_str(), prms[3].c_str());
 				Util::SafeFormat(token, sizeof(token), "X-CSRF-Token: %s", prms[0].c_str());
-				Util::SafeFormat(cookie, sizeof(cookie), "Cookie: %s:%s", prms[2].c_str(),prms[1].c_str());
+				Util::SafeFormat(cookie, sizeof(cookie), "Cookie: %s=%s", prms[2].c_str(),prms[1].c_str());
 
 				curl_easy_setopt(curl, CURLOPT_URL, url);
 				curl_easy_setopt(curl, CURLOPT_USERAGENT, "EETAW");

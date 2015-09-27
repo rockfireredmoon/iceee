@@ -934,7 +934,7 @@ class this.Connection extends this.MessageBroadcaster
 				
 				req.setRequestHeader("User-Agent", "EETAW");
 				req.setRequestHeader("Host", Util.extractHostnameAndPortFromUrl(mAuthData));
-				req.setRequestHeader("Cookie", session_name + ": " + Util.replace(sessid, ":", "%3a"));
+				req.setRequestHeader("Cookie", session_name + "=" + Util.replace(sessid, ":", "%3a"));
 				req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 				req.open("GET", mAuthData + "/user/" + uid + ".json", false);
 				req.send();
@@ -1177,7 +1177,7 @@ class this.Connection extends this.MessageBroadcaster
 			};
 			innerReq.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 			innerReq.setRequestHeader("User-Agent", "EETAW");
-			innerReq.setRequestHeader("Cookie", "X-CSRF-Token: " + mXCSRFToken);
+			innerReq.setRequestHeader("Cookie", "X-CSRF-Token=" + mXCSRFToken);
 			innerReq.setRequestHeader("Host", Util.extractHostnameAndPortFromUrl(mAuthData));
 			innerReq.open("POST", mAuthData + "/user/login.json", false);
 			innerReq.send(this.System.encodeVars({
