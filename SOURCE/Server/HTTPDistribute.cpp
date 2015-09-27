@@ -1104,7 +1104,7 @@ int HTTPDistribute :: FillAPI(void)
 				ZoneDefInfo *zd = g_ZoneDefManager.GetPointerByID(it->pld.CurrentZoneID);
 				if(cd != NULL && zd != NULL)
 				{
-					Util::SafeFormat(buf, sizeof(buf), "%s\"%s\" : { \"zone\": \"%s\", \"shard\": \"%s\" }", no > 1 ? "," : "", cd->cdef.css.display_name, zd->mName.c_str(), zd->mShardName.c_str());
+					Util::SafeFormat(buf, sizeof(buf), "%s\"%s\" : { \"zone\": \"%s\", \"shard\": \"%s\" }", no > 0 ? "," : "", cd->cdef.css.display_name, zd->mName.c_str(), zd->mShardName.c_str());
 					no++;
 					response += buf;
 				}

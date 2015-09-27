@@ -50,14 +50,14 @@ mkdir -p ${scratch}/Media \
 	${scratch}/Media/Sound \
 	${scratch}/Media/Terrain \
 
-do_car ${scratch}/Release ${base}/asset/Release/Current/EarthEternal.car  
+#do_car ${scratch}/Release ${base}/asset/Release/Current/EarthEternal.car  
 do_car ${scratch}/Media/Prop ${base}/asset/Release/Current/Media/Armor-*.car
 do_car ${scratch}/Media/Armor ${base}/asset/Release/Current/Media/Prop-*.car 
 do_car ${scratch}/Media/Bldg ${base}/asset/Release/Current/Media/Bldg-*.car 
 do_car ${scratch}/Media/ATS ${base}/asset/Release/Current/Media/ATS-*.car 
 do_car ${scratch}/Media/Biped ${base}/asset/Release/Current/Media/Biped-*.car
 do_car ${scratch}/Media/Boss ${base}/asset/Release/Current/Media/Boss-*.car
-do_car ${scratch}/Media/Cav ${base}/asset/Release/Current/Media/Cav-*.car
+do_car ${scratch}/Media/Cav ${base}/asset/Release/Current/Media/Cav*.car
 do_car ${scratch}/Media/CL ${base}/asset/Release/Current/Media/CL-*.car
 do_car ${scratch}/Media/Dng ${base}/asset/Release/Current/Media/Dng-*.car
 do_car ${scratch}/Media/Horde ${base}/asset/Release/Current/Media/Horde-*.car
@@ -67,6 +67,14 @@ do_car ${scratch}/Media/Maps ${base}/asset/Release/Current/Media/Maps-*.car
 do_car ${scratch}/Media/Music ${base}/asset/Release/Current/Media/Music-*.car
 do_car ${scratch}/Media/Pet ${base}/asset/Release/Current/Media/Pet-*.car
 do_car ${scratch}/Media/Sound ${base}/asset/Release/Current/Media/Sound-*.car
+do_car ${scratch}/Media ${base}/asset/Release/Current/Media/Effects.car
+do_car ${scratch}/Media ${base}/asset/Release/Current/Media/Environments.car
+do_car ${scratch}/Media ${base}/asset/Release/Current/Media/Epic_Axe_Wing.car
+do_car ${scratch}/Media ${base}/asset/Release/Current/Media/Flash_GUI.car
+do_car ${scratch}/Media ${base}/asset/Release/Current/Media/GUI.car
+do_car ${scratch}/Media ${base}/asset/Release/Current/Media/Source.car
+do_car ${scratch}/Media ${base}/asset/Release/Current/Media/Stitched_Maps.car
+do_car ${scratch}/Media ${base}/asset/Release/Current/Media/Temp_Ground.car
 do_car ${scratch}/Media ${base}/asset/Release/Current/Media/Catalogs.car
 do_car ${scratch}/Media ${base}/asset/Release/Current/Media/Sky-Cartoon.car
 do_car ${scratch}/Media ${base}/asset/Release/Current/Media/Refashion_Files.car

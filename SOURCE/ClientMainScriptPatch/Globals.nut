@@ -20,7 +20,7 @@ gServer <- {};
 //be attempted in the order they appear
 gServer.address <- [
 	"127.0.0.1",
-	"sv1.dev.eartheternal.com"
+	"213.138.112.253"
 ];
 gServer.port <- [
 	4242,
