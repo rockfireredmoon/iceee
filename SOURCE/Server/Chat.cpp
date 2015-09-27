@@ -198,7 +198,7 @@ void ChatManager :: LogChatMessage(const char *messageStr)
 {
 	cs.Enter("ChatManager::LogChatMessage");
 	ChatMessage cm;
-	cm.mTime = g_ServerTime;
+	cm.mTime =  time(NULL);
 	cm.mMessage = messageStr;
 	CircularChatBuffer.push_back(cm);
 	while(CircularChatBuffer.size() > MAX_CHAT_BUFFER_SIZE)

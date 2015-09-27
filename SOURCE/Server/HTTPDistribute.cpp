@@ -1127,7 +1127,7 @@ int HTTPDistribute :: FillAPI(void)
 			time_t tt = cm.mTime;
 			timeinfo = localtime(&tt);
 			char tbuf[64];
-			strftime(tbuf, sizeof(tbuf), "%m/%d %H:%m", timeinfo);
+			strftime(tbuf, sizeof(tbuf), "%m/%d %H:%M", timeinfo);
 			Util::EncodeJSONString(msg);
 			Util::SafeFormat(buf, sizeof(buf), "%s\"%lu\" : { \"message\": \"%s\", \"time\": \"%s\" }", no > 0 ? "," : "", cm.mTime, msg.c_str(), tbuf);
 			response += buf;
