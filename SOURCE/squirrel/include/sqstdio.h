@@ -2,6 +2,8 @@
 #ifndef _SQSTDIO_H_
 #define _SQSTDIO_H_
 
+#include "squirrel.h"
+
 #ifdef __cplusplus
 
 #define SQSTD_STREAM_TYPE_TAG 0x80000000

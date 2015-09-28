@@ -69,7 +69,7 @@ const char* BinaryBuffer::GetData(void)
 	return reinterpret_cast<const char*>(&mData[0]);
 }
 
-size_t BinaryBuffer::GetSize(void)
+unsigned long BinaryBuffer::GetSize(void)
 {
 	return mData.size();
 }

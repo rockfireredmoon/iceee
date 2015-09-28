@@ -1,5 +1,5 @@
 noinst_LIBRARIES = libsquirrel.a
-AM_CPPFLAGS = -I../include
+libsquirrel_a_CPPFLAGS = -I../include
 libsquirrel_a_SOURCES = sqapi.cpp \
 				sqbaselib.cpp \
 				sqclass.cpp \

@@ -211,11 +211,14 @@ void SystemLoop_Windows(void);
 
 void SystemLoop_Console(void);
 
+#ifdef WINDOWS_PLATFORM
+#include <malloc.h>
+#endif
+
 // Linux exception handling.
 #ifndef WINDOWS_PLATFORM
 #include <signal.h>
 #include <execinfo.h>
-#endif
 
 void segfault_sigaction(int signum, siginfo_t *si, void *arg)
 {
@@ -321,6 +324,7 @@ void InstallSignalHandler(void)
 	sigaction(SIGINT, &sa, NULL);
 	sigaction(SIGTERM, &sa, NULL);
 }
+#endif
 
 /*
 void Handle_SIGPIPE(int unknown)

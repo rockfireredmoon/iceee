@@ -50,13 +50,13 @@ private:
 
 
 // Needed for proper naming conventions to prevent warnings or errors.
-//#ifdef WINDOWS_PLATFORM
-//	#define PLATFORM_GETCWD   _getcwd
-//	#define PLATFORM_CHDIR    _chdir
-//#else
+#ifdef WINDOWS_PLATFORM
+	#define PLATFORM_GETCWD   _getcwd
+	#define PLATFORM_CHDIR    _chdir
+#else
 	#define PLATFORM_GETCWD   getcwd
 	#define PLATFORM_CHDIR    chdir
-//#endif
+#endif
 
 
 namespace Platform

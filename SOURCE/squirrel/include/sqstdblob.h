@@ -2,6 +2,8 @@
 #ifndef _SQSTDBLOB_H_
 #define _SQSTDBLOB_H_
 
+#include "squirrel.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif

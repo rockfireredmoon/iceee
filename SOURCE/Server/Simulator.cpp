@@ -126,6 +126,7 @@ OnExitFunctionClearBuffers::~OnExitFunctionClearBuffers()
 
 #ifndef WINDOWS_PLATFORM
 #include <errno.h>
+#include <stddef.h>
 #endif
 
 const char EXIT_GUILD_HALL[] = "EXIT GUILD HALL";
@@ -473,7 +474,7 @@ void SimulatorQuery :: Clear(void)
 	argCount = 0;
 };
 
-bool SimulatorQuery :: ValidArgIndex(uint argIndex)
+bool SimulatorQuery :: ValidArgIndex(unsigned int argIndex)
 {
 	if(argIndex < 0 || argIndex >= argCount)
 	{
@@ -483,22 +484,22 @@ bool SimulatorQuery :: ValidArgIndex(uint argIndex)
 	return true;
 }
 
-const char* SimulatorQuery :: GetString(uint argIndex)
+const char* SimulatorQuery :: GetString(unsigned int argIndex)
 {
 	return ValidArgIndex(argIndex) ? args[argIndex].c_str() : NULL;
 }
 
-int SimulatorQuery :: GetInteger(uint argIndex)
+int SimulatorQuery :: GetInteger(unsigned int argIndex)
 {
 	return ValidArgIndex(argIndex) ? atoi(args[argIndex].c_str()) : 0;
 }
 
-float SimulatorQuery :: GetFloat(uint argIndex)
+float SimulatorQuery :: GetFloat(unsigned int argIndex)
 {
 	return ValidArgIndex(argIndex) ? static_cast<float>(atof(args[argIndex].c_str())) : 0.0F;
 }
 
-bool SimulatorQuery :: GetBool(uint argIndex)
+bool SimulatorQuery :: GetBool(unsigned int argIndex)
 {
 	return ValidArgIndex(argIndex) ? (atoi(args[argIndex].c_str()) != 0) : false;
 }
@@ -916,7 +917,7 @@ void SimulatorThread :: ForceErrorMessage(const char *message, int msgtype)
 	g_PacketManager.ReleaseThread();
 }
 
-int SimulatorThread :: AttemptSend(const char *buffer, uint buflen)
+int SimulatorThread :: AttemptSend(const char *buffer, unsigned int buflen)
 {
 #ifdef DEBUG_TIME
 	Debug::TimeTrack("SimulatorThread::AttemptSend");
@@ -953,7 +954,7 @@ void SimulatorThread :: OnConnect(void)
 	);
 	int dpos = 0;
 	int cpos = 0;
-	for(uint i = 0; i < sizeof(remotename.sa_data); i++)
+	for(unsigned int i = 0; i < sizeof(remotename.sa_data); i++)
 	{
 		dpos += sprintf(&SendBuf[dpos], "%d.", (unsigned char)remotename.sa_data[i]);
 		int c = remotename.sa_data[i];
@@ -1549,7 +1550,7 @@ void SimulatorThread :: ReadQueryFromMessage(void)
 	//LogMessageL(MSG_DIAGV, "Query [%d]=[%s]", query.ID, Aux1);
 
 	query.argCount = GetByte(&readPtr[ReadPos], ReadPos);
-	for(uint i = 0; i < query.argCount; i++)
+	for(unsigned int i = 0; i < query.argCount; i++)
 	{
 		GetStringUTF(&readPtr[ReadPos], Aux1, sizeof(Aux1), ReadPos);
 		query.args.push_back(Aux1);
@@ -1739,7 +1740,7 @@ void SimulatorThread :: handle_query_pref_setA(void)
 	   Response: Return standard "OK".
 	*/
 
-	for(uint i = 0; i < query.argCount; i += 2)
+	for(unsigned int i = 0; i < query.argCount; i += 2)
 		pld.accPtr->preferenceList.SetPref(query.args[i].c_str(), query.args[i + 1].c_str());
 
 	WritePos = PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
@@ -1760,7 +1761,7 @@ void SimulatorThread :: handle_query_pref_set(void)
 	*/
 
 	//The character system needs extra debug steps.
-	for(uint i = 0; i < query.argCount; i += 2)
+	for(unsigned int i = 0; i < query.argCount; i += 2)
 	{
 		const char *name = query.args[i].c_str();
 		const char *value = query.args[i + 1].c_str();
@@ -1807,7 +1808,7 @@ void SimulatorThread :: RespondPrefGet(PreferenceContainer *prefSet)
 	//Each preference request will have a matching response field.
 	WritePos += PutShort(&SendBuf[WritePos], query.argCount);
 
-	for(uint i = 0; i < query.argCount; i++)
+	for(unsigned int i = 0; i < query.argCount; i++)
 	{
 		const char * pref = prefSet->GetPrefValue(query.args[i].c_str());
 
@@ -2592,7 +2593,7 @@ void SimulatorThread :: handle_game_query(void)
 			}
 
 			LogMessageL(MSG_WARN, "[WARNING] Unhandled query in game: %s", query.name.c_str());
-			for(uint i = 0; i < query.argCount; i++)
+			for(unsigned int i = 0; i < query.argCount; i++)
 				LogMessageL(MSG_WARN, "  [%d]=[%s]", i, query.args[i].c_str());
 
 			WritePos = PrepExt_QueryResponseError(SendBuf, query.ID, "Unknown query.");
@@ -2611,7 +2612,7 @@ void SimulatorThread :: handle_game_query(void)
 	if(passTime > 50)
 	{
 		LogMessageL(MSG_SHOW, "[DEBUG] TIME PASS handle_game_query() %d ms for query:%s (ID:%d)", passTime, query.name.c_str(), query.ID);
-		for(uint i = 0; i < query.argCount; i++)
+		for(unsigned int i = 0; i < query.argCount; i++)
 			LogMessageL(MSG_SHOW, "  [%d]=%s", i, query.args[i].c_str());
 	}
 
@@ -3692,7 +3693,7 @@ int SimulatorThread :: handle_query_map_marker(void)
 	if(zoneID != pld.CurrentZoneID)
 		return PrepExt_QueryResponseNull(SendBuf, query.ID);
 	MULTISTRING qRes;
-	for(uint i = 1; i < query.argCount; i++)
+	for(unsigned int i = 1; i < query.argCount; i++)
 	{
 		if(query.args[i].compare("QuestGiver") == 0)
 		{
@@ -6178,7 +6179,7 @@ const char * SimulatorThread :: GetErrorString(int error)
 	return "Server error: undefined";
 }
 
-bool SimulatorThread :: HasQueryArgs(uint minCount)
+bool SimulatorThread :: HasQueryArgs(unsigned int minCount)
 {
 	if(query.argCount < minCount)
 	{
@@ -6379,7 +6380,7 @@ int SimulatorThread :: protected_helper_query_scenery_edit(void)
 		LogMessageL(MSG_SHOW, "[DEBUG] scenery.edit: (new) %d", prop.ID);
 	}
 
-	for(uint i = 1; i < query.argCount; i += 2)
+	for(unsigned int i = 1; i < query.argCount; i += 2)
 	{
 		const char *field = query.args[i].c_str();
 		const char *data = query.args[i + 1].c_str();
@@ -6964,7 +6965,7 @@ int SimulatorThread :: handle_query_creature_def_edit(void)
 		if(CheckPermissionSimple(0, Permission_TweakClient) == true)
 		{
 			const char *appearance = NULL;
-			for(uint i = 1 + argOffset; i < query.argCount; i += 2)
+			for(unsigned int i = 1 + argOffset; i < query.argCount; i += 2)
 			{
 				const char *name = query.args[i].c_str();
 				const char *value = query.args[i + 1].c_str();
@@ -7022,7 +7023,7 @@ int SimulatorThread :: handle_query_creature_def_edit(void)
 	//and value.  The key specifies which item to change,
 	//(appearance so far), and the value contains the information
 	//to apply.
-	for(uint i = 1 + argOffset; i < query.argCount; i += 2)
+	for(unsigned int i = 1 + argOffset; i < query.argCount; i += 2)
 	{
 		std::string n = query.args[i];
 		std::transform(n.begin(), n.end(), n.begin(), ::tolower);
@@ -8669,7 +8670,7 @@ int SimulatorThread :: handle_query_quest_complete(void)
 		CID = query.GetInteger(1);
 	if(query.argCount > 2)
 	{
-		for(uint i = 2; i < query.argCount; i++)
+		for(unsigned int i = 2; i < query.argCount; i++)
 			selectionList.push_back(query.GetInteger(i));
 	}
 
@@ -8997,7 +8998,7 @@ int SimulatorThread :: protected_helper_query_trade_items(void)
 
 	InventorySlot item;
 	pData->itemList.clear();
-	for(uint a = 0; a < query.argCount; a++)
+	for(unsigned int a = 0; a < query.argCount; a++)
 	{
 		unsigned long CCSID = strtol(query.args[a].c_str(), NULL, 16);
 		InventorySlot *itemPtr = pld.charPtr->inventory.GetItemPtrByCCSID(CCSID);
@@ -9671,10 +9672,10 @@ int SimulatorThread :: handle_command_refashion(void)
 
 	//Clear the arguments only.  The ID must be retained for a proper query response.
 	query.args.clear();
-	sprintf(Aux3, "%X", (uint)origCCSID);
+	sprintf(Aux3, "%X", (unsigned int)origCCSID);
 	query.args.push_back(Aux3);
 
-	sprintf(Aux3, "%X", (uint)lookCCSID);
+	sprintf(Aux3, "%X", (unsigned int)lookCCSID);
 	query.args.push_back(Aux3);
 
 	query.args.push_back("0");
@@ -11260,7 +11261,7 @@ int SimulatorThread :: handle_command_deriveset(void)
 
 	std::string eqApp = creatureInst->CurrentTarget.targ->css.eq_appearance;
 
-	uint pos = 0;
+	unsigned int pos = 0;
 	while(pos != string::npos)
 	{
 		pos = eqApp.find_first_of("{}[]");
@@ -11588,7 +11589,7 @@ int SimulatorThread :: handle_query_script_op(int op)
 			wpos += PutShort(&SendBuf[wpos], 0);      //Message size
 			wpos += PutInteger(&SendBuf[wpos], query.ID);  //Query response index
 			wpos += PutShort(&SendBuf[wpos], lines.size() + 1);
-			for(uint i = 0 ; i < lines.size() ; i++) {
+			for(unsigned int i = 0 ; i < lines.size() ; i++) {
 				wpos += PutByte(&SendBuf[wpos], 1);
 				wpos += PutStringUTF(&SendBuf[wpos], lines[i].c_str());
 			}
@@ -11822,7 +11823,7 @@ int SimulatorThread :: handle_query_petition_list(void)
 			{
 				int c = 0;
 				memset(&Aux1, 0, sizeof(Aux1));
-				for(uint i = 0 ; i < accData->MAX_CHARACTER_SLOTS; i++) {
+				for(unsigned int i = 0 ; i < accData->MAX_CHARACTER_SLOTS; i++) {
 					if(accData->CharacterSet[i] != 0 && accData->CharacterSet[i] != petitioner->cdef.CreatureDefID) {
 						CharacterCacheEntry *cce = accData->characterCache.ForceGetCharacter(accData->CharacterSet[i]);
 						if(cce != NULL)
@@ -12508,7 +12509,7 @@ int SimulatorThread :: handle_query_item_market_list(void)
 
 	wpos += PutShort(&SendBuf[wpos], 0);
 
-	uint count = 0;
+	unsigned int count = 0;
 
 	// First row has cost of name change
 	wpos += PutByte(&SendBuf[wpos], 1);
@@ -12697,7 +12698,7 @@ int SimulatorThread :: handle_query_guild_info(void)
 	}
 	else {
 		wpos += PutShort(&SendBuf[wpos], pld.charPtr->guildList.size());
-		for(uint i = 0 ; i < pld.charPtr->guildList.size(); i++)
+		for(unsigned int i = 0 ; i < pld.charPtr->guildList.size(); i++)
 		{
 
 			//local defID = r[0];
@@ -12777,7 +12778,7 @@ int SimulatorThread :: handle_query_guild_leave(void)
 	wpos += PutShort(&SendBuf[wpos], 0);      //Message size
 	wpos += PutInteger(&SendBuf[wpos], query.ID);  //Query response index
 	wpos += PutShort(&SendBuf[wpos], defs.size());
-	for(uint i = 0 ; i < defs.size() ; i++) {
+	for(unsigned int i = 0 ; i < defs.size() ; i++) {
 		sprintf(Aux1, "%d", defs[i]);
 		wpos += PutByte(&SendBuf[wpos], 1);
 		wpos += PutStringUTF(&SendBuf[wpos], Aux1);
@@ -12897,7 +12898,7 @@ int SimulatorThread :: OfferLoot(int mode, ActiveLootContainer *loot, ActivePart
 	// First tags for other party members
 	LogMessageL(MSG_SHOW, "Offering to %d party member", party->mMemberList.size());
 	int offers = 0;
-	for(uint i = 0 ; i < party->mMemberList.size(); i++) {
+	for(unsigned int i = 0 ; i < party->mMemberList.size(); i++) {
 		if(receivingCreature == NULL || party->mMemberList[i].mCreatureID != receivingCreature->CreatureID) {
 			// Only send offer to players in range
 			int distCheck = protected_CheckDistanceBetweenCreaturesFor(party->mMemberList[i].mCreaturePtr, CID, PARTY_LOOT_RANGE);
@@ -13049,7 +13050,7 @@ int SimulatorThread :: handle_query_ps_join(void)
 
 int SimulatorThread :: handle_query_ps_leave(void)
 {
-	for(uint i = 0; i < query.argCount; i++)
+	for(unsigned int i = 0; i < query.argCount; i++)
 		LogMessage("%d=%s", i, query.args[i].c_str());
 
 	const char *name = NULL;
@@ -13186,7 +13187,7 @@ int SimulatorThread :: handle_query_mod_setats(void)
 	int failed = 0;
 	int wpos = 0;
 	g_SceneryManager.GetThread("SimulatorThread::handle_query_mod_setats");
-	for(uint i = 1; i < query.argCount; i += 2)
+	for(unsigned int i = 1; i < query.argCount; i += 2)
 	{
 		int propID = atoi(query.args[i].c_str());
 		const char *assetStr = query.args[i + 1].c_str();
@@ -13209,7 +13210,7 @@ int SimulatorThread :: handle_query_mod_setats(void)
 			SceneryObject replaceProp;
 			replaceProp.copyFrom(so);
 			std::string newAsset = replaceProp.Asset;
-			uint pos = newAsset.find("?ATS=");
+			unsigned int pos = newAsset.find("?ATS=");
 			if(pos != string::npos)
 			{
 				newAsset.erase(pos + 5, newAsset.length());  //Erase everything after "?ATS="
@@ -13334,7 +13335,7 @@ int SimulatorThread :: handle_query_mod_igforum_openthread(void)
 
 	MULTISTRING results;
 	g_IGFManager.OpenThread(id, start, count, results);
-	uint wpos = PrepExt_QueryResponseMultiString(SendBuf, query.ID, results);
+	unsigned int wpos = PrepExt_QueryResponseMultiString(SendBuf, query.ID, results);
 
 	if(wpos >= sizeof(SendBuf) - 1)
 		LogMessageL(MSG_CRIT, "[CRITICAL]: IGF openthread response too large: %d", wpos);
@@ -13500,7 +13501,7 @@ int SimulatorThread :: handle_query_mod_itempreview(void)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Server error.");
 
 	std::vector<int> eqArray;
-	for(uint i = 2; i < query.argCount; i++)
+	for(unsigned int i = 2; i < query.argCount; i++)
 		eqArray.push_back(atoi(query.args[i].c_str()));
 
 	int targetEquipSlot = 0;
@@ -13943,7 +13944,7 @@ void SimulatorThread :: VerifySendBufSize(int length)
 }
 */
 			
-void SimulatorThread :: VerifyGenericBuffer(const char *buffer, uint buflen)
+void SimulatorThread :: VerifyGenericBuffer(const char *buffer, unsigned int buflen)
 {
 	//Note: SendBuf does not work if called from any of the instance batch send (LSendTo___)  functions
 	//since it will likely use a different simulator's buffer at a different address.
@@ -14300,7 +14301,7 @@ int SimulatorThread :: handle_query_mod_craft(void)
 	//Resolve inputs.
 	std::vector<CraftInputSlot> inputs;
 	std::vector<CraftInputSlot> outputs;
-	for(uint i = 0; i < query.argCount; i++)
+	for(unsigned int i = 0; i < query.argCount; i++)
 	{
 		unsigned int CCSID = inv.GetCCSIDFromHexID(query.GetString(i));
 		InventorySlot *slot = inv.GetItemPtrByCCSID(CCSID);
@@ -15063,7 +15064,7 @@ int SimulatorThread :: handle_query_script_exec(void)
 		string funcName = query.GetString(0);
 		if(inst->nutScriptPlayer != NULL) {
 			std::vector<ScriptCore::ScriptParam> p;
-			for(uint i = 1 ; i < query.argCount; i++) {
+			for(unsigned int i = 1 ; i < query.argCount; i++) {
 				p.push_back(ScriptCore::ScriptParam(query.GetString(i)));
 			}
 			inst->nutScriptPlayer->JumpToLabel(funcName.c_str(), p);
@@ -15298,7 +15299,7 @@ void SimulatorThread :: CheckIfLootReadyToDistribute(ActiveLootContainer *loot, 
 	// How many decisions do we expect to process the roll. This will depend
 	// on if this is the secondary roll when round robin or loot master is in use
 	// has been processed or not
-	uint requiredDecisions = party->mMemberList.size();
+	unsigned int requiredDecisions = party->mMemberList.size();
 	if((party->mLootMode == ROUND_ROBIN || party->mLootMode == LOOT_MASTER)) {
 		if(loot->IsStage2(lootTag->mItemId)) {
 			requiredDecisions = party->mMemberList.size() - 1;
@@ -15307,7 +15308,7 @@ void SimulatorThread :: CheckIfLootReadyToDistribute(ActiveLootContainer *loot, 
 			requiredDecisions = 1;
 		}
 	}
-	uint decisions = (uint)loot->CountDecisions(lootTag->mItemId);
+	unsigned int decisions = (unsigned int)loot->CountDecisions(lootTag->mItemId);
 	LogMessageL(MSG_SHOW, "Loot requires %d decisions, we have %d", requiredDecisions, decisions);
 
 	if(decisions >= requiredDecisions)
@@ -15394,7 +15395,7 @@ void SimulatorThread :: CheckIfLootReadyToDistribute(ActiveLootContainer *loot, 
 		if(receivingCreature == NULL) {
 			LogMessageL(MSG_WARN, "Everybody passed on loot %d", lootTag->mItemId);
 			// Send a winner with a tag of '0'. This will close the window
-			for(uint i = 0 ; i < party->mMemberList.size(); i++) {
+			for(unsigned int i = 0 ; i < party->mMemberList.size(); i++) {
 				// Skip the loot master or robin
 
 				LootTag *tag = party->GetTag(lootTag->mItemId, party->mMemberList[i].mCreaturePtr->CreatureID);
@@ -15413,7 +15414,7 @@ void SimulatorThread :: CheckIfLootReadyToDistribute(ActiveLootContainer *loot, 
 
 		// Send the actual winner to all of the party that have a tag
 		LootTag *winnerTag = party->GetTag(lootTag->mItemId, receivingCreature->CreatureID);
-		for(uint i = 0 ; i < party->mMemberList.size(); i++)
+		for(unsigned int i = 0 ; i < party->mMemberList.size(); i++)
 		{
 			LogMessageL(MSG_WARN, "Informing %d of the winner (%d)", party->mMemberList[i].mCreaturePtr->CreatureID, lootTag->mCreatureId);
 			LootTag *tag = party->GetTag(lootTag->mItemId, party->mMemberList[i].mCreaturePtr->CreatureID);

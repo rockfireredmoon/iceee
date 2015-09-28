@@ -12,9 +12,7 @@
 #include "ConfigString.h"
 #include "Stats.h"
 
-#ifndef WINDOWS_PLATFORM
 #include <stddef.h>
-#endif
 
 //vector<ItemDef> ItemList;
 

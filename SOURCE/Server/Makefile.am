@@ -1,8 +1,15 @@
 bin_PROGRAMS = planetforeverd
-AM_CPPFLAGS= -I../squirrel/include -I../squirrel/sqrat
 
+planetforeverd_CPPFLAGS = $(libcurl_CFLAGS) -I../squirrel/include $(libcurl_CFLAGS)
 planetforeverd_LDADD = ../squirrel/squirrel/libsquirrel.a ../squirrel/sqstdlib/libsqstdlib.a
+
+if MINGW
+planetforeverd_CPPFLAGS += -DWINDOWS_PLATFORM=1 
+planetforeverd_LDFLAGS = -lws2_32 -lcurl -lws2_32
+else
 planetforeverd_LDFLAGS = -lpthread -lrt -lcurl
+endif
+
 planetforeverd_SOURCES = md5.cc \
 	Ability2.cpp \
 	AbilityTime.cpp \
@@ -67,7 +74,7 @@ planetforeverd_SOURCES = md5.cc \
 	Report.cpp \
 	Router.cpp \
 	Scenery2.cpp \
-	Squirrel.cpp \
+	SquirrelObjects.cpp \
 	ScriptCore.cpp \
 	SimulatorBase.cpp \
 	Simulator.cpp \
@@ -163,4 +170,22 @@ planetforeverd_SOURCES = md5.cc \
 	ZoneDef.h \
 	ZoneObject.h \
 	json/json-forwards.h \
-	json/json.h
+	json/json.h \
+	sqmodule.h \
+	sqrat.h \
+	sqratimport.h \
+	sqrat/sqratAllocator.h \
+	sqrat/sqratArray.h \
+	sqrat/sqratClass.h \
+	sqrat/sqratClassType.h \
+	sqrat/sqratConst.h \
+	sqrat/sqratFunction.h \
+	sqrat/sqratGlobalMethods.h \
+	sqrat/sqratMemberMethods.h \
+	sqrat/sqratObject.h \
+	sqrat/sqratOverloadMethods.h \
+	sqrat/sqratScript.h \
+	sqrat/sqratTable.h \
+	sqrat/sqratTypes.h \
+	sqrat/sqratUtil.h \
+	sqrat/sqratVM.h

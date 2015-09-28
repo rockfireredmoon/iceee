@@ -5,12 +5,13 @@
 #include "CommonTypes.h"
 #include "StringList.h"
 #include "Simulator.h"
-#include "Squirrel.h"
 #include "Creature.h"
 #include <stdlib.h>
 #include <sqrat.h>
 #include <sqrat.h>
 #include <algorithm>    // std::remove
+
+#include "SquirrelObjects.h"
 //#include <sqbind.h>
 
 //extern char GAuxBuf[];

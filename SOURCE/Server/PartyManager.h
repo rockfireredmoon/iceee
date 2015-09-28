@@ -70,7 +70,7 @@ public:
 	int mLeaderID;
 	LootMode mLootMode;
 	int mLootFlags;
-	uint mNextToGetLoot;
+	unsigned int mNextToGetLoot;
 	std::string mLeaderName;
 	std::vector<PartyMember> mMemberList;
 	std::map<int, LootTag*> lootTags;
