@@ -1398,7 +1398,7 @@ mMinUseLevel=25
 [ENTRY]
 mID=2050006
 mType=5
-mDisplayName=Pet: Turkatrice (Level 15)
+mDisplayName=Pet - Turkatrice (Level 15)
 mIcon=Icon-32-Armor-Turkatrice_Helm.png|Icon-32-BG-Grey.png
 mIvType1=1
 mIvMax1=1
@@ -1413,7 +1413,7 @@ Params=pet=3620
 [ENTRY]
 mID=2050007
 mType=5
-mDisplayName=Pet: Turkatrice (Level 26)
+mDisplayName=Pet - Turkatrice (Level 26)
 mIcon=Icon-32-Armor-Turkatrice_Helm.png|Icon-32-BG-Grey.png
 mIvType1=1
 mIvMax1=1
@@ -1428,7 +1428,7 @@ Params=pet=3621
 [ENTRY]
 mID=2050008
 mType=5
-mDisplayName=Pet: Turkatrice (Level 32)
+mDisplayName=Pet - Turkatrice (Level 32)
 mIcon=Icon-32-Armor-Turkatrice_Helm.png|Icon-32-BG-Grey.png
 mIvType1=1
 mIvMax1=1
@@ -1443,7 +1443,7 @@ Params=pet=3622
 [ENTRY]
 mID=2050009
 mType=5
-mDisplayName=Pet: Chillkin (Level 15)
+mDisplayName=Pet - Chillkin (Level 15)
 mIcon=Icon-32-Cob_Pipe.png|Icon-32-BG-Aqua.png
 mIvType1=1
 mIvMax1=1
@@ -1458,7 +1458,7 @@ Params=pet=3623
 [ENTRY]
 mID=2050010
 mType=5
-mDisplayName=Pet: Chillkin (Level 26)
+mDisplayName=Pet - Chillkin (Level 26)
 mIcon=Icon-32-Cob_Pipe.png|Icon-32-BG-Aqua.png
 mIvType1=1
 mIvMax1=1
@@ -1473,7 +1473,7 @@ Params=pet=3624
 [ENTRY]
 mID=2050011
 mType=5
-mDisplayName=Pet: Chillkin (Level 32)
+mDisplayName=Pet - Chillkin (Level 32)
 mIcon=Icon-32-Cob_Pipe.png|Icon-32-BG-Aqua.png
 mIvType1=1
 mIvMax1=1
