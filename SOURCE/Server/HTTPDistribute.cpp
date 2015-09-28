@@ -1114,7 +1114,7 @@ int HTTPDistribute :: FillAPI(void)
 	}
 	else if(Util::HasEnding(FileNameRequest, "/chat")) {
 		response += "{ ";
-		int count = parms.find("count") == parms.end() ? 100 : atoi(parms.find("count")->second.c_str());
+		int count = parms.find("count") == parms.end() ? 20 : atoi(parms.find("count")->second.c_str());
 		std::deque<ChatMessage>::iterator it;
 		g_ChatManager.cs.Enter("HTTPDistribute::Chat");
 		int start = g_ChatManager.CircularChatBuffer.size() - 1 - count;
