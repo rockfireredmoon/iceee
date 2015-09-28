@@ -1,13 +1,13 @@
 bin_PROGRAMS = planetforeverd
 
 planetforeverd_CPPFLAGS = $(libcurl_CFLAGS) -I../squirrel/include $(libcurl_CFLAGS)
-planetforeverd_LDADD = ../squirrel/squirrel/libsquirrel.a ../squirrel/sqstdlib/libsqstdlib.a
+planetforeverd_LDADD = ../squirrel/squirrel/libsquirrel.a ../squirrel/sqstdlib/libsqstdlib.a $(libcurl_LIBS)
 
 if MINGW
 planetforeverd_CPPFLAGS += -DWINDOWS_PLATFORM=1 
 planetforeverd_LDFLAGS = -lws2_32 -lcurl -lws2_32
 else
-planetforeverd_LDFLAGS = -lpthread -lrt -lcurl
+planetforeverd_LDFLAGS = -lpthread -lrt
 endif
 
 planetforeverd_SOURCES = md5.cc \
