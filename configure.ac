@@ -31,8 +31,8 @@ AM_CONDITIONAL(DEBUG, test x"$debug" = x"true")
 AC_CANONICAL_HOST
 case $host_os in
   *mingw*) mingw=true ;;
-  *) mingw=false ;;
-esac
+  		*) mingw=false;;
+	esac
 AM_CONDITIONAL([MINGW], [test x$mingw = xtrue])
 
 AC_CHECK_LIB(pthread, pthread_create,[pthread=true], [pthread=false])
