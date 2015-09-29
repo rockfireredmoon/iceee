@@ -25,10 +25,10 @@ public:
     void Clear();
     void ReadDirectories();
     void ReadFiles(void);
-    const char * GetDirectory();
-    void SetDirectory(const char *path);
+    std::string GetDirectory();
+    void SetDirectory(std::string path);
     int FileCount(void);
-    bool CheckInvalidDir(const char *filename);
+    bool CheckInvalidDir(std::string filename);
 
 private:
     int TYPE_DIR;

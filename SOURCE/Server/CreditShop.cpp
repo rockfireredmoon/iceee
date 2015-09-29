@@ -315,7 +315,7 @@ int CreditShopManager::LoadItems(void) {
 	std::string dir = r.GetDirectory();
 	r.SetDirectory("CreditShop");
 	r.ReadFiles();
-	r.SetDirectory(dir.c_str());
+	r.SetDirectory(dir);
 
 	std::vector<std::string>::iterator it;
 	for (it = r.fileList.begin(); it != r.fileList.end(); ++it) {
