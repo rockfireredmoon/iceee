@@ -147,10 +147,13 @@ private:
 #ifdef DEBUG_TIME
 	unsigned long acquireTime;
 #endif
+
+#ifdef HAS_PTHREAD
+	pthread_mutex_t mutex;
+#else
 #ifdef WINDOWS_PLATFORM
 	CRITICAL_SECTION cs;
-#else
-	pthread_mutex_t mutex;
+#endif
 #endif
 	void Clear(void);        //Zero all values, to be called by the constructor.
 };
