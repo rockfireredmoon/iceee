@@ -110,13 +110,13 @@ extern char VersionString[];
 //	Critical sections (mutexes)
 //
 
-#ifdef WINDOWS_PLATFORM
+#ifdef HAS_PTHREAD
+	#include <pthread.h>
+#else
 	#ifndef WIN32_LEAN_AND_MEAN
 		#define WIN32_LEAN_AND_MEAN
 	#endif
 	#include <windows.h>
-#else
-	#include <pthread.h>
 #endif
 
 
@@ -190,18 +190,18 @@ private:
 */
 
 
-#ifdef WINDOWS_PLATFORM
-	#define PLATFORM_THREADRETURN    DWORD WINAPI
-	#define PLATFORM_THREADARGS      LPVOID
-	//#define PLATFORM_CLOSETHREAD(x)  __noop;    //Formerly  ExitThread(0)  Turns out this function is intended for C and not C++.  Testing revealed that it could cause memory errors and crashes.
-	#define PLATFORM_CLOSETHREAD(x);
-	int Platform_CreateThread(size_t stackSize, void* ptrRoutine, void* ptrArgs, DWORD* threadID);
-#else
+#ifdef HAS_PTHREAD
 	typedef void*(*PLATFORM_FUNCTIONPTR)(void*);
 	#define PLATFORM_THREADRETURN    static void*
 	#define PLATFORM_THREADARGS      void*
 	#define PLATFORM_CLOSETHREAD(x)  pthread_exit(NULL);
 	int Platform_CreateThread(size_t stackSize, void* ptrRoutine, void* ptrArgs, unsigned long *threadID);
+#else
+	#define PLATFORM_THREADRETURN    DWORD WINAPI
+	#define PLATFORM_THREADARGS      LPVOID
+	//#define PLATFORM_CLOSETHREAD(x)  __noop;    //Formerly  ExitThread(0)  Turns out this function is intended for C and not C++.  Testing revealed that it could cause memory errors and crashes.
+	#define PLATFORM_CLOSETHREAD(x);
+	int Platform_CreateThread(size_t stackSize, void* ptrRoutine, void* ptrArgs, DWORD* threadID);
 #endif
 
 

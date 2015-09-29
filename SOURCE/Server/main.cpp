@@ -179,6 +179,15 @@ If using Code::Blocks on LINUX
 #include "Guilds.h"
 #include "Daily.h"
 
+#ifdef WINDOWS_SERVICE
+#include <windows.h>
+void  ServiceMain(int argc, char** argv);
+SERVICE_STATUS ServiceStatus;
+SERVICE_STATUS_HANDLE hStatus;
+void  ControlHandler(DWORD request);
+int InitService();
+#endif
+
 //extern GuildManager g_GuildManager;
 
 ChangeData g_AutoSaveTimer;
@@ -186,6 +195,7 @@ ChangeData g_AutoSaveTimer;
 char GAuxBuf[1024];    //Note, if this size is modified, change all "extern" references
 char GSendBuf[32767];  //Note, if this size is modified, change all "extern" references
 
+int InitServerMain(void);
 void RunServerMain(void);
 void SendHeartbeatMessages(void);
 void RunPendingMessages(void);  //Runs all pending messages in the BroadCastMessage class.
@@ -371,10 +381,14 @@ void Handle_SIGINT(int unknown)
 
 //#endif
 
+#ifdef WINDOWS_SERVICE
+int main()
+#else
 #ifdef USE_WINDOWS_GUI
 int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 #else
 int main(int argc, char *argv[])
+#endif
 #endif
 {
 #ifdef _CRTDEBUGGING
@@ -396,7 +410,49 @@ int main(int argc, char *argv[])
 	*/
 #endif
 
+#ifdef WINDOWS_SERVICE
+	SERVICE_TABLE_ENTRY ServiceTable[2];
+	ServiceTable[0].lpServiceName = "TAWD";
+	ServiceTable[0].lpServiceProc = (LPSERVICE_MAIN_FUNCTION)ServiceMain;
+	ServiceTable[1].lpServiceName = NULL;
+	ServiceTable[1].lpServiceProc = NULL;
+    StartServiceCtrlDispatcher(ServiceTable);
+#else
+#ifdef WINDOWS_GUI
+	return InitServerMain();
+#else
+	InitServerMain();
+#endif
+#endif
+}
 
+
+#ifdef WINDOWS_SERVICE
+void ServiceMain(int argc, char** argv) {
+
+    int error;
+    ServiceStatus.dwServiceType        = SERVICE_WIN32;
+    ServiceStatus.dwCurrentState       = SERVICE_START_PENDING;
+    ServiceStatus.dwControlsAccepted   = SERVICE_ACCEPT_STOP | SERVICE_ACCEPT_SHUTDOWN;
+    ServiceStatus.dwWin32ExitCode      = 0;
+    ServiceStatus.dwServiceSpecificExitCode = 0;
+    ServiceStatus.dwCheckPoint         = 0;
+    ServiceStatus.dwWaitHint           = 0;
+
+    SetServiceStatus (hStatus, &ServiceStatus);
+
+    hStatus = RegisterServiceCtrlHandler(
+		"TAWD",
+		(LPHANDLER_FUNCTION)ControlHandler);
+
+    if (hStatus == (SERVICE_STATUS_HANDLE)0) {
+        return;
+    }
+    InitServerMain();
+}
+#endif
+
+int InitServerMain() {
 	TRACE_INIT(250);
 
 #ifdef USE_WINDOWS_GUI
@@ -578,6 +634,10 @@ int main(int argc, char *argv[])
 
 	g_ChatManager.OpenChatLogFile("RegionChat.log");
 	
+#ifdef WINDOWS_SERVICE
+    ServiceStatus.dwCurrentState = SERVICE_RUNNING;
+    SetServiceStatus (hStatus, &ServiceStatus);
+#endif
 
 #ifdef USE_WINDOWS_GUI
 	SystemLoop_Windows();
@@ -586,6 +646,13 @@ int main(int argc, char *argv[])
 #endif
 
 	ShutDown();
+
+#ifdef WINDOWS_SERVICE
+    ServiceStatus.dwWin32ExitCode = 0;
+    ServiceStatus.dwCurrentState  = SERVICE_STOPPED;
+    SetServiceStatus (hStatus, &ServiceStatus);
+#endif
+
 	UnloadResources();
 	exit(EXIT_SUCCESS);
 #ifdef _CRTDEBUGGING
@@ -593,6 +660,43 @@ int main(int argc, char *argv[])
 #endif
 	return 0;
 }
+
+#ifdef WINDOWS_SERVICE
+
+// Service initialization
+int InitService() {
+    int result;
+    //result = g_Log.AddmeWriteToLog("Monitoring started.");
+    return(result);
+}
+
+// Control handler function
+void ControlHandler(DWORD request) {
+	// TODO proper cleanup
+    switch(request) {
+
+        case SERVICE_CONTROL_STOP:
+            //WriteToLog("Monitoring stopped.");
+
+            ServiceStatus.dwWin32ExitCode = 0;
+            ServiceStatus.dwCurrentState  = SERVICE_STOPPED;
+            SetServiceStatus (hStatus, &ServiceStatus);
+            return;
+        case SERVICE_CONTROL_SHUTDOWN:
+            //WriteToLog("Monitoring stopped.");
+            ServiceStatus.dwWin32ExitCode = 0;
+            ServiceStatus.dwCurrentState  = SERVICE_STOPPED;
+            SetServiceStatus (hStatus, &ServiceStatus);
+            return;
+        default:
+            break;
+    }
+
+    // Report current status
+    SetServiceStatus (hStatus,  &ServiceStatus);
+    return;
+}
+#endif
 
 
 #ifdef WINDOWS_PLATFORM

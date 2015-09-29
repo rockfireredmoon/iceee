@@ -1,5 +1,5 @@
 dnl Process this file with autoconf to produce a configure script.
-AC_INIT(planetforeverd, 1.0, emerald.icemoon@gmail.com)
+AC_INIT(tawd, 1.0, emerald.icemoon@gmail.com)
 AC_CONFIG_AUX_DIR(config)
 AC_CONFIG_MACRO_DIR([m4])
 AM_INIT_AUTOMAKE([subdir-objects foreign])
@@ -34,4 +34,11 @@ case $host_os in
   *) mingw=false ;;
 esac
 AM_CONDITIONAL([MINGW], [test x$mingw = xtrue])
+
+AC_CHECK_LIB(pthread, pthread_create,[pthread=true], [pthread=false])
+if test "x${pthread}" != xtrue; then
+   AC_MSG_ERROR([required library pthread missing])
+fi
+AM_CONDITIONAL([HAS_PTHREAD], [test x$pthread = xtrue])
+
 AC_OUTPUT
