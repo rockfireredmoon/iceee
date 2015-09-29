@@ -55,15 +55,16 @@ void Platform_DirectoryReader :: ReadFiles(void)
     RunScan(TYPE_FILE);
 }
 
-void Platform_DirectoryReader :: SetDirectory(const char *path)
+void Platform_DirectoryReader :: SetDirectory(std::string path)
 {
-    PLATFORM_CHDIR(path);
+    PLATFORM_CHDIR(path.c_str());
 }
 
-const char * Platform_DirectoryReader :: GetDirectory()
+std::string Platform_DirectoryReader :: GetDirectory()
 {
 	char cwd[512];
-	return PLATFORM_GETCWD(cwd,sizeof(cwd));
+	PLATFORM_GETCWD(cwd,sizeof(cwd));
+	return cwd;
 	//return get_current_dir_name();
 }
 
@@ -72,14 +73,14 @@ int Platform_DirectoryReader :: FileCount(void)
     return fileList.size();
 }
 
-bool Platform_DirectoryReader :: CheckInvalidDir(const char *entryName)
+bool Platform_DirectoryReader :: CheckInvalidDir(std::string entryName)
 {
     if(excludeRel == true)
     {
-        if(strcmp(entryName, ".") == 0)
+        if(entryName.compare(".") == 0)
             return true;
 
-        if(strcmp(entryName, "..") == 0)
+        if(entryName.compare("..") == 0)
             return true;
     }
     return false;

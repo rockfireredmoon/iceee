@@ -367,7 +367,7 @@ int AINutManager::LoadScripts(void) {
 	string dir = r.GetDirectory();
 	r.SetDirectory("AIScript");
 	r.ReadFiles();
-	r.SetDirectory(dir.c_str());
+	r.SetDirectory(dir);
 
 	vector<std::string>::iterator it;
 	for (it = r.fileList.begin(); it != r.fileList.end(); ++it) {
