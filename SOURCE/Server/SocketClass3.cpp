@@ -223,7 +223,7 @@ int SocketClass :: Accept(void)
 	 * for most setups as the router is very likely to be running on the
 	 * same host as the simulator
 	 */
-	int sa_len;
+	socklen_t sa_len;
 	struct sockaddr_storage sa;
 	sa_len = sizeof(sa);
 	if(getsockname(clientfd, (struct sockaddr*)&sa, &sa_len) == -1) {
