@@ -104,11 +104,11 @@ int RouterThread :: InitThread(int instanceindex, int globalThreadID)
 	return 0;
 }
 
-void RouterThread :: OnConnect(void)
+void RouterThread :: OnConnect(const char *destAddress)
 {
 	//This is the router's job, resolve the target Simulator's address, send
 	//the address string, then restart the thread.
-	int res = ResolvePort(g_SimulatorPort);
+	int res = ResolvePort(destAddress, g_SimulatorPort);
 	if(res != 0)
 	{
 		int size = strlen(SimTarget);
@@ -127,9 +127,9 @@ void RouterThread :: Shutdown(void)
 	sc.ShutdownServer();
 }
 
-int RouterThread :: ResolvePort(int port)
+int RouterThread :: ResolvePort(const char *destAddress, int port)
 {
-	sprintf(SimTarget, "%s:%d", g_SimulatorAddress, port);
+	sprintf(SimTarget, "%s:%d", strlen(g_SimulatorAddress) == 0 ? destAddress : g_SimulatorAddress, port);
 	return 1;
 }
 
@@ -192,7 +192,7 @@ void RouterThread :: RunMainLoop(void)
 			int res = sc.Accept();
 			if(res == 0)
 			{
-				OnConnect();
+				OnConnect(sc.destAddr);
 				//Job is done, get rid of the client.
 				Status = Status_Kick;
 			}

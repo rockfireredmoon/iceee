@@ -321,7 +321,7 @@ int CreditShopManager::LoadItems(void) {
 	for (it = r.fileList.begin(); it != r.fileList.end(); ++it) {
 		std::string p = *it;
 		if (Util::HasEnding(p, ".txt")) {
-			LoadItem(atoi(Platform::Basename(p.c_str())));
+			LoadItem(atoi(Platform::Basename(p).c_str()));
 		}
 	}
 
@@ -332,4 +332,3 @@ CreditShopItem * CreditShopManager::GetItem(int id) {
 	std::map<int, CreditShopItem*>::iterator it = mItems.find(id);
 	return it == mItems.end() ? NULL : it->second;
 }
-

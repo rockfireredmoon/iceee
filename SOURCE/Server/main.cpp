@@ -411,6 +411,16 @@ int main(int argc, char *argv[])
 #endif
 
 #ifdef WINDOWS_SERVICE
+
+	/* By default the working directory will be the \Windows\System32. This is no good for us,
+		 * we need to be wherever the exectuable is	 *
+		 */
+	char buffer[MAX_PATH];
+	GetModuleFileName(NULL, buffer, MAX_PATH);
+	std::string dn = Platform::Dirname(buffer);
+	PLATFORM_CHDIR(dn.c_str());
+
+
 	SERVICE_TABLE_ENTRY ServiceTable[2];
 	ServiceTable[0].lpServiceName = "TAWD";
 	ServiceTable[0].lpServiceProc = (LPSERVICE_MAIN_FUNCTION)ServiceMain;
@@ -431,7 +441,7 @@ int main(int argc, char *argv[])
 void ServiceMain(int argc, char** argv) {
 
     int error;
-    ServiceStatus.dwServiceType        = SERVICE_WIN32;
+    ServiceStatus.dwServiceType        = SERVICE_WIN32_OWN_PROCESS;
     ServiceStatus.dwCurrentState       = SERVICE_START_PENDING;
     ServiceStatus.dwControlsAccepted   = SERVICE_ACCEPT_STOP | SERVICE_ACCEPT_SHUTDOWN;
     ServiceStatus.dwWin32ExitCode      = 0;
@@ -481,6 +491,10 @@ int InitServerMain() {
 	LoadConfig("ServerConfig.txt");
 	LoadSession("SessionVars.txt");
 	g_Log.LoggingEnabled = g_GlobalLogging;
+
+	char cwd[512];
+	PLATFORM_GETCWD(cwd,sizeof(cwd));
+	g_Log.AddMessageFormat("Working from %s", cwd);
 
 	g_FileChecksum.LoadFromFile(Platform::GenerateFilePath(GAuxBuf, "Data", "HTTPChecksum.txt"));
 	g_Log.AddMessageFormat("Loaded %d checksums.", g_FileChecksum.mChecksumData.size());

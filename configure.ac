@@ -28,6 +28,27 @@ AS_HELP_STRING([--enable-debug],
 esac],
 [debug=false])
 AM_CONDITIONAL(DEBUG, test x"$debug" = x"true")
+
+
+AC_ARG_ENABLE(pthread,
+AS_HELP_STRING([--enable-pthread],
+               [enable pthread, default: tes]),
+[case "${enableval}" in
+             yes) pthread=true ;;
+             no)  pthread=false ;;
+             *)   AC_MSG_ERROR([bad value ${enableval} for --enable-pthread]) ;;
+esac],
+[pthread=true])
+LIBPTHREAD=
+AS_IF([test "x$pthread" != xfalse],
+	[AC_CHECK_LIB([pthread], [main],
+              [AC_SUBST([LIBPTHREAD], ["-lpthread"])
+               AC_DEFINE([HAS_PTHREAD], [1], [Define if you have pthread])
+              ],
+              [AC_MSG_FAILURE(
+                 [test for pthread failed])])])
+
+
 AC_CANONICAL_HOST
 case $host_os in
   *mingw*) mingw=true ;;
@@ -35,10 +56,17 @@ case $host_os in
 	esac
 AM_CONDITIONAL([MINGW], [test x$mingw = xtrue])
 
-AC_CHECK_LIB(pthread, pthread_create,[pthread=true], [pthread=false])
-if test "x${pthread}" != xtrue; then
-   AC_MSG_ERROR([required library pthread missing])
-fi
-AM_CONDITIONAL([HAS_PTHREAD], [test x$pthread = xtrue])
+#AM_CONDITIONAL([HAS_PTHREAD], [test x$pthread = xtrue -a x$usepthread = xtrue])
+
+AC_ARG_ENABLE(service,
+AS_HELP_STRING([--enable-service],
+               [enable service, default: no]),
+[case "${enableval}" in
+             yes) service=true ;;
+             no)  service=false ;;
+             *)   AC_MSG_ERROR([bad value ${enableval} for --enable-service]) ;;
+esac],
+[service=false])
+AM_CONDITIONAL([SERVICE], [test x$service = xtrue])
 
 AC_OUTPUT

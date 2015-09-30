@@ -50,6 +50,7 @@ private:
 
 
 // Needed for proper naming conventions to prevent warnings or errors.
+
 #ifdef WINDOWS_PLATFORM
 	#define PLATFORM_GETCWD   _getcwd
 	#define PLATFORM_CHDIR    _chdir
@@ -70,10 +71,10 @@ namespace Platform
 	bool Delete(const char *path);
     bool FileExists(const char *sourceFile);
     bool DirExists(const char *path);
-    const char * Dirname(const char *path);
-    const char * Filename(const char *path);
-    const char * Extension(const char *path);
-    const char * Basename(const char *path);
+    std::string Dirname(std::string path);
+    std::string Filename(std::string path);
+    std::string Extension(std::string path);
+    std::string Basename(std::string path);
     unsigned long GetLastModified(const char *path);
     int SetLastModified(const char *path, unsigned long lastModified);
 }
