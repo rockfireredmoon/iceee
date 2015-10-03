@@ -11,7 +11,7 @@ function CLDebug( string )
 
 function GetFullPath( name )
 {
-	if (this.Util.isDevMode())
+	if (this.Util.isDevMode() && !this.Util.isHybridMode())
 	{
 		local pos = name.find("-");
 
@@ -19,11 +19,13 @@ function GetFullPath( name )
 		{
 			name = name.slice(0, pos) + "/" + name;
 		}
-
-		return "../../Media/" + name;
+		local mp = "../../Media/" + name;
+		print("ICE! FIRST GetFullPath : " + name + " dev: " + this.Util.isDevMode() + " hyb: " + this.Util.isHybridMode() + " = " + mp + "\n");
+		return mp;
 	}
 	else
 	{
+		print("ICE! FIRST GetFullPath : Media/" + name + ".car\n");
 		return "Media/" + name + ".car";
 	}
 }
@@ -127,6 +129,7 @@ class this.Archive
 	function onLoadError( name, error )
 	{
 		::IGIS.error("Unable to load archive: " + name);
+		print("ICE! OLE Unable to load archive : " + name  + ", " + error + "\n");
 		this.mLoading = false;
 		this.mError = error;
 		this.mDone = true;
@@ -137,6 +140,7 @@ class this.Archive
 	{
 		if (this.Util.isDevMode())
 		{
+			print("ICE! OFE Unable to load archive : " + name);
 			::IGIS.error("Unable to load archive: " + name);
 			this.mLoading = false;
 			this.mError = error;
@@ -257,6 +261,7 @@ class this.FileArchive extends this.Archive
 
 	function fetch()
 	{
+		print("ICE! Fetch file archive: " + this.mPath + " (" + this.GetFullPath(this.mPath) + ")\n");
 		::_cache.fetch(this.GetFullPath(this.mPath));
 		this.log.debug("Fetching " + this.mPath);
 	}
@@ -298,6 +303,7 @@ class this.VirtualArchive extends this.Archive
 			this.mDone = true;
 			return;
 		}
+		print("ICE! Fetch file archive: " + this.mFiles[this.mCurrent] + "[" + this.mCurrent + "] (" + this.GetFullPath(this.mFiles[this.mCurrent]) + ")\n");
 
 		::_cache.fetch(this.GetFullPath(this.mFiles[this.mCurrent]));
 	}
@@ -928,7 +934,7 @@ class this.SuperContentLoader
 				}
 			}
 
-			archive = this.Util.isDevMode() ? this.VirtualArchive(name, deps) : this.FileArchive(name, name);
+			archive = ( this.Util.isDevMode() && !this.Util.isHybridMode() ) ? this.VirtualArchive(name, deps) : this.FileArchive(name, name);
 		}
 		else
 		{

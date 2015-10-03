@@ -237,7 +237,33 @@ Screen.setOverlayVisible("Preloader/Overlay", true);
 local xargs = {};
 foreach( k, v in _args )
 {
+	print("ICE! " + k + " = " + v + "\n");
 	if(k == "src") {
+	
+		if(Preloader.startsWith(v, "file://Release/Release")) {
+			v = "file://Release" + v.slice(22);
+			print("ICE! FIX! " + v + "\n");
+		}
+	
+	
+		/*
+		if(Preloader.startsWith(v, "file://") && !Preloader.startsWith(v, "file:///")) {
+			// Another hack for dev mode
+			v = "file:///" + v.slice(7);
+			print("ICE! NEW FILE URL : " + v);
+			_args[k] = v;
+		}
+		*/
+		
+		// file://Release/Current?dev=2/EarthEternal.car
+		if(Preloader.startsWith(v, "file://Release/Current?")) {
+			// Yet another hack attempting to get dev client working
+			local idx = v.find("/",23); 
+			v = v.slice(0, 22) + v.slice(idx) + v.slice(22, idx);
+			print("ICE! NEW SLICED URL : " + v);
+			_args[k] = v;
+		}
+		
 	
 		/* A hacky way to get parameters set via the URL. Using the 0.8.6 client,
 		 * I cannot find a way to pass arguments. Greths documentation suggests something
@@ -252,9 +278,11 @@ foreach( k, v in _args )
 		 */
 	
 		local parts = Preloader.split(v, "#");
+		
 		if(parts.len() > 1) {
 			_args[k] = parts[0];
 			foreach(arg in Preloader.split(parts[1], ",")) {
+				print("ICE! setting " + arg);
 				local nvp = Preloader.split(arg, "=");
 				if(nvp.len() > 1) 
 					xargs[nvp[0]] <- nvp[1];
@@ -275,7 +303,14 @@ catch(e) {
 
 if( "src" in _args )
 {
+	local src = _args["src"];
+	/*if(Preloader.startsWith(src, "file:///Release/Current/EarthEternal.car")) {
+		src = "EarthEternal.car";
+		print("ICE! REL! " + src + "\n");
+	}*/
+	
 	// Right. Begin the download!
-	_cache.fetch(_args["src"]);
+	print("ICE! Downloading " + src + " from " + _cache.getBaseURL() + " \n" ); 
+	_cache.fetch(src);
 }
 

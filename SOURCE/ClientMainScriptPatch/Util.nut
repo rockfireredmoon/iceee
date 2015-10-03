@@ -91,7 +91,13 @@ this.Util.waitForAssets <- function ( assets, callback, ... )
 this.Util.isDevMode <- function ()
 {
 	local test = this._args;
-	return "dev" in this._args;
+	return "dev" in this._args || this.Util.isHybridMode();
+};
+
+this.Util.isHybridMode <- function ()
+{
+	local test = this._args;
+	return "hybrid" in this._args;
 };
 this.Util.hasPermission <- function ( permission )
 {
@@ -1351,10 +1357,18 @@ this.Util.getTerrainPathInfo <- function ()
 		throw this.Exception("Terrain path info available only in dev mode");
 	}
 
-	if (basePath.slice(0, 8) != "file:///")
+	if (basePath.slice(0, 8) != "file://")
 	{
-		throw this.Exception("Terrain path unavailble for base URL: " + basePath);
+		if (this.Util.isHybridMode() == false)
+			throw this.Exception("Terrain path unavailble for base URL: " + basePath);
+			
+		print("ICE! Hybrid terrain path info: " + base + " against " + basePath);
 	}
+	else {
+		print("ICE! None Hybrid terrain path info: " + base + " against " + basePath);
+	}
+	 
+	
 
 	basePath = basePath.slice(8);
 	basePath += "/../../Media/Terrain/Terrain-" + base + "/";
