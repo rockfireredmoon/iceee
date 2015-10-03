@@ -1276,6 +1276,7 @@ void SimulatorThread :: handle_lobby_authenticate(void)
 					bool player = false;
 					bool sage = false;
 					bool admin = false;
+					bool builder = false;
 
 					Json::Value::Members members = roles.getMemberNames();
 
@@ -1290,6 +1291,9 @@ void SimulatorThread :: handle_lobby_authenticate(void)
 						}
 						else if(strcmp(val.asCString(), "administrator") == 0) {
 							admin = true;
+						}
+						else if(strcmp(val.asCString(), "builders") == 0) {
+							builder = true;
 						}
 					}
 
@@ -1333,7 +1337,7 @@ void SimulatorThread :: handle_lobby_authenticate(void)
 					 */
 					if(accPtr != NULL) {
 						// Sages and admins get sage
-						bool needSage = sage || admin;
+						bool needSage = sage || admin || builder;
 						if(needSage != accPtr->HasPermission(Perm_Account, Permission_Sage)) {
 							accPtr->SetPermission(Perm_Account, "sage", needSage);
 							accPtr->PendingMinorUpdates++;
@@ -1346,9 +1350,16 @@ void SimulatorThread :: handle_lobby_authenticate(void)
 						}
 
 						// Sages and admins get debug
-						bool needDebug = sage || admin;
+						bool needDebug = sage || admin || builder;
 						if(needDebug != accPtr->HasPermission(Perm_Account, Permission_Debug)) {
 							accPtr->SetPermission(Perm_Account, "debug", needDebug);
+							accPtr->PendingMinorUpdates++;
+						}
+
+						// Builders
+						bool needBuilder = builder || admin;
+						if(needDebug != accPtr->HasPermission(Perm_Account, Permission_Builder)) {
+							accPtr->SetPermission(Perm_Account, "builder", needBuilder);
 							accPtr->PendingMinorUpdates++;
 						}
 					}

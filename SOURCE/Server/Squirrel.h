@@ -2,7 +2,7 @@
 #ifndef SQUIRREL_H
 #define SQUIRREL_H
 
-#include "sqrat.h"
+#include "../sqrat/sqrat.h"
 #include <string>
 
 namespace Squirrel {

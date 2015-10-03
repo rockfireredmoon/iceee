@@ -44,6 +44,7 @@ PermissionInfo PermissionDef[] = {
 	{Perm_Account, 0, Permission_SelfDiag,       "selfdiag" },
 	{Perm_Account, 0, Permission_Troll,          "troll" },
 	{Perm_Account, 0, Permission_TrollChat,      "trollchat" },
+	{Perm_Account, 0, Permission_Builder,        "builder" },
 	{Perm_Account, 0, Permission_FullSet,        "fullset" }
 };
 const int MaxPermissionDef = sizeof(PermissionDef) / sizeof(PermissionInfo);
@@ -192,6 +193,9 @@ int AccountData :: GetFreeCharacterSlot(void)
 
 bool AccountData :: CheckBuildPermission(int zoneID, int pagex, int pagey)
 {
+	if(HasPermission(Perm_Account, Permission_Builder)) {
+		return true;
+	}
 	for(size_t i = 0; i < BuildPermissionList.size(); i++)
 	{
 		BuildPermissionArea &bpa = BuildPermissionList[i];
@@ -207,6 +211,9 @@ bool AccountData :: CheckBuildPermission(int zoneID, int pagex, int pagey)
 
 bool AccountData :: CheckBuildPermissionAdv(int zoneID, int PageSize, float posx, float posz)
 {
+	if(HasPermission(Perm_Account, Permission_Builder)) {
+		return true;
+	}
 	//Need increased resolution since negative positions may round to zero.
 	int px = (int)posx;
 	int pz = (int)posz;
