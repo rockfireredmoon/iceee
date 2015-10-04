@@ -919,6 +919,10 @@ void HTTPDistribute :: HandleHTTP_POST(char *dataStart, MULTISTRING &header)
 				wpos += sprintf(&SendBuf[wpos], "Completed");
 				TotalSendBytes += sc.AttemptSend(SendBuf, wpos);
 			}
+			else if(header[a][1].compare("/api/login") == 0)
+			{
+
+			}
 			else
 			{
 				g_Log.AddMessageFormat("[WARNING] POST file [%s] is not accepted.", header[a][1].c_str());
@@ -1067,7 +1071,11 @@ int HTTPDistribute :: FillAPI(void)
 	char buf[256];
 	int no = 0;
 
+	std::string statusText = "OK";
+	int statusCode = 200;
+
 	// Extract parameters
+	std::string type = "application/json";
 	std::map<string, string> parms;
 	std::vector<string> parmStrings;
 	std::vector<string> parmStringList;
@@ -1090,7 +1098,52 @@ int HTTPDistribute :: FillAPI(void)
 		}
 	}
 
+	//this.mOutBuf.putStringUTF(this.md5(::_username + ":" + this.md5(::_password) + ":" + auth_data));
 
+	if(Util::HasEnding(FileNameRequest, "/auth")) {
+		if ( parms.find("client_id") == parms.end() ||  parms.find("redirect_uri") == parms.end()) {
+			statusCode = 403;
+			statusText = "Missing parameters.";
+		}
+		else {
+			std::string redirectURI = parms.find("redirect_uri")->second;
+			std::string clientID = parms.find("client_id")->second;
+			OAuth2Client *client = NULL;
+			for(std::vector<OAuth2Client>::iterator it = g_Config.OAuth2Clients.begin(); it != g_Config.OAuth2Clients.end(); ++it) {
+				OAuth2Client c = *it;
+				if(c.ClientId.compare(clientID) == 0) {
+					client = &c;
+				}
+			}
+			if(client == NULL) {
+				statusCode = 403;
+				statusText = "Unknown client.";
+			}
+			else {
+				response += "<html><head><script src=\"../md5.js\" type=\"text/javascript\"></script>\n<script type=\"text/javascript\">\n";
+				response += "function pf_HashAuth(frm) { \n ";
+				response += "document.getElementById(\"hash\").value = ";
+				response += "md5(document.getElementById(\"username\").value + ";
+				response += "\":\" + md5(document.getElementById(\"password\").value) + \":" + std::string(g_AuthKey) + "\");\n";
+				response += "document.getElementById(\"password\").value = \"\";\n";
+				response += "document.getElementById(\"username\").value = \"\";\n";
+				response += "return true;\n }\n";
+				response += "</script>\n</head>\n<body>\n<h1>Planet Forever Authentication</h1>\n";
+				response += "<form onsubmit=\"return pf_HashAuth(this);\" action=\"login\">\n";
+				response += "<div class=\"usernameRow\"><label class=\"usernameLabel\">Username:</label>\n";
+				response += "<input type=\"text\" id=\"username\" name=\"username\" size=\"20\"/></div>\n";
+				response += "<div class=\"passwordRow\"><label class=\"passwordLabel\">Password:</label>\n";
+				response += "<input type=\"password\" id=\"password\" name=\"password\" size=\"20\"/></div>\n";
+				response += "<div class=\"actionRow\">\n";
+				response += "<input type=\"hidden\" name=\"client_id\" value=\"" + clientID + "\"/>\n";
+				response += "<input type=\"hidden\" name=\"redirect_uri\" value=\"" + redirectURI + "\"/>\n";
+				response += "<input type=\"hidden\" name=\"hash\" id=\"hash\"/>\n";
+				response += "<input type=\"submit\" value=\"Login\"/>\n";
+				response += "</div>\n</form>\n</html>\n";
+			}
+		}
+		type = "text/html";
+	}
 	if(Util::HasEnding(FileNameRequest, "/who")) {
 		response += "{ ";
 		SIMULATOR_IT it;
@@ -1138,8 +1191,8 @@ int HTTPDistribute :: FillAPI(void)
 		response += " }";
 	}
 
-	wpos += sprintf(&SendBuf[wpos], "HTTP/1.1 200 OK\r\n");
-	wpos += sprintf(&SendBuf[wpos], "Content-Type: application/json\r\n");
+	wpos += sprintf(&SendBuf[wpos], "HTTP/1.1 %d %s\r\n", statusCode, statusText.c_str());
+	wpos += sprintf(&SendBuf[wpos], "Content-Type: %s\r\n", type.c_str());
 	wpos += sprintf(&SendBuf[wpos], "Content-Length: %d\r\n", (int)response.size());
 	wpos += sprintf(&SendBuf[wpos], "\r\n");
 	wpos += sprintf(&SendBuf[wpos], "%s", response.c_str());

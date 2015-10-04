@@ -122,6 +122,8 @@ void CheckNewLine(std::string &dest)
 
 void LoadConfig(const char *filename)
 {
+	g_Config.OAuth2Clients.clear();
+
 	//Loads the configuration options from the target file.  These are core options
 	//required for the server to operate.
 	
@@ -451,6 +453,19 @@ void LoadConfig(const char *filename)
 				g_Config.SMTPSSL = lfr.BlockToBool(1);
 			else if(strcmp(NameBlock, "SMTPSender") == 0)
 				g_Config.SMTPSender = lfr.BlockToStringC(1, 0);
+			else if(strcmp(NameBlock, "OAuth2Client") == 0) {
+				STRINGLIST output;
+				Util::Split(lfr.BlockToString(1), "|", output);
+				if(output.size() == 3) {
+					OAuth2Client c;
+					c.ClientId = output[0];
+					c.ClientSecret = output[1];
+					c.RedirectURL = output[2];
+				}
+				else {
+					g_Log.AddMessageFormatW(MSG_SHOW, "Invalid OAuth2Client string [%s] in config file [%s]", lfr.BlockToString(0), filename);
+				}
+			}
 			else
 			{
 				g_Log.AddMessageFormatW(MSG_SHOW, "Unknown identifier [%s] in config file [%s]", lfr.BlockToString(0), filename);

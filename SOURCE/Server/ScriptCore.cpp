@@ -1,10 +1,6 @@
 #include "ScriptCore.h"
 
-#include <sqrat/sqratClass.h>
-#include <sqrat/sqratFunction.h>
-#include <sqrat/sqratScript.h>
-#include <sqrat/sqratTable.h>
-#include <sqrat/sqratUtil.h>
+#include "../sqrat/sqrat.h"
 #include <stdarg.h>
 #include <stddef.h>
 #include <string.h>

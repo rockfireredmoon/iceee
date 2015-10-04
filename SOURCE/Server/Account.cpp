@@ -1340,6 +1340,11 @@ int AccountManager :: CreateCharacter(STRINGLIST &args, AccountData *accPtr)
 			return rr;
 		}
 
+		// The first name may only be sage if the account has sage permissons
+		if(Util::CaseInsensitiveStringCompare(args[0], "Sage") == 0 && !accPtr->HasPermission(Perm_Account, Permission_Sage)) {
+			return CHARACTER_FIRSTINV;
+		}
+
 		int newID = GetNewCharacterID();
 		SessionVarsChangeData.AddChange();
 		accPtr->CharacterSet[r] = newID;

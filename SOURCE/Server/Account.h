@@ -155,10 +155,17 @@ struct AccountQuickData
 	std::string mLoginAuth;
 	std::string mRegKey;
 	std::string mGroveName;
+
+	// Transient
+	std::string mAccessToken;
+	unsigned long mAccessTokenExpire;
+
 	AccountQuickData()
 	{
 		mID = 0;
+		mAccessTokenExpire = 0;
 	}
+
 	void Clear(void)
 	{
 		mID = 0;
@@ -166,6 +173,8 @@ struct AccountQuickData
 		mLoginAuth.clear();
 		mRegKey.clear();
 		mGroveName.clear();
+		mAccessTokenExpire = 0;
+		mAccessToken.clear();
 	}
 };
 

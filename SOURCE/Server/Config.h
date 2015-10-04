@@ -83,6 +83,20 @@ enum LogLevel
 	LOG_VERBOSE
 };
 
+/* For OAuth2 authentication (used for migrating PF accounts to TAW)
+ * Each 'client' string consists of a Client ID (can be public), a
+ * Client Secret (kept private) and an allowed redirect URL
+ *
+ * <clientId>^<clientSecret>^<redirectURL>
+ */
+class OAuth2Client
+{
+public:
+	std::string ClientId;
+	std::string ClientSecret;
+	std::string RedirectURL;
+};
+
 class GlobalConfigData
 {
 public:
@@ -215,6 +229,8 @@ public:
 	int SMTPPort;						// For emails, the SMTP port
 	bool SMTPSSL;						// For emails, whether to use SSL
 	std::string SMTPSender;				// For emails, the default sender address
+
+	std::vector<OAuth2Client> OAuth2Clients;
 
 	unsigned long debugAdministrativeBehaviorFlags;
 	void SetAdministrativeBehaviorFlag(unsigned long bitValue, bool state);
