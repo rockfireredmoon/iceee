@@ -921,7 +921,33 @@ void HTTPDistribute :: HandleHTTP_POST(char *dataStart, MULTISTRING &header)
 			}
 			else if(header[a][1].compare("/api/login") == 0)
 			{
+				MULTISTRING params;
+				ExtractPairs(dataStart, params);
 
+				std::string redirectURI = GetValueOfKey(params, "redirect_uri");
+				std::string clientID = GetValueOfKey(params, "client_id");
+				std::string scope = GetValueOfKey(params, "scope");
+				std::string responseType = GetValueOfKey(params, "response_type");
+				std::string hash = GetValueOfKey(params, "hash");
+				std::string username = GetValueOfKey(params, "username");
+
+				g_Log.AddMessageFormat("[REMOVEME] redir: %s   client: %s   scope: %s   responsetype: %s   username: %s   hash: %s",
+						redirectURI.c_str(), clientID.c_str(), scope.c_str(), responseType.c_str(), username.c_str(), hash.c_str());
+				std::string hashed;
+				AccountData::GenerateSaltedHash(hash.c_str(), hash);
+
+				g_AccountManager.cs.Enter("SimulatorThread::handle_lobby_authenticate");
+				AccountData *accPtr = g_AccountManager.GetValidLogin(username.c_str(), hash.c_str());
+				g_AccountManager.cs.Leave();
+				if(accPtr == NULL) {
+					int wpos = 0;
+					wpos += sprintf(&SendBuf[wpos], "HTTP/1.1 301 Moved Permanently\r\n");
+					wpos += sprintf(&SendBuf[wpos], "Location: auth?msg=Invalid%20username%20or%20password.\r\n");
+					wpos += sprintf(&SendBuf[wpos], "Content-Type: text/html\r\n");
+					wpos += sprintf(&SendBuf[wpos], "\r\n");
+					wpos += sprintf(&SendBuf[wpos], "Invalid username or password.");
+					TotalSendBytes += sc.AttemptSend(SendBuf, wpos);
+				}
 			}
 			else
 			{
@@ -1101,13 +1127,16 @@ int HTTPDistribute :: FillAPI(void)
 	//this.mOutBuf.putStringUTF(this.md5(::_username + ":" + this.md5(::_password) + ":" + auth_data));
 
 	if(Util::HasEnding(FileNameRequest, "/auth")) {
-		if ( parms.find("client_id") == parms.end() ||  parms.find("redirect_uri") == parms.end()) {
+		if ( parms.find("client_id") == parms.end() ||  parms.find("redirect_uri") == parms.end()
+				 ||  parms.find("response_type") == parms.end() ||  parms.find("scope") == parms.end()) {
 			statusCode = 403;
 			statusText = "Missing parameters.";
 		}
 		else {
 			std::string redirectURI = parms.find("redirect_uri")->second;
 			std::string clientID = parms.find("client_id")->second;
+			std::string scope = parms.find("scope")->second;
+			std::string responseType = parms.find("response_type")->second;
 			OAuth2Client *client = NULL;
 			for(std::vector<OAuth2Client>::iterator it = g_Config.OAuth2Clients.begin(); it != g_Config.OAuth2Clients.end(); ++it) {
 				OAuth2Client c = *it;
@@ -1120,7 +1149,11 @@ int HTTPDistribute :: FillAPI(void)
 				statusText = "Unknown client.";
 			}
 			else {
-				response += "<html><head><script src=\"../md5.js\" type=\"text/javascript\"></script>\n<script type=\"text/javascript\">\n";
+				response += "<html><head>";
+				response += "<link rel=\"stylesheet\" href=\"../main.css\">\n";
+				response += "<script src=\"../md5.js\" type=\"text/javascript\">\n";
+				response += "</script>\n";
+				response += "<script type=\"text/javascript\">\n";
 				response += "function pf_HashAuth(frm) { \n ";
 				response += "document.getElementById(\"hash\").value = ";
 				response += "md5(document.getElementById(\"username\").value + ";
@@ -1128,7 +1161,15 @@ int HTTPDistribute :: FillAPI(void)
 				response += "document.getElementById(\"password\").value = \"\";\n";
 				response += "document.getElementById(\"username\").value = \"\";\n";
 				response += "return true;\n }\n";
-				response += "</script>\n</head>\n<body>\n<h1>Planet Forever Authentication</h1>\n";
+				response += "</script>\n";
+				response += "</head>\n";
+				response += "<body>\n";
+				response += "<h1>Planet Forever Authentication</h1>\n";
+				if(parms.find("msg") != parms.end() ) {
+					std::string msg =parms.find("msg")->second;
+					Util::EncodeJSONString(msg);
+					response += "<div class=\"errmsg\">" + msg + "</div>\n";
+				}
 				response += "<form onsubmit=\"return pf_HashAuth(this);\" action=\"login\">\n";
 				response += "<div class=\"usernameRow\"><label class=\"usernameLabel\">Username:</label>\n";
 				response += "<input type=\"text\" id=\"username\" name=\"username\" size=\"20\"/></div>\n";
@@ -1137,6 +1178,8 @@ int HTTPDistribute :: FillAPI(void)
 				response += "<div class=\"actionRow\">\n";
 				response += "<input type=\"hidden\" name=\"client_id\" value=\"" + clientID + "\"/>\n";
 				response += "<input type=\"hidden\" name=\"redirect_uri\" value=\"" + redirectURI + "\"/>\n";
+				response += "<input type=\"hidden\" name=\"response_type\" value=\"" + responseType + "\"/>\n";
+				response += "<input type=\"hidden\" name=\"scope\" value=\"" + scope + "\"/>\n";
 				response += "<input type=\"hidden\" name=\"hash\" id=\"hash\"/>\n";
 				response += "<input type=\"submit\" value=\"Login\"/>\n";
 				response += "</div>\n</form>\n</html>\n";

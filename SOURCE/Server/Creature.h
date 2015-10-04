@@ -20,7 +20,7 @@ class SimulatorThread;
 #include "AbilityTime.h"
 #include "Arena.h"
 #include "DropTable.h"
-#include "../sqrat/sqrat.h"
+#include "sqrat.h"
 #include "Daily.h"
 #include "Globals.h"
 

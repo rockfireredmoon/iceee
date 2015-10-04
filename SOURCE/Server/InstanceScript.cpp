@@ -7,7 +7,7 @@
 #include "Simulator.h"
 #include "Creature.h"
 #include <stdlib.h>
-#include "../sqrat/sqrat.h"
+#include "sqrat.h"
 #include <algorithm>    // std::remove
 
 #include "SquirrelObjects.h"

@@ -22,17 +22,17 @@ Platform_DirectoryReader :: Platform_DirectoryReader()
 {
     excludeRel = true;
 
-    #ifdef WINDOWS_PLATFORM
+#ifdef WINDOWS_PLATFORM
     // For Windows, these specific values are not used for object comparison.
     // All that matters is they're different.
     TYPE_DIR = 0;
     TYPE_FILE = 1;
-    #else
-    // For Linux, the search function directly compares objects with these
+#else
+   // For Linux, the search function directly compares objects with these
     // predefined types.
     TYPE_DIR = DT_DIR;
     TYPE_FILE = DT_REG;
-    #endif
+#endif
 }
 
 Platform_DirectoryReader :: ~Platform_DirectoryReader()
