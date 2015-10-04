@@ -12,11 +12,12 @@ if MINGW
 tawd_CPPFLAGS += -DWINDOWS_PLATFORM=1
 tawd_LDFLAGS = -lws2_32 -lcurl -lws2_32 -lssl -static -static-libgcc -static-libstdc++
 else
-#tawd_LDFLAGS = -lpthread -lrt -static
+tawd_LDFLAGS = -lrt -static
 endif
 
 if HAS_PTHREAD
 tawd_CPPFLAGS += -DHAS_PTHREAD=1
+tawd_LDFLAGS += -lpthread
 endif
 
 tawd_SOURCES = md5.cc \
@@ -202,11 +203,12 @@ tawd_SOURCES = md5.cc \
 
 if MINGW
 tawdsvc_CPPFLAGS = $(libcurl_CFLAGS) -I../squirrel/include $(libcurl_CFLAGS) -DWINDOWS_PLATFORM=1 -DWINDOWS_SERVICE=1
-if HAS_PTHREAD
-tawdsvc_CPPFLAGS += -DHAS_PTHREAD=1
-endif
 tawdsvc_LDADD = ../squirrel/squirrel/libsquirrel.a ../squirrel/sqstdlib/libsqstdlib.a $(libcurl_LIBS)
 tawdsvc_LDFLAGS = -lws2_32 -lcurl -lws2_32 -lssl -static -static-libgcc -static-libstdc++
+if HAS_PTHREAD
+tawdsvc_CPPFLAGS += -DHAS_PTHREAD=1
+tawdsvc_LDFLAGS += -lpthread
+endif
 tawdsvc_SOURCES = md5.cc \
 	Ability2.cpp \
 	AbilityTime.cpp \

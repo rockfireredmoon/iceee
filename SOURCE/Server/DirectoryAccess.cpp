@@ -238,7 +238,7 @@ unsigned long Platform::GetLastModified(const char *path) {
 	if(stat(path, &attrib) < 0) {
 		return 0;
 	}
-	return attrib.st_mtim.tv_sec;
+	return attrib.st_mtime;
 #endif
 }
 
