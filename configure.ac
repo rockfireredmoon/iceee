@@ -3,6 +3,11 @@ AC_INIT(planetforeverd, 1.0, emerald.icemoon@gmail.com)
 AC_CONFIG_AUX_DIR(config)
 AC_CONFIG_MACRO_DIR([m4])
 AM_INIT_AUTOMAKE([subdir-objects foreign])
+
+PKG_CHECK_MODULES([libcurl],[libcurl])
+AC_SUBST([libcurl_CFLAGS])
+AC_SUBST([libcurl_LIBS])
+
 AC_PROG_CXX
 LT_INIT
 AC_CONFIG_FILES([
@@ -23,4 +28,10 @@ AS_HELP_STRING([--enable-debug],
 esac],
 [debug=false])
 AM_CONDITIONAL(DEBUG, test x"$debug" = x"true")
+AC_CANONICAL_HOST
+case $host_os in
+  *mingw*) mingw=true ;;
+  *) mingw=false ;;
+esac
+AM_CONDITIONAL([MINGW], [test x$mingw = xtrue])
 AC_OUTPUT

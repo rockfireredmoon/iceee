@@ -5,12 +5,13 @@
 #include <map>
 #include <vector>
 #include <string>
-#include <squirrel.h>
 #include <sqstdio.h>
 #include <sqstdaux.h>
 #include <sqstdstring.h>
 #include "Callback.h"
-#include "../sqrat/sqrat.h"
+#include <squirrel.h>
+#include "sqrat.h"
+#include "SquirrelObjects.h"
 
 void PrintFunc(HSQUIRRELVM v, const SQChar *s, ...);
 void Errorfunc(HSQUIRRELVM v, const SQChar *s, ...);

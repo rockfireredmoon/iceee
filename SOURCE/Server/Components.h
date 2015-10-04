@@ -193,7 +193,8 @@ private:
 #ifdef WINDOWS_PLATFORM
 	#define PLATFORM_THREADRETURN    DWORD WINAPI
 	#define PLATFORM_THREADARGS      LPVOID
-	#define PLATFORM_CLOSETHREAD(x)  __noop;    //Formerly  ExitThread(0)  Turns out this function is intended for C and not C++.  Testing revealed that it could cause memory errors and crashes.
+	//#define PLATFORM_CLOSETHREAD(x)  __noop;    //Formerly  ExitThread(0)  Turns out this function is intended for C and not C++.  Testing revealed that it could cause memory errors and crashes.
+	#define PLATFORM_CLOSETHREAD(x);
 	int Platform_CreateThread(size_t stackSize, void* ptrRoutine, void* ptrArgs, DWORD* threadID);
 #else
 	typedef void*(*PLATFORM_FUNCTIONPTR)(void*);
@@ -222,8 +223,9 @@ private:
 //
 #ifndef WINDOWS_PLATFORM
 	//#include <sys/time.h>
-	#include <time.h>
 #endif
+
+#include <time.h>
 
 class PlatformTime
 {

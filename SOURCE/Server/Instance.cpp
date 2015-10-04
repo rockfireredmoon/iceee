@@ -811,7 +811,7 @@ int ActiveInstance :: UnregisterPlayer(SimulatorThread *callSim)
 		nutScriptPlayer->RunFunction("on_unregister", p, true);
 		if(questNutScriptList.empty() == false)
 		{
-			for(uint i = 0 ; i < questNutScriptList.size(); i++) {
+			for(unsigned int i = 0 ; i < questNutScriptList.size(); i++) {
 				QuestScript::QuestNutPlayer * p = questNutScriptList[i];
 				p->RunFunction("on_unregister", std::vector<ScriptCore::ScriptParam>(), true);
 			}
@@ -2661,7 +2661,7 @@ int ActiveInstance :: SidekickUnregister(CreatureInstance* host)
 {
 	//Unregisters a list of sidekicks from the active instance.  Should be called
 	//whenever a player is removed from an instance.
-	uint size = 0;
+	unsigned int size = 0;
 	bool bActive = false;
 	list<CreatureInstance>::iterator it;
 	do
@@ -3023,7 +3023,7 @@ void ActiveInstance :: RunScripts(void)
 		/* A for loop is used here as the script list may change while the queue is
 		 * being execute (e.g. a halt instruction, or new quest opened).
 		 */
-		for(uint i = 0 ; i < questNutScriptList.size(); i++) {
+		for(unsigned int i = 0 ; i < questNutScriptList.size(); i++) {
 			QuestScript::QuestNutPlayer * p = questNutScriptList[i];
 			if(p->mActive)
 				p->ExecQueue();

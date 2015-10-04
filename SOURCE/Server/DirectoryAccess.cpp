@@ -6,6 +6,8 @@
 #ifdef WINDOWS_PLATFORM
 #include <direct.h>
 #include <io.h>
+#include <windows.h>
+#define EPOCH_DIFF 11644473600LL
 #else
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -60,9 +62,9 @@ void Platform_DirectoryReader :: SetDirectory(const char *path)
 
 const char * Platform_DirectoryReader :: GetDirectory()
 {
-//	string cwd;
-//	PLATFORM_GETCWD(cwd.c_str());
-	return get_current_dir_name();
+	char cwd[512];
+	return PLATFORM_GETCWD(cwd,sizeof(cwd));
+	//return get_current_dir_name();
 }
 
 int Platform_DirectoryReader :: FileCount(void)
@@ -176,6 +178,14 @@ const char* Platform::FixPaths(std::string &pathName)
 
 bool Platform::DirExists(const char *path)
 {
+#ifdef WINDOWS_PLATFORM
+	DWORD ftyp = GetFileAttributesA(path);
+	if (ftyp == INVALID_FILE_ATTRIBUTES)
+	    return false;
+	if (ftyp & FILE_ATTRIBUTE_DIRECTORY)
+	    return true;
+	return false;
+#else
 	DIR *dir;
 	if ((dir = opendir(path)) != NULL) {
 		closedir(dir);
@@ -183,6 +193,7 @@ bool Platform::DirExists(const char *path)
 	}
 	else
 		return false;
+#endif
 }
 
 bool Platform::Delete(const char *path)
@@ -200,14 +211,65 @@ bool Platform::FileExists(const char *path)
 }
 
 unsigned long Platform::GetLastModified(const char *path) {
+#ifdef WINDOWS_PLATFORM
+
+	FILETIME ftCreate, ftAccess, ftWrite;
+	SYSTEMTIME stUTC, stLocal;
+	DWORD dwRet;
+
+	HANDLE hFile;
+
+	hFile = CreateFile(path, GENERIC_READ, FILE_SHARE_READ, NULL,
+		OPEN_EXISTING, 0, NULL);
+
+	if(hFile == INVALID_HANDLE_VALUE)
+		return 0;
+
+	// Retrieve the file times for the file.
+	if (!GetFileTime(hFile, &ftCreate, &ftAccess, &ftWrite))
+		return 0;
+
+	// http://stackoverflow.com/questions/19709580/c-convert-filetime-to-seconds
+	__int64* val = (__int64*) &ftWrite;
+	return static_cast<unsigned long>(*val) / 10000000 - EPOCH_DIFF;   // epoch is Jan. 1, 1601: 134774 days to Jan. 1, 1970
+#else
 	struct stat attrib;
 	if(stat(path, &attrib) < 0) {
 		return 0;
 	}
 	return attrib.st_mtim.tv_sec;
+#endif
 }
 
 int Platform::SetLastModified(const char *path, unsigned long lastModifiedSec) {
+#ifdef WINDOWS_PLATFORM
+
+	HANDLE hFile;
+
+	hFile = CreateFile(path, GENERIC_READ | FILE_WRITE_ATTRIBUTES, FILE_SHARE_READ, NULL,
+		OPEN_EXISTING, 0, NULL);
+
+	if(hFile == INVALID_HANDLE_VALUE)
+		return 0;
+
+	// http://stackoverflow.com/questions/3585583/convert-unix-linux-time-to-windows-filetime
+	unsigned long long qwResult = EPOCH_DIFF;
+	qwResult += lastModifiedSec;
+	qwResult *= 10000000LL;
+
+	FILETIME ft;
+	ft.dwLowDateTime  = (DWORD) (qwResult & 0xFFFFFFFF );
+	ft.dwHighDateTime = (DWORD) (qwResult >> 32 );
+
+	if(!SetFileTime(hFile,
+		        (LPFILETIME) NULL,
+		        (LPFILETIME) NULL,
+		        &ft)) {
+		return 0;
+	}
+
+	return 1;
+#else
 	struct utimbuf new_times;
 	struct stat attrib;
 	if(stat(path, &attrib) < 0) {
@@ -219,6 +281,7 @@ int Platform::SetLastModified(const char *path, unsigned long lastModifiedSec) {
 	    return 1;
 	}
 	return 1;
+#endif
 }
 
 void Platform::MakeDirectory(const char *path)

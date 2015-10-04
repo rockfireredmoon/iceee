@@ -103,7 +103,7 @@ struct ItemDef
 	//if(g_ProtocolVersion >= 7)
 	int resultItemId;
 	int keyComponentId;
-	uint numberOfItems;
+	unsigned int numberOfItems;
 	std::vector<int> craftItemDefId;   //needs to be variable depending on <numberOfItems>
 
 	//if(g_ProtocolVersion >= 9)

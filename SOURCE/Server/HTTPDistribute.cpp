@@ -285,7 +285,7 @@ void HTTPDistribute :: RunMainLoop(void)
 			LastAction = g_ServerTime;
 			if(res > 0)
 			{
-				uint newSize = RecCurrentPos + res;
+				unsigned int newSize = RecCurrentPos + res;
 				if(newSize >= sizeof(RecBuf) - 2)
 				{
 					//Buffer is full

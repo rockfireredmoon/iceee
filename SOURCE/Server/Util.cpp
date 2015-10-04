@@ -743,7 +743,7 @@ void Join(std::vector<std::string> &src, const char *delim, std::string &dest)
 {
 	std::string s = delim;
 	dest.clear();
-	for(uint i = 0 ; i < src.size(); i++) {
+	for(unsigned int i = 0 ; i < src.size(); i++) {
 		if(i > 0)
 			dest.append(s);
 		dest.append(src[i]);

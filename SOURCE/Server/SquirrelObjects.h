@@ -1,8 +1,8 @@
 #pragma once
-#ifndef SQUIRREL_H
-#define SQUIRREL_H
+#ifndef SQUIRRELOBJECTS_H
+#define SQUIRRELOBJECTS_H
 
-#include "../sqrat/sqrat.h"
+#include "sqrat.h"
 #include <string>
 
 namespace Squirrel {
@@ -137,4 +137,4 @@ private:
 
 
 }
-#endif //#define SQUIRREL_H
+#endif //#define SQUIRRELOBJECTS_H

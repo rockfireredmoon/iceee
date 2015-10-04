@@ -2,6 +2,8 @@
 #ifndef _SQSTD_AUXLIB_H_
 #define _SQSTD_AUXLIB_H_
 
+#include "squirrel.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif

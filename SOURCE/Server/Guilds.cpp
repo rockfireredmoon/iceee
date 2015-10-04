@@ -31,7 +31,7 @@ void GuildDefinition:: RunLoadDefaults(void)
 		guildHallZone = static_cast<int>(strtol(locData[3].c_str(), NULL, 10));
 	}
 
-	for(uint i = 0 ; i < ranks.size() ; i++)
+	for(unsigned int i = 0 ; i < ranks.size() ; i++)
 	{
 		ranks[i].RunLoadDefaults();
 	}
@@ -106,7 +106,7 @@ void GuildManager :: LoadFile(const char *filename)
 				Util::SafeCopy(newItem.motto, lfr.BlockToStringC(1, 0), sizeof(newItem.motto));
 			else {
 				// Assume to be rank
-				uint rank = lfr.BlockToIntC(0);
+				unsigned int rank = lfr.BlockToIntC(0);
 				if(rank != newItem.ranks.size() + 1) {
 					if(newItem.ranks.size() > 0) {
 						g_Log.AddMessageFormat("Unknown identifier [%s] in file [%s], expected <rank>=<valour>", lfr.SecBuffer, filename);
@@ -177,8 +177,8 @@ bool GuildManager :: IsMutualGuild(int selfDefID, int otherDefID)
 {
 	CharacterData *cdata = g_CharacterManager.GetPointerByID(selfDefID);
 	CharacterData *otherCdata = g_CharacterManager.GetPointerByID(otherDefID);
-	for(uint i = 0 ; i < cdata->guildList.size(); i++)
-		for(uint j = 0 ; j < otherCdata->guildList.size(); j++)
+	for(unsigned int i = 0 ; i < cdata->guildList.size(); i++)
+		for(unsigned int j = 0 ; j < otherCdata->guildList.size(); j++)
 			if(cdata->guildList[i].GuildDefID == otherCdata->guildList[j].GuildDefID)
 				return true;
 	return false;

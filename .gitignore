@@ -20,3 +20,6 @@
 *.mk
 *.cnut
 /temp
+/.settings/
+/.cproject
+*.autotools
