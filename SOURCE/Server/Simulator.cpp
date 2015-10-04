@@ -1277,6 +1277,7 @@ void SimulatorThread :: handle_lobby_authenticate(void)
 					bool sage = false;
 					bool admin = false;
 					bool builder = false;
+					bool developer = false;
 
 					Json::Value::Members members = roles.getMemberNames();
 
@@ -1289,6 +1290,9 @@ void SimulatorThread :: handle_lobby_authenticate(void)
 						else if(strcmp(val.asCString(), "sages") == 0) {
 							sage = true;
 						}
+						else if(strcmp(val.asCString(), "developers") == 0) {
+							developer = true;
+						}
 						else if(strcmp(val.asCString(), "administrator") == 0) {
 							admin = true;
 						}
@@ -1297,7 +1301,7 @@ void SimulatorThread :: handle_lobby_authenticate(void)
 						}
 					}
 
-					if(!player && !sage && !admin) {
+					if(!player && !sage && !admin && !developer && !builder) {
 						ForceErrorMessage("User is valid, but does not have permission to play game.", INFOMSG_ERROR);
 						Disconnect("SimulatorThread::handle_lobby_authenticate");
 						g_Log.AddMessageFormat("User %s is valid, but does not have player or sage permissions.", Aux2);
@@ -1337,7 +1341,7 @@ void SimulatorThread :: handle_lobby_authenticate(void)
 					 */
 					if(accPtr != NULL) {
 						// Sages and admins get sage
-						bool needSage = sage || admin || builder;
+						bool needSage = sage || admin || builder || developer;
 						if(needSage != accPtr->HasPermission(Perm_Account, Permission_Sage)) {
 							accPtr->SetPermission(Perm_Account, "sage", needSage);
 							accPtr->PendingMinorUpdates++;
@@ -1350,7 +1354,7 @@ void SimulatorThread :: handle_lobby_authenticate(void)
 						}
 
 						// Sages and admins get debug
-						bool needDebug = sage || admin || builder;
+						bool needDebug = admin || builder || developer;
 						if(needDebug != accPtr->HasPermission(Perm_Account, Permission_Debug)) {
 							accPtr->SetPermission(Perm_Account, "debug", needDebug);
 							accPtr->PendingMinorUpdates++;
@@ -1358,7 +1362,7 @@ void SimulatorThread :: handle_lobby_authenticate(void)
 
 						// Builders
 						bool needBuilder = builder || admin;
-						if(needDebug != accPtr->HasPermission(Perm_Account, Permission_Builder)) {
+						if(needBuilder != accPtr->HasPermission(Perm_Account, Permission_Builder)) {
 							accPtr->SetPermission(Perm_Account, "builder", needBuilder);
 							accPtr->PendingMinorUpdates++;
 						}
