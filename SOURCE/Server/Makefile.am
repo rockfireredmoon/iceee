@@ -57,8 +57,6 @@ tawd_SOURCES = md5.cc \
 	Globals.cpp \
 	Guilds.cpp \
 	GM.cpp \
-	HTTPBase.cpp \
-	HTTPDistribute.cpp \
 	IGForum.cpp \
 	Instance.cpp \
 	InstanceScale.cpp \
@@ -146,8 +144,6 @@ tawd_SOURCES = md5.cc \
 	Globals.h \
 	Guilds.h \
 	GM.h \
-	HTTPBase.h \
-	HTTPDistribute.h \
 	IGForum.h \
 	Instance.h \
 	InstanceScale.h \
@@ -264,8 +260,6 @@ tawdsvc_SOURCES = md5.cc \
 	Globals.cpp \
 	Guilds.cpp \
 	GM.cpp \
-	HTTPBase.cpp \
-	HTTPDistribute.cpp \
 	IGForum.cpp \
 	Instance.cpp \
 	InstanceScale.cpp \
@@ -353,8 +347,6 @@ tawdsvc_SOURCES = md5.cc \
 	Globals.h \
 	Guilds.h \
 	GM.h \
-	HTTPBase.h \
-	HTTPDistribute.h \
 	IGForum.h \
 	Instance.h \
 	InstanceScale.h \
