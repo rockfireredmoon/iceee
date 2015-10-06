@@ -17,8 +17,6 @@
 #include "Item.h"
 #include "AIScript.h"
 #include "AIScript2.h"
-#include "HTTPBase.h"
-#include "HTTPDistribute.h"
 #include "SimulatorBase.h"
 #include "Router.h"
 #include "Instance.h"
