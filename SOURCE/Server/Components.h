@@ -147,7 +147,7 @@ private:
 #ifdef DEBUG_TIME
 	unsigned long acquireTime;
 #endif
-#ifdef WINDOWS_PLATFORM
+#ifndef HAS_PTHREAD
 	CRITICAL_SECTION cs;
 #else
 	pthread_mutex_t mutex;

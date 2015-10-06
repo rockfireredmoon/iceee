@@ -44,7 +44,6 @@ if test "x${crypto}" != xtrue; then
    AC_MSG_ERROR([required library crypto missing])
 fi
 
-
 AC_CHECK_LIB(pthread, pthread_create,[pthread=true], [pthread=false])
 if test "x${pthread}" != xtrue; then
    AC_MSG_ERROR([required library pthread missing])

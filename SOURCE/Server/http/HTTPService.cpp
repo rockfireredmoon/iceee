@@ -25,6 +25,7 @@
 #include "WebControlPanel.h"
 
 #include "../Config.h"
+#include "../Util.h"
 #include "../StringList.h"
 #include "../FileReader.h"
 #include <stdio.h>
@@ -127,6 +128,7 @@ bool HTTPService::Start() {
 	if(g_HTTPListenPort > 0 || g_HTTPSListenPort > 0) {
 
 		zzOptions[idx++] = "listening_ports";
+		char portbuf[6];
 
 		std::string *ports = new std::string();
 		if(g_HTTPListenPort > 0) {
@@ -135,7 +137,8 @@ bool HTTPService::Start() {
 				ports->append(g_BindAddress);
 				ports->append(":");
 			}
-			ports->append(std::to_string(g_HTTPListenPort));
+			Util::SafeFormat(portbuf, sizeof(portbuf), "%f", g_HTTPListenPort);
+			ports->append(portbuf);
 		}
 		if(g_HTTPSListenPort > 0) {
 			if(g_SSLCertificate.size() < 1) {
@@ -150,7 +153,8 @@ bool HTTPService::Start() {
 					ports->append(g_BindAddress);
 					ports->append(":");
 				}
-				ports->append(std::to_string((unsigned long)g_HTTPSListenPort) + "s");
+				Util::SafeFormat(portbuf, sizeof(portbuf), "%f", g_HTTPSListenPort);
+				ports->append(portbuf);
 			}
 		}
 

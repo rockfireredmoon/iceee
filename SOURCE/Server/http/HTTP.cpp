@@ -1,4 +1,5 @@
 #include "HTTP.h"
+#include <stdlib.h>
 
 using namespace HTTPD;
 
