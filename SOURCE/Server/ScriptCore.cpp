@@ -1,10 +1,7 @@
 #include "ScriptCore.h"
 
-#include <sqrat/sqratClass.h>
-#include <sqrat/sqratFunction.h>
-#include <sqrat/sqratScript.h>
-#include <sqrat/sqratTable.h>
-#include <sqrat/sqratUtil.h>
+#include <squirrel.h>
+#include "sqrat.h"
 #include <stdarg.h>
 #include <stddef.h>
 #include <string.h>
@@ -15,8 +12,6 @@
 #include <iterator>
 #include <utility>
 #include <algorithm>
-
-#include "../squirrel/squirrel/sqvm.h"
 #include "CommonTypes.h"
 #include "Components.h"
 #include "DirectoryAccess.h"

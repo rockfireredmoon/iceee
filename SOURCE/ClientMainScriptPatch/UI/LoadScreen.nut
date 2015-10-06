@@ -385,7 +385,8 @@ class this.LoadScreenManager
 			}
 		};
 		local txt = "";
-		req.open("GET", "http://www.theanubianwar.com/loading_announcements");
+		
+		req.open("GET", this.Util.getWebServerRoot() + "loading_announcements");
 		req.send(txt);
 	}
 
@@ -414,7 +415,7 @@ class this.LoadScreenManager
 			}
 		};
 		local txt = "";
-		req.open("GET", "http://www.theanubianwar.com/tips");
+		req.open("GET", this.Util.getWebServerRoot() + "tips");
 		req.send(txt);
 	}
 

@@ -13,7 +13,6 @@
 #include "AIScript2.h"
 #include "DebugTracer.h"
 #include "Simulator.h"
-#include "Squirrel.h"
 #include "Item.h"  //For quest item rewards
 #include "Interact.h"  //For interactions with non-quest objects (like warps)
 #include "Components.h"
@@ -33,6 +32,7 @@
 
 #include "Debug.h"
 #include "Report.h"
+#include "squirrel.h"
 
 const int TAUNT_BECKON_DISTANCE = 50;           //Taunted creatures will attempt to move at least this close to their target.
 
@@ -7731,7 +7731,7 @@ int CreatureInstance :: CAF_RegisterTargetSidekick(int abGroupID)
 }
 
 void CreatureInstance :: DetachItem(const char *type, const char *node) {
-	for(uint i = 0 ; i < appearanceModifiers.size(); i++) {
+	for(unsigned int i = 0 ; i < appearanceModifiers.size(); i++) {
 		AddAttachmentModifier *mod = dynamic_cast<AddAttachmentModifier*>(appearanceModifiers[i]);
 		if(mod && mod->mType == type && mod->mNode == node) {
 			RemoveAppearanceModifier(mod);

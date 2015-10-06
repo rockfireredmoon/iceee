@@ -1,9 +1,26 @@
-bin_PROGRAMS = planetforeverd
-AM_CPPFLAGS= -I../squirrel/include -I../squirrel/sqrat
 
-planetforeverd_LDADD = ../squirrel/squirrel/libsquirrel.a ../squirrel/sqstdlib/libsqstdlib.a
-planetforeverd_LDFLAGS = -lpthread -lrt -lcurl
-planetforeverd_SOURCES = md5.cc \
+if MINGW
+bin_PROGRAMS = tawd tawdsvc
+else
+bin_PROGRAMS = tawd
+endif
+
+tawd_CPPFLAGS = $(libcurl_CFLAGS) $(libssl_CFLAGS) -I../squirrel/include $(libcurl_CFLAGS)
+tawd_LDADD = ../squirrel/squirrel/libsquirrel.a ../squirrel/sqstdlib/libsqstdlib.a $(libcurl_LIBS) $(libssl_LIBS)
+
+if MINGW
+tawd_CPPFLAGS += -DWINDOWS_PLATFORM=1
+tawd_LDFLAGS = -lws2_32 -lcurl -lws2_32 -lssl -static -static-libgcc -static-libstdc++
+else
+tawd_LDFLAGS = -lrt -ldl -static
+endif
+
+if HAS_PTHREAD
+tawd_CPPFLAGS += -DHAS_PTHREAD=1
+tawd_LDFLAGS += -lpthread
+endif
+
+tawd_SOURCES = md5.cc \
 	Ability2.cpp \
 	AbilityTime.cpp \
 	Account.cpp \
@@ -67,7 +84,7 @@ planetforeverd_SOURCES = md5.cc \
 	Report.cpp \
 	Router.cpp \
 	Scenery2.cpp \
-	Squirrel.cpp \
+	SquirrelObjects.cpp \
 	ScriptCore.cpp \
 	SimulatorBase.cpp \
 	Simulator.cpp \
@@ -80,6 +97,14 @@ planetforeverd_SOURCES = md5.cc \
 	VirtualItem.cpp \
 	ZoneDef.cpp \
 	ZoneObject.cpp \
+	http/CAR.cpp \
+	http/OAuth2.cpp \
+	http/TAWApi.cpp \
+	http/LegacyAccounts.cpp \
+	http/WebControlPanel.cpp \
+	http/CivetServer.cpp \
+	http/civetweb.c \
+	http/HTTPService.cpp \
 	Ability2.h \
 	AbilityTime.h \
 	Account.h \
@@ -163,4 +188,240 @@ planetforeverd_SOURCES = md5.cc \
 	ZoneDef.h \
 	ZoneObject.h \
 	json/json-forwards.h \
-	json/json.h
+	json/json.h \
+	sqmodule.h \
+	sqrat.h \
+	sqratimport.h \
+	sqrat/sqratAllocator.h \
+	sqrat/sqratArray.h \
+	sqrat/sqratClass.h \
+	sqrat/sqratClassType.h \
+	sqrat/sqratConst.h \
+	sqrat/sqratFunction.h \
+	sqrat/sqratGlobalMethods.h \
+	sqrat/sqratMemberMethods.h \
+	sqrat/sqratObject.h \
+	sqrat/sqratOverloadMethods.h \
+	sqrat/sqratScript.h \
+	sqrat/sqratTable.h \
+	sqrat/sqratTypes.h \
+	sqrat/sqratUtil.h \
+	sqrat/sqratVM.h \
+	http/CAR.h \
+	http/HTTP.h \
+	http/OAuth2.h \
+	http/TAWApi.h \
+	http/CivetServer.h \
+	http/civetweb.h \
+	http/HTTPService.h \
+	http/md5.inl \
+	http/LegacyAccounts.h \
+	http/WebControlPanel.h
+	
+
+if MINGW
+tawdsvc_CPPFLAGS = $(libcurl_CFLAGS) -I../squirrel/include $(libcurl_CFLAGS) -DWINDOWS_PLATFORM=1 -DWINDOWS_SERVICE=1
+tawdsvc_LDADD = ../squirrel/squirrel/libsquirrel.a ../squirrel/sqstdlib/libsqstdlib.a $(libcurl_LIBS)
+tawdsvc_LDFLAGS = -lws2_32 -lcurl -lws2_32 -lssl -static -static-libgcc -static-libstdc++
+if HAS_PTHREAD
+tawdsvc_CPPFLAGS += -DHAS_PTHREAD=1
+tawdsvc_LDFLAGS += -lpthread
+endif
+tawdsvc_SOURCES = md5.cc \
+	Ability2.cpp \
+	AbilityTime.cpp \
+	Account.cpp \
+	ActiveCharacter.cpp \
+	AIScript.cpp \
+	AIScript2.cpp \
+	Arena.cpp \
+	Audit.cpp \
+	BroadCast.cpp \
+	ByteBuffer.cpp \
+	Character.cpp \
+	ChatChannel.cpp \
+	Chat.cpp \
+	Combat.cpp \
+	Components.cpp \
+	Config.cpp \
+	ConfigString.cpp \
+	Crafting.cpp \
+	Creature.cpp \
+	CreditShop.cpp \
+	CreatureSpawner2.cpp \
+	Daily.cpp \
+	Debug.cpp \
+	DebugProfiler.cpp \
+	DebugTracer.cpp \
+	DirectoryAccess.cpp \
+	DropTable.cpp \
+	EliteMob.cpp \
+	EssenceShop.cpp \
+	FileReader3.cpp \
+	FileReader.cpp \
+	FriendStatus.cpp \
+	Gamble.cpp \
+	Globals.cpp \
+	Guilds.cpp \
+	GM.cpp \
+	HTTPBase.cpp \
+	HTTPDistribute.cpp \
+	IGForum.cpp \
+	Instance.cpp \
+	InstanceScale.cpp \
+	InstanceScript.cpp \
+	Interact.cpp \
+	Inventory.cpp \
+	Item.cpp \
+	ItemSet.cpp \
+	jsoncpp.cpp \
+	main.cpp \
+	Mail.cpp \
+	MainWindow.cpp \
+	MainWindow_Event.cpp \
+	NPC.cpp \
+	Packet.cpp \
+	PartyManager.cpp \
+	Preferences.cpp \
+	PVP.cpp \
+	QuestAction.cpp \
+	Quest.cpp \
+	QuestScript.cpp \
+	RemoteAction.cpp \
+	Report.cpp \
+	Router.cpp \
+	Scenery2.cpp \
+	SquirrelObjects.cpp \
+	ScriptCore.cpp \
+	SimulatorBase.cpp \
+	Simulator.cpp \
+	SocketClass3.cpp \
+	Stats.cpp \
+	StringList.cpp \
+	Trade.cpp \
+	URL.cpp \
+	Util.cpp \
+	VirtualItem.cpp \
+	ZoneDef.cpp \
+	ZoneObject.cpp \
+	http/CAR.cpp \
+	http/OAuth2.cpp \
+	http/TAWApi.cpp \
+	http/CivetServer.cpp \
+	http/civetweb.c \
+	http/HTTPService.cpp \
+	http/LegacyAccounts.cpp \
+	http/WebControlPanel.cpp \
+	Ability2.h \
+	AbilityTime.h \
+	Account.h \
+	ActiveCharacter.h \
+	AIScript.h \
+	AIScript2.h \
+	Arena.h \
+	Audit.h \
+	BroadCast.h \
+	ByteBuffer.h \
+	Character.h \
+	ChatChannel.h \
+	Chat.h \
+	Combat.h \
+	CreditShop.h \
+	CommonTypes.h \
+	Components.h \
+	Config.h \
+	ConfigStr.h \
+	ConfigString.h \
+	Crafting.h \
+	Creature.h \
+	CreatureSpawner2.h \
+	Daily.h \
+	Debug.h \
+	DebugProfiler.h \
+	DebugTracer.h \
+	DecodePackets.h \
+	DirectoryAccess.h \
+	DropTable.h \
+	EliteMob.h \
+	EssenceShop.h \
+	FileReader3.h \
+	FileReader.h \
+	Formula.h \
+	FriendStatus.h \
+	Fun.h \
+	Gamble.h \
+	Globals.h \
+	Guilds.h \
+	GM.h \
+	HTTPBase.h \
+	HTTPDistribute.h \
+	IGForum.h \
+	Instance.h \
+	InstanceScale.h \
+	InstanceScript.h \
+	IntArray.h \
+	Interact.h \
+	Inventory.h \
+	Item.h \
+	ItemSet.h \
+	Mail.h \
+	MainWindow.h \
+	NPC.h \
+	Packet.h \
+	PartyManager.h \
+	Preferences.h \
+	PVP.h \
+	QuestAction.h \
+	Quest.h \
+	QuestScript.h \
+	RemoteAction.h \
+	Report.h \
+	RotatingList.h \
+	Router.h \
+	Squirrel.h \
+	Scenery2.h \
+	ScriptCore.h \
+	Session.h \
+	SimulatorBase.h \
+	Simulator.h \
+	SocketClass3.h \
+	Stats.h \
+	StringList.h \
+	Trade.h \
+	TradingBoard.h \
+	URL.h \
+	Util.h \
+	VirtualItem.h \
+	ZoneDef.h \
+	ZoneObject.h \
+	json/json-forwards.h \
+	json/json.h \
+	sqmodule.h \
+	sqrat.h \
+	sqratimport.h \
+	sqrat/sqratAllocator.h \
+	sqrat/sqratArray.h \
+	sqrat/sqratClass.h \
+	sqrat/sqratClassType.h \
+	sqrat/sqratConst.h \
+	sqrat/sqratFunction.h \
+	sqrat/sqratGlobalMethods.h \
+	sqrat/sqratMemberMethods.h \
+	sqrat/sqratObject.h \
+	sqrat/sqratOverloadMethods.h \
+	sqrat/sqratScript.h \
+	sqrat/sqratTable.h \
+	sqrat/sqratTypes.h \
+	sqrat/sqratUtil.h \
+	sqrat/sqratVM.h \
+	http/CAR.h \
+	http/HTTP.h \
+	http/OAuth2.h \
+	http/TAWApi.h \
+	http/CivetServer.h \
+	http/civetweb.h \
+	http/HTTPService.h \
+	http/md5.inl \
+	http/LegacyAccounts.h \
+	http/WebControlPanel.h
+endif

@@ -28,7 +28,7 @@
 #if !defined(_SQ_IMPORT_H_)
 #define _SQ_IMPORT_H_
 
-#include <squirrel.h>
+#include "squirrel.h"
 
 #ifdef __cplusplus
 extern "C" {

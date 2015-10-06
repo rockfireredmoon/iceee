@@ -76,7 +76,7 @@ void Platform_CriticalSection :: Init(void)
 {
 	if(initialized == false)
 	{
-#ifdef WINDOWS_PLATFORM
+#ifndef HAS_PTHREAD
 	InitializeCriticalSection(&cs);
 #else
 	pthread_mutexattr_t mutexattr;
@@ -105,7 +105,7 @@ void Platform_CriticalSection :: Delete(void)
 {
 	if(initialized == true)
 	{
-	#ifdef WINDOWS_PLATFORM
+	#ifndef HAS_PTHREAD
 		DeleteCriticalSection(&cs);
 	#else
 		pthread_mutex_destroy(&mutex);
@@ -145,8 +145,8 @@ void Platform_CriticalSection :: Enter(const char *requestDesc)
 		Init();
 	}
 #endif
-		
-#ifdef WINDOWS_PLATFORM
+
+#ifndef HAS_PTHREAD
 	EnterCriticalSection(&cs);
 #else
 	pthread_mutex_lock(&mutex);
@@ -172,7 +172,7 @@ void Platform_CriticalSection :: Leave(void)
 		return;
 
 	lockCount = 0;
-#ifdef WINDOWS_PLATFORM
+#ifndef HAS_PTHREAD
 	LeaveCriticalSection(&cs);
 #else
 	pthread_mutex_unlock(&mutex);
@@ -203,7 +203,7 @@ int Platform_CriticalSection :: GetLockCount(void)
 //  returns zero on success.  These functions are modified to always return nonzero
 //  on success.
 
-#ifdef WINDOWS_PLATFORM
+#ifndef HAS_PTHREAD
 
 int Platform_CreateThread(size_t stackSize, void* ptrRoutine, void* ptrArgs, DWORD* threadID)
 {
@@ -211,7 +211,7 @@ int Platform_CreateThread(size_t stackSize, void* ptrRoutine, void* ptrArgs, DWO
 	return (res != NULL);
 }
 
-#else //#ifdef WINDOWS_PLATFORM
+#else //# HAS_PTHREAD
 
 int Platform_CreateThread(size_t stackSize, void* ptrRoutine, void* ptrArgs, unsigned long *threadID)
 {
@@ -226,7 +226,7 @@ int Platform_CreateThread(size_t stackSize, void* ptrRoutine, void* ptrArgs, uns
 	return 1;
 }
 
-#endif //#ifdef WINDOWS_PLATFORM
+#endif //# HAS_PTHREAD
 
 
 
@@ -237,6 +237,7 @@ int Platform_CreateThread(size_t stackSize, void* ptrRoutine, void* ptrArgs, uns
 //
 
 // Only for Linux.
+
 #ifndef WINDOWS_PLATFORM
 
 void Sleep_Nanosleep(int milliseconds)

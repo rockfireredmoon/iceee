@@ -110,6 +110,7 @@ public:
 	// Transient stuff (not store in character data)
 	bool DueDailyRewards;	// When set to true, when login has completely finished the player will be given their daily rewards
 
+
 	bool HasBuildZone(BuildPermissionArea &bpa);
 
 	bool ExpandCharacterSlots();
@@ -155,13 +156,22 @@ struct AccountQuickData
 	std::string mLoginAuth;
 	std::string mRegKey;
 	std::string mGroveName;
+
+	// Transient stuff (not stored)
+	std::string mAuthCode;   // When an API login is occuring
+	unsigned long mAuthCodeExpire;; // When the API login should expire (in practice a short amount of time);
+
 	AccountQuickData()
 	{
 		mID = 0;
+		mAuthCodeExpire = 0;
 	}
+
 	void Clear(void)
 	{
 		mID = 0;
+		mAuthCode.clear();
+		mAuthCodeExpire = 0;
 		mLoginName.clear();
 		mLoginAuth.clear();
 		mRegKey.clear();
@@ -260,6 +270,7 @@ public:
 	int AccountRecover(const char *username, const char *keypass, const char *type);
 	bool ValidString(const char *str);
 	bool ValidGroveString(std::string &nameToAdjust);
+	AccountData * FetchAccountWithAuthCode(const char *authCode);
 	AccountData * FetchAccountByUsername(const char *username);
 	const char * GetErrorMessage(int message);
 	int CheckAutoSave(bool force);
@@ -364,6 +375,7 @@ enum PermissionFlagEnum
 	Permission_TrollChat      = 0x00020000,     //Just for fun.  Uses a customizable phrase replace on region chat messages.
 	Permission_SelfDiag       = 0x10000000,     //Not a "permission" but helps to track down arbitrary stuff for specific players.
 	Permission_PasswordReset  = 0x20000000,     //The password can be reset on this account.
+	Permission_Builder        = 0x30000000,     //Can build anywhere.
 
 	//Full permissions for all flags of a given set
 	Permission_FullSet    = 0xFFFFFFFF     //Full permissions for all flags of this set

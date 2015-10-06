@@ -28,7 +28,6 @@
 #if !defined(_SCRAT_VM_H_)
 #define _SCRAT_VM_H_
 
-#include <squirrel.h>
 #include <sqrat.h>
 
 #include <iostream>
@@ -40,6 +39,7 @@
 #include <sqstdmath.h>
 #include <sqstdsystem.h>
 #include <sqstdstring.h>
+#include <squirrel.h>
 
 namespace Sqrat
 {

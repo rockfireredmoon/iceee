@@ -31,7 +31,9 @@ extern int g_DefZone;
 
 //For the HTTP server
 extern char g_HTTPBaseFolder[512];
-extern int g_HTTPListenPort;
+extern unsigned int g_HTTPListenPort;
+extern unsigned int g_HTTPSListenPort;
+extern std::string g_SSLCertificate;
 
 extern unsigned long g_RebroadcastDelay;
 extern unsigned long g_LocalActivityScanDelay;
@@ -81,6 +83,26 @@ enum LogLevel
 	LOG_WARNING,
 	LOG_NORMAL,
 	LOG_VERBOSE
+};
+
+/* For OAuth2 authentication (used for migrating PF accounts to TAW)
+ * Each 'client' string consists of a Client ID (can be public), a
+ * Client Secret (kept private) and an allowed redirect URL
+ *
+ * <clientId>^<clientSecret>^<redirectURL>
+ */
+class OAuth2Client
+{
+public:
+	std::string ClientId;
+	std::string ClientSecret;
+	std::string RedirectURL;
+
+	OAuth2Client() {
+	}
+
+	~OAuth2Client() {
+	}
 };
 
 class GlobalConfigData
@@ -215,6 +237,8 @@ public:
 	int SMTPPort;						// For emails, the SMTP port
 	bool SMTPSSL;						// For emails, whether to use SSL
 	std::string SMTPSender;				// For emails, the default sender address
+
+	std::vector<OAuth2Client*> OAuth2Clients;
 
 	unsigned long debugAdministrativeBehaviorFlags;
 	void SetAdministrativeBehaviorFlag(unsigned long bitValue, bool state);

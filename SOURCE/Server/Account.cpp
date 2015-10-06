@@ -44,6 +44,7 @@ PermissionInfo PermissionDef[] = {
 	{Perm_Account, 0, Permission_SelfDiag,       "selfdiag" },
 	{Perm_Account, 0, Permission_Troll,          "troll" },
 	{Perm_Account, 0, Permission_TrollChat,      "trollchat" },
+	{Perm_Account, 0, Permission_Builder,        "builder" },
 	{Perm_Account, 0, Permission_FullSet,        "fullset" }
 };
 const int MaxPermissionDef = sizeof(PermissionDef) / sizeof(PermissionInfo);
@@ -192,6 +193,9 @@ int AccountData :: GetFreeCharacterSlot(void)
 
 bool AccountData :: CheckBuildPermission(int zoneID, int pagex, int pagey)
 {
+	if(HasPermission(Perm_Account, Permission_Builder)) {
+		return true;
+	}
 	for(size_t i = 0; i < BuildPermissionList.size(); i++)
 	{
 		BuildPermissionArea &bpa = BuildPermissionList[i];
@@ -207,6 +211,9 @@ bool AccountData :: CheckBuildPermission(int zoneID, int pagex, int pagey)
 
 bool AccountData :: CheckBuildPermissionAdv(int zoneID, int PageSize, float posx, float posz)
 {
+	if(HasPermission(Perm_Account, Permission_Builder)) {
+		return true;
+	}
 	//Need increased resolution since negative positions may round to zero.
 	int px = (int)posx;
 	int pz = (int)posz;
@@ -817,9 +824,14 @@ AccountData * AccountManager :: GetValidLogin(const char *loginName, const char 
 	AccountQuickData *aqd = GetAccountQuickDataByUsername(loginName);
 	if(aqd != NULL)
 	{
-		if(aqd->mLoginAuth.compare(loginAuth) == 0)
+		if(aqd->mLoginAuth.compare(loginAuth) == 0) {
+
+			g_Log.AddMessageFormat("[REMOVEME] OK auth lookup for %s (%s)", loginName, loginAuth);
 			return FetchIndividualAccount(aqd->mID);
+		}
 	}
+
+	g_Log.AddMessageFormat("[REMOVEME] Failed auth lookup for %s (%s)", loginName, loginAuth);
 
 	return NULL;
 }
@@ -1109,6 +1121,20 @@ bool AccountManager :: ValidGroveString(std::string &nameToAdjust)
 	return true;
 }
 
+AccountData * AccountManager :: FetchAccountWithAuthCode(const char *authCode)
+{
+	ACCOUNT_ITERATOR it;
+	for(size_t i = 0; i < accountQuickData.size(); i++) {
+		if(accountQuickData[i].mAuthCode.compare(authCode) == 0) {
+			if(accountQuickData[i].mAuthCodeExpire < g_ServerTime)
+				return FetchIndividualAccount(accountQuickData[i].mID);
+			else
+				break;
+		}
+	}
+	return NULL;
+}
+
 AccountData * AccountManager :: FetchAccountByUsername(const char *username)
 {
 	ACCOUNT_ITERATOR it;
@@ -1331,6 +1357,11 @@ int AccountManager :: CreateCharacter(STRINGLIST &args, AccountData *accPtr)
 		int rr = ValidateNameParts(args[0], args[1]);
 		if(rr != CHARACTER_SUCCESS) {
 			return rr;
+		}
+
+		// The first name may only be sage if the account has sage permissons
+		if(Util::CaseInsensitiveStringCompare(args[0], "Sage") == 0 && !accPtr->HasPermission(Perm_Account, Permission_Sage)) {
+			return CHARACTER_FIRSTINV;
 		}
 
 		int newID = GetNewCharacterID();

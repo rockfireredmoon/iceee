@@ -101,7 +101,7 @@ public:
 	int GetItemByCCSID(unsigned int findCCSID);
 	InventorySlot * GetItemPtrByCCSID(unsigned int findCCSID);
 	InventorySlot * GetItemPtrByID(int itemID);
-	int GetItemBySlot(int containerID, uint slot);
+	int GetItemBySlot(int containerID, unsigned int slot);
 	void ClearAll(void);
 	unsigned int GetCCSID(unsigned short container, unsigned short slot);
 	unsigned int GetCCSIDFromHexID(const char *hexStr);

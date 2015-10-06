@@ -41,17 +41,17 @@ struct SimulatorQuery
 	int ID;
 	std::string name;
 	std::vector<std::string> args;
-	uint argCount;
+	unsigned int argCount;
 
 	SimulatorQuery();
 	~SimulatorQuery();
 	void Clear(void);
 
-	bool ValidArgIndex(uint argIndex);
-	const char* GetString(uint argIndex);
-	int GetInteger(uint argIndex);
-	float GetFloat(uint argIndex);
-	bool GetBool(uint argIndex);
+	bool ValidArgIndex(unsigned int argIndex);
+	const char* GetString(unsigned int argIndex);
+	int GetInteger(unsigned int argIndex);
+	float GetFloat(unsigned int argIndex);
+	bool GetBool(unsigned int argIndex);
 };
 
 struct QueryErrorMsg
@@ -150,7 +150,7 @@ public:
 	void AddPendingDisconnect(void);
 	void ProcessDisconnect(void);
 	void ForceErrorMessage(const char *message, int msgtype);
-	int AttemptSend(const char *buffer, uint buflen);
+	int AttemptSend(const char *buffer, unsigned int buflen);
 	void OnConnect(void);
 
 	bool CheckStateGameplayProtocol(void) const;
@@ -372,7 +372,7 @@ public:
 	int protected_helper_query_scenery_edit(void);
 	int protected_helper_query_scenery_delete(void);
 	const char * GetErrorString(int error);
-	bool HasQueryArgs(uint minCount);
+	bool HasQueryArgs(unsigned int minCount);
 	int ResolveEmoteTarget(int target);
 	void JoinPrivateChannel(const char *channelname, const char *password);
 
@@ -537,7 +537,7 @@ public:
 
 	bool TargetRarityAboveNormal(void);
 	//void VerifySendBufSize(int length);
-	void VerifyGenericBuffer(const char *buffer, uint buflen);
+	void VerifyGenericBuffer(const char *buffer, unsigned int buflen);
 	void LogPingStatistics(bool server, bool client);
 
 	void Debug_GenerateReport(ReportBuffer *report);

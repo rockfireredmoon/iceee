@@ -2,6 +2,8 @@
 #ifndef _SQSTD_STRING_H_
 #define _SQSTD_STRING_H_
 
+#include "squirrel.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif

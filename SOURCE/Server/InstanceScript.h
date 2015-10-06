@@ -6,8 +6,8 @@
 #include <vector>
 #include "Callback.h"
 #include "Scenery2.h"
-#include "Squirrel.h"
 #include "PartyManager.h"
+#include "SquirrelObjects.h"
 
 class ActiveInstance;
 class CreatureInstance;

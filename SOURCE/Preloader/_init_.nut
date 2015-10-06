@@ -276,6 +276,14 @@ catch(e) {
 if( "src" in _args )
 {
 	// Right. Begin the download!
-	_cache.fetch(_args["src"]);
+	
+	// Relativize the url
+	local src = _args["src"];
+	/*if(Preloader.startsWith(src, _cache.getBaseURL())) {
+		src = src.slice(_cache.getBaseURL().len() + 1);
+	}*/
+	
+	print("ICE! Fetching " + src + " from " + _cache.getBaseURL() + "\n");
+	_cache.fetch(src);
 }
 

@@ -25,10 +25,10 @@ public:
     void Clear();
     void ReadDirectories();
     void ReadFiles(void);
-    const char * GetDirectory();
-    void SetDirectory(const char *path);
+    std::string GetDirectory();
+    void SetDirectory(std::string path);
     int FileCount(void);
-    bool CheckInvalidDir(const char *filename);
+    bool CheckInvalidDir(std::string filename);
 
 private:
     int TYPE_DIR;
@@ -50,13 +50,13 @@ private:
 
 
 // Needed for proper naming conventions to prevent warnings or errors.
-//#ifdef WINDOWS_PLATFORM
-//	#define PLATFORM_GETCWD   _getcwd
-//	#define PLATFORM_CHDIR    _chdir
-//#else
+#ifdef WINDOWS_PLATFORM
+	#define PLATFORM_GETCWD   _getcwd
+	#define PLATFORM_CHDIR    _chdir
+#else
 	#define PLATFORM_GETCWD   getcwd
 	#define PLATFORM_CHDIR    chdir
-//#endif
+#endif
 
 
 namespace Platform

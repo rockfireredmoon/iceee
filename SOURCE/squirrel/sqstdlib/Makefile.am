@@ -1,5 +1,5 @@
 noinst_LIBRARIES = libsqstdlib.a
-AM_CPPFLAGS = -I../include
+libsqstdlib_a_CPPFLAGS = -I../include
 libsqstdlib_a_SOURCES = sqstdaux.cpp \
 	sqstdblob.cpp \
 	sqstdio.cpp \

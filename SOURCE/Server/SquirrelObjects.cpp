@@ -1,4 +1,4 @@
-#include "Squirrel.h"
+#include "SquirrelObjects.h"
 #include "Util.h"
 
 namespace Squirrel {

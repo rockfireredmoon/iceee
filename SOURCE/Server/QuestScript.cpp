@@ -322,7 +322,7 @@ void QuestNutPlayer::Info(const char *message)
 		if(party == NULL)
 			source->simulatorPtr->AttemptSend(Buffer, size);
 		else
-			for(uint i = 0 ; i < party->mMemberList.size(); i++)
+			for(unsigned int i = 0 ; i < party->mMemberList.size(); i++)
 				party->mMemberList[i].mCreaturePtr->actInst->LSendToOneSimulator(Buffer, size, party->mMemberList[i].mCreaturePtr->simulatorPtr);
 
 	}
@@ -505,7 +505,7 @@ void QuestScriptPlayer::RunImplementationCommands(int opcode)
 				if(party == NULL)
 					simCall->AttemptSend(Buffer, size);
 				else
-					for(uint i = 0 ; i < party->mMemberList.size(); i++)
+					for(unsigned int i = 0 ; i < party->mMemberList.size(); i++)
 						party->mMemberList[i].mCreaturePtr->actInst->LSendToOneSimulator(Buffer, size, party->mMemberList[i].mCreaturePtr->simulatorPtr);
 
 			}

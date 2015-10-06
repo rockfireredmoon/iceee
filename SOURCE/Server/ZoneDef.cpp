@@ -1120,7 +1120,7 @@ int ZoneDefManager :: EnumerateGroves(int searchAccountID, int characterDefId, s
 		else
 		{
 			// Check if the zone is a guild hall for a guild the character is in
-			for(uint i = 0 ; i < cdata->guildList.size(); i++)
+			for(unsigned int i = 0 ; i < cdata->guildList.size(); i++)
 			{
 				int guildDefID = cdata->guildList[0].GuildDefID;
 				GuildDefinition *gDef = g_GuildManager.GetGuildDefinition(guildDefID);

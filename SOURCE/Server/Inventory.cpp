@@ -428,7 +428,7 @@ InventorySlot * InventoryManager :: GetItemPtrByID(int itemID)
 	return NULL;
 }
 
-int InventoryManager :: GetItemBySlot(int containerID, uint slot)
+int InventoryManager :: GetItemBySlot(int containerID, unsigned int slot)
 {
 	if(slot < 0)
 		return -1;

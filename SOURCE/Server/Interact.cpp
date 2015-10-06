@@ -40,7 +40,7 @@ void InteractObject :: Clear(void)
 
 void InteractObject :: SetName(char *str)
 {
-	uint len = strlen(str);
+	unsigned int len = strlen(str);
 	if(len > sizeof(internalName) - 1)
 	{
 		g_Log.AddMessageFormat("[WARNING] InteractObject::SetName string size is too long [%s]", str);
@@ -69,7 +69,7 @@ void InteractObject :: SetType(char *str)
 
 void InteractObject :: SetMessage(char *str)
 {
-	uint len = strlen(str);
+	unsigned int len = strlen(str);
 	if(len > sizeof(useMessage) - 1)
 	{
 		g_Log.AddMessageFormat("[WARNING] InteractObject::SetMessage string size is too long [%s]", str);
@@ -80,7 +80,7 @@ void InteractObject :: SetMessage(char *str)
 
 void InteractObject :: SetScriptFunction(char *str)
 {
-	uint len = strlen(str);
+	unsigned int len = strlen(str);
 	if(len > sizeof(scriptFunction) - 1)
 	{
 		g_Log.AddMessageFormat("[WARNING] InteractObject::SetScriptFunction string size is too long [%s]", str);

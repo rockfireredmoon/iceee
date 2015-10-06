@@ -56,8 +56,6 @@
 #if !defined(_SCRAT_MAIN_H_)
 #define _SCRAT_MAIN_H_
 
-#include <squirrel.h>
-
 #include "sqrat/sqratTable.h"
 #include "sqrat/sqratClass.h"
 #include "sqrat/sqratFunction.h"
@@ -65,5 +63,6 @@
 #include "sqrat/sqratUtil.h"
 #include "sqrat/sqratScript.h"
 #include "sqrat/sqratArray.h"
+#include <squirrel.h>
 
 #endif

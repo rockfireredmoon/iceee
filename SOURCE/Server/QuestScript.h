@@ -4,11 +4,11 @@
 
 #include "ScriptCore.h"
 #include "Creature.h"
-#include "Squirrel.h"
 #include "Components.h"
 #include <vector>
 #include <string>
 #include <list>
+#include "SquirrelObjects.h"
 
 class ActiveInstance;
 class SimulatorThread;

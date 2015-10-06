@@ -1,7 +1,5 @@
 #include "RemoteAction.h"
 
-#include "HTTPBase.h"
-#include "HTTPDistribute.h"
 #include "StringList.h"
 #include "Config.h"
 #include "Globals.h"
@@ -27,9 +25,26 @@
 #include "DebugProfiler.h"
 #include <stdlib.h>
 #include "Report.h"
+#include "http/HTTPService.h"
 
 extern char GAuxBuf[];
 
+const char *GetValueOfKey(MULTISTRING &extract, const char *key)
+{
+	//Search the given list of rows for an entry with a certain key value
+	//Then return a string pointer to its value.
+	for(size_t i = 0; i < extract.size(); i++)
+	{
+		size_t vals = extract[i].size();
+		if(vals >= 2)
+		{
+			if(extract[i][0].compare(key) == 0)
+				return extract[i][1].c_str();
+		}
+	}
+	//g_Log.AddMessageFormat("Not found: %s", key);
+	return NULL;
+}
 
 int RunRemoteAction(ReportBuffer &report, MULTISTRING &header, MULTISTRING &params)
 {
@@ -178,9 +193,9 @@ void RefreshThreads(ReportBuffer &report)
 	long tsnd = 0;
 
 	report.AddLine("Simulators in use: %d", Simulator.size());
-	report.AddLine("HTTP Full Connection Errors: %d", HTTPBaseServer.Debug_MaxFullConnections);
-	report.AddLine("HTTP Full Kicked connections: %d", HTTPBaseServer.Debug_KickedFullConnections);
-	report.AddLine("HTTP Dropped hanging connections: %d", g_HTTPDistributeManager.mDroppedConnections);
+//	report.AddLine("HTTP Full Connection Errors: %d", HTTPBaseServer.Debug_MaxFullConnections);
+//	report.AddLine("HTTP Full Kicked connections: %d", HTTPBaseServer.Debug_KickedFullConnections);
+//	report.AddLine("HTTP Dropped hanging connections: %d", g_HTTPDistributeManager.mDroppedConnections);
 	report.AddLine(NULL);
 	report.AddLine("Sent: %s in %d packets", GetDataSizeStr(g_PacketManager.mTotalBytesSent), g_PacketManager.mTotalPacketsSent);
 	report.AddLine("Dropped: %s in %d packets", GetDataSizeStr(g_PacketManager.mTotalBytesDropped), g_PacketManager.mTotalPacketsDropped);
@@ -203,37 +218,37 @@ void RefreshThreads(ReportBuffer &report)
 	report.AddLine(NULL);
 
 	report.AddLine("[Component] (Status) Sent bytes / Received bytes");
-	report.AddLine("[HTTP] (%s) %s / %s (total of deactivated threads) ",
-		StatusPhaseStrings[HTTPBaseServer.Status],
-		GetDataSizeStr(g_HTTPDistributeManager.mTotalSendBytes),
-		GetDataSizeStr(g_HTTPDistributeManager.mTotalRecBytes));
+//	report.AddLine("[HTTP] (%s) %s / %s (total of deactivated threads) ",
+//		StatusPhaseStrings[HTTPBaseServer.Status],
+//		GetDataSizeStr(g_HTTPDistributeManager.mTotalSendBytes),
+//		GetDataSizeStr(g_HTTPDistributeManager.mTotalRecBytes));
 
-	httpsend += g_HTTPDistributeManager.mTotalSendBytes;
-	httprec += g_HTTPDistributeManager.mTotalRecBytes;
+//	httpsend += g_HTTPDistributeManager.mTotalSendBytes;
+//	httprec += g_HTTPDistributeManager.mTotalRecBytes;
+//
+//	tsnd += g_HTTPDistributeManager.mTotalSendBytes;
+//	trec += g_HTTPDistributeManager.mTotalRecBytes;
 
-	tsnd += g_HTTPDistributeManager.mTotalSendBytes;
-	trec += g_HTTPDistributeManager.mTotalRecBytes;
-
-	//Thread guard to fix a potential multithreaded issue of accessing while adding or removing list items.
-	http_cs.Enter("RefreshThreads");
-	HTTPDistributeManager::ITERATOR hdit;
-	for(hdit = g_HTTPDistributeManager.mDistributeList.begin(); hdit != g_HTTPDistributeManager.mDistributeList.end(); ++hdit)
-	{
-		report.AddLine("[HTTP:%d] (%s) %s / %s (%d, %d, %d)",
-			hdit->InternalIndex,
-			StatusPhaseStrings[hdit->Status],
-			GetDataSizeStr(hdit->TotalSendBytes),
-			GetDataSizeStr(hdit->TotalRecBytes),
-			(int)hdit->inUse,
-			(int)hdit->SendFile,
-			(int)hdit->Finished);
-
-		httpsend += hdit->TotalSendBytes;
-		httprec += hdit->TotalRecBytes;
-		tsnd += hdit->TotalSendBytes;
-		trec += hdit->TotalRecBytes;
-	}
-	http_cs.Leave();
+//	//Thread guard to fix a potential multithreaded issue of accessing while adding or removing list items.
+//	http_cs.Enter("RefreshThreads");
+//	HTTPDistributeManager::ITERATOR hdit;
+//	for(hdit = g_HTTPDistributeManager.mDistributeList.begin(); hdit != g_HTTPDistributeManager.mDistributeList.end(); ++hdit)
+//	{
+//		report.AddLine("[HTTP:%d] (%s) %s / %s (%d, %d, %d)",
+//			hdit->InternalIndex,
+//			StatusPhaseStrings[hdit->Status],
+//			GetDataSizeStr(hdit->TotalSendBytes),
+//			GetDataSizeStr(hdit->TotalRecBytes),
+//			(int)hdit->inUse,
+//			(int)hdit->SendFile,
+//			(int)hdit->Finished);
+//
+//		httpsend += hdit->TotalSendBytes;
+//		httprec += hdit->TotalRecBytes;
+//		tsnd += hdit->TotalSendBytes;
+//		trec += hdit->TotalRecBytes;
+//	}
+//	http_cs.Leave();
 
 	report.AddLine("[Router] (%s) %s / %s",
 		StatusPhaseStrings[Router.Status],

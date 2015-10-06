@@ -1,4 +1,3 @@
-#pragma warning(disable: 4996)
 
 #include "Debug.h"
 
@@ -10,6 +9,9 @@
 #include "ByteBuffer.h"
 #include <math.h>
 #include <stdlib.h>
+#include <iostream>
+#include <sstream>
+#include <iomanip>
 
 ChangeData SessionVarsChangeData;
 
@@ -743,7 +745,7 @@ void Join(std::vector<std::string> &src, const char *delim, std::string &dest)
 {
 	std::string s = delim;
 	dest.clear();
-	for(uint i = 0 ; i < src.size(); i++) {
+	for(unsigned int i = 0 ; i < src.size(); i++) {
 		if(i > 0)
 			dest.append(s);
 		dest.append(src[i]);
@@ -1199,6 +1201,68 @@ void SanitizeClientString(char *string)
 			string[i] = '.';
 }
 
+
+
+void URLEncode(std::string &str) {
+	ostringstream escaped;
+	escaped.fill('0');
+	escaped << hex;
+
+	for (string::const_iterator i = str.begin(), n = str.end(); i != n;
+			++i) {
+		string::value_type c = (*i);
+
+		// Keep alphanumeric and other accepted characters intact
+		if (isalnum(c) || c == '-' || c == '_' || c == '.' || c == '~') {
+			escaped << c;
+			continue;
+		}
+
+		// Any other characters are percent-encoded
+		escaped << '%' << setw(2) << int((unsigned char) c);
+	}
+	std::string s = escaped.str();
+	str.swap(s);
+}
+
+void URLDecode(std::string &str) {
+	g_Log.AddMessageFormat("[REMOVEME] Decode of %s", str.c_str());
+	std::string ret;
+	ret.reserve(str.size());
+	char ch;
+	unsigned int i, ii;
+	for (i = 0; i < str.length(); i++) {
+		if (int(str[i]) == 37) {
+			sscanf(str.substr(i + 1, 2).c_str(), "%x", &ii);
+			ch = static_cast<char>(ii);
+			ret += ch;
+			i = i + 2;
+		} else if (str[i] == '+') {
+			ret += " ";
+		} else {
+			ret += str[i];
+		}
+	}
+	g_Log.AddMessageFormat("[REMOVEME] Becomes %s", ret.c_str());
+    str.swap(ret);
+}
+
+void EncodeHTML(std::string& data) {
+    std::string buffer;
+    buffer.reserve(data.size());
+    for(size_t pos = 0; pos != data.size(); ++pos) {
+        switch(data[pos]) {
+            case '&':  buffer.append("&amp;");       break;
+            case '\"': buffer.append("&quot;");      break;
+            case '\'': buffer.append("&apos;");      break;
+            case '<':  buffer.append("&lt;");        break;
+            case '>':  buffer.append("&gt;");        break;
+            default:   buffer.append(&data[pos], 1); break;
+        }
+    }
+    data.swap(buffer);
+}
+
 void EncodeJSONString(std::string& str)
 {
 	ReplaceAll(str, "\n", "\\n");
@@ -1408,19 +1472,20 @@ void TokenizeByWhitespace(const std::string &input, STRINGLIST &output)
 		output.push_back(str.substr(first, len - first + 1));
 }
 
-std::string RandomStr()
+std::string RandomStr(unsigned int size, bool all)
 {
-//	static const char alphanum[] =
-//		"0123456789"
-//		"ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-//		"abcdefghijklmnopqrstuvwxyz";
+	if(all)
+		return RandomStrFrom(size,
+			"1234567890ABCDEFGHIJKLMNPQRSTUVWXYZabcdefghijklmnpqrstuvwxyz");
+	else
+		return RandomStrFrom(size, "23456789ABCDEFGHIJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz");
+}
 
-	static const char alphanum[] =
-			"23456789"
-			"ABCDEFGHIJKLMNPQRSTUVWXYZ"
-			"abcdefghjkmnpqrstuvwxyz";
 
-	char str[32];
+
+std::string RandomStrFrom(unsigned int size, const char alphanum[])
+{
+	char str[size];
 	for (unsigned int i = 0; i < sizeof(str); ++i) {
 		str[i] = alphanum[rand() % (sizeof(alphanum) - 1)];
 	}

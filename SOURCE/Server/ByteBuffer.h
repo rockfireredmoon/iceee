@@ -29,7 +29,7 @@ public:
 	void PutStringUTF(const char *tocopy);
 
 	const char *GetData(void);
-	size_t GetSize(void);
+	unsigned long GetSize(void);
 };
 
 

@@ -57,7 +57,8 @@ unsigned long g_SceneryAutosaveTime = 300000;  //5 minutes
 
 //For the HTTP server
 char g_HTTPBaseFolder[512] = {0};
-int g_HTTPListenPort = 80;
+unsigned int g_HTTPListenPort = 80;
+unsigned int g_HTTPSListenPort = 0;
 
 
 //Milliseconds between normal game time to rebroadcast creature and object definitions
@@ -67,6 +68,8 @@ unsigned long g_RebroadcastDelay = 25000;
 unsigned long g_LocalActivityScanDelay = 3000;
 int g_LocalActivityRange = 1200;  //600
 
+
+std::string g_SSLCertificate;
 std::string g_HTTP404Header;
 std::string g_HTTP404Message;
 int g_HTTP404Redirect = 0;
@@ -122,6 +125,8 @@ void CheckNewLine(std::string &dest)
 
 void LoadConfig(const char *filename)
 {
+	g_Config.OAuth2Clients.clear();
+
 	//Loads the configuration options from the target file.  These are core options
 	//required for the server to operate.
 	
@@ -222,6 +227,10 @@ void LoadConfig(const char *filename)
 			{
 				g_HTTPListenPort = lfr.BlockToInt(1);
 			}
+			else if(strcmp(NameBlock, "HTTPSListenPort") == 0)
+			{
+				g_HTTPSListenPort = lfr.BlockToInt(1);
+			}
 			else if(strcmp(NameBlock, "RebroadcastDelay") == 0)
 			{
 				g_RebroadcastDelay = lfr.BlockToULongC(1);
@@ -229,6 +238,10 @@ void LoadConfig(const char *filename)
 			else if(strcmp(NameBlock, "SceneryAutosaveTime") == 0)
 			{
 				g_SceneryAutosaveTime = lfr.BlockToULongC(1);
+			}
+			else if(strcmp(NameBlock, "SSLCertificate") == 0)
+			{
+				AppendString(g_SSLCertificate, lfr.BlockToStringC(1, 0));
 			}
 			else if(strcmp(NameBlock, "HTTP404Header") == 0)
 			{
@@ -451,6 +464,20 @@ void LoadConfig(const char *filename)
 				g_Config.SMTPSSL = lfr.BlockToBool(1);
 			else if(strcmp(NameBlock, "SMTPSender") == 0)
 				g_Config.SMTPSender = lfr.BlockToStringC(1, 0);
+			else if(strcmp(NameBlock, "OAuth2Client") == 0) {
+				STRINGLIST output;
+				Util::Split(lfr.BlockToString(1), "|", output);
+				if(output.size() == 3) {
+					OAuth2Client *c = new OAuth2Client();
+					c->ClientId = output[0];
+					c->ClientSecret = output[1];
+					c->RedirectURL = output[2];
+					g_Config.OAuth2Clients.push_back(c);
+				}
+				else {
+					g_Log.AddMessageFormatW(MSG_SHOW, "Invalid OAuth2Client string [%s] in config file [%s]", lfr.BlockToString(0), filename);
+				}
+			}
 			else
 			{
 				g_Log.AddMessageFormatW(MSG_SHOW, "Unknown identifier [%s] in config file [%s]", lfr.BlockToString(0), filename);
