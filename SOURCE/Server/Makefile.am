@@ -5,14 +5,14 @@ else
 bin_PROGRAMS = tawd
 endif
 
-tawd_CPPFLAGS = $(libcurl_CFLAGS) -I../squirrel/include $(libcurl_CFLAGS)
-tawd_LDADD = ../squirrel/squirrel/libsquirrel.a ../squirrel/sqstdlib/libsqstdlib.a $(libcurl_LIBS)
+tawd_CPPFLAGS = $(libcurl_CFLAGS) $(libssl_CFLAGS) -I../squirrel/include $(libcurl_CFLAGS)
+tawd_LDADD = ../squirrel/squirrel/libsquirrel.a ../squirrel/sqstdlib/libsqstdlib.a $(libcurl_LIBS) $(libssl_LIBS)
 
 if MINGW
 tawd_CPPFLAGS += -DWINDOWS_PLATFORM=1
 tawd_LDFLAGS = -lws2_32 -lcurl -lws2_32 -lssl -static -static-libgcc -static-libstdc++
 else
-tawd_LDFLAGS = -lrt -static
+tawd_LDFLAGS = -lrt -ldl -static
 endif
 
 if HAS_PTHREAD
@@ -97,6 +97,14 @@ tawd_SOURCES = md5.cc \
 	VirtualItem.cpp \
 	ZoneDef.cpp \
 	ZoneObject.cpp \
+	http/CAR.cpp \
+	http/OAuth2.cpp \
+	http/TAWApi.cpp \
+	http/LegacyAccounts.cpp \
+	http/WebControlPanel.cpp \
+	http/CivetServer.cpp \
+	http/civetweb.c \
+	http/HTTPService.cpp \
 	Ability2.h \
 	AbilityTime.h \
 	Account.h \
@@ -198,7 +206,17 @@ tawd_SOURCES = md5.cc \
 	sqrat/sqratTable.h \
 	sqrat/sqratTypes.h \
 	sqrat/sqratUtil.h \
-	sqrat/sqratVM.h
+	sqrat/sqratVM.h \
+	http/CAR.h \
+	http/HTTP.h \
+	http/OAuth2.h \
+	http/TAWApi.h \
+	http/CivetServer.h \
+	http/civetweb.h \
+	http/HTTPService.h \
+	http/md5.inl \
+	http/LegacyAccounts.h \
+	http/WebControlPanel.h
 	
 
 if MINGW
@@ -286,6 +304,14 @@ tawdsvc_SOURCES = md5.cc \
 	VirtualItem.cpp \
 	ZoneDef.cpp \
 	ZoneObject.cpp \
+	http/CAR.cpp \
+	http/OAuth2.cpp \
+	http/TAWApi.cpp \
+	http/CivetServer.cpp \
+	http/civetweb.c \
+	http/HTTPService.cpp \
+	http/LegacyAccounts.cpp \
+	http/WebControlPanel.cpp \
 	Ability2.h \
 	AbilityTime.h \
 	Account.h \
@@ -387,5 +413,15 @@ tawdsvc_SOURCES = md5.cc \
 	sqrat/sqratTable.h \
 	sqrat/sqratTypes.h \
 	sqrat/sqratUtil.h \
-	sqrat/sqratVM.h
+	sqrat/sqratVM.h \
+	http/CAR.h \
+	http/HTTP.h \
+	http/OAuth2.h \
+	http/TAWApi.h \
+	http/CivetServer.h \
+	http/civetweb.h \
+	http/HTTPService.h \
+	http/md5.inl \
+	http/LegacyAccounts.h \
+	http/WebControlPanel.h
 endif

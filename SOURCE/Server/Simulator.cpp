@@ -9825,7 +9825,7 @@ int SimulatorThread :: handle_command_adjustexp(void)
 		Args : [0] amount
 	*/
 
-	if(CheckPermissionSimple(Perm_Account, Permission_Admin) == false)
+	if(CheckPermissionSimple(Perm_Account, Permission_Admin) == false && CheckPermissionSimple(Perm_Account, Permission_Builder) == false)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
 
 	if(query.argCount < 1)
@@ -11986,7 +11986,7 @@ int SimulatorThread :: handle_query_user_auth_reset() {
 	}
 
 	// Generate a new recovery key
-	std::string newKey = Util::RandomStr();
+	std::string newKey = Util::RandomStr(32, false);
 
 	// Remove the existing registration key
 	Util::SafeFormat(acc->RegKey, sizeof(acc->RegKey), "%s", newKey.c_str());

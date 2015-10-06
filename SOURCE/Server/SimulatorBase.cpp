@@ -3,7 +3,6 @@
 #include "Config.h"
 #include "Globals.h"
 #include "StringList.h"
-#include "HTTPDistribute.h"
 #include "Simulator.h"
 #include <stdlib.h>   //For itoa()
 #include "Util.h"

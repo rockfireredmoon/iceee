@@ -824,9 +824,14 @@ AccountData * AccountManager :: GetValidLogin(const char *loginName, const char 
 	AccountQuickData *aqd = GetAccountQuickDataByUsername(loginName);
 	if(aqd != NULL)
 	{
-		if(aqd->mLoginAuth.compare(loginAuth) == 0)
+		if(aqd->mLoginAuth.compare(loginAuth) == 0) {
+
+			g_Log.AddMessageFormat("[REMOVEME] OK auth lookup for %s (%s)", loginName, loginAuth);
 			return FetchIndividualAccount(aqd->mID);
+		}
 	}
+
+	g_Log.AddMessageFormat("[REMOVEME] Failed auth lookup for %s (%s)", loginName, loginAuth);
 
 	return NULL;
 }
@@ -1114,6 +1119,20 @@ bool AccountManager :: ValidGroveString(std::string &nameToAdjust)
 			return false;
 	}
 	return true;
+}
+
+AccountData * AccountManager :: FetchAccountWithAuthCode(const char *authCode)
+{
+	ACCOUNT_ITERATOR it;
+	for(size_t i = 0; i < accountQuickData.size(); i++) {
+		if(accountQuickData[i].mAuthCode.compare(authCode) == 0) {
+			if(accountQuickData[i].mAuthCodeExpire < g_ServerTime)
+				return FetchIndividualAccount(accountQuickData[i].mID);
+			else
+				break;
+		}
+	}
+	return NULL;
 }
 
 AccountData * AccountManager :: FetchAccountByUsername(const char *username)

@@ -88,6 +88,16 @@ this.Util.waitForAssets <- function ( assets, callback, ... )
 	this._contentLoader.load(assets, priority, "Package " + this._nextPackageNameID++, waiter);
 	return waiter;
 };
+this.Util.getWebServerRoot <- function ()
+{
+	local basePath = this._cache.getBaseURL();
+	if (basePath.slice(0, 8) == "file:///")
+		return basePath + "/../../";
+	else if (basePath.slice(0, 7) == "http://") 
+		return basePath.slice(0, basePath.find("/", 8) + 1);
+	else 
+		return "/";
+};
 this.Util.isDevMode <- function ()
 {
 	local test = this._args;

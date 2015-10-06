@@ -122,6 +122,8 @@ namespace Util
 	void EncodeJSONString(std::string& str);
 	std::string FormatDate(time_t *time);
 	void ReplaceAll(std::string& str, const std::string& from, const std::string& to);
+	void URLDecode(std::string &str);
+	void URLEncode(std::string &str);
 
 	int GetInteger(const STRINGLIST &strList, size_t index);
 	int GetInteger(const std::string &str);
@@ -133,7 +135,8 @@ namespace Util
 
 	void AssignFloatArrayFromStringSplit(float *arrayDest, size_t arraySize, const std::string &strData);
 	void TokenizeByWhitespace(const std::string &input, STRINGLIST &output);
-	std::string RandomStr();
+	std::string RandomStr(unsigned int size, bool all);
+	std::string RandomStrFrom(unsigned int size, const char alphanum[]);
 }
 
 /*

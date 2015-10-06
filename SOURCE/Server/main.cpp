@@ -161,8 +161,6 @@ If using Code::Blocks on LINUX
 #include "Interact.h"
 #include "DropTable.h"
 #include "Config.h"
-#include "HTTPDistribute.h"
-#include "HTTPBase.h"
 #include "DirectoryAccess.h"
 #include "RemoteAction.h"
 #include "Gamble.h"
@@ -178,6 +176,7 @@ If using Code::Blocks on LINUX
 #include "CreditShop.h"
 #include "Guilds.h"
 #include "Daily.h"
+#include "http/HTTPService.h"
 
 #ifdef WINDOWS_SERVICE
 #include <windows.h>
@@ -482,7 +481,6 @@ int InitServerMain() {
 	LoadSession("SessionVars.txt");
 	g_Log.LoggingEnabled = g_GlobalLogging;
 
-	g_FileChecksum.LoadFromFile(Platform::GenerateFilePath(GAuxBuf, "Data", "HTTPChecksum.txt"));
 	g_Log.AddMessageFormat("Loaded %d checksums.", g_FileChecksum.mChecksumData.size());
 
 	g_ItemManager.LoadData();
@@ -591,16 +589,18 @@ int InitServerMain() {
 
 	if(g_Config.Upgrade == 0)
 	{
-		HTTPBaseServer.SetBindAddress(g_BindAddress);
 		Router.SetBindAddress(g_BindAddress);
 		SimulatorBase.SetBindAddress(g_BindAddress);
 	}
 
-	if(g_HTTPListenPort > 0 && g_Config.Upgrade == 0)
-	{
-		HTTPBaseServer.SetHomePort(g_HTTPListenPort);
-		HTTPBaseServer.InitThread(0, g_GlobalThreadID++);
-	}
+//	if(g_HTTPListenPort > 0 && g_Config.Upgrade == 0)
+//	{
+//		HTTPBaseServer.SetHomePort(g_HTTPListenPort);
+//		HTTPBaseServer.InitThread(0, g_GlobalThreadID++);
+//	}
+
+	g_FileChecksum.LoadFromFile(Platform::GenerateFilePath(GAuxBuf, "Data", "HTTPChecksum.txt"));
+	g_HTTPService.Start();
 
 	if(g_RouterPort != 0 && g_Config.Upgrade == 0)
 	{
@@ -611,6 +611,7 @@ int InitServerMain() {
 
 	SimulatorBase.SetHomePort(g_SimulatorPort);
 	SimulatorBase.InitThread(0, g_GlobalThreadID++);
+
 
 	g_PacketManager.LaunchThread();
 	g_SceneryManager.LaunchThread();
@@ -777,14 +778,14 @@ bool VerifyOperation(void)
 	int errorCount = 0;
 	while(true)
 	{
-		if(g_HTTPListenPort > 0)
-		{
-			if(HTTPBaseServer.Status != Status_Wait)
-			{
-				printf("The HTTP server is not operational. (Status: %s)\n", StatusPhaseStrings[HTTPBaseServer.Status]);
-				errorCount++;
-			}
-		}
+//		if(g_HTTPListenPort > 0)
+//		{
+//			if(HTTPBaseServer.Status != Status_Wait)
+//			{
+//				printf("The HTTP server is not operational. (Status: %s)\n", StatusPhaseStrings[HTTPBaseServer.Status]);
+//				errorCount++;
+//			}
+//		}
 		if(g_RouterPort > 0)
 		{
 			if(Router.Status != Status_Wait)
@@ -848,16 +849,7 @@ void ShutDown(void)
 	// Call ShutdownServer() for systems that are listening for connections.
 	// Call DisconnectClient() for systems that are connected to sockets.
 
-	if(g_HTTPListenPort > 0)
-	{
-		if(HTTPBaseServer.isExist == true)
-		{
-			HTTPBaseServer.isActive = false;
-			HTTPBaseServer.Shutdown();
-		}
-
-		g_HTTPDistributeManager.ShutDown();
-	}
+	g_HTTPService.Shutdown();
 
 	if(g_RouterPort != 0)
 	{
@@ -1030,7 +1022,6 @@ void RunServerMain(void)
 	Debug::CheckAutoSave(false);
 
 	g_SimulatorManager.RunPendingActions();
-	g_HTTPDistributeManager.CheckInactiveDistribute();
 	g_CharacterManager.CheckGarbageCharacters();
 
 #ifdef USE_WINDOWS_GUI

@@ -311,7 +311,7 @@ class this.States.LoginState extends this.State
 			}
 		};
 		local txt = "";
-		req.open("GET", "http://www.theanubianwar.com/in_game_news");
+		req.open("GET", this.Util.getWebServerRoot() + "in_game_news");
 		req.send(txt);
 	}
 
