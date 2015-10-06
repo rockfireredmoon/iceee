@@ -20,3 +20,14 @@
 *.mk
 *.cnut
 /temp
+/Petitions/
+/Characters/
+/.settings/
+/Accounts/
+/asset/
+/Dynamic/
+*.autotools
+*.cproject
+/ZoneDef/
+/ServerConfig.txt
+*.project
