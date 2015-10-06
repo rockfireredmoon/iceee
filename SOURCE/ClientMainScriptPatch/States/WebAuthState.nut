@@ -7,13 +7,10 @@ class this.States.WebAuthState extends this.State
 	mBackground = null;
 	constructor()
 	{
-		print("ICE! Creating WebAuthState\n");
 	}
 
 	function onEnter()
 	{
-		print("ICE! ENTER WEBAUTH " + ::_args.web_auth_token + "\n");
-		
 		this.mComponent = this.GUI.Component();
 		this.mComponent.setAppearance("GoldBorder");
 		this.mComponent.setSize(::Screen.getWidth(), ::Screen.getHeight());

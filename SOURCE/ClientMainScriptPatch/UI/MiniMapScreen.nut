@@ -160,7 +160,6 @@ class Screens.MiniMapScreen extends GUI.Component
 	}
 	
 	function setPVP(pvp) {
-		print("ICE! Set PVP to " + pvp + " " + isPVP() + "\n");
 		mPVPRadioGroup.setSelected(pvp ? mPVPModeButton : mPVEModeButton);
 	}
 
@@ -261,14 +260,12 @@ class Screens.MiniMapScreen extends GUI.Component
 	}
 
 	function onPVPPressed( pButton ) {
-		print("ICE! Selecting PVP " + pButton  + " against : " + mPVPRadioGroup.getSelected() + " = " + isPVP() + "\n");
 		::_Connection.sendQuery("mode", this, [
 			"pvp"
 		]);
 	}
 	
 	function onPVEPressed( pButton ) {
-		print("ICE! Selecting PVE " + pButton  + " against : " + mPVPRadioGroup.getSelected() + " = " + isPVP() + "\n");
 		::_Connection.sendQuery("mode", this, [
 			"pve"
 		]);

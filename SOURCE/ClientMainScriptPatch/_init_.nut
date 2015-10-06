@@ -82,7 +82,6 @@ catch(e) {
 foreach( k, v in ::_args )
 {
 	this.log.debug("ARGS: " + k + ", " + v);
-	print("ICE! ARGS: " + k + ", " + v + "\n");
 }
 
 ::Screen.setTitle("Earth Eternal - The Anubian War");

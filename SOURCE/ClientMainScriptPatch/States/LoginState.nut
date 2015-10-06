@@ -18,7 +18,6 @@ class this.States.LoginState extends this.State
 	mCheckConnectEvent = null;
 	constructor()
 	{
-		print("ICE! Creating LoginState\n");
 	}
 
 	function onEnter()
