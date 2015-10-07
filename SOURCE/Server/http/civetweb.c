@@ -147,8 +147,8 @@ typedef long off_t;
 
 #define ERRNO   GetLastError()
 #define NO_SOCKLEN_T
-#define SSL_LIB   "ssleay32.dll"
-#define CRYPTO_LIB  "libeay32.dll"
+#define SSL_LIB   "libssl.dll"
+#define CRYPTO_LIB  "libcrypto.dll"
 #define O_NONBLOCK  0
 #if !defined(EWOULDBLOCK)
 #define EWOULDBLOCK  WSAEWOULDBLOCK
@@ -287,15 +287,14 @@ typedef unsigned short int in_port_t;
 #include <dlfcn.h>
 #endif
 #include <pthread.h>
+
 #if defined(__MACH__)
 #define SSL_LIB   "libssl.dylib"
 #define CRYPTO_LIB  "libcrypto.dylib"
 #else
-#if !defined(SSL_LIB)
-#define SSL_LIB   "libssl.so"
-#endif
-#if !defined(CRYPTO_LIB)
-#define CRYPTO_LIB  "libcrypto.so"
+#if defined(__MINGW32__)
+#define SSL_LIB   "libssl.dll"
+#define CRYPTO_LIB  "libcrypto.dll"
 #endif
 #endif
 #ifndef O_BINARY

@@ -137,7 +137,7 @@ bool HTTPService::Start() {
 				ports->append(g_BindAddress);
 				ports->append(":");
 			}
-			Util::SafeFormat(portbuf, sizeof(portbuf), "%f", g_HTTPListenPort);
+			Util::SafeFormat(portbuf, sizeof(portbuf), "%d", g_HTTPListenPort);
 			ports->append(portbuf);
 		}
 		if(g_HTTPSListenPort > 0) {
@@ -153,7 +153,7 @@ bool HTTPService::Start() {
 					ports->append(g_BindAddress);
 					ports->append(":");
 				}
-				Util::SafeFormat(portbuf, sizeof(portbuf), "%f", g_HTTPSListenPort);
+				Util::SafeFormat(portbuf, sizeof(portbuf), "%d", g_HTTPSListenPort);
 				ports->append(portbuf);
 			}
 		}
