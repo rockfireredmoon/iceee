@@ -9,3 +9,7 @@ else
 AM_CFLAGS = -O2
 AM_CXXFLAGS = -O2
 endif
+
+LIBTOOL_DEPS = @LIBTOOL_DEPS@
+libtool: $(LIBTOOL_DEPS)
+	$(SHELL) ./config.status libtool
