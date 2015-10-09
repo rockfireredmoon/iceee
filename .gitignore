@@ -33,3 +33,5 @@
 *.in
 *.cproject
 *.mk
+/asset/
+*.autotools

@@ -58,7 +58,11 @@ unsigned long g_SceneryAutosaveTime = 300000;  //5 minutes
 //For the HTTP server
 char g_HTTPBaseFolder[512] = {0};
 unsigned int g_HTTPListenPort = 80;
+
+#ifndef NO_SSL
 unsigned int g_HTTPSListenPort = 0;
+std::string g_SSLCertificate;
+#endif
 
 
 //Milliseconds between normal game time to rebroadcast creature and object definitions
@@ -69,7 +73,6 @@ unsigned long g_LocalActivityScanDelay = 3000;
 int g_LocalActivityRange = 1200;  //600
 
 
-std::string g_SSLCertificate;
 std::string g_HTTP404Header;
 std::string g_HTTP404Message;
 int g_HTTP404Redirect = 0;
@@ -227,10 +230,16 @@ void LoadConfig(const char *filename)
 			{
 				g_HTTPListenPort = lfr.BlockToInt(1);
 			}
+#ifndef NO_SSL
 			else if(strcmp(NameBlock, "HTTPSListenPort") == 0)
 			{
 				g_HTTPSListenPort = lfr.BlockToInt(1);
 			}
+			else if(strcmp(NameBlock, "SSLCertificate") == 0)
+			{
+				AppendString(g_SSLCertificate, lfr.BlockToStringC(1, 0));
+			}
+#endif
 			else if(strcmp(NameBlock, "RebroadcastDelay") == 0)
 			{
 				g_RebroadcastDelay = lfr.BlockToULongC(1);
@@ -238,10 +247,6 @@ void LoadConfig(const char *filename)
 			else if(strcmp(NameBlock, "SceneryAutosaveTime") == 0)
 			{
 				g_SceneryAutosaveTime = lfr.BlockToULongC(1);
-			}
-			else if(strcmp(NameBlock, "SSLCertificate") == 0)
-			{
-				AppendString(g_SSLCertificate, lfr.BlockToStringC(1, 0));
 			}
 			else if(strcmp(NameBlock, "HTTP404Header") == 0)
 			{
