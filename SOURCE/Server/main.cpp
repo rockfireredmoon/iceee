@@ -447,6 +447,18 @@ void ServiceMain(int argc, char** argv) {
     if (hStatus == (SERVICE_STATUS_HANDLE)0) {
         return;
     }
+
+	std::string cwd = Platform::GetDirectory();
+	std::string exe = argv[0];
+
+	if (Platform::IsAbsolute(exe)) {
+		cwd = Platform::Dirname(exe.c_str());
+	} else {
+		cwd = cwd + "\\" + Platform::Dirname(exe.c_str());
+	}
+
+	Platform::SetDirectory(cwd);
+
     InitServerMain();
 }
 #endif
@@ -481,6 +493,7 @@ int InitServerMain() {
 	LoadSession("SessionVars.txt");
 	g_Log.LoggingEnabled = g_GlobalLogging;
 
+	g_Log.AddMessageFormat("Working directory %s.", g_WorkingDirectory);
 	g_Log.AddMessageFormat("Loaded %d checksums.", g_FileChecksum.mChecksumData.size());
 
 	g_ItemManager.LoadData();

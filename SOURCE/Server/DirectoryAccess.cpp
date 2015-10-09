@@ -21,6 +21,7 @@
 Platform_DirectoryReader :: Platform_DirectoryReader()
 {
     excludeRel = true;
+    cwd = ".";
 
 #ifdef WINDOWS_PLATFORM
     // For Windows, these specific values are not used for object comparison.
@@ -42,6 +43,7 @@ Platform_DirectoryReader :: ~Platform_DirectoryReader()
 
 void Platform_DirectoryReader :: Clear(void)
 {
+	cwd = ".";
     fileList.clear();
 }
 
@@ -57,15 +59,12 @@ void Platform_DirectoryReader :: ReadFiles(void)
 
 void Platform_DirectoryReader :: SetDirectory(std::string path)
 {
-    PLATFORM_CHDIR(path.c_str());
+	cwd = path;
 }
 
 std::string Platform_DirectoryReader :: GetDirectory()
 {
-	char cwd[512];
-	PLATFORM_GETCWD(cwd,sizeof(cwd));
 	return cwd;
-	//return get_current_dir_name();
 }
 
 int Platform_DirectoryReader :: FileCount(void)
@@ -92,6 +91,8 @@ void Platform_DirectoryReader :: RunScan(int filter)
 {
 	_finddata_t fdata;
 	intptr_t sHandle;
+	char path[512];
+	snprintf(path, sizeof(path), "%s\\*.*", cwd.c_str());
 	sHandle = _findfirst("*.*", &fdata);
 	if(sHandle == -1)
 		return;
@@ -128,7 +129,7 @@ void Platform_DirectoryReader :: RunScan(int filter)
 //Linux version
 void Platform_DirectoryReader :: RunScan(int filter)
 {
-    DIR *dir = opendir(".");
+    DIR *dir = opendir(cwd.c_str());
     if(dir == NULL)
         return;
 
@@ -164,6 +165,31 @@ char * Platform::FixPaths(char* pathName)
 			pathName[i] = PLATFORM_FOLDERVALID;
 	}
 	return pathName;
+}
+
+
+void Platform::SetDirectory(std::string path)
+{
+    PLATFORM_CHDIR(path.c_str());
+}
+
+bool Platform::IsAbsolute(std::string str) {
+#if defined(_WIN32) || defined(WIN32)
+	if (str.size() > 2 && str.substr(1, 2).compare(":\\") == 0) {
+		return true;
+	}
+	return str.find("\\") == 0;
+#else
+	return str.find("/") == 0;
+#endif
+}
+
+std::string Platform :: GetDirectory()
+{
+	char cwd[512];
+	PLATFORM_GETCWD(cwd,sizeof(cwd));
+	return cwd;
+	//return get_current_dir_name();
 }
 
 const char* Platform::FixPaths(std::string &pathName)
@@ -300,7 +326,7 @@ char * Platform::GenerateFilePath(char *resultBuffer, const char *folderName, co
 	return resultBuffer;
 }
 
-const char * Platform::Filename(const char *path)
+std::string Platform::Filename(const char *path)
 {
 	STRINGLIST v;
 	const std::string p = path;
@@ -312,7 +338,7 @@ const char * Platform::Filename(const char *path)
 		return v[v.size() - 1].c_str();
 }
 
-const char * Platform::Basename(const char *path)
+std::string Platform::Basename(const char *path)
 {
 	STRINGLIST v;
 	const std::string p = Filename(path);
@@ -324,11 +350,11 @@ const char * Platform::Basename(const char *path)
 		std::string t;
 		v.erase(v.end() - 1);
 		Util::Join(v, d.c_str(), t);
-		return t.c_str();
+		return t;
 	}
 }
 
-const char * Platform::Extension(const char *path)
+std::string Platform::Extension(const char *path)
 {
 	STRINGLIST v;
 	const std::string p = Filename(path);
@@ -337,12 +363,12 @@ const char * Platform::Extension(const char *path)
 	if(v.size() == 0)
 		return "";
 	else if(v.size() == 1)
-		return v[0].c_str();
+		return v[0];
 	else
-		return v[v.size() - 1].c_str();
+		return v[v.size() - 1];
 }
 
-const char * Platform::Dirname(const char *path)
+std::string Platform::Dirname(const char *path)
 {
 	STRINGLIST v;
 	const std::string p = path;
@@ -356,7 +382,7 @@ const char * Platform::Dirname(const char *path)
 		std::string t;
 		v.erase(v.end() - 1);
 		Util::Join(v, d.c_str(), t);
-		return t.c_str();
+		return t;
 	}
 }
 
