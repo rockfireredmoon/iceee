@@ -40,7 +40,7 @@ bool RemoteActionHandler::handlePost(CivetServer *server,
 		struct mg_connection *conn) {
 	std::map<std::string, std::string> parms;
 
-	if (parsePOST(server, conn, parms)) {
+	if (parseForm(server, conn, parms)) {
 
 		if (parms.find("action") == parms.end()
 				|| parms.find("authtoken") == parms.end())

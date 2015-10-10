@@ -12,6 +12,10 @@
 #include <iostream>
 #include <sstream>
 #include <iomanip>
+#include <algorithm>
+#include <functional>
+#include <cctype>
+#include <locale>
 
 ChangeData SessionVarsChangeData;
 
@@ -1226,7 +1230,6 @@ void URLEncode(std::string &str) {
 }
 
 void URLDecode(std::string &str) {
-	g_Log.AddMessageFormat("[REMOVEME] Decode of %s", str.c_str());
 	std::string ret;
 	ret.reserve(str.size());
 	char ch;
@@ -1243,7 +1246,6 @@ void URLDecode(std::string &str) {
 			ret += str[i];
 		}
 	}
-	g_Log.AddMessageFormat("[REMOVEME] Becomes %s", ret.c_str());
     str.swap(ret);
 }
 
@@ -1472,6 +1474,11 @@ void TokenizeByWhitespace(const std::string &input, STRINGLIST &output)
 		output.push_back(str.substr(first, len - first + 1));
 }
 
+std::string RandomHexStr(unsigned int size)
+{
+	return RandomStrFrom(size, "1234567890abcdef");
+}
+
 std::string RandomStr(unsigned int size, bool all)
 {
 	if(all)
@@ -1482,6 +1489,22 @@ std::string RandomStr(unsigned int size, bool all)
 }
 
 
+// trim from start
+std::string &LTrim(std::string &s) {
+        s.erase(s.begin(), std::find_if(s.begin(), s.end(), std::not1(std::ptr_fun<int, int>(std::isspace))));
+        return s;
+}
+
+// trim from end
+std::string &RTrim(std::string &s) {
+        s.erase(std::find_if(s.rbegin(), s.rend(), std::not1(std::ptr_fun<int, int>(std::isspace))).base(), s.end());
+        return s;
+}
+
+// trim from both ends
+std::string &Trim(std::string &s) {
+        return LTrim(RTrim(s));
+}
 
 std::string RandomStrFrom(unsigned int size, const char alphanum[])
 {

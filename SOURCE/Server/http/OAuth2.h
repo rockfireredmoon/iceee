@@ -24,7 +24,7 @@
 namespace HTTPD {
 
 /*
- * Handles /api/auth requests, which returns HTML to allow login via
+ * Handles /oauth/auth requests, which returns HTML to allow login via
  * OAuth2. This chains to /api/login.
  */
 class AuthHandler: public AbstractCivetHandler {
@@ -32,7 +32,7 @@ public:
 	virtual bool handleGet(CivetServer *server, struct mg_connection *conn);
 };
 /*
- * Handles /api/login requests (a POST), which in turn redirects back
+ * Handles /oauth/login requests (a POST), which in turn redirects back
  * to the client site with temporary authentication it may use for the
  * next stage, which is a call to /api/token.
  */
@@ -42,13 +42,23 @@ public:
 };
 
 /*
- * Handles /api/token requests (a GET), which returns a JSON response containing
+ * Handles /oauth/token requests (a GET), which returns a JSON response containing
  * the token.
  */
 class TokenHandler: public AbstractCivetHandler {
 public:
+	virtual bool handlePost(CivetServer *server, struct mg_connection *conn);
+};
+
+/*
+ * Handles /api/self requests (a GET), which returns a JSON response containing
+ * user details.
+ */
+class SelfHandler: public AbstractCivetHandler {
+public:
 	virtual bool handleGet(CivetServer *server, struct mg_connection *conn);
 };
+
 }
 
 #endif

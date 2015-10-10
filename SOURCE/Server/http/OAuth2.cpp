@@ -54,7 +54,6 @@ bool AuthHandler::handleGet(CivetServer *server, struct mg_connection *conn) {
 
 	if (CivetServer::getParam(conn, "redirect_uri", encodedRedirectURI)
 			&& CivetServer::getParam(conn, "client_id", clientID)
-			&& CivetServer::getParam(conn, "scope", scope)
 			&& CivetServer::getParam(conn, "response_type", responseType)) {
 
 		std::string response;
@@ -109,6 +108,7 @@ bool AuthHandler::handleGet(CivetServer *server, struct mg_connection *conn) {
 			response += "<input type=\"hidden\" name=\"hash\" id=\"hash\"/>\n";
 			response += "<input type=\"submit\" value=\"Login\"/>\n";
 			response += "</div>\n</form>\n</html>\n";
+			writeResponse(server, conn, response, "text/html");
 		}
 
 	} else {
@@ -124,74 +124,63 @@ bool AuthHandler::handleGet(CivetServer *server, struct mg_connection *conn) {
 
 bool LoginHandler::handlePost(CivetServer *server, struct mg_connection *conn) {
 
-	char post_data[1024];
-	int post_data_len;
-	char encodedRedirectURI[1024];
-	char redirectURI[1024];
-	char clientID[64];
-	char scope[64];
-	char hash[256];
-	char username[64];
-	char responseType[64];
+	std::map<std::string, std::string> parms;
+	if (parseForm(server, conn, parms)) {
+		if (parms.find("redirect_uri") == parms.end()
+				|| parms.find("client_id") == parms.end()
+				|| parms.find("scope") == parms.end()
+				|| parms.find("response_type") == parms.end()
+				|| parms.find("hash") == parms.end()
+				|| parms.find("username") == parms.end()) {
+			writeStatus(server, conn, 403, "Forbidden", "Missing parameters.");
+		}
+		else {
 
-	post_data_len = mg_read(conn, post_data, sizeof(post_data));
+			std::string encodedRedirectURI = parms["redirect_uri"];
+			std::string redirectURI = parms["redirect_uri"];
+			std::string clientID = parms["client_id"];
+			std::string scope = parms["scope"];
+			std::string responseType = parms["response_type"];
+			std::string hash = parms["hash"];
+			std::string username = parms["username"];
 
-	if (mg_get_var(post_data, post_data_len, "redirect_uri", encodedRedirectURI,
-			sizeof(encodedRedirectURI)) > 0
-			&& mg_get_var(post_data, post_data_len, "client_id", clientID,
-					sizeof(clientID)) > 0
-			&& mg_get_var(post_data, post_data_len, "scope", scope,
-					sizeof(scope)) > 0
-			&& mg_get_var(post_data, post_data_len, "response_type",
-					responseType, sizeof(responseType)) > 0
-			&& mg_get_var(post_data, post_data_len, "hash", hash, sizeof(hash))
-					> 0
-			&& mg_get_var(post_data, post_data_len, "username", username,
-					sizeof(username)) > 0) {
+			OAuth2Client *client = findClient(clientID);
+			CivetServer::urlDecode(encodedRedirectURI.c_str(), encodedRedirectURI.size(), redirectURI, false);
 
-		OAuth2Client *client = findClient(clientID);
-		mg_url_decode(encodedRedirectURI, sizeof(encodedRedirectURI),
-				redirectURI, sizeof(redirectURI), false);
-
-		mg_printf(conn, "HTTP/1.1 301 Moved Permanently\r\n);");
-		if (client == NULL
-				|| !Util::HasBeginning(redirectURI, client->RedirectURL)) {
-			g_Log.AddMessageFormat(
-					"[WARNING] Attempt to use login api from invalid client (%s for %s against %s)",
-					clientID, redirectURI,
-					client == NULL ? "None" : client->RedirectURL.c_str());
-			mg_printf(conn,
-					"Location: auth?e=2&client_id=%s&redirect_uri=%s&scope=%s&response_type=%s\r\n\r\n",
-					clientID, redirectURI, scope, responseType);
-		} else {
-			g_Log.AddMessageFormat(
-					"[REMOVEME] redir: %s   client: %s   scope: %s   responsetype: %s   username: %s   hash: %s",
-					redirectURI, clientID, scope, responseType, username, hash);
-			std::string hashed;
-			AccountData::GenerateSaltedHash(hash, hashed);
-
-			g_AccountManager.cs.Enter(
-					"SimulatorThread::handle_web_authenticate");
-			AccountData *accPtr = g_AccountManager.GetValidLogin(username,
-					hash);
-			g_AccountManager.cs.Leave();
-			if (accPtr == NULL) {
+			mg_printf(conn, "HTTP/1.1 301 Moved Permanently\r\n");
+			if (client == NULL
+					|| !Util::HasBeginning(redirectURI, client->RedirectURL)) {
+				g_Log.AddMessageFormat(
+						"[WARNING] Attempt to use login api from invalid client (%s for %s against %s)",
+						clientID.c_str(), redirectURI.c_str(),
+						client == NULL ? "None" : client->RedirectURL.c_str());
 				mg_printf(conn,
-						"Location: auth?e=1&client_id=%s&redirect_uri=%s&scope=%s&response_type=%s\r\n\r\n",
-						clientID, redirectURI, scope, responseType);
+						"Location: authorize?e=2&client_id=%s&redirect_uri=%s&scope=%s&response_type=%s\r\n\r\n",
+						clientID.c_str(), redirectURI.c_str(), scope.c_str(), responseType.c_str());
 			} else {
-				std::string authCode = Util::RandomStr(22, true);
-				AccountQuickData *aqd =
-						g_AccountManager.GetAccountQuickDataByUsername(
-								accPtr->Name);
-				aqd->mAuthCode = authCode;
-				aqd->mAuthCodeExpire = g_ServerTime + 30000; // 30 seconds
-				mg_printf(conn, "Location: %s&code=%s\r\n\r\n", redirectURI,
-						authCode.c_str());
+				std::string hashed;
+				AccountData::GenerateSaltedHash(hash.c_str(), hashed);
+
+				g_AccountManager.cs.Enter(
+						"SimulatorThread::handle_web_authenticate");
+				AccountData *accPtr = g_AccountManager.GetValidLogin(username.c_str(),
+						hashed.c_str());
+				g_AccountManager.cs.Leave();
+				if (accPtr == NULL) {
+					mg_printf(conn,
+							"Location: authorize?e=1&client_id=%s&redirect_uri=%s&scope=%s&response_type=%s\r\n\r\n",
+							clientID.c_str(), redirectURI.c_str(), scope.c_str(), responseType.c_str());
+				} else {
+					std::string authCode = g_AccountManager.GenerateToken(accPtr->ID, 30000, AccessToken::AUTHENTICATION_CODE, 1);
+					std::string decodedURI = redirectURI;
+					Util::URLDecode(decodedURI);
+					mg_printf(conn, "Location: %s&code=%s\r\n\r\n", decodedURI.c_str(),
+							authCode.c_str());
+				}
 			}
 		}
 	} else {
-		writeStatus(server, conn, 403, "Forbidden", "Missing parameters.");
+		writeStatus(server, conn, 403, "Forbidden", "Encoding not allowed.");
 	}
 
 	return true;
@@ -201,61 +190,97 @@ bool LoginHandler::handlePost(CivetServer *server, struct mg_connection *conn) {
 // TokenHandler
 //
 
-bool TokenHandler::handleGet(CivetServer *server, struct mg_connection *conn) {
+bool TokenHandler::handlePost(CivetServer *server, struct mg_connection *conn) {
 
-	std::string encodedRedirectURI;
-	std::string clientID;
-	std::string grantType;
-	std::string code;
-	std::string clientSecret;
-
-	if (CivetServer::getParam(conn, "redirect_uri", encodedRedirectURI)
-			&& CivetServer::getParam(conn, "grant_type", grantType)
-			&& CivetServer::getParam(conn, "client_id", clientID)
-			&& CivetServer::getParam(conn, "code", code)) {
-
-		std::string response;
-		std::string redirectURI;
-
-		CivetServer::urlDecode(encodedRedirectURI, redirectURI, false);
-		OAuth2Client *client = findClient(clientID);
-
-		if (client == NULL
-				|| !Util::HasBeginning(redirectURI, client->RedirectURL)) {
-			g_Log.AddMessageFormat(
-					"[WARNING] Attempt to use token api from invalid client (%s for %s against %s)",
-					clientID.c_str(), redirectURI.c_str(),
-					client == NULL ? "None" : client->RedirectURL.c_str());
-			writeJSON200(server, conn, "{ \"error\":\"invalid_request\"}");
-		} else {
-			g_Log.AddMessageFormat(
-					"[REMOVEME] redir: %s   client: %s   code: %s   clientSecret: %s   grantType: %s",
-					redirectURI.c_str(), clientID.c_str(), code.c_str(),
-					clientSecret.c_str(), grantType.c_str());
+	std::map<std::string, std::string> parms;
+	MultiPart mp;
+	if (parseMultiPart(server, conn, &mp)) {
 
 
-			if(client->ClientSecret.size() > 0 && !CivetServer::getParam(conn, "redirect_uri", encodedRedirectURI)) {
+		std::string encodedRedirectURI = mp.getPartWithName("redirect_uri").content;
+		std::string clientID = mp.getPartWithName("client_id").content;
+		std::string grantType = mp.getPartWithName("grant_type").content;
+		std::string code = mp.getPartWithName("code").content;
+		std::string clientSecret = mp.getPartWithName("client_secret").content;
+
+		if (encodedRedirectURI.size() == 0 || clientID.size() == 0 || grantType.size() == 0 || code.size() == 0) {
+			writeStatus(server, conn, 403, "Forbidden", "Missing parameters.");
+		}
+		else {
+
+			std::string response;
+			std::string redirectURI;
+
+			CivetServer::urlDecode(encodedRedirectURI, redirectURI, false);
+			OAuth2Client *client = findClient(clientID);
+
+			if (client == NULL
+					|| !Util::HasBeginning(redirectURI, client->RedirectURL)) {
 				g_Log.AddMessageFormat(
-									"[WARNING] Invalid client secret used  (%s for %s against %s)",
-									clientID.c_str(), redirectURI.c_str(),
-									client == NULL ? "None" : client->RedirectURL.c_str());
+						"[WARNING] Attempt to use token api from invalid client (%s for %s against %s)",
+						clientID.c_str(), redirectURI.c_str(),
+						client == NULL ? "None" : client->RedirectURL.c_str());
 				writeJSON200(server, conn, "{ \"error\":\"invalid_request\"}");
-			}
-			else {
-				AccountData *accPtr = g_AccountManager.FetchAccountWithAuthCode(
-						code.c_str());
-				if (accPtr == NULL) {
+			} else {
+				if(client->ClientSecret.size() > 0 && clientSecret.compare(client->ClientSecret) != 0) {
 					g_Log.AddMessageFormat(
-							"[WARNING] Attempt to get non-existing auth code.");
+										"[WARNING] Invalid client secret used  (%s for %s against %s)",
+										clientID.c_str(), redirectURI.c_str(),
+										client == NULL ? "None" : client->RedirectURL.c_str());
 					writeJSON200(server, conn, "{ \"error\":\"invalid_request\"}");
-				} else
-					writeJSON200(server, conn, "{ \"access_token\":\"" + Util::RandomStr(22, true) + "\"}");
+				}
+				else {
+					AccessToken *tkn = g_AccountManager.GetToken(code);
+					if (tkn == NULL) {
+						g_Log.AddMessageFormat(
+								"[WARNING] Attempt to get non-existing auth code '%s'.", code.c_str());
+						writeJSON200(server, conn, "{ \"error\":\"invalid_request\"}");
+					} else {
+						writeJSON200(server, conn, "{\"access_token\":\"" + g_AccountManager.GenerateToken(tkn->accountID, 60000, AccessToken::ACCESS_TOKEN, -1) + "\"}");
+					}
+				}
 			}
 		}
 	}
 	else {
-		writeStatus(server, conn, 403, "Forbidden", "Missing parameters.");
+		writeStatus(server, conn, 403, "Forbidden", "Invalid encoding.");
 	}
 
 	return true;
 }
+
+//
+// SelfHandler
+//
+
+bool SelfHandler::handleGet(CivetServer *server, struct mg_connection *conn) {
+
+	// Parse parameters
+	std::string p;
+	if(CivetServer::getParam(conn, "access_token", p)) {
+		AccessToken *tkn = g_AccountManager.GetToken(p);
+		if(tkn == NULL) {
+			writeStatus(server, conn, 403, "Forbidden", "Invalid access token.");
+		}
+		else {
+			AccountData *ad = g_AccountManager.FetchIndividualAccount(tkn->accountID);
+			if(ad == NULL) {
+				writeStatus(server, conn, 403, "Forbidden", "Invalid account.");
+			}
+			else {
+				char buf[256];
+				std::string un = ad->Name;
+				Util::EncodeJSONString(un);
+				Util::SafeFormat(buf, sizeof(buf),
+						"{ \"data\": { \"id\": \"%d\", \"username\": \"%s\" } }", ad->ID, un.c_str());
+				writeJSON200(server, conn, buf);
+			}
+		}
+	}
+	else {
+		writeStatus(server, conn, 403, "Forbidden", "No access token.");
+	}
+	return true;
+}
+
+
