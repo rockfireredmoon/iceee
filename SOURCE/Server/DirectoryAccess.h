@@ -33,6 +33,7 @@ public:
 private:
     int TYPE_DIR;
     int TYPE_FILE;
+    std::string cwd;
     void RunScan(int filter);
 };
 
@@ -61,6 +62,9 @@ private:
 
 namespace Platform
 {
+	bool IsAbsolute(std::string str);
+	std::string GetDirectory();
+	void SetDirectory(std::string path);
 	char * FixPaths(char* pathName);
 	const char* FixPaths(std::string &pathName);
 	void MakeDirectory(const char *path);
@@ -70,10 +74,10 @@ namespace Platform
 	bool Delete(const char *path);
     bool FileExists(const char *sourceFile);
     bool DirExists(const char *path);
-    const char * Dirname(const char *path);
-    const char * Filename(const char *path);
-    const char * Extension(const char *path);
-    const char * Basename(const char *path);
+    std::string Dirname(const char *path);
+    std::string Filename(const char *path);
+    std::string Extension(const char *path);
+    std::string Basename(const char *path);
     unsigned long GetLastModified(const char *path);
     int SetLastModified(const char *path, unsigned long lastModified);
 }
