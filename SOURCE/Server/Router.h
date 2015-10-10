@@ -64,9 +64,9 @@ public:
 	void SetTargetPort(int port);
 	void SetBindAddress(const char *address);
 	int InitThread(int instanceindex, int globalThreadID);
-	void OnConnect(void);  //Called once a connection has been made
+	void OnConnect(const char *destAddress);  //Called once a connection has been made
 	void Shutdown(void);   //Force a complete shutdown (thread too)
-	int ResolvePort(int port);  //Returns 1 if successful, 0 if nothing found
+	int ResolvePort(const char *destAddress, int port);  //Returns 1 if successful, 0 if nothing found
 	void ResetValues(bool fullRestart);
 	void Restart(void);
 

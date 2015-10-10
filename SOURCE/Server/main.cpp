@@ -410,6 +410,16 @@ int main(int argc, char *argv[])
 #endif
 
 #ifdef WINDOWS_SERVICE
+
+	/* By default the working directory will be the \Windows\System32. This is no good for us,
+		 * we need to be wherever the exectuable is	 *
+		 */
+	char buffer[MAX_PATH];
+	GetModuleFileName(NULL, buffer, MAX_PATH);
+	std::string dn = Platform::Dirname(buffer);
+	PLATFORM_CHDIR(dn.c_str());
+
+
 	SERVICE_TABLE_ENTRY ServiceTable[2];
 	ServiceTable[0].lpServiceName = "TAWD";
 	ServiceTable[0].lpServiceProc = (LPSERVICE_MAIN_FUNCTION)ServiceMain;
@@ -448,16 +458,16 @@ void ServiceMain(int argc, char** argv) {
         return;
     }
 
-	std::string cwd = Platform::GetDirectory();
-	std::string exe = argv[0];
-
-	if (Platform::IsAbsolute(exe)) {
-		cwd = Platform::Dirname(exe.c_str());
-	} else {
-		cwd = cwd + "\\" + Platform::Dirname(exe.c_str());
-	}
-
-	Platform::SetDirectory(cwd);
+//	std::string cwd = Platform::GetDirectory();
+//	std::string exe = argv[0];
+//
+//	if (Platform::IsAbsolute(exe)) {
+//		cwd = Platform::Dirname(exe.c_str());
+//	} else {
+//		cwd = cwd + "\\" + Platform::Dirname(exe.c_str());
+//	}
+//
+//	Platform::SetDirectory(cwd);
 
     InitServerMain();
 }

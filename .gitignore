@@ -35,3 +35,10 @@
 *.mk
 /asset/
 *.autotools
+*.txt
+/Accounts/
+/asset/
+/Characters/
+/Petitions/
+/Dynamic/
+/ZoneDef/
