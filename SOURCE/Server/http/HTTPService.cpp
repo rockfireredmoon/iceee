@@ -124,8 +124,15 @@ bool HTTPService::Start() {
 	zzOptions[idx++] = "document_root";
 	zzOptions[idx++] = g_HTTPBaseFolder;
 
+	bool http = g_HTTPListenPort > 0;
+#ifndef NO_SSL
+	if(g_HTTPSListenPort > 0) {
+		http = true;
+	}
+#endif
+
 	// HTTP
-	if(g_HTTPListenPort > 0 || g_HTTPSListenPort > 0) {
+	if(http) {
 
 		zzOptions[idx++] = "listening_ports";
 		char portbuf[6];
@@ -140,6 +147,7 @@ bool HTTPService::Start() {
 			Util::SafeFormat(portbuf, sizeof(portbuf), "%d", g_HTTPListenPort);
 			ports->append(portbuf);
 		}
+#ifndef NO_SSL
 		if(g_HTTPSListenPort > 0) {
 			if(g_SSLCertificate.size() < 1) {
 				g_Log.AddMessageFormat("[WARNING] SSL port has been set (%d), but no SSLCertificate has been set. SSL server cannot be started.", g_HTTPSListenPort);
@@ -157,6 +165,7 @@ bool HTTPService::Start() {
 				ports->append(portbuf);
 			}
 		}
+#endif
 
 		zzOptions[idx++] = ports->c_str();
 
@@ -165,9 +174,11 @@ bool HTTPService::Start() {
 		zzOptions[idx++] = "AccessLog.txt";
 		zzOptions[idx++] = "error_log_file";
 		zzOptions[idx++] = "ErrorLog.txt";
+#ifndef NO_SSL
 		zzOptions[idx++] = "ssl_certificate";
 		zzOptions[idx++] = g_SSLCertificate.c_str();
 		zzOptions[idx] = 0;
+#endif
 
 		g_Log.AddMessageFormat("Starting CivetWeb");
 		civetServer = new CivetServer(zzOptions);

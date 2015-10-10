@@ -5,20 +5,8 @@ bin_PROGRAMS = tawd
 endif
 
 tawd_CPPFLAGS = -I../squirrel/include
-tawd_LDADD = ../squirrel/squirrel/libsquirrel.a ../squirrel/sqstdlib/libsqstdlib.a $(LTLIBCRYPTO) $(LTLIBSSL) $(LTLIBCURL)
+tawd_LDADD = ../squirrel/squirrel/libsquirrel.a ../squirrel/sqstdlib/libsqstdlib.a
 tawd_LDFLAGS = -v
-
-#if MINGW
-#tawd_CPPFLAGS += -DWINDOWS_PLATFORM=1
-#tawd_LDFLAGS = -v -lws2_32 -lws2_32 -static-libgcc -static-libstdc++
-#else
-#tawd_LDFLAGS = -v -lrt -ldl 
-#endif
-#
-#if HAS_PTHREAD
-#tawd_CPPFLAGS += -DHAS_PTHREAD=1
-#tawd_LDFLAGS += -lpthread
-#endif
 
 tawd_SOURCES = md5.cc \
 	Ability2.cpp \
@@ -217,13 +205,9 @@ tawd_SOURCES = md5.cc \
 	
 
 if WINSERVICE
-#tawdsvc_CPPFLAGS = -I../squirrel/include -DWINDOWS_PLATFORM=1 -DWINDOWS_SERVICE=1 $(libcurl_CFLAGS)
-#tawdsvc_LDADD = ../squirrel/squirrel/libsquirrel.a ../squirrel/sqstdlib/libsqstdlib.a $(libcurl_LIBS) $(LIBCRYPTO) $(LIBSSL) 
-#tawdsvc_LDFLAGS = -lws2_32 -lcurl -lws2_32 -static-libgcc -static-libstdc++
-#if HAS_PTHREAD
-#tawdsvc_CPPFLAGS += -DHAS_PTHREAD=1
-#tawdsvc_LDFLAGS += -lpthread
-#endif
+
+tawdsvc_CPPFLAGS = -I../squirrel/include -DWINDOWS_SERVICE=1
+tawdsvc_LDADD = ../squirrel/squirrel/libsquirrel.a ../squirrel/sqstdlib/libsqstdlib.a
 tawdsvc_SOURCES = md5.cc \
 	Ability2.cpp \
 	AbilityTime.cpp \
