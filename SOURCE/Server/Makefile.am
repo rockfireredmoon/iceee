@@ -5,8 +5,8 @@ bin_PROGRAMS = tawd
 endif
 
 tawd_CPPFLAGS = -I../squirrel/include
-tawd_LDADD = ../squirrel/squirrel/libsquirrel.a ../squirrel/sqstdlib/libsqstdlib.a
-tawd_LDFLAGS = -v $(LTLIBCRYPTO) $(LTLIBSSL) $(LTLIBCURL)
+tawd_LDADD = ../squirrel/squirrel/libsquirrel.a ../squirrel/sqstdlib/libsqstdlib.a $(LTLIBCRYPTO) $(LTLIBSSL) $(LTLIBCURL)
+tawd_LDFLAGS = -v
 
 #if MINGW
 #tawd_CPPFLAGS += -DWINDOWS_PLATFORM=1
