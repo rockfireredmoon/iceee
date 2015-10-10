@@ -134,6 +134,10 @@ CPPFLAGS="$CPPFLAGS $PTHREAD_CFLAGS -DHAS_PTHREAD=1"
 LIBS="$LIBS $PTHREAD_LIBS $PTHREAD_CFLAGS"
 #LDFLAGS="$LD_FLAGS $PTHREAD_CFLAGS $PTHREAD_LIBS "
 
+if test "x${mingw}" != xtrue; then
+	AC_CHECK_LIB([ws2_32],[ws2=true],[ws=false])
+fi
+
 dnl
 dnl Tail
 dnl

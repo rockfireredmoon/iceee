@@ -26,7 +26,7 @@
 /configure
 /config.status
 /config.log
-*.m4
+aclocal.m4
 *.txt
 /temp
 *.log
