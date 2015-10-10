@@ -31,3 +31,11 @@
 /ZoneDef/
 /ServerConfig.txt
 *.project
+/.metadata/
+/locasset/
+/Grove/
+/Debug/
+/VirtualItems/
+*.pem
+/ImportKeys.txt
+*.txt
