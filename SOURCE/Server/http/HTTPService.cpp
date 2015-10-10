@@ -195,19 +195,25 @@ bool HTTPService::Start() {
 		civetServer->addHandler("**.car$", new CARHandler());
 
 		// API
-		civetServer->addHandler("/api/who", new WhoHandler());
-		civetServer->addHandler("/api/chat", new ChatHandler());
+		if(g_Config.PublicAPI) {
+			civetServer->addHandler("/api/who", new WhoHandler());
+			civetServer->addHandler("/api/chat", new ChatHandler());
+		}
 
 		// OAuth - Used to authenticate external services
-		civetServer->addHandler("/oauth/authorize", new AuthHandler());
-		civetServer->addHandler("/oauth/login", new LoginHandler());
-		civetServer->addHandler("/oauth/token", new TokenHandler());
-		civetServer->addHandler("/oauth/self", new SelfHandler());
+		if(g_Config.OAuth2Clients.size() > 0) {
+			civetServer->addHandler("/oauth/authorize", new AuthHandler());
+			civetServer->addHandler("/oauth/login", new LoginHandler());
+			civetServer->addHandler("/oauth/token", new TokenHandler());
+			civetServer->addHandler("/oauth/self", new SelfHandler());
+		}
 
 		// Legacy account maintenannce
-		civetServer->addHandler("/newaccount", new NewAccountHandler());
-		civetServer->addHandler("/resetpassword", new ResetPasswordHandler());
-		civetServer->addHandler("/accountrecover", new AccountRecoverHandler());
+		if(g_Config.LegacyAccounts) {
+			civetServer->addHandler("/newaccount", new NewAccountHandler());
+			civetServer->addHandler("/resetpassword", new ResetPasswordHandler());
+			civetServer->addHandler("/accountrecover", new AccountRecoverHandler());
+		}
 
 		// Legacy web control panel
 		civetServer->addHandler("/remoteaction", new RemoteActionHandler());

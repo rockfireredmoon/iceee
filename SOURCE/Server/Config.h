@@ -239,6 +239,8 @@ public:
 	std::string SMTPSender;				// For emails, the default sender address
 
 	std::vector<OAuth2Client*> OAuth2Clients;
+	bool LegacyAccounts;
+	bool PublicAPI;
 
 	unsigned long debugAdministrativeBehaviorFlags;
 	void SetAdministrativeBehaviorFlag(unsigned long bitValue, bool state);
