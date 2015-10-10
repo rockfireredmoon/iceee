@@ -1279,6 +1279,7 @@ void SimulatorThread :: handle_lobby_authenticate(void)
 					bool admin = false;
 					bool builder = false;
 					bool developer = false;
+					bool tweaker = false;
 
 					Json::Value::Members members = roles.getMemberNames();
 
@@ -1299,6 +1300,9 @@ void SimulatorThread :: handle_lobby_authenticate(void)
 						}
 						else if(strcmp(val.asCString(), "builders") == 0) {
 							builder = true;
+						}
+						else if(strcmp(val.asCString(), "tweakers") == 0) {
+							tweaker = true;
 						}
 					}
 
@@ -1365,6 +1369,28 @@ void SimulatorThread :: handle_lobby_authenticate(void)
 						bool needBuilder = builder || admin;
 						if(needBuilder != accPtr->HasPermission(Perm_Account, Permission_Builder)) {
 							accPtr->SetPermission(Perm_Account, "builder", needBuilder);
+							accPtr->PendingMinorUpdates++;
+						}
+
+						// Tweakers
+						bool needClientTweak = tweaker || admin || sage || builder || developer;
+						if(needClientTweak != accPtr->HasPermission(Perm_Account, Permission_TweakClient)) {
+							accPtr->SetPermission(Perm_Account, "tweakclient", needClientTweak);
+							accPtr->PendingMinorUpdates++;
+						}
+						bool needSelfTweak = admin || builder || developer;
+						if(needSelfTweak != accPtr->HasPermission(Perm_Account, Permission_TweakSelf)) {
+							accPtr->SetPermission(Perm_Account, "tweakself", needSelfTweak);
+							accPtr->PendingMinorUpdates++;
+						}
+						bool needNPCTweak = admin || builder || developer;
+						if(needNPCTweak != accPtr->HasPermission(Perm_Account, Permission_TweakNPC)) {
+							accPtr->SetPermission(Perm_Account, "tweaknpc", needNPCTweak);
+							accPtr->PendingMinorUpdates++;
+						}
+						bool needOtherTweak = admin;
+						if(needOtherTweak != accPtr->HasPermission(Perm_Account, Permission_TweakOther)) {
+							accPtr->SetPermission(Perm_Account, "tweakother", needOtherTweak);
 							accPtr->PendingMinorUpdates++;
 						}
 					}
@@ -3606,7 +3632,7 @@ int SimulatorThread :: handle_query_scenery_list(void)
 	int x = query.GetInteger(1);
 	int y = query.GetInteger(2);
 	
-	LogMessageL(MSG_SHOW, "[DEBUG] scenery.list: %d, %d, %d", zone, x, y);
+//	LogMessageL(MSG_SHOW, "[DEBUG] scenery.list: %d, %d, %d", zone, x, y);
 
 	bool skipQuery = false;
 	if(g_Config.ProperSceneryList == 0 || (CheckPermissionSimple(Perm_Account, Permission_FastLoad) == true))
