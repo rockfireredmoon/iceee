@@ -1,18 +1,17 @@
-
-if MINGW
+if WINSERVICE
 bin_PROGRAMS = tawd tawdsvc
 else
 bin_PROGRAMS = tawd
 endif
 
-tawd_CPPFLAGS = $(libcurl_CFLAGS) $(libssl_CFLAGS) -I../squirrel/include $(libcurl_CFLAGS)
-tawd_LDADD = ../squirrel/squirrel/libsquirrel.a ../squirrel/sqstdlib/libsqstdlib.a $(libcurl_LIBS) $(libssl_LIBS)
+tawd_CPPFLAGS = $(libcurl_CFLAGS) $(libssl_CFLAGS) $(libcrypto_CFLAGS) -I../squirrel/include
+tawd_LDADD = ../squirrel/squirrel/libsquirrel.a ../squirrel/sqstdlib/libsqstdlib.a $(libcurl_LIBS) $(LIBCRYPTO) $(LIBSSL) 
 
 if MINGW
 tawd_CPPFLAGS += -DWINDOWS_PLATFORM=1
-tawd_LDFLAGS = -lws2_32 -lcurl -lws2_32 -lssl -static -static-libgcc -static-libstdc++
+tawd_LDFLAGS = -v -lws2_32 -lws2_32 -static-libgcc -static-libstdc++
 else
-tawd_LDFLAGS = -lrt -ldl -static
+tawd_LDFLAGS = -v -lrt -ldl
 endif
 
 if HAS_PTHREAD
@@ -216,10 +215,10 @@ tawd_SOURCES = md5.cc \
 	http/WebControlPanel.h
 	
 
-if MINGW
-tawdsvc_CPPFLAGS = $(libcurl_CFLAGS) -I../squirrel/include $(libcurl_CFLAGS) -DWINDOWS_PLATFORM=1 -DWINDOWS_SERVICE=1
-tawdsvc_LDADD = ../squirrel/squirrel/libsquirrel.a ../squirrel/sqstdlib/libsqstdlib.a $(libcurl_LIBS)
-tawdsvc_LDFLAGS = -lws2_32 -lcurl -lws2_32 -lssl -static -static-libgcc -static-libstdc++
+if WINSERVICE
+tawdsvc_CPPFLAGS = -I../squirrel/include -DWINDOWS_PLATFORM=1 -DWINDOWS_SERVICE=1 $(libcurl_CFLAGS)
+tawdsvc_LDADD = ../squirrel/squirrel/libsquirrel.a ../squirrel/sqstdlib/libsqstdlib.a $(libcurl_LIBS) $(LIBCRYPTO) $(LIBSSL) 
+tawdsvc_LDFLAGS = -lws2_32 -lcurl -lws2_32 -static-libgcc -static-libstdc++
 if HAS_PTHREAD
 tawdsvc_CPPFLAGS += -DHAS_PTHREAD=1
 tawdsvc_LDFLAGS += -lpthread

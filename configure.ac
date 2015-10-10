@@ -6,6 +6,10 @@ AM_INIT_AUTOMAKE([subdir-objects foreign])
 
 AC_PROG_CXX
 LT_INIT
+AC_PROG_LIBTOOL
+AM_PROG_LIBTOOL
+
+
 AC_CONFIG_FILES([
 	Makefile
 	SOURCE/Makefile
@@ -31,18 +35,35 @@ case $host_os in
 	esac
 AM_CONDITIONAL([MINGW], [test x$mingw = xtrue])
 
+AC_ARG_ENABLE(winservice,
+AS_HELP_STRING([--enable-winservice],
+               [enable windows service, default: $mingw ]),
+[case "${enableval}" in
+             yes) winservice=true ;;
+             no)  winservice=false ;;
+             *)   AC_MSG_ERROR([bad value ${enableval} for --enable-winservice]) ;;
+esac],
+[winservice=$mingw])
+AM_CONDITIONAL([WINSERVICE], [test x$winservice = xtrue])
+
+CPPFLAGS="$CPPFLAGS -DNO_SSL_DL=1"
+
+#-DNO_SSL_DL=1 
+
+#AC_SEARCH_LIBS([SSL_library_init], [ssl], [], AC_MSG_ERROR([libssl not found]),[-l crypto])
+AC_LIB_LINKFLAGS([crypto])
+AC_LIB_LINKFLAGS([ssl])
+
 PKG_CHECK_MODULES([libcurl],[libcurl])
 AC_SUBST([libcurl_CFLAGS])
 AC_SUBST([libcurl_LIBS])
 
-PKG_CHECK_MODULES([libssl], [libssl]) 
-AC_CHECK_LIB(ssl, SSL_library_init, [libssl_LIBS="-lssl" libssl_CFLAGS="" ], AC_MSG_ERROR([libssl library is required]))
-AC_SUBST(libssl_CFLAGS)
-AC_SUBST(libssl_LIBS)
-AC_CHECK_LIB(crypto, DES_xcbc_encrypt, [crypto=true], [crypto=false])
-if test "x${crypto}" != xtrue; then
-   AC_MSG_ERROR([required library crypto missing])
-fi
+#PKG_CHECK_MODULES([libssl], [libssl]) 
+#AC_SUBST(libssl_CFLAGS)
+#AC_SUBST(libssl_LIBS)
+#PKG_CHECK_MODULES([libcrypto], [libcrypto])
+#AC_SUBST(libcrypto_CFLAGS)
+#AC_SUBST(libcrypto_LIBS)
 
 AC_CHECK_LIB(pthread, pthread_create,[pthread=true], [pthread=false])
 if test "x${pthread}" != xtrue; then
