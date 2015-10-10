@@ -295,6 +295,9 @@ typedef unsigned short int in_port_t;
 #if defined(__MINGW32__)
 #define SSL_LIB   "libssl.dll"
 #define CRYPTO_LIB  "libcrypto.dll"
+#else
+#define SSL_LIB   "libssl.so"
+#define CRYPTO_LIB  "libcrypto.so"
 #endif
 #endif
 #ifndef O_BINARY

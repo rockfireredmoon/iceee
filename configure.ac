@@ -6,6 +6,7 @@ AM_INIT_AUTOMAKE([subdir-objects foreign])
 
 AC_PROG_CXX
 LT_INIT
+AC_SUBST([LIBTOOL_DEPS])
 AC_PROG_LIBTOOL
 AM_PROG_LIBTOOL
 
@@ -46,30 +47,19 @@ esac],
 [winservice=$mingw])
 AM_CONDITIONAL([WINSERVICE], [test x$winservice = xtrue])
 
+# Stops Civet trying to dynamically load OpenSSL
 CPPFLAGS="$CPPFLAGS -DNO_SSL_DL=1"
-
-#-DNO_SSL_DL=1 
-
-#AC_SEARCH_LIBS([SSL_library_init], [ssl], [], AC_MSG_ERROR([libssl not found]),[-l crypto])
-AC_LIB_LINKFLAGS([crypto])
-AC_LIB_LINKFLAGS([ssl])
-
-PKG_CHECK_MODULES([libcurl],[libcurl])
-AC_SUBST([libcurl_CFLAGS])
-AC_SUBST([libcurl_LIBS])
-
-#PKG_CHECK_MODULES([libssl], [libssl]) 
-#AC_SUBST(libssl_CFLAGS)
-#AC_SUBST(libssl_LIBS)
-#PKG_CHECK_MODULES([libcrypto], [libcrypto])
-#AC_SUBST(libcrypto_CFLAGS)
-#AC_SUBST(libcrypto_LIBS)
-
-AC_CHECK_LIB(pthread, pthread_create,[pthread=true], [pthread=false])
-if test "x${pthread}" != xtrue; then
-   AC_MSG_ERROR([required library pthread missing])
+if test "x${mingw}" = xtrue; then
+	CPPFLAGS="$CPPFLAGS -DWINDOWS_PLATFORM=1"
 fi
-AM_CONDITIONAL([HAS_PTHREAD], [test x$pthread = xtrue])
+
+AC_LIB_LINKFLAGS([crypto])
+AC_LIB_LINKFLAGS([curl],[ssl crypto])
+AC_LIB_LINKFLAGS([ssl],[crypto])
+
+AX_PTHREAD()
+CPPFLAGS="$CPPFLAGS $PTHREAD_CFLAGS -DHAS_PTHREAD=1"
+LIBS="$PTHREAD_LIBS $LIBS $PTHREAD_CFLAGS"
 
 AC_OUTPUT
 
