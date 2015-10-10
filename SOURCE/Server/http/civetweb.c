@@ -3965,11 +3965,7 @@ static int parse_http_message(char *buf, int len, struct mg_request_info *ri)
 
     // For TAWD - SparkPlayer is dumb. It sends the complete URI in the GET request which is outside of the standard
     if(memcmp(ri->uri, "http://", 7) == 0) {
-     	int len = strlen(ri->uri);
-    	char *to = (char*) mg_malloc(len - 7);
-    	strncpy(to, ri->uri + 7, len - 7);
-    	to[len - 7] = '\0';
-    	ri->uri = to;
+    	ri->uri += 7;
     	const char *ptr = strchr(ri->uri, '/');
     	if(ptr) {
         	ri->uri = ptr;
@@ -5647,6 +5643,7 @@ void mg_set_request_handler(struct mg_context *ctx, const char *uri, mg_request_
 static int use_request_handler(struct mg_connection *conn)
 {
     struct mg_request_info *request_info = mg_get_request_info(conn);
+
     const char *uri = request_info->uri;
     size_t urilen = strlen(uri);
     struct mg_request_handler_info *tmp_rh = conn->ctx->request_handlers;
