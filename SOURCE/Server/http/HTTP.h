@@ -25,7 +25,10 @@
 #include <map>
 #include <vector>
 
-#define MG_BUF_LEN 32768
+#define MG_BUF_LEN 16384
+#define MAX_PARAMETER_SIZE 16384
+#define MAX_MULTIPART_HEADERS 10
+#define MAX_PARAMETERS 1024
 
 namespace HTTPD {
 
@@ -38,11 +41,28 @@ public:
 
 };
 
+class Part {
+public:
+	std::map<std::string, std::string> headers;
+	std::string content;
+	std::map<std::string, std::string> getHeaderValues(std::string header);
+	bool write(const char *data, size_t offset, size_t len);
+
+};
+
+class MultiPart {
+public:
+	Part getPartWithName(std::string name);
+	std::vector<Part> parts;
+};
+
 class AbstractCivetHandler: public CivetHandler {
 public:
 	std::string formatTime(std::time_t *now);
 
-	bool parsePOST(CivetServer *server, struct mg_connection *conn,
+	bool parseMultiPart(CivetServer *server, struct mg_connection *conn, MultiPart *multipart);
+
+	bool parseForm(CivetServer *server, struct mg_connection *conn,
 			std::map<std::string, std::string> &parms);
 
 	void writeJSON200(CivetServer *server, struct mg_connection *conn,
@@ -50,6 +70,8 @@ public:
 
 	void writeStatus(CivetServer *server, struct mg_connection *conn, int code,
 			std::string msg, std::string data);
+
+	void writeResponse(CivetServer *server, struct mg_connection *conn, std::string data, std::string contentType);
 };
 
 }

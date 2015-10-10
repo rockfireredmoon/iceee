@@ -174,6 +174,10 @@ bool HTTPService::Start() {
 		zzOptions[idx++] = "AccessLog.txt";
 		zzOptions[idx++] = "error_log_file";
 		zzOptions[idx++] = "ErrorLog.txt";
+//		zzOptions[idx++] = "enable_keep_alive";
+//		zzOptions[idx++] = "yes";
+		zzOptions[idx++] = "enable_directory_listing";
+		zzOptions[idx++] = "no";
 #ifndef NO_SSL
 		zzOptions[idx++] = "ssl_certificate";
 		zzOptions[idx++] = g_SSLCertificate.c_str();
@@ -187,15 +191,25 @@ bool HTTPService::Start() {
 			return false;
 		}
 
+		// CAR files
 		civetServer->addHandler("**.car$", new CARHandler());
+
+		// API
 		civetServer->addHandler("/api/who", new WhoHandler());
 		civetServer->addHandler("/api/chat", new ChatHandler());
-		civetServer->addHandler("/oauth2/auth", new AuthHandler());
-		civetServer->addHandler("/oauth2/login", new LoginHandler());
-		civetServer->addHandler("/oauth2/token", new TokenHandler());
+
+		// OAuth - Used to authenticate external services
+		civetServer->addHandler("/oauth/authorize", new AuthHandler());
+		civetServer->addHandler("/oauth/login", new LoginHandler());
+		civetServer->addHandler("/oauth/token", new TokenHandler());
+		civetServer->addHandler("/oauth/self", new SelfHandler());
+
+		// Legacy account maintenannce
 		civetServer->addHandler("/newaccount", new NewAccountHandler());
 		civetServer->addHandler("/resetpassword", new ResetPasswordHandler());
 		civetServer->addHandler("/accountrecover", new AccountRecoverHandler());
+
+		// Legacy web control panel
 		civetServer->addHandler("/remoteaction", new RemoteActionHandler());
 
 		return true;

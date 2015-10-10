@@ -59,6 +59,24 @@ const char RandomSalt[] = "W7UDynoSUED5zbdA5ldiSlxV9DX0Fssl8VdhRUZWkG6D6XRGETXKR
 "H7q6usn8oSETobwEqsAqdVeMk06621glbeV9yofr7SapSTnp2xXSyklDcr5hOiEoFdCLkePQQoAEAtEx" \
 "jKLu0aTpKMRmysq5kTiS";
 
+//
+// AccessToken
+//
+AccessToken :: AccessToken()
+{
+	expire = 0;
+	uses = 0;
+	tokenType = ACCESS_TOKEN;
+	accountID = 0;
+}
+AccessToken :: ~AccessToken()
+{
+}
+
+//
+// AccountData
+//
+
 AccountData :: AccountData()
 {
 	ClearAll();
@@ -825,14 +843,9 @@ AccountData * AccountManager :: GetValidLogin(const char *loginName, const char 
 	if(aqd != NULL)
 	{
 		if(aqd->mLoginAuth.compare(loginAuth) == 0) {
-
-			g_Log.AddMessageFormat("[REMOVEME] OK auth lookup for %s (%s)", loginName, loginAuth);
 			return FetchIndividualAccount(aqd->mID);
 		}
 	}
-
-	g_Log.AddMessageFormat("[REMOVEME] Failed auth lookup for %s (%s)", loginName, loginAuth);
-
 	return NULL;
 }
 
@@ -1121,18 +1134,46 @@ bool AccountManager :: ValidGroveString(std::string &nameToAdjust)
 	return true;
 }
 
-AccountData * AccountManager :: FetchAccountWithAuthCode(const char *authCode)
+
+AccessToken* AccountManager :: GetToken(std::string token)
 {
-	ACCOUNT_ITERATOR it;
-	for(size_t i = 0; i < accountQuickData.size(); i++) {
-		if(accountQuickData[i].mAuthCode.compare(authCode) == 0) {
-			if(accountQuickData[i].mAuthCodeExpire < g_ServerTime)
-				return FetchIndividualAccount(accountQuickData[i].mID);
-			else
-				break;
+	cs.Enter("AccountManager::GetToken");
+	AccessToken *t = Tokens[token];
+	if(t != NULL) {
+		if(t->uses != -1) {
+			if(t->uses < 1) {
+				Tokens.erase(Tokens.find(token));
+				delete t;
+				cs.Leave();
+				return NULL;
+			}
+			t->uses--;
 		}
+		if( g_ServerTime < t->expire) {
+			cs.Leave();
+			return t;
+		}
+		Tokens.erase(Tokens.find(token));
+		delete t;
+
 	}
+	cs.Leave();
 	return NULL;
+}
+
+std::string AccountManager :: GenerateToken(int accountID, unsigned long ttl, int tokenType, int uses)
+{
+	std::string token = Util::RandomHexStr(32);
+	AccessToken *t = new AccessToken();
+	t->accountID = accountID;
+	t->expire = g_ServerTime + ttl;
+	t->tokenType = tokenType;
+	t->token = token;
+	t->uses = uses;
+	cs.Enter("AccountManager::GenerateToken");
+	Tokens[token] = t;
+	cs.Leave();
+	return token;
 }
 
 AccountData * AccountManager :: FetchAccountByUsername(const char *username)

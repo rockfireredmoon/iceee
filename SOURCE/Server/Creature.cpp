@@ -3719,11 +3719,9 @@ bool CreatureInstance :: CanPVPTarget(CreatureInstance *target)
 		return false;
 
 	if(target->HasStatus(StatusEffects::UNATTACKABLE)) {
-//		g_Log.AddMessageFormat("REMOVEME no pvp because unattackable");
 		return false;
 	}
 	if(target->HasStatus(StatusEffects::INVINCIBLE)) {
-//		g_Log.AddMessageFormat("REMOVEME no pvp because invincible");
 		return false;
 	}
 

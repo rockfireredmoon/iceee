@@ -14,6 +14,24 @@
 
 class CharacterData;
 
+class AccessToken
+{
+public:
+	AccessToken();
+	~AccessToken();
+
+	enum TokenType {
+		AUTHENTICATION_CODE,
+		ACCESS_TOKEN
+	};
+
+	std::string token;
+	int tokenType;
+	int uses;
+	int accountID;
+	unsigned long expire;
+};
+
 struct BuildPermissionArea
 {
 	int ZoneID;
@@ -157,21 +175,14 @@ struct AccountQuickData
 	std::string mRegKey;
 	std::string mGroveName;
 
-	// Transient stuff (not stored)
-	std::string mAuthCode;   // When an API login is occuring
-	unsigned long mAuthCodeExpire;; // When the API login should expire (in practice a short amount of time);
-
 	AccountQuickData()
 	{
 		mID = 0;
-		mAuthCodeExpire = 0;
 	}
 
 	void Clear(void)
 	{
 		mID = 0;
-		mAuthCode.clear();
-		mAuthCodeExpire = 0;
 		mLoginName.clear();
 		mLoginAuth.clear();
 		mRegKey.clear();
@@ -270,7 +281,6 @@ public:
 	int AccountRecover(const char *username, const char *keypass, const char *type);
 	bool ValidString(const char *str);
 	bool ValidGroveString(std::string &nameToAdjust);
-	AccountData * FetchAccountWithAuthCode(const char *authCode);
 	AccountData * FetchAccountByUsername(const char *username);
 	const char * GetErrorMessage(int message);
 	int CheckAutoSave(bool force);
@@ -297,6 +307,8 @@ public:
 	void RunUpdateCycle(bool force);
 	bool AcceptingLogins(void);
 	int ValidateNameParts(const std::string &first, const std::string &last);
+	std::string GenerateToken(int accountID, unsigned long ttl, int tokenType, int uses);
+	AccessToken *GetToken(std::string token);
 
 	enum ErrorCode
 	{
@@ -344,6 +356,7 @@ private:
 	void LoadSectionGeneral(FileReader &fr, AccountData &ad, const char *debugFilename);
 	void LoadSectionCharacterCache(FileReader &fr, AccountData &ad, const char *debugFilename);
 	Timer TimerGeneralUpdate;
+	std::map<std::string, AccessToken*> Tokens;
 	static const int GENERAL_UPDATE_FREQUENCY = 5000;
 };
 

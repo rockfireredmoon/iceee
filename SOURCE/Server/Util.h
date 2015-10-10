@@ -124,6 +124,9 @@ namespace Util
 	void ReplaceAll(std::string& str, const std::string& from, const std::string& to);
 	void URLDecode(std::string &str);
 	void URLEncode(std::string &str);
+	std::string &LTrim(std::string &s);
+	std::string &RTrim(std::string &s);
+	std::string &Trim(std::string &s);
 
 	int GetInteger(const STRINGLIST &strList, size_t index);
 	int GetInteger(const std::string &str);
@@ -137,6 +140,7 @@ namespace Util
 	void TokenizeByWhitespace(const std::string &input, STRINGLIST &output);
 	std::string RandomStr(unsigned int size, bool all);
 	std::string RandomStrFrom(unsigned int size, const char alphanum[]);
+	std::string RandomHexStr(unsigned int size);
 }
 
 /*

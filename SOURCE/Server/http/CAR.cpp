@@ -22,6 +22,7 @@
 #include "../Util.h"
 #include "../Config.h"
 #include "../DirectoryAccess.h"
+#include "../StringList.h"
 
 #include <sys/stat.h>
 #include <string.h>
@@ -31,25 +32,11 @@ using namespace HTTPD;
 
 /* Protect against directory disclosure attack by removing '..',
  excessive '/' and '\' characters */
-static void remove_double_dots_and_double_slashes(char *s) {
-	char *p = s;
-
-	while (*s != '\0') {
-		*p++ = *s++;
-		if (s[-1] == '/' || s[-1] == '\\') {
-			/* Skip all following slashes, backslashes and double-dots */
-			while (s[0] != '\0') {
-				if (s[0] == '/' || s[0] == '\\') {
-					s++;
-				} else if (s[0] == '.' && s[1] == '.') {
-					s += 2;
-				} else {
-					break;
-				}
-			}
-		}
-	}
-	*p = '\0';
+static std::string remove_double_dots_and_double_slashes(std::string str) {
+	Util::ReplaceAll(str, "..", "");
+	Util::ReplaceAll(str, "\\\\", "");
+	Util::ReplaceAll(str, "//", "");
+	return str;
 }
 
 /* Send bytes from the opened file to the client. */
@@ -104,18 +91,18 @@ bool CARHandler::handleGet(CivetServer *server, struct mg_connection *conn) {
 	/* Handler may access the request info using mg_get_request_info */
 	struct mg_request_info * req_info = mg_get_request_info(conn);
 
+	std::string ruri;
+
 	/* Prepare the URI */
-	int uri_len = (int) strlen(req_info->uri);
-	mg_url_decode(req_info->uri, uri_len, (char *) req_info->uri,
-			uri_len + 1, 0);
-	remove_double_dots_and_double_slashes((char *) req_info->uri);
+	CivetServer::urlDecode(req_info->uri, strlen(req_info->uri), ruri, false);
+	ruri = remove_double_dots_and_double_slashes(ruri);
 
 	//
 	int status = 304;
 	FileResource file;
 
 	/* Get the full path of the file */
-	std::string nativePath = req_info->uri;
+	std::string nativePath = ruri;
 	Util::Replace(nativePath,
 			std::string(1, PLATFORM_FOLDERINVALID).c_str()[0],
 			std::string(1, PLATFORM_FOLDERVALID).c_str()[0]);
@@ -142,7 +129,7 @@ bool CARHandler::handleGet(CivetServer *server, struct mg_connection *conn) {
 		status = openFile(req_info, &file);
 	} else {
 		//If the checksum does not match, we need to update.
-		if (g_FileChecksum.MatchChecksum(req_info->uri, checksum)
+		if (g_FileChecksum.MatchChecksum(ruri, checksum)
 				== false) {
 			status = openFile(req_info, &file);
 		}
@@ -155,7 +142,7 @@ bool CARHandler::handleGet(CivetServer *server, struct mg_connection *conn) {
 				file.fileSize);
 		mg_printf(conn,
 				"Content-Disposition: attachment; filename=\"%s\";\r\n",
-				req_info->uri);
+				ruri.c_str());
 		mg_printf(conn, "Last-Modified: %s\r\n", formatTime(&file.lastModified).c_str());
 		mg_printf(conn, "Content-Type: application/octet-stream\r\n\r\n");
 		send_file_data(conn, &file);
