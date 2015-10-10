@@ -469,6 +469,10 @@ void LoadConfig(const char *filename)
 				g_Config.SMTPSSL = lfr.BlockToBool(1);
 			else if(strcmp(NameBlock, "SMTPSender") == 0)
 				g_Config.SMTPSender = lfr.BlockToStringC(1, 0);
+			else if(strcmp(NameBlock, "LegacyAccounts") == 0)
+				g_Config.LegacyAccounts = lfr.BlockToBool(1);
+			else if(strcmp(NameBlock, "PublicAPI") == 0)
+				g_Config.PublicAPI = lfr.BlockToBool(1);
 			else if(strcmp(NameBlock, "OAuth2Client") == 0) {
 				STRINGLIST output;
 				Util::Split(lfr.BlockToString(1), "|", output);
@@ -705,6 +709,9 @@ GlobalConfigData :: GlobalConfigData()
 	SMTPPort = 25;
 	SMTPSSL = false;
 	SMTPSender = "";
+
+	PublicAPI = true;
+	LegacyAccounts = false;
 
 	InvalidLoginMessage = "Account not found.  Check username and password.";
 }
