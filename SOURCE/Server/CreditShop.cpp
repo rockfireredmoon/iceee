@@ -332,4 +332,3 @@ CreditShopItem * CreditShopManager::GetItem(int id) {
 	std::map<int, CreditShopItem*>::iterator it = mItems.find(id);
 	return it == mItems.end() ? NULL : it->second;
 }
-

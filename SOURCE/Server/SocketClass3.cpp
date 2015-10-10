@@ -218,6 +218,26 @@ int SocketClass :: Accept(void)
 	}
 	ClientSocket = clientfd;
 
+	/* Get the address of the route the client connected TO. This is useful
+	 * because it allows us to leave SimulatorAddress blank in ServerConfig
+	 * for most setups as the router is very likely to be running on the
+	 * same host as the simulator
+	 */
+	int sa_len;
+	struct sockaddr_storage sa;
+	sa_len = sizeof(sa);
+	if(getsockname(clientfd, (struct sockaddr*)&sa, &sa_len) == -1) {
+		LogMessage("Failed to get destination sockname: %d", this->port);
+		return -1;
+	}
+	memset(destAddr,0,INET6_ADDRSTRLEN);
+	int err=getnameinfo((struct sockaddr*)&sa,sa_len,destAddr,sizeof(destAddr),
+	    0,0,NI_NUMERICHOST);
+	if (err!=0) {
+		LogMessage("Failed to to convert address to string ");
+		return -1;
+	}
+
 	linger lData = {0};
 	lData.l_linger = 5;
 	lData.l_onoff = 1;
