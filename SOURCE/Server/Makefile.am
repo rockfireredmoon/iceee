@@ -92,6 +92,9 @@ tawd_SOURCES = md5.cc \
 	http/CivetServer.cpp \
 	http/civetweb.c \
 	http/HTTPService.cpp \
+	auth/Auth.cpp \
+	auth/DevAuthentication.cpp \
+	auth/ServiceAuthentication.cpp \
 	Ability2.h \
 	AbilityTime.h \
 	Account.h \
@@ -201,7 +204,10 @@ tawd_SOURCES = md5.cc \
 	http/HTTPService.h \
 	http/md5.inl \
 	http/LegacyAccounts.h \
-	http/WebControlPanel.h
+	http/WebControlPanel.h \
+	auth/Auth.h \
+	auth/DevAuthentication.h \
+	auth/ServiceAuthentication.h
 	
 
 if WINSERVICE
@@ -292,6 +298,9 @@ tawdsvc_SOURCES = md5.cc \
 	http/HTTPService.cpp \
 	http/LegacyAccounts.cpp \
 	http/WebControlPanel.cpp \
+	auth/Auth.cpp \
+	auth/DevAuthentication.cpp \
+	auth/ServiceAuthentication.cpp \
 	Ability2.h \
 	AbilityTime.h \
 	Account.h \
@@ -401,5 +410,8 @@ tawdsvc_SOURCES = md5.cc \
 	http/HTTPService.h \
 	http/md5.inl \
 	http/LegacyAccounts.h \
-	http/WebControlPanel.h
+	http/WebControlPanel.h \
+	auth/Auth.h \
+	auth/DevAuthentication.h \
+	auth/ServiceAuthentication.h
 endif

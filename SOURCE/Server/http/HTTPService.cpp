@@ -181,8 +181,8 @@ bool HTTPService::Start() {
 #ifndef NO_SSL
 		zzOptions[idx++] = "ssl_certificate";
 		zzOptions[idx++] = g_SSLCertificate.c_str();
-		zzOptions[idx] = 0;
 #endif
+		zzOptions[idx] = 0;
 
 		g_Log.AddMessageFormat("Starting CivetWeb");
 		civetServer = new CivetServer(zzOptions);
@@ -202,7 +202,7 @@ bool HTTPService::Start() {
 
 		// OAuth - Used to authenticate external services
 		if(g_Config.OAuth2Clients.size() > 0) {
-			civetServer->addHandler("/oauth/authorize", new AuthHandler());
+			civetServer->addHandler("/oauth/authorize", new AuthorizeHandler());
 			civetServer->addHandler("/oauth/login", new LoginHandler());
 			civetServer->addHandler("/oauth/token", new TokenHandler());
 			civetServer->addHandler("/oauth/self", new SelfHandler());

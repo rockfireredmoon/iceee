@@ -42,7 +42,7 @@ static OAuth2Client * findClient(std::string clientID) {
 // AuthHandler
 //
 
-bool AuthHandler::handleGet(CivetServer *server, struct mg_connection *conn) {
+bool AuthorizeHandler::handleGet(CivetServer *server, struct mg_connection *conn) {
 
 	std::string encodedRedirectURI;
 	std::string clientID;

@@ -27,7 +27,7 @@ namespace HTTPD {
  * Handles /oauth/auth requests, which returns HTML to allow login via
  * OAuth2. This chains to /api/login.
  */
-class AuthHandler: public AbstractCivetHandler {
+class AuthorizeHandler: public AbstractCivetHandler {
 public:
 	virtual bool handleGet(CivetServer *server, struct mg_connection *conn);
 };
