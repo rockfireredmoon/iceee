@@ -8,8 +8,7 @@
 #include "Squirrel.h"
 #include "Creature.h"
 #include <stdlib.h>
-#include <sqrat.h>
-#include <sqrat.h>
+#include "../squirrel/sqrat/sqrat.h"
 #include <algorithm>    // std::remove
 //#include <sqbind.h>
 

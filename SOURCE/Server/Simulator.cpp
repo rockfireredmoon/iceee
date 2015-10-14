@@ -2975,6 +2975,8 @@ bool SimulatorThread :: HandleCommand(int &PendingData)
 		PendingData = handle_command_set_earsize();
 	else if(query.name.compare("stailsize") == 0)
 		PendingData = handle_command_set_tailsize();
+	else if(query.name.compare("daily") == 0)
+		PendingData = handle_command_daily();
 	else
 		return false;
 
@@ -3312,14 +3314,14 @@ void SimulatorThread :: SetLoadingStatus(bool status, bool shutdown)
 			g_PartyManager.CheckMemberLogin(creatureInst);
 			AddMessage(0, 0, BCM_Notice_MOTD);
 
-			ProcessDailyRewards();
+			ProcessDailyRewards(pld.accPtr->ConsecutiveDaysLoggedIn, pld.charPtr->cdef.css.level);
 
 			LoadStage = LOADSTAGE_LOADED;  //Initial loading screen is finished, players should be able to control their characters.
 		}
 	}
 }
 
-void SimulatorThread :: ProcessDailyRewards(void)
+void SimulatorThread :: ProcessDailyRewards(unsigned int days, unsigned int level)
 {
 
 	// Handle daily rewards
@@ -3327,16 +3329,16 @@ void SimulatorThread :: ProcessDailyRewards(void)
 		pld.accPtr->DueDailyRewards = false;
 		pld.accPtr->PendingMinorUpdates++;
 
-		std::vector<DailyProfile> profiles = g_DailyProfileManager.GetProfiles(pld.accPtr->ConsecutiveDaysLoggedIn, pld.charPtr->cdef.css.level);
+		std::vector<DailyProfile> profiles = g_DailyProfileManager.GetProfiles(days, level);
 		if(profiles.size() == 0) {
 			// Reset to day1
 			pld.accPtr->ConsecutiveDaysLoggedIn = 1;
-			profiles = g_DailyProfileManager.GetProfiles(pld.accPtr->ConsecutiveDaysLoggedIn, pld.charPtr->cdef.css.level);
+			profiles = g_DailyProfileManager.GetProfiles(days, level);
 		}
 
 		if(profiles.size() > 0) {
 			char buf[256];
-			Util::SafeFormat(buf, sizeof(buf), "This is day %d of a maximum of %d consecutive login days. You earned :-", pld.accPtr->ConsecutiveDaysLoggedIn, g_DailyProfileManager.GetMaxDayNumber());
+			Util::SafeFormat(buf, sizeof(buf), "This is day %d of a maximum of %d consecutive login days. You earned :-", days, g_DailyProfileManager.GetMaxDayNumber());
 			AttemptSend(SendBuf, PrepExt_SendInfoMessage(SendBuf, buf, INFOMSG_INFO));
 
 			std::vector<DailyProfile> lootProfiles;
@@ -5645,6 +5647,33 @@ int SimulatorThread :: handle_command_giveall(void)
 	sprintf(Aux1, "Gave %d items.", found);
 	SendInfoMessage(Aux1, INFOMSG_INFO);
 
+	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
+}
+
+int SimulatorThread :: handle_command_daily(void)
+{
+	/*  Query: daily
+		Cheat to give yourself a new daily reward. Used for test.
+		Args : [0] = equip type ID
+		       [1] = partial appearance string to match
+    */
+
+	if(CheckPermissionSimple(Perm_Account, Permission_Debug) == false)
+		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
+
+	pld.accPtr->DueDailyRewards = true;
+
+	unsigned int days = pld.accPtr->ConsecutiveDaysLoggedIn;
+	unsigned int level = pld.charPtr->cdef.css.level;
+
+	if(query.argCount == 2) {
+		days =  query.GetInteger(0);
+		level =  query.GetInteger(1);
+	}
+	else if(query.argCount != 0) {
+		return PrepExt_QueryResponseError(SendBuf, query.ID, "Usage: /daily [<days> <level>]");
+	}
+	ProcessDailyRewards(days, level);
 	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
 }
 

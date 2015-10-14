@@ -10,7 +10,7 @@
 #include <sqstdaux.h>
 #include <sqstdstring.h>
 #include "Callback.h"
-#include "sqrat.h"
+#include "../squirrel/sqrat/sqrat.h"
 
 void PrintFunc(HSQUIRRELVM v, const SQChar *s, ...);
 void Errorfunc(HSQUIRRELVM v, const SQChar *s, ...);
