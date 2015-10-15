@@ -7318,10 +7318,10 @@ void CreatureInstance :: PlayerLoot(int level, std::vector<DailyProfile> profile
 		}
 		case RewardType::ITEM:
 			ItemDef *item = NULL;
-
+			int itemID = 0;
 			// Have 10 attempts at getting a valid item.
 			for(int i = 0 ; i < 10; i++) {
-				int itemID = profile.itemReward.itemIDs[randmod(profile.itemReward.itemIDs.size())];
+				itemID = profile.itemReward.itemIDs[randmod(profile.itemReward.itemIDs.size())];
 				item = g_ItemManager.GetPointerByID(itemID);
 				if(item != NULL) {
 					loot.AddItem(itemID);
