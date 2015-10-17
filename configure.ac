@@ -15,6 +15,7 @@ dnl
 m4_include([ax_check_openssl.m4])
 m4_include([ax_pthread.m4])
 m4_include([libcurl.m4])
+m4_include([ax_cxx_compile_stdcxx_11.m4])
 
 
 dnl
