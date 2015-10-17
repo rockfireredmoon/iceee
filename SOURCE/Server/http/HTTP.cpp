@@ -23,13 +23,6 @@
 
 using namespace HTTPD;
 
-static void extractPair(std::string pair, std::string &key,
-		std::string &value) {
-	size_t eidx = pair.find("=");
-	key = eidx == std::string::npos ? pair : pair.substr(0, eidx);
-	value = eidx == std::string::npos ? "" : pair.substr(eidx + 1);
-}
-
 //
 // MultiPart
 Part MultiPart::getPartWithName(std::string name) {

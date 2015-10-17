@@ -15,20 +15,28 @@
  * along with TAWD.  If not, see <http://www.gnu.org/licenses/
  */
 
-#ifndef WEBAUTHENTICATION_H
-#define WEBAUTHENTICATION_H
+#ifndef COMMAND_H
+#define COMMAND_H
 
-#include "Auth.h"
+#include "../Simulator.h"
 
-class ServiceAuthenticationHandler : public AuthHandler {
+
+class QueryHandler {
 public:
-	ServiceAuthenticationHandler();
-	~ServiceAuthenticationHandler();
-	AccountData *onAuthenticate(SimulatorThread *sim, std::string loginName, std::string authorizationHash);
-private:
-	void transferGroves(AccountData *account);
+	virtual ~QueryHandler();
+	virtual int handleCommand(SimulatorThread *sim)=0;
 };
 
+class QueryManager {
+public:
+	QueryManager();
+	~QueryManager();
+	QueryHandler *getCommandHandler(std::string command);
+private:
+	std::map<std::string, QueryHandler*> commandHandlers;
+};
+
+extern QueryManager g_QueryManager;
 
 #endif
 

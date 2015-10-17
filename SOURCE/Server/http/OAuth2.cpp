@@ -269,10 +269,10 @@ bool SelfHandler::handleGet(CivetServer *server, struct mg_connection *conn) {
 			}
 			else {
 				char buf[256];
-				std::string un = ad->Name;
-				Util::EncodeJSONString(un);
+				std::string name = ad->Name;
 				Util::SafeFormat(buf, sizeof(buf),
-						"{ \"data\": { \"id\": \"%d\", \"username\": \"%s\" } }", ad->ID, un.c_str());
+						"{ \"data\": { \"id\": \"%d\", \"username\": \"%s\" } }", ad->ID,
+						Util::EncodeJSONString(name).c_str());
 				writeJSON200(server, conn, buf);
 			}
 		}

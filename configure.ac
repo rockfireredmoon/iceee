@@ -94,12 +94,14 @@ dnl
 AM_CONDITIONAL([MINGW], [test x$mingw = xtrue])
 AM_CONDITIONAL([WINSERVICE], [test x$winservice = xtrue])
 
+AX_CXX_COMPILE_STDCXX_11([noext],[mandatory])
+
 dnl
 dnl Compiler and link setup
 dnl
 
 # Stops Civet trying to dynamically load OpenSSL
-CPPFLAGS="$CPPFLAGS -DNO_SSL_DL=1"
+#CPPFLAGS="$CPPFLAGS -DNO_SSL_DL=1"
 if test "x${mingw}" = xtrue; then
 	CPPFLAGS="$CPPFLAGS -DWINDOWS_PLATFORM=1"
 fi
@@ -118,6 +120,10 @@ if test "x${ssl}" = xtrue; then
 	CPPFLAGS="$CPPFLAGS $OPENSSL_INCLUDES"
 	LIBS="$LIBS $OPENSSL_LIBS"
 	LDFLAGS="$LD_FLAGS $OPENSSL_LDFLAGS"
+	AC_CHECK_LIB([dl], [dlsym], [dl=true], [dl=false])
+	if test "x${dl}" = xtrue; then
+		LIBS="$LIBS -ldl"
+	fi
 else
 	CPPFLAGS="$CPPFLAGS -DNO_SSL=1"
 fi

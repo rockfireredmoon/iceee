@@ -805,22 +805,6 @@ Scale=1,1,1
 spawnPackage=#2085
 
 [ENTRY]
-ID=1130558
-Asset=Bldg-Fort_Anvil#Bldg-Fort_Anvil
-Name=Untitled
-Pos=17748.6,1354.93,20125.1
-Orient=0,0,0,1
-Scale=1,1,1
-
-[ENTRY]
-ID=1130559
-Asset=Bldg-Fort_Anvil#Bldg-Fort_Anvil
-Name=Untitled
-Pos=17744.4,1353.89,20119.2
-Orient=0,0,0,1
-Scale=1,1,1
-
-[ENTRY]
 ID=1130560
 Asset=Prop-Anvil
 Name=Untitled

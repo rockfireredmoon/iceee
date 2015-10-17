@@ -1265,11 +1265,12 @@ void EncodeHTML(std::string& data) {
     data.swap(buffer);
 }
 
-void EncodeJSONString(std::string& str)
+std::string EncodeJSONString(std::string &str)
 {
 	ReplaceAll(str, "\n", "\\n");
 	ReplaceAll(str, "\r", "\\r");
 	ReplaceAll(str, "\"", "\\\"");
+	return str;
 }
 
 void ReplaceAll(std::string& str, const std::string& from, const std::string& to)

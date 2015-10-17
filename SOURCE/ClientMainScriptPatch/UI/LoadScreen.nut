@@ -386,8 +386,10 @@ class this.LoadScreenManager
 		};
 		local txt = "";
 		
+		print("ICE! Fetching loading_announcements " + this.Util.getWebServerRoot() + "loading_announcements\n");
 		req.open("GET", this.Util.getWebServerRoot() + "loading_announcements");
 		req.send(txt);
+		print("ICE! Fetched loading_announcements " + this.Util.getWebServerRoot() + "loading_announcements\n");
 	}
 
 	function fetchTips()
@@ -415,8 +417,10 @@ class this.LoadScreenManager
 			}
 		};
 		local txt = "";
+		print("ICE! Fetching tips " + this.Util.getWebServerRoot() + "tips\n");
 		req.open("GET", this.Util.getWebServerRoot() + "tips");
 		req.send(txt);
+		print("ICE! Fetched tips " + this.Util.getWebServerRoot() + "tips\n");
 	}
 
 	function closeGui()

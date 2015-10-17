@@ -15,6 +15,7 @@
  * along with TAWD.  If not, see <http://www.gnu.org/licenses/
  */
 
+#include "CivetServer.h"
 #include "CAR.h"
 
 #include "HTTP.h"
@@ -28,16 +29,6 @@
 #include <string.h>
 
 using namespace HTTPD;
-
-
-/* Protect against directory disclosure attack by removing '..',
- excessive '/' and '\' characters */
-static std::string remove_double_dots_and_double_slashes(std::string str) {
-	Util::ReplaceAll(str, "..", "");
-	Util::ReplaceAll(str, "\\\\", "");
-	Util::ReplaceAll(str, "//", "");
-	return str;
-}
 
 /* Send bytes from the opened file to the client. */
 static void send_file_data(struct mg_connection *conn, FileResource *filep) {
@@ -95,11 +86,12 @@ bool CARHandler::handleGet(CivetServer *server, struct mg_connection *conn) {
 
 	/* Prepare the URI */
 	CivetServer::urlDecode(req_info->uri, strlen(req_info->uri), ruri, false);
-	ruri = remove_double_dots_and_double_slashes(ruri);
+	ruri = removeDoubleDotsAndDoubleSlashes(ruri);
 
 	//
 	int status = 304;
 	FileResource file;
+	std::string newChecksum;
 
 	/* Get the full path of the file */
 	std::string nativePath = ruri;
@@ -127,16 +119,23 @@ bool CARHandler::handleGet(CivetServer *server, struct mg_connection *conn) {
 	if (checksum == NULL) {
 		// No condition
 		status = openFile(req_info, &file);
+		newChecksum = g_FileChecksum.MatchChecksum(ruri, "__");
 	} else {
 		//If the checksum does not match, we need to update.
-		if (g_FileChecksum.MatchChecksum(ruri, checksum)
-				== false) {
+		newChecksum = g_FileChecksum.MatchChecksum(ruri, checksum);
+		if (newChecksum.size() > 0) {
 			status = openFile(req_info, &file);
 		}
 	}
 
+//    conn->must_close = 1;
+//    conn->status_code = status;
+	mg_set_as_close(conn);
+	mg_set_status(conn, status);
+
 	switch (status) {
 	case 200:
+		g_Log.AddMessageFormat("Sending %s (%lu bytes)", ruri.c_str(), file.fileSize);
 		mg_printf(conn,
 				"HTTP/1.1 200 OK\r\nContent-Length: %lu\r\nAccept-Range: bytes\r\n",
 				file.fileSize);
@@ -144,9 +143,18 @@ bool CARHandler::handleGet(CivetServer *server, struct mg_connection *conn) {
 				"Content-Disposition: attachment; filename=\"%s\";\r\n",
 				ruri.c_str());
 		mg_printf(conn, "Last-Modified: %s\r\n", formatTime(&file.lastModified).c_str());
+//		mg_printf(conn, "ETag: %s\r\n", newChecksum.c_str());
 		mg_printf(conn, "Content-Type: application/octet-stream\r\n\r\n");
 		send_file_data(conn, &file);
 	    fclose(file.fd);
+		g_Log.AddMessageFormat("Sent %s (%lu bytes)", ruri.c_str(), file.fileSize);
+
+
+		mg_set_content_length(conn, file.fileSize);
+		mg_increase_sent_bytes(conn, file.fileSize);
+//	    conn->num_bytes_sent += file.fileSize;
+
+
 		break;
 	case 304: {
 		std::time_t now = std::time(NULL);
@@ -166,6 +174,5 @@ bool CARHandler::handleGet(CivetServer *server, struct mg_connection *conn) {
 		mg_printf(conn, "%s", g_HTTP404Message.c_str());
 		break;
 	}
-
 	return true;
 }

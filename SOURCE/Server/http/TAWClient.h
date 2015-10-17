@@ -15,20 +15,28 @@
  * along with TAWD.  If not, see <http://www.gnu.org/licenses/
  */
 
-#ifndef WEBAUTHENTICATION_H
-#define WEBAUTHENTICATION_H
+#ifndef TAWCLIENT_H
+#define TAWCLIENT_H
 
-#include "Auth.h"
+#include "HTTPClient.h"
+#include "../ZoneDef.h"
+#include <vector>
+#include <curl/curl.h>
 
-class ServiceAuthenticationHandler : public AuthHandler {
+/*
+ * Communicates with another TAW server to retrieve some player specific
+ * data (used for account migration).
+ */
+class TAWClient  {
 public:
-	ServiceAuthenticationHandler();
-	~ServiceAuthenticationHandler();
-	AccountData *onAuthenticate(SimulatorThread *sim, std::string loginName, std::string authorizationHash);
+	TAWClient(std::string url);
+	bool getAccountByName(std::string accountName, AccountData &account);
+	bool getScenery(int zoneID, SceneryPage &page);
+	bool getZone(int zoneID, ZoneDefInfo &zone, std::vector<SceneryPageKey> &pages);
+	bool enumerateGroves(int accountID, std::vector<ZoneDefInfo> &zones);
 private:
-	void transferGroves(AccountData *account);
+	std::string mUrl;
 };
-
 
 #endif
 

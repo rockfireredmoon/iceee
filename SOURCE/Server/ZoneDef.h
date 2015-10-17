@@ -11,6 +11,8 @@
 #include "Report.h"
 #include "Guilds.h"
 
+#include "json/json.h"
+
 class DropRateProfile;
 
 class ZoneEditPermission
@@ -61,6 +63,16 @@ struct EnvironmentTileKey
 		else if(x == other.x)
 			return (y < other.y);
 		return false;
+	}
+
+	void ReadFromJSON(Json::Value &value) {
+		x = value["x"].asInt();
+		y = value["y"].asInt();
+	}
+
+	void WriteToJSON(Json::Value &value) {
+		value["x"] = x;
+		value["y"] = y;
 	}
 };
 
@@ -156,6 +168,9 @@ public:
 	void AuditScenery(const char *username, int zone, const SceneryObject *sceneryObject, int opType);
 	void AutosaveAudits(bool force);
 
+	void WriteToJSON(Json::Value &value);
+	void ReadFromJSON(Json::Value &value);
+
 private:
 	void CreateDefaultGrovePermission(void);
 };
@@ -193,6 +208,8 @@ public:
 	ZoneDefInfo* GetPointerByExactWarpName(const char *name);
 	ZoneDefInfo* GetPointerByGroveName(const char *name);
 
+	std::string GetNextGroveName(std::string groveName);
+
 	static const int GROVE_ZONE_ID_INCREMENT = 8;
 	static const int GROVE_ZONE_ID_DEFAULT = 5000;
 
@@ -202,6 +219,7 @@ public:
 
 	//int EnumerateGroves(std::string &groveName, std::vector<ZoneDefInfo*> &groveList);
 	int EnumerateGroves(int searchAccountID, int creatureDefId, std::vector<std::string>& groveList);
+	int EnumerateGroveIds(int searchAccountID, int creatureDefId, std::vector<int>& groveList);
 	int EnumerateArenas(std::vector<std::string>& arenaList);
 	void UpdateGroveAccountID(const char *groveName, int newAccountID);
 	void UpdateZoneIndex(int zoneID, int accountID, const char *warpName, const char *groveName, bool allowCreate);

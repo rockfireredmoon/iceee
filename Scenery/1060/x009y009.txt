@@ -233,7 +233,7 @@ Pos=17378.6,1391.18,17641.7
 Orient=0,0.997606,0,-0.0691484
 Scale=1,1,1
 spawnPackage=#F3183
-aiModule=Bastion_NPC_CatapultFiringAnimation
+aiModule=Bastion_NPC_CatapultFiringAnimation(3397)
 
 [ENTRY]
 ID=1129528
@@ -243,7 +243,7 @@ Pos=17368.7,1407.74,17817.2
 Orient=0,0.993868,0,0.11057
 Scale=1,1,1
 spawnPackage=#F3183
-aiModule=Bastion_NPC_CatapultFiringAnimation
+aiModule=Bastion_NPC_CatapultFiringAnimation(3397)
 
 [ENTRY]
 ID=1129899

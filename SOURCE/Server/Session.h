@@ -28,7 +28,7 @@ int SaveSession(const char *filename)
 	fprintf(output, "NextPetitionID=%d\r\n", g_PetitionManager.NextPetitionID);
 	fprintf(output, "\r\n");
 	fclose(output);
-	LogMessage("Saved session file.", filename);
+	g_Log.AddMessageFormat("Saved session file.", filename);
 	return 0;
 }
 

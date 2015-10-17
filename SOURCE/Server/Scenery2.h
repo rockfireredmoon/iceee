@@ -6,6 +6,7 @@
 #include <list>
 #include "Packet.h"
 #include "Components.h"
+#include "json/json.h"
 
 class CreatureSpawnDef;
 
@@ -74,6 +75,7 @@ namespace ActiveLocation
 class SceneryObject
 {
 public:
+	SceneryObject(const SceneryObject& so);
 	SceneryObject();
 	~SceneryObject();
 	void Destroy(void);
@@ -135,6 +137,9 @@ public:
 
 	const char *GetSpawnPackageName(void);
 	bool ExtractATS(std::string& outputStr) const;
+
+	void WriteToJSON(Json::Value &value);
+	void ReadFromJSON(Json::Value &value);
 };
 
 
@@ -156,6 +161,11 @@ struct SceneryPageKey
 		else if(x == other.x)
 			return (y < other.y);
 		return false;
+	}
+
+	void ReadFromJSON(Json::Value &value) {
+		x = value["x"].asInt();
+		y = value["y"].asInt();
 	}
 };
 

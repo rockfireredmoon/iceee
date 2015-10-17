@@ -1,11 +1,21 @@
 #!/bin/bash
 
+source "$(dirname $0)"/shelllib.sh
+
 cd "$(dirname $0)"/..
 base=$(pwd)
 
 SCRATCH="${base}/scratch"
-BASE_ASSETS="${base}/SOURCE/Base"
+BASE_ASSETS="${base}/../../Common/eeassets/original-client/media"
 TARGET_ASSETS="${base}/asset"
+
+# Test for Base directory. I wasted two days because I forgot about this
+# directory when moving stuff around :\
+if [ ! -d "${BASE_ASSETS}" -o -z "$(ls -A ${BASE_ASSETS})" ] ; then
+	echo "$0: Base assets directory '${BASE_ASSETS}' does not exist or does not contain any files" >&2
+	exit 1
+fi
+
 
 #
 # Functions
@@ -20,7 +30,7 @@ function compile_sq() {
 	esac
 	output="$(dirname "$1")/$(basename "$1" .nut).cnut"
 	rm -f "${output}"
-	if ! wine ${base}/UTILITIES/sq.exe -o "${output}" -c "${script}" ; then
+	if ! run_win_tool ${base}/UTILITIES/sq.exe -o "${output}" -c "${script}" ; then
 		echo "$0: Failed to compile ${script}" >&2
 		tput bel
 		return 1
@@ -45,14 +55,17 @@ mkdir -p "${SCRATCH}/content"
 
 echo "Extracting catalog"
 cp SOURCE/CAR/Catalogs.car "${SCRATCH}/archives"
-wine UTILITIES/CARDecode.exe "${SCRATCH}/archives/Catalogs.car"
+if ! run_win_tool UTILITIES/CARDecode.exe "${SCRATCH}/archives/Catalogs.car" ; then
+	echo "$0: Failed to decode ${SCRATCH}/archives/Catalogs.car" >&2
+	exit 1
+fi
 
 echo "Decompressing catalog"
 pushd "${SCRATCH}/content"
 unzip -q "${SCRATCH}/archives/Catalogs.zip"
 echo "Generating abilities"
 cp ${base}/Data/AbilityTable.txt .
-wine ${base}/UTILITIES/EEUtilAbilityTable.exe
+run_win_tool ${base}/UTILITIES/EEUtilAbilityTable.exe
 ls
 popd
 echo "Copying other catalog patches"
@@ -79,7 +92,10 @@ zip -dg -q -r "${SCRATCH}/archives/Catalogs.zip" *
 popd
 
 echo "Archiving catalog"
-wine ${base}/UTILITIES/CARDecode.exe "${SCRATCH}/archives/Catalogs.zip"
+if ! run_win_tool ${base}/UTILITIES/CARDecode.exe "${SCRATCH}/archives/Catalogs.zip" ; then
+	echo "$0: Failed to decode ${SCRATCH}/archives/Catalogs.zip" >&2
+	exit 1
+fi
 
 rm -fr "${SCRATCH}/content"
 mkdir -p "${SCRATCH}/content"
@@ -108,7 +124,10 @@ mkdir -p "${SCRATCH}/content"
 
 echo "Extracting original scripts"
 cp SOURCE/CAR/EarthEternal.car "${SCRATCH}/archives"
-wine UTILITIES/CARDecode.exe "${SCRATCH}/archives/EarthEternal.car"
+if ! run_win_tool UTILITIES/CARDecode.exe "${SCRATCH}/archives/EarthEternal.car" ; then
+	echo "$0: Failed to extract orginal" >&2
+	exit 1
+fi
 
 echo "Copying mod scripts"
 pushd SOURCE/ClientMod/EarthEternal
@@ -181,7 +200,10 @@ popd
 echo "*******************************************************"
 echo "Archiving earth eternal"
 echo "*******************************************************"
-wine UTILITIES/CARDecode.exe "${SCRATCH}/archives/EarthEternal.zip"
+if ! run_win_tool UTILITIES/CARDecode.exe "${SCRATCH}/archives/EarthEternal.zip" ; then
+	echo "$0: Failed to create new main archive ${SCRATCH}/archives/EarthEternal.zip" >&2
+	exit 1
+fi
 
 rm -fr "${SCRATCH}/content"
 mkdir -p "${SCRATCH}/content"
@@ -190,7 +212,10 @@ echo "*******************************************************"
 echo "Extracting PF sound mods"
 echo "*******************************************************"
 cp SOURCE/CAR/Sound-ModSound.car "${SCRATCH}/archives"
-wine UTILITIES/CARDecode.exe "${SCRATCH}/archives/Sound-ModSound.car"
+if ! run_win_tool UTILITIES/CARDecode.exe "${SCRATCH}/archives/Sound-ModSound.car" ; then
+	echo "$0: Failed to create new sound archive ${SCRATCH}/archives/Sound-ModSound.car" >&2
+	exit 1
+fi
 
 echo "*******************************************************"
 echo "Decompressing PF sounds mods"
@@ -234,7 +259,10 @@ popd >/dev/null
 echo "*******************************************************"
 echo "Archiving sounds"
 echo "*******************************************************"
-wine UTILITIES/CARDecode.exe "${SCRATCH}/archives/Sound-ModSound.zip"
+if ! run_win_tool UTILITIES/CARDecode.exe "${SCRATCH}/archives/Sound-ModSound.zip" ; then
+	echo "$0: Failed to archive new sounds ${SCRATCH}/archives/Sound-ModSound.zip" >&2
+	exit 1
+fi
 
 rm -fr "${SCRATCH}/ap"
 mkdir "${SCRATCH}/ap"
@@ -296,7 +324,10 @@ for i in ${SCRATCH}/ap/*; do
 		else
 			echo "Add to car file for ${i}"			
 			cp "${carfile}" "${SCRATCH}/archives"
-			wine UTILITIES/CARDecode.exe "${SCRATCH}/archives/${carbase}"
+			if ! run_win_tool UTILITIES/CARDecode.exe "${SCRATCH}/archives/${carbase}" ; then
+				echo "$0 : Failed decode ${SCRATCH}/archives/${carbase}" >&2
+				exit 1
+			fi
 			pushd "${SCRATCH}/content" >/dev/null
 			unzip -q "${SCRATCH}/archives/${zipbase}"
 			popd >/dev/null
@@ -308,7 +339,10 @@ for i in ${SCRATCH}/ap/*; do
 		echo "Compressing ${zipbase}"
 		zip -dg -q -r "${SCRATCH}/archives/${zipbase}" *
 		popd >/dev/null
-		wine UTILITIES/CARDecode.exe "${SCRATCH}/archives/${zipbase}"
+		if ! run_win_tool UTILITIES/CARDecode.exe "${SCRATCH}/archives/${zipbase}" ; then
+				echo "$0 : Failed decode ${SCRATCH}/archives/${zipbase}" >&2
+				exit 1
+		fi
 	fi
 done
 
@@ -328,10 +362,10 @@ done
 #echo "*******************************************************"
 #rm -f "${SCRATCH}/HTTPChecksum.txt"
  
-#echo "/Release/Current/EarthEternal.car=\""$(wine UTILITIES/MD5.exe "${SCRATCH}/archives/EarthEternal.car"|tr -d '\r')"\"" >> "${SCRATCH}/HTTPChecksum.txt"
+#echo "/Release/Current/EarthEternal.car=\""$(run_win_tool UTILITIES/MD5.exe "${SCRATCH}/archives/EarthEternal.car"|tr -d '\r')"\"" >> "${SCRATCH}/HTTPChecksum.txt"
 #for i in ${SCRATCH}/archives/*.car; do
 	#if [ $(basename $i) != "EarthEternal.car" ] ; then
-		#echo "/Release/Current/Media/$(basename ${i})=\""$(wine UTILITIES/MD5.exe "${i}"|tr -d '\r')"\"" >> "${SCRATCH}/HTTPChecksum.txt"
+		#echo "/Release/Current/Media/$(basename ${i})=\""$(run_win_tool UTILITIES/MD5.exe "${i}"|tr -d '\r')"\"" >> "${SCRATCH}/HTTPChecksum.txt"
 	#fi
 #done
 
@@ -351,14 +385,10 @@ if [ -d asset -a -d Data ]; then
 					echo "Copied $(basename ${i})"
 				fi
 			done
-
-			echo "Creating checksums"			
-			pushd ${base}/asset
-			find Release -type f|while read line ; do md5sum $line| \
-				awk '{ print "/" substr($2,1) "=\"" $1 "\"" }' ; done | \
-				sort -u > ${base}/Data/HTTPChecksum.txt
-			popd
+			
+			${base}/SCRIPTS/checksum.sh
 			
 			echo "All files copied for version ${FULL_VERSION}" ;;
 	esac
 fi
+

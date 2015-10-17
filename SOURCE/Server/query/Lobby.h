@@ -15,20 +15,18 @@
  * along with TAWD.  If not, see <http://www.gnu.org/licenses/
  */
 
-#ifndef WEBAUTHENTICATION_H
-#define WEBAUTHENTICATION_H
+#ifndef LOBBY_H
+#define LOBBY_H
 
-#include "Auth.h"
+#include "Query.h"
 
-class ServiceAuthenticationHandler : public AuthHandler {
+class LobbyPingHandler : public QueryHandler {
 public:
-	ServiceAuthenticationHandler();
-	~ServiceAuthenticationHandler();
-	AccountData *onAuthenticate(SimulatorThread *sim, std::string loginName, std::string authorizationHash);
-private:
-	void transferGroves(AccountData *account);
+	int handleCommand(SimulatorThread *sim);
 };
 
-
+class AccountTrackingHandler : public QueryHandler {
+public:
+	int handleCommand(SimulatorThread *sim);
+};
 #endif
-

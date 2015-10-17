@@ -41,6 +41,42 @@ public:
 	virtual bool handleGet(CivetServer *server, struct mg_connection *conn);
 };
 
+/*
+ * Handles /api/user/<accountIdOrName> requests, returning a JSON response containing user
+ * details
+ */
+class UserHandler: public AbstractCivetHandler {
+public:
+	virtual bool handleGet(CivetServer *server, struct mg_connection *conn);
+};
+
+/*
+ * Handles /api/user/<accountId>/groves requests, returning a JSON response containing a list
+ * of an accounts groves
+ */
+class UserGrovesHandler: public AbstractCivetHandler {
+public:
+	virtual bool handleGet(CivetServer *server, struct mg_connection *conn);
+};
+
+/*
+ * Handles /api/zone/<zoneDefId> requests, returning a JSON response containing zone
+ * details and tiles.
+ */
+class ZoneHandler: public AbstractCivetHandler {
+public:
+	virtual bool handleGet(CivetServer *server, struct mg_connection *conn);
+};
+
+/*
+ * Handles /api/scenery/<zoneDefId>/<x>/<y> requests, returning a JSON response containing grove
+ * details.
+ */
+class SceneryHandler: public AbstractCivetHandler {
+public:
+	virtual bool handleGet(CivetServer *server, struct mg_connection *conn);
+};
+
 }
 
 #endif

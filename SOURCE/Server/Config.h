@@ -241,6 +241,10 @@ public:
 	std::vector<OAuth2Client*> OAuth2Clients;
 	bool LegacyAccounts;
 	bool PublicAPI;
+	bool DirectoryListing;
+	bool HTTPKeepAlive;
+
+	std::string LegacyServer;			// URL of server to transfer groves from
 
 	unsigned long debugAdministrativeBehaviorFlags;
 	void SetAdministrativeBehaviorFlag(unsigned long bitValue, bool state);

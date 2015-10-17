@@ -408,7 +408,7 @@ Pos=15411.9,1187.94,14462.1
 Orient=0,0.833272,0,0.552863
 Scale=1,1,1
 spawnPackage=#E3396
-aiModule=Bastion_NPC_CatapultFiringAnimation(3396,3397)
+aiModule=Bastion_NPC_CatapultFiringAnimation(3397
 
 [ENTRY]
 ID=1129397
@@ -452,7 +452,7 @@ Pos=15474.3,1182.46,14418.5
 Orient=0,0.836026,0,0.54869
 Scale=1,1,1
 spawnPackage=#E3396
-aiModule=Bastion_NPC_CatapultFiringAnimation(3396,3397)
+aiModule=Bastion_NPC_CatapultFiringAnimation(3397
 
 [ENTRY]
 ID=1129404
@@ -462,7 +462,7 @@ Pos=15539,1172,14357.8
 Orient=0,0.699716,0,0.714421
 Scale=1,1,1
 spawnPackage=#E3396
-aiModule=Bastion_NPC_CatapultFiringAnimation(3396,3397)
+aiModule=Bastion_NPC_CatapultFiringAnimation(3397
 
 [ENTRY]
 ID=1129408
@@ -647,7 +647,7 @@ link=1129611,1
 ID=1129613
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=Untitled
-Pos=15548.2,1158.02,13514.4
+Pos=15544.1,1158.02,13514.4
 Orient=0,0.522687,0,0.852525
 Scale=1,1,1
 spawnPackage=#E3175

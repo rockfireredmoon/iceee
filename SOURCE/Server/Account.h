@@ -10,6 +10,7 @@
 #include "Inventory.h"
 #include "Character.h"
 #include "Util.h"  //ChangeData was moved here
+#include "json/json.h"
 
 
 class CharacterData;
@@ -160,6 +161,8 @@ public:
 	bool MatchRegistrationKey(const char *regkey);
 	bool IsRegistrationKeyEmpty(void);
 	void CheckRecoveryRegistrationKey(const char *regkey);
+	void WriteToJSON(Json::Value &value);
+	void ReadFromJSON(Json::Value &value);
 private:
 	short SessionLoginCount;   //Number of Simulators logged into this account.
 	unsigned long ExpireTime;  //The server time when the account will be ready for garbage deletion.

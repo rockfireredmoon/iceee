@@ -15,20 +15,22 @@
  * along with TAWD.  If not, see <http://www.gnu.org/licenses/
  */
 
-#ifndef WEBAUTHENTICATION_H
-#define WEBAUTHENTICATION_H
+#ifndef SITECLIENT_H
+#define SITECLIENT_H
 
-#include "Auth.h"
+#include "HTTPClient.h"
+#include <string>
 
-class ServiceAuthenticationHandler : public AuthHandler {
+/*
+ * Client that communicates with the website using Drupal services.
+ */
+class SiteClient  {
 public:
-	ServiceAuthenticationHandler();
-	~ServiceAuthenticationHandler();
-	AccountData *onAuthenticate(SimulatorThread *sim, std::string loginName, std::string authorizationHash);
+	SiteClient(std::string url);
+	bool sendPrivateMessage(std::string sender, std::string recipient, std::string message);
 private:
-	void transferGroves(AccountData *account);
+	std::string mUrl;
 };
-
 
 #endif
 

@@ -383,7 +383,7 @@ public:
 	bool CanMoveItems(void);
 
 	void SetLoadingStatus(bool status, bool shutdown);
-	void ProcessDailyRewards(void);
+	void ProcessDailyRewards(unsigned int days, unsigned int level);
 	void SetPersona(int personaIndex);
 	void SaveCharacterStats(void);
 	bool CheckWriteFlush(int &curPos);
@@ -515,6 +515,7 @@ public:
 	int handle_command_pathlinks(void);
 	int handle_command_partyinvite(void);
 	int handle_command_roll(void);
+	int handle_command_daily(void);
 
 	bool QuestResetObjectives(int QuestID, int objective);
 	bool QuestJoin(int QuestID);

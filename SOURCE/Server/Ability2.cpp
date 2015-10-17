@@ -2558,24 +2558,8 @@ int AbilityCalculator :: AddGrove(ARGUMENT_LIST args)
 		ciTarget->simulatorPtr->SendInfoMessage("No such grove template.", INFOMSG_ERROR);
 	}
 	else {
-
-		/* Find the next available grove name. The accounts original grove name is
-		 * used, and a number appended until a grove with that name is not found.
-		 */
-		int index = 2;
-		char name[256];
-		ZoneDefInfo *zoneDef = NULL;
-		while(index < 999) {
-			Util::SafeFormat(name, sizeof(name), "%s%d", ciTarget->simulatorPtr->pld.accPtr->GroveName.c_str(), index);
-			zoneDef = g_ZoneDefManager.GetPointerByExactWarpName(name);
-			if(zoneDef == NULL) {
-				break;
-			}
-			index++;
-		}
-
-
-		if(zoneDef != NULL)
+		std::string name = g_ZoneDefManager.GetNextGroveName(ciTarget->simulatorPtr->pld.accPtr->GroveName);
+		if(name.size() == 0)
 			ciTarget->simulatorPtr->SendInfoMessage("No free grove names.", INFOMSG_ERROR);
 		else {
 
@@ -2610,7 +2594,7 @@ int AbilityCalculator :: AddGrove(ARGUMENT_LIST args)
 			ciTarget->simulatorPtr->pld.accPtr->PendingMinorUpdates++;
 
 			char msg[256];
-			Util::SafeFormat(msg, sizeof(msg), "You have a new grove! Type /grove at a sanctuary to travel to it. Your grove's warp name is '%s'.", name);
+			Util::SafeFormat(msg, sizeof(msg), "You have a new grove! Type /grove at a sanctuary to travel to it. Your grove's warp name is '%s'.", name.c_str());
 			ciTarget->simulatorPtr->SendInfoMessage(msg, INFOMSG_INFO);
 
 			Util::SafeFormat(msg, sizeof(msg), "%s has a new grove!", ciTarget->css.display_name);

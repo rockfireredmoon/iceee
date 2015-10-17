@@ -119,7 +119,7 @@ namespace Util
 	float StringToFloat(const std::string &str);
 	int ParseDate(const std::string &str, time_t &time);
 	void EncodeHTML(std::string& data);
-	void EncodeJSONString(std::string& str);
+	std::string EncodeJSONString(std::string &str);
 	std::string FormatDate(time_t *time);
 	void ReplaceAll(std::string& str, const std::string& from, const std::string& to);
 	void URLDecode(std::string &str);

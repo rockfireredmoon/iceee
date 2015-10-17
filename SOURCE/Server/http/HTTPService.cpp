@@ -75,20 +75,21 @@ void FileChecksum :: LoadFromFile(const char *filename)
 	lfr.CloseCurrent();
 }
 
-bool FileChecksum :: MatchChecksum(const std::string &filename, const std::string &checksum)
+std::string FileChecksum :: MatchChecksum(const std::string &filename, const std::string &checksum)
 {
 	CHECKSUM_MAP::iterator it = mChecksumData.find(filename);
 
 	//If it doesn't appear in the list, assume it's valid so the client doesn't redownload
 	if(it == mChecksumData.end()) {
 		g_Log.AddMessageFormat("[WARNING] File %s is not in the index, so it's checksum is unknown. Assuming no download required.", filename.c_str());
-		return true;
+		return "";
 	}
 
-	if(it->second.compare(checksum) == 0)
-		return true;
+	if(it->second.compare(checksum) == 0) {
+		return "";
+	}
 
-	return false;
+	return it->second;
 }
 
 
@@ -161,7 +162,7 @@ bool HTTPService::Start() {
 					ports->append(g_BindAddress);
 					ports->append(":");
 				}
-				Util::SafeFormat(portbuf, sizeof(portbuf), "%d", g_HTTPSListenPort);
+				Util::SafeFormat(portbuf, sizeof(portbuf), "%ds", g_HTTPSListenPort);
 				ports->append(portbuf);
 			}
 		}
@@ -174,10 +175,12 @@ bool HTTPService::Start() {
 		zzOptions[idx++] = "AccessLog.txt";
 		zzOptions[idx++] = "error_log_file";
 		zzOptions[idx++] = "ErrorLog.txt";
-//		zzOptions[idx++] = "enable_keep_alive";
-//		zzOptions[idx++] = "yes";
+		if(g_Config.HTTPKeepAlive) {
+			zzOptions[idx++] = "enable_keep_alive";
+			zzOptions[idx++] = "yes";
+		}
 		zzOptions[idx++] = "enable_directory_listing";
-		zzOptions[idx++] = "no";
+		zzOptions[idx++] = g_Config.DirectoryListing ? "yes" : "no";
 #ifndef NO_SSL
 		zzOptions[idx++] = "ssl_certificate";
 		zzOptions[idx++] = g_SSLCertificate.c_str();
@@ -198,6 +201,10 @@ bool HTTPService::Start() {
 		if(g_Config.PublicAPI) {
 			civetServer->addHandler("/api/who", new WhoHandler());
 			civetServer->addHandler("/api/chat", new ChatHandler());
+			civetServer->addHandler("/api/user/*", new UserHandler());
+			civetServer->addHandler("/api/user/*/groves", new UserGrovesHandler());
+			civetServer->addHandler("/api/zone/*", new ZoneHandler());
+			civetServer->addHandler("/api/scenery/*", new SceneryHandler());
 		}
 
 		// OAuth - Used to authenticate external services

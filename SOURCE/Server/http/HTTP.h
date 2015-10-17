@@ -19,6 +19,7 @@
 #define HTTP_H
 
 #include "CivetServer.h"
+#include "../Util.h"
 
 #include <ctime>
 #include <string>
@@ -31,6 +32,30 @@
 #define MAX_PARAMETERS 1024
 
 namespace HTTPD {
+
+inline static void extractPair(std::string pair, std::string &key,
+		std::string &value) {
+	size_t eidx = pair.find("=");
+	key = eidx == std::string::npos ? pair : pair.substr(0, eidx);
+	value = eidx == std::string::npos ? "" : pair.substr(eidx + 1);
+}
+
+
+/* Protect against directory disclosure attack by removing '..',
+ excessive '/' and '\' characters */
+inline static std::string removeDoubleDotsAndDoubleSlashes(std::string str) {
+	std::string &c = str;
+	Util::ReplaceAll(c, "..", "");
+	Util::ReplaceAll(c, "\\\\", "");
+	Util::ReplaceAll(c, "//", "");
+	return c;
+}
+
+inline static std::string removeEndSlash(std::string str) {
+	while(Util::HasEnding(str, "/"))
+		str = str.substr(0, str.length() - 1);
+	return str;
+}
 
 class FileResource {
 public:

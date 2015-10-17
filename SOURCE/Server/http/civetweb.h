@@ -185,6 +185,14 @@ CIVETWEB_API struct mg_context *mg_start(const struct mg_callbacks *callbacks,
                             void *user_data,
                             const char **configuration_options);
 
+CIVETWEB_API void mg_set_status(struct mg_connection *conn, int status);
+
+CIVETWEB_API void mg_set_as_close(struct mg_connection *conn);
+
+CIVETWEB_API void mg_set_content_length(struct mg_connection *conn, unsigned long length);
+
+CIVETWEB_API void mg_increase_sent_bytes(struct mg_connection *conn, unsigned long bytes);
+
 
 /* Stop the web server.
 

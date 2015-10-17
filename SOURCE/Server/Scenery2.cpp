@@ -25,6 +25,13 @@ namespace ActiveLocation
 	}
 }
 
+SceneryObject :: SceneryObject(const SceneryObject &so)
+{
+	extraData = NULL;
+	Clear();
+	copyFrom(&so);
+}
+
 SceneryObject :: SceneryObject()
 {
 	//Important, need to explicitly initialize as NULL before clear is called, or
@@ -318,6 +325,137 @@ bool SceneryObject :: SetExtendedProperty(const char *propertyName, const char *
 		return false;
 	
 	return true;
+}
+
+void SceneryObject::ReadFromJSON(Json::Value &value) {
+	ID = value.get("id", 0).asInt();
+	strcpy(Asset, value.get("asset", "").asCString());
+	strcpy(Name, value.get("name", "").asCString());
+
+	Json::Value pos = value["pos"];
+	LocationX = pos.get("x", 0).asFloat();
+	LocationY = pos.get("y", 0).asFloat();
+	LocationZ = pos.get("z", 0).asFloat();
+
+	Json::Value orient = value["orient"];
+	QuatX = orient.get("x", 0).asFloat();
+	QuatY = orient.get("y", 0).asFloat();
+	QuatZ = orient.get("z", 0).asFloat();
+	QuatW = orient.get("w", 0).asFloat();
+
+	Json::Value scale = value["scale"];
+	ScaleX = pos.get("x", 0).asFloat();
+	ScaleY = pos.get("y", 0).asFloat();
+	ScaleZ = pos.get("z", 0).asFloat();
+
+	Flags = value["flags"].asInt();
+	Layer = value["layer"].asInt();
+	patrolSpeed = value["patrolSpeed"].asInt();
+	strcpy(patrolEvent, value.get("patrolEvent", "").asCString());
+
+	if(value.isMember("extra")) {
+		Json::Value extra = value["extra"];
+		if(CreateExtraData()) {
+			extraData->facing = extra["facing"].asInt();
+			strcpy(extraData->spawnName, value.get("spawnName", "").asCString());
+			extraData->leaseTime = extra["leaseTime"].asInt();
+			strcpy(extraData->spawnPackage, value.get("spawnPackage", "").asCString());
+			extraData->mobTotal = extra["mobTotal"].asInt();
+			if(extra.isMember("maxActive"))
+				extraData->maxActive = extra["maxActive"].asInt();
+			strcpy(extraData->aiModule, value.get("aiModule", "").asCString());
+			if(extra.isMember("maxLeash"))
+				extraData->maxLeash = extra["maxLeash"].asInt();
+			extraData->loyaltyRadius = extra["loyaltyRadius"].asInt();
+			extraData->wanderRadius = extra["wanderRadius"].asInt();
+			if(extra.isMember("despawnTime"))
+				extraData->despawnTime = extra["despawnTime"].asInt();
+			extraData->sequential = extra["sequential"].asInt();
+			strcpy(extraData->spawnLayer, value.get("spawnLayer", "").asCString());
+			if(extra.isMember("links")) {
+				Json::Value links = extra["links"];
+				int count = 0;
+				for(Json::Value::iterator lit = links.begin(); lit != links.end(); ++lit) {
+					Json::Value litem = *lit;
+					extraData->link[count].propID = litem["prop"].asInt();
+					extraData->link[count].type = litem["type"].asInt();
+					count++;
+				}
+			}
+		}
+	}
+}
+
+void SceneryObject::WriteToJSON(Json::Value &value) {
+	value["id"] = ID;
+	value["asset"] = Asset;
+	value["name"] = Name;
+
+	Json::Value pos;
+	pos["x"] = LocationX;
+	pos["y"] = LocationY;
+	pos["z"] = LocationZ;
+	value["pos"] = pos;
+
+	Json::Value orient;
+	orient["x"] = QuatX;
+	orient["y"] = QuatY;
+	orient["z"] = QuatZ;
+	orient["w"] = QuatZ;
+	value["orient"] = orient;
+
+	Json::Value scale;
+	scale["x"] = ScaleX;
+	scale["y"] = ScaleY;
+	scale["z"] = ScaleZ;
+	value["scale"] = scale;
+
+	value["flags"] = Flags;
+	value["layer"] = Layer;
+	value["patrolSpeed"] = patrolSpeed;
+	value["patrolEvent"] = patrolEvent;
+
+	if(extraData != NULL) {
+		Json::Value extra;
+
+		extra["facing"] = extraData->facing;
+		extra["spawnName"] = extraData->spawnName;
+		extra["leaseTime"] = extraData->leaseTime;
+		extra["spawnPackage"] = extraData->spawnPackage;
+		extra["mobTotal"] = extraData->mobTotal;
+
+		if(extraData->maxActive != CreatureSpawnDef::DEFAULT_MAXACTIVE)
+			extra["maxActive"] = extraData->maxActive;
+
+		extra["aiModule"] = extraData->aiModule;
+
+		if(extraData->maxLeash != CreatureSpawnDef::DEFAULT_MAXLEASH && extraData->maxLeash != 0)
+			extra["maxLeash"] = extraData->maxLeash;
+
+		extra["loyaltyRadius"] = extraData->loyaltyRadius;
+		extra["wanderRadius"] = extraData->wanderRadius;
+
+		if(extraData->despawnTime != CreatureSpawnDef::DEFAULT_DESPAWNTIME)
+			extra["despawnTime"] = extraData->despawnTime;
+
+		extra["sequential"] = extraData->sequential;
+		extra["spawnLayer"] = extraData->spawnLayer;
+
+		if(extraData->linkCount > 0) {
+			Json::Value links;
+			for(int i = 0; i < extraData->linkCount; i++) {
+				if(extraData->link[i].propID != 0) {
+					Json::Value link;
+					link["prop"] = extraData->link[i].propID;
+					link["type"] = extraData->link[i].type;
+					links[i] = link;
+				}
+			}
+			extra["links"] = links;
+		}
+
+		value["extra"] = extra;
+	}
 }
 
 void SceneryObject::WriteToStream(FILE *file) const

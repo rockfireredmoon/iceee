@@ -68,7 +68,7 @@ Pos=17136.9,1428.11,18314.6
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=#F3183
-aiModule=Bastion_NPC_CatapultFiringAnimation
+aiModule=Bastion_NPC_CatapultFiringAnimation(3397)
 
 [ENTRY]
 ID=1129538

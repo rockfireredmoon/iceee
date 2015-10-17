@@ -414,8 +414,7 @@ void LoadConfig(const char *filename)
 				g_Config.ProgressiveDropRateBonusMultMax = lfr.BlockToFloatC(1);
 			else if(strcmp(NameBlock, "DropRateBonusMultMax") == 0)
 				g_Config.DropRateBonusMultMax = lfr.BlockToFloatC(1);
-			else if(strcmp(NameBlock, "UseIntegerHealth") == 0)
-			{
+			else if(strcmp(NameBlock, "UseIntegerHealth") == 0)	{
 				g_Config.UseIntegerHealth = lfr.BlockToBool(1);
 				StatManager::SetHealthToInteger(g_Config.UseIntegerHealth);
 			}
@@ -473,6 +472,12 @@ void LoadConfig(const char *filename)
 				g_Config.LegacyAccounts = lfr.BlockToBool(1);
 			else if(strcmp(NameBlock, "PublicAPI") == 0)
 				g_Config.PublicAPI = lfr.BlockToBool(1);
+			else if(strcmp(NameBlock, "DirectoryListing") == 0)
+				g_Config.DirectoryListing = lfr.BlockToBool(1);
+			else if(strcmp(NameBlock, "HTTPKeepAlive") == 0)
+				g_Config.HTTPKeepAlive = lfr.BlockToBool(1);
+			else if(strcmp(NameBlock, "LegacyServer") == 0)
+				g_Config.LegacyServer = lfr.BlockToStringC(1, 0);
 			else if(strcmp(NameBlock, "OAuth2Client") == 0) {
 				STRINGLIST output;
 				Util::Split(lfr.BlockToString(1), "|", output);
@@ -712,6 +717,7 @@ GlobalConfigData :: GlobalConfigData()
 
 	PublicAPI = true;
 	LegacyAccounts = false;
+	LegacyServer = "";
 
 	InvalidLoginMessage = "Account not found.  Check username and password.";
 }

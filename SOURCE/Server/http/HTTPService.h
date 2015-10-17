@@ -31,7 +31,7 @@ public:
 	typedef std::map<std::string, std::string> CHECKSUM_MAP;
 	CHECKSUM_MAP mChecksumData;
 	void LoadFromFile(const char *filename);
-	bool MatchChecksum(const std::string &filename, const std::string &checksum);
+	std::string MatchChecksum(const std::string &filename, const std::string &checksum);
 };
 
 class HTTPService

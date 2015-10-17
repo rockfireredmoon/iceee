@@ -6302,6 +6302,26 @@ static void close_connection(struct mg_connection *conn)
     mg_unlock_connection(conn);
 }
 
+void mg_set_as_close(struct mg_connection *conn)
+{
+	conn->must_close = 1;
+}
+
+void mg_set_content_length(struct mg_connection *conn, unsigned long length)
+{
+	conn->content_len = length;
+}
+
+void mg_set_status(struct mg_connection *conn, int status)
+{
+	conn->status_code = status;
+}
+
+void mg_increase_sent_bytes(struct mg_connection *conn, unsigned long bytes)
+{
+	conn->num_bytes_sent += bytes;
+}
+
 void mg_close_connection(struct mg_connection *conn)
 {
 #ifndef NO_SSL

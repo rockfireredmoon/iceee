@@ -612,6 +612,69 @@ void AccountData :: CheckRecoveryRegistrationKey(const char *regkey)
 	}
 }
 
+
+void AccountData :: ReadFromJSON(Json::Value &value)
+{
+	strcpy(Name, value.get("name", "").asCString());
+	ID = value.get("id", 0).asInt();
+
+	characterCache.cacheData.clear();
+
+	Json::Value characters = value["characters"];
+	for(Json::Value::iterator it = characters.begin(); it != characters.end() ; ++it) {
+		CharacterCacheEntry cce;
+		cce.display_name = characters.get("name", "").asString();
+		cce.level = characters.get("level", 0).asInt();
+		cce.profession = characters.get("profession", 0).asInt();
+		cce.appearance = characters.get("appearance", 0).asString();
+		cce.eq_appearance = characters.get("eqAppearance", 0).asString();
+		characterCache.cacheData.push_back(cce);
+	}
+	SuspendDurationSec = value["suspend"].asLargestUInt();
+	SuspendTimeSec = value["suspended"].asLargestUInt();
+	strcpy(LastLogOn, value["logon"].asCString());
+	LastLogOnTimeSec = value["logonTime"].asLargestUInt();
+	ConsecutiveDaysLoggedIn = value["days"].asInt();
+	Credits = value["credits"].asInt();
+	DeliveryBoxSlots = value["deliveryBoxes"].asInt();
+	MaxCharacters = value["max"].asInt();
+	GroveName = value["grove"].asString();
+
+//	ID = value["id"];
+}
+
+void AccountData :: WriteToJSON(Json::Value &value)
+{
+	value["name"] = Name;
+	value["id"] = ID;
+
+	Json::Value characters;
+	for(std::vector<CharacterCacheEntry>::iterator it = characterCache.cacheData.begin(); it != characterCache.cacheData.end(); ++it) {
+		CharacterCacheEntry cce = *it;
+		Json::Value character;
+		character["name"] = cce.display_name;
+		character["level"] = cce.level;
+		character["profession"] = cce.profession;
+		character["appearance"] = cce.appearance;
+		character["eqAppearance"] = cce.eq_appearance;
+		characters[cce.display_name] = character;
+	}
+	for(int i = 0 ; i < MAX_CHARACTER_SLOTS; i++) {
+		if(CharacterSet[i] > 0)
+			characters.append(CharacterSet[i]);
+	}
+	value["characters"] = characters;
+	value["suspend"] = Json::UInt64(SuspendDurationSec);
+	value["suspended"] = Json::UInt64(SuspendTimeSec);
+	value["logon"] = LastLogOn;
+	value["logonTime"] = Json::UInt64(LastLogOnTimeSec);
+	value["days"] = ConsecutiveDaysLoggedIn;
+	value["credits"] = Credits;
+	value["deliveryBoxes"] = DeliveryBoxSlots;
+	value["grove"] = GroveName;
+	value["max"] = MaxCharacters;
+}
+
 AccountManager :: AccountManager()
 {
 	NextCharacterID = DEFAULT_CHARACTER_ID;

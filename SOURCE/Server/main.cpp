@@ -1396,6 +1396,7 @@ void SendDebugPings(void)
 
 char *LogMessage(const char *format, ...)
 {
+	g_Log.string_cs.Enter("StringList::AddMessage");
 	va_list args;
 	va_start (args, format);
 	//vsnprintf(LogBuffer, maxSize, format, args);
@@ -1403,6 +1404,7 @@ char *LogMessage(const char *format, ...)
 	va_end (args);
 
 	g_Log.AddMessage(LogBuffer);
+	g_Log.string_cs.Leave();
 
 	return LogBuffer;
 }

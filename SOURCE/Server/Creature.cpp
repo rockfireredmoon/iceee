@@ -7315,7 +7315,21 @@ void CreatureInstance :: PlayerLoot(int level, std::vector<DailyProfile> profile
 			break;
 		}
 		case RewardType::ITEM:
-			loot.AddItem(profile.itemReward.itemIDs[randmod(profile.itemReward.itemIDs.size())]);
+			ItemDef *item = NULL;
+			int itemID = 0;
+
+			// Have 10 attempts at getting a valid item.
+			for(int i = 0 ; i < 10; i++) {
+				itemID = profile.itemReward.itemIDs[randmod(profile.itemReward.itemIDs.size())];
+				item = g_ItemManager.GetPointerByID(itemID);
+				if(item != NULL) {
+					loot.AddItem(itemID);
+					break;
+				}
+			}
+			if(item == NULL) {
+				g_Log.AddMessageFormat("[WARNING] An item (%d) exists in the daily loot table that does not exist. Player wi", itemID);
+			}
 			break;
 		}
 	}

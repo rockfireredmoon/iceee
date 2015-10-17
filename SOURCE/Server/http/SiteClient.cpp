@@ -15,20 +15,17 @@
  * along with TAWD.  If not, see <http://www.gnu.org/licenses/
  */
 
-#ifndef WEBAUTHENTICATION_H
-#define WEBAUTHENTICATION_H
+#include "SiteClient.h"
 
-#include "Auth.h"
+//
+// SiteClient
+//
 
-class ServiceAuthenticationHandler : public AuthHandler {
-public:
-	ServiceAuthenticationHandler();
-	~ServiceAuthenticationHandler();
-	AccountData *onAuthenticate(SimulatorThread *sim, std::string loginName, std::string authorizationHash);
-private:
-	void transferGroves(AccountData *account);
-};
+SiteClient::SiteClient(std::string url) {
+	mUrl = url;
+}
 
 
-#endif
-
+bool SiteClient::sendPrivateMessage(std::string sender, std::string recipient, std::string message) {
+	return true;
+}

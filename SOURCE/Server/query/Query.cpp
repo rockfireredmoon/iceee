@@ -15,20 +15,32 @@
  * along with TAWD.  If not, see <http://www.gnu.org/licenses/
  */
 
-#ifndef WEBAUTHENTICATION_H
-#define WEBAUTHENTICATION_H
+#include "Query.h"
+#include "Lobby.h"
 
-#include "Auth.h"
+//
+// CommandHandler
+//
+QueryHandler::~QueryHandler() {
+}
 
-class ServiceAuthenticationHandler : public AuthHandler {
-public:
-	ServiceAuthenticationHandler();
-	~ServiceAuthenticationHandler();
-	AccountData *onAuthenticate(SimulatorThread *sim, std::string loginName, std::string authorizationHash);
-private:
-	void transferGroves(AccountData *account);
-};
+//
+// CommandManager
+//
 
+QueryManager g_QueryManager;
 
-#endif
+QueryManager::QueryManager() {
+	commandHandlers["util.ping"] = new LobbyPingHandler();
+	commandHandlers["account.tracking"] = new AccountTrackingHandler();
+}
 
+QueryManager::~QueryManager() {
+}
+
+QueryHandler *QueryManager :: getCommandHandler(std::string command)
+{
+	if(commandHandlers.find(command) == commandHandlers.end())
+		return NULL;
+	return commandHandlers[command];
+}

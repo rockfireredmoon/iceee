@@ -87,6 +87,8 @@ tawd_SOURCES = md5.cc \
 	http/CAR.cpp \
 	http/OAuth2.cpp \
 	http/TAWApi.cpp \
+	http/SiteClient.cpp \
+	http/TAWClient.cpp \
 	http/LegacyAccounts.cpp \
 	http/WebControlPanel.cpp \
 	http/CivetServer.cpp \
@@ -95,6 +97,8 @@ tawd_SOURCES = md5.cc \
 	auth/Auth.cpp \
 	auth/DevAuthentication.cpp \
 	auth/ServiceAuthentication.cpp \
+	query/Query.cpp \
+	query/Lobby.cpp \
 	Ability2.h \
 	AbilityTime.h \
 	Account.h \
@@ -199,6 +203,8 @@ tawd_SOURCES = md5.cc \
 	http/HTTP.h \
 	http/OAuth2.h \
 	http/TAWApi.h \
+	http/TAWClient.h \
+	http/SiteClient.h \
 	http/CivetServer.h \
 	http/civetweb.h \
 	http/HTTPService.h \
@@ -207,7 +213,9 @@ tawd_SOURCES = md5.cc \
 	http/WebControlPanel.h \
 	auth/Auth.h \
 	auth/DevAuthentication.h \
-	auth/ServiceAuthentication.h
+	auth/ServiceAuthentication.h \
+	query/Query.h \
+	query/Lobby.h
 	
 
 if WINSERVICE
@@ -293,6 +301,8 @@ tawdsvc_SOURCES = md5.cc \
 	http/CAR.cpp \
 	http/OAuth2.cpp \
 	http/TAWApi.cpp \
+	http/TAWClient.cpp \
+	http/SiteClient.cpp \
 	http/CivetServer.cpp \
 	http/civetweb.c \
 	http/HTTPService.cpp \
@@ -301,6 +311,8 @@ tawdsvc_SOURCES = md5.cc \
 	auth/Auth.cpp \
 	auth/DevAuthentication.cpp \
 	auth/ServiceAuthentication.cpp \
+	query/Query.cpp \
+	query/Lobby.cpp \
 	Ability2.h \
 	AbilityTime.h \
 	Account.h \
@@ -405,6 +417,8 @@ tawdsvc_SOURCES = md5.cc \
 	http/HTTP.h \
 	http/OAuth2.h \
 	http/TAWApi.h \
+	http/TAWClient.h \
+	http/SiteClient.h \
 	http/CivetServer.h \
 	http/civetweb.h \
 	http/HTTPService.h \
@@ -413,5 +427,7 @@ tawdsvc_SOURCES = md5.cc \
 	http/WebControlPanel.h \
 	auth/Auth.h \
 	auth/DevAuthentication.h \
-	auth/ServiceAuthentication.h
+	auth/ServiceAuthentication.h \
+	query/Query.h \
+	query/Lobby.h
 endif

@@ -654,6 +654,118 @@ void ZoneDefInfo :: CreateDefaultGrovePermission(void)
 	PendingChanges++;
 }
 
+void ZoneDefInfo :: ReadFromJSON(Json::Value &value) {
+
+	mID = value.get("id", 0).asInt();
+	mAccountID = value.get("account", 0).asInt();
+	mDesc = value.get("description", "").asString();
+	mName = value.get("name", "").asString();
+	mTerrainConfig = value.get("terrain", "").asString();
+	mEnvironmentType = value.get("environment", "").asString();
+	mMapName = value.get("map", "").asString();
+	mRegions = value.get("regions", "").asString();
+	mShardName = value.get("shard", "").asString();
+	mWarpName = value.get("warp", "").asString();
+
+	Json::Value defLoc = value["def"];
+	DefX = defLoc.get("x", 0).asInt();
+	DefY = defLoc.get("y", 0).asInt();
+	DefZ = defLoc.get("z", 0).asInt();
+
+	mPageSize = value["page"].asInt();
+	mMode = value["mode"].asInt();
+	mReturnZone = value["return"].asInt();
+	mPersist = value["persist"].asBool();
+	mInstance = value["instance"].asBool();
+	mGrove = value["grove"].asBool();
+	mArena = value["arena"].asBool();
+	mGuildHall = value["hall"].asBool();
+	mEnvironmentCycle = value["cycle"].asBool();
+	mAudit = value["audit"].asBool();
+
+	mMaxAggroRange = value["maxAggro"].asInt();
+	mMaxLeashRange = value["maxLeash"].asInt();
+
+	mDropRateProfile = value.get("profile", "").asString();
+
+	Json::Value filter = value["filter"];
+	mPlayerFilterType = filter.get("type", 0).asInt();
+	Json::Value filteredCreatures = filter["creatureDefs"];
+	mPlayerFilterID.clear();
+	for(Json::Value::iterator it = filteredCreatures.begin(); it != filteredCreatures.end(); ++it) {
+		mPlayerFilterID.push_back((*it).asInt());
+	}
+
+	mTileEnvironment.clear();
+	Json::Value envTiles = value["environmentTiles"];
+	for(Json::Value::iterator it = envTiles.begin(); it != envTiles.end(); ++it) {
+		Json::Value item = *it;
+		Json::Value key = item["key"];
+		EnvironmentTileKey k;
+		k.ReadFromJSON(key);
+		mTileEnvironment[k] = item["environment"].asString();
+	}
+}
+
+void ZoneDefInfo :: WriteToJSON(Json::Value &value) {
+	value["id"] = mID;
+	value["account"] = mAccountID;
+	value["description"] = mDesc;
+	value["name"] = mName;
+	value["terrain"] = mTerrainConfig;
+	value["environment"] = mEnvironmentType;
+	value["map"] = mMapName;
+	value["regions"] = mRegions;
+	value["shard"] = mShardName;
+	value["warp"] = mWarpName;
+
+	Json::Value defLoc;
+	defLoc["x"] = DefX;
+	defLoc["y"] = DefY;
+	defLoc["z"] = DefZ;
+	value["def"] = defLoc;
+
+	value["page"] = mPageSize;
+	value["mode"] = mMode;
+	value["return"] = mReturnZone;
+	value["persist"] = mPersist;
+	value["instance"] = mInstance;
+	value["grove"] = mGrove;
+	value["arena"] = mArena;
+	value["hall"] = mGuildHall;
+	value["cycle"] = mEnvironmentCycle;
+	value["audit"] = mAudit;
+	value["maxAggro"] = mMaxAggroRange;
+	value["maxLeash"] = mMaxLeashRange;
+
+	if(mPlayerFilterID.size() > 0) {
+		Json::Value filter;
+		filter["type"] = mPlayerFilterType;
+		Json::Value creatureDefs;
+		for(std::vector<int>::iterator it = mPlayerFilterID.begin(); it != mPlayerFilterID.end(); ++it)
+			creatureDefs.append(*it);
+		filter["creatureDefs"] = creatureDefs;
+		value["filter"] = filter;
+	}
+
+	value["profile"] = mDropRateProfile;
+
+	if(mTileEnvironment.size() > 0) {
+		Json::Value envtiles;
+		for(std::map<EnvironmentTileKey, std::string>::iterator it = mTileEnvironment.begin(); it != mTileEnvironment.end(); ++it) {
+			Json::Value item;
+			Json::Value key;
+			EnvironmentTileKey k = it->first;
+			k.WriteToJSON(key);
+			item["key"] = key;
+			item["environment"] = it->second;
+			value["tile"] = item;
+		}
+		value["environmentTiles"] = envtiles;
+	}
+
+}
+
 ZoneDefManager :: ZoneDefManager()
 {
 	mNextAutosaveTime = 0;
@@ -926,6 +1038,26 @@ ZoneDefInfo * ZoneDefManager :: GetPointerByPartialWarpName(const char *name)
 	return retptr;
 }
 
+std::string ZoneDefManager :: GetNextGroveName(std::string groveName)
+{
+	/* Find the next available grove name. The accounts original grove name is
+	 * used, and a number appended until a grove with that name is not found.
+	 */
+	int index = 1;
+	char name[256];
+	name[0] = 0;
+	ZoneDefInfo *zoneDef = NULL;
+	while(index < 999) {
+		Util::SafeFormat(name, sizeof(name), "%s%d", groveName.c_str(), index);
+		zoneDef = g_ZoneDefManager.GetPointerByExactWarpName(name);
+		if(zoneDef == NULL) {
+			break;
+		}
+		index++;
+	}
+	return name;
+}
+
 ZoneDefInfo * ZoneDefManager :: GetPointerByExactWarpName(const char *name)
 {
 	ZoneDefInfo *retptr = NULL;
@@ -1105,11 +1237,50 @@ int ZoneDefManager :: CheckAutoSave(bool force)
 	return saveOps;
 }
 
+int ZoneDefManager :: EnumerateGroveIds(int searchAccountID, int characterDefId, std::vector<int>& groveIdList)
+{
+	cs.Enter("ZoneDefManager::EnumerateGroveIds");
+	ZONEINDEX_ITERATOR it;
+	CharacterData  *cdata = characterDefId == 0 ? NULL : g_CharacterManager.GetPointerByID(characterDefId);
+
+	for(it = mZoneIndex.begin(); it != mZoneIndex.end(); ++it)
+	{
+		if(it->second.mAccountID == searchAccountID)
+		{
+			groveIdList.push_back(it->second.mID);
+		}
+		else
+		{
+			if(cdata != NULL)
+			{
+				// Check if the zone is a guild hall for a guild the character is in
+				for(unsigned int i = 0 ; i < cdata->guildList.size(); i++)
+				{
+					int guildDefID = cdata->guildList[0].GuildDefID;
+					GuildDefinition *gDef = g_GuildManager.GetGuildDefinition(guildDefID);
+					if(gDef == NULL) {
+						g_Log.AddMessageFormat("Guild definition %d does not exist", guildDefID);
+					}
+					else {
+						if(it->second.mID == gDef->guildHallZone && cdata->IsInGuildAndHasValour(guildDefID, 0))
+						{
+							groveIdList.push_back(it->second.mID);
+							break;
+						}
+					}
+				}
+			}
+		}
+	}
+	cs.Leave();
+	return static_cast<int>(groveIdList.size());
+}
+
 int ZoneDefManager :: EnumerateGroves(int searchAccountID, int characterDefId, std::vector<std::string>& groveList)
 {
 	cs.Enter("ZoneDefManager::EnumerateGroves");
 	ZONEINDEX_ITERATOR it;
-	CharacterData  *cdata = g_CharacterManager.GetPointerByID(characterDefId);
+	CharacterData  *cdata = characterDefId == 0 ? NULL : g_CharacterManager.GetPointerByID(characterDefId);
 
 	for(it = mZoneIndex.begin(); it != mZoneIndex.end(); ++it)
 	{
@@ -1119,19 +1290,22 @@ int ZoneDefManager :: EnumerateGroves(int searchAccountID, int characterDefId, s
 		}
 		else
 		{
-			// Check if the zone is a guild hall for a guild the character is in
-			for(unsigned int i = 0 ; i < cdata->guildList.size(); i++)
+			if(cdata != NULL)
 			{
-				int guildDefID = cdata->guildList[0].GuildDefID;
-				GuildDefinition *gDef = g_GuildManager.GetGuildDefinition(guildDefID);
-				if(gDef == NULL) {
-					g_Log.AddMessageFormat("Guild definition %d does not exist", guildDefID);
-				}
-				else {
-					if(it->second.mID == gDef->guildHallZone && cdata->IsInGuildAndHasValour(guildDefID, 0))
-					{
-						groveList.push_back(it->second.mWarpName);
-						break;
+				// Check if the zone is a guild hall for a guild the character is in
+				for(unsigned int i = 0 ; i < cdata->guildList.size(); i++)
+				{
+					int guildDefID = cdata->guildList[0].GuildDefID;
+					GuildDefinition *gDef = g_GuildManager.GetGuildDefinition(guildDefID);
+					if(gDef == NULL) {
+						g_Log.AddMessageFormat("Guild definition %d does not exist", guildDefID);
+					}
+					else {
+						if(it->second.mID == gDef->guildHallZone && cdata->IsInGuildAndHasValour(guildDefID, 0))
+						{
+							groveList.push_back(it->second.mWarpName);
+							break;
+						}
 					}
 				}
 			}
