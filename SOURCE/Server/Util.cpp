@@ -438,14 +438,12 @@ int PrepExt_SendEmoteControl(char *buffer, int creatureID, int emoteEvent)
 	return wpos;
 }
 
-int PrepExt_ModStopSwimFlag(char *buffer)
+int PrepExt_ModStopSwimFlag(char *buffer, bool swim)
 {
 	int wpos = 0;
 	wpos += PutByte(&buffer[wpos], 100);   //_handleModMessage   REQUIRES MODDED CLIENT
 	wpos += PutShort(&buffer[wpos], 0);    //Reserve for size
-
-	wpos += PutByte(&buffer[wpos], MODMESSAGE_EVENT_STOP_SWIM);  //Event code
-
+	wpos += PutByte(&buffer[wpos], swim ? MODMESSAGE_EVENT_START_SWIM : MODMESSAGE_EVENT_STOP_SWIM);  //Event code
 	PutShort(&buffer[1], wpos - 3);       //Set message size
 	return wpos;
 }

@@ -286,6 +286,14 @@ function Connection::_handleModMessage(data)
 			::_avatar.mController.onStopSwimming();
 		}
 		break;
+		
+	case 41:  //Force start swimming. 
+		if(::_avatar)
+		{
+			::_avatar.mSwimming = true;
+			::_avatar.mController.onStartSwimming(0);
+		}
+		break;
 	}
 }
 

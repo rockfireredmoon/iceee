@@ -162,6 +162,7 @@ public:
 	void handle_lobby_authenticate(void);
 	void handle_lobby_selectPersona(void);
 	void handle_lobby_query(void);
+	void handle_swimStateChange(void);
 	void handle_inspectItemDef(void);
 	void handle_updateVelocity(void);
 	void handle_communicate(void);
