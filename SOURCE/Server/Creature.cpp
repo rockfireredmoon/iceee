@@ -1684,11 +1684,16 @@ void CreatureInstance :: AddBuff(int buffSource, int buffCategory, int abTier, i
 			newMod.clientAmount = calcAmount;
 		}
 
-		activeStatMod.push_back(newMod);
+		PushStatMod(newMod);
+
 
 		AddBaseStatMod(statID, calcAmount);
 	}
 	pendingOperations.UpdateList_Add(CREATURE_UPDATE_MOD | CREATURE_UPDATE_STAT, this, statID);
+}
+
+void CreatureInstance :: PushStatMod(ActiveStatMod &newMod) {
+	activeStatMod.push_back(newMod);
 }
 
 void CreatureInstance :: RemoveStatModsBySource(int buffSource)
@@ -1699,8 +1704,8 @@ void CreatureInstance :: RemoveStatModsBySource(int buffSource)
 	{
 		if(activeStatMod[pos].sourceType == buffSource)
 		{
-			RemoveBuffIndex(pos);
-			count++;
+				RemoveBuffIndex(pos);
+				count++;
 		}
 		else
 			pos++;
@@ -1724,7 +1729,7 @@ ActiveBuff * CreatureInstance :: AddMod(unsigned char tier, int buffCategory, sh
 	newMod.expireTime = buff->castEndTimeMS;
 
 	// Signal update of status effects
-	activeStatMod.push_back(newMod);
+	PushStatMod(newMod);
 	pendingOperations.UpdateList_Add(CREATURE_UPDATE_MOD, this, 0);
 
 	return buff;
@@ -1740,7 +1745,7 @@ void CreatureInstance :: AddItemStatMod(int itemID, int statID, float amount)
 	newMod.amount = amount;
 	newMod.clientAmount = newMod.amount;
 	newMod.expireTime = PlatformTime::MAX_TIME;
-	activeStatMod.push_back(newMod);
+	PushStatMod(newMod);
 	
 	AddBaseStatMod(statID, amount);
 }
@@ -1922,10 +1927,9 @@ void CreatureInstance :: UpdateBaseStatMinimum(int statID, float amount)
 // responsible for iterating or otherwise correctly determinating a valid index.
 void CreatureInstance :: RemoveBuffIndex(size_t index)
 {
-
-	//			g_AbilityManager.ActivateAbility(this, abilityID, EventType::onDeactivate, &ab[0]);
-	g_AbilityManager.ActivateAbility(this, activeStatMod[index].abilityID, EventType::onDeactivate, &ab[0]);
-
+	if(activeStatMod[index].abilityID != 0) {
+		g_AbilityManager.ActivateAbility(this, activeStatMod[index].abilityID, EventType::onDeactivate, &ab[0]);
+	}
 	SubtractBaseStatMod(activeStatMod[index].modStatID, activeStatMod[index].amount);
 	activeStatMod.erase(activeStatMod.begin() + index);
 }
@@ -1936,22 +1940,10 @@ void CreatureInstance :: RemoveBuffsFromAbility(int abilityID, bool send)
 {
 	size_t i = 0;
 	while(i < activeStatMod.size())
-	{
 		if(activeStatMod[i].abilityID == abilityID)
-		{
-			//Hack for some experimental transformation ability
-//			if(activeStatMod[i].abilityGroupID == 544)
-//				_RemoveStatusList(StatusEffects::TRANSFORMED);
-
-//			g_AbilityManager.ActivateAbility(this, abilityID, EventType::onDeactivate, &ab[0]);
-
 			RemoveBuffIndex(i);
-		}
 		else
-		{
 			i++;
-		}
-	}
 	buffManager.RemoveBuff(abilityID);
 
 	if(send == true)

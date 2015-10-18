@@ -440,6 +440,7 @@ public:
 	void RemoveBuffsFromAbility(int abilityID, bool send);
 	void RemoveBuffIndex(size_t index);
 	void RemoveAllBuffs(bool send);
+	void PushStatMod(ActiveStatMod &mod);
 	void RemoveAbilityBuffTypeExcept(int buffCategory, int abilityID, int abilityGroupID);
 	bool RemoveAbilityBuffWithStat(int statID, float sign);
 	void ActivateSavedAbilities(void);
