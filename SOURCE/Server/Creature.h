@@ -416,6 +416,8 @@ public:
 
 	vector<BaseStatData> baseStats;  //Base stats.  New entries are saved to this list when a unique Add() is made.
 
+	bool swimming; // Whether the player is swimming
+
 	ActiveBuff * AddMod(unsigned char tier, int buffCategory, short abID, short abgID, double durationSec);
 	void AttachItem(const char *type, const char *node);
 	void DetachItem(const char *type, const char *node);
@@ -509,6 +511,7 @@ public:
 	bool isTargetInCone(CreatureInstance * target, double amount);
 	void RegisterHostility(CreatureInstance *attacker, int hostility);
 	void SetCombatStatus(void);
+	void Untransform(void);
 	int GetOrbRegenerationTime(float regenFactor);
 	void CheckUpdateTimers(void);
 	void CheckLootTimers(void);

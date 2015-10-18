@@ -12,6 +12,7 @@ const int MODMESSAGE_EVENT_PING_STOP = 21;
 const int MODMESSAGE_EVENT_PING_QUERY = 22;
 const int MODMESSAGE_EVENT_GENERIC_REQUEST = 23;
 const int MODMESSAGE_EVENT_STOP_SWIM = 40;
+const int MODMESSAGE_EVENT_START_SWIM = 41;
 const int MODMESSAGE_EVENT_POPUP_MSG = 30;
 
 extern char MessageBuf[128];
@@ -60,7 +61,7 @@ int PrepExt_SendEffect(char *buffer, int sourceID, const char *effectName, int t
 int PrepExt_SendHeartbeatMessage(char *buffer, unsigned long elapsedMilliseconds);
 int PrepExt_SendAdvancedEmote(char *buffer, int creatureID, const char *emoteName, float emoteSpeed, int loop);
 int PrepExt_SendEmoteControl(char *buffer, int creatureID, int emoteEvent);
-int PrepExt_ModStopSwimFlag(char *buffer);
+int PrepExt_ModStopSwimFlag(char *buffer, bool swim);
 int PrepExt_TradeCurrencyOffer(char *buffer, int offeringPlayerID, int tradeAmount);
 int PrepExt_CreatureEventPortalRequest(char *buffer, int actorID, const char *casterName, const char *locationName);
 int PrepExt_CreatureEventVaultSize(char *buffer, int actorID, int vaultSize, int deliverySlots);

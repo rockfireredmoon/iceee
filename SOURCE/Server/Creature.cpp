@@ -494,6 +494,8 @@ void CreatureInstance :: Clear(void)
 	transformAbilityId = 0;
 
 	LastUseDefID = 0;
+
+	swimming = false;
 }
 
 bool CreatureInstance :: KillAI(void)
@@ -682,6 +684,8 @@ void CreatureInstance :: CopyFrom(CreatureInstance *source)
 	transformCreatureId = source->transformCreatureId;
 
 	LastUseDefID = source->LastUseDefID;
+
+	swimming = source->swimming;
 }
 
 void CreatureInstance :: CopyBuffsFrom(CreatureInstance *source)
@@ -1234,6 +1238,11 @@ void CreatureInstance :: SetCombatStatus(void)
 		return;
 	Status(StatusEffects::IN_COMBAT, 5);
 	Status(StatusEffects::IN_COMBAT_STAND, 5);
+	Untransform();
+}
+
+void CreatureInstance :: Untransform(void)
+{
 	if(transformCreatureId != 0) {
 		if(transformAbilityId != 0)
 			RemoveBuffsFromAbility(transformAbilityId, true);
@@ -1241,7 +1250,6 @@ void CreatureInstance :: SetCombatStatus(void)
 			CAF_Untransform();
 	}
 }
-
 
 bool CreatureInstance :: NotSilenced(void)
 {
@@ -8844,6 +8852,12 @@ int PrepExt_UpdateAppearance(char *buffer, CreatureInstance *cInst)
 	PutShort(&buffer[spos], r);           //Write number of stats
 
 	PutShort(&buffer[1], wpos - 3);       //Set message size
+
+	/* If creature was swimming, reset their swim state */
+	if(cInst->swimming) {
+		wpos += PrepExt_ModStopSwimFlag(&buffer[wpos], false);
+//		wpos += PrepExt_ModStopSwimFlag(&buffer[wpos], true);
+	}
 
 	return wpos;
 }

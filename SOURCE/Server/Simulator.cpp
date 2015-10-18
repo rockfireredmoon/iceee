@@ -1131,7 +1131,7 @@ void SimulatorThread :: HandleGameMsg(int msgType)
 	case 5: handle_inspectCreature(); break;
 	case 6: handle_abilityActivate(); break;
 	case 9: handle_inspectItemDef(); break;
-	case 10: break;  //This message is sent when the player transitions between swim/non-swim states in the client.  No effect on the server side so just ignore it so it doesn't generate error messages.
+	case 10: handle_swimStateChange(); break;
 	case 11: handle_disconnect(); break;
 
 	case 19: handle_debugServerPing(); break;       //Sent by a modded client only.
@@ -1694,6 +1694,14 @@ void SimulatorThread :: RespondPrefGet(PreferenceContainer *prefSet)
 	}
 
 	PutShort(&SendBuf[1], WritePos - 3);
+}
+void SimulatorThread :: handle_swimStateChange(void)
+{
+	bool swim = GetByte(&readPtr[ReadPos], ReadPos) == 1;
+	creatureInst->swimming = swim;
+	if(swim && creatureInst->IsTransformed()) {
+		creatureInst->Untransform();
+	}
 }
 
 void SimulatorThread :: handle_inspectItemDef(void)
@@ -3116,14 +3124,14 @@ void SimulatorThread :: SetPosition(int xpos, int ypos, int zpos, int update)
 			int size = PrepExt_CreaturePos(SendBuf, creatureInst);
 			size += PrepExt_GeneralMoveUpdate(&SendBuf[size],creatureInst);
 			if(g_Config.UseStopSwim == true)
-				size += PrepExt_ModStopSwimFlag(&SendBuf[size]);
+				size += PrepExt_ModStopSwimFlag(&SendBuf[size], false);
 			AttemptSend(SendBuf, size);
 		}
 		else
 		{
 			int size = PrepExt_UpdateFullPosition(SendBuf, creatureInst);
 			if(g_Config.UseStopSwim == true)
-				size += PrepExt_ModStopSwimFlag(&SendBuf[size]);
+				size += PrepExt_ModStopSwimFlag(&SendBuf[size], false);
 			creatureInst->actInst->LSendToLocalSimulator(SendBuf, size, creatureInst->CurrentX, creatureInst->CurrentZ);
 		}
 
@@ -3140,6 +3148,8 @@ void SimulatorThread :: UpdateEqAppearance(void)
 	creatureInst->css.SetEqAppearance(pld.charPtr->cdef.css.eq_appearance.c_str());
 
 	int wpos = PrepExt_SendEqAppearance(SendBuf, pld.CreatureDefID, creatureInst->PeekAppearanceEq().c_str());
+	wpos += PrepExt_ModStopSwimFlag(&SendBuf[wpos], false);
+
 	creatureInst->BroadcastLocal(SendBuf, wpos);
 
 	//Stats
