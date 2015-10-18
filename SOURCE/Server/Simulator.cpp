@@ -11939,7 +11939,7 @@ int SimulatorThread :: handle_query_petition_send(void)
 
 int SimulatorThread :: handle_query_marker_del(void)
 {
-	bool ok = CheckPermissionSimple(Perm_Account, Permission_Admin);
+	bool ok = CheckPermissionSimple(Perm_Account, Permission_Admin) || CheckPermissionSimple(Perm_Account, Permission_Builder);
 	if(!ok) {
 		if(pld.zoneDef->mGrove == true && pld.zoneDef->mAccountID != pld.accPtr->ID)
 			ok = true;
@@ -12051,7 +12051,7 @@ int SimulatorThread :: handle_query_gm_spawn(void)
 
 int SimulatorThread :: handle_query_marker_edit(void)
 {
-	bool ok = CheckPermissionSimple(Perm_Account, Permission_Admin);
+	bool ok = CheckPermissionSimple(Perm_Account, Permission_Admin) || CheckPermissionSimple(Perm_Account, Permission_Builder);
 	if(!ok) {
 		if(pld.zoneDef->mGrove == true && pld.zoneDef->mAccountID != pld.accPtr->ID)
 			ok = true;
@@ -12426,7 +12426,7 @@ int SimulatorThread :: handle_query_item_market_list(void)
 
 int SimulatorThread :: handle_query_marker_list(void)
 {
-	if(!CheckPermissionSimple(Perm_Account, Permission_Admin))
+	if(!CheckPermissionSimple(Perm_Account, Permission_Admin) && !CheckPermissionSimple(Perm_Account, Permission_Builder))
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
 	if(query.args[0] == "zone") {
 		// Do a reload so we get external updates too
