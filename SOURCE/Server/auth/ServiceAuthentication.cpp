@@ -358,6 +358,13 @@ AccountData * ServiceAuthenticationHandler::onAuthenticate(SimulatorThread *sim,
 						accPtr->PendingMinorUpdates++;
 					}
 
+					// Item give
+					bool needItemGive = sage || admin;
+					if(needItemGive != accPtr->HasPermission(Perm_Account, Permission_ItemGive)) {
+						accPtr->SetPermission(Perm_Account, "itemgive", needItemGive);
+						accPtr->PendingMinorUpdates++;
+					}
+
 					// Tweakers
 					bool needClientTweak = tweaker || admin || sage || builder || developer;
 					if(needClientTweak != accPtr->HasPermission(Perm_Account, Permission_TweakClient)) {
