@@ -495,7 +495,7 @@ RewardItem.1=5328,1,0
 ID=759
 Requires=756
 Title=The Lost Brother
-BodyText=Hail! I have heard of you deeds and have hope that you can assist me as well? My brother Anton has gone missing. I fear he may in fact already be dead. I told him not to go but he insisted it was "in the interest of learning"! You see he is an aspiring mage and had a strong belief that the large crystal shard to the south would help him unlock some hidden power deep inside him. My attempts to stop him from going were in vain. It has been almost a week and I have not heard from him! Please seek out my brother - may he still live! If indeed he has passed then I beg of you bring me some proof of his passing! Please, if you can spare the time, help me!
+BodyText=Hail! I have heard of your deeds and have hope that you can assist me as well? My brother Anton has gone missing. I fear he may in fact already be dead. I told him not to go but he insisted it was "in the interest of learning"! You see he is an aspiring mage and had a strong belief that the large crystal shard to the south would help him unlock some hidden power deep inside him. My attempts to stop him from going were in vain. It has been almost a week and I have not heard from him! Please seek out my brother - may he still live! If indeed he has passed then I beg of you bring me some proof of his passing! Please, if you can spare the time, help me!
 CompleteText=My fears realized...sigh...why would he not listen!? Sorry friend but I am
 overcome with grief. Please take this and my thanks for your efforts.  Farewell.
 Level=8
