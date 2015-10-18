@@ -13099,6 +13099,7 @@ int SimulatorThread :: handle_query_mod_setats(void)
 	{
 		int propID = atoi(query.args[i].c_str());
 		const char *assetStr = query.args[i + 1].c_str();
+
 		//SceneryObject *so = g_SceneryManager.GetPropPtr(pld.CurrentZoneID, propID, NULL);
 		SceneryObject *so = g_SceneryManager.GlobalGetPropPtr(pld.CurrentZoneID, propID, NULL);
 		if(so != NULL)
@@ -13118,14 +13119,17 @@ int SimulatorThread :: handle_query_mod_setats(void)
 			SceneryObject replaceProp;
 			replaceProp.copyFrom(so);
 			std::string newAsset = replaceProp.Asset;
-			uint pos = newAsset.find("?ATS=");
+
+			size_t pos = newAsset.find("?ATS=");
 			if(pos != string::npos)
 			{
+
 				newAsset.erase(pos + 5, newAsset.length());  //Erase everything after "?ATS="
 				newAsset.append(atsName);
 			}
 			else
 			{
+
 				newAsset.append("?ATS=");
 				newAsset.append(atsName);
 			}
