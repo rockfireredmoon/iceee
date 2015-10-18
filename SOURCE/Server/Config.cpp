@@ -160,11 +160,19 @@ void LoadConfig(const char *filename)
 			}
 			else if(strcmp(NameBlock, "SimulatorAddress") == 0)
 			{
+				#ifdef LOCALHOST
+				g_Log.AddMessageFormatW(MSG_SHOW, "SimulatorAddress %s in %s is not supported in this edition.", lfr.BlockToString(0), filename);
+				#else
 				strncpy(g_SimulatorAddress, lfr.BlockToString(1), sizeof(g_SimulatorAddress) - 1);
+				#endif
 			}
 			else if(strcmp(NameBlock, "BindAddress") == 0)
 			{
+				#ifdef LOCALHOST
+				g_Log.AddMessageFormatW(MSG_SHOW, "BindAddress %s in %s is not supported in this edition.", lfr.BlockToString(0), filename);
+				#else
 				strncpy(g_BindAddress, lfr.BlockToString(1), sizeof(g_BindAddress) - 1);
+				#endif
 			}
 			else if(strcmp(NameBlock, "SimulatorPort") == 0)
 			{
@@ -675,6 +683,7 @@ GlobalConfigData :: GlobalConfigData()
 	SMTPSender = "";
 
 	InvalidLoginMessage = "Account not found.  Check username and password.";
+
 }
 
 GlobalConfigData :: ~GlobalConfigData()

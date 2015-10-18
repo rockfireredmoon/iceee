@@ -1,18 +1,36 @@
-dnl Process this file with autoconf to produce a configure script.
-AC_INIT(planetforeverd, 1.0, emerald.icemoon@gmail.com)
+dnl
+dnl Initialisation
+dnl
+
+AC_INIT(soad, 1.0, emerald.icemoon@gmail.com)
+	
 AC_CONFIG_AUX_DIR(config)
 AC_CONFIG_MACRO_DIR([m4])
-AM_INIT_AUTOMAKE([subdir-objects])
-AC_PROG_CXX
-LT_INIT
-AC_CONFIG_FILES([
-	Makefile
-	SOURCE/Makefile
-	SOURCE/squirrel/Makefile
-	SOURCE/squirrel/squirrel/Makefile
-	SOURCE/squirrel/sqstdlib/Makefile
-	SOURCE/Server/Makefile
-])
+AM_INIT_AUTOMAKE([subdir-objects foreign])
+
+dnl
+dnl Include external macros
+dnl
+
+m4_include([ax_pthread.m4])
+m4_include([libcurl.m4])
+m4_include([ax_cxx_compile_stdcxx_11.m4])
+
+
+dnl
+dnl Environment detectection
+dnl 
+AC_CANONICAL_HOST
+case $host_os in
+  *mingw*) mingw=true ;;
+  		*) mingw=false;;
+esac
+
+dnl
+dnl Arguments
+dnl
+
+
 AC_ARG_ENABLE(debug,
 AS_HELP_STRING([--enable-debug],
                [enable debugging, default: no]),
@@ -23,4 +41,130 @@ AS_HELP_STRING([--enable-debug],
 esac],
 [debug=false])
 AM_CONDITIONAL(DEBUG, test x"$debug" = x"true")
+
+AC_ARG_ENABLE(winservice,
+AS_HELP_STRING([--enable-winservice],
+               [enable windows service, default: $mingw ]),
+[case "${enableval}" in
+             yes) winservice=true ;;
+             no)  winservice=false ;;
+             *)   AC_MSG_ERROR([bad value ${enableval} for --enable-winservice]) ;;
+esac],
+[winservice=$mingw])
+
+AC_ARG_ENABLE(selfcontained,
+AS_HELP_STRING([--enable-selfcontained],
+               [link statically to produce self contained executable: $mingw ]),
+[case "${enableval}" in
+             yes) selfcontained=true ;;
+             no)  selfcontained=false ;;
+             *)   AC_MSG_ERROR([bad value ${enableval} for --enable-selfcontained]) ;;
+esac],
+[selfcontained=$mingw])
+
+AC_ARG_ENABLE(localhost,
+AS_HELP_STRING([--enable-localhost],
+               [produce a build only capable of listening on localhost: $mingw ]),
+[case "${enableval}" in
+             yes) localhost=true ;;
+             no)  localhost=false ;;
+             *)   AC_MSG_ERROR([bad value ${enableval} for --enable-localhost]) ;;
+esac],
+[localhost=false])
+	
+
+dnl
+dnl Secondary initialisation
+dnl
+
+if test "x${selfcontained}" = xtrue; then
+	AM_DISABLE_SHARED
+	AM_ENABLE_STATIC
+fi
+
+
+AC_PROG_CXX
+LT_INIT
+AC_SUBST([LIBTOOL_DEPS])
+AC_PROG_LIBTOOL
+
+dnl
+dnl Token replacment
+dnl
+AM_CONDITIONAL([MINGW], [test x$mingw = xtrue])
+AM_CONDITIONAL([WINSERVICE], [test x$winservice = xtrue])
+
+AX_CXX_COMPILE_STDCXX_11([noext],[mandatory])
+
+dnl
+dnl Compiler and link setup
+dnl
+
+# Stops Civet trying to dynamically load OpenSSL
+#CPPFLAGS="$CPPFLAGS -DNO_SSL_DL=1"
+if test "x${mingw}" = xtrue; then
+	CPPFLAGS="$CPPFLAGS -DWINDOWS_PLATFORM=1"
+fi
+
+# Static linking
+static=""
+if test "x${selfcontained}" = xtrue; then
+	CPPFLAGS="$CPPFLAGS -DPTW32_STATIC_LIB"
+	if test "x${mingw}" = xtrue; then
+		LDFLAGS="-static-libgcc -static-libstdc++ $LDFLAGS"
+	fi
+fi
+
+# Localhost
+if test "x${localhost}" = xtrue; then
+	CPPFLAGS="$CPPFLAGS -DLOCALHOST=1"
+fi
+
+LIBCURL_CHECK_CONFIG()
+CPPFLAGS="$CPPFLAGS $LIBCURL_CPPFLAGS"
+LIBS="$LIBS $LIBCURL"
+
+AX_PTHREAD([has_pthread=true],[has_pthread=false])
+if test "x${has_pthread}" != xtrue; then
+	AC_MSG_ERROR([could not find a pthreads library])
+fi
+CPPFLAGS="$CPPFLAGS $PTHREAD_CFLAGS -DHAS_PTHREAD=1"
+LIBS="$LIBS $PTHREAD_LIBS $PTHREAD_CFLAGS"
+#LDFLAGS="$LD_FLAGS $PTHREAD_CFLAGS $PTHREAD_LIBS "
+
+if test "x${mingw}" != xtrue; then
+	AC_CHECK_LIB([ws2_32],[ws2=true],[ws=false])
+fi
+
+dnl
+dnl Tail
+dnl
+
+AC_CONFIG_FILES([
+	Makefile
+	SOURCE/Makefile
+	SOURCE/squirrel/Makefile
+	SOURCE/squirrel/squirrel/Makefile
+	SOURCE/squirrel/sqstdlib/Makefile
+	SOURCE/Server/Makefile
+])
 AC_OUTPUT
+
+dnl
+dnl Report
+dnl
+
+AS_ECHO("Available features :-")
+AS_ECHO("")
+AS_ECHO("General")
+AS_ECHO("-------")
+AS_ECHO_N("Static linked build         - ")
+AS_IF([test "x$selfcontained" = xtrue ],[AS_ECHO("Yes")],[AS_ECHO("No")])
+AS_ECHO_N("Windows (MinGW)             - ")
+AS_IF([test "x$mingw" = xtrue ],[AS_ECHO("Yes")],[AS_ECHO("No")])
+AS_ECHO_N("Windows service             - ")
+AS_IF([test "x$winservice" = xtrue ],[AS_ECHO("Yes")],[AS_ECHO("No")])
+AS_ECHO_N("pthread                     - ")
+AS_IF([test "x$has_pthread" = xtrue ],[AS_ECHO("Yes")],[AS_ECHO("No")])
+AS_ECHO_N("localhost                   - ")
+AS_IF([test "x$localhost" = xtrue ],[AS_ECHO("Yes")],[AS_ECHO("No")])

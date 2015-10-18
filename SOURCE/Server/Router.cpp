@@ -104,11 +104,11 @@ int RouterThread :: InitThread(int instanceindex, int globalThreadID)
 	return 0;
 }
 
-void RouterThread :: OnConnect(void)
+void RouterThread :: OnConnect(const char *address)
 {
 	//This is the router's job, resolve the target Simulator's address, send
 	//the address string, then restart the thread.
-	int res = ResolvePort(g_SimulatorPort);
+	int res = ResolvePort(address, g_SimulatorPort);
 	if(res != 0)
 	{
 		int size = strlen(SimTarget);
@@ -127,10 +127,17 @@ void RouterThread :: Shutdown(void)
 	sc.ShutdownServer();
 }
 
-int RouterThread :: ResolvePort(int port)
+int RouterThread :: ResolvePort(const char *address, int port)
 {
-	sprintf(SimTarget, "%s:%d", g_SimulatorAddress, port);
+#ifdef LOCALHOST
+	sprintf(SimTarget, "%s:%d", LOCALHOST_ADDRESS, port);
+#else
+	if(strlen(g_SimulatorAddress) == 0)
+		sprintf(SimTarget, "%s:%d", address, port);
+	else
+		sprintf(SimTarget, "%s:%d", g_SimulatorAddress, port);
 	return 1;
+#endif
 }
 
 void RouterThread :: Restart(void)
@@ -176,7 +183,11 @@ void RouterThread :: RunMainLoop(void)
 		}
 		else if(Status == Status_Init)
 		{
+#ifdef LOCALHOST
+			if(sc.CreateSocket(HomePortStr, LOCALHOST_ADDRESS) == 0)
+#else
 			if(sc.CreateSocket(HomePortStr, BindAddress) == 0)
+#endif
 			{
 				LogMessageL("[Router] Server created, awaiting connection on port %d (socket:%d)", HomePort, sc.ListenSocket);
 				Status = Status_Wait;
@@ -192,7 +203,7 @@ void RouterThread :: RunMainLoop(void)
 			int res = sc.Accept();
 			if(res == 0)
 			{
-				OnConnect();
+				OnConnect(sc.destAddr);
 				//Job is done, get rid of the client.
 				Status = Status_Kick;
 			}

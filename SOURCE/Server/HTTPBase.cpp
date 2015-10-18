@@ -126,7 +126,11 @@ PLATFORM_THREADRETURN HTTPBaseThreadProc(PLATFORM_THREADARGS lpParam)
 		}
 		else if(controller->Status == Status_Init)
 		{
+#ifdef LOCALHOST
+			if(controller->sc.CreateSocket(controller->HomePortStr, LOCALHOST_ADDRESS) == 0)
+#else
 			if(controller->sc.CreateSocket(controller->HomePortStr, controller->BindAddress) == 0)
+#endif
 			{
 				controller->LogMessageL(LOG_ALWAYS, "[HTTP] Server created, awaiting connection on port %d (socket:%d).", controller->HomePort, controller->sc.ListenSocket);
 				controller->Status = Status_Wait;

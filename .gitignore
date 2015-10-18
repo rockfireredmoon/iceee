@@ -40,3 +40,4 @@
 *.pem
 *.cproject
 *.project
+*.autotools
