@@ -22,6 +22,7 @@
 #include "../Character.h"
 #include "../ZoneDef.h"
 #include "../Scenery2.h"
+#include "../Config.h"
 #include "../Chat.h"
 #include "../DirectoryAccess.h"
 #include "../json/json.h"
@@ -29,10 +30,24 @@
 using namespace HTTPD;
 
 //
+// AuthenticatedHandler
+//
+
+bool AuthenticatedHandler::handleGet(CivetServer *server, struct mg_connection *conn) {
+
+	if(!isAuthorized(server, conn, g_Config.APIAuthentication)) {
+		writeWWWAuthenticate(server, conn, "TAWD");
+		return true;
+	}
+
+	return handleAuthenticatedGet(server, conn);
+}
+
+//
 // WhoHandler
 //
 
-bool WhoHandler::handleGet(CivetServer *server, struct mg_connection *conn) {
+bool WhoHandler::handleAuthenticatedGet(CivetServer *server, struct mg_connection *conn) {
 	std::string response;
 	char buf[256];
 	response.append("{ ");
@@ -66,7 +81,7 @@ bool WhoHandler::handleGet(CivetServer *server, struct mg_connection *conn) {
 // ChatHandler
 //
 
-bool ChatHandler::handleGet(CivetServer *server, struct mg_connection *conn) {
+bool ChatHandler::handleAuthenticatedGet(CivetServer *server, struct mg_connection *conn) {
 
 	std::string response;
 	char buf[256];
@@ -111,7 +126,7 @@ bool ChatHandler::handleGet(CivetServer *server, struct mg_connection *conn) {
 //
 // UserHandler
 //
-bool UserHandler::handleGet(CivetServer *server,
+bool UserHandler::handleAuthenticatedGet(CivetServer *server,
 		struct mg_connection *conn) {
 
 
@@ -166,7 +181,7 @@ bool UserHandler::handleGet(CivetServer *server,
 // UserGrovesHandler
 //
 
-bool UserGrovesHandler::handleGet(CivetServer *server,
+bool UserGrovesHandler::handleAuthenticatedGet(CivetServer *server,
 		struct mg_connection *conn) {
 
 	/* Handler may access the request info using mg_get_request_info */
@@ -227,7 +242,7 @@ bool UserGrovesHandler::handleGet(CivetServer *server,
 // GroveHandler
 //
 
-bool ZoneHandler::handleGet(CivetServer *server, struct mg_connection *conn) {
+bool ZoneHandler::handleAuthenticatedGet(CivetServer *server, struct mg_connection *conn) {
 
 	/* Handler may access the request info using mg_get_request_info */
 	struct mg_request_info * req_info = mg_get_request_info(conn);
@@ -293,7 +308,7 @@ bool ZoneHandler::handleGet(CivetServer *server, struct mg_connection *conn) {
 // SceneryHandler
 //
 
-bool SceneryHandler::handleGet(CivetServer *server,
+bool SceneryHandler::handleAuthenticatedGet(CivetServer *server,
 		struct mg_connection *conn) {
 
 	/* Handler may access the request info using mg_get_request_info */

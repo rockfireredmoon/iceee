@@ -20,6 +20,7 @@
 #include "../Util.h"
 #include <stdlib.h>
 #include <string.h>
+#include "../util/base64.h"
 
 using namespace HTTPD;
 
@@ -31,7 +32,6 @@ Part MultiPart::getPartWithName(std::string name) {
 		Part p = *it;
 		std::map<std::string, std::string> hv = p.getHeaderValues(
 				"Content-Disposition");
-		g_Log.AddMessageFormat("Compare: %s with %s (in %d) content: %s", name.c_str(), hv["name"].c_str(), hv.size(), p.content.c_str());
 		if (name.compare(hv["name"]) == 0) {
 			return p;
 		}
@@ -298,10 +298,36 @@ bool AbstractCivetHandler::parseForm(CivetServer *server,
 	return true;
 }
 
+bool AbstractCivetHandler::isAuthorized(CivetServer *server, struct mg_connection *conn, std::string credentials) {
+	const char* h = server->getHeader(conn, "Authorization");
+	if(h != NULL) {
+		std::vector<std::string> l;
+		Util::Split(h, " ", l);
+		if(l.size() >= 2) {
+			std::string type = l[0];
+			std::string auth = l[1];
+			std::string enc = base64_encode(reinterpret_cast<const unsigned char*>(credentials.c_str()), credentials.length());
+			if(type.compare("Basic") == 0 && enc.compare(auth) == 0) {
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+void AbstractCivetHandler::writeWWWAuthenticate(CivetServer *server,
+		struct mg_connection *conn, std::string realm) {
+	mg_printf(conn, "HTTP/1.1 401 Unauthorized\r\n");
+	mg_printf(conn, "WWW-Authenticate: Basic realm=\"%s\"\r\n\r\n", realm.c_str());
+	mg_set_status(conn, 401);
+	mg_set_as_close(conn);
+}
+
 void AbstractCivetHandler::writeJSON200(CivetServer *server,
 		struct mg_connection *conn, std::string data) {
 	mg_printf(conn, "HTTP/1.1 200 OK\r\nContent-Length: %lu\r\n", data.size());
 	mg_printf(conn, "Content-Type: application/json\r\n\r\n%s", data.c_str());
+	mg_set_status(conn, 200);
 }
 
 void AbstractCivetHandler::writeStatus(CivetServer *server,
@@ -311,6 +337,7 @@ void AbstractCivetHandler::writeStatus(CivetServer *server,
 	mg_printf(conn, "HTTP/1.1 %d %s\r\nContent-Length: %lu\r\n", code,
 			msg.c_str(), content.size());
 	mg_printf(conn, "Content-Type: text/html\r\n\r\n%s", content.c_str());
+	mg_set_status(conn, code);
 }
 
 void AbstractCivetHandler::writeResponse(CivetServer *server,
@@ -318,5 +345,6 @@ void AbstractCivetHandler::writeResponse(CivetServer *server,
 	mg_printf(conn, "HTTP/1.1 200 OK\r\nContent-Length: %lu\r\n", data.size());
 	mg_printf(conn, "Content-Type: %s\r\n\r\n%s", contentType.c_str(),
 			data.c_str());
+	mg_set_status(conn, 200);
 }
 

@@ -24,57 +24,66 @@
 namespace HTTPD {
 
 /*
+ * All these API requests are authenticated.
+ */
+class AuthenticatedHandler: public AbstractCivetHandler {
+public:
+	bool handleGet(CivetServer *server, struct mg_connection *conn);
+	virtual bool handleAuthenticatedGet(CivetServer *server, struct mg_connection *conn) =0;
+};
+
+/*
  * Handles /api/who requests, returning a JSON response containing all
  * logged in users.
  */
-class WhoHandler: public AbstractCivetHandler {
+class WhoHandler: public AuthenticatedHandler {
 public:
-	virtual bool handleGet(CivetServer *server, struct mg_connection *conn);
+	bool handleAuthenticatedGet(CivetServer *server, struct mg_connection *conn);
 };
 
 /*
  * Handles /api/chat requests, returning a JSON response containing historical
  * region chat messages.
  */
-class ChatHandler: public AbstractCivetHandler {
+class ChatHandler: public AuthenticatedHandler {
 public:
-	virtual bool handleGet(CivetServer *server, struct mg_connection *conn);
+	bool handleAuthenticatedGet(CivetServer *server, struct mg_connection *conn);
 };
 
 /*
  * Handles /api/user/<accountIdOrName> requests, returning a JSON response containing user
  * details
  */
-class UserHandler: public AbstractCivetHandler {
+class UserHandler: public AuthenticatedHandler {
 public:
-	virtual bool handleGet(CivetServer *server, struct mg_connection *conn);
+	bool handleAuthenticatedGet(CivetServer *server, struct mg_connection *conn);
 };
 
 /*
  * Handles /api/user/<accountId>/groves requests, returning a JSON response containing a list
  * of an accounts groves
  */
-class UserGrovesHandler: public AbstractCivetHandler {
+class UserGrovesHandler: public AuthenticatedHandler {
 public:
-	virtual bool handleGet(CivetServer *server, struct mg_connection *conn);
+	bool handleAuthenticatedGet(CivetServer *server, struct mg_connection *conn);
 };
 
 /*
  * Handles /api/zone/<zoneDefId> requests, returning a JSON response containing zone
  * details and tiles.
  */
-class ZoneHandler: public AbstractCivetHandler {
+class ZoneHandler: public AuthenticatedHandler {
 public:
-	virtual bool handleGet(CivetServer *server, struct mg_connection *conn);
+	bool handleAuthenticatedGet(CivetServer *server, struct mg_connection *conn);
 };
 
 /*
  * Handles /api/scenery/<zoneDefId>/<x>/<y> requests, returning a JSON response containing grove
  * details.
  */
-class SceneryHandler: public AbstractCivetHandler {
+class SceneryHandler: public AuthenticatedHandler {
 public:
-	virtual bool handleGet(CivetServer *server, struct mg_connection *conn);
+	bool handleAuthenticatedGet(CivetServer *server, struct mg_connection *conn);
 };
 
 }

@@ -478,6 +478,8 @@ void LoadConfig(const char *filename)
 				g_Config.HTTPKeepAlive = lfr.BlockToBool(1);
 			else if(strcmp(NameBlock, "LegacyServer") == 0)
 				g_Config.LegacyServer = lfr.BlockToStringC(1, 0);
+			else if(strcmp(NameBlock, "APIAuthentication") == 0)
+				g_Config.APIAuthentication = lfr.BlockToStringC(1, 0);
 			else if(strcmp(NameBlock, "OAuth2Client") == 0) {
 				STRINGLIST output;
 				Util::Split(lfr.BlockToString(1), "|", output);
@@ -718,6 +720,7 @@ GlobalConfigData :: GlobalConfigData()
 	PublicAPI = true;
 	LegacyAccounts = false;
 	LegacyServer = "";
+	APIAuthentication = "api:api";
 
 	InvalidLoginMessage = "Account not found.  Check username and password.";
 }

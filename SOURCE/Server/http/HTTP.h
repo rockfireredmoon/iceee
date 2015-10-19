@@ -79,16 +79,21 @@ class MultiPart {
 public:
 	Part getPartWithName(std::string name);
 	std::vector<Part> parts;
+	bool requiresAuthentication;
 };
 
 class AbstractCivetHandler: public CivetHandler {
 public:
 	std::string formatTime(std::time_t *now);
 
+	bool isAuthorized(CivetServer *server, struct mg_connection *conn, std::string credentials);
+
 	bool parseMultiPart(CivetServer *server, struct mg_connection *conn, MultiPart *multipart);
 
 	bool parseForm(CivetServer *server, struct mg_connection *conn,
 			std::map<std::string, std::string> &parms);
+
+	void writeWWWAuthenticate(CivetServer *server, struct mg_connection *conn, std::string realm);
 
 	void writeJSON200(CivetServer *server, struct mg_connection *conn,
 			std::string data);

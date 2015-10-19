@@ -245,6 +245,7 @@ public:
 	bool HTTPKeepAlive;
 
 	std::string LegacyServer;			// URL of server to transfer groves from
+	std::string APIAuthentication;		// Username:Password to allow API authentication
 
 	unsigned long debugAdministrativeBehaviorFlags;
 	void SetAdministrativeBehaviorFlag(unsigned long bitValue, bool state);

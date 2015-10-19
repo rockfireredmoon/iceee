@@ -63,6 +63,11 @@ void ServiceAuthenticationHandler::transferGroves(AccountData *data) {
 				zd.mWarpName = nextGroveName;
 				zd.mGroveName = data->GroveName;
 
+				// Just to be sure ..
+				zd.mArena = false;
+				zd.mGrove = true;
+				zd.mGuildHall = false;
+
 				// Player IDs will be different, might as well just clear them
 				zd.mPlayerFilterID.clear();
 				zd.mPlayerFilterType = 0;
@@ -76,6 +81,7 @@ void ServiceAuthenticationHandler::transferGroves(AccountData *data) {
 
 				// Create the zone
 				int zoneID = g_ZoneDefManager.CreateZone(zd);
+				zd.mID = zoneID;
 
 				if(gt != NULL){
 					BuildPermissionArea bp;
@@ -89,6 +95,8 @@ void ServiceAuthenticationHandler::transferGroves(AccountData *data) {
 					data->PendingMinorUpdates++;
 				}
 
+				g_Log.AddMessageFormat("New grove zone ID is %d", zd.mID);
+
 				std::vector<SceneryPageKey> pages;
 				if(client.getZone((*it).mID, *it, pages)) {
 					for(std::vector<SceneryPageKey>::iterator sit = pages.begin(); sit != pages.end(); ++sit) {
@@ -98,14 +106,24 @@ void ServiceAuthenticationHandler::transferGroves(AccountData *data) {
 						sp.mTileY = spk.y;
 						g_Log.AddMessageFormat("   Copying tile %d x %d.", spk.x, spk.y);
 						client.getScenery((*it).mID, sp);
+
+						g_SceneryManager.GetThread("ServiceAuthentication::transferGroves");
+
 						SceneryPage::SCENERY_IT pit;
 						for(pit = sp.mSceneryList.begin(); pit != sp.mSceneryList.end(); ++pit) {
 							SceneryObject prop = pit->second;
-							g_Log.AddMessageFormat("       Copying object %d", prop.ID);
 							SceneryPage * page = g_SceneryManager.GetOrCreatePage(zoneID, spk.x, spk.y);
+
+							// Give prop new ID
+							int newPropID = g_SceneryVars.BaseSceneryID + g_SceneryVars.SceneryAdditive++;
+							g_Log.AddMessageFormat("       Copying object %d to %d", prop.ID, newPropID);
+							prop.ID = newPropID;
+							SessionVarsChangeData.AddChange();
+
 							page->AddProp(prop, true);
-							prop.Destroy();
 						}
+
+						g_SceneryManager.ReleaseThread();
 					}
 				}
 				else {
@@ -144,7 +162,7 @@ AccountData * ServiceAuthenticationHandler::onAuthenticate(SimulatorThread *sim,
 		g_Log.AddMessageFormat("Unexpected number of elements in login string for SERVICE authentication. %s", authorizationHash.c_str());
 	}
 	else {
-		/* Now try the integrated website authentication. This is host by the Drupal module 'Services' and is
+		/* Now try the integrated website authentication. This is hosted by the Drupal module 'Services' and is
 		 * JSON based. The flow is roughly ..
 		 *
 		 * 1. The client makes an HTTP request to the website asking for a 'CSRF' token.
@@ -153,7 +171,7 @@ AccountData * ServiceAuthenticationHandler::onAuthenticate(SimulatorThread *sim,
 		 * 4. If username/password OK, the website responds with a session ID and cookie.
 		 * 5. The client sends the token, session ID and cookie to the game server (this is the point THIS code comes into play)
 		 * 6. The server contacts the website using the token, session ID and cookie and requests full user details.
-		 * 7. The website responsds with user details including roles (used to configure permissions)
+		 * 7. The website responds with user details including roles (used to configure permissions)
 		 * 8. The server looks for a local account with the same username, creating one if required
 		 * 9. The server responds to the client saying auth is OK and the user may login
 		 */

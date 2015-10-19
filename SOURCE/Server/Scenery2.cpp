@@ -344,9 +344,9 @@ void SceneryObject::ReadFromJSON(Json::Value &value) {
 	QuatW = orient.get("w", 0).asFloat();
 
 	Json::Value scale = value["scale"];
-	ScaleX = pos.get("x", 0).asFloat();
-	ScaleY = pos.get("y", 0).asFloat();
-	ScaleZ = pos.get("z", 0).asFloat();
+	ScaleX = scale.get("x", 0).asFloat();
+	ScaleY = scale.get("y", 0).asFloat();
+	ScaleZ = scale.get("z", 0).asFloat();
 
 	Flags = value["flags"].asInt();
 	Layer = value["layer"].asInt();
@@ -401,7 +401,7 @@ void SceneryObject::WriteToJSON(Json::Value &value) {
 	orient["x"] = QuatX;
 	orient["y"] = QuatY;
 	orient["z"] = QuatZ;
-	orient["w"] = QuatZ;
+	orient["w"] = QuatW;
 	value["orient"] = orient;
 
 	Json::Value scale;

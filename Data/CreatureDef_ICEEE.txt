@@ -2004,3 +2004,160 @@ profession=1
 creature_category=Mortal
 ai_package=example
 rarity=1
+
+
+[ENTRY]
+defHints=2
+ID=7862
+strength=92
+dexterity=79
+constitution=92
+psyche=63
+spirit=63
+base_damage_melee=112
+damage_resist_melee=1638
+damage_resist_fire=1638
+damage_resist_frost=1638
+damage_resist_mystic=1638
+damage_resist_death=1638
+will_regen=1
+might_regen=1
+offhand_weapon_damage=500
+casting_setback_chance=500
+channeling_break_chance=500
+appearance=c2:{["h"]=0,["c"]={["boots"]={["type"]="Armor-Cloth-Epic3",["colors"]=[]},["chest"]={["type"]="Armor-Cloth-Epic3",["colors"]=[]},["leggings"]={["type"]="Armor-Cloth-Epic3",["colors"]=[]},["belt"]={["type"]="Armor-Cloth-Epic3",["colors"]=[]},["collar"]={["type"]="Armor-Cloth-Epic3",["colors"]=[]},["arms"]={["type"]="Armor-Cloth-Epic3",["colors"]=[]}},["b"]="n",["sk"]={["base"]="74914A",["digits"]="FF9600",["spots"]="8D9942",["eye"]="755B3A",["eye_lid"]="FF8F00",["highlight"]="DAC496",["eye_white"]="D4D4D4"},["r"]="a",["g"]="m",["sz"]="1"}
+level=45
+display_name=Transformation Vendor 1
+sub_name=Weapon Merchant
+profession=1
+creature_category=Mortal
+rarity=2
+ai_package=4_knight_30
+
+[ENTRY]
+defHints=2
+ID=7863
+strength=92
+dexterity=79
+constitution=92
+psyche=63
+spirit=63
+base_damage_melee=112
+damage_resist_melee=1638
+damage_resist_fire=1638
+damage_resist_frost=1638
+damage_resist_mystic=1638
+damage_resist_death=1638
+will_regen=1
+might_regen=1
+offhand_weapon_damage=500
+casting_setback_chance=500
+channeling_break_chance=500
+appearance=c2:{["h"]=0,["c"]={["boots"]={["type"]="Armor-Cloth-Epic3",["colors"]=[]},["chest"]={["type"]="Armor-Cloth-Epic3",["colors"]=[]},["leggings"]={["type"]="Armor-Cloth-Epic3",["colors"]=[]},["belt"]={["type"]="Armor-Cloth-Epic3",["colors"]=[]},["collar"]={["type"]="Armor-Cloth-Epic3",["colors"]=[]},["arms"]={["type"]="Armor-Cloth-Epic3",["colors"]=[]}},["b"]="n",["sk"]={["eye_whites"]="FFFFFF",["highlights"]="CAB9A8",["mask"]="261D17",["base"]="896A56",["eye"]="00C6FF",["tips"]="544234",["nose"]="575757",["chest"]="CAB9A8"},["r"]="d",["g"]="m",["sz"]="1.2"}
+level=45
+display_name=Transformation Vendor 2
+sub_name=Weapon Merchant
+profession=1
+creature_category=Mortal
+rarity=2
+ai_package=4_knight_30
+
+[ENTRY]
+defHints=2
+ID=7864
+strength=92
+dexterity=79
+constitution=92
+psyche=63
+spirit=63
+base_damage_melee=112
+damage_resist_melee=1638
+damage_resist_fire=1638
+damage_resist_frost=1638
+damage_resist_mystic=1638
+damage_resist_death=1638
+will_regen=1
+might_regen=1
+offhand_weapon_damage=500
+casting_setback_chance=500
+channeling_break_chance=500
+appearance=c2:{["h"]=0,["c"]={["boots"]={["type"]="Armor-Cloth-Epic3",["colors"]=[]},["chest"]={["type"]="Armor-Cloth-Epic3",["colors"]=[]},["leggings"]={["type"]="Armor-Cloth-Epic3",["colors"]=[]},["belt"]={["type"]="Armor-Cloth-Epic3",["colors"]=[]},["collar"]={["type"]="Armor-Cloth-Epic3",["colors"]=[]},["arms"]={["type"]="Armor-Cloth-Epic3",["colors"]=[]}},["b"]="n",["sk"]={["shoulders_head"]="BB8645",["hands_feet"]="CA914C",["eye_white"]="C5C4C4",["snout"]="9C8E6D",["base"]="9A8567",["nails"]="2F2313",["eye"]="91A220",["inner_ear"]="9A8567",["nose"]="887C60",["outer_ear"]="675E48"},["r"]="f",["g"]="m",["sz"]="1.2"}
+level=45
+display_name=Transformation Vendor 3
+sub_name=Weapon Merchant
+profession=1
+creature_category=Mortal
+rarity=2
+ai_package=4_knight_30
+
+[ENTRY]
+ID=7864
+appearance=n4:{["sk"]={["eye"]="FFFBC7",["moss"]="537E10",["rock"]="7C7C7C"},["c"]="Horde-Rock_Bear",["sz"]="1"}
+level=4
+display_name=Rock Bear Form
+creature_category=Magical
+constitution=1
+
+[ENTRY]
+ID=7865
+appearance=n4:{["sk"]={["inside_ear"]="A48C6B",["fur2"]="3E3A31",["fur1"]="6E6757",["eye"]="4F5358"},["c"]="Horde-Spibear",["sz"]="1"}
+level=4
+display_name=Spibear Form
+creature_category=Magical
+constitution=1
+
+[ENTRY]
+ID=7866
+appearance=n4:{["sk"]={["horn"]="F0D37A",["eyes"]="FFF200",["tattoo"]="FE3E01",["body"]="2E2E2E"},["c"]="Horde-Unikorn",["sz"]="1"}
+level=4
+display_name=Unikorn Form
+creature_category=Magical
+constitution=1
+
+[ENTRY]
+ID=7867
+appearance=n4:{["c"]="Pet-Alpaca",["sz"]="1.5"}
+level=4
+display_name=Alpaca Form
+creature_category=Magical
+constitution=1
+
+[ENTRY]
+ID=7868
+appearance=n4:{["c"]="Pet-Bigcat",["sz"]="1.3"}
+level=4
+display_name=Panther Form
+creature_category=Magical
+constitution=1
+
+[ENTRY]
+ID=7869
+appearance=n4:{["sk"]={["plates"]="242424",["skin"]="39BF41",["tail2"]="FF6D00",["tail1"]="FFB600"},["c"]="Horde-Salamander",["sz"]="1.3"}
+level=4
+display_name=Salamander Form
+creature_category=Magical
+constitution=1
+
+[ENTRY]
+ID=7870
+appearance=n4:{["sk"]={["fur"]="656E64",["outereye"]="FFCD00",["eye"]="FFFBC7",["mouth"]="75562C",["nose"]="69483B",["horns"]="DCD074"},["c"]="Horde-Prickly_Boar",["sz"]="1.3"}
+level=4
+display_name=Boar Form
+creature_category=Magical
+constitution=1
+
+[ENTRY]
+ID=7871
+appearance=n4:{["sk"]={["body"]="0A0355",["highlight"]="94660D",["mouth"]="151515"},["c"]="Horde-Phoenix",["sz"]="1.3"}
+level=4
+display_name=Pheonix Form
+creature_category=Magical
+constitution=1
+
+[ENTRY]
+ID=7872
+appearance=n4:{["sk"]={["fur"]="484848",["eyes"]="AAB2B2",["dark_fur"]="292929",["nails"]="1C0909",["quill1"]="630505",["quill2"]="696921"},["c"]="Horde-Dire_Hedgehog",["sz"]="1.3"}
+level=4
+display_name=Hedgehog Form
+creature_category=Magical
+constitution=1
