@@ -99,6 +99,7 @@ tawd_SOURCES = md5.cc \
 	auth/ServiceAuthentication.cpp \
 	query/Query.cpp \
 	query/Lobby.cpp \
+	util/base64.cpp \
 	Ability2.h \
 	AbilityTime.h \
 	Account.h \
@@ -215,7 +216,8 @@ tawd_SOURCES = md5.cc \
 	auth/DevAuthentication.h \
 	auth/ServiceAuthentication.h \
 	query/Query.h \
-	query/Lobby.h
+	query/Lobby.h \
+	util/base64.h
 	
 
 if WINSERVICE
@@ -313,6 +315,7 @@ tawdsvc_SOURCES = md5.cc \
 	auth/ServiceAuthentication.cpp \
 	query/Query.cpp \
 	query/Lobby.cpp \
+	util/base64.cpp \
 	Ability2.h \
 	AbilityTime.h \
 	Account.h \
@@ -429,5 +432,6 @@ tawdsvc_SOURCES = md5.cc \
 	auth/DevAuthentication.h \
 	auth/ServiceAuthentication.h \
 	query/Query.h \
-	query/Lobby.h
+	query/Lobby.h \
+	util/base64.h
 endif

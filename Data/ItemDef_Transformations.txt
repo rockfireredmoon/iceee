@@ -140,6 +140,150 @@ Params=verifycast=1&keep=1
 [ENTRY]
 mID=50011
 mType=5
+mDisplayName=Reusable Scroll: Rockbears' Form
+mIcon=Icon-32-Scroll2.png|Icon-32-BG-Divine.png
+mIvType1=0
+mIvMax1=0
+mLevel=1
+mUseAbilityId=27009
+mValue=1
+mValueType=1
+mQualityLevel=4
+mMinUseLevel=1
+mFlavorText=A Reusable skill scroll that transforms you into a feral form, increasing movement speed by 50% for 10 minutes. Drag the item to your ability bars to use.
+Params=verifycast=1&keep=1
+
+[ENTRY]
+mID=50012
+mType=5
+mDisplayName=Reusable Scroll: Spibears' Form
+mIcon=Icon-32-Scroll2.png|Icon-32-BG-Divine.png
+mIvType1=0
+mIvMax1=0
+mLevel=1
+mUseAbilityId=27010
+mValue=1
+mValueType=1
+mQualityLevel=4
+mMinUseLevel=1
+mFlavorText=A Reusable skill scroll that transforms you into a feral form, increasing movement speed by 50% for 10 minutes. Drag the item to your ability bars to use.
+Params=verifycast=1&keep=1
+
+[ENTRY]
+mID=50013
+mType=5
+mDisplayName=Reusable Scroll: Unikorns' Form
+mIcon=Icon-32-Scroll2.png|Icon-32-BG-Divine.png
+mIvType1=0
+mIvMax1=0
+mLevel=1
+mUseAbilityId=27011
+mValue=1
+mValueType=1
+mQualityLevel=4
+mMinUseLevel=1
+mFlavorText=A Reusable skill scroll that transforms you into a feral form, increasing movement speed by 50% for 10 minutes. Drag the item to your ability bars to use.
+Params=verifycast=1&keep=1
+
+[ENTRY]
+mID=50014
+mType=5
+mDisplayName=Reusable Scroll: Alpacas' Form
+mIcon=Icon-32-Scroll2.png|Icon-32-BG-Divine.png
+mIvType1=0
+mIvMax1=0
+mLevel=1
+mUseAbilityId=27012
+mValue=1
+mValueType=1
+mQualityLevel=4
+mMinUseLevel=1
+mFlavorText=A Reusable skill scroll that transforms you into a feral form, increasing movement speed by 50% for 10 minutes. Drag the item to your ability bars to use.
+Params=verifycast=1&keep=1
+
+[ENTRY]
+mID=50015
+mType=5
+mDisplayName=Reusable Scroll: Panthers' Form
+mIcon=Icon-32-Scroll2.png|Icon-32-BG-Divine.png
+mIvType1=0
+mIvMax1=0
+mLevel=1
+mUseAbilityId=27013
+mValue=1
+mValueType=1
+mQualityLevel=4
+mMinUseLevel=1
+mFlavorText=A Reusable skill scroll that transforms you into a feral form, increasing movement speed by 50% for 10 minutes. Drag the item to your ability bars to use.
+Params=verifycast=1&keep=1
+
+[ENTRY]
+mID=50016
+mType=5
+mDisplayName=Reusable Scroll: Salamanders' Form
+mIcon=Icon-32-Scroll2.png|Icon-32-BG-Divine.png
+mIvType1=0
+mIvMax1=0
+mLevel=1
+mUseAbilityId=27014
+mValue=1
+mValueType=1
+mQualityLevel=4
+mMinUseLevel=1
+mFlavorText=A Reusable skill scroll that transforms you into a feral form, increasing movement speed by 50% for 10 minutes. Drag the item to your ability bars to use.
+Params=verifycast=1&keep=1
+
+[ENTRY]
+mID=50017
+mType=5
+mDisplayName=Reusable Scroll: Boars' Form
+mIcon=Icon-32-Scroll2.png|Icon-32-BG-Divine.png
+mIvType1=0
+mIvMax1=0
+mLevel=1
+mUseAbilityId=27015
+mValue=1
+mValueType=1
+mQualityLevel=4
+mMinUseLevel=1
+mFlavorText=A Reusable skill scroll that transforms you into a feral form, increasing movement speed by 50% for 10 minutes. Drag the item to your ability bars to use.
+Params=verifycast=1&keep=1
+
+[ENTRY]
+mID=50018
+mType=5
+mDisplayName=Reusable Scroll: Phoenixs' Form
+mIcon=Icon-32-Scroll2.png|Icon-32-BG-Divine.png
+mIvType1=0
+mIvMax1=0
+mLevel=1
+mUseAbilityId=27016
+mValue=1
+mValueType=1
+mQualityLevel=4
+mMinUseLevel=1
+mFlavorText=A Reusable skill scroll that transforms you into a feral form, increasing movement speed by 50% for 10 minutes. Drag the item to your ability bars to use.
+Params=verifycast=1&keep=1
+
+[ENTRY]
+mID=50019
+mType=5
+mDisplayName=Reusable Scroll: Hedgehogs' Form
+mIcon=Icon-32-Scroll2.png|Icon-32-BG-Divine.png
+mIvType1=0
+mIvMax1=0
+mLevel=1
+mUseAbilityId=27017
+mValue=1
+mValueType=1
+mQualityLevel=4
+mMinUseLevel=1
+mFlavorText=A Reusable skill scroll that transforms you into a feral form, increasing movement speed by 50% for 10 minutes. Drag the item to your ability bars to use.
+Params=verifycast=1&keep=1
+
+[ENTRY]
+mID=51001
+mType=5
 mDisplayName=Hiromis' Brew Of Nudity
 mIcon=Icon-32-Potion_Short_Green.png|Icon-32-BG-Red.png
 mIvType1=1

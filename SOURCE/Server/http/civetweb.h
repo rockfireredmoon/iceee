@@ -52,6 +52,11 @@ struct mg_context;     /* Handle for the HTTP service itself */
 struct mg_connection;  /* Handle for the individual connection */
 
 
+/* Parsed Authorization header */
+struct ah {
+    char *user, *uri, *cnonce, *response, *qop, *nc, *nonce;
+};
+
 /* This structure contains information about the HTTP request. */
 struct mg_request_info {
     const char *request_method; /* "GET", "POST", etc */
@@ -184,6 +189,8 @@ struct mg_callbacks {
 CIVETWEB_API struct mg_context *mg_start(const struct mg_callbacks *callbacks,
                             void *user_data,
                             const char **configuration_options);
+
+CIVETWEB_API int mg_parse_auth_header(struct mg_connection *conn, char *buf, size_t buf_size, struct ah *ah);
 
 CIVETWEB_API void mg_set_status(struct mg_connection *conn, int status);
 

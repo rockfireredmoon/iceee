@@ -57,6 +57,21 @@ inline static std::string removeEndSlash(std::string str) {
 	return str;
 }
 
+/*
+ * Tracks the session obtained at authentication time
+ */
+
+class SiteSession {
+public:
+	std::string xCSRF;
+	std::string sessionName;
+	std::string sessionID;
+	int uid;
+	int unreadMessages;
+	void CopyFrom(SiteSession *session);
+	void Clear();
+};
+
 class FileResource {
 public:
 	FILE *fd;
@@ -79,16 +94,21 @@ class MultiPart {
 public:
 	Part getPartWithName(std::string name);
 	std::vector<Part> parts;
+	bool requiresAuthentication;
 };
 
 class AbstractCivetHandler: public CivetHandler {
 public:
 	std::string formatTime(std::time_t *now);
 
+	bool isAuthorized(CivetServer *server, struct mg_connection *conn, std::string credentials);
+
 	bool parseMultiPart(CivetServer *server, struct mg_connection *conn, MultiPart *multipart);
 
 	bool parseForm(CivetServer *server, struct mg_connection *conn,
 			std::map<std::string, std::string> &parms);
+
+	void writeWWWAuthenticate(CivetServer *server, struct mg_connection *conn, std::string realm);
 
 	void writeJSON200(CivetServer *server, struct mg_connection *conn,
 			std::string data);

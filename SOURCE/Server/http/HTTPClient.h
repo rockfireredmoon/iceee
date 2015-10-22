@@ -24,10 +24,32 @@
 #include "../StringList.h"
 #include <sstream>
 
+struct Writeable {
+	const char *readptr;
+	long sizeleft;
+};
+
 inline static size_t writeCallback(void *contents, size_t size, size_t nmemb, void *userp)
 {
     ((std::string*)userp)->append((char*)contents, size * nmemb);
     return size * nmemb;
+}
+
+inline static size_t readCallback(void *ptr, size_t size, size_t nmemb,
+		void *userp) {
+	struct Writeable *wrt = (struct Writeable *) userp;
+
+	if (size * nmemb < 1)
+		return 0;
+
+	if (wrt->sizeleft) {
+		*(char *) ptr = wrt->readptr[0];
+		wrt->readptr++;
+		wrt->sizeleft--;
+		return 1;
+	}
+
+	return 0;
 }
 
 inline static int readJSONFromUrl(std::string url, std::string *readBuffer) {

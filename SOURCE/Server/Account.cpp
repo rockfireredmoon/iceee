@@ -120,6 +120,8 @@ void AccountData :: ClearAll(void)
 	SessionLoginCount = 0;
 	ExpireTime = 0;
 
+	SiteSession.Clear();
+
 	//CurrentVaultSize = DEFAULT_VAULT_SIZE;
 }
 
@@ -394,6 +396,9 @@ void AccountData :: SaveToStream(FILE *output)
 		fprintf(output, "\r\n");
 
 	Util::WriteString(output, "GroveName", GroveName);
+//	Util::WriteString(output, "xCSRF", SiteSession.xCSRF);
+//	Util::WriteString(output, "SessionName", SiteSession.sessionName);
+//	Util::WriteString(output, "SessionID", SiteSession.sessionID);
 	for(size_t i = 0; i < BuildPermissionList.size(); i++)
 	{
 		BuildPermissionArea &bpa = BuildPermissionList[i];
@@ -764,6 +769,12 @@ void AccountManager :: LoadSectionGeneral(FileReader &fr, AccountData &ad, const
 	}
 	else if(strcmp(NameBlock, "GROVENAME") == 0)
 		ad.GroveName = fr.BlockToStringC(1, 0);
+	else if(strcmp(NameBlock, "XCSRF") == 0)
+		ad.SiteSession.xCSRF = fr.BlockToStringC(1, 0);
+	else if(strcmp(NameBlock, "SESSIONID") == 0)
+		ad.SiteSession.sessionID = fr.BlockToStringC(1, 0);
+	else if(strcmp(NameBlock, "SESSIONNAME") == 0)
+		ad.SiteSession.sessionName = fr.BlockToStringC(1, 0);
 	else if(strcmp(NameBlock, "BUILD") == 0)
 	{
 		BuildPermissionArea bpa;

@@ -38,6 +38,19 @@ void URLManager::LoadFile(void)
 	mLoaded = true;
 }
 
+
+std::string URLManager::GetURL(std::string name) {
+	if(mLoaded == false)
+		LoadFile();
+	for(std::vector<STRINGLIST>::iterator it = mLoadedURLs.begin(); it != mLoadedURLs.end() ; ++it) {
+		std::string n = (*it)[0];
+		if(n.compare(name) == 0) {
+			return (*it)[1];
+		}
+	}
+	return "http://unknown";
+}
+
 const MULTISTRING& URLManager::GetURLs(void)
 {
 	if(mLoaded == false)

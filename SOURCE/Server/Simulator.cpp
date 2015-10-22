@@ -40,6 +40,7 @@
 //#include "restclient.h"
 #include "auth/Auth.h"
 #include "Daily.h"
+#include "http/SiteClient.h"
 #include "query/Query.h"
 #include <curl/curl.h>
 #include "md5.hh"
@@ -2001,15 +2002,16 @@ void SimulatorThread :: LoadCharacterSession(void)
 		strcpy(pld.accPtr->LastLogOn, pld.charPtr->LastLogOn);
 
 		// Is this a consecutive day?
-		unsigned long lastLoginDay = pld.accPtr->LastLogOnTimeSec / 86400;
-		pld.accPtr->LastLogOnTimeSec = time(NULL);
-		unsigned long today =  pld.accPtr->LastLogOnTimeSec / 86400;
-		if(lastLoginDay == 0 || today == lastLoginDay + 1) {
+		unsigned long lastLoginDay = pld.accPtr->LastLogOnTimeSec == 0 ? 0 : pld.accPtr->LastLogOnTimeSec / 86400;
+		unsigned long nowTimeSec = time(NULL);
+		unsigned long nowTimeDay =  nowTimeSec / 86400;
+		if(lastLoginDay == 0 || nowTimeDay == lastLoginDay + 1) {
 			// It is!
 			pld.accPtr->ConsecutiveDaysLoggedIn++;
 			LogMessageL(MSG_SHOW, "%s has now logged in %d consecutive days.", pld.accPtr->Name, pld.accPtr->ConsecutiveDaysLoggedIn);
 		}
 
+		pld.accPtr->LastLogOnTimeSec = nowTimeSec;
 		pld.accPtr->PendingMinorUpdates++;
 	}
 
@@ -3253,6 +3255,15 @@ void SimulatorThread :: SetLoadingStatus(bool status, bool shutdown)
 
 			ProcessDailyRewards(pld.accPtr->ConsecutiveDaysLoggedIn, pld.charPtr->cdef.css.level);
 
+
+			if(pld.accPtr->SiteSession.unreadMessages > 0) {
+				char buf[256];
+				Util::SafeFormat(buf, sizeof(buf), "You have %d unread private message%s. See %s", pld.accPtr->SiteSession.unreadMessages, pld.accPtr->SiteSession.unreadMessages > 1 ? "s": "",
+						g_URLManager.GetURL("NewMessages").c_str());
+				g_Log.AddMessageFormat(buf);
+				AttemptSend(SendBuf, PrepExt_SendInfoMessage(SendBuf, buf, INFOMSG_INFO));
+			}
+
 			LoadStage = LOADSTAGE_LOADED;  //Initial loading screen is finished, players should be able to control their characters.
 		}
 	}
@@ -4483,7 +4494,15 @@ void SimulatorThread :: handle_communicate(void)
 
 	if(tell == true && found == false)
 	{
-		sprintf(LogBuffer, "Player \"%s\" is not logged in.", Aux3);
+		char subject[256];
+		Util::SafeFormat(subject, sizeof(subject), "In-game tell for %s from %s", Aux3, creatureInst->css.display_name);
+		SiteClient siteClient(g_Config.ServiceAuthURL);
+		if(siteClient.sendPrivateMessage(&pld.accPtr->SiteSession, Aux3, subject, message)) {
+			sprintf(LogBuffer, "Player \"%s\" is not logged in, sent private message to their game account.", Aux3);
+		}
+		else {
+			sprintf(LogBuffer, "Player \"%s\" is not logged in.", Aux3);
+		}
 		SendInfoMessage(LogBuffer, INFOMSG_ERROR);
 	}
 }
@@ -10553,8 +10572,14 @@ void SimulatorThread :: Debug_GenerateReport(ReportBuffer *report)
 	report->AddLine("Sim:%d", InternalIndex);
 	if(creatureInst != NULL)
 		report->AddLine("display_name=%s", creatureInst->css.display_name);
-	if(pld.accPtr != NULL)
+	if(pld.accPtr != NULL) {
 		report->AddLine("AccountID=%d", pld.accPtr->ID);
+		report->AddLine("uid=%d", pld.accPtr->SiteSession.uid);
+		report->AddLine("unreadMessages=%d", pld.accPtr->SiteSession.unreadMessages);
+		report->AddLine("XCSRF=%s", pld.accPtr->SiteSession.xCSRF.c_str());
+		report->AddLine("SessionName=%s", pld.accPtr->SiteSession.sessionName.c_str());
+		report->AddLine("SessionID=%s", pld.accPtr->SiteSession.sessionID.c_str());
+	}
 	if(pld.charPtr != NULL)
 	{
 		int sec = ((g_ServerTime - TimeLastAutoSave) / 1000) + pld.charPtr->SecondsLogged;

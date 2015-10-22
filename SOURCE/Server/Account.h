@@ -11,6 +11,7 @@
 #include "Character.h"
 #include "Util.h"  //ChangeData was moved here
 #include "json/json.h"
+#include "http/HTTP.h"
 
 
 class CharacterData;
@@ -128,6 +129,7 @@ public:
 
 	// Transient stuff (not store in character data)
 	bool DueDailyRewards;	// When set to true, when login has completely finished the player will be given their daily rewards
+	HTTPD::SiteSession SiteSession;
 
 
 	bool HasBuildZone(BuildPermissionArea &bpa);

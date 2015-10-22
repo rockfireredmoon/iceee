@@ -3034,11 +3034,6 @@ static void open_auth_file(struct mg_connection *conn, const char *path,
     }
 }
 
-/* Parsed Authorization header */
-struct ah {
-    char *user, *uri, *cnonce, *response, *qop, *nc, *nonce;
-};
-
 /* Return 1 on success. Always initializes the ah structure. */
 static int parse_auth_header(struct mg_connection *conn, char *buf,
                              size_t buf_size, struct ah *ah)
@@ -6316,6 +6311,13 @@ void mg_set_status(struct mg_connection *conn, int status)
 {
 	conn->status_code = status;
 }
+
+
+int mg_parse_auth_header(struct mg_connection *conn, char *buf, size_t buf_size, struct ah *ah)
+{
+	return parse_auth_header(conn, buf, buf_size, ah);
+}
+
 
 void mg_increase_sent_bytes(struct mg_connection *conn, unsigned long bytes)
 {

@@ -116,6 +116,9 @@ if test "x${selfcontained}" = xtrue; then
 	fi
 fi
 
+
+LDFLAGS="-rdynamic $LDFLAGS"
+
 if test "x${ssl}" = xtrue; then
 	AX_CHECK_OPENSSL()
 	CPPFLAGS="$CPPFLAGS $OPENSSL_INCLUDES"

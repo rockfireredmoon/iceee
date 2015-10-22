@@ -621,7 +621,30 @@ Item=40119  ;Constitution Potion: Level 20
 Item=40123  ;Armor Boost Potion: Level 10
 Item=40124  ;Armor Boost Potion: Level 20
 
+; Transformation vendor 1, Anglorum
+[ENTRY]
+CreatureDefID=7862
+Item=50007 ; Reusable Scroll: Bears' Form
+Item=50008 ; Reusable Scroll: Stags' Form
+Item=50009 ; Reusable Scroll: Wolfs' Form
+Item=50010 ; Reusable Scroll: Felines' Form
 
+; Transformation vendor 2, Anglorum
+[ENTRY]
+CreatureDefID=7863
+Item=50011 ; Reusable Scroll: Rockbears' Form
+Item=50012 ; Reusable Scroll: Spiders' Form
+Item=50013 ; Reusable Scroll: Unikorns' Form
+Item=50014 ; Reusable Scroll: Alpacas' Form
+
+; Transformation vendor 3, Anglorum
+[ENTRY]
+CreatureDefID=7864
+Item=50015 ; Reusable Scroll: Panthers' Form
+Item=50016 ; Reusable Scroll: Salamanders' Form
+Item=50017 ; Reusable Scroll: Boars' Form
+Item=50018 ; Reusable Scroll: Phoenixs' Form
+Item=50019 ; Reusable Scroll: Hedgehogs' Form
 
 
 
