@@ -57,6 +57,21 @@ inline static std::string removeEndSlash(std::string str) {
 	return str;
 }
 
+/*
+ * Tracks the session obtained at authentication time
+ */
+
+class SiteSession {
+public:
+	std::string xCSRF;
+	std::string sessionName;
+	std::string sessionID;
+	int uid;
+	int unreadMessages;
+	void CopyFrom(SiteSession *session);
+	void Clear();
+};
+
 class FileResource {
 public:
 	FILE *fd;

@@ -51,6 +51,7 @@ bool RemoteActionHandler::handlePost(CivetServer *server,
 			writeStatus(server, conn, 200, "OK", "Permission denied.");
 		else {
 			std::string action = parms["action"];
+			g_Log.AddMessageFormat("[REMOVEME] %s", action.c_str());
 
 			// Actions
 			if (action.compare("shutdown") == 0) {

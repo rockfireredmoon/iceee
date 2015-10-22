@@ -18,6 +18,7 @@ typedef std::vector<STRINGLIST> MULTISTRING;
 class URLManager
 {
 public:
+	std::string GetURL(std::string name);
 	const MULTISTRING& GetURLs(void);
 	URLManager();
 

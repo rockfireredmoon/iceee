@@ -24,13 +24,7 @@
 #include "../md5.hh"
 #include "../json/json.h"
 #include "../http/TAWClient.h"
-
-
-static size_t WriteCallback(void *contents, size_t size, size_t nmemb, void *userp)
-{
-    ((std::string*)userp)->append((char*)contents, size * nmemb);
-    return size * nmemb;
-}
+#include "../http/SiteClient.h"
 
 ServiceAuthenticationHandler::ServiceAuthenticationHandler() {
 
@@ -176,242 +170,228 @@ AccountData * ServiceAuthenticationHandler::onAuthenticate(SimulatorThread *sim,
 		 * 9. The server responds to the client saying auth is OK and the user may login
 		 */
 
-		struct curl_slist *headers = NULL;
-		CURL *curl;
-		curl = curl_easy_init();
-		if(curl) {
-			char url[256];
-			char token[256];
-			char cookie[256];
+		// Session - Kept in the user, may be used in game at some point (e.g. private message)
+		HTTPD::SiteSession session;
+		session.xCSRF = prms[0];
+		session.sessionName = prms[2];
+		session.sessionID = prms[1];
+		session.uid = atoi(prms[3].c_str());
 
-			std::string readBuffer;
+		// The client does the actual communication
+		SiteClient sc(g_Config.ServiceAuthURL);
 
-			Util::SafeFormat(url, sizeof(url), "%s/user/%s.json", g_Config.ServiceAuthURL.c_str(), prms[3].c_str());
-			Util::SafeFormat(token, sizeof(token), "X-CSRF-Token: %s", prms[0].c_str());
-			Util::SafeFormat(cookie, sizeof(cookie), "Cookie: %s=%s", prms[2].c_str(),prms[1].c_str());
+		std::string readBuffer;
+		char url[256];
+		Util::SafeFormat(url, sizeof(url), "user/%s", prms[3].c_str());
+		int res;
 
-			curl_easy_setopt(curl, CURLOPT_URL, url);
-			curl_easy_setopt(curl, CURLOPT_USERAGENT, "EETAW");
+		res = sc.sendRequest(&session, url, readBuffer);
 
-			headers = curl_slist_append(headers, token);
-			headers = curl_slist_append(headers, cookie);
-			headers = curl_slist_append(headers, "Content-Type: application/json");
+		if(res == 200) {
+			// Parse the JSON response from service.
 
-			curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
-			curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
+			Json::Value root;
+			Json::Reader reader;
+			bool parsingSuccessful = reader.parse( readBuffer.c_str(), root );
+			if ( !parsingSuccessful )
+			{
+				g_Log.AddMessageFormat("[WARNING] Invalid data from authentication request.");
+				sim->ForceErrorMessage("Account information is not valid data.", INFOMSG_ERROR);
+				sim->Disconnect("ServiceAuthentication::authenticate");
+				return NULL;
+			}
 
-			curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
+			/*
+			 * If no roles were returned, authentication failed
+			 */
+			if(!root.isMember("roles")) {
+				sim->ForceErrorMessage("Please sign in through the game website.", INFOMSG_ERROR);
+				sim->Disconnect("ServiceAuthentication::authenticate");
+				g_Log.AddMessageFormat("[WARNING] A likely attempt to login using the client directly.");
+				return NULL;
+			}
 
-			curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
+			/* Examine the roles the user has. We can use these to set up the account with
+			 * the appropriate permissions
+			 */
+			const Json::Value roles = root["roles"];
 
-			// TODO might need config item to disable SSL verification
-			//curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 0L);
-			//curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, 0L);
+			bool player = false;
+			bool sage = false;
+			bool admin = false;
+			bool builder = false;
+			bool developer = false;
+			bool tweaker = false;
+			bool veteran = false;
 
-			CURLcode res;
-			res = curl_easy_perform(curl);
+			Json::Value::Members members = roles.getMemberNames();
 
-			curl_slist_free_all(headers);
-			curl_easy_cleanup(curl);
-			if(res == CURLE_OK) {
-
-				// Parse the JSON response from service.
-
-				Json::Value root;
-				Json::Reader reader;
-				bool parsingSuccessful = reader.parse( readBuffer.c_str(), root );
-				if ( !parsingSuccessful )
-				{
-					sim->ForceErrorMessage("Account information is not valid data.", INFOMSG_ERROR);
-					sim->Disconnect("ServiceAuthentication::authenticate");
-					return NULL;
+			for(Json::Value::Members::iterator it = members.begin(); it != members.end(); ++it) {
+				std::string mem = *it;
+				Json::Value val = roles.get(mem, "");
+				if(strcmp(val.asCString(), "players") == 0) {
+					player = true;
 				}
-
-				/*
-				 * If no roles were returned, authentication failed
-				 */
-				if(!root.isMember("roles")) {
-					sim->ForceErrorMessage("Please sign in through the game website.", INFOMSG_ERROR);
-					sim->Disconnect("ServiceAuthentication::authenticate");
-					g_Log.AddMessageFormat("[WARNING] A likely attempt to login using the client directly.");
-					return NULL;
+				else if(strcmp(val.asCString(), "sages") == 0) {
+					sage = true;
 				}
-
-				/* Examine the roles the user has. We can use these to set up the account with
-				 * the appropriate permissions
-				 */
-				const Json::Value roles = root["roles"];
-
-				bool player = false;
-				bool sage = false;
-				bool admin = false;
-				bool builder = false;
-				bool developer = false;
-				bool tweaker = false;
-				bool veteran = false;
-
-				Json::Value::Members members = roles.getMemberNames();
-
-				for(Json::Value::Members::iterator it = members.begin(); it != members.end(); ++it) {
-					std::string mem = *it;
-					Json::Value val = roles.get(mem, "");
-					if(strcmp(val.asCString(), "players") == 0) {
-						player = true;
-					}
-					else if(strcmp(val.asCString(), "sages") == 0) {
-						sage = true;
-					}
-					else if(strcmp(val.asCString(), "developers") == 0) {
-						developer = true;
-					}
-					else if(strcmp(val.asCString(), "administrator") == 0) {
-						admin = true;
-					}
-					else if(strcmp(val.asCString(), "builders") == 0) {
-						builder = true;
-					}
-					else if(strcmp(val.asCString(), "tweakers") == 0) {
-						tweaker = true;
-					}
-					else if(strcmp(val.asCString(), "veterans") == 0) {
-						veteran = true;
-					}
+				else if(strcmp(val.asCString(), "developers") == 0) {
+					developer = true;
 				}
-
-				if(!player && !sage && !admin && !developer && !builder) {
-					sim->ForceErrorMessage("User is valid, but does not have permission to play game.", INFOMSG_ERROR);
-					sim->Disconnect("ServiceAuthentication::authenticate");
-					g_Log.AddMessageFormat("User %s is valid, but does not any permission that allows play.", loginName.c_str());
-					return NULL;
+				else if(strcmp(val.asCString(), "administrator") == 0) {
+					admin = true;
 				}
-
-				// Get the grove name if it's provided
-				std::string grove;
-				if(root.isMember("field_grove")) {
-					const Json::Value fieldGrove = root["field_grove"];
-					const Json::Value fieldUnd = fieldGrove["und"];
-					const Json::Value fieldArr = fieldUnd[0];
-					grove = fieldArr.get("value","").asString();
+				else if(strcmp(val.asCString(), "builders") == 0) {
+					builder = true;
 				}
+				else if(strcmp(val.asCString(), "tweakers") == 0) {
+					tweaker = true;
+				}
+				else if(strcmp(val.asCString(), "veterans") == 0) {
+					veteran = true;
+				}
+			}
+
+			if(!player && !sage && !admin && !developer && !builder) {
+				sim->ForceErrorMessage("User is valid, but does not have permission to play game.", INFOMSG_ERROR);
+				sim->Disconnect("ServiceAuthentication::authenticate");
+				g_Log.AddMessageFormat("User %s is valid, but does not any permission that allows play.", loginName.c_str());
+				return NULL;
+			}
+
+			// Get the grove name if it's provided
+			std::string grove;
+			if(root.isMember("field_grove")) {
+				const Json::Value fieldGrove = root["field_grove"];
+				const Json::Value fieldUnd = fieldGrove["und"];
+				const Json::Value fieldArr = fieldUnd[0];
+				grove = fieldArr.get("value","").asString();
+			}
 
 
-				/*
-				 * Look up the account locally. If it already exists, just load it, otherwise
-				 * create a groveless account (without a registration key).
-				 */
-				AccountQuickData *aqd = g_AccountManager.GetAccountQuickDataByUsername(loginName.c_str());
-				if(aqd != NULL) {
-					g_Log.AddMessageFormat("External service authenticated %s OK.", loginName.c_str());
+			/*
+			 * Look up the account locally. If it already exists, just load it, otherwise
+			 * create a groveless account (without a registration key).
+			 */
+			AccountQuickData *aqd = g_AccountManager.GetAccountQuickDataByUsername(loginName.c_str());
+			if(aqd != NULL) {
+				g_Log.AddMessageFormat("External service authenticated %s OK.", loginName.c_str());
+				accPtr = g_AccountManager.FetchIndividualAccount(aqd->mID);
+
+				// TODO temp
+				if(veteran) {
+					if(grove.size() > 0)
+						transferGroves(accPtr);
+					else
+						g_Log.AddMessageFormat("No grove name supplied, groves will not be imported.", loginName.c_str());
+				}
+			}
+			else {
+				g_Log.AddMessageFormat("Service authenticated OK, but there was no local account with name %s, creating one", loginName.c_str());
+				g_AccountManager.cs.Enter("ServiceAccountCreation");
+				int retval = g_AccountManager.CreateAccountFromService(loginName.c_str());
+				g_AccountManager.cs.Leave();
+				if(retval == g_AccountManager.ACCOUNT_SUCCESS) {
+					AccountQuickData *aqd = g_AccountManager.GetAccountQuickDataByUsername(loginName.c_str());
 					accPtr = g_AccountManager.FetchIndividualAccount(aqd->mID);
-
-					// TODO temp
+					accPtr->GroveName = grove;
+					accPtr->PendingMinorUpdates++;
 					if(veteran) {
 						if(grove.size() > 0)
 							transferGroves(accPtr);
 						else
 							g_Log.AddMessageFormat("No grove name supplied, groves will not be imported.", loginName.c_str());
 					}
+					else {
+						g_Log.AddMessageFormat("Not a veteran, no groves will be imported.", loginName.c_str());
+					}
 				}
 				else {
-					g_Log.AddMessageFormat("Service authenticated OK, but there was no local account with name %s, creating one", loginName.c_str());
-					g_AccountManager.cs.Enter("ServiceAccountCreation");
-					int retval = g_AccountManager.CreateAccountFromService(loginName.c_str());
-					g_AccountManager.cs.Leave();
-					if(retval == g_AccountManager.ACCOUNT_SUCCESS) {
-						AccountQuickData *aqd = g_AccountManager.GetAccountQuickDataByUsername(loginName.c_str());
-						accPtr = g_AccountManager.FetchIndividualAccount(aqd->mID);
-						accPtr->GroveName = grove;
-						accPtr->PendingMinorUpdates++;
-						if(veteran) {
-							if(grove.size() > 0)
-								transferGroves(accPtr);
-							else
-								g_Log.AddMessageFormat("No grove name supplied, groves will not be imported.", loginName.c_str());
-						}
-						else {
-							g_Log.AddMessageFormat("Not a veteran, no groves will be imported.", loginName.c_str());
-						}
-					}
-					else {
-						char buf[128];
-						Util::SafeFormat(buf, sizeof(buf), "Failed to create account on game server. %s", g_AccountManager.GetErrorMessage(retval));
-						sim->ForceErrorMessage(buf, INFOMSG_ERROR);
-						sim->Disconnect("ServiceAuthentication::authenticate");
-						return NULL;
-					}
-				}
-
-				/*
-				 * Make sure the account has the permissions as set on the external service. This means
-				 * for example sages on the website are also sages in the game (saves having to manually
-				 * set permissions)
-				 */
-				if(accPtr != NULL) {
-					// Sages and admins get sage
-					bool needSage = sage || admin || builder || developer;
-					if(needSage != accPtr->HasPermission(Perm_Account, Permission_Sage)) {
-						accPtr->SetPermission(Perm_Account, "sage", needSage);
-						accPtr->PendingMinorUpdates++;
-					}
-
-					// Admin and developer gets admin
-
-					bool needAdmin = admin || developer;
-					if(needAdmin != accPtr->HasPermission(Perm_Account, Permission_Admin)) {
-						accPtr->SetPermission(Perm_Account, "admin", needAdmin);
-						accPtr->PendingMinorUpdates++;
-					}
-
-					// Sages and admins get debug
-					bool needDebug = admin || builder || developer;
-					if(needDebug != accPtr->HasPermission(Perm_Account, Permission_Debug)) {
-						accPtr->SetPermission(Perm_Account, "debug", needDebug);
-						accPtr->PendingMinorUpdates++;
-					}
-
-					// Builders
-					bool needBuilder = builder || admin;
-					if(needBuilder != accPtr->HasPermission(Perm_Account, Permission_Builder)) {
-						accPtr->SetPermission(Perm_Account, "builder", needBuilder);
-						accPtr->PendingMinorUpdates++;
-					}
-
-					// Item give
-					bool needItemGive = sage || admin;
-					if(needItemGive != accPtr->HasPermission(Perm_Account, Permission_ItemGive)) {
-						accPtr->SetPermission(Perm_Account, "itemgive", needItemGive);
-						accPtr->PendingMinorUpdates++;
-					}
-
-					// Tweakers
-					bool needClientTweak = tweaker || admin || sage || builder || developer;
-					if(needClientTweak != accPtr->HasPermission(Perm_Account, Permission_TweakClient)) {
-						accPtr->SetPermission(Perm_Account, "tweakclient", needClientTweak);
-						accPtr->PendingMinorUpdates++;
-					}
-					bool needSelfTweak = admin || builder || developer;
-					if(needSelfTweak != accPtr->HasPermission(Perm_Account, Permission_TweakSelf)) {
-						accPtr->SetPermission(Perm_Account, "tweakself", needSelfTweak);
-						accPtr->PendingMinorUpdates++;
-					}
-					bool needNPCTweak = admin || builder || developer;
-					if(needNPCTweak != accPtr->HasPermission(Perm_Account, Permission_TweakNPC)) {
-						accPtr->SetPermission(Perm_Account, "tweaknpc", needNPCTweak);
-						accPtr->PendingMinorUpdates++;
-					}
-					bool needOtherTweak = admin;
-					if(needOtherTweak != accPtr->HasPermission(Perm_Account, Permission_TweakOther)) {
-						accPtr->SetPermission(Perm_Account, "tweakother", needOtherTweak);
-						accPtr->PendingMinorUpdates++;
-					}
+					char buf[128];
+					Util::SafeFormat(buf, sizeof(buf), "Failed to create account on game server. %s", g_AccountManager.GetErrorMessage(retval));
+					sim->ForceErrorMessage(buf, INFOMSG_ERROR);
+					sim->Disconnect("ServiceAuthentication::authenticate");
+					return NULL;
 				}
 			}
-			else {
-				sim->ForceErrorMessage("User not found on external service, please contact site administrator for assistance.", INFOMSG_ERROR);
-				sim->Disconnect("ServiceAuthentication::authenticate");
-				g_Log.AddMessageFormat("Service returned error when confirming authentication. Status %d", res);
-				return NULL;
+
+			/*
+			 * Make sure the account has the permissions as set on the external service. This means
+			 * for example sages on the website are also sages in the game (saves having to manually
+			 * set permissions)
+			 */
+			if(accPtr != NULL) {
+
+				// Sages and admins get sage
+				bool needSage = sage || admin || builder || developer;
+				if(needSage != accPtr->HasPermission(Perm_Account, Permission_Sage)) {
+					accPtr->SetPermission(Perm_Account, "sage", needSage);
+					accPtr->PendingMinorUpdates++;
+				}
+
+				// Admin and developer gets admin
+
+				bool needAdmin = admin || developer;
+				if(needAdmin != accPtr->HasPermission(Perm_Account, Permission_Admin)) {
+					accPtr->SetPermission(Perm_Account, "admin", needAdmin);
+					accPtr->PendingMinorUpdates++;
+				}
+
+				// Sages and admins get debug
+				bool needDebug = admin || builder || developer;
+				if(needDebug != accPtr->HasPermission(Perm_Account, Permission_Debug)) {
+					accPtr->SetPermission(Perm_Account, "debug", needDebug);
+					accPtr->PendingMinorUpdates++;
+				}
+
+				// Builders
+				bool needBuilder = builder || admin;
+				if(needBuilder != accPtr->HasPermission(Perm_Account, Permission_Builder)) {
+					accPtr->SetPermission(Perm_Account, "builder", needBuilder);
+					accPtr->PendingMinorUpdates++;
+				}
+
+				// Item give
+				bool needItemGive = sage || admin;
+				if(needItemGive != accPtr->HasPermission(Perm_Account, Permission_ItemGive)) {
+					accPtr->SetPermission(Perm_Account, "itemgive", needItemGive);
+					accPtr->PendingMinorUpdates++;
+				}
+
+				// Tweakers
+				bool needClientTweak = tweaker || admin || sage || builder || developer;
+				if(needClientTweak != accPtr->HasPermission(Perm_Account, Permission_TweakClient)) {
+					accPtr->SetPermission(Perm_Account, "tweakclient", needClientTweak);
+					accPtr->PendingMinorUpdates++;
+				}
+				bool needSelfTweak = admin || builder || developer;
+				if(needSelfTweak != accPtr->HasPermission(Perm_Account, Permission_TweakSelf)) {
+					accPtr->SetPermission(Perm_Account, "tweakself", needSelfTweak);
+					accPtr->PendingMinorUpdates++;
+				}
+				bool needNPCTweak = admin || builder || developer;
+				if(needNPCTweak != accPtr->HasPermission(Perm_Account, Permission_TweakNPC)) {
+					accPtr->SetPermission(Perm_Account, "tweaknpc", needNPCTweak);
+					accPtr->PendingMinorUpdates++;
+				}
+				bool needOtherTweak = admin;
+				if(needOtherTweak != accPtr->HasPermission(Perm_Account, Permission_TweakOther)) {
+					accPtr->SetPermission(Perm_Account, "tweakother", needOtherTweak);
+					accPtr->PendingMinorUpdates++;
+				}
+
+				// Get the number of unread private messages waiting
+				session.unreadMessages = sc.getUnreadPrivateMessages(&session);
+				g_Log.AddMessageFormat("Account has %d unread messages", session.unreadMessages);
+
+				accPtr->SiteSession.CopyFrom(&session);
 			}
+		}
+		else {
+			sim->ForceErrorMessage("User not found on external service, please contact site administrator for assistance.", INFOMSG_ERROR);
+			sim->Disconnect("ServiceAuthentication::authenticate");
+			g_Log.AddMessageFormat("Service returned error when confirming authentication. Status %d", res);
+			return NULL;
 		}
 	}
 

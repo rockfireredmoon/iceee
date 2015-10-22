@@ -100,7 +100,7 @@ QuestNutPlayer * QuestNutManager::GetActiveScript(int CID, int questID)
 	list<QuestNutPlayer*>::iterator it;
 	for (it = l.begin(); it != l.end(); ++it) {
 		QuestNutPlayer *pl = *it;
-		if(pl->GetQuestID() == questID) {
+		if(pl != NULL && pl->GetQuestID() == questID) {
 			return *it;
 		}
 	}

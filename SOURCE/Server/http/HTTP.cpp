@@ -25,6 +25,25 @@
 using namespace HTTPD;
 
 //
+// SiteSession
+//
+void SiteSession::CopyFrom(SiteSession *session) {
+	xCSRF = session->xCSRF;
+	sessionName = session->sessionName;
+	sessionID = session->sessionID;
+	uid = session->uid;
+	unreadMessages = session->unreadMessages;
+}
+
+void SiteSession::Clear() {
+	xCSRF.clear();
+	sessionName.clear();
+	sessionID.clear();
+	uid = 0;
+	unreadMessages = 0;
+}
+
+//
 // MultiPart
 Part MultiPart::getPartWithName(std::string name) {
 	for (std::vector<Part>::iterator it = parts.begin(); it != parts.end();
@@ -226,6 +245,8 @@ bool AbstractCivetHandler::parseForm(CivetServer *server,
 	char postData[MG_BUF_LEN + 1];
 	std::string contentType = CivetServer::getHeader(conn, "Content-Type");
 	int contentLength = atoi(CivetServer::getHeader(conn, "Content-Length"));
+
+	g_Log.AddMessageFormat("[REMOVEME] content type : %s %d", contentType.c_str(), contentLength);
 
 	//application/x-www-form-urlencoded
 	if (contentType.find("application/x-www-form-urlencoded") == 0) {

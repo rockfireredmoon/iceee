@@ -130,7 +130,6 @@ bool CARHandler::handleGet(CivetServer *server, struct mg_connection *conn) {
 
 //    conn->must_close = 1;
 //    conn->status_code = status;
-	mg_set_as_close(conn);
 	mg_set_status(conn, status);
 
 	switch (status) {
@@ -154,6 +153,7 @@ bool CARHandler::handleGet(CivetServer *server, struct mg_connection *conn) {
 		mg_increase_sent_bytes(conn, file.fileSize);
 //	    conn->num_bytes_sent += file.fileSize;
 
+		//mg_set_as_close(conn);
 
 		break;
 	case 304: {
@@ -163,6 +163,7 @@ bool CARHandler::handleGet(CivetServer *server, struct mg_connection *conn) {
 		mg_printf(conn, "Date: %s\r\n", formatTime(&now).c_str());
 		mg_printf(conn, "Last-Modified: %s\r\n", formatTime(&file.lastModified).c_str());
 		mg_printf(conn, "Cache-Control: max-age=0\r\n\r\n");
+//		mg_set_as_close(conn);
 
 		break;
 	}
@@ -172,6 +173,7 @@ bool CARHandler::handleGet(CivetServer *server, struct mg_connection *conn) {
 				(int) g_HTTP404Message.size());
 		mg_printf(conn, "Content-Type: text/html\r\n\r\n");
 		mg_printf(conn, "%s", g_HTTP404Message.c_str());
+		mg_set_as_close(conn);
 		break;
 	}
 	return true;

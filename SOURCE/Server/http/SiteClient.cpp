@@ -16,6 +16,10 @@
  */
 
 #include "SiteClient.h"
+#include "../Config.h"
+#include "../Util.h"
+#include "../json/json.h"
+
 
 //
 // SiteClient
@@ -25,7 +29,134 @@ SiteClient::SiteClient(std::string url) {
 	mUrl = url;
 }
 
+int SiteClient::sendRequest(HTTPD::SiteSession *session, std::string path, std::string &content) {
+	struct curl_slist *headers = NULL;
+	CURL *curl;
+	curl = curl_easy_init();
+	if(curl) {
+		char url[256];
+		char token[256];
+		char cookie[256];
 
-bool SiteClient::sendPrivateMessage(std::string sender, std::string recipient, std::string message) {
-	return true;
+		Util::SafeFormat(url, sizeof(url), "%s/%s.json", mUrl.c_str(), path.c_str());
+		Util::SafeFormat(token, sizeof(token), "X-CSRF-Token: %s", session->xCSRF.c_str());
+		Util::SafeFormat(cookie, sizeof(cookie), "Cookie: %s=%s", session->sessionName.c_str(),session->sessionID.c_str());
+
+		curl_easy_setopt(curl, CURLOPT_URL, url);
+		curl_easy_setopt(curl, CURLOPT_USERAGENT, "EETAW");
+
+		headers = curl_slist_append(headers, token);
+		headers = curl_slist_append(headers, cookie);
+		headers = curl_slist_append(headers, "Content-Type: application/json");
+
+		curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, writeCallback);
+		curl_easy_setopt(curl, CURLOPT_WRITEDATA, &content);
+
+		curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
+
+		curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
+
+		// TODO might need config item to disable SSL verification
+		//curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 0L);
+		//curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, 0L);
+
+		CURLcode res;
+		res = curl_easy_perform(curl);
+
+		long http_code = 0;
+		curl_easy_getinfo (curl, CURLINFO_RESPONSE_CODE, &http_code);
+		curl_slist_free_all(headers);
+		curl_easy_cleanup(curl);
+		return (int)http_code;
+	}
+
+	return CURLE_SEND_ERROR;
+}
+
+
+
+int SiteClient::postJSON(HTTPD::SiteSession *session, std::string path, std::string &content) {
+	struct curl_slist *headers = NULL;
+	CURL *curl;
+	curl = curl_easy_init();
+	if(curl) {
+		struct Writeable wrt;
+
+		wrt.readptr = content.c_str();
+		wrt.sizeleft = content.length();
+
+		char url[256];
+		char token[256];
+		char cookie[256];
+
+		Util::SafeFormat(url, sizeof(url), "%s/%s.json", mUrl.c_str(), path.c_str());
+		Util::SafeFormat(token, sizeof(token), "X-CSRF-Token: %s", session->xCSRF.c_str());
+		Util::SafeFormat(cookie, sizeof(cookie), "Cookie: %s=%s", session->sessionName.c_str(),session->sessionID.c_str());
+
+		curl_easy_setopt(curl, CURLOPT_URL, url);
+		curl_easy_setopt(curl, CURLOPT_USERAGENT, "EETAW");
+
+		headers = curl_slist_append(headers, token);
+		headers = curl_slist_append(headers, cookie);
+		headers = curl_slist_append(headers, "Content-Type: application/json");
+
+	    curl_easy_setopt(curl, CURLOPT_POST, 1L);
+	    curl_easy_setopt(curl, CURLOPT_POSTFIELDSIZE, content.size());
+
+		curl_easy_setopt(curl, CURLOPT_READFUNCTION, readCallback);
+		curl_easy_setopt(curl, CURLOPT_READDATA, &wrt);
+
+		curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
+
+		curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
+
+		// TODO might need config item to disable SSL verification
+		//curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 0L);
+		//curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, 0L);
+
+		CURLcode res;
+		res = curl_easy_perform(curl);
+
+		long http_code = 0;
+		curl_easy_getinfo (curl, CURLINFO_RESPONSE_CODE, &http_code);
+		curl_slist_free_all(headers);
+		curl_easy_cleanup(curl);
+		return (int)http_code;
+	}
+
+	return CURLE_SEND_ERROR;
+}
+
+int SiteClient::getUnreadPrivateMessages(HTTPD::SiteSession *session) {
+	std::string readBuffer;
+	char url[1024];
+	int res;
+	res = sendRequest(session, "privatemsgunread", readBuffer);
+	if(res == 200) {
+		Json::Value root;
+		Json::Reader reader;
+		if (reader.parse( readBuffer.c_str(), root ) && root.size() > 0) {
+			return atoi(root[0].asCString());
+		}
+	}
+	return -1;
+}
+
+bool SiteClient::sendPrivateMessage(HTTPD::SiteSession *session, std::string recipient, std::string subject, std::string message) {
+
+	std::string readBuffer;
+	char url[1024];
+
+	Json::Value root;
+	root["subject"] = subject;
+	root["body"] = message;
+	root["recipients"] = recipient;
+
+	Json::StyledWriter writer;
+	std::string output = writer.write(root);
+	g_Log.AddMessageFormat("[REMOVEME] WRITE: %s", output.c_str());
+
+	int res = postJSON(session, "privatemsg", output);
+	g_Log.AddMessageFormat("[REMOVEME] Post returned %d", res);
+	return res == 200;
 }

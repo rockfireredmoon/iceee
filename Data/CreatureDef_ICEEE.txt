@@ -2091,7 +2091,7 @@ rarity=2
 ai_package=4_knight_30
 
 [ENTRY]
-ID=7864
+ID=7865
 appearance=n4:{["sk"]={["eye"]="FFFBC7",["moss"]="537E10",["rock"]="7C7C7C"},["c"]="Horde-Rock_Bear",["sz"]="1"}
 level=4
 display_name=Rock Bear Form
@@ -2099,7 +2099,7 @@ creature_category=Magical
 constitution=1
 
 [ENTRY]
-ID=7865
+ID=7866
 appearance=n4:{["sk"]={["inside_ear"]="A48C6B",["fur2"]="3E3A31",["fur1"]="6E6757",["eye"]="4F5358"},["c"]="Horde-Spibear",["sz"]="1"}
 level=4
 display_name=Spibear Form
@@ -2107,7 +2107,7 @@ creature_category=Magical
 constitution=1
 
 [ENTRY]
-ID=7866
+ID=7867
 appearance=n4:{["sk"]={["horn"]="F0D37A",["eyes"]="FFF200",["tattoo"]="FE3E01",["body"]="2E2E2E"},["c"]="Horde-Unikorn",["sz"]="1"}
 level=4
 display_name=Unikorn Form
@@ -2115,7 +2115,7 @@ creature_category=Magical
 constitution=1
 
 [ENTRY]
-ID=7867
+ID=7868
 appearance=n4:{["c"]="Pet-Alpaca",["sz"]="1.5"}
 level=4
 display_name=Alpaca Form
@@ -2123,7 +2123,7 @@ creature_category=Magical
 constitution=1
 
 [ENTRY]
-ID=7868
+ID=7869
 appearance=n4:{["c"]="Pet-Bigcat",["sz"]="1.3"}
 level=4
 display_name=Panther Form
@@ -2131,7 +2131,7 @@ creature_category=Magical
 constitution=1
 
 [ENTRY]
-ID=7869
+ID=7870
 appearance=n4:{["sk"]={["plates"]="242424",["skin"]="39BF41",["tail2"]="FF6D00",["tail1"]="FFB600"},["c"]="Horde-Salamander",["sz"]="1.3"}
 level=4
 display_name=Salamander Form
@@ -2139,7 +2139,7 @@ creature_category=Magical
 constitution=1
 
 [ENTRY]
-ID=7870
+ID=7871
 appearance=n4:{["sk"]={["fur"]="656E64",["outereye"]="FFCD00",["eye"]="FFFBC7",["mouth"]="75562C",["nose"]="69483B",["horns"]="DCD074"},["c"]="Horde-Prickly_Boar",["sz"]="1.3"}
 level=4
 display_name=Boar Form
@@ -2147,7 +2147,7 @@ creature_category=Magical
 constitution=1
 
 [ENTRY]
-ID=7871
+ID=7872
 appearance=n4:{["sk"]={["body"]="0A0355",["highlight"]="94660D",["mouth"]="151515"},["c"]="Horde-Phoenix",["sz"]="1.3"}
 level=4
 display_name=Pheonix Form
@@ -2155,7 +2155,7 @@ creature_category=Magical
 constitution=1
 
 [ENTRY]
-ID=7872
+ID=7873
 appearance=n4:{["sk"]={["fur"]="484848",["eyes"]="AAB2B2",["dark_fur"]="292929",["nails"]="1C0909",["quill1"]="630505",["quill2"]="696921"},["c"]="Horde-Dire_Hedgehog",["sz"]="1.3"}
 level=4
 display_name=Hedgehog Form

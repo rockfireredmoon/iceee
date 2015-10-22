@@ -611,7 +611,6 @@ namespace ScriptCore
 			g_Log.AddMessageFormat("[WARNING] Attempt to run function on inactive script %s.", name.c_str());
 			return false;
 		}
-		g_Log.AddMessageFormat("RunFunction(%s)", name.c_str());
 		unsigned long now = g_PlatformTime.getMilliseconds();
 		mRunning = true;
 

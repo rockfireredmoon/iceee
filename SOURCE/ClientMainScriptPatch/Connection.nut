@@ -915,47 +915,20 @@ class this.Connection extends this.MessageBroadcaster
 			
 			this.log.debug("AUTH URL: " + auth_data);
 
-			if (this.mAuthToken)
-			{ 
-				local spl = this.Util.split(this.mAuthToken, ":");
-				local uid = spl[2];
-				local session_name = spl[0];
-				local sessid = spl[1];
-				
-				req.onreadystatechange = function () {
-					if (this.readyState == 4) {
-						 ::_Connection._handleServiceTokenLogin(this);
-					}
-				};
-				
-				// Get the X-CSRF-Token (sent as header on next request)
-				//req.setRequestHeader("Content-Type", "application/json");
-				//req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-				
-				req.setRequestHeader("User-Agent", "EETAW");
-				req.setRequestHeader("Host", Util.extractHostnameAndPortFromUrl(mAuthData));
-				req.setRequestHeader("Cookie", session_name + "=" + Util.replace(sessid, ":", "%3a"));
-				req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-				req.open("GET", mAuthData + "/user/" + uid + ".json", false);
-				req.send();
-			}
-			else
-			{
-				mXCSRFToken = null;
-				
-				req.onreadystatechange = function () {
-					if (this.readyState == 4) {
-						 ::_Connection._handleServiceToken(this);
-					}
-				};
-				
-				// Get the X-CSRF-Token (sent as header on next request)
-				req.setRequestHeader("Content-Type", "application/json");
-				req.setRequestHeader("User-Agent", "EETAW");
-				req.setRequestHeader("Host", Util.extractHostnameAndPortFromUrl(mAuthData));
-				req.open("POST", mAuthData + "/user/token.json", false);
-				req.send("{}");
-			}
+			mXCSRFToken = null;
+			
+			req.onreadystatechange = function () {
+				if (this.readyState == 4) {
+					 ::_Connection._handleServiceToken(this);
+				}
+			};
+			
+			// Get the X-CSRF-Token (sent as header on next request)
+			req.setRequestHeader("Content-Type", "application/json");
+			req.setRequestHeader("User-Agent", "EETAW");
+			req.setRequestHeader("Host", Util.extractHostnameAndPortFromUrl(mAuthData));
+			req.open("POST", mAuthData + "/user/token.json", false);
+			req.send("{}");
 		
 		}
 		else if (auth_method == this.AuthMethod.DEV)
@@ -1103,7 +1076,7 @@ class this.Connection extends this.MessageBroadcaster
 			
 			local results = ::json(req.responseText);
 			local name = "name" in results ? results.name : "UNKNOWN";
-			local tkn = "NONE:" + sessid + ":" + session_name + ":" + uid;
+			local tkn = mXCSRFToken + ":" + sessid + ":" + session_name + ":" + uid;
 			
 			_beginSend("authenticate");
 			if (this.mProtocolVersionId >= 11)
@@ -1168,22 +1141,49 @@ class this.Connection extends this.MessageBroadcaster
 			close(false);
 		}
 		else {
-			// Now we can authenticate the username and password							
-			local innerReq = this.XMLHttpRequest();
-			innerReq.onreadystatechange = function () : ()	{
-				if (this.readyState == 4) {
-					::_Connection._handleServiceLogin(this);
-				}
-			};
-			innerReq.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-			innerReq.setRequestHeader("User-Agent", "EETAW");
-			innerReq.setRequestHeader("Cookie", "X-CSRF-Token=" + mXCSRFToken);
-			innerReq.setRequestHeader("Host", Util.extractHostnameAndPortFromUrl(mAuthData));
-			innerReq.open("POST", mAuthData + "/user/login.json", false);
-			innerReq.send(this.System.encodeVars({
-				username = ::_username,
-				password = ::_password,
-			}));
+		
+			if (this.mAuthToken)
+			{ 
+				local spl = this.Util.split(this.mAuthToken, ":");
+				local uid = spl[2];
+				local session_name = spl[0];
+				local sessid = spl[1];						
+				local innerReq = this.XMLHttpRequest();
+				
+				innerReq.onreadystatechange = function () {
+					if (this.readyState == 4) {
+						 ::_Connection._handleServiceTokenLogin(this);
+					}
+				};
+				
+				innerReq.setRequestHeader("User-Agent", "EETAW");
+				innerReq.setRequestHeader("Host", Util.extractHostnameAndPortFromUrl(mAuthData));
+				innerReq.setRequestHeader("Cookie", session_name + "=" + Util.replace(sessid, ":", "%3a"));
+				innerReq.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+				innerReq.open("GET", mAuthData + "/user/" + uid + ".json", false);
+				innerReq.send();
+			}
+			else
+			{
+				
+				// Now we can authenticate the username and password							
+				local innerReq = this.XMLHttpRequest();
+				innerReq.onreadystatechange = function () : ()	{
+					if (this.readyState == 4) {
+						::_Connection._handleServiceLogin(this);
+					}
+				};
+				innerReq.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+				innerReq.setRequestHeader("User-Agent", "EETAW");
+				innerReq.setRequestHeader("Cookie", "X-CSRF-Token=" + mXCSRFToken);
+				innerReq.setRequestHeader("Host", Util.extractHostnameAndPortFromUrl(mAuthData));
+				innerReq.open("POST", mAuthData + "/user/login.json", false);
+				innerReq.send(this.System.encodeVars({
+					username = ::_username,
+					password = ::_password,
+				}));
+			}
+		
 			
 		}
 	}

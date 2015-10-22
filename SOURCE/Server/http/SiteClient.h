@@ -18,8 +18,10 @@
 #ifndef SITECLIENT_H
 #define SITECLIENT_H
 
+#include "HTTP.h"
 #include "HTTPClient.h"
 #include <string>
+#include <curl/curl.h>
 
 /*
  * Client that communicates with the website using Drupal services.
@@ -27,7 +29,10 @@
 class SiteClient  {
 public:
 	SiteClient(std::string url);
-	bool sendPrivateMessage(std::string sender, std::string recipient, std::string message);
+	int postJSON(HTTPD::SiteSession *session, std::string path, std::string &content);
+	int sendRequest(HTTPD::SiteSession *session, std::string path, std::string &content);
+	int getUnreadPrivateMessages(HTTPD::SiteSession *session);
+	bool sendPrivateMessage(HTTPD::SiteSession *session, std::string recipient, std::string subject, std::string message);
 private:
 	std::string mUrl;
 };

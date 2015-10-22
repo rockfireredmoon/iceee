@@ -231,6 +231,19 @@ void SystemLoop_Console(void);
 
 void segfault_sigaction(int signum, siginfo_t *si, void *arg)
 {
+	/* Uninstall signal handlers so if any happen while processing
+	 * this we don't go into a mad loop
+	 */
+	signal(SIGPIPE, SIG_DFL);
+	signal(SIGSEGV, SIG_DFL);
+	signal(SIGFPE, SIG_DFL);
+	signal(SIGILL, SIG_DFL);
+	signal(SIGBUS, SIG_DFL);
+	signal(SIGABRT, SIG_DFL);
+	signal(SIGINT, SIG_DFL);
+	signal(SIGTERM, SIG_DFL);
+
+
 	g_Log.AddMessageFormatW(MSG_CRIT, "[CRITICAL] signal encountered: %d", signum);
 	switch(signum)
 	{
@@ -1429,7 +1442,11 @@ void Debug_OutputCharacter(FILE *output, int index, CreatureInstance *cInst)
 		for(std::vector<QuestReference>::iterator it = act.itemList.begin(); it != act.itemList.end(); ++it) {
 			QuestReference ref = *it;
 			fprintf(output, "    Quest: %d (ACT %d)\r\n", ref.QuestID, ref.CurAct);
+
+			g_QuestNutManager.cs.Enter("QuestNutManager::GetActiveScript");
 			QuestScript::QuestNutPlayer *questScript = g_QuestNutManager.GetActiveScript(cInst->CreatureID, ref.QuestID);
+			g_QuestNutManager.cs.Leave();
+
 			if(questScript != NULL && questScript->def != NULL) {
 				fprintf(output, "    Quest Script: %s \r\n", questScript->def->scriptName.c_str());
 			}
