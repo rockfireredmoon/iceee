@@ -152,23 +152,29 @@ bool UserHandler::handleAuthenticatedGet(CivetServer *server,
 	else {
 		int accountId = atoi(pathParts[pathParts.size() - 1].c_str());
 		if(accountId == 0) {
-			AccountQuickData *aqd = g_AccountManager.GetAccountQuickDataByUsername(pathParts[pathParts.size() - 1].c_str());
+			std::string username = pathParts[pathParts.size() - 1];
+			Util::URLDecode(username);
+			AccountQuickData *aqd = g_AccountManager.GetAccountQuickDataByUsername(username.c_str());
 			if(aqd != NULL) {
 				accountId = aqd->mID;
 			}
 		}
 
 		AccountData *ad = NULL;
+		g_AccountManager.cs.Enter("TAWApi::UserHandler::handleAuthenticatedGet");
 		if(accountId != 0) {
 			ad = g_AccountManager.FetchIndividualAccount(accountId);
 		}
 
-		if(ad == NULL)
+		if(ad == NULL) {
+			g_AccountManager.cs.Leave();
 			writeStatus(server, conn, 404, "Not found.",
 					"The account could not be found.");
+		}
 		else {
 			Json::Value root;
 			ad->WriteToJSON(root);
+			g_AccountManager.cs.Leave();
 			Json::StyledWriter writer;
 			writeJSON200(server, conn, writer.write(root));
 		}
