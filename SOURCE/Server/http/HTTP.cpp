@@ -246,8 +246,6 @@ bool AbstractCivetHandler::parseForm(CivetServer *server,
 	std::string contentType = CivetServer::getHeader(conn, "Content-Type");
 	int contentLength = atoi(CivetServer::getHeader(conn, "Content-Length"));
 
-	g_Log.AddMessageFormat("[REMOVEME] content type : %s %d", contentType.c_str(), contentLength);
-
 	//application/x-www-form-urlencoded
 	if (contentType.find("application/x-www-form-urlencoded") == 0) {
 

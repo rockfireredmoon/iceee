@@ -35,10 +35,5 @@ aclocal.m4
 *.mk
 /asset/
 *.autotools
-*.txt
-/Accounts/
-/asset/
-/Characters/
-/Petitions/
-/Dynamic/
-/ZoneDef/
+/Audit/
+**/*.cnut

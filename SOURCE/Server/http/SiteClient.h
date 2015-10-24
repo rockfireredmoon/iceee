@@ -29,7 +29,8 @@
 class SiteClient  {
 public:
 	SiteClient(std::string url);
-	int postJSON(HTTPD::SiteSession *session, std::string path, std::string &content);
+	int refreshXCSRF(HTTPD::SiteSession *session);
+	int postJSON(HTTPD::SiteSession *session, std::string path, std::string &content, std::string &reply);
 	int sendRequest(HTTPD::SiteSession *session, std::string path, std::string &content);
 	int getUnreadPrivateMessages(HTTPD::SiteSession *session);
 	bool sendPrivateMessage(HTTPD::SiteSession *session, std::string recipient, std::string subject, std::string message);

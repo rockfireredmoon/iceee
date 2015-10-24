@@ -10,6 +10,7 @@
 #include "Inventory.h"
 #include "Creature.h"
 #include "Quest.h"
+#include "PlayerStats.h"
 
 #include "Components.h"
 #include "DirectoryAccess.h"
@@ -215,6 +216,9 @@ public:
 
 	//short equipStat[Stat_MaxRow][Stat_MaxCol];
 	unsigned int PermissionSet[2];
+
+	// Character wide death/kill stats
+	PlayerStatSet PlayerStats;
 
 	void ClearAll();
 	void CopyFrom(CharacterData &source);

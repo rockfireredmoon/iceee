@@ -61,6 +61,7 @@ tawd_SOURCES = md5.cc \
 	NPC.cpp \
 	Packet.cpp \
 	PartyManager.cpp \
+	PlayerStats.cpp \
 	Preferences.cpp \
 	PVP.cpp \
 	QuestAction.cpp \
@@ -155,6 +156,7 @@ tawd_SOURCES = md5.cc \
 	NPC.h \
 	Packet.h \
 	PartyManager.h \
+	PlayerStats.h \
 	Preferences.h \
 	PVP.h \
 	QuestAction.h \
@@ -277,6 +279,7 @@ tawdsvc_SOURCES = md5.cc \
 	NPC.cpp \
 	Packet.cpp \
 	PartyManager.cpp \
+	PlayerStats.cpp \
 	Preferences.cpp \
 	PVP.cpp \
 	QuestAction.cpp \
@@ -371,6 +374,7 @@ tawdsvc_SOURCES = md5.cc \
 	NPC.h \
 	Packet.h \
 	PartyManager.h \
+	PlayerStats.h \
 	Preferences.h \
 	PVP.h \
 	QuestAction.h \

@@ -2855,6 +2855,12 @@ void CreatureInstance :: ProcessDeath(void)
 		 * mode and the zone is not an arena
 		 */
 		if(serverFlags & ServerFlags::IsPlayer) {
+
+			AccountData *victimsAccount = g_AccountManager.GetActiveAccountByID(charPtr->AccountID);
+			if(victimsAccount == NULL) {
+				g_Log.AddMessageFormat("[WARNING] Cannot find account %d for character %d to update kill/death stats.", charPtr->AccountID);
+			}
+
 			/* This is a player death, determine if they were killed during PVP way. Loot
 			 * is not given in arenas
 			 */
@@ -2866,9 +2872,39 @@ void CreatureInstance :: ProcessDeath(void)
 					if(attacker->charPtr->Mode == PVP::GameMode::PVP) {
 						pvpAttackers.push_back(attacker);
 					}
+
+					// If the attacker is a player, increase their kill counts
+					if(attacker->charPtr != NULL && attacker->charPtr->AccountID > 0) {
+						AccountData *attackersAccount = g_AccountManager.GetActiveAccountByID(attacker->charPtr->AccountID);
+						if(attackersAccount == NULL) {
+							g_Log.AddMessageFormat("[WARNING] Cannot find account %d for character %d to update kill/death stats.", attacker->charPtr->AccountID);
+						}
+						else {
+							// Update character kill/death stats
+							if(attacker->charPtr != NULL) {
+								attacker->charPtr->PlayerStats.TotalPVPDeaths++;
+								attacker->charPtr->pendingChanges++;
+							}
+
+							// Update account kill/death stats
+							attackersAccount->PlayerStats.TotalPVPKills++;
+							attackersAccount->PendingMinorUpdates++;
+						}
+					}
 				}
 
 				if(pvpAttackers.size() > 0) {
+
+					// Update character kill/death stats
+					charPtr->PlayerStats.TotalPVPDeaths++;
+					charPtr->pendingChanges++;
+
+					// Update account kill/death stats
+					if(victimsAccount != NULL) {
+						victimsAccount->PlayerStats.TotalPVPDeaths++;
+						victimsAccount->PendingMinorUpdates++;
+					}
+
 
 					char buffer[2048];
 
@@ -2930,11 +2966,77 @@ void CreatureInstance :: ProcessDeath(void)
 					}
 
 				}
+				else {
+					if(victimsAccount != NULL) {
+						// Update character kill/death stats
+						charPtr->PlayerStats.TotalDeaths++;
+						charPtr->pendingChanges++;
+
+						// Update account kill/death stats
+						victimsAccount->PlayerStats.TotalDeaths++;
+						victimsAccount->PendingMinorUpdates++;
+					}
+				}
+			}
+			else {
+				if(victimsAccount != NULL) {
+					// Update character kill/death stats
+					charPtr->PlayerStats.TotalDeaths++;
+					charPtr->pendingChanges++;
+
+					// Update account kill/death stats
+					victimsAccount->PlayerStats.TotalDeaths++;
+					victimsAccount->PendingMinorUpdates++;
+				}
+
+				for(size_t i = 0; i < attackerList.size(); i++)	{
+					CreatureInstance *attacker = attackerList[i].ptr;
+
+					// If the attacker is a player, increase their kill counts
+					if(attacker->charPtr != NULL && attacker->charPtr->AccountID > 0) {
+
+						// Update character kill/death stats
+						attacker->charPtr->PlayerStats.TotalKills++;
+						attacker->charPtr->pendingChanges++;
+
+						// Update account kill/death stats
+						AccountData *attackersAccount = g_AccountManager.GetActiveAccountByID(attacker->charPtr->AccountID);
+						if(attackersAccount == NULL) {
+							g_Log.AddMessageFormat("[WARNING] Cannot find account %d for character %d to update kill/death stats.", attacker->charPtr->AccountID);
+						}
+						else {
+							attackersAccount->PlayerStats.TotalKills++;
+							attackersAccount->PendingMinorUpdates++;
+						}
+					}
+				}
 			}
 		}
 		else {
 			// Ordinary creature
 			CreateLoot(highestLev);
+
+			for(size_t i = 0; i < attackerList.size(); i++)	{
+				CreatureInstance *attacker = attackerList[i].ptr;
+
+				// If the attacker is a player, increase their kill counts
+				if(attacker->charPtr != NULL && attacker->charPtr->AccountID > 0) {
+
+					// Update character kill/death stats
+					attacker->charPtr->PlayerStats.TotalKills++;
+					attacker->charPtr->pendingChanges++;
+
+					// Update account kill/death stats
+					AccountData *attackersAccount = g_AccountManager.GetActiveAccountByID(attacker->charPtr->AccountID);
+					if(attackersAccount == NULL) {
+						g_Log.AddMessageFormat("[WARNING] Cannot find account %d for character %d to update kill/death stats.", attacker->charPtr->AccountID);
+					}
+					else {
+						attackersAccount->PlayerStats.TotalKills++;
+						attackersAccount->PendingMinorUpdates++;
+					}
+				}
+			}
 		}
 
 		// Calculate how many credits should be awarded if the creature 'drops' them.

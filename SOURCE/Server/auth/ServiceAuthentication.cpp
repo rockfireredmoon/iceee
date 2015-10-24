@@ -180,6 +180,11 @@ AccountData * ServiceAuthenticationHandler::onAuthenticate(SimulatorThread *sim,
 		// The client does the actual communication
 		SiteClient sc(g_Config.ServiceAuthURL);
 
+		// Get an X-CSRF-Token
+		if(session.xCSRF.compare("NONE") == 0) {
+			sc.refreshXCSRF(&session);
+		}
+
 		std::string readBuffer;
 		char url[256];
 		Util::SafeFormat(url, sizeof(url), "user/%s", prms[3].c_str());

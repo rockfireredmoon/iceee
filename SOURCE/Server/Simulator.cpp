@@ -4494,16 +4494,39 @@ void SimulatorThread :: handle_communicate(void)
 
 	if(tell == true && found == false)
 	{
-		char subject[256];
-		Util::SafeFormat(subject, sizeof(subject), "In-game tell for %s from %s", Aux3, creatureInst->css.display_name);
-		SiteClient siteClient(g_Config.ServiceAuthURL);
-		if(siteClient.sendPrivateMessage(&pld.accPtr->SiteSession, Aux3, subject, message)) {
-			sprintf(LogBuffer, "Player \"%s\" is not logged in, sent private message to their game account.", Aux3);
+
+		/* Look up the account name for the character */
+		int cdefID = g_AccountManager.GetCDefFromCharacterName(Aux3);
+		int msgCode = INFOMSG_ERROR;
+		if(cdefID == -1) {
+			sprintf(LogBuffer, "No such character \"%s\" .", Aux3);
 		}
 		else {
-			sprintf(LogBuffer, "Player \"%s\" is not logged in.", Aux3);
+			CharacterData *cd = g_CharacterManager.RequestCharacter(cdefID, true);
+			if(cd == NULL || cd->AccountID < 1) {
+				sprintf(LogBuffer, "Could not find creature definition for \"%s\" (%d), please report this error to an admin.", Aux3, cdefID);
+			}
+			else {
+				AccountData *data = g_AccountManager.FetchIndividualAccount(cd->AccountID);
+				if(data == NULL) {
+					sprintf(LogBuffer, "Could not find account for \"%s\" (%d, %d), please report this error to an admin.", Aux3, cdefID, cd->AccountID);
+				}
+				else {
+					char subject[256];
+					Util::SafeFormat(subject, sizeof(subject), "In-game private message for %s from %s", Aux3, creatureInst->css.display_name);
+
+					SiteClient siteClient(g_Config.ServiceAuthURL);
+					if(siteClient.sendPrivateMessage(&pld.accPtr->SiteSession, data->Name, subject, message)) {
+						sprintf(LogBuffer, "Sent offline private message to \"%s\".", Aux3);
+						msgCode = INFOMSG_INFO;
+					}
+					else {
+						sprintf(LogBuffer, "Player \"%s\" is not logged in.", Aux3);
+					}
+				}
+			}
 		}
-		SendInfoMessage(LogBuffer, INFOMSG_ERROR);
+		SendInfoMessage(LogBuffer, msgCode);
 	}
 }
 
