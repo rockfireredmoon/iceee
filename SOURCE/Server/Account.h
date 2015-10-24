@@ -9,6 +9,7 @@
 #include "Components.h"
 #include "Inventory.h"
 #include "Character.h"
+#include "PlayerStats.h"
 #include "Util.h"  //ChangeData was moved here
 #include "json/json.h"
 #include "http/HTTP.h"
@@ -114,6 +115,9 @@ public:
 	int ConsecutiveDaysLoggedIn; // The number of consecutive days the account has logged in
 	int Credits; // The number of credits the account has (if AccountCredits is on)
 	int DeliveryBoxSlots;
+
+	// Account wide stats
+	PlayerStatSet PlayerStats;
 
 	/* User data  */
 //	std::vector<InventorySlot> deliveryInventory;

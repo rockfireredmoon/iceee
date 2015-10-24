@@ -120,6 +120,8 @@ void AccountData :: ClearAll(void)
 	SessionLoginCount = 0;
 	ExpireTime = 0;
 
+	PlayerStats.Clear();
+
 	SiteSession.Clear();
 
 	//CurrentVaultSize = DEFAULT_VAULT_SIZE;
@@ -396,6 +398,9 @@ void AccountData :: SaveToStream(FILE *output)
 		fprintf(output, "\r\n");
 
 	Util::WriteString(output, "GroveName", GroveName);
+	PlayerStats.SaveToStream(output);
+
+
 //	Util::WriteString(output, "xCSRF", SiteSession.xCSRF);
 //	Util::WriteString(output, "SessionName", SiteSession.sessionName);
 //	Util::WriteString(output, "SessionID", SiteSession.sessionID);
@@ -644,8 +649,10 @@ void AccountData :: ReadFromJSON(Json::Value &value)
 	DeliveryBoxSlots = value["deliveryBoxes"].asInt();
 	MaxCharacters = value["max"].asInt();
 	GroveName = value["grove"].asString();
-
-//	ID = value["id"];
+	PlayerStats.Clear();
+	if(value.isMember("playerStats")) {
+		PlayerStats.ReadFromJSON(value["playerStats"]);
+	}
 }
 
 void AccountData :: WriteToJSON(Json::Value &value)
@@ -678,6 +685,10 @@ void AccountData :: WriteToJSON(Json::Value &value)
 	value["deliveryBoxes"] = DeliveryBoxSlots;
 	value["grove"] = GroveName;
 	value["max"] = MaxCharacters;
+
+	Json::Value ps;
+	PlayerStats.WriteToJSON(ps);
+	value["playerStats"] = ps;
 }
 
 AccountManager :: AccountManager()
@@ -824,7 +835,7 @@ void AccountManager :: LoadSectionGeneral(FileReader &fr, AccountData &ad, const
 //		if(slot.VerifyItemExist() == true)
 //			ad.deliveryInventory.push_back(slot);
 //	}
-	else {
+	else if(!ad.PlayerStats.LoadFromStream(fr)) {
 		if(CheckSection_Inventory(fr, ad.inventory, debugFilename,  ad.Name, "Account") == -2) {
 			g_Log.AddMessageFormat("Unknown identifier [%s] in file [%s]", NameBlock, debugFilename);
 		}

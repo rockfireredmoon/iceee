@@ -39,7 +39,8 @@ int SiteClient::sendRequest(HTTPD::SiteSession *session, std::string path, std::
 		char cookie[256];
 
 		Util::SafeFormat(url, sizeof(url), "%s/%s.json", mUrl.c_str(), path.c_str());
-		Util::SafeFormat(token, sizeof(token), "X-CSRF-Token: %s", session->xCSRF.c_str());
+		if(session->xCSRF.size() > 0)
+			Util::SafeFormat(token, sizeof(token), "X-CSRF-Token: %s", session->xCSRF.c_str());
 		Util::SafeFormat(cookie, sizeof(cookie), "Cookie: %s=%s", session->sessionName.c_str(),session->sessionID.c_str());
 
 		curl_easy_setopt(curl, CURLOPT_URL, url);
@@ -75,7 +76,7 @@ int SiteClient::sendRequest(HTTPD::SiteSession *session, std::string path, std::
 
 
 
-int SiteClient::postJSON(HTTPD::SiteSession *session, std::string path, std::string &content) {
+int SiteClient::postJSON(HTTPD::SiteSession *session, std::string path, std::string &content, std::string &reply) {
 	struct curl_slist *headers = NULL;
 	CURL *curl;
 	curl = curl_easy_init();
@@ -90,7 +91,8 @@ int SiteClient::postJSON(HTTPD::SiteSession *session, std::string path, std::str
 		char cookie[256];
 
 		Util::SafeFormat(url, sizeof(url), "%s/%s.json", mUrl.c_str(), path.c_str());
-		Util::SafeFormat(token, sizeof(token), "X-CSRF-Token: %s", session->xCSRF.c_str());
+		if(session->xCSRF.size() > 0)
+			Util::SafeFormat(token, sizeof(token), "X-CSRF-Token: %s", session->xCSRF.c_str());
 		Util::SafeFormat(cookie, sizeof(cookie), "Cookie: %s=%s", session->sessionName.c_str(),session->sessionID.c_str());
 
 		curl_easy_setopt(curl, CURLOPT_URL, url);
@@ -105,6 +107,9 @@ int SiteClient::postJSON(HTTPD::SiteSession *session, std::string path, std::str
 
 		curl_easy_setopt(curl, CURLOPT_READFUNCTION, readCallback);
 		curl_easy_setopt(curl, CURLOPT_READDATA, &wrt);
+
+		curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, writeCallback);
+		curl_easy_setopt(curl, CURLOPT_WRITEDATA, &reply);
 
 		curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
 
@@ -127,6 +132,23 @@ int SiteClient::postJSON(HTTPD::SiteSession *session, std::string path, std::str
 	return CURLE_SEND_ERROR;
 }
 
+int SiteClient::refreshXCSRF(HTTPD::SiteSession *session) {
+	std::string sendBuffer;
+	std::string replyBuffer;
+	char url[1024];
+	int res;
+	session->xCSRF = "";
+	res = postJSON(session, "user/token", sendBuffer, replyBuffer);
+	if(res == 200) {
+		Json::Value root;
+		Json::Reader reader;
+		if (reader.parse( replyBuffer.c_str(), root ) && root.size() > 0) {
+			session->xCSRF = root["token"].asCString();
+		}
+	}
+	return res;
+}
+
 int SiteClient::getUnreadPrivateMessages(HTTPD::SiteSession *session) {
 	std::string readBuffer;
 	char url[1024];
@@ -143,8 +165,8 @@ int SiteClient::getUnreadPrivateMessages(HTTPD::SiteSession *session) {
 }
 
 bool SiteClient::sendPrivateMessage(HTTPD::SiteSession *session, std::string recipient, std::string subject, std::string message) {
-
 	std::string readBuffer;
+	std::string replyBuffer;
 	char url[1024];
 
 	Json::Value root;
@@ -154,9 +176,6 @@ bool SiteClient::sendPrivateMessage(HTTPD::SiteSession *session, std::string rec
 
 	Json::StyledWriter writer;
 	std::string output = writer.write(root);
-	g_Log.AddMessageFormat("[REMOVEME] WRITE: %s", output.c_str());
-
-	int res = postJSON(session, "privatemsg", output);
-	g_Log.AddMessageFormat("[REMOVEME] Post returned %d", res);
+	int res = postJSON(session, "privatemsg", output, replyBuffer);
 	return res == 200;
 }

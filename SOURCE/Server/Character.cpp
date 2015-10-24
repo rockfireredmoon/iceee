@@ -210,6 +210,8 @@ void CharacterData :: ClearAll(void)
 	CreditsPurchased = 0;
 	CreditsSpent = 0;
 	ExtraAbilityPoints = 0;
+
+	PlayerStats.Clear();
 }
 
 void CharacterData :: CopyFrom(CharacterData &source)
@@ -1363,8 +1365,7 @@ int CheckSection_General(FileReader &fr, CharacterData &cd, const char *debugFil
 	{
 		cd.InstanceScaler = fr.BlockToStringC(1, 0);
 	}
-	else
-	{
+	else if(!cd.PlayerStats.LoadFromStream(fr)) {
 		g_Log.AddMessageFormat("Unknown identifier [%s] in character General section (line: %d).", fr.BlockToString(0), fr.LineNumber);
 	}
 	return 0;
@@ -1622,6 +1623,8 @@ void SaveCharacterToStream(FILE *output, CharacterData &cd)
 	fprintf(output, "LastWarpTime=%lu\r\n", cd.LastWarpTime);
 	fprintf(output, "UnstickCount=%d\r\n", cd.UnstickCount);
 	fprintf(output, "LastUnstickTime=%lu\r\n", cd.LastUnstickTime);
+
+	cd.PlayerStats.SaveToStream(output);
 
 	Util::WriteIntegerList(output, "hengeList", cd.hengeList);
 
