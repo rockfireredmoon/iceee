@@ -268,9 +268,11 @@ AccountData * ServiceAuthenticationHandler::onAuthenticate(SimulatorThread *sim,
 			std::string grove;
 			if(root.isMember("field_grove")) {
 				const Json::Value fieldGrove = root["field_grove"];
-				const Json::Value fieldUnd = fieldGrove["und"];
-				const Json::Value fieldArr = fieldUnd[0];
-				grove = fieldArr.get("value","").asString();
+				if(fieldGrove.isMember("und")) {
+					const Json::Value fieldUnd = fieldGrove["und"];
+					const Json::Value fieldArr = fieldUnd[0];
+					grove = fieldArr.get("value","").asString();
+				}
 			}
 
 
