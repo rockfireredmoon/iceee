@@ -206,7 +206,10 @@ bool HTTPService::Start() {
 			civetServer->addHandler("/api/user/*/groves", new UserGrovesHandler());
 			civetServer->addHandler("/api/zone/*", new ZoneHandler());
 			civetServer->addHandler("/api/scenery/*", new SceneryHandler());
-			civetServer->addHandler("/api/leaderboard", new LeaderboardHandler());
+			HTTPD::LeaderboardHandler* leaderboardHandler =
+					new LeaderboardHandler();
+			civetServer->addHandler("/api/leaderboard", leaderboardHandler);
+			civetServer->addHandler("/api/leaderboard/*", leaderboardHandler);
 		}
 
 		// OAuth - Used to authenticate external services
