@@ -15,6 +15,7 @@ public:
 
 	PlayerStatSet();
 
+	void CopyFrom(PlayerStatSet *other);
 	void Clear();
 	void SaveToStream(FILE *output);
 	bool LoadFromStream(FileReader &fr);

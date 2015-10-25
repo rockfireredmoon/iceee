@@ -380,6 +380,27 @@ float CreatureDefinition :: GetDropRateMult(void) const
 	return data.GetValueFloat("dropratemult");
 }
 
+void CreatureDefinition :: WriteToJSON(Json::Value &value)
+{
+	value["id"] = CreatureDefID;
+	value["defHints"]  = DefHints;
+	Json::Value defx(Json::arrayValue);
+	for(std::vector<int>::iterator it = DefaultEffects.begin(); it != DefaultEffects.end(); ++it) {
+		defx.append(*it);
+	}
+	value["defaultEffects"] = defx;
+	value["extraData"]  = ExtraData;
+
+	Json::Value jcss;
+
+	for(int a = 0; a < NumStats; a++)
+		if(isStatZero(a, &css) == false)
+			WriteStatToJSON(a, &css, jcss);
+
+
+	value["css"] = jcss;
+}
+
 //**************************************************
 //               CreatureInstance
 //**************************************************

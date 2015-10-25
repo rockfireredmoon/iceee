@@ -745,6 +745,55 @@ int WriteStatToSetByName(const char *name, const char *value, CharacterStatSet *
 	return WriteStatToSet(GetStatIndexByName(name), value, css);
 }
 
+
+int WriteStatToJSON(int StatIndex, CharacterStatSet *css, Json::Value &value)
+{
+	int r = StatIndex;
+	if(r == -1)
+		return -1;
+
+	char *base = (char*)css + StatList[r].offset;
+
+	switch(StatList[r].etype)
+	{
+	case StatType::SHORT:
+		{
+		short val = 0;
+		memcpy(&val, base, sizeof(short));
+		value[StatList[r].name] = val;
+		return 0;
+		}
+	case StatType::INTEGER:
+		{
+		int val = 0;
+		memcpy(&val, base, sizeof(int));
+		value[StatList[r].name] = val;
+		return 0;
+		}
+	case StatType::FLOAT:
+		{
+		float val = 0.0F;
+		memcpy(&val, base, sizeof(float));
+		value[StatList[r].name] = val;
+		return 0;
+		}
+	case StatType::CSTRING:
+		{
+		std::string s = base;
+		value[StatList[r].name] = s;
+		return 0;
+		}
+	case StatType::STRING:
+		{
+		std::string s = ((std::string*)base)->c_str();
+		value[StatList[r].name] = s;
+		return 0;
+		}
+	}
+
+	return -1;
+}
+
 int WriteStatToFile(int StatIndex, CharacterStatSet *css, FILE *file)
 {
 	int r = StatIndex;

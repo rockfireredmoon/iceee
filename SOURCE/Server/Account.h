@@ -111,6 +111,7 @@ public:
 	unsigned long SuspendTimeSec;      //Time when the ban was first set
 
 	char LastLogOn[32];      //Date and time of last login of any character in the account.
+	unsigned long CreatedTimeSec; //Time in seconds since epoch the account was created
 	unsigned long LastLogOnTimeSec; //Last login time in seconds since epoch
 	int ConsecutiveDaysLoggedIn; // The number of consecutive days the account has logged in
 	int Credits; // The number of credits the account has (if AccountCredits is on)

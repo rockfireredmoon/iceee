@@ -10,7 +10,7 @@
 #include "sqrat.h"
 #include <algorithm>    // std::remove
 
-#include "SquirrelObjects.h"
+#include "util/SquirrelObjects.h"
 //#include <sqbind.h>
 
 //extern char GAuxBuf[];

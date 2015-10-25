@@ -24,7 +24,7 @@
 #include "InstanceScript.h"
 #include "Arena.h"
 #include "PVP.h"
-#include "SquirrelObjects.h"
+#include "util/SquirrelObjects.h"
 using namespace std;
 
 class SimulatorThread;

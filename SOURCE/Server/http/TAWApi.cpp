@@ -25,7 +25,9 @@
 #include "../Config.h"
 #include "../Chat.h"
 #include "../DirectoryAccess.h"
+#include "../Leaderboard.h"
 #include "../json/json.h"
+#include <algorithm>
 
 using namespace HTTPD;
 
@@ -76,6 +78,104 @@ bool WhoHandler::handleAuthenticatedGet(CivetServer *server, struct mg_connectio
 
 	return true;
 }
+
+//
+// LeaderboardHandler
+//
+
+bool killsSort(const Leader &l1, const Leader &l2) {
+	return l1.mStats.TotalKills > l2.mStats.TotalKills;
+}
+
+bool deathsSort(const Leader &l1, const Leader &l2) {
+	return l1.mStats.TotalDeaths > l2.mStats.TotalDeaths;
+}
+
+bool pvpKillsSort(const Leader &l1, const Leader &l2) {
+	return l1.mStats.TotalPVPKills > l2.mStats.TotalPVPKills;
+}
+
+bool pvpDeathsSort(const Leader &l1, const Leader &l2) {
+	return l1.mStats.TotalPVPDeaths > l2.mStats.TotalPVPDeaths;
+}
+
+bool LeaderboardHandler::handleAuthenticatedGet(CivetServer *server, struct mg_connection *conn) {
+	char buf[256];
+	int no = 0;
+
+	int top = 100;
+	int count = 10;
+	int start = 0;
+	bool desc = false;
+	std::string board = "character";
+	std::string sortBy = "kills";
+
+	// Parse parameters
+	std::string p;
+	if (CivetServer::getParam(conn, "count", p)) {
+		count = atoi(p.c_str());
+	}
+	if (CivetServer::getParam(conn, "top", p)) {
+		top = atoi(p.c_str());
+	}
+	if (CivetServer::getParam(conn, "start", p)) {
+		start = atoi(p.c_str());
+	}
+	if (CivetServer::getParam(conn, "board", p)) {
+		board = p.c_str();
+	}
+	if (CivetServer::getParam(conn, "sort", p)) {
+		sortBy = p.c_str();
+	}
+	if (CivetServer::getParam(conn, "desc", p)) {
+		desc = p.compare("true") == 0;
+	}
+
+	Leaderboard *leaderboard = g_LeaderboardManager.GetBoard(board);
+	if(leaderboard == NULL)
+		writeStatus(server, conn, 404, "Not found.",
+				"The account could not be found.");
+	else {
+
+		Json::Value root;
+
+		leaderboard->cs.Enter("LeaderboardHandler::handleAuthenticatedGet");
+		std::vector<Leader> l(leaderboard->mLeaders);
+		leaderboard->cs.Leave();
+
+		if(sortBy.compare("deaths"))
+			sort(l.begin(), l.end(), deathsSort);
+		else if(sortBy.compare("pvpKills"))
+			sort(l.begin(), l.end(), pvpKillsSort);
+		else if(sortBy.compare("pvpDeaths"))
+			sort(l.begin(), l.end(), pvpDeathsSort);
+		else
+			sort(l.begin(), l.end(), killsSort);
+
+		if(desc)
+			std::reverse(l.begin(),l.end());
+
+		Json::Value data;
+		int didx = 0;
+		for(int i = start ; i < start + count && i < l.size() ; i++) {
+			Json::Value jv;
+			l[i].WriteToJSON(jv);
+			jv["rank"] = i + 1;
+			data[didx++] = jv;
+		}
+
+		root["data"] = data;
+		root["total"] = Json::UInt64(l.size());
+		root["collected"] = Json::UInt64(leaderboard->mCollected);
+
+		Json::StyledWriter writer;
+		writeJSON200(server, conn, writer.write(root));
+	}
+
+	return true;
+
+}
+
 
 //
 // ChatHandler
@@ -175,6 +275,61 @@ bool UserHandler::handleAuthenticatedGet(CivetServer *server,
 			Json::Value root;
 			ad->WriteToJSON(root);
 			g_AccountManager.cs.Leave();
+			Json::StyledWriter writer;
+			writeJSON200(server, conn, writer.write(root));
+		}
+	}
+
+	return true;
+}
+
+
+//
+// CharacterHandler
+//
+bool CharacterHandler::handleAuthenticatedGet(CivetServer *server,
+		struct mg_connection *conn) {
+
+
+	/* Handler may access the request info using mg_get_request_info */
+	struct mg_request_info * req_info = mg_get_request_info(conn);
+
+	std::string ruri;
+
+	/* Prepare the URI */
+	CivetServer::urlDecode(req_info->uri, strlen(req_info->uri), ruri, false);
+	ruri = removeDoubleDotsAndDoubleSlashes(ruri);
+	ruri = removeEndSlash(ruri);
+
+	std::vector<std::string> pathParts;
+	Util::Split(ruri, "/", pathParts);
+
+	// Parse parameters
+
+	// Parse parameters
+	if (pathParts.size() < 2)
+		writeStatus(server, conn, 404, "Not found.",
+				"The account could not be found.");
+	else {
+		CharacterData *cd = NULL;
+		int cdefID = atoi(pathParts[pathParts.size() - 1].c_str());
+		if(cdefID == 0) {
+			std::string characterName = pathParts[pathParts.size() - 1];
+			Util::URLDecode(characterName);
+			cdefID = g_AccountManager.GetCDefFromCharacterName(characterName.c_str());
+		}
+		if(cdefID != 0) {
+			cd = g_CharacterManager.RequestCharacter(cdefID, true);
+		}
+
+		if(cd == NULL) {
+			g_AccountManager.cs.Leave();
+			writeStatus(server, conn, 404, "Not found.",
+					"The character could not be found.");
+		}
+		else {
+			Json::Value root;
+			cd->WriteToJSON(root);
 			Json::StyledWriter writer;
 			writeJSON200(server, conn, writer.write(root));
 		}

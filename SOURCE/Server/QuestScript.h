@@ -8,7 +8,7 @@
 #include <vector>
 #include <string>
 #include <list>
-#include "SquirrelObjects.h"
+#include "util/SquirrelObjects.h"
 
 class ActiveInstance;
 class SimulatorThread;

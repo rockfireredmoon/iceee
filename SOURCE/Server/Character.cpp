@@ -16,6 +16,8 @@
 #include "PVP.h"
 #include "InstanceScale.h"
 #include "Inventory.h"
+#include "util/SquirrelObjects.h"
+#include "util/JsonHelpers.h"
 
 
 const int SERVER_CHARACTER_VERSION = 1;
@@ -187,6 +189,7 @@ void CharacterData :: ClearAll(void)
 	hengeList.clear();
 
 	SecondsLogged = 0;
+	CreatedTimeSec = 0;
 	SessionsLogged = 0;
 	memset(&TimeLogged, 0, sizeof(TimeLogged));
 	memset(&LastSession, 0, sizeof(LastSession));
@@ -1185,6 +1188,10 @@ int CheckSection_General(FileReader &fr, CharacterData &cd, const char *debugFil
 	{
 		cd.SecondsLogged = fr.BlockToULongC(1);
 	}
+	else if(strcmp(fr.SecBuffer, "CREATEDTIME") == 0)
+	{
+		cd.CreatedTimeSec = fr.BlockToULongC(1);
+	}
 	else if(strcmp(fr.SecBuffer, "SESSIONSLOGGED") == 0)
 	{
 		cd.SessionsLogged = fr.BlockToIntC(1);
@@ -1587,6 +1594,244 @@ int LoadCharacterFromStream(FileReader &fr, CharacterData &cd, const char *debug
 	return 1;
 }
 
+void CharacterData::WritePrivateToJSON(Json::Value &value)
+{
+
+	value["privateChannelName"] = PrivateChannelName;
+	value["privateChannelPassword"] = PrivateChannelPassword;
+}
+
+void CharacterData::WriteToJSON(Json::Value &value)
+{
+	value["account"] = AccountID;
+	value["characterVersion"] = characterVersion;
+	value["status"] = StatusText;
+	value["secondsLogged"] = Json::UInt64(SecondsLogged);
+	value["createdTime"] = Json::UInt64(CreatedTimeSec);
+	value["sessionsLogged"] = SessionsLogged;
+	value["timeLogged"] = TimeLogged;
+	value["lastSession"] = LastSession;
+	value["lastLogon"] = LastLogOn;
+	value["lastLogoff"] = LastLogOff;
+	value["originalAppearance"] = originalAppearance;
+	value["instanceScale"] = InstanceScaler;
+	value["currentVaultSize"] = CurrentVaultSize;
+	value["creditsPurchased"] = CreditsPurchased;
+	value["creditsSpent"] = CreditsSpent;
+	value["extraAbilityPoints"] = ExtraAbilityPoints;
+	value["lastWarpTime"] = Json::UInt64(LastWarpTime);
+	value["unstickCount"] = UnstickCount;
+	value["lastUnstickTime"] = Json::UInt64(LastUnstickTime);
+
+	// JSON version of appear
+	Json::Value appearance;
+	JsonHelpers::SquirrelAppearanceToJSONAppearance(cdef.css.appearance, appearance);
+	value["appearance"] = appearance;
+
+	Json::Value henges(Json::arrayValue);
+	for(std::vector<int>::iterator it = hengeList.begin(); it != hengeList.end(); ++it) {
+		henges.append(*it);
+	}
+	value["henges"] = henges;
+
+	Json::Value stats;
+	PlayerStats.WriteToJSON(stats);
+	value["playerStats"] = stats;
+
+//	fprintf(output, "GroveReturn=%d,%d,%d,%d\r\n", cd.groveReturnPoint[0], cd.groveReturnPoint[1], cd.groveReturnPoint[2], cd.groveReturnPoint[3]);
+//	fprintf(output, "BindReturn=%d,%d,%d,%d\r\n", cd.bindReturnPoint[0], cd.bindReturnPoint[1], cd.bindReturnPoint[2], cd.bindReturnPoint[3]);
+
+	Json::Value c;
+	cdef.WriteToJSON(c);
+	value["cdef"] = c;
+
+
+	Json::Value a;
+	a["instance"] = activeData.CurInstance;
+	a["zone"] = activeData.CurZone;
+	a["x"] = activeData.CurX;
+	a["y"] = activeData.CurY;
+	a["z"] = activeData.CurZ;
+	a["rot"] = activeData.CurRotation;
+	value["activeData"] = a;
+
+
+	value["maxSidekicks"] = MaxSidekicks;
+	value["mode"] = Mode;
+
+	Json::Value guilds(Json::objectValue);
+	for(std::vector<GuildListObject>::iterator it = guildList.begin(); it != guildList.end(); ++it) {
+		GuildListObject ob = *it;
+		Json::Value g;
+		ob.WriteToJSON(g);
+		guilds[ob.GuildDefID] = g;
+	}
+	value["guilds"] = guilds;
+
+
+//
+//	int write = 0;
+//		for(int a = 0; a < MaxPermissionDef; a++)
+//		{
+//			if((cd.PermissionSet[PermissionDef[a].index] & PermissionDef[a].flag) == PermissionDef[a].flag)
+//			{
+//				if(write == 0)
+//					fprintf(output, "Permissions=");
+//				if(write > 0)
+//					fputc(',', output);
+//				write++;
+//
+//				fprintf(output, "%s", PermissionDef[a].name);
+//				if(write >= 5)
+//				{
+//					fprintf(output, "\r\n");
+//					write = 0;
+//				}
+//			}
+//		}
+//		if(write > 0)
+//			fprintf(output, "\r\n");
+//
+//		Util::WriteIntegerList(output, "Abilities", cd.abilityList.AbilityList);
+//
+//		//Guild list
+//		for(size_t i = 0; i < cd.guildList.size(); i++)
+//			fprintf(output, "GuildList=%d,%d\r\n", cd.guildList[i].GuildDefID, cd.guildList[i].Valour);
+//
+//		//Friend list
+//		for(size_t i = 0; i < cd.friendList.size(); i++)
+//			fprintf(output, "FriendList=%d,%s\r\n", cd.friendList[i].CDefID, cd.friendList[i].Name.c_str());
+//
+//
+//		/*
+//		fcount = (int)cd.SidekickList.size();
+//		written = 0;
+//		while(written < fcount)
+//		{
+//			if((written % 10) == 0)
+//			{
+//				if(written > 0)
+//					fprintf(output, "\r\n");
+//				fprintf(output, "Sidekicks=%d", cd.SidekickList[written]);
+//			}
+//			else
+//			{
+//				fprintf(output, ",%d", cd.SidekickList[written]);
+//			}
+//			written++;
+//		}
+//		if(written > 0)
+//			fprintf(output, "\r\n");
+//			*/
+//		for(size_t i = 0; i < cd.SidekickList.size(); i++)
+//			fprintf(output, "Sidekick=%d,%d,%d\r\n", cd.SidekickList[i].CDefID, cd.SidekickList[i].summonType, cd.SidekickList[i].summonParam);
+//		fprintf(output, "\r\n");
+//
+//		//Stats
+//		fprintf(output, "\r\n");
+//
+//		//Preferences
+//		fprintf(output, "[PREFS]\r\n");
+//		for(a = 0; a < (int)cd.preferenceList.PrefList.size(); a++)
+//		{
+//			/* Not comparing against defaults anymore
+//			int r = defcd.preferenceList.GetPrefIndex((char*)cd.preferenceList.PrefList[a].name.c_str());
+//			bool save = true;
+//			if(r >= 0)
+//			{
+//				if(defcd.preferenceList.PrefList[r].value.compare(cd.preferenceList.PrefList[a].value) == 0)
+//					save = false;
+//			}
+//			if(save == true)
+//				fprintf(output, "%s=%s\r\n", cd.preferenceList.PrefList[a].name.c_str(), cd.preferenceList.PrefList[a].value.c_str());
+//			*/
+//			fprintf(output, "%s=%s\r\n", cd.preferenceList.PrefList[a].name.c_str(), cd.preferenceList.PrefList[a].value.c_str());
+//		}
+//		fprintf(output, "\r\n");
+//
+//		fprintf(output, "[INV]\r\n");
+//		int b;
+//		for(a = 0; a < MAXCONTAINER; a++)
+//		{
+//			for(b = 0; b < (int)cd.inventory.containerList[a].size(); b++)
+//			{
+//				InventorySlot *slot = &cd.inventory.containerList[a][b];
+//				fprintf(output, "%s=%lu,%d",
+//					GetContainerNameFromID((slot->CCSID & CONTAINER_ID) >> 16),
+//					slot->CCSID & CONTAINER_SLOT,
+//					slot->IID );
+//
+//				bool extend = false;
+//				if(slot->count > 0 || slot->customLook != 0 || slot->bindStatus != 0 || slot->secondsRemaining != -1)
+//					extend = true;
+//
+//				if(extend == true) {
+//					fprintf(output, ",%d,%d,%d,%ld", slot->count, slot->customLook, slot->bindStatus, slot->AdjustTimes());
+//				}
+//
+//				fprintf(output, "\r\n");
+//			}
+//		}
+//
+//
+//		//Active quests
+//		fprintf(output, "\r\n[QUEST]\r\n");
+//		for(a = 0; a < (int)cd.questJournal.activeQuests.itemList.size(); a++)
+//		{
+//			QuestReference &qref = cd.questJournal.activeQuests.itemList[a];
+//			fprintf(output, "active=%d,%d", qref.QuestID, qref.CurAct);
+//			for(b = 0; b < 3; b++)
+//			{
+//				int comp = qref.ObjComplete[b];
+//				int count = qref.ObjCounter[b];
+//				fprintf(output, ",%d,%d", comp, count);
+//			}
+//			fprintf(output, "\r\n");
+//		}
+//
+//		// Completed quests
+//		int fcount = (int)cd.questJournal.completedQuests.itemList.size();
+//		int written = 0;
+//		while(written < fcount)
+//		{
+//			if((written % 10) == 0)
+//			{
+//				if(written > 0)
+//					fprintf(output, "\r\n");
+//				fprintf(output, "complete=%d", cd.questJournal.completedQuests.itemList[written].QuestID);
+//			}
+//			else
+//			{
+//				fprintf(output, ",%d", cd.questJournal.completedQuests.itemList[written].QuestID);
+//			}
+//			written++;
+//		}
+//		if(written > 0)
+//			fprintf(output, "\r\n");
+//
+//		// Quests waiting to open again for repeat.
+//		for(size_t i = 0; i < cd.questJournal.delayedRepeat.size(); i++)
+//		{
+//			QuestRepeatDelay *d = &cd.questJournal.delayedRepeat[i];
+//			fprintf(output, "repeat=%d,%lu,%lu\r\n", d->QuestID, d->StartTimeMinutes, d->WaitTimeMinutes);
+//		}
+//
+//
+//
+//		fprintf(output, "\r\n[COOLDOWN]\r\n");
+//		cd.cooldownManager.SaveToStream(output);
+//
+//		if(g_Config.PersistentBuffs) {
+//			fprintf(output, "\r\n[ABILITIES]\r\n");
+//			cd.buffManager.SaveToStream(output);
+//		}
+
+
+
+
+
+}
+
 void SaveCharacterToStream(FILE *output, CharacterData &cd)
 {
 	fprintf(output, "[ENTRY]\r\n");
@@ -1605,6 +1850,7 @@ void SaveCharacterToStream(FILE *output, CharacterData &cd)
 	Util::WriteString(output, "PrivateChannelName", cd.PrivateChannelName);
 	Util::WriteString(output, "PrivateChannelPassword", cd.PrivateChannelPassword);
 
+	fprintf(output, "CreateTime=%lu\r\n", cd.CreatedTimeSec);
 	fprintf(output, "SecondsLogged=%lu\r\n", cd.SecondsLogged);
 	fprintf(output, "SessionsLogged=%d\r\n", cd.SessionsLogged);
 	fprintf(output, "TimeLogged=%s\r\n", cd.TimeLogged);
@@ -1835,11 +2081,18 @@ int GetCharacterIndexByName(char *name)
 //{
 //}
 //
-//GuildListObject :: Clear(void)
-//{
-//	GuildDefID = 0;
-//	Valour = 0;
-//}
+
+void GuildListObject :: WriteToJSON(Json::Value &value)
+{
+	value["id"] = GuildDefID;
+	value["valour"] = Valour;
+}
+
+void GuildListObject :: Clear(void)
+{
+	GuildDefID = 0;
+	Valour = 0;
+}
 
 //
 
@@ -1859,6 +2112,32 @@ void FriendListObject :: Clear(void)
 	CDefID = 0;
 }
 
+CharacterLeaderboard :: CharacterLeaderboard() {
+	SetName("character");
+}
+
+CharacterLeaderboard :: ~CharacterLeaderboard() {
+}
+
+void CharacterLeaderboard :: OnBuild(std::vector<Leader> *leaders)
+{
+	unsigned int idx = 0;
+	g_AccountManager.cs.Enter("CharacterLeaderboard::OnBuild");
+	std::map<int, std::string> charCopy(g_AccountManager.UsedCharacterNames.GetData());
+	g_AccountManager.cs.Leave();
+	for(std::map<int, std::string>::iterator it = charCopy.begin(); it != charCopy.end(); ++it) {
+		CharacterData *cd = g_CharacterManager.RequestCharacter(it->first, true);
+		if(cd != NULL) {
+			Leader l;
+			l.mId = it->first;
+			l.mName = cd->cdef.css.display_name;
+			l.mStats.CopyFrom(&cd->PlayerStats);
+			leaders->push_back(l);
+		}
+		PLATFORM_SLEEP(1000);
+		idx++;
+	}
+}
 
 
 CharacterManager :: CharacterManager()

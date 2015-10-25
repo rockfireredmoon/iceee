@@ -16,6 +16,7 @@
 #include "DirectoryAccess.h"
 #include "CreatureSpawner2.h" //For timer
 #include "AbilityTime.h"  //For cooldown data storage.
+#include "Leaderboard.h"
 
 
 class ItemDef;
@@ -93,7 +94,8 @@ struct GuildListObject
 	int Valour;
 
 	GuildListObject() { Clear(); };
-	void Clear(void) { GuildDefID = 0; Valour = 0; }
+	void WriteToJSON(Json::Value &value);
+	void Clear(void);
 };
 
 struct SidekickObject
@@ -164,6 +166,7 @@ public:
 	//char Order[4];          //Unknown, but is a parameter used when sending an account's character list to a client.
 
 	unsigned long SecondsLogged;  //Cumulative time count of seconds logged in.
+	unsigned long CreatedTimeSec; //Time in seconds since epoch the character was created
 	int SessionsLogged;      //Cumulative number of sessions logged in.
 	char TimeLogged[32];     //Human readable format of SecondsLogged (hh:mm:ss format)
 	char LastSession[32];    //Time logged during the last game session (hh:mm:ss format)
@@ -273,11 +276,21 @@ public:
 	bool VaultIsMaximumCapacity(void);
 	void VaultDoPurchaseExpand(void);
 
+	void WritePrivateToJSON(Json::Value &value);
+	void WriteToJSON(Json::Value &value);
+
 //	void NamedLocationUpdate(const NamedLocation &location);
 //	void NamedLocationGetPtr(const char *name);	
 
 	void Debug_CountItems(int *intArr);
 
+};
+
+class CharacterLeaderboard : public Leaderboard {
+public:
+	CharacterLeaderboard();
+	~CharacterLeaderboard();
+	void OnBuild(std::vector<Leader> *leaders);
 };
 
 // Maintains characters that are currently loaded in memory.

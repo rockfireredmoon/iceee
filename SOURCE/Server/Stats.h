@@ -6,6 +6,7 @@
 #include <string>
 #include <stdio.h>
 #include <string.h>
+#include "json/json.h"
 #include "ByteBuffer.h"
 #include "CommonTypes.h"
 
@@ -594,6 +595,7 @@ int WriteStatToSetByName(const char *name, const char *value, CharacterStatSet *
 bool isStatZero(int StatIndex, CharacterStatSet *css);
 bool isStatEqual(int StatIndex, CharacterStatSet *css1, CharacterStatSet *css2);
 const char * GetStatValueAsString(int StatIndex, char *ConvBuf, CharacterStatSet *css);
+int WriteStatToJSON(int StatIndex, CharacterStatSet *css, Json::Value &value);
 int WriteStatToFile(int StatIndex, CharacterStatSet *css, FILE *file);
 int WriteStatToFileByName(char *name, CharacterStatSet *css, FILE *file);
 float GetStatValueByID(int statID, CharacterStatSet *css);

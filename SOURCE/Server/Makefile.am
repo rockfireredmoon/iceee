@@ -54,6 +54,7 @@ tawd_SOURCES = md5.cc \
 	Item.cpp \
 	ItemSet.cpp \
 	jsoncpp.cpp \
+	Leaderboard.cpp \
 	main.cpp \
 	Mail.cpp \
 	MainWindow.cpp \
@@ -71,7 +72,6 @@ tawd_SOURCES = md5.cc \
 	Report.cpp \
 	Router.cpp \
 	Scenery2.cpp \
-	SquirrelObjects.cpp \
 	ScriptCore.cpp \
 	SimulatorBase.cpp \
 	Simulator.cpp \
@@ -101,6 +101,8 @@ tawd_SOURCES = md5.cc \
 	query/Query.cpp \
 	query/Lobby.cpp \
 	util/base64.cpp \
+	util/JsonHelpers.cpp \
+	util/SquirrelObjects.cpp \
 	Ability2.h \
 	AbilityTime.h \
 	Account.h \
@@ -151,6 +153,7 @@ tawd_SOURCES = md5.cc \
 	Inventory.h \
 	Item.h \
 	ItemSet.h \
+	Leaderboard.h \
 	Mail.h \
 	MainWindow.h \
 	NPC.h \
@@ -219,7 +222,9 @@ tawd_SOURCES = md5.cc \
 	auth/ServiceAuthentication.h \
 	query/Query.h \
 	query/Lobby.h \
-	util/base64.h
+	util/base64.h \
+	util/JsonHelpers.h \
+	SquirrelObjects.h
 	
 
 if WINSERVICE
@@ -273,6 +278,7 @@ tawdsvc_SOURCES = md5.cc \
 	ItemSet.cpp \
 	jsoncpp.cpp \
 	main.cpp \
+	Leaderboard.cpp \
 	Mail.cpp \
 	MainWindow.cpp \
 	MainWindow_Event.cpp \
@@ -319,6 +325,7 @@ tawdsvc_SOURCES = md5.cc \
 	query/Query.cpp \
 	query/Lobby.cpp \
 	util/base64.cpp \
+	util/JsonHelpers.cpp \
 	Ability2.h \
 	AbilityTime.h \
 	Account.h \
@@ -369,6 +376,7 @@ tawdsvc_SOURCES = md5.cc \
 	Inventory.h \
 	Item.h \
 	ItemSet.h \
+	Leaderboard.h \
 	Mail.h \
 	MainWindow.h \
 	NPC.h \
@@ -437,5 +445,7 @@ tawdsvc_SOURCES = md5.cc \
 	auth/ServiceAuthentication.h \
 	query/Query.h \
 	query/Lobby.h \
-	util/base64.h
+	util/base64.h \
+	util/JsonHelpers.h \
+	SquirrelObjects.h
 endif
