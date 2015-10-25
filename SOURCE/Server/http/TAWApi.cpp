@@ -143,16 +143,16 @@ bool LeaderboardHandler::handleAuthenticatedGet(CivetServer *server, struct mg_c
 		std::vector<Leader> l(leaderboard->mLeaders);
 		leaderboard->cs.Leave();
 
-		if(sortBy.compare("deaths"))
+		if(sortBy.compare("deaths") == 0)
 			sort(l.begin(), l.end(), deathsSort);
-		else if(sortBy.compare("pvpKills"))
+		else if(sortBy.compare("pvpKills") == 0)
 			sort(l.begin(), l.end(), pvpKillsSort);
-		else if(sortBy.compare("pvpDeaths"))
+		else if(sortBy.compare("pvpDeaths") == 0)
 			sort(l.begin(), l.end(), pvpDeathsSort);
 		else
 			sort(l.begin(), l.end(), killsSort);
 
-		if(!desc)
+		if(desc)
 			std::reverse(l.begin(),l.end());
 
 		Json::Value data;
