@@ -7,7 +7,7 @@
 #include "Callback.h"
 #include "Scenery2.h"
 #include "PartyManager.h"
-#include "SquirrelObjects.h"
+#include "util/SquirrelObjects.h"
 
 class ActiveInstance;
 class CreatureInstance;

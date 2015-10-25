@@ -60,6 +60,15 @@ public:
 };
 
 /*
+ * Handles /api/character/<characterIdOrName> requests, returning a JSON response containing character
+ * details
+ */
+class CharacterHandler: public AuthenticatedHandler {
+public:
+	bool handleAuthenticatedGet(CivetServer *server, struct mg_connection *conn);
+};
+
+/*
  * Handles /api/user/<accountId>/groves requests, returning a JSON response containing a list
  * of an accounts groves
  */
@@ -82,6 +91,15 @@ public:
  * details.
  */
 class SceneryHandler: public AuthenticatedHandler {
+public:
+	bool handleAuthenticatedGet(CivetServer *server, struct mg_connection *conn);
+};
+
+/*
+ * Handles /api/leaderboard/<name> requests, returning a JSON response containing player
+ * rankings.
+ */
+class LeaderboardHandler: public AuthenticatedHandler {
 public:
 	bool handleAuthenticatedGet(CivetServer *server, struct mg_connection *conn);
 };

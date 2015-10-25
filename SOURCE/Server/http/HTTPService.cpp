@@ -202,9 +202,11 @@ bool HTTPService::Start() {
 			civetServer->addHandler("/api/who", new WhoHandler());
 			civetServer->addHandler("/api/chat", new ChatHandler());
 			civetServer->addHandler("/api/user/*", new UserHandler());
+			civetServer->addHandler("/api/character/*", new CharacterHandler());
 			civetServer->addHandler("/api/user/*/groves", new UserGrovesHandler());
 			civetServer->addHandler("/api/zone/*", new ZoneHandler());
 			civetServer->addHandler("/api/scenery/*", new SceneryHandler());
+			civetServer->addHandler("/api/leaderboard", new LeaderboardHandler());
 		}
 
 		// OAuth - Used to authenticate external services

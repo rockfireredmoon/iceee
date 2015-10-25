@@ -23,6 +23,7 @@ class SimulatorThread;
 #include "sqrat.h"
 #include "Daily.h"
 #include "Globals.h"
+#include "json/json.h"
 
 class CreatureInstance;  //Forward declaration for a pointer in the SelectedObject structure
 class AIScriptPlayer;    //Forward declaration for AI script
@@ -171,6 +172,7 @@ public:
 	bool operator < (const CreatureDefinition& other) const;
 	bool IsNamedMob(void) const;
 	float GetDropRateMult(void) const;
+	void WriteToJSON(Json::Value &value);
 };
 
 class ActiveInstance;  //Forward declaration is required

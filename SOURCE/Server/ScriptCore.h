@@ -11,7 +11,7 @@
 #include "Callback.h"
 #include <squirrel.h>
 #include "sqrat.h"
-#include "SquirrelObjects.h"
+#include "util/SquirrelObjects.h"
 
 void PrintFunc(HSQUIRRELVM v, const SQChar *s, ...);
 void Errorfunc(HSQUIRRELVM v, const SQChar *s, ...);

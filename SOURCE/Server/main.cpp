@@ -176,6 +176,7 @@ If using Code::Blocks on LINUX
 #include "CreditShop.h"
 #include "Guilds.h"
 #include "Daily.h"
+#include "Leaderboard.h"
 #include "http/HTTPService.h"
 
 #ifdef WINDOWS_SERVICE
@@ -651,6 +652,10 @@ int InitServerMain() {
 
 	g_PacketManager.LaunchThread();
 	g_SceneryManager.LaunchThread();
+
+	// setup leaderboard
+	g_LeaderboardManager.mBoards.push_back(new CharacterLeaderboard());
+	g_LeaderboardManager.InitThread(g_GlobalThreadID++);
 
 	g_Log.AddMessage("Server data has finished loading.");
 

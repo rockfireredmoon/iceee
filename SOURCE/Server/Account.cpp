@@ -108,6 +108,7 @@ void AccountData :: ClearAll(void)
 	MaxCharacters = DEFAULT_CHARACTER_SLOTS;
 
 	LastLogOnTimeSec = 0;
+	CreatedTimeSec = 0;
 	ConsecutiveDaysLoggedIn = 0;
 
 	Credits = 0;
@@ -357,6 +358,7 @@ void AccountData :: SaveToStream(FILE *output)
 	}
 	fprintf(output, "LastLogOn=%s\r\n", LastLogOn);
 	fprintf(output, "LastLogOnTime=%lu\r\n", LastLogOnTimeSec);
+	fprintf(output, "CreatedTime=%lu\r\n", CreatedTimeSec);
 	fprintf(output, "ConsecutiveDaysLoggedIn=%d\r\n", ConsecutiveDaysLoggedIn);
 	fprintf(output, "Credits=%d\r\n", Credits);
 	fprintf(output, "DeliveryBoxSlots=%d\r\n", DeliveryBoxSlots);
@@ -644,6 +646,7 @@ void AccountData :: ReadFromJSON(Json::Value &value)
 	SuspendTimeSec = value["suspended"].asLargestUInt();
 	strcpy(LastLogOn, value["logon"].asCString());
 	LastLogOnTimeSec = value["logonTime"].asLargestUInt();
+	CreatedTimeSec = value["createdTime"].asLargestUInt();
 	ConsecutiveDaysLoggedIn = value["days"].asInt();
 	Credits = value["credits"].asInt();
 	DeliveryBoxSlots = value["deliveryBoxes"].asInt();
@@ -680,6 +683,7 @@ void AccountData :: WriteToJSON(Json::Value &value)
 	value["suspended"] = Json::UInt64(SuspendTimeSec);
 	value["logon"] = LastLogOn;
 	value["logonTime"] = Json::UInt64(LastLogOnTimeSec);
+	value["createdTime"] = Json::UInt64(CreatedTimeSec);
 	value["days"] = ConsecutiveDaysLoggedIn;
 	value["credits"] = Credits;
 	value["deliveryBoxes"] = DeliveryBoxSlots;
@@ -739,6 +743,8 @@ void AccountManager :: LoadSectionGeneral(FileReader &fr, AccountData &ad, const
 			ad.Credits = fr.BlockToULongC(1);
 	else if(strcmp(NameBlock, "LASTLOGONTIME") == 0)
 		ad.LastLogOnTimeSec = fr.BlockToULongC(1);
+	else if(strcmp(NameBlock, "CREATEDTIME") == 0)
+		ad.CreatedTimeSec = fr.BlockToULongC(1);
 	else if(strcmp(NameBlock, "DELIVERYBOXSLOTS") == 0)
 		ad.DeliveryBoxSlots = fr.BlockToIntC(1);
 	else if(strcmp(NameBlock, "SUSPENDDURATION") == 0)
@@ -985,6 +991,7 @@ int AccountManager :: CreateAccount(const char *username, const char *password, 
 		NextAccountID = accountQuickData.size();
 	}
 	newAccount.ID = NextAccountID++;
+	newAccount.CreatedTimeSec = time(NULL);
 
 	newAccount.SetPermission(Perm_Account, "regionchat", true);
 	newAccount.SetPermission(Perm_Account, "forumpost", true);
@@ -1048,6 +1055,7 @@ int AccountManager :: CreateAccountFromService(const char *username)
 		NextAccountID = accountQuickData.size();
 	}
 	newAccount.ID = NextAccountID++;
+	newAccount.CreatedTimeSec = time(NULL);
 	Util::SafeCopy(newAccount.Name, username, sizeof(newAccount.Name));
 
 	newAccount.SetPermission(Perm_Account, "regionchat", true);
@@ -1496,6 +1504,7 @@ int AccountManager :: CreateCharacter(STRINGLIST &args, AccountData *accPtr)
 
 		CharacterData newChar;
 		newChar.CopyFrom(*g_CharacterManager.GetDefaultCharacter());
+		newChar.CreatedTimeSec = time(NULL);
 		newChar.cdef.CreatureDefID = newID;
 		newChar.cdef.DefHints = 1;
 		newChar.pendingChanges = 1;
