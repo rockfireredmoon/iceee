@@ -152,7 +152,7 @@ bool LeaderboardHandler::handleAuthenticatedGet(CivetServer *server, struct mg_c
 		else
 			sort(l.begin(), l.end(), killsSort);
 
-		if(desc)
+		if(!desc)
 			std::reverse(l.begin(),l.end());
 
 		Json::Value data;
