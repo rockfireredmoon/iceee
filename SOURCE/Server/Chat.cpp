@@ -427,7 +427,8 @@ void ChatManager :: LogChatMessage(ChatMessage &message)
 	cs.Leave();
 	if(m_ChatLogFile != NULL)
 	{
-		if(message.mChannel->chatScope == ChatBroadcastRange::CHAT_SCOPE_NONE)
+		// TODO if(message.mChannel->chatScope == ChatBroadcastRange::CHAT_SCOPE_NONE)
+		if(message.mChannel->chatScope == 0)
 			Util::SafeFormat(LogBuffer, sizeof(LogBuffer), "%s: %s", message.mSender.c_str(), message.mMessage.c_str());
 		else
 			Util::SafeFormat(LogBuffer, sizeof(LogBuffer), "%s %s: %s", message.mChannel->prefix, message.mSender.c_str(), message.mMessage.c_str());
