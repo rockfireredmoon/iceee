@@ -1085,17 +1085,23 @@ int ActiveInstance :: ProcessMessage(MessageComponent *msg)
 		SidekickWarp((CreatureInstance*)msg->param1);
 		break;
 	case BCM_PlayerLogIn:
+	{
 		sprintf(GAuxBuf, "%s has logged in.", ((CharacterData*)msg->param1)->cdef.css.display_name);
-		g_ChatManager.LogChatMessage(GAuxBuf);
+		ChatMessage cm(GAuxBuf);
+		g_ChatManager.LogChatMessage(cm);
 		size = PrepExt_SendInfoMessage(GSendBuf, GAuxBuf, INFOMSG_INFO);
 		SendToAllSimulator(GSendBuf, size, msg->SimulatorID);
 		break;
+	}
 	case BCM_PlayerLogOut:
+	{
 		sprintf(GAuxBuf, "%s has disconnected.", ((CharacterData*)msg->param1)->cdef.css.display_name);
-		g_ChatManager.LogChatMessage(GAuxBuf);
+		ChatMessage cm(GAuxBuf);
+		g_ChatManager.LogChatMessage(cm);
 		size = PrepExt_SendInfoMessage(GSendBuf, GAuxBuf, INFOMSG_INFO);
 		SendToAllSimulator(GSendBuf, size, msg->param2);
 		break;
+	}
 	case BCM_PlayerFriendLogState:
 		size = PrepExt_FriendsLogStatus(GSendBuf, ((SimulatorThread*)msg->param1)->pld.charPtr, msg->param2);
 		SendToFriendSimulator(GSendBuf, size, ((SimulatorThread*)msg->param1)->pld.charPtr->cdef.CreatureDefID);

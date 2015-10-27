@@ -1,8 +1,11 @@
 #include <time.h>
 #include "Chat.h"
+#include "ChatChannel.h"
 #include "RotatingList.h"
 #include "Simulator.h"
 #include "ByteBuffer.h"
+#include "FriendStatus.h"
+#include "Instance.h"
 
 ChatManager g_ChatManager;
 bool NewChat = false;
@@ -56,6 +59,103 @@ const int LOCAL_CHAT_RANGE = 750;
 
 RotatingList<int> ChatLogIndex(100);
 vector<string> ChatLogString(100);
+
+//
+// ChatMessage
+//
+ChatMessage::ChatMessage() {
+	mMessage = "";
+	mChannel = &ValidChatChannel[0];
+	mSender = "";
+	mSenderCreatureDefID = -1;
+	mSenderCreatureID = -1;
+	mTell = false;
+	mRecipient = "";
+	mSendingInstance = -1;
+	mTime = time(NULL);
+	mChannelName = "";
+	mSimulatorID = -1;
+}
+
+
+ChatMessage::ChatMessage(std::string msg)
+{
+	mMessage = msg;
+	mChannel = &ValidChatChannel[0];
+	mSender = "";
+	mSenderCreatureDefID = -1;
+	mSenderCreatureID = -1;
+	mTell = false;
+	mRecipient = "";
+	mSendingInstance = -1;
+	mTime = time(NULL);
+	mChannelName = "";
+	mSimulatorID = -1;
+}
+
+ChatMessage::ChatMessage(const ChatMessage &msg)
+{
+
+	mMessage = msg.mMessage;
+	mChannel = msg.mChannel;
+	mSender = msg.mSender;
+	mSenderCreatureDefID = msg.mSenderCreatureDefID;
+	mSenderCreatureID = msg.mSenderCreatureID;
+	mTell = msg.mTell;
+	mRecipient = msg.mRecipient;
+	mSendingInstance = msg.mSendingInstance;
+	mTime = msg.mTime;
+	mChannelName = msg.mChannelName;
+	mSimulatorID = msg.mSimulatorID;
+}
+ChatMessage::ChatMessage(CharacterServerData *pld)
+{
+	mMessage = "";
+	mChannel = &ValidChatChannel[0];
+	mSender = pld->charPtr->cdef.css.display_name;
+	mSenderCreatureDefID = pld->CreatureDefID;
+	mSenderCreatureID = pld->CreatureID;
+	mTell = false;
+	mRecipient = "";
+	mSendingInstance = pld->CurrentInstanceID;
+	mTime = time(NULL);
+	mChannelName = "";
+	mSimulatorID = -1;
+}
+
+void ChatMessage::WriteToJSON(Json::Value &value) {
+
+	struct tm * timeinfo;
+	time_t tt = mTime;
+	timeinfo = localtime(&tt);
+	char tbuf[64];
+	strftime(tbuf, sizeof(tbuf), "%m/%d %H:%M", timeinfo);
+
+	value["message"] = mMessage;
+	value["channelName"] = mChannelName;
+	value["senderCreatureDefID"] = mSenderCreatureDefID;
+	value["senderCreatureID"] = mSenderCreatureID;
+	value["recipient"] = mRecipient;
+	value["sendingInstance"] = mSendingInstance;
+	value["simulatorID"] = mSimulatorID;
+	value["tell"] = mTell;
+	value["time"] = Json::UInt64(mTime);
+	value["timeReadable"] = tbuf;
+	value["sender"] = mSender;
+	if(mChannel != NULL) {
+		Json::Value ch;
+
+		ch["scope"] = mChannel->chatScope;
+		ch["channel"] = mChannel->channel;
+		if(mChannel->prefix != NULL)
+			ch["prefix"] = mChannel->prefix;
+		if(mChannel->friendly != NULL)
+			ch["friendly"] = mChannel->friendly;
+		ch["name"] = mChannel->name;
+
+		value["channel"] = ch;
+	}
+}
 
 //
 // ChatManager - Handles external logging of chat and a circular chat buffer for use by external services
@@ -152,7 +252,8 @@ int ChatManager :: handleCommunicationMsg(char *channel, char *message, char *na
 		name[0] = 0;   //Disable name from showing in the data buffer
 
 	wpos += sprintf(&LogBuffer[wpos], "%s", message);
-	LogChatMessage(LogBuffer);
+	ChatMessage cm(message);
+	LogChatMessage(cm);
 
 	wpos = 0;
 	wpos += PutByte(&ComBuf[wpos], 0x32);       //_handleCommunicationMsg
@@ -194,24 +295,142 @@ void ChatManager :: FlushChatLogFile(void)
 		fflush(m_ChatLogFile);
 }
 
-void ChatManager :: LogChatMessage(const char *messageStr)
-{
-	cs.Enter("ChatManager::LogChatMessage");
-	ChatMessage cm;
-	cm.mTime =  time(NULL);
-	cm.mMessage = messageStr;
-	CircularChatBuffer.push_back(cm);
-	while(CircularChatBuffer.size() >= MAX_CHAT_BUFFER_SIZE - 1)
-		CircularChatBuffer.pop_front();
-	cs.Leave();
 
+void ChatManager :: LogMessage(std::string message)
+{
 	static char timeBuf[256];
 	if(m_ChatLogFile != NULL)
 	{
 		time_t curtime;
 		time(&curtime);
 		strftime(timeBuf, sizeof(timeBuf), "%x %X", localtime(&curtime));
-		fprintf(m_ChatLogFile, "%s : %s\r\n", timeBuf, messageStr);
+		fprintf(m_ChatLogFile, "%s : %s\r\n", timeBuf, message.c_str());
 	}
 }
 
+
+
+bool ChatManager ::SendChatMessage(ChatMessage &message, CreatureInstance *sendingCreatureInstance) {
+
+	message.mTime =  time(NULL);
+
+	int wpos = 0;
+	wpos += PutByte(&SendBuf[wpos], 50);       //_handleCommunicationMsg
+	wpos += PutShort(&SendBuf[wpos], 0);         //Placeholder for size
+	wpos += PutInteger(&SendBuf[wpos], message.mSenderCreatureID);    //Character ID who's sending the message
+	wpos += PutStringUTF(&SendBuf[wpos], message.mSender.c_str()); //pld.charPtr->cdef.css.display_name);  //Character name
+	wpos += PutStringUTF(&SendBuf[wpos], message.mChannel->channel);
+	wpos += PutStringUTF(&SendBuf[wpos], message.mMessage.c_str());
+	PutShort(&SendBuf[1], wpos - 3);     //Set size
+
+	bool found = false;
+	bool log = message.mChannel->chatScope == CHAT_SCOPE_REGION || message.mChannel->chatScope == CHAT_SCOPE_SERVER;
+
+	bool breakLoop = false;
+	SIMULATOR_IT it;
+	for(it = Simulator.begin(); it != Simulator.end(); ++it)
+	{
+		if(breakLoop == true)
+			break;
+
+		if(it->ProtocolState == 0)
+		{
+			//LogMessageL(MSG_ERROR, "[WARNING] Cannot not send chat to lobby protocol simulator");
+			continue;
+		}
+
+		if(it->isConnected == false)
+			continue;
+
+		if(it->pld.charPtr == NULL)
+			continue;
+
+		bool send = false;
+		if(message.mTell == true)
+		{
+			if(strcmp(it->pld.charPtr->cdef.css.display_name, message.mRecipient.c_str()) == 0)
+			{
+				send = true;
+				found = true;
+			}
+		}
+		else
+		{
+			switch(message.mChannel->chatScope)
+			{
+			case CHAT_SCOPE_LOCAL:
+				if(sendingCreatureInstance == NULL || it->pld.CurrentInstanceID != message.mSendingInstance)
+					break;
+				if(ActiveInstance::GetPlaneRange(it->creatureInst, sendingCreatureInstance, LOCAL_CHAT_RANGE) > LOCAL_CHAT_RANGE)
+					break;
+
+				send = true;
+				break;
+
+			case CHAT_SCOPE_REGION:
+				if(it->pld.CurrentInstanceID != message.mSendingInstance)
+					break;
+				send = true;
+				break;
+			case CHAT_SCOPE_SERVER:
+				send = true;
+				break;
+			case CHAT_SCOPE_FRIEND:
+				if(it->pld.CreatureDefID == message.mSenderCreatureDefID)  //Send to self
+					send = true;
+				else if(g_FriendListManager.IsMutualFriendship(it->pld.CreatureDefID, message.mSenderCreatureDefID) ==true)
+					send = true;
+				break;
+			case CHAT_SCOPE_CHANNEL:
+			{
+				PrivateChannel *privateChannelData = g_ChatChannelManager.GetChannelForMessage(message.mSimulatorID, message.mChannelName.c_str() + 3);
+				if(privateChannelData != NULL) {
+					for(size_t i = 0; i < privateChannelData->mMemberList.size(); i++)
+						if(it->InternalID == privateChannelData->mMemberList[i].mSimulatorID)
+							send = true;
+				}
+				break;
+			}
+			case CHAT_SCOPE_PARTY:
+				if(sendingCreatureInstance == NULL)
+					break;
+				g_PartyManager.BroadCastPacket(sendingCreatureInstance->PartyID, sendingCreatureInstance->CreatureDefID, SendBuf, wpos);
+				breakLoop = true;
+				break;
+			case CHAT_SCOPE_CLAN:
+				if(it->pld.CreatureDefID == message.mSenderCreatureDefID)  //Send to self
+					send = true;
+				else if(g_GuildManager.IsMutualGuild(it->pld.CreatureDefID, message.mSenderCreatureDefID) ==true)
+					send = true;
+				break;
+			default:
+				break;
+			}
+		}
+
+		if(send == true)
+			it->AttemptSend(SendBuf, wpos);
+	}
+
+	if(log == true)
+		LogChatMessage(message);
+
+	return true;
+}
+
+void ChatManager :: LogChatMessage(ChatMessage &message)
+{
+	cs.Enter("ChatManager::LogChatMessage");
+	CircularChatBuffer.push_back(message);
+	while(CircularChatBuffer.size() >= MAX_CHAT_BUFFER_SIZE - 1)
+		CircularChatBuffer.pop_front();
+	cs.Leave();
+	if(m_ChatLogFile != NULL)
+	{
+		if(message.mChannel->chatScope == ChatBroadcastRange::CHAT_SCOPE_NONE)
+			Util::SafeFormat(LogBuffer, sizeof(LogBuffer), "%s: %s", message.mSender.c_str(), message.mMessage.c_str());
+		else
+			Util::SafeFormat(LogBuffer, sizeof(LogBuffer), "%s %s: %s", message.mChannel->prefix, message.mSender.c_str(), message.mMessage.c_str());
+		LogMessage(LogBuffer);
+	}
+}

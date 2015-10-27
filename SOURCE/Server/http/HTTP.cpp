@@ -307,8 +307,9 @@ bool AbstractCivetHandler::parseForm(CivetServer *server,
 				it != prms.end(); ++it) {
 			std::string p = *it;
 			eidx = p.find("=");
-			parms[p.substr(0, eidx)] =
-					eidx == std::string::npos ? "" : p.substr(eidx + 1);
+			std::string v = eidx == std::string::npos ? "" : p.substr(eidx + 1);
+			Util::URLDecode(v);
+			parms[p.substr(0, eidx)] = v;
 		}
 	} else {
 		return false;

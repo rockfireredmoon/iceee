@@ -1850,7 +1850,7 @@ void SaveCharacterToStream(FILE *output, CharacterData &cd)
 	Util::WriteString(output, "PrivateChannelName", cd.PrivateChannelName);
 	Util::WriteString(output, "PrivateChannelPassword", cd.PrivateChannelPassword);
 
-	fprintf(output, "CreateTime=%lu\r\n", cd.CreatedTimeSec);
+	fprintf(output, "CreatedTime=%lu\r\n", cd.CreatedTimeSec);
 	fprintf(output, "SecondsLogged=%lu\r\n", cd.SecondsLogged);
 	fprintf(output, "SessionsLogged=%d\r\n", cd.SessionsLogged);
 	fprintf(output, "TimeLogged=%s\r\n", cd.TimeLogged);

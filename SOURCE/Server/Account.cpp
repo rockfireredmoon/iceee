@@ -1478,7 +1478,7 @@ int AccountManager :: ValidateNameParts(const std::string &first, const std::str
 	return CHARACTER_SUCCESS;
 }
 
-int AccountManager :: CreateCharacter(STRINGLIST &args, AccountData *accPtr)
+int AccountManager :: CreateCharacter(STRINGLIST &args, AccountData *accPtr, CharacterData &newChar)
 {
 	// Safeguard to make sure the query is valid.
 	// Variable elements begin at index [11]. All previous elements must exist.
@@ -1502,7 +1502,6 @@ int AccountManager :: CreateCharacter(STRINGLIST &args, AccountData *accPtr)
 		SessionVarsChangeData.AddChange();
 		accPtr->CharacterSet[r] = newID;
 
-		CharacterData newChar;
 		newChar.CopyFrom(*g_CharacterManager.GetDefaultCharacter());
 		newChar.CreatedTimeSec = time(NULL);
 		newChar.cdef.CreatureDefID = newID;
@@ -1646,6 +1645,17 @@ int AccountManager :: CreateCharacter(STRINGLIST &args, AccountData *accPtr)
 		g_CharacterManager.AddExternalCharacter(newChar.cdef.CreatureDefID, newChar);
 		AddUsedCharacterName(newChar.cdef.CreatureDefID, newChar.cdef.css.display_name);
 		
+		CharacterCacheEntry entry;
+		entry.Clear();
+		entry.creatureDefID = newChar.cdef.CreatureDefID;
+		entry.level = newChar.cdef.css.level;
+		entry.profession = newChar.cdef.css.profession;
+		entry.display_name = newChar.cdef.css.display_name;
+		entry.appearance = newChar.cdef.css.appearance;
+		entry.eq_appearance = newChar.cdef.css.eq_appearance;
+		accPtr->characterCache.AddEntry(entry);
+
+
 		accPtr->PendingMinorUpdates++;
 
 

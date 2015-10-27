@@ -844,7 +844,12 @@ void SimulatorThread :: ProcessDisconnect(void)
 			{
 
 				sprintf(Aux1, "%s has disconnected.", pld.charPtr->cdef.css.display_name);
-				g_ChatManager.LogChatMessage(Aux1);
+
+				ChatMessage msg(&pld);
+				msg.mSimulatorID = InternalID;
+				msg.mMessage = Aux1;
+				g_ChatManager.LogChatMessage(msg);
+
 				WritePos = PrepExt_SendInfoMessage(SendBuf, Aux1, INFOMSG_INFO);
 				SendToAllSimulator(SendBuf, WritePos, InternalID);
 
@@ -1481,10 +1486,12 @@ int SimulatorThread :: handle_query_persona_create(void)
 	   Return: Unknown.  Possibly an index for use in the client?
 	*/
 	g_AccountManager.cs.Enter("SimulatorThread::handle_query_persona_create");
-	int r = g_AccountManager.CreateCharacter(query.args, pld.accPtr);
+	CharacterData newChar;
+	int r = g_AccountManager.CreateCharacter(query.args, pld.accPtr, newChar);
 	g_AccountManager.cs.Leave();
 	if(r < AccountManager::CHARACTER_SUCCESS)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, g_AccountManager.GetCharacterErrorMessage(r));
+	g_CharacterManager.SaveCharacter(newChar.cdef.CreatureDefID);
 
 	sprintf(Aux1, "%d", r + 1);
 	return PrepExt_QueryResponseString(SendBuf, query.ID, Aux1);
@@ -4389,108 +4396,19 @@ void SimulatorThread :: handle_communicate(void)
 			charName = g_Config.AprilFoolsName.c_str();
 	}
 
-	int wpos = 0;
-	wpos += PutByte(&SendBuf[wpos], 50);       //_handleCommunicationMsg
-	wpos += PutShort(&SendBuf[wpos], 0);         //Placeholder for size
-	wpos += PutInteger(&SendBuf[wpos], pld.CreatureID);    //Character ID who's sending the message
-	wpos += PutStringUTF(&SendBuf[wpos], charName); //pld.charPtr->cdef.css.display_name);  //Character name
-	wpos += PutStringUTF(&SendBuf[wpos], channel);
-	wpos += PutStringUTF(&SendBuf[wpos], message);
-	PutShort(&SendBuf[1], wpos - 3);     //Set size
+	ChatMessage msg;
+	msg.mChannelName = channel;
+	msg.mMessage = message;
+	msg.mSender = charName;
+	msg.mSenderCreatureDefID = pld.CreatureDefID;
+	msg.mSenderCreatureID = pld.CreatureID;
+	msg.mTell = tell;
+	msg.mRecipient = Aux3;
+	msg.mSendingInstance = pld.CurrentInstanceID;
+	msg.mChannel = channelInfo;
+	msg.mSimulatorID = InternalID;
 
-	bool found = false;
-	bool log = false;
-
-	bool breakLoop = false;
-	SIMULATOR_IT it;
-	for(it = Simulator.begin(); it != Simulator.end(); ++it)
-	{
-		if(breakLoop == true)
-			break;
-
-		if(it->ProtocolState == 0)
-		{
-			//LogMessageL(MSG_ERROR, "[WARNING] Cannot not send chat to lobby protocol simulator");
-			continue;
-		}
-
-		if(it->isConnected == false)
-			continue;
-
-		if(it->pld.charPtr == NULL)
-			continue;
-
-		bool send = false;
-		if(tell == true)
-		{
-			if(strcmp(it->pld.charPtr->cdef.css.display_name, Aux3) == 0)
-			{
-				send = true;
-				found = true;
-			}
-		}
-		else
-		{
-			switch(channelInfo->chatScope)
-			{
-			case CHAT_SCOPE_LOCAL:
-				if(it->pld.CurrentInstanceID != pld.CurrentInstanceID)
-					break;
-				if(ActiveInstance::GetPlaneRange(it->creatureInst, creatureInst, LOCAL_CHAT_RANGE) > LOCAL_CHAT_RANGE)
-					break;
-
-				send = true;
-				break;
-
-			case CHAT_SCOPE_REGION:
-				if(it->pld.CurrentInstanceID != pld.CurrentInstanceID)
-					break;
-				log = true;
-				send = true;
-				break;
-			case CHAT_SCOPE_SERVER:
-				log = true;
-				send = true;
-				break;
-			case CHAT_SCOPE_FRIEND:
-				if(it->pld.CreatureDefID == pld.CreatureDefID)  //Send to self
-					send = true;
-				//else if(g_SocialManager.pld.charPtr->GetFriendIndex(it->pld.CreatureDefID) >= 0)
-				else if(g_FriendListManager.IsMutualFriendship(it->pld.CreatureDefID, pld.CreatureDefID) ==true)
-					send = true;
-				break;
-			case CHAT_SCOPE_CHANNEL:
-				for(size_t i = 0; i < privateChannelData->mMemberList.size(); i++)
-					if(it->InternalID == privateChannelData->mMemberList[i].mSimulatorID)
-						send = true;
-				break;
-			case CHAT_SCOPE_PARTY:
-				g_PartyManager.BroadCastPacket(creatureInst->PartyID, creatureInst->CreatureDefID, SendBuf, wpos);
-				breakLoop = true;
-				break;
-			case CHAT_SCOPE_CLAN:
-				if(it->pld.CreatureDefID == pld.CreatureDefID)  //Send to self
-					send = true;
-				else if(g_GuildManager.IsMutualGuild(it->pld.CreatureDefID, pld.CreatureDefID) ==true)
-					send = true;
-				break;
-			default:
-				break;
-			}
-		}
-
-		if(send == true)
-			it->AttemptSend(SendBuf, wpos);
-	}
-
-	if(log == true)
-	{
-		if(channelInfo->prefix != NULL)
-			Util::SafeFormat(LogBuffer, sizeof(LogBuffer), "%s %s: %s", channelInfo->prefix, pld.charPtr->cdef.css.display_name, message);
-		else
-			Util::SafeFormat(LogBuffer, sizeof(LogBuffer), "%s: %s", pld.charPtr->cdef.css.display_name, message);
-		g_ChatManager.LogChatMessage(LogBuffer);
-	}
+	bool found = g_ChatManager.SendChatMessage(msg, creatureInst);
 
 	if(tell == true && found == false)
 	{

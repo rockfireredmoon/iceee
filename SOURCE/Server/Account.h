@@ -301,7 +301,7 @@ public:
 
 	//Placeholder character creation stuff.  Should probably be moved to
 	//the character system when that's redone.
-	int CreateCharacter(STRINGLIST &args, AccountData *accPtr);
+	int CreateCharacter(STRINGLIST &args, AccountData *accPtr, CharacterData &newChar);
 	int GetNewCharacterID(void);
 	void DeleteCharacter(int index, AccountData *accPtr);
 
