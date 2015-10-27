@@ -16,6 +16,7 @@
  */
 
 #include "TAWApi.h"
+#include "../Chat.h"
 #include "../Util.h"
 #include "../Account.h"
 #include "../Simulator.h"
@@ -36,13 +37,23 @@ using namespace HTTPD;
 //
 
 bool AuthenticatedHandler::handleGet(CivetServer *server, struct mg_connection *conn) {
-
 	if(!isAuthorized(server, conn, g_Config.APIAuthentication)) {
 		writeWWWAuthenticate(server, conn, "TAWD");
 		return true;
 	}
-
 	return handleAuthenticatedGet(server, conn);
+}
+
+bool AuthenticatedHandler::handlePost(CivetServer *server, struct mg_connection *conn) {
+	if(!isAuthorized(server, conn, g_Config.APIAuthentication)) {
+		writeWWWAuthenticate(server, conn, "TAWD");
+		return true;
+	}
+	return handleAuthenticatedPost(server, conn);
+}
+
+bool AuthenticatedHandler::handleAuthenticatedPost(CivetServer *server, struct mg_connection *conn) {
+	return false;
 }
 
 //
@@ -181,20 +192,8 @@ bool LeaderboardHandler::handleAuthenticatedGet(CivetServer *server, struct mg_c
 // ChatHandler
 //
 
-bool ChatHandler::handleAuthenticatedGet(CivetServer *server, struct mg_connection *conn) {
-
-	std::string response;
+void WriteChat(Json::Value &chat, int count) {
 	char buf[256];
-	int no = 0;
-
-	// Parse parameters
-	std::string p;
-	int count = 20;
-	if (CivetServer::getParam(conn, "count", p)) {
-		count = atoi(p.c_str());
-	}
-
-	response.append("{ ");
 	std::deque<ChatMessage>::iterator it;
 	g_ChatManager.cs.Enter("HTTPDistribute::Chat");
 	int start = g_ChatManager.CircularChatBuffer.size() - 1 - count;
@@ -203,22 +202,58 @@ bool ChatHandler::handleAuthenticatedGet(CivetServer *server, struct mg_connecti
 	for (unsigned int i = start; i < g_ChatManager.CircularChatBuffer.size();
 			i++) {
 		ChatMessage cm = g_ChatManager.CircularChatBuffer[i];
-		std::string msg = cm.mMessage;
-		struct tm * timeinfo;
-		time_t tt = cm.mTime;
-		timeinfo = localtime(&tt);
-		char tbuf[64];
-		strftime(tbuf, sizeof(tbuf), "%m/%d %H:%M", timeinfo);
-		Util::SafeFormat(buf, sizeof(buf),
-				"%s\"%lu\" : { \"message\": \"%s\", \"time\": \"%s\" }",
-				no > 0 ? "," : "", cm.mTime,
-				Util::EncodeJSONString(msg).c_str(), tbuf);
-		response += buf;
-		no++;
+		Json::Value jcm;
+		cm.WriteToJSON(jcm);
+		Util::SafeFormat(buf, sizeof(buf), "%lu", cm.mTime);
+		chat[buf] = jcm;
 	}
 	g_ChatManager.cs.Leave();
-	response.append(" }");
-	writeJSON200(server, conn, response);
+}
+
+bool ChatHandler::handleAuthenticatedPost(CivetServer *server, struct mg_connection *conn) {
+	std::map<std::string, std::string> parms;
+	if (parseForm(server, conn, parms)) {
+		if (parms.find("msg") == parms.end() || parms.find("from") == parms.end())
+			writeStatus(server, conn, 403, "Forbidden", "Missing parameters.");
+		else {
+			std::string msg = parms["msg"];
+			std::string from = parms["from"];
+			std::string channel = parms.find("channel") == parms.end() ? "rc/" : parms["channel"];
+			int count = parms.find("count") == parms.end() ? 20 : atoi(parms["count"].c_str());
+
+			g_Log.AddMessageFormat("[REMOVEME] Extchat: %s (%s) / %s", msg.c_str(), from.c_str(), channel.c_str());
+
+			ChatMessage cm(msg);
+			cm.mChannelName = channel;
+			cm.mChannel = GetChatInfoByChannel(cm.mChannelName.c_str());
+			cm.mSender = from;
+			g_ChatManager.SendChatMessage(cm, NULL);
+
+			Json::Value root;
+			WriteChat(root, count);
+			Json::StyledWriter writer;
+			writeJSON200(server, conn, writer.write(root));
+		}
+	} else {
+		writeStatus(server, conn, 403, "Forbidden", "Encoding not allowed.");
+	}
+	return true;
+}
+
+bool ChatHandler::handleAuthenticatedGet(CivetServer *server, struct mg_connection *conn) {
+
+
+	// Parse parameters
+	std::string p;
+	int count = 20;
+	if (CivetServer::getParam(conn, "count", p)) {
+		count = atoi(p.c_str());
+	}
+
+	Json::Value root;
+	WriteChat(root, count);
+	Json::StyledWriter writer;
+	writeJSON200(server, conn, writer.write(root));
 
 	return true;
 }
@@ -261,20 +296,19 @@ bool UserHandler::handleAuthenticatedGet(CivetServer *server,
 		}
 
 		AccountData *ad = NULL;
-		g_AccountManager.cs.Enter("TAWApi::UserHandler::handleAuthenticatedGet");
 		if(accountId != 0) {
+			g_AccountManager.cs.Enter("TAWApi::UserHandler::handleAuthenticatedGet");
 			ad = g_AccountManager.FetchIndividualAccount(accountId);
+			g_AccountManager.cs.Leave();
 		}
 
 		if(ad == NULL) {
-			g_AccountManager.cs.Leave();
 			writeStatus(server, conn, 404, "Not found.",
 					"The account could not be found.");
 		}
 		else {
 			Json::Value root;
 			ad->WriteToJSON(root);
-			g_AccountManager.cs.Leave();
 			Json::StyledWriter writer;
 			writeJSON200(server, conn, writer.write(root));
 		}

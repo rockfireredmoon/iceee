@@ -2903,7 +2903,7 @@ void CreatureInstance :: ProcessDeath(void)
 						else {
 							// Update character kill/death stats
 							if(attacker->charPtr != NULL) {
-								attacker->charPtr->PlayerStats.TotalPVPDeaths++;
+								attacker->charPtr->PlayerStats.TotalPVPKills++;
 								attacker->charPtr->pendingChanges++;
 							}
 

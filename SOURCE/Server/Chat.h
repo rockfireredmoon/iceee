@@ -10,6 +10,9 @@
 #include <deque>
 #include "RotatingList.h"
 #include "StringList.h"
+#include "Creature.h"
+#include "ActiveCharacter.h"
+#include "json/json.h"
 
 using namespace std;
 
@@ -55,8 +58,24 @@ extern bool NewChat;
 class ChatMessage
 {
 public:
+	ChatMessage();
+	ChatMessage(std::string message);
+	ChatMessage(CharacterServerData *pld);
+	ChatMessage(const ChatMessage &msg);
+
 	unsigned long mTime;
 	std::string mMessage;
+	int mSenderCreatureID;
+	int mSenderCreatureDefID;
+	int mSendingInstance;
+	std::string mSender;
+	std::string mChannelName;
+	int mSimulatorID;
+	bool mTell;
+	std::string mRecipient;
+	const ChannelCompare *mChannel;
+
+	void WriteToJSON(Json::Value &value);
 };
 
 class ChatManager
@@ -70,7 +89,9 @@ public:
 	void CloseChatLogFile(void);
 	void FlushChatLogFile(void);
 	void OpenChatLogFile(const char *filename);
-	void LogChatMessage(const char *messageStr);
+	bool SendChatMessage(ChatMessage &message, CreatureInstance *sendingCreatureInstance);
+	void LogChatMessage(ChatMessage &message);
+	void LogMessage(std::string message);
 	int handleCommunicationMsg(char *channel, char *message, char *name);
 	Platform_CriticalSection cs;  //Needed for circular chat buffer which may be inserted into by many threads
 
@@ -78,6 +99,8 @@ private:
 	static const int MAX_CHAT_BUFFER_SIZE = 100;
 
 	FILE* m_ChatLogFile;
+	char SendBuf[24576];     //Holds data that is being prepared for sending
+	char LogBuffer[1024];
 };
 
 extern ChatManager g_ChatManager;

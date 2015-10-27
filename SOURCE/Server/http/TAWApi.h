@@ -29,7 +29,9 @@ namespace HTTPD {
 class AuthenticatedHandler: public AbstractCivetHandler {
 public:
 	bool handleGet(CivetServer *server, struct mg_connection *conn);
+	bool handlePost(CivetServer *server, struct mg_connection *conn);
 	virtual bool handleAuthenticatedGet(CivetServer *server, struct mg_connection *conn) =0;
+	virtual bool handleAuthenticatedPost(CivetServer *server, struct mg_connection *conn);
 };
 
 /*
@@ -48,6 +50,7 @@ public:
 class ChatHandler: public AuthenticatedHandler {
 public:
 	bool handleAuthenticatedGet(CivetServer *server, struct mg_connection *conn);
+	bool handleAuthenticatedPost(CivetServer *server, struct mg_connection *conn);
 };
 
 /*

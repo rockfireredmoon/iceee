@@ -330,6 +330,13 @@ AccountData * ServiceAuthenticationHandler::onAuthenticate(SimulatorThread *sim,
 			 * for example sages on the website are also sages in the game (saves having to manually
 			 * set permissions)
 			 */
+
+
+			//
+			// TODO should allow this to be determined by a configuration file, I am forever
+			// tweaking role->permission mappings
+			//
+
 			if(accPtr != NULL) {
 
 				// Sages and admins get sage
@@ -387,6 +394,16 @@ AccountData * ServiceAuthenticationHandler::onAuthenticate(SimulatorThread *sim,
 				bool needOtherTweak = admin;
 				if(needOtherTweak != accPtr->HasPermission(Perm_Account, Permission_TweakOther)) {
 					accPtr->SetPermission(Perm_Account, "tweakother", needOtherTweak);
+					accPtr->PendingMinorUpdates++;
+				}
+				bool needSysChat = admin;
+				if(needSysChat != accPtr->HasPermission(Perm_Account, Permission_SysChat)) {
+					accPtr->SetPermission(Perm_Account, "syschat", needSysChat);
+					accPtr->PendingMinorUpdates++;
+				}
+				bool needGMChat = admin;
+				if(needGMChat != accPtr->HasPermission(Perm_Account, Permission_GMChat)) {
+					accPtr->SetPermission(Perm_Account, "gmchat", needGMChat);
 					accPtr->PendingMinorUpdates++;
 				}
 
