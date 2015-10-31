@@ -6,7 +6,9 @@
 #include <list>
 #include <string>
 #include <stdarg.h>
+#include "Components.h"
 #include "CommonTypes.h"
+#include "json/json.h"
 
 namespace Category
 {
@@ -80,6 +82,7 @@ public:
 	int mIv2;
 
 	void ParseItemProto(std::string proto);
+	void WriteToJSON(Json::Value &value);
 
 //	this.mItemProtoEntry.setText("item" + defId + ":" + (lookId != defId ? lookId : 0) + ":" + itemID.mItemData.mIv1 + ":" + itemID.mItemData.mIv2);
 	
@@ -89,6 +92,7 @@ class CreditShopManager
 {
 public:
 	int nextMarketItemID;
+	Platform_CriticalSection cs;
 
 	CreditShopManager();
 	~CreditShopManager();
@@ -105,6 +109,6 @@ public:
 } //namespace CS
 
 
-extern CS::CreditShopManager g_CSManager;
+extern CS::CreditShopManager g_CreditShopManager;
 
 #endif //#ifndef CREDITSHOP_H

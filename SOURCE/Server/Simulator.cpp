@@ -45,6 +45,7 @@
 #include <curl/curl.h>
 #include "md5.hh"
 #include "json/json.h"
+#include "query/ClanHandlers.h"
 
 //This is the main function of the simulator thread.  A thread must be created for each port
 //since the connecting function will halt until a connection is established.
@@ -1237,9 +1238,10 @@ void SimulatorThread :: ClearAuxBuffers(void)
 
 void SimulatorThread :: BroadcastMessage(const char *message)
 {
+	char buf[256];
 	LogMessageL(MSG_SHOW, "Broadcast message '%s'", message);
-	int wpos = PrepExt_Broadcast(SendBuf, message);
-	AttemptSend(SendBuf, wpos);
+	int wpos = PrepExt_Broadcast(buf, message);
+	AttemptSend(buf, wpos);
 }
 
 void SimulatorThread :: SendInfoMessage(const char *message, char eventID)
@@ -1262,7 +1264,7 @@ void SimulatorThread :: JoinGuild(GuildDefinition *gDef, int startValour)
 	g_CharacterManager.GetThread("CharacterData::JoinGuild");
 	pld.charPtr->JoinGuild(gDef->guildDefinitionID);
 	pld.charPtr->AddValour(gDef->guildDefinitionID, startValour);
-	pld.charPtr->cdef.css.SetSubName(gDef->defName);
+	pld.charPtr->cdef.css.SetSubName(gDef->defName.c_str());
 	g_CharacterManager.ReleaseThread();
 	creatureInst->SendStatUpdate(STAT::SUB_NAME);
 	AddMessage((long)&pld.charPtr->cdef, 0, BCM_UpdateCreatureDef);
@@ -1308,36 +1310,20 @@ void SimulatorThread :: handle_lobby_query(void)
 	int PendingData = 0;
 	query.Clear();  //Clear it before processing so that debug polls can fetch the most recent query.
 	ReadQueryFromMessage();
-
-	if(query.name.compare("persona.list") == 0)
-		handle_query_persona_list();
-	else if(query.name.compare("persona.create") == 0)
-		PendingData = handle_query_persona_create();
-	else if(query.name.compare("persona.delete") == 0)
-		PendingData = handle_query_persona_delete();
-	else if(query.name.compare("pref.getA") == 0)
-		handle_query_pref_getA();
-	else if(query.name.compare("account.tracking") == 0)
-		handle_query_account_tracking();
-	else if(query.name.compare("util.ping") == 0)
-		handle_query_util_ping();
-	else if(query.name.compare("mod.getURL") == 0)
-		handle_query_mod_getURL();
-	else {
-		QueryHandler *qh = g_QueryManager.getCommandHandler(query.name);
-		if(qh == NULL) {
-			LogMessageL(MSG_WARN, "[WARNING] Unhandled query in lobby: %s", query.name.c_str());
-		}
-		else {
-			qh->handleCommand(this);
-		}
+	QueryHandler *qh = g_QueryManager.getLobbyQueryHandler(query.name);
+	if(qh == NULL) {
+		LogMessageL(MSG_WARN, "[WARNING] Unhandled query in lobby: %s", query.name.c_str());
 	}
-
+	else {
+		PendingData = qh->handleQuery(this, &pld, &query, creatureInst);
+		g_Log.AddMessageFormat("[REMOVEME] pendingdata for %s = %d", query.name.c_str(), PendingData);
+	}
 	if(PendingData > 0)
 	{
 		AttemptSend(SendBuf, PendingData);
 		PendingSend = false;
 	}
+
 }
 
 void SimulatorThread :: ReadQueryFromMessage(void)
@@ -1368,268 +1354,6 @@ void SimulatorThread :: ReadQueryFromMessage(void)
 	}
 }
 
-void SimulatorThread :: handle_query_persona_list(void)
-{
-	/* Query: persona.list
-	   Args : [none]
-	   Notes: First query sent to the server.
-	   Response: Send back the list of characters available on this account.
-	*/
-
-	//Seems to be a rare condition when the account can indeed be NULL at this point.  Possibly
-	//disconnecting after the query is sent, but before it's processed?
-	if(pld.accPtr == NULL)
-	{
-		LogMessageL(MSG_CRIT, "[CRITICAL] persona.list null account");
-		return;
-	}
-
-	g_Log.AddMessageFormat("Retrieving persona list for account:%d", pld.accPtr->ID);
-	//TODO: Fix a potential buffer overflow.
-
-	WritePos = 0;
-	WritePos += PutByte(&SendBuf[WritePos], 1);            //_handleQueryResultMsg
-	WritePos += PutShort(&SendBuf[WritePos], 0);           //Message size
-	WritePos += PutInteger(&SendBuf[WritePos], query.ID);  //Query ID
-
-	//Character row count
-	int charCount = pld.accPtr->GetCharacterCount();
-	if(g_ProtocolVersion >= 38)
-	{
-		//Version 0.8.9 has a an extra row in the beginning
-		//with one string, the number of characters following.
-		WritePos += PutShort(&SendBuf[WritePos], charCount + 1);
-
-		WritePos += PutByte(&SendBuf[WritePos], 1);
-		sprintf(Aux3, "%d", charCount + 1);
-		WritePos += PutStringUTF(&SendBuf[WritePos], Aux3);
-	}
-	else
-	{
-		WritePos += PutShort(&SendBuf[WritePos], charCount);
-	}
-
-
-	g_CharacterManager.GetThread("SimulatorThread::handle_query_persona_list");
-
-	int b;
-	for(b = 0; b < AccountData::MAX_CHARACTER_SLOTS; b++)
-	{
-		if(pld.accPtr->CharacterSet[b] != 0)
-		{
-			int cdefid = pld.accPtr->CharacterSet[b];
-			CharacterCacheEntry *cce = pld.accPtr->characterCache.ForceGetCharacter(cdefid);
-			if(cce == NULL)
-			{
-				LogMessageL(MSG_ERROR, "[ERROR] Could not request character: %d", cdefid);
-				ForceErrorMessage("Critical: could not load a character.", INFOMSG_ERROR);
-				Disconnect("SimulatorThread::handle_query_persona_list");
-				return;
-			}
-
-			if(g_Config.AprilFools != 0)
-			{
-				WritePos += PutByte(&SendBuf[WritePos], 6);       //6 character data strings
-				WritePos += PutStringUTF(&SendBuf[WritePos], cce->display_name.c_str()); //Seems to be sent twice in 0.8.9.  Unknown purpose.
-				WritePos += PutStringUTF(&SendBuf[WritePos], cce->display_name.c_str());
-				WritePos += PutStringUTF(&SendBuf[WritePos], cce->appearance.c_str());
-
-				const char *eqApp = cce->eq_appearance.c_str();
-				switch(cce->profession)
-				{
-				case 1: eqApp = "{[1]=3163,[0]=141760,[6]=3019,[10]=3008,[11]=2831}"; break;
-				case 2: eqApp = "{[0]=141763,[1]=141764,[6]=2107,[10]=2442,[11]=2898}"; break;
-				case 3: eqApp = "{[6]=2810,[10]=1980,[11]=2108,[2]=141765}"; break;
-				case 4: eqApp = "{[2]=143609,[6]=3160,[10]=3161,[11]=3162}"; break;
-				}
-				WritePos += PutStringUTF(&SendBuf[WritePos], eqApp);
-
-				//sprintf(Aux3, "%d", cce->level);
-				WritePos += PutStringUTF(&SendBuf[WritePos], "1");
-
-				sprintf(Aux3, "%d", cce->profession);
-				WritePos += PutStringUTF(&SendBuf[WritePos], Aux3);
-				if(WritePos >= (int)sizeof(SendBuf))
-					g_Log.AddMessageFormatW(MSG_CRIT, "[CRITICAL] Buffer overflow in persona.list");
-			}
-			else
-			{
-				//Normal stuff.
-				WritePos += PutByte(&SendBuf[WritePos], 6);       //6 character data strings
-				WritePos += PutStringUTF(&SendBuf[WritePos], cce->display_name.c_str()); //Seems to be sent twice in 0.8.9.  Unknown purpose.
-				WritePos += PutStringUTF(&SendBuf[WritePos], cce->display_name.c_str());
-				WritePos += PutStringUTF(&SendBuf[WritePos], cce->appearance.c_str());
-				WritePos += PutStringUTF(&SendBuf[WritePos], cce->eq_appearance.c_str());
-
-				sprintf(Aux3, "%d", cce->level);
-				WritePos += PutStringUTF(&SendBuf[WritePos], Aux3);
-
-				sprintf(Aux3, "%d", cce->profession);
-				WritePos += PutStringUTF(&SendBuf[WritePos], Aux3);
-				if(WritePos >= (int)sizeof(SendBuf))
-					g_Log.AddMessageFormatW(MSG_CRIT, "[CRITICAL] Buffer overflow in persona.list");
-			}
-		}
-	}
-	PutShort(&SendBuf[1], WritePos - 3);       //Set message size
-	g_CharacterManager.ReleaseThread();
-
-	PendingSend = true;
-}
-
-int SimulatorThread :: handle_query_persona_create(void)
-{
-	/* Query: persona.create
-	   Args : [variable] list of attributes
-	   Notes: Attributes are customized by the player in the Character Creation
-	          steps.
-	   Return: Unknown.  Possibly an index for use in the client?
-	*/
-	g_AccountManager.cs.Enter("SimulatorThread::handle_query_persona_create");
-	CharacterData newChar;
-	int r = g_AccountManager.CreateCharacter(query.args, pld.accPtr, newChar);
-	g_AccountManager.cs.Leave();
-	if(r < AccountManager::CHARACTER_SUCCESS)
-		return PrepExt_QueryResponseError(SendBuf, query.ID, g_AccountManager.GetCharacterErrorMessage(r));
-	g_CharacterManager.SaveCharacter(newChar.cdef.CreatureDefID);
-
-	sprintf(Aux1, "%d", r + 1);
-	return PrepExt_QueryResponseString(SendBuf, query.ID, Aux1);
-}
-
-int SimulatorThread :: handle_query_persona_delete(void)
-{
-	/* Query: persona.delete
-	   Args : [0] index to remove
-	*/
-	if(query.argCount < 1)
-		return PrepExt_QueryResponseError(SendBuf, query.ID, "Invalid query");
-
-	g_AccountManager.DeleteCharacter(query.GetInteger(0), pld.accPtr);
-	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-}
-
-
-void SimulatorThread :: handle_query_pref_getA(void)
-{
-	/* Query: pref.getA
-	   Args : [variable] list of preferences (by named string) to retrieve.
-	   Notes: Retrieves the account preferences.  Sent after the client login is
-	          successful.
-	   Response: Search for each preference in the account data and send back the
-	          string data.
-	*/
-	RespondPrefGet(&pld.accPtr->preferenceList);
-	PendingSend = true;
-}
-
-void SimulatorThread :: handle_query_pref_get(void)
-{
-	/* Query: pref.get
-	   Args : [variable] list of preferences (by named string) to retrieve.
-	   Notes: Retrieves the character preferences.
-	   Response: Search for each preference in the character data and send back
-	          the string data.
-	*/
-
-	RespondPrefGet(&pld.charPtr->preferenceList);
-	PendingSend = true;
-}
-
-void SimulatorThread :: handle_query_pref_setA(void)
-{
-	/* Query: pref.setA
-	   Args : [variable, multiple of two] list of string pairs of the name and
-	          value to set (in the account permission set).
-	   Response: Return standard "OK".
-	*/
-
-	for(unsigned int i = 0; i < query.argCount; i += 2)
-		pld.accPtr->preferenceList.SetPref(query.args[i].c_str(), query.args[i + 1].c_str());
-
-	WritePos = PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-
-	//Account data was changed, flag the change so the system can autosave the
-	//file when needed.
-	pld.accPtr->PendingMinorUpdates++;
-
-	PendingSend = true;
-}
-
-void SimulatorThread :: handle_query_pref_set(void)
-{
-	/* Query: pref.set
-	   Args : [variable, multiple of two] list of string pairs of the name and
-	          value to set (in the character permission set).
-	   Response: Return standard "OK".
-	*/
-
-	//The character system needs extra debug steps.
-	for(unsigned int i = 0; i < query.argCount; i += 2)
-	{
-		const char *name = query.args[i].c_str();
-		const char *value = query.args[i + 1].c_str();
-		//if(LoadStage < LOADSTAGE_LOADED)
-		//	LogMessageL(MSG_WARN, "[WARNING] Pref set while loading [%s]=[%s"], name, value);
-
-		bool allow = true;
-		if(strstr(name, "quickbar") != NULL)
-		{
-			if(LoadStage < 2)
-			{
-				allow = false;
-				LogMessageL(MSG_WARN, "[WARNING] Tried to set quickbar preference before gameplay [%s]=[%s]", name, value);
-			}
-			else if(strlen(value) < 3)
-			{
-				allow = false;
-				LogMessageL(MSG_WARN, "[WARNING] Tried to set quickbar preference to NULL [%s]=[%s]", name, value);
-			}
-		}
-
-		if(allow == true)
-			pld.charPtr->preferenceList.SetPref(name, value);
-	}
-
-	WritePos = PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-
-	RespondPrefGet(&pld.charPtr->preferenceList);
-	PendingSend = true;
-}
-
-void SimulatorThread :: RespondPrefGet(PreferenceContainer *prefSet)
-{
-	//Helper function for the "pref.getA" and "pref.get" queries.
-	//Since the both accounts and characters use the same class to store
-	//preferences, the query handlers will call this function with the
-	//appropriate pointer.
-
-	WritePos = 0;
-	WritePos += PutByte(&SendBuf[WritePos], 1);            //_handleQueryResultMsg
-	WritePos += PutShort(&SendBuf[WritePos], 0);           //Message size
-	WritePos += PutInteger(&SendBuf[WritePos], query.ID);  //Query response index
-
-	//Each preference request will have a matching response field.
-	WritePos += PutShort(&SendBuf[WritePos], query.argCount);
-
-	for(unsigned int i = 0; i < query.argCount; i++)
-	{
-		const char * pref = prefSet->GetPrefValue(query.args[i].c_str());
-
-		//One string for each preference result.
-		WritePos += PutByte(&SendBuf[WritePos], 1);
-		if(pref != NULL)
-		{
-			WritePos += PutStringUTF(&SendBuf[WritePos], pref);
-		}
-		else
-		{
-			WritePos += PutStringUTF(&SendBuf[WritePos], "");
-		}
-	}
-
-	PutShort(&SendBuf[1], WritePos - 3);
-}
 void SimulatorThread :: handle_swimStateChange(void)
 {
 	bool swim = GetByte(&readPtr[ReadPos], ReadPos) == 1;
@@ -2388,30 +2112,38 @@ void SimulatorThread :: handle_game_query(void)
 		LogMessageL(MSG_SHOW, "  %d=%s", i, query.args[i].c_str());
 	*/
 	
-	if(HandleQuery(PendingData) == false)
+	QueryHandler *qh = g_QueryManager.getQueryHandler(query.name);
+	if(qh == NULL)
 	{
-		if(HandleCommand(PendingData) == false)
+		if(HandleQuery(PendingData) == false)
 		{
-			// See if the instance script will handle the command
-			if(creatureInst != NULL && creatureInst->actInst != NULL && creatureInst->actInst->nutScriptPlayer != NULL) {
-				std::vector<ScriptCore::ScriptParam> p;
-				p.push_back(creatureInst->CreatureID);
-				p.insert(p.end(), query.args.begin(), query.args.end());
-				Util::SafeFormat(Aux1, sizeof(Aux1), "on_command_%s", query.name.c_str());
-				if(creatureInst->actInst->nutScriptPlayer->RunFunction(Aux1, p, true)) {
-					WritePos = PrepExt_QueryResponseString(SendBuf, query.ID, "OK.");
-					PendingSend = true;
-					return;
+			if(HandleCommand(PendingData) == false)
+			{
+				// See if the instance script will handle the command
+				if(creatureInst != NULL && creatureInst->actInst != NULL && creatureInst->actInst->nutScriptPlayer != NULL) {
+					std::vector<ScriptCore::ScriptParam> p;
+					p.push_back(creatureInst->CreatureID);
+					p.insert(p.end(), query.args.begin(), query.args.end());
+					Util::SafeFormat(Aux1, sizeof(Aux1), "on_command_%s", query.name.c_str());
+					if(creatureInst->actInst->nutScriptPlayer->RunFunction(Aux1, p, true)) {
+						WritePos = PrepExt_QueryResponseString(SendBuf, query.ID, "OK.");
+						PendingSend = true;
+						return;
+					}
 				}
+
+				LogMessageL(MSG_WARN, "[WARNING] Unhandled query in game: %s", query.name.c_str());
+				for(unsigned int i = 0; i < query.argCount; i++)
+					LogMessageL(MSG_WARN, "  [%d]=[%s]", i, query.args[i].c_str());
+
+				WritePos = PrepExt_QueryResponseError(SendBuf, query.ID, "Unknown query.");
+				PendingSend = true;
 			}
-
-			LogMessageL(MSG_WARN, "[WARNING] Unhandled query in game: %s", query.name.c_str());
-			for(unsigned int i = 0; i < query.argCount; i++)
-				LogMessageL(MSG_WARN, "  [%d]=[%s]", i, query.args[i].c_str());
-
-			WritePos = PrepExt_QueryResponseError(SendBuf, query.ID, "Unknown query.");
-			PendingSend = true;
 		}
+	}
+	else
+	{
+		PendingData = qh->handleQuery(this, &pld, &query, creatureInst);
 	}
 
 	if(PendingData > 0)
@@ -2442,14 +2174,6 @@ bool SimulatorThread :: HandleQuery(int &PendingData)
 		handle_query_client_loading();
 	else if(query.name.compare("scenery.list") == 0)
 		PendingData = handle_query_scenery_list();
-	else if(query.name.compare("pref.getA") == 0)
-		handle_query_pref_getA();
-	else if(query.name.compare("pref.get") == 0)
-		handle_query_pref_get();
-	else if(query.name.compare("pref.setA") == 0)
-		handle_query_pref_setA();
-	else if(query.name.compare("pref.set") == 0)
-		handle_query_pref_set();
 	else if(query.name.compare("creature.isusable") == 0)
 		handle_query_creature_isusable();
 	else if(query.name.compare("creature.def.edit") == 0)
@@ -2492,10 +2216,6 @@ bool SimulatorThread :: HandleQuery(int &PendingData)
 		handle_query_friends_status();
 	else if(query.name.compare("friends.getstatus") == 0)
 		handle_query_friends_getstatus();
-	else if(query.name.compare("clan.info") == 0)
-		PendingData = handle_query_clan_info();
-	else if(query.name.compare("clan.list") == 0)
-		PendingData = handle_query_clan_list();
 	else if(query.name.compare("guild.info") == 0)
 		PendingData = handle_query_guild_info();
 	else if(query.name.compare("petition.send") == 0)
@@ -2508,8 +2228,6 @@ bool SimulatorThread :: HandleQuery(int &PendingData)
 		PendingData = handle_query_itemdef_contents();
 	else if(query.name.compare("itemdef.delete") == 0)
 		PendingData = handle_query_itemdef_delete();
-	else if(query.name.compare("util.addFunds") == 0)
-		PendingData = handle_query_util_addfunds();
 	else if(query.name.compare("validate.name") == 0)
 		PendingData = handle_query_validate_name();
 	else if(query.name.compare("user.auth.reset") == 0)
@@ -2562,8 +2280,6 @@ bool SimulatorThread :: HandleQuery(int &PendingData)
 		handle_query_ab_respec();
 	else if(query.name.compare("buff.remove") == 0)
 		PendingData = handle_query_buff_remove();
-	else if(query.name.compare("util.ping") == 0)
-		PendingData = handle_query_util_ping();
 	else if(query.name.compare("util.pingsim") == 0)
 		handle_query_util_pingsim();
 	else if(query.name.compare("util.pingrouter") == 0)
@@ -2676,8 +2392,6 @@ bool SimulatorThread :: HandleQuery(int &PendingData)
 		PendingData = handle_query_mod_grove_togglecycle();
 	else if(query.name.compare("mod.setats") == 0)
 		PendingData = handle_query_mod_setats();
-	else if(query.name.compare("mod.getURL") == 0)
-		PendingData = handle_query_mod_getURL();
 	/*
 	else if(query.name.compare("mod.igforum.createcategory") == 0)
 		PendingData = handle_query_mod_igforum_createcategory();
@@ -3439,30 +3153,6 @@ int SimulatorThread :: handle_query_scenery_list(void)
 	if(skipQuery == true)
 		return PrepExt_QueryResponseNull(SendBuf, query.ID);
 	return 0;
-}
-
-void SimulatorThread :: handle_query_account_tracking(void)
-{
-	/* Query: account.tracking
-	   Args : 0 = Seems to be a bit flag corresponding to the following
-	          screens:
-	          1 = Character Selection
-	          2 = Character Creation Page 1 (Gender/Race/Body/Face)
-	          4 = Character Creation Page 2 (Detail Colors/Size)
-	          8 = Character Creation Page 3 (Class)
-	          16 = Character Creation Page 4 (Name, Clothing)
-	   Notes: Doesn't seem to be sent in 0.6.0 or 0.8.9, but is sent
-	          in 0.8.6.  The proper response for this query is unknown.
-	          The query is sent in any forward page changes, but only sends for
-			  back pages from 4 to 16.
-	*/
-	int value = 0;
-	if(query.argCount >= 1)
-		value = atoi(query.args[0].c_str());
-	if(value >= 2)
-		characterCreation = true;
-	WritePos = PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-	PendingSend = true;
 }
 
 void SimulatorThread :: handle_query_account_fulfill(void)
@@ -7307,15 +6997,6 @@ void SimulatorThread :: handle_command_deleteabove(void)
 	PendingSend = true;
 }
 
-int SimulatorThread :: handle_query_util_ping(void)
-{
-	/*  Query: util.ping
-		Sent by the client in odd times, such as when communication is idle.
-		Args : [none]
-    */
-	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-}
-
 void SimulatorThread :: handle_query_util_pingsim(void)
 {
 	/*  Query: util.pingsim
@@ -9778,67 +9459,6 @@ int SimulatorThread :: handle_query_persona_resCost(void)
 	return wpos;
 }
 
-int SimulatorThread :: handle_query_clan_info(void)
-{
-	/*  Query: clan.info
-		Retrieves the clan info of the Simulator player.
-		Args: [none]
-	*/
-	int wpos = 0;
-	wpos += PutByte(&SendBuf[wpos], 1);       //_handleQueryResultMsg
-	wpos += PutShort(&SendBuf[wpos], 0);      //Message size
-	wpos += PutInteger(&SendBuf[wpos], query.ID);  //Query response index
-
-	wpos += PutShort(&SendBuf[wpos], 3);         //Row count
-
-	wpos += PutByte(&SendBuf[wpos], 1);
-	wpos += PutStringUTF(&SendBuf[wpos], g_ClanName);   //Clan name
-
-	wpos += PutByte(&SendBuf[wpos], 1);          
-	wpos += PutStringUTF(&SendBuf[wpos], g_ClanMOTD);   //Message of the day
-
-	wpos += PutByte(&SendBuf[wpos], 1);
-	wpos += PutStringUTF(&SendBuf[wpos], g_ClanLeader); //Clan leader's name.
-
-	PutShort(&SendBuf[1], wpos - 3);
-	return wpos;
-}
-
-int SimulatorThread :: handle_query_clan_list(void)
-{
-	/*  Query: clan.list
-		Retrieves the list of clan members for the player's clan.
-		Args: [none]
-	*/
-
-	int wpos = 0;
-	wpos += PutByte(&SendBuf[wpos], 1);            //_handleQueryResultMsg
-	wpos += PutShort(&SendBuf[wpos], 0);           //Message size
-	wpos += PutInteger(&SendBuf[wpos], query.ID);  //Query response index
-
-	// Number of rows (number of clan members)
-	wpos += PutShort(&SendBuf[wpos], 0);
-
-	/*	For each member, 5 elements per row:
-		[0] = Character Name
-		[1] = Level
-		[2] = Profession (ex: "1", "2", "3", "4")
-		[3] = Online Status (ex: "true" or "false")
-		[4] = Arbitrary Rank Title (ex: "Leader", "Officer")
-	*/
-	
-//	int a, b;
-//	for(a = 0; a < g_ClanMemberCount; a++)
-//	{
-//		wpos += PutByte(&SendBuf[wpos], 5);   //Five data items per character
-//		for(b = 0; b < 5; b++)
-//			wpos += PutStringUTF(&SendBuf[wpos], g_ClanMemberList[a][b]);
-//	}
-	
-	PutShort(&SendBuf[1], wpos - 3);             //Set message size
-	return wpos;
-}
-
 int SimulatorThread :: handle_query_spawn_list(void)
 {
 	/*  Query: spawn.list
@@ -11735,28 +11355,6 @@ int SimulatorThread :: handle_query_itemdef_delete(void)
 	return PrepExt_QueryResponseError(SendBuf, query.ID, "Failed to delete item.");
 }
 
-int SimulatorThread :: handle_query_util_addfunds() {
-	if(!CheckPermissionSimple(Perm_Account, Permission_Sage))
-			return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
-	if(query.args[0].compare("COPPER") == 0) {
-		int amount = atoi(query.args[1].c_str());
-		g_CharacterManager.GetThread("SimulatorThread::AddFunds");
-		CreatureInstance *creature = creatureInst->actInst->GetPlayerByName(query.args[3].c_str());
-		if(creature != NULL) {
-			creature->AdjustCopper(amount);
-			Debug::Log("[SAGE] %s gave %s %d copper because '%s'",
-					pld.charPtr->cdef.css.display_name, creature->charPtr->cdef.css.display_name, amount, query.args[2].c_str());
-			g_CharacterManager.ReleaseThread();
-			return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-		}
-		else {
-			SendInfoMessage("Player must be logged on to receive funds.", INFOMSG_ERROR);
-		}
-		g_CharacterManager.ReleaseThread();
-	}
-	return PrepExt_QueryResponseError(SendBuf, query.ID, "Failed to add funds.");
-}
-
 int SimulatorThread :: handle_query_user_auth_reset() {
 	if(!CheckPermissionSimple(Perm_Account, Permission_Sage))
 			return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
@@ -12062,7 +11660,7 @@ int SimulatorThread :: handle_query_item_market_buy(void)
 	if(query.args.size() < 1)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Invalid query.");
 	int id = query.GetInteger(0);
-	CS::CreditShopItem * csItem = g_CSManager.GetItem(id);
+	CS::CreditShopItem * csItem = g_CreditShopManager.GetItem(id);
 	g_CharacterManager.GetThread("SimulatorThread::MarketReload");
 	if(csItem == NULL) {
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "No such item.");
@@ -12135,7 +11733,7 @@ int SimulatorThread :: handle_query_item_market_buy(void)
 
 		if(csItem->mQuantityLimit > 0) {
 			csItem->mQuantitySold++;
-			g_CSManager.SaveItem(csItem);
+			g_CreditShopManager.SaveItem(csItem);
 		}
 
 		int wpos = 0;
@@ -12206,9 +11804,9 @@ int SimulatorThread :: handle_query_item_market_purchase_name(void)
 int SimulatorThread :: handle_query_item_market_reload(void)
 {
 	Debug::Log("[CS] Credit Shop reloaded");
-	g_CharacterManager.GetThread("SimulatorThread::MarketReload");
-	g_CSManager.LoadItems();
-	g_CharacterManager.ReleaseThread();
+	g_CreditShopManager.cs.Enter("SimulatorThread::MarketReload");
+	g_CreditShopManager.LoadItems();
+	g_CreditShopManager.cs.Leave();
 	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
 }
 
@@ -12222,12 +11820,12 @@ int SimulatorThread :: handle_query_item_market_edit(void)
 
 	if(strcmp(query.GetString(0), "DELETE") == 0 && query.args.size() > 1) {
 		int id = query.GetInteger(1);
-		CS::CreditShopItem *item = g_CSManager.GetItem(id);
+		CS::CreditShopItem *item = g_CreditShopManager.GetItem(id);
 		if(item == NULL)
 			return PrepExt_QueryResponseError(SendBuf, query.ID, "Invalid item.");
 		else {
 			// TODO remove
-			if(g_CSManager.RemoveItem(id)) {
+			if(g_CreditShopManager.RemoveItem(id)) {
 				g_Log.AddMessageFormat("Removed credit shop item %d", item->mId);
 				return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
 			}
@@ -12239,12 +11837,12 @@ int SimulatorThread :: handle_query_item_market_edit(void)
 		bool isNew = strcmp(query.GetString(0), "NEW") == 0;
 		if(isNew) {
 			csItem = new CS::CreditShopItem();
-			csItem->mId = g_CSManager.nextMarketItemID++;
+			csItem->mId = g_CreditShopManager.nextMarketItemID++;
 			SessionVarsChangeData.AddChange();
 			Util::SafeFormat(Aux3, sizeof(Aux3), "Created market csItem %d", csItem->mId);
 		}
 		else {
-			csItem = g_CSManager.GetItem(query.GetInteger(0));
+			csItem = g_CreditShopManager.GetItem(query.GetInteger(0));
 			if(csItem == NULL)
 				return PrepExt_QueryResponseError(SendBuf, query.ID, "Invalid item.");
 			Util::SafeFormat(Aux3, sizeof(Aux3), "Save market csItem %d", csItem->mId);
@@ -12292,8 +11890,10 @@ int SimulatorThread :: handle_query_item_market_edit(void)
 		if(csItem->mTitle.compare(item->mDisplayName) == 0)
 			csItem->mTitle = "";
 
-		g_CSManager.SaveItem(csItem);
-		g_CSManager.mItems[csItem->mId] = csItem;
+		g_CreditShopManager.SaveItem(csItem);
+		g_CreditShopManager.cs.Enter("SimulatorThread :: handle_query_item_market_edit");
+		g_CreditShopManager.mItems[csItem->mId] = csItem;
+		g_CreditShopManager.cs.Leave();
 
 		Debug::Log("[CS] Updated Credit shop item %d '%s'", csItem->mId, csItem->mTitle.c_str());
 		return PrepExt_QueryResponseString(SendBuf, query.ID, Aux3);
@@ -12319,7 +11919,8 @@ int SimulatorThread :: handle_query_item_market_list(void)
 	count++;
 
 	// Now the actual items
-	for(std::map<int, CS::CreditShopItem*>::iterator it = g_CSManager.mItems.begin(); it != g_CSManager.mItems.end(); ++it)
+	g_CreditShopManager.cs.Enter("handle_query_item_market_list");
+	for(std::map<int, CS::CreditShopItem*>::iterator it = g_CreditShopManager.mItems.begin(); it != g_CreditShopManager.mItems.end(); ++it)
 	{
 		if(g_ServerTime < (it->second->mStartDate * 1000UL))
 			// Not available yet
@@ -12384,6 +11985,7 @@ int SimulatorThread :: handle_query_item_market_list(void)
 
 		}
 	}
+	g_CreditShopManager.cs.Leave();
 	PutShort(&SendBuf[7], count);
 	PutShort(&SendBuf[1], wpos - 3);
 	return wpos;
@@ -12524,9 +12126,9 @@ int SimulatorThread :: handle_query_guild_info(void)
 			sprintf(Aux1, "%d", gdef->guildType);
 			wpos += PutStringUTF(&SendBuf[wpos], Aux1);
 
-			wpos += PutStringUTF(&SendBuf[wpos], gdef->defName);
+			wpos += PutStringUTF(&SendBuf[wpos], gdef->defName.c_str());
 
-			wpos += PutStringUTF(&SendBuf[wpos], gdef->motto);
+			wpos += PutStringUTF(&SendBuf[wpos], gdef->motto.c_str());
 
 			GuildRankObject *rank = g_GuildManager.GetRank(pld.CreatureDefID, gdef->guildDefinitionID);
 			if(rank == NULL) {
@@ -13051,11 +12653,6 @@ int SimulatorThread :: handle_query_mod_setats(void)
 	SendInfoMessage(Aux1, INFOMSG_INFO);
 
 	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-}
-
-int SimulatorThread :: handle_query_mod_getURL(void)
-{
-	return PrepExt_QueryResponseMultiString(SendBuf, query.ID, g_URLManager.GetURLs());
 }
 
 
@@ -15307,7 +14904,6 @@ void SimulatorThread :: CheckIfLootReadyToDistribute(ActiveLootContainer *loot, 
 		LogMessageL(MSG_SHOW, "Loot %d not ready yet to distribute", lootTag->mItemId);
 	}
 }
-
 
 int SendToOneSimulator(char *buffer, int length, SimulatorThread *simPtr)
 {

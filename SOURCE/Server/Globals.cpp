@@ -19,9 +19,6 @@ const char * StatusPhaseStrings[] = {
 };
 
 //Data returned on a query request for "clan.info"
-char g_ClanName[] = "Forging Ahead";
-char g_ClanMOTD[] = "Recreating EE, one byte at a time.";
-char g_ClanLeader[] = "true";
 
 //Data returned on a query request for "clan.list"
 //int g_ClanMemberCount = 0;                     //Number of clan characters

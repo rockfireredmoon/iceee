@@ -293,7 +293,7 @@ int QuestActionContainer :: ExecuteSingleCommand(SimulatorThread *caller, Extend
 				caller->SendInfoMessage("Joining guild ..", INFOMSG_INFO);
 				caller->JoinGuild(gDef, 0);
 				char buffer[64];
-				Util::SafeFormat(buffer, sizeof(buffer), "You have joined %s", gDef->defName);
+				Util::SafeFormat(buffer, sizeof(buffer), "You have joined %s", gDef->defName.c_str());
 				caller->SendInfoMessage(buffer, INFOMSG_INFO);
 			}
 		}

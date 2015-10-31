@@ -247,6 +247,9 @@ public:
 	std::string LegacyServer;			// URL of server to transfer groves from
 	std::string APIAuthentication;		// Username:Password to allow API authentication
 
+	unsigned int ClanCost;
+	bool Clans;
+
 	unsigned long debugAdministrativeBehaviorFlags;
 	void SetAdministrativeBehaviorFlag(unsigned long bitValue, bool state);
 	bool HasAdministrativeBehaviorFlag(unsigned long bitValue);

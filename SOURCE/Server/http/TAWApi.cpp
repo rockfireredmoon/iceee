@@ -21,11 +21,15 @@
 #include "../Account.h"
 #include "../Simulator.h"
 #include "../Character.h"
+#include "../CreditShop.h"
+#include "../Clan.h"
+#include "../Guilds.h"
 #include "../ZoneDef.h"
 #include "../Scenery2.h"
 #include "../Config.h"
 #include "../Chat.h"
 #include "../DirectoryAccess.h"
+#include "../PlayerStats.h"
 #include "../Leaderboard.h"
 #include "../json/json.h"
 #include <algorithm>
@@ -91,6 +95,81 @@ bool WhoHandler::handleAuthenticatedGet(CivetServer *server, struct mg_connectio
 }
 
 //
+// CreditShopHandler
+//
+
+bool CreditShopHandler::handleAuthenticatedGet(CivetServer *server, struct mg_connection *conn) {
+	char buf[256];
+	int no = 0;
+
+	PageOptions opts;
+	opts.count = 10;
+	opts.Init(server, conn);
+
+	int category = Category::UNDEFINED;
+
+	// Parse parameters
+	std::string p;
+	if (CivetServer::getParam(conn, "category", p)) {
+		category = Category::GetIDByName(p.c_str());
+	}
+
+	Json::Value root;
+	std::vector<CS::CreditShopItem*> items;
+	g_CreditShopManager.cs.Enter("LeaderboardHandler::g_CreditShopManager");
+	std::map<int, CS::CreditShopItem*> itemMap = g_CreditShopManager.mItems;
+	for(std::map<int, CS::CreditShopItem*>::iterator it = itemMap.begin(); it != itemMap.end(); ++it)	{
+		if(it-> second->mCategory == category) {
+			items.push_back(it->second);
+		}
+	}
+	g_CreditShopManager.cs.Leave();
+
+
+
+	Json::Value data;
+	int didx = 0;
+	for(int i = opts.start ; i < opts.start + opts.count && i < items.size() ; i++) {
+		Json::Value jv;
+		items[i]->WriteToJSON(jv);
+
+		if(items[i]->mItemId > 0) {
+			ItemDef *item = g_ItemManager.GetSafePointerByID(items[i]->mItemId);
+			if(item != NULL) {
+				if(items[i]->mTitle.length() == 0)
+					jv["computedTitle"] = item->mDisplayName;
+				std::vector<std::string> l;
+				Util::Split(item->mIcon, "|", l);
+				switch(l.size()) {
+				case 1:
+					jv["icon1"] = "TODO";
+					jv["icon2"] = l[0];
+					break;
+				case 2:
+					jv["icon1"] = l[0];
+					jv["icon2"] = l[1];
+					break;
+				}
+			}
+		}
+		if(!jv.isMember("computedTitle")) {
+			jv["computedTitle"] = items[i]->mTitle;
+		}
+
+		data[didx++] = jv;
+	}
+
+	root["data"] = data;
+	root["total"] = Json::UInt64(items.size());
+
+	Json::StyledWriter writer;
+	writeJSON200(server, conn, writer.write(root));
+
+	return true;
+
+}
+
+//
 // LeaderboardHandler
 //
 
@@ -114,32 +193,15 @@ bool LeaderboardHandler::handleAuthenticatedGet(CivetServer *server, struct mg_c
 	char buf[256];
 	int no = 0;
 
-	int top = 100;
-	int count = 10;
-	int start = 0;
-	bool desc = false;
+	PageOptions opts;
+	opts.Init(server, conn);
+
 	std::string board = "character";
-	std::string sortBy = "kills";
 
 	// Parse parameters
 	std::string p;
-	if (CivetServer::getParam(conn, "count", p)) {
-		count = atoi(p.c_str());
-	}
-	if (CivetServer::getParam(conn, "top", p)) {
-		top = atoi(p.c_str());
-	}
-	if (CivetServer::getParam(conn, "start", p)) {
-		start = atoi(p.c_str());
-	}
 	if (CivetServer::getParam(conn, "board", p)) {
 		board = p.c_str();
-	}
-	if (CivetServer::getParam(conn, "sort", p)) {
-		sortBy = p.c_str();
-	}
-	if (CivetServer::getParam(conn, "desc", p)) {
-		desc = p.compare("true") == 0;
 	}
 
 	Leaderboard *leaderboard = g_LeaderboardManager.GetBoard(board);
@@ -154,21 +216,21 @@ bool LeaderboardHandler::handleAuthenticatedGet(CivetServer *server, struct mg_c
 		std::vector<Leader> l(leaderboard->mLeaders);
 		leaderboard->cs.Leave();
 
-		if(sortBy.compare("deaths") == 0)
+		if(opts.sort.compare("deaths") == 0)
 			sort(l.begin(), l.end(), deathsSort);
-		else if(sortBy.compare("pvpKills") == 0)
+		else if(opts.sort.compare("pvpKills") == 0)
 			sort(l.begin(), l.end(), pvpKillsSort);
-		else if(sortBy.compare("pvpDeaths") == 0)
+		else if(opts.sort.compare("pvpDeaths") == 0)
 			sort(l.begin(), l.end(), pvpDeathsSort);
 		else
 			sort(l.begin(), l.end(), killsSort);
 
-		if(desc)
+		if(opts.desc)
 			std::reverse(l.begin(),l.end());
 
 		Json::Value data;
 		int didx = 0;
-		for(int i = start ; i < start + count && i < l.size() ; i++) {
+		for(int i = opts.start ; i < opts.start + opts.count && i < l.size() ; i++) {
 			Json::Value jv;
 			l[i].WriteToJSON(jv);
 			jv["rank"] = i + 1;
@@ -187,6 +249,202 @@ bool LeaderboardHandler::handleAuthenticatedGet(CivetServer *server, struct mg_c
 
 }
 
+//
+// ClanHandler
+//
+
+bool rankSort(const Clans::ClanMember &l1, const Clans::ClanMember &l2) {
+	return l1.mRank > l2.mRank;
+}
+
+void ClanHandler::writeClanToJSON(Clans::Clan &clan, Json::Value &c) {
+
+	PlayerStatSet total;
+	clan.WriteToJSON(c);
+
+	std::vector<Clans::ClanMember> l(clan.mMembers);
+	sort(l.begin(), l.end(), rankSort);
+
+	for(std::vector<Clans::ClanMember>::iterator it2 = l.begin(); it2 != l.end(); ++it2) {
+		CharacterData *cd = g_CharacterManager.RequestCharacter((*it2).mID, true);
+		if(cd != NULL) {
+			char buf[12];
+			Util::SafeFormat(buf,sizeof(buf),"%d", it2->mID);
+			c["members"][buf]["name"] = cd->cdef.css.display_name;
+			c["members"][buf]["level"] = cd->cdef.css.level;
+			c["members"][buf]["profession"] = cd->cdef.css.profession;
+
+			Json::Value stats;
+			cd->PlayerStats.WriteToJSON(stats);
+			total.Add(cd->PlayerStats);
+
+			c["members"][buf]["playerStats"] = stats;
+
+			if((*it2).mRank == Clans::Rank::LEADER) {
+				Json::Value l;
+				l["name"] =  cd->cdef.css.display_name;
+				l["id"] =  cd->cdef.CreatureDefID;
+				c["leader"] = l;
+			}
+		}
+		else {
+			g_Log.AddMessageFormat("[WARNING] Clan %s (%d) contains member %d that does not exist.", clan.mName.c_str(), clan.mId, (*it2).mID);
+		}
+	}
+
+	c["size"] = Json::UInt64(clan.mMembers.size());
+
+	Json::Value totalStats;
+	total.WriteToJSON(totalStats);
+	c["playerStats"] = totalStats;
+}
+
+bool ClanHandler::handleAuthenticatedGet(CivetServer *server, struct mg_connection *conn) {
+
+	struct mg_request_info * req_info = mg_get_request_info(conn);
+
+	std::string ruri;
+
+	/* Prepare the URI */
+	CivetServer::urlDecode(req_info->uri, strlen(req_info->uri), ruri, false);
+	ruri = removeDoubleDotsAndDoubleSlashes(ruri);
+	ruri = removeStartSlash(removeEndSlash(ruri));
+
+	std::vector<std::string> pathParts;
+	Util::Split(ruri, "/", pathParts);
+
+	PageOptions opts;
+	opts.Init(server, conn);
+
+
+	Json::Value root;
+	if(pathParts.size() > 0 && pathParts[pathParts.size() - 1].compare("clans") == 0) {
+		// List clans
+		std::map<int, Clans::Clan> m = g_ClanManager.mClans;
+
+		for(std::map<int, Clans::Clan>::iterator it = m.begin(); it != m.end(); ++it) {
+			Json::Value c;
+			Clans::Clan clan = it->second;
+			writeClanToJSON(clan, c);
+			root[clan.mName] = c;
+		}
+	}
+	else {
+		// TODO get clan
+		int clanID = g_ClanManager.FindClanID(pathParts[pathParts.size() - 1].c_str());
+		if(clanID == -1) {
+			writeStatus(server, conn, 404, "Not found.",
+					"The clan could not be found.");
+			return true;
+		}
+		writeClanToJSON(g_ClanManager.mClans[clanID], root);
+	}
+	Json::StyledWriter writer;
+	writeJSON200(server, conn, writer.write(root));
+
+	return true;
+
+}
+
+
+
+//
+// GuildHandler
+//
+
+//bool rankSort(const Clans::ClanMember &l1, const Clans::ClanMember &l2) {
+//	return l1.mRank > l2.mRank;
+//}
+
+void GuildHandler::writeGuildToJSON(GuildDefinition *guild, Json::Value &c) {
+
+	PlayerStatSet total;
+	guild->WriteToJSON(c);
+
+//	std::vector<Clans::ClanMember> l(clan.mMembers);
+//	sort(l.begin(), l.end(), rankSort);
+//
+//	for(std::vector<Clans::ClanMember>::iterator it2 = l.begin(); it2 != l.end(); ++it2) {
+//		CharacterData *cd = g_CharacterManager.RequestCharacter((*it2).mID, true);
+//		if(cd != NULL) {
+//			char buf[12];
+//			Util::SafeFormat(buf,sizeof(buf),"%d", it2->mID);
+//			c["members"][buf]["name"] = cd->cdef.css.display_name;
+//			c["members"][buf]["level"] = cd->cdef.css.level;
+//			c["members"][buf]["profession"] = cd->cdef.css.profession;
+//
+//			Json::Value stats;
+//			cd->PlayerStats.WriteToJSON(stats);
+//			total.Add(cd->PlayerStats);
+//
+//			c["members"][buf]["playerStats"] = stats;
+//
+//			if((*it2).mRank == Clans::Rank::LEADER) {
+//				Json::Value l;
+//				l["name"] =  cd->cdef.css.display_name;
+//				l["id"] =  cd->cdef.CreatureDefID;
+//				c["leader"] = l;
+//			}
+//		}
+//		else {
+//			g_Log.AddMessageFormat("[WARNING] Clan %s (%d) contains member %d that does not exist.", clan.mName.c_str(), clan.mId, (*it2).mID);
+//		}
+//	}
+//
+//	c["size"] = Json::UInt64(clan.mMembers.size());
+//
+//	Json::Value totalStats;
+//	total.WriteToJSON(totalStats);
+//	c["playerStats"] = totalStats;
+}
+
+bool GuildHandler::handleAuthenticatedGet(CivetServer *server, struct mg_connection *conn) {
+
+	struct mg_request_info * req_info = mg_get_request_info(conn);
+
+	std::string ruri;
+
+	/* Prepare the URI */
+	CivetServer::urlDecode(req_info->uri, strlen(req_info->uri), ruri, false);
+	ruri = removeDoubleDotsAndDoubleSlashes(ruri);
+	ruri = removeStartSlash(removeEndSlash(ruri));
+
+	std::vector<std::string> pathParts;
+	Util::Split(ruri, "/", pathParts);
+
+	PageOptions opts;
+	opts.Init(server, conn);
+
+
+	Json::Value root;
+	if(pathParts.size() > 0 && pathParts[pathParts.size() - 1].compare("guilds") == 0) {
+		// List clans
+		std::vector<GuildDefinition> m = g_GuildManager.defList;
+
+		for(std::vector<GuildDefinition>::iterator it = m.begin(); it != m.end(); ++it) {
+			Json::Value c;
+			GuildDefinition guild = *it;
+			writeGuildToJSON(&guild, c);
+			root[guild.defName] = c;
+		}
+	}
+	else {
+		std::string name = pathParts[pathParts.size() - 1];
+		Util::URLDecode(name);
+		GuildDefinition *guild = g_GuildManager.FindGuildDefinition(name);
+		if(guild == NULL) {
+			writeStatus(server, conn, 404, "Not found.",
+					"The guild could not be found.");
+			return true;
+		}
+		writeGuildToJSON(guild, root);
+	}
+	Json::StyledWriter writer;
+	writeJSON200(server, conn, writer.write(root));
+
+	return true;
+
+}
 
 //
 // ChatHandler
@@ -364,6 +622,10 @@ bool CharacterHandler::handleAuthenticatedGet(CivetServer *server,
 		else {
 			Json::Value root;
 			cd->WriteToJSON(root);
+			if(cd->clan > 0) {
+				Clans::Clan c = g_ClanManager.mClans[cd->clan];
+				root["clanName"] = c.mName;
+			}
 			Json::StyledWriter writer;
 			writeJSON200(server, conn, writer.write(root));
 		}

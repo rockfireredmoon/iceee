@@ -16,7 +16,6 @@
  */
 
 #include "Query.h"
-#include "Lobby.h"
 
 //
 // CommandHandler
@@ -31,16 +30,20 @@ QueryHandler::~QueryHandler() {
 QueryManager g_QueryManager;
 
 QueryManager::QueryManager() {
-	commandHandlers["util.ping"] = new LobbyPingHandler();
-	commandHandlers["account.tracking"] = new AccountTrackingHandler();
 }
 
 QueryManager::~QueryManager() {
 }
 
-QueryHandler *QueryManager :: getCommandHandler(std::string command)
-{
-	if(commandHandlers.find(command) == commandHandlers.end())
+QueryHandler *QueryManager::getQueryHandler(std::string command) {
+	if (queryHandlers.find(command) == queryHandlers.end())
 		return NULL;
-	return commandHandlers[command];
+	return queryHandlers[command];
 }
+
+QueryHandler *QueryManager::getLobbyQueryHandler(std::string command) {
+	if (lobbyQueryHandlers.find(command) == lobbyQueryHandlers.end())
+		return NULL;
+	return lobbyQueryHandlers[command];
+}
+

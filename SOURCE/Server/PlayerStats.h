@@ -15,6 +15,7 @@ public:
 
 	PlayerStatSet();
 
+	void Add(PlayerStatSet &other);
 	void CopyFrom(PlayerStatSet *other);
 	void Clear();
 	void SaveToStream(FILE *output);

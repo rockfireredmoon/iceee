@@ -20,6 +20,8 @@
 
 #include "CivetServer.h"
 #include "HTTP.h"
+#include "../Clan.h"
+#include "../Guilds.h"
 
 namespace HTTPD {
 
@@ -105,6 +107,33 @@ public:
 class LeaderboardHandler: public AuthenticatedHandler {
 public:
 	bool handleAuthenticatedGet(CivetServer *server, struct mg_connection *conn);
+};
+/*
+ * Handles /api/cs/<name> requests, returning a JSON response containing the credit shop.
+ */
+class CreditShopHandler: public AuthenticatedHandler {
+public:
+	bool handleAuthenticatedGet(CivetServer *server, struct mg_connection *conn);
+};
+
+/*
+ * Handles /api/clan and /api/clan/<name> requests, returning a JSON response containing clan details.
+ */
+class ClanHandler: public AuthenticatedHandler {
+public:
+	bool handleAuthenticatedGet(CivetServer *server, struct mg_connection *conn);
+private:
+	void writeClanToJSON(Clans::Clan &clan, Json::Value &c);
+};
+
+/*
+ * Handles /api/guild and /api/guild/<name> requests, returning a JSON response containing clan details.
+ */
+class GuildHandler: public AuthenticatedHandler {
+public:
+	bool handleAuthenticatedGet(CivetServer *server, struct mg_connection *conn);
+private:
+	void writeGuildToJSON(GuildDefinition *guild, Json::Value &c);
 };
 
 }

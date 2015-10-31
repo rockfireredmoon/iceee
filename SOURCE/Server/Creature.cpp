@@ -6833,7 +6833,7 @@ void CreatureInstance :: AddValour(int GuildDefID, int amount)
 	if(currentRank == NULL || currentRank->valour != newRank->valour)
 	{
 		char buffer[128];
-		Util::SafeFormat(buffer, sizeof(buffer), "You have gained %d valour in %s", amount,guildDef->defName);
+		Util::SafeFormat(buffer, sizeof(buffer), "You have gained %d valour in %s", amount,guildDef->defName.c_str());
 		simulatorPtr->SendInfoMessage(buffer, INFOMSG_INFO);
 	}
 	if(currentRank == NULL || currentRank->rank != newRank->rank)
@@ -6843,7 +6843,7 @@ void CreatureInstance :: AddValour(int GuildDefID, int amount)
 		simulatorPtr->BroadcastGuildChange(GuildDefID);
 
 		char buffer[128];
-		Util::SafeFormat(buffer, sizeof(buffer), "You have been promoted to %s in %s", newRank->title.c_str(),guildDef->defName);
+		Util::SafeFormat(buffer, sizeof(buffer), "You have been promoted to %s in %s", newRank->title.c_str(),guildDef->defName.c_str());
 		simulatorPtr->SendInfoMessage(buffer, INFOMSG_INFO);
 
 		char Buffer[1024];

@@ -175,9 +175,14 @@ If using Code::Blocks on LINUX
 #include "InstanceScale.h"
 #include "CreditShop.h"
 #include "Guilds.h"
+#include "Clan.h"
 #include "Daily.h"
 #include "Leaderboard.h"
 #include "http/HTTPService.h"
+#include "query/Lobby.h"
+#include "query/ClanHandlers.h"
+#include "query/PreferenceHandlers.h"
+#include "query/GMHandlers.h"
 
 #ifdef WINDOWS_SERVICE
 #include <windows.h>
@@ -500,7 +505,9 @@ int InitServerMain() {
 	}
 #endif
 
-	PLATFORM_GETCWD(g_WorkingDirectory, 256);
+	if(PLATFORM_GETCWD(g_WorkingDirectory, 256) == NULL) {
+		printf("Failed to get current working directory.");
+	}
 	bcm.mlog.reserve(100);
 
 	LOG_OPEN();
@@ -518,6 +525,53 @@ int InitServerMain() {
 	g_Log.LoggingEnabled = g_GlobalLogging;
 
 	g_Log.AddMessageFormat("Working directory %s.", g_WorkingDirectory);
+	// Lobby Query Handlers
+	g_QueryManager.lobbyQueryHandlers["account.tracking"] = new AccountTrackingHandler();
+	g_QueryManager.lobbyQueryHandlers["persona.list"] = new PersonaListHandler();
+	g_QueryManager.lobbyQueryHandlers["persona.create"] = new PersonaCreateHandler();
+	g_QueryManager.lobbyQueryHandlers["persona.delete"] = new PersonaDeleteHandler();
+	g_QueryManager.lobbyQueryHandlers["mod.getURL"] = new ModGetURLHandler();
+
+	// Game Query Handlers
+	g_QueryManager.queryHandlers["clan.disband"] = new ClanDisbandHandler();
+	g_QueryManager.queryHandlers["clan.create"] = new ClanCreateHandler();
+	g_QueryManager.queryHandlers["clan.info"] = new ClanInfoHandler();
+	g_QueryManager.queryHandlers["clan.invite"] = new ClanInviteHandler();
+	g_QueryManager.queryHandlers["clan.invite.accept"] = new ClanInviteAcceptHandler();
+	g_QueryManager.queryHandlers["clan.leave"] = new ClanLeaveHandler();
+	g_QueryManager.queryHandlers["clan.remove"] = new ClanRemoveHandler();
+	g_QueryManager.queryHandlers["clan.motd"] = new ClanMotdHandler();
+	g_QueryManager.queryHandlers["clan.list"] = new ClanListHandler();
+	g_QueryManager.queryHandlers["clan.rank"] = new ClanRankHandler();
+	g_QueryManager.queryHandlers["pref.get"] = new PrefGetHandler();
+	g_QueryManager.queryHandlers["pref.set"] = new PrefSetHandler();
+	g_QueryManager.queryHandlers["util.addFunds"] = new AddFundsHandler();
+
+	// Some are shared
+
+	PrefSetAHandler* prefSetAHandler = new PrefSetAHandler();
+	g_QueryManager.lobbyQueryHandlers["pref.setA"] = prefSetAHandler;
+	g_QueryManager.queryHandlers["pref.setA"] = prefSetAHandler;
+
+	PrefGetAHandler* prefGetAHandler = new PrefGetAHandler();
+	g_QueryManager.lobbyQueryHandlers["pref.getA"] = prefGetAHandler;
+	g_QueryManager.queryHandlers["pref.getA"] = prefGetAHandler;
+
+	LobbyPingHandler* pingHandler = new LobbyPingHandler();
+	g_QueryManager.lobbyQueryHandlers["util.ping"] = pingHandler;
+	g_QueryManager.queryHandlers["util.ping"] = pingHandler;
+
+
+
+//	else if(query.name.compare("pref.get") == 0)
+//		handle_query_pref_get();
+//	else if(query.name.compare("pref.setA") == 0)
+//		handle_query_pref_setA();
+//	else if(query.name.compare("pref.set") == 0)
+//		handle_query_pref_set();
+
+
+
 	g_Log.AddMessageFormat("Loaded %d checksums.", g_FileChecksum.mChecksumData.size());
 
 	g_ItemManager.LoadData();
@@ -568,8 +622,11 @@ int InitServerMain() {
 	g_GuildManager.LoadFile(Platform::GenerateFilePath(GAuxBuf, "Data", "GuildDef.txt"));
 	g_Log.AddMessageFormat("Loaded %d Guild definitions.", g_GuildManager.GetStandardCount());
 
-	g_CSManager.LoadItems();
-	g_Log.AddMessageFormat("Loaded %d Credit Shop items.", g_CSManager.mItems.size());
+	g_ClanManager.LoadClans();
+	g_Log.AddMessageFormat("Loaded %d Clans.", g_ClanManager.mClans.size());
+
+	g_CreditShopManager.LoadItems();
+	g_Log.AddMessageFormat("Loaded %d Credit Shop items.", g_CreditShopManager.mItems.size());
 
 	g_ZoneDefManager.LoadData();
 	g_GroveTemplateManager.LoadData();

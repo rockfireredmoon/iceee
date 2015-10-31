@@ -33,7 +33,6 @@ bool TAWClient::getAccountByName(std::string accountName, AccountData &account) 
 	std::ostringstream completeUrl;
 	completeUrl << mUrl << "/user/" << accountName << std::endl;
 	std::string readBuffer;
-	g_Log.AddMessageFormat(">> Reading JSON from %s (%s)", completeUrl.str().c_str(), mUrl.c_str());
 	int res = readJSONFromUrl(completeUrl.str(), &readBuffer);
 	if(res == CURLE_OK) {
 		Json::Value root;
