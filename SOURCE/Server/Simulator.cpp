@@ -1316,7 +1316,6 @@ void SimulatorThread :: handle_lobby_query(void)
 	}
 	else {
 		PendingData = qh->handleQuery(this, &pld, &query, creatureInst);
-		g_Log.AddMessageFormat("[REMOVEME] pendingdata for %s = %d", query.name.c_str(), PendingData);
 	}
 	if(PendingData > 0)
 	{
@@ -3983,8 +3982,6 @@ void SimulatorThread :: handle_communicate(void)
 	bool perm = true;
 //	bool privateChannel = false;
 	PrivateChannel* privateChannelData = NULL;
-
-	g_Log.AddMessageFormat("[REMOVEME] Chat channel : %s", channel);
 
 	if(strncmp(channel, "t/", 2) == 0)
 	{
