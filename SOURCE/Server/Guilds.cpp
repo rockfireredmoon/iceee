@@ -144,6 +144,7 @@ GuildDefinition * GuildManager::FindGuildDefinition(std::string name) {
 
 GuildDefinition * GuildManager::GetGuildDefinition(int guildDefID) {
 	size_t i = 0;
+
 	for (i = 0; i < defList.size(); i++) {
 		if (defList[i].guildDefinitionID == guildDefID)
 			return &defList[i];

@@ -6,6 +6,7 @@
 #include "ByteBuffer.h"
 #include "FriendStatus.h"
 #include "Instance.h"
+#include "Clan.h"
 
 ChatManager g_ChatManager;
 bool NewChat = false;
@@ -19,7 +20,7 @@ ChannelCompare ValidChatChannel[] = {
 	{CHAT_SCOPE_SERVER,  "rc/", "[Region]", "/region", true },
 	{CHAT_SCOPE_SERVER,  "tc/", "[Trade]", "/trade", true },
 	{CHAT_SCOPE_CHANNEL, "ch/", "[Channel]", "/ch", true },
-	{CHAT_SCOPE_FRIEND,  "clan", "[Clan]", "/clan", true },
+	{CHAT_SCOPE_CLAN,  "clan", "[Clan]", "/clan", true },
 	{CHAT_SCOPE_PARTY,  "party", "[Party]", "/party", true },
 
 	//These only show the message.  The name is used but there is no "says: " dividing them.
@@ -398,11 +399,19 @@ bool ChatManager ::SendChatMessage(ChatMessage &message, CreatureInstance *sendi
 				breakLoop = true;
 				break;
 			case CHAT_SCOPE_CLAN:
+			{
+
+				Clans::Clan c = g_ClanManager.mClans[message.mSenderClanID];
 				if(it->pld.CreatureDefID == message.mSenderCreatureDefID)  //Send to self
 					send = true;
-				else if(g_GuildManager.IsMutualGuild(it->pld.CreatureDefID, message.mSenderCreatureDefID) ==true)
-					send = true;
+				else {
+					if(c.mId > 0 && it->pld.charPtr->clan == c.mId)
+						send = true;
+					else if(g_GuildManager.IsMutualGuild(it->pld.CreatureDefID, message.mSenderCreatureDefID) ==true)
+						send = true;
+				}
 				break;
+			}
 			default:
 				break;
 			}

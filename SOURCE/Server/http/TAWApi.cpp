@@ -331,7 +331,9 @@ bool ClanHandler::handleAuthenticatedGet(CivetServer *server, struct mg_connecti
 	}
 	else {
 		// TODO get clan
-		int clanID = g_ClanManager.FindClanID(pathParts[pathParts.size() - 1].c_str());
+		std::string name = pathParts[pathParts.size() - 1];
+		Util::URLDecode(name);
+		int clanID = g_ClanManager.FindClanID(name);
 		if(clanID == -1) {
 			writeStatus(server, conn, 404, "Not found.",
 					"The clan could not be found.");

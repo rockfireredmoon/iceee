@@ -18,6 +18,7 @@
 #include "AbilityTime.h"  //For cooldown data storage.
 #include "Leaderboard.h"
 
+using namespace std;
 
 class ItemDef;
 struct ChangeData;
