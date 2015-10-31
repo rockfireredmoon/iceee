@@ -22,6 +22,7 @@ tawd_SOURCES = md5.cc \
 	Character.cpp \
 	ChatChannel.cpp \
 	Chat.cpp \
+	Clan.cpp \
 	Combat.cpp \
 	Components.cpp \
 	Config.cpp \
@@ -98,8 +99,11 @@ tawd_SOURCES = md5.cc \
 	auth/Auth.cpp \
 	auth/DevAuthentication.cpp \
 	auth/ServiceAuthentication.cpp \
+	query/ClanHandlers.cpp \
 	query/Query.cpp \
 	query/Lobby.cpp \
+	query/PreferenceHandlers.cpp \
+	query/GMHandlers.cpp \
 	util/base64.cpp \
 	util/JsonHelpers.cpp \
 	util/SquirrelObjects.cpp \
@@ -116,6 +120,7 @@ tawd_SOURCES = md5.cc \
 	Character.h \
 	ChatChannel.h \
 	Chat.h \
+	Clan.h \
 	Combat.h \
 	CreditShop.h \
 	CommonTypes.h \
@@ -221,7 +226,10 @@ tawd_SOURCES = md5.cc \
 	auth/DevAuthentication.h \
 	auth/ServiceAuthentication.h \
 	query/Query.h \
+	query/PreferenceHandlers.h \
 	query/Lobby.h \
+	query/ClanHandlers.h \
+	query/GMHandlers.h \
 	util/base64.h \
 	util/JsonHelpers.h \
 	SquirrelObjects.h
@@ -245,6 +253,7 @@ tawdsvc_SOURCES = md5.cc \
 	Character.cpp \
 	ChatChannel.cpp \
 	Chat.cpp \
+	Clan.cpp \
 	Combat.cpp \
 	Components.cpp \
 	Config.cpp \
@@ -324,6 +333,9 @@ tawdsvc_SOURCES = md5.cc \
 	auth/ServiceAuthentication.cpp \
 	query/Query.cpp \
 	query/Lobby.cpp \
+	query/ClanHandlers.cpp \
+	query/PreferenceHandlers.cpp \
+	query/GMHandlers.cpp \
 	util/base64.cpp \
 	util/JsonHelpers.cpp \
 	Ability2.h \
@@ -341,6 +353,7 @@ tawdsvc_SOURCES = md5.cc \
 	Chat.h \
 	Combat.h \
 	CreditShop.h \
+	Clan.h \
 	CommonTypes.h \
 	Components.h \
 	Config.h \
@@ -443,8 +456,11 @@ tawdsvc_SOURCES = md5.cc \
 	auth/Auth.h \
 	auth/DevAuthentication.h \
 	auth/ServiceAuthentication.h \
+	query/PreferenceHandlers.h \
 	query/Query.h \
 	query/Lobby.h \
+	query/ClanHandlers.h \
+	query/GMHandlers.h \
 	util/base64.h \
 	util/JsonHelpers.h \
 	SquirrelObjects.h

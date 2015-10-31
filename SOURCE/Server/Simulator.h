@@ -3,6 +3,7 @@
 
 #include "SocketClass3.h"
 #include "Packet.h"
+#include "Clan.h"
 #include "Components.h"
 
 #include "ActiveCharacter.h"
@@ -11,6 +12,8 @@
 #include "Guilds.h"
 #include "DropTable.h"
 #include "PartyManager.h"
+
+#include <vector>
 
 class AccountData;
 struct PlayerInstancePlacementData;
@@ -293,7 +296,6 @@ public:
 	int handle_query_item_market_reload(void);
 	int handle_query_item_market_purchase_name(void);
 	int handle_query_bug_report(void);
-	int handle_query_util_addfunds();
 	int handle_query_user_auth_reset();
 	int handle_query_validate_name();
 	int handle_query_petition_list(void);

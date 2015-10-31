@@ -57,6 +57,12 @@ inline static std::string removeEndSlash(std::string str) {
 	return str;
 }
 
+inline static std::string removeStartSlash(std::string str) {
+	while(Util::HasBeginning(str, "/"))
+		str = str.substr(1);
+	return str;
+}
+
 /*
  * Tracks the session obtained at authentication time
  */
@@ -118,8 +124,19 @@ public:
 
 	void writeResponse(CivetServer *server, struct mg_connection *conn, std::string data, std::string contentType);
 };
+class PageOptions {
+public:
+	int count;
+	int top;
+	int start;
+	std::string sort;
+	bool desc;
+
+	void Init(CivetServer *server, struct mg_connection *conn);
+};
 
 }
+
 
 #endif
 

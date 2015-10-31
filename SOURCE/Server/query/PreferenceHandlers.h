@@ -15,47 +15,34 @@
  * along with TAWD.  If not, see <http://www.gnu.org/licenses/
  */
 
-#ifndef LOBBY_H
-#define LOBBY_H
+#ifndef PREFERENCEHANDLERS_H
+#define PREFERENCEHANDLERS_H
 
 #include "Query.h"
 
-class LobbyPingHandler : public QueryHandler {
+int RespondPrefGet(PreferenceContainer *prefSet, char *SendBuf, SimulatorQuery &query);
+
+class PrefGetAHandler : public QueryHandler {
 public:
-	~LobbyPingHandler() {};
+	~PrefGetAHandler() {};
 	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
 };
 
-class AccountTrackingHandler : public QueryHandler {
+class PrefGetHandler : public QueryHandler {
 public:
-	~AccountTrackingHandler() {};
+	~PrefGetHandler() {};
+	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
+};
+class PrefSetAHandler : public QueryHandler {
+public:
+	~PrefSetAHandler() {};
 	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
 };
 
-class PersonaListHandler : public QueryHandler {
+class PrefSetHandler : public QueryHandler {
 public:
-	~PersonaListHandler() {};
+	~PrefSetHandler() {};
 	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
 };
-
-class PersonaCreateHandler : public QueryHandler {
-public:
-	~PersonaCreateHandler() {};
-	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
-};
-
-
-class PersonaDeleteHandler : public QueryHandler {
-public:
-	~PersonaDeleteHandler() {};
-	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
-};
-
-class ModGetURLHandler : public QueryHandler {
-public:
-	~ModGetURLHandler() {};
-	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
-};
-
 
 #endif

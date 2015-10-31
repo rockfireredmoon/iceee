@@ -5,6 +5,7 @@
 
 #include <vector>
 #include <string>
+#include "json/json.h"
 
 
 struct GuildRankObject
@@ -20,10 +21,11 @@ struct GuildRankObject
 	void RunLoadDefaults(void);
 };
 
-struct GuildDefinition
+class GuildDefinition
 {
-	char defName[20];
-	char motto[128];
+public:
+	std::string defName;
+	std::string motto;
 	int guildDefinitionID;
 	int guildType;
 	std::string sGuildHall;
@@ -39,6 +41,7 @@ struct GuildDefinition
 	~GuildDefinition() { }
 	void Clear(void);
 	void RunLoadDefaults(void);
+	void WriteToJSON(Json::Value &value);
 };
 
 class GuildManager
@@ -52,6 +55,7 @@ public:
 	void LoadFile(const char *filename);
 	int GetStandardCount(void);
 	GuildDefinition *GetGuildDefinitionForGuildHallZoneID(int zoneID);
+	GuildDefinition *FindGuildDefinition(std::string name);
 	GuildDefinition *GetGuildDefinition(int GuildDefID);
 	bool IsMutualGuild(int selfDefID, int otherDefID);
 	GuildRankObject *GetRank(int CDefId, int guildDefId);

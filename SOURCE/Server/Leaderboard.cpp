@@ -58,6 +58,8 @@ void Leader::WriteToJSON(Json::Value &value) {
 // LeaderBoard
 //
 Leaderboard::Leaderboard() {
+	mCollected = 0;
+	mName = "";
 	cs.Init();
 	cs.SetDebugName("Leaderboard");
 }

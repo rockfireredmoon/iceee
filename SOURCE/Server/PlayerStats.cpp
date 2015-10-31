@@ -40,6 +40,13 @@ void PlayerStatSet::CopyFrom(PlayerStatSet *other) {
 	TotalPVPKills = other->TotalPVPKills;
 }
 
+void PlayerStatSet::Add(PlayerStatSet &other) {
+	TotalDeaths += other.TotalDeaths;
+	TotalKills += other.TotalKills;
+	TotalPVPDeaths += other.TotalPVPDeaths;
+	TotalPVPKills += other.TotalPVPKills;
+}
+
 void PlayerStatSet::SaveToStream(FILE *output) {
 	Util::WriteInteger(output, "TotalKills", TotalKills);
 	Util::WriteInteger(output, "TotalDeaths", TotalDeaths);

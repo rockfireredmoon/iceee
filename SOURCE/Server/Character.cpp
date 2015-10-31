@@ -167,6 +167,7 @@ void CharacterData :: ClearAll(void)
 	characterVersion = 0;
 	pendingChanges = 0;
 	expireTime = 0;
+	clan = 0;
 
 	cdef.css.Clear();
 	memset(&activeData, 0, sizeof(activeData));
@@ -1152,6 +1153,10 @@ int CheckSection_General(FileReader &fr, CharacterData &cd, const char *debugFil
 	{
 		cd.activeData.CurInstance = fr.BlockToInt(1);
 	}
+	else if(strcmp(fr.SecBuffer, "CLAN") == 0)
+	{
+		cd.clan = fr.BlockToInt(1);
+	}
 	else if(strcmp(fr.SecBuffer, "ZONE") == 0)
 	{
 		cd.activeData.CurZone = fr.BlockToInt(1);
@@ -1837,6 +1842,7 @@ void SaveCharacterToStream(FILE *output, CharacterData &cd)
 	fprintf(output, "[ENTRY]\r\n");
 	fprintf(output, "characterVersion=%d\r\n", cd.characterVersion);
 	fprintf(output, "AccountID=%d\r\n", cd.AccountID);
+	fprintf(output, "Clan=%d\r\n", cd.clan);
 	fprintf(output, "ID=%d\r\n", cd.cdef.CreatureDefID);
 	fprintf(output, "Instance=%d\r\n", cd.activeData.CurInstance);
 	fprintf(output, "Zone=%d\r\n", cd.activeData.CurZone);

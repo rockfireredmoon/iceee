@@ -439,7 +439,7 @@ class this.Screens.SocialWindow extends this.GUI.Frame
 		this.mTabPane.setTabPlacement("top");
 		this.mTabPane.setTabFontColor("E4E4E4");
 		this.mTabPane.addTab("Friends", friendsPane);
-		//this.mTabPane.addTab("Clan", clanPane);
+		this.mTabPane.addTab("Clan", clanPane);
 		this.mTabPane.addTab("Guild", guildPane);
 		this.mTabPane.addTab("Ignored", ignoredPane);
 		this.mTabPane.addActionListener(this);
@@ -1220,6 +1220,7 @@ class this.Screens.SocialWindow extends this.GUI.Frame
 
 	function onClanRankChanged( name, rank )
 	{
+		print("ICE! Clan rank change " + name + " = " + rank + "\n");
 		local member = this.findClanMember(name);
 
 		if (member == null)

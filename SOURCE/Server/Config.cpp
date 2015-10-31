@@ -494,6 +494,10 @@ void LoadConfig(const char *filename)
 					g_Log.AddMessageFormatW(MSG_SHOW, "Invalid OAuth2Client string [%s] in config file [%s]", lfr.BlockToString(0), filename);
 				}
 			}
+			else if(strcmp(NameBlock, "Clans") == 0)
+				g_Config.Clans = lfr.BlockToBool(1);
+			else if(strcmp(NameBlock, "ClanCost") == 0)
+				g_Config.ClanCost = lfr.BlockToInt(1);
 			else
 			{
 				g_Log.AddMessageFormatW(MSG_SHOW, "Unknown identifier [%s] in config file [%s]", lfr.BlockToString(0), filename);
@@ -723,6 +727,12 @@ GlobalConfigData :: GlobalConfigData()
 	APIAuthentication = "api:api";
 
 	InvalidLoginMessage = "Account not found.  Check username and password.";
+
+	HTTPKeepAlive = 0;
+	DirectoryListing = false;
+
+	Clans = true;
+	ClanCost = 100000;
 }
 
 GlobalConfigData :: ~GlobalConfigData()

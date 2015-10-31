@@ -15,34 +15,15 @@
  * along with TAWD.  If not, see <http://www.gnu.org/licenses/
  */
 
-#ifndef QUERY_H
-#define QUERY_H
+#ifndef GMHANDLERS_H
+#define GMHANDLERS_H
 
-#include "../Simulator.h"
-#include "../ByteBuffer.h"
-#include "../Character.h"
-#include "../Creature.h"
-#include "../StringList.h"
+#include "Query.h"
 
-
-class QueryHandler {
+class AddFundsHandler : public QueryHandler {
 public:
-	virtual ~QueryHandler()=0;
-	virtual int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance)=0;
+	~AddFundsHandler() {};
+	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
 };
-
-class QueryManager {
-public:
-	QueryManager();
-	~QueryManager();
-	QueryHandler *getQueryHandler(std::string query);
-	QueryHandler *getLobbyQueryHandler(std::string query);
-
-	std::map<std::string, QueryHandler*> lobbyQueryHandlers;
-	std::map<std::string, QueryHandler*> queryHandlers;
-};
-
-extern QueryManager g_QueryManager;
 
 #endif
-

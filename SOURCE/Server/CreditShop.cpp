@@ -7,7 +7,7 @@
 
 using namespace CS;
 
-CreditShopManager g_CSManager;
+CreditShopManager g_CreditShopManager;
 
 namespace Status {
 
@@ -96,6 +96,9 @@ int GetIDByName(const std::string &name) {
 }
 
 //
+// CreditShopItem
+//
+
 CreditShopItem::CreditShopItem() {
 	mCategory = Category::UNDEFINED;
 	mStatus = Category::UNDEFINED;
@@ -115,6 +118,29 @@ CreditShopItem::CreditShopItem() {
 	mIv2 = 0;
 }
 CreditShopItem::~CreditShopItem() {}
+
+void CreditShopItem::WriteToJSON(Json::Value &value) {
+	value["title"] = mTitle;
+	value["description"] = mDescription;
+	if(mStartDate > 0)
+		value["beginDate"] = Util::FormatDate(&mStartDate);
+	if(mEndDate > 0)
+		value["endDate"] = Util::FormatDate(&mEndDate);
+	value["currency"] = Currency::GetNameByID(mPriceCurrency);
+	value["copper"] = Json::UInt64(mPriceCopper);
+	value["credits"] = Json::UInt64(mPriceCredits);
+	value["itemID"] = mItemId;
+	if(mIv1 >0)
+		value["iv1"] = mIv1;
+	if(mIv2 >0)
+		value["iv2"] = mIv2;
+	value["category"] = Category::GetNameByID(mCategory);
+	value["status"] = Status::GetNameByID(mStatus);
+	if(mQuantityLimit > 0)
+		value["limit"] = mQuantityLimit;
+	if(mQuantitySold > 0)
+		value["sold"] = mQuantitySold;
+}
 
 void CreditShopItem::ParseItemProto(std::string proto) {
 
@@ -136,6 +162,10 @@ void CreditShopItem::ParseItemProto(std::string proto) {
 		}
 	}
 }
+
+//
+// CreditShopManager
+//
 
 CreditShopManager::CreditShopManager() {
 	nextMarketItemID = 1;
@@ -270,7 +300,9 @@ CreditShopItem * CreditShopManager::LoadItem(int id) {
 			item->mPriceCredits = amt;
 	}
 
+	cs.Enter("CreditShopManager::LoadItem");
 	mItems[id] = item;
+	cs.Leave();
 
 	return item;
 }
@@ -282,11 +314,13 @@ bool CreditShopManager::RemoveItem(int id) {
 		g_Log.AddMessageFormat("No file for CS item [%s] to remove", path);
 		return false;
 	}
+	cs.Enter("CreditShopManager::RemoveItem");
 	std::map<int, CreditShopItem*>::iterator it = mItems.find(id);
 	if(it != mItems.end()) {
 		delete it->second;
 		mItems.erase(it);
 	}
+	cs.Leave();
 	char buf[128];
 	Util::SafeFormat(buf, sizeof(buf), "CreditShop/%d.del", id);
 	Platform::FixPaths(buf);
@@ -329,6 +363,9 @@ int CreditShopManager::LoadItems(void) {
 }
 
 CreditShopItem * CreditShopManager::GetItem(int id) {
+	cs.Enter("CreditShopManager::GetItem");
 	std::map<int, CreditShopItem*>::iterator it = mItems.find(id);
-	return it == mItems.end() ? NULL : it->second;
+	CreditShopItem *item = it == mItems.end() ? NULL : it->second;
+	cs.Leave();
+	return item;
 }

@@ -36,7 +36,7 @@ public:
 	AbilityContainer();
 	~AbilityContainer();
 
-	vector<int> AbilityList;
+	std::vector<int> AbilityList;
 
 	int GetAbilityIndex(int value);
 	int AddAbility(int value);
@@ -48,7 +48,7 @@ public:
 	IntContainer();
 	~IntContainer();
 
-	vector<int> List;
+	std::vector<int> List;
 
 	int GetIndex(int value);
 	int Add(int value);
@@ -69,7 +69,7 @@ public:
 	PreferenceContainer();
 	~PreferenceContainer();
 
-	vector<_PreferencePair> PrefList;
+	std::vector<_PreferencePair> PrefList;
 
 	int GetPrefIndex(const char *name);
 	const char * GetPrefValue(const char *name);
@@ -222,6 +222,8 @@ public:
 
 	// Character wide death/kill stats
 	PlayerStatSet PlayerStats;
+
+	int clan;
 
 	void ClearAll();
 	void CopyFrom(CharacterData &source);

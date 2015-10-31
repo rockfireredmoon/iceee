@@ -7,6 +7,7 @@
 #include "Item.h"
 #include "GM.h"
 #include "CreditShop.h"
+#include "Clan.h"
 
 int SaveSession(const char *filename)
 {
@@ -24,7 +25,8 @@ int SaveSession(const char *filename)
 	fprintf(output, "NextZoneID=%d\r\n", g_ZoneDefManager.NextZoneID);
 	fprintf(output, "NextAccountID=%d\r\n", g_AccountManager.NextAccountID);
 	fprintf(output, "NextVirtualItemID=%d\r\n", g_ItemManager.nextVirtualItemID);
-	fprintf(output, "NextMarketItemID=%d\r\n", g_CSManager.nextMarketItemID);
+	fprintf(output, "NextMarketItemID=%d\r\n", g_CreditShopManager.nextMarketItemID);
+	fprintf(output, "NextClanID=%d\r\n", g_ClanManager.nextClanID);
 	fprintf(output, "NextPetitionID=%d\r\n", g_PetitionManager.NextPetitionID);
 	fprintf(output, "\r\n");
 	fclose(output);
@@ -62,7 +64,9 @@ int LoadSession(const char *filename)
 			else if(strcmp(NameBlock, "NextVirtualItemID") == 0)
 				g_ItemManager.nextVirtualItemID = lfr.BlockToInt(1);
 			else if(strcmp(NameBlock, "NextMarketItemID") == 0)
-				g_CSManager.nextMarketItemID = lfr.BlockToInt(1);
+				g_CreditShopManager.nextMarketItemID = lfr.BlockToInt(1);
+			else if(strcmp(NameBlock, "NextClanID") == 0)
+				g_ClanManager.nextClanID = lfr.BlockToInt(1);
 			else
 				g_Log.AddMessageFormat("[ERROR] Unknown identifier [%s] in file [%s]", NameBlock, filename);
 		}

@@ -368,3 +368,25 @@ void AbstractCivetHandler::writeResponse(CivetServer *server,
 	mg_set_status(conn, 200);
 }
 
+//
+// PageOptions
+//
+void PageOptions::Init(CivetServer *server, struct mg_connection *conn) {
+	std::string p;
+	if (CivetServer::getParam(conn, "count", p)) {
+		count = atoi(p.c_str());
+	}
+	if (CivetServer::getParam(conn, "top", p)) {
+		top = atoi(p.c_str());
+	}
+	if (CivetServer::getParam(conn, "start", p)) {
+		start = atoi(p.c_str());
+	}
+	if (CivetServer::getParam(conn, "sort", p)) {
+		sort = p.c_str();
+	}
+	if (CivetServer::getParam(conn, "desc", p)) {
+		desc = p.compare("true") == 0;
+	}
+};
+
