@@ -150,9 +150,6 @@ int ClanCreateHandler::handleQuery(SimulatorThread *sim,
 				"You may not create a clan, you are already part of one.");
 	}
 
-	g_Log.AddMessageFormat("[REMOVEME] Player copper %lu against cost of %lu",
-			creatureInstance->charPtr->cdef.css.copper, g_Config.ClanCost);
-
 	if (creatureInstance->charPtr->cdef.css.copper < g_Config.ClanCost)
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 				"You do not have enough gold to create a clan.");

@@ -1610,6 +1610,7 @@ void CharacterData::WriteToJSON(Json::Value &value)
 {
 	value["account"] = AccountID;
 	value["characterVersion"] = characterVersion;
+	value["clan"] = clan;
 	value["status"] = StatusText;
 	value["secondsLogged"] = Json::UInt64(SecondsLogged);
 	value["createdTime"] = Json::UInt64(CreatedTimeSec);
