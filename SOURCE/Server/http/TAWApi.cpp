@@ -331,7 +331,9 @@ bool ClanHandler::handleAuthenticatedGet(CivetServer *server, struct mg_connecti
 	}
 	else {
 		// TODO get clan
-		int clanID = g_ClanManager.FindClanID(pathParts[pathParts.size() - 1].c_str());
+		std::string name = pathParts[pathParts.size() - 1];
+		Util::URLDecode(name);
+		int clanID = g_ClanManager.FindClanID(name);
 		if(clanID == -1) {
 			writeStatus(server, conn, 404, "Not found.",
 					"The clan could not be found.");
@@ -479,9 +481,17 @@ bool ChatHandler::handleAuthenticatedPost(CivetServer *server, struct mg_connect
 			std::string channel = parms.find("channel") == parms.end() ? "rc/" : parms["channel"];
 			int count = parms.find("count") == parms.end() ? 20 : atoi(parms["count"].c_str());
 
-			g_Log.AddMessageFormat("[REMOVEME] Extchat: %s (%s) / %s", msg.c_str(), from.c_str(), channel.c_str());
-
 			ChatMessage cm(msg);
+			if(channel.compare("clan") == 0) {
+				int cdefID = g_AccountManager.GetCDefFromCharacterName(from.c_str());
+				if(cdefID != -1) {
+					CharacterData *cd = g_CharacterManager.RequestCharacter(cdefID, true);
+					if(cd != NULL) {
+						cm.mSenderClanID = cd->clan;
+					}
+				}
+			}
+
 			cm.mChannelName = channel;
 			cm.mChannel = GetChatInfoByChannel(cm.mChannelName.c_str());
 			cm.mSender = from;

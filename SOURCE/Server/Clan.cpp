@@ -36,7 +36,6 @@ int GetIDByName(const std::string &name) {
 		return MEMBER;
 	return INITIATE;
 }
-
 }
 
 //

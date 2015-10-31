@@ -3983,6 +3983,9 @@ void SimulatorThread :: handle_communicate(void)
 	bool perm = true;
 //	bool privateChannel = false;
 	PrivateChannel* privateChannelData = NULL;
+
+	g_Log.AddMessageFormat("[REMOVEME] Chat channel : %s", channel);
+
 	if(strncmp(channel, "t/", 2) == 0)
 	{
 		tell = true;
@@ -4087,6 +4090,8 @@ void SimulatorThread :: handle_communicate(void)
 	}
 
 	ChatMessage msg;
+	if(pld.charPtr != NULL)
+		msg.mSenderClanID = pld.charPtr->clan;
 	msg.mChannelName = channel;
 	msg.mMessage = message;
 	msg.mSender = charName;

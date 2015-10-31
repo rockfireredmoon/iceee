@@ -67,6 +67,7 @@ public:
 	std::string mMessage;
 	int mSenderCreatureID;
 	int mSenderCreatureDefID;
+	int mSenderClanID;
 	int mSendingInstance;
 	std::string mSender;
 	std::string mChannelName;
