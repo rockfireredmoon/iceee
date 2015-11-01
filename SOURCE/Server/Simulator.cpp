@@ -2239,8 +2239,6 @@ bool SimulatorThread :: HandleQuery(int &PendingData)
 		PendingData = handle_query_item_market_edit();
 	else if(query.name.compare("item.market.reload") == 0)
 		PendingData = handle_query_item_market_reload();
-	else if(query.name.compare("item.market.buy") == 0)
-		PendingData = handle_query_item_market_buy();
 	else if(query.name.compare("item.market.purchase.name") == 0)
 		PendingData = handle_query_item_market_purchase_name();
 	else if(query.name.compare("bug.report") == 0)
@@ -11656,97 +11654,6 @@ int SimulatorThread :: handle_query_marker_edit(void)
 	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
 }
 
-
-int SimulatorThread :: handle_query_item_market_buy(void)
-{
-	if(query.args.size() < 1)
-		return PrepExt_QueryResponseError(SendBuf, query.ID, "Invalid query.");
-	int id = query.GetInteger(0);
-	CS::CreditShopItem * csItem = g_CreditShopManager.GetItem(id);
-	g_CharacterManager.GetThread("SimulatorThread::MarketReload");
-	if(csItem == NULL) {
-		return PrepExt_QueryResponseError(SendBuf, query.ID, "No such item.");
-	}
-	else {
-
-		if(csItem->mQuantityLimit != 0 && (csItem->mQuantityLimit - csItem->mQuantitySold) < 1) {
-			return PrepExt_QueryResponseError(SendBuf, query.ID, "Sold out!");
-		}
-
-		if(( csItem->mPriceCurrency == Currency::COPPER || csItem->mPriceCurrency == Currency::COPPER_CREDITS) && (unsigned long)creatureInst->css.copper < csItem->mPriceCopper) {
-			return PrepExt_QueryResponseError(SendBuf, query.ID, "You do not have enough copper!");
-		}
-
-		if(csItem->mPriceCurrency == Currency::CREDITS || csItem->mPriceCurrency == Currency::COPPER_CREDITS) {
-			if(g_Config.AccountCredits) {
-				creatureInst->css.credits = pld.accPtr->Credits;
-			}
-			if((unsigned long)creatureInst->css.credits < csItem->mPriceCredits) {
-				return PrepExt_QueryResponseError(SendBuf, query.ID, "You do not have enough credits!");
-			}
-		}
-
-		if(csItem->mStartDate !=0 && g_ServerTime < (csItem->mStartDate * 1000UL)) {
-			return PrepExt_QueryResponseError(SendBuf, query.ID, "This item is not yet available!");
-		}
-
-		if(csItem->mEndDate !=0 && g_ServerTime >= (csItem->mEndDate * 1000UL)) {
-			return PrepExt_QueryResponseError(SendBuf, query.ID, "This item is no longer available!");
-		}
-
-		ItemDef * item= g_ItemManager.GetSafePointerByID(csItem->mItemId);
-		if(item == NULL) {
-			return PrepExt_QueryResponseError(SendBuf, query.ID, "No such item!");
-		}
-		int slot = pld.charPtr->inventory.GetFreeSlot(INV_CONTAINER);
-		if(slot == -1)
-			return PrepExt_QueryResponseError(SendBuf, query.ID, "You do not have enough slots in your inventory!");
-
-
-		InventorySlot *sendSlot = creatureInst->charPtr->inventory.AddItem_Ex(INV_CONTAINER, item->mID, csItem->mIv1 + 1);
-		if(sendSlot == NULL) {
-			int err = creatureInst->charPtr->inventory.LastError;
-			if(err == InventoryManager::ERROR_ITEM)
-				return PrepExt_QueryResponseError(SendBuf, query.ID, "Server error: item does not exist.");
-			else if(err == InventoryManager::ERROR_SPACE)
-				return PrepExt_QueryResponseError(SendBuf, query.ID, "You do not have any free inventory space.");
-			else if(err == InventoryManager::ERROR_LIMIT)
-				return PrepExt_QueryResponseError(SendBuf, query.ID, "You already the maximum amount of these items.");
-			else
-				return PrepExt_QueryResponseError(SendBuf, query.ID, "Server error: undefined error.");
-		}
-		ActivateActionAbilities(sendSlot);
-
-		g_CharacterManager.GetThread("Simulator::MarketBuy");
-
-		if(csItem->mPriceCurrency == Currency::COPPER || csItem->mPriceCurrency == Currency::COPPER_CREDITS) {
-			creatureInst->css.copper -= csItem->mPriceCopper;
-			creatureInst->SendStatUpdate(STAT::COPPER);
-		}
-
-		if(csItem->mPriceCurrency == Currency::CREDITS || csItem->mPriceCurrency == Currency::COPPER_CREDITS) {
-			creatureInst->css.credits -= csItem->mPriceCredits;
-			if(g_Config.AccountCredits) {
-				pld.accPtr->Credits = creatureInst->css.credits;
-				pld.accPtr->PendingMinorUpdates++;
-			}
-			creatureInst->SendStatUpdate(STAT::CREDITS);
-		}
-
-		if(csItem->mQuantityLimit > 0) {
-			csItem->mQuantitySold++;
-			g_CreditShopManager.SaveItem(csItem);
-		}
-
-		int wpos = 0;
-		wpos += AddItemUpdate(&SendBuf[wpos], Aux2, sendSlot);
-		wpos += PrepExt_QueryResponseString(&SendBuf[wpos], query.ID, "OK");
-
-		g_CharacterManager.ReleaseThread();
-
-		return wpos;
-	}
-}
 
 int SimulatorThread :: handle_query_item_market_purchase_name(void)
 {

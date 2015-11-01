@@ -104,6 +104,7 @@ tawd_SOURCES = md5.cc \
 	query/Lobby.cpp \
 	query/PreferenceHandlers.cpp \
 	query/GMHandlers.cpp \
+	query/CreditShopHandlers.cpp \
 	util/base64.cpp \
 	util/JsonHelpers.cpp \
 	util/SquirrelObjects.cpp \
@@ -230,6 +231,7 @@ tawd_SOURCES = md5.cc \
 	query/Lobby.h \
 	query/ClanHandlers.h \
 	query/GMHandlers.h \
+	query/CreditShopHandlers.h \
 	util/base64.h \
 	util/JsonHelpers.h \
 	SquirrelObjects.h
@@ -336,6 +338,7 @@ tawdsvc_SOURCES = md5.cc \
 	query/ClanHandlers.cpp \
 	query/PreferenceHandlers.cpp \
 	query/GMHandlers.cpp \
+	query/CreditShopHandlers.cpp \
 	util/base64.cpp \
 	util/JsonHelpers.cpp \
 	Ability2.h \
@@ -461,6 +464,7 @@ tawdsvc_SOURCES = md5.cc \
 	query/Lobby.h \
 	query/ClanHandlers.h \
 	query/GMHandlers.h \
+	query/CreditShopHandlers.h \
 	util/base64.h \
 	util/JsonHelpers.h \
 	SquirrelObjects.h

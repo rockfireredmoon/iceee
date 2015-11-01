@@ -1,8 +1,10 @@
 #include "CreditShop.h"
+#include "Config.h"
 #include "Util.h"
 #include "FileReader.h"
 #include "DirectoryAccess.h"
 #include "StringList.h"
+#include "Item.h"
 #include <string.h>
 
 using namespace CS;
@@ -69,6 +71,30 @@ int GetIDByName(const std::string &name) {
 
 }
 
+namespace CreditShopError {
+std::string GetDescription(int id) {
+	switch (id) {
+	case NONE:
+		return "No error";
+	case SOLD_OUT:
+		return "Sold out!";
+	case NOT_ENOUGH_COPPER:
+		return "You do not have enough copper!";
+	case NOT_ENOUGH_CREDITS:
+		return "You do not have enough credits!";
+	case NOT_YET_AVAILABLE:
+		return "This item is not yet available!";
+	case NO_LONGER_AVAILABLE:
+		return "This item is no longer available!";
+	case NOT_ENOUGH_FREE_SLOTS:
+		return "You do not have enough slots in your inventory!";
+	case SERVER_ERROR:
+		return "Internal error.";
+	}
+	return "<undefined>";
+}
+}
+
 namespace Currency {
 
 const char *GetNameByID(int id) {
@@ -117,45 +143,47 @@ CreditShopItem::CreditShopItem() {
 	mIv1 = 0;
 	mIv2 = 0;
 }
-CreditShopItem::~CreditShopItem() {}
+CreditShopItem::~CreditShopItem() {
+}
 
 void CreditShopItem::WriteToJSON(Json::Value &value) {
+	value["id"] = mId;
 	value["title"] = mTitle;
 	value["description"] = mDescription;
-	if(mStartDate > 0)
+	if (mStartDate > 0)
 		value["beginDate"] = Util::FormatDate(&mStartDate);
-	if(mEndDate > 0)
+	if (mEndDate > 0)
 		value["endDate"] = Util::FormatDate(&mEndDate);
 	value["currency"] = Currency::GetNameByID(mPriceCurrency);
 	value["copper"] = Json::UInt64(mPriceCopper);
 	value["credits"] = Json::UInt64(mPriceCredits);
 	value["itemID"] = mItemId;
-	if(mIv1 >0)
+	if (mIv1 > 0)
 		value["iv1"] = mIv1;
-	if(mIv2 >0)
+	if (mIv2 > 0)
 		value["iv2"] = mIv2;
 	value["category"] = Category::GetNameByID(mCategory);
 	value["status"] = Status::GetNameByID(mStatus);
-	if(mQuantityLimit > 0)
+	if (mQuantityLimit > 0)
 		value["limit"] = mQuantityLimit;
-	if(mQuantitySold > 0)
+	if (mQuantitySold > 0)
 		value["sold"] = mQuantitySold;
 }
 
 void CreditShopItem::ParseItemProto(std::string proto) {
 
 	std::vector<std::string> p;
-	if(Util::HasBeginning(proto, "item")) {
+	if (Util::HasBeginning(proto, "item")) {
 		proto = proto.substr(4);
 	}
 	Util::Split(proto.c_str(), ":", p);
-	if(p.size() > 0) {
+	if (p.size() > 0) {
 		mItemId = atoi(p[0].c_str());
-		if(p.size() > 1) {
+		if (p.size() > 1) {
 			mLookId = atoi(p[1].c_str());
-			if(p.size() > 2) {
+			if (p.size() > 2) {
 				mIv1 = atoi(p[2].c_str());
-				if(p.size() > 3) {
+				if (p.size() > 3) {
 					mIv2 = atoi(p[3].c_str());
 				}
 			}
@@ -174,6 +202,40 @@ CreditShopManager::CreditShopManager() {
 CreditShopManager::~CreditShopManager() {
 }
 
+int CreditShopManager::ValidateItem(CreditShopItem *csItem, AccountData *accPtr,
+		CharacterStatSet *css, CharacterData *cd) {
+	if (csItem->mQuantityLimit != 0
+			&& (csItem->mQuantityLimit - csItem->mQuantitySold) < 1)
+		return CreditShopError::SOLD_OUT;
+
+	if ((csItem->mPriceCurrency == Currency::COPPER
+			|| csItem->mPriceCurrency == Currency::COPPER_CREDITS)
+			&& (unsigned long) css->copper < csItem->mPriceCopper)
+		return CreditShopError::NOT_ENOUGH_COPPER;
+
+	if (csItem->mPriceCurrency == Currency::CREDITS
+			|| csItem->mPriceCurrency == Currency::COPPER_CREDITS) {
+		if (g_Config.AccountCredits) {
+			css->credits = accPtr->Credits;
+		}
+		if ((unsigned long) css->credits < csItem->mPriceCredits)
+			return CreditShopError::NOT_ENOUGH_CREDITS;
+	}
+
+	unsigned long nowTimeSec = time(NULL);
+	if (csItem->mStartDate != 0 && nowTimeSec < (csItem->mStartDate))
+		return CreditShopError::NOT_YET_AVAILABLE;
+
+	if (csItem->mEndDate != 0 && nowTimeSec >= (csItem->mEndDate))
+		return CreditShopError::NO_LONGER_AVAILABLE;
+
+	int slot = cd->inventory.GetFreeSlot(INV_CONTAINER);
+	if (slot == -1)
+		return CreditShopError::NOT_ENOUGH_FREE_SLOTS;
+
+	return CreditShopError::NONE;
+}
+
 bool CreditShopManager::SaveItem(CreditShopItem * item) {
 	std::string path = GetPath(item->mId);
 	g_Log.AddMessageFormat("Saving credit shop item to %s.", path.c_str());
@@ -185,29 +247,32 @@ bool CreditShopManager::SaveItem(CreditShopItem * item) {
 	}
 
 	fprintf(output, "[ENTRY]\r\n");
-	if(item->mTitle.compare("") != 0)
+	if (item->mTitle.compare("") != 0)
 		fprintf(output, "Title=%s\r\n", item->mTitle.c_str());
-	if(item->mDescription.compare("") != 0)
+	if (item->mDescription.compare("") != 0)
 		fprintf(output, "Description=%s\r\n", item->mDescription.c_str());
-	if(item->mStartDate > 0)
-		fprintf(output, "BeginDate=%s\r\n", Util::FormatDate(&item->mStartDate).c_str());
-	if(item->mEndDate > 0)
-		fprintf(output, "EndDate=%s\r\n", Util::FormatDate(&item->mEndDate).c_str());
-	fprintf(output, "PriceCurrency=%s\r\n", Currency::GetNameByID(item->mPriceCurrency));
+	if (item->mStartDate > 0)
+		fprintf(output, "BeginDate=%s\r\n",
+				Util::FormatDate(&item->mStartDate).c_str());
+	if (item->mEndDate > 0)
+		fprintf(output, "EndDate=%s\r\n",
+				Util::FormatDate(&item->mEndDate).c_str());
+	fprintf(output, "PriceCurrency=%s\r\n",
+			Currency::GetNameByID(item->mPriceCurrency));
 	fprintf(output, "PriceCopper=%lu\r\n", item->mPriceCopper);
 	fprintf(output, "PriceCredits=%lu\r\n", item->mPriceCredits);
 	fprintf(output, "ItemID=%d\r\n", item->mItemId);
-	if(item->mIv1 > 0)
+	if (item->mIv1 > 0)
 		fprintf(output, "Iv1=%d\r\n", item->mIv1);
-	if(item->mIv2 > 0)
+	if (item->mIv2 > 0)
 		fprintf(output, "Iv2=%d\r\n", item->mIv2);
-	if(item->mLookId > 0)
+	if (item->mLookId > 0)
 		fprintf(output, "LookId=%d\r\n", item->mLookId);
 	fprintf(output, "Category=%s\r\n", Category::GetNameByID(item->mCategory));
 	fprintf(output, "Status=%s\r\n", Status::GetNameByID(item->mStatus));
-	if(item->mQuantityLimit > 0)
+	if (item->mQuantityLimit > 0)
 		fprintf(output, "QuantityLimit=%d\r\n", item->mQuantityLimit);
-	if(item->mQuantitySold > 0)
+	if (item->mQuantitySold > 0)
 		fprintf(output, "QuantitySold=%d\r\n", item->mQuantitySold);
 
 	fprintf(output, "\r\n");
@@ -252,8 +317,7 @@ CreditShopItem * CreditShopManager::LoadItem(int id) {
 					break;
 				}
 				item->mId = id;
-			}
-			else if (strcmp(lfr.SecBuffer, "TITLE") == 0)
+			} else if (strcmp(lfr.SecBuffer, "TITLE") == 0)
 				item->mTitle = lfr.BlockToStringC(1, 0);
 			else if (strcmp(lfr.SecBuffer, "DESCRIPTION") == 0)
 				item->mDescription = lfr.BlockToStringC(1, 0);
@@ -262,7 +326,8 @@ CreditShopItem * CreditShopManager::LoadItem(int id) {
 			else if (strcmp(lfr.SecBuffer, "ENDDATE") == 0)
 				Util::ParseDate(lfr.BlockToStringC(1, 0), item->mEndDate);
 			else if (strcmp(lfr.SecBuffer, "PRICECURRENCY") == 0)
-				item->mPriceCurrency =Currency::GetIDByName(lfr.BlockToStringC(1, 0));
+				item->mPriceCurrency = Currency::GetIDByName(
+						lfr.BlockToStringC(1, 0));
 			else if (strcmp(lfr.SecBuffer, "PRICEAMOUNT") == 0)
 				amt = lfr.BlockToIntC(1);
 			else if (strcmp(lfr.SecBuffer, "PRICECOPPER") == 0)
@@ -271,14 +336,16 @@ CreditShopItem * CreditShopManager::LoadItem(int id) {
 				item->mPriceCredits = lfr.BlockToIntC(1);
 			else if (strcmp(lfr.SecBuffer, "ITEMID") == 0)
 				item->mItemId = lfr.BlockToIntC(1);
-			else if (strcmp(lfr.SecBuffer, "ITEMAMOUNT") == 0 || strcmp(lfr.SecBuffer, "IV1") == 0)
+			else if (strcmp(lfr.SecBuffer, "ITEMAMOUNT") == 0
+					|| strcmp(lfr.SecBuffer, "IV1") == 0)
 				item->mIv1 = lfr.BlockToIntC(1);
 			else if (strcmp(lfr.SecBuffer, "IV2") == 0)
 				item->mIv2 = lfr.BlockToIntC(1);
 			else if (strcmp(lfr.SecBuffer, "LOOKID") == 0)
 				item->mLookId = lfr.BlockToIntC(1);
 			else if (strcmp(lfr.SecBuffer, "CATEGORY") == 0)
-				item->mCategory =Category::GetIDByName(lfr.BlockToStringC(1, 0));
+				item->mCategory = Category::GetIDByName(
+						lfr.BlockToStringC(1, 0));
 			else if (strcmp(lfr.SecBuffer, "STATUS") == 0)
 				item->mStatus = Status::GetIDByName(lfr.BlockToStringC(1, 0));
 			else if (strcmp(lfr.SecBuffer, "QUANTITYLIMIT") == 0)
@@ -292,11 +359,11 @@ CreditShopItem * CreditShopManager::LoadItem(int id) {
 	}
 	lfr.CloseCurrent();
 
-	// For backwards compatibility - will be able to remove once all items resaved or removed
-	if(amt > 0) {
-		if(item->mPriceCurrency == Currency::COPPER)
+// For backwards compatibility - will be able to remove once all items resaved or removed
+	if (amt > 0) {
+		if (item->mPriceCurrency == Currency::COPPER)
 			item->mPriceCopper = amt;
-		else if(item->mPriceCurrency == Currency::CREDITS)
+		else if (item->mPriceCurrency == Currency::CREDITS)
 			item->mPriceCredits = amt;
 	}
 
@@ -307,7 +374,6 @@ CreditShopItem * CreditShopManager::LoadItem(int id) {
 	return item;
 }
 
-
 bool CreditShopManager::RemoveItem(int id) {
 	const char * path = GetPath(id).c_str();
 	if (!Platform::FileExists(path)) {
@@ -316,7 +382,7 @@ bool CreditShopManager::RemoveItem(int id) {
 	}
 	cs.Enter("CreditShopManager::RemoveItem");
 	std::map<int, CreditShopItem*>::iterator it = mItems.find(id);
-	if(it != mItems.end()) {
+	if (it != mItems.end()) {
 		delete it->second;
 		mItems.erase(it);
 	}
@@ -324,8 +390,8 @@ bool CreditShopManager::RemoveItem(int id) {
 	char buf[128];
 	Util::SafeFormat(buf, sizeof(buf), "CreditShop/%d.del", id);
 	Platform::FixPaths(buf);
-	if(!Platform::FileExists(buf) || remove(buf) == 0) {
-		if(!rename(path, buf) == 0) {
+	if (!Platform::FileExists(buf) || remove(buf) == 0) {
+		if (!rename(path, buf) == 0) {
 			g_Log.AddMessageFormat("Failed to remove credit shop item %d", id);
 			return false;
 		}
@@ -341,7 +407,8 @@ std::string CreditShopManager::GetPath(int id) {
 }
 
 int CreditShopManager::LoadItems(void) {
-	for(std::map<int, CreditShopItem*>::iterator it = mItems.begin(); it != mItems.end(); ++it)
+	for (std::map<int, CreditShopItem*>::iterator it = mItems.begin();
+			it != mItems.end(); ++it)
 		delete it->second;
 	mItems.clear();
 
