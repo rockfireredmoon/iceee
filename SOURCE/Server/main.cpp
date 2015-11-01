@@ -183,6 +183,7 @@ If using Code::Blocks on LINUX
 #include "query/ClanHandlers.h"
 #include "query/PreferenceHandlers.h"
 #include "query/GMHandlers.h"
+#include "query/CreditShopHandlers.h"
 
 #ifdef WINDOWS_SERVICE
 #include <windows.h>
@@ -546,6 +547,8 @@ int InitServerMain() {
 	g_QueryManager.queryHandlers["pref.get"] = new PrefGetHandler();
 	g_QueryManager.queryHandlers["pref.set"] = new PrefSetHandler();
 	g_QueryManager.queryHandlers["util.addFunds"] = new AddFundsHandler();
+	g_QueryManager.queryHandlers["item.market.buy"] = new CreditShopBuyHandler();
+
 
 	// Some are shared
 
@@ -694,7 +697,6 @@ int InitServerMain() {
 //	}
 
 	g_FileChecksum.LoadFromFile(Platform::GenerateFilePath(GAuxBuf, "Data", "HTTPChecksum.txt"));
-	g_HTTPService.Start();
 
 	if(g_RouterPort != 0 && g_Config.Upgrade == 0)
 	{
@@ -715,6 +717,8 @@ int InitServerMain() {
 	g_LeaderboardManager.InitThread(g_GlobalThreadID++);
 
 	g_Log.AddMessage("Server data has finished loading.");
+
+	g_HTTPService.Start();
 
 #ifdef USE_WINDOWS_GUI
 	if(g_GlobalLogging == false)

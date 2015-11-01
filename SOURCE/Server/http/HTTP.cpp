@@ -350,10 +350,19 @@ void AbstractCivetHandler::writeJSON200(CivetServer *server,
 	mg_set_status(conn, 200);
 }
 
+void AbstractCivetHandler::writeStatusPlain(CivetServer *server,
+		struct mg_connection *conn, int code, std::string msg,
+		std::string data) {
+	mg_printf(conn, "HTTP/1.1 %d %s\r\nContent-Length: %lu\r\n", code,
+			msg.c_str(), data.size());
+	mg_printf(conn, "Content-Type: text/html\r\n\r\n%s", data.c_str());
+	mg_set_status(conn, code);
+}
+
 void AbstractCivetHandler::writeStatus(CivetServer *server,
 		struct mg_connection *conn, int code, std::string msg,
 		std::string data) {
-	std::string content = "<html><body><h1>" + msg + "</h1></body></html>";
+	std::string content = "<html><body><h1>" + data + "</h1></body></html>";
 	mg_printf(conn, "HTTP/1.1 %d %s\r\nContent-Length: %lu\r\n", code,
 			msg.c_str(), content.size());
 	mg_printf(conn, "Content-Type: text/html\r\n\r\n%s", content.c_str());
@@ -371,6 +380,14 @@ void AbstractCivetHandler::writeResponse(CivetServer *server,
 //
 // PageOptions
 //
+PageOptions::PageOptions() {
+	start = 0;
+	sort = "";
+	desc = false;
+	count = 20;
+	top = 0;
+}
+
 void PageOptions::Init(CivetServer *server, struct mg_connection *conn) {
 	std::string p;
 	if (CivetServer::getParam(conn, "count", p)) {

@@ -119,6 +119,9 @@ public:
 	void writeJSON200(CivetServer *server, struct mg_connection *conn,
 			std::string data);
 
+	void writeStatusPlain(CivetServer *server, struct mg_connection *conn, int code,
+			std::string msg, std::string data);
+
 	void writeStatus(CivetServer *server, struct mg_connection *conn, int code,
 			std::string msg, std::string data);
 
@@ -132,6 +135,7 @@ public:
 	std::string sort;
 	bool desc;
 
+	PageOptions();
 	void Init(CivetServer *server, struct mg_connection *conn);
 };
 

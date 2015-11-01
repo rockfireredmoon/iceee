@@ -22,6 +22,7 @@
 #include "HTTP.h"
 #include "../Clan.h"
 #include "../Guilds.h"
+#include "../CreditShop.h"
 
 
 namespace HTTPD {
@@ -115,6 +116,9 @@ public:
 class CreditShopHandler: public AuthenticatedHandler {
 public:
 	bool handleAuthenticatedGet(CivetServer *server, struct mg_connection *conn);
+	bool handleAuthenticatedPost(CivetServer *server, struct mg_connection *conn);
+private:
+	void writeCreditShopItemToJSON(CS::CreditShopItem* item, Json::Value &c);
 };
 
 /*

@@ -210,7 +210,10 @@ bool HTTPService::Start() {
 					new LeaderboardHandler();
 			civetServer->addHandler("/api/leaderboard", leaderboardHandler);
 			civetServer->addHandler("/api/leaderboard/*", leaderboardHandler);
-			civetServer->addHandler("/api/cs", new CreditShopHandler());
+			HTTPD::CreditShopHandler* creditShopHandler =
+					new CreditShopHandler();
+			civetServer->addHandler("/api/cs", creditShopHandler);
+			civetServer->addHandler("/api/cs/*", creditShopHandler);
 			HTTPD::ClanHandler* clanHandler = new ClanHandler();
 			civetServer->addHandler("/api/clans", clanHandler);
 			civetServer->addHandler("/api/clan/*", clanHandler);
