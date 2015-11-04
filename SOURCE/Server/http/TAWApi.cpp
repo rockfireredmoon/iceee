@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with TAWD.  If not, see <http://www.gnu.org/licenses/
  */
-
+ 
 #include "TAWApi.h"
 #include "../Chat.h"
 #include "../Util.h"
@@ -32,6 +32,7 @@
 #include "../DirectoryAccess.h"
 #include "../PlayerStats.h"
 #include "../Leaderboard.h"
+#include "../Item.h"
 #include "../json/json.h"
 #include <algorithm>
 
@@ -758,6 +759,13 @@ bool UserHandler::handleAuthenticatedGet(CivetServer *server,
 			}
 		}
 
+		std::string p;
+		bool detailed = false;
+		CivetServer::getParam(conn, "detailed", p);
+		if (p.compare("true") == 0) {
+			detailed = true;
+		}
+
 		AccountData *ad = NULL;
 		if (accountId != 0) {
 			g_AccountManager.cs.Enter(
@@ -772,6 +780,20 @@ bool UserHandler::handleAuthenticatedGet(CivetServer *server,
 		} else {
 			Json::Value root;
 			ad->WriteToJSON(root);
+
+			if(detailed) {
+				for(int i = 0 ; i < AccountData::MAX_CHARACTER_SLOTS; i++) {
+					if(ad->CharacterSet[i] != 0) {
+						CharacterData *cd = g_CharacterManager.RequestCharacter(ad->CharacterSet[i], true);
+						if(cd != NULL) {
+							Json::Value cv;
+							cd->WriteToJSON(cv);
+							root["characters"][cd->cdef.css.display_name]["details"] = cv;
+						}
+					}
+				}
+			}
+
 			Json::StyledWriter writer;
 			writeJSON200(server, conn, writer.write(root));
 		}
@@ -819,7 +841,6 @@ bool CharacterHandler::handleAuthenticatedGet(CivetServer *server,
 		}
 
 		if (cd == NULL) {
-			g_AccountManager.cs.Leave();
 			writeStatusPlain(server, conn, 404, "Not found.",
 					"The character could not be found.");
 		} else {
@@ -1020,3 +1041,55 @@ bool SceneryHandler::handleAuthenticatedGet(CivetServer *server,
 	return true;
 }
 
+
+//
+// ItemHandler
+//
+bool ItemHandler::handleAuthenticatedGet(CivetServer *server,
+		struct mg_connection *conn) {
+
+	struct mg_request_info * req_info = mg_get_request_info(conn);
+
+	std::string ruri;
+
+	/* Prepare the URI */
+	CivetServer::urlDecode(req_info->uri, strlen(req_info->uri), ruri, false);
+	ruri = removeDoubleDotsAndDoubleSlashes(ruri);
+	ruri = removeEndSlash(ruri);
+
+	std::vector<std::string> pathParts;
+	Util::Split(ruri, "/", pathParts);
+
+	// Parse parameters
+
+	// Parse parameters
+	if (pathParts.size() < 2)
+		writeStatusPlain(server, conn, 404, "Not found.",
+				"The item could not be found.");
+	else {
+		ItemDef *itemDef = NULL;
+		int itemID = atoi(pathParts[pathParts.size() - 1].c_str());
+		if (itemID == 0) {
+			std::string itemName = pathParts[pathParts.size() - 1];
+			Util::URLDecode(itemName);
+			g_Log.AddMessageFormat("[REMOVEME] Looking up item %s", itemName.c_str());
+			itemDef = g_ItemManager.GetSafePointerByExactName(itemName.c_str());
+		}
+		else {
+			g_Log.AddMessageFormat("[REMOVEME] Looking up item %d", itemID);
+			itemDef = g_ItemManager.GetSafePointerByID(itemID);
+		}
+
+		if (itemDef == NULL) {
+			writeStatusPlain(server, conn, 404, "Not found.",
+					"The item could not be found.");
+		} else {
+			Json::Value root;
+			itemDef->WriteToJSON(root);
+			Json::StyledWriter writer;
+			writeJSON200(server, conn, writer.write(root));
+		}
+	}
+
+	return true;
+}

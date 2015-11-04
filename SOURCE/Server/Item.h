@@ -12,6 +12,7 @@
 #include "FileReader.h"
 #include "Util.h"
 #include "Report.h"  //For debugging
+#include "json/json.h"
 
 enum SpecialItemType
 {
@@ -153,6 +154,7 @@ struct ItemDef
 	}
 	void Debug_WriteToStream(FILE *output);
 	void Debug_WriteReport(ReportBuffer &report);
+	void WriteToJSON(Json::Value &value);
 };
 
 class VirtualItem

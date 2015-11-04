@@ -141,6 +141,14 @@ private:
 	void writeGuildToJSON(GuildDefinition *guild, Json::Value &c);
 };
 
+/*
+ * Handles /api/item/<name> requests, returning a JSON response containing item details.
+ */
+class ItemHandler: public AuthenticatedHandler {
+public:
+	bool handleAuthenticatedGet(CivetServer *server, struct mg_connection *conn);
+};
+
 }
 
 #endif

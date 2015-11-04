@@ -519,6 +519,83 @@ void ItemDef :: CopyFrom(ItemDef *source)
 	Params = source->Params;
 }
 
+void ItemDef :: WriteToJSON(Json::Value &value) {
+	value["id"] = mID;
+	value["type"] = mType;
+	value["displayName"] = mDisplayName;
+	value["appearance"] = mAppearance;
+	std::vector<std::string> l;
+	Util::Split(mIcon, "|", l);
+	switch (l.size()) {
+	case 1:
+		value["icon1"] = "Icon-32-BG-Blue.png";
+		value["icon2"] = l[0];
+		break;
+	case 2:
+		value["icon1"] = l[0];
+		value["icon2"] = l[1];
+		break;
+	}
+	value["ivType1"] = mIvType1;
+	value["ivMax1"] = mIvMax1;
+	value["ivType2"] = mIvType2;
+	value["ivMax2"] = mIvMax2;
+	value["sv1"] = mSv1;
+	value["copper"] = _mCopper;
+	value["containerSlots"] = mContainerSlots;
+	value["autoTitleType"] = mAutoTitleType;
+	value["level"] = mLevel;
+	value["bindingType"] = mBindingType;
+	value["equipType"] = mEquipType;
+	value["weaponType"] = mWeaponType;
+	value["weaponDamageMin"] = mWeaponDamageMin;
+	value["weaponDamageMax"] = mWeaponDamageMax;
+	value["speed"] = _mSpeed;
+	value["weaponExtraDamageRating"] = mWeaponExtraDamangeRating;
+	value["weaponExtraDamageType"] = mWeaponExtraDamageType;
+	value["equipEffectId"] = mEquipEffectId;
+	value["useAbilityId"] = mUseAbilityId;
+	value["actionAbilityId"] = mActionAbilityId;
+	value["armorType"] = mArmorType;
+	value["armorResistMelee"] = mArmorResistMelee;
+	value["armorResistFire"] = mArmorResistFire;
+	value["armorResistFrost"] = mArmorResistFrost;
+	value["armorResistMystic"] = mArmorResistMystic;
+	value["armorResistDeath"] = mArmorResistDeath;
+	value["bonusStrength"] = mBonusStrength;
+	value["bonusDexterity"] = mBonusDexterity;
+	value["bonusConstitution"] = mBonusConstitution;
+	value["bonusPsyche"] = mBonusPsyche;
+	value["bonusSpirit"] = mBonusSpirit;
+	value["bonusHealth"] = _mBonusHealth;
+	value["bonusWill"] = mBonusWill;
+	value["charm"] = isCharm;
+	value["meleeHitMod"] = mMeleeHitMod;
+	value["meleeCritMod"] = mMeleeCritMod;
+	value["magicHitMod"] = mMagicHitMod;
+	value["parryMod"] = mParryMod;
+	value["blockMod"] = mBlockMod;
+	value["regenHealthMod"] = mRegenHealthMod;
+	value["attackSpeedMod"] = mAttackSpeedMod;
+	value["castSpeedMod"] = mCastSpeedMod;
+	value["healingMod"] = mHealingMod;
+	value["value"] = mValue;
+	value["valueType"] = mValueType;
+	value["resultItemId"] = resultItemId;
+	value["keyComponentId"] = keyComponentId;
+	value["numberOfItems"] = numberOfItems;
+	value["flavorText"] = mFlavorText;
+	value["specialItemType"] = mSpecialItemType;
+	value["ownershipRestriction"] = mOwnershipRestriction;
+	value["qualityLevel"] = mQualityLevel;
+	value["minUseLevel"] = mMinUseLevel;
+	value["params"] = Params;
+	Json::Value c;
+	for(std::vector<int>::iterator it = craftItemDefId.begin(); it != craftItemDefId.end(); ++it)
+		c.append(*it);
+	value["craft"] = c;
+}
+
 void ItemDef :: ProcessParams(void)
 {
 	if(Params.size() == 0)
