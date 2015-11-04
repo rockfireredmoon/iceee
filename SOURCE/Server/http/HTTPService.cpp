@@ -220,6 +220,7 @@ bool HTTPService::Start() {
 			HTTPD::GuildHandler* guildHandler = new GuildHandler();
 			civetServer->addHandler("/api/guilds", guildHandler);
 			civetServer->addHandler("/api/guild/*", guildHandler);
+			civetServer->addHandler("/api/item/*", new ItemHandler());
 		}
 
 		// OAuth - Used to authenticate external services
