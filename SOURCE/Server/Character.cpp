@@ -578,8 +578,8 @@ void CharacterData :: BackupAppearance(void)
 
 void CharacterData :: BuildAvailableQuests(QuestDefinitionContainer &questList)
 {
-	questJournal.availableQuests.Free();
-	questJournal.availableSoonQuests.Free();
+	questJournal.availableQuests.itemList.clear();
+	questJournal.availableSoonQuests.itemList.clear();
 
 	//The iterators below would crash the program if attempting to iterate across an empty quest list
 	//when trying to set up the default null (zero ID) character.

@@ -160,15 +160,6 @@ struct QuestReference
 		Reset();
 	}
 
-	QuestReference(QuestReference const &origin)
-	{
-		QuestID = origin.QuestID;
-		CreatureDefID = origin.CreatureDefID;
-		DefPtr = origin.DefPtr;
-		CurAct = origin.CurAct;
-		Complete = origin.Complete;
-	}
-
 	void RunObjectiveCompleteScripts(int CID, int act, int obj);
 	int CheckQuestObjective(int CID, char *buffer, int type, int CDefID);
 	int CheckCompletedAct(QuestAct *defAct);
