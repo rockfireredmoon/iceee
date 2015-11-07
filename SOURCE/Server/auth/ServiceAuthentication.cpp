@@ -269,15 +269,24 @@ AccountData * ServiceAuthenticationHandler::onAuthenticate(SimulatorThread *sim,
 
 			// Broken?
 
-//			if(root.isMember("field_grove")) {
-//				const Json::Value fieldGrove = root["field_grove"];
-//				if(fieldGrove.isMember("und")) {
-//					const Json::Value fieldUnd = fieldGrove["und"];
-//					const Json::Value fieldArr = fieldUnd[0];
-//					grove = fieldArr.get("value","").asString();
-//				}
-//			}
+			if(root.isMember("field_grove")) {
+				const Json::Value fieldGrove = root["field_grove"];
+				if(fieldGrove.isMember("und")) {
+					const Json::Value fieldUnd = fieldGrove["und"];
+					if(fieldUnd.size() > 0) {
+						const Json::Value fieldArr = fieldUnd[0];
+						grove = fieldArr.get("value","").asString();
+					}
+				}
+				g_Log.AddMessageFormat("Player has grove name of %s", grove.c_str());
+			}
 
+			// Some characters are unacceptable in grove names (i.e. separators in index and data files)
+			un = grove;
+			Util::ReplaceAll(un, "=", "%61");
+			Util::ReplaceAll(un, ";", "%3b");
+			Util::ReplaceAll(un, "\"", "%34");
+			grove = un;
 
 			/*
 			 * Look up the account locally. If it already exists, just load it, otherwise
@@ -288,13 +297,6 @@ AccountData * ServiceAuthenticationHandler::onAuthenticate(SimulatorThread *sim,
 				g_Log.AddMessageFormat("External service authenticated %s OK.", loginName.c_str());
 				accPtr = g_AccountManager.FetchIndividualAccount(aqd->mID);
 
-				// TODO temp
-				if(veteran) {
-					if(grove.size() > 0)
-						transferGroves(accPtr);
-					else
-						g_Log.AddMessageFormat("No grove name supplied, groves will not be imported.", loginName.c_str());
-				}
 			}
 			else {
 				g_Log.AddMessageFormat("Service authenticated OK, but there was no local account with name %s, creating one", loginName.c_str());
@@ -338,6 +340,45 @@ AccountData * ServiceAuthenticationHandler::onAuthenticate(SimulatorThread *sim,
 			//
 
 			if(accPtr != NULL) {
+				if(accPtr->GroveName.length() > 0 && grove.compare(accPtr->GroveName) != 0) {
+					g_Log.AddMessageFormat("Attempting to rename player groves from '%s' to '%s'", accPtr->GroveName.c_str(), grove.c_str());
+
+					ZoneDefInfo *def = g_ZoneDefManager.GetPointerByGroveName(grove.c_str());
+					if(def != NULL) {
+						char buf[128];
+						Util::SafeFormat(buf, sizeof(buf), "The Grove name '%s' is already in use by another player. Please choose another. ", grove.c_str());
+						sim->ForceErrorMessage(buf, INFOMSG_ERROR);
+						sim->Disconnect("ServiceAuthentication::authenticate");
+						return NULL;
+					}
+
+					// TODO prevent rename if grove name already exists under different player
+					char buf[256];
+
+					std::vector<int> groveList;
+					g_ZoneDefManager.EnumerateGroveIds(accPtr->ID, 0, groveList);
+					int idx = 1;
+					for (std::vector<int>::iterator it = groveList.begin();
+							it != groveList.end(); ++it) {
+						ZoneDefInfo *zone = g_ZoneDefManager.GetPointerByID(*it);
+						if (zone == NULL)
+							g_Log.AddMessageFormat("Unknown grove %d", *it);
+						else {
+							Util::SafeFormat(buf, sizeof(buf), "%s%d", grove.c_str(), idx);
+							g_Log.AddMessageFormat("Grove %s is now %s", zone->mWarpName.c_str(), buf);
+							zone->mWarpName = buf;
+							zone->mGroveName = grove;
+							zone->PendingChanges++;
+
+							g_ZoneDefManager.UpdateZoneIndex(zone->mID, accPtr->ID, zone->mWarpName.c_str(), zone->mGroveName.c_str(), false);
+
+							idx++;
+						}
+					}
+					accPtr->PendingMinorUpdates++;
+				}
+
+				accPtr->GroveName = grove;
 
 				// Sages and admins get sage
 				bool needSage = sage || admin || builder || developer;
