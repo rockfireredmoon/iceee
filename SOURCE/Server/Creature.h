@@ -344,17 +344,17 @@ public:
 	int CreatureDefID;   //Associated Creature Def ID
 	int CreatureID;      //Creature Instance ID
 
-	union
-	{
+//	union
+//	{
 		ActiveSpawner *spawnGen;   //For NPCs, the pointer of the spawner object that generated this creature
 		CharacterData *charPtr;  //For Players, the pointer back the character definition
-	};
-	
-	union
-	{
+//	};
+//
+//	union
+//	{
 		SpawnTile *spawnTile;    //For NPCs, spawntile that this object is linked to.
 		SimulatorThread *simulatorPtr; //For players, a pointer back to the simulator that is controlling this object.
-	};
+//	};
 
 	ActiveInstance *actInst;
 

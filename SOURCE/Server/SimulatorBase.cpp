@@ -172,9 +172,11 @@ void SimulatorBaseThread :: RunMainLoop(void)
 			}
 			else
 			{
-				LogMessageL(LOG_ERROR, "Socket error: %s", sc.GetErrorMessage());
-				//This shouldn't normally fail.  Need a complete restart.
-				Status = Status_Restart;
+				if(isActive) {
+					LogMessageL(LOG_ERROR, "Socket error: %s", sc.GetErrorMessage());
+					//This shouldn't normally fail.  Need a complete restart.
+					Status = Status_Restart;
+				}
 			}
 		}
 		else if(Status == Status_Restart)

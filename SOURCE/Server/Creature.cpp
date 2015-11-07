@@ -411,6 +411,7 @@ CreatureInstance :: ~CreatureInstance()
 
 void CreatureInstance :: Clear(void)
 {
+
 	if(aiNut != NULL)
 	{
 		aiNutManager.RemoveActiveScript(aiNut);
@@ -432,6 +433,10 @@ void CreatureInstance :: Clear(void)
 	CreatureID = 0;
 
 	actInst = NULL;
+	charPtr = NULL;
+	spawnGen = NULL;
+	spawnTile = NULL;
+	simulatorPtr = NULL;
 	//Spawner = NULL;
 
 	memset(&statusEffects, 0, sizeof(statusEffects));
@@ -686,6 +691,13 @@ void CreatureInstance :: CopyFrom(CreatureInstance *source)
 	LastUseDefID = source->LastUseDefID;
 
 	swimming = source->swimming;
+
+	// TODO Em really not sure about this .. but I am running out of ideas
+	charPtr = source->charPtr;
+	spawnGen = source->spawnGen;
+	spawnTile = source->spawnTile;
+	simulatorPtr = source->simulatorPtr;
+
 }
 
 void CreatureInstance :: CopyBuffsFrom(CreatureInstance *source)

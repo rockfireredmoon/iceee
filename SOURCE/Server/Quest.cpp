@@ -1232,6 +1232,8 @@ void QuestDefinitionContainer :: ResolveQuestMarkers(void)
 
 QuestReferenceContainer :: QuestReferenceContainer()
 {
+//	std::vector<QuestReference> l(100);
+//	itemList = l;
 }
 
 QuestReferenceContainer :: ~QuestReferenceContainer()

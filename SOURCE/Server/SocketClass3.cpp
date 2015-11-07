@@ -213,7 +213,9 @@ int SocketClass :: Accept(void)
 	int clientfd = accept(ListenSocket, (sockaddr*)&acceptData, &len);
 	if(clientfd == -1)
 	{
-		LogMessage("Failed to accept on port: %d", this->port);
+		if(!shuttingDown) {
+			LogMessage("Failed to accept on port: %d", this->port);
+		}
 		return -1;
 	}
 	ClientSocket = clientfd;
@@ -272,6 +274,7 @@ void SocketClass :: DisconnectClient(void)
 
 void SocketClass :: ShutdownServer(void)
 {
+	shuttingDown = true;
 	DisconnectClient();
 	if(ListenSocket != Invalid_Socket)
 	{

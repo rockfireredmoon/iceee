@@ -387,6 +387,11 @@ void Helper_OutputCreature(ReportBuffer &report, int index, CreatureInstance *ob
 		report.AddLine("  Officer: %p (%s)\r\n", obj->AnchorObject, obj->AnchorObject->css.display_name);
 		report.AddLine("  Position: %d, %d, %d (MovT: %d)\r\n", obj->CurrentX, obj->CurrentY, obj->CurrentZ, obj->movementTime - g_ServerTime);
 	}
+	if(obj->charPtr != NULL) {
+		report.AddLine("  Active quests: %lu\r\n", obj->charPtr->questJournal.activeQuests.itemList.size());
+		report.AddLine("  Available quests: %lu\r\n", obj->charPtr->questJournal.availableQuests.itemList.size());
+		report.AddLine("  Available soon quests: %lu\r\n", obj->charPtr->questJournal.availableSoonQuests.itemList.size());
+	}
 }
 
 void RefreshScripts(ReportBuffer &report)

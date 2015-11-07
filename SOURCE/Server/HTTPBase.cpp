@@ -150,9 +150,11 @@ PLATFORM_THREADRETURN HTTPBaseThreadProc(PLATFORM_THREADARGS lpParam)
 			}
 			else
 			{
-				controller->LogMessageL(LOG_ERROR, "[HTTP] Socket error: %s", controller->sc.GetErrorMessage());
-				//This shouldn't normally fail.  Need a complete restart.
-				controller->Status = Status_Restart;
+				if(controller->isActive) {
+					controller->LogMessageL(LOG_ERROR, "[HTTP] Socket error: %s", controller->sc.GetErrorMessage());
+					//This shouldn't normally fail.  Need a complete restart.
+					controller->Status = Status_Restart;
+				}
 			}
 		}
 		else if(controller->Status == Status_Restart)

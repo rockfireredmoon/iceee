@@ -59,6 +59,7 @@ public:
 private:
 	fd_set readset;
 	timeval seltime;
+	bool shuttingDown;
 };
 
 #endif //#ifndef SOCKETCLASS3_H

@@ -209,9 +209,11 @@ void RouterThread :: RunMainLoop(void)
 			}
 			else
 			{
-				LogMessageL("[Router] Socket error: %s", sc.GetErrorMessage());
-				//This shouldn't normally fail.  Need a complete restart.
-				Status = Status_Restart;
+				if(isActive) {
+					LogMessageL("[Router] Socket error: %s", sc.GetErrorMessage());
+					//This shouldn't normally fail.  Need a complete restart.
+					Status = Status_Restart;
+				}
 			}
 		}
 		else if(Status == Status_Restart)

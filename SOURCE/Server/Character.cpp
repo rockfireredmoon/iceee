@@ -578,8 +578,8 @@ void CharacterData :: BackupAppearance(void)
 
 void CharacterData :: BuildAvailableQuests(QuestDefinitionContainer &questList)
 {
-	questJournal.availableQuests.itemList.clear();
-	questJournal.availableSoonQuests.itemList.clear();
+	questJournal.availableQuests.Free();
+	questJournal.availableSoonQuests.Free();
 
 	//The iterators below would crash the program if attempting to iterate across an empty quest list
 	//when trying to set up the default null (zero ID) character.
@@ -588,7 +588,7 @@ void CharacterData :: BuildAvailableQuests(QuestDefinitionContainer &questList)
 
 	QuestReference qr;
 	bool soon = false;
-	
+
 	QuestDefinitionContainer::ITERATOR it;
 	for(it = questList.mQuests.begin(); it != questList.mQuests.end(); ++it)
 	{
@@ -2006,16 +2006,16 @@ void CharacterManager :: Compatibility_SaveList(FILE *output)
 	*/
 }
 
-void CharacterManager :: Compatibility_ResolveCharacters(void)
-{
-	CHARACTER_MAP::iterator it;
-	for(it = charList.begin(); it != charList.end(); ++it)
-	{
-		it->second.BuildAvailableQuests(QuestDef);
-		it->second.questJournal.ResolveLoadedQuests();
-		it->second.inventory.CountInventorySlots();
-	}
-}
+//void CharacterManager :: Compatibility_ResolveCharacters(void)
+//{
+//	CHARACTER_MAP::iterator it;
+//	for(it = charList.begin(); it != charList.end(); ++it)
+//	{
+//		it->second.BuildAvailableQuests(QuestDef);
+//		it->second.questJournal.ResolveLoadedQuests();
+//		it->second.inventory.CountInventorySlots();
+//	}
+//}
 
 CharacterData * CharacterManager :: RequestCharacter(int CDefID, bool tempOnly)
 {
