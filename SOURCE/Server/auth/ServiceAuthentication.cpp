@@ -274,7 +274,7 @@ AccountData * ServiceAuthenticationHandler::onAuthenticate(SimulatorThread *sim,
 
 			if(root.isMember("field_grove")) {
 				const Json::Value fieldGrove = root["field_grove"];
-				if(fieldGrove.isMember("und")) {
+				if(fieldGrove.size() > 0 && fieldGrove.isMember("und")) {
 					const Json::Value fieldUnd = fieldGrove["und"];
 					if(fieldUnd.size() > 0) {
 						const Json::Value fieldArr = fieldUnd[0];
