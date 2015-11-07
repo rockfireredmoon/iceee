@@ -197,6 +197,9 @@ AccountData * ServiceAuthenticationHandler::onAuthenticate(SimulatorThread *sim,
 
 			Json::Value root;
 			Json::Reader reader;
+
+			g_Log.AddMessageFormat("JSON >>> %s", readBuffer.c_str());
+
 			bool parsingSuccessful = reader.parse( readBuffer.c_str(), root );
 			if ( !parsingSuccessful )
 			{
