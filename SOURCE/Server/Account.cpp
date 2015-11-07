@@ -933,7 +933,7 @@ AccountData * AccountManager :: GetValidLogin(const char *loginName, const char 
 	AccountQuickData *aqd = GetAccountQuickDataByUsername(loginName);
 	if(aqd != NULL)
 	{
-		if(aqd->mLoginAuth.compare(loginAuth) == 0) {
+		if(aqd->mLoginAuth.size() > 0 && aqd->mLoginAuth.compare(loginAuth) == 0) {
 			return FetchIndividualAccount(aqd->mID);
 		}
 	}
