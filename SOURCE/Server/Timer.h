@@ -15,20 +15,41 @@
  * along with TAWD.  If not, see <http://www.gnu.org/licenses/
  */
 
-#ifndef WEBAUTHENTICATION_H
-#define WEBAUTHENTICATION_H
 
-#include "Auth.h"
+#pragma once
+#ifndef TIMER_H
+#define TIMER_H
 
-class ServiceAuthenticationHandler : public AuthHandler {
+#include <vector>
+#include "Components.h"
+
+class TimerTask
+{
 public:
-	ServiceAuthenticationHandler();
-	~ServiceAuthenticationHandler();
-	AccountData *onAuthenticate(SimulatorThread *sim, std::string loginName, std::string authorizationHash);
+	TimerTask();
+	virtual ~TimerTask();
+
+	unsigned long mWhen;
+	int mTaskId;
+
+	virtual void run() =0;
+};
+
+class TimerManager
+{
+public:
+	TimerManager();
+	~TimerManager();
+	Platform_CriticalSection cs;
+	std::vector<TimerTask*> mTasks;
+	void AddTask(TimerTask *task);
+	void RunTasks();
 private:
-	void copyVeteranPlayerDetails(std::string pfUsername, AccountData *account);
+	unsigned long mNextRun;
+	int mNextTaskId;
 };
 
 
-#endif
+extern TimerManager g_TimerManager;
 
+#endif

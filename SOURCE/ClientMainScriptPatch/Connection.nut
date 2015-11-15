@@ -67,6 +67,7 @@ this.ProtocolDef <- {
 		[71] = "_handleItemDefUpdateMsg",
 		[80] = "_handlePVPStatUpdateMessage",
 		[90] = "_handleHeartbeatMessage",
+		[97] = "_handleAuctionHouseUpdateMsg",
 		[98] = "_handleSceneryEffectMsg",
 		[99] = "_handleGuildUpdateMsg",
 		inspectCreatureDef = 0,
@@ -2317,6 +2318,11 @@ class this.Connection extends this.MessageBroadcaster
 				{
 					creatureDef.setMeta("credit_shopkeeper", true);
 				}
+				
+				if ((defHints & this.CDEF_HINT_AUCTIONEER) != 0)
+				{
+					creatureDef.setMeta("auctioneer", true);
+				}
 
 				if ((defHints & this.CDEF_HINT_ESSENCE_VENDOR) != 0)
 				{
@@ -3258,6 +3264,31 @@ class this.Connection extends this.MessageBroadcaster
 			break;
 		default:
 			print("ICE: Unknown effect message message type " + type);
+			break;
+		}
+	}
+	
+	function _handleAuctionHouseUpdateMsg(data)
+	{
+		local type = data.getByte();
+		switch(type)
+		{
+		case 1: 
+			this.broadcastMessage("onNewAuctionHouseItem", AuctionItem().fromUpdate(data));
+			break;
+		case 2:
+			local auctioneerId = data.getStringUTF().tointeger();
+			local auctionId = data.getStringUTF().tointeger();
+			local remainingSeconds = data.getStringUTF().tointeger();
+			local bids = data.getStringUTF().tointeger();
+			local bidCopper = data.getStringUTF().tointeger();
+			local bidCredits = data.getStringUTF().tointeger();
+			this.broadcastMessage("onUpdateAuctionHouseItem", auctioneerId, auctionId, remainingSeconds, bids, bidCopper, bidCredits);
+			break;
+		case 3:
+			local auctioneerId = data.getStringUTF().tointeger();
+			local auctionId = data.getStringUTF().tointeger();
+			this.broadcastMessage("onRemoveAuctionHouseItem", auctioneerId, auctionId);
 			break;
 		}
 	}
@@ -4354,6 +4385,9 @@ class this.Connection extends this.MessageBroadcaster
 	static CDEF_HINT_CLANREGISTRAR = 128;
 	static CDEF_HINT_VAULT = 256;
 	static CDEF_HINT_CREDIT_SHOP = 512;
+	static CDEF_HINT_USABLE = 1024;
+	static CDEF_HINT_USABLE_SPARKLY = 2048;
+	static CDEF_HINT_AUCTIONEER = 4096;
 	static ITEM_DEF = 1;
 	static ITEM_LOOK_DEF = 2;
 	static ITEM_CONTAINER = 4;

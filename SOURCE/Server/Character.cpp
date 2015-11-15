@@ -1996,7 +1996,6 @@ void SaveCharacterToStream(FILE *output, CharacterData &cd)
 		}
 	}
 
-
 	//Active quests
 	fprintf(output, "\r\n[QUEST]\r\n");
 	for(a = 0; a < (int)cd.questJournal.activeQuests.itemList.size(); a++)
@@ -2214,7 +2213,7 @@ int CharacterManager :: LoadCharacter(int CDefID, bool tempResource)
 	}
 
 	ReleaseThread();
-	g_Log.AddMessageFormatW(MSG_SHOW, "Successfully loaded creature: %d [%s]", CDefID, charList[CDefID].cdef.css.display_name);
+//	g_Log.AddMessageFormatW(MSG_SHOW, "Successfully loaded creature: %d [%s]", CDefID, charList[CDefID].cdef.css.display_name);
 	return 0;
 }
 
@@ -2470,7 +2469,7 @@ void CharacterManager :: UnloadCharacter(int CDefID)
 		if(it->second.pendingChanges != 0)
 			g_Log.AddMessageFormat("[WARNING] Unloading a character with pending changes:", CDefID);
 
-		g_Log.AddMessageFormat("Unloading character: %d [%s]", CDefID, it->second.cdef.css.display_name);
+//		g_Log.AddMessageFormat("Unloading character: %d [%s]", CDefID, it->second.cdef.css.display_name);
 		charList.erase(it);
 	}
 }

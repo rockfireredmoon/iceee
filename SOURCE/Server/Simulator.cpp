@@ -426,6 +426,30 @@ void SimulatorManager :: FlushHangingSimulators(void)
 	}
 }
 
+void SimulatorManager :: SendToAllSimulators(const char *buffer, unsigned int buflen, SimulatorThread *except)
+{
+	cs.Enter("SimulatorManager::SendToAllSimulators");
+	SIMULATOR_IT it;
+	for(it = Simulator.begin(); it != Simulator.end(); ++it)
+	{
+
+		if(except != NULL && except->InternalID == it->InternalID)
+			continue;
+
+		if(it->ProtocolState == 0)
+			continue;
+
+		if(it->isConnected == false)
+			continue;
+
+		if(it->pld.charPtr == NULL)
+			continue;
+
+		it->AttemptSend(buffer, buflen);
+	}
+	cs.Leave();
+}
+
 void SimulatorManager :: BroadcastMessage(const char *message)
 {
 
@@ -2233,14 +2257,6 @@ bool SimulatorThread :: HandleQuery(int &PendingData)
 		PendingData = handle_query_user_auth_reset();
 	else if(query.name.compare("item.create") == 0)
 		PendingData = handle_query_item_create();
-	else if(query.name.compare("item.market.list") == 0)
-		PendingData = handle_query_item_market_list();
-	else if(query.name.compare("item.market.edit") == 0)
-		PendingData = handle_query_item_market_edit();
-	else if(query.name.compare("item.market.reload") == 0)
-		PendingData = handle_query_item_market_reload();
-	else if(query.name.compare("item.market.purchase.name") == 0)
-		PendingData = handle_query_item_market_purchase_name();
 	else if(query.name.compare("bug.report") == 0)
 		PendingData = handle_query_bug_report();
 	else if(query.name.compare("gm.spawn") == 0)
@@ -2367,12 +2383,6 @@ bool SimulatorThread :: HandleQuery(int &PendingData)
 		PendingData = handle_query_persona_gm();
 	else if(query.name.compare("party") == 0)
 		PendingData = handle_query_party();
-	else if(query.name.compare("vault.send") == 0)
-		PendingData = handle_query_vault_send();
-	else if(query.name.compare("vault.size") == 0)
-		PendingData = handle_query_vault_size();
-	else if(query.name.compare("vault.expand") == 0)
-		PendingData = handle_query_vault_expand();
 	else if(query.name.compare("quest.share") == 0)
 		PendingData = handle_query_quest_share();
 	else if(query.name.compare("mod.emote") == 0)
@@ -3067,6 +3077,7 @@ int SimulatorThread :: handle_query_item_contents(void)
 	if(contID == DELIVERY_CONTAINER) {
 		inv = pld.accPtr->inventory;
 	}
+
 	SendInventoryData(inv.containerList[contID]);
 
 	WritePos = 0;
@@ -3723,6 +3734,7 @@ int SimulatorThread :: handle_query_item_move(void)
 	if(destContainer == DELIVERY_CONTAINER) {
 		destInv = &pld.accPtr->inventory;
 	}
+
 	if(origContainer == DELIVERY_CONTAINER) {
 		origInv = &pld.accPtr->inventory;
 	}
@@ -3805,6 +3817,9 @@ int SimulatorThread :: handle_query_item_move(void)
 	else if(mpos == -4) {
 		if(destContainer == DELIVERY_CONTAINER) {
 			return PrepExt_QueryResponseError(SendBuf, query.ID, "Items bound to you cannot be placed into your delivery box.");
+		}
+		else if(destContainer == AUCTION_CONTAINER) {
+			return PrepExt_QueryResponseError(SendBuf, query.ID, "Items bound to you cannot be auctioned.");
 		}
 		else {
 			return PrepExt_QueryResponseError(SendBuf, query.ID, "Items bound to you cannot be placed into your vault.");
@@ -9888,188 +9903,6 @@ int SimulatorThread :: handle_query_party(void)
 	*/
 }
 
-int SimulatorThread :: handle_query_vault_send(void)
-{
-	if(query.argCount < 2)
-		return PrepExt_QueryResponseError(SendBuf, query.ID, "Invalid query.");
-
-	/* Make sure there enough stamps in the vault to be able to send each
-	 * item in the delivery box
-	 */
-
-	int items = pld.accPtr->inventory.containerList[DELIVERY_CONTAINER].size();
-	if(items < 1) {
-		return PrepExt_QueryResponseError(SendBuf, query.ID, "You must place the items to send in your delivery box.");
-	}
-
-	// TODO hardcoded
-	int stamps  = pld.charPtr->inventory.GetItemCount(STAMPS_CONTAINER, POSTAGE_STAMP_ITEM_ID);
-	if(items > stamps) {
-		return PrepExt_QueryResponseError(SendBuf, query.ID, "You do not have enough stamps.");
-	}
-
-	/**
-	 * Get the recipient's creature
-	 */
-	int cdefID = g_AccountManager.GetCDefFromCharacterName(query.GetString(1));
-	if(cdefID == -1) {
-		Util::SafeFormat(Aux1, sizeof(Aux1), "Unknown character name '%s'", query.GetString(1));
-		return PrepExt_QueryResponseError(SendBuf, query.ID, Aux1);
-	}
-
-	g_CharacterManager.GetThread("SimulatorThread::VaultSend");
-	g_AccountManager.cs.Enter("SimulatorThread::VaultSend");
-
-	CharacterData *cd = g_CharacterManager.GetPointerByID(cdefID);
-	if(cd == NULL) {
-		// Not active
-		cd = g_CharacterManager.RequestCharacter(cdefID, true);
-	}
-
-	if(cd == NULL) {
-		g_CharacterManager.ReleaseThread();
-		g_AccountManager.cs.Leave();
-		return PrepExt_QueryResponseError(SendBuf, query.ID, "Could not get creature instance.");
-	}
-
-	// Make sure player is not trying to send to their own account
-	if(cd->AccountID == pld.accPtr->ID) {
-		g_CharacterManager.ReleaseThread();
-		g_AccountManager.cs.Leave();
-		return PrepExt_QueryResponseError(SendBuf, query.ID, "You cannot send items to yourself.");
-	}
-
-	// Now we have a creature, we can try and get the account
-	AccountData *acc = g_AccountManager.GetActiveAccountByID(cd->AccountID);
-	if(acc == NULL) {
-		acc = g_AccountManager.LoadAccountID(cd->AccountID);
-	}
-	if(acc == NULL) {
-		g_CharacterManager.ReleaseThread();
-		g_AccountManager.cs.Leave();
-		return PrepExt_QueryResponseError(SendBuf, query.ID, "Could not get account instance.");
-	}
-
-
-	// Now we have an account, we can make sure there are enough free delivery slots
-	int freeSlots = acc->DeliveryBoxSlots - acc->inventory.containerList[DELIVERY_CONTAINER].size();
-	if(freeSlots < items) {
-		if(freeSlots < 1)
-			Util::SafeFormat(Aux1, sizeof(Aux1), "The recipient has no free delivery slots.");
-		else
-			Util::SafeFormat(Aux1, sizeof(Aux1), "The recipient only has %d free delivery slots.", freeSlots);
-		g_CharacterManager.ReleaseThread();
-		g_AccountManager.cs.Leave();
-		return PrepExt_QueryResponseError(SendBuf, query.ID, Aux1);
-	}
-
-	// Notify the recipient if they are online
-	CreatureInstance *inst = g_ActiveInstanceManager.GetPlayerCreatureByDefID(cd->cdef.CreatureDefID);
-
-	// Have got this far, so have enough stamps, and recipient exists and has enough free delivery slots
-	int wpos = 0;
-
-	InventoryManager *origInv = &pld.accPtr->inventory;
-	InventoryManager *destInv = &acc->inventory;
-	std::vector<InventorySlot> l = origInv->containerList[DELIVERY_CONTAINER];
-	int origSlot = 0;
-	int destSlot = destInv->containerList[DELIVERY_CONTAINER].size();
-	int itemsSent = 0;
-
-	pld.accPtr->PendingMinorUpdates++;
-	acc->PendingMinorUpdates++;
-
-	for(std::vector<InventorySlot>::iterator it = l.begin(); it != l.end() ; ++it) {
-
-		if( (origInv->VerifyContainerSlotBoundary(DELIVERY_CONTAINER, origSlot) == false) ||
-			(destInv->VerifyContainerSlotBoundary(DELIVERY_CONTAINER, destSlot) == false) )
-		{
-			wpos += PrepExt_QueryResponseError(&SendBuf[wpos], query.ID, "Failed to move item.");
-			goto exit;
-		}
-
-		int mpos = origInv->ItemMove(&SendBuf[wpos], Aux3, &creatureInst->css, pld.charPtr->localCharacterVault, DELIVERY_CONTAINER, origSlot, destInv, DELIVERY_CONTAINER, destSlot, false);
-		if(mpos > 0)
-		{
-			wpos += mpos;
-			wpos += pld.charPtr->inventory.RemoveItemsAndUpdate(STAMPS_CONTAINER, POSTAGE_STAMP_ITEM_ID, 1, &SendBuf[wpos]);
-			itemsSent++;
-		}
-		else {
-			Util::SafeFormat(Aux1, sizeof(Aux1), "Failed to move item (%d).", mpos);
-			wpos += PrepExt_QueryResponseError(&SendBuf[wpos], query.ID, Aux1);
-			goto exit;
-		}
-
-		origSlot++;
-		destSlot++;
-	}
-
-	wpos += PrepExt_QueryResponseString(&SendBuf[wpos], query.ID, "OK");
-
-exit:
-
-	// Inform the active player if we have one
-	if(inst != NULL && itemsSent > 0) {
-		inst->simulatorPtr->SendInventoryData(destInv->containerList[DELIVERY_CONTAINER]);
-		Util::SafeFormat(Aux1, sizeof(Aux1), "%s just sent you %d item%s to your delivery box. You may collect at any vault.", pld.charPtr->cdef.css.display_name, itemsSent);
-		inst->simulatorPtr->SendInfoMessage(Aux1,  INFOMSG_INFO);
-	}
-
-	g_CharacterManager.ReleaseThread();
-	g_AccountManager.cs.Leave();
-	return wpos;
-}
-
-int SimulatorThread :: handle_query_vault_size(void)
-{
-	sprintf(Aux1, "%d", pld.charPtr->VaultGetTotalCapacity());
-	sprintf(Aux2, "%d", pld.accPtr->DeliveryBoxSlots);
-	return PrepExt_QueryResponseString2(SendBuf, query.ID, Aux1, Aux2);
-}
-
-int SimulatorThread :: handle_query_vault_expand(void)
-{
-	if(query.argCount < 1)
-		return PrepExt_QueryResponseError(SendBuf, query.ID, "Invalid query.");
-
-	int CID = query.GetInteger(0);
-	int r = protected_CheckDistance(CID);
-	if(r != 0)
-		return PrepExt_QueryResponseError(SendBuf, query.ID, "You are too far away.");
-	
-	int CDefID = ResolveCreatureDef(CID);
-	CreatureDefinition *cdef = CreatureDef.GetPointerByCDef(CDefID);
-	if(cdef == NULL)
-		return PrepExt_QueryResponseError(SendBuf, query.ID, "Invalid creature.");
-	if(!(cdef->DefHints & CDEF_HINT_VAULT))
-		return PrepExt_QueryResponseError(SendBuf, query.ID, "You must speak to a vault keeper.");
-
-	if(pld.charPtr->VaultIsMaximumCapacity() == true)
-		return PrepExt_QueryResponseError(SendBuf, query.ID, "Your vault space is at maximum capacity.");
-
-	if(g_Config.AccountCredits) {
-		creatureInst->css.credits = pld.accPtr->Credits;
-	}
-	if(creatureInst->css.credits < CharacterData::VAULT_EXPAND_CREDIT_COST)
-		return PrepExt_QueryResponseError(SendBuf, query.ID, "You do not have enough credits.");
-
-	pld.charPtr->VaultDoPurchaseExpand();
-	int newSize = pld.charPtr->VaultGetTotalCapacity();
-	creatureInst->css.credits -= CharacterData::VAULT_EXPAND_CREDIT_COST;
-
-	if(g_Config.AccountCredits) {
-		pld.accPtr->Credits = creatureInst->css.credits;
-		pld.accPtr->PendingMinorUpdates++;
-	}
-	
-	creatureInst->SendStatUpdate(STAT::CREDITS);
-
-	int wpos = PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-	wpos += PrepExt_CreatureEventVaultSize(&SendBuf[wpos], creatureInst->CreatureID, newSize, pld.accPtr->DeliveryBoxSlots);
-	return wpos;
-}
-
 int SimulatorThread :: handle_query_quest_share(void)
 {
 	if(query.argCount < 1)
@@ -11652,252 +11485,6 @@ int SimulatorThread :: handle_query_marker_edit(void)
 	creatureInst->actInst->worldMarkers.Save();
 	cs.Leave();
 	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-}
-
-
-int SimulatorThread :: handle_query_item_market_purchase_name(void)
-{
-	if(query.args.size() < 2)
-		return PrepExt_QueryResponseError(SendBuf, query.ID, "Invalid query.");
-	string firstName = query.GetString(0);
-	string secondName = query.GetString(1);
-
-	int res = g_AccountManager.ValidateNameParts(firstName.c_str(), secondName.c_str());
-	if(res != AccountManager::CHARACTER_SUCCESS) {
-		Util::SafeFormat(Aux1, sizeof(Aux1), "Renamed to %s %s returned error %d", firstName.c_str(), secondName.c_str(), res);
-		return PrepExt_QueryResponseError(SendBuf, query.ID, Aux1);
-	}
-
-	string fullName = firstName + " " + secondName;
-	string currentName = creatureInst->css.display_name;
-
-	if(g_Config.AccountCredits) {
-		creatureInst->css.credits = pld.accPtr->Credits;
-	}
-	if((unsigned long)creatureInst->css.credits < g_Config.NameChangeCost) {
-		return PrepExt_QueryResponseError(SendBuf, query.ID, "You do not have enough credits!");
-	}
-
-	AccountData * acc = g_AccountManager.FetchIndividualAccount(creatureInst->charPtr->AccountID);
-	if(acc == NULL)
-	{
-		return PrepExt_QueryResponseError(SendBuf, query.ID, "Name change failed, missing account.");
-	}
-	CharacterCacheEntry *ce = acc->characterCache.GetCacheCharacter(creatureInst->CreatureDefID);
-	if(ce == NULL)
-	{
-		return PrepExt_QueryResponseError(SendBuf, query.ID, "Name change failed, missing cache entry.");
-	}
-	if(fullName.compare(ce->display_name) == 0) {
-		return PrepExt_QueryResponseError(SendBuf, query.ID, "You have chosen the same name!");
-	}
-	ce->display_name = fullName.c_str();
-	acc->PendingMinorUpdates++;
-	memcpy(creatureInst->css.display_name, fullName.c_str(), fullName.size() + 1);
-
-	g_AccountManager.RemoveUsedCharacterName(pld.CreatureDefID);
-	g_AccountManager.AddUsedCharacterName(pld.CreatureDefID, fullName.c_str());
-
-
-	Debug::Log("[CS] Player '%s' changed their name to '%s'", currentName.c_str(), fullName.c_str());
-
-	creatureInst->css.credits -= g_Config.NameChangeCost;
-	if(g_Config.AccountCredits) {
-		pld.accPtr->Credits = creatureInst->css.credits;
-		pld.accPtr->PendingMinorUpdates++;
-	}
-	creatureInst->SendStatUpdate(STAT::CREDITS);
-	creatureInst->SendStatUpdate(STAT::DISPLAY_NAME);
-	return  PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-}
-int SimulatorThread :: handle_query_item_market_reload(void)
-{
-	Debug::Log("[CS] Credit Shop reloaded");
-	g_CreditShopManager.cs.Enter("SimulatorThread::MarketReload");
-	g_CreditShopManager.LoadItems();
-	g_CreditShopManager.cs.Leave();
-	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-}
-
-int SimulatorThread :: handle_query_item_market_edit(void)
-{
-	if(query.args.size() < 1)
-		return PrepExt_QueryResponseError(SendBuf, query.ID, "Invalid query.");
-
-	if(!CheckPermissionSimple(Perm_Account, Permission_Sage))
-			return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
-
-	if(strcmp(query.GetString(0), "DELETE") == 0 && query.args.size() > 1) {
-		int id = query.GetInteger(1);
-		CS::CreditShopItem *item = g_CreditShopManager.GetItem(id);
-		if(item == NULL)
-			return PrepExt_QueryResponseError(SendBuf, query.ID, "Invalid item.");
-		else {
-			// TODO remove
-			if(g_CreditShopManager.RemoveItem(id)) {
-				g_Log.AddMessageFormat("Removed credit shop item %d", item->mId);
-				return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-			}
-			return PrepExt_QueryResponseError(SendBuf, query.ID, "Failed to remove.");
-		}
-	}
-	else if(query.args.size() > 22) {
-		CS::CreditShopItem * csItem;
-		bool isNew = strcmp(query.GetString(0), "NEW") == 0;
-		if(isNew) {
-			csItem = new CS::CreditShopItem();
-			csItem->mId = g_CreditShopManager.nextMarketItemID++;
-			SessionVarsChangeData.AddChange();
-			Util::SafeFormat(Aux3, sizeof(Aux3), "Created market csItem %d", csItem->mId);
-		}
-		else {
-			csItem = g_CreditShopManager.GetItem(query.GetInteger(0));
-			if(csItem == NULL)
-				return PrepExt_QueryResponseError(SendBuf, query.ID, "Invalid item.");
-			Util::SafeFormat(Aux3, sizeof(Aux3), "Save market csItem %d", csItem->mId);
-		}
-
-		int currency = query.GetInteger(16);
-		unsigned long priceCopper = 0;
-		unsigned long priceCredits = 0;
-		STRINGLIST priceElements;
-		Util::Split(query.GetString(14), "+", priceElements);
-		if(currency == Currency::COPPER) {
-			priceCopper = atoi(priceElements[0].c_str());
-		}
-		else if(currency == Currency::CREDITS) {
-			priceCredits = atoi(priceElements[0].c_str());
-		}
-		else if(currency == Currency::COPPER_CREDITS) {
-			if(priceElements.size() != 2) {
-				return PrepExt_QueryResponseError(SendBuf, query.ID, "COPPER+CREDITS require two costs, <copperCost>+<creditCost>.");
-			}
-			priceCopper = atoi(priceElements[0].c_str());
-			priceCredits = atoi(priceElements[1].c_str());
-		}
-
-		csItem->mTitle = query.GetString(2);
-		csItem->mDescription = query.GetString(4);
-		csItem->mCategory = Category::GetIDByName(query.GetString(6));
-		csItem->mStatus = Status::GetIDByName(query.GetString(8));
-		Util::ParseDate(query.GetString(10), csItem->mStartDate);
-		Util::ParseDate(query.GetString(12), csItem->mEndDate);
-		csItem->mPriceCopper = priceCopper;
-		csItem->mPriceCredits = priceCredits;
-		csItem->mPriceCurrency = currency;
-		csItem->mQuantityLimit = query.GetInteger(18);
-		csItem->mQuantitySold = query.GetInteger(20);
-		csItem->ParseItemProto(query.GetString(22));
-
-		// Check the item
-		ItemDef * item= g_ItemManager.GetSafePointerByID(csItem->mItemId);
-		if(item == NULL) {
-			if(isNew)
-				delete csItem;
-			return PrepExt_QueryResponseError(SendBuf, query.ID, "No such item!");
-		}
-		if(csItem->mTitle.compare(item->mDisplayName) == 0)
-			csItem->mTitle = "";
-
-		g_CreditShopManager.SaveItem(csItem);
-		g_CreditShopManager.cs.Enter("SimulatorThread :: handle_query_item_market_edit");
-		g_CreditShopManager.mItems[csItem->mId] = csItem;
-		g_CreditShopManager.cs.Leave();
-
-		Debug::Log("[CS] Updated Credit shop item %d '%s'", csItem->mId, csItem->mTitle.c_str());
-		return PrepExt_QueryResponseString(SendBuf, query.ID, Aux3);
-	}
-	return PrepExt_QueryResponseError(SendBuf, query.ID, "Invalid sub-query.");
-}
-
-int SimulatorThread :: handle_query_item_market_list(void)
-{
-	int wpos = 0;
-	wpos += PutByte(&SendBuf[wpos], 1);       //_handleQueryResultMsg
-	wpos += PutShort(&SendBuf[wpos], 0);      //Message size
-	wpos += PutInteger(&SendBuf[wpos], query.ID);  //Query response index
-
-	wpos += PutShort(&SendBuf[wpos], 0);
-
-	unsigned int count = 0;
-
-	// First row has cost of name change
-	wpos += PutByte(&SendBuf[wpos], 1);
-	sprintf(Aux1, "%d", g_Config.NameChangeCost);
-	wpos += PutStringUTF(&SendBuf[wpos], Aux1);
-	count++;
-
-	// Now the actual items
-	g_CreditShopManager.cs.Enter("handle_query_item_market_list");
-	for(std::map<int, CS::CreditShopItem*>::iterator it = g_CreditShopManager.mItems.begin(); it != g_CreditShopManager.mItems.end(); ++it)
-	{
-		if(g_ServerTime < (it->second->mStartDate * 1000UL))
-			// Not available yet
-			continue;
-
-		ItemDef * item= g_ItemManager.GetSafePointerByID(it->second->mItemId);
-		if(item != NULL)
-		{
-
-			wpos += PutByte(&SendBuf[wpos], 12);
-
-
-			sprintf(Aux1, "%d", it->second->mId);
-			wpos += PutStringUTF(&SendBuf[wpos], Aux1);
-			if(it->second->mTitle.size() == 0)
-				sprintf(Aux1, "%s", item->mDisplayName.c_str());
-			else
-				sprintf(Aux1, "%s", it->second->mTitle.c_str());
-			wpos += PutStringUTF(&SendBuf[wpos], Aux1);
-
-			sprintf(Aux1, "%s", it->second->mDescription.c_str());
-			wpos += PutStringUTF(&SendBuf[wpos], Aux1);
-
-			sprintf(Aux1, "%s", Status::GetNameByID(it->second->mStatus));
-			wpos += PutStringUTF(&SendBuf[wpos], Aux1);
-
-			sprintf(Aux1, "%s", Category::GetNameByID(it->second->mCategory));
-			wpos += PutStringUTF(&SendBuf[wpos], Aux1);
-
-			sprintf(Aux1, "%s", it->second->mStartDate == 0 ? "" :
-							 Util::FormatDate(&it->second->mEndDate).c_str());
-			wpos += PutStringUTF(&SendBuf[wpos], Aux1);
-
-			sprintf(Aux1, "%s", it->second->mEndDate == 0 ? "" :
-					( g_ServerTime >= ( it->second->mEndDate * 1000UL ) ?
-							"Expired" : Util::FormatDate(&it->second->mEndDate).c_str()));
-			wpos += PutStringUTF(&SendBuf[wpos], Aux1);
-
-			if(it->second->mPriceCurrency == Currency::COPPER)
-				sprintf(Aux1, "%lu", it->second->mPriceCopper);
-			else if(it->second->mPriceCurrency == Currency::CREDITS)
-				sprintf(Aux1, "%lu", it->second->mPriceCredits);
-			else if(it->second->mPriceCurrency == Currency::COPPER_CREDITS)
-				sprintf(Aux1, "%lu+%lu", it->second->mPriceCopper, it->second->mPriceCredits);
-			else
-				sprintf(Aux1, "999999");
-			wpos += PutStringUTF(&SendBuf[wpos], Aux1);
-
-			sprintf(Aux1, "%d", it->second->mPriceCurrency);
-			wpos += PutStringUTF(&SendBuf[wpos], Aux1);
-
-			sprintf(Aux1, "%d", it->second->mQuantityLimit);
-			wpos += PutStringUTF(&SendBuf[wpos], Aux1);
-
-			sprintf(Aux1, "%d", it->second->mQuantitySold);
-			wpos += PutStringUTF(&SendBuf[wpos], Aux1);
-
-			sprintf(Aux1, "%d:%d:%d:%d", it->second->mItemId, it->second->mLookId, it->second->mIv1, it->second->mIv2);
-			wpos += PutStringUTF(&SendBuf[wpos], Aux1);
-
-			count++;
-
-		}
-	}
-	g_CreditShopManager.cs.Leave();
-	PutShort(&SendBuf[7], count);
-	PutShort(&SendBuf[1], wpos - 3);
-	return wpos;
 }
 
 

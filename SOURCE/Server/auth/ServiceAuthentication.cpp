@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with TAWD.  If not, see <http://www.gnu.org/licenses/
  */
- 
+
 #include "ServiceAuthentication.h"
 #include "../Config.h"
 #include "../StringList.h"
@@ -34,107 +34,141 @@ ServiceAuthenticationHandler::~ServiceAuthenticationHandler() {
 
 }
 
-void ServiceAuthenticationHandler::transferGroves(AccountData *data) {
+void ServiceAuthenticationHandler::copyVeteranPlayerDetails(std::string pfUsername, AccountData *data) {
+
+	g_Log.AddMessageFormat("Importing veteran details for account %s", data->Name);
+
 	/*
 	 * Now contact the partner server and see if there are any groves to transfer
 	 */
 	TAWClient client(g_Config.LegacyServer);
 	std::vector<ZoneDefInfo> zones;
 	AccountData otherAccount;
-	if(client.getAccountByName(data->Name, otherAccount)) {
+	if (client.getAccountByName(pfUsername, otherAccount)) {
 		std::vector<ZoneDefInfo> groves;
-		if(client.enumerateGroves(otherAccount.ID, groves)) {
-			g_Log.AddMessageFormat("Copying %d groves from source account.", groves.size());
-			for(std::vector<ZoneDefInfo>::iterator it = groves.begin(); it != groves.end(); ++it) {
 
-				std::string nextGroveName = g_ZoneDefManager.GetNextGroveName(data->GroveName);
+		// Get the highest level character (for veteran rewards)
+		std::vector<CharacterCacheEntry> cd = otherAccount.characterCache.cacheData;
+		g_Log.AddMessageFormat("Imported account for %s has %d characters", data->Name, cd.size());
+		for (std::vector<CharacterCacheEntry>::iterator it = cd.begin();
+				it != cd.end(); ++it) {
+			data->VeteranLevel = max(data->VeteranLevel, (*it).level);
+			g_Log.AddMessageFormat("Character %s is level %d (max now %d)", (*it).level, (*it).display_name.c_str());
+		}
 
-				ZoneDefInfo zd = *it;
+		if (data->GroveName.size() > 0) {
+			if (client.enumerateGroves(otherAccount.ID, groves)) {
+				g_Log.AddMessageFormat("Copying %d groves from source account.",
+						groves.size());
+				for (std::vector<ZoneDefInfo>::iterator it = groves.begin();
+						it != groves.end(); ++it) {
 
-				// Change to the players new account
-				zd.mAccountID = data->ID;
-				zd.mEditPermissions.clear();
-				zd.mWarpName = nextGroveName;
-				zd.mGroveName = data->GroveName;
+					std::string nextGroveName =
+							g_ZoneDefManager.GetNextGroveName(data->GroveName);
 
-				// Just to be sure ..
-				zd.mArena = false;
-				zd.mGrove = true;
-				zd.mGuildHall = false;
+					ZoneDefInfo zd = *it;
 
-				// Player IDs will be different, might as well just clear them
-				zd.mPlayerFilterID.clear();
-				zd.mPlayerFilterType = 0;
+					// Change to the players new account
+					zd.mAccountID = data->ID;
+					zd.mEditPermissions.clear();
+					zd.mWarpName = nextGroveName;
+					zd.mGroveName = data->GroveName;
 
-				g_Log.AddMessageFormat("Copying grove '%s' to '%s'.", zd.mWarpName.c_str(), nextGroveName.c_str());
+					// Just to be sure ..
+					zd.mArena = false;
+					zd.mGrove = true;
+					zd.mGuildHall = false;
 
-				const GroveTemplate *gt = g_GroveTemplateManager.GetTemplateByTerrainCfg(zd.mTerrainConfig.c_str());
-				if(gt == NULL) {
-					g_Log.AddMessageFormat("No grove template for %s, will not be able to add default build permission for user %s.", zd.mTerrainConfig.c_str(), data->Name);
-				}
+					// Player IDs will be different, might as well just clear them
+					zd.mPlayerFilterID.clear();
+					zd.mPlayerFilterType = 0;
 
-				// Create the zone
-				int zoneID = g_ZoneDefManager.CreateZone(zd);
-				zd.mID = zoneID;
+					g_Log.AddMessageFormat("Copying grove '%s' to '%s'.",
+							zd.mWarpName.c_str(), nextGroveName.c_str());
 
-				if(gt != NULL){
-					BuildPermissionArea bp;
-					bp.ZoneID = zoneID;
-					bp.x1 = gt->mTileX1;
-					bp.y1 = gt->mTileY1;
-					bp.x2 = gt->mTileX2;
-					bp.y2 = gt->mTileY2;
+					const GroveTemplate *gt =
+							g_GroveTemplateManager.GetTemplateByTerrainCfg(
+									zd.mTerrainConfig.c_str());
+					if (gt == NULL) {
+						g_Log.AddMessageFormat(
+								"No grove template for %s, will not be able to add default build permission for user %s (%s).",
+								zd.mTerrainConfig.c_str(), data->Name, pfUsername.c_str());
+					}
 
-					data->BuildPermissionList.push_back(bp);
-					data->PendingMinorUpdates++;
-				}
+					// Create the zone
+					int zoneID = g_ZoneDefManager.CreateZone(zd);
+					zd.mID = zoneID;
 
-				g_Log.AddMessageFormat("New grove zone ID is %d", zd.mID);
+					if (gt != NULL) {
+						BuildPermissionArea bp;
+						bp.ZoneID = zoneID;
+						bp.x1 = gt->mTileX1;
+						bp.y1 = gt->mTileY1;
+						bp.x2 = gt->mTileX2;
+						bp.y2 = gt->mTileY2;
 
-				std::vector<SceneryPageKey> pages;
-				if(client.getZone((*it).mID, *it, pages)) {
-					for(std::vector<SceneryPageKey>::iterator sit = pages.begin(); sit != pages.end(); ++sit) {
-						SceneryPageKey spk = *sit;
-						SceneryPage sp;
-						sp.mTileX = spk.x;
-						sp.mTileY = spk.y;
-						g_Log.AddMessageFormat("   Copying tile %d x %d.", spk.x, spk.y);
-						client.getScenery((*it).mID, sp);
+						data->BuildPermissionList.push_back(bp);
+						data->PendingMinorUpdates++;
+					}
 
-						g_SceneryManager.GetThread("ServiceAuthentication::transferGroves");
+					g_Log.AddMessageFormat("New grove zone ID is %d", zd.mID);
 
-						SceneryPage::SCENERY_IT pit;
-						for(pit = sp.mSceneryList.begin(); pit != sp.mSceneryList.end(); ++pit) {
-							SceneryObject prop = pit->second;
-							SceneryPage * page = g_SceneryManager.GetOrCreatePage(zoneID, spk.x, spk.y);
+					std::vector<SceneryPageKey> pages;
+					if (client.getZone((*it).mID, *it, pages)) {
+						for (std::vector<SceneryPageKey>::iterator sit =
+								pages.begin(); sit != pages.end(); ++sit) {
+							SceneryPageKey spk = *sit;
+							SceneryPage sp;
+							sp.mTileX = spk.x;
+							sp.mTileY = spk.y;
+							g_Log.AddMessageFormat("   Copying tile %d x %d.",
+									spk.x, spk.y);
+							client.getScenery((*it).mID, sp);
 
-							// Give prop new ID
-							int newPropID = g_SceneryVars.BaseSceneryID + g_SceneryVars.SceneryAdditive++;
-							g_Log.AddMessageFormat("       Copying object %d to %d", prop.ID, newPropID);
-							prop.ID = newPropID;
-							SessionVarsChangeData.AddChange();
+							g_SceneryManager.GetThread(
+									"ServiceAuthentication::transferGroves");
 
-							page->AddProp(prop, true);
+							SceneryPage::SCENERY_IT pit;
+							for (pit = sp.mSceneryList.begin();
+									pit != sp.mSceneryList.end(); ++pit) {
+								SceneryObject prop = pit->second;
+								SceneryPage * page =
+										g_SceneryManager.GetOrCreatePage(zoneID,
+												spk.x, spk.y);
+
+								// Give prop new ID
+								int newPropID = g_SceneryVars.BaseSceneryID
+										+ g_SceneryVars.SceneryAdditive++;
+								g_Log.AddMessageFormat(
+										"       Copying object %d to %d",
+										prop.ID, newPropID);
+								prop.ID = newPropID;
+								SessionVarsChangeData.AddChange();
+
+								page->AddProp(prop, true);
+							}
+
+							g_SceneryManager.ReleaseThread();
 						}
-
-						g_SceneryManager.ReleaseThread();
+					} else {
+						g_Log.AddMessageFormat(
+								"[WARNING] Failed to get zone %d.", (*it).mID);
 					}
 				}
-				else {
-					g_Log.AddMessageFormat("[WARNING] Failed to get zone %d.", (*it).mID);
-				}
+			} else {
+				g_Log.AddMessageFormat("[WARNING] Failed to enumerate groves.");
 			}
 		}
-		else {
-			g_Log.AddMessageFormat("[WARNING] Failed to enumerate groves.");
-		}
-	}
-	else {
+	} else {
 		g_Log.AddMessageFormat("[WARNING] Failed to retrieve legacy account.");
 	}
+
+	data->VeteranImported = true;
+	data->PendingMinorUpdates++;
 }
 
-AccountData * ServiceAuthenticationHandler::onAuthenticate(SimulatorThread *sim, std::string loginName, std::string authorizationHash) {
+AccountData * ServiceAuthenticationHandler::onAuthenticate(SimulatorThread *sim,
+		std::string loginName, std::string authorizationHash) {
 
 	AccountData *accPtr = NULL;
 
@@ -152,10 +186,11 @@ AccountData * ServiceAuthenticationHandler::onAuthenticate(SimulatorThread *sim,
 
 	std::vector<std::string> prms;
 	Util::Split(authorizationHash, ":", prms);
-	if(prms.size() < 4) {
-		g_Log.AddMessageFormat("Unexpected number of elements in login string for SERVICE authentication. %s", authorizationHash.c_str());
-	}
-	else {
+	if (prms.size() < 4) {
+		g_Log.AddMessageFormat(
+				"Unexpected number of elements in login string for SERVICE authentication. %s",
+				authorizationHash.c_str());
+	} else {
 		/* Now try the integrated website authentication. This is hosted by the Drupal module 'Services' and is
 		 * JSON based. The flow is roughly ..
 		 *
@@ -181,7 +216,7 @@ AccountData * ServiceAuthenticationHandler::onAuthenticate(SimulatorThread *sim,
 		SiteClient sc(g_Config.ServiceAuthURL);
 
 		// Get an X-CSRF-Token
-		if(session.xCSRF.compare("NONE") == 0) {
+		if (session.xCSRF.compare("NONE") == 0) {
 			sc.refreshXCSRF(&session);
 		}
 
@@ -192,7 +227,7 @@ AccountData * ServiceAuthenticationHandler::onAuthenticate(SimulatorThread *sim,
 
 		res = sc.sendRequest(&session, url, readBuffer);
 
-		if(res == 200) {
+		if (res == 200) {
 			// Parse the JSON response from service.
 
 			Json::Value root;
@@ -200,11 +235,12 @@ AccountData * ServiceAuthenticationHandler::onAuthenticate(SimulatorThread *sim,
 
 			g_Log.AddMessageFormat("JSON >>> %s", readBuffer.c_str());
 
-			bool parsingSuccessful = reader.parse( readBuffer.c_str(), root );
-			if ( !parsingSuccessful )
-			{
-				g_Log.AddMessageFormat("[WARNING] Invalid data from authentication request.");
-				sim->ForceErrorMessage("Account information is not valid data.", INFOMSG_ERROR);
+			bool parsingSuccessful = reader.parse(readBuffer.c_str(), root);
+			if (!parsingSuccessful) {
+				g_Log.AddMessageFormat(
+						"[WARNING] Invalid data from authentication request.");
+				sim->ForceErrorMessage("Account information is not valid data.",
+						INFOMSG_ERROR);
 				sim->Disconnect("ServiceAuthentication::authenticate");
 				return NULL;
 			}
@@ -212,10 +248,13 @@ AccountData * ServiceAuthenticationHandler::onAuthenticate(SimulatorThread *sim,
 			/*
 			 * If no roles were returned, authentication failed
 			 */
-			if(!root.isMember("roles")) {
-				sim->ForceErrorMessage("Please sign in through the game website.", INFOMSG_ERROR);
+			if (!root.isMember("roles")) {
+				sim->ForceErrorMessage(
+						"Please sign in through the game website.",
+						INFOMSG_ERROR);
 				sim->Disconnect("ServiceAuthentication::authenticate");
-				g_Log.AddMessageFormat("[WARNING] A likely attempt to login using the client directly.");
+				g_Log.AddMessageFormat(
+						"[WARNING] A likely attempt to login using the client directly.");
 				return NULL;
 			}
 
@@ -234,54 +273,69 @@ AccountData * ServiceAuthenticationHandler::onAuthenticate(SimulatorThread *sim,
 
 			Json::Value::Members members = roles.getMemberNames();
 
-			for(Json::Value::Members::iterator it = members.begin(); it != members.end(); ++it) {
+			for (Json::Value::Members::iterator it = members.begin();
+					it != members.end(); ++it) {
 				std::string mem = *it;
 				Json::Value val = roles.get(mem, "");
-				if(strcmp(val.asCString(), "players") == 0) {
+				if (strcmp(val.asCString(), "players") == 0) {
 					player = true;
-				}
-				else if(strcmp(val.asCString(), "sages") == 0) {
+				} else if (strcmp(val.asCString(), "sages") == 0) {
 					sage = true;
-				}
-				else if(strcmp(val.asCString(), "developers") == 0) {
+				} else if (strcmp(val.asCString(), "developers") == 0) {
 					developer = true;
-				}
-				else if(strcmp(val.asCString(), "administrator") == 0) {
+				} else if (strcmp(val.asCString(), "administrator") == 0) {
 					admin = true;
-				}
-				else if(strcmp(val.asCString(), "builders") == 0) {
+				} else if (strcmp(val.asCString(), "builders") == 0) {
 					builder = true;
-				}
-				else if(strcmp(val.asCString(), "tweakers") == 0) {
+				} else if (strcmp(val.asCString(), "tweakers") == 0) {
 					tweaker = true;
-				}
-				else if(strcmp(val.asCString(), "veterans") == 0) {
+				} else if (strcmp(val.asCString(), "veterans") == 0) {
 					veteran = true;
 				}
 			}
 
-			if(!player && !sage && !admin && !developer && !builder) {
-				sim->ForceErrorMessage("User is valid, but does not have permission to play game.", INFOMSG_ERROR);
+			if (!player && !sage && !admin && !developer && !builder) {
+				sim->ForceErrorMessage(
+						"User is valid, but does not have permission to play game.",
+						INFOMSG_ERROR);
 				sim->Disconnect("ServiceAuthentication::authenticate");
-				g_Log.AddMessageFormat("User %s is valid, but does not any permission that allows play.", loginName.c_str());
+				g_Log.AddMessageFormat(
+						"User %s is valid, but does not any permission that allows play.",
+						loginName.c_str());
 				return NULL;
 			}
 
 			// Get the grove name if it's provided
 			std::string grove;
 
-			// Broken?
 
-			if(root.isMember("field_grove")) {
+			// Grove name
+			if (root.isMember("field_grove")) {
 				const Json::Value fieldGrove = root["field_grove"];
-				if(fieldGrove.size() > 0 && fieldGrove.isMember("und")) {
+				if (fieldGrove.size() > 0 && fieldGrove.isMember("und")) {
 					const Json::Value fieldUnd = fieldGrove["und"];
-					if(fieldUnd.size() > 0) {
+					if (fieldUnd.size() > 0) {
 						const Json::Value fieldArr = fieldUnd[0];
-						grove = fieldArr.get("value","").asString();
+						grove = fieldArr.get("value", "").asString();
 					}
 				}
-				g_Log.AddMessageFormat("Player has grove name of %s", grove.c_str());
+				g_Log.AddMessageFormat("Player has grove name of %s",
+						grove.c_str());
+			}
+
+			// Planetforever username (for account migration)
+			std::string pfUsername = "";
+			if (root.isMember("field_pf_username")) {
+				const Json::Value fieldPfUsername = root["field_pf_username"];
+				if (fieldPfUsername.size() > 0 && fieldPfUsername.isMember("und")) {
+					const Json::Value fieldUnd = fieldPfUsername["und"];
+					if (fieldUnd.size() > 0) {
+						const Json::Value fieldArr = fieldUnd[0];
+						pfUsername = fieldArr.get("value", "").asString();
+					}
+				}
+				g_Log.AddMessageFormat("Player has PF account name of %s",
+						pfUsername.c_str());
 			}
 
 			// Some characters are unacceptable in grove names (i.e. separators in index and data files)
@@ -295,35 +349,34 @@ AccountData * ServiceAuthenticationHandler::onAuthenticate(SimulatorThread *sim,
 			 * Look up the account locally. If it already exists, just load it, otherwise
 			 * create a groveless account (without a registration key).
 			 */
-			AccountQuickData *aqd = g_AccountManager.GetAccountQuickDataByUsername(loginName.c_str());
-			if(aqd != NULL) {
-				g_Log.AddMessageFormat("External service authenticated %s OK.", loginName.c_str());
+			AccountQuickData *aqd =
+					g_AccountManager.GetAccountQuickDataByUsername(
+							loginName.c_str());
+			if (aqd != NULL) {
+				g_Log.AddMessageFormat("External service authenticated %s OK.",
+						loginName.c_str());
 				accPtr = g_AccountManager.FetchIndividualAccount(aqd->mID);
 
-			}
-			else {
-				g_Log.AddMessageFormat("Service authenticated OK, but there was no local account with name %s, creating one", loginName.c_str());
+			} else {
+				g_Log.AddMessageFormat(
+						"Service authenticated OK, but there was no local account with name %s, creating one",
+						loginName.c_str());
 				g_AccountManager.cs.Enter("ServiceAccountCreation");
-				int retval = g_AccountManager.CreateAccountFromService(loginName.c_str());
+				int retval = g_AccountManager.CreateAccountFromService(
+						loginName.c_str());
 				g_AccountManager.cs.Leave();
-				if(retval == g_AccountManager.ACCOUNT_SUCCESS) {
-					AccountQuickData *aqd = g_AccountManager.GetAccountQuickDataByUsername(loginName.c_str());
+				if (retval == g_AccountManager.ACCOUNT_SUCCESS) {
+					AccountQuickData *aqd =
+							g_AccountManager.GetAccountQuickDataByUsername(
+									loginName.c_str());
 					accPtr = g_AccountManager.FetchIndividualAccount(aqd->mID);
 					accPtr->GroveName = grove;
 					accPtr->PendingMinorUpdates++;
-					if(veteran) {
-						if(grove.size() > 0)
-							transferGroves(accPtr);
-						else
-							g_Log.AddMessageFormat("No grove name supplied, groves will not be imported.", loginName.c_str());
-					}
-					else {
-						g_Log.AddMessageFormat("Not a veteran, no groves will be imported.", loginName.c_str());
-					}
-				}
-				else {
+				} else {
 					char buf[128];
-					Util::SafeFormat(buf, sizeof(buf), "Failed to create account on game server. %s", g_AccountManager.GetErrorMessage(retval));
+					Util::SafeFormat(buf, sizeof(buf),
+							"Failed to create account on game server. %s",
+							g_AccountManager.GetErrorMessage(retval));
 					sim->ForceErrorMessage(buf, INFOMSG_ERROR);
 					sim->Disconnect("ServiceAuthentication::authenticate");
 					return NULL;
@@ -336,20 +389,24 @@ AccountData * ServiceAuthenticationHandler::onAuthenticate(SimulatorThread *sim,
 			 * set permissions)
 			 */
 
-
 			//
 			// TODO should allow this to be determined by a configuration file, I am forever
 			// tweaking role->permission mappings
 			//
+			if (accPtr != NULL) {
+				if (accPtr->GroveName.length() > 0
+						&& grove.compare(accPtr->GroveName) != 0) {
+					g_Log.AddMessageFormat(
+							"Attempting to rename player groves from '%s' to '%s'",
+							accPtr->GroveName.c_str(), grove.c_str());
 
-			if(accPtr != NULL) {
-				if(accPtr->GroveName.length() > 0 && grove.compare(accPtr->GroveName) != 0) {
-					g_Log.AddMessageFormat("Attempting to rename player groves from '%s' to '%s'", accPtr->GroveName.c_str(), grove.c_str());
-
-					ZoneDefInfo *def = g_ZoneDefManager.GetPointerByGroveName(grove.c_str());
-					if(def != NULL) {
+					ZoneDefInfo *def = g_ZoneDefManager.GetPointerByGroveName(
+							grove.c_str());
+					if (def != NULL) {
 						char buf[128];
-						Util::SafeFormat(buf, sizeof(buf), "The Grove name '%s' is already in use by another player. Please choose another. ", grove.c_str());
+						Util::SafeFormat(buf, sizeof(buf),
+								"The Grove name '%s' is already in use by another player. Please choose another. ",
+								grove.c_str());
 						sim->ForceErrorMessage(buf, INFOMSG_ERROR);
 						sim->Disconnect("ServiceAuthentication::authenticate");
 						return NULL;
@@ -359,21 +416,27 @@ AccountData * ServiceAuthenticationHandler::onAuthenticate(SimulatorThread *sim,
 					char buf[256];
 
 					std::vector<int> groveList;
-					g_ZoneDefManager.EnumerateGroveIds(accPtr->ID, 0, groveList);
+					g_ZoneDefManager.EnumerateGroveIds(accPtr->ID, 0,
+							groveList);
 					int idx = 1;
 					for (std::vector<int>::iterator it = groveList.begin();
 							it != groveList.end(); ++it) {
-						ZoneDefInfo *zone = g_ZoneDefManager.GetPointerByID(*it);
+						ZoneDefInfo *zone = g_ZoneDefManager.GetPointerByID(
+								*it);
 						if (zone == NULL)
 							g_Log.AddMessageFormat("Unknown grove %d", *it);
 						else {
-							Util::SafeFormat(buf, sizeof(buf), "%s%d", grove.c_str(), idx);
-							g_Log.AddMessageFormat("Grove %s is now %s", zone->mWarpName.c_str(), buf);
+							Util::SafeFormat(buf, sizeof(buf), "%s%d",
+									grove.c_str(), idx);
+							g_Log.AddMessageFormat("Grove %s is now %s",
+									zone->mWarpName.c_str(), buf);
 							zone->mWarpName = buf;
 							zone->mGroveName = grove;
 							zone->PendingChanges++;
 
-							g_ZoneDefManager.UpdateZoneIndex(zone->mID, accPtr->ID, zone->mWarpName.c_str(), zone->mGroveName.c_str(), false);
+							g_ZoneDefManager.UpdateZoneIndex(zone->mID,
+									accPtr->ID, zone->mWarpName.c_str(),
+									zone->mGroveName.c_str(), false);
 
 							idx++;
 						}
@@ -385,7 +448,9 @@ AccountData * ServiceAuthenticationHandler::onAuthenticate(SimulatorThread *sim,
 
 				// Sages and admins get sage
 				bool needSage = sage || admin || builder || developer;
-				if(needSage != accPtr->HasPermission(Perm_Account, Permission_Sage)) {
+				if (needSage
+						!= accPtr->HasPermission(Perm_Account,
+								Permission_Sage)) {
 					accPtr->SetPermission(Perm_Account, "sage", needSage);
 					accPtr->PendingMinorUpdates++;
 				}
@@ -393,75 +458,109 @@ AccountData * ServiceAuthenticationHandler::onAuthenticate(SimulatorThread *sim,
 				// Admin and developer gets admin
 
 				bool needAdmin = admin || developer;
-				if(needAdmin != accPtr->HasPermission(Perm_Account, Permission_Admin)) {
+				if (needAdmin
+						!= accPtr->HasPermission(Perm_Account,
+								Permission_Admin)) {
 					accPtr->SetPermission(Perm_Account, "admin", needAdmin);
 					accPtr->PendingMinorUpdates++;
 				}
 
 				// Sages and admins get debug
 				bool needDebug = admin || builder || developer;
-				if(needDebug != accPtr->HasPermission(Perm_Account, Permission_Debug)) {
+				if (needDebug
+						!= accPtr->HasPermission(Perm_Account,
+								Permission_Debug)) {
 					accPtr->SetPermission(Perm_Account, "debug", needDebug);
 					accPtr->PendingMinorUpdates++;
 				}
 
 				// Builders
 				bool needBuilder = builder || admin;
-				if(needBuilder != accPtr->HasPermission(Perm_Account, Permission_Builder)) {
+				if (needBuilder
+						!= accPtr->HasPermission(Perm_Account,
+								Permission_Builder)) {
 					accPtr->SetPermission(Perm_Account, "builder", needBuilder);
 					accPtr->PendingMinorUpdates++;
 				}
 
 				// Item give
 				bool needItemGive = sage || admin;
-				if(needItemGive != accPtr->HasPermission(Perm_Account, Permission_ItemGive)) {
-					accPtr->SetPermission(Perm_Account, "itemgive", needItemGive);
+				if (needItemGive
+						!= accPtr->HasPermission(Perm_Account,
+								Permission_ItemGive)) {
+					accPtr->SetPermission(Perm_Account, "itemgive",
+							needItemGive);
 					accPtr->PendingMinorUpdates++;
 				}
 
 				// Tweakers
-				bool needClientTweak = tweaker || admin || sage || builder || developer;
-				if(needClientTweak != accPtr->HasPermission(Perm_Account, Permission_TweakClient)) {
-					accPtr->SetPermission(Perm_Account, "tweakclient", needClientTweak);
+				bool needClientTweak = tweaker || admin || sage || builder
+						|| developer;
+				if (needClientTweak
+						!= accPtr->HasPermission(Perm_Account,
+								Permission_TweakClient)) {
+					accPtr->SetPermission(Perm_Account, "tweakclient",
+							needClientTweak);
 					accPtr->PendingMinorUpdates++;
 				}
 				bool needSelfTweak = admin || builder || developer;
-				if(needSelfTweak != accPtr->HasPermission(Perm_Account, Permission_TweakSelf)) {
-					accPtr->SetPermission(Perm_Account, "tweakself", needSelfTweak);
+				if (needSelfTweak
+						!= accPtr->HasPermission(Perm_Account,
+								Permission_TweakSelf)) {
+					accPtr->SetPermission(Perm_Account, "tweakself",
+							needSelfTweak);
 					accPtr->PendingMinorUpdates++;
 				}
 				bool needNPCTweak = admin || builder || developer;
-				if(needNPCTweak != accPtr->HasPermission(Perm_Account, Permission_TweakNPC)) {
-					accPtr->SetPermission(Perm_Account, "tweaknpc", needNPCTweak);
+				if (needNPCTweak
+						!= accPtr->HasPermission(Perm_Account,
+								Permission_TweakNPC)) {
+					accPtr->SetPermission(Perm_Account, "tweaknpc",
+							needNPCTweak);
 					accPtr->PendingMinorUpdates++;
 				}
 				bool needOtherTweak = admin;
-				if(needOtherTweak != accPtr->HasPermission(Perm_Account, Permission_TweakOther)) {
-					accPtr->SetPermission(Perm_Account, "tweakother", needOtherTweak);
+				if (needOtherTweak
+						!= accPtr->HasPermission(Perm_Account,
+								Permission_TweakOther)) {
+					accPtr->SetPermission(Perm_Account, "tweakother",
+							needOtherTweak);
 					accPtr->PendingMinorUpdates++;
 				}
 				bool needSysChat = admin;
-				if(needSysChat != accPtr->HasPermission(Perm_Account, Permission_SysChat)) {
+				if (needSysChat
+						!= accPtr->HasPermission(Perm_Account,
+								Permission_SysChat)) {
 					accPtr->SetPermission(Perm_Account, "syschat", needSysChat);
 					accPtr->PendingMinorUpdates++;
 				}
 				bool needGMChat = admin;
-				if(needGMChat != accPtr->HasPermission(Perm_Account, Permission_GMChat)) {
+				if (needGMChat
+						!= accPtr->HasPermission(Perm_Account,
+								Permission_GMChat)) {
 					accPtr->SetPermission(Perm_Account, "gmchat", needGMChat);
 					accPtr->PendingMinorUpdates++;
 				}
 
 				// Get the number of unread private messages waiting
 				session.unreadMessages = sc.getUnreadPrivateMessages(&session);
-				g_Log.AddMessageFormat("Account has %d unread messages", session.unreadMessages);
+				g_Log.AddMessageFormat("Account has %d unread messages",
+						session.unreadMessages);
+
+				if (!accPtr->VeteranImported) {
+					copyVeteranPlayerDetails(pfUsername, accPtr);
+				}
 
 				accPtr->SiteSession.CopyFrom(&session);
 			}
-		}
-		else {
-			sim->ForceErrorMessage("User not found on external service, please contact site administrator for assistance.", INFOMSG_ERROR);
+		} else {
+			sim->ForceErrorMessage(
+					"User not found on external service, please contact site administrator for assistance.",
+					INFOMSG_ERROR);
 			sim->Disconnect("ServiceAuthentication::authenticate");
-			g_Log.AddMessageFormat("Service returned error when confirming authentication. Status %d", res);
+			g_Log.AddMessageFormat(
+					"Service returned error when confirming authentication. Status %d",
+					res);
 			return NULL;
 		}
 	}

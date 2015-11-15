@@ -828,12 +828,14 @@ class this.Screens.Inventory extends this.GUI.ContainerFrame
 
 		this.mInventoryContainer.addMovingToProperties("trade_avatar", this.MoveToProperties(this.MovementTypes.LOCK));
 		this.mInventoryContainer.addMovingToProperties("quickbar", this.MoveToProperties(this.MovementTypes.CLONE));
+		this.mInventoryContainer.addMovingToProperties("itempreview", this.MoveToProperties(this.MovementTypes.CLONE));
 		this.mInventoryContainer.addMovingToProperties("creaturetweak_inventory", this.MoveToProperties(this.MovementTypes.MOVE));
 		this.mInventoryContainer.addMovingToProperties("bag_inventory", this.MoveToProperties(this.MovementTypes.MOVE));
 		this.mInventoryContainer.addMovingToProperties("morph_stats", this.MoveToProperties(this.MovementTypes.LOCK));
 		this.mInventoryContainer.addMovingToProperties("morph_look", this.MoveToProperties(this.MovementTypes.CLONE));
 		this.mInventoryContainer.addMovingToProperties("crafting_list_container", this.MoveToProperties(this.MovementTypes.CLONE));
 		this.mInventoryContainer.addMovingToProperties("vault", this.MoveToProperties(this.MovementTypes.MOVE));
+		this.mInventoryContainer.addMovingToProperties("auction", this.MoveToProperties(this.MovementTypes.MOVE));
 		this.mInventoryContainer.addMovingToProperties("stamps", this.MoveToProperties(this.MovementTypes.MOVE));
 		this.mInventoryContainer.addMovingToProperties("delivery", this.MoveToProperties(this.MovementTypes.MOVE));
 		this.mInventoryContainer.addMovingToProperties("market_edit", this.MoveToProperties(this.MovementTypes.CLONE));
@@ -853,6 +855,7 @@ class this.Screens.Inventory extends this.GUI.ContainerFrame
 		this.mInventoryContainer.addAcceptingFromProperties("bag_inventory", this.AcceptFromProperties(this));
 		this.mInventoryContainer.addAcceptingFromProperties("loot", this.AcceptFromProperties(this));
 		this.mInventoryContainer.addAcceptingFromProperties("vault", this.AcceptFromProperties(this));
+		this.mInventoryContainer.addAcceptingFromProperties("auction", this.AcceptFromProperties(this));
 		this.mInventoryContainer.addAcceptingFromProperties("delivery", this.AcceptFromProperties(this));
 		this.mInventoryContainer.addAcceptingFromProperties("stamps", this.AcceptFromProperties(this));
 

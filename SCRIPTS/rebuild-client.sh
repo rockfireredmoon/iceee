@@ -150,6 +150,8 @@ find . -name '*.nut' | cpio -updm "${SCRATCH}/content"
 find . -name '*.jpg' | cpio -updm "${SCRATCH}/content"
 find . -name '*.jpeg' | cpio -updm "${SCRATCH}/content"
 find . -name '*.png' | cpio -updm "${SCRATCH}/content"
+find . -name '*.material' | cpio -updm "${SCRATCH}/content"
+find . -name '*.overlay' | cpio -updm "${SCRATCH}/content"
 popd
 
 MAJOR_ICEEE_VERSION=ICE1

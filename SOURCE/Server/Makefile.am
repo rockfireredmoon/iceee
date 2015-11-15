@@ -17,6 +17,7 @@ tawd_SOURCES = md5.cc \
 	AIScript2.cpp \
 	Arena.cpp \
 	Audit.cpp \
+	AuctionHouse.cpp \
 	BroadCast.cpp \
 	ByteBuffer.cpp \
 	Character.cpp \
@@ -79,6 +80,7 @@ tawd_SOURCES = md5.cc \
 	SocketClass3.cpp \
 	Stats.cpp \
 	StringList.cpp \
+	Timer.cpp \
 	Trade.cpp \
 	URL.cpp \
 	Util.cpp \
@@ -105,6 +107,8 @@ tawd_SOURCES = md5.cc \
 	query/PreferenceHandlers.cpp \
 	query/GMHandlers.cpp \
 	query/CreditShopHandlers.cpp \
+	query/VaultHandlers.cpp \
+	query/AuctionHouseHandlers.cpp \
 	util/base64.cpp \
 	util/JsonHelpers.cpp \
 	util/SquirrelObjects.cpp \
@@ -115,6 +119,7 @@ tawd_SOURCES = md5.cc \
 	AIScript.h \
 	AIScript2.h \
 	Arena.h \
+	AuctionHouse.h \
 	Audit.h \
 	BroadCast.h \
 	ByteBuffer.h \
@@ -184,6 +189,7 @@ tawd_SOURCES = md5.cc \
 	SocketClass3.h \
 	Stats.h \
 	StringList.h \
+	Timer.h \
 	Trade.h \
 	TradingBoard.h \
 	URL.h \
@@ -232,6 +238,8 @@ tawd_SOURCES = md5.cc \
 	query/ClanHandlers.h \
 	query/GMHandlers.h \
 	query/CreditShopHandlers.h \
+	query/VaultHandlers.h \
+	query/AuctionHouseHandlers.h \
 	util/base64.h \
 	util/JsonHelpers.h \
 	SquirrelObjects.h
@@ -249,6 +257,7 @@ tawdsvc_SOURCES = md5.cc \
 	AIScript.cpp \
 	AIScript2.cpp \
 	Arena.cpp \
+	AuctionHouse.cpp \
 	Audit.cpp \
 	BroadCast.cpp \
 	ByteBuffer.cpp \
@@ -313,6 +322,7 @@ tawdsvc_SOURCES = md5.cc \
 	SocketClass3.cpp \
 	Stats.cpp \
 	StringList.cpp \
+	Timer.cpp \
 	Trade.cpp \
 	URL.cpp \
 	Util.cpp \
@@ -339,6 +349,8 @@ tawdsvc_SOURCES = md5.cc \
 	query/PreferenceHandlers.cpp \
 	query/GMHandlers.cpp \
 	query/CreditShopHandlers.cpp \
+	query/VaultHandlers.cpp \
+	query/AuctionHouseHandlers.cpp \
 	util/base64.cpp \
 	util/JsonHelpers.cpp \
 	Ability2.h \
@@ -348,6 +360,7 @@ tawdsvc_SOURCES = md5.cc \
 	AIScript.h \
 	AIScript2.h \
 	Arena.h \
+	AuctionHouse.h \
 	Audit.h \
 	BroadCast.h \
 	ByteBuffer.h \
@@ -417,6 +430,7 @@ tawdsvc_SOURCES = md5.cc \
 	SocketClass3.h \
 	Stats.h \
 	StringList.h \
+	Timer.h \
 	Trade.h \
 	TradingBoard.h \
 	URL.h \
@@ -465,6 +479,8 @@ tawdsvc_SOURCES = md5.cc \
 	query/ClanHandlers.h \
 	query/GMHandlers.h \
 	query/CreditShopHandlers.h \
+	query/VaultHandlers.h \
+	query/AuctionHouseHandlers.h \
 	util/base64.h \
 	util/JsonHelpers.h \
 	SquirrelObjects.h

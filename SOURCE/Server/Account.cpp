@@ -113,6 +113,8 @@ void AccountData :: ClearAll(void)
 
 	Credits = 0;
 	DeliveryBoxSlots = 0;
+	VeteranLevel = 0;
+	VeteranImported = false;
 	inventory.ClearAll();
 //	deliveryInventory.clear();
 
@@ -362,6 +364,8 @@ void AccountData :: SaveToStream(FILE *output)
 	fprintf(output, "ConsecutiveDaysLoggedIn=%d\r\n", ConsecutiveDaysLoggedIn);
 	fprintf(output, "Credits=%d\r\n", Credits);
 	fprintf(output, "DeliveryBoxSlots=%d\r\n", DeliveryBoxSlots);
+	fprintf(output, "VeteranLevel=%d\r\n", VeteranLevel);
+	fprintf(output, "VeteranImported=%d\r\n", VeteranImported ? 1 : 0);
 	fprintf(output, "\r\n");
 
 	fprintf(output, "Characters=");
@@ -650,6 +654,8 @@ void AccountData :: ReadFromJSON(Json::Value &value)
 	ConsecutiveDaysLoggedIn = value["days"].asInt();
 	Credits = value["credits"].asInt();
 	DeliveryBoxSlots = value["deliveryBoxes"].asInt();
+	VeteranLevel = value["veteranLevel"].asInt();
+	VeteranImported = value["veteranImported"].asBool();
 	MaxCharacters = value["max"].asInt();
 	GroveName = value["grove"].asString();
 	PlayerStats.Clear();
@@ -687,6 +693,8 @@ void AccountData :: WriteToJSON(Json::Value &value)
 	value["days"] = ConsecutiveDaysLoggedIn;
 	value["credits"] = Credits;
 	value["deliveryBoxes"] = DeliveryBoxSlots;
+	value["veteranLevel"] = VeteranLevel;
+	value["veteranImported"] = VeteranImported;
 	value["grove"] = GroveName;
 	value["max"] = MaxCharacters;
 
@@ -747,6 +755,10 @@ void AccountManager :: LoadSectionGeneral(FileReader &fr, AccountData &ad, const
 		ad.CreatedTimeSec = fr.BlockToULongC(1);
 	else if(strcmp(NameBlock, "DELIVERYBOXSLOTS") == 0)
 		ad.DeliveryBoxSlots = fr.BlockToIntC(1);
+	else if(strcmp(NameBlock, "VETERANLEVEL") == 0)
+		ad.VeteranLevel = fr.BlockToIntC(1);
+	else if(strcmp(NameBlock, "VETERANIMPORTED") == 0)
+		ad.VeteranImported = fr.BlockToBoolC(1);
 	else if(strcmp(NameBlock, "SUSPENDDURATION") == 0)
 		ad.SuspendDurationSec = fr.BlockToULongC(1);
 	else if(strcmp(NameBlock, "CHARACTERS") == 0)
@@ -933,7 +945,7 @@ AccountData * AccountManager :: GetValidLogin(const char *loginName, const char 
 	AccountQuickData *aqd = GetAccountQuickDataByUsername(loginName);
 	if(aqd != NULL)
 	{
-		if(aqd->mLoginAuth.size() > 0 && aqd->mLoginAuth.compare(loginAuth) == 0) {
+		if(aqd->mLoginAuth.compare(loginAuth) == 0) {
 			return FetchIndividualAccount(aqd->mID);
 		}
 	}

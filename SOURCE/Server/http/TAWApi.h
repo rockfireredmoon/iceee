@@ -23,6 +23,7 @@
 #include "../Clan.h"
 #include "../Guilds.h"
 #include "../CreditShop.h"
+#include "../AuctionHouse.h"
 
 
 namespace HTTPD {
@@ -147,6 +148,17 @@ private:
 class ItemHandler: public AuthenticatedHandler {
 public:
 	bool handleAuthenticatedGet(CivetServer *server, struct mg_connection *conn);
+};
+
+
+/*
+ * Handles /api/auction requests, returning a JSON response containing auction details.
+ */
+class AuctionHandler: public AuthenticatedHandler {
+public:
+	bool handleAuthenticatedGet(CivetServer *server, struct mg_connection *conn);
+private:
+	void writeAuctionItemToJSON(AuctionHouseItem * item, Json::Value &c);
 };
 
 }

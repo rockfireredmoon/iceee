@@ -250,6 +250,11 @@ public:
 	unsigned int ClanCost;
 	bool Clans;
 
+	int MaxAuctionHours;
+	int MinAuctionHours;
+	float PercentageCommisionPerHour;
+	int MaxAuctionExpiredHours;
+
 	unsigned long debugAdministrativeBehaviorFlags;
 	void SetAdministrativeBehaviorFlag(unsigned long bitValue, bool state);
 	bool HasAdministrativeBehaviorFlag(unsigned long bitValue);

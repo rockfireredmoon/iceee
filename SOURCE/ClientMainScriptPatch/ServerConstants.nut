@@ -47,7 +47,8 @@ this.InventoryMapping <- {
 	buyback = 4,
 	trade = 5,
 	stamps = 7,
-	delivery = 8
+	delivery = 8,
+	auction = 9
 };
 this.ItemEquipSlotToAttachmentPoint <- {
 	[this.ItemEquipSlot.WEAPON_MAIN_HAND] = [
