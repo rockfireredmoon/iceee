@@ -3588,7 +3588,8 @@ void ActiveInstance :: LoadStaticObjects(const char *filename)
 			int y = lfr.BlockToIntC(2);
 			int z = lfr.BlockToIntC(3);
 			int facing = lfr.BlockToIntC(4);
-			SpawnGeneric(CDefID, x, y, z, facing, 0);
+			int flags = lfr.BlockLen[5] > 0 ? lfr.BlockToIntC(5) : 0;
+			SpawnGeneric(CDefID, x, y, z, facing, flags);
 		}
 	}
 	lfr.CloseCurrent();
