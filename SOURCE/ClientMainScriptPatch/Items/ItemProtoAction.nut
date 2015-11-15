@@ -5,6 +5,7 @@ class this.ItemProtoAction extends this.Action
 	mStackCount = 1;
 	mInfoFrame = null;
 	mItemId = "";
+	mLookId = null;
 	
 	constructor( proto )
 	{
@@ -18,6 +19,7 @@ class this.ItemProtoAction extends this.Action
 		}
 
 		local itemId = attributes[0].slice(itemIndex + 4);
+		mLookId = attributes[1].tointeger();
 		this.mStackCount = attributes[2].tointeger() + 1;
 		local itemDef = ::_ItemDataManager.getItemDef(itemId.tointeger());
 		this.Action.constructor(itemDef.mDisplayName, itemDef.mIcon);

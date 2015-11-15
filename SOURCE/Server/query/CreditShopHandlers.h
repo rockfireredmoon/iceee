@@ -15,16 +15,54 @@
  * along with TAWD.  If not, see <http://www.gnu.org/licenses/
  */
 
-
 #ifndef CSHANDLERS_H
 #define CSHANDLERS_H
 
 #include "Query.h"
 
-class CreditShopBuyHandler : public QueryHandler {
+class CreditShopBuyHandler: public QueryHandler {
 public:
-	~CreditShopBuyHandler() {};
-	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
+	~CreditShopBuyHandler() {
+	}
+
+	int handleQuery(SimulatorThread *sim, CharacterServerData *pld,
+			SimulatorQuery *query, CreatureInstance *creatureInstance);
+};
+
+class CreditShopListHandler: public QueryHandler {
+public:
+	~CreditShopListHandler() {
+	}
+
+	int handleQuery(SimulatorThread *sim, CharacterServerData *pld,
+			SimulatorQuery *query, CreatureInstance *creatureInstance);
+};
+
+class CreditShopEditHandler: public QueryHandler {
+public:
+	~CreditShopEditHandler() {
+	}
+
+	int handleQuery(SimulatorThread *sim, CharacterServerData *pld,
+			SimulatorQuery *query, CreatureInstance *creatureInstance);
+};
+
+class CreditShopPurchaseNameHandler: public QueryHandler {
+public:
+	~CreditShopPurchaseNameHandler() {
+	}
+
+	int handleQuery(SimulatorThread *sim, CharacterServerData *pld,
+			SimulatorQuery *query, CreatureInstance *creatureInstance);
+};
+
+class CreditShopReloadHandler: public QueryHandler {
+public:
+	~CreditShopReloadHandler() {
+	}
+
+	int handleQuery(SimulatorThread *sim, CharacterServerData *pld,
+			SimulatorQuery *query, CreatureInstance *creatureInstance);
 };
 
 #endif

@@ -796,6 +796,22 @@ this.Util.findMatchingContainer <- function ( containerName, ... )
 			
 		}
 	}
+	else if (containerName == "auction")
+	{
+		local ah = this.Screens.get("AuctionHouse", true);
+		if (ah)
+		{
+			actionContainer = ah.getYourItemContainer();
+		}
+	}
+	//else if (containerName == "auctionhouse")
+	//{
+		//local ah = this.Screens.get("AuctionHouse", true);
+		//if (ah)
+		//{
+			//actionContainer = ah.getActionContainer();
+		//}
+	//}
 	else if (containerName == "delivery")
 	{
 		local vault = this.Screens.get("Vault", true);
@@ -1435,6 +1451,82 @@ this.Util.parseHourToTimeStr <- function ( value )
 
 	return timeStr;
 };
+
+this.Util.milliToTimeLeftString <- function( millis ) {
+
+	local timeLeftTable = Util.paraseMiliToTable(millis);
+	local timeLeftString = "";
+	if (timeLeftTable.h > 0)
+		timeLeftString += timeLeftTable.h + ":";
+
+	if (timeLeftTable.m > 0) {
+		if (timeLeftTable.m <= 9)
+			timeLeftString += "0";
+
+		timeLeftString += timeLeftTable.m + ":";
+	}
+	else {
+		timeLeftString += "00:";
+	}
+
+	if (timeLeftTable.s <= 9)
+		timeLeftString += "0";
+
+	timeLeftString += timeLeftTable.s;
+	return timeLeftString;
+}
+
+this.Util.parseMilliToShortTimeStr <- function ( value )
+{
+	local timeTable = this.Util.paraseMiliToTable(value);
+	local timeStr = "";
+
+	if (timeTable.d == 1)
+	{
+		timeStr = timeTable.d + " day ";
+	}
+	else if (timeTable.d > 1)
+	{
+		timeStr = timeTable.d + " days ";
+	}
+
+	if (timeTable.h == 1)
+	{
+		timeStr = timeStr + timeTable.h + " hr ";
+	}
+	else if (timeTable.h > 1)
+	{
+		timeStr = timeStr + timeTable.h + " hrs ";
+	}
+	
+	if(timeTable.d < 1) { 
+
+		if (timeTable.m == 1)
+		{
+			timeStr = timeStr + timeTable.m + " min ";
+		}
+		else if (timeTable.m > 1)
+		{
+			timeStr = timeStr + timeTable.m + " mins ";
+		}
+		
+		if (timeTable.h < 1) {
+	
+			if (timeTable.s == 1)
+			{
+				timeStr = timeStr + timeTable.s + " sec ";
+			}
+			else if (timeTable.s > 1)
+			{
+				timeStr = timeStr + timeTable.s + " secs ";
+			}
+		}
+		
+	}
+
+	return timeStr;
+};
+
 this.Util.parseMilliToTimeStr <- function ( value )
 {
 	local timeTable = this.Util.paraseMiliToTable(value);

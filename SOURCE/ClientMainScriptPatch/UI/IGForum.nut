@@ -1791,7 +1791,7 @@ class Screens.PreviewItem extends GUI.Frame
 		mButtonForumToggle.setFixedSize(120, 18);
 
 
-		mItemDrag = GUI.ActionContainer("quickbar", 1, 1, 0, 0, this, false);
+		mItemDrag = GUI.ActionContainer("itempreview", 1, 1, 0, 0, this, false);
 		mItemDrag.setItemPanelVisible(false);
 		mItemDrag.setValidDropContainer(true);
 		mItemDrag.setAllowButtonDisownership(false);
@@ -1801,6 +1801,10 @@ class Screens.PreviewItem extends GUI.Frame
 		mItemDrag.setSize(size.width, size.height);
 		//mItemDrag.setPosition( 18, 18 );
 		mItemDrag.addAcceptingFromProperties("inventory", AcceptFromProperties(this));
+		mItemDrag.addAcceptingFromProperties("auctionhouse", AcceptFromProperties(this));
+		mItemDrag.addAcceptingFromProperties("vault", AcceptFromProperties(this));
+		mItemDrag.addAcceptingFromProperties("deliveryBox", AcceptFromProperties(this));
+		mItemDrag.addAcceptingFromProperties("item_shop", AcceptFromProperties(this));
 
 
 
@@ -1855,15 +1859,26 @@ class Screens.PreviewItem extends GUI.Frame
 	{
 		local button = oldSlot.getActionButton();
 		local action = button.getAction();
-		local itemData = action.mItemData;
-
-		local itemID = itemData.mItemDefId;
-		local lookID = 0;
-		if(itemData.mItemLookDefId > 0)
-			lookID = itemData.mItemLookDefId;
-
-		local itemDef = ::_ItemDataManager.getItemDef(itemID);
-		SetItem(itemID, lookID);
+		
+		
+		if(action instanceof ItemAction) { 
+			local itemData = action.mItemData;
+	
+			local itemID = itemData.mItemDefId;
+			local lookID = 0;
+			if(itemData.mItemLookDefId > 0)
+				lookID = itemData.mItemLookDefId;
+	
+			local itemDef = ::_ItemDataManager.getItemDef(itemID);
+			SetItem(itemID, lookID);
+			return true;
+		}
+		else if(action instanceof ItemProtoAction) {
+			SetItem(action.mItemDefId, action.mLookId);
+			return true;
+		}
+		
+		return false;
 	}
 	function SetItem(itemID, lookID)
 	{

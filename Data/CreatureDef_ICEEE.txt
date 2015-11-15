@@ -2161,3 +2161,17 @@ level=4
 display_name=Hedgehog Form
 creature_category=Magical
 constitution=1
+
+[ENTRY]
+defHints=4096
+ID=7874
+will_regen=1
+might_regen=1
+appearance=c2:{["h"]=0,["c"]={["boots"]={["type"]="Armor-CC-Clothing7",["colors"]=["2a2a2a","ffffff","3f3f3f","000000","ffffff"]},["leggings"]={["type"]="Armor-CC-Clothing1",["colors"]=["10167f","0c0e2a","ffffff"]},["belt"]={["type"]="Armor-Cloth-Low3",["colors"]=["7f7f7f","f2d756","fffd00","7f7f54","151515","d4d48c","ffffff","ffffff"]},["collar"]={["type"]="Armor-Cloth-Female-Fancy2",["colors"]=["007f07","f2d756","fffd00","ffffff","2a1509","d4d48c","aaa98d","ffffff"]},["chest"]={["type"]="Armor-CC-Clothing1",["colors"]=["080b3f","2b59e9","2f61ff"]}},["b"]="m",["sk"]={["hands_feet"]="BFAE9C",["goatee"]="A18065",["eye_white"]="DCDCDC",["snout"]="E5DDD0",["horns"]="90735C",["face_highlight"]="C9B6A4",["eye"]="809497",["hoves"]="89745C",["eye_lid"]="D4CDC2",["base"]="A78A6F"},["r"]="c",["g"]="m",["sz"]="1"}
+level=50
+display_name=Shorn Kelly
+sub_name=Auctioneer
+profession=1
+creature_category=Mortal
+ai_package=example
+total_size=5

@@ -660,6 +660,7 @@ class Screens.Vault extends GUI.BigFrame
 		mVaultContainer.addMovingToProperties("inventory", MoveToProperties(MovementTypes.MOVE));
 		mVaultContainer.addMovingToProperties("vault", MoveToProperties(MovementTypes.MOVE));
 		mVaultContainer.addMovingToProperties("deliveryBox", MoveToProperties(MovementTypes.MOVE));
+		mVaultContainer.addMovingToProperties("itempreview", MoveToProperties(MovementTypes.CLONE));
 		
 		mVaultContainer.addAcceptingFromProperties("stamps", AcceptFromProperties(this));
 		mVaultContainer.addAcceptingFromProperties("inventory", AcceptFromProperties(this));
@@ -672,6 +673,7 @@ class Screens.Vault extends GUI.BigFrame
 		mDeliveryBoxAC.addAcceptingFromProperties("inventory", AcceptFromProperties(this));
 		mDeliveryBoxAC.addAcceptingFromProperties("vault", AcceptFromProperties(this));
 		mDeliveryBoxAC.addAcceptingFromProperties("deliveryBox", AcceptFromProperties(this));
+		mDeliveryBoxAC.addMovingToProperties("itempreview", MoveToProperties(MovementTypes.CLONE));
 		
 		
 	}

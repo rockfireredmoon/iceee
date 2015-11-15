@@ -7,6 +7,7 @@
 #include "Item.h"
 #include "GM.h"
 #include "CreditShop.h"
+#include "AuctionHouse.h"
 #include "Clan.h"
 
 int SaveSession(const char *filename)
@@ -26,6 +27,7 @@ int SaveSession(const char *filename)
 	fprintf(output, "NextAccountID=%d\r\n", g_AccountManager.NextAccountID);
 	fprintf(output, "NextVirtualItemID=%d\r\n", g_ItemManager.nextVirtualItemID);
 	fprintf(output, "NextMarketItemID=%d\r\n", g_CreditShopManager.nextMarketItemID);
+	fprintf(output, "NextAuctionHouseItemID=%d\r\n", g_AuctionHouseManager.nextAuctionHouseItemID);
 	fprintf(output, "NextClanID=%d\r\n", g_ClanManager.nextClanID);
 	fprintf(output, "NextPetitionID=%d\r\n", g_PetitionManager.NextPetitionID);
 	fprintf(output, "\r\n");
@@ -65,6 +67,8 @@ int LoadSession(const char *filename)
 				g_ItemManager.nextVirtualItemID = lfr.BlockToInt(1);
 			else if(strcmp(NameBlock, "NextMarketItemID") == 0)
 				g_CreditShopManager.nextMarketItemID = lfr.BlockToInt(1);
+			else if(strcmp(NameBlock, "NextAuctionHouseItemID") == 0)
+				g_AuctionHouseManager.nextAuctionHouseItemID = lfr.BlockToInt(1);
 			else if(strcmp(NameBlock, "NextClanID") == 0)
 				g_ClanManager.nextClanID = lfr.BlockToInt(1);
 			else

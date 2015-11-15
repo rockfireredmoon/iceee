@@ -177,6 +177,7 @@ If using Code::Blocks on LINUX
 #include "Guilds.h"
 #include "Clan.h"
 #include "Daily.h"
+#include "Timer.h"
 #include "Leaderboard.h"
 #include "http/HTTPService.h"
 #include "query/Lobby.h"
@@ -184,6 +185,8 @@ If using Code::Blocks on LINUX
 #include "query/PreferenceHandlers.h"
 #include "query/GMHandlers.h"
 #include "query/CreditShopHandlers.h"
+#include "query/VaultHandlers.h"
+#include "query/AuctionHouseHandlers.h"
 
 #ifdef WINDOWS_SERVICE
 #include <windows.h>
@@ -548,6 +551,19 @@ int InitServerMain() {
 	g_QueryManager.queryHandlers["pref.set"] = new PrefSetHandler();
 	g_QueryManager.queryHandlers["util.addFunds"] = new AddFundsHandler();
 	g_QueryManager.queryHandlers["item.market.buy"] = new CreditShopBuyHandler();
+	g_QueryManager.queryHandlers["item.market.list"] = new CreditShopListHandler();
+	g_QueryManager.queryHandlers["item.market.edit"] = new CreditShopEditHandler();
+	g_QueryManager.queryHandlers["item.market.reload"] = new CreditShopReloadHandler();
+	g_QueryManager.queryHandlers["item.market.purchase.name"] = new CreditShopPurchaseNameHandler();
+
+
+	g_QueryManager.queryHandlers["vault.size"] = new VaultSizeHandler();
+	g_QueryManager.queryHandlers["vault.send"] = new VaultSendHandler();
+	g_QueryManager.queryHandlers["vault.expand"] = new VaultExpandHandler();
+	g_QueryManager.queryHandlers["ah.contents"] = new AuctionHouseContentsHandler();
+	g_QueryManager.queryHandlers["ah.auction"] = new AuctionHouseAuctionHandler();
+	g_QueryManager.queryHandlers["ah.bid"] = new AuctionHouseBidHandler();
+	g_QueryManager.queryHandlers["ah.buy"] = new AuctionHouseBuyHandler();
 
 
 	// Some are shared
@@ -630,6 +646,9 @@ int InitServerMain() {
 
 	g_CreditShopManager.LoadItems();
 	g_Log.AddMessageFormat("Loaded %d Credit Shop items.", g_CreditShopManager.mItems.size());
+
+	g_AuctionHouseManager.LoadItems();
+	g_Log.AddMessageFormat("Loaded %d Auction House items.", g_CreditShopManager.mItems.size());
 
 	g_ZoneDefManager.LoadData();
 	g_GroveTemplateManager.LoadData();
@@ -1191,6 +1210,7 @@ void RunServerMain(void)
 		SaveSession("SessionVars.txt");
 
 	RunActiveInstances();
+	g_TimerManager.RunTasks();
 	g_SimulatorManager.FlushHangingSimulators();
 	g_ItemManager.CheckVirtualItemAutosave(false);
 	CheckCharacterAutosave(false);

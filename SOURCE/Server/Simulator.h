@@ -290,10 +290,6 @@ public:
 	int handle_query_itemdef_contents(void);
 	int handle_query_itemdef_delete(void);
 	int handle_query_item_create(void);
-	int handle_query_item_market_list(void);
-	int handle_query_item_market_edit(void);
-	int handle_query_item_market_reload(void);
-	int handle_query_item_market_purchase_name(void);
 	int handle_query_bug_report(void);
 	int handle_query_user_auth_reset();
 	int handle_query_validate_name();
@@ -320,9 +316,6 @@ public:
 	int handle_query_ps_leave(void);
 	int handle_query_party(void);
 	int handle_query_quest_share(void);
-	int handle_query_vault_size(void);
-	int handle_query_vault_send(void);
-	int handle_query_vault_expand(void);
 	int handle_query_shard_set(void);
 
 	int handle_query_mod_setgrovestart(void);
@@ -599,6 +592,7 @@ public:
 	void RegisterAction(ThreadRequest *reqData);
 	void UnregisterAction(ThreadRequest *reqData);
 	void RunPendingActions(void);
+	void SendToAllSimulators(const char *buffer, unsigned int buflen, SimulatorThread *except);
 
 	SimulatorThread* GetPtrByID(int simID);
 	

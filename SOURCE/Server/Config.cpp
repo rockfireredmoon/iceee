@@ -498,6 +498,14 @@ void LoadConfig(const char *filename)
 				g_Config.Clans = lfr.BlockToBool(1);
 			else if(strcmp(NameBlock, "ClanCost") == 0)
 				g_Config.ClanCost = lfr.BlockToInt(1);
+			else if(strcmp(NameBlock, "MaxAuctionHours") == 0)
+				g_Config.MaxAuctionHours = lfr.BlockToInt(1);
+			else if(strcmp(NameBlock, "MinAuctionHours") == 0)
+				g_Config.MinAuctionHours = lfr.BlockToInt(1);
+			else if(strcmp(NameBlock, "MinAuctionHours") == 0)
+				g_Config.PercentageCommisionPerHour = lfr.BlockToFloatC(1);
+			else if(strcmp(NameBlock, "MaxAuctionExpiredHours") == 0)
+				g_Config.MaxAuctionExpiredHours= lfr.BlockToInt(1);
 			else
 			{
 				g_Log.AddMessageFormatW(MSG_SHOW, "Unknown identifier [%s] in config file [%s]", lfr.BlockToString(0), filename);
@@ -733,6 +741,11 @@ GlobalConfigData :: GlobalConfigData()
 
 	Clans = true;
 	ClanCost = 100000;
+
+	MaxAuctionHours = 24 * 7;
+	MinAuctionHours = 1;
+	PercentageCommisionPerHour = 5.0 / 24;
+	MaxAuctionExpiredHours = 24;
 }
 
 GlobalConfigData :: ~GlobalConfigData()

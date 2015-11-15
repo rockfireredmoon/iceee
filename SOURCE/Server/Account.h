@@ -116,6 +116,8 @@ public:
 	int ConsecutiveDaysLoggedIn; // The number of consecutive days the account has logged in
 	int Credits; // The number of credits the account has (if AccountCredits is on)
 	int DeliveryBoxSlots;
+	int VeteranLevel; // If the account is a veteran, they might get privileges
+	bool VeteranImported; // If the veteran account has been imported
 
 	// Account wide stats
 	PlayerStatSet PlayerStats;

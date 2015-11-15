@@ -431,7 +431,8 @@ enum StandardContainerEnum
 	BANK_CONTAINER = 2,
 	BUYBACK_CONTAINER = 4,
 	STAMPS_CONTAINER = 7,
-	DELIVERY_CONTAINER = 8
+	DELIVERY_CONTAINER = 8,
+	AUCTION_CONTAINER = 9
 };
 
 #define INV_BASESLOTS   24    //All characters start with 24 slots.

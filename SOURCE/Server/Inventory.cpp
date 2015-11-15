@@ -244,6 +244,7 @@ InventorySlot * InventoryManager :: AddItem_Ex(int containerID, int itemID, int 
 		count += GetItemCount(BANK_CONTAINER, itemDef->mID);
 		count += GetItemCount(EQ_CONTAINER, itemDef->mID);
 		count += GetItemCount(DELIVERY_CONTAINER, itemDef->mID);
+		count += GetItemCount(AUCTION_CONTAINER, itemDef->mID);
 		count += GetItemCount(STAMPS_CONTAINER, itemDef->mID);
 		if(count >= itemDef->mOwnershipRestriction) {
 			// Already have the limit of this item
@@ -681,7 +682,7 @@ int InventoryManager :: ItemMove(char *buffer, char *convBuf, CharacterStatSet *
 	}
 
 
-	if((destContainer == BANK_CONTAINER && localCharacterVault == false) || destContainer == DELIVERY_CONTAINER)
+	if((destContainer == BANK_CONTAINER && localCharacterVault == false) || destContainer == DELIVERY_CONTAINER || destContainer == AUCTION_CONTAINER )
 	{
 		if(containerList[origContainer][origItemIndex].bindStatus != 0)
 			return -4;

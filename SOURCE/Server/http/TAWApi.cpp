@@ -1072,11 +1072,9 @@ bool ItemHandler::handleAuthenticatedGet(CivetServer *server,
 		if (itemID == 0) {
 			std::string itemName = pathParts[pathParts.size() - 1];
 			Util::URLDecode(itemName);
-			g_Log.AddMessageFormat("[REMOVEME] Looking up item %s", itemName.c_str());
 			itemDef = g_ItemManager.GetSafePointerByExactName(itemName.c_str());
 		}
 		else {
-			g_Log.AddMessageFormat("[REMOVEME] Looking up item %d", itemID);
 			itemDef = g_ItemManager.GetSafePointerByID(itemID);
 		}
 
@@ -1092,4 +1090,69 @@ bool ItemHandler::handleAuthenticatedGet(CivetServer *server,
 	}
 
 	return true;
+}
+
+//
+// AuctionHouseHandler
+//
+
+void AuctionHandler::writeAuctionItemToJSON(AuctionHouseItem * item,
+		Json::Value &c) {
+	item->WriteToJSON(c);
+}
+
+bool AuctionHandler::handleAuthenticatedGet(CivetServer *server,
+		struct mg_connection *conn) {
+	char buf[256];
+	int no = 0;
+
+	struct mg_request_info * req_info = mg_get_request_info(conn);
+	std::string ruri;
+
+	/* Prepare the URI */
+	CivetServer::urlDecode(req_info->uri, strlen(req_info->uri), ruri, false);
+	ruri = removeDoubleDotsAndDoubleSlashes(ruri);
+	ruri = removeStartSlash(removeEndSlash(ruri));
+
+	std::vector<std::string> pathParts;
+	Util::Split(ruri, "/", pathParts);
+
+	PageOptions opts;
+	opts.count = 10;
+	opts.Init(server, conn);
+
+	Json::Value root;
+	if (pathParts.size() > 0
+			&& pathParts[pathParts.size() - 1].compare("auction") == 0) {
+		g_AuctionHouseManager.cs.Enter("AuctionHandler::handleAuthenticatedGet");
+		std::vector<int> auctioneers;
+		for(std::map<int, AuctionHouseItem*>::iterator it = g_AuctionHouseManager.mItems.begin(); it != g_AuctionHouseManager.mItems.end(); ++it) {
+			if(std::find(auctioneers.begin(), auctioneers.end(), it->second->mAuctioneer) == auctioneers.end())
+				auctioneers.push_back(it->second->mAuctioneer);
+		}
+		g_AuctionHouseManager.cs.Leave();
+		Json::StyledWriter writer;
+		Json::Value root(Json::arrayValue);
+		for(std::vector<int>::iterator it = auctioneers.begin(); it != auctioneers.end(); ++it) {
+			root.append(*it);
+		}
+		writeJSON200(server, conn, writer.write(root));
+	} else {
+		int id = atoi(pathParts[pathParts.size() - 1].c_str());
+		g_AuctionHouseManager.cs.Enter("AuctionHandler::handleAuthenticatedGet");
+		for(std::map<int, AuctionHouseItem*>::iterator it = g_AuctionHouseManager.mItems.begin(); it != g_AuctionHouseManager.mItems.end(); ++it) {
+			if(it->second->mAuctioneer == id) {
+				Json::Value item;
+				it->second->WriteToJSON(item);
+				Util::SafeFormat(buf, sizeof(buf),"%d", it->first);
+				root[buf] = item;
+			}
+		}
+		g_AuctionHouseManager.cs.Leave();
+		Json::StyledWriter writer;
+		writeJSON200(server, conn, writer.write(root));
+	}
+
+	return true;
+
 }

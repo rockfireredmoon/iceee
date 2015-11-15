@@ -158,6 +158,7 @@ void CreditShopItem::WriteToJSON(Json::Value &value) {
 	value["copper"] = Json::UInt64(mPriceCopper);
 	value["credits"] = Json::UInt64(mPriceCredits);
 	value["itemID"] = mItemId;
+	value["lookID"] = mLookId;
 	if (mIv1 > 0)
 		value["iv1"] = mIv1;
 	if (mIv2 > 0)
