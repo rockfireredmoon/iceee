@@ -1697,7 +1697,7 @@ BodyText=Hail! You there! Yes hello! Are you venturing into Camelot? You are? Go
 
 I was sent here by my boss, Elden Motera in Fort Stonehenge, to fetch something from the city. Unfortunately , the guards seem to have mistaken me for some miscreant! I mean, look at me! I am an upstanding citizen! Really! To the point, they will not allow me into the city. Hrmph!
 
-Perhaps you could get the item for me. In the Slums you will find a Merga Moonseer. She is, uhm... ...witch, perhaps is the best way to describe her... Do not worry, she is harmless, if not a bit odd! Tell her Elden sent you for his special treat! She will understand.
+Perhaps you could get the item for me. In the Slums you will find a Merga Moonseer. She is, uhm... a ...witch, perhaps is the best way to describe her... Do not worry, she is harmless, if not a bit odd! Tell her Elden sent you for his special treat! She will understand.
 CompleteText=Who are you? What are you looking at, hmm? HRMM?! You looking at me? Am I a curiosity?? Oh... look, birds! I love birds... ...in a nice stew... ...with a touch of lemon... Did the lemons send you? Well, did they?!
 
 Oh, Elden sent you! Oh, I see then, you must not be working for THEM... ...this is good, good... ...hmm... Do you hear that? Sounds like dragons! Or wait...! No just a sparrow. Mostly the same they are, anyway...
