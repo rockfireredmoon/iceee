@@ -38,7 +38,7 @@ BodyText=Oh! Hello there! Perhaps you could help me with a small amount of work 
 
 I am a trader, you see. I take bits and pieces of creatures here in Anglorum over into Midlands and beyond to trade for other such creature bits, or just to sell. Normally, I have my man-servant, Aramere, do the collection of these things for me. But sadly, he is off on other business for me at this time, though he should be back by now! Hrmph!
 
-So, if you have the time and could use some coin, I could use some Barbhog Hides, Lake Crab Shells and some Talon Tailfeathers from the nasty little Talons that seem to infest this area - a half dozen of each should do just fine!
+So, if you have the time and could use some coin, I could use some Barbhog Hides, Lake Crab Shells and some Tailfeathers from the nasty little Razor-Talons that seem to infest this area - a half dozen of each should do just fine!
 CompleteText=You return! And I see you have my goods! Excellent! Take your reward and thank you very much!
 Level=11
 Suggested=11
@@ -58,11 +58,11 @@ Act.BodyText=Gather six Barbhog Hides from Barbhogs.
 
 Gather six Lake Crab Shells from Scuttling Lake Crabs.
 
-Gather six Talon Tailfeathers from Talons.
+Gather six Tailfeathers from Razor-Talons.
 Obj.0.type=kill
 Obj.0.data1=1618,1619
 Obj.0.data2=6
-Obj.0.description=Gather 6 Boar Hides
+Obj.0.description=Gather 6 Barbhog Hides
 Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=500169
@@ -80,7 +80,7 @@ Obj.1.markerLocations=46890.0,74.8913,66762.0,81;
 Obj.2.type=kill
 Obj.2.data1=1621,1622,1623
 Obj.2.data2=6
-Obj.2.description=Gather 6 Hawk Feathers
+Obj.2.description=Gather 6 Razor-Talon Tailfeathers
 Obj.2.complete=0
 Obj.2.myCreatureDefID=
 Obj.2.myItemID=500170
@@ -190,7 +190,7 @@ ID=245
 Title=Thornbringers Investigation
 BodyText=Welcome to Stonehenge. I am glad you have been sent to us. We surely can use help with some local issues.
 
-More specifically, I need some help dealing with these "thornbringers". Though they would appear to be Druids, like myself, they bring not life, but decay to all things around them.
+More specifically, I need some help dealing with a group calling themselves "Thornbringers". Though they would appear to be Druids, like myself, they bring not life, but decay to all things around them.
 
 They have infested the shores south of the henge and seem to be spreading daily. I have yet to ascertain what their true purpose is, or even who the leader is amongst their ranks.
 
@@ -336,7 +336,7 @@ RewardItem.3=143289,1,0
 [ENTRY]
 ID=246
 Title=A More Direct Approach
-BodyText=Hello! While most of my fellow Druids want to discuss the "whats" and "hows" of dealing with these Thornbringers, I am one for more direct action! Go to the Thornbringer camps south of the henge and, well... ...simply put.. Kill them! My brethren may disagree with my urgent action, but I cannot stand idly by while they spread their decay!
+BodyText=Hello! While most of my fellow Druids want to discuss the "whats" and "hows" of dealing with these Thornbringers, I am one for more direct action! Go to the Thornbringer camps south of the henge and, well... ...simply put... Kill them! My brethren may disagree with my urgent action, but I cannot stand idly by while they spread their decay!
 CompleteText=Perhaps this will make them think twice about keeping up their evil plans! Thank you very much!
 Level=10
 Suggested=10
@@ -420,6 +420,10 @@ ID=247
 Requires=245
 Title=Bandit Connection?
 BodyText=Ah Christie sent you? Good, I can use some help!
+
+I was sent from Camelot by Grand Druid Lunast. He is convinced the local Thornbringer situation is also related to the sudden rise of the River-Runner bandits. Previously, they were a source of little concern, doing little more than occasionally waylaying a passersby here and there on their way to Camelot. Recently, however, they have grown in not only numbers, but have gone as far as taking over some farmland south of Camelot itself!
+
+I am convinced there is a connection between the Thornbringers and the sudden rise of these bandits, as well. I have heard that a bandit messenger has been seen just south of the road. That same area seems to be visited quite regularly by one of the Thornbringers. Perhaps this is a message drop between the two? Investigate for me and let me know what you find. I can only act, in a more direct manner, if I have proof!
 CompleteText=Ah, just as I thought! Jek and Jester Jumptail; mostly buffoons, but with enough resources, it seems, they can cause quite a large amount of mayhem.
 Level=10
 Suggested=11
@@ -435,9 +439,7 @@ sGiver=43610.0,179.37,65435.0,81
 sEnder=43610.0,179.37,65435.0,81
 Heroism=6
 [ACT]
-Act.BodyText=I was sent from Camelot by Grand Druid Lunast. He is convinced the local Thornbringer situation is also related to the sudden rise of the River-Runner bandits. Previously, they were a source of little concern, doing little more than occasionally waylaying a passersby here and there, on their way to Camelot. Recently however, they have grown in not only numbers, but have gone as far as taking over some farmland south of Camelot itself!
-
-I am convinced there is a connection between the Thornbringers and the sudden rise of these bandits, as well. I have heard that a bandit messenger has been seen just south of the road. That same area seems to be visited quite regularly by one of the Thornbringers. Perhaps this is a message drop between the two? Investigate for me and let me know what you find. I can only act, in a more direct manner, if I have proof!
+Act.BodyText=Druid Kearn has heard a rumor regarding a messenger from the River-Runner Bandits and a Thornbringer being seen frequenting an area somewhere South of the road between Fort Stonehenge and Camelot. He suspects there might be a message drop location somewhere in the vicinity, but needs evidence of this before he can act on it. Travel to the area South of the Road and see what you can find!
 Obj.0.type=travel
 Obj.0.data1=46393,207,67508,81
 Obj.0.data2=250
@@ -459,7 +461,7 @@ Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=46425.8,177.08,68334.0,81;
 [ACT]
-Act.BodyText=You see a odd looking stump that could be the perfect place for a message drop!
+Act.BodyText=You see an odd looking stump that could be the perfect place for a message drop!
 Obj.0.type=gather
 Obj.0.data1=1599
 Obj.0.data2=1
@@ -489,7 +491,7 @@ Obj.0.markerLocations=43611.7,179.502,65438.0,81;
 ID=248
 Requires=247
 Title=The First Bandit Brother
-BodyText=Jek and Jester Jumptail are brothers. Bungling brothers, normally, but it seems they have gotten smarter - well that is doubtful... At least they have the help and resources from these Thornbringer Druids, to have greater numbers of men at their disposal. I know for a fact that Jek Jumptail is lording over three small bandit camps near the bridge to the southeast. Go to the camps and eliminate the bandits, and Jek Jumptail.
+BodyText=Jek and Jester Jumptail are brothers. Bungling brothers, normally, but it seems they have gotten smarter - well that is doubtful... At least they have the help and resources from these Thornbringer Druids, to have greater numbers of men at their disposal. I know for a fact that Jek Jumptail is lording over three small bandit camps near the bridge to the southeast. Go to the camps and eliminate the bandits and Jek Jumptail.
 CompleteText=Ah! You have done well striking a blow into the heart of these bandits! I thank you! Druid Christie has more information about the Thornbringers she wishes to share with you. Speak to her when you are able. Thank you again!
 Level=10
 Suggested=11
@@ -697,7 +699,7 @@ Obj.0.markerLocations=54866.1,147.576,63294.0,81;
 [ACT]
 Act.BodyText=The Druid Hall is home to the Order of Gaia. They are a druidic sect of Gaia followers who work with the King to protect Camelot.
 
-Next stop: The Crown and Sword Tavern!
+Next stop: The Pigspit Tavern!
 Obj.0.type=travel
 Obj.0.data1=54156,152,63368,81
 Obj.0.data2=100
@@ -708,7 +710,7 @@ Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=54156.6,152.159,63368.0,81;
 [ACT]
-Act.BodyText=The Pigspit Tavern has a two out of five-star rating; but do not let that worry you! They have the finest ale in all of Anglorum! I mean, you are not actually going there for the food are you?
+Act.BodyText=The Pigspit Tavern has a two out of five-star rating; but, do not let that worry you! They have the finest ale in all of Anglorum! I mean, you are not actually going there for the food are you?
 
 Next stop: The Old Underground entrance.
 Obj.0.type=travel
@@ -721,8 +723,7 @@ Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=55051.1,70.0389,67249.0,81;
 [ACT]
-Act.BodyText=The Old Underground is a remnant of days long gone. It is said it once was used for transportation under a former city here. These days, it is locked up tight, and for good reason. Travelers are warned not to try to enter for
-fear of being maimed, killed, or eaten... Or possibly all three!
+Act.BodyText=The Old Underground is a remnant of days long gone. It is said it once was used for transportation under a former city here. These days, it is locked up tight, and for good reason. Travelers are warned not to try to enter for fear of being maimed, killed, or eaten... Or possibly all three!
 
 Next stop: The Market
 Obj.0.type=travel
@@ -735,7 +736,7 @@ Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=56024.9,352.191,66102.9,81;
 [ACT]
-Act.BodyText=The Market is full of shop keepers and plenty of bargins! Enjoy!
+Act.BodyText=The Market is full of shop keepers and plenty of bargains! Enjoy!
 
 Next stop: The Camelot Great Library
 Obj.0.type=travel
@@ -762,11 +763,9 @@ Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=55057.1,176.166,63577.7,81;
 [ACT]
-Act.BodyText=Look up and behold the glory of Castle Camelot. Finished in the last decade, it is home to our king, Arthur Pendragon and his wife, Queen
-Guinevere.
+Act.BodyText=Look up and behold the glory of Castle Camelot. Finished in the last decade, it is home to our king, Arthur Pendragon and his wife, Queen Guinevere.
 
-The castle is also the home to the Knights of the Round. The King's Personal
-guard.
+The castle is also the home to the Knights of the Round, the King's personal guard.
 
 Next Stop: Big Ben.
 Obj.0.type=travel
@@ -781,7 +780,7 @@ Obj.0.markerLocations=55260.4,158.092,63321.7,81;
 [ACT]
 Act.BodyText=Big Ben; an ancient relic which is constantly maintained and preserved as a relic of the long lost past. It is one of the few remnants of "man" still to be found in our world!
 
-Thank you for taken Vanderworm Tours! I hope you have a pleasant stay in our fine city!
+Thank you for taking Vanderworm Tours! I hope you have a pleasant stay in our fine city!
 Obj.0.type=talk
 Obj.0.data1=
 Obj.0.data2=
@@ -838,7 +837,7 @@ ID=554
 Title=BOUNTY: Steppe-Slimer 
 BodyText=Kill 10 Steppe-Slimers.
 CompleteText=
-Level=10,14
+Level=12,16
 Exp=825
 PartySize=1
 NumRewards=0
@@ -941,7 +940,7 @@ sGiver=55509.0,394.255,68948.0,81
 sEnder=55509.0,394.255,68948.0,81
 Heroism=10
 [ACT]
-Act.BodyText=Kill 20 River-Runner Bandits at Farmer Felp's Farm and eliminate Jester Jumptail.
+Act.BodyText=Kill 20 River-Runner Bandits at Farmer Felps's Farm and eliminate Jester Jumptail.
 Obj.0.type=kill
 Obj.0.data1=1692,1693,1694,1695,1696,1697
 Obj.0.data2=20
@@ -976,7 +975,7 @@ Obj.0.markerLocations=55521.203,393.432,68929.0,81;
 ID=271
 Requires=254
 Title=Stolen Tools
-BodyText=If you are ridding my farm of these bandits, for sure I am glad of this, Would you also retrieve my stolen tools? These buggers have not only have been pillaging my farm, but they also stole my tools. My tools were all in an old bucket, all of which, bucket included, have been handed down from generation to generation. They may be old and even mostly useless, as tools go, but they have the value of sentiment.
+BodyText=If you are ridding my farm of these bandits, for sure I am glad of this, would you also retrieve my stolen tools? These buggers have not only been pillaging my farm, but they also stole my tools. My tools were all in an old bucket, all of which, bucket included, have been handed down from generation to generation. They may be old and even mostly useless, as tools go, but they have the value of sentiment.
 CompleteText=You found my tools! Oh thank you, thank you!
 Level=11
 Suggested=12
@@ -996,7 +995,7 @@ Act.BodyText=Search the farm areas now occupied by bandits to find Farmer Felps'
 Obj.0.type=travel
 Obj.0.data1=57732,241,68674,81
 Obj.0.data2=100
-Obj.0.description=Find Farmer Felps's stolen tools
+Obj.0.description=Find Farmer Felps' stolen tools
 Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
@@ -1031,7 +1030,7 @@ Obj.0.markerLocations=55521.203,393.432,68929.0,81;
 ID=256
 Requires=255
 Title=Return to Grand Druid Lunast
-BodyText=I got a missive from Grand Druid Lunast while you were dealing with bandits. He wishes to speak with you again.
+BodyText=I got a missive from Grand Druid Lunast while you were dealing with the bandits. He wishes to speak with you again.
 CompleteText=Good, you have returned.
 Level=11
 Suggested=11
@@ -1095,7 +1094,7 @@ ID=258
 Requires=257
 Title=The Locked Door
 BodyText=I have been investigating the graveyard and trying to ascertain exactly what the Thornbringers are doing here. Recently, the long-deceased have been rising from the grave. This is horrible! We must act quickly.
-The source of these risen dead must be inside the crypt. I see the Thornbringers come and go in and out of the crypt, but when I tried to enter, the door would not yield. There must be some secret to unlocking the door. Search the graveyard for a way to unlock the door.
+The source of these risen dead must be inside the crypt. I see the Thornbringers come and go in and out of the crypt; but when I tried to enter, the door would not yield. There must be some secret to unlocking the door. Search the graveyard for a way to unlock the door.
 CompleteText=What is this? These symbols... they were freshly carved into the stone? But this... should not be. I have a very dark suspicion, but I need a book from the Camelot Great Library to confirm my fears.
 Level=11
 Suggested=12
@@ -1122,8 +1121,7 @@ Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=58178.9,128.774,62084.0,81;
 [ACT]
-Act.BodyText=You find an oddly-etched tombstone. The symbols are very strange. Make
-a rubbing and show it to Druid Lorna.
+Act.BodyText=You find an oddly-etched tombstone. The symbols are very strange. Make a rubbing and show it to Druid Lorna.
 Obj.0.type=activate
 Obj.0.data1=1789
 Obj.0.data2=1
@@ -1197,7 +1195,7 @@ Obj.0.markerLocations=57631.5,363.687,61871.0,81;
 ID=259
 Requires=258
 Title=A Trip to the Library
-BodyText=I need you to travel to the the Camelot Great Library and speak with Archivist Blackhorn. Tell him I sent you for a book called "Occultus Stilus quod Lingua". He may complain, but tell him it is of the utmost importance to the Order of Druids that you bring me this book. He will most likely still complain! Hurry and bring the book to me.
+BodyText=I need you to travel to the Camelot Great Library and speak with Archivist Blackhorn. Tell him I sent you for a book called "Occultus Stilus quod Lingua". He may complain, but tell him it is of the utmost importance to the Order of Gaia that you bring me this book. He will most likely still complain! Hurry and bring the book to me.
 CompleteText=Oh, good day to you. What can I do for you this fine day?
 
 You want what?!?!
@@ -1355,7 +1353,7 @@ Obj.0.markerLocations=54648.5,162.362,63289.0,81;
 ID=262
 Requires=261
 Title=Dandridge Farm in Flames
-BodyText=I have received disturbing news regarding the old Dandridge farm. It has been abandoned for some time, but it seems someone has burned the place to the ground. The property was left to the order after the death of Mason Dandridge and I am very unhappy to hear someone has burned it down. Would you investigate and tell me what you find?
+BodyText=I have received disturbing news regarding the old Dandridge farm. It has been abandoned for some time, but it seems someone has burned the place to the ground. The property was left to the Order after the death of Mason Dandridge and I am very unhappy to hear someone has burned it down. Would you investigate and tell me what you find?
 CompleteText=Shadows? Are you sure? More dire news in what appears to be increasingly dire times.
 Level=13
 Suggested=13
@@ -1398,7 +1396,7 @@ Obj.0.markerLocations=54611.6,166.946,63316.0,81;
 ID=263
 Requires=262
 Title=Speak to Merlin
-BodyText=Shadows. It would be best if you spoke with Merlin about this. He can best explain what you saw. Once you have spoken with him, return to me. Perhaps I will have word from the order on how to proceed with this Thornbringer problem by that time.
+BodyText=Shadows. It would be best if you spoke with Merlin about this. He can best explain what you saw. Once you have spoken with him, return to me. Perhaps I will have word from the Order on how to proceed with this Thornbringer problem by that time.
 CompleteText=Hello again, hero! What can I do for you? Shadows? There is much to explain if you wish to know about the Shadows.
 Level=13
 Suggested=13
@@ -1432,13 +1430,13 @@ BodyText=Shadows... Long ago, some very well meaning, yet foolish souls sought a
 
 They were fools. Along the winding roots of infinite possible Earths, they found the Enigma Primal. As they claimed their prize, the Shadow came like smoke bellowing up from the cracks in the earth - whispering and grasping and following them.
 
-To make matters worse for the Mystarchs, was that the Enigma Primal was incomplete. While yes it was the key to understanding the Mysterium Primordial, the Enigma Primal was missing a single page - intentionally torn from its binding - the very first page. The key was in fact missing its own key. To attempt to read the Enigma Primal without fully comprehending it - via its own key - was to dip into insanity; such are the powers at play here.
+To make matters worse for the Mystarchs, was that the Enigma Primal was incomplete. While yes it was the key to understanding the Mysterium Primordial, the Enigma Primal was missing a single page - intentionally torn from its binding - the very first page. The key was in fact missing its own key. To attempt to read the Enigma Primal without fully comprehending it - via its own key - was to dip into insanity. Such are the powers at play here.
 
 It was clear this Enigma Primal was a trap deliberately set by the Shadows, or as they began to call them, the Shadow Legion.
 
 While they did seal the Shadows out of our existence for the most part, the threat still lingers. Tears in reality from one world often cause rifts in another. When those rifts appear in our world, so do the Shadows.
 
-If, as you say, Shadows are now at the old Dandridge Farm, then I must inform Arthur immediately. Better still, you will inform Arthur! It is about time the Hero of Earthend met the king! Go to him; tell him what you told me and let him know that I will consult with him on this matter very shortly.
+If, as you say, Shadows are now at the old Dandridge Farm, then I must inform Arthur immediately. Better still, you will inform Arthur! It is about time the Hero of Earthend met the king! Go to him. Tell him what you told me and let him know that I will consult with him on this matter very shortly.
 CompleteText=Greetings hero! I have heard much of you and your exploits. I am grateful for your aid.
 
 What brings you here today?
@@ -1506,8 +1504,8 @@ Obj.0.markerLocations=55199.203,561.344,64408.0,81;
 [ENTRY]
 ID=283
 Requires=265
-Title=The Milita House
-BodyText=The Knights of Avalon recently assaulted the east shore of the lake. Honestly, I cannot quite conceive of their exact purpose for this action. We have had an unspoken truce of sorts for many years. They did not breach the gate from their Avalonian stronghold and we in return have not attempted to enter. Mordred and Morgana have not been seen in our lands for many years. Why now they decided to strike out from Avalon is a mystery. More mysterious is the fact that they did not send elite troops. They sent a garrison or more of men, but they were not highly skilled and were easily beaten. I suspect something else is afoot. Something we are unaware of. That thought worries me.
+Title=The Militia House
+BodyText=The Knights of Avalon recently mounted an assault on the east shore of the Avalon Lake. Honestly, I cannot quite conceive of their exact purpose for this action. We have had an unspoken truce of sorts for many years. They did not breach the gate from their Avalonian stronghold and we in return have not attempted to enter. Mordred and Morgana have not been seen in our lands for many years. Why they decided to strike out from Avalon now is a mystery. More mysterious is the fact that they did not send elite troops. They sent a garrison or more of men, but they were not highly skilled and were easily beaten. I suspect something else is afoot. Something we are unaware of. That thought worries me.
 
 If you wish to assist in ridding our lands of the Avalonians, then head directly to the Militia House on the south-eastern shore of the lake. The Anglorum Militia is an army of the people. They are the backbone of Anglorum's defense.
 
@@ -1532,7 +1530,7 @@ Repeat=0
 sGiver=55196.0,561.344,64415.0,81
 sEnder=50180.0,186.885,66403.0,81
 [ACT]
-Act.BodyText=Travel to the Militia House on the south-eastern shores of the lake.
+Act.BodyText=Travel to the Militia House on the south-eastern shores of the Avalon Lake.
 Obj.0.type=travel
 Obj.0.data1=50013,185,66241,81
 Obj.0.data2=200
@@ -1619,7 +1617,7 @@ Obj.0.markerLocations=57641.297,329.345,61733.0,81;
 ID=267
 Requires=266
 Title=Wilhelm's Crypt
-BodyText=The crypt is unlocked. I sent a scout inside to see what exactly is going on down there. His report is horror. The Thrornbringers have some kind of power source they are using to raise the dead. The inside of the crypt is crawling with the recently risen. Worse, it appears even old King Wilhelm has arisen! The central part of the crypt is where we must strike. A powerful mage named Jengal is there overseeing this atrocity. You must kill him and steal the power source. We cannot allow this to continue!
+BodyText=The crypt is unlocked. I sent a scout inside to see what exactly is going on down there. His report is horror. The Thornbringers have some kind of power source they are using to raise the dead. The inside of the crypt is crawling with the recently risen. Worse, it appears even old King Wilhelm has arisen! The central part of the crypt is where we must strike. A powerful mage named Jengal is there overseeing this atrocity. You must kill him and steal the power source. We cannot allow this to continue!
 CompleteText=You are safely returned. This gladdens my heart. Leave the destruction of this power source to me. At least the dead will stop rising, but there is more at work here.
 Level=13
 Suggested=14
@@ -1695,14 +1693,14 @@ ID=277
 Title=Elden's Special Treat
 BodyText=Hail! You there! Yes hello! Are you venturing into Camelot? You are? Good! Perhaps you would do me a favor.
 
-I was sent here by my boss, Elden Motera in Fort Stonehenge, to fetch something from the city. Unfortunately , the guards seem to have mistaken me for some miscreant! I mean, look at me! I am an upstanding citizen! Really! To the point, they will not allow me into the city. Hrmph!
+I was sent here by my boss, Elden Motera in Fort Stonehenge, to fetch something from the city. Unfortunately, the guards seem to have mistaken me for some miscreant! I mean, look at me! I am an upstanding citizen! Really! To the point, they will not allow me into the city. Hrmph!
 
 Perhaps you could get the item for me. In the Slums you will find a Merga Moonseer. She is, uhm... a ...witch, perhaps is the best way to describe her... Do not worry, she is harmless, if not a bit odd! Tell her Elden sent you for his special treat! She will understand.
 CompleteText=Who are you? What are you looking at, hmm? HRMM?! You looking at me? Am I a curiosity?? Oh... look, birds! I love birds... ...in a nice stew... ...with a touch of lemon... Did the lemons send you? Well, did they?!
 
 Oh, Elden sent you! Oh, I see then, you must not be working for THEM... ...this is good, good... ...hmm... Do you hear that? Sounds like dragons! Or wait...! No just a sparrow. Mostly the same they are, anyway...
 
-Oh, Elden's Special Treat? Oh yes, yes... ...freshly cooked, in fact, and tasty... ...tasty like fire... You ever eat fire? Not as bad as you think in fact....
+Oh, Elden's Special Treat? Oh yes, yes... ...freshly cooked, in fact, and tasty... ...tasty like fire... You ever eat fire? Not as bad as you think in fact...
 
 Give me a moment...
 Level=11
@@ -1776,10 +1774,11 @@ Obj.0.markerLocations=49960.0,184.068,66192.0,81;
 
 [ENTRY]
 ID=284
+Requires=283
 Title=Basic Duty
 BodyText=First we need to see if you can even follow some basic orders... My orders!
 
-Up the coast along the beach are some weapon caches left behind by some Avalonians we beat back in recent days. Go up the coasts and look for three weapon caches. Take any weapons you find and bring them back to me. We are always looking for new equipment and I do not care if they were made in Camelot or in the 'misty shores,' or wherever-it-is these Avalonians come from.
+Up the coast along the beach are some weapon caches left behind by some Avalonians we beat back in recent days. Go up the coast and look for three weapon caches. Take any weapons you find and bring them back to me. We are always looking for new equipment and I do not care if they were made in Camelot or in the 'misty shores', or wherever-it-is these Avalonians come from.
 
 Be warned; there may still be a few stragglers wandering the shores.
 
@@ -1961,7 +1960,7 @@ Obj.0.markerLocations=49958.6,185.298,66289.0,81;
 [ENTRY]
 ID=558
 Title=BOUNTY: Battlefield Knights of Avalon
-BodyText=Kill 12 Knight of Avalon across the bridge on the battlefield. (Vindicators, Marauders, Fire-Charmers and Ice-Charmers)
+BodyText=Kill 12 Knights of Avalon across the bridge on the battlefield. (Vindicators, Marauders, Fire-Charmers and Ice-Charmers)
 CompleteText=
 Level=17,21
 Exp=1097
@@ -1976,11 +1975,11 @@ sGiver=49966.0,184.0,66159.0,81
 sEnder=49966.0,184.0,66159.0,81
 Heroism=6
 [ACT]
-Act.BodyText=Kill 12 Knight of Avalon across the bridge on the battlefield. (Vindicators, Marauders, Fire-Charmers and Ice-Charmers)
+Act.BodyText=Kill 12 Knights of Avalon across the bridge on the battlefield. (Vindicators, Marauders, Fire-Charmers and Ice-Charmers)
 Obj.0.type=kill
 Obj.0.data1=1802,1803,1804,1805,1806,1807
 Obj.0.data2=12
-Obj.0.description=Kill 12 Knight of Avalon on the battlefield
+Obj.0.description=Kill 12 Knights of Avalon on the battlefield
 Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
@@ -2005,10 +2004,10 @@ Requires=285
 Title=Assaulting the Keep
 BodyText=I think it's time we put mettle to the test.
 
-The keep up the road, Lakeshore Keep as it's known, is in the hands of an Avalonian captain named Konin Graves. I want him killed. Plain and simple. With him gone, we should be able to take the keep with ease.
+The keep up the road, Lakeshore Keep as it's known, is in the hands of an Avalonian captain named Konin Graves. I want her killed. Plain and simple. With her gone, we should be able to take the keep with ease.
 
 Step to it, soldier! *grin*
-CompleteText=Well done! We will move on the keep in due time. It will be much easier to take with Konin in his grave! *hah* Also, take this as a reward for you efforts!
+CompleteText=Well done! We will move on the keep in due time. It will be much easier to take with Konin in her grave! *hah* Also, take this as a reward for you efforts!
 Level=14
 Suggested=16
 Exp=2628
@@ -2055,7 +2054,7 @@ Requires=286
 Title=The Battlefield Camps
 BodyText=The last task I have for you is no easier than the last. In fact, you could consider it twice as hard!
 
-North past the farm and across the bridge, is the main battlefield where we put our steel to the heads of those Avalonians. The battlefield is now flanked by two Avalonian camps, the bulk of their remaining forces. The easiest way to kill a snake is to cut off its head! In this case, heads! Each camp is lorded over by Avalonian captains; Rancor Grinwind, a mage of considerable ability, and Pernin Ayn, a druid with a dead-eye bow shot. Both should be approached with extreme caution.
+North past the farm and across the bridge, is the main battlefield where we put our steel to the heads of those Avalonians. The battlefield is now flanked by two Avalonian camps, the bulk of their remaining forces. The easiest way to kill a snake is to cut off its head! In this case, heads! Each camp is lorded over by Avalonian captains; Rancor Grindwind, a mage of considerable ability, and Pernin Ayn, a druid with a dead-eye bow shot. Both should be approached with extreme caution.
 
 Thus far you have proven your worth far beyond my expectations. If you choose to take this mission for me, I then offer you my greatest wishes for victory!
 CompleteText=I will have to travel to Camelot and thank Arthur personally for sending you to me. You are a true soldier!
@@ -2079,11 +2078,11 @@ sGiver=50180.0,186.885,66403.0,81
 sEnder=50180.0,186.885,66403.0,81
 Heroism=10
 [ACT]
-Act.BodyText=Travel to the battlefield in the north and kill the two Avalonian Captains, Rancor Grinwind and Pernin Ayn
+Act.BodyText=Travel to the battlefield in the north and kill the two Avalonian Captains, Rancor Grindwind and Pernin Ayn.
 Obj.0.type=kill
 Obj.0.data1=1809
 Obj.0.data2=1
-Obj.0.description=Kill Rancor Grinwind
+Obj.0.description=Kill Rancor Grindwind
 Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
@@ -2118,7 +2117,7 @@ RewardItem.3=142548,1,0
 ID=291
 Requires=286
 Title=Travel to Bath
-BodyText=Hail traveler. I know you are quite busy keeping up with Nordington's orders, but if you could do me a favor, when you have the time, I would appreciate it. I am to be wed in less than a month, but my duty keeps me here until the time of ceremony. My fiancee is in the town of Bath, in the north-west. His name is Master Sargeant Wright. If you could deliver a message to him for me, I would be forever in your debt!
+BodyText=Hail traveler. I know you are quite busy keeping up with Nordington's orders, but if you could do me a favor, when you have the time, I would appreciate it. I am to be wed in less than a month, but my duty keeps me here until the time of the ceremony. My fiancee is in the town of Bath, in the north-west. His name is Master Sargeant Wright. If you could deliver a message to him for me, I would be forever in your debt!
 CompleteText=You have a message from my darling? Gaia be praised! Thank you for bringing me this, and welcome to Bath!
 Level=14
 Suggested=15
@@ -2148,7 +2147,7 @@ Obj.0.markerLocations=38969.6,303.956,54205.0,81;
 ID=290
 Requires=286
 Title=Salvaging Weapons
-BodyText=If you are heading into the battlefield, then you can do me another favor. Salvage any weapons you find in the field. There are sure to be many strewn about, if the Avalonians have not already picked the field clean. In which case you can also just steal weapons from the camps on either side of the battle field. We will take weapons from anywhere we can get them for sure. If you bring me ten weapons, I will reward you in kind.
+BodyText=If you are heading into the battlefield, then you can do me another favor. Salvage any weapons you find in the field. There are sure to be many strewn about, if the Avalonians have not already picked the field clean. In which case you can also just steal weapons from the camps on either side of the battlefield. We will take weapons from anywhere we can get them for sure. If you bring me ten weapons, I will reward you in kind.
 CompleteText=Well done. Again as promised, here is your reward.
 Level=15
 Suggested=17
@@ -2249,7 +2248,7 @@ Obj.0.markerLocations=56159.6,343.427,65981.0,81;
 ID=278
 Title=Elden's Special Treat
 Requires=277
-BodyText=Ok ! Here we go... Shhhh! I hear spies! They are everywhere... ...listen! LISTEN!
+BodyText=Ok! Here we go... Shhhh! I hear spies! They are everywhere... ...listen! LISTEN!
 
 Wait... ...hmmm.... Do you like eggs? I do not trust them! They are liars, I tell you, all of them...! I hate eggs!
 
@@ -2287,7 +2286,7 @@ Obj.0.markerLocations=53359.0,168.831,64300.3,81;
 ID=269
 Requires=267
 Title=Return to Grand Druid Lunast
-BodyText=We have new news about Claira and it is not good news. I had hoped ending this horror here would end the threat, I was wrong. Speak with Grand Druid Luncast as soon as you can. Thank you for your help here, you are a true hero!
+BodyText=We have new news about Claira and it is not good news. I had hoped ending this horror here would end the threat; I was wrong. Speak with Grand Druid Lunast as soon as you can. Thank you for your help here, you are a true hero!
 CompleteText=Greetings once more friend. I am glad to see you unharmed.
 Level=13
 Suggested=14
@@ -2318,9 +2317,9 @@ Obj.0.markerLocations=54611.6,166.946,63316.0,81;
 [ENTRY]
 ID=270
 Title=Yellow-Heart Blossoms 
-BodyText=Hello! Hello! I could sure use some help from someone like you! I normally go to Farmer Felps' farm and pick Yellow Heart Blossoms once a week - they grow wild in the fields. This week I went down there and, after having only picked these few right here in my bucket, I was attacked by bandits! What is this world coming to?
+BodyText=Hello! Hello! I could sure use some help from someone like you! I normally go to Farmer Felps' farm and pick Yellow-Heart Blossoms once a week - they grow wild in the fields. This week I went down there and, after having only picked these few right here in my bucket, I was attacked by bandits! What is this world coming to?
 
-If you are going that way perhaps you could pick some of the Yellow Heart Blossoms for me? I would be ever grateful!
+If you are going that way perhaps you could pick some of the Yellow-Heart Blossoms for me? I would be ever grateful!
 CompleteText=You got them? Glorious day! Thank you so much!
 Level=11
 Suggested=11
@@ -2370,7 +2369,7 @@ CompleteText=You again? Oh, more paperwork from Druid Dern? *beams*
 
 Let me see! *blush*
 
-I thank you... ...the Order of Gaia thanks you for you stalwart duty to us and making sure our paperwork is in order. *wink*
+I thank you... ...the Order of Gaia thanks you for your stalwart duty to us and making sure our paperwork is in order. *wink*
 Level=13
 Suggested=13
 Exp=2334
@@ -2401,7 +2400,7 @@ Requires=269
 Title=Priestess Claira
 BodyText=I have a great fear that these Thornbringers are part of something greater. I have suspicions I yet not even discuss with you, but there is one clear thing; Claira must be eliminated. She is the leader of these malcontents and the horror they wrought, which you saw first hand in the crypt. This is more than enough reason to act.
 
-We now know she is deep in the Underhenge, an old shrine under Stonhenge. It was left many years ago to decay due to its structural instability. Go to the Underhenge and put an end to Claira.
+We now know she is deep in the Underhenge, an old shrine under Stonehenge. It was left many years ago to decay due to its structural instability. Go to the Underhenge and put an end to Claira.
 CompleteText=Again you return unharmed. Gaia be praised. What is this...?
 
 ...as I thought, this is all just part of Hetius and Mali's scheming.
@@ -2410,7 +2409,7 @@ Hetius, Grand Fanatic Hetius as he is also known, is a follower of Hyperion. Het
 
 Personally, I do not believe the tale. What I do believe is he, Mali, and all their followers, DO believe that this may be the start of an even greater threat.
 
-For now, though, I must thank you. You have done so much for our order and this land. Please take this key to my chest in the corner. You may open it and take one item of your choosing.
+For now, though, I must thank you. You have done so much for our Order and this land. Please take this key to my chest in the corner. You may open it and take one item of your choosing.
 
 Again friend, I thank you! May Gaia guide your hand, heart, and mind. Farewell.
 Level=14
