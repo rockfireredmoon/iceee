@@ -2519,7 +2519,7 @@ ID=294
 Title=Swamp Bandits
 BodyText=Hail and well met, friend! Are you perhaps looking for some work? If indeed you are, I can offer you some for sure.
 
-A group of bandits have been attacking travelers coming from the south, toward Bath. I have a man stationed not far from their encampment named Sargent Brahms. If you would, go and speak with him. We could really use some help ridding the area of these bandits.
+A group of bandits have been attacking travelers coming from the south, toward Bath. I have a man stationed not far from their encampment named Sergeant Brahms. If you would, go and speak with him. We could really use some help ridding the area of these bandits.
 CompleteText=Yes? Oh, so Rhames sent you? Good, I can really use some assistance here.
 Level=14
 Suggested=15
@@ -2548,7 +2548,7 @@ Obj.0.markerLocations=41758.5,526.886,56659.0,81;
 [ENTRY]
 ID=303
 Title=Rare Books
-BodyText=Greetings. I wonder if you had any plans to perhaps investigate the old Monastery to the south-west?
+BodyText=Greetings. I wonder if you have any plans to perhaps investigate the old Monastery to the south-west?
 
 If you do, I would like you to keep your eyes peeled for any rare books you might find. The entire place is now overrun with some crazy-brained monks. Some crazy woman has them all riled up that the end of days is nigh - you know the type eh? Yes well, be that as it may, there are still some very old and rare books to be found inside the depths of the Monastery. I would pay you very well if you bring me... hmmm... eight... yes, eight sounds about right! That will fill out another book shelf back home. Bring me the books and I will reward you very well.
 CompleteText=You have the books! Impressive. I was not sure you would even return! But you did... ...so I suppose I owe you a reward?
@@ -2604,7 +2604,7 @@ BodyText=Welcome! Welcome to the Rusty Nail! Finest establishment in Bath, you s
 We are well known here for our delicious Vespin Honey Mead. Sadly, my supplies of Vespin Honey are reaching the bottom of the barrel. The Vespins are normally fairly passive and I have workers who collect honey for me at regular intervals. Of late, the Vespins have been aggressive! My workers had to flee the hives and left all the honey they had collected behind!
 
 If you could retrieve three of the buckets of honey they left behind, I would be very grateful! I only need three buckets of Vespin Honey to make an entirely fresh keg of mead. Interested?
-CompleteText=Ah yes, success! Prefect! Now I can complete my mead!
+CompleteText=Ah yes, success! Perfect! Now I can complete my mead!
 
 Come back later and I may have more work for you to do! Farewell!
 Level=15
@@ -2693,12 +2693,12 @@ ID=304
 Title=A Druid's Task
 BodyText=Hail. I do not suppose you have time to aid a simple druid?
 
-You do? Ah, Gaia be praised! Myself and Faern here were sent here from Camelot... Well, not sent here specifically, but sent to the old Monastery. Grand Druid Lunast asked us to gather some pulp from from the bookwyrms. When the bookwyrms take a new book as a body, it changes uhm... something... errr... ...well that is neither here nor there! The important thing is, we failed! I am sure Lunast thought we were up to the task, or else why would he have sent us?!
+You do? Ah, Gaia be praised! Myself and Faern here were sent here from Camelot... Well, not sent here specifically, but sent to the old Monastery. Grand Druid Lunast asked us to gather some pulp from the bookwyrms that infest the place. When the bookwyrms take a new book as a body, it changes uhm... something... errr... ...well that is neither here nor there! The important thing is, we failed! I am sure Lunast thought we were up to the task, or else why would he have sent us?!
 
 Would you perchance gather the pulp we need? I suppose Lunast would be less angry with us if we at least returned with what he asked for.
 CompleteText=Praise Gaia, you brought the pulp! Now we must go and admit we failed, unless... you do not suppose he knew we could not manage to get it ourselves...? Perhaps this was a test to see how resourceful we are!
 
-I guess I will find out soon enough.
+I guess we will find out soon enough.
 
 Thank you again for all your help!
 Level=16
@@ -2740,7 +2740,7 @@ Obj.0.markerLocations=39742.9,310.14,53846.0,81;
 [ENTRY]
 ID=305
 Title=The Lost Journal
-BodyText=Hail traveler! Myself and my fellow druid Michalka have run into a spot of trouble. We were sent by Grand Druid Lunast to retrieve some pulp from the bookworms at the old Monastery. Michalka is concerned about our 'mission,' but I am more upset that while we were running for our lives, I lost my journal. Grand Druid Lunast may be angry with us for our failure. However, he will eventually get past that, but I will be surely lost without my trusty journal. It has the chronicle of my entire life in its pages! I fear that if it stays too long outside the monastery, that one of the bookworms may turn my journal into its next set of wings! So please, I beg you, go to the abandoned Monastery and find my journal. It should be outside in in the old graveyard, somewhere!
+BodyText=Hail traveler! Myself and my fellow druid Michalka have run into a spot of trouble. We were sent by Grand Druid Lunast to retrieve some pulp from the bookwyrms at the old Monastery. Michalka is concerned about our 'mission'; but I am more upset that while we were running for our lives, I lost my journal. Grand Druid Lunast may be angry with us for our failure. However, he will eventually get past that; but I will be surely lost without my trusty journal. It has the chronicle of my entire life in its pages! I fear that if it stays too long outside the Monastery, that one of the bookwyrms may turn my journal into its next set of wings! So please, I beg you, go to the Abandoned Monastery and find my journal. It should be outside in the old graveyard, somewhere!
 CompleteText=You have my journal? I will never be able to thank you enough!
 Level=16
 Suggested=17
@@ -2783,11 +2783,11 @@ Obj.0.markerLocations=39746.2,310.14,53822.0,81;
 [ENTRY]
 ID=301
 Title=Herb Hunting!
-BodyText=Hail friend! Being the only herbalist in town can be quite a trying life. Everyone needs something all the time! Where is my Wort-Root? Where are my Barglefor leaves? When will it end?!
+BodyText=Hail friend! Being the only herbalist in town can be quite a trying life. Everyone needs something all the time! Where is my Wort-Root? Where are my Barglefor Leaves? When will it end?!
 
 Oh sorry, just a tad bit too busy for my own good. Perhaps you can assist me? I am out of three of my most popular herbs. Two are rather easy to obtain, though difficult to find; the third requires you to fell some nasty little beasts. Care to help me?
 
-Great! What I need is Petite Swamp Barbs. They grow just along the edges of the swamp to the south of town. I also need a handful of Wrath-Thorn Barbs. Your best bet for finding those lovelies is down by the old Monastery. I tend not to go there myself, that place gives me the creeps, but it is a great place to find Wrath-thorn growing wildly! Finally I need some Wandering Earth Moss. This one is a little tricky: Wandering Earth Moss is called that because it grows on the backs of Earth Trudgers. They are quite large, but I think you are more than a match for them! You will find them a bit north of the Monastery, so at least you will already be in the area collecting my Wrath-Thorn Barbs!
+Great! What I need is Petite Swamp Barbs. They grow just along the edges of the swamp to the southeast of town. I also need a handful of Wrath-Thorn Barbs. Your best bet for finding those lovelies is down by the old Monastery. I tend not to go there myself, that place gives me the creeps, but it is a great place to find Wrath-Thorn growing wildly! Finally I need some Wandering Earth Moss. This one is a little tricky: Wandering Earth Moss is called that because it grows on the backs of Earth Trudgers. They are quite large, but I think you are more than a match for them! You will find them a bit north of the Monastery, so at least you will already be in the area collecting my Wrath-Thorn Barbs!
 CompleteText=You are back! Great! Now I can fill these orders.
 
 Check back later, I may have more herbs for you to hunt down for me!
@@ -2842,7 +2842,7 @@ Obj.2.myItemID=500212
 Obj.2.completeText=0 of 6
 Obj.2.markerLocations=34110.0,242.852,59548.0,81;
 [ACT]
-Act.BodyText=Reuturn to Herbalist Kaydee.
+Act.BodyText=Return to Herbalist Kaydee.
 Obj.0.type=talk
 Obj.0.data1=0
 Obj.0.data2=0
@@ -2940,11 +2940,11 @@ ID=292
 Title=The Fate of Baron Unger
 BodyText=Greetings traveler. I am Lady Kathryn Rose, of the House of Rose. My family has lived in Bath and owned much of the surrounding land for many years. Our family has seen many highs and lows and it is a current low that I wish to discuss with you.
 
-This regards my uncle, Baron Unger. While it is common for him to be very much a hermit, I now have grown to worry about his well being. He lives high on the hill in the Overwatch Keep. Once a watch post, it was deeded to our family many years ago. Uncle Unger took the place as his own private sanctuary in which to study. I fear that his studies have gone from the mere hypothetical to the real. He was always obsessed with beast consciousness. Asking "What makes us self aware in ways that more common creatures are not?". People spoke of him doing experiments on local creatures.
+This regards my uncle, Baron Unger. While it is common for him to be very much a hermit, I now have grown to worry about his well being. He lives high on the hill in the Overwatch Keep. Once a watch post, it was deeded to our family many years ago. Uncle Unger took the place as his own private sanctuary in which to study. I fear that his studies have gone from the mere hypothetical to the real. He was always obsessed with Beast consciousness, asking, "What makes us self aware in ways that more common creatures are not?". People spoke of him doing experiments on local creatures.
 
 I have not heard a word from him in over three months. I sent a servant to speak with him - the servant never returned. I sent some of the local militia to speak with him - they returned with horrible news. It would seem the entire keep is overrun with strange creatures and they could not get inside to see if my uncle was there.
 
-I ask of you to go the to the keep and discover the fate of Baron Unger. If he lives, ask him to return to Bath. If the unthinkable has happened and he has... passed ...then please return his ring - the Rose Family Signet - to me, so that I may at least have something to remember him by.
+I ask of you to go to the keep and discover the fate of Baron Unger. If he lives, ask him to return to Bath. If the unthinkable has happened and he has... passed ...then please return his ring - the Rose Family Signet - to me, so that I may at least have something to remember him by.
 
 If you would do me this great favor I will be ever thankful.
 CompleteText=You have returned - what news?
@@ -3022,6 +3022,8 @@ BodyText=While you were gone, I had searched for some way to reward you for your
 
 Take it and see if you can solve it. If perchance you do, please return to me and let me know what you discover at the end.
 CompleteText=What's this? A key... oh and it has our family seal on it! I know what this key is for! I just never thought I would ever see it! An heirloom chest passed down from family member to family member with a riddle of sorts. It was said that one day the key would be found. That was all! I suppose the whole time the map was just a way to find the key! You have earned the right to open the chest, adventurer, and take whatever may be inside!
+
+(You prudently choose not to detail all the troubles you went through just to get the key...)
 //Level=14
 Level=100
 Suggested=20
@@ -3038,6 +3040,8 @@ sEnder=39000.0,314.726,53686.0,81
 Heroism=14
 [ACT]
 Act.BodyText=The map is very old. It simply shows the basic outline of Anglorum. It has some basic, but very cryptic, instructions: "To find the way, seek the lonely grave marker upon the hill. From there, more will be revealed."
+
+(You look at the crude outline of Anglorum and notice an almost obscure mark on it indicating a spot in eastern Anglorum. Studying the spot where the mark can be seen, you realize the location must be somewhere around the northern farmland areas east of the road. Head there and try your hunch!)
 Obj.0.type=travel
 Obj.0.data1=59586,443,57779,81;
 Obj.0.data2=100
@@ -3048,7 +3052,9 @@ Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=59586.1,443.008,57779.1,81;
 [ACT]
-Act.BodyText=The map text has now changed! "You found the lonely grave. Now seek the graves of three by the sea."
+Act.BodyText=The map text has suddenly changed! "You found the lonely grave. Now seek the graves of three by the sea."
+
+(You realize the map is likely imbued with some kind of magic, each new clue revealing itself as the previous location is found. You also notice the obscure mark spotted earlier has also moved to a new location. It now seems to indicate a spot along the coast south of Camelot. Isn't there a farm in that area?)
 Obj.0.type=travel
 Obj.0.data1=55496,177,69420,81
 Obj.0.data2=100
@@ -3059,7 +3065,9 @@ Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=55496.3,177.254,69420.8,81;
 [ACT]
-Act.BodyText=The map text has changed again! "You found the three by the sea. Now seek the stone upon the stone upon the stone upon the stone."
+Act.BodyText=The map text has changed once again! "You found the three by the sea. Now seek the stone upon the stone upon the stone upon the stone."
+
+(You're starting to notice a pattern in the clues. This one seems a bit murky though...literally. Close inspection of the crude map now seems to show that now familiar mark has relocated to a spot somewhere in the northeastern section of the Moors due west of Nottingham. You begin to wonder how many piles of stones match the description provided in the clue...)
 Obj.0.type=travel
 Obj.0.data1=48851,99,48707,81;
 Obj.0.data2=150
@@ -3070,7 +3078,9 @@ Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=48851.1,99.9969,48707.6,81;
 [ACT]
-Act.BodyText=The map text has changed again! "You found the stones upon the stones. Now seek the hand grasping from the earth."
+Act.BodyText=The map text has changed yet again! "You found the stones upon the stones. Now seek the hand grasping from the earth."
+
+(By now, you have gotten the hang of the map's "clues". As expected upon inspection of the crude drawing of Anglorum, you notice the now-familiar mark has relocated once more. It takes you a bit to find it and when you finally spot the mark, it seems to be indicating a location along the coast of the Western Highlands region of Anglorum. Isn't the old Monastery in that area?)
 Obj.0.type=travel
 Obj.0.data1=30190,157,59700,81;
 Obj.0.data2=100
@@ -3081,7 +3091,9 @@ Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=30190.5,157.065,59700.4,81;
 [ACT]
-Act.BodyText=The map text has changed again "You found the hand grasping from the earth. Now seek the skull upon the tree."
+Act.BodyText=The map text has changed yet again! "You found the hand grasping from the earth. Now seek the skull upon the tree."
+
+(You're used to the map's pattern by now so you immediately look for that mark again. As expected, it has moved to another location on the crudely drawn outline of Anglorum. This time, it seems to be pointing to a spot somewhere deep in the middle of Sherwood Forest and just north of the Moors. You quietly grumble as you realize this "clue" is practically asking you to find a needle in a haystack...or in this case, a tree in the middle of a forest.)
 Obj.0.type=travel
 Obj.0.data1=47413,265,44620,81
 Obj.0.data2=100
@@ -3092,7 +3104,9 @@ Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=47413.2,265.65,44620.9,81;
 [ACT]
-Act.BodyText=The map text has changed again "You found the lonely grave, and the three by sea. You found the stone upon the stone and the hand grasping from the earth, and now the skull upon the tree. Now seek the sword in the bones and take the key.
+Act.BodyText=The map text has changed once more! "You found the lonely grave, and the three by sea. You found the stone upon the stone and the hand grasping from the earth, and now the skull upon the tree. Now seek the sword in the bones and take the key."
+
+(That last clue was a doozy, yet you bring yourself to look for that mark again. Sure enough, it has now moved to a location on the northern shores of Avalon Lake just south of the Moors. You happen to notice an island in the lake seems to be located just south of the spot indicated. If this clue is correct, your rather long trek around Anglorum may finally be nearing its end.)
 Obj.0.type=travel
 Obj.0.data1=44645,277,59775,81
 Obj.0.data2=100
@@ -3103,7 +3117,9 @@ Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=44645.3,277.007,59775.3,81;
 [ACT]
-Act.BodyText=The map text has changed again: "You are complete." Take a close look at the Sword.
+Act.BodyText=The map text has changed once more! "You are now finished."
+
+(You notice the mark has disappeared from the crude drawing. This must be what you have been after, so you take a close look at the Sword.)
 Obj.0.type=activate
 Obj.0.data1=1926
 Obj.0.data2=1
@@ -3133,7 +3149,7 @@ ID=300
 Requires=299
 Title=Delivery to the Crossroads Inn
 BodyText=Hello again. Now that my mead is complete, I wonder if you would mind delivering a few bottles up to Grolmer Weiss at the Crossroads Inn?
-CompleteText=Is that the latest order of Vespin Honey Mead from bath? Oh lovely! Give it here!
+CompleteText=Is that the latest order of Vespin Honey Mead from Bath? Oh lovely! Give it here!
 
 Oh where are my manners? ...ahem... Welcome to the Crossroads Inn.
 Level=16
@@ -3168,7 +3184,7 @@ BodyText=Recently, we've been having a bit of a bandit problem. The buggers have
 
 They have control of a fairly large area at the edge of the swamp. They have taken the small farm here and even have an encampment out on the island south of the farm.
 
-The most important thing is to rid ourselves of Floro. He is the ring leader. Without him, the rest will most likely scatter to the winds. The problem is I cannot seem to catch him. I have seen him enter the farm house and then seem to vanish. There must be some secret basement in that place, but I am unable to find it.
+The most important thing is to rid ourselves of Floro. He is the ringleader. Without him, the rest will most likely scatter to the winds. The problem is I cannot seem to catch him. I have seen him enter the farm house and then seem to vanish. There must be some secret basement in that place, but I am unable to find it.
 
 I want you to assault their camps. Kill fifteen of them - that'll let them know how seriously we've taken thieving in these parts. At the same time, keep your eyes open for clues as to how to enter the basement of that farm house. I think our only chance of catching Floro is to get him while he is in there with no other way to escape.
 CompleteText=What news?
@@ -3185,7 +3201,7 @@ sGiver=41762.0,526.848,56660.0,81
 sEnder=41762.0,526.848,56660.0,81
 Heroism=10
 [ACT]
-Act.BodyText=Travel to the Bog Rat encampment and kill fifteen Bog Rat Bandits. Keep a look out for clues how to gain entrance to the farm house basement.
+Act.BodyText=Travel to the Bog Rat encampment and kill fifteen Bog Rat Bandits. Keep a lookout for clues how to gain entrance to the farmhouse basement.
 Obj.0.type=kill
 Obj.0.data1=1882,1883,1884,1885
 Obj.0.data2=15
@@ -3200,7 +3216,7 @@ Act.BodyText=The last bandit you killed had a diary. A love struck bandit's sorr
 
 "...so I suppose I am just another faceless bandit to her, but oh! Elindra, how I love you! Even though I know you only have eyes for Gillian Nor... but then you always did have a thing for those in authority. Gillian just thinks he is so special because Floro trusts him with the secret of the basement door..."
 
-Hunt down Gillian Nor and find the secret to unlock the farm house basement.
+Hunt down Gillian Nor and find the secret to unlock the farmhouse basement.
 Obj.0.type=kill
 Obj.0.data1=1886
 Obj.0.data2=1
@@ -3288,7 +3304,7 @@ sGiver=41762.0,526.848,56660.0,81
 sEnder=41762.0,526.848,56660.0,81
 Heroism=14
 [ACT]
-Act.BodyText=Return to the farm house and enter the farm house basement. Once inside, find and kill Floro the Sly.
+Act.BodyText=Return to the farmhouse and enter the farmhouse basement. Once inside, find and kill Floro the Sly.
 Obj.0.type=kill
 Obj.0.data1=39
 Obj.0.data2=1
@@ -3322,7 +3338,7 @@ I also need some very specific salamander tails. Locally, they call them Bogbeas
 
 Finally I need some Seacrab Eyes. Yeah, I know - eew! I have a monthly order for them from someone living in Nottingham - who knows? I just sell the stuff!
 
-Goodluck!
+Good luck!
 CompleteText=Once more you have proven to be quite the hunter! Thank you very much.
 Level=18
 Suggested=20
@@ -3456,8 +3472,8 @@ RewardItem.0=21328,1,1
 [ENTRY]
 ID=308
 Title=The Gloom Witches
-BodyText=Good day, friend. I hope I am not bothering you, but I am in quite a predicament. I have been a fool and now I fear I may pay for my foolishness with my very soul! You see, I met this traveler on the road. She was kind, sincere and beautiful, so I was not at all adverse to having her travel the road with me. She said she knew a shortcut to Nottingham through the swamp! I must admit, I should have known something was wrong right then, but I suppose I was taken in by her charms. I agreed to follow her on this 'shortcut'. Next thing I know, she disappeared into the fog and I am standing at some old shack in the swamp, surrounded by Gloom Witches! Yes, Gloom Witches, here in Anglorum! Then darkness! I awoke sometime later in a cavern. The Gloom Witches were there! They were chanting some mojo I could not quite understand and I felt a retching pain. One of them spoke to me and told me she had just stolen a piece of my soul and put it in some big red bottle! I am not sure if she was serious or just trying to scare me. Then they set me free! I ran with all haste back here to the inn! This cannot be allowed to continue! I talked to the guards and local militia, but they do not seem to believe me! So, friend, I beg of you! Go into the swamp, to that shack, and destroy the vile Gloom Witches. And if you can, get back that piece of my soul! I think the cave was under the shack, but it is all a bit or a blur... Please, do what you can!
-CompleteText=Hello again. Yes, I 'felt' - something, I think...maybe... ...either way, I am better for knowing you put an end to those horrible creatures! Allow me to reward you for all you have done; take one of these items. Thank you and farewell.
+BodyText=Good day, friend. I hope I am not bothering you, but I am in quite a predicament. I have been a fool and now I fear I may pay for my foolishness with my very soul! You see, I met this traveler on the road. She was kind, sincere and beautiful, so I was not at all adverse to having her travel the road with me. She said she knew a shortcut to Nottingham through the swamp! I must admit, I should have known something was wrong right then, but I suppose I was taken in by her charms. I agreed to follow her on this 'shortcut'. Next thing I know, she disappeared into the fog and I am standing at some old shack in the swamp, surrounded by Gloom Witches! Yes, Gloom Witches, here in Anglorum! Then darkness! I awoke sometime later in a cavern. The Gloom Witches were there! They were chanting some mojo I could not quite understand and I felt a retching pain. One of them spoke to me and told me she had just stolen a piece of my soul and put it in some big blue bottle! I am not sure if she was serious or just trying to scare me. Then they set me free! I ran with all haste back here to the inn! This cannot be allowed to continue! I talked to the guards and local militia, but they do not seem to believe me! So, friend, I beg of you! Go into the swamp, to that shack, and destroy the vile Gloom Witches. And if you can, get back that piece of my soul! I think the cave was under the shack, but it is all a bit of a blur... Please, do what you can!
+CompleteText=Hello again. Yes, I 'felt' - something, I think...maybe... ...either way, I am better now knowing you put an end to those horrible creatures! Allow me to reward you for all you have done; take one of these items. Thank you and farewell.
 Level=18
 Suggested=20
 Exp=3096
@@ -3472,11 +3488,11 @@ sGiver=43922.7,308.138,50302.0,81
 sEnder=43922.7,308.138,50302.0,81
 Heroism=14
 [ACT]
-Act.BodyText=Travel into the swamp and find the Gloom Witch shack.
+Act.BodyText=Travel into the swamp and find the Gloom Witches' shack.
 Obj.0.type=travel
 Obj.0.data1=47956,98,47980,81
 Obj.0.data2=300
-Obj.0.description=Find the Gloom Witch Shack in the swamp
+Obj.0.description=Find the Gloom Witches' Shack in the swamp
 Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
@@ -3494,11 +3510,11 @@ Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=48057.9,98.0964,47923.0,81;
 [ACT]
-Act.BodyText=Enter the Cold Storm Cavern and kill twenty five Gloom Witches. If you can, try to reclaim the stolen piece of Grear McKay's soul!
+Act.BodyText=Enter the Coldstorm Cavern and kill twenty five Gloom Witches. If you can, try to reclaim the stolen piece of Grear McKay's soul!
 Obj.0.type=kill
 Obj.0.data1=97,98,99,100,101,102,104
 Obj.0.data2=25
-Obj.0.description=Kill 25 Gloom Witches in Cold Storm Cavern
+Obj.0.description=Kill 25 Gloom Witches in Coldstorm Cavern
 Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
@@ -3507,14 +3523,14 @@ Obj.0.markerLocations=
 Obj.1.type=activate
 Obj.1.data1=1924
 Obj.1.data2=1
-Obj.1.description=Find and destroy the Big Red Bottle!
+Obj.1.description=Find and destroy the Big Blue Bottle!
 Obj.1.complete=0
 Obj.1.myCreatureDefID=
 Obj.1.myItemID=
 Obj.1.completeText=
 Obj.1.markerLocations=2215.45,268.385,4074.45,27;
 Obj.1.ActivateTime=2000
-Obj.1.ActivateText=Destroying Big Red Bottle!
+Obj.1.ActivateText=Destroying Big Blue Bottle!
 [ACT]
 Act.BodyText=Return to Grear McKay.
 Obj.0.type=talk
@@ -3561,10 +3577,10 @@ Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=56255.1,347.535,64243.0,81;
 [ACT]
-Act.BodyText=You found a book that mentions a Glindergloom. There are two entries: One is a mushroom that is native to most of the continent. The other is a wand that can be fashioned, also know as Glindergloom. To fashion Glindergloom, you need three components: A Petrified Twig, a Perfect Ruby Eye of Earth and the toe bone of a Black Lich. The three pieces must be placed in a Putrefied Urn to fashion Glindergloom. You can only assume Teressa Doomfeather wants that wand.
+Act.BodyText=You found a book that mentions a Glindergloom. There are two entries: One is a mushroom that is native to most of the continent. The other is a wand that can be fashioned, also known as Glindergloom. To fashion Glindergloom, you need three components: A Petrified Twig, a Perfect Ruby Eye of Earth and the toe bone of a Black Lich. The three pieces must be placed in a Putrefied Urn to fashion Glindergloom. You can only assume Teressa Doomfeather wants that wand.
 Petrified Twigs are commonly created by Mossback Sliders, which are large snails found in the swamp. Something in their excretions turns common twigs into rock-hard, Petrified Twigs. Search the swamp near the Mossback Sliders for a Petrified Twig.
-Ruby Eye of Earth is the eye of an earth elemental also found in the swamp. A Perfect Ruby Eye, though, would require one from the elder earth elemental, Gohlum.
-The toe bone of a Black Lich requires you know where to find a Black Lich! Search the undead ruins just south of the road through the swamp. It is rumored that a Black Lich has made those ruins his home.
+Ruby Eye of Earth is the eye of an earth elemental also found in the swamp. A Perfect Ruby Eye, though, would require one from the elder earth elemental, Grohlum.
+The toe bone of a Black Lich requires you to know where to find a Black Lich! Search the undead ruins just south of the road through the swamp. It is rumored that a Black Lich has made those ruins his home.
 If you can find these three things, then you must find a Putrefied Urn. As luck would have it, there is such a thing in the lands of Anglorum, but the text mentions that it is near the entrance to Coldstorm Cavern, which is just north of here.
 If you truly wish to chase away the dooms, then you have quite a journey ahead of you.
 Obj.0.type=gather
@@ -3628,7 +3644,7 @@ Requires=300
 Title=Moonberries
 BodyText=Perhaps you are more than just a deliverer of mead? Perhaps you could do something for me as well?
 
-I make the finest Moonberry Pies you will ever taste! Sadly, I am out of Moonberries! So you see, if perchance you were not busy right now, maybe you could fetch me some? I will gladly pay you for only half a dozen Moonberries! You see, just a piece of one, prepared by me in a special way, will flavor even the most dreadful pie I could make into a Moonberry masterpiece! So, if you would please journey to the east. A short distance to the south, Moonberries grow openly in the fields just outside the swamp. Do be careful, there are dreadful things lurking all over that menacing field.
+I make the finest Moonberry Pies you will ever taste! Sadly, I am out of Moonberries! So you see, if perchance you were not busy right now, maybe you could fetch me some? I will gladly pay you for only half a dozen Moonberries! You see, just a piece of one, prepared by me in a special way, will flavor even the most dreadful pie I could make into a Moonberry masterpiece! So, if you would please journey a short distance to the south of here, Moonberries grow openly in the fields just outside the swamp. Do be careful, there are dreadful things lurking all over that menacing field.
 CompleteText=Ah-ho! Moonberries! You are simply a wondrous soul! Thank you!
 Level=17
 Suggested=18
@@ -3671,7 +3687,7 @@ Obj.0.markerLocations=43824.7,313.936,50134.0,81;
 [ENTRY]
 ID=310
 Title=The Runestones
-BodyText=Hail! Could I trouble you for some help? I was trying very hard to get some rubbings off some runes for my research. They sit surrounding a small pool in the swamp to the east. Sadly, I found them to be surrounded by creatures far beyond my ability to defend myself against, including an elder earth elemental the locals call Grohlum. You, on the other hand, look like you can handle yourself better than I in such situations. Would you get the rubbings for me?
+BodyText=Hail! Could I trouble you for some help? I was trying very hard to get some rubbings off some runes for my research. They sit around a small pool in the swamp to the east. Sadly, I found them to be surrounded by creatures far beyond my ability to defend myself against, including an elder earth elemental the locals call Grohlum. You, on the other hand, look like you can handle yourself better than I in such situations. Would you get the rubbings for me?
 CompleteText=Thank you, friend. This will aid me in my research greatly!
 Level=17
 Suggested=18
@@ -3800,7 +3816,7 @@ ID=307
 Requires=306
 Title=Delivery to Tall Grass Farm
 BodyText=I have a delivery for the Tall Grass Farm. It is such a long trip these days - the only safe way is to go all the way to the south and follow the road around the lake, past Camelot and north again. You though... ...yes, you look like you would find a much faster way to go, perhaps through the wretched swamp, even? Well, to the point! I need this package delivered to Farmer Sned. He pays very good money for my Moonberry pies. Are you interested?
-CompleteText=What is that smell, hmmm? I must be... ...you have brought my Moonberry Pies - yes! Mmmmmm! I thought so! Thank you!
+CompleteText=What is that smell, hmmm? It must be... ...you have brought my Moonberry Pies - yes! Mmmmmm! I thought so! Thank you!
 Level=17
 Suggested=17
 Exp=2744
@@ -3830,11 +3846,15 @@ ID=316
 Title=Trouble in Nottingham
 BodyText=Hail and well met. You are new to Nottingham, yes? I need an outsider to help me with a troubling issue.
 
-This entire area is lorded over by Willem Grays, though he prefers the moniker of Sheriff of Nottingham. At first his appointment by the crown was a blessing; he was ruthless with the local bandits and fair with the people. But then something changed. He began to levy larger and larger taxes on the local people. If they could not pay, he would toss them in the dungeon. In recent months, some people have gone missing entirely, and the more I investigate, the more it seems the Sheriff may be responsible.
+This entire area is lorded over by Wilem Grays, though he prefers the moniker of Sheriff of Nottingham. At first his appointment by the crown was a blessing; he was ruthless with the local bandits and fair with the people. But then something changed. He began to levy larger and larger taxes on the local people. If they could not pay, he would toss them in the dungeon. In recent months, some people have gone missing entirely, and the more I investigate, the more it seems the Sheriff may be responsible.
 
 The guards here in the town I know are fair men, but to the north there are camps of "Sheriff's Deputies" - more like thugs - used to enforce the taxes. The Sheriff himself has not been seen for months. He never leaves his keep atop the mount.
 
 I am in a tough situation. I must respect the Sheriff's authority, but I cannot sit idly by and watch him terrorize the people. My missives to the crown have thus far gone with no response. Would you help me find out just what has happened to the Sheriff?
+
+I know that I should not broach this, as I could meet a similar fate as those who have disappeared, yet I do so for the sake of the people of Nottingham. To the west of town, deep into the middle of Sherwood Forest, you will find a small settlement. There you will find one who also seeks to get to the bottom of this problem. His name is Robin Hood. Both he and his group of Merry Beasts have done much for the people of the town while the Sheriff has become all the worse.
+
+Head to Robin's Camp and meet with him. Perhaps both of you can do what I cannot. I beg you, for the sake of the people of Nottingham, find out what you can regarding the Sheriff's change of heart and what can be done about it.
 CompleteText=Well met, friend. I am Robin. What can I do for you?
 Level=18
 Suggested=19
@@ -3908,7 +3928,7 @@ BodyText=You there! You the adventurous type? Up for some 'adventure'? Yes? Yes?
 
 Ah yes, you see this key? Hmm, yes, shiny, right? Very shiny! It opens a little box! A very small box, but inside is big treasure! Big treasure! Problem is, I lost the box! I was in the swamp with the box looking for the key, you see? Then I found the key! But I also found some very grumpy undead, so I ran. When I was clear of the swamp, I took the key and was going to open the box - but no box!
 
-Terrbile news, yes? Yes! So, s,o soooo.... If you go back to the undead ruins and find my box, then I can open it with the shiny key, yes? Do this for me and I will tell you a secret, yes? Yes!
+Terrible news, yes? Yes! So, so, soooo.... If you go back to the undead ruins and find my box, then I can open it with the shiny key, yes? Do this for me and I will tell you a secret, yes? Yes!
 CompleteText=You have it! Give it to me!!
 Level=18
 Suggested=20
@@ -4034,7 +4054,7 @@ ID=324
 Title=The Family Estate
 BodyText=Hello. Do you venture into the swamps often? If so, I could use your help.
 
-I have been researching my families history in the area. It would seem at one time my family had an estate in what is now all swamp land. If You would travel there and look for anything - even the smallest trinket - that may still remain, I would be very grateful. Would you do this for me the next time you are in the swamp?
+I have been researching my family's history in the area. It would seem at one time my family had an estate in what is now all swamp land. If you would travel there and look for anything - even the smallest trinket - that may still remain, I would be very grateful. Would you do this for me the next time you are in the swamp?
 CompleteText=Any luck? Oh yes! This chest has my family crest upon it. This is most helpful! Thank you so much, stranger!
 Level=18
 Suggested=20
@@ -4096,7 +4116,7 @@ sGiver=57078.4,168.688,57246.0,81
 sEnder=57078.4,168.688,57246.0,81
 Heroism=10
 [ACT]
-Act.BodyText=Travel north and northwest of the the Tall Grass Farm and kill ten Blightbeak Roosters. They will often cluster beneath trees where they take their rest.
+Act.BodyText=Travel north and northwest of the Tall Grass Farm and kill ten Blightbeak Roosters. They will often cluster beneath trees where they take their rest.
 Obj.0.type=kill
 Obj.0.data1=1683,1684
 Obj.0.data2=10
@@ -4121,19 +4141,19 @@ Obj.0.markerLocations=57078.0,168.688,57246.0,81;
 [ENTRY]
 ID=313
 Title=The Amulet
-BodyText=Hello traveler. I stand here and look at the Broken Tower, knowing the dangers that lurk inside, yet yearning for the knowledge stored up in its walls. Do you know the story of the tower? You see many years ago, it was a center for magical learning. While many in Anglorum have taken up the ways of druidic study, some search for more elemental power without the burdens of joining the order and praising Gaia with the rest of that lot. The Tower, as it was called, was taken over by a Lisian mage known as Sneath. He sought to train the best and brightest, to be a new generation of mages with real power. All was well until one day - boom! - something happened inside the tower. The earth shook and many of the surrounding structures sank into the lake. Not long after, Merlin arrived and looked very displeased. He entered the tower. Several hours later he came back outside with most of the students of the Tower. He then declared the Tower sealed and simply left. The door would no longer open and not even the entrance teleportation device would function.
+BodyText=Hello traveler. I stand here and look at the Broken Tower, knowing the dangers that lurk inside, yet yearning for the knowledge stored up in its walls. Do you know the story of the Tower? You see, many years ago it was once a centre for magical learning. While many in Anglorum have taken up the ways of druidic study, some search for more elemental power without the burdens of joining the Order and praising Gaia with the rest of that lot. The Tower, was taken over by a Lisian mage known as Sneath. He sought to train the best and brightest, to be a new generation of mages with real power. All was well until one day - boom! - something happened inside the Tower. The earth shook and many of the surrounding structures sank into the lake. Not long after, Merlin arrived and looked very displeased. He entered the Tower. Several hours later he came back outside with most of the students of the Tower. He then declared the Tower sealed and simply left. The door would no longer open and not even the entrance teleportation device would function.
 
 There was much speculation as to what happened. Some say Merlin was the cause of the entire thing. Some say Sneath tapped into some unknown power. No one is really sure, especially now that time has passed. I know the truth of it, though. I was there all those years ago. I can tell you Merlin was not to blame. In fact, without his help, many more may have died.
 
 Sneath was not an evil soul, but he did crave power. He sought all throughout the world for items of such power, so as to make that power his own and to teach that power to others. It was this craving that would be the end of the Tower. A stranger brought Sneath a book one day. He told Sneath it contained some of the wisdom of the Mystarchs. This surely got Sneath's attention and for days he languished in his study transcribing every character, every rune, every single word. This went on for nearly two weeks before Sneath emerged. He told us he had unlocked some secrets long forgotten and that a new era was at hand. This was the start of a very lengthy speech. As he spoke, he seemed more and more ill at ease, as if each word was taking more and more effort, and then he collapsed. We took him to his bed and let him rest.
 
-Late that night there was a terrible rumble in Tower, followed by a horrifying scream of agony from Sneath's room. We rushed in only to find him standing in the middle of the room surrounded by crackling energy. Again he began to speak, but his voice was not his own. In his hands was the book the stranger had brought and before him an urn filled with the dust of the dead, putrid and glowing a sickly green. Seemingly possessed, Sneath began to speak words I still have yet to comprehend, and all around me my friends began to wither and die. My own cowardice rushed up in me and I ran for my life. Half way down the hall, I nearly ran into Merlin, who was rushing toward Sneath's room. What transpired after that, I do not know. It was hours later that Merlin emerged with the book and a few more students. Merlin then cast some magic and sealed up the door. He then deactivated the teleporter, though its flame still burns. It simply does not work any longer.
+Late that night there was a terrible rumble in the Tower, followed by a horrifying scream of agony from Sneath's room. We rushed in only to find him standing in the middle of the room surrounded by crackling energy. Again he began to speak, but his voice was not his own. In his hands was the book the stranger had brought and before him an urn filled with the dust of the dead, putrid and glowing a sickly green. Seemingly possessed, Sneath began to speak words I still have yet to comprehend, and all around me my friends began to wither and die. My own cowardice rushed up in me and I ran for my life. Halfway down the hall, I nearly ran into Merlin, who was rushing toward Sneath's room. What transpired after that, I do not know. It was hours later that Merlin emerged with the book and a few more students. Merlin then cast some magic and sealed up the door, after which, he then deactivated the teleporter as well. Though its flame still burns, it simply does not work any longer.
 
-Over the years, I have sought answers from Merlin, but he had nothing to say to me, except to leave matters be. But I cannot. If Sneath still lives, I want revenge. He murdered my friends - my best friends and I did nothing to stop him. I have devoted my life to learning the ways of magic in hopes of returning inside the halls of the Tower, the Broken Tower, as they call it now. Though I have found no way to breach the ground floor door, I do believe I have found a way to reactivate the teleporter. Sadly, I am now aged and weak, too weak to ever find answers, or get my vengeance.
+Over the years, I have sought answers from Merlin; but he had nothing to say to me, except to leave matters be. But I cannot. If Sneath still lives, I want revenge. He murdered my friends - my best friends and I did nothing to stop him. I have devoted my life to learning the ways of magic in hopes of returning inside the halls of the Tower, the Broken Tower, as they call it now. Though I have found no way to breach the ground floor door, I do believe I have found a way to reactivate the teleporter. Sadly, I am now aged and weak, too weak to ever find answers, or get my vengeance.
 
 Would you be my vengeance? Would you accept my plea to enter the Broken Tower and slay Sneath, if he still lives?
 
-Reactivating the teleporter is no easy feat. There is a way to break Merlin's enchantment on it and make it function for you. To make the key, I need something very special; a Black Lich wand. I have searched for many years to find how to obtain such a thing. In the ruined castle in the swamp, there is a very old altar where this can be done. But to do so you must first gather three amulet fragments. I have tracked them down, but they are all in the possession of powerful undead in the swamp. You must kill them and get the amulet fragments. Once you have them, you can summon a wretched Black Lich named Alimat, and retrieve his wand. With his wand I can fashion the key for you.
+Reactivating the teleporter is no easy feat; though, there is a way to break Merlin's enchantment on it and make it function for you. To make the key, I need something very special: a Black Lich's wand. I have searched for many years to find how to obtain such a thing. In the ruined castle in the swamp, there is a very old altar where this can be done; but to do so you must first gather three amulet fragments. I have tracked them down, but they are all in the possession of powerful undead in the swamp. You must kill them and get the amulet fragments. Once you have them, you can summon a wretched Black Lich named Alimat, and retrieve his wand. With his wand I can fashion the key for you.
 
 I know this is a lot to ask.
 CompleteText=You have them? Let me see them...
@@ -4200,7 +4220,7 @@ BodyText=Yes, my treasure! All mine!
 As promised, I will tell you a secret! Deep in the swamp is a chest. You may take one item from inside. It has more treasure, but I have little use for weapons and armor. But I am sure you could use something to help you in your adventures, yes? Yes! Go now to the location! I hid the key to the chest on the sign! Who would look for the key right next to the chest, yes? NO! Never! That would be crazy! Go, go! Enjoy!
 
 Good luck!
-CompleteText=You see a sign written in some strange language. While the characters look familiar, what it actually means is a mystery! As promised, there is a key attached to the back of the sign, directly next the a chest!
+CompleteText=You see a sign written in some strange language. While the characters look familiar, what it actually means is a mystery! As promised, there is a key attached to the back of the sign, directly next the chest!
 Level=19
 Suggested=20
 Exp=1548
@@ -4230,10 +4250,10 @@ RewardItem.0=21152,1,1
 ID=325
 Requires=324
 Title=Delivering the Payment
-BodyText=If you would do me one more favor? This information came to be via a fellow in Southshield, one Hampton Pinchpurse. Not the most trustworthy beast, but he did give me great information in this case! Would you take this payment to him and give him my thanks?
+BodyText=If you are able, would do me one more favor? This information came to me via a fellow in South Shield, one Hampton Pinchpurse. Not the most trustworthy beast, but he did give me great information in this case! Would you take this payment to him and give him my thanks?
 CompleteText=Who are you? Oh, old Brown sent you to me with some coin? Well, give it here.
 
-Be careful around here, those Faerie Sworn seem to be popping up everywhere in these parts.
+Be careful around here, those Faerie-Sworn seem to be popping up everywhere in these parts.
 Level=18
 Suggested=20
 Exp=3096
@@ -4247,7 +4267,7 @@ Repeat=0
 sGiver=53126.2,267.991,48204.0,81
 sEnder=43195.0,183.558,44299.0,81
 [ACT]
-Act.BodyText=Travel to Southshield and deliver the payment to Hampton Pursepinch.
+Act.BodyText=Travel to South Shield and deliver the payment to Hampton Pursepinch.
 Obj.0.type=talk
 Obj.0.data1=0
 Obj.0.data2=0
@@ -4262,7 +4282,7 @@ Obj.0.markerLocations=43192.8,183.802,44300.0,81;
 ID=314
 Requires=313
 Title=Alimat
-BodyText=Now for the difficult task. This amulet will allow you to use the altar at the top of the old keep. This first altar is a portal - it should take you into a room under the old keep. Inside, you will find another altar. It is here you will summon Alimat. You must stay in contact with the altar the entire time you are summoning Alimat - it may take a while. It would be wise to bring companions, as I do not know what else could be summoned up along with him. I am well learned, but I am no expert in summoning of the dead. Once he is summoned, you must defeat him and take his wand. Once you have the wand, return to me and I can use it break the enchantment on the teleporter into the Broken Tower.
+BodyText=Now for the difficult task. This amulet will allow you to use the altar at the top of the old keep. This first altar is a portal - it should take you into a room under the old keep. Inside, you will find another altar. It is here you will summon Alimat. You must stay in contact with the altar the entire time you are summoning Alimat - it may take a while. It would be wise to bring companions, as I do not know what else could be summoned up along with him. I am well learned, but I am no expert in the summoning of the dead. Once he is summoned, you must defeat him and take his wand. Once you have the wand, return to me and I can use it to break the enchantment on the teleporter into the Broken Tower.
 CompleteText=You are truly amazing! Give me the wand!
 Level=18
 Suggested=20
@@ -4278,11 +4298,11 @@ sGiver=57119.0,115.0,57863.0,81
 sEnder=57119.0,115.0,57863.0,81
 Heroism=14
 [ACT]
-Act.BodyText=Travel to the peak of the old castle ruin in the swamp.
+Act.BodyText=Travel to the top of the old castle ruin in the swamp.
 Obj.0.type=travel
 Obj.0.data1=48453,294,57175,81
 Obj.0.data2=150
-Obj.0.description=Travel to the  peak of the old castle ruin
+Obj.0.description=Travel to the top of the old castle ruin
 Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
@@ -4340,7 +4360,7 @@ RewardItem.0=141019,1,1
 ID=315
 Requires=314
 Title=Sneath the Betrayer
-BodyText=Ah yes, with the wand and the amulet together you should now be able to use the teleporter and enter the Broken Tower. The device is a plinth with a brazier on top burning a pale violet hue. Once inside, be warned: Though the tower looks small on the outside, it's substantially larger inside. This was done long ago, some kind of spacial magic and I have no idea how it works, but just be warned and wary. If Sneath still lives, he will be very dangerous. Now go and exact the vengeance I myself can no longer fulfill myself.
+BodyText=Ah yes, with the wand and the amulet together you should now be able to use the teleporter and enter the Broken Tower. The device is a plinth with a brazier on top burning a pale violet hue. Once inside, be warned: Though the tower looks small on the outside, it's substantially larger inside. This was done long ago, some kind of spacial magic and I have no idea how it works, but just be warned and wary. If Sneath still lives, he will be very dangerous. Now go and exact the vengeance I can no longer fulfill myself.
 CompleteText=You returned. What happened?
 
 He was alive?! And you defeated him?!
@@ -4492,7 +4512,7 @@ RewardItem.0=21333,1,1
 [ENTRY]
 ID=328
 Title=Faerie-Sworn Bounty
-BodyText=The Faerie-Sworn are a constant thorn in our sides here in Southshield. I will gladly pay a bounty if you can eliminate some of them and thin their numbers. Are you up to the task?
+BodyText=The Faerie-Sworn are a constant thorn in our sides here in South Shield. I will gladly pay a bounty if you can eliminate some of them and thin their numbers. Are you up to the task?
 CompleteText=Task complete? Very good! Thank you for your ruthless diligence.
 Level=19
 Suggested=20
@@ -4533,7 +4553,7 @@ Obj.0.markerLocations=42446.8,243.5,42933.0,81;
 [ENTRY]
 ID=326
 Title=Faerie-Sworn Plans
-BodyText=If you have come to help us, then lets be about our business, otherwise I do not have time to talk to you.
+BodyText=If you have come to help us, then let's be about our business, otherwise I do not have time to talk to you.
 
 Ah, you want to help? Good. We have had increasing issues with traitors! That is what they are, plain and simple. These 'beasts' who would give their souls over to the Faeries, nothing but traitors to all beasts!
 
@@ -4596,7 +4616,7 @@ Requires=326
 Title=The Hollow Tree
 BodyText=I knew they were up to something. This cannot be allowed to transpire. If, somehow, they could open a portal to bypass the wall, then all of Anglorum, even the rest of the continent, is in dire peril.
 
- Find this Hollow Tree the plan speaks of. If that is their base of operations, then their leader must be inside. Kill their leader and do not allow them to complete that gate!
+Find this Hollow Tree the plan speaks of. If that is their base of operations, then their leader must be inside. Kill their leader and do not allow them to complete that gate!
 
 Do not delay!
 CompleteText=You return - what news? There was a partial gate? Terrible news if there is truly some way for the Faeries to portal past the wall. I must send word to the crown immediately! Oh yes, thank you so much for you help. Accept this reward with my thanks. Farewell.
@@ -4666,7 +4686,7 @@ RewardItem.3=5159,1,0
 ID=317
 Requires=316
 Title=A Task from Robin
-BodyText=You want to know what has happened to the Sheriff? It is true we have been enemies since he began his campaign of egregious taxes, but he was always more a scoundrel than a truly evil man. Lately that has changed. I have proof that he is directly responsible for the deaths of some of the local people. This I cannot allow to stand, but I do not condone murder, myself, unless there is no other choice.
+BodyText=You want to know what has happened to the Sheriff? It is true we have been enemies since he began his campaign of egregious taxes, but he was always more a scoundrel than a truly evil beast. Lately that has changed. I have proof that he is directly responsible for the deaths of some of the local people. This I cannot allow to stand; but I do not condone murder, myself, unless there is no other choice.
 
 I want you to investigate the Sheriff's "Deputy" camps - they are nothing more than murderers and thieves. Perhaps you can find something there that will shed some light on the Sheriff's recent change in behavior.
 CompleteText=What news?
@@ -4699,7 +4719,7 @@ Act.BodyText=You found Faerie Food! Take a sample of the Faerie Food and return 
 Obj.0.type=gather
 Obj.0.data1=1920
 Obj.0.data2=1
-Obj.0.description=Take a sample of the Faerire Food
+Obj.0.description=Take a sample of the Faerie Food
 Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=500194
@@ -4850,7 +4870,7 @@ Obj.0.markerLocations=48503.1,172.137,44668.0,81;
 ID=318
 Requires=317
 Title=Return to Nottingham
-BodyText=You found Faerie food in the deputy camps? Oh, this is terrible news. You see, the Faeries are always on the move up here in the north. They themselves cannot pass Hadrian's wall, but their influence is always felt to those up here. Some fall prey to the whispers in the night and become puppets to the Faeries' string pulling. Eating Faerie food is akin to signing your soul over to them! The Sheriff himself has always been a glutton. If he has been tainted directly by Faerie food, then there is no recourse, he must be put down. His will is not his own and we cannot allow the Faeries to seed this land with anymore dissent than they already have.
+BodyText=You found Faerie Food in the Deputy camps? Oh, this is terrible news. You see, the Faeries are always on the move up here in the north. They themselves cannot pass Hadrian's Wall, but their influence is always felt to those up here. Some fall prey to the whispers in the night and become puppets to the Faeries' string pulling. Eating Faerie Food is akin to signing your soul over to them! The Sheriff himself has always been a glutton. If he has been tainted directly by Faerie Food, then there is no recourse and he must be put down. His will is not his own and we cannot allow the Faeries to seed this land with any more dissent than they already have.
 
 Return to Master Sergeant Illius and let him know what you plan to do. He will not stop you but, he will not aid you.
 
