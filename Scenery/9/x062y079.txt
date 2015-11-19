@@ -1,6 +1,7 @@
 [ENTRY]
 ID=150999216
 Asset=CL-Rock-Clutter#CL-Rock-Clutter
+Name=Untitled
 Pos=46578.5,213.419,59375
 Orient=0,0.00499998,0,0.999987
 Scale=1,1,1
@@ -9,6 +10,7 @@ Flags=1
 [ENTRY]
 ID=150999297
 Asset=CL-Plains_Bush1#CL-Plains_Bush1
+Name=Untitled
 Pos=46881,265.67,59778
 Orient=0,0,0,1
 Scale=1,1,1
@@ -17,6 +19,7 @@ Flags=1
 [ENTRY]
 ID=151041147
 Asset=CL-RockStack1#CL-RockStack1
+Name=Untitled
 Pos=47140,176.415,59471
 Orient=0,-0.522687,0,0.852525
 Scale=1.85,1.85,1.85
@@ -25,6 +28,7 @@ Flags=1
 [ENTRY]
 ID=151041148
 Asset=CL-RockStack4#CL-RockStack4
+Name=Untitled
 Pos=47144,345.05,59480
 Orient=0,0,0,1
 Scale=1,1,1
@@ -33,24 +37,25 @@ Flags=1
 [ENTRY]
 ID=151051291
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=46708,199.573,59298
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=3a_goliathcamps01_24_25
-outerRadius=30
 
 [ENTRY]
 ID=151051292
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=46779.5,271.206,59686
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=3a_goliathcamps01_24_25
-outerRadius=30
 
 [ENTRY]
 ID=151051303
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=46981.9,267.73,59950
 Orient=0,0,0,1
 Scale=1,1,1
@@ -61,16 +66,18 @@ link=151051305,1
 [ENTRY]
 ID=151051304
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=47149.8,276.218,59748
 Orient=0,-0.589145,0,0.808028
 Scale=1,1,1
+spawnPackage=3a_goliathcamps01_24_25
 links_count=1
 link=151051306,1
-spawnPackage=3a_goliathcamps01_24_25
 
 [ENTRY]
 ID=151051305
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=47077.3,259.977,59738
 Orient=0,0,0,1
 Scale=1,1,1
@@ -80,16 +87,18 @@ link=151051303,1
 [ENTRY]
 ID=151055804
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=46833.5,212.169,59471
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=3_bb04a_Gork_elderGoliath_h_k_25
 links_count=1
 link=151055805,1
-spawnPackage=3_bb04a_Gork_elderGoliath_h_k_25
 
 [ENTRY]
 ID=151055805
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=47022.4,213.91,59583
 Orient=0,0,0,1
 Scale=2.125,2.125,2.125
@@ -101,6 +110,7 @@ link=151055820,1
 [ENTRY]
 ID=151055806
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=47066.8,279.99,59846
 Orient=0,0,0,1
 Scale=2.125,2.125,2.125
@@ -111,6 +121,7 @@ link=151055807,1
 [ENTRY]
 ID=151055820
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=46881.7,207.639,59527
 Orient=0,0,0,1
 Scale=2.125,2.125,2.125
