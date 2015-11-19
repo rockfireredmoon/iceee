@@ -595,6 +595,7 @@ void CreatureInstance :: RemoveAttachedHateProfile(void)
 
 void CreatureInstance :: RemoveFromSpawner(bool wasKilled)
 {
+
 	//Non player, non sidekicks were generated from a spawner.
 	//This will notify the spawners that a respawn may be necessary.
 
