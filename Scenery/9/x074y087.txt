@@ -1,7 +1,6 @@
 [ENTRY]
 ID=151015090
 Asset=CL-UndeadTree2#CL-UndeadTree2
-Name=Untitled
 Pos=56194.3,880.037,65300
 Orient=0,-0.174108,0,0.984727
 Scale=2.45,2.45,2.45
@@ -10,7 +9,6 @@ Flags=1
 [ENTRY]
 ID=151016164
 Asset=CL-Undead_Camp2#CL-Undead_Camp2
-Name=Untitled
 Pos=55767.4,910.854,65535
 Orient=0,-0.407761,0,0.913089
 Scale=1.325,1.325,1.325
@@ -19,100 +17,98 @@ Flags=1
 [ENTRY]
 ID=151027164
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=55769,909.344,65560
 Orient=0,0.764329,0,0.644827
 Scale=1,1,1
 spawnPackage=11_dth_limbCuller_r_41
+outerRadius=1
 
 [ENTRY]
 ID=151027166
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=55785.9,911.01,65525
 Orient=0,-0.963558,0,0.267499
 Scale=1,1,1
 spawnPackage=11_dth_limbCuller_r_41
+outerRadius=1
 
 [ENTRY]
 ID=151027168
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=55766.8,912.118,65513
 Orient=0,-0.713864,0,0.700285
 Scale=1,1,1
 spawnPackage=11_dth_limbCuller_r_41
+outerRadius=1
 
 [ENTRY]
 ID=151027170
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=55747.3,912.247,65523
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_dth_limbCuller_r_41
+outerRadius=1
 
 [ENTRY]
 ID=151027172
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=55786.5,909.479,65549
 Orient=0,0.972329,0,0.233617
 Scale=1,1,1
 spawnPackage=11_dth_limbCuller_r_41
+outerRadius=1
 
 [ENTRY]
 ID=151027177
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=55750.8,910.693,65551
 Orient=0,0.281157,0,0.959662
 Scale=1,1,1
 spawnPackage=11_dth_limbCuller_r_41
+outerRadius=1
 
 [ENTRY]
 ID=151027192
 Asset=Manipulator-SpawnPoint
-Name=Untitled
-Pos=55610,915,65590
+Pos=55612.6,915.789,65593
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_dth_limbCuller_r_41
+outerRadius=1
 
 [ENTRY]
 ID=151027204
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=55669,916.915,65441
 Orient=0,-0.42141,0,0.90687
 Scale=1,1,1
 spawnPackage=11_dth_limbCuller_r_41
+outerRadius=1
 
 [ENTRY]
 ID=151027226
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=55938,894.85,65514
 Orient=0,-0.0749297,0,0.997189
 Scale=1,1,1
 spawnPackage=11_dth_limbCuller_r_41
+outerRadius=1
 
 [ENTRY]
 ID=151027227
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=56078.2,900.971,65331
 Orient=0,-0.706825,0,0.707388
 Scale=1,1,1
-spawnPackage=11_dth_limbCuller_r_41
-maxActive=0
 links_count=1
 link=151027228,1
+spawnPackage=11_dth_limbCuller_r_41
+outerRadius=1
 
 [ENTRY]
 ID=151027228
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=56138.2,881.174,65403
 Orient=0,0,0,1
 Scale=1,1,1
@@ -123,18 +119,17 @@ link=151027230,1
 [ENTRY]
 ID=151027259
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=56083.6,866.754,65580
 Orient=0,-0.129634,0,0.991562
 Scale=1,1,1
-spawnPackage=11_dth_limbCuller_r_41
 links_count=1
 link=151027264,1
+spawnPackage=11_dth_limbCuller_r_41
+outerRadius=1
 
 [ENTRY]
 ID=151027264
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=56214.2,841.183,65619
 Orient=0,0,0,1
 Scale=1,1,1
@@ -145,18 +140,17 @@ link=151027265,1
 [ENTRY]
 ID=151027267
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=56031.7,867.577,65608
 Orient=0,-0.995415,0,0.0956499
 Scale=1,1,1
-spawnPackage=11_dth_limbCuller_r_41
 links_count=1
 link=151027268,1
+spawnPackage=11_dth_limbCuller_r_41
+outerRadius=1
 
 [ENTRY]
 ID=151027268
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=55822.7,893.649,65697
 Orient=0,0,0,1
 Scale=1,1,1
@@ -167,7 +161,6 @@ link=151027269,1
 [ENTRY]
 ID=151027269
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=55738.7,899.207,65772
 Orient=0,0,0,1
 Scale=1,1,1
@@ -177,16 +170,15 @@ link=151027268,1
 [ENTRY]
 ID=151027273
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=55794,917.578,65379
 Orient=0,0.838759,0,0.544503
 Scale=1,1,1
 spawnPackage=11_dth_limbCuller_r_41
+outerRadius=1
 
 [ENTRY]
 ID=151028706
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=55710.8,852.29,65945
 Orient=0,0,0,1
 Scale=1,1,1

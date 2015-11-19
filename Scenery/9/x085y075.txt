@@ -1,78 +1,6 @@
 [ENTRY]
-ID=1083199
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=Untitled
-Pos=64058.1,783.286,56992.5
-Orient=0,0,0,1
-Scale=1,1,1
-spawnPackage=#F3667
-
-[ENTRY]
-ID=1083229
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=Untitled
-Pos=64105.3,779.812,56573.8
-Orient=0,-0.394019,0,0.919102
-Scale=1,1,1
-spawnPackage=#F1248
-
-[ENTRY]
-ID=1083237
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=Untitled
-Pos=64452,787.304,56656.4
-Orient=0,-0.770739,0,0.637151
-Scale=1,1,1
-spawnPackage=#F1355
-
-[ENTRY]
-ID=1083254
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=Untitled
-Pos=64058.8,780.742,56819.1
-Orient=0,0,0,1
-Scale=1,1,1
-spawnPackage=#F1355
-
-[ENTRY]
-ID=1091137
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=Untitled
-Pos=63806.5,773.969,56488.3
-Orient=0,-0.389418,0,0.921061
-Scale=1,1,1
-spawnPackage=#F1355
-
-[ENTRY]
-ID=1104009
-Asset=CL-Fountain1
-Name=Untitled
-Pos=64245.7,781.065,56909.3
-Orient=0,0,0,1
-Scale=1,1,1
-
-[ENTRY]
-ID=1110822
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=Untitled
-Pos=64315.2,781.713,56825.9
-Orient=0,-0.849481,0,0.52762
-Scale=1,1,1
-spawnPackage=#F3676
-
-[ENTRY]
-ID=1127939
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=Untitled
-Pos=63950.6,780.194,56920
-Orient=0,0,0,1
-Scale=1,1,1
-spawnPackage=#7785
-
-[ENTRY]
 ID=151016770
 Asset=Prop-Campfires#Prop-Campfire2
-Name=Untitled
 Pos=63991.1,781.759,56800
 Orient=0,0,0,1
 Scale=7.375,7.375,7.375
@@ -81,7 +9,6 @@ Flags=1
 [ENTRY]
 ID=151016833
 Asset=Prop-Chunks#Prop-Chunks1
-Name=Untitled
 Pos=63818.3,779.703,56822
 Orient=0,0,0,1
 Scale=0.9,0.9,0.9
@@ -90,7 +17,6 @@ Flags=1
 [ENTRY]
 ID=151016843
 Asset=Prop-Lamp_Post_Junk#Prop-Lamp_Post_Junk2
-Name=Untitled
 Pos=63924.6,780.194,56920
 Orient=0,0.685289,0,0.728272
 Scale=1.7,1.7,1.7
@@ -98,19 +24,17 @@ Flags=1
 
 [ENTRY]
 ID=151027474
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=Untitled
+Asset=Manipulator#Manipulator-PathNode
 Pos=64276.4,781.389,56796
-Orient=0,0.978197,0,-0.207681
+Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#F1355
+Flags=1
 links_count=1
 link=151027475,1
 
 [ENTRY]
 ID=151027475
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=64178.1,780.27,56855
 Orient=0,0,0,1
 Scale=1,1,1
@@ -122,7 +46,6 @@ link=151027476,1
 [ENTRY]
 ID=151027476
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=64138,780.619,56804
 Orient=0,0,0,1
 Scale=1,1,1
@@ -134,7 +57,6 @@ link=151027477,1
 [ENTRY]
 ID=151027477
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=63915,779.901,56892
 Orient=0,0,0,1
 Scale=1,1,1
@@ -146,7 +68,6 @@ link=151027478,1
 [ENTRY]
 ID=151027478
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=63867.8,781.908,56694
 Orient=0,0,0,1
 Scale=1,1,1
@@ -160,7 +81,6 @@ link=151027481,1
 [ENTRY]
 ID=151027480
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=63785.6,779.398,56600
 Orient=0,0,0,1
 Scale=1,1,1
@@ -171,7 +91,6 @@ link=151027478,1
 [ENTRY]
 ID=151027481
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=63863.2,775.673,56496
 Orient=0,0,0,1
 Scale=1,1,1
@@ -181,20 +100,17 @@ link=151027478,1
 
 [ENTRY]
 ID=151027482
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=Untitled
+Asset=Manipulator#Manipulator-PathNode
 Pos=64289.6,781.342,56752
-Orient=0,0.838759,0,0.544503
+Orient=0,0,0,1
 Scale=1,1,1
 Flags=1
-spawnPackage=#F1355
 links_count=1
 link=151027483,1
 
 [ENTRY]
 ID=151027483
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=64208.6,778.511,56553
 Orient=0,0,0,1
 Scale=1,1,1
@@ -206,7 +122,6 @@ link=151027484,1
 [ENTRY]
 ID=151027484
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=64147.7,778.951,56520
 Orient=0,0,0,1
 Scale=1,1,1
@@ -218,7 +133,6 @@ link=151027485,1
 [ENTRY]
 ID=151027485
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=64173.3,773.581,56399
 Orient=0,0,0,1
 Scale=1,1,1
@@ -230,7 +144,6 @@ link=151027486,1
 [ENTRY]
 ID=151027486
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=64161.9,759.944,56269
 Orient=0,0,0,1
 Scale=1,1,1
@@ -240,20 +153,17 @@ link=151027485,1
 
 [ENTRY]
 ID=151027487
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=Untitled
+Asset=Manipulator#Manipulator-PathNode
 Pos=64327,782.384,56777
 Orient=0,0,0,1
 Scale=1,1,1
 Flags=1
-spawnPackage=#F1355
 links_count=1
 link=151027488,1
 
 [ENTRY]
 ID=151027488
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=64409.1,793.704,56800
 Orient=0,0,0,1
 Scale=1,1,1
@@ -265,7 +175,6 @@ link=151027489,1
 [ENTRY]
 ID=151027489
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=64453.5,794.321,56867
 Orient=0,0,0,1
 Scale=1,1,1
@@ -277,7 +186,6 @@ link=151027490,1
 [ENTRY]
 ID=151028798
 Asset=CL-Market_Stall-Food1#CL-Market_Stall-Food1
-Name=Untitled
 Pos=64108,780.155,56631
 Orient=0,0.193766,0,0.981048
 Scale=1,1,1
@@ -286,7 +194,6 @@ Flags=1
 [ENTRY]
 ID=151028806
 Asset=CL-Market_Stall-Wares1#CL-Market_Stall-Wares1
-Name=Untitled
 Pos=64059.2,784.33,56994
 Orient=0,-0.700853,0,-0.713306
 Scale=1,1,1
@@ -295,7 +202,6 @@ Flags=1
 [ENTRY]
 ID=151028811
 Asset=CL-Market_Stall-Weapons#CL-Market_Stall-Weapons
-Name=Untitled
 Pos=64400.3,784.689,56632
 Orient=0,-0.179029,0,0.983844
 Scale=1,1,1
@@ -304,7 +210,6 @@ Flags=1
 [ENTRY]
 ID=151028814
 Asset=CL-Rack1
-Name=Untitled
 Pos=64417.8,785.272,56664
 Orient=0,-0.412321,0,0.911039
 Scale=1,1,1
@@ -313,7 +218,6 @@ Flags=1
 [ENTRY]
 ID=151028817
 Asset=CL-Rack2#CL-Rack2
-Name=Untitled
 Pos=64366.4,783.633,56639
 Orient=0,0,0,1
 Scale=1,1,1
@@ -322,7 +226,6 @@ Flags=1
 [ENTRY]
 ID=151028825
 Asset=Prop-Tent
-Name=Untitled
 Pos=64469.2,787.781,56576
 Orient=0,-0.443948,0,0.896053
 Scale=1.7,1.7,1.7
@@ -331,7 +234,6 @@ Flags=1
 [ENTRY]
 ID=151028829
 Asset=CL-Camp2
-Name=Untitled
 Pos=64451.7,787.015,56634
 Orient=0,0,0,1
 Scale=1,1,1
@@ -340,7 +242,6 @@ Flags=1
 [ENTRY]
 ID=151028830
 Asset=CL-Camp1
-Name=Untitled
 Pos=63772.1,778.311,56954
 Orient=0,0.937923,0,-0.346843
 Scale=1,1,1
@@ -349,7 +250,6 @@ Flags=1
 [ENTRY]
 ID=151028832
 Asset=CL-Camp3
-Name=Untitled
 Pos=64071.2,779.812,56571
 Orient=0,0.632673,0,0.774419
 Scale=1,1,1
@@ -358,7 +258,6 @@ Flags=1
 [ENTRY]
 ID=151028878
 Asset=Prop-Well1#Prop-Well1
-Name=Untitled
 Pos=64322.1,782.368,56804
 Orient=0,0,0,1
 Scale=2.1,2.1,2.1
@@ -367,7 +266,6 @@ Flags=1
 [ENTRY]
 ID=151059514
 Asset=Light-Medium?COLOR=33FFFF
-Name=Untitled
 Pos=63771.9,823.693,56567.2
 Orient=0,-0.859862,0,0.510526
 Scale=1,1,1

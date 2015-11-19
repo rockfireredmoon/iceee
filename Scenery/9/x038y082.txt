@@ -500,6 +500,14 @@ Orient=0,0,0,1
 Scale=1,1,1
 
 [ENTRY]
+ID=151060345
+Asset=Prop-Holiday-Harvest_Banner#Prop-Holiday-Harvest_Banner
+Name=IMPORT
+Pos=28699.6,751.93,61789.7
+Orient=0,-0.942563,0,-0.334029
+Scale=7.45,7.45,7.45
+
+[ENTRY]
 ID=151062300
 Asset=Manipulator-SpawnPoint
 Name=Untitled

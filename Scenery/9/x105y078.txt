@@ -1,7 +1,6 @@
 [ENTRY]
 ID=151018801
 Asset=Prop-Burnt_Pines#Prop-Burnt_Pine2
-Name=Untitled
 Pos=79013,780.935,58970
 Orient=0,0,0,1
 Scale=2.075,2.075,2.075
@@ -10,7 +9,6 @@ Flags=1
 [ENTRY]
 ID=151018807
 Asset=CL-Vampire_Camp3#CL-Vampire_Camp3
-Name=Untitled
 Pos=79103,759.442,58967
 Orient=0,-0.324043,0,0.946042
 Scale=1,1,1
@@ -19,7 +17,6 @@ Flags=1
 [ENTRY]
 ID=151026763
 Asset=Prop-Burnt_Pine3
-Name=Untitled
 Pos=78785,822.793,59220
 Orient=0,-0.552199,0,0.833712
 Scale=2.975,2.975,2.975
@@ -28,7 +25,6 @@ Flags=1
 [ENTRY]
 ID=151026764
 Asset=Prop-Burnt_Pines#Prop-Burnt_Pine5
-Name=Untitled
 Pos=78991,764.7,58815
 Orient=-0.127263,0.130216,-0.1326,0.974302
 Scale=2.35,2.35,2.35
@@ -37,27 +33,26 @@ Flags=1
 [ENTRY]
 ID=151029687
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=79131,758.991,59057
 Orient=0,0.872355,0,0.488872
 Scale=1,1,1
 spawnPackage=12_vmp_moonskullHunter_46_47
+outerRadius=1
 
 [ENTRY]
 ID=151029688
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=79148,759.38,58909
 Orient=0,0.824886,0,0.5653
 Scale=1,1,1
-spawnPackage=12_vmp_moonskullHunter_46_47
 links_count=1
 link=151029689,1
+spawnPackage=12_vmp_moonskullHunter_46_47
+outerRadius=1
 
 [ENTRY]
 ID=151029689
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=79119,755.757,58841
 Orient=0,0,0,1
 Scale=1,1,1
@@ -68,7 +63,6 @@ link=151029690,1
 [ENTRY]
 ID=151029690
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=79040,754.691,58826
 Orient=0,0,0,1
 Scale=1,1,1
@@ -79,7 +73,6 @@ link=151029691,1
 [ENTRY]
 ID=151029691
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=78992,761.413,58881
 Orient=0,0,0,1
 Scale=1,1,1
@@ -89,63 +82,62 @@ link=151029690,1
 [ENTRY]
 ID=151029692
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=79043,761.392,58973
 Orient=0,-0.0299955,0,0.99955
 Scale=1,1,1
 spawnPackage=12_vmp_moonskullHunter_46_47
+outerRadius=1
 
 [ENTRY]
 ID=151029693
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=79118,759.442,58963
 Orient=0,-0.987888,0,0.155167
 Scale=1,1,1
 spawnPackage=12_vmp_fl_02_captive
+outerRadius=1
 
 [ENTRY]
 ID=151029694
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=79082,759.27,58959
 Orient=0,-0.232843,0,0.972514
 Scale=1,1,1
 spawnPackage=12_vmp_fl_02_captive
+outerRadius=1
 
 [ENTRY]
 ID=151029695
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=79094,759.442,58988
 Orient=0,0.568762,0,0.822502
 Scale=1,1,1
 spawnPackage=12_vmp_fl_02_captive
+outerRadius=1
 
 [ENTRY]
 ID=151029698
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=79008,755.416,58795
 Orient=0,0.496881,0,0.867819
 Scale=1,1,1
 spawnPackage=12_vmp_moonskullHunter_46_47
+outerRadius=1
 
 [ENTRY]
 ID=151029699
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=78992,761.503,58913
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=12_vmp_moonskullHunter_46_47
 links_count=1
 link=151029700,1
+spawnPackage=12_vmp_moonskullHunter_46_47
+outerRadius=1
 
 [ENTRY]
 ID=151029700
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=79067,759.339,58927
 Orient=0,0,0,1
 Scale=1,1,1
@@ -156,7 +148,6 @@ link=151029701,1
 [ENTRY]
 ID=151029701
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=79173,759.34,58959
 Orient=0,0,0,1
 Scale=1,1,1
@@ -167,7 +158,6 @@ link=151029702,1
 [ENTRY]
 ID=151029702
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=79174,759.203,58996
 Orient=0,0,0,1
 Scale=1,1,1
@@ -178,7 +168,6 @@ link=151029703,1
 [ENTRY]
 ID=151029703
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=79088,759.432,59029
 Orient=0,0,0,1
 Scale=1,1,1
@@ -189,7 +178,6 @@ link=151029704,1
 [ENTRY]
 ID=151029704
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=79087,759.442,59088
 Orient=0,0,0,1
 Scale=1,1,1
@@ -199,25 +187,24 @@ link=151029703,1
 [ENTRY]
 ID=151029705
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=79045,759.442,59056
 Orient=0,0.324043,0,0.946042
 Scale=1,1,1
 spawnPackage=12_vmp_moonskullHunter_46_47
+outerRadius=1
 
 [ENTRY]
 ID=151029706
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=79054,759.41,58894
 Orient=0,-0.804599,0,0.593818
 Scale=1,1,1
 spawnPackage=12_vmp_fl_02_captive
+outerRadius=1
 
 [ENTRY]
 ID=151029708
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=78849,800.216,59243
 Orient=0,0,0,1
 Scale=1,1,1
@@ -228,7 +215,6 @@ link=151029709,1
 [ENTRY]
 ID=151029709
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=78995,773.351,59223
 Orient=0,0,0,1
 Scale=1,1,1
@@ -239,7 +225,6 @@ link=151029710,1
 [ENTRY]
 ID=151029710
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=79121,761.881,59147
 Orient=0,0,0,1
 Scale=1,1,1
@@ -250,7 +235,6 @@ link=151029711,1
 [ENTRY]
 ID=151029711
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=79021,766.471,59137
 Orient=0,0,0,1
 Scale=1,1,1
@@ -261,7 +245,6 @@ link=151029712,1
 [ENTRY]
 ID=151029712
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=78980,772.086,59177
 Orient=0,0,0,1
 Scale=1,1,1
@@ -272,7 +255,6 @@ link=151029713,1
 [ENTRY]
 ID=151029713
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=78864,803.841,59191
 Orient=0,0,0,1
 Scale=1,1,1
@@ -283,7 +265,6 @@ link=151029714,1
 [ENTRY]
 ID=151029714
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=78758,856.5,59084
 Orient=0,0,0,1
 Scale=1,1,1
@@ -294,25 +275,24 @@ link=151029713,1
 [ENTRY]
 ID=151029724
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=78758,836.919,59176
 Orient=0,0.305059,0,0.952333
 Scale=1,1,1
 spawnPackage=12_vmp_moonskullHunter_46_47
+outerRadius=1
 
 [ENTRY]
 ID=151029725
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=78760,860.178,59052
 Orient=0,-0.425939,0,0.904752
 Scale=1,1,1
 spawnPackage=12_vmp_moonskullHunter_46_47
+outerRadius=1
 
 [ENTRY]
 ID=151029729
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=78776,860.751,58743
 Orient=0,0,0,1
 Scale=1,1,1
@@ -323,7 +303,6 @@ link=151029730,1
 [ENTRY]
 ID=151029730
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=78784,862.237,58980
 Orient=0,0,0,1
 Scale=1,1,1
@@ -333,20 +312,20 @@ link=151029729,1
 [ENTRY]
 ID=151029734
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=79150,759.248,59147
 Orient=0,-0.947396,0,0.320063
 Scale=1,1,1
-spawnPackage=12_vmp_moonskullHunter_46_47
 links_count=1
 link=151029735,1
+spawnPackage=12_vmp_moonskullHunter_46_47
+outerRadius=1
 
 [ENTRY]
 ID=151029740
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=78958,763.688,59090
 Orient=0,-0.568762,0,0.822502
 Scale=1,1,1
 spawnPackage=12_vmp_fl_02_captive
+outerRadius=1
 

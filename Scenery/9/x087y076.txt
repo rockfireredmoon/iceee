@@ -1,15 +1,6 @@
 [ENTRY]
-ID=1084173
-Asset=Prop-Sanctuary_Stone#Prop-Sanctuary_Stone
-Name=Untitled
-Pos=65495.8,574.755,57431.3
-Orient=0,-0.479426,0,0.877583
-Scale=1,1,1
-
-[ENTRY]
 ID=151016715
 Asset=Bldg-Urban-Barracks#Bldg-Urban-Barracks?ATS=ATS-Warpig
-Name=Untitled
 Pos=65335.3,568.997,57033
 Orient=0,0.183946,0,0.982936
 Scale=1.675,1.675,1.675
@@ -18,7 +9,6 @@ Flags=1
 [ENTRY]
 ID=151016725
 Asset=Warpig_Walls#Prop-Warpig_Wall1
-Name=Untitled
 Pos=65706,603.196,57006
 Orient=0,-0.838758,0,0.544504
 Scale=1.575,1.575,1.575
@@ -27,7 +17,6 @@ Flags=1
 [ENTRY]
 ID=151016728
 Asset=Prop-Warpig_Wall1
-Name=Untitled
 Pos=65643,604.161,57323
 Orient=0,-0.699716,0,0.714422
 Scale=1.575,1.575,1.575
@@ -36,7 +25,6 @@ Flags=1
 [ENTRY]
 ID=151016756
 Asset=Prop-Warpig_Tower
-Name=Untitled
 Pos=65660,636.719,57542
 Orient=0.02252,0.374883,0.0555746,0.925131
 Scale=2.15,2.15,2.15
@@ -45,7 +33,6 @@ Flags=1
 [ENTRY]
 ID=151016763
 Asset=Prop-Sick-Forest_Tree3
-Name=Untitled
 Pos=65836,547.952,57505
 Orient=0,0,0,1
 Scale=1,1,1
@@ -54,7 +41,6 @@ Flags=1
 [ENTRY]
 ID=151016774
 Asset=CL-Rack1
-Name=Untitled
 Pos=65395.4,568.445,57051
 Orient=0,0,0,1
 Scale=1.8,1.8,1.8
@@ -63,7 +49,6 @@ Flags=1
 [ENTRY]
 ID=151016777
 Asset=CL-Rack2#CL-Rack2
-Name=Untitled
 Pos=65310.2,572.1,57119
 Orient=0,0.40319,0,0.915116
 Scale=1.95,1.95,1.95
@@ -72,7 +57,6 @@ Flags=1
 [ENTRY]
 ID=151016788
 Asset=Prop-Bush_Arid3#Prop-Bush_Arid3
-Name=Untitled
 Pos=65422,576.199,57400
 Orient=0,0,0,1
 Scale=1.775,1.775,1.775
@@ -81,7 +65,6 @@ Flags=1
 [ENTRY]
 ID=151016797
 Asset=Prop-Bush_AridDead1#Prop-Bush_AridDead1
-Name=Untitled
 Pos=65429.8,571.584,57006
 Orient=0,0,0,1
 Scale=3.375,3.375,3.375
@@ -90,7 +73,6 @@ Flags=1
 [ENTRY]
 ID=151016819
 Asset=Prop-Rubble1#Prop-Rubble1
-Name=Untitled
 Pos=65560,579.333,57623
 Orient=0,0.29552,0,0.955337
 Scale=8.5,8.5,8.5
@@ -99,7 +81,6 @@ Flags=1
 [ENTRY]
 ID=151016821
 Asset=Prop-Rubble2#Prop-Rubble2
-Name=Untitled
 Pos=65255.2,580.287,57203
 Orient=0,0,0,1
 Scale=6.225,6.225,6.225
@@ -108,7 +89,6 @@ Flags=1
 [ENTRY]
 ID=151016841
 Asset=Prop-Lamp_Post_Junk#Prop-Lamp_Post_Junk1
-Name=Untitled
 Pos=65624,597.389,57736
 Orient=0,0,0,1
 Scale=1.925,1.925,1.925
@@ -117,7 +97,6 @@ Flags=1
 [ENTRY]
 ID=151016845
 Asset=Prop-Lamp_Post_Junk#Prop-Lamp_Post_Junk3
-Name=Untitled
 Pos=65330.3,564.077,57167
 Orient=0,0.257081,0,0.96639
 Scale=1.45,1.45,1.45
@@ -126,7 +105,6 @@ Flags=1
 [ENTRY]
 ID=151016851
 Asset=Prop-Chunks#Prop-Chunks2
-Name=Untitled
 Pos=65742,571.696,57156
 Orient=0,0,0,1
 Scale=1,1,1
@@ -135,7 +113,6 @@ Flags=1
 [ENTRY]
 ID=151024621
 Asset=Prop-Anubian_Camp#Prop-Anubian_Palisade
-Name=Untitled
 Pos=65687,593.15,57741
 Orient=0.261857,-0.0192998,-0.00523799,0.964899
 Scale=1.5,1.5,1.5
@@ -144,7 +121,6 @@ Flags=1
 [ENTRY]
 ID=151024623
 Asset=Prop-Anubian_Palisade
-Name=Untitled
 Pos=65687,593.15,57671
 Orient=0.255879,-0.2059,-0.0558776,0.942873
 Scale=2.475,2.475,2.475
@@ -152,13 +128,11 @@ Flags=1
 
 [ENTRY]
 ID=151027449
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=Untitled
+Asset=Manipulator#Manipulator-PathNode
 Pos=65494,602.884,57664
-Orient=0,-0.560509,0,0.828149
+Orient=0,0,0,1
 Scale=1,1,1
 Flags=1
-spawnPackage=#F1355
 links_count=4
 link=151027448,1
 link=151027450,1
@@ -168,7 +142,6 @@ link=151027468,1
 [ENTRY]
 ID=151027450
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=65334.4,594.022,57464
 Orient=0,0,0,1
 Scale=1,1,1
@@ -178,20 +151,17 @@ link=151027449,1
 
 [ENTRY]
 ID=151027451
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=Untitled
+Asset=Manipulator#Manipulator-PathNode
 Pos=65312.7,587.422,57397
-Orient=0,0.479426,0,0.877583
+Orient=0,0,0,1
 Scale=1,1,1
 Flags=1
-spawnPackage=#F1355
 links_count=1
 link=151027452,1
 
 [ENTRY]
 ID=151027452
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=65371.3,574.875,57300
 Orient=0,0,0,1
 Scale=1,1,1
@@ -204,7 +174,6 @@ link=151027516,1
 [ENTRY]
 ID=151027453
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=65431.4,571.287,57150
 Orient=0,0,0,1
 Scale=1,1,1
@@ -216,20 +185,17 @@ link=151027465,1
 
 [ENTRY]
 ID=151027465
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=Untitled
+Asset=Manipulator#Manipulator-PathNode
 Pos=65355.1,571.984,57075
-Orient=0,-0.389418,0,0.921061
+Orient=0,0,0,1
 Scale=1,1,1
 Flags=1
-spawnPackage=#F1355
 links_count=1
 link=151027453,1
 
 [ENTRY]
 ID=151027466
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=65388,594.72,57720
 Orient=0,0,0,1
 Scale=1,1,1
@@ -240,7 +206,6 @@ link=151027449,1
 [ENTRY]
 ID=151027467
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=65701,598.445,57628
 Orient=0,0,0,1
 Scale=1,1,1
@@ -251,7 +216,6 @@ link=151027468,1
 [ENTRY]
 ID=151027468
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=65580,601.963,57660
 Orient=0,0,0,1
 Scale=1,1,1
@@ -262,20 +226,17 @@ link=151027467,1
 
 [ENTRY]
 ID=151027469
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=Untitled
+Asset=Manipulator#Manipulator-PathNode
 Pos=65255,591.391,57403
-Orient=0,0.945784,0,0.324796
+Orient=0,0,0,1
 Scale=1,1,1
 Flags=1
-spawnPackage=#F1355
 links_count=1
 link=151027470,1
 
 [ENTRY]
 ID=151028890
 Asset=Prop-Battlefield_Engines#Prop-Battlefield_Barricade
-Name=Untitled
 Pos=65805,592.708,57742
 Orient=-0.201348,0.591652,-0.0179281,0.78044
 Scale=4.25,4.25,4.25
@@ -284,7 +245,6 @@ Flags=1
 [ENTRY]
 ID=151028892
 Asset=Prop-Battlefield_Engines#Prop-Battlefield_Barricade
-Name=Untitled
 Pos=65771,548.595,57294
 Orient=0,0.830497,0,0.557023
 Scale=5.475,5.475,5.475
@@ -293,7 +253,6 @@ Flags=1
 [ENTRY]
 ID=151028893
 Asset=Prop-Battlefield_Engines#Prop-Battlefield_Barricade
-Name=Untitled
 Pos=65850,574.703,57153
 Orient=-0.390153,0.496387,0.0881754,0.770458
 Scale=4.15,4.15,4.15

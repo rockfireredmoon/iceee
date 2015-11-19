@@ -1,16 +1,6 @@
 [ENTRY]
-ID=1127772
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=
-Pos=60286.5,799.496,71303.1
-Orient=0,0,0,1
-Scale=1,1,1
-spawnPackage=11_alp_ZombieMix_44_45
-
-[ENTRY]
 ID=151015818
 Asset=Prop-Dungeon-Entrance-Mine1#Prop-Dungeon-Entrance-Mine1
-Name=Untitled
 Pos=60739.8,1042.09,71484
 Orient=0,-0.822049,0,0.569417
 Scale=1.7,1.7,1.7
@@ -19,7 +9,6 @@ Flags=1
 [ENTRY]
 ID=151015819
 Asset=Prop-Dungeon-Entrance-Mine1
-Name=Untitled
 Pos=60515.2,1226.24,71994
 Orient=0,-0.999168,0,0.040785
 Scale=1.7,1.7,1.7
@@ -28,7 +17,6 @@ Flags=1
 [ENTRY]
 ID=151015820
 Asset=Prop-Dungeon-Entrance-Mine1
-Name=Untitled
 Pos=60226.5,1057.06,71874
 Orient=0,-0.999168,0,0.040785
 Scale=1.7,1.7,1.7
@@ -37,7 +25,6 @@ Flags=1
 [ENTRY]
 ID=151015822
 Asset=Prop-Dvergar_Equipment#Prop-Dvergar_Scaffolding
-Name=Untitled
 Pos=60355.3,783.804,71576
 Orient=0,-0.514136,0,0.857709
 Scale=2.3,2.3,2.3
@@ -46,7 +33,6 @@ Flags=1
 [ENTRY]
 ID=151015823
 Asset=Prop-Dvergar_Scaffolding
-Name=Untitled
 Pos=60646.2,1020.2,71615
 Orient=0,-0.914795,0,0.403919
 Scale=2.3,2.3,2.3
@@ -55,7 +41,6 @@ Flags=1
 [ENTRY]
 ID=151015824
 Asset=Prop-Dvergar_Equipment#Prop-Dvergar_Contraption
-Name=Untitled
 Pos=60147.9,1024.57,71738
 Orient=0,0.227978,0,0.973666
 Scale=1.575,1.575,1.575
@@ -64,7 +49,6 @@ Flags=1
 [ENTRY]
 ID=151015825
 Asset=Prop-Dungeon_Chain#Prop-Dungeon_Chain2
-Name=Untitled
 Pos=60158.3,1142.37,71703
 Orient=0,0.149438,0,0.988771
 Scale=2.35,2.35,2.35
@@ -73,7 +57,6 @@ Flags=1
 [ENTRY]
 ID=151015826
 Asset=Prop-Dvergar_Scaffolding
-Name=Untitled
 Pos=60543,1191.99,71790
 Orient=0,-0.514136,0,0.857709
 Scale=1.575,1.575,1.575
@@ -82,7 +65,6 @@ Flags=1
 [ENTRY]
 ID=151015827
 Asset=Prop-Mining_Cart#Prop-Mine-Cart
-Name=Untitled
 Pos=60390.2,795.478,71498
 Orient=0,0,0,1
 Scale=1.625,1.625,1.625
@@ -91,7 +73,6 @@ Flags=1
 [ENTRY]
 ID=151015828
 Asset=Prop-Mine-Cart
-Name=Untitled
 Pos=60416.8,799.496,71363
 Orient=0,-0.252245,0,0.967663
 Scale=1.625,1.625,1.625
@@ -100,7 +81,6 @@ Flags=1
 [ENTRY]
 ID=151015829
 Asset=Prop-Market_Stall1#Prop-Market_Stall1
-Name=Untitled
 Pos=60337.3,797.511,71416
 Orient=0,-0.992713,0,0.120503
 Scale=1.375,1.375,1.375
@@ -109,7 +89,6 @@ Flags=1
 [ENTRY]
 ID=151015830
 Asset=Prop-Market_Stall1
-Name=Untitled
 Pos=60445.9,799.021,71338
 Orient=0,-0.918788,0,0.394751
 Scale=1.15,1.15,1.15
@@ -118,7 +97,6 @@ Flags=1
 [ENTRY]
 ID=151015870
 Asset=Prop-Smithing-Iron_Ingots#Prop-Smithing-Iron_Ingots
-Name=Untitled
 Pos=60429.5,807.146,71336
 Orient=0,0.342898,0,0.939373
 Scale=2.175,2.175,2.175
@@ -127,7 +105,6 @@ Flags=1
 [ENTRY]
 ID=151015871
 Asset=Prop-Smithing-Iron_Ingots
-Name=Untitled
 Pos=60444.9,807.082,71318
 Orient=0,0,0,1
 Scale=1,1,1
@@ -136,7 +113,6 @@ Flags=1
 [ENTRY]
 ID=151015872
 Asset=Prop-Market_Stall1
-Name=Untitled
 Pos=60242.2,799.25,71445
 Orient=0,-0.999983,0,0.00579688
 Scale=1.125,1.125,1.125
@@ -145,7 +121,6 @@ Flags=1
 [ENTRY]
 ID=151015873
 Asset=Prop-Smithing-Iron_Ingots
-Name=Untitled
 Pos=60348.2,807.197,71395
 Orient=0,0.996738,0,0.0807084
 Scale=2.175,2.175,2.175
@@ -154,7 +129,6 @@ Flags=1
 [ENTRY]
 ID=151015874
 Asset=Prop-Mining_Pick#Prop-Mining_Pick
-Name=Untitled
 Pos=60320.5,807.226,71404
 Orient=0,0,0,1
 Scale=1,1,1
@@ -163,7 +137,6 @@ Flags=1
 [ENTRY]
 ID=151015875
 Asset=Prop-Ladder1#Prop-Ladder1
-Name=Untitled
 Pos=60334.1,797.033,71536
 Orient=0,0.810497,0,0.585743
 Scale=5.85,5.85,5.85
@@ -172,7 +145,6 @@ Flags=1
 [ENTRY]
 ID=151015876
 Asset=Prop-Tombstone_Large1
-Name=Untitled
 Pos=60162.6,801.661,71514
 Orient=0,0.539632,0,0.841901
 Scale=1,1,1
@@ -181,7 +153,6 @@ Flags=1
 [ENTRY]
 ID=151015878
 Asset=Prop-Shovel
-Name=Untitled
 Pos=60119.4,807.312,71441
 Orient=-0.681562,0.0109749,-0.0102242,0.731606
 Scale=1,1,1
@@ -190,7 +161,6 @@ Flags=1
 [ENTRY]
 ID=151015879
 Asset=Prop-Tombstone2
-Name=Untitled
 Pos=60562.6,795.161,71277
 Orient=0,-0.780209,0,0.625519
 Scale=2.125,2.125,2.125
@@ -199,7 +169,6 @@ Flags=1
 [ENTRY]
 ID=151015883
 Asset=Prop-Tombstone_Large2
-Name=Untitled
 Pos=60107.1,801.253,71461
 Orient=0,0.338197,0,0.941075
 Scale=1,1,1
@@ -208,7 +177,6 @@ Flags=1
 [ENTRY]
 ID=151015884
 Asset=Prop-Mine-Cart
-Name=Untitled
 Pos=60295.7,802.636,71382
 Orient=-0.620986,0,0,0.783822
 Scale=1.625,1.625,1.625
@@ -217,7 +185,6 @@ Flags=1
 [ENTRY]
 ID=151015895
 Asset=Prop-Lamp_Post_Undead1
-Name=Untitled
 Pos=60180.7,816.14,71254
 Orient=0,0,0,1
 Scale=1.4,1.4,1.4
@@ -226,7 +193,6 @@ Flags=1
 [ENTRY]
 ID=151028620
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=60363.8,799.496,71355
 Orient=0,0,0,1
 Scale=1,1,1
@@ -237,7 +203,6 @@ link=151029114,1
 [ENTRY]
 ID=151028626
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=60202.3,802.427,71326
 Orient=0,0,0,1
 Scale=1,1,1
@@ -248,7 +213,6 @@ link=151028627,1
 [ENTRY]
 ID=151028627
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=60086.5,828.874,71285
 Orient=0,0,0,1
 Scale=1,1,1
@@ -259,47 +223,47 @@ link=151028628,1
 [ENTRY]
 ID=151029111
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=60273.3,804.496,71389
 Orient=0,0.535416,0,0.844589
 Scale=1,1,1
 spawnPackage=11_alp_ZombieMix_44_45
+outerRadius=10
 
 [ENTRY]
 ID=151029112
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=60203.7,804.725,71436
 Orient=0,0.670587,0,0.741831
 Scale=1,1,1
 spawnPackage=11_alp_ZombieMix_44_45
+outerRadius=10
 
 [ENTRY]
 ID=151029113
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=60292.1,804.678,71424
 Orient=0,0.713864,0,0.700285
 Scale=1,1,1
 spawnPackage=11_alp_ZombieMix_44_45
+outerRadius=10
 
 [ENTRY]
 ID=151029114
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=60393.6,804.495,71371
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=11_alp_ZombieMix_44_45
 links_count=1
 link=151028620,1
+spawnPackage=11_alp_ZombieMix_44_45
+outerRadius=10
 
 [ENTRY]
 ID=151029115
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=60314.7,804.953,71504
 Orient=0,0.777072,0,0.629412
 Scale=1,1,1
 spawnPackage=11_alp_ZombieMix_44_45
+outerRadius=10
 

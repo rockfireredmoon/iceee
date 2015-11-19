@@ -1,17 +1,6 @@
 [ENTRY]
-ID=1127773
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=
-Pos=59620.6,578.683,70571.3
-Orient=0,0,0,1
-Scale=1,1,1
-spawnPackage=11_alp_ZombieMix_44_45
-wanderRadius=100
-
-[ENTRY]
 ID=151015900
 Asset=Prop-Lamp_Post_Undead#Prop-Lamp_Post_Undead4
-Name=Untitled
 Pos=59942.5,902.332,70916
 Orient=0,0.711473,0,-0.702713
 Scale=1.825,1.825,1.825
@@ -20,7 +9,6 @@ Flags=1
 [ENTRY]
 ID=151015901
 Asset=Prop-Lamp_Post_Undead4
-Name=Untitled
 Pos=59846,902.332,70916
 Orient=0,0.734548,0,0.678557
 Scale=1.825,1.825,1.825
@@ -29,7 +17,6 @@ Flags=1
 [ENTRY]
 ID=151015903
 Asset=Prop-Tombstone_Large2
-Name=Untitled
 Pos=59782.7,976.858,70830
 Orient=0,0,0,1
 Scale=2.125,2.125,2.125
@@ -38,7 +25,6 @@ Flags=1
 [ENTRY]
 ID=151015904
 Asset=Prop-Dungeon_Chain1
-Name=Untitled
 Pos=59788,1052.94,70831
 Orient=0,0,0,1
 Scale=1.075,1.075,1.075
@@ -47,7 +33,6 @@ Flags=1
 [ENTRY]
 ID=151015912
 Asset=Prop-Fences#Prop-Wooden_Barricade2
-Name=Untitled
 Pos=59844.2,1002.74,70550
 Orient=0.305059,0,0,0.952333
 Scale=1.8,1.8,1.8
@@ -56,7 +41,6 @@ Flags=1
 [ENTRY]
 ID=151015914
 Asset=Prop-Battlefield_Skeleton1
-Name=Untitled
 Pos=59838,1012.75,70525
 Orient=0.0513654,-0.831682,-0.0400679,0.551418
 Scale=1.625,1.625,1.625
@@ -65,7 +49,6 @@ Flags=1
 [ENTRY]
 ID=151028629
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=59915.8,884.025,71090
 Orient=0,0,0,1
 Scale=1,1,1
@@ -76,7 +59,6 @@ link=151028630,1
 [ENTRY]
 ID=151028630
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=59903.1,901.507,70926
 Orient=0,0,0,1
 Scale=1,1,1
@@ -87,54 +69,53 @@ link=151029105,1
 [ENTRY]
 ID=151029101
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=59759.8,911.163,70886
 Orient=0,-0.761095,0,0.64864
 Scale=1,1,1
 spawnPackage=11_alp_ZombieMix_44_45
+outerRadius=10
 
 [ENTRY]
 ID=151029102
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=59826.1,910.859,70888
 Orient=0,-0.644218,0,0.764842
 Scale=1,1,1
 spawnPackage=11_alp_ZombieMix_44_45
+outerRadius=10
 
 [ENTRY]
 ID=151029103
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=59945.7,909.556,70886
 Orient=0,-0.849481,0,0.52762
 Scale=1,1,1
 spawnPackage=11_alp_ZombieMix_44_45
+outerRadius=10
 
 [ENTRY]
 ID=151029104
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=59987.8,906.845,70888
 Orient=0,-0.804599,0,0.593818
 Scale=1,1,1
 spawnPackage=11_alp_ZombieMix_44_45
+outerRadius=10
 
 [ENTRY]
 ID=151029105
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=59898.1,912.603,70901
 Orient=0,-0.767543,0,0.640997
 Scale=1,1,1
-spawnPackage=11_alp_ZombieMix_44_45
 links_count=1
 link=151028630,1
+spawnPackage=11_alp_ZombieMix_44_45
+outerRadius=10
 
 [ENTRY]
 ID=151029323
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=59333.7,616.921,70562
 Orient=0,0,0,1
 Scale=1,1,1
@@ -145,7 +126,6 @@ link=151029324,1
 [ENTRY]
 ID=151041063
 Asset=CL-GrunsBush_4#CL-GrunsBush_4
-Name=Untitled
 Pos=59435,595.824,70663
 Orient=0,0,0,1
 Scale=2.075,2.075,2.075

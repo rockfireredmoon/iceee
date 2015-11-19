@@ -12,5 +12,5 @@ Data\QuestNewCorsica.txt
 Data\QuestICEEE.txt
 
 ; Data\QuestEventSummer.txt
-; Data\QuestEventHarvestFest.txt
+Data\QuestEventHarvestFest.txt
 ; Data\QuestEventWinterDawning.txt

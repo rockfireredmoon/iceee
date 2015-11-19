@@ -1,18 +1,6 @@
 [ENTRY]
-ID=1127484
-Asset=Manipulator#Manipulator-PathNode
-Name=
-Pos=63440,817.663,57765
-Orient=0,0,0,1
-Scale=1,1,1
-links_count=2
-link=1127485,1
-link=1127483,1
-
-[ENTRY]
 ID=151045723
 Asset=CL-AridBush5#CL-AridBush5
-Name=Untitled
 Pos=63420.1,834.658,57878
 Orient=0,0,0,1
 Scale=2.275,2.275,2.275
@@ -21,7 +9,6 @@ Flags=1
 [ENTRY]
 ID=151045726
 Asset=CL-AridBush4#CL-AridBush4
-Name=Untitled
 Pos=63309.2,855.498,57772
 Orient=0,-0.960835,0,0.277121
 Scale=1,1,1
@@ -30,7 +17,6 @@ Flags=1
 [ENTRY]
 ID=151045727
 Asset=CL-AridBush3#CL-AridBush3
-Name=Untitled
 Pos=63398.2,847.123,57853
 Orient=0,0.792563,0,0.609791
 Scale=1.775,1.775,1.775
@@ -39,7 +25,6 @@ Flags=1
 [ENTRY]
 ID=151047561
 Asset=CL-AridBush1#CL-AridBush1
-Name=Untitled
 Pos=63138.8,1059.23,57835
 Orient=0,0,0,1
 Scale=1.7,1.7,1.7
@@ -48,7 +33,6 @@ Flags=1
 [ENTRY]
 ID=151047562
 Asset=CL-AridBush2#CL-AridBush2
-Name=Untitled
 Pos=63269.4,1068.4,58125
 Orient=0,0,0,1
 Scale=1.8,1.8,1.8
@@ -57,7 +41,6 @@ Flags=1
 [ENTRY]
 ID=151047563
 Asset=CL-AridBush3#CL-AridBush3
-Name=Untitled
 Pos=63097.1,1059.3,58004
 Orient=0,0,0,1
 Scale=1,1,1

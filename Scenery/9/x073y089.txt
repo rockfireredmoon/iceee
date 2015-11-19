@@ -1,7 +1,6 @@
 [ENTRY]
 ID=151017064
 Asset=CL-UndeadTree5#CL-UndeadTree5
-Name=Untitled
 Pos=55192.6,631.495,67328
 Orient=0,0,0,1
 Scale=1,1,1
@@ -10,19 +9,16 @@ Flags=1
 [ENTRY]
 ID=151028606
 Asset=Manipulator-SpawnPoint
-Name=Untitled
-Pos=55260,665,66920
+Pos=55122.3,661.153,67037
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_dth_wilds_41_42
-loyaltyRadius=25
-wanderRadius=150
+outerRadius=10
 
 [ENTRY]
 ID=151028642
 Asset=Manipulator-PathNode
-Name=Untitled
-Pos=55250,696.814,66806
+Pos=55229,696.814,66806
 Orient=0,0,0,1
 Scale=1,1,1
 links_count=1
@@ -31,7 +27,6 @@ link=151028641,1
 [ENTRY]
 ID=151040874
 Asset=Prop-Dungeon-Entrance-Mine1#Prop-Dungeon-Entrance-Mine1
-Name=Untitled
 Pos=54957.5,742.425,66897
 Orient=0,0.681639,0,0.731689
 Scale=1.425,1.425,1.425
@@ -40,7 +35,6 @@ Flags=1
 [ENTRY]
 ID=151041220
 Asset=CL-GrunsBush_1#CL-GrunsBush_1
-Name=Untitled
 Pos=55275.6,663.649,66876
 Orient=0,0,0,1
 Scale=1.525,1.525,1.525
@@ -49,7 +43,6 @@ Flags=1
 [ENTRY]
 ID=151041221
 Asset=CL-GrunsBush_2#CL-GrunsBush_2
-Name=Untitled
 Pos=55197.4,672.47,66952
 Orient=0,0,0.124675,0.992198
 Scale=1.825,1.825,1.825
@@ -58,7 +51,6 @@ Flags=1
 [ENTRY]
 ID=151041222
 Asset=CL-UndeadBoulder6#CL-UndeadBoulder6
-Name=Untitled
 Pos=54951.5,751.863,66905
 Orient=0,0,0,1
 Scale=0.5,0.5,0.5
@@ -67,7 +59,6 @@ Flags=1
 [ENTRY]
 ID=151041223
 Asset=CL-UndeadBoulder5#CL-UndeadBoulder5
-Name=Untitled
 Pos=54960.7,741.859,66916
 Orient=0,0.501213,0,0.865324
 Scale=0.35,0.35,0.35
@@ -76,7 +67,6 @@ Flags=1
 [ENTRY]
 ID=151041224
 Asset=CL-GrunsBush_3#CL-GrunsBush_3
-Name=Untitled
 Pos=55111.6,712.058,66878
 Orient=0,0,0.124675,0.992198
 Scale=1.825,1.825,1.825
@@ -85,7 +75,6 @@ Flags=1
 [ENTRY]
 ID=151041229
 Asset=CL-GrunsBush_4#CL-GrunsBush_4
-Name=Untitled
 Pos=55064,714.582,66900
 Orient=0,0,0,1
 Scale=1,1,1
@@ -94,7 +83,6 @@ Flags=1
 [ENTRY]
 ID=151041230
 Asset=CL-GrunsBush_3#CL-GrunsBush_3
-Name=Untitled
 Pos=55310.1,628.826,67160
 Orient=0,0,0,1
 Scale=2.55,2.55,2.55
@@ -103,7 +91,6 @@ Flags=1
 [ENTRY]
 ID=151041231
 Asset=CL-GrunsBush_2#CL-GrunsBush_2
-Name=Untitled
 Pos=55492.8,643.62,67396
 Orient=0,0,0,1
 Scale=1,1,1
@@ -112,7 +99,6 @@ Flags=1
 [ENTRY]
 ID=151041232
 Asset=CL-GrunsBush_1#CL-GrunsBush_1
-Name=Untitled
 Pos=55473.4,639.679,67169
 Orient=0,0,0,1
 Scale=1,1,1

@@ -1,15 +1,6 @@
 [ENTRY]
-ID=1082958
-Asset=Light-Large?Group=1&COLOR=FF00FD
-Name=Untitled
-Pos=55082.3,664.695,67618.8
-Orient=0,0,0,1
-Scale=1,1,1
-
-[ENTRY]
 ID=151017065
 Asset=CL-UndeadTree1#CL-UndeadTree1
-Name=Untitled
 Pos=55332.6,635.66,67854
 Orient=0,0,0,1
 Scale=2,2,2
@@ -18,7 +9,6 @@ Flags=1
 [ENTRY]
 ID=151017067
 Asset=CL-UndeadTree3#CL-UndeadTree3
-Name=Untitled
 Pos=55381.6,651.329,67626
 Orient=0,0,0,1
 Scale=1,1,1
@@ -27,7 +17,6 @@ Flags=1
 [ENTRY]
 ID=151017069
 Asset=CL-UndeadTree5#CL-UndeadTree5
-Name=Untitled
 Pos=54935.1,632.059,68002.3
 Orient=0,0,0,1
 Scale=2,2,2
@@ -36,7 +25,6 @@ Flags=1
 [ENTRY]
 ID=151017547
 Asset=Prop-Lamp_Post_Undead#Prop-Lamp_Post_Undead4
-Name=Untitled
 Pos=55045.6,636.648,67635
 Orient=0,0,0,1
 Scale=2.3,2.3,2.3
@@ -44,7 +32,6 @@ Scale=2.3,2.3,2.3
 [ENTRY]
 ID=151017550
 Asset=CL-UndeadBoulder6#CL-UndeadBoulder6
-Name=Untitled
 Pos=55055.4,643.97,67521
 Orient=0,0,0,1
 Scale=1.575,1.575,1.575
@@ -52,7 +39,6 @@ Scale=1.575,1.575,1.575
 [ENTRY]
 ID=151017551
 Asset=CL-UndeadBoulder1#CL-UndeadBoulder1
-Name=Untitled
 Pos=54916.8,635.774,67700
 Orient=0,0,0,1
 Scale=1,1,1
@@ -60,7 +46,6 @@ Scale=1,1,1
 [ENTRY]
 ID=151017553
 Asset=Prop-Bush_AridDead1#Prop-Bush_AridDead1
-Name=Untitled
 Pos=55059.9,636.558,67649
 Orient=0,0,0,1
 Scale=1.85,1.85,1.85
@@ -68,7 +53,6 @@ Scale=1.85,1.85,1.85
 [ENTRY]
 ID=151017554
 Asset=Prop-Bush_AridDead2#Prop-Bush_AridDead2
-Name=Untitled
 Pos=55030.4,637.366,67610
 Orient=0,0,0,1
 Scale=1,1,1
@@ -76,7 +60,6 @@ Scale=1,1,1
 [ENTRY]
 ID=151017555
 Asset=Prop-Bush_AridDead3#Prop-Bush_AridDead3
-Name=Untitled
 Pos=55102.1,635.354,67736
 Orient=0,0,0.0948575,0.995491
 Scale=1.8,1.8,1.8
@@ -84,7 +67,6 @@ Scale=1.8,1.8,1.8
 [ENTRY]
 ID=151017557
 Asset=Prop-Burnt_Pines#Prop-Burnt_Pine1
-Name=Untitled
 Pos=55229.5,645.472,67636
 Orient=0,0,0,1
 Scale=2.325,2.325,2.325
@@ -92,7 +74,6 @@ Scale=2.325,2.325,2.325
 [ENTRY]
 ID=151017558
 Asset=Prop-Burnt_Pines#Prop-Burnt_Pine2
-Name=Untitled
 Pos=55286.8,637.081,67737
 Orient=0,0,0,1
 Scale=1.975,1.975,1.975
@@ -100,42 +81,40 @@ Scale=1.975,1.975,1.975
 [ENTRY]
 ID=151028280
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=54753.5,631.952,68096
 Orient=0,0.792563,0,0.609791
 Scale=1,1,1
-spawnPackage=11_irh_vampiderCamp_42_43
 links_count=1
 link=151028281,1
+spawnPackage=11_irh_vampiderCamp_42_43
+outerRadius=1
 
 [ENTRY]
 ID=151028283
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=54854.8,631.952,68145
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_irh_vampiderCamp_42_43
+outerRadius=10
+
+[ENTRY]
+ID=151028662
+Asset=Manipulator-SpawnPoint
+Pos=55483.5,648.094,67793
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=11_dth_wilds_41_42
+outerRadius=10
 
 [ENTRY]
 ID=151028664
 Asset=Manipulator-SpawnPoint
-Name=Untitled
-Pos=55197.4,632.443,67919.9
+Pos=55456.4,681.064,68084
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=11_dth_wilds_41_42
 links_count=1
 link=151028666,1
-
-[ENTRY]
-ID=151028666
-Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
-Pos=55439.2,678.247,68050.3
-Orient=0,0,0,1
-Scale=1,1,1
-links_count=2
-link=151028664,1
-link=151028668,1
+spawnPackage=11_dth_wilds_41_42
+outerRadius=10
 

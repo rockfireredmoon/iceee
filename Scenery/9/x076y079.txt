@@ -1,17 +1,6 @@
 [ENTRY]
-ID=1127558
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=
-Pos=57057.6,795.535,59578.9
-Orient=0,0,0,1
-Scale=1,1,1
-spawnPackage=11_jld_junderbroodWorkskrill_k_43
-wanderRadius=200
-
-[ENTRY]
 ID=151017272
 Asset=CL-Skrill_Mound
-Name=Untitled
 Pos=57553.2,604.005,59599
 Orient=0,-0.953607,0,0.301053
 Scale=1.075,1.075,1.075
@@ -20,52 +9,51 @@ Flags=1
 [ENTRY]
 ID=151026704
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=57445,880.258,59495
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_jld_junderbroodSkrillmix_43
+outerRadius=10
 
 [ENTRY]
 ID=151026707
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=57461.1,875.448,59413
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_jld_junderbroodSkrillmix_43
+outerRadius=10
 
 [ENTRY]
 ID=151026708
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=57387.7,877.756,59411
 Orient=0,0.91071,0,0.413046
 Scale=1,1,1
 spawnPackage=11_jld_junderbroodSkrillmix_43
+outerRadius=10
 
 [ENTRY]
 ID=151026710
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=57335.8,849.379,59346
 Orient=0,0.80162,0,0.597834
 Scale=1,1,1
 spawnPackage=11_jld_junderbroodSkrillmix_43
+outerRadius=10
 
 [ENTRY]
 ID=151026711
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=57480.7,849.561,59345
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_jld_junderbroodSkrillmix_43
+outerRadius=10
 
 [ENTRY]
 ID=151026717
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=57396.5,817.372,59310
 Orient=0,0,0,1
 Scale=1,1,1
@@ -77,18 +65,17 @@ link=151026731,1
 [ENTRY]
 ID=151026736
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=57202,844.392,59758
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=11_jld_junderbroodSkrillmix_43
 links_count=1
 link=151026719,1
+spawnPackage=11_jld_junderbroodSkrillmix_43
+outerRadius=10
 
 [ENTRY]
 ID=151045318
 Asset=CL-AridBush2#CL-AridBush2
-Name=Untitled
 Pos=57610.1,506.538,59779
 Orient=0,0,0,1
 Scale=1.975,1.975,1.975
@@ -97,7 +84,6 @@ Flags=1
 [ENTRY]
 ID=151045319
 Asset=CL-AridBush3#CL-AridBush3
-Name=Untitled
 Pos=57634.1,512.54,59781
 Orient=0,0,0,1
 Scale=1,1,1
@@ -106,7 +92,6 @@ Flags=1
 [ENTRY]
 ID=151045323
 Asset=CL-AridBush6#CL-AridBush6
-Name=Untitled
 Pos=57609.4,508.098,59911
 Orient=0,0,0,1
 Scale=1,1,1
@@ -115,7 +100,6 @@ Flags=1
 [ENTRY]
 ID=151045324
 Asset=CL-AridBush2#CL-AridBush2
-Name=Untitled
 Pos=57712.1,507.582,59983
 Orient=0,0,0,1
 Scale=1,1,1

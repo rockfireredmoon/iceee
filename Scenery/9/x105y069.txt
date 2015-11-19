@@ -1,7 +1,6 @@
 [ENTRY]
 ID=151024530
 Asset=Prop-Rubble1#Prop-Rubble1
-Name=Untitled
 Pos=79048,626.577,51929
 Orient=0,0,0,1
 Scale=5.225,5.225,5.225
@@ -10,7 +9,6 @@ Flags=1
 [ENTRY]
 ID=151026610
 Asset=Prop-Burnt_Pines#Prop-Burnt_Pine4
-Name=Untitled
 Pos=78814,1299.49,52032
 Orient=-0.0650824,0.365375,0.0256181,0.928229
 Scale=4.6,4.6,4.6
@@ -18,7 +16,6 @@ Scale=4.6,4.6,4.6
 [ENTRY]
 ID=151026611
 Asset=Prop-Burnt_Pines#Prop-Burnt_Pine5
-Name=Untitled
 Pos=78843,1298.73,52126
 Orient=0,0,0,1
 Scale=2.525,2.525,2.525
@@ -26,7 +23,6 @@ Scale=2.525,2.525,2.525
 [ENTRY]
 ID=151026623
 Asset=Prop-Burnt_Pines#Prop-Burnt_Pine1
-Name=Untitled
 Pos=79433,1263.08,52187
 Orient=-0.0650824,0.365375,0.0256181,0.928229
 Scale=2.5,2.5,2.5
@@ -35,7 +31,6 @@ Flags=1
 [ENTRY]
 ID=151026634
 Asset=Prop-Tombstone#Prop-Tombstone_Large2
-Name=Untitled
 Pos=79137,1293.78,52330
 Orient=-0.119712,0,0,0.992809
 Scale=2.275,2.275,2.275
@@ -43,7 +38,6 @@ Scale=2.275,2.275,2.275
 [ENTRY]
 ID=151026636
 Asset=CL-Graveyard2#CL-Graveyard2
-Name=Untitled
 Pos=79302,1299.2,52283
 Orient=0,0,0,1
 Scale=1,1,1
@@ -52,45 +46,44 @@ Flags=1
 [ENTRY]
 ID=151031443
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=79372,1299.76,52428
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_vmp_vampider
+outerRadius=10
 
 [ENTRY]
 ID=151031444
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=79241,1302.42,52356
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_vmp_vampider
+outerRadius=10
 
 [ENTRY]
 ID=151031445
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=79212,1305.79,52460
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_vmp_vampider
+outerRadius=10
 
 [ENTRY]
 ID=151031476
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=78963,1298.95,52304
 Orient=0,-0.232843,0,0.972514
 Scale=1,1,1
-spawnPackage=12_vmp_valkalCaster
 links_count=1
 link=151031477,1
+spawnPackage=12_vmp_valkalCaster
+outerRadius=1
 
 [ENTRY]
 ID=151031477
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=79027,1304.13,52413
 Orient=0,0,0,1
 Scale=1,1,1

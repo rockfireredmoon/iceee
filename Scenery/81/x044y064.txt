@@ -1,7 +1,6 @@
 [ENTRY]
 ID=1358955193
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=44483.6,257.104,64998
 Orient=0,0,0,1
 Scale=1,1,1
@@ -11,7 +10,6 @@ link=1358955187,1
 [ENTRY]
 ID=1358955232
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=44014.6,107.345,64960
 Orient=0,0,0,1
 Scale=1,1,1
@@ -22,7 +20,6 @@ link=1358955235,1
 [ENTRY]
 ID=1358955234
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=44061.8,84.3888,64896
 Orient=0,0,0,1
 Scale=1,1,1
@@ -33,7 +30,6 @@ link=1358955237,1
 [ENTRY]
 ID=1358955235
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=44036.1,97.8362,64936
 Orient=0,0,0,1
 Scale=1,1,1
@@ -44,7 +40,6 @@ link=1358955234,1
 [ENTRY]
 ID=1358955237
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=44072.2,76.3462,64870
 Orient=0,0,0,1
 Scale=1,1,1
@@ -54,7 +49,6 @@ link=1358955234,1
 [ENTRY]
 ID=1358955384
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=44032.6,80.1847,64817
 Orient=0,0.923303,0,-0.384073
 Scale=1,1,1
@@ -63,7 +57,6 @@ spawnPackage=1a_npc_City_Watch
 [ENTRY]
 ID=1358964754
 Asset=Prop-Nordic_Props#Prop-Dock1
-Name=Untitled
 Pos=44086.5,24.9245,64806
 Orient=0,-0.908634,0,0.417594
 Scale=1,1,1
@@ -72,7 +65,6 @@ Flags=1
 [ENTRY]
 ID=1358964755
 Asset=Prop-Dock1
-Name=Untitled
 Pos=44096.3,23.4663,64757
 Orient=0,-0.767544,0,0.640996
 Scale=1,1,1
@@ -81,7 +73,6 @@ Flags=1
 [ENTRY]
 ID=1358964756
 Asset=Prop-Dock1
-Name=Untitled
 Pos=44105.5,22.0138,64701
 Orient=0,-0.767544,0,0.640996
 Scale=1,1,1
@@ -90,7 +81,6 @@ Flags=1
 [ENTRY]
 ID=1358964757
 Asset=Prop-Boat-Fishing#Prop-Boat-Fishing
-Name=Untitled
 Pos=44105.1,61.3638,64669
 Orient=0,0,0,1
 Scale=1,1,1

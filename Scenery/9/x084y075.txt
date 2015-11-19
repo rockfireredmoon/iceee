@@ -1,25 +1,6 @@
 [ENTRY]
-ID=1091136
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=Untitled
-Pos=63692.9,779.354,56635.4
-Orient=0,-0.319309,0,0.947651
-Scale=1,1,1
-spawnPackage=#F1355
-
-[ENTRY]
-ID=1126558
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=Untitled
-Pos=63741.6,778.849,56549.1
-Orient=0,0.416871,0,0.908966
-Scale=1,1,1
-spawnPackage=#F7790
-
-[ENTRY]
 ID=151016714
 Asset=Bldg-Stone_Lion_Fort#Bldg-Stone_Lion_Fort?ATS=ATS-Warpig
-Name=Untitled
 Pos=63692.3,768.329,56531
 Orient=0,0.439462,0,0.898261
 Scale=1.25,1.25,1.25
@@ -28,7 +9,6 @@ Flags=1
 [ENTRY]
 ID=151016812
 Asset=CL-AridBush5#CL-AridBush5
-Name=Untitled
 Pos=63506,781.727,56839
 Orient=0,0,0,1
 Scale=1.675,1.675,1.675
@@ -37,7 +17,6 @@ Flags=1
 [ENTRY]
 ID=151016813
 Asset=CL-AridBush6#CL-AridBush6
-Name=Untitled
 Pos=63740,778.225,56986
 Orient=0,0,0,1
 Scale=1.725,1.725,1.725
@@ -46,7 +25,6 @@ Flags=1
 [ENTRY]
 ID=151016836
 Asset=Prop-Chunks#Prop-Chunks2
-Name=Untitled
 Pos=63510.2,780.569,56995
 Orient=0,0,0,1
 Scale=1.2,1.2,1.2
@@ -55,7 +33,6 @@ Flags=1
 [ENTRY]
 ID=151016839
 Asset=Prop-Chunks#Prop-Chunks1
-Name=Untitled
 Pos=63538.1,783.747,56677
 Orient=0,0,0,1
 Scale=1.825,1.825,1.825
@@ -64,7 +41,6 @@ Flags=1
 [ENTRY]
 ID=151027479
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=63678.3,779.415,56678
 Orient=0,0,0,1
 Scale=1,1,1
@@ -75,7 +51,6 @@ link=151027478,1
 [ENTRY]
 ID=151059513
 Asset=Prop-Instance_Entrance
-Name=Untitled
 Pos=63744,829.952,56548.3
 Orient=0,-0.944672,0,-0.328016
 Scale=2.075,2.075,2.075

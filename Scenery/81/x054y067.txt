@@ -577,6 +577,22 @@ links_count=1
 link=1358967179,1
 
 [ENTRY]
+ID=1358967508
+Asset=Prop-Banner_Post2
+Name=IMPORT
+Pos=54582.3,217.093,67892.6
+Orient=0,-0.971527,0,-0.236929
+Scale=1.625,1.625,1.625
+
+[ENTRY]
+ID=1358967509
+Asset=Prop-Holiday-Harvest_Banner
+Name=IMPORT
+Pos=54556.4,331.455,67879.9
+Orient=0,-0.971527,0,-0.236929
+Scale=3.4,3.4,3.4
+
+[ENTRY]
 ID=1358967579
 Asset=Manipulator-SpawnPoint
 Name=Untitled

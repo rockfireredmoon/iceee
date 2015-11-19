@@ -1,7 +1,6 @@
 [ENTRY]
 ID=151016830
 Asset=Prop-Anubian_Camp#Prop-Anubian_Palisade
-Name=Untitled
 Pos=63451.5,921.053,56025
 Orient=-0.255916,0.719779,0.0356743,0.644323
 Scale=2.7,2.7,2.7

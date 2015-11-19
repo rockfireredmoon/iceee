@@ -1,45 +1,36 @@
 [ENTRY]
-ID=1127187
-Asset=Prop-Instance_Entrance#Prop-Instance_Entrance
-Name=
-Pos=27907.3,227.409,62437.9
-Orient=0,0.991665,0,-0.128844
-Scale=1,1,1
-
-[ENTRY]
 ID=10000063
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=28287,635,62506
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=144
+sceneryName=generated_spawn
 spawnPackage=z9_eur_gen_Heartwood_Arbormuse_990
 
 [ENTRY]
 ID=10000073
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=27922,206,62344
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=45
+sceneryName=generated_spawn
 spawnPackage=z9_eur_gen_Councilor_Bentleaf_670
 
 [ENTRY]
 ID=10000223
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=28442,635,62453
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=89
+sceneryName=generated_spawn
 spawnPackage=z9_eur_gen_Councilor_Sapclaw_668
 
 [ENTRY]
 ID=151003168
 Asset=Bldg-Heartwood_SmallA?ATS=ATS-Camelot
-Name=Untitled
 Pos=28434.1,694.748,62530
 Orient=0,0.916803,0,0.39934
 Scale=1,1,1
@@ -48,7 +39,6 @@ Flags=1
 [ENTRY]
 ID=151003272
 Asset=Prop-Cave_Entrance1#Prop-Cave_Entrance1
-Name=Untitled
 Pos=27902.5,202.167,62437
 Orient=-0.0285983,-0.576463,0.0980826,0.810711
 Scale=2,2,2
@@ -57,7 +47,6 @@ Flags=1
 [ENTRY]
 ID=151003545
 Asset=Prop-Mats#Prop-Mat2
-Name=Untitled
 Pos=28467.5,635.116,62413
 Orient=0,0,0,1
 Scale=3.575,3.575,3.575
@@ -66,7 +55,6 @@ Flags=1
 [ENTRY]
 ID=151003546
 Asset=CL-Heartwood_Garden5#CL-Heartwood_Garden5
-Name=Untitled
 Pos=28325,635.116,62519
 Orient=0,0,0,1
 Scale=1,1,1
@@ -75,7 +63,6 @@ Flags=1
 [ENTRY]
 ID=151003547
 Asset=Prop-Garden_Box
-Name=Untitled
 Pos=28282.6,635.116,62545
 Orient=0,0,0,1
 Scale=1,1,1
@@ -84,7 +71,6 @@ Flags=1
 [ENTRY]
 ID=151003548
 Asset=Prop-Tree1
-Name=Untitled
 Pos=28274.5,635.896,62541
 Orient=-0.0681155,0.889469,-0.0639789,0.447338
 Scale=1.2,1.2,1.2
@@ -93,7 +79,6 @@ Flags=1
 [ENTRY]
 ID=151003549
 Asset=Prop-Bush-Med2#Prop-Bush-Med2
-Name=Untitled
 Pos=28287.6,641.433,62538
 Orient=0,0,0,1
 Scale=1.5,1.5,1.5
@@ -102,7 +87,6 @@ Flags=1
 [ENTRY]
 ID=151003550
 Asset=CL-Junk1
-Name=Untitled
 Pos=28280.3,635.115,62282
 Orient=0,-0.40776,0,0.913089
 Scale=1.2,1.2,1.2
@@ -111,7 +95,6 @@ Flags=1
 [ENTRY]
 ID=151003551
 Asset=CL-Junk3
-Name=Untitled
 Pos=28276.5,635.115,62302
 Orient=0,0,0,1
 Scale=1.45,1.45,1.45
@@ -120,7 +103,6 @@ Flags=1
 [ENTRY]
 ID=151003552
 Asset=Prop-Wooden_Furniture#Prop-Table5
-Name=Untitled
 Pos=28392.6,633.205,62256
 Orient=0,-0.434966,0,0.900447
 Scale=0.95,0.95,0.95
@@ -129,7 +111,6 @@ Flags=1
 [ENTRY]
 ID=151003556
 Asset=Prop-Bread_Loaf#Prop-Bread_Loaf
-Name=Untitled
 Pos=28392.2,641.826,62257
 Orient=0,0.795602,0,0.60582
 Scale=1.45,1.45,1.45
@@ -137,7 +118,6 @@ Scale=1.45,1.45,1.45
 [ENTRY]
 ID=151003561
 Asset=Prop-Barrel2
-Name=Untitled
 Pos=28274.5,638.201,62266
 Orient=-0.309816,0,0,0.950797
 Scale=1.475,1.475,1.475
@@ -146,7 +126,6 @@ Flags=1
 [ENTRY]
 ID=151003567
 Asset=Prop-Couch2#Prop-Couch2
-Name=Untitled
 Pos=28397.2,633.261,62624
 Orient=0,-0.819192,0,0.57352
 Scale=1.325,1.325,1.325
@@ -154,7 +133,6 @@ Scale=1.325,1.325,1.325
 [ENTRY]
 ID=151003954
 Asset=Light-Medium
-Name=Untitled
 Pos=28283.4,677.069,62406
 Orient=0,0,0,1
 Scale=1,1,1
@@ -162,7 +140,6 @@ Scale=1,1,1
 [ENTRY]
 ID=151003982
 Asset=Bldg-Heartwood_SmallB?ATS=ATS-Camelot
-Name=Untitled
 Pos=28480.1,635.176,62545
 Orient=0,-0.913414,0,-0.407032
 Scale=1,1,1
@@ -170,18 +147,16 @@ Scale=1,1,1
 [ENTRY]
 ID=151023239
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=28262.2,635.116,62464
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=4_npc_gfo_wanderguards
 links_count=1
 link=151023240,1
+spawnPackage=4_npc_gfo_wanderguards
 
 [ENTRY]
 ID=151023240
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=28285.7,635.116,62465
 Orient=0,0,0,1
 Scale=1,1,1
@@ -193,7 +168,6 @@ link=151023249,1
 [ENTRY]
 ID=151023241
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=28391.1,635.116,62413
 Orient=0,0,0,1
 Scale=1,1,1
@@ -204,7 +178,6 @@ link=151023242,1
 [ENTRY]
 ID=151023242
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=28373.3,635.115,62294
 Orient=0,0,0,1
 Scale=1,1,1
@@ -215,7 +188,6 @@ link=151023243,1
 [ENTRY]
 ID=151023243
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=28451.1,635.115,62272
 Orient=0,0,0,1
 Scale=1,1,1
@@ -226,7 +198,6 @@ link=151023244,1
 [ENTRY]
 ID=151023249
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=28414,635.116,62381
 Orient=0,0,0,1
 Scale=1,1,1
@@ -237,28 +208,27 @@ link=151023248,1
 [ENTRY]
 ID=151060541
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=28041.7,221.669,62743.4
 Orient=0,0,0,1
 Scale=1,1,1
+innerRadius=25
 spawnPackage=HOLIDAY_turkatrice_32_33
+outerRadius=30
 
 [ENTRY]
 ID=151060542
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=27770.1,231.563,62674.5
 Orient=0,-0.964884,0,0.262678
 Scale=1,1,1
-spawnPackage=HOLIDAY_turkatrice_32_33
 links_count=2
 link=151060544,1
 link=151060547,1
+spawnPackage=HOLIDAY_turkatrice_32_33
 
 [ENTRY]
 ID=151060546
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=27767.1,251.35,62872.8
 Orient=0,0,0,1
 Scale=1,1,1
@@ -269,7 +239,6 @@ link=151060547,1
 [ENTRY]
 ID=151060547
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=27795.7,220.75,62739
 Orient=0,0,0,1
 Scale=1,1,1
@@ -280,37 +249,35 @@ link=151060546,1
 [ENTRY]
 ID=151060549
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=28476.2,310.329,62981.6
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=HOLIDAY_turkatrice_32_33
+outerRadius=1
 
 [ENTRY]
 ID=151060623
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=28067.8,239.13,62769.8
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=HOLIDAY_wf09_snowmen_32_33
+outerRadius=1
 
 [ENTRY]
 ID=151060624
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=28356.5,333.709,62877.9
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=HOLIDAY_wf09_snowmen_32_33
 links_count=2
 link=151060625,1
 link=151060627,1
+spawnPackage=HOLIDAY_wf09_snowmen_32_33
 
 [ENTRY]
 ID=151062302
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=27889.4,196.3,62255.6
 Orient=0,0,0,1
 Scale=1,1,1
@@ -319,7 +286,6 @@ spawnPackage=HOLIDAY_Easter_Egg
 [ENTRY]
 ID=151062303
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=27791.6,278.684,62426.7
 Orient=0,0,0,1
 Scale=1,1,1
@@ -328,7 +294,6 @@ spawnPackage=HOLIDAY_Easter_Egg
 [ENTRY]
 ID=151062332
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=28422,635.116,62637.2
 Orient=0,0,0,1
 Scale=1,1,1

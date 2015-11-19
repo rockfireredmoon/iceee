@@ -1,17 +1,6 @@
 [ENTRY]
-ID=1127934
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=
-Pos=52816.8,640.051,67050.3
-Orient=0,0,0,1
-Scale=1,1,1
-spawnPackage=11_dth_wilds_41_42
-wanderRadius=100
-
-[ENTRY]
 ID=151015266
 Asset=CL-UndeadBoulder6#CL-UndeadBoulder6
-Name=Untitled
 Pos=53141.4,599.249,67380
 Orient=0,0.780209,0,0.625519
 Scale=2,2,2
@@ -20,7 +9,6 @@ Flags=1
 [ENTRY]
 ID=151017061
 Asset=CL-UndeadTree2#CL-UndeadTree2
-Name=Untitled
 Pos=52661.8,633.957,67162
 Orient=0,0,0,1
 Scale=2,2,2
@@ -29,37 +17,35 @@ Flags=1
 [ENTRY]
 ID=151028296
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=53204.1,608.559,67327
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=11_irh_vampiderCamp_42_43
 links_count=1
 link=151028297,1
+spawnPackage=11_irh_vampiderCamp_42_43
+outerRadius=10
 
 [ENTRY]
 ID=151028527
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=52512.8,640.524,66819
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_dth_nefariousHareCamp
-wanderRadius=100
+outerRadius=10
 
 [ENTRY]
 ID=151028528
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=52606.3,636.568,67026
 Orient=0,0.681639,0,0.731689
 Scale=1,1,1
 spawnPackage=11_dth_nefariousHareCamp
+outerRadius=1
 
 [ENTRY]
 ID=151028533
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=52690,620.412,67323
 Orient=0,0,0,1
 Scale=1,1,1
@@ -69,26 +55,24 @@ link=151028532,1
 [ENTRY]
 ID=151028534
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=52566.1,638.501,67260
 Orient=0,-0.479426,0,0.877582
 Scale=1,1,1
 spawnPackage=11_dth_nefariousHareCamp
+outerRadius=1
 
 [ENTRY]
 ID=151028535
 Asset=Manipulator-SpawnPoint
-Name=Untitled
-Pos=52859.3,628.053,66886.4
+Pos=52859.3,628.053,67007
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_dth_nefariousHareCamp
-wanderRadius=100
+outerRadius=10
 
 [ENTRY]
 ID=151028583
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=53122.5,593.014,66978
 Orient=0,0,0,1
 Scale=1,1,1
@@ -98,7 +82,6 @@ link=151028582,1
 [ENTRY]
 ID=151048141
 Asset=Prop-Burnt_Pines#Prop-Burnt_Pine1
-Name=Untitled
 Pos=53096.4,604.519,66910
 Orient=0,0,0.13459,0.990901
 Scale=3.525,3.525,3.525
@@ -107,7 +90,6 @@ Flags=1
 [ENTRY]
 ID=151048142
 Asset=Prop-Burnt_Pines#Prop-Burnt_Pine2
-Name=Untitled
 Pos=53121.7,596.101,66933
 Orient=0,0.810497,0,0.585743
 Scale=2.8,2.8,2.8

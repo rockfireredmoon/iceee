@@ -1,14 +1,16 @@
 [ENTRY]
 ID=1029383
+PlacedBy=-400000000
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=Untitled
+Name=
 Pos=69150,415,36430
-Orient=0,-1,0,7.54979e-08
+Orient=0,-1,0,7.54979e-008
 Scale=1,1,1
 spawnPackage=z9_eur_gen_Bogwahr_Maldar_2351
 
 [ENTRY]
 ID=150999438
+PlacedBy=0
 Asset=Bldg-BremenP?ATS=ATS-Bremen
 Name=Untitled
 Pos=69249,424.444,36093
@@ -18,6 +20,7 @@ Flags=1
 
 [ENTRY]
 ID=150999449
+PlacedBy=0
 Asset=Bldg-BremenQ#Bldg-BremenQ?ATS=ATS-Bremen
 Name=Untitled
 Pos=69079,360.374,36742
@@ -27,6 +30,7 @@ Flags=1
 
 [ENTRY]
 ID=150999450
+PlacedBy=0
 Asset=Bldg-BremenO?ATS=ATS-Bremen
 Name=Untitled
 Pos=69234,415.057,36422.4
@@ -36,6 +40,7 @@ Flags=1
 
 [ENTRY]
 ID=150999481
+PlacedBy=0
 Asset=Bldg-Wall18?ATS=ATS-Castle
 Name=Untitled
 Pos=69343,407.076,36090.5
@@ -45,6 +50,7 @@ Flags=1
 
 [ENTRY]
 ID=150999482
+PlacedBy=0
 Asset=Bldg-Wall18?ATS=ATS-Castle
 Name=Untitled
 Pos=69353,402.859,36489
@@ -54,6 +60,7 @@ Flags=1
 
 [ENTRY]
 ID=150999530
+PlacedBy=0
 Asset=Bldg-Wall9?ATS=ATS-Castle
 Name=Untitled
 Pos=69493,332.73,36625
@@ -63,6 +70,7 @@ Flags=1
 
 [ENTRY]
 ID=151000666
+PlacedBy=0
 Asset=Prop-Lamp_Post1#Prop-Lamp_Post1
 Name=Untitled
 Pos=69013,424.582,36398
@@ -72,6 +80,7 @@ Flags=1
 
 [ENTRY]
 ID=151000708
+PlacedBy=0
 Asset=Light-Large?GROUP=2
 Name=Untitled
 Pos=69024,498.645,36065
@@ -81,6 +90,7 @@ Flags=1
 
 [ENTRY]
 ID=151056355
+PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=69728,361.753,36675
@@ -90,6 +100,7 @@ spawnPackage=2a_stc_sectionB7_general
 
 [ENTRY]
 ID=151056366
+PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=69674,484.886,36292
@@ -99,6 +110,7 @@ spawnPackage=2a_stc_sectionB7_general
 
 [ENTRY]
 ID=151057906
+PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=69219,402.212,36589
@@ -110,6 +122,7 @@ link=151057907,1
 
 [ENTRY]
 ID=151057907
+PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=69276,376.124,36683
@@ -121,6 +134,7 @@ link=151057908,1
 
 [ENTRY]
 ID=151057929
+PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=69043,424.383,36343
@@ -132,6 +146,7 @@ link=151057930,1
 
 [ENTRY]
 ID=151057930
+PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=69048,424.581,36131
@@ -143,6 +158,7 @@ link=151057931,1
 
 [ENTRY]
 ID=151057932
+PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=69044,424.437,36335
@@ -152,6 +168,7 @@ spawnPackage=2a_npc_guard
 
 [ENTRY]
 ID=151057935
+PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=69144,424.353,36043
@@ -161,6 +178,7 @@ spawnPackage=2a_npc_guard
 
 [ENTRY]
 ID=151057939
+PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=69029,424.582,36093
@@ -172,6 +190,7 @@ link=151057940,1
 
 [ENTRY]
 ID=151057940
+PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=69241,424.361,36097
@@ -183,6 +202,7 @@ link=151057944,1
 
 [ENTRY]
 ID=151059022
+PlacedBy=0
 Asset=Effects#Par-Bugs1-Emitter
 Name=Untitled
 Pos=69287,426.537,36036.3
@@ -191,6 +211,7 @@ Scale=1,1,1
 
 [ENTRY]
 ID=151060276
+PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=69479.6,387.924,36522.6
@@ -202,6 +223,7 @@ link=151060277,1
 
 [ENTRY]
 ID=151060277
+PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=69405,419.746,36448
@@ -213,6 +235,7 @@ link=151060278,1
 
 [ENTRY]
 ID=151060278
+PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=69415.9,432.342,36334.5
@@ -223,6 +246,7 @@ link=151060277,1
 
 [ENTRY]
 ID=151060279
+PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=69425.5,433.545,36257.8
@@ -235,6 +259,7 @@ link=151060282,1
 
 [ENTRY]
 ID=151060282
+PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=69396.1,429.531,36256.8
@@ -246,6 +271,7 @@ link=151060281,1
 
 [ENTRY]
 ID=151060439
+PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=69600,409.704,36515
@@ -257,6 +283,7 @@ link=151060440,1
 
 [ENTRY]
 ID=151060440
+PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=69520,434.813,36000
@@ -269,6 +296,7 @@ link=151060443,1
 
 [ENTRY]
 ID=151060443
+PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=69520,426.224,36005
@@ -280,6 +308,7 @@ link=151060440,1
 
 [ENTRY]
 ID=151060853
+PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=69555.5,428.154,36454.3
@@ -291,6 +320,7 @@ link=151060854,1
 
 [ENTRY]
 ID=151062271
+PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=69310.6,425.269,36286.2
@@ -300,6 +330,7 @@ spawnPackage=HOLIDAY_Easter_Egg
 
 [ENTRY]
 ID=151062273
+PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=69302.2,424.625,36215.6

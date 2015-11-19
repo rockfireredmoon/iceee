@@ -15,7 +15,7 @@ Pos=48450,172,44643
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=173
-sceneryName=generated_Bounty_Chest__South_Shield
+sceneryName=generated_Bounty_Chest__South_Shield
 spawnPackage=#2868
 
 [ENTRY]

@@ -1,37 +1,6 @@
 [ENTRY]
-ID=1127595
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=
-Pos=58227.7,734.055,57625
-Orient=0,0,0,1
-Scale=1,1,1
-spawnPackage=11_jld_junderbroodSkrillmix_43
-wanderRadius=150
-
-[ENTRY]
-ID=1127596
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=
-Pos=58488.3,747.883,57248
-Orient=0,0,0,1
-Scale=1,1,1
-spawnPackage=11_jld_junderbroodSkrillmix_43
-wanderRadius=200
-
-[ENTRY]
-ID=1127597
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=
-Pos=58144,711.321,57017.5
-Orient=0,0,0,1
-Scale=1,1,1
-spawnPackage=11_jld_junderbroodSkrillmix_43
-wanderRadius=100
-
-[ENTRY]
 ID=151026861
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=58412.9,755.779,57199
 Orient=0,0,0,1
 Scale=1,1,1
@@ -41,7 +10,6 @@ link=151026860,1
 [ENTRY]
 ID=151026862
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=58460.9,755.779,57145
 Orient=0,0,0,1
 Scale=1,1,1
@@ -51,7 +19,6 @@ link=151026860,1
 [ENTRY]
 ID=151026863
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=58499,755.779,57130
 Orient=0,0,0,1
 Scale=1,1,1
@@ -61,7 +28,6 @@ link=151026860,1
 [ENTRY]
 ID=151026867
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=58495.7,755.936,57355
 Orient=0,0,0,1
 Scale=1,1,1
@@ -73,7 +39,6 @@ link=151026888,1
 [ENTRY]
 ID=151026868
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=58452.8,755.779,57341
 Orient=0,0,0,1
 Scale=1,1,1
@@ -85,7 +50,6 @@ link=151026889,1
 [ENTRY]
 ID=151026869
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=58409.2,755.779,57311
 Orient=0,0,0,1
 Scale=1,1,1
@@ -97,7 +61,6 @@ link=151026890,1
 [ENTRY]
 ID=151026870
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=58387.3,755.779,57267
 Orient=0,0,0,1
 Scale=1,1,1
@@ -109,7 +72,6 @@ link=151026891,1
 [ENTRY]
 ID=151026871
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=58333.6,755.706,57194
 Orient=0,0,0,1
 Scale=1,1,1
@@ -120,7 +82,6 @@ link=151026872,1
 [ENTRY]
 ID=151026872
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=58243.2,755.234,57239
 Orient=0,0,0,1
 Scale=1,1,1
@@ -131,7 +92,6 @@ link=151026873,1
 [ENTRY]
 ID=151026873
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=58284.7,755.779,57428
 Orient=0,0,0,1
 Scale=1,1,1
@@ -142,7 +102,6 @@ link=151026874,1
 [ENTRY]
 ID=151026874
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=58216,755.779,57466
 Orient=0,0,0,1
 Scale=1,1,1
@@ -153,7 +112,6 @@ link=151026875,1
 [ENTRY]
 ID=151026875
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=58198.6,755.779,57656
 Orient=0,0,0,1
 Scale=1,1,1
@@ -164,40 +122,39 @@ link=151026876,1
 [ENTRY]
 ID=151026889
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=58460.8,755.781,57319
 Orient=0,0.624897,0,0.780707
 Scale=1,1,1
-spawnPackage=11_jld_junderbroodWorkskrill_k_43
 links_count=1
 link=151026868,1
+spawnPackage=11_jld_junderbroodWorkskrill_k_43
+outerRadius=5
 
 [ENTRY]
 ID=151026890
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=58420.8,755.781,57293
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=11_jld_junderbroodWorkskrill_k_43
 links_count=1
 link=151026869,1
+spawnPackage=11_jld_junderbroodWorkskrill_k_43
+outerRadius=5
 
 [ENTRY]
 ID=151026891
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=58399.3,755.781,57252
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=11_jld_junderbroodWorkskrill_k_43
 links_count=1
 link=151026870,1
+spawnPackage=11_jld_junderbroodWorkskrill_k_43
+outerRadius=5
 
 [ENTRY]
 ID=151044817
 Asset=Prop-Giant_Mushroom#Prop-Giant_Mushroom3
-Name=Untitled
 Pos=58448.5,749.469,57647
 Orient=-0.235275,0.636251,-0.0190935,0.734484
 Scale=0.625,0.625,0.625
@@ -206,7 +163,6 @@ Flags=1
 [ENTRY]
 ID=151044818
 Asset=Prop-Giant_Mushroom#Prop-Giant_Mushroom1
-Name=Untitled
 Pos=58052.1,755.779,57643
 Orient=-0.271547,0,0,0.962425
 Scale=0.75,0.75,0.75
@@ -215,7 +171,6 @@ Flags=1
 [ENTRY]
 ID=151044819
 Asset=Prop-Giant_Mushroom_Chopped#Prop-Giant_Mushroom_Chopped2
-Name=Untitled
 Pos=58363.9,748.757,57491
 Orient=0,-0.609159,0,0.793048
 Scale=0.475,0.475,0.475
@@ -224,7 +179,6 @@ Flags=1
 [ENTRY]
 ID=151044820
 Asset=Prop-Giant_Mushroom_Chopped#Prop-Giant_Mushroom_Chopped3
-Name=Untitled
 Pos=58393.4,755.88,57443
 Orient=0,-0.352274,0,0.935897
 Scale=0.425,0.425,0.425
@@ -233,7 +187,6 @@ Flags=1
 [ENTRY]
 ID=151047547
 Asset=Prop-Giant_Mushroom3
-Name=Untitled
 Pos=58028,745.917,57649
 Orient=-0.139632,0.556503,-0.0955273,0.813438
 Scale=0.25,0.25,0.25
@@ -242,7 +195,6 @@ Flags=1
 [ENTRY]
 ID=151047548
 Asset=Prop-Giant_Mushroom#Prop-Giant_Mushroom1
-Name=Untitled
 Pos=58441,746.537,57671
 Orient=-0.0401259,0.928419,0.155378,0.335092
 Scale=0.525,0.525,0.525
@@ -251,7 +203,6 @@ Flags=1
 [ENTRY]
 ID=151047549
 Asset=CL-AridBush3#CL-AridBush3
-Name=Untitled
 Pos=58418.1,771.144,57639
 Orient=0,-0.425939,0,0.904752
 Scale=0.7,0.7,0.7
@@ -260,7 +211,6 @@ Flags=1
 [ENTRY]
 ID=151047550
 Asset=CL-AridBush4#CL-AridBush4
-Name=Untitled
 Pos=58437.1,770.903,57701
 Orient=0,-0.425939,0,0.904752
 Scale=0.8,0.8,0.8

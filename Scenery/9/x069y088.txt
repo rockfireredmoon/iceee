@@ -1,18 +1,6 @@
 [ENTRY]
-ID=1127779
-Asset=Manipulator#Manipulator-PathNode
-Name=
-Pos=52410.2,649.832,66691.8
-Orient=0,0,0,1
-Scale=1,1,1
-links_count=2
-link=1127780,1
-link=151028503,1
-
-[ENTRY]
 ID=151015269
 Asset=CL-UndeadTree4#CL-UndeadTree4
-Name=Untitled
 Pos=51878.5,785.401,66674
 Orient=0,0,0,1
 Scale=1,1,1
@@ -21,22 +9,18 @@ Flags=1
 [ENTRY]
 ID=151028503
 Asset=Manipulator-SpawnPoint
-Name=Untitled
-Pos=52188.7,670.191,66707.6
-Orient=0,0.271547,0,0.962425
+Pos=52075.9,715.372,66632
+Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_dth_nefariousHareCamp
-links_count=2
-link=1127781,1
-link=1127779,1
+outerRadius=10
 
 [ENTRY]
 ID=151028536
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=51905.3,797.12,66408
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_dth_nefariousHareCamp
-wanderRadius=100
+outerRadius=10
 

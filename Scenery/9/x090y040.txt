@@ -1,17 +1,9 @@
 [ENTRY]
-ID=1130373
-Asset=Prop-Loot1#Prop-Loot-Wood_Chest1
-Name=
-Pos=67852.8,124.022,30303.4
-Orient=0,-0.798621,0,0.601835
-Scale=1.5,1.5,1.5
-
-[ENTRY]
 ID=151012616
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=67618,104.304,30333
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=2_trf_wildsBeach_25_27
+outerRadius=100
 

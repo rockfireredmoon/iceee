@@ -94,6 +94,22 @@ Orient=0,0.34759,0,0.937647
 Scale=1,1,1
 
 [ENTRY]
+ID=1358967498
+Asset=Prop-Banner_Post2
+Name=IMPORT
+Pos=52848.2,182.93,64281.8
+Orient=0,-0.501213,0,0.865324
+Scale=1.625,1.625,1.625
+
+[ENTRY]
+ID=1358967499
+Asset=Prop-Holiday-Harvest_Banner
+Name=IMPORT
+Pos=52862.5,296.929,64306.9
+Orient=0,-0.501213,0,0.865324
+Scale=3.4,3.4,3.4
+
+[ENTRY]
 ID=1358967600
 Asset=Manipulator-PathNode
 Name=Untitled

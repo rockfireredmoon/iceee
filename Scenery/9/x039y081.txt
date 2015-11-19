@@ -2,7 +2,7 @@
 ID=10000059
 Asset=Manipulator-SpawnPoint
 Name=Untitled
-Pos=29390.3,291.944,61231
+Pos=29389,292,61232
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=244
@@ -382,6 +382,14 @@ Pos=29942.7,608.123,61448.8
 Orient=0,-0.877201,0,0.480123
 Scale=1.9,1.9,1.9
 Flags=1
+
+[ENTRY]
+ID=151060339
+Asset=Prop-Holiday-WinterDawning_Banner#Prop-Holiday-WinterDawning_Banner
+Name=IMPORT
+Pos=29393.1,578.287,61399.5
+Orient=0,0,0,1
+Scale=5.475,5.475,5.475
 
 [ENTRY]
 ID=151060453

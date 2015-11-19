@@ -2861,30 +2861,30 @@ Spawn=942,50  ;Vile Deathspinner (41) at 0
 ; Harvest Fest only
 [ENTRY]
 Name=HOLIDAY_turkatrice_26_27
-; Spawn=2846,25  ;Turkatrice (26)
-; Spawn=2847,25  ;Turkatrice (27)
-; Spawn=2848,25  ;Turkatrice (26)
-; Spawn=2849,25  ;Turkatrice (27)
+Spawn=2846,25  ;Turkatrice (26)
+Spawn=2847,25  ;Turkatrice (27)
+Spawn=2848,25  ;Turkatrice (26)
+Spawn=2849,25  ;Turkatrice (27)
 
 ; Harvest Fest only
 [ENTRY]
 Name=HOLIDAY_turkatriceKing_k_30
-; Spawn=2850,100  ;Turkatrice King (30)
+Spawn=2850,100  ;Turkatrice King (30)
 
 
 
 ; Harvest Fest only
 [ENTRY]
 Name=HOLIDAY_turkatrice_32_33
-; Spawn=2851,25  ;Turkatrice (32)
-; Spawn=2852,25  ;Turkatrice (33)
-; Spawn=2853,25  ;Turkatrice (32)
-; Spawn=2854,25  ;Turkatrice (33)
+Spawn=2851,25  ;Turkatrice (32)
+Spawn=2852,25  ;Turkatrice (33)
+Spawn=2853,25  ;Turkatrice (32)
+Spawn=2854,25  ;Turkatrice (33)
 
 ; Harvest Fest only
 [ENTRY]
 Name=HOLIDAY_turkatriceKing_k_35
-; Spawn=2855,100  ;Turkatrice King (35)
+Spawn=2855,100  ;Turkatrice King (35)
 
 
 

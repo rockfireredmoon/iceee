@@ -1,7 +1,6 @@
 [ENTRY]
 ID=151027540
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=63711.5,506.979,58976
 Orient=0,0,0,1
 Scale=1,1,1
@@ -10,9 +9,17 @@ link=151027539,1
 link=151027541,1
 
 [ENTRY]
+ID=151027991
+Asset=Manipulator-SpawnPoint
+Pos=63057.3,1047.55,59150
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=11_jld_junderbroodSkrillmix_43
+outerRadius=200
+
+[ENTRY]
 ID=151045748
 Asset=CL-AridBush1#CL-AridBush1
-Name=Untitled
 Pos=63028.7,1044.05,58515
 Orient=0,0,0,1
 Scale=1,1,1
@@ -21,7 +28,6 @@ Flags=1
 [ENTRY]
 ID=151047555
 Asset=Prop-Sick-Forest_Tree#Prop-Sick-Forest_Tree5
-Name=Untitled
 Pos=63248.4,1045.07,59142
 Orient=0,0,0,1
 Scale=0.85,0.85,0.85
@@ -30,7 +36,6 @@ Flags=1
 [ENTRY]
 ID=151047556
 Asset=CL-AridBush6
-Name=Untitled
 Pos=63151,1053.73,59114
 Orient=0,0,0,1
 Scale=2.05,2.05,2.05

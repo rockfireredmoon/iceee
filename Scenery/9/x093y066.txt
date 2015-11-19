@@ -1,25 +1,6 @@
 [ENTRY]
-ID=1091112
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=Untitled
-Pos=70499.5,992.447,50172.9
-Orient=0,0.568762,0,0.822502
-Scale=1,1,1
-spawnPackage=#F1340
-
-[ENTRY]
-ID=1091113
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=Untitled
-Pos=70476,992.447,50131.1
-Orient=0,0,0,1
-Scale=1,1,1
-spawnPackage=#F1353
-
-[ENTRY]
 ID=151024048
 Asset=Warpig_Walls#Prop-Warpig_Tower
-Name=Untitled
 Pos=70298,988.111,50083
 Orient=-0.0250141,-0.779585,-0.0312,0.625019
 Scale=3.075,3.075,3.075
@@ -28,7 +9,6 @@ Flags=1
 [ENTRY]
 ID=151024050
 Asset=Warpig_Walls#Prop-Warpig_Wall1
-Name=Untitled
 Pos=70438,1036.25,49858
 Orient=0,0.439463,0,0.898261
 Scale=2.225,2.225,2.225
@@ -37,7 +17,6 @@ Flags=1
 [ENTRY]
 ID=151024102
 Asset=CL-Sick-Pine2#CL-Sick-Pine2
-Name=Untitled
 Pos=69784,1030.52,50216
 Orient=0,0,0,1
 Scale=1.25,1.25,1.25
@@ -46,7 +25,6 @@ Flags=1
 [ENTRY]
 ID=151024124
 Asset=CL-Swinland_JunkPile1
-Name=Untitled
 Pos=70377,992.471,49995
 Orient=0,-0.66687,0,0.745174
 Scale=1.05,1.05,1.05
@@ -55,7 +33,6 @@ Flags=1
 [ENTRY]
 ID=151024129
 Asset=Prop-Tent
-Name=Untitled
 Pos=70481,992.393,50063
 Orient=0,0.281158,0,0.959662
 Scale=1.5,1.5,1.5
@@ -64,7 +41,6 @@ Flags=1
 [ENTRY]
 ID=151024130
 Asset=Prop-Tent3#Prop-Tent3
-Name=Untitled
 Pos=70419,992.447,50144
 Orient=0,-0.99871,0,0.0507749
 Scale=1,1,1
@@ -73,7 +49,6 @@ Flags=1
 [ENTRY]
 ID=151024132
 Asset=Prop-Tent2
-Name=Untitled
 Pos=70466,992.677,50226
 Orient=0,-0.252245,0,0.967663
 Scale=1.775,1.775,1.775
@@ -82,9 +57,10 @@ Flags=1
 [ENTRY]
 ID=151030192
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=70284,887.242,49507
 Orient=0,0,0,1
 Scale=1,1,1
+innerRadius=50
 spawnPackage=12_wpg_Wilds_44_45
+outerRadius=80
 

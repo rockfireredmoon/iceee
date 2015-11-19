@@ -426,6 +426,14 @@ links_count=1
 link=151060263,1
 
 [ENTRY]
+ID=151060367
+Asset=Prop-Holiday-Harvest_Banner#Prop-Holiday-Harvest_Banner
+Name=IMPORT
+Pos=67591.5,604.681,37091.3
+Orient=0,0.920751,0,0.390151
+Scale=5.425,5.425,5.425
+
+[ENTRY]
 ID=151060431
 Asset=Manipulator-PathNode
 Name=Untitled

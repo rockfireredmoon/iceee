@@ -1,17 +1,16 @@
 [ENTRY]
 ID=10000159
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=43327,263,67850
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=57
+sceneryName=generated_Stonehenge
 spawnPackage=#879
 
 [ENTRY]
 ID=1358954944
 Asset=Prop-Henge-SarsenStone_Post2
-Name=Untitled
 Pos=43319.3,213.093,67454
 Orient=-0.10272,0.96916,0.0395293,-0.22049
 Scale=1.3,1.3,1.3
@@ -20,7 +19,6 @@ Flags=1
 [ENTRY]
 ID=1358957412
 Asset=Prop-Henge-SarsenStone_Post2
-Name=Untitled
 Pos=43719.2,211.154,67535
 Orient=-0.110035,0.812557,-0.00249194,-0.572396
 Scale=1.3,1.3,1.3
@@ -28,7 +26,6 @@ Scale=1.3,1.3,1.3
 [ENTRY]
 ID=1358960016
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=43988.4,244.624,67131
 Orient=0,0,0,1
 Scale=1,1,1
@@ -39,25 +36,24 @@ link=1358960020,1
 [ENTRY]
 ID=1358960207
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=43801.7,227.741,67255
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=1a_hog/rocCamp01_hogs
+outerRadius=100
 
 [ENTRY]
 ID=1358960222
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=43994.3,219.045,67388
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=1a_hog/rocCamp01_hogs
+outerRadius=10
 
 [ENTRY]
 ID=1358964664
 Asset=Prop-Henge-SarsenStone#Prop-Henge-SarsenStone_Post2
-Name=Untitled
 Pos=43440.9,221.133,67454
 Orient=0,0,-0.0399893,0.9992
 Scale=1,1,1
@@ -66,7 +62,6 @@ Flags=1
 [ENTRY]
 ID=1358964667
 Asset=CL-Henge-SarsenStone1#CL-Henge-SarsenStone1
-Name=Untitled
 Pos=43165.1,220.174,67638
 Orient=0,0.92388,0,0.382683
 Scale=2,2,2
@@ -75,7 +70,6 @@ Flags=1
 [ENTRY]
 ID=1358964668
 Asset=CL-Henge-SarsenStone1#CL-Henge-SarsenStone1
-Name=Untitled
 Pos=43328.9,261.903,67848
 Orient=0,0.68921,0,0.724562
 Scale=1,1,1
@@ -83,7 +77,6 @@ Scale=1,1,1
 [ENTRY]
 ID=1358964786
 Asset=CL-Henge-SarsenStone1
-Name=Untitled
 Pos=43019.4,222.727,67845
 Orient=0,-0.0749298,0,0.997189
 Scale=1.85,1.85,1.85
@@ -92,15 +85,13 @@ Flags=1
 [ENTRY]
 ID=1358964787
 Asset=CL-Henge-SarsenStone1
-Name=Untitled
 Pos=43647.8,227.328,67886
-Orient=0,1,0,7.54979e-08
+Orient=0,1,0,7.54979e-008
 Scale=2,2,2
 
 [ENTRY]
 ID=1358964792
 Asset=CL-Henge-SarsenStone1
-Name=Untitled
 Pos=43537.7,250.645,67653
 Orient=0,0.382683,0,0.92388
 Scale=2,2,2
@@ -108,7 +99,6 @@ Scale=2,2,2
 [ENTRY]
 ID=1358964793
 Asset=Effects#Par-Gate_Fog-Emitter
-Name=Untitled
 Pos=43331.2,262.562,67843
 Orient=0,0.707107,0,0.707107
 Scale=1.15,1.15,1.15
@@ -116,7 +106,6 @@ Scale=1.15,1.15,1.15
 [ENTRY]
 ID=1358964795
 Asset=Prop-Henge-BlueStone
-Name=Untitled
 Pos=43171.5,255.409,67963
 Orient=-0.00395614,0.056424,-0.0698308,-0.995954
 Scale=1.15,1.15,1.15
@@ -125,7 +114,6 @@ Flags=1
 [ENTRY]
 ID=1358964796
 Asset=Prop-Henge-BlueStone
-Name=Untitled
 Pos=43153.5,256.035,67900
 Orient=0,0,0,1
 Scale=0.825,0.825,0.825
@@ -134,7 +122,6 @@ Flags=1
 [ENTRY]
 ID=1358964799
 Asset=Prop-Henge-BlueStone
-Name=Untitled
 Pos=43444,267.579,67970
 Orient=0,0.975723,0,0.219007
 Scale=1,1,1
@@ -143,7 +130,6 @@ Flags=1
 [ENTRY]
 ID=1358964800
 Asset=Prop-Henge-BlueStone
-Name=Untitled
 Pos=43287.3,253.676,67675
 Orient=0.13278,-0.977573,0.022001,-0.161979
 Scale=1,1,1
@@ -152,7 +138,6 @@ Flags=1
 [ENTRY]
 ID=1358964801
 Asset=Prop-Henge-BlueStone
-Name=Untitled
 Pos=43490.8,266.091,67840
 Orient=-0.135572,-0.840289,-0.213054,0.479732
 Scale=1.5,1.5,1.5
@@ -161,7 +146,6 @@ Flags=1
 [ENTRY]
 ID=1358964802
 Asset=Prop-Henge-BlueStone
-Name=Untitled
 Pos=43507.2,268.007,67923
 Orient=0.720942,0.157435,-0.143982,0.659338
 Scale=1,1,1
@@ -170,7 +154,6 @@ Flags=1
 [ENTRY]
 ID=1358964803
 Asset=Prop-Henge-BlueStone
-Name=Untitled
 Pos=43186.4,253.272,67747
 Orient=0,0,0,1
 Scale=1.325,1.325,1.325
@@ -179,7 +162,6 @@ Flags=1
 [ENTRY]
 ID=1358964804
 Asset=Prop-Henge-BlueStone
-Name=Untitled
 Pos=43156.1,254.038,67814
 Orient=0,-0.581035,0,0.813878
 Scale=1.325,1.325,1.325
@@ -188,7 +170,6 @@ Flags=1
 [ENTRY]
 ID=1358964806
 Asset=Prop-Henge-BlueStone
-Name=Untitled
 Pos=43234.6,252.881,67697
 Orient=0,0.933839,0,0.357693
 Scale=1,1,1
@@ -197,7 +178,6 @@ Flags=1
 [ENTRY]
 ID=1358964807
 Asset=Prop-Henge-BlueStone
-Name=Untitled
 Pos=43437.8,204.821,67285
 Orient=-0.098243,-0.932207,-0.0365082,0.346418
 Scale=1.6,1.6,1.6
@@ -206,7 +186,6 @@ Flags=1
 [ENTRY]
 ID=1358964808
 Asset=Prop-Henge-BlueStone
-Name=Untitled
 Pos=43418.8,215.378,67425
 Orient=-0.098243,-0.932207,-0.0365082,0.346418
 Scale=1,1,1
@@ -215,7 +194,6 @@ Flags=1
 [ENTRY]
 ID=1358964810
 Asset=Prop-Henge-BlueStone
-Name=Untitled
 Pos=43366.3,210.865,67367
 Orient=-0.738565,0.0856657,0.0312177,0.667988
 Scale=1.6,1.6,1.6
@@ -224,7 +202,6 @@ Flags=1
 [ENTRY]
 ID=1358964811
 Asset=Prop-Henge-BlueStone
-Name=Untitled
 Pos=43380.7,257.146,67677
 Orient=-0.098243,-0.932207,-0.0365082,0.346418
 Scale=1,1,1
@@ -233,7 +210,6 @@ Flags=1
 [ENTRY]
 ID=1358964812
 Asset=Prop-Henge-BlueStone
-Name=Untitled
 Pos=43464.8,264.284,67767
 Orient=0,0.880347,0,-0.474331
 Scale=1.075,1.075,1.075
@@ -242,7 +218,6 @@ Flags=1
 [ENTRY]
 ID=1358964814
 Asset=Prop-Henge-BlueStone
-Name=Untitled
 Pos=43433.4,261.106,67718
 Orient=0,0.91071,0,0.413046
 Scale=1,1,1
@@ -251,7 +226,6 @@ Flags=1
 [ENTRY]
 ID=1358964821
 Asset=Prop-Henge-SarsenStone_Post
-Name=Untitled
 Pos=43226.2,203.631,67431
 Orient=-0.25023,-0.292895,-0.502182,0.774216
 Scale=1,1,1
@@ -260,7 +234,6 @@ Flags=1
 [ENTRY]
 ID=1358964822
 Asset=Prop-Bush-Large2
-Name=Untitled
 Pos=43271.8,222.259,67451
 Orient=-0.0249974,0,0,0.999687
 Scale=1.525,1.525,1.525
@@ -269,7 +242,6 @@ Flags=1
 [ENTRY]
 ID=1358965535
 Asset=CL-Hills_Bush6#CL-Hills_Bush6
-Name=Untitled
 Pos=43265.8,225.162,67533
 Orient=0,0,0,1
 Scale=1,1,1
@@ -278,7 +250,6 @@ Flags=1
 [ENTRY]
 ID=1358965536
 Asset=CL-Hills_Bush5#CL-Hills_Bush5
-Name=Untitled
 Pos=43514.3,232.067,67553
 Orient=0,-0.874789,0,0.484504
 Scale=1.775,1.775,1.775
@@ -287,7 +258,6 @@ Flags=1
 [ENTRY]
 ID=1358965537
 Asset=CL-Hills_Bush5#CL-Hills_Bush5
-Name=Untitled
 Pos=43898.4,217.77,67552
 Orient=0,0,0,1
 Scale=1,1,1
@@ -295,7 +265,6 @@ Scale=1,1,1
 [ENTRY]
 ID=1358965538
 Asset=CL-Hills_Bush3#CL-Hills_Bush3
-Name=Untitled
 Pos=43888.5,219.36,67539
 Orient=0,0.995881,0,0.0906716
 Scale=1,1,1
@@ -303,7 +272,6 @@ Scale=1,1,1
 [ENTRY]
 ID=1358965548
 Asset=CL-Hills_Bush3#CL-Hills_Bush3
-Name=Untitled
 Pos=43450.5,210.38,67285
 Orient=0,0,0,1
 Scale=1,1,1
@@ -311,7 +279,6 @@ Scale=1,1,1
 [ENTRY]
 ID=1358965970
 Asset=Prop-Bush-Large2#Prop-Bush-Large2
-Name=Untitled
 Pos=43455.8,217.594,67418
 Orient=0,0,0,1
 Scale=1,1,1
@@ -320,7 +287,6 @@ Flags=1
 [ENTRY]
 ID=1358966723
 Asset=Light-Medium?COLOR=33FFFF
-Name=Untitled
 Pos=43324.7,293.98,67813.6
 Orient=0,0,0,1
 Scale=1,1,1

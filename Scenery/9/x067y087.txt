@@ -1,7 +1,17 @@
 [ENTRY]
+ID=151028546
+Asset=Manipulator-SpawnPoint
+Pos=50828.2,796.812,65528
+Orient=0,-0.703279,0,0.710914
+Scale=1,1,1
+links_count=1
+link=151028547,1
+spawnPackage=11_dth_wilds_41_42
+outerRadius=10
+
+[ENTRY]
 ID=151028547
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=50828.4,799.469,65841
 Orient=0,0,0,1
 Scale=1,1,1
@@ -12,7 +22,6 @@ link=151028548,1
 [ENTRY]
 ID=151059493
 Asset=Prop-Dead-Forest-Tree3
-Name=Untitled
 Pos=50423,596.301,65566.7
 Orient=-0.0160718,0.99752,-0.065449,-0.0203027
 Scale=3.95,3.95,3.95

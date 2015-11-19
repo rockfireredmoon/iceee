@@ -1,71 +1,6 @@
 [ENTRY]
-ID=1091140
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=Untitled
-Pos=73751.9,877.617,60006.5
-Orient=0,0.999958,0,-0.00920352
-Scale=1,1,1
-spawnPackage=#F1355
-links_count=1
-link=1091144,1
-
-[ENTRY]
-ID=1091144
-Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
-Pos=73510.6,883.382,60019.2
-Orient=0,0,0,1
-Scale=1,1,1
-links_count=2
-link=1091140,1
-link=1091141,1
-
-[ENTRY]
-ID=1091149
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=Untitled
-Pos=73779.2,877.931,60005.3
-Orient=0,0.0449848,0,0.998988
-Scale=1,1,1
-spawnPackage=#F1355
-links_count=1
-link=1091139,1
-
-[ENTRY]
-ID=1091157
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=Untitled
-Pos=73515.4,879.413,60574.2
-Orient=0,-0.677972,0,0.735088
-Scale=1,1,1
-spawnPackage=#F1355
-links_count=1
-link=1091158,1
-
-[ENTRY]
-ID=1091158
-Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
-Pos=73531.5,869.264,60708.3
-Orient=0,0,0,1
-Scale=1,1,1
-links_count=2
-link=1091157,1
-link=1091159,1
-
-[ENTRY]
-ID=1091174
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=Untitled
-Pos=73567.6,879.11,60385
-Orient=0,0.998952,0,0.0457803
-Scale=1,1,1
-spawnPackage=#F1304
-
-[ENTRY]
 ID=151024206
 Asset=CL-Random-Junk3#CL-Random-Junk3
-Name=Untitled
 Pos=73640,880.073,60134
 Orient=0,0,0,1
 Scale=1,1,1
@@ -74,7 +9,6 @@ Flags=1
 [ENTRY]
 ID=151024209
 Asset=CL-Random-Junk5#CL-Random-Junk5
-Name=Untitled
 Pos=74205,882.638,60284
 Orient=0,-0.452886,0,0.891568
 Scale=1,1,1
@@ -83,7 +17,6 @@ Flags=1
 [ENTRY]
 ID=151024256
 Asset=Prop-Chunks#Prop-Chunks1
-Name=Untitled
 Pos=74087,894.527,60599
 Orient=0,0.572867,0,0.819648
 Scale=3.05,3.05,3.05
@@ -92,7 +25,6 @@ Flags=1
 [ENTRY]
 ID=151024262
 Asset=Prop-Rubble2#Prop-Rubble2
-Name=Untitled
 Pos=73594,876.691,60281
 Orient=0,-0.804599,0,0.593818
 Scale=5.475,5.475,5.475
@@ -101,7 +33,6 @@ Flags=1
 [ENTRY]
 ID=151024266
 Asset=Prop-BonesTex_A#Prop-Bones-Femur
-Name=Untitled
 Pos=73995,867.812,60121
 Orient=-0.523206,-0.653823,0.441207,0.322658
 Scale=1.925,1.925,1.925
@@ -110,7 +41,6 @@ Flags=1
 [ENTRY]
 ID=151024270
 Asset=Prop-Burnt_Pines#Prop-Burnt_Pine3
-Name=Untitled
 Pos=73597,877.537,60053
 Orient=-0.13459,0,0,0.990901
 Scale=2.025,2.025,2.025
@@ -119,7 +49,6 @@ Flags=1
 [ENTRY]
 ID=151024271
 Asset=Prop-Burnt_Pines#Prop-Burnt_Pine4
-Name=Untitled
 Pos=74092,931.693,60393
 Orient=0,0,0,1
 Scale=3.6,3.6,3.6
@@ -128,7 +57,6 @@ Flags=1
 [ENTRY]
 ID=151024274
 Asset=Prop-Battlefield_Skeletons#Prop-Battlefield_Skeleton4
-Name=Untitled
 Pos=73775,877.376,60144
 Orient=0,0,0,1
 Scale=1.025,1.025,1.025
@@ -137,7 +65,6 @@ Flags=1
 [ENTRY]
 ID=151024275
 Asset=Prop-Battlefield_Skeletons#Prop-Battlefield_Skeleton1
-Name=Untitled
 Pos=73736,879.668,60244
 Orient=0,0,0,1
 Scale=1,1,1
@@ -146,7 +73,6 @@ Flags=1
 [ENTRY]
 ID=151024276
 Asset=Prop-Battlefield_Skeletons#Prop-Battlefield_Skeleton2
-Name=Untitled
 Pos=73602,881.671,60042
 Orient=0,-0.849481,0,0.52762
 Scale=1,1,1
@@ -155,7 +81,6 @@ Flags=1
 [ENTRY]
 ID=151024280
 Asset=Prop-Battlefield_Skeletons#Prop-Battlefield_Arrows
-Name=Untitled
 Pos=73870,875.721,60122
 Orient=0,0,0,1
 Scale=1.75,1.75,1.75
@@ -164,7 +89,6 @@ Flags=1
 [ENTRY]
 ID=151024287
 Asset=Prop-Battlefield_Engines#Prop-Battlefield_Barricade
-Name=Untitled
 Pos=73993,869.204,60199
 Orient=0,0.939099,0,0.343646
 Scale=4.375,4.375,4.375
@@ -173,7 +97,6 @@ Flags=1
 [ENTRY]
 ID=151024289
 Asset=Prop-Battlefield_Engines#Prop-Battlefield_Barricade
-Name=Untitled
 Pos=74226,844.16,60006
 Orient=0,0.997836,0,0.0657489
 Scale=2.25,2.25,2.25
@@ -182,7 +105,6 @@ Flags=1
 [ENTRY]
 ID=151024291
 Asset=Prop-Battlefield_Barricade
-Name=Untitled
 Pos=73998,869.204,60360
 Orient=0,0.75128,0,0.659984
 Scale=4.375,4.375,4.375
@@ -191,7 +113,6 @@ Flags=1
 [ENTRY]
 ID=151024292
 Asset=Prop-Burnt_Pines#Prop-Burnt_Pine5
-Name=Untitled
 Pos=73601,882.064,60078
 Orient=0,0.389418,0,0.921061
 Scale=1.55,1.55,1.55
@@ -200,7 +121,6 @@ Flags=1
 [ENTRY]
 ID=151024331
 Asset=CL-Vampire_Roadside1#CL-Vampire_Roadside1
-Name=Untitled
 Pos=74223,888.62,60664
 Orient=0.40319,0,0,0.915116
 Scale=1.95,1.95,1.95
@@ -209,7 +129,6 @@ Flags=1
 [ENTRY]
 ID=151024345
 Asset=Prop-Lamp_Post_Junk#Prop-Lamp_Post_Junk2
-Name=Untitled
 Pos=74076,861.283,60027
 Orient=0.0216525,-0.978466,0.137853,-0.15209
 Scale=1.875,1.875,1.875
@@ -218,7 +137,6 @@ Flags=1
 [ENTRY]
 ID=151024367
 Asset=Prop-Bush-Burnt_Large3#Prop-Bush-Burnt_Large3
-Name=Untitled
 Pos=74081,898.063,60522
 Orient=0,0,0,1
 Scale=2.7,2.7,2.7
@@ -226,7 +144,6 @@ Scale=2.7,2.7,2.7
 [ENTRY]
 ID=151024370
 Asset=Prop-Bush-Burnt_Med1#Prop-Bush-Burnt_Med1
-Name=Untitled
 Pos=73969,869.974,60086
 Orient=0,0,0,1
 Scale=2.15,2.15,2.15
@@ -234,7 +151,6 @@ Scale=2.15,2.15,2.15
 [ENTRY]
 ID=151024371
 Asset=Prop-Bush-Burnt_Med2#Prop-Bush-Burnt_Med2
-Name=Untitled
 Pos=73963,872.785,60079
 Orient=0,0,0,1
 Scale=1.425,1.425,1.425
@@ -242,7 +158,6 @@ Scale=1.425,1.425,1.425
 [ENTRY]
 ID=151024377
 Asset=Prop-Bush-Burnt_Large2#Prop-Bush-Burnt_Large2
-Name=Untitled
 Pos=73882,878.235,60028
 Orient=0,0,0,1
 Scale=1,1,1
@@ -250,7 +165,6 @@ Scale=1,1,1
 [ENTRY]
 ID=151024378
 Asset=Prop-Bush-Burnt_Large3#Prop-Bush-Burnt_Large3
-Name=Untitled
 Pos=73692,877.867,60198
 Orient=0,0,0,1
 Scale=1,1,1
@@ -258,7 +172,6 @@ Scale=1,1,1
 [ENTRY]
 ID=151024379
 Asset=Prop-Bush-Burnt_Med1#Prop-Bush-Burnt_Med1
-Name=Untitled
 Pos=73852,882.211,60442
 Orient=0,0,0,1
 Scale=2.75,2.75,2.75
@@ -266,7 +179,6 @@ Scale=2.75,2.75,2.75
 [ENTRY]
 ID=151024381
 Asset=Prop-Bush-Burnt_Med2#Prop-Bush-Burnt_Med2
-Name=Untitled
 Pos=73900,880.896,60369
 Orient=0,0,0,1
 Scale=1.8,1.8,1.8
@@ -274,7 +186,6 @@ Scale=1.8,1.8,1.8
 [ENTRY]
 ID=151024382
 Asset=Prop-Bush-Burnt_Med3#Prop-Bush-Burnt_Med3
-Name=Untitled
 Pos=73584,878.025,60375
 Orient=0,0,0,1
 Scale=2.45,2.45,2.45
@@ -282,7 +193,6 @@ Scale=2.45,2.45,2.45
 [ENTRY]
 ID=151024393
 Asset=Prop-Bush_AridDead1#Prop-Bush_AridDead1
-Name=Untitled
 Pos=73746,879.038,60073
 Orient=0,0,0,1
 Scale=1.275,1.275,1.275
@@ -290,7 +200,6 @@ Scale=1.275,1.275,1.275
 [ENTRY]
 ID=151024407
 Asset=Prop-Bush_AridDead1#Prop-Bush_AridDead1
-Name=Untitled
 Pos=73608,880.787,60625
 Orient=0,0,0,1
 Scale=2.275,2.275,2.275
@@ -298,7 +207,6 @@ Scale=2.275,2.275,2.275
 [ENTRY]
 ID=151024408
 Asset=Prop-Bush_AridDead2#Prop-Bush_AridDead2
-Name=Untitled
 Pos=73632,886.565,60708
 Orient=0,0,0,1
 Scale=2.5,2.5,2.5
@@ -306,7 +214,6 @@ Scale=2.5,2.5,2.5
 [ENTRY]
 ID=151024409
 Asset=Prop-Bush_AridDead3#Prop-Bush_AridDead3
-Name=Untitled
 Pos=73755,883.02,60531
 Orient=0,0,0,1
 Scale=2.425,2.425,2.425
@@ -314,7 +221,6 @@ Scale=2.425,2.425,2.425
 [ENTRY]
 ID=151026505
 Asset=Warpig_Walls#Prop-Warpig_Wall1
-Name=Untitled
 Pos=73817,881.72,60442
 Orient=0,-0.677972,0,0.735088
 Scale=2,2,2
@@ -322,7 +228,6 @@ Scale=2,2,2
 [ENTRY]
 ID=151026506
 Asset=Prop-Warpig_Tower
-Name=Untitled
 Pos=73792,907.343,60214
 Orient=0.021998,0.702882,-0.0426597,0.709685
 Scale=1.675,1.675,1.675
@@ -330,7 +235,6 @@ Scale=1.675,1.675,1.675
 [ENTRY]
 ID=151028655
 Asset=CL-Random-Junk1#CL-Random-Junk1
-Name=Untitled
 Pos=73781,881.973,60459
 Orient=0,0,0,1
 Scale=1,1,1

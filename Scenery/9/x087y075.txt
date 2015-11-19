@@ -1,24 +1,6 @@
 [ENTRY]
-ID=1083234
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=Untitled
-Pos=65298.8,579.694,56619.7
-Orient=0,-0.777072,0,0.629412
-Scale=1,1,1
-spawnPackage=#F3683
-
-[ENTRY]
-ID=1104010
-Asset=Bldg-Urban#Bldg-Urban-Small_House1?ATS=ATS-Warpig
-Name=Untitled
-Pos=65425.8,604.217,56473.2
-Orient=0,-0.867423,0,0.497571
-Scale=1,1,1
-
-[ENTRY]
 ID=151016718
 Asset=Prop-Warpig_Tower
-Name=Untitled
 Pos=65803,573.922,56810
 Orient=0,0.193766,0,0.981048
 Scale=3.35,3.35,3.35
@@ -27,7 +9,6 @@ Flags=1
 [ENTRY]
 ID=151016778
 Asset=Prop-Campfire
-Name=Untitled
 Pos=65277.9,575.543,56668
 Orient=0,0,0,1
 Scale=5.525,5.525,5.525
@@ -36,7 +17,6 @@ Flags=1
 [ENTRY]
 ID=151016780
 Asset=Prop-Anubian_Camp#Prop-Anubian_Palisade
-Name=Untitled
 Pos=65728,597.65,56732
 Orient=-0.210756,-0.347088,-0.0653767,0.911503
 Scale=3.2,3.2,3.2
@@ -45,7 +25,6 @@ Flags=1
 [ENTRY]
 ID=151016782
 Asset=Prop-Bush_Arid1#Prop-Bush_Arid1
-Name=Untitled
 Pos=65350.4,570.551,56788
 Orient=0,0,0,1
 Scale=1.95,1.95,1.95
@@ -54,7 +33,6 @@ Flags=1
 [ENTRY]
 ID=151016785
 Asset=Prop-Bush_Arid2#Prop-Bush_Arid2
-Name=Untitled
 Pos=65644,584.508,56770
 Orient=0,0,0,1
 Scale=2.15,2.15,2.15
@@ -63,7 +41,6 @@ Flags=1
 [ENTRY]
 ID=151016799
 Asset=Prop-Bush_AridDead2#Prop-Bush_AridDead2
-Name=Untitled
 Pos=65708,595.82,56668
 Orient=0,0,0,1
 Scale=3.3,3.3,3.3
@@ -72,7 +49,6 @@ Flags=1
 [ENTRY]
 ID=151027454
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=65522,571.538,56985
 Orient=0,0,0,1
 Scale=1,1,1
@@ -84,7 +60,6 @@ link=151027455,1
 [ENTRY]
 ID=151027455
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=65528,572.375,56822
 Orient=0,0,0,1
 Scale=1,1,1
@@ -96,7 +71,6 @@ link=151027456,1
 [ENTRY]
 ID=151027456
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=65560,587.035,56643
 Orient=0,0,0,1
 Scale=1,1,1
@@ -108,7 +82,6 @@ link=151027457,1
 [ENTRY]
 ID=151027457
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=65671,608.148,56603
 Orient=0,0,0,1
 Scale=1,1,1
@@ -119,7 +92,6 @@ link=151027456,1
 [ENTRY]
 ID=151028891
 Asset=Prop-Battlefield_Engines#Prop-Battlefield_Barricade
-Name=Untitled
 Pos=65864,569.051,56992
 Orient=-0.0923292,0.63011,-0.181131,0.749418
 Scale=6.825,6.825,6.825
@@ -128,7 +100,6 @@ Flags=1
 [ENTRY]
 ID=151028896
 Asset=Prop-Battlefield_Engines#Prop-Battlefield_Barricade
-Name=Untitled
 Pos=65739,600.312,56459
 Orient=0,0.448423,0,0.893821
 Scale=5.975,5.975,5.975

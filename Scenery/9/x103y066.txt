@@ -1,7 +1,6 @@
 [ENTRY]
 ID=151023982
 Asset=CL-Sick-Pine2#CL-Sick-Pine2
-Name=Untitled
 Pos=77293,978.257,50137
 Orient=0,0,0,1
 Scale=1,1,1

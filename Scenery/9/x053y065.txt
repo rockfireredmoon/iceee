@@ -1,37 +1,36 @@
 [ENTRY]
 ID=10000145
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=39879,245,49175
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=92
+sceneryName=generated_spawn
 spawnPackage=z9_eur_gen_Brunhild_VonDame_432
 
 [ENTRY]
 ID=10000284
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=40030,244,49304
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=113
+sceneryName=generated_spawn
 spawnPackage=z9_eur_gen_Bounty_Board_2809
 
 [ENTRY]
 ID=10000319
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=40053,245,49308
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=191
+sceneryName=generated_spawn
 spawnPackage=z9_eur_gen_Bounty_Chest__Bafflegate_2872
 
 [ENTRY]
 ID=151000471
 Asset=Bldg-Urban-Small_Facade2?ATS=ATS-Camelot
-Name=Untitled
 Pos=39852.2,238.838,49211
 Orient=0,-0.914795,0,0.403919
 Scale=1,1,1
@@ -40,7 +39,6 @@ Flags=1
 [ENTRY]
 ID=151000491
 Asset=Prop-Forest_Tree4
-Name=Untitled
 Pos=39969.8,241.721,49288
 Orient=0,-0.99794,0,-0.0641599
 Scale=1,1,1
@@ -49,7 +47,6 @@ Flags=1
 [ENTRY]
 ID=151000497
 Asset=Prop-Henge-BlueStone
-Name=Untitled
 Pos=39941.5,216.857,49019
 Orient=0,0,-0.0299955,0.99955
 Scale=1.225,1.225,1.225
@@ -58,7 +55,6 @@ Flags=1
 [ENTRY]
 ID=151000498
 Asset=Prop-Henge-BlueStone
-Name=Untitled
 Pos=40007.8,245.07,49287
 Orient=0,0,0,1
 Scale=1,1,1
@@ -67,7 +63,6 @@ Flags=1
 [ENTRY]
 ID=151000504
 Asset=CL-Wooden_Fence1
-Name=Untitled
 Pos=39920.6,216.891,48988
 Orient=0,-0.875559,0,-0.483111
 Scale=1.35,1.35,1.35
@@ -76,7 +71,6 @@ Flags=1
 [ENTRY]
 ID=151000508
 Asset=Prop-Lamp_Post2
-Name=Untitled
 Pos=39968.6,243.594,49246
 Orient=0,0,0,1
 Scale=1,1,1
@@ -85,7 +79,6 @@ Flags=1
 [ENTRY]
 ID=151000745
 Asset=Light-Huge?GROUP=2
-Name=Untitled
 Pos=39787.6,333.182,48871
 Orient=0,0,0,1
 Scale=1,1,1
@@ -94,7 +87,6 @@ Flags=1
 [ENTRY]
 ID=151001471
 Asset=Prop-Wooden_Tower
-Name=Untitled
 Pos=40307.1,254.931,49422
 Orient=0,0.361615,0,0.932327
 Scale=1.275,1.275,1.275
@@ -103,7 +95,6 @@ Flags=1
 [ENTRY]
 ID=151001473
 Asset=Prop-Wooden_Tower
-Name=Untitled
 Pos=39800.2,251.881,49480
 Orient=0,-0.29552,0,0.955337
 Scale=1.275,1.275,1.275
@@ -112,7 +103,6 @@ Flags=1
 [ENTRY]
 ID=151001668
 Asset=Prop-Wooden_Wall
-Name=Untitled
 Pos=40395.3,253.19,49351
 Orient=0,0.939646,0,-0.342149
 Scale=1,1,1
@@ -121,7 +111,6 @@ Flags=1
 [ENTRY]
 ID=151011759
 Asset=Prop-Henge-BlueStone
-Name=Untitled
 Pos=39763.3,186.882,48853
 Orient=0,0,0,1
 Scale=1,1,1
@@ -130,7 +119,6 @@ Flags=1
 [ENTRY]
 ID=151053474
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=40230.2,251.214,49409
 Orient=0,0,0,1
 Scale=1,1,1
@@ -141,7 +129,6 @@ link=151053475,1
 [ENTRY]
 ID=151053475
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=40134,245.02,49324
 Orient=0,0,0,1
 Scale=1,1,1
@@ -152,7 +139,6 @@ link=151053476,1
 [ENTRY]
 ID=151053476
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=40052.4,245.578,49261
 Orient=0,0,0,1
 Scale=1,1,1
@@ -163,7 +149,6 @@ link=151053477,1
 [ENTRY]
 ID=151053477
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=39984.1,230.018,49148
 Orient=0,0,0,1
 Scale=1,1,1
@@ -174,7 +159,6 @@ link=151053478,1
 [ENTRY]
 ID=151053478
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=39907.2,220.113,49008
 Orient=0,0,0,1
 Scale=1,1,1
@@ -185,7 +169,6 @@ link=151053479,1
 [ENTRY]
 ID=151053479
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=39827.1,193.142,48837
 Orient=0,0,0,1
 Scale=1,1,1
@@ -195,7 +178,6 @@ link=151053478,1
 [ENTRY]
 ID=151053484
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=40252.7,253.14,49473
 Orient=0,0,0,1
 Scale=1,1,1
@@ -206,7 +188,6 @@ link=151053486,1
 [ENTRY]
 ID=151053486
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=40184.8,247.402,49399
 Orient=0,0,0,1
 Scale=1,1,1
@@ -217,7 +198,6 @@ link=151053487,1
 [ENTRY]
 ID=151053487
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=40140.6,245.255,49355
 Orient=0,0,0,1
 Scale=1,1,1
@@ -228,7 +208,6 @@ link=151053488,1
 [ENTRY]
 ID=151053488
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=40064.2,245.502,49296
 Orient=0,0,0,1
 Scale=1,1,1
@@ -239,7 +218,6 @@ link=151053489,1
 [ENTRY]
 ID=151053489
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=39997,243.83,49245
 Orient=0,0,0,1
 Scale=1,1,1
@@ -250,7 +228,6 @@ link=151053490,1
 [ENTRY]
 ID=151053490
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=39940.2,233.073,49167
 Orient=0,0,0,1
 Scale=1,1,1
@@ -261,7 +238,6 @@ link=151053491,1
 [ENTRY]
 ID=151053491
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=39871.2,222.701,49013
 Orient=0,0,0,1
 Scale=1,1,1
@@ -272,7 +248,6 @@ link=151053492,1
 [ENTRY]
 ID=151053492
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=39792.4,193.575,48856
 Orient=0,0,0,1
 Scale=1,1,1
@@ -282,7 +257,6 @@ link=151053491,1
 [ENTRY]
 ID=151053974
 Asset=Prop-Sanctuary_Stone
-Name=Untitled
 Pos=40054.6,209.24,49035
 Orient=0,-0.518418,0,0.855127
 Scale=1,1,1
@@ -290,7 +264,6 @@ Scale=1,1,1
 [ENTRY]
 ID=151053975
 Asset=Manipulator-Sanctuary
-Name=Untitled
 Pos=40053.8,219.24,49035
 Orient=0,0,0,1
 Scale=1,1,1

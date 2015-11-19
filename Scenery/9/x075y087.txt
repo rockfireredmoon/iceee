@@ -1,7 +1,6 @@
 [ENTRY]
 ID=151015093
 Asset=CL-UndeadTree4#CL-UndeadTree4
-Name=Untitled
 Pos=56383.5,872.986,65356
 Orient=0,0,0,1
 Scale=1,1,1
@@ -10,7 +9,6 @@ Flags=1
 [ENTRY]
 ID=151015214
 Asset=Prop-Ground_Plant4#Prop-Ground_Plant4
-Name=Untitled
 Pos=56448,873.719,65375
 Orient=0,0,0,1
 Scale=10,10,10
@@ -19,15 +17,13 @@ Flags=1
 [ENTRY]
 ID=151017529
 Asset=Prop-Lamp_Post_Undead#Prop-Lamp_Post_Undead3
-Name=Untitled
-Pos=56619.5,851.423,65458
+Pos=56619.5,879.535,65458
 Orient=0,0,0,1
 Scale=1,1,1
 
 [ENTRY]
 ID=151019166
 Asset=CL-UndeadBoulder5#CL-UndeadBoulder5
-Name=Untitled
 Pos=56259.7,800.663,65760
 Orient=0,-0.590431,0,-0.807088
 Scale=1.525,1.525,1.525
@@ -35,7 +31,6 @@ Scale=1.525,1.525,1.525
 [ENTRY]
 ID=151027230
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=56283.2,854.566,65488
 Orient=0,0,0,1
 Scale=1,1,1
@@ -46,7 +41,6 @@ link=151027231,1
 [ENTRY]
 ID=151027231
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=56514.7,869.803,65437
 Orient=0,0,0,1
 Scale=1,1,1
@@ -56,7 +50,6 @@ link=151027230,1
 [ENTRY]
 ID=151027265
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=56334.1,831.601,65642
 Orient=0,0,0,1
 Scale=1,1,1

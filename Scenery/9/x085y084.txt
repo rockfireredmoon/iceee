@@ -1,18 +1,6 @@
 [ENTRY]
-ID=1127681
-Asset=Manipulator#Manipulator-PathNode
-Name=
-Pos=64240,915.237,63084
-Orient=0,0,0,1
-Scale=1,1,1
-links_count=2
-link=1127680,1
-link=151028453,1
-
-[ENTRY]
 ID=151015677
 Asset=CL-Graveyard2#CL-Graveyard2
-Name=Untitled
 Pos=63802.3,1151.31,63506
 Orient=0,0.941345,0,-0.337447
 Scale=1,1,1
@@ -21,7 +9,6 @@ Flags=1
 [ENTRY]
 ID=151016637
 Asset=CL-UndeadTree3#CL-UndeadTree3
-Name=Untitled
 Pos=63916.2,1148.07,63179
 Orient=0,0,0,1
 Scale=0.675,0.675,0.675
@@ -30,7 +17,6 @@ Flags=1
 [ENTRY]
 ID=151016651
 Asset=Prop-Torture_Equipment#Prop-Dungeon-Iron_Maiden
-Name=Untitled
 Pos=63975.3,1188.99,63254
 Orient=0,0,0,1
 Scale=1,1,1
@@ -39,7 +25,6 @@ Flags=1
 [ENTRY]
 ID=151016653
 Asset=Prop-Carrionite_Props#Prop-Carrionite_Rope
-Name=Untitled
 Pos=63975.5,1237.71,63238
 Orient=0,0,0,1
 Scale=1,1,1
@@ -48,7 +33,6 @@ Flags=1
 [ENTRY]
 ID=151017611
 Asset=Prop-Burnt_Pines#Prop-Burnt_Pine3
-Name=Untitled
 Pos=63963.4,1150.04,63511
 Orient=0,0,0,1
 Scale=1.925,1.925,1.925
@@ -56,7 +40,6 @@ Scale=1.925,1.925,1.925
 [ENTRY]
 ID=151017612
 Asset=Prop-Burnt_Pines#Prop-Burnt_Pine4
-Name=Untitled
 Pos=63985.1,1147.59,63473
 Orient=0,0,0,1
 Scale=1,1,1
@@ -64,7 +47,6 @@ Scale=1,1,1
 [ENTRY]
 ID=151017613
 Asset=Prop-Burnt_Pines#Prop-Burnt_Pine1
-Name=Untitled
 Pos=64004,1135.58,63549
 Orient=0,0,0,1
 Scale=1.725,1.725,1.725
@@ -72,7 +54,6 @@ Scale=1.725,1.725,1.725
 [ENTRY]
 ID=151028354
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=63764.3,1155.66,63240
 Orient=0,0,0,1
 Scale=1,1,1
@@ -82,7 +63,6 @@ link=151028355,1
 [ENTRY]
 ID=151028405
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=63830.8,1152.01,63470
 Orient=0,0,0,1
 Scale=1,1,1
@@ -93,7 +73,6 @@ link=151028501,1
 [ENTRY]
 ID=151028406
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=63879.4,1152.9,63440
 Orient=0,0,0,1
 Scale=1,1,1
@@ -105,7 +84,6 @@ link=151028416,1
 [ENTRY]
 ID=151028408
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=63949.8,1150.64,63590
 Orient=0,0,0,1
 Scale=1,1,1
@@ -116,7 +94,6 @@ link=151028409,1
 [ENTRY]
 ID=151028409
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=63867.3,1149.07,63656
 Orient=0,0,0,1
 Scale=1,1,1
@@ -127,7 +104,6 @@ link=151028410,1
 [ENTRY]
 ID=151028410
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=63751.1,1144.65,63541
 Orient=0,0,0,1
 Scale=1,1,1
@@ -138,7 +114,6 @@ link=151028411,1
 [ENTRY]
 ID=151028415
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=63818.9,1154.07,63308
 Orient=0,0,0,1
 Scale=1,1,1
@@ -149,7 +124,6 @@ link=151028416,1
 [ENTRY]
 ID=151028416
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=63903.3,1152.05,63361
 Orient=0,0,0,1
 Scale=1,1,1
@@ -160,56 +134,45 @@ link=151028415,1
 [ENTRY]
 ID=151028498
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=63770.7,1148.56,63498
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_dth_CarrioniteGraveLooter_r_42_43
+outerRadius=10
 
 [ENTRY]
 ID=151028499
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=63795.7,1150.59,63480
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_dth_CarrioniteGraveLooter_r_42_43
+outerRadius=10
 
 [ENTRY]
 ID=151028501
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=63808.5,1151.88,63457
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=11_dth_CarrioniteGraveLooter_r_42_43
 links_count=1
 link=151028405,1
+spawnPackage=11_dth_CarrioniteGraveLooter_r_42_43
+outerRadius=10
 
 [ENTRY]
 ID=151029226
 Asset=Manipulator-SpawnPoint
-Name=Untitled
-Pos=64357.7,880.858,63436.8
+Pos=64440.8,880.112,63458
 Orient=0,0,0,1
 Scale=1,1,1
+innerRadius=65
 spawnPackage=11_dth_wilds_42_43
-wanderRadius=70
-
-[ENTRY]
-ID=151029227
-Asset=Manipulator-SpawnPoint
-Name=Untitled
-Pos=64491.4,910.536,63076.1
-Orient=0,0,0,1
-Scale=1,1,1
-spawnPackage=11_dth_wilds_42_43
-wanderRadius=100
+outerRadius=70
 
 [ENTRY]
 ID=151047581
 Asset=CL-GrunsBush_2#CL-GrunsBush_2
-Name=Untitled
 Pos=64341.4,857.366,63199
 Orient=0,0,0,1
 Scale=2.375,2.375,2.375

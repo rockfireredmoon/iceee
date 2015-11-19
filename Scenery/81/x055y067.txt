@@ -7,14 +7,6 @@ Orient=0,0.461749,0,-0.887011
 Scale=1,1,1
 
 [ENTRY]
-ID=1127040
-Asset=Prop-Instance_Entrance#Prop-Instance_Entrance
-Name=
-Pos=55096.3,173.847,67345.5
-Orient=0,-0.636537,0,0.771246
-Scale=1.425,1.425,1.425
-
-[ENTRY]
 ID=1358955238
 Asset=Manipulator-PathNode
 Name=Untitled

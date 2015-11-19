@@ -1,27 +1,26 @@
 [ENTRY]
 ID=151027429
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=55641.4,649.754,69717
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_irh_undeadChirurgeon
+outerRadius=1
 
 [ENTRY]
 ID=151027437
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=55599.2,640.546,69625
 Orient=0,-0.777072,0,0.629412
 Scale=1,1,1
-spawnPackage=11_irh_undeadChirurgeon
 links_count=1
 link=151027438,1
+spawnPackage=11_irh_undeadChirurgeon
+outerRadius=1
 
 [ENTRY]
 ID=151041102
 Asset=CL-UndeadTree3#CL-UndeadTree3
-Name=Untitled
 Pos=55843.4,697.709,69557
 Orient=0,0,0,1
 Scale=1,1,1
@@ -30,7 +29,6 @@ Flags=1
 [ENTRY]
 ID=151041110
 Asset=Prop-Burnt_Pines#Prop-Burnt_Pine2
-Name=Untitled
 Pos=56055.9,751.391,69644
 Orient=0,0,0,1
 Scale=1,1,1
@@ -39,7 +37,6 @@ Flags=1
 [ENTRY]
 ID=151041118
 Asset=Prop-Burnt_Pines#Prop-Burnt_Pine4
-Name=Untitled
 Pos=56171.6,883.104,69357
 Orient=0.139551,-0.923353,-0.053453,0.353677
 Scale=3.775,3.775,3.775
@@ -48,7 +45,6 @@ Flags=1
 [ENTRY]
 ID=151041119
 Asset=Prop-Burnt_Pines#Prop-Burnt_Pine1
-Name=Untitled
 Pos=55768.6,699.867,69456
 Orient=-0.059964,0,0,0.998201
 Scale=1.95,1.95,1.95
@@ -57,7 +53,6 @@ Flags=1
 [ENTRY]
 ID=151041120
 Asset=Prop-Burnt_Pines#Prop-Burnt_Pine3
-Name=Untitled
 Pos=55746.3,709.209,69536
 Orient=0.0948572,0,0,0.995491
 Scale=2.675,2.675,2.675
@@ -66,7 +61,6 @@ Flags=1
 [ENTRY]
 ID=151041137
 Asset=CL-Bramble_Thicket1#CL-Bramble_Thicket1
-Name=Untitled
 Pos=55939.7,703.287,69552
 Orient=0,0.564642,0,0.825336
 Scale=2.175,2.175,2.175
@@ -75,7 +69,6 @@ Flags=1
 [ENTRY]
 ID=151041142
 Asset=Prop-Burnt_Pine4
-Name=Untitled
 Pos=56241.4,773.29,69614
 Orient=0,0,0,1
 Scale=1.5,1.5,1.5
@@ -83,7 +76,6 @@ Scale=1.5,1.5,1.5
 [ENTRY]
 ID=151041167
 Asset=CL-GrunsBush_1#CL-GrunsBush_1
-Name=Untitled
 Pos=55726.9,669.217,69564
 Orient=0,0,0,1
 Scale=1.55,1.55,1.55
@@ -92,7 +84,6 @@ Flags=1
 [ENTRY]
 ID=151041168
 Asset=CL-GrunsBush_2#CL-GrunsBush_2
-Name=Untitled
 Pos=55768.1,677.548,69482
 Orient=0,0,0,1
 Scale=1.65,1.65,1.65
@@ -101,7 +92,6 @@ Flags=1
 [ENTRY]
 ID=151041172
 Asset=CL-GrunsBush_1#CL-GrunsBush_1
-Name=Untitled
 Pos=56108.8,755.838,69672
 Orient=0,0,0,1
 Scale=1,1,1
@@ -110,7 +100,6 @@ Flags=1
 [ENTRY]
 ID=151041173
 Asset=CL-GrunsBush_2#CL-GrunsBush_2
-Name=Untitled
 Pos=56064.3,752.086,69649
 Orient=0,0,0,1
 Scale=1,1,1
@@ -119,7 +108,6 @@ Flags=1
 [ENTRY]
 ID=151041353
 Asset=CL-UndeadTree1
-Name=Untitled
 Pos=55552.3,612.068,69325
 Orient=0,0,0,1
 Scale=1.85,1.85,1.85

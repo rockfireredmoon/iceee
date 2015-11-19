@@ -47,15 +47,6 @@ Orient=0,0.382683,0,0.92388
 Scale=1,1,1
 
 [ENTRY]
-ID=10000047
-Asset=Manipulator-SpawnPoint
-Name=Untitled
-Pos=55995.3,355.671,66050
-Orient=0,0,0,1
-Scale=1,1,1
-spawnPackage=#2758
-
-[ENTRY]
 ID=1358955038
 Asset=Manipulator-PathNode
 Name=Untitled
@@ -483,6 +474,22 @@ Pos=55895.5,283.345,66766.6
 Orient=0.00837308,0.55251,0.0492535,0.832008
 Scale=1.05,1.05,1.05
 Flags=1
+
+[ENTRY]
+ID=1358967391
+Asset=Prop-Holiday-Harvest_Banner
+Name=IMPORT
+Pos=55020.4,329.463,66483.8
+Orient=0,-0.677972,0,0.735088
+Scale=3.025,3.025,3.025
+
+[ENTRY]
+ID=1358967392
+Asset=Prop-Banner_Post2
+Name=IMPORT
+Pos=55022.1,244.226,66507.4
+Orient=0,0.724287,0,0.689499
+Scale=1.2,1.2,1.2
 
 [ENTRY]
 ID=1358968624

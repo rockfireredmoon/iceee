@@ -1,18 +1,6 @@
 [ENTRY]
-ID=1091141
-Asset=Manipulator#Manipulator-PathNode
-Name=
-Pos=73413.9,881.731,59948.5
-Orient=0,0,0,1
-Scale=1,1,1
-links_count=2
-link=1091144,1
-link=1091142,1
-
-[ENTRY]
 ID=151018096
 Asset=Arid_Clutter?d=0.9&s=875543&sz=800%5C
-Name=Untitled
 Pos=73105,913.39,59596
 Orient=0,0,0,1
 Scale=1,1,1
@@ -21,7 +9,6 @@ Flags=1
 [ENTRY]
 ID=151018100
 Asset=Prop-Boulder_Arid#Prop-Boulder_Arid4
-Name=Untitled
 Pos=73422,866.391,59446
 Orient=0.202066,0.483223,-0.115695,0.843967
 Scale=10,10,10
@@ -30,7 +17,6 @@ Flags=1
 [ENTRY]
 ID=151018101
 Asset=CL-AridBush3#CL-AridBush3
-Name=Untitled
 Pos=73035,921.601,59500
 Orient=0,-0.572867,0,0.819648
 Scale=1,1,1
@@ -39,7 +25,6 @@ Flags=1
 [ENTRY]
 ID=151028376
 Asset=Prop-Pine-Sick_Tree#Prop-Pine-Sick_Tree8
-Name=Untitled
 Pos=73190,916.747,59510
 Orient=0,-0.375559,0,0.926798
 Scale=3,3,3
@@ -48,7 +33,6 @@ Flags=1
 [ENTRY]
 ID=151028384
 Asset=Prop-Pine-Sick_Tree#Prop-Pine-Sick_Tree7
-Name=Untitled
 Pos=73048,918.403,59557
 Orient=0,0,-0.0948572,0.995491
 Scale=6.175,6.175,6.175
@@ -57,45 +41,50 @@ Flags=1
 [ENTRY]
 ID=151030749
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=72926,931.693,59418
 Orient=0,0,0,1
 Scale=1,1,1
+innerRadius=20
 spawnPackage=12_wpg_Wilds_45_46
+outerRadius=40
 
 [ENTRY]
 ID=151030750
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=72892,916.198,59569
 Orient=0,0,0,1
 Scale=1,1,1
+innerRadius=20
 spawnPackage=12_wpg_Wilds_45_46
+outerRadius=40
 
 [ENTRY]
 ID=151030751
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=73047,936.573,59667
 Orient=0,0,0,1
 Scale=1,1,1
+innerRadius=20
 spawnPackage=12_wpg_Wilds_45_46
+outerRadius=40
 
 [ENTRY]
 ID=151030752
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=73221,923.562,59395
 Orient=0,0,0,1
 Scale=1,1,1
+innerRadius=20
 spawnPackage=12_wpg_Wilds_45_46
+outerRadius=40
 
 [ENTRY]
 ID=151030753
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=73120,909.368,59260
 Orient=0,0,0,1
 Scale=1,1,1
+innerRadius=20
 spawnPackage=12_wpg_Wilds_45_46
+outerRadius=40
 

@@ -1,15 +1,6 @@
 [ENTRY]
-ID=1130374
-Asset=Prop-Loot1#Prop-Loot-Silver_Chest1
-Name=
-Pos=82503.1,785.735,36417.6
-Orient=0,0,0,1
-Scale=1,1,1
-
-[ENTRY]
 ID=151040016
 Asset=CL-SnowyPine1
-Name=Untitled
 Pos=83026,1463.34,36045
 Orient=0,0,0,1
 Scale=2.875,2.875,2.875
@@ -17,7 +8,6 @@ Scale=2.875,2.875,2.875
 [ENTRY]
 ID=151040017
 Asset=CL-SnowyPine3
-Name=Untitled
 Pos=82590,886.794,36241
 Orient=0,-0.710353,0,0.703845
 Scale=1.975,1.975,1.975

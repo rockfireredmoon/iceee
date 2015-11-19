@@ -1,15 +1,6 @@
 [ENTRY]
-ID=1127757
-Asset=CL-Dead-Forest#CL-Dead-Web_Forest3
-Name=
-Pos=53738.3,748.738,69966.3
-Orient=0,0,0,1
-Scale=1,1,1
-
-[ENTRY]
 ID=151028267
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=53760.3,711.918,69773
 Orient=0,0,0,1
 Scale=1,1,1
@@ -20,7 +11,6 @@ link=151028269,1
 [ENTRY]
 ID=151028269
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=53801.4,738.572,69857
 Orient=0,0,0,1
 Scale=1,1,1
@@ -28,9 +18,16 @@ links_count=1
 link=151028267,1
 
 [ENTRY]
+ID=151041215
+Asset=CL-UndeadTree2#CL-UndeadTree2
+Pos=53785,749.373,69951
+Orient=0,0,0,1
+Scale=1.1,1.1,1.1
+Flags=1
+
+[ENTRY]
 ID=151041217
 Asset=Prop-Burnt_Pines#Prop-Burnt_Pine2
-Name=Untitled
 Pos=53699.2,714.785,69777
 Orient=-0.13459,0,0,0.990901
 Scale=2.425,2.425,2.425

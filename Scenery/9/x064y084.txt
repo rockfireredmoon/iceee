@@ -1,7 +1,6 @@
 [ENTRY]
 ID=150999257
 Asset=CL-Plains_Bush1#CL-Plains_Bush1
-Name=Untitled
 Pos=48453.4,199.243,63046
 Orient=0,0,0,1
 Scale=1,1,1
@@ -9,27 +8,25 @@ Scale=1,1,1
 [ENTRY]
 ID=151051391
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=48532.9,197.286,63085
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=3a_goliathcamps01_24_25
+outerRadius=30
 
 [ENTRY]
 ID=151051423
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=48551.9,330.91,63595
 Orient=0,-0.488177,0,0.872745
 Scale=1,1,1
-spawnPackage=3a_goliathcamps01_24_25
 links_count=1
 link=151051427,1
+spawnPackage=3a_goliathcamps01_24_25
 
 [ENTRY]
 ID=151051427
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=48594.8,360.232,63740
 Orient=0,0,0,1
 Scale=1,1,1
@@ -40,18 +37,16 @@ link=151051428,1
 [ENTRY]
 ID=151056241
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=48081.9,267.583,63421
 Orient=0,0,0,1
 Scale=1,1,1
-links_count=3
+links_count=2
 link=151056240,1
 link=151056242,1
 
 [ENTRY]
 ID=151059826
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=48239.6,222.853,63016.6
 Orient=0,0,0,1
 Scale=1,1,1

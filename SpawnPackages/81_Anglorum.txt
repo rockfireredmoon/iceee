@@ -951,15 +951,15 @@ Spawn=1725,100  ;Jester Jumptail (13) at 0
 ; DISABLED WHEN EVENT IS NOT ACTIVE
 [ENTRY]
 Name=HOLIDAY_turkatrice_15_16
-; Spawn=2841,25  ;Turkatrice (15)
-; Spawn=2842,25  ;Turkatrice (16)
-; Spawn=2843,25  ;Turkatrice (15)
-; Spawn=2844,25  ;Turkatrice (16)
+Spawn=2841,25  ;Turkatrice (15)
+Spawn=2842,25  ;Turkatrice (16)
+Spawn=2843,25  ;Turkatrice (15)
+Spawn=2844,25  ;Turkatrice (16)
 
 ; DISABLED WHEN EVENT IS NOT ACTIVE
 [ENTRY]
 Name=HOLIDAY_turkatriceKing_k_20
-; Spawn=2845,100  ;Turkatrice King (20)
+Spawn=2845,100  ;Turkatrice King (20)
 
 
 

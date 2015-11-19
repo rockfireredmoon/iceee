@@ -1,17 +1,6 @@
 [ENTRY]
-ID=1127544
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=
-Pos=63990,847.959,61190
-Orient=0,0,0,1
-Scale=1,1,1
-spawnPackage=11_jld_junderbroodSkrillmix_43
-wanderRadius=90
-
-[ENTRY]
 ID=151015313
 Asset=Prop-Boulder_Scary#Prop-Boulder_Scary6
-Name=Untitled
 Pos=64415.5,852.354,60995
 Orient=0,0,0.522687,0.852525
 Scale=1.75,1.75,1.75
@@ -20,7 +9,6 @@ Flags=1
 [ENTRY]
 ID=151016660
 Asset=Prop-Iron_Fences#Prop-Iron_Fence1
-Name=Untitled
 Pos=64131.5,869.085,61484
 Orient=0,0.826807,0,-0.562486
 Scale=2.275,2.275,2.275
@@ -28,7 +16,6 @@ Scale=2.275,2.275,2.275
 [ENTRY]
 ID=151017356
 Asset=CL-AridBush3#CL-AridBush3
-Name=Untitled
 Pos=64020.3,863.083,61302
 Orient=0,0,0,1
 Scale=2.2,2.2,2.2
@@ -37,7 +24,6 @@ Flags=1
 [ENTRY]
 ID=151017365
 Asset=CL-UndeadTree2#CL-UndeadTree2
-Name=Untitled
 Pos=63942.1,862.853,61481
 Orient=0,0,0,1
 Scale=1.9,1.9,1.9
@@ -46,7 +32,6 @@ Flags=1
 [ENTRY]
 ID=151017400
 Asset=CL-AridBush4#CL-AridBush4
-Name=Untitled
 Pos=64322.2,865.321,61378
 Orient=0,-0.864924,0,0.501902
 Scale=1,1,1
@@ -55,9 +40,9 @@ Flags=1
 [ENTRY]
 ID=151027381
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=64325.4,865.643,61103
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_jld_junderbroodSkrillmix_43
+outerRadius=200
 

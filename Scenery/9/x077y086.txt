@@ -1,26 +1,11 @@
 [ENTRY]
-ID=1127924
-Asset=CL-Plants#CL-GrunsBush_2
-Name=Untitled
-Pos=58070,945.59,64721.4
-Orient=0,0,-0.271547,0.962425
+ID=1030340
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=58049.5,883.341,64981.4
+Orient=0,-0.499221,0,0.866475
 Scale=1,1,1
-
-[ENTRY]
-ID=1127925
-Asset=CL-GrunsBush_2
-Name=Untitled
-Pos=58067,914.614,64779.7
-Orient=0,0,-0.271547,0.962425
-Scale=1,1,1
-
-[ENTRY]
-ID=1127926
-Asset=CL-GrunsBush_2
-Name=Untitled
-Pos=58032.2,895.235,64785.6
-Orient=0.075119,0.451127,-0.333982,0.824195
-Scale=1,1,1
+spawnPackage=z9_eur_MJ_Price
 
 [ENTRY]
 ID=151017525
@@ -42,7 +27,7 @@ Scale=1.925,1.925,1.925
 ID=151017599
 Asset=Prop-Burnt_Pines#Prop-Burnt_Pine2
 Name=Untitled
-Pos=58076.4,884.814,64959.4
+Pos=58064.4,884.498,64969
 Orient=0,0,0,1
 Scale=1.575,1.575,1.575
 
@@ -63,14 +48,4 @@ Orient=0,0,0,1
 Scale=1,1,1
 links_count=1
 link=151027666,1
-
-[ENTRY]
-ID=151028805
-Asset=Manipulator-SpawnPoint
-Name=Untitled
-Pos=58249.6,892.773,65156.3
-Orient=0,0,0,1
-Scale=1,1,1
-spawnPackage=11_dth_wilds_41_42
-wanderRadius=100
 

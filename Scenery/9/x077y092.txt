@@ -1,18 +1,17 @@
 [ENTRY]
 ID=151029300
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=58474.7,897.251,69575
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=11_alp_zombieSoulgazer
 links_count=1
 link=151029317,1
+spawnPackage=11_alp_zombieSoulgazer
+outerRadius=1
 
 [ENTRY]
 ID=151029311
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=57820.5,862.266,69633
 Orient=0,0,0,1
 Scale=1,1,1
@@ -23,7 +22,6 @@ link=151029312,1
 [ENTRY]
 ID=151029312
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=57997.1,901.271,69576
 Orient=0,0,0,1
 Scale=1,1,1
@@ -34,7 +32,6 @@ link=151029313,1
 [ENTRY]
 ID=151029313
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=58121.6,912.628,69598
 Orient=0,0,0,1
 Scale=1,1,1
@@ -45,7 +42,6 @@ link=151029314,1
 [ENTRY]
 ID=151029314
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=58159.1,916.233,69575
 Orient=0,0,0,1
 Scale=1,1,1
@@ -56,7 +52,6 @@ link=151029315,1
 [ENTRY]
 ID=151029315
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=58301.7,914.005,69572
 Orient=0,0,0,1
 Scale=1,1,1
@@ -67,7 +62,6 @@ link=151029316,1
 [ENTRY]
 ID=151029316
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=58422.8,899.359,69614
 Orient=0,0,0,1
 Scale=1,1,1
@@ -77,26 +71,24 @@ link=151029315,1
 [ENTRY]
 ID=151029345
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=57998.1,904.137,69561
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_alp_ZombieMix_44_45
+outerRadius=10
 
 [ENTRY]
 ID=151029346
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=58314.2,918.662,69553
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_alp_ZombieMix_44_45
-wanderRadius=60
+outerRadius=10
 
 [ENTRY]
 ID=151040849
 Asset=Prop-Dungeon-Entrance-Mine1#Prop-Dungeon-Entrance-Mine1
-Name=Untitled
 Pos=57761.6,979.505,69171
 Orient=0,0,0,1
 Scale=1.7,1.7,1.7
@@ -105,7 +97,6 @@ Flags=1
 [ENTRY]
 ID=151041038
 Asset=CL-GrunsBush_1#CL-GrunsBush_1
-Name=Untitled
 Pos=57839.6,921.372,69345
 Orient=0,0,0,1
 Scale=1.725,1.725,1.725
@@ -114,7 +105,6 @@ Flags=1
 [ENTRY]
 ID=151041045
 Asset=CL-GrunsBush_4#CL-GrunsBush_4
-Name=Untitled
 Pos=57783.5,956.282,69257
 Orient=0,0,0,1
 Scale=1.775,1.775,1.775
@@ -123,7 +113,6 @@ Flags=1
 [ENTRY]
 ID=151041046
 Asset=CL-GrunsBush_5#CL-GrunsBush_5
-Name=Untitled
 Pos=57816.3,916.802,69376
 Orient=0,0,0,1
 Scale=2.025,2.025,2.025
@@ -132,7 +121,6 @@ Flags=1
 [ENTRY]
 ID=151041047
 Asset=Prop-Boulder_Scary#Prop-Boulder_Scary5
-Name=Untitled
 Pos=57762.2,976.911,69180
 Orient=0,0,0,1
 Scale=0.35,0.35,0.35
@@ -141,7 +129,6 @@ Flags=1
 [ENTRY]
 ID=151041048
 Asset=CL-GrunsBush_1#CL-GrunsBush_1
-Name=Untitled
 Pos=57955.3,871.092,69715
 Orient=0,0,0,1
 Scale=1.675,1.675,1.675
@@ -150,7 +137,6 @@ Flags=1
 [ENTRY]
 ID=151041049
 Asset=CL-GrunsBush_2#CL-GrunsBush_2
-Name=Untitled
 Pos=57770.3,855.694,69693
 Orient=0,0,0,1
 Scale=1.725,1.725,1.725
@@ -159,7 +145,6 @@ Flags=1
 [ENTRY]
 ID=151041077
 Asset=Prop-Burnt_Pines#Prop-Burnt_Pine2
-Name=Untitled
 Pos=57796.8,904.596,69696
 Orient=0,0,0,1
 Scale=3.825,3.825,3.825
@@ -168,7 +153,6 @@ Flags=1
 [ENTRY]
 ID=151041078
 Asset=Prop-Burnt_Pines#Prop-Burnt_Pine3
-Name=Untitled
 Pos=57927.4,920.133,69563
 Orient=-0.010336,-0.977798,-0.203305,0.0497113
 Scale=4.675,4.675,4.675
@@ -176,7 +160,6 @@ Scale=4.675,4.675,4.675
 [ENTRY]
 ID=151041079
 Asset=CL-GrunsBush_3#CL-GrunsBush_3
-Name=Untitled
 Pos=57797.5,867.371,69560
 Orient=0,0,0,1
 Scale=3,3,3

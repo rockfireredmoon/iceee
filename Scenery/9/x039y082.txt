@@ -604,6 +604,14 @@ Scale=1.925,1.925,1.925
 Flags=1
 
 [ENTRY]
+ID=151060346
+Asset=Prop-Holiday-Harvest_Banner
+Name=IMPORT
+Pos=29862.1,751.39,62140.3
+Orient=0,0,0,1
+Scale=7.45,7.45,7.45
+
+[ENTRY]
 ID=151060452
 Asset=Manipulator-PathNode
 Name=Untitled
@@ -698,6 +706,8 @@ spawnPackage=HOLIDAY_Easter_Egg
 [ENTRY]
 ID=151062425
 Asset=Prop-Waving_Banner1
+Name=Untitled
 Pos=29488.3,335.088,62184.9
 Orient=0,0.470626,0,0.882333
 Scale=0.325,0.325,0.325
+

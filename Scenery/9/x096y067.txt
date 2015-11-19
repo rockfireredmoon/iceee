@@ -1,17 +1,6 @@
 [ENTRY]
-ID=1091069
-Asset=Manipulator#Manipulator-PathNode
-Name=
-Pos=72016.9,1508.19,50975
-Orient=0,0,0,1
-Scale=1,1,1
-links_count=1
-link=1091070,1
-
-[ENTRY]
 ID=151028006
 Asset=Prop-Bush_Arid1#Prop-Bush_Arid1
-Name=Untitled
 Pos=72094,1531.89,50913
 Orient=0,0,0,1
 Scale=1,1,1

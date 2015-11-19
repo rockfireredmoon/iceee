@@ -1,17 +1,6 @@
 [ENTRY]
-ID=1127727
-Asset=Manipulator#Manipulator-PathNode
-Name=
-Pos=62077.8,921.425,70384.5
-Orient=0,0,0,1
-Scale=1,1,1
-links_count=1
-link=1127728,1
-
-[ENTRY]
 ID=151015155
 Asset=CL-UndeadTree3#CL-UndeadTree3
-Name=Untitled
 Pos=62175.8,894.88,69751
 Orient=0,0.867423,0,0.497572
 Scale=1.8,1.8,1.8
@@ -20,7 +9,6 @@ Flags=1
 [ENTRY]
 ID=151017490
 Asset=Prop-Dvergar_Scaffolding
-Name=Untitled
 Pos=61906.6,872.324,70189
 Orient=0,-0.703279,0,0.710914
 Scale=1.725,1.725,1.725
@@ -29,7 +17,6 @@ Flags=1
 [ENTRY]
 ID=151017502
 Asset=Prop-Wagon_Undead#Prop-Wagon_Undead
-Name=Untitled
 Pos=61929.4,891.529,70261
 Orient=0,0,0,1
 Scale=2,2,2
@@ -38,7 +25,6 @@ Flags=1
 [ENTRY]
 ID=151017504
 Asset=Prop-Brazier_Purple#Prop-Brazier_Purple
-Name=Untitled
 Pos=61840.8,887.52,70394
 Orient=0,0,0,1
 Scale=7.55,7.55,7.55
@@ -47,7 +33,6 @@ Flags=1
 [ENTRY]
 ID=151017513
 Asset=Prop-Brazier_Purple
-Name=Untitled
 Pos=61840.6,864.518,70395
 Orient=0,0,0,1
 Scale=5.725,5.725,5.725
@@ -56,7 +41,6 @@ Flags=1
 [ENTRY]
 ID=151017556
 Asset=Prop-Iron_Fences#Prop-Iron_Fence1
-Name=Untitled
 Pos=61809.5,887.194,70396
 Orient=0,-0.774923,0,-0.632056
 Scale=1.825,1.825,1.825
@@ -65,7 +49,6 @@ Flags=1
 [ENTRY]
 ID=151017559
 Asset=Prop-Iron_Fences#Prop-Iron_Fence2
-Name=Untitled
 Pos=61834.1,890.925,70428
 Orient=0.043704,-0.98299,0.0106582,-0.178066
 Scale=1.525,1.525,1.525
@@ -74,7 +57,6 @@ Flags=1
 [ENTRY]
 ID=151017562
 Asset=Prop-Iron_Fence2
-Name=Untitled
 Pos=61822.3,888.139,70360
 Orient=-0.00786652,-0.308164,-0.0370196,-0.95058
 Scale=1.6,1.6,1.6
@@ -83,7 +65,6 @@ Flags=1
 [ENTRY]
 ID=151017566
 Asset=Prop-Iron_Fence2
-Name=Untitled
 Pos=61857.3,891.175,70358
 Orient=-0.0265998,0.25352,-0.0269218,-0.96659
 Scale=1.6,1.6,1.6
@@ -92,7 +73,6 @@ Flags=1
 [ENTRY]
 ID=151017567
 Asset=Prop-Iron_Fence2
-Name=Untitled
 Pos=61874.4,896.152,70386
 Orient=0.0238617,0.738132,-0.0230512,-0.67384
 Scale=1.35,1.35,1.35
@@ -101,7 +81,6 @@ Flags=1
 [ENTRY]
 ID=151017568
 Asset=Prop-Iron_Fence2
-Name=Untitled
 Pos=61863.4,895.643,70419
 Orient=-0.0487122,0.880722,0.00707888,-0.471069
 Scale=1.425,1.425,1.425
@@ -110,7 +89,6 @@ Flags=1
 [ENTRY]
 ID=151017573
 Asset=Prop-Skulls#Prop-Skull_Mammal
-Name=Untitled
 Pos=61804,902.921,70374
 Orient=0.251213,-0.665387,0.148963,0.686995
 Scale=1,1,1
@@ -119,7 +97,6 @@ Flags=1
 [ENTRY]
 ID=151017582
 Asset=Prop-Torture_Equipment#Prop-Dungeon-Iron_Maiden
-Name=Untitled
 Pos=61816.7,886.094,70378
 Orient=0,0,0,1
 Scale=1,1,1
@@ -128,7 +105,6 @@ Flags=1
 [ENTRY]
 ID=151017653
 Asset=Light-Medium?COLOR=3300FF
-Name=Untitled
 Pos=61851.6,916.443,70393
 Orient=0,0,0,1
 Scale=10,10,10
@@ -136,7 +112,6 @@ Scale=10,10,10
 [ENTRY]
 ID=151028683
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=61942.6,900.579,70388
 Orient=0,0,0,1
 Scale=1,1,1
@@ -147,7 +122,6 @@ link=151028684,1
 [ENTRY]
 ID=151028684
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=61874.9,886.94,70314
 Orient=0,0,0,1
 Scale=1,1,1
@@ -159,7 +133,6 @@ link=151029134,1
 [ENTRY]
 ID=151028685
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=61775.3,870.661,70291
 Orient=0,0,0,1
 Scale=1,1,1
@@ -170,7 +143,6 @@ link=151028687,1
 [ENTRY]
 ID=151028687
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=61726,880.449,70377
 Orient=0,0,0,1
 Scale=1,1,1
@@ -181,7 +153,6 @@ link=151028688,1
 [ENTRY]
 ID=151028688
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=61767.9,888.284,70453
 Orient=0,0,0,1
 Scale=1,1,1
@@ -192,7 +163,6 @@ link=151028689,1
 [ENTRY]
 ID=151028695
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=61868.5,886.808,70250
 Orient=0,0,0,1
 Scale=1,1,1
@@ -203,7 +173,6 @@ link=151029135,1
 [ENTRY]
 ID=151028696
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=61715.2,855.452,70203
 Orient=0,0,0,1
 Scale=0.95,0.95,0.95
@@ -215,7 +184,6 @@ link=151028709,1
 [ENTRY]
 ID=151028697
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=61676.6,847.521,70124
 Orient=0,0,0,1
 Scale=0.95,0.95,0.95
@@ -226,7 +194,6 @@ link=151028698,1
 [ENTRY]
 ID=151028698
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=61720.6,853.306,70016
 Orient=0,0,0,1
 Scale=1,1,1
@@ -237,7 +204,6 @@ link=151028699,1
 [ENTRY]
 ID=151028699
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=61813.7,857.684,69922
 Orient=0,0,0,1
 Scale=1,1,1
@@ -248,7 +214,6 @@ link=151028701,1
 [ENTRY]
 ID=151028701
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=61912.8,874.76,69851
 Orient=0,0,0,1
 Scale=1,1,1
@@ -259,8 +224,7 @@ link=151028702,1
 [ENTRY]
 ID=151028702
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
-Pos=61865.3,879.929,69784.8
+Pos=61998.5,952.917,69758
 Orient=0,0,0,1
 Scale=1,1,1
 links_count=2
@@ -270,7 +234,6 @@ link=151028703,1
 [ENTRY]
 ID=151028709
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=61621.9,850.817,70270
 Orient=0,0,0,1
 Scale=1,1,1
@@ -281,7 +244,6 @@ link=151028710,1
 [ENTRY]
 ID=151028710
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=61561.7,827.883,70185
 Orient=0,0,0,1
 Scale=1,1,1
@@ -292,56 +254,55 @@ link=151028712,1
 [ENTRY]
 ID=151029132
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=61890.9,898.975,70390
 Orient=0,-0.998152,0,0.0607589
 Scale=1,1,1
 spawnPackage=11_alp_ZombieMix_44_45
+outerRadius=10
 
 [ENTRY]
 ID=151029133
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=61873.1,900.097,70438
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_alp_ZombieMix_44_45
+outerRadius=10
 
 [ENTRY]
 ID=151029134
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=61876.2,893.072,70347
 Orient=0,-0.939099,0,0.343646
 Scale=1,1,1
-spawnPackage=11_alp_ZombieMix_44_45
 links_count=1
 link=151028684,1
+spawnPackage=11_alp_ZombieMix_44_45
+outerRadius=10
 
 [ENTRY]
 ID=151029135
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=61880.2,893.028,70278
 Orient=0,0.924606,0,0.380925
 Scale=1,1,1
-spawnPackage=11_alp_ZombieMix_44_45
 links_count=1
 link=151028695,1
+spawnPackage=11_alp_ZombieMix_44_45
+outerRadius=10
 
 [ENTRY]
 ID=151029136
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=61948.6,896.483,70307
 Orient=0,-0.900101,0,0.435682
 Scale=1,1,1
 spawnPackage=11_alp_ZombieMix_44_45
+outerRadius=10
 
 [ENTRY]
 ID=151040567
 Asset=Prop-Tombstone#Prop-Tombstone_Large2
-Name=Untitled
 Pos=62121.3,972.689,69816
 Orient=-0.163511,0.0935689,-0.0155805,0.981971
 Scale=2.325,2.325,2.325

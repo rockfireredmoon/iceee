@@ -1,7 +1,6 @@
 [ENTRY]
 ID=150999254
 Asset=CL-Rock-Clutter#CL-Rock-Clutter
-Name=Untitled
 Pos=44662.8,377.502,62452
 Orient=0,-0.908633,0,0.417595
 Scale=1,1,1
@@ -10,19 +9,17 @@ Flags=1
 [ENTRY]
 ID=151051205
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=44325.7,342.167,62675
 Orient=0,0.223106,0,0.974794
 Scale=1,1,1
-spawnPackage=3a_goliathcamps01_23_24
 links_count=2
 link=151051208,1
 link=151051210,1
+spawnPackage=3a_goliathcamps01_23_24
 
 [ENTRY]
 ID=151051208
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=44502.4,382.597,62565
 Orient=0,0,0,1
 Scale=1,1,1
@@ -33,7 +30,6 @@ link=151051209,1
 [ENTRY]
 ID=151051209
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=44605.9,399.774,62416
 Orient=0,0,0,1
 Scale=1,1,1
@@ -44,7 +40,6 @@ link=151051210,1
 [ENTRY]
 ID=151051210
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=44408.8,396.2,62485
 Orient=0,0,0,1
 Scale=1,1,1
@@ -55,7 +50,6 @@ link=151051209,1
 [ENTRY]
 ID=151051276
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=44914.9,384,62387
 Orient=0,0,0,1
 Scale=1,1,1
@@ -65,22 +59,20 @@ link=151051275,1
 [ENTRY]
 ID=151056247
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=44904,317.571,62634
 Orient=0,0,0,1
 Scale=1.525,1.525,1.525
-links_count=3
+links_count=2
 link=151056246,1
 link=151056248,1
 
 [ENTRY]
 ID=151056248
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=44311.7,295.372,62872
 Orient=0,0,0,1
 Scale=1.525,1.525,1.525
-links_count=3
+links_count=2
 link=151056247,1
 link=151056249,1
 

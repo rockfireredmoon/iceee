@@ -1,10 +1,14 @@
 [ENTRY]
-ID=1105029
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=Untitled
-Pos=71822.6,1421.88,66691.8
+ID=151019145
+Asset=CL-SnowyPine1#CL-SnowyPine1
+Pos=71858,1426.65,66678
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#F2756
-wanderRadius=200
+
+[ENTRY]
+ID=151019146
+Asset=CL-SnowyPine2#CL-SnowyPine2
+Pos=71897,1421.26,66713
+Orient=0,0,0,1
+Scale=1,1,1
 

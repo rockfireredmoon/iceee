@@ -1,15 +1,6 @@
 [ENTRY]
-ID=1130331
-Asset=Prop-Loot1#Prop-Loot-Gold_Chest1
-Name=
-Pos=71887.1,1400.61,42938.8
-Orient=0,0.247404,0,0.968912
-Scale=1.5,1.5,1.5
-
-[ENTRY]
 ID=151008354
 Asset=Prop-Boulder3
-Name=Untitled
 Pos=71643,1025.52,42812
 Orient=0,-0.939645,0,-0.34215
 Scale=2.775,2.775,2.775
@@ -18,7 +9,6 @@ Flags=1
 [ENTRY]
 ID=151008356
 Asset=Prop-Dead-Forest-Tree#Prop-Dead-Forest-Tree5
-Name=Untitled
 Pos=71571,1053.91,42876
 Orient=0,0.193767,0,0.981048
 Scale=1,1,1
@@ -27,7 +17,6 @@ Flags=1
 [ENTRY]
 ID=151008360
 Asset=Prop-Dead-Forest-Tree#Prop-Dead-Forest-Tree2
-Name=Untitled
 Pos=71799,1043.31,42784
 Orient=0,0.902953,0,-0.429739
 Scale=1,1,1
@@ -36,7 +25,6 @@ Flags=1
 [ENTRY]
 ID=151008393
 Asset=CL-Skeleton_Bottle1#CL-Skeleton_Bottle1
-Name=Untitled
 Pos=71824,1053.98,42751
 Orient=0,0,0,1
 Scale=1,1,1

@@ -1,10 +1,25 @@
 [ENTRY]
+ID=151060401
+Asset=Prop-Banner_Post2
+Name=IMPORT
+Pos=69950,397.375,35133.4
+Orient=0,0.857299,0,0.514819
+Scale=1.625,1.625,1.625
+
+[ENTRY]
+ID=151060402
+Asset=Prop-Holiday-Harvest_Banner
+Name=IMPORT
+Pos=69936.1,511.076,35108.1
+Orient=0,0.857299,0,0.514819
+Scale=3.4,3.4,3.4
+
+[ENTRY]
 ID=151060810
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=70422.5,455.15,35096.2
 Orient=0,0,0,1
 Scale=1,1,1
-innerRadius=25
 spawnPackage=HOLIDAY_wf09_snowmen_26_27
-outerRadius=30
 

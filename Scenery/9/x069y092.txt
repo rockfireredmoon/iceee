@@ -1,7 +1,6 @@
 [ENTRY]
 ID=151017034
 Asset=Prop-Crypt
-Name=Untitled
 Pos=52271.5,713.327,69334
 Orient=0.0402151,-0.234276,-0.164333,0.957336
 Scale=3.225,3.225,3.225
@@ -10,28 +9,26 @@ Flags=1
 [ENTRY]
 ID=151028136
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=51779.9,645.984,69095
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_irh_daemonStagCamp
+outerRadius=10
 
 [ENTRY]
 ID=151028164
 Asset=Manipulator-SpawnPoint
-Name=Untitled
-Pos=52140.3,627.127,69033.2
+Pos=52154.8,603.752,69066
 Orient=0,0.963558,0,0.267499
 Scale=1,1,1
-spawnPackage=11_irh_daemonStagCamp
-wanderRadius=100
 links_count=1
 link=151028165,1
+spawnPackage=11_irh_daemonStagCamp
+outerRadius=10
 
 [ENTRY]
 ID=151040973
 Asset=CL-UndeadTree4#CL-UndeadTree4
-Name=Untitled
 Pos=51930,558.775,69182
 Orient=0,-0.622234,0,-0.782831
 Scale=1,1,1
@@ -40,7 +37,6 @@ Flags=1
 [ENTRY]
 ID=151040991
 Asset=CL-GrunsBush_2
-Name=Untitled
 Pos=51755.4,731.5,69501
 Orient=0,0.430458,0,0.902611
 Scale=1.875,1.875,1.875

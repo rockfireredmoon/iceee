@@ -1,17 +1,6 @@
 [ENTRY]
-ID=1127768
-Asset=Manipulator#Manipulator-PathNode
-Name=
-Pos=60743.1,626.946,70203.9
-Orient=0,0,0,1
-Scale=1,1,1
-links_count=1
-link=1127767,1
-
-[ENTRY]
 ID=151015700
 Asset=Prop-Tombstone#Prop-Tombstone_Large2
-Name=Untitled
 Pos=60141.3,939.749,69833
 Orient=0,0,0,1
 Scale=1,1,1
@@ -20,7 +9,6 @@ Flags=1
 [ENTRY]
 ID=151015710
 Asset=Prop-Tombstone_Large2
-Name=Untitled
 Pos=60005.9,976.232,69991
 Orient=0,0,0,1
 Scale=2.125,2.125,2.125
@@ -29,7 +17,6 @@ Flags=1
 [ENTRY]
 ID=151017631
 Asset=Prop-Lamp_Post_Undead1#Prop-Lamp_Post_Undead1
-Name=Untitled
 Pos=60522.1,599.528,70392
 Orient=0,0,0,1
 Scale=2.4,2.4,2.4
@@ -37,7 +24,6 @@ Scale=2.4,2.4,2.4
 [ENTRY]
 ID=151028597
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=60466.8,592.332,70404
 Orient=0,0,0,1
 Scale=1,1,1
@@ -49,7 +35,6 @@ link=151028607,1
 [ENTRY]
 ID=151028599
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=60377.4,583.764,70387
 Orient=0,0,0,1
 Scale=1,1,1
@@ -60,7 +45,6 @@ link=151028600,1
 [ENTRY]
 ID=151028600
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=60261.3,579.018,70371
 Orient=0,0,0,1
 Scale=1,1,1
@@ -71,7 +55,6 @@ link=151028601,1
 [ENTRY]
 ID=151028601
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=60144.8,578.393,70403
 Orient=0,0,0,1
 Scale=1,1,1
@@ -82,7 +65,6 @@ link=151028603,1
 [ENTRY]
 ID=151028603
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=60048.7,578.393,70376
 Orient=0,0,0,1
 Scale=1,1,1
@@ -93,7 +75,6 @@ link=151028604,1
 [ENTRY]
 ID=151028607
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=60518.6,598.692,70364
 Orient=0,0,0,1
 Scale=1,1,1
@@ -104,7 +85,6 @@ link=151028608,1
 [ENTRY]
 ID=151028608
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=60653.9,623.377,70362
 Orient=0,0,0,1
 Scale=1,1,1
@@ -115,9 +95,9 @@ link=151028609,1
 [ENTRY]
 ID=151029092
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=60136,944.893,69802
 Orient=0,0.754571,0,0.656219
 Scale=1,1,1
 spawnPackage=11_alp_ZombieMix_44_45
+outerRadius=10
 

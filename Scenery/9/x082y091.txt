@@ -1,16 +1,6 @@
 [ENTRY]
-ID=1127691
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=
-Pos=61920.1,772.488,68476.9
-Orient=0,0.744643,0,0.667463
-Scale=1,1,1
-spawnPackage=11_dth_wilds_44_45_south
-
-[ENTRY]
 ID=151017620
 Asset=Prop-Burnt_Pines#Prop-Burnt_Pine4
-Name=Untitled
 Pos=61849,794.219,68481
 Orient=-0.0441565,-0.977426,-0.0931359,0.184428
 Scale=4.275,4.275,4.275
@@ -19,7 +9,6 @@ Flags=1
 [ENTRY]
 ID=151017621
 Asset=Prop-Burnt_Pines#Prop-Burnt_Pine5
-Name=Untitled
 Pos=61821.3,778.522,68413
 Orient=0,0,0,1
 Scale=2.25,2.25,2.25
@@ -28,16 +17,15 @@ Flags=1
 [ENTRY]
 ID=151029282
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=61999.8,772.488,68473
-Orient=0,0.727726,0,0.685868
+Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_dth_wilds_44_45_south
+outerRadius=10
 
 [ENTRY]
 ID=151040429
 Asset=CL-GrunsBush_3#CL-GrunsBush_3
-Name=Untitled
 Pos=61871.8,772.488,68463
 Orient=0,-0.479426,0,0.877582
 Scale=2.1,2.1,2.1
@@ -46,7 +34,6 @@ Flags=1
 [ENTRY]
 ID=151040430
 Asset=CL-GrunsBush_4#CL-GrunsBush_4
-Name=Untitled
 Pos=61818.8,772.488,68381
 Orient=0,0,0,1
 Scale=1,1,1
@@ -55,7 +42,6 @@ Flags=1
 [ENTRY]
 ID=151040551
 Asset=CL-Bramble_Thicket1#CL-Bramble_Thicket1
-Name=Untitled
 Pos=62049.4,772.488,68541
 Orient=0,0,0,1
 Scale=2.725,2.725,2.725
@@ -63,7 +49,6 @@ Scale=2.725,2.725,2.725
 [ENTRY]
 ID=151040590
 Asset=Prop-Burnt_Pines#Prop-Burnt_Pine5
-Name=Untitled
 Pos=61998.7,908.874,68932
 Orient=0.100932,0.913859,-0.035348,-0.391695
 Scale=3.325,3.325,3.325
@@ -72,7 +57,6 @@ Flags=1
 [ENTRY]
 ID=151040591
 Asset=Prop-Burnt_Pines#Prop-Burnt_Pine2
-Name=Untitled
 Pos=61967.3,918.529,68901
 Orient=0,0,0,1
 Scale=2.525,2.525,2.525
@@ -81,7 +65,6 @@ Flags=1
 [ENTRY]
 ID=151040592
 Asset=CL-GrunsBush_2#CL-GrunsBush_2
-Name=Untitled
 Pos=62008,917.189,68970
 Orient=0,-0.479426,0,0.877582
 Scale=2.425,2.425,2.425
@@ -90,7 +73,6 @@ Flags=1
 [ENTRY]
 ID=151040633
 Asset=Effects#Par-FireFlies1
-Name=Untitled
 Pos=61993.6,801.237,68254
 Orient=0,0,0,1
 Scale=1,1,1
@@ -98,7 +80,6 @@ Scale=1,1,1
 [ENTRY]
 ID=151040648
 Asset=CL-GrunsBush_4#CL-GrunsBush_4
-Name=Untitled
 Pos=61920.3,772.347,68298
 Orient=0,0,0,1
 Scale=1.275,1.275,1.275
@@ -107,7 +88,6 @@ Flags=1
 [ENTRY]
 ID=151040649
 Asset=Prop-Tombstone#Prop-Tombstone2
-Name=Untitled
 Pos=61916.6,782.686,68298
 Orient=0,0.924606,0,0.380925
 Scale=3.4,3.4,3.4

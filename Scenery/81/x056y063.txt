@@ -258,6 +258,22 @@ Scale=1,1,1
 spawnPackage=HOLIDAY_turkatrice_15_16
 
 [ENTRY]
+ID=1358967386
+Asset=Prop-Holiday-Harvest_Banner#Prop-Holiday-Harvest_Banner
+Name=IMPORT
+Pos=56035,384.205,63690.8
+Orient=0,0.690075,0,-0.723738
+Scale=2.2,2.2,2.2
+
+[ENTRY]
+ID=1358967387
+Asset=Prop-Holiday-Harvest_Banner
+Name=IMPORT
+Pos=56041,383.865,63590.7
+Orient=0,0.690075,0,-0.723738
+Scale=2.2,2.2,2.2
+
+[ENTRY]
 ID=1358967555
 Asset=Manipulator-SpawnPoint
 Name=Untitled

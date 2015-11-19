@@ -1,15 +1,6 @@
 [ENTRY]
-ID=1128578
-Asset=Prop-Interact_Rectangle
-Name=
-Pos=63195.4,314.164,53472.9
-Orient=0.614349,0.303659,-0.34217,0.642873
-Scale=35,35,35
-
-[ENTRY]
 ID=151049917
 Asset=Prop-Boulder_Arid#Prop-Boulder_Arid2
-Name=Untitled
 Pos=63632.2,596.324,53587
 Orient=0,0,0,1
 Scale=7.575,7.575,7.575
@@ -18,7 +9,6 @@ Flags=1
 [ENTRY]
 ID=151049922
 Asset=Prop-Boulder_Arid#Prop-Boulder_Arid7
-Name=Untitled
 Pos=63385.3,434.488,53833
 Orient=0,0.522687,0,0.852525
 Scale=2.4,2.4,2.4

@@ -1,61 +1,6 @@
 [ENTRY]
-ID=1127474
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=Untitled
-Pos=58783.5,945.071,63548.3
-Orient=0,0.947905,0,-0.318554
-Scale=1,1,1
-spawnPackage=11_dth_shadowfieldCity
-
-[ENTRY]
-ID=1128112
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=Untitled
-Pos=58724.1,976.883,63190.8
-Orient=0,0.699716,0,0.714421
-Scale=1,1,1
-spawnPackage=11_dth_shadowfieldCity
-
-[ENTRY]
-ID=1128113
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=Untitled
-Pos=58625.3,976.883,63144.5
-Orient=0,0,0,1
-Scale=1,1,1
-spawnPackage=11_dth_shadowfieldCity
-
-[ENTRY]
-ID=1128114
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=Untitled
-Pos=58628,976.797,63100.8
-Orient=0,0,0,1
-Scale=1,1,1
-spawnPackage=11_dth_shadowfieldCity
-
-[ENTRY]
-ID=1128117
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=Untitled
-Pos=58714,950.424,63489.6
-Orient=0,-0.786425,0,0.617686
-Scale=1,1,1
-spawnPackage=11_dth_shadowfieldCity
-
-[ENTRY]
-ID=1128131
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=Untitled
-Pos=58959.1,983.856,63085.9
-Orient=0,0.706825,0,0.707388
-Scale=1,1,1
-spawnPackage=11_dth_shadowfieldCity
-
-[ENTRY]
 ID=151016234
 Asset=Bldg-Urban-Inn1b?ATS=ATS-Undead
-Name=Untitled
 Pos=58571.3,984.006,63253
 Orient=0,-0.0249975,0,0.999687
 Scale=1,1,1
@@ -64,7 +9,6 @@ Flags=1
 [ENTRY]
 ID=151016242
 Asset=Bldg-Urban-Small_Facade1b?ATS=ATS-Undead
-Name=Untitled
 Pos=58537.9,1039.86,63362
 Orient=0,0.568762,0,0.822502
 Scale=1,1,1
@@ -73,7 +17,6 @@ Flags=1
 [ENTRY]
 ID=151016244
 Asset=Bldg-Urban-Small_Facade2b?ATS=ATS-Undead
-Name=Untitled
 Pos=58693.5,974.756,63243
 Orient=0,-0.747971,0,0.663731
 Scale=1,1,1
@@ -82,7 +25,6 @@ Flags=1
 [ENTRY]
 ID=151016245
 Asset=Bldg-Urban-Small_Facade4b?ATS=ATS-Undead
-Name=Untitled
 Pos=58984.5,978.31,63168
 Orient=0,0.00999966,0,0.99995
 Scale=1,1,1
@@ -90,7 +32,6 @@ Scale=1,1,1
 [ENTRY]
 ID=151016253
 Asset=CL-UndeadTree5#CL-UndeadTree5
-Name=Untitled
 Pos=59065.8,960.383,63347
 Orient=0,-0.0349929,0,0.999388
 Scale=0.875,0.875,0.875
@@ -99,7 +40,6 @@ Flags=1
 [ENTRY]
 ID=151016452
 Asset=Prop-Bush-Burnt_Large2
-Name=Untitled
 Pos=59070.4,1031.6,63728
 Orient=0,0,0,1
 Scale=1.95,1.95,1.95
@@ -108,7 +48,6 @@ Flags=1
 [ENTRY]
 ID=151016462
 Asset=Prop-Pumpkin3
-Name=Untitled
 Pos=59052.9,1031.59,63742
 Orient=0,0,0,1
 Scale=1,1,1
@@ -116,7 +55,6 @@ Scale=1,1,1
 [ENTRY]
 ID=151016464
 Asset=Prop-Fence-Stone_Curve
-Name=Untitled
 Pos=59060.1,1028.44,63706
 Orient=0,0,0,1
 Scale=1,1,1
@@ -124,7 +62,6 @@ Scale=1,1,1
 [ENTRY]
 ID=151016466
 Asset=Prop-Fence-Stone2
-Name=Untitled
 Pos=58965.3,1031.59,63706
 Orient=0,0,0,1
 Scale=1,1,1
@@ -132,7 +69,6 @@ Scale=1,1,1
 [ENTRY]
 ID=151016479
 Asset=Prop-Bush-Burnt_Large2
-Name=Untitled
 Pos=58647.9,976.708,63079
 Orient=0,0,0,1
 Scale=1.95,1.95,1.95
@@ -141,7 +77,6 @@ Flags=1
 [ENTRY]
 ID=151016481
 Asset=Prop-Bush-Burnt_Med3
-Name=Untitled
 Pos=58748.3,976.683,63093
 Orient=0,0,0,1
 Scale=1.475,1.475,1.475
@@ -150,7 +85,6 @@ Flags=1
 [ENTRY]
 ID=151016483
 Asset=Prop-Bush-Burnt_Med2
-Name=Untitled
 Pos=58766.2,976.784,63106
 Orient=0,0,0,1
 Scale=1.475,1.475,1.475
@@ -159,7 +93,6 @@ Flags=1
 [ENTRY]
 ID=151016484
 Asset=Prop-Bush-Burnt_Small1
-Name=Untitled
 Pos=58860.4,977.237,63046
 Orient=0,0,0,1
 Scale=1.875,1.875,1.875
@@ -168,7 +101,6 @@ Flags=1
 [ENTRY]
 ID=151016485
 Asset=Prop-Bush-Burnt_Small2
-Name=Untitled
 Pos=58851.9,977.311,63026
 Orient=0,0,0,1
 Scale=2.05,2.05,2.05
@@ -177,7 +109,6 @@ Flags=1
 [ENTRY]
 ID=151016486
 Asset=Prop-Bush-Burnt_Small3
-Name=Untitled
 Pos=58765.7,976.706,63096
 Orient=0,0,0,1
 Scale=1.225,1.225,1.225
@@ -185,7 +116,6 @@ Scale=1.225,1.225,1.225
 [ENTRY]
 ID=151016490
 Asset=Prop-Fence-Stone_Post
-Name=Untitled
 Pos=58670.2,976.588,63069
 Orient=0,0,0,1
 Scale=1,1,1
@@ -194,7 +124,6 @@ Flags=1
 [ENTRY]
 ID=151016491
 Asset=Prop-Fence-Stone_Curve
-Name=Untitled
 Pos=58640.4,976.43,63041
 Orient=0,0,0,1
 Scale=1,1,1
@@ -203,7 +132,6 @@ Flags=1
 [ENTRY]
 ID=151016492
 Asset=Prop-Fence-Stone_Short
-Name=Untitled
 Pos=58618.8,976.285,63041
 Orient=0,0,0,1
 Scale=1,1,1
@@ -212,7 +140,6 @@ Flags=1
 [ENTRY]
 ID=151016494
 Asset=Prop-Fence-Stone1
-Name=Untitled
 Pos=58863.9,974.638,63238
 Orient=-0.0418311,0.326577,-0.0594826,0.942369
 Scale=1,1,1
@@ -220,7 +147,6 @@ Scale=1,1,1
 [ENTRY]
 ID=151016495
 Asset=Prop-Fence-Stone_Post
-Name=Untitled
 Pos=58897.3,976.908,63211
 Orient=0,0.17903,0,0.983844
 Scale=1,1,1
@@ -228,7 +154,6 @@ Scale=1,1,1
 [ENTRY]
 ID=151016496
 Asset=Prop-Bush-Burnt_Med3
-Name=Untitled
 Pos=58867.7,976.889,63244
 Orient=0,0,0,1
 Scale=1.95,1.95,1.95
@@ -236,15 +161,13 @@ Scale=1.95,1.95,1.95
 [ENTRY]
 ID=151016497
 Asset=CL-UndeadBoulder6#CL-UndeadBoulder6
-Name=Untitled
-Pos=58837.9,949.78,63466.6
+Pos=58890.6,961.233,63546
 Orient=0,-0.29552,0,0.955337
 Scale=1.825,1.825,1.825
 
 [ENTRY]
 ID=151016499
 Asset=Prop-Fence-Stone_Post
-Name=Untitled
 Pos=58862.1,977.431,63039
 Orient=-0.0285227,0.176743,-0.156744,0.971277
 Scale=1,1,1
@@ -253,7 +176,6 @@ Flags=1
 [ENTRY]
 ID=151016500
 Asset=Prop-Vampire_Tree#Prop-Vampire_Tree3
-Name=Untitled
 Pos=58652.2,976.883,63164
 Orient=0,0,0,1
 Scale=1.45,1.45,1.45
@@ -262,7 +184,6 @@ Flags=1
 [ENTRY]
 ID=151016501
 Asset=Prop-Bush-Burnt_Large2
-Name=Untitled
 Pos=58664.4,976.892,63155
 Orient=0,-0.576959,0,0.816773
 Scale=1.1,1.1,1.1
@@ -271,7 +192,6 @@ Flags=1
 [ENTRY]
 ID=151016502
 Asset=Prop-Wagon_Undead#Prop-Wagon_Undead
-Name=Untitled
 Pos=58884.9,977.455,63054
 Orient=0,-0.514136,0,0.857709
 Scale=1,1,1
@@ -280,7 +200,6 @@ Flags=1
 [ENTRY]
 ID=151016504
 Asset=Prop-Bush-Burnt_Large3#Prop-Bush-Burnt_Large3
-Name=Untitled
 Pos=58871.3,977.467,63059
 Orient=0,0,0,1
 Scale=1.175,1.175,1.175
@@ -289,7 +208,6 @@ Flags=1
 [ENTRY]
 ID=151016505
 Asset=Prop-Lamp_Post_Undead1#Prop-Lamp_Post_Undead1
-Name=Untitled
 Pos=58792.6,976.714,63225
 Orient=0,0,0,1
 Scale=1.375,1.375,1.375
@@ -297,7 +215,6 @@ Scale=1.375,1.375,1.375
 [ENTRY]
 ID=151016508
 Asset=Prop-Lamp_Post_Undead1
-Name=Untitled
 Pos=58867.6,975.423,63222
 Orient=-0.0289088,-0.266611,-0.00800073,0.963337
 Scale=1.375,1.375,1.375
@@ -305,7 +222,6 @@ Scale=1.375,1.375,1.375
 [ENTRY]
 ID=151016509
 Asset=Prop-Lamp_Post_Undead3
-Name=Untitled
 Pos=58528.3,976.721,63021
 Orient=0,0,0,1
 Scale=1.375,1.375,1.375
@@ -314,7 +230,6 @@ Flags=1
 [ENTRY]
 ID=151016537
 Asset=Prop-Dead-Forest-Tree#Prop-Dead-Forest-Tree2
-Name=Untitled
 Pos=58824.1,937.521,63583
 Orient=-0.0651085,0.273203,0.216917,0.934916
 Scale=1,1,1
@@ -322,7 +237,6 @@ Scale=1,1,1
 [ENTRY]
 ID=151016538
 Asset=Prop-Bush-Burnt_Med2#Prop-Bush-Burnt_Med2
-Name=Untitled
 Pos=58834.9,948.757,63645
 Orient=0,-0.164252,0,0.986418
 Scale=3.1,3.1,3.1
@@ -330,7 +244,6 @@ Scale=3.1,3.1,3.1
 [ENTRY]
 ID=151016539
 Asset=Prop-Bush-Burnt_Med3#Prop-Bush-Burnt_Med3
-Name=Untitled
 Pos=58786.6,934.825,63595
 Orient=0,-0.164252,0,0.986418
 Scale=3.1,3.1,3.1
@@ -338,7 +251,6 @@ Scale=3.1,3.1,3.1
 [ENTRY]
 ID=151017305
 Asset=Light-Large?COLOR=6666FF
-Name=Untitled
 Pos=58841.9,1055.48,63234
 Orient=0,0,0,1
 Scale=4.55,4.55,4.55
@@ -346,7 +258,6 @@ Scale=4.55,4.55,4.55
 [ENTRY]
 ID=151027577
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=58970.3,1031.47,63739
 Orient=0,0,0,1
 Scale=1,1,1
@@ -358,7 +269,6 @@ link=151027651,1
 [ENTRY]
 ID=151027580
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=59041.3,1031.47,63733
 Orient=0,0,0,1
 Scale=1,1,1
@@ -369,18 +279,17 @@ link=151027582,1
 [ENTRY]
 ID=151027651
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=59025.8,1031.59,63718
 Orient=0,-0.942489,0,0.334238
 Scale=1,1,1
-spawnPackage=11_dth_undeadFarmhand_r_43
 links_count=1
 link=151027577,1
+spawnPackage=11_dth_undeadFarmhand_r_43
+outerRadius=1
 
 [ENTRY]
 ID=151027829
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=58818.3,974.802,63266
 Orient=0,0,0,1
 Scale=1,1,1
@@ -391,7 +300,6 @@ link=151029033,1
 [ENTRY]
 ID=151027830
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=58794.1,961.432,63423
 Orient=0,0,0,1
 Scale=1,1,1
@@ -402,7 +310,6 @@ link=151027831,1
 [ENTRY]
 ID=151027831
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=58701.6,928.505,63584
 Orient=0,0,0,1
 Scale=1,1,1
@@ -411,29 +318,47 @@ link=151027830,1
 link=151027832,1
 
 [ENTRY]
+ID=151028782
+Asset=Manipulator#Manipulator-PathNode
+Pos=59149.9,1036.17,63093
+Orient=0,0,0,1
+Scale=1,1,1
+links_count=2
+link=151028781,1
+link=151028783,1
+
+[ENTRY]
+ID=151028783
+Asset=Manipulator-PathNode
+Pos=59229,1087.46,63221
+Orient=0,0,0,1
+Scale=1,1,1
+links_count=1
+link=151028782,1
+
+[ENTRY]
 ID=151028835
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=58505,1039.83,63435
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=11_dth_shadowfieldCity
 links_count=1
 link=151028836,1
+spawnPackage=11_dth_shadowfieldCity
+outerRadius=1
 
 [ENTRY]
 ID=151028845
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=58560.7,1039.83,63465
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_dth_shadowfieldCity
+outerRadius=1
 
 [ENTRY]
 ID=151028851
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=58701.8,976.512,63034
 Orient=0,0,0,1
 Scale=1,1,1
@@ -444,7 +369,6 @@ link=151028852,1
 [ENTRY]
 ID=151028852
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=58720.5,976.804,63122
 Orient=0,0,0,1
 Scale=1,1,1
@@ -455,7 +379,6 @@ link=151028853,1
 [ENTRY]
 ID=151028853
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=58789.7,976.804,63173
 Orient=0,0,0,1
 Scale=1,1,1
@@ -466,7 +389,6 @@ link=151028854,1
 [ENTRY]
 ID=151028854
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=58857.3,976.804,63167
 Orient=0,0,0,1
 Scale=1,1,1
@@ -477,7 +399,6 @@ link=151028855,1
 [ENTRY]
 ID=151028855
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=58829.5,976.626,63067
 Orient=0,0,0,1
 Scale=1,1,1
@@ -488,82 +409,80 @@ link=151028856,1
 [ENTRY]
 ID=151028860
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=58777.7,976.137,63241
 Orient=0,-0.685289,0,0.728271
 Scale=1,1,1
 spawnPackage=11_dth_shadowfieldCity
+outerRadius=1
 
 [ENTRY]
 ID=151028861
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=58799.2,976.883,63127
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_dth_shadowfieldCity
+outerRadius=10
 
 [ENTRY]
 ID=151028863
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=58850.2,977.576,63018
 Orient=0,0.999958,0,-0.00920336
 Scale=1,1,1
 spawnPackage=11_dth_shadowfieldCity
+outerRadius=1
 
 [ENTRY]
 ID=151028864
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=58934,976.883,63139
 Orient=0,-0.999942,0,0.0107962
 Scale=1,1,1
 spawnPackage=11_dth_shadowfieldCity
+outerRadius=1
 
 [ENTRY]
 ID=151028870
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=58668,976.883,63192
 Orient=0,0.593177,0,0.805072
 Scale=1,1,1
 spawnPackage=11_dth_shadowfieldCity
+outerRadius=1
 
 [ENTRY]
 ID=151028871
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=58999.3,995.852,63021
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_dth_shadowfieldCity
-wanderRadius=50
+outerRadius=10
 
 [ENTRY]
 ID=151028872
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=58586,976.425,63043
 Orient=0,0.677972,0,0.735088
 Scale=1,1,1
 spawnPackage=11_dth_shadowfieldCity
+outerRadius=1
 
 [ENTRY]
 ID=151028873
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=58903.4,976.883,63278
 Orient=0,-0.699716,0,0.714421
 Scale=1,1,1
-spawnPackage=11_dth_shadowfieldCity
 links_count=1
 link=151028874,1
+spawnPackage=11_dth_shadowfieldCity
+outerRadius=1
 
 [ENTRY]
 ID=151028874
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=58927.8,976.505,63417
 Orient=0,0,0,1
 Scale=1,1,1
@@ -574,7 +493,6 @@ link=151028875,1
 [ENTRY]
 ID=151028875
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=58997.2,977.109,63481
 Orient=0,0,0,1
 Scale=1,1,1
@@ -584,17 +502,15 @@ link=151028874,1
 [ENTRY]
 ID=151028876
 Asset=Manipulator-SpawnPoint
-Name=Untitled
-Pos=59096,977.111,63497.7
-Orient=-0.20846,0,0,0.978031
+Pos=59096,977.111,63461
+Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_dth_shadowfieldCity
-wanderRadius=50
+outerRadius=10
 
 [ENTRY]
 ID=151028882
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=58763.1,976.654,63006
 Orient=0,0,0,1
 Scale=1,1,1
@@ -605,7 +521,6 @@ link=151028883,1
 [ENTRY]
 ID=151028883
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=58737.7,976.654,63014
 Orient=0,0,0,1
 Scale=1,1,1
@@ -616,11 +531,11 @@ link=151028884,1
 [ENTRY]
 ID=151029033
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=58825,976.883,63226
 Orient=0,-0.770739,0,0.637152
 Scale=1,1,1
-spawnPackage=11_taskmasterGlutt
 links_count=1
 link=151027829,1
+spawnPackage=11_taskmasterGlutt
+outerRadius=1
 
