@@ -3324,10 +3324,11 @@ void ActiveInstance :: ScriptCallUse(int sourceCreatureID, int usedCreatureDefID
 	char buffer[64];
 	if(nutScriptPlayer != NULL) {
 		std::vector<ScriptCore::ScriptParam> p;
+		Util::SafeFormat(buffer, sizeof(buffer), "on_use_%d", usedCreatureDefID);
+		nutScriptPlayer->JumpToLabel(buffer, p);
 		p.push_back(ScriptCore::ScriptParam(sourceCreatureID));
 		p.push_back(ScriptCore::ScriptParam(usedCreatureDefID));
 		nutScriptPlayer->JumpToLabel("on_use", p);
-		Util::SafeFormat(buffer, sizeof(buffer), "on_use_%d", usedCreatureDefID);
 	}
 	else {
 		Util::SafeFormat(buffer, sizeof(buffer), "onUse_%d", usedCreatureDefID);
@@ -3340,11 +3341,11 @@ void ActiveInstance :: ScriptCallUseHalt(int sourceCreatureID, int usedCreatureD
 	char buffer[64];
 	if(nutScriptPlayer != NULL) {
 		std::vector<ScriptCore::ScriptParam> p;
+		Util::SafeFormat(buffer, sizeof(buffer), "on_use_halt_%d", usedCreatureDefID);
+		nutScriptPlayer->JumpToLabel(buffer, p);
 		p.push_back(ScriptCore::ScriptParam(sourceCreatureID));
 		p.push_back(ScriptCore::ScriptParam(usedCreatureDefID));
 		nutScriptPlayer->JumpToLabel("on_use_halt", p);
-
-		Util::SafeFormat(buffer, sizeof(buffer), "on_use_halt_%d", usedCreatureDefID);
 	}
 	else {
 		Util::SafeFormat(buffer, sizeof(buffer), "onUseHalt_%d", usedCreatureDefID);
@@ -3357,11 +3358,12 @@ void ActiveInstance :: ScriptCallUseFinish(int sourceCreatureID, int usedCreatur
 	char buffer[64];
 	if(nutScriptPlayer != NULL) {
 		std::vector<ScriptCore::ScriptParam> p;
+		Util::SafeFormat(buffer, sizeof(buffer), "on_use_finish_%d", usedCreatureDefID);
+		nutScriptPlayer->JumpToLabel(buffer, p);
 		p.push_back(ScriptCore::ScriptParam(sourceCreatureID));
 		p.push_back(ScriptCore::ScriptParam(usedCreatureDefID));
 		nutScriptPlayer->JumpToLabel("on_use_finish", p);
 
-		Util::SafeFormat(buffer, sizeof(buffer), "on_use_finish_%d", usedCreatureDefID);
 	}
 	else {
 		Util::SafeFormat(buffer, sizeof(buffer), "onUseFinish_%d", usedCreatureDefID);
@@ -3588,7 +3590,8 @@ void ActiveInstance :: LoadStaticObjects(const char *filename)
 			int y = lfr.BlockToIntC(2);
 			int z = lfr.BlockToIntC(3);
 			int facing = lfr.BlockToIntC(4);
-			SpawnGeneric(CDefID, x, y, z, facing, 0);
+			int flags = lfr.BlockLen[5] > 0 ? lfr.BlockToIntC(5) : 0;
+			SpawnGeneric(CDefID, x, y, z, facing, flags);
 		}
 	}
 	lfr.CloseCurrent();

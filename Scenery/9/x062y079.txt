@@ -92,7 +92,6 @@ Pos=46833.5,212.169,59471
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=3_bb04a_Gork_elderGoliath_h_k_25
-maxLeash=750
 links_count=1
 link=151055805,1
 

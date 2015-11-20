@@ -5817,7 +5817,6 @@ mEquipType=11
 mWeaponType=0
 app=Icon-32-C_Armor-Chest01.png
 app=Icon-32-C_Armor-Chest05.png
-app=Icon-32-C_Armor-Hands01.png
 app=Icon-32-L_Armor-Chest05.png
 app=Icon-32-M_Armor-Chest01.png
 
@@ -6939,7 +6938,7 @@ app=Icon-32-Armor-Arms04.png
 app=Icon-32-Armor-Arms06.png
 app=Icon-32-Armor-Arms08.png
 app=Icon-32-Armor-Arms09.png
-app=Icon-32-H_Armor-Hands02.png
+app=Icon-32-Armor-Arms09.png
 
 [ENTRY]
 asset=Armor-Heavy-Low2
@@ -7021,7 +7020,6 @@ app=Icon-32-Armor-Arms06.png
 app=Icon-32-Armor-Arms08.png
 app=Icon-32-Armor-Arms09.png
 app=Icon-32-Armor-Arms10.png
-app=Icon-32-C_Armor-Hands02.png
 
 [ENTRY]
 asset=Armor-Light-Low2
@@ -7110,7 +7108,6 @@ app=Icon-32-Armor-Arms06.png
 app=Icon-32-Armor-Arms07.png
 app=Icon-32-Armor-Arms08.png
 app=Icon-32-Armor-Arms09.png
-app=Icon-32-C_Armor-Hands01.png
 
 [ENTRY]
 asset=Armor-Light-Mid3
