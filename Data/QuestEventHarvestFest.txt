@@ -3,7 +3,7 @@
 [ENTRY]
 ID=590
 Title=The Harvest Fest!
-BodyText=Welcome to the Harvest Fest my friend! Each year we celebrate the fullness of nature's plenty with a large feast and of course have the annual Turkatrice hunt! The Turkatrice migrate through Europe at this time every year but they do not stay long! Anyone who hunts them may get Turkatrice legs - quite tasty when cooked! Turn in three of the legs at the Harvest Table and you can take gift of your choosing!
+BodyText=Welcome to the Harvest Fest my friend! Each year we celebrate the fullness of nature's plenty with a large feast and, of course, have the annual Turkatrice hunt! The Turkatrice migrate through Europe at this time every year, but they do not stay long! Anyone who hunts them may get Turkatrice legs - quite tasty when cooked! Turn in three of the legs at the Harvest Table and you can take a gift of your choosing!
 
 Everyone gets a gift for free as well! Just take one from my Harvest-Master Chest!
 
@@ -45,7 +45,7 @@ RewardItem.3=143569,1,0
 [ENTRY]
 ID=591
 Title=The Harvest Fest!
-BodyText=Welcome to the Harvest Fest my friend! Each year we celebrate the fullness of nature's plenty with a large feast and of course have the annual Turkatrice hunt! The Turkatrice migrate through Europe at this time every year but they do not stay long! Anyone who hunts them may get Turkatrice legs - quite tasty when cooked! Turn in three of the legs at the Harvest Table and you can take gift of your choosing!
+BodyText=Welcome to the Harvest Fest my friend! Each year we celebrate the fullness of nature's plenty with a large feast and, of course, have the annual Turkatrice hunt! The Turkatrice migrate through Europe at this time every year, but they do not stay long! Anyone who hunts them may get Turkatrice legs - quite tasty when cooked! Turn in three of the legs at the Harvest Table and you can take a gift of your choosing!
 
 Everyone gets a gift for free as well! Just take one from my Harvest-Master Chest!
 
@@ -85,7 +85,7 @@ RewardItem.3=143576,1,0
 [ENTRY]
 ID=592
 Title=The Harvest Fest!
-BodyText=Welcome to the Harvest Fest my friend! Each year we celebrate the fullness of nature's plenty with a large feast and of course have the annual Turkatrice hunt! The Turkatrice migrate through Europe at this time every year but they do not stay long! Anyone who hunts them may get Turkatrice legs - quite tasty when cooked! Turn in three of the legs at the Harvest Table and you can take gift of your choosing!
+BodyText=Welcome to the Harvest Fest my friend! Each year we celebrate the fullness of nature's plenty with a large feast and, of course, have the annual Turkatrice hunt! The Turkatrice migrate through Europe at this time every year, but they do not stay long! Anyone who hunts them may get Turkatrice legs - quite tasty when cooked! Turn in three of the legs at the Harvest Table and you can take a gift of your choosing!
 
 Everyone gets a gift for free as well! Just take one from my Harvest-Master Chest!
 
