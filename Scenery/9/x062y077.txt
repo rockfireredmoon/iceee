@@ -1,6 +1,7 @@
 [ENTRY]
 ID=150999285
 Asset=CL-Plains_Bush1#CL-Plains_Bush1
+Name=Untitled
 Pos=47241.9,189.188,58318
 Orient=0,-0.0948571,0,0.995491
 Scale=1,1,1
@@ -9,6 +10,7 @@ Flags=1
 [ENTRY]
 ID=151002228
 Asset=Prop-Henge-SarsenStone_Post2
+Name=Untitled
 Pos=47097.8,182.043,58319
 Orient=0,-0.352274,0,0.935897
 Scale=2.325,2.325,2.325
@@ -17,6 +19,7 @@ Flags=1
 [ENTRY]
 ID=151041150
 Asset=CL-RockStack3#CL-RockStack3
+Name=Untitled
 Pos=47184.1,189.496,58241
 Orient=0,-0.986844,0,-0.161676
 Scale=2.425,2.425,2.425
@@ -25,25 +28,27 @@ Flags=1
 [ENTRY]
 ID=151051278
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=46721.2,199.712,57904
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=3a_goliathcamps01_24_25
-outerRadius=20
 
 [ENTRY]
 ID=151051279
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=46587.9,193.502,57914
 Orient=0,-0.994576,0,-0.104015
 Scale=1,1,1
+spawnPackage=3a_goliathcamps01_24_25
 links_count=1
 link=151051284,1
-spawnPackage=3a_goliathcamps01_24_25
 
 [ENTRY]
 ID=151051280
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=46522.6,207.777,58464
 Orient=0,0.0649542,0,0.997888
 Scale=1,1,1
@@ -52,24 +57,25 @@ spawnPackage=3a_goliathcamps01_24_25
 [ENTRY]
 ID=151051282
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=46769.4,190.449,58330
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=3a_goliathcamps01_24_25
-outerRadius=30
 
 [ENTRY]
 ID=151051283
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=47040.3,207.652,58039
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=3a_goliathcamps01_24_25
-outerRadius=30
 
 [ENTRY]
 ID=151051299
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=46690.1,182.954,58496
 Orient=0,0,0,1
 Scale=1,1,1
@@ -79,6 +85,7 @@ link=151051297,1
 [ENTRY]
 ID=151051301
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=47073.8,197.276,58281
 Orient=0,0.908634,0,0.417594
 Scale=1,1,1
@@ -87,17 +94,19 @@ spawnPackage=3a_goliathcamps01_24_25
 [ENTRY]
 ID=151051325
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=47179,269.614,58370
 Orient=0,-0.413771,0,-0.910381
 Scale=1,1,1
+spawnPackage=3a_goliathcamps01_24_25
 links_count=1
 link=151051326,1
-spawnPackage=3a_goliathcamps01_24_25
 
 [ENTRY]
 ID=151055817
 Asset=Manipulator-PathNode
-Pos=47016.4,203.004,58173
+Name=Untitled
+Pos=47056.5,208.595,58130.2
 Orient=0,0,0,1
 Scale=2.125,2.125,2.125
 links_count=2

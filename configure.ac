@@ -94,7 +94,7 @@ dnl
 AM_CONDITIONAL([MINGW], [test x$mingw = xtrue])
 AM_CONDITIONAL([WINSERVICE], [test x$winservice = xtrue])
 
-AX_CXX_COMPILE_STDCXX_11([noext],[mandatory])
+#AX_CXX_COMPILE_STDCXX_11([noext],[mandatory])
 
 dnl
 dnl Compiler and link setup
