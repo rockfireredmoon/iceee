@@ -1,4 +1,5 @@
 [ENTRY]
+Title=Potion of The Feline's Form
 Description=Feral Transformation Potion
 PriceCurrency=CREDITS
 PriceCopper=0

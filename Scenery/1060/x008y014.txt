@@ -2,7 +2,7 @@
 ID=1130846
 Asset=Earthrise Forest?d=1&s=7&sz=500
 Name=Untitled
-Pos=16287.1,1468.5,28174.3
+Pos=16287.1,1468.5,27729.1
 Orient=0,0,0,1
 Scale=1,1,1
 
@@ -33,9 +33,337 @@ Scale=4,4,4
 [ENTRY]
 ID=1131886
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
-Pos=16942.7,1361.81,27280.2
+Name=Untitled
+Pos=16914.7,1361.81,27306.3
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#F3
+spawnPackage=#2050, #2051
+
+[ENTRY]
+ID=1132203
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=17122.2,1347.25,27478.1
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#2050, #2051
+
+[ENTRY]
+ID=1132204
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=16643.1,1329.18,27106.9
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#2050, #2051
+
+[ENTRY]
+ID=1132205
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=17017.2,1236.44,27038.1
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#2050,#2051
+
+[ENTRY]
+ID=1132325
+Asset=Prop-Vespin_Hive
+Name=
+Pos=16482.6,1504.81,27859.2
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
+ID=1132328
+Asset=Prop-NewVespin_Great_Hive1
+Name=
+Pos=16273.7,1416.35,28130.8
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
+ID=1132329
+Asset=Prop-Vespin_Hive
+Name=
+Pos=16516.3,1451.76,28211.9
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
+ID=1132330
+Asset=Prop-Vespin_Hive
+Name=
+Pos=16520.8,1481.94,28092.7
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
+ID=1132331
+Asset=Prop-Vespin_Hive
+Name=
+Pos=16202,1382.85,28360.7
+Orient=0.169182,0,0,0.985585
+Scale=1,1,1
+
+[ENTRY]
+ID=1132332
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=16652.7,1423.84,28218.3
+Orient=0,-0.183947,0,0.982936
+Scale=1,1,1
+spawnPackage=#2010, #2011
+
+[ENTRY]
+ID=1132333
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=16508.8,1375.29,28393.7
+Orient=0,-0.9001,0,0.435682
+Scale=1,1,1
+spawnPackage=#2010, #2011
+
+[ENTRY]
+ID=1132334
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=16355.1,1386.69,28385.1
+Orient=0,-0.461779,0,0.886995
+Scale=1,1,1
+spawnPackage=#2010, #2011
+
+[ENTRY]
+ID=1132335
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=16595,1370.46,28430.2
+Orient=0,-0.822049,0,0.569417
+Scale=1,1,1
+spawnPackage=#2010, #2011
+
+[ENTRY]
+ID=1132336
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=16706.4,1400.62,28314.3
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#2010, #2011
+
+[ENTRY]
+ID=1132337
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=16701.5,1463.72,28078.9
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#2010, #2011
+
+[ENTRY]
+ID=1132338
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=16732.8,1369.4,28480.5
+Orient=0,-0.556361,0,0.830941
+Scale=1,1,1
+spawnPackage=#2010, #2011
+
+[ENTRY]
+ID=1132339
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=16898,1416.04,28361.8
+Orient=0,-0.628793,0,0.777573
+Scale=1,1,1
+spawnPackage=#2010, #2011
+
+[ENTRY]
+ID=1132340
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=17088,1485.93,28409.5
+Orient=0,0.977865,0,0.209239
+Scale=1,1,1
+spawnPackage=#2010, #2011
+
+[ENTRY]
+ID=1132341
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=16912.5,1533.85,28003.6
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#2010, #2011
+
+[ENTRY]
+ID=1132342
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=17001.6,1516.63,28088.9
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#2010, #2011
+
+[ENTRY]
+ID=1132343
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=16176.7,1473.75,27925
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#2010, #2011
+
+[ENTRY]
+ID=1132344
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=16184.1,1466.84,27742.5
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#2010, #2011
+
+[ENTRY]
+ID=1132345
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=16461.1,1498.47,27896.9
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#2010, #2011
+
+[ENTRY]
+ID=1132346
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=16492.9,1526.58,27713.6
+Orient=0,-0.971527,0,-0.236929
+Scale=1,1,1
+spawnPackage=#2010, #2011
+
+[ENTRY]
+ID=1132347
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=16742.6,1568.28,27695.7
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#2010, #2011
+
+[ENTRY]
+ID=1132348
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=16871.8,1555.84,27794.7
+Orient=0,-0.996457,0,-0.0841042
+Scale=1,1,1
+spawnPackage=#2010, #2011
+
+[ENTRY]
+ID=1132349
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=17003.1,1571.09,27889.5
+Orient=0,-0.977146,0,-0.212569
+Scale=1,1,1
+spawnPackage=#2010, #2011
+
+[ENTRY]
+ID=1132352
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=16103.7,1376.66,28335.8
+Orient=0,-0.42141,0,0.90687
+Scale=1,1,1
+spawnPackage=#2010, #2011
+
+[ENTRY]
+ID=1132353
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=16238.7,1318,28599.7
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#2010, #2011
+
+[ENTRY]
+ID=1132354
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=16508.1,1273.96,28623.8
+Orient=0,-0.457338,0,0.889293
+Scale=1,1,1
+spawnPackage=#2010, #2011
+
+[ENTRY]
+ID=1132355
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=16649,1291.65,28671.8
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#2010, #2011
+
+[ENTRY]
+ID=1132356
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=16880,1339.29,28612.8
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#2010, #2011
+
+[ENTRY]
+ID=1132357
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=16424.4,1532.05,27383
+Orient=0,-0.352274,0,0.935897
+Scale=1,1,1
+spawnPackage=#2010, #2011
+
+[ENTRY]
+ID=1132358
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=16599.6,1542.99,27497.5
+Orient=0,-0.819192,0,0.57352
+Scale=1,1,1
+spawnPackage=#2010, #2011
+
+[ENTRY]
+ID=1132359
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=15951.5,1372.4,27832.6
+Orient=0,-0.66687,0,0.745174
+Scale=1,1,1
+spawnPackage=#2010, #2011
+
+[ENTRY]
+ID=1132360
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=15966.8,1395.96,27610.6
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#2010, #2011
+
+[ENTRY]
+ID=1132361
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=16390,1473.4,27111.8
+Orient=0,-0.767543,0,0.640997
+Scale=1,1,1
+spawnPackage=#2010, #2011
+
+[ENTRY]
+ID=1132362
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=16465.6,1498.54,28111.3
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#2012
 

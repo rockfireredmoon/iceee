@@ -254,7 +254,7 @@ Pos=21041.7,1572.52,28044.4
 Orient=0,-0.930216,0,0.367013
 Scale=1,1,1
 spawnPackage=#F3183
-aiModule=Bastion_NPC_CatapultFiringAnimation
+aiModule=Bastion_NPC_CatapultFiringAnimation(3397)
 
 [ENTRY]
 ID=1130995
@@ -264,7 +264,7 @@ Pos=21012.1,1561.65,27961.3
 Orient=0,-0.928369,0,0.37166
 Scale=1,1,1
 spawnPackage=#F3183
-aiModule=Bastion_NPC_CatapultFiringAnimation
+aiModule=Bastion_NPC_CatapultFiringAnimation(3397)
 
 [ENTRY]
 ID=1130996
@@ -314,7 +314,7 @@ Pos=20259.4,1502.94,28763.2
 Orient=0,0.366273,0,0.930508
 Scale=1,1,1
 spawnPackage=#F3396
-aiModule=Bastion_NPC_CatapultFiringAnimation
+aiModule=Bastion_NPC_CatapultFiringAnimation(3397)
 
 [ENTRY]
 ID=1131005
@@ -324,7 +324,7 @@ Pos=20216.4,1500.73,28692.7
 Orient=0,0.338197,0,0.941076
 Scale=1,1,1
 spawnPackage=#E3396
-aiModule=Bastion_NPC_CatapultFiringAnimation
+aiModule=Bastion_NPC_CatapultFiringAnimation(3397)
 
 [ENTRY]
 ID=1131006
@@ -417,4 +417,139 @@ Name=Untitled
 Pos=21089.6,1591.5,27156.9
 Orient=0,0,0,1
 Scale=1,1,1
+
+[ENTRY]
+ID=1132383
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=Untitled
+Pos=19340.3,1687.33,27131.1
+Orient=0,0.747971,0,0.663731
+Scale=1,1,1
+spawnPackage=#2047
+
+[ENTRY]
+ID=1132385
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=Untitled
+Pos=19220.1,1634.88,26951.7
+Orient=0,-0.999983,0,0.00579636
+Scale=1,1,1
+spawnPackage=#2047
+
+[ENTRY]
+ID=1132388
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=Untitled
+Pos=19247.2,1767.49,27298.2
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#2047
+
+[ENTRY]
+ID=1132477
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=21102.2,1696.07,27683.9
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#F1980, #F1983
+links_count=1
+link=1132498,1
+
+[ENTRY]
+ID=1132478
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=21111.2,1648.6,27390.4
+Orient=0,0.995881,0,0.0906716
+Scale=1,1,1
+spawnPackage=#F1980, #F1983
+
+[ENTRY]
+ID=1132479
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=21089.6,1646.67,27449.4
+Orient=0,0.987888,0,0.155167
+Scale=1,1,1
+spawnPackage=#F1980, #F1983
+
+[ENTRY]
+ID=1132480
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=20877.1,1558.53,27793.6
+Orient=0,0.744643,0,0.667463
+Scale=1,1,1
+spawnPackage=#F1980, #F1983
+
+[ENTRY]
+ID=1132481
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=20938.4,1573.92,27765.9
+Orient=0,0.819192,0,0.57352
+Scale=1,1,1
+spawnPackage=#F1980, #F1983
+
+[ENTRY]
+ID=1132482
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=21109.4,1574.53,28010.2
+Orient=0,-0.926499,0,0.376297
+Scale=1,1,1
+spawnPackage=#F1980, #F1983
+
+[ENTRY]
+ID=1132483
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=20973.3,1560,27900
+Orient=0,0.796565,0,-0.604552
+Scale=1,1,1
+spawnPackage=#F1980, #F1983
+
+[ENTRY]
+ID=1132487
+Asset=Manipulator#Manipulator-PathNode
+Name=
+Pos=21022.4,1622.61,27391.5
+Orient=0,0,0,1
+Scale=1,1,1
+links_count=1
+link=1132497,1
+
+[ENTRY]
+ID=1132495
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=21117.5,1696.63,27710.1
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#F1980, #F1983
+links_count=1
+link=1132498,1
+
+[ENTRY]
+ID=1132496
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=21106.6,1696.61,27651.2
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#F1980, #F1983
+links_count=1
+link=1132498,1
+
+[ENTRY]
+ID=1132497
+Asset=Manipulator#Manipulator-PathNode
+Name=
+Pos=21119.2,1657.12,27429.6
+Orient=0,0,0,1
+Scale=1,1,1
+links_count=2
+link=1132486,1
+link=1132487,1
 

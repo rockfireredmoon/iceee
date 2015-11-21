@@ -1,4 +1,5 @@
 [ENTRY]
+Title=Journeyman's Tome
 Description=Gain quest experience faster
 PriceCurrency=CREDITS
 PriceCopper=0

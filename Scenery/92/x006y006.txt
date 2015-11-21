@@ -229,16 +229,6 @@ Orient=-0.233384,0.0178344,-0.171289,-0.957013
 Scale=0.875,0.875,0.875
 
 [ENTRY]
-ID=1028408
-Asset=Manipulator-SpawnPoint
-Name=Untitled
-Pos=11526.3,677.8,12808.6
-Orient=0,0,0,1
-Scale=1,1,1
-spawnName=Target
-spawnPackage=#E3397
-
-[ENTRY]
 ID=1028409
 Asset=Manipulator-SpawnPoint
 Name=Untitled

@@ -6,12 +6,11 @@ Pos=44471.7,224.429,65144.1
 Orient=0,-0.25708,0,0.96639
 Scale=1,1,1
 spawnPackage=#F7779
-maxActive=0
 
 [ENTRY]
 ID=1130299
 Asset=Prop-Loot1#Prop-Loot-Crate1
-Name=
+Name=Untitled
 Pos=44094.7,193.862,65727.2
 Orient=0,-0.543835,0,0.839192
 Scale=1,1,1

@@ -1,4 +1,13 @@
 [ENTRY]
+ID=1129657
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=Untitled
+Pos=17861.8,1181.41,19400.1
+Orient=0,0.814341,0,-0.580387
+Scale=0.9,0.9,0.9
+spawnPackage=#F3257
+
+[ENTRY]
 ID=1129708
 Asset=Bldg-Desert#Bldg-Desert-Facade-Small2?ATS=ATS-Spanish
 Name=Untitled
@@ -941,4 +950,13 @@ Orient=0,0,0,1
 Scale=1,1,1
 links_count=1
 link=1130573,1
+
+[ENTRY]
+ID=1132584
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=18011.3,1600.14,20706
+Orient=0,-0.958016,0,0.286715
+Scale=1,1,1
+spawnPackage=#F2115
 
