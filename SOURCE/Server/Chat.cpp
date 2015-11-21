@@ -325,7 +325,7 @@ bool ChatManager ::SendChatMessage(ChatMessage &message, CreatureInstance *sendi
 	PutShort(&SendBuf[1], wpos - 3);     //Set size
 
 	bool found = false;
-	bool log = message.mChannel->chatScope == CHAT_SCOPE_REGION || message.mChannel->chatScope == CHAT_SCOPE_SERVER;
+	bool log = !message.mTell && ( message.mChannel->chatScope == CHAT_SCOPE_REGION || message.mChannel->chatScope == CHAT_SCOPE_SERVER );
 
 	bool breakLoop = false;
 	SIMULATOR_IT it;

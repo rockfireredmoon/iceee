@@ -1078,12 +1078,38 @@ void SpawnManager :: RunGarbageCheck(TILELIST_CONT &activeTileList)
 				bFound = true;
 				break;
 			}
+
 		}
+
 		if(bFound == false)
 		{
-			//g_Log.AddMessageFormat("[DEBUG] Removing inactive spawn tile: %d, %d", it->TileX, it->TileY);
-			it->RemoveAllAttachedCreature(actInst);
-			spawnTiles.erase(it++);
+			//
+			// For creatures that patrol, we need to look at their actual location, not
+			// their spawners location. Take 'Gork' as an example. His patrol is large. If the
+			// player follows him away from his spawn point, when he crosses over to another
+			// tile, and the player is also not in the same tile as the spawner, then the
+			// tile will erased
+			//
+			for(std::vector<int>::iterator it2 = it->attachedCreatureID.begin(); !bFound && it2 != it->attachedCreatureID.end(); ++it2) {
+				CreatureInstance *creatureInstance = actInst->GetNPCInstanceByCID(*it2);
+				if(creatureInstance != NULL) {
+					int tileX = creatureInstance->CurrentX / SpawnTile::SPAWN_TILE_SIZE;
+					int tileY = creatureInstance->CurrentZ / SpawnTile::SPAWN_TILE_SIZE;
+					for(size_t i = 0; !bFound && i < activeTileList.size(); i++) {
+						if(activeTileList[i].first == tileX && activeTileList[i].second == tileY)
+							bFound = true;
+					}
+				}
+			}
+
+			if(bFound == false) {
+				//g_Log.AddMessageFormat("[DEBUG] Removing inactive spawn tile: %d, %d", it->TileX, it->TileY);
+				it->RemoveAllAttachedCreature(actInst);
+				spawnTiles.erase(it++);
+			}
+			else {
+				it++;
+			}
 		}
 		else
 		{

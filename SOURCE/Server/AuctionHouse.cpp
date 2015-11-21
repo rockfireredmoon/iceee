@@ -292,19 +292,27 @@ void AuctionTimerTask::run() {
 		g_AuctionHouseManager.cs.Leave();
 	}
 	else {
-		// Broadcast
-		int wpos2 = 0;
-		wpos2 += PutByte(&buf[wpos2], 97);
-		wpos2 += PutShort(&buf[wpos2], 0);
-		wpos2 += PutByte(&buf[wpos2], 3);
-		Util::SafeFormat(buf2, sizeof(buf2), "%d", mItem->mAuctioneer);
-		wpos2 += PutStringUTF(&buf[wpos2], buf2);
-		Util::SafeFormat(buf2, sizeof(buf2), "%d", mItem->mId);
-		wpos2 += PutStringUTF(&buf[wpos2], buf2);
-		PutShort(&buf[1], wpos2 - 3);
 		g_AuctionHouseManager.RemoveItem(mItem->mId);
 		g_AuctionHouseManager.cs.Leave();
-		g_SimulatorManager.SendToAllSimulators(buf, wpos2, NULL);
+
+		/* Find the active auctioneer instance. If there isn't one, then nobody can be standing at an auction house,
+		 * so there is no need to broadcast the change
+		 */
+		CreatureInstance *instance = g_ActiveInstanceManager.GetPlayerCreatureByDefID(mItem->mAuctioneer);
+		if(instance != NULL) {
+
+			// Broadcast
+			int wpos2 = 0;
+			wpos2 += PutByte(&buf[wpos2], 97);
+			wpos2 += PutShort(&buf[wpos2], 0);
+			wpos2 += PutByte(&buf[wpos2], 3);
+			Util::SafeFormat(buf2, sizeof(buf2), "%d", mItem->mAuctioneer);
+			wpos2 += PutStringUTF(&buf[wpos2], buf2);
+			Util::SafeFormat(buf2, sizeof(buf2), "%d", mItem->mId);
+			wpos2 += PutStringUTF(&buf[wpos2], buf2);
+			PutShort(&buf[1], wpos2 - 3);
+			g_SimulatorManager.SendToAllSimulators(buf, wpos2, NULL);
+		}
 	}
 
 }
@@ -329,6 +337,7 @@ AuctionHouseItem::AuctionHouseItem() {
 	mAuctioneer = 0;
 	itemDef = NULL;
 	mSellerName = "";
+	timerTask = NULL;
 }
 
 AuctionHouseItem::~AuctionHouseItem() {
@@ -575,8 +584,11 @@ AuctionHouseItem * AuctionHouseManager::LoadItem(int id) {
 	mItems[id] = item;
 	cs.Leave();
 
-	if(!item->IsExpired())
-		g_TimerManager.AddTask(new AuctionTimerTask(item));
+	if(!item->IsExpired()) {
+		AuctionTimerTask *tt = new AuctionTimerTask(item);
+		item->timerTask = tt;
+		g_TimerManager.AddTask(tt);
+	}
 
 	return item;
 }
@@ -589,8 +601,16 @@ bool AuctionHouseManager::RemoveItem(int id) {
 		return false;
 	}
 	cs.Enter("AuctionHouseManager::RemoveItem");
+
+
 	std::map<int, AuctionHouseItem*>::iterator it = mItems.find(id);
 	if (it != mItems.end()) {
+		if(it->second->timerTask != NULL) {
+			it->second->timerTask->cancel();
+			delete it->second->timerTask;
+		}
+
+
 		delete it->second;
 		mItems.erase(it);
 	}

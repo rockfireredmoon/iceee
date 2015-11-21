@@ -152,6 +152,7 @@ find . -name '*.jpeg' | cpio -updm "${SCRATCH}/content"
 find . -name '*.png' | cpio -updm "${SCRATCH}/content"
 find . -name '*.material' | cpio -updm "${SCRATCH}/content"
 find . -name '*.overlay' | cpio -updm "${SCRATCH}/content"
+find . -name '*.fontdef' | cpio -updm "${SCRATCH}/content"
 popd
 
 MAJOR_ICEEE_VERSION=ICE1

@@ -83,6 +83,7 @@ public:
 	// Transient
 	ItemDef *itemDef;
 	std::string mSellerName;
+	TimerTask *timerTask;
 
 	unsigned long GetTimeRemaining();
 	bool IsExpired();
