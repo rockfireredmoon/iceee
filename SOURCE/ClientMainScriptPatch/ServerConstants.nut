@@ -1435,6 +1435,12 @@ this.Stat <- {
 		type = "short",
 		name = "drop_gain_rate",
 		prettyName = "Treasure Gain Rate"
+	},
+	TAGS = 164,
+	[164] = {
+		type = "string",
+		name = "tags",
+		prettyName = "Tags"
 	}
 };
 this.StatusEffects <- {

@@ -33,6 +33,7 @@ public:
 	int mTaskId;
 
 	virtual void run() =0;
+	void cancel();
 };
 
 class TimerManager

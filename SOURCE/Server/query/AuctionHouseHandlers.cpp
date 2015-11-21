@@ -81,12 +81,11 @@ int AuctionHouseContentsHandler::handleQuery(SimulatorThread *sim,
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 				"Invalid query.");
 
-	int auctioneerId = query->GetInteger(0);
 	int itemTypeID = query->GetInteger(1);
 	int qualityID = query->GetInteger(2);
 
 	CreatureInstance *auctioneerInstance =
-			creatureInstance->actInst->GetNPCInstanceByCID(auctioneerId);
+			creatureInstance->actInst->GetNPCInstanceByCID(query->GetInteger(0));
 	if (auctioneerInstance == NULL) {
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 				"Unknown auctioneer.");
@@ -124,7 +123,7 @@ int AuctionHouseContentsHandler::handleQuery(SimulatorThread *sim,
 					it->second->mItemId);
 		} else {
 			bool isForAuctioneer = it->second->mAuctioneer == 0
-					|| auctioneerId == it->second->mAuctioneer;
+					|| auctioneerInstance->CreatureDefID == it->second->mAuctioneer;
 			bool isOfType = itemTypeID == -1
 					|| itemTypeID == it->second->itemDef->mType;
 			bool isOfQuality = qualityID == -1
@@ -163,10 +162,8 @@ int AuctionHouseAuctionHandler::handleQuery(SimulatorThread *sim,
 	InventorySlot slot =
 			pld->charPtr->inventory.containerList[AUCTION_CONTAINER][0];
 
-	int auctioneer = atoi(query->GetString(0));
-
 	CreatureInstance *auctioneerInstance =
-			creatureInstance->actInst->GetNPCInstanceByCID(auctioneer);
+			creatureInstance->actInst->GetNPCInstanceByCID(atoi(query->GetString(0)));
 	if (auctioneerInstance == NULL)
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 				"Unknown auctioneer.");
@@ -254,7 +251,7 @@ int AuctionHouseAuctionHandler::handleQuery(SimulatorThread *sim,
 
 	AuctionHouseItem *ahItem = new AuctionHouseItem();
 	ahItem->mId = g_AuctionHouseManager.nextAuctionHouseItemID++;
-	ahItem->mAuctioneer = auctioneer;
+	ahItem->mAuctioneer = auctioneerInstance->CreatureDefID;
 	ahItem->mReserveCopper = reserveCopper;
 	ahItem->mReserveCredits = reserveCredits;
 	ahItem->mBuyItNowCopper = buyItNowCopper;
@@ -270,7 +267,9 @@ int AuctionHouseAuctionHandler::handleQuery(SimulatorThread *sim,
 	SessionVarsChangeData.AddChange();
 
 	g_AuctionHouseManager.SaveItem(ahItem);
-	g_TimerManager.AddTask(new AuctionTimerTask(ahItem));
+	AuctionTimerTask *tt = new AuctionTimerTask(ahItem);
+	ahItem->timerTask = tt;
+	g_TimerManager.AddTask(tt);
 
 	int wpos = PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
 	wpos += pld->charPtr->inventory.RemoveItemsAndUpdate(AUCTION_CONTAINER,
@@ -281,7 +280,7 @@ int AuctionHouseAuctionHandler::handleQuery(SimulatorThread *sim,
 	wpos2 += PutByte(&sim->Aux2[wpos2], 97);
 	wpos2 += PutShort(&sim->Aux2[wpos2], 0);
 	wpos2 += PutByte(&sim->Aux2[wpos2], 1);
-	Util::SafeFormat(sim->Aux3, sizeof(sim->Aux3), "%d", auctioneer);
+	Util::SafeFormat(sim->Aux3, sizeof(sim->Aux3), "%d", auctioneerInstance->CreatureID);
 	wpos2 += PutStringUTF(&sim->Aux2[wpos2], sim->Aux3);
 	wpos2 += WriteAuctionItem(&sim->Aux2[wpos2], sim->Aux3, ahItem);
 	PutShort(&sim->Aux2[1], wpos2 - 3);
@@ -309,10 +308,17 @@ int AuctionHouseBidHandler::handleQuery(SimulatorThread *sim,
 		CharacterServerData *pld, SimulatorQuery *query,
 		CreatureInstance *creatureInstance) {
 
-	int auctioneer = atoi(query->GetString(0));
 	unsigned long copper = atol(query->GetString(1));
 	unsigned long credits = atol(query->GetString(2));
 	int auctionId = atoi(query->GetString(3));
+
+	CreatureInstance *auctioneerInstance =
+			creatureInstance->actInst->GetNPCInstanceByCID(atoi(query->GetString(0)));
+	if (auctioneerInstance == NULL) {
+		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+				"Unknown auctioneer.");
+	}
+
 
 	g_AuctionHouseManager.cs.Enter("AuctionHouseBidHandler::handleQuery");
 	if (g_AuctionHouseManager.mItems.find(auctionId)
@@ -323,7 +329,7 @@ int AuctionHouseBidHandler::handleQuery(SimulatorThread *sim,
 	}
 
 	AuctionHouseItem *item = g_AuctionHouseManager.mItems[auctionId];
-	if (item->mAuctioneer != 0 && item->mAuctioneer != auctioneer) {
+	if (item->mAuctioneer != 0 && item->mAuctioneer != auctioneerInstance->CreatureDefID) {
 		g_AuctionHouseManager.cs.Leave();
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 				"Incorrect auctioneer.");
@@ -351,7 +357,7 @@ int AuctionHouseBidHandler::handleQuery(SimulatorThread *sim,
 	wpos2 += PutByte(&sim->Aux2[wpos2], 97);
 	wpos2 += PutShort(&sim->Aux2[wpos2], 0);
 	wpos2 += PutByte(&sim->Aux2[wpos2], 2);
-	Util::SafeFormat(sim->Aux3, sizeof(sim->Aux3), "%d", auctioneer);
+	Util::SafeFormat(sim->Aux3, sizeof(sim->Aux3), "%d", auctioneerInstance->CreatureID);
 	wpos2 += PutStringUTF(&sim->Aux2[wpos2], sim->Aux3);
 	Util::SafeFormat(sim->Aux3, sizeof(sim->Aux3), "%d", item->mId);
 	wpos2 += PutStringUTF(&sim->Aux2[wpos2], sim->Aux3);
@@ -379,7 +385,6 @@ int AuctionHouseBuyHandler::handleQuery(SimulatorThread *sim,
 		CharacterServerData *pld, SimulatorQuery *query,
 		CreatureInstance *creatureInstance) {
 
-	int auctioneer = atoi(query->GetString(0));
 	int auctionId = atoi(query->GetString(1));
 
 	g_AuctionHouseManager.cs.Enter("AuctionHouseBuyHandler::handleQuery");
@@ -391,7 +396,7 @@ int AuctionHouseBuyHandler::handleQuery(SimulatorThread *sim,
 	}
 
 	CreatureInstance *auctioneerInstance =
-			creatureInstance->actInst->GetNPCInstanceByCID(auctioneer);
+			creatureInstance->actInst->GetNPCInstanceByCID(atoi(query->GetString(0)));
 	if (auctioneerInstance == NULL) {
 		g_AuctionHouseManager.cs.Leave();
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
@@ -399,7 +404,7 @@ int AuctionHouseBuyHandler::handleQuery(SimulatorThread *sim,
 	}
 
 	AuctionHouseItem *item = g_AuctionHouseManager.mItems[auctionId];
-	if (item->mAuctioneer != 0 && item->mAuctioneer != auctioneer) {
+	if (item->mAuctioneer != 0 && item->mAuctioneer != auctioneerInstance->CreatureDefID) {
 		g_AuctionHouseManager.cs.Leave();
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 				"Incorrect auctioneer.");
@@ -462,7 +467,7 @@ int AuctionHouseBuyHandler::handleQuery(SimulatorThread *sim,
 	wpos2 += PutByte(&sim->Aux2[wpos2], 97);
 	wpos2 += PutShort(&sim->Aux2[wpos2], 0);
 	wpos2 += PutByte(&sim->Aux2[wpos2], 3);
-	Util::SafeFormat(sim->Aux3, sizeof(sim->Aux3), "%d", auctioneer);
+	Util::SafeFormat(sim->Aux3, sizeof(sim->Aux3), "%d", auctioneerInstance->CreatureID);
 	wpos2 += PutStringUTF(&sim->Aux2[wpos2], sim->Aux3);
 	Util::SafeFormat(sim->Aux3, sizeof(sim->Aux3), "%d", item->mId);
 	wpos2 += PutStringUTF(&sim->Aux2[wpos2], sim->Aux3);

@@ -33,6 +33,10 @@ TimerTask::TimerTask() {
 TimerTask::~TimerTask() {
 }
 
+void TimerTask::cancel() {
+
+}
+
 //
 // TimerManager
 //

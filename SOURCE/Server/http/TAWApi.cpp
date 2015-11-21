@@ -1134,16 +1134,35 @@ bool AuctionHandler::handleAuthenticatedGet(CivetServer *server,
 		Json::StyledWriter writer;
 		Json::Value root(Json::arrayValue);
 		for(std::vector<int>::iterator it = auctioneers.begin(); it != auctioneers.end(); ++it) {
-			root.append(*it);
+			CreatureDefinition *def = CreatureDef.GetPointerByCDef(*it);
+			if(def != NULL) {
+				Json::Value c;
+				def->WriteToJSON(c);
+				root.append(c);
+			}
 		}
 		writeJSON200(server, conn, writer.write(root));
 	} else {
 		int id = atoi(pathParts[pathParts.size() - 1].c_str());
+		if(id == 0) {
+			std::string an = pathParts[pathParts.size() - 1];
+			Util::URLDecode(an);
+			CreatureDefinition *def = CreatureDef.GetPointerByName(an.c_str());
+			if(def != NULL) {
+				id = def->CreatureDefID;
+			}
+		}
 		g_AuctionHouseManager.cs.Enter("AuctionHandler::handleAuthenticatedGet");
 		for(std::map<int, AuctionHouseItem*>::iterator it = g_AuctionHouseManager.mItems.begin(); it != g_AuctionHouseManager.mItems.end(); ++it) {
 			if(it->second->mAuctioneer == id) {
 				Json::Value item;
 				it->second->WriteToJSON(item);
+				ItemDef *itemDef = g_ItemManager.GetSafePointerByID(it->second->mItemId);
+				if(itemDef != NULL) {
+					Json::Value ij;
+					itemDef->WriteToJSON(ij);
+					item["item"] = ij;
+				}
 				Util::SafeFormat(buf, sizeof(buf),"%d", it->first);
 				root[buf] = item;
 			}

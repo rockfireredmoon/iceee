@@ -2375,6 +2375,8 @@ class this.SceneObject extends this.MessageBroadcaster
 	mIsSunVisible = true;
 	mShowName = null;
 	mNameBoard = null;
+	mTagBoard = null;
+	mTagIcon = null;
 	mShowHeadLight = false;
 	mHeadLight = null;
 	mStatusEffects = null;
@@ -5050,6 +5052,18 @@ class this.SceneObject extends this.MessageBroadcaster
 		{
 			this.mNameBoard.setLineHeight(h);
 		}
+		
+		if(this.mTagBoard != null) 
+		{
+			if (this.mNamePlateScale)
+			{
+				this.mTagBoard.setLineHeight(h * this.mNamePlateScale);
+			}
+			else
+			{
+				this.mTagBoard.setLineHeight(h);
+			}
+		}
 	}
 
 	function isAlwaysVisible()
@@ -6799,6 +6813,31 @@ class this.SceneObject extends this.MessageBroadcaster
 				}
 			}
 		}
+		else if (statId == this.Stat.TAGS)
+		{
+			_positionName();
+		}
+	}
+	
+	function updateTags(tagstring) {
+		local tags = this.Util.split(tagstring, "|");
+		local tagStr = "";
+		foreach(t in tags) {
+			if(tagStr.len() > 0) {
+				tagStr = tagStr + "\n";
+			}
+			tagStr = tagStr + t;			
+		}
+		this.mTagBoard.setText(tagStr);
+	}
+	
+	function updateTagBoardColor()
+	{
+		if (this.mTagBoard)
+		{
+			this.mTagBoard.setColorTop(this.Color(1.0, 0.7, 0.3, 1.0));
+			this.mTagBoard.setColorBottom(this.Color(1.0, 0.7, 0.3, 1.0));
+		}
 	}
 
 	function updateNameBoardColor()
@@ -7396,6 +7435,12 @@ class this.SceneObject extends this.MessageBroadcaster
 					this.mNameBoard.destroy();
 					this.mNameBoard = null;
 				}
+				
+				if(this.mTagBoard)
+				{
+					this.mTagBoard.destroy();
+					this.mTagBoard = null;
+				}
 			}
 
 			if (this.mNameBoard == null && showNameboard)
@@ -7430,12 +7475,59 @@ class this.SceneObject extends this.MessageBroadcaster
 			{
 				this.mNameBoard.setVisibilityFlags(::_UIVisible == true ? this.VisibilityFlags.ANY | this.VisibilityFlags.FEEDBACK : 0);
 			}
+			
+			local tags = this.getStat(this.Stat.TAGS);
+			if (this.mTagBoard == null && showNameboard && tags != "")
+			{
+				_create_tag_board(tags);
+			}
+			else if (!showNameboard || tags == "")
+			{
+				if (this.mTagBoard)
+				{
+					this.mTagBoard.destroy();
+					this.mTagBoard = null;
+				}
+			}
+			else if (showNameboard && tags != "" && mTagBoard)
+			{
+				updateTags(tags);
+			}
+			
+			if (this.mTagBoard)
+			{
+				this.mTagBoard.setVisibilityFlags(::_UIVisible == true ? this.VisibilityFlags.ANY | this.VisibilityFlags.FEEDBACK : 0);
+			}
+			
 		}
 		else if (this.mNameBoard)
 		{
 			this.mNameBoard.destroy();
 			this.mNameBoard = null;
+			
+			if(this.mTagBoard) 
+			{
+				this.mTagBoard.destroy();
+				this.mTagBoard = null;
+			}
 		}
+	}
+	
+	function _create_tag_board(tags) {
+		local scale = this.mNamePlateScale == null ? 1.0 : this.mNamePlateScale;
+		this.mTagBoard = this._scene.createTextBoard(this.getNodeName() + "/TagBoard", "Impact_16", 2 * scale, "");
+		this.mNode.attachObject(this.mTagBoard);
+		this.mTagBoard.setYOffset(this.getNamePlatePosition().y + 3);
+		this.mTagBoard.setVisibilityFlags(this.VisibilityFlags.ANY | this.VisibilityFlags.FEEDBACK);
+		this.updateTagBoardColor();
+		
+		
+		this.mTagIcon = this._scene.createDecal("BuildTool/Compass", "BuildCompass", 15.0, 15.0);
+		this.mTagIcon.setVisibilityFlags(this.VisibilityFlags.ANY | this.VisibilityFlags.FEEDBACK);
+		this.mNode.attachObject(this.mTagIcon);
+		
+		
+		updateTags(tags);
 	}
 
 	function cue( visual, ... )

@@ -199,6 +199,7 @@ StatDefinition StatList[] =
 	{STAT::HEROISM_GAIN_RATE           , StatType::SHORT,    "short",  "heroism_gain_rate",     "Heroism Gain Rate",  NULL, 0, msizeof(CharacterStatSet, heroism_gain_rate), offsetof(CharacterStatSet, heroism_gain_rate), SUT_All },
 	{STAT::QUEST_EXP_GAIN_RATE         , StatType::SHORT,    "short",  "quest_exp_gain_rate",   "Quest Experience Gain Rate",  NULL, 0, msizeof(CharacterStatSet, quest_exp_gain_rate), offsetof(CharacterStatSet, quest_exp_gain_rate), SUT_All },
 	{STAT::DROP_GAIN_RATE              , StatType::SHORT,    "short",  "drop_gain_rate",        "Treasure Gain Rate",  NULL, 0, msizeof(CharacterStatSet, drop_gain_rate), offsetof(CharacterStatSet, drop_gain_rate), SUT_All },
+	{STAT::TAGS 					   , StatType::STRING,   "string", "tags",        			"Tags",  NULL, 0, msizeof(CharacterStatSet, tags), offsetof(CharacterStatSet, tags), SUT_All },
 
 };
 const int MaxStatList = sizeof(StatList) / sizeof(StatList[0]);
@@ -503,6 +504,7 @@ CharacterStatSet :: CharacterStatSet()
 	dexterity = 0;
 	spawn_table_points = 0;
 	armor_rating = 0;
+	tags = "";
 
 
 }
