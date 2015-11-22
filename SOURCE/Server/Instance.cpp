@@ -2081,6 +2081,8 @@ CreatureInstance* ActiveInstance :: SpawnAtProp(int CDefID, int PropID, int dura
 void ActiveInstance :: EraseAllCreatureReference(CreatureInstance *object)
 {
 
+	g_Log.AddMessageFormat("[REMOVEME] EraseAllCreatureReference %d (%d)", object->CreatureDefID, object->CreatureID);
+
 	object->UnloadResources();
 	pendingOperations.UpdateList_Remove(object);
 	pendingOperations.DeathList_Remove(object);
@@ -2147,6 +2149,7 @@ int ActiveInstance :: EraseIndividualReference(CreatureInstance *object)
 
 int ActiveInstance :: RemoveNPCInstance(int CreatureID)
 {
+	g_Log.AddMessageFormat("[REMOVEME] RemoveNPCInstance %d", CreatureID);
 #ifndef CREATUREMAP
 	list<CreatureInstance>::iterator it;
 #else

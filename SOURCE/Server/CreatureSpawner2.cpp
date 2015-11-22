@@ -750,6 +750,8 @@ void SpawnTile :: RemoveSpawnPointCreatures(ActiveSpawner *spawner)
 
 void SpawnTile :: RemoveSpawnPointCreature(ActiveSpawner *spawner, int creatureID)
 {
+	g_Log.AddMessageFormat("[REMOVEME] RemoveSpawnPointCreature %d", creatureID);
+
 	//Removes all creatures spawned by this point. 
 #ifndef CREATUREMAP
 	std::list<CreatureInstance>::iterator cit;

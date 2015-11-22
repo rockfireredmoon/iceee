@@ -7122,6 +7122,7 @@ void CreatureInstance :: CheckQuestInteract(int CreatureDefID)
 
 void CreatureInstance :: RunQuestObjectInteraction(CreatureInstance *target, bool deleteObject)
 {
+	g_Log.AddMessageFormat("[REMOVEME] RunQuestObjectInteraction %d (del %s)", target->CreatureDefID, deleteObject ? "YES" : "NO");
 	if(target == NULL)
 		return;
 	if(!(serverFlags & ServerFlags::IsPlayer))
@@ -7137,7 +7138,8 @@ void CreatureInstance :: RunQuestObjectInteraction(CreatureInstance *target, boo
 	/* Determine if target creature is Warp interact as well as a Quest object interaction.
 	 * If it is, we don't activate for the rest of the party, they must do it themselves
 	 */
-	InteractObject *ob = g_InteractObjectContainer.GetObjectByID(target->CreatureDefID, target->actInst->mZone);
+	g_Log.AddMessageFormat("[REMOVEME] Testing if interact warp for %d (%d zone %s)", target->CreatureDefID, target->actInst == NULL ? 0 : target->actInst->mZone, target->actInst == NULL ? "NULL!!!!!" : "OK");
+	InteractObject *ob = target->actInst == NULL ? NULL : g_InteractObjectContainer.GetObjectByID(target->CreatureDefID, target->actInst->mZone);
 	if(ob == NULL || ob->opType != InteractObject::TYPE_WARP) {
 		/*
 		 * Either no interact object, or there is and it isn't a warp, so activate for the party too
@@ -7151,7 +7153,7 @@ void CreatureInstance :: RunQuestObjectInteraction(CreatureInstance *target, boo
 					CreatureInstance *member = actInst->GetPlayerByCDefID(CDefID);
 					if(member == NULL)
 						continue;
-					if(member->actInst->mInstanceID != instance)
+					if(member->actInst == NULL || member->actInst->mInstanceID != instance)
 						continue;
 					if(actInst->GetPlaneRange(this, member, PARTY_SHARE_DISTANCE) >= PARTY_SHARE_DISTANCE)
 						continue;
@@ -7161,8 +7163,10 @@ void CreatureInstance :: RunQuestObjectInteraction(CreatureInstance *target, boo
 		}
 	}
 
-	if(deleteObject == true)
+	if(deleteObject == true) {
+		g_Log.AddMessageFormat("[REMOVEME] Will removenpc instance because delete object %d", target->CreatureID);
 		target->actInst->RemoveNPCInstance(target->CreatureID);
+	}
 }
 
 void CreatureInstance :: RunObjectInteraction(CreatureInstance *target)
