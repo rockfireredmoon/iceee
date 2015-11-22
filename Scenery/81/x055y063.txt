@@ -7,6 +7,15 @@ Orient=0,0,0,1
 Scale=1,1,1
 
 [ENTRY]
+ID=1131664
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=55278.7,158.092,63243.4
+Orient=0,0.999415,0,-0.034197
+Scale=1,1,1
+spawnPackage=#2860
+
+[ENTRY]
 ID=10000066
 Asset=Manipulator-SpawnPoint
 Name=Untitled
@@ -809,7 +818,7 @@ ID=1358967301
 Asset=Prop-Table2
 Name=IMPORT
 Pos=55096.9,145.463,63321.2
-Orient=0,1.19209e-007,0,1
+Orient=0,1.19209e-07,0,1
 Scale=1.225,1.225,1.225
 
 [ENTRY]

@@ -14,7 +14,6 @@ dnl
 
 m4_include([ax_pthread.m4])
 m4_include([libcurl.m4])
-m4_include([ax_cxx_compile_stdcxx_11.m4])
 
 
 dnl
@@ -94,7 +93,7 @@ dnl
 AM_CONDITIONAL([MINGW], [test x$mingw = xtrue])
 AM_CONDITIONAL([WINSERVICE], [test x$winservice = xtrue])
 
-AX_CXX_COMPILE_STDCXX_11([noext],[mandatory])
+dnl AX_CXX_COMPILE_STDCXX_11([noext],[mandatory])
 
 dnl
 dnl Compiler and link setup
