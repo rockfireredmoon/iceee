@@ -155,7 +155,8 @@ class this.States.LoginState extends this.State
 		local infoPanel = mCS.infoPanel <- ::GUI.Panel();
 		infoPanel.setLayoutManager( GUI.BorderLayout() );
 		infoPanel.setInsets( 6, 6, 6, 6 );
-		infoPanel.setSize( 400, 116 );
+		infoPanel.setSize( 400, 200 );
+		infoPanel.setMaximumSize(400, 200);
 		baseContainer.add( infoPanel, GUI.BorderLayout.NORTH );
 		
 		local infoTitle = mCS.infoTitle <- ::GUI.Label("NEWS");
@@ -163,6 +164,8 @@ class this.States.LoginState extends this.State
 		infoPanel.add( infoTitle, GUI.BorderLayout.NORTH );
 		
 		local scrollArea = mCS.scrollArea <- GUI.ScrollPanel();
+		scrollArea.setSize( 380, 150 );
+		scrollArea.setMaximumSize(380, 150);
 		infoPanel.add( scrollArea, GUI.BorderLayout.CENTER );
 		
 		mNews = mCS.infoArea <- ::GUI.HTML();
@@ -299,6 +302,11 @@ class this.States.LoginState extends this.State
 				if (this.status == 200)
 				{
 					local text = this.responseText;
+					text = this.Util.replace(text, "\r\n", "\n");
+					while(Util.endsWith(text, "\n")) {
+						text = text.slice(0, text.len() - 1);
+					}
+					text = this.Util.replace(text, "\n", "<br/>");
 					self.setNews(text);
 				}
 				else

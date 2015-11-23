@@ -53,6 +53,7 @@ struct SimulatorQuery
 	bool ValidArgIndex(unsigned int argIndex);
 	const char* GetString(unsigned int argIndex);
 	int GetInteger(unsigned int argIndex);
+	long GetLong(unsigned int argIndex);
 	float GetFloat(unsigned int argIndex);
 	bool GetBool(unsigned int argIndex);
 };

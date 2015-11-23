@@ -522,6 +522,11 @@ int SimulatorQuery :: GetInteger(unsigned int argIndex)
 	return ValidArgIndex(argIndex) ? atoi(args[argIndex].c_str()) : 0;
 }
 
+long SimulatorQuery :: GetLong(unsigned int argIndex)
+{
+	return ValidArgIndex(argIndex) ? atol(args[argIndex].c_str()) : 0;
+}
+
 float SimulatorQuery :: GetFloat(unsigned int argIndex)
 {
 	return ValidArgIndex(argIndex) ? static_cast<float>(atof(args[argIndex].c_str())) : 0.0F;

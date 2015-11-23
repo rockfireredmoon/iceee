@@ -46,6 +46,46 @@ namespace AuctionHouseError
 	std::string GetDescription(int eventID);
 }
 
+
+namespace AuctionHouseSearchOrder
+{
+	enum
+	{
+		REMAINING = 0,
+		END_TIME = 1,
+		LEVEL = 2,
+		QUALITY = 3,
+		TYPE = 4,
+		WEAPON_TYPE = 5,
+		BUY_COPPER = 6,
+		BUY_CREDITS = 7,
+		BID_COPPER = 8,
+		BID_CREDITS= 9
+	};
+	std::string GetDescription(int eventID);
+}
+
+class AuctionHouseSearch
+{
+public:
+	AuctionHouseSearch();
+	~AuctionHouseSearch();
+	int mAuctioneer;
+	int mItemTypeId;
+	int mQualityId;
+	int mOrder;
+	int mMaxRows;
+	bool mReverse;
+	unsigned long mBuyPriceCopperStart;
+	unsigned long mBuyPriceCopperEnd;
+	unsigned long mBuyPriceCreditsStart;
+	unsigned long mBuyPriceCreditsEnd;
+	unsigned long mLevelStart;
+	unsigned long mLevelEnd;
+
+	std::string mSearch;
+};
+
 class AuctionHouseBid
 {
 public:
@@ -107,7 +147,7 @@ public:
 	bool RemoveItem(int id);
 	std::string GetPath(int id);
 	bool SaveItem(AuctionHouseItem * item);
-
+	void Search(AuctionHouseSearch &search, std::vector<AuctionHouseItem*> &results);
 };
 
 

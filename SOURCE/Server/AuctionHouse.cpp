@@ -27,6 +27,7 @@
 #include "Instance.h"
 #include "Chat.h"
 #include <string.h>
+#include <algorithm>
 
 AuctionHouseManager g_AuctionHouseManager;
 
@@ -94,52 +95,60 @@ void AuctionTimerTask::run() {
 
 	// Get seller objects
 
-	CreatureInstance *sellerInstance = g_ActiveInstanceManager.GetPlayerCreatureByDefID(mItem->mSeller);
+	CreatureInstance *sellerInstance =
+			g_ActiveInstanceManager.GetPlayerCreatureByDefID(mItem->mSeller);
 	CharacterStatSet *sellerCss = NULL;
 	AccountData *sellerAccount = NULL;
 	CharacterData *sellerCharacterData = NULL;
-	if(sellerInstance == NULL) {
-		sellerCharacterData = g_CharacterManager.RequestCharacter(mItem->mSeller, true);
-		if(sellerCharacterData == NULL) {
-			g_Log.AddMessageFormat("[WARNING] Seller of auction item, no longer exists. Received copper and credits go to /dev/null!");
-		}
-		else {
+	if (sellerInstance == NULL) {
+		sellerCharacterData = g_CharacterManager.RequestCharacter(
+				mItem->mSeller, true);
+		if (sellerCharacterData == NULL) {
+			g_Log.AddMessageFormat(
+					"[WARNING] Seller of auction item, no longer exists. Received copper and credits go to /dev/null!");
+		} else {
 			sellerCss = &sellerCharacterData->cdef.css;
-			sellerAccount = g_AccountManager.FetchIndividualAccount(sellerCharacterData->AccountID);
-			if(sellerAccount == NULL) {
-				g_Log.AddMessageFormat("[WARNING] Seller account of auction item, no longer exists. Received copper and credits go to /dev/null!");
+			sellerAccount = g_AccountManager.FetchIndividualAccount(
+					sellerCharacterData->AccountID);
+			if (sellerAccount == NULL) {
+				g_Log.AddMessageFormat(
+						"[WARNING] Seller account of auction item, no longer exists. Received copper and credits go to /dev/null!");
 			}
 		}
-	}
-	else {
+	} else {
 		sellerCharacterData = sellerInstance->charPtr;
 		sellerCss = &sellerInstance->css;
-		sellerAccount = g_AccountManager.GetActiveAccountByID(sellerCharacterData->AccountID);
+		sellerAccount = g_AccountManager.GetActiveAccountByID(
+				sellerCharacterData->AccountID);
 	}
 
 	// Find the best bid and process it
-	for(std::vector<AuctionHouseBid>::reverse_iterator it = mItem->mBids.rbegin(); it != mItem->mBids.rend(); ++it) {
+	for (std::vector<AuctionHouseBid>::reverse_iterator it =
+			mItem->mBids.rbegin(); it != mItem->mBids.rend(); ++it) {
 		// Look for an instance of the bidders character stat set or the offline players character stat set
-		CreatureInstance *creatureInstance = g_ActiveInstanceManager.GetPlayerCreatureByDefID(it->mBuyer);
+		CreatureInstance *creatureInstance =
+				g_ActiveInstanceManager.GetPlayerCreatureByDefID(it->mBuyer);
 		CharacterStatSet *css;
 		AccountData *account;
 		CharacterData *characterData = NULL;
-		if(creatureInstance == NULL) {
-			characterData = g_CharacterManager.RequestCharacter(it->mBuyer, true);
-			if(characterData == NULL) {
+		if (creatureInstance == NULL) {
+			characterData = g_CharacterManager.RequestCharacter(it->mBuyer,
+					true);
+			if (characterData == NULL) {
 				// Creature now deleted?
 				continue;
 			}
 			css = &characterData->cdef.css;
-			account = g_AccountManager.FetchIndividualAccount(characterData->AccountID);
-			if(account == NULL)
+			account = g_AccountManager.FetchIndividualAccount(
+					characterData->AccountID);
+			if (account == NULL)
 				// Account now deleted? (shouldn't happen)
 				continue;
-		}
-		else {
+		} else {
 			characterData = creatureInstance->charPtr;
 			css = &creatureInstance->css;
-			account = g_AccountManager.GetActiveAccountByID(characterData->AccountID);
+			account = g_AccountManager.GetActiveAccountByID(
+					characterData->AccountID);
 		}
 		InventoryManager *inventory = &characterData->inventory;
 
@@ -151,123 +160,126 @@ void AuctionTimerTask::run() {
 		// Check the prospective recipient inventory space
 		int slot = inventory->GetFreeSlot(INV_CONTAINER);
 		if (slot == -1) {
-			Util::SafeFormat(buf,sizeof(buf), "Your bid on '%s' failed because you do not have enough inventory space. Item goes to next bidder or back to seller.",
-							mItem->itemDef->mDisplayName.c_str());
+			Util::SafeFormat(buf, sizeof(buf),
+					"Your bid on '%s' failed because you do not have enough inventory space. Item goes to next bidder or back to seller.",
+					mItem->itemDef->mDisplayName.c_str());
 			ChatMessage cm(buf);
 			cm.mChannelName = "tc/";
 			cm.mChannel = GetChatInfoByChannel(cm.mChannelName.c_str());
 			cm.mSender = "EEBay";
 			cm.mTell = true;
 			cm.mRecipient = css->display_name;
-			if(!g_ChatManager.SendChatMessage(cm, NULL)) {
+			if (!g_ChatManager.SendChatMessage(cm, NULL)) {
 				// TODO send via website private message
 			}
 			continue;
 		}
 
 		// Check the prospective recipient has enough copper
-		if(it->mCopper > 0 && it->mCopper > css->copper) {
+		if (it->mCopper > 0 && it->mCopper > css->copper) {
 
-			Util::SafeFormat(buf,sizeof(buf), "Your bid on '%s' failed because you do not have enough copper. Item goes to next bidder or back to seller.",
-							mItem->itemDef->mDisplayName.c_str());
+			Util::SafeFormat(buf, sizeof(buf),
+					"Your bid on '%s' failed because you do not have enough copper. Item goes to next bidder or back to seller.",
+					mItem->itemDef->mDisplayName.c_str());
 			ChatMessage cm(buf);
 			cm.mChannelName = "tc/";
 			cm.mChannel = GetChatInfoByChannel(cm.mChannelName.c_str());
 			cm.mSender = "EEBay";
 			cm.mTell = true;
-			if(!g_ChatManager.SendChatMessage(cm, NULL)) {
+			if (!g_ChatManager.SendChatMessage(cm, NULL)) {
 				// TODO send via website private message
 			}
 			continue;
 		}
 
 		// Check the prospective recipient has enough credits
-		if(it->mCredits > 0 && it->mCredits > css->credits) {
-			Util::SafeFormat(buf,sizeof(buf), "Your bid on '%s' failed because you do not have enough credits. Item goes to next bidder or back to seller.",
-							mItem->itemDef->mDisplayName.c_str());
+		if (it->mCredits > 0 && it->mCredits > css->credits) {
+			Util::SafeFormat(buf, sizeof(buf),
+					"Your bid on '%s' failed because you do not have enough credits. Item goes to next bidder or back to seller.",
+					mItem->itemDef->mDisplayName.c_str());
 			ChatMessage cm(buf);
 			cm.mChannelName = "tc/";
 			cm.mChannel = GetChatInfoByChannel(cm.mChannelName.c_str());
 			cm.mSender = "EEBay";
 			cm.mTell = true;
 			cm.mRecipient = css->display_name;
-			if(!g_ChatManager.SendChatMessage(cm, NULL)) {
+			if (!g_ChatManager.SendChatMessage(cm, NULL)) {
 				// TODO send via website private message
 			}
 			continue;
 		}
 
 		// Nearly there! Now try to add item to recipients inventory
-		InventorySlot *sendSlot = inventory->AddItem_Ex(
-					INV_CONTAINER, mItem->mItemId, mItem->mCount + 1);
+		InventorySlot *sendSlot = inventory->AddItem_Ex(INV_CONTAINER,
+				mItem->mItemId, mItem->mCount + 1);
 		if (sendSlot == NULL) {
 			int err = creatureInstance->charPtr->inventory.LastError;
 			std::string errText = "Server error: undefined error.";
 			if (err == InventoryManager::ERROR_ITEM)
-				errText =  "Server error: item does not exist.";
+				errText = "Server error: item does not exist.";
 			else if (err == InventoryManager::ERROR_SPACE)
 				errText = "You do not have any free inventory space.";
 			else if (err == InventoryManager::ERROR_LIMIT)
 				errText = "You already the maximum amount of these items.";
-		}
-		else {
+		} else {
 			// Update recipients inventory
-			if(creatureInstance != NULL && creatureInstance->simulatorPtr != NULL) {
+			if (creatureInstance != NULL
+					&& creatureInstance->simulatorPtr != NULL) {
 				int wpos = AddItemUpdate(buf, buf2, sendSlot);
 				creatureInstance->simulatorPtr->AttemptSend(buf, wpos);
 			}
 
 			// Take copper from recipient and give to seller
-			if(it->mCopper > 0) {
+			if (it->mCopper > 0) {
 				css->copper -= it->mCopper;
 				characterData->pendingChanges++;
-				if(creatureInstance != NULL) {
+				if (creatureInstance != NULL) {
 					creatureInstance->SendStatUpdate(STAT::COPPER);
 				}
 
-				if(sellerCss != NULL) {
+				if (sellerCss != NULL) {
 					sellerCss->copper += it->mCopper;
-					if(sellerCharacterData != NULL) {
+					if (sellerCharacterData != NULL) {
 						sellerCharacterData->pendingChanges++;
 					}
-					if(sellerInstance != NULL) {
+					if (sellerInstance != NULL) {
 						sellerInstance->SendStatUpdate(STAT::COPPER);
 					}
 				}
 			}
 
 			// Take credits from recipient and give to seller
-			if(it->mCredits > 0) {
+			if (it->mCredits > 0) {
 				css->credits -= it->mCredits;
-				if(g_Config.AccountCredits)
+				if (g_Config.AccountCredits)
 					account->PendingMinorUpdates++;
 				else
 					characterData->pendingChanges++;
-				if(creatureInstance != NULL) {
+				if (creatureInstance != NULL) {
 					creatureInstance->SendStatUpdate(STAT::CREDITS);
 				}
 
-				if(sellerCss != NULL) {
+				if (sellerCss != NULL) {
 					sellerCss->credits += it->mCredits;
-					if(g_Config.AccountCredits  && sellerAccount != NULL)
+					if (g_Config.AccountCredits && sellerAccount != NULL)
 						sellerAccount->PendingMinorUpdates++;
-					else if(sellerCharacterData != NULL) {
+					else if (sellerCharacterData != NULL) {
 						sellerCharacterData->pendingChanges++;
 					}
-					if(sellerInstance != NULL) {
+					if (sellerInstance != NULL) {
 						sellerInstance->SendStatUpdate(STAT::CREDITS);
 					}
 				}
 			}
 
-			Util::SafeFormat(buf,sizeof(buf), "%s is the winning bidder of '%s'!",
-										css->display_name,
-										mItem->itemDef->mDisplayName.c_str());
+			Util::SafeFormat(buf, sizeof(buf),
+					"%s is the winning bidder of '%s'!", css->display_name,
+					mItem->itemDef->mDisplayName.c_str());
 			ChatMessage cm(buf);
 			cm.mChannelName = "tc/";
 			cm.mChannel = GetChatInfoByChannel(cm.mChannelName.c_str());
 			cm.mSender = "EEBay";
-			if(!g_ChatManager.SendChatMessage(cm, NULL)) {
+			if (!g_ChatManager.SendChatMessage(cm, NULL)) {
 				// TODO send via website private message to recipient / vendor ONLY
 			}
 
@@ -277,29 +289,32 @@ void AuctionTimerTask::run() {
 
 	}
 
-	if(!success) {
+	if (!success) {
 
-		Util::SafeFormat(buf,sizeof(buf), "Your auction item '%s' failed to attract any bids. You have %d hours to remove it from the auction before it is automatically removed and placed in your vendor buyback inventory.",
-				mItem->itemDef->mDisplayName.c_str(), g_Config.MaxAuctionExpiredHours);
+		Util::SafeFormat(buf, sizeof(buf),
+				"Your auction item '%s' failed to attract any bids. You have %d hours to remove it from the auction before it is automatically removed and placed in your vendor buyback inventory.",
+				mItem->itemDef->mDisplayName.c_str(),
+				g_Config.MaxAuctionExpiredHours);
 		ChatMessage cm(buf);
 		cm.mChannelName = "tc/";
 		cm.mChannel = GetChatInfoByChannel(cm.mChannelName.c_str());
 		cm.mSender = "EEBay";
 		cm.mTell = true;
-		if(!g_ChatManager.SendChatMessage(cm, NULL)) {
+		if (!g_ChatManager.SendChatMessage(cm, NULL)) {
 			// TODO send via website private message
 		}
 		g_AuctionHouseManager.cs.Leave();
-	}
-	else {
+	} else {
 		g_AuctionHouseManager.RemoveItem(mItem->mId);
 		g_AuctionHouseManager.cs.Leave();
 
 		/* Find the active auctioneer instance. If there isn't one, then nobody can be standing at an auction house,
 		 * so there is no need to broadcast the change
 		 */
-		CreatureInstance *instance = g_ActiveInstanceManager.GetPlayerCreatureByDefID(mItem->mAuctioneer);
-		if(instance != NULL) {
+		CreatureInstance *instance =
+				g_ActiveInstanceManager.GetPlayerCreatureByDefID(
+						mItem->mAuctioneer);
+		if (instance != NULL) {
 
 			// Broadcast
 			int wpos2 = 0;
@@ -344,26 +359,29 @@ AuctionHouseItem::~AuctionHouseItem() {
 }
 
 bool AuctionHouseItem::IsExpired() {
-	return  mEndDate - time(NULL) <= 0;
+	return mEndDate - time(NULL) <= 0;
 }
 
 unsigned long AuctionHouseItem::GetTimeRemaining() {
 	long timeRemaining = mEndDate - time(NULL);
-	if(timeRemaining < 0)
+	if (timeRemaining < 0)
 		timeRemaining = 0;
 	return timeRemaining;
 
 }
-bool AuctionHouseItem::Bid(int creatureDefID, unsigned long copper, unsigned long credits) {
+bool AuctionHouseItem::Bid(int creatureDefID, unsigned long copper,
+		unsigned long credits) {
 
 	for (std::vector<AuctionHouseBid>::iterator it = mBids.begin();
 			it != mBids.end(); ++it) {
-		if(it->mBuyer == creatureDefID) {
+		if (it->mBuyer == creatureDefID) {
 			mBids.erase(it);
 			break;
 		}
 	}
-	if(mBids.size() == 0 || ( copper > mBids[mBids.size() - 1].mCopper || credits > mBids[mBids.size() - 1].mCredits) ) {
+	if (mBids.size() == 0
+			|| (copper > mBids[mBids.size() - 1].mCopper
+					|| credits > mBids[mBids.size() - 1].mCredits)) {
 		AuctionHouseBid bid;
 		bid.mBuyer = creatureDefID;
 		bid.mCopper = copper;
@@ -377,11 +395,9 @@ bool AuctionHouseItem::Bid(int creatureDefID, unsigned long copper, unsigned lon
 
 void AuctionHouseItem::WriteToJSON(Json::Value &value) {
 	value["id"] = mId;
-	if (mStartDate > 0)
-		value["beginDate"] = Util::FormatDate(&mStartDate);
-	if (mEndDate > 0)
-		value["endDate"] = Util::FormatDate(&mEndDate);
-
+	value["begin"] = Json::UInt64(mStartDate);
+	value["end"] = Json::UInt64(mEndDate);
+	value["remain"] = Json::Int64(mEndDate - time(NULL));
 	value["seller"] = mSeller;
 	value["auctioneer"] = mAuctioneer;
 	value["reserveCopper"] = Json::UInt64(mReserveCopper);
@@ -584,7 +600,7 @@ AuctionHouseItem * AuctionHouseManager::LoadItem(int id) {
 	mItems[id] = item;
 	cs.Leave();
 
-	if(!item->IsExpired()) {
+	if (!item->IsExpired()) {
 		AuctionTimerTask *tt = new AuctionTimerTask(item);
 		item->timerTask = tt;
 		g_TimerManager.AddTask(tt);
@@ -602,14 +618,12 @@ bool AuctionHouseManager::RemoveItem(int id) {
 	}
 	cs.Enter("AuctionHouseManager::RemoveItem");
 
-
 	std::map<int, AuctionHouseItem*>::iterator it = mItems.find(id);
 	if (it != mItems.end()) {
-		if(it->second->timerTask != NULL) {
+		if (it->second->timerTask != NULL) {
 			it->second->timerTask->cancel();
 			delete it->second->timerTask;
 		}
-
 
 		delete it->second;
 		mItems.erase(it);
@@ -625,8 +639,7 @@ bool AuctionHouseManager::RemoveItem(int id) {
 			return false;
 		}
 	}
-	g_Log.AddMessageFormat("Auction house item %d removed",
-			id);
+	g_Log.AddMessageFormat("Auction house item %d removed", id);
 	return true;
 }
 
@@ -635,6 +648,174 @@ std::string AuctionHouseManager::GetPath(int id) {
 	Util::SafeFormat(buf, sizeof(buf), "AuctionHouse/%d.txt", id);
 	Platform::FixPaths(buf);
 	return buf;
+}
+
+bool remainingSort(const AuctionHouseItem *l1, const AuctionHouseItem *l2) {
+	time_t now = time(NULL);
+	return l1->mEndDate < now && l2->mEndDate >= now ?
+			true :
+			(l1->mEndDate >= now && l2->mEndDate < now ?
+					false : l1->mEndDate > l2->mEndDate);
+}
+
+bool endTimeSort(const AuctionHouseItem *l1, const AuctionHouseItem *l2) {
+	return l1->mEndDate > l2->mEndDate;
+}
+
+bool levelSort(const AuctionHouseItem *l1, const AuctionHouseItem *l2) {
+	int lev1 = l1->itemDef == NULL ? 0 : l1->itemDef->mLevel;
+	int lev2 = l2->itemDef == NULL ? 0 : l2->itemDef->mLevel;
+	return lev1 > lev2;
+}
+
+bool qualitySort(const AuctionHouseItem *l1, const AuctionHouseItem *l2) {
+	int q1 = l1->itemDef == NULL ? 0 : l1->itemDef->mQualityLevel;
+	int q2 = l2->itemDef == NULL ? 0 : l2->itemDef->mQualityLevel;
+	return q1 > q2;
+}
+
+bool typeSort(const AuctionHouseItem *l1, const AuctionHouseItem *l2) {
+	int t1 = l1->itemDef == NULL ? 0 : l1->itemDef->mType;
+	int t2 = l2->itemDef == NULL ? 0 : l2->itemDef->mType;
+	return t1 > t2;
+}
+
+bool weaponTypeSort(const AuctionHouseItem *l1, const AuctionHouseItem *l2) {
+	int t1 = l1->itemDef == NULL ? 0 : l1->itemDef->mWeaponType;
+	int t2 = l2->itemDef == NULL ? 0 : l2->itemDef->mWeaponType;
+	return t1 > t2;
+}
+
+bool buyCopperSort(const AuctionHouseItem *l1, const AuctionHouseItem *l2) {
+	return l1->mBuyItNowCopper > l2->mBuyItNowCopper;
+}
+
+bool buyCreditsSort(const AuctionHouseItem *l1, const AuctionHouseItem *l2) {
+	return l1->mBuyItNowCredits > l2->mBuyItNowCredits;
+}
+
+bool bidCopperSort(const AuctionHouseItem *l1, const AuctionHouseItem *l2) {
+	unsigned long c1 =
+			l1->mBids.size() == 0 ? 0 : l1->mBids[l1->mBids.size() - 1].mCopper;
+	unsigned long c2 =
+			l2->mBids.size() == 0 ? 0 : l2->mBids[l2->mBids.size() - 1].mCopper;
+	return c1 > c2;
+}
+
+bool bidCreditsSort(const AuctionHouseItem *l1, const AuctionHouseItem *l2) {
+	unsigned long c1 =
+			l1->mBids.size() == 0 ?
+					0 : l1->mBids[l1->mBids.size() - 1].mCredits;
+	unsigned long c2 =
+			l2->mBids.size() == 0 ?
+					0 : l2->mBids[l2->mBids.size() - 1].mCredits;
+	return c1 > c2;
+}
+
+void AuctionHouseManager::Search(AuctionHouseSearch &search,
+		std::vector<AuctionHouseItem*> &results) {
+
+	for (std::map<int, AuctionHouseItem*>::iterator it = mItems.begin();
+			it != mItems.end(); ++it) {
+		if (search.mMaxRows > -1 && results.size() >= search.mMaxRows)
+			break;
+
+		if (it->second->itemDef == NULL) {
+			g_Log.AddMessageFormat(
+					"[WARNING] Item in auction house does not link to a valid item. %d",
+					it->second->mItemId);
+		} else {
+			bool matches = it->second->mAuctioneer == 0
+					|| search.mAuctioneer == it->second->mAuctioneer;
+			if (matches) {
+				matches = search.mItemTypeId == -1
+						|| search.mItemTypeId == it->second->itemDef->mType;
+			}
+			if (matches) {
+				matches = search.mQualityId == -1
+						|| search.mQualityId
+								== it->second->itemDef->mQualityLevel;
+			}
+			if (matches) {
+				matches = it->second->itemDef->mLevel
+						>= search.mLevelStart
+						&& it->second->itemDef->mLevel
+								<= search.mLevelEnd;
+			}
+			if (matches) {
+				matches = it->second->mBuyItNowCopper
+						>= search.mBuyPriceCopperStart
+						&& it->second->mBuyItNowCopper
+								<= search.mBuyPriceCopperEnd;
+			}
+			if (matches) {
+				matches = it->second->mBuyItNowCredits == 0
+						|| (it->second->mBuyItNowCredits
+								>= search.mBuyPriceCreditsStart
+								&& it->second->mBuyItNowCredits
+										<= search.mBuyPriceCreditsEnd);
+			}
+//			if (matches) {
+//				unsigned long bidCopper = 0;
+//				unsigned long bidCredits = 0;
+//				if(it->second->mBids.size() > 0) {
+//					bidCopper = it->second->mBids[it->second->mBids.size() - 1].mCopper;
+//					bidCredits = it->second->mBids[it->second->mBids.size() - 1].mCredits;
+//				}
+//				matches = bidCopper >= search.mit->second->mBuyItNowCredits == 0
+//						|| (it->second->mBuyItNowCredits
+//								>= search.mBuyPriceCreditsStart
+//								&& it->second->mBuyItNowCredits
+//										<= search.mBuyPriceCreditsEnd);
+//			}
+			if (matches) {
+				matches = search.mSearch.length() == 0
+						|| Util::CaseInsensitiveStringFind(
+								it->second->itemDef->mDisplayName,
+								search.mSearch);
+			}
+
+			if (matches) {
+				results.push_back(it->second);
+			}
+		}
+	}
+
+	switch (search.mOrder) {
+	case AuctionHouseSearchOrder::REMAINING:
+		sort(results.begin(), results.end(), remainingSort);
+		break;
+	case AuctionHouseSearchOrder::END_TIME:
+		sort(results.begin(), results.end(), endTimeSort);
+		break;
+	case AuctionHouseSearchOrder::LEVEL:
+		sort(results.begin(), results.end(), levelSort);
+		break;
+	case AuctionHouseSearchOrder::QUALITY:
+		sort(results.begin(), results.end(), qualitySort);
+		break;
+	case AuctionHouseSearchOrder::TYPE:
+		sort(results.begin(), results.end(), typeSort);
+		break;
+	case AuctionHouseSearchOrder::WEAPON_TYPE:
+		sort(results.begin(), results.end(), weaponTypeSort);
+		break;
+	case AuctionHouseSearchOrder::BUY_COPPER:
+		sort(results.begin(), results.end(), buyCopperSort);
+		break;
+	case AuctionHouseSearchOrder::BUY_CREDITS:
+		sort(results.begin(), results.end(), buyCreditsSort);
+		break;
+	case AuctionHouseSearchOrder::BID_COPPER:
+		sort(results.begin(), results.end(), bidCopperSort);
+		break;
+	case AuctionHouseSearchOrder::BID_CREDITS:
+		sort(results.begin(), results.end(), bidCreditsSort);
+		break;
+	}
+
+	if (search.mReverse)
+		std::reverse(results.begin(), results.end());
 }
 
 int AuctionHouseManager::LoadItems(void) {
@@ -666,4 +847,25 @@ AuctionHouseItem * AuctionHouseManager::GetItem(int id) {
 	AuctionHouseItem *item = it == mItems.end() ? NULL : it->second;
 	cs.Leave();
 	return item;
+}
+
+//
+// AuctionHouseSearch
+//
+AuctionHouseSearch::AuctionHouseSearch() {
+	mAuctioneer = 0;
+	mItemTypeId = -1;
+	mQualityId = -1;
+	mMaxRows = -1;
+	mReverse = false;
+	mOrder = AuctionHouseSearchOrder::REMAINING;
+	mBuyPriceCopperStart = 0;
+	mBuyPriceCopperEnd = 99999999;
+	mBuyPriceCreditsStart = 0;
+	mBuyPriceCreditsEnd = 9999999;
+	mLevelStart = 0;
+	mLevelEnd = 99;
+}
+
+AuctionHouseSearch::~AuctionHouseSearch() {
 }

@@ -1163,6 +1163,12 @@ bool AuctionHandler::handleAuthenticatedGet(CivetServer *server,
 					itemDef->WriteToJSON(ij);
 					item["item"] = ij;
 				}
+				CharacterData *data = g_CharacterManager.RequestCharacter(it->second->mSeller, true);
+				if(data != NULL) {
+					Json::Value cj;
+					cj["name"] = data->cdef.css.display_name;
+					item["sellerDetail"] = cj;
+				}
 				Util::SafeFormat(buf, sizeof(buf),"%d", it->first);
 				root[buf] = item;
 			}

@@ -3,6 +3,124 @@ require("UI/Equipment");
 require("UI/Screens");
 require("Items/AuctionItemProtoAction");
 
+class Screens.AuctionFiltersScreen extends this.GUI.Frame
+{
+	static mClassName = "Screens.AuctionFiltersScreen";
+	mScreenInitialized = false;
+	mApplyButton = null;
+	mBuyCopperStart = null;
+	mBuyCreditsStart = null;
+	mBuyCopperEnd = null;
+	mBuyCreditsEnd = null;
+	mLevelStart = null;
+	mLevelEnd = null;
+	mWeaponType = null;
+	mSort = null;
+	mReverse = null;
+	
+	constructor()
+	{
+		this.GUI.Frame.constructor("Auction Filters");
+		
+		mApplyButton = GUI.NarrowButton("Apply");
+		mApplyButton.setPressMessage("_applyPressed");
+		mApplyButton.addActionListener(this);
+		
+		local fform = GUI.Container(GUI.GridLayout(5, 3));
+		fform.getLayoutManager().setColumns(128, "*", 96);
+		fform.getLayoutManager().setGaps(4, 4);
+		//fform.getLayoutManager().setRows("*");
+		
+		// Start buy it now
+		fform.add(GUI.Label("Buy Price Start:"));
+		mBuyCopperStart = GUI.Currency();
+		mBuyCopperStart.setAllowCurrencyEdit(true);
+		fform.add(mBuyCopperStart);
+		mBuyCreditsStart = GUI.Credits();
+		mBuyCreditsStart.setAllowCreditsEdit(true);
+		mBuyCreditsStart.setPreferredSize(72, 14);
+		fform.add(mBuyCreditsStart);
+		
+		// End buy it now
+		fform.add(GUI.Label("Buy Price End:"));
+		mBuyCopperEnd = GUI.Currency();
+		mBuyCopperEnd.setAllowCurrencyEdit(true);
+		fform.add(mBuyCopperEnd);
+		mBuyCreditsEnd = GUI.Credits();
+		mBuyCreditsEnd.setAllowCreditsEdit(true);
+		mBuyCreditsEnd.setPreferredSize(72, 14);
+		fform.add(mBuyCreditsEnd);
+		
+		mLevelStart = GUI.InputArea();
+		mLevelStart.setSize(32, 15);
+		mLevelStart.setAllowOnlyNumbers(true);
+		mLevelStart.setMaxCharacters(2);
+		mLevelStart.setCenterText(true);
+		fform.add(GUI.Label("Level Start:"));
+		fform.add(mLevelStart, {
+			anchor = GUI.GridLayout.LEFT
+		});
+		fform.add(GUI.Spacer(10, 10));
+		
+		mLevelEnd = GUI.InputArea();
+		mLevelEnd.setSize(32, 15);
+		mLevelEnd.setAllowOnlyNumbers(true);
+		mLevelEnd.setMaxCharacters(2);
+		mLevelEnd.setCenterText(true);
+		fform.add(GUI.Label("Level End:"));
+		fform.add(mLevelEnd, {
+			anchor = GUI.GridLayout.LEFT
+		});
+		fform.add(GUI.Spacer(10, 10));
+		
+		mReverse = ::GUI.CheckBox();
+		mReverse.setSize(20, 20);
+		mReverse.setFixedSize(20, 20);
+		mReverse.setChecked(false);
+		fform.add(GUI.Label("Reverse:"));
+		fform.add(mReverse, {
+			anchor = GUI.GridLayout.WEST
+		});
+		fform.add(GUI.Spacer(10, 10));
+		
+		
+		local actions = GUI.Container(GUI.BoxLayout());
+		actions.getLayoutManager().setAlignment(0.5);
+		actions.getLayoutManager().setExpand(false);
+		actions.add(mApplyButton);
+		
+		local cmain = GUI.Container(GUI.BoxLayoutV());
+		cmain.setInsets(5);
+		cmain.getLayoutManager().setAlignment(0.5);
+		cmain.getLayoutManager().setGap(8);
+		cmain.add(fform);
+		cmain.add(actions);
+		
+		setContentPane(cmain);
+		local sz = this.getPreferredSize();
+		//sz.height += 50;
+		setSize(sz);
+		setPosition(10, 10);
+		
+		_resetPressed();
+	}
+	
+	function _resetPressed() {
+		mBuyCopperStart.setCurrentValue(0);
+		mBuyCreditsStart.setCurrentValue(0);
+		mBuyCopperEnd.setCurrentValue(99999999);
+		mBuyCreditsEnd.setCurrentValue(9999999);
+		mLevelStart.setText("0");
+		mLevelEnd.setText("99");
+		mReverse.setChecked(false);
+	}
+	
+	function _applyPressed(button) {
+		local as = Screens.get("AuctionHouse", false);
+		if (as)
+			as._refreshAuctionHouse();
+	}
+}
 
 class AuctionItem {
 
@@ -69,6 +187,8 @@ class Screens.AuctionHouse extends GUI.BigFrame
 	mBidCreditsEntry = null;
 	mCommissionCopperEntry = null;
 	mCommissionCreditsEntry = null;
+	mSearchEntry = null;
+	mOrderEntry = null;
 	mTypeEntry = null;
 	mQualityEntry = null;
 	mBidButton = null;
@@ -82,6 +202,9 @@ class Screens.AuctionHouse extends GUI.BigFrame
 	mSellFieldsLabel = null;
 	mCommission = 0;
 	mAuctioneerName = "<Unknown>";
+	mAdvancedButton = null;
+	mSearchUpdateEvent = null;
+	mResetButton = null;
 	
 	constructor()
 	{
@@ -654,6 +777,14 @@ class Screens.AuctionHouse extends GUI.BigFrame
 				::_eventScheduler.cancel(mUpdateTimesEvent);
 				mUpdateTimesEvent = null;
 			}
+			if (mSearchUpdateEvent) {
+				::_eventScheduler.cancel(mSearchUpdateEvent);
+				mSearchUpdateEvent = null;
+			}
+			
+			local as = Screens.get("AuctionFiltersScreen", false);
+			if (as && as.isVisible())
+				as.setVisible(false);
 		}
 	}
 	
@@ -666,7 +797,15 @@ class Screens.AuctionHouse extends GUI.BigFrame
 	}
 	
 	function onTextChanged( text ) {
-		_recalcCommission();
+		if(text == mSearchEntry) {
+			if (mSearchUpdateEvent) {
+				::_eventScheduler.cancel(mSearchUpdateEvent);
+			}
+			mSearchUpdateEvent = ::_eventScheduler.fireIn(2, this, "searchUpdateEvent");
+		}
+		else {
+			_recalcCommission();
+		}
 	}
 	
 	function onRemoveAuctionHouseItem(auctioneerId, auctionId) {
@@ -714,6 +853,10 @@ class Screens.AuctionHouse extends GUI.BigFrame
 		mUpdateTimesEvent = ::_eventScheduler.fireIn(1, this, "updateTimes");
 	}
 	
+	function searchUpdateEvent() {
+		_refreshAuctionHouse();
+	}
+	
 	function auctioneerDistanceCheck() {
 		if (!isVisible()) {
 			return;
@@ -744,6 +887,14 @@ class Screens.AuctionHouse extends GUI.BigFrame
 
 	function _buildAuctionHouse() {
 	
+		mAdvancedButton = GUI.Button("Advanced");
+		mAdvancedButton.setPressMessage("_advancedPressed");
+		mAdvancedButton.addActionListener(this);
+		
+		mResetButton = GUI.Button("Reset");
+		mResetButton.setPressMessage("_resetPressed");
+		mResetButton.addActionListener(this);
+	
 		mTypeEntry = GUI.DropDownList();
 		mTypeEntry.addChoice("All");
 		foreach(k, v in ItemTypeNameDef) {
@@ -762,7 +913,23 @@ class Screens.AuctionHouse extends GUI.BigFrame
 		mQualityEntry.addChoice("Legendary");
 		mQualityEntry.addChoice("Artifact");
 		mQualityEntry.addSelectionChangeListener(this);
-	
+		
+		mOrderEntry = GUI.DropDownList();
+		mOrderEntry.addChoice("Remaining");
+		mOrderEntry.addChoice("End Time");
+		mOrderEntry.addChoice("Level");
+		mOrderEntry.addChoice("Quality");
+		mOrderEntry.addChoice("Type");
+		mOrderEntry.addChoice("Weapon Type");
+		mOrderEntry.addChoice("Buy (Copper)");
+		mOrderEntry.addChoice("Buy (Cred)");
+		mOrderEntry.addChoice("Bid (Copper)");
+		mOrderEntry.addChoice("Bid (Cred)");
+		mOrderEntry.addSelectionChangeListener(this);
+		
+		mSearchEntry = GUI.InputArea();
+		//mSearchEntry.setSize(32, 15);
+		mSearchEntry.addActionListener(this);
 	
 		mAuctionHouseContainer = GUI.InventoryActionContainer("auctionhouse", 10, 1, 0, 0, this);
 		mAuctionHouseContainer.setUseMode(GUI.ActionButtonSlot.USE_LEFT_DOUBLE_CLICK);
@@ -782,20 +949,33 @@ class Screens.AuctionHouse extends GUI.BigFrame
 		//mAuctionHouseContainer.setSize(375,390);
 		//mAuctionHouseContainer.setPreferredSize(375,390);
 		
-		local filterPanel = GUI.Container(GUI.GridLayout(2, 2));
+		local filterPanel = GUI.Container(GUI.GridLayout(2, 4));
 		filterPanel.setInsets(0,0,4,0);
-		filterPanel.getLayoutManager().setColumns(102, "*");
-		filterPanel.getLayoutManager().setGaps(2, 2);
+		filterPanel.getLayoutManager().setColumns(42, "*", 42, "*");
+		filterPanel.getLayoutManager().setGaps(4, 4);
 		filterPanel.add(GUI.Label("Type"));
 		filterPanel.add(mTypeEntry);
+		filterPanel.add(GUI.Label("Order"));
+		filterPanel.add(mOrderEntry);
 		filterPanel.add(GUI.Label("Rarity"));
 		filterPanel.add(mQualityEntry);
+		filterPanel.add(GUI.Label("Search"));
+		filterPanel.add(mSearchEntry);
+		
+		local rightPanel = GUI.Container(GUI.BoxLayoutV(true));
+		rightPanel.add(mAdvancedButton);
+		rightPanel.add(mResetButton);
+		
+		local topPanel = GUI.Container(GUI.GridLayout(1, 2));
+		topPanel.getLayoutManager().setColumns("*", 96);
+		topPanel.add(filterPanel);	
+		topPanel.add(rightPanel);
 		
 		local centreBox = GUI.Container(GUI.GridLayout(2, 1));
 		centreBox.getLayoutManager().setColumns("*");
 		centreBox.getLayoutManager().setRows(64, "*");
 		centreBox.setInsets(4);
-		centreBox.add(filterPanel);
+		centreBox.add(topPanel);
 		centreBox.add(mAuctionHouseContainer);
 		
 		mScreenContainer.add(centreBox);
@@ -1063,6 +1243,18 @@ class Screens.AuctionHouse extends GUI.BigFrame
 		close();
 		GUI.ContainerFrame._removeNotify();
 	}
+	
+	function _resetPressed(button) {
+		mSearchEntry.setText("");
+		mOrderEntry.setCurrent("Remaining");
+		mTypeEntry.setCurrent("All");
+		mQualityEntry.setCurrent("All");
+		local as = Screens.get("AuctionFiltersScreen", false);
+		if (as)
+			as._resetPressed();
+			
+		_refreshAuctionHouse();
+	}
 
 	function _auctionPressed( button )	{
 		sendAuction();
@@ -1096,12 +1288,50 @@ class Screens.AuctionHouse extends GUI.BigFrame
 		}
 	}
 	
+	function _advancedPressed( button )	{
+		local as = Screens.get("AuctionFiltersScreen", false);
+		if (as && as.isVisible())
+			as.setVisible(false);
+		else
+			as = Screens.show("AuctionFiltersScreen");
+	}
+	
 	function _refreshAuctionHouse() {
 		mAuctionHouseContainer.removeAllActions();
+		
+		local buyPriceCopperStart = 0;
+		local buyPriceCreditsStart = 0;
+		local buyPriceCopperEnd = 99999999;
+		local buyPriceCreditsEnd = 9999999;
+		local levelStart = 0;
+		local levelEnd = 99;	
+		local reverse = false;
+		
+		
+		local as = Screens.get("AuctionFiltersScreen", false);
+		if (as) {
+			buyPriceCopperStart = as.mBuyCopperStart.getIputAmount();
+			buyPriceCopperEnd = as.mBuyCopperEnd.getIputAmount();
+			buyPriceCreditsStart = as.mBuyCreditsStart.getCurrentValue();
+			buyPriceCreditsEnd = as.mBuyCreditsEnd.getCurrentValue();
+			levelStart = as.mLevelStart.getText().tointeger();
+			levelEnd = as.mLevelEnd.getText().tointeger();
+			reverse = as.mReverse.getChecked();
+		}	
+		
 		::_Connection.sendQuery("ah.contents", this, [
 			mCurrentAuctioneerId,
 			mTypeEntry.getCurrentIndex() == 0 ? -1 : mTypeEntry.getCurrentIndex(),
-			mQualityEntry.getCurrentIndex() - 1
+			mQualityEntry.getCurrentIndex() - 1,
+			mOrderEntry.getCurrentIndex(),
+			mSearchEntry.getText(),
+			buyPriceCopperStart,
+			buyPriceCopperEnd,
+			buyPriceCreditsStart,
+			buyPriceCreditsEnd,
+			levelStart,
+			levelEnd,
+			reverse ? 1 : 0
 		]);
 	}
 

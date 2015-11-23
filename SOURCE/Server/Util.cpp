@@ -1295,6 +1295,7 @@ void RemoveStringsFrom(const char *search, std::string& operativeString)
 	} while(pos != std::string::npos);
 }
 
+
 bool CaseInsensitiveStringCompare(const std::string& str1, const std::string& str2) {
     if (str1.size() != str2.size()) {
         return false;
@@ -1305,6 +1306,20 @@ bool CaseInsensitiveStringCompare(const std::string& str1, const std::string& st
         }
     }
     return true;
+}
+
+bool CaseInsensitiveStringFind(const std::string& str1, const std::string& str2) {
+    for (string::const_iterator c1 = str1.begin(), c2 = str2.begin(); c1 != str1.end(); ++c1) {
+        if (tolower(*c1) == tolower(*c2)) {
+        	c2++;
+        	if(c2 == str2.end()) {
+        		return true;
+        	}
+        }
+        else
+        	c2 = str2.begin();
+    }
+    return false;
 }
 
 void ToLowerCase(std::string &input)

@@ -77,12 +77,22 @@ static inline int WriteAuctionItem(char *buffer, char *scratch,
 int AuctionHouseContentsHandler::handleQuery(SimulatorThread *sim,
 		CharacterServerData *pld, SimulatorQuery *query,
 		CreatureInstance *creatureInstance) {
-	if (query->argCount < 3)
+	if (query->argCount < 12)
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 				"Invalid query.");
 
-	int itemTypeID = query->GetInteger(1);
-	int qualityID = query->GetInteger(2);
+	AuctionHouseSearch search;
+	search.mItemTypeId = query->GetInteger(1);
+	search.mQualityId = query->GetInteger(2);
+	search.mOrder = query->GetInteger(3);
+	search.mSearch = query->GetString(4);
+	search.mBuyPriceCopperStart = query->GetLong(5);
+	search.mBuyPriceCopperEnd = query->GetLong(6);
+	search.mBuyPriceCreditsStart = query->GetLong(7);
+	search.mBuyPriceCreditsEnd = query->GetLong(8);
+	search.mLevelStart = query->GetInteger(9);
+	search.mLevelEnd = query->GetInteger(10);
+	search.mReverse = query->GetBool(11);
 
 	CreatureInstance *auctioneerInstance =
 			creatureInstance->actInst->GetNPCInstanceByCID(query->GetInteger(0));
@@ -90,19 +100,22 @@ int AuctionHouseContentsHandler::handleQuery(SimulatorThread *sim,
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 				"Unknown auctioneer.");
 	}
+	search.mAuctioneer = auctioneerInstance->CreatureDefID;
+
+	std::vector<AuctionHouseItem*> results;
+	g_AuctionHouseManager.Search(search, results);
 
 	int wpos = 0;
 	wpos += PutByte(&sim->SendBuf[wpos], 1);
 	wpos += PutShort(&sim->SendBuf[wpos], 0);
 	wpos += PutInteger(&sim->SendBuf[wpos], query->ID);
 
-	int rowCount = g_AuctionHouseManager.mItems.size() + 1;
-	int maxRows = rowCount;
-	if (maxRows > 768) {
-		maxRows = 768;
+	int maxRows = results.size();
+	if (maxRows > 512) {
+		maxRows = 512;
 	}
 
-	wpos += PutShort(&sim->SendBuf[wpos], rowCount);
+	wpos += PutShort(&sim->SendBuf[wpos], maxRows);
 
 	// First row contains some auction data
 	wpos += PutByte(&sim->SendBuf[wpos], 2);
@@ -111,31 +124,14 @@ int AuctionHouseContentsHandler::handleQuery(SimulatorThread *sim,
 	wpos += PutStringUTF(&sim->SendBuf[wpos], auctioneerInstance->css.display_name);
 
 	int row = 1;
-	for (std::map<int, AuctionHouseItem*>::iterator it =
-			g_AuctionHouseManager.mItems.begin();
-			it != g_AuctionHouseManager.mItems.end(); ++it) {
+	for (std::vector<AuctionHouseItem*>::iterator it = results.begin();
+			it != results.end(); ++it) {
 		if (row >= maxRows)
 			break;
 
-		if (it->second->itemDef == NULL) {
-			g_Log.AddMessageFormat(
-					"[WARNING] Item in auction house does not link to a valid item. %d",
-					it->second->mItemId);
-		} else {
-			bool isForAuctioneer = it->second->mAuctioneer == 0
-					|| auctioneerInstance->CreatureDefID == it->second->mAuctioneer;
-			bool isOfType = itemTypeID == -1
-					|| itemTypeID == it->second->itemDef->mType;
-			bool isOfQuality = qualityID == -1
-					|| qualityID == it->second->itemDef->mQualityLevel;
-
-			if (isForAuctioneer && isOfType && isOfQuality) {
-				wpos += PutByte(&sim->SendBuf[wpos], 9);
-				wpos += WriteAuctionItem(&sim->SendBuf[wpos], sim->Aux2,
-						it->second);
-				row++;
-			}
-		}
+		wpos += PutByte(&sim->SendBuf[wpos], 9);
+		wpos += WriteAuctionItem(&sim->SendBuf[wpos], sim->Aux2, *it);
+		row++;
 	}
 	PutShort(&sim->SendBuf[1], wpos - 3);
 	PutShort(&sim->SendBuf[7], row);
