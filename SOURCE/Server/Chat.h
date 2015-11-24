@@ -13,6 +13,7 @@
 #include "Creature.h"
 #include "ActiveCharacter.h"
 #include "json/json.h"
+#include "http/HTTP.h"
 
 using namespace std;
 
@@ -90,6 +91,7 @@ public:
 	void CloseChatLogFile(void);
 	void FlushChatLogFile(void);
 	void OpenChatLogFile(const char *filename);
+	bool SendChatMessageAsOffline(ChatMessage &message, HTTPD::SiteSession *session);
 	bool SendChatMessage(ChatMessage &message, CreatureInstance *sendingCreatureInstance);
 	void LogChatMessage(ChatMessage &message);
 	void LogMessage(std::string message);

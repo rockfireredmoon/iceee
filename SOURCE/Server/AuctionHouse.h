@@ -28,6 +28,7 @@
 #include "Item.h"
 #include "Stats.h"
 #include "Timer.h"
+#include "http/SiteClient.h"
 
 
 namespace AuctionHouseError
@@ -116,9 +117,11 @@ public:
 	unsigned long mReserveCredits;
 	unsigned long mBuyItNowCopper;
 	unsigned long mBuyItNowCredits;
+	unsigned long mSecondsRemaining;
 	int mItemId;
 	int mLookId;
 	int mCount;
+	bool mCompleted;
 
 	// Transient
 	ItemDef *itemDef;
@@ -136,6 +139,7 @@ class AuctionHouseManager
 public:
 	int nextAuctionHouseItemID;
 	Platform_CriticalSection cs;
+	HTTPD::SiteSession *session;
 
 	AuctionHouseManager();
 	~AuctionHouseManager();
@@ -148,12 +152,21 @@ public:
 	std::string GetPath(int id);
 	bool SaveItem(AuctionHouseItem * item);
 	void Search(AuctionHouseSearch &search, std::vector<AuctionHouseItem*> &results);
+	void ConnectToSite();
 };
 
 
 class AuctionTimerTask: public TimerTask {
 public:
 	AuctionTimerTask(AuctionHouseItem *mItem);
+	AuctionHouseItem *mItem;
+	void run();
+};
+
+
+class AuctionRemoveTimerTask: public TimerTask {
+public:
+	AuctionRemoveTimerTask(AuctionHouseItem *mItem);
 	AuctionHouseItem *mItem;
 	void run();
 };

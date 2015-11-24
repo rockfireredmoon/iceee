@@ -90,6 +90,7 @@ void AuctionTimerTask::run() {
 
 	// Any bids at all?
 	bool success = false;
+	bool reserveReached = true;
 
 	g_AuctionHouseManager.cs.Enter("AuctionTimerTask::run");
 
@@ -122,9 +123,23 @@ void AuctionTimerTask::run() {
 				sellerCharacterData->AccountID);
 	}
 
+	// Auctioneer
+	CreatureDefinition *auctioneer = CreatureDef.GetPointerByCDef(
+			mItem->mAuctioneer);
+
 	// Find the best bid and process it
 	for (std::vector<AuctionHouseBid>::reverse_iterator it =
 			mItem->mBids.rbegin(); it != mItem->mBids.rend(); ++it) {
+
+		// Was reserve not reached
+		if ((mItem->mReserveCopper != 0 && it->mCopper < mItem->mReserveCopper)
+				|| (mItem->mReserveCredits != 0
+						&& it->mCredits < mItem->mReserveCredits)) {
+			success = true;
+			break;
+		} else
+			reserveReached = false;
+
 		// Look for an instance of the bidders character stat set or the offline players character stat set
 		CreatureInstance *creatureInstance =
 				g_ActiveInstanceManager.GetPlayerCreatureByDefID(it->mBuyer);
@@ -170,7 +185,8 @@ void AuctionTimerTask::run() {
 			cm.mTell = true;
 			cm.mRecipient = css->display_name;
 			if (!g_ChatManager.SendChatMessage(cm, NULL)) {
-				// TODO send via website private message
+				g_ChatManager.SendChatMessageAsOffline(cm,
+						g_AuctionHouseManager.session);
 			}
 			continue;
 		}
@@ -184,10 +200,12 @@ void AuctionTimerTask::run() {
 			ChatMessage cm(buf);
 			cm.mChannelName = "tc/";
 			cm.mChannel = GetChatInfoByChannel(cm.mChannelName.c_str());
-			cm.mSender = "EEBay";
+			cm.mSender =
+					auctioneer == NULL ? "EEBay" : auctioneer->css.display_name;
 			cm.mTell = true;
 			if (!g_ChatManager.SendChatMessage(cm, NULL)) {
-				// TODO send via website private message
+				g_ChatManager.SendChatMessageAsOffline(cm,
+						g_AuctionHouseManager.session);
 			}
 			continue;
 		}
@@ -200,11 +218,13 @@ void AuctionTimerTask::run() {
 			ChatMessage cm(buf);
 			cm.mChannelName = "tc/";
 			cm.mChannel = GetChatInfoByChannel(cm.mChannelName.c_str());
-			cm.mSender = "EEBay";
+			cm.mSender =
+					auctioneer == NULL ? "EEBay" : auctioneer->css.display_name;
 			cm.mTell = true;
 			cm.mRecipient = css->display_name;
 			if (!g_ChatManager.SendChatMessage(cm, NULL)) {
-				// TODO send via website private message
+				g_ChatManager.SendChatMessageAsOffline(cm,
+						g_AuctionHouseManager.session);
 			}
 			continue;
 		}
@@ -222,6 +242,9 @@ void AuctionTimerTask::run() {
 			else if (err == InventoryManager::ERROR_LIMIT)
 				errText = "You already the maximum amount of these items.";
 		} else {
+			sendSlot->secondsRemaining = mItem->mSecondsRemaining;
+			sendSlot->customLook = mItem->mLookId;
+
 			// Update recipients inventory
 			if (creatureInstance != NULL
 					&& creatureInstance->simulatorPtr != NULL) {
@@ -278,9 +301,9 @@ void AuctionTimerTask::run() {
 			ChatMessage cm(buf);
 			cm.mChannelName = "tc/";
 			cm.mChannel = GetChatInfoByChannel(cm.mChannelName.c_str());
-			cm.mSender = "EEBay";
+			cm.mSender =
+					auctioneer == NULL ? "EEBay" : auctioneer->css.display_name;
 			if (!g_ChatManager.SendChatMessage(cm, NULL)) {
-				// TODO send via website private message to recipient / vendor ONLY
 			}
 
 			success = true;
@@ -297,39 +320,193 @@ void AuctionTimerTask::run() {
 				g_Config.MaxAuctionExpiredHours);
 		ChatMessage cm(buf);
 		cm.mChannelName = "tc/";
+		cm.mRecipient = sellerCss->display_name;
 		cm.mChannel = GetChatInfoByChannel(cm.mChannelName.c_str());
-		cm.mSender = "EEBay";
+		cm.mSender =
+				auctioneer == NULL ? "EEBay" : auctioneer->css.display_name;
 		cm.mTell = true;
 		if (!g_ChatManager.SendChatMessage(cm, NULL)) {
-			// TODO send via website private message
+			g_ChatManager.SendChatMessageAsOffline(cm,
+					g_AuctionHouseManager.session);
 		}
+		mItem->mCompleted = true;
+		g_AuctionHouseManager.SaveItem(mItem);
+		AuctionRemoveTimerTask *tr = new AuctionRemoveTimerTask(mItem);
+		mItem->timerTask = tr;
+		g_TimerManager.AddTask(tr);
 		g_AuctionHouseManager.cs.Leave();
 	} else {
-		g_AuctionHouseManager.RemoveItem(mItem->mId);
-		g_AuctionHouseManager.cs.Leave();
+		if (!reserveReached) {
+			Util::SafeFormat(buf, sizeof(buf),
+					"Your auction item '%s' failed to reach the reserve price. You have %d hours to remove it from the auction before it is automatically removed and placed in your vendor buyback inventory.",
+					mItem->itemDef->mDisplayName.c_str(),
+					g_Config.MaxAuctionExpiredHours);
+			ChatMessage cm(buf);
+			cm.mChannelName = "tc/";
+			cm.mRecipient = sellerCss->display_name;
+			cm.mChannel = GetChatInfoByChannel(cm.mChannelName.c_str());
+			cm.mSender =
+					auctioneer == NULL ? "EEBay" : auctioneer->css.display_name;
+			cm.mTell = true;
+			if (!g_ChatManager.SendChatMessage(cm, NULL)) {
+				g_ChatManager.SendChatMessageAsOffline(cm,
+						g_AuctionHouseManager.session);
+			}
+			mItem->mCompleted = true;
+			g_AuctionHouseManager.SaveItem(mItem);
+			AuctionRemoveTimerTask *tr = new AuctionRemoveTimerTask(mItem);
+			mItem->timerTask = tr;
+			g_TimerManager.AddTask(tr);
+			g_AuctionHouseManager.cs.Leave();
+		} else {
 
-		/* Find the active auctioneer instance. If there isn't one, then nobody can be standing at an auction house,
-		 * so there is no need to broadcast the change
-		 */
-		CreatureInstance *instance =
-				g_ActiveInstanceManager.GetPlayerCreatureByDefID(
-						mItem->mAuctioneer);
-		if (instance != NULL) {
+			mItem->timerTask = NULL;
 
-			// Broadcast
-			int wpos2 = 0;
-			wpos2 += PutByte(&buf[wpos2], 97);
-			wpos2 += PutShort(&buf[wpos2], 0);
-			wpos2 += PutByte(&buf[wpos2], 3);
-			Util::SafeFormat(buf2, sizeof(buf2), "%d", mItem->mAuctioneer);
-			wpos2 += PutStringUTF(&buf[wpos2], buf2);
-			Util::SafeFormat(buf2, sizeof(buf2), "%d", mItem->mId);
-			wpos2 += PutStringUTF(&buf[wpos2], buf2);
-			PutShort(&buf[1], wpos2 - 3);
-			g_SimulatorManager.SendToAllSimulators(buf, wpos2, NULL);
+			g_AuctionHouseManager.RemoveItem(mItem->mId);
+			g_AuctionHouseManager.cs.Leave();
+
+			/* Find the active auctioneer instance. If there isn't one, then nobody can be standing at an auction house,
+			 * so there is no need to broadcast the change
+			 */
+			CreatureInstance *instance =
+					g_ActiveInstanceManager.GetNPCCreatureByDefID(
+							mItem->mAuctioneer);
+			if (instance != NULL) {
+
+				// Broadcast
+				int wpos2 = 0;
+				wpos2 += PutByte(&buf[wpos2], 97);
+				wpos2 += PutShort(&buf[wpos2], 0);
+				wpos2 += PutByte(&buf[wpos2], 3);
+				Util::SafeFormat(buf2, sizeof(buf2), "%d", instance->CreatureID);
+				wpos2 += PutStringUTF(&buf[wpos2], buf2);
+				Util::SafeFormat(buf2, sizeof(buf2), "%d", mItem->mId);
+				wpos2 += PutStringUTF(&buf[wpos2], buf2);
+				PutShort(&buf[1], wpos2 - 3);
+				g_SimulatorManager.SendToAllSimulators(buf, wpos2, NULL);
+			}
 		}
 	}
 
+}
+
+//
+// AuctionRemoveTimerTask
+//
+AuctionRemoveTimerTask::AuctionRemoveTimerTask(AuctionHouseItem *item) {
+	mItem = item;
+	mWhen = item->mEndDate + (g_Config.MaxAuctionExpiredHours * 3600);
+}
+
+void AuctionRemoveTimerTask::run() {
+	char buf[1024];
+	char buf2[256];
+
+	g_Log.AddMessageFormat(
+			"Removing auction house item '%s' (sold by %s) from auction list",
+			mItem->itemDef->mDisplayName.c_str(), mItem->mSellerName.c_str());
+
+	g_AuctionHouseManager.cs.Enter("AuctionTimerTask::run");
+
+	// Get seller objects
+
+	CreatureInstance *sellerInstance =
+			g_ActiveInstanceManager.GetPlayerCreatureByDefID(mItem->mSeller);
+	CharacterStatSet *sellerCss = NULL;
+	AccountData *sellerAccount = NULL;
+	CharacterData *sellerCharacterData = NULL;
+	if (sellerInstance == NULL) {
+		sellerCharacterData = g_CharacterManager.RequestCharacter(
+				mItem->mSeller, true);
+		if (sellerCharacterData == NULL) {
+			g_Log.AddMessageFormat(
+					"[WARNING] Seller of auction item, no longer exists.");
+		} else {
+			sellerCss = &sellerCharacterData->cdef.css;
+			sellerAccount = g_AccountManager.FetchIndividualAccount(
+					sellerCharacterData->AccountID);
+			if (sellerAccount == NULL) {
+				g_Log.AddMessageFormat(
+						"[WARNING] Seller account of auction item, no longer exists.");
+			}
+		}
+	} else {
+		sellerCharacterData = sellerInstance->charPtr;
+		sellerCss = &sellerInstance->css;
+		sellerAccount = g_AccountManager.GetActiveAccountByID(
+				sellerCharacterData->AccountID);
+	}
+
+	// Auctioneer
+	CreatureInstance *auctioneerInstance =
+			g_ActiveInstanceManager.GetNPCCreatureByDefID(
+					mItem->mAuctioneer);
+	if(auctioneerInstance == NULL) {
+		g_Log.AddMessageFormat("[REMOVEME] WARNING! No auctioneer instance for ID %d", mItem->mAuctioneer);
+	}
+	CreatureDefinition *auctioneer = auctioneerInstance == NULL ? CreatureDef.GetPointerByCDef(
+			mItem->mAuctioneer) : &auctioneerInstance->charPtr->cdef;
+
+	if(auctioneer == NULL) {
+		g_Log.AddMessageFormat("[REMOVEME] WARNING! No auctioneer object for ID %d", mItem->mAuctioneer);
+	}
+
+	if (sellerCss != NULL) {
+		Util::SafeFormat(buf, sizeof(buf),
+				"Your expired auction item '%s' has been in the auction house too long and has been removed. You may retrieve it from your buyback.",
+				mItem->itemDef->mDisplayName.c_str());
+		ChatMessage cm(buf);
+		cm.mChannelName = "tc/";
+		cm.mRecipient = sellerCss->display_name;
+		cm.mChannel = GetChatInfoByChannel(cm.mChannelName.c_str());
+		cm.mSender =
+				auctioneer == NULL ? "EEBay" : auctioneer->css.display_name;
+		cm.mTell = true;
+		if (!g_ChatManager.SendChatMessage(cm, NULL)) {
+			g_ChatManager.SendChatMessageAsOffline(cm,
+					g_AuctionHouseManager.session);
+		}
+
+		if (sellerCharacterData != NULL) {
+			int wpos = 0;
+			InventorySlot tempItem;
+			tempItem.IID = mItem->mItemId;
+			tempItem.dataPtr = mItem->itemDef;
+			tempItem.count = mItem->mCount;
+			tempItem.secondsRemaining = mItem->mSecondsRemaining;
+			tempItem.customLook = mItem->mLookId;
+			wpos += sellerCharacterData->inventory.AddBuyBack(&tempItem,
+					&buf[wpos]);
+			sellerCharacterData->pendingChanges++;
+			if (sellerInstance != NULL && sellerInstance->simulatorPtr != NULL) {
+				sellerInstance->simulatorPtr->AttemptSend(buf, wpos);
+			}
+		}
+
+	}
+
+	mItem->timerTask = NULL;
+
+	if (auctioneerInstance != NULL) {
+
+		// Broadcast
+		int wpos2 = 0;
+		wpos2 += PutByte(&buf[wpos2], 97);
+		wpos2 += PutShort(&buf[wpos2], 0);
+		wpos2 += PutByte(&buf[wpos2], 3);
+		Util::SafeFormat(buf2, sizeof(buf2), "%d", auctioneerInstance->CreatureID);
+		wpos2 += PutStringUTF(&buf[wpos2], buf2);
+		Util::SafeFormat(buf2, sizeof(buf2), "%d", mItem->mId);
+		wpos2 += PutStringUTF(&buf[wpos2], buf2);
+		PutShort(&buf[1], wpos2 - 3);
+
+		g_AuctionHouseManager.RemoveItem(mItem->mId);
+		g_AuctionHouseManager.cs.Leave();
+		g_SimulatorManager.SendToAllSimulators(buf, wpos2, NULL);
+	} else {
+		g_AuctionHouseManager.RemoveItem(mItem->mId);
+		g_AuctionHouseManager.cs.Leave();
+	}
 }
 
 //
@@ -353,6 +530,8 @@ AuctionHouseItem::AuctionHouseItem() {
 	itemDef = NULL;
 	mSellerName = "";
 	timerTask = NULL;
+	mCompleted = false;
+	mSecondsRemaining = 0;
 }
 
 AuctionHouseItem::~AuctionHouseItem() {
@@ -425,6 +604,7 @@ void AuctionHouseItem::WriteToJSON(Json::Value &value) {
 
 AuctionHouseManager::AuctionHouseManager() {
 	nextAuctionHouseItemID = 1;
+	session = NULL;
 }
 
 AuctionHouseManager::~AuctionHouseManager() {
@@ -486,6 +666,8 @@ bool AuctionHouseManager::SaveItem(AuctionHouseItem * item) {
 	fprintf(output, "ReserveCredits=%lu\r\n", item->mReserveCredits);
 	fprintf(output, "BuyItNowCopper=%lu\r\n", item->mBuyItNowCopper);
 	fprintf(output, "BuyItNowCredits=%lu\r\n", item->mBuyItNowCredits);
+	fprintf(output, "SecondsRemaining=%lu\r\n", item->mSecondsRemaining);
+	fprintf(output, "Completed=%d\r\n", item->mCompleted ? 1 : 0);
 	fprintf(output, "ItemID=%d\r\n", item->mItemId);
 	if (item->mCount > 0)
 		fprintf(output, "Count=%d\r\n", item->mCount);
@@ -557,6 +739,10 @@ AuctionHouseItem * AuctionHouseManager::LoadItem(int id) {
 				item->mBuyItNowCopper = lfr.BlockToULongC(1);
 			else if (strcmp(lfr.SecBuffer, "BUYITNOWCREDITS") == 0)
 				item->mBuyItNowCredits = lfr.BlockToULongC(1);
+			else if (strcmp(lfr.SecBuffer, "SECONDSREMAINING") == 0)
+				item->mSecondsRemaining = lfr.BlockToULongC(1);
+			else if (strcmp(lfr.SecBuffer, "COMPLETED") == 0)
+				item->mCompleted = lfr.BlockToBoolC(1);
 			else if (strcmp(lfr.SecBuffer, "ITEMID") == 0)
 				item->mItemId = lfr.BlockToIntC(1);
 			else if (strcmp(lfr.SecBuffer, "COUNT") == 0)
@@ -600,10 +786,16 @@ AuctionHouseItem * AuctionHouseManager::LoadItem(int id) {
 	mItems[id] = item;
 	cs.Leave();
 
-	if (!item->IsExpired()) {
+	if (!item->mCompleted) {
+		// Finish auction
 		AuctionTimerTask *tt = new AuctionTimerTask(item);
 		item->timerTask = tt;
 		g_TimerManager.AddTask(tt);
+	} else {
+		// Remove the item completely
+		AuctionRemoveTimerTask *tr = new AuctionRemoveTimerTask(item);
+		item->timerTask = tr;
+		g_TimerManager.AddTask(tr);
 	}
 
 	return item;
@@ -737,10 +929,8 @@ void AuctionHouseManager::Search(AuctionHouseSearch &search,
 								== it->second->itemDef->mQualityLevel;
 			}
 			if (matches) {
-				matches = it->second->itemDef->mLevel
-						>= search.mLevelStart
-						&& it->second->itemDef->mLevel
-								<= search.mLevelEnd;
+				matches = it->second->itemDef->mLevel >= search.mLevelStart
+						&& it->second->itemDef->mLevel <= search.mLevelEnd;
 			}
 			if (matches) {
 				matches = it->second->mBuyItNowCopper
@@ -839,6 +1029,17 @@ int AuctionHouseManager::LoadItems(void) {
 	}
 
 	return 0;
+}
+
+void AuctionHouseManager::ConnectToSite() {
+	/* We need a session with which to send private message from the auction system. This
+	 * may need to be refreshed periodically
+	 */
+	session = new HTTPD::SiteSession();
+	SiteClient sc(g_Config.ServiceAuthURL);
+	sc.refreshXCSRF(session);
+	sc.login(session, "eebay", "changeme!");
+	sc.refreshXCSRF(session);
 }
 
 AuctionHouseItem * AuctionHouseManager::GetItem(int id) {

@@ -3840,6 +3840,19 @@ CreatureInstance* ActiveInstanceManager :: GetPlayerCreatureByDefID(int Creature
 	return search;
 }
 
+CreatureInstance* ActiveInstanceManager :: GetNPCCreatureByDefID(int CreatureDefID)
+{
+	CreatureInstance *search = NULL;
+	std::list<ActiveInstance>::iterator it;
+	for(it = instList.begin(); it != instList.end(); ++it)
+	{
+		search = it->GetNPCInstanceByCDefID(CreatureDefID);
+		if(search != NULL)
+			break;
+	}
+	return search;
+}
+
 
 void ActiveInstanceManager :: CheckActiveInstances(void)
 {

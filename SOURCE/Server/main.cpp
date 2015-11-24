@@ -648,6 +648,7 @@ int InitServerMain() {
 	g_Log.AddMessageFormat("Loaded %d Credit Shop items.", g_CreditShopManager.mItems.size());
 
 	g_AuctionHouseManager.LoadItems();
+	g_AuctionHouseManager.ConnectToSite();
 	g_Log.AddMessageFormat("Loaded %d Auction House items.", g_CreditShopManager.mItems.size());
 
 	g_ZoneDefManager.LoadData();

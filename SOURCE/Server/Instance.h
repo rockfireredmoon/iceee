@@ -447,6 +447,7 @@ public:
 
 	CreatureInstance* GetPlayerCreatureByName(const char *name);
 	CreatureInstance* GetPlayerCreatureByDefID(int CreatureDefID);
+	CreatureInstance* GetNPCCreatureByDefID(int CreatureDefID);
 
 	void CheckActiveInstances(void);
 	void DebugFlushInactiveInstances(void);

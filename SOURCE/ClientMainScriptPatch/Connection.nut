@@ -1179,6 +1179,7 @@ class this.Connection extends this.MessageBroadcaster
 			innerReq.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 			innerReq.setRequestHeader("User-Agent", "EETAW");
 			innerReq.setRequestHeader("Cookie", "X-CSRF-Token=" + mXCSRFToken);
+			innerReq.setRequestHeader("X-CSRF-Token", mXCSRFToken);
 			innerReq.setRequestHeader("Host", Util.extractHostnameAndPortFromUrl(mAuthData));
 			innerReq.open("POST", mAuthData + "/user/login.json", false);
 			innerReq.send(this.System.encodeVars({

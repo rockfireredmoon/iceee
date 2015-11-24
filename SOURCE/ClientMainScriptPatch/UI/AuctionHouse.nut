@@ -809,7 +809,9 @@ class Screens.AuctionHouse extends GUI.BigFrame
 	}
 	
 	function onRemoveAuctionHouseItem(auctioneerId, auctionId) {
+		print("ICE! onRemoveAuctionHouseItem " + auctioneerId + "," + auctionId + " against " + mCurrentAuctioneerId + "\n"); 
 		if(auctioneerId == mCurrentAuctioneerId) {
+			print("ICE! onRemoveAuctionHouseItem refresh!\n");
 			// TODO this is a bit too brute force. Instead it should only remove the item changed
 			_refreshAuctionHouse();
 		}

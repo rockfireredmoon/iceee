@@ -132,10 +132,34 @@ int SiteClient::postJSON(HTTPD::SiteSession *session, std::string path, std::str
 	return CURLE_SEND_ERROR;
 }
 
+bool SiteClient::login(HTTPD::SiteSession *session, std::string username, std::string password) {
+	Json::Value body;
+	body["username"] = username;
+	body["password"] = password;
+	Json::StyledWriter writer;
+	std::string output = writer.write(body);
+	int res;
+	std::string replyBuffer;
+	res = postJSON(session, "user/login", output, replyBuffer);
+	if(res == 200) {
+		Json::Value root;
+		Json::Reader reader;
+		if (reader.parse( replyBuffer.c_str(), root ) && root.size() > 0) {
+			g_Log.AddMessageFormat(">>> %s", replyBuffer.c_str());
+			session->sessionID = root["sessid"].asCString();
+			session->sessionName = root["session_name"].asCString();
+			return true;
+		}
+	}
+	else {
+		g_Log.AddMessageFormat("[WARNING] Failed to authenticate with error %d", res);
+	}
+	return false;
+}
+
 int SiteClient::refreshXCSRF(HTTPD::SiteSession *session) {
 	std::string sendBuffer;
 	std::string replyBuffer;
-	char url[1024];
 	int res;
 	session->xCSRF = "";
 	res = postJSON(session, "user/token", sendBuffer, replyBuffer);
@@ -151,7 +175,6 @@ int SiteClient::refreshXCSRF(HTTPD::SiteSession *session) {
 
 int SiteClient::getUnreadPrivateMessages(HTTPD::SiteSession *session) {
 	std::string readBuffer;
-	char url[1024];
 	int res;
 	res = sendRequest(session, "privatemsgunread", readBuffer);
 	if(res == 200) {
@@ -167,7 +190,6 @@ int SiteClient::getUnreadPrivateMessages(HTTPD::SiteSession *session) {
 bool SiteClient::sendPrivateMessage(HTTPD::SiteSession *session, std::string recipient, std::string subject, std::string message) {
 	std::string readBuffer;
 	std::string replyBuffer;
-	char url[1024];
 
 	Json::Value root;
 	root["subject"] = subject;

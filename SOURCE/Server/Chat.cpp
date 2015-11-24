@@ -7,6 +7,8 @@
 #include "FriendStatus.h"
 #include "Instance.h"
 #include "Clan.h"
+#include "Config.h"
+#include "http/SiteClient.h"
 
 ChatManager g_ChatManager;
 bool NewChat = false;
@@ -309,7 +311,39 @@ void ChatManager :: LogMessage(std::string message)
 	}
 }
 
+bool ChatManager ::SendChatMessageAsOffline(ChatMessage &message, HTTPD::SiteSession *session) {
+	/* Look up the account name for the character */
+	int cdefID = g_AccountManager.GetCDefFromCharacterName(message.mRecipient.c_str());
+	int msgCode = INFOMSG_ERROR;
+	if(cdefID == -1) {
+		g_Log.AddMessageFormat("No such character \"%s\" .", message.mRecipient.c_str());
+	}
+	else {
+		CharacterData *cd = g_CharacterManager.RequestCharacter(cdefID, true);
+		if(cd == NULL || cd->AccountID < 1) {
+			g_Log.AddMessageFormat("Could not find creature definition for \"%s\" (%d).", message.mRecipient.c_str(), cdefID);
+		}
+		else {
+			AccountData *data = g_AccountManager.FetchIndividualAccount(cd->AccountID);
+			if(data == NULL) {
+				g_Log.AddMessageFormat("Could not find account for \"%s\" (%d, %d).", message.mRecipient.c_str(), cdefID, cd->AccountID);
+			}
+			else {
+				char subject[256];
+				Util::SafeFormat(subject, sizeof(subject), "In-game private message for %s from %s", message.mRecipient.c_str(), message.mSender.c_str());
 
+				SiteClient siteClient(g_Config.ServiceAuthURL);
+				if(siteClient.sendPrivateMessage(session, data->Name, subject, message.mMessage)) {
+					return true;
+				}
+				else {
+					g_Log.AddMessageFormat("Player \"%s\" is not logged in.", message.mRecipient.c_str());
+				}
+			}
+		}
+	}
+	return false;
+}
 
 bool ChatManager ::SendChatMessage(ChatMessage &message, CreatureInstance *sendingCreatureInstance) {
 
@@ -417,14 +451,16 @@ bool ChatManager ::SendChatMessage(ChatMessage &message, CreatureInstance *sendi
 			}
 		}
 
-		if(send == true)
+		if(send == true) {
+			found = true;
 			it->AttemptSend(SendBuf, wpos);
+		}
 	}
 
 	if(log == true)
 		LogChatMessage(message);
 
-	return true;
+	return found;
 }
 
 void ChatManager :: LogChatMessage(ChatMessage &message)

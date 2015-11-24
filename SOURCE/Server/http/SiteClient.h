@@ -33,6 +33,7 @@ public:
 	int postJSON(HTTPD::SiteSession *session, std::string path, std::string &content, std::string &reply);
 	int sendRequest(HTTPD::SiteSession *session, std::string path, std::string &content);
 	int getUnreadPrivateMessages(HTTPD::SiteSession *session);
+	bool login(HTTPD::SiteSession *session, std::string username, std::string password);
 	bool sendPrivateMessage(HTTPD::SiteSession *session, std::string recipient, std::string subject, std::string message);
 private:
 	std::string mUrl;

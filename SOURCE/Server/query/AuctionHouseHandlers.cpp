@@ -110,12 +110,12 @@ int AuctionHouseContentsHandler::handleQuery(SimulatorThread *sim,
 	wpos += PutShort(&sim->SendBuf[wpos], 0);
 	wpos += PutInteger(&sim->SendBuf[wpos], query->ID);
 
-	int maxRows = results.size();
-	if (maxRows > 512) {
-		maxRows = 512;
+	int rows = results.size();
+	if (rows > 512) {
+		rows = 512;
 	}
 
-	wpos += PutShort(&sim->SendBuf[wpos], maxRows);
+	wpos += PutShort(&sim->SendBuf[wpos], rows + 1);
 
 	// First row contains some auction data
 	wpos += PutByte(&sim->SendBuf[wpos], 2);
@@ -123,18 +123,13 @@ int AuctionHouseContentsHandler::handleQuery(SimulatorThread *sim,
 	wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux2);
 	wpos += PutStringUTF(&sim->SendBuf[wpos], auctioneerInstance->css.display_name);
 
-	int row = 1;
+	int row = 0;
 	for (std::vector<AuctionHouseItem*>::iterator it = results.begin();
-			it != results.end(); ++it) {
-		if (row >= maxRows)
-			break;
-
+			row < rows && it != results.end(); ++it, row++) {
 		wpos += PutByte(&sim->SendBuf[wpos], 9);
 		wpos += WriteAuctionItem(&sim->SendBuf[wpos], sim->Aux2, *it);
-		row++;
 	}
 	PutShort(&sim->SendBuf[1], wpos - 3);
-	PutShort(&sim->SendBuf[7], row);
 	return wpos;
 }
 
@@ -259,6 +254,7 @@ int AuctionHouseAuctionHandler::handleQuery(SimulatorThread *sim,
 	ahItem->mItemId = slot.IID;
 	ahItem->mLookId = slot.customLook;
 	ahItem->mCount = slot.count;
+	ahItem->mSecondsRemaining = slot.secondsRemaining;
 
 	SessionVarsChangeData.AddChange();
 
@@ -430,6 +426,8 @@ int AuctionHouseBuyHandler::handleQuery(SimulatorThread *sim,
 			return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 					"Server error: undefined error.");
 	}
+	sendSlot->secondsRemaining = item->mSecondsRemaining;
+	sendSlot->customLook = item->mLookId;
 
 
 	CreatureInstance *sellerInstance = g_ActiveInstanceManager.GetPlayerCreatureByDefID(item->mSeller);
