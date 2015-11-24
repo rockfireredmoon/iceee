@@ -237,6 +237,7 @@ Screen.setOverlayVisible("Preloader/Overlay", true);
 local xargs = {};
 foreach( k, v in _args )
 {
+	print("ICE! Arg: " + k + " = " + v + "\n");
 	if(k == "src") {
 	
 		/* A hacky way to get parameters set via the URL. Using the 0.8.6 client,

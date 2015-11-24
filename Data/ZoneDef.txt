@@ -110,6 +110,15 @@ ShardName=Corsica 1
 WarpName=NewCorsica
 DefLoc=15739,1117,13201
 
+[ENTRY]
+ID=1070
+NAME=Winterland
+TERRAINCONFIG=Terrain-Winterland#Terrain-Winterland.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=Winterland
+WarpName=Winterland
+DefLoc=2958,260,3821
+
 
 [ENTRY]
 DESC=Fix Cor
@@ -118,7 +127,6 @@ NAME=FixCor
 TERRAINCONFIG=Terrain-Corsica#Terrain-Corsica.cfg
 ENVIRONMENTTYPE=NightSky
 MAPNAME=Maps-Corsica
-REGIONS=Terrain-Corsica/Corsica_Regions.png
 ShardName=FixCor
 WarpName=FixCor
 DefLoc=15907,1111,12567
