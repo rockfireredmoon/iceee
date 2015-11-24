@@ -27,7 +27,6 @@
 /config.status
 /config.log
 aclocal.m4
-*.txt
 /temp
 *.log
 *.in
