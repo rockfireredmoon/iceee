@@ -169,6 +169,33 @@ WarpName=NewBremen
 DefLoc=24883,122,33093
 
 [ENTRY]
+ID=120
+NAME=Grindle's Lair (20)
+TERRAINCONFIG=Terrain-Blank#Terrain-Blank.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=Grindles
+WarpName=Grindle20
+DefLoc=880,599,120
+
+[ENTRY]
+ID=121
+NAME=Grindle's Lair (30)
+TERRAINCONFIG=Terrain-Blank#Terrain-Blank.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=Grindles
+WarpName=Grindle30
+DefLoc=880,599,120
+
+[ENTRY]
+ID=122
+NAME=Grindle's Lair (35)
+TERRAINCONFIG=Terrain-Blank#Terrain-Blank.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=Grindles
+WarpName=Grindle35
+DefLoc=880,599,120
+
+[ENTRY]
 ID=1
 NAME=Sandbox
 TERRAINCONFIG=Terrain-Sandbox#Terrain-Sandbox.cfg
