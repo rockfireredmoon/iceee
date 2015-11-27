@@ -19,6 +19,7 @@
 #include "../Creature.h"
 #include "../Instance.h"
 #include "../Debug.h"
+#include "../Config.h"
 
 //
 //AddFundsHandler
@@ -29,26 +30,78 @@ int AddFundsHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 	if (!sim->CheckPermissionSimple(Perm_Account, Permission_Sage))
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 				"Permission denied.");
-	if (query->args[0].compare("COPPER") == 0) {
+	std::string err;
+
+	if (query->args[0].compare("CREDITS") == 0
+			|| query->args[0].compare("COPPER") == 0) {
 		int amount = atoi(query->args[1].c_str());
 		g_CharacterManager.GetThread("SimulatorThread::AddFunds");
-		CreatureInstance *creature = query->args[3].compare(creatureInstance->charPtr->cdef.css.display_name) == 0 ? creatureInstance :
-				creatureInstance->actInst->GetPlayerByName(query->args[3].c_str());
-		if (creature != NULL) {
-			creature->AdjustCopper(amount);
-			Debug::Log("[SAGE] %s gave %s %d copper because '%s'",
-					pld->charPtr->cdef.css.display_name,
-					creature->charPtr->cdef.css.display_name, amount,
-					query->args[2].c_str());
-			g_CharacterManager.ReleaseThread();
-			return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
+		CreatureInstance *creature =
+				query->args[3].compare(
+						creatureInstance->charPtr->cdef.css.display_name) == 0 ?
+						creatureInstance :
+						creatureInstance->actInst->GetPlayerByName(
+								query->args[3].c_str());
+		CharacterStatSet *css;
+		CharacterData *cd;
+		if (creature == NULL) {
+			cd = g_CharacterManager.GetCharacterByName(query->args[3].c_str());
+			if (cd != NULL)
+				css = &(cd->cdef.css);
 		} else {
-			sim->SendInfoMessage("Player must be logged on to receive funds.",
-					INFOMSG_ERROR);
+			cd = creature->charPtr;
+			css = &creature->css;
 		}
+
+		g_AccountManager.cs.Enter("AddFundsHandler::handleQuery");
+		AccountData *ad = g_AccountManager.FetchIndividualAccount(
+				cd->AccountID);
+
+		if (cd == NULL) {
+			err = "Cannot find character.";
+		} else if (ad == NULL) {
+			err = "Cannot find account.";
+		} else {
+			if (css != NULL) {
+				if (query->args[0].compare("COPPER") == 0) {
+					css->copper += amount;
+					if (css->copper < 0)
+						css->copper = 0;
+					if (creatureInstance != NULL)
+						creatureInstance->SendStatUpdate(STAT::COPPER);
+					cd->pendingChanges++;
+				} else {
+					if (g_Config.AccountCredits)
+						css->credits = ad->Credits;
+					css->credits += amount;
+					if (css->credits < 0)
+						css->credits = 0;
+					if (g_Config.AccountCredits) {
+						ad->Credits = css->credits;
+						ad->PendingMinorUpdates++;
+					} else
+						cd->pendingChanges++;
+					if (creatureInstance != NULL)
+						creatureInstance->SendStatUpdate(STAT::CREDITS);
+				}
+
+				Debug::Log("[SAGE] %s gave %s %d copper because '%s'",
+						pld->charPtr->cdef.css.display_name, css->display_name,
+						amount, query->args[2].c_str());
+			} else {
+				err = "Cannot find player.";
+			}
+		}
+		g_AccountManager.cs.Leave();
 		g_CharacterManager.ReleaseThread();
 	}
-	return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
-			"Failed to add funds.");
+
+	if (err.size() == 0)
+		return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
+	else {
+		Util::SafeFormat(sim->Aux2, sizeof(sim->Aux2),
+				"Failed to add funds. %s", err.c_str());
+		return PrepExt_QueryResponseError(sim->SendBuf, query->ID, sim->Aux2);
+	}
 }
 

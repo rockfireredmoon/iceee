@@ -9,8 +9,11 @@ class this.Screens.GMScreen extends this.GUI.Frame
 	mListInventoryButton = null;
 	mDeleteItemDefButton = null;
 	mCopperAmount = null;
+	mCreditsAmount = null;
 	mModifyCopperButton = null;
+	mModifyCreditsButton = null;
 	mCopperReasonPopup = null;
+	mCreditsReasonPopup = null;
 	mRenameInputArea = null;
 	mRenameButton = null;
 	mRenameReasonPopup = null;
@@ -184,6 +187,24 @@ class this.Screens.GMScreen extends this.GUI.Frame
 				local inputBoxPosY = ::Screen.getHeight() / 2 - this.mCopperReasonPopup.getWidth() / 2;
 				this.mCopperReasonPopup.setPosition(inputBoxPosX, inputBoxPosY);
 				this.mCopperReasonPopup.showInputBox();
+			}
+		}
+		else if (button == this.mModifyCreditsButton)
+		{
+			local channel = this.mCreditsAmount.getText();
+
+			if (channel == "")
+			{
+				this.IGIS.error("No copper value set");
+			}
+			else
+			{
+				this.mCreditsReasonPopup = this.GUI.PopupInputBox("Reason for modifying credits:");
+				this.mCreditsReasonPopup.addActionListener(this);
+				local inputBoxPosX = ::Screen.getWidth() / 2 - this.mCreditsReasonPopup.getWidth() / 2;
+				local inputBoxPosY = ::Screen.getHeight() / 2 - this.mCreditsReasonPopup.getWidth() / 2;
+				this.mCreditsReasonPopup.setPosition(inputBoxPosX, inputBoxPosY);
+				this.mCreditsReasonPopup.showInputBox();
 			}
 		}
 		else if (button == this.mPetitionScreenButton)
@@ -374,6 +395,38 @@ class this.Screens.GMScreen extends this.GUI.Frame
 			this.mCopperAmount.setText("");
 			this.mCopperReasonPopup.hidePopup();
 			this.mCopperReasonPopup = null;
+		}
+		else if (inputArea == this.mCreditsReasonPopup)
+		{
+			if (this.mCreditsReasonPopup.getText() == "")
+			{
+				this.IGIS.error("You must specify a reason for modifying credits.");
+				return;
+			}
+
+			local selectedTarget = ::_avatar.getTargetObject();
+			local creatureName = ::_avatar.getName();
+
+			if (selectedTarget != null)
+			{
+				creatureName = selectedTarget.getName();
+			}
+
+			local creditsAmount = this.mCreditsAmount.getText();
+
+			if (creditsAmount != "")
+			{
+				::_Connection.sendQuery("util.addFunds", this, [
+					"CREDITS",
+					creditsAmount,
+					this.mCreditsReasonPopup.getText(),
+					creatureName
+				]);
+			}
+
+			this.mCreditsAmount.setText("");
+			this.mCreditsReasonPopup.hidePopup();
+			this.mCreditsReasonPopup = null;
 		}
 		else if (inputArea == this.mGMSilenceReasonPopup)
 		{
@@ -626,6 +679,7 @@ class this.Screens.GMScreen extends this.GUI.Frame
 		container.add(this.GUI.Spacer(1, 5));
 		container.add(this._buildCreateItemSection());
 		container.add(this._buildModifyFundsSection());
+		container.add(this._buildModifyCreditsSection());
 		container.add(this._buildRenameSection());
 		container.add(this._buildFreezeSection());
 		container.add(this._buildChannelSection());
@@ -648,6 +702,20 @@ class this.Screens.GMScreen extends this.GUI.Frame
 		container.add(this.GUI.Label("Copper Amount"));
 		container.add(this.mCopperAmount);
 		container.add(this.mModifyCopperButton);
+		return container;
+	}
+	function _buildModifyCreditsSection()
+	{
+		local container = this.GUI.Container();
+		this.mCreditsAmount = this.GUI.InputArea();
+		this.mCreditsAmount.setAllowOnlyNumbers(true);
+		this.mCreditsAmount.setSize(70, 15);
+		this.mModifyCreditsButton = this.GUI.Button("Modify Credits");
+		this.mModifyCreditsButton.addActionListener(this);
+		this.mModifyCreditsButton.setReleaseMessage("onButtonPressed");
+		container.add(this.GUI.Label("Credits"));
+		container.add(this.mCreditsAmount);
+		container.add(this.mModifyCreditsButton);
 		return container;
 	}
 
