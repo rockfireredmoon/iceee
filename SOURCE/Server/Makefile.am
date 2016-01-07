@@ -1,9 +1,13 @@
-bin_PROGRAMS = planetforeverd
-AM_CPPFLAGS= -I../squirrel/include -I../squirrel/sqrat
+if WINSERVICE
+bin_PROGRAMS = soad soadsvc
+else
+bin_PROGRAMS = soad
+endif
 
-planetforeverd_LDADD = ../squirrel/squirrel/libsquirrel.a ../squirrel/sqstdlib/libsqstdlib.a
-planetforeverd_LDFLAGS = -lpthread -lrt -lcurl
-planetforeverd_SOURCES = md5.cc \
+soad_CPPFLAGS = -I../squirrel/include
+soad_LDADD = ../squirrel/squirrel/libsquirrel.a ../squirrel/sqstdlib/libsqstdlib.a
+soad_LDFLAGS = -v
+soad_SOURCES = md5.cc \
 	Ability2.cpp \
 	AbilityTime.cpp \
 	Account.cpp \
@@ -161,3 +165,169 @@ planetforeverd_SOURCES = md5.cc \
 	VirtualItem.h \
 	ZoneDef.h \
 	ZoneObject.h
+	
+	
+if WINSERVICE
+
+soadsvc_CPPFLAGS = -I../squirrel/include -DWINDOWS_SERVICE=1
+soadsvc_LDADD = ../squirrel/squirrel/libsquirrel.a ../squirrel/sqstdlib/libsqstdlib.a
+soadsvc_SOURCES = md5.cc \
+	Ability2.cpp \
+	AbilityTime.cpp \
+	Account.cpp \
+	ActiveCharacter.cpp \
+	AIScript.cpp \
+	AIScript2.cpp \
+	Arena.cpp \
+	Audit.cpp \
+	BroadCast.cpp \
+	ByteBuffer.cpp \
+	Character.cpp \
+	ChatChannel.cpp \
+	Chat.cpp \
+	Combat.cpp \
+	Components.cpp \
+	Config.cpp \
+	ConfigString.cpp \
+	Crafting.cpp \
+	Creature.cpp \
+	CreditShop.cpp \
+	CreatureSpawner2.cpp \
+	Daily.cpp \
+	Debug.cpp \
+	DebugProfiler.cpp \
+	DebugTracer.cpp \
+	DirectoryAccess.cpp \
+	DropTable.cpp \
+	EliteMob.cpp \
+	EssenceShop.cpp \
+	FileReader3.cpp \
+	FileReader.cpp \
+	FriendStatus.cpp \
+	Gamble.cpp \
+	Globals.cpp \
+	Guilds.cpp \
+	GM.cpp \
+	HTTPBase.cpp \
+	HTTPDistribute.cpp \
+	IGForum.cpp \
+	Instance.cpp \
+	InstanceScale.cpp \
+	InstanceScript.cpp \
+	Interact.cpp \
+	Inventory.cpp \
+	Item.cpp \
+	ItemSet.cpp \
+	main.cpp \
+	Mail.cpp \
+	MainWindow.cpp \
+	MainWindow_Event.cpp \
+	NPC.cpp \
+	Packet.cpp \
+	PartyManager.cpp \
+	Preferences.cpp \
+	PVP.cpp \
+	QuestAction.cpp \
+	Quest.cpp \
+	QuestScript.cpp \
+	RemoteAction.cpp \
+	Report.cpp \
+	Router.cpp \
+	Scenery2.cpp \
+	Squirrel.cpp \
+	ScriptCore.cpp \
+	SimulatorBase.cpp \
+	Simulator.cpp \
+	SocketClass3.cpp \
+	Stats.cpp \
+	StringList.cpp \
+	Trade.cpp \
+	URL.cpp \
+	Util.cpp \
+	VirtualItem.cpp \
+	ZoneDef.cpp \
+	ZoneObject.cpp \
+	Ability2.h \
+	AbilityTime.h \
+	Account.h \
+	ActiveCharacter.h \
+	AIScript.h \
+	AIScript2.h \
+	Arena.h \
+	Audit.h \
+	BroadCast.h \
+	ByteBuffer.h \
+	Character.h \
+	ChatChannel.h \
+	Chat.h \
+	Combat.h \
+	CreditShop.h \
+	CommonTypes.h \
+	Components.h \
+	Config.h \
+	ConfigStr.h \
+	ConfigString.h \
+	Crafting.h \
+	Creature.h \
+	CreatureSpawner2.h \
+	Daily.h \
+	Debug.h \
+	DebugProfiler.h \
+	DebugTracer.h \
+	DecodePackets.h \
+	DirectoryAccess.h \
+	DropTable.h \
+	EliteMob.h \
+	EssenceShop.h \
+	FileReader3.h \
+	FileReader.h \
+	Formula.h \
+	FriendStatus.h \
+	Fun.h \
+	Gamble.h \
+	Globals.h \
+	Guilds.h \
+	GM.h \
+	HTTPBase.h \
+	HTTPDistribute.h \
+	IGForum.h \
+	Instance.h \
+	InstanceScale.h \
+	InstanceScript.h \
+	IntArray.h \
+	Interact.h \
+	Inventory.h \
+	Item.h \
+	ItemSet.h \
+	Mail.h \
+	MainWindow.h \
+	NPC.h \
+	Packet.h \
+	PartyManager.h \
+	Preferences.h \
+	PVP.h \
+	QuestAction.h \
+	Quest.h \
+	QuestScript.h \
+	RemoteAction.h \
+	Report.h \
+	RotatingList.h \
+	Router.h \
+	Squirrel.h \
+	Scenery2.h \
+	ScriptCore.h \
+	Session.h \
+	SimulatorBase.h \
+	Simulator.h \
+	SocketClass3.h \
+	Stats.h \
+	StringList.h \
+	Trade.h \
+	TradingBoard.h \
+	URL.h \
+	Util.h \
+	VirtualItem.h \
+	ZoneDef.h \
+	ZoneObject.h
+	
+endif

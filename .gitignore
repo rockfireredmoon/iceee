@@ -8,7 +8,6 @@
 /config.status
 /config.guess
 /compile
-*.m4
 /config/
 /Makefile
 /libtool
@@ -40,3 +39,6 @@
 *.pem
 *.cproject
 *.project
+*.autotools
+/Deleted/
+/Audit/

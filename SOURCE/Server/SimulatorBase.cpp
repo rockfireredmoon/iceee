@@ -147,7 +147,11 @@ void SimulatorBaseThread :: RunMainLoop(void)
 		}
 		else if(Status == Status_Init)
 		{
+#ifdef LOCALHOST
+			if(sc.CreateSocket(HomePortStr, LOCALHOST_ADDRESS) == 0)
+#else
 			if(sc.CreateSocket(HomePortStr, BindAddress) == 0)
+#endif
 			{
 				LogMessageL(LOG_ALWAYS, "[SimB] Server created, awaiting connection on port %d (socket:%d).", HomePort, sc.ListenSocket);
 				Status = Status_Wait;
@@ -168,9 +172,11 @@ void SimulatorBaseThread :: RunMainLoop(void)
 			}
 			else
 			{
-				LogMessageL(LOG_ERROR, "Socket error: %s", sc.GetErrorMessage());
-				//This shouldn't normally fail.  Need a complete restart.
-				Status = Status_Restart;
+				if(isActive) {
+					LogMessageL(LOG_ERROR, "Socket error: %s", sc.GetErrorMessage());
+					//This shouldn't normally fail.  Need a complete restart.
+					Status = Status_Restart;
+				}
 			}
 		}
 		else if(Status == Status_Restart)

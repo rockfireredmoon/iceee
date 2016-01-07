@@ -30,6 +30,7 @@ public:
 	int port;
 	int ListenSocket;
 	int ClientSocket;
+	char destAddr[INET6_ADDRSTRLEN];
 	sockaddr_in acceptData;
 	char debugName[32];  //Used to identify the owner of this socket, for debug purposes.
 
@@ -58,6 +59,7 @@ public:
 private:
 	fd_set readset;
 	timeval seltime;
+	bool shuttingDown;
 };
 
 #endif //#ifndef SOCKETCLASS3_H

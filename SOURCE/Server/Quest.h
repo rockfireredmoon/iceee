@@ -184,6 +184,7 @@ class QuestReferenceContainer
 {
 public:
 	QuestReferenceContainer();
+
 	~QuestReferenceContainer();
 	void Free(void);
 

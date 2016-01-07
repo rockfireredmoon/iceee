@@ -2,7 +2,7 @@
 [ENTRY]
 ID=602
 Title=A Gift for the Holidays!
-BodyText=Welcome friend! Again the seasons change and the Winter Dawning Festival is upon us!This season everyone may take a single gift from the Holiday Gift Chest. If you want additional gifts you can hunt the Chills that now stalk the landscape. Each Chillkin has a chance to drop a Corn-Cob Pipe. Turn in three Corn-Cob Pipes to the Chillkin Hunter Chest and take another gift of your choosing! Be wary! The Chillkin are not too dangerous but the Chill Lords are very dangerous!By the way! Do you like my outfit? You too can have this same Winter Dawning Suit. Simply go to the Credit Store(Press the K key) and look in the NEW! Tab. Please be merry and have much cheer this holiday season!
+BodyText=Welcome friend! Again the seasons change and the Winter Dawning Festival is upon us! This season everyone may take a single gift from the Holiday Gift Chest. If you want additional gifts, you can hunt the Chills that now stalk the landscape. Each Chillkin has a chance to drop a Corn-Cob Pipe. Turn in three Corn-Cob Pipes to the Chillkin Hunter Chest and take another gift of your choosing! Be wary! The Chillkin are not too dangerous but the Chill Lords are very dangerous! By the way, do you like my outfit? You too can have this same Winter Dawning Suit. Simply go to the Credit Shop(Press the K key) and look in the NEW! Tab. Please be merry and have much cheer this holiday season!
 CompleteText=Take a free gift!
 Level=7
 Suggested=7
@@ -35,7 +35,7 @@ RewardItem.3=143581,1,0
 [ENTRY]
 ID=603
 Title=A Gift for the Holidays!
-BodyText=Welcome friend! Again the seasons change and the Winter Dawning Festival is upon us!This season everyone may take a single gift from the Holiday Gift Chest. If you want additional gifts you can hunt the Chills that now stalk the landscape. Each Chillkin has a chance to drop a Corn-Cob Pipe. Turn in three Corn-Cob Pipes to the Chillkin Hunter Chest and take another gift of your choosing! Be wary! The Chillkin are not too dangerous but the Chill Lords are very dangerous!By the way! Do you like my outfit? You too can have this same Winter Dawning Suit. Simply go to the Credit Store(Press the K key) and look in the NEW! Tab. Please be merry and have much cheer this holiday season!
+BodyText=Welcome friend! Again the seasons change and the Winter Dawning Festival is upon us! This season everyone may take a single gift from the Holiday Gift Chest. If you want additional gifts, you can hunt the Chills that now stalk the landscape. Each Chillkin has a chance to drop a Corn-Cob Pipe. Turn in three Corn-Cob Pipes to the Chillkin Hunter Chest and take another gift of your choosing! Be wary! The Chillkin are not too dangerous but the Chill Lords are very dangerous! By the way, do you like my outfit? You too can have this same Winter Dawning Suit. Simply go to the Credit Shop(Press the K key) and look in the NEW! Tab. Please be merry and have much cheer this holiday season!
 CompleteText=Take a free gift!
 Level=16
 Suggested=16
@@ -70,7 +70,7 @@ RewardItem.3=143582,1,0
 [ENTRY]
 ID=604
 Title=A Gift for the Holidays!
-BodyText=Welcome friend! Again the seasons change and the Winter Dawning Festival is upon us!This season everyone may take a single gift from the Holiday Gift Chest. If you want additional gifts you can hunt the Chills that now stalk the landscape. Each Chillkin has a chance to drop a Corn-Cob Pipe. Turn in three Corn-Cob Pipes to the Chillkin Hunter Chest and take another gift of your choosing! Be wary! The Chillkin are not too dangerous but the Chill Lords are very dangerous!By the way! Do you like my outfit? You too can have this same Winter Dawning Suit. Simply go to the Credit Store(Press the K key) and look in the NEW! Tab. Please be merry and have much cheer this holiday season!
+BodyText=Welcome friend! Again the seasons change and the Winter Dawning Festival is upon us! This season everyone may take a single gift from the Holiday Gift Chest. If you want additional gifts, you can hunt the Chills that now stalk the landscape. Each Chillkin has a chance to drop a Corn-Cob Pipe. Turn in three Corn-Cob Pipes to the Chillkin Hunter Chest and take another gift of your choosing! Be wary! The Chillkin are not too dangerous but the Chill Lords are very dangerous! By the way, do you like my outfit? You too can have this same Winter Dawning Suit. Simply go to the Credit Shop(Press the K key) and look in the NEW! Tab. Please be merry and have much cheer this holiday season!
 CompleteText=Take a free gift!
 Level=27
 Suggested=27
@@ -104,8 +104,8 @@ RewardItem.3=143583,1,0
 // HEARTWOOD
 [ENTRY]
 ID=605
-Title=A Gift for the Holiday!
-BodyText=Welcome friend! Again the seasons change and the Winter Dawning Festival is upon us!This season everyone may take a single gift from the Holiday Gift Chest. If you want additional gifts you can hunt the Chills that now stalk the landscape. Each Chillkin has a chance to drop a Corn-Cob Pipe. Turn in three Corn-Cob Pipes to the Chillkin Hunter Chest and take another gift of your choosing! Be wary! The Chillkin are not too dangerous but the Chill Lords are very dangerous!By the way! Do you like my outfit? You too can have this same Winter Dawning Suit. Simply go to the Credit Store(Press the K key) and look in the NEW! Tab. Please be merry and have much cheer this holiday season!
+Title=A Gift for the Holidays!
+BodyText=Welcome friend! Again the seasons change and the Winter Dawning Festival is upon us! This season everyone may take a single gift from the Holiday Gift Chest. If you want additional gifts, you can hunt the Chills that now stalk the landscape. Each Chillkin has a chance to drop a Corn-Cob Pipe. Turn in three Corn-Cob Pipes to the Chillkin Hunter Chest and take another gift of your choosing! Be wary! The Chillkin are not too dangerous but the Chill Lords are very dangerous! By the way, do you like my outfit? You too can have this same Winter Dawning Suit. Simply go to the Credit Shop(Press the K key) and look in the NEW! Tab. Please be merry and have much cheer this holiday season!
 CompleteText=Take a free gift!
 Level=33
 Suggested=33
@@ -141,7 +141,7 @@ RewardItem.3=143584,1,0
 [ENTRY]
 ID=10000
 Title=A Special Gift
-BodyText=Bark! Or rather, greetings! Perhaps you're wondering how I'm speaking to you. That's not important. Do you see that tree over there? Apparently the townsfolk decided that a giant tree was too easy to miss, so they added colorful lights and decorations too. Bizarre, don't you think? They call this Winter Dawning. There are several gift boxes underneath it. Among them is something for you. Go take a look.
+BodyText=Bark! Or rather, greetings! Perhaps you're wondering how I'm speaking to you. That's not important. Do you see that tree over there? Apparently the townsfolk decided that a giant tree was too easy to miss, so they added colorful lights and decorations too. Bizarre, don't you think? They call it the Winter Dawning Tree. Anyway, there are several gift boxes underneath it and among them is something for you. Go take a look.
 CompleteText=You unwrap the gift, finding an assortment of items. But there is yet another box within. Open it! (Double click the inventory item)
 Level=15
 Suggested=15

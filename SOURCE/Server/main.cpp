@@ -186,6 +186,7 @@ ChangeData g_AutoSaveTimer;
 char GAuxBuf[1024];    //Note, if this size is modified, change all "extern" references
 char GSendBuf[32767];  //Note, if this size is modified, change all "extern" references
 
+int InitServerMain(void);
 void RunServerMain(void);
 void SendHeartbeatMessages(void);
 void RunPendingMessages(void);  //Runs all pending messages in the BroadCastMessage class.
@@ -215,10 +216,21 @@ void SystemLoop_Console(void);
 #ifndef WINDOWS_PLATFORM
 #include <signal.h>
 #include <execinfo.h>
-#endif
+
+bool handlingSignal;
 
 void segfault_sigaction(int signum, siginfo_t *si, void *arg)
 {
+	if(handlingSignal) {
+		fprintf(stderr, "[FATAL]: Re-entered signal handling. Giving up and exiting\n");
+		fflush(stderr);
+
+		// Crashed will dealing with crash! Just give up so we don't loop like a mad thing
+		exit(0);
+	}
+	handlingSignal = true;
+
+//	g_ServerStatus = SERVER_STATUS_STOPPED;
 	g_Log.AddMessageFormatW(MSG_CRIT, "[CRITICAL] signal encountered: %d", signum);
 	switch(signum)
 	{
@@ -321,6 +333,7 @@ void InstallSignalHandler(void)
 	sigaction(SIGINT, &sa, NULL);
 	sigaction(SIGTERM, &sa, NULL);
 }
+#endif
 
 /*
 void Handle_SIGPIPE(int unknown)
@@ -367,10 +380,14 @@ void Handle_SIGINT(int unknown)
 
 //#endif
 
+#ifdef WINDOWS_SERVICE
+int main()
+#else
 #ifdef USE_WINDOWS_GUI
 int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 #else
 int main(int argc, char *argv[])
+#endif
 #endif
 {
 #ifdef _CRTDEBUGGING
@@ -392,7 +409,61 @@ int main(int argc, char *argv[])
 	*/
 #endif
 
+#ifdef WINDOWS_SERVICE
 
+	/* By default the working directory will be the \Windows\System32. This is no good for us,
+		 * we need to be wherever the exectuable is	 *
+		 */
+	char buffer[MAX_PATH];
+	GetModuleFileName(NULL, buffer, MAX_PATH);
+	std::string dn = Platform::Dirname(buffer);
+	PLATFORM_CHDIR(dn.c_str());
+
+
+	SERVICE_TABLE_ENTRY ServiceTable[2];
+	ServiceTable[0].lpServiceName = "TAWD";
+	ServiceTable[0].lpServiceProc = (LPSERVICE_MAIN_FUNCTION)ServiceMain;
+	ServiceTable[1].lpServiceName = NULL;
+	ServiceTable[1].lpServiceProc = NULL;
+    StartServiceCtrlDispatcher(ServiceTable);
+#else
+#ifdef WINDOWS_GUI
+	return InitServerMain();
+#else
+	InitServerMain();
+#endif
+#endif
+}
+
+
+#ifdef WINDOWS_SERVICE
+void ServiceMain(int argc, char** argv) {
+
+    int error;
+    ServiceStatus.dwServiceType        = SERVICE_WIN32;
+    ServiceStatus.dwCurrentState       = SERVICE_START_PENDING;
+    ServiceStatus.dwControlsAccepted   = SERVICE_ACCEPT_STOP | SERVICE_ACCEPT_SHUTDOWN;
+    ServiceStatus.dwWin32ExitCode      = 0;
+    ServiceStatus.dwServiceSpecificExitCode = 0;
+    ServiceStatus.dwCheckPoint         = 0;
+    ServiceStatus.dwWaitHint           = 0;
+
+    SetServiceStatus (hStatus, &ServiceStatus);
+
+    hStatus = RegisterServiceCtrlHandler(
+		"TAWD",
+		(LPHANDLER_FUNCTION)ControlHandler);
+
+    if (hStatus == (SERVICE_STATUS_HANDLE)0) {
+        return;
+    }
+
+
+    InitServerMain();
+}
+#endif
+
+int InitServerMain() {
 	TRACE_INIT(250);
 
 #ifdef USE_WINDOWS_GUI
@@ -574,6 +645,10 @@ int main(int argc, char *argv[])
 
 	OpenChatLogFile("RegionChat.log");
 	
+#ifdef WINDOWS_SERVICE
+    ServiceStatus.dwCurrentState = SERVICE_RUNNING;
+    SetServiceStatus (hStatus, &ServiceStatus);
+#endif
 
 #ifdef USE_WINDOWS_GUI
 	SystemLoop_Windows();
@@ -582,6 +657,13 @@ int main(int argc, char *argv[])
 #endif
 
 	ShutDown();
+
+#ifdef WINDOWS_SERVICE
+    ServiceStatus.dwWin32ExitCode = 0;
+    ServiceStatus.dwCurrentState  = SERVICE_STOPPED;
+    SetServiceStatus (hStatus, &ServiceStatus);
+#endif
+
 	UnloadResources();
 	exit(EXIT_SUCCESS);
 #ifdef _CRTDEBUGGING
@@ -589,6 +671,43 @@ int main(int argc, char *argv[])
 #endif
 	return 0;
 }
+
+#ifdef WINDOWS_SERVICE
+
+// Service initialization
+int InitService() {
+    int result;
+    //result = g_Log.AddmeWriteToLog("Monitoring started.");
+    return(result);
+}
+
+// Control handler function
+void ControlHandler(DWORD request) {
+	// TODO proper cleanup
+    switch(request) {
+
+        case SERVICE_CONTROL_STOP:
+            //WriteToLog("Monitoring stopped.");
+
+            ServiceStatus.dwWin32ExitCode = 0;
+            ServiceStatus.dwCurrentState  = SERVICE_STOPPED;
+            SetServiceStatus (hStatus, &ServiceStatus);
+            return;
+        case SERVICE_CONTROL_SHUTDOWN:
+            //WriteToLog("Monitoring stopped.");
+            ServiceStatus.dwWin32ExitCode = 0;
+            ServiceStatus.dwCurrentState  = SERVICE_STOPPED;
+            SetServiceStatus (hStatus, &ServiceStatus);
+            return;
+        default:
+            break;
+    }
+
+    // Report current status
+    SetServiceStatus (hStatus,  &ServiceStatus);
+    return;
+}
+#endif
 
 
 #ifdef WINDOWS_PLATFORM
@@ -1289,25 +1408,39 @@ void Debug_OutputCharacter(FILE *output, int index, CreatureInstance *cInst)
 {
 	//Helper function for outputting creature data.
 	fprintf(output, "  [%02d] = %s (Ptr: %p) ID: %d, CDef: %d, Fact: %d\r\n", index, cInst->css.display_name, cInst, cInst->CreatureID, cInst->CreatureDefID, cInst->Faction);
+	fflush(output);
 	fprintf(output, "    Pos: %d, %d, %d\r\n", cInst->CurrentX, cInst->CurrentY, cInst->CurrentZ);
+	fflush(output);
 	if(cInst->aiScript != NULL)
 	{
 		fprintf(output, "    AI TLS Ptr: %p (%s) curInst: %d\r\n", cInst->aiScript, cInst->aiScript->def->scriptName.c_str(), cInst->aiScript->curInst);
+		fflush(output);
 	}
 	if(cInst->aiNut != NULL)
 	{
 		fprintf(output, "    AI Squirrel Ptr: %p (%s)\r\n", cInst->aiNut, cInst->aiNut->def->scriptName.c_str());
+		fflush(output);
 	}
 	fprintf(output, "    Target: %s (Ptr: %p)\r\n", (cInst->CurrentTarget.targ != NULL) ? cInst->CurrentTarget.targ->css.display_name : "null", cInst->CurrentTarget.targ);
+	fflush(output);
 	fprintf(output, "    Might: %d (%d), Will: %d (%d)\r\n", cInst->css.might, cInst->css.might_charges, cInst->css.will, cInst->css.will_charges);
+	fflush(output);
 	if(cInst->charPtr != NULL) {
+		fprintf(output, "    Available quests: %d\r\n", cInst->charPtr->questJournal.availableQuests.itemList.size());
+		fflush(output);
+		fprintf(output, "    Available soon quests: %d\r\n", cInst->charPtr->questJournal.availableSoonQuests.itemList.size());
+		fflush(output);
+		fprintf(output, "    Active quests: %d\r\n", cInst->charPtr->questJournal.activeQuests.itemList.size());
+		fflush(output);
 		QuestReferenceContainer act = cInst->charPtr->questJournal.activeQuests;
 		for(std::vector<QuestReference>::iterator it = act.itemList.begin(); it != act.itemList.end(); ++it) {
 			QuestReference ref = *it;
 			fprintf(output, "    Quest: %d (ACT %d)\r\n", ref.QuestID, ref.CurAct);
+			fflush(output);
 			QuestScript::QuestNutPlayer *questScript = g_QuestNutManager.GetActiveScript(cInst->CreatureID, ref.QuestID);
 			if(questScript != NULL && questScript->def != NULL) {
-				fprintf(output, "    Quest Script: %d \r\n", questScript->def->scriptName.c_str());
+				fprintf(output, "    Quest Script: %s \r\n", questScript->def->scriptName.c_str());
+				fflush(output);
 			}
 		}
 	}
@@ -1317,18 +1450,24 @@ void Debug_OutputCharacter(FILE *output, int index, CreatureInstance *cInst)
 		if(cInst->ab[abi].bPending == true)
 		{
 			fprintf(output, "    ab[%d] abID: %d, %d targets\r\n", abi, cInst->ab[abi].abilityID, cInst->ab[abi].TargetCount);
+			fflush(output);
 			int b;
 			for(b = 0; b < cInst->ab[abi].TargetCount; b++)
 			{
 				CreatureInstance *targ = cInst->ab[abi].TargetList[b];
 				fprintf(output, "      [%d] = %s (Ptr: %p)\r\n", b, (targ != NULL) ? targ->css.display_name : "null", targ);
+				fflush(output);
 			}
 		}
-		if(cInst->ab[abi].x != 0.0F)
+		if(cInst->ab[abi].x != 0.0F) {
 			fprintf(output, "    ab[%d] target loc: %g, %g, %g\r\n", abi, cInst->ab[abi].x, cInst->ab[abi].y, cInst->ab[abi].z);
+			fflush(output);
+		}
 	}
-	if(cInst->AnchorObject != NULL)
+	if(cInst->AnchorObject != NULL) {
 		fprintf(output, "    Officer: %s (Ptr: %p)\r\n", cInst->AnchorObject->css.display_name, cInst->AnchorObject);
+		fflush(output);
+	}
 
 	if(cInst->HasStatus(StatusEffects::AUTO_ATTACK))
 		fprintf(output, "    AUTO_ATTACK");
@@ -1337,6 +1476,7 @@ void Debug_OutputCharacter(FILE *output, int index, CreatureInstance *cInst)
 	if(cInst->HasStatus(StatusEffects::DEAD))
 		fprintf(output, "    DEAD");
 	fprintf(output, "\r\n");
+	fflush(output);
 }
 
 void Debug_FullDump(void)
@@ -1386,11 +1526,16 @@ void Debug_FullDump(void)
 
 #ifndef CREATUREMAP
 		fprintf(output, "\r\nNPCs: %d\r\n", aInst->NPCListPtr.size());
-		for(a = 0; a < (int)aInst->NPCListPtr.size(); a++)
+		fflush(output);
+		for(a = 0; a < (int)aInst->NPCListPtr.size(); a++) {
 			Debug_OutputCharacter(output, a, aInst->NPCListPtr[a]);
+			fflush(output);
+		}
 		fprintf(output, "\r\n\r\n");
 #else
 		ActiveInstance::CREATURE_IT it;
+		fprintf(output, "\r\nNPCs: %lu\r\n", aInst->NPCListPtr.size());
+		fflush(output);
 		for(it = aInst->NPCList.begin(); it != aInst->NPCList.end(); ++it)
 			Debug_OutputCharacter(output, a, &it->second);
 		fprintf(output, "\r\n\r\n");

@@ -126,7 +126,11 @@ PLATFORM_THREADRETURN HTTPBaseThreadProc(PLATFORM_THREADARGS lpParam)
 		}
 		else if(controller->Status == Status_Init)
 		{
+#ifdef LOCALHOST
+			if(controller->sc.CreateSocket(controller->HomePortStr, LOCALHOST_ADDRESS) == 0)
+#else
 			if(controller->sc.CreateSocket(controller->HomePortStr, controller->BindAddress) == 0)
+#endif
 			{
 				controller->LogMessageL(LOG_ALWAYS, "[HTTP] Server created, awaiting connection on port %d (socket:%d).", controller->HomePort, controller->sc.ListenSocket);
 				controller->Status = Status_Wait;
@@ -146,9 +150,11 @@ PLATFORM_THREADRETURN HTTPBaseThreadProc(PLATFORM_THREADARGS lpParam)
 			}
 			else
 			{
-				controller->LogMessageL(LOG_ERROR, "[HTTP] Socket error: %s", controller->sc.GetErrorMessage());
-				//This shouldn't normally fail.  Need a complete restart.
-				controller->Status = Status_Restart;
+				if(controller->isActive) {
+					controller->LogMessageL(LOG_ERROR, "[HTTP] Socket error: %s", controller->sc.GetErrorMessage());
+					//This shouldn't normally fail.  Need a complete restart.
+					controller->Status = Status_Restart;
+				}
 			}
 		}
 		else if(controller->Status == Status_Restart)

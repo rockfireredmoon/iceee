@@ -344,17 +344,17 @@ public:
 	int CreatureDefID;   //Associated Creature Def ID
 	int CreatureID;      //Creature Instance ID
 
-	union
-	{
+//	union
+//	{
 		ActiveSpawner *spawnGen;   //For NPCs, the pointer of the spawner object that generated this creature
 		CharacterData *charPtr;  //For Players, the pointer back the character definition
-	};
-	
-	union
-	{
+//	};
+//
+//	union
+//	{
 		SpawnTile *spawnTile;    //For NPCs, spawntile that this object is linked to.
 		SimulatorThread *simulatorPtr; //For players, a pointer back to the simulator that is controlling this object.
-	};
+//	};
 
 	ActiveInstance *actInst;
 
@@ -416,6 +416,8 @@ public:
 
 	vector<BaseStatData> baseStats;  //Base stats.  New entries are saved to this list when a unique Add() is made.
 
+	bool swimming; // Whether the player is swimming
+
 	ActiveBuff * AddMod(unsigned char tier, int buffCategory, short abID, short abgID, double durationSec);
 	void AttachItem(const char *type, const char *node);
 	void DetachItem(const char *type, const char *node);
@@ -438,6 +440,7 @@ public:
 	void RemoveBuffsFromAbility(int abilityID, bool send);
 	void RemoveBuffIndex(size_t index);
 	void RemoveAllBuffs(bool send);
+	void PushStatMod(ActiveStatMod &mod);
 	void RemoveAbilityBuffTypeExcept(int buffCategory, int abilityID, int abilityGroupID);
 	bool RemoveAbilityBuffWithStat(int statID, float sign);
 	void ActivateSavedAbilities(void);
@@ -509,6 +512,7 @@ public:
 	bool isTargetInCone(CreatureInstance * target, double amount);
 	void RegisterHostility(CreatureInstance *attacker, int hostility);
 	void SetCombatStatus(void);
+	void Untransform(void);
 	int GetOrbRegenerationTime(float regenFactor);
 	void CheckUpdateTimers(void);
 	void CheckLootTimers(void);
