@@ -1,6 +1,5 @@
 [ENTRY]
 ID=1029336
-PlacedBy=-400000000
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=Untitled
 Pos=16602,1216,36536
@@ -10,7 +9,6 @@ spawnPackage=#F1971
 
 [ENTRY]
 ID=1029352
-PlacedBy=-400000000
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=Untitled
 Pos=16137.2,1181.85,36676.7
@@ -19,8 +17,17 @@ Scale=1,1,1
 spawnPackage=#FH2198
 
 [ENTRY]
+ID=1131442
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=16236.5,1185.5,36564.2
+Orient=0,-0.488177,0,0.872745
+Scale=1,1,1
+spawnPackage=#F3183
+aiModule=Bastion_NPC_CatapultFiringAnimation(3397)
+
+[ENTRY]
 ID=973079494
-PlacedBy=0
 Asset=Prop-Fences#Prop-Wooden_Barricade1
 Name=Untitled
 Pos=16805.1,1217.3,36315.2
@@ -29,7 +36,6 @@ Scale=1.55,1.55,1.55
 
 [ENTRY]
 ID=973079495
-PlacedBy=0
 Asset=Prop-Fences#Prop-Wooden_Barricade2
 Name=Untitled
 Pos=16738.2,1215.97,36733.7
@@ -38,7 +44,6 @@ Scale=1.55,1.55,1.55
 
 [ENTRY]
 ID=973079496
-PlacedBy=0
 Asset=Prop-Wooden_Barricade2
 Name=Untitled
 Pos=16670.3,1211.87,36318.6
@@ -47,7 +52,6 @@ Scale=1.55,1.55,1.55
 
 [ENTRY]
 ID=973079497
-PlacedBy=0
 Asset=Prop-Wooden_Barricade1
 Name=Untitled
 Pos=16570.3,1217.7,36675.1
@@ -56,7 +60,6 @@ Scale=1.55,1.55,1.55
 
 [ENTRY]
 ID=973079498
-PlacedBy=0
 Asset=Prop-Wooden_Barricade1
 Name=Untitled
 Pos=16866.7,1200.39,36357.4
@@ -65,7 +68,6 @@ Scale=1.55,1.55,1.55
 
 [ENTRY]
 ID=973079499
-PlacedBy=0
 Asset=Prop-Wooden_Barricade1
 Name=Untitled
 Pos=16796.7,1217.01,36697.4
@@ -74,7 +76,6 @@ Scale=1.55,1.55,1.55
 
 [ENTRY]
 ID=973079500
-PlacedBy=0
 Asset=Prop-Wooden_Barricade1
 Name=Untitled
 Pos=16617.6,1217.12,36354
@@ -83,7 +84,6 @@ Scale=1.55,1.55,1.55
 
 [ENTRY]
 ID=973079501
-PlacedBy=0
 Asset=CL-Camp3
 Name=Untitled
 Pos=16821,1216.27,36580.5
@@ -92,7 +92,6 @@ Scale=1,1,1
 
 [ENTRY]
 ID=973079505
-PlacedBy=-400000056
 Asset=Prop-Siege_Tower
 Name=Untitled
 Pos=16492.1,1233.41,36685.3
@@ -101,7 +100,6 @@ Scale=1.225,1.225,1.225
 
 [ENTRY]
 ID=973079529
-PlacedBy=-400000056
 Asset=Prop-Tent3#Prop-Tent3
 Name=Untitled
 Pos=16547.7,1218.21,36541.2
@@ -110,7 +108,6 @@ Scale=1.625,1.625,1.625
 
 [ENTRY]
 ID=973079530
-PlacedBy=-400000056
 Asset=CL-Rack1
 Name=Untitled
 Pos=16588.4,1221.87,36644.7
@@ -119,7 +116,6 @@ Scale=1,1,1
 
 [ENTRY]
 ID=973079531
-PlacedBy=-400000056
 Asset=CL-Rack2
 Name=Untitled
 Pos=16580.8,1223.1,36625.5
@@ -128,7 +124,6 @@ Scale=1,1,1
 
 [ENTRY]
 ID=973079532
-PlacedBy=-400000056
 Asset=CL-Rack1
 Name=Untitled
 Pos=16577.1,1223.36,36610.6
@@ -137,7 +132,6 @@ Scale=1,1,1
 
 [ENTRY]
 ID=973079533
-PlacedBy=-400000056
 Asset=CL-Rack1
 Name=Untitled
 Pos=16619.7,1216.86,36388.7
@@ -146,7 +140,6 @@ Scale=1,1,1
 
 [ENTRY]
 ID=973079534
-PlacedBy=-400000056
 Asset=CL-Rack2
 Name=Untitled
 Pos=16631.8,1218.34,36377.1
@@ -155,7 +148,6 @@ Scale=1,1,1
 
 [ENTRY]
 ID=973079535
-PlacedBy=-400000056
 Asset=CL-Rack1
 Name=Untitled
 Pos=16642.6,1218.11,36368.4
@@ -164,7 +156,6 @@ Scale=1,1,1
 
 [ENTRY]
 ID=973079536
-PlacedBy=-400000000
 Asset=CL-Junk3
 Name=Untitled
 Pos=16806.6,1213.11,36374.7
@@ -173,7 +164,6 @@ Scale=1.975,1.975,1.975
 
 [ENTRY]
 ID=973079537
-PlacedBy=-400000000
 Asset=Prop-Table4#Prop-Table4
 Name=Untitled
 Pos=16643.4,1208.03,36494.5
@@ -182,7 +172,6 @@ Scale=1,1,1
 
 [ENTRY]
 ID=973079538
-PlacedBy=-400000000
 Asset=Prop-Desk_Set#Prop-Paper
 Name=Untitled
 Pos=16639.5,1215.51,36491.2
@@ -191,7 +180,6 @@ Scale=1,1,1
 
 [ENTRY]
 ID=973079539
-PlacedBy=-400000000
 Asset=Prop-Paper
 Name=Untitled
 Pos=16645.9,1215.6,36498.4
@@ -200,7 +188,6 @@ Scale=1,1,1
 
 [ENTRY]
 ID=973079540
-PlacedBy=-400000000
 Asset=Prop-Containers1#Prop-Crate3
 Name=Untitled
 Pos=16839.9,1211.28,36361
@@ -209,7 +196,6 @@ Scale=1.4,1.4,1.4
 
 [ENTRY]
 ID=973079541
-PlacedBy=0
 Asset=Prop-Containers1#Prop-Crate2
 Name=Untitled
 Pos=16813.4,1216.52,36352.4
@@ -218,7 +204,6 @@ Scale=1.4,1.4,1.4
 
 [ENTRY]
 ID=973079542
-PlacedBy=-400000000
 Asset=Prop-Crate2
 Name=Untitled
 Pos=16815,1226.48,36354.4
@@ -227,7 +212,6 @@ Scale=1.4,1.4,1.4
 
 [ENTRY]
 ID=973079546
-PlacedBy=0
 Asset=Prop-Campfire
 Name=Untitled
 Pos=16636.3,1216.16,36558.5
@@ -236,7 +220,6 @@ Scale=1.35,1.35,1.35
 
 [ENTRY]
 ID=973079594
-PlacedBy=0
 Asset=Prop-Bush-Med2#Prop-Bush-Med2
 Name=Untitled
 Pos=16010.9,1247.76,36206.8
@@ -245,7 +228,6 @@ Scale=1.425,1.425,1.425
 
 [ENTRY]
 ID=973079613
-PlacedBy=-400000056
 Asset=Prop-Fences#Prop-Wooden_Barricade1
 Name=Untitled
 Pos=16322.5,1244.69,36906.1
@@ -254,7 +236,6 @@ Scale=1.35,1.35,1.35
 
 [ENTRY]
 ID=973079616
-PlacedBy=-400000056
 Asset=Prop-Wooden_Barricade1
 Name=Untitled
 Pos=16228.8,1226.83,36922.6
@@ -263,7 +244,6 @@ Scale=1.55,1.55,1.55
 
 [ENTRY]
 ID=973079831
-PlacedBy=0
 Asset=Prop-Stump2
 Name=Untitled
 Pos=16815.1,1234.38,36888.5
@@ -272,7 +252,6 @@ Scale=1.2,1.2,1.2
 
 [ENTRY]
 ID=973080094
-PlacedBy=0
 Asset=Prop-Lamp_Post_NB1
 Name=Untitled
 Pos=16076.4,1165.83,36674.4
@@ -281,7 +260,6 @@ Scale=1.225,1.225,1.225
 
 [ENTRY]
 ID=973080095
-PlacedBy=-400000000
 Asset=Prop-Lamp_Post_NB1
 Name=Untitled
 Pos=16772.4,1202.88,36432.4
@@ -290,7 +268,6 @@ Scale=1.225,1.225,1.225
 
 [ENTRY]
 ID=973080101
-PlacedBy=0
 Asset=Prop-Lamp_Post_NB_Unlit
 Name=Untitled
 Pos=16408.9,1216.52,36958.7
@@ -299,7 +276,6 @@ Scale=1,1,1
 
 [ENTRY]
 ID=973080104
-PlacedBy=-400000000
 Asset=Battlefield?d=0.2&amp
 Name=Untitled
 Pos=16542.3,1220.62,36944.3
@@ -308,7 +284,6 @@ Scale=1,1,1
 
 [ENTRY]
 ID=973080746
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=16713.2,1216.3,36303.4
@@ -320,7 +295,6 @@ link=973080754,1
 
 [ENTRY]
 ID=973080747
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=16701.5,1216.3,36437
@@ -332,7 +306,6 @@ link=973080749,1
 
 [ENTRY]
 ID=973080749
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=16702.4,1216.3,36506.7
@@ -344,7 +317,6 @@ link=973080750,1
 
 [ENTRY]
 ID=973080750
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=16676.6,1216.3,36578
@@ -356,7 +328,6 @@ link=973080751,1
 
 [ENTRY]
 ID=973080751
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=16641.3,1216.3,36642.3
@@ -367,7 +338,6 @@ link=973080750,1
 
 [ENTRY]
 ID=973080752
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=16498.7,1216.3,36853.1
@@ -378,7 +348,6 @@ link=973080856,1
 
 [ENTRY]
 ID=973080753
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=16768.6,1216.51,36295.6
@@ -387,7 +356,6 @@ Scale=1,1,1
 
 [ENTRY]
 ID=973080754
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=16749.9,1216.06,36433.8
@@ -399,7 +367,6 @@ link=973080755,1
 
 [ENTRY]
 ID=973080755
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=16746,1216.29,36544.6
@@ -410,7 +377,6 @@ link=973080754,1
 
 [ENTRY]
 ID=973080756
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=16720.3,1216.29,36613.9
@@ -422,7 +388,6 @@ link=973080771,1
 
 [ENTRY]
 ID=973080757
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=16652.3,1216.29,36739
@@ -433,7 +398,6 @@ link=973080758,1
 
 [ENTRY]
 ID=973080758
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=16545.7,1216.29,36866.8
@@ -445,7 +409,6 @@ link=973080757,1
 
 [ENTRY]
 ID=973080760
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=16779.4,1216,36459.4
@@ -454,7 +417,6 @@ Scale=1,1,1
 
 [ENTRY]
 ID=973080761
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=16890,1207.75,36457.4
@@ -466,7 +428,6 @@ link=973080762,1
 
 [ENTRY]
 ID=973080771
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=16672.6,1216.3,36469.9
@@ -477,7 +438,6 @@ link=973080756,1
 
 [ENTRY]
 ID=973080772
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=16672.8,1216.3,36440.4
@@ -488,7 +448,6 @@ link=973080820,1
 
 [ENTRY]
 ID=973080799
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=16480.1,1215.29,36436.8
@@ -499,7 +458,6 @@ link=973080800,1
 
 [ENTRY]
 ID=973080800
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=16255.8,1191.29,36457.8
@@ -511,7 +469,6 @@ link=973080799,1
 
 [ENTRY]
 ID=973080801
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=16133.1,1186.02,36481.5
@@ -523,7 +480,6 @@ link=973080800,1
 
 [ENTRY]
 ID=973080819
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=16134.2,1186.02,36503.9
@@ -535,7 +491,6 @@ link=973080818,1
 
 [ENTRY]
 ID=973080820
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=16423,1207.65,36464.8
@@ -547,7 +502,6 @@ link=973080819,1
 
 [ENTRY]
 ID=973080831
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=16711.2,1216.5,36273.6
@@ -559,7 +513,6 @@ link=973080746,1
 
 [ENTRY]
 ID=973080832
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=16778,1216.77,36276
@@ -569,7 +522,6 @@ spawnPackage=58_earthrise_npc_soldier
 
 [ENTRY]
 ID=973080833
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=16766,1216.14,36460
@@ -581,7 +533,6 @@ link=973080761,1
 
 [ENTRY]
 ID=973080835
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=16673.6,1216.3,36440.7
@@ -593,7 +544,6 @@ link=973080747,1
 
 [ENTRY]
 ID=973080839
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=16803.4,1217.43,36287.7
@@ -603,7 +553,6 @@ spawnPackage=58_earthrise_npc_soldier
 
 [ENTRY]
 ID=973080840
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=16688,1216.69,36281
@@ -613,7 +562,6 @@ spawnPackage=58_earthrise_npc_soldier
 
 [ENTRY]
 ID=973080841
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=16804,1216.27,36632
@@ -623,7 +571,6 @@ spawnPackage=58_earthrise_npc_soldier
 
 [ENTRY]
 ID=973080842
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=16855.3,1216.07,36588.1
@@ -633,7 +580,6 @@ spawnPackage=58_earthrise_npc_soldier
 
 [ENTRY]
 ID=973080843
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=16849.6,1215.98,36536.5
@@ -643,7 +589,6 @@ spawnPackage=58_earthrise_npc_soldier
 
 [ENTRY]
 ID=973080845
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=16473,1216.3,36905
@@ -655,7 +600,6 @@ link=973080758,1
 
 [ENTRY]
 ID=973080846
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=16425.7,1216.4,36958.1
@@ -665,7 +609,6 @@ spawnPackage=58_earthrise_npc_soldier
 
 [ENTRY]
 ID=973080847
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=16490,1215.72,36996
@@ -675,7 +618,6 @@ spawnPackage=58_earthrise_npc_soldier
 
 [ENTRY]
 ID=973080848
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=16483.7,1216.4,36826.3
@@ -684,7 +626,6 @@ Scale=1,1,1
 
 [ENTRY]
 ID=973080849
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=16438.6,1216.3,36810.3
@@ -693,7 +634,6 @@ Scale=1,1,1
 
 [ENTRY]
 ID=973080850
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=16474.9,1216.53,36719.2
@@ -702,7 +642,6 @@ Scale=1,1,1
 
 [ENTRY]
 ID=973080851
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=16295.6,1177.56,36784.6
@@ -711,7 +650,6 @@ Scale=1,1,1
 
 [ENTRY]
 ID=973080852
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=16255.8,1170.75,36772.7
@@ -720,7 +658,6 @@ Scale=1,1,1
 
 [ENTRY]
 ID=973080853
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=16484.2,1216.4,36827.2
@@ -732,7 +669,6 @@ link=973080756,1
 
 [ENTRY]
 ID=973080854
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=16435,1216.3,36706
@@ -742,7 +678,6 @@ spawnPackage=58_earthrise_npc_soldier
 
 [ENTRY]
 ID=973080856
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=16311.3,1203.91,36841.4
@@ -754,7 +689,6 @@ link=973080752,1
 
 [ENTRY]
 ID=973082761
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=16825.5,1217.83,36394.6
@@ -764,7 +698,6 @@ spawnPackage=58_earthrise_npc_soldier
 
 [ENTRY]
 ID=973082782
-PlacedBy=0
 Asset=Prop-Sanctuary_Stone
 Name=Untitled
 Pos=16726.3,1216.3,36693.9
@@ -774,7 +707,6 @@ Flags=1
 
 [ENTRY]
 ID=973082783
-PlacedBy=0
 Asset=Manipulator-Sanctuary
 Name=Untitled
 Pos=16725.5,1226.3,36693.9
@@ -784,7 +716,6 @@ Flags=1
 
 [ENTRY]
 ID=973082827
-PlacedBy=-400000000
 Asset=Prop-Lamp_Post_NB1
 Name=Untitled
 Pos=16779.2,1205.75,36489.3
@@ -793,7 +724,6 @@ Scale=1.225,1.225,1.225
 
 [ENTRY]
 ID=973082828
-PlacedBy=0
 Asset=Prop-Lamp_Post_NB1
 Name=Untitled
 Pos=16200,1165.42,36675.7
@@ -802,16 +732,14 @@ Scale=1.225,1.225,1.225
 
 [ENTRY]
 ID=973082829
-PlacedBy=0
 Asset=Prop-Fence-Stone#Prop-Fence-Stone_Curve
 Name=Untitled
 Pos=16118.2,1168.37,36703
-Orient=0,1,0,7.54979e-008
+Orient=0,1,0,7.54979e-08
 Scale=1,1,1
 
 [ENTRY]
 ID=973082832
-PlacedBy=0
 Asset=Prop-Fence-Stone#Prop-Fence-Stone_Post
 Name=Untitled
 Pos=16115.3,1166.76,36645
@@ -820,7 +748,6 @@ Scale=1,1,1
 
 [ENTRY]
 ID=973082833
-PlacedBy=0
 Asset=Prop-Fence-Stone_Curve
 Name=Untitled
 Pos=16189,1169.08,36673.6
@@ -829,7 +756,6 @@ Scale=1,1,1
 
 [ENTRY]
 ID=973082836
-PlacedBy=0
 Asset=Prop-Fence-Stone_Curve
 Name=Untitled
 Pos=16088.7,1169.36,36675.1
@@ -838,16 +764,14 @@ Scale=1,1,1
 
 [ENTRY]
 ID=973082837
-PlacedBy=0
 Asset=Prop-Fence-Stone#Prop-Fence-Stone1
 Name=Untitled
 Pos=16161.7,1167.37,36703.3
-Orient=0,1,0,7.54979e-008
+Orient=0,1,0,7.54979e-08
 Scale=1,1,1
 
 [ENTRY]
 ID=973082838
-PlacedBy=0
 Asset=Prop-Fence-Stone_Post
 Name=Untitled
 Pos=16158,1168.63,36645.7
@@ -856,7 +780,6 @@ Scale=1.425,1.425,1.425
 
 [ENTRY]
 ID=973082839
-PlacedBy=0
 Asset=Prop-Lamp_Post_NB1
 Name=Untitled
 Pos=16139.4,1166.35,36714.2
@@ -865,7 +788,6 @@ Scale=1.225,1.225,1.225
 
 [ENTRY]
 ID=973082840
-PlacedBy=0
 Asset=Prop-Fence-Stone_Curve
 Name=Untitled
 Pos=16159.1,1168.8,36645.7
@@ -874,7 +796,6 @@ Scale=1,1,1
 
 [ENTRY]
 ID=973082841
-PlacedBy=0
 Asset=Prop-Fence-Stone_Post
 Name=Untitled
 Pos=16115.1,1168.63,36645.4
@@ -883,7 +804,6 @@ Scale=1.425,1.425,1.425
 
 [ENTRY]
 ID=973082842
-PlacedBy=0
 Asset=Prop-Fence-Stone_Post
 Name=Untitled
 Pos=16123.6,1176.53,36675.5
@@ -892,7 +812,6 @@ Scale=1.425,1.425,1.425
 
 [ENTRY]
 ID=973082845
-PlacedBy=0
 Asset=Prop-Fence-Stone_Post
 Name=Untitled
 Pos=16149.8,1176.92,36676.1
@@ -901,7 +820,6 @@ Scale=1.425,1.425,1.425
 
 [ENTRY]
 ID=973082848
-PlacedBy=0
 Asset=Effects#Par-Lamp_Glow1-Emitter
 Name=Untitled
 Pos=16137.2,1181.85,36676.7

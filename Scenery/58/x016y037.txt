@@ -1,6 +1,47 @@
 [ENTRY]
+ID=1131444
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=16376,1561.2,37603.7
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#F3397
+
+[ENTRY]
+ID=1131445
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=16025.6,1445.59,37726.8
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#F3397
+
+[ENTRY]
+ID=1131447
+Asset=Effects#Par-Flame-Emitter
+Name=
+Pos=16360.8,1519.9,37632.9
+Orient=0,0,0,1
+Scale=5,5,5
+
+[ENTRY]
+ID=1131448
+Asset=Effects#Par-Black_Smoke-Emitter
+Name=
+Pos=16344.7,1596.5,37637.3
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
+ID=1131449
+Asset=Environment-Marker?type=Bastion
+Name=
+Pos=16364.4,1237.34,37199.4
+Orient=0,0,0,1
+Scale=11,11,11
+
+[ENTRY]
 ID=973079248
-PlacedBy=0
 Asset=Bldg-Earthend_Wall1#Bldg-Earthend_Wall1?ATS=ATS-Roman
 Name=Untitled
 Pos=16902.8,1324.49,37772.1
@@ -9,7 +50,6 @@ Scale=1,1,1
 
 [ENTRY]
 ID=973079249
-PlacedBy=0
 Asset=Bldg-Earthend_Tower1#Bldg-Earthend_Tower1?ATS=ATS-Roman
 Name=Untitled
 Pos=16714.9,1325.1,37511.9
@@ -18,7 +58,6 @@ Scale=1,1,1
 
 [ENTRY]
 ID=973079250
-PlacedBy=0
 Asset=Bldg-Earthend_Wall1?ATS=ATS-Roman
 Name=Untitled
 Pos=16793.7,1322.67,37605.8
@@ -27,7 +66,6 @@ Scale=1,1,1
 
 [ENTRY]
 ID=973079251
-PlacedBy=0
 Asset=Bldg-Earthend_Tower2#Bldg-Earthend_Tower2?ATS=ATS-Roman
 Name=Untitled
 Pos=16820.4,1324.84,37735.8
@@ -36,7 +74,6 @@ Scale=1,1,1
 
 [ENTRY]
 ID=973079252
-PlacedBy=0
 Asset=Bldg-Earthend_Wall2#Bldg-Earthend_Wall2?ATS=ATS-Roman
 Name=Untitled
 Pos=16622.6,1292.48,37446.1
@@ -45,7 +82,6 @@ Scale=1.325,1.325,1.325
 
 [ENTRY]
 ID=973079253
-PlacedBy=0
 Asset=Bldg-Earthend_Tower2#Bldg-Earthend_Tower2?ATS=ATS-Roman
 Name=Untitled
 Pos=16459.5,1276.53,37411.1
@@ -54,7 +90,6 @@ Scale=1.3,1.3,1.3
 
 [ENTRY]
 ID=973079254
-PlacedBy=-400000000
 Asset=Bldg-Earthend_Gate1#Bldg-Earthend_Gate1?ATS=ATS-Roman
 Name=Untitled
 Pos=16281.4,1275.9,37414.5
@@ -63,7 +98,6 @@ Scale=1.35,1.35,1.35
 
 [ENTRY]
 ID=973079255
-PlacedBy=0
 Asset=Bldg-Earthend_Tower1?ATS=ATS-Roman
 Name=Untitled
 Pos=16113.3,1276.57,37436.4
@@ -72,7 +106,6 @@ Scale=1.325,1.325,1.325
 
 [ENTRY]
 ID=973079262
-PlacedBy=-400000000
 Asset=Prop-Castle_Gate2
 Name=Untitled
 Pos=16307.6,1277.58,37412.6
@@ -81,7 +114,6 @@ Scale=1.675,1.675,1.675
 
 [ENTRY]
 ID=973079263
-PlacedBy=-400000000
 Asset=Prop-Castle_Gate2
 Name=Untitled
 Pos=16261.4,1275.01,37416
@@ -90,7 +122,6 @@ Scale=1.7,1.7,1.7
 
 [ENTRY]
 ID=973079265
-PlacedBy=0
 Asset=Par-Black_Smoke-Emitter
 Name=Untitled
 Pos=16230.9,1377.17,37488
@@ -99,7 +130,6 @@ Scale=1,1,1
 
 [ENTRY]
 ID=973079266
-PlacedBy=0
 Asset=Bldg-Earthend_Tower1?ATS=ATS-Roman
 Name=Untitled
 Pos=16956.7,1317.3,37860.1
@@ -108,7 +138,6 @@ Scale=1,1,1
 
 [ENTRY]
 ID=973079506
-PlacedBy=-400000056
 Asset=Prop-Siege_Tower
 Name=Untitled
 Pos=16256.3,1231.64,37022.2
@@ -117,7 +146,6 @@ Scale=1.225,1.225,1.225
 
 [ENTRY]
 ID=973079508
-PlacedBy=-400000056
 Asset=Prop-Battlefield_Engines#Prop-Battlefield_Siege_Tower
 Name=Untitled
 Pos=16023,1204.99,37034.7
@@ -126,7 +154,6 @@ Scale=1,1,1
 
 [ENTRY]
 ID=973079509
-PlacedBy=-400000000
 Asset=Prop-Battlefield_Siege_Tower
 Name=Untitled
 Pos=16337,1274,37372.1
@@ -135,7 +162,6 @@ Scale=1,1,1
 
 [ENTRY]
 ID=973079544
-PlacedBy=0
 Asset=Prop-Bird1#Prop-Bird1
 Name=Untitled
 Pos=16263.4,1527.26,37420.3
@@ -144,7 +170,6 @@ Scale=1,1,1
 
 [ENTRY]
 ID=973079545
-PlacedBy=0
 Asset=Prop-Bird1
 Name=Untitled
 Pos=16263.4,1527.26,37452.2
@@ -153,7 +178,6 @@ Scale=1,1,1
 
 [ENTRY]
 ID=973079595
-PlacedBy=0
 Asset=Bldg-Earthend_FauxRoof#Bldg-Earthend_FauxRoof?ATS=ATS-Roman
 Name=Untitled
 Pos=16310.3,1448.51,37518.6
@@ -162,7 +186,6 @@ Scale=0.525,0.525,0.525
 
 [ENTRY]
 ID=973079596
-PlacedBy=0
 Asset=Bldg-Earthend4#Bldg-Earthend4?ATS=ATS-Roman
 Name=Untitled
 Pos=16371.2,1335.25,37656.3
@@ -171,7 +194,6 @@ Scale=1.25,1.25,1.25
 
 [ENTRY]
 ID=973079602
-PlacedBy=0
 Asset=Bldg-Earthend_FauxRoof?ATS=ATS-Roman
 Name=Untitled
 Pos=16062.7,1440.29,37606.9
@@ -180,7 +202,6 @@ Scale=0.525,0.525,0.525
 
 [ENTRY]
 ID=973079603
-PlacedBy=0
 Asset=Bldg-Earthend_FauxRoof?ATS=ATS-Roman
 Name=Untitled
 Pos=16181.3,1334.11,37962.1
@@ -189,7 +210,6 @@ Scale=0.525,0.525,0.525
 
 [ENTRY]
 ID=973079604
-PlacedBy=0
 Asset=Bldg-Earthend_FauxRoof?ATS=ATS-Roman
 Name=Untitled
 Pos=16695.7,1443.74,37648.1
@@ -198,7 +218,6 @@ Scale=0.525,0.525,0.525
 
 [ENTRY]
 ID=973079605
-PlacedBy=0
 Asset=Bldg-Earthend_FauxRoof?ATS=ATS-Roman
 Name=Untitled
 Pos=16545.7,1334.39,37902.7
@@ -207,7 +226,6 @@ Scale=0.75,0.75,0.75
 
 [ENTRY]
 ID=973079612
-PlacedBy=0
 Asset=Bldg-Earthend_FauxRoof?ATS=ATS-Roman
 Name=Untitled
 Pos=16271.6,1414.24,37708.9
@@ -216,7 +234,6 @@ Scale=0.525,0.525,0.525
 
 [ENTRY]
 ID=973079614
-PlacedBy=-400000056
 Asset=Prop-Fences#Prop-Wooden_Barricade2
 Name=Untitled
 Pos=16554.1,1249.6,37011.3
@@ -225,7 +242,6 @@ Scale=1.35,1.35,1.35
 
 [ENTRY]
 ID=973079615
-PlacedBy=-400000056
 Asset=Prop-Fences#Prop-Wooden_Barricade1
 Name=Untitled
 Pos=16596.5,1243.19,37046
@@ -234,7 +250,6 @@ Scale=1.35,1.35,1.35
 
 [ENTRY]
 ID=973079832
-PlacedBy=0
 Asset=Prop-Stump2
 Name=Untitled
 Pos=16675.5,1210.52,37161.7
@@ -243,7 +258,6 @@ Scale=1.925,1.925,1.925
 
 [ENTRY]
 ID=973080100
-PlacedBy=0
 Asset=Prop-Lamp_Post_NB#Prop-Lamp_Post_NB_Unlit
 Name=Untitled
 Pos=16496.3,1214.15,37010.9
@@ -252,7 +266,6 @@ Scale=1,1,1
 
 [ENTRY]
 ID=973080102
-PlacedBy=-400000000
 Asset=Prop-Lamp_Post_NB_Unlit
 Name=Untitled
 Pos=16222.8,1268.82,37347.2
@@ -261,7 +274,6 @@ Scale=1,1,1
 
 [ENTRY]
 ID=973081081
-PlacedBy=0
 Asset=Bldg-Earthend4?ATS=ATS-Roman
 Name=Untitled
 Pos=16371.2,1489.48,37656.3

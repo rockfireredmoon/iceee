@@ -69,6 +69,7 @@ Name=Untitled
 Pos=16521.9,1201.94,15229.2
 Orient=0,-0.999784,0,0.0207949
 Scale=1,1,1
+spawnPackage=#3238
 
 [ENTRY]
 ID=1028872
@@ -112,7 +113,7 @@ Name=Untitled
 Pos=16435.6,1189.16,14945.3
 Orient=0,-0.747971,0,0.663731
 Scale=1,1,1
-spawnPackage=#893
+spawnPackage=#3238
 links_count=2
 link=1130454,1
 link=1130450,1
@@ -408,7 +409,7 @@ Pos=15411.9,1187.94,14462.1
 Orient=0,0.833272,0,0.552863
 Scale=1,1,1
 spawnPackage=#E3396
-aiModule=Bastion_NPC_CatapultFiringAnimation(3396,3397)
+aiModule=Bastion_NPC_CatapultFiringAnimation(3396
 
 [ENTRY]
 ID=1129397
@@ -452,7 +453,7 @@ Pos=15474.3,1182.46,14418.5
 Orient=0,0.836026,0,0.54869
 Scale=1,1,1
 spawnPackage=#E3396
-aiModule=Bastion_NPC_CatapultFiringAnimation(3396,3397)
+aiModule=Bastion_NPC_CatapultFiringAnimation(3396
 
 [ENTRY]
 ID=1129404
@@ -462,7 +463,7 @@ Pos=15539,1172,14357.8
 Orient=0,0.699716,0,0.714421
 Scale=1,1,1
 spawnPackage=#E3396
-aiModule=Bastion_NPC_CatapultFiringAnimation(3396,3397)
+aiModule=Bastion_NPC_CatapultFiringAnimation(3396
 
 [ENTRY]
 ID=1129408
@@ -1031,7 +1032,7 @@ Name=Untitled
 Pos=16344.8,1147.8,14483.6
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#893
+spawnPackage=#3238
 wanderRadius=50
 
 [ENTRY]
@@ -1041,7 +1042,7 @@ Name=Untitled
 Pos=16297.1,1138.48,14392.3
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#893
+spawnPackage=#3238
 wanderRadius=50
 
 [ENTRY]
@@ -1051,7 +1052,7 @@ Name=Untitled
 Pos=16010.5,1155.3,14451.4
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#893
+spawnPackage=#3238
 wanderRadius=50
 
 [ENTRY]
@@ -1061,7 +1062,7 @@ Name=Untitled
 Pos=16236.1,1134.9,14546.7
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#893
+spawnPackage=#3238
 wanderRadius=50
 
 [ENTRY]
@@ -1080,7 +1081,7 @@ Name=Untitled
 Pos=15984.9,1148.25,14537.6
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#893
+spawnPackage=#3238
 wanderRadius=50
 
 [ENTRY]
@@ -1090,7 +1091,7 @@ Name=Untitled
 Pos=15982.4,1143.63,14626.3
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#893
+spawnPackage=#3238
 wanderRadius=50
 
 [ENTRY]
@@ -1100,7 +1101,7 @@ Name=Untitled
 Pos=15955.1,1175.03,14707.1
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#893
+spawnPackage=#3238
 wanderRadius=50
 
 [ENTRY]
@@ -1110,7 +1111,7 @@ Name=Untitled
 Pos=16246.5,1127.27,14735.7
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#N893
+spawnPackage=#3238
 aiModule=Bastion_NPC_GuardMeleeAnimation1
 
 [ENTRY]
@@ -1138,7 +1139,7 @@ Name=Untitled
 Pos=15911.8,1191.69,14767.5
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#893
+spawnPackage=#3238
 wanderRadius=50
 
 [ENTRY]
@@ -1148,7 +1149,7 @@ Name=Untitled
 Pos=15848.2,1198.21,14804.4
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#893
+spawnPackage=#3238
 wanderRadius=50
 
 [ENTRY]
@@ -1158,7 +1159,7 @@ Name=Untitled
 Pos=15897.3,1204.25,14865.9
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#893
+spawnPackage=#3238
 wanderRadius=50
 
 [ENTRY]
@@ -1225,7 +1226,7 @@ Name=Untitled
 Pos=16337.5,1173.81,14858
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#893
+spawnPackage=#3238
 links_count=1
 link=1130450,1
 
@@ -1236,7 +1237,7 @@ Name=Untitled
 Pos=16420.6,1211.22,15045.2
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#893
+spawnPackage=#3238
 links_count=1
 link=1130453,1
 
@@ -1247,7 +1248,7 @@ Name=Untitled
 Pos=16433.7,1223.56,15147.2
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#893
+spawnPackage=#3238
 links_count=2
 link=1028852,1
 link=1130461,1
@@ -1326,7 +1327,7 @@ Name=Untitled
 Pos=16275.2,1174.84,15122
 Orient=0,0,0,1
 Scale=1.025,1.025,1.025
-spawnPackage=#893
+spawnPackage=#3238
 links_count=1
 link=1130460,1
 
@@ -1337,7 +1338,7 @@ Name=Untitled
 Pos=16459,1210.09,15235.3
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#893
+spawnPackage=#3238
 links_count=1
 link=1130461,1
 
@@ -1348,7 +1349,7 @@ Name=Untitled
 Pos=15920.3,1242.37,14975.4
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#893
+spawnPackage=#3238
 wanderRadius=50
 links_count=1
 link=1130596,1
@@ -1360,7 +1361,7 @@ Name=Untitled
 Pos=15830.1,1283.27,14979.4
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#893
+spawnPackage=#3238
 wanderRadius=50
 
 [ENTRY]
@@ -1386,7 +1387,7 @@ Name=Untitled
 Pos=16074.1,1270.89,15327.6
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#893
+spawnPackage=#3238
 links_count=2
 link=1130598,1
 link=1130602,1
@@ -1406,7 +1407,7 @@ Name=Untitled
 Pos=15827.3,1349.35,15311
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#893
+spawnPackage=#3238
 links_count=2
 link=1130603,1
 link=1130589,1
@@ -1418,6 +1419,7 @@ Name=Untitled
 Pos=15743.9,1355.79,15114.6
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=#3238
 links_count=2
 link=1130592,1
 link=1130591,1
@@ -1611,7 +1613,7 @@ Name=Untitled
 Pos=16029.5,1287.99,15309.2
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#893
+spawnPackage=#3238
 links_count=1
 link=1130586,1
 
@@ -1622,7 +1624,7 @@ Name=Untitled
 Pos=15797.6,1354.19,15172.2
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#893
+spawnPackage=#3238
 links_count=1
 link=1130589,1
 
@@ -1633,7 +1635,7 @@ Name=Untitled
 Pos=16054.2,1179.98,15027.1
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#893
+spawnPackage=#3238
 links_count=1
 link=1130602,1
 
@@ -1644,7 +1646,7 @@ Name=Untitled
 Pos=15863.7,1296.13,15073.1
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#893
+spawnPackage=#3238
 links_count=1
 link=1130607,1
 
@@ -1655,7 +1657,7 @@ Name=Untitled
 Pos=15696.7,1386.07,15180.5
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#893
+spawnPackage=#3238
 links_count=1
 link=1130591,1
 
@@ -1666,7 +1668,7 @@ Name=Untitled
 Pos=16081.1,1154.66,14969.3
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#893
+spawnPackage=#3238
 links_count=1
 link=1130606,1
 
@@ -1677,7 +1679,7 @@ Name=Untitled
 Pos=16002,1305.14,15342
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#893
+spawnPackage=#3238
 links_count=1
 link=1130585,1
 

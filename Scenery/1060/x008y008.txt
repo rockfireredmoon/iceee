@@ -39,7 +39,7 @@ Name=Untitled
 Pos=16180,1240.28,15408.2
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#893
+spawnPackage=#3238
 links_count=2
 link=1130599,1
 link=1130605,1
@@ -71,7 +71,7 @@ Name=Untitled
 Pos=16416.8,1197.76,15752.6
 Orient=0,-0.609159,0,0.793048
 Scale=1,1,1
-spawnPackage=#893
+spawnPackage=#3238
 wanderRadius=100
 
 [ENTRY]
@@ -81,7 +81,7 @@ Name=Untitled
 Pos=16689.3,1231.89,16127.4
 Orient=0,-0.416871,0,0.908966
 Scale=1,1,1
-spawnPackage=#893
+spawnPackage=#3238
 wanderRadius=50
 
 [ENTRY]
@@ -335,10 +335,10 @@ spawnPackage=#3180
 ID=1028935
 Asset=Manipulator-SpawnPoint
 Name=Untitled
-Pos=15555.8,1129.24,15455.9
-Orient=0,0,0,1
+Pos=15555.8,1129.24,15474.3
+Orient=0,-0.560509,0,0.828149
 Scale=1,1,1
-spawnPackage=#3180
+spawnPackage=#3302
 
 [ENTRY]
 ID=1028938
@@ -1022,7 +1022,7 @@ Name=Untitled
 Pos=15408.1,1137,16390.1
 Orient=0,0.576959,0,0.816774
 Scale=1,1,1
-spawnPackage=#3180
+spawnPackage=#3300
 
 [ENTRY]
 ID=1130394
@@ -1060,7 +1060,7 @@ Name=Untitled
 Pos=15646.3,1122.41,15945.5
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#3180
+spawnPackage=#3299
 wanderRadius=50
 
 [ENTRY]
@@ -1070,7 +1070,7 @@ Name=Untitled
 Pos=15621.9,1128.2,15657.5
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#3180
+spawnPackage=#3247
 wanderRadius=50
 
 [ENTRY]
@@ -1243,7 +1243,7 @@ Name=Untitled
 Pos=15549.5,1133.18,16081.8
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#3180
+spawnPackage=#3300
 wanderRadius=50
 
 [ENTRY]
@@ -1556,7 +1556,7 @@ Name=Untitled
 Pos=16572,1204.74,15407
 Orient=0,0.597195,0,0.802096
 Scale=1,1,1
-spawnPackage=#n917
+spawnPackage=#3238
 
 [ENTRY]
 ID=1130576
@@ -1565,7 +1565,7 @@ Name=Untitled
 Pos=16587,1203,15574.3
 Orient=0,-0.475032,0,0.879969
 Scale=1,1,1
-spawnPackage=#n917
+spawnPackage=#3238
 
 [ENTRY]
 ID=1130577
@@ -1582,17 +1582,17 @@ Name=Untitled
 Pos=16580.4,1204.17,15507.3
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#893
+spawnPackage=#3238
 wanderRadius=100
 
 [ENTRY]
 ID=1130580
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=Untitled
-Pos=16237.4,1218.92,15455.3
+Pos=16237.6,1219.03,15454.8
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#893
+spawnPackage=#3238
 links_count=2
 link=1130617,1
 link=1130624,1
@@ -1683,7 +1683,7 @@ Name=Untitled
 Pos=15965.7,1335.89,15407.4
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#893
+spawnPackage=#3238
 links_count=1
 link=1130594,1
 
@@ -1694,7 +1694,7 @@ Name=Untitled
 Pos=16035.3,1264.89,15525.1
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#893
+spawnPackage=#3238
 links_count=1
 link=1130600,1
 
@@ -1740,7 +1740,7 @@ Name=Untitled
 Pos=16233,1216.63,15588.6
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#893
+spawnPackage=#3238
 links_count=1
 link=1130622,1
 
@@ -1809,7 +1809,7 @@ Name=Untitled
 Pos=16200.9,1294.78,16413.1
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#893
+spawnPackage=#3238
 links_count=1
 link=1130633,1
 
@@ -1820,7 +1820,7 @@ Name=Untitled
 Pos=15922.6,1386.27,16576.8
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#893
+spawnPackage=#3238
 links_count=1
 link=1130635,1
 
@@ -1831,7 +1831,7 @@ Name=Untitled
 Pos=16130,1317.4,16488.3
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#893
+spawnPackage=#3238
 links_count=1
 link=1130634,1
 
@@ -1842,7 +1842,7 @@ Name=Untitled
 Pos=16289.2,1226.7,16068.3
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#893
+spawnPackage=#3238
 links_count=1
 link=1130638,1
 
@@ -1863,7 +1863,7 @@ Name=Untitled
 Pos=16442.9,1228.98,16239.8
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#893
+spawnPackage=#3238
 wanderRadius=50
 
 [ENTRY]
@@ -1873,7 +1873,7 @@ Name=Untitled
 Pos=16565.5,1217.31,16227.1
 Orient=0,0.998248,0,-0.0591691
 Scale=1,1,1
-spawnPackage=#893
+spawnPackage=#3238
 
 [ENTRY]
 ID=1130633
@@ -1978,7 +1978,7 @@ Name=Untitled
 Pos=16791.4,1255.89,16202.6
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#893
+spawnPackage=#3238
 wanderRadius=50
 
 [ENTRY]
@@ -1988,6 +1988,6 @@ Name=Untitled
 Pos=16875.7,1242.46,16267.2
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#893
+spawnPackage=#3238
 wanderRadius=50
 

@@ -232,8 +232,10 @@ Orient=0,-0.852317,0,0.523026
 Scale=1,1,1
 spawnPackage=#3690
 aiModule=custom_heathendel_kronos
-links_count=1
+links_count=3
 link=1129402,0
+link=1030470,0
+link=1030471,0
 
 [ENTRY]
 ID=1030453
@@ -376,6 +378,8 @@ Orient=0,-0.807558,0,0.589788
 Scale=1,1,1
 spawnPackage=#3688
 loyaltyRadius=85
+links_count=1
+link=1030452,0
 
 [ENTRY]
 ID=1030471
@@ -386,6 +390,8 @@ Orient=0,-0.881958,0,0.471329
 Scale=1,1,1
 spawnPackage=#3688
 loyaltyRadius=85
+links_count=1
+link=1030452,0
 
 [ENTRY]
 ID=1030472
@@ -420,30 +426,24 @@ links_count=1
 link=1030473,0
 
 [ENTRY]
-ID=1129402
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=Untitled
-Pos=27495.4,618.196,78523.4
-Orient=0,0.531186,0,0.847255
-Scale=1,1,1
-links_count=1
-link=1030452,0
-
-[ENTRY]
 ID=1129501
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=27415.7,627.184,78479.4
 Orient=0,-0.783327,0,0.62161
 Scale=1,1,1
 spawnPackage=#3688
+links_count=1
+link=1129502,0
 
 [ENTRY]
 ID=1129502
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=27568.8,615.658,78534.7
 Orient=0,-0.836026,0,0.54869
 Scale=1,1,1
 spawnPackage=#3688
+links_count=1
+link=1129501,0
 

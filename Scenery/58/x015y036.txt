@@ -1,6 +1,15 @@
 [ENTRY]
+ID=1131443
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=15865.1,1200.5,36930.1
+Orient=0,-0.443948,0,0.896053
+Scale=1,1,1
+spawnPackage=#F3183
+aiModule=Bastion_NPC_CatapultFiringAnimation(3397)
+
+[ENTRY]
 ID=973079296
-PlacedBy=0
 Asset=Earthrise Forest?d=1.0&amp
 Name=Untitled
 Pos=15259.1,1215.05,36209.8
@@ -10,7 +19,6 @@ Flags=1
 
 [ENTRY]
 ID=973079517
-PlacedBy=0
 Asset=Earthrise Forest?d=1.0&amp
 Name=Untitled
 Pos=15322.3,1257.11,36970.1
@@ -20,7 +28,6 @@ Flags=1
 
 [ENTRY]
 ID=973079593
-PlacedBy=0
 Asset=Prop-Bush-Med3#Prop-Bush-Med3
 Name=Untitled
 Pos=15994.9,1245.07,36206.3
@@ -29,7 +36,6 @@ Scale=1.8,1.8,1.8
 
 [ENTRY]
 ID=973080108
-PlacedBy=0
 Asset=CL-Earthrise_Forest2#CL-Earthrise_Forest2
 Name=Untitled
 Pos=15620,1307.55,36037.4
@@ -39,7 +45,6 @@ Flags=1
 
 [ENTRY]
 ID=973080802
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=15961.7,1185.86,36573
@@ -51,7 +56,6 @@ link=973080801,1
 
 [ENTRY]
 ID=973080803
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=15855.5,1185.7,36801.4
@@ -62,7 +66,6 @@ link=973080804,1
 
 [ENTRY]
 ID=973080804
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=15787.6,1186.46,36871.7
@@ -74,7 +77,6 @@ link=973080803,1
 
 [ENTRY]
 ID=973080805
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=15592.7,1186.2,36976.1
@@ -86,7 +88,6 @@ link=973080804,1
 
 [ENTRY]
 ID=973080814
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=15606.2,1186.01,36987.8
@@ -98,7 +99,6 @@ link=973080816,1
 
 [ENTRY]
 ID=973080816
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=15790.3,1186.27,36889.6
@@ -110,7 +110,6 @@ link=973080817,1
 
 [ENTRY]
 ID=973080817
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=15874.5,1185.74,36812.4
@@ -121,7 +120,6 @@ link=973080816,1
 
 [ENTRY]
 ID=973080818
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=15976.4,1186.02,36592.8
@@ -132,7 +130,6 @@ link=973080819,1
 
 [ENTRY]
 ID=973080836
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=15962.5,1185.85,36573.8
@@ -144,7 +141,6 @@ link=973080802,1
 
 [ENTRY]
 ID=973081825
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=15180.5,1215.43,36001.1
@@ -155,7 +151,6 @@ wanderRadius=120
 
 [ENTRY]
 ID=973081828
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=15131.5,1186.08,36228.7
@@ -166,7 +161,6 @@ wanderRadius=120
 
 [ENTRY]
 ID=973081830
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=15014.4,1172.12,36725.6
@@ -177,7 +171,6 @@ wanderRadius=60
 
 [ENTRY]
 ID=973081835
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=15356.5,1194.77,36427.9
@@ -188,7 +181,6 @@ wanderRadius=80
 
 [ENTRY]
 ID=973081836
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=15442,1200.64,36652
@@ -199,7 +191,6 @@ wanderRadius=120
 
 [ENTRY]
 ID=973081837
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=15455.3,1219,36083.3
@@ -210,7 +201,6 @@ wanderRadius=120
 
 [ENTRY]
 ID=973081838
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=15683.1,1242.07,36197.7
