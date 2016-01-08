@@ -396,6 +396,7 @@ private:
 
 class NutScriptCallStringParser {
 public:
+	bool mEnabled;
 	std::string mScriptName;
 	std::vector<std::string> mArgs;
 	NutScriptCallStringParser(std::string string);
