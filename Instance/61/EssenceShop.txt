@@ -1,13 +1,14 @@
 ; Thothmes's Treasure
 [ENTRY]
 CreatureDefID=1531
-EssenceID=20771
-Item=142449,1
-Item=4794,1
-Item=4801,1
-Item=142448,1
-Item=142451,1
-Item=4797,1
-Item=4799,1
-Item=142450,1
+EssenceID=20771 
+Item=142451,1 ; Anubid Spear
+Item=4797,1 ; Anubian Boots
+Item=4799,1 ; Anubian Bracers
+Item=142449,1 ; Dusky Claw
+
+Item=4801,1 ; Anubian Band
+Item=4794,1 ; Anubian Greaves
+Item=142448,1 ; Khonshu Blade
+Item=142450,1 ; Anubian Slavecatcher
 

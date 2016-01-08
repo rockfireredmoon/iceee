@@ -99,6 +99,8 @@ namespace ScriptCore
 		else {
 			mScriptName = callString;
 		}
+
+		mEnabled = mScriptName.length() > 0 && mScriptName.compare("none") != 0 && mScriptName.compare("nothing") != 0;
 	}
 
 	NutDef::NutDef() {
@@ -605,7 +607,7 @@ namespace ScriptCore
 			ClearQueue();
 			sq_close(vm);
 			if(def->HasFlag(NutDef::FLAG_REPORT_END))
-				PrintMessage("Script [%s] has ended", def->scriptName.c_str());
+				PrintMessage("Script [%s] has halted", def->scriptName.c_str());
 			mHalting = false;
 			HaltedDerived();
 		}
@@ -1858,6 +1860,7 @@ bool ScriptPlayer :: RunSingleInstruction(void)
 	switch(instr->opCode)
 	{
 	case OP_END:
+		g_Log.AddMessageFormat("[REMOVEME] Ending script %s because OP_END.", def->scriptName.c_str());
 		EndExecution();
 		breakScript = true;
 		break;
@@ -2088,6 +2091,7 @@ bool ScriptPlayer::PerformJumpRequest(const char *name, int callStyle)
 		//an event queue, it probably needs to be stopped.
 		if(def->UseEventQueue() == false)
 		{
+			g_Log.AddMessageFormat("[REMOVEME] Ending script %s on call to label %s because it doesn't exist.", name, def->scriptName.c_str());
 			EndExecution();
 		}
 	}

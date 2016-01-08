@@ -1659,7 +1659,7 @@ int AbilityManager2 :: EnumerateTargets(CreatureInstance *actor, int targetType,
 
 int AbilityManager2 :: ActivateAbility(CreatureInstance *cInst, short abilityID, int eventType, ActiveAbilityInfo *abInfo)
 {
-//	g_Log.AddMessageFormat("ActivateAbility [%s] AbID:%d, Evt:%d", cInst->css.display_name, abilityID, eventType);
+	g_Log.AddMessageFormat("ActivateAbility [%s] AbID:%d, Evt:%d", cInst->css.display_name, abilityID, eventType);
 
 	//Hack for autoattacks and quest interaction triggers
 	int result = CheckActivateSpecialAbility(cInst, abilityID, eventType);
