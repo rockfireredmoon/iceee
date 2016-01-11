@@ -9728,6 +9728,9 @@ int SimulatorThread :: handle_command_adjustexp(void)
 	}
 
 	int amount = atoi(query.args[0].c_str());
+	if(amount < 1) {
+		return PrepExt_QueryResponseError(SendBuf, query.ID, "Invalid experience amount. Experience amount may only be increased (have a value of 1 or greater).");
+	}
 	creatureInst->AddExperience(amount);
 	if(amount < 0)
 	{
