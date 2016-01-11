@@ -184,6 +184,11 @@ InventoryManager :: ~InventoryManager()
 
 int InventoryManager :: AddItem(int containerID, InventorySlot &item)
 {
+	if(item.IID == 0)
+	{
+		return -1;
+	}
+
 	if(containerID >= 0 && containerID <= MAXCONTAINER)
 	{
 		//Hack to fix item counts for those that need them.
