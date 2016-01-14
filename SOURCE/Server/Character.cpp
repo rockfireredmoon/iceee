@@ -617,6 +617,13 @@ void CharacterData :: BuildAvailableQuests(QuestDefinitionContainer &questList)
 		if(!qd->guildStart && qd->guildId != 0 && !IsInGuildAndHasValour(qd->guildId, qd->valourRequired))
 			continue;
 
+		//
+		if(qd->accountQuest) {
+			AccountData *acc = g_AccountManager.GetActiveAccountByID(AccountID);
+			if(acc != NULL && std::find(acc->AccountQuests.begin(), acc->AccountQuests.end(), qd->questID) != acc->AccountQuests.end())
+				continue;
+		}
+
 		//If we get here, the quest is good to add to at least one availability list.
 		qr.QuestID = qd->questID;
 		qr.DefPtr = qd;
