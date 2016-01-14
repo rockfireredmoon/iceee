@@ -2082,6 +2082,10 @@ void SimulatorThread :: LoadCharacterSession(void)
 			pld.accPtr->ConsecutiveDaysLoggedIn++;
 			LogMessageL(MSG_SHOW, "%s has now logged in %d consecutive days.", pld.accPtr->Name, pld.accPtr->ConsecutiveDaysLoggedIn);
 		}
+		else {
+			// Not a consecutive day, so not due daily rewards
+			pld.accPtr->DueDailyRewards = false;
+		}
 
 		pld.accPtr->PendingMinorUpdates++;
 	}
