@@ -472,6 +472,7 @@ public:
 	void QueueRemove(NutScriptEvent *evt);
 	void QueueAdd(NutScriptEvent *evt);
 	void QueueInsert(NutScriptEvent *evt);
+	void Exec(Sqrat::Function function);
 	void Queue(Sqrat::Function function, int fireDelay);
 //	void DoQueue(Sqrat::Function function, int fireDelay);
 	bool ExecQueue(void);

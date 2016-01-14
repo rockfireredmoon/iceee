@@ -440,6 +440,7 @@ public:
 	int guildId;		// This quest requires the player is part of this guid
 	int	valourRequired;	// The amount of valour required to activate the quest
 	int valourGiven;	// The amount of valour given on completion
+	bool accountQuest;  // The quest may only be done once per account
 
 	// This stuff is used internally for determining quest marker information.  It is extracted from the "sGiver" field and converted to numerical types here for faster processing.
 	int giverX;

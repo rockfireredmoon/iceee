@@ -192,6 +192,7 @@ public:
 	unsigned int SquirrelGCDelay;				 	 //How long the queue must be idle for before GC can go ahead.
 	unsigned int SquirrelGCMaxDelay;				 	 //How long after reaching call count before GC is forced.
 	int SquirrelVMStackSize;						// Initial VM stack size
+	int SquirrelQueueSpeed;							// Global queue speed. This value is divide by the script 'speed' to get the event delay for that script
 
 	bool PersistentBuffs;              //If true, active buffs will be saved and restored on next login
 	bool PartyLoot;						// Whether to allow party loot

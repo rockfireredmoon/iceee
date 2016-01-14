@@ -8506,6 +8506,15 @@ int SimulatorThread :: handle_query_quest_join(void)
 	qdef->mScriptAcceptAction.ExecuteAllCommands(this);
 
 	LogMessageL(MSG_DIAGV, "  Request quest.join (QuestID: %d, CID: %d)", QuestID, CID);
+
+	if(qdef->accountQuest) {
+		g_AccountManager.cs.Enter("SimulatorThread::VaultSend");
+		AccountData *acc = g_AccountManager.GetActiveAccountByID(creatureInst->charPtr->AccountID);
+		acc->AccountQuests.push_back(qdef->questID);
+		acc->PendingMinorUpdates++;
+		g_AccountManager.cs.Leave();
+	}
+
 	int wpos = pld.charPtr->questJournal.QuestJoin(SendBuf, QuestID, query.ID);
 
 	g_QuestNutManager.AddActiveScript(creatureInst, QuestID);
