@@ -1987,6 +1987,25 @@ void CreatureInstance :: RemoveAllBuffs(bool send)
 	baseStats.clear();
 }
 
+void CreatureInstance :: RemoveAllBuffsExceptGroupID(bool send, int abilityGroupID)
+{
+	size_t pos = 0;
+	while(pos < activeStatMod.size())
+	{
+		if(activeStatMod[pos].abilityGroupID != abilityGroupID)
+			RemoveBuffIndex(pos);
+		else
+			pos++;
+	}
+
+	for(size_t i = 0; i < baseStats.size(); i++)
+	{
+		float value = baseStats[i].fBaseVal;
+		WriteValueToStat(baseStats[i].StatID, value, &css);
+	}
+	baseStats.clear();
+}
+
 //Remove all buffs of a certain category that do not match the ability.
 void CreatureInstance :: RemoveAbilityBuffTypeExcept(int buffCategory, int abilityID, int abilityGroupID)
 {
@@ -7887,7 +7906,7 @@ int CreatureInstance :: GetOffhandDamage(void)
 // that are commonly set by default abilities (which may be class specific).
 void CreatureInstance :: Respec(void)
 {
-	RemoveAllBuffs(false);
+	RemoveAllBuffsExceptGroupID(false, 999);
 
 	static const int EffectList[] = {
 		StatusEffects::CAN_USE_WEAPON_2H,
