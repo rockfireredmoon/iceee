@@ -435,6 +435,8 @@ void LoadConfig(const char *filename)
 				g_Config.SquirrelQueueSpeed = lfr.BlockToIntC(1);
 			else if(strcmp(NameBlock, "PersistentBuffs") == 0)
 				g_Config.PersistentBuffs = lfr.BlockToBool(1);
+			else if(strcmp(NameBlock, "FallDamage") == 0)
+				g_Config.FallDamage = lfr.BlockToBool(1);
 			else if(strcmp(NameBlock, "PartyLoot") == 0)
 				g_Config.PartyLoot = lfr.BlockToBool(1);
 			else if(strcmp(NameBlock, "AccountCredits") == 0)
@@ -669,6 +671,7 @@ GlobalConfigData :: GlobalConfigData()
 
 	PersistentBuffs = false;
 	PartyLoot = false;
+	FallDamage = false;
 
 	AccountCredits = true;
 	NameChangeCost = 300;

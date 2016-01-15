@@ -3646,26 +3646,26 @@ void SimulatorThread :: handle_updateVelocity(void)
 
 	//LogMessageL(MSG_SHOW, "Heading:%d, Rot:%d, Spd:%d", creatureInst->Heading, creatureInst->Rotation, speed);
 
-	/*
-	int deltaY = creatureInst->CurrentY - y;
-	if(deltaY > 30)
-		pld.bFalling = true;
-	if(pld.bFalling == true)
-	{
-		pld.DeltaY += deltaY;
-		LogMessageL(MSG_SHOW, "Delta: %d, %d", deltaY, pld.DeltaY);
-	}
-	if(deltaY < 30)
-	{
+	if(g_Config.FallDamage && !creatureInst->actInst->mZoneDefPtr->mGrove) {
+		int deltaY = creatureInst->CurrentY - y;
+		if(deltaY > 30)
+			pld.bFalling = true;
 		if(pld.bFalling == true)
 		{
-			creatureInst->CheckFallDamage(pld.DeltaY);
-			LogMessageL(MSG_SHOW, "Damage: %d", pld.DeltaY);
-			pld.bFalling = false;
+			pld.DeltaY += deltaY;
+			LogMessageL(MSG_SHOW, "Delta: %d, %d", deltaY, pld.DeltaY);
 		}
-		pld.DeltaY = 0;
+		if(deltaY < 30)
+		{
+			if(pld.bFalling == true)
+			{
+				creatureInst->CheckFallDamage(pld.DeltaY);
+				LogMessageL(MSG_SHOW, "Damage: %d", pld.DeltaY);
+				pld.bFalling = false;
+			}
+			pld.DeltaY = 0;
+		}
 	}
-	*/
 
 	if(g_Config.HasAdministrativeBehaviorFlag(ADMIN_BEHAVIOR_VERIFYSPEED) == true)
 	{

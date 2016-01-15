@@ -197,6 +197,8 @@ public:
 	bool PersistentBuffs;              //If true, active buffs will be saved and restored on next login
 	bool PartyLoot;						// Whether to allow party loot
 
+	bool FallDamage;					// If true, fall damage is enabled
+
 	bool AccountCredits;				// If true, credits will be stored at the account level rather than per character and shared across all characters
 	unsigned int NameChangeCost;					// Number of credits a last name change costs
 	unsigned int MinPVPPlayerLootItems;				// Minimum number of items that will be dropped by the player after a PVP fight
