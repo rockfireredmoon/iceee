@@ -2902,14 +2902,22 @@ void CreatureInstance :: ProcessDeath(void)
 			std::vector<CreatureInstance*> pvpAttackers;
 
 			if(charPtr->Mode == PVP::GameMode::PVP && !actInst->mZoneDefPtr->mArena) {
+
+				/* Don't want loop to be dropped if ANY attacker is not a player */
+				bool npcInvolved = false;
+
 				for(size_t i = 0; i < attackerList.size(); i++)	{
 					CreatureInstance *attacker = attackerList[i].ptr;
-					if(attacker->charPtr->Mode == PVP::GameMode::PVP) {
+					if(!(attacker->serverFlags & ServerFlags::IsPlayer)) {
+						npcInvolved = true;
+						break;
+					}
+					else if(attacker->charPtr->Mode == PVP::GameMode::PVP) {
 						pvpAttackers.push_back(attacker);
 					}
 				}
 
-				if(pvpAttackers.size() > 0) {
+				if(!npcInvolved && pvpAttackers.size() > 0) {
 
 					char buffer[2048];
 
