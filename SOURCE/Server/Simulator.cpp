@@ -3644,11 +3644,11 @@ void SimulatorThread :: handle_updateVelocity(void)
 	int speed = GetByte(&readPtr[ReadPos], ReadPos);
 
 
-	//LogMessageL(MSG_SHOW, "Heading:%d, Rot:%d, Spd:%d", creatureInst->Heading, creatureInst->Rotation, speed);
+//	LogMessageL(MSG_SHOW, "Heading:%d, Rot:%d, Spd:%d, X: %d, Y: %d, Z: %d", creatureInst->Heading, creatureInst->Rotation, speed, x, y, z);
 
 	if(g_Config.FallDamage && !creatureInst->actInst->mZoneDefPtr->mGrove) {
 		int deltaY = creatureInst->CurrentY - y;
-		if(deltaY > 30)
+		if(deltaY >= 30)
 			pld.bFalling = true;
 		if(pld.bFalling == true)
 		{

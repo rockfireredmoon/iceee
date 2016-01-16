@@ -5,5 +5,5 @@ PriceCopper=1000000
 PriceCredits=1000
 ItemID=7
 Category=BAGS
-Status=NEW
+Status=<undefined>
 

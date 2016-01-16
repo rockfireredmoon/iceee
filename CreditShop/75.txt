@@ -7,5 +7,5 @@ PriceCredits=100
 ItemID=8400
 Iv1=19
 Category=CONSUMABLES
-Status=NEW
+Status=<undefined>
 
