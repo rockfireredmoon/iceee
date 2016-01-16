@@ -80,6 +80,7 @@ void AccountData :: ClearAll(void)
 	//memset(ResCharacterSet, 0, sizeof(ResCharacterSet));
 	memset(PermissionSet, 0, sizeof(PermissionSet));
 	GroveName.clear();
+	AccountQuests.clear();
 	BuildPermissionList.clear();
 	preferenceList.PrefList.clear();
 	PendingMinorUpdates = 0;
@@ -374,6 +375,9 @@ void AccountData :: SaveToStream(FILE *output)
 		BuildPermissionArea &bpa = BuildPermissionList[i];
 		fprintf(output, "Build=%d,%d,%d,%d,%d\r\n", bpa.ZoneID, bpa.x1, bpa.y1, bpa.x2, bpa.y2);
 	}
+
+	for(size_t i = 0; i < AccountQuests.size(); i++)
+		fprintf(output, "AccountQuest=%d\r\n", AccountQuests[i]);
 
 
 	//Preferences
@@ -676,6 +680,10 @@ void AccountManager :: LoadSectionGeneral(FileReader &fr, AccountData &ad, const
 	}
 	else if(strcmp(NameBlock, "GROVENAME") == 0)
 		ad.GroveName = fr.BlockToStringC(1, 0);
+	else if(strcmp(NameBlock, "ACCOUNTQUEST") == 0)
+	{
+		ad.AccountQuests.push_back(fr.BlockToIntC(1));
+	}
 	else if(strcmp(NameBlock, "BUILD") == 0)
 	{
 		BuildPermissionArea bpa;

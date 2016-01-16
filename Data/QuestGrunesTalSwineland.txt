@@ -1817,7 +1817,7 @@ Obj.1.complete=0
 Obj.1.myCreatureDefID=
 Obj.1.myItemID=
 Obj.1.completeText=0 of 1
-Obj.1.markerLocations=62058.2,965.544,64770.5,9
+Obj.1.markerLocations=61811.7,787.118,62807.1,9
 [ACT]
 Act.BodyText=Return to Garus Greyson
 Obj.0.type=talk
@@ -1835,7 +1835,7 @@ ID=825
 Title=Hot Bug-Wings
 BodyText=I betcha yer such a pansy, you couldn't eat one of my hot bug-wings and not cry like a little girl!
 
-Git-outta-here! Bring me a proper dozen Bug-Wings from The Bugs found west of here, and I'll let you use my special hot sauce to prove yerself worthy.
+Git-outta-here! Bring me a proper thirty of them Bug-Wings from The Bugs found west of here, and I'll let you use my special hot sauce to prove yerself worthy.
 
 And don't skimp on the size with those wings, got it?
 CompleteText=You got them Bug Wings yet? Yeah, those'll do right nicely! Now just give me a moment and I'll let ya have a plate!
@@ -1852,7 +1852,7 @@ Repeat=0
 sGiver=64157.2,779.793,56624.6,9
 sEnder=64157.2,779.793,56624.6,9
 [ACT]
-Act.BodyText=Gather a dozen Bug Wings from the Junderbrood Scarabskrill, Jumderbrood Workskrill, Junderbrood Spitterskrill and Junderbrood Stingerskrill in the Skrill Hives west of the Warpig Camp.
+Act.BodyText=Gather thirty Bug Wings from the Junderbrood Scarabskrill, Jumderbrood Workskrill, Junderbrood Spitterskrill and Junderbrood Stingerskrill in the Skrill Hives west of the Warpig Camp.
 
 Obj.0.type=kill
 Obj.0.data1=1188,1186,1189,1190,1192,1193,1194,1195

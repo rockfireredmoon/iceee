@@ -105,6 +105,8 @@ public:
 	CharacterCacheManager characterCache;
 	std::string GroveName;
 	std::vector<BuildPermissionArea> BuildPermissionList;
+	std::vector<int> AccountQuests;
+
 	int MaxCharacters;
 
 	// Transient stuff (not store in character data)

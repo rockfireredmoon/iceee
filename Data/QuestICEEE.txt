@@ -203,6 +203,7 @@ We hope you stick around, there will be a reward at the end for your hard work.
 CompleteText=Oh, didn't I say? You have to use these keys on that chest next to me, pick wisely!
 Level=1
 Suggested=1
+AccountQuest=1
 Exp=1
 PartySize=1
 NumRewards=0

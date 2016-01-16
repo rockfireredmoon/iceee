@@ -415,7 +415,7 @@ namespace ScriptCore
 				}
 				Sqrat::Object speed = infoObject.GetSlot("speed");
 				if(!speed.IsNull()) {
-					def->mScriptSpeed = speed.Cast<int>();
+					def->mScriptSpeed = Util::ClipInt(speed.Cast<int>(), 1, 100);
 				}
 			}
 		}
@@ -457,6 +457,12 @@ namespace ScriptCore
 		else {
 			return RunFunction(name, parms, true);
 		}
+	}
+
+	void NutPlayer::Exec(Sqrat::Function function) {
+		QueueAdd(new ScriptCore::NutScriptEvent(
+					new ScriptCore::TimeCondition(g_Config.SquirrelQueueSpeed / def->mScriptSpeed),
+					new ScriptCore::SquirrelFunctionCallback(this, function)));
 	}
 
 	void NutPlayer::Queue(Sqrat::Function function, int fireDelay) {
@@ -508,6 +514,7 @@ namespace ScriptCore
 		vector3FClass.Var("y", &Squirrel::Vector3::mY);
 		vector3FClass.Var("z", &Squirrel::Vector3::mZ);
 
+		clazz->Func(_SC("exec"), &NutPlayer::Exec);
 		clazz->Func(_SC("queue"), &NutPlayer::Queue);
 		clazz->Func(_SC("clear_queue"), &NutPlayer::QueueClear);
 		clazz->Func(_SC("broadcast"), &NutPlayer::Broadcast);

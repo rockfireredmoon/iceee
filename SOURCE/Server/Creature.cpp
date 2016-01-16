@@ -1987,6 +1987,25 @@ void CreatureInstance :: RemoveAllBuffs(bool send)
 	baseStats.clear();
 }
 
+void CreatureInstance :: RemoveAllBuffsExceptGroupID(bool send, int abilityGroupID)
+{
+	size_t pos = 0;
+	while(pos < activeStatMod.size())
+	{
+		if(activeStatMod[pos].abilityGroupID != abilityGroupID)
+			RemoveBuffIndex(pos);
+		else
+			pos++;
+	}
+
+	for(size_t i = 0; i < baseStats.size(); i++)
+	{
+		float value = baseStats[i].fBaseVal;
+		WriteValueToStat(baseStats[i].StatID, value, &css);
+	}
+	baseStats.clear();
+}
+
 //Remove all buffs of a certain category that do not match the ability.
 void CreatureInstance :: RemoveAbilityBuffTypeExcept(int buffCategory, int abilityID, int abilityGroupID)
 {
@@ -2883,14 +2902,22 @@ void CreatureInstance :: ProcessDeath(void)
 			std::vector<CreatureInstance*> pvpAttackers;
 
 			if(charPtr->Mode == PVP::GameMode::PVP && !actInst->mZoneDefPtr->mArena) {
+
+				/* Don't want loop to be dropped if ANY attacker is not a player */
+				bool npcInvolved = false;
+
 				for(size_t i = 0; i < attackerList.size(); i++)	{
 					CreatureInstance *attacker = attackerList[i].ptr;
-					if(attacker->charPtr->Mode == PVP::GameMode::PVP) {
+					if(!(attacker->serverFlags & ServerFlags::IsPlayer)) {
+						npcInvolved = true;
+						break;
+					}
+					else if(attacker->charPtr->Mode == PVP::GameMode::PVP) {
 						pvpAttackers.push_back(attacker);
 					}
 				}
 
-				if(pvpAttackers.size() > 0) {
+				if(!npcInvolved && pvpAttackers.size() > 0) {
 
 					char buffer[2048];
 
@@ -7887,7 +7914,7 @@ int CreatureInstance :: GetOffhandDamage(void)
 // that are commonly set by default abilities (which may be class specific).
 void CreatureInstance :: Respec(void)
 {
-	RemoveAllBuffs(false);
+	RemoveAllBuffsExceptGroupID(false, 999);
 
 	static const int EffectList[] = {
 		StatusEffects::CAN_USE_WEAPON_2H,

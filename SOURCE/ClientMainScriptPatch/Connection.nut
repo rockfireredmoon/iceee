@@ -929,13 +929,11 @@ class this.Connection extends this.MessageBroadcaster
 				
 				req.onreadystatechange = function () {
 					if (this.readyState == 4) {
-						print("ICE! Got auth reply : " + this.responseText + "\n");
 						 ::_Connection._handleServiceToken(this);
 					}
 				};
 				
 				// Get the X-CSRF-Token (sent as header on next request)
-				print("ICE! Posting auth to " + mAuthData + "/user/token.json\n");
 				req.setRequestHeader("Content-Type", "application/json");
 				req.setRequestHeader("User-Agent", "EETAW");
 				req.setRequestHeader("Host", Util.extractHostnameAndPortFromUrl(mAuthData));
@@ -1067,14 +1065,11 @@ class this.Connection extends this.MessageBroadcaster
 	
 	function _handleServiceLogin(req) {
 		local errorMsg = "No user details returned.";
-		print("ICE! Auth 2nd Result: " + req.status + " " + req.statusText + "\n");
 		this.log.debug("Auth 2nd Result: " + req.status + " " + req.statusText);
 		if (req.status == 200) {
 			
 			local results = ::json(req.responseText);
 			local tkn = mXCSRFToken + ":" + results.sessid + ":" + results.session_name + ":" + results.user.uid;
-			
-			print("ICE! Now sending to server (" + tkn + ")\n");
 			
 			mOutBuf._beginSend("authenticate");
 
@@ -1098,19 +1093,16 @@ class this.Connection extends this.MessageBroadcaster
 	function _handleServiceToken(req) {
 	
 		local errorMsg = "No token returned";
-		print("ICE! _handleServiceToken : " + req.status + " " + req.statusText + "\n");
 		this.log.debug("Auth Result: " + req.status + " " + req.statusText);
 		if (req.status == 200) {
 			local results = ::json(req.responseText);
 			mXCSRFToken = results.token;
-			print("ICE! TOKEN: " + mXCSRFToken + "\n");
 		}
 		else {
 			errorMsg = "Failed to get access token from (Error Code: " + req.status + "/" + mAuthData + ")";
 		}
 		
 		if(mXCSRFToken == null) {
-			print("ICE! TOKENFAIL\n");
 			this.States.event("AuthFailure", errorMsg);
 			close(false);
 		}
@@ -1119,12 +1111,10 @@ class this.Connection extends this.MessageBroadcaster
 			local innerReq = this.XMLHttpRequest();
 			innerReq.onreadystatechange = function () : ( self )	{
 				if (this.readyState == 4) {
-					print("ICE! REPLY! " + this.responseText + "\n");
 					::_Connection._handleServiceLogin(this);
 				}
 			};
 			innerReq.open("POST", mAuthData + "/user/login.json", false);
-			print("ICE! Positing to " mAuthData + "/user/login.json\n");
 			innerReq.send(this.System.encodeVars({
 				username = ::_username,
 				password = ::_password,
@@ -3586,7 +3576,7 @@ class this.Connection extends this.MessageBroadcaster
 		local itemId = data.getStringUTF();
 		local mask = data.getByte();
 		local flags = data.getByte();
-
+		
 		if (mask == 0)
 		{
 			this.log.debug("Item gone: " + itemId);

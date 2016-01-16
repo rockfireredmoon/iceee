@@ -67,11 +67,8 @@ class Screens.ItemMarketEditScreen extends GUI.Frame {
 		mCategoryEntry.addSelectionChangeListener(this);
 		
 		mStatusEntry = GUI.DropDownList();
-		mStatusEntry.addChoice("HIDDEN");
+		mStatusEntry.addChoice("UNDEFINED");
 		mStatusEntry.addChoice("NEW");
-		mStatusEntry.addChoice("ACTIVE");
-		mStatusEntry.addChoice("EXPIRED");
-		mStatusEntry.addChoice("CANCELED");
 		mStatusEntry.addChoice("HOT");
 		mStatusEntry.addSelectionChangeListener(this);
 		

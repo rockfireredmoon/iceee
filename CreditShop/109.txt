@@ -6,5 +6,5 @@ PriceCopper=0
 PriceCredits=500
 ItemID=900024
 Category=RECIPES
-Status=NEW
+Status=<undefined>
 

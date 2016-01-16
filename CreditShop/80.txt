@@ -6,5 +6,5 @@ PriceCopper=1
 PriceCredits=0
 ItemID=2005003
 Category=PETS
-Status=NEW
+Status=<undefined>
 

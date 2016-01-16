@@ -2082,6 +2082,10 @@ void SimulatorThread :: LoadCharacterSession(void)
 			pld.accPtr->ConsecutiveDaysLoggedIn++;
 			LogMessageL(MSG_SHOW, "%s has now logged in %d consecutive days.", pld.accPtr->Name, pld.accPtr->ConsecutiveDaysLoggedIn);
 		}
+		else {
+			// Not a consecutive day, so not due daily rewards
+			pld.accPtr->DueDailyRewards = false;
+		}
 
 		pld.accPtr->PendingMinorUpdates++;
 	}
@@ -3640,28 +3644,28 @@ void SimulatorThread :: handle_updateVelocity(void)
 	int speed = GetByte(&readPtr[ReadPos], ReadPos);
 
 
-	//LogMessageL(MSG_SHOW, "Heading:%d, Rot:%d, Spd:%d", creatureInst->Heading, creatureInst->Rotation, speed);
+//	LogMessageL(MSG_SHOW, "Heading:%d, Rot:%d, Spd:%d, X: %d, Y: %d, Z: %d", creatureInst->Heading, creatureInst->Rotation, speed, x, y, z);
 
-	/*
-	int deltaY = creatureInst->CurrentY - y;
-	if(deltaY > 30)
-		pld.bFalling = true;
-	if(pld.bFalling == true)
-	{
-		pld.DeltaY += deltaY;
-		LogMessageL(MSG_SHOW, "Delta: %d, %d", deltaY, pld.DeltaY);
-	}
-	if(deltaY < 30)
-	{
+	if(g_Config.FallDamage && !creatureInst->actInst->mZoneDefPtr->mGrove) {
+		int deltaY = creatureInst->CurrentY - y;
+		if(deltaY >= 30)
+			pld.bFalling = true;
 		if(pld.bFalling == true)
 		{
-			creatureInst->CheckFallDamage(pld.DeltaY);
-			LogMessageL(MSG_SHOW, "Damage: %d", pld.DeltaY);
-			pld.bFalling = false;
+			pld.DeltaY += deltaY;
+			LogMessageL(MSG_SHOW, "Delta: %d, %d", deltaY, pld.DeltaY);
 		}
-		pld.DeltaY = 0;
+		if(deltaY < 30)
+		{
+			if(pld.bFalling == true)
+			{
+				creatureInst->CheckFallDamage(pld.DeltaY);
+				LogMessageL(MSG_SHOW, "Damage: %d", pld.DeltaY);
+				pld.bFalling = false;
+			}
+			pld.DeltaY = 0;
+		}
 	}
-	*/
 
 	if(g_Config.HasAdministrativeBehaviorFlag(ADMIN_BEHAVIOR_VERIFYSPEED) == true)
 	{
@@ -8502,6 +8506,15 @@ int SimulatorThread :: handle_query_quest_join(void)
 	qdef->mScriptAcceptAction.ExecuteAllCommands(this);
 
 	LogMessageL(MSG_DIAGV, "  Request quest.join (QuestID: %d, CID: %d)", QuestID, CID);
+
+	if(qdef->accountQuest) {
+		g_AccountManager.cs.Enter("SimulatorThread::VaultSend");
+		AccountData *acc = g_AccountManager.GetActiveAccountByID(creatureInst->charPtr->AccountID);
+		acc->AccountQuests.push_back(qdef->questID);
+		acc->PendingMinorUpdates++;
+		g_AccountManager.cs.Leave();
+	}
+
 	int wpos = pld.charPtr->questJournal.QuestJoin(SendBuf, QuestID, query.ID);
 
 	g_QuestNutManager.AddActiveScript(creatureInst, QuestID);
@@ -9728,6 +9741,9 @@ int SimulatorThread :: handle_command_adjustexp(void)
 	}
 
 	int amount = atoi(query.args[0].c_str());
+	if(amount < 1) {
+		return PrepExt_QueryResponseError(SendBuf, query.ID, "Invalid experience amount. Experience amount may only be increased (have a value of 1 or greater).");
+	}
 	creatureInst->AddExperience(amount);
 	if(amount < 0)
 	{
