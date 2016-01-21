@@ -1,12 +1,4 @@
 [ENTRY]
-ID=1000001
-Asset=Bldg-Camelot4?ATS=ATS-Camelot_Low
-Name=Untitled
-Pos=55400.2,274.271,66135.1
-Orient=0,0,0,1
-Scale=1,1,1
-
-[ENTRY]
 ID=1000006
 Asset=Prop-Tree_Accessories1#Prop-Stump_Cut2
 Name=Untitled
@@ -44,6 +36,14 @@ Asset=Prop-Banner#Prop-Banner-Camelot3
 Name=Untitled
 Pos=55855,391.276,66465
 Orient=0,0.382683,0,0.92388
+Scale=1,1,1
+
+[ENTRY]
+ID=1133272
+Asset=Bldg-Camelot4?ATS=ATS-Camelot_Low
+Name=
+Pos=55400.2,274.271,66135.1
+Orient=0,0,0,1
 Scale=1,1,1
 
 [ENTRY]

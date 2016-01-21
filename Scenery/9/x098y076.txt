@@ -1,7 +1,7 @@
 [ENTRY]
 ID=1091359
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=73568.8,1195.7,57494.7
 Orient=0,0,0,1
 Scale=1,1,1
@@ -12,7 +12,7 @@ link=1091360,1
 [ENTRY]
 ID=1091360
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=73677.1,1196.96,57557.4
 Orient=0,0,0,1
 Scale=1,1,1
@@ -22,7 +22,7 @@ link=1091359,1
 [ENTRY]
 ID=1091397
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=73604.6,1195.93,57444.6
 Orient=0,-0.706825,0,0.707388
 Scale=1,1,1
@@ -30,7 +30,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1091398
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=73532.8,1195.7,57606
 Orient=0,0,0,1
 Scale=1,1,1
@@ -38,7 +38,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1091399
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=73578.2,1195.7,57566.7
 Orient=0,-0.518418,0,0.855127
 Scale=1,1,1
@@ -46,7 +46,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1091400
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=73635.5,1195.82,57603
 Orient=0,-0.971148,0,0.238476
 Scale=1,1,1
@@ -54,7 +54,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1091401
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=73630.9,1196.97,57660.2
 Orient=0,0.955101,0,0.296281
 Scale=1,1,1
@@ -62,7 +62,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1091402
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=73573.3,1198.29,57680.3
 Orient=0,0.628793,0,0.777573
 Scale=1,1,1
@@ -70,7 +70,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1091407
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=73726.6,1198.22,57652.2
 Orient=0,0.984588,0,0.174892
 Scale=1,1,1
@@ -78,9 +78,25 @@ Scale=1,1,1
 [ENTRY]
 ID=1091428
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=73707.8,1204.31,57491
 Orient=0,0.995083,0,-0.099041
+Scale=1,1,1
+
+[ENTRY]
+ID=1133156
+Asset=Prop-Fog#Prop-Fog_Green_Ground
+Name=
+Pos=73628.9,1196.73,57652.3
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
+ID=1133157
+Asset=Prop-Fog#Prop-Fog_Green_Ground
+Name=
+Pos=73541.4,1195.55,57502.3
+Orient=0,0,0,1
 Scale=1,1,1
 
 [ENTRY]
