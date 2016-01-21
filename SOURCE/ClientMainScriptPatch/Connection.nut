@@ -3673,7 +3673,7 @@ class this.Connection extends this.MessageBroadcaster
 		local itemId = data.getStringUTF();
 		local mask = data.getByte();
 		local flags = data.getByte();
-
+		
 		if (mask == 0)
 		{
 			this.log.debug("Item gone: " + itemId);

@@ -827,7 +827,7 @@ int InventoryManager :: AddItemUpdate(char *buffer, char *convBuf, InventorySlot
 	wpos += PutByte(&buffer[wpos], slot->bindStatus);
 
 	//if (flags & FLAG_ITEM_TIME_REMAINING)
-	wpos += PutInteger(&buffer[wpos], -1);   //timeRemaining
+	wpos += PutInteger(&buffer[wpos], slot->GetTimeRemaining());   //timeRemaining
 
 	PutShort(&buffer[1], wpos - 3);     //Set size
 	return wpos;

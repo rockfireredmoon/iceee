@@ -444,8 +444,12 @@ void LoadConfig(const char *filename)
 				g_Config.SquirrelGCMaxDelay = lfr.BlockToIntC(1);
 			else if(strcmp(NameBlock, "SquirrelVMStackSize") == 0)
 				g_Config.SquirrelVMStackSize = lfr.BlockToIntC(1);
+			else if(strcmp(NameBlock, "SquirrelQueueSpeed") == 0)
+				g_Config.SquirrelQueueSpeed = lfr.BlockToIntC(1);
 			else if(strcmp(NameBlock, "PersistentBuffs") == 0)
 				g_Config.PersistentBuffs = lfr.BlockToBool(1);
+			else if(strcmp(NameBlock, "FallDamage") == 0)
+				g_Config.FallDamage = lfr.BlockToBool(1);
 			else if(strcmp(NameBlock, "PartyLoot") == 0)
 				g_Config.PartyLoot = lfr.BlockToBool(1);
 			else if(strcmp(NameBlock, "AccountCredits") == 0)
@@ -714,9 +718,11 @@ GlobalConfigData :: GlobalConfigData()
 	SquirrelGCDelay = 10000;
 	SquirrelGCMaxDelay = 60000;
 	SquirrelVMStackSize = 512;
+	SquirrelQueueSpeed = 10000;
 
 	PersistentBuffs = false;
 	PartyLoot = false;
+	FallDamage = false;
 
 	AccountCredits = true;
 	NameChangeCost = 300;

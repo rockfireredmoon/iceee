@@ -581,6 +581,7 @@ void QuestDefinition :: Clear(void)
 	valourRequired = 0;
 	guildId = 0;
 	guildStart = false;
+	accountQuest = false;
 }
 
 void QuestDefinition :: CopyFrom(const QuestDefinition &other)
@@ -627,6 +628,7 @@ void QuestDefinition :: CopyFrom(const QuestDefinition &other)
 	valourRequired = other.valourRequired;
 	guildId = other.guildId;
 	guildStart = other.guildStart;
+	accountQuest = other.accountQuest;
 }
 
 int QuestDefinition :: GetObjective(unsigned int act, int type, int CDefID)
@@ -984,6 +986,8 @@ void QuestDefinitionContainer :: LoadFromFile(const char *filename)
 				newItem.QuestEnderID = lfr.BlockToIntC(1);
 			else if(strcmp(lfr.SecBuffer, "REPEAT") == 0)
 				newItem.Repeat = lfr.BlockToBoolC(1);
+			else if(strcmp(lfr.SecBuffer, "ACCOUNTQUEST") == 0)
+				newItem.accountQuest = lfr.BlockToBoolC(1);
 			else if(strcmp(lfr.SecBuffer, "REPEATDELAY") == 0)
 				newItem.SetRepeatTime(lfr.BlockToStringC(1, 0));
 			else if(strcmp(lfr.SecBuffer, "SGIVER") == 0)

@@ -1770,6 +1770,10 @@ void SimulatorThread :: LoadCharacterSession(void)
 			pld.accPtr->ConsecutiveDaysLoggedIn++;
 			LogMessageL(MSG_SHOW, "%s has now logged in %d consecutive days.", pld.accPtr->Name, pld.accPtr->ConsecutiveDaysLoggedIn);
 		}
+		else {
+			// Not a consecutive day, so not due daily rewards
+			pld.accPtr->DueDailyRewards = false;
+		}
 
 		pld.accPtr->LastLogOnTimeSec = nowTimeSec;
 		pld.accPtr->PendingMinorUpdates++;
@@ -3289,28 +3293,28 @@ void SimulatorThread :: handle_updateVelocity(void)
 	int speed = GetByte(&readPtr[ReadPos], ReadPos);
 
 
-	//LogMessageL(MSG_SHOW, "Heading:%d, Rot:%d, Spd:%d", creatureInst->Heading, creatureInst->Rotation, speed);
+//	LogMessageL(MSG_SHOW, "Heading:%d, Rot:%d, Spd:%d, X: %d, Y: %d, Z: %d", creatureInst->Heading, creatureInst->Rotation, speed, x, y, z);
 
-	/*
-	int deltaY = creatureInst->CurrentY - y;
-	if(deltaY > 30)
-		pld.bFalling = true;
-	if(pld.bFalling == true)
-	{
-		pld.DeltaY += deltaY;
-		LogMessageL(MSG_SHOW, "Delta: %d, %d", deltaY, pld.DeltaY);
-	}
-	if(deltaY < 30)
-	{
+	if(g_Config.FallDamage && !creatureInst->actInst->mZoneDefPtr->mGrove) {
+		int deltaY = creatureInst->CurrentY - y;
+		if(deltaY >= 30)
+			pld.bFalling = true;
 		if(pld.bFalling == true)
 		{
-			creatureInst->CheckFallDamage(pld.DeltaY);
-			LogMessageL(MSG_SHOW, "Damage: %d", pld.DeltaY);
-			pld.bFalling = false;
+			pld.DeltaY += deltaY;
+			LogMessageL(MSG_SHOW, "Delta: %d, %d", deltaY, pld.DeltaY);
 		}
-		pld.DeltaY = 0;
+		if(deltaY < 30)
+		{
+			if(pld.bFalling == true)
+			{
+				creatureInst->CheckFallDamage(pld.DeltaY);
+				LogMessageL(MSG_SHOW, "Damage: %d", pld.DeltaY);
+				pld.bFalling = false;
+			}
+			pld.DeltaY = 0;
+		}
 	}
-	*/
 
 	if(g_Config.HasAdministrativeBehaviorFlag(ADMIN_BEHAVIOR_VERIFYSPEED) == true)
 	{
@@ -8091,6 +8095,15 @@ int SimulatorThread :: handle_query_quest_join(void)
 	qdef->mScriptAcceptAction.ExecuteAllCommands(this);
 
 	LogMessageL(MSG_DIAGV, "  Request quest.join (QuestID: %d, CID: %d)", QuestID, CID);
+
+	if(qdef->accountQuest) {
+		g_AccountManager.cs.Enter("SimulatorThread::VaultSend");
+		AccountData *acc = g_AccountManager.GetActiveAccountByID(creatureInst->charPtr->AccountID);
+		acc->AccountQuests.push_back(qdef->questID);
+		acc->PendingMinorUpdates++;
+		g_AccountManager.cs.Leave();
+	}
+
 	int wpos = pld.charPtr->questJournal.QuestJoin(SendBuf, QuestID, query.ID);
 
 	g_QuestNutManager.AddActiveScript(creatureInst, QuestID);
