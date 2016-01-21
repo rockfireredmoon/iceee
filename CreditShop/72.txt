@@ -5,5 +5,5 @@ PriceCopper=0
 PriceCredits=100
 ItemID=8313
 Category=CHARMS
-Status=NEW
+Status=<undefined>
 

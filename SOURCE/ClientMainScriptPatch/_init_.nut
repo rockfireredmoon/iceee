@@ -70,6 +70,7 @@ try {
 }
 catch(e) {
 	print("[WARNING] Could not load extended arguments cache. Web authentication will not be possible.\n");
+	print("[WARNING] Error: " + e + "\n");
 }
 
 // Clear the temporary cookie, we don't need it anymore

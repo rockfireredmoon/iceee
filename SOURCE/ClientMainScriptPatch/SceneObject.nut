@@ -5789,6 +5789,7 @@ class this.SceneObject extends this.MessageBroadcaster
 		local groundTestDir = this.Vector3(0.0, -5000.0, 0.0);
 		local groundTest = this._scene.sweepBox(box, startingPoint, startingPoint + groundTestDir, this.QueryFlags.FLOOR | this.QueryFlags.BLOCKING, false);
 		local finalGroundPos = startingPoint + groundTestDir * groundTest.distance;
+		local wasVerticalSpeed = this.mVerticalSpeed;
 		finalGroundPos.y -= StepValue;
 		finalMovementPos.y -= StepValue;
 
@@ -5819,6 +5820,8 @@ class this.SceneObject extends this.MessageBroadcaster
 		{
 			terrain = floor;
 		}
+		
+		local hitGround = false;
 
 		if (floor != null && terrain != null)
 		{
@@ -5826,6 +5829,8 @@ class this.SceneObject extends this.MessageBroadcaster
 			{
 				this.setDistanceToFloor(0.0, floor.normal);
 				this.mVerticalSpeed = 0.0;
+				//print("ICE! Hit ground 1\n");
+				//hitGround = true;
 				pos.y = finalGroundPos.y;
 			}
 
@@ -5840,6 +5845,8 @@ class this.SceneObject extends this.MessageBroadcaster
 					this.mVerticalSpeed = 0.0;
 					this.mCurrentlyJumping = false;
 					pos.y = finalGroundPos.y;
+					//print("ICE! Hit ground 2\n");
+					//hitGround = true;
 				}
 				else if (finalMovementPos.y - finalGroundPos.y <= 1.0)
 				{
@@ -5847,6 +5854,8 @@ class this.SceneObject extends this.MessageBroadcaster
 					this.mVerticalSpeed = 0.0;
 					this.setDistanceToFloor(0.0, terrain.normal);
 					this.mCurrentlyJumping = false;
+					print("ICE! Hit ground 3\n");
+					hitGround = true;
 				}
 				else
 				{
@@ -5869,6 +5878,8 @@ class this.SceneObject extends this.MessageBroadcaster
 					pos = terrain.pos;
 					this.setDistanceToFloor(0.0, terrain.normal);
 					this.mCurrentlyJumping = false;
+					//print("ICE! Hit ground 4\n");
+					//hitGround = true;
 				}
 				else
 				{
@@ -5883,6 +5894,8 @@ class this.SceneObject extends this.MessageBroadcaster
 			}
 
 			local slideableTerrainHeight = this.Util.getFloorHeightAt(pos, 10.0, this.QueryFlags.FLOOR, true, this.getNode());
+			
+			local sentUpdate = false;
 
 			if (::_avatar == this)
 			{
@@ -5914,6 +5927,7 @@ class this.SceneObject extends this.MessageBroadcaster
 					{
 						this.mSlopeSlideInertia = null;
 						this.serverVelosityUpdate();
+						sentUpdate = true;
 					}
 				}
 			}
@@ -5925,6 +5939,7 @@ class this.SceneObject extends this.MessageBroadcaster
 				}
 
 				this.serverVelosityUpdate();
+				sentUpdate = true;
 				local slidePosition = this.Vector3(pos.x, pos.y, pos.z);
 				slidePosition.x += this.mSlopeSlideInertia.x * ::_deltat / 1000.0;
 				slidePosition.z += this.mSlopeSlideInertia.z * ::_deltat / 1000.0;
@@ -5963,6 +5978,10 @@ class this.SceneObject extends this.MessageBroadcaster
 				}
 
 				checkSwimming = true;
+			}
+			
+			if (::_avatar == this && !sentUpdate && hitGround) {
+				print("ICE! Hit ground!!!!\n");
 			}
 		}
 

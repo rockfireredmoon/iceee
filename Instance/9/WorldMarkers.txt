@@ -134,6 +134,7 @@ Comment=[Comment here]
 Position=57701.0,738.0,61520.0
 
 [ENTRY]
+<<<<<<< HEAD
 Name=Dustshore - Bazzart
 Comment=[Comment here]
 Position=22353.0,399.0,76922.0
@@ -157,4 +158,9 @@ Position=56702.0,426.0,49721.0
 Name=Midlands Hunters Camp
 Comment=[Comment here]
 Position=54319.0,170.0,58839.0
+
+[ENTRY]
+Name=Jump test 1
+Comment=Ascending eifel tower
+Position=29051.0,500.0,62577.0
 
