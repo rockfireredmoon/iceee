@@ -816,11 +816,22 @@ void CharacterData :: OnCharacterCreation(void)
 		if(qdef != NULL)
 			questJournal.activeQuests.AddItem(378, qdef);
 
+		/*
 		activeData.CurX = 5682;
 		activeData.CurY = 682;
 		activeData.CurZ = 5890;
 		activeData.CurZone = 59;
 		activeData.CurRotation = 225;
+		*/
+
+
+		activeData.CurZone = g_DefZone;
+		activeData.CurX = g_DefX;
+		activeData.CurY = g_DefY;
+		activeData.CurZ = g_DefZ;
+		activeData.CurRotation = g_DefRotation;
+
+
 		std::string quickbar0;
 		quickbar0 = "\"{[\\\"slotsY\\\"]=1,[\\\"slotsX\\\"]=8,[\\\"snapY\\\"]=null,[\\\"y\\\"]=0.863333,[\\\"x\\\"]=0.33625,[\\\"positionX\\\"]=84,[\\\"positionY\\\"]=26,[\\\"snapX\\\"]=null,[\\\"locked\\\"]=true,[\\\"visible\\\"]=true,[\\\"buttons\\\"]=[null,null,";
 		switch(cdef.css.profession)

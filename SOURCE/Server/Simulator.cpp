@@ -1555,6 +1555,7 @@ void SimulatorThread :: SetPersona(int personaIndex)
 		pld.charPtr->activeData.CurX = g_DefX;
 		pld.charPtr->activeData.CurY = g_DefY;
 		pld.charPtr->activeData.CurZ = g_DefZ;
+		pld.charPtr->activeData.CurRotation = g_DefRotation;
 	}
 	//int InstanceID = pld.charPtr->activeData.CurInstance;
 	int InstanceID = 0;

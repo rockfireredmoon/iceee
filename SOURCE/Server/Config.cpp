@@ -50,7 +50,7 @@ bool g_GlobalLogging = true;
 int g_DefX = 0;                  //Default X coordinate on the map
 int g_DefY = 0;
 int g_DefZ = 0;                  //Default Z coordinate on the map
-
+int g_DefRotation = 0;
 int g_DefZone = 81;              //Default instance ID to log into
 
 unsigned long g_SceneryAutosaveTime = 300000;  //5 minutes
@@ -205,6 +205,10 @@ void LoadConfig(const char *filename)
 			else if(strcmp(NameBlock, "DefZone") == 0)
 			{
 				g_DefZone = lfr.BlockToInt(1);
+			}
+			else if(strcmp(NameBlock, "DefRotation") == 0)
+			{
+				g_DefRotation = lfr.BlockToInt(1);
 			}
 			else if(strcmp(NameBlock, "HTTPBaseFolder") == 0)
 			{

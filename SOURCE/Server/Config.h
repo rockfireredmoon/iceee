@@ -28,6 +28,7 @@ extern int g_DefX;
 extern int g_DefY;
 extern int g_DefZ;
 extern int g_DefZone;
+extern int g_DefRotation;
 
 //For the HTTP server
 extern char g_HTTPBaseFolder[512];
