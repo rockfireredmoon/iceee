@@ -249,3 +249,7 @@ Sanctuary=27301.4,630.152,79634.2,Kerakura's Lair
 [ENTRY]
 ZoneID=1059
 Sanctuary=5819.58,694.726,5874.88,Museum
+
+[ENTRY]
+ZoneID=92
+Sanctuary=10392,624.558,12609.2
