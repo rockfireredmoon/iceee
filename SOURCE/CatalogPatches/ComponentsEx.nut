@@ -184,6 +184,7 @@ ComponentIndex["Prop-Crystal_Yellow_Small3"] <- "Prop-Crystals";
 ComponentIndex["Prop-Crystal_Yellow_Small4"] <- "Prop-Crystals";
 
 ComponentIndex["Prop-TNT"] <- "Prop-Containers2";
+ComponentIndex["Prop-TupikBarrel"] <- "Prop-Containers3";
 
 ComponentIndex["Prop-Wooden_Barricade_Sm1_far"] <- "Prop-Fences";
 ComponentIndex["CL-Farm-Chicken_Coop1"] <- "CL-Farm";
