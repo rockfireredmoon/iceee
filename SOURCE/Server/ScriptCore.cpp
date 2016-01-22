@@ -2098,7 +2098,7 @@ bool ScriptPlayer::PerformJumpRequest(const char *name, int callStyle)
 		//an event queue, it probably needs to be stopped.
 		if(def->UseEventQueue() == false)
 		{
-			g_Log.AddMessageFormat("[REMOVEME] Ending script %s on call to label %s because it doesn't exist.", name, def->scriptName.c_str());
+			g_Log.AddMessageFormat("[REMOVEME] Ending script %s on call to label %s because it doesn't exist.", def->scriptName.c_str(), name);
 			EndExecution();
 		}
 	}
