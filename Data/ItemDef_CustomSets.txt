@@ -770,7 +770,7 @@ mArmorType=1
 mID=7058
 mType=3
 mDisplayName=Battle Mage Collar
-mAppearance=[{["c"]={["colors"]=["000000","000000","43107f","43107f","43107f","43107f"],["type"]="Armor-Medium-Mid3"}}]
+mAppearance=[{["c"]={["type"]="Armor-Heavy-Mid2",["colors"]=["aaaaaa","bf3434","0a6cbf"]}}]
 mIcon=Icon-32-Armor-Neck03.png|Icon-32-BG-Blue.png
 mLevel=10
 mValue=1000
