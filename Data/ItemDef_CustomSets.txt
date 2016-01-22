@@ -756,7 +756,7 @@ mArmorType=1
 [ENTRY]
 mID=7057
 mType=3
-mDisplayName=Battle Mage Smock
+mDisplayName=Battle Mage Wrap
 mAppearance=[{["c"]={["type"]="Armor-Cloth-High3",["colors"]=["d4d4d4","d43939","7f2222","07487f","d49212","d49212"]}}]
 mIcon=Icon-32-C_Armor-Legs04.png|Icon-32-BG-Blue.png
 mLevel=10
@@ -851,9 +851,9 @@ mArmorType=1
 [ENTRY]
 mID=7064
 mType=3
-mDisplayName=Raven Leggings
+mDisplayName=Raven Chestpiece
 mAppearance=[{["c"]={["type"]="Armor-Warrior-Tauranian",["colors"]=["552a54","000000","e79f4d","2a0000"]}}]
-mIcon=Icon-32-M_Armor-Legs05.png|Icon-32-BG-Blue.png
+mIcon=Icon-32-M_Armor-Chest03.png|Icon-32-BG-Blue.png
 mLevel=10
 mValue=1000
 mQualityLevel=2
