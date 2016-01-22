@@ -1,5 +1,4 @@
 #name instance_anglorum_81
-#queue_jumps
 
 :init
 set waterelementalcamp 0
