@@ -3,7 +3,7 @@ Description=Player Made Set
 PriceCurrency=CREDITS
 PriceCopper=0
 PriceCredits=100
-ItemID=7063
+ItemID=7109
 Category=ARMOR
 Status=NEW
 
