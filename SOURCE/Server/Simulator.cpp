@@ -10526,7 +10526,7 @@ int SimulatorThread :: handle_command_setbehavior(void)
 
 int SimulatorThread :: handle_command_deriveset(void)
 {
-	if(CheckPermissionSimple(Perm_Account, Permission_Admin) == false)
+	if(CheckPermissionSimple(Perm_Account, Permission_Sage) == false)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
 
 	if(creatureInst->CurrentTarget.targ == NULL)
