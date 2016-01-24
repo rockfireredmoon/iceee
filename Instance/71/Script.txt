@@ -1,4 +1,0 @@
-; Zhushi's Treasure
-:onKill_943
-spawn 1191182623
-end

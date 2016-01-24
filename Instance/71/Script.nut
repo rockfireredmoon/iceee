@@ -1,13 +1,12 @@
 ::info <- {
-	name = "Hall of Bones",
+	name = "Zhushis Lair",
 	author = "Grethnefar, ported by Emerald Icemoon",
 	description = "Handles step-up spawns and boss treasure",
 	queue_events = true
 }
 
-// Akaz's Treasure
-function on_kill_739()
-	inst.spawn(1056964748, 0, 0);
+kills <- 0;
 
-
-	
+function on_kill_943()
+	// Zhushi's Treasure
+	inst.spawn(1191182623, 0, 0);

@@ -1154,7 +1154,7 @@ casting_setback_chance=500
 channeling_break_chance=500
 appearance=c2:{["a"]=[{["type"]="Armor-Cloth-Epic3-Left_Pauldron",["node"]="left_shoulder",["colors"]=["3F3F3F","944D0D","3F3F3F","3F3F3F"]},{["type"]="Armor-Cloth-Epic3-Right_Pauldron",["node"]="right_shoulder",["colors"]=["3F3F3F","944D0D","3F3F3F","3F3F3F"]},{["type"]="Armor-Light-High1-Helmet",["node"]="helmet",["colors"]=["3F3F3F","3F3F3F","3F3F3F","545148","944D0D"]},{["type"]="Item-Bow-High1",["node"]="left_hand",["colors"]=["2A2A2A","554704","944D0D","944D0D","7B2E00"]}],["c"]={["boots"]={["type"]="Armor-Medium-Epic2",["colors"]=["aa580f","151515","3f3f3f","b59c7d","5a524d","a0857c","caa455"]},["chest"]={["type"]="Armor-Medium-Epic2",["colors"]=["aa580f","151515","3f3f3f","b59c7d","5a524d","a0857c","caa455"]},["leggings"]={["type"]="Armor-Medium-Epic2",["colors"]=["aa580f","151515","3f3f3f","b59c7d","5a524d","a0857c","caa455"]},["belt"]={["type"]="Armor-Medium-Epic2",["colors"]=["aa580f","151515","151515","5a524d","2a2a2a","a0857c","caa455"]},["arms"]={["type"]="Armor-Medium-Epic2",["colors"]=["aa580f","aa580f","3f3f3f","aa580f","aa580f","aa580f","aa580f"]},["gloves"]={["type"]="Armor-Medium-Epic2",["colors"]=["aa580f","151515","3f3f3f","b59c7d","5a524d","a0857c","caa455"]}},["b"]="n",["sk"]={["hands_feet"]="3F3F3F",["spots"]="3F3F3F",["eye_white"]="3F3F3F",["nails"]="3F3F3F",["base"]="7F6B06",["eye"]="FF8516",["horns"]="7F6B06",["lower_jaw"]="7F6B06"},["sz"]="1.5",["h"]=0,["g"]="f",["r"]="l"}
 level=48
-rarity-1
+rarity=1
 display_name=Sandmother
 sub_name=Brood of Kerakura
 profession=5
