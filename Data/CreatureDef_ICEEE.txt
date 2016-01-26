@@ -2200,6 +2200,32 @@ display_name=Ambusher
 profession=5
 creature_category=Mortal
 ai_package=melee_creature_brave_6
-sub_name=Sneaky Sneaks
+sub_name=TEMPORARY - REDO - 7875
+
+[ENTRY]
+ID=7876
+strength=9
+dexterity=9
+constitution=14
+psyche=11
+spirit=14
+base_damage_melee=9
+damage_resist_melee=147
+damage_resist_fire=147
+damage_resist_frost=147
+damage_resist_mystic=147
+damage_resist_death=147
+will_regen=1
+might_regen=1
+offhand_weapon_damage=500
+casting_setback_chance=500
+channeling_break_chance=500
+appearance=c2:{["h"]=0,["c"]={["boots"]={["type"]="Armor-Medium-Mid2",["colors"]=[]},["chest"]={["type"]="Armor-Medium-Mid2",["colors"]=[]},["arms"]={["type"]="Armor-Medium-Mid2",["colors"]=[]},["leggings"]={["type"]="Armor-Medium-Mid2",["colors"]=[]},["collar"]={["type"]="Armor-Medium-Mid2",["colors"]=[]},["belt"]={["type"]="Armor-Medium-Mid2",["colors"]=[]},["gloves"]={["type"]="Armor-Medium-Mid2",["colors"]=[]}},["b"]="m",["sk"]={["hands_feet"]="816A5D",["eye_white"]="EEE0D0",["nails"]="444444",["ear_tips"]="9B785D",["base"]="947D50",["eye"]="A1664B",["inner_ear"]="C9A680",["nose"]="84746C",["head_highlight"]="B4926E"},["g"]="m",["r"]="x"}
+level=5
+display_name=Milicent Bystander
+profession=5
+creature_category=Mortal
+ai_package=melee_creature_brave_6
+sub_name=TEMPORARY - REDO - 7876
 
 
