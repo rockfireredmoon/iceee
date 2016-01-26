@@ -5,6 +5,7 @@
 #include "ScriptCore.h"
 #include "Creature.h"
 #include "Components.h"
+#include "Quest.h"
 #include <vector>
 #include <string>
 #include <list>
@@ -37,7 +38,7 @@ public:
 	CreatureInstance *source;
 	CreatureInstance *target;
 	ScriptCore::NutScriptEvent *activateEvent;
-	int QuestAct;
+	int CurrentQuestAct;
 	Squirrel::Vector3I activate;
 	QuestNutPlayer();
 	virtual ~QuestNutPlayer();
@@ -55,6 +56,11 @@ public:
 	int GetSource();
 	bool ResetObjective(int objective);
 	bool Abandon();
+	int AddQuest(QuestDefinition questDefinition);
+	bool Invite(int questID);
+	QuestObjective KillObjective(std::string description, Sqrat::Array &cdefIds, int amount, std::string completeText, std::string markerLocations);
+	QuestObjective TalkObjective(std::string description, int creatureDefId, std::string markerLocations);
+
 	int AddSidekick(int cdefID, bool pet);
 	int RemoveSidekick(int sidekickID);
 	bool Join(int questID);

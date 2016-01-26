@@ -301,7 +301,6 @@ public:
 	int handle_query_gm_spawn(void);
 	int handle_query_guild_info(void);
 	int handle_query_guild_leave(void);
-	int handle_query_script_op(int op);
 	int handle_query_clan_info(void);
 	int handle_query_clan_list(void);
 	int handle_query_spawn_list(void);
@@ -515,6 +514,7 @@ public:
 
 	bool QuestResetObjectives(int QuestID, int objective);
 	bool QuestJoin(int QuestID);
+	bool QuestInvite(int QuestID);
 	bool QuestClear(int QuestID);
 
 	int AddSidekick(int CDefID);

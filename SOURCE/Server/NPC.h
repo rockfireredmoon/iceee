@@ -13,11 +13,13 @@ typedef std::vector<STRINGLIST> MULTISTRING;
 struct HateCreatureData
 {
 	int CDefID;   //CDef of the attacking object
+	int CID;
 	int damage;
 	int hate;
 	short level;  //Level of the attacking object
 	HateCreatureData()
 	{
+		CID = 0;
 		CDefID = 0;
 		damage = 0;
 		hate = 0;
@@ -47,7 +49,7 @@ public:
 	void SetImmediateRefresh(void);
 	void ExtendTauntRelease(int seconds);
 	int GetIndexByCreature(int CDefID);
-	void Add(int CDefID, short level, int damage, int hate);
+	void Add(int CID, int CDefID, short level, int damage, int hate);
 	int GetHighestLevel(void);
 	void UnHate(int CreatureDefID);
 	bool CheckRefreshAndUpdate(void);

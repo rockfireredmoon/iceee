@@ -1056,9 +1056,11 @@ void CreatureInstance :: OnApplyDamage(CreatureInstance *attacker, int amount)
 			//This is so sidekick kills will register as experience for the
 			//associated player.
 			int CDefID = attacker->CreatureDefID;
+			int CID = attacker->CreatureID;
 			short level = attacker->css.level;
 			if(attacker->AnchorObject != NULL)
 			{
+				CID = attacker->AnchorObject->CreatureID;
 				CDefID = attacker->AnchorObject->CreatureDefID;
 				level = attacker->AnchorObject->css.level;
 			}
@@ -1078,7 +1080,7 @@ void CreatureInstance :: OnApplyDamage(CreatureInstance *attacker, int amount)
 			//Note: the ability table mentions that a gain rate of 100 is 200% of normal. 
 			if(attacker->css.hate_gain_rate != 0)
 				hateAmount += Util::GetAdditiveFromIntegralPercent100((int)hateAmount, attacker->css.hate_gain_rate);
-			hprof->Add(CDefID, level, amount, (int)hateAmount);
+			hprof->Add(CID, CDefID, level, amount, (int)hateAmount);
 			SetServerFlag(ServerFlags::HateInfoChanged, true);
 		}
 	}
@@ -2259,7 +2261,7 @@ void CreatureInstance :: AddHate(CreatureInstance *attacker, int amount)
 	HateProfile *hprof = GetHateProfile();
 	if(hprof == NULL)
 		return;
-	hprof->Add(attacker->CreatureDefID, attacker->css.level, 0, amount);
+	hprof->Add(attacker->CreatureID, attacker->CreatureDefID, attacker->css.level, 0, amount);
 	hprof->SetImmediateRefresh();
 	SetServerFlag(ServerFlags::HateInfoChanged, true);
 }
