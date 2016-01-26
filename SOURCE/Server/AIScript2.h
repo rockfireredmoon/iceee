@@ -1,3 +1,6 @@
+#ifndef AISCRIPT2_H
+#define AISCRIPT2_H
+
 #include <list>
 
 #include "ScriptCore.h"
@@ -96,3 +99,5 @@ public:
 };
 
 extern AINutManager aiNutManager;
+
+#endif

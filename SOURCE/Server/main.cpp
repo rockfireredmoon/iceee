@@ -187,6 +187,7 @@ If using Code::Blocks on LINUX
 #include "query/CreditShopHandlers.h"
 #include "query/VaultHandlers.h"
 #include "query/AuctionHouseHandlers.h"
+#include "query/ScriptHandlers.h"
 
 #ifdef WINDOWS_SERVICE
 #include <windows.h>
@@ -564,6 +565,11 @@ int InitServerMain() {
 	g_QueryManager.queryHandlers["ah.auction"] = new AuctionHouseAuctionHandler();
 	g_QueryManager.queryHandlers["ah.bid"] = new AuctionHouseBidHandler();
 	g_QueryManager.queryHandlers["ah.buy"] = new AuctionHouseBuyHandler();
+
+	g_QueryManager.queryHandlers["script.run"] = new ScriptRunHandler();
+	g_QueryManager.queryHandlers["script.load"] = new ScriptLoadHandler();
+	g_QueryManager.queryHandlers["script.kill"] = new ScriptKillHandler();
+	g_QueryManager.queryHandlers["script.save"] = new ScriptSaveHandler();
 
 
 	// Some are shared

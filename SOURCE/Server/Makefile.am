@@ -109,6 +109,7 @@ tawd_SOURCES = md5.cc \
 	query/CreditShopHandlers.cpp \
 	query/VaultHandlers.cpp \
 	query/AuctionHouseHandlers.cpp \
+	query/ScriptHandlers.cpp \
 	util/base64.cpp \
 	util/JsonHelpers.cpp \
 	util/SquirrelObjects.cpp \
@@ -240,6 +241,7 @@ tawd_SOURCES = md5.cc \
 	query/CreditShopHandlers.h \
 	query/VaultHandlers.h \
 	query/AuctionHouseHandlers.h \
+	query/ScriptHandlers.h \
 	util/base64.h \
 	util/JsonHelpers.h \
 	SquirrelObjects.h
@@ -351,6 +353,7 @@ tawdsvc_SOURCES = md5.cc \
 	query/CreditShopHandlers.cpp \
 	query/VaultHandlers.cpp \
 	query/AuctionHouseHandlers.cpp \
+	query/ScriptHandlers.cpp \
 	util/base64.cpp \
 	util/JsonHelpers.cpp \
 	Ability2.h \
@@ -481,6 +484,7 @@ tawdsvc_SOURCES = md5.cc \
 	query/CreditShopHandlers.h \
 	query/VaultHandlers.h \
 	query/AuctionHouseHandlers.h \
+	query/ScriptHandlers.h \
 	util/base64.h \
 	util/JsonHelpers.h \
 	SquirrelObjects.h

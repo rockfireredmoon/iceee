@@ -532,6 +532,11 @@ QuestDefinition :: ~QuestDefinition()
 	Clear();
 }
 
+void QuestDefinition :: AddAct(QuestAct &act) {
+	actList.push_back(act);
+	actCount++;
+}
+
 void QuestDefinition :: Clear(void)
 {
 	profession = 0;
@@ -851,6 +856,7 @@ void QuestDefinition :: SetRepeatTime(const char *format)
 
 QuestDefinitionContainer :: QuestDefinitionContainer()
 {
+	mVirtualQuestID = 100000;
 }
 
 QuestDefinitionContainer :: ~QuestDefinitionContainer()
@@ -860,6 +866,7 @@ QuestDefinitionContainer :: ~QuestDefinitionContainer()
 
 void QuestDefinitionContainer :: Clear(void)
 {
+	mVirtualQuestID = 100000;
 	mQuests.clear();
 }
 
@@ -1597,6 +1604,9 @@ int QuestJournal :: QuestData(char *buffer, char *convBuf, int QuestID, int Quer
 	int act = GetCurrentAct(QuestID);
 	if(act >= (int)qd->actList.size())
 		return PrepExt_QueryResponseError(buffer, QueryIndex, "Server error: quest act does not exist");
+	else if(act <0) {
+		return PrepExt_QueryResponseError(buffer, QueryIndex, "Server error: quest act not set");
+	}
 
 	int QuestData = activeQuests.HasQuestID(QuestID);
 	QuestReference *qref = NULL;
@@ -1925,15 +1935,18 @@ int QuestJournal :: CheckTravelLocations(int CID, char *buffer, int x, int y, in
 			wpos += PrepExt_SendInfoMessage(&buffer[wpos], resPtr->c_str(), INFOMSG_INFO);
 
 			// Run on_objective_complete functions for the quest script
-			std::list<QuestScript::QuestNutPlayer*> l = g_QuestNutManager.GetActiveQuestScripts(qr.QuestID);
-			if(l.size() > 0) {
-				char ConvBuf[256];
-				Util::SafeFormat(ConvBuf, sizeof(ConvBuf), "on_objective_complete_%d_%d",qr.CurAct,r);
-				for(std::list<QuestScript::QuestNutPlayer*>::iterator it = l.begin() ; it != l.end(); ++it) {
-					QuestScript::QuestNutPlayer *player = *it;
-					player->JumpToLabel(ConvBuf);
-				}
-			}
+
+			// WTF? Maybe some misguided attempt at activating party objective?
+
+//			std::list<QuestScript::QuestNutPlayer*> l = g_QuestNutManager.GetActiveQuestScripts(qr.QuestID);
+//			if(l.size() > 0) {
+//				char ConvBuf[256];
+//				Util::SafeFormat(ConvBuf, sizeof(ConvBuf), "on_objective_complete_%d_%d",qr.CurAct,r);
+//				for(std::list<QuestScript::QuestNutPlayer*>::iterator it = l.begin() ; it != l.end(); ++it) {
+//					QuestScript::QuestNutPlayer *player = *it;
+//					player->JumpToLabel(ConvBuf);
+//				}
+//			}
 
 			qr.RunObjectiveCompleteScripts(CID, qr.CurAct, r);
 
@@ -1944,7 +1957,7 @@ int QuestJournal :: CheckTravelLocations(int CID, char *buffer, int x, int y, in
 	return wpos;
 }
 
-int QuestJournal :: CheckQuestTalk(char *buffer, int CreatureDefID, int CreatureInstID)
+int QuestJournal :: CheckQuestTalk(char *buffer, int CreatureDefID, int CreatureInstID, int PlayerCID)
 {
 	//Resolve which quest has the talk objective.
 	int activeIndex = activeQuests.HasCreatureReturn(CreatureDefID);
@@ -1983,6 +1996,8 @@ int QuestJournal :: CheckQuestTalk(char *buffer, int CreatureDefID, int Creature
 	questRef.ObjComplete[objective] = 1;
 	questRef.ObjCounter[objective] = 1;
 
+	questRef.RunObjectiveCompleteScripts(PlayerCID, questRef.CurAct, objective);
+
 	int wpos = 0;
 	wpos += PutByte(&buffer[wpos], 7);  //_handleQuestEventMsg
 	wpos += PutShort(&buffer[wpos], 0); //Size
@@ -2012,7 +2027,16 @@ int QuestJournal :: CheckQuestTalk(char *buffer, int CreatureDefID, int Creature
 		wpos += PutInteger(&buffer[wpos], CreatureInstID); //Quest ID
 		PutShort(&buffer[tpos + 1], wpos - tpos - 3);
 
-		//wpos += questRef.AdvanceAct(&buffer[wpos], &questDef);
+
+		// See below - talking to NPC ends quest
+
+//		QuestScript::QuestNutPlayer* player = g_QuestNutManager.GetActiveScript(CreatureInstID, qdef->questID);
+//		if(player != NULL) {
+//			char ConvBuf[128];
+//			Util::SafeFormat(ConvBuf, sizeof(ConvBuf), "on_advance_act_%d",questRef.CurAct);
+//			player->JumpToLabel(ConvBuf);
+//		}
+//		wpos += questRef.AdvanceAct(&buffer[wpos], &questDef);
 	}
 
 	//Just to make sure the act doesn't extend beyond the array size

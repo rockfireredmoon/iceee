@@ -180,6 +180,34 @@ int AbstractInstanceNutPlayer::GetNPCID(int CDefID) {
 	return targ == NULL ? 0 : targ->CreatureID;
 }
 
+SQInteger AbstractInstanceNutPlayer::GetHated(HSQUIRRELVM v)
+{
+    if (sq_gettop(v) == 2) {
+        Sqrat::Var<AbstractInstanceNutPlayer&> left(v, 1);
+        if (!Sqrat::Error::Occurred(v)) {
+            Sqrat::Var<int> right(v, 2);
+        	std::vector<int> vv;
+        	CreatureInstance *creature = left.value.GetNPCPtr(right.value);
+        	if(creature != NULL && creature->hateProfilePtr != NULL) {
+        		std::vector<HateCreatureData>::iterator it;
+        		for(it = creature->hateProfilePtr->hateList.begin(); it < creature->hateProfilePtr->hateList.end(); ++it) {
+        			g_Log.AddMessageFormat("[REMOVEME] ADDING HATE %d", it->CDefID);
+        			vv.push_back(it->CID);
+        		}
+        	}
+            sq_newarray(v, vv.size());
+            for (std::size_t i = 0; i < vv.size(); ++i) {
+                Sqrat::PushVar(v, i);
+                Sqrat::PushVar(v, vv[i]);
+                sq_rawset(v, -3);
+            }
+            return 1;
+        }
+        return sq_throwerror(v, Sqrat::Error::Message(v).c_str());
+    }
+    return sq_throwerror(v, _SC("wrong number of parameters"));
+}
+
 SQInteger AbstractInstanceNutPlayer::CIDs(HSQUIRRELVM v)
 {
     if (sq_gettop(v) == 2) {
@@ -272,7 +300,11 @@ void InstanceNutPlayer::RegisterFunctions() {
 	Sqrat::DerivedClass<AbstractInstanceNutPlayer, NutPlayer> abstractInstanceClass(vm, _SC("AbstractInstance"));
 	Sqrat::DerivedClass<InstanceNutPlayer, AbstractInstanceNutPlayer> instanceClass(vm, _SC("Instance"));
 	Sqrat::RootTable(vm).Bind(_SC("Instance"), instanceClass);
+
+	Sqrat::DerivedClass<AINutPlayer, InstanceScript::InstanceNutPlayer> aiClass(vm, _SC("AI"));
+	Sqrat::RootTable(vm).Bind(_SC("AI"), aiClass);
 	RegisterInstanceFunctions(this, &instanceClass);
+
 	Sqrat::RootTable(vm).SetInstance(_SC("inst"), this);
 }
 
@@ -295,9 +327,12 @@ void InstanceNutPlayer::RegisterInstanceFunctions(NutPlayer *instance, Sqrat::De
 	instanceClass->Func(_SC("attach_item"), &InstanceNutPlayer::AttachItem);
 	instanceClass->Func(_SC("detach_item"), &InstanceNutPlayer::DetachItem);
 	instanceClass->Func(_SC("unhate"), &InstanceNutPlayer::Unhate);
+	instanceClass->Func(_SC("get_ai"), &InstanceNutPlayer::GetAI);
 	instanceClass->Func(_SC("clear_target"), &InstanceNutPlayer::ClearTarget);
 	instanceClass->Func(_SC("spawn"), &InstanceNutPlayer::Spawn);
 	instanceClass->Func(_SC("play_sound"), &InstanceNutPlayer::PlaySound);
+	instanceClass->Func(_SC("invite_quest"), &InstanceNutPlayer::InviteQuest);
+	instanceClass->Func(_SC("join_quest"), &InstanceNutPlayer::JoinQuest);
 	instanceClass->Func(_SC("get_display_name"), &InstanceNutPlayer::GetDisplayName);
 	instanceClass->Func(_SC("load_spawn_tile"), &InstanceNutPlayer::LoadSpawnTile);
 	instanceClass->Func(_SC("load_spawn_tile_for"), &InstanceNutPlayer::LoadSpawnTileFor);
@@ -330,6 +365,7 @@ void InstanceNutPlayer::RegisterInstanceFunctions(NutPlayer *instance, Sqrat::De
 
 	// Functions that return arrays or tables have to be dealt with differently
 	instanceClass->SquirrelFunc(_SC("cids"), &InstanceNutPlayer::CIDs);
+	instanceClass->SquirrelFunc(_SC("get_hated"), &InstanceNutPlayer::GetHated);
 
 	// Common instance functions (TODO register in abstract class somehow)
 	instanceClass->Func(_SC("broadcast"), &InstanceNutPlayer::Broadcast);
@@ -637,6 +673,59 @@ void InstanceNutPlayer::PlaySound(const char *name) {
 	actInst->SendPlaySound(sub[0].c_str(), sub[1].c_str());
 }
 
+bool InstanceNutPlayer::InviteQuest(int CID, int questID, bool inviteParty) {
+	CreatureInstance *ci = GetCreaturePtr(CID);
+	bool ok = false;
+	if (ci != NULL && ci->simulatorPtr != NULL) {
+		if (!ci->simulatorPtr->QuestInvite(questID)) {
+			g_Log.AddMessageFormat("%d could not be invited the quest %d.", CID, questID);
+		}
+		else
+			ok = true;
+
+		if (inviteParty && ci->PartyID > 0) {
+			ActiveParty* party = g_PartyManager.GetPartyByID(ci->PartyID);
+			if (party != NULL) {
+				std::vector<PartyMember>::iterator it;
+				for(it = party->mMemberList.begin(); it != party->mMemberList.end(); ++it) {
+					PartyMember m = *it;
+					if(m.mCreaturePtr != NULL && m.mCreaturePtr->simulatorPtr != NULL) {
+						m.mCreaturePtr->simulatorPtr->QuestInvite(questID);
+					}
+				}
+				ok = true;
+			}
+		}
+
+	}
+	else {
+		g_Log.AddMessageFormat("Could not find creature with ID %d in this instance to invite quest %d.", CID, questID);
+	}
+	return ok;
+}
+
+bool InstanceNutPlayer::JoinQuest(int CID, int questID, bool joinParty) {
+	CreatureInstance *ci = GetCreaturePtr(CID);
+	if (ci->simulatorPtr != NULL) {
+		if (ci->simulatorPtr->QuestJoin(questID)) {
+			if (joinParty && ci->PartyID > 0) {
+				ActiveParty* party = g_PartyManager.GetPartyByID(ci->PartyID);
+				if (party != NULL) {
+					std::vector<PartyMember>::iterator it;
+					for(it = party->mMemberList.begin(); it != party->mMemberList.end(); ++it) {
+						PartyMember m = *it;
+						if(m.mCreaturePtr != NULL && m.mCreaturePtr->simulatorPtr != NULL) {
+							m.mCreaturePtr->simulatorPtr->QuestJoin(questID);
+						}
+					}
+				}
+			}
+			return true;
+		}
+	}
+	return false;
+}
+
 int InstanceNutPlayer::Transform(int propID, Sqrat::Table transformation) {
 	char buffer[256];
 	SceneryObject *propPtr = g_SceneryManager.GlobalGetPropPtr(actInst->mZone, propID, NULL);
@@ -742,10 +831,16 @@ void InstanceNutPlayer::Emote(int CID, const char *emotion) {
 		g_Log.AddMessageFormat("Could not find creature with ID %d in this instance to emote.", CID);
 }
 
+AINutPlayer* InstanceNutPlayer::GetAI(int CID) {
+	CreatureInstance *ci = GetNPCPtr(CID);
+	return ci != NULL ? ci->aiNut : NULL;
+}
+
 int InstanceNutPlayer::GetPartyID(int CID) {
 	CreatureInstance *ci = GetCreaturePtr(CID);
 	return ci != NULL ? ci->PartyID : 0;
 }
+
 
 Squirrel::Vector3I InstanceNutPlayer::GetLocation(int CID) {
 	CreatureInstance *ci = GetCreaturePtr(CID);

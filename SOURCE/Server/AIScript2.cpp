@@ -1,6 +1,7 @@
 #ifndef WIN32_LEAN_AND_MEAN
 #define WIN32_LEAN_AND_MEAN
 #endif
+#include "ScriptCore.h"
 #include "AIScript2.h"
 #include "FileReader.h"
 #include "StringList.h"

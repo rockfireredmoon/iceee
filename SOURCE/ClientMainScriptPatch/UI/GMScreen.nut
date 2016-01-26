@@ -38,7 +38,7 @@ class this.Screens.GMScreen extends this.GUI.Frame
 	{
 		this.GUI.Frame.constructor("GM Screen");
 		this.mainScreen = this._buildMainScreen();
-		this.setSize(435, 405);
+		this.setSize(435, 435);
 		this.setContentPane(this.mainScreen);
 	}
 

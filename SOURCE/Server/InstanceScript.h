@@ -33,6 +33,7 @@ public:
 	virtual ~AbstractInstanceNutPlayer();
 	void SetInstancePointer(ActiveInstance *parent);
 	static SQInteger CIDs(HSQUIRRELVM v);
+	static SQInteger GetHated(HSQUIRRELVM v);
 	int GetNPCID(int CDefID);
 	int GetCIDForPropID(int propID);
 	void Info(const char *message);
@@ -64,6 +65,7 @@ public:
 	int PVPStart(int type);
 	bool PVPGoal(int cid);
 	bool PVPStop();
+	AINutPlayer* GetAI(int CID);
 	bool SetStatusEffect(int CID, const char *effect, long durationMS);
 	bool RemoveStatusEffect(int CID, const char *effect);
 	void RestoreOriginalAppearance(int CID);
@@ -90,6 +92,8 @@ public:
 	int Transform(int propID, Sqrat::Table transformation);
 	int Asset(int propID, const char *newAsset, float scale);
 	int CountAlive(int CDefID);
+	bool InviteQuest(int CID, int questID, bool inviteParty);
+	bool JoinQuest(int CID, int questID, bool joinParty);
 	void DetachSceneryEffect(int propID, int tag);
 	int ParticleAttach(int propID, const char *effect, float scale, float offsetX, float offsetY, float offsetZ);
 	void Emote(int cid, const char *emotion);

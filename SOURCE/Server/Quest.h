@@ -257,7 +257,7 @@ public:
 	QuestObjective* CreatureUse(int CreatureDefID, int &QuestID, int &CurrentAct);
 	int CreatureUse_Confirmed(int CID, char *buffer, int CreatureDefID);
 	int CheckTravelLocations(int CID, char *buffer, int x, int y, int z, int zone);
-	int CheckQuestTalk(char *buffer, int CreatureDefID, int CreatureInstID);
+	int CheckQuestTalk(char *buffer, int CreatureDefID, int CreatureInstID, int PlayerCID);
 	int ForceComplete(int CID, int QuestID, char *buffer);
 	int ForceAllComplete(int CID, char *buffer);
 	void QuestResetObjectives(int CID, int QuestID);
@@ -276,8 +276,9 @@ public:
 	int GetRepeatDelayIndex(int questID);
 };
 
-struct QuestObjective
+class QuestObjective
 {
+public:
 	static const int OBJECTIVE_TYPE_NONE = 0;
 	static const int OBJECTIVE_TYPE_TRAVEL = 1;
 	static const int OBJECTIVE_TYPE_KILL = 2;
@@ -330,6 +331,14 @@ struct QuestObjective
 	{
 		Clear();
 	}
+
+	QuestObjective(int pType, std::string pDescription)
+	{
+		Clear();
+		type = pType;
+		description = pDescription;
+	}
+
 	void Clear(void)
 	{
 		type = 0;
@@ -344,6 +353,28 @@ struct QuestObjective
 		completeText = "";
 		markerLocations = "";
 		gather = false;
+	}
+
+	void AddData1(int data)
+	{
+		data1.push_back(data);
+	}
+
+	void CopyFrom(QuestObjective *objective)
+	{
+		type = objective->type;
+		data1.reserve(objective->data1.size());
+		copy(objective->data1.begin(),objective->data1.end(),back_inserter(data1));
+		data2 = objective->data2;
+		ActivateTime = objective->ActivateTime;
+		ActivateText = objective->ActivateText;
+		description = objective->description;
+		complete = objective->complete;
+		myCreatureDefID = objective->myCreatureDefID;
+		myItemID = objective->myItemID;
+		completeText = objective->completeText;
+		markerLocations = objective->markerLocations;
+		gather = objective->gather;
 	}
 	int HasObjectiveCDef(int objType, int objCDef)
 	{
@@ -369,14 +400,30 @@ struct QuestObjective
 };
 
 
-struct QuestAct
+class QuestAct
 {
+public:
 	QuestObjective objective[3];
 	std::string BodyText;  //Each act has custom body text that differs from the "genericdata" text.
+
+	QuestAct() {
+		Clear();
+	}
+	QuestAct(std::string pBodyText, QuestObjective *obj) {
+		Clear();
+		BodyText = pBodyText;
+		AddObjective(0, obj);
+	}
+
 	~QuestAct()
 	{
 		Clear();
 	}
+	void AddObjective(int index, QuestObjective *obj)
+	{
+		objective[index].CopyFrom(obj);
+	}
+
 	void Clear(void)
 	{
 		for(int a = 0; a < 3; a++)
@@ -455,6 +502,7 @@ public:
 	QuestCommand::QuestActionContainer mScriptCompleteAction;       //Actions to perform when the quest is accepted.
 
 	void Clear(void);
+	void AddAct(QuestAct &act);
 	void CopyFrom(const QuestDefinition &other);
 	int GetObjective(unsigned int act, int type, int CDefID);
 	QuestAct* GetActPtrByIndex(int index);
@@ -473,6 +521,7 @@ public:
 	QuestDefinitionContainer();
 	~QuestDefinitionContainer();
 
+	unsigned long mVirtualQuestID;
 	std::map<int, QuestDefinition> mQuests;
 	typedef std::map<int, QuestDefinition>::iterator ITERATOR;
 
@@ -481,10 +530,10 @@ public:
 	QuestDefinition* GetQuestDefPtrByName(const char *name);
 	void LoadQuestPackages(const char *filename);
 	void ResolveQuestMarkers(void);
+	void AddIfValid(QuestDefinition &newItem);
 
 private:
 	void LoadFromFile(const char *filename);
-	void AddIfValid(QuestDefinition &newItem);
 	bool LimitIndex(int &value, int max);
 	void AppendString(std::string &value, char *appendStr);
 	int GetTypeByName(char *name);

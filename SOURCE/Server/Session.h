@@ -9,6 +9,7 @@
 #include "CreditShop.h"
 #include "AuctionHouse.h"
 #include "Clan.h"
+#include "Quest.h"
 
 int SaveSession(const char *filename)
 {
@@ -30,6 +31,7 @@ int SaveSession(const char *filename)
 	fprintf(output, "NextAuctionHouseItemID=%d\r\n", g_AuctionHouseManager.nextAuctionHouseItemID);
 	fprintf(output, "NextClanID=%d\r\n", g_ClanManager.nextClanID);
 	fprintf(output, "NextPetitionID=%d\r\n", g_PetitionManager.NextPetitionID);
+	fprintf(output, "NextVirtualQuestID=%d\r\n", QuestDef.mVirtualQuestID);
 	fprintf(output, "\r\n");
 	fclose(output);
 	g_Log.AddMessageFormat("Saved session file.", filename);
@@ -71,6 +73,8 @@ int LoadSession(const char *filename)
 				g_AuctionHouseManager.nextAuctionHouseItemID = lfr.BlockToInt(1);
 			else if(strcmp(NameBlock, "NextClanID") == 0)
 				g_ClanManager.nextClanID = lfr.BlockToInt(1);
+			else if(strcmp(NameBlock, "NextVirtualQuestID") == 0)
+				QuestDef.mVirtualQuestID = lfr.BlockToInt(1);
 			else
 				g_Log.AddMessageFormat("[ERROR] Unknown identifier [%s] in file [%s]", NameBlock, filename);
 		}

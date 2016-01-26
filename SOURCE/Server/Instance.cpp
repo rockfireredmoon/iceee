@@ -2113,6 +2113,7 @@ void ActiveInstance :: RunDeath(CreatureInstance *object)
 			}
 		}
 		else {
+			p.push_back(object->CreatureDefID);
 			nutScriptPlayer->JumpToLabel("on_death", p);
 			QuestScript::QuestNutPlayer *nut = GetSimulatorQuestNutScript(object->simulatorPtr);
 			if(nut != NULL) {

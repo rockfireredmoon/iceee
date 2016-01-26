@@ -133,10 +133,14 @@ QuestNutPlayer * QuestNutManager::AddActiveScript(CreatureInstance *creature, in
 		g_Log.AddMessageFormat("Failed to compile %s. %s",
 				def->scriptName.c_str(), errors.c_str());
 
-	std::list<QuestNutPlayer*> l;
-	l.push_back(player);
-
-	questAct[creature->CreatureID] = l;
+	if(questAct.find(creature->CreatureID) == questAct.end()) {
+		std::list<QuestNutPlayer*> l;
+		l.push_back(player);
+		questAct[creature->CreatureID] = l;
+	}
+	else {
+		questAct[creature->CreatureID].push_back(player);
+	}
 
 	cs.Leave();
 	return player;
@@ -188,7 +192,7 @@ QuestNutPlayer::QuestNutPlayer()
 	target = NULL;
 	activateEvent = NULL;
 	RunFlags = 0;
-	QuestAct = 0;
+	CurrentQuestAct = 0;
 }
 
 QuestNutPlayer::~QuestNutPlayer()
@@ -208,10 +212,114 @@ void QuestNutPlayer::RegisterFunctions() {
 	Sqrat::RootTable(vm).Bind(_SC("Quest"), questClass);
 	RegisterQuestFunctions(this, &questClass);
 	Sqrat::RootTable(vm).SetInstance(_SC("quest"), this);
+
+	Sqrat::Class<QuestObjective> questObjectiveClass(vm, "QuestObjective", true);
+	questObjectiveClass.Ctor();
+	questObjectiveClass.Ctor<int, std::string>();
+	Sqrat::RootTable(vm).Bind(_SC("QuestObjective"), questObjectiveClass);
+
+
+//	static const int OBJECTIVE_TYPE_NONE = 0;
+//	static const int OBJECTIVE_TYPE_TRAVEL = 1;
+//	static const int OBJECTIVE_TYPE_KILL = 2;
+//	static const int OBJECTIVE_TYPE_ACTIVATE = 3;
+//	static const int OBJECTIVE_TYPE_GATHER = 4;
+//	static const int OBJECTIVE_TYPE_TALK = 5;
+//	static const int OBJECTIVE_TYPE_EMOTE = 6;
+
+	questObjectiveClass.Var(_SC("type"), &QuestObjective::type);
+	questObjectiveClass.Var(_SC("data2"), &QuestObjective::data2);
+	questObjectiveClass.Var(_SC("activate_time"), &QuestObjective::ActivateTime);
+	questObjectiveClass.Var(_SC("activate_text"), &QuestObjective::ActivateText);
+	questObjectiveClass.Var(_SC("description"), &QuestObjective::description);
+	questObjectiveClass.Var(_SC("complete"), &QuestObjective::complete);
+	questObjectiveClass.Var(_SC("my_creature_def_id"), &QuestObjective::myCreatureDefID);
+	questObjectiveClass.Var(_SC("my_item_id"), &QuestObjective::myItemID);
+	questObjectiveClass.Var(_SC("complete_text"), &QuestObjective::completeText);
+	questObjectiveClass.Var(_SC("marker_locations"), &QuestObjective::markerLocations);
+	questObjectiveClass.Var(_SC("gather"), &QuestObjective::gather);
+	questObjectiveClass.Func(_SC("add_data_1"), &QuestObjective::AddData1);
+
+	Sqrat::Class<QuestAct> questActClass(vm, "QuestAct", true);
+	questActClass.Ctor();
+	questActClass.Ctor<std::string, QuestObjective*>();
+	Sqrat::RootTable(vm).Bind(_SC("QuestAct"), questActClass);
+	questActClass.Var(_SC("body_text"), &QuestAct::BodyText);
+	questActClass.Func(_SC("set_objective"), &QuestAct::AddObjective);
+
+//	questActClass.Var("objective", &QuestAct::objective);
+
+	// Point Object, X/Z location
+	Sqrat::Class<QuestDefinition> questDefinitionClass(vm, "QuestDefinition", true);
+	questDefinitionClass.Ctor();
+	Sqrat::RootTable(vm).Bind(_SC("QuestDefinition"), questDefinitionClass);
+
+
+	questDefinitionClass.Var(_SC("profession"), &QuestDefinition::profession);
+	questDefinitionClass.Var(_SC("quest_id"), &QuestDefinition::questID);
+	questDefinitionClass.Var(_SC("title"), &QuestDefinition::title);
+	questDefinitionClass.Var(_SC("body_text"), &QuestDefinition::bodyText);
+	questDefinitionClass.Var(_SC("comp_text"), &QuestDefinition::compText);
+	questDefinitionClass.Var(_SC("level_suggested"), &QuestDefinition::levelSuggested);
+	questDefinitionClass.Var(_SC("experience"), &QuestDefinition::experience);
+	questDefinitionClass.Var(_SC("party_size"), &QuestDefinition::partySize);
+	questDefinitionClass.Var(_SC("num_rewards"), &QuestDefinition::numRewards);
+	questDefinitionClass.Var(_SC("coin"), &QuestDefinition::coin);
+	questDefinitionClass.Var(_SC("unabandon"), &QuestDefinition::unabandon);
+	questDefinitionClass.Var(_SC("s_giver"), &QuestDefinition::sGiver);
+	questDefinitionClass.Var(_SC("s_ender"), &QuestDefinition::sEnder);
+	questDefinitionClass.Var(_SC("level_min"), &QuestDefinition::levelMin);
+	questDefinitionClass.Var(_SC("level_max"), &QuestDefinition::levelMax);
+	questDefinitionClass.Var(_SC("requires"), &QuestDefinition::Requires);
+	questDefinitionClass.Var(_SC("quest_giver_id"), &QuestDefinition::QuestGiverID);
+	questDefinitionClass.Var(_SC("quest_ender_id"), &QuestDefinition::QuestEnderID);
+	questDefinitionClass.Var(_SC("repeat"), &QuestDefinition::Repeat);
+	questDefinitionClass.Var(_SC("repeat_minute_delay"), &QuestDefinition::RepeatMinuteDelay);
+	questDefinitionClass.Var(_SC("heroism"), &QuestDefinition::heroism);
+	questDefinitionClass.Var(_SC("guild_start"), &QuestDefinition::guildStart);
+	questDefinitionClass.Var(_SC("guild_id"), &QuestDefinition::guildId);
+	questDefinitionClass.Var(_SC("valour_required"), &QuestDefinition::valourRequired);
+	questDefinitionClass.Var(_SC("valour_given"), &QuestDefinition::valourGiven);
+	questDefinitionClass.Var(_SC("account_quest"), &QuestDefinition::accountQuest);
+	questDefinitionClass.Func(_SC("add_act"), &QuestDefinition::AddAct);
+
+
+//	//Note: numbers in brackets (ex: [0]) indicate which row of the outgoing query data this field occupies.
+//
+//		//QuestObjective objective[3];
+//		//Three sections  (for(i = 12; i < 25; i += 6)
+//		// [12]   i+0  string description.  If not empty, get the rest.
+//		// [13]   i+1  bool complete ("true", "false" ?)
+//		// [14]   i+2  int myCreatureDefID
+//		// [15]   i+3  int myItemID
+//		// [16]   i+4  string completeText
+//		// [17]   i+5  string markerLocations  "x,y,z,zone;x,y,z,zone;..."
+//		// { [18] [19] [20] [21] [22] [23] }
+//		// { [24] [25] [26] [27] [28] [29] }
+//
+//		//[30], [31], [32], [33]
+//		static const int MAXREWARDS = 4;
+//		QuestItemReward rewardItem[MAXREWARDS];  //"id:# count:# required:false"
+//
+//		//This data is used internally by the server
+//		std::vector<QuestAct> actList;
+//		int actCount;
+//
+//
+//		// This stuff is used internally for determining quest marker information.  It is extracted from the "sGiver" field and converted to numerical types here for faster processing.
+//		int giverX;
+//		int giverY;
+//		int giverZ;
+//		int giverZone;
+
 }
 
 void QuestNutPlayer::RegisterQuestFunctions(NutPlayer *instance, Sqrat::DerivedClass<QuestNutPlayer, NutPlayer> *instanceClass)
 {
+	instanceClass->Func(_SC("add_quest"), &QuestNutPlayer::AddQuest);
+	instanceClass->Func(_SC("talk_objective"), &QuestNutPlayer::TalkObjective);
+	instanceClass->Func(_SC("kill_objective"), &QuestNutPlayer::KillObjective);
+	instanceClass->Func(_SC("invite"), &QuestNutPlayer::Invite);
 	instanceClass->Func(_SC("add_sidekick"), &QuestNutPlayer::AddSidekick);
 	instanceClass->Func(_SC("remove_sidekick"), &QuestNutPlayer::RemoveSidekick);
 	instanceClass->Func(_SC("abandon"), &QuestNutPlayer::Abandon);
@@ -304,7 +412,7 @@ void QuestNutPlayer::InterruptInteraction()
 		QueueRemove(activateEvent);
 		activateEvent = NULL;
 	}
-	Util::SafeFormat(buf, sizeof(buf), "on_interrupt_%d", QuestAct);
+	Util::SafeFormat(buf, sizeof(buf), "on_interrupt_%d", CurrentQuestAct);
 	JumpToLabel(buf);
 }
 
@@ -356,6 +464,54 @@ void QuestNutPlayer::TriggerDelete(int CID, unsigned long ms) {
 	}
 }
 
+QuestObjective QuestNutPlayer::TalkObjective(std::string description, int creatureDefId, std::string markerLocations) {
+	QuestObjective o;
+	o.type = QuestObjective::OBJECTIVE_TYPE_TALK;
+	o.description = description;
+	o.AddData1(0);
+	o.data2 = 0;
+	o.myCreatureDefID = creatureDefId;
+	o.markerLocations = markerLocations;
+	return o;
+}
+
+QuestObjective QuestNutPlayer::KillObjective(std::string description, Sqrat::Array &cdefIds, int amount, std::string completeText, std::string markerLocations) {
+	QuestObjective o;
+	o.type = QuestObjective::OBJECTIVE_TYPE_KILL;
+	o.description = description;
+	for (int i = 0; i < cdefIds.GetSize(); i++) {
+		Sqrat::Object obj = cdefIds.GetSlot(SQInteger(i));
+		o.AddData1((int)obj.Cast<unsigned long>());
+	}
+	o.data2 = amount;
+	o.completeText = completeText;
+	o.markerLocations = markerLocations;
+	return o;
+}
+
+//	"Kill 6 Anubian forces");
+//		obj.add_data_1(3132);
+//		obj.add_data_1(3133);
+//		obj.add_data_1(3140);
+//		obj.add_data_1(3141);
+//		obj.data2 = 6;
+//		obj.complete_text = "0 of 6";
+//		obj.marker_locations = "11144,501.824,11989.8,92";
+
+
+bool QuestNutPlayer::Invite(int questID) {
+	if(questID == GetQuestID())
+		return false;
+	return source->simulatorPtr->QuestInvite(questID);
+}
+
+int QuestNutPlayer::AddQuest(QuestDefinition questDefinition) {
+	unsigned long questID = QuestDef.mVirtualQuestID++;
+	questDefinition.questID = questID;
+	SessionVarsChangeData.AddChange();
+	QuestDef.AddIfValid(questDefinition);
+	return questID;
+}
 
 int QuestNutPlayer::AddSidekick(int cdefID, bool pet) {
 	int type = pet ? SidekickObject::PET : SidekickObject::QUEST;
@@ -383,8 +539,8 @@ int QuestNutPlayer::RemoveSidekick(int sidekickID) {
 bool QuestNutPlayer::Join(int questID) {
 	if(questID == GetQuestID())
 		return false;
-	source->simulatorPtr->QuestJoin(questID);
-	return true;}
+	return source->simulatorPtr->QuestJoin(questID);
+}
 
 bool QuestNutPlayer::ResetObjective(int objective) {
 	return source->simulatorPtr->QuestResetObjectives(((QuestNutDef*)def)->mQuestID, objective);

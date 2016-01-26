@@ -28,12 +28,13 @@ int HateProfile :: GetIndexByCreature(int CDefID)
 	return -1;
 }
 
-void HateProfile :: Add(int CDefID, short level, int damage, int hate)
+void HateProfile :: Add(int CID, int CDefID, short level, int damage, int hate)
 {
 	int r = GetIndexByCreature(CDefID);
 	if(r == -1)
 	{
 		HateCreatureData newItem;
+		newItem.CID = CID;
 		newItem.CDefID = CDefID;
 		newItem.level = level;
 		if(hate < 0)

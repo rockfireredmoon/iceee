@@ -1,3 +1,5 @@
+#ifndef AISCRIPT_H
+#define AISCRIPT_H
 #include <list>
 
 #include "ScriptCore.h"
@@ -87,3 +89,4 @@ public:
 };
 
 extern AIScriptManager aiScriptManager;
+#endif
