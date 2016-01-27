@@ -36,6 +36,7 @@ aclocal.m4
 *.autotools
 /Audit/
 **/*.cnut
+**/**/*.cnut
 /Clan/
 /Deleted/
 /AuctionHouse/

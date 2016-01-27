@@ -218,20 +218,31 @@ BodyText=You've been ambushed! Kill all of the attackers.
 CompleteText=Well, that was unexpected. It wasn't for nothing though!
 Level=5
 Suggested=1
-Exp=325
+Exp=700
 PartySize=1
 NumRewards=0
-Coin=1000
+Coin=100
 Unabandon=0
 Repeat=0
 [ACT]
 Act.BodyText=Kill the 3 Ambushers
 Obj.0.type=kill
 Obj.0.data1=7875
-Obj.0.data2=6
+Obj.0.data2=3
 Obj.0.description=Kill 3 Ambushers
 Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=0 of 3
+[ACT]
+Act.BodyText=Speak to Lieutenant Willard
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=3250
+Obj.0.description=Speak to Lieutenant Willard
+Obj.0.complete=0
+Obj.0.myCreatureDefID=3250
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=16795.6,1205.34,15459.1,1060;
 

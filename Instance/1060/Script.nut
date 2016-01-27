@@ -26,7 +26,7 @@ function start_ambushers_906(cid) {
 			inst.ai(cid, "tryMelee");
 		} 
 		
-	}, 100);
+	}, 2000);
 
 }
 
