@@ -1,7 +1,7 @@
 [ENTRY]
 ID=1126714
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=1414.16,720,3073.01
 Orient=0,0,0,1
 Scale=0.925,0.925,0.925
@@ -12,7 +12,7 @@ link=1126716,1
 [ENTRY]
 ID=1126715
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=1418.15,720,3073.21
 Orient=0,0,0,1
 Scale=1,1,1
@@ -23,7 +23,7 @@ link=1126717,1
 [ENTRY]
 ID=1126716
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=1384.94,720,3056.51
 Orient=0,0,0,1
 Scale=1,1,1
@@ -33,12 +33,20 @@ link=1126714,1
 [ENTRY]
 ID=1126717
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=1443.48,720,3056.27
 Orient=0,0,0,1
 Scale=1,1,1
 links_count=1
 link=1126715,1
+
+[ENTRY]
+ID=1133301
+Asset=Prop-Lamp_Posts1#Prop-Lamp_Post_NB_Unlit
+Name=
+Pos=1286.54,719.544,3314.9
+Orient=0,0,0,1
+Scale=1,1,1
 
 [ENTRY]
 ID=10000002
@@ -101,7 +109,7 @@ Scale=1,1,1
 
 [ENTRY]
 ID=1275068453
-Asset=Prop-Lamp_Post_NB1
+Asset=Prop-Lamp_Posts1#Prop-Lamp_Post_NB_Unlit
 Name=Untitled
 Pos=1450.23,716.451,3178.2
 Orient=0,-0.0449853,0,0.998988
@@ -109,7 +117,7 @@ Scale=1,1,1
 
 [ENTRY]
 ID=1275068455
-Asset=Prop-Lamp_Post_NB1
+Asset=Prop-Lamp_Posts1#Prop-Lamp_Post_NB_Unlit
 Name=Untitled
 Pos=1280.01,716.996,3364.52
 Orient=0,-0.0249979,0,0.999687
@@ -117,7 +125,7 @@ Scale=1,1,1
 
 [ENTRY]
 ID=1275068456
-Asset=Prop-Lamp_Post_NB1
+Asset=Prop-Lamp_Posts1#Prop-Lamp_Post_NB_Unlit
 Name=Untitled
 Pos=1187.36,716.931,3364.01
 Orient=0,-0.0449853,0,0.998988

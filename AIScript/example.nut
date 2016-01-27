@@ -15,7 +15,12 @@ function on_target_acquired(targetCID) {
 	main();
 }
 
-function main() {
+function tryMelee() {
+	// For backwards compatibility
 	ai.use(32766);
+}
+
+function main() {
+	tryMelee();
 	ai.exec(main);
 }

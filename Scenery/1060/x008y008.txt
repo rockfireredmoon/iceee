@@ -53,7 +53,7 @@ Name=Untitled
 Pos=16085.2,1267.97,15674.5
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#3141, #3175
+spawnPackage=#3141
 links_count=2
 link=1130619,1
 link=1130617,1
@@ -379,7 +379,7 @@ Name=Untitled
 Pos=17265.1,1161.3,15687
 Orient=0,0.488177,0,0.872745
 Scale=1.1,1.1,1.1
-spawnPackage=#1989, #1990, #3189
+spawnPackage=#1989
 links_count=1
 link=1028785,1
 
@@ -1606,7 +1606,7 @@ Name=Untitled
 Pos=16237.4,1218.92,15455.3
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#3141, #3175
+spawnPackage=#3141
 links_count=2
 link=1130617,1
 link=1130624,1
@@ -1754,7 +1754,7 @@ Name=Untitled
 Pos=16233,1216.63,15588.6
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#3141, #3175
+spawnPackage=#3141
 links_count=1
 link=1130622,1
 
@@ -1765,7 +1765,7 @@ Name=Untitled
 Pos=16388.9,1203.63,15553.9
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#3141, #3175
+spawnPackage=#3141
 links_count=2
 link=1130625,1
 link=1130624,1
@@ -1867,7 +1867,7 @@ Name=Untitled
 Pos=16347.3,1257.81,16195.2
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#3180, #3181
+spawnPackage=#3180
 wanderRadius=50
 
 [ENTRY]
@@ -2004,4 +2004,44 @@ Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=#893
 wanderRadius=50
+
+[ENTRY]
+ID=1133308
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=16502.6,1206.24,15599.5
+Orient=0,0.706825,0,0.707388
+Scale=1,1,1
+spawnPackage=#N7876
+sequential=1
+
+[ENTRY]
+ID=1133309
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=16479.1,1204.15,15635.2
+Orient=0,0.42141,0,0.90687
+Scale=1,1,1
+spawnPackage=#E7875
+maxActive=0
+
+[ENTRY]
+ID=1133310
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=16541.4,1205.9,15622.6
+Orient=0,0.87959,0,0.475732
+Scale=1,1,1
+spawnPackage=#E7875
+maxActive=0
+
+[ENTRY]
+ID=1133311
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=16507.6,1204.93,15634.9
+Orient=0,0.601198,0,0.7991
+Scale=1,1,1
+spawnPackage=#E7875
+maxActive=0
 
