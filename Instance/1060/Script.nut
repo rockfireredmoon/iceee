@@ -11,20 +11,22 @@ function start_ambushers_906(cid) {
 	}
 
 	/* Allow a very short delay for the player to accept */
-	inst.sleep(1000);
-
-	/* Then spawn the ambushers anyway :) */
-	local cids = [ inst.spawn(1133310,0,0), inst.spawn(1133311,0,0), inst.spawn(1133309,0,0) ];	
-
-	inst.info("CIDS: " + cids);
-
-	/* Make each of the ambushers pick a random target from everyone who attacked */
-	foreach(cid in cids) {
-		inst.info("Set target " + cid);
-		inst.set_target(cid, attacked[randmodrng(0, attacked.len())]);
-		inst.info("Set AO " + cid);
-		inst.ai(cid, "tryMelee");
-	}
+	inst.queue(function() {
+	
+		/* Then spawn the ambushers anyway :) */
+		local cids = [ inst.spawn(1133310,0,0), inst.spawn(1133311,0,0), inst.spawn(1133309,0,0) ];	
+	
+		inst.info("CIDS: " + cids);
+	
+		/* Make each of the ambushers pick a random target from everyone who attacked */
+		foreach(cid in cids) {
+			inst.info("Set target " + cid);
+			inst.set_target(cid, attacked[randmodrng(0, attacked.len())]);
+			inst.info("Set AO " + cid);
+			inst.ai(cid, "tryMelee");
+		} 
+		
+	}, 100);
 
 }
 
