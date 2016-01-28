@@ -188,6 +188,7 @@ If using Code::Blocks on LINUX
 #include "query/VaultHandlers.h"
 #include "query/AuctionHouseHandlers.h"
 #include "query/ScriptHandlers.h"
+#include "query/WarpHandlers.h"
 
 #ifdef WINDOWS_SERVICE
 #include <windows.h>
@@ -571,6 +572,13 @@ int InitServerMain() {
 	g_QueryManager.queryHandlers["script.kill"] = new ScriptKillHandler();
 	g_QueryManager.queryHandlers["script.save"] = new ScriptSaveHandler();
 
+	g_QueryManager.queryHandlers["warp"] = new WarpHandler();
+	g_QueryManager.queryHandlers["warpi"] = new WarpInstanceHandler();
+	g_QueryManager.queryHandlers["warpg"] = new WarpPullHandler();
+	g_QueryManager.queryHandlers["warpt"] = new WarpTileHandler();
+	g_QueryManager.queryHandlers["warpg"] = new WarpGroveHandler();
+	g_QueryManager.queryHandlers["warpextoff"] = new WarpExternalOfflineHandler();
+	g_QueryManager.queryHandlers["warpext"] = new WarpExternalHandler();
 
 	// Some are shared
 

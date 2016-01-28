@@ -56,7 +56,7 @@ public:
 	InstanceNutPlayer();
 	virtual ~InstanceNutPlayer();
 	virtual void RegisterFunctions();
-	void RegisterInstanceFunctions(NutPlayer *instance, Sqrat::DerivedClass<InstanceNutPlayer, AbstractInstanceNutPlayer> *instanceClass);
+	static void RegisterInstanceFunctions(HSQUIRRELVM vm, Sqrat::DerivedClass<InstanceNutPlayer, AbstractInstanceNutPlayer> *instanceClass);
 	virtual void HaltDerivedExecution();
 	virtual void HaltedDerived();
 

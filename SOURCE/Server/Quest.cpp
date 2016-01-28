@@ -72,7 +72,7 @@ int QuestReference :: CheckQuestObjective(int CID, char *buffer, int type, int C
 		
 		//Already complete, no need for additional processing.
 		if(ObjComplete[obj] == 1)
-			return tsize;
+			return 0;
 
 		ObjCounter[obj]++;
 		if(ObjCounter[obj] >= qd->actList[CurAct].objective[obj].data2)
@@ -86,7 +86,6 @@ int QuestReference :: CheckQuestObjective(int CID, char *buffer, int type, int C
 			//g_Log.AddMessageFormat("[DEBUG] Objective: %s", writeStr);
 			//writeStr already points to this
 		}
-		wpos = tsize;
 		wpos += PutByte(&buffer[wpos], 7);  //_handleQuestEventMsg
 		wpos += PutShort(&buffer[wpos], 0); //Size
 		wpos += PutInteger(&buffer[wpos], QuestID ); //Quest ID
@@ -94,8 +93,28 @@ int QuestReference :: CheckQuestObjective(int CID, char *buffer, int type, int C
 		wpos += PutByte(&buffer[wpos], obj);  //Objective Index.
 		wpos += PutByte(&buffer[wpos], ObjComplete[obj]); //Set to 1 if this objective is completed.
 		wpos += PutStringUTF(&buffer[wpos], writeStr); //Completed text ex: 1 of 5
-		PutShort(&buffer[tsize + 1], wpos - tsize - 3);
-		tsize += (wpos - tsize);
+		PutShort(&buffer[1], wpos - 3);
+
+		// If the objective triggers an 'outcome', then complete all the other objectives in this act
+		if(qd->actList[CurAct].objective[obj].outcome > -1) {
+			for(int i = 0 ; i < 3 ; i++) {
+				if(i != obj && ObjComplete[i] == 0) {
+
+					ObjComplete[i] = 1;
+
+					tsize = wpos;
+					wpos += PutByte(&buffer[wpos], 7);  //_handleQuestEventMsg
+					wpos += PutShort(&buffer[wpos], 0); //Size
+					wpos += PutInteger(&buffer[wpos], QuestID ); //Quest ID
+					wpos += PutByte(&buffer[wpos], QuestObjective::EVENTMSG_STATUS);
+					wpos += PutByte(&buffer[wpos], i);  //Objective Index.
+					wpos += PutByte(&buffer[wpos], ObjComplete[i]); //Set to 1 if this objective is completed.
+					wpos += PutStringUTF(&buffer[wpos], ""); //Completed text ex: 1 of 5
+					PutShort(&buffer[tsize + 1], wpos - tsize - 3);
+				}
+			}
+			Outcome = qd->actList[CurAct].objective[obj].outcome;
+		}
 
 		QuestScript::QuestNutPlayer* player = g_QuestNutManager.GetActiveScript(CID, qd->questID);
 
@@ -109,11 +128,17 @@ int QuestReference :: CheckQuestObjective(int CID, char *buffer, int type, int C
 		{
 			RunObjectiveCompleteScripts(CID, CurAct, obj);
 
-			if(CheckCompletedAct(&qd->actList[CurAct]) == 1)
-				tsize += AdvanceAct(CID, &buffer[tsize], qd);
+			if(CheckCompletedAct(&qd->actList[CurAct]) == 1) {
+				if(CurAct < qd->actCount - 1)
+					wpos += AdvanceAct(CID, &buffer[wpos], qd);
+				else {
+					wpos += CompleteQuest(CID, &buffer[wpos], qd);
+					wpos += QuestJournal(CID, &buffer[wpos], qd);
+				}
+			}
 		}
 	}
-	return tsize;
+	return wpos;
 }
 
 void QuestReference :: RunObjectiveCompleteScripts(int CID, int act, int obj)
@@ -196,8 +221,33 @@ void QuestReference :: ClearObjectiveData(void)
 	memset(ObjComplete, 0, sizeof(ObjComplete));
 }
 
+
+int QuestReference :: QuestJournal(int CID, char *buffer, QuestDefinition *qdef) {
+	int wpos = PutByte(&buffer[wpos], 7);  //_handleQuestEventMsg
+	wpos += PutShort(&buffer[wpos], 0); //Size
+	wpos += PutInteger(&buffer[wpos], qdef->questID); //Quest ID
+	wpos += PutByte(&buffer[wpos], QuestObjective::EVENTMSG_JOURNAL);
+	wpos += PutInteger(&buffer[wpos], CID); //Quest ID
+	PutShort(&buffer[1], wpos - 3);
+	return wpos;
+}
+
+int QuestReference :: CompleteQuest(int CID, char *buffer, QuestDefinition *qdef) {
+
+	//Send a quest complete message instead of act complete.
+
+	int wpos = PutByte(&buffer[wpos], 7);  //_handleQuestEventMsg
+	wpos += PutShort(&buffer[wpos], 0); //Size
+	wpos += PutInteger(&buffer[wpos], qdef->questID); //Quest ID
+	wpos += PutByte(&buffer[wpos], QuestObjective::EVENTMSG_QUESTCOMPLETED);
+	PutShort(&buffer[1], wpos  - 3);
+	return wpos;
+}
+
 int QuestReference :: AdvanceAct(int CID, char *buffer, QuestDefinition *questDef)
 {
+	g_Log.AddMessageFormat("[REMOVEME] AdvanceAct %d. Current Act is %d. Act count is %d", CID, CurAct, questDef->actCount);
+
 	int wpos = 0;
 	wpos += PutByte(&buffer[wpos], 7);  //_handleQuestEventMsg
 	wpos += PutShort(&buffer[wpos], 0); //Size
@@ -214,6 +264,8 @@ int QuestReference :: AdvanceAct(int CID, char *buffer, QuestDefinition *questDe
 	}
 	else
 	{
+		g_Log.AddMessageFormat("[REMOVEME] AdvanceAct NOW %d. Current Act is %d. Act count is %d", CID, CurAct, questDef->actCount);
+
 		ClearObjectiveData();
 		//Objective[0] = 0;
 		//Objective[1] = 0;
@@ -260,6 +312,7 @@ void QuestReference :: Reset(void)
 	ResetObjectives();
 	Complete = 0;
 	CurAct = 0;
+	Outcome = 0;
 }
 
 bool QuestReference :: TestInvalid(void)
@@ -532,9 +585,26 @@ QuestDefinition :: ~QuestDefinition()
 	Clear();
 }
 
+QuestOutcome* QuestDefinition :: GetOutcome(int index) {
+	if(index >=0 && index < outcomeCount)
+		return &outcomes[index];
+	return NULL;
+}
+
+QuestOutcome* QuestDefinition :: GetLastOutcome() {
+	if(outcomeCount == 0)
+		AddOutcome(QuestOutcome());
+	return &outcomes.back();
+}
+
 void QuestDefinition :: AddAct(QuestAct &act) {
 	actList.push_back(act);
 	actCount++;
+}
+
+void QuestDefinition :: AddOutcome(QuestOutcome act) {
+	outcomes.push_back(act);
+	outcomeCount++;
 }
 
 void QuestDefinition :: Clear(void)
@@ -543,14 +613,11 @@ void QuestDefinition :: Clear(void)
 	questID = 0;
 	title.clear();
 	bodyText.clear();
-	compText.clear();
 	levelMin = 0;
 	levelMax = 0;
 	levelSuggested = 0;
 
-	experience = 0;
 	partySize = 0;
-	numRewards = 0;
 	coin = 0;
 	unabandon = false;
 
@@ -562,15 +629,16 @@ void QuestDefinition :: Clear(void)
 	actCount = 0;
 	actList.clear();
 
-	for(int i = 0; i < 4; i++)
-		rewardItem[i].Clear();
+	for(size_t i = 0; i < outcomes.size(); i++)
+		outcomes[i].Clear();
+	outcomeCount = 0;
+	outcomes.clear();
 
 	Requires = 0;
 	QuestGiverID = 0;
 	QuestEnderID = 0;
 	Repeat = false;
 	RepeatMinuteDelay = 0;
-	heroism = 0;
 
 	giverX = 0;
 	giverY = 0;
@@ -582,7 +650,6 @@ void QuestDefinition :: Clear(void)
 	mScriptCompleteCondition.Clear();
 	mScriptCompleteAction.Clear();
 
-	valourGiven = 0;
 	valourRequired = 0;
 	guildId = 0;
 	guildStart = false;
@@ -595,29 +662,32 @@ void QuestDefinition :: CopyFrom(const QuestDefinition &other)
 	questID = other.questID;
 	title = other.title;
 	bodyText = other.bodyText;
-	compText = other.compText;
 	levelSuggested = other.levelSuggested;
-	experience = other.experience;
 	partySize = other.partySize;
-	numRewards = other.numRewards;
 	coin = other.coin;
 	unabandon = other.unabandon;
 	sGiver = other.sGiver;
 	sEnder = other.sEnder;
-
-	for(size_t i = 0; i < MAXREWARDS; i++)
-		rewardItem[i].CopyFrom(other.rewardItem[i]);
 
 	levelMin = other.levelMin;
 	levelMax = other.levelMax;
 	Requires = other.Requires;
 	QuestGiverID = other.QuestGiverID;
 	QuestEnderID = other.QuestEnderID;
+
+	outcomes.clear();
+	outcomeCount = 0;
+	for(int i = 0 ; i < other.outcomeCount; i++) {
+		QuestOutcome qo;
+		qo.CopyFrom(other.outcomes[i]);
+		AddOutcome(qo);
+	}
+
+
 	actList.assign(other.actList.begin(), other.actList.end());
 	actCount = other.actCount;
 	Repeat = other.Repeat;
 	RepeatMinuteDelay = other.RepeatMinuteDelay;
-	heroism = other.heroism;
 
 	giverX = other.giverX;
 	giverY = other.giverY;
@@ -629,7 +699,6 @@ void QuestDefinition :: CopyFrom(const QuestDefinition &other)
 	mScriptCompleteCondition.CopyFrom(other.mScriptCompleteCondition);
 	mScriptCompleteAction.CopyFrom(other.mScriptCompleteAction);
 
-	valourGiven = other.valourGiven;
 	valourRequired = other.valourRequired;
 	guildId = other.guildId;
 	guildStart = other.guildStart;
@@ -671,20 +740,25 @@ QuestAct* QuestDefinition :: GetActPtrByIndex(int index)
 //be granted.
 //Note that numRewards is only used for quests with multiple-choice reward options, and specifies
 //exactly how many items must be selected by the player.
-bool QuestDefinition :: FilterSelectedRewards(const std::vector<int>& selectedIndexes, std::vector<QuestItemReward>& outputRewardList)
+bool QuestDefinition :: FilterSelectedRewards(int outcomeIndex, const std::vector<int>& selectedIndexes, std::vector<QuestItemReward>& outputRewardList)
 {
 	int possibleRewards = 0;
 	int choiceCount = 0;
 	bool add = false;
 
-	for(size_t i = 0; i < MAXREWARDS; i++)
+	QuestOutcome *outcome = GetOutcome(outcomeIndex);
+	if(outcome == NULL) {
+		return false;
+	}
+
+	for(size_t i = 0; i < QuestOutcome::MAXREWARDS; i++)
 	{
-		if(rewardItem[i].itemID == 0)
+		if(outcome->rewardItem[i].itemID == 0)
 			continue;
 
 		possibleRewards++;
 
-		if(rewardItem[i].required == false)
+		if(outcome->rewardItem[i].required == false)
 		{
 			for(size_t s = 0; s < selectedIndexes.size(); s++)
 			{
@@ -704,12 +778,12 @@ bool QuestDefinition :: FilterSelectedRewards(const std::vector<int>& selectedIn
 
 		if(add == true)
 		{
-			outputRewardList.push_back(rewardItem[i]);
+			outputRewardList.push_back(outcome->rewardItem[i]);
 			add = false;
 		}
 	}
 
-	if(numRewards > 0 && choiceCount != numRewards)
+	if(outcome->numRewards > 0 && choiceCount != outcome->numRewards)
 	{
 		//Don't allow multiple rewards in this case, but a single reward should always be accepted,
 		//otherwise the player would not be able to complete the quest.  Technically if the quest data was
@@ -774,27 +848,26 @@ void QuestDefinition :: RunLoadValidation(void)
 	
 
 	//Check the rewards to make sure they're properly matched for correct player selection.
-	int optionalRewards = 0;
-	for(int i = 0; i < QuestDefinition::MAXREWARDS; i++)
-	{
-		if(rewardItem[i].itemID != 0)
-		{
-			if(rewardItem[i].required == false)
-				optionalRewards++;
+	for(int o = 0 ; o < outcomeCount; o++) {
+		QuestOutcome *outcome = &outcome[o];
+		int optionalRewards = 0;
+		for(int i = 0; i < QuestOutcome::MAXREWARDS; i++) {
+			if(outcome->rewardItem[i].itemID != 0) {
+				if(outcome->rewardItem[i].required == false)
+					optionalRewards++;
+			}
 		}
-	}
 
-	if(numRewards > 0)
-	{
-		if(optionalRewards == 0)
-			g_Log.AddMessageFormat("[WARNING] Quest:%d numRewards is set, but no optional items are defined.", questID);
-		else if(optionalRewards == 1)
-			g_Log.AddMessageFormat("[WARNING] Quest:%d numRewards is set, but only one item is defined (requires player selection for implicit reward)", questID);
-	}
-	else
-	{
-		if(optionalRewards > 0)
-			g_Log.AddMessageFormat("[WARNING] Quest:%d has optional rewards but numRewards is not set.", questID);
+		if(outcome->numRewards > 0)	{
+			if(optionalRewards == 0)
+				g_Log.AddMessageFormat("[WARNING] Quest:%d numRewards is set, but no optional items are defined.", questID);
+			else if(optionalRewards == 1)
+				g_Log.AddMessageFormat("[WARNING] Quest:%d numRewards is set, but only one item is defined (requires player selection for implicit reward)", questID);
+		}
+		else {
+			if(optionalRewards > 0)
+				g_Log.AddMessageFormat("[WARNING] Quest:%d has optional rewards but numRewards is not set.", questID);
+		}
 	}
 
 	
@@ -905,6 +978,7 @@ void QuestDefinitionContainer :: LoadFromFile(const char *filename)
 	bool firstAct = true;
 	string *LastLoadString = NULL;
 	lfr.CommentStyle = Comment_Slash;
+	int outcome = -1;
 	while(lfr.FileOpen() == true)
 	{
 		int r = lfr.ReadLine();
@@ -921,6 +995,10 @@ void QuestDefinitionContainer :: LoadFromFile(const char *filename)
 				firstAct = true;
 				LastLoadString = NULL;
 			}
+			else if(strcmp(lfr.SecBuffer, "[OUTCOME]") == 0)
+			{
+				newItem.AddOutcome(QuestOutcome());
+			}
 			else if(strcmp(lfr.SecBuffer, "REQUIRES") == 0)
 				newItem.Requires = lfr.BlockToIntC(1);
 			else if(strcmp(lfr.SecBuffer, "PROFESSION") == 0)
@@ -936,8 +1014,8 @@ void QuestDefinitionContainer :: LoadFromFile(const char *filename)
 			}
 			else if(strcmp(lfr.SecBuffer, "COMPLETETEXT") == 0)
 			{
-				AppendString(newItem.compText, lfr.BlockToStringC(1, 0));
-				LastLoadString = &newItem.compText;
+				AppendString(newItem.GetLastOutcome()->compText, lfr.BlockToStringC(1, 0));
+				LastLoadString = &newItem.GetLastOutcome()->compText;
 			}
 			else if(strcmp(lfr.SecBuffer, "LEVEL") == 0)
 			{
@@ -964,7 +1042,7 @@ void QuestDefinitionContainer :: LoadFromFile(const char *filename)
 			}
 			else if(strcmp(lfr.SecBuffer, "VALOURGIVEN") == 0)
 			{
-				newItem.valourGiven = lfr.BlockToIntC(1);
+				newItem.GetLastOutcome()->valourGiven = lfr.BlockToIntC(1);
 				LastLoadString = NULL;
 			}
 			else if(strcmp(lfr.SecBuffer, "VALOURREQUIRED") == 0)
@@ -978,11 +1056,11 @@ void QuestDefinitionContainer :: LoadFromFile(const char *filename)
 				LastLoadString = NULL;
 			}
 			else if(strcmp(lfr.SecBuffer, "EXP") == 0)
-				newItem.experience = lfr.BlockToIntC(1);
+				newItem.GetLastOutcome()->experience = lfr.BlockToIntC(1);
 			else if(strcmp(lfr.SecBuffer, "PARTYSIZE") == 0)
 				newItem.partySize = lfr.BlockToIntC(1);
 			else if(strcmp(lfr.SecBuffer, "NUMREWARDS") == 0)
-				newItem.numRewards = lfr.BlockToIntC(1);
+				newItem.GetLastOutcome()->numRewards = lfr.BlockToIntC(1);
 			else if(strcmp(lfr.SecBuffer, "COIN") == 0)
 				newItem.coin = lfr.BlockToIntC(1);
 			else if(strcmp(lfr.SecBuffer, "UNABANDON") == 0)
@@ -1002,7 +1080,7 @@ void QuestDefinitionContainer :: LoadFromFile(const char *filename)
 			else if(strcmp(lfr.SecBuffer, "SENDER") == 0)
 				newItem.sEnder = lfr.BlockToStringC(1, 0);
 			else if(strcmp(lfr.SecBuffer, "HEROISM") == 0)
-				newItem.heroism = lfr.BlockToIntC(1);
+				newItem.GetLastOutcome()->heroism = lfr.BlockToIntC(1);
 			else if(strcmp(lfr.SecBuffer, "[ACT]") == 0)
 			{
 				if(firstAct == true)
@@ -1067,6 +1145,8 @@ void QuestDefinitionContainer :: LoadFromFile(const char *filename)
 					curAct->objective[index].complete = lfr.BlockToIntC(3);
 				else if(strcmp(lfr.SecBuffer, "MYCREATUREDEFID") == 0)
 					curAct->objective[index].myCreatureDefID = lfr.BlockToIntC(3);
+				else if(strcmp(lfr.SecBuffer, "OUTCOME") == 0)
+					curAct->objective[index].outcome = lfr.BlockToIntC(3);
 				else if(strcmp(lfr.SecBuffer, "MYITEMID") == 0)
 					curAct->objective[index].myItemID = lfr.BlockToIntC(3);
 				else if(strcmp(lfr.SecBuffer, "COMPLETETEXT") == 0)
@@ -1082,9 +1162,9 @@ void QuestDefinitionContainer :: LoadFromFile(const char *filename)
 				if(LimitIndex(index, 3) == true)
 					g_Log.AddMessageFormat("[WARNING] Quest RewardItem index is limited to 0-3 (line %d)", lfr.LineNumber);
 				lfr.MultiBreak(".=,");
-				newItem.rewardItem[index].itemID = lfr.BlockToIntC(2);
-				newItem.rewardItem[index].itemCount = lfr.BlockToIntC(3);
-				newItem.rewardItem[index].required = lfr.BlockToBool(4);
+				newItem.GetLastOutcome()->rewardItem[index].itemID = lfr.BlockToIntC(2);
+				newItem.GetLastOutcome()->rewardItem[index].itemCount = lfr.BlockToIntC(3);
+				newItem.GetLastOutcome()->rewardItem[index].required = lfr.BlockToBool(4);
 			}
 			else if(strcmp(lfr.SecBuffer, "SCRIPTACCEPTCONDITION") == 0)
 				newItem.mScriptAcceptCondition.AddLine(lfr.BlockToStringC(1, 0));
@@ -1191,19 +1271,23 @@ void QuestDefinitionContainer :: ResolveQuestMarkers(void)
 		//Extra bit of verification we'll toss here since it's a convenient place to trap some logic errors in the quest data.
 		int possibleRewards = 0;
 		int optional = 0;
-		for(int i = 0; i < QuestDefinition::MAXREWARDS; i++)
-		{
-			if(qd->rewardItem[i].itemID != 0)
+
+		for(int o = 0 ; o < qd->outcomeCount; o++) {
+			QuestOutcome *outcome = &qd->outcomes[o];
+			for(int i = 0; i < QuestOutcome::MAXREWARDS; i++)
 			{
-				possibleRewards++;
-				if(qd->rewardItem[i].required == false)
-					optional++;
+				if(outcome->rewardItem[i].itemID != 0)
+				{
+					possibleRewards++;
+					if(outcome->rewardItem[i].required == false)
+						optional++;
+				}
 			}
+			if(outcome->numRewards > 0 && possibleRewards == 0)
+				g_Log.AddMessageFormat("[WARNING] quest numRewards exists, but no items for Quest ID: %d (outcome %d)", qd->questID, o);
+			if(outcome->numRewards > 0 && optional <= 1)
+				g_Log.AddMessageFormat("[WARNING] quest numRewards mismatch for Quest ID: %d (outcome %d)", qd->questID, o);
 		}
-		if(qd->numRewards > 0 && possibleRewards == 0)
-			g_Log.AddMessageFormat("[WARNING] quest numRewards exists, but no items for Quest ID: %d", qd->questID);
-		if(qd->numRewards > 0 && optional <= 1)
-			g_Log.AddMessageFormat("[WARNING] quest numRewards mismatch for Quest ID: %d", qd->questID);
 
 		if(qd->actCount > 0)
 		{
@@ -1290,6 +1374,14 @@ void QuestReferenceContainer :: Sort(void)
 	*/
 }
 
+QuestReference* QuestReferenceContainer :: GetItem(int questID) {
+	for(size_t i = 0; i < itemList.size(); i++)
+		if(itemList[i].QuestID == questID)
+			return &itemList[i];
+
+	return NULL;
+}
+
 int QuestReferenceContainer :: HasQuestID(int searchVal)
 {
 	for(size_t i = 0; i < itemList.size(); i++)
@@ -1319,11 +1411,22 @@ int QuestReferenceContainer :: HasCreatureReturn(int searchVal)
 		if(qd == NULL)
 			continue;
 
-		for(int b = 0; b < 3; b++)
-		{
-			if(qd->actList[act].objective[b].type == QuestObjective::OBJECTIVE_TYPE_TALK)
-				if(qd->actList[act].objective[b].myCreatureDefID == searchVal)
-					return a;
+		if(searchVal == -1) {
+			/* If we are looking for a non-ending quest, and the quest doesn't end in a talk objective, then
+			 * this is the one we want
+			 */
+			if(qd->actList[qd->actCount - 1].objective[0].type != QuestObjective::OBJECTIVE_TYPE_TALK) {
+				return a;
+			}
+		}
+		else {
+			/* For standard ending quests */
+			for(int b = 0; b < 3; b++)
+			{
+				if(qd->actList[act].objective[b].type == QuestObjective::OBJECTIVE_TYPE_TALK)
+					if(qd->actList[act].objective[b].myCreatureDefID == searchVal)
+						return a;
+			}
 		}
 	}
 	return -1;
@@ -1537,7 +1640,9 @@ int QuestJournal :: QuestGenericData(char *buffer, int bufsize, char *convBuf, i
 		return PrepExt_QueryResponseError(buffer, QueryIndex, "Server error: quest not found.");
 	}
 
-	int debug_check = qd->title.size() + qd->bodyText.size() + qd->compText.size();
+	QuestOutcome *outcome = qd->GetOutcome(0);
+
+	int debug_check = qd->title.size() + qd->bodyText.size() + outcome->compText.size();
 	if(debug_check > bufsize - 100)
 	{
 		g_Log.AddMessageFormat("[ERROR] QUEST DATA TOO LARGE FOR BUFFER (Quest ID:%d)", QuestID);
@@ -1557,14 +1662,14 @@ int QuestJournal :: QuestGenericData(char *buffer, int bufsize, char *convBuf, i
 	wpos += PutStringUTF(&buffer[wpos], StringFromInt(convBuf, qd->questID));   //[0] = Quest ID
 	wpos += PutStringUTF(&buffer[wpos], qd->title.c_str());   //[1] = Title
 	wpos += PutStringUTF(&buffer[wpos], qd->bodyText.c_str());   //[2] = body
-	wpos += PutStringUTF(&buffer[wpos], qd->compText.c_str());   //[3] = completion text
+	wpos += PutStringUTF(&buffer[wpos], outcome->compText.c_str());   //[3] = completion text
 	wpos += PutStringUTF(&buffer[wpos], StringFromInt(convBuf, qd->levelSuggested));   //[4] = level
-	wpos += PutStringUTF(&buffer[wpos], StringFromInt(convBuf, qd->experience));   //[5] = experience
+	wpos += PutStringUTF(&buffer[wpos], StringFromInt(convBuf, outcome->experience));   //[5] = experience
 	wpos += PutStringUTF(&buffer[wpos], StringFromInt(convBuf, qd->partySize));   //[6] = party size
-	wpos += PutStringUTF(&buffer[wpos], StringFromInt(convBuf, qd->numRewards));   //[7] = rewards
+	wpos += PutStringUTF(&buffer[wpos], StringFromInt(convBuf, outcome->numRewards));   //[7] = rewards
 	wpos += PutStringUTF(&buffer[wpos], StringFromInt(convBuf, qd->coin));   //[8] = coin
 	wpos += PutStringUTF(&buffer[wpos], StringFromBool(convBuf, qd->unabandon));   //[9] = unabandon
-	wpos += PutStringUTF(&buffer[wpos], StringFromInt(convBuf, qd->valourGiven)); //[10] = valour
+	wpos += PutStringUTF(&buffer[wpos], StringFromInt(convBuf, outcome->valourGiven)); //[10] = valour
 
 	//3 sets of data, 3 elements each
 	//  [0] = Objective text
@@ -1580,7 +1685,7 @@ int QuestJournal :: QuestGenericData(char *buffer, int bufsize, char *convBuf, i
 	}
 
 	for(a = 0; a < 4; a++)
-		wpos += PutStringUTF(&buffer[wpos], qd->rewardItem[a].Print(convBuf));
+		wpos += PutStringUTF(&buffer[wpos], outcome->rewardItem[a].Print(convBuf));
 
 
 	//Spans Rows: {20, 21, 22, 23}
@@ -1612,6 +1717,8 @@ int QuestJournal :: QuestData(char *buffer, char *convBuf, int QuestID, int Quer
 	QuestReference *qref = NULL;
 	if(QuestData >= 0)
 		qref = &activeQuests.itemList[QuestData];
+
+	QuestOutcome *outcome = qd->GetOutcome(qref == NULL ? 0 : qref->Outcome);
 
 	//Full data has 34 rows.
 	int wpos = 0;
@@ -1645,14 +1752,14 @@ int QuestJournal :: QuestData(char *buffer, char *convBuf, int QuestID, int Quer
 		bodyText = &qd->actList[act].BodyText;
 	wpos += PutStringUTF(&buffer[wpos], bodyText->c_str());   //[2] = body
 
-	wpos += PutStringUTF(&buffer[wpos], qd->compText.c_str());   //[3] = completion text
+	wpos += PutStringUTF(&buffer[wpos], outcome->compText.c_str());   //[3] = completion text
 	wpos += PutStringUTF(&buffer[wpos], StringFromInt(convBuf, qd->levelSuggested));   //[4] = level
-	wpos += PutStringUTF(&buffer[wpos], StringFromInt(convBuf, qd->experience));   //[5] = experience
+	wpos += PutStringUTF(&buffer[wpos], StringFromInt(convBuf, outcome->experience));   //[5] = experience
 	wpos += PutStringUTF(&buffer[wpos], StringFromInt(convBuf, qd->partySize));   //[6] = party size
-	wpos += PutStringUTF(&buffer[wpos], StringFromInt(convBuf, qd->numRewards));   //[7] = rewards
+	wpos += PutStringUTF(&buffer[wpos], StringFromInt(convBuf, outcome->numRewards));   //[7] = rewards
 	wpos += PutStringUTF(&buffer[wpos], StringFromInt(convBuf, qd->coin));   //[8] = coin
 	wpos += PutStringUTF(&buffer[wpos], StringFromBool(convBuf, qd->unabandon));   //[9] = unabandon
-	wpos += PutStringUTF(&buffer[wpos], StringFromInt(convBuf, qd->valourGiven));   //[10] = valour
+	wpos += PutStringUTF(&buffer[wpos], StringFromInt(convBuf, outcome->valourGiven));   //[10] = valour
 
 	/*
 	sprintf(ConvBuf, "%g,%g,%g,%d", qd->sGiver.x, qd->sGiver.y, qd->sGiver.z, qd->sGiver.zone);
@@ -1725,7 +1832,7 @@ int QuestJournal :: QuestData(char *buffer, char *convBuf, int QuestID, int Quer
 
 	// {31, 32, 33, 34}
 	for(a = 0; a < 4; a++)
-		wpos += PutStringUTF(&buffer[wpos], qd->rewardItem[a].Print(convBuf));
+		wpos += PutStringUTF(&buffer[wpos], outcome->rewardItem[a].Print(convBuf));
 
 	PutShort(&buffer[1], wpos - 3);               //Set message size
 	return wpos;
@@ -1924,6 +2031,22 @@ int QuestJournal :: CheckTravelLocations(int CID, char *buffer, int x, int y, in
 			std::string resultText;
 			std::string *resPtr = &resultText;
 			wpos += PrepExt_QuestStatusMessage(&buffer[wpos], qdef->questID, r, true, "Complete");
+
+
+
+			// If the objective triggers an 'outcome', then complete all the other objectives in this act
+			if(qdef->actList[qr.CurAct].objective[r].outcome > -1) {
+				for(int i = 0 ; i < 3 ; i++) {
+					if(i != r && qr.ObjComplete[i] == 0) {
+						qr.ObjComplete[i] = 1;
+						wpos += PrepExt_QuestStatusMessage(&buffer[wpos], qdef->questID, i, true, "Complete");
+					}
+				}
+				qr.Outcome = qdef->actList[qr.CurAct].objective[r].outcome;
+			}
+
+
+
 			if(qdef->actList[qr.CurAct].objective[r].ActivateText.size() > 0)
 				resPtr = &qdef->actList[qr.CurAct].objective[r].ActivateText;
 			else
@@ -2008,24 +2131,32 @@ int QuestJournal :: CheckQuestTalk(char *buffer, int CreatureDefID, int Creature
 	wpos += PutStringUTF(&buffer[wpos], "Complete");
 	PutShort(&buffer[1], wpos - 3);
 
-	if(questRef.CheckCompletedAct(&qdef->actList[questRef.CurAct]) == 1)
+	// If the objective triggers an 'outcome', then complete all the other objectives in this act
+	if(qdef->actList[questRef.CurAct].objective[objective].outcome > -1) {
+		for(int i = 0 ; i < 3 ; i++) {
+			if(i != objective && questRef.ObjComplete[i] == 0) {
+
+				questRef.ObjComplete[i] = 1;
+
+				wpos += PutByte(&buffer[wpos], 7);  //_handleQuestEventMsg
+				wpos += PutShort(&buffer[wpos], 0); //Size
+				wpos += PutInteger(&buffer[wpos], qdef->questID ); //Quest ID
+				wpos += PutByte(&buffer[wpos], QuestObjective::EVENTMSG_STATUS);
+				wpos += PutByte(&buffer[wpos], i);  //Objective Index.
+				wpos += PutByte(&buffer[wpos], questRef.ObjComplete[i]); //Set to 1 if this objective is completed.
+				wpos += PutStringUTF(&buffer[wpos], ""); //Completed text ex: 1 of 5
+				PutShort(&buffer[1], wpos - 3);
+			}
+		}
+		questRef.Outcome = qdef->actList[questRef.CurAct].objective[objective].outcome;
+	}
+
+
+	if(questRef.CurAct == qdef->actCount - 1 && questRef.CheckCompletedAct(&qdef->actList[questRef.CurAct]) == 1)
 	{
 		//Send a quest complete message instead of act complete.
-
-		int tpos = wpos;
-		wpos += PutByte(&buffer[wpos], 7);  //_handleQuestEventMsg
-		wpos += PutShort(&buffer[wpos], 0); //Size
-		wpos += PutInteger(&buffer[wpos], qdef->questID); //Quest ID
-		wpos += PutByte(&buffer[wpos], QuestObjective::EVENTMSG_QUESTCOMPLETED);
-		PutShort(&buffer[tpos + 1], wpos - tpos - 3);
-
-		tpos = wpos;
-		wpos += PutByte(&buffer[wpos], 7);  //_handleQuestEventMsg
-		wpos += PutShort(&buffer[wpos], 0); //Size
-		wpos += PutInteger(&buffer[wpos], qdef->questID); //Quest ID
-		wpos += PutByte(&buffer[wpos], QuestObjective::EVENTMSG_JOURNAL);
-		wpos += PutInteger(&buffer[wpos], CreatureInstID); //Quest ID
-		PutShort(&buffer[tpos + 1], wpos - tpos - 3);
+		wpos += questRef.CompleteQuest(CreatureInstID, &buffer[wpos], qdef);
+		wpos += questRef.QuestJournal(CreatureInstID, &buffer[wpos], qdef);
 
 
 		// See below - talking to NPC ends quest
@@ -2037,6 +2168,9 @@ int QuestJournal :: CheckQuestTalk(char *buffer, int CreatureDefID, int Creature
 //			player->JumpToLabel(ConvBuf);
 //		}
 //		wpos += questRef.AdvanceAct(&buffer[wpos], &questDef);
+	}
+	else {
+		wpos += questRef.AdvanceAct(PlayerCID, &buffer[wpos], qdef);
 	}
 
 	//Just to make sure the act doesn't extend beyond the array size
@@ -2205,6 +2339,18 @@ int QuestJournal :: FilterEmote(int CID, char *outbuf, const char *message, int 
 			std::string resultText;
 			std::string *resPtr = &resultText;
 			wpos += PrepExt_QuestStatusMessage(&outbuf[wpos], qdef->questID, obj, true, "Complete");
+
+			// If the objective triggers an 'outcome', then complete all the other objectives in this act
+			if(qdef->actList[qr->CurAct].objective[obj].outcome > -1) {
+				for(int i = 0 ; i < 3 ; i++) {
+					if(i != obj && qr->ObjComplete[i] == 0) {
+						qr->ObjComplete[i] = 1;
+						wpos += PrepExt_QuestStatusMessage(&outbuf[wpos], qdef->questID, i, true, "Complete");
+					}
+				}
+				qr->Outcome = qdef->actList[qr->CurAct].objective[obj].outcome;
+			}
+
 			resultText = "Objective complete: ";
 			resultText.append(qdef->actList[act].objective[obj].description);
 
@@ -2262,7 +2408,7 @@ bool QuestJournal :: IsQuestRedeemable(QuestDefinition* questDef, int QuestID, i
 		return false;
 	}
 
-	if(questDef->QuestEnderID != QuestEnderCreatureID)
+	if(QuestEnderCreatureID != -1 && questDef->QuestEnderID != QuestEnderCreatureID)
 		return false;
 
 	int index = activeQuests.HasQuestID(QuestID);

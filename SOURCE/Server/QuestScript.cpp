@@ -1,4 +1,5 @@
 #include "QuestScript.h"
+#include "InstanceScript.h"
 #include "StringList.h"
 #include "Simulator.h"
 #include "Util.h"
@@ -189,10 +190,10 @@ QuestNutPlayer::QuestNutPlayer()
 {
 	activate = Squirrel::Vector3I(0,0,0);
 	source = NULL;
-	target = NULL;
+//	target = NULL;
 	activateEvent = NULL;
 	RunFlags = 0;
-	CurrentQuestAct = 0;
+//	CurrentQuestAct = 0;
 }
 
 QuestNutPlayer::~QuestNutPlayer()
@@ -250,6 +251,12 @@ void QuestNutPlayer::RegisterFunctions() {
 //	questActClass.Var("objective", &QuestAct::objective);
 
 	// Point Object, X/Z location
+
+
+	Sqrat::Class<QuestOutcome> questOutcomeClass(vm, "QuestOutcome", true);
+	questOutcomeClass.Ctor();
+	Sqrat::RootTable(vm).Bind(_SC("QuestOutcome"), questOutcomeClass);
+
 	Sqrat::Class<QuestDefinition> questDefinitionClass(vm, "QuestDefinition", true);
 	questDefinitionClass.Ctor();
 	Sqrat::RootTable(vm).Bind(_SC("QuestDefinition"), questDefinitionClass);
@@ -259,11 +266,8 @@ void QuestNutPlayer::RegisterFunctions() {
 	questDefinitionClass.Var(_SC("quest_id"), &QuestDefinition::questID);
 	questDefinitionClass.Var(_SC("title"), &QuestDefinition::title);
 	questDefinitionClass.Var(_SC("body_text"), &QuestDefinition::bodyText);
-	questDefinitionClass.Var(_SC("comp_text"), &QuestDefinition::compText);
 	questDefinitionClass.Var(_SC("level_suggested"), &QuestDefinition::levelSuggested);
-	questDefinitionClass.Var(_SC("experience"), &QuestDefinition::experience);
 	questDefinitionClass.Var(_SC("party_size"), &QuestDefinition::partySize);
-	questDefinitionClass.Var(_SC("num_rewards"), &QuestDefinition::numRewards);
 	questDefinitionClass.Var(_SC("coin"), &QuestDefinition::coin);
 	questDefinitionClass.Var(_SC("unabandon"), &QuestDefinition::unabandon);
 	questDefinitionClass.Var(_SC("s_giver"), &QuestDefinition::sGiver);
@@ -275,14 +279,24 @@ void QuestNutPlayer::RegisterFunctions() {
 	questDefinitionClass.Var(_SC("quest_ender_id"), &QuestDefinition::QuestEnderID);
 	questDefinitionClass.Var(_SC("repeat"), &QuestDefinition::Repeat);
 	questDefinitionClass.Var(_SC("repeat_minute_delay"), &QuestDefinition::RepeatMinuteDelay);
-	questDefinitionClass.Var(_SC("heroism"), &QuestDefinition::heroism);
 	questDefinitionClass.Var(_SC("guild_start"), &QuestDefinition::guildStart);
 	questDefinitionClass.Var(_SC("guild_id"), &QuestDefinition::guildId);
 	questDefinitionClass.Var(_SC("valour_required"), &QuestDefinition::valourRequired);
-	questDefinitionClass.Var(_SC("valour_given"), &QuestDefinition::valourGiven);
 	questDefinitionClass.Var(_SC("account_quest"), &QuestDefinition::accountQuest);
 	questDefinitionClass.Func(_SC("add_act"), &QuestDefinition::AddAct);
+	questDefinitionClass.Func(_SC("add_outcome"), &QuestDefinition::AddOutcome);
 
+	questOutcomeClass.Var(_SC("num_rewards"), &QuestOutcome::numRewards);
+	questOutcomeClass.Var(_SC("experience"), &QuestOutcome::experience);
+	questOutcomeClass.Var(_SC("comp_text"), &QuestOutcome::compText);
+	questOutcomeClass.Var(_SC("heroism"), &QuestOutcome::heroism);
+	questOutcomeClass.Var(_SC("valour_given"), &QuestOutcome::valourGiven);
+
+
+	Sqrat::DerivedClass<InstanceScript::AbstractInstanceNutPlayer, NutPlayer> abstractInstanceClass(vm, _SC("AbstractInstance"));
+	Sqrat::DerivedClass<InstanceScript::InstanceNutPlayer, InstanceScript::AbstractInstanceNutPlayer> instanceClass(vm, _SC("Instance"));
+	Sqrat::RootTable(vm).Bind(_SC("Instance"), instanceClass);
+	InstanceScript::InstanceNutPlayer::RegisterInstanceFunctions(vm, &instanceClass);
 
 //	//Note: numbers in brackets (ex: [0]) indicate which row of the outgoing query data this field occupies.
 //
@@ -316,6 +330,8 @@ void QuestNutPlayer::RegisterFunctions() {
 
 void QuestNutPlayer::RegisterQuestFunctions(NutPlayer *instance, Sqrat::DerivedClass<QuestNutPlayer, NutPlayer> *instanceClass)
 {
+	instanceClass->Func(_SC("get_instance"), &QuestNutPlayer::GetInstance);
+	instanceClass->Func(_SC("say"), &QuestNutPlayer::Say);
 	instanceClass->Func(_SC("add_quest"), &QuestNutPlayer::AddQuest);
 	instanceClass->Func(_SC("talk_objective"), &QuestNutPlayer::TalkObjective);
 	instanceClass->Func(_SC("kill_objective"), &QuestNutPlayer::KillObjective);
@@ -327,9 +343,9 @@ void QuestNutPlayer::RegisterQuestFunctions(NutPlayer *instance, Sqrat::DerivedC
 	instanceClass->Func(_SC("join"), &QuestNutPlayer::Join);
 	instanceClass->Func(_SC("this_zone"), &QuestNutPlayer::ThisZone);
 	instanceClass->Func(_SC("info"), &QuestNutPlayer::Info);
-	instanceClass->Func(_SC("info"), &QuestNutPlayer::Info);
 	instanceClass->Func(_SC("uinfo"), &QuestNutPlayer::Info);
 	instanceClass->Func(_SC("effect"), &QuestNutPlayer::Effect);
+	instanceClass->Func(_SC("effect_npc"), &QuestNutPlayer::EffectNPC);
 	instanceClass->Func(_SC("trigger_delete"), &QuestNutPlayer::TriggerDelete);
 	instanceClass->Func(_SC("despawn"), &QuestNutPlayer::Despawn);
 	instanceClass->Func(_SC("get_target"), &QuestNutPlayer::GetTarget);
@@ -339,6 +355,7 @@ void QuestNutPlayer::RegisterQuestFunctions(NutPlayer *instance, Sqrat::DerivedC
 	instanceClass->Func(_SC("warp_zone"), &QuestNutPlayer::WarpZone);
 	instanceClass->Func(_SC("is_interacting"), &QuestNutPlayer::IsInteracting);
 	instanceClass->Func(_SC("emote"), &QuestNutPlayer::Emote);
+	instanceClass->Func(_SC("emote_npc"), &QuestNutPlayer::EmoteNPC);
 	instanceClass->Func(_SC("heroism"), &QuestNutPlayer::Heroism);
 	instanceClass->Func(_SC("has_item"), &QuestNutPlayer::HasItem);
 	instanceClass->Func(_SC("has_quest"), &QuestNutPlayer::HasQuest);
@@ -348,7 +365,12 @@ void QuestNutPlayer::RegisterQuestFunctions(NutPlayer *instance, Sqrat::DerivedC
 	instanceClass->Func(_SC("transform"), &QuestNutPlayer::Transform);
 	instanceClass->Func(_SC("untransform"), &QuestNutPlayer::Untransform);
 	instanceClass->Func(_SC("join_guild"), &QuestNutPlayer::JoinGuild);
+	instanceClass->Func(_SC("chat"), &QuestNutPlayer::Chat);
 
+}
+
+InstanceScript::InstanceNutPlayer* QuestNutPlayer::GetInstance() {
+	return source->actInst->nutScriptPlayer;
 }
 
 int QuestNutPlayer::ThisZone() {
@@ -369,6 +391,19 @@ bool QuestNutPlayer::HasQuest(int questID) {
 
 int QuestNutPlayer::GetTransformed() {
 	return source->IsTransformed() ? source->transformCreatureId : 0;
+}
+
+void QuestNutPlayer::Say(int CID, const char *message) {
+	CreatureInstance *creature = source->actInst->GetNPCInstanceByCID(CID);
+	if(creature != NULL) {
+		creature->SendSay(message);
+	}
+}
+
+void QuestNutPlayer::Chat(const char *name, const char *channel, const char *message) {
+	char buffer[4096];
+	int wpos = PrepExt_GenericChatMessage(buffer, 0, name, channel, message);
+	source->actInst->LSendToAllSimulator(buffer, wpos, -1);
 }
 
 void QuestNutPlayer::ChangeHeroism(int amount) {
@@ -412,7 +447,7 @@ void QuestNutPlayer::InterruptInteraction()
 		QueueRemove(activateEvent);
 		activateEvent = NULL;
 	}
-	Util::SafeFormat(buf, sizeof(buf), "on_interrupt_%d", CurrentQuestAct);
+	Util::SafeFormat(buf, sizeof(buf), "on_interrupt");
 	JumpToLabel(buf);
 }
 
@@ -444,9 +479,20 @@ void QuestNutPlayer::UInfo(const char *message)
 }
 
 void QuestNutPlayer::Effect(const char *effect) {
-	char Buffer[1024];
-	int size = PrepExt_SendEffect(Buffer, target->CreatureID, effect, 0);
-	source->actInst->LSendToAllSimulator(Buffer, size, -1);
+	if(source->CurrentTarget.targ != NULL) {
+		char Buffer[1024];
+		int size = PrepExt_SendEffect(Buffer, source->CurrentTarget.targ->CreatureID, effect, 0);
+		source->actInst->LSendToAllSimulator(Buffer, size, -1);
+	}
+}
+
+void QuestNutPlayer::EffectNPC(int CID, const char *effect) {
+	CreatureInstance *instance = source->actInst->GetNPCInstanceByCID(CID);
+	if(instance  != NULL) {
+		char Buffer[1024];
+		int size = PrepExt_SendEffect(Buffer, instance ->CreatureID, effect, 0);
+		source->actInst->LSendToAllSimulator(Buffer, size, -1);
+	}
 }
 void QuestNutPlayer::TriggerDelete(int CID, unsigned long ms) {
 	CreatureInstance *targ;
@@ -555,7 +601,7 @@ int QuestNutPlayer::GetQuestID() {
 }
 
 int QuestNutPlayer::GetTarget() {
-	return target == NULL ? -1 : target->CreatureID;
+	return source->CurrentTarget.targ == NULL ? -1 : source->CurrentTarget.targ->CreatureID;
 }
 
 int QuestNutPlayer::GetSource() {
@@ -580,12 +626,18 @@ void QuestNutPlayer::WarpZone(int zoneID) {
 }
 
 bool QuestNutPlayer::IsInteracting(int cdefID) {
-	return target != NULL && target->CreatureDefID == cdefID;
+	return source->CurrentTarget.targ != NULL && source->CurrentTarget.targ->CreatureDefID == cdefID;
 }
 
 void QuestNutPlayer::Emote(const char *emotion) {
 	char Buffer[1024];
 	int size = PrepExt_GenericChatMessage(Buffer, source->CreatureID, "", "emote", emotion);
+	source->actInst->LSendToAllSimulator(Buffer, size, -1);
+}
+
+void QuestNutPlayer::EmoteNPC(int CID, const char *emotion) {
+	char Buffer[1024];
+	int size = PrepExt_GenericChatMessage(Buffer, CID, "", "emote", emotion);
 	source->actInst->LSendToAllSimulator(Buffer, size, -1);
 }
 

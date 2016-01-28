@@ -224,6 +224,8 @@ NumRewards=0
 Coin=100
 Unabandon=0
 Repeat=0
+;QuestEnderID=3250
+;sEnder=17740.2,1338.71,19874.8,1060
 [ACT]
 Act.BodyText=Kill the 3 Ambushers
 Obj.0.type=kill
@@ -234,15 +236,75 @@ Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=0 of 3
+;[ACT]
+;Act.BodyText=Speak to Lieutenant Willard
+;Obj.0.type=talk
+;Obj.0.data1=0
+;Obj.0.data2=3250
+;Obj.0.description=Speak to Lieutenant Willard
+;Obj.0.complete=0
+;Obj.0.myCreatureDefID=3250
+;Obj.0.myItemID=
+;Obj.0.completeText=
+;Obj.0.markerLocations=16795.6,1205.34,15459.1,1060;
+
+[ENTRY]
+ID=907
+Title=A Moral Choice!
+BodyText=Rescue the target or take the loot.  NEED PROPER QUEST TEXT
+Level=5
+Suggested=1
+PartySize=1
+Unabandon=0
+Repeat=0
+QuestGiverID=7877
+QuestEnderID=7877
+Repeat=0
+sGiver=17740.2,1338.71,19874.8,1060
+sEnder=17740.2,1338.71,19874.8,1060
+[OUTCOME]
+CompleteText=You Rescued the target!
+Exp=325
+Coin=100
+NumRewards=0
+[OUTCOME]
+CompleteText=You took the loot!
+Exp=5
+Coin=20
+NumRewards=0
 [ACT]
-Act.BodyText=Speak to Lieutenant Willard
+Act.BodyText=Rescue the target or take the loot.
 Obj.0.type=talk
+Obj.0.outcome=0
 Obj.0.data1=0
-Obj.0.data2=3250
-Obj.0.description=Speak to Lieutenant Willard
+Obj.0.data2=7878
+Obj.0.description=Rescue the target
 Obj.0.complete=0
-Obj.0.myCreatureDefID=3250
+Obj.0.myCreatureDefID=7878
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=16795.6,1205.34,15459.1,1060;
+Obj.0.markerLocations=17433.1,1305.77,19963.9,1060;
+Obj.1.type=gather
+Obj.1.outcome=1
+Obj.1.data1=7879
+Obj.1.data2=1
+Obj.1.description=Take the loot
+Obj.1.complete=0
+Obj.1.myCreatureDefID=
+Obj.1.myItemID=
+Obj.1.completeText=
+Obj.1.markerLocations=17403,1301.98,19982.5,1060;
+Obj.1.ActivateTime=5000
+Obj.1.ActivateText=Taking the loot...
+[ACT]
+Act.BodyText=Speak to Questy McChoice
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=7877
+Obj.0.description=Speak to Questy McChoice
+Obj.0.complete=0
+Obj.0.myCreatureDefID=7877
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=17740.2,1338.71,19874.8,1060;
 

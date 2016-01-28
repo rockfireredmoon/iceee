@@ -3,6 +3,7 @@
 #define QUESTSCRIPT_H
 
 #include "ScriptCore.h"
+#include "InstanceScript.h"
 #include "Creature.h"
 #include "Components.h"
 #include "Quest.h"
@@ -10,6 +11,7 @@
 #include <string>
 #include <list>
 #include "util/SquirrelObjects.h"
+#include "sqrat.h"
 
 class ActiveInstance;
 class SimulatorThread;
@@ -36,9 +38,9 @@ public:
 	unsigned short RunFlags;
 	static const unsigned short FLAG_FINISHED = 1;
 	CreatureInstance *source;
-	CreatureInstance *target;
+//	CreatureInstance *target;
 	ScriptCore::NutScriptEvent *activateEvent;
-	int CurrentQuestAct;
+//	int CurrentQuestAct;
 	Squirrel::Vector3I activate;
 	QuestNutPlayer();
 	virtual ~QuestNutPlayer();
@@ -52,6 +54,7 @@ public:
 
 	// Exposed to scripts
 
+	InstanceScript::InstanceNutPlayer *GetInstance();
 	int GetTarget();
 	int GetSource();
 	bool ResetObjective(int objective);
@@ -64,8 +67,11 @@ public:
 	int AddSidekick(int cdefID, bool pet);
 	int RemoveSidekick(int sidekickID);
 	bool Join(int questID);
+	void Say(int cid, const char *message);
+	void Chat(const char *name, const char *channel, const char *message);
 	void Info(const char *message);
 	void UInfo(const char *message);
+	void EffectNPC(int CID, const char *effect);
 	void Effect(const char *effect);
 	void TriggerDelete(int targetCID, unsigned long delay);
 	void Despawn(int targetCID);
@@ -75,6 +81,7 @@ public:
 	void WarpZone(int zoneID);
 	bool IsInteracting(int cdefID);
 	void Emote(const char *emotion);
+	void EmoteNPC(int cid, const char *emotion);
 	int Heroism();
 	bool HasItem(int itemID);
 	bool HasQuest(int questID);

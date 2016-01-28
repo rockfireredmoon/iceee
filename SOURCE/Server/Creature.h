@@ -467,7 +467,7 @@ public:
 	void SetLevel(int newLevel);
 	void CheckQuestKill(CreatureInstance *target);
 	void CheckQuestInteract(int CreatureDefID);
-	int ProcessQuestRewards(int QuestID, const std::vector<QuestItemReward>& itemsToGive);
+	int ProcessQuestRewards(int QuestID, int Outcome, const std::vector<QuestItemReward>& itemsToGive);
 	int QuestInteractObject(QuestObjective *objectiveData);
 	int NormalInteractObject(char *outBuf, InteractObject *interactObj);
 	void RunQuestObjectInteraction(CreatureInstance *target, bool deleteObject);

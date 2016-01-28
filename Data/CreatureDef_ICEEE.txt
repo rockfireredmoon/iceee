@@ -2178,11 +2178,11 @@ total_size=5
 
 [ENTRY]
 ID=7875
-strength=3
-dexterity=3
-constitution=4
-psyche=3
-spirit=3
+strength=1
+dexterity=1
+constitution=1
+psyche=2
+spirit=1
 base_damage_melee=3
 will_regen=1
 might_regen=1
@@ -2190,7 +2190,7 @@ offhand_weapon_damage=100
 casting_setback_chance=100
 channeling_break_chance=100
 appearance=c2:{["a"]=[{["type"]="Armor-Cloth-Mid1-Helmet",["node"]="helmet",["colors"]=["7F7F7F","BFBE1E","949417"]},{["type"]="Item-Staff4",["node"]="right_hand",["colors"]=["E9C50C","E9C559","15AA1E"]}],["c"]={["boots"]={["type"]="Armor-Cloth-Low2",["colors"]=["8c5e46","515161","e8610b","6e85bb"]},["leggings"]={["type"]="Armor-Cloth-Low4",["colors"]=["7f7f7f","6b7f5a","c1a32a","2a2a2a","b6a590"]},["belt"]={["type"]="Armor-Cloth-Low1",["colors"]=["7f7f7f","277f1b","c1a32a","2a2a2a"]},["chest"]={["type"]="Armor-Cloth-Low3",["colors"]=["7f2b07","7f7f7f","c1a32a","2a2a2a","b6a590","69987a","d29775","867d75"]},["arms"]={["type"]="Armor-Cloth-Low4",["colors"]=["2c9433","1f6a24","e9e94c","3f3f3f","e1c057"]}},["b"]="n",["sk"]={["hands_feet"]="907B6C",["eye_white"]="DDD7D2",["snout"]="907B6C",["teeth"]="B0998F",["tail"]="95635B",["base"]="91776D",["eye_lid"]="A28B7B",["nails"]="4A3A2F",["eye"]="8B5E55",["inner_ear"]="B3796D",["nose"]="78524A",["chest"]="A58E7E"},["sz"]="1",["h"]=0,["g"]="m",["r"]="o"}
-level=3
+level=2
 display_name=Ambusher
 profession=5
 creature_category=Mortal
@@ -2221,6 +2221,46 @@ display_name=Milicent Bystander
 profession=5
 creature_category=Mortal
 ai_package=melee_creature_brave_6
-sub_name=TEMPORARY - REDO - 7876
+sub_name=TEMPORARY - REDO - 7876rtal
+ai_package=example
 
+[ENTRY]
+defHints=48
+ID=7877
+will_regen=1
+might_regen=1
+appearance=c2:{["h"]=0,["b"]="n",["sk"]={["plates"]="675757",["skin"]="713B3B",["eyeball"]="999999",["eye"]="43A364",["horns"]="674B4B",["nails"]="4D4141",["teeth"]="BABABA"},["g"]="m",["r"]="e"}
+level=1
+display_name=Questy McChoice
+sub_name=TEMPORARY - REDO - 7877
+profession=1
+creature_category=Mortal
+ai_package=example
+
+
+[ENTRY]
+ID=7878
+defHints=48
+will_regen=1
+might_regen=1
+appearance=c2:{["a"]=[{["type"]="Armor-Cloth-Mid1-Helmet",["node"]="helmet",["colors"]=["007F07","BFBE1E","949417"]},{["type"]="Item-Wand-Basic1",["node"]="right_hand"}],["h"]=0,["c"]={["boots"]={["type"]="Armor-Cloth-Low2",["colors"]=["8c5e46","515161","e8610b","6e85bb"]},["leggings"]={["type"]="Armor-Cloth-Low4",["colors"]=["3e7f30","277f1b","c1a32a","2a2a2a","b6a590"]},["belt"]={["type"]="Armor-Cloth-Low1",["colors"]=["3e7f30","277f1b","c1a32a","2a2a2a"]},["chest"]={["type"]="Armor-Cloth-Low3",["colors"]=["3e7f30","277f1b","c1a32a","2a2a2a","b6a590","69987a","d29775","867d75"]},["arms"]={["type"]="Armor-Cloth-Low4",["colors"]=["2c9433","1f6a24","e9e94c","3f3f3f","e1c057"]}},["b"]="n",["sk"]={["hands_feet"]="8F7E7A",["shoulders"]="7C6965",["nails"]="AC7E74",["mask"]="947E7A",["base"]="C2AD95",["eye_white"]="E2D4B7",["eye"]="6A4652",["nose"]="7C6965",["ponytail"]="6A5A56",["ears"]="D5C1A5"},["g"]="f",["r"]="r"}
+level=1
+display_name=Trapped Beast
+sub_name=TEMPORARY - REDO - 7878
+profession=1
+creature_category=Inanimate
+ai_package=nothing
+
+
+[ENTRY]
+ID=7879
+will_regen=1
+might_regen=1
+appearance=p1:{["a"]="Prop-Loot-Wood_Chest1",["sz"]=".75"}
+level=1
+display_name=Tempting Loot
+profession=1
+creature_category=Inanimate
+ai_package=example
+sub_name=TEMPORARY - REDO - 7879
 

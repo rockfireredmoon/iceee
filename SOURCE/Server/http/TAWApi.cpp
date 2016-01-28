@@ -66,6 +66,19 @@ bool AuthenticatedHandler::handleAuthenticatedPost(CivetServer *server,
 }
 
 //
+// UpHandler
+//
+
+bool UpHandler::handleAuthenticatedGet(CivetServer *server,
+		struct mg_connection *conn) {
+	Json::Value root;
+	Json::StyledWriter writer;
+	root["status"] = "up";
+	writeJSON200(server, conn, writer.write(root));
+	return true;
+}
+
+//
 // WhoHandler
 //
 

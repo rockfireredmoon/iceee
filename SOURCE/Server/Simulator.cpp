@@ -2485,20 +2485,6 @@ bool SimulatorThread :: HandleCommand(int &PendingData)
 		PendingData = handle_command_pose2();
 	else if(query.name.compare("esay") == 0)
 		PendingData = handle_command_esay();
-	else if(query.name.compare("warp") == 0)
-		PendingData = handle_command_warp();
-	else if(query.name.compare("warpi") == 0)
-		PendingData = handle_command_warpi();
-	else if(query.name.compare("warpt") == 0)
-		PendingData = handle_command_warpt();
-	else if(query.name.compare("warpp") == 0)
-		PendingData = handle_command_warpp();
-	else if(query.name.compare("warpg") == 0)
-		PendingData = handle_command_warpg();
-	else if(query.name.compare("warpextoff") == 0)
-		PendingData = handle_command_warpextoff();
-	else if(query.name.compare("warpext") == 0)
-		PendingData = handle_command_warpext();
 	else if(query.name.compare("health") == 0)
 		PendingData = handle_command_health();
 	else if(query.name.compare("speed") == 0)
@@ -4321,119 +4307,6 @@ int SimulatorThread :: CheckValidWarpZone(int ZoneID)
 	return ERROR_NONE;
 }
 
-int SimulatorThread :: handle_command_warp(void)
-{
-	/* Query: warp
-	   Args : Optional types:
-	     [0] = characterName 
-		 [0] = direction [n|e|s|w]
-		 [0] = direction [n|e|s|w], [1] = distance
-		 [0] = XPos, [1] = Ypos
-    */
-
-	if(pld.zoneDef->mGrove == false)
-		if(CheckPermissionSimple(Perm_Account, Permission_Debug) == false)
-			return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
-
-	if(query.argCount < 1)
-		return PrepExt_QueryResponseError(SendBuf, query.ID, "Usage: /warp x y [or] /warp \"Character Name\"");
-
-	int zone = pld.CurrentZoneID;
-	//int instance = pld.CurrentInstanceID;
-	int instance = 0;  //Only set the instance if we need an explicit warp there.
-	int xpos = creatureInst->CurrentX;
-	int ypos = creatureInst->CurrentY;
-	int zpos = creatureInst->CurrentZ;
-
-	if(query.argCount >= 2)
-	{
-		const char *param1 = query.args[0].c_str();
-		int param2 = atoi(query.args[1].c_str());
-
-		//First check for relative directional positions before
-		//processing a raw coordinate
-		if(strcmp(param1, "n") == 0)
-			zpos -= param2;
-		else if(strcmp(param1, "s") == 0)
-			zpos += param2;
-		else if(strcmp(param1, "w") == 0)
-			xpos -= param2;
-		else if(strcmp(param1, "e") == 0)
-			xpos += param2;
-		else
-		{
-			//Coordinate warp
-			xpos = atoi(param1);
-			zpos = param2;
-		}
-	}
-	else if(query.argCount == 1)
-	{
-		const char *target = query.args[0].c_str();
-		if(strcmp(target, "n") == 0)
-			zpos -= DefaultWarpDistance;
-		else if(strcmp(target, "s") == 0)
-			zpos += DefaultWarpDistance;
-		else if(strcmp(target, "w") == 0)
-			xpos -= DefaultWarpDistance;
-		else if(strcmp(target, "e") == 0)
-			xpos += DefaultWarpDistance;
-		else if(strchr(target, ',') != NULL)
-		{
-			std::vector<std::string> args;
-			Util::Split(query.args[0], ",", args);
-			if(args.size() >= 2)
-			{
-				xpos = atoi(args[0].c_str());
-				zpos = atoi(args[1].c_str());
-				if(args.size() >= 3)
-					zpos = atoi(args[2].c_str());   //Hack for x,y,z strings since they're often copy/pasted
-			}
-		}
-		else
-		{
-			//Check names
-			bool bFound = false;
-
-			SIMULATOR_IT it;
-			for(it = Simulator.begin(); it != Simulator.end(); ++it)
-			{
-				if(it->isConnected == true && it->ProtocolState == 1)
-				{
-					if(it->IsGMInvisible() == true)
-						continue;
-					if(strstr(it->pld.charPtr->cdef.css.display_name, target) != NULL)
-					{
-						zone = it->pld.CurrentZoneID;
-						instance = it->pld.CurrentInstanceID;
-						xpos = it->creatureInst->CurrentX;
-						ypos = it->creatureInst->CurrentY;
-						zpos = it->creatureInst->CurrentZ;
-						bFound = true;
-						break;
-					}
-				}
-			}
-			if(bFound == false)
-			{
-				Util::SafeFormat(Aux1, sizeof(Aux1), "Could not find target for warp: %s", target);
-				SendInfoMessage(Aux1, INFOMSG_ERROR);
-			}
-		}
-	}
-
-	if(zone != pld.CurrentZoneID)
-	{
-		int errCode = CheckValidWarpZone(zone);
-		if(errCode != ERROR_NONE)
-			return PrepExt_QueryResponseError(SendBuf, query.ID, GetGenericErrorString(errCode));
-	}
-
-	DoWarp(zone, instance, xpos, ypos, zpos);
-
-	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-}
-
 //This function performs a warp.  Assumes that the target is a verified destination for the player.
 void SimulatorThread :: DoWarp(int zoneID, int instanceID, int xpos, int ypos, int zpos)
 {
@@ -4455,224 +4328,6 @@ void SimulatorThread :: DoWarp(int zoneID, int instanceID, int xpos, int ypos, i
 		CheckMapUpdate(true);
 	}
 }
-
-int SimulatorThread :: handle_command_warpi(void)
-{
-	/*  Query: warpi
-		Handles on-demand warping to instances.
-		Args : 1, [0] = Instance Name
-    */
-
-	if(pld.zoneDef->mGrove == false)
-		if(CheckPermissionSimple(Perm_Account, Permission_Debug) == false)
-			return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
-
-	if(query.argCount < 1)
-		return PrepExt_QueryResponseError(SendBuf, query.ID, "Usage: /warpi groveName");
-
-	const char *warpTarg = query.args[0].c_str();
-	ZoneDefInfo *targZone = g_ZoneDefManager.GetPointerByPartialWarpName(warpTarg);
-	if(targZone == NULL)
-	{
-		Util::SafeFormat(Aux1, sizeof(Aux1), "Zone name not found: %s", warpTarg);
-		LogMessageL(MSG_ERROR, "%s", Aux1);
-		SendInfoMessage(Aux1, INFOMSG_ERROR);
-	}
-	else
-	{
-		int errCode = CheckValidWarpZone(targZone->mID);
-		if(errCode != ERROR_NONE)
-			return PrepExt_QueryResponseError(SendBuf, query.ID, GetGenericErrorString(errCode));
-
-		//If the avatar is running, it will glitch the position.
-
-		// EM - Is this really needed?
-//		SetPosition(targZone->DefX, targZone->DefY, targZone->DefZ, 1);
-
-		if(ProtectedSetZone(targZone->mID, 0) == false)
-		{
-			ForceErrorMessage("Critical error while changing zones.", INFOMSG_ERROR);
-			Disconnect("SimulatorThread::handle_command_warpi");
-			return PrepExt_QueryResponseError(SendBuf, query.ID, "Critical error.");
-		}
-		SetPosition(targZone->DefX, targZone->DefY, targZone->DefZ, 1);
-	}
-	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-}
-
-int SimulatorThread :: handle_command_warpt(void)
-{
-	/*  Query: warpt
-		Handles on-demand warping to a scenery tile coordinate within the instance.
-		Args : 2, [0] = TileX, [1] = TileY
-    */
-
-	if(pld.zoneDef->mGrove == false)
-		if(CheckPermissionSimple(Perm_Account, Permission_Debug) == false)
-			return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
-
-	if(query.argCount < 2)
-		return PrepExt_QueryResponseError(SendBuf, query.ID, "Usage: /warpt x y");
-
-	int x = atoi(query.args[0].c_str());
-	int z = atoi(query.args[1].c_str());
-
-	int xtarg = Util::ClipInt(x, 0, 100) * pld.zoneDef->mPageSize;
-	int ztarg = Util::ClipInt(z, 0, 100) * pld.zoneDef->mPageSize;
-
-	SetPosition(xtarg, creatureInst->CurrentY, ztarg, 1);
-	SendInfoMessage("Warping.", INFOMSG_INFO);
-
-	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-}
-
-int SimulatorThread :: handle_command_warpp(void)
-{
-	/*  Query: warpp
-		An external warp that pull a target directly to the player.
-    */
-	if(CheckPermissionSimple(Perm_Account, Permission_Sage) == false)
-		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
-
-	CreatureInstance *targ = NULL;
-	if(query.argCount == 0)
-		targ = creatureInst->CurrentTarget.targ;
-	else
-		targ = creatureInst->actInst->GetPlayerByName(query.args[0].c_str());
-
-	if(targ == NULL || targ == creatureInst)
-		return PrepExt_QueryResponseError(SendBuf, query.ID, "Must select a target.");
-
-	targ->CurrentX = creatureInst->CurrentX;
-	targ->CurrentY = creatureInst->CurrentY;
-	targ->CurrentZ = creatureInst->CurrentZ;
-
-	AddMessage((long)targ, 0, BCM_UpdatePosition);
-	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-}
-
-int SimulatorThread :: handle_command_warpg(void)
-{
-	const char *grove = NULL;
-	if(query.argCount > 0)
-		grove = query.GetString(0);
-
-	if(grove == NULL)
-		return PrepExt_QueryResponseError(SendBuf, query.ID, "No grove specified.");
-
-	ZoneDefInfo *zoneDef = g_ZoneDefManager.GetPointerByExactWarpName(grove);
-	if(zoneDef == NULL)
-		return PrepExt_QueryResponseError(SendBuf, query.ID, "Grove not found.");
-	if(zoneDef->mGrove == false && !zoneDef->mGuildHall)
-		return PrepExt_QueryResponseError(SendBuf, query.ID, "Destination is not a grove.");
-
-	int errCode = CheckValidWarpZone(zoneDef->mID);
-	if(errCode != ERROR_NONE)
-		return PrepExt_QueryResponseError(SendBuf, query.ID, GetGenericErrorString(errCode));
-
-	int xLoc = 0;
-	int zLoc = 0;
-	if(query.argCount == 3)
-	{
-		xLoc = query.GetInteger(1);
-		zLoc = query.GetInteger(2);
-	}
-	WarpToZone(zoneDef, xLoc, 0, zLoc);
-	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-}
-
-int SimulatorThread :: handle_command_warpextoff(void)
-{
-	/*  Query: warpext
-		Warp an external target to the player.  Used to set positions of offline characters.
-		Args: [0] = Character Name [required]
-		      [1] = Zone ID to warp the character to [required]
-			  [2][3] = X and Z coordinate to warp [optional]
-			  [4] = Y coordinate to warp [optional]
-    */
-
-	if(CheckPermissionSimple(Perm_Account, Permission_Sage) == false)
-		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
-
-	if(query.argCount < 2)
-		return PrepExt_QueryResponseError(SendBuf, query.ID, "Usage: /warpext \"Char Name\" zoneID [x z] [y]");
-
-	ZoneDefInfo *zoneDef = g_ZoneDefManager.GetPointerByID(atoi(query.args[1].c_str()));
-	if(zoneDef == NULL)
-		return PrepExt_QueryResponseError(SendBuf, query.ID, "Zone not found.");
-
-	CharacterData *cd = NULL;
-	g_CharacterManager.GetThread("SimulatorThread::handle_command_warpext");
-	cd = g_CharacterManager.GetCharacterByName(query.args[0].c_str());
-	g_CharacterManager.ReleaseThread();
-	if(cd != NULL)
-		return PrepExt_QueryResponseError(SendBuf, query.ID, "Character must be offline.");
-
-	g_AccountManager.cs.Enter("SimulatorThread::handle_command_warpext");
-	int CDef = g_AccountManager.GetCDefFromCharacterName(query.args[0].c_str());
-	g_AccountManager.cs.Leave();
-
-	if(CDef == -1)
-		return PrepExt_QueryResponseError(SendBuf, query.ID, "Character name not found.");
-
-	g_CharacterManager.GetThread("SimulatorThread::handle_command_warpext");
-	cd = g_CharacterManager.RequestCharacter(CDef, true);
-	g_CharacterManager.ReleaseThread();
-
-	if(cd == NULL)
-		return PrepExt_QueryResponseError(SendBuf, query.ID, "Failed to load character.");
-	cd->ExtendExpireTime();
-
-	int warpx = zoneDef->DefX;
-	int warpy = zoneDef->DefY;
-	int warpz = zoneDef->DefZ;
-	if(query.argCount >= 4)
-	{
-		warpx = atoi(query.args[2].c_str());
-		warpz = atoi(query.args[3].c_str());
-	}
-	if(query.argCount >= 5)
-		warpy = atoi(query.args[4].c_str());
-
-	cd->activeData.CurZone = zoneDef->mID;
-	cd->activeData.CurX = warpx;
-	cd->activeData.CurY = warpy;
-	cd->activeData.CurZ = warpz;
-	cd->SetExpireTime();
-
-	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-}
-
-int SimulatorThread :: handle_command_warpext(void)
-{
-	/*  Query: warpext2
-		Warp an external target to a new zone ID.
-		Args: [0] = Character Name [required]
-		      [1] = Zone ID to warp the character to [required]
-    */
-
-	if(CheckPermissionSimple(Perm_Account, Permission_Sage) == false)
-		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
-
-	if(query.argCount < 2)
-		return PrepExt_QueryResponseError(SendBuf, query.ID, "Usage: /warpext \"Char Name\" zoneID");
-
-	ZoneDefInfo *zoneDef = g_ZoneDefManager.GetPointerByID(atoi(query.args[1].c_str()));
-	if(zoneDef == NULL)
-		return PrepExt_QueryResponseError(SendBuf, query.ID, "Zone not found.");
-
-	SIMULATOR_IT it;
-	for(it = Simulator.begin(); it != Simulator.end(); ++it)
-		if(it->ProtocolState == 1)
-			if(strcmp(it->creatureInst->css.display_name, query.args[0].c_str()) == 0)
-			{
-				SendInfoMessage("Warping target.", INFOMSG_INFO);
-				it->MainCallSetZone(zoneDef->mID, 0, true);
-				return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-			}
-	return PrepExt_QueryResponseError(SendBuf, query.ID, "Target not found."); 
-}
-
 
 int SimulatorThread :: handle_command_health(void)
 {
@@ -7941,8 +7596,8 @@ int SimulatorThread :: handle_query_creature_use(void)
 				// New script system
 				int wpos = creatureInst->QuestInteractObject(qo);
 				questNutScript->source = creatureInst;
-				questNutScript->target = target;
-				questNutScript->CurrentQuestAct = QuestAct;
+//				questNutScript->target = target;
+//				questNutScript->CurrentQuestAct = QuestAct;
 				questNutScript->activate.Set(target->CurrentX, target->CurrentY, target->CurrentZ);
 				sprintf(Aux1, "on_activate_%d", QuestAct);
 				questNutScript->JumpToLabel(Aux1);
@@ -8145,7 +7800,9 @@ int SimulatorThread :: handle_query_quest_getcompletequest(void)
 	int CID = atoi(query.args[0].c_str());
 	LogMessageL(MSG_DIAGV, "  Request quest.getcompletequest for %d", CID);
 
-	int CDef = ResolveCreatureDef(CID);
+	// -1 means the quest is a quest without an ending creature
+	int CDef = CID == creatureInst->CreatureID ? -1 : ResolveCreatureDef(CID);
+
 	return pld.charPtr->questJournal.QuestGetCompleteQuest(SendBuf, Aux3, CDef, query.ID);
 }
 
@@ -8181,22 +7838,35 @@ int SimulatorThread :: handle_query_quest_complete(void)
 	if(qj == NULL)
 		return ErrorMessageAndQueryOK(SendBuf, "Critical server error.");
 
-	CreatureInstance *questEnder = ResolveCreatureInstance(CID, 1);
-	if(questEnder == NULL)
-		return ErrorMessageAndQueryOK(SendBuf, "Server error: creature does not exist.");
+	int enderCreatureDefID = -1;
+	if(CID == creatureInst->CreatureID) {
+	}
+	else {
+		CreatureInstance *questEnder = ResolveCreatureInstance(CID, 1);
+		if(questEnder == NULL)
+			return ErrorMessageAndQueryOK(SendBuf, "Server error: creature does not exist.");
 
-	if(ActiveInstance::GetBoxRange(creatureInst, questEnder) > INTERACT_RANGE)
-		return ErrorMessageAndQueryOK(SendBuf, "You are too far away from the quest ender.");
+		if(ActiveInstance::GetBoxRange(creatureInst, questEnder) > INTERACT_RANGE)
+			return ErrorMessageAndQueryOK(SendBuf, "You are too far away from the quest ender.");
+
+		enderCreatureDefID = questEnder->CreatureDefID;
+	}
 
 	QuestDefinition *qd = QuestDef.GetQuestDefPtrByID(QID);
 	if(qd == NULL)
 		return ErrorMessageAndQueryOK(SendBuf, "Quest not found.");
 
-	if(qj->IsQuestRedeemable(qd, QID, questEnder->CreatureDefID) == false)
+//	QuestReference *qr = g_Q
+	QuestReference *qr = qj->activeQuests.GetItem(qd->questID);
+	if(qr == NULL) {
+		return ErrorMessageAndQueryOK(SendBuf, "No quest reference.");
+	}
+
+	if(qj->IsQuestRedeemable(qd, QID, enderCreatureDefID) == false)
 		return ErrorMessageAndQueryOK(SendBuf, "Quest cannot be redeemed yet.");
 
 	std::vector<QuestItemReward> rewardedItems;
-	if(qd->FilterSelectedRewards(selectionList, rewardedItems) != true)
+	if(qd->FilterSelectedRewards(qr->Outcome, selectionList, rewardedItems) != true)
 		return ErrorMessageAndQueryOK(SendBuf, "Failed to select quest reward items.");
 
 	int freeSlots = pld.charPtr->inventory.CountFreeSlots(INV_CONTAINER);
@@ -8236,7 +7906,7 @@ int SimulatorThread :: handle_query_quest_complete(void)
 	if(response == -1)
 		return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
 
-	response = creatureInst->ProcessQuestRewards(QID, rewardedItems);
+	response = creatureInst->ProcessQuestRewards(QID, qr->Outcome, rewardedItems);
 
 
 

@@ -40,6 +40,14 @@ public:
 };
 
 /*
+ * Handles /api/up requests, returning a JSON response containing uptime data.
+ */
+class UpHandler: public AuthenticatedHandler {
+public:
+	bool handleAuthenticatedGet(CivetServer *server, struct mg_connection *conn);
+};
+
+/*
  * Handles /api/who requests, returning a JSON response containing all
  * logged in users.
  */

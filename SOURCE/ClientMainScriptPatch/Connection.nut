@@ -1363,6 +1363,7 @@ class this.Connection extends this.MessageBroadcaster
 	{
 		local questId = data.getInteger();
 		local event = data.getByte();
+		print("ICE! handleQuestEventMsg " + questId + " / " + event);
 
 		switch(event)
 		{

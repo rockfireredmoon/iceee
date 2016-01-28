@@ -199,6 +199,7 @@ bool HTTPService::Start() {
 
 		// API
 		if(g_Config.PublicAPI) {
+			civetServer->addHandler("/api/up", new UpHandler());
 			civetServer->addHandler("/api/who", new WhoHandler());
 			civetServer->addHandler("/api/chat", new ChatHandler());
 			civetServer->addHandler("/api/user/*", new UserHandler());

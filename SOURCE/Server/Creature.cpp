@@ -7084,7 +7084,7 @@ void CreatureInstance :: CheckQuestKill(CreatureInstance *target)
 	}
 }
 
-int CreatureInstance :: ProcessQuestRewards(int QuestID, const std::vector<QuestItemReward>& itemsToGive)
+int CreatureInstance :: ProcessQuestRewards(int QuestID, int outcomeIdx, const std::vector<QuestItemReward>& itemsToGive)
 {
 	if(!(serverFlags & ServerFlags::IsPlayer))
 	{
@@ -7103,10 +7103,16 @@ int CreatureInstance :: ProcessQuestRewards(int QuestID, const std::vector<Quest
 	if(simulatorPtr == NULL)
 		return -1;
 
-	AddValour(qd->guildId, qd->valourGiven);
+	QuestOutcome* outcome = qd->GetOutcome(outcomeIdx);
+	if(outcome == NULL) {
+		g_Log.AddMessageFormat("[ERROR] ProcessQuestRewards() invalid quest ID [%d] has no outcome for index %d", QuestID, outcomeIdx);
+				return -1;
+	}
+
+	AddValour(qd->guildId, outcome->valourGiven);
 
 	// Adjust Exp taking tomes into account
-	int exp = qd->experience;
+	int exp = outcome->experience;
 
 	// Adjust for other bonuses
 	if(css.quest_exp_gain_rate > 0) {
@@ -7114,7 +7120,7 @@ int CreatureInstance :: ProcessQuestRewards(int QuestID, const std::vector<Quest
 	}
 
 	AddExperience(exp);
-	AddHeroismForQuest(qd->heroism, qd->levelSuggested);
+	AddHeroismForQuest(outcome->heroism, qd->levelSuggested);
 	css.copper += qd->coin;
 	short stat = STAT::COPPER;
 

@@ -444,13 +444,6 @@ public:
 	int handle_command_pose(void);
 	int handle_command_pose2(void);
 	int handle_command_esay(void);
-	int handle_command_warp(void);
-	int handle_command_warpi(void);
-	int handle_command_warpt(void);
-	int handle_command_warpp(void);
-	int handle_command_warpg(void);
-	int handle_command_warpextoff(void);
-	int handle_command_warpext(void);
 	int handle_command_health(void);
 	int handle_command_speed(void);
 	int handle_command_fa(void);

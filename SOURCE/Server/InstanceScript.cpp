@@ -292,23 +292,7 @@ void InstanceNutPlayer::HaltDerivedExecution()
 	spawned.clear();
 }
 
-void InstanceNutPlayer::RegisterFunctions() {
-	Sqrat::Class<NutPlayer> nutClass(vm, _SC("Core"), true);
-	Sqrat::RootTable(vm).Bind(_SC("Core"), nutClass);
-	RegisterCoreFunctions(this, &nutClass);
-
-	Sqrat::DerivedClass<AbstractInstanceNutPlayer, NutPlayer> abstractInstanceClass(vm, _SC("AbstractInstance"));
-	Sqrat::DerivedClass<InstanceNutPlayer, AbstractInstanceNutPlayer> instanceClass(vm, _SC("Instance"));
-	Sqrat::RootTable(vm).Bind(_SC("Instance"), instanceClass);
-
-	Sqrat::DerivedClass<AINutPlayer, InstanceScript::InstanceNutPlayer> aiClass(vm, _SC("AI"));
-	Sqrat::RootTable(vm).Bind(_SC("AI"), aiClass);
-	RegisterInstanceFunctions(this, &instanceClass);
-
-	Sqrat::RootTable(vm).SetInstance(_SC("inst"), this);
-}
-
-void InstanceNutPlayer::RegisterInstanceFunctions(NutPlayer *instance, Sqrat::DerivedClass<InstanceNutPlayer, AbstractInstanceNutPlayer> *instanceClass)
+void InstanceNutPlayer::RegisterInstanceFunctions(HSQUIRRELVM vm, Sqrat::DerivedClass<InstanceNutPlayer, AbstractInstanceNutPlayer> *instanceClass)
 {
 	instanceClass->Func(_SC("transform"), &InstanceNutPlayer::Transform);
 	instanceClass->Func(_SC("pvp_goal"), &InstanceNutPlayer::PVPGoal);
@@ -383,6 +367,22 @@ void InstanceNutPlayer::RegisterInstanceFunctions(NutPlayer *instance, Sqrat::De
 	Sqrat::ConstTable(vm).Const(_SC("CREATURE_RUN_SPEED"), CREATURE_RUN_SPEED);
 
 
+}
+
+void InstanceNutPlayer::RegisterFunctions() {
+	Sqrat::Class<NutPlayer> nutClass(vm, _SC("Core"), true);
+	Sqrat::RootTable(vm).Bind(_SC("Core"), nutClass);
+	RegisterCoreFunctions(this, &nutClass);
+
+	Sqrat::DerivedClass<AbstractInstanceNutPlayer, NutPlayer> abstractInstanceClass(vm, _SC("AbstractInstance"));
+	Sqrat::DerivedClass<InstanceNutPlayer, AbstractInstanceNutPlayer> instanceClass(vm, _SC("Instance"));
+	Sqrat::RootTable(vm).Bind(_SC("Instance"), instanceClass);
+
+	Sqrat::DerivedClass<AINutPlayer, InstanceScript::InstanceNutPlayer> aiClass(vm, _SC("AI"));
+	Sqrat::RootTable(vm).Bind(_SC("AI"), aiClass);
+	RegisterInstanceFunctions(vm, &instanceClass);
+
+	Sqrat::RootTable(vm).SetInstance(_SC("inst"), this);
 }
 
 bool InstanceNutPlayer::DisbandVirtualParty(int partyID)
@@ -706,8 +706,14 @@ bool InstanceNutPlayer::InviteQuest(int CID, int questID, bool inviteParty) {
 
 bool InstanceNutPlayer::JoinQuest(int CID, int questID, bool joinParty) {
 	CreatureInstance *ci = GetCreaturePtr(CID);
-	if (ci->simulatorPtr != NULL) {
-		if (ci->simulatorPtr->QuestJoin(questID)) {
+		bool ok = false;
+		if (ci != NULL && ci->simulatorPtr != NULL) {
+			if (!ci->simulatorPtr->QuestJoin(questID)) {
+				g_Log.AddMessageFormat("%d could not be invited the quest %d.", CID, questID);
+			}
+			else
+				ok = true;
+
 			if (joinParty && ci->PartyID > 0) {
 				ActiveParty* party = g_PartyManager.GetPartyByID(ci->PartyID);
 				if (party != NULL) {
@@ -718,12 +724,15 @@ bool InstanceNutPlayer::JoinQuest(int CID, int questID, bool joinParty) {
 							m.mCreaturePtr->simulatorPtr->QuestJoin(questID);
 						}
 					}
+					ok = true;
 				}
 			}
-			return true;
+
 		}
-	}
-	return false;
+		else {
+			g_Log.AddMessageFormat("Could not find creature with ID %d in this instance to invite quest %d.", CID, questID);
+		}
+		return ok;
 }
 
 int InstanceNutPlayer::Transform(int propID, Sqrat::Table transformation) {

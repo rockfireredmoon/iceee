@@ -138,6 +138,7 @@ struct QuestReference
 	char ObjComplete[3];    // Objective completed.
 	char Complete;
 	short CurAct;
+	int Outcome;
 	QuestReference()
 	{
 		QuestID = 0;
@@ -171,6 +172,8 @@ struct QuestReference
 	QuestDefinition* GetQuestPointer(void); 
 	bool operator < (const QuestReference &compare) const { return QuestID < compare.QuestID; }
 	bool TestInvalid(void);
+	int CompleteQuest(int CID, char *buffer, QuestDefinition *qdef);
+	int QuestJournal(int CID, char *buffer, QuestDefinition *qdef);
 
 	/* DISABLED, NEVER FINISHED
 	bool HasItemObjective(void);
@@ -197,6 +200,7 @@ public:
 	int HasCreatureDef(int searchVal);
 	void RemoveIndex(size_t index);
 	void ResolveIDs(void);
+	QuestReference* GetItem(int questID);
 	int HasCreatureReturn(int searchVal);
 	int HasObjectInteraction(int CreatureDefID);
 
@@ -276,6 +280,51 @@ public:
 	int GetRepeatDelayIndex(int questID);
 };
 
+class QuestOutcome
+{
+public:
+	std::string compText;  //[3]    The speech text that is displayed to the player when they redeem the quest and accept rewards.
+	int experience;        //[5]    Experience points awarded to the player when the quest is redeemed.
+	int numRewards;        //[7]    If the player is given a choice of which reward items to choose, this is the number of items they are required to select from the reward box.  Usually set to 1 when multiple rewards are offered.  Should not be set if the quest has only one reward, because the player implicitly accepts it, and if this field is set then the player must explicitly select it even though there are no other options.
+	int coin;              //[8]    Copper granted to the player when the quest is redeemed.
+	//[30], [31], [32], [33]
+	static const int MAXREWARDS = 4;
+	QuestItemReward rewardItem[MAXREWARDS];  //"id:# count:# required:false"
+
+	int heroism;         //This is a quest completion bonus new to this server.
+
+	int valourGiven;	// The amount of valour given on completion
+
+	QuestOutcome() {
+		Clear();
+	}
+
+	~QuestOutcome()	{
+		Clear();
+	}
+
+	void CopyFrom(const QuestOutcome &other)
+	{
+		valourGiven = other.valourGiven;
+		heroism = other.heroism;
+		compText = other.compText;
+		experience = other.experience;
+		numRewards = other.numRewards;
+		for(size_t i = 0; i < MAXREWARDS; i++)
+			rewardItem[i].CopyFrom(other.rewardItem[i]);
+	}
+
+	void Clear(void) {
+		valourGiven = 0;
+		heroism = 0;
+		compText.clear();
+		experience = 0;
+		numRewards = 0;
+		for(int i = 0; i < MAXREWARDS; i++)
+			rewardItem[i].Clear();
+	}
+};
+
 class QuestObjective
 {
 public:
@@ -326,6 +375,7 @@ public:
 	int myItemID;             //[offset] + 3
 	std::string completeText;      //[offset] + 4   //Shows in parenthesis after the objective.
 	std::string markerLocations;   //[offset] + 5
+	int outcome;
 
 	QuestObjective()
 	{
@@ -341,6 +391,7 @@ public:
 
 	void Clear(void)
 	{
+		outcome = -1;
 		type = 0;
 		data1.clear();
 		data2 = 0;
@@ -362,6 +413,7 @@ public:
 
 	void CopyFrom(QuestObjective *objective)
 	{
+		outcome = objective->outcome;
 		type = objective->type;
 		data1.reserve(objective->data1.size());
 		copy(objective->data1.begin(),objective->data1.end(),back_inserter(data1));
@@ -443,11 +495,8 @@ public:
 	int questID;           //[0]    Quest identification, for server lookups and client info.
 	std::string title;     //[1]    Title name.
 	std::string bodyText;  //[2]    Speech text that is provided to the player for them to read before they accept the quest.
-	std::string compText;  //[3]    The speech text that is displayed to the player when they redeem the quest and accept rewards.
 	int levelSuggested;    //[4]    Recommended player level, displayed on the quest accept screen.
-	int experience;        //[5]    Experience points awarded to the player when the quest is redeemed.
 	int partySize;         //[6]    Recommended party size, displayed on the quest accept screen.
-	int numRewards;        //[7]    If the player is given a choice of which reward items to choose, this is the number of items they are required to select from the reward box.  Usually set to 1 when multiple rewards are offered.  Should not be set if the quest has only one reward, because the player implicitly accepts it, and if this field is set then the player must explicitly select it even though there are no other options.
 	int coin;              //[8]    Copper granted to the player when the quest is redeemed.
 	bool unabandon;        //[9]    Unabandonable (written as "true" or "false")
 
@@ -465,10 +514,6 @@ public:
 	// { [18] [19] [20] [21] [22] [23] }
 	// { [24] [25] [26] [27] [28] [29] }
 
-	//[30], [31], [32], [33]
-	static const int MAXREWARDS = 4;
-	QuestItemReward rewardItem[MAXREWARDS];  //"id:# count:# required:false"
-
 	//This data is used internally by the server
 	int levelMin;        //Minimum player level required to accept this quest.  Used for internal processing.
 	int levelMax;        //Maximum player level required to accept this quest.  Used for internal processing.
@@ -479,13 +524,11 @@ public:
 	int actCount;
 	bool Repeat;         //Quest is repeatable and is not logged into the completed quest list. (such as bounty boards).
 	unsigned long RepeatMinuteDelay;  //Number of minutes that must pass before the quest is reactivated for another one-time completion.  Specifically used for event quests so the ID does not remain forever in the completed list.  Note this is a special case and not related to <Repeat>, which must remain false for this work correctly.
-	int heroism;         //This is a quest completion bonus new to this server.
 
 	//	IceEE additions
 	bool guildStart;	// This quest starts a guild (and so the player must not be in that guild for it to be available)
 	int guildId;		// This quest requires the player is part of this guid
 	int	valourRequired;	// The amount of valour required to activate the quest
-	int valourGiven;	// The amount of valour given on completion
 	bool accountQuest;  // The quest may only be done once per account
 
 	// This stuff is used internally for determining quest marker information.  It is extracted from the "sGiver" field and converted to numerical types here for faster processing.
@@ -494,6 +537,10 @@ public:
 	int giverZ;
 	int giverZone;
 	
+	// Outcomes
+	std::vector<QuestOutcome> outcomes;
+	int outcomeCount;
+
 	//These are extentions to allow a very basic form of command scripting within the game.
 	 
 	QuestCommand::QuestActionContainer mScriptAcceptCondition;    //Additional conditions to accept the quest.
@@ -502,11 +549,14 @@ public:
 	QuestCommand::QuestActionContainer mScriptCompleteAction;       //Actions to perform when the quest is accepted.
 
 	void Clear(void);
+	QuestOutcome* GetOutcome(int index);
+	QuestOutcome* GetLastOutcome();
+	void AddOutcome(QuestOutcome outcome);
 	void AddAct(QuestAct &act);
 	void CopyFrom(const QuestDefinition &other);
 	int GetObjective(unsigned int act, int type, int CDefID);
 	QuestAct* GetActPtrByIndex(int index);
-	bool FilterSelectedRewards(const std::vector<int>& selectedIndexes, std::vector<QuestItemReward>& outputRewardList);
+	bool FilterSelectedRewards(int outcomeIndex, const std::vector<int>& selectedIndexes, std::vector<QuestItemReward>& outputRewardList);
 	void RunLoadDefaults(void);
 	void RunLoadValidation(void);
 	void SetRepeatTime(const char *format);

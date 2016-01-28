@@ -131,9 +131,10 @@ class this.QuestManager extends this.DefaultQueryHandler
 	function requestCompleteNotTurnInQuest( creatureId )
 	{
 		local questEnder = this.Screens.get("QuestEnder", true);
-
+		print("ICE! Quest ender screen " + creatureId + "\n");
 		if (questEnder.getCreatureId() == null)
 		{
+			print("ICE! No qe creature\n");
 			questEnder.setCreatureId(creatureId);
 			this._Connection.sendQuery("quest.getcompletequest", this, creatureId);
 		}
