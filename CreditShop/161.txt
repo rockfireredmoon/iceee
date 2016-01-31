@@ -1,9 +1,9 @@
 [ENTRY]
-Description=Player Made Set
+Description=SPM Credit Shop Set
 PriceCurrency=CREDITS
 PriceCopper=0
 PriceCredits=100
-ItemID=7108
+ItemID=5673
 Category=ARMOR
-Status=<undefined>
+Status=NEW
 
