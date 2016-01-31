@@ -12,7 +12,7 @@ function on_kill(creatureDefID, creatureID) {
 		// Anglor Dren's chest
 		inst.spawn(1291845811,0,0);
 	}
-	else if(creatureDefID in [ 1993, 1994]) {
+	else if(array_contains([1993, 1994],creatureDefID)) {
 		killcount++;
 		if(killcount >= 6) {
 			inst.spawn(1291845744,0,0);

@@ -9,9 +9,9 @@ taintmaw_kills <- 0;
 marblightclaw_kills <- 0;
 
 function on_kill(creatureDefID, creatureID)
-	if(creatureDefID in [966,967] && ++taintmaw_kills >= 9) 
+	if(array_contains([966,967],creatureDefID)  && ++taintmaw_kills >= 9) 
 		inst.spawn(805308154, 970, 0);
-	else if(creatureDefID in [960,964,965,968,2640] && ++marblightclaw_kills >= 7) 
+	else if(array_contains([960,964,965,968,2640],creatureDefID) && ++marblightclaw_kills >= 7) 
 		inst.spawn(805308827, 0, 0);
 	else if(creatureDefID == 975)
 		//  Vitiator's Treasure (from Aram Norr)
