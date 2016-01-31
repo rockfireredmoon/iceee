@@ -490,6 +490,8 @@ public:
 	int RandModRng(int min, int max);
 	int RandDbl(double min, double max);
 
+	static bool ArrayContains(Sqrat::Array table, int value);
+
 	std::vector<NutScriptEvent*> mQueue;
 	std::vector<NutScriptEvent*> mQueueAdd;
 	std::vector<NutScriptEvent*> mQueueInsert;
