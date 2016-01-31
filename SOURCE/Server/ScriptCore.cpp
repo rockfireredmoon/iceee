@@ -527,6 +527,7 @@ namespace ScriptCore
 		Sqrat::RootTable(vm).Func("randint", &randint);
 		Sqrat::RootTable(vm).Func("randdbl", &randdbl);
 		Sqrat::RootTable(vm).Func("rand", &randi);
+		Sqrat::RootTable(vm).Func("array_contains", &ArrayContains);
 
 		// Add in the script arguments
 		Sqrat::RootTable(vm).SetValue(_SC("__argc"), SQInteger(mArgs.size()));
@@ -877,6 +878,15 @@ namespace ScriptCore
 	        return sq_throwerror(v, Sqrat::Error::Message(v).c_str());
 	    }
 	    return sq_throwerror(v, _SC("wrong number of parameters"));
+	}
+
+	bool NutPlayer::ArrayContains(Sqrat::Array arr, int value) {
+		for(int i = 0 ; i < arr.GetSize(); i++) {
+			Sqrat::SharedPtr<int> a = arr.GetValue<int>(i);
+			if(*(arr.GetValue<int>(i).Get()) == value)
+				return true;
+		}
+		return false;
 	}
 
 

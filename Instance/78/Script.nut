@@ -11,6 +11,6 @@ function on_kill(creatureDefID, creatureID) {
 	if(creatureDefID == 2524)
 		// spawn Taylin Rotbreath's Treasure
 		inst.spawn(1308623828,0,0);
-	else if(creatureDefID in [ 2520, 2521, 2522, 2523] && ++killcount == 8) 
+	else if(array_contains([ 2520, 2521, 2522, 2523],creatureDefID) && ++killcount == 8) 
 		inst.spawn(1029380,0,0);
 }
