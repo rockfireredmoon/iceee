@@ -4,6 +4,7 @@
 
 #include "ScriptCore.h"
 #include <vector>
+#include <algorithm>
 #include "Callback.h"
 #include "Scenery2.h"
 #include "PartyManager.h"
@@ -13,6 +14,34 @@ class ActiveInstance;
 class CreatureInstance;
 
 namespace InstanceScript {
+
+class MonitorArea {
+public:
+	Squirrel::Area area;
+	std::vector<int> creatureIds;
+	std::string name;
+
+	MonitorArea() {
+		Clear();
+	}
+
+	~MonitorArea() {
+		Clear();
+	}
+
+	void Remove(int creatureId) {
+		creatureIds.erase(std::find(creatureIds.begin(), creatureIds.end(), creatureId));
+	}
+
+	bool Contains(int creatureId) {
+		return std::find(creatureIds.begin(), creatureIds.end(), creatureId) != creatureIds.end();
+	}
+
+	void Clear() {
+		creatureIds.clear();
+	}
+
+};
 
 class InstanceNutDef: public ScriptCore::NutDef {
 
@@ -26,7 +55,6 @@ private:
 	std::map<std::string, Squirrel::Area> mLocationDef;
 };
 
-
 class AbstractInstanceNutPlayer: public ScriptCore::NutPlayer {
 public:
 	AbstractInstanceNutPlayer();
@@ -35,7 +63,11 @@ public:
 	static SQInteger CIDs(HSQUIRRELVM v);
 	static SQInteger GetHated(HSQUIRRELVM v);
 	int GetNPCID(int CDefID);
+	void MonitorArea(std::string name, Squirrel::Area area);
+	void UnmonitorArea(std::string name);
 	int GetCIDForPropID(int propID);
+	void PlayerMovement(CreatureInstance *creature);
+	void PlayerLeft(CreatureInstance *creature);
 	void Info(const char *message);
 	void Message(const char *message, int type);
 	void LocalBroadcast(const char *message);
@@ -43,6 +75,11 @@ public:
 	void Error(const char *message);
 	void Chat(const char *name, const char *channel, const char *message);
 	void CreatureChat(int cid, const char *channel, const char *message);
+	static SQInteger Scan(HSQUIRRELVM v);
+	static SQInteger ScanNPCs(HSQUIRRELVM v);
+	int ScanNPC(Squirrel::Area *location, int CDefID);
+	std::vector<int> ScanForNPCs(Squirrel::Area *location, int CDefID);
+	std::vector<InstanceScript::MonitorArea> monitorAreas;
 protected:
 	CreatureInstance* GetNPCPtr(int CID);
 	CreatureInstance* GetCreaturePtr(int CID);
@@ -92,9 +129,11 @@ public:
 	int Transform(int propID, Sqrat::Table transformation);
 	int Asset(int propID, const char *newAsset, float scale);
 	int CountAlive(int CDefID);
+	bool AttachSidekick(int playerCID, int sidekickCID, int summonType);
 	bool InviteQuest(int CID, int questID, bool inviteParty);
 	bool JoinQuest(int CID, int questID, bool joinParty);
 	void DetachSceneryEffect(int propID, int tag);
+	int GetPropIDForSpawn(int CID);
 	int ParticleAttach(int propID, const char *effect, float scale, float offsetX, float offsetY, float offsetZ);
 	void Emote(int cid, const char *emotion);
 	int CDefIDForCID(int cid);
@@ -110,9 +149,6 @@ public:
 	int OLDSpawnAt(int creatureID, float x, float y, float z, int facing, int flags);
 	int GetTarget(int CID);
 	bool SetTarget(int CID, int targetCID);
-	std::vector<int>  Scan(Squirrel::Area *location);
-	int ScanNPC(Squirrel::Area *location, int CDefID);
-	std::vector<int> ScanNPCs(Squirrel::Area *location, int CDefID);
 
 private:
 	std::vector<SceneryEffect> activeEffects;

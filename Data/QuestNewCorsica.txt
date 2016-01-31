@@ -224,8 +224,6 @@ NumRewards=0
 Coin=100
 Unabandon=0
 Repeat=0
-;QuestEnderID=3250
-;sEnder=17740.2,1338.71,19874.8,1060
 [ACT]
 Act.BodyText=Kill the 3 Ambushers
 Obj.0.type=kill

@@ -354,7 +354,7 @@ bool ChatManager ::SendChatMessage(ChatMessage &message, CreatureInstance *sendi
 	wpos += PutShort(&SendBuf[wpos], 0);         //Placeholder for size
 	wpos += PutInteger(&SendBuf[wpos], message.mSenderCreatureID);    //Character ID who's sending the message
 	wpos += PutStringUTF(&SendBuf[wpos], message.mSender.c_str()); //pld.charPtr->cdef.css.display_name);  //Character name
-	wpos += PutStringUTF(&SendBuf[wpos], message.mChannel->channel);
+	wpos += PutStringUTF(&SendBuf[wpos], message.mTell ? "t/" : message.mChannel->channel);
 	wpos += PutStringUTF(&SendBuf[wpos], message.mMessage.c_str());
 	PutShort(&SendBuf[1], wpos - 3);     //Set size
 

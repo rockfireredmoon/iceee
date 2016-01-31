@@ -246,7 +246,6 @@ int QuestReference :: CompleteQuest(int CID, char *buffer, QuestDefinition *qdef
 
 int QuestReference :: AdvanceAct(int CID, char *buffer, QuestDefinition *questDef)
 {
-	g_Log.AddMessageFormat("[REMOVEME] AdvanceAct %d. Current Act is %d. Act count is %d", CID, CurAct, questDef->actCount);
 
 	int wpos = 0;
 	wpos += PutByte(&buffer[wpos], 7);  //_handleQuestEventMsg
@@ -259,13 +258,10 @@ int QuestReference :: AdvanceAct(int CID, char *buffer, QuestDefinition *questDe
 	CurAct++;
 	if(CurAct >= questDef->actCount)
 	{
-		g_Log.AddMessageFormat("[ERROR] Current act exceeds count (QID: %d, Act: %d, ActCount: %d)", questDef->questID, CurAct, questDef->actCount);
 		CurAct = questDef->actCount - 1;
 	}
 	else
 	{
-		g_Log.AddMessageFormat("[REMOVEME] AdvanceAct NOW %d. Current Act is %d. Act count is %d", CID, CurAct, questDef->actCount);
-
 		ClearObjectiveData();
 		//Objective[0] = 0;
 		//Objective[1] = 0;

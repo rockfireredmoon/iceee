@@ -799,6 +799,13 @@ CreatureInstance * ActiveInstance :: LoadPlayer(CreatureInstance *source, Simula
 	//activityManager.UpdatePlayer(source->CreatureID, 0, 0);  //Pass dummy coords so the real update can take place.
 	//activityManager.UpdatePlayer(source->CreatureID, tx, tz);
 
+	if(nutScriptPlayer != NULL) {
+		std::vector<ScriptCore::ScriptParam> p;
+		p.push_back(newItem.CreatureID);
+		nutScriptPlayer->JumpToLabel("on_loaded", p);
+		nutScriptPlayer->PlayerMovement(&newItem);
+	}
+
 	return &PlayerList.back();
 }
 
@@ -842,6 +849,11 @@ int ActiveInstance :: UnloadPlayer(SimulatorThread *callSim)
 
 	//Notify the spawn management system to delete this player.
 	//activityManager.RemovePlayer(creatureID);
+
+
+	if(nutScriptPlayer != NULL && callSim->creatureInst != NULL) {
+		nutScriptPlayer->PlayerLeft(callSim->creatureInst);
+	}
 
 	CreatureInstance * cInst = GetPlayerByID(creatureID);
 	if(cInst == NULL)
@@ -1912,6 +1924,14 @@ CreatureInstance* ActiveInstance :: SpawnCreate(CreatureInstance * sourceActor, 
 	retPtr = &it->second;
 #endif
 	RebuildNPCList();
+
+	if(nutScriptPlayer != NULL) {
+		std::vector<ScriptCore::ScriptParam> parms;
+		parms.push_back(ScriptCore::ScriptParam(retPtr->CreatureDefID));
+		parms.push_back(ScriptCore::ScriptParam(retPtr->CreatureID));
+		nutScriptPlayer->JumpToLabel("on_spawn", parms);
+	}
+
 	return retPtr;
 }
 
@@ -2008,6 +2028,14 @@ CreatureInstance* ActiveInstance :: SpawnGeneric(int CDefID, int x, int y, int z
 	RebuildNPCList();
 	spawnsys.genericSpawns.push_back(retPtr->CreatureID);
 
+
+	if(nutScriptPlayer != NULL) {
+		std::vector<ScriptCore::ScriptParam> parms;
+		parms.push_back(ScriptCore::ScriptParam(retPtr->CreatureDefID));
+		parms.push_back(ScriptCore::ScriptParam(retPtr->CreatureID));
+		nutScriptPlayer->JumpToLabel("on_spawn", parms);
+	}
+
 	return retPtr;
 }
 
@@ -2080,6 +2108,14 @@ CreatureInstance* ActiveInstance :: SpawnAtProp(int CDefID, int PropID, int dura
 
 	int size = PrepExt_GeneralMoveUpdate(GSendBuf, add);
 	LSendToLocalSimulator(GSendBuf, size, x, z);
+
+	if(nutScriptPlayer != NULL) {
+		std::vector<ScriptCore::ScriptParam> parms;
+		parms.push_back(ScriptCore::ScriptParam(add->CreatureDefID));
+		parms.push_back(ScriptCore::ScriptParam(add->CreatureID));
+		nutScriptPlayer->JumpToLabel("on_spawn", parms);
+	}
+
 	return add;
 }
 
@@ -2921,6 +2957,12 @@ SceneryEffectList* ActiveInstance :: GetSceneryEffectList(int PropID)
 	return &it->second;
 }
 
+void ActiveInstance :: PlayerMovement(CreatureInstance* host) {
+	if(nutScriptPlayer != NULL) {
+		nutScriptPlayer->PlayerMovement(host);
+	}
+}
+
 int ActiveInstance :: PartyAll(CreatureInstance* host, char *outBuf)
 {
 	int wpos = 0;
@@ -3326,7 +3368,7 @@ void ActiveInstance :: ScriptCallPackageKill(const char *name)
 		ScriptCall(name);
 }
 
-void ActiveInstance :: ScriptCallUse(int sourceCreatureID, int usedCreatureDefID)
+void ActiveInstance :: ScriptCallUse(int sourceCreatureID, int usedCreatureID, int usedCreatureDefID)
 {
 	char buffer[64];
 	if(nutScriptPlayer != NULL) {
@@ -3334,6 +3376,7 @@ void ActiveInstance :: ScriptCallUse(int sourceCreatureID, int usedCreatureDefID
 		Util::SafeFormat(buffer, sizeof(buffer), "on_use_%d", usedCreatureDefID);
 		nutScriptPlayer->JumpToLabel(buffer, p);
 		p.push_back(ScriptCore::ScriptParam(sourceCreatureID));
+		p.push_back(ScriptCore::ScriptParam(usedCreatureID));
 		p.push_back(ScriptCore::ScriptParam(usedCreatureDefID));
 		nutScriptPlayer->JumpToLabel("on_use", p);
 	}

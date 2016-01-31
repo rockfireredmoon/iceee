@@ -180,6 +180,145 @@ int AbstractInstanceNutPlayer::GetNPCID(int CDefID) {
 	return targ == NULL ? 0 : targ->CreatureID;
 }
 
+void AbstractInstanceNutPlayer::MonitorArea(std::string name, Squirrel::Area area) {
+	InstanceScript::MonitorArea a;
+	a.name = name;
+	a.area = area;
+	monitorAreas.push_back(a);
+
+	for(std::vector<CreatureInstance*>::iterator it = actInst->PlayerListPtr.begin(); it != actInst->PlayerListPtr.end(); ++it) {
+		PlayerMovement(*it);
+	}
+}
+
+void AbstractInstanceNutPlayer::UnmonitorArea(std::string name) {
+    for(std::vector<InstanceScript::MonitorArea>::iterator it = monitorAreas.begin() ; it != monitorAreas.end(); ++it) {
+    	if((*it).name.compare(name) == 0) {
+    		monitorAreas.erase(it);
+            return;
+        }
+    }
+}
+
+void AbstractInstanceNutPlayer::PlayerLeft(CreatureInstance *creature) {
+	bool inside;
+	bool contain;
+	for(std::vector<InstanceScript::MonitorArea>::iterator it = monitorAreas.begin() ; it != monitorAreas.end(); ++it) {
+		contain = (*it).Contains(creature->CreatureID);
+		if(contain) {
+			// Player leaves monitored area
+			(*it).Remove(creature->CreatureID);
+			std::vector<ScriptCore::ScriptParam> p;
+			p.push_back(ScriptCore::ScriptParam(creature->CreatureID));
+			char ConvBuf[256];
+			Util::SafeFormat(ConvBuf, sizeof(ConvBuf), "on_player_exit_%s",(*it).name.c_str());
+			RunFunction(ConvBuf, p, false);
+		}
+	}
+}
+
+void AbstractInstanceNutPlayer::PlayerMovement(CreatureInstance *creature) {
+	bool inside;
+	bool contain;
+
+	for(std::vector<InstanceScript::MonitorArea>::iterator it = monitorAreas.begin() ; it != monitorAreas.end(); ++it) {
+
+		inside = (*it).area.Inside(creature->CurrentX, creature->CurrentZ);
+		contain = (*it).Contains(creature->CreatureID);
+		if(inside && !contain) {
+			(*it).creatureIds.push_back(creature->CreatureID);
+			// Player enters monitored area
+			std::vector<ScriptCore::ScriptParam> p;
+			p.push_back(ScriptCore::ScriptParam(creature->CreatureID));
+			char ConvBuf[256];
+			Util::SafeFormat(ConvBuf, sizeof(ConvBuf), "on_player_enter_%s",(*it).name.c_str());
+			JumpToLabel(ConvBuf, p);
+		}
+		else if(!inside && contain) {
+			// Player leaves monitored area
+			(*it).Remove(creature->CreatureID);
+			std::vector<ScriptCore::ScriptParam> p;
+			p.push_back(ScriptCore::ScriptParam(creature->CreatureID));
+			char ConvBuf[256];
+			Util::SafeFormat(ConvBuf, sizeof(ConvBuf), "on_player_exit_%s",(*it).name.c_str());
+			JumpToLabel(ConvBuf, p);
+		}
+	}
+}
+
+std::vector<int> AbstractInstanceNutPlayer::ScanForNPCs(Squirrel::Area *location, int CDefID) {
+
+	std::vector<int> vv;
+
+	if(actInst != NULL) {
+		for(size_t i = 0; i < actInst->NPCListPtr.size(); i++)
+		{
+			CreatureInstance *ci = actInst->NPCListPtr[i];
+			if(CDefID != -1 && ci->CreatureDefID != CDefID)
+				continue;
+			if(ci->CurrentX < location->mX1)
+				continue;
+			if(ci->CurrentX > location->mX2)
+				continue;
+			if(ci->CurrentZ < location->mY1)
+				continue;
+			if(ci->CurrentZ > location->mY2)
+				continue;
+			vv.push_back(ci->CreatureID);
+		}
+	}
+	return vv;
+}
+
+int AbstractInstanceNutPlayer::ScanNPC(Squirrel::Area *location, int CDefID) {
+	vector<int> v = ScanForNPCs(location, CDefID);
+	return v.size() == 0 ? 0 : v[0];
+}
+
+SQInteger AbstractInstanceNutPlayer::ScanNPCs(HSQUIRRELVM v)
+{
+	if (sq_gettop(v) == 3) {
+		Sqrat::Var<AbstractInstanceNutPlayer&> left(v, 1);
+		if (!Sqrat::Error::Occurred(v)) {
+			Sqrat::Var<Squirrel::Area> right(v, 2);
+			Sqrat::Var<int> end(v, 3);
+			Squirrel::Area *location = &right.value;
+			int CDefID = end.value;
+			std::vector<int> vv = left.value.ScanForNPCs(location, CDefID);
+			sq_newarray(v, vv.size());
+			for (std::size_t i = 0; i < vv.size(); ++i) {
+				Sqrat::PushVar(v, i);
+				Sqrat::PushVar(v, vv[i]);
+				sq_rawset(v, -3);
+			}
+			return 1;
+		}
+		return sq_throwerror(v, Sqrat::Error::Message(v).c_str());
+	}
+	return sq_throwerror(v, _SC("wrong number of parameters"));
+}
+
+SQInteger AbstractInstanceNutPlayer::Scan(HSQUIRRELVM v)
+{
+    if (sq_gettop(v) == 2) {
+        Sqrat::Var<AbstractInstanceNutPlayer&> left(v, 1);
+        if (!Sqrat::Error::Occurred(v)) {
+            Sqrat::Var<Squirrel::Area> right(v, 2);
+            Squirrel::Area *location = &right.value;
+        	std::vector<int> vv = left.value.ScanForNPCs(location, -1);
+            sq_newarray(v, vv.size());
+            for (std::size_t i = 0; i < vv.size(); ++i) {
+                Sqrat::PushVar(v, i);
+                Sqrat::PushVar(v, vv[i]);
+                sq_rawset(v, -3);
+            }
+            return 1;
+        }
+        return sq_throwerror(v, Sqrat::Error::Message(v).c_str());
+    }
+    return sq_throwerror(v, _SC("wrong number of parameters"));
+}
+
 SQInteger AbstractInstanceNutPlayer::GetHated(HSQUIRRELVM v)
 {
     if (sq_gettop(v) == 2) {
@@ -191,7 +330,6 @@ SQInteger AbstractInstanceNutPlayer::GetHated(HSQUIRRELVM v)
         	if(creature != NULL && creature->hateProfilePtr != NULL) {
         		std::vector<HateCreatureData>::iterator it;
         		for(it = creature->hateProfilePtr->hateList.begin(); it < creature->hateProfilePtr->hateList.end(); ++it) {
-        			g_Log.AddMessageFormat("[REMOVEME] ADDING HATE %d", it->CDefID);
         			vv.push_back(it->CID);
         		}
         	}
@@ -317,14 +455,12 @@ void InstanceNutPlayer::RegisterInstanceFunctions(HSQUIRRELVM vm, Sqrat::Derived
 	instanceClass->Func(_SC("play_sound"), &InstanceNutPlayer::PlaySound);
 	instanceClass->Func(_SC("invite_quest"), &InstanceNutPlayer::InviteQuest);
 	instanceClass->Func(_SC("join_quest"), &InstanceNutPlayer::JoinQuest);
+	instanceClass->Func(_SC("attach_sidekick"), &InstanceNutPlayer::AttachSidekick);
 	instanceClass->Func(_SC("get_display_name"), &InstanceNutPlayer::GetDisplayName);
 	instanceClass->Func(_SC("load_spawn_tile"), &InstanceNutPlayer::LoadSpawnTile);
 	instanceClass->Func(_SC("load_spawn_tile_for"), &InstanceNutPlayer::LoadSpawnTileFor);
 	instanceClass->Func(_SC("spawn_at"), &InstanceNutPlayer::SpawnAt);
 	instanceClass->Func(_SC("cdef"), &InstanceNutPlayer::CDefIDForCID);
-	instanceClass->Func(_SC("scan_npcs"), &InstanceNutPlayer::ScanNPCs);
-	instanceClass->Func(_SC("scan_npc"), &InstanceNutPlayer::ScanNPC);
-	instanceClass->Func(_SC("scan"), &InstanceNutPlayer::Scan);
 	instanceClass->Func(_SC("getTarget"), &InstanceNutPlayer::GetTarget);
 	instanceClass->Func(_SC("get_target"), &InstanceNutPlayer::GetTarget);
 	instanceClass->Func(_SC("get_location"), &InstanceNutPlayer::GetLocation);
@@ -333,6 +469,7 @@ void InstanceNutPlayer::RegisterInstanceFunctions(HSQUIRRELVM vm, Sqrat::Derived
 	instanceClass->Func(_SC("ai"), &InstanceNutPlayer::AI);
 	instanceClass->Func(_SC("count_alive"), &InstanceNutPlayer::CountAlive);
 	instanceClass->Func(_SC("get_health_pc"), &InstanceNutPlayer::GetHealthPercent);
+	instanceClass->Func(_SC("get_spawn_prop"), &InstanceNutPlayer::GetPropIDForSpawn);
 	instanceClass->Func(_SC("walk"), &InstanceNutPlayer::Walk);
 	instanceClass->Func(_SC("walk_then"), &InstanceNutPlayer::WalkThen);
 	instanceClass->Func(_SC("despawn"), &InstanceNutPlayer::Despawn);
@@ -346,10 +483,15 @@ void InstanceNutPlayer::RegisterInstanceFunctions(HSQUIRRELVM vm, Sqrat::Derived
 	instanceClass->Func(_SC("unremove_prop"), &InstanceNutPlayer::UnremoveProp);
 	instanceClass->Func(_SC("unremove_props"), &InstanceNutPlayer::UnremoveProps);
 	instanceClass->Func(_SC("get_npc_id"), &InstanceNutPlayer::GetNPCID);
+	instanceClass->Func(_SC("scan_npc"), &InstanceNutPlayer::ScanNPC);
+	instanceClass->Func(_SC("monitor_area"), &InstanceNutPlayer::MonitorArea);
+	instanceClass->Func(_SC("unmonitor_area"), &InstanceNutPlayer::UnmonitorArea);
 
 	// Functions that return arrays or tables have to be dealt with differently
 	instanceClass->SquirrelFunc(_SC("cids"), &InstanceNutPlayer::CIDs);
 	instanceClass->SquirrelFunc(_SC("get_hated"), &InstanceNutPlayer::GetHated);
+	instanceClass->SquirrelFunc(_SC("scan_npcs"), &AbstractInstanceNutPlayer::ScanNPCs);
+	instanceClass->SquirrelFunc(_SC("scan"), &AbstractInstanceNutPlayer::Scan);
 
 	// Common instance functions (TODO register in abstract class somehow)
 	instanceClass->Func(_SC("broadcast"), &InstanceNutPlayer::Broadcast);
@@ -366,6 +508,18 @@ void InstanceNutPlayer::RegisterInstanceFunctions(HSQUIRRELVM vm, Sqrat::Derived
 	Sqrat::ConstTable(vm).Const(_SC("CREATURE_JOG_SPEED"), CREATURE_JOG_SPEED);
 	Sqrat::ConstTable(vm).Const(_SC("CREATURE_RUN_SPEED"), CREATURE_RUN_SPEED);
 
+	Sqrat::ConstTable(vm).Const(_SC("SIDEKICK_GENERIC"), SidekickObject::GENERIC);
+	Sqrat::ConstTable(vm).Const(_SC("SIDEKICK_ABILITY"), SidekickObject::ABILITY);
+	Sqrat::ConstTable(vm).Const(_SC("SIDEKICK_PET"), SidekickObject::PET);
+	Sqrat::ConstTable(vm).Const(_SC("SIDEKICK_QUEST"), SidekickObject::QUEST);
+
+	Sqrat::ConstTable(vm).Const(_SC("STATUS_EFFECT_INVINCIBLE"), StatusEffects::INVINCIBLE);
+	Sqrat::ConstTable(vm).Const(_SC("STATUS_EFFECT_USABLE_BY_COMBATANT"), StatusEffects::USABLE_BY_COMBATANT);
+	Sqrat::ConstTable(vm).Const(_SC("STATUS_EFFECT_IS_USABLE"), StatusEffects::IS_USABLE);
+	Sqrat::ConstTable(vm).Const(_SC("STATUS_EFFECT_UNATTACKABLE"), StatusEffects::UNATTACKABLE);
+
+
+
 
 }
 
@@ -381,6 +535,12 @@ void InstanceNutPlayer::RegisterFunctions() {
 	Sqrat::DerivedClass<AINutPlayer, InstanceScript::InstanceNutPlayer> aiClass(vm, _SC("AI"));
 	Sqrat::RootTable(vm).Bind(_SC("AI"), aiClass);
 	RegisterInstanceFunctions(vm, &instanceClass);
+
+//	Sqrat::Class<SceneryObject> sceneryObjectClass(vm, _SC("SceneryObject"), true);
+//	Sqrat::RootTable(vm).Bind(_SC("SceneryObject"), sceneryObjectClass);
+//	sceneryObjectClass.Var(_SC("asset"), &SceneryObject::Asset);
+//	sceneryObjectClass.Var(_SC("name"), &SceneryObject::Name);
+//	sceneryObjectClass.Var(_SC("id"), &SceneryObject::ID);
 
 	Sqrat::RootTable(vm).SetInstance(_SC("inst"), this);
 }
@@ -704,6 +864,37 @@ bool InstanceNutPlayer::InviteQuest(int CID, int questID, bool inviteParty) {
 	return ok;
 }
 
+
+bool InstanceNutPlayer::AttachSidekick(int playerCID, int sidekickCID, int summonType) {
+	CreatureInstance *ci = GetCreaturePtr(playerCID);
+	CreatureInstance *si = GetCreaturePtr(sidekickCID);
+	if(ci == NULL || si == NULL)
+		return false;
+
+	// TODO check if sidekick is already attached
+
+	SidekickObject skobj(si->CreatureDefID);
+	skobj.summonType = summonType;
+
+	ci->charPtr->AddSidekick(skobj);
+
+	si->AnchorObject = ci;
+	si->css.aggro_players = 0;
+	si->SetServerFlag(ServerFlags::IsSidekick, true);
+	if(skobj.summonType == SidekickObject::ABILITY)
+		si->CAF_RunSidekickStatFilter(skobj.summonParam);
+	else if(skobj.summonType == SidekickObject::QUEST)
+		si->CAF_RunSidekickStatFilter(skobj.summonParam);
+	else if(skobj.summonType == SidekickObject::PET)
+		si->SetServerFlag(ServerFlags::Noncombatant, true);
+
+	skobj.CID = si->CreatureID;
+	si->_AddStatusList(StatusEffects::INVINCIBLE, -1);
+	si->_AddStatusList(StatusEffects::UNATTACKABLE, -1);
+
+	return true;
+}
+
 bool InstanceNutPlayer::JoinQuest(int CID, int questID, bool joinParty) {
 	CreatureInstance *ci = GetCreaturePtr(CID);
 		bool ok = false;
@@ -850,6 +1041,13 @@ int InstanceNutPlayer::GetPartyID(int CID) {
 	return ci != NULL ? ci->PartyID : 0;
 }
 
+int InstanceNutPlayer::GetPropIDForSpawn(int CID) {
+	CreatureInstance *ci = GetCreaturePtr(CID);
+	if(ci != NULL && ci->spawnGen != NULL && ci->spawnGen->spawnPoint != NULL) {
+		return ci->spawnGen->spawnPoint->ID;
+	}
+	return -1;
+}
 
 Squirrel::Vector3I InstanceNutPlayer::GetLocation(int CID) {
 	CreatureInstance *ci = GetCreaturePtr(CID);
@@ -887,6 +1085,8 @@ void InstanceNutPlayer::WalkThen(int CID, Squirrel::Point point, int speed, int 
 	if(ci)
 	{
 		ci->SetServerFlag(ServerFlags::ScriptMovement, true);
+		ci->SelectTarget(NULL);
+		ci->SetServerFlag(ServerFlags::Stationary, false);
 		ci->previousPathNode = 0;   //Disable any path links.
 		ci->nextPathNode = 0;
 		ci->tetherNodeX = point.mX;
@@ -894,6 +1094,7 @@ void InstanceNutPlayer::WalkThen(int CID, Squirrel::Point point, int speed, int 
 		ci->CurrentTarget.DesLocX = point.mX;
 		ci->CurrentTarget.DesLocZ = point.mZ;
 		ci->CurrentTarget.desiredRange = range;
+		ci->movementTime = g_ServerTime;
 		ci->Speed = speed;
 
 		QueueAdd(new ScriptCore::NutScriptEvent(
@@ -917,13 +1118,16 @@ void InstanceNutPlayer::Walk(int CID, Squirrel::Point point, int speed, int rang
 	if(ci)
 	{
 		ci->SetServerFlag(ServerFlags::ScriptMovement, true);
+		ci->SetServerFlag(ServerFlags::Stationary, false);
+		ci->SelectTarget(NULL);
 		ci->previousPathNode = 0;   //Disable any path links.
 		ci->nextPathNode = 0;
 		ci->tetherNodeX = point.mX;
 		ci->tetherNodeZ = point.mZ;
 		ci->CurrentTarget.DesLocX = point.mX;
-		ci->CurrentTarget.DesLocZ = point.mX;
+		ci->CurrentTarget.DesLocZ = point.mZ;
 		ci->CurrentTarget.desiredRange = range;
+		ci->movementTime = g_ServerTime;
 		ci->Speed = speed;
 	}
 }
@@ -1040,54 +1244,6 @@ bool InstanceNutPlayer::SetTarget(int CID, int targetCID)
 	return false;
 }
 
-int InstanceNutPlayer::ScanNPC(Squirrel::Area *location, int CDefID) {
-	vector<int> v = ScanNPCs(location, CDefID);
-	return v.size() == 0 ? 0 : v[0];
-}
-
-vector<int> InstanceNutPlayer::Scan(Squirrel::Area *location) {
-	vector<int> v;
-	v.clear();
-	if(actInst == NULL || location == NULL)
-		return v;
-	for(size_t i = 0; i < actInst->NPCListPtr.size(); i++)
-	{
-		CreatureInstance *ci = actInst->NPCListPtr[i];
-		if(ci->CurrentX < location->mX1)
-			continue;
-		if(ci->CurrentX > location->mX2)
-			continue;
-		if(ci->CurrentZ < location->mY1)
-			continue;
-		if(ci->CurrentZ > location->mY2)
-			continue;
-		v.push_back(ci->CreatureID);
-	}
-	return v;
-}
-
-vector<int> InstanceNutPlayer::ScanNPCs(Squirrel::Area *location, int CDefID) {
-	vector<int> v;
-	v.clear();
-	if(actInst == NULL || location == NULL)
-		return v;
-	for(size_t i = 0; i < actInst->NPCListPtr.size(); i++)
-	{
-		CreatureInstance *ci = actInst->NPCListPtr[i];
-		if(ci->CreatureDefID != CDefID)
-			continue;
-		if(ci->CurrentX < location->mX1)
-			continue;
-		if(ci->CurrentX > location->mX2)
-			continue;
-		if(ci->CurrentZ < location->mY1)
-			continue;
-		if(ci->CurrentZ > location->mY2)
-			continue;
-		v.push_back(ci->CreatureID);
-	}
-	return v;
-}
 
 int InstanceNutPlayer::LoadSpawnTile(Squirrel::Point location)
 {

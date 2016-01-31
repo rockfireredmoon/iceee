@@ -393,7 +393,7 @@ public:
 	bool RunScript(std::string &errors);
 	void ScriptCallPackageKill(const char *name);
 	void ScriptCallKill(int CreatureDefID, int CreatureID);
-	void ScriptCallUse(int sourceCreatureID, int usedCreatureDefID);
+	void ScriptCallUse(int sourceCreatureID, int usedCreatureId, int usedCreatureDefID);
 	void ScriptCallUseHalt(int sourceCreatureID, int usedCreatureDefID);
 	void ScriptCallUseFinish(int sourceCreatureID, int usedCreatureDefID);
 	void ScriptCall(const char *name);
@@ -411,6 +411,8 @@ public:
 
 	bool StopPVP();
 	PVP::PVPGame * StartPVP(int type);
+
+	void PlayerMovement(CreatureInstance *creature);
 
 private:
 	void ClearScriptObjects();

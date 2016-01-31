@@ -3820,7 +3820,7 @@ class this.SceneObject extends this.MessageBroadcaster
 				::_questManager.requestCompleteNotTurnInQuest(so.getQuestIndicator().getCreatureId());
 				useageType = "RequestComplete";
 			}
-			else if (::_useableCreatureManager.isUseable(so.getID()))
+			else if (::_useableCreatureManager.isUseable(so.getID()) || so.hasStatusEffect(this.StatusEffects.USABLE_BY_SCRIPT))
 			{
 				if (so.hasStatusEffect(this.StatusEffects.USABLE_BY_COMBATANT) || !::_avatar.hasStatusEffect(this.StatusEffects.IN_COMBAT))
 				{
@@ -3831,6 +3831,10 @@ class this.SceneObject extends this.MessageBroadcaster
 				{
 					this.IGIS.info("You cannot interact with this when you\'re in combat.");
 				}
+			}
+			else 
+			{
+				print("ICE! Non usable creature");
 			}
 		}
 		else if (!so.isDead())
@@ -4792,7 +4796,7 @@ class this.SceneObject extends this.MessageBroadcaster
 
 	function setSceneryName( name )
 	{
-		this.mProperties.NAME = name;
+		this.mProperties.NAME <- name;
 	}
 
 	function getSceneryName()
@@ -5133,12 +5137,17 @@ class this.SceneObject extends this.MessageBroadcaster
 		 */
 		if(mCurrentTransformationFrame != null) {
 			foreach(transform in mCurrentTransformationFrame.transforms) {
-				local tType = "type" in transform ? transform.type : "unknown"; 
+				local tType = "type" in transform ? transform.type : "unknown";
+				
+				/* 
 				if(tType == "scale" || tType == "rotate" || tType == "translate" || tType == "opacity") {
 					if("start" in transform)
 						delete transform.start
 				}
-				else if(tType == "playAudio") {
+				else 
+				*/
+				
+				if(tType == "playAudio") {
 					if("played" in transform) 
 						delete transform.played;
 				}
@@ -5194,6 +5203,78 @@ class this.SceneObject extends this.MessageBroadcaster
 			else 
 				transform.interpolator <- Interpolator.INTERPOLATION_LINEAR;
 		}
+		
+		/* Apply each of the transformations (using the state of the object before the
+		 * frame started as a base) and interpolate using the current progress
+		 */
+		local tType = null;  
+		foreach(transform in mCurrentTransformationFrame.transforms) {
+		
+			if("interpolation" in transform)
+				transform.interpolator <- Interpolator.interpolate(transform.interpolation);
+			else 
+				transform.interpolator <- Interpolator.INTERPOLATION_LINEAR;
+		
+			tType = "type" in transform ? transform.type : "unknown"; 
+			if(tType == "opacity") {
+				if("start" in transform)
+					transform.from <- transform.start;
+				else
+					transform.from <- getOpacity();
+				if("end" in transform) 
+					transform.to <- transform.end;
+				else if("by" in transform) {
+					transform.to <- transform.from + transform.by;
+				}
+			}
+			else if(tType == "scale") {
+				// Scale		
+				if("start" in transform)
+					transform.from <- arrayToVector3(transform.start);
+				else
+					transform.from <- Vector3(getScale().x, getScale().y, getScale().z);
+				if("end" in transform) 
+					transform.to <- arrayToVector3(transform.end);
+				else if("by" in transform) {
+					local byV = arrayToVector3(transform.by);
+					transform.to <- Vector3(transform.from.x + byV.x, transform.from.y + byV.y, transform.from.z + byV.z);
+				}
+			}
+			else if(tType == "rotate") {
+				// Rotate
+				if("start" in transform)
+					transform.from <- arrayToVector3(transform.start);
+				else {				
+					local q = mNode.getOrientation();
+					transform.from <- Vector3(Math.rad2deg(q.getYaw()), Math.rad2deg(q.getPitch()), Math.rad2deg(q.getRoll()));
+				}
+				if("end" in transform) 
+					transform.to <- arrayToVector3(transform.end);
+				else if("by" in transform) {
+					local byV = arrayToVector3(transform.by);
+					transform.to <- Vector3(transform.from.x + byV.x, transform.from.y + byV.y, transform.from.z + byV.z);
+				}
+				
+				local offset = Vector3(0,0,0);
+				if("offset" in transform) {
+					offset = arrayToVector3(transform.offset);
+				}
+				transform._offset <- offset;
+			}
+			else if(tType == "translate") {
+				// Translate
+				if("start" in transform)
+					transform.from <- arrayToVector3(transform.start);
+				else
+					transform.from <- Vector3(getPosition().x, getPosition().y, getPosition().z);
+				if("end" in transform) 
+					transform.to <- arrayToVector3(transform.end);
+				else if("by" in transform) {
+					local byV = arrayToVector3(transform.by);
+					transform.to <- Vector3(transform.from.x + byV.x, transform.from.y + byV.y, transform.from.z + byV.z);
+				}
+			}
+		}
 			
 			
 		return true;	
@@ -5246,27 +5327,17 @@ class this.SceneObject extends this.MessageBroadcaster
 		foreach(transform in mCurrentTransformationFrame.transforms) {
 			tType = "type" in transform ? transform.type : "unknown"; 
 			if(tType == "opacity") {
-				// Scale				
-				if(!("start" in transform))
-					transform.start <- getOpacity();
-				local amtV = interpolatedTransformation(transform, pc);
-				Util.setNodeOpacity(mNode, amtV.x);				
+				Util.setNodeOpacity(mNode, interpolatedTransformation(transform, pc));				
 			}
 			else if(tType == "scale") {
-				// Scale				
-				if(!("start" in transform))
-					transform.start <- Vector3(getScale().x, getScale().y, getScale().z);
-				local amtV = interpolatedTransformation(transform, pc);
-				mNode.setScale(amtV);
+				// Scale		
+				mNode.setScale(interpolatedTransformation(transform, pc));
 			}
 			else if(tType == "rotate") {
 				// Rotate
-				if(!("start" in transform)) {
-					local q = mNode.getOrientation();
-					transform.start <- Quaternion(q.w, q.x, q.y, q.z);
-				}
 				
 				local amtV = interpolatedTransformation(transform, pc);
+				print("ICE! Rotate " + transform.from + " / " + transform.to + " = " + amtV + " offset " + offset + "\n"); 
 				
 				// Need amounts in radians
 				amtV.x = Math.deg2rad(amtV.x);
@@ -5278,13 +5349,14 @@ class this.SceneObject extends this.MessageBroadcaster
 				local qz = this.Quaternion(amtV.z, Vector3(0.0, 0.0, 1.0));
 				local quat = qz * qy * qx;
 				
+				mNode.translate(transform._offset, Node.TS_LOCAL);
 				mNode.setOrientation(quat);
+				mNode.translate(transform._offset * - 1, Node.TS_LOCAL);
 			}
 			else if(tType == "translate") {
 				// Translate
-				if(!("start" in transform))
-					transform.start <- Vector3(getPosition().x, getPosition().y, getPosition().z);
-				mNode.setPosition(interpolatedTransformation(transform, pc) + transform.start);
+				print("ICE! From " + transform.from + " / " + transform.to + " = " + getPosition() + "\n");
+				setPosition(interpolatedTransformation(transform, pc));
 			}
 			else if(tType == "goto") {
 				// Jump to a different frame
@@ -5339,18 +5411,20 @@ class this.SceneObject extends this.MessageBroadcaster
 	
 	function interpolatedTransformation(transform, pc) {
 	
-	
-		local toV = arrayToVector3(transform.to);
-		local fromV = ("from" in transform) ? arrayToVector3(transform.from) : ( "start" in transform ? transform.start : Vector3(0.0,0.0,0.0) );
-		/*return Vector3(fromV.x + ( ( toV.x - fromV.x ) * pc ),
-			fromV.y + ( ( toV.y - fromV.y ) * pc ),
-			fromV.z + ( ( toV.z - fromV.z ) * pc ));*/
-			
-		//function apply(start, end, a) {
-		
-		return Vector3(transform.interpolator.apply(fromV.x, toV.x, pc ),
-						transform.interpolator.apply(fromV.y, toV.y, pc ),
-						transform.interpolator.apply(fromV.z, toV.z, pc ));
+		local toV = transform.to;
+		local fromV = transform.from;
+
+		if(typeof toV == "float" || typeof toV == "integer") 
+			return transform.interpolator.apply(fromV, toV, pc );
+		else if(typeof toV == "Quaternion") 
+			return Quaternion(transform.interpolator.apply(fromV.x, toV.x, pc ),
+							transform.interpolator.apply(fromV.y, toV.y, pc ),
+							transform.interpolator.apply(fromV.z, toV.z, pc ),
+							transform.interpolator.apply(fromV.w, toV.w, pc ));
+		else
+			return Vector3(transform.interpolator.apply(fromV.x, toV.x, pc ),
+							transform.interpolator.apply(fromV.y, toV.y, pc ),
+							transform.interpolator.apply(fromV.z, toV.z, pc ));
 	}
 	
 	function arrayToVector3(arr) {

@@ -5586,29 +5586,34 @@ int CreatureInstance :: RunMovementStep(void)
 		int distRemain = dist - desRange;
 		if(distRemain > 0)
 		{
-			//Improve movement accuracy in active combat by reducing the delays between updates.
-			int moveSpeed = CREATURE_WALK_SPEED;
-			if(CurrentTarget.targ != NULL)
-			{
-				nextMoveTime = CREATURE_MOVEMENT_COMBAT_FREQUENCY;
-				moveSpeed = CREATURE_RUN_SPEED;
-			}
-			else
-			{
-				nextMoveTime = CREATURE_MOVEMENT_NONCOMBAT_FREQUENCY;
-				if(serverFlags & ServerFlags::LeashRecall)
+			/*Improve movement accuracy in active combat by reducing the delays between updates.
+			 * If scripted, don't change the speed
+			 */
+
+			if(!(serverFlags & ServerFlags::ScriptMovement)) {
+				int moveSpeed = CREATURE_WALK_SPEED;
+				if(CurrentTarget.targ != NULL)
+				{
+					nextMoveTime = CREATURE_MOVEMENT_COMBAT_FREQUENCY;
 					moveSpeed = CREATURE_RUN_SPEED;
+				}
+				else
+				{
+					nextMoveTime = CREATURE_MOVEMENT_NONCOMBAT_FREQUENCY;
+					if(serverFlags & ServerFlags::LeashRecall)
+						moveSpeed = CREATURE_RUN_SPEED;
+				}
+
+				int maxSpeed = moveSpeed + css.mod_movement;  //the mod may be negative
+				if(css.level <= SLOW_CREATURE_LEVEL_THRESHOLD)
+					maxSpeed -= SLOW_CREATURE_SPEED_PENALTY;
+
+				maxSpeed = Util::ClipInt(maxSpeed, 0, 255);  //Maximum byte representation
+				Speed = maxSpeed;
 			}
-
-			int maxSpeed = moveSpeed + css.mod_movement;  //the mod may be negative
-			if(css.level <= SLOW_CREATURE_LEVEL_THRESHOLD)
-				maxSpeed -= SLOW_CREATURE_SPEED_PENALTY;
-
-			maxSpeed = Util::ClipInt(maxSpeed, 0, 255);  //Maximum byte representation
-			Speed = maxSpeed;
 
 			//The number of units moved per second at this speed.
-			float distPerSecond = ((float)maxSpeed / 100.0F) * DEFAULT_CREATURE_SPEED;
+			float distPerSecond = ((float)Speed / 100.0F) * DEFAULT_CREATURE_SPEED;
 
 			//The number of units to move for this update.
 			int updateDist = (int)(distPerSecond * ((float)nextMoveTime / 1000.0F));
@@ -5878,6 +5883,7 @@ void CreatureInstance :: MoveToTarget_Ex2(void)
 
 			int dist = actInst->GetPlaneRange(this, AnchorObject, SANE_DISTANCE);
 			//int yoffs = abs(CurrentY - AnchorObject->CurrentY);
+
 			if(dist > FARDIST) // || yoffs > YOFFSET)
 			{
 				CurrentX = AnchorObject->CurrentX + randint(-CLOSE_SCATTER_RANGE, CLOSE_SCATTER_RANGE);
@@ -6000,7 +6006,6 @@ void CreatureInstance :: MoveToTarget_Ex2(void)
 	int dist = (int)sqrt((double)((xlen * xlen) + (zlen * zlen)));
 	if(dist < 30)
 	{
-		//g_Log.AddMessageFormat("Stopping (Dist: %d) (Desired: %d)", (int)dist, CurrentTarget.desiredRange);
 		Speed = 0;
 		CurrentX = CurrentTarget.DesLocX;
 		CurrentZ = CurrentTarget.DesLocZ;
@@ -6039,7 +6044,6 @@ void CreatureInstance :: MoveToTarget_Ex2(void)
 		float angle = (float)Heading * 6.283185F / 256.0F;
 		CurrentZ += (int)((float)distRemain * cos(angle));
 		CurrentX += (int)((float)distRemain * sin(angle));
-		//g_Log.AddMessageFormat("distRemain:%d, dist:%d", distRemain, dist);
 		if(distRemain < maxmove)
 		{
 			//nextMoveTime = (int)(900 * ((float)distRemain / (float)maxmove));
@@ -6049,7 +6053,6 @@ void CreatureInstance :: MoveToTarget_Ex2(void)
 	}
 
 	movementTime = g_ServerTime + nextMoveTime;
-	//g_Log.AddMessageFormat("Movement step:%d", nextMoveTime);
 
 	if(update == true)
 	{
@@ -9326,6 +9329,7 @@ int PrepExt_UpdateEquipStats(char *buffer, CreatureInstance *cInst)
 
 int PrepExt_GeneralMoveUpdate(char *buffer, CreatureInstance *cInst)
 {
+
 	//Combination of velocity, elevation and short position update.
 	//Meant to emulate official server position updates for mobs.
 	int wpos = 0;

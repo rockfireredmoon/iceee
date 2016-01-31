@@ -290,6 +290,7 @@ StatusEffectBitInfo StatusEffectBitData[] = {
 	// New array index
 	{StatusEffects::INVISIBLE_EQUIPMENT,   2, (1 << 0), "INVISIBLE_EQUIPMENT" },
 	{StatusEffects::USABLE_BY_COMBATANT,   2, (1 << 1), "USABLE_BY_COMBATANT" },
+	{StatusEffects::USABLE_BY_SCRIPT,   	2, (1 << 2), "USABLE_BY_SCRIPT" },
 };
 const int MAX_STATUSEFFECT = sizeof(StatusEffectBitData) / sizeof(StatusEffectBitInfo);
 

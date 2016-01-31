@@ -81,6 +81,14 @@ public:
 		mRadius = 0;
 	}
 
+	bool operator==(Area &other) {
+		return mX1 == other.mX1 && mX2 == other.mX2 && mY1 == other.mY1 && mY2 == other.mY2;
+	}
+
+	bool Inside(int x, int y) {
+		return x >= mX1 && x <= mX2 && y >= mY1 && y <= mY2;
+	}
+
 	Point ToPoint() {
 		return Point(mX1, mX2);
 	}

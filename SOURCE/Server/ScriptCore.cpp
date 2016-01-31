@@ -129,7 +129,7 @@ namespace ScriptCore
 	}
 
 	void NutDef::Initialize(const char *sourceFile) {
-		g_Log.AddMessageFormat("Compiling Squirrel script '%s'", sourceFile);
+		g_Log.AddMessageFormat("Initializing Squirrel script '%s'", sourceFile);
 		mSourceFile = sourceFile;
 		scriptName = Platform::Basename(mSourceFile.c_str());
 	}

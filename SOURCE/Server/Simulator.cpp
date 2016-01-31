@@ -2760,6 +2760,9 @@ void SimulatorThread :: SetPosition(int xpos, int ypos, int zpos, int update)
 	creatureInst->CurrentY = ypos;
 	creatureInst->CurrentZ = zpos;
 
+	if(creatureInst->actInst != NULL)
+		creatureInst->actInst->PlayerMovement(creatureInst);
+
 	if(update == 1)
 	{
 		pld.MovementBlockTime = g_ServerTime + g_Config.WarpMovementBlockTime;
@@ -3444,6 +3447,8 @@ void SimulatorThread :: handle_updateVelocity(void)
 			}
 		}
 
+
+
 		//Check our current position against any quest objective locations.
 		//The movement counter will help us check every other step instead as a small optimization.
 		if((pld.PendingMovement & 1) && (pld.charPtr != NULL))
@@ -3460,6 +3465,10 @@ void SimulatorThread :: handle_updateVelocity(void)
 
 	}
 
+
+	if(creatureInst->actInst != NULL) {
+		creatureInst->actInst->PlayerMovement(creatureInst);
+	}
 
 	//Check for zone boundaries, if a player is trying to go somewhere they should not be able to access.
 	if(g_ZoneBarrierManager.CheckCollision(pld.CurrentZoneID, creatureInst->CurrentX, creatureInst->CurrentZ) == true)
@@ -7474,6 +7483,8 @@ int SimulatorThread :: handle_query_creature_use(void)
 	creatureInst->CancelInvisibility();
 
 	int CID = atoi(query.args[0].c_str());
+
+	g_Log.AddMessageFormat("[REMOVEME] Creature use %d", CID);
 	CreatureInstance *target = creatureInst->actInst->GetNPCInstanceByCID(CID);
 
 	if(target == NULL)
@@ -7492,7 +7503,7 @@ int SimulatorThread :: handle_query_creature_use(void)
 	}
 
 	//For any other interact besides henge, notify the instance on the off chance that it needs to do something.
-	creatureInst->actInst->ScriptCallUse(creatureInst->CreatureID, CDef);
+	creatureInst->actInst->ScriptCallUse(creatureInst->CreatureID, target->CreatureID, CDef);
 
 	int QuestID = 0;
 	int QuestAct = 0;
@@ -7547,6 +7558,9 @@ int SimulatorThread :: handle_query_creature_use(void)
 			return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
 		}
 
+		if(target->HasStatus(StatusEffects::USABLE_BY_SCRIPT)) {
+			return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
+		}
 
 		CreatureDefinition *cdef = CreatureDef.GetPointerByCDef(target->CreatureDefID);
 		if(cdef != NULL && ((cdef->DefHints & CDEF_HINT_USABLE) ||(cdef->DefHints & CDEF_HINT_USABLE_SPARKLY)))

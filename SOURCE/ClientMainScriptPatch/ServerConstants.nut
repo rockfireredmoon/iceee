@@ -1838,7 +1838,13 @@ this.StatusEffects <- {
 	[65] = {
 		prettyName = "Maybe interacted with by someone in combat.",
 		icon = "",
-		type = "Buff"
+		type = "None"
+	},
+	USABLE_BY_SCRIPT = 66,
+	[66] = {
+		prettyName = "Maybe interacted with by a server side script.",
+		icon = "",
+		type = "None"
 	}
 };
 this.AbilityUseType <- {
