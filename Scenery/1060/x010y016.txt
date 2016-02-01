@@ -111,14 +111,6 @@ Orient=0,0.713864,0,0.700285
 Scale=1,1,1
 
 [ENTRY]
-ID=1131050
-Asset=Prop-Fog_White
-Name=Untitled
-Pos=20217.6,978.686,31786.8
-Orient=0,0,0,1
-Scale=4,4,4
-
-[ENTRY]
 ID=1132302
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=Untitled
@@ -306,4 +298,12 @@ Pos=21056.9,1153.53,30750.1
 Orient=0,0.983082,0,-0.183164
 Scale=1,1,1
 spawnPackage=#2059
+
+[ENTRY]
+ID=1133381
+Asset=Prop-Fog_White
+Name=
+Pos=20217.6,978.686,31786.8
+Orient=0,0,0,1
+Scale=4,4,4
 

@@ -2,14 +2,20 @@
 
 /* Array of CDefID used for the lamp posts. There may be as many instances of each as you wish. As soon
    as one is clicked, the rest will light. */
-LAMP_POST_CDEFID <- [ 7880, 7881, 7882, 7883, 7884, 7885, 7886 ];
+LAMP_POST_CDEFID <- [ 7880, 7881, 7882, 7883, 7884, 7885, 7886, 7887, 7888, 7889, 7890, 7891 ];
 
 /* Array of Light props that are associated with each lamp post. The size and indexes match LAMP_POST_CDEFID.
    Each light prop will be near at least one lamp (if there are multiple they should used the same CDefID) */
-LIGHT_PROPS <- [ 1275068514, 1275068515, 1275068516, 1275068517, 1275068518, 1275068519, 1275068520 ];
+LIGHT_PROPS <- [ 1275068514, 1275068515, 1275068516, 1275068517, 1275068518, 1275068519, 1275068520, 1133377, 1133378, 1275068523, 1275068524, 1275068512 ];
 
 /* Array of CDefID uses for the NPC's that are being escorted */
 ESCORTED_CDEFID <- [ 7878 ];
+
+/* Whether lights may be turned off */
+ALLOW_OFF <- true;
+
+/* Which lamp CIDS will spawn an ambush */
+AMBUSH <- [ 7884 ];
 
 /* Table of locations each NPC will walk to as they are lit. Accounts for 3 NPCs). The 
    location is where they will be returned to if no lights are lit. There is an additional position at
@@ -23,11 +29,34 @@ POSITIONS <- [
 	[ Point(585,1623), Point(601,1644), Point(615,1669) ],
 	[ Point(889,1658), Point(865,1658), Point(831,1670) ],
 	[ Point(863,2214), Point(863,2214), Point(864,2165) ],
-	[ Point(655,2211), Point(677,2210), Point(708,2220) ]
+	[ Point(655,2211), Point(677,2210), Point(708,2220) ],
+        [ Point(700,2453), Point(701,2430), Point(718,2403) ],
+        [ Point(1433,2486), Point(1429,2472), Point(1396,2460) ],
+        [ Point(1426,3012), Point(1410,3012), Point(1386,3013) ],
+        [ Point(1427,3189), Point(1414,3190), Point(1400,3190) ],
+        [ Point(1249,3306), Point(1230,3309), Point(1204,3310) ]
 	];
 
 /* Tracks the currently lit lamp posts */
 lit <- {};
+
+/* Has Seafood been spawned? */
+seafood_spawned <- false;
+
+/* Function invoked when player enters Krusty area */
+function on_player_enter_Seafood(cid) {
+	if(!seafood_spawned) {
+		seafood_spawned = true;
+		inst.spawn(1126706,0,0);
+		inst.spawn(1275068603,0,0);
+		inst.spawn(1275068604,0,0);
+
+	}
+}
+
+function on_player_exit_Seafood(cid) {
+}
+
 
 /*
  * Function to determine which lamp post the NPC's may walk to, i.e the
@@ -51,7 +80,6 @@ function configure_movement() {
 	foreach(cdefid in ESCORTED_CDEFID) {
 		foreach(cid in inst.cids(cdefid)) {
 		
-			inst.info("Walking " + cid + " to " + positions[idx].x + "," + positions[idx].z); 
 			inst.walk_then(cid, positions[idx], CREATURE_RUN_SPEED, 0, function() { 
 			});
 			
@@ -71,18 +99,28 @@ function configure_movement() {
  * light or extinguish it.
  */
 function on_use(sourceCID, targetCId, usedCDefID) {
-	//if(usedCDefID in LAMP_POST_CDEFID) {
-	
-	foreach(l in LAMP_POST_CDEFID) {
+
+	local lamp_idx = 0;	
+	for(; lamp_idx < LAMP_POST_CDEFID.len(); lamp_idx++) {
+		local l = LAMP_POST_CDEFID[lamp_idx];
 		if(l == usedCDefID) {
-			if(usedCDefID in lit) {
-				inst.info("You extinguish the lamp, the darkness and fear creeps back in ..");
-				delete lit[usedCDefID];		
+			if(!(usedCDefID in lit)) {
+				if(lamp_idx == 0 || LAMP_POST_CDEFID[lamp_idx - 1] in lit) {
+
+					/* Is this an ambush point? */
+
+					inst.info("You light the lamp, burning back the darkness and fear ..");
+					lit[usedCDefID] <- true;
+				}
+				else {
+					inst.info("You must light the previous lamp first!");
+				}
 			}
-			else {
-				inst.info("You light the lamp, burning back the darkness and fear ..");
-				lit[usedCDefID] <- true;
+			else if(ALLOW_OFF) {
+				delete lit[usedCDefID];
+				inst.info("Hey, who turned the lights out!");
 			}
+				
 			
 			
 			configure_all_lamp_posts();
@@ -91,6 +129,7 @@ function on_use(sourceCID, targetCId, usedCDefID) {
 			break;
 		}
 	}
+
 }
 
 /*
@@ -124,6 +163,9 @@ function configure_all_lamp_posts() {
 		}
 	}
 }
+
+/* Player movement notification area to trigger krusty */
+inst.monitor_area("Seafood", Area(990, 2398, 1220, 2520) );
 
 /* Initialisation */
 configure_all_lamp_posts();

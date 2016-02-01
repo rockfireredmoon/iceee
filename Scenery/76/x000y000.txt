@@ -7,12 +7,40 @@ Orient=0,0.707107,0,0.707107
 Scale=2,2,2
 
 [ENTRY]
-ID=1133294
-Asset=Prop-Lamp_Posts1#Prop-Lamp_Post_NB_Unlit
+ID=1133371
+Asset=Manipulator#Manipulator-SpawnPoint
 Name=
-Pos=889.71,600,816.761
+Pos=898.196,595.71,691.023
+Orient=0,-0.617059,0,0.786917
+Scale=1,1,1
+spawnPackage=#F7878
+
+[ENTRY]
+ID=1133372
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=878.304,595.464,691.84
+Orient=0,-0.696135,0,0.717911
+Scale=1,1,1
+spawnPackage=#F7878
+
+[ENTRY]
+ID=1133373
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=854.294,596.035,691.131
+Orient=0,-0.628793,0,0.777573
+Scale=1,1,1
+spawnPackage=#F7878
+
+[ENTRY]
+ID=1133375
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=912.298,600,961.282
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=#F7880
 
 [ENTRY]
 ID=1275068418
@@ -43,12 +71,12 @@ Flags=1
 
 [ENTRY]
 ID=1275068438
-Asset=Prop-Lamp_Post_NB#Prop-Lamp_Post_NB1
+Asset=Manipulator#Manipulator-SpawnPoint
 Name=Untitled
 Pos=831.063,600,958.915
-Orient=0,0,0,1
+Orient=0,-0.104807,0,0.994493
 Scale=1,1,1
-Flags=1
+spawnPackage=#F7880
 
 [ENTRY]
 ID=1275068439
@@ -57,15 +85,6 @@ Name=Untitled
 Pos=825.068,601.477,655.895
 Orient=0,0,0,1
 Scale=1,1,1
-
-[ENTRY]
-ID=1275068440
-Asset=Prop-Lamp_Post_NB1
-Name=Untitled
-Pos=912.298,600,961.282
-Orient=0,0,0,1
-Scale=1,1,1
-Flags=1
 
 [ENTRY]
 ID=1275068441
@@ -136,7 +155,6 @@ Name=Untitled
 Pos=862.509,648.722,938.719
 Orient=0,0,0,1
 Scale=1,1,1
-Flags=1
 
 [ENTRY]
 ID=1275068525
