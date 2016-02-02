@@ -1440,7 +1440,8 @@ void AbilityManager2 :: LoadAbilityTable(const char *filename)
 	while(!feof(input))
 	{
 		buffer[0] = 0;  //Always reset, otherwise the last line will be processed twice
-		fgets(buffer, sizeof(buffer), input);
+		if(fgets(buffer, sizeof(buffer), input) == NULL)
+			break;
 		lineNumber++;
 		RemoveTrailingNewlines(buffer);
 

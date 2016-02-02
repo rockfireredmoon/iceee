@@ -5794,12 +5794,14 @@ class this.SceneObject extends this.MessageBroadcaster
 		}
 
 		local checkSwimming = !this.mSwimming;
+		local floating = hasStatusEffect(this.StatusEffects.FLOATING);
+		local hovering = hasStatusEffect(this.StatusEffects.HOVERING);
 
 		if (this.mSwimming)
 		{
 			local sterrain = this.Util.getFloorHeightAt(pos, 10.0, this.QueryFlags.KEEP_ON_FLOOR, true, this.getNode());
 
-			if (sterrain && (this.mWaterElevation - sterrain.pos.y) / sizeY < 0.30000001)
+			if (sterrain && (this.mWaterElevation - sterrain.pos.y) / sizeY < 0.30000001 )
 			{
 				checkSwimming = false;
 				this.mSwimming = false;
@@ -5833,6 +5835,15 @@ class this.SceneObject extends this.MessageBroadcaster
 					return;
 				}
 			}
+		}
+		
+		if(hovering) {
+			print("ICE! Hovering " +  this + "\n");
+			if (this.mAnimationHandler)
+			{
+				this.mAnimationHandler.forceAnimUpdate();
+			}
+			return;
 		}
 
 		pos = this.collideAndMoveSweep(pos, dir, this.QueryFlags.BLOCKING).pos;
@@ -5903,8 +5914,6 @@ class this.SceneObject extends this.MessageBroadcaster
 			{
 				this.setDistanceToFloor(0.0, floor.normal);
 				this.mVerticalSpeed = 0.0;
-				//print("ICE! Hit ground 1\n");
-				//hitGround = true;
 				pos.y = finalGroundPos.y;
 			}
 
@@ -5919,8 +5928,6 @@ class this.SceneObject extends this.MessageBroadcaster
 					this.mVerticalSpeed = 0.0;
 					this.mCurrentlyJumping = false;
 					pos.y = finalGroundPos.y;
-					//print("ICE! Hit ground 2\n");
-					//hitGround = true;
 				}
 				else if (finalMovementPos.y - finalGroundPos.y <= 1.0)
 				{
@@ -5928,7 +5935,6 @@ class this.SceneObject extends this.MessageBroadcaster
 					this.mVerticalSpeed = 0.0;
 					this.setDistanceToFloor(0.0, terrain.normal);
 					this.mCurrentlyJumping = false;
-					print("ICE! Hit ground 3\n");
 					hitGround = true;
 				}
 				else
@@ -5952,8 +5958,6 @@ class this.SceneObject extends this.MessageBroadcaster
 					pos = terrain.pos;
 					this.setDistanceToFloor(0.0, terrain.normal);
 					this.mCurrentlyJumping = false;
-					//print("ICE! Hit ground 4\n");
-					//hitGround = true;
 				}
 				else
 				{
@@ -6058,8 +6062,9 @@ class this.SceneObject extends this.MessageBroadcaster
 				print("ICE! Hit ground!!!!\n");
 			}
 		}
-
-		if (checkSwimming)
+		
+		
+		if (checkSwimming && !floating)
 		{
 			local swimming = false;
 			this.mWaterElevation = this.Util.getWaterHeightAt(pos);

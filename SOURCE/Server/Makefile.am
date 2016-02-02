@@ -97,6 +97,7 @@ tawd_SOURCES = md5.cc \
 	http/WebControlPanel.cpp \
 	http/CivetServer.cpp \
 	http/civetweb.c \
+	http/handle_form.inl \
 	http/HTTPService.cpp \
 	auth/Auth.cpp \
 	auth/DevAuthentication.cpp \
@@ -111,6 +112,7 @@ tawd_SOURCES = md5.cc \
 	query/AuctionHouseHandlers.cpp \
 	query/ScriptHandlers.cpp \
 	query/WarpHandlers.cpp \
+	query/MarkerHandlers.cpp \
 	util/base64.cpp \
 	util/JsonHelpers.cpp \
 	util/SquirrelObjects.cpp \
@@ -244,6 +246,7 @@ tawd_SOURCES = md5.cc \
 	query/AuctionHouseHandlers.h \
 	query/ScriptHandlers.h \
 	query/WarpHandlers.h \
+	query/MarkerHandlers.h \
 	util/base64.h \
 	util/JsonHelpers.h \
 	SquirrelObjects.h
@@ -339,6 +342,7 @@ tawdsvc_SOURCES = md5.cc \
 	http/TAWApi.cpp \
 	http/TAWClient.cpp \
 	http/SiteClient.cpp \
+	http/handle_form.inl \
 	http/CivetServer.cpp \
 	http/civetweb.c \
 	http/HTTPService.cpp \
@@ -357,6 +361,7 @@ tawdsvc_SOURCES = md5.cc \
 	query/AuctionHouseHandlers.cpp \
 	query/ScriptHandlers.cpp \
 	query/WarpHandlers.cpp \
+	query/MarkerHandlers.cpp \
 	util/base64.cpp \
 	util/JsonHelpers.cpp \
 	Ability2.h \
@@ -489,6 +494,7 @@ tawdsvc_SOURCES = md5.cc \
 	query/AuctionHouseHandlers.h \
 	query/ScriptHandlers.h \
 	query/WarpHandlers.h \
+	query/MarkerHandlers.h \
 	util/base64.h \
 	util/JsonHelpers.h \
 	SquirrelObjects.h

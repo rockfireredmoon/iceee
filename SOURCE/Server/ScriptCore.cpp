@@ -229,8 +229,12 @@ namespace ScriptCore
 
 	bool SquirrelFunctionCallback::Execute()
 	{
+		bool wasRunning = mNut->mRunning;
+		mNut->mRunning = true;
 		Sqrat::SharedPtr<bool> ptr = mFunction.Evaluate<bool>();
-		return ptr.Get() == NULL || ptr.Get();
+		bool v = ptr.Get() == NULL || ptr.Get();
+		mNut->mRunning = wasRunning;
+		return v;
 	}
 
 	//
@@ -252,6 +256,7 @@ namespace ScriptCore
 
 	bool RunFunctionCallback::Execute()
 	{
+		g_Log.AddMessageFormat("[REMOVEME] EXECING %s", mFunctionName.c_str());
 		return mNut->RunFunction(mFunctionName, mArgs, false);
 	}
 
@@ -596,9 +601,24 @@ namespace ScriptCore
 			/* If we reached here via a script function, we already executing and don't want to close the VM.
 			 * In this case the halt is queued instance
 			 */
+
+			ScriptCore::NutScriptEvent* nse;
+			for(std::vector<ScriptCore::NutScriptEvent*>::iterator it = mQueue.begin(); it != mQueue.end(); ++it) {
+				nse = *it;
+				if(nse->mCallback != NULL) {
+					if(HaltCallback* wc = dynamic_cast<HaltCallback*>(nse->mCallback)) {
+						nse->Cancel();
+					}
+				}
+			}
+
 			Halt();
 			return;
 		}
+		HaltVM();
+	}
+
+	void NutPlayer::HaltVM() {
 		if(mActive && !mHalting) {
 			mHalting = true;
 			vector<ScriptParam> v;
@@ -609,17 +629,24 @@ namespace ScriptCore
 			sq_close(vm);
 			if(def->HasFlag(NutDef::FLAG_REPORT_END))
 				PrintMessage("Script [%s] has ended", def->scriptName.c_str());
+//			else
+//				g_Log.AddMessageFormat("[REMOVEME] VM Halted!");
 			mHalting = false;
 			HaltedDerived();
 		}
 	}
 
 	bool NutPlayer::RunFunction(std::string name, std::vector<ScriptParam> parms, bool time) {
+		Util::ReplaceAll(name, "-", "_MINUS_");
+
+//		g_Log.AddMessageFormat("[REMOVEME] Running function %s in %s (active: %s).", name.c_str(), def->mSourceFile.c_str(), mActive ? "yes" : "no");
+
 		if(!mActive) {
 			g_Log.AddMessageFormat("[WARNING] Attempt to run function on inactive script %s.", name.c_str());
 			return false;
 		}
 		unsigned long now = g_PlatformTime.getMilliseconds();
+		bool wasRunning = mRunning;
 		mRunning = true;
 
 		// Wake the VM up if it is suspend so the onFinish can be run
@@ -653,6 +680,7 @@ namespace ScriptCore
 			}
 			sq_call(vm,parms.size() + 1,SQFalse,SQTrue); //calls the function
 		}
+//		g_Log.AddMessageFormat("[REMOVEME] Before top function %s in %s (active: %s)", name.c_str(), def->mSourceFile.c_str(), mActive ? "yes" : "no");
 		sq_settop(vm,top);
 
 		if(time) {
@@ -661,7 +689,8 @@ namespace ScriptCore
 			mProcessingTime += g_PlatformTime.getMilliseconds() - now;
 		}
 
-		mRunning = false;
+		mRunning = wasRunning;
+//		g_Log.AddMessageFormat("[REMOVEME] Complete function %s in %s.", name.c_str(), def->mSourceFile.c_str());
 
 		return true;
 	}
@@ -682,11 +711,13 @@ namespace ScriptCore
 		}
 
 		if(mQueue.size() > 0) {
+//			g_Log.AddMessageFormat("[REMOVEME] MAYBE RETRY active: %s", mActive ? "yes" : "no");
 			/*
 			 * If the VM wasn't suspended while handling this event, and the
 			 * event returned false, then we requeue this event for retry
 			 */
-			if(sq_getvmstate(vm) != SQ_VMSTATE_SUSPENDED && !res) {
+			if(mActive && sq_getvmstate(vm) != SQ_VMSTATE_SUSPENDED && !res) {
+//				g_Log.AddMessageFormat("[REMOVEME] RETRY active: %s", mActive ? "yes" : "no");
 				mQueueAdd.push_back(nse);
 				mQueue.erase(mQueue.begin() + index);
 			}
@@ -710,7 +741,7 @@ namespace ScriptCore
 		}
 		bool ok = false;
 		mExecuting = true;
-		for(size_t i = 0; i < mQueue.size(); i++)
+		for(size_t i = 0; mActive && i < mQueue.size(); i++)
 		{
 			NutScriptEvent *nse = mQueue[i];
 
@@ -744,7 +775,7 @@ namespace ScriptCore
 		mExecuting = false;
 
 		// If nothing was executed, and the GC counter has been reached
-		if(!ok && mGCCounter > g_Config.SquirrelGCCallCount) {
+		if(mActive && !ok && mGCCounter > g_Config.SquirrelGCCallCount) {
 			unsigned long now = g_PlatformTime.getElapsedMilliseconds();
 			if(mForceGC == 0) {
 				mForceGC = now + g_Config.SquirrelGCMaxDelay;

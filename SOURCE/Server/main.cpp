@@ -189,6 +189,7 @@ If using Code::Blocks on LINUX
 #include "query/AuctionHouseHandlers.h"
 #include "query/ScriptHandlers.h"
 #include "query/WarpHandlers.h"
+#include "query/MarkerHandlers.h"
 
 #ifdef WINDOWS_SERVICE
 #include <windows.h>
@@ -579,6 +580,11 @@ int InitServerMain() {
 	g_QueryManager.queryHandlers["warpg"] = new WarpGroveHandler();
 	g_QueryManager.queryHandlers["warpextoff"] = new WarpExternalOfflineHandler();
 	g_QueryManager.queryHandlers["warpext"] = new WarpExternalHandler();
+
+
+	g_QueryManager.queryHandlers["marker.list"] = new MarkerListHandler();
+	g_QueryManager.queryHandlers["marker.edit"] = new MarkerEditHandler();
+	g_QueryManager.queryHandlers["marker.del"] = new MarkerDelHandler();
 
 	// Some are shared
 

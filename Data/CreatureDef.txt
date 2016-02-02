@@ -73896,6 +73896,7 @@ display_name=Target
 profession=1
 creature_category=Mortal
 ai_package=example
+hide_nameboard=1
 
 [ENTRY]
 ID=3398

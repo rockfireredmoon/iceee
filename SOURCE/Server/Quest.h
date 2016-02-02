@@ -335,6 +335,7 @@ public:
 	static const int OBJECTIVE_TYPE_GATHER = 4;
 	static const int OBJECTIVE_TYPE_TALK = 5;
 	static const int OBJECTIVE_TYPE_EMOTE = 6;
+	static const int OBJECTIVE_TYPE_GENERIC = 7;
 
 	static const int EVENTMSG_STATUS = 0;
 	static const int EVENTMSG_ACTCOMPLETED = 1;
@@ -387,6 +388,29 @@ public:
 		Clear();
 		type = pType;
 		description = pDescription;
+	}
+
+	static int GetTypeByName(char *name)
+	{
+		const static char *TypeName[8] = {
+			"NONE", "KILL", "TRAVEL", "ACTIVATE", "GATHER", "TALK", "EMOTE", "GENERIC"
+		};
+		const static int TypeVar[8] = {
+			QuestObjective::OBJECTIVE_TYPE_NONE,
+			QuestObjective::OBJECTIVE_TYPE_KILL,
+			QuestObjective::OBJECTIVE_TYPE_TRAVEL,
+			QuestObjective::OBJECTIVE_TYPE_ACTIVATE,
+			QuestObjective::OBJECTIVE_TYPE_GATHER,
+			QuestObjective::OBJECTIVE_TYPE_TALK,
+			QuestObjective::OBJECTIVE_TYPE_EMOTE,
+			QuestObjective::OBJECTIVE_TYPE_GENERIC
+		};
+
+		for(int a = 1; a < 8; a++)
+			if(strcmp(name, TypeName[a]) == 0)
+				return TypeVar[a];
+
+		return TypeVar[0];
 	}
 
 	void Clear(void)
@@ -455,7 +479,8 @@ public:
 class QuestAct
 {
 public:
-	QuestObjective objective[3];
+	static const int MAXOBJECTIVES= 3;
+	QuestObjective objective[MAXOBJECTIVES];
 	std::string BodyText;  //Each act has custom body text that differs from the "genericdata" text.
 
 	QuestAct() {
@@ -586,7 +611,6 @@ private:
 	void LoadFromFile(const char *filename);
 	bool LimitIndex(int &value, int max);
 	void AppendString(std::string &value, char *appendStr);
-	int GetTypeByName(char *name);
 };
 
 

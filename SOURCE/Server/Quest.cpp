@@ -1108,7 +1108,7 @@ void QuestDefinitionContainer :: LoadFromFile(const char *filename)
 				lfr.BlockToStringC(2, Case_Upper);
 				if(strcmp(lfr.SecBuffer, "TYPE") == 0)
 				{
-					curAct->objective[index].type = GetTypeByName(lfr.BlockToStringC(3, Case_Upper));
+					curAct->objective[index].type = QuestObjective::GetTypeByName(lfr.BlockToStringC(3, Case_Upper));
 					if(curAct->objective[index].type == 0)
 						g_Log.AddMessageFormatW(MSG_DIAG, "[WARNING] Unidentified quest objective type [%s] (line %d)", lfr.BlockToStringC(3, 0), lfr.LineNumber);
 
@@ -1216,27 +1216,6 @@ void QuestDefinitionContainer :: AppendString(string &value, char *appendStr)
 	value.append(appendStr);
 }
 
-int QuestDefinitionContainer :: GetTypeByName(char *name)
-{
-	const static char *TypeName[7] = {
-		"NONE", "KILL", "TRAVEL", "ACTIVATE", "GATHER", "TALK", "EMOTE",
-	};
-	const static int TypeVar[7] = {
-		QuestObjective::OBJECTIVE_TYPE_NONE,
-		QuestObjective::OBJECTIVE_TYPE_KILL,
-		QuestObjective::OBJECTIVE_TYPE_TRAVEL,
-		QuestObjective::OBJECTIVE_TYPE_ACTIVATE,
-		QuestObjective::OBJECTIVE_TYPE_GATHER,
-		QuestObjective::OBJECTIVE_TYPE_TALK,
-		QuestObjective::OBJECTIVE_TYPE_EMOTE
-	};
-
-	for(int a = 1; a < 7; a++)
-		if(strcmp(name, TypeName[a]) == 0)
-			return TypeVar[a];
-
-	return TypeVar[0];
-}
 
 QuestDefinition* QuestDefinitionContainer :: GetQuestDefPtrByName(const char *name)
 {

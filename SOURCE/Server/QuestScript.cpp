@@ -622,7 +622,10 @@ int QuestNutPlayer::SpawnAt(int propID, int cdefID, unsigned long duration, int 
 }
 
 void QuestNutPlayer::WarpZone(int zoneID) {
+	/*HaltExecution();
 	source->simulatorPtr->MainCallSetZone(zoneID, 0, true);
+	*/
+	QueueAdd(new ScriptCore::NutScriptEvent(new ScriptCore::TimeCondition(0), new WarpToZoneCallback(this, zoneID)));
 }
 
 bool QuestNutPlayer::IsInteracting(int cdefID) {
@@ -802,6 +805,21 @@ void QuestScriptPlayer::TriggerAbort(void)
 {
 	if(!(RunFlags & FLAG_FINISHED))
 		mExecuting = false;
+}
+
+WarpToZoneCallback :: WarpToZoneCallback(QuestNutPlayer *nut, int zone) {
+	mNut = nut;
+	mZone = zone;
+}
+
+WarpToZoneCallback :: ~WarpToZoneCallback() {
+	mNut = NULL;
+}
+
+bool WarpToZoneCallback :: Execute() {
+	if(mNut->source != NULL && mNut->source->simulatorPtr != NULL)
+		mNut->source->simulatorPtr->MainCallSetZone(mZone, 0, true);
+	return true;
 }
 
 

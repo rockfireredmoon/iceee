@@ -410,6 +410,11 @@ CreatureInstance * SpawnTile :: SpawnCreature(ActiveInstance *inst, ActiveSpawne
 				SpawnFlags |= SpawnPackageDef::FLAG_VISWEAPON_RANGED;
 				cOffset++;
 			}
+			else if(p == 'b' || p == 'B')
+			{
+				SpawnFlags |= SpawnPackageDef::FLAG_HIDE_NAMEBOARD;
+				cOffset++;
+			}
 			else if(p == 'p' || p == 'P')
 			{
 				propSpawn = true;
@@ -632,6 +637,9 @@ CreatureInstance * SpawnTile :: SpawnCreature(ActiveInstance *inst, ActiveSpawne
 			visw = 2;
 		ptr->css.vis_weapon = visw;
 	//}
+
+	if(SpawnFlags & SpawnPackageDef::FLAG_HIDE_NAMEBOARD)
+		ptr->css.hide_nameboard = 1;
 
 	if(SpawnFlags & SpawnPackageDef::FLAG_HIDEMAP)
 		ptr->css.hide_minimap = 1;

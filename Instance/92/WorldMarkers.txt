@@ -1,0 +1,15 @@
+[ENTRY]
+Name=Captain Karl
+Comment=[Comment here]
+Position=11521.0,407.0,13661.0
+
+[ENTRY]
+Name=Sanctuary
+Comment=[Comment here]
+Position=10391.0,624.0,12615.0
+
+[ENTRY]
+Name=Catapult Ledge
+Comment=[Comment here]
+Position=11859.0,664.0,11980.0
+

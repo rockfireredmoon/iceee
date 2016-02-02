@@ -23,6 +23,7 @@ namespace QuestScript
 // Squirrel script system
 //
 
+
 class QuestNutDef: public ScriptCore::NutDef {
 
 public:
@@ -91,6 +92,16 @@ public:
 	void Transform(int cdefID);
 	void Untransform();
 	void JoinGuild(int guildDefID);
+};
+
+class WarpToZoneCallback : public ScriptCore::NutCallback
+{
+public:
+	QuestNutPlayer *mNut;
+	int mZone;
+	WarpToZoneCallback(QuestNutPlayer *nut, int zone);
+	~WarpToZoneCallback();
+	bool Execute();
 };
 
 class QuestNutManager

@@ -517,6 +517,17 @@ mMinUseLevel=10
 mUseAbilityId=27104
 
 [ENTRY]
+mID=8119
+mType=9
+mDisplayName=Rope
+mIcon=Icon-32-Rope_Coil.png|Icon-32-BG-Green.png
+mIvType1=5
+mIvMax1=217
+mSv1=A Hopeless Cause
+mValue=1
+mQualityLevel=1
+
+[ENTRY]
 mID=8200
 mType=2
 mDisplayName=Searoxinohn

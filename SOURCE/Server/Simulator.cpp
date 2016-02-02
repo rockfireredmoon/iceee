@@ -1853,6 +1853,7 @@ void SimulatorThread :: SendSetAvatar(int CreatureID)
 
 void SimulatorThread :: MainCallHelperInstanceUnregister(void)
 {
+
 	if(creatureInst->actInst != NULL)
 		creatureInst->actInst->UnregisterPlayer(this);
 
@@ -2271,12 +2272,6 @@ bool SimulatorThread :: HandleQuery(int &PendingData)
 		PendingData = handle_query_bug_report();
 	else if(query.name.compare("gm.spawn") == 0)
 		PendingData = handle_query_gm_spawn();
-	else if(query.name.compare("marker.list") == 0)
-		PendingData = handle_query_marker_list();
-	else if(query.name.compare("marker.edit") == 0)
-		PendingData = handle_query_marker_edit();
-	else if(query.name.compare("marker.del") == 0)
-		PendingData = handle_query_marker_del();
 	else if(query.name.compare("guild.leave") == 0)
 		PendingData = handle_query_guild_leave();
 	else if(query.name.compare("scenery.edit") == 0)
@@ -7484,7 +7479,7 @@ int SimulatorThread :: handle_query_creature_use(void)
 
 	int CID = atoi(query.args[0].c_str());
 
-	g_Log.AddMessageFormat("[REMOVEME] Creature use %d", CID);
+//	g_Log.AddMessageFormat("[REMOVEME] Creature use %d", CID);
 	CreatureInstance *target = creatureInst->actInst->GetNPCInstanceByCID(CID);
 
 	if(target == NULL)
@@ -10645,29 +10640,6 @@ int SimulatorThread :: handle_query_petition_send(void)
 	}
 }
 
-int SimulatorThread :: handle_query_marker_del(void)
-{
-	bool ok = CheckPermissionSimple(Perm_Account, Permission_Admin) || CheckPermissionSimple(Perm_Account, Permission_Builder);
-	if(!ok) {
-		if(pld.zoneDef->mGrove == true && pld.zoneDef->mAccountID != pld.accPtr->ID)
-			ok = true;
-	}
-	if(!ok)
-		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
-	vector<WorldMarker>::iterator it;
-
-	for (it = creatureInst->actInst->worldMarkers.WorldMarkerList.begin(); it != creatureInst->actInst->worldMarkers.WorldMarkerList.end(); ++it) {
-		if(strcmp(it->Name, query.args[0].c_str()) == 0) {
-			cs.Enter("SimulatorThread::WorldMarkers");
-			creatureInst->actInst->worldMarkers.WorldMarkerList.erase(it);
-			creatureInst->actInst->worldMarkers.Save();
-			cs.Leave();
-			break;
-		}
-	}
-	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-}
-
 int SimulatorThread :: handle_query_gm_spawn(void)
 {
 	bool ok = CheckPermissionSimple(Perm_Account, Permission_Sage);
@@ -10756,89 +10728,6 @@ int SimulatorThread :: handle_query_gm_spawn(void)
 
 	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
 }
-
-int SimulatorThread :: handle_query_marker_edit(void)
-{
-	bool ok = CheckPermissionSimple(Perm_Account, Permission_Admin) || CheckPermissionSimple(Perm_Account, Permission_Builder);
-	if(!ok) {
-		if(pld.zoneDef->mGrove == true && pld.zoneDef->mAccountID != pld.accPtr->ID)
-			ok = true;
-	}
-	if(!ok)
-		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
-
-	if(query.args.size() < 5)
-		return PrepExt_QueryResponseError(SendBuf, query.ID, "Invalid query.");
-
-	vector<WorldMarker>::iterator it;
-	for (it = creatureInst->actInst->worldMarkers.WorldMarkerList.begin(); it != creatureInst->actInst->worldMarkers.WorldMarkerList.end(); ++it) {
-		if(strcmp(it->Name, query.args[0].c_str()) == 0) {
-			cs.Enter("SimulatorThread::WorldMarkers");
-			Util::SafeCopy(it->Name, query.args[2].c_str(), sizeof(it->Name));
-			Util::SafeCopy(it->Comment, query.args[4].c_str(), sizeof(it->Comment));
-			it->X = creatureInst->CurrentX;
-			it->Y = creatureInst->CurrentY;
-			it->Z = creatureInst->CurrentZ;
-			creatureInst->actInst->worldMarkers.Save();
-			cs.Leave();
-			return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-		}
-	}
-	g_Log.AddMessageFormat("Creating new marker %s in zone %d at %s.", query.args[2].c_str(), creatureInst->actInst->mZone, query.args[4].c_str());
-	WorldMarker wm;
-	cs.Enter("SimulatorThread::UpdateWorldMarkers");
-	Util::SafeCopy(wm.Name, query.args[2].c_str(), sizeof(wm.Name));
-	Util::SafeCopy(wm.Comment, query.args[4].c_str(), sizeof(wm.Comment));
-	wm.X = creatureInst->CurrentX;
-	wm.Y = creatureInst->CurrentY;
-	wm.Z = creatureInst->CurrentZ;
-	creatureInst->actInst->worldMarkers.WorldMarkerList.push_back(wm);
-	creatureInst->actInst->worldMarkers.Save();
-	cs.Leave();
-	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-}
-
-
-int SimulatorThread :: handle_query_marker_list(void)
-{
-	if(!CheckPermissionSimple(Perm_Account, Permission_Admin) && !CheckPermissionSimple(Perm_Account, Permission_Builder))
-		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
-	if(query.args[0] == "zone") {
-		// Do a reload so we get external updates too
-		cs.Enter("SimulatorThread::WorldMarkers");
-		creatureInst->actInst->worldMarkers.Reload();
-		cs.Leave();
-
-		int wpos = 0;
-		wpos += PutByte(&SendBuf[wpos], 1);       //_handleQueryResultMsg
-		wpos += PutShort(&SendBuf[wpos], 0);      //Message size
-		wpos += PutInteger(&SendBuf[wpos], query.ID);  //Query response index
-
-		wpos += PutShort(&SendBuf[wpos], creatureInst->actInst->worldMarkers.WorldMarkerList.size());
-		vector<WorldMarker>::iterator it;
-
-		for(it = creatureInst->actInst->worldMarkers.WorldMarkerList.begin(); it != creatureInst->actInst->worldMarkers.WorldMarkerList.end(); ++it)
-		{
-			wpos += PutByte(&SendBuf[wpos], 4);
-			sprintf(Aux1, "%s", it->Name);
-			wpos += PutStringUTF(&SendBuf[wpos], Aux1);
-			sprintf(Aux1, "%d", creatureInst->actInst->mZone);
-			wpos += PutStringUTF(&SendBuf[wpos], Aux1);
-			sprintf(Aux1, "%f %f %f", it->X,it->Y,it->Z);
-			wpos += PutStringUTF(&SendBuf[wpos], Aux1);
-			sprintf(Aux1, "%s", it->Comment);
-			wpos += PutStringUTF(&SendBuf[wpos], Aux1);
-		}
-
-		PutShort(&SendBuf[1], wpos - 3);
-		return wpos;
-	}
-	else {
-		g_Log.AddMessageFormat("TODO Implement non-zone marker list query. %s", query.args[0].c_str());
-	}
-	return 0;
-}
-
 
 int SimulatorThread :: handle_query_bug_report(void)
 {

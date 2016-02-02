@@ -31,7 +31,7 @@ int SaveSession(const char *filename)
 	fprintf(output, "NextAuctionHouseItemID=%d\r\n", g_AuctionHouseManager.nextAuctionHouseItemID);
 	fprintf(output, "NextClanID=%d\r\n", g_ClanManager.nextClanID);
 	fprintf(output, "NextPetitionID=%d\r\n", g_PetitionManager.NextPetitionID);
-	fprintf(output, "NextVirtualQuestID=%d\r\n", QuestDef.mVirtualQuestID);
+	fprintf(output, "NextVirtualQuestID=%lu\r\n", QuestDef.mVirtualQuestID);
 	fprintf(output, "\r\n");
 	fclose(output);
 	g_Log.AddMessageFormat("Saved session file.", filename);

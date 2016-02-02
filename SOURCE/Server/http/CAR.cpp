@@ -65,7 +65,7 @@ static void send_file_data(struct mg_connection *conn, FileResource *filep) {
 	}
 }
 
-int CARHandler::openFile(struct mg_request_info * req_info, FileResource *file) {
+int CARHandler::openFile(const struct mg_request_info * req_info, FileResource *file) {
 	file->fd = fopen(file->filePath.c_str(), "rb");
 	if (file->fd == NULL) {
 		return 404;
@@ -80,7 +80,7 @@ int CARHandler::openFile(struct mg_request_info * req_info, FileResource *file) 
 
 bool CARHandler::handleGet(CivetServer *server, struct mg_connection *conn) {
 	/* Handler may access the request info using mg_get_request_info */
-	struct mg_request_info * req_info = mg_get_request_info(conn);
+	const struct mg_request_info * req_info = mg_get_request_info(conn);
 
 	std::string ruri;
 

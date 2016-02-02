@@ -1845,6 +1845,18 @@ this.StatusEffects <- {
 		prettyName = "Maybe interacted with by a server side script.",
 		icon = "",
 		type = "None"
+	},
+	FLOATING = 67,
+	[67] = {
+		prettyName = "Won't sink.",
+		icon = "",
+		type = "None"
+	},
+	HOVERING = 68,
+	[68] = {
+		prettyName = "Won't fall.",
+		icon = "",
+		type = "None"
 	}
 };
 this.AbilityUseType <- {

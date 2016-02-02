@@ -486,6 +486,7 @@ void InstanceNutPlayer::RegisterInstanceFunctions(HSQUIRRELVM vm, Sqrat::Derived
 	instanceClass->Func(_SC("scan_npc"), &InstanceNutPlayer::ScanNPC);
 	instanceClass->Func(_SC("monitor_area"), &InstanceNutPlayer::MonitorArea);
 	instanceClass->Func(_SC("unmonitor_area"), &InstanceNutPlayer::UnmonitorArea);
+	instanceClass->Func(_SC("quest_advance"), &InstanceNutPlayer::AdvanceQuest);
 
 	// Functions that return arrays or tables have to be dealt with differently
 	instanceClass->SquirrelFunc(_SC("cids"), &InstanceNutPlayer::CIDs);
@@ -517,9 +518,6 @@ void InstanceNutPlayer::RegisterInstanceFunctions(HSQUIRRELVM vm, Sqrat::Derived
 	Sqrat::ConstTable(vm).Const(_SC("STATUS_EFFECT_USABLE_BY_COMBATANT"), StatusEffects::USABLE_BY_COMBATANT);
 	Sqrat::ConstTable(vm).Const(_SC("STATUS_EFFECT_IS_USABLE"), StatusEffects::IS_USABLE);
 	Sqrat::ConstTable(vm).Const(_SC("STATUS_EFFECT_UNATTACKABLE"), StatusEffects::UNATTACKABLE);
-
-
-
 
 }
 
@@ -895,6 +893,26 @@ bool InstanceNutPlayer::AttachSidekick(int playerCID, int sidekickCID, int summo
 	return true;
 }
 
+bool InstanceNutPlayer::AdvanceQuest(int CID, int questID, int act, int objective, int outcome) {
+	CreatureInstance *ci = GetCreaturePtr(CID);
+	bool ok = false;
+	if (ci != NULL && ci->simulatorPtr != NULL) {
+		QuestReference *ref = ci->charPtr->questJournal.activeQuests.GetItem(questID);
+		if(ref != NULL && ref->CurAct == act) {
+			QuestAct act = ref->DefPtr->actList[ref->CurAct];
+			if(objective >=0 && objective < QuestAct::MAXOBJECTIVES) {
+				char buffer[256];
+				int wpos = ref->CheckQuestObjective(CID, buffer, act.objective[objective].type, ci->CreatureDefID);
+				ci->simulatorPtr->AttemptSend(buffer, wpos);
+				ok = true;
+			}
+		}
+	}
+	return ok;
+
+
+}
+
 bool InstanceNutPlayer::JoinQuest(int CID, int questID, bool joinParty) {
 	CreatureInstance *ci = GetCreaturePtr(CID);
 		bool ok = false;
@@ -1097,6 +1115,18 @@ void InstanceNutPlayer::WalkThen(int CID, Squirrel::Point point, int speed, int 
 		ci->movementTime = g_ServerTime;
 		ci->Speed = speed;
 
+		ScriptCore::NutScriptEvent* nse;
+		for(std::vector<ScriptCore::NutScriptEvent*>::iterator it = mQueue.begin(); it != mQueue.end(); ++it) {
+			nse = *it;
+			if(nse->mCondition != NULL) {
+				if(WalkCondition* wc = dynamic_cast<WalkCondition*>(nse->mCondition)) {
+					if(wc->cInst->CreatureID == CID) {
+						nse->Cancel();
+					}
+				}
+			}
+		}
+
 		QueueAdd(new ScriptCore::NutScriptEvent(
 				new WalkCondition(ci),
 				new ScriptCore::SquirrelFunctionCallback(this, onArrival)
@@ -1129,6 +1159,19 @@ void InstanceNutPlayer::Walk(int CID, Squirrel::Point point, int speed, int rang
 		ci->CurrentTarget.desiredRange = range;
 		ci->movementTime = g_ServerTime;
 		ci->Speed = speed;
+
+		ScriptCore::NutScriptEvent* nse;
+		for(std::vector<ScriptCore::NutScriptEvent*>::iterator it = mQueue.begin(); it != mQueue.end(); ++it) {
+			nse = *it;
+			if(nse->mCondition != NULL) {
+				if(WalkCondition* wc = dynamic_cast<WalkCondition*>(nse->mCondition)) {
+					if(wc->cInst->CreatureID == CID) {
+						nse->Cancel();
+					}
+				}
+			}
+		}
+
 	}
 }
 

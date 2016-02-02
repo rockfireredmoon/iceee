@@ -3655,12 +3655,12 @@ void CreatureInstance :: CancelPending_Ex(ActiveAbilityInfo *ability)
 			if(script != NULL)
 				script->TriggerAbort();
 
-			QuestScript::QuestNutPlayer *nut = actInst->GetSimulatorQuestNutScript(simulatorPtr);
-			if(nut != NULL) {
-				char buffer[64];
-				Util::SafeFormat(buffer, sizeof(buffer), "on_use_abort_%d", CreatureDefID);
-				nut->JumpToLabel(buffer);
-			}
+//			QuestScript::QuestNutPlayer *nut = actInst->GetSimulatorQuestNutScript(simulatorPtr);
+//			if(nut != NULL) {
+//				char buffer[64];
+//				Util::SafeFormat(buffer, sizeof(buffer), "on_use_abort_%d", CreatureDefID);
+//				nut->JumpToLabel(buffer);
+//			}
 
 			//Fall through since all quest/object interactions need to notify the client to
 			//cancel the event timer.

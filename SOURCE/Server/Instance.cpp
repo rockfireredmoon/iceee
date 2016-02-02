@@ -92,6 +92,12 @@ void WorldMarkerContainer::Clear()
 
 void WorldMarkerContainer::Save()
 {
+
+	std::string dir = Platform::Dirname(mFilename.c_str());
+	if(!Platform::DirExists(dir.c_str())) {
+		Platform::MakeDirectory(dir.c_str());
+	}
+
 	g_Log.AddMessageFormat("Saving world markers to %s.", mFilename.c_str());
 	FILE *output = fopen(mFilename.c_str(), "wb");
 	if(output == NULL)
@@ -3074,10 +3080,16 @@ void ActiveInstance :: RunScripts(void)
 		 */
 		for(unsigned int i = 0 ; i < questNutScriptList.size(); i++) {
 			QuestScript::QuestNutPlayer * p = questNutScriptList[i];
-			if(p->mActive)
+			if(p->mActive) {
+				int events = p->mQueue.size();
+//				if(events >0)
+//					g_Log.AddMessageFormat("[REMOVEME] Running script for %d, quest %d (%d events)", mZone, ((QuestScript::QuestNutDef*)p->def)->mQuestID, events);
 				p->ExecQueue();
-			else
+			}
+			else {
+//				g_Log.AddMessageFormat("[REMOVEME] Removing script for %d, quest %d", mZone, ((QuestScript::QuestNutDef*)p->def)->mQuestID);
 				g_QuestNutManager.RemoveActiveScript(p);
+			}
 		}
 	}
 

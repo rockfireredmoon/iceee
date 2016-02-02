@@ -559,7 +559,8 @@ void LoadFileIntoString(std::string &dest, char *filename)
 	char buffer[4096];
 	while(!feof(input))
 	{
-		fgets(buffer, sizeof(buffer), input);
+		if(fgets(buffer, sizeof(buffer), input) == NULL)
+			break;
 		if(!feof(input))
 		{
 			if(dest.size() == 0)

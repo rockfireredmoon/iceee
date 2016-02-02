@@ -132,6 +132,7 @@ public:
 	bool AttachSidekick(int playerCID, int sidekickCID, int summonType);
 	bool InviteQuest(int CID, int questID, bool inviteParty);
 	bool JoinQuest(int CID, int questID, bool joinParty);
+	bool AdvanceQuest(int CID, int questID, int act, int objective, int outcome);
 	void DetachSceneryEffect(int propID, int tag);
 	int GetPropIDForSpawn(int CID);
 	int ParticleAttach(int propID, const char *effect, float scale, float offsetX, float offsetY, float offsetZ);

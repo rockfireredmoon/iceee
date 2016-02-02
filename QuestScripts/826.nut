@@ -11,7 +11,6 @@
 }
 
 function on_activated_0() {
-	print("activated!\n");
 	quest.info("Chewing gum for the eyes ..");
 	local cid = quest.spawn(1128357);
 	quest.queue(function() {

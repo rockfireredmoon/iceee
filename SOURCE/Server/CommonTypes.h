@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <string>
+#include <iostream>
 
 //These were being defined in multiple places so decided to link them here.
 

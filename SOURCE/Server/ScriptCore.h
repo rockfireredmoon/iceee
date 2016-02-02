@@ -5,6 +5,7 @@
 #include <map>
 #include <vector>
 #include <string>
+#include <thread>
 #include <sqstdio.h>
 #include <sqstdaux.h>
 #include <sqstdstring.h>
@@ -499,6 +500,7 @@ public:
 
 private:
 	bool ExecEvent(NutScriptEvent *nse, int index);
+	void HaltVM();
 
 protected:
 	static const size_t MAX_QUEUE_SIZE = 16;

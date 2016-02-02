@@ -30,7 +30,7 @@ class CARHandler: public AbstractCivetHandler {
 public:
 	virtual bool handleGet(CivetServer *server, struct mg_connection *conn);
 private:
-	int openFile(struct mg_request_info * req_info, FileResource *file);
+	int openFile(const struct mg_request_info * req_info, FileResource *file);
 };
 
 }

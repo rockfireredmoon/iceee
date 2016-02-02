@@ -189,6 +189,7 @@ public:
 	static const int FLAG_ALLBITS = 0xFF;
 	static const int FLAG_USABLE = 512;
 	static const int FLAG_USABLE_BY_COMBATANT = 1024;
+	static const int FLAG_HIDE_NAMEBOARD = 2048;
 
 	static const int MAX_SPAWNCOUNT = 12;
 	static const int DEFAULT_MAXSHARES = 100;

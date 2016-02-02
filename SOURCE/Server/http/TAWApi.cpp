@@ -294,7 +294,7 @@ bool CreditShopHandler::handleAuthenticatedGet(CivetServer *server,
 	char buf[256];
 	int no = 0;
 
-	struct mg_request_info * req_info = mg_get_request_info(conn);
+	const struct mg_request_info * req_info = mg_get_request_info(conn);
 	std::string ruri;
 
 	/* Prepare the URI */
@@ -502,7 +502,7 @@ void ClanHandler::writeClanToJSON(Clans::Clan &clan, Json::Value &c) {
 bool ClanHandler::handleAuthenticatedGet(CivetServer *server,
 		struct mg_connection *conn) {
 
-	struct mg_request_info * req_info = mg_get_request_info(conn);
+	const struct mg_request_info * req_info = mg_get_request_info(conn);
 
 	std::string ruri;
 
@@ -602,7 +602,7 @@ void GuildHandler::writeGuildToJSON(GuildDefinition *guild, Json::Value &c) {
 bool GuildHandler::handleAuthenticatedGet(CivetServer *server,
 		struct mg_connection *conn) {
 
-	struct mg_request_info * req_info = mg_get_request_info(conn);
+	const struct mg_request_info * req_info = mg_get_request_info(conn);
 
 	std::string ruri;
 
@@ -741,7 +741,7 @@ bool UserHandler::handleAuthenticatedGet(CivetServer *server,
 		struct mg_connection *conn) {
 
 	/* Handler may access the request info using mg_get_request_info */
-	struct mg_request_info * req_info = mg_get_request_info(conn);
+	const struct mg_request_info * req_info = mg_get_request_info(conn);
 
 	std::string ruri;
 
@@ -822,7 +822,7 @@ bool CharacterHandler::handleAuthenticatedGet(CivetServer *server,
 		struct mg_connection *conn) {
 
 	/* Handler may access the request info using mg_get_request_info */
-	struct mg_request_info * req_info = mg_get_request_info(conn);
+	const struct mg_request_info * req_info = mg_get_request_info(conn);
 
 	std::string ruri;
 
@@ -879,7 +879,7 @@ bool UserGrovesHandler::handleAuthenticatedGet(CivetServer *server,
 		struct mg_connection *conn) {
 
 	/* Handler may access the request info using mg_get_request_info */
-	struct mg_request_info * req_info = mg_get_request_info(conn);
+	const struct mg_request_info * req_info = mg_get_request_info(conn);
 
 	std::string ruri;
 
@@ -942,7 +942,7 @@ bool ZoneHandler::handleAuthenticatedGet(CivetServer *server,
 		struct mg_connection *conn) {
 
 	/* Handler may access the request info using mg_get_request_info */
-	struct mg_request_info * req_info = mg_get_request_info(conn);
+	const struct mg_request_info * req_info = mg_get_request_info(conn);
 
 	std::string ruri;
 
@@ -1009,7 +1009,7 @@ bool SceneryHandler::handleAuthenticatedGet(CivetServer *server,
 		struct mg_connection *conn) {
 
 	/* Handler may access the request info using mg_get_request_info */
-	struct mg_request_info * req_info = mg_get_request_info(conn);
+	const struct mg_request_info * req_info = mg_get_request_info(conn);
 
 	std::string ruri;
 
@@ -1061,7 +1061,7 @@ bool SceneryHandler::handleAuthenticatedGet(CivetServer *server,
 bool ItemHandler::handleAuthenticatedGet(CivetServer *server,
 		struct mg_connection *conn) {
 
-	struct mg_request_info * req_info = mg_get_request_info(conn);
+	const struct mg_request_info * req_info = mg_get_request_info(conn);
 
 	std::string ruri;
 
@@ -1119,7 +1119,7 @@ bool AuctionHandler::handleAuthenticatedGet(CivetServer *server,
 	char buf[256];
 	int no = 0;
 
-	struct mg_request_info * req_info = mg_get_request_info(conn);
+	const struct mg_request_info * req_info = mg_get_request_info(conn);
 	std::string ruri;
 
 	/* Prepare the URI */
