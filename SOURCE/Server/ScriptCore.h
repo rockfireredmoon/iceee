@@ -5,7 +5,6 @@
 #include <map>
 #include <vector>
 #include <string>
-#include <thread>
 #include <sqstdio.h>
 #include <sqstdaux.h>
 #include <sqstdstring.h>
