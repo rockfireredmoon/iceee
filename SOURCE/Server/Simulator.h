@@ -507,7 +507,6 @@ public:
 	bool QuestInvite(int QuestID);
 	bool QuestClear(int QuestID);
 
-	int AddSidekick(int CDefID);
 	void AddPet(int CDefID);
 	void DoWarp(int zoneID, int instanceID, int xpos, int ypos, int zpos);
 	int CheckValidHengeDestination(const char *destName, int creatureID);

@@ -71826,6 +71826,7 @@ ai_package=nothing
 total_size=5
 
 [ENTRY]
+defHints=48
 ID=3251
 will_regen=1
 might_regen=1

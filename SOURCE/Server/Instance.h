@@ -365,6 +365,7 @@ public:
 	void RebuildSidekickList(void);
 	CreatureInstance* InstantiateSidekick(CreatureInstance *host, SidekickObject &skobj, int count);
 	int CreateSidekick(CreatureInstance* host, SidekickObject &skobj);
+	void RecruitSidekick(CreatureInstance *recruit, CreatureInstance *host, SidekickObject &skobj);
 	int SidekickRemove(CreatureInstance* host, vector<SidekickObject> *sidekickList, int CID);
 	int SidekickRemoveOne(CreatureInstance* host, vector<SidekickObject> *sidekickList);
 	int SidekickRemoveAll(CreatureInstance* host, vector<SidekickObject> *sidekickList);

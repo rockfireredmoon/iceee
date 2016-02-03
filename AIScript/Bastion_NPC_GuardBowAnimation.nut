@@ -2,23 +2,27 @@
  * A squirrel script version of Bastion_NPC_GuardBowAnimation1. Script
  * targets a single creature and fires an arrow.
  *
- * Note the old script relied on cooldown and just constant tried to attack (something).
- * I have no idea how targetting was supposed to happen, so instead this script uses
- * a single ability and it's own timers.
+ * The script expects at least one parameter, the prop ID for the spawner of the creature 
+ * to fire at. Multiple prop IDs maybe supplied as further arguments.
  *
- * The script expects a single parameter, the prop ID for the spawner of the creature 
- * to fire at.
+ * The script will pick the phrases to say, and the ability to use based on
+ * whether the target is an enemy or not. Friendly phrases are intended for arrow
+ * practice, where as enemy phrases are intended for use by archers actively
+ * attacking or defending an area.
  *
  * The creature will also randomly "say" phrases from a list defined in this script
  */
  
 // Constants
 const AB_PRACTICE_ARROW = 5423;
+const AB_BATTLE_ARROW = 5432;
 const SPEAK_CHANCE = 15;
 
-// State variables
-target_propid <- __argc > 0 ? __argv[0].tointeger() : 0;
-target_cid <- 0;
+// Push prop IDs to target
+target_propid <- [];
+for(local argi = 0 ; argi < __argc ; argi++) {
+	target_propid.push(__argv[argi].tointeger());
+}
 
 // Script Info
 info <- {
@@ -29,7 +33,7 @@ info <- {
 }
 
 // Phrases
-phrases <- [
+friendly_phrases <- [
 	"Bullseye!",
 	"I aim to please",
 	"My accuracy is improving",
@@ -42,14 +46,34 @@ phrases <- [
 	"Aren’t you a little short for an archer?"
 ];
 
+enemy_phrases <- [
+	"Got 'im, right in the anubians!",
+	"Ready .. aim .. fire!",
+	"Aim for the whites of their eyes boys!",
+	"Hold .... Fire!"
+];
+
 
 function attack_target() {
-	if(target_cid == 0)
-		target_cid = ai.get_cid_for_prop(target_propid);
-	else {
+	// Find CIDs of props
+	local propId = target_propid[randmodrng(0, target_propid.len())];
+	local target_cid = ai.get_cid_for_prop(propId);
+	if(target_cid != 0) {
+		// Target
 		ai.set_other_target(ai.get_self(), target_cid);
-		ai.use(AB_PRACTICE_ARROW);
+		local phrases;
 		
+		// Attack
+		if(ai.is_target_enemy()) {
+			phrases = enemy_phrases;
+			ai.use(AB_BATTLE_ARROW);
+		}
+		else {
+			phrases = friendly_phrases;
+			ai.use(AB_PRACTICE_ARROW);
+		}
+		
+		// Speak			
 		if(randmodrng(0, 100) <= SPEAK_CHANCE) {
 			ai.queue(function() {
 				ai.speak(phrases[randmodrng(0, phrases.len())]);
@@ -57,10 +81,11 @@ function attack_target() {
 		}
 		
 	}
+	
 	ai.queue(attack_target, 4000 + randmod(1000));
 }
 
 if(target_propid == 0)  
-	ai.error("Error! AI script Bastion_NPC_GuardBowAnimation script called without any parameter. Requires propID of the target's spawner");
+	ai.error("Error! AI script Bastion_NPC_GuardBowAnimation script called without any parameter. Requires at least one propID of the target's spawner");
 else  
 	ai.queue(attack_target, 0);

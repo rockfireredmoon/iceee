@@ -19,6 +19,34 @@
 //to fill in some structure data for the stats.
 //#define SIZEOFFSET(s, m)    {msizeof(s, m), offsetof(s, m)},
 
+
+struct SidekickObject
+{
+
+	static const int HATE_SIDEKICK = 0;
+	static const int HATE_OFFICER = 1;
+	static const int HATE_BOTH = 2;
+	static const int HATE_SIDEKICK_MORE = 3;
+	static const int HATE_OFFICER_MORE = 4;
+	static const int HATE_NEITHER = 4;
+
+	static const int GENERIC = 0;
+	static const int ABILITY = 1;
+	static const int PET     = 2;
+	static const int QUEST   = 3;
+
+	int CDefID;           //Creature Definition this sidekick is derived from
+	char summonType;      //Type of summon (GENERIC, ABILITY, PET)
+	short summonParam;    //For Type:ABILITY, this is the ability group ID that summoned this object
+	int CID;			  //The CID of the instantiated sidekick
+	int hateType;         //How to hate any attacked creatures
+	SidekickObject() { Clear(); };
+	SidekickObject(int cdefid) { CDefID = cdefid; summonType = GENERIC; summonParam = 0; CID = 0; hateType = 0; }
+	SidekickObject(int cdefid, char type, short param) { CDefID = cdefid; summonType = type; summonParam = param; CID = 0; hateType = 0; }
+	void Clear(void) { CDefID = 0; summonType = GENERIC; summonParam = 0; CID = 0; hateType = 0; }
+	void CopyFrom(SidekickObject *source) { CDefID = source->CDefID; summonType = source->summonType; summonParam = source->summonParam ; CID = source->CID; hateType = source->hateType;  };
+};
+
 struct CharacterStatSet
 {
 	std::string appearance;  //char appearance[4096];

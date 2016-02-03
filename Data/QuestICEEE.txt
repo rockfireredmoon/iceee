@@ -195,7 +195,7 @@ Obj.0.markerLocations=15657.4,1124.7,13227.1,1060;
 [ENTRY]
 ID=853
 Title=Welcome Beast...
-BodyText=Greetings and welcome to Earth Eternal - The Scour of Abiban. 
+BodyText=Greetings and welcome to Earth Eternal - The Scourge of Abiban. 
 
 I hear you volunteered to aid us by boldly stepping in to new lands, paving the way for more beasts to venture further than ever before. For that we are grateful, and offer you these keys to our Gift Box. It is nothing really, just a little a little token to get you started.  
 

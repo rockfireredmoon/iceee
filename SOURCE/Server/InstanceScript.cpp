@@ -509,6 +509,13 @@ void InstanceNutPlayer::RegisterInstanceFunctions(HSQUIRRELVM vm, Sqrat::Derived
 	Sqrat::ConstTable(vm).Const(_SC("CREATURE_JOG_SPEED"), CREATURE_JOG_SPEED);
 	Sqrat::ConstTable(vm).Const(_SC("CREATURE_RUN_SPEED"), CREATURE_RUN_SPEED);
 
+	Sqrat::ConstTable(vm).Const(_SC("HATE_SIDEKICK"), SidekickObject::HATE_SIDEKICK);
+	Sqrat::ConstTable(vm).Const(_SC("HATE_OFFICER"), SidekickObject::HATE_OFFICER);
+	Sqrat::ConstTable(vm).Const(_SC("HATE_BOTH"), SidekickObject::HATE_BOTH);
+	Sqrat::ConstTable(vm).Const(_SC("HATE_SIDEKICK_MORE"), SidekickObject::HATE_SIDEKICK_MORE);
+	Sqrat::ConstTable(vm).Const(_SC("HATE_OFFICER_MORE"), SidekickObject::HATE_OFFICER_MORE);
+	Sqrat::ConstTable(vm).Const(_SC("HATE_NEITHER"), SidekickObject::HATE_NEITHER);
+
 	Sqrat::ConstTable(vm).Const(_SC("SIDEKICK_GENERIC"), SidekickObject::GENERIC);
 	Sqrat::ConstTable(vm).Const(_SC("SIDEKICK_ABILITY"), SidekickObject::ABILITY);
 	Sqrat::ConstTable(vm).Const(_SC("SIDEKICK_PET"), SidekickObject::PET);

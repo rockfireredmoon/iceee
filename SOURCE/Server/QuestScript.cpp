@@ -129,7 +129,7 @@ QuestNutPlayer * QuestNutManager::AddActiveScript(CreatureInstance *creature, in
 	player->source = creature;
 	creature->actInst->questNutScriptList.push_back(player);
 
-	player->Initialize(def, errors);
+	player->Initialize(creature->actInst, def, errors);
 	if (errors.length() > 0)
 		g_Log.AddMessageFormat("Failed to compile %s. %s",
 				def->scriptName.c_str(), errors.c_str());
@@ -206,9 +206,13 @@ void QuestNutPlayer::HaltedDerived() {
 }
 
 void QuestNutPlayer::RegisterFunctions() {
-	Sqrat::Class<NutPlayer> nutClass(vm, _SC("Core"), true);
-	Sqrat::RootTable(vm).Bind(_SC("Core"), nutClass);
-	RegisterCoreFunctions(this, &nutClass);
+
+	InstanceNutPlayer::RegisterFunctions();
+
+//	Sqrat::Class<NutPlayer> nutClass(vm, _SC("Core"), true);
+//	Sqrat::RootTable(vm).Bind(_SC("Core"), nutClass);
+//	RegisterCoreFunctions(this, &nutClass);
+
 	Sqrat::DerivedClass<QuestNutPlayer, NutPlayer> questClass(vm, _SC("Quest"));
 	Sqrat::RootTable(vm).Bind(_SC("Quest"), questClass);
 	RegisterQuestFunctions(this, &questClass);
@@ -326,6 +330,12 @@ void QuestNutPlayer::RegisterFunctions() {
 //		int giverZ;
 //		int giverZone;
 
+
+}
+
+void QuestNutPlayer::Initialize(ActiveInstance *actInst, QuestNutDef *defPtr, std::string &errors) {
+	SetInstancePointer(actInst);
+	NutPlayer::Initialize(defPtr, errors);
 }
 
 void QuestNutPlayer::RegisterQuestFunctions(NutPlayer *instance, Sqrat::DerivedClass<QuestNutPlayer, NutPlayer> *instanceClass)
@@ -336,6 +346,7 @@ void QuestNutPlayer::RegisterQuestFunctions(NutPlayer *instance, Sqrat::DerivedC
 	instanceClass->Func(_SC("talk_objective"), &QuestNutPlayer::TalkObjective);
 	instanceClass->Func(_SC("kill_objective"), &QuestNutPlayer::KillObjective);
 	instanceClass->Func(_SC("invite"), &QuestNutPlayer::Invite);
+	instanceClass->Func(_SC("recruit_sidekick"), &QuestNutPlayer::RecruitSidekick);
 	instanceClass->Func(_SC("add_sidekick"), &QuestNutPlayer::AddSidekick);
 	instanceClass->Func(_SC("remove_sidekick"), &QuestNutPlayer::RemoveSidekick);
 	instanceClass->Func(_SC("abandon"), &QuestNutPlayer::Abandon);
@@ -559,13 +570,37 @@ int QuestNutPlayer::AddQuest(QuestDefinition questDefinition) {
 	return questID;
 }
 
-int QuestNutPlayer::AddSidekick(int cdefID, bool pet) {
-	int type = pet ? SidekickObject::PET : SidekickObject::QUEST;
+int QuestNutPlayer::RecruitSidekick(int CID, int type, int param, int hate) {
+
+	CreatureInstance *instance = source->actInst->GetNPCInstanceByCID(CID);
+	if(instance  != NULL) {
+		int exist = source->charPtr->CountSidekick(type);
+
+		SidekickObject skobj(instance->CreatureDefID);
+		skobj.summonType = type;
+		skobj.hateType = hate;
+		skobj.summonParam = param;
+
+	//	source->charPtr->AddSidekick(skobj);
+		int r = source->actInst->CreateSidekick(source, skobj);
+		if(r == -1) {
+			g_Log.AddMessageFormat("Failed to add sidekick %d", instance->CreatureDefID);
+			return -1;
+		}
+		return r;
+	}
+	return -1;
+}
+
+int QuestNutPlayer::AddSidekick(int cdefID, int type, int param, int hate) {
 	int exist = source->charPtr->CountSidekick(type);
 
 	SidekickObject skobj(cdefID);
 	skobj.summonType = type;
-	skobj.summonParam = SIDEKICK_ABILITY_GROUP_ID;
+	skobj.hateType = hate;
+
+	// Parameter might be ability group ID in case of ABILITY summon type (e.g. 589)
+	skobj.summonParam = param;
 
 //	source->charPtr->AddSidekick(skobj);
 	int r = source->actInst->CreateSidekick(source, skobj);

@@ -845,24 +845,26 @@ void QuestDefinition :: RunLoadValidation(void)
 
 	//Check the rewards to make sure they're properly matched for correct player selection.
 	for(int o = 0 ; o < outcomeCount; o++) {
-		QuestOutcome *outcome = &outcome[o];
+		QuestOutcome &oc = outcomes[o];
 		int optionalRewards = 0;
 		for(int i = 0; i < QuestOutcome::MAXREWARDS; i++) {
-			if(outcome->rewardItem[i].itemID != 0) {
-				if(outcome->rewardItem[i].required == false)
+			if(oc.rewardItem[i].itemID != 0) {
+				if(oc.rewardItem[i].required == false) {
 					optionalRewards++;
+//					g_Log.AddMessageFormat("[REMOVEME] optrew=%d rewardIndex=%d item=%d count=%d  ---   exp%d : co=%d : ct=%s : c=%d", optionalRewards, i, oc.rewardItem[i].itemID, oc.rewardItem[i].itemCount, oc.experience, oc.coin, oc.compText.c_str(), oc.numRewards);
+				}
 			}
 		}
 
-		if(outcome->numRewards > 0)	{
+		if(oc.numRewards > 0)	{
 			if(optionalRewards == 0)
-				g_Log.AddMessageFormat("[WARNING] Quest:%d numRewards is set, but no optional items are defined.", questID);
+				g_Log.AddMessageFormat("[WARNING] Quest:%d (%d outcome) numRewards is set, but no optional items are defined.", questID, o);
 			else if(optionalRewards == 1)
-				g_Log.AddMessageFormat("[WARNING] Quest:%d numRewards is set, but only one item is defined (requires player selection for implicit reward)", questID);
+				g_Log.AddMessageFormat("[WARNING] Quest:%d (%d outcome) numRewards is set, but only one item is defined (requires player selection for implicit reward)", questID, o);
 		}
 		else {
 			if(optionalRewards > 0)
-				g_Log.AddMessageFormat("[WARNING] Quest:%d has optional rewards but numRewards is not set.", questID);
+				g_Log.AddMessageFormat("[WARNING] Quest:%d (%d outcome) has optional rewards (%d) but numRewards is not set.", questID, o, optionalRewards);
 		}
 	}
 

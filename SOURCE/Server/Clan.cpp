@@ -274,7 +274,6 @@ bool ClanManager::SaveClan(Clan &clan) {
 	}
 
 	fprintf(output, "[ENTRY]\r\n");
-	fprintf(output, "ID=%d\r\n", clan.mId);
 	fprintf(output, "Name=%s\r\n", clan.mName.c_str());
 	fprintf(output, "MOTD=%s\r\n", clan.mMOTD.c_str());
 	for(std::vector<ClanMember>::iterator it = clan.mMembers.begin(); it != clan.mMembers.end(); ++it) {

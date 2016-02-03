@@ -190,6 +190,7 @@ If using Code::Blocks on LINUX
 #include "query/ScriptHandlers.h"
 #include "query/WarpHandlers.h"
 #include "query/MarkerHandlers.h"
+#include "query/SidekickHandlers.h"
 
 #ifdef WINDOWS_SERVICE
 #include <windows.h>
@@ -559,6 +560,15 @@ int InitServerMain() {
 	g_QueryManager.queryHandlers["item.market.reload"] = new CreditShopReloadHandler();
 	g_QueryManager.queryHandlers["item.market.purchase.name"] = new CreditShopPurchaseNameHandler();
 
+	g_QueryManager.queryHandlers["skadd"] = new SidekickAddHandler();
+	g_QueryManager.queryHandlers["skremove"] = new SidekickRemoveHandler();
+	g_QueryManager.queryHandlers["skremoveall"] = new SidekickRemoveAllHandler();
+	g_QueryManager.queryHandlers["skattack"] = new SidekickAttackHandler();
+	g_QueryManager.queryHandlers["skcall"] = new SidekickCallHandler();
+	g_QueryManager.queryHandlers["skwarp"] = new SidekickWarpHandler();
+	g_QueryManager.queryHandlers["sklow"] = new SidekickLowHandler();
+	g_QueryManager.queryHandlers["skparty"] = new SidekickPartyHandler();
+	g_QueryManager.queryHandlers["skscatter"] = new SidekickScatterHandler();
 
 	g_QueryManager.queryHandlers["vault.size"] = new VaultSizeHandler();
 	g_QueryManager.queryHandlers["vault.send"] = new VaultSendHandler();

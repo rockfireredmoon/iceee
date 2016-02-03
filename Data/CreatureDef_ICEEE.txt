@@ -1885,25 +1885,53 @@ ai_package=Newb_Knight
 
 [ENTRY]
 ID=7851
+strength=9
+dexterity=7
+constitution=9
+psyche=6
+spirit=6
+base_damage_melee=5
+damage_resist_melee=71
+damage_resist_fire=71
+damage_resist_frost=71
+damage_resist_mystic=71
+damage_resist_death=71
 will_regen=1
 might_regen=1
+offhand_weapon_damage=500
+casting_setback_chance=500
+channeling_break_chance=500
 appearance=c2:{["a"]=[{["type"]="Item-Spear-Basic4",["node"]="right_hand",["colors"]=["AA8E76","55382C"]},{["type"]="Item-Bow-Basic2",["node"]="back_2",["colors"]=["3F2A21","FF502C","FFFFFF"]},{["type"]="Armor-Heavy-High2-Left_Pauldron",["node"]="left_shoulder",["colors"]=["ffffff","DDA546","942E1A","ffffff"]},{["type"]="Armor-Heavy-High2-Right_Pauldron",["node"]="right_shoulder",["colors"]=["ffffff","DDA546","942E1A","ffffff"]}],["c"]={["boots"]={["type"]="Armor-Heavy-High2",["colors"]=["dda546","ffffff","bfbfbf","ffffff","ffffff","ffffff","ffffff","ffffff"]},["chest"]={["type"]="Armor-Medium-Low5",["colors"]=["d4d4d4","dda546","ffffff","aa7342","7f2816","ffffff"]},["arms"]={["type"]="Armor-Medium-Low5",["colors"]=["949494","dda546","ffffff","ffffff","ffffff","7f2816"]},["leggings"]={["type"]="Armor-Medium-Low5",["colors"]=["d4d4d4","dda546","7f2816","ffffff","ffffff","aa7342"]},["collar"]={["type"]="Armor-Heavy-Mid3",["colors"]=["7f7f7f","ffffff","ffffff","ffffff","DDA546","ffffff"]},["belt"]={["type"]="Armor-Heavy-High2",["colors"]=["dda546","ffffff","d4d4d4","ffffff","ffffff","ffffff","7f2816","ffffff"]},["gloves"]={["type"]="Armor-Heavy-High2",["colors"]=["dda546","ffffff","aaaaaa","ffffff","ffffff","7f2816","ffffff","ffffff"]}},["b"]="n",["sk"]={["fingers_hooves"]="D4B293",["snout"]="AA8E76",["eye_symbol"]="FFFFFF",["base"]="E9E9C2",["horns"]="3F2B19",["eye"]="57DBFF",["eye_white"]="FFFFFF",["nose"]="553921",["inner_ear"]="AA8E76"},["sz"]="1",["h"]=0,["g"]="m",["r"]="h"}
 level=1
 display_name=Recruit Jacob
 profession=1
 creature_category=Mortal
-ai_package=nothing
+ai_package=knight_brave_6
 
 [ENTRY]
 ID=7852
+strength=9
+dexterity=7
+constitution=9
+psyche=6
+spirit=6
+base_damage_melee=5
+damage_resist_melee=71
+damage_resist_fire=71
+damage_resist_frost=71
+damage_resist_mystic=71
+damage_resist_death=71
 will_regen=1
 might_regen=1
+offhand_weapon_damage=500
+casting_setback_chance=500
+channeling_break_chance=500
 appearance=c2:{["a"]=[{["type"]="Armor-Medium-High2-Left_Pauldron",["node"]="left_shoulder",["colors"]=["ffffff","DDA546"]},{["type"]="Armor-Medium-High2-Right_Pauldron",["node"]="right_shoulder",["colors"]=["ffffff","DDA546"]},{["type"]="Item-Claw-Medium3",["node"]="right_hand",["colors"]=["942E1A","ffffff","DDA546"]},{["type"]="Item-Claw-Medium3",["node"]="left_hand",["colors"]=["942E1A","ffffff","DDA546"]}],["c"]={["boots"]={["type"]="Armor-Heavy-High2",["colors"]=["dda546","ffffff","bfbfbf","ffffff","ffffff","ffffff","ffffff","ffffff"]},["chest"]={["type"]="Armor-Medium-Low5",["colors"]=["d4d4d4","dda546","ffffff","aa7342","7f2816","ffffff"]},["arms"]={["type"]="Armor-Medium-Low5",["colors"]=["949494","dda546","ffffff","ffffff","ffffff","7f2816"]},["leggings"]={["type"]="Armor-Medium-Low5",["colors"]=["d4d4d4","dda546","7f2816","ffffff","ffffff","aa7342"]},["collar"]={["type"]="Armor-Heavy-Mid3",["colors"]=["7f7f7f","ffffff","ffffff","ffffff","DDA546","ffffff"]},["belt"]={["type"]="Armor-Heavy-High2",["colors"]=["dda546","ffffff","d4d4d4","ffffff","ffffff","ffffff","7f2816","ffffff"]},["gloves"]={["type"]="Armor-Heavy-High2",["colors"]=["dda546","ffffff","aaaaaa","ffffff","ffffff","7f2816","ffffff","ffffff"]}},["b"]="n",["sk"]={["hands_feet"]="AA8E76",["goatee"]="BF400A",["eye_white"]="DCDCDC",["snout"]="AA3909",["horns"]="3F2A21",["face_highlight"]="551C04",["eye"]="B0FF44",["hoves"]="551C04",["eye_lid"]="AA8E76",["base"]="7F2B07"},["sz"]="1",["h"]=1,["g"]="m",["r"]="c"}
 level=1
 display_name=Recruit Ares
 profession=1
 creature_category=Mortal
-ai_package=nothing
+ai_package=knight_brave_6
 
 [ENTRY]
 ID=7853

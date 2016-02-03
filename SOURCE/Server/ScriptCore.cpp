@@ -256,7 +256,6 @@ namespace ScriptCore
 
 	bool RunFunctionCallback::Execute()
 	{
-		g_Log.AddMessageFormat("[REMOVEME] EXECING %s", mFunctionName.c_str());
 		return mNut->RunFunction(mFunctionName, mArgs, false);
 	}
 

@@ -2498,6 +2498,30 @@ bool ActiveInstance :: QualifyDelete(void)
 	return true;
 }
 
+
+void ActiveInstance :: RecruitSidekick(CreatureInstance *recruit, CreatureInstance *host, SidekickObject &skobj)
+{
+	recruit->sidekickData.CopyFrom(&skobj);
+	recruit->Faction = host->Faction;
+	recruit->AnchorObject = host;
+	recruit->css.aggro_players = 0;
+	recruit->SetServerFlag(ServerFlags::IsSidekick, true);
+
+	if(skobj.summonType == SidekickObject::ABILITY)
+		recruit->CAF_RunSidekickStatFilter(skobj.summonParam);
+	else if(skobj.summonType == SidekickObject::QUEST)
+		recruit->CAF_RunSidekickStatFilter(skobj.summonParam);
+	else if(skobj.summonType == SidekickObject::PET)
+		recruit->SetServerFlag(ServerFlags::Noncombatant, true);
+
+	skobj.CID = recruit->CreatureID;
+
+	SidekickList.push_back(*recruit);
+	SidekickListPtr.push_back(recruit);
+	recruit->_AddStatusList(StatusEffects::INVINCIBLE, -1);
+	recruit->_AddStatusList(StatusEffects::UNATTACKABLE, -1);
+}
+
 CreatureInstance* ActiveInstance :: InstantiateSidekick(CreatureInstance *host, SidekickObject &skobj, int count)
 {
 	//Generates a new creature instance of a sidekick into this zone.
@@ -2507,6 +2531,7 @@ CreatureInstance* ActiveInstance :: InstantiateSidekick(CreatureInstance *host, 
 
 	CreatureInstance newItem;
 
+	newItem.sidekickData.CopyFrom(&skobj);
 	newItem.actInst = this;
 	newItem.Faction = host->Faction;
 	newItem.BuildZoneString(mInstanceID, mZone, 0);
@@ -2749,10 +2774,12 @@ void ActiveInstance :: SidekickAttack(CreatureInstance* host)
 {
 	//All sidekicks registered with the given host will assume its current target.
 	size_t a;
-	for(a = 0; a < SidekickListPtr.size(); a++)
-		if(SidekickListPtr[a]->AnchorObject == host)
-			if(!(SidekickListPtr[a]->serverFlags & ServerFlags::Noncombatant))
-				SidekickListPtr[a]->SelectTarget(host->CurrentTarget.targ);
+	for(a = 0; a < SidekickListPtr.size(); a++) {
+		if(SidekickListPtr[a]->AnchorObject == host) {
+			SidekickListPtr[a]->SetServerFlag(ServerFlags::Noncombatant, -1);
+			SidekickListPtr[a]->SelectTarget(host->CurrentTarget.targ);
+		}
+	}
 }
 
 
@@ -2765,6 +2792,7 @@ void ActiveInstance :: SidekickCall(CreatureInstance* host)
 		{
 			SidekickListPtr[a]->SelectTarget(NULL);
 			SidekickListPtr[a]->movementTime = g_ServerTime;
+			SidekickListPtr[a]->SetServerFlag(ServerFlags::Noncombatant, 1);
 			SidekickListPtr[a]->SetServerFlag(ServerFlags::CalledBack, true);
 			//Replace the current destination.
 			SidekickListPtr[a]->CurrentTarget.DesLocX = host->CurrentX + randint(-MED_SCATTER_RANGE, MED_SCATTER_RANGE);

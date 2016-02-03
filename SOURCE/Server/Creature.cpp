@@ -1080,7 +1080,30 @@ void CreatureInstance :: OnApplyDamage(CreatureInstance *attacker, int amount)
 			//Note: the ability table mentions that a gain rate of 100 is 200% of normal. 
 			if(attacker->css.hate_gain_rate != 0)
 				hateAmount += Util::GetAdditiveFromIntegralPercent100((int)hateAmount, attacker->css.hate_gain_rate);
-			hprof->Add(CID, CDefID, level, amount, (int)hateAmount);
+
+			if(attacker->AnchorObject != NULL) {
+				// Decide how much to hate the sidekick itself and the officer
+
+				if(attacker->sidekickData.summonType == SidekickObject::HATE_SIDEKICK || attacker->sidekickData.summonType == SidekickObject::HATE_BOTH)
+					hprof->Add(CID, CDefID, level, amount, (int)hateAmount);
+
+				if(attacker->sidekickData.summonType == SidekickObject::HATE_OFFICER || attacker->sidekickData.summonType == SidekickObject::HATE_BOTH)
+					hprof->Add(attacker->CreatureID, attacker->CreatureDefID, level, amount, (int)hateAmount);
+
+				if(attacker->sidekickData.summonType == SidekickObject::HATE_OFFICER_MORE) {
+					hprof->Add(CID, CDefID, level, amount, (int)(hateAmount / 2.0));
+					hprof->Add(attacker->CreatureID, attacker->CreatureDefID, level, amount, (int)hateAmount);
+				}
+				else if(attacker->sidekickData.summonType == SidekickObject::HATE_OFFICER_MORE) {
+					hprof->Add(CID, CDefID, level, amount, (int)hateAmount);
+					hprof->Add(attacker->CreatureID, attacker->CreatureDefID, level, amount, (int)(hateAmount / 2.0));
+				}
+			}
+			else {
+				hprof->Add(CID, CDefID, level, amount, (int)hateAmount);
+			}
+
+
 			SetServerFlag(ServerFlags::HateInfoChanged, true);
 		}
 	}

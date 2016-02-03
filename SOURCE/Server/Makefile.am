@@ -113,6 +113,7 @@ tawd_SOURCES = md5.cc \
 	query/ScriptHandlers.cpp \
 	query/WarpHandlers.cpp \
 	query/MarkerHandlers.cpp \
+	query/SidekickHandlers.cpp \
 	util/base64.cpp \
 	util/JsonHelpers.cpp \
 	util/SquirrelObjects.cpp \
@@ -247,6 +248,7 @@ tawd_SOURCES = md5.cc \
 	query/ScriptHandlers.h \
 	query/WarpHandlers.h \
 	query/MarkerHandlers.h \
+	query/SidekickHandlers.h \
 	util/base64.h \
 	util/JsonHelpers.h \
 	SquirrelObjects.h
@@ -362,6 +364,7 @@ tawdsvc_SOURCES = md5.cc \
 	query/ScriptHandlers.cpp \
 	query/WarpHandlers.cpp \
 	query/MarkerHandlers.cpp \
+	query/SidekickHandlers.cpp \
 	util/base64.cpp \
 	util/JsonHelpers.cpp \
 	Ability2.h \
@@ -495,6 +498,7 @@ tawdsvc_SOURCES = md5.cc \
 	query/ScriptHandlers.h \
 	query/WarpHandlers.h \
 	query/MarkerHandlers.h \
+	query/SidekickHandlers.h \
 	util/base64.h \
 	util/JsonHelpers.h \
 	SquirrelObjects.h

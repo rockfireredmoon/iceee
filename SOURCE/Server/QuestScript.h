@@ -33,7 +33,7 @@ public:
 	virtual ~QuestNutDef();
 };
 
-class QuestNutPlayer: public ScriptCore::NutPlayer {
+class QuestNutPlayer: public InstanceScript::InstanceNutPlayer {
 public:
 	//Variables used by the script.
 	unsigned short RunFlags;
@@ -46,6 +46,7 @@ public:
 	QuestNutPlayer();
 	virtual ~QuestNutPlayer();
 
+	void Initialize(ActiveInstance *actInst, QuestNutDef *defPtr, std::string &errors);
 	virtual void RegisterFunctions();
 	void RegisterQuestFunctions(NutPlayer *instance, Sqrat::DerivedClass<QuestNutPlayer, NutPlayer> *instanceClass);
 	virtual void HaltDerivedExecution();
@@ -65,7 +66,8 @@ public:
 	QuestObjective KillObjective(std::string description, Sqrat::Array &cdefIds, int amount, std::string completeText, std::string markerLocations);
 	QuestObjective TalkObjective(std::string description, int creatureDefId, std::string markerLocations);
 
-	int AddSidekick(int cdefID, bool pet);
+	int RecruitSidekick(int cid, int type, int param, int hate);
+	int AddSidekick(int cdefID, int type, int param, int hate);
 	int RemoveSidekick(int sidekickID);
 	bool Join(int questID);
 	void Say(int cid, const char *message);

@@ -34,6 +34,8 @@ class QuestItemReward;
 class InstanceScaleProfile;
 class ReportBuffer;
 
+#define SIDEKICK_ABILITY_GROUP_ID	549
+
 extern const int CREATURE_WALK_SPEED;
 extern const int CREATURE_JOG_SPEED;
 extern const int CREATURE_RUN_SPEED;
@@ -367,6 +369,7 @@ public:
 	int CurrentY;           //Position on map (elevation)
 	int CurrentZ;           //Position on map (vertical position on grid)
 	CreatureInstance *AnchorObject;  //For sidekicks, this is the host player they follow.
+	SidekickObject sidekickData; //For sidekicks, contains data from when they were spawned / recruited.
 
 	unsigned char Heading;
 	unsigned char Rotation;
