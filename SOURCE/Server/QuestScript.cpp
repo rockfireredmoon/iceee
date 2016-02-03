@@ -297,10 +297,10 @@ void QuestNutPlayer::RegisterFunctions() {
 	questOutcomeClass.Var(_SC("valour_given"), &QuestOutcome::valourGiven);
 
 
-	Sqrat::DerivedClass<InstanceScript::AbstractInstanceNutPlayer, NutPlayer> abstractInstanceClass(vm, _SC("AbstractInstance"));
-	Sqrat::DerivedClass<InstanceScript::InstanceNutPlayer, InstanceScript::AbstractInstanceNutPlayer> instanceClass(vm, _SC("Instance"));
-	Sqrat::RootTable(vm).Bind(_SC("Instance"), instanceClass);
-	InstanceScript::InstanceNutPlayer::RegisterInstanceFunctions(vm, &instanceClass);
+//	Sqrat::DerivedClass<InstanceScript::AbstractInstanceNutPlayer, NutPlayer> abstractInstanceClass(vm, _SC("AbstractInstance"));
+//	Sqrat::DerivedClass<InstanceScript::InstanceNutPlayer, InstanceScript::AbstractInstanceNutPlayer> instanceClass(vm, _SC("Instance"));
+//	Sqrat::RootTable(vm).Bind(_SC("Instance"), instanceClass);
+//	InstanceScript::InstanceNutPlayer::RegisterInstanceFunctions(vm, &instanceClass);
 
 //	//Note: numbers in brackets (ex: [0]) indicate which row of the outgoing query data this field occupies.
 //
