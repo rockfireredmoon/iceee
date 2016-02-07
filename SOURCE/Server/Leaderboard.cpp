@@ -120,9 +120,7 @@ int LeaderboardManager::InitThread(int globalThreadID) {
 
 void LeaderboardManager::RunMainLoop() {
 	while(mIsActive == true) {
-		LogMessageL("Checking %d leaderboards", mBoards.size());
 		for(std::vector<Leaderboard*>::iterator it = mBoards.begin(); it != mBoards.end(); ++it) {
-			LogMessageL("[LeaderboardManager] Processing leaderboard %s", (*it)->mName.c_str());
 			(*it)->Build();
 		}
 		PLATFORM_SLEEP(60000);
@@ -136,7 +134,6 @@ char * LeaderboardManager :: LogMessageL(const char *format, ...)
 
 	va_list args;
 	va_start (args, format);
-	//vsnprintf(LogBuffer, maxSize, format, args);
 	Util::SafeFormatArg(mLogBuffer, sizeof(mLogBuffer), format, args);
 	va_end (args);
 

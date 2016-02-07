@@ -75,7 +75,7 @@ void FileChecksum :: LoadFromFile(const char *filename)
 	lfr.CloseCurrent();
 }
 
-std::string FileChecksum :: MatchChecksum(const std::string &filename, const std::string &checksum)
+std::string FileChecksum :: MatchChecksum(const std::string filename, const std::string checksum)
 {
 	CHECKSUM_MAP::iterator it = mChecksumData.find(filename);
 

@@ -12682,12 +12682,6 @@ void mg_set_as_close(struct mg_connection *conn)
 }
 
 // For TAWD
-void mg_set_content_length(struct mg_connection *conn, unsigned long length)
-{
-	conn->content_len = length;
-}
-
-// For TAWD
 void mg_set_status(struct mg_connection *conn, int status)
 {
 	conn->status_code = status;

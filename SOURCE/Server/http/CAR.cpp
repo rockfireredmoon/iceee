@@ -128,43 +128,36 @@ bool CARHandler::handleGet(CivetServer *server, struct mg_connection *conn) {
 		}
 	}
 
-//    conn->must_close = 1;
-//    conn->status_code = status;
 	mg_set_status(conn, status);
 
 	switch (status) {
 	case 200:
-		g_Log.AddMessageFormat("Sending %s (%lu bytes)", ruri.c_str(), file.fileSize);
-		mg_printf(conn,
-				"HTTP/1.1 200 OK\r\nContent-Length: %lu\r\nAccept-Range: bytes\r\n",
-				file.fileSize);
+	{
+		mg_printf(conn,	"HTTP/1.1 200 OK\r\n");
+		mg_printf(conn, "Content-Type: application/octet-stream\r\n");
+		mg_printf(conn,	"Content-Length: %lu\r\n", file.fileSize);
+		mg_printf(conn, "Accept-Range: bytes\r\n");
+		std::string fn;
+		fn = Platform::Filename(ruri.c_str());
 		mg_printf(conn,
 				"Content-Disposition: attachment; filename=\"%s\";\r\n",
-				ruri.c_str());
+				fn.c_str());
 		mg_printf(conn, "Last-Modified: %s\r\n", formatTime(&file.lastModified).c_str());
-//		mg_printf(conn, "ETag: %s\r\n", newChecksum.c_str());
-		mg_printf(conn, "Content-Type: application/octet-stream\r\n\r\n");
+		mg_printf(conn, "\r\n");
 		send_file_data(conn, &file);
 	    fclose(file.fd);
-		g_Log.AddMessageFormat("Sent %s (%lu bytes)", ruri.c_str(), file.fileSize);
-
-
-		mg_set_content_length(conn, file.fileSize);
 		mg_increase_sent_bytes(conn, file.fileSize);
-//	    conn->num_bytes_sent += file.fileSize;
-
-		//mg_set_as_close(conn);
-
 		break;
+	}
 	case 304: {
+		g_Log.AddMessageFormat("Not modified %s (%lu bytes)", ruri.c_str(), file.fileSize);
 		std::time_t now = std::time(NULL);
 		mg_printf(conn, "HTTP/1.1 304 Not Modified\r\n");
 		mg_printf(conn, "Expires: Tue, 1 Nov 2011 00:00:00 GMT\r\n");
 		mg_printf(conn, "Date: %s\r\n", formatTime(&now).c_str());
 		mg_printf(conn, "Last-Modified: %s\r\n", formatTime(&file.lastModified).c_str());
 		mg_printf(conn, "Cache-Control: max-age=0\r\n\r\n");
-//		mg_set_as_close(conn);
-
+		mg_set_as_close(conn);
 		break;
 	}
 	default:

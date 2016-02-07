@@ -715,7 +715,7 @@ namespace ScriptCore
 			 * If the VM wasn't suspended while handling this event, and the
 			 * event returned false, then we requeue this event for retry
 			 */
-			if(mActive && sq_getvmstate(vm) != SQ_VMSTATE_SUSPENDED && !res) {
+			if(mActive && !res && sq_getvmstate(vm) != SQ_VMSTATE_SUSPENDED) {
 //				g_Log.AddMessageFormat("[REMOVEME] RETRY active: %s", mActive ? "yes" : "no");
 				mQueueAdd.push_back(nse);
 				mQueue.erase(mQueue.begin() + index);
