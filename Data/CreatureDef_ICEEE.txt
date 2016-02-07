@@ -2443,12 +2443,13 @@ ai_package=example
 ID=7892
 will_regen=1
 might_regen=1
-appearance=p1:{["a"]="Prop-Rope_Coil",["sz"]="1"}
+appearance=p1:{["a"]="Prop-Interact_Sphere",["sz"]="1"}
 level=1
-display_name=Rope
+display_name=Boat to Corsica!
 profession=1
 creature_category=Inanimate
 ai_package=example
+
 
 
 
