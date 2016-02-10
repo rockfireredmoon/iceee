@@ -7,7 +7,7 @@
 [ENTRY]
 ID=348
 Title=Speak with Sir Lancelot
-BodyText=Welcome friend. We have many new arrivals here these days - all seeking adventure and glory! If you are seeking to aid our isle in its time of need then make haste to Sir Lancelot. I am sure he could use all the help he can get right now! You will find him up atop the hill in front of the manor house. Good luck, and welcome to Northbeach!
+BodyText=Welcome friend. We have many new arrivals here these days - all seeking adventure and glory! If you are seeking to aid our isle in its time of need, then make haste to Sir Lancelot. I am sure he could use all the help he can get right now! You will find him up atop the hill in front of the manor house. Good luck, and welcome to Northbeach!
 CompleteText=Another new arrival - welcome.
 Level=2
 Suggested=3
@@ -73,7 +73,7 @@ Requires=349
 Title=Plant Samples
 BodyText=I am glad you were sent to me. I can really use the help.
 
-It all started a short while ago. Some of the local plants seem to have...well come to life. There are surely some plant creatures in this world but these plants used to be just your normal, run-of-the-mill, soaking up sunshine type! Now they are walking all over and in some cases have become quite aggressive. This is causing mayhem! To make matters worse very strange creatures have been appearing all over Corsica. I would try to explain but you will just have to see for yourself to believe!
+It all started a short while ago. Some of the local plants seem to have...well come to life. There are surely some plant creatures in this world; but these plants used to be just your normal, run-of-the-mill, soaking up sunshine type! Now they are walking all over and, in some cases, have become quite aggressive. This is causing mayhem! To make matters worse, very strange creatures have been appearing all over Corsica. I would try to explain but you will just have to see for yourself to believe!
 
 What I need from you is a two fold task. Just across the bridge from Northbeach on the main isle of Corsica are some of these newly-walking around plants. I need some samples from them. I also need samples from unaffected plants in the same area. Bring me five samples of each.
 CompleteText=You are safely returned! Let me see the samples.
@@ -132,7 +132,7 @@ Title=The Vilegrove
 BodyText=Hmm. Interesting. This is a good start. I was hoping to have some samples from some of the larger plant creatures already. I sent my assistant out earlier to retrieve them but he has not yet returned. Do me the favor of checking up on him. He is a short trip farther out across the bridge in the small forest grove just off the road. It was a very lovely grove until all of this strangeness began. The local people now refer to it as the Vilegrove. It is overrun with large and often aggressive plants.
 
 Go and make sure my assistant, his name is Ker, is fine and bring back the samples I asked him to gather.
-CompleteText=Meer sent you I assume? Good I need your help!
+CompleteText=Meer sent you I assume? Good, I need your help!
 Level=3
 Suggested=4
 Exp=314
@@ -161,7 +161,7 @@ Obj.0.markerLocations=16867.0,1224.0,16424.0,58;
 ID=352
 Requires=351
 Title=Ferngar!
-BodyText=I tell you these plants "things" are not to be trifled with. I am not a warrior! I am a research assistant! I told Meer this was going to be trouble but she insisted I come here! I went in to get the samples but those "things" - they are horrible. To make matters worse they now seem to have a leader or at least there is a big mean thing in there. Some of the locals call it Ferngar or some such thing - I am not amused by naming horrible creatures - and I am not going back in there. That thing almost ate me or bit me or...well...it was chasing me! If you want to go get the samples for Meer then please do - she wanted five samples from the big plants in there. If you are going in there then also do me a favor and kill Ferngar. It would allow me to do more work and I am positive Meer would want a sample from that abomination! 
+BodyText=I tell you these plant "things" are not to be trifled with. I am not a warrior! I am a research assistant! I told Meer this was going to be trouble but she insisted I come here! I went in to get the samples but those "things" - they are horrible. To make matters worse, they now seem to have a leader - or at least there is a big mean thing in there. Some of the locals call it Ferngar or some such thing - I am not amused by naming horrible creatures - and I am not going back in there. That thing almost ate me or bit me or...well...it was chasing me! If you want to go get the samples for Meer then please do - she wanted five samples from the big plants in there. If you are going in there, then also do me a favor and kill Ferngar. It would allow me to do more work and I am positive Meer would want a sample from that abomination! 
 CompleteText=You did it? Wonderful!
 Level=3
 Suggested=4
@@ -277,7 +277,7 @@ Requires=354
 Title=The Lost Ale Delivery
 
 
-BodyText=Ah-ho! Hello there friend! Welcome to the Rusty Spoon! Best ale in all of Corsica...well normally! You see my last ale delivery went missing in a manner of sorts. They sent a new delivery chap from Southend and he got lost! Lost!? Well he ended out by the Old Dante place and claimed he was attacked by chickenbeasts of some kind! Chickenbeasts?!? Sounds like some fantasy tale to me! Matters not - what matters is he ran away leaving all the ale behind! I was only concerned about one special keg though. A special brew called Braga Brew! Great taste and also doubles as a cleaner for your blades! Good stuff! If you could head out toward the Old Dante place and find that keg of Braga Brew for me - oh friend I would be eternally grateful to you! Oh..hah! And watch out for those "chickens" - pfft! 
+BodyText=Ah-ho! Hello there friend! Welcome to the Rusty Spoon! Best ale in all of Corsica...well normally! You see my last ale delivery went missing in a manner of sorts. They sent a new delivery chap from Southend and he got lost! Lost!? Well he ended out by the Old Dante place and claimed he was attacked by chickenbeasts of some kind! Chickenbeasts?!? Sounds like some fantasy tale to me! Matters not - what matters is he ran away leaving all the ale behind! I was only concerned about one special keg though. A special brew called Braga Brew! Great taste and also doubles as a cleaner for your blades! Good stuff! If you could head out toward the Old Dante place and find that keg of Braga Brew for me - oh friend I would be eternally grateful to you! Oh...hah! And watch out for those "chickens" - pfft! 
 CompleteText=There really were chickenbeasts? Well, hmm. I am just glad you found that keg. As promised here's your payment! Thanks again friend!
 Level=4
 Suggested=4
@@ -315,7 +315,7 @@ Obj.0.myItemID=500220
 Obj.0.completeText=
 Obj.0.markerLocations=18774.0,1208.0,16356.0,58;
 Obj.0.ActivateTime=2000
-Obj.0.ActivateText=Taking the Brew
+Obj.0.ActivateText=Taking the Braga Brew
 [ACT]
 Act.BodyText=Return to Worgram Wumpfist.
 Obj.0.type=talk
@@ -332,7 +332,7 @@ Obj.0.markerLocations=15766.0,1193.0,13763.0,58;
 ID=355
 Requires=354
 Title=The Lost Journal
-BodyText=This is an unpleasant sight. Meer was right, there is indeed some dark magic at work here. Hmmm...before I can be sure, I need a favor. I seemed to have lost my journal. I too have been researching these strange plants and creatures and was taking notes. I must have dropped it when I was last out on the island investigating. I was out at the old Dante Manor. It was once a great merchant's home but is now abandoned and falling into disrepair. If you could - travel to the old manor and find my journal. Be warned there are some dangerous creatures on the prowl out there. Good luck! 
+BodyText=This is an unpleasant sight. Meer was right, there is indeed some dark magic at work here. Hmmm...before I can be sure, I need a favor. I seemed to have lost my journal. I too have been researching these strange plants and creatures and was taking notes. I must have dropped it when I was last out on the island investigating. I was out at the old Dante Manor. It was once a great merchant's home but is now abandoned and falling into disrepair. If you could - travel to the old manor and find my journal. Be warned, there are some dangerous creatures on the prowl out there. Good luck! 
 CompleteText=Ah! My journal - thank you.
 Level=4
 Suggested=4
@@ -348,11 +348,11 @@ sGiver=15372.0,1160.0,13669.0,58
 sEnder=15372.0,1160.0,13669.0,58
 Heroism=6
 [ACT]
-Act.BodyText=Travel to Old Dante Manor and find Raji's Journal.
+Act.BodyText=Travel to the Old Dante Manor and find Raji's Journal.
 Obj.0.type=travel
 Obj.0.data1=19838,1128,16152,58
 Obj.0.data2=300
-Obj.0.description=Travel to Old Dante Manor
+Obj.0.description=Travel to the Old Dante Manor
 Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
@@ -387,7 +387,7 @@ Obj.0.markerLocations=15372.0,1160.0,13669.0,58;
 ID=361
 Requires=355
 Title=Seeking Wildvine
-BodyText=Friend? I wonder if you could assist me. I normally buy Wildvine from Raji but it seems he is out of stock! I cannot possibly have my evening tea without the flavoring from fresh Wildvine! I would even go seek some myself but with all the terribly strange creatures out there - I am just too afraid! Would you perchance be heading out to the main island? It would be wonderful if you were to find six Wildvines and return them to me! They grow wildly along the eastern part of the island between the Old Dante Manor and Southend. Do you think you could?
+BodyText=Friend? I wonder if you could assist me. I normally buy Wildvine from Raji, but it seems he is out of stock! I cannot possibly have my evening tea without the flavoring from fresh Wildvine! I would even go seek some myself, but with all the terribly strange creatures out there - I am just too afraid! Would you perchance be heading out to the main island? It would be wonderful if you were to find six Wildvines and return them to me! They grow wildly along the eastern part of the island between the Old Dante Manor and Southend. Do you think you could?
 CompleteText=Oh you did it! You have my Wildvine! Praise Gaia! My tea will not have to be flavored with Snargleroot now! Thank you so much!
 Level=4
 Suggested=4
@@ -403,7 +403,7 @@ sGiver=15473.0,1160.0,13689.0,58
 sEnder=15473.0,1160.0,13689.0,58
 Heroism=6
 [ACT]
-Act.BodyText=Travel to the south east and collect six Wildvine.
+Act.BodyText=Travel to the southeast and collect six Wildvine.
 Obj.0.type=gather
 Obj.0.data1=2109
 Obj.0.data2=6
@@ -431,7 +431,7 @@ Obj.0.markerLocations=15473.0,1160.0,13689.0,58;
 ID=356
 Requires=355
 Title=The Strange Device
-BodyText=Yes, hmmm...indeed my notes and these samples do tell a story. I have my suspicions but I want to be sure. While you were gone I heard news of some sort of strange device in the woods south of Dante Manor, a short distance from Southend in fact. I want you to go there and investigate the device. Again be wary! I was told there are more strange and potentially dangerous creatures in the area. 
+BodyText=Yes, hmmm...indeed my notes and these samples do tell a story. I have my suspicions but I want to be sure. While you were gone I heard news of some sort of strange device in the woods south of Dante Manor, a short distance from Southend in fact. I want you to go there and investigate the device. Again, be wary! I was told there are more strange and potentially dangerous creatures in the area. 
 CompleteText=Let me see that crystal. Oh hrmmm...This is exactly what I feared.
 Level=4
 Suggested=4
@@ -500,13 +500,13 @@ ID=357
 Requires=356
 Title=Anglor Dren
 
-BodyText=This...crystal...you see...ages ago after Djall banished the Titans to Tartarus he turned his attention to the Faeries. He banished their Spirit Mother, Agalarna, to the comet he arrived on, Djall's Hammer, and sent her traveling through the universe. This was punishment to the Faerie, who had been slaves to the Titans, to let them know he was now their master. The Spirit Mother would often return, in passing, as her comet flew past earth. After ages her spirit became fused with the comet. The last passing of the comet was met with tragedy. The comet slammed into the moon! You can see the results in the sky above! Pieces of the comet rained down upon the Earth, each holding a small portion of the Spirit Mother's power. Wherever one is found strange things happen. There is a large shard in the south on the isle of Earthrise. I suspect this is why the Anubians are so keen on taking the island and why they have left us - thus far - mostly alone. Even small fragments can hold great power - but dangerous power.
+BodyText=This...crystal... You see...ages ago, long before they were banished to Tartarus by the Dark Lord Djall, the Titans ruled supreme on the Earth. According to legend, as punishment to the insubordinant Faeries, who were the chief servants to the Titans,  Kronos banished their Spirit Mother, Agalarna, to the depths of space using a comet passing by Earth at that time and sent her traveling through the universe. The Spirit Mother would return, in passing, as her comet flew past Earth after countless eons. After many eons, her spirit became fused with the comet itself. Stories claim that this same comet, known to us Djall's Hammer, also served as the Dark Lord's access route to our world eons ago. The last passing of this comet, however, was met with tragedy as it's trajectory sent it slamming into the moon! You can see the results of the impact in the sky above! For many days, pieces of the comet rained down upon the Earth, each holding a small portion of the Spirit Mother's power. Wherever one is found strange things happen. There is a large shard in the south on the isle of Earthrise. I suspect this is why the Anubians are so keen on taking the island and why they have left us - thus far - mostly alone. Even small fragments can hold great power - but dangerous power.
 
-Oh I am rambling on with stories - apologies. To the point: this crystal is a tiny shard of the Spirit Mother. It alone - even amplified by that device could not cause the entire island to be affected. I would guess that there is a larger device and larger crystal. There is only one beast on this island that could possibly know how to do this and sadly it may be my fault he has.
+Oh, I am rambling on with stories - apologies. To the point: this crystal is a tiny shard of the Spirit Mother. It alone - even amplified by that device, could not cause the entire island to be affected. I would guess that there is a larger device and larger crystal. There is only one beast on this island that could possibly know how to do this and sadly it may be my fault he has.
 
-Anglor Dren was my assistant. I helped him unlock the potential for magic he had. He is a quite potent mage but he had no plan to learn for any other reason than raw power. I miscalculated his motives - and this is the result.
+Anglor Dren was my assistant. I helped him unlock the potential for magic he had. He is a quite potent mage, but he had no plan to learn for any other reason than raw power. I miscalculated his motives - and this is the result.
 
-Anglor has taken up residence in the old lighthouse just north of Dante Manor. I urge you to go there and destroy the device, I will guess Anglor is also to be found inside. Though I am unhappy to even broach this topic - you may have to kill Anglor in order to destroy the machine. I have no love for violence but we cannot allow these abominations to continue to spread. 
+Anglor has taken up residence in the old lighthouse just north of Dante Manor. I urge you to go there and destroy the device, I will guess Anglor is also to be found inside. Though I am unhappy to even broach this topic - you may have to kill Anglor in order to destroy the machine. I have no love for violence, but we cannot allow these abominations to continue to spread. 
 CompleteText=You return! I am sorry you had to kill Anglor - even as misguided as he was. You have done well though! Please take this reward!
 Level=4
 Suggested=5
@@ -544,7 +544,7 @@ Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=426,300,1090,77;
 [ACT]
-Act.BodyText=Kill Anglor Dren and destroy his his device!
+Act.BodyText=Kill Anglor Dren and destroy his device!
 
 (Kill all six Madvines to get Anglor Dren to appear. This is a "Step-Up Spawner". In various places around the game world you will find similar situations. Killing a certain number of creatures in an area will sometimes cause harder creatures to spawn. In some cases - a boss will spawn!)
 Obj.0.type=activate
@@ -587,7 +587,7 @@ Title=Speak with Sir Lancelot
 BodyText=You should speak with Lancelot - he was asking about you while you were gone.
 
 Safe journey friend!
-CompleteText=So you have solved the mystery of the stranger beasts? Very well done. My confidence in you is redoubled!
+CompleteText=So you have solved the mystery of the strange beasts? Very well done. My confidence in you is redoubled!
 Level=4
 Suggested=5
 Exp=342
@@ -621,7 +621,7 @@ BodyText=You have returned just in time. I have just received word from Southend
 Please travel to Southend and speak with him.
 
 Thank you greatly for all your assistance thus far. I am sure we will meet again.
-CompleteText=Greetings! I am glad Sir Lancelot sent you. I can use all the help can get these days.
+CompleteText=Greetings! I am glad Sir Lancelot sent you. I can use all the help I can get these days.
 Level=5
 Suggested=5
 Exp=428
@@ -677,7 +677,7 @@ Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=16235.4,1126.99,20270.3,58;
 [ACT]
-Act.BodyText=The last Anubian you killed had a massive from General Akhom. It speaks of a gate being nearly complete and a full scale invasion soon to follow! Take this note directly to Captain Hernsmutt immediately.
+Act.BodyText=The last Anubian you killed had a missive from General Akhom. It speaks of a gate being nearly complete and a full scale invasion soon to follow! Take this note directly to Captain Hernsmutt immediately.
 Obj.0.type=talk
 Obj.0.data1=0
 Obj.0.data2=1963
@@ -692,7 +692,7 @@ Obj.0.markerLocations=18026.0,1600.0,20685.0,58;
 ID=363
 Requires=359
 Title=My Dearest Darling!
-BodyText=Oh friend! Friend! I need your help! Anubians! They done took my home away! They smashed their boat into my docks even! But that is not the worst of it! You see my dearest darling has been lost! They took her too! She was so sweet! Oh what am I going to do! Can you help? She must still be right where I left her - just outside my house! I hope they have not consumed her! She is my favorite! Can you help?
+BodyText=Oh friend! Friend! I need your help! Anubians! They done took my home away! They smashed their boat into my docks even! But that is not the worst of it! You see, my dearest darling has been lost! They took her too! She was so sweet! Oh what am I going to do! Can you help? She must still be right where I left her - just outside my house! I hope they have not consumed her! She is my favorite! Can you help?
 CompleteText=Oh thank you! You rescued my dearest darling from those wretched Anubians!
 Level=5
 Suggested=6
@@ -730,7 +730,7 @@ Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=16056.8,1124.01,20435.4,58;
 [ACT]
-Act.BodyText=You would not think it possible be but you see a wine bottle with the words "Dearest Darling" on the table in front of you. Take the bottle!
+Act.BodyText=You would not think it possible, but you see a wine bottle with the words "Dearest Darling" on the porch in front of you. Take the bottle!
 Obj.0.type=gather
 Obj.0.data1=2110
 Obj.0.data2=1
@@ -758,7 +758,7 @@ Obj.0.markerLocations=17850.0,1600.0,20756.0,58;
 ID=364
 Requires=362
 Title=Travel to the Wayside Warcamp
-BodyText=This is grim news. If the Anubians complete one of their gates they could simply open it and flood Earthrise with troops over night. You must take this news to Garnor Brighteye - the Commander at the Wayside Warcamp in the south. Yes, the bridge has been destroyed by the Anubians but we have another way through. There is a tunnel that links South end to Earthrise. It was originally used for smuggling years ago - now it is our only way south. There is a secret entrance in the inn. The large bookshelf in the main room conceals a hidden door. In fact you will be the last to use the tunnel. We cannot risk the Anubians finding it and having easier access to our island.
+BodyText=This is grim news. If the Anubians complete one of their gates, they could simply open it and flood Earthrise with troops overnight. You must take this news to Garnor Brighteye - the Commander at the Wayside Warcamp in the south. Yes, the bridge has been destroyed by the Anubians but we have another way through. There is a tunnel that links Southend to Earthrise. It was originally used for smuggling years ago - now it is our only way south. There is a secret entrance in the inn. The large bookshelf in the main room conceals a hidden door. In fact, you will be the last to use the tunnel. We cannot risk the Anubians finding it and having easier access to our island.
 
 Go now and be quick! But be wary! The tunnel usually is crawling with unfriendly creatures! 
 CompleteText=Welcome to the Wayside Warcamp. You bring news?
