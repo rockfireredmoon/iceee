@@ -30,7 +30,7 @@ Obj.0.markerLocations=10867.8,568.911,12169.2,92;
 [ENTRY]
 Requires=900
 ID=901
-Title=The Anubian War
+Title=Report to Sergeant Bors
 BodyText=Here's your objective recruit! These Anubian bastards are right on our door step I need you to get down there and even the odds up a bit! Kill as many as you can then report back to me!
 CompleteText=HAHA! You showed them! excellent work recruit but we're not out of the water yet!
 Level=1
