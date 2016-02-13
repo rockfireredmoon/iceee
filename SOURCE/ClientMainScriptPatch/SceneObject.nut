@@ -7560,11 +7560,11 @@ class this.SceneObject extends this.MessageBroadcaster
 			}
 			
 			local tags = this.getStat(this.Stat.TAGS);
-			if (this.mTagBoard == null && showNameboard && tags != "")
+			if (this.mTagBoard == null && showNameboard && tags != null && tags != "")
 			{
 				_create_tag_board(tags);
 			}
-			else if (!showNameboard || tags == "")
+			else if (!showNameboard || tags == "" || tags == null)
 			{
 				if (this.mTagBoard)
 				{
