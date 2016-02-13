@@ -10,6 +10,8 @@ Data\QuestEuropeExt.txt
 Data\QuestGrunesTalSwineland.txt
 Data\QuestNewCorsica.txt
 Data\QuestICEEE.txt
+Data\QuestBastionIsland.txt
+Data\QuestNewEarthrise.txt
 
 ; Data\QuestEventSummer.txt
 ; Data\QuestEventHarvestFest.txt
