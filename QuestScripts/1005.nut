@@ -12,9 +12,9 @@
 }
 
 function on_use_finish_7892() {
-	quest.clear_queue();
-	quest.info("COMPLETE!");
-	/* quest.warp_zone(1060); */
-	quest.info("Due to a bug, server will crash if a quest initiates a warp.  So please use /warpi NewCorsica till this is fix :)");
+	/*local cid = quest.get_source();
+	inst.exec(function() { inst.warp_player(cid, 1060); }); */
+	
+	quest.warp_zone(1060);
 
 }

@@ -1554,7 +1554,8 @@ void Debug_OutputCharacter(FILE *output, int index, CreatureInstance *cInst)
 	}
 	fprintf(output, "    Target: %s (Ptr: %p)\r\n", (cInst->CurrentTarget.targ != NULL) ? cInst->CurrentTarget.targ->css.display_name : "null", cInst->CurrentTarget.targ);
 	fprintf(output, "    Might: %d (%d), Will: %d (%d)\r\n", cInst->css.might, cInst->css.might_charges, cInst->css.will, cInst->css.will_charges);
-	if(cInst->charPtr != NULL) {
+	if(cInst->charPtr != NULL)
+	{
 		QuestReferenceContainer act = cInst->charPtr->questJournal.activeQuests;
 		for(std::vector<QuestReference>::iterator it = act.itemList.begin(); it != act.itemList.end(); ++it) {
 			QuestReference ref = *it;

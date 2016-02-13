@@ -6,7 +6,7 @@ cd "$(dirname $0)"/..
 base=$(pwd)
 
 SCRATCH="${base}/scratch"
-BASE_ASSETS="${base}/../../Common/eeassets/original-client/media"
+BASE_ASSETS="${base}/../../Common/eeassets/original-client/assets/Release/Current/Media"
 TARGET_ASSETS="${base}/asset"
 
 # Test for Base directory. I wasted two days because I forgot about this

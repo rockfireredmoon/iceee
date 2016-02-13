@@ -1151,33 +1151,6 @@ creature_category=Magical
 constitution=1
 
 [ENTRY]
-ID=7813
-defHints=48
-strength=30
-dexterity=30
-constitution=23
-psyche=20
-spirit=20
-base_damage_melee=36
-damage_resist_melee=933
-damage_resist_fire=533
-damage_resist_frost=533
-damage_resist_mystic=533
-damage_resist_death=533
-will_regen=1
-might_regen=1
-offhand_weapon_damage=500
-casting_setback_chance=500
-channeling_break_chance=500
-appearance=n4:{["sk"]={["fur"]="3F3F3F",["eye"]="00FFFF",["highlight"]="555555",["claws"]="151515",["mouth"]="7F7F7F"},["c"]="Horde-Wolf",["sz"]=".8"}
-level=21
-display_name=Taiga Wolf
-profession=3
-creature_category=Animal
-ai_package=melee_creature_brave_6
-total_size=16
-
-[ENTRY]
 ID=7814
 defHints=48
 strength=30
@@ -2443,7 +2416,7 @@ ai_package=example
 ID=7892
 will_regen=1
 might_regen=1
-appearance=p1:{["a"]="Prop-Interact_Sphere",["sz"]="1"}
+appearance=p1:{["a"]="Prop-Interact_Sphere",["sz"]="2.5"}
 level=1
 display_name=Boat to Corsica!
 profession=1

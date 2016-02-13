@@ -143,6 +143,7 @@ public:
 	int LoadSpawnTile(Squirrel::Point location);
 	int DespawnAll(int CDefID);
 	int GetHealthPercent(int cid);
+	void WarpPlayer(int CID, int zoneID);
 	void Walk(int CID, Squirrel::Point point, int speed, int range);
 	void WalkThen(int CID, Squirrel::Point point, int speed, int range, Sqrat::Function onArrival);
 	int Spawn(int propID, int creatureID, int flags);

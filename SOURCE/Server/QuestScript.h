@@ -39,6 +39,7 @@ public:
 	unsigned short RunFlags;
 	static const unsigned short FLAG_FINISHED = 1;
 	CreatureInstance *source;
+	CreatureDefinition *sourceDef;
 //	CreatureInstance *target;
 	ScriptCore::NutScriptEvent *activateEvent;
 //	int CurrentQuestAct;
@@ -96,15 +97,15 @@ public:
 	void JoinGuild(int guildDefID);
 };
 
-class WarpToZoneCallback : public ScriptCore::NutCallback
-{
-public:
-	QuestNutPlayer *mNut;
-	int mZone;
-	WarpToZoneCallback(QuestNutPlayer *nut, int zone);
-	~WarpToZoneCallback();
-	bool Execute();
-};
+//class WarpToZoneCallback : public ScriptCore::NutCallback
+//{
+//public:
+//	QuestNutPlayer *mNut;
+//	int mZone;
+//	WarpToZoneCallback(QuestNutPlayer *nut, int zone);
+//	~WarpToZoneCallback();
+//	bool Execute();
+//};
 
 class QuestNutManager
 {

@@ -474,6 +474,7 @@ void InstanceNutPlayer::RegisterInstanceFunctions(HSQUIRRELVM vm, Sqrat::Derived
 	instanceClass->Func(_SC("walk_then"), &InstanceNutPlayer::WalkThen);
 	instanceClass->Func(_SC("despawn"), &InstanceNutPlayer::Despawn);
 	instanceClass->Func(_SC("despawn_all"), &InstanceNutPlayer::DespawnAll);
+	instanceClass->Func(_SC("warp_player"), &InstanceNutPlayer::WarpPlayer);
 	// TODO deprecated
 	instanceClass->Func(_SC("effect"), &InstanceNutPlayer::ParticleAttach);
 	instanceClass->Func(_SC("restore"), &InstanceNutPlayer::DetachSceneryEffect);
@@ -1148,6 +1149,17 @@ void InstanceNutPlayer::WalkThen(int CID, Squirrel::Point point, int speed, int 
 //				new ScriptCore::TimeCondition(fireDelay),
 //				new ScriptCore::SquirrelFunctionCallback(this, function)));
 //}
+
+
+void InstanceNutPlayer::WarpPlayer(int CID, int zoneID) {
+	CreatureInstance *ci = actInst->GetPlayerByID(CID);
+	if(ci) {
+		ci->simulatorPtr->MainCallSetZone(zoneID, 0, true);
+	}
+	/*HaltExecution();
+	source->simulatorPtr->MainCallSetZone(zoneID, 0, true);
+	*/
+}
 
 void InstanceNutPlayer::Walk(int CID, Squirrel::Point point, int speed, int range) {
 

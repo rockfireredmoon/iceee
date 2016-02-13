@@ -70,7 +70,7 @@ QuestNutDef * QuestNutManager::GetScriptByID(int questID) {
 
 std::list<QuestNutPlayer*> QuestNutManager::GetActiveScripts(int CID)
 {
-	return questAct[CID];
+	return questAct.find(CID) == questAct.end() ? std::list<QuestNutPlayer*>() : questAct[CID];
 }
 
 std::list<QuestNutPlayer*> QuestNutManager::GetActiveQuestScripts(int questID)
@@ -127,6 +127,7 @@ QuestNutPlayer * QuestNutManager::AddActiveScript(CreatureInstance *creature, in
 	QuestNutPlayer * player = new QuestNutPlayer();
 	std::string errors;
 	player->source = creature;
+	player->sourceDef = &creature->charPtr->cdef;
 	creature->actInst->questNutScriptList.push_back(player);
 
 	player->Initialize(creature->actInst, def, errors);
@@ -175,7 +176,16 @@ void QuestNutManager::RemoveActiveScript(QuestNutPlayer *registeredPtr) {
 			if(player->source != NULL && player->source->actInst != NULL)
 				player->source->actInst->questNutScriptList.erase(
 						std::remove(player->source->actInst->questNutScriptList.begin(), player->source->actInst->questNutScriptList.end(), player), player->source->actInst->questNutScriptList.end());
-			delete player;
+			g_Log.AddMessageFormat("[REMOVEME] Deleting player");
+			if(player->mActive) {
+				g_Log.AddMessageFormat("[WARNING!] Player is active, cannot delete");
+			}
+			else {
+				// TODO
+				g_Log.AddMessageFormat("[WARNING!] TODO actually delete player");
+				//player->
+				//delete player;
+			}
 			l.erase(it);
 			break;
 		}
@@ -190,6 +200,7 @@ QuestNutPlayer::QuestNutPlayer()
 {
 	activate = Squirrel::Vector3I(0,0,0);
 	source = NULL;
+	sourceDef = NULL;
 //	target = NULL;
 	activateEvent = NULL;
 	RunFlags = 0;
@@ -660,7 +671,8 @@ void QuestNutPlayer::WarpZone(int zoneID) {
 	/*HaltExecution();
 	source->simulatorPtr->MainCallSetZone(zoneID, 0, true);
 	*/
-	QueueAdd(new ScriptCore::NutScriptEvent(new ScriptCore::TimeCondition(0), new WarpToZoneCallback(this, zoneID)));
+	ClearQueue();
+	source->simulatorPtr->MainCallSetZone(zoneID, 0, true);
 }
 
 bool QuestNutPlayer::IsInteracting(int cdefID) {
@@ -842,20 +854,21 @@ void QuestScriptPlayer::TriggerAbort(void)
 		mExecuting = false;
 }
 
-WarpToZoneCallback :: WarpToZoneCallback(QuestNutPlayer *nut, int zone) {
-	mNut = nut;
-	mZone = zone;
-}
-
-WarpToZoneCallback :: ~WarpToZoneCallback() {
-	mNut = NULL;
-}
-
-bool WarpToZoneCallback :: Execute() {
-	if(mNut->source != NULL && mNut->source->simulatorPtr != NULL)
-		mNut->source->simulatorPtr->MainCallSetZone(mZone, 0, true);
-	return true;
-}
+//WarpToZoneCallback :: WarpToZoneCallback(QuestNutPlayer *nut, int zone) {
+//	mNut = nut;
+//	mZone = zone;
+//}
+//
+//WarpToZoneCallback :: ~WarpToZoneCallback() {
+//	mNut = NULL;
+//}
+//
+//bool WarpToZoneCallback :: Execute() {
+//	if(mNut->source != NULL && mNut->source->simulatorPtr != NULL) {
+//		mNut->source->simulatorPtr->MainCallSetZone(mZone, 0, true);
+//	}
+//	return true;
+//}
 
 
 void LoadQuestScripts(const char *filename)

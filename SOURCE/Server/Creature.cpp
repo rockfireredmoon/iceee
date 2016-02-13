@@ -3704,7 +3704,6 @@ void CreatureInstance :: CancelPending_Ex(ActiveAbilityInfo *ability)
 			break;
 		}
 	}
-
 	if(registeredAbility == true)
 	{
 		int size = 0;

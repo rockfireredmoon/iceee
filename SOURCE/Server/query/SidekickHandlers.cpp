@@ -90,7 +90,7 @@ int SidekickAddHandler::handleQuery(SimulatorThread *sim,
 	else
 		AddSidekick(sim, CDefID, type);
 
-	//UpdateSidekick(SidekickObject::PET, CDefID);
+	//UpdateSidekick(SidekickObject::|PET, CDefID);
 
 	wpos += PrepExt_QueryResponseString(&sim->SendBuf[wpos], query->ID, "OK");
 	return wpos;

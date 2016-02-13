@@ -309,17 +309,25 @@ namespace ScriptCore
 	}
 
 	void NutPlayer::ClearQueue() {
-		std::vector<ScriptCore::NutScriptEvent*>::iterator it;
-		for(it = mQueue.begin(); it != mQueue.end(); ++it)
-			delete *it;
-		for(it = mQueueAdd.begin(); it != mQueueAdd.end(); ++it)
-			delete *it;
-		for(it = mQueueInsert.begin(); it != mQueueInsert.end(); ++it)
-			delete *it;
-		mQueue.clear();
-		mQueueAdd.clear();
-		mQueueInsert.clear();
-		mQueueRemove.clear();
+		if(mHalting) {
+			g_Log.AddMessageFormat("[WARNING] Attempt to clear queue while halting");
+		}
+		else if(mExecuting) {
+			mClear = true;
+		}
+		else {
+			std::vector<ScriptCore::NutScriptEvent*>::iterator it;
+			for(it = mQueue.begin(); it != mQueue.end(); ++it)
+				delete *it;
+			for(it = mQueueAdd.begin(); it != mQueueAdd.end(); ++it)
+				delete *it;
+			for(it = mQueueInsert.begin(); it != mQueueInsert.end(); ++it)
+				delete *it;
+			mQueue.clear();
+			mQueueAdd.clear();
+			mQueueInsert.clear();
+			mQueueRemove.clear();
+		}
 	}
 
 	void NutPlayer::Initialize(NutDef *defPtr, std::string &errors) {
@@ -547,6 +555,7 @@ namespace ScriptCore
 			return;
 		}
 
+		// TODO not sure about this ...
 		mActive = true;
 
 		// TODO somehow reset state of script
@@ -596,6 +605,14 @@ namespace ScriptCore
 
 	void NutPlayer :: HaltExecution(void)
 	{
+		if(mHalting) {
+			g_Log.AddMessageFormat("[WARNING] Attempt to halt halting script %s.", def->mSourceFile.c_str());
+			return;
+		}
+		if(mActive) {
+			g_Log.AddMessageFormat("[WARNING] Attempt to halt inactive script %s.", def->mSourceFile.c_str());
+			return;
+		}
 		if(mRunning) {
 			/* If we reached here via a script function, we already executing and don't want to close the VM.
 			 * In this case the halt is queued instance
@@ -611,26 +628,29 @@ namespace ScriptCore
 				}
 			}
 
+			ClearQueue();
 			Halt();
+			mHalting = true;
 			return;
 		}
+		mHalting = true;
 		HaltVM();
 	}
 
 	void NutPlayer::HaltVM() {
-		if(mActive && !mHalting) {
-			mHalting = true;
+		if(mActive) {
 			vector<ScriptParam> v;
 			RunFunction("on_halt", v, true);
 			HaltDerivedExecution();
 			mActive = false;
+			mExecuting = false;
+			mHalting = false;
 			ClearQueue();
 			sq_close(vm);
 			if(def->HasFlag(NutDef::FLAG_REPORT_END))
 				PrintMessage("Script [%s] has ended", def->scriptName.c_str());
 //			else
 //				g_Log.AddMessageFormat("[REMOVEME] VM Halted!");
-			mHalting = false;
 			HaltedDerived();
 		}
 	}
@@ -680,7 +700,8 @@ namespace ScriptCore
 			sq_call(vm,parms.size() + 1,SQFalse,SQTrue); //calls the function
 		}
 //		g_Log.AddMessageFormat("[REMOVEME] Before top function %s in %s (active: %s)", name.c_str(), def->mSourceFile.c_str(), mActive ? "yes" : "no");
-		sq_settop(vm,top);
+		if(mActive && !mHalting)
+			sq_settop(vm,top);
 
 		if(time) {
 			mCalls++;
@@ -709,13 +730,13 @@ namespace ScriptCore
 			}
 		}
 
-		if(mQueue.size() > 0) {
+		if(mActive && !mHalting && mQueue.size() > 0 && index < mQueue.size()) {
 //			g_Log.AddMessageFormat("[REMOVEME] MAYBE RETRY active: %s", mActive ? "yes" : "no");
 			/*
 			 * If the VM wasn't suspended while handling this event, and the
 			 * event returned false, then we requeue this event for retry
 			 */
-			if(mActive && !res && sq_getvmstate(vm) != SQ_VMSTATE_SUSPENDED) {
+			if(!res && sq_getvmstate(vm) != SQ_VMSTATE_SUSPENDED) {
 //				g_Log.AddMessageFormat("[REMOVEME] RETRY active: %s", mActive ? "yes" : "no");
 				mQueueAdd.push_back(nse);
 				mQueue.erase(mQueue.begin() + index);
@@ -740,7 +761,7 @@ namespace ScriptCore
 		}
 		bool ok = false;
 		mExecuting = true;
-		for(size_t i = 0; mActive && i < mQueue.size(); i++)
+		for(size_t i = 0; !mClear && mActive && i < mQueue.size(); i++)
 		{
 			NutScriptEvent *nse = mQueue[i];
 
@@ -757,21 +778,30 @@ namespace ScriptCore
 			}
 		}
 
-		// Apply any changes to the queue made while running the queued event
-		for(size_t i = 0; i < mQueueRemove.size(); i++)	{
-			NutScriptEvent *nse = mQueueRemove[i];
-			mQueue.erase(std::remove(mQueue.begin(), mQueue.end(), nse), mQueue.end());
-			mQueueAdd.erase(std::remove(mQueueAdd.begin(), mQueueAdd.end(), nse), mQueueAdd.end());
-			mQueueInsert.erase(std::remove(mQueueInsert.begin(), mQueueInsert.end(), nse), mQueueInsert.end());
-		}
-		mQueue.insert(mQueue.end(), mQueueAdd.begin(), mQueueAdd.end());
-		mQueue.insert(mQueue.begin(), mQueueInsert.begin(), mQueueInsert.end());
-		mQueueAdd.clear();
-		mQueueInsert.clear();
-		mQueueRemove.clear();
-
 		// All done
 		mExecuting = false;
+
+		if(mClear) {
+			ClearQueue();
+			mClear = false;
+		}
+		else {
+
+			// Apply any changes to the queue made while running the queued event
+			for(size_t i = 0; i < mQueueRemove.size(); i++)	{
+				NutScriptEvent *nse = mQueueRemove[i];
+				mQueue.erase(std::remove(mQueue.begin(), mQueue.end(), nse), mQueue.end());
+				mQueueAdd.erase(std::remove(mQueueAdd.begin(), mQueueAdd.end(), nse), mQueueAdd.end());
+				mQueueInsert.erase(std::remove(mQueueInsert.begin(), mQueueInsert.end(), nse), mQueueInsert.end());
+				delete nse;
+			}
+			mQueue.insert(mQueue.end(), mQueueAdd.begin(), mQueueAdd.end());
+			mQueue.insert(mQueue.begin(), mQueueInsert.begin(), mQueueInsert.end());
+
+			mQueueAdd.clear();
+			mQueueInsert.clear();
+			mQueueRemove.clear();
+		}
 
 		// If nothing was executed, and the GC counter has been reached
 		if(mActive && !ok && mGCCounter > g_Config.SquirrelGCCallCount) {
@@ -801,6 +831,10 @@ namespace ScriptCore
 
 	void NutPlayer::QueueInsert(NutScriptEvent *evt)
 	{
+		if(mHalting) {
+			PrintMessage("[WARNING] Script event when halting");
+			return;
+		}
 		if(!mActive) {
 			PrintMessage("[WARNING] Script event when not active");
 			return;
@@ -854,6 +888,10 @@ namespace ScriptCore
 
 	void NutPlayer::QueueAdd(NutScriptEvent *evt)
 	{
+		if(mHalting) {
+			PrintMessage("[WARNING] Script event when halting");
+			return;
+		}
 		if(!mActive) {
 			PrintMessage("[WARNING] Script event when not active");
 			return;

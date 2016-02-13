@@ -235,10 +235,13 @@ _root.addListener(Preloader);
 Screen.setOverlayVisible("Preloader/Overlay", true);
 
 local xargs = {};
+
+local USE_HACK = true;
+
 foreach( k, v in _args )
 {
 	print("ICE! Arg: " + k + " = " + v + "\n");
-	if(k == "src") {
+	if(k == "src" && USE_HACK) {
 	
 		/* A hacky way to get parameters set via the URL. Using the 0.8.6 client,
 		 * I cannot find a way to pass arguments. Greths documentation suggests something
@@ -283,6 +286,13 @@ if( "src" in _args )
 	/*if(Preloader.startsWith(src, _cache.getBaseURL())) {
 		src = src.slice(_cache.getBaseURL().len() + 1);
 	}*/
+	
+	/*
+	src = "file://Release/" + src.slice(15);
+	
+	_cache = MediaCache("xxxx", "file://Release/Current"); 
+	_cache.addListener(Preloader);
+	*/
 	
 	print("ICE! Fetching " + src + " from " + _cache.getBaseURL() + "\n");
 	_cache.fetch(src);

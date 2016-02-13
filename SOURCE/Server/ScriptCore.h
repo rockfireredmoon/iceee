@@ -438,6 +438,7 @@ public:
 	bool mHalting; //If true, the script is currently halting (subsequent halts will do nothing).
 	bool mExecuting;
 	bool mRunning; //If true, a function call is currently running (will make halts be queued)
+	bool mClear;
 
 	std::vector<std::string> mArgs; // Scripts may be called with arguments. This vector should be set before initialising the player
 
