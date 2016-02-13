@@ -63,4 +63,5 @@ Pos=11541.4,413.12,13734.9
 Orient=0,0.85821,0,0.513299
 Scale=1,1,1
 spawnPackage=#F7892
+despawnTime=5
 
