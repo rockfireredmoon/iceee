@@ -3583,8 +3583,6 @@ class this.SceneObject extends this.MessageBroadcaster
 
 	function useCreature( so )
 	{
-		print("ICE! Use creature\n");
-		
 		local pvpable = so.hasStatusEffect(this.StatusEffects.PVPABLE);
 		local creatureUsed = true;
 		::_avatar.setResetTabTarget(true);
@@ -3722,21 +3720,12 @@ class this.SceneObject extends this.MessageBroadcaster
 			}
 			else if (so.getMeta("auctioneer"))
 			{
-				print("ICE! AUCTIONEER!\n");
 				local auctionScreen = this.Screens.get("AuctionHouse", true);
-
 				if (auctionScreen)
 				{
-					print("ICE! AUCTIONEER - Found AH screen!\n");
 					auctionScreen.setAuctioneerId(so.getID());
-					print("ICE! AUCTIONEER - Showing AH screen!\n");
 					auctionScreen.setVisible(true);
-					print("ICE! AUCTIONEER - Shown AH screen!\n");
 				}
-				else {
-					print("ICE! AUCTIONEER - No AH screen!\n");
-				}
-
 				useageType = "Auction";
 			}
 			else if (so.getMeta("clan_registrar"))
@@ -3831,10 +3820,6 @@ class this.SceneObject extends this.MessageBroadcaster
 				{
 					this.IGIS.info("You cannot interact with this when you\'re in combat.");
 				}
-			}
-			else 
-			{
-				print("ICE! Non usable creature");
 			}
 		}
 		else if (!so.isDead())

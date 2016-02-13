@@ -1990,6 +1990,7 @@ might_regen=1
 appearance=n4:{["sk"]={["main"]="104AC1"},["c"]="Horde-Invisible_Biped",["sz"]="0.01"}
 level=1
 display_name=Target
+hide_nameboard=1
 profession=1
 creature_category=Mortal
 ai_package=example

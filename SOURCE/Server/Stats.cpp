@@ -189,10 +189,10 @@ StatDefinition StatList[] =
 	{STAT::HEALTH_REGEN                , StatType::SHORT,    "short",  "health_regen",      "Health Regen",      NULL, 0, msizeof(CharacterStatSet, health_regen), offsetof(CharacterStatSet, health_regen), SUT_None },
 	{STAT::BLEEDING                    , StatType::SHORT,    "short",  "bleeding",          "Bleeding",          NULL, 0, msizeof(CharacterStatSet, bleeding), offsetof(CharacterStatSet, bleeding), SUT_None },
 	{STAT::DAMAGE_SHIELD               , StatType::INTEGER,    "int",    "damage_shield",     "Damage Shield",     NULL, 0, msizeof(CharacterStatSet, damage_shield), offsetof(CharacterStatSet, damage_shield), SUT_None },
-	{STAT::HIDE_NAMEBOARD              , StatType::SHORT,    "short",  "hide_nameboard",    "Hide Nameboard",    NULL, 0, msizeof(CharacterStatSet, hide_nameboard), offsetof(CharacterStatSet, hide_nameboard), SUT_None },
+	{STAT::HIDE_NAMEBOARD              , StatType::SHORT,    "short",  "hide_nameboard",    "Hide Nameboard",    NULL, 0, msizeof(CharacterStatSet, hide_nameboard), offsetof(CharacterStatSet, hide_nameboard), SUT_All },
 
 	//Note: Does not exist in 0.8.6.  Does exist in 0.8.8.
-	{STAT::HIDE_MINIMAP                , StatType::SHORT,    "short",  "hide_minimap",      "Hide Minimap",      NULL, 0, msizeof(CharacterStatSet, hide_minimap), offsetof(CharacterStatSet, hide_minimap), SUT_CDefExt },
+	{STAT::HIDE_MINIMAP                , StatType::SHORT,    "short",  "hide_minimap",      "Hide Minimap",      NULL, 0, msizeof(CharacterStatSet, hide_minimap), offsetof(CharacterStatSet, hide_minimap), SUT_All },
 
 	//ICEEE
 	{STAT::CREDIT_DROPS                , StatType::SHORT,    "short",  "credit_drops",          "Credit Drops",  NULL, 0, msizeof(CharacterStatSet, credit_drops), offsetof(CharacterStatSet, credit_drops), SUT_All },

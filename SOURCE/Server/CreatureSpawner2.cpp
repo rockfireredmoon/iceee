@@ -638,8 +638,9 @@ CreatureInstance * SpawnTile :: SpawnCreature(ActiveInstance *inst, ActiveSpawne
 		ptr->css.vis_weapon = visw;
 	//}
 
-	if(SpawnFlags & SpawnPackageDef::FLAG_HIDE_NAMEBOARD)
+	if(SpawnFlags & SpawnPackageDef::FLAG_HIDE_NAMEBOARD) {
 		ptr->css.hide_nameboard = 1;
+	}
 
 	if(SpawnFlags & SpawnPackageDef::FLAG_HIDEMAP)
 		ptr->css.hide_minimap = 1;
