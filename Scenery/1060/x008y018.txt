@@ -1,12 +1,4 @@
 [ENTRY]
-ID=1130867
-Asset=Prop-Mother_Shard#Prop-Mother_Shard
-Name=Untitled
-Pos=15608.9,1188.13,34636.7
-Orient=0.703498,-0.142444,0.0925527,0.690098
-Scale=2,2,2
-
-[ENTRY]
 ID=1131225
 Asset=Prop-Battlefield1#Prop-Battlefield_Stone
 Name=Untitled
@@ -423,8 +415,16 @@ spawnPackage=#F1971
 [ENTRY]
 ID=1132633
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=16702.8,1202.85,36455.4
 Orient=0,0,0,1
 Scale=1,1,1
+
+[ENTRY]
+ID=1133396
+Asset=Prop-Battlefield_Stone
+Name=
+Pos=15596.7,1175.25,34702.7
+Orient=-0.29552,0,-0,0.955337
+Scale=8,8,8
 

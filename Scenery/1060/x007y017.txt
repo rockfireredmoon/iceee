@@ -1,12 +1,4 @@
 [ENTRY]
-ID=1130868
-Asset=Prop-Mother_Shard#Prop-Mother_Shard
-Name=Untitled
-Pos=14777.7,1223.81,33095.8
-Orient=-0.00225908,-0.112418,-0.712104,0.693012
-Scale=3,3,3
-
-[ENTRY]
 ID=1131432
 Asset=Prop-Marker1#Prop-Monster_Marker
 Name=Untitled
@@ -41,171 +33,179 @@ Scale=1,1,1
 [ENTRY]
 ID=1132227
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=14619.9,1221.62,34190.4
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#2040, #2041
+spawnPackage=#2040
 
 [ENTRY]
 ID=1132228
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=14620.8,1192.53,34365.5
 Orient=0,0.912764,0,0.408487
 Scale=1,1,1
-spawnPackage=#2040, #2041
+spawnPackage=#2040
 
 [ENTRY]
 ID=1132229
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=14251.5,1178.82,34272.7
 Orient=0,-0.342898,0,0.939373
 Scale=1,1,1
-spawnPackage=#2040, #2041
+spawnPackage=#2040
 
 [ENTRY]
 ID=1132230
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=14853.2,1185.76,34116.4
 Orient=0,-0.757843,0,0.652438
 Scale=1,1,1
-spawnPackage=#2040, #2041
+spawnPackage=#2040
 
 [ENTRY]
 ID=1132231
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=14866.6,1182.33,34280.3
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#2040, #2041
+spawnPackage=#2040
 
 [ENTRY]
 ID=1132232
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=14880.5,1188.57,34535.6
 Orient=0,0.651834,0,0.758362
 Scale=1,1,1
-spawnPackage=#2040, #2041
+spawnPackage=#2040
 
 [ENTRY]
 ID=1132233
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=15110.5,1211.04,34395.5
 Orient=0,-0.744643,0,0.667463
 Scale=1,1,1
-spawnPackage=#2040, #2041
+spawnPackage=#2040
 
 [ENTRY]
 ID=1132244
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=15256.9,1223.14,34535
 Orient=0,-0.985719,0,-0.168397
 Scale=1,1,1
-spawnPackage=#2030, #2031
+spawnPackage=#2030
 
 [ENTRY]
 ID=1132247
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=14386.1,1129.41,33620.8
 Orient=0,-0.792563,0,0.609791
 Scale=1,1,1
-spawnPackage=#2040, #2041
+spawnPackage=#2040
 
 [ENTRY]
 ID=1132248
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=14616.8,1142.52,33498.6
 Orient=0,-0.921371,0,-0.388685
 Scale=1,1,1
-spawnPackage=#2040, #2041
+spawnPackage=#2040
 
 [ENTRY]
 ID=1132249
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=14848.6,1189.21,33622.6
 Orient=0,-0.999415,0,-0.0341969
 Scale=1,1,1
-spawnPackage=#2040, #2041
+spawnPackage=#2040
 
 [ENTRY]
 ID=1132250
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=14664.1,1155.99,33723.7
 Orient=0,0.805544,0,-0.592536
 Scale=1,1,1
-spawnPackage=#2040,#2041
+spawnPackage=#2040
 
 [ENTRY]
 ID=1132251
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=14394.5,1178.64,33888.8
 Orient=0,0.620986,0,0.783822
 Scale=1,1,1
-spawnPackage=#2040, #2041
+spawnPackage=#2040
 
 [ENTRY]
 ID=1132252
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=15017.1,1211.22,33928.6
 Orient=0,-0.996738,0,0.0807084
 Scale=1,1,1
-spawnPackage=#2040, #2041
+spawnPackage=#2040
 
 [ENTRY]
 ID=1132253
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=15231.2,1270.56,33816.1
 Orient=0,-0.881958,0,0.471328
 Scale=1,1,1
-spawnPackage=#2040, #2041
+spawnPackage=#2040
 
 [ENTRY]
 ID=1132254
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=14706.2,1223.16,33195.2
 Orient=0,-0.964884,0,0.262678
 Scale=1,1,1
-spawnPackage=#2040, #2041
+spawnPackage=#2040
 
 [ENTRY]
 ID=1132255
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=14915.4,1197.18,33362.2
 Orient=0,0.999983,0,0.00579636
 Scale=1,1,1
-spawnPackage=#2040, #2041
+spawnPackage=#2040
 
 [ENTRY]
 ID=1132256
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=14448.9,1154.53,33264.1
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#2040, #2041
+spawnPackage=#2040
 
 [ENTRY]
 ID=1132266
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=15277.8,1127.52,33241.7
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#2027, 2028
+spawnPackage=#2027
+
+[ENTRY]
+ID=1133395
+Asset=Prop-Battlefield_Stone
+Name=
+Pos=14942.1,1217.43,33101.9
+Orient=0.154166,0.0401873,-0.249024,0.955304
+Scale=7,7,7
 

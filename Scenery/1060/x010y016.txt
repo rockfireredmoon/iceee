@@ -302,8 +302,24 @@ spawnPackage=#2059
 [ENTRY]
 ID=1133381
 Asset=Prop-Fog_White
-Name=
-Pos=20217.6,978.686,31786.8
-Orient=0,0,0,1
+Name=Untitled
+Pos=20230.5,979.155,31783.6
+Orient=-0.0149994,0,0,0.999888
 Scale=4,4,4
+
+[ENTRY]
+ID=1133403
+Asset=Par-Gate_Fog-Emitter
+Name=
+Pos=20211.8,1002.82,31781.1
+Orient=0,-0.514136,0,0.857709
+Scale=1,1,1
+
+[ENTRY]
+ID=1133404
+Asset=Par-Hadrian_Glow-Emitter
+Name=
+Pos=20213.5,1004.45,31777.2
+Orient=0,0,0,1
+Scale=1,1,1
 

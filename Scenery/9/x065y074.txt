@@ -1,6 +1,15 @@
 [ENTRY]
+ID=1133406
+Asset=Bldg-Urban-Small_Facade1?ATS=ATS-Camelot
+Name=
+Pos=48909.2,342.794,55524.3
+Orient=0,-0.773915,0,0.63329
+Scale=1,1,1
+
+[ENTRY]
 ID=150999788
 Asset=Sick-Web_Forest
+Name=Untitled
 Pos=48937.7,164.263,55989
 Orient=0,0,0,1
 Scale=1,1,1
@@ -9,6 +18,7 @@ Flags=1
 [ENTRY]
 ID=150999789
 Asset=Sick-Web_Forest
+Name=Untitled
 Pos=49422.1,346.767,55891
 Orient=0,0,0,1
 Scale=1,1,1
@@ -17,6 +27,7 @@ Flags=1
 [ENTRY]
 ID=151001776
 Asset=Prop-Wooden_Tower
+Name=Untitled
 Pos=48851.7,324.672,55586
 Orient=0,-0.109779,0,0.993956
 Scale=1.775,1.775,1.775
@@ -25,6 +36,7 @@ Flags=1
 [ENTRY]
 ID=151001784
 Asset=Prop-Wooden_Wall
+Name=Untitled
 Pos=49010.3,349.645,55611
 Orient=0,-0.99794,0,-0.0641599
 Scale=1.4,1.4,1.4
@@ -33,6 +45,7 @@ Flags=1
 [ENTRY]
 ID=151001785
 Asset=Prop-Wooden_Wall
+Name=Untitled
 Pos=49329.3,392.592,55620
 Orient=0,-0.995881,0,0.0906714
 Scale=1.375,1.375,1.375
@@ -41,6 +54,7 @@ Flags=1
 [ENTRY]
 ID=151001787
 Asset=Prop-Wooden_Tower
+Name=Untitled
 Pos=49171.5,389.04,55635
 Orient=0,-0.0599647,0,0.998201
 Scale=1.6,1.6,1.6
@@ -49,6 +63,7 @@ Flags=1
 [ENTRY]
 ID=151001873
 Asset=Prop-Bush-Large3
+Name=Untitled
 Pos=48808.3,338.29,55565
 Orient=0,-0.792562,0,0.609791
 Scale=2.225,2.225,2.225
@@ -57,25 +72,27 @@ Flags=1
 [ENTRY]
 ID=151053608
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=48855.2,173.098,56150
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=3a_sectionB6_general
-outerRadius=10
 
 [ENTRY]
 ID=151053609
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=49073.1,161.626,55865
 Orient=0,-0.999784,0,0.0207949
 Scale=1,1,1
+spawnPackage=3a_sectionB6_general
 links_count=1
 link=151053610,1
-spawnPackage=3a_sectionB6_general
 
 [ENTRY]
 ID=151053610
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=48873.4,168.933,55879
 Orient=0,0,0,1
 Scale=1,1,1
@@ -86,6 +103,7 @@ link=151053611,1
 [ENTRY]
 ID=151053611
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=48850.7,238.308,55717
 Orient=0,0,0,1
 Scale=1,1,1
@@ -95,16 +113,18 @@ link=151053610,1
 [ENTRY]
 ID=151053727
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=49019.3,217.321,56218
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=3a_sectionB6_general
 links_count=1
 link=151053729,1
-spawnPackage=3a_sectionB6_general
 
 [ENTRY]
 ID=151053729
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=49202.5,260.639,56217
 Orient=0,0,0,1
 Scale=1,1,1
@@ -114,15 +134,16 @@ link=151053727,1
 [ENTRY]
 ID=151053733
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=49425.8,287.485,56141
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=3a_sectionB6_general
-outerRadius=10
 
 [ENTRY]
 ID=151053739
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=49001.3,351.678,55536
 Orient=0,0,0,1
 Scale=1,1,1
@@ -133,6 +154,7 @@ link=151053740,1
 [ENTRY]
 ID=151053740
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=49092.2,366.288,55564
 Orient=0,0,0,1
 Scale=1,1,1
@@ -143,6 +165,7 @@ link=151053742,1
 [ENTRY]
 ID=151053742
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=49203.6,390.822,55554
 Orient=0,0,0,1
 Scale=1,1,1
@@ -153,10 +176,11 @@ link=151053743,1
 [ENTRY]
 ID=151053749
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=49314,268.231,56247
 Orient=0,-0.773915,0,0.63329
 Scale=1,1,1
+spawnPackage=3a_sectionB6_general
 links_count=1
 link=151053750,1
-spawnPackage=3a_sectionB6_general
 
