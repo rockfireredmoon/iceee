@@ -436,9 +436,9 @@ public:
 	NutDef *def; //Pointer to the script definition that this player is executing.
 	bool mActive; //If true, the script is considered to be running (has not terminated).
 	bool mHalting; //If true, the script is currently halting (subsequent halts will do nothing).
-	bool mExecuting;
 	bool mRunning; //If true, a function call is currently running (will make halts be queued)
 	bool mClear;
+	NutScriptEvent *mExecutingEvent; // If not NULL, will be the currently executing event
 
 	std::vector<std::string> mArgs; // Scripts may be called with arguments. This vector should be set before initialising the player
 
@@ -463,7 +463,9 @@ public:
 	void RunScript(void);                //Run the script until it ends.
 	void FullReset(void);
 	void Halt(void);
+	void HaltVM();
 	int GC(void);
+	std::string GetStatus();
 	bool JumpToLabel(const char *name);
 	bool JumpToLabel(const char *name, std::vector<ScriptParam> parms);
 	bool RunFunction(std::string name, std::vector<ScriptParam> parms, bool time);
@@ -500,7 +502,6 @@ public:
 
 private:
 	bool ExecEvent(NutScriptEvent *nse, int index);
-	void HaltVM();
 
 protected:
 	static const size_t MAX_QUEUE_SIZE = 16;

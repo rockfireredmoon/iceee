@@ -182,9 +182,8 @@ void QuestNutManager::RemoveActiveScript(QuestNutPlayer *registeredPtr) {
 			}
 			else {
 				// TODO
-				g_Log.AddMessageFormat("[WARNING!] TODO actually delete player");
-				//player->
-				//delete player;
+				//g_Log.AddMessageFormat("[WARNING!] TODO actually delete player");
+				delete player;
 			}
 			l.erase(it);
 			break;
@@ -363,6 +362,10 @@ void QuestNutPlayer::RegisterQuestFunctions(NutPlayer *instance, Sqrat::DerivedC
 	instanceClass->Func(_SC("abandon"), &QuestNutPlayer::Abandon);
 	instanceClass->Func(_SC("reset_objective"), &QuestNutPlayer::ResetObjective);
 	instanceClass->Func(_SC("join"), &QuestNutPlayer::Join);
+	instanceClass->Func(_SC("scatter_sidekicks"), &QuestNutPlayer::ScatterSidekicks);
+	instanceClass->Func(_SC("call_sidekicks"), &QuestNutPlayer::CallSidekicks);
+	instanceClass->Func(_SC("sidekicks_attack"), &QuestNutPlayer::SidekicksAttack);
+	instanceClass->Func(_SC("sidekicks_defend"), &QuestNutPlayer::SidekicksDefend);
 	instanceClass->Func(_SC("this_zone"), &QuestNutPlayer::ThisZone);
 	instanceClass->Func(_SC("info"), &QuestNutPlayer::Info);
 	instanceClass->Func(_SC("uinfo"), &QuestNutPlayer::Info);
@@ -416,7 +419,7 @@ int QuestNutPlayer::GetTransformed() {
 }
 
 void QuestNutPlayer::Say(int CID, const char *message) {
-	CreatureInstance *creature = source->actInst->GetNPCInstanceByCID(CID);
+	CreatureInstance *creature = source->actInst->GetNPCorSidekickInstanceByCID(CID);
 	if(creature != NULL) {
 		creature->SendSay(message);
 	}
@@ -579,6 +582,28 @@ int QuestNutPlayer::AddQuest(QuestDefinition questDefinition) {
 	SessionVarsChangeData.AddChange();
 	QuestDef.AddIfValid(questDefinition);
 	return questID;
+}
+
+void QuestNutPlayer::SidekicksDefend() {
+	source->RemoveNoncombatantStatus("skattack");
+	source->simulatorPtr->AddMessage((long) source, 0, BCM_SidekickDefend);
+	source->simulatorPtr->PendingSend = true;
+}
+
+void QuestNutPlayer::SidekicksAttack() {
+	source->RemoveNoncombatantStatus("skattack");
+	source->simulatorPtr->AddMessage((long) source, 0, BCM_SidekickAttack);
+	source->simulatorPtr->PendingSend = true;
+}
+
+void QuestNutPlayer::CallSidekicks() {
+	source->simulatorPtr->AddMessage((long) source, 0, BCM_SidekickCall);
+	source->simulatorPtr->PendingSend = true;
+}
+
+void QuestNutPlayer::ScatterSidekicks() {
+	source->simulatorPtr->AddMessage((long) source, 0, BCM_SidekickScatter);
+	source->simulatorPtr->PendingSend = true;
 }
 
 int QuestNutPlayer::RecruitSidekick(int CID, int type, int param, int hate) {

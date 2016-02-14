@@ -67,6 +67,10 @@ public:
 	QuestObjective KillObjective(std::string description, Sqrat::Array &cdefIds, int amount, std::string completeText, std::string markerLocations);
 	QuestObjective TalkObjective(std::string description, int creatureDefId, std::string markerLocations);
 
+	void ScatterSidekicks();
+	void CallSidekicks();
+	void SidekicksAttack();
+	void SidekicksDefend();
 	int RecruitSidekick(int cid, int type, int param, int hate);
 	int AddSidekick(int cdefID, int type, int param, int hate);
 	int RemoveSidekick(int sidekickID);

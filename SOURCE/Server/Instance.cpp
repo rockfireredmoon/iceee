@@ -1093,6 +1093,9 @@ int ActiveInstance :: ProcessMessage(MessageComponent *msg)
 	case BCM_SidekickAttack:
 		SidekickAttack((CreatureInstance*)msg->param1);
 		break;
+	case BCM_SidekickDefend:
+		SidekickDefend((CreatureInstance*)msg->param1);
+		break;
 	case BCM_SidekickCall:
 		SidekickCall((CreatureInstance*)msg->param1);
 		break;
@@ -1725,6 +1728,18 @@ CreatureInstance * ActiveInstance :: GetInstanceByCID(int CID)
 	return NULL;
 }
 
+CreatureInstance * ActiveInstance :: GetNPCorSidekickInstanceByCID(int CID)
+{
+	CreatureInstance *inst = GetNPCInstanceByCID(CID);
+	if(inst == NULL) {
+		for(size_t i = 0; i < SidekickListPtr.size(); i++)
+			if(SidekickListPtr[i]->CreatureID == CID)
+				return SidekickListPtr[i];
+	}
+
+	return NULL;
+}
+
 CreatureInstance * ActiveInstance :: GetNPCInstanceByCID(int CID)
 {
 #ifndef CREATUREMAP
@@ -2155,6 +2170,16 @@ void ActiveInstance :: RunDeath(CreatureInstance *object)
 			}
 		}
 		else {
+
+			if((object->serverFlags & ServerFlags::IsSidekick) && object->AnchorObject != NULL) {
+				std::list<QuestScript::QuestNutPlayer*> l = g_QuestNutManager.GetActiveScripts(object->CreatureID);
+				std::vector<ScriptCore::ScriptParam> p;
+				p.push_back(object->CreatureID);
+				for(std::list<QuestScript::QuestNutPlayer*>::iterator it = l.begin(); it != l.end(); ++it) {
+					(*it)->JumpToLabel("on_sidekick_death", p);
+				}
+			}
+
 			p.push_back(object->CreatureDefID);
 			nutScriptPlayer->JumpToLabel("on_death", p);
 			QuestScript::QuestNutPlayer *nut = GetSimulatorQuestNutScript(object->simulatorPtr);
@@ -2627,31 +2652,37 @@ int ActiveInstance :: SidekickRemoveOne(CreatureInstance* host, vector<SidekickO
 	//to cancel pending abilities.
 	int size = 0;
 	list<CreatureInstance>::iterator it;
+	int found = 0;
 	for(it = SidekickList.begin(); it != SidekickList.end(); ++it)
 	{
 		if(it->AnchorObject == host)
 			if(&*it == host->CurrentTarget.targ)
 			{
-				for(size_t i = 0; i < sidekickList->size(); i++)
-				{
-					if(sidekickList->at(i).CDefID == it->CreatureDefID)
+				if(found == 0) {
+					for(size_t i = 0; i < sidekickList->size(); i++)
 					{
-						sidekickList->erase(sidekickList->begin() + i);
-						break;
+						if(sidekickList->at(i).CDefID == it->CreatureDefID)
+						{
+							sidekickList->erase(sidekickList->begin() + i);
+							break;
+						}
 					}
+
+					size = PrepExt_RemoveCreature(GAuxBuf, it->CreatureID);
+					LSendToLocalSimulator(GAuxBuf, size, host->CurrentX, host->CurrentZ);
+
+					EraseAllCreatureReference(&*it);
+
+					SidekickList.erase(it);
+					RebuildSidekickList();
 				}
-
-				size = PrepExt_RemoveCreature(GAuxBuf, it->CreatureID);
-				LSendToLocalSimulator(GAuxBuf, size, host->CurrentX, host->CurrentZ);
-
-				EraseAllCreatureReference(&*it);
-
-				SidekickList.erase(it);
-				RebuildSidekickList();
-				return 1;
+				found++;
 			}
 	}
-	return -1;
+	if(found == 0) {
+		host->SetServerFlag(ServerFlags::Defended, -1);
+	}
+	return found > 0 ? 1 : -1;
 }
 
 int ActiveInstance :: SidekickRemoveAll(CreatureInstance* host, vector<SidekickObject> *sidekickList)
@@ -2663,6 +2694,7 @@ int ActiveInstance :: SidekickRemoveAll(CreatureInstance* host, vector<SidekickO
 	bool bActive = false;
 	list<CreatureInstance>::iterator it;
 	int debug_iter = 0;
+	host->SetServerFlag(ServerFlags::Defended, -1);
 	do
 	{
 		bActive = false;
@@ -2774,24 +2806,55 @@ void ActiveInstance :: SidekickAttack(CreatureInstance* host)
 {
 	//All sidekicks registered with the given host will assume its current target.
 	size_t a;
+	host->SetServerFlag(ServerFlags::Defended, -1);
 	for(a = 0; a < SidekickListPtr.size(); a++) {
 		if(SidekickListPtr[a]->AnchorObject == host) {
+			SidekickListPtr[a]->SetServerFlag(ServerFlags::Defender, -1);
 			SidekickListPtr[a]->SetServerFlag(ServerFlags::Noncombatant, -1);
 			SidekickListPtr[a]->SelectTarget(host->CurrentTarget.targ);
 		}
 	}
 }
 
+void ActiveInstance :: SidekickDefend(CreatureInstance* host)
+{
+	static int MED_SCATTER_RANGE = 20;
+	size_t a;
+	host->SetServerFlag(ServerFlags::Defended, 1);
+	for(a = 0; a < SidekickListPtr.size(); a++)
+		if(SidekickListPtr[a]->AnchorObject == host)
+		{
+			SidekickListPtr[a]->SetServerFlag(ServerFlags::Noncombatant, -1);
+			SidekickListPtr[a]->SetServerFlag(ServerFlags::Defender, 1);
+			if(host->GetHateProfile() == NULL || host->GetHateProfile()->hateList.size() == 0) {
+				SidekickListPtr[a]->SelectTarget(NULL);
+				SidekickListPtr[a]->movementTime = g_ServerTime;
+				SidekickListPtr[a]->SetServerFlag(ServerFlags::CalledBack, true);
+				SidekickListPtr[a]->CurrentTarget.DesLocX = host->CurrentX + randint(-MED_SCATTER_RANGE, MED_SCATTER_RANGE);
+				SidekickListPtr[a]->CurrentTarget.DesLocZ = host->CurrentZ + randint(-MED_SCATTER_RANGE, MED_SCATTER_RANGE);
+			}
+			else {
+				HateCreatureData hcd = host->GetHateProfile()->hateList[0];
+				CreatureInstance *cinst = GetNPCInstanceByCID(hcd.CID);
+				if(cinst != NULL) {
+					SidekickListPtr[a]->SelectTarget(cinst);
+					SidekickListPtr[a]->movementTime = g_ServerTime;
+				}
+			}
+		}
+}
 
 void ActiveInstance :: SidekickCall(CreatureInstance* host)
 {
 	static int MED_SCATTER_RANGE = 20;
 	size_t a;
+	host->SetServerFlag(ServerFlags::Defended, -1);
 	for(a = 0; a < SidekickListPtr.size(); a++)
 		if(SidekickListPtr[a]->AnchorObject == host)
 		{
 			SidekickListPtr[a]->SelectTarget(NULL);
 			SidekickListPtr[a]->movementTime = g_ServerTime;
+			SidekickListPtr[a]->SetServerFlag(ServerFlags::Defender, -1);
 			SidekickListPtr[a]->SetServerFlag(ServerFlags::Noncombatant, 1);
 			SidekickListPtr[a]->SetServerFlag(ServerFlags::CalledBack, true);
 			//Replace the current destination.

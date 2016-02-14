@@ -14,25 +14,26 @@ info <- {
 	description = "Simple Knight AI"
 }
 
-function on_target_lost(targetCID)
+function on_target_lost(targetCID) 
 	ai.clear_queue();
 
 function on_target_acquired(targetCID) {
 	ai.use(5063);
-	main();
+	ai.exec(main);
 }
 
 function main() {
 	ai.use(32766);
 	if(ai.get_might_charge() >= 2) {
 		ai.use(5221);
-		ai.sleep(1000);
+		if(ai.sleep(1000)) 
+			return;
 	}
 	if(ai.get_might() >= 3) {
 		ai.use(5157);
-		ai.sleep(2000);
+		if(ai.sleep(1000))
+			return;
 	}
-	ai.exec(main);
 }
 
 

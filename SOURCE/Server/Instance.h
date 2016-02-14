@@ -333,6 +333,7 @@ public:
 	static int GetActualRange(CreatureInstance *obj1, CreatureInstance *obj2, int threshold);
 	static int ActivateAbility(CreatureInstance *cInst, short ability, int ActionType, ActiveAbilityInfo *abInfo);
 	CreatureInstance * GetInstanceByCID(int CID);
+	CreatureInstance * GetNPCorSidekickInstanceByCID(int CID);
 	CreatureInstance * GetNPCInstanceByCID(int CID);
 	void GetNPCInstancesByCDefID(int CDefID, vector<int> *cids);
 	CreatureInstance * GetNPCInstanceByCDefID(int CDefID);
@@ -377,6 +378,7 @@ public:
 
 	void SidekickAttack(CreatureInstance* host);
 	void SidekickCall(CreatureInstance* host);
+	void SidekickDefend(CreatureInstance* host);
 	void SidekickWarp(CreatureInstance *host);
 	void SidekickScatter(CreatureInstance* host);
 

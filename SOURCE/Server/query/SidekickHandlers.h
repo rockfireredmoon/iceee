@@ -41,6 +41,11 @@ public:
 	~SidekickAttackHandler() {};
 	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
 };
+class SidekickDefendHandler : public QueryHandler {
+public:
+	~SidekickDefendHandler() {};
+	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
+};
 class SidekickCallHandler : public QueryHandler {
 public:
 	~SidekickCallHandler() {};

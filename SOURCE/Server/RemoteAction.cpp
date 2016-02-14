@@ -382,8 +382,8 @@ void Helper_OutputCreature(ReportBuffer &report, int index, CreatureInstance *ob
 	if(obj->aiScript != NULL && obj->aiScript->mActive)
 		report.AddLine("TSL %s", obj->aiScript->def->scriptName.c_str());
 	if(obj->aiNut != NULL)
-		report.AddLine("Squirrel %s calls: %lu ptime: %lu itime: %l exec: %s, halting: %s active: %s", obj->aiNut->def->scriptName.c_str(),obj->aiNut->mCalls,
-				obj->aiNut->mProcessingTime, obj->aiNut->mInitTime, obj->aiNut->mExecuting ? "yes" : "no", obj->aiNut->mHalting ? "yes" : "no", obj->aiNut->mActive ? "yes" : "no");
+		report.AddLine("Squirrel %s calls: %lu ptime: %lu itime: %l exec: %s, halting: %s status: %s", obj->aiNut->def->scriptName.c_str(),obj->aiNut->mCalls,
+				obj->aiNut->mProcessingTime, obj->aiNut->mInitTime, obj->aiNut->GetStatus().c_str(), obj->aiNut->mHalting ? "yes" : "no", obj->aiNut->mActive ? "yes" : "no");
 
 	report.AddLine("%d,%d,%d", obj->CurrentX, obj->CurrentY, obj->CurrentZ);
 	for(d = 0; d < 2; d++)
@@ -416,8 +416,8 @@ void RefreshScripts(ReportBuffer &report)
 		for(std::list<QuestScript::QuestNutPlayer *>::iterator lit = l.begin(); lit != l.end(); ++lit) {
 			QuestScript::QuestNutPlayer *player = *lit;
 			seconds = (double)player->mProcessingTime / 1000.0;
-			report.AddLine("%-50s %-20s %-20s %4.4f %5d %5d %5d %-10s", player->def->mSourceFile.c_str(), player->def->scriptName.c_str(), player->def->mAuthor.c_str(), seconds,
-						player->mInitTime, player->mCalls, player->mGCTime, player->mActive ? "Active" : "Inactive");
+			report.AddLine("    %-50s %-20s %-20s %4.4f %5d %5d %5d %-10s", player->def->mSourceFile.c_str(), player->def->scriptName.c_str(), player->def->mAuthor.c_str(), seconds,
+						player->mInitTime, player->mCalls, player->mGCTime, player->GetStatus().c_str());
 
 			if(report.WasTruncated())
 				break;
@@ -435,8 +435,28 @@ void RefreshScripts(ReportBuffer &report)
 		ActiveInstance *ainst = g_ActiveInstanceManager.instListPtr[a];
 		InstanceScript::InstanceNutPlayer * player = ainst->nutScriptPlayer;
 		if(player != NULL) {
-			report.AddLine("%-50s %-20s %-20s %4.4f %5d %5d %5d %-10s", player->def->mSourceFile.c_str(), player->def->scriptName.c_str(), player->def->mAuthor.c_str(), seconds,
-					player->mInitTime, player->mCalls, player->mGCTime, player->mActive ? "Active" : "Inactive");
+			report.AddLine("    %-50s %-20s %-20s %4.4f %5d %5d %5d %-10s", player->def->mSourceFile.c_str(), player->def->scriptName.c_str(), player->def->mAuthor.c_str(), seconds,
+					player->mInitTime, player->mCalls, player->mGCTime, player->GetStatus().c_str());
+		}
+		report.AddLine("  AI (NPC)");
+		for(std::vector<CreatureInstance*>::iterator it = ainst->NPCListPtr.begin(); it != ainst->NPCListPtr.end(); ++it) {
+			CreatureInstance *cinst = *it;
+			if(cinst->aiNut != NULL) {
+				AINutPlayer *ai = cinst->aiNut;
+				seconds = (double)ai->mProcessingTime / 1000.0;
+				report.AddLine("    %-50s %-20s %-20s %4.4f %5d %5d %5d %-10s", ai->def->mSourceFile.c_str(), ai->def->scriptName.c_str(), ai->def->mAuthor.c_str(), seconds,
+						ai->mInitTime, ai->mCalls, ai->mGCTime, ai->GetStatus().c_str());
+			}
+		}
+		report.AddLine("  AI (Sidekicks)");
+		for(std::vector<CreatureInstance*>::iterator it = ainst->SidekickListPtr.begin(); it != ainst->SidekickListPtr.end(); ++it) {
+			CreatureInstance *cinst = *it;
+			if(cinst->aiNut != NULL) {
+				AINutPlayer *ai = cinst->aiNut;
+				seconds = (double)ai->mProcessingTime / 1000.0;
+				report.AddLine("    %-50s %-20s %-20s %4.4f %5d %5d %5d %-10s", ai->def->mSourceFile.c_str(), ai->def->scriptName.c_str(), ai->def->mAuthor.c_str(), seconds,
+						ai->mInitTime, ai->mCalls, ai->mGCTime, ai->GetStatus().c_str());
+			}
 		}
 
 		if(report.WasTruncated())
@@ -449,6 +469,7 @@ void RefreshScripts(ReportBuffer &report)
 void RefreshInstance(ReportBuffer &report)
 {
 	size_t a, b;
+	g_ActiveInstanceManager.cs.Enter("RemoteAction::RefreshInstance");
 	for(a = 0; a < g_ActiveInstanceManager.instListPtr.size(); a++)
 	{
 		ActiveInstance *ainst = g_ActiveInstanceManager.instListPtr[a];
@@ -504,6 +525,7 @@ void RefreshInstance(ReportBuffer &report)
 		if(report.WasTruncated())
 			break;
 	}
+	g_ActiveInstanceManager.cs.Leave();
 }
 
 

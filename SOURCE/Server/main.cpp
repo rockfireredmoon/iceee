@@ -564,6 +564,7 @@ int InitServerMain() {
 	g_QueryManager.queryHandlers["skremove"] = new SidekickRemoveHandler();
 	g_QueryManager.queryHandlers["skremoveall"] = new SidekickRemoveAllHandler();
 	g_QueryManager.queryHandlers["skattack"] = new SidekickAttackHandler();
+	g_QueryManager.queryHandlers["skdefend"] = new SidekickDefendHandler();
 	g_QueryManager.queryHandlers["skcall"] = new SidekickCallHandler();
 	g_QueryManager.queryHandlers["skwarp"] = new SidekickWarpHandler();
 	g_QueryManager.queryHandlers["sklow"] = new SidekickLowHandler();

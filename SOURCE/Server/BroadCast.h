@@ -57,6 +57,9 @@ enum BCMEnum
 	BCM_RunObjectInteraction, //Triggers processing of an interaction by a character
 	BCM_RunTranslocate,       //Triggers a simulator to return the player to its bind point, which may be outside an instance.
 	BCM_RunPortalRequest,     //Triggers a request to jump to a henge interact object by name
+
+
+	BCM_SidekickDefend,       //Calls sidekicks to defend the host.  Param1 = CreatureInstance *host
 };
 
 struct MessageComponent

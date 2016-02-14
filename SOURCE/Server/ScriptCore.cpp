@@ -193,7 +193,8 @@ namespace ScriptCore
 
 	bool ResumeCallback::Execute()
 	{
-		sq_wakeupvm(mNut->vm, false, false, false, false);
+		sq_pushbool(mNut->vm, false);
+		sq_wakeupvm(mNut->vm, true, false, false, false);
 		return true;
 	}
 
@@ -211,7 +212,7 @@ namespace ScriptCore
 
 	bool HaltCallback::Execute()
 	{
-		mNut->HaltExecution();
+		mNut->HaltVM();
 		return true;
 	}
 
@@ -286,10 +287,11 @@ namespace ScriptCore
 
 	NutPlayer::NutPlayer() {
 		mInitTime = 0;
+		mClear = false;
 		vm = NULL;
 		def = NULL;
 		mActive = false;
-		mExecuting = false;
+		mExecutingEvent = NULL;
 		mProcessingTime = 0;
 		mGCCounter = 0;
 		mMaybeGC = 0;
@@ -304,15 +306,30 @@ namespace ScriptCore
 		ClearQueue();
 	}
 
+	std::string NutPlayer::GetStatus() {
+		if(mHalting) {
+			return "Halting";
+		}
+		else if(mActive) {
+			if(mExecutingEvent != NULL)
+				return "Executing";
+			else
+				return "Active";
+		}
+		else {
+			return "Inactive";
+		}
+	}
+
 	int NutPlayer::GC() {
 		return sq_collectgarbage(vm);
 	}
 
 	void NutPlayer::ClearQueue() {
 		if(mHalting) {
-			g_Log.AddMessageFormat("[WARNING] Attempt to clear queue while halting");
+			g_Log.AddMessageFormat("[WARNING] Attempt to clear queue while halting in %s", def->scriptName.c_str());
 		}
-		else if(mExecuting) {
+		else if(mExecutingEvent != NULL) {
 			mClear = true;
 		}
 		else {
@@ -456,10 +473,13 @@ namespace ScriptCore
 	bool NutPlayer::JumpToLabel(const char *name, std::vector<ScriptParam> parms)
 	{
 		if(def->mQueueEvents) {
+
+//			g_Log.AddMessageFormat("[REMOVEME] Queue Jump to label %s in %s", name, def->scriptName.c_str());
 			QueueAdd(new NutScriptEvent(new TimeCondition(0), new RunFunctionCallback(this, name, parms)));
 			return true;
 		}
 		else {
+//			g_Log.AddMessageFormat("[REMOVEME] Run Jump to label %s in %s", name, def->scriptName.c_str());
 			return RunFunction(name, parms, true);
 		}
 	}
@@ -597,6 +617,7 @@ namespace ScriptCore
     	NutScriptEvent *nse = new NutScriptEvent(new TimeCondition (0), cb);
     	nse->mRunWhenSuspended = true;
     	QueueInsert(nse);
+		mHalting = true;
 	}
 
 	void NutPlayer :: HaltedDerived(void) { }
@@ -609,10 +630,11 @@ namespace ScriptCore
 			g_Log.AddMessageFormat("[WARNING] Attempt to halt halting script %s.", def->mSourceFile.c_str());
 			return;
 		}
-		if(mActive) {
+		if(!mActive) {
 			g_Log.AddMessageFormat("[WARNING] Attempt to halt inactive script %s.", def->mSourceFile.c_str());
 			return;
 		}
+
 		if(mRunning) {
 			/* If we reached here via a script function, we already executing and don't want to close the VM.
 			 * In this case the halt is queued instance
@@ -630,7 +652,6 @@ namespace ScriptCore
 
 			ClearQueue();
 			Halt();
-			mHalting = true;
 			return;
 		}
 		mHalting = true;
@@ -640,13 +661,15 @@ namespace ScriptCore
 	void NutPlayer::HaltVM() {
 		if(mActive) {
 			vector<ScriptParam> v;
+//			g_Log.AddMessageFormat("[REMOVEME] Halting VM");
 			RunFunction("on_halt", v, true);
 			HaltDerivedExecution();
 			mActive = false;
-			mExecuting = false;
+			mExecutingEvent = NULL;
 			mHalting = false;
 			ClearQueue();
 			sq_close(vm);
+//			g_Log.AddMessageFormat("[REMOVEME] Halted VM for %s", def->scriptName.c_str());
 			if(def->HasFlag(NutDef::FLAG_REPORT_END))
 				PrintMessage("Script [%s] has ended", def->scriptName.c_str());
 //			else
@@ -656,6 +679,9 @@ namespace ScriptCore
 	}
 
 	bool NutPlayer::RunFunction(std::string name, std::vector<ScriptParam> parms, bool time) {
+
+//		g_Log.AddMessageFormat("[REMOVEME] Run function %s in %s", name.c_str(), def->mSourceFile.c_str());
+
 		Util::ReplaceAll(name, "-", "_MINUS_");
 
 //		g_Log.AddMessageFormat("[REMOVEME] Running function %s in %s (active: %s).", name.c_str(), def->mSourceFile.c_str(), mActive ? "yes" : "no");
@@ -671,7 +697,8 @@ namespace ScriptCore
 		// Wake the VM up if it is suspend so the onFinish can be run
 		if(sq_getvmstate(vm) == SQ_VMSTATE_SUSPENDED) {
 			g_Log.AddMessageFormat("Waking up VM to run %s.", name.c_str());
-			sq_wakeupvm(vm, false, false, false, true);
+			sq_pushbool(vm, true);
+			sq_wakeupvm(vm, true, false, false, true);
 		}
 
 		SQInteger top = sq_gettop(vm);
@@ -755,15 +782,15 @@ namespace ScriptCore
 
 	bool NutPlayer :: ExecQueue(void)
 	{
-		if(mExecuting) {
+		if(mExecutingEvent != NULL) {
 			g_Log.AddMessageFormat("Already executing. Something tried to executing the queue while it was already executing.");
 			return true;
 		}
 		bool ok = false;
-		mExecuting = true;
 		for(size_t i = 0; !mClear && mActive && i < mQueue.size(); i++)
 		{
 			NutScriptEvent *nse = mQueue[i];
+			mExecutingEvent = nse;
 
 			// If the VM is suspended, ignore events that dont have mRunWhenSuspended = true. In
 			// practice, this is currently only the ResumeCallback
@@ -776,10 +803,11 @@ namespace ScriptCore
 				ok = true;
 				break;
 			}
+			// All done
+			mExecutingEvent = NULL;
 		}
 
-		// All done
-		mExecuting = false;
+		mExecutingEvent = NULL;
 
 		if(mClear) {
 			ClearQueue();
@@ -839,7 +867,7 @@ namespace ScriptCore
 			PrintMessage("[WARNING] Script event when not active");
 			return;
 		}
-		if(mExecuting)
+		if(mExecutingEvent != NULL)
 		{
 			if(mQueueInsert.size() >= MAX_QUEUE_SIZE)
 			{
@@ -861,11 +889,12 @@ namespace ScriptCore
 
 	void NutPlayer::QueueClear()
 	{
-		if(mExecuting)
+		if(mExecutingEvent != NULL)
 		{
 			for(size_t i = 0; i < mQueue.size(); i++)	{
 				NutScriptEvent *nse = mQueue[i];
-				mQueueRemove.push_back(nse);
+				if(nse != mExecutingEvent)
+					mQueueRemove.push_back(nse);
 			}
 		}
 		else
@@ -876,9 +905,10 @@ namespace ScriptCore
 
 	void NutPlayer::QueueRemove(NutScriptEvent *evt)
 	{
-		if(mExecuting)
+		if(mExecutingEvent != NULL)
 		{
-			mQueueRemove.insert(mQueueRemove.begin(), evt);
+			if(evt != mExecutingEvent)
+				mQueueRemove.insert(mQueueRemove.begin(), evt);
 		}
 		else
 		{
@@ -897,14 +927,16 @@ namespace ScriptCore
 			return;
 		}
 
-		if(mExecuting)
+		if(mExecutingEvent != NULL)
 		{
-			if(mQueueAdd.size() >= MAX_QUEUE_SIZE)
-			{
-				PrintMessage("[ERROR] Script error: Deferred QueueEvent() list is full %d of %d", mQueueAdd.size(), MAX_QUEUE_SIZE);
-				return;
+			if(mExecutingEvent != evt) {
+				if(mQueueAdd.size() >= MAX_QUEUE_SIZE)
+				{
+					PrintMessage("[ERROR] Script error: Deferred QueueEvent() list is full %d of %d", mQueueAdd.size(), MAX_QUEUE_SIZE);
+					return;
+				}
+				mQueueAdd.push_back(evt);
 			}
-			mQueueAdd.push_back(evt);
 		} else
 		{
 

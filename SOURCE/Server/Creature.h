@@ -91,7 +91,9 @@ struct ServerFlags
 		Noncombatant      = (1 << 20),  //This prevents acquisition of targets, and being targeted.
 		Taunted           = (1 << 21),  //Indicates that the creature is taunted and should attempt to enter melee range.
 		ScriptMovement    = (1 << 22),  //This creature has been granted arbitrary movement by a script.  It bends the rules somewhat when dealing with leash and wander radius.
-		ScriptNoLinkLoyal = (1 << 23),  //This creature has been specifically disabled from 
+		ScriptNoLinkLoyal = (1 << 23),  //This creature has been specifically disabled from
+		Defender		  = (1 << 24),  //This creature should defend the player
+		Defended		  = (1 << 25),  //This creature is defended
 
 		// NOTE: if any more are added, check to make sure the following
 		// variable and function support the required number of bits.

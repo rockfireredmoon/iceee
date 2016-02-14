@@ -22,11 +22,13 @@ function have_target() {
 	ai.use(RANGED_MELEE);
 	if(ai.get_might_charge() >= 2) {
 		ai.use(FORCE_BLAST);
-		ai.sleep(1000);
+		if(ai.sleep(1000))
+			return;
 	}
 	if(ai.get_might() >= 3) {
 		ai.use(FORCE_BOLT);
-		ai.sleep(2000);
+		if(ai.sleep(2000))
+			return;
 	}
 	if(ai.has_target())
 		ai.queue(have_target, 100);

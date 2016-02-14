@@ -34,6 +34,8 @@
 #include "Report.h"
 #include "squirrel.h"
 
+#include <list>
+
 const int TAUNT_BECKON_DISTANCE = 50;           //Taunted creatures will attempt to move at least this close to their target.
 
 const int SLOW_CREATURE_LEVEL_THRESHOLD = 9;     //Creatures less than or equal to this level will move slower per update cycle.
@@ -881,7 +883,9 @@ bool CreatureInstance :: IsValidForPVP(void)
 HateProfile* CreatureInstance :: GetHateProfile(void)
 {
 	if(hateProfilePtr == NULL)
-		if(!(serverFlags & ServerFlags::IsPlayer) || IsValidForPVP())
+		//if(!(serverFlags & ServerFlags::IsPlayer) || IsValidForPVP())
+		// New to help sidekicks decide who to attack
+		//if(!(serverFlags & ServerFlags::IsPlayer))
 			hateProfilePtr = actInst->hateProfiles.GetProfile();
 	return hateProfilePtr;
 }
@@ -1047,8 +1051,16 @@ void CreatureInstance :: OnApplyDamage(CreatureInstance *attacker, int amount)
 		return;
 	//Players are not given hate profiles, since they have no use for them.
 	//Experience and objectives are based on enemy kills, not players.
-	if(!(serverFlags & ServerFlags::IsPlayer) || IsValidForPVP())
-	{
+
+
+	/* ICE - No longer true. Hate is used to determine who sidekicks should attack,
+	 * this is also a place to instigate the 'defend' action of sidekicks. Upon
+	 * receiving damage, the sidekick will be instructed to attack whoever has
+	 * the greatest hate
+	 */
+
+//	if(!(serverFlags & ServerFlags::IsPlayer) || IsValidForPVP())
+//	{
 		HateProfile *hprof = GetHateProfile();
 		if(hprof != NULL)
 		{
@@ -1106,6 +1118,11 @@ void CreatureInstance :: OnApplyDamage(CreatureInstance *attacker, int amount)
 
 			SetServerFlag(ServerFlags::HateInfoChanged, true);
 		}
+//	}
+
+
+	if((serverFlags & ServerFlags::IsPlayer ) && (serverFlags & ServerFlags::Defended)) {
+		actInst->SidekickDefend(this);
 	}
 }
 
@@ -2905,6 +2922,16 @@ void CreatureInstance :: ProcessDeath(void)
 	//Process experience and quest objectives.
 	if(actInst->mZoneDefPtr->mGrove == false)
 	{
+
+		if((serverFlags & ServerFlags::IsSidekick) && AnchorObject != NULL) {
+			std::list<QuestScript::QuestNutPlayer*> l = g_QuestNutManager.GetActiveScripts(CreatureID);
+			std::vector<ScriptCore::ScriptParam> p;
+			p.push_back(CreatureID);
+			for(std::list<QuestScript::QuestNutPlayer*>::iterator it = l.begin(); it != l.end(); ++it) {
+				(*it)->JumpToLabel("on_sidekick_death", p);
+			}
+		}
+
 		if(serverFlags & ServerFlags::IsNPC)
 			actInst->NotifyKill(css.rarity);
 
@@ -6141,7 +6168,13 @@ void CreatureInstance :: SelectTarget(CreatureInstance *newTarget)
 		if(CurrentTarget.targ != NULL && aiNut != NULL) {
 			std::vector<ScriptCore::ScriptParam> p;
 			p.push_back(CurrentTarget.targ->CreatureID);
-			aiNut->JumpToLabel("on_target_lost", p);
+
+			/* Need to run immediately as it may clear the queue, thus clearing any queued events in the
+			 * on_target_acquired event
+			 *
+			 * TODO Need to fix this in SOA too!
+			 */
+			aiNut->RunFunction("on_target_lost", p, true);
 		}
 
 		if(newTarget != NULL)

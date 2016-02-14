@@ -31,15 +31,18 @@ function main() {
 	ai.use(32766);
 	if(ai.get_will_charge() >= 3) {
 		ai.use(5299);
-		ai.sleep(1000);
+		if(ai.sleep(1000))
+			return;
 	}
 	if(ai.get_will() >= 10) {
 		ai.use(5044);
-		ai.sleep(2000);
+		if(ai.sleep(2000))
+			return;
 	}
 	if(ai.get_will() >= 3) {
 		ai.use(5198);
-		ai.sleep(2000);
+		if(ai.sleep(2000))
+			return;
 	}
 	ai.queue(main, 100);
 }

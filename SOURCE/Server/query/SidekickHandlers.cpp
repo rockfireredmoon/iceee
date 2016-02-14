@@ -156,6 +156,20 @@ int SidekickAttackHandler::handleQuery(SimulatorThread *sim,
 		CreatureInstance *creatureInstance) {
 	creatureInstance->RemoveNoncombatantStatus("skattack");
 	sim->AddMessage((long) creatureInstance, 0, BCM_SidekickAttack);
+	sim->PendingSend = true;
+	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
+}
+
+//
+// SidekickDefendHandler
+//
+
+int SidekickDefendHandler::handleQuery(SimulatorThread *sim,
+		CharacterServerData *pld, SimulatorQuery *query,
+		CreatureInstance *creatureInstance) {
+	creatureInstance->RemoveNoncombatantStatus("skattack");
+	sim->AddMessage((long) creatureInstance, 0, BCM_SidekickDefend);
+	sim->PendingSend = true;
 	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
 }
 
