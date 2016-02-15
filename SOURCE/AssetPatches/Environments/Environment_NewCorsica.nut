@@ -18,9 +18,8 @@
 		b = 0.3
 	},
 	Sky = [
-		"BastionSky"
+		"SunsetGradient",
 		"WhiteClouds"
-		"SwirlingClouds"
 	],
 	Fog = {
 		color = {
@@ -57,12 +56,12 @@
 		"Sound-Ambient-Bastion.ogg"
 	],
 	Activate_Music = [
-		"Music-Northbeach.ogg"
+		"Music-FailingDefense.ogg"
 	],
 	Ambient_Sound = [
 		"Sound-Ambient-Newbwind.ogg"
 	],
 	Ambient_Music_Delay = 180,
-	Activate_Music_Cooldown = 300.0,
+	Activate_Music_Cooldown = 180.0,
 	Blend_Time = 2.5
 };

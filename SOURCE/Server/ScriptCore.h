@@ -464,6 +464,7 @@ public:
 	void FullReset(void);
 	void Halt(void);
 	void HaltVM();
+	void HaltEvent(bool immediate);
 	int GC(void);
 	std::string GetStatus();
 	bool JumpToLabel(const char *name);

@@ -11,7 +11,7 @@
 	description = "A Hopeless Cause"
 }
 
-function on_use_finish_7892() {
+function on_use_finish_7892(cid) {
 	/*local cid = quest.get_source();
 	inst.exec(function() { inst.warp_player(cid, 1060); }); */
 	

@@ -1908,8 +1908,9 @@ int AbilityManager2 :: CheckActivateSpecialAbility(CreatureInstance *cInst, shor
 			cInst->RunQuestObjectInteraction(cInst->ab[0].TargetList[0], false);
 		break;
 	case ABILITYID_QUEST_GATHER_OBJECT:
-		if(eventType == EventType::onActivate)
+		if(eventType == EventType::onActivate) {
 			cInst->RunQuestObjectInteraction(cInst->ab[0].TargetList[0], true);
+		}
 		break;
 	case ABILITYID_INTERACT_OBJECT:
 		if(eventType == EventType::onActivate)

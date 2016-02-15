@@ -2424,6 +2424,19 @@ profession=1
 creature_category=Inanimate
 ai_package=example
 
+[ENTRY]
+ID=7893
+defHints=48
+will_regen=1
+might_regen=1
+appearance=c2:{["a"]=[{["type"]="Armor-Cloth-Mid1-Helmet",["node"]="helmet",["colors"]=["007F07","BFBE1E","949417"]},{["type"]="Item-Wand-Basic1",["node"]="right_hand"}],["h"]=0,["c"]={["boots"]={["type"]="Armor-Cloth-Low2",["colors"]=["8c5e46","515161","e8610b","6e85bb"]},["leggings"]={["type"]="Armor-Cloth-Low4",["colors"]=["3e7f30","277f1b","c1a32a","2a2a2a","b6a590"]},["belt"]={["type"]="Armor-Cloth-Low1",["colors"]=["3e7f30","277f1b","c1a32a","2a2a2a"]},["chest"]={["type"]="Armor-Cloth-Low3",["colors"]=["3e7f30","277f1b","c1a32a","2a2a2a","b6a590","69987a","d29775","867d75"]},["arms"]={["type"]="Armor-Cloth-Low4",["colors"]=["2c9433","1f6a24","e9e94c","3f3f3f","e1c057"]}},["b"]="n",["sk"]={["hands_feet"]="8F7E7A",["shoulders"]="7C6965",["nails"]="AC7E74",["mask"]="947E7A",["base"]="C2AD95",["eye_white"]="E2D4B7",["eye"]="6A4652",["nose"]="7C6965",["ponytail"]="6A5A56",["ears"]="D5C1A5"},["g"]="f",["r"]="r"}
+level=1
+display_name=Battle Survivor
+sub_name=TEMPORARY - REDO - 7893
+profession=1
+creature_category=Inanimate
+ai_package=nothing
+
 
 
 

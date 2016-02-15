@@ -7133,7 +7133,7 @@ void CreatureInstance :: CheckQuestKill(CreatureInstance *target)
 	if(!(serverFlags & ServerFlags::IsPlayer))
 		return;
 
-	int wpos = charPtr->questJournal.CheckQuestObjective(CreatureID, GSendBuf, QuestObjective::OBJECTIVE_TYPE_KILL, target->CreatureDefID);
+	int wpos = charPtr->questJournal.CheckQuestObjective(CreatureID, GSendBuf, QuestObjective::OBJECTIVE_TYPE_KILL, target->CreatureDefID, target->CreatureID);
 	if(wpos > 0)
 	{
 		//TODO: Simulator revamp
@@ -7293,7 +7293,7 @@ int CreatureInstance :: NormalInteractObject(char *outBuf, InteractObject *inter
 	return wpos;
 }
 
-void CreatureInstance :: CheckQuestInteract(int CreatureDefID)
+void CreatureInstance :: CheckQuestInteract(int targetCreatureID, int targetCreatureDefID)
 {
 	if(!(serverFlags & ServerFlags::IsPlayer))
 		return;
@@ -7303,22 +7303,16 @@ void CreatureInstance :: CheckQuestInteract(int CreatureDefID)
 	if(simulatorPtr == NULL)
 		return;
 
-	int wpos = charPtr->questJournal.CreatureUse_Confirmed(CreatureID, GSendBuf, CreatureDefID);
+	int wpos = charPtr->questJournal.CreatureUse_Confirmed(CreatureID, GSendBuf, targetCreatureDefID, targetCreatureID);
 	if(wpos > 0)
 	{
 		simulatorPtr->AttemptSend(GSendBuf, wpos);
+
+		/* This is in wrong place really, as scripts has continue after such objectives. However, these script types are used less now */
+
 		QuestScript::QuestScriptPlayer *script = actInst->GetSimulatorQuestScript(simulatorPtr);
 		if(script != NULL)
 			script->TriggerFinished();
-
-		QuestScript::QuestNutPlayer *nut = actInst->GetSimulatorQuestNutScript(simulatorPtr);
-		if(nut != NULL) {
-			char buffer[64];
-			Util::SafeFormat(buffer, sizeof(buffer), "on_use_finish_%d", CreatureDefID);
-			nut->JumpToLabel(buffer);
-		}
-
-		//actInst->ScriptCallUseFinish(LastUseDefID);
 	}
 }
 
@@ -7334,7 +7328,7 @@ void CreatureInstance :: RunQuestObjectInteraction(CreatureInstance *target, boo
 
 	int instance = actInst->mInstanceID;
 
-	CheckQuestInteract(target->CreatureDefID);
+	CheckQuestInteract(target->CreatureID, target->CreatureDefID);
 
 	/* Determine if target creature is Warp interact as well as a Quest object interaction.
 	 * If it is, we don't activate for the rest of the party, they must do it themselves
@@ -7357,7 +7351,7 @@ void CreatureInstance :: RunQuestObjectInteraction(CreatureInstance *target, boo
 						continue;
 					if(actInst->GetPlaneRange(this, member, PARTY_SHARE_DISTANCE) >= PARTY_SHARE_DISTANCE)
 						continue;
-					member->CheckQuestInteract(target->CreatureDefID);
+					member->CheckQuestInteract(target->CreatureID, target->CreatureDefID);
 				}
 			}
 		}
@@ -7377,7 +7371,7 @@ void CreatureInstance :: RunObjectInteraction(CreatureInstance *target)
 	//We need to add this to the message queue, because the instance changing code will
 	//remove (and invalidate) this creature instance before the ability processing
 	//is complete, potentially causing a crash.
-	bcm.AddEvent2(simulatorPtr->InternalID, (long)simulatorPtr, target->CreatureDefID, BCM_RunObjectInteraction, actInst);
+	bcm.AddEvent2(simulatorPtr->InternalID, (long)simulatorPtr, target->CreatureID, BCM_RunObjectInteraction, actInst);
 }
 
 void CreatureInstance :: SendUpdatedLoot(void)

@@ -471,7 +471,7 @@ public:
 	void SendStatUpdate(int statID);
 	void SetLevel(int newLevel);
 	void CheckQuestKill(CreatureInstance *target);
-	void CheckQuestInteract(int CreatureDefID);
+	void CheckQuestInteract(int CreatureID, int CreatureDefID);
 	int ProcessQuestRewards(int QuestID, int Outcome, const std::vector<QuestItemReward>& itemsToGive);
 	int QuestInteractObject(QuestObjective *objectiveData);
 	int NormalInteractObject(char *outBuf, InteractObject *interactObj);

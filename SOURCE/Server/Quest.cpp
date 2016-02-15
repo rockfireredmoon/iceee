@@ -7,6 +7,7 @@
 
 #include <algorithm>
 #include "Util.h"
+#include "Instance.h"
 
 //#pragma warning(disable:4996)
 
@@ -38,7 +39,7 @@ bool QuestRepeatDelay :: IsAvailable(void)
 	return false;
 }
 
-int QuestReference :: CheckQuestObjective(int CID, char *buffer, int type, int CDefID)
+int QuestReference :: CheckQuestObjective(int CID, char *buffer, int type, int targetCDefID, int targetCID)
 {
 	static char ConvBuf[64];
 	static char completeStr[] = "Complete";
@@ -59,8 +60,9 @@ int QuestReference :: CheckQuestObjective(int CID, char *buffer, int type, int C
 		return 0;
 	}
 
+
 	//int obj = qd->GetKillObjective(CurAct, CDefID);
-	int obj = qd->GetObjective(CurAct, type, CDefID);
+	int obj = qd->GetObjective(CurAct, type, targetCDefID);
 	if(obj >= 0)
 	{
 		//TODO: debug check, can probably remove this later
@@ -120,6 +122,9 @@ int QuestReference :: CheckQuestObjective(int CID, char *buffer, int type, int C
 
 		// Run on_objective_incr functions for the quest script
 		if(player != NULL) {
+			if(player->source != NULL)
+				player->source->actInst->ScriptCallUseFinish(CID,  targetCDefID, targetCID);
+
 			Util::SafeFormat(ConvBuf, sizeof(ConvBuf), "on_objective_incr_%d_%d",CurAct,obj);
 			player->JumpToLabel(ConvBuf);
 		}
@@ -134,6 +139,10 @@ int QuestReference :: CheckQuestObjective(int CID, char *buffer, int type, int C
 				else {
 					wpos += CompleteQuest(CID, &buffer[wpos], qd);
 					wpos += QuestJournal(CID, &buffer[wpos], qd);
+
+					if(player != NULL) {
+						player->HaltEvent(false);
+					}
 				}
 			}
 		}
@@ -485,14 +494,14 @@ const char * QuestJournal :: GetQuestShareErrorString(int errCode)
 	return "Unknown error";
 }
 
-int QuestJournal :: CheckQuestObjective(int CID, char *buffer, int type, int CDefID)
+int QuestJournal :: CheckQuestObjective(int CID, char *buffer, int type, int targetCDefID, int targetCID)
 {
 	//This function is activated by the query.  Intercept an activation type
 	//to determine if the character needs to process the activation.
 	int tsize = 0;
 	for(size_t a = 0; a < activeQuests.itemList.size(); a++)
 		if(activeQuests.itemList[a].Complete == 0)
-			tsize += activeQuests.itemList[a].CheckQuestObjective(CID, &buffer[tsize], type, CDefID);
+			tsize += activeQuests.itemList[a].CheckQuestObjective(CID, &buffer[tsize], type, targetCDefID, targetCID);
 
 	return tsize;
 }
@@ -701,21 +710,33 @@ void QuestDefinition :: CopyFrom(const QuestDefinition &other)
 	accountQuest = other.accountQuest;
 }
 
-int QuestDefinition :: GetObjective(unsigned int act, int type, int CDefID)
-{
+int QuestDefinition :: GetObjective(int act, int type, int CDefID) {
+
 	//Search the objective list to see if any targets match the given ID.
 	//Return a pointer to the objective definition.
-	if(act >= actList.size())
-	{
-		g_Log.AddMessageFormat("[WARNING] GetKillObjective() act [%d] is out of range for Quest ID: %d", act, questID);
+
+	if (act < -1 || (act != -1 && act >= actList.size())) {
+		g_Log.AddMessageFormat(
+				"[WARNING] GetKillObjective() act [%d] is out of range for Quest ID: %d",
+				act, questID);
 		return -1;
 	}
 	int a;
-	for(a = 0; a < 3; a++)
-	{
-		int r = actList[act].objective[a].HasObjectiveCDef(type, CDefID);
-		if(r >= 0)
-			return a;
+	if (act == -1) {
+		for (act = 0; act < actCount; act++) {
+			for (a = 0; a < 3; a++) {
+				int r = actList[act].objective[a].HasObjectiveCDef(type,
+						CDefID);
+				if (r >= 0)
+					return a;
+			}
+		}
+	} else {
+		for (a = 0; a < 3; a++) {
+			int r = actList[act].objective[a].HasObjectiveCDef(type, CDefID);
+			if (r >= 0)
+				return a;
+		}
 	}
 	return -1;
 }
@@ -1984,9 +2005,9 @@ QuestObjective * QuestJournal :: CreatureUse(int CreatureDefID, int &QuestID, in
 	return NULL;
 }
 
-int QuestJournal :: CreatureUse_Confirmed(int CID, char *buffer, int CreatureDefID)
+int QuestJournal :: CreatureUse_Confirmed(int CID, char *buffer, int targetCreatureDefID, int targetCreatureID)
 {
-	return CheckQuestObjective(CID, buffer, QuestObjective::OBJECTIVE_TYPE_ACTIVATE, CreatureDefID);
+	return CheckQuestObjective(CID, buffer, QuestObjective::OBJECTIVE_TYPE_ACTIVATE, targetCreatureDefID, targetCreatureID);
 }
 
 int QuestJournal :: CheckTravelLocations(int CID, char *buffer, int x, int y, int z, int zone)

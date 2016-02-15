@@ -613,10 +613,17 @@ namespace ScriptCore
 	}
 
 	void NutPlayer::Halt(void) {
+		HaltEvent(false);
+	}
+
+	void NutPlayer::HaltEvent(bool immediate) {
     	HaltCallback *cb = new HaltCallback(this);
     	NutScriptEvent *nse = new NutScriptEvent(new TimeCondition (0), cb);
     	nse->mRunWhenSuspended = true;
-    	QueueInsert(nse);
+    	if(immediate)
+    		QueueInsert(nse);
+    	else
+    		QueueAdd(nse);
 		mHalting = true;
 	}
 
@@ -651,7 +658,7 @@ namespace ScriptCore
 			}
 
 			ClearQueue();
-			Halt();
+			HaltEvent(true);
 			return;
 		}
 		mHalting = true;

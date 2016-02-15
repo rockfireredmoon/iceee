@@ -1737,7 +1737,7 @@ CreatureInstance * ActiveInstance :: GetNPCorSidekickInstanceByCID(int CID)
 				return SidekickListPtr[i];
 	}
 
-	return NULL;
+	return inst;
 }
 
 CreatureInstance * ActiveInstance :: GetNPCInstanceByCID(int CID)
@@ -3506,17 +3506,29 @@ void ActiveInstance :: ScriptCallUseHalt(int sourceCreatureID, int usedCreatureD
 	}
 }
 
-void ActiveInstance :: ScriptCallUseFinish(int sourceCreatureID, int usedCreatureDefID)
+void ActiveInstance :: ScriptCallUseFinish(int sourceCreatureID, int usedCreatureDefID, int usedCreaturedID)
 {
 	char buffer[64];
 	if(nutScriptPlayer != NULL) {
+		std::vector<ScriptCore::ScriptParam> e;
+		e.push_back(ScriptCore::ScriptParam(usedCreaturedID));
+
 		std::vector<ScriptCore::ScriptParam> p;
-		Util::SafeFormat(buffer, sizeof(buffer), "on_use_finish_%d", usedCreatureDefID);
-		nutScriptPlayer->JumpToLabel(buffer, p);
 		p.push_back(ScriptCore::ScriptParam(sourceCreatureID));
 		p.push_back(ScriptCore::ScriptParam(usedCreatureDefID));
+		p.push_back(ScriptCore::ScriptParam(usedCreaturedID));
+
+		Util::SafeFormat(buffer, sizeof(buffer), "on_use_finish_%d", usedCreatureDefID);
+		nutScriptPlayer->JumpToLabel(buffer, e);
 		nutScriptPlayer->JumpToLabel("on_use_finish", p);
 
+		for(std::vector<QuestScript::QuestNutPlayer*>::iterator it = questNutScriptList.begin(); it != questNutScriptList.end(); ++it) {
+			QuestDefinition *def = QuestDef.GetQuestDefPtrByID((*it)->GetQuestID());
+			if(def->GetObjective(-1, -1, usedCreatureDefID) != -1) {
+				(*it)->JumpToLabel(buffer, e);
+				(*it)->JumpToLabel("on_use_finish", p);
+			}
+		}
 	}
 	else {
 		Util::SafeFormat(buffer, sizeof(buffer), "onUseFinish_%d", usedCreatureDefID);
@@ -3662,36 +3674,41 @@ void ActiveInstance :: FetchNearbyCreatures(SimulatorThread *simPtr, CreatureIns
 		simPtr->AttemptSend(simPtr->SendBuf, wpos);
 }
 
-void ActiveInstance :: RunObjectInteraction(SimulatorThread *simPtr, int CDef)
+void ActiveInstance :: RunObjectInteraction(SimulatorThread *simPtr, int CID)
 {
-	InteractObject *intObj = g_InteractObjectContainer.GetObjectByID(CDef, simPtr->pld.CurrentZoneID);
-	if(intObj != NULL)
-	{
-		if(intObj->opType == InteractObject::TYPE_WARP)
+	CreatureInstance *cinst = GetNPCInstanceByCID(CID);
+	if(cinst == NULL)
+		g_Log.AddMessageFormat("No creature to interact with %d", CID);
+	else {
+		InteractObject *intObj = g_InteractObjectContainer.GetObjectByID(cinst->CreatureID, simPtr->pld.CurrentZoneID);
+		if(intObj != NULL)
 		{
-			simPtr->MainCallSetZone(intObj->WarpID, 0, false);
-			simPtr->SetPosition(intObj->WarpX, intObj->WarpY, intObj->WarpZ, 1);
-		}
-		else if(intObj->opType == InteractObject::TYPE_LOCATIONRETURN)
-		{
-			int x = simPtr->pld.charPtr->groveReturnPoint[0];
-			int y = simPtr->pld.charPtr->groveReturnPoint[1];
-			int z = simPtr->pld.charPtr->groveReturnPoint[2];
-			int zone = simPtr->pld.charPtr->groveReturnPoint[3];
-			simPtr->MainCallSetZone(zone, 0, false);
-			simPtr->SetPosition(x, y, z, 1);
-		}
-		else if(intObj->opType == InteractObject::TYPE_SCRIPT)
-		{
-			if(nutScriptPlayer != NULL) {
-				std::vector<ScriptCore::ScriptParam> p;
-				p.push_back(ScriptCore::ScriptParam(simPtr->creatureInst->CreatureID));
-				p.push_back(ScriptCore::ScriptParam(CDef));
-				nutScriptPlayer->JumpToLabel(intObj->scriptFunction, p);
+			if(intObj->opType == InteractObject::TYPE_WARP)
+			{
+				simPtr->MainCallSetZone(intObj->WarpID, 0, false);
+				simPtr->SetPosition(intObj->WarpX, intObj->WarpY, intObj->WarpZ, 1);
 			}
-		}
+			else if(intObj->opType == InteractObject::TYPE_LOCATIONRETURN)
+			{
+				int x = simPtr->pld.charPtr->groveReturnPoint[0];
+				int y = simPtr->pld.charPtr->groveReturnPoint[1];
+				int z = simPtr->pld.charPtr->groveReturnPoint[2];
+				int zone = simPtr->pld.charPtr->groveReturnPoint[3];
+				simPtr->MainCallSetZone(zone, 0, false);
+				simPtr->SetPosition(x, y, z, 1);
+			}
+			else if(intObj->opType == InteractObject::TYPE_SCRIPT)
+			{
+				if(nutScriptPlayer != NULL) {
+					std::vector<ScriptCore::ScriptParam> p;
+					p.push_back(ScriptCore::ScriptParam(simPtr->creatureInst->CreatureID));
+					p.push_back(ScriptCore::ScriptParam(cinst->CreatureID));
+					nutScriptPlayer->JumpToLabel(intObj->scriptFunction, p);
+				}
+			}
 
-		ScriptCallUseFinish(simPtr->creatureInst->CreatureID,  CDef);
+			ScriptCallUseFinish(simPtr->creatureInst->CreatureID,  cinst->CreatureDefID, cinst->CreatureID);
+		}
 	}
 }
 

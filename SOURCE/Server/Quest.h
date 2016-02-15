@@ -162,7 +162,7 @@ struct QuestReference
 	}
 
 	void RunObjectiveCompleteScripts(int CID, int act, int obj);
-	int CheckQuestObjective(int CID, char *buffer, int type, int CDefID);
+	int CheckQuestObjective(int CID, char *buffer, int type, int targetCDefID, int targetCID);
 	int CheckCompletedAct(QuestAct *defAct);
 	int CheckTravelLocation(int x, int y, int z, int zone);
 	void ClearObjectiveData(void);
@@ -238,7 +238,7 @@ public:
 	int CheckQuestShare(int questID);
 	static const char * GetQuestShareErrorString(int errCode);
 
-	int CheckQuestObjective(int CID, char *buffer, int type, int CDefID);
+	int CheckQuestObjective(int CID, char *buffer, int type, int targetCDefID, int targetCID);
 	int GetCurrentAct(int questID);
 
 	/* DISABLED, NEVER FINISHED
@@ -259,7 +259,7 @@ public:
 	int QuestGetCompleteQuest_Helper(int creatureDefID);
 	int QuestComplete(int QuestID);
 	QuestObjective* CreatureUse(int CreatureDefID, int &QuestID, int &CurrentAct);
-	int CreatureUse_Confirmed(int CID, char *buffer, int CreatureDefID);
+	int CreatureUse_Confirmed(int CID, char *buffer, int targetCreatureDefID, int targetCreatureID);
 	int CheckTravelLocations(int CID, char *buffer, int x, int y, int z, int zone);
 	int CheckQuestTalk(char *buffer, int CreatureDefID, int CreatureInstID, int PlayerCID);
 	int ForceComplete(int CID, int QuestID, char *buffer);
@@ -454,19 +454,19 @@ public:
 	}
 	int HasObjectiveCDef(int objType, int objCDef)
 	{
-		if(objType == OBJECTIVE_TYPE_KILL)
+		if(objType == -1 || objType == OBJECTIVE_TYPE_KILL)
 		{
 			for(size_t i = 0; i < data1.size(); i++)
 				if(data1[i] == objCDef)
 					return static_cast<int>(i);
 		}
-		if(objType == OBJECTIVE_TYPE_ACTIVATE)
+		if(objType == -1 || objType == OBJECTIVE_TYPE_ACTIVATE)
 		{
 			for(size_t i = 0; i < data1.size(); i++)
 				if(data1[i] == objCDef)
 					return static_cast<int>(i);
 		}
-		if(objType == OBJECTIVE_TYPE_TALK)
+		if(objType == -1 || objType == OBJECTIVE_TYPE_TALK)
 		{
 			if(myCreatureDefID == objCDef)
 				return 0;
@@ -579,7 +579,7 @@ public:
 	void AddOutcome(QuestOutcome outcome);
 	void AddAct(QuestAct &act);
 	void CopyFrom(const QuestDefinition &other);
-	int GetObjective(unsigned int act, int type, int CDefID);
+	int GetObjective(int act, int type, int CDefID);
 	QuestAct* GetActPtrByIndex(int index);
 	bool FilterSelectedRewards(int outcomeIndex, const std::vector<int>& selectedIndexes, std::vector<QuestItemReward>& outputRewardList);
 	void RunLoadDefaults(void);

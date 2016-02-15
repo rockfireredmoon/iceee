@@ -47,7 +47,7 @@ function on_halt() {
 	reset_act();
 }
 
-function on_use_finish_1241() {
+function on_use_finish_1241(cid) {
 	quest.info("It's alive!");
 	behemoth_cid = quest.spawn(151028053);
 	quest.sleep(2000);

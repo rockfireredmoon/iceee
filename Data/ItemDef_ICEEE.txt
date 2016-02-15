@@ -1022,3 +1022,14 @@ mSpecialItemType=3
 mQualityLevel=4
 mMinUseLevel=1
 mUseAbilityId=27005
+
+[ENTRY]
+mID=8600
+mType=9
+mDisplayName=Battle Survivor
+mIcon=Icon-32-1hSword-Medium1.png|Icon-32-BG-Green.png
+mIvType1=5
+mIvMax1=1006
+mSv1=The Battle of North Beach
+mValue=1
+mQualityLevel=1

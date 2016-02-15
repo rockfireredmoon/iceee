@@ -910,7 +910,7 @@ bool InstanceNutPlayer::AdvanceQuest(int CID, int questID, int act, int objectiv
 			QuestAct act = ref->DefPtr->actList[ref->CurAct];
 			if(objective >=0 && objective < QuestAct::MAXOBJECTIVES) {
 				char buffer[256];
-				int wpos = ref->CheckQuestObjective(CID, buffer, act.objective[objective].type, ci->CreatureDefID);
+				int wpos = ref->CheckQuestObjective(CID, buffer, act.objective[objective].type, ci->CreatureDefID, ci->CreatureID);
 				ci->simulatorPtr->AttemptSend(buffer, wpos);
 				ok = true;
 			}
