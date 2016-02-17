@@ -310,9 +310,10 @@ Obj.0.markerLocations=17740.2,1338.71,19874.8,1060;
 ID=1005
 Requires=905
 Title=A Hopeless Cause
-BodyText=Yer finally ready?! arrrgghh it's about blasted time! Don't you realize we're in a warzone!  
-Aye aint the time for petty bickering let's set sail mate! To CORSICA!
-CompleteText=What the hell are you doing here soldier!!!  The North Beach is all but lost! They came out of nowhere we bottle necked the bridge hoping to even out the fight but they launch the assualt from all sides countless ships with hordes of Anubians.  We were overwhelmed teh city watch barricaded themselves in the keep I doubt theyre still alive... We've lost its over...
+BodyText=Yer finally ready?! Arrrgghh! It's about blasted time! Don't you realize we're in the middle of a warzone?!
+
+Aye, ain't the time for petty bickering! Let's set sail mate! To CORSICA!
+CompleteText=What the hell are you doing here soldier?!! The North Beach is all but lost! Those Anubians came out of nowhere! We bottlenecked the bridge hoping to even out the fight, but, then they launched the assualt from the beaches using countless ships carrying hordes more of those dogs! We were overwhelmed so fast, the city watch barricaded themselves in the keep. I doubt they are even still alive... We've lost this fight... It's over...
 Level=3
 Suggested=4
 Exp=437
@@ -326,7 +327,7 @@ Repeat=0
 sGiver=11516.3,407.698,13654.7,92
 sEnder=15739,1108.24,13201,1060
 [ACT]
-Act.BodyText=Set sail for Corsica
+Act.BodyText=Get on Captain Karl's boat and set sail for Corsica.
 Obj.0.type=gather
 Obj.0.data1=7892
 Obj.0.data2=1
@@ -339,7 +340,7 @@ Obj.0.markerLocations=11550,411.093,13639.8,92
 Obj.0.ActivateTime=6000
 Obj.0.ActivateText=Casting off...
 [ACT]
-Act.BodyText=Report to Coporal Anderson
+Act.BodyText=Report to Corporal Anderson
 Obj.0.type=talk
 Obj.0.data1=
 Obj.0.data2=3263
