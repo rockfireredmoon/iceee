@@ -24,9 +24,9 @@ class Survivor {
 
 /* An array of survivors */
 survivors <- [ 
-	Survivor(1000030,"I .. I had made a strategic retreat!", Point(15483,14164.6)), 
-	Survivor(1000031,"Thanks for clearing a path, I owe you!", Point(15359.3,13442.6)), 
-	Survivor(1000032,"It's hell out there, but intense in here too!", Point(15623,13606.7)),
+	Survivor(1133411,"I .. I had made a strategic retreat!", Point(15483,14164.6)), 
+	Survivor(1133412,"Thanks for clearing a path, I owe you!", Point(15359.3,13442.6)), 
+	Survivor(1133413,"It's hell out there, but intense in here too!", Point(15623,13606.7)),
 ];
 
 

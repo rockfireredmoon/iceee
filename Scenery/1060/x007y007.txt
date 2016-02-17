@@ -574,3 +574,23 @@ Scale=1,1,1
 spawnPackage=#E3141
 aiModule=Bastion_NPC_GuardMeleeAnimation3
 
+[ENTRY]
+ID=1133412
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=15258.7,1153.99,13897.3
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#F7893
+despawnTime=15
+
+[ENTRY]
+ID=1133413
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=15281.5,1166.42,13732.2
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#F7893
+despawnTime=15
+

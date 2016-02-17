@@ -1522,14 +1522,6 @@ Orient=0,0,-0.535416,0.844589
 Scale=1,1,1
 
 [ENTRY]
-ID=1130495
-Asset=Environment-Marker?type=Fire1
-Name=Untitled
-Pos=16459.5,1225.82,16071.8
-Orient=0,0,0,1
-Scale=0.6,0.6,0.6
-
-[ENTRY]
 ID=1130498
 Asset=Sound?SOUND=crackling_fire_loop.ogg&GAIN=1
 Name=Untitled
@@ -2008,7 +2000,7 @@ wanderRadius=50
 [ENTRY]
 ID=1133308
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=16502.6,1206.24,15599.5
 Orient=0,0.706825,0,0.707388
 Scale=1,1,1
@@ -2018,7 +2010,7 @@ sequential=1
 [ENTRY]
 ID=1133309
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=16479.1,1204.15,15635.2
 Orient=0,0.42141,0,0.90687
 Scale=1,1,1
@@ -2028,7 +2020,7 @@ maxActive=0
 [ENTRY]
 ID=1133310
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=16541.4,1205.9,15622.6
 Orient=0,0.87959,0,0.475732
 Scale=1,1,1
@@ -2038,7 +2030,7 @@ maxActive=0
 [ENTRY]
 ID=1133311
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=16507.6,1204.93,15634.9
 Orient=0,0.601198,0,0.7991
 Scale=1,1,1

@@ -186,12 +186,3 @@ link=1130262,1
 link=1130259,1
 link=1130261,1
 
-[ENTRY]
-ID=1130264
-Asset=Environment-Marker?type=Bastion
-Name=Untitled
-Pos=15717.6,1359.21,13235.6
-Orient=0,0,0,1
-Scale=50,50,50
-Flags=1
-
