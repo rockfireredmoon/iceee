@@ -84,7 +84,6 @@ public:
 	void TriggerDelete(int targetCID, unsigned long delay);
 	void Despawn(int targetCID);
 	int ThisZone();
-	int Spawn(int propID);
 	int SpawnAt(int propID, int cdefID, unsigned long duration, int elevation);
 	void WarpZone(int zoneID);
 	bool IsInteracting(int cdefID);

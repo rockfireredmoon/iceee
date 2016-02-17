@@ -2412,7 +2412,6 @@ profession=1
 creature_category=Inanimate
 ai_package=example
 
-
 [ENTRY]
 ID=7892
 will_regen=1
@@ -2437,8 +2436,68 @@ profession=1
 creature_category=Inanimate
 ai_package=nothing
 
+[ENTRY]
+ID=7894
+will_regen=1
+might_regen=1
+appearance=p1:{["a"]="Prop-Crate",["sz"]="1"}
+level=1
+display_name=Archery Platform Parts
+profession=1
+creature_category=Inanimate
+ai_package=example
 
+[ENTRY]
+ID=7895
+will_regen=1
+might_regen=1
+appearance=p1:{["a"]="Prop-Archery_Platform",["sz"]="1"}
+level=1
+display_name=Archery Platform
+profession=1
+creature_category=Inanimate
+ai_package=example
 
+[ENTRY]
+ID=7896
+will_regen=1
+might_regen=1
+appearance=p1:{["a"]="Prop-Interact_Sphere",["sz"]="1"}
+level=1
+display_name=Barricade Parts
+profession=1
+creature_category=Inanimate
+ai_package=example
 
+[ENTRY]
+ID=7897
+will_regen=1
+might_regen=1
+appearance=p1:{["a"]="Prop-Battlefield_Barricade",["sz"]="1"}
+level=1
+display_name=Barricade
+profession=1
+creature_category=Inanimate
+ai_package=example
 
+[ENTRY]
+ID=7898
+will_regen=1
+might_regen=1
+appearance=p1:{["a"]="Prop-Interact_Sphere",["sz"]="1"}
+level=1
+display_name=Spike Trap
+profession=1
+creature_category=Inanimate
+ai_package=example
 
+[ENTRY]
+ID=7899
+will_regen=1
+might_regen=1
+appearance=p1:{["a"]="Prop-Garden_Dirt",["sz"]="0.5"}
+level=1
+display_name=Dug Spike Trap
+profession=1
+creature_category=Inanimate
+ai_package=example

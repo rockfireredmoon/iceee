@@ -1,5 +1,99 @@
 #!/bin/sq
 
+info <- {
+	enabled = true,
+	author = "Emerald Icemoon",
+	description = "Instance script for New Corsica"
+}
+
+//
+// Some handling for quest 1007 - 'Base Of Operations'
+//
+
+/* A custom class that encapsulates details about related props */
+
+class PropRelationship {
+	mPropId = 0;
+	mBuiltPropId = "";
+	
+	constructor(propId, builtPropId) {
+		mPropId = propId;
+		mBuiltPropId = builtPropId;
+	}
+}
+
+/* An array of towers */
+towers <- [ 
+	PropRelationship(1000033,1000034),
+	PropRelationship(1000035,1000036)
+];
+
+function on_use_finish_7894(cid) {
+	// Find the tower
+	foreach(tower in towers) {
+		if(inst.get_cid_for_prop(tower.mPropId) == cid) {
+			// Spawn the large version!
+			
+			local towerCid = inst.spawn_prop(tower.mBuiltPropId);
+			
+			inst.queue(function() { despawn(cid) }, 1000);
+			inst.queue(function() { despawn(towerCid) }, 10000);
+			
+			// Done
+			break;
+		}
+	}
+}
+
+/* An array of barricades */
+barricades <- [ 
+	PropRelationship(1000045,1000046),
+	PropRelationship(1000047,1000048)
+];
+ 
+function on_use_finish_7896(cid) {
+	// Find the barricade
+	foreach(barricade in barricades) {
+		if(inst.get_cid_for_prop(barricade.mPropId) == cid) {
+			
+			local barricadeCid = inst.spawn_prop(barricade.mBuiltPropId);
+			
+			inst.queue(function() { despawn(cid) }, 1000);
+			inst.queue(function() { despawn(barricadeCid) }, 10000);
+			
+			// Done
+			break;
+		}
+	}
+}
+
+
+/* An array of spike traps */
+traps <- [ 
+	PropRelationship(1000052,1000053),
+	PropRelationship(1000054,1000055)
+];
+ 
+function on_use_finish_7898(cid) {
+	// Find the trap
+	foreach(trap in traps) {
+		if(inst.get_cid_for_prop(trap.mPropId) == cid) {
+			
+			local trapCid = inst.spawn_prop(trap.mBuiltPropId);
+			
+			inst.queue(function() { despawn(cid) }, 1000);
+			inst.queue(function() { despawn(trapCid) }, 10000);
+			
+			// Done
+			break;
+		}
+	}
+}
+
+//
+// Example ad-hoc quest
+//
+
 function on_death(cid, cdefid) {
 	if(cdefid == 7876) {
 	

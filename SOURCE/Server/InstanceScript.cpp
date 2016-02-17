@@ -451,6 +451,7 @@ void InstanceNutPlayer::RegisterInstanceFunctions(HSQUIRRELVM vm, Sqrat::Derived
 	instanceClass->Func(_SC("unhate"), &InstanceNutPlayer::Unhate);
 	instanceClass->Func(_SC("get_ai"), &InstanceNutPlayer::GetAI);
 	instanceClass->Func(_SC("clear_target"), &InstanceNutPlayer::ClearTarget);
+	instanceClass->Func(_SC("spawn_prop"), &InstanceNutPlayer::SpawnProp);
 	instanceClass->Func(_SC("spawn"), &InstanceNutPlayer::Spawn);
 	instanceClass->Func(_SC("play_sound"), &InstanceNutPlayer::PlaySound);
 	instanceClass->Func(_SC("invite_quest"), &InstanceNutPlayer::InviteQuest);
@@ -1316,6 +1317,10 @@ int InstanceNutPlayer::LoadSpawnTile(Squirrel::Point location)
 int InstanceNutPlayer::LoadSpawnTileFor(Squirrel::Point location)
 {
 	return LoadSpawnTile(Squirrel::Point(location.mX / SpawnTile::SPAWN_TILE_SIZE,location.mZ / SpawnTile::SPAWN_TILE_SIZE));
+}
+
+int InstanceNutPlayer::SpawnProp(int propID) {
+	return Spawn(propID, 0, 0);
 }
 
 int InstanceNutPlayer::Spawn(int propID, int creatureID, int flags)

@@ -375,6 +375,7 @@ void QuestNutPlayer::RegisterQuestFunctions(NutPlayer *instance, Sqrat::DerivedC
 	instanceClass->Func(_SC("despawn"), &QuestNutPlayer::Despawn);
 	instanceClass->Func(_SC("get_target"), &QuestNutPlayer::GetTarget);
 	instanceClass->Func(_SC("get_source"), &QuestNutPlayer::GetSource);
+	instanceClass->Func(_SC("spawn_prop"), &QuestNutPlayer::SpawnProp);
 	instanceClass->Func(_SC("spawn"), &QuestNutPlayer::Spawn);
 	instanceClass->Func(_SC("spawn_at"), &QuestNutPlayer::SpawnAt);
 	instanceClass->Func(_SC("warp_zone"), &QuestNutPlayer::WarpZone);
@@ -681,10 +682,6 @@ int QuestNutPlayer::GetSource() {
 
 void QuestNutPlayer::Despawn(int CID) {
 	source->actInst->RemoveNPCInstance(CID);
-}
-
-int QuestNutPlayer::Spawn(int propID) {
-	return source->actInst->spawnsys.TriggerSpawn(propID, 0, 0);
 }
 
 int QuestNutPlayer::SpawnAt(int propID, int cdefID, unsigned long duration, int elevation) {

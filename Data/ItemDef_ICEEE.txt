@@ -1033,3 +1033,36 @@ mIvMax1=1006
 mSv1=The Battle of North Beach
 mValue=1
 mQualityLevel=1
+
+[ENTRY]
+mID=8601
+mType=9
+mDisplayName=Archery Tower Parts
+mIcon=Icon-32-1hSword-Medium1.png|Icon-32-BG-Green.png
+mIvType1=5
+mIvMax1=1007
+mSv1=Base of Operations
+mValue=1
+mQualityLevel=1
+
+[ENTRY]
+mID=8602
+mType=9
+mDisplayName=Barricade Parts
+mIcon=Icon-32-1hSword-Medium1.png|Icon-32-BG-Green.png
+mIvType1=5
+mIvMax1=1007
+mSv1=Base of Operations
+mValue=1
+mQualityLevel=1
+
+[ENTRY]
+mID=8603
+mType=9
+mDisplayName=Spike Trap
+mIcon=Icon-32-1hSword-Medium1.png|Icon-32-BG-Green.png
+mIvType1=5
+mIvMax1=1007
+mSv1=Base of Operations
+mValue=1
+mQualityLevel=1

@@ -146,6 +146,7 @@ public:
 	void WarpPlayer(int CID, int zoneID);
 	void Walk(int CID, Squirrel::Point point, int speed, int range);
 	void WalkThen(int CID, Squirrel::Point point, int speed, int range, Sqrat::Function onArrival);
+	int SpawnProp(int propID);
 	int Spawn(int propID, int creatureID, int flags);
 	int SpawnAt(int creatureID, Squirrel::Vector3I location, int facing, int flags);
 	int OLDSpawnAt(int creatureID, float x, float y, float z, int facing, int flags);
