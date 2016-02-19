@@ -436,9 +436,13 @@ Obj.0.markerLocations=18216.3,1147.9,16026.8,1060
 [ENTRY]
 Requires=1014
 ID=1015
-Title=Biological Warfare PartII
-BodyText=So its quite genius really! I discovered that the sap from within the Vileslashers is quite poisonious and almost instantly deadly upon contact... Ive found a way to change the sap into a gas which can be released in a catapult.  I just need a few Vileslashers to extract it from thats where you come in.  Take this the shock seems to mellow them out once they've become weak.  Bring me 3 and we should have enough to gas out those Anubians.
-CompleteText=Exellent the tamer worked here give me a moment to finish these up and you can bring them to Commander Ellis.
+Title=Biological Warfare: Taming the Lashers
+BodyText=So it's quite genius really! I have discovered that the sap from within the Vile Lasher plants here in the Vilegrove contains an interesting, even rather deadly, toxin. Death is guaranteed if enough exposure to the toxin is made with another living thing. Following a bit of experimenting, I have found a way to chemically change the Lasher sap toxin into a gas form. This toxic gas can then be contained within special 'bombs' ready to be transported anywhere you might need them. You can then release the gas into the air by delivering the bombs to the target via a catapult barrage.
+
+Thing is, I just need a few more Vile Lashers to extract the sap from and complete my research. That's where you come in. Take this - it's a sort of 'plant taming device' that will prove quite useful in your task. The shocks it gives seems to mellow the Lashers out once they've become weakened. Bring me three of them and that should provide us with enough sap toxin to completely gas out those Anubians.
+
+OH! Don't worry about being poisoned yourself as the toxin in the sap, while indeed deadly, needs enough direct contact to do the job in it's natural state. Your armor should prevent that from happening. I'll be here preparing my equipment while you're out there.
+CompleteText=Excellent, the plant tamer worked! Here, give me a moment to finish these up and you can bring them to Commander Ellis.
 Level=7
 Suggested=7
 Exp=772
@@ -452,22 +456,22 @@ Repeat=0
 sGiver=18216.3,1147.9,16026.8,1060
 sEnder=18216.3,1147.9,16026.8,1060
 [ACT]
-Act.BodyText=Head into the Vile Grove and bring 3 tamed Vileslashers to Researcher Dalorian
+Act.BodyText=Head into the Vilegrove and bring 3 tamed Vile Lashers to Researcher Dalorian.
 Obj.0.type=talk
 Obj.0.data1=
 Obj.0.data2=
-Obj.0.description=Tame 3 Vileslashers
+Obj.0.description=Tame Vile Lashers
 Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
-Obj.0.completeText=
+Obj.0.completeText=(0 of 3)
 Obj.0.markerLocations=17669.7,1193.84,15135.5,1060
 [ACT]
 Act.BodyText=Return to Researcher Dalorian
 Obj.0.type=talk
 Obj.0.data1=
 Obj.0.data2=
-Obj.0.description=Speak to Researcher Dalorian
+Obj.0.description=Return to Researcher Dalorian
 Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
@@ -477,9 +481,9 @@ Obj.0.markerLocations=18273.8,1148.86,16088.1,1060
 [ENTRY]
 Requires=1015
 ID=1016
-Title=Biological Warfare PartIII
-BodyText=Dear Gaia these are spectacular!! This is exactly what I needed to send these abominations back to the Sea! Will you do the honors?
-CompleteText=Did you see them scatter ?! With what you accomplished today this plan of yours might actually work. Alright I'll gather my troops and head to North Beach, but I need to ask one more thing from you...
+Title=Biological Warfare: The Secret Weapon Completed
+BodyText=Sorry to keep you waiting, friend. Here are the bombs Commander Ellis requested. I must confess that I probably wouldn't have been able to finish my work here were it not for your help. Thank you ever so much! Now hurry, the Commander needs those as soon as possible.
+CompleteText=There you are soldier! I was beginning to wonder if you'd tucked tail at the last minute or had met a more dire fate! Good to see I was wrong! Are those the bombs Dalorian was working on? Bring them here immediately! I must make certain they will do the job before we even attempt to employ them!
 Level=7
 Suggested=7
 Exp=112
@@ -493,18 +497,48 @@ Repeat=0
 sGiver=17667.5,1347.19,17587.5,1060
 sEnder=17667.5,1347.19,17587.5,1060
 [ACT]
-Act.BodyText=Load the bomb into the catapult
+Act.BodyText=Take the newly completed bombs directly to Commander Ellis at the Central Command Post.
 Obj.0.type=talk
 Obj.0.data1=
 Obj.0.data2=
-Obj.0.description=Load the bomb into the catapult
+Obj.0.description=Take the bombs to Commander Ellis
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=17667.5,1347.19,17587.5,1060
+
+[ENTRY]
+Requires=1016
+ID=1017
+Title=Biological Warfare: Bombs Away!
+BodyText=Dear Gaia, these are spectacular!! This is exactly what I needed to send those abominable dogs back to the Sea! Will you do the honors?
+CompleteText=Did you see them scatter?! With what you accomplished today, this plan of yours might actually work. Alright, I'll gather my troops and head to North Beach; but, I need to ask one more thing from you...
+Level=7
+Suggested=7
+Exp=112
+PartySize=1
+NumRewards=0
+Coin=92
+Unabandon=0
+QuestGiverID=3225
+QuestEnderID=3225
+Repeat=0
+sGiver=17667.5,1347.19,17587.5,1060
+sEnder=17667.5,1347.19,17587.5,1060
+[ACT]
+Act.BodyText=Load the bombs into the catapult and launch them at the Anubian Supply Camp located near the Port.
+Obj.0.type=talk
+Obj.0.data1=
+Obj.0.data2=
+Obj.0.description=Load the bombs into the catapult
 Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=17496.6,1380.15,17616.3,1060
 [ACT]
-Act.BodyText=Speak to Commander Ellis
+Act.BodyText=Report back to Commander Ellis
 Obj.0.type=talk
 Obj.0.data1=
 Obj.0.data2=
@@ -516,8 +550,8 @@ Obj.0.completeText=
 Obj.0.markerLocations=17667.5,1347.19,17587.5,1060
 
 [ENTRY]
-Requires=1016
-ID=1017
+Requires=1017
+ID=1018
 Title=Loose Ends
 BodyText=This camp is a strategic location on this island and abandoning it could help the enemy. We'll destroy the bridge upon our retreat; however, I need you to investigate the Anubian supply camp we hit. Drive back any remaining resistance and if the Captain survived the barrage send him back to his gods too...
 CompleteText=Get your tail over here soldier!! You came from the North Beach? Last I heard Anubians controlled the North end of the Island. We've been waiting for them to attack us from both sides, but it hasn't happened. What are they waiting for? Wha...t? North Beach has, eh? Okay, spare me the details; but report this to Sir Lancelot. He'll be thrilled to hear this!
@@ -568,8 +602,8 @@ Obj.0.completeText=
 Obj.0.markerLocations=17427.6,1279.05,19910.7,1060
 
 [ENTRY]
-Requires=1017
-ID=1018
+Requires=1018
+ID=1019
 Title=The Battle of Southend
 BodyText=Somehow I knew you'd still be alive soldier!  As it turns out, the Anubians have too great of numbers here. ...Fall back to Northbeach, huh. That's quite the plan! If we could retake Corsica, we may still have a shot at this war!
 
@@ -631,8 +665,8 @@ Obj.0.completeText=
 Obj.0.markerLocations=17255,1341.78,19777.3,1060
 
 [ENTRY]
-Requires=1018
-ID=1019
+Requires=1019
+ID=1020
 Title=The Fall of Southend
 BodyText=I'll bring these plans back to North Beach, but you have a more important assignment here. I cannot bring these civilians along with me as it's too dangerous and I can't leave them to die here either! Your assignment is to take these civilians to the Warcamp in Earthrise. Corsica may be in dire straits, but Earthrise should still be holding strong.
 
