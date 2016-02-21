@@ -46,7 +46,7 @@ Repeat=0
 sGiver=10867.8,568.911,12169.2,92
 sEnder=10867.8,568.911,12169.2,92
 [ACT]
-Act.BodyText=Kill 6 Anubian Scouts and report back to Sergeant Bors
+Act.BodyText=Kill 6 Anubian Scouts
 Obj.0.type=kill
 Obj.0.data1=3132,3134,3140,3141
 Obj.0.data2=6
