@@ -338,7 +338,7 @@ void segfault_sigaction(int signum, siginfo_t *si, void *arg)
 	UnloadResources();
 	fprintf(stderr, "Resources unloaded, exiting program.\n");
 	fflush(stderr);
-	exit(1);
+	exit(signum);
 	return;
 }
 
