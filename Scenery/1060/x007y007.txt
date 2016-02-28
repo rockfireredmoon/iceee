@@ -109,7 +109,7 @@ Flags=1
 ID=1029103
 Asset=Manipulator-SpawnPoint
 Name=Untitled
-Pos=14830.9,1114.07,14080
+Pos=14831.3,1113.97,14081
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=#E3175
@@ -607,7 +607,7 @@ despawnTime=15
 [ENTRY]
 ID=1133417
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=15172.4,1110.47,14188.4
 Orient=0,-0.574172,0,-0.818735
 Scale=1,1,1
@@ -617,7 +617,7 @@ maxActive=0
 [ENTRY]
 ID=1133418
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=15214.9,1114.58,14334.2
 Orient=0,0,0,1
 Scale=1,1,1
@@ -627,7 +627,7 @@ despawnTime=15
 [ENTRY]
 ID=1133419
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=15223.6,1114.94,14326.8
 Orient=0,0.522687,0,0.852525
 Scale=1,1,1
@@ -637,7 +637,7 @@ maxActive=0
 [ENTRY]
 ID=1133420
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=15146.7,1115.67,14331.4
 Orient=0,0,0,1
 Scale=1,1,1
@@ -647,7 +647,7 @@ despawnTime=15
 [ENTRY]
 ID=1133421
 Asset=Prop-Pine_Forest_Accessories#Prop-Pine_Sticks1
-Name=
+Name=Untitled
 Pos=15148.5,1115.76,14330
 Orient=0,0,0,1
 Scale=1,1,1
@@ -655,7 +655,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1133422
 Asset=Prop-Pine_Forest_Accessories#Prop-Pine_Sticks1
-Name=
+Name=Untitled
 Pos=15051.5,1112.2,14285.6
 Orient=0,0,0,1
 Scale=1,1,1
@@ -663,7 +663,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1133423
 Asset=Prop-Pine_Forest_Accessories#Prop-Pine_Sticks1
-Name=
+Name=Untitled
 Pos=14956.6,1114.11,14226.4
 Orient=0,0,0,1
 Scale=1,1,1
@@ -671,7 +671,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1133424
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=15148.5,1115.78,14329.7
 Orient=0,-0.786425,0,0.617686
 Scale=1,1,1
@@ -681,7 +681,7 @@ maxActive=0
 [ENTRY]
 ID=1133425
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=15054.1,1112.17,14281.5
 Orient=0,0,0,1
 Scale=1,1,1
@@ -691,7 +691,7 @@ despawnTime=15
 [ENTRY]
 ID=1133426
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=15049.9,1112.23,14289.9
 Orient=0,-0.836026,0,0.54869
 Scale=1,1,1
@@ -701,7 +701,7 @@ maxActive=0
 [ENTRY]
 ID=1133427
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=14965.7,1113.95,14210.4
 Orient=0,0,0,1
 Scale=1,1,1
@@ -711,7 +711,7 @@ despawnTime=15
 [ENTRY]
 ID=1133428
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=14957.4,1113.64,14217.9
 Orient=0,0.21823,0,0.975898
 Scale=1,1,1
@@ -721,7 +721,7 @@ maxActive=0
 [ENTRY]
 ID=1133429
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=14816.7,1110.22,14210.9
 Orient=0,0,0,1
 Scale=1,1,1
@@ -731,7 +731,7 @@ despawnTime=15
 [ENTRY]
 ID=1133430
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=14803.9,1109.62,14212.3
 Orient=0,0,0,1
 Scale=1,1,1
@@ -741,7 +741,7 @@ maxActive=0
 [ENTRY]
 ID=1133431
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=15056.5,1114.98,14348.1
 Orient=0,0,0,1
 Scale=1,1,1
@@ -751,7 +751,7 @@ despawnTime=15
 [ENTRY]
 ID=1133432
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=15046.3,1114.65,14349.3
 Orient=0,0,0,1
 Scale=1,1,1
