@@ -1,0 +1,295 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>Remote Tools</title>
+<link rel="stylesheet" href="main.css">
+</head>
+<body>
+
+<script type="text/javascript" src="targetAddress.js"></script>
+
+<script type="text/javascript">
+
+var maxSimulator = 12;
+
+/*
+var targetAddress = "http://localhost/";
+*/
+
+var xhttp;
+
+function AppendParam(list, key, value)
+{
+	if(list.length > 0)
+		list = list + "&";
+
+	return list + key + "=" + value;
+}
+
+function AppendControlParam(list, control)
+{
+	var obj = document.getElementById(control);
+	if(!obj)
+		return list;
+
+	return AppendParam(list, obj.id, obj.value);
+}
+
+function Action_shutdown()
+{
+	var res = confirm("Confirm shutdown of the server.");
+	if(res == false)
+		return;
+
+	var np = "";
+	np = AppendParam(np, "action", "shutdown");
+	np = AppendControlParam(np, "authtoken");
+	SendPOST("remoteaction", np);
+}
+
+function Action_reqthread()
+{
+	var np = "";
+	np = AppendParam(np, "action", "refreshthreads");
+	np = AppendControlParam(np, "authtoken");
+	SendPOST("remoteaction", np);
+}
+
+function Action_reqtime()
+{
+	var np = "";
+	np = AppendParam(np, "action", "refreshtime");
+	np = AppendControlParam(np, "authtoken");
+	SendPOST("remoteaction", np);
+}
+
+function Action_refreshmods()
+{
+	var np = "";
+	np = AppendParam(np, "action", "refreshmods");
+	np = AppendControlParam(np, "authtoken");
+
+	var obj = document.getElementById("sim_id");
+	np = AppendParam(np, "sim_id", obj.value);
+
+	SendPOST("remoteaction", np);
+}
+
+function Action_refreshplayers()
+{
+	var np = "";
+	np = AppendParam(np, "action", "refreshplayers");
+	np = AppendControlParam(np, "authtoken");
+	SendPOST("remoteaction", np);
+}
+
+
+function Action_refreshscripts()
+{
+	var np = "";
+	np = AppendParam(np, "action", "refreshscripts");
+	np = AppendControlParam(np, "authtoken");
+	SendPOST("remoteaction", np);
+}
+
+function Action_refreshinstance()
+{
+	var np = "";
+	np = AppendParam(np, "action", "refreshinstance");
+	np = AppendControlParam(np, "authtoken");
+	SendPOST("remoteaction", np);
+}
+
+function Action_refreshhateprofile()
+{
+	var np = "";
+	np = AppendParam(np, "action", "refreshhateprofile");
+	np = AppendControlParam(np, "authtoken");
+	SendPOST("remoteaction", np);
+}
+
+function Action_refreshcharacter()
+{
+	var np = "";
+	np = AppendParam(np, "action", "refreshcharacter");
+	np = AppendControlParam(np, "authtoken");
+	SendPOST("remoteaction", np);
+}
+
+function Action_refreshsim()
+{
+	var np = "";
+	np = AppendParam(np, "action", "refreshsim");
+	np = AppendControlParam(np, "authtoken");
+	SendPOST("remoteaction", np);
+}
+
+function Action_setmotd()
+{
+	var np = "";
+	np = AppendParam(np, "action", "setmotd");
+	np = AppendControlParam(np, "authtoken");
+
+	var obj = document.getElementById("send_data");
+	if(obj.value.length == 0)
+	{
+		alert("Cannot send empty MOTD string.");
+		return;
+	}
+	np = AppendParam(np, "data", obj.value);
+	SendPOST("remoteaction", np);
+}
+
+function Action_reloadchecksum()
+{
+	var np = "";
+	np = AppendParam(np, "action", "reloadchecksum");
+	np = AppendControlParam(np, "authtoken");
+	SendPOST("remoteaction", np);
+}
+
+
+function Action_reloadconfig()
+{
+	var np = "";
+	np = AppendParam(np, "action", "reloadconfig");
+	np = AppendControlParam(np, "authtoken");
+	SendPOST("remoteaction", np);
+}
+
+function Action_importkeys()
+{
+	var np = "";
+	np = AppendParam(np, "action", "importkeys");
+	np = AppendControlParam(np, "authtoken");
+	SendPOST("remoteaction", np);
+}
+
+function Action_refreshprofiler()
+{
+	var np = "";
+	np = AppendParam(np, "action", "refreshprofiler");
+	np = AppendControlParam(np, "authtoken");
+	SendPOST("remoteaction", np);
+}
+
+function Action_refreshitem()
+{
+	var np = "";
+	np = AppendParam(np, "action", "refreshitem");
+	np = AppendControlParam(np, "authtoken");
+
+	var obj = document.getElementById("sim_id");
+	np = AppendParam(np, "sim_id", obj.value);
+	SendPOST("remoteaction", np);
+}
+
+function Action_refreshitemdetailed()
+{
+	var np = "";
+	np = AppendParam(np, "action", "refreshitemdetailed");
+	np = AppendControlParam(np, "authtoken");
+
+	var obj = document.getElementById("sim_id");
+	np = AppendParam(np, "sim_id", obj.value);
+	SendPOST("remoteaction", np);
+}
+
+function Action_refreshpacket()
+{
+	var np = "";
+	np = AppendParam(np, "action", "refreshpacket");
+	np = AppendControlParam(np, "authtoken");
+	SendPOST("remoteaction", np);
+}
+
+function SendPOST(file, args)
+{
+	var obj = document.getElementById("resulttext");
+	if(obj)
+		obj.innerHTML = "Request sent, waiting for server response...";
+
+	xhttp = new XMLHttpRequest(); 
+	xhttp.onreadystatechange = HandlerOnReadyStateChange;
+	xhttp.open("POST", targetAddress + file);
+	xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	xhttp.setRequestHeader("Content-Length", args.length);
+	xhttp.setRequestHeader("Connection", "close");
+	xhttp.send(args);    
+}
+
+
+function HandlerOnReadyStateChange()
+{	
+	if(xhttp.readyState == 4)
+	{
+		if(xhttp.status == 200 )
+		{
+			var obj = document.getElementById("resulttext");
+			obj.innerHTML = xhttp.responseText;
+		}
+	}
+}
+
+
+</script>
+
+
+<p>
+Authorization Token: <input type="text" id="authtoken">
+
+
+<p>
+Simulator ID:
+<input type="text" size="6" id="sim_id" value="0">
+
+<p>
+Input Data:
+<input type="text" size="128" id="send_data" value="">
+
+<p style="text-align: right">
+<input type="button" id="shutdown" value="Shut Down" onClick="Action_shutdown();">
+<p>
+
+<input type="button" id="reqthread" value="Refresh Threads" onClick="Action_reqthread();">
+
+<input type="button" id="reqtime" value="Refresh Time" onClick="Action_reqtime();">
+
+<input type="button" id="reqmods" value="Refresh Mods" onClick="Action_refreshmods();">
+
+<input type="button" id="refreshplayers" value="Refresh Players" onClick="Action_refreshplayers();">
+
+<input type="button" id="refreshinstance" value="Refresh Instance" onClick="Action_refreshinstance();">
+
+<input type="button" id="refreshscripts" value="Refresh Scripts" onClick="Action_refreshscripts();">
+
+<input type="button" id="refreshhateprofile" value="Refresh Hate Profile" onClick="Action_refreshhateprofile();">
+
+<input type="button" id="refreshcharacter" value="Refresh Character" onClick="Action_refreshcharacter();">
+<p>
+
+<input type="button" id="refreshsim" value="Refresh Sim Data" onClick="Action_refreshsim();">
+
+<input type="button" id="setmotd" value="Set MOTD" onClick="Action_setmotd();">
+
+<input type="button" id="reloadchecksum" value="Reload Checksum" onClick="Action_reloadchecksum();">
+
+<input type="button" id="reloadconfig" value="Reload Config" onClick="Action_reloadconfig();">
+<input type="button" id="importkeys" value="Import Keys" onClick="Action_importkeys();">
+<input type="button" id="refreshprofiler" value="Refresh Profiles" onClick="Action_refreshprofiler();">
+<p>
+<input type="button" id="refreshitem" value="Refresh Item" onClick="Action_refreshitem();">
+<input type="button" id="refreshitemdetailed" value="Refresh Item (Detailed)" onClick="Action_refreshitemdetailed();">
+<input type="button" id="refreshpacket" value="Refresh Packet" onClick="Action_refreshpacket();">
+<hr>
+
+<div><b>Server response:</b></div>
+<code><pre>
+<p id="resulttext">
+No action has been sent yet.
+</pre></code>
+</body>
+</html>

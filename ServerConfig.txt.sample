@@ -103,11 +103,11 @@ MessageLevel=15         ; Show + Critical + Error + Warnings
 ; Password for the administrative web panel
 RemoteAuthenticationPassword=admin
 
-
-DefZone=81                   ; Default Zone ID for characters to log into
-DefX=43329 ;64000
-DefY=263
-DefZ=67793 ;48000
+DefZone=92                   ; Default Zone ID for characters to log into
+DefX=10422
+DefY=614
+DefZ=12548
+DefRotation=180
 
 ProperSceneryList=1          ; Use a proper scenery response (longer loading screens, but low chance of getting stuck in props as they're loading)
 BuybackLimit=32               ; Maximum number of items reserved in the buyback list.  There are 16 items per page.

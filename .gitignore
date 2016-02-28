@@ -33,7 +33,6 @@ aclocal.m4
 *.cproject
 *.mk
 *.tar.gz
-/asset/
 *.autotools
 /Audit/
 **/*.cnut
