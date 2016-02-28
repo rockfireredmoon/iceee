@@ -5,7 +5,6 @@ ai_DATA = 4_druid_melee_30.txt \
 		4_mage_30.txt \
 		4_rogue_30.txt \
 		Bastion_NPC_CatapultFiringAnimation.nut \
-		Bastion_NPC_GuardBowAnimation.cnut \
 		Bastion_NPC_GuardBowAnimation.nut \
 		Bastion_NPC_GuardMeleeAnimation1.txt \
 		Bastion_NPC_GuardMeleeAnimation2.txt \
