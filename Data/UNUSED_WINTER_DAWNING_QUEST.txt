@@ -1,0 +1,414 @@
+; Camelot
+[ENTRY]
+ID=593
+Title=Vargan's Book of Lore
+BodyText=Hello friend! Welcome to the Winter Dawning Festival. While this is normally a joyous occasion, this year's festival has been marred with troubles. Many of the gifts left by the festival tree have been disappearing. We thought at first it was a mere thief come in the night but late last night we saw the abomination - Grindle! Yes, it would seem Grindle is more than a childhood monster used to keep younglings well behaved. You have not heard the story of Grindle? Hmmm...then you should travel to the Great Library in Camelot and do some research. Seek out Vargan's Book of Lore, it will have any known information about Grindle's story. Ultimately we need to find where Grindle is taking the gifts and return them to the festival tree! We could surely use your help - would you aid us?
+CompleteText=You have found Vargan's Book of Lore.
+Suggested=20
+Exp=3096
+PartySize=1
+NumRewards=0
+Coin=585
+Unabandon=0
+QuestGiverID=2902
+QuestEnderID=2913
+Repeat=0
+sGiver=54887,146,63335,81
+sEnder=56141,429,64266,81
+[ACT]
+Act.BodyText=Seek out Vargan's Book of Lore
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Seek out Vargan's Book of Lore
+Obj.0.complete=0
+Obj.0.myCreatureDefID=2913
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=56344.9,349.563,64250.4,81;
+
+; Bremen
+[ENTRY]
+ID=594
+Title=Vargan's Book of Lore
+BodyText=Hello friend! Welcome to the Winter Dawning Festival. While this is normally a joyous occasion, this year's festival has been marred with troubles. Many of the gifts left by the festival tree have been disappearing. We thought at first it was a mere thief come in the night but late last night we saw the abomination - Grindle! Yes, it would seem Grindle is more than a childhood monster used to keep younglings well behaved. You have not heard the story of Grindle? Hmmm...then you should travel to the Great Library in Camelot and do some research. Seek out Vargan's Book of Lore, it will have any known information about Grindle's story. Ultimately we need to find where Grindle is taking the gifts and return them to the festival tree! We could surely use your help - would you aid us?
+CompleteText=You have found Vargan's Book of Lore.
+Suggested=30
+Exp=4633
+PartySize=1
+NumRewards=0
+Coin=1125
+Unabandon=0
+QuestGiverID=2903
+QuestEnderID=2913
+Repeat=0
+sGiver=68964,424,35668,9
+sEnder=56141,429,64266,81
+[ACT]
+Act.BodyText=Seek out Vargan's Book of Lore
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Seek out Vargan's Book of Lore
+Obj.0.complete=0
+Obj.0.myCreatureDefID=2913
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=56141,429,64266,81;
+
+; Heartwood
+[ENTRY]
+ID=595
+Title=Vargan's Book of Lore
+BodyText=Hello friend! Welcome to the Winter Dawning Festival. While this is normally a joyous occasion, this year's festival has been marred with troubles. Many of the gifts left by the festival tree have been disappearing. We thought at first it was a mere thief come in the night but late last night we saw the abomination - Grindle! Yes, it would seem Grindle is more than a childhood monster used to keep younglings well behaved. You have not heard the story of Grindle? Hmmm...then you should travel to the Great Library in Camelot and do some research. Seek out Vargan's Book of Lore, it will have any known information about Grindle's story. Ultimately we need to find where Grindle is taking the gifts and return them to the festival tree! We could surely use your help - would you aid us?
+CompleteText=You have found Vargan's Book of Lore.
+Suggested=35
+Exp=1702
+PartySize=1
+NumRewards=0
+Coin=452
+Unabandon=0
+QuestGiverID=2904
+QuestEnderID=2913
+Repeat=0
+sGiver=28930,508,62789,9
+sEnder=56141,429,64266,81
+[ACT]
+Act.BodyText=Seek out Vargan's Book of Lore
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Seek out Vargan's Book of Lore
+Obj.0.complete=0
+Obj.0.myCreatureDefID=2913
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=56344.9,349.563,64250.4,81;
+
+; Camelot
+[ENTRY]
+ID=596
+Requires=593
+Title=The Legend of Grindle
+BodyText=Vargan's Book of Lore is a large and aged tome. You search the pages and find several entries about the story of Grindle. It is said Grindle was once a young and handsome beast, beloved by all and feared by none. Then came the horrors of the Bleakness. In the darkest depths of that time, Grindle's love Heraldine was taken by the Vampires. Grindle was grief stricken and set out to rescue her. He was no knight, but he claimed he would save her or die trying. He was never seen again. While unclear how, the legend tells that he made a deal with Abidan to save his love from the Vampires. Abidan transformed him into a hideous Revenant - this gave him the power he needed to attempt his rescue. The legend goes on to say that he fought fiercely in his transformed body and did, in fact, save Heraldine. There was, however, no happy ending. Heraldine had no idea how she was rescued or what happened to her love Grindle. She assumed he was lost trying to rescue her. Then came the Winter Dawning Festival. Heraldine sat on the cliffs overlooking the sea. A sound startled her and a hideous creature approached. She screamed but the beast spoke to her. To her disbelief it claimed to be her lost love Grindle, but she could not reckon it. She went mad. Heraldine, so distraught at the hideous appearance of her lover, threw herself off the cliff. It is here that the tale of Grindle is born. Mothers use the specter of Grindle to scare their children. Grindle is always watching! If children misbehave, then Grindle will come, at Winter Dawning, and steal their presents from under the festival tree! Most dismiss any truth to these legends and claim they are just scary stories; but, over the years supposed sightings of Grindle have been made at various locations. Three locations seem to stand out. In Anglorum, more sightings than any other location are in and around the Abandoned Monastery. In New Badari, there are tales of something strange lurking in the Dunklehimer Brewery cellar that resembles Grindle. Finally, in the Heartwood, many Grindle sightings are noted to be around the Dark Depths.
+CompleteText=I am glad to see you have returned. What news do you bring?
+Suggested=20
+Exp=3096
+PartySize=1
+NumRewards=0
+Coin=585
+Unabandon=0
+QuestGiverID=2913
+QuestEnderID=2902
+Repeat=0
+sGiver=56141,429,64266,81
+sEnder=54887,146,63335,81
+[ACT]
+Act.BodyText=Return to Wendel Ostran
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Wendel Ostran
+Obj.0.complete=0
+Obj.0.myCreatureDefID=2902
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=56344.9,349.563,64250.4,81;
+
+
+; Bremen
+[ENTRY]
+ID=597
+Requires=594
+Title=The Legend of Grindle
+BodyText=Vargan's Book of Lore is a large and aged tome. You search the pages and find several entries about the story of Grindle. It is said Grindle was once a young and handsome beast, beloved by all and feared by none. Then came the horrors of the Bleakness. In the darkest depths of that time, Grindle's love Heraldine was taken by the Vampires. Grindle was grief stricken and set out to rescue her. He was no knight, but he claimed he would save her or die trying. He was never seen again. While unclear how, the legend tells that he made a deal with Abidan to save his love from the Vampires. Abidan transformed him into a hideous Revenant - this gave him the power he needed to attempt his rescue. The legend goes on to say that he fought fiercely in his transformed body and did, in fact, save Heraldine. There was, however, no happy ending. Heraldine had no idea how she was rescued or what happened to her love Grindle. She assumed he was lost trying to rescue her. Then came the Winter Dawning Festival. Heraldine sat on the cliffs overlooking the sea. A sound startled her and a hideous creature approached. She screamed but the beast spoke to her. To her disbelief it claimed to be her lost love Grindle, but she could not reckon it. She went mad. Heraldine, so distraught at the hideous appearance of her lover, threw herself off the cliff. It is here that the tale of Grindle is born. Mothers use the specter of Grindle to scare their children. Grindle is always watching! If children misbehave, then Grindle will come, at Winter Dawning, and steal their presents from under the festival tree! Most dismiss any truth to these legends and claim they are just scary stories; but, over the years supposed sightings of Grindle have been made at various locations. Three locations seem to stand out. In Anglorum, more sightings than any other location are in and around the Abandoned Monastery. In New Badari, there are tales of something strange lurking in the Dunklehimer Brewery cellar that resembles Grindle. Finally, in the Heartwood, many Grindle sightings are noted to be around the Dark Depths.
+CompleteText=I am glad to see you have returned. What news do you bring?
+Suggested=30
+Exp=4633
+PartySize=1
+NumRewards=0
+Coin=1125
+Unabandon=0
+QuestGiverID=2913
+QuestEnderID=2903
+Repeat=0
+sGiver=56141,429,64266,81
+sEnder=68964,424,35668,9
+[ACT]
+Act.BodyText=Return to Forden Jallows
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Forden Jallows
+Obj.0.complete=0
+Obj.0.myCreatureDefID=2903
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=68964,424,35668,9;
+
+
+; Heartwood
+[ENTRY]
+ID=598
+Requires=595
+Title=The Legend of Grindle
+BodyText=Vargan's Book of Lore is a large and aged tome. You search the pages and find several entries about the story of Grindle. It is said Grindle was once a young and handsome beast, beloved by all and feared by none. Then came the horrors of the Bleakness. In the darkest depths of that time, Grindle's love Heraldine was taken by the Vampires. Grindle was grief stricken and set out to rescue her. He was no knight, but he claimed he would save her or die trying. He was never seen again. While unclear how, the legend tells that he made a deal with Abidan to save his love from the Vampires. Abidan transformed him into a hideous Revenant - this gave him the power he needed to attempt his rescue. The legend goes on to say that he fought fiercely in his transformed body and did, in fact, save Heraldine. There was, however, no happy ending. Heraldine had no idea how she was rescued or what happened to her love Grindle. She assumed he was lost trying to rescue her. Then came the Winter Dawning Festival. Heraldine sat on the cliffs overlooking the sea. A sound startled her and a hideous creature approached. She screamed but the beast spoke to her. To her disbelief it claimed to be her lost love Grindle, but she could not reckon it. She went mad. Heraldine, so distraught at the hideous appearance of her lover, threw herself off the cliff. It is here that the tale of Grindle is born. Mothers use the specter of Grindle to scare their children. Grindle is always watching! If children misbehave, then Grindle will come, at Winter Dawning, and steal their presents from under the festival tree! Most dismiss any truth to these legends and claim they are just scary stories; but, over the years supposed sightings of Grindle have been made at various locations. Three locations seem to stand out. In Anglorum, more sightings than any other location are in and around the Abandoned Monastery. In New Badari, there are tales of something strange lurking in the Dunklehimer Brewery cellar that resembles Grindle. Finally, in the Heartwood, many Grindle sightings are noted to be around the Dark Depths.
+CompleteText=I am glad to see you have returned. What news do you bring?
+Suggested=35
+Exp=1702
+PartySize=1
+NumRewards=0
+Coin=452
+Unabandon=0
+QuestGiverID=2913
+QuestEnderID=2904
+Repeat=0
+sGiver=56141,429,64266,81
+sEnder=68964,424,35668,9
+[ACT]
+Act.BodyText=Return to Haslo Norgun
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Haslo Norgun
+Obj.0.complete=0
+Obj.0.myCreatureDefID=2904
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=28930,508,62789,9;
+
+
+; Camelot
+[ENTRY]
+ID=599
+Requires=596
+Title=Grindle's Lair
+BodyText=Interesting. We must track down Grindle and get those gifts back. We are in Camelot so I suppose the best place to look would be in and around the old Monastery. Go now, investigate and return with those gifts!
+CompleteText=You have done very well and kept the spirit of the season alive. In the name of all beasts in Camelot I give you thanks! Please choose one of these rewards and enjoy the Winter Dawning Festival!
+Suggested=20
+Exp=3096
+PartySize=5
+NumRewards=1
+Coin=585
+Unabandon=0
+QuestGiverID=2902
+QuestEnderID=2902
+Repeat=0
+sGiver=54887,146,63335,81
+sEnder=54887,146,63335,81
+[ACT]
+Act.BodyText=Travel to the Abandoned Monastery.
+Obj.0.type=travel
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Travel to the Abandoned Monastery
+Obj.0.complete=0
+Obj.0.myCreatureDefID=0
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=
+[ACT]
+Act.BodyText=Find the strange device.
+Obj.0.type=travel
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Find the strange device
+Obj.0.complete=0
+Obj.0.myCreatureDefID=0
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=
+[ACT]
+Act.BodyText=You have found a strange device! This must be the entrance to Grindle's Lair. 
+Obj.0.type=travel
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Use the device to enter Grindle's Lair
+Obj.0.complete=0
+Obj.0.myCreatureDefID=0
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=
+[ACT]
+Act.BodyText=Defeat Grindle.
+Obj.0.type=kill
+Obj.0.data1=2905
+Obj.0.data2=1
+Obj.0.description=Defeat Grindle
+Obj.0.complete=0
+Obj.0.myCreatureDefID=0
+Obj.0.myItemID=
+Obj.0.completeText=0 of 1
+Obj.0.markerLocations=
+[ACT]
+Act.BodyText=Return to Wendel Ostran.
+Obj.0.type=talk
+Obj.0.data1=
+Obj.0.data2=
+Obj.0.description=Return to Wendel Ostran
+Obj.0.complete=0
+Obj.0.myCreatureDefID=2902
+Obj.0.myItemID=
+Obj.0.completeText=0 of 1
+Obj.0.markerLocations=54887,146,63335,81;
+RewardItem.0=800635,1,0
+RewardItem.1=800636,1,0
+RewardItem.2=800638,1,0
+RewardItem.3=800637,1,0
+
+; Bremen
+[ENTRY]
+ID=600
+Requires=597
+Title=Grindle's Lair
+BodyText=Interesting. We must track down Grindle and get those gifts back. We are in Bremen so I suppose the best place to look would be in and around the Dunklehimer Brewery Cellar. Go now, investigate and return with those gifts!
+CompleteText=You have done very well and kept the spirit of the season alive. In the name of all beasts in Bremen I give you thanks! Please choose one of these rewards and enjoy the Winter Dawning Festival!
+Suggested=30
+Exp=4633
+PartySize=5
+NumRewards=1
+Coin=1125
+Unabandon=0
+QuestGiverID=2903
+QuestEnderID=2903
+Repeat=0
+sGiver=68964,424,35668,9
+sEnder=68964,424,35668,9
+[ACT]
+Act.BodyText=Travel to the Dunklehimer Brewery
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Travel to the Dunklehimer Brewery
+Obj.0.complete=0
+Obj.0.myCreatureDefID=0
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=
+[ACT]
+Act.BodyText=Find the strange device.
+Obj.0.type=travel
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Find the strange device
+Obj.0.complete=0
+Obj.0.myCreatureDefID=0
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=
+[ACT]
+Act.BodyText=You have found a strange device! This must be the entrance to Grindle's Lair. 
+Obj.0.type=travel
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Use the device to enter Grindle's Lair
+Obj.0.complete=0
+Obj.0.myCreatureDefID=0
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=
+[ACT]
+Act.BodyText=Defeat Grindle.
+Obj.0.type=kill
+Obj.0.data1=2906
+Obj.0.data2=1
+Obj.0.description=Defeat Grindle
+Obj.0.complete=0
+Obj.0.myCreatureDefID=0
+Obj.0.myItemID=
+Obj.0.completeText=0 of 1
+Obj.0.markerLocations=
+[ACT]
+Act.BodyText=Return to Forden Jallows.
+Obj.0.type=talk
+Obj.0.data1=
+Obj.0.data2=
+Obj.0.description=Return to Forden Jallows
+Obj.0.complete=0
+Obj.0.myCreatureDefID=2903
+Obj.0.myItemID=
+Obj.0.completeText=0 of 1
+Obj.0.markerLocations=68964,424,35668,9;
+RewardItem.0=800639,1,0
+RewardItem.1=800642,1,0
+RewardItem.2=800640,1,0
+RewardItem.3=800641,1,0
+
+
+; Heartwood
+[ENTRY]
+ID=601
+Requires=598
+Title=Grindle's Lair
+BodyText=Interesting. We must track down Grindle and get those gifts back. We are in Heartwood so I suppose the best place to look would be in and around the Dark Depths. Go now, investigate and return with those gifts!
+CompleteText=You have done very well and kept the spirit of the season alive. In the name of all beasts in Heartwood I give you thanks! Please choose one of these rewards and enjoy the Winter Dawning Festival!
+Suggested=35
+Exp=5675
+PartySize=5
+NumRewards=1
+Coin=1508
+Unabandon=0
+QuestGiverID=2904
+QuestEnderID=2904
+Repeat=0
+sGiver=28930,508,62789,9
+sEnder=28930,508,62789,9
+[ACT]
+Act.BodyText=Travel to the Dark Depths
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Travel to the Dark Depths
+Obj.0.complete=0
+Obj.0.myCreatureDefID=0
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=
+[ACT]
+Act.BodyText=Find the strange device.
+Obj.0.type=travel
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Find the strange device
+Obj.0.complete=0
+Obj.0.myCreatureDefID=0
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=
+[ACT]
+Act.BodyText=You have found a strange device! This must be the entrance to Grindle's Lair. 
+Obj.0.type=travel
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Use the device to enter Grindle's Lair
+Obj.0.complete=0
+Obj.0.myCreatureDefID=0
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=
+[ACT]
+Act.BodyText=Defeat Grindle.
+Obj.0.type=kill
+Obj.0.data1=2907
+Obj.0.data2=1
+Obj.0.description=Defeat Grindle
+Obj.0.complete=0
+Obj.0.myCreatureDefID=0
+Obj.0.myItemID=
+Obj.0.completeText=0 of 1
+Obj.0.markerLocations=
+[ACT]
+Act.BodyText=Return to Haslo Norgun.
+Obj.0.type=talk
+Obj.0.data1=
+Obj.0.data2=
+Obj.0.description=Return to Haslo Norgun.
+Obj.0.complete=0
+Obj.0.myCreatureDefID=2904
+Obj.0.myItemID=
+Obj.0.completeText=0 of 1
+Obj.0.markerLocations=28930,508,62789,9;
+RewardItem.0=800643,1,0
+RewardItem.1=800646,1,0
+RewardItem.2=800644,1,0
+RewardItem.3=800645,1,0

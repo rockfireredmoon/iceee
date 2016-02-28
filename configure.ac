@@ -2,7 +2,7 @@ dnl
 dnl Initialisation
 dnl
 
-AC_INIT(tawd, 1.0, emerald.icemoon@gmail.com)
+AC_INIT(tawd, 0.1, emerald.icemoon@gmail.com)
 	
 AC_CONFIG_AUX_DIR(config)
 AC_CONFIG_MACRO_DIR([m4])
@@ -154,6 +154,19 @@ dnl
 
 AC_CONFIG_FILES([
 	Makefile
+	asset/Makefile
+	AIScript/Makefile
+	Data/Makefile
+	Instance/Makefile
+	ItemMod/Makefile
+	ItemMod/Tables/Makefile
+	Loot/Makefile
+	Packages/Makefile
+	QuestScripts/Makefile
+	SpawnPackages/Makefile
+	Etc/Makefile
+	Etc/Linux/Makefile
+	Scenery/Makefile
 	SOURCE/Makefile
 	SOURCE/squirrel/Makefile
 	SOURCE/squirrel/squirrel/Makefile

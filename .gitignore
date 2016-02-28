@@ -32,11 +32,13 @@ aclocal.m4
 *.in
 *.cproject
 *.mk
+*.tar.gz
 /asset/
 *.autotools
 /Audit/
 **/*.cnut
 **/**/*.cnut
+**/**/Makefile
 /Clan/
 /Deleted/
 /AuctionHouse/

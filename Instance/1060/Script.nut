@@ -90,6 +90,38 @@ function on_use_finish_7898(cid) {
 	}
 }
 
+/* Bring the boats in! */
+
+function boat1In() {
+	local move = {
+		["type"] = "translate",
+		["start"] = [14591.6,1083.23,14997.1],
+		["end"] = [14891.9,1083.23,14044]
+	};
+	local table = {
+		["frames"] = [ {
+			["duration"] = 10.0,
+			["transforms"] = [ move ]
+			} ]
+	};
+	inst.transform(1029106, table);
+}
+
+function boat1Out() {
+	local move = {
+		["type"] = "translate",
+		["start"] = [14791.9,1083.23,14544],
+		["end"] = [14591.6,1083.23,14997.1]
+	};
+	local table = {
+		["frames"] = [ {
+			["duration"] = 10.0,
+			["transforms"] = [ move ]
+			} ]
+	};
+	inst.transform(1029106, table);
+}
+
 //
 // Example ad-hoc quest
 //

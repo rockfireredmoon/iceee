@@ -1,0 +1,61 @@
+body {
+	background-color: #000000;
+	color: #EEEEEE;
+	font-family: Arial;
+	font-size: 12px;
+}
+
+div {
+	font-size: 12px;
+	width: 540px;
+}
+
+.lcol {
+	text-align: right;
+}
+
+.rcol {
+	
+}
+
+.string {
+	font-size: 12px;
+	color: #00FFFF;
+}
+
+.highlight {
+	color: #FFFF00;
+	font-weight: bold;
+}
+
+.warning {
+	color: #FF0000;
+	font-weight: bold;
+}
+
+input {
+	border-color: #DDDDDD;
+	border-width: 1px;
+}
+
+li {
+	padding-bottom: 10px;
+}
+
+.indent {
+	padding-left: 40px;
+	width: 500px;
+}
+
+.end {
+	padding-top: 80px;
+}
+
+td {
+	padding-right: 10px;
+	padding-bottom: 10px;
+}
+
+.center {
+	text-align: center;
+}

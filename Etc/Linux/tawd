@@ -1,0 +1,56 @@
+#! /bin/sh
+### BEGIN INIT INFO
+# Provides:          tawd
+# Required-Start:    $remote_fs $network
+# Required-Stop:     $remote_fs
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Starts the TAWD Earth Eternal server
+### END INIT INFO
+#
+
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+DAEMON=/usr/bin/tawd
+DAEMON_DIR=/var/lib/tawd
+NAME=tawd
+DESC="TAWD Earth Eternal Server"
+PIDFILE=/var/run/tawd.pid
+
+test -x $DAEMON || exit 0
+
+set -e
+
+. /lib/lsb/init-functions
+
+case "$1" in
+  start)
+	echo -n "Starting $DESC: "
+	start-stop-daemon --start --quiet --chdir $DAEMON_DIR --exec $DAEMON --pidfile $PIDFILE -- -d -p $PIDFILE 
+	echo "$NAME."
+	;;
+  stop)
+	echo -n "Stopping $DESC: "
+	# Send TERM after 5 seconds, wait at most 30 seconds.
+	if start-stop-daemon --stop --oknodo --retry TERM/5/KILL/30 --exec $DAEMON --pidfile $PIDFILE ; then  
+		rm -f $PIDFILE
+	fi
+	echo "$NAME."
+	;;
+ status)
+         status_of_proc -p $PIDFILE $DAEMON $NAME && exit 0 || exit $?
+        ;;
+  restart)
+	echo -n "Restarting $DESC: "
+	if start-stop-daemon --stop --oknodo --retry TERM/5/KILL/30 --exec $DAEMON --pidfile $PIDFILE ; then 
+		rm -f $PIDFILE
+	fi
+	start-stop-daemon --start --quiet --chdir $DAEMON_DIR --exec $DAEMON -- -d -p $PIDFILE
+	echo "$NAME."
+	;;
+  *)
+	echo "Usage: $0 {start|stop|restart}" >&2
+	exit 1
+	;;
+esac
+
+exit 0
