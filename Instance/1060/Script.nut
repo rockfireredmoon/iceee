@@ -24,8 +24,8 @@ class PropRelationship {
 
 /* An array of towers */
 towers <- [ 
-	PropRelationship(1000033,1000034),
-	PropRelationship(1000035,1000036)
+	PropRelationship(1133416,1133417),
+	PropRelationship(1133418,1133419)
 ];
 
 function on_use_finish_7894(cid) {
@@ -47,8 +47,9 @@ function on_use_finish_7894(cid) {
 
 /* An array of barricades */
 barricades <- [ 
-	PropRelationship(1000045,1000046),
-	PropRelationship(1000047,1000048)
+	PropRelationship(1133420,1133424),
+	PropRelationship(1133425,1133426),
+	PropRelationship(1133427,1133428)
 ];
  
 function on_use_finish_7896(cid) {
@@ -70,7 +71,7 @@ function on_use_finish_7896(cid) {
 
 /* An array of spike traps */
 traps <- [ 
-	PropRelationship(1000052,1000053),
+	PropRelationship(1133429,1133430),
 	PropRelationship(1000054,1000055)
 ];
  
