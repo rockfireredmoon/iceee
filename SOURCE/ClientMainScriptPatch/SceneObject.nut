@@ -5611,6 +5611,11 @@ class this.SceneObject extends this.MessageBroadcaster
 
 	function _updateFloorAlignment()
 	{
+		if(mCurrentTransformationFrame != null) 
+		{
+			return;
+		}
+		
 		if (this.mFloorAlignMode != this.FloorAlignMode.WHILE_ASCENDING_DESCENDING)
 		{
 			return;
@@ -6252,8 +6257,10 @@ class this.SceneObject extends this.MessageBroadcaster
 	{
 		if (!this.mController)
 		{
-			local pos = this.Util.safePointOnFloor(this.Vector3(pX, pY, pZ), this.getNode());
-			this.setPosition(pos);
+			if(mCurrentTransformationFrame != null) {
+				local pos = this.Util.safePointOnFloor(this.Vector3(pX, pY, pZ), this.getNode());
+				this.setPosition(pos);
+				}
 		}
 		else
 		{

@@ -185,7 +185,6 @@ tawd_SOURCES = md5.cc \
 	Report.h \
 	RotatingList.h \
 	Router.h \
-	Squirrel.h \
 	Scenery2.h \
 	ScriptCore.h \
 	Session.h \
@@ -251,7 +250,7 @@ tawd_SOURCES = md5.cc \
 	query/SidekickHandlers.h \
 	util/base64.h \
 	util/JsonHelpers.h \
-	SquirrelObjects.h
+	util/SquirrelObjects.h
 	
 
 if WINSERVICE
@@ -324,7 +323,6 @@ tawdsvc_SOURCES = md5.cc \
 	Report.cpp \
 	Router.cpp \
 	Scenery2.cpp \
-	SquirrelObjects.cpp \
 	ScriptCore.cpp \
 	SimulatorBase.cpp \
 	Simulator.cpp \
@@ -367,6 +365,7 @@ tawdsvc_SOURCES = md5.cc \
 	query/SidekickHandlers.cpp \
 	util/base64.cpp \
 	util/JsonHelpers.cpp \
+	util/SquirrelObjects.cpp \
 	Ability2.h \
 	AbilityTime.h \
 	Account.h \
@@ -435,7 +434,6 @@ tawdsvc_SOURCES = md5.cc \
 	Report.h \
 	RotatingList.h \
 	Router.h \
-	Squirrel.h \
 	Scenery2.h \
 	ScriptCore.h \
 	Session.h \
@@ -501,5 +499,5 @@ tawdsvc_SOURCES = md5.cc \
 	query/SidekickHandlers.h \
 	util/base64.h \
 	util/JsonHelpers.h \
-	SquirrelObjects.h
+	util/SquirrelObjects.h
 endif

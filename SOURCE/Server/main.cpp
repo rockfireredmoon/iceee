@@ -199,6 +199,8 @@ SERVICE_STATUS ServiceStatus;
 SERVICE_STATUS_HANDLE hStatus;
 void  ControlHandler(DWORD request);
 int InitService();
+#else
+#include <unistd.h>
 #endif
 
 //extern GuildManager g_GuildManager;
@@ -208,7 +210,7 @@ ChangeData g_AutoSaveTimer;
 char GAuxBuf[1024];    //Note, if this size is modified, change all "extern" references
 char GSendBuf[32767];  //Note, if this size is modified, change all "extern" references
 
-int InitServerMain(void);
+int InitServerMain(int argc, char *argv[]);
 void RunServerMain(void);
 void SendHeartbeatMessages(void);
 void RunPendingMessages(void);  //Runs all pending messages in the BroadCastMessage class.
@@ -258,79 +260,89 @@ void segfault_sigaction(int signum, siginfo_t *si, void *arg)
 	signal(SIGTERM, SIG_DFL);
 
 
-	g_Log.AddMessageFormatW(MSG_CRIT, "[CRITICAL] signal encountered: %d", signum);
-	switch(signum)
-	{
-	case SIGABRT: fprintf(stderr, "Caught: SIGABRT\n"); break;
-	case SIGINT: fprintf(stderr, "Caught: SIGINT\n"); break;
-	case SIGSEGV: fprintf(stderr, "Caught: SIGSEGV\n"); break;
-	case SIGPIPE: fprintf(stderr, "Caught: SIGPIPE\n"); break;
-	default: fprintf(stderr, "Caught signal: %d\n", signum); break;
-	}
-	void *ptrBuf[256];
-	int numPtr = backtrace(ptrBuf, 256);
-	fprintf(stderr, "Number of pointers: %d\n", numPtr);
-	char **result = backtrace_symbols(ptrBuf, numPtr);
-	fprintf(stderr, "Stack trace:\n");
-	if(result != NULL)
-	{
-		for(int a = 0; a < numPtr; a++)
-			fprintf(stderr, "  %s\n", result[a]);
-		free(result);
-	}
-	fprintf(stderr, "Stack trace finished\n");
-	fflush(stderr);
+	if(signum != SIGTERM) {
+		g_Log.AddMessageFormatW(MSG_CRIT, "[CRITICAL] signal encountered: %d", signum);
+		switch(signum)
+		{
+		case SIGABRT: fprintf(stderr, "Caught: SIGABRT\n"); break;
+		case SIGINT: fprintf(stderr, "Caught: SIGINT\n"); break;
+		case SIGSEGV: fprintf(stderr, "Caught: SIGSEGV\n"); break;
+		case SIGPIPE: fprintf(stderr, "Caught: SIGPIPE\n"); break;
+		default: fprintf(stderr, "Caught signal: %d\n", signum); break;
+		}
+		void *ptrBuf[256];
 
-	fprintf(stderr, "Forcing auto save.\n");
-	fflush(stderr);
+		int numPtr = backtrace(ptrBuf, 256);
+		fprintf(stderr, "Number of pointers: %d\n", numPtr);
+		char **result = backtrace_symbols(ptrBuf, numPtr);
+		fprintf(stderr, "Stack trace:\n");
+		if(result != NULL)
+		{
+			for(int a = 0; a < numPtr; a++)
+				fprintf(stderr, "  %s\n", result[a]);
+			free(result);
+		}
+		fprintf(stderr, "Stack trace finished\n");
+		fflush(stderr);
+
+		fprintf(stderr, "Forcing auto save.\n");
+		fflush(stderr);
+	}
+
 	CheckCharacterAutosave(true);
 	SaveSession("SessionVars.txt");
 
-	fprintf(stderr, "Debug::LastAbility: %d\r\n", Debug::LastAbility);
-	fprintf(stderr, "Debug::CreatureDefID: %d\r\n", Debug::CreatureDefID);
-	fprintf(stderr, "Debug::LastName: %s\r\n", Debug::LastName);
-	fprintf(stderr, "Debug::LastPlayer: %p\r\n", Debug::LastPlayer);
-	fprintf(stderr, "Debug::IsPlayer: %d\r\n", Debug::IsPlayer);
+	if(signum != SIGTERM) {
+		fprintf(stderr, "Debug::LastAbility: %d\r\n", Debug::LastAbility);
+		fprintf(stderr, "Debug::CreatureDefID: %d\r\n", Debug::CreatureDefID);
+		fprintf(stderr, "Debug::LastName: %s\r\n", Debug::LastName);
+		fprintf(stderr, "Debug::LastPlayer: %p\r\n", Debug::LastPlayer);
+		fprintf(stderr, "Debug::IsPlayer: %d\r\n", Debug::IsPlayer);
 
-	fprintf(stderr, "Debug::LastTileZone: %d\r\n", Debug::LastTileZone);
-	fprintf(stderr, "Debug::LastTileX: %d\r\n", Debug::LastTileX);
-	fprintf(stderr, "Debug::LastTileY: %d\r\n", Debug::LastTileY);
-	fprintf(stderr, "Debug::LastTilePropID: %d\r\n", Debug::LastTilePropID);
-	fprintf(stderr, "Debug::LastTilePtr: %p\r\n", Debug::LastTilePtr);
-	fprintf(stderr, "Debug::LastTilePackage: %p\r\n", Debug::LastTilePackage);
+		fprintf(stderr, "Debug::LastTileZone: %d\r\n", Debug::LastTileZone);
+		fprintf(stderr, "Debug::LastTileX: %d\r\n", Debug::LastTileX);
+		fprintf(stderr, "Debug::LastTileY: %d\r\n", Debug::LastTileY);
+		fprintf(stderr, "Debug::LastTilePropID: %d\r\n", Debug::LastTilePropID);
+		fprintf(stderr, "Debug::LastTilePtr: %p\r\n", Debug::LastTilePtr);
+		fprintf(stderr, "Debug::LastTilePackage: %p\r\n", Debug::LastTilePackage);
 
-	fprintf(stderr, "Debug::LastFlushSimulatorID: %d\r\n", Debug::LastFlushSimulatorID);
+		fprintf(stderr, "Debug::LastFlushSimulatorID: %d\r\n", Debug::LastFlushSimulatorID);
 
-	fprintf(stderr, "Debug::ActivateAbility_cInst: %p\r\n", Debug::ActivateAbility_cInst);
-	fprintf(stderr, "Debug::ActivateAbility_ability: %d\r\n", Debug::ActivateAbility_ability);
-	fprintf(stderr, "Debug::ActivateAbility_ActionType: %d\r\n", Debug::ActivateAbility_ActionType);
-	fprintf(stderr, "Debug::ActivateAbility_abTargetCount: %d\r\n", Debug::ActivateAbility_abTargetCount);
-	fprintf(stderr, "Debug::ActivateAbility_abTargetList: \r\n");
-	for(size_t i = 0; i < MAXTARGET; i++)
-		fprintf(stderr, "  [%zu]=%p\r\n", i, Debug::ActivateAbility_abTargetList[i]);
+		fprintf(stderr, "Debug::ActivateAbility_cInst: %p\r\n", Debug::ActivateAbility_cInst);
+		fprintf(stderr, "Debug::ActivateAbility_ability: %d\r\n", Debug::ActivateAbility_ability);
+		fprintf(stderr, "Debug::ActivateAbility_ActionType: %d\r\n", Debug::ActivateAbility_ActionType);
+		fprintf(stderr, "Debug::ActivateAbility_abTargetCount: %d\r\n", Debug::ActivateAbility_abTargetCount);
+		fprintf(stderr, "Debug::ActivateAbility_abTargetList: \r\n");
+		for(size_t i = 0; i < MAXTARGET; i++)
+			fprintf(stderr, "  [%zu]=%p\r\n", i, Debug::ActivateAbility_abTargetList[i]);
 
-	fprintf(stderr, "Debug::LastSimulatorID: %d\r\n", Debug::LastSimulatorID);
+		fprintf(stderr, "Debug::LastSimulatorID: %d\r\n", Debug::LastSimulatorID);
 
-	fflush(stderr);
-	SIMULATOR_IT it;
-	for(it = Simulator.begin(); it != Simulator.end(); ++it)
-		fprintf(stderr, "Sim:%d %p = %d\r\n", it->InternalID, &*it, it->pld.CreatureDefID);
-	fflush(stderr);
+		fflush(stderr);
+		SIMULATOR_IT it;
+		for(it = Simulator.begin(); it != Simulator.end(); ++it)
+			fprintf(stderr, "Sim:%d %p = %d\r\n", it->InternalID, &*it, it->pld.CreatureDefID);
+		fflush(stderr);
 
-	fprintf(stderr, "Running messages\n");
-	fflush(stderr);
+		fprintf(stderr, "Running messages\n");
+		fflush(stderr);
+	}
 	RunMessageListCrash();
-	fprintf(stderr, "Finished running messages\n");
 
-	fprintf(stderr, "Writing crash dump\n");
-	fflush(stderr);
-	Debug_FullDump();
 
-	fprintf(stderr, "Writing trace log\n");
-	fflush(stderr);
+	if(signum != SIGTERM) {
+		fprintf(stderr, "Finished running messages\n");
 
-	fprintf(stderr, "Shutting down.\n");
-	fflush(stderr);
+		fprintf(stderr, "Writing crash dump\n");
+		fflush(stderr);
+		Debug_FullDump();
+
+		fprintf(stderr, "Writing trace log\n");
+		fflush(stderr);
+
+		fprintf(stderr, "Shutting down.\n");
+		fflush(stderr);
+	}
 	ShutDown();
 
 	fprintf(stderr, "Unloading resources.\n");
@@ -338,7 +350,7 @@ void segfault_sigaction(int signum, siginfo_t *si, void *arg)
 	UnloadResources();
 	fprintf(stderr, "Resources unloaded, exiting program.\n");
 	fflush(stderr);
-	exit(1);
+	exit(signum == SIGTERM ? 0 : 1);
 	return;
 }
 
@@ -408,15 +420,18 @@ void Handle_SIGINT(int unknown)
 //#endif
 
 #ifdef WINDOWS_SERVICE
-int main()
+int main() {
+	int argc = 0;
+	char *argv[0];
 #else
 #ifdef USE_WINDOWS_GUI
-int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
+int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
+	int argc = 0;
+	char *argv[0];
 #else
-int main(int argc, char *argv[])
+int main(int argc, char *argv[]) {
 #endif
 #endif
-{
 #ifdef _CRTDEBUGGING
 	_CrtSetDbgFlag ( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
 #endif
@@ -455,9 +470,9 @@ int main(int argc, char *argv[])
     StartServiceCtrlDispatcher(ServiceTable);
 #else
 #ifdef WINDOWS_GUI
-	return InitServerMain();
+	return InitServerMain(0, 0);
 #else
-	InitServerMain();
+	InitServerMain(argc, argv);
 #endif
 #endif
 }
@@ -500,8 +515,18 @@ void ServiceMain(int argc, char** argv) {
 }
 #endif
 
-int InitServerMain() {
+int InitServerMain(int argc, char *argv[]) {
 	TRACE_INIT(250);
+
+	bool daemonize = false;
+	std::string pidfile = "";
+	for(int i = 0 ; i < argc ; i++) {
+		if(strcmp(argv[i], "-d") == 0)
+			daemonize = true;
+		else if(strcmp(argv[i], "-p") == 0) {
+			pidfile = argv[++i];
+		}
+	}
 
 #ifdef USE_WINDOWS_GUI
 	//The window needs to be initialized before any commands explicitly adjust
@@ -748,6 +773,22 @@ int InitServerMain() {
 //	}
 
 	g_FileChecksum.LoadFromFile(Platform::GenerateFilePath(GAuxBuf, "Data", "HTTPChecksum.txt"));
+
+	if(daemonize) {
+		int ret = daemon(1, 1);
+		if(ret == 0) {
+			LogMessage("Daemonized!\n");
+			FILE *output = fopen(pidfile.c_str(), "wb");
+			if(output != NULL) {
+				fprintf(output, "%d\n", getpid());
+				fclose(output);
+			}
+		}
+		else {
+			LogMessage("Failed to daemonize. %d\n", ret);
+			exit(1);
+		}
+	}
 
 	if(g_RouterPort != 0 && g_Config.Upgrade == 0)
 	{

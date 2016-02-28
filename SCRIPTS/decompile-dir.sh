@@ -1,5 +1,10 @@
 #!/bin/bash
 
+DISABLE_BASESKEL=XXXX
+DISABLE_MESH=XXXXX
+DISABLE_CNUT=XXXXX
+DISABLE_SKEL=
+
 # 
 # Re-sequence prop IDs (using current scenery ID by default) 
 #
@@ -16,8 +21,8 @@ for dir in $* ; do
 	find ${dir} > /tmp/$$.list
 	while read line ; do
 		case "${line}" in
-		*.skeleton) ${base}/SCRIPTS/convert.sh "${line}" ;;
-		*.skeletonXXXX) ${base}/SCRIPTS/convert.sh "${line}"
+		*.skeleton${DISABLE_BASESKEL}) ${base}/SCRIPTS/convert.sh "${line}" ;;
+		*.skeleton${DISABLE_SKEL}) ${base}/SCRIPTS/convert.sh "${line}"
 		
 					# NO LONGER NEEDED, ANIM FILES CAN BE LOADED BY JME3
 					
@@ -53,8 +58,8 @@ for dir in $* ; do
 	 				fi
 
 					;;			
-			*.mesh) ${base}/SCRIPTS/convert.sh "${line}" ;;
-			*.cnut) nutf=$(dirname "${line}")/$(basename "${line}" .cnut).nut
+			*.mesh${DISABLE_MESH}) ${base}/SCRIPTS/convert.sh "${line}" ;;
+			*.cnut${DISABLE_CNUT}) nutf=$(dirname "${line}")/$(basename "${line}" .cnut).nut
 					if [ -f "${nutf}" ] ; then
 						echo "$0: warning. ${nutf} already exists, will not decompile" >&2
 					else
