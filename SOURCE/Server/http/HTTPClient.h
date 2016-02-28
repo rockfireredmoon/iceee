@@ -72,7 +72,9 @@ inline static int readJSONFromUrl(std::string url, std::string *readBuffer) {
 
 		curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
 
+#ifdef OUTPUT_TO_CONSOLE
 		curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
+#endif
 
 		// TODO might need config item to disable SSL verification
 		//curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 0L);

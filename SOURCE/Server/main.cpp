@@ -192,6 +192,11 @@ If using Code::Blocks on LINUX
 #include "query/MarkerHandlers.h"
 #include "query/SidekickHandlers.h"
 
+#ifdef OUTPUT_TO_CONSOLE
+#define DAEMON_NO_CLOSE 1
+#else
+#define DAEMON_NO_CLOSE 0
+#endif
 #ifdef WINDOWS_SERVICE
 #include <windows.h>
 void  ServiceMain(int argc, char** argv);
@@ -775,7 +780,7 @@ int InitServerMain(int argc, char *argv[]) {
 	g_FileChecksum.LoadFromFile(Platform::GenerateFilePath(GAuxBuf, "Data", "HTTPChecksum.txt"));
 
 	if(daemonize) {
-		int ret = daemon(1, 1);
+		int ret = daemon(1, DAEMON_NO_CLOSE);
 		if(ret == 0) {
 			LogMessage("Daemonized!\n");
 			FILE *output = fopen(pidfile.c_str(), "wb");
@@ -1412,10 +1417,12 @@ void RunMessageListQueue(void)
 			SetText = true;
 		}
 #else //
+	#ifdef OUTPUT_TO_CONSOLE
 	#ifdef WINDOWS_PLATFORM
 		printf("%s\r\n", buf);
 	#else
 		printf("%s\n", buf);
+	#endif
 	#endif
 #endif //USE_WINDOWS_GUI
 

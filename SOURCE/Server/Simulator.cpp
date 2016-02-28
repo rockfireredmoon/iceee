@@ -10562,7 +10562,10 @@ int SimulatorThread :: handle_query_bug_report(void)
 
 		curl_easy_setopt(curl, CURLOPT_POSTFIELDS, Aux1);
 		curl_easy_setopt(curl, CURLOPT_POSTFIELDSIZE, -1L);
-		curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
+
+		#ifdef OUTPUT_TO_CONSOLE
+			curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
+		#endif
 
 		// TODO might need config item to disable SSL verification
 		//curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 0L);
