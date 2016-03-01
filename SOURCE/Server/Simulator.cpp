@@ -4706,7 +4706,7 @@ int SimulatorThread :: CheckValidWarpZone(int ZoneID)
 		return ERROR_NONE;
 
 	//For regular players
-	if(zonePtr->mGrove == false && zonePtr->mArena == false && zonePtr ->mGuildHall)
+	if(zonePtr->mGrove == false && zonePtr->mArena == false && zonePtr ->mGuildHall == false)
 		if(CheckPermissionSimple(Perm_Account, Permission_Debug) == false)
 			return ERROR_WARPGROVEONLY;
 
