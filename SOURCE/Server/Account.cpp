@@ -15,7 +15,7 @@
 #include "Util.h"
 #include "ConfigString.h"
 #include "Inventory.h"
-
+#include "util/Log.h"
 #include "md5.hh"
 
 //char *GetValueOfKey(MULTISTRING &extract, const char *key);  //External function
@@ -1406,7 +1406,7 @@ void AccountManager :: SaveKeyListChanges(void)
 	FILE *output = Util::OpenSaveFile(KeyFileName.c_str());
 	if(output == NULL)
 	{
-		g_Log.AddMessageFormatW(MSG_ERROR, "[ERROR] Failed to open file for writing: [%s]", KeyFileName.c_str());
+		g_Logs.data->error("Failed to open file for writing: [%v]", KeyFileName.c_str());
 		cs.Leave();
 		return;
 	}
@@ -1421,7 +1421,7 @@ void AccountManager :: SaveKeyListChanges(void)
 	KeyListChanges.ClearPending();
 	cs.Leave();
 
-	g_Log.AddMessageFormatW(MSG_SHOW, "Saved registration key changes.");
+	g_Logs.data->info("Saved registration key changes.");
 }
 
 void AccountManager :: SaveUsedNameListChanges(void)
@@ -1436,7 +1436,7 @@ void AccountManager :: SaveUsedNameListChanges(void)
 	FILE *output = Util::OpenSaveFile(UsedListFileName.c_str());
 	if(output == NULL)
 	{
-		g_Log.AddMessageFormatW(MSG_ERROR, "[ERROR] Failed to open file for writing: [%s]", UsedListFileName.c_str());
+		g_Logs.data->error("Failed to open file for writing: [%v]", UsedListFileName.c_str());
 		cs.Leave();
 		return;
 	}
@@ -1457,7 +1457,7 @@ void AccountManager :: SaveUsedNameListChanges(void)
 	UsedCharacterNames.mChanges.ClearPending();
 	cs.Leave();
 
-	g_Log.AddMessageFormatW(MSG_SHOW, "Saved used character list changes.");
+	g_Logs.data->info("Saved used character list changes.");
 }
 
 bool AccountManager :: ValidCharacterName(const std::string &name)
@@ -1782,7 +1782,7 @@ void AccountManager :: LoadUsedNameList(const char *fileName)
 	FileReader lfr;
 	if(lfr.OpenText(fileName) != Err_OK)
 	{
-		g_Log.AddMessageFormatW(MSG_ERROR, "[ERROR] Could not open file [%s]", fileName);
+		g_Logs.data->error("Could not open file [%v]", fileName);
 		return;
 	}
 	lfr.CommentStyle = Comment_Semi;

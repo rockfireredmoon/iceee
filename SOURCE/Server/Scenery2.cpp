@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include <errno.h>
 #include <algorithm>
+#include "util/Log.h"
 
 SceneryManager g_SceneryManager;
 GlobalSceneryVars g_SceneryVars;
@@ -98,7 +99,7 @@ int SceneryObject :: SetName(const char *buffer)
 	if(ToCopy > sizeof(Name) - 1)
 	{
 		ToCopy = sizeof(Name) - 1;
-		g_Log.AddMessage("Warning: Asset internal name clipped");
+		g_Logs.server->warn("Asset internal name clipped");
 	}
 	strncpy(Name, buffer, ToCopy);
 	return 0;
@@ -111,14 +112,14 @@ int SceneryObject :: SetAsset(const char *buffer)
 
 	memset(Asset, 0, sizeof(Asset));
 	if(strlen(buffer) > sizeof(Asset) - 1)
-		g_Log.AddMessage("Warning: Asset resource name clipped");
+		g_Logs.server->warn("Asset resource name clipped");
 	Util::SafeCopy(Asset, buffer, sizeof(Asset));
 
 	//Debugging, empty assets cause permanent loading screens
 	if(buffer[0] == 0)
-		g_Log.AddMessage("[CRITICAL] SetAsset() new data is empty");
+		g_Logs.server->error("SetAsset() new data is empty");
 	if(Asset[0] == 0)
-		g_Log.AddMessage("[CRITICAL] SetAsset() Asset name is empty");
+		g_Logs.server->error("SetAsset() Asset name is empty");
 
 	return 0;
 }
@@ -133,7 +134,7 @@ int SceneryObject :: SetPatrolEvent(const char *buffer)
 	if(ToCopy > sizeof(patrolEvent) - 1)
 	{
 		ToCopy = sizeof(patrolEvent) - 1;
-		g_Log.AddMessage("Warning: Asset patrolEvent clipped");
+		g_Logs.server->warn("Asset patrolEvent clipped");
 	}
 	strncpy(patrolEvent, buffer, ToCopy);
 	return 0;
@@ -707,7 +708,7 @@ bool SceneryPage::SaveFile(const char *fileName)
 	FILE *output = fopen(fileName, "wb");
 	if(output == NULL)
 	{
-		g_Log.AddMessageFormat("[ERROR] Could not open file for writing [%s] - %d. %s", fileName, errno, strerror(errno));
+		g_Logs.data->error("Could not open file for writing [%v] - %v. %v", fileName, errno, strerror(errno));
 		return false;
 	}
 
@@ -1500,8 +1501,10 @@ void SceneryManager::ThreadMain(void)
 
 void SceneryManager::LaunchThread(void)
 {
-	int res = Platform_CreateThread(0, (void*)ThreadProc, &g_SceneryManager, NULL);
-	g_Log.AddMessageFormatW(MSG_ERROR, "SceneryManager::LaunchThread: %s ", (res == 0) ? "error creating thread" : "successful");
+	if(Platform_CreateThread(0, (void*)ThreadProc, &g_SceneryManager, NULL) == 0)
+		g_Logs.server->error("SceneryManager::LaunchThread: error creating thread");
+	else
+		g_Logs.server->info("SceneryManager::LaunchThread: successful");
 }
 
 void SceneryManager::ShutdownThread(void)

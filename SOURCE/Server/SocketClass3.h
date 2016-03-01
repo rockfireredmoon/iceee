@@ -27,6 +27,7 @@ public:
 	void DisconnectClient(void);
 	void ShutdownServer(void);
 
+	bool disconnecting;
 	int port;
 	int ListenSocket;
 	int ClientSocket;

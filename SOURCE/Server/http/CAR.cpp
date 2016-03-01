@@ -24,6 +24,7 @@
 #include "../Config.h"
 #include "../DirectoryAccess.h"
 #include "../StringList.h"
+#include "../util/Log.h"
 
 #include <sys/stat.h>
 #include <string.h>
@@ -133,6 +134,7 @@ bool CARHandler::handleGet(CivetServer *server, struct mg_connection *conn) {
 	switch (status) {
 	case 200:
 	{
+		g_Logs.http->info("Sending %v (%v bytes)", ruri.c_str(), file.fileSize);
 		mg_printf(conn,	"HTTP/1.1 200 OK\r\n");
 		mg_printf(conn, "Content-Type: application/octet-stream\r\n");
 		mg_printf(conn,	"Content-Length: %lu\r\n", file.fileSize);
@@ -150,7 +152,7 @@ bool CARHandler::handleGet(CivetServer *server, struct mg_connection *conn) {
 		break;
 	}
 	case 304: {
-		g_Log.AddMessageFormat("Not modified %s (%lu bytes)", ruri.c_str(), file.fileSize);
+		g_Logs.http->info("Not modified %v (%v bytes)", ruri.c_str(), file.fileSize);
 		std::time_t now = std::time(NULL);
 		mg_printf(conn, "HTTP/1.1 304 Not Modified\r\n");
 		mg_printf(conn, "Expires: Tue, 1 Nov 2011 00:00:00 GMT\r\n");
@@ -161,6 +163,7 @@ bool CARHandler::handleGet(CivetServer *server, struct mg_connection *conn) {
 		break;
 	}
 	default:
+		g_Logs.http->info("Could not find %v", ruri.c_str());
 		mg_printf(conn, "HTTP/1.1 404 Not Found\r\n");
 		mg_printf(conn, "Content-Length: %d\r\n",
 				(int) g_HTTP404Message.size());

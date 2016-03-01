@@ -20,6 +20,7 @@
 #include "../Instance.h"
 #include "../Debug.h"
 #include "../Config.h"
+#include "../util/Log.h"
 
 //
 //AddFundsHandler
@@ -85,7 +86,7 @@ int AddFundsHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 						creatureInstance->SendStatUpdate(STAT::CREDITS);
 				}
 
-				Debug::Log("[SAGE] %s gave %s %d copper because '%s'",
+				g_Logs.event->info("[SAGE] %v gave %v %v copper because '%v'",
 						pld->charPtr->cdef.css.display_name, css->display_name,
 						amount, query->args[2].c_str());
 			} else {

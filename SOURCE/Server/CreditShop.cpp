@@ -401,6 +401,7 @@ bool CreditShopManager::RemoveItem(int id) {
 }
 
 std::string CreditShopManager::GetPath(int id) {
+
 	char buf[128];
 	Util::SafeFormat(buf, sizeof(buf), "CreditShop/%d.txt", id);
 	Platform::FixPaths(buf);

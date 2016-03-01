@@ -1,0 +1,130 @@
+-- data
+	* GLOBAL:
+	   FORMAT               =  "%datetime [%level] %msg"
+	   FILENAME             =  "Logs/DataLog.log"
+	   ENABLED              =  true
+	   TO_FILE              =  true
+	   TO_STANDARD_OUTPUT   =  true
+	   MILLISECONDS_WIDTH   =  6
+	   PERFORMANCE_TRACKING =  true
+	   MAX_LOG_FILE_SIZE    =  2097152 ## 2MB - Comment starts with two hashes (##)
+	   LOG_FLUSH_THRESHOLD  =  10 ## Flush after every 100 logs
+	* DEBUG:
+	   FORMAT               = "%datetime{%d/%M} [%level] %func %msg"
+-- server
+	* GLOBAL:
+	   FORMAT               =  "%datetime [%level] %msg"
+	   FILENAME             =  "Logs/ServerLog.txt"
+	   ENABLED              =  true
+	   TO_FILE              =  true
+	   TO_STANDARD_OUTPUT   =  true
+	   MILLISECONDS_WIDTH   =  6
+	   PERFORMANCE_TRACKING =  true
+	   MAX_LOG_FILE_SIZE    =  2097152 ## 2MB - Comment starts with two hashes (##)
+	   LOG_FLUSH_THRESHOLD  =  10 ## Flush after every 100 logs
+	* DEBUG:
+	   FORMAT               = "%datetime{%d/%M} [%level] %func %msg"
+-- chat
+	* GLOBAL:
+	   FORMAT               =  "%datetime [%level] %msg"
+	   FILENAME             =  "Logs/RegionChat.log"
+	   ENABLED              =  true
+	   TO_FILE              =  true
+	   TO_STANDARD_OUTPUT   =  true
+	   MILLISECONDS_WIDTH   =  6
+	   PERFORMANCE_TRACKING =  true
+	   MAX_LOG_FILE_SIZE    =  2097152 ## 2MB - Comment starts with two hashes (##)
+	   LOG_FLUSH_THRESHOLD  =  10 ## Flush after every 100 logs
+	* DEBUG:
+	   FORMAT               = "%datetime{%d/%M} [%level] %func %msg"
+-- http
+	* GLOBAL:
+	   FORMAT               =  "%datetime [%level] %msg"
+	   FILENAME             =  "Logs/HTTPServer.log"
+	   ENABLED              =  true
+	   TO_FILE              =  true
+	   TO_STANDARD_OUTPUT   =  true
+	   MILLISECONDS_WIDTH   =  6
+	   PERFORMANCE_TRACKING =  true
+	   MAX_LOG_FILE_SIZE    =  2097152 ## 2MB - Comment starts with two hashes (##)
+	   LOG_FLUSH_THRESHOLD  =  10 ## Flush after every 100 logs
+	* DEBUG:
+	   FORMAT               = "%datetime{%d/%M} [%level] %func %msg"
+-- cheat
+	* GLOBAL:
+	   FORMAT               =  "%datetime [%level] %msg"
+	   FILENAME             =  "Logs/CheatLog.log"
+	   ENABLED              =  true
+	   TO_FILE              =  true
+	   TO_STANDARD_OUTPUT   =  true
+	   MILLISECONDS_WIDTH   =  6
+	   PERFORMANCE_TRACKING =  true
+	   MAX_LOG_FILE_SIZE    =  2097152 ## 2MB - Comment starts with two hashes (##)
+	   LOG_FLUSH_THRESHOLD  =  10 ## Flush after every 100 logs
+	* DEBUG:
+	   FORMAT               = "%datetime{%d/%M} [%level] %func %msg"
+-- event
+	* GLOBAL:
+	   FORMAT               =  "%datetime [%level] %msg"
+	   FILENAME             =  "Logs/EventLog.log"
+	   ENABLED              =  true
+	   TO_FILE              =  true
+	   TO_STANDARD_OUTPUT   =  true
+	   MILLISECONDS_WIDTH   =  6
+	   PERFORMANCE_TRACKING =  true
+	   MAX_LOG_FILE_SIZE    =  2097152 ## 2MB - Comment starts with two hashes (##)
+	   LOG_FLUSH_THRESHOLD  =  10 ## Flush after every 100 logs
+	* DEBUG:
+	   FORMAT               = "%datetime{%d/%M} [%level] %func %msg"   
+-- router
+	* GLOBAL:
+	   FORMAT               =  "%datetime [%level] %msg"
+	   FILENAME             =  "Logs/Router.log"
+	   ENABLED              =  true
+	   TO_FILE              =  true
+	   TO_STANDARD_OUTPUT   =  true
+	   MILLISECONDS_WIDTH   =  6
+	   PERFORMANCE_TRACKING =  true
+	   MAX_LOG_FILE_SIZE    =  2097152 ## 2MB - Comment starts with two hashes (##)
+	   LOG_FLUSH_THRESHOLD  =  10 ## Flush after every 100 logs
+	* DEBUG:
+	   FORMAT               = "%datetime{%d/%M} [%level] %func %msg"   
+-- simulator
+	* GLOBAL:
+	   FORMAT               =  "%datetime [%level] %msg"
+	   FILENAME             =  "Logs/Simulator.log"
+	   ENABLED              =  true
+	   TO_FILE              =  true
+	   TO_STANDARD_OUTPUT   =  true
+	   MILLISECONDS_WIDTH   =  6
+	   PERFORMANCE_TRACKING =  true
+	   MAX_LOG_FILE_SIZE    =  2097152 ## 2MB - Comment starts with two hashes (##)
+	   LOG_FLUSH_THRESHOLD  =  10 ## Flush after every 100 logs
+	* DEBUG:
+	   FORMAT               = "%datetime{%d/%M} [%level] %func %msg"   
+-- leaderboard
+	* GLOBAL:
+	   FORMAT               =  "%datetime [%level] %msg"
+	   FILENAME             =  "Logs/Leaderboard.log"
+	   ENABLED              =  true
+	   TO_FILE              =  true
+	   TO_STANDARD_OUTPUT   =  true
+	   MILLISECONDS_WIDTH   =  6
+	   PERFORMANCE_TRACKING =  true
+	   MAX_LOG_FILE_SIZE    =  2097152 ## 2MB - Comment starts with two hashes (##)
+	   LOG_FLUSH_THRESHOLD  =  10 ## Flush after every 100 logs
+	* DEBUG:
+	   FORMAT               = "%datetime{%d/%M} [%level] %func %msg"   
+-- script
+	* GLOBAL:
+	   FORMAT               =  "%datetime [%level] %msg"
+	   FILENAME             =  "Logs/ScriptLog.log"
+	   ENABLED              =  true
+	   TO_FILE              =  true
+	   TO_STANDARD_OUTPUT   =  true
+	   MILLISECONDS_WIDTH   =  6
+	   PERFORMANCE_TRACKING =  true
+	   MAX_LOG_FILE_SIZE    =  2097152 ## 2MB - Comment starts with two hashes (##)
+	   LOG_FLUSH_THRESHOLD  =  10 ## Flush after every 100 logs
+	* DEBUG:
+	   FORMAT               = "%datetime{%d/%M} [%level] %func %msg"     

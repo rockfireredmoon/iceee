@@ -53,8 +53,6 @@ public:
 	void CheckAutoResponse(void);
 
 	int LaunchSimulatorThread(void);
-
-	char * LogMessageL(int logLevel, const char *format, ...);  //Logs a message to the local buffer instead of the main thread
 };
 
 extern SimulatorBaseThread SimulatorBase;

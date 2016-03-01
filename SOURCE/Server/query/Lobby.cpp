@@ -21,6 +21,7 @@
 #include "../Account.h"
 #include "../Config.h"
 #include "../URL.h"
+#include "../util/Log.h"
 
 //
 //PersonaListHandler
@@ -38,7 +39,7 @@ int PersonaListHandler::handleQuery(SimulatorThread *sim,
 	//Seems to be a rare condition when the account can indeed be NULL at this point.  Possibly
 	//disconnecting after the query is sent, but before it's processed?
 	if (pld->accPtr == NULL) {
-		sim->LogMessageL(MSG_CRIT, "[CRITICAL] persona.list null account");
+		g_Logs.simulator->error("[%v] persona.list null account", sim->InternalID);
 		return 0;
 	}
 
@@ -74,8 +75,7 @@ int PersonaListHandler::handleQuery(SimulatorThread *sim,
 			CharacterCacheEntry *cce =
 					pld->accPtr->characterCache.ForceGetCharacter(cdefid);
 			if (cce == NULL) {
-				sim->LogMessageL(MSG_ERROR,
-						"[ERROR] Could not request character: %d", cdefid);
+				g_Logs.simulator->error("[%v] Could not request character: %v", sim->InternalID, cdefid);
 				sim->ForceErrorMessage("Critical: could not load a character.",
 						INFOMSG_ERROR);
 				sim->Disconnect("SimulatorThread::handle_query_persona_list");
@@ -116,8 +116,7 @@ int PersonaListHandler::handleQuery(SimulatorThread *sim,
 				sprintf(sim->Aux3, "%d", cce->profession);
 				WritePos += PutStringUTF(&sim->SendBuf[WritePos], sim->Aux3);
 				if (WritePos >= (int) sizeof(sim->SendBuf))
-					g_Log.AddMessageFormatW(MSG_CRIT,
-							"[CRITICAL] Buffer overflow in persona.list");
+					g_Logs.server->error("Buffer overflow in persona.list");
 			} else {
 				//Normal stuff.
 				WritePos += PutByte(&sim->SendBuf[WritePos], 6); //6 character data strings
@@ -136,8 +135,7 @@ int PersonaListHandler::handleQuery(SimulatorThread *sim,
 				sprintf(sim->Aux3, "%d", cce->profession);
 				WritePos += PutStringUTF(&sim->SendBuf[WritePos], sim->Aux3);
 				if (WritePos >= (int) sizeof(sim->SendBuf))
-					g_Log.AddMessageFormatW(MSG_CRIT,
-							"[CRITICAL] Buffer overflow in persona.list");
+					g_Logs.server->error("Buffer overflow in persona.list");
 			}
 		}
 	}

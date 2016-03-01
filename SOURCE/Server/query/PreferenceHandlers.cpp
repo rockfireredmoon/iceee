@@ -18,6 +18,7 @@
 #include "PreferenceHandlers.h"
 #include "../Preferences.h"
 #include "../Account.h"
+#include "../util/Log.h"
 
 int RespondPrefGet(PreferenceContainer *prefSet, char *SendBuf,
 		SimulatorQuery *query) {
@@ -97,13 +98,12 @@ int PrefSetHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 		if (strstr(name, "quickbar") != NULL) {
 			if (sim->LoadStage < 2) {
 				allow = false;
-				sim->LogMessageL(MSG_WARN,
-						"[WARNING] Tried to set quickbar preference before gameplay [%s]=[%s]",
+				g_Logs.simulator->warn("[%v] Tried to set quickbar preference before gameplay [%v]=[%v]", sim->InternalID,
 						name, value);
 			} else if (strlen(value) < 3) {
 				allow = false;
-				sim->LogMessageL(MSG_WARN,
-						"[WARNING] Tried to set quickbar preference to NULL [%s]=[%s]",
+				g_Logs.simulator->warn("[%v] Tried to set quickbar preference to NULL [%v]=[%v]",
+						sim->InternalID,
 						name, value);
 			}
 		}

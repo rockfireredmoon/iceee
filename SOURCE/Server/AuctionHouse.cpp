@@ -690,8 +690,7 @@ bool AuctionHouseManager::SaveItem(AuctionHouseItem * item) {
 
 AuctionHouseItem * AuctionHouseManager::LoadItem(int id) {
 	std::string path = GetPath(id);
-	const char * buf = path.c_str();
-	if (!Platform::FileExists(buf)) {
+	if (!Platform::FileExists(path)) {
 		g_Log.AddMessageFormat("No file for CS item [%s]", path.c_str());
 		return NULL;
 	}
@@ -699,7 +698,7 @@ AuctionHouseItem * AuctionHouseManager::LoadItem(int id) {
 	AuctionHouseItem *item = new AuctionHouseItem();
 
 	FileReader lfr;
-	if (lfr.OpenText(buf) != Err_OK) {
+	if (lfr.OpenText(path.c_str()) != Err_OK) {
 		g_Log.AddMessageFormat("Could not open file [%s]", path.c_str());
 		return NULL;
 	}
@@ -719,7 +718,7 @@ AuctionHouseItem * AuctionHouseManager::LoadItem(int id) {
 				if (item->mId != 0) {
 					g_Log.AddMessageFormat(
 							"[WARNING] %s contains multiple entries. Auction house items have one entry per file",
-							buf);
+							path.c_str());
 					break;
 				}
 				item->mId = id;
@@ -767,7 +766,7 @@ AuctionHouseItem * AuctionHouseManager::LoadItem(int id) {
 				item->mBids.push_back(bid);
 			} else
 				g_Log.AddMessageFormat("Unknown identifier [%s] in file [%s]",
-						lfr.SecBuffer, buf);
+						lfr.SecBuffer, path.c_str());
 		}
 	}
 	lfr.CloseCurrent();
@@ -802,10 +801,10 @@ AuctionHouseItem * AuctionHouseManager::LoadItem(int id) {
 }
 
 bool AuctionHouseManager::RemoveItem(int id) {
-	const char * path = GetPath(id).c_str();
+	std::string path = GetPath(id);
 	if (!Platform::FileExists(path)) {
 		g_Log.AddMessageFormat("No file for auction house item [%s] to remove",
-				path);
+				path.c_str());
 		return false;
 	}
 	cs.Enter("AuctionHouseManager::RemoveItem");
@@ -825,7 +824,7 @@ bool AuctionHouseManager::RemoveItem(int id) {
 	Util::SafeFormat(buf, sizeof(buf), "AuctionHouse/%d.del", id);
 	Platform::FixPaths(buf);
 	if (!Platform::FileExists(buf) || remove(buf) == 0) {
-		if (!rename(path, buf) == 0) {
+		if (!rename(path.c_str(), buf) == 0) {
 			g_Log.AddMessageFormat("Failed to remove auction house item %d",
 					id);
 			return false;

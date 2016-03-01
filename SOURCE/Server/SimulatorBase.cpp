@@ -6,7 +6,7 @@
 #include "Simulator.h"
 #include <stdlib.h>   //For itoa()
 #include "Util.h"
-
+#include "util/Log.h"
 
 PLATFORM_THREADRETURN SimulatorBaseThreadProc(PLATFORM_THREADARGS lpParam);
 SimulatorBaseThread SimulatorBase;
@@ -88,7 +88,7 @@ int SimulatorBaseThread :: InitThread(int instanceindex, int globalThreadID)
 	if(r == 0)
 	{
 		isActive = false;
-		LogMessageL(LOG_CRITICAL, "[SimB] Could not create thread.");
+		g_Logs.simulator->error("[SimB] Could not create thread.");
 		return 1;
 	}
 	return 0;
@@ -124,7 +124,7 @@ PLATFORM_THREADRETURN SimulatorBaseThreadProc(PLATFORM_THREADARGS lpParam)
 	// Thread has been deactivated, shut it down
 	controller->sc.ShutdownServer();
 
-	controller->LogMessageL(LOG_NORMAL, "[SimB] Thread shut down.");
+	g_Logs.simulator->info("[SimB] Thread shut down.");
 
 	controller->isExist = false;
 
@@ -148,7 +148,7 @@ void SimulatorBaseThread :: RunMainLoop(void)
 		{
 			if(sc.CreateSocket(HomePortStr, BindAddress) == 0)
 			{
-				LogMessageL(LOG_ALWAYS, "[SimB] Server created, awaiting connection on port %d (socket:%d).", HomePort, sc.ListenSocket);
+				g_Logs.simulator->info("[SimB] Server created, awaiting connection on port %v (socket:%v).", HomePort, sc.ListenSocket);
 				Status = Status_Wait;
 			}
 			else
@@ -167,48 +167,38 @@ void SimulatorBaseThread :: RunMainLoop(void)
 			}
 			else
 			{
-				LogMessageL(LOG_ERROR, "Socket error: %s", sc.GetErrorMessage());
-				//This shouldn't normally fail.  Need a complete restart.
-				Status = Status_Restart;
+				if(sc.disconnecting) {
+					g_Logs.simulator->info("SimulatorBase shutdown.");
+					Status = Status_None;
+				}
+				else {
+					g_Logs.simulator->info("Socket error: %v", sc.GetErrorMessage());
+					//This shouldn't normally fail.  Need a complete restart.
+					Status = Status_Restart;
+				}
 			}
 		}
 		else if(Status == Status_Restart)
 		{
-			LogMessageL(LOG_ALWAYS, "[SimB] Disconnecting server.");
+			g_Logs.simulator->info("[SimB] Disconnecting server.");
 			sc.ShutdownServer();
 			Status = Status_Init;
 			PLATFORM_SLEEP(g_ErrorSleep);
 		}
 		else if(Status == Status_Kick)
 		{
-			LogMessageL(LOG_ALWAYS, "[SimB] Kicking client.");
+			g_Logs.simulator->info("[SimB] Kicking client.");
 			sc.DisconnectClient();
 			Status = Status_Wait;  //Wait for another connection.
 		}
 		else
 		{
-			LogMessageL(LOG_CRITICAL, "[SimB] Unknown status.");
+			g_Logs.simulator->error("[SimB] Unknown status.");
 			Status = Status_Restart;
 		}
 		//Keep it from burning up unnecessary CPU cycles.
 		PLATFORM_SLEEP(SleepDelayNormal);
 	}
-}
-
-char * SimulatorBaseThread :: LogMessageL(int logLevel, const char *format, ...)
-{
-	//TODO: Change to a separate log check
-	if(logLevel > g_Config.LogLevelSimulatorBase)
-		return NULL;
-
-	va_list args;
-	va_start (args, format);
-	//vsnprintf(LogBuffer, sizeof(LogBuffer) - 1, format, args);
-	Util::SafeFormatArg(LogBuffer, sizeof(LogBuffer), format, args);
-	va_end (args);
-
-	g_Log.AddMessage(LogBuffer);
-	return LogBuffer;
 }
 
 void SimulatorBaseThread :: CheckAutoResponse(void)
@@ -239,18 +229,18 @@ int SimulatorBaseThread :: LaunchSimulatorThread(void)
 
 			int res = simPtr->InitThread(simPtr->InternalID, g_GlobalThreadID++);
 			if(res != 0)
-				LogMessageL(LOG_NORMAL, "[SimB] Passing over to simulator ID:%d (socket:%d).", simPtr->InternalID, sc.ClientSocket);
+				g_Logs.simulator->info("[SimB] Passing over to simulator ID:%v (socket:%v).", simPtr->InternalID, sc.ClientSocket);
 			else
-				LogMessageL(LOG_CRITICAL, "[SimB] Failed to launch thread.", simPtr->InternalID);
+				g_Logs.simulator->fatal("[SimB] Failed to launch thread. %v", simPtr->InternalID);
 		}
 		else
 		{
-			g_Log.AddMessageFormatW(MSG_CRIT, "[ERROR] SimBase failed to create simulator.");
+			g_Logs.simulator->fatal("[SimB] SimBase failed to create simulator.");
 		}
 	}
 	else
 	{
-		g_Log.AddMessageFormatW(MSG_CRIT, "[ERROR] SimBase failed to call a thread launch.");
+		g_Logs.simulator->fatal("[SimB] SimBase failed to call a thread launch.");
 	}
 
 	threadReq.status = ThreadRequest::STATUS_COMPLETE;

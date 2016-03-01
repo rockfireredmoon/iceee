@@ -6,6 +6,7 @@
 #include "StringList.h"
 #include <stdlib.h>  //For itoa()
 #include "Util.h"
+#include "util/Log.h"
 
 //This is the main function of the router thread.  A thread must be created for each port
 //since the connecting function will halt until a connection is established.
@@ -98,7 +99,7 @@ int RouterThread :: InitThread(int instanceindex, int globalThreadID)
 	if(r == 0)
 	{
 		isActive = false;
-		LogMessageL("[Router:%d] Could not create thread.", instanceindex);
+		g_Logs.router->error("[%v] Could not create thread.", instanceindex);
 		return 1;
 	}
 	return 0;
@@ -113,7 +114,7 @@ void RouterThread :: OnConnect(const char *address)
 	{
 		int size = strlen(SimTarget);
 		sc.AttemptSend(SimTarget, size);
-		LogMessageL("[Router] Sent connection string: %s", SimTarget);
+		g_Logs.router->info("[%v] Sent connection string: %v", InternalIndex, SimTarget);
 		TotalSendBytes += size;
 	}
 
@@ -161,7 +162,7 @@ PLATFORM_THREADRETURN RouterThreadProc(PLATFORM_THREADARGS lpParam)
 	// Thread has been deactivated, shut it down
 	controller->sc.ShutdownServer();
 
-	controller->LogMessageL("[Router] Thread shut down.");
+	g_Logs.router->info("Thread shut down.");
 	controller->isExist = false;
 
 	AdjustComponentCount(-1);
@@ -181,7 +182,7 @@ void RouterThread :: RunMainLoop(void)
 		{
 			if(sc.CreateSocket(HomePortStr, BindAddress) == 0)
 			{
-				LogMessageL("[Router] Server created, awaiting connection on port %d (socket:%d)", HomePort, sc.ListenSocket);
+				g_Logs.router->info("Server created, awaiting connection on port %v (socket:%v)", HomePort, sc.ListenSocket);
 				Status = Status_Wait;
 			}
 			else
@@ -201,14 +202,20 @@ void RouterThread :: RunMainLoop(void)
 			}
 			else
 			{
-				LogMessageL("[Router] Socket error: %s", sc.GetErrorMessage());
-				//This shouldn't normally fail.  Need a complete restart.
-				Status = Status_Restart;
+				if(sc.disconnecting) {
+					g_Logs.router->info("Router shutdown.");
+					Status = Status_None;
+				}
+				else {
+					g_Logs.router->error("Socket error: %v", sc.GetErrorMessage());
+					//This shouldn't normally fail.  Need a complete restart.
+					Status = Status_Restart;
+				}
 			}
 		}
 		else if(Status == Status_Restart)
 		{
-			LogMessageL("[Router] Disconnecting server.");
+			g_Logs.router->info("Disconnecting server.");
 			sc.ShutdownServer();
 			Status = Status_Init;
 			PLATFORM_SLEEP(g_ErrorSleep);
@@ -220,7 +227,7 @@ void RouterThread :: RunMainLoop(void)
 		}
 		else
 		{
-			LogMessageL("[Router] Unknown status.");
+			g_Logs.router->warn("Unknown status %v.", Status);
 			Status = Status_Restart;
 		}
 		//Keep it from burning up unnecessary CPU cycles.
@@ -228,17 +235,3 @@ void RouterThread :: RunMainLoop(void)
 	}
 }
 
-char * RouterThread :: LogMessageL(const char *format, ...)
-{
-	if(g_Log.LoggingEnabled == false)
-		return NULL;
-
-	va_list args;
-	va_start (args, format);
-	//vsnprintf(LogBuffer, maxSize, format, args);
-	Util::SafeFormatArg(LogBuffer, sizeof(LogBuffer), format, args);
-	va_end (args);
-
-	g_Log.AddMessage(LogBuffer);
-	return LogBuffer;
-}

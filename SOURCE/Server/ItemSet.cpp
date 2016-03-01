@@ -5,6 +5,7 @@
 #include "StringList.h"
 #include "CommonTypes.h"
 #include "Util.h"
+#include "util/Log.h"
 
 ItemSetManager g_ItemSetManager;
 
@@ -68,7 +69,7 @@ void ItemSetManager::LoadFile(const char *filename)
 	FileReader3 fr;
 	if(fr.OpenFile(filename) != FileReader3::SUCCESS)
 	{
-		g_Log.AddMessageFormat("[ERROR] Could not open file [%s]", filename);
+		g_Logs.data->error("Could not open file [%v]", filename);
 		return;
 	}
 	fr.SetCommentChar(';');
@@ -219,7 +220,7 @@ void ItemSetScriptPlayer :: RunImplementationCommands(int opcode)
 		}
 		break;
 	default:
-		ScriptCore::PrintMessage("Unidentified op type: %d", in->opCode);
+		g_Logs.script->error("Unidentified op type: %v", in->opCode);
 		break;
 	}
 }

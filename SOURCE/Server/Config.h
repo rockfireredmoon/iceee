@@ -21,8 +21,6 @@ extern int g_ErrorSleep;
 
 extern char g_SimulatorAddress[128];
 extern char g_BindAddress[128];
-extern bool g_SimulatorLog;
-extern bool g_GlobalLogging;
 
 extern int g_DefX;
 extern int g_DefY;
@@ -117,10 +115,6 @@ public:
 	//central logging system. (see LogLevel values)
 	//If the message provided is less than or equal to the specified LogLevel value, the message
 	//will be added.
-
-	int LogLevelHTTPBase;
-	int LogLevelSimulatorBase;
-	int LogLevelHTTPDistribute;
 
 	int BuybackLimit;
 	int ProperSceneryList;     //Should be set to 1.  If zero, this is basically like having a global fastload permission applied to all players, which is bad for normal players.
@@ -258,6 +252,8 @@ public:
 	int MinAuctionHours;
 	float PercentageCommisionPerHour;
 	int MaxAuctionExpiredHours;
+
+	std::string ShutdownHandlerScript;
 
 	unsigned long debugAdministrativeBehaviorFlags;
 	void SetAdministrativeBehaviorFlag(unsigned long bitValue, bool state);

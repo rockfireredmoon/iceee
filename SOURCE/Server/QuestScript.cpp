@@ -50,7 +50,7 @@ QuestNutDef * QuestNutManager::GetScriptByID(int questID) {
 	if(it == questDef.end()) {
 		// Create script def
 		QuestNutDef *d = new QuestNutDef(questID);
-		if(Platform::FileExists(d->GetQuestNutScriptPath().c_str())) {
+		if(Platform::FileExists(d->GetQuestNutScriptPath())) {
 			questDef[questID] = d;
 			return d;
 		}

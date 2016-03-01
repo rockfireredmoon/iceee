@@ -17,8 +17,10 @@ libtool: $(LIBTOOL_DEPS)
 install-exec-hook:
 	mkdir -p $(DESTDIR)$(sysconfdir)/tawd ; \
 	cp -n ServerConfig.txt.sample $(DESTDIR)$(sysconfdir)/tawd/ServerConfig.txt ; \
+	cp -n LogConfig.txt.sample $(DESTDIR)$(sysconfdir)/tawd/LogConfig.txt ; \
 	\
 	mkdir -p $(DESTDIR)$(localstatedir)/lib/tawd ; \
+	ln -sf $(DESTDIR)$(sysconfdir)/tawd/LogConfig.txt $(DESTDIR)$(localstatedir)/lib/tawd/LogConfig.txt ; \
 	ln -sf $(DESTDIR)$(sysconfdir)/tawd/ServerConfig.txt $(DESTDIR)$(localstatedir)/lib/tawd/ServerConfig.txt ; \
 	ln -sf $(DESTDIR)$(datarootdir)/tawd/AIScript $(DESTDIR)$(localstatedir)/lib/tawd/AIScript ; \
 	ln -sf $(DESTDIR)$(datarootdir)/tawd/Data $(DESTDIR)$(localstatedir)/lib/tawd/Data ; \
@@ -33,6 +35,7 @@ install-exec-hook:
 	mkdir -p $(DESTDIR)$(localstatedir)/lib/tawd/AuctionHouse ; \
 	mkdir -p $(DESTDIR)$(localstatedir)/lib/tawd/Characters ; \
 	mkdir -p $(DESTDIR)$(localstatedir)/lib/tawd/Clan ; \
+	mkdir -p $(DESTDIR)$(localstatedir)/lib/tawd/Logs ; \
 	mkdir -p $(DESTDIR)$(localstatedir)/lib/tawd/CreditShop ; \
 	mkdir -p $(DESTDIR)$(localstatedir)/lib/tawd/Dynamic ; \
 	mkdir -p $(DESTDIR)$(localstatedir)/lib/tawd/Grove ; \
@@ -41,15 +44,6 @@ install-exec-hook:
 	mkdir -p $(DESTDIR)$(localstatedir)/lib/tawd/VirtualItems ; \
 	mkdir -p $(DESTDIR)$(localstatedir)/lib/tawd/ZoneDef ; \
 	mkdir -p $(DESTDIR)$(localstatedir)/log/tawd ; \
-	touch $(DESTDIR)$(localstatedir)/log/tawd/CheatLog.log ; \
-	ln -sf $(DESTDIR)$(localstatedir)/log/tawd/CheatLog.log $(DESTDIR)$(localstatedir)/lib/tawd/CheatLog.log ; \
-	touch $(DESTDIR)$(localstatedir)/log/tawd/ErrorLog.log ; \
-	ln -sf $(DESTDIR)$(localstatedir)/log/tawd/ErrorLog.log $(DESTDIR)$(localstatedir)/lib/tawd/ErrorLog.log ; \
-	touch $(DESTDIR)$(localstatedir)/log/tawd/EventLog.log ; \
-	ln -sf $(DESTDIR)$(localstatedir)/log/tawd/EventLog.log $(DESTDIR)$(localstatedir)/lib/tawd/EventLog.log ; \
-	touch $(DESTDIR)$(localstatedir)/log/tawd/RegionChat.log ; \
-	ln -sf $(DESTDIR)$(localstatedir)/log/tawd/RegionChat.log $(DESTDIR)$(localstatedir)/lib/tawd/RegionChat.log ; \
-	touch $(DESTDIR)$(localstatedir)/log/tawd/ServerLog.log ; \
-	ln -sf $(DESTDIR)$(localstatedir)/log/tawd/ServerLog.log $(DESTDIR)$(localstatedir)/lib/tawd/ServerLog.log ; \
+	ln -sf $(DESTDIR)$(localstatedir)/log/tawd $(DESTDIR)$(localstatedir)/lib/tawd/Logs ; \
 	echo Done ;
 	

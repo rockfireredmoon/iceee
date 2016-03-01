@@ -18,7 +18,7 @@
 #include "Inventory.h"
 #include "util/SquirrelObjects.h"
 #include "util/JsonHelpers.h"
-
+#include "util/Log.h"
 
 const int SERVER_CHARACTER_VERSION = 1;
 
@@ -2166,7 +2166,6 @@ void CharacterLeaderboard :: OnBuild(std::vector<Leader> *leaders)
 
 CharacterManager :: CharacterManager()
 {
-	CreateDefaultCharacter();
 	cs.SetDebugName("CS_CHARMGR");
 	cs.disabled = true;
 }
@@ -2190,7 +2189,7 @@ int CharacterManager :: LoadCharacter(int CDefID, bool tempResource)
 	FileReader lfr;
 	if(lfr.OpenText(FileName) != Err_OK)
 	{
-		g_Log.AddMessageFormatW(MSG_ERROR, "[ERROR] Could not open character file [%s]", FileName);
+		g_Logs.data->error("Could not open character file [%v]", FileName);
 		return -1;
 	}
 
@@ -2199,7 +2198,7 @@ int CharacterManager :: LoadCharacter(int CDefID, bool tempResource)
 	lfr.CloseCurrent();
 	if(newChar.cdef.CreatureDefID != CDefID)
 	{
-		g_Log.AddMessageFormatW(MSG_ERROR, "[ERROR] LoadCharacter() ID mismatch, expected [%d], got [%d]", CDefID, newChar.cdef.CreatureDefID);
+		g_Logs.data->error("LoadCharacter() ID mismatch, expected [%v], got [%v]", CDefID, newChar.cdef.CreatureDefID);
 		return -1;
 	}
 
@@ -2222,7 +2221,7 @@ int CharacterManager :: LoadCharacter(int CDefID, bool tempResource)
 		newInstance = true;
 	}
 	else
-		g_Log.AddMessageFormatW(MSG_ERROR, "[WARNING] LoadCharacter() ID [%d] already exists.", CDefID);
+		g_Logs.data->warn("LoadCharacter() ID [%v] already exists.", CDefID);
 
 	if(newInstance == true)
 	{
@@ -2293,7 +2292,7 @@ void CharacterManager :: AddExternalCharacter(int CDefID, CharacterData &newChar
 	else if(it->first != CDefID)
 		charList.insert(it, CHARACTER_PAIR(CDefID, newChar));
 	else
-		g_Log.AddMessageFormatW(MSG_ERROR, "[WARNING] AddExternalCharacter() ID [%d] already exists.", CDefID);
+		g_Logs.data->warn("AddExternalCharacter() ID [%v] already exists.", CDefID);
 }
 
 void CharacterManager :: Compatibility_SaveList(FILE *output)

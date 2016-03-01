@@ -10,13 +10,14 @@
 #include "AuctionHouse.h"
 #include "Clan.h"
 #include "Quest.h"
+#include "util/Log.h"
 
 int SaveSession(const char *filename)
 {
 	FILE *output = fopen(filename, "wb");
 	if(output == NULL)
 	{
-		LogMessage("Could not open session config file [%s] for writing.", filename);
+		g_Logs.server->error("Could not open session config file [%v] for writing.", filename);
 		return -1;
 	}
 	char buffer[256] = "; This file stores session settings and is automatically saved on exit.\r\n";
@@ -34,7 +35,7 @@ int SaveSession(const char *filename)
 	fprintf(output, "NextVirtualQuestID=%lu\r\n", QuestDef.mVirtualQuestID);
 	fprintf(output, "\r\n");
 	fclose(output);
-	g_Log.AddMessageFormat("Saved session file.", filename);
+	g_Logs.server->info("Saved session file %v.", filename);
 	return 0;
 }
 
@@ -43,7 +44,7 @@ int LoadSession(const char *filename)
 	FileReader lfr;
 	if(lfr.OpenText(filename) != Err_OK)
 	{
-		LogMessage("Could not open session config file [%s] for reading.", filename);
+		g_Logs.server->error("Could not open session config file [%v] for reading.", filename);
 		return -1;
 	}
 	lfr.CommentStyle = Comment_Semi;
@@ -80,7 +81,7 @@ int LoadSession(const char *filename)
 		}
 	}
 	lfr.CloseCurrent();
-	LogMessage("Loaded session file.", filename);
+	g_Logs.server->info("Loaded session file %v.", filename);
 	return 0;
 }
 

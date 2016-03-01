@@ -16,6 +16,7 @@
 #include <functional>
 #include <cctype>
 #include <locale>
+#include "util/Log.h"
 
 ChangeData SessionVarsChangeData;
 
@@ -739,7 +740,7 @@ FILE * OpenSaveFile(const char *filename)
 {
 	FILE *file = fopen(filename, "wb");
 	if(file == NULL)
-		g_Log.AddMessageFormatW(MSG_ERROR, "[ERROR] Could not open file [%s] for writing.", filename);
+		g_Logs.data->error("Could not open file [%v] for writing.", filename);
 	return file;
 }
 

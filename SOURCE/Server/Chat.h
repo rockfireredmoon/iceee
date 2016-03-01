@@ -88,9 +88,6 @@ public:
 
 	deque<ChatMessage> CircularChatBuffer;
 
-	void CloseChatLogFile(void);
-	void FlushChatLogFile(void);
-	void OpenChatLogFile(const char *filename);
 	bool SendChatMessageAsOffline(ChatMessage &message, HTTPD::SiteSession *session);
 	bool SendChatMessage(ChatMessage &message, CreatureInstance *sendingCreatureInstance);
 	void LogChatMessage(ChatMessage &message);
@@ -101,9 +98,7 @@ public:
 private:
 	static const int MAX_CHAT_BUFFER_SIZE = 100;
 
-	FILE* m_ChatLogFile;
 	char SendBuf[24576];     //Holds data that is being prepared for sending
-	char LogBuffer[1024];
 };
 
 extern ChatManager g_ChatManager;

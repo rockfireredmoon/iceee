@@ -1,6 +1,7 @@
 #include "stdarg.h"
 #include "CommonTypes.h"
 #include "StringList.h"
+#include "util/Log.h"
 #include <math.h>
 
 enum OperatorType
@@ -294,8 +295,11 @@ private:
 		va_start (args, format);
 		if(verify != NULL)
 			verify->AddError(format, args);
-		else
-			g_Log.AddMessageFormatArg(format, args);
+		else {
+			char buf[256];
+			vsprintf(buf, format, args);
+			g_Logs.server->info(buf);
+		}
 		va_end (args);
 	}
 

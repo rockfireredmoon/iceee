@@ -2,6 +2,7 @@
 #include <time.h>
 
 #include "SocketClass3.h"
+#include "util/Log.h"
 
 #ifdef WINDOWS_PLATFORM
 #pragma comment(lib, "Ws2_32.lib")
@@ -36,6 +37,7 @@ SocketClass :: ~SocketClass()
 
 void SocketClass :: Clear(void)
 {
+	disconnecting = false;
 	port = 0;
 	ListenSocket = Invalid_Socket;
 	ClientSocket = Invalid_Socket;
@@ -105,7 +107,7 @@ int SocketClass :: CreateSocket(char *port, const char *address)
 	int socketfd = socket(AF_INET, SOCK_STREAM, 0);
 	if(socketfd == Invalid_Socket)
 	{
-		LogMessage("Could not create socket.");
+		g_Logs.server->error("Could not create socket.");
 		return -1;
 	}
 
@@ -120,15 +122,15 @@ int SocketClass :: CreateSocket(char *port, const char *address)
 	// Em - 13/3/2015 - Allow binding to different address (to have multiple servers on same host with no client mod)
 	if(address) {
 		if(inet_aton(address, &serveraddr.sin_addr) < 0) {
-			LogMessage("WARNING: Binding to all address for port %d because bind address %s is invalid", portNum, address);
+			g_Logs.server->warn("Binding to all address for port %v because bind address %v is invalid", portNum, address);
 			serveraddr.sin_addr.s_addr = INADDR_ANY;
 		}
 		else {
-			LogMessage("Bound port %d to %s", portNum, address);
+			g_Logs.server->info("Bound port %v to %v", portNum, address);
 		}
 	}
 	else {
-		LogMessage("WARNING: Binding to all address");
+		g_Logs.server->warn("Binding to all address");
 		serveraddr.sin_addr.s_addr = INADDR_ANY;
 	}
 
@@ -138,21 +140,21 @@ int SocketClass :: CreateSocket(char *port, const char *address)
 	// the ports earlier
 	int so_reuseaddr = 1;
 	if(setsockopt(socketfd, SOL_SOCKET, SO_REUSEADDR, &so_reuseaddr, sizeof so_reuseaddr) < 0) {
-		LogMessage("WARNING: Could not set SO_REUSEADDR on listening socket: %s (%s)", port, strerror(errno));
+		g_Logs.server->warn("Could not set SO_REUSEADDR on listening socket: %v (%v)", port, strerror(errno));
 		CLOSE_SOCKET(socketfd);
 		return -1;
 	}
 
 	if(bind(socketfd, (sockaddr*)&serveraddr, len) < 0)
 	{
-		LogMessage("Could not bind: %s (%s)", port, strerror(errno));
+		g_Logs.server->error("Could not bind: %v (%v)", port, strerror(errno));
 		CLOSE_SOCKET(socketfd);
 		return -1;
 	}
 
 	if(listen(socketfd, 5) < 0)
 	{
-		LogMessage("Could not listen: %s (%s)", port, strerror(errno));
+		g_Logs.server->error("Could not listen: %v (%v)", port, strerror(errno));
 		CLOSE_SOCKET(socketfd);
 		return -1;
 	}
@@ -213,7 +215,8 @@ int SocketClass :: Accept(void)
 	int clientfd = accept(ListenSocket, (sockaddr*)&acceptData, &len);
 	if(clientfd == -1)
 	{
-		LogMessage("Failed to accept on port: %d", this->port);
+		if(!disconnecting)
+			g_Logs.server->error("Failed to accept on port: %v", this->port);
 		return -1;
 	}
 	ClientSocket = clientfd;
@@ -227,14 +230,14 @@ int SocketClass :: Accept(void)
 	struct sockaddr_storage sa;
 	sa_len = sizeof(sa);
 	if(getsockname(clientfd, (struct sockaddr*)&sa, &sa_len) == -1) {
-		LogMessage("Failed to get destination sockname: %d", this->port);
+		g_Logs.server->error("Failed to get destination sockname: %v", this->port);
 		return -1;
 	}
 	memset(destAddr,0,INET6_ADDRSTRLEN);
 	int err=getnameinfo((struct sockaddr*)&sa,sa_len,destAddr,sizeof(destAddr),
 	    0,0,NI_NUMERICHOST);
 	if (err!=0) {
-		LogMessage("Failed to to convert address to string ");
+		g_Logs.server->error("Failed to to convert address to string ");
 		return -1;
 	}
 
@@ -246,10 +249,10 @@ int SocketClass :: Accept(void)
 	int res;
 	res = setsockopt(ClientSocket, SOL_SOCKET, SO_REUSEADDR, (const char*)&optval, sizeof(optval));
 	if(res != 0)
-		LogMessage("setsockopt SO_REUSEADDR error: %d", errno);
+		g_Logs.server->error("setsockopt SO_REUSEADDR error: %v", errno);
 	res = setsockopt(ClientSocket, SOL_SOCKET, SO_LINGER, (const char*)&lData, sizeof(lData));
 	if(res != 0)
-		LogMessage("setsockopt SO_LINGER error: %d", errno);
+		g_Logs.server->error("setsockopt SO_LINGER error: %v", errno);
 
 
 	FD_ZERO(&readset);
@@ -275,6 +278,7 @@ void SocketClass :: ShutdownServer(void)
 	DisconnectClient();
 	if(ListenSocket != Invalid_Socket)
 	{
+		disconnecting = true;
 		shutdown(ListenSocket, SHUTDOWN_PARAM);
 		CLOSE_SOCKET(ListenSocket);
 		ListenSocket = Invalid_Socket;
@@ -331,7 +335,7 @@ int SocketClass :: AttemptSend(const char *buffer, int buflen)
 #ifdef DEBUG_TIME
 	unsigned long passTime = g_PlatformTime.getMilliseconds() - startTime;
 	if(passTime > 250)
-		LogMessage("[SOCKET] Send Time: %ld ms", passTime);
+		g_Logs.server->warn("Socket Send Time: %v ms", passTime);
 #endif
 
 	if(pos == buflen)
@@ -405,7 +409,7 @@ int SocketClass :: AttemptSendNoBlock(const char *buffer, int buflen)
 #ifdef DEBUG_TIME
 	unsigned long passTime = g_PlatformTime.getMilliseconds() - startTime;
 	if(passTime > 50)
-		LogMessage("[SOCKET] AttemptSendNoBlock Send Time: %ld ms", passTime);
+		g_Logs.server->warn("Socket AttemptSendNoBlock Send Time: %v ms", passTime);
 #endif
 
 	if(pos == buflen)
@@ -472,7 +476,7 @@ const char * SocketClass :: GetErrorMessage(void)
 	case ELOOP:
 		return "Too many symbolic links were encountered in resolving my_addr.";
 	default:
-		LogMessage("[SOCKET] Unidentified error: %d", errno);
+		g_Logs.server->error("Unidentified socket error: %v", errno);
 		return "Unidentified error.";
 	}
 #endif

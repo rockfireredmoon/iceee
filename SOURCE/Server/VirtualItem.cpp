@@ -13,6 +13,7 @@ default static item database.
 #include "Config.h"
 #include "Stats.h"
 #include "DirectoryAccess.h"
+#include "util/Log.h"
 
 const char *FLAVOR_TEXT_HEADER = "</b></i><font size=\"16\"><b>";
 const char *FLAVOR_TEXT_FOOTER = "</b></font>";
@@ -960,8 +961,7 @@ void ItemManager :: NotifyDestroy(int itemID, const char *debugReason)
 		pageit->second.DeleteID(itemID);
 
 	VItemList.erase(it);
-	g_Log.AddMessageFormat("Destroyed virtual item: %d (%s)", itemID, debugReason);
-	Debug::Log("[DESTROY] Destroyed virtual item: %d (%s)", itemID, debugReason);
+	g_Logs.event->info("[DESTROY] Destroyed virtual item: %v (%v)", itemID, debugReason);
 	SessionVarsChangeData.AddChange();
 }
 

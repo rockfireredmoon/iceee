@@ -10,6 +10,7 @@
 #include "Report.h"
 #include "Character.h"
 #include "Globals.h"
+#include "util/Log.h"
 
 ZoneDefManager g_ZoneDefManager;
 ZoneBarrierManager g_ZoneBarrierManager;
@@ -1226,7 +1227,7 @@ int ZoneDefManager :: CheckAutoSave(bool force)
 		FILE *output = fopen(fileName.c_str(), "wb");
 		if(output == NULL)
 		{
-			g_Log.AddMessageFormat("[ERROR] Could not open file [%s] for saving", fileName.c_str());
+			g_Logs.data->error("Could not open file [%v] for saving", fileName.c_str());
 			continue;
 		}
 		def->SaveToStream(output);

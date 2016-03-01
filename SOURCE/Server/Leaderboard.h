@@ -67,9 +67,8 @@ public:
 
 	int InitThread(int globalThreadID);
 	void RunMainLoop();
+	void Shutdown();
 	Leaderboard* GetBoard(std::string name);
-
-	char * LogMessageL(const char *format, ...);  //Logs a message to the local buffer instead of the main thread
 };
 
 

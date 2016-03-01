@@ -69,8 +69,6 @@ public:
 	int ResolvePort(const char *address, int port);  //Returns 1 if successful, 0 if nothing found
 	void ResetValues(bool fullRestart);
 	void Restart(void);
-
-	char * LogMessageL(const char *format, ...);  //Logs a message to the local buffer instead of the main thread
 };
 
 extern RouterThread Router;

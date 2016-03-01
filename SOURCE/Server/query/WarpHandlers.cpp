@@ -22,6 +22,7 @@
 #include "../Creature.h"
 #include "../Instance.h"
 #include "../Config.h"
+#include "../util/Log.h"
 
 //
 // WarpHandler
@@ -155,7 +156,7 @@ int WarpInstanceHandler::handleQuery(SimulatorThread *sim,
 	if (targZone == NULL) {
 		Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1),
 				"Zone name not found: %s", warpTarg);
-		sim->LogMessageL(MSG_ERROR, "%s", sim->Aux1);
+		g_Logs.simulator->error("[%v] %v", sim->InternalID, sim->Aux1);
 		sim->SendInfoMessage(sim->Aux1, INFOMSG_ERROR);
 	} else {
 		int errCode = sim->CheckValidWarpZone(targZone->mID);

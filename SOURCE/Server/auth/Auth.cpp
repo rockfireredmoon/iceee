@@ -17,6 +17,7 @@
 
 #include "Auth.h"
 #include "../Util.h"
+#include "../util/Log.h"
 #include "../Config.h"
 #include "../StringList.h"
 
@@ -50,7 +51,7 @@ AccountData * AuthHandler::authenticate(SimulatorThread *sim) {
 	AccountData *accPtr = this->onAuthenticate(sim, std::string(loginName), std::string(authHash));
 
 	if(accPtr == NULL)	{
-		sim->LogMessageL(MSG_ERROR, "Could not find account: %s", loginName);
+		g_Logs.simulator->error("[%v] Could not find account: %v", sim->InternalID, loginName);
 		sim->ForceErrorMessage(g_Config.InvalidLoginMessage.c_str(), INFOMSG_ERROR);
 		sim->Disconnect("SimulatorThread::handle_lobby_authenticate");
 	}

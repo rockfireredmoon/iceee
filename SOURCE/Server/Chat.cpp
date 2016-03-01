@@ -9,6 +9,7 @@
 #include "Clan.h"
 #include "Config.h"
 #include "http/SiteClient.h"
+#include "util/Log.h"
 
 ChatManager g_ChatManager;
 bool NewChat = false;
@@ -168,7 +169,6 @@ ChatManager :: ChatManager()
 {
 	cs.Init();
 	cs.SetDebugName("CS_ZONEDEFMGR");
-	m_ChatLogFile = NULL;
 }
 
 ChatManager :: ~ChatManager()
@@ -278,37 +278,9 @@ int ChatManager :: handleCommunicationMsg(char *channel, char *message, char *na
 	return wpos;
 }
 
-void ChatManager :: OpenChatLogFile(const char *filename)
-{
-	m_ChatLogFile = fopen(filename, "a");
-}
-
-void ChatManager :: CloseChatLogFile(void)
-{
-	if(m_ChatLogFile != NULL)
-	{
-		fclose(m_ChatLogFile);
-		m_ChatLogFile = NULL;
-	}
-}
-
-void ChatManager :: FlushChatLogFile(void)
-{
-	if(m_ChatLogFile != NULL)
-		fflush(m_ChatLogFile);
-}
-
-
 void ChatManager :: LogMessage(std::string message)
 {
-	static char timeBuf[256];
-	if(m_ChatLogFile != NULL)
-	{
-		time_t curtime;
-		time(&curtime);
-		strftime(timeBuf, sizeof(timeBuf), "%x %X", localtime(&curtime));
-		fprintf(m_ChatLogFile, "%s : %s\r\n", timeBuf, message.c_str());
-	}
+	g_Logs.chat->info(message);
 }
 
 bool ChatManager ::SendChatMessageAsOffline(ChatMessage &message, HTTPD::SiteSession *session) {
@@ -470,13 +442,9 @@ void ChatManager :: LogChatMessage(ChatMessage &message)
 	while(CircularChatBuffer.size() >= MAX_CHAT_BUFFER_SIZE - 1)
 		CircularChatBuffer.pop_front();
 	cs.Leave();
-	if(m_ChatLogFile != NULL)
-	{
-		// TODO if(message.mChannel->chatScope == ChatBroadcastRange::CHAT_SCOPE_NONE)
-		if(message.mChannel->chatScope == 0)
-			Util::SafeFormat(LogBuffer, sizeof(LogBuffer), "%s: %s", message.mSender.c_str(), message.mMessage.c_str());
-		else
-			Util::SafeFormat(LogBuffer, sizeof(LogBuffer), "%s %s: %s", message.mChannel->prefix, message.mSender.c_str(), message.mMessage.c_str());
-		LogMessage(LogBuffer);
-	}
+	// TODO if(message.mChannel->chatScope == ChatBroadcastRange::CHAT_SCOPE_NONE)
+	if(message.mChannel->chatScope == 0)
+		g_Logs.chat->info("%v: %v", message.mSender.c_str(), message.mMessage.c_str());
+	else
+		g_Logs.chat->info("%v %v: %v", message.mChannel->prefix, message.mSender.c_str(), message.mMessage.c_str());
 }

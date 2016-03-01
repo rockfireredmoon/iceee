@@ -95,7 +95,7 @@ dnl
 AM_CONDITIONAL([MINGW], [test x$mingw = xtrue])
 AM_CONDITIONAL([WINSERVICE], [test x$winservice = xtrue])
 
-dnl AX_CXX_COMPILE_STDCXX_11([noext],[optional])
+AX_CXX_COMPILE_STDCXX_11([noext],[mandatory])
 
 dnl
 dnl Compiler and link setup
@@ -131,6 +131,9 @@ if test "x${ssl}" = xtrue; then
 else
 	CPPFLAGS="$CPPFLAGS -DNO_SSL=1"
 fi
+
+#
+CPPFLAGS="$CPPFLAGS -D_ELPP_THREAD_SAFE=1"
 
 LIBCURL_CHECK_CONFIG()
 CPPFLAGS="$CPPFLAGS $LIBCURL_CPPFLAGS"

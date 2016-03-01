@@ -11,7 +11,7 @@
 #include "InstanceScale.h" //Drop rate profile
 #include "ConfigString.h"
 #include "Stats.h"
-
+#include "util/Log.h"
 #include <stddef.h>
 
 //vector<ItemDef> ItemList;
@@ -1416,7 +1416,7 @@ int PrepExt_ItemDef(char *SendBuf, ItemDef *item, int ProtocolState)
 			WritePos += PutInteger(&SendBuf[WritePos], item->craftItemDefId[i]);
 
 		if(item->numberOfItems != item->craftItemDefId.size())
-			g_Log.AddMessageFormatW(MSG_WARN, "[ERROR] Crafting material item count mismatch for ID: %d", item->mID);
+			g_Logs.server->error("Crafting material item count mismatch for ID: %v", item->mID);
 	}
 
 	if(g_ProtocolVersion >= 9)

@@ -151,15 +151,15 @@ void ClanManager::CreateClan(Clan &clan) {
 }
 
 bool ClanManager::LoadClan(int id, Clan &clan) {
-	const char * buf = GetPath(id).c_str();
-	if (!Platform::FileExists(buf)) {
-		g_Log.AddMessageFormat("No file for CS item [%s]", buf);
+	std::string path = GetPath(id);
+	if (!Platform::FileExists(path)) {
+		g_Log.AddMessageFormat("No file for CS item [%s]", path.c_str());
 		return NULL;
 	}
 
 	FileReader lfr;
-	if (lfr.OpenText(buf) != Err_OK) {
-		g_Log.AddMessageFormat("Could not open file [%s]", buf);
+	if (lfr.OpenText(path.c_str()) != Err_OK) {
+		g_Log.AddMessageFormat("Could not open file [%s]", path.c_str());
 		return false;
 	}
 
@@ -175,7 +175,7 @@ bool ClanManager::LoadClan(int id, Clan &clan) {
 				if (clan.mId != 0) {
 					g_Log.AddMessageFormat(
 							"[WARNING] %s contains multiple entries. CS items have one entry per file",
-							buf);
+							path.c_str());
 					break;
 				}
 				clan.mId = id;
@@ -194,11 +194,11 @@ bool ClanManager::LoadClan(int id, Clan &clan) {
 				} else {
 					g_Log.AddMessageFormat(
 							"Incomplete clan memober information [%s] in file [%s]",
-							lfr.SecBuffer, buf);
+							lfr.SecBuffer, path.c_str());
 				}
 			} else
 				g_Log.AddMessageFormat("Unknown identifier [%s] in file [%s]",
-						lfr.SecBuffer, buf);
+						lfr.SecBuffer, path.c_str());
 		}
 	}
 	lfr.CloseCurrent();
@@ -219,9 +219,9 @@ int ClanManager::FindClanID(std::string clanName) {
 
 bool ClanManager::RemoveClan(Clan &clan) {
 
-	const char * path = GetPath(clan.mId).c_str();
+	std::string path = GetPath(clan.mId);
 	if (!Platform::FileExists(path)) {
-		g_Log.AddMessageFormat("No file for clan [%s] to remove", path);
+		g_Log.AddMessageFormat("No file for clan [%s] to remove", path.c_str());
 		return false;
 	}
 	cs.Enter("ClanManager::RemoveClan");
@@ -231,7 +231,7 @@ bool ClanManager::RemoveClan(Clan &clan) {
 	Util::SafeFormat(buf, sizeof(buf), "Clan/%d.del", clan.mId);
 	Platform::FixPaths(buf);
 	if(!Platform::FileExists(buf) || remove(buf) == 0) {
-		if(!rename(path, buf) == 0) {
+		if(!rename(path.c_str(), buf) == 0) {
 			g_Log.AddMessageFormat("Failed to remove clan %d", clan.mId);
 			return false;
 		}

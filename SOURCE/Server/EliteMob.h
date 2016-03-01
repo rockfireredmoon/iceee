@@ -1,6 +1,7 @@
 #include <string>
 #include <vector>
 #include "Util.h"
+#include "util/Log.h"
 
 class CreatureInstance;   //Forward declaration for a pointer argument.
 

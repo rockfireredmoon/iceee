@@ -72,7 +72,7 @@ namespace Platform
 	void GenerateFilePath(std::string& resultStr, const char *folderName, const char *fileName);
 	int FileCopy(const char *sourceFile, const char *destFile);
 	bool Delete(const char *path);
-    bool FileExists(const char *sourceFile);
+    bool FileExists(std::string sourceFile);
     bool DirExists(const char *path);
     std::string Dirname(const char *path);
     std::string Filename(const char *path);

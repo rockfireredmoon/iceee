@@ -206,6 +206,7 @@ VerifyMovement=0
 InvalidLoginMessage=<font size="24"><b>Account not found. Check your username and password.</b></font>
 
 DebugLogAIScriptUse=0
-
-
 Upgrade=0
+
+; A script to execute when the server has crashed
+ShutdownHandlerScript=

@@ -19,6 +19,7 @@
 #include "../Config.h"
 #include "../Util.h"
 #include "../json/json.h"
+#include "../util/Log.h"
 
 
 //
@@ -147,14 +148,13 @@ bool SiteClient::login(HTTPD::SiteSession *session, std::string username, std::s
 		Json::Value root;
 		Json::Reader reader;
 		if (reader.parse( replyBuffer.c_str(), root ) && root.size() > 0) {
-			g_Log.AddMessageFormat(">>> %s", replyBuffer.c_str());
 			session->sessionID = root["sessid"].asCString();
 			session->sessionName = root["session_name"].asCString();
 			return true;
 		}
 	}
 	else {
-		g_Log.AddMessageFormat("[WARNING] Failed to authenticate with error %d", res);
+		g_Logs.server->warn("Failed to authenticate with error %v", res);
 	}
 	return false;
 }

@@ -838,7 +838,7 @@ void AbilityEntry2 :: InitializeData(void)
 		}	
 		else if(eventParams.size() != 0)
 		{
-			g_Log.AddMessageFormat("[WARNING] Ability:%d malformed event [%s]", abilityID, eventList[i].c_str());
+			g_Logs.data->warn("Ability:%v malformed event [%v]", abilityID, eventList[i].c_str());
 		}
 	}
 }
@@ -1517,9 +1517,9 @@ void AbilityManager2 :: Verify(void)
 		it->second.Verify(this, verifyInfo);
 		if(verifyInfo.mError != 0)
 		{
-			g_Log.AddMessageFormat("Ability [%d] verification failed (%d errors)", it->first, verifyInfo.mError);
+			g_Logs.data->error("Ability [%v] verification failed (%v errors)", it->first, verifyInfo.mError);
 			for(size_t i = 0; i < verifyInfo.mErrorMsg.size(); i++)
-				g_Log.AddMessageFormat("  %s", verifyInfo.mErrorMsg[i].c_str());
+				g_Logs.data->error("  %v", verifyInfo.mErrorMsg[i].c_str());
 			verifyInfo.Clear();
 		}
 	}

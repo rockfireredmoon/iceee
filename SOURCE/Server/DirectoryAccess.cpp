@@ -228,9 +228,9 @@ bool Platform::Delete(const char *path)
 	return remove(path) == 0;
 }
 
-bool Platform::FileExists(const char *path)
+bool Platform::FileExists(std::string path)
 {
-	FILE *input = fopen(path, "rb");
+	FILE *input = fopen(path.c_str(), "rb");
 	if(input == NULL)
 		return false;
 	fclose(input);

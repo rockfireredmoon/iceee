@@ -2,6 +2,7 @@
 #include "Components.h"
 #include "StringList.h"
 #include <string.h>
+#include "util/Log.h"
 
 char VersionString[] = {"Version 36b : " __DATE__ }; 
 
@@ -136,12 +137,12 @@ void Platform_CriticalSection :: Enter(const char *requestDesc)
 	{
 		if(notifyWait == true)
 			if(useDebugMessages == true)
-				g_Log.AddMessageFormatW(MSG_SHOW, "[DEBUG] CriticalSection::Enter[%s] waiting, %d count, request:%s, last:%s", debugName, lockCount, requestDesc, lastLock);
+				g_Logs.server->debug("CriticalSection::Enter[%v] waiting, %v count, request:%v, last:%v", debugName, lockCount, requestDesc, lastLock);
 	}
 	if(initialized == false)
 	{
 		if(useDebugMessages == true)
-			g_Log.AddMessageFormatW(MSG_CRIT, "[CRITICAL] Platform_CriticalSection::Enter[%s] on uninitialized section.", debugName);
+			g_Logs.server->debug("Platform_CriticalSection::Enter[%v] on uninitialized section.", debugName);
 		Init();
 	}
 #endif
@@ -159,7 +160,7 @@ void Platform_CriticalSection :: Enter(const char *requestDesc)
 	{
 		long passTime = (long)g_PlatformTime.getMilliseconds() - (long)startTime;
 		if(passTime > 100)
-			g_Log.AddMessageFormatW(MSG_SHOW, "[DEBUG] TIME PASSED CriticalSection::Enter[%s] %ld ms (%s).", debugName, passTime, lastLock);
+			g_Logs.server->debug("TIME PASSED CriticalSection::Enter[%v] %v ms (%v).", debugName, passTime, lastLock);
 		//g_Log.AddMessageFormatW(MSG_SHOW, "[DEBUG] ENTER CriticalSection[%s]", debugName);
 	}
 	acquireTime = startTime;
@@ -183,7 +184,7 @@ void Platform_CriticalSection :: Leave(void)
 	{
 		long passTime = (long)g_PlatformTime.getMilliseconds() - (long)acquireTime;
 		if(passTime > 100)
-			g_Log.AddMessageFormatW(MSG_SHOW, "[DEBUG] TIME PASSED CriticalSection::Leave[%s] %ld ms (%s).", debugName, passTime, lastLock);
+			g_Logs.server->debug("TIME PASSED CriticalSection::Leave[%v] %v ms (%v).", debugName, passTime, lastLock);
 		//g_Log.AddMessageFormatW(MSG_SHOW, "[DEBUG] LEAVE CriticalSection[%s]", debugName);
 	}
 #endif

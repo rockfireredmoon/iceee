@@ -76,7 +76,7 @@ void EliteManager :: LoadTypeTable(const char *filename)
 	FileReader3 fr;
 	if(fr.OpenFile(filename) != FileReader3::SUCCESS)
 	{
-		g_Log.AddMessageFormat("[ERROR] Could not open file: %s", filename);
+		g_Logs.data->error("Could not open file: %v", filename);
 		return;
 	}
 	fr.SetCommentChar(';');
@@ -112,7 +112,7 @@ void EliteManager :: LoadAffixTable(const char *filename)
 	FileReader3 fr;
 	if(fr.OpenFile(filename) != FileReader3::SUCCESS)
 	{
-		g_Log.AddMessageFormat("[ERROR] Could not open file: %s", filename);
+		g_Logs.data->error("Could not open file: %v", filename);
 		return;
 	}
 	fr.SetCommentChar(';');

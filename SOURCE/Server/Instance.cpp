@@ -1,5 +1,6 @@
 #include "Components.h"
 #include "Debug.h"
+#include "util/Log.h"
 
 #define VERIFYCINST(x)  EMPTY_OPERATION
 #define SEND_DEBUG_MSG_ALL(msg,sim)  EMPTY_OPERATION
@@ -838,7 +839,7 @@ int ActiveInstance :: UnloadPlayer(SimulatorThread *callSim)
 	int r = SimExist(callSim);
 	if(r == -1)
 	{
-		g_Log.AddMessageFormatW(MSG_ERROR, "[ERROR] UnloadPlayer Sim:%d not found.", callSim->InternalIndex);
+		g_Logs.server->error("UnloadPlayer Sim:%v not found.", callSim->InternalIndex);
 		return -1;
 	}
 
@@ -864,7 +865,7 @@ int ActiveInstance :: UnloadPlayer(SimulatorThread *callSim)
 	CreatureInstance * cInst = GetPlayerByID(creatureID);
 	if(cInst == NULL)
 	{
-		g_Log.AddMessageFormatW(MSG_ERROR, "[ERROR] UnloadPlayer creature %d not found", creatureID);
+		g_Logs.server->error("UnloadPlayer creature %v not found", creatureID);
 		return -1;
 	}
 
@@ -1682,7 +1683,7 @@ CreatureInstance * ActiveInstance :: GetInstanceByCID(int CID)
 {
 	if(PlayerListPtr.size() != PlayerList.size())
 	{
-		g_Log.AddMessageFormatW(MSG_CRIT, "GetInstanceByCID PlayerList Mismatch %d:%d", PlayerListPtr.size() != PlayerList.size());
+		g_Logs.server->error("GetInstanceByCID PlayerList Mismatch %v:%v", PlayerListPtr.size() != PlayerList.size());
 		return NULL;
 	}
 
@@ -1712,7 +1713,7 @@ CreatureInstance * ActiveInstance :: GetInstanceByCID(int CID)
 
 	if(SidekickListPtr.size() != SidekickList.size())
 	{
-		g_Log.AddMessageFormatW(MSG_CRIT, "GetInstanceByCID PlayerList Mismatch %d:%d", SidekickListPtr.size() != SidekickList.size());
+		g_Logs.server->error("GetInstanceByCID PlayerList Mismatch %v:%v", SidekickListPtr.size() != SidekickList.size());
 		return NULL;
 	}
 	for(a = 0; a < SidekickListPtr.size(); a++)
@@ -2477,13 +2478,13 @@ void ActiveInstance :: InitializeData(void)
 	Platform::FixPaths(buffer);
 	essenceShopList.LoadFromFile(buffer);
 	if(essenceShopList.EssenceShopList.size() > 0)
-		g_Log.AddMessageFormatW(MSG_DIAG, "Loaded %d essence shops.", essenceShopList.EssenceShopList.size());
+		g_Logs.data->debug("Loaded %v essence shops.", essenceShopList.EssenceShopList.size());
 
 	Util::SafeFormat(buffer, sizeof(buffer), "%s\\%d\\Shop.txt", mZoneDefPtr->mGrove ? "Grove" : "Instance", mZone);
 	Platform::FixPaths(buffer);
 	itemShopList.LoadFromFile(buffer);
 	if(itemShopList.EssenceShopList.size() > 0)
-		g_Log.AddMessageFormatW(MSG_DIAG, "Loaded %d item shops.", itemShopList.EssenceShopList.size());
+		g_Logs.data->debug("Loaded %v item shops.", itemShopList.EssenceShopList.size());
 
 
 	Util::SafeFormat(buffer, sizeof(buffer), "%s\\%d\\Static.txt", mZoneDefPtr->mGrove ? "Grove" : "Instance", mZone);
@@ -2495,7 +2496,7 @@ void ActiveInstance :: InitializeData(void)
 	Platform::FixPaths(buffer);
 	worldMarkers.LoadFromFile(buffer);
 	if(worldMarkers.WorldMarkerList.size() > 0)
-		g_Log.AddMessageFormatW(MSG_DIAG, "Loaded %d world markers.", worldMarkers.WorldMarkerList.size());
+		g_Logs.data->debug("Loaded %v world markers.", worldMarkers.WorldMarkerList.size());
 
 	//retPtr->SetScaleConfig(scaleConfigSetting, 47);
 	arenaRuleset.mPVPStatus = mZoneDefPtr->mMode;
@@ -2725,7 +2726,7 @@ int ActiveInstance :: SidekickRemoveAll(CreatureInstance* host, vector<SidekickO
 
 	sidekickList->clear();
 
-	g_Log.AddMessageFormatW(MSG_DIAG, "Debug: iterations: %d", debug_iter);
+	g_Logs.server->debug("Iterations: %v", debug_iter);
 	return 1;
 }
 
@@ -2738,12 +2739,12 @@ int ActiveInstance :: SidekickRegister(CreatureInstance* host, vector<SidekickOb
 	{
 		if(InstantiateSidekick(host, sidekickList->at(i), count) != NULL)
 		{
-			g_Log.AddMessageFormatW(MSG_DIAGV, "Registering sidekick: %d", sidekickList->at(i).CDefID);
+			g_Logs.server->info("Registering sidekick: %v", sidekickList->at(i).CDefID);
 			count++;
 		}
 	}
 
-	g_Log.AddMessageFormatW(MSG_DIAG, "Registered %d sidekicks", count);
+	g_Logs.server->info("Registered %v sidekicks", count);
 
 	if(count > 0)
 	{
@@ -3948,13 +3949,13 @@ int ActiveInstanceManager :: AddSimulator_Ex(PlayerInstancePlacementData &pd)
 	CreatureInstance *cptr = ptr->LoadPlayer(pd.in_cInst, pd.in_simPtr);
 	if(cptr == NULL)
 	{
-		g_Log.AddMessageFormatW(MSG_ERROR, "[ERROR] AddSimulator() Failed to add Sim:%d to zone %d", pd.in_simPtr->InternalIndex, pd.in_zoneID);
+		g_Logs.server->error("AddSimulator() Failed to add Sim:%v to zone %v", pd.in_simPtr->InternalIndex, pd.in_zoneID);
 		return -1;
 	}
 
 	cptr->BuildZoneString(ptr->mInstanceID, ptr->mZone, 0);
 	cptr->OnInstanceEnter(ptr->arenaRuleset);
-	g_Log.AddMessageFormatW(MSG_DIAG, "Added Sim:%d to instance %d", pd.in_simPtr->InternalIndex, ptr->mInstanceID);
+	g_Logs.server->info("Added Sim:%v to instance %v", pd.in_simPtr->InternalIndex, ptr->mInstanceID);
 	ptr->AdjustPlayerCount(1);
 	
 	pd.out_cInst = cptr;
@@ -3973,7 +3974,7 @@ int ActiveInstanceManager :: FlushSimulator(int SimulatorID)
 	int debug_deleted = 0;
 	debug_deleted = bcm.RemoveSimulator(SimulatorID);
 	if(debug_deleted > 0)
-		g_Log.AddMessageFormatW(MSG_DIAG, "Flushed %d remaining messages", debug_deleted);
+		g_Logs.server->info("Flushed %v remaining messages", debug_deleted);
 
 	return 1;
 }
@@ -4038,7 +4039,7 @@ void ActiveInstanceManager :: CheckActiveInstances(void)
 	{
 		if(it->QualifyDelete() == true)
 		{
-			g_Log.AddMessageFormatW(MSG_SHOW, "Removing inactive instance [%s : %d]", it->mZoneDefPtr->mName.c_str(), it->mZone);
+			g_Logs.server->info("Removing inactive instance [%v : %v]", it->mZoneDefPtr->mName.c_str(), it->mZone);
 			delCount++;
 			it->Clear();
 			instList.erase(it++);

@@ -33,6 +33,7 @@
 #include "Debug.h"
 #include "Report.h"
 #include "squirrel.h"
+#include "util/Log.h"
 
 #include <list>
 
@@ -742,7 +743,7 @@ bool CreatureInstance :: StartAI(std::string &errors)
 		{
 			aiScript = aiScriptManager.AddActiveScript(scriptName);
 			if(aiScript == NULL)
-				g_Log.AddMessageFormatW(MSG_SHOW, "[WARNING] Could not find script [%s] for instantiated creature [%s]", p.mScriptName.c_str(), cdef->css.display_name);
+				g_Logs.script->warn("Could not find script [%v] for instantiated creature [%v]", p.mScriptName.c_str(), cdef->css.display_name);
 			else
 				aiScript->attachedCreature = this;
 		}
@@ -751,7 +752,7 @@ bool CreatureInstance :: StartAI(std::string &errors)
 			aiNut = aiNutManager.AddActiveScript(this, def, p.mArgs, errors);
 			if(aiNut == NULL)
 			{
-				g_Log.AddMessageFormatW(MSG_SHOW, "[WARNING] While the script %s for instantiated creature [%s] was found, it did not start." , p.mScriptName.c_str(), cdef->css.display_name);
+				g_Logs.script->warn("While the script %v for instantiated creature [%v] was found, it did not start." , p.mScriptName.c_str(), cdef->css.display_name);
 			}
 		}
 
@@ -2428,11 +2429,11 @@ void CreatureInstance :: OnUnstick(void)
 		return;
 
 	//This is a custom function to help assist in logging unsticks.
-	Debug::Log("[UNSTICK] %s (%s, %d,%d,%d)", css.display_name, ZoneString, CurrentX, CurrentY, CurrentZ);
+	g_Logs.event->info("[UNSTICK] %v (%v,%v,%v,%v)", css.display_name, ZoneString, CurrentX, CurrentY, CurrentZ);
 	bool quick = charPtr->NotifyUnstick(false);
 	if(quick == true)
 	{
-		Debug::Log("[UNSTICK] Quick");
+		g_Logs.event->info("[UNSTICK] Resulted in quick unstick");
 		
 		/*
 		if(CheckBuffLimits(10,BuffCategory::DBMove_Debuff_Rez, true) == true)
@@ -6154,7 +6155,7 @@ void CreatureInstance :: RequestTarget(int CreatureID)
 {
 	if(actInst == NULL)
 	{
-		g_Log.AddMessageFormatW(MSG_CRIT, "[CRITICAL] CreatureInstance::RequestTarget actInst is NULL");
+		g_Logs.script->error("CreatureInstance::RequestTarget actInst is NULL");
 		return;
 	}
 	SelectTarget(actInst->GetInstanceByCID(CreatureID));

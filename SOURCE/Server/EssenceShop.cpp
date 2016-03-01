@@ -6,6 +6,7 @@
 #include "FileReader.h"
 #include "StringList.h"
 #include <string.h>
+#include "util/Log.h"
 
 EssenceShopItem :: EssenceShopItem()
 {
@@ -250,7 +251,7 @@ void EssenceShopContainer :: LoadFromFile(char *filename)
 				int id = ResolveItemIdentifier(lfr.BlockToStringC(1, 0));
 				int cost = lfr.BlockToIntC(2);
 				if(id <= 0)
-					g_Log.AddMessageFormatW(MSG_WARN, "[WARNING] EssenceShop item [%s] referred to in file [%s] was not found.", lfr.BlockToStringC(1, 0), filename);
+					g_Logs.data->warn("EssenceShop item [%v] referred to in file [%v] was not found.", lfr.BlockToStringC(1, 0), filename);
 				else
 					newItem.AddItem(id, cost);
 			}
@@ -272,7 +273,7 @@ EssenceShop * EssenceShopContainer :: GetEssenceShopPtr(int cdefid, char *itempr
 	int index = GetShopByCDefID(cdefid);
 	if(index == -1)
 	{
-		g_Log.AddMessageFormatW(MSG_WARN, "[WARNING] TradeEssence() failed: no EssenceShop for CDef [%d]", cdefid);
+		g_Logs.server->error("TradeEssence() failed: no EssenceShop for CDef [%v]", cdefid);
 		return NULL;
 	}
 
@@ -284,14 +285,14 @@ EssenceShop * EssenceShopContainer :: GetEssenceShopPtr(int cdefid, char *itempr
 	int itemid = esptr->GetItemIDFromProto(itemproto);
 	if(itemid <= 0)
 	{
-		g_Log.AddMessageFormatW(MSG_WARN, "[WARNING] TradeEssence() failed: itemproto not valid [%s]", itemproto);
+		g_Logs.server->error("TradeEssence() failed: itemproto not valid [%v]", itemproto);
 		return NULL;
 	}
 
 	int itemindex = esptr->GetTradeIndexByID(itemid);
 	if(itemindex == -1)
 	{
-		g_Log.AddMessageFormatW(MSG_WARN, "[WARNING] TradeEssence() failed: Item [%d] not found in reward list.", itemid);
+		g_Logs.server->error("TradeEssence() failed: Item [%v] not found in reward list.", itemid);
 		return NULL;
 	}
 

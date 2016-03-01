@@ -5,6 +5,7 @@
 #include "StringList.h"
 #include "Config.h"
 #include "Debug.h"
+#include "util/Log.h"
 
 int InventorySlot :: GetStackCount(void)
 {
@@ -17,7 +18,7 @@ int InventorySlot :: GetStackCount(void)
 	}
 	else
 	{
-		g_Log.AddMessageFormatW(MSG_ERROR, "[ERROR] GetStackCount() failed item lookup for ID [%d]", IID);
+		g_Logs.server->error("GetStackCount() failed item lookup for ID [%v]", IID);
 	}
 
 	return 1;
@@ -79,7 +80,7 @@ ItemDef * InventorySlot :: ResolveSafeItemPtr(void)
 		dataPtr = g_ItemManager.GetPointerByID(IID);
 		if(dataPtr == NULL)
 		{
-			g_Log.AddMessageFormatW(MSG_ERROR, "[ERROR] ResolveSafeItemPtr() ID not found: %d", IID);
+			g_Logs.server->error("ResolveSafeItemPtr() ID not found: %v", IID);
 			dataPtr = g_ItemManager.GetDefaultItemPtr();
 		}
 	}
@@ -87,7 +88,7 @@ ItemDef * InventorySlot :: ResolveSafeItemPtr(void)
 	{
 		fprintf(stderr, "ResolveSafeItemPtr() returning NULL\r\n");
 		fflush(stderr);
-		g_Log.AddMessageFormatW(MSG_ERROR, "[ERROR] ResolveSafeItemPtr() returning with NULL");
+		g_Logs.server->error("ResolveSafeItemPtr() returning with NULL");
 	}
 	return dataPtr;
 }
@@ -232,7 +233,7 @@ InventorySlot * InventoryManager :: AddItem_Ex(int containerID, int itemID, int 
 	ItemDef *itemDef = g_ItemManager.GetPointerByID(itemID);
 	if(itemDef == NULL)
 	{
-		g_Log.AddMessageFormatW(MSG_WARN, "[WARNING] Item [%d] does not exist.", itemID);
+		g_Logs.server->warn("Item [%v] does not exist.", itemID);
 		SetError(ERROR_ITEM);
 		return NULL;
 	}
@@ -631,7 +632,7 @@ int InventoryManager :: ItemMove(char *buffer, char *convBuf, CharacterStatSet *
 	int origItemIndex = GetItemBySlot(origContainer, origSlot);
 	if(origItemIndex == -1)
 	{
-		g_Log.AddMessageFormatW(MSG_ERROR, "[ERROR] ItemMove: item not found (container: %d, slot: %d)", origContainer, origSlot);
+		g_Logs.server->error("ItemMove: item not found (container: %v, slot: %v)", origContainer, origSlot);
 		return 0;
 	}
 
@@ -945,17 +946,17 @@ bool InventoryManager :: VerifyContainerSlotBoundary(int container, int slot)
 {
 	if(container < 0 || container >= MAXCONTAINER)
 	{
-		g_Log.AddMessageFormatW(MSG_ERROR, "[ERROR] VerifyContainerSlotBoundary: invalid container: %d", container);
+		g_Logs.server->error("VerifyContainerSlotBoundary: invalid container: %v", container);
 		return false;
 	}
 	if(slot < 0)
 	{
-		g_Log.AddMessageFormatW(MSG_ERROR, "[ERROR] VerifyContainerSlotBoundary: invalid slot: %d", slot);
+		g_Logs.server->error("VerifyContainerSlotBoundary: invalid slot: %v", slot);
 		return false;
 	}
 	if(container == INV_CONTAINER && slot >= MaxContainerSlot[container])
 	{
-		g_Log.AddMessageFormatW(MSG_ERROR, "[ERROR] VerifyContainerSlotBoundary: slot is too high: %d", slot);
+		g_Logs.server->error("VerifyContainerSlotBoundary: slot is too high: %v", slot);
 		return false;
 	}
 	return true;
@@ -1201,8 +1202,7 @@ int CheckSection_Inventory(FileReader &fr, InventoryManager &cd, const char *deb
 	ItemDef *itemDef = g_ItemManager.GetPointerByID(ID);
 	if(itemDef == NULL)
 	{
-		g_Log.AddMessageFormat("[INVENTORY] Warning: %s [%s] Item ID [%d] not found for container [%s]", debugType, debugName, ID, fr.BlockToStringC(0, 0));
-		Debug::Log("[INVENTORY] Warning: %s [%s] Item ID [%d] not found for container [%s]", debugType, debugName, ID, fr.BlockToStringC(0, 0));
+		g_Logs.event->warn("[INVENTORY] %v [%v] Item ID [%v] not found for container [%v]", debugType, debugName, ID, fr.BlockToStringC(0, 0));
 		return -1;
 	}
 	//tt.Finish();

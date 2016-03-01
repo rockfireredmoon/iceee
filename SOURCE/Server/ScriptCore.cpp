@@ -20,6 +20,7 @@
 #include "StringList.h"
 #include "Util.h"
 #include "Config.h"
+#include "util/Log.h"
 
 extern unsigned long g_ServerTime;
 
@@ -129,7 +130,7 @@ namespace ScriptCore
 	}
 
 	void NutDef::Initialize(const char *sourceFile) {
-		g_Log.AddMessageFormat("Initializing Squirrel script '%s'", sourceFile);
+		g_Logs.script->info("Initializing Squirrel script '%v'", sourceFile);
 		mSourceFile = sourceFile;
 		scriptName = Platform::Basename(mSourceFile.c_str());
 	}
@@ -678,7 +679,7 @@ namespace ScriptCore
 			sq_close(vm);
 //			g_Log.AddMessageFormat("[REMOVEME] Halted VM for %s", def->scriptName.c_str());
 			if(def->HasFlag(NutDef::FLAG_REPORT_END))
-				PrintMessage("Script [%s] has ended", def->scriptName.c_str());
+				g_Logs.script->info("Script [%v] has ended", def->scriptName.c_str());
 //			else
 //				g_Log.AddMessageFormat("[REMOVEME] VM Halted!");
 			HaltedDerived();
@@ -867,18 +868,18 @@ namespace ScriptCore
 	void NutPlayer::QueueInsert(NutScriptEvent *evt)
 	{
 		if(mHalting) {
-			PrintMessage("[WARNING] Script event when halting");
+			g_Logs.script->warn("Script event when halting");
 			return;
 		}
 		if(!mActive) {
-			PrintMessage("[WARNING] Script event when not active");
+			g_Logs.script->warn("Script event when not active");
 			return;
 		}
 		if(mExecutingEvent != NULL)
 		{
 			if(mQueueInsert.size() >= MAX_QUEUE_SIZE)
 			{
-				PrintMessage("[ERROR] Script error: Deferred QueueEvent() list is full %d of %d", mQueueInsert.size(), MAX_QUEUE_SIZE);
+				g_Logs.script->error("Script error: Deferred QueueEvent() list is full %v of %v", mQueueInsert.size(), MAX_QUEUE_SIZE);
 				return;
 			}
 			mQueueInsert.insert(mQueueInsert.begin(), evt);
@@ -887,7 +888,7 @@ namespace ScriptCore
 
 			if(mQueue.size() >= MAX_QUEUE_SIZE)
 			{
-				PrintMessage("[ERROR] Script error: QueueEvent() list is full [script: %s]", def->scriptName.c_str());
+				g_Logs.script->error("Script error: QueueEvent() list is full [script: %v]", def->scriptName.c_str());
 				return;
 			}
 			mQueue.insert(mQueue.begin(), evt);
@@ -926,11 +927,11 @@ namespace ScriptCore
 	void NutPlayer::QueueAdd(NutScriptEvent *evt)
 	{
 		if(mHalting) {
-			PrintMessage("[WARNING] Script event when halting");
+			g_Logs.script->warn("Script event when halting");
 			return;
 		}
 		if(!mActive) {
-			PrintMessage("[WARNING] Script event when not active");
+			g_Logs.script->warn("Script event when not active");
 			return;
 		}
 
@@ -939,7 +940,7 @@ namespace ScriptCore
 			if(mExecutingEvent != evt) {
 				if(mQueueAdd.size() >= MAX_QUEUE_SIZE)
 				{
-					PrintMessage("[ERROR] Script error: Deferred QueueEvent() list is full %d of %d", mQueueAdd.size(), MAX_QUEUE_SIZE);
+					g_Logs.script->error("Script error: Deferred QueueEvent() list is full %v of %v", mQueueAdd.size(), MAX_QUEUE_SIZE);
 					return;
 				}
 				mQueueAdd.push_back(evt);
@@ -949,7 +950,7 @@ namespace ScriptCore
 
 			if(mQueue.size() >= MAX_QUEUE_SIZE)
 			{
-				PrintMessage("[ERROR] Script error: QueueEvent() list is full [script: %s]", def->scriptName.c_str());
+				g_Logs.script->error("Script error: QueueEvent() list is full [script: %v]", def->scriptName.c_str());
 				return;
 			}
 			mQueue.push_back(evt);
@@ -987,19 +988,6 @@ namespace ScriptCore
 		}
 		return false;
 	}
-
-
-	void PrintMessage(const char *format, ...) {
-		char messageBuf[2048];
-
-		va_list args;
-		va_start(args, format);
-		vsnprintf(messageBuf, sizeof(messageBuf) - 1, format, args);
-		va_end(args);
-
-		g_Log.AddMessageFormat("%s", messageBuf);
-	}
-
 
 
 OpCodeInfo defCoreOpCode[] = {
@@ -1123,7 +1111,7 @@ void ScriptDef :: CompileFromSource(const char *sourceFile)
 	FileReader lfr;
 	if(lfr.OpenText(sourceFile) != Err_OK)
 	{
-		PrintMessage("[WARNING] InstanceScript::CompileFromSource() unable to open file: %s", sourceFile);
+		g_Logs.script->warn("InstanceScript::CompileFromSource() unable to open file: %v", sourceFile);
 		return;
 	}
 
@@ -1157,7 +1145,7 @@ void ScriptDef :: CompileLine(char *line, ScriptCompiler &compileData)
 		else if(strcmp(opname, "if") == 0)
 		{
 			if(tokens.size() < 4)
-				PrintMessage("Syntax error: not enough operands for IF statement in [%s line %d]", compileData.mSourceFile, compileData.mLineNumber);
+				g_Logs.script->error("Syntax error: not enough operands for IF statement in [%v line %v]", compileData.mSourceFile, compileData.mLineNumber);
 			else
 			{
 				int vleft = 0;
@@ -1166,7 +1154,7 @@ void ScriptDef :: CompileLine(char *line, ScriptCompiler &compileData)
 				int cmp = ResolveComparisonType(tokens[2].c_str());
 				int right = ResolveOperandType(tokens[3].c_str(), vright);
 				if(cmp == CMP_INV)
-					PrintMessage("Invalid comparison operator: [%s] in [%s line %d]", compileData.mSourceFile, compileData.mLineNumber);
+					g_Logs.script->error("Invalid comparison operator: [%v] in [%v line %v]", compileData.mSourceFile, compileData.mLineNumber);
 				else
 				{
 					bool valid = true;
@@ -1178,7 +1166,7 @@ void ScriptDef :: CompileLine(char *line, ScriptCompiler &compileData)
 					case OPT_INT: PushOpCode(OP_PUSHINT, vright, 0); break;
 					case OPT_FLOAT: PushOpCode(OP_PUSHFLOAT, vright, 0); break;
 					case OPT_APPINT: PushOpCode(OP_PUSHAPPVAR, vright, 0); break;
-					default: PrintMessage("Invalid operator [%s] for IF statement [%s line %d]", tokens[3].c_str(), compileData.mSourceFile, compileData.mLineNumber); valid = false; break;
+					default: g_Logs.script->error("Invalid operator [%s] for IF statement [%v line %v]", tokens[3].c_str(), compileData.mSourceFile, compileData.mLineNumber); valid = false; break;
 					}
 		
 					switch(left)
@@ -1187,7 +1175,7 @@ void ScriptDef :: CompileLine(char *line, ScriptCompiler &compileData)
 					case OPT_INT: PushOpCode(OP_PUSHINT, vleft, 0); break;
 					case OPT_FLOAT: PushOpCode(OP_PUSHFLOAT, vleft, 0); break;
 					case OPT_APPINT: PushOpCode(OP_PUSHAPPVAR, vleft, 0); break;
-					default: PrintMessage("Invalid operator [%s] for IF statement [%s line %d]", tokens[1].c_str(), compileData.mSourceFile, compileData.mLineNumber); valid = false; break;
+					default: g_Logs.script->error("Invalid operator [%v] for IF statement [%v line %v]", tokens[1].c_str(), compileData.mSourceFile, compileData.mLineNumber); valid = false; break;
 					}
 
 					if(valid == true)
@@ -1213,7 +1201,7 @@ void ScriptDef :: CompileLine(char *line, ScriptCompiler &compileData)
 		{
 			BlockData *block = compileData.GetLastUnresolvedBlock();
 			if(block == NULL)
-				PrintMessage("[WARNING] ENDIF without a matching IF (%s line %d)", compileData.mSourceFile, compileData.mLineNumber);
+				g_Logs.script->warn("ENDIF without a matching IF (%v line %v)", compileData.mSourceFile, compileData.mLineNumber);
 			else
 			{
 				//In both cases, we want to alter the CMP instruction data with the jump offset
@@ -1239,7 +1227,7 @@ void ScriptDef :: CompileLine(char *line, ScriptCompiler &compileData)
 		{
 			BlockData *block = compileData.GetLastUnresolvedBlock();
 			if(block == NULL)
-				PrintMessage("[WARNING] ELSE without a matching IF (%s line %d)", compileData.mSourceFile, compileData.mLineNumber);
+				g_Logs.script->warn("ELSE without a matching IF (%v line %v)", compileData.mSourceFile, compileData.mLineNumber);
 			else
 			{
 				block->mInstIndexElse = curInst;
@@ -1256,7 +1244,7 @@ void ScriptDef :: CompileLine(char *line, ScriptCompiler &compileData)
 		{
 			BlockData *block = compileData.GetLastUnresolvedBlock();
 			if(block == NULL)
-				PrintMessage("[WARNING] RECOMPARE without a matching IF (%s line %d)", compileData.mSourceFile, compileData.mLineNumber);
+				g_Logs.script->warn("RECOMPARE without a matching IF (%v line %v)", compileData.mSourceFile, compileData.mLineNumber);
 			else
 			{
 				//Jump to the CMP instruction of the "if" statement, plus the two PUSH operations
@@ -1277,7 +1265,7 @@ void ScriptDef :: CompileLine(char *line, ScriptCompiler &compileData)
 			OpCodeInfo *opinfo = GetInstructionDataByName(opname);
 			if(opinfo->opCode == OP_NOP)
 			{
-				PrintMessage("Unknown instruction [%s] [%s line %d]", opname, compileData.mSourceFile, compileData.mLineNumber);
+				g_Logs.script->error("Unknown instruction [%v] [%v line %v]", opname, compileData.mSourceFile, compileData.mLineNumber);
 			}
 			else
 			{
@@ -1308,7 +1296,7 @@ void ScriptDef :: CompileLine(char *line, ScriptCompiler &compileData)
 						pushType = ConvertParamTypeToPushType(pushType);
 						if(pushType == OPT_NONE)
 						{
-							PrintMessage("Could not convert parameter token [%s] to expected type [%s line %d]", paramToken, compileData.mSourceFile, compileData.mLineNumber);
+							g_Logs.script->error("Could not convert parameter token [%v] to expected type [%v line %v]", paramToken, compileData.mSourceFile, compileData.mLineNumber);
 						}
 						else
 						{
@@ -1347,7 +1335,7 @@ void ScriptDef :: FinalizeCompile(ScriptCompiler &compileData)
 	{
 		if(label[i].instrOffset == -1)
 		{
-			PrintMessage("Unresolved label: %s", label[i].name.c_str());
+			g_Logs.script->error("Unresolved label: %v", label[i].name.c_str());
 			label[i].instrOffset = 0;
 		}
 	}
@@ -1474,12 +1462,12 @@ int ScriptDef :: CreateLabel(const char *name, int targInst)
 {
 	if(name == NULL)
 	{
-		PrintMessage("Label name is null."); 
+		g_Logs.script->error("Label name is null.");
 		return -1;
 	}
 	if(name[0] == 0)
 	{
-		PrintMessage("Label name cannot be empty."); 
+		g_Logs.script->error("Label name cannot be empty.");
 		return -1;
 	}
 
@@ -1516,7 +1504,7 @@ int ScriptDef :: CreateString(const char *name)
 {
 	if(name == NULL)
 	{
-		PrintMessage("String cannot be NULL."); 
+		g_Logs.script->error("String cannot be NULL.");
 		return -1;
 	}
 
@@ -1738,7 +1726,7 @@ OpCodeInfo* ScriptDef :: GetInstructionData(int opcode)
 			return &arrayStart[i];
 	}
 
-	PrintMessage("Unidentified opcode: %d", opcode);
+	g_Logs.script->error("Unidentified opcode: %v", opcode);
 	return &defCoreOpCode[0];
 }
 
@@ -1776,7 +1764,7 @@ int ScriptDef :: ResolveOperandType(const char *token, int &value)
 {
 	if(token == NULL)
 	{
-		PrintMessage("Token is null");
+		g_Logs.script->error("Token is null");
 		value = 0;
 		return OPT_INT;
 	}
@@ -1879,7 +1867,7 @@ void ScriptDef :: SetMetaDataBase(const char *opname, ScriptCompiler &compileDat
 			else if(strcmp(flagName, "bits") == 0)
 				flag = FLAG_BITS;
 			else
-				PrintMessage("Unknown flag [%s] [%s line %d]", flagName, compileData.mSourceFile, compileData.mLineNumber);
+				g_Logs.script->error("Unknown flag [%v] [%v line %v]", flagName, compileData.mSourceFile, compileData.mLineNumber);
 			SetFlag(flag, value);
 		}
 	}
@@ -1910,7 +1898,7 @@ bool ScriptDef :: HasFlag(unsigned int flag)
 void ScriptDef :: SetMetaDataDerived(const char *opname, ScriptCompiler &compileData)
 {
 	//const STRINGLIST &tokens = compileData.mTokens;  //Alias so we don't have to change the rest of the code.
-	PrintMessage("Unhandled metadata token [%s] (%s line %d)", opname, compileData.mSourceFile, compileData.mLineNumber);
+	g_Logs.script->error("Unhandled metadata token [%v] (%v line %v)", opname, compileData.mSourceFile, compileData.mLineNumber);
 }
 
 
@@ -1960,7 +1948,7 @@ bool ScriptPlayer :: RunSingleInstruction(void)
 
 	if(curInst >= (int)def->instr.size())
 	{
-		PrintMessage("[ERROR] Instruction past end of script (%d of %d)", curInst, def->instr.size());
+		g_Logs.script->error("Instruction past end of script (%v of %v)", curInst, def->instr.size());
 		mExecuting = false;
 		return true;
 	}
@@ -1998,13 +1986,13 @@ bool ScriptPlayer :: RunSingleInstruction(void)
 		advance = 0;
 		break;
 	case OP_PRINT:
-		PrintMessage("%s", def->stringList[def->instr[curInst].param1].c_str());
+		g_Logs.script->info("%v", def->stringList[def->instr[curInst].param1].c_str());
 		break;
 	case OP_PRINTVAR:
-		PrintMessage("var[%s]=%d", def->varName[instr->param1].c_str(), GetVarValue(instr->param1));
+		g_Logs.script->info("var[%v]=%v", def->varName[instr->param1].c_str(), GetVarValue(instr->param1));
 		break;
 	case OP_PRINTAPPVAR:
-		PrintMessage("appvar[%s]=%d", GetStringPtr(instr->param1), GetApplicationPropertyAsInteger(GetStringPtr(instr->param1)));
+		g_Logs.script->info("appvar[%v]=%v", GetStringPtr(instr->param1), GetApplicationPropertyAsInteger(GetStringPtr(instr->param1)));
 		break;
 	case OP_PRINTINTARR:
 		if(VerifyIntArrayIndex(instr->param1) >= 0)
@@ -2134,7 +2122,7 @@ void ScriptPlayer :: RunImplementationCommands(int opcode)
 	case OP_NOP:
 		break;
 	default:
-		PrintMessage("Unidentified op type: %d", def->instr[curInst].opCode);
+		g_Logs.script->error("Unidentified op type: %v", def->instr[curInst].opCode);
 		break;
 	}
 }
@@ -2200,7 +2188,7 @@ bool ScriptPlayer::PerformJumpRequest(const char *name, int callStyle)
 	else
 	{
 		if(def->HasFlag(ScriptDef::FLAG_REPORT_LABEL))
-			PrintMessage("Label [%s] not found in script [%s]", name, def->scriptName.c_str());
+			g_Logs.script->error("Label [%v] not found in script [%v]", name, def->scriptName.c_str());
 
 		//Just need to determine if the script should be halted on failure.  If it doesn't use
 		//an event queue, it probably needs to be stopped.
@@ -2217,7 +2205,7 @@ void ScriptPlayer :: EndExecution(void)
 	mExecuting = false;
 	scriptEventQueue.clear();
 	if(def->HasFlag(ScriptDef::FLAG_REPORT_END))
-		PrintMessage("Script [%s] has ended", def->scriptName.c_str());
+		g_Logs.script->info("Script [%v] has ended", def->scriptName.c_str());
 }
 
 void ScriptPlayer :: Call(int targetInstructionIndex)
@@ -2248,7 +2236,7 @@ int ScriptPlayer :: GetApplicationPropertyAsInteger(const char *propertyName)
 void ScriptPlayer :: PushVarStack(int value)
 {
 	if(varStack.size() > MAX_STACK_SIZE)
-		PrintMessage("[ERROR] Script error: PushVarStack() stack is full [script: %s]", def->scriptName.c_str());
+		g_Logs.script->error("Script error: PushVarStack() stack is full [script: %v]", def->scriptName.c_str());
 	else
 		varStack.push_back(value);
 }
@@ -2257,7 +2245,7 @@ int ScriptPlayer :: PopVarStack(void)
 {
 	int retval = 0;
 	if(varStack.size() == 0)
-		PrintMessage("[ERROR] Script error: PopVarStack() stack is empty [script: %s]", def->scriptName.c_str());
+		g_Logs.script->error("Script error: PopVarStack() stack is empty [script: %v]", def->scriptName.c_str());
 	else
 	{
 		retval = varStack[varStack.size() - 1];
@@ -2269,7 +2257,7 @@ int ScriptPlayer :: PopVarStack(void)
 void ScriptPlayer :: PushCallStack(int value)
 {
 	if(callStack.size() > MAX_STACK_SIZE)
-		PrintMessage("[ERROR] Script error: PushCallStack() stack is full [script: %s]", def->scriptName.c_str());
+		g_Logs.script->error("Script error: PushCallStack() stack is full [script: %v]", def->scriptName.c_str());
 	else
 		callStack.push_back(value);
 }
@@ -2278,7 +2266,7 @@ int ScriptPlayer :: PopCallStack(void)
 {
 	int retval = 0;
 	if(callStack.size() == 0)
-		PrintMessage("[ERROR] Script error: PopCallStack() stack is empty [script: %s]", def->scriptName.c_str());
+		g_Logs.script->error("Script error: PopCallStack() stack is empty [script: %v]", def->scriptName.c_str());
 	else
 	{
 		retval = callStack[callStack.size() - 1];
@@ -2291,7 +2279,7 @@ void ScriptPlayer :: QueueEvent(const char *labelName, unsigned long fireDelay)
 {
 	if(scriptEventQueue.size() >= MAX_QUEUE_SIZE)
 	{
-		PrintMessage("[ERROR] Script error: QueueEvent() list is full [script: %s]", def->scriptName.c_str());
+		g_Logs.script->error("Script error: QueueEvent() list is full [script: %v]", def->scriptName.c_str());
 		return;
 	}
 
@@ -2331,7 +2319,7 @@ const char * ScriptPlayer :: GetStringPtr(int index)
 
 	if(index < 0 || index >= static_cast<int>(def->stringList.size()))
 	{
-		PrintMessage("Script error: string index out of range [%d] for script [%s]", index, def->scriptName.c_str());
+		g_Logs.script->error("Script error: string index out of range [%v] for script [%v]", index, def->scriptName.c_str());
 		return NULL_RESPONSE;
 	}
 	return def->stringList[index].c_str();
@@ -2341,7 +2329,7 @@ int ScriptPlayer :: GetVarValue(int index)
 {
 	int retval = 0;
 	if(index < 0 || index >= (int)vars.size())
-		PrintMessage("Script error: variable index out of range [%d] for script [%s]", index, def->scriptName.c_str());
+		g_Logs.script->error("Script error: variable index out of range [%v] for script [%v]", index, def->scriptName.c_str());
 	else
 		retval = vars[index];
 
@@ -2352,7 +2340,7 @@ const char * ScriptPlayer :: GetStringTableEntry(int index)
 {
 	const char *retval = "";
 	if(index < 0 || index >= (int)def->stringList.size())
-		PrintMessage("Script error: string index out of range [%d] for script [%s]", index, def->scriptName.c_str());
+		g_Logs.script->error("Script error: string index out of range [%v] for script [%v]", index, def->scriptName.c_str());
 	else
 		retval = def->stringList[index].c_str();
 
@@ -2363,7 +2351,7 @@ int ScriptPlayer :: VerifyIntArrayIndex(int index)
 {
 	if(index < 0 || index >= (int)def->mIntArray.size())
 	{
-		PrintMessage("Script error: IntArray index out of range [%d] for script [%s]", index, def->scriptName.c_str());
+		g_Logs.script->error("Script error: IntArray index out of range [%v] for script [%v]", index, def->scriptName.c_str());
 		return -1;
 	}
 	return index;
@@ -2373,7 +2361,7 @@ void ScriptPlayer :: SetVar(unsigned int index, int value)
 {
 	if(index >= vars.size())
 	{
-		PrintMessage("[ERROR] SetVar() index [%d] is outside range [%d]", index, vars.size());
+		g_Logs.script->error("SetVar() index [%v] is outside range [%v]", index, vars.size());
 		return;
 	}
 	vars[index] = value;
@@ -2504,7 +2492,7 @@ bool ScriptCompiler :: ExpectTokens(size_t count, const char *op, const char *de
 {
 	if(mTokens.size() != count)
 	{
-		PrintMessage("[%s] expects parameters [%s] [%s line %d]", op, desc, mSourceFile, mLineNumber);
+		g_Logs.script->error("[%v] expects parameters [%v] [%v line %v]", op, desc, mSourceFile, mLineNumber);
 		return false;
 	}
 	return true;
@@ -2539,7 +2527,7 @@ void IntArray::Append(int value)
 {
 	if(arrayData.size() >= MAX_ARRAY_DATA_SIZE)
 	{
-		PrintMessage("IntArray [%s] cannot append more than %d elements", name.c_str(), MAX_ARRAY_DATA_SIZE);
+		g_Logs.script->error("IntArray [%v] cannot append more than %v elements", name.c_str(), MAX_ARRAY_DATA_SIZE);
 		return;
 	}
 	arrayData.push_back(value);
@@ -2574,7 +2562,7 @@ bool IntArray::VerifyIndex(int index)
 {
 	if(index < 0 || index >= (int)arrayData.size())
 	{
-		PrintMessage("IntArray [%s] index [%d] out of range", name.c_str(), index);
+		g_Logs.script->error("IntArray [%v] index [%v] out of range", name.c_str(), index);
 		return false;
 	}
 	return true;
@@ -2592,7 +2580,7 @@ void IntArray::DebugPrintContents(void)
 		str += buffer;
 	}
 	str += "]";
-	PrintMessage("IntArray[%s]=%s", name.c_str(), str.c_str());
+	g_Logs.script->info("IntArray[%v]=%v", name.c_str(), str.c_str());
 }
 
 ScriptEvent::ScriptEvent(const char *label, unsigned long fireTime)

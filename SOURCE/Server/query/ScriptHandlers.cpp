@@ -26,6 +26,7 @@
 #include "../ScriptCore.h"
 #include "../InstanceScript.h"
 #include "../QuestScript.h"
+#include "../util/Log.h"
 #include <algorithm>
 #include <fstream>
 
@@ -217,18 +218,18 @@ int ScriptLoadHandler::handleScriptQuery(bool ownPlayer, int instanceID,
 		Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1),
 				"Unable to open script.");
 		sim->SendInfoMessage(sim->Aux1, INFOMSG_ERROR);
-		sim->LogMessageL(MSG_WARN,
-				"[WARNING] Load script query unable to open script for zone: %d",
+		g_Logs.simulator->warn("[%v] Load script query unable to open script for zone: %v",
+				sim->InternalID,
 				creatureInstance->actInst->mZone);
 		return 0;
 	}
 	FileReader lfr;
 	std::vector<std::string> lines;
-	if (Platform::FileExists(path.c_str())) {
+	if (Platform::FileExists(path)) {
 		if (lfr.OpenText(path.c_str()) != Err_OK) {
-
-			sim->LogMessageL(MSG_WARN,
-					"[WARNING] Load script query unable to open file: %s",
+			g_Logs.simulator->warn(
+					"%d Load script query unable to open file: %s",
+					sim->InternalID,
 					path.c_str());
 			return 0;
 		}
@@ -350,7 +351,8 @@ int ScriptRunHandler::handleScriptQuery(bool ownPlayer, int instanceID,
 		std::string path, SimulatorThread *sim, CharacterServerData *pld,
 		SimulatorQuery *query, CreatureInstance *creatureInstance) {
 	// Run
-	sim->LogMessageL(MSG_SHOW, "Handling script run");
+
+	g_Logs.simulator->info("[%v] Handling script run", sim->InternalID);
 
 	std::string errors;
 
@@ -478,7 +480,7 @@ int ScriptSaveHandler::handleScriptQuery(bool ownPlayer, int instanceID,
 		out.close();
 
 		// If we wrote OK, delete the old file and swap in the new one
-		if (!Platform::FileExists(path.c_str()) || remove(path.c_str()) == 0) {
+		if (!Platform::FileExists(path) || remove(path.c_str()) == 0) {
 			if (rename(tpath.c_str(), path.c_str()) == 0) {
 				Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1),
 						"Script for %d saved.",
@@ -487,15 +489,16 @@ int ScriptSaveHandler::handleScriptQuery(bool ownPlayer, int instanceID,
 				return PrepExt_QueryResponseString(sim->SendBuf, query->ID,
 						"OK");
 			} else {
-				sim->LogMessageL(MSG_WARN,
-						"[WARNING] Failed to rename %s to %s, old script will no longer be available, neither will new",
+
+				g_Logs.simulator->warn("[%v] Failed to rename %v to %v, old script will no longer be available, neither will new",
+						sim->InternalID,
 						tpath.c_str(), path.c_str());
 				return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 						"Failed to rename new file, the script may now be missing!");
 			}
 		} else {
-			sim->LogMessageL(MSG_WARN,
-					"[WARNING] Failed to remove %s, new script will not be available.",
+			g_Logs.simulator->warn("[%v] Failed to remove %v, new script will not be available.",
+					sim->InternalID,
 					path.c_str());
 			return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 					"Failed to delete old script file, new one not swapped in.");

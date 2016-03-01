@@ -5,9 +5,6 @@
 // Undefine to remove functionality.
 #define USE_SIMPLE_TRACE
 
-//For file logging of messages through the g_Log system.
-#define USE_SERVER_LOG
-
 #ifdef USE_SIMPLE_TRACE
 
 class SimpleTracerCore
@@ -78,29 +75,5 @@ public:
   #define TRACE_OUTPUT(x)         EMPTY_OPERATION
   #define QTRACE(msgStr)          EMPTY_OPERATION
 #endif //USE_SIMPLE_TRACE
-
-#ifdef USE_SERVER_LOG
-#include <stdio.h>
-#include <ctime>
-extern char LogFileName[];
-extern FILE *LogHandle;
-void Log_Open(void);
-void Log_Close(void);
-void Log_Write(const char *text);
-void Log_WriteFormat(char *format, ...);
-void Log_Flush(void);
-
-#define LOG_OPEN() Log_Open()
-#define LOG_CLOSE() Log_Close()
-#define LOG_WRITE(x) Log_Write(x)
-#define LOG_WRITEF(x, ...) Log_WriteFormat(x, __VA_ARGS__)
-#define LOG_FLUSH() Log_Flush()
-#else
-#define LOG_OPEN() __noop
-#define LOG_CLOSE() __noop
-#define LOG_WRITE(x) __noop
-#define LOG_WRITEF(x) __noop
-#define LOG_FLUSH() __noop
-#endif //USE_SERVER_LOG
 
 #endif //DEBUGTRACER_H

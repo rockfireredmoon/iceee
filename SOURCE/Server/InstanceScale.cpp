@@ -5,6 +5,7 @@
 #include "DropTable.h"
 #include "Stats.h"  //For CreatureRarityType.
 #include "CommonTypes.h"
+#include "util/Log.h"
 
 const char *DropRateProfileManager::STANDARD = "standard";
 const char *DropRateProfileManager::INSTANCE = "instance";
@@ -217,7 +218,7 @@ void DropRateProfileManager::LoadTable(const char *filename)
 	FileReader3 fr;
 	if(fr.OpenFile(filename) != FileReader3::SUCCESS)
 	{
-		g_Log.AddMessageFormat("[ERROR] Could not open file [%s]", filename);
+		g_Logs.data->error("Could not open file [%v]", filename);
 		return;
 	}
 	fr.SetCommentChar(';');
@@ -301,7 +302,7 @@ void InstanceScaleManager::LoadTable(const char *filename)
 	FileReader3 fr;
 	if(fr.OpenFile(filename) != FileReader3::SUCCESS)
 	{
-		g_Log.AddMessageFormat("[ERROR] Could not open file [%s]", filename);
+		g_Logs.data->error("Could not open file [%v]", filename);
 		return;
 	}
 	fr.SetCommentChar(';');

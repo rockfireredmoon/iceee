@@ -148,7 +148,6 @@ public:
 
 	//FUNCTIONS
 	void RunMainLoop(void);
-	void LogMessageL(unsigned short messageType, const char *format, ...);
 	int InitThread(int instanceindex, int globalThreadID);
 	void Disconnect(const char *debugCaller);
 	void AddPendingDisconnect(void);

@@ -33,7 +33,6 @@ tawd_SOURCES = md5.cc \
 	CreditShop.cpp \
 	CreatureSpawner2.cpp \
 	Daily.cpp \
-	Debug.cpp \
 	DebugProfiler.cpp \
 	DebugTracer.cpp \
 	DirectoryAccess.cpp \
@@ -59,8 +58,6 @@ tawd_SOURCES = md5.cc \
 	Leaderboard.cpp \
 	main.cpp \
 	Mail.cpp \
-	MainWindow.cpp \
-	MainWindow_Event.cpp \
 	NPC.cpp \
 	Packet.cpp \
 	PartyManager.cpp \
@@ -117,6 +114,7 @@ tawd_SOURCES = md5.cc \
 	util/base64.cpp \
 	util/JsonHelpers.cpp \
 	util/SquirrelObjects.cpp \
+	util/Log.cpp \
 	Ability2.h \
 	AbilityTime.h \
 	Account.h \
@@ -171,7 +169,6 @@ tawd_SOURCES = md5.cc \
 	ItemSet.h \
 	Leaderboard.h \
 	Mail.h \
-	MainWindow.h \
 	NPC.h \
 	Packet.h \
 	PartyManager.h \
@@ -249,6 +246,7 @@ tawd_SOURCES = md5.cc \
 	query/MarkerHandlers.h \
 	query/SidekickHandlers.h \
 	util/base64.h \
+	util/Log.h \
 	util/JsonHelpers.h \
 	util/SquirrelObjects.h
 	
@@ -282,7 +280,6 @@ tawdsvc_SOURCES = md5.cc \
 	CreditShop.cpp \
 	CreatureSpawner2.cpp \
 	Daily.cpp \
-	Debug.cpp \
 	DebugProfiler.cpp \
 	DebugTracer.cpp \
 	DirectoryAccess.cpp \
@@ -308,8 +305,6 @@ tawdsvc_SOURCES = md5.cc \
 	main.cpp \
 	Leaderboard.cpp \
 	Mail.cpp \
-	MainWindow.cpp \
-	MainWindow_Event.cpp \
 	NPC.cpp \
 	Packet.cpp \
 	PartyManager.cpp \
@@ -366,6 +361,7 @@ tawdsvc_SOURCES = md5.cc \
 	util/base64.cpp \
 	util/JsonHelpers.cpp \
 	util/SquirrelObjects.cpp \
+	util/Log.cpp \
 	Ability2.h \
 	AbilityTime.h \
 	Account.h \
@@ -420,7 +416,6 @@ tawdsvc_SOURCES = md5.cc \
 	ItemSet.h \
 	Leaderboard.h \
 	Mail.h \
-	MainWindow.h \
 	NPC.h \
 	Packet.h \
 	PartyManager.h \
@@ -498,6 +493,7 @@ tawdsvc_SOURCES = md5.cc \
 	query/MarkerHandlers.h \
 	query/SidekickHandlers.h \
 	util/base64.h \
+	util/Log.h \
 	util/JsonHelpers.h \
 	util/SquirrelObjects.h
 endif

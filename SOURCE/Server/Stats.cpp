@@ -5,7 +5,7 @@
 #include "Util.h"
 #include "Config.h"
 #include "Globals.h"
-
+#include "util/Log.h"
 #ifndef WINDOWS_PLATFORM
 #include <stddef.h>
 #endif
@@ -931,7 +931,7 @@ float GetStatValueByID(int statID, CharacterStatSet *css)
 	int StatIndex = GetStatIndex(statID);
 	if(StatIndex == -1)
 	{
-		g_Log.AddMessageFormatW(MSG_WARN, "Stat ID not found: %d", statID);
+		g_Logs.server->warn("Stat ID not found: %v", statID);
 		return 0;
 	}
 

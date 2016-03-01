@@ -19,7 +19,7 @@
 #include "Components.h"
 #include "StringList.h"
 #include "Util.h"
-
+#include "util/Log.h"
 
 PLATFORM_THREADRETURN LeaderboardThreadProc(PLATFORM_THREADARGS lpParam)
 {
@@ -28,7 +28,7 @@ PLATFORM_THREADRETURN LeaderboardThreadProc(PLATFORM_THREADARGS lpParam)
 	controller->mIsActive = true;
 	AdjustComponentCount(1);
 	controller->RunMainLoop();
-	controller->LogMessageL("[LeaderboardManager] Thread shut down.");
+	g_Logs.leaderboard->info("LeaderboardManager Thread shut down.");
 	controller->mIsExist = false;
 	AdjustComponentCount(-1);
 	PLATFORM_CLOSETHREAD(0);
@@ -78,7 +78,7 @@ void Leaderboard::Build() {
 	cs.Enter("Leaderboard::Build");
 	mLeaders.clear();
 	mLeaders.reserve(l.size());
-	copy(l.begin(),l.end(),back_inserter(mLeaders));
+	copy(l.begin(), l.end(), back_inserter(mLeaders));
 	mCollected = time(NULL);
 	cs.Leave();
 }
@@ -99,8 +99,9 @@ LeaderboardManager::~LeaderboardManager() {
 }
 
 Leaderboard* LeaderboardManager::GetBoard(std::string name) {
-	for(std::vector<Leaderboard*>::iterator it = mBoards.begin(); it != mBoards.end(); ++it) {
-		if((*it)->mName.compare(name) == 0) {
+	for (std::vector<Leaderboard*>::iterator it = mBoards.begin();
+			it != mBoards.end(); ++it) {
+		if ((*it)->mName.compare(name) == 0) {
 			return *it;
 		}
 	}
@@ -109,34 +110,32 @@ Leaderboard* LeaderboardManager::GetBoard(std::string name) {
 
 int LeaderboardManager::InitThread(int globalThreadID) {
 	mGlobalThreadID = globalThreadID;
-	int r = Platform_CreateThread(0, (void*)LeaderboardThreadProc, this, &mThreadID);
-	if(r == 0) {
+	int r = Platform_CreateThread(0, (void*) LeaderboardThreadProc, this,
+			&mThreadID);
+	if (r == 0) {
 		mIsActive = false;
-		LogMessageL("[LeaderboardManager:%d] Could not create thread.", globalThreadID);
+		g_Logs.leaderboard->error(
+				"LeaderboardManager %v could not create thread.",
+				globalThreadID);
 		return 1;
 	}
 	return 0;
 }
 
-void LeaderboardManager::RunMainLoop() {
-	while(mIsActive == true) {
-		for(std::vector<Leaderboard*>::iterator it = mBoards.begin(); it != mBoards.end(); ++it) {
-			(*it)->Build();
-		}
-		PLATFORM_SLEEP(60000);
-	}
+void LeaderboardManager::Shutdown() {
+	mIsActive = false;
 }
 
-char * LeaderboardManager :: LogMessageL(const char *format, ...)
-{
-	if(g_Log.LoggingEnabled == false)
-		return NULL;
-
-	va_list args;
-	va_start (args, format);
-	Util::SafeFormatArg(mLogBuffer, sizeof(mLogBuffer), format, args);
-	va_end (args);
-
-	g_Log.AddMessage(mLogBuffer);
-	return mLogBuffer;
+void LeaderboardManager::RunMainLoop() {
+	unsigned seconds = 0;
+	while (mIsActive == true) {
+		if (seconds % 60 == 0) {
+			for (std::vector<Leaderboard*>::iterator it = mBoards.begin();
+					it != mBoards.end(); ++it) {
+				(*it)->Build();
+			}
+		}
+		seconds++;
+		PLATFORM_SLEEP(1000);
+	}
 }

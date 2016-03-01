@@ -130,11 +130,11 @@ If using Code::Blocks on LINUX
 #ifdef _CRTDEBUGGING
  #include <crtdbg.h>
 #endif
-
 #include "DebugTracer.h"
+#include "util/Log.h"
+INITIALIZE_EASYLOGGINGPP
 
 #include "Components.h"
-#include "MainWindow.h"
 #include "SocketClass3.h"
 #include "Account.h"
 #include "Character.h"
@@ -222,8 +222,6 @@ void RunPendingMessages(void);  //Runs all pending messages in the BroadCastMess
 void SendDebugPings();
 void ShutDown(void);
 void UnloadResources(void);
-void RunMessageListCrash(void);
-void RunMessageListQueue(void);
 bool VerifyOperation(void);
 void RunActiveInstances(void);
 void CheckCharacterAutosave(bool force);
@@ -266,95 +264,80 @@ void segfault_sigaction(int signum, siginfo_t *si, void *arg)
 
 
 	if(signum != SIGTERM) {
-		g_Log.AddMessageFormatW(MSG_CRIT, "[CRITICAL] signal encountered: %d", signum);
+		g_Logs.server->fatal("Signal encountered: %v", signum);
 		switch(signum)
 		{
-		case SIGABRT: fprintf(stderr, "Caught: SIGABRT\n"); break;
-		case SIGINT: fprintf(stderr, "Caught: SIGINT\n"); break;
-		case SIGSEGV: fprintf(stderr, "Caught: SIGSEGV\n"); break;
-		case SIGPIPE: fprintf(stderr, "Caught: SIGPIPE\n"); break;
-		default: fprintf(stderr, "Caught signal: %d\n", signum); break;
+		case SIGABRT: g_Logs.server->fatal("Caught: SIGABRT"); break;
+		case SIGINT: g_Logs.server->fatal("Caught: SIGINT"); break;
+		case SIGSEGV: g_Logs.server->fatal("Caught: SIGSEGV"); break;
+		case SIGPIPE: g_Logs.server->fatal("Caught: SIGPIPE"); break;
+		default: g_Logs.server->fatal("Caught signal: %v", signum); break;
 		}
 		void *ptrBuf[256];
 
 		int numPtr = backtrace(ptrBuf, 256);
-		fprintf(stderr, "Number of pointers: %d\n", numPtr);
+		g_Logs.server->fatal("Number of pointers: %v", numPtr);
 		char **result = backtrace_symbols(ptrBuf, numPtr);
-		fprintf(stderr, "Stack trace:\n");
+		g_Logs.server->fatal("Stack trace:");
 		if(result != NULL)
 		{
 			for(int a = 0; a < numPtr; a++)
-				fprintf(stderr, "  %s\n", result[a]);
+				g_Logs.server->fatal("  %v", result[a]);
 			free(result);
 		}
-		fprintf(stderr, "Stack trace finished\n");
-		fflush(stderr);
-
-		fprintf(stderr, "Forcing auto save.\n");
-		fflush(stderr);
+		g_Logs.server->fatal("Stack trace finished");
 	}
 
-	CheckCharacterAutosave(true);
-	SaveSession("SessionVars.txt");
-
 	if(signum != SIGTERM) {
-		fprintf(stderr, "Debug::LastAbility: %d\r\n", Debug::LastAbility);
-		fprintf(stderr, "Debug::CreatureDefID: %d\r\n", Debug::CreatureDefID);
-		fprintf(stderr, "Debug::LastName: %s\r\n", Debug::LastName);
-		fprintf(stderr, "Debug::LastPlayer: %p\r\n", Debug::LastPlayer);
-		fprintf(stderr, "Debug::IsPlayer: %d\r\n", Debug::IsPlayer);
+		g_Logs.server->fatal("Debug::LastAbility: %v", Debug::LastAbility);
+		g_Logs.server->fatal("Debug::CreatureDefID: %v", Debug::CreatureDefID);
+		g_Logs.server->fatal("Debug::LastName: %v", Debug::LastName);
+		g_Logs.server->fatal("Debug::LastPlayer: %v", Debug::LastPlayer);
+		g_Logs.server->fatal("Debug::IsPlayer: %v", Debug::IsPlayer);
 
-		fprintf(stderr, "Debug::LastTileZone: %d\r\n", Debug::LastTileZone);
-		fprintf(stderr, "Debug::LastTileX: %d\r\n", Debug::LastTileX);
-		fprintf(stderr, "Debug::LastTileY: %d\r\n", Debug::LastTileY);
-		fprintf(stderr, "Debug::LastTilePropID: %d\r\n", Debug::LastTilePropID);
-		fprintf(stderr, "Debug::LastTilePtr: %p\r\n", Debug::LastTilePtr);
-		fprintf(stderr, "Debug::LastTilePackage: %p\r\n", Debug::LastTilePackage);
+		g_Logs.server->fatal("Debug::LastTileZone: %v", Debug::LastTileZone);
+		g_Logs.server->fatal("Debug::LastTileX: %v", Debug::LastTileX);
+		g_Logs.server->fatal("Debug::LastTileY: %v", Debug::LastTileY);
+		g_Logs.server->fatal("Debug::LastTilePropID: %v", Debug::LastTilePropID);
+		g_Logs.server->fatal("Debug::LastTilePtr: %v", Debug::LastTilePtr);
+		g_Logs.server->fatal("Debug::LastTilePackage: %v", Debug::LastTilePackage);
 
-		fprintf(stderr, "Debug::LastFlushSimulatorID: %d\r\n", Debug::LastFlushSimulatorID);
+		g_Logs.server->fatal("Debug::LastFlushSimulatorID: %v", Debug::LastFlushSimulatorID);
 
-		fprintf(stderr, "Debug::ActivateAbility_cInst: %p\r\n", Debug::ActivateAbility_cInst);
-		fprintf(stderr, "Debug::ActivateAbility_ability: %d\r\n", Debug::ActivateAbility_ability);
-		fprintf(stderr, "Debug::ActivateAbility_ActionType: %d\r\n", Debug::ActivateAbility_ActionType);
-		fprintf(stderr, "Debug::ActivateAbility_abTargetCount: %d\r\n", Debug::ActivateAbility_abTargetCount);
-		fprintf(stderr, "Debug::ActivateAbility_abTargetList: \r\n");
+		g_Logs.server->fatal("Debug::ActivateAbility_cInst: %v", Debug::ActivateAbility_cInst);
+		g_Logs.server->fatal("Debug::ActivateAbility_ability: %v", Debug::ActivateAbility_ability);
+		g_Logs.server->fatal("Debug::ActivateAbility_ActionType: %v", Debug::ActivateAbility_ActionType);
+		g_Logs.server->fatal("Debug::ActivateAbility_abTargetCount: %v", Debug::ActivateAbility_abTargetCount);
+		g_Logs.server->fatal("Debug::ActivateAbility_abTargetList: ");
 		for(size_t i = 0; i < MAXTARGET; i++)
-			fprintf(stderr, "  [%zu]=%p\r\n", i, Debug::ActivateAbility_abTargetList[i]);
+			g_Logs.server->fatal("  [%v]=%v", i, Debug::ActivateAbility_abTargetList[i]);
 
-		fprintf(stderr, "Debug::LastSimulatorID: %d\r\n", Debug::LastSimulatorID);
-
-		fflush(stderr);
+		g_Logs.server->fatal("Debug::LastSimulatorID: %v", Debug::LastSimulatorID);
 		SIMULATOR_IT it;
 		for(it = Simulator.begin(); it != Simulator.end(); ++it)
-			fprintf(stderr, "Sim:%d %p = %d\r\n", it->InternalID, &*it, it->pld.CreatureDefID);
-		fflush(stderr);
-
-		fprintf(stderr, "Running messages\n");
-		fflush(stderr);
+			g_Logs.server->fatal("Sim:%v %v = %v", it->InternalID, &*it, it->pld.CreatureDefID);
 	}
-	RunMessageListCrash();
-
 
 	if(signum != SIGTERM) {
-		fprintf(stderr, "Finished running messages\n");
-
-		fprintf(stderr, "Writing crash dump\n");
-		fflush(stderr);
+		g_Logs.server->fatal("Finished running messages");
 		Debug_FullDump();
-
-		fprintf(stderr, "Writing trace log\n");
-		fflush(stderr);
-
-		fprintf(stderr, "Shutting down.\n");
-		fflush(stderr);
 	}
 	ShutDown();
-
-	fprintf(stderr, "Unloading resources.\n");
-	fflush(stderr);
 	UnloadResources();
-	fprintf(stderr, "Resources unloaded, exiting program.\n");
-	fflush(stderr);
+
+
+	if(signum != SIGTERM && g_Config.ShutdownHandlerScript.size() > 0) {
+		char scriptCall[g_Config.ShutdownHandlerScript.size() + 64];
+		g_Logs.server->fatal("Calling shutdown handler script %v", g_Config.ShutdownHandlerScript);
+		Util::SafeFormat(scriptCall, sizeof(scriptCall), "%s %d",
+				g_Config.ShutdownHandlerScript.c_str(),
+				signum);
+
+		g_Logs.server->fatal("Shutdown handler script %v completed with status %v", g_Config.ShutdownHandlerScript, system(scriptCall));
+	}
+
+	g_Logs.server->fatal("Exiting");
+	g_Logs.FlushAll();
 	exit(signum == SIGTERM ? 0 : 1);
 	return;
 }
@@ -429,19 +412,11 @@ int main() {
 	int argc = 0;
 	char *argv[0];
 #else
-#ifdef USE_WINDOWS_GUI
-int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
-	int argc = 0;
-	char *argv[0];
-#else
 int main(int argc, char *argv[]) {
-#endif
 #endif
 #ifdef _CRTDEBUGGING
 	_CrtSetDbgFlag ( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
 #endif
-
-	Debug::Init();
 
 	// Linux exception handling.
 #ifndef WINDOWS_PLATFORM
@@ -533,26 +508,14 @@ int InitServerMain(int argc, char *argv[]) {
 		}
 	}
 
-#ifdef USE_WINDOWS_GUI
-	//The window needs to be initialized before any commands explicitly adjust
-	//the values in any form controls
-	if(InitMainWindow(hInstance, nCmdShow) == false)
-	{
-		MessageBox(NULL, "Could not create window.", "Error", MB_OK);
-		return 0;
-	}
-#endif
+	START_EASYLOGGINGPP(argc, argv);
 
 	if(PLATFORM_GETCWD(g_WorkingDirectory, 256) == NULL) {
 		printf("Failed to get current working directory.");
 	}
 	bcm.mlog.reserve(100);
 
-	LOG_OPEN();
-
-#ifndef USE_WINDOWS_GUI
-	printf("Loading data files...");
-#endif
+	g_Logs.server->info("Loading data files...");
 
 	//Init the time.  When the environment config is set during the load phase, it needs
 	//to know the present time to initialize the first time cycle.
@@ -560,9 +523,9 @@ int InitServerMain(int argc, char *argv[]) {
 
 	LoadConfig("ServerConfig.txt");
 	LoadSession("SessionVars.txt");
-	g_Log.LoggingEnabled = g_GlobalLogging;
 
-	g_Log.AddMessageFormat("Working directory %s.", g_WorkingDirectory);
+	g_Logs.server->info("Working directory %v.", g_WorkingDirectory);
+
 	// Lobby Query Handlers
 	g_QueryManager.lobbyQueryHandlers["account.tracking"] = new AccountTrackingHandler();
 	g_QueryManager.lobbyQueryHandlers["persona.list"] = new PersonaListHandler();
@@ -652,27 +615,28 @@ int InitServerMain(int argc, char *argv[]) {
 
 
 
-	g_Log.AddMessageFormat("Loaded %d checksums.", g_FileChecksum.mChecksumData.size());
+	g_Logs.data->info("Loaded %v checksums.", g_FileChecksum.mChecksumData.size());
 
+	g_CharacterManager.CreateDefaultCharacter();
 	g_ItemManager.LoadData();
 	g_ItemSetManager.LoadData();
 
 	g_ModManager.LoadFromFile(Platform::GenerateFilePath(GAuxBuf, "ItemMod", "ModTables.txt"));
-	g_Log.AddMessageFormat("Loaded %d ModTables.", g_ModManager.modTable.size());
+	g_Logs.data->info("Loaded %v ModTables.", g_ModManager.modTable.size());
 	g_ModTemplateManager.LoadFromFile(Platform::GenerateFilePath(GAuxBuf, "ItemMod", "ModTemplates.txt"));
-	g_Log.AddMessageFormat("Loaded %d ModTemplates.", g_ModTemplateManager.equipTemplate.size());
+	g_Logs.data->info("Loaded %v ModTemplates.", g_ModTemplateManager.equipTemplate.size());
 	g_EquipAppearance.LoadFromFile(Platform::GenerateFilePath(GAuxBuf, "ItemMod", "Appearances.txt"));
-	g_Log.AddMessageFormat("Loaded %d EquipAppearance.", g_EquipAppearance.dataEntry.size());
+	g_Logs.data->info("Loaded %v EquipAppearance.", g_EquipAppearance.dataEntry.size());
 	g_EquipIconAppearance.LoadFromFile(Platform::GenerateFilePath(GAuxBuf, "ItemMod", "Icons.txt"));
-	g_Log.AddMessageFormat("Loaded %d EquipIconAppearance.", g_EquipIconAppearance.dataEntry.size());
+	g_Logs.data->info("Loaded %v EquipIconAppearance.", g_EquipIconAppearance.dataEntry.size());
 	g_EquipTable.LoadFromFile(Platform::GenerateFilePath(GAuxBuf, "ItemMod", "EquipTable.txt"));
-	g_Log.AddMessageFormat("Loaded %d EquipTable.", g_EquipTable.equipList.size());
+	g_Logs.data->info("Loaded %v EquipTable.", g_EquipTable.equipList.size());
 	g_NameTemplateManager.LoadFromFile(Platform::GenerateFilePath(GAuxBuf, "ItemMod", "Names.txt"));
-	g_Log.AddMessageFormat("Loaded %d Name Templates.", g_NameTemplateManager.nameTemplate.size());
+	g_Logs.data->info("Loaded %v Name Templates.", g_NameTemplateManager.nameTemplate.size());
 	g_NameModManager.LoadFromFile(Platform::GenerateFilePath(GAuxBuf, "ItemMod", "NameMod.txt"));
-	g_Log.AddMessageFormat("Loaded %d NameMods", g_NameModManager.mModList.size());
+	g_Logs.data->info("Loaded %v NameMods", g_NameModManager.mModList.size());
 	g_NameWeightManager.LoadFromFile(Platform::GenerateFilePath(GAuxBuf, "ItemMod", "NameWeight.txt"));
-	g_Log.AddMessageFormat("Loaded %d NameWeight", g_NameWeightManager.mWeightList.size());
+	g_Logs.data->info("Loaded %v NameWeight", g_NameWeightManager.mWeightList.size());
 	g_VirtualItemModSystem.LoadSettings();
 	g_DropTableManager.LoadData();
 
@@ -689,56 +653,56 @@ int InitServerMain(int argc, char *argv[]) {
 
 
 	CreatureDef.LoadPackages(Platform::GenerateFilePath(GAuxBuf, "Packages", "CreaturePack.txt"));
-	g_Log.AddMessageFormat("Loaded %d CreatureDefs.", CreatureDef.NPC.size());
+	g_Logs.data->info("Loaded %v CreatureDefs.", CreatureDef.NPC.size());
 
 	g_PetDefManager.LoadFile(Platform::GenerateFilePath(GAuxBuf, "Data", "Pets.txt"));
-	g_Log.AddMessageFormat("Loaded %d PetDefs.", g_PetDefManager.GetStandardCount());
+	g_Logs.data->info("Loaded %v PetDefs.", g_PetDefManager.GetStandardCount());
 
 	g_AccountManager.LoadAllData();
 
 	g_GambleManager.LoadFile(Platform::GenerateFilePath(GAuxBuf, "Data", "Gamble.txt"));
-	g_Log.AddMessageFormat("Loaded %d Gamble definitions.", g_GambleManager.GetStandardCount());
+	g_Logs.data->info("Loaded %v Gamble definitions.", g_GambleManager.GetStandardCount());
 
 	g_GuildManager.LoadFile(Platform::GenerateFilePath(GAuxBuf, "Data", "GuildDef.txt"));
-	g_Log.AddMessageFormat("Loaded %d Guild definitions.", g_GuildManager.GetStandardCount());
+	g_Logs.data->info("Loaded %v Guild definitions.", g_GuildManager.GetStandardCount());
 
 	g_ClanManager.LoadClans();
-	g_Log.AddMessageFormat("Loaded %d Clans.", g_ClanManager.mClans.size());
+	g_Logs.data->info("Loaded %v Clans.", g_ClanManager.mClans.size());
 
 	g_CreditShopManager.LoadItems();
-	g_Log.AddMessageFormat("Loaded %d Credit Shop items.", g_CreditShopManager.mItems.size());
+	g_Logs.data->info("Loaded %v Credit Shop items.", g_CreditShopManager.mItems.size());
 
 	g_AuctionHouseManager.LoadItems();
 	g_AuctionHouseManager.ConnectToSite();
-	g_Log.AddMessageFormat("Loaded %d Auction House items.", g_CreditShopManager.mItems.size());
+	g_Logs.data->info("Loaded %v Auction House items.", g_CreditShopManager.mItems.size());
 
 	g_ZoneDefManager.LoadData();
 	g_GroveTemplateManager.LoadData();
 
 	g_ZoneBarrierManager.LoadFromFile(Platform::GenerateFilePath(GAuxBuf, "Data", "MapBarrier.txt"));
-	g_Log.AddMessageFormat("Loaded %d MapBarrier.", g_ZoneBarrierManager.GetLoadedCount());
+	g_Logs.data->info("Loaded %v MapBarrier.", g_ZoneBarrierManager.GetLoadedCount());
 
 	g_ZoneMarkerDataManager.LoadFile(Platform::GenerateFilePath(GAuxBuf, "Data", "ZoneMarkers.txt"));
-	g_Log.AddMessageFormat("Loaded %d zones with marker data.", g_ZoneMarkerDataManager.zoneList.size());
+	g_Logs.data->info("Loaded %v zones with marker data.", g_ZoneMarkerDataManager.zoneList.size());
 
 	MapDef.LoadFile(Platform::GenerateFilePath(GAuxBuf, "Data", "MapDef.txt"));
-	g_Log.AddMessageFormat("Loaded %d MapDef.", MapDef.mMapList.size());
+	g_Logs.data->info("Loaded %v MapDef.", MapDef.mMapList.size());
 
 	MapLocation.LoadFile(Platform::GenerateFilePath(GAuxBuf, "Data", "MapLocations.txt"));
-	g_Log.AddMessageFormat("Loaded %d MapLocation zones.", MapLocation.mLocationSet.size());
+	g_Logs.data->info("Loaded %v MapLocation zones.", MapLocation.mLocationSet.size());
 
 	g_SceneryManager.LoadData();
 
 	g_SpawnPackageManager.LoadFromFile("SpawnPackages", "SpawnPackageList.txt");
-	g_Log.AddMessageFormat("Loaded %d Spawn Package lists.", g_SpawnPackageManager.packageList.size());
+	g_Logs.data->info("Loaded %v Spawn Package lists.", g_SpawnPackageManager.packageList.size());
 
 	QuestDef.LoadQuestPackages(Platform::GenerateFilePath(GAuxBuf, "Packages", "QuestPack.txt"));
-	g_Log.AddMessageFormat("Loaded %d Quests.", QuestDef.mQuests.size());
+	g_Logs.data->info("Loaded %v Quests.", QuestDef.mQuests.size());
 	QuestScript::LoadQuestScripts(Platform::GenerateFilePath(GAuxBuf, "Data", "QuestScript.txt"));
 	QuestDef.ResolveQuestMarkers();
 
 	g_InteractObjectContainer.LoadFromFile(Platform::GenerateFilePath(GAuxBuf, "Data", "InteractDef.txt"));
-	g_Log.AddMessageFormat("Loaded %d InteractDef.", g_InteractObjectContainer.objList.size());
+	g_Logs.data->info("Loaded %v InteractDef.", g_InteractObjectContainer.objList.size());
 
 	g_CraftManager.LoadData();
 
@@ -750,7 +714,7 @@ int InitServerMain(int argc, char *argv[]) {
 	g_DropRateProfileManager.LoadData();
 
 	g_DailyProfileManager.LoadData();
-	g_Log.AddMessageFormat("Loaded %d Daily Profiles.", g_DailyProfileManager.GetNumberOfProfiles());
+	g_Logs.data->info("Loaded %v Daily Profiles.", g_DailyProfileManager.GetNumberOfProfiles());
 
 	g_FriendListManager.LoadAllData();
 
@@ -782,7 +746,7 @@ int InitServerMain(int argc, char *argv[]) {
 	if(daemonize) {
 		int ret = daemon(1, DAEMON_NO_CLOSE);
 		if(ret == 0) {
-			LogMessage("Daemonized!\n");
+			g_Logs.server->info("Daemonized!\n");
 			FILE *output = fopen(pidfile.c_str(), "wb");
 			if(output != NULL) {
 				fprintf(output, "%d\n", getpid());
@@ -790,7 +754,8 @@ int InitServerMain(int argc, char *argv[]) {
 			}
 		}
 		else {
-			LogMessage("Failed to daemonize. %d\n", ret);
+			g_Logs.FlushAll();
+			g_Logs.server->fatal("Failed to daemonize. %v\n", ret);
 			exit(1);
 		}
 	}
@@ -813,15 +778,9 @@ int InitServerMain(int argc, char *argv[]) {
 	g_LeaderboardManager.mBoards.push_back(new CharacterLeaderboard());
 	g_LeaderboardManager.InitThread(g_GlobalThreadID++);
 
-	g_Log.AddMessage("Server data has finished loading.");
+	g_Logs.data->info("Server data has finished loading.");
 
 	g_HTTPService.Start();
-
-#ifdef USE_WINDOWS_GUI
-	if(g_GlobalLogging == false)
-		SetWindowText(MainWindowControlSet[MWCS_Edit_Status], "Note: Global logging is disabled.\r\n");
-	AdjustComponentCount(1); 
-#endif
 
 	g_ServerLaunchTime = g_PlatformTime.getMilliseconds();
 	srand(g_ServerLaunchTime & Platform::MAX_UINT);
@@ -832,18 +791,12 @@ int InitServerMain(int argc, char *argv[]) {
 
 	RunUpgradeCheck();
 
-	g_ChatManager.OpenChatLogFile("RegionChat.log");
-	
 #ifdef WINDOWS_SERVICE
     ServiceStatus.dwCurrentState = SERVICE_RUNNING;
     SetServiceStatus (hStatus, &ServiceStatus);
 #endif
 
-#ifdef USE_WINDOWS_GUI
-	SystemLoop_Windows();
-#else
 	SystemLoop_Console();
-#endif
 
 	ShutDown();
 
@@ -960,10 +913,6 @@ bool VerifyOperation(void)
 
 	// If the GUI is functional, the admins can monitor the output and
 	// and manually shut down the server for themselves.
-#ifdef USE_WINDOWS_GUI
-	return true;
-#endif
-
 
 	// Otherwise check the ports.  If any are not operational, prompt
 	// the user if they want to quit.
@@ -971,7 +920,6 @@ bool VerifyOperation(void)
 	// Wait a couple seconds to give the threads a chance to start up.
 	// Flush messages so any previous messages from the loading stage
 	// are visible.
-	RunMessageListQueue();
 	PLATFORM_SLEEP(2000);
 
 	int errorCount = 0;
@@ -1018,15 +966,15 @@ bool VerifyOperation(void)
 
 void ShutDown(void)
 {
-	Debug::Shutdown();
-
-	g_ChatManager.FlushChatLogFile();
-	g_ChatManager.CloseChatLogFile();
+	g_Logs.FlushAll();
+	g_Logs.CloseAll();
 
 	SaveSession("SessionVars.txt");
 	g_IGFManager.CheckAutoSave(true);
 
 	//VarDump();
+	CheckCharacterAutosave(true);
+
 	g_PacketManager.ShutdownThread();
 	g_SceneryManager.ShutdownThread();
 
@@ -1036,8 +984,7 @@ void ShutDown(void)
 	g_ZoneDefManager.CheckAutoSave(true);
 	g_ItemManager.CheckVirtualItemAutosave(true);
 
-
-	g_Log.AddMessage("Waiting for threads to shut down...");
+	g_Logs.server->info("Waiting for threads to shut down...");
 
 	//To shut down the threads:
 	//
@@ -1048,19 +995,25 @@ void ShutDown(void)
 	// Call ShutdownServer() for systems that are listening for connections.
 	// Call DisconnectClient() for systems that are connected to sockets.
 
+	g_Logs.server->info("Shutting down HTTP");
 	g_HTTPService.Shutdown();
 
 	if(g_RouterPort != 0)
 	{
 		if(Router.isExist == true)
 		{
+			g_Logs.server->info("Shutting down Router");
 			Router.isActive = false;
 			Router.sc.ShutdownServer();
 		}
 	}
 
+	g_LeaderboardManager.Shutdown();
+
+	g_Logs.server->info("Shutting down SimulatorBase");
 	SimulatorBase.isActive = false;
 	SimulatorBase.sc.ShutdownServer();
+	g_Logs.server->info("Threads shut down, disconnecting all clients...");
 
 	SIMULATOR_IT it;
 	for(it = Simulator.begin(); it != Simulator.end(); ++it)
@@ -1069,18 +1022,11 @@ void ShutDown(void)
 		it->sc.DisconnectClient();
 	}
 
-#ifdef USE_WINDOWS_GUI
-	if(hwndMainWindow != NULL)
-	{
-		ShowWindow(hwndMainWindow, SW_HIDE);
-		FreeWindow();
-		hwndMainWindow = NULL;
-		AdjustComponentCount(-1);  //For main window
-	}
-#endif
-
 	//If any of the simulators are waiting 
 	long waitCount = 0;
+	if(ActiveComponents > 0) {
+		g_Logs.server->info("Running any pending actions.");
+	}
 	while(ActiveComponents > 0)
 	{
 		g_SimulatorManager.RunPendingActions();
@@ -1110,9 +1056,7 @@ void ShutDown(void)
 
 void UnloadResources(void)
 {
-	//Since we're shutting down, flush the message log.
-	g_Log.LoggingEnabled = false;
-	RunMessageListQueue();
+	g_Logs.server->info("Unloading server resources");
 
 	g_AccountManager.UnloadAllData();
 	g_CharacterManager.Clear();
@@ -1136,9 +1080,9 @@ void UnloadResources(void)
 	pendingOperations.Free();
 	g_SimulatorManager.Free();
 	g_FriendListManager.SaveAllData();
+	g_Logs.FlushAll();
 		//Debugger.Destroy();
 	TRACE_FREE();
-	LOG_CLOSE();
 }
 
 
@@ -1217,21 +1161,10 @@ void RunServerMain(void)
 
 	static Timer logTimer;
 	if(logTimer.ReadyWithUpdate(300000))
-		g_ChatManager.FlushChatLogFile();
-	Debug::CheckAutoSave(false);
+		g_Logs.chat->flush();
 
 	g_SimulatorManager.RunPendingActions();
 	g_CharacterManager.CheckGarbageCharacters();
-
-#ifdef USE_WINDOWS_GUI
-	if(VisPage == PAGECHAT && NewChat == true)
-	{
-		RefreshChatBox();
-		NewChat = false;
-	}
-#endif
-
-	RunMessageListQueue();
 
 	g_ServerTime = g_PlatformTime.getMilliseconds();
 
@@ -1355,94 +1288,6 @@ void SendHeartbeatMessages(void)
 		it->PendingHeartbeatResponse++;
 		it->AttemptSend(GSendBuf, wpos);
 	}
-}
-
-
-void RunMessageListCrash(void)
-{
-	//Dumps the message queue in the event of a crash.
-	if(g_Log.pendingCount <= 0)
-		return;
-
-	for(size_t i = 0; i < g_Log.stringList.size(); i++)
-	{
-		const char *buf = g_Log.stringList[i].c_str();
-		fprintf(stderr, "[msg:%02lu]: %s\r\n", i, buf);
-		fflush(stderr);
-		LOG_WRITE(buf);
-	}
-	g_Log.stringList.clear();
-}
-
-void RunMessageListQueue(void)
-{
-	
-	if(g_Log.pendingCount <= 0)
-		return;
-
-	/*
-	g_Log.GetThread();
-	g_Log.stringList.clear();
-	g_Log.pendingCount = 0;
-	g_Log.ReleaseThread();
-	*/
-
-#ifdef USE_WINDOWS_GUI
-	bool SetText = false;
-	GetWindowText(MainWindowControlSet[MWCS_Edit_Status], WindowTextBuffer, sizeof(WindowTextBuffer));
-	int WritePos = strlen(WindowTextBuffer);
-	int Remain = sizeof(WindowTextBuffer) - WritePos - 2;
-#endif
-
-	g_Log.GetThread("RunMessageListQueue");
-	for(size_t i = 0; i < g_Log.stringList.size(); i++)
-	{
-		const char *buf = g_Log.stringList[i].c_str();
-		LOG_WRITE(buf);
-
-#ifdef USE_WINDOWS_GUI
-		int ToCopy = strlen(buf);
-		if(Remain >= ToCopy + 3)
-		{
-			int OldPos = WritePos;
-			strncpy(&WindowTextBuffer[WritePos], buf, ToCopy);
-			WritePos += ToCopy;
-			if(Remain > 3)
-			{
-				WindowTextBuffer[WritePos++] = '\r';
-				WindowTextBuffer[WritePos++] = '\n';
-			}
-			WindowTextBuffer[WritePos] = 0;
-			Remain -= (WritePos - OldPos);
-			SetText = true;
-		}
-#else //
-	#ifdef OUTPUT_TO_CONSOLE
-	#ifdef WINDOWS_PLATFORM
-		printf("%s\r\n", buf);
-	#else
-		printf("%s\n", buf);
-	#endif
-	#endif
-#endif //USE_WINDOWS_GUI
-
-	}
-	g_Log.stringList.clear();
-	g_Log.pendingCount = 0;
-	g_Log.ReleaseThread();
-
-#ifdef USE_WINDOWS_GUI
-	//Added the messages to the string buffer, set the window text
-	if(SetText == true)
-	{
-		SetWindowText(MainWindowControlSet[MWCS_Edit_Status], WindowTextBuffer);
-
-		//Scroll to the end
-		HRESULT hres;
-		hres = SendMessage(MainWindowControlSet[MWCS_Edit_Status], EM_GETLINECOUNT, NULL, NULL);
-		SendMessage(MainWindowControlSet[MWCS_Edit_Status], EM_LINESCROLL, NULL, hres);
-	}
-#endif //USE_WINDOWS_GUI
 }
 
 
@@ -1572,22 +1417,6 @@ void SendDebugPings(void)
 	}
 }
 
-
-char *LogMessage(const char *format, ...)
-{
-	g_Log.string_cs.Enter("StringList::AddMessage");
-	va_list args;
-	va_start (args, format);
-	//vsnprintf(LogBuffer, maxSize, format, args);
-	Util::SafeFormatArg(LogBuffer, sizeof(LogBuffer), format, args);
-	va_end (args);
-
-	g_Log.AddMessage(LogBuffer);
-	g_Log.string_cs.Leave();
-
-	return LogBuffer;
-}
-
 void Debug_OutputCharacter(FILE *output, int index, CreatureInstance *cInst)
 {
 	//Helper function for outputting creature data.
@@ -1649,6 +1478,7 @@ void Debug_OutputCharacter(FILE *output, int index, CreatureInstance *cInst)
 
 void Debug_FullDump(void)
 {
+	g_Logs.server->info("Writing crash dump");
 	FILE *output = fopen("crash_dump.txt", "wb");
 	if(output == NULL)
 		return;

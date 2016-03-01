@@ -123,6 +123,8 @@ struct LabelDef {
 	LabelDef(const char *labelName, int targInst);
 };
 
+#define MAX_ARRAY_DATA_SIZE 64
+
 struct IntArray {
 	std::string name;
 	std::vector<int> arrayData;
@@ -139,7 +141,6 @@ struct IntArray {
 	bool VerifyIndex(int index);
 	void DebugPrintContents(void);
 
-	static const int MAX_ARRAY_DATA_SIZE = 64;
 };
 
 
@@ -341,8 +342,6 @@ protected:
 	short advance; //Number of instructions to advance after the current instruction.  Used for retry commands or jump elsewhere.
 };
 
-void PrintMessage(const char *format, ...);
-
 // Manages and stores all temporary helper data when a script is being compiled.  Can be safely
 // discarded after compilation is finished.
 class NutCompiler {
@@ -429,6 +428,9 @@ public:
 	void Cancel();
 };
 
+
+#define MAX_QUEUE_SIZE 16
+
 class NutPlayer {
 public:
 
@@ -505,7 +507,6 @@ private:
 	bool ExecEvent(NutScriptEvent *nse, int index);
 
 protected:
-	static const size_t MAX_QUEUE_SIZE = 16;
 	void ClearQueue();
 
 };

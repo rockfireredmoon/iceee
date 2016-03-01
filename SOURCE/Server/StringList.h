@@ -32,16 +32,9 @@ public:
 	~StringList();
 	void Destroy(void);
 
-	void AddMessage(const char *value);
 	void AddMessageFormat(const char *format, ...);
-	void AddMessageFormatArg(const char *format, va_list args);
-	void AddMessageFormatW(unsigned short flags, const char *format, ...);
 
-	bool LoggingEnabled;
-	unsigned int Filter;                  //Bit flag for filtering messages
 	char formatBuffer[4096];              //Local buffer for generating a string
-	std::vector<std::string> stringList;  //List of strings pending in the output buffer
-	volatile int pendingCount;            //Number of strings in the queue for the main thread to process
 	Platform_CriticalSection string_cs; 
 
 	void GetThread(const char *request);

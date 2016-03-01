@@ -20,6 +20,7 @@
 #include "../Account.h"
 #include "../Config.h"
 #include "../Debug.h"
+#include "../util/Log.h"
 #include <algorithm>
 
 using namespace std;
@@ -32,7 +33,7 @@ using namespace CS;
 int CreditShopReloadHandler::handleQuery(SimulatorThread *sim,
 		CharacterServerData *pld, SimulatorQuery *query,
 		CreatureInstance *creatureInstance) {
-	Debug::Log("[CS] Credit Shop reloaded");
+	g_Logs.event->info("[CS] Credit Shop reloaded");
 	g_CreditShopManager.cs.Enter("SimulatorThread::MarketReload");
 	g_CreditShopManager.LoadItems();
 	g_CreditShopManager.cs.Leave();
@@ -95,7 +96,7 @@ int CreditShopPurchaseNameHandler::handleQuery(SimulatorThread *sim,
 	g_AccountManager.RemoveUsedCharacterName(pld->CreatureDefID);
 	g_AccountManager.AddUsedCharacterName(pld->CreatureDefID, fullName.c_str());
 
-	Debug::Log("[CS] Player '%s' changed their name to '%s'",
+	g_Logs.event->info("[CS] Player '%v' changed their name to '%v'",
 			currentName.c_str(), fullName.c_str());
 
 	creatureInstance->css.credits -= g_Config.NameChangeCost;
@@ -206,7 +207,7 @@ int CreditShopEditHandler::handleQuery(SimulatorThread *sim,
 		g_CreditShopManager.mItems[csItem->mId] = csItem;
 		g_CreditShopManager.cs.Leave();
 
-		Debug::Log("[CS] Updated Credit shop item %d '%s'", csItem->mId,
+		g_Logs.event->info("[CS] Updated Credit shop item %v '%v'", csItem->mId,
 				csItem->mTitle.c_str());
 		return PrepExt_QueryResponseString(sim->SendBuf, query->ID, sim->Aux3);
 	}

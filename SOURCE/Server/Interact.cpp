@@ -3,6 +3,7 @@
 #include "Interact.h"
 #include "StringList.h"
 #include "FileReader.h"
+#include "util/Log.h"
 
 InteractObjectContainer g_InteractObjectContainer;
 
@@ -150,7 +151,7 @@ void InteractObjectContainer :: LoadFromFile(char *filename)
 	FileReader lfr;
 	if(lfr.OpenText(filename) != Err_OK)
 	{
-		g_Log.AddMessageFormat("[ERROR] Could not open file [%s]", filename);
+		g_Logs.data->error("Could not open file [%v]", filename);
 		return;
 	}
 

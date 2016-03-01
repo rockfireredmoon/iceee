@@ -11,6 +11,7 @@
 #include "DirectoryAccess.h"
 #include "Report.h"
 #include "Config.h"
+#include "util/Log.h"
 
 const int USE_FAIL_DELAY = 250;  //Milliseconds to wait before retrying a failed script "use" command.
 
@@ -161,7 +162,7 @@ void AIScriptPlayer :: RunImplementationCommands(int opcode)
 		SetVar(def->instr[curInst].param1, attachedCreature->css.level);
 		break;
 	case OP_DEBUGPRINT:
-		ScriptCore::PrintMessage("[SCRIPTDEBUG] %s", def->stringList[def->instr[curInst].param1].c_str());
+		g_Logs.script->debug("%v", def->stringList[def->instr[curInst].param1].c_str());
 		break;
 	case OP_GETCOOLDOWN:
 		{
@@ -368,7 +369,7 @@ void AIScriptPlayer :: RunImplementationCommands(int opcode)
 		}
 		break;
 	default:
-		ScriptCore::PrintMessage("Unidentified op type: %d", in->opCode);
+		g_Logs.script->error("Unidentified op type: %v", in->opCode);
 		break;
 	}
 }

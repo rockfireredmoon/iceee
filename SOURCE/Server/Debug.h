@@ -89,33 +89,6 @@ namespace Debug
 		unsigned long lastTime;
 		const char *displayLabel;
 	};
-
-	class FileLogger
-	{
-	public:
-		//FileLogger();
-		FileLogger(const char *filename);
-		~FileLogger(void);
-		void Open();
-		void Close(void);
-		void Flush(void);
-		void Log(const char *format, ...);
-		void Log(const char *format, va_list args);
-		void CheckAutoSave(bool force);
-	private:
-		const char *mFileName;
-		FILE *mOutputStream;
-		char mTimeBuf[256];
-		unsigned long mNextAutoSave;
-		static const int AUTOSAVE_TIME = 300000;
-	};
-
-	extern FileLogger eventLogger;
-	extern FileLogger cheatLogger;
-	void Init(void);
-	void Shutdown(void);
-	void Log(const char *format, ...);
-	void CheckAutoSave(bool force);
 } // namespace Debug
 
 #endif  //#ifndef DEBUG_H

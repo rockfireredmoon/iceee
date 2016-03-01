@@ -21,6 +21,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "../util/base64.h"
+#include "../util/Log.h"
 
 using namespace HTTPD;
 
@@ -69,7 +70,7 @@ bool Part::write(const char *data, size_t off, size_t len) {
 	content.append(c);
 
 	if(content.length() > MAX_PARAMETER_SIZE) {
-		g_Log.AddMessage("[WARNING] Exceeded multipart header limit. Rejecting entire post.");
+		g_Logs.http->warn("Exceeded multipart header limit. Rejecting entire post.");
 		return false;
 	}
 	return true;
@@ -193,7 +194,7 @@ bool AbstractCivetHandler::parseMultiPart(CivetServer *server,
 									// A header
 									headerLines.push_back(line);
 									if(headerLines.size() > MAX_MULTIPART_HEADERS) {
-										g_Log.AddMessage("[WARNING] Exceeded multipart header limit. Rejecting entire post.");
+										g_Logs.http->warn("Exceeded multipart header limit. Rejecting entire post.");
 										return false;
 									}
 									line.clear();
@@ -267,7 +268,7 @@ bool AbstractCivetHandler::parseForm(CivetServer *server,
 						val.append(rem);
 
 						if(val.length() > MAX_PARAMETER_SIZE || prms.size() > MAX_PARAMETERS) {
-							g_Log.AddMessage("[WARNING] Exceeded limits. Rejecting entire post.");
+							g_Logs.http->warn("Exceeded limits. Rejecting entire post.");
 							return false;
 						}
 
@@ -281,7 +282,7 @@ bool AbstractCivetHandler::parseForm(CivetServer *server,
 
 
 						if(val.length() > MAX_PARAMETER_SIZE || prms.size() > MAX_PARAMETERS) {
-							g_Log.AddMessage("[WARNING] Exceeded limits. Rejecting entire post.");
+							g_Logs.http->warn("Exceeded limits. Rejecting entire post.");
 							return false;
 						}
 
@@ -293,7 +294,7 @@ bool AbstractCivetHandler::parseForm(CivetServer *server,
 				if (val.size() > 0) {
 					prms.push_back(val);
 					if(val.length() > MAX_PARAMETER_SIZE || prms.size() > MAX_PARAMETERS) {
-						g_Log.AddMessage("[WARNING] Exceeded limits. Rejecting entire post.");
+						g_Logs.http->warn("Exceeded limits. Rejecting entire post.");
 						return false;
 					}
 				}
