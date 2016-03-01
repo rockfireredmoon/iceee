@@ -360,7 +360,7 @@ Title=Fix Your Escape Boat
 BodyText=There's a boat waiting for you on the beach down the path to the southeast. You'll need a hammer to repair it, which you can probably find in a Dvergar Raider's camp near the beach.
 
 * Each time you use the Assault ability (a 'Charge Ability') you will generate Melee charges.
-* You then use those Melee charges to power 'Execute Abilities' such as the Shieldbash ability (press '4' to use it).
+* You then use those Melee charges to power 'Execute Abilities' such as the Shield Bash ability (press '4' to use it).
 CompleteText=Welcome to Corsica! Glad to see you've made it. 
 Level=1
 Suggested=1
