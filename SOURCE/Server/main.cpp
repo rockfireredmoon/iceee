@@ -191,6 +191,9 @@ INITIALIZE_EASYLOGGINGPP
 #include "query/WarpHandlers.h"
 #include "query/MarkerHandlers.h"
 #include "query/SidekickHandlers.h"
+#include "query/QuestHandlers.h"
+#include "query/IGFHandlers.h"
+#include "query/TradeHandlers.h"
 
 #ifdef OUTPUT_TO_CONSOLE
 #define DAEMON_NO_CLOSE 1
@@ -325,6 +328,18 @@ void segfault_sigaction(int signum, siginfo_t *si, void *arg)
 	ShutDown();
 	UnloadResources();
 
+	if (signum != SIGTERM && g_Config.ServiceAuthURL.size() > 0) {
+		g_Logs.server->fatal("Posting forum report");
+		SiteClient siteClient(g_Config.ServiceAuthURL);
+		HTTPD::SiteSession siteSession;
+		siteClient.refreshXCSRF(&siteSession);
+		siteClient.login(&siteSession, "emerald", "raschid123#");
+		if (siteClient.postCrashReport(&siteSession, signum) == 0) {
+			g_Logs.server->fatal("Posted forum report");
+		} else {
+			g_Logs.server->fatal("Failed to post forum report");
+		}
+	}
 
 	if(signum != SIGTERM && g_Config.ShutdownHandlerScript.size() > 0) {
 		char scriptCall[g_Config.ShutdownHandlerScript.size() + 64];
@@ -589,6 +604,40 @@ int InitServerMain(int argc, char *argv[]) {
 	g_QueryManager.queryHandlers["marker.list"] = new MarkerListHandler();
 	g_QueryManager.queryHandlers["marker.edit"] = new MarkerEditHandler();
 	g_QueryManager.queryHandlers["marker.del"] = new MarkerDelHandler();
+
+
+	g_QueryManager.queryHandlers["quest.indicator"] = new QuestIndicatorHandler();
+	g_QueryManager.queryHandlers["quest.getquestoffer"] = new QuestGetOfferHandler();
+	g_QueryManager.queryHandlers["quest.genericdata"] = new QuestGenericDataHandler();
+	g_QueryManager.queryHandlers["quest.join"] = new QuestJoinHandler();
+	g_QueryManager.queryHandlers["quest.list"] = new QuestListHandler();
+	g_QueryManager.queryHandlers["quest.data"] = new QuestDataHandler();
+	g_QueryManager.queryHandlers["quest.getcompletequest"] = new QuestGetCompleteHandler();
+	g_QueryManager.queryHandlers["quest.complete"] = new QuestCompleteHandler();
+	g_QueryManager.queryHandlers["quest.leave"] = new QuestLeaveHandler();
+	g_QueryManager.queryHandlers["quest.hack"] = new QuestHackHandler();
+
+
+	g_QueryManager.queryHandlers["mod.igforum.getcategory"] = new IGFGetCategoryHandler();
+	g_QueryManager.queryHandlers["mod.igforum.opencategory"] = new IGFOpenCategoryHandler();
+	g_QueryManager.queryHandlers["mod.igforum.openthread"] = new IGFOpenThreadHandler();
+	g_QueryManager.queryHandlers["mod.igforum.sendpost"] = new IGFSendPostHandler();
+	g_QueryManager.queryHandlers["mod.igforum.deletepost"] = new IGFDeletePostHandler();
+	g_QueryManager.queryHandlers["mod.igforum.setlockstatus"] = new IGFSetLockStatusHandler();
+	g_QueryManager.queryHandlers["mod.igforum.setstickystatus"] = new IGFSetStickyStatusHandler();
+	g_QueryManager.queryHandlers["mod.igforum.editobject"] = new IGFEditObjectHandler();
+	g_QueryManager.queryHandlers["mod.igforum.deleteobject"] = new IGFDeleteObjectHandler();
+	g_QueryManager.queryHandlers["mod.igforum.runaction"] = new IGFRunActionHandler();
+	g_QueryManager.queryHandlers["mod.igforum.move"] = new IGFMoveHandler();
+
+	g_QueryManager.queryHandlers["trade.shop"] = new TradeShopHandler();
+	g_QueryManager.queryHandlers["trade.items"] = new TradeItemsHandler();
+	g_QueryManager.queryHandlers["trade.essence"] = new TradeEssenceHandler();
+	g_QueryManager.queryHandlers["trade.start"] = new TradeStartHandler();
+	g_QueryManager.queryHandlers["trade.cancel"] = new TradeCancelHandler();
+	g_QueryManager.queryHandlers["trade.offer"] = new TradeOfferHandler();
+	g_QueryManager.queryHandlers["trade.accept"] = new TradeAcceptHandler();
+	g_QueryManager.queryHandlers["trade.currency"] = new TradeCurrencyHandler();
 
 	// Some are shared
 

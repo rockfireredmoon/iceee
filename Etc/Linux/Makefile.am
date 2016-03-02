@@ -7,13 +7,13 @@ EXTRA_DIST = \
 install-data-hook:
 	chmod a+rx $(sysconfdir)/init.d/tawd ; 
 else
-initdir=$(libdir)/systemd/system
+initdir=/lib/systemd/system
 init_DATA = tawd.service
 EXTRA_DIST = \
 	$(init_DATA)
 	
 install-data-hook:
-	chmod a+rx $(libdir)/systemd/system/tawd.service ;
+	chmod a+rx /lib/systemd/system/tawd.service ;
 endif
 
 

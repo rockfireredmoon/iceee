@@ -111,6 +111,9 @@ tawd_SOURCES = md5.cc \
 	query/WarpHandlers.cpp \
 	query/MarkerHandlers.cpp \
 	query/SidekickHandlers.cpp \
+	query/QuestHandlers.cpp \
+	query/IGFHandlers.cpp \
+	query/TradeHandlers.cpp \
 	util/base64.cpp \
 	util/JsonHelpers.cpp \
 	util/SquirrelObjects.cpp \
@@ -245,6 +248,9 @@ tawd_SOURCES = md5.cc \
 	query/WarpHandlers.h \
 	query/MarkerHandlers.h \
 	query/SidekickHandlers.h \
+	query/QuestHandlers.h \
+	query/IGFHandlers.h \
+	query/TradeHandlers.h \
 	util/base64.h \
 	util/Log.h \
 	util/JsonHelpers.h \
@@ -358,6 +364,9 @@ tawdsvc_SOURCES = md5.cc \
 	query/WarpHandlers.cpp \
 	query/MarkerHandlers.cpp \
 	query/SidekickHandlers.cpp \
+	query/QuestHandlers.cpp \
+	query/IGFHandlers.cpp \
+	query/TradeHandlers.cpp \
 	util/base64.cpp \
 	util/JsonHelpers.cpp \
 	util/SquirrelObjects.cpp \
@@ -492,6 +501,9 @@ tawdsvc_SOURCES = md5.cc \
 	query/WarpHandlers.h \
 	query/MarkerHandlers.h \
 	query/SidekickHandlers.h \
+	query/QuestHandlers.h \
+	query/IGFHandlers.h \
+	query/TradeHandlers.h \
 	util/base64.h \
 	util/Log.h \
 	util/JsonHelpers.h \

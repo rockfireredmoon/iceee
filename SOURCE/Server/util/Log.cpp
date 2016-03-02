@@ -7,6 +7,7 @@ LogManager::LogManager() {
 	el::Loggers::configureFromGlobal("LogConfig.txt");
 	el::Loggers::addFlag(el::LoggingFlag::NewLineForContainer);
 	el::Loggers::addFlag(el::LoggingFlag::DisableApplicationAbortOnFatalLog);
+	el::Loggers::addFlag(el::LoggingFlag::ColoredTerminalOutput);
 
 	server = Loggers::getLogger("server", false);
 	chat = Loggers::getLogger("chat", false);

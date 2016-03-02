@@ -175,6 +175,20 @@ int SiteClient::refreshXCSRF(HTTPD::SiteSession *session) {
 	return res;
 }
 
+int SiteClient::postCrashReport(HTTPD::SiteSession *session, int signal) {
+	std::string readBuffer;
+	std::string replyBuffer;
+
+	Json::Value root;
+	root["title"] = "Server has crashed";
+	root["comment_body"] = "This is an automated message from the game server. I just crashed, but will do my very best to restart myself.";
+
+	Json::StyledWriter writer;
+	std::string output = writer.write(root);
+	int res = postJSON(session, "node/116", output, replyBuffer);
+	return res == 200 ? 0 : res;
+}
+
 int SiteClient::getUnreadPrivateMessages(HTTPD::SiteSession *session) {
 	std::string readBuffer;
 	int res;
