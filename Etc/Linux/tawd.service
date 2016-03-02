@@ -5,7 +5,7 @@ After=network.target
 [Service]
 Type=forking
 PIDFile=/var/run/tawd.pid
-ExecStartPre=chdir /var/lib/tawd
+WorkingDirectory=/var/lib/tawd
 ExecStart=/usr/bin/tawd -d -p /var/run/tawd.pid
 ExecStop=/usr/bin/kill -SIGTERM $MAINPID
 
