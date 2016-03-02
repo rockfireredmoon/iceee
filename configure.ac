@@ -27,6 +27,11 @@ case $host_os in
   		*) mingw=false;;
 esac
 
+has_systemd=false
+if test -f /usr/lib/systemd/catalog/systemd.catalog ; then
+    has_systemd=true
+fi
+
 dnl
 dnl Arguments
 dnl
@@ -94,6 +99,7 @@ dnl Token replacment
 dnl
 AM_CONDITIONAL([MINGW], [test x$mingw = xtrue])
 AM_CONDITIONAL([WINSERVICE], [test x$winservice = xtrue])
+AM_CONDITIONAL([SYSTEMD], [test x$has_systemd = xtrue])
 
 AX_CXX_COMPILE_STDCXX_11([noext],[mandatory])
 
@@ -194,6 +200,8 @@ AS_ECHO_N("Windows service             - ")
 AS_IF([test "x$winservice" = xtrue ],[AS_ECHO("Yes")],[AS_ECHO("No")])
 AS_ECHO_N("pthread                     - ")
 AS_IF([test "x$has_pthread" = xtrue ],[AS_ECHO("Yes")],[AS_ECHO("No")])
+AS_ECHO_N("systemd                     - ")
+AS_IF([test "x$has_systemd" = xtrue ],[AS_ECHO("Yes")],[AS_ECHO("No")])
 AS_ECHO("")
 AS_ECHO("HTTP Server")
 AS_ECHO("-----------------")

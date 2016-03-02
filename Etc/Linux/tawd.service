@@ -1,0 +1,9 @@
+[Unit]
+Description=Earth Eternal - The Anubian War Daemon
+After=network.target
+
+[Service]
+Type=forking
+PIDFile=/var/run/tawd.pid
+ExecStart=/usr/bin/tawd -d -p /var/run /var/run/tawd.pid
+ExecStop=/usr/bin/kill -SIGTERM $MAINPID
