@@ -6613,6 +6613,7 @@ void SimulatorThread :: handle_query_friends_status(void)
 
 	pld.charPtr->StatusText = newStatus;
 	int wpos = 0;
+
 	wpos += PutByte(&SendBuf[wpos], 43);  //_handleFriendNotificationMsg
 	wpos += PutShort(&SendBuf[wpos], 0);  //size
 	wpos += PutByte(&SendBuf[wpos], 3);   //message type for status changed
@@ -8501,6 +8502,10 @@ int SimulatorThread :: handle_query_quest_join(void)
 	if(qdef->QuestGiverID != giverNPC->CreatureDefID)
 		return ErrorMessageAndQueryOK(SendBuf, "That object does not give that quest.");
 
+	if(qdef->accountQuest && pld.accPtr->HasAccountCompletedQuest(QuestID)) {
+		return ErrorMessageAndQueryOK(SendBuf, "You have already completed this quest on another character, and it is a once-per-account quest type.");
+	}
+
 	if(qdef->mScriptAcceptCondition.ExecuteAllCommands(this) < 0)
 		return ErrorMessageAndQueryOK(SendBuf, "Cannot accept the quest yet.");
 	qdef->mScriptAcceptAction.ExecuteAllCommands(this);
@@ -10049,6 +10054,7 @@ int SimulatorThread :: handle_query_creature_delete(void)
 	int CreatureID = query.GetInteger(0);
 	CreatureInstance *creature = creatureInst->actInst->GetNPCInstanceByCID(CreatureID);
 	if(creature != NULL)
+
 	{
 		if(HasPropEditPermission(NULL, (float)creature->CurrentX, (float)creature->CurrentZ) == true)
 		{
@@ -15294,6 +15300,7 @@ void SimulatorThread :: CheckIfLootReadyToDistribute(ActiveLootContainer *loot, 
 				loot->SetStage2(iid, true);
 				loot->RemoveCreatureRolls(iid, cid);
 				party->RemoveCreatureTags(iid, cid);
+
 				if(OfferLoot(-1, loot, party, creatureInst, iid, needOrGreed, lcid, 0) == QueryErrorMsg::GENERIC) {
 					// Nobody to offer to, clean up as if the item had never been looted
 					LogMessageL(MSG_SHOW, "Nobody to offer loot in %d to, cleaning up as if not yet looted.", lcid);
