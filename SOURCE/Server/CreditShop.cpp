@@ -189,17 +189,17 @@ bool CreditShopManager::SaveItem(CreditShopItem * item) {
 }
 
 CreditShopItem * CreditShopManager::LoadItem(int id) {
-	const char * buf = GetPath(id).c_str();
-	if (!Platform::FileExists(buf)) {
-		g_Log.AddMessageFormat("No file for CS item [%s]", buf);
+	std::string buf = GetPath(id);
+	if (!Platform::FileExists(buf.c_str())) {
+		g_Log.AddMessageFormat("No file for CS item [%s]", buf.c_str());
 		return NULL;
 	}
 
 	CreditShopItem *item = new CreditShopItem();
 
 	FileReader lfr;
-	if (lfr.OpenText(buf) != Err_OK) {
-		g_Log.AddMessageFormat("Could not open file [%s]", buf);
+	if (lfr.OpenText(buf.c_str()) != Err_OK) {
+		g_Log.AddMessageFormat("Could not open file [%s]", buf.c_str());
 		return NULL;
 	}
 
@@ -218,7 +218,7 @@ CreditShopItem * CreditShopManager::LoadItem(int id) {
 				if (item->mId != 0) {
 					g_Log.AddMessageFormat(
 							"[WARNING] %s contains multiple entries. CS items have one entry per file",
-							buf);
+							buf.c_str());
 					break;
 				}
 				item->mId = id;
@@ -257,7 +257,7 @@ CreditShopItem * CreditShopManager::LoadItem(int id) {
 				item->mQuantitySold = lfr.BlockToIntC(1);
 			else
 				g_Log.AddMessageFormat("Unknown identifier [%s] in file [%s]",
-						lfr.SecBuffer, buf);
+						lfr.SecBuffer, buf.c_str());
 		}
 	}
 	lfr.CloseCurrent();

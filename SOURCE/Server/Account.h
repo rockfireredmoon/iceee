@@ -121,6 +121,7 @@ public:
 	void FillRegistrationKey(const char *key);
 	bool SetPermission(short filterType, const char *name, bool value);
 	bool HasPermission(short permissionSet, unsigned int permissionFlag);
+	bool HasAccountCompletedQuest(int QuestID);
 	int GetFreeCharacterSlot(void);
 	bool CheckBuildPermission(int zoneID, int pagex, int pagey);
 	bool CheckBuildPermissionAdv(int zoneID, int PageSize, float posx, float posz);

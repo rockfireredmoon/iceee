@@ -15,6 +15,7 @@
 #include "Util.h"
 #include "ConfigString.h"
 #include "Inventory.h"
+#include <algorithm>
 
 #include "md5.hh"
 
@@ -236,6 +237,11 @@ bool AccountData :: HasCharacterID(int CDefID)
 		if(CharacterSet[a] == CDefID)
 			return true;
 	return false;
+}
+
+
+bool AccountData :: HasAccountCompletedQuest(int QuestID) {
+	return std::find(AccountQuests.begin(), AccountQuests.end(), QuestID) != AccountQuests.end();
 }
 
 bool AccountData :: HasBuildZone(BuildPermissionArea &bpa)
@@ -682,7 +688,13 @@ void AccountManager :: LoadSectionGeneral(FileReader &fr, AccountData &ad, const
 		ad.GroveName = fr.BlockToStringC(1, 0);
 	else if(strcmp(NameBlock, "ACCOUNTQUEST") == 0)
 	{
-		ad.AccountQuests.push_back(fr.BlockToIntC(1));
+		int qid = fr.BlockToIntC(1);
+		if(ad.HasAccountCompletedQuest(qid)) {
+			g_Log.AddMessageFormat("[WARNING] Account %d has multiple account quests with same ID %d, ignoring", ad.ID, qid);
+		}
+		else {
+			ad.AccountQuests.push_back(fr.BlockToIntC(1));
+		}
 	}
 	else if(strcmp(NameBlock, "BUILD") == 0)
 	{
