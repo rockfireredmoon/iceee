@@ -1,6 +1,7 @@
 [ENTRY]
 ID=1358954804
 Asset=CL-Forest6
+Name=Untitled
 Pos=41642.9,668.523,66726
 Orient=0,0,0,1
 Scale=1,1,1
@@ -9,6 +10,7 @@ Flags=1
 [ENTRY]
 ID=1358954809
 Asset=Prop-Water_Plane1
+Name=Untitled
 Pos=41546.6,640.48,66097
 Orient=0,0.8772,0,0.480125
 Scale=1.15,1.15,1.15
@@ -17,6 +19,7 @@ Flags=1
 [ENTRY]
 ID=1358954818
 Asset=Prop-Water_Plane1
+Name=Untitled
 Pos=41863.1,394.566,66097
 Orient=0,0.8772,0,0.480125
 Scale=1.225,1.225,1.225
@@ -25,6 +28,7 @@ Flags=1
 [ENTRY]
 ID=1358954927
 Asset=CL-Swamp-BullRushes2#CL-Swamp-BullRushes2
+Name=Untitled
 Pos=41389.2,720.393,66414
 Orient=0,-0.0399891,0,0.9992
 Scale=2,2,2
@@ -33,6 +37,7 @@ Flags=1
 [ENTRY]
 ID=1358954928
 Asset=CL-Swamp-BullRushes2
+Name=Untitled
 Pos=41145.8,655.06,66372
 Orient=0,-0.266731,0,0.963771
 Scale=2,2,2
@@ -41,6 +46,7 @@ Flags=1
 [ENTRY]
 ID=1358954931
 Asset=Prop-Lily_Pads1
+Name=Untitled
 Pos=41309.7,640.337,66033
 Orient=0,0,0,1
 Scale=3.45,3.45,3.45
@@ -49,6 +55,7 @@ Flags=1
 [ENTRY]
 ID=1358954932
 Asset=Prop-Water_Plants#Prop-Lily_Pads2
+Name=Untitled
 Pos=41101.5,637.091,66189
 Orient=0,0.271547,0,0.962425
 Scale=3.45,3.45,3.45
@@ -57,6 +64,7 @@ Flags=1
 [ENTRY]
 ID=1358954934
 Asset=Prop-Boulder#Prop-Boulder7
+Name=Untitled
 Pos=41445.6,618.656,66326
 Orient=-0.278551,0.501658,-0.174638,0.800157
 Scale=1.975,1.975,1.975
@@ -65,6 +73,7 @@ Flags=1
 [ENTRY]
 ID=1358954935
 Asset=Prop-Lily_Pads1
+Name=Untitled
 Pos=41309.7,636.054,66383
 Orient=0,0.375559,0,0.926799
 Scale=5.15,5.15,5.15
@@ -73,6 +82,7 @@ Flags=1
 [ENTRY]
 ID=1358954936
 Asset=Prop-Lily_Pads2
+Name=Untitled
 Pos=41309.7,640.337,66189
 Orient=0,0.944148,0,0.329521
 Scale=3.45,3.45,3.45
@@ -81,6 +91,7 @@ Flags=1
 [ENTRY]
 ID=1358954937
 Asset=Prop-Lily_Pads1
+Name=Untitled
 Pos=41163.1,636.428,66164
 Orient=0,0.979223,0,-0.202787
 Scale=5.4,5.4,5.4
@@ -89,6 +100,7 @@ Flags=1
 [ENTRY]
 ID=1358954939
 Asset=Prop-Flowers-Lily1
+Name=Untitled
 Pos=41162.1,634.526,66408
 Orient=0,0,0,1
 Scale=0.55,0.55,0.55
@@ -97,6 +109,7 @@ Flags=1
 [ENTRY]
 ID=1358954940
 Asset=Prop-Flowers-Lily#Prop-Flowers-Lily1
+Name=Untitled
 Pos=41072.6,631.872,66343.9
 Orient=0,0.770739,0,0.637151
 Scale=1,1,1
@@ -105,6 +118,7 @@ Flags=1
 [ENTRY]
 ID=1358954942
 Asset=Prop-Lily_Pads1
+Name=Untitled
 Pos=41163.1,636.428,66098
 Orient=0,0.979223,0,-0.202787
 Scale=5.425,5.425,5.425
@@ -113,6 +127,7 @@ Flags=1
 [ENTRY]
 ID=1358954943
 Asset=Prop-Lily_Pads1
+Name=Untitled
 Pos=41163.1,636.428,66356
 Orient=0,0.668056,0,-0.744111
 Scale=3.9,3.9,3.9
@@ -121,69 +136,70 @@ Flags=1
 [ENTRY]
 ID=1358959393
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=41713,668.189,66627.1
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=1a_waterElementalCamp01_general_STEPUP
-outerRadius=1
 
 [ENTRY]
 ID=1358959394
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=41443.6,673.562,66836
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=1a_waterElementalCamp01_general_STEPUP
-outerRadius=1
 
 [ENTRY]
 ID=1358959395
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=41226.3,662.226,66624.6
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=1a_waterElementalCamp01_general_STEPUP
-outerRadius=1
 
 [ENTRY]
 ID=1358959396
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=41425.8,680.537,66664.7
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=1a_waterElementalCamp01_general_STEPUP
-outerRadius=1
 
 [ENTRY]
 ID=1358959398
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=41016.6,633.535,66599.8
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=1a_waterElementalCamp01_general_STEPUP
-outerRadius=1
 
 [ENTRY]
 ID=1358959402
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=41821.4,661.555,66865
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=1a_waterElementalCamp01_general_STEPUP
-outerRadius=1
 
 [ENTRY]
 ID=1358959403
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=41136.3,624.451,66855
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=1a_waterElementalCamp01_general_STEPUP
-outerRadius=1
 
 [ENTRY]
 ID=1358959442
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=41960.3,742.633,66311
 Orient=0,0,0,1
 Scale=0.95,0.95,0.95
@@ -194,6 +210,7 @@ link=1358959441,1
 [ENTRY]
 ID=1358965466
 Asset=CL-Hills_Bush6#CL-Hills_Bush6
+Name=Untitled
 Pos=41822.2,526.089,66678.3
 Orient=0,0,0,1
 Scale=1,1,1
@@ -201,6 +218,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1358965504
 Asset=CL-Hills_RockGiant3#CL-Hills_RockGiant3
+Name=Untitled
 Pos=41967.5,409.784,66550
 Orient=0,0,0,1
 Scale=0.25,0.25,0.25
@@ -209,6 +227,7 @@ Flags=1
 [ENTRY]
 ID=1358966391
 Asset=Prop-Flowers-Lily1
+Name=Untitled
 Pos=41072.6,631.872,66200
 Orient=0,0.770739,0,0.637151
 Scale=1,1,1
@@ -217,6 +236,7 @@ Flags=1
 [ENTRY]
 ID=1358966392
 Asset=Prop-Flowers-Lily1
+Name=Untitled
 Pos=41268,631.906,66441
 Orient=0,0.770739,0,0.637151
 Scale=0.75,0.75,0.75
@@ -225,6 +245,7 @@ Flags=1
 [ENTRY]
 ID=1358966421
 Asset=Prop-Hill_Tree3
+Name=Untitled
 Pos=41248.9,632.82,66990.4
 Orient=0,-0.581035,0,0.813878
 Scale=2.075,2.075,2.075

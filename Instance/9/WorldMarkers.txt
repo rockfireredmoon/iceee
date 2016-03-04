@@ -138,3 +138,8 @@ Name=Jump test 1
 Comment=Ascending eifel tower
 Position=29051.0,500.0,62577.0
 
+[ENTRY]
+Name= Dustshore Bazzart
+Comment=[Comment here]
+Position=22677.0,381.0,76884.0
+

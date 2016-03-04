@@ -1,6 +1,7 @@
 [ENTRY]
 ID=151008830
 Asset=Bldg-Hychithah_Temple#Bldg-Hychithah_Temple?ATS=ATS-Greek
+Name=Untitled
 Pos=55206.2,239.604,54134
 Orient=0,-0.819192,0,0.57352
 Scale=1,1,1
@@ -9,6 +10,7 @@ Flags=1
 [ENTRY]
 ID=151009576
 Asset=Effects#Par-Slow_Drip-Emitter
+Name=Untitled
 Pos=55147.8,207.561,54187
 Orient=0,0,0,1
 Scale=1,1,1
@@ -17,6 +19,7 @@ Flags=1
 [ENTRY]
 ID=151009579
 Asset=Par-Waves-1-Emitter
+Name=Untitled
 Pos=55058.6,150.475,54262
 Orient=0,-0.985719,0,-0.168396
 Scale=1,1,1
@@ -25,6 +28,7 @@ Flags=1
 [ENTRY]
 ID=151009581
 Asset=Par-Waves-1-Emitter
+Name=Untitled
 Pos=54797.4,150.475,54090
 Orient=0,-0.789504,0,0.613746
 Scale=1,1,1
@@ -33,6 +37,7 @@ Flags=1
 [ENTRY]
 ID=151009582
 Asset=Par-Waves-1-Emitter
+Name=Untitled
 Pos=55019.9,150.475,54141
 Orient=0,-0.574173,0,-0.818734
 Scale=1,1,1
@@ -41,6 +46,7 @@ Flags=1
 [ENTRY]
 ID=151009584
 Asset=Prop-Door2#Prop-Door2
+Name=Untitled
 Pos=55178.4,115.728,54136
 Orient=0,0.976806,0,0.214126
 Scale=2.275,2.275,2.275
@@ -49,6 +55,7 @@ Flags=1
 [ENTRY]
 ID=151062471
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=55177.1,283.663,54141.8
 Orient=0,-0.986549,0,-0.163467
 Scale=1,1,1
