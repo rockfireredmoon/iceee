@@ -6,6 +6,7 @@
 #include "StringList.h"
 #include "Item.h"
 #include <string.h>
+#include "util/Log.h"
 
 using namespace CS;
 
@@ -132,6 +133,7 @@ CreditShopItem::CreditShopItem() {
 	mId = 0;
 	mStartDate = 0;
 	mEndDate = 0;
+	mCreatedDate = 0;
 	mPriceCopper = 0;
 	mPriceCredits = 0;
 	mQuantityLimit = 0;
@@ -154,6 +156,8 @@ void CreditShopItem::WriteToJSON(Json::Value &value) {
 		value["beginDate"] = Util::FormatDate(&mStartDate);
 	if (mEndDate > 0)
 		value["endDate"] = Util::FormatDate(&mEndDate);
+	if (mCreatedDate > 0)
+		value["createdDate"] = Util::FormatDate(&mCreatedDate);
 	value["currency"] = Currency::GetNameByID(mPriceCurrency);
 	value["copper"] = Json::UInt64(mPriceCopper);
 	value["credits"] = Json::UInt64(mPriceCredits);
@@ -258,6 +262,9 @@ bool CreditShopManager::SaveItem(CreditShopItem * item) {
 	if (item->mEndDate > 0)
 		fprintf(output, "EndDate=%s\r\n",
 				Util::FormatDate(&item->mEndDate).c_str());
+	if (item->mCreatedDate > 0)
+			fprintf(output, "CreatedDate=%s\r\n",
+					Util::FormatDate(&item->mStartDate).c_str());
 	fprintf(output, "PriceCurrency=%s\r\n",
 			Currency::GetNameByID(item->mPriceCurrency));
 	fprintf(output, "PriceCopper=%lu\r\n", item->mPriceCopper);
@@ -285,17 +292,17 @@ bool CreditShopManager::SaveItem(CreditShopItem * item) {
 }
 
 CreditShopItem * CreditShopManager::LoadItem(int id) {
-	const char * buf = GetPath(id).c_str();
-	if (!Platform::FileExists(buf)) {
-		g_Log.AddMessageFormat("No file for CS item [%s]", buf);
+	std::string buf = GetPath(id);
+	if (!Platform::FileExists(buf.c_str())) {
+		g_Log.AddMessageFormat("No file for CS item [%s]", buf.c_str());
 		return NULL;
 	}
 
 	CreditShopItem *item = new CreditShopItem();
 
 	FileReader lfr;
-	if (lfr.OpenText(buf) != Err_OK) {
-		g_Log.AddMessageFormat("Could not open file [%s]", buf);
+	if (lfr.OpenText(buf.c_str()) != Err_OK) {
+		g_Log.AddMessageFormat("Could not open file [%s]", buf.c_str());
 		return NULL;
 	}
 
@@ -314,7 +321,7 @@ CreditShopItem * CreditShopManager::LoadItem(int id) {
 				if (item->mId != 0) {
 					g_Log.AddMessageFormat(
 							"[WARNING] %s contains multiple entries. CS items have one entry per file",
-							buf);
+							buf.c_str());
 					break;
 				}
 				item->mId = id;
@@ -326,6 +333,8 @@ CreditShopItem * CreditShopManager::LoadItem(int id) {
 				Util::ParseDate(lfr.BlockToStringC(1, 0), item->mStartDate);
 			else if (strcmp(lfr.SecBuffer, "ENDDATE") == 0)
 				Util::ParseDate(lfr.BlockToStringC(1, 0), item->mEndDate);
+			else if (strcmp(lfr.SecBuffer, "CREATEDDATE") == 0)
+				Util::ParseDate(lfr.BlockToStringC(1, 0), item->mCreatedDate);
 			else if (strcmp(lfr.SecBuffer, "PRICECURRENCY") == 0)
 				item->mPriceCurrency = Currency::GetIDByName(
 						lfr.BlockToStringC(1, 0));
@@ -355,7 +364,7 @@ CreditShopItem * CreditShopManager::LoadItem(int id) {
 				item->mQuantitySold = lfr.BlockToIntC(1);
 			else
 				g_Log.AddMessageFormat("Unknown identifier [%s] in file [%s]",
-						lfr.SecBuffer, buf);
+						lfr.SecBuffer, buf.c_str());
 		}
 	}
 	lfr.CloseCurrent();
@@ -424,9 +433,19 @@ int CreditShopManager::LoadItems(void) {
 	for (it = r.fileList.begin(); it != r.fileList.end(); ++it) {
 		std::string p = *it;
 		if (Util::HasEnding(p, ".txt")) {
-			LoadItem(atoi(Platform::Basename(p.c_str()).c_str()));
+			CreditShopItem *item = LoadItem(atoi(Platform::Basename(p.c_str()).c_str()));
+			g_Logs.data->info("Credit shop item %v (item ID %v)", item->mId, item->mItemId);
+			if(item != NULL) {
+				if(item->mId >= nextMarketItemID) {
+					nextMarketItemID = item->mId + 1;
+					g_Logs.data->warn("Adjusted next market item ID to %v");
+				}
+			}
 		}
 	}
+
+
+
 
 	return 0;
 }

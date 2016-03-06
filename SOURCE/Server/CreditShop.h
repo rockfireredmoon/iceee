@@ -90,6 +90,7 @@ public:
 	int mCategory;
 	time_t mStartDate;
 	time_t mEndDate;
+	time_t mCreatedDate;
 	unsigned long mPriceCopper;
 	unsigned long mPriceCredits;
 	int mPriceCurrency;

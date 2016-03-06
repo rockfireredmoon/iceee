@@ -1378,8 +1378,8 @@ void AbilityManager2 :: InitializeCategories(void)
 	for(it = mCooldownCategories.begin(); it != mCooldownCategories.end(); ++it)
 		it->second = currentID++;
 
-	g_Log.AddMessageFormat("Registered %d Buff Categories", mBuffCategories.size());
-	g_Log.AddMessageFormat("Registered %d Cooldown Categories", mCooldownCategories.size());
+	g_Logs.data->info("Registered %v Buff Categories", mBuffCategories.size());
+	g_Logs.data->info("Registered %v Cooldown Categories", mCooldownCategories.size());
 }
 
 //Required in the loading stage. Stat ID names need to be lowercase for the lookup
@@ -1490,7 +1490,7 @@ void AbilityManager2 :: LoadAbilityTable(const char *filename)
 		}
 	}
 	fclose(input);
-	g_Log.AddMessageFormat("Loaded ability file [%s], %d abilities loaded.", filename, loadCount);
+	g_Logs.data->info("Loaded ability file [%v], %v abilities loaded.", filename, loadCount);
 }
 
 void AbilityManager2 :: InsertAbility(int abilityID, const STRINGLIST &rowData)

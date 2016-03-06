@@ -270,6 +270,11 @@ bool AccountData :: HasCharacterID(int CDefID)
 	return false;
 }
 
+
+bool AccountData :: HasAccountCompletedQuest(int QuestID) {
+	return std::find(AccountQuests.begin(), AccountQuests.end(), QuestID) != AccountQuests.end();
+}
+
 bool AccountData :: HasBuildZone(BuildPermissionArea &bpa)
 {
 	for(size_t i = 0; i < BuildPermissionList.size(); i++)
@@ -803,7 +808,13 @@ void AccountManager :: LoadSectionGeneral(FileReader &fr, AccountData &ad, const
 	else if(strcmp(NameBlock, "GROVENAME") == 0)
 		ad.GroveName = fr.BlockToStringC(1, 0);
 	else if(strcmp(NameBlock, "ACCOUNTQUEST") == 0)	{
-		ad.AccountQuests.push_back(fr.BlockToIntC(1));
+		int qid = fr.BlockToIntC(1);
+		if(ad.HasAccountCompletedQuest(qid)) {
+			g_Logs.data->warn("Account %v has multiple account quests with same ID %v, ignoring", ad.ID, qid);
+		}
+		else {
+			ad.AccountQuests.push_back(fr.BlockToIntC(1));
+		}
 	}
 	else if(strcmp(NameBlock, "XCSRF") == 0)
 		ad.SiteSession.xCSRF = fr.BlockToStringC(1, 0);
@@ -1798,7 +1809,7 @@ void AccountManager :: LoadUsedNameList(const char *fileName)
 			//UsedCharacterNames.push_back(USEDCHAR_PAIR(CDefID, lfr.BlockToString(1)));
 		}
 	}
-	g_Log.AddMessageFormat("Loaded %d Used Names.", UsedCharacterNames.GetDataCount());
+	g_Logs.data->info("Loaded %d Used Names.", UsedCharacterNames.GetDataCount());
 	lfr.CloseCurrent();
 }
 

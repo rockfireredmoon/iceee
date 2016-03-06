@@ -33,10 +33,13 @@ void StringList :: AddMessageFormat(const char *format, ...)
 {
 	string_cs.Enter("StringList::AddMessageFormat");
 	va_list args;
+	char buf[4096];
 	va_start (args, format);
-	Util::SafeFormatArg(formatBuffer, sizeof(formatBuffer), format, args);
+	std::string f = "[FIXME] ";
+	f.append(format);
+	Util::SafeFormatArg(buf, sizeof(buf), f.c_str(), args);
 	va_end (args);
-	g_Logs.server->info(formatBuffer);
+	g_Logs.server->info(buf);
 	string_cs.Leave();
 }
 

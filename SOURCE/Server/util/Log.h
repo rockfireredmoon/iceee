@@ -38,6 +38,7 @@ public:
 	Logger *simulator;
 	Logger *data;
 	Logger *script;
+	Logger *cs;
 };
 
 extern LogManager g_Logs;

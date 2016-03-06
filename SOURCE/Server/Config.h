@@ -252,6 +252,7 @@ public:
 	int MinAuctionHours;
 	float PercentageCommisionPerHour;
 	int MaxAuctionExpiredHours;
+	int MaxNewCreditShopItemDays;
 
 	std::string ShutdownHandlerScript;
 

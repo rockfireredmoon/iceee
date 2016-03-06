@@ -230,17 +230,23 @@ class this.CreditShopManager extends this.DefaultQueryHandler
 				if (category in this.CategoryTypes)
 				{
 					local dataHolder = this.CategoryTypes[category].dataList;
-					dataHolder.append(creditShopItem);
+					if(creditShopItem.mItemDefId != null && creditShopItem.mItemDefId != 0) {
+						dataHolder.append(creditShopItem);
+					}
 				}
 			}
 			
 			r++;
 		}
 
+		/*
+		Disabled for now, use server provided order
+		
 		foreach( key, data in this.CategoryTypes )
 		{
 			data.dataList.sort(this.compareCreditItemIds);
 		}
+		*/
 
 		this.mMessageBroadcaster.broadcastMessage("onCreditItemsUpdate", this);
 	}

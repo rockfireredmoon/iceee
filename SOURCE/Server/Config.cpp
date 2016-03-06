@@ -420,6 +420,9 @@ void LoadConfig(const char *filename) {
 				g_Config.MaxAuctionExpiredHours = lfr.BlockToInt(1);
 			else if (strcmp(NameBlock, "ShutdownHandlerScript") == 0)
 				g_Config.ShutdownHandlerScript = lfr.BlockToStringC(1, 0);
+			else if (strcmp(NameBlock, "MaxNewCreditShopItemDays") == 0)
+				g_Config.MaxNewCreditShopItemDays = lfr.BlockToFloatC(1);
+
 			else {
 				g_Logs.data->error("Unknown identifier [%v] in config file [%v]",
 						lfr.BlockToString(0), filename);
@@ -646,6 +649,7 @@ GlobalConfigData::GlobalConfigData() {
 	MinAuctionHours = 1;
 	PercentageCommisionPerHour = 5.0 / 24;
 	MaxAuctionExpiredHours = 24;
+	MaxNewCreditShopItemDays = 14;
 
 	ShutdownHandlerScript = "";
 }

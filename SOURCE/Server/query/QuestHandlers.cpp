@@ -149,6 +149,10 @@ int QuestJoinHandler::handleQuery(SimulatorThread *sim,
 		return sim->ErrorMessageAndQueryOK(sim->SendBuf,
 				"That object does not give that quest.");
 
+	if(qdef->accountQuest && pld->accPtr->HasAccountCompletedQuest(QuestID)) {
+		return sim->ErrorMessageAndQueryOK(sim->SendBuf, "You have already completed this quest on another character, and it is a once-per-account quest type.");
+	}
+
 	if (qdef->mScriptAcceptCondition.ExecuteAllCommands(sim) < 0)
 		return sim->ErrorMessageAndQueryOK(sim->SendBuf, "Cannot accept the quest yet.");
 	qdef->mScriptAcceptAction.ExecuteAllCommands(sim);

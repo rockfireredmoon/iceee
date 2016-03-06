@@ -7,6 +7,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <vector>
+#include "util/Log.h"
 
 Clans::ClanManager g_ClanManager;
 
@@ -153,13 +154,13 @@ void ClanManager::CreateClan(Clan &clan) {
 bool ClanManager::LoadClan(int id, Clan &clan) {
 	std::string path = GetPath(id);
 	if (!Platform::FileExists(path)) {
-		g_Log.AddMessageFormat("No file for CS item [%s]", path.c_str());
+		g_Logs.data->info("No file for CS item [%v]", path.c_str());
 		return NULL;
 	}
 
 	FileReader lfr;
 	if (lfr.OpenText(path.c_str()) != Err_OK) {
-		g_Log.AddMessageFormat("Could not open file [%s]", path.c_str());
+		g_Logs.data->error("Could not open file [%v]", path.c_str());
 		return false;
 	}
 
@@ -173,8 +174,8 @@ bool ClanManager::LoadClan(int id, Clan &clan) {
 		if (r > 0) {
 			if (strcmp(lfr.SecBuffer, "[ENTRY]") == 0) {
 				if (clan.mId != 0) {
-					g_Log.AddMessageFormat(
-							"[WARNING] %s contains multiple entries. CS items have one entry per file",
+					g_Logs.data->warn(
+							"%s contains multiple entries. CS items have one entry per file",
 							path.c_str());
 					break;
 				}
@@ -192,12 +193,12 @@ bool ClanManager::LoadClan(int id, Clan &clan) {
 					mem.mRank = atoi(l[1].c_str());
 					clan.mMembers.push_back(mem);
 				} else {
-					g_Log.AddMessageFormat(
-							"Incomplete clan memober information [%s] in file [%s]",
+					g_Logs.data->info(
+							"Incomplete clan member information [%v] in file [%v]",
 							lfr.SecBuffer, path.c_str());
 				}
 			} else
-				g_Log.AddMessageFormat("Unknown identifier [%s] in file [%s]",
+				g_Logs.data->info("Unknown identifier [%d] in file [%d]",
 						lfr.SecBuffer, path.c_str());
 		}
 	}
@@ -221,7 +222,7 @@ bool ClanManager::RemoveClan(Clan &clan) {
 
 	std::string path = GetPath(clan.mId);
 	if (!Platform::FileExists(path)) {
-		g_Log.AddMessageFormat("No file for clan [%s] to remove", path.c_str());
+		g_Logs.server->info("No file for clan [%v] to remove", path.c_str());
 		return false;
 	}
 	cs.Enter("ClanManager::RemoveClan");
@@ -232,7 +233,7 @@ bool ClanManager::RemoveClan(Clan &clan) {
 	Platform::FixPaths(buf);
 	if(!Platform::FileExists(buf) || remove(buf) == 0) {
 		if(!rename(path.c_str(), buf) == 0) {
-			g_Log.AddMessageFormat("Failed to remove clan %d", clan.mId);
+			g_Logs.server->info("Failed to remove clan %v", clan.mId);
 			return false;
 		}
 	}
@@ -265,10 +266,10 @@ int ClanManager::LoadClans(void) {
 
 bool ClanManager::SaveClan(Clan &clan) {
 	std::string path = GetPath(clan.mId);
-	g_Log.AddMessageFormat("Saving clan to %s.", path.c_str());
+	g_Logs.data->info("Saving clan to %v.", path.c_str());
 	FILE *output = fopen(path.c_str(), "wb");
 	if (output == NULL) {
-		g_Log.AddMessageFormat("[ERROR] Saving clan could not open: %s",
+		g_Logs.data->info("[ERROR] Saving clan could not open: %s",
 				path.c_str());
 		return false;
 	}

@@ -5562,6 +5562,7 @@ void SimulatorThread::handle_query_friends_status(void) {
 
 	pld.charPtr->StatusText = newStatus;
 	int wpos = 0;
+
 	wpos += PutByte(&SendBuf[wpos], 43);  //_handleFriendNotificationMsg
 	wpos += PutShort(&SendBuf[wpos], 0);  //size
 	wpos += PutByte(&SendBuf[wpos], 3);   //message type for status changed
@@ -8306,7 +8307,7 @@ void SimulatorThread::CheckSpawnTileUpdate(bool force) {
 		unsigned long timeDif = g_PlatformTime.getMilliseconds() - startTime;
 		if (timeDif > 50)
 			g_Logs.simulator->debug(
-					"[%d] CheckSpawnTileUpdate complete in %d ms, zone:%d",
+					"[%v] CheckSpawnTileUpdate complete in %v ms, zone:%v",
 					InternalID, timeDif, pld.CurrentZoneID);
 		//LogMessageL(MSG_SHOW, "[DEBUG] Updating %d creatures", scount);
 	}

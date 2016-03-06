@@ -19,6 +19,7 @@ LogManager::LogManager() {
 	simulator = Loggers::getLogger("simulator", false);
 	data = Loggers::getLogger("data", false);
 	script = Loggers::getLogger("script", false);
+	cs = Loggers::getLogger("cs", false);
 
 }
 

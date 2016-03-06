@@ -27,7 +27,7 @@ class Screens.ItemMarketEditScreen extends GUI.Frame {
 	mQuantityLimitEntry = null;
 	mQuantitySoldEntry = null;
 	mItemProtoEntry = null;
-	
+	mSelectFirstOnNextLoad = false;	
 	mItemSlot = null;
 	
 	mDeleteButton = null;
@@ -179,7 +179,7 @@ class Screens.ItemMarketEditScreen extends GUI.Frame {
 		::_Connection.sendQuery("item.market.edit", this, [
 			"NEW",
 			"title",
-			"New Offer",
+			"",
 			"description",
 			"",
 			"category",
@@ -201,7 +201,8 @@ class Screens.ItemMarketEditScreen extends GUI.Frame {
 			"itemProto",
 			""
 		]);
-		fillList();
+		mSelectFirstOnNextLoad = true;
+		fillList();		
 	}
 
 	function onTextChanged( text ) {
@@ -376,7 +377,8 @@ class Screens.ItemMarketEditScreen extends GUI.Frame {
 				rr++;
 			}
 
-			mOutputList.setSelectedRows(selected);
+			mOutputList.setSelectedRows([mSelectFirstOnNextLoad ? 0 : selected]);
+			mSelectFirstOnNextLoad = false;
 		}
 	}
 
