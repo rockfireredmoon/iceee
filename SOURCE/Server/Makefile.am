@@ -114,6 +114,8 @@ tawd_SOURCES = md5.cc \
 	query/QuestHandlers.cpp \
 	query/IGFHandlers.cpp \
 	query/TradeHandlers.cpp \
+	query/SceneryHandlers.cpp \
+	query/SupportHandlers.cpp \
 	util/base64.cpp \
 	util/JsonHelpers.cpp \
 	util/SquirrelObjects.cpp \
@@ -251,6 +253,8 @@ tawd_SOURCES = md5.cc \
 	query/QuestHandlers.h \
 	query/IGFHandlers.h \
 	query/TradeHandlers.h \
+	query/SceneryHandlers.h \
+	query/SupportHandlers.h \
 	util/base64.h \
 	util/Log.h \
 	util/JsonHelpers.h \
@@ -367,6 +371,8 @@ tawdsvc_SOURCES = md5.cc \
 	query/QuestHandlers.cpp \
 	query/IGFHandlers.cpp \
 	query/TradeHandlers.cpp \
+	query/SceneryHandlers.cpp \
+	query/SupportHandlers.cpp \
 	util/base64.cpp \
 	util/JsonHelpers.cpp \
 	util/SquirrelObjects.cpp \
@@ -504,8 +510,10 @@ tawdsvc_SOURCES = md5.cc \
 	query/QuestHandlers.h \
 	query/IGFHandlers.h \
 	query/TradeHandlers.h \
+	query/SceneryHandlers.h \
 	util/base64.h \
 	util/Log.h \
 	util/JsonHelpers.h \
-	util/SquirrelObjects.h
+	util/SquirrelObjects.h \
+	query/SupportHandlers.cpp
 endif

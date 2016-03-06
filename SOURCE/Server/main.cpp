@@ -194,6 +194,9 @@ INITIALIZE_EASYLOGGINGPP
 #include "query/QuestHandlers.h"
 #include "query/IGFHandlers.h"
 #include "query/TradeHandlers.h"
+#include "query/SceneryHandlers.h"
+#include "query/SupportHandlers.h"
+#include <curl/curl.h>
 
 #ifdef OUTPUT_TO_CONSOLE
 #define DAEMON_NO_CLOSE 1
@@ -525,6 +528,8 @@ int InitServerMain(int argc, char *argv[]) {
 
 	START_EASYLOGGINGPP(argc, argv);
 
+	curl_global_init(CURL_GLOBAL_DEFAULT);
+
 	if(PLATFORM_GETCWD(g_WorkingDirectory, 256) == NULL) {
 		printf("Failed to get current working directory.");
 	}
@@ -638,6 +643,18 @@ int InitServerMain(int argc, char *argv[]) {
 	g_QueryManager.queryHandlers["trade.offer"] = new TradeOfferHandler();
 	g_QueryManager.queryHandlers["trade.accept"] = new TradeAcceptHandler();
 	g_QueryManager.queryHandlers["trade.currency"] = new TradeCurrencyHandler();
+
+	g_QueryManager.queryHandlers["scenery.list"] = new SceneryListHandler();
+	g_QueryManager.queryHandlers["scenery.edit"] = new SceneryEditHandler();
+	g_QueryManager.queryHandlers["scenery.delete"] = new SceneryDeleteHandler();
+	g_QueryManager.queryHandlers["scenery.link.add"] = new SceneryLinkAddHandler();
+	g_QueryManager.queryHandlers["scenery.link.del"] = new SceneryLinkDelHandler();
+
+
+	g_QueryManager.queryHandlers["bug.report"] = new BugReportHandler();
+	g_QueryManager.queryHandlers["petition.send"] = new PetitionSendHandler();
+	g_QueryManager.queryHandlers["petition.list"] = new PetitionListHandler();
+	g_QueryManager.queryHandlers["petition.doaction"] = new PetitionDoActionHandler();
 
 	// Some are shared
 
