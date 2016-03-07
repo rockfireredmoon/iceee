@@ -4,5 +4,6 @@
 	--sysconfdir=/etc \
 	--libdir=/usr/lib \
 	--datarootdir=/usr/share \
-	--localstatedir=/var
+	--localstatedir=/var \
+	--enable-debug
 	
