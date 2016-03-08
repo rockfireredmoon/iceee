@@ -162,7 +162,7 @@ void AIScriptPlayer :: RunImplementationCommands(int opcode)
 		SetVar(def->instr[curInst].param1, attachedCreature->css.level);
 		break;
 	case OP_DEBUGPRINT:
-		g_Logs.script->debug("%v", def->stringList[def->instr[curInst].param1].c_str());
+		g_Logs.script->debug("[DEBUGPRINT] (%v) %v", def->scriptName, def->stringList[def->instr[curInst].param1].c_str());
 		break;
 	case OP_GETCOOLDOWN:
 		{

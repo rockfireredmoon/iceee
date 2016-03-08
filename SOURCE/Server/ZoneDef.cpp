@@ -794,7 +794,7 @@ int ZoneDefManager :: LoadFile(const char *fileName)
 	FileReader lfr;
 	if(lfr.OpenText(fileName) != Err_OK)
 	{
-		g_Log.AddMessageFormat("Error: Could not open file [%s]", fileName);
+		g_Logs.data->error("Could not open file [%v]", fileName);
 		return -1;
 	}
 
@@ -915,7 +915,7 @@ int ZoneDefManager :: LoadFile(const char *fileName)
 					}
 				}
 				else
-					g_Log.AddMessageFormat("Unknown identifier [%s] while reading from file %s.", lfr.SecBuffer, fileName);
+					g_Logs.data->info("Unknown identifier [%v] while reading from file %v.", lfr.SecBuffer, fileName);
 			}
 		}
 	}
@@ -926,7 +926,7 @@ int ZoneDefManager :: LoadFile(const char *fileName)
 		newItem.SetDefaults();
 		mZoneList[newItem.mID].CopyFrom(newItem);
 	}
-	g_Log.AddMessageFormat("Loaded zone file [%s]", fileName);
+	g_Logs.data->info("Loaded zone file [%v]", fileName);
 	return 0;
 }
 
@@ -943,7 +943,7 @@ ZoneDefInfo * ZoneDefManager :: LoadZoneDef(int ID)
 	//Official zones are static and can't be loaded at runtime..
 	if(ID < GROVE_ZONE_ID_DEFAULT)
 	{
-		g_Log.AddMessageFormat("[CRITICAL] Could not find ZoneDef: %d", ID);
+		g_Logs.server->error("Could not find ZoneDef: %v", ID);
 		return NULL;
 	}
 
@@ -956,7 +956,7 @@ ZoneDefInfo * ZoneDefManager :: LoadZoneDef(int ID)
 	it = mZoneList.find(ID);
 	if(it == mZoneList.end())
 	{
-		g_Log.AddMessageFormat("[ERROR] LoadZoneDef failed to load zone.");
+		g_Logs.server->error("LoadZoneDef failed to load zone.");
 		return NULL;
 	}
 	return &it->second;
@@ -983,8 +983,8 @@ void ZoneDefManager :: LoadData(void)
 	Platform::GenerateFilePath(mDataFileIndex, "Dynamic", "ZoneIndex.txt");
 	LoadIndex();
 
-	g_Log.AddMessageFormat("Loaded %d ZoneDef.", mZoneList.size());
-	g_Log.AddMessageFormat("Loaded %d ZoneIndex.", mZoneIndex.size());
+	g_Logs.server->info("Loaded %v ZoneDef.", mZoneList.size());
+	g_Logs.server->info("Loaded %v ZoneIndex.", mZoneIndex.size());
 
 	InitDefaultZoneIndex();
 }
@@ -1260,7 +1260,7 @@ int ZoneDefManager :: EnumerateGroveIds(int searchAccountID, int characterDefId,
 					int guildDefID = cdata->guildList[0].GuildDefID;
 					GuildDefinition *gDef = g_GuildManager.GetGuildDefinition(guildDefID);
 					if(gDef == NULL) {
-						g_Log.AddMessageFormat("Guild definition %d does not exist", guildDefID);
+						g_Logs.server->error("Guild definition %v does not exist", guildDefID);
 					}
 					else {
 						if(it->second.mID == gDef->guildHallZone && cdata->IsInGuildAndHasValour(guildDefID, 0))
@@ -1299,7 +1299,7 @@ int ZoneDefManager :: EnumerateGroves(int searchAccountID, int characterDefId, s
 					int guildDefID = cdata->guildList[0].GuildDefID;
 					GuildDefinition *gDef = g_GuildManager.GetGuildDefinition(guildDefID);
 					if(gDef == NULL) {
-						g_Log.AddMessageFormat("Guild definition %d does not exist", guildDefID);
+						g_Logs.server->error("Guild definition %v does not exist", guildDefID);
 					}
 					else {
 						if(it->second.mID == gDef->guildHallZone && cdata->IsInGuildAndHasValour(guildDefID, 0))
@@ -1340,7 +1340,7 @@ void ZoneDefManager :: UpdateGroveAccountID(const char *groveName, int newAccoun
 			name.erase(pos);
 		if(name.compare(groveName) == 0)
 		{
-			g_Log.AddMessageFormat("Resetting grove [ID:%d, Name:%s] account ID from %d to %d", it->second.mID, it->second.mWarpName.c_str(), it->second.mAccountID, newAccountID);
+			g_Logs.server->info("Resetting grove [ID:%v, Name:%v] account ID from %v to %v", it->second.mID, it->second.mWarpName.c_str(), it->second.mAccountID, newAccountID);
 			it->second.mAccountID = newAccountID;
 			it->second.mGroveName = groveName;
 			ZoneListChanges.AddChange();
@@ -1363,13 +1363,13 @@ void ZoneDefManager :: UpdateZoneIndex(int zoneID, int accountID, const char *wa
 	}
 	if(entry != NULL)
 	{
-		g_Log.AddMessageFormat("UpdateZoneIndex() original: [%d] [%d] [%s] [%s]", entry->mID, entry->mAccountID, entry->mWarpName.c_str(), entry->mGroveName.c_str());
+		g_Logs.server->info("UpdateZoneIndex() original: [%v] [%v] [%v] [%v]", entry->mID, entry->mAccountID, entry->mWarpName.c_str(), entry->mGroveName.c_str());
 		entry->mID = zoneID;
 		entry->mAccountID = accountID;
 		entry->mWarpName = warpName;
 		entry->mGroveName = groveName;
 		ZoneIndexChanges.AddChange();
-		g_Log.AddMessageFormat("UpdateZoneIndex() updated: [%d] [%d] [%s] [%s]", entry->mID, entry->mAccountID, entry->mWarpName.c_str(), entry->mGroveName.c_str());
+		g_Logs.server->info("UpdateZoneIndex() updated: [%v] [%v] [%v] [%v]", entry->mID, entry->mAccountID, entry->mWarpName.c_str(), entry->mGroveName.c_str());
 	}
 }
 
@@ -1406,7 +1406,7 @@ void ZoneDefManager :: UnloadInactiveZones(std::vector<int>& activeZones)
 		}
 		if((has == false) && (it->second.QualifyDelete() == true))
 		{
-			g_Log.AddMessageFormat("Unloading inactive zone def: %d (%s)", it->second.mID, it->second.mWarpName.c_str());
+			g_Logs.server->info("Unloading inactive zone def: %v (%v)", it->second.mID, it->second.mWarpName.c_str());
 			mZoneList.erase(it++);
 		}
 		else
@@ -1419,7 +1419,7 @@ bool ZoneDefManager :: SaveIndex(void)
 	FILE *output = fopen(mDataFileIndex.c_str(), "wb");
 	if(output == NULL)
 	{
-		g_Log.AddMessageFormat("[ERROR] SaveIndex() could not open file [%s]", mDataFileIndex.c_str());
+		g_Logs.data->error("SaveIndex() could not open file [%v]", mDataFileIndex.c_str());
 		return false;
 	}
 
@@ -1435,7 +1435,7 @@ void ZoneDefManager :: LoadIndex(void)
 	FileReader3 fr;
 	if(fr.OpenFile(mDataFileIndex.c_str()) != Err_OK)
 	{
-		g_Log.AddMessageFormat("[ERROR] LoadIndex() could not open file [%s]", mDataFileIndex.c_str());
+		g_Logs.data->error("LoadIndex() could not open file [%v]", mDataFileIndex.c_str());
 		return;
 	}
 
@@ -1584,7 +1584,7 @@ void ZoneBarrierManager :: LoadFromFile(const char *filename)
 	FileReader lfr;
 	if(lfr.OpenText(filename) != Err_OK)
 	{
-		g_Log.AddMessageFormat("Could not load Zone Barrier file: %s", filename); 
+		g_Logs.data->error("Could not load Zone Barrier file: %v", filename);
 		return;
 	}
 	lfr.CommentStyle = Comment_Semi;
@@ -1620,7 +1620,7 @@ void ZoneBarrierManager :: LoadFromFile(const char *filename)
 			else if(strcmp(lfr.SecBuffer, "Zone") == 0)
 				curZone = lfr.BlockToIntC(1);
 			else
-				g_Log.AddMessageFormat("Unknown identifier [%s] in file [%s] on line %d", lfr.SecBuffer, filename, lfr.LineNumber);
+				g_Logs.data->info("Unknown identifier [%v] in file [%v] on line %v", lfr.SecBuffer, filename, lfr.LineNumber);
 		}
 	}
 	lfr.CloseCurrent();
@@ -1740,7 +1740,7 @@ void GroveTemplateManager :: LoadData(void)
 
 	// Need to set up the TerrainCfg lookup table.
 	ResolveTerrainMap();
-	g_Log.AddMessageFormat("Loaded %d Grove Templates", mTemplateEntries.size());
+	g_Logs.data->info("Loaded %v Grove Templates", mTemplateEntries.size());
 }
 
 void GroveTemplateManager :: LoadFile(const char *filename)
@@ -1748,7 +1748,7 @@ void GroveTemplateManager :: LoadFile(const char *filename)
 	FileReader3 fr;
 	if(fr.OpenFile(filename) != fr.SUCCESS)
 	{
-		g_Log.AddMessageFormat("Unable to open grove template file [%s]", filename);
+		g_Logs.data->error("Unable to open grove template file [%v]", filename);
 		return;
 	}
 

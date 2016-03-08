@@ -287,8 +287,19 @@ void segfault_sigaction(int signum, siginfo_t *si, void *arg)
 		g_Logs.server->fatal("Stack trace:");
 		if(result != NULL)
 		{
-			for(int a = 0; a < numPtr; a++)
-				g_Logs.server->fatal("  %v", result[a]);
+			for(int a = 0; a < numPtr; a++) {
+				std::string line = "UNKNOWN";
+				std::vector<std::string> parts;
+				Util::Split(result[a], " ", parts);
+				if(parts.size() > 0) {
+					std:string addr = parts[parts.size() - 1];
+					char cmd[512];
+					Util::SafeFormat(cmd, sizeof(cmd), "addr2line -e %s -a %s", g_Executable, addr.c_str());
+					line = Util::CaptureCommand(cmd);
+				}
+				g_Logs.server->fatal("  %v %v", result[a], line);
+
+			}
 			free(result);
 		}
 		g_Logs.server->fatal("Stack trace finished");
@@ -516,23 +527,35 @@ void ServiceMain(int argc, char** argv) {
 int InitServerMain(int argc, char *argv[]) {
 	TRACE_INIT(250);
 
+	if(PLATFORM_GETCWD(g_WorkingDirectory, 256) == NULL) {
+		printf("Failed to get current working directory.");
+	}
+
+	START_EASYLOGGINGPP(argc, argv);
+
 	bool daemonize = false;
 	std::string pidfile = "";
+
 	for(int i = 0 ; i < argc ; i++) {
-		if(strcmp(argv[i], "-d") == 0)
+		if(i == 0) {
+			if(Util::HasBeginning(argv[i], "/"))
+				strcpy(g_Executable, argv[i]);
+			else
+				Util::SafeFormat(g_Executable, 512, "%s/%s", g_WorkingDirectory, argv[i]);
+		}
+		else if(strcmp(argv[i], "-d") == 0)
 			daemonize = true;
 		else if(strcmp(argv[i], "-p") == 0) {
 			pidfile = argv[++i];
+		}
+		else if(strcmp(argv[i], "-I") == 0) {
+			el::Loggers::addFlag(el::LoggingFlag::ImmediateFlush);
 		}
 	}
 
 	START_EASYLOGGINGPP(argc, argv);
 
 	curl_global_init(CURL_GLOBAL_DEFAULT);
-
-	if(PLATFORM_GETCWD(g_WorkingDirectory, 256) == NULL) {
-		printf("Failed to get current working directory.");
-	}
 	bcm.mlog.reserve(100);
 
 	g_Logs.server->info("Loading data files...");

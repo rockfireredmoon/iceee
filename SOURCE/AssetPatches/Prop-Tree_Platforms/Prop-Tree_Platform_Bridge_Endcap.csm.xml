@@ -1,6 +1,0 @@
-<?xml version="1.0" ?>
-<Component id="Prop-Tree_Platform_Bridge_Endcap" xmlns="http://ee.ironrealms.com/CMS_XML.xsd">
-  <LOD dist="" mesh=""/>
-  <Entity mesh="Prop-Tree_Platform_Bridge_Endcap.mesh" boundingBox=""/>
-  <Entity mesh="Prop-Tree_Platform_Bridge_Endcap-Blocking.mesh" qf="4" vf="2"/>
-</Component>

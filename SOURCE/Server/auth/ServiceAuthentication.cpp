@@ -36,7 +36,7 @@ ServiceAuthenticationHandler::~ServiceAuthenticationHandler() {
 
 void ServiceAuthenticationHandler::copyVeteranPlayerDetails(std::string pfUsername, AccountData *data) {
 
-	g_Log.AddMessageFormat("Importing veteran details for account %s", data->Name);
+	g_Logs.server->info("Importing veteran details for account %v", data->Name);
 
 	/*
 	 * Now contact the partner server and see if there are any groves to transfer
@@ -49,16 +49,16 @@ void ServiceAuthenticationHandler::copyVeteranPlayerDetails(std::string pfUserna
 
 		// Get the highest level character (for veteran rewards)
 		std::vector<CharacterCacheEntry> cd = otherAccount.characterCache.cacheData;
-		g_Log.AddMessageFormat("Imported account for %s has %d characters", data->Name, cd.size());
+		g_Logs.server->info("Imported account for %v has %v characters", data->Name, cd.size());
 		for (std::vector<CharacterCacheEntry>::iterator it = cd.begin();
 				it != cd.end(); ++it) {
 			data->VeteranLevel = max(data->VeteranLevel, (*it).level);
-			g_Log.AddMessageFormat("Character %s is level %d (max now %d)", (*it).level, (*it).display_name.c_str());
+			g_Logs.server->info("Character %v is level %v (max now %v)", (*it).level, (*it).display_name.c_str());
 		}
 
 		if (data->GroveName.size() > 0) {
 			if (client.enumerateGroves(otherAccount.ID, groves)) {
-				g_Log.AddMessageFormat("Copying %d groves from source account.",
+				g_Logs.server->info("Copying %v groves from source account.",
 						groves.size());
 				for (std::vector<ZoneDefInfo>::iterator it = groves.begin();
 						it != groves.end(); ++it) {
@@ -83,15 +83,15 @@ void ServiceAuthenticationHandler::copyVeteranPlayerDetails(std::string pfUserna
 					zd.mPlayerFilterID.clear();
 					zd.mPlayerFilterType = 0;
 
-					g_Log.AddMessageFormat("Copying grove '%s' to '%s'.",
+					g_Logs.server->info("Copying grove '%v' to '%v'.",
 							zd.mWarpName.c_str(), nextGroveName.c_str());
 
 					const GroveTemplate *gt =
 							g_GroveTemplateManager.GetTemplateByTerrainCfg(
 									zd.mTerrainConfig.c_str());
 					if (gt == NULL) {
-						g_Log.AddMessageFormat(
-								"No grove template for %s, will not be able to add default build permission for user %s (%s).",
+					g_Logs.server->warn(
+								"No grove template for %v, will not be able to add default build permission for user %v (%v).",
 								zd.mTerrainConfig.c_str(), data->Name, pfUsername.c_str());
 					}
 
@@ -111,7 +111,7 @@ void ServiceAuthenticationHandler::copyVeteranPlayerDetails(std::string pfUserna
 						data->PendingMinorUpdates++;
 					}
 
-					g_Log.AddMessageFormat("New grove zone ID is %d", zd.mID);
+					g_Logs.server->info("New grove zone ID is %v", zd.mID);
 
 					std::vector<SceneryPageKey> pages;
 					if (client.getZone((*it).mID, *it, pages)) {
@@ -121,7 +121,7 @@ void ServiceAuthenticationHandler::copyVeteranPlayerDetails(std::string pfUserna
 							SceneryPage sp;
 							sp.mTileX = spk.x;
 							sp.mTileY = spk.y;
-							g_Log.AddMessageFormat("   Copying tile %d x %d.",
+							g_Logs.server->info("   Copying tile %v x %v.",
 									spk.x, spk.y);
 							client.getScenery((*it).mID, sp);
 
@@ -139,8 +139,8 @@ void ServiceAuthenticationHandler::copyVeteranPlayerDetails(std::string pfUserna
 								// Give prop new ID
 								int newPropID = g_SceneryVars.BaseSceneryID
 										+ g_SceneryVars.SceneryAdditive++;
-								g_Log.AddMessageFormat(
-										"       Copying object %d to %d",
+								g_Logs.server->info(
+										"       Copying object %v to %v",
 										prop.ID, newPropID);
 								prop.ID = newPropID;
 								SessionVarsChangeData.AddChange();
@@ -151,16 +151,15 @@ void ServiceAuthenticationHandler::copyVeteranPlayerDetails(std::string pfUserna
 							g_SceneryManager.ReleaseThread();
 						}
 					} else {
-						g_Log.AddMessageFormat(
-								"[WARNING] Failed to get zone %d.", (*it).mID);
+						g_Logs.server->warn("Failed to get zone %v.", (*it).mID);
 					}
 				}
 			} else {
-				g_Log.AddMessageFormat("[WARNING] Failed to enumerate groves.");
+				g_Logs.server->warn("Failed to enumerate groves.");
 			}
 		}
 	} else {
-		g_Log.AddMessageFormat("[WARNING] Failed to retrieve legacy account.");
+		g_Logs.server->warn("Failed to retrieve legacy account.");
 	}
 
 	data->VeteranImported = true;
@@ -187,8 +186,8 @@ AccountData * ServiceAuthenticationHandler::onAuthenticate(SimulatorThread *sim,
 	std::vector<std::string> prms;
 	Util::Split(authorizationHash, ":", prms);
 	if (prms.size() < 4) {
-		g_Log.AddMessageFormat(
-				"Unexpected number of elements in login string for SERVICE authentication. %s",
+	g_Logs.server->info(
+				"Unexpected number of elements in login string for SERVICE authentication. %v",
 				authorizationHash.c_str());
 	} else {
 		/* Now try the integrated website authentication. This is hosted by the Drupal module 'Services' and is
@@ -233,12 +232,10 @@ AccountData * ServiceAuthenticationHandler::onAuthenticate(SimulatorThread *sim,
 			Json::Value root;
 			Json::Reader reader;
 
-			g_Log.AddMessageFormat("JSON >>> %s", readBuffer.c_str());
-
 			bool parsingSuccessful = reader.parse(readBuffer.c_str(), root);
 			if (!parsingSuccessful) {
-				g_Log.AddMessageFormat(
-						"[WARNING] Invalid data from authentication request.");
+				g_Logs.server->warn(
+						"Invalid data from authentication request.");
 				sim->ForceErrorMessage("Account information is not valid data.",
 						INFOMSG_ERROR);
 				sim->Disconnect("ServiceAuthentication::authenticate");
@@ -253,8 +250,7 @@ AccountData * ServiceAuthenticationHandler::onAuthenticate(SimulatorThread *sim,
 						"Please sign in through the game website.",
 						INFOMSG_ERROR);
 				sim->Disconnect("ServiceAuthentication::authenticate");
-				g_Log.AddMessageFormat(
-						"[WARNING] A likely attempt to login using the client directly.");
+				g_Logs.server->warn("A likely attempt to login using the client directly.");
 				return NULL;
 			}
 
@@ -299,8 +295,7 @@ AccountData * ServiceAuthenticationHandler::onAuthenticate(SimulatorThread *sim,
 						"User is valid, but does not have permission to play game.",
 						INFOMSG_ERROR);
 				sim->Disconnect("ServiceAuthentication::authenticate");
-				g_Log.AddMessageFormat(
-						"User %s is valid, but does not any permission that allows play.",
+				g_Logs.server->info("User %v is valid, but does not any permission that allows play.",
 						loginName.c_str());
 				return NULL;
 			}
@@ -319,8 +314,7 @@ AccountData * ServiceAuthenticationHandler::onAuthenticate(SimulatorThread *sim,
 						grove = fieldArr.get("value", "").asString();
 					}
 				}
-				g_Log.AddMessageFormat("Player has grove name of %s",
-						grove.c_str());
+				g_Logs.server->info("Player has grove name of %v", grove.c_str());
 			}
 
 			// Planetforever username (for account migration)
@@ -334,8 +328,7 @@ AccountData * ServiceAuthenticationHandler::onAuthenticate(SimulatorThread *sim,
 						pfUsername = fieldArr.get("value", "").asString();
 					}
 				}
-				g_Log.AddMessageFormat("Player has PF account name of %s",
-						pfUsername.c_str());
+				g_Logs.server->info("Player has PF account name of %v", pfUsername.c_str());
 			}
 
 			// Some characters are unacceptable in grove names (i.e. separators in index and data files)
@@ -353,13 +346,13 @@ AccountData * ServiceAuthenticationHandler::onAuthenticate(SimulatorThread *sim,
 					g_AccountManager.GetAccountQuickDataByUsername(
 							loginName.c_str());
 			if (aqd != NULL) {
-				g_Log.AddMessageFormat("External service authenticated %s OK.",
+				g_Logs.server->info("External service authenticated %v OK.",
 						loginName.c_str());
 				accPtr = g_AccountManager.FetchIndividualAccount(aqd->mID);
 
 			} else {
-				g_Log.AddMessageFormat(
-						"Service authenticated OK, but there was no local account with name %s, creating one",
+				g_Logs.server->info(
+						"Service authenticated OK, but there was no local account with name %v, creating one",
 						loginName.c_str());
 				g_AccountManager.cs.Enter("ServiceAccountCreation");
 				int retval = g_AccountManager.CreateAccountFromService(
@@ -396,8 +389,8 @@ AccountData * ServiceAuthenticationHandler::onAuthenticate(SimulatorThread *sim,
 			if (accPtr != NULL) {
 				if (accPtr->GroveName.length() > 0
 						&& grove.compare(accPtr->GroveName) != 0) {
-					g_Log.AddMessageFormat(
-							"Attempting to rename player groves from '%s' to '%s'",
+					g_Logs.server->info(
+							"Attempting to rename player groves from '%v' to '%v'",
 							accPtr->GroveName.c_str(), grove.c_str());
 
 					ZoneDefInfo *def = g_ZoneDefManager.GetPointerByGroveName(
@@ -424,11 +417,11 @@ AccountData * ServiceAuthenticationHandler::onAuthenticate(SimulatorThread *sim,
 						ZoneDefInfo *zone = g_ZoneDefManager.GetPointerByID(
 								*it);
 						if (zone == NULL)
-							g_Log.AddMessageFormat("Unknown grove %d", *it);
+							g_Logs.server->info("Unknown grove %d", *it);
 						else {
 							Util::SafeFormat(buf, sizeof(buf), "%s%d",
 									grove.c_str(), idx);
-							g_Log.AddMessageFormat("Grove %s is now %s",
+							g_Logs.server->info("Grove %v is now %v",
 									zone->mWarpName.c_str(), buf);
 							zone->mWarpName = buf;
 							zone->mGroveName = grove;
@@ -544,7 +537,7 @@ AccountData * ServiceAuthenticationHandler::onAuthenticate(SimulatorThread *sim,
 
 				// Get the number of unread private messages waiting
 				session.unreadMessages = sc.getUnreadPrivateMessages(&session);
-				g_Log.AddMessageFormat("Account has %d unread messages",
+				g_Logs.server->info("Account has %v unread messages",
 						session.unreadMessages);
 
 				if (!accPtr->VeteranImported) {
@@ -558,8 +551,8 @@ AccountData * ServiceAuthenticationHandler::onAuthenticate(SimulatorThread *sim,
 					"User not found on external service, please contact site administrator for assistance.",
 					INFOMSG_ERROR);
 			sim->Disconnect("ServiceAuthentication::authenticate");
-			g_Log.AddMessageFormat(
-					"Service returned error when confirming authentication. Status %d",
+			g_Logs.server->info(
+					"Service returned error when confirming authentication. Status %v",
 					res);
 			return NULL;
 		}

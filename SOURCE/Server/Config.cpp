@@ -84,6 +84,7 @@ string g_MOTD_Message = "";
 
 // ***************************  Internal Variables  **************************
 char g_WorkingDirectory[256] = { 0 }; //If the size of this changes, need to change the parameter by _getcwd() in the main() function.
+char g_Executable[512] = { 0 };
 //long g_HTTP404FileDataSize = 0;
 
 const int g_JumpConstant = 32767;

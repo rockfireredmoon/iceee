@@ -2347,8 +2347,7 @@ void QuestJournal::CheckRepeatDelay(void) {
 					int availi = availableQuests.HasQuestID(questID);
 					if (availi == -1) {
 						availableQuests.AddItem(questID, qdef);
-						g_Log.AddMessageFormat("[QUEST] Resetting quest %d",
-								questID);
+						g_Logs.server->info("Resetting quest %v", questID);
 					}
 				}
 

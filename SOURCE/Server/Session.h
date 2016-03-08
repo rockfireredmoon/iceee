@@ -77,7 +77,7 @@ int LoadSession(const char *filename)
 			else if(strcmp(NameBlock, "NextVirtualQuestID") == 0)
 				QuestDef.mVirtualQuestID = lfr.BlockToInt(1);
 			else
-				g_Log.AddMessageFormat("[ERROR] Unknown identifier [%s] in file [%s]", NameBlock, filename);
+				g_Logs.data->error("Unknown identifier [%v] in file [%v]", NameBlock, filename);
 		}
 	}
 	lfr.CloseCurrent();

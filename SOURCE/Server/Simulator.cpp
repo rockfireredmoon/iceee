@@ -279,7 +279,7 @@ void SimulatorManager::ProcessPendingDisconnects(void) {
 
 	cs.Enter("SimulatorManager::AddPendingDisconnect");
 	for (size_t i = 0; i < pendingDisconnects.size(); i++) {
-		g_Log.AddMessageFormat("ProcessPendingDisconnects - Sim:%d",
+		g_Logs.simulator->info("ProcessPendingDisconnects - Sim:%v",
 				pendingDisconnects[i]->InternalID);
 		pendingDisconnects[i]->ProcessDisconnect();
 	}
@@ -345,8 +345,8 @@ void SimulatorManager::CheckIdleSimulatorBoot(AccountData *account) {
 			it->ForceErrorMessage(
 					"Your connection is being kicked because there is another login on your account.",
 					INFOMSG_INFO);
-			g_Log.AddMessageFormat(
-					"[KICK] CheckIdleSimulatorBoot Forcing Simulator:%d to shut down",
+			g_Logs.simulator->warn(
+					"[KICK] CheckIdleSimulatorBoot Forcing Simulator:%v to shut down",
 					it->InternalID);
 			it->Disconnect("SimulatorManager::CheckIdleSimulatorBoot");
 			return;
@@ -371,7 +371,7 @@ void SimulatorManager::FlushHangingSimulators(void) {
 				testTime = SIMULATOR_FLUSH_CHARCREATE;
 			if (g_ServerTime > it->LastRecv + testTime) {
 				it->ForceErrorMessage("Closing connection.", INFOMSG_INFO);
-				g_Log.AddMessageFormat("Forcing Simulator:%d to shut down",
+				g_Logs.simulator->info("Forcing Simulator:%v to shut down",
 						it->InternalID);
 				it->Disconnect("SimulatorManager::FlushHangingSimulators");
 			}
@@ -379,8 +379,8 @@ void SimulatorManager::FlushHangingSimulators(void) {
 			//While we're here, might as well check for idle characters and boot them.
 			if (g_ServerTime >= it->pld.NextIdleCheckTime) {
 				if (it->pld.VerifyIdle() == true) {
-					g_Log.AddMessageFormat(
-							"[BOT] Forcing Simulator:%d to shut down (detected idle)",
+					g_Logs.simulator->warn(
+							"[BOT] Forcing Simulator:%v to shut down (detected idle)",
 							it->InternalID);
 					it->ForceErrorMessage(
 							"You have been disconnected for inactivity.",
@@ -401,8 +401,8 @@ void SimulatorManager::FlushHangingSimulators(void) {
 				it->ForceErrorMessage(
 						"The server has not received a routine message from the client. Disconnecting.",
 						INFOMSG_INFO);
-				g_Log.AddMessageFormat(
-						"Forcing Simulator:%d to shut down (no heartbeat response)",
+				g_Logs.simulator->warn(
+						"Forcing Simulator:%v to shut down (no heartbeat response)",
 						it->InternalID);
 				it->Disconnect("SimulatorManager::FlushHangingSimulators");
 			}
@@ -436,7 +436,7 @@ void SimulatorManager::SendToAllSimulators(const char *buffer,
 void SimulatorManager::BroadcastMessage(const char *message) {
 
 	cs.Enter("SimulatorManager::BroadcastMessage");
-	g_Log.AddMessageFormat("Broadcast message '%s'", message);
+	g_Logs.simulator->info("Broadcast message '%v'", message);
 	SIMULATOR_IT it;
 	for (it = Simulator.begin(); it != Simulator.end(); ++it) {
 		if (it->ProtocolState == 0) {
@@ -481,7 +481,7 @@ void SimulatorQuery::Clear(void) {
 
 bool SimulatorQuery::ValidArgIndex(unsigned int argIndex) {
 	if (argIndex < 0 || argIndex >= argCount) {
-		g_Log.AddMessageFormat("[WARNING] Invalid index: %d for query: %s",
+		g_Logs.simulator->warn("Invalid index: %v for query: %v",
 				argIndex, name.c_str());
 		return false;
 	}
@@ -641,7 +641,7 @@ PLATFORM_THREADRETURN SimulatorThreadProc(PLATFORM_THREADARGS lpParam)
 	SimulatorThread *controller = (SimulatorThread*)lpParam;
 	if(controller->sim_cs.initialized == false)
 	{
-		g_Log.AddMessageFormat("[CRITICAL] Simulator critical section is not initialized.");
+		g_Logs.simulator->fatal("Simulator critical section is not initialized.");
 		return 0;
 	}
 	controller->LastUpdate = g_ServerTime;
@@ -663,7 +663,7 @@ PLATFORM_THREADRETURN SimulatorThreadProc(PLATFORM_THREADARGS lpParam)
 	controller->LastUpdate = g_ServerTime;
 	AdjustComponentCount(-1);
 	controller->AddPendingDisconnect();
-	g_Log.AddMessageFormat("Thread for Sim:%d shut down.", controller->InternalID);
+	g_Logs.simulator->info("Thread for Sim:%v shut down.", controller->InternalID);
 	PLATFORM_CLOSETHREAD(0);
 	return 0;
 }
@@ -724,7 +724,7 @@ void SimulatorThread::RunMainLoop(void) {
 						//HandleReceivedMessage2();  //OBSOLETE, routing through the main thread from AddPendingPacketData()
 					} else if (res == 0) {
 						g_Logs.simulator->debug(
-								"[%d] Connection closed message.", InternalID);
+								"[%v] Connection closed message.", InternalID);
 						Status = Status_Restart;
 					} else if (res == -2) {
 						g_Logs.simulator->error("[%v] Socket select error.",
@@ -766,7 +766,7 @@ void SimulatorThread::RunMainLoop(void) {
 		  //__except((filter(GetExceptionCode(), GetExceptionInformation())))
 		BEGINCATCH
 		{
-			g_Log.AddMessageFormat("[ERROR] Exception occurred in [Sim:%d]",
+			g_Logs.simulator->fatal("Exception occurred in [Sim:%v]",
 					InternalIndex);
 			ForceErrorMessage("CRITICAL ERROR: EMERGENCY DISCONNECT",
 					INFOMSG_ERROR);
@@ -991,8 +991,8 @@ void SimulatorThread::HandleReceivedMessage2(void) {
 	cs.Leave();
 
 	if (isConnected == false) {
-		g_Log.AddMessageFormat(
-				"[CRITICAL] Should not be processing data (size: %d)",
+		g_Logs.simulator->fatal(
+				"Should not be processing data (size: %v)",
 				procData.mData.size());
 		return;
 		procData.Clear();
@@ -1000,7 +1000,7 @@ void SimulatorThread::HandleReceivedMessage2(void) {
 
 	if (procData.mData.size() == 0) {
 		g_Logs.simulator->warn(
-				"[%d] HandleReceivedMessage2 procData size is zero",
+				"[%v] HandleReceivedMessage2 procData size is zero",
 				InternalID);
 		return;
 	}
@@ -1542,7 +1542,7 @@ void SimulatorThread::SetPersona(int personaIndex) {
 	UpdateEqAppearance();
 
 	g_Logs.simulator->debug(
-			"[%d] Persona set to index:%d, (ID: %d, CDef: %d) (%s)", InternalID,
+			"[%v] Persona set to index:%v, (ID: %v, CDef: %v) (%v)", InternalID,
 			personaIndex, pld.CreatureID, pld.CreatureDefID,
 			pld.charPtr->cdef.css.display_name);
 
@@ -1990,7 +1990,7 @@ void SimulatorThread::CheckMapUpdate(bool force) {
 			std::string * tEnv = pld.zoneDef->GetTileEnvironment(
 					creatureInst->CurrentX, creatureInst->CurrentZ);
 			if (strcmp(tEnv->c_str(), pld.CurrentEnv) != 0) {
-				g_Log.AddMessageFormat("Sending environment change to %s",
+				g_Logs.simulator->info("Sending environment change to %v",
 						tEnv->c_str());
 				SendSetMap();
 			}
@@ -2131,7 +2131,7 @@ void SimulatorThread::handle_game_query(void) {
 	unsigned long passTime = g_PlatformTime.getMilliseconds() - startTime;
 	if (passTime > 50) {
 		g_Logs.simulator->debug(
-				"[%d] TIME PASS handle_game_query() %d ms for query:%s (ID:%d)",
+				"[%v] TIME PASS handle_game_query() %v ms for query:%v (ID:%v)",
 				InternalID, passTime, query.name.c_str(), query.ID);
 		for (unsigned int i = 0; i < query.argCount; i++)
 			g_Logs.simulator->debug("[%v]   [%v]=%v", InternalID, i,
@@ -2337,7 +2337,7 @@ bool SimulatorThread::HandleQuery(int &PendingData) {
 	else if (query.name.compare("team") == 0)
 		PendingData = handle_query_team();
 	else {
-		g_Log.AddMessageFormat("Unhandled query '%s'.", query.name.c_str());
+		g_Logs.simulator->warn("Unhandled query '%v'.", query.name.c_str());
 		return false;
 	}
 
@@ -2832,7 +2832,6 @@ void SimulatorThread::SetLoadingStatus(bool status, bool shutdown) {
 						pld.accPtr->SiteSession.unreadMessages,
 						pld.accPtr->SiteSession.unreadMessages > 1 ? "s" : "",
 						g_URLManager.GetURL("NewMessages").c_str());
-				g_Log.AddMessageFormat(buf);
 				AttemptSend(SendBuf,
 						PrepExt_SendInfoMessage(SendBuf, buf, INFOMSG_INFO));
 			}
@@ -4027,13 +4026,13 @@ bool SimulatorThread::CheckPermissionSimple(int permissionSet,
 	//permissions.  Return true if it does, or false if it doesn't.
 	//Intended to check for a specific permission or set of flags.
 	if (pld.accPtr == NULL) {
-		g_Log.AddMessageFormat(
-				"[CRITICAL] CheckPermissionSimple accPtr is NULL");
+		g_Logs.simulator->error(
+				"CheckPermissionSimple accPtr is NULL");
 		return false;
 	}
 	if (pld.charPtr == NULL) {
-		g_Log.AddMessageFormat(
-				"[CRITICAL] CheckPermissionSimple charPtr is NULL");
+		g_Logs.simulator->error(
+				"CheckPermissionSimple charPtr is NULL");
 		return false;
 	}
 
@@ -5281,7 +5280,7 @@ int SimulatorThread::protected_helper_query_scenery_edit(void) {
 					"[%d] scenery.edit extended property was set [%s=%s]",
 					InternalID, field, data);
 		} else
-			g_Log.AddMessageFormat("Unknown property [%s] for scenery.edit",
+			g_Logs.simulator->warn("Unknown property [%v] for scenery.edit",
 					field);
 	}
 
@@ -5638,8 +5637,8 @@ int SimulatorThread::handle_query_statuseffect_set(void) {
 							pld.charPtr->cdef.css.display_name, time,
 							query.args[4].c_str());
 					creature->simulatorPtr->SendInfoMessage(Aux2, INFOMSG_INFO);
-					g_Log.AddMessageFormat(
-							"[SAGE] %s silenced %s for %d minutes because",
+					g_Logs.event->info(
+							"[SAGE] %v silenced %v for %v minutes because",
 							pld.charPtr->cdef.css.display_name,
 							creature->charPtr->cdef.css.display_name, time,
 							query.args[4].c_str());
@@ -5648,12 +5647,12 @@ int SimulatorThread::handle_query_statuseffect_set(void) {
 							"You have been frozen by %s for %d minutes.",
 							pld.charPtr->cdef.css.display_name, time);
 					creature->simulatorPtr->SendInfoMessage(Aux2, INFOMSG_INFO);
-					g_Log.AddMessageFormat("[SAGE] %s froze %s for %d minutes",
+					g_Logs.event->info("[SAGE] %v froze %v for %v minutes",
 							pld.charPtr->cdef.css.display_name,
 							creature->charPtr->cdef.css.display_name, time);
 				} else {
-					g_Log.AddMessageFormat(
-							"[SAGE] %s removed status effect %d from %s",
+					g_Logs.event->info(
+							"[SAGE] %v removed status effect %v from %v",
 							pld.charPtr->cdef.css.display_name, statusEffect,
 							creature->charPtr->cdef.css.display_name);
 				}
@@ -5668,7 +5667,7 @@ int SimulatorThread::handle_query_statuseffect_set(void) {
 							"You have been unsilenced by %s",
 							pld.charPtr->cdef.css.display_name);
 					creature->simulatorPtr->SendInfoMessage(Aux2, INFOMSG_INFO);
-					g_Log.AddMessageFormat("[SAGE] %s unsilenced %s",
+					g_Logs.event->info("[SAGE] %v unsilenced %v",
 							pld.charPtr->cdef.css.display_name,
 							creature->charPtr->cdef.css.display_name);
 				} else if (statusEffect == StatusEffects::GM_FROZEN) {
@@ -5676,12 +5675,12 @@ int SimulatorThread::handle_query_statuseffect_set(void) {
 							"You have been unfrozen by %s",
 							pld.charPtr->cdef.css.display_name);
 					creature->simulatorPtr->SendInfoMessage(Aux2, INFOMSG_INFO);
-					g_Log.AddMessageFormat("[SAGE] %s unfroze %s",
+					g_Logs.event->info("[SAGE] %v unfroze %v",
 							pld.charPtr->cdef.css.display_name,
 							creature->charPtr->cdef.css.display_name);
 				} else {
-					g_Log.AddMessageFormat(
-							"[SAGE] %s set status effect %d for %d minutes on %s",
+					g_Logs.event->info(
+							"[SAGE] %v set status effect %v for %v minutes on %v",
 							pld.charPtr->cdef.css.display_name, statusEffect,
 							time, creature->charPtr->cdef.css.display_name);
 				}
@@ -5952,7 +5951,6 @@ int SimulatorThread::handle_query_item_def_use(void) {
 	 [1] = Creature/%d (Avatar)        Selected target.
 	 */
 
-	g_Log.AddMessageFormat("item.def.use");
 	if (query.argCount > 0) {
 		int itemID = query.GetInteger(0);
 		InventorySlot *item = pld.charPtr->inventory.GetItemPtrByID(itemID);
@@ -6865,7 +6863,6 @@ int SimulatorThread::handle_query_creature_use(void) {
 
 	int CID = atoi(query.args[0].c_str());
 
-//	g_Log.AddMessageFormat("[REMOVEME] Creature use %d", CID);
 	CreatureInstance *target = creatureInst->actInst->GetNPCInstanceByCID(CID);
 
 	if (target == NULL)
@@ -6899,6 +6896,7 @@ int SimulatorThread::handle_query_creature_use(void) {
 			if (intObj->opType == InteractObject::TYPE_WARP
 					|| intObj->opType == InteractObject::TYPE_LOCATIONRETURN) {
 				if (intObj->WarpID != pld.CurrentZoneID) {
+					g_Logs.server->info("%v is a warp interact to %v", CDef, intObj->WarpID);
 					ZoneDefInfo *zoneDef = g_ZoneDefManager.GetPointerByID(
 							intObj->WarpID);
 					if (zoneDef != NULL) {
@@ -6909,6 +6907,7 @@ int SimulatorThread::handle_query_creature_use(void) {
 										pd, zoneDef);
 						std::string outputMsg;
 						if (inst != NULL) {
+							g_Logs.server->info("There is an active instance for zone %v for player %v", intObj->WarpID, creatureInst->CreatureDefID);
 							if (inst->scaleConfig.IsScaled() == true) {
 								outputMsg =
 										"You are entering a scaled instance. Difficulty: ";
@@ -6917,6 +6916,8 @@ int SimulatorThread::handle_query_creature_use(void) {
 											inst->scaleProfile->mDifficultyName);
 							}
 						} else {
+							g_Logs.server->info("There is no active instance for zone %v for player %v", intObj->WarpID, creatureInst->CreatureDefID);
+
 							if (zoneDef->IsMobScalable()
 									== true&& pd.in_scaleProfile != NULL) {
 								outputMsg =
@@ -6929,18 +6930,24 @@ int SimulatorThread::handle_query_creature_use(void) {
 							SendInfoMessage(outputMsg.c_str(), INFOMSG_INFO);
 						}
 					}
+					else {
+						g_Logs.server->error("Zone %v does not exist. %v cannot be warped.", intObj->WarpID, CDef );
+					}
 				}
 			}
 
 			creatureInst->LastUseDefID = CDef;
 			int size = creatureInst->NormalInteractObject(SendBuf, intObj);
-			if (size > 0)
+			if (size > 0) {
+				g_Logs.server->info("Creature %v is a normal interact being used by %v", CDef, creatureInst->CreatureDefID);
 				AttemptSend(SendBuf, size);
+			}
 
 			return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
 		}
 
 		if (target->HasStatus(StatusEffects::USABLE_BY_SCRIPT)) {
+			g_Logs.server->info("Creature %v is usable by scripts by %v", CDef, creatureInst->CreatureDefID);
 			return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
 		}
 
@@ -6948,8 +6955,10 @@ int SimulatorThread::handle_query_creature_use(void) {
 				target->CreatureDefID);
 		if (cdef != NULL
 				&& ((cdef->DefHints & CDEF_HINT_USABLE)
-						|| (cdef->DefHints & CDEF_HINT_USABLE_SPARKLY)))
+						|| (cdef->DefHints & CDEF_HINT_USABLE_SPARKLY))) {
+			g_Logs.server->info("Creature %v is usable by %v", CDef, creatureInst->CreatureDefID);
 			return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
+		}
 
 		return PrepExt_QueryResponseError(SendBuf, query.ID,
 				"Cannot use object.");
@@ -8976,8 +8985,8 @@ int SimulatorThread::handle_query_itemdef_delete(void) {
 						&cdata->inventory.containerList[INV_CONTAINER][a];
 				if (slot != NULL) {
 					if (slot->IID == item->mID) {
-						g_Log.AddMessageFormat(
-								"[SAGE] %s removed %s from %s because '%s'",
+						g_Logs.event->info(
+								"[SAGE] %v removed %v from %v because '%v'",
 								pld.charPtr->cdef.css.display_name,
 								item->mDisplayName.c_str(),
 								creature->charPtr->cdef.css.display_name,
@@ -9081,8 +9090,8 @@ int SimulatorThread::handle_query_item_create(void) {
 						creature->charPtr->inventory.AddItem_Ex(INV_CONTAINER,
 								item->mID, 1);
 				if (sendSlot != NULL) {
-					g_Log.AddMessageFormat(
-							"[SAGE] %s gave %s to %s because '%s'",
+					g_Logs.event->info(
+							"[SAGE] %v gave %v to %v because '%v'",
 							pld.charPtr->cdef.css.display_name,
 							item->mDisplayName.c_str(),
 							creature->charPtr->cdef.css.display_name,
@@ -9153,7 +9162,7 @@ int SimulatorThread::handle_query_petition_send(void) {
 				it->AttemptSend(buffer, wpos);
 		return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
 	} else {
-		g_Log.AddMessageFormat("Failed to create petition.");
+		g_Logs.simulator->error("Failed to create petition.");
 		return PrepExt_QueryResponseString(SendBuf, query.ID, "Failed"); //??
 	}
 }
@@ -9217,8 +9226,8 @@ int SimulatorThread::handle_query_gm_spawn(void) {
 			s->SelectTarget(c);
 			r = s->CallAbilityEvent(abilityID, EventType::onRequest);
 			if (r != 0)
-				g_Log.AddMessageFormat(
-						"Failed to use ability %d on spawn master creature %d",
+				g_Logs.simulator->error(
+						"Failed to use ability %v on spawn master creature %v",
 						abilityID, creatureID);
 			break;
 		case 1:
@@ -9228,8 +9237,8 @@ int SimulatorThread::handle_query_gm_spawn(void) {
 				s->SelectTarget(targ);
 				r = s->CallAbilityEvent(abilityID, EventType::onRequest);
 				if (r != 0)
-					g_Log.AddMessageFormat(
-							"Failed to use ability %d for spawn master creature %d",
+					g_Logs.simulator->error(
+							"Failed to use ability %v for spawn master creature %v",
 							abilityID, creatureID);
 			}
 			break;
@@ -9240,8 +9249,8 @@ int SimulatorThread::handle_query_gm_spawn(void) {
 				s->SelectTarget(targ);
 				r = s->CallAbilityEvent(abilityID, EventType::onRequest);
 				if (r != 0)
-					g_Log.AddMessageFormat(
-							"Failed to use ability %d for spawn master creature %d",
+					g_Logs.simulator->error(
+							"Failed to use ability %v for spawn master creature %v",
 							abilityID, creatureID);
 			}
 			break;
@@ -9260,8 +9269,8 @@ int SimulatorThread::handle_query_bug_report(void) {
 			Util::EncodeJSONString(summary).c_str(),
 			pld.charPtr->cdef.css.display_name, query.GetString(1),
 			Util::EncodeJSONString(desc).c_str());
-	g_Log.AddMessageFormat(
-			"Posting bug report with summary %s and category of %s",
+	g_Logs.simulator->info(
+			"Posting bug report with summary %v and category of %v",
 			query.GetString(0), query.GetString(2));
 
 	struct curl_slist *headers = NULL;
@@ -9583,8 +9592,8 @@ int SimulatorThread::OfferLoot(int mode, ActiveLootContainer *loot,
 				LootTag * tag = party->TagItem(ItemID,
 						party->mMemberList[i].mCreaturePtr->CreatureID, CID);
 				Util::SafeFormat(Aux3, sizeof(Aux3), "%d", tag->lootTag);
-				g_Log.AddMessageFormat(
-						"[LOOT] Sending offer of %d to %d using tag %s", ItemID,
+				g_Logs.simulator->info(
+						"Sending offer of %v to %v using tag %v", ItemID,
 						party->mMemberList[i].mCreatureID, Aux3);
 				WriteIdx = PartyManager::OfferLoot(SendBuf, ItemID, Aux3,
 						needOrGreed);
@@ -9594,7 +9603,7 @@ int SimulatorThread::OfferLoot(int mode, ActiveLootContainer *loot,
 				offers++;
 			} else {
 				g_Logs.event->info(
-						"%d is too far away from %d to receive loot (%d)",
+						"%v is too far away from %d to receive loot (%v)",
 						party->mMemberList[i].mCreaturePtr->CreatureID, CID,
 						distCheck);
 			}
@@ -9617,8 +9626,8 @@ int SimulatorThread::OfferLoot(int mode, ActiveLootContainer *loot,
 //		qresponse.push_back(Aux3);
 //		WriteIdx= PrepExt_QueryResponseStringList(&SendBuf[WriteIdx], query.ID, qresponse);
 		Util::SafeFormat(Aux3, sizeof(Aux3), "%d", tag->lootTag);
-		g_Log.AddMessageFormat(
-				"[LOOT] Sending offer of %d to original looter (%d) using tag %s",
+		g_Logs.simulator->info(
+				"Sending offer of %v to original looter (%v) using tag %v",
 				ItemID, receivingCreature->CreatureID, Aux3);
 		return PartyManager::OfferLoot(SendBuf, ItemID, Aux3, needOrGreed);
 	}
@@ -9761,8 +9770,8 @@ void SimulatorThread::CreatureUseHenge(int creatureID, int creatureDefID) {
 		InteractObject *iobj = NULL;
 		iobj = g_InteractObjectContainer.GetHengeByDefID(creatureDefID);
 		if (iobj == NULL) {
-			g_Log.AddMessageFormat(
-					"[WARNING] Henge not found in interact list: %d",
+			g_Logs.simulator->warn(
+					"Henge not found in interact list: %v",
 					creatureDefID);
 			return;
 		}
@@ -10265,21 +10274,21 @@ int SimulatorThread::handle_command_dtrig(void) {
 			pkgmap[search[i]->extraData->spawnPackage]++;
 		}
 		for (it = pkgmap.begin(); it != pkgmap.end(); ++it)
-			g_Log.AddMessageFormat("%s----:%d", it->first.c_str(), it->second);
+			g_Logs.simulator->info("%v----:%v", it->first.c_str(), it->second);
 		g_SceneryManager.ReleaseThread();
 	}
 		break;
 	case 19: {
 		CreatureInstance *ptr = creatureInst->CurrentTarget.targ;
 		if (ptr) {
-			g_Log.AddMessageFormat("name=%s", ptr->css.display_name);
-			g_Log.AddMessageFormat("aggro=%d", ptr->css.aggro_players);
-			g_Log.AddMessageFormat("ai=%s", ptr->css.ai_package);
-			g_Log.AddMessageFormat("faction=%d", ptr->Faction);
-			g_Log.AddMessageFormat("sflags=%d", ptr->serverFlags);
+			g_Logs.simulator->info("name=%v", ptr->css.display_name);
+			g_Logs.simulator->info("aggro=%v", ptr->css.aggro_players);
+			g_Logs.simulator->info("ai=%v", ptr->css.ai_package);
+			g_Logs.simulator->info("faction=%v", ptr->Faction);
+			g_Logs.simulator->info("sflags=%v", ptr->serverFlags);
 			for (size_t i = 0; i <= 62; i++)
 				if (ptr->HasStatus(i))
-					g_Log.AddMessageFormat("Status:%s", GetStatusNameByID(i));
+					g_Logs.simulator->info("Status:%v", GetStatusNameByID(i));
 		}
 	}
 		break;
@@ -10401,7 +10410,7 @@ int SimulatorThread::handle_command_dtrig(void) {
 					found->NotifyAccess(true);
 				merge++;
 			} else {
-				g_Log.AddMessageFormat("Skipped: %d", it->second.ID);
+				g_Logs.simulator->info("Skipped: %v", it->second.ID);
 			}
 		}
 		g_SceneryManager.ReleaseThread();
@@ -10410,7 +10419,7 @@ int SimulatorThread::handle_command_dtrig(void) {
 				"Scenery import to zone %d: %d in file, %d added, %d merged",
 				zoneID, page.mSceneryList.size(), add, merge);
 		SendInfoMessage(Aux1, INFOMSG_INFO);
-		g_Log.AddMessageFormat(Aux1);
+		g_Logs.simulator->info(Aux1);
 	}
 		break;
 	case 903:
@@ -10904,7 +10913,7 @@ int SimulatorThread::handle_query_mod_craft(void) {
 			wpos += PrepExt_SendInfoMessage(&SendBuf[wpos],
 					outputMsg[i].c_str(), INFOMSG_INFO);
 		AttemptSend(SendBuf, wpos);
-		g_Log.AddMessageFormat("[CRAFT] Crafted %s", recipe->GetName());
+		g_Logs.event->info("[CRAFT] Crafted %v", recipe->GetName());
 	}
 
 	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");

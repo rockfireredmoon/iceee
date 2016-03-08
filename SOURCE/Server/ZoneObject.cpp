@@ -3,6 +3,7 @@
 #include "StringList.h"
 #include <string.h>
 #include <math.h>
+#include "util/Log.h"
 
 ZoneMarkerDataManager g_ZoneMarkerDataManager;
 
@@ -98,7 +99,7 @@ void ZoneMarkerDataManager :: LoadFile(const char *filename)
 	FileReader lfr;
 	if(lfr.OpenText(filename) != Err_OK)
 	{
-		g_Log.AddMessageFormat("Could not open file [%s]", filename);
+		g_Logs.data->error("Could not open file [%v]", filename);
 		return;
 	}
 

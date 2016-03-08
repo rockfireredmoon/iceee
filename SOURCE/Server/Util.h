@@ -123,6 +123,7 @@ namespace Util
 	void EncodeHTML(std::string& data);
 	std::string EncodeJSONString(std::string &str);
 	std::string FormatDate(time_t *time);
+	std::string CaptureCommand(std::string cmd);
 	void ReplaceAll(std::string& str, const std::string& from, const std::string& to);
 	void URLDecode(std::string &str);
 	void URLEncode(std::string &str);

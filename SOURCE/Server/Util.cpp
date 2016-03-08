@@ -326,7 +326,7 @@ int PrepExt_QueryResponseStringList(char *buffer, int queryIndex, const STRINGLI
 	int count = strData.size();
 	if(count > 255)
 	{
-		g_Log.AddMessageFormat("[WARNING] PrepExt_QueryResponseStringList too many strings: %d", count);
+		g_Logs.server->warn("PrepExt_QueryResponseStringList too many strings: %v", count);
 		count = 255;
 	}
 	wpos += PutByte(&buffer[wpos], count); //String count
@@ -351,7 +351,7 @@ int PrepExt_QueryResponseMultiString(char *buffer, int queryIndex, const MULTIST
 		stringCount = strData[rows].size();
 		if(stringCount > 255)
 		{
-			g_Log.AddMessageFormat("[WARNING] PrepExt_QueryResponseMultiString too many strings: %d", stringCount);
+			g_Logs.server->warn("PrepExt_QueryResponseMultiString too many strings: %v", stringCount);
 			stringCount = 255;
 		}
 		wpos += PutByte(&buffer[wpos], stringCount);
@@ -864,7 +864,7 @@ void SafeCopyN(char *dest, const char *source, int destSize, int copySize)
 	}
 	if(copySize < 1)
 	{
-		g_Log.AddMessageFormat("[STRING] WARNING: SafeCopyN() cannot copy %d bytes", copySize);
+		g_Logs.server->warn("SafeCopyN() cannot copy %v bytes", copySize);
 		dest[0] = 0;
 		return;
 	}
@@ -876,7 +876,7 @@ void SafeCopyN(char *dest, const char *source, int destSize, int copySize)
 	if(len > max)
 	{
 #ifdef _DEBUG
-		g_Log.AddMessageFormat("[STRING] WARNING: SafeCopyN() at maximum limit to hold [%s] with [%d] bytes", source, copySize);
+		g_Logs.server->warn("SafeCopyN() at maximum limit to hold [%v] with [%v] bytes", source, copySize);
 #endif
 		len = max;
 	}
@@ -921,7 +921,7 @@ int SafeFormat(char *destBuf, size_t maxCount, const char *format, ...)
 		trunc = true;
 	}
 	if(trunc == true)
-		g_Log.AddMessageFormat("[STRING] SafeFormat() output was truncated [%s]", destBuf);
+		g_Logs.server->info("SafeFormat() output was truncated [%v]", destBuf);
 
 	return res;
 }
@@ -951,7 +951,7 @@ int SafeFormatArg(char *destBuf, size_t maxCount, const char *format, va_list ar
 		trunc = true;
 	}
 	if(trunc == true)
-		g_Log.AddMessageFormat("[STRING] SafeFormatArg() output was truncated [%s]", destBuf);
+		g_Logs.server->warn("SafeFormatArg() output was truncated [%v]", destBuf);
 
 	return res;
 }
@@ -964,7 +964,7 @@ int SafeFormatOffset(unsigned int offset, char *buffer, unsigned int bufferSize,
 	if((int)offset >= maxSafeSize)
 	{
 #ifdef _DEBUG
-		g_Log.AddMessageFormatW(MSG_WARN, "[STRING] SafeFormatOffset() string already full");
+		g_Logs.server->warn("SafeFormatOffset() string already full");
 #endif
 		return 0;
 	}
@@ -1368,6 +1368,22 @@ std::string FormatDate(time_t *time)
 	struct tm *timeinfo = localtime(time);
 	strftime(buff, 20, "%d/%m/%Y", timeinfo);
 	return buff;
+}
+
+std::string CaptureCommand(std::string cmd) {
+	string data;
+	FILE * stream;
+	const int max_buffer = 256;
+	char buffer[max_buffer];
+	cmd.append(" 2>&1");
+	stream = popen(cmd.c_str(), "r");
+	if (stream) {
+		while (!feof(stream))
+			if (fgets(buffer, max_buffer, stream) != NULL)
+				data.append(buffer);
+		pclose(stream);
+	}
+	return data;
 }
 
 int ParseDate(const std::string &str, time_t &time)

@@ -56,6 +56,7 @@ extern string g_MOTD_Message;
 
 //Internal variables, shouldn't be set in the config file
 extern char g_WorkingDirectory[];
+extern char g_Executable[];
 //extern long g_HTTP404FileDataSize;
 
 extern const int g_JumpConstant;

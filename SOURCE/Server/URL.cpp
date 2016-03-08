@@ -2,6 +2,7 @@
 #include "StringList.h"
 #include "FileReader3.h"
 #include "DirectoryAccess.h"
+#include "util/Log.h"
 
 URLManager g_URLManager;
 
@@ -18,7 +19,7 @@ void URLManager::LoadFile(void)
 	FileReader3 fr;
 	if(fr.OpenFile(filename.c_str()) != FileReader3::SUCCESS)
 	{
-		g_Log.AddMessageFormat("[ERROR] Could not open URL file [%s]", filename.c_str());
+		g_Logs.server->error("Could not open URL file [%v]", filename.c_str());
 		return;
 	}
 	fr.SetCommentChar(';');

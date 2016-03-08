@@ -1,6 +1,0 @@
-<?xml version="1.0" ?>
-<Component id="Prop-Wooden_Wall" xmlns="http://ee.ironrealms.com/CMS_XML.xsd">
-  <LOD dist="" mesh=""/>
-  <Entity mesh="Prop-Wooden_Wall.mesh" boundingBox=""/>
-  <Entity mesh="Prop-Wooden_Wall-Blocking.mesh" qf="4" vf="2"/>
-</Component>

@@ -647,7 +647,7 @@ int WriteCurrentStatToBuffer(char *buffer, short StatID, CharacterStatSet *css)
 	int r = GetStatIndex(StatID);
 	if(r == -1)
 	{
-		g_Log.AddMessageFormat("[ERROR] StatID not found: %d", StatID);
+		g_Logs.server->error("StatID not found: %v", StatID);
 		return 0;
 	}
 
@@ -660,7 +660,7 @@ int WriteCurrentStatToBuffer(char *buffer, short StatID, CharacterStatSet *css)
 	case StatType::CSTRING:   return PutStringUTF(buffer, base);
 	case StatType::STRING:    return PutStringUTF(buffer, ((std::string*)base)->c_str());
 	default:
-		g_Log.AddMessageFormat("[ERROR] Unhandled stat type [%s] for StatID [%d]", StatList[r].type, StatID);
+		g_Logs.server->error("Unhandled stat type [%v] for StatID [%v]", StatList[r].type, StatID);
 	}
 	return 0;
 }
@@ -670,7 +670,7 @@ int WriteStatToBuffer(char *buffer, short StatID, float value)
 	int r = GetStatIndex(StatID);
 	if(r == -1)
 	{
-		g_Log.AddMessageFormat("[ERROR] WriteStatToBuffer() Invalid StatID: %d", StatID);
+		g_Logs.server->error("WriteStatToBuffer() Invalid StatID: %v", StatID);
 		return 0;
 	}
 
@@ -693,7 +693,7 @@ int WriteStatToBuffer(char *buffer, short StatID, float value)
 	case StatType::STRING:
 		return PutStringUTF(buffer, "");
 	default:
-		g_Log.AddMessageFormat("[ERROR] Unhandled stat type [%s] for StatID [%d]", StatList[r].type, StatID);
+		g_Logs.server->error("Unhandled stat type [%v] for StatID [%v]", StatList[r].type, StatID);
 	}
 	return 0;
 }
@@ -730,7 +730,7 @@ int WriteStatToSet(int StatIndex, const char *value, CharacterStatSet *css)
 		int len = strlen(value);
 		if(len > StatList[r].size - 1)
 		{
-			g_Log.AddMessageFormat("Warning: text is too long to fit variable size of %d (%s)", len, value);
+			g_Logs.server->warn("Text is too long to fit variable size of %v (%v)", len, value);
 			len = StatList[r].size - 1;
 		}
 		strncpy(base, value, len);
@@ -1129,7 +1129,7 @@ int WriteCharacterStats(CharacterStatSet *css, char *buffer, int &wpos, int flag
 				wpos += PutStringUTF(&buffer[wpos], ((std::string*)data)->c_str());
 				break;
 			default:
-				g_Log.AddMessageFormat("[WARNING] Unknown data type [%s] for stat [%s]", StatList[a].type, StatList[a].name);
+				g_Logs.server->warn("Unknown data type [%v] for stat [%v]", StatList[a].type, StatList[a].name);
 				stcount--;
 			}
 			/* OBSOLETE

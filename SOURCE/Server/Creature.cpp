@@ -7261,7 +7261,7 @@ int CreatureInstance :: NormalInteractObject(char *outBuf, InteractObject *inter
 {
 	if(CurrentTarget.targ == NULL)
 	{
-		g_Log.AddMessageFormat("[WARNING] NormalInteractObject target is NULL");
+		g_Logs.server->warn("NormalInteractObject target is NULL");
 		return 0;
 	}
 

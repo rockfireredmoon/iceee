@@ -1,6 +1,7 @@
 #include "Globals.h"
 #include "FileReader3.h"
 #include "StringList.h"
+#include "util/Log.h"
 
 //Shared between the servers
 const int SleepDelayError = 5000;
@@ -269,7 +270,7 @@ namespace Global
 		FileReader3 fr;
 		if(fr.OpenFile(filename) != FileReader3::SUCCESS)
 		{
-			g_Log.AddMessageFormat("[ERROR] Cannot load file [%s]", filename);
+			g_Logs.data->error("Cannot load file [%v]", filename);
 			fr.CloseFile();
 			return;
 		}

@@ -105,7 +105,7 @@ int ResolveFileSymbol(const char *name, FileSymbol *set, int maxcount)
 		if(strcmp(set[i].name, name) == 0)
 			return set[i].value;
 
-	g_Log.AddMessageFormat("[WARNING] ResolveFileSymbol not found: %s", name);
+	g_Logs.server->warn("ResolveFileSymbol not found: %v", name);
 	return set[0].value;
 }
 
@@ -613,7 +613,7 @@ void VirtualItem :: InstantiateNew(int ID, int level, int rarity, int equipType,
 	EquipTemplate* eqTemplate = g_ModTemplateManager.GetTemplate(equipType, weaponType);
 	if(eqTemplate == NULL)
 	{
-		g_Log.AddMessageFormat("[WARNING] ItemMod template not found for equipType:%d, weaponType:%d", equipType, weaponType);
+		g_Logs.server->warn("ItemMod template not found for equipType:%v, weaponType:%v", equipType, weaponType);
 		return;
 	}
 
@@ -643,7 +643,7 @@ void VirtualItem :: InstantiateNew(int ID, int level, int rarity, int equipType,
 	if(resultStr == NULL)
 	{
 		mStandardDef.mAppearance.clear();
-		g_Log.AddMessageFormat("%d:NOT FOUND (eq:%d, weap:%d, rarity:%d)", ID, equipType, weaponType, rarity);
+		g_Logs.server->warn("%v:NOT FOUND (eq:%v, weap:%v, rarity:%v)", ID, equipType, weaponType, rarity);
 	}
 	else
 	{
@@ -659,7 +659,7 @@ void VirtualItem :: InstantiateNew(int ID, int level, int rarity, int equipType,
 	if(resultStr == NULL)
 	{
 		mStandardDef.mIcon = "Icon/QuestionMark|Icon-32-BG-Black.png";
-		g_Log.AddMessageFormat("%d: ICON NOT FOUND (eq:%d, weap:%d, rarity:%d) (%s)", ID, equipType, weaponType, rarity, asset.c_str());
+		g_Logs.server->warn("%v: ICON NOT FOUND (eq:%v, weap:%v, rarity:%v) (%v)", ID, equipType, weaponType, rarity, asset.c_str());
 	}
 	else
 	{
@@ -679,7 +679,7 @@ void VirtualItem :: InstantiateNew(int ID, int level, int rarity, int equipType,
 	}
 
 	if(asset.size() == 0)
-		g_Log.AddMessageFormat("ID:%d  Asset name not found: %s\n", ID, mStandardDef.mAppearance.c_str());
+		g_Logs.server->warn("ID:%v Asset name not found: %v\n", ID, mStandardDef.mAppearance.c_str());
 	mStandardDef.mDisplayName = g_NameTemplateManager.RetrieveName(equipType, weaponType, asset.c_str()); 
 
 	ApplyModString();
@@ -851,21 +851,21 @@ int VirtualItem :: ApplyModTable(ValidTable* validTable, int level, int rarity)
 	ModTable *modTable = g_ModManager.GetModTable(validTable->tableName);
 	if(modTable == NULL)
 	{
-		g_Log.AddMessageFormat("Could not find mod table [%s]", validTable->tableName);
+		g_Logs.server->warn("Could not find mod table [%v]", validTable->tableName);
 		return 0;
 	}
 
 	ModRow *modRow = modTable->GetRowByLevel(level);
 	if(modRow == NULL)
 	{
-		g_Log.AddMessageFormat("Could not find level:%d in table [%s]", level, validTable->tableName);
+		g_Logs.server->warn("Could not find level:%v in table [%v]", level, validTable->tableName);
 		return 0;
 	}
 
 	int value = modRow->FetchData(rarity);
 	if(value == 0)
 	{
-		g_Log.AddMessageFormat("Zero value returned in table [%s] for level:%d, rarity:%d", validTable->tableName, level, rarity);
+		g_Logs.server->warn("Zero value returned in table [%v] for level:%v, rarity:%v", validTable->tableName, level, rarity);
 		return 0;
 	}
 
@@ -934,7 +934,7 @@ int ItemManager :: RollVirtualItem(VirtualItemSpawnParams &viParams)
 		VirtualItemSpawnType *equipTable = g_EquipTable.GetRandomEntry();
 		if(equipTable == NULL)
 		{
-			g_Log.AddMessageFormat("[ERROR] RollVirtualItem could not retrieve randomized item");
+			g_Logs.server->error("RollVirtualItem could not retrieve randomized item");
 			return -1;
 		}
 		viParams.mEquipType = equipTable->mEquipType;
@@ -1034,12 +1034,12 @@ void ItemManager :: CheckVirtualItemAutosave(bool force)
 					it->second.bPendingSave = false;
 				}
 				else
-					g_Log.AddMessageFormat("[ERROR] Failed to open VirtualItem page: %s", filename);
+					g_Logs.server->error("Failed to open VirtualItem page: %v", filename);
 			}
 			else
 			{
 				remove(filename);
-				g_Log.AddMessageFormat("Removing item page [%s]", filename);
+				g_Logs.server->info("Removing item page [%v]", filename);
 				del = true;
 			}
 		}
@@ -1064,7 +1064,7 @@ VirtualItemPage* ItemManager :: RequestVirtualItemPagePtr(int page)
 			LoadVirtualItemPage(&it->second);
 			return &it->second;
 		}
-		g_Log.AddMessageFormat("[CRITICAL] ItemManager::GetVirtualItemPagePtr could not insert page.");
+		g_Logs.server->error("ItemManager::GetVirtualItemPagePtr could not insert page.");
 		return NULL;
 	}
 	return &it->second;
@@ -1095,7 +1095,7 @@ void ItemManager :: LoadVirtualItemPage(VirtualItemPage* targetPage)
 	FileReader lfr;
 	if(lfr.OpenText(filename) != Err_OK)
 	{
-		g_Log.AddMessageFormat("[ERROR] Unable to open VirtualItem page [%s]", filename);
+		g_Logs.server->error("Unable to open VirtualItem page [%v]", filename);
 		return;
 	}
 
@@ -1253,7 +1253,7 @@ void ModTable :: LoadFromFile(const char *filename)
 	FileReader lfr;
 	if(lfr.OpenText(filename) != Err_OK)
 	{
-		g_Log.AddMessageFormat("Could not load ModTable file: %s", filename);
+		g_Logs.data->error("Could not load ModTable file: %v", filename);
 		return;
 	}
 	lfr.CommentStyle = Comment_Semi;
@@ -1294,7 +1294,7 @@ void ModManager :: LoadFromFile(const char *filename)
 	FileReader lfr;
 	if(lfr.OpenText(filename) != Err_OK)
 	{
-		g_Log.AddMessageFormat("Could not load ModTable list file: %s", filename);
+		g_Logs.data->error("Could not load ModTable list file: %v", filename);
 		return;
 	}
 	lfr.CommentStyle = Comment_Semi;
@@ -1369,7 +1369,7 @@ void EquipTemplateManager :: LoadFromFile(const char *filename)
 	FileReader lfr;
 	if(lfr.OpenText(filename) != Err_OK)
 	{
-		g_Log.AddMessageFormat("Error opening Mod Template file: %s", filename);
+		g_Logs.server->error("Error opening Mod Template file: %v", filename);
 		return;
 	}
 
@@ -1481,7 +1481,7 @@ void EquipAppearance :: LoadFromFile(const char *filename)
 	FileReader lfr;
 	if(lfr.OpenText(filename) != Err_OK)
 	{
-		g_Log.AddMessageFormat("[ERROR] Unable to open EquipAppearance file [%s]", filename);
+		g_Logs.server->error("Unable to open EquipAppearance file [%v]", filename);
 		return;
 	}
 	lfr.CommentStyle = Comment_Semi;
@@ -1511,7 +1511,7 @@ void EquipAppearance :: LoadFromFile(const char *filename)
 			else if(strcmp(lfr.SecBuffer, "asset") == 0)
 				entry.asset = lfr.BlockToStringC(1, 0);
 			else
-				g_Log.AddMessageFormat("[WARNING] Unknown identifier [%s] in file [%s] on line [%d]", lfr.SecBuffer, filename, lfr.LineNumber);
+				g_Logs.server->warn("Unknown identifier [%v] in file [%v] on line [%v]", lfr.SecBuffer, filename, lfr.LineNumber);
 		}
 	}
 	AddIfValid(entry);
@@ -1607,10 +1607,10 @@ void EquipAppearance :: Debug_CheckForNames(void)
 			std::string app = dataEntry[i].dataList[a];
 			app = VirtualItem::GetAppearanceAsset(app);
 			if(g_NameTemplateManager.Debug_HasName(app.c_str(), dataEntry[i].mEquipType, dataEntry[i].mWeaponType) == false)
-				g_Log.AddMessageFormat("NAME Not found: %s (mEquipType=%d, mWeaponType=%d)", app.c_str(), dataEntry[i].mEquipType, dataEntry[i].mWeaponType);
+				g_Logs.server->warn("NAME Not found: %v (mEquipType=%v, mWeaponType=%v)", app.c_str(), dataEntry[i].mEquipType, dataEntry[i].mWeaponType);
 
 			if(g_EquipIconAppearance.Debug_HasName(app.c_str(), dataEntry[i].mEquipType, dataEntry[i].mWeaponType) == false)
-				g_Log.AddMessageFormat("ICON Not found: %s (mEquipType=%d, mWeaponType=%d)", app.c_str(), dataEntry[i].mEquipType, dataEntry[i].mWeaponType);
+				g_Logs.server->warn("ICON Not found: %v (mEquipType=%v, mWeaponType=%v)", app.c_str(), dataEntry[i].mEquipType, dataEntry[i].mWeaponType);
 		}
 	}
 }
@@ -1651,7 +1651,7 @@ void EquipTable :: LoadFromFile(const char *filename)
 	FileReader lfr;
 	if(lfr.OpenText(filename) != Err_OK)
 	{
-		g_Log.AddMessageFormat("[ERROR] Unable to open EquipTable file [%s]", filename);
+		g_Logs.server->error("Unable to open EquipTable file [%v]", filename);
 		return;
 	}
 	lfr.CommentStyle = Comment_Semi;
@@ -1748,7 +1748,7 @@ const char* NameTemplate :: GetRandomName(void)
 			return nameList[i].name;
 		base += nameList[i].shares;
 	}
-	g_Log.AddMessageFormat("[DEBUG] GetRandomName() unable to resolve name for template: mEquipType:%d, mWeaponType:%d, asset:%s", mEquipType, mWeaponType, assetName.c_str());
+	g_Logs.server->debug("GetRandomName() unable to resolve name for template: mEquipType:%v, mWeaponType:%v, asset:%v", mEquipType, mWeaponType, assetName.c_str());
 	return NULL;
 }
 
@@ -1773,7 +1773,7 @@ void NameTemplateManager :: LoadFromFile(const char *filename)
 	FileReader lfr;
 	if(lfr.OpenText(filename) != Err_OK)
 	{
-		g_Log.AddMessageFormat("[ERROR] Unable to open Item Name file [%s]", filename);
+		g_Logs.server->error("Unable to open Item Name file [%v]", filename);
 		return;
 	}
 	lfr.CommentStyle = Comment_Semi;
@@ -1805,14 +1805,14 @@ void NameTemplateManager :: LoadFromFile(const char *filename)
 				nameEntry.shares = lfr.BlockToIntC(2);
 				if(nameEntry.shares <= 0)
 				{
-					g_Log.AddMessageFormat("[WARNING] Name share chance is zero in file [%s] on line [%d]", filename, lfr.LineNumber);
+					g_Logs.server->warn("Name share chance is zero in file [%v] on line [%v]", filename, lfr.LineNumber);
 					nameEntry.shares = 1;
 				}
 				newItem.nameList.push_back(nameEntry);
 				nameEntry.Clear();
 			}
 			else
-				g_Log.AddMessageFormat("[WARNING] Unknown identifier [%s] in file [%s] on line [%d]", lfr.SecBuffer, filename, lfr.LineNumber);
+				g_Logs.server->warn("Unknown identifier [%v] in file [%v] on line [%v]", lfr.SecBuffer, filename, lfr.LineNumber);
 		}
 	}
 	AddIfValid(newItem);
@@ -1858,7 +1858,7 @@ const char* NameTemplateManager :: RetrieveName(int mEquipType, int mWeaponType,
 			result = GetDefaultName(mEquipType, mWeaponType, asset);
 		return result;
 	}
-	g_Log.AddMessageFormat("[DEBUG] RetrieveName() unable to find name for mEquipType:%d, mWeaponType:%d, asset:%s", mEquipType, mWeaponType, asset);
+	g_Logs.server->debug("RetrieveName() unable to find name for mEquipType:%v, mWeaponType:%v, asset:%v", mEquipType, mWeaponType, asset);
 	return GetDefaultName(mEquipType, mWeaponType, asset);
 }
 
@@ -1907,7 +1907,7 @@ const char* NameTemplateManager :: GetDefaultName(int mEquipType, int mWeaponTyp
 		else if(strstr(asset, "Dart") != NULL) return "Dart";
 	}
 
-	g_Log.AddMessageFormat("[WARNING] GetDefaultName() failed to resolve default name form mEquipType=%d, mWeaponType=%d, asset=%s", mEquipType, mWeaponType, asset);
+	g_Logs.server->warn("GetDefaultName() failed to resolve default name form mEquipType=%v, mWeaponType=%v, asset=%v", mEquipType, mWeaponType, asset);
 	return NameTemplate::DEFAULT_NAME;
 }
 
@@ -1954,7 +1954,7 @@ void NameModManager :: LoadFromFile(const char *filename)
 	FileReader lfr;
 	if(lfr.OpenText(filename) != Err_OK)
 	{
-		g_Log.AddMessageFormat("[ERROR] Unable to open NameMod file [%s]", filename);
+		g_Logs.server->error("Unable to open NameMod file [%v]", filename);
 		return;
 	}
 	lfr.CommentStyle = Comment_Semi;
@@ -2037,7 +2037,7 @@ void NameWeightManager :: LoadFromFile(const char *filename)
 	FileReader lfr;
 	if(lfr.OpenText(filename) != Err_OK)
 	{
-		g_Log.AddMessageFormat("[ERROR] Unable to open NameWeight file [%s]", filename);
+		g_Logs.server->error("Unable to open NameWeight file [%v]", filename);
 		return;
 	}
 	lfr.CommentStyle = Comment_Semi;
@@ -2065,7 +2065,7 @@ float NameWeightManager :: GetWeightForName(const char *statName)
 		if(strcmp(mWeightList[i].mStat, statName) == 0)
 			return mWeightList[i].mWeight;
 
-	g_Log.AddMessageFormat("[WARNING] GetWeightForName() could not find stat: %s", statName);
+	g_Logs.server->warn("GetWeightForName() could not find stat: %v", statName);
 	return 0.0F;
 }
 
@@ -2125,7 +2125,7 @@ void VirtualItemModSystem :: LoadFromFile(const char *filename)
 	FileReader lfr;
 	if(lfr.OpenText(filename) != Err_OK)
 	{
-		g_Log.AddMessageFormat("[ERROR] Unable to open ModConfig file [%s]", filename);
+		g_Logs.server->error("Unable to open ModConfig file [%v]", filename);
 		return;
 	}
 	lfr.CommentStyle = Comment_Semi;
@@ -2163,7 +2163,7 @@ void VirtualItemModSystem :: LoadFromFile(const char *filename)
 			else if(strcmp(lfr.SecBuffer, "StatPointMult") == 0)
 				newItem.statPointMult = (float)lfr.BlockToDblC(1);
 			else
-				g_Log.AddMessageFormat("[WARNING] Unknown identifier [%s] in file [%s] on line [%d", lfr.SecBuffer, filename, lfr.LineNumber);
+				g_Logs.server->warn("Unknown identifier [%v] in file [%v] on line [%v]", lfr.SecBuffer, filename, lfr.LineNumber);
 		}
 	}
 	UpdateRarityConfig(newItem);
@@ -2248,8 +2248,8 @@ void VirtualItemModSystem :: Debug_RunDropDiagnostic(int level)
 		else
 			non++;
 	}
-	g_Log.AddMessageFormat("No drops: %d (%g)", non, (non / (double)iter) * 100.0);
+	g_Logs.server->info("No drops: %v (%v)", non, (non / (double)iter) * 100.0);
 	for(int i = 0; i <= 6; i++)
-		g_Log.AddMessageFormat("Rarity[%d]: %d (%g)", i, rarity[i], (rarity[i] / (double)iter) * 100.0);
+		g_Logs.server->info("Rarity[%v]: %v (%v)", i, rarity[i], (rarity[i] / (double)iter) * 100.0);
 
 }

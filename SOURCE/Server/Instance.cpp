@@ -3679,11 +3679,12 @@ void ActiveInstance :: RunObjectInteraction(SimulatorThread *simPtr, int CID)
 {
 	CreatureInstance *cinst = GetNPCInstanceByCID(CID);
 	if(cinst == NULL)
-		g_Log.AddMessageFormat("No creature to interact with %d", CID);
+		g_Logs.server->warn("No creature to interact with %v", CID);
 	else {
-		InteractObject *intObj = g_InteractObjectContainer.GetObjectByID(cinst->CreatureID, simPtr->pld.CurrentZoneID);
+		InteractObject *intObj = g_InteractObjectContainer.GetObjectByID(cinst->CreatureDefID, simPtr->pld.CurrentZoneID);
 		if(intObj != NULL)
 		{
+			g_Logs.server->info("Found interact %v", CID);
 			if(intObj->opType == InteractObject::TYPE_WARP)
 			{
 				simPtr->MainCallSetZone(intObj->WarpID, 0, false);
@@ -3709,6 +3710,9 @@ void ActiveInstance :: RunObjectInteraction(SimulatorThread *simPtr, int CID)
 			}
 
 			ScriptCallUseFinish(simPtr->creatureInst->CreatureID,  cinst->CreatureDefID, cinst->CreatureID);
+		}
+		else {
+			g_Logs.server->warn("No interact %v", CID);
 		}
 	}
 }

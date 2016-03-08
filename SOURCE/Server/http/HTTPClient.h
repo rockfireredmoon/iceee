@@ -23,6 +23,7 @@
 #include <string>
 #include "../StringList.h"
 #include <sstream>
+#include "../util/Log.h"
 
 struct Writeable {
 	const char *readptr;
@@ -53,7 +54,7 @@ inline static size_t readCallback(void *ptr, size_t size, size_t nmemb,
 }
 
 inline static int readJSONFromUrl(std::string url, std::string *readBuffer) {
-	g_Log.AddMessageFormat("Reading JSON from %s", url.c_str());
+	g_Logs.server->info("Reading JSON from %v", url.c_str());
 
 	CURL *curl;
 	curl = curl_easy_init();
