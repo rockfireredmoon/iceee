@@ -16,7 +16,6 @@ gamedata_DATA = AbilityTableAdmin.txt \
 		Gamble.txt \
 		GroveTemplate.txt \
 		GuildDef.txt \
-		HTTPChecksum.txt \
 		InteractDef.txt \
 		ItemDef_CraftOverride.txt \
 		ItemDef_CSOverride.txt \
