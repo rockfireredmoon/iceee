@@ -9,17 +9,17 @@ LogManager::LogManager() {
 	el::Loggers::addFlag(el::LoggingFlag::DisableApplicationAbortOnFatalLog);
 	el::Loggers::addFlag(el::LoggingFlag::ColoredTerminalOutput);
 
-	server = Loggers::getLogger("server", false);
-	chat = Loggers::getLogger("chat", false);
-	cheat = Loggers::getLogger("cheat", false);
-	event = Loggers::getLogger("event", false);
-	http = Loggers::getLogger("http", false);
-	router = Loggers::getLogger("router", false);
-	leaderboard = Loggers::getLogger("leaderboard", false);
-	simulator = Loggers::getLogger("simulator", false);
-	data = Loggers::getLogger("data", false);
-	script = Loggers::getLogger("script", false);
-	cs = Loggers::getLogger("cs", false);
+	server = Loggers::getLogger("server", true);
+	chat = Loggers::getLogger("chat", true);
+	cheat = Loggers::getLogger("cheat", true);
+	event = Loggers::getLogger("event", true);
+	http = Loggers::getLogger("http", true);
+	router = Loggers::getLogger("router", true);
+	leaderboard = Loggers::getLogger("leaderboard", true);
+	simulator = Loggers::getLogger("simulator", true);
+	data = Loggers::getLogger("data", true);
+	script = Loggers::getLogger("script", true);
+	cs = Loggers::getLogger("cs", true);
 
 }
 
