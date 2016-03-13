@@ -1,0 +1,56 @@
+[BOOK]
+TITLE=The Book Of Books
+
+; Page 1
+
+[PAGE]
+TEXT=<font size="24"><b>Introduction</b></font><br><br>This is the <b>Book Of Books</b>, and introduces the concept of books into the server and client.
+
+Each page of the book is associated with a single item. These items are defined as a new <b>mIvType1</b> of \
+<i>BOOK_PAGE</i> which has a value of <i>11</i>. <b>mIvMax1</b> and <b>mIvMax2</b> are used to to point \
+to the <b>ID</b> and the <b>Page</b> that this item provides. 
+
+When the item is looted or otherwise collected, that page in book will be displayed automatically, also
+the book can be displayed by clicking on the item in the inventory.  
+
+At any time, the player may view all of their current books in one place, currently using \
+the <b>/book</b> command, but I intended to add some way in the UI of opening these. The \
+page must be somewhere in the players inventory, be it bags or vaults.
+
+
+; Page 2
+[PAGE]
+TEXT=<font size="24"><b>Defining Books</b></font><br><br>Books are stored in the <a href="https://github.com/rockfireredmoon/iceee/tree/master/Books">Books</a> directory of the static data, using the following format :-
+
+\[BOOK]
+\TITLE=Some book title
+\[PAGE]
+\TEXT=Some book text.
+For page 1 
+\[PAGE]
+\TEXT=Some book text.
+For page 2
+..
+..
+..
+\[PAGE]
+\TEXT=Some book text.
+The last page.
+
+Each book is contain inside 1 file inside this directory, named <b>[bookId].txt</b> where [bookId] is a unique
+number, it doesn't matter what this number is, but by convential should be sequential, and is used to tie the
+book item definition to this book text.  
+
+Book text may span multiple lines, as once 'TEXT=', any text after this point up to either the next [PAGE] or \
+the end of file will be part of that pages text. If you want two lines to be joined together, end the line with
+a backslash (\). To add a line literally, begin it with a backslash (\).  
+
+The book text itself uses a very restricted subset of HTML (this actually uses the component \
+as is used in other areas of text display such as the IGF).
+
+Supported tags include :-
+&lt;b&gt;some text&lt;/b&gt; Bold text
+&lt;i&gt;some text&lt;/i&gt; Italic text
+&lt;br&gt; Break to a new line 
+&lt;font color="#ff0000" name="MaiandraOutline" size="18"&gt;some text&lt;/font&gt; Set font size, name or color
+&lt;a href="http://www.theanubianwar.com"&gt;TAW&lt;/a&gt; For links to external web pages.

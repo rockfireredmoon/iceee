@@ -377,6 +377,17 @@ int PrepExt_QueryResponseError(char *buffer, int queryIndex, const char *message
 	return wpos;
 }
 
+int PrepExt_SendBookOpen(char *buffer, int bookID, int page) {
+	int wpos = 0;
+	wpos += PutByte(&buffer[wpos], 96);              //_handleBooks
+	wpos += PutShort(&buffer[wpos], 0);             //Placeholder for message size
+	wpos += PutByte(&buffer[wpos], 1); 				// Open
+	wpos += PutInteger(&buffer[wpos], bookID);
+	wpos += PutInteger(&buffer[wpos], page);
+	PutShort(&buffer[1], wpos - 3);                 //Message size
+	return wpos;
+}
+
 int PrepExt_SendEffect(char *buffer, int sourceID, const char *effectName, int targetID)
 {
 	//Send an effect to the client.  Send as a single target effect

@@ -1809,7 +1809,7 @@ void AccountManager :: LoadUsedNameList(const char *fileName)
 			//UsedCharacterNames.push_back(USEDCHAR_PAIR(CDefID, lfr.BlockToString(1)));
 		}
 	}
-	g_Logs.data->info("Loaded %d Used Names.", UsedCharacterNames.GetDataCount());
+	g_Logs.data->info("Loaded %v Used Names.", UsedCharacterNames.GetDataCount());
 	lfr.CloseCurrent();
 }
 

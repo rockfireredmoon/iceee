@@ -465,7 +465,7 @@ void CharacterData :: UpdateEquipStats(CreatureInstance *destData)
 				int wslot = slot;
 				if(slot < 0 || slot >= 3)
 				{
-					g_Log.AddMessageFormat("[ERROR] UpdateEquipStats unexpected weapon slot: %d", slot);
+					g_Logs.server->error("UpdateEquipStats unexpected weapon slot: %v", slot);
 					wslot = 0;
 				}
 				destData->EquippedWeapons[wslot] = itemDef->mWeaponType;
@@ -753,7 +753,7 @@ void CharacterData :: CheckVersion(void)
 
 	characterVersion = SERVER_CHARACTER_VERSION;
 	pendingChanges++;
-	g_Log.AddMessageFormat("Character Upgraded: %s (%d)", cdef.css.display_name, cdef.CreatureDefID);
+	g_Logs.data->info("Character Upgraded: %v (%v)", cdef.css.display_name, cdef.CreatureDefID);
 }
 
 void CharacterData :: VersionUpgradeCharacterItems(void)
@@ -771,7 +771,7 @@ void CharacterData :: VersionUpgradeCharacterItems(void)
 				if(itemDef->mBindingType == BIND_ON_PICKUP && inventory.containerList[c][i].bindStatus == 0)
 				{
 					inventory.containerList[c][i].bindStatus = 1;
-					g_Log.AddMessageFormat("Updating bind status %s (%d):%s", cdef.css.display_name, cdef.CreatureDefID, itemDef->mDisplayName.c_str());
+					g_Logs.data->info("Updating bind status %v (%v):%v", cdef.css.display_name, cdef.CreatureDefID, itemDef->mDisplayName.c_str());
 				}
 			}
 		}
@@ -797,14 +797,13 @@ void CharacterData :: VersionUpgradeCharacterItems(void)
 					del = true;
 				}
 				else
-					g_Log.AddMessageFormat("%s: No inventory space for: %s", cdef.css.display_name, itemDef->mDisplayName.c_str());
+					g_Logs.server->warn("%v: No inventory space for: %v", cdef.css.display_name, itemDef->mDisplayName.c_str());
 			}
 		}
 		if(del == false)
 			pos++;
-		else
-		{
-			g_Log.AddMessageFormat("%s: Moving unequippable item: %s", cdef.css.display_name, itemDef->mDisplayName.c_str());
+		else {
+			g_Logs.server->info("%v: Moving unequippable item: %v", cdef.css.display_name, itemDef->mDisplayName.c_str());
 			inventory.containerList[EQ_CONTAINER].erase(inventory.containerList[EQ_CONTAINER].begin() + pos);
 		}
 	}
@@ -1385,7 +1384,7 @@ int CheckSection_General(FileReader &fr, CharacterData &cd, const char *debugFil
 			if(fr.BlockLen[a] > 0)
 			{
 				if(cd.SetPermission(Perm_Account, fr.BlockToStringC(a, Case_Lower), true) == false)
-					g_Log.AddMessageFormat("Warning: Unknown permission identifier [%s] in Character file.", fr.SecBuffer);
+					g_Logs.data->warn("Unknown permission identifier [%v] in Character file.", fr.SecBuffer);
 			}
 			else
 				break;
@@ -1396,7 +1395,7 @@ int CheckSection_General(FileReader &fr, CharacterData &cd, const char *debugFil
 		cd.InstanceScaler = fr.BlockToStringC(1, 0);
 	}
 	else if(!cd.PlayerStats.LoadFromStream(fr)) {
-		g_Log.AddMessageFormat("Unknown identifier [%s] in character General section (line: %d).", fr.BlockToString(0), fr.LineNumber);
+		g_Logs.data->warn("Unknown identifier [%v] in character General section (line: %v).", fr.BlockToString(0), fr.LineNumber);
 	}
 	return 0;
 }
@@ -1414,7 +1413,7 @@ int CheckSection_Stats(FileReader &fr, CharacterData &cd, const char *debugFilen
 	int res = WriteStatToSetByName(StatName, fr.BlockToStringC(1, 0), &cd.cdef.css);
 	if(res == -1)
 	{
-		g_Log.AddMessageFormat("Warning: unknown stat name in Character list: %s", StatName);
+		g_Logs.data->warn("Unknown stat name in Character list: %v", StatName);
 	}
 	return 0;
 }
@@ -1598,7 +1597,7 @@ int LoadCharacterFromStream(FileReader &fr, CharacterData &cd, const char *debug
 					CheckSection_Preference(fr, cd, debugFilename);
 				else if(Section == CDFS_Inv) {
 					if(CheckSection_Inventory(fr, cd.inventory, debugFilename,  cd.cdef.css.display_name, "Character") == -2) {
-						g_Log.AddMessageFormat("Warning: Character [%s] unknown container name [%s]", cd.cdef.css.display_name, fr.BlockToStringC(0, 0));
+						g_Logs.data->warn("Character [%v] unknown container name [%v]", cd.cdef.css.display_name, fr.BlockToStringC(0, 0));
 					}
 				}
 				else if(Section == CDFS_Quest)
@@ -2410,7 +2409,7 @@ bool CharacterManager :: RemoveSingleGarbage(void)  //CharacterData &charData)
 				if(it->second.pendingChanges != 0)
 				if(SaveCharacter(it->first) == false)
 				{
-					g_Log.AddMessageFormat("[DEBUG] RemoveSingleGarbage failed to save");
+					g_Logs.server->debug("RemoveSingleGarbage failed to save");
 					return true;
 				}
 
@@ -2450,7 +2449,7 @@ bool CharacterManager :: SaveCharacter(int CDefID)
 	CharacterData *ptr = GetPointerByID(CDefID);
 	if(ptr == NULL)
 	{
-		g_Log.AddMessageFormat("[ERROR] SaveCharacter() invalid ID: %d", CDefID);
+		g_Logs.data->error("SaveCharacter() invalid ID: %v", CDefID);
 		return false;
 	}
 
@@ -2461,7 +2460,7 @@ bool CharacterManager :: SaveCharacter(int CDefID)
 	FILE *output = fopen(FileName, "wb");
 	if(output == NULL)
 	{
-		g_Log.AddMessageFormat("[ERROR] SaveCharacter() could not open file [%s]", FileName);
+		g_Logs.data->error("SaveCharacter() could not open file [%v]", FileName);
 		return false;
 	}
 	SaveCharacterToStream(output, *ptr);
@@ -2469,11 +2468,11 @@ bool CharacterManager :: SaveCharacter(int CDefID)
 	ptr->pendingChanges = 0;
 
 	if(fflush(output) != 0)
-		g_Log.AddMessageFormat("[CRITICAL] Error flushing file: %s", FileName);
+		g_Logs.data->error("Failed to flush file: %v", FileName);
 	if(fclose(output) != 0)
-		g_Log.AddMessageFormat("[CRITICAL] Error closing file: %s", FileName);
+		g_Logs.data->error("Failed to close file: %s", FileName);
 		
-	g_Log.AddMessageFormat("Saved character %d [%s]", ptr->cdef.CreatureDefID, ptr->cdef.css.display_name);
+	g_Logs.data->info("Saved character %v [%v]", ptr->cdef.CreatureDefID, ptr->cdef.css.display_name);
 	return true;
 }
 
@@ -2484,7 +2483,7 @@ void CharacterManager :: UnloadCharacter(int CDefID)
 	if(it != charList.end())
 	{
 		if(it->second.pendingChanges != 0)
-			g_Log.AddMessageFormat("[WARNING] Unloading a character with pending changes:", CDefID);
+			g_Logs.server->warn("Unloading a character with pending changes:", CDefID);
 
 //		g_Log.AddMessageFormat("Unloading character: %d [%s]", CDefID, it->second.cdef.css.display_name);
 		charList.erase(it);

@@ -1061,8 +1061,112 @@ mID=8603
 mType=9
 mDisplayName=Spike Trap
 mIcon=Icon-32-1hSword-Medium1.png|Icon-32-BG-Green.png
-mIvType1=5
 mIvMax1=1007
 mSv1=Base of Operations
 mValue=1
 mQualityLevel=1
+
+[ENTRY]
+mID=8700
+mType=8
+mDisplayName=Book of Books
+mIcon=Icon-32-Talisman_Book.png|Icon-32-BG-Green.png
+mLevel=1
+mIvType1=11
+mIvMax1=1
+mIvMax2=1
+mBindingType=1
+mValue=1
+mQualityLevel=1
+mMinUseLevel=1
+mFlavorText=Double-click to open, or use /books
+
+[ENTRY]
+mID=8701
+mType=8
+mDisplayName=Book of Books
+mIcon=Icon-32-Talisman_Book.png|Icon-32-BG-Green.png
+mLevel=1
+mIvType1=11
+mIvMax1=1
+mIvMax2=2
+mBindingType=1
+mValue=1
+mQualityLevel=1
+mMinUseLevel=1
+mFlavorText=Double-click to open, or use /books 
+
+[ENTRY]
+mID=8702
+mType=8
+mDisplayName=Book of Classes
+mIcon=Icon-32-Talisman_Book.png|Icon-32-BG-Green.png
+mLevel=1
+mIvType1=11
+mIvMax1=2
+mIvMax2=1
+mBindingType=1
+mValue=1
+mQualityLevel=1
+mMinUseLevel=1
+mFlavorText=Double-click to open, or use /books
+
+[ENTRY]
+mID=8703
+mType=8
+mDisplayName=Book of Classes
+mIcon=Icon-32-Talisman_Book.png|Icon-32-BG-Green.png
+mLevel=1
+mIvType1=11
+mIvMax1=2
+mIvMax2=2
+mBindingType=1
+mValue=1
+mQualityLevel=1
+mMinUseLevel=1
+mFlavorText=Double-click to open, or use /books
+
+[ENTRY]
+mID=8704
+mType=8
+mDisplayName=Book of Classes
+mIcon=Icon-32-Talisman_Book.png|Icon-32-BG-Green.png
+mLevel=1
+mIvType1=11
+mIvMax1=2
+mIvMax2=3
+mBindingType=1
+mValue=1
+mQualityLevel=1
+mMinUseLevel=1
+mFlavorText=Double-click to open, or use /books
+
+[ENTRY]
+mID=8705
+mType=8
+mDisplayName=Book of Classes
+mIcon=Icon-32-Talisman_Book.png|Icon-32-BG-Green.png
+mLevel=1
+mIvType1=11
+mIvMax1=2
+mIvMax2=4
+mBindingType=1
+mValue=1
+mQualityLevel=1
+mMinUseLevel=1
+mFlavorText=Double-click to open, or use /books
+
+[ENTRY]
+mID=8706
+mType=8
+mDisplayName=Book of Classes
+mIcon=Icon-32-Talisman_Book.png|Icon-32-BG-Green.png
+mLevel=1
+mIvType1=11
+mIvMax1=2
+mIvMax2=5
+mBindingType=1
+mValue=1
+mQualityLevel=1
+mMinUseLevel=1
+mFlavorText=Double-click to open, or use /books

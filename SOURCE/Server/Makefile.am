@@ -19,6 +19,7 @@ tawd_SOURCES = md5.cc \
 	Audit.cpp \
 	AuctionHouse.cpp \
 	BroadCast.cpp \
+	Books.cpp \
 	ByteBuffer.cpp \
 	Character.cpp \
 	ChatChannel.cpp \
@@ -116,6 +117,8 @@ tawd_SOURCES = md5.cc \
 	query/TradeHandlers.cpp \
 	query/SceneryHandlers.cpp \
 	query/SupportHandlers.cpp \
+	query/BookHandlers.cpp \
+	query/ItemHandlers.cpp \
 	util/base64.cpp \
 	util/JsonHelpers.cpp \
 	util/SquirrelObjects.cpp \
@@ -129,6 +132,7 @@ tawd_SOURCES = md5.cc \
 	Arena.h \
 	AuctionHouse.h \
 	Audit.h \
+	Books.h \
 	BroadCast.h \
 	ByteBuffer.h \
 	Character.h \
@@ -255,6 +259,8 @@ tawd_SOURCES = md5.cc \
 	query/TradeHandlers.h \
 	query/SceneryHandlers.h \
 	query/SupportHandlers.h \
+	query/BookHandlers.h \
+	query/ItemHandlers.h \
 	util/base64.h \
 	util/Log.h \
 	util/JsonHelpers.h \
@@ -275,6 +281,7 @@ tawdsvc_SOURCES = md5.cc \
 	Arena.cpp \
 	AuctionHouse.cpp \
 	Audit.cpp \
+	Books.cpp \
 	BroadCast.cpp \
 	ByteBuffer.cpp \
 	Character.cpp \
@@ -373,10 +380,14 @@ tawdsvc_SOURCES = md5.cc \
 	query/TradeHandlers.cpp \
 	query/SceneryHandlers.cpp \
 	query/SupportHandlers.cpp \
+	query/BookHandlers.cpp \
+	query/BookHandlers.cpp \
+	query/ItemHandlers.cpp \
 	util/base64.cpp \
 	util/JsonHelpers.cpp \
 	util/SquirrelObjects.cpp \
 	util/Log.cpp \
+	Books.h \
 	Ability2.h \
 	AbilityTime.h \
 	Account.h \
@@ -503,6 +514,7 @@ tawdsvc_SOURCES = md5.cc \
 	query/CreditShopHandlers.h \
 	query/VaultHandlers.h \
 	query/AuctionHouseHandlers.h \
+	query/BookHandlers.h \
 	query/ScriptHandlers.h \
 	query/WarpHandlers.h \
 	query/MarkerHandlers.h \
@@ -511,6 +523,7 @@ tawdsvc_SOURCES = md5.cc \
 	query/IGFHandlers.h \
 	query/TradeHandlers.h \
 	query/SceneryHandlers.h \
+	query/ItemHandlers.h \
 	util/base64.h \
 	util/Log.h \
 	util/JsonHelpers.h \

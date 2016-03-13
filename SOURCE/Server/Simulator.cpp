@@ -1032,7 +1032,7 @@ void SimulatorThread::HandleReceivedMessage2(void) {
 		if (firstConnect == true) {
 			if (msgType != 1) {
 				g_Logs.simulator->error(
-						"[%d] HandleReceivedMessage() Invalid first request, disconnecting (type: %d, size: %d)",
+						"[%v] HandleReceivedMessage() Invalid first request, disconnecting (type: %v, size: %v)",
 						InternalID, msgType, msgSize);
 				Disconnect("SimulatorThread::HandleReceivedMessage2");
 				return;
@@ -1041,7 +1041,7 @@ void SimulatorThread::HandleReceivedMessage2(void) {
 		}
 		if (msgSize > remain - 3) {
 			g_Logs.simulator->error(
-					"[%d] HandleReceivedMessage() expected more data, has: %d, needs: %d",
+					"[%v] HandleReceivedMessage() expected more data, has: %v, needs: %v",
 					InternalID, remain - 3, msgSize);
 			break;
 		}
@@ -1057,7 +1057,7 @@ void SimulatorThread::HandleReceivedMessage2(void) {
 				WritePos = 0;
 			} else
 				g_Logs.simulator->warn(
-						"[%d] PendingSend marked for zero bytes.", InternalID);
+						"[%v] PendingSend marked for zero bytes.", InternalID);
 
 			PendingSend = false;
 		}
@@ -2220,10 +2220,6 @@ bool SimulatorThread::HandleQuery(int &PendingData) {
 		handle_query_scenery_edit();
 	else if (query.name.compare("scenery.delete") == 0)
 		handle_query_scenery_delete();
-	else if (query.name.compare("item.def.use") == 0)
-		handle_query_item_def_use();
-	else if (query.name.compare("item.use") == 0)
-		handle_query_item_use();
 	else if (query.name.compare("ab.ownage.list") == 0)
 		handle_query_ab_ownage_list();
 	else if (query.name.compare("ab.buy") == 0)
@@ -4343,26 +4339,6 @@ int SimulatorThread::handle_command_partylowest(void) {
 	return PrepExt_QueryResponseString(&SendBuf[WritePos], query.ID, "OK");
 }
 
-void SimulatorThread::AddPet(int CDefID) {
-	int exist = pld.charPtr->CountSidekick(SidekickObject::PET);
-	if (exist > 0) {
-		creatureInst->actInst->SidekickRemoveAll(creatureInst,
-				&pld.charPtr->SidekickList);
-		return;
-	}
-
-	SidekickObject skobj(CDefID);
-	skobj.summonType = SidekickObject::PET;
-
-	pld.charPtr->AddSidekick(skobj);
-	int r = creatureInst->actInst->CreateSidekick(creatureInst, skobj);
-	if (r == -1) {
-		SendInfoMessage("Server error: Invalid Creature ID for sidekick.",
-				INFOMSG_ERROR);
-		return;
-	}
-}
-
 int SimulatorThread::handle_command_who(void) {
 	/*  Query: who
 	 Notify the client of a list of players currently logged in.
@@ -5942,195 +5918,6 @@ int SimulatorThread::handle_query_creature_def_edit(void) {
 		LastUpdate = g_ServerTime;
 	}
 	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-}
-
-int SimulatorThread::handle_query_item_def_use(void) {
-	/*  Query: item.def.use
-	 Attempt to use an item.  Sent when an item is used from the quickbar.
-	 Args : [0] = Item Def ID
-	 [1] = Creature/%d (Avatar)        Selected target.
-	 */
-
-	if (query.argCount > 0) {
-		int itemID = query.GetInteger(0);
-		InventorySlot *item = pld.charPtr->inventory.GetItemPtrByID(itemID);
-		if (item != NULL) {
-			UseItem(item->CCSID);
-		}
-	}
-	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-}
-
-int SimulatorThread::handle_query_item_use(void) {
-	/*  Query: item.use
-	 Attempt to use an item.  Sent when an object was double-clicked
-	 in the inventory.
-	 Args : [0] = Hex identifier of the inventory item.
-	 */
-
-	if (query.argCount > 0) {
-		unsigned int CCSID = pld.charPtr->inventory.GetCCSIDFromHexID(
-				query.GetString(0));
-		UseItem(CCSID);
-	}
-	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-}
-
-int SimulatorThread::UseItem(unsigned int CCSID) {
-	if (creatureInst->activeLootID != 0) {
-		SendInfoMessage("You cannot use items while trading.", INFOMSG_ERROR);
-		return -1;
-	}
-
-	InventorySlot *slot = pld.charPtr->inventory.GetItemPtrByCCSID(CCSID);
-	if (slot == NULL) {
-		SendInfoMessage("Item not found in inventory.", INFOMSG_ERROR);
-		return -1;
-	}
-
-	ItemDef *itemDef = slot->ResolveItemPtr();
-	if (itemDef == NULL) {
-		SendInfoMessage("Item not found in database.", INFOMSG_ERROR);
-		return -1;
-	}
-
-	if (itemDef->mType != ItemType::CONSUMABLE)
-		return -1;
-
-	if (creatureInst->css.level < itemDef->mMinUseLevel) {
-		SendInfoMessage("Your level is too low.", INFOMSG_ERROR);
-		return -1;
-	}
-
-	// The AddSidekick() function has its own thread guard, so we don't
-	// need one here.
-	bool removeOnUse = true;
-	if (itemDef->mUseAbilityId != 0) {
-		ConfigString cfg(itemDef->Params);
-		//AddMessage((long)creatureInst, itemDef->mUseAbilityId, BCM_AbilityRequest);
-		int r = creatureInst->RequestAbilityActivation(itemDef->mUseAbilityId);
-		if (r != Ability2::ABILITY_SUCCESS) {
-			removeOnUse = false;
-			return -1;
-		} else {
-			if (creatureInst->ab[0].type == AbilityType::Cast) {
-				pld.mItemUseInProgress = true;
-				pld.mItemUseCCSID = CCSID;
-				removeOnUse = false; //We'll remove it later.  Look for code uses of RunFinishedCast().
-			} else {
-
-				int keep = cfg.GetValueInt("keep");
-				if (keep != 0) {
-					removeOnUse = false;
-				}
-
-				pld.mItemUseInProgress = false;
-				pld.mItemUseCCSID = 0;
-			}
-		}
-	} else {
-		ConfigString cfg(itemDef->Params);
-		int petSpawnID = cfg.GetValueInt("pet");
-		if (petSpawnID != 0) {
-			AddPet(petSpawnID);
-			removeOnUse = false;
-		} else {
-			int credits = cfg.GetValueInt("credits");
-			int abPoints = cfg.GetValueInt("abilitypoints");
-			if (credits > 0) {
-				if (g_Config.AccountCredits) {
-					creatureInst->css.credits = pld.accPtr->Credits;
-				}
-				creatureInst->css.credits += credits;
-				if (g_Config.AccountCredits) {
-					pld.accPtr->Credits = creatureInst->css.credits;
-					pld.accPtr->PendingMinorUpdates++;
-				}
-
-				Util::SafeFormat(Aux1, sizeof(Aux1), "You gain %d credits.",
-						credits);
-				SendInfoMessage(Aux1, INFOMSG_INFO);
-				creatureInst->SendStatUpdate(STAT::CREDITS);
-			}
-			if (abPoints > 0) {
-				creatureInst->css.current_ability_points += abPoints;
-				creatureInst->css.total_ability_points += abPoints;
-				pld.charPtr->AddAbilityPoints(abPoints);
-				creatureInst->SendStatUpdate(STAT::CURRENT_ABILITY_POINTS);
-				creatureInst->SendStatUpdate(STAT::TOTAL_ABILITY_POINTS);
-				//We don't need to send a text notification for ability points, the client will notify the user.
-			}
-			removeOnUse = true;
-		}
-	}
-
-	/*
-	 else if(itemDef->mActionAbilityId != 0)
-	 {
-	 if(itemDef->mActionAbilityId == RESERVED_ABILITY_SUMMON)
-	 {
-	 ArbitraryKeyValueData adat;
-	 adat.Assign(itemDef->Params);
-	 int petSpawnID = adat.GetValueInt("pet");
-	 if(petSpawnID != 0)
-	 {
-	 AddPet(petSpawnID);
-	 removeOnUse = false;
-	 }
-	 else
-	 {
-	 if(AddSidekick(itemDef->mActionAbilityId) == -1)
-	 removeOnUse = false;
-	 }
-	 }
-	 else if(itemDef->mActionAbilityId == RESERVED_ABILITY_BONUS)
-	 {
-	 ArbitraryKeyValueData adat;
-	 adat.Assign(itemDef->Params);
-	 int credits = adat.GetValueInt("credits");
-	 int abPoints = adat.GetValueInt("abilitypoints");
-	 if(credits > 0)
-	 {
-	 creatureInst->css.credits += credits;
-	 Util::SafeFormat(Aux1, sizeof(Aux1), "You gain %d credits.", credits);
-	 SendInfoMessage(Aux1, INFOMSG_INFO);
-	 creatureInst->SendStatUpdate(STAT::CREDITS);
-	 }
-	 if(abPoints > 0)
-	 {
-	 creatureInst->css.current_ability_points += abPoints;
-	 creatureInst->css.total_ability_points += abPoints;
-	 pld.charPtr->AddAbilityPoints(abPoints);
-	 creatureInst->SendStatUpdate(STAT::CURRENT_ABILITY_POINTS);
-	 creatureInst->SendStatUpdate(STAT::TOTAL_ABILITY_POINTS);
-	 //We don't need to send a text notification for ability points, the client will notify the user.
-	 }
-	 removeOnUse = true;
-	 }
-	 }
-	 else
-	 {
-	 LogMessageL(MSG_SHOW, "Checking pet");
-	 ArbitraryKeyValueData adat;
-	 adat.Assign(itemDef->Params);
-	 int petSpawnID = adat.GetValueInt("pet");
-	 if(petSpawnID != 0)
-	 {
-	 LogMessageL(MSG_SHOW, "Adding pet");
-	 AddPet(petSpawnID);
-	 removeOnUse = false;
-	 }
-	 }
-	 */
-
-	if (removeOnUse == false)  //No need for the rest, leave early.
-		return 0;
-
-	//If it's stackable, need to remove an object from the stack,
-	//and delete the item if there are no more.
-	DecrementStack(slot);
-
-	return 0;
 }
 
 void SimulatorThread::DecrementStack(InventorySlot *slot) {

@@ -46,4 +46,4 @@ aclocal.m4
 /AccessLog.txt
 /ServerLog.txt
 /Logs/
-*.txt
+/LogConfig.txt

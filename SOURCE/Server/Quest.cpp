@@ -1067,7 +1067,7 @@ void QuestDefinitionContainer::LoadFromFile(const char *filename) {
 									lfr.BlockToStringC(3, Case_Upper));
 					if (curAct->objective[index].type == 0)
 						g_Logs.data->warn(
-								"Unidentified quest objective type [%s] (line %d)",
+								"Unidentified quest objective type [%v] (line %v)",
 								lfr.BlockToStringC(3, 0), lfr.LineNumber);
 
 					//Hack for gather types, after gather behavior was separated from

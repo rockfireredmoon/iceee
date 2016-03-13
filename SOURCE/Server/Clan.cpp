@@ -175,7 +175,7 @@ bool ClanManager::LoadClan(int id, Clan &clan) {
 			if (strcmp(lfr.SecBuffer, "[ENTRY]") == 0) {
 				if (clan.mId != 0) {
 					g_Logs.data->warn(
-							"%s contains multiple entries. CS items have one entry per file",
+							"%v contains multiple entries. CS items have one entry per file",
 							path.c_str());
 					break;
 				}
@@ -198,7 +198,7 @@ bool ClanManager::LoadClan(int id, Clan &clan) {
 							lfr.SecBuffer, path.c_str());
 				}
 			} else
-				g_Logs.data->info("Unknown identifier [%d] in file [%d]",
+				g_Logs.data->info("Unknown identifier [%v] in file [%v]",
 						lfr.SecBuffer, path.c_str());
 		}
 	}

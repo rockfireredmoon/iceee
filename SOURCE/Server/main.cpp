@@ -178,6 +178,7 @@ INITIALIZE_EASYLOGGINGPP
 #include "Clan.h"
 #include "Daily.h"
 #include "Timer.h"
+#include "Books.h"
 #include "Leaderboard.h"
 #include "http/HTTPService.h"
 #include "query/Lobby.h"
@@ -196,6 +197,8 @@ INITIALIZE_EASYLOGGINGPP
 #include "query/TradeHandlers.h"
 #include "query/SceneryHandlers.h"
 #include "query/SupportHandlers.h"
+#include "query/BookHandlers.h"
+#include "query/ItemHandlers.h"
 #include <curl/curl.h>
 
 #ifdef OUTPUT_TO_CONSOLE
@@ -679,6 +682,12 @@ int InitServerMain(int argc, char *argv[]) {
 	g_QueryManager.queryHandlers["petition.list"] = new PetitionListHandler();
 	g_QueryManager.queryHandlers["petition.doaction"] = new PetitionDoActionHandler();
 
+	g_QueryManager.queryHandlers["book.list"] = new BookListHandler();
+	g_QueryManager.queryHandlers["book.get"] = new BookGetHandler();
+
+	g_QueryManager.queryHandlers["item.use"] = new ItemUseHandler();
+	g_QueryManager.queryHandlers["item.def.use"] = new ItemDefUseHandler();
+
 	// Some are shared
 
 	PrefSetAHandler* prefSetAHandler = new PrefSetAHandler();
@@ -692,8 +701,6 @@ int InitServerMain(int argc, char *argv[]) {
 	LobbyPingHandler* pingHandler = new LobbyPingHandler();
 	g_QueryManager.lobbyQueryHandlers["util.ping"] = pingHandler;
 	g_QueryManager.queryHandlers["util.ping"] = pingHandler;
-
-
 
 //	else if(query.name.compare("pref.get") == 0)
 //		handle_query_pref_get();
@@ -757,6 +764,8 @@ int InitServerMain(int argc, char *argv[]) {
 
 	g_ClanManager.LoadClans();
 	g_Logs.data->info("Loaded %v Clans.", g_ClanManager.mClans.size());
+	g_BookManager.Init();
+	g_Logs.data->info("Loaded %v Books.", g_BookManager.books.size());
 
 	g_CreditShopManager.LoadItems();
 	g_Logs.data->info("Loaded %v Credit Shop items.", g_CreditShopManager.mItems.size());

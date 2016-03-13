@@ -233,8 +233,6 @@ public:
 	void handle_query_friends_status(void);
 	void handle_query_friends_getstatus(void);
 	int handle_query_creature_def_edit(void);
-	int handle_query_item_def_use(void);
-	int handle_query_item_use(void);
 	void handle_query_ab_ownage_list(void);
 	int handle_query_ab_buy(void);
 	void handle_query_ab_respec(void);
@@ -330,7 +328,6 @@ public:
 
 	void RespondPrefGet(PreferenceContainer *prefSet);
 	int UseItem(unsigned int CCSID);
-	void DecrementStack(InventorySlot *slot);
 	void RunFinishedCast(bool success);
 	bool CanMoveItems(void);
 
@@ -467,7 +464,7 @@ public:
 	bool QuestInvite(int QuestID);
 	bool QuestClear(int QuestID);
 
-	void AddPet(int CDefID);
+	void DecrementStack(InventorySlot *slot);
 	void DoWarp(int zoneID, int instanceID, int xpos, int ypos, int zpos);
 	int CheckValidHengeDestination(const char *destName, int creatureID);
 	//void CheckQuestItems(void); DISABLED, NEVER FINISHED
