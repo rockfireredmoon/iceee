@@ -516,9 +516,33 @@ void QuestScriptPlayer::RunImplementationCommands(int opcode)
 				ActiveParty * party = g_PartyManager.GetPartyByID(cInst->PartyID);
 				if(party == NULL)
 					simCall->AttemptSend(Buffer, size);
-				else
-					for(uint i = 0 ; i < party->mMemberList.size(); i++)
-						party->mMemberList[i].mCreaturePtr->actInst->LSendToOneSimulator(Buffer, size, party->mMemberList[i].mCreaturePtr->simulatorPtr);
+				else {
+					for(uint i = 0 ; i < party->mMemberList.size(); i++) {
+
+						//
+						// A crash is originating here, so this excessive NULL checking
+						// is an attempt to narrow down the actual cause, as it is not
+						// easily reproduceable
+						//
+
+						if(party->mMemberList[i].mCreaturePtr != NULL) {
+							if(party->mMemberList[i].mCreaturePtr->actInst != NULL) {
+								if(party->mMemberList[i].mCreaturePtr->simulatorPtr != NULL) {
+									party->mMemberList[i].mCreaturePtr->actInst->LSendToOneSimulator(Buffer, size, party->mMemberList[i].mCreaturePtr->simulatorPtr);
+								}
+								else {
+									g_Log.AddMessageFormat("[WARNING] Sim is NULL in party member %d (%d / %d", i, party->mMemberList[i].mCreatureID, party->mMemberList[i].mCreatureDefID);
+								}
+							}
+							else {
+								g_Log.AddMessageFormat("[WARNING] Active Instance is NULL in party member %d (%d / %d", i, party->mMemberList[i].mCreatureID, party->mMemberList[i].mCreatureDefID);
+							}
+						}
+						else {
+							g_Log.AddMessageFormat("[WARNING] Creature Pointer is NULL in party member %d (%d / %d", i, party->mMemberList[i].mCreatureID, party->mMemberList[i].mCreatureDefID);
+						}
+					}
+				}
 
 			}
 		}
