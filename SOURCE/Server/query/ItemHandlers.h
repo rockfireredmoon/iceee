@@ -41,4 +41,28 @@ public:
 	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
 };
 
+class ItemContentsHandler : public QueryHandler {
+public:
+	~ItemContentsHandler() {};
+	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
+};
+
+class ItemMoveHandler : public QueryHandler {
+public:
+	~ItemMoveHandler() {};
+	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
+};
+
+class ItemDeleteHandler : public QueryHandler {
+public:
+	~ItemDeleteHandler() {};
+	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
+};
+
+class ItemSplitHandler : public QueryHandler {
+public:
+	~ItemSplitHandler() {};
+	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
+};
+
 #endif

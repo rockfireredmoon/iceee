@@ -43,6 +43,7 @@ tawd_SOURCES = md5.cc \
 	FileReader3.cpp \
 	FileReader.cpp \
 	FriendStatus.cpp \
+	Fun.cpp \
 	Gamble.cpp \
 	Globals.cpp \
 	Guilds.cpp \
@@ -109,7 +110,6 @@ tawd_SOURCES = md5.cc \
 	query/VaultHandlers.cpp \
 	query/AuctionHouseHandlers.cpp \
 	query/ScriptHandlers.cpp \
-	query/WarpHandlers.cpp \
 	query/MarkerHandlers.cpp \
 	query/SidekickHandlers.cpp \
 	query/QuestHandlers.cpp \
@@ -119,6 +119,7 @@ tawd_SOURCES = md5.cc \
 	query/SupportHandlers.cpp \
 	query/BookHandlers.cpp \
 	query/ItemHandlers.cpp \
+	query/CommandHandlers.cpp \
 	util/base64.cpp \
 	util/JsonHelpers.cpp \
 	util/SquirrelObjects.cpp \
@@ -251,7 +252,6 @@ tawd_SOURCES = md5.cc \
 	query/VaultHandlers.h \
 	query/AuctionHouseHandlers.h \
 	query/ScriptHandlers.h \
-	query/WarpHandlers.h \
 	query/MarkerHandlers.h \
 	query/SidekickHandlers.h \
 	query/QuestHandlers.h \
@@ -261,6 +261,7 @@ tawd_SOURCES = md5.cc \
 	query/SupportHandlers.h \
 	query/BookHandlers.h \
 	query/ItemHandlers.h \
+	query/CommandHandlers.h \
 	util/base64.h \
 	util/Log.h \
 	util/JsonHelpers.h \
@@ -306,6 +307,7 @@ tawdsvc_SOURCES = md5.cc \
 	FileReader3.cpp \
 	FileReader.cpp \
 	FriendStatus.cpp \
+	Fun.cpp \
 	Gamble.cpp \
 	Globals.cpp \
 	Guilds.cpp \
@@ -372,7 +374,6 @@ tawdsvc_SOURCES = md5.cc \
 	query/VaultHandlers.cpp \
 	query/AuctionHouseHandlers.cpp \
 	query/ScriptHandlers.cpp \
-	query/WarpHandlers.cpp \
 	query/MarkerHandlers.cpp \
 	query/SidekickHandlers.cpp \
 	query/QuestHandlers.cpp \
@@ -383,6 +384,7 @@ tawdsvc_SOURCES = md5.cc \
 	query/BookHandlers.cpp \
 	query/BookHandlers.cpp \
 	query/ItemHandlers.cpp \
+	query/CommandHandlers.cpp \
 	util/base64.cpp \
 	util/JsonHelpers.cpp \
 	util/SquirrelObjects.cpp \
@@ -516,7 +518,6 @@ tawdsvc_SOURCES = md5.cc \
 	query/AuctionHouseHandlers.h \
 	query/BookHandlers.h \
 	query/ScriptHandlers.h \
-	query/WarpHandlers.h \
 	query/MarkerHandlers.h \
 	query/SidekickHandlers.h \
 	query/QuestHandlers.h \
@@ -524,6 +525,7 @@ tawdsvc_SOURCES = md5.cc \
 	query/TradeHandlers.h \
 	query/SceneryHandlers.h \
 	query/ItemHandlers.h \
+	query/CommandHandlers.h \
 	util/base64.h \
 	util/Log.h \
 	util/JsonHelpers.h \

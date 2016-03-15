@@ -189,7 +189,6 @@ INITIALIZE_EASYLOGGINGPP
 #include "query/VaultHandlers.h"
 #include "query/AuctionHouseHandlers.h"
 #include "query/ScriptHandlers.h"
-#include "query/WarpHandlers.h"
 #include "query/MarkerHandlers.h"
 #include "query/SidekickHandlers.h"
 #include "query/QuestHandlers.h"
@@ -199,6 +198,7 @@ INITIALIZE_EASYLOGGINGPP
 #include "query/SupportHandlers.h"
 #include "query/BookHandlers.h"
 #include "query/ItemHandlers.h"
+#include "query/CommandHandlers.h"
 #include <curl/curl.h>
 
 #ifdef OUTPUT_TO_CONSOLE
@@ -623,15 +623,6 @@ int InitServerMain(int argc, char *argv[]) {
 	g_QueryManager.queryHandlers["script.kill"] = new ScriptKillHandler();
 	g_QueryManager.queryHandlers["script.save"] = new ScriptSaveHandler();
 
-	g_QueryManager.queryHandlers["warp"] = new WarpHandler();
-	g_QueryManager.queryHandlers["warpi"] = new WarpInstanceHandler();
-	g_QueryManager.queryHandlers["warpg"] = new WarpPullHandler();
-	g_QueryManager.queryHandlers["warpt"] = new WarpTileHandler();
-	g_QueryManager.queryHandlers["warpg"] = new WarpGroveHandler();
-	g_QueryManager.queryHandlers["warpextoff"] = new WarpExternalOfflineHandler();
-	g_QueryManager.queryHandlers["warpext"] = new WarpExternalHandler();
-
-
 	g_QueryManager.queryHandlers["marker.list"] = new MarkerListHandler();
 	g_QueryManager.queryHandlers["marker.edit"] = new MarkerEditHandler();
 	g_QueryManager.queryHandlers["marker.del"] = new MarkerDelHandler();
@@ -687,6 +678,77 @@ int InitServerMain(int argc, char *argv[]) {
 
 	g_QueryManager.queryHandlers["item.use"] = new ItemUseHandler();
 	g_QueryManager.queryHandlers["item.def.use"] = new ItemDefUseHandler();
+	g_QueryManager.queryHandlers["item.contents"] = new ItemContentsHandler();
+	g_QueryManager.queryHandlers["item.move"] = new ItemMoveHandler();
+	g_QueryManager.queryHandlers["item.split"] = new ItemSplitHandler();
+	g_QueryManager.queryHandlers["item.delete"] = new ItemDeleteHandler();
+
+	// Commands
+	g_QueryManager.queryHandlers["help"] = new HelpHandler();
+	g_QueryManager.queryHandlers["adjustexp"] = new AdjustExpHandler();
+	g_QueryManager.queryHandlers["unstick"] = new UnstickHandler();
+	g_QueryManager.queryHandlers["pose"] = new PoseHandler();
+	g_QueryManager.queryHandlers["pose2"] = new Pose2Handler();
+	g_QueryManager.queryHandlers["esay"] = new EsayHandler();
+	g_QueryManager.queryHandlers["health"] = new HealthHandler();
+	g_QueryManager.queryHandlers["speed"] = new SpeedHandler();
+	g_QueryManager.queryHandlers["fa"] = new ForceAbilityHandler();
+	g_QueryManager.queryHandlers["partylowest"] = new PartyLowestHandler();
+	g_QueryManager.queryHandlers["who"] = new WhoHandler();
+	g_QueryManager.queryHandlers["gmwho"] = new GMWhoHandler();
+	g_QueryManager.queryHandlers["chwho"] = new CHWhoHandler();
+	g_QueryManager.queryHandlers["give"] = new GiveHandler();
+	g_QueryManager.queryHandlers["giveid"] = new GiveIDHandler();
+	g_QueryManager.queryHandlers["giveall"] = new GiveAllHandler();
+	g_QueryManager.queryHandlers["giveapp"] = new GiveAppHandler();
+	g_QueryManager.queryHandlers["deleteall"] = new DeleteAllHandler();
+	g_QueryManager.queryHandlers["deleteabove"] = new DeleteAboveHandler();
+	g_QueryManager.queryHandlers["grove"] = new GroveHandler();
+	g_QueryManager.queryHandlers["pvp"] = new PVPHandler();
+	g_QueryManager.queryHandlers["complete"] = new CompleteHandler();
+	g_QueryManager.queryHandlers["refashion"] = new RefashionHandler();
+	g_QueryManager.queryHandlers["backup"] = new BackupHandler();
+	g_QueryManager.queryHandlers["restore1"] = new RestoreHandler();
+	g_QueryManager.queryHandlers["god"] = new GodHandler();
+	g_QueryManager.queryHandlers["setstat"] = new SetStatHandler();
+	g_QueryManager.queryHandlers["scale"] = new ScaleHandler();
+	g_QueryManager.queryHandlers["partyall"] = new PartyAllHandler();
+	g_QueryManager.queryHandlers["partyquit"] = new PartyQuitHandler();
+	g_QueryManager.queryHandlers["ccc"] = new CCCHandler();
+	g_QueryManager.queryHandlers["ban"] = new BanHandler();
+	g_QueryManager.queryHandlers["unban"] = new UnbanHandler();
+	g_QueryManager.queryHandlers["setpermission"] = new SetPermissionHandler();
+	g_QueryManager.queryHandlers["setbuildpermission"] = new SetBuildPermissionHandler();
+	g_QueryManager.queryHandlers["setpermissionc"] = new SetPermissionCHandler();
+	g_QueryManager.queryHandlers["setbehavior"] = new SetBehaviorHandler();
+	g_QueryManager.queryHandlers["deriveset"] = new DeriveSetHandler();
+	g_QueryManager.queryHandlers["igstatus"] = new IGStatusHandler();
+	g_QueryManager.queryHandlers["partyzap"] = new PartyZapHandler();
+	g_QueryManager.queryHandlers["partyinvite"] = new PartyInviteHandler();
+	g_QueryManager.queryHandlers["roll"] = new RollHandler();
+	g_QueryManager.queryHandlers["forumlock"] = new ForumLockHandler();
+	g_QueryManager.queryHandlers["zonename"] = new ZoneNameHandler();
+	g_QueryManager.queryHandlers["dtrig"] = new DtrigHandler();
+	g_QueryManager.queryHandlers["sdiag"] = new SdiagHandler();
+	g_QueryManager.queryHandlers["sping"] = new SpingHandler();
+	g_QueryManager.queryHandlers["info"] = new InfoHandler();
+	g_QueryManager.queryHandlers["grovesetting"] = new GroveSettingHandler();
+	g_QueryManager.queryHandlers["grovepermission"] = new GrovePermissionsHandler();
+	g_QueryManager.queryHandlers["dngscale"] = new DngScaleHandler();
+	g_QueryManager.queryHandlers["pathlinks"] = new PathLinksHandler();
+	g_QueryManager.queryHandlers["targ"] = new TargHandler();
+	g_QueryManager.queryHandlers["elev"] = new ElevHandler();
+	g_QueryManager.queryHandlers["cycle"] = new CycleHandler();
+	g_QueryManager.queryHandlers["searsize"] = new SearSizeHandler();
+	g_QueryManager.queryHandlers["stailsize"] = new StailSizeHandler();
+	g_QueryManager.queryHandlers["daily"] = new DailyHandler();
+	g_QueryManager.queryHandlers["warp"] = new WarpHandler();
+	g_QueryManager.queryHandlers["warpi"] = new WarpInstanceHandler();
+	g_QueryManager.queryHandlers["warpg"] = new WarpPullHandler();
+	g_QueryManager.queryHandlers["warpt"] = new WarpTileHandler();
+	g_QueryManager.queryHandlers["warpg"] = new WarpGroveHandler();
+	g_QueryManager.queryHandlers["warpextoff"] = new WarpExternalOfflineHandler();
+	g_QueryManager.queryHandlers["warpext"] = new WarpExternalHandler();
 
 	// Some are shared
 

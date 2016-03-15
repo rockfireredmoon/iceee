@@ -30,6 +30,12 @@ using namespace std;
 class SimulatorThread;
 class InstanceScaleProfile;
 
+
+const char EXIT_GUILD_HALL[] = "EXIT GUILD HALL";
+const char EXIT_GROVE[] = "EXIT GROVE";
+const char EXIT_PVP[] = "EXIT PVP";
+
+
 extern const int SANE_DISTANCE;
 extern const int DISTANCE_FAILED;
 

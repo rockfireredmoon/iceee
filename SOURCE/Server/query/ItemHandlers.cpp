@@ -24,9 +24,8 @@
 #include "Instance.h"
 #include "ConfigString.h"
 
-void AddPet(SimulatorThread *sim,
-		CharacterServerData *pld, SimulatorQuery *query,
-		CreatureInstance *creatureInstance, int CDefID) {
+void AddPet(SimulatorThread *sim, CharacterServerData *pld,
+		SimulatorQuery *query, CreatureInstance *creatureInstance, int CDefID) {
 	int exist = pld->charPtr->CountSidekick(SidekickObject::PET);
 	if (exist > 0) {
 		creatureInstance->actInst->SidekickRemoveAll(creatureInstance,
@@ -46,14 +45,15 @@ void AddPet(SimulatorThread *sim,
 	}
 }
 
-int UseItem(SimulatorThread *sim,
-		CharacterServerData *pld, SimulatorQuery *query,
-		CreatureInstance *creatureInstance, unsigned int CCSID) {
+int UseItem(SimulatorThread *sim, CharacterServerData *pld,
+		SimulatorQuery *query, CreatureInstance *creatureInstance,
+		unsigned int CCSID) {
 
 	g_Logs.simulator->debug("[%v] Uses item %v", sim->InternalID, CCSID);
 
 	if (creatureInstance->activeLootID != 0) {
-		sim->SendInfoMessage("You cannot use items while trading.", INFOMSG_ERROR);
+		sim->SendInfoMessage("You cannot use items while trading.",
+				INFOMSG_ERROR);
 		return -1;
 	}
 
@@ -69,13 +69,13 @@ int UseItem(SimulatorThread *sim,
 		return -1;
 	}
 
-
 	if (creatureInstance->css.level < itemDef->mMinUseLevel) {
 		sim->SendInfoMessage("Your level is too low.", INFOMSG_ERROR);
 		return -1;
 	}
 
-	if (itemDef->mType != ItemType::CONSUMABLE && itemDef->mType != ItemType::SPECIAL)
+	if (itemDef->mType != ItemType::CONSUMABLE
+			&& itemDef->mType != ItemType::SPECIAL)
 		return -1;
 
 	// The AddSidekick() function has its own thread guard, so we don't
@@ -84,7 +84,8 @@ int UseItem(SimulatorThread *sim,
 	if (itemDef->mUseAbilityId != 0) {
 		ConfigString cfg(itemDef->Params);
 		//AddMessage((long)creatureInst, itemDef->mUseAbilityId, BCM_AbilityRequest);
-		int r = creatureInstance->RequestAbilityActivation(itemDef->mUseAbilityId);
+		int r = creatureInstance->RequestAbilityActivation(
+				itemDef->mUseAbilityId);
 		if (r != Ability2::ABILITY_SUCCESS) {
 			removeOnUse = false;
 			return -1;
@@ -105,11 +106,13 @@ int UseItem(SimulatorThread *sim,
 			}
 		}
 	} else {
-		if(itemDef->mType == ItemType::SPECIAL && itemDef->mIvType1 == ItemIntegerType::BOOK_PAGE) {
-			g_Logs.simulator->debug("Opening book %v on page %v", itemDef->mIvMax1, itemDef->mIvMax2);
-			return PrepExt_SendBookOpen(sim->SendBuf, itemDef->mIvMax1, itemDef->mIvMax2 - 1);
-		}
-		else {
+		if (itemDef->mType == ItemType::SPECIAL
+				&& itemDef->mIvType1 == ItemIntegerType::BOOK_PAGE) {
+			g_Logs.simulator->debug("Opening book %v on page %v",
+					itemDef->mIvMax1, itemDef->mIvMax2);
+			return PrepExt_SendBookOpen(sim->SendBuf, itemDef->mIvMax1,
+					itemDef->mIvMax2 - 1);
+		} else {
 			ConfigString cfg(itemDef->Params);
 			int petSpawnID = cfg.GetValueInt("pet");
 			if (petSpawnID != 0) {
@@ -128,8 +131,8 @@ int UseItem(SimulatorThread *sim,
 						pld->accPtr->PendingMinorUpdates++;
 					}
 
-					Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1), "You gain %d credits.",
-							credits);
+					Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1),
+							"You gain %d credits.", credits);
 					sim->SendInfoMessage(sim->Aux1, INFOMSG_INFO);
 					creatureInstance->SendStatUpdate(STAT::CREDITS);
 				}
@@ -137,8 +140,10 @@ int UseItem(SimulatorThread *sim,
 					creatureInstance->css.current_ability_points += abPoints;
 					creatureInstance->css.total_ability_points += abPoints;
 					pld->charPtr->AddAbilityPoints(abPoints);
-					creatureInstance->SendStatUpdate(STAT::CURRENT_ABILITY_POINTS);
-					creatureInstance->SendStatUpdate(STAT::TOTAL_ABILITY_POINTS);
+					creatureInstance->SendStatUpdate(
+							STAT::CURRENT_ABILITY_POINTS);
+					creatureInstance->SendStatUpdate(
+							STAT::TOTAL_ABILITY_POINTS);
 					//We don't need to send a text notification for ability points, the client will notify the user.
 				}
 				removeOnUse = true;
@@ -215,7 +220,6 @@ int UseItem(SimulatorThread *sim,
 	return 0;
 }
 
-
 //
 //ItemUseHandler
 //
@@ -233,7 +237,7 @@ int ItemUseHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 		unsigned int CCSID = pld->charPtr->inventory.GetCCSIDFromHexID(
 				query->GetString(0));
 		int ret = UseItem(sim, pld, query, creatureInstance, CCSID);
-		if(ret > 0) {
+		if (ret > 0) {
 			wpos += ret;
 		}
 	}
@@ -265,3 +269,439 @@ int ItemDefUseHandler::handleQuery(SimulatorThread *sim,
 	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
 }
 
+//
+//ItemContentsHandler
+//
+
+int ItemContentsHandler::handleQuery(SimulatorThread *sim,
+		CharacterServerData *pld, SimulatorQuery *query,
+		CreatureInstance *creatureInstance) {
+	/* Query: item.contents
+	 Args : container name to retrieve
+	 */
+
+	if (sim->HasQueryArgs(1) == false)
+		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+				"Invalid query.");
+
+	const char *contName = query->args[0].c_str();
+
+	int contID = GetContainerIDFromName(contName);
+	if (contID == -1) {
+		g_Logs.simulator->warn("[%v] Invalid [item.contents] container: [%v]",
+				sim->InternalID, contName);
+		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+				"Invalid item container.");
+	}
+
+	InventoryManager inv = pld->charPtr->inventory;
+
+	if (contID == DELIVERY_CONTAINER) {
+		inv = pld->accPtr->inventory;
+	}
+
+	sim->SendInventoryData(inv.containerList[contID]);
+
+	int WritePos = 0;
+
+	WritePos += PutByte(&sim->SendBuf[WritePos], 1);     //_handleQueryResultMsg
+	WritePos += PutShort(&sim->SendBuf[WritePos], 0);      //Message size
+	WritePos += PutInteger(&sim->SendBuf[WritePos], query->ID); //Query response index
+
+	sprintf(sim->Aux2, "%d", contID);
+	sprintf(sim->Aux3, "%d", (int) inv.containerList[contID].size());
+	WritePos += PutShort(&sim->SendBuf[WritePos], 1);      //Array count
+	WritePos += PutByte(&sim->SendBuf[WritePos], 2);       //String count
+	WritePos += PutStringUTF(&sim->SendBuf[WritePos], sim->Aux2);  //ID
+	WritePos += PutStringUTF(&sim->SendBuf[WritePos], sim->Aux3);  //Count
+	PutShort(&sim->SendBuf[1], WritePos - 3);             //Set message size
+
+	return WritePos;
+}
+
+//
+//ItemMoveHandler
+//
+
+int ItemMoveHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
+		SimulatorQuery *query, CreatureInstance *creatureInstance) {
+	/*
+	 --- Some samples of server queries for different operations:
+	 Generally it follows this format:
+	 [0] = CCSID        Hex string formed by the Container ID and Container Slot,
+	 which can be extracted by bitmasks.
+	 [1] = inv          Target container name.
+	 [2] = 23           Target container slot.
+	 [3] = inventory    Current container name, varies depending on move operation.
+	 [4] = -1           Current container slot, varies depending on the container name
+	 and operation.
+
+	 When moving from an equipped slot to backpack slot:
+	 [0] = CCSID
+	 [1] = inv          (target container)
+	 [2] = 23           (target slot)
+	 [3] = inventory
+	 [4] = -1
+
+	 When moving from backpack slot to an equipped slot:
+	 [0] = CCSID
+	 [1] = eq           (target container)
+	 [2] = 3            (target slot, where slots are mapped to specific attachment points)
+	 [3] = inventory    (current container)
+	 [4] = 23           (current index)
+
+	 When moving between backpack slots:
+	 [0] = CCSID
+	 [1] = inv          (target container)
+	 [2] = 30           (target slot)
+	 [3] = inventory    (current container)
+	 [4] = 31           (current slot)
+
+	 When moving a weapon from backpack to equipped slot:
+	 [0] = 10002
+	 [1] = eq           (target container)
+	 [2] = 2            (target slot)
+	 [3] = eq_ranged    (unknown)
+	 [4] = -1           (unknown)
+
+	 When moving a weapon from equipped slot to backpack:
+	 [0] = 10002
+	 [1] = inv          (target container)
+	 [2] = 42           (target slot)
+	 [3] = eq_ranged    (unknown)
+	 [4] = 0            (unknown)
+
+	 */
+
+	/* Query: item.move
+	 Args : [0] = Item ID (in hexadecimal)
+	 [1] = Name of the destination container.
+	 [2] = Destination slot.
+	 [3] = Name of the source container (previous item location).
+	 [4] = Source slot.
+	 */
+
+	//if(HasQueryArgs(5) == false)
+	//	return;
+	if (query->argCount < 5)
+		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+				"Invalid query->");
+
+	/* Query debug output
+	 for(int i = 0; i < query->argCount; i++)
+	 LogMessageL(MSG_SHOW, "[%d]=%s", i, query->args[i].c_str());
+	 */
+
+	unsigned long CCSID = strtol(query->args[0].c_str(), NULL, 16);
+
+	int origContainer = (CCSID & CONTAINER_ID) >> 16;
+	int origSlot = CCSID & CONTAINER_SLOT;
+
+	int destContainer = GetContainerIDFromName(query->args[1].c_str());
+	int destSlot = strtol(query->args[2].c_str(), NULL, 10);
+
+	if (destContainer == -1) {
+		g_Logs.simulator->error(
+				"[%d] item.move: unknown destination container [%s] for CCSID [%lu]",
+				sim->InternalID, query->args[0].c_str(), CCSID);
+		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+				"Unknown destination container.");
+	}
+
+	if (sim->CanMoveItems() == false)
+		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+				"You may not move items while busy.");
+
+	//This is a pretty ugly hack to prevent some out of sync and potential duping issues.
+	//If the player submits two items to trade, then removes one item from trade by dragging the
+	//item and dropping it back into the inventory over the other item, it will swap the items and
+	//allow that item to be submitted for trade twice, thus duping.
+	int selfID = creatureInstance->CreatureID;
+	int tradeID = creatureInstance->activeLootID;
+	TradeTransaction *tradeData =
+			creatureInstance->actInst->tradesys.GetExistingTransaction(tradeID);
+	if (tradeData != NULL) {
+		creatureInstance->actInst->tradesys.CancelTransaction(selfID, tradeID,
+				sim->SendBuf);
+		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+				"You may not move items while trading.");
+	}
+	//End of hack.
+
+	//Hack to enforce class restrictions for weapons.
+	/* DEACTIVATED SINCE IT'S NOT SYNCHRONIZED WITH THE CLIENT
+	 if(destContainer == EQ_CONTAINER)
+	 {
+	 int origItemIndex = GetItemBySlot(origContainer, origSlot);
+	 if(origItemIndex >= 0)
+	 {
+	 InventorySlot &source = containerList[origContainer][origItemIndex];
+	 ItemDef *sourceItem = source.ResolveSafeItemPtr();
+	 if(sourceItem->mWeaponType != 0)
+	 if(creatureInstance->ValidateEquippableWeapon(sourceItem->mWeaponType) == false)
+	 return PrepExt_QueryResponseError(sim->SendBuf, query->ID, "You cannot equip weapons of that type.");
+	 }
+	 }
+	 */
+
+	//Need this or else accounts with debug permissions (multiple simultaneous logins per account)
+	//will overwrite each other's vault contents. (Originally intended for shared vaults, which
+	//implementation was never finished, but might as well keep)
+	if (((destContainer == BANK_CONTAINER) || (origContainer == BANK_CONTAINER))
+			&& (pld->accPtr->GetSessionLoginCount() > 1))
+		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+				"You cannot use vaults while logged into multiple account characters at once.");
+
+	if (((destContainer == DELIVERY_CONTAINER)
+			|| (origContainer == DELIVERY_CONTAINER))
+			&& (pld->accPtr->GetSessionLoginCount() > 1))
+		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+				"You cannot use delivery boxes while logged into multiple account characters at once.");
+
+	if (((destContainer == STAMPS_CONTAINER)
+			|| (origContainer == STAMPS_CONTAINER))
+			&& (pld->accPtr->GetSessionLoginCount() > 1))
+		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+				"You cannot use stamp boxes while logged into multiple account characters at once.");
+
+	InventoryManager *origInv = &pld->charPtr->inventory;
+	InventoryManager *destInv = &pld->charPtr->inventory;
+
+	if (destContainer == DELIVERY_CONTAINER) {
+		destInv = &pld->accPtr->inventory;
+	}
+
+	if (origContainer == DELIVERY_CONTAINER) {
+		origInv = &pld->accPtr->inventory;
+	}
+
+	if ((origInv->VerifyContainerSlotBoundary(origContainer, origSlot) == false)
+			|| (destInv->VerifyContainerSlotBoundary(destContainer, destSlot)
+					== false)) {
+		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+				"Failed to move item.");
+	}
+
+	if (destContainer == STAMPS_CONTAINER) {
+		int origItemIndex = origInv->GetItemBySlot(origContainer, origSlot);
+		if (origItemIndex < 0)
+			return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+					"Invalid item.");
+
+		InventorySlot &source =
+				origInv->containerList[origContainer][origItemIndex];
+		ItemDef *sourceItem = source.ResolveItemPtr();
+		if (sourceItem == NULL || sourceItem->mID != POSTAGE_STAMP_ITEM_ID) {
+			return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+					"You may only add stamps to a stamp container.");
+		}
+	}
+
+	if (destContainer == EQ_CONTAINER) {
+		int origItemIndex = origInv->GetItemBySlot(origContainer, origSlot);
+		if (origItemIndex < 0)
+			return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+					"Invalid item.");
+
+		InventorySlot &source =
+				origInv->containerList[origContainer][origItemIndex];
+		ItemDef *sourceItem = source.ResolveItemPtr();
+		int res = destInv->VerifyEquipItem(sourceItem, destSlot,
+				creatureInstance->css.level, creatureInstance->css.profession);
+		if (res != InventoryManager::EQ_ERROR_NONE)
+			return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+					InventoryManager::GetEqErrorString(res));
+	}
+
+	int mpos = origInv->ItemMove(sim->Aux1, sim->Aux3, &creatureInstance->css,
+			pld->charPtr->localCharacterVault, origContainer, origSlot, destInv,
+			destContainer, destSlot, true);
+	if (mpos > 0) {
+		if (destContainer == DELIVERY_CONTAINER
+				|| origContainer == DELIVERY_CONTAINER) {
+			pld->accPtr->PendingMinorUpdates++;
+		}
+
+		sim->AttemptSend(sim->Aux1, mpos);
+		//Send the query response after the item updates.
+		int wpos = PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
+		sim->AttemptSend(sim->SendBuf, wpos);
+
+		if (origContainer == EQ_CONTAINER || destContainer == EQ_CONTAINER) {
+			//Just in case a container was equipped or unequipped, update the max inventory slots
+			origInv->CountInventorySlots();
+			if (origInv != destInv) {
+				destInv->CountInventorySlots();
+			}
+
+			//Update the eq_appearance string and broadcast an update to all other players
+			sim->UpdateEqAppearance();
+		}
+
+		/* DISABLED, NEVER FINISHED
+		 //Check quest objectives.
+		 if(origContainer == INV_CONTAINER || destContainer == INV_CONTAINER)
+		 {
+		 wpos = pld->charPtr->questJournal.RefreshItemQuests(pld->charPtr->inventory, sim->SendBuf);
+		 if(wpos > 0)
+		 AttemptSend(sim->SendBuf, wpos);
+		 }
+		 */
+		return 0;
+	}
+
+	//Ugly error code handling.
+	if (mpos == -1)
+		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+				"You cannot equip a two-handed weapon while using an off-hand item.");
+	else if (mpos == -2)
+		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+				"You cannot equip an offhand item while using a two-handed weapon.");
+	else if (mpos == -3)
+		return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK"); //Hack to allow movement when the origin and destination is the same.  The request must return successful, otherwise the client will spam retry requests.
+	else if (mpos == -4) {
+		if (destContainer == DELIVERY_CONTAINER) {
+			return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+					"Items bound to you cannot be placed into your delivery box.");
+		} else if (destContainer == AUCTION_CONTAINER) {
+			return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+					"Items bound to you cannot be auctioned.");
+		} else {
+			return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+					"Items bound to you cannot be placed into your vault.");
+		}
+	} else if (mpos < -100)
+		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+				InventoryManager::GetEqErrorString(mpos + 100));
+
+	return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+			"Failed to move item.");
+}
+
+//
+//ItemSplitHandler
+//
+
+int ItemSplitHandler::handleQuery(SimulatorThread *sim,
+		CharacterServerData *pld, SimulatorQuery *query,
+		CreatureInstance *creatureInstance) {
+
+	if (sim->HasQueryArgs(2) == false)
+		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+				"Invalid query.");
+
+	long CCSID = strtol(query->args[0].c_str(), NULL, 16);
+	int amount = atoi(query->args[1].c_str());
+	InventorySlot *item = pld->charPtr->inventory.GetItemPtrByCCSID(CCSID);
+	if (item == NULL) {
+		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+				"Item not found in inventory.");
+	}
+
+	int slot = pld->charPtr->inventory.GetFreeSlot(INV_CONTAINER);
+	if (slot == -1) {
+		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+				"No free inventory space.");
+	}
+
+	int currentCount = item->GetStackCount();
+	if (amount < 1 || amount >= currentCount) {
+		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+				"Cannot split that amount.");
+	}
+
+	InventorySlot newItem;
+	newItem.CopyFrom(*item, false);
+	newItem.CCSID = pld->charPtr->inventory.GetCCSID(INV_CONTAINER, slot);
+	newItem.count = amount - 1;
+
+	int r = pld->charPtr->inventory.AddItem(INV_CONTAINER, newItem);
+	if (r == -1) {
+		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+				"Error creating new stack.");
+	}
+
+	//Need to refetch since the pointer might've changed when adding the item.
+	item = pld->charPtr->inventory.GetItemPtrByCCSID(CCSID);
+	if (item == NULL) {
+		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+				"Item not found in inventory.");
+	}
+	item->count -= amount;
+
+	int WritePos = AddItemUpdate(sim->SendBuf, sim->Aux1, item);
+	WritePos += AddItemUpdate(&sim->SendBuf[WritePos], sim->Aux1, &newItem);
+	WritePos += PrepExt_QueryResponseString(&sim->SendBuf[WritePos], query->ID,
+			"OK");
+	return WritePos;
+}
+
+//
+//ItemDeleteHandler
+//
+
+int ItemDeleteHandler::handleQuery(SimulatorThread *sim,
+		CharacterServerData *pld, SimulatorQuery *query,
+		CreatureInstance *creatureInstance) {
+	/* Query: item.delete
+	 Args : [0] = Item ID (in hexadecimal)
+	 */
+
+	if (query->argCount < 1)
+		return PrepExt_QueryResponseNull(sim->SendBuf, query->ID);
+
+	unsigned long InventoryID = strtol(query->args[0].c_str(), NULL, 16);
+	int origContainer = (InventoryID & CONTAINER_ID) >> 16;
+	int origSlot = InventoryID & CONTAINER_SLOT;
+	int r = pld->charPtr->inventory.GetItemBySlot(origContainer, origSlot);
+	if (r == -1) {
+		g_Logs.simulator->error("[%v] erver error: Item ID not found [%v]",
+				sim->InternalID, InventoryID);
+		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+				"Item not found.");
+	}
+
+	int itemID = pld->charPtr->inventory.containerList[origContainer][r].IID;
+
+	//NOTE: FOR DEBUG PURPOSES
+	ItemDef *itemDef = g_ItemManager.GetPointerByID(itemID);
+	if (itemDef != NULL) {
+		g_Logs.simulator->info("[%v] Deleting item %v [%v]", sim->InternalID,
+				itemID, itemDef->mDisplayName.c_str());
+
+		// If the item provides an always active ability, then it should be removed now
+		if (itemDef->mActionAbilityId > 0) {
+			creatureInstance->RemoveBuffsFromAbility(itemDef->mActionAbilityId,
+					true);
+		}
+	}
+
+	//Find the players best (in terms of recoup amount) grinder (if they have one)
+	int invId = GetContainerIDFromName("inv");
+	ItemDef *grinderDef = pld->charPtr->inventory.GetBestSpecialItem(invId,
+			ITEM_GRINDER);
+	if (grinderDef != NULL) {
+		int amt = (int) (((double) itemDef->mValue / 100.0)
+				* grinderDef->mIvMax1);
+		creatureInstance->AdjustCopper(amt);
+	}
+
+	//Append a delete notice to the response string
+	int wpos = 0;
+	wpos += RemoveItemUpdate(&sim->SendBuf[wpos], sim->Aux3,
+			&pld->charPtr->inventory.containerList[origContainer][r]);
+	sim->AttemptSend(sim->SendBuf, wpos);
+
+	//Remove from server's inventory list
+	pld->charPtr->inventory.RemItem(InventoryID);
+
+	//Just in case a container was equipped or unequipped, update the max inventory slots
+	pld->charPtr->inventory.CountInventorySlots();
+
+	//Update the eq_appearance string and broadcast an update to all other players
+	sim->UpdateEqAppearance();
+
+	g_ItemManager.NotifyDestroy(itemID, "item.delete");
+
+	return PrepExt_QueryResponseNull(sim->SendBuf, query->ID);
+}
