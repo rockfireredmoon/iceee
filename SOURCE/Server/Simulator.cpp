@@ -2156,12 +2156,6 @@ bool SimulatorThread::HandleQuery(int &PendingData) {
 		PendingData = handle_query_ab_remainingcooldowns();
 	else if (query.name.compare("map.marker") == 0)
 		PendingData = handle_query_map_marker();
-	else if (query.name.compare("loot.list") == 0)
-		handle_query_loot_list();
-	else if (query.name.compare("loot.item") == 0)
-		handle_query_loot_item();
-	else if (query.name.compare("loot.exit") == 0)
-		handle_query_loot_exit();
 	else if (query.name.compare("creature.use") == 0)
 		PendingData = handle_query_creature_use();
 	else if (query.name.compare("account.info") == 0)
@@ -3549,30 +3543,6 @@ bool SimulatorThread::CheckWriteFlush(int &curPos) {
 	return false;
 }
 
-void SimulatorThread::handle_query_loot_list(void) {
-	/*  Query: loot.list
-	 Retrieves a list of loot for a particular dead creature.
-	 Args : [0] = Creature Instance ID.
-	 */
-
-	if (HasQueryArgs(1) == false)
-		return;
-
-	WritePos = 0;
-
-	int CreatureID = atoi(query.args[0].c_str());
-
-	int r = creatureInst->actInst->lootsys.GetCreature(CreatureID);
-	if (r == -1)
-		WritePos = PrepExt_QueryResponseString2(SendBuf, query.ID, "FAIL",
-				"Creature does not have any loot.");
-	else
-		WritePos = creatureInst->actInst->lootsys.WriteLootQueryToBuffer(r,
-				SendBuf, Aux2, query.ID);
-
-	PendingSend = true;
-}
-
 int SimulatorThread::protected_CheckDistance(int creatureID) {
 	return protected_CheckDistanceBetweenCreatures(creatureInst, creatureID);
 }
@@ -3772,51 +3742,6 @@ int SimulatorThread::protected_helper_query_loot_need_greed_pass(void) {
 	}
 	CheckIfLootReadyToDistribute(loot, tag);
 	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-}
-
-void SimulatorThread::handle_query_loot_need_greed_pass(void) {
-	/*  Query: loot.need
-	 Signals players interested in being needy.
-	 Args : [0] = Loot tag
-	 */
-
-	if (HasQueryArgs(2) == false)
-		return;
-
-	WritePos = 0;
-	WritePos = protected_helper_query_loot_need_greed_pass();
-	if (WritePos <= 0)
-		WritePos = PrepExt_QueryResponseString2(SendBuf, query.ID, "FAIL",
-				GetErrorString(WritePos));
-	PendingSend = true;
-}
-
-void SimulatorThread::handle_query_loot_item(void) {
-	/*  Query: loot.item
-	 Loots a particular item off a creature.
-	 Args : [0] = Creature Instance ID
-	 [1] = Item Definition ID
-	 */
-
-	if (HasQueryArgs(2) == false)
-		return;
-
-	WritePos = 0;
-
-	int result = protected_helper_query_loot_item();
-	if (result < 0)
-		WritePos = PrepExt_QueryResponseString2(SendBuf, query.ID, "FAIL",
-				GetErrorString(result));
-	PendingSend = true;
-}
-
-void SimulatorThread::handle_query_loot_exit(void) {
-	/*  Query: loot.exit
-	 Signals the server that the loot window has been closed.
-	 The server currently does not process this information.
-	 */
-	WritePos = PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-	PendingSend = true;
 }
 
 const char * SimulatorThread::GetErrorString(int error) {
@@ -6231,6 +6156,22 @@ int SimulatorThread::handle_query_party(void) {
 	 return wpos;
 	 */
 }
+void SimulatorThread::handle_query_loot_need_greed_pass(void) {
+	/*  Query: loot.need
+	 Signals players interested in being needy.
+	 Args : [0] = Loot tag
+	 */
+
+	if (HasQueryArgs(2) == false)
+		return;
+
+	WritePos = 0;
+	WritePos = protected_helper_query_loot_need_greed_pass();
+	if (WritePos <= 0)
+		WritePos = PrepExt_QueryResponseString2(SendBuf, query.ID, "FAIL",
+				GetErrorString(WritePos));
+	PendingSend = true;
+}
 
 int SimulatorThread::handle_query_quest_share(void) {
 	if (query.argCount < 1)
@@ -7281,6 +7222,11 @@ int SimulatorThread::OfferLoot(int mode, ActiveLootContainer *loot,
 			party->mMemberList.size());
 	int offers = 0;
 	for (unsigned int i = 0; i < party->mMemberList.size(); i++) {
+		if(party->mMemberList[i].mCreaturePtr == NULL || party->mMemberList[i].mCreaturePtr->simulatorPtr == NULL) {
+			g_Logs.simulator->info("[%v] Skipping %v (%v) because they no longer have a simulator", InternalID,
+					party->mMemberList[i].mCreatureID, party->mMemberList[i].mDisplayName);
+		}
+
 		if (receivingCreature == NULL
 				|| party->mMemberList[i].mCreatureID
 						!= receivingCreature->CreatureID) {

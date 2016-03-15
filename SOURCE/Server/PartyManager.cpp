@@ -5,6 +5,7 @@
 #include "Util.h"
 #include "Globals.h"
 #include "Instance.h"
+#include "util/Log.h"
 
 PartyManager g_PartyManager;
 
@@ -127,14 +128,21 @@ PartyMember* ActiveParty :: GetMemberByID(int memberID)
 
 PartyMember* ActiveParty :: GetNextLooter()
 {
-	if(mNextToGetLoot >= mMemberList.size()) {
-		mNextToGetLoot = 0;
+	for(int i = 0 ; i < mMemberList.size(); i++) {
+		if(mNextToGetLoot >= mMemberList.size()) {
+			mNextToGetLoot = 0;
+		}
+		if(mNextToGetLoot >= mMemberList.size()) {
+			return NULL;
+		}
+		mNextToGetLoot++;
+		PartyMember* m = &mMemberList[mNextToGetLoot - 1];
+		if(m->mCreaturePtr != NULL || m->mCreaturePtr->simulatorPtr == NULL) {
+			return m;
+		}
+		g_Logs.server->info("%v (%v) is next in round robin, but they no longer have a simulator", m->mCreatureID, m->mDisplayName);
 	}
-	if(mNextToGetLoot >= mMemberList.size()) {
-		return NULL;
-	}
-	mNextToGetLoot++;
-	return &mMemberList[mNextToGetLoot - 1];
+	return NULL;
 }
 
 PartyMember* ActiveParty :: GetMemberByDefID(int memberDefID)
