@@ -199,7 +199,6 @@ INITIALIZE_EASYLOGGINGPP
 #include "query/BookHandlers.h"
 #include "query/ItemHandlers.h"
 #include "query/CommandHandlers.h"
-#include "query/LootHandlers.h"
 #include <curl/curl.h>
 
 #ifdef OUTPUT_TO_CONSOLE
@@ -683,10 +682,6 @@ int InitServerMain(int argc, char *argv[]) {
 	g_QueryManager.queryHandlers["item.move"] = new ItemMoveHandler();
 	g_QueryManager.queryHandlers["item.split"] = new ItemSplitHandler();
 	g_QueryManager.queryHandlers["item.delete"] = new ItemDeleteHandler();
-
-	g_QueryManager.queryHandlers["loot.list"] = new LootListHandler();
-	g_QueryManager.queryHandlers["loot.item"] = new LootItemHandler();
-	g_QueryManager.queryHandlers["loot.exit"] = new LootExitHandler();
 
 	// Commands
 	g_QueryManager.queryHandlers["help"] = new HelpHandler();

@@ -137,7 +137,7 @@ PartyMember* ActiveParty :: GetNextLooter()
 		}
 		mNextToGetLoot++;
 		PartyMember* m = &mMemberList[mNextToGetLoot - 1];
-		if(m->mCreaturePtr != NULL || m->mCreaturePtr->simulatorPtr == NULL) {
+		if(m->mCreaturePtr != NULL && m->mCreaturePtr->simulatorPtr != NULL) {
 			return m;
 		}
 		g_Logs.server->info("%v (%v) is next in round robin, but they no longer have a simulator", m->mCreatureID, m->mDisplayName);

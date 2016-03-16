@@ -214,8 +214,11 @@ public:
 	void handle_query_account_fulfill(void);
 	int handle_query_ab_remainingcooldowns(void);
 	int handle_query_map_marker(void);
+	void handle_query_loot_list(void);
+	void handle_query_loot_item(void);
 	void handle_query_loot_need_greed_pass(void);
 	int protected_helper_query_loot_need_greed_pass(void);
+	void handle_query_loot_exit(void);
 	void handle_query_creature_isusable(void);
 	void handle_query_scenery_edit(void);
 	void handle_query_scenery_delete(void);

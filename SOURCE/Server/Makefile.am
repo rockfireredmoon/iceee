@@ -120,7 +120,6 @@ tawd_SOURCES = md5.cc \
 	query/BookHandlers.cpp \
 	query/ItemHandlers.cpp \
 	query/CommandHandlers.cpp \
-	query/LootHandlers.cpp \
 	util/base64.cpp \
 	util/JsonHelpers.cpp \
 	util/SquirrelObjects.cpp \
@@ -263,7 +262,6 @@ tawd_SOURCES = md5.cc \
 	query/BookHandlers.h \
 	query/ItemHandlers.h \
 	query/CommandHandlers.h \
-	query/LootHandlers.h \
 	util/base64.h \
 	util/Log.h \
 	util/JsonHelpers.h \
@@ -387,7 +385,6 @@ tawdsvc_SOURCES = md5.cc \
 	query/BookHandlers.cpp \
 	query/ItemHandlers.cpp \
 	query/CommandHandlers.cpp \
-	query/LootHandlers.cpp \
 	util/base64.cpp \
 	util/JsonHelpers.cpp \
 	util/SquirrelObjects.cpp \
@@ -529,7 +526,6 @@ tawdsvc_SOURCES = md5.cc \
 	query/SceneryHandlers.h \
 	query/ItemHandlers.h \
 	query/CommandHandlers.h \
-	query/LootHandlers.h \
 	util/base64.h \
 	util/Log.h \
 	util/JsonHelpers.h \
