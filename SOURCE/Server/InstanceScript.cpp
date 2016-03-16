@@ -890,10 +890,8 @@ bool InstanceNutPlayer::InviteQuest(int CID, int questID, bool inviteParty) {
 				for (it = party->mMemberList.begin();
 						it != party->mMemberList.end(); ++it) {
 					PartyMember m = *it;
-					if (m.mCreaturePtr != NULL
-							&& m.mCreaturePtr->simulatorPtr != NULL) {
+					if(m.IsOnlineAndValid())
 						m.mCreaturePtr->simulatorPtr->QuestInvite(questID);
-					}
 				}
 				ok = true;
 			}
@@ -978,10 +976,8 @@ bool InstanceNutPlayer::JoinQuest(int CID, int questID, bool joinParty) {
 				for (it = party->mMemberList.begin();
 						it != party->mMemberList.end(); ++it) {
 					PartyMember m = *it;
-					if (m.mCreaturePtr != NULL
-							&& m.mCreaturePtr->simulatorPtr != NULL) {
+					if(m.IsOnlineAndValid())
 						m.mCreaturePtr->simulatorPtr->QuestJoin(questID);
-					}
 				}
 				ok = true;
 			}

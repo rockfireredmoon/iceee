@@ -787,29 +787,8 @@ void QuestScriptPlayer::RunImplementationCommands(int opcode)
 					simCall->AttemptSend(Buffer, size);
 				else {
 					for(unsigned int i = 0 ; i < party->mMemberList.size(); i++) {
-
-						//
-						// A crash is originating here, so this excessive NULL checking
-						// is an attempt to narrow down the actual cause, as it is not
-						// easily reproduceable
-						//
-
-						if(party->mMemberList[i].mCreaturePtr != NULL) {
-							if(party->mMemberList[i].mCreaturePtr->actInst != NULL) {
-								if(party->mMemberList[i].mCreaturePtr->simulatorPtr != NULL) {
-									party->mMemberList[i].mCreaturePtr->actInst->LSendToOneSimulator(Buffer, size, party->mMemberList[i].mCreaturePtr->simulatorPtr);
-								}
-								else {
-									g_Logs.server->warn("Sim is NULL in party member %v (%v / %v)", i, party->mMemberList[i].mCreatureID, party->mMemberList[i].mCreatureDefID);
-								}
-							}
-							else {
-								g_Logs.server->warn("Active Instance is NULL in party member %v (%v / %v)", i, party->mMemberList[i].mCreatureID, party->mMemberList[i].mCreatureDefID);
-							}
-						}
-						else {
-							g_Logs.server->warn("Creature Pointer is NULL in party member %v (%v / %v)", i, party->mMemberList[i].mCreatureID, party->mMemberList[i].mCreatureDefID);
-						}
+						if(party->mMemberList[i].IsOnlineAndValid())
+							party->mMemberList[i].mCreaturePtr->actInst->LSendToOneSimulator(Buffer, size, party->mMemberList[i].mCreaturePtr->simulatorPtr);
 					}
 				}
 

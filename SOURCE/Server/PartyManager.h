@@ -5,8 +5,9 @@
 #include <vector>
 #include "Creature.h"
 
-struct PartyMember
+class PartyMember
 {
+public:
 	int mCreatureDefID;
 	int mCreatureID;
 	std::string mDisplayName;
@@ -17,6 +18,10 @@ struct PartyMember
 	int mPVPKills;
 	int mPVPDeaths;
 	int mPVPGoals;
+
+	bool IsOnlineAndValid();
+	bool IsOnline();
+
 };
 
 

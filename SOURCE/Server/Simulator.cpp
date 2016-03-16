@@ -7281,7 +7281,7 @@ int SimulatorThread::OfferLoot(int mode, ActiveLootContainer *loot,
 			party->mMemberList.size());
 	int offers = 0;
 	for (unsigned int i = 0; i < party->mMemberList.size(); i++) {
-		if(party->mMemberList[i].mCreaturePtr == NULL || party->mMemberList[i].mCreaturePtr->simulatorPtr == NULL ) {
+		if(!party->mMemberList[i].IsOnlineAndValid()) {
 			g_Logs.simulator->info("[%v] Skipping party member %v because they have no simulator", InternalID, party->mMemberList[i].mCreatureID);
 			continue;
 		}
@@ -9147,6 +9147,12 @@ void SimulatorThread::CheckIfLootReadyToDistribute(ActiveLootContainer *loot,
 		LootTag *winnerTag = party->GetTag(lootTag->mItemId,
 				receivingCreature->CreatureID);
 		for (unsigned int i = 0; i < party->mMemberList.size(); i++) {
+			if(!party->mMemberList[i].IsOnlineAndValid()) {
+				g_Logs.simulator->info("[%v] Skipping informing %v of the winnner (%v) as they have no simulator", InternalID, party->mMemberList[i].mCreaturePtr->CreatureID,
+						lootTag->mCreatureId);
+				continue;
+			}
+
 			g_Logs.simulator->info("[%v] Informing %v of the winner (%v)",
 					InternalID, party->mMemberList[i].mCreaturePtr->CreatureID,
 					lootTag->mCreatureId);

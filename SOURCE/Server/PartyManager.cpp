@@ -12,6 +12,13 @@ PartyManager g_PartyManager;
 static int lootSeq = 0;
 typedef std::map<int, LootTag*>::iterator it_type;
 
+bool PartyMember :: IsOnlineAndValid() {
+	return mSocket != SocketClass::Invalid_Socket && mCreaturePtr != NULL && mCreaturePtr->simulatorPtr != NULL;
+}
+bool PartyMember :: IsOnline() {
+	return mSocket != SocketClass::Invalid_Socket;
+}
+
 LootTag :: LootTag(int itemId, int creatureId, int lootCreatureId)
 {
 	lootTag = ++lootSeq;
@@ -137,9 +144,8 @@ PartyMember* ActiveParty :: GetNextLooter()
 		}
 		mNextToGetLoot++;
 		PartyMember* m = &mMemberList[mNextToGetLoot - 1];
-		if(m->mCreaturePtr != NULL && m->mCreaturePtr->simulatorPtr != NULL) {
+		if(m->IsOnlineAndValid())
 			return m;
-		}
 		g_Logs.server->info("%v (%v) is next in round robin, but they no longer have a simulator", m->mCreatureID, m->mDisplayName);
 	}
 	return NULL;
@@ -190,7 +196,7 @@ void ActiveParty :: RebroadCastMemberList(char *buffer)
 {
 	for(size_t i = 0; i < mMemberList.size(); i++)
 	{
-		if(mMemberList[i].mSocket == SocketClass::Invalid_Socket)
+		if(!mMemberList[i].IsOnlineAndValid())
 			continue;
 		int wpos = PartyManager::WriteMemberList(buffer, this, mMemberList[i].mCreatureID);
 		g_PacketManager.ExternalAddPacket(mMemberList[i].mSocket, buffer, wpos);
@@ -201,7 +207,7 @@ void ActiveParty :: DebugDestroyParty(const char *buffer, int length)
 {
 	for(size_t i = 0; i < mMemberList.size(); i++)
 	{
-		if(mMemberList[i].mSocket != SocketClass::Invalid_Socket)
+		if(mMemberList[i].IsOnline())
 			g_PacketManager.ExternalAddPacket(mMemberList[i].mSocket, buffer, length);
 		if(mMemberList[i].mCreaturePtr != NULL)
 			mMemberList[i].mCreaturePtr->PartyID = 0;
@@ -251,7 +257,7 @@ void ActiveParty:: BroadcastInfoMessageToAllMembers(const char *buffer)
 void ActiveParty :: BroadCast(const char *buffer, int length)
 {
 	for(size_t i = 0; i < mMemberList.size(); i++)
-		if(mMemberList[i].mSocket != SocketClass::Invalid_Socket)
+		if(mMemberList[i].IsOnline())
 			g_PacketManager.ExternalAddPacket(mMemberList[i].mSocket, buffer, length);
 }
 
@@ -259,7 +265,7 @@ void ActiveParty :: BroadCastExcept(const char *buffer, int length, int excludeD
 {
 	for(size_t i = 0; i < mMemberList.size(); i++)
 		if(mMemberList[i].mCreatureDefID != excludeDefID)
-			if(mMemberList[i].mSocket != SocketClass::Invalid_Socket)
+			if(mMemberList[i].IsOnline())
 				g_PacketManager.ExternalAddPacket(mMemberList[i].mSocket, buffer, length);
 }
 
@@ -269,7 +275,7 @@ void ActiveParty :: BroadCastTo(const char *buffer, int length, int creatureDefI
 	{
 		if(mMemberList[i].mCreatureDefID == creatureDefID)
 		{
-			if(mMemberList[i].mSocket != SocketClass::Invalid_Socket)
+			if(mMemberList[i].IsOnline())
 			{
 				g_PacketManager.ExternalAddPacket(mMemberList[i].mSocket, buffer, length);
 				return;
@@ -716,10 +722,10 @@ LootTag * ActiveParty :: GetTag(int itemId, int creatureId)
 
 void ActiveParty :: RemoveTagsForLootCreatureId(int lootCreatureId, int itemId, int creatureId)
 {
-	g_Log.AddMessageFormat("Removing loot tags for loot creature ID %d and item ID %d", lootCreatureId, itemId);
+	g_Logs.simulator->info("Removing loot tags for loot creature ID %v and item ID %v", lootCreatureId, itemId);
 	std::map<int, LootTag*>::iterator itr = lootTags.begin();
 	while (itr != lootTags.end()) {
-		g_Log.AddMessageFormat("  ---> remove %d - %d ?", (*itr->second).lootTag, (*itr->second).mCreatureId,  (*itr->second).mItemId);
+		g_Log.AddMessageFormat("  ---> remove %v - %v ?", (*itr->second).lootTag, (*itr->second).mCreatureId,  (*itr->second).mItemId);
 		if ((*itr->second).mLootCreatureId == lootCreatureId && (itemId == 0 || (*itr->second).mItemId == itemId)
 				&& (creatureId == 0 || (*itr->second).mCreatureId == creatureId)) {
 			delete itr->second;
