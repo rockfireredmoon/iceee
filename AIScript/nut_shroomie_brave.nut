@@ -31,5 +31,5 @@ function have_target() {
 			return;
 	}
 	if(ai.has_target())
-		ai.exec(have_target);
+		ai.queue(have_target, 100);
 }
