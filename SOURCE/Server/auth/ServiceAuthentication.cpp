@@ -17,7 +17,7 @@
 
 #include "ServiceAuthentication.h"
 #include "../Config.h"
-#include "../StringList.h"
+
 #include "../Account.h"
 #include "../Scenery2.h"
 #include <curl/curl.h>
@@ -417,7 +417,7 @@ AccountData * ServiceAuthenticationHandler::onAuthenticate(SimulatorThread *sim,
 						ZoneDefInfo *zone = g_ZoneDefManager.GetPointerByID(
 								*it);
 						if (zone == NULL)
-							g_Logs.server->info("Unknown grove %d", *it);
+							g_Logs.server->info("Unknown grove %v", *it);
 						else {
 							Util::SafeFormat(buf, sizeof(buf), "%s%d",
 									grove.c_str(), idx);

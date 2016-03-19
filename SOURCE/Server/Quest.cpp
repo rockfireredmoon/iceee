@@ -1,6 +1,6 @@
 #include "Quest.h"
 #include "QuestScript.h"
-#include "StringList.h"
+
 #include "FileReader.h"
 #include "DirectoryAccess.h"
 #include "Character.h"
@@ -1540,7 +1540,7 @@ int QuestJournal::QuestGenericData(char *buffer, int bufsize, char *convBuf,
 	//this more gracefully.
 	QuestDefinition *qd = QuestDef.GetQuestDefPtrByID(QuestID);
 	if (qd == NULL) {
-		g_Logs.server->error("Quest ID [%d] not found", QuestID);
+		g_Logs.server->error("Quest ID [%v] not found", QuestID);
 		return PrepExt_QueryResponseError(buffer, QueryIndex,
 				"Server error: quest not found.");
 	}
@@ -1615,7 +1615,7 @@ int QuestJournal::QuestData(char *buffer, char *convBuf, int QuestID,
 
 	QuestDefinition *qd = QuestDef.GetQuestDefPtrByID(QuestID);
 	if (qd == NULL) {
-		g_Logs.server->error("Quest ID [%d] not found", QuestID);
+		g_Logs.server->error("Quest ID [%v] not found", QuestID);
 		return PrepExt_QueryResponseError(buffer, QueryIndex,
 				"Server error: quest not found.");
 	}
@@ -2393,7 +2393,7 @@ void QuestJournal::RemoveOldRepeatQuests(void) {
 		} else {
 			//Quest doesn't exist, might as well delete it while we're processing.
 			delThis = true;
-			g_Logs.server->info("Deleting unknown quest ID %d",
+			g_Logs.server->info("Deleting unknown quest ID %v",
 					questID);
 		}
 

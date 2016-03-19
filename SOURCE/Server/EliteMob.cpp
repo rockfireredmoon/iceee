@@ -1,9 +1,10 @@
 #include "EliteMob.h"
 #include "DirectoryAccess.h"
 #include "FileReader3.h"
-#include "StringList.h"
+
 #include "Creature.h"
 #include "Util.h"
+#include "util/Log.h"
 
 EliteManager g_EliteManager;
 
@@ -67,8 +68,8 @@ void EliteManager :: LoadData(void)
 	Platform::GenerateFilePath(filename, "Data", "EliteAffix.txt");
 	LoadAffixTable(filename.c_str());
 
-	g_Log.AddMessageFormat("Loaded %d EliteType", mEliteType.size());
-	g_Log.AddMessageFormat("Loaded %d EliteAffix", mAffixEntry.size());
+	g_Logs.data->info("Loaded %v EliteType", mEliteType.size());
+	g_Logs.data->info("Loaded %v EliteAffix", mAffixEntry.size());
 }
 
 void EliteManager :: LoadTypeTable(const char *filename)
@@ -230,7 +231,7 @@ void EliteManager :: ApplyTransformation(CreatureInstance *creature)
 		if(affix->mNextAffix.size() > 0)
 		{
 			ProcessAffixes(level, creature, affix->mNextAffix, 0);
-			g_Log.AddMessageFormat("Applied next: [%s]", affix->mNextAffix.c_str());
+			g_Logs.server->info("Applied next: [%v]", affix->mNextAffix.c_str());
 		}
 
 		affixCount++;
@@ -270,7 +271,7 @@ void EliteManager :: ProcessAffixes(int level, CreatureInstance *creature, const
 	//Generic error test.  There is no reason for any chain to get this deep.
 	if(nestlevel > RECURSION_NEST_LEVEL_MAX)
 	{
-		g_Log.AddMessageFormat("[CRITICAL] EliteManager::ProcessAffixes potential loop [%s] nestlevel [%d]", affixName.c_str(), nestlevel);
+		g_Logs.server->error("EliteManager::ProcessAffixes potential loop [%v] nestlevel [%v]", affixName.c_str(), nestlevel);
 		return;
 	}
 
@@ -290,7 +291,7 @@ void EliteManager :: ProcessAffixes(int level, CreatureInstance *creature, const
 		{
 			if(affixes[i]->mNextAffix.compare(affixName) == 0)
 			{
-				g_Log.AddMessageFormat("[ERROR] EliteManager::ProcessAffixes next affix references self [%s->%s]", affixName.c_str(), affixes[i]->mNextAffix.c_str());
+				g_Logs.server->error("EliteManager::ProcessAffixes next affix references self [%v->%v]", affixName.c_str(), affixes[i]->mNextAffix.c_str());
 			}
 			else
 			{

@@ -14,7 +14,8 @@
 
 
 #include "Components.h"
-#include "StringList.h"
+
+#include "util/Log.h"
 #include <time.h>
 
 namespace Debug
@@ -42,9 +43,9 @@ namespace Debug
 			if(timePass > reportThreshold)
 			{
 				if(param1 != 0 || param2 != 0)
-					g_Log.AddMessageFormat("[DEBUG] TIME PASS %s, %ld ms (%d, %d)", displayLabel, timePass, param1, param2);
+					g_Logs.server->debug("TIME PASS %v, %v ms (%v, %v)", displayLabel, timePass, param1, param2);
 				else
-					g_Log.AddMessageFormat("[DEBUG] TIME PASS %s, %ld ms", displayLabel, timePass);
+					g_Logs.server->debug("TIME PASS %v, %v ms", displayLabel, timePass);
 			}
 		}
 		void SetParam(int p1, int p2)
@@ -77,14 +78,14 @@ namespace Debug
 			displayLabel = label;
 			unsigned long curTime = g_PlatformTime.getMilliseconds();
 			long timePass = (long)curTime - (long)lastTime;
-			g_Log.AddMessageFormat("[DEBUG] UPDATE TIME PASS %s, %ld ms", displayLabel, timePass);
+			g_Logs.server->debug("UPDATE TIME PASS %v, %v ms", displayLabel, timePass);
 			lastTime = curTime;
 		}
 		void Finish(void)
 		{
 			long timePass = (long)g_PlatformTime.getMilliseconds() - (long)lastTime;
 			if(timePass > 5)
-				g_Log.AddMessageFormat("[DEBUG] FINISH TIME PASS %s, %ld ms", displayLabel, timePass);
+				g_Logs.server->debug("FINISH TIME PASS %v, %v ms", displayLabel, timePass);
 		}
 		unsigned long lastTime;
 		const char *displayLabel;

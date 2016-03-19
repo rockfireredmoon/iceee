@@ -1,5 +1,5 @@
 #include "Instance.h"
-#include "StringList.h"
+
 #include "CreatureSpawner2.h"
 #include "Scenery2.h"
 #include "FileReader.h"
@@ -12,6 +12,8 @@
 #include "Config.h"  //For debug behavior state
 
 SpawnPackageManager g_SpawnPackageManager;
+const int SpawnPackageDef::MAX_ID;
+const int SpawnPackageDef::MAX_SPAWNCOUNT;
 
 Timer :: Timer()
 {
@@ -64,7 +66,7 @@ bool ActiveSpawner :: UpdateSourcePackage(void)
 {
 	if(spawnPoint == NULL)
 	{
-		g_Log.AddMessageFormat("[WARNING] UpdateSourcePackage() cannot derive from null spawnPoint"); 
+		g_Logs.data->warn("UpdateSourcePackage() cannot derive from null spawnPoint");
 		return false;
 	}
 
@@ -79,7 +81,7 @@ bool ActiveSpawner :: UpdateSourcePackage(void)
 
 	if((spawnPackage == NULL) && (pkgName[0] != 0))
 	{
-		g_Log.AddMessageFormat("[WARNING] Spawn point ID [%d, loc: %g %g] undefined package [%s]", spawnPoint->ID, spawnPoint->LocationX, spawnPoint->LocationZ, pkgName); 
+		g_Logs.data->warn("Spawn point ID [%v, loc: %v %v] undefined package [%v]", spawnPoint->ID, spawnPoint->LocationX, spawnPoint->LocationZ, pkgName);
 		return false;
 	}
 	return true;
@@ -249,7 +251,7 @@ bool SpawnTile :: Debug_VerifyProp(int zone, int propID, SceneryObject *ptr)
 	// DEBUG VERIFICATION OF PROP
 	if(ptr == NULL)
 	{
-		g_Log.AddMessageFormat("[CRITICAL] SpawnTile::Debug_VerifyProp existing pointer is null: %d", propID);
+		g_Logs.server->error("SpawnTile::Debug_VerifyProp existing pointer is null: %v", propID);
 		return false;
 	}
 	/*
@@ -272,7 +274,7 @@ void SpawnTile :: RunProcessing(ActiveInstance *inst)
 {
 	if(inst == NULL)
 	{
-		g_Log.AddMessageFormat("[CRITICAL] SpawnTile::RunProcessing inst is NULL");
+		g_Logs.server->error("SpawnTile::RunProcessing inst is NULL");
 		return;
 	}
 	Debug::LastTileZone = inst->mZone;
@@ -296,7 +298,7 @@ void SpawnTile :: RunProcessing(ActiveInstance *inst)
 
 		if(it->second.spawnPoint == NULL)
 		{
-			g_Log.AddMessageFormat("[CRITICAL] SpawnTile::RunProcessing no spawn point");
+			g_Logs.server->error("SpawnTile::RunProcessing no spawn point");
 			it->second.Invalidate();
 			continue;
 		}
@@ -334,7 +336,7 @@ void SpawnTile :: RunProcessing(ActiveInstance *inst)
 
 		if(inst->mZoneDefPtr == NULL)
 		{
-			g_Log.AddMessageFormat("[CRITICAL] SpawnTile::RunProcessing inst->mZoneDefPtr is NULL");
+			g_Logs.server->error("SpawnTile::RunProcessing inst->mZoneDefPtr is NULL");
 			continue;
 		}
 
@@ -360,7 +362,7 @@ CreatureInstance * SpawnTile :: SpawnCreature(ActiveInstance *inst, ActiveSpawne
 {
 	if(forceCreatureDef == 0 && spawner->spawnPackage == NULL)
 	{
-		g_Log.AddMessageFormat("[WARNING] SpawnCreature() spawnPackage is NULL (prop ID: %d)", spawner->spawnPoint->ID);
+		g_Logs.server->warn("SpawnCreature() spawnPackage is NULL (prop ID: %v)", spawner->spawnPoint->ID);
 		spawner->Invalidate();
 		return NULL;
 	}
@@ -445,7 +447,7 @@ CreatureInstance * SpawnTile :: SpawnCreature(ActiveInstance *inst, ActiveSpawne
 
 			CreatureDef.AddNPCDef(newItem);
 
-			g_Log.AddMessageFormat("[INFO] Creating ad-hoc prop creature: %d ()", newItem.CreatureDefID);
+			g_Logs.server->info("Creating ad-hoc prop creature: %v ()", newItem.CreatureDefID);
 
 		}
 		else
@@ -470,7 +472,7 @@ CreatureInstance * SpawnTile :: SpawnCreature(ActiveInstance *inst, ActiveSpawne
 
 	if(CDefID == -1)
 	{
-		g_Log.AddMessageFormat("[WARNING] SpawnCreature() could not determine spawn for package [%s]", spawner->spawnPackage->packageName);
+		g_Logs.server->warn("SpawnCreature() could not determine spawn for package [%v]", spawner->spawnPackage->packageName);
 
 		//Bump it to never.  Prevents logging spam from repeated attempts.
 		spawner->Invalidate();
@@ -493,7 +495,7 @@ CreatureInstance * SpawnTile :: SpawnCreature(ActiveInstance *inst, ActiveSpawne
 	CreatureDefinition *cdef = CreatureDef.GetPointerByCDef(CDefID);
 	if(cdef == NULL)
 	{
-		g_Log.AddMessageFormat("[WARNING] SpawnCreature() package [%s] returned unknown creature ID [%d]", spawner->spawnPackage->packageName, CDefID);
+		g_Logs.server->error("SpawnCreature() package [%v] returned unknown creature ID [%v]", spawner->spawnPackage->packageName, CDefID);
 
 		//Bump it to never.  Prevents logging spam from repeated attempts.
 		spawner->Invalidate();
@@ -722,12 +724,12 @@ void SpawnTile :: UpdateSpawnPoint(SceneryObject *prop)
 	{
 		it = activeSpawn.begin(); //Code::Blocks won't allow the argument on the next line
 		AddSpawnerFromProp(it, prop);
-		g_Log.AddMessageFormat("[DEBUG] UpdateSpawnPoint() added");
+		g_Logs.server->debug("UpdateSpawnPoint() added");
 	}
 	else
 	{
 		RemoveSpawnPointCreatures(&it->second);
-		g_Log.AddMessageFormat("[DEBUG] UpdateSpawnPoint() update");
+		g_Logs.server->debug("UpdateSpawnPoint() update");
 		it->second.spawnPoint = prop;
 		if(it->second.UpdateSourcePackage() == false)
 			it->second.Invalidate();
@@ -1145,7 +1147,7 @@ void SpawnManager :: RemoveSpawnPoint(int PropID)
 	for(it = spawnTiles.begin(); it != spawnTiles.end(); ++it)
 	{
 		if(it->RemoveSpawnPoint(actInst, PropID) == true)
-			g_Log.AddMessageFormat("Removing %d from %d, %d", PropID, it->TileX, it->TileY);
+			g_Logs.server->info("Removing %v from %v, %v", PropID, it->TileX, it->TileY);
 		//	return;
 	}
 }
@@ -1196,12 +1198,12 @@ int SpawnManager :: TriggerSpawn(int PropID, int forceCreatureDef, int forceFlag
 
 				return inst->CreatureID;
 			}
-			g_Log.AddMessageFormat("Found spawner, but no creature for spawn of %d (%d, %d)", PropID, forceCreatureDef, forceFlags);
+			g_Logs.server->error("Found spawner, but no creature for spawn of %v (%v, %v)", PropID, forceCreatureDef, forceFlags);
 			return -1;
 		}
 	}
 
-	g_Log.AddMessageFormat("No spawn of %d (%d, %d) because no active spawners found (maybe the prop is not in a tile that is yet loaded)", PropID, forceCreatureDef, forceFlags);
+	g_Logs.server->error("No spawn of %v (%v, %v) because no active spawners found (maybe the prop is not in a tile that is yet loaded)", PropID, forceCreatureDef, forceFlags);
 	return -1;
 }
 
@@ -1300,7 +1302,7 @@ void SpawnPackageDef :: AddPointOverride(int propID, int creatureDefID)
 {
 	if(numPointOverride >= MAX_POINT_OVERRIDE)
 	{
-		g_Log.AddMessageFormat("Cannot add point more point overrides for [%s]", packageName);
+		g_Logs.server->error("Cannot add point more point overrides for [%v]", packageName);
 		return;
 	}
 
@@ -1339,7 +1341,7 @@ int SpawnPackageList :: LoadFromFile(const char *filename)
 	FileReader lfr;
 	if(lfr.OpenText(filename) != Err_OK)
 	{
-		g_Log.AddMessageFormat("[ERROR] Cannot open spawn package definition file: %s", filename);
+		g_Logs.server->error("Cannot open spawn package definition file: %v", filename);
 		return -1;
 	}
 
@@ -1371,7 +1373,7 @@ int SpawnPackageList :: LoadFromFile(const char *filename)
 					int ID = lfr.BlockToIntC(1);
 					if(ID > newItem.MAX_ID)
 					{
-						g_Log.AddMessageFormat("[WARNING] Spawn target definition cannot exceed %d (file: %s, line: %d)", newItem.MAX_ID, filename, lfr.LineNumber);
+						g_Logs.server->warn("Spawn target definition cannot exceed %v (file: %v, line: %v)", newItem.MAX_ID, filename, lfr.LineNumber);
 						ID = 0;
 					}
 					newItem.spawnID[newItem.spawnCount] = ID;
@@ -1380,7 +1382,7 @@ int SpawnPackageList :: LoadFromFile(const char *filename)
 				}
 				else
 				{
-					g_Log.AddMessageFormat("[WARNING] Cannot exceed %d spawning options (file: %s, line: %d)", newItem.MAX_SPAWNCOUNT, filename, lfr.LineNumber);
+					g_Logs.server->warn("Cannot exceed %v spawning options (file: %v, line: %v)", newItem.MAX_SPAWNCOUNT, filename, lfr.LineNumber);
 				}
 			}
 			else if(strcmp(lfr.SecBuffer, "Shares") == 0)
@@ -1436,7 +1438,7 @@ int SpawnPackageList :: LoadFromFile(const char *filename)
 				ZoneID = lfr.BlockToIntC(1);
 			}
 			else
-				g_Log.AddMessageFormat("Unknown Spawn Package property [%s] in file [%s] on line [%d]", lfr.SecBuffer, filename, lfr.LineNumber);
+				g_Logs.server->error("Unknown Spawn Package property [%v] in file [%v] on line [%v]", lfr.SecBuffer, filename, lfr.LineNumber);
 		}
 	}
 	AddIfValid(newItem);
@@ -1490,7 +1492,7 @@ void SpawnPackageManager :: LoadFromFile(const char *subfolder, const char *file
 	Platform::GenerateFilePath(FileName, subfolder, filename);
 	if(lfr.OpenText(FileName) != Err_OK)
 	{
-		g_Log.AddMessageFormat("[ERROR] Could not open master spawn package list [%s].", FileName);
+		g_Logs.server->error("Could not open master spawn package list [%v].", FileName);
 		return;
 	}
 
@@ -1697,7 +1699,7 @@ bool UniqueSpawnManager :: TestSpawn(const char *spawnPackageName, int maxSpawnP
 
 void UniqueSpawnManager :: ReRoll(const char *spawnPackageName, int durationSeconds)
 {
-	g_Log.AddMessageFormat("Rerolling: %s", spawnPackageName);
+	g_Logs.server->info("Rerolling: %v", spawnPackageName);
 	ITERATOR it = mEntryList.find(spawnPackageName);
 	if(it != mEntryList.end())
 		it->second.ReRoll(durationSeconds);

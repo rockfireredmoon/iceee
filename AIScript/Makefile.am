@@ -38,7 +38,7 @@ ai_DATA = 4_druid_melee_30.txt \
 		death_creature_brave_6.txt \
 		druid_bow_brave_1.txt \
 		druid_bow_brave_6.txt \
-		druid_death_brave_6.txt \
+		druid_death_brave_6.nut \
 		druid_mystic_brave_6.txt \
 		Earthrise_flavor_catapultfiring1.txt \
 		example.nut \
@@ -61,7 +61,7 @@ ai_DATA = 4_druid_melee_30.txt \
 		nut_shroomie_brave.nut \
 		nut_sleep_test.nut \
 		rogue_brave_1.txt \
-		rogue_brave_6.txt \
+		rogue_brave_6.nut \
 		script_list.txt \
 		shroomie_brave.txt \
 		thunderwalker_brave.txt

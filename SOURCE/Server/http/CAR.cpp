@@ -23,7 +23,7 @@
 #include "../Util.h"
 #include "../Config.h"
 #include "../DirectoryAccess.h"
-#include "../StringList.h"
+
 #include "../util/Log.h"
 
 #include <sys/stat.h>

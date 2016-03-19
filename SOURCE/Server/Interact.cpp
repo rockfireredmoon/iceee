@@ -1,7 +1,7 @@
 #include <string.h>
 
 #include "Interact.h"
-#include "StringList.h"
+
 #include "FileReader.h"
 #include "util/Log.h"
 
@@ -44,7 +44,7 @@ void InteractObject :: SetName(char *str)
 	unsigned int len = strlen(str);
 	if(len > sizeof(internalName) - 1)
 	{
-		g_Log.AddMessageFormat("[WARNING] InteractObject::SetName string size is too long [%s]", str);
+		g_Logs.data->warn("InteractObject::SetName string size is too long [%v]", str);
 		len = sizeof(internalName) - 1;
 	}
 	strncpy(internalName, str, len);
@@ -65,7 +65,7 @@ void InteractObject :: SetType(char *str)
 	}
 
 	if(opType == TYPE_NONE)
-		g_Log.AddMessageFormat("[WARNING] InteractObject::SetType unknown type [%s]", str);
+		g_Logs.data->warn("InteractObject::SetType unknown type [%v]", str);
 }
 
 void InteractObject :: SetMessage(char *str)
@@ -73,7 +73,7 @@ void InteractObject :: SetMessage(char *str)
 	unsigned int len = strlen(str);
 	if(len > sizeof(useMessage) - 1)
 	{
-		g_Log.AddMessageFormat("[WARNING] InteractObject::SetMessage string size is too long [%s]", str);
+		g_Logs.data->warn("InteractObject::SetMessage string size is too long [%v]", str);
 		len = sizeof(useMessage) - 1;
 	}
 	strncpy(useMessage, str, len);
@@ -84,7 +84,7 @@ void InteractObject :: SetScriptFunction(char *str)
 	unsigned int len = strlen(str);
 	if(len > sizeof(scriptFunction) - 1)
 	{
-		g_Log.AddMessageFormat("[WARNING] InteractObject::SetScriptFunction string size is too long [%s]", str);
+		g_Logs.data->warn("InteractObject::SetScriptFunction string size is too long [%v]", str);
 		len = sizeof(scriptFunction) - 1;
 	}
 	strncpy(scriptFunction, str, len);
@@ -202,7 +202,7 @@ void InteractObjectContainer :: LoadFromFile(char *filename)
 			else if(strcmp(lfr.SecBuffer, "ScriptFunction") == 0)
 				newItem.SetScriptFunction(lfr.BlockToStringC(1, 0));
 			else
-				g_Log.AddMessageFormat("[WARNING] Unknown identifier [%s] in file [%s] on line [%d]", lfr.SecBuffer, filename, lfr.LineNumber);
+				g_Logs.data->warn("Unknown identifier [%v] in file [%v] on line [%v]", lfr.SecBuffer, filename, lfr.LineNumber);
 		}
 	}
 	AddItem(newItem);

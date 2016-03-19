@@ -1,4 +1,4 @@
-#include "StringList.h"
+
 #include "Scenery2.h"
 #include "FileReader3.h"
 #include "Util.h"
@@ -239,7 +239,7 @@ void SceneryObject :: SetProperty(int index, const char *propName, int propType,
 		return;
 	if(index < 0 || index >= CreatureSpawnDef::MAX_PROP)
 	{
-		g_Log.AddMessageFormat("[ERROR] SetProperty index out of range [%d]", index);
+		g_Logs.server->error("SetProperty index out of range [%v]", index);
 		return;
 	}
 	Util::SafeCopy(extraData->prop[index].name, propName, sizeof(extraData->prop[index].name));
@@ -260,7 +260,7 @@ void SceneryObject :: SetLink(int index, int linkID, int type)
 		return;
 	if(index < 0 || index >= CreatureSpawnDef::MAX_LINK)
 	{
-		g_Log.AddMessageFormat("[ERROR] SetLink index out of range [%d]", index);
+		g_Logs.server->error("SetLink index out of range [%v]", index);
 		return;
 	}
 	extraData->link[index].propID = linkID;
@@ -699,7 +699,7 @@ void SceneryPage::CheckAutosave(int& debugPagesSaved, int& debugPropsSaved)
 
 void SceneryPage::RemoveFile(const char *fileName)
 {
-	g_Log.AddMessageFormat("Removed [%s]", fileName);
+	g_Logs.data->info("Removed [%v]", fileName);
 	remove(fileName);
 }
 
@@ -715,11 +715,11 @@ bool SceneryPage::SaveFile(const char *fileName)
 	SCENERY_IT it;
 	for(it = mSceneryList.begin(); it != mSceneryList.end(); ++it)
 	{
-		g_Log.AddMessageFormat("Saving prop [%d]", it->second.ID);
+		g_Logs.data->debug("Saving prop [%v]", it->second.ID);
 			it->second.WriteToStream(output);
 	}
 	fclose(output);
-	g_Log.AddMessageFormat("Saved [%s]", fileName);
+	g_Logs.data->info("Saved prop [%v]", fileName);
 	return true;
 }
 
@@ -748,7 +748,7 @@ void SceneryPage::LoadSceneryFromFile(const char *fileName)
 	FileReader3 fr;
 	if(fr.OpenFile(fileName) != FileReader3::SUCCESS)
 	{
-		//g_Log.AddMessageFormat("Could not open file to load scenery: [%s]", fileName);
+		g_Logs.data->debug("Could not open file to load scenery: [%v]", fileName);
 		return;
 	}
 	fr.SetCommentChar(';');
@@ -1104,7 +1104,7 @@ void SceneryZone::RemoveInactiveTiles(const ActiveLocation::CONTAINER& activeLis
 			++it;
 	}
 	if(count > 0)
-		g_Log.AddMessageFormat("Deleted %d inactive scenery tiles from zone %d", count, mZone);
+		g_Logs.server->info("Deleted %v inactive scenery tiles from zone %v", count, mZone);
 }
 
 size_t SceneryZone::GetTileCount(void)
@@ -1158,7 +1158,7 @@ SceneryZone* SceneryManager::GetOrCreateZone(int zoneID)
 		ZoneDefInfo *zoneDef = g_ZoneDefManager.GetPointerByID(zoneID);
 		if(zoneDef == NULL)
 		{
-			g_Log.AddMessageFormat("[ERROR] Zone ID is not defined: %d", zoneID);
+			g_Logs.server->error("Zone ID is not defined: %v", zoneID);
 			obj.mPageSize = ZoneDefInfo::DEFAULT_PAGESIZE;
 		}
 		else
@@ -1176,7 +1176,7 @@ SceneryPage* SceneryManager::GetOrCreatePage(int zoneID, int sceneryPageX, int s
 	SceneryZone *zone = GetOrCreateZone(zoneID);
 	if(zone == NULL)
 	{
-		g_Log.AddMessageFormat("[ERROR] GetOrCreatePage failed to create zone: %d", zoneID);
+		g_Logs.server->error("GetOrCreatePage failed to create zone: %v", zoneID);
 		return NULL;
 	}
 
@@ -1195,7 +1195,7 @@ void SceneryManager::LoadData(void)
 {
 	char buffer[256];
 	LoadStringsFile(Platform::GenerateFilePath(buffer, "Data", "Valid_ATS.txt"), mValidATS);
-	g_Log.AddMessageFormat("Marked %d valid ATS files.", mValidATS.size());
+	g_Logs.server->info("Marked %v valid ATS files.", mValidATS.size());
 }
 
 void SceneryManager::CheckAutosave(bool force)
@@ -1216,7 +1216,7 @@ void SceneryManager::CheckAutosave(bool force)
 
 	mNextAutosaveTime = g_ServerTime + g_SceneryAutosaveTime;
 	if(debugPropsSaved > 0)
-		g_Log.AddMessageFormat("[SCENERY] Saved %d props in %d pages.", debugPropsSaved, debugPagesSaved);
+		g_Logs.data->info("Saved %v props in %v pages.", debugPropsSaved, debugPagesSaved);
 }
 
 bool SceneryManager::ValidATSEntry(const std::string& atsName)
@@ -1391,7 +1391,7 @@ void SceneryManager::SendPageRequest(const SceneryPageRequest& request, std::lis
 
 	if(page == NULL)
 	{
-		g_Log.AddMessageFormat("[ERROR] SendPageRequest retrieved NULL page");
+		g_Logs.server->error("SendPageRequest retrieved NULL page");
 		
 		wpos = PrepExt_QueryResponseNull(prepBuf, request.queryID);
 		data.Assign(prepBuf, wpos);
@@ -1555,7 +1555,7 @@ void SceneryManager::RunGarbageCheck(void)
 
 		if(zoneit->second.GetTileCount() == 0)
 		{
-			g_Log.AddMessageFormat("[SCENERY] Removing inactive Zone: %d", zoneit->second.mZone);
+			g_Logs.server->info("Removing inactive Zone: %v", zoneit->second.mZone);
 			mZones.erase(zoneit++);
 		}
 		else

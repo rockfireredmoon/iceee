@@ -146,7 +146,7 @@ INITIALIZE_EASYLOGGINGPP
 #include "BroadCast.h"
 #include "Util.h"
 #include "Scenery2.h"
-#include "StringList.h"
+
 #include "Instance.h"
 #include "ZoneDef.h"
 #include "Session.h"
@@ -749,6 +749,11 @@ int InitServerMain(int argc, char *argv[]) {
 	g_QueryManager.queryHandlers["warpg"] = new WarpGroveHandler();
 	g_QueryManager.queryHandlers["warpextoff"] = new WarpExternalOfflineHandler();
 	g_QueryManager.queryHandlers["warpext"] = new WarpExternalHandler();
+	g_QueryManager.queryHandlers["script.exec"] = new ScriptExecHandler();
+	g_QueryManager.queryHandlers["script.time"] = new ScriptTimeHandler();
+	g_QueryManager.queryHandlers["script.gc"] = new ScriptGCHandler();
+	g_QueryManager.queryHandlers["script.wakevm"] = new ScriptWakeVMHandler();
+	g_QueryManager.queryHandlers["script.clearqueue"] = new ScriptClearQueueHandler();
 
 	// Some are shared
 
@@ -1208,7 +1213,7 @@ void ShutDown(void)
 	}
 
 	if(waitCount > 0)
-		g_Log.AddMessageFormat("[DEBUG] Shutdown() waitcount: %d", waitCount);
+		g_Logs.server->debug("Shutdown() waitcount: %v", waitCount);
 
 	//Characters can be unloaded only after the simulators have stopped using them.
 	g_CharacterManager.UnloadAllCharacters();
@@ -1227,8 +1232,6 @@ void UnloadResources(void)
 #endif
 
 	bcm.Free();
-
-	g_Log.Destroy();
 
 	MapDef.FreeList();
 	g_ZoneDefManager.Free();
@@ -1309,7 +1312,7 @@ void RunServerMain(void)
 		{
 			if(it->isThreadExist == false && it->isConnected == false && (g_ServerTime > it->LastUpdate + 2000))
 			{
-				g_Log.AddMessageFormat("Erasing sim:%d", it->InternalID);
+				g_Logs.simulator->info("[%v] Erasing sim", it->InternalID);
 				g_SimulatorManager.baseByteSent += it->TotalSendBytes;
 				g_SimulatorManager.baseByteRec += it->TotalRecBytes;
 				Simulator.erase(it++);
@@ -1411,7 +1414,7 @@ void CheckCharacterAutosave(bool force)
 			g_CharacterManager.SaveCharacter(it->pld.CreatureDefID);
 			count++;
 		}
-		g_Log.AddMessageFormat("Finished autosave on %d characters.", count);
+		g_Logs.server->info("Finished autosave on %v characters.", count);
 	}
 }
 
@@ -1524,7 +1527,7 @@ void RunPendingMessages(void)
 		if(msg->actInst != NULL)
 			msg->actInst->ProcessMessage(msg);
 		else
-			g_Log.AddMessageFormat("[ERROR] Invalid Active Instance [%p] message for Sim:%d", msg->actInst, msg->SimulatorID);
+			g_Logs.server->error("Invalid Active Instance [%v] message for Sim:%v", msg->actInst, msg->SimulatorID);
 	}
 	bcm.mlog.clear();
 	bcm.LeaveCS();
@@ -1642,7 +1645,7 @@ void Debug_FullDump(void)
 	FILE *output = fopen("crash_dump.txt", "wb");
 	if(output == NULL)
 		return;
-	g_Log.AddMessageFormat("Writing crash dump.");
+	g_Logs.server->fatal("Writing crash dump.");
 
 	fprintf(output, "Account Data:\r\n");
 	g_AccountManager.cs.Enter("Debug_FullDump");
@@ -1706,7 +1709,7 @@ void EraseRegistrationKeys(void)
 		AccountData *accPtr = g_AccountManager.FetchIndividualAccount(g_AccountManager.accountQuickData[i].mID);
 		if(accPtr == NULL || aqd == NULL)
 		{
-			g_Log.AddMessageFormat("[ERROR] Account not found: %s", g_AccountManager.accountQuickData[i].mLoginName.c_str());
+			g_Logs.server->error("Account not found: %v", g_AccountManager.accountQuickData[i].mLoginName.c_str());
 			continue;
 		}
 
@@ -1735,7 +1738,7 @@ void RunUpgradeCheck(void)
 		EraseRegistrationKeys();
 	}
 
-	g_Log.AddMessageFormat("g_Config: Server upgraded, shutting down.");
+	g_Logs.server->info("g_Config: Server upgraded, shutting down.");
 	g_ServerStatus = SERVER_STATUS_STOPPED;
 }
 

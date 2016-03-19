@@ -1,7 +1,7 @@
 #include "Books.h"
 #include "FileReader.h"
 #include "Util.h"
-#include "StringList.h"
+
 #include "Character.h"
 #include "util/Log.h"
 

@@ -4,7 +4,7 @@
 
 #include "Account.h"
 #include "Character.h"
-#include "StringList.h"
+
 #include "Config.h"
 #include "DirectoryAccess.h"
 
@@ -632,7 +632,7 @@ void AccountData :: CheckRecoveryRegistrationKey(const char *regkey)
 				g_AccountManager.AccountQuickDataChanges.AddChange();
 			}
 
-			g_Log.AddMessageFormat("Account [%s] missing registration key was restored from recovery key.", Name);
+			g_Logs.data->warn("Account [%v] missing registration key was restored from recovery key.", Name);
 		}
 	}
 }
@@ -797,7 +797,7 @@ void AccountManager :: LoadSectionGeneral(FileReader &fr, AccountData &ad, const
 			if(fr.BlockLen[a] > 0)
 			{
 				if(ad.SetPermission(Perm_Account, fr.BlockToStringC(a, Case_Lower), true) == false)
-					g_Log.AddMessageFormat("Warning: Unknown permission identifier [%s] in Accounts file.", fr.SecBuffer);
+					g_Logs.data->warn("Unknown permission identifier [%v] in Accounts file.", fr.SecBuffer);
 			}
 			else
 			{
@@ -873,7 +873,7 @@ void AccountManager :: LoadSectionGeneral(FileReader &fr, AccountData &ad, const
 //	}
 	else if(!ad.PlayerStats.LoadFromStream(fr)) {
 		if(CheckSection_Inventory(fr, ad.inventory, debugFilename,  ad.Name, "Account") == -2) {
-			g_Log.AddMessageFormat("Unknown identifier [%s] in file [%s]", NameBlock, debugFilename);
+			g_Logs.data->warn("Unknown identifier [%v] in file [%v]", NameBlock, debugFilename);
 		}
 	}
 }
@@ -908,7 +908,7 @@ void AccountManager :: LoadSectionCharacterCache(FileReader &fr, AccountData &ad
 				return;
 		}
 	}
-	g_Log.AddMessageFormat("Finished loading character cache");
+	g_Logs.data->info("Finished loading character cache");
 }
 
 void AccountManager :: LoadAccountFromStream(FileReader &fr, AccountData &ad, const char *debugFilename)
@@ -1017,7 +1017,7 @@ int AccountManager :: CreateAccount(const char *username, const char *password, 
 
 	if(NextAccountID < (int)accountQuickData.size())
 	{
-		g_Log.AddMessageFormat("[WARNING] NextAccountID is lower than current total (%d of %d)", NextAccountID, accountQuickData.size());
+		g_Logs.data->warn("NextAccountID is lower than current total (%v of %v)", NextAccountID, accountQuickData.size());
 		NextAccountID = accountQuickData.size();
 	}
 	newAccount.ID = NextAccountID++;
@@ -1041,7 +1041,7 @@ int AccountManager :: CreateAccount(const char *username, const char *password, 
 	//Generate and assign the password hash
 	newAccount.SetNewPassword(username, password);
 
-	g_Log.AddMessageFormat("Created account: %s:%s", username, newAccount.AuthData);
+	g_Logs.data->info("Created account: %v:%v", username, newAccount.AuthData);
 
 	//Prepare the grove
 	newAccount.GroveName = adjustedGroveName;
@@ -1056,7 +1056,7 @@ int AccountManager :: CreateAccount(const char *username, const char *password, 
 	KeyList.erase(KeyList.begin() + keyIndex);
 	KeyListChanges.AddChange();
 
-	g_Log.AddMessageFormat("Account created [%s] with %d characters.", newAccount.Name, newAccount.GetCharacterCount());
+	g_Logs.event->info("[ACCOUNT] Account created [%v] with %v characters.", newAccount.Name, newAccount.GetCharacterCount());
 
 	newAccount.PendingMinorUpdates++;  //Save at the next available opportunity
 	AccList.push_back(newAccount);
@@ -1081,7 +1081,7 @@ int AccountManager :: CreateAccountFromService(const char *username)
 
 	if(NextAccountID < (int)accountQuickData.size())
 	{
-		g_Log.AddMessageFormat("[WARNING] NextAccountID is lower than current total (%d of %d)", NextAccountID, accountQuickData.size());
+		g_Logs.data->warn("NextAccountID is lower than current total (%v of %v)", NextAccountID, accountQuickData.size());
 		NextAccountID = accountQuickData.size();
 	}
 	newAccount.ID = NextAccountID++;
@@ -1099,7 +1099,7 @@ int AccountManager :: CreateAccountFromService(const char *username)
 	newAccount.SetPermission(Perm_Account, "admin", true);
 #endif
 
-	g_Log.AddMessageFormat("Account created [%s] with %d characters.", newAccount.Name, newAccount.GetCharacterCount());
+	g_Logs.event->info("[ACCOUNT] Account created [%v] with %v characters (via service).", newAccount.Name, newAccount.GetCharacterCount());
 
 	newAccount.PendingMinorUpdates++;  //Save at the next available opportunity
 	AccList.push_back(newAccount);
@@ -1830,7 +1830,7 @@ void AccountManager :: DeleteCharacter(int index, AccountData *accPtr)
 	accPtr->characterCache.RemoveCharacter(CDefID);
 	accPtr->PendingMinorUpdates++;
 
-	g_Log.AddMessageFormat("[CHARACTER] Deleted character ID:%d", CDefID);
+	g_Logs.event->info("[CHARACTER] Deleted character ID:%v", CDefID);
 
 	char sourceBuf[256];
 	char destBuf[256];
@@ -1915,7 +1915,7 @@ void AccountManager :: LoadQuickData(void)
 	FileReader lfr;
 	if(lfr.OpenText(buffer) != Err_OK)
 	{
-		g_Log.AddMessageFormat("[ERROR] Unable to open file: %s", buffer);
+		g_Logs.data->error("Unable to open file: %v", buffer);
 		return;
 	}
 	AccountQuickData data;
@@ -1943,7 +1943,7 @@ void AccountManager :: LoadQuickData(void)
 			data.Clear();
 		}
 		else if(r != 0) {
-			g_Log.AddMessageFormat("[WARNING] AccountList.txt invalid data on line %d (has %d elements)", line, r);
+			g_Logs.data->warn("AccountList.txt invalid data on line %v (has %v elements)", line, r);
 		}
 	}
 	
@@ -1952,7 +1952,7 @@ void AccountManager :: LoadQuickData(void)
 	highestID++; //The next available ID needs to be 1 past the current highest.
 	if(highestID > NextAccountID)
 	{
-		g_Log.AddMessageFormat("[WARNING] LoadQuickData() NextAccountID incorrect (current: %d, highest: %d)", NextAccountID, highestID);
+		g_Logs.data->warn("LoadQuickData() NextAccountID incorrect (current: %v, highest: %v)", NextAccountID, highestID);
 		NextAccountID = highestID;
 	}
 	lfr.CloseCurrent();
@@ -1992,7 +1992,7 @@ AccountData * AccountManager :: LoadAccountID(int accountID)
 	FileReader lfr;
 	if(lfr.OpenText(filename) != Err_OK)
 	{
-		g_Log.AddMessageFormat("[ERROR] Failed to open account: %s", filename);
+		g_Logs.data->error("Failed to open account: %v", filename);
 		return NULL;
 	}
 
@@ -2003,12 +2003,12 @@ AccountData * AccountManager :: LoadAccountID(int accountID)
 
 	if(accData.ID != 0)
 	{
-		g_Log.AddMessageFormat("Loaded account file: %s", filename);
+		g_Logs.data->info("Loaded account file: %v", filename);
 		AccList.push_back(accData);
 	}
 	else
 	{
-		g_Log.AddMessageFormat("[ERROR] Account file possibly damaged: %s", filename);
+		g_Logs.data->error("Account file possibly damaged: %v", filename);
 		return NULL;
 	}
 
@@ -2016,7 +2016,7 @@ AccountData * AccountManager :: LoadAccountID(int accountID)
 		if(AccList.back().ID == accountID)
 			return &AccList.back();
 
-	g_Log.AddMessageFormat("[ERROR] Failed to retrieve account: %d", accountID);
+	g_Logs.data->error("Failed to retrieve account: %v", accountID);
 	return NULL;
 }
 
@@ -2047,7 +2047,7 @@ void AccountManager :: SaveIndividualAccount(AccountData *account)
 	FILE *output = fopen(buffer, "wb");
 	if(output == NULL)
 	{
-		g_Log.AddMessageFormat("[ERROR] SaveAccountToStream could not open: %s", buffer);
+		g_Logs.data->error("SaveAccountToStream could not open: %v", buffer);
 		return;
 	}
 	account->SaveToStream(output);
@@ -2068,12 +2068,12 @@ void AccountManager :: RunUpdateCycle(bool force)
 		{
 			SaveIndividualAccount(&*it);
 			it->PendingMinorUpdates = 0;
-			g_Log.AddMessageFormat("[ACCOUNT] Saved: %d", it->ID);
+			g_Logs.data->info("Saved account: %v", it->ID);
 		}
 
 		if(it->QualifyGarbage(force) == true)
 		{
-			g_Log.AddMessageFormat("[ACCOUNT] Unloading: %d", it->ID);
+			g_Logs.event->info("[ACCOUNT] Unloading account: %v", it->ID);
 			AccList.erase(it++);
 		}
 		else
@@ -2113,12 +2113,12 @@ void AccountManager :: ImportKeys(void)
 		}
 		else
 		{
-			g_Log.AddMessageFormat("[KEY] import collision: %s", importList[i].c_str());
+			g_Logs.data->error("Key import collision: %v", importList[i].c_str());
 			fail++;
 		}
 	}
 	KeyListChanges.AddChange();
-	g_Log.AddMessageFormat("[KEY] Success: %d, Failed: %d", succeed, fail);
+	g_Logs.data->info("Key import Success: %v, Failed: %v", succeed, fail);
 }
 
 bool AccountManager :: AcceptingLogins(void)
@@ -2149,7 +2149,7 @@ CharacterCacheEntry* CharacterCacheManager :: ForceGetCharacter(int cdefID)
 	CharacterCacheEntry *cce = GetCacheCharacter(cdefID);
 	if(cce == NULL)
 	{
-		g_Log.AddMessageFormat("Loading character entry [%d] into cache", cdefID);
+		g_Logs.data->info("Loading character entry [%v] into cache", cdefID);
 		CharacterData *charData = g_CharacterManager.RequestCharacter(cdefID, true);
 		if(charData == NULL)
 			charData = g_CharacterManager.GetDefaultCharacter();
@@ -2157,7 +2157,7 @@ CharacterCacheEntry* CharacterCacheManager :: ForceGetCharacter(int cdefID)
 			cce = UpdateCharacter(charData);
 	}
 	else
-		g_Log.AddMessageFormat("Retrieved character entry [%d] from cache", cdefID);
+		g_Logs.data->info("Retrieved character entry [%v] from cache", cdefID);
 	return cce;
 }
 
@@ -2179,7 +2179,7 @@ CharacterCacheEntry* CharacterCacheManager :: UpdateCharacter(CharacterData *cha
 
 	if(entry == NULL)
 	{
-		g_Log.AddMessageFormat("[ERROR] UpdateCharacter() failed");
+		g_Logs.data->error("UpdateCharacter() failed");
 		return NULL;
 	}
 

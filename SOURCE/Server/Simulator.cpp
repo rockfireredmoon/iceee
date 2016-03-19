@@ -5,7 +5,7 @@
 #include <time.h>
 
 #include "Simulator.h"
-#include "StringList.h"
+
 #include "Debug.h"
 #include "Util.h"
 #include "Config.h"
@@ -2306,12 +2306,6 @@ bool SimulatorThread::HandleQuery(int &PendingData) {
 		PendingData = handle_query_instance();
 	else if (query.name.compare("go") == 0)
 		PendingData = handle_query_go();
-	else if (query.name.compare("script.time") == 0)
-		PendingData = handle_query_script_time();
-	else if (query.name.compare("script.exec") == 0)
-		PendingData = handle_query_script_exec();
-	else if (query.name.compare("script.gc") == 0)
-		PendingData = handle_query_script_gc();
 	else if (query.name.compare("zone.mode") == 0)
 		PendingData = handle_query_zone_mode();
 	else if (query.name.compare("mode") == 0)
@@ -2629,7 +2623,7 @@ void SimulatorThread::SetLoadingStatus(bool status, bool shutdown) {
 			if (ValidPointers() == false) {
 				ForceErrorMessage(
 						"Unexpected error when setting final load stage.",
-						MSG_ERROR);
+						INFOMSG_ERROR);
 				sc.DisconnectClient();
 				return;
 			}
@@ -8483,29 +8477,6 @@ int SimulatorThread::handle_query_instance(void) {
 	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
 }
 
-int SimulatorThread::handle_query_script_gc(void) {
-	ActiveInstance *inst = creatureInst->actInst;
-	if (inst != NULL) {
-		if (inst->nutScriptPlayer != NULL) {
-			Util::SafeFormat(Aux1, sizeof(Aux1),
-					"Instance script collected %d objects",
-					inst->nutScriptPlayer->GC());
-			SendInfoMessage(Aux1, INFOMSG_INFO);
-		}
-
-		ActiveInstance::CREATURE_IT it;
-		for (it = inst->NPCList.begin(); it != inst->NPCList.end(); ++it) {
-			AINutPlayer *player = it->second.aiNut;
-			if (player != NULL) {
-				Util::SafeFormat(Aux1, sizeof(Aux1), "CID: %d (%s) collected",
-						it->first, it->second.css.display_name, player->GC());
-				SendInfoMessage(Aux1, INFOMSG_INFO);
-			}
-		}
-	}
-	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-}
-
 int SimulatorThread::handle_query_team(void) {
 	if (query.argCount > 0) {
 
@@ -8769,79 +8740,6 @@ int SimulatorThread::handle_query_zone_mode(void) {
 	}
 }
 
-int SimulatorThread::handle_query_script_exec(void) {
-	bool ok = CheckPermissionSimple(Perm_Account, Permission_Admin);
-	if (!ok) {
-		if (pld.zoneDef->mGrove == true
-				&& pld.zoneDef->mAccountID != pld.accPtr->ID)
-			ok = true;
-	}
-	if (!ok)
-		return PrepExt_QueryResponseError(SendBuf, query.ID,
-				"Permission denied.");
-	ActiveInstance *inst = creatureInst->actInst;
-	if (inst != NULL && query.argCount > 0) {
-		string funcName = query.GetString(0);
-		if (inst->nutScriptPlayer != NULL) {
-			std::vector<ScriptCore::ScriptParam> p;
-			for (unsigned int i = 1; i < query.argCount; i++) {
-				p.push_back(ScriptCore::ScriptParam(query.GetString(i)));
-			}
-			inst->nutScriptPlayer->JumpToLabel(funcName.c_str(), p);
-		}
-	} else {
-		Util::SafeFormat(Aux1, sizeof(Aux1), "No function name provided.");
-		SendInfoMessage(Aux1, INFOMSG_ERROR);
-	}
-	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-}
-
-int SimulatorThread::handle_query_script_time(void) {
-	ActiveInstance *inst = creatureInst->actInst;
-	if (inst != NULL) {
-		double seconds;
-		if (inst->nutScriptPlayer != NULL) {
-			seconds = (double) inst->nutScriptPlayer->mProcessingTime / 1000.0;
-			Util::SafeFormat(Aux1, sizeof(Aux1),
-					"S Instance: %4.3f (%ul,%u,%ul). %s", seconds,
-					inst->nutScriptPlayer->mInitTime,
-					inst->nutScriptPlayer->mCalls,
-					inst->nutScriptPlayer->mGCTime,
-					inst->nutScriptPlayer->mActive ? "Active" : "Inactive");
-			SendInfoMessage(Aux1, INFOMSG_INFO);
-		}
-		if (inst->scriptPlayer != NULL) {
-			seconds = (double) inst->scriptPlayer->mProcessingTime / 1000.0;
-			Util::SafeFormat(Aux1, sizeof(Aux1), "T Instance: %4.3f. %s",
-					seconds,
-					inst->scriptPlayer->mActive ? "Active" : "Inactive");
-			SendInfoMessage(Aux1, INFOMSG_INFO);
-		}
-
-		ActiveInstance::CREATURE_IT it;
-		for (it = inst->NPCList.begin(); it != inst->NPCList.end(); ++it) {
-			AINutPlayer *player = it->second.aiNut;
-			if (player != NULL) {
-				seconds = (double) player->mProcessingTime / 1000.0;
-				Util::SafeFormat(Aux1, sizeof(Aux1),
-						"S CID: %d (%s) %4.3f (%ul,%u,%ul)", it->first,
-						it->second.css.display_name, seconds, player->mInitTime,
-						player->mCalls, player->mGCTime);
-				SendInfoMessage(Aux1, INFOMSG_INFO);
-			}
-
-			AIScriptPlayer *tPlayer = it->second.aiScript;
-			if (tPlayer != NULL) {
-				seconds = (double) tPlayer->mProcessingTime / 1000.0;
-				Util::SafeFormat(Aux1, sizeof(Aux1), "T CID: %d (%s) %4.3f",
-						it->first, it->second.css.display_name, seconds);
-				SendInfoMessage(Aux1, INFOMSG_INFO);
-			}
-		}
-	}
-	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-}
-
 int SimulatorThread::handle_query_go(void) {
 	//Sent by the client when pressing 'C' when the build tool is open.  Intended function is to
 	//warp the player to the camera position.
@@ -9033,7 +8931,7 @@ void SimulatorThread::CheckIfLootReadyToDistribute(ActiveLootContainer *loot,
 		if (!loot->IsStage2(lootTag->mItemId) && party->mLootMode == LOOT_MASTER
 				&& party->mLeaderID == creatureInst->CreatureID) {
 			g_Logs.simulator->info(
-					"[%d] Got loot roll from party leader %d for %d",
+					"[%v] Got loot roll from party leader %v for %v",
 					InternalID, party->mLeaderID, lootTag->mItemId);
 			if (loot->IsNeeded(lootTag->mItemId, creatureInst->CreatureID)
 					|| loot->IsGreeded(lootTag->mItemId,
@@ -9055,7 +8953,7 @@ void SimulatorThread::CheckIfLootReadyToDistribute(ActiveLootContainer *loot,
 						lcid, 0) == QueryErrorMsg::GENERIC) {
 					// Nobody to offer to, clean up as if the item had never been looted
 					g_Logs.simulator->info(
-							"[%d] Nobody to offer loot in %d to, cleaning up as if not yet looted.",
+							"[%v] Nobody to offer loot in %v to, cleaning up as if not yet looted.",
 							InternalID, lcid);
 					ResetLoot(party, loot, iid);
 				}
@@ -9084,7 +8982,7 @@ void SimulatorThread::CheckIfLootReadyToDistribute(ActiveLootContainer *loot,
 				int cid = lootTag->mCreatureId;
 				int lcid = lootTag->mLootCreatureId;
 				g_Logs.simulator->info(
-						"[%d] Robin passed, offering %d to rest of party",
+						"[%v] Robin passed, offering %d to rest of party",
 						InternalID, iid);
 				loot->SetStage2(iid, true);
 				loot->RemoveCreatureRolls(iid, cid);
@@ -9093,7 +8991,7 @@ void SimulatorThread::CheckIfLootReadyToDistribute(ActiveLootContainer *loot,
 						lcid, 0) == QueryErrorMsg::GENERIC) {
 					// Nobody to offer to, clean up as if the item had never been looted
 					g_Logs.simulator->info(
-							"[%d] Nobody to offer loot in %d to, cleaning up as if not yet looted.",
+							"[%v] Nobody to offer loot in %d to, cleaning up as if not yet looted.",
 							InternalID, lcid);
 					ResetLoot(party, loot, iid);
 				}
@@ -9148,7 +9046,7 @@ void SimulatorThread::CheckIfLootReadyToDistribute(ActiveLootContainer *loot,
 				receivingCreature->CreatureID);
 		for (unsigned int i = 0; i < party->mMemberList.size(); i++) {
 			if(!party->mMemberList[i].IsOnlineAndValid()) {
-				g_Logs.simulator->info("[%v] Skipping informing %v of the winnner (%v) as they have no simulator", InternalID, party->mMemberList[i].mCreaturePtr->CreatureID,
+				g_Logs.simulator->info("[%v] Skipping informing %v of the winnner (%v) as they have no simulator", InternalID, party->mMemberList[i].mCreatureID,
 						lootTag->mCreatureId);
 				continue;
 			}
@@ -9170,7 +9068,7 @@ void SimulatorThread::CheckIfLootReadyToDistribute(ActiveLootContainer *loot,
 						party->mMemberList[i].mCreaturePtr->simulatorPtr);
 			} else {
 				g_Logs.simulator->warn(
-						"[%d] No tag for item %d for a player %d to be informed",
+						"[%v] No tag for item %v for a player %d to be informed",
 						InternalID, lootTag->mItemId,
 						party->mMemberList[i].mCreaturePtr->CreatureID);
 			}
@@ -9193,7 +9091,7 @@ void SimulatorThread::CheckIfLootReadyToDistribute(ActiveLootContainer *loot,
 					winnerTag->mItemId, 1);
 			if (newItem == NULL) {
 				g_Logs.simulator->warn(
-						"[%d] Item to loot (%d) has disappeared.", InternalID,
+						"[%v] Item to loot (%v) has disappeared.", InternalID,
 						winnerTag->mItemId);
 				ResetLoot(party, loot, lootTag->mItemId);
 				return;
@@ -9241,7 +9139,7 @@ void SimulatorThread::CheckIfLootReadyToDistribute(ActiveLootContainer *loot,
 						lootTag->mLootCreatureId);
 
 				g_Logs.simulator->warn(
-						"[%d] Loot %d is now empty (%d tags now in the party).",
+						"[%v] Loot %v is now empty (%v tags now in the party).",
 						InternalID, loot->CreatureID, party->lootTags.size());
 			}
 

@@ -3,7 +3,7 @@
 #include "Character.h"
 #include "FileReader.h"
 #include "Config.h"       //For global variables holding default positions
-#include "StringList.h"   //To report errors
+   //To report errors
 #include "ItemSet.h"
 #include "Quest.h"
 #include <limits>
@@ -2470,7 +2470,7 @@ bool CharacterManager :: SaveCharacter(int CDefID)
 	if(fflush(output) != 0)
 		g_Logs.data->error("Failed to flush file: %v", FileName);
 	if(fclose(output) != 0)
-		g_Logs.data->error("Failed to close file: %s", FileName);
+		g_Logs.data->error("Failed to close file: %v", FileName);
 		
 	g_Logs.data->info("Saved character %v [%v]", ptr->cdef.CreatureDefID, ptr->cdef.css.display_name);
 	return true;

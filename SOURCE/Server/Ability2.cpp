@@ -6,16 +6,20 @@
 #include <stdlib.h>
 #include "Creature.h"
 #include "Formula.h"
-#include "StringList.h"
+
 #include "Simulator.h"
 #include "Util.h"
 #include "Instance.h"
 #include "Stats.h"
 #include "Item.h"  //For item ID verification
 #include "Combat.h"
+#include "util/Log.h"
 
 extern double g_FacingTarget;
 extern char GSendBuf[];
+
+const int AbilityManager2::REQUIRED_ROW_ENTRIES;
+const int AbilityManager2::NON_PURCHASE_ID_THRESHOLD;
 
 Ability2::AbilityManager2 g_AbilityManager;
 
@@ -250,7 +254,7 @@ namespace TargetType
 		else if(targetTypeName.compare("STXAE") == 0) return TargetType::STXAE;
 		else if(targetTypeName.compare("STP") == 0) return TargetType::STP;
 		else if(targetTypeName.size() > 0)
-			g_Log.AddMessageFormat("TargetType: Unknown name [%s]", targetTypeName.c_str());
+			g_Logs.server->error("TargetType: Unknown name [%v]", targetTypeName.c_str());
 		
 		return None;
 	}
@@ -385,7 +389,7 @@ bool SplitFunction(const std::string &input, STRINGLIST &output)
 			{
 				if(nestLevel != 1)
 				{
-					g_Log.AddMessageFormat("Unexpected embedded comma: [%s]", input.c_str());
+					g_Logs.data->error("Unexpected embedded comma: [%v]", input.c_str());
 					break;
 				}
 				output.push_back(input.substr(first, i - first));
@@ -401,7 +405,7 @@ bool SplitFunction(const std::string &input, STRINGLIST &output)
 	}
 	if(nestLevel != 0)
 	{
-		g_Log.AddMessageFormat("Malformed parenthesis: [%s]", input.c_str());
+		g_Logs.data->error("Malformed parenthesis: [%v]", input.c_str());
 		return false;
 	}
 	if(last != std::string::npos && first != last)
@@ -554,7 +558,7 @@ float AbilityFunction2 :: GetEvaluation(size_t argIndex, AbilityManager2 *symbol
 {
 	if(argIndex >= mArguments.size())
 	{
-		g_Log.AddMessageFormat("GetEvaluation() not enough arguments");
+		g_Logs.data->error("GetEvaluation() not enough arguments");
 		return 0.0F;
 	}
 	if(mCached == false)
@@ -626,7 +630,7 @@ void AbilityEvent2 :: AddChanceFunctionList(const std::string &eventFunctionList
 	size_t second = eventFunctionList.find("%");
 	if(first == std::string::npos || second == std::string::npos)
 	{
-		g_Log.AddMessageFormat("Missing percentage chance in chance function list [%s]", eventFunctionList.c_str());
+		g_Logs.data->error("Missing percentage chance in chance function list [%v]", eventFunctionList.c_str());
 		return;
 	}
 	first++; //Advance beyond the tilde
@@ -639,7 +643,7 @@ void AbilityEvent2 :: AddChanceFunctionList(const std::string &eventFunctionList
 	second = eventFunctionList.find("}", second);
 	if(first == std::string::npos || second == std::string::npos)
 	{
-		g_Log.AddMessageFormat("Missing curly braces in chance function list: [%s]", eventFunctionList.c_str());
+		g_Logs.data->error("Missing curly braces in chance function list: [%v]", eventFunctionList.c_str());
 		return;
 	}
 	first++; //Advance beyond the opening brace
@@ -663,7 +667,7 @@ void AbilityEvent2 :: AddChanceFunctionList(const std::string &eventFunctionList
 void AbilityEvent2 :: SetFullEvent(const STRINGLIST &eventParams)
 {
 	if(eventParams.size() != 3)
-		g_Log.AddMessageFormat("SetFullEvent failed (not enough parameters)");
+		g_Logs.server->error("SetFullEvent failed (not enough parameters)");
 	mActionType = eventParams[0];
 	mTargetTypeStr.AssignFormula(eventParams[1]);
 	SetFunctionEvent(eventParams[2]);
@@ -680,16 +684,16 @@ void AbilityEvent2 :: ResolveTargetingInfo(void)
 
 void AbilityEvent2 :: DebugPrint(void)
 {
-	g_Log.AddMessageFormat("ActionType: [%s]", mActionType.c_str());
-	g_Log.AddMessageFormat("TargetTypeStr: [%s]", mTargetTypeStr.mFunctionName.c_str());
+	g_Logs.server->debug("ActionType: [%v]", mActionType.c_str());
+	g_Logs.server->debug("TargetTypeStr: [%v]", mTargetTypeStr.mFunctionName.c_str());
 	for(size_t i = 0; i < mTargetTypeStr.mArguments.size(); i++)
-		g_Log.AddMessageFormat("  [%d]=[%s]", i, mTargetTypeStr.mArguments[i].c_str());
-	g_Log.AddMessageFormat("Functions:%d", mFunctionList.size());
+		g_Logs.server->debug("  [%v]=[%v]", i, mTargetTypeStr.mArguments[i].c_str());
+	g_Logs.server->debug("Functions:%v", mFunctionList.size());
 	for(size_t i = 0; i < mFunctionList.size(); i++)
 	{
-		g_Log.AddMessageFormat("  [%d]=[%s]", i, mFunctionList[i].mFunctionName.c_str());
+		g_Logs.server->debug("  [%v]=[%v]", i, mFunctionList[i].mFunctionName.c_str());
 		for(size_t a = 0; a < mFunctionList[i].mArguments.size(); a++)
-			g_Log.AddMessageFormat("    [%d]=[%s]", a, mFunctionList[i].mArguments[a].c_str());
+			g_Logs.server->debug("    [%v]=[%v]", a, mFunctionList[i].mArguments[a].c_str());
 	}
 }
 
@@ -727,7 +731,7 @@ bool AbilityEvent2 :: HasDifferentTargetType(AbilityEvent2 *other)
 {
 	if(other == NULL)
 	{
-		g_Log.AddMessageFormat("[ERROR] HasDifferentTargetType other is NULL");
+		g_Logs.server->error("HasDifferentTargetType other is NULL");
 		return true;
 	}
 	if((mTargetType != other->mTargetType) || (mTargetRange != other->mTargetRange))
@@ -783,7 +787,7 @@ void AbilityEntry2 :: DebugPrint(void)
 	{
 		if(mEvents[i].mFunctionList.size() == 0)
 			continue;
-		g_Log.AddMessageFormat("Event:%d", i);
+		g_Logs.server->debug("Event:%v", i);
 		mEvents[i].DebugPrint();
 	}
 }
@@ -829,7 +833,7 @@ void AbilityEntry2 :: InitializeData(void)
 		{
 			int index = EventType::GetEventIDByName(eventParams[0]);
 			if(index == EventType::UNDEFINED)
-				g_Log.AddMessageFormat("[WARNING] Ability:%d unknown event [%s]", abilityID, eventParams[0].c_str());
+				g_Logs.data->warn("Ability:%v unknown event [%v]", abilityID, eventParams[0].c_str());
 			else
 			{
 				eventPtr = &mEvents[index];
@@ -953,7 +957,7 @@ void AbilityEntry2 :: FinalizeData(void)
 			else if(flagList[i].compare("allowdeadstate") == 0)
 				mAbilityFlags |= AbilityFlags::AllowDeadState;
 			else if(flagList[i].size() > 0)
-				g_Log.AddMessageFormat("Unknown server flag [%s] for ability [%d]", flagList[i].c_str(), mAbilityID);
+				g_Logs.data->warn("Unknown server flag [%v] for ability [%v]", flagList[i].c_str(), mAbilityID);
 		}
 	}
 	
@@ -1000,7 +1004,7 @@ void AbilityEntry2 :: FinalizeData(void)
 			case 'M': mAbilityFlags |= AbilityFlags::Mage; break;
 			case 'D': mAbilityFlags |= AbilityFlags::Druid; break;
 			default:
-				g_Log.AddMessageFormat("Unknown class specifier [%c] for ability [%d]", preReq[4][i], mAbilityID);
+				g_Logs.data->warn("Unknown class specifier [%v] for ability [%v]", preReq[4][i], mAbilityID);
 			}
 		}
 	}
@@ -1309,7 +1313,7 @@ void AbilityManager2 :: InsertFunction(const char *name, FunctionPtr function)
 {
 	if(mFunctionMap.find(name) != mFunctionMap.end())
 	{
-		g_Log.AddMessageFormat("[ERROR] AbilityManager function [%s] already registered", name);
+		g_Logs.data->error("[ERROR] AbilityManager function [%v] already registered", name);
 		return;
 	}
 	mFunctionMap[name] = function;
@@ -1319,7 +1323,7 @@ void AbilityManager2 :: InsertVerifier(const char *functionName, const ABVerifie
 {
 	if(mVerifierMap.find(functionName) != mVerifierMap.end())
 	{
-		g_Log.AddMessageFormat("[ERROR] AbilityManager verifier [%s] already registered", functionName);
+		g_Logs.data->error("AbilityManager verifier [%v] already registered", functionName);
 		return;
 	}
 	mVerifierMap[functionName] = argInfo;
@@ -1430,7 +1434,7 @@ void AbilityManager2 :: LoadAbilityTable(const char *filename)
 	FILE *input = fopen(filename, "rb");
 	if(input == NULL)
 	{
-		g_Log.AddMessageFormat("Cannot open ability table file [%s]", filename);
+		g_Logs.data->error("Cannot open ability table file [%v]", filename);
 		return;
 	}
 	char buffer[4096];
@@ -1453,10 +1457,10 @@ void AbilityManager2 :: LoadAbilityTable(const char *filename)
 			if(buffer[i] == '"')
 				count++;
 			if((buffer[i] != '\t' && buffer[i] < ' ') || buffer[i] >= 127)
-				g_Log.AddMessageFormat("Unidentified character [%c] on line [%d] of [%s]", buffer[i], lineNumber, filename);
+				g_Logs.data->error("Unidentified character [%v] on line [%v] of [%v]", buffer[i], lineNumber, filename);
 		}
 		if(count % 2 != 0)
-			g_Log.AddMessageFormat("Mismatched quotation marks on line [%d] of [%s]", lineNumber, filename);
+			g_Logs.data->error("Mismatched quotation marks on line [%v] of [%v]", lineNumber, filename);
 		//End hack
 
 		//Don't process empty lines.  Prevents reporting errors for lacking the required row entries.
@@ -1472,7 +1476,7 @@ void AbilityManager2 :: LoadAbilityTable(const char *filename)
 		{
 			if(rowData.size() < REQUIRED_ROW_ENTRIES)
 			{
-				g_Log.AddMessageFormat("[WARNING] Malformed row, %d objects (needs %d) (file:%s, line: %d)", rowData.size(), REQUIRED_ROW_ENTRIES, filename, lineNumber);
+				g_Logs.data->warn("Malformed row, %v objects (needs %v) (file:%v, line: %v)", rowData.size(), Ability2::AbilityManager2::REQUIRED_ROW_ENTRIES, filename, lineNumber);
 			}
 			else
 			{
@@ -1503,7 +1507,7 @@ void AbilityManager2 :: DebugPrint(void)
 	ABILITY_ITERATOR it;
 	for(it = mAbilityIndex.begin(); it != mAbilityIndex.end(); ++it)
 	{
-		g_Log.AddMessageFormat("Ability:%d", it->first);
+		g_Logs.server->debug("Ability:%v", it->first);
 		it->second.DebugPrint();
 	}
 }
@@ -1671,13 +1675,13 @@ int AbilityManager2 :: ActivateAbility(CreatureInstance *cInst, short abilityID,
 	it = mAbilityIndex.find(abilityID);
 	if(it == mAbilityIndex.end())
 	{
-		g_Log.AddMessageFormat("Ability not found in table: %d", abilityID);
+		g_Logs.server->error("Ability not found in table: %v", abilityID);
 		return ABILITY_NOT_FOUND;
 	}
 	AbilityEvent2 *abEvent = it->second.GetEvent(eventType);
 	if(abEvent == NULL)
 	{
-		g_Log.AddMessageFormat("Ability ID [%d] does not have an event [%d]");
+		g_Logs.server->error("Ability ID [%v] does not have an event [%v]");
 		return ABILITY_BAD_EVENT;
 	}
 
@@ -1734,7 +1738,7 @@ int AbilityManager2 :: ActivateAbility(CreatureInstance *cInst, short abilityID,
 		abProcessing.ciTarget = ab->TargetList[targIndex];
 		if(abProcessing.ciTarget == NULL)
 		{
-			g_Log.AddMessageFormat("[CRITICAL] Target index [%d] is NULL", targIndex);
+			g_Logs.server->error("Target index [%v] is NULL", targIndex);
 			return 0;
 		}
 		for(size_t f = 0; f < abEvent->mFunctionList.size(); f++)
@@ -1742,7 +1746,7 @@ int AbilityManager2 :: ActivateAbility(CreatureInstance *cInst, short abilityID,
 			fit = mFunctionMap.find(abEvent->mFunctionList[f].mFunctionName);
 			if(fit == mFunctionMap.end())
 			{
-				g_Log.AddMessageFormat("[ERROR] Ability ID [%d] event [%d] references an unrecognized function [%s]", abilityID, eventType, abEvent->mFunctionList[f].mFunctionName.c_str());
+				g_Logs.server->error("Ability ID [%v] event [%v] references an unrecognized function [%v]", abilityID, eventType, abEvent->mFunctionList[f].mFunctionName.c_str());
 				//return ABILITY_NOT_FOUND;
 			}
 			else
@@ -1837,13 +1841,13 @@ int AbilityManager2 :: ActivateImplicit(CreatureInstance *cInst, CreatureInstanc
 	it = mAbilityIndex.find(abilityID);
 	if(it == mAbilityIndex.end())
 	{
-		g_Log.AddMessageFormat("[ERROR] Ability not found in table: %d", abilityID);
+		g_Logs.server->warn("Ability not found in table: %v", abilityID);
 		return ABILITY_NOT_FOUND;
 	}
 	AbilityEvent2 *abEvent = it->second.GetEvent(eventType);
 	if(abEvent == NULL)
 	{
-		g_Log.AddMessageFormat("[ERROR] Ability ID [%d] does not have an event [%d]");
+		g_Logs.server->warn("Ability ID [%v] does not have an event [%v]");
 		return ABILITY_BAD_EVENT;
 	}
 
@@ -1858,7 +1862,7 @@ int AbilityManager2 :: ActivateImplicit(CreatureInstance *cInst, CreatureInstanc
 	abProcessing.ciTarget = target;
 	if(abProcessing.ciTarget == NULL)
 	{
-		g_Log.AddMessageFormat("[CRITICAL] Implicit action target is NULL");
+		g_Logs.server->error("Implicit action target is NULL");
 		return 0;
 	}
 	for(size_t f = 0; f < abEvent->mFunctionList.size(); f++)
@@ -1866,7 +1870,7 @@ int AbilityManager2 :: ActivateImplicit(CreatureInstance *cInst, CreatureInstanc
 		fit = mFunctionMap.find(abEvent->mFunctionList[f].mFunctionName);
 		if(fit == mFunctionMap.end())
 		{
-			g_Log.AddMessageFormat("Ability ID [%d] event [%d] references an invalid function [%s]", abilityID, eventType, abEvent->mFunctionList[f].mFunctionName.c_str());
+			g_Logs.server->warn("Ability ID [%v] event [%v] references an invalid function [%v]", abilityID, eventType, abEvent->mFunctionList[f].mFunctionName.c_str());
 		}
 		else
 		{
@@ -2065,7 +2069,7 @@ double AbilityManager2 :: ResolveSymbol(const std::string &symbol)
 	else if(symbol.compare("willChargesCurrent") == 0)     //Expanded attribute, not used in the official gameplay.
 		return abProcessing.ciSource->css.will_charges;
 	else
-		g_Log.AddMessageFormat("[WARNING] UNRESOLVED FUNCTION SYMBOL [%s]", symbol.c_str());
+		g_Logs.data->warn("Unresolved function symbol [%v]", symbol.c_str());
 	return 0.0;
 }
 
@@ -2075,7 +2079,7 @@ int AbilityManager2 :: ResolveBuffCategoryID(const char *buffName)
 	it = mBuffCategories.find(buffName);
 	if(it == mBuffCategories.end())
 	{
-		g_Log.AddMessageFormat("[WARNING] Could not buff category name [%s]", buffName);
+		g_Logs.data->warn("Could not buff category name [%v]", buffName);
 		return 0;
 	}
 	return it->second;
@@ -2098,7 +2102,7 @@ int AbilityManager2 :: ResolveCooldownCategoryID(const char *cooldownName)
 	it = mCooldownCategories.find(cooldownName);
 	if(it == mCooldownCategories.end())
 	{
-		g_Log.AddMessageFormat("[WARNING] Could not resolve cooldown category name [%s]", cooldownName);
+		g_Logs.data->warn("Could not resolve cooldown category name [%v]", cooldownName);
 		return 0;
 	}
 	return it->second;
@@ -2121,7 +2125,7 @@ int AbilityManager2 :: ResolveStatID(const char *statName)
 	if(index >= 0)
 		return StatList[index].ID;
 
-	g_Log.AddMessageFormat("ResolveStatID failed to resolve [%s]", statName);
+	g_Logs.data->warn("ResolveStatID failed to resolve [%v]", statName);
 	return -1;
 }
 int AbilityManager2 :: ResolveStatusEffectID(const char *statusEffectName)
@@ -2130,7 +2134,7 @@ int AbilityManager2 :: ResolveStatusEffectID(const char *statusEffectName)
 	if(ID >= 0)
 		return ID;
 
-	g_Log.AddMessageFormat("ResolveStatusEffectID failed to resolve [%s]", statusEffectName);
+	g_Logs.data->warn("ResolveStatusEffectID failed to resolve [%v]", statusEffectName);
 	return -1;
 }
 
@@ -3201,7 +3205,7 @@ void AbilityCalculator :: ConsumeReagent(void)
 int AbilityCalculator :: DisplayEffect(ARGUMENT_LIST args)
 {
 	const char *effect = args.GetString(0);
-	g_Log.AddMessageFormat("Display Effect: %s", effect);
+	g_Logs.server->info("Display Effect: %v", effect);
 	ciSource->SimulateEffect(effect, ciTarget);
 	return ABILITY_SUCCESS;
 }
@@ -3217,7 +3221,6 @@ int AbilityCalculator :: NotTransformed(ARGUMENT_LIST args)
 //Action.  New to this server.  Removes all clothes (but keeps stats)
 int AbilityCalculator :: Nudify(ARGUMENT_LIST args)
 {
-	g_Log.AddMessageFormat("Nudify");
 	int timeSec = static_cast<int>(args.GetEvaluation(0, &g_AbilityManager));
 	int buffType = ResolveBuffCategoryID(mAbilityEntry->GetRowAsCString(ABROW::BUFF_CATEGORY));
 	ActiveBuff * buff = ciTarget->AddMod(mAbilityEntry->mTier, buffType, mAbilityEntry->mAbilityID, mAbilityEntry->mAbilityGroupID, timeSec);
@@ -3229,7 +3232,7 @@ int AbilityCalculator :: Nudify(ARGUMENT_LIST args)
 int AbilityCalculator :: Transform(ARGUMENT_LIST args)
 {
 	int creatureDefID = args.GetInteger(0);
-	g_Log.AddMessageFormat("Transform: %d", creatureDefID);
+	g_Logs.server->info("Transform: %v", creatureDefID);
 	int timeSec = static_cast<int>(args.GetEvaluation(1, &g_AbilityManager));
 	int buffType = ResolveBuffCategoryID(mAbilityEntry->GetRowAsCString(ABROW::BUFF_CATEGORY));
 	ActiveBuff * buff = ciTarget->AddMod(mAbilityEntry->mTier, buffType, mAbilityEntry->mAbilityID, mAbilityEntry->mAbilityGroupID, timeSec);
@@ -3240,7 +3243,6 @@ int AbilityCalculator :: Transform(ARGUMENT_LIST args)
 //Action.  New to this server.  Transform into another creature
 int AbilityCalculator :: Untransform(ARGUMENT_LIST args)
 {
-	g_Log.AddMessageFormat("Untransform");
 	ciSource->CAF_Untransform();
 	return ABILITY_SUCCESS;
 }
@@ -3717,7 +3719,7 @@ int AbilityCalculator :: GetAdjustedChannelDuration(int initialDuration)
 	int channelTime = mChannelExtendedDurationSec;
 	if(channelTime < 1 || channelTime > 32)
 	{
-		g_Log.AddMessageFormat("[DEBUG] Ability Duration is invalid: %d", channelTime);
+		g_Logs.server->debug("Ability Duration is invalid: %v", channelTime);
 		channelTime = Util::ClipInt(channelTime, 1, 32);
 	}
 

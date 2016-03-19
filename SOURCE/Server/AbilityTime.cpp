@@ -1,14 +1,15 @@
 #include "AbilityTime.h"
 #include "Ability2.h"
-#include "StringList.h"
+
 #include "Config.h"
 #include <string.h>
+#include "util/Log.h"
 
 extern unsigned long g_ServerTime;
 
 void ActiveBuffManager :: ActiveToPersistent()
 {
-	g_Log.AddMessageFormat("Moving active %d buffs to persistent buffs (replacing %d)", buffList.size(), persistentBuffList.size());
+	g_Logs.server->info("Moving active %v buffs to persistent buffs (replacing %v)", buffList.size(), persistentBuffList.size());
 	persistentBuffList.clear();
 	persistentBuffList.assign(buffList.begin(), buffList.end());
 	buffList.clear();
@@ -63,7 +64,7 @@ ActiveBuff * ActiveBuffManager :: UpdateBuff(unsigned char tier, unsigned char b
 		{
 			ActiveBuff *persistentBuff = GetPersistentBuff(tier, abID);
 			if(persistentBuff != NULL) {
-				g_Log.AddMessageFormat("Overriding duration of %f with %f for ability %d because there was an active ability on logout", duration,
+				g_Logs.server->info("Overriding duration of %v with %v for ability %v because there was an active ability on logout", duration,
 						persistentBuff->durationS, abID);
 				buffList[r].durationS = (int)persistentBuff ->durationS;
 			}
@@ -107,7 +108,7 @@ ActiveBuff * ActiveBuffManager :: AddBuff(unsigned char tier, unsigned char buff
 	{
 		ActiveBuff *persistentBuff = GetPersistentBuff(tier, abID);
 		if(persistentBuff != NULL) {
-			g_Log.AddMessageFormat("Overriding duration of %f of with %f for ability %d because there was an active ability on logout", duration,
+			g_Logs.server->info("Overriding duration of %v of with %v for ability %v because there was an active ability on logout", duration,
 					persistentBuff->durationS, abID);
 			buff.durationS = (int)persistentBuff ->durationS;
 		}
@@ -135,18 +136,18 @@ void ActiveBuffManager :: RemoveBuff(int abilityID)
 // Some old logging to assist with seeing which buffs exist when testing add/remove calls.
 void ActiveBuffManager :: DebugLogBuffs(const char *label)
 {
-	g_Log.AddMessageFormat("Active ability buffs (%s)", label);
+	g_Logs.server->debug("Active ability buffs (%v)", label);
 	for(size_t i = 0; i < buffList.size(); i++)
 	{
 		const char *cat = g_AbilityManager.ResolveBuffCategoryName(buffList[i].buffType);
-		g_Log.AddMessageFormat("ab:%d,abgid:%d,tier:%d,cat:%s,timeleft:%d", buffList[i].abID, buffList[i].abgID, buffList[i].tier, cat, ( buffList[i].castEndTimeMS - g_ServerTime) / 1000);
+		g_Logs.server->debug("ab:%v,abgid:%v,tier:%v,cat:%v,timeleft:%v", buffList[i].abID, buffList[i].abgID, buffList[i].tier, cat, ( buffList[i].castEndTimeMS - g_ServerTime) / 1000);
 	}
 	if(g_Config.PersistentBuffs) {
-		g_Log.AddMessageFormat("Persistent Active ability buffs (%s)", label);
+		g_Logs.server->debug("Persistent Active ability buffs (%v)", label);
 		for(size_t i = 0; i < persistentBuffList.size(); i++)
 		{
 			const char *cat = g_AbilityManager.ResolveBuffCategoryName(persistentBuffList[i].buffType);
-			g_Log.AddMessageFormat("ab:%d,abgid:%d,tier:%d,cat:%s,timeleft:%d", persistentBuffList[i].abID, persistentBuffList[i].abgID, persistentBuffList[i].tier, cat, ( persistentBuffList[i].castEndTimeMS - g_ServerTime) / 1000);
+			g_Logs.server->debug("ab:%v,abgid:%v,tier:%v,cat:%v,timeleft:%v", persistentBuffList[i].abID, persistentBuffList[i].abgID, persistentBuffList[i].tier, cat, ( persistentBuffList[i].castEndTimeMS - g_ServerTime) / 1000);
 		}
 	}
 }
@@ -167,7 +168,7 @@ void ActiveBuffManager :: SaveToStream(FILE *output)
 		const Ability2::AbilityEntry2* abEntry = g_AbilityManager.GetAbilityPtrByID(buffList[i].abID);
 		// Only save abilities that have remaining time and are not passive
 		if(abEntry != NULL && remain > 0 && !abEntry->IsPassive()) {
-			g_Log.AddMessageFormat("Saving ability %d,%d,%d,%d,%lu\r\n", buffList[i].tier,
+			g_Logs.server->info("Saving ability %v,%v,%v,%v,%v\r\n", buffList[i].tier,
 					buffList[i].buffType, buffList[i].abID, buffList[i].abgID, remain);
 			fprintf(output, "Active=%d,%d,%d,%d,%lu\r\n", buffList[i].tier,
 					buffList[i].buffType, buffList[i].abID, buffList[i].abgID, remain);

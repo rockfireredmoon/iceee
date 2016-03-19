@@ -3,7 +3,7 @@
 #include "Clan.h"
 #include "FileReader.h"
 #include "DirectoryAccess.h"
-#include "StringList.h"
+
 #include <string.h>
 #include <stdlib.h>
 #include <vector>
@@ -269,8 +269,7 @@ bool ClanManager::SaveClan(Clan &clan) {
 	g_Logs.data->info("Saving clan to %v.", path.c_str());
 	FILE *output = fopen(path.c_str(), "wb");
 	if (output == NULL) {
-		g_Logs.data->info("[ERROR] Saving clan could not open: %s",
-				path.c_str());
+		g_Logs.data->error("Saving clan could not open: %v", path.c_str());
 		return false;
 	}
 

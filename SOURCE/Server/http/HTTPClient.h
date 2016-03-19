@@ -21,7 +21,7 @@
 #include <vector>
 #include <curl/curl.h>
 #include <string>
-#include "../StringList.h"
+
 #include <sstream>
 #include "../util/Log.h"
 

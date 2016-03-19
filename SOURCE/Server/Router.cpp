@@ -3,7 +3,7 @@
 #include "Config.h"
 #include "Globals.h"
 #include "Simulator.h"
-#include "StringList.h"
+
 #include <stdlib.h>  //For itoa()
 #include "Util.h"
 #include "util/Log.h"

@@ -1,7 +1,7 @@
 #include "PartyManager.h"
 #include "ByteBuffer.h"
 #include "Simulator.h"
-#include "StringList.h"
+
 #include "Util.h"
 #include "Globals.h"
 #include "Instance.h"
@@ -556,7 +556,7 @@ void PartyManager :: DeletePartyByID(int partyID)
 	{
 		if(mPartyList[i].mPartyID == partyID)
 		{
-			g_Log.AddMessageFormat("Deleting party: %d", partyID);
+			g_Logs.server->info("Deleting party: %v", partyID);
 			mPartyList.erase(mPartyList.begin() + i);
 			return;
 		}
@@ -616,7 +616,7 @@ void PartyManager :: DebugForceRemove(CreatureInstance *caller)
 			//For debugging purposes
 			if(mPartyList[i].mLeaderDefID == caller->CreatureDefID)
 			{
-				g_Log.AddMessageFormat("[PARTY] Empty party was removed for (%d)", caller->CreatureDefID);
+				g_Logs.server->info("[PARTY] Empty party was removed for (%v)", caller->CreatureDefID);
 				mPartyList[i].Disband(WriteBuf);
 				mPartyList.erase(mPartyList.begin() + i);
 				return;
@@ -725,12 +725,12 @@ void ActiveParty :: RemoveTagsForLootCreatureId(int lootCreatureId, int itemId, 
 	g_Logs.simulator->info("Removing loot tags for loot creature ID %v and item ID %v", lootCreatureId, itemId);
 	std::map<int, LootTag*>::iterator itr = lootTags.begin();
 	while (itr != lootTags.end()) {
-		g_Log.AddMessageFormat("  ---> remove %v - %v ?", (*itr->second).lootTag, (*itr->second).mCreatureId,  (*itr->second).mItemId);
+		g_Logs.server->debug("  ---> remove %v - %v ?", (*itr->second).lootTag, (*itr->second).mCreatureId,  (*itr->second).mItemId);
 		if ((*itr->second).mLootCreatureId == lootCreatureId && (itemId == 0 || (*itr->second).mItemId == itemId)
 				&& (creatureId == 0 || (*itr->second).mCreatureId == creatureId)) {
 			delete itr->second;
 			lootTags.erase(itr++);
-			g_Log.AddMessageFormat("  ---> yes!");
+			g_Logs.server->debug("  ---> yes!");
 		}
 		else
 			++itr;
@@ -764,7 +764,7 @@ LootTag * ActiveParty :: TagItem(int itemId, int creatureId, int lootCreatureId)
 {
 	LootTag *tag = new LootTag(itemId, creatureId, lootCreatureId);
 	lootTags[tag->lootTag] = tag;
-	g_Log.AddMessageFormat("Tagged item %d for loot creature %d to creature %d. Tag is %d", tag->mItemId, tag->mLootCreatureId, tag->mCreatureId, tag->lootTag);
+	g_Logs.server->debug("Tagged item %v for loot creature %v to creature %v. Tag is %v", tag->mItemId, tag->mLootCreatureId, tag->mCreatureId, tag->lootTag);
 	return tag;
 }
 

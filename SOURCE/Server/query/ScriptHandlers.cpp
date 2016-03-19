@@ -60,7 +60,7 @@ int AbstractScriptHandler::handleQuery(SimulatorThread *sim,
 	int type = query->GetInteger(0);
 	const char *parameter = query->GetString(1);
 
-	g_Log.AddMessageFormat("Script type %d param: %s", type, parameter);
+	g_Logs.script->debug("Script type %v param: %v", type, parameter);
 
 	bool admin = sim->CheckPermissionSimple(Perm_Account, Permission_Admin);
 	bool ok = admin;
@@ -257,17 +257,17 @@ int ScriptLoadHandler::handleScriptQuery(bool ownPlayer, int instanceID,
 	wpos += PutByte(&sim->SendBuf[wpos], 2);
 
 	if (player != NULL) {
-		g_Log.AddMessageFormat("Using active new player %s",
+		g_Logs.script->info("Using active new player %v",
 				player->mActive ? "active" : "inactive");
 		wpos += PutStringUTF(&sim->SendBuf[wpos],
 				player->mActive ? "true" : "false"); // active
 	} else if (oldPlayer != NULL) {
-		g_Log.AddMessageFormat("Using active old player %s",
+		g_Logs.script->info("Using active old player %v",
 				oldPlayer->mActive ? "active" : "inactive");
 		wpos += PutStringUTF(&sim->SendBuf[wpos],
 				oldPlayer->mActive ? "true" : "false"); // active
 	} else {
-		g_Log.AddMessageFormat("No player %s!",
+		g_Logs.script->warn("No player %v!",
 				ownPlayer ? "false" : "unknown");
 		wpos += PutStringUTF(&sim->SendBuf[wpos],
 				ownPlayer ? "false" : "unknown"); // active
@@ -462,7 +462,7 @@ int ScriptSaveHandler::handleScriptQuery(bool ownPlayer, int instanceID,
 	Platform::FixPaths(dir);
 	Platform::MakeDirectory(dir.c_str());
 
-	g_Log.AddMessageFormat("Saving to %s in %s", path.c_str(), dir.c_str());
+	g_Logs.script->info("Saving to %v in %v", path.c_str(), dir.c_str());
 
 	// Save to temporary file first in case the save fails (leaving some hope of recovery)
 	string tpath = path;

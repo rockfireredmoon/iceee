@@ -16,6 +16,7 @@
  */
 #include "JsonHelpers.h"
 #include "SquirrelObjects.h"
+#include "Log.h"
 
 namespace JsonHelpers {
 
@@ -24,7 +25,7 @@ int SquirrelAppearanceToJSONAppearance(string source, Json::Value &value) {
 	string currentAppearance = source;
 	size_t pos = currentAppearance.find(":");
 	if(pos == string::npos)	{
-		g_Log.AddMessageFormat("Could not parse exist appearance. %s", currentAppearance.c_str());
+		g_Logs.server->error("Could not parse current appearance. %v", currentAppearance.c_str());
 		return -1;
 	}
 	string prefix = currentAppearance.substr(0, pos + 1);
@@ -35,11 +36,11 @@ int SquirrelAppearanceToJSONAppearance(string source, Json::Value &value) {
 	HSQUIRRELVM vm = sq_open(g_Config.SquirrelVMStackSize);
 	Sqrat::Script script(vm);
 
-	g_Log.AddMessageFormat("Adjusting appearance. %s", currentAppearance.c_str());
+	g_Logs.server->debug("Adjusting appearance. %v", currentAppearance.c_str());
 
 	script.CompileString(_SC(currentAppearance.c_str()));
 	if (Sqrat::Error::Occurred(vm)) {
-		g_Log.AddMessageFormat("Failed to compile appearance. %s", Sqrat::Error::Message(vm).c_str());
+		g_Logs.server->error("Failed to compile appearance. %v", Sqrat::Error::Message(vm).c_str());
 		return -1;
 	}
 	script.Run();

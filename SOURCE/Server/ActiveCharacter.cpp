@@ -2,8 +2,9 @@
 #include "Util.h"
 #include "Config.h"
 #include "ZoneDef.h"
-#include "StringList.h"
+
 #include <stdlib.h>
+#include "util/Log.h"
 
 CharacterServerData :: CharacterServerData()
 {
@@ -79,7 +80,7 @@ QuestJournal* CharacterServerData :: GetQuestJournal(void)
 {
 	if(charPtr == NULL)
 	{
-		g_Log.AddMessageFormat("[CRITICAL] GetQuestJournal() charPtr is NULL");
+		g_Logs.server->error("GetQuestJournal() charPtr is NULL");
 		return NULL;
 	}
 	return &charPtr->questJournal;

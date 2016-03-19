@@ -32,7 +32,7 @@ unsigned long CREATURE_DELETE_RECHECK = 60000; //Delay between rescanning for de
 #include "Instance.h"
 
 #include "FileReader.h"
-#include "StringList.h"
+
 
 //All needed for local message processing
 #include "Globals.h"
@@ -99,11 +99,11 @@ void WorldMarkerContainer::Save()
 		Platform::MakeDirectory(dir.c_str());
 	}
 
-	g_Log.AddMessageFormat("Saving world markers to %s.", mFilename.c_str());
+	g_Logs.data->info("Saving world markers to %v.", mFilename.c_str());
 	FILE *output = fopen(mFilename.c_str(), "wb");
 	if(output == NULL)
 	{
-		g_Log.AddMessageFormat("[ERROR] Saving world markers could not open: %s", mFilename.c_str());
+		g_Logs.data->error("Saving world markers could not open: %v", mFilename.c_str());
 		return;
 	}
 
@@ -129,7 +129,7 @@ void WorldMarkerContainer::Reload()
 	FileReader lfr;
 	if(lfr.OpenText(mFilename.c_str()) != Err_OK)
 	{
-		g_Log.AddMessageFormat("[NOTICE] WorldMarker file [%s] not found.", mFilename.c_str());
+		g_Logs.data->error("WorldMarker file [%v] not found.", mFilename.c_str());
 		return;
 	}
 
@@ -163,7 +163,7 @@ void WorldMarkerContainer::Reload()
 				Util::Split(str.c_str(), ",", locData);
 				if(locData.size() < 3)
 				{
-					g_Log.AddMessageFormat("[WARNING] WorldMarker:%s has incomplete Position string (%s)", newItem.Name, str.c_str());
+					g_Logs.data->warn("WorldMarker:%v has incomplete Position string (%v)", newItem.Name, str.c_str());
 				}
 				else
 				{
@@ -288,7 +288,7 @@ int MapDefContainer :: LoadFile(const char *fileName)
 	FileReader lfr;
 	if(lfr.OpenText(fileName) != Err_OK)
 	{
-		g_Log.AddMessageFormat("Error: Could not open file %s", fileName);
+		g_Logs.data->error("Error: Could not open file %v", fileName);
 		return -1;
 	}
 	lfr.CommentStyle = Comment_Semi;
@@ -306,7 +306,7 @@ int MapDefContainer :: LoadFile(const char *fileName)
 				opIndex = CreateMap();
 				if(opIndex == -1)
 				{
-					g_Log.AddMessageFormat("Error: Could not create a new MapDef entry.");
+					g_Logs.data->error("Could not create a new MapDef entry.");
 					lfr.CloseCurrent();
 					return -1;
 				}
@@ -344,12 +344,12 @@ int MapDefContainer :: LoadFile(const char *fileName)
 					else if(strcmp(lfr.SecBuffer, "SCALE_HEIGHT") == 0)
 						mMapList[opIndex].scale_height = (float)lfr.BlockToDblC(1);
 					else
-						g_Log.AddMessageFormat("Unknown identifier [%s] while reading from file %s.", lfr.SecBuffer, fileName);
+						g_Logs.data->error("Unknown identifier [%v] while reading from file %v.", lfr.SecBuffer, fileName);
 				}
 				else
 				{
 					lfr.CloseCurrent();
-					g_Log.AddMessageFormat("Error reading %s, data must begin with an [ENTRY] block.", fileName);
+					g_Logs.data->error("Error reading %v, data must begin with an [ENTRY] block.", fileName);
 					return -1;
 				}
 			}
@@ -482,7 +482,7 @@ int MapLocationHandler :: ResolveItems(void)
 			mld->resolvedIndex = MapDef.GetIndexByName(mld->MapName.c_str(), "Region");
 			if(mld->resolvedIndex == -1)
 			{
-				g_Log.AddMessageFormat("Warning: could not resolve location name [%s]", mld->MapName.c_str());
+				g_Logs.data->warn("Could not resolve location name [%v]", mld->MapName.c_str());
 
 				//Just set it to a null index so it won't crash if accessed at a
 				//later time.
@@ -498,7 +498,7 @@ int MapLocationHandler :: LoadFile(const char *filename)
 	FileReader lfr;
 	if(lfr.OpenText(filename) != Err_OK)
 	{
-		g_Log.AddMessageFormat("Error: could not open file [%s]", filename);
+		g_Logs.data->error("Could not open file [%v]", filename);
 		return -1;
 	}
 
@@ -549,7 +549,7 @@ int MapLocationHandler :: LoadFile(const char *filename)
 			}
 			else
 			{
-				g_Log.AddMessageFormat("Unknown identifier [%s] in file [%s]", lfr.SecBuffer, filename);
+				g_Logs.data->error("Unknown identifier [%v] in file [%v]", lfr.SecBuffer, filename);
 			}
 		}
 	}
@@ -608,7 +608,7 @@ void ActiveInstance :: Clear(void)
 		NPCListPtr[a]->UnloadResources();
 		if(pendingOperations.Debug_HasCreature(NPCListPtr[a]) == true)
 		{
-			g_Log.AddMessageFormat("[CRITICAL] Creature not removed from access list: %s (%p)", NPCListPtr[a]->css.display_name, NPCListPtr[a]);
+			g_Logs.server->error("Creature not removed from access list: %v (%v)", NPCListPtr[a]->css.display_name, NPCListPtr[a]);
 		}
 		EraseAllCreatureReference(NPCListPtr[a]);
 	}
@@ -622,7 +622,7 @@ void ActiveInstance :: Clear(void)
 	{
 		SidekickListPtr[a]->UnloadResources();
 		if(pendingOperations.Debug_HasCreature(SidekickListPtr[a]) == true)
-			g_Log.AddMessageFormat("[CRITICAL] Creature not removed from access list: %s (%s)", SidekickListPtr[a]->css.display_name, SidekickListPtr[a]);
+			g_Logs.server->error("Creature not removed from access list: %v (%v)", SidekickListPtr[a]->css.display_name, SidekickListPtr[a]);
 		EraseAllCreatureReference(SidekickListPtr[a]);
 	}
 
@@ -653,7 +653,7 @@ void ActiveInstance :: Clear(void)
 bool ActiveInstance :: StopPVP()
 {
 	if(pvpGame != NULL) {
-		g_Log.AddMessageFormat("Stopping PVP game %d in %d", mZone, pvpGame->mId);
+		g_Logs.server->info("Stopping PVP game %v in %v", mZone, pvpGame->mId);
 		g_PVPManager.ReleaseGame(pvpGame->mId);
 		pvpGame = NULL;
 		return true;
@@ -664,12 +664,12 @@ bool ActiveInstance :: StopPVP()
 PVP::PVPGame * ActiveInstance :: StartPVP(int type)
 {
 	if(pvpGame != NULL) {
-		g_Log.AddMessageFormat("Already in PVP game %d for %d", pvpGame->mId, mZone);
+		g_Logs.server->error("Already in PVP game %v for %v", pvpGame->mId, mZone);
 		return NULL;
 	}
 	pvpGame = g_PVPManager.NewGame();
 	pvpGame->mGameType = type;
-	g_Log.AddMessageFormat("New PVP game %d for %d", pvpGame->mId, mZone);
+	g_Logs.server->info("New PVP game %v for %v", pvpGame->mId, mZone);
 
 	char buf[64];
 	int wpos = PrepExt_PVPStateUpdate(buf, pvpGame);
@@ -756,7 +756,7 @@ CreatureInstance * ActiveInstance :: LoadPlayer(CreatureInstance *source, Simula
 	//Return an index into the quick access array.
 	if(SimExist(simCall) >= 0)
 	{
-		g_Log.AddMessageFormat("LoadPlayer() Sim:%d already exists, quitting", simCall->InternalIndex);
+		g_Logs.server->error("LoadPlayer() Sim:%v already exists, quitting", simCall->InternalIndex);
 		return NULL;
 	}
 	RegSim.push_back(simCall);
@@ -768,7 +768,7 @@ CreatureInstance * ActiveInstance :: LoadPlayer(CreatureInstance *source, Simula
 
 	//Always set these parameters in case the source doesn't have them already.
 	newItem.actInst = this;
-	g_Log.AddMessageFormat("LoadPlayer() object created in %p", this);
+	g_Logs.server->info("LoadPlayer() object created in %v", this);
 	newItem.Faction = FACTION_PLAYERFRIENDLY;
 
 	//CreatureID and CreatureDefID are the same for players
@@ -900,7 +900,7 @@ int ActiveInstance :: RemovePlayerByID(int creatureID)
 			int size = PrepExt_RemoveCreature(GSendBuf, it->CreatureID);
 			LSendToLocalSimulator(GSendBuf, size, it->CurrentX, it->CurrentZ);
 			EraseAllCreatureReference(&*it);
-			g_Log.AddMessageFormat("PLAYER REMOVED (%s) at (%p)", it->css.display_name, &*it);
+			g_Logs.server->info("Player removed (%v) at (%v)", it->css.display_name, &*it);
 			PlayerList.erase(it);
 			RebuildPlayerList();
 
@@ -2066,7 +2066,7 @@ CreatureInstance* ActiveInstance :: SpawnAtProp(int CDefID, int PropID, int dura
 	CreatureDefinition *cdef = CreatureDef.GetPointerByCDef(CDefID);
 	if(cdef == NULL)
 	{
-		g_Log.AddMessageFormat("[ERROR] SpawnAtProp() creature def not found: %d", CDefID);
+		g_Logs.server->error("SpawnAtProp() creature def not found: %v", CDefID);
 		return NULL;
 	}
 
@@ -2092,7 +2092,7 @@ CreatureInstance* ActiveInstance :: SpawnAtProp(int CDefID, int PropID, int dura
 	g_SceneryManager.ReleaseThread();
 	if(so == NULL)
 	{
-		g_Log.AddMessageFormat("[ERROR] SpawnAtProp() prop not found: %d", PropID);
+		g_Logs.server->error("SpawnAtProp() prop not found: %v", PropID);
 		return NULL;
 	}
 
@@ -2151,7 +2151,7 @@ void ActiveInstance :: EraseAllCreatureReference(CreatureInstance *object)
 	EraseIndividualReference(object);
 	if(pendingOperations.Debug_HasCreature(object))
 	{
-		g_Log.AddMessageFormat("[CRITICAL] EraseAllCreatureReference still has pending object for erased creature: %d, %s", object->CreatureID, object->css.display_name);
+		g_Logs.server->warn("EraseAllCreatureReference still has pending object for erased creature: %v, %v", object->CreatureID, object->css.display_name);
 		pendingOperations.UpdateList_Remove(object);
 		pendingOperations.DeathList_Remove(object);
 	};
@@ -2196,11 +2196,11 @@ int ActiveInstance :: EraseIndividualReference(CreatureInstance *object)
 {
 	//Search for a creature instance and remove all possible references to it
 	if(PlayerList.size() != PlayerListPtr.size())
-		g_Log.AddMessageFormat("[CRITICAL] PlayerList mismatch: %d, %d", PlayerList.size(), PlayerListPtr.size());
+		g_Logs.server->error("PlayerList mismatch: %v, %v", PlayerList.size(), PlayerListPtr.size());
 	if(NPCList.size() != NPCListPtr.size())
-		g_Log.AddMessageFormat("[CRITICAL] NPCList mismatch: %d, %d", NPCList.size(), NPCListPtr.size());
+		g_Logs.server->error("NPCList mismatch: %v, %v", NPCList.size(), NPCListPtr.size());
 	if(SidekickList.size() != SidekickListPtr.size())
-		g_Log.AddMessageFormat("[CRITICAL] SidekickList mismatch: %d, %d", SidekickList.size(), SidekickListPtr.size());
+		g_Logs.server->error("SidekickList mismatch: %v, %v", SidekickList.size(), SidekickListPtr.size());
 
 	int rcount = 0;
 	size_t a;
@@ -2452,7 +2452,7 @@ void ActiveInstance :: InitializeData(void)
 		std::string errors;
 		nutScriptPlayer->Initialize(&nutScriptDef, errors);
 		if(errors.length() > 0)
-			g_Log.AddMessageFormat("Failed to compile. %s", errors.c_str());
+			g_Logs.server->error("Failed to compile. %v", errors.c_str());
 	}
 	else if(Util::HasEnding(path, ".txt")) {
 		scriptDef.CompileFromSource(path.c_str());
@@ -2462,7 +2462,7 @@ void ActiveInstance :: InitializeData(void)
 		scriptPlayer->JumpToLabel("init");
 	}
 	else {
-		g_Log.AddMessageFormat("No Squirrel script for instance %d", mZone);
+		g_Logs.server->error("No Squirrel script for instance %v", mZone);
 	}
 
 
@@ -2478,13 +2478,13 @@ void ActiveInstance :: InitializeData(void)
 	Platform::FixPaths(buffer);
 	essenceShopList.LoadFromFile(buffer);
 	if(essenceShopList.EssenceShopList.size() > 0)
-		g_Logs.data->debug("Loaded %v essence shops.", essenceShopList.EssenceShopList.size());
+		g_Logs.data->info("Loaded %v essence shops.", essenceShopList.EssenceShopList.size());
 
 	Util::SafeFormat(buffer, sizeof(buffer), "%s\\%d\\Shop.txt", mZoneDefPtr->mGrove ? "Grove" : "Instance", mZone);
 	Platform::FixPaths(buffer);
 	itemShopList.LoadFromFile(buffer);
 	if(itemShopList.EssenceShopList.size() > 0)
-		g_Logs.data->debug("Loaded %v item shops.", itemShopList.EssenceShopList.size());
+		g_Logs.data->info("Loaded %v item shops.", itemShopList.EssenceShopList.size());
 
 
 	Util::SafeFormat(buffer, sizeof(buffer), "%s\\%d\\Static.txt", mZoneDefPtr->mGrove ? "Grove" : "Instance", mZone);
@@ -2496,7 +2496,7 @@ void ActiveInstance :: InitializeData(void)
 	Platform::FixPaths(buffer);
 	worldMarkers.LoadFromFile(buffer);
 	if(worldMarkers.WorldMarkerList.size() > 0)
-		g_Logs.data->debug("Loaded %v world markers.", worldMarkers.WorldMarkerList.size());
+		g_Logs.data->info("Loaded %v world markers.", worldMarkers.WorldMarkerList.size());
 
 	//retPtr->SetScaleConfig(scaleConfigSetting, 47);
 	arenaRuleset.mPVPStatus = mZoneDefPtr->mMode;
@@ -3141,7 +3141,7 @@ CreatureInstance * ActiveInstance :: inspectCreature(int CreatureID)
 		if(SidekickListPtr[a]->CreatureID == CreatureID)
 			return SidekickListPtr[a];
 
-	g_Log.AddMessageFormat("[WARNING] inspectCreature failed for ID [%d]", CreatureID);
+	g_Logs.server->warn("InspectCreature failed for ID [%v]", CreatureID);
 
 	TIMETRACKF(1);
 	return NULL;
@@ -3260,7 +3260,7 @@ void ActiveInstance :: SendLoyaltyAggro(CreatureInstance *instigator, CreatureIn
 
 		source->SelectTarget(instigator);
 		source->SetServerFlag(ServerFlags::LocalActive, true);
-		g_Log.AddMessageFormat("Loyalty aggro: %s (%d range)", source->css.display_name, loyaltyRadius);
+		g_Logs.server->info("Loyalty aggro: %v (%v range)", source->css.display_name, loyaltyRadius);
 	}
 	//g_Log.AddMessageFormat("Loyalty aggro: %d (%d range)", count, loyaltyRadius);
 }
@@ -3544,33 +3544,33 @@ void ActiveInstance :: ScriptCall(const char *name)
 	if(nutScriptPlayer != NULL) {
 
 		if(nutScriptPlayer->JumpToLabel(name) == true) {
-			g_Log.AddMessageFormat("Squirrel Script call %s in %d", name, mZone);
+			g_Logs.script->debug("Squirrel Script call %v in %v", name, mZone);
 			//scriptPlayer->RunUntilWait();
 			called = true;
 		}
 		else {
-			g_Log.AddMessageFormat("Squirrel Refused to jump %s", name);
+			g_Logs.script->debug("Squirrel Refused to jump %v", name);
 		}
 	}
 	if(scriptPlayer != NULL) {
 		if(scriptPlayer->JumpToLabel(name) == true) {
-			g_Log.AddMessageFormat("TSL Script call %s in %d", name, mZone);
+			g_Logs.script->debug("TSL Script call %v in %v", name, mZone);
 			scriptPlayer->RunUntilWait();
 			called = true;
 		}
 		else {
-			g_Log.AddMessageFormat("TSL Refused to jump %s", name);
+			g_Logs.script->debug("TSL Refused to jump %v", name);
 		}
 	}
 	if(!called) {
-		g_Log.AddMessageFormat("Nothing handled script %s", name);
+		g_Logs.script->debug("Nothing handled script %v", name);
 	}
 }
 
 bool ActiveInstance :: RunScript(std::string &errors)
 {
 	if((scriptPlayer != NULL && scriptPlayer->mActive) || (nutScriptPlayer != NULL && nutScriptPlayer->mActive)) {
-		g_Log.AddMessageFormat("Request to run script for %d when it is already running", mZone);
+		g_Logs.script->warn("Request to run script for %v when it is already running", mZone);
 		return false;
 	}
 
@@ -3582,14 +3582,14 @@ bool ActiveInstance :: RunScript(std::string &errors)
 	//Load the new script system
 	std::string path = InstanceScript::InstanceNutDef::GetInstanceScriptPath(mZoneDefPtr->mID, false, mZoneDefPtr->mGrove);
 	if(Util::HasEnding(path, ".nut")) {
-		g_Log.AddMessageFormat("Running Squirrel script %s", path.c_str());
+		g_Logs.script->info("Running Squirrel script %v", path.c_str());
 		nutScriptDef.Initialize(path.c_str());
 		nutScriptPlayer = new InstanceScript::InstanceNutPlayer();
 		nutScriptPlayer->SetInstancePointer(this);
 		nutScriptPlayer->Initialize(&nutScriptDef, errors);
 	}
 	else if(Util::HasEnding(path, ".txt")) {
-		g_Log.AddMessageFormat("Running TSL script %s", path.c_str());
+		g_Logs.script->info("Running TSL script %v", path.c_str());
 		scriptDef.CompileFromSource(path.c_str());
 		scriptPlayer = new InstanceScript::InstanceScriptPlayer();
 		scriptPlayer->Initialize(&scriptDef);
@@ -3597,7 +3597,7 @@ bool ActiveInstance :: RunScript(std::string &errors)
 		scriptPlayer->JumpToLabel("init");
 	}
 	else {
-		g_Log.AddMessageFormat("No script for instance %d", mZone);
+		g_Logs.script->info("No script for instance %v", mZone);
 		return false;
 	}
 	return true;
@@ -3618,20 +3618,20 @@ bool ActiveInstance :: KillScript()
 {
 	bool ok = false;
 	if(scriptPlayer != NULL && scriptPlayer->mActive) {
-		g_Log.AddMessageFormat("Killing script for %d", mZone);
+		g_Logs.script->info("Killing script for %v", mZone);
 		scriptPlayer->EndExecution();
 		ok = true;
 	}
 	else if(nutScriptPlayer != NULL) {
 		if(nutScriptPlayer->mActive) {
-			g_Log.AddMessageFormat("Killing squirrel script for %d", mZone);
+			g_Logs.script->info("Killing squirrel script for %v", mZone);
 			nutScriptPlayer->HaltExecution();
 			ok = true;
 		}
 	}
 	ClearScriptObjects();
 	if(!ok) {
-		g_Log.AddMessageFormat("Request to kill inactive squirrel script %d", mZone);
+		g_Logs.script->warn("Request to kill inactive squirrel script %v", mZone);
 	}
 	return ok;
 }
@@ -3854,7 +3854,7 @@ ActiveInstance* ActiveInstanceManager :: ResolveExistingInstance(PlayerInstanceP
 		ptr = GetPtrByZoneInstanceID(pd.in_zoneID, pd.in_instanceID);
 		if(ptr != NULL)
 		{
-			g_Log.AddMessageFormat("Found instance by instance ID: %d", pd.in_instanceID);
+			g_Logs.server->debug("Found instance by instance ID: %v", pd.in_instanceID);
 			return ptr;
 		}
 	}
@@ -3869,7 +3869,7 @@ ActiveInstance* ActiveInstanceManager :: ResolveExistingInstance(PlayerInstanceP
 			ptr = GetPtrByZonePartyID(pd.in_zoneID, pd.in_partyID);
 			if(ptr != NULL)
 			{
-				g_Log.AddMessageFormat("Found instance by party ID: %d", pd.in_partyID);
+				g_Logs.server->debug("Found instance by party ID: %v", pd.in_partyID);
 				return ptr;
 			}
 
@@ -3882,7 +3882,7 @@ ActiveInstance* ActiveInstanceManager :: ResolveExistingInstance(PlayerInstanceP
 		ptr = GetPtrByZoneOwner(pd.in_zoneID, pd.in_creatureDefID);
 		if(ptr != NULL)
 		{
-			g_Log.AddMessageFormat("Found instance by owner: %d", pd.in_creatureDefID);
+			g_Logs.server->debug("Found instance by owner: %v", pd.in_creatureDefID);
 			return ptr;
 		}
 	}
@@ -3891,7 +3891,7 @@ ActiveInstance* ActiveInstanceManager :: ResolveExistingInstance(PlayerInstanceP
 		ptr = GetPtrByZoneID(pd.in_zoneID);
 		if(ptr != NULL)
 		{
-			g_Log.AddMessageFormat("Found instance by zone: %d", pd.in_zoneID);
+			g_Logs.script->debug("Found instance by zone: %v", pd.in_zoneID);
 			return ptr;
 		}
 	}
@@ -3903,7 +3903,7 @@ int ActiveInstanceManager :: AddSimulator_Ex(PlayerInstancePlacementData &pd)
 	ZoneDefInfo *zoneDef = g_ZoneDefManager.GetPointerByID(pd.in_zoneID);
 	if(zoneDef == NULL)
 	{
-		g_Log.AddMessageFormat("[ERROR] AddSimulator() ZoneDef does not exist for ID: %d", pd.in_zoneID);
+		g_Logs.server->debug("AddSimulator() ZoneDef does not exist for ID: %v", pd.in_zoneID);
 		return -1;
 	}
 
@@ -3911,13 +3911,13 @@ int ActiveInstanceManager :: AddSimulator_Ex(PlayerInstancePlacementData &pd)
 	ActiveInstance *ptr = ResolveExistingInstance(pd, zoneDef);
 	if(ptr == NULL)
 	{
-		g_Log.AddMessageFormat("Creating new instance for zone: %d", pd.in_zoneID);
+		g_Logs.server->debug("Creating new instance for zone: %v", pd.in_zoneID);
 		ptr = CreateInstance(pd.in_zoneID, pd);
 		created = true;
 	}
 	if(ptr == NULL)
 	{
-		g_Log.AddMessageFormat("[ERROR] AddSimulator() Unable to create instance for zone: %d", pd.in_zoneID);
+		g_Logs.server->error("AddSimulator() Unable to create instance for zone: %v", pd.in_zoneID);
 		return -1;
 	}
 

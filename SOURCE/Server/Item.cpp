@@ -1,5 +1,5 @@
 #include <string.h>
-#include "StringList.h"
+
 #include "Config.h"   //For override globals
 #include "ByteBuffer.h"
 #include "DirectoryAccess.h"
@@ -772,7 +772,7 @@ int LoadItemFromStream(FileReader &fr, ItemDef *itemDef, char *debugFilename)
 				//int r = SetItemProperty(itemDef, fr.BlockToString(0), fr.BlockToString(1));
 				int r = SetItemProperty(itemDef, NameBuf, ValueBuf);
 				if(r == -1)
-					g_Log.AddMessageFormat("Unknown property [%s] in item file [%s] on line [%d]", fr.BlockToString(0), debugFilename, fr.LineNumber);
+					g_Logs.data->warn("Unknown property [%v] in item file [%v] on line [%v]", fr.BlockToString(0), debugFilename, fr.LineNumber);
 			}
 		}
 	}
@@ -838,7 +838,7 @@ void ItemManager :: LoadData(void)
 	char buffer[256];
 	LoadItemPackages(Platform::GenerateFilePath(buffer, "Packages", "ItemPack.txt"), false);
 	LoadItemPackages(Platform::GenerateFilePath(buffer, "Packages", "ItemPackOverride.txt"), true);
-	g_Log.AddMessageFormat("Loaded %d items.", g_ItemManager.GetStandardCount());
+	g_Logs.data->info("Loaded %v items.", g_ItemManager.GetStandardCount());
 }
 
 void ItemManager :: LoadItemList(char *filename, bool itemOverride)
@@ -848,7 +848,7 @@ void ItemManager :: LoadItemList(char *filename, bool itemOverride)
 	FileReader lfr;
 	if(lfr.OpenText(filename) != Err_OK)
 	{
-		g_Log.AddMessageFormat("Could not open file [%s].", filename);
+		g_Logs.data->error("Could not open file [%v].", filename);
 		return;
 	}
 
@@ -877,7 +877,7 @@ void ItemManager :: LoadItemList(char *filename, bool itemOverride)
 			if(ptr != NULL)
 				ptr->CopyFrom(&newItem);
 			else
-				g_Log.AddMessageFormat("[WARNING] Item override specified for ID:%d was not found [%s]", newItem.mID, filename);
+				g_Logs.data->warn("Item override specified for ID:%v was not found [%v]", newItem.mID, filename);
 		}
 		else
 		{
@@ -885,7 +885,7 @@ void ItemManager :: LoadItemList(char *filename, bool itemOverride)
 			if(ptr->mID == 0)
 				ptr->CopyFrom(&newItem);
 			else
-				g_Log.AddMessageFormat("[WARNING] Not allowed to override item %d [%s] in file [%s]", ptr->mID, ptr->mDisplayName.c_str(), filename);
+				g_Logs.data->warn("Not allowed to override item %v [%v] in file [%v]", ptr->mID, ptr->mDisplayName.c_str(), filename);
 				//TODO: Obsolete
 			//ItemList.push_back(newItem);
 		}
@@ -899,7 +899,7 @@ void ItemManager :: LoadItemPackages(char *listFile, bool itemOverride)
 	FileReader lfr;
 	if(lfr.OpenText(listFile) != Err_OK)
 	{
-		g_Log.AddMessageFormat("Could not open Item list file [%s]", listFile);
+		g_Logs.data->error("Could not open Item list file [%v]", listFile);
 		Finalize();
 		return;
 	}
@@ -962,7 +962,7 @@ ItemDef * ItemManager :: GetPointerByID(int ID)
 		if(it != VItemList.end())
 			return &it->second.mStandardDef;
 		else
-			g_Log.AddMessageFormat("Virtual item not found: %d", ID);
+			g_Logs.data->error("Virtual item not found: %v", ID);
 	}
 	return NULL;
 }
@@ -983,7 +983,7 @@ VirtualItem * ItemManager :: GetVirtualItem(int ID)
 	if(it != VItemList.end())
 		return &it->second;
 	else
-		g_Log.AddMessageFormat("Virtual Item not found: %d", ID);
+		g_Logs.data->error("Virtual Item not found: %v", ID);
 	return NULL;
 }
 
@@ -1009,7 +1009,7 @@ ItemDef * ItemManager :: GetSafePointerByID(int ID)
 		if(it != ItemList.end())
 			return &it->second;
 		else
-			g_Log.AddMessageFormat("[ERROR] Item not found: %d", ID);
+			g_Logs.data->error("Item not found: %v", ID);
 	}
 	else
 	{
@@ -1024,7 +1024,7 @@ ItemDef * ItemManager :: GetSafePointerByID(int ID)
 		if(it != VItemList.end())
 			return &it->second.mStandardDef;
 		else
-			g_Log.AddMessageFormat("[ERROR] Virtual item not found: %d", ID);
+			g_Logs.data->error("Virtual item not found: %v", ID);
 	}
 	return GetDefaultItemPtr();
 }
@@ -1218,14 +1218,14 @@ int ItemManager :: RunPurchaseModifier(int itemID)
 
 	if(searchList.size() == 0)
 	{
-		g_Log.AddMessageFormat("RunPurchaseModifier() search list returned empty");
+		g_Logs.data->warn("RunPurchaseModifier() search list returned empty");
 		return itemID;
 	}
 
 	int randIndex = randint(0, (int)searchList.size() - 1);
 	if(randIndex < 0 || randIndex >= (int)searchList.size())
 	{
-		g_Log.AddMessageFormat("RunPurchaseModifier() index error.");
+		g_Logs.data->warn("RunPurchaseModifier() index error.");
 		return itemID;
 	}
 	return searchList[randIndex]->mID;

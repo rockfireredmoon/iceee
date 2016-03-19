@@ -1,6 +1,6 @@
 #include <string.h>
 #include "Config.h"
-#include "StringList.h"
+
 #include "FileReader.h"
 #include "Scenery2.h"  //for g_SceneryVars
 #include "DirectoryAccess.h"

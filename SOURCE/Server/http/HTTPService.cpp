@@ -26,7 +26,7 @@
 
 #include "../Config.h"
 #include "../Util.h"
-#include "../StringList.h"
+
 #include "../FileReader.h"
 #include <stdio.h>
 #include <algorithm>
@@ -54,7 +54,7 @@ void FileChecksum :: LoadFromFile(const char *filename)
 	FileReader lfr;
 	if(lfr.OpenText(filename) != Err_OK)
 	{
-		g_Log.AddMessageFormat("[WARNING] Could not open file: %s", filename);
+		g_Logs.http->warn("Could not open file: %v", filename);
 		return;
 	}
 	lfr.CommentStyle = Comment_Semi;
@@ -81,7 +81,7 @@ std::string FileChecksum :: MatchChecksum(const std::string filename, const std:
 
 	//If it doesn't appear in the list, assume it's valid so the client doesn't redownload
 	if(it == mChecksumData.end()) {
-		g_Log.AddMessageFormat("[WARNING] File %s is not in the index, so it's checksum is unknown. Assuming no download required.", filename.c_str());
+		g_Logs.http->warn("File %v is not in the index, so it's checksum is unknown. Assuming no download required.", filename.c_str());
 		return "";
 	}
 
@@ -140,7 +140,7 @@ bool HTTPService::Start() {
 
 		std::string *ports = new std::string();
 		if(g_HTTPListenPort > 0) {
-			g_Log.AddMessageFormat("CivetWeb HTTP configured on port %d", g_HTTPListenPort);
+			g_Logs.http->info("CivetWeb HTTP configured on port %v", g_HTTPListenPort);
 			if(strlen(g_BindAddress) > 0) {
 				ports->append(g_BindAddress);
 				ports->append(":");
@@ -151,13 +151,13 @@ bool HTTPService::Start() {
 #ifndef NO_SSL
 		if(g_HTTPSListenPort > 0) {
 			if(g_SSLCertificate.size() < 1) {
-				g_Log.AddMessageFormat("[WARNING] SSL port has been set (%d), but no SSLCertificate has been set. SSL server cannot be started.", g_HTTPSListenPort);
+				g_Logs.http->warn("SSL port has been set (%v), but no SSLCertificate has been set. SSL server cannot be started.", g_HTTPSListenPort);
 			}
 			else {
 				if(ports->size()> 0) {
 					ports->append(",");
 				}
-				g_Log.AddMessageFormat("CivetWeb HTTPS configured on port %d", g_HTTPSListenPort);
+				g_Logs.http->info("CivetWeb HTTPS configured on port %v", g_HTTPSListenPort);
 				if(strlen(g_BindAddress) > 0) {
 					ports->append(g_BindAddress);
 					ports->append(":");
@@ -187,10 +187,10 @@ bool HTTPService::Start() {
 #endif
 		zzOptions[idx] = 0;
 
-		g_Log.AddMessageFormat("Starting CivetWeb");
+		g_Logs.http->info("Starting CivetWeb");
 		civetServer = new CivetServer(zzOptions);
 		if(!civetServer->isConfigured()) {
-			g_Log.AddMessageFormat("[WARNING] CivetWeb HTTP server disabled due to misconfiguration.");
+			g_Logs.http->warn("CivetWeb HTTP server disabled due to misconfiguration.");
 			return false;
 		}
 
@@ -248,7 +248,7 @@ bool HTTPService::Start() {
 		return true;
 	}
 	else {
-		g_Log.AddMessageFormat("[WARNING] CivetWeb HTTP server disabled. No HTTP requests will be served.");
+		g_Logs.http->warn("CivetWeb HTTP server disabled. No HTTP requests will be served.");
 
 		return false;
 	}

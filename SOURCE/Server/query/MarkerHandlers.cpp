@@ -63,7 +63,7 @@ int MarkerListHandler::handleQuery(SimulatorThread *sim,
 		PutShort(&sim->SendBuf[1], wpos - 3);
 		return wpos;
 	} else {
-		g_Log.AddMessageFormat("TODO Implement non-zone marker list query-> %s",
+		g_Logs.simulator->warn("TODO Implement non-zone marker list query-> %v",
 				query->args[0].c_str());
 	}
 	return 0;
@@ -100,7 +100,7 @@ int MarkerEditHandler::handleQuery(SimulatorThread *sim,
 			return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
 		}
 	}
-	g_Log.AddMessageFormat("Creating new marker %s in zone %d at %s.",
+	g_Logs.simulator->info("Creating new marker %v in zone %v at %v.",
 			query->args[2].c_str(), creatureInstance->actInst->mZone,
 			query->args[4].c_str());
 	WorldMarker wm;

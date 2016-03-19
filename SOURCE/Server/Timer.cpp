@@ -17,7 +17,7 @@
 
 #include "Timer.h"
 #include <algorithm>
-#include "StringList.h"
+
 
 TimerManager g_TimerManager;
 

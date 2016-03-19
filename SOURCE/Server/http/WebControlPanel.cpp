@@ -19,7 +19,7 @@
 #include "../Config.h"
 #include "../Report.h"
 #include "../RemoteAction.h"
-#include "../StringList.h"
+
 #include "../Account.h"
 #include "../EliteMob.h"
 #include "../Ability2.h"
@@ -27,7 +27,7 @@
 #include "../DirectoryAccess.h"
 
 #include "HTTPService.h"
-
+#include "../util/Log.h"
 #include <map>
 
 using namespace HTTPD;
@@ -54,7 +54,7 @@ bool RemoteActionHandler::handlePost(CivetServer *server,
 
 			// Actions
 			if (action.compare("shutdown") == 0) {
-				g_Log.AddMessageFormat(
+				g_Logs.event->info(
 						"[NOTICE] The server was remotely shut down.");
 				g_ServerStatus = SERVER_STATUS_STOPPED;
 			} else if (action.compare("reloadvi") == 0) {

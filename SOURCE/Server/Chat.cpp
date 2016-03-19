@@ -288,17 +288,17 @@ bool ChatManager ::SendChatMessageAsOffline(ChatMessage &message, HTTPD::SiteSes
 	int cdefID = g_AccountManager.GetCDefFromCharacterName(message.mRecipient.c_str());
 	int msgCode = INFOMSG_ERROR;
 	if(cdefID == -1) {
-		g_Log.AddMessageFormat("No such character \"%s\" .", message.mRecipient.c_str());
+		g_Logs.server->error("No such character \"%v\" .", message.mRecipient.c_str());
 	}
 	else {
 		CharacterData *cd = g_CharacterManager.RequestCharacter(cdefID, true);
 		if(cd == NULL || cd->AccountID < 1) {
-			g_Log.AddMessageFormat("Could not find creature definition for \"%s\" (%d).", message.mRecipient.c_str(), cdefID);
+			g_Logs.server->error("Could not find creature definition for \"%v\" (%v).", message.mRecipient.c_str(), cdefID);
 		}
 		else {
 			AccountData *data = g_AccountManager.FetchIndividualAccount(cd->AccountID);
 			if(data == NULL) {
-				g_Log.AddMessageFormat("Could not find account for \"%s\" (%d, %d).", message.mRecipient.c_str(), cdefID, cd->AccountID);
+				g_Logs.server->error("Could not find account for \"%v\" (%v, %v).", message.mRecipient.c_str(), cdefID, cd->AccountID);
 			}
 			else {
 				char subject[256];
@@ -309,7 +309,7 @@ bool ChatManager ::SendChatMessageAsOffline(ChatMessage &message, HTTPD::SiteSes
 					return true;
 				}
 				else {
-					g_Log.AddMessageFormat("Player \"%s\" is not logged in.", message.mRecipient.c_str());
+					g_Logs.server->warn("Player \"%v\" is not logged in and no private message sent.", message.mRecipient.c_str());
 				}
 			}
 		}

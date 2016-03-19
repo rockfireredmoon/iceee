@@ -1,6 +1,6 @@
 #include "RemoteAction.h"
 
-#include "StringList.h"
+
 #include "Config.h"
 #include "Globals.h"
 
@@ -26,6 +26,7 @@
 #include <stdlib.h>
 #include "Report.h"
 #include "http/HTTPService.h"
+#include "util/Log.h"
 
 extern char GAuxBuf[];
 
@@ -56,20 +57,20 @@ int RunRemoteAction(ReportBuffer &report, MULTISTRING &header, MULTISTRING &para
 	const char *auth = GetValueOfKey(params, "authtoken");
 	if(action == NULL || auth == NULL)
 	{
-		g_Log.AddMessageFormat("[ERROR] Invalid POST message.");
+		g_Logs.http->error("Invalid POST message.");
 		return REMOTE_INVALIDPOST;
 	}
 
 	if(g_Config.RemotePasswordMatch(auth) == false)
 	{
-		g_Log.AddMessageFormat("[ERROR] Invalid remote authentication string.");
+		g_Logs.http->error("Invalid remote authentication string.");
 		//g_Log.AddMessageFormat("Has:[%s], Need:[%s]", auth, g_Config.RemoteAuthenticationPassword.c_str());
 		return REMOTE_AUTHFAILED;
 	}
 
 	if(strcmp(action, "shutdown") == 0)
 	{
-		g_Log.AddMessageFormat("[NOTICE] The server was remotely shut down.");
+		g_Logs.event->info("[NOTICE] The server was remotely shut down.");
 		g_ServerStatus = SERVER_STATUS_STOPPED;
 		return REMOTE_COMPLETE;
 	}
@@ -382,8 +383,14 @@ void Helper_OutputCreature(ReportBuffer &report, int index, CreatureInstance *ob
 	if(obj->aiScript != NULL && obj->aiScript->mActive)
 		report.AddLine("TSL %s", obj->aiScript->def->scriptName.c_str());
 	if(obj->aiNut != NULL)
-		report.AddLine("Squirrel %s calls: %lu ptime: %lu itime: %l exec: %s, halting: %s status: %s", obj->aiNut->def->scriptName.c_str(),obj->aiNut->mCalls,
-				obj->aiNut->mProcessingTime, obj->aiNut->mInitTime, obj->aiNut->GetStatus().c_str(), obj->aiNut->mHalting ? "yes" : "no", obj->aiNut->mActive ? "yes" : "no");
+		report.AddLine("Squirrel %s calls: %lu ptime: %lu itime: %lu exec: %s, halting: %s status: %s",
+				obj->aiNut->def->scriptName.c_str(),
+				obj->aiNut->mCalls,
+				obj->aiNut->mProcessingTime,
+				obj->aiNut->mInitTime,
+				obj->aiNut->GetStatus().c_str(),
+				obj->aiNut->mHalting ? "yes" : "no",
+				obj->aiNut->mActive ? "yes" : "no");
 
 	report.AddLine("%d,%d,%d", obj->CurrentX, obj->CurrentY, obj->CurrentZ);
 	for(d = 0; d < 2; d++)

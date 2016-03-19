@@ -398,8 +398,8 @@ int TradeStartHandler::protected_helper_query_trade_start(SimulatorThread *sim,
 
 	ActiveInstance *actInst = creatureInstance->actInst;
 	if (actInst == NULL) {
-		g_Log.AddMessageFormat(
-				"[CRITICAL] trade.start active instance is NULL");
+		g_Logs.simulator->error(
+				"[%v] trade.start active instance is NULL", sim->InternalID);
 		return QueryErrorMsg::INVALIDOBJ;
 	}
 
@@ -634,7 +634,7 @@ int TradeAcceptHandler::protected_helper_query_trade_accept(SimulatorThread *sim
 			SendToOneSimulator(sim->SendBuf, wpos, target->simulatorPtr);
 			//origin->actInst->LSendToOneSimulator(SendBuf, wpos, origin->SimulatorIndex);
 			//target->actInst->LSendToOneSimulator(SendBuf, wpos, target->SimulatorIndex);
-			g_Log.AddMessageFormat("Origin lacks space\n");
+			g_Logs.simulator->debug("[%v] Origin lacks space", sim->InternalID);
 			goto exit;
 		}
 		if (tslots < (int) tradeData->player[0].itemList.size()) {
@@ -650,7 +650,7 @@ int TradeAcceptHandler::protected_helper_query_trade_accept(SimulatorThread *sim
 			SendToOneSimulator(sim->SendBuf, wpos, target->simulatorPtr);
 			//origin->actInst->LSendToOneSimulator(SendBuf, wpos, origin->SimulatorIndex);
 			//target->actInst->LSendToOneSimulator(SendBuf, wpos, target->SimulatorIndex);
-			g_Log.AddMessageFormat("Target lacks space\n");
+			g_Logs.simulator->debug("[%v] Target lacks space", sim->InternalID);
 			goto exit;
 		}
 
@@ -667,7 +667,7 @@ int TradeAcceptHandler::protected_helper_query_trade_accept(SimulatorThread *sim
 			SendToOneSimulator(sim->SendBuf, wpos, target->simulatorPtr);
 			//origin->actInst->LSendToOneSimulator(SendBuf, wpos, origin->SimulatorIndex);
 			//target->actInst->LSendToOneSimulator(SendBuf, wpos, target->SimulatorIndex);
-			g_Log.AddMessageFormat("Origin lacks copper\n");
+			g_Logs.simulator->debug("[%v] Origin lacks copper", sim->InternalID);
 			goto exit;
 		}
 		if (tradeData->player[1].coin > target->css.copper) {
@@ -682,12 +682,12 @@ int TradeAcceptHandler::protected_helper_query_trade_accept(SimulatorThread *sim
 			SendToOneSimulator(sim->SendBuf, wpos, target->simulatorPtr);
 			//origin->actInst->LSendToOneSimulator(SendBuf, wpos, origin->SimulatorIndex);
 			//target->actInst->LSendToOneSimulator(SendBuf, wpos, target->SimulatorIndex);
-			g_Log.AddMessageFormat("Target lacks copper\n");
+			g_Logs.simulator->debug("[%v] Target lacks copper", sim->InternalID);
 			goto exit;
 		}
 
 		//Ready to trade.
-		g_Log.AddMessageFormat("Trade requirements passed\n");
+		g_Logs.simulator->debug("[%v] Trade requirements passed", sim->InternalID);
 
 		//Adjust and send coin transfer to both players.
 		origin->css.copper -= tradeData->player[0].coin;
@@ -711,14 +711,14 @@ int TradeAcceptHandler::protected_helper_query_trade_accept(SimulatorThread *sim
 		wpos = 0;
 		CharacterData *p1 = origin->charPtr;
 		CharacterData *p2 = target->charPtr;
-		g_Log.AddMessageFormat("[DEBUG] Trade betweeen [%s] and [%s]",
-				p1->cdef.css.display_name, p2->cdef.css.display_name);
+		g_Logs.simulator->debug("[%v] Trade betweeen [%v] and [%v]",
+				sim->InternalID, p1->cdef.css.display_name, p2->cdef.css.display_name);
 		for (size_t a = 0; a < tradeData->player[0].itemList.size(); a++) {
 			unsigned long CCSID = tradeData->player[0].itemList[a].CCSID;
 			InventorySlot *item = p1->inventory.GetItemPtrByCCSID(CCSID);
 			if (item == NULL) {
-				g_Log.AddMessageFormat(
-						"Failed to remove item from first player.");
+				g_Logs.simulator->error(
+						"[%v] Failed to remove item from first player.", sim->InternalID);
 			} else {
 				wpos += p1->inventory.RemoveItemUpdate(&sim->SendBuf[wpos], sim->Aux3,
 						item);
@@ -727,7 +727,7 @@ int TradeAcceptHandler::protected_helper_query_trade_accept(SimulatorThread *sim
 		}
 		SendToOneSimulator(sim->SendBuf, wpos, origin->simulatorPtr);
 		//origin->actInst->LSendToOneSimulator(SendBuf, wpos, origin->SimulatorIndex);
-		g_Log.AddMessageFormat("Removed %d items from first player.",
+		g_Logs.simulator->debug("[%v] Removed %v items from first player.", sim->InternalID,
 				tradeData->player[0].itemList.size());
 
 		//Remove items from second player.
@@ -736,8 +736,8 @@ int TradeAcceptHandler::protected_helper_query_trade_accept(SimulatorThread *sim
 			unsigned long CCSID = tradeData->player[1].itemList[a].CCSID;
 			InventorySlot *item = p2->inventory.GetItemPtrByCCSID(CCSID);
 			if (item == NULL) {
-				g_Log.AddMessageFormat(
-						"Failed to remove item from first player.");
+				g_Logs.simulator->error(
+						"[%v] Failed to remove item from first player.", sim->InternalID);
 			} else {
 				wpos += p2->inventory.RemoveItemUpdate(&sim->SendBuf[wpos], sim->Aux3,
 						item);
@@ -746,7 +746,7 @@ int TradeAcceptHandler::protected_helper_query_trade_accept(SimulatorThread *sim
 		}
 		SendToOneSimulator(sim->SendBuf, wpos, target->simulatorPtr);
 		//target->actInst->LSendToOneSimulator(SendBuf, wpos, target->SimulatorIndex);
-		g_Log.AddMessageFormat("Removed %d items from second player.",
+		g_Logs.simulator->debug("[%v] Removed %v items from second player.", sim->InternalID,
 				tradeData->player[1].itemList.size());
 
 		//Give items to first player
@@ -757,7 +757,7 @@ int TradeAcceptHandler::protected_helper_query_trade_accept(SimulatorThread *sim
 			InventorySlot *item = p1->inventory.AddItem_Ex(INV_CONTAINER,
 					itemID, count);
 			if (item == NULL)
-				g_Log.AddMessageFormat("Failed to add item to first player.");
+				g_Logs.simulator->error("[%v] Failed to add item to first player.", sim->InternalID);
 			else {
 				g_Logs.event->info("[TRADE] From %v to %v (%v)",
 						tradeData->player[1].cInst->css.display_name,
@@ -770,7 +770,7 @@ int TradeAcceptHandler::protected_helper_query_trade_accept(SimulatorThread *sim
 		}
 		SendToOneSimulator(sim->SendBuf, wpos, origin->simulatorPtr);
 		//origin->actInst->LSendToOneSimulator(SendBuf, wpos, origin->SimulatorIndex);
-		g_Log.AddMessageFormat("Gave %d items to first player.",
+		g_Logs.simulator->debug("[%v] Gave %v items to first player.", sim->InternalID,
 				tradeData->player[1].itemList.size());
 
 		//Give items to second player
@@ -781,7 +781,7 @@ int TradeAcceptHandler::protected_helper_query_trade_accept(SimulatorThread *sim
 			InventorySlot *item = p2->inventory.AddItem_Ex(INV_CONTAINER,
 					itemID, count);
 			if (item == NULL)
-				g_Log.AddMessageFormat("Failed to add item to second player.");
+				g_Logs.simulator->error("[%v] Failed to add item to second player.", sim->InternalID);
 			else {
 				g_Logs.event->info("[TRADE] From %v to %v (%v)",
 						tradeData->player[0].cInst->css.display_name,
@@ -794,7 +794,7 @@ int TradeAcceptHandler::protected_helper_query_trade_accept(SimulatorThread *sim
 		}
 		SendToOneSimulator(sim->SendBuf, wpos, target->simulatorPtr);
 		//target->actInst->LSendToOneSimulator(SendBuf, wpos, target->SimulatorIndex);
-		g_Log.AddMessageFormat("Gave %d items to second player.",
+		g_Logs.simulator->debug("[%v] Gave %v items to second player.", sim->InternalID,
 				tradeData->player[0].itemList.size());
 
 		//Send trade completion message.
@@ -817,7 +817,7 @@ int TradeAcceptHandler::protected_helper_query_trade_accept(SimulatorThread *sim
 		origin->activeLootID = 0;
 		target->activeLootID = 0;
 
-		g_Log.AddMessageFormat("Trade complete\n");
+		g_Logs.simulator->debug("[%v] Trade complete", sim->InternalID);
 		actInst->tradesys.RemoveTransaction(tradeID);
 	}
 

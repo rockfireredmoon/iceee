@@ -496,6 +496,9 @@ public:
 	int RandModRng(int min, int max);
 	int RandDbl(double min, double max);
 
+	bool WakeVM(std::string name);
+	int ClearQueue();
+
 	static bool ArrayContains(Sqrat::Array table, int value);
 
 	std::vector<NutScriptEvent*> mQueue;
@@ -505,9 +508,6 @@ public:
 
 private:
 	bool ExecEvent(NutScriptEvent *nse, int index);
-
-protected:
-	void ClearQueue();
 
 };
 

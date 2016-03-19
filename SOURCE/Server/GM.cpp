@@ -1,9 +1,10 @@
 #include "GM.h"
 #include "FileReader.h"
 #include "Util.h"
-#include "StringList.h"
+
 #include "Character.h"
 #include <dirent.h>
+#include "util/Log.h"
 
 PetitionManager g_PetitionManager;
 
@@ -52,7 +53,7 @@ bool PetitionManager::Take(int petitionId, int sageCharacterId) {
 	Platform::FixPaths(tempStrBuf2);
 	if(Platform::FileCopy(tempStrBuf, tempStrBuf2) == 0 && remove(tempStrBuf) == 0)
 		return true;
-	g_Log.AddMessageFormat("[ERROR] Failed to take petition to %s", tempStrBuf);
+	g_Logs.data->error("Failed to take petition to %v", tempStrBuf);
 	return false;
 }
 bool PetitionManager::Untake(int petitionId, int sageCharacterId) {
@@ -64,7 +65,7 @@ bool PetitionManager::Untake(int petitionId, int sageCharacterId) {
 	Platform::FixPaths(tempStrBuf2);
 	if(Platform::FileCopy(tempStrBuf, tempStrBuf2) == 0 && remove(tempStrBuf) == 0)
 		return true;
-	g_Log.AddMessageFormat("[ERROR] Failed to untake petition to %s", tempStrBuf);
+	g_Logs.data->error("Failed to untake petition to %v", tempStrBuf);
 	return false;
 }
 bool PetitionManager::Close(int petitionId, int sageCharacterId) {
@@ -76,7 +77,7 @@ bool PetitionManager::Close(int petitionId, int sageCharacterId) {
 	Platform::FixPaths(tempStrBuf2);
 	if(Platform::FileCopy(tempStrBuf, tempStrBuf2) == 0 && remove(tempStrBuf) == 0)
 		return true;
-	g_Log.AddMessageFormat("[ERROR] Failed to close petition to %s", tempStrBuf);
+	g_Logs.data->error("Failed to close petition to %v", tempStrBuf);
 	return false;
 }
 
@@ -85,11 +86,10 @@ int PetitionManager::NewPetition(int petitionerCDefID, int category, const char 
 	int id = NextPetitionID++;
 	Util::SafeFormat(buffer, sizeof(buffer), "Petitions\\Pending\\%d.txt", id);
 	Platform::FixPaths(buffer);
-	g_Log.AddMessageFormat("Saving petition to %s.", buffer);
+	g_Logs.data->info("Saving petition to %v.", buffer);
 	FILE *output = fopen(buffer, "wb");
 	if (output == NULL) {
-		g_Log.AddMessageFormat("[ERROR] Saving petition could not open: %s",
-				buffer);
+		g_Logs.data->error("Saving petition could not open: %v", buffer);
 		return -1;
 	}
 	fprintf(output, "[ENTRY]\r\n");
@@ -139,7 +139,7 @@ void PetitionManager::FillPetitions(std::vector<Petition> *petitions, const char
 			Util::RemoveStringsFrom(".txt", s);
 			int id = atoi(s.c_str());
 			if(id > 0) {
-				g_Log.AddMessageFormat("Found petition %d", id);
+				g_Logs.data->info("Found petition %v", id);
 				Petition p = Load(path, id);
 				p.status = status;
 				petitions->push_back(p);
@@ -147,7 +147,7 @@ void PetitionManager::FillPetitions(std::vector<Petition> *petitions, const char
 		}
 		closedir(dir);
 	} else {
-		g_Log.AddMessageFormat("Failed to open Petitions directory %s, does it exist?", path);
+		g_Logs.data->error("Failed to open Petitions directory %v, does it exist?", path);
 	}
 }
 
@@ -159,7 +159,7 @@ Petition PetitionManager::Load(const char *path, int id) {
 	FileReader lfr;
 	Petition newItem;
 	if (lfr.OpenText(buffer) != Err_OK) {
-		g_Log.AddMessageFormat("Could not open file [%s]", buffer);
+		g_Logs.data->error("Could not open file [%v]", buffer);
 	} else {
 		lfr.CommentStyle = Comment_Semi;
 		int r = 0;
@@ -171,9 +171,7 @@ Petition PetitionManager::Load(const char *path, int id) {
 				if (strcmp(lfr.SecBuffer, "[ENTRY]") == 0) {
 					//
 					if (newItem.petitionId != 0) {
-						g_Log.AddMessageFormat(
-								"[WARNING] Petition file %s has more than one ENTRY",
-								buffer);
+						g_Logs.data->warn("Petition file %v has more than one ENTRY", buffer);
 						newItem.RunLoadDefaults();
 						break;
 					}
@@ -201,8 +199,7 @@ Petition PetitionManager::Load(const char *path, int id) {
 					Util::SafeCopy(newItem.resolution, r.c_str(),
 							sizeof(newItem.resolution));
 				} else {
-					g_Log.AddMessageFormat(
-							"[WARNING] Petition file %s has unknown pair %s",
+					g_Logs.data->warn("Petition file %v has unknown pair %v",
 							buffer, lfr.SecBuffer);
 				}
 			}

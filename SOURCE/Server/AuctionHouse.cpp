@@ -21,7 +21,7 @@
 #include "FileReader.h"
 #include "DirectoryAccess.h"
 #include "ByteBuffer.h"
-#include "StringList.h"
+
 #include "Simulator.h"
 #include "Item.h"
 #include "Instance.h"
@@ -105,15 +105,14 @@ void AuctionTimerTask::run() {
 		sellerCharacterData = g_CharacterManager.RequestCharacter(
 				mItem->mSeller, true);
 		if (sellerCharacterData == NULL) {
-			g_Log.AddMessageFormat(
-					"[WARNING] Seller of auction item, no longer exists. Received copper and credits go to /dev/null!");
+			g_Logs.server->warn("Seller of auction item, no longer exists. Received copper and credits go to /dev/null!");
 		} else {
 			sellerCss = &sellerCharacterData->cdef.css;
 			sellerAccount = g_AccountManager.FetchIndividualAccount(
 					sellerCharacterData->AccountID);
 			if (sellerAccount == NULL) {
-				g_Log.AddMessageFormat(
-						"[WARNING] Seller account of auction item, no longer exists. Received copper and credits go to /dev/null!");
+				g_Logs.server->warn(
+						"Seller account of auction item, no longer exists. Received copper and credits go to /dev/null!");
 			}
 		}
 	} else {
@@ -402,8 +401,8 @@ void AuctionRemoveTimerTask::run() {
 	char buf[1024];
 	char buf2[256];
 
-	g_Log.AddMessageFormat(
-			"Removing auction house item '%s' (sold by %s) from auction list",
+	g_Logs.event->info(
+			"Removing auction house item '%v' (sold by %v) from auction list",
 			mItem->itemDef->mDisplayName.c_str(), mItem->mSellerName.c_str());
 
 	g_AuctionHouseManager.cs.Enter("AuctionTimerTask::run");
@@ -419,15 +418,13 @@ void AuctionRemoveTimerTask::run() {
 		sellerCharacterData = g_CharacterManager.RequestCharacter(
 				mItem->mSeller, true);
 		if (sellerCharacterData == NULL) {
-			g_Log.AddMessageFormat(
-					"[WARNING] Seller of auction item, no longer exists.");
+			g_Logs.server->warn("Seller of auction item, no longer exists.");
 		} else {
 			sellerCss = &sellerCharacterData->cdef.css;
 			sellerAccount = g_AccountManager.FetchIndividualAccount(
 					sellerCharacterData->AccountID);
 			if (sellerAccount == NULL) {
-				g_Log.AddMessageFormat(
-						"[WARNING] Seller account of auction item, no longer exists.");
+				g_Logs.server->warn("Seller account of auction item, no longer exists.");
 			}
 		}
 	} else {
@@ -442,13 +439,13 @@ void AuctionRemoveTimerTask::run() {
 			g_ActiveInstanceManager.GetNPCCreatureByDefID(
 					mItem->mAuctioneer);
 	if(auctioneerInstance == NULL) {
-		g_Log.AddMessageFormat("[REMOVEME] WARNING! No auctioneer instance for ID %d", mItem->mAuctioneer);
+		g_Logs.server->warn("No auctioneer instance for ID %v", mItem->mAuctioneer);
 	}
 	CreatureDefinition *auctioneer = auctioneerInstance == NULL ? CreatureDef.GetPointerByCDef(
 			mItem->mAuctioneer) : &auctioneerInstance->charPtr->cdef;
 
 	if(auctioneer == NULL) {
-		g_Log.AddMessageFormat("[REMOVEME] WARNING! No auctioneer object for ID %d", mItem->mAuctioneer);
+		g_Logs.server->warn("No auctioneer object for ID %v", mItem->mAuctioneer);
 	}
 
 	if (sellerCss != NULL) {
@@ -649,11 +646,10 @@ bool AuctionHouseManager::SaveItem(AuctionHouseItem * item) {
 	mItems[item->mId] = item;
 
 	std::string path = GetPath(item->mId);
-	g_Log.AddMessageFormat("Saving credit shop item to %s.", path.c_str());
+	g_Logs.data->info("Saving credit shop item to %v.", path.c_str());
 	FILE *output = fopen(path.c_str(), "wb");
 	if (output == NULL) {
-		g_Log.AddMessageFormat("[ERROR] Saving petition could not open: %s",
-				path.c_str());
+		g_Logs.data->warn("Saving petition could not open: %v", path.c_str());
 		return false;
 	}
 
@@ -691,7 +687,7 @@ bool AuctionHouseManager::SaveItem(AuctionHouseItem * item) {
 AuctionHouseItem * AuctionHouseManager::LoadItem(int id) {
 	std::string path = GetPath(id);
 	if (!Platform::FileExists(path)) {
-		g_Log.AddMessageFormat("No file for CS item [%s]", path.c_str());
+		g_Logs.data->error("No file for CS item [%v]", path.c_str());
 		return NULL;
 	}
 
@@ -699,7 +695,7 @@ AuctionHouseItem * AuctionHouseManager::LoadItem(int id) {
 
 	FileReader lfr;
 	if (lfr.OpenText(path.c_str()) != Err_OK) {
-		g_Log.AddMessageFormat("Could not open file [%s]", path.c_str());
+		g_Logs.data->error("Could not open file [%v]", path.c_str());
 		return NULL;
 	}
 
@@ -716,9 +712,7 @@ AuctionHouseItem * AuctionHouseManager::LoadItem(int id) {
 		if (r > 0) {
 			if (strcmp(lfr.SecBuffer, "[ENTRY]") == 0) {
 				if (item->mId != 0) {
-					g_Log.AddMessageFormat(
-							"[WARNING] %s contains multiple entries. Auction house items have one entry per file",
-							path.c_str());
+					g_Logs.data->warn("%v contains multiple entries. Auction house items have one entry per file", path.c_str());
 					break;
 				}
 				item->mId = id;
@@ -759,14 +753,11 @@ AuctionHouseItem * AuctionHouseManager::LoadItem(int id) {
 					bid.mCredits = atol(l[2].c_str());
 					bid.mBidTime = atol(l[3].c_str());
 				} else {
-					g_Log.AddMessageFormat(
-							"[ERROR] Invalid auction house bid for %d",
-							item->mId);
+					g_Logs.data->error("Invalid auction house bid for %v", item->mId);
 				}
 				item->mBids.push_back(bid);
 			} else
-				g_Log.AddMessageFormat("Unknown identifier [%s] in file [%s]",
-						lfr.SecBuffer, path.c_str());
+				g_Logs.data->warn("Unknown identifier [%v] in file [%v]", lfr.SecBuffer, path.c_str());
 		}
 	}
 	lfr.CloseCurrent();
@@ -803,8 +794,7 @@ AuctionHouseItem * AuctionHouseManager::LoadItem(int id) {
 bool AuctionHouseManager::RemoveItem(int id) {
 	std::string path = GetPath(id);
 	if (!Platform::FileExists(path)) {
-		g_Log.AddMessageFormat("No file for auction house item [%s] to remove",
-				path.c_str());
+		g_Logs.data->error("No file for auction house item [%v] to remove", path.c_str());
 		return false;
 	}
 	cs.Enter("AuctionHouseManager::RemoveItem");
@@ -825,12 +815,12 @@ bool AuctionHouseManager::RemoveItem(int id) {
 	Platform::FixPaths(buf);
 	if (!Platform::FileExists(buf) || remove(buf) == 0) {
 		if (!rename(path.c_str(), buf) == 0) {
-			g_Log.AddMessageFormat("Failed to remove auction house item %d",
+			g_Logs.data->error("Failed to remove auction house item %v",
 					id);
 			return false;
 		}
 	}
-	g_Log.AddMessageFormat("Auction house item %d removed", id);
+	g_Logs.event->info("Auction house item %v removed", id);
 	return true;
 }
 
@@ -912,8 +902,7 @@ void AuctionHouseManager::Search(AuctionHouseSearch &search,
 			break;
 
 		if (it->second->itemDef == NULL) {
-			g_Log.AddMessageFormat(
-					"[WARNING] Item in auction house does not link to a valid item. %d",
+			g_Logs.data->warn("Item in auction house does not link to a valid item. %v",
 					it->second->mItemId);
 		} else {
 			bool matches = it->second->mAuctioneer == 0

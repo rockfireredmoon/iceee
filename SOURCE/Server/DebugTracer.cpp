@@ -1,6 +1,7 @@
 #include "DebugTracer.h"
-#include "StringList.h"
+
 #include "Util.h"
+#include "util/Log.h"
 
 
 #ifdef USE_SIMPLE_TRACE
@@ -78,13 +79,13 @@ QuickTrace :: QuickTrace(const char *message)
 	msg = message;
 	fprintf(stderr, "BEGIN: %s\r\n", message);
 	fflush(stderr);
-	g_Log.AddMessageFormat("[TRACE] BEGIN: %s", message);
+	g_Logs.server->trace("BEGIN: %v", message);
 }
 QuickTrace :: ~QuickTrace()
 {
 	fprintf(stderr, "END: %s\r\n", msg);
 	fflush(stderr);
-	g_Log.AddMessageFormat("[TRACE] END: %s", msg);
+	g_Logs.server->trace("END: %v", msg);
 }
 
 void CheckPoint(char *format, ...)

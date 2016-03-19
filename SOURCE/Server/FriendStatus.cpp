@@ -1,8 +1,9 @@
 #include "FriendStatus.h"
 #include "FileReader.h"
-#include "StringList.h"
+
 #include "Util.h"
 #include "DirectoryAccess.h"
+#include "util/Log.h"
 
 FriendListManager g_FriendListManager;
 
@@ -48,8 +49,8 @@ void FriendListManager :: LoadAllData(void)
 	LoadSocialData();
 	LoadNetworkData();
 
-	g_Log.AddMessageFormat("Loaded %d Friend Social Entries", socialData.size());
-	g_Log.AddMessageFormat("Loaded %d Friend Network Entries", networkData.size());
+	g_Logs.data->info("Loaded %v Friend Social Entries", socialData.size());
+	g_Logs.data->info("Loaded %v Friend Network Entries", networkData.size());
 }
 
 void FriendListManager :: SaveAllData(void)
@@ -62,13 +63,13 @@ void FriendListManager :: LoadSocialData(void)
 {
 	if(socialDataFile.size() == 0)
 	{
-		g_Log.AddMessageFormat("Social Cache filename not set.");
+		g_Logs.data->error("Social Cache filename not set.");
 		return;
 	}
 	FileReader lfr;
 	if(lfr.OpenText(socialDataFile.c_str()) != Err_OK)
 	{
-		g_Log.AddMessageFormat("Error opening Social Cache file for reading: %s", socialDataFile.c_str());
+		g_Logs.data->error("Error opening Social Cache file for reading: %v", socialDataFile.c_str());
 		return;
 	}
 	lfr.CommentStyle = Comment_Semi;
@@ -108,13 +109,13 @@ void FriendListManager :: SaveSocialData(void)
 {
 	if(socialDataFile.size() == 0)
 	{
-		g_Log.AddMessageFormat("Social Cache filename not set.");
+		g_Logs.data->error("Social Cache filename not set.");
 		return;
 	}
 	FILE *output = fopen(socialDataFile.c_str(), "wb");
 	if(output == NULL)
 	{
-		g_Log.AddMessageFormat("Error opening Social Cache file for writing: %s", socialDataFile.c_str());
+		g_Logs.data->error("Error opening Social Cache file for writing: %v", socialDataFile.c_str());
 		return;
 	}
 	SOCIAL_MAP::iterator it;
@@ -198,13 +199,13 @@ void FriendListManager :: LoadNetworkData(void)
 {
 	if(networkDataFile.size() == 0)
 	{
-		g_Log.AddMessageFormat("Network Cache filename not set.");
+		g_Logs.data->error("Network Cache filename not set.");
 		return;
 	}
 	FileReader lfr;
 	if(lfr.OpenText(networkDataFile.c_str()) != Err_OK)
 	{
-		g_Log.AddMessageFormat("Error opening Network Cache file for reading: %s", networkDataFile.c_str());
+		g_Logs.data->error("Error opening Network Cache file for reading: %v", networkDataFile.c_str());
 		return;
 	}
 
@@ -228,13 +229,13 @@ void FriendListManager :: SaveNetworkData(void)
 {
 	if(networkDataFile.size() == 0)
 	{
-		g_Log.AddMessageFormat("Network Cache filename not set.");
+		g_Logs.data->error("Network Cache filename not set.");
 		return;
 	}
 	FILE *output = fopen(networkDataFile.c_str(), "wb");
 	if(output == NULL)
 	{
-		g_Log.AddMessageFormat("Error opening Network Cache file for writing: %s", networkDataFile.c_str());
+		g_Logs.data->error("Error opening Network Cache file for writing: %v", networkDataFile.c_str());
 		return;
 	}
 

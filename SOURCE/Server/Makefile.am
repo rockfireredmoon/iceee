@@ -78,7 +78,6 @@ tawd_SOURCES = md5.cc \
 	Simulator.cpp \
 	SocketClass3.cpp \
 	Stats.cpp \
-	StringList.cpp \
 	Timer.cpp \
 	Trade.cpp \
 	URL.cpp \
@@ -199,7 +198,6 @@ tawd_SOURCES = md5.cc \
 	Simulator.h \
 	SocketClass3.h \
 	Stats.h \
-	StringList.h \
 	Timer.h \
 	Trade.h \
 	TradingBoard.h \
@@ -342,7 +340,6 @@ tawdsvc_SOURCES = md5.cc \
 	Simulator.cpp \
 	SocketClass3.cpp \
 	Stats.cpp \
-	StringList.cpp \
 	Timer.cpp \
 	Trade.cpp \
 	URL.cpp \
@@ -464,7 +461,6 @@ tawdsvc_SOURCES = md5.cc \
 	Simulator.h \
 	SocketClass3.h \
 	Stats.h \
-	StringList.h \
 	Timer.h \
 	Trade.h \
 	TradingBoard.h \

@@ -456,8 +456,8 @@ int QuestHackHandler::handleQuery(SimulatorThread *sim,
 	}
 	int WritePos = 0;
 	if (creature == NULL) {
-		g_Log.AddMessageFormat(
-				"No creature for  quest hack op for quest %s and creature %s.",
+		g_Logs.simulator->warn(
+				"No creature for  quest hack op for quest %v and creature %v.",
 				query->GetString(1), query->GetString(2));
 		WritePos = PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 				"Selected creature does not exist.");
@@ -479,8 +479,8 @@ int QuestHackHandler::handleQuery(SimulatorThread *sim,
 				creature->CreatureID, qdef->questID, &sim->Aux1[0]);
 		creature->simulatorPtr->AttemptSend(sim->Aux1, wpos);
 	} else {
-		g_Log.AddMessageFormat(
-				"Unknown quest hack op for quest %s and creature %s.",
+		g_Logs.simulator->warn(
+				"Unknown quest hack op for quest %v and creature %v.",
 				query->GetString(1), query->GetString(2));
 		WritePos = PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 				"Unknown quest hack op.");

@@ -1,7 +1,7 @@
 #include "ZoneDef.h"
 #include "FileReader.h"
 #include "FileReader3.h"
-#include "StringList.h"
+
 #include "Config.h"
 #include "PVP.h"
 #include "Util.h"

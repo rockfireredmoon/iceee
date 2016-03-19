@@ -1,8 +1,9 @@
 #include "Gamble.h"
 #include "FileReader.h"
 #include "Util.h"
-#include "StringList.h"
+
 #include <string.h>
+#include "util/Log.h"
 
 GambleManager g_GambleManager;
 
@@ -91,7 +92,7 @@ int GambleManager :: GetSearchType(const char *name)
 		if(strcmp(SearchName[i], name) == 0)
 			return SearchRet[i];
 
-	g_Log.AddMessageFormat("[WARNING] Search type [%s] not found for gamble definition.", name);
+	g_Logs.data->warn("Search type [%v] not found for gamble definition.", name);
 	return SEARCH_NONE;
 }
 
@@ -100,7 +101,7 @@ void GambleManager :: LoadFile(const char *filename)
 	FileReader lfr;
 	if(lfr.OpenText(filename) != Err_OK)
 	{
-		g_Log.AddMessageFormat("Could not open file [%s]", filename);
+		g_Logs.data->error("Could not open file [%v]", filename);
 		return;
 	}
 	GambleDefinition newItem;
@@ -142,7 +143,7 @@ void GambleManager :: LoadFile(const char *filename)
 			else if(strcmp(lfr.SecBuffer, "ITEMSELECTION") == 0)
 				newItem.AddItemSelections(lfr.BlockToStringC(1, 0));
 			else
-				g_Log.AddMessageFormat("Unknown identifier [%s] in file [%s]", lfr.SecBuffer, filename);
+				g_Logs.data->error("Unknown identifier [%v] in file [%v]", lfr.SecBuffer, filename);
 		}
 	}
 	if(newItem.searchType != SEARCH_NONE)

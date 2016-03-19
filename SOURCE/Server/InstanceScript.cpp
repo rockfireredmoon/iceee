@@ -3,7 +3,7 @@
 #include "AIScript2.h"
 #include "Instance.h"
 #include "CommonTypes.h"
-#include "StringList.h"
+
 #include "Simulator.h"
 #include "Creature.h"
 #include <stdlib.h>
@@ -138,8 +138,8 @@ void AbstractInstanceNutPlayer::CreatureChat(int CID, const char *channel,
 				PrepExt_GenericChatMessage(buffer, CID, ci->css.display_name,
 						channel, message), -1);
 	else
-		g_Log.AddMessageFormat(
-				"Could not find creature with ID %d in this instance to communicate.",
+		g_Logs.script->error(
+				"Could not find creature with ID %v in this instance to communicate.",
 				CID);
 }
 
@@ -602,14 +602,14 @@ bool InstanceNutPlayer::DisbandVirtualParty(int partyID) {
 bool InstanceNutPlayer::AddToVirtualParty(int partyID, int CID) {
 	ActiveParty * party = g_PartyManager.GetPartyByID(partyID);
 	if (party == NULL)
-		g_Log.AddMessageFormat(
-				"Cannot add %d to party with ID %d because it doesn't exist.",
+		g_Logs.script->error(
+				"Cannot add %v to party with ID %v because it doesn't exist.",
 				CID, partyID);
 	else {
 		CreatureInstance *ci = GetCreaturePtr(CID);
 		if (ci == NULL)
-			g_Log.AddMessageFormat(
-					"Cannot add %d to party with ID %d because they CID doesn't exist.",
+			g_Logs.script->error(
+					"Cannot add %v to party with ID %v because they CID doesn't exist.",
 					CID, partyID);
 		else {
 			char WriteBuf[512];
@@ -630,9 +630,7 @@ std::vector<int> InstanceNutPlayer::GetVirtualPartyMembers(int partyID) {
 	ActiveParty * party = g_PartyManager.GetPartyByID(partyID);
 	std::vector<int> p;
 	if (party == NULL)
-		g_Log.AddMessageFormat(
-				"Cannot get party members for ID %d because it doesn't exist.",
-				partyID);
+		g_Logs.script->error("Cannot get party members for ID %v because it doesn't exist.", partyID);
 	else
 		for (size_t i = 0; i < party->mMemberList.size(); i++)
 			p.push_back(party->mMemberList[i].mCreatureID);
@@ -647,8 +645,7 @@ int InstanceNutPlayer::GetVirtualPartyLeader(int partyID) {
 bool InstanceNutPlayer::QuitParty(int CID) {
 	CreatureInstance *ci = GetCreaturePtr(CID);
 	if (ci == NULL)
-		g_Log.AddMessageFormat(
-				"Cannot add quit %d from party as the CID doesn't exist.", CID);
+		g_Logs.script->error("Cannot add quit %v from party as the CID doesn't exist.", CID);
 	else {
 		g_PartyManager.DoQuit(ci);
 		return true;
@@ -667,9 +664,7 @@ bool InstanceNutPlayer::PVPGoal(int cid) {
 		ci->ProcessPVPGoal();
 		return true;
 	}
-	g_Log.AddMessageFormat(
-			"Failed to increase goal for %d, creature instance not found.",
-			cid);
+	g_Logs.script->error("Failed to increase goal for %v, creature instance not found.", cid);
 	return false;
 }
 
@@ -684,8 +679,7 @@ int InstanceNutPlayer::CreateParty(int leaderCID) {
 
 int InstanceNutPlayer::CreateTeam(int leaderCID, int team) {
 	if (actInst->pvpGame == NULL) {
-		g_Log.AddMessageFormat(
-				"Request to create team when there is no PVP game opened.");
+		g_Logs.script->error("Request to create team when there is no PVP game opened.");
 		return -1;
 	}
 	ActiveParty * party = DoCreateParty(leaderCID, team);
@@ -699,8 +693,7 @@ ActiveParty * InstanceNutPlayer::DoCreateParty(int leaderCID, int team) {
 	CreatureInstance *ci = GetCreaturePtr(leaderCID);
 	if (ci != NULL) {
 		if (ci->PartyID != 0) {
-			g_Log.AddMessageFormat("%d is already in party %d.", leaderCID,
-					ci->PartyID);
+			g_Logs.script->error("%v is already in party %v.", leaderCID, ci->PartyID);
 			return NULL;
 		}
 		ActiveParty * party = g_PartyManager.CreateParty(ci);
@@ -714,7 +707,7 @@ ActiveParty * InstanceNutPlayer::DoCreateParty(int leaderCID, int team) {
 			return party;
 		}
 	}
-	g_Log.AddMessageFormat("Failed to create party %d.", leaderCID);
+	g_Logs.script->error("Failed to create party %v.", leaderCID);
 	return NULL;
 }
 
@@ -755,9 +748,7 @@ void InstanceNutPlayer::ClearTarget(int CID) {
 		ci->SelectTarget(NULL);
 		ci->SetAutoAttack(NULL, 0);
 	} else
-		g_Log.AddMessageFormat(
-				"Could not find creature with ID %d in this instance to clear targets from.",
-				CID);
+		g_Logs.script->error("Could not find creature with ID %v in this instance to clear targets from.", CID);
 }
 
 void InstanceNutPlayer::Unhate(int CID) {
@@ -765,9 +756,7 @@ void InstanceNutPlayer::Unhate(int CID) {
 	if (ci != NULL)
 		ci->UnHate();
 	else
-		g_Log.AddMessageFormat(
-				"Could not find creature with ID %d in this instance to unhate.",
-				CID);
+		g_Logs.script->error("Could not find creature with ID %v in this instance to unhate.", CID);
 }
 
 void InstanceNutPlayer::DetachItem(int CID, const char *type,
@@ -776,9 +765,7 @@ void InstanceNutPlayer::DetachItem(int CID, const char *type,
 	if (ci != NULL) {
 		ci->DetachItem(type, node);
 	} else
-		g_Log.AddMessageFormat(
-				"Could not find creature with ID %d in this instance to detach item %s (%s) from.",
-				CID, type, node);
+		g_Logs.script->error("Could not find creature with ID %v in this instance to detach item %v (%v) from.", CID, type, node);
 }
 
 void InstanceNutPlayer::AttachItem(int CID, const char *type,
@@ -787,9 +774,7 @@ void InstanceNutPlayer::AttachItem(int CID, const char *type,
 	if (ci != NULL) {
 		ci->AttachItem(type, node);
 	} else
-		g_Log.AddMessageFormat(
-				"Could not find creature with ID %d in this instance to attach item %s (%s) to.",
-				CID, type, node);
+		g_Logs.script->error("Could not find creature with ID %v in this instance to attach item %v (%v) to.", CID, type, node);
 }
 
 void InstanceNutPlayer::UnremoveProps() {
@@ -878,8 +863,7 @@ bool InstanceNutPlayer::InviteQuest(int CID, int questID, bool inviteParty) {
 	bool ok = false;
 	if (ci != NULL && ci->simulatorPtr != NULL) {
 		if (!ci->simulatorPtr->QuestInvite(questID)) {
-			g_Log.AddMessageFormat("%d could not be invited the quest %d.", CID,
-					questID);
+			g_Logs.script->error("%v could not be invited the quest %v.", CID, questID);
 		} else
 			ok = true;
 
@@ -898,9 +882,7 @@ bool InstanceNutPlayer::InviteQuest(int CID, int questID, bool inviteParty) {
 		}
 
 	} else {
-		g_Log.AddMessageFormat(
-				"Could not find creature with ID %d in this instance to invite quest %d.",
-				CID, questID);
+		g_Logs.script->error("Could not find creature with ID %v in this instance to invite quest %v.", CID, questID);
 	}
 	return ok;
 }
@@ -964,8 +946,7 @@ bool InstanceNutPlayer::JoinQuest(int CID, int questID, bool joinParty) {
 	bool ok = false;
 	if (ci != NULL && ci->simulatorPtr != NULL) {
 		if (!ci->simulatorPtr->QuestJoin(questID)) {
-			g_Log.AddMessageFormat("%d could not be invited the quest %d.", CID,
-					questID);
+			g_Logs.script->error("%v could not be invited the quest %v.", CID, questID);
 		} else
 			ok = true;
 
@@ -984,9 +965,7 @@ bool InstanceNutPlayer::JoinQuest(int CID, int questID, bool joinParty) {
 		}
 
 	} else {
-		g_Log.AddMessageFormat(
-				"Could not find creature with ID %d in this instance to invite quest %d.",
-				CID, questID);
+		g_Logs.script->error("Could not find creature with ID %v in this instance to invite quest %v.", CID, questID);
 	}
 	return ok;
 }
@@ -1012,12 +991,10 @@ int InstanceNutPlayer::Transform(int propID, Sqrat::Table transformation) {
 		activeEffects.push_back(l);
 		int wpos = actInst->AddSceneryEffect(buffer, &l);
 		actInst->LSendToAllSimulator(buffer, wpos, -1);
-		g_Log.AddMessageFormat("Create effect tag %d for prop %d.", l.tag,
-				propID);
+		g_Logs.script->debug("Create effect tag %v for prop %v.", l.tag, propID);
 		return l.tag;
 	} else
-		g_Log.AddMessageFormat(
-				"Could not find prop with ID %d in this instance.", propID);
+		g_Logs.script->error("Could not find prop with ID %v in this instance.", propID);
 	return -1;
 }
 
@@ -1037,12 +1014,10 @@ int InstanceNutPlayer::Asset(int propID, const char *newAsset, float scale) {
 		activeEffects.push_back(l);
 		int wpos = actInst->AddSceneryEffect(buffer, &l);
 		actInst->LSendToAllSimulator(buffer, wpos, -1);
-		g_Log.AddMessageFormat("Create effect tag %d for prop %d.", l.tag,
-				propID);
+		g_Logs.script->debug("Create effect tag %v for prop %v.", l.tag, propID);
 		return l.tag;
 	} else
-		g_Log.AddMessageFormat(
-				"Could not find prop with ID %d in this instance.", propID);
+		g_Logs.script->error("Could not find prop with ID %v in this instance.", propID);
 	return -1;
 }
 
@@ -1083,12 +1058,10 @@ int InstanceNutPlayer::ParticleAttach(int propID, const char *effect,
 		activeEffects.push_back(l);
 		int wpos = actInst->AddSceneryEffect(buffer, &l);
 		actInst->LSendToAllSimulator(buffer, wpos, -1);
-		g_Log.AddMessageFormat("Create effect tag %d for prop %d.", l.tag,
-				propID);
+		g_Logs.script->debug("Create effect tag %v for prop %v.", l.tag, propID);
 		return l.tag;
 	} else
-		g_Log.AddMessageFormat(
-				"Could not find prop with ID %d in this instance.", propID);
+		g_Logs.script->error("Could not find prop with ID %v in this instance.", propID);
 	return -1;
 }
 
@@ -1100,9 +1073,7 @@ void InstanceNutPlayer::Emote(int CID, const char *emotion) {
 				PrepExt_GenericChatMessage(buffer, CID, ci->css.display_name,
 						"emote", emotion), -1);
 	else
-		g_Log.AddMessageFormat(
-				"Could not find creature with ID %d in this instance to emote.",
-				CID);
+		g_Logs.script->info("Could not find creature with ID %v in this instance to emote.", CID);
 }
 
 AINutPlayer* InstanceNutPlayer::GetAI(int CID) {
@@ -1271,10 +1242,10 @@ bool InstanceNutPlayer::RemoveStatusEffect(int CID, const char *effect) {
 }
 
 bool InstanceNutPlayer::Despawn(int CID) {
-	g_Log.AddMessageFormat("[DEBUG] Despawning %d", CID);
+	g_Logs.script->debug("Despawning %v", CID);
 	CreatureInstance *source = actInst->GetNPCInstanceByCID(CID);
 	if (source == NULL) {
-		g_Log.AddMessageFormat("[DEBUG] No spawn %d", CID);
+		g_Logs.script->debug("No spawn %v", CID);
 		return false;
 	}
 	spawned.erase(std::remove(spawned.begin(), spawned.end(), CID),
@@ -1372,8 +1343,7 @@ int InstanceNutPlayer::SpawnAt(int creatureID, Squirrel::Vector3I location,
 		return -1;
 	else {
 		genericSpawned.push_back(creature->CreatureID);
-		g_Log.AddMessageFormat("Spawn at returned temp creature ID of %d",
-				creature->CreatureID);
+		g_Logs.script->debug("Spawn at returned temp creature ID of %v", creature->CreatureID);
 		return creature->CreatureID;
 	}
 }
@@ -1386,8 +1356,7 @@ int InstanceNutPlayer::OLDSpawnAt(int creatureID, float x, float y, float z,
 		return -1;
 	else {
 		genericSpawned.push_back(creature->CreatureID);
-		g_Log.AddMessageFormat("Spawn at returned temp creature ID of %d",
-				creature->CreatureID);
+		g_Logs.script->debug("Spawn at returned temp creature ID of %v", creature->CreatureID);
 		return creature->CreatureID;
 	}
 }
@@ -1447,7 +1416,7 @@ bool InstanceScriptDef::HandleAdvancedCommand(const char *commandToken,
 		retVal = true;
 		if (tokens.size() < 5) {
 			g_Logs.script->error(
-					"Syntax error: not enough operands for SPAWNLOC statement (%s line %d",
+					"Syntax error: not enough operands for SPAWNLOC statement (%v line %v",
 					compileData.mSourceFile, compileData.mLineNumber);
 		} else {
 			int CDefID = atoi(tokens[1].c_str());
@@ -1492,12 +1461,9 @@ void InstanceScriptPlayer::RunImplementationCommands(int opcode) {
 			int wpos = actInst->AddSceneryEffect(buffer, &l);
 			actInst->LSendToAllSimulator(buffer, wpos, -1);
 			PushVarStack(l.tag);
-			g_Log.AddMessageFormat("Create effect tag %d for prop %d.", l.tag,
-					instr->param1);
+			g_Logs.script->debug("Create effect tag %v for prop %v.", l.tag, instr->param1);
 		} else
-			g_Log.AddMessageFormat(
-					"Could not find prop with ID %d in this instance.",
-					instr->param1);
+			g_Logs.script->error("Could not find prop with ID %v in this instance.", instr->param1);
 		break;
 	}
 	case OP_PARTICLE_DETACH: {
@@ -1525,7 +1491,7 @@ void InstanceScriptPlayer::RunImplementationCommands(int opcode) {
 			if (source == NULL)
 				break;
 			else {
-				g_Log.AddMessageFormat("Despawn: %d (%d)",
+				g_Logs.script->debug("Despawn: %v (%v)",
 						GetVarValue(instr->param1), source->CreatureID);
 				actInst->spawnsys.Despawn(source->CreatureID);
 			}
@@ -1535,10 +1501,10 @@ void InstanceScriptPlayer::RunImplementationCommands(int opcode) {
 	case OP_DESPAWN: {
 		CreatureInstance *source = actInst->GetInstanceByCID(
 				GetVarValue(instr->param1));
-		g_Log.AddMessageFormat("Despawn: %d (%d)", GetVarValue(instr->param1),
+		g_Logs.script->debug("Despawn: %v (%v)", GetVarValue(instr->param1),
 				source->CreatureDefID);
 		if (source == NULL)
-			g_Log.AddMessageFormat("Despawn failed, %d does not exist.",
+			g_Logs.script->error("Despawn failed, %v does not exist.",
 					GetVarValue(instr->param1));
 		else
 			actInst->spawnsys.Despawn(GetVarValue(instr->param1));
@@ -1679,7 +1645,7 @@ void InstanceScriptPlayer::RunImplementationCommands(int opcode) {
 	}
 		break;
 	default:
-		g_Log.AddMessageFormat("Unidentified InstanceScriptPlayer OpCode: %d",
+		g_Logs.script->error("Unidentified InstanceScriptPlayer OpCode: %v",
 				instr->opCode);
 		break;
 	}

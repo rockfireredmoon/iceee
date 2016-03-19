@@ -3,7 +3,8 @@
 #include "IGForum.h"
 #include "FileReader.h"
 #include "DirectoryAccess.h"
-#include "StringList.h"
+
+#include "util/Log.h"
 
 IGFManager g_IGFManager;
 
@@ -49,7 +50,7 @@ void IGFCategoryPage :: SaveFile(const char *filename)
 	FILE *output = fopen(filename, "wb");
 	if(output == NULL)
 	{
-		g_Log.AddMessageFormat("[ERROR] IGFCategoryPage::SaveFile failed to open: %s", filename);
+		g_Logs.data->error("IGFCategoryPage::SaveFile failed to open: %v", filename);
 		return;
 	}
 	CATEGORYENTRY::iterator it;
@@ -73,7 +74,7 @@ void IGFCategoryPage :: LoadFile(const char *filename)
 	FileReader lfr;
 	if(lfr.OpenText(filename) != Err_OK)
 	{
-		g_Log.AddMessageFormat("[ERROR] IGFCategoryPage::LoadFile failed to open file.");
+		g_Logs.data->error("IGFCategoryPage::LoadFile failed to open file.");
 		return;
 	}
 	lfr.CommentStyle = Comment_Semi;
@@ -111,7 +112,7 @@ void IGFCategoryPage :: LoadFile(const char *filename)
 					entry.mThreadList.push_back(lfr.BlockToIntC(i));
 			}
 			else
-				g_Log.AddMessageFormat("[WARNING] IGFCategoryPage::LoadFile unknown identifier [%s] in file [%s] on line [%d]", lfr.SecBuffer, filename, lfr.LineNumber);
+				g_Logs.data->warn("IGFCategoryPage::LoadFile unknown identifier [%v] in file [%v] on line [%v]", lfr.SecBuffer, filename, lfr.LineNumber);
 		}
 	}
 	if(entry.mID != 0)
@@ -161,7 +162,7 @@ void IGFThreadPage :: SaveFile(const char *filename)
 	FILE *output = fopen(filename, "wb");
 	if(output == NULL)
 	{
-		g_Log.AddMessageFormat("[ERROR] IGFThreadPage::SaveFile failed to open file.");
+		g_Logs.data->error("IGFThreadPage::SaveFile failed to open file.");
 		return;
 	}
 	THREADENTRY::iterator it;
@@ -190,7 +191,7 @@ void IGFThreadPage :: LoadFile(const char *filename)
 	FileReader lfr;
 	if(lfr.OpenText(filename) != Err_OK)
 	{
-		g_Log.AddMessageFormat("[ERROR] IGFThreadPage::LoadFile failed to open file.");
+		g_Logs.data->error("IGFThreadPage::LoadFile failed to open file.");
 		return;
 	}
 	lfr.CommentStyle = Comment_Semi;
@@ -236,7 +237,7 @@ void IGFThreadPage :: LoadFile(const char *filename)
 					entry.mPostList.push_back(lfr.BlockToIntC(i));
 			}
 			else
-				g_Log.AddMessageFormat("[WARNING] IGFThreadPage::LoadFile unknown identifier [%s] in file [%s] on line [%d]", lfr.SecBuffer, filename, lfr.LineNumber);
+				g_Logs.data->warn("IGFThreadPage::LoadFile unknown identifier [%v] in file [%v] on line [%v]", lfr.SecBuffer, filename, lfr.LineNumber);
 		}
 	}
 	if(entry.mID != 0)
@@ -279,7 +280,7 @@ void IGFPostPage :: SaveFile(const char *filename)
 	FILE *output = fopen(filename, "wb");
 	if(output == NULL)
 	{
-		g_Log.AddMessageFormat("[ERROR] IGFPostPage::SaveFile failed to open file.");
+		g_Logs.data->error("IGFPostPage::SaveFile failed to open file.");
 		return;
 	}
 	POSTENTRY::iterator it;
@@ -305,7 +306,7 @@ void IGFPostPage :: LoadFile(const char *filename)
 	FileReader lfr;
 	if(lfr.OpenText(filename) != Err_OK)
 	{
-		g_Log.AddMessageFormat("[ERROR] IGFPostPage::LoadFile failed to open: %s", filename);
+		g_Logs.data->error("IGFPostPage::LoadFile failed to open: %v", filename);
 		return;
 	}
 	//lfr.CommentStyle = Comment_Semi;  //No comments since they're valid characters for posts.
@@ -343,7 +344,7 @@ void IGFPostPage :: LoadFile(const char *filename)
 			else if(strcmp(lfr.SecBuffer, "BodyText") == 0)
 				entry.mBodyText = lfr.BlockToStringC(1, 0);
 			else
-				g_Log.AddMessageFormat("[WARNING] IGFPostPage::LoadFile unknown identifier [%s] in file [%s] on line [%d]", lfr.SecBuffer, filename, lfr.LineNumber);
+				g_Logs.data->warn("IGFPostPage::LoadFile unknown identifier [%v] in file [%v] on line [%v]", lfr.SecBuffer, filename, lfr.LineNumber);
 		}
 	}
 	if(entry.mID != 0)
@@ -713,7 +714,7 @@ void IGFManager :: OpenThread(int threadID, int startPost, int requestedCount, M
 		IGFPost *post = GetPagedPostPtr(thread->mPostList[i]);
 		if(post == NULL)
 		{
-			g_Log.AddMessageFormat("[ERROR] OpenThread: unable to find post: %d", thread->mPostList[i]);
+			g_Logs.data->error("OpenThread: unable to find post: %v", thread->mPostList[i]);
 			continue;
 		}
 
@@ -979,7 +980,7 @@ int IGFManager :: CreateCategory(AccountData *callerAccount, int parentCategoryI
 	IGFCategory *category = GetPagedCategoryPtr(parentCategoryID);
 	if(category == NULL)
 	{
-		g_Log.AddMessageFormat("Invalid category: %d", parentCategoryID);
+		g_Logs.data->error("Invalid category: %v", parentCategoryID);
 		return ERROR_INVALIDCATEGORY;
 	}
 
@@ -1268,7 +1269,7 @@ void IGFManager :: SaveConfig(void)
 	FILE *output = fopen(buffer, "wb");
 	if(output == NULL)
 	{
-		g_Log.AddMessageFormat("[ERROR] IGFManager::SaveConfig failed to open file.");
+		g_Logs.data->error("IGFManager::SaveConfig failed to open file.");
 		return;
 	}
 	fprintf(output, "NextCategoryID=%d\r\n", mNextCategoryID);
@@ -1286,7 +1287,7 @@ void IGFManager :: LoadConfig(void)
 	FileReader lfr;
 	if(lfr.OpenText(buffer) != Err_OK)
 	{
-		g_Log.AddMessageFormat("[ERROR] IGFManager::LoadConfig failed to open file.");
+		g_Logs.data->error("IGFManager::LoadConfig failed to open file.");
 		return;
 	}
 	lfr.CommentStyle = Comment_Semi;
@@ -1306,7 +1307,7 @@ void IGFManager :: LoadConfig(void)
 			else if(strcmp(lfr.SecBuffer, "PlatformLaunchMinute") == 0)
 				mPlatformLaunchMinute = lfr.BlockToULongC(1);
 			else
-				g_Log.AddMessageFormat("[WARNING] IGFManager::LoadConfig unknown identifier [%s] in file [%s] on line [%d]", lfr.SecBuffer, buffer, lfr.LineNumber);
+				g_Logs.data->warn("IGFManager::LoadConfig unknown identifier [%v] in file [%v] on line [%v]", lfr.SecBuffer, buffer, lfr.LineNumber);
 		}
 	}
 	lfr.CloseCurrent();
@@ -1651,7 +1652,7 @@ void IGFManager :: SortCategoryThreads(IGFCategory *category)
 		IGFThread *thread = GetPagedThreadPtr(threadID);
 		if(thread == NULL)
 		{
-			g_Log.AddMessageFormat("[ERROR] IGFManager::SortCategoryThreads thread [%d] does not exist", threadID);
+			g_Logs.data->error("IGFManager::SortCategoryThreads thread [%v] does not exist", threadID);
 			continue;
 		}
 		sortObj.mID = threadID;

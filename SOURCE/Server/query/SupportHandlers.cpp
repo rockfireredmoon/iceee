@@ -34,8 +34,8 @@ int BugReportHandler::handleQuery(SimulatorThread *sim,
 			Util::EncodeJSONString(summary).c_str(),
 			pld->charPtr->cdef.css.display_name, query->GetString(1),
 			Util::EncodeJSONString(desc).c_str());
-	g_Log.AddMessageFormat(
-			"Posting bug report with summary %s and category of %s",
+	g_Logs.server->info(
+			"Posting bug report with summary %v and category of %v",
 			query->GetString(0), query->GetString(2));
 
 	CURL *curl;
@@ -191,7 +191,7 @@ int PetitionSendHandler::handleQuery(SimulatorThread *sim,
 		};
 		return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
 	} else {
-		g_Log.AddMessageFormat("Failed to create petition.");
+		g_Logs.server->error("Failed to create petition.");
 		return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "Failed"); //??
 	}
 }

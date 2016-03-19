@@ -19,8 +19,9 @@
 #include "../Config.h"
 #include "../Util.h"
 #include "../Account.h"
-#include "../StringList.h"
+
 #include <vector>
+#include "util/Log.h"
 
 using namespace HTTPD;
 
@@ -150,8 +151,8 @@ bool LoginHandler::handlePost(CivetServer *server, struct mg_connection *conn) {
 			mg_printf(conn, "HTTP/1.1 301 Moved Permanently\r\n");
 			if (client == NULL
 					|| !Util::HasBeginning(redirectURI, client->RedirectURL)) {
-				g_Log.AddMessageFormat(
-						"[WARNING] Attempt to use login api from invalid client (%s for %s against %s)",
+				g_Logs.http->warn(
+						"Attempt to use login api from invalid client (%v for %v against %v)",
 						clientID.c_str(), redirectURI.c_str(),
 						client == NULL ? "None" : client->RedirectURL.c_str());
 				mg_printf(conn,
@@ -216,15 +217,15 @@ bool TokenHandler::handlePost(CivetServer *server, struct mg_connection *conn) {
 
 			if (client == NULL
 					|| !Util::HasBeginning(redirectURI, client->RedirectURL)) {
-				g_Log.AddMessageFormat(
-						"[WARNING] Attempt to use token api from invalid client (%s for %s against %s)",
+				g_Logs.http->warn(
+						"Attempt to use token api from invalid client (%v for %v against %v)",
 						clientID.c_str(), redirectURI.c_str(),
 						client == NULL ? "None" : client->RedirectURL.c_str());
 				writeJSON200(server, conn, "{ \"error\":\"invalid_request\"}");
 			} else {
 				if(client->ClientSecret.size() > 0 && clientSecret.compare(client->ClientSecret) != 0) {
-					g_Log.AddMessageFormat(
-										"[WARNING] Invalid client secret used  (%s for %s against %s)",
+					g_Logs.http->warn(
+										"Invalid client secret used  (%v for %v against %v)",
 										clientID.c_str(), redirectURI.c_str(),
 										client == NULL ? "None" : client->RedirectURL.c_str());
 					writeJSON200(server, conn, "{ \"error\":\"invalid_request\"}");
@@ -232,8 +233,8 @@ bool TokenHandler::handlePost(CivetServer *server, struct mg_connection *conn) {
 				else {
 					AccessToken *tkn = g_AccountManager.GetToken(code);
 					if (tkn == NULL) {
-						g_Log.AddMessageFormat(
-								"[WARNING] Attempt to get non-existing auth code '%s'.", code.c_str());
+						g_Logs.http->warn(
+								"Attempt to get non-existing auth code '%v'.", code.c_str());
 						writeJSON200(server, conn, "{ \"error\":\"invalid_request\"}");
 					} else {
 						writeJSON200(server, conn, "{\"access_token\":\"" + g_AccountManager.GenerateToken(tkn->accountID, 60000, AccessToken::ACCESS_TOKEN, -1) + "\"}");

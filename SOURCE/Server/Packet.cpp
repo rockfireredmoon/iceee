@@ -1,6 +1,6 @@
 #include "SocketClass3.h"
 #include "Packet.h"
-#include "StringList.h"
+
 
 PacketManager g_PacketManager;
 
@@ -43,7 +43,7 @@ void DebugPacketManager::UpdateHistory(void) {
 		mCurrent.Clear();
 
 		if (mHistory.size() > 512) {
-			g_Log.AddMessageFormat("[DEBUG] mHistory size too large");
+			g_Logs.server->debug("mHistory size too large");
 			mHistory.erase(mHistory.begin(), mHistory.begin() + 256);
 		}
 	}
@@ -65,7 +65,7 @@ Packet::~Packet() {
 void Packet::Assign(const char *buffer, int length) {
 	//Sanity checks, old debugging stuff...
 	if (length > 100000)
-		g_Log.AddMessageFormat("[CRITICAL] Assign() length is %d", length);
+		g_Logs.server->error("Assign() length is %v", length);
 	//mData.reserve(length);
 	mData.assign(buffer, length);
 }
@@ -78,7 +78,7 @@ void Packet::AssignFrom(const Packet &source, size_t begin, size_t end) {
 
 void Packet::Append(const char *buffer, int length) {
 	if (length > 100000)
-		g_Log.AddMessageFormat("[CRITICAL] Append() length is %d", length);
+		g_Logs.server->error("Append() length is %v", length);
 
 	if (mData.size() == 0)
 		mData.assign(buffer, length);
@@ -88,8 +88,7 @@ void Packet::Append(const char *buffer, int length) {
 
 void Packet::Append(const Packet &data) {
 	if (data.mData.size() > 100000)
-		g_Log.AddMessageFormat("[CRITICAL] Append(&data) bytecount: %d",
-				data.mData.size());
+		g_Logs.server->error("Append(&data) bytecount: %v",	data.mData.size());
 
 	if (mData.size() == 0)
 		mData.assign(data.mData);
@@ -103,9 +102,9 @@ void Packet::Clear(void) {
 
 void Packet::TrimFront(size_t byteCount) {
 	if (byteCount > 100000)
-		g_Log.AddMessageFormat("[CRITICAL] TrimFront bytecount: %d", byteCount);
+		g_Logs.server->error("TrimFront bytecount: %v", byteCount);
 	if (mData.size() > 100000)
-		g_Log.AddMessageFormat("[CRITICAL] TrimFront mData.size: %d",
+		g_Logs.server->error("TrimFront mData.size: %v",
 				mData.size());
 	mData.erase(0, byteCount);
 }
@@ -177,7 +176,7 @@ void PacketManager::ShutdownThread(void) {
 
 void PacketManager::AddOutgoingPacket2(int socket, const Packet &data) {
 	if (data.mData.size() == 0) {
-		g_Log.AddMessageFormat("Cannot add packet of zero size.");
+		g_Logs.server->error("Cannot add packet of zero size.");
 		return;
 	}
 
@@ -185,13 +184,13 @@ void PacketManager::AddOutgoingPacket2(int socket, const Packet &data) {
 	if (pSock != NULL) {
 		pSock->mPacketList.push_back(data);
 	} else
-		g_Log.AddMessageFormat("Could not retrieve a PendingSocket object.");
+		g_Logs.server->error("Could not retrieve a PendingSocket object.");
 }
 
 void PacketManager::ExternalAddPacket(int socket, const char *data,
 		int length) {
 	if (length == 0) {
-		g_Log.AddMessageFormat("Cannot add packet of zero size.");
+		g_Logs.server->error("Cannot add packet of zero size.");
 		return;
 	}
 
@@ -203,7 +202,7 @@ void PacketManager::ExternalAddPacket(int socket, const char *data,
 	if (pSock != NULL)
 		pSock->mPacketList.push_back(packet); //Clustering will be performed when the thread grabs and sorts this pending data.
 	else
-		g_Log.AddMessageFormat("Could not retrieve a PendingSocket object.");
+		g_Logs.server->error("Could not retrieve a PendingSocket object.");
 	ReleaseThread();
 }
 
@@ -270,8 +269,7 @@ void PacketManager::SendPackets2(void) {
 			//If we get here, it had a serious failure or it succeeded.
 			//Either way, we're done with the data, so it can be erased.
 			if (res == SEND_FAILED) {
-				g_Log.AddMessageFormat("[SOCKET] Disconnecting Socket:%d",
-						it->mSocket);
+				g_Logs.server->error("Disconnecting Socket:%v", it->mSocket);
 				SocketClass::DisconnectClient(it->mSocket);
 			}
 			mSendData.erase(it++);
@@ -281,7 +279,7 @@ void PacketManager::SendPackets2(void) {
 
 int PacketManager::SendSocket(int socket, PendingSocket &socketData) {
 	if (socketData.mPacketList.size() == 0) {
-		g_Log.AddMessageFormat("[SOCKET] No data");
+		g_Logs.server->error("No socket data");
 		return SEND_DATA;
 	}
 
@@ -334,8 +332,7 @@ int PacketManager::SendSocket(int socket, PendingSocket &socketData) {
 			if (derror.mCurrent.mPartialEventCount
 					% g_Config.DebugPacketSendTrigger == 0) {
 				if (g_Config.DebugPacketSendMessage == true)
-					g_Log.AddMessageFormat(
-							"[SOCKET] Socket:%d failing to send (%d/%d), %d bytes remaining in %d packets",
+					g_Logs.server->error("Socket:%v failing to send (%v/%v), %v bytes remaining in %v packets",
 							socketData.mSocket, sendRes, size,
 							socketData.DebugGetPendingSize(),
 							socketData.mPacketList.size());
@@ -376,7 +373,7 @@ int PacketManager::AttemptSend2(int socket, const char *buffer, int length) {
 #endif
 			//Not a wait/block error, could be an invalid socket or something else
 			//important.
-			g_Log.AddMessageFormat("[SOCKET] Unspecified error: %d",
+			g_Logs.server->error("Unspecified socket error: %v",
 					mLastError);
 			return -1;
 		}

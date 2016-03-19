@@ -1,6 +1,6 @@
 #include "ZoneObject.h"
 #include "FileReader.h"
-#include "StringList.h"
+
 #include <string.h>
 #include <math.h>
 #include "util/Log.h"

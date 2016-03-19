@@ -1,10 +1,11 @@
 #include "QuestAction.h"
-#include "StringList.h"
+
 #include "Util.h"
 #include "Stats.h"
 #include "Item.h"
 #include "Simulator.h"
 #include "Stats.h"
+#include "util/Log.h"
 
 namespace QuestCommand
 {
@@ -65,7 +66,7 @@ bool ExtendedQuestAction :: ResolveOperand(const std::string &token, int paramTy
 		paramStr = token;
 		return true;
 	default:
-		g_Log.AddMessageFormat("Unknown paramType:%d", paramType);
+		g_Logs.data->warn("Unknown paramType:%v", paramType);
 	}
 	return false;
 }
@@ -85,7 +86,7 @@ int ExtendedQuestAction :: GetComparator(const std::string &name)
 		if(name.compare(dataArr[i].name) == 0)
 			return dataArr[i].value;
 
-	g_Log.AddMessageFormat("Quest script comparator [%s] not recognized", name.c_str());
+	g_Logs.data->warn("Quest script comparator [%v] not recognized", name.c_str());
 	return COMP_NONE;
 }
 
@@ -111,13 +112,13 @@ bool ExtendedQuestAction :: InitCommand(const STRINGLIST &tokenList)
 	const QuestScriptCommandDef *cmd = GetCommandDef(tokenList[0]);
 	if(cmd == 0)
 	{
-		g_Log.AddMessageFormat("Quest command not recognized [%s]", tokenList[0].c_str());
+		g_Logs.data->warn("Quest command not recognized [%v]", tokenList[0].c_str());
 		return false;
 	}
 	size_t tokenCount = tokenList.size();
 	if(tokenCount != cmd->numParams + 1)  //First token is command itself
 	{
-		g_Log.AddMessageFormat("Expected [%d] arguments for command [%s]", cmd->numParams, cmd->name);
+		g_Logs.data->warn("Expected [%v] arguments for command [%v]", cmd->numParams, cmd->name);
 		return false;
 	}
 
@@ -170,7 +171,7 @@ void QuestActionContainer :: AddCommand(const std::string &command)
 	Util::TokenizeByWhitespace(command, tokens);
 	if(tokens.size() == 0)
 	{
-		g_Log.AddMessageFormat("No tokens in command.");
+		g_Logs.data->warn("No tokens in command.");
 		return;
 	}
 	ExtendedQuestAction inst;
@@ -301,13 +302,13 @@ int QuestActionContainer :: ExecuteSingleCommand(SimulatorThread *caller, Extend
 	case ACTION_TRANSFORM:
 		{
 			int creatureDefID = e.param[0];
-			g_Log.AddMessageFormat("Transform: %d", creatureDefID);
+			g_Logs.data->debug("Transform: %v", creatureDefID);
 			cInst->CAF_Transform(creatureDefID, 0, -1);
 		}
 		break;
 	case ACTION_UNTRANSFORM:
 		{
-			g_Log.AddMessageFormat("Untransform");
+			g_Logs.data->debug("Untransform");
 			cInst->CAF_Untransform();
 		}
 		break;

@@ -4,7 +4,7 @@
 #include "Util.h"
 #include "Item.h"
 #include "FileReader.h"
-#include "StringList.h"
+
 #include <string.h>
 #include "util/Log.h"
 
@@ -216,7 +216,7 @@ void EssenceShopContainer :: LoadFromFile(char *filename)
 	FileReader lfr;
 	if(lfr.OpenText(filename) != Err_OK)
 	{
-		g_Log.AddMessageFormat("[NOTICE] EssenceShop file [%s] not found.", filename);
+		g_Logs.data->error("EssenceShop file [%v] not found.", filename);
 		return;
 	}
 

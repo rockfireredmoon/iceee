@@ -135,7 +135,7 @@ int CreditShopEditHandler::handleQuery(SimulatorThread *sim,
 		else {
 			// TODO remove
 			if (g_CreditShopManager.RemoveItem(id)) {
-				g_Log.AddMessageFormat("Removed credit shop item %d",
+				g_Logs.event->info("[CS] Removed credit shop item %v",
 						item->mId);
 				return PrepExt_QueryResponseString(sim->SendBuf, query->ID,
 						"OK");

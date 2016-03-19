@@ -1,7 +1,7 @@
 #include "Mail.h"
 #include "FileReader.h"
 #include "Util.h"
-#include "StringList.h"
+
 #include "Config.h"
 #include <string.h>
 #include <curl/curl.h>

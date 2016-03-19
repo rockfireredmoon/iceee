@@ -16,9 +16,10 @@
  */
 
 #include "TAWClient.h"
-#include "../StringList.h"
+
 #include <sstream>
 #include <iostream>
+#include "../util/Log.h"
 
 //
 // TAWClient
@@ -39,7 +40,7 @@ bool TAWClient::getAccountByName(std::string accountName, AccountData &account) 
 		Json::Reader reader;
 		bool parsingSuccessful = reader.parse( readBuffer.c_str(), root );
 		if ( !parsingSuccessful) {
-			g_Log.AddMessageFormat("Failed to parse JSON account data for %d (on %s)", accountName.c_str(), completeUrl.str().c_str());
+			g_Logs.http->error("Failed to parse JSON account data for %v (on %v)", accountName.c_str(), completeUrl.str().c_str());
 			return false;
 		}
 		account.ReadFromJSON(root);
@@ -58,7 +59,7 @@ bool TAWClient::getScenery(int zoneID, SceneryPage &page) {
 		Json::Reader reader;
 		bool parsingSuccessful = reader.parse( readBuffer.c_str(), root );
 		if ( !parsingSuccessful) {
-			g_Log.AddMessageFormat("Failed to parse JSON scenery data for %d (on %s)", zoneID, completeUrl.str().c_str());
+			g_Logs.http->error("Failed to parse JSON scenery data for %v (on %v)", zoneID, completeUrl.str().c_str());
 			return false;
 		}
 		Json::Value objects = root["objects"];
@@ -84,7 +85,7 @@ bool TAWClient::getZone(int zoneID, ZoneDefInfo &zone, std::vector<SceneryPageKe
 		Json::Reader reader;
 		bool parsingSuccessful = reader.parse( readBuffer.c_str(), root );
 		if ( !parsingSuccessful) {
-			g_Log.AddMessageFormat("Failed to parse JSON zone data for %d (on %s)", zoneID, completeUrl.str().c_str());
+			g_Logs.http->error("Failed to parse JSON zone data for %v (on %v)", zoneID, completeUrl.str().c_str());
 			return false;
 		}
 		zone.ReadFromJSON(root);
@@ -112,7 +113,7 @@ bool TAWClient::enumerateGroves(int accountID, std::vector<ZoneDefInfo> &zones) 
 		Json::Reader reader;
 		bool parsingSuccessful = reader.parse( readBuffer.c_str(), root );
 		if ( !parsingSuccessful) {
-			g_Log.AddMessageFormat("Failed to parse JSON account data for %d (on %s)", accountID, completeUrl.str().c_str());
+			g_Logs.http->error("Failed to parse JSON account data for %v (on %v)", accountID, completeUrl.str().c_str());
 			return false;
 		}
 		for(Json::Value::iterator it = root.begin(); it != root.end(); ++it) {

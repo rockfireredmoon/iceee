@@ -4,7 +4,7 @@ default static item database.
 
 #include "VirtualItem.h"
 #include "Util.h"
-#include "StringList.h"
+
 #include "DropTable.h"
 #include "InstanceScale.h"
 #include <string.h>

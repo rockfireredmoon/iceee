@@ -29,6 +29,9 @@
 #include "../IGForum.h"
 #include "../Ability2.h"
 #include "../Fun.h"
+#include "../InstanceScript.h"
+#include "../AIScript.h"
+#include "../AIScript2.h"
 
 //
 //AbstractCommandHandler
@@ -2982,4 +2985,180 @@ int WarpExternalHandler::handleCommand(SimulatorThread *sim,
 	return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 			"Target not found.");
 }
+
+//
+// ScriptExecHandler
+//
+
+ScriptExecHandler::ScriptExecHandler() :
+		AbstractCommandHandler(
+				"Usage: /script.exec <function> [<arg1> [<arg2> ..]]", 1) {
+}
+
+int ScriptExecHandler::handleCommand(SimulatorThread *sim,
+		CharacterServerData *pld, SimulatorQuery *query,
+		CreatureInstance *creatureInstance) {
+	bool ok = sim->CheckPermissionSimple(Perm_Account, Permission_Admin);
+	if (!ok) {
+		if (pld->zoneDef->mGrove == true
+				&& pld->zoneDef->mAccountID != pld->accPtr->ID)
+			ok = true;
+	}
+	if (!ok)
+		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+				"Permission denied.");
+	ActiveInstance *inst = creatureInstance->actInst;
+	string funcName = query->GetString(0);
+	if (inst->nutScriptPlayer != NULL) {
+		std::vector<ScriptCore::ScriptParam> p;
+		for (unsigned int i = 1; i < query->argCount; i++) {
+			p.push_back(ScriptCore::ScriptParam(query->GetString(i)));
+		}
+		inst->nutScriptPlayer->JumpToLabel(funcName.c_str(), p);
+	}
+	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
+}
+
+ScriptTimeHandler::ScriptTimeHandler() :
+		AbstractCommandHandler("Usage: /script.time", 0) {
+	mAllowedPermissions.push_back(Permission_Sage);
+	mAllowedPermissions.push_back(Permission_Admin);
+}
+
+int ScriptTimeHandler::handleCommand(SimulatorThread *sim,
+		CharacterServerData *pld, SimulatorQuery *query,
+		CreatureInstance *creatureInstance) {
+	ActiveInstance *inst = creatureInstance->actInst;
+	if (inst != NULL) {
+		double seconds;
+		if (inst->nutScriptPlayer != NULL) {
+			seconds = (double) inst->nutScriptPlayer->mProcessingTime / 1000.0;
+			Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1),
+					"S Instance: %4.3f (%ul,%u,%ul). %s", seconds,
+					inst->nutScriptPlayer->mInitTime,
+					inst->nutScriptPlayer->mCalls,
+					inst->nutScriptPlayer->mGCTime,
+					inst->nutScriptPlayer->mActive ? "Active" : "Inactive");
+			sim->SendInfoMessage(sim->Aux1, INFOMSG_INFO);
+		}
+		if (inst->scriptPlayer != NULL) {
+			seconds = (double) inst->scriptPlayer->mProcessingTime / 1000.0;
+			Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1),
+					"T Instance: %4.3f. %s", seconds,
+					inst->scriptPlayer->mActive ? "Active" : "Inactive");
+			sim->SendInfoMessage(sim->Aux1, INFOMSG_INFO);
+		}
+
+		ActiveInstance::CREATURE_IT it;
+		for (it = inst->NPCList.begin(); it != inst->NPCList.end(); ++it) {
+			AINutPlayer *player = it->second.aiNut;
+			if (player != NULL) {
+				seconds = (double) player->mProcessingTime / 1000.0;
+				Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1),
+						"S CID: %d (%s) %4.3f (%ul,%u,%ul)", it->first,
+						it->second.css.display_name, seconds, player->mInitTime,
+						player->mCalls, player->mGCTime);
+				sim->SendInfoMessage(sim->Aux1, INFOMSG_INFO);
+			}
+
+			AIScriptPlayer *tPlayer = it->second.aiScript;
+			if (tPlayer != NULL) {
+				seconds = (double) tPlayer->mProcessingTime / 1000.0;
+				Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1),
+						"T CID: %d (%s) %4.3f", it->first,
+						it->second.css.display_name, seconds);
+				sim->SendInfoMessage(sim->Aux1, INFOMSG_INFO);
+			}
+		}
+	}
+	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
+}
+
+ScriptWakeVMHandler::ScriptWakeVMHandler() :
+		AbstractCommandHandler("Usage: /script.wakevm", 0) {
+	mAllowedPermissions.push_back(Permission_Sage);
+	mAllowedPermissions.push_back(Permission_Admin);
+}
+
+int ScriptWakeVMHandler::handleCommand(SimulatorThread *sim,
+		CharacterServerData *pld, SimulatorQuery *query,
+		CreatureInstance *creatureInstance) {
+	ActiveInstance *inst = creatureInstance->actInst;
+	if (inst != NULL) {
+		if (inst->nutScriptPlayer != NULL) {
+			Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1),
+					"Woken VM for %s: %s", inst->nutScriptDef.mDescription.c_str(),
+					inst->nutScriptPlayer->WakeVM("By User") ? "Woke OK" : "Did not wake");
+			sim->SendInfoMessage(sim->Aux1, INFOMSG_INFO);
+		}
+
+		ActiveInstance::CREATURE_IT it;
+		for (it = inst->NPCList.begin(); it != inst->NPCList.end(); ++it) {
+			AINutPlayer *player = it->second.aiNut;
+			if (player != NULL) {
+				Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1),
+						"CID: %d (%s) collected", it->first,
+						it->second.css.display_name, player->GC());
+				sim->SendInfoMessage(sim->Aux1, INFOMSG_INFO);
+			}
+		}
+	}
+	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
+}
+
+ScriptGCHandler::ScriptGCHandler() :
+		AbstractCommandHandler("Usage: /script.gc", 0) {
+	mAllowedPermissions.push_back(Permission_Sage);
+	mAllowedPermissions.push_back(Permission_Admin);
+}
+
+int ScriptGCHandler::handleCommand(SimulatorThread *sim,
+		CharacterServerData *pld, SimulatorQuery *query,
+		CreatureInstance *creatureInstance) {
+	ActiveInstance *inst = creatureInstance->actInst;
+	if (inst != NULL) {
+		if (inst->nutScriptPlayer != NULL) {
+			Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1),
+					"Instance script collected %d objects",
+					inst->nutScriptPlayer->GC());
+			sim->SendInfoMessage(sim->Aux1, INFOMSG_INFO);
+		}
+
+		ActiveInstance::CREATURE_IT it;
+		for (it = inst->NPCList.begin(); it != inst->NPCList.end(); ++it) {
+			AINutPlayer *player = it->second.aiNut;
+			if (player != NULL) {
+				Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1),
+						"CID: %d (%s) collected", it->first,
+						it->second.css.display_name, player->GC());
+				sim->SendInfoMessage(sim->Aux1, INFOMSG_INFO);
+			}
+		}
+	}
+	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
+}
+
+
+ScriptClearQueueHandler::ScriptClearQueueHandler() :
+		AbstractCommandHandler("Usage: /script.clearqueue", 0) {
+	mAllowedPermissions.push_back(Permission_Sage);
+	mAllowedPermissions.push_back(Permission_Admin);
+}
+
+int ScriptClearQueueHandler::handleCommand(SimulatorThread *sim,
+		CharacterServerData *pld, SimulatorQuery *query,
+		CreatureInstance *creatureInstance) {
+	ActiveInstance *inst = creatureInstance->actInst;
+	if (inst != NULL) {
+		if (inst->nutScriptPlayer != NULL) {
+			Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1),
+					"Instance script cleared of %d queue events",
+					inst->nutScriptPlayer->ClearQueue());
+			sim->SendInfoMessage(sim->Aux1, INFOMSG_INFO);
+		}
+
+	}
+	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
+}
+
 

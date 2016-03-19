@@ -3,7 +3,7 @@
 #endif
 #include "AIScript.h"
 #include "FileReader.h"
-#include "StringList.h"
+
 #include "Instance.h"
 #include "Creature.h"
 #include "Ability2.h"
@@ -112,7 +112,7 @@ void AIScriptPlayer :: RunImplementationCommands(int opcode)
 			if(g_Config.DebugLogAIScriptUse == true)
 			{
 				const Ability2::AbilityEntry2* abptr = g_AbilityManager.GetAbilityPtrByID(in->param1);
-				g_Log.AddMessageFormat("Using: %s", abptr->GetRowAsCString(Ability2::ABROW::NAME));
+				g_Logs.script->debug("Using: %v", abptr->GetRowAsCString(Ability2::ABROW::NAME));
 			}
 			//END DEBUG OUTPUT
 
@@ -128,7 +128,7 @@ void AIScriptPlayer :: RunImplementationCommands(int opcode)
 				if(g_Config.DebugLogAIScriptUse == true)
 				{
 					const Ability2::AbilityEntry2* abptr = g_AbilityManager.GetAbilityPtrByID(in->param1);
-					g_Log.AddMessageFormat("Using: %s   Failed: %d", abptr->GetRowAsCString(Ability2::ABROW::NAME), g_AbilityManager.GetAbilityErrorCode(r));
+					g_Logs.script->debug("Using: %v   Failed: %v", abptr->GetRowAsCString(Ability2::ABROW::NAME), g_AbilityManager.GetAbilityErrorCode(r));
 				}
 
 				if(attachedCreature->AIAbilityFailureAllowRetry(r) == true)
@@ -426,7 +426,7 @@ int AIScriptManager :: LoadScripts(void)
 	FileReader lfr;
 	if(lfr.OpenText(FileName) != Err_OK)
 	{
-		g_Log.AddMessageFormat("Error opening master script list [%s]", FileName);
+		g_Logs.data->error("Error opening master script list [%v]", FileName);
 		return -1;
 	}
 
@@ -444,7 +444,7 @@ int AIScriptManager :: LoadScripts(void)
 		}
 	}
 	lfr.CloseCurrent();
-	g_Log.AddMessageFormat("Loaded %d AI Scripts", aiDef.size());
+	g_Logs.data->info("Loaded %v AI Scripts", aiDef.size());
 
 	return 0;
 }

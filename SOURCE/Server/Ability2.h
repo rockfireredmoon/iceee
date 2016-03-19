@@ -854,4 +854,5 @@ public:
 extern Ability2::AbilityManager2 g_AbilityManager;
 
 
+
 #endif //#ifndef ABILITY2_H

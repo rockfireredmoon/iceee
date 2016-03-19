@@ -21,7 +21,7 @@
 #include <squirrel.h>
 
 #include "../json/json.h"
-#include "../StringList.h"
+
 #include "../Config.h"
 #include "../sqrat.h"
 

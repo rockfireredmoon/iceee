@@ -493,4 +493,39 @@ public:
 	int handleCommand(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
 };
 
+class ScriptExecHandler : public AbstractCommandHandler {
+public:
+	ScriptExecHandler();
+	~ScriptExecHandler() {};
+	int handleCommand(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
+};
+
+class ScriptTimeHandler : public AbstractCommandHandler {
+public:
+	ScriptTimeHandler();
+	~ScriptTimeHandler() {};
+	int handleCommand(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
+};
+
+class ScriptWakeVMHandler : public AbstractCommandHandler {
+public:
+	ScriptWakeVMHandler();
+	~ScriptWakeVMHandler() {};
+	int handleCommand(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
+};
+
+class ScriptGCHandler : public AbstractCommandHandler {
+public:
+	ScriptGCHandler();
+	~ScriptGCHandler() {};
+	int handleCommand(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
+};
+
+class ScriptClearQueueHandler : public AbstractCommandHandler {
+public:
+	ScriptClearQueueHandler();
+	~ScriptClearQueueHandler() {};
+	int handleCommand(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
+};
+
 #endif

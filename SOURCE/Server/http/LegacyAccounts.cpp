@@ -19,7 +19,7 @@
 #include "../Config.h"
 #include "../Util.h"
 #include "../Account.h"
-#include "../StringList.h"
+
 #include <vector>
 
 using namespace HTTPD;

@@ -1,13 +1,14 @@
 #include "Crafting.h"
 
 #include "Item.h"
-#include "StringList.h"
+
 #include "Util.h"
 #include "stdio.h"
 #include "FileReader3.h"
 #include <algorithm>
 #include "DirectoryAccess.h"
 #include "ScriptCore.h"
+#include "util/Log.h"
 
 /*
 
@@ -102,7 +103,7 @@ void CraftManager::LoadData(void)
 	Platform::GenerateFilePath(filename, "Data", "CraftDef.txt");
 	LoadRecipeFile(filename.c_str());
 
-	g_Log.AddMessageFormat("Loaded %d crafting recipes.", mRecipes.size());
+	g_Logs.data->info("Loaded %v crafting recipes.", mRecipes.size());
 }
 
 void CraftManager::LoadRecipeFile(const char *filename)
@@ -110,7 +111,7 @@ void CraftManager::LoadRecipeFile(const char *filename)
 	FileReader3 fr;
 	if(fr.OpenFile(filename) != FileReader3::SUCCESS)
 	{
-		g_Log.AddMessageFormat("Error opening crafting recipe file:%s", filename);
+		g_Logs.data->error("Error opening crafting recipe file:%v", filename);
 		return;
 	}
 	fr.SetCommentChar(';');
@@ -259,7 +260,7 @@ bool CraftManager::CheckCondition(const STRINGVECTOR &conditions, const std::vec
 		}
 		else
 		{
-			g_Log.AddMessageFormat("[ERROR] CraftManager::CheckCondition unknown condition [%s]", op);
+			g_Logs.server->error("CraftManager::CheckCondition unknown condition [%v]", op);
 		}
 	}
 	if(passed == conditions.size())
@@ -329,7 +330,7 @@ void CraftManager::GenerateOutputs(const CraftRecipe *recipe, std::vector<CraftI
 		}
 		else
 		{
-			g_Log.AddMessageFormat("[ERROR] CraftManager::CheckCondition unknown action [%s]", args[0].c_str());
+			g_Logs.server->error("CraftManager::CheckCondition unknown action [%v]", args[0].c_str());
 		}
 	}
 }
@@ -360,7 +361,7 @@ int CraftManager::GetProperty(const CraftInputSlot &object, const char *property
 	if(strcmp(propertyName, "armortype") == 0) return object.mItemDef->mArmorType;
 	if(strcmp(propertyName, "equiptype") == 0) return object.mItemDef->mEquipType;
 	
-	g_Log.AddMessageFormat("[ERROR] CraftManager::GetProperty unknown propert name [%s]", propertyName);
+	g_Logs.server->error("CraftManager::GetProperty unknown propert name [%v]", propertyName);
 	return INVALID_PROPERTY;
 }
 

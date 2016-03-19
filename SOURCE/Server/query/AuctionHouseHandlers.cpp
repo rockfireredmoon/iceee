@@ -437,13 +437,13 @@ int AuctionHouseBuyHandler::handleQuery(SimulatorThread *sim,
 	if(sellerInstance == NULL) {
 		sellerCharacterData = g_CharacterManager.RequestCharacter(item->mSeller, true);
 		if(sellerCharacterData == NULL) {
-			g_Log.AddMessageFormat("[WARNING] Seller of auction item, no longer exists. Received copper and credits go to /dev/null!");
+			g_Logs.simulator->warn("Seller of auction item, no longer exists. Received copper and credits go to /dev/null!");
 		}
 		else {
 			sellerCss = &sellerCharacterData->cdef.css;
 			sellerAccount = g_AccountManager.FetchIndividualAccount(sellerCharacterData->AccountID);
 			if(sellerAccount == NULL) {
-				g_Log.AddMessageFormat("[WARNING] Seller of auction item, no longer exists. Received copper and credits go to /dev/null!");
+				g_Logs.simulator->warn("Seller of auction item, no longer exists. Received copper and credits go to /dev/null!");
 			}
 		}
 	}

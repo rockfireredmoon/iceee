@@ -3,7 +3,7 @@
 #include "Util.h"
 #include "FileReader.h"
 #include "DirectoryAccess.h"
-#include "StringList.h"
+
 #include "Item.h"
 #include <string.h>
 #include "util/Log.h"
@@ -243,11 +243,10 @@ int CreditShopManager::ValidateItem(CreditShopItem *csItem, AccountData *accPtr,
 
 bool CreditShopManager::SaveItem(CreditShopItem * item) {
 	std::string path = GetPath(item->mId);
-	g_Log.AddMessageFormat("Saving credit shop item to %s.", path.c_str());
+	g_Logs.data->info("Saving credit shop item to %v.", path.c_str());
 	FILE *output = fopen(path.c_str(), "wb");
 	if (output == NULL) {
-		g_Log.AddMessageFormat("[ERROR] Saving petition could not open: %s",
-				path.c_str());
+		g_Logs.data->error("Saving petition could not open: %v", path.c_str());
 		return false;
 	}
 
@@ -294,7 +293,7 @@ bool CreditShopManager::SaveItem(CreditShopItem * item) {
 CreditShopItem * CreditShopManager::LoadItem(int id) {
 	std::string buf = GetPath(id);
 	if (!Platform::FileExists(buf.c_str())) {
-		g_Log.AddMessageFormat("No file for CS item [%s]", buf.c_str());
+		g_Logs.data->error("No file for CS item [%v]", buf.c_str());
 		return NULL;
 	}
 
@@ -302,7 +301,7 @@ CreditShopItem * CreditShopManager::LoadItem(int id) {
 
 	FileReader lfr;
 	if (lfr.OpenText(buf.c_str()) != Err_OK) {
-		g_Log.AddMessageFormat("Could not open file [%s]", buf.c_str());
+		g_Logs.data->error("Could not open file [%v]", buf.c_str());
 		return NULL;
 	}
 
@@ -319,8 +318,8 @@ CreditShopItem * CreditShopManager::LoadItem(int id) {
 		if (r > 0) {
 			if (strcmp(lfr.SecBuffer, "[ENTRY]") == 0) {
 				if (item->mId != 0) {
-					g_Log.AddMessageFormat(
-							"[WARNING] %s contains multiple entries. CS items have one entry per file",
+					g_Logs.data->warn(
+							"%v contains multiple entries. CS items have one entry per file",
 							buf.c_str());
 					break;
 				}
@@ -363,7 +362,7 @@ CreditShopItem * CreditShopManager::LoadItem(int id) {
 			else if (strcmp(lfr.SecBuffer, "QUANTITYSOLD") == 0)
 				item->mQuantitySold = lfr.BlockToIntC(1);
 			else
-				g_Log.AddMessageFormat("Unknown identifier [%s] in file [%s]",
+				g_Logs.data->error("Unknown identifier [%v] in file [%v]",
 						lfr.SecBuffer, buf.c_str());
 		}
 	}
@@ -387,7 +386,7 @@ CreditShopItem * CreditShopManager::LoadItem(int id) {
 bool CreditShopManager::RemoveItem(int id) {
 	const char * path = GetPath(id).c_str();
 	if (!Platform::FileExists(path)) {
-		g_Log.AddMessageFormat("No file for CS item [%s] to remove", path);
+		g_Logs.data->error("No file for CS item [%v] to remove", path);
 		return false;
 	}
 	cs.Enter("CreditShopManager::RemoveItem");
@@ -402,7 +401,7 @@ bool CreditShopManager::RemoveItem(int id) {
 	Platform::FixPaths(buf);
 	if (!Platform::FileExists(buf) || remove(buf) == 0) {
 		if (!rename(path, buf) == 0) {
-			g_Log.AddMessageFormat("Failed to remove credit shop item %d", id);
+			g_Logs.data->error("Failed to remove credit shop item %v", id);
 			return false;
 		}
 	}
@@ -434,7 +433,7 @@ int CreditShopManager::LoadItems(void) {
 		std::string p = *it;
 		if (Util::HasEnding(p, ".txt")) {
 			CreditShopItem *item = LoadItem(atoi(Platform::Basename(p.c_str()).c_str()));
-			g_Logs.data->info("Credit shop item %v (item ID %v)", item->mId, item->mItemId);
+			g_Logs.data->debug("Credit shop item %v (item ID %v)", item->mId, item->mItemId);
 			if(item != NULL) {
 				if(item->mId >= nextMarketItemID) {
 					nextMarketItemID = item->mId + 1;

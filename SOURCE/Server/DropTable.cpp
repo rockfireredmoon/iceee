@@ -1,13 +1,14 @@
 #include "Config.h"
 #include "DropTable.h"
 #include "FileReader.h"
-#include "StringList.h"
+
 #include "DirectoryAccess.h"
 #include "ByteBuffer.h"
 #include "Util.h" //For randint()
 #include "Item.h"
 #include <algorithm>
 #include <string.h>
+#include "util/Log.h"
 
 
 DropTableManager g_DropTableManager;
@@ -129,7 +130,7 @@ void ActiveLootContainer :: AddItem(int itemID)
 	//Sanity check.  Too many items can cause buffer overflows when writing packet data.
 	if(itemList.size() > 16)
 	{
-		g_Log.AddMessageFormat("[ERROR] Too many items added to container.");
+		g_Logs.data->error("Too many items added to container.");
 		return;
 	}
 	if(itemID > 0)
@@ -226,7 +227,7 @@ void ActiveLootContainer :: Greed(int itemId, int looterCreatureId)
 		greeded[itemId] = a;
 	}
 	greeded[itemId].insert(looterCreatureId);
-	g_Log.AddMessageFormat("Creature %d greeded item %d, meaning there are now %d decisions on this item", looterCreatureId, itemId, Count(itemId, &greeded));
+	g_Logs.server->debug("Creature %v greeded item %v, meaning there are now %v decisions on this item", looterCreatureId, itemId, Count(itemId, &greeded));
 }
 
 void ActiveLootContainer :: Need(int itemId, int looterCreatureId)
@@ -236,7 +237,7 @@ void ActiveLootContainer :: Need(int itemId, int looterCreatureId)
 		needed[itemId] = a;
 	}
 	needed[itemId].insert(looterCreatureId);
-	g_Log.AddMessageFormat("Creature %d needed item %d, meaning there are now %d decisions on this item", looterCreatureId, itemId, Count(itemId, &needed));
+	g_Logs.server->debug("Creature %v needed item %v, meaning there are now %v decisions on this item", looterCreatureId, itemId, Count(itemId, &needed));
 }
 
 void ActiveLootContainer :: Pass(int itemId, int looterCreatureId)
@@ -246,7 +247,7 @@ void ActiveLootContainer :: Pass(int itemId, int looterCreatureId)
 		passed[itemId] = a;
 	}
 	passed[itemId].insert(looterCreatureId);
-	g_Log.AddMessageFormat("Creature %d passed item %d, meaning there are now %d decisions on this item", looterCreatureId, itemId, Count(itemId, &passed));
+	g_Logs.server->debug("Creature %v passed item %v, meaning there are now %v decisions on this item", looterCreatureId, itemId, Count(itemId, &passed));
 }
 
 bool ActiveLootContainer :: IsPassed(int itemId, int looterCreatureId)
@@ -290,7 +291,7 @@ int ActiveLootContainer :: Count(int itemId, std::map<int, std::set<int> > * map
 
 void ActiveLootContainer :: RemoveAllRolls()
 {
-	g_Log.AddMessageFormat("Removing all rolls for loot creature %d", CreatureID);
+	g_Logs.server->debug("Removing all rolls for loot creature %v", CreatureID);
 	greeded.clear();
 	needed.clear();
 	passed.clear();
@@ -310,7 +311,7 @@ void ActiveLootContainer :: RemoveCreatureRolls(int itemId, int looterCreatureId
 
 void ActiveLootContainer ::  RemoveCreatureRollsFromMap(int itemId, int looterCreatureId, std::map<int, std::set<int> > *map)
 {
-	g_Log.AddMessageFormat("Removing rolls for item %d on creature %d", itemId, looterCreatureId);
+	g_Logs.server->debug("Removing rolls for item %v on creature %v", itemId, looterCreatureId);
 	std::map<int, set<int> >::iterator it = map->find(itemId);
 	if(it != map->end()) {
 		if(looterCreatureId == 0)
@@ -578,7 +579,7 @@ void DropTableManager :: LoadSetFile(const char *filename)
 	FileReader lfr;
 	if(lfr.OpenText(filename) != Err_OK)
 	{
-		g_Log.AddMessageFormat("[WARNING] Could not open file [%s]", filename);
+		g_Logs.data->error("Could not open file [%v]", filename);
 		return;
 	}
 	lfr.CommentStyle = Comment_Semi;
@@ -608,7 +609,7 @@ void DropTableManager :: LoadPackageFile(const char *filename)
 	FileReader lfr;
 	if(lfr.OpenText(filename) != Err_OK)
 	{
-		g_Log.AddMessageFormat("[WARNING] Could not open file [%s]", filename);
+		g_Logs.data->error("Could not open file [%v]", filename);
 		return;
 	}
 	lfr.CommentStyle = Comment_Semi;
@@ -638,7 +639,7 @@ void DropTableManager :: LoadCreatureFile(const char *filename)
 	FileReader lfr;
 	if(lfr.OpenText(filename) != Err_OK)
 	{
-		g_Log.AddMessageFormat("[WARNING] Could not open file [%s]", filename);
+		g_Logs.data->error("Could not open file [%v]", filename);
 		return;
 	}
 	lfr.CommentStyle = Comment_Semi;
@@ -672,10 +673,10 @@ void DropTableManager :: LoadData(void)
 	ResolveClassFlags();
 	ResolveAutotable();
 
-	g_Log.AddMessageFormat("Loaded %d Drop Sets.", mSet.size());
-	g_Log.AddMessageFormat("Loaded %d Drop Packages.", mPackage.size());
-	g_Log.AddMessageFormat("Loaded %d Drop Creatures.", mCreature.size());
-	g_Log.AddMessageFormat("Resolved %d Drop Levels.", mLevel.size());
+	g_Logs.data->info("Loaded %v Drop Sets.", mSet.size());
+	g_Logs.data->info("Loaded %v Drop Packages.", mPackage.size());
+	g_Logs.data->info("Loaded %v Drop Creatures.", mCreature.size());
+	g_Logs.data->info("Resolved %v Drop Levels.", mLevel.size());
 }
 
 //Resolves which item class (arbitrary drop rate or direct item mQualityLevel)
@@ -698,7 +699,7 @@ void DropTableManager :: ResolveClassFlags(void)
 			if(sit != mSet.end())
 				pit->second.mCombinedClassFlags |= sit->second.mClassFlag;
 			else
-				g_Log.AddMessageFormat("[WARNING] Drop Package [%s] contains an undefined set [%s]", pit->second.mName.c_str(), pit->second.mSetList[i].c_str());
+				g_Logs.data->warn("Drop Package [%v] contains an undefined set [%v]", pit->second.mName.c_str(), pit->second.mSetList[i].c_str());
 		}
 	}
 }
@@ -877,7 +878,7 @@ void DropTableManager :: RollDrops(const DropRollParameters& params, std::vector
 		queryResults.Filter(classOrder[i], filter);
 		if(filter.size() == 0)
 		{
-			g_Log.AddMessageFormat("[DROP] No sets found for class flag %d", classOrder[i]);
+			g_Logs.server->info("No sets found for class flag %v", classOrder[i]);
 			continue;
 		}
 
@@ -914,7 +915,7 @@ void DropTableManager :: AddSetQueryResult(const std::string &setOrPkgName, SetQ
 				output.AddSet(setit->second.mClassFlag, &setit->second);
 			}
 			else
-				g_Log.AddMessageFormat("[WARNING] Unknown set [%s] referenced by package [%s]", pkgit->second.mSetList[i].c_str(), pkgit->second.mName.c_str());
+				g_Logs.data->warn("Unknown set [%v] referenced by package [%v]", pkgit->second.mSetList[i].c_str(), pkgit->second.mName.c_str());
 		}
 	}
 }

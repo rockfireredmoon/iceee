@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "Stats.h"
-#include "StringList.h"
+
 #include "Util.h"
 #include "Config.h"
 #include "Globals.h"

@@ -17,7 +17,7 @@
 #include "DirectoryAccess.h"
 #include "FileReader.h"
 #include "Simulator.h"
-#include "StringList.h"
+
 #include "Util.h"
 #include "Config.h"
 #include "util/Log.h"
@@ -194,9 +194,17 @@ namespace ScriptCore
 
 	bool ResumeCallback::Execute()
 	{
+    	g_Logs.script->debug("Waking VM for script %v", mNut->def->scriptName);
 		sq_pushbool(mNut->vm, false);
-		sq_wakeupvm(mNut->vm, true, false, false, false);
-		return true;
+		if(SQ_SUCCEEDED(sq_wakeupvm(mNut->vm,SQTrue,SQFalse,SQFalse,SQFalse))) {
+			sq_pop(mNut->vm,1); //pop retval
+			if(sq_getvmstate(mNut->vm) == SQ_VMSTATE_IDLE) {
+				sq_settop(mNut->vm,1); //pop roottable
+			}
+			return true;
+		}
+
+		return false;
 	}
 
 	//
@@ -326,15 +334,18 @@ namespace ScriptCore
 		return sq_collectgarbage(vm);
 	}
 
-	void NutPlayer::ClearQueue() {
+	int NutPlayer::ClearQueue() {
+		int total = 0;
 		if(mHalting) {
-			g_Log.AddMessageFormat("[WARNING] Attempt to clear queue while halting in %s", def->scriptName.c_str());
+			g_Logs.script->warn("Attempt to clear queue while halting in %v", def->scriptName.c_str());
 		}
 		else if(mExecutingEvent != NULL) {
 			mClear = true;
 		}
 		else {
+			WakeVM("NutPlayer::ClearQueue");
 			std::vector<ScriptCore::NutScriptEvent*>::iterator it;
+			total += mQueue.size() + mQueueAdd.size() + mQueueInsert.size();
 			for(it = mQueue.begin(); it != mQueue.end(); ++it)
 				delete *it;
 			for(it = mQueueAdd.begin(); it != mQueueAdd.end(); ++it)
@@ -346,6 +357,7 @@ namespace ScriptCore
 			mQueueInsert.clear();
 			mQueueRemove.clear();
 		}
+		return total;
 	}
 
 	void NutPlayer::Initialize(NutDef *defPtr, std::string &errors) {
@@ -362,7 +374,7 @@ namespace ScriptCore
 
 		sqstd_seterrorhandlers(vm); //registers the default error handlers
 		sq_setprintfunc(vm, PrintFunc, Errorfunc); //sets the print function
-		g_Log.AddMessageFormat("Processing Squirrel script '%s'", def->mSourceFile.c_str());
+		g_Logs.script->info("Processing Squirrel script '%v'", def->mSourceFile.c_str());
 
 
 		/* Look for the compiled NUT file (.cnut). If it exists, test if the modification
@@ -384,26 +396,26 @@ namespace ScriptCore
 		Sqrat::Script script(vm);
 
 		if(cnutMod != nutMod) {
-			g_Log.AddMessageFormat("Recompiling Squirrel script '%s'", def->mSourceFile.c_str());
+			g_Logs.script->info("Recompiling Squirrel script '%v'", def->mSourceFile.c_str());
 			script.CompileFile(_SC(def->mSourceFile), errors);
 		}
 		else {
-			g_Log.AddMessageFormat("Loading existing Squirrel script bytecode for '%s'", cnut.c_str());
+			g_Logs.script->info("Loading existing Squirrel script bytecode for '%v'", cnut.c_str());
 			script.CompileFile(_SC(cnut.c_str()), errors);
 		}
 
 		if (Sqrat::Error::Occurred(vm)) {
 			errors.append(Sqrat::Error::Message(vm).c_str());
-			g_Log.AddMessageFormat("Squirrel script  %s failed to compile. %s", def->mSourceFile.c_str(), Sqrat::Error::Message(vm).c_str());
+			g_Logs.script->error("Squirrel script %v failed to compile. %v", def->mSourceFile.c_str(), Sqrat::Error::Message(vm).c_str());
 		}
 		else {
 			if(cnutMod != nutMod) {
-				g_Log.AddMessageFormat("Writing Squirrel script bytecode for '%s' to '%s'", def->mSourceFile.c_str(), cnut.c_str());
+				g_Logs.script->info("Writing Squirrel script bytecode for '%v' to '%v'", def->mSourceFile.c_str(), cnut.c_str());
 				try {
 					script.WriteCompiledFile(cnut);
 				}
 				catch(int e) {
-					g_Log.AddMessageFormat("Failed to write Squirrel script bytecode for '%s' to '%s'. Err %d", def->mSourceFile.c_str(), cnut.c_str(), e);
+					g_Logs.script->error("Failed to write Squirrel script bytecode for '%v' to '%v'. Err %v", def->mSourceFile.c_str(), cnut.c_str(), e);
 				}
 				Platform::SetLastModified(cnut.c_str(), nutMod);
 			}
@@ -414,7 +426,7 @@ namespace ScriptCore
 			if (Sqrat::Error::Occurred(vm)) {
 				mActive = false;
 				errors.append(Sqrat::Error::Message(vm).c_str());
-				g_Log.AddMessageFormat("Squirrel script  %s failed to run. %s", def->mSourceFile.c_str(), Sqrat::Error::Message(vm).c_str());
+				g_Logs.script->error("Squirrel script %v failed to run. %v", def->mSourceFile.c_str(), Sqrat::Error::Message(vm).c_str());
 			}
 
 			// The script might have provided an info table
@@ -475,26 +487,39 @@ namespace ScriptCore
 	{
 		if(def->mQueueEvents) {
 
-//			g_Log.AddMessageFormat("[REMOVEME] Queue Jump to label %s in %s", name, def->scriptName.c_str());
+			g_Logs.script->debug("Queue Jump to label %v in %v", name, def->scriptName.c_str());
 			QueueAdd(new NutScriptEvent(new TimeCondition(0), new RunFunctionCallback(this, name, parms)));
 			return true;
 		}
 		else {
-//			g_Log.AddMessageFormat("[REMOVEME] Run Jump to label %s in %s", name, def->scriptName.c_str());
+			g_Logs.script->debug("Run Jump to label %v in %v", name, def->scriptName.c_str());
 			return RunFunction(name, parms, true);
 		}
 	}
 
 	void NutPlayer::Exec(Sqrat::Function function) {
-		QueueAdd(new ScriptCore::NutScriptEvent(
-					new ScriptCore::TimeCondition(g_Config.SquirrelQueueSpeed / def->mScriptSpeed),
-					new ScriptCore::SquirrelFunctionCallback(this, function)));
+		if(def == NULL) {
+			g_Logs.script->error("Exec when there is no script def!");
+		}
+		else {
+			unsigned long spd = g_Config.SquirrelQueueSpeed / def->mScriptSpeed;
+			g_Logs.script->debug("Queueing call (exec) in %v in %v", def->scriptName.c_str(), spd);
+			QueueAdd(new ScriptCore::NutScriptEvent(
+						new ScriptCore::TimeCondition(spd),
+						new ScriptCore::SquirrelFunctionCallback(this, function)));
+		}
 	}
 
 	void NutPlayer::Queue(Sqrat::Function function, int fireDelay) {
-		QueueAdd(new ScriptCore::NutScriptEvent(
-					new ScriptCore::TimeCondition(fireDelay),
-					new ScriptCore::SquirrelFunctionCallback(this, function)));
+		if(def == NULL) {
+			g_Logs.script->error("Exec when there is no script def!");
+		}
+		else {
+			g_Logs.script->debug("Queueing call in %v in %v", def->scriptName.c_str(), fireDelay);
+			QueueAdd(new ScriptCore::NutScriptEvent(
+						new ScriptCore::TimeCondition(fireDelay),
+						new ScriptCore::SquirrelFunctionCallback(this, function)));
+		}
 	}
 
 	void NutPlayer::RegisterFunctions() { }
@@ -635,15 +660,17 @@ namespace ScriptCore
 	void NutPlayer :: HaltExecution(void)
 	{
 		if(mHalting) {
-			g_Log.AddMessageFormat("[WARNING] Attempt to halt halting script %s.", def->mSourceFile.c_str());
+			g_Logs.script->warn("Attempt to halt halting script %v.", def->mSourceFile.c_str());
 			return;
 		}
 		if(!mActive) {
-			g_Log.AddMessageFormat("[WARNING] Attempt to halt inactive script %s.", def->mSourceFile.c_str());
+			g_Logs.script->info("Attempt to halt inactive script %v.", def->mSourceFile.c_str());
 			return;
 		}
 
 		if(mRunning) {
+			g_Logs.script->debug("Queueing halt of VM [%v]", def->scriptName.c_str());
+
 			/* If we reached here via a script function, we already executing and don't want to close the VM.
 			 * In this case the halt is queued instance
 			 */
@@ -668,6 +695,7 @@ namespace ScriptCore
 
 	void NutPlayer::HaltVM() {
 		if(mActive) {
+			g_Logs.script->debug("Halting VM [%v] for ", def->scriptName.c_str());
 			vector<ScriptParam> v;
 //			g_Log.AddMessageFormat("[REMOVEME] Halting VM");
 			RunFunction("on_halt", v, true);
@@ -680,10 +708,14 @@ namespace ScriptCore
 //			g_Log.AddMessageFormat("[REMOVEME] Halted VM for %s", def->scriptName.c_str());
 			if(def->HasFlag(NutDef::FLAG_REPORT_END))
 				g_Logs.script->info("Script [%v] has ended", def->scriptName.c_str());
+			else
+				g_Logs.script->debug("Script [%v] has ended", def->scriptName.c_str());
 //			else
 //				g_Log.AddMessageFormat("[REMOVEME] VM Halted!");
 			HaltedDerived();
 		}
+		else
+			g_Logs.script->debug("Request to halt an inactive VM [%v]", def->scriptName.c_str());
 	}
 
 	bool NutPlayer::RunFunction(std::string name, std::vector<ScriptParam> parms, bool time) {
@@ -695,19 +727,14 @@ namespace ScriptCore
 //		g_Log.AddMessageFormat("[REMOVEME] Running function %s in %s (active: %s).", name.c_str(), def->mSourceFile.c_str(), mActive ? "yes" : "no");
 
 		if(!mActive) {
-			g_Log.AddMessageFormat("[WARNING] Attempt to run function on inactive script %s.", name.c_str());
+			g_Logs.script->warn("Attempt to run function on inactive script %v.", name.c_str());
 			return false;
 		}
 		unsigned long now = g_PlatformTime.getMilliseconds();
 		bool wasRunning = mRunning;
 		mRunning = true;
 
-		// Wake the VM up if it is suspend so the onFinish can be run
-		if(sq_getvmstate(vm) == SQ_VMSTATE_SUSPENDED) {
-			g_Log.AddMessageFormat("Waking up VM to run %s.", name.c_str());
-			sq_pushbool(vm, true);
-			sq_wakeupvm(vm, true, false, false, true);
-		}
+		WakeVM(name);
 
 		SQInteger top = sq_gettop(vm);
 		sq_pushroottable(vm);
@@ -728,7 +755,7 @@ namespace ScriptCore
 					sq_pushstring(vm,_SC(it->strValue.c_str()), it->strValue.size());
 					break;
 				default:
-					g_Log.AddMessageFormat("Unsupported parameter type for Squirrel script. %d", it->type);
+					g_Logs.script->error("Unsupported parameter type for Squirrel script. %v", it->type);
 					break;
 				}
 			}
@@ -750,6 +777,22 @@ namespace ScriptCore
 		return true;
 	}
 
+	bool NutPlayer :: WakeVM(std::string name) {
+
+		// Wake the VM up if it is suspend so the onFinish can be run
+		if(sq_getvmstate(vm) == SQ_VMSTATE_SUSPENDED) {
+			g_Logs.script->debug("Waking up VM to run %v.", name.c_str());
+			sq_pushbool(vm, true);
+			sq_throwerror(vm, _SC("Sleep interrupted."));
+			sq_wakeupvm(vm, true, false, false, true);
+			return true;
+		}
+		else {
+			g_Logs.script->debug("Request to wake an already awake VM to run %v.", name.c_str());
+		}
+		return false;
+	}
+
 	bool NutPlayer :: ExecEvent(NutScriptEvent *nse, int index)
 	{
 		unsigned long now = g_PlatformTime.getMilliseconds();
@@ -761,18 +804,18 @@ namespace ScriptCore
 				res = cb->Execute();
 			}
 			catch(int e) {
-				g_Log.AddMessageFormat("Callback failed. %d", e);
+				g_Logs.script->error("Callback failed. %v", e);
 			}
 		}
 
 		if(mActive && !mHalting && mQueue.size() > 0 && index < mQueue.size()) {
-//			g_Log.AddMessageFormat("[REMOVEME] MAYBE RETRY active: %s", mActive ? "yes" : "no");
+			g_Logs.script->debug("Maybe retry active: %v", mActive ? "yes" : "no");
 			/*
 			 * If the VM wasn't suspended while handling this event, and the
 			 * event returned false, then we requeue this event for retry
 			 */
 			if(!res && sq_getvmstate(vm) != SQ_VMSTATE_SUSPENDED) {
-//				g_Log.AddMessageFormat("[REMOVEME] RETRY active: %s", mActive ? "yes" : "no");
+				g_Logs.script->debug("Retry active: %v", mActive ? "yes" : "no");
 				mQueueAdd.push_back(nse);
 				mQueue.erase(mQueue.begin() + index);
 			}
@@ -791,7 +834,7 @@ namespace ScriptCore
 	bool NutPlayer :: ExecQueue(void)
 	{
 		if(mExecutingEvent != NULL) {
-			g_Log.AddMessageFormat("Already executing. Something tried to executing the queue while it was already executing.");
+			g_Logs.script->warn("Already executing. Something tried to executing the queue while it was already executing.");
 			return true;
 		}
 		bool ok = false;
@@ -851,7 +894,7 @@ namespace ScriptCore
 			if(now >= mMaybeGC + g_Config.SquirrelGCDelay || now >= mForceGC) {
 				int objs = GC();
 				unsigned long took = g_PlatformTime.getElapsedMilliseconds() - now;
-				g_Log.AddMessageFormat("GC performed because callcount reached %d and returned %d objects taking %ul ms", mGCCounter, took, objs);
+				g_Logs.script->info("GC performed because callcount reached %v and returned %v objects taking %v ms", mGCCounter, took, objs);
 				mGCTime += took;
 				mGCCounter = 0;
 				mForceGC = 0;
@@ -972,6 +1015,7 @@ namespace ScriptCore
 	        	ResumeCallback *cb = new ResumeCallback(&left.value);
 	        	NutScriptEvent *nse = new NutScriptEvent(new TimeCondition (right.value), cb);
 	        	nse->mRunWhenSuspended = true;
+	        	g_Logs.script->debug("Suspending VM for %v for %v", (&left.value)->def->scriptName, right.value);
 	        	left.value.QueueAdd(nse);
 	            return sq_suspendvm(v);
 	        }
@@ -1166,7 +1210,7 @@ void ScriptDef :: CompileLine(char *line, ScriptCompiler &compileData)
 					case OPT_INT: PushOpCode(OP_PUSHINT, vright, 0); break;
 					case OPT_FLOAT: PushOpCode(OP_PUSHFLOAT, vright, 0); break;
 					case OPT_APPINT: PushOpCode(OP_PUSHAPPVAR, vright, 0); break;
-					default: g_Logs.script->error("Invalid operator [%s] for IF statement [%v line %v]", tokens[3].c_str(), compileData.mSourceFile, compileData.mLineNumber); valid = false; break;
+					default: g_Logs.script->error("Invalid operator [%v] for IF statement [%v line %v]", tokens[3].c_str(), compileData.mSourceFile, compileData.mLineNumber); valid = false; break;
 					}
 		
 					switch(left)
@@ -1929,7 +1973,7 @@ ScriptPlayer :: ~ScriptPlayer()
 
 void ScriptPlayer :: Initialize(ScriptDef *defPtr)
 {
-	g_Log.AddMessageFormat("Initialising TSL script %s", defPtr->scriptName.c_str());
+	g_Logs.script->info("Initialising TSL script %v", defPtr->scriptName.c_str());
 	def = defPtr;
 	FullReset();
 }

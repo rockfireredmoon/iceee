@@ -2,7 +2,7 @@
 #include "Globals.h"
 #include "Inventory.h"
 #include "Util.h"
-#include "StringList.h"
+
 #include "Config.h"
 #include "Debug.h"
 #include "util/Log.h"
@@ -228,7 +228,7 @@ InventorySlot * InventoryManager :: GetExistingPartialStack(int containerID, Ite
 InventorySlot * InventoryManager :: AddItem_Ex(int containerID, int itemID, int count)
 {
 	if(count == 0)
-		g_Log.AddMessageFormat("[WARNING] AddItem_Ex() count is zero");
+		g_Logs.server->warn("AddItem_Ex() count is zero");
 
 	ItemDef *itemDef = g_ItemManager.GetPointerByID(itemID);
 	if(itemDef == NULL)
@@ -728,7 +728,7 @@ int InventoryManager :: ItemMove(char *buffer, char *convBuf, CharacterStatSet *
 						wpos += destInv->AddItemUpdate(&buffer[wpos], convBuf, &dest);
 					}
 					wpos += RemoveItemUpdate(&buffer[wpos], convBuf, &source);
-					g_Log.AddMessageFormat("[ITEMMOVE] Stack Erasing: %d", source.IID);
+					g_Logs.server->debug("[ITEMMOVE] Stack Erasing: %v", source.IID);
 					containerList[origContainer].erase(containerList[origContainer].begin() + origItemIndex);
 				}
 				else
@@ -795,7 +795,7 @@ int InventoryManager :: ItemMove(char *buffer, char *convBuf, CharacterStatSet *
 		wpos += destInv->AddItemUpdate(&buffer[wpos], convBuf, &dest);
 	}
 	destInv->containerList[destContainer].push_back(dest);
-	g_Log.AddMessageFormat("[ITEMMOVE] Erasing: %d (new dest: %d)", source.IID, dest.IID);
+	g_Logs.server->debug("[ITEMMOVE] Erasing: %v (new dest: %v)", source.IID, dest.IID);
 	containerList[origContainer].erase(containerList[origContainer].begin() + origItemIndex);
 	return wpos;
 }
@@ -1193,7 +1193,7 @@ int CheckSection_Inventory(FileReader &fr, InventoryManager &cd, const char *deb
 	int ID = fr.BlockToInt(2);
 	if(cd.GetItemBySlot(ContID, slot) >= 0)
 	{
-		g_Log.AddMessageFormat("Warning: %s [%s] inventory [%s] slot already filled [%d]", debugType, debugName, fr.BlockToStringC(0, 0), slot);
+		g_Logs.server->warn("%v [%v] inventory [%v] slot already filled [%v]", debugType, debugName, fr.BlockToStringC(0, 0), slot);
 		return -1;
 	}
 
@@ -1231,7 +1231,7 @@ int CheckSection_Inventory(FileReader &fr, InventoryManager &cd, const char *deb
 	newItem.timeLoaded = g_ServerTime;
 	if(cd.AddItem(ContID, newItem) == -1)
 	{
-		g_Log.AddMessageFormat("Warning: %s [%s] failed to add item (container:%s, slot:%d, itemID:%d)", debugType, debugName, fr.BlockToStringC(0, 0), slot, ID);
+		g_Logs.server->warn("%v [%v] failed to add item (container:%v, slot:%v, itemID:%v)", debugType, debugName, fr.BlockToStringC(0, 0), slot, ID);
 		return -1;
 	}
 	return 0;

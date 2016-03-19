@@ -1,7 +1,9 @@
 #include <algorithm>
 #include "NPC.h"
-#include "StringList.h" //For debugging
+ //For debugging
 #include "FileReader.h"
+#include "util/Log.h"
+#include "Components.h"
 
 PetDefManager g_PetDefManager;
 
@@ -128,7 +130,7 @@ void HateProfileContainer :: RemoveProfile(HateProfile* profile)
 			return;
 		}
 	}
-	g_Log.AddMessageFormat("[DEBUG] Hate profile pointer not found: %p", profile);
+	g_Logs.server->debug("Hate profile pointer not found: %v", profile);
 }
 
 void HateProfileContainer :: UnHate(int CreatureDefID)
@@ -208,7 +210,7 @@ void PetDefManager :: LoadFile(const char *filename)
 	FileReader lfr;
 	if(lfr.OpenText(filename) != Err_OK)
 	{
-		g_Log.AddMessageFormat("Error opening file: %s", filename);
+		g_Logs.data->error("Error opening file: %v", filename);
 		return;
 	}
 	lfr.CommentStyle = Comment_Semi;

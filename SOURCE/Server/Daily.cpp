@@ -13,7 +13,7 @@
 #include "Daily.h"
 #include "FileReader3.h"
 #include "DirectoryAccess.h"
-#include "StringList.h"
+
 #include "Util.h"
 #include <stdlib.h>
 #include "util/Log.h"
@@ -104,7 +104,7 @@ void VirtualItemReward::FromData(std::string data) {
 	std::vector<std::string> a;
 	Util::Split(data.c_str(), ":", a);
 	if(a.size() < 3) {
-		g_Log.AddMessageFormat("Daily configuration contains incomplete VIRTUAL item");
+		g_Logs.data->warn("Daily configuration contains incomplete VIRTUAL item");
 	}
 	else {
 		minItemRarity = atoi(a[0].c_str());
@@ -184,7 +184,7 @@ void DailyProfileManager::LoadData(void)
 	Platform::GenerateFilePath(filename, "Data", "Daily.txt");
 	LoadTable(filename.c_str());
 
-	g_Log.AddMessageFormat("Loaded %d daily profiles", mProfiles.size());
+	g_Logs.data->info("Loaded %v daily profiles", mProfiles.size());
 }
 
 void DailyProfileManager::LoadTable(const char *filename)

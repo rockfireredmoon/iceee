@@ -53,6 +53,7 @@ function main() {
 	}
 	
 	ai.use(32766);
-	ai.exec(main);
+	if(ai.has_target())
+		ai.exec(main);
 }
 

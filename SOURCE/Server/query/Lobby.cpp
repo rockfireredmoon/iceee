@@ -43,7 +43,7 @@ int PersonaListHandler::handleQuery(SimulatorThread *sim,
 		return 0;
 	}
 
-	g_Log.AddMessageFormat("Retrieving persona list for account:%d",
+	g_Logs.simulator->info("Retrieving persona list for account:%v",
 			pld->accPtr->ID);
 	//TODO: Fix a potential buffer overflow.
 
@@ -195,8 +195,8 @@ int PersonaDeleteHandler::handleQuery(SimulatorThread *sim,
 				Clans::ClanMember me = c.GetMember(CDefID);
 				c.RemoveMember(me);
 				if (c.mMembers.size() < 1) {
-					g_Log.AddMessageFormat(
-							"Disbanding clan %s because the last member left.",
+					g_Logs.event->info(
+							"[CLAN] Disbanding clan %v because the last member left.",
 							c.mName.c_str());
 					g_ClanManager.RemoveClan(c);
 				} else {
@@ -210,8 +210,8 @@ int PersonaDeleteHandler::handleQuery(SimulatorThread *sim,
 								nextLeader = c.GetFirstMemberOfRank(
 										Clans::Rank::INITIATE);
 								if (nextLeader.mID == 0) {
-									g_Log.AddMessageFormat(
-											"[WARNING] There is nobody to pass leadership of clan of %s to! Removing the clan",
+									g_Logs.event->warn(
+											"[CLAN] There is nobody to pass leadership of clan of %v to! Removing the clan",
 											c.mName.c_str());
 									g_ClanManager.RemoveClan(c);
 									BroadcastClanDisbandment(c);

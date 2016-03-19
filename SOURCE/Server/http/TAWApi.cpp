@@ -486,8 +486,8 @@ void ClanHandler::writeClanToJSON(Clans::Clan &clan, Json::Value &c) {
 				c["leader"] = l;
 			}
 		} else {
-			g_Log.AddMessageFormat(
-					"[WARNING] Clan %s (%d) contains member %d that does not exist.",
+			g_Logs.server->warn(
+					"Clan %v (%v) contains member %v that does not exist.",
 					clan.mName.c_str(), clan.mId, (*it2).mID);
 		}
 	}
@@ -919,7 +919,7 @@ bool UserGrovesHandler::handleAuthenticatedGet(CivetServer *server,
 				int id = *it;
 				ZoneDefInfo *zone = g_ZoneDefManager.GetPointerByID(id);
 				if (zone == NULL)
-					g_Log.AddMessageFormat("Unknown grove %d", id);
+					g_Logs.server->error("Unknown grove %v", id);
 				else {
 					Json::Value grove;
 					zone->WriteToJSON(grove);

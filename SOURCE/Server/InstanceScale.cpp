@@ -1,7 +1,7 @@
 #include "InstanceScale.h"
 #include "FileReader3.h"
 #include "DirectoryAccess.h"
-#include "StringList.h"
+
 #include "DropTable.h"
 #include "Stats.h"  //For CreatureRarityType.
 #include "CommonTypes.h"
@@ -168,7 +168,7 @@ void DropRateProfile::DebugRunFlagTest(void)
 			for(int mn = 0; mn <= 1; mn++)
 			{
 				bool result = IsCreatureAllowed(iq, mr, (mn != 0));
-				g_Log.AddMessageFormat("Testing[%s] ItemQual[%d] mobRarity[%d] mobNamed[%d] : %s", mName.c_str(), iq, mr, mn, ((result == true) ? "TRUE" : "false") );
+				g_Logs.server->debug("Testing [%v] ItemQual[%v] mobRarity[%v] mobNamed[%v] : %v", mName.c_str(), iq, mr, mn, ((result == true) ? "TRUE" : "false") );
 			}
 		}
 	}
@@ -210,7 +210,7 @@ void DropRateProfileManager::LoadData(void)
 	Platform::GenerateFilePath(filename, "Data", "DropRateProfile.txt");
 	LoadTable(filename.c_str());
 
-	g_Log.AddMessageFormat("Loaded %d drop rate profiles", mProfiles.size());
+	g_Logs.data->info("Loaded %v drop rate profiles", mProfiles.size());
 }
 
 void DropRateProfileManager::LoadTable(const char *filename)
@@ -257,7 +257,7 @@ const DropRateProfile& DropRateProfileManager::GetProfileByName(const std::strin
 	if(it != mProfiles.end())
 		return it->second;
 
-	g_Log.AddMessageFormat("[ERROR] DropRateProfile [%s] does not exist.", name.c_str());
+	g_Logs.server->error("DropRateProfile [%v] does not exist.", name.c_str());
 	return mNullProfile;
 }
 
@@ -294,7 +294,7 @@ void InstanceScaleManager::LoadData(void)
 	Platform::GenerateFilePath(filename, "Data", "ScaledDifficulties.txt");
 
 	LoadTable(filename.c_str());
-	g_Log.AddMessageFormat("Loaded %d instance scaling profiles", mProfiles.size());
+	g_Logs.data->info("Loaded %v instance scaling profiles", mProfiles.size());
 }
 
 void InstanceScaleManager::LoadTable(const char *filename)

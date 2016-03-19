@@ -22,7 +22,8 @@
 #include "../ByteBuffer.h"
 #include "../Character.h"
 #include "../Creature.h"
-#include "../StringList.h"
+
+#include "../util/Log.h"
 
 
 class QueryHandler {

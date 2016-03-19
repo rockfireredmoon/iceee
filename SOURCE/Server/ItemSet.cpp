@@ -2,7 +2,7 @@
 #include "ItemSet.h"
 #include "DirectoryAccess.h"
 #include "FileReader3.h"
-#include "StringList.h"
+
 #include "CommonTypes.h"
 #include "Util.h"
 #include "util/Log.h"
@@ -61,7 +61,7 @@ void ItemSetManager::LoadData(void)
 	
 	UpdateFlavorText();
 	
-	g_Log.AddMessageFormat("Loaded %d Item Sets", mRegisteredSets.size());
+	g_Logs.data->info("Loaded %v Item Sets", mRegisteredSets.size());
 }
 
 void ItemSetManager::LoadFile(const char *filename)
@@ -159,7 +159,7 @@ void ItemSetManager::UpdateFlavorText(void)
 		ItemDef *itemDef = g_ItemManager.GetPointerByID(it->first);
 		if(itemDef == NULL)
 		{
-			g_Log.AddMessageFormat("[ERROR] Item ID [%d] does not exist", it->first);
+			g_Logs.server->error("Item ID [%v] does not exist", it->first);
 			continue;
 		}
 		itemDef->mFlavorText.append(setData->mFlavorText);

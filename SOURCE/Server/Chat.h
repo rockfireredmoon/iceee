@@ -9,7 +9,7 @@
 #include <string>
 #include <deque>
 #include "RotatingList.h"
-#include "StringList.h"
+
 #include "Creature.h"
 #include "ActiveCharacter.h"
 #include "json/json.h"

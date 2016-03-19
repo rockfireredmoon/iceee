@@ -19,7 +19,7 @@
 #include "../Util.h"
 #include "../util/Log.h"
 #include "../Config.h"
-#include "../StringList.h"
+
 
 
 #include "ServiceAuthentication.h"

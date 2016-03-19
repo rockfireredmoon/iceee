@@ -5,7 +5,7 @@
 #include "Ability2.h"
 #include "Creature.h"
 #include "FileReader.h"
-#include "StringList.h"
+
 #include "Instance.h"
 #include "Util.h"
 #include "Globals.h"  //For combat globals
@@ -105,13 +105,13 @@ void ActiveAbilityInfo :: Duration(int seconds)
 	//NOTE: max is based on the data type's size (currently short)
 	if(seconds < 1 || seconds > 32)
 	{
-		g_Log.AddMessageFormat("[DEBUG] Ability Duration is invalid: %d", seconds);
+		g_Logs.server->debug("Ability Duration is invalid: %v", seconds);
 		seconds = Util::ClipInt(seconds, 1, 32);
 	}
 	iterationDur = 1000 * seconds;
 	if(iterationInt == 0)
 	{
-		g_Log.AddMessageFormat("[DEBUG] Ability Iterations is zero: %d", abilityID);
+		g_Logs.server->debug("Ability Iterations is zero: %v", abilityID);
 		iterationInt = 1000;
 	}
 	iterations = iterationDur / iterationInt;
@@ -145,7 +145,7 @@ void ActiveAbilityInfo :: TransferTargetList(ActiveAbilityInfo *from)
 {
 	if(this == from)
 	{
-		g_Log.AddMessageFormat("[ERROR] TransferTargetList objects are the same.");
+		g_Logs.server->error("TransferTargetList objects are the same.");
 		return;
 	}
 	TargetCount = from->TargetCount;
@@ -225,7 +225,7 @@ std::string AbstractAppearanceModifier::DoModify(std::string source, bool eq) {
 	string currentAppearance = source;
 	size_t pos = currentAppearance.find(":");
 	if(pos == string::npos)	{
-		g_Log.AddMessageFormat("Could not parse exist appearance. %s", currentAppearance.c_str());
+		g_Logs.server->error("Could not parse exist appearance. %v", currentAppearance.c_str());
 		return source;
 	}
 	string prefix = currentAppearance.substr(0, pos + 1);
@@ -236,11 +236,11 @@ std::string AbstractAppearanceModifier::DoModify(std::string source, bool eq) {
 	HSQUIRRELVM vm = sq_open(g_Config.SquirrelVMStackSize);
 	Sqrat::Script script(vm);
 
-	g_Log.AddMessageFormat("Adjusting appearance. %s", currentAppearance.c_str());
+	g_Logs.server->debug("Adjusting appearance. %v", currentAppearance.c_str());
 
 	script.CompileString(_SC(currentAppearance.c_str()));
 	if (Sqrat::Error::Occurred(vm)) {
-		g_Log.AddMessageFormat("Failed to compile appearance. %s", Sqrat::Error::Message(vm).c_str());
+		g_Logs.server->error("Failed to compile appearance. %v", Sqrat::Error::Message(vm).c_str());
 		return source;
 	}
 	script.Run();
@@ -257,7 +257,7 @@ std::string AbstractAppearanceModifier::DoModify(std::string source, bool eq) {
 	Squirrel::Printer printer;
 	std::string newAppearance = prefix;
 	printer.PrintTable(&newAppearance, table);
-	g_Log.AddMessageFormat("Attaching item. New appearance is. %s", newAppearance.c_str());
+	g_Logs.server->debug("Attaching item. New appearance is. %v", newAppearance.c_str());
 
 	return newAppearance;
 }
@@ -270,7 +270,7 @@ CreatureAttributeModifier::CreatureAttributeModifier(std::string attribute, std:
 CreatureAttributeModifier::~CreatureAttributeModifier() {}
 
 void CreatureAttributeModifier::ProcessTable(Sqrat::Table *table) {
-	g_Log.AddMessageFormat("Setting attr '%s' to '%s'", mAttribute.c_str(), mValue.c_str());
+	g_Logs.server->debug("Setting attr '%v' to '%v'", mAttribute.c_str(), mValue.c_str());
 	table->SetValue(_SC(mAttribute.c_str()), _SC(mValue.c_str()));
 }
 
@@ -544,6 +544,8 @@ bool CreatureInstance :: KillAI(void)
 
 void CreatureInstance :: UnloadResources(void)
 {
+	g_Logs.server->debug("Unloading resources for creature %v (%v)", CreatureID, CreatureDefID);
+
 	//NOTE: Should only be called by the main thread.
 	//Unloads any resources attached to this object (or that this object is specially linked to
 	//to, like spawnpoints (but not ability targets, those are separate).
@@ -556,7 +558,7 @@ void CreatureInstance :: UnloadResources(void)
 	//Temporary instances are local to a function, and are used for initializing
 	//data before they are added into the official creature list (via push_back())
 	if(actInst == NULL)
-		g_Log.AddMessageFormat("[CRITICAL] UnloadResources() called for creature without an instance.");
+		g_Logs.server->error("UnloadResources() called for creature without an instance.");
 
 	g_QuestNutManager.RemoveActiveScripts(CreatureID);
 
@@ -702,7 +704,7 @@ void CreatureInstance :: CopyFrom(CreatureInstance *source)
 		if(ap == source->transformModifier) {
 			transformModifier = cap;
 		}
-		g_Log.AddMessageFormat("Copied 1 appearance modifiers");
+		g_Logs.server->debug("Copied 1 appearance modifiers");
 		appearanceModifiers.push_back(cap);
 	}
 	transformAbilityId = source->transformAbilityId;
@@ -1240,7 +1242,7 @@ void CreatureInstance :: RegisterHostility(CreatureInstance *attacker, int hosti
 {
 	if(attacker == NULL)
 	{
-		g_Log.AddMessageFormat("[CRITICAL] RegisterHostility attacker is null");
+		g_Logs.server->error("RegisterHostility attacker is null");
 		return;
 	}
 
@@ -2172,7 +2174,7 @@ void CreatureInstance :: LimitValueOverflows(void)
 		css.constitution -= (int)trimCon;
 		int newHP = GetMaxHealth(true);
 		css.health = newHP;
-		g_Log.AddMessageFormat("[WARNING] Constitution overflow! OldHP:%d, ConReduct:%d, NewHP:%d", max, (int)trimCon, newHP);
+		g_Logs.server->warn("Constitution overflow! OldHP:%v, ConReduct:%v, NewHP:%v", max, (int)trimCon, newHP);
 	}
 
 	css.damage_resist_melee = Util::ClipInt(css.damage_resist_melee, 0, MAX_SHORT);
@@ -2952,7 +2954,7 @@ void CreatureInstance :: ProcessDeath(void)
 
 			AccountData *victimsAccount = g_AccountManager.GetActiveAccountByID(charPtr->AccountID);
 			if(victimsAccount == NULL) {
-				g_Log.AddMessageFormat("[WARNING] Cannot find account %d for character %d to update kill/death stats.", charPtr->AccountID);
+				g_Logs.server->warn("Cannot find account %v for character %v to update kill/death stats.", charPtr->AccountID);
 			}
 
 			/* This is a player death, determine if they were killed during PVP way. Loot
@@ -2979,7 +2981,7 @@ void CreatureInstance :: ProcessDeath(void)
 					if(attacker->charPtr != NULL && attacker->charPtr->AccountID > 0) {
 						AccountData *attackersAccount = g_AccountManager.GetActiveAccountByID(attacker->charPtr->AccountID);
 						if(attackersAccount == NULL) {
-							g_Log.AddMessageFormat("[WARNING] Cannot find account %d for character %d to update kill/death stats.", attacker->charPtr->AccountID);
+							g_Logs.server->warn("Cannot find account %v for character %v to update kill/death stats.", attacker->charPtr->AccountID);
 						}
 						else {
 							// Update character kill/death stats
@@ -3104,7 +3106,7 @@ void CreatureInstance :: ProcessDeath(void)
 						// Update account kill/death stats
 						AccountData *attackersAccount = g_AccountManager.GetActiveAccountByID(attacker->charPtr->AccountID);
 						if(attackersAccount == NULL) {
-							g_Log.AddMessageFormat("[WARNING] Cannot find account %d for character %d to update kill/death stats.", attacker->charPtr->AccountID);
+							g_Logs.server->warn("Cannot find account %v for character %v to update kill/death stats.", attacker->charPtr->AccountID);
 						}
 						else {
 							attackersAccount->PlayerStats.TotalKills++;
@@ -3131,7 +3133,7 @@ void CreatureInstance :: ProcessDeath(void)
 					// Update account kill/death stats
 					AccountData *attackersAccount = g_AccountManager.GetActiveAccountByID(attacker->charPtr->AccountID);
 					if(attackersAccount == NULL) {
-						g_Log.AddMessageFormat("[WARNING] Cannot find account %d for character %d to update kill/death stats.", attacker->charPtr->AccountID);
+						g_Logs.server->warn("Cannot find account %v for character %v to update kill/death stats.", attacker->charPtr->AccountID);
 					}
 					else {
 						attackersAccount->PlayerStats.TotalKills++;
@@ -3176,7 +3178,7 @@ void CreatureInstance :: ProcessDeath(void)
 			int levelDiff = ( css.level - maxPlayerLevel ) + 1;
 			credits = creditDrops * levelDiff * css.rarity * alivePlayers;
 			if(credits < 0) {
-				g_Log.AddMessageFormat("Party earned no credits as level difference too great or nobody was left alive");
+				g_Logs.server->debug("Party earned no credits as level difference too great or nobody was left alive");
 			}
 			else {
 				if(credits == 1)
@@ -3184,7 +3186,7 @@ void CreatureInstance :: ProcessDeath(void)
 				else if(credits > 1)
 					Util::SafeFormat(buf, sizeof(buf), "Your party earned %d credits each", credits);
 
-				g_Log.AddMessageFormat("This mob drops credits. The team earned %d (max player level %d, difference %d, alive %d)", credits, maxPlayerLevel, levelDiff, alivePlayers);
+				g_Logs.server->debug("This mob drops credits. The team earned %v (max player level %v, difference %v, alive %v)", credits, maxPlayerLevel, levelDiff, alivePlayers);
 			}
 
 
@@ -3807,11 +3809,11 @@ void CreatureInstance :: RegisterChannel(int abilityID, int duration, int interv
 
 	if(interval == 0)
 	{
-		g_Log.AddMessageFormat("WARNING: RegisterChannel() interval is zero");
+		g_Logs.server->warn("RegisterChannel() interval is zero");
 		interval = 1000;
 	}
 	if(duration < interval)
-		g_Log.AddMessageFormat("WARNING: RegisterChannel() possible iteration problem (ability: %d, duration: %d, interval: %d", abilityID, duration, interval);
+		g_Logs.server->warn("RegisterChannel() possible iteration problem (ability: %v, duration: %v, interval: %v", abilityID, duration, interval);
 
 	ab[abSlot].abilityID = abilityID;
 	ab[abSlot].type = AbilityType::Channel;
@@ -3820,7 +3822,7 @@ void CreatureInstance :: RegisterChannel(int abilityID, int duration, int interv
 	ab[abSlot].iterations = duration / interval;
 	if(ab[abSlot].iterations == 0)
 	{
-		g_Log.AddMessageFormat("WARNING: RegisterChannel() iterations is zero");
+		g_Logs.server->warn("RegisterChannel() iterations is zero");
 		ab[abSlot].iterations = 1;
 	}
 	ab[abSlot].fireTime = g_ServerTime;
@@ -4402,11 +4404,11 @@ int CreatureInstance :: RequestAbilityActivation(int abilityID)
 		if((serverFlags & ServerFlags::IsPlayer) && (simulatorPtr != NULL))
 		{
 			int errorCode = Ability2::AbilityManager2::GetAbilityErrorCode(result);
-			g_Log.AddMessageFormat("Failed to activate ability %d because error code %d (%d).", abilityID, errorCode, result);
+			g_Logs.simulator->debug("Failed to activate ability %v because error code %v (%v).", abilityID, errorCode, result);
 			simulatorPtr->SendAbilityErrorMessage(errorCode);
 		}
 		else {
-			g_Log.AddMessageFormat("Non-success result %d.", result);
+			g_Logs.simulator->warn("Non-success result %v.", result);
 		}
 
 		//Other processing may require conditional processing based on return value.
@@ -4684,7 +4686,7 @@ void CreatureInstance :: ActivateSavedAbilities(void)
 			 */
 			buffManager.ActiveToPersistent();
 		else
-			g_Log.AddMessageFormat("No active buffs, %d persistent buffs", buffManager.persistentBuffList.size());
+			g_Logs.server->debug("No active buffs, %v persistent buffs", buffManager.persistentBuffList.size());
 
 		initialisingAbilities = true;
 
@@ -5133,7 +5135,7 @@ void CreatureInstance :: CheckPathLocation(void)
 	//Needs linked points.
 	if(so->extraData->linkCount == 0)
 	{
-		g_Log.AddMessageFormat("[WARNING] CheckPathLocation() no links on prop: %d", nextPathNode);
+		g_Logs.server->warn("CheckPathLocation() no links on prop: %v", nextPathNode);
 		return;
 	}
 
@@ -6175,6 +6177,7 @@ void CreatureInstance :: SelectTarget(CreatureInstance *newTarget)
 			 *
 			 * TODO Need to fix this in SOA too!
 			 */
+			g_Logs.server->debug("%v lost their target (which was %v).", CreatureID, CurrentTarget.targ->CreatureID);
 			aiNut->RunFunction("on_target_lost", p, true);
 		}
 
@@ -6234,6 +6237,7 @@ void CreatureInstance :: SelectTarget(CreatureInstance *newTarget)
 		if(aiNut != NULL && CurrentTarget.targ != NULL) {
 			std::vector<ScriptCore::ScriptParam> p;
 			p.push_back(CurrentTarget.targ->CreatureID);
+			g_Logs.server->debug("%v acquired target (which is %v).", CreatureID, CurrentTarget.targ->CreatureID);
 			aiNut->JumpToLabel("on_target_acquired", p);
 		}
 	}
@@ -6905,7 +6909,7 @@ void CreatureInstance :: AddValour(int GuildDefID, int amount)
 
 	if(actInst == NULL || charPtr == NULL)
 	{
-		g_Log.AddMessageFormat("[ERROR] AddValour() active instance or charPtr is NULL.");
+		g_Logs.server->error("AddValour() active instance or charPtr is NULL.");
 		return;
 	}
 
@@ -6916,7 +6920,7 @@ void CreatureInstance :: AddValour(int GuildDefID, int amount)
 	g_CharacterManager.ReleaseThread();
 	GuildRankObject *newRank = g_GuildManager.GetRank(CreatureDefID, GuildDefID);
 	if(newRank == NULL) {
-		g_Log.AddMessageFormat("[ERROR] Huh, no new rank in guild, joined %d to %d", CreatureDefID, GuildDefID);
+		g_Logs.server->error("No new rank in guild, joined %v to %v", CreatureDefID, GuildDefID);
 		return;
 	}
 	if(currentRank == NULL || currentRank->valour != newRank->valour)
@@ -6948,7 +6952,7 @@ void CreatureInstance :: AddCredits(int amount)
 {
 	if(actInst == NULL)
 	{
-		g_Log.AddMessageFormat("[ERROR] AddCredits() active instance is NULL.");
+		g_Logs.server->error("AddCredits() active instance is NULL.");
 		return;
 	}
 
@@ -6971,7 +6975,7 @@ void CreatureInstance :: AddExperience(int amount)
 {
 	if(actInst == NULL)
 	{
-		g_Log.AddMessageFormat("[ERROR] AddExperience() active instance is NULL.");
+		g_Logs.server->error("AddExperience() active instance is NULL.");
 		return;
 	}
 	if(css.level >= g_Config.CapExperienceLevel)
@@ -7013,7 +7017,7 @@ void CreatureInstance :: RemoveNoncombatantStatus(const char *debugCaller)
 	if(serverFlags & ServerFlags::Noncombatant)
 	{
 		SetServerFlag(ServerFlags::Noncombatant, false);
-		g_Log.AddMessageFormat("Noncombat status removed (%s)", debugCaller);
+		g_Logs.server->info("Noncombat status removed (%v)", debugCaller);
 	}
 }
 
@@ -7147,14 +7151,14 @@ int CreatureInstance :: ProcessQuestRewards(int QuestID, int outcomeIdx, const s
 {
 	if(!(serverFlags & ServerFlags::IsPlayer))
 	{
-		g_Log.AddMessageFormat("[ERROR] ProcessQuestRewards() must be a player to receive inventory objects", QuestID);
+		g_Logs.server->error("ProcessQuestRewards(%v) must be a player to receive inventory objects", QuestID);
 		return -1;
 	}
 
 	QuestDefinition *qd = QuestDef.GetQuestDefPtrByID(QuestID);
 	if(qd == NULL)
 	{
-		g_Log.AddMessageFormat("[ERROR] ProcessQuestRewards() invalid quest ID [%d]", QuestID);
+		g_Logs.server->error("ProcessQuestRewards() invalid quest ID [%v]", QuestID);
 		return -1;
 	}
 
@@ -7164,7 +7168,7 @@ int CreatureInstance :: ProcessQuestRewards(int QuestID, int outcomeIdx, const s
 
 	QuestOutcome* outcome = qd->GetOutcome(outcomeIdx);
 	if(outcome == NULL) {
-		g_Log.AddMessageFormat("[ERROR] ProcessQuestRewards() invalid quest ID [%d] has no outcome for index %d", QuestID, outcomeIdx);
+		g_Logs.server->error("ProcessQuestRewards() invalid quest ID [%v] has no outcome for index %v", QuestID, outcomeIdx);
 				return -1;
 	}
 
@@ -7197,7 +7201,7 @@ int CreatureInstance :: ProcessQuestRewards(int QuestID, int outcomeIdx, const s
 		{
 			wpos += PrepExt_SendInfoMessage(&GSendBuf[wpos], "Reward item not found in database.", INFOMSG_ERROR);
 			simulatorPtr->AttemptSend(GSendBuf, wpos);
-			g_Log.AddMessageFormat("[ERROR] ProcessQuestRewards() Reward item [%d] not found in database for quest [%d]", itemID, QuestID);
+			g_Logs.server->error("ProcessQuestRewards() Reward item [%v] not found in database for quest [%v]", itemID, QuestID);
 			return -1;
 		}
 
@@ -7471,7 +7475,7 @@ float CreatureInstance :: GetDropRateMultiplier(CreatureDefinition *cdef)
 
 	//Debug logging, not necessary.
 	if(dropRateBonus > 2.0F)
-		g_Log.AddMessageFormat("[LOOT] DropRateMult [%s] %d,%d: %g", css.display_name, css.level, css.rarity, dropRateBonus);
+		g_Logs.server->debug("DropRateMult [%v] %v,%v: %v", css.display_name, css.level, css.rarity, dropRateBonus);
 
 
 	return dropRateBonus;
@@ -7540,7 +7544,7 @@ void CreatureInstance :: PlayerLoot(int level, std::vector<DailyProfile> profile
 				}
 			}
 			if(item == NULL) {
-				g_Log.AddMessageFormat("[WARNING] An item (%d) exists in the daily loot table that does not exist. Player wi", itemID);
+				g_Logs.server->warn("An item (%v) exists in the daily loot table that does not exist.", itemID);
 			}
 			break;
 		}
@@ -7665,7 +7669,7 @@ void CreatureInstance :: SetLevel(int newLevel)
 	}
 
 	css.level = newLevel;
-	g_Log.AddMessageFormat("Player [%s] had reached level [%d]", css.display_name, css.level);
+	g_Logs.event->info("[PLAYER] Player [%v] had reached level [%v]", css.display_name, css.level);
 
 	if(actInst == NULL)
 		return;
@@ -7775,10 +7779,10 @@ bool CreatureInstance :: IsTransformed()
 bool CreatureInstance :: CAF_Untransform()
 {
 	if(transformModifier == NULL) {
-		g_Log.AddMessageFormat("%d not transformed", CreatureDefID);
+		g_Logs.server->warn("%v not transformed", CreatureDefID);
 		return false;
 	}
-	g_Log.AddMessageFormat("Untransforming %d (app is %s)", CreatureDefID, css.appearance.c_str());
+	g_Logs.server->debug("Untransforming %v (app is %v)", CreatureDefID, css.appearance.c_str());
 	_ClearStatusFlag(StatusEffects::TRANSFORMED);
 	_ClearStatusFlag(StatusEffects::INVISIBLE_EQUIPMENT);
 	SetServerFlag(ServerFlags::IsTransformed, false);
@@ -7792,10 +7796,10 @@ bool CreatureInstance :: CAF_Untransform()
 bool CreatureInstance :: CAF_Nudify(int durationS)
 {
 	if(transformModifier != NULL) {
-		g_Log.AddMessageFormat("%d already transformed", CreatureDefID);
+		g_Logs.server->warn("%v already transformed", CreatureDefID);
 		return false;
 	}
-	g_Log.AddMessageFormat("Nudifying %d (app is %s)", CreatureDefID, css.appearance.c_str());
+	g_Logs.server->debug("Nudifying %v (app is %v)", CreatureDefID, css.appearance.c_str());
 	transformModifier = new NudifyAppearanceModifier();
 	_AddStatusList(StatusEffects::INVISIBLE_EQUIPMENT, durationS);
 	PushAppearanceModifier(transformModifier);
@@ -7806,11 +7810,11 @@ bool CreatureInstance :: CAF_Nudify(int durationS)
 bool CreatureInstance :: CAF_Transform(int CDefID, int abID, int durationS)
 {
 	if(transformModifier != NULL) {
-		g_Log.AddMessageFormat("%d already transformed into %d", CreatureDefID, transformCreatureId);
+		g_Logs.server->warn("%v already transformed into %v", CreatureDefID, transformCreatureId);
 		return false;
 	}
 
-	g_Log.AddMessageFormat("Transforming %d into %d", CreatureDefID, CDefID);
+	g_Logs.server->debug("Transforming %v into %v", CreatureDefID, CDefID);
 	_AddStatusList(StatusEffects::TRANSFORMED, durationS);
 	SetServerFlag(ServerFlags::IsTransformed, true);
 
@@ -7905,7 +7909,7 @@ void CreatureInstance :: StatScaleToLevel(int statID, int targetLevel)
 {
 	float value = GetStatValueByID(statID, &css);
 	float mult = (float)targetLevel / (float)css.level;
-	g_Log.AddMessageFormat("Level %d to %d, value: %g, mult: %g, result: %g", css.level, targetLevel, value, mult, value * mult);
+	g_Logs.server->debug("Level %v to %v, value: %v, mult: %v, result: %v", css.level, targetLevel, value, mult, value * mult);
 	WriteValueToStat(statID, value * mult, &css);
 }
 
@@ -7917,7 +7921,7 @@ int CreatureInstance :: CAF_RegisterTargetSidekick(int abGroupID)
 	int count = 0;
 	if(serverFlags & ServerFlags::IsTransformed)
 	{
-		g_Log.AddMessageFormat("Player is transformed.");
+		g_Logs.server->debug("Player is transformed.");
 		ab[0].TargetList[count++] = this;
 	}
 
@@ -7947,9 +7951,9 @@ int CreatureInstance :: CAF_RegisterTargetSidekick(int abGroupID)
 			break;
 	}
 	ab[0].TargetCount = count;
-	g_Log.AddMessageFormat("%d targets found", count);
+	g_Logs.server->debug("%v targets found", count);
 	for(int i = 0; i < count; i++)
-		g_Log.AddMessageFormat("[%d] = [%s]", i, ab[0].TargetList[i]->css.display_name);
+		g_Logs.server->debug("[%v] = [%v]", i, ab[0].TargetList[i]->css.display_name);
 
 	return count;
 }
@@ -7978,12 +7982,11 @@ void CreatureInstance :: ClearAppearanceModifiers()
 
 void CreatureInstance :: RemoveAppearanceModifier(AppearanceModifier *modifier)
 {
-	g_Log.AddMessageFormat("Removing an appearance modifier for %d from a list of %d", CreatureID, appearanceModifiers.size());
+	g_Logs.server->debug("Removing an appearance modifier for %v from a list of %v", CreatureID, appearanceModifiers.size());
 	std::vector<AppearanceModifier*>::iterator it = appearanceModifiers.begin();
 	for(; it != appearanceModifiers.end(); ++it) {
 		AppearanceModifier *app = *it;
 		if(app == modifier) {
-			g_Log.AddMessageFormat("Removing a modifier");
 			delete *it;
 			appearanceModifiers.erase(it);
 			break;
@@ -8012,7 +8015,7 @@ std::string CreatureInstance :: PeekAppearance()
 
 void CreatureInstance :: PushAppearanceModifier(AppearanceModifier *modifier)
 {
-	g_Log.AddMessageFormat("Pushing an appearance modifier to %d in a list of %d, now %d",
+	g_Logs.server->debug("Pushing an appearance modifier to %v in a list of %v, now %v",
 			CreatureID, appearanceModifiers.size(), appearanceModifiers.size() + 1);
 	appearanceModifiers.push_back(modifier);
 	int wpos = PrepExt_UpdateAppearance(GSendBuf, this);
@@ -8308,7 +8311,7 @@ void CreatureInstance :: OnInstanceEnter(const ArenaRuleset &arenaRuleset)
 		}
 		if(pass == true)
 		{
-			g_Log.AddMessageFormat("Matched: %d", rule->mRuleType);
+			g_Logs.server->debug("Matched: %v", rule->mRuleType);
 			int StatID = GetStatIndexByName(rule->mStatName.c_str());
 			if(StatID == -1)
 				continue;
@@ -8326,7 +8329,7 @@ void CreatureInstance :: OnInstanceEnter(const ArenaRuleset &arenaRuleset)
 		}
 		else
 		{
-			g_Log.AddMessageFormat("Failed: %d", rule->mRuleType);
+			g_Logs.server->error("Failed: %v", rule->mRuleType);
 		}
 	}
 }
@@ -8499,7 +8502,7 @@ void CreatureDefManager :: AddNPCDef(CreatureDefinition &newItem)
 		NPC.insert(NPC.end(), CREATURE_PAIR(newItem.CreatureDefID, newItem));
 	else
 	{
-		g_Log.AddMessageFormat("[WARNING] Overwriting Creature Def: %d", newItem.CreatureDefID);
+		g_Logs.server->warn("Overwriting Creature Def: %v", newItem.CreatureDefID);
 		it->second.CopyFrom(newItem);
 	}
 }
@@ -8538,7 +8541,7 @@ int CreatureDefManager :: LoadPackages(const char *listFile)
 	FileReader lfr;
 	if(lfr.OpenText(listFile) != Err_OK)
 	{
-		g_Log.AddMessageFormat("Could not open Creature list file [%s]", listFile);
+		g_Logs.data->error("Could not open Creature list file [%v]", listFile);
 		return -1;
 	}
 	lfr.CommentStyle = Comment_Semi;
@@ -8560,7 +8563,7 @@ int CreatureDefManager :: LoadFile(const char *filename)
 	FileReader lfr;
 	if(lfr.OpenText(filename) != Err_OK)
 	{
-		g_Log.AddMessageFormat("Could not open CreatureDef file [%s]", filename);
+		g_Logs.data->error("Could not open CreatureDef file [%v]", filename);
 		return -1;
 	}
 
@@ -8609,7 +8612,7 @@ int CreatureDefManager :: LoadFile(const char *filename)
 					if(r >= 0)
 						newItem.DefaultEffects.push_back(r);
 					else
-						g_Log.AddMessageFormat("[WARNING] Unknown status effect identifier [%s] in file [%s]", lfr.SecBuffer, filename);
+						g_Logs.data->warn("Unknown status effect identifier [%v] in file [%v]", lfr.SecBuffer, filename);
 				}
 			}
 			else
@@ -8618,7 +8621,7 @@ int CreatureDefManager :: LoadFile(const char *filename)
 				r = WriteStatToSetByName(StrBuf, lfr.BlockToStringC(1, 0), &newItem.css);
 				if(r == -1)
 				{
-					g_Log.AddMessageFormat("[WARNING] Unknown identifier [%s] in file [%s]", StrBuf, filename);
+					g_Logs.data->warn("Unknown identifier [%v] in file [%v]", StrBuf, filename);
 				}
 			}
 		}

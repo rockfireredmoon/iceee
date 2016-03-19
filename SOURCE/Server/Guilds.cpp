@@ -1,8 +1,9 @@
 #include "Guilds.h"
 #include "FileReader.h"
 #include "Util.h"
-#include "StringList.h"
+
 #include "Character.h"
+#include "util/Log.h"
 
 GuildManager g_GuildManager;
 
@@ -30,8 +31,7 @@ void GuildDefinition::RunLoadDefaults(void) {
 	STRINGLIST locData;
 	Util::Split(sGuildHall, ",", locData);
 	if (locData.size() < 4) {
-		g_Log.AddMessageFormat(
-				"[WARNING] GuildDef:%d has incomplete sGuildHall string",
+		g_Logs.data->warn("GuildDef:%v has incomplete sGuildHall string",
 				guildDefinitionID);
 	} else {
 		guildHallX = static_cast<int>(strtod(locData[0].c_str(), NULL));
@@ -54,8 +54,7 @@ void GuildRankObject::RunLoadDefaults() {
 	STRINGLIST rankData;
 	Util::Split(_data, ",", rankData);
 	if (rankData.size() < 2) {
-		g_Log.AddMessageFormat("[WARNING] Rank:%d has incomplete rank string",
-				rank);
+		g_Logs.data->warn("Rank:%v has incomplete rank string", rank);
 	} else {
 		valour = static_cast<int>(strtod(rankData[0].c_str(), NULL));
 		title = rankData[1].c_str();
@@ -72,7 +71,7 @@ GuildManager::~GuildManager() {
 void GuildManager::LoadFile(const char *filename) {
 	FileReader lfr;
 	if (lfr.OpenText(filename) != Err_OK) {
-		g_Log.AddMessageFormat("Could not open file [%s]", filename);
+		g_Logs.data->error("Could not open file [%v]", filename);
 		return;
 	}
 	GuildDefinition newItem;
@@ -104,12 +103,12 @@ void GuildManager::LoadFile(const char *filename) {
 				unsigned int rank = lfr.BlockToIntC(0);
 				if (rank != newItem.ranks.size() + 1) {
 					if (newItem.ranks.size() > 0) {
-						g_Log.AddMessageFormat(
-								"Unknown identifier [%s] in file [%s], expected <rank>=<valour>",
+						g_Logs.data->warn(
+								"Unknown identifier [%v] in file [%v], expected <rank>=<valour>",
 								lfr.SecBuffer, filename);
 					} else {
-						g_Log.AddMessageFormat(
-								"Unknown identifier [%s] in file [%s]",
+						g_Logs.data->warn(
+								"Unknown identifier [%v] in file [%v]",
 								lfr.SecBuffer, filename);
 					}
 				} else {
@@ -135,7 +134,7 @@ int GuildManager::GetStandardCount(void) {
 
 GuildDefinition * GuildManager::FindGuildDefinition(std::string name) {
 	for (int i = 0; i < defList.size(); i++) {
-		g_Log.AddMessageFormat("Looking for guild .. %s against %s", name.c_str(), defList[i].defName.c_str());
+		g_Logs.data->debug("Looking for guild .. %v against %v", name.c_str(), defList[i].defName.c_str());
 		if (defList[i].defName.compare(name) == 0)
 			return &defList[i];
 	}

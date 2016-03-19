@@ -1,6 +1,6 @@
 #include "QuestScript.h"
 #include "InstanceScript.h"
-#include "StringList.h"
+
 #include "Simulator.h"
 #include "Util.h"
 #include "Instance.h"
@@ -124,7 +124,7 @@ QuestNutPlayer * QuestNutManager::AddActiveScript(CreatureInstance *creature, in
 		return NULL;
 	cs.Enter("QuestNutManager::AddActiveScript");
 
-	g_Log.AddMessageFormat("Compiling quest script %d", questID);
+	g_Logs.script->info("Compiling quest script %v", questID);
 	QuestNutPlayer * player = new QuestNutPlayer();
 	std::string errors;
 	player->source = creature;
@@ -133,7 +133,7 @@ QuestNutPlayer * QuestNutManager::AddActiveScript(CreatureInstance *creature, in
 
 	player->Initialize(creature->actInst, def, errors);
 	if (errors.length() > 0)
-		g_Log.AddMessageFormat("Failed to compile %s. %s",
+		g_Logs.script->error("Failed to compile %v. %v",
 				def->scriptName.c_str(), errors.c_str());
 
 	if(questAct.find(creature->CreatureID) == questAct.end()) {
@@ -151,7 +151,7 @@ QuestNutPlayer * QuestNutManager::AddActiveScript(CreatureInstance *creature, in
 
 void QuestNutManager::RemoveActiveScripts(int CID) {
 	cs.Enter("QuestNutManager::RemoveActiveScript");
-	g_Log.AddMessageFormat("Removing active scripts for %d", CID);
+	g_Logs.script->info("Removing active scripts for %v", CID);
 	std::list<QuestNutPlayer*> l = questAct[CID];
 	for (list<QuestNutPlayer*>::iterator it = l.begin(); it != l.end(); ++it) {
 		QuestNutPlayer* player = *it;
@@ -177,9 +177,9 @@ void QuestNutManager::RemoveActiveScript(QuestNutPlayer *registeredPtr) {
 			if(player->source != NULL && player->source->actInst != NULL)
 				player->source->actInst->questNutScriptList.erase(
 						std::remove(player->source->actInst->questNutScriptList.begin(), player->source->actInst->questNutScriptList.end(), player), player->source->actInst->questNutScriptList.end());
-			g_Log.AddMessageFormat("[REMOVEME] Deleting player");
+			g_Logs.script->debug("Deleting player");
 			if(player->mActive) {
-				g_Log.AddMessageFormat("[WARNING!] Player is active, cannot delete");
+				g_Logs.script->warn("Player is active, cannot delete");
 			}
 			else {
 				// TODO
@@ -445,12 +445,12 @@ void QuestNutPlayer::RemoveItem(int itemID, int itemCount) {
 }
 
 void QuestNutPlayer::Transform(int cdefID) {
-	g_Log.AddMessageFormat("Transform: %d", cdefID);
+	g_Logs.script->info("Transform: %v", cdefID);
 	source->CAF_Transform(cdefID, 0, -1);
 }
 
 void QuestNutPlayer::Untransform() {
-	g_Log.AddMessageFormat("Untransform");
+	g_Logs.script->info("Untransform");
 	source->CAF_Untransform();
 }
 
@@ -622,7 +622,7 @@ int QuestNutPlayer::RecruitSidekick(int CID, int type, int param, int hate) {
 	//	source->charPtr->AddSidekick(skobj);
 		int r = source->actInst->CreateSidekick(source, skobj);
 		if(r == -1) {
-			g_Log.AddMessageFormat("Failed to add sidekick %d", instance->CreatureDefID);
+			g_Logs.script->error("Failed to add sidekick %v", instance->CreatureDefID);
 			return -1;
 		}
 		return r;
@@ -643,7 +643,7 @@ int QuestNutPlayer::AddSidekick(int cdefID, int type, int param, int hate) {
 //	source->charPtr->AddSidekick(skobj);
 	int r = source->actInst->CreateSidekick(source, skobj);
 	if(r == -1) {
-		g_Log.AddMessageFormat("Failed to add sidekick %d", cdefID);
+		g_Logs.script->error("Failed to add sidekick %v", cdefID);
 		return -1;
 	}
 	return r;
@@ -864,7 +864,7 @@ void QuestScriptPlayer::RunImplementationCommands(int opcode)
 		}
 		break;
 	default:
-		g_Log.AddMessageFormat("Unidentified op type: %d", instr->opCode);
+		g_Logs.script->error("Unidentified op type: %v", instr->opCode);
 		break;
 	}
 }

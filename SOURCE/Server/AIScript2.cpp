@@ -4,7 +4,7 @@
 #include "ScriptCore.h"
 #include "AIScript2.h"
 #include "FileReader.h"
-#include "StringList.h"
+
 #include "InstanceScript.h"
 #include "Instance.h"
 #include "Creature.h"
@@ -14,6 +14,7 @@
 #include "Report.h"
 #include "Config.h"
 #include "DirectoryAccess.h"
+#include "util/Log.h"
 
 const int USE_FAIL_DELAY = 250; //Milliseconds to wait before retrying a failed script "use" command.
 
@@ -62,7 +63,7 @@ void AINutPlayer::Use(int abilityID) {
 		if (g_Config.DebugLogAIScriptUse == true) {
 			const Ability2::AbilityEntry2* abptr =
 					g_AbilityManager.GetAbilityPtrByID(abilityID);
-			g_Log.AddMessageFormat("Using: %s",
+			g_Logs.script->debug("Using: %v",
 					abptr->GetRowAsCString(Ability2::ABROW::NAME));
 		}
 		//END DEBUG OUTPUT
@@ -77,7 +78,7 @@ void AINutPlayer::Use(int abilityID) {
 			if (g_Config.DebugLogAIScriptUse == true) {
 				const Ability2::AbilityEntry2* abptr =
 						g_AbilityManager.GetAbilityPtrByID(abilityID);
-				g_Log.AddMessageFormat("Using: %s   Failed: %d",
+				g_Logs.script->debug("Using: %v   Failed: %v",
 						abptr->GetRowAsCString(Ability2::ABROW::NAME),
 						g_AbilityManager.GetAbilityErrorCode(r));
 			}
@@ -412,7 +413,7 @@ AINutPlayer * AINutManager::AddActiveScript(CreatureInstance *creature,
 	player->mArgs = args;
 	player->Initialize(creature, def, errors);
 	if (errors.length() > 0)
-		g_Log.AddMessageFormat("Failed to compile %s. %s",
+		g_Logs.script->error("Failed to compile %v. %v",
 				def->scriptName.c_str(), errors.c_str());
 	aiAct.push_back(player);
 	return player;
