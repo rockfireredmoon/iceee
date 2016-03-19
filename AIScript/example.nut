@@ -22,5 +22,6 @@ function tryMelee() {
 
 function main() {
 	tryMelee();
-	ai.exec(main);
+	if(ai.has_target())
+		ai.exec(main);
 }
