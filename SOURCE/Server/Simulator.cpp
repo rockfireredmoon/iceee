@@ -9025,8 +9025,8 @@ void SimulatorThread::CheckIfLootReadyToDistribute(ActiveLootContainer *loot,
 			for (unsigned int i = 0; i < party->mMemberList.size(); i++) {
 				// Skip the loot master or robin
 
-				LootTag *tag = party->GetTag(lootTag->mItemId,
-						party->mMemberList[i].mCreaturePtr->CreatureID);
+				LootTag *tag = party->mMemberList[i].IsOnlineAndValid() ? party->GetTag(lootTag->mItemId,
+						party->mMemberList[i].mCreaturePtr->CreatureID) : NULL;
 				if (tag != NULL) {
 					Util::SafeFormat(Aux2, sizeof(Aux2), "%d:%d",
 							tag->mCreatureId, tag->mSlotIndex);
@@ -9046,7 +9046,7 @@ void SimulatorThread::CheckIfLootReadyToDistribute(ActiveLootContainer *loot,
 				receivingCreature->CreatureID);
 		for (unsigned int i = 0; i < party->mMemberList.size(); i++) {
 			if(!party->mMemberList[i].IsOnlineAndValid()) {
-				g_Logs.simulator->info("[%v] Skipping informing %v of the winnner (%v) as they have no simulator", InternalID, party->mMemberList[i].mCreatureID,
+				g_Logs.simulator->info("[%v] Skipping informing %v of the winner (%v) as they have no simulator", InternalID, party->mMemberList[i].mCreatureID,
 						lootTag->mCreatureId);
 				continue;
 			}
