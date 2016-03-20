@@ -8,6 +8,8 @@ LogManager::LogManager() {
 	el::Loggers::addFlag(el::LoggingFlag::NewLineForContainer);
 	el::Loggers::addFlag(el::LoggingFlag::DisableApplicationAbortOnFatalLog);
 	el::Loggers::addFlag(el::LoggingFlag::ColoredTerminalOutput);
+	el::Loggers::addFlag(el::LoggingFlag::HierarchicalLogging);
+	el::Loggers::setLoggingLevel(el::Level::Info);
 
 	server = Loggers::getLogger("server", true);
 	chat = Loggers::getLogger("chat", true);

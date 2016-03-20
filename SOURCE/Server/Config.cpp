@@ -392,6 +392,10 @@ void LoadConfig(const char *filename) {
 				g_Config.HTTPKeepAlive = lfr.BlockToBool(1);
 			else if (strcmp(NameBlock, "LegacyServer") == 0)
 				g_Config.LegacyServer = lfr.BlockToStringC(1, 0);
+			else if (strcmp(NameBlock, "SiteServiceUsername") == 0)
+				g_Config.SiteServiceUsername = lfr.BlockToStringC(1, 0);
+			else if (strcmp(NameBlock, "SiteServicePassword") == 0)
+				g_Config.SiteServicePassword = lfr.BlockToStringC(1, 0);
 			else if (strcmp(NameBlock, "APIAuthentication") == 0)
 				g_Config.APIAuthentication = lfr.BlockToStringC(1, 0);
 			else if (strcmp(NameBlock, "OAuth2Client") == 0) {
@@ -642,6 +646,9 @@ GlobalConfigData::GlobalConfigData() {
 
 	HTTPKeepAlive = 0;
 	DirectoryListing = false;
+
+	SiteServiceUsername = "";
+	SiteServicePassword = "";
 
 	Clans = true;
 	ClanCost = 100000;

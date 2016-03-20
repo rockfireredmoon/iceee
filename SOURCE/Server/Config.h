@@ -245,6 +245,8 @@ public:
 
 	std::string LegacyServer;			// URL of server to transfer groves from
 	std::string APIAuthentication;		// Username:Password to allow API authentication
+	std::string SiteServiceUsername;
+	std::string SiteServicePassword;
 
 	unsigned int ClanCost;
 	bool Clans;

@@ -239,6 +239,7 @@ void RunUpgradeCheck(void);
 void BroadcastLocationToParty(SimulatorThread &player);
 
 char LogBuffer[4096];
+bool crashing;
 
 void Debug_FullDump(void);
 
@@ -259,6 +260,8 @@ void SystemLoop_Console(void);
 
 void segfault_sigaction(int signum, siginfo_t *si, void *arg)
 {
+	crashing = true;
+
 	/* Uninstall signal handlers so if any happen while processing
 	 * this we don't go into a mad loop
 	 */
@@ -345,12 +348,12 @@ void segfault_sigaction(int signum, siginfo_t *si, void *arg)
 	ShutDown();
 	UnloadResources();
 
-	if (signum != SIGTERM && g_Config.ServiceAuthURL.size() > 0) {
+	if (signum != SIGTERM && g_Config.ServiceAuthURL.size() > 0 && g_Config.SiteServiceUsername.size() > 0) {
 		g_Logs.server->fatal("Posting forum report");
 		SiteClient siteClient(g_Config.ServiceAuthURL);
 		HTTPD::SiteSession siteSession;
 		siteClient.refreshXCSRF(&siteSession);
-		siteClient.login(&siteSession, "emerald", "raschid123#");
+		siteClient.login(&siteSession, g_Config.SiteServiceUsername, g_Config.SiteServicePassword);
 		if (siteClient.postCrashReport(&siteSession, signum) == 0) {
 			g_Logs.server->fatal("Posted forum report");
 		} else {
@@ -554,9 +557,35 @@ int InitServerMain(int argc, char *argv[]) {
 		else if(strcmp(argv[i], "-I") == 0) {
 			el::Loggers::addFlag(el::LoggingFlag::ImmediateFlush);
 		}
+		else if(strcmp(argv[i], "-L") == 0) {
+			i++;
+			if(i < argc) {
+				std::string str = argv[i];
+				Util::ToLowerCase(str);
+				if(str.compare("info") == 0) {
+					el::Loggers::setLoggingLevel(el::Level::Info);
+				}
+				else if(str.compare("debug") == 0) {
+					el::Loggers::setLoggingLevel(el::Level::Debug);
+				}
+				else if(str.compare("error") == 0) {
+					el::Loggers::setLoggingLevel(el::Level::Error);
+				}
+				else if(str.compare("fatal") == 0) {
+					el::Loggers::setLoggingLevel(el::Level::Fatal);
+				}
+				else if(str.compare("trace") == 0) {
+					el::Loggers::setLoggingLevel(el::Level::Trace);
+				}
+				else if(str.compare("verbose") == 0) {
+					el::Loggers::setLoggingLevel(el::Level::Verbose);
+				}
+				else if(str.compare("warning") == 0) {
+					el::Loggers::setLoggingLevel(el::Level::Warning);
+				}
+			}
+		}
 	}
-
-	START_EASYLOGGINGPP(argc, argv);
 
 	curl_global_init(CURL_GLOBAL_DEFAULT);
 	bcm.mlog.reserve(100);
@@ -1046,10 +1075,12 @@ void SystemLoop_Windows(void)
 	} //End try
 	BEGINCATCH
 	{
-		POPUP_MESSAGE("An exception occurred, shutting down.", "Critical Error");
-		Debug_FullDump();
-		ShutDown();
-		Exception = true;
+		if(!crashing) {
+			POPUP_MESSAGE("An exception occurred, shutting down.", "Critical Error");
+			Debug_FullDump();
+			ShutDown();
+			Exception = true;
+		}
 	}
 
 }
@@ -1067,7 +1098,11 @@ void SystemLoop_Console(void)
 	} //End try
 	BEGINCATCH
 	{
-		Debug_FullDump();
+		if(crashing) {
+			g_Logs.server->fatal("Exception occurred while handling a crash.");
+		} else {
+			Debug_FullDump();
+		}
 	}
 }
 
@@ -1595,7 +1630,7 @@ void Debug_OutputCharacter(FILE *output, int index, CreatureInstance *cInst)
 	}
 	fprintf(output, "    Target: %s (Ptr: %p)\r\n", (cInst->CurrentTarget.targ != NULL) ? cInst->CurrentTarget.targ->css.display_name : "null", cInst->CurrentTarget.targ);
 	fprintf(output, "    Might: %d (%d), Will: %d (%d)\r\n", cInst->css.might, cInst->css.might_charges, cInst->css.will, cInst->css.will_charges);
-	if(cInst->charPtr != NULL)
+	if(cInst->serverFlags & ServerFlags::IsPlayer)
 	{
 		QuestReferenceContainer act = cInst->charPtr->questJournal.activeQuests;
 		for(std::vector<QuestReference>::iterator it = act.itemList.begin(); it != act.itemList.end(); ++it) {
@@ -1641,11 +1676,10 @@ void Debug_OutputCharacter(FILE *output, int index, CreatureInstance *cInst)
 
 void Debug_FullDump(void)
 {
-	g_Logs.server->info("Writing crash dump");
+	g_Logs.server->fatal("Writing crash dump.");
 	FILE *output = fopen("crash_dump.txt", "wb");
 	if(output == NULL)
 		return;
-	g_Logs.server->fatal("Writing crash dump.");
 
 	fprintf(output, "Account Data:\r\n");
 	g_AccountManager.cs.Enter("Debug_FullDump");

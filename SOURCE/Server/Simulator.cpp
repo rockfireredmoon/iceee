@@ -2666,6 +2666,13 @@ void SimulatorThread::SetLoadingStatus(bool status, bool shutdown) {
 						PrepExt_SendInfoMessage(SendBuf, buf, INFOMSG_INFO));
 			}
 
+
+			char buf[256];
+			std::vector<std::string> l;
+			Util::Split(Util::CaptureCommand(buf), "\r", l);
+			for(auto it = l.begin(); it != l.end(); ++it)
+				AttemptSend(SendBuf,PrepExt_SendInfoMessage(SendBuf, (*it).c_str(), INFOMSG_INFO));
+
 			LoadStage = LOADSTAGE_LOADED; //Initial loading screen is finished, players should be able to control their characters.
 		}
 	}
