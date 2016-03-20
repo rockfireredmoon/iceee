@@ -12829,6 +12829,12 @@ int SimulatorThread :: OfferLoot(int mode, ActiveLootContainer *loot, ActivePart
 	LogMessageL(MSG_SHOW, "Offering to %d party member", party->mMemberList.size());
 	int offers = 0;
 	for(uint i = 0 ; i < party->mMemberList.size(); i++) {
+
+		if(!party->mMemberList[i].IsOnlineAndValid()) {
+			g_Log.AddMessageFormat("[%d] Skipping party member %d because they have no simulator", InternalID, party->mMemberList[i].mCreatureID);
+			continue;
+		}
+
 		if(receivingCreature == NULL || party->mMemberList[i].mCreatureID != receivingCreature->CreatureID) {
 			// Only send offer to players in range
 			int distCheck = protected_CheckDistanceBetweenCreaturesFor(party->mMemberList[i].mCreaturePtr, CID, PARTY_LOOT_RANGE);
@@ -15333,7 +15339,7 @@ void SimulatorThread :: CheckIfLootReadyToDistribute(ActiveLootContainer *loot, 
 			for(uint i = 0 ; i < party->mMemberList.size(); i++) {
 				// Skip the loot master or robin
 
-				LootTag *tag = party->GetTag(lootTag->mItemId, party->mMemberList[i].mCreaturePtr->CreatureID);
+				LootTag *tag = party->mMemberList[i].IsOnlineAndValid() ? party->GetTag(lootTag->mItemId, party->mMemberList[i].mCreaturePtr->CreatureID) : NULL;
 				if(tag != NULL)
 				{
 					Util::SafeFormat(Aux2, sizeof(Aux2), "%d:%d", tag->mCreatureId, tag->mSlotIndex);
@@ -15351,6 +15357,12 @@ void SimulatorThread :: CheckIfLootReadyToDistribute(ActiveLootContainer *loot, 
 		LootTag *winnerTag = party->GetTag(lootTag->mItemId, receivingCreature->CreatureID);
 		for(uint i = 0 ; i < party->mMemberList.size(); i++)
 		{
+			if(!party->mMemberList[i].IsOnlineAndValid()) {
+				g_Log.AddMessageFormat("[%d] Skipping informing %d of the winner (%d) as they have no simulator", InternalID, party->mMemberList[i].mCreatureID,
+						lootTag->mCreatureId);
+				continue;
+			}
+
 			LogMessageL(MSG_WARN, "Informing %d of the winner (%d)", party->mMemberList[i].mCreaturePtr->CreatureID, lootTag->mCreatureId);
 			LootTag *tag = party->GetTag(lootTag->mItemId, party->mMemberList[i].mCreaturePtr->CreatureID);
 			if(tag != NULL)

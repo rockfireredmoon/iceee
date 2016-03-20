@@ -11,6 +11,13 @@ PartyManager g_PartyManager;
 static int lootSeq = 0;
 typedef std::map<int, LootTag*>::iterator it_type;
 
+bool PartyMember :: IsOnlineAndValid() {
+	return mSocket != SocketClass::Invalid_Socket && mCreaturePtr != NULL && mCreaturePtr->simulatorPtr != NULL;
+}
+bool PartyMember :: IsOnline() {
+	return mSocket != SocketClass::Invalid_Socket;
+}
+
 LootTag :: LootTag(int itemId, int creatureId, int lootCreatureId)
 {
 	lootTag = ++lootSeq;
@@ -127,6 +134,7 @@ PartyMember* ActiveParty :: GetMemberByID(int memberID)
 
 PartyMember* ActiveParty :: GetNextLooter()
 {
+	for(int i = 0 ; i < mMemberList.size(); i++) {
 	if(mNextToGetLoot >= mMemberList.size()) {
 		mNextToGetLoot = 0;
 	}
@@ -134,7 +142,13 @@ PartyMember* ActiveParty :: GetNextLooter()
 		return NULL;
 	}
 	mNextToGetLoot++;
-	return &mMemberList[mNextToGetLoot - 1];
+		PartyMember* m = &mMemberList[mNextToGetLoot - 1];
+		if(m->IsOnlineAndValid())
+			return m;
+		g_Log.AddMessageFormat("[DEBUG] %d (%s) is next in round robin, but they no longer have a simulator",
+				m->mCreatureID, m->mDisplayName.c_str());
+	}
+	return NULL;
 }
 
 PartyMember* ActiveParty :: GetMemberByDefID(int memberDefID)
@@ -182,7 +196,7 @@ void ActiveParty :: RebroadCastMemberList(char *buffer)
 {
 	for(size_t i = 0; i < mMemberList.size(); i++)
 	{
-		if(mMemberList[i].mSocket == SocketClass::Invalid_Socket)
+		if(!mMemberList[i].IsOnlineAndValid())
 			continue;
 		int wpos = PartyManager::WriteMemberList(buffer, this, mMemberList[i].mCreatureID);
 		g_PacketManager.ExternalAddPacket(mMemberList[i].mSocket, buffer, wpos);
@@ -193,7 +207,7 @@ void ActiveParty :: DebugDestroyParty(const char *buffer, int length)
 {
 	for(size_t i = 0; i < mMemberList.size(); i++)
 	{
-		if(mMemberList[i].mSocket != SocketClass::Invalid_Socket)
+		if(mMemberList[i].IsOnline())
 			g_PacketManager.ExternalAddPacket(mMemberList[i].mSocket, buffer, length);
 		if(mMemberList[i].mCreaturePtr != NULL)
 			mMemberList[i].mCreaturePtr->PartyID = 0;
@@ -243,7 +257,7 @@ void ActiveParty:: BroadcastInfoMessageToAllMembers(const char *buffer)
 void ActiveParty :: BroadCast(const char *buffer, int length)
 {
 	for(size_t i = 0; i < mMemberList.size(); i++)
-		if(mMemberList[i].mSocket != SocketClass::Invalid_Socket)
+		if(mMemberList[i].IsOnline())
 			g_PacketManager.ExternalAddPacket(mMemberList[i].mSocket, buffer, length);
 }
 
@@ -251,7 +265,7 @@ void ActiveParty :: BroadCastExcept(const char *buffer, int length, int excludeD
 {
 	for(size_t i = 0; i < mMemberList.size(); i++)
 		if(mMemberList[i].mCreatureDefID != excludeDefID)
-			if(mMemberList[i].mSocket != SocketClass::Invalid_Socket)
+			if(mMemberList[i].IsOnline())
 				g_PacketManager.ExternalAddPacket(mMemberList[i].mSocket, buffer, length);
 }
 
@@ -261,7 +275,7 @@ void ActiveParty :: BroadCastTo(const char *buffer, int length, int creatureDefI
 	{
 		if(mMemberList[i].mCreatureDefID == creatureDefID)
 		{
-			if(mMemberList[i].mSocket != SocketClass::Invalid_Socket)
+			if(mMemberList[i].IsOnline())
 			{
 				g_PacketManager.ExternalAddPacket(mMemberList[i].mSocket, buffer, length);
 				return;
