@@ -26,8 +26,8 @@ Scale=3,3,3
 ID=1133453
 Asset=Prop-Interact1#Prop-Interact_Rectangle
 Name=
-Pos=55347.8,367.999,67714.3
-Orient=0,0,0.707107,0.707107
+Pos=55344.8,383.046,67714.5
+Orient=0,0,0.748235,0.663433
 Scale=2,2,2
 
 [ENTRY]
@@ -37,6 +37,15 @@ Name=
 Pos=55075.7,302.664,67681.4
 Orient=0,0,0,1
 Scale=1,1,1
+
+[ENTRY]
+ID=1133457
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=55315.3,462.692,67789.9
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#F1572
 
 [ENTRY]
 ID=1358955238
@@ -372,7 +381,7 @@ Scale=1.25,1.25,1.25
 ID=1358964487
 Asset=Bldg-Camelot8b?ATS=ATS-Castle_Camelot
 Name=Untitled
-Pos=55340,305,67805
+Pos=55340,305,67793.9
 Orient=0,0.696707,0,0.717356
 Scale=1.25,1.25,1.25
 Flags=1
