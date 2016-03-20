@@ -992,7 +992,7 @@ mArmorType=1
 [ENTRY]
 mID=7121
 mType=3
-mDisplayName=Royal Commander Kilt
+mDisplayName=Royal Commander Pants
 mAppearance=[{["c"]={["colors"]=["fff8dc","fff8dc","fff8dc","fff8dc","fff8dc","fff8dc"],["type"]="Armor-Light-Mid4"}}]
 mIcon=Icon-32-C_Armor-Legs04.png|Icon-32-BG-Aqua.png
 mLevel=20
