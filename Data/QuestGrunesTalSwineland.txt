@@ -699,11 +699,6 @@ Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=22386,380,76723,9;
 
-
-
-
-
-
 [ENTRY]
 ID=794
 Title=A Forgotten Epoch
@@ -859,8 +854,6 @@ Obj.0.completeText=
 Obj.0.markerLocations=42310,737.331,66784,81;
 RewardItem.0=7066,1,1
 
-
-
 [ENTRY]
 Requires=796
 ID=797
@@ -953,7 +946,7 @@ BodyText="I see you've been entrusted with the key."
 
 Sonny stroked his chin fur.
 
-"I don't know what you did to earn Mike's trust," (neither did you), "but time is a wasting.  In order to light the next orb you'll need to travel to the Gloom Witches lair and obtain fetishes of death from the elemental there."
+"I don't know what you did to earn Mike's trust," (neither did you), "but time is a wasting.  In order to light the next orb you'll need to travel to the Gloom Witches lair and obtain a fetish of death from the elemental there."
 CompleteText="You made it back? Maybe there is something to you."
 Level=20
 Suggested=20
@@ -972,12 +965,12 @@ Heroism=14
 Act.BodyText=Enter the Gloom Witches lair, Cold Storm Cavern in Anglorum, and defeat Stormwitch Cyclona to obtain fetishes of death.
 Obj.0.type=kill
 Obj.0.data1=1841
-Obj.0.data2=5
-Obj.0.description=Collect 5 fetishes of death
+Obj.0.data2=1
+Obj.0.description=Collect the fetish of death
 Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
-Obj.0.completeText=0 of 5
+Obj.0.completeText=0 of 1
 Obj.0.markerLocations=2205.71,248.456,4185.73,27;
 [ACT]
 Act.BodyText=Return to Sonny "The Snail".
@@ -996,7 +989,7 @@ Obj.0.markerLocations=3818,509,2993,60;
 Requires=799
 ID=800
 Title=Life Can Be Alluring
-BodyText="Now that we have the fetishes of death, we need fetishes of life.  You can obtain them from the witchdoctor in the Forest Cavern.  Blah, blah, blah, danger.  Just make it back to me..."
+BodyText="Now that we have the fetish of death, we need the fetish of life.  You can obtain it from the witchdoctor in the Forest Cavern.  Blah, blah, blah, danger.  Just make it back to me..."
 CompleteText="Just as expected!  The next part won't be so easy though."
 Level=20
 Suggested=25
@@ -1012,15 +1005,15 @@ sGiver=3818,509,2993,60
 sEnder=3818,509,2993,60
 Heroism=14
 [ACT]
-Act.BodyText=Enter the Forest Cavern in Midlands, and defeat the witchdoctor to obtain fetishes of life.
+Act.BodyText=Enter the Forest Cavern in Midlands, and defeat the witchdoctor to obtain the fetish of life.
 Obj.0.type=kill
 Obj.0.data1=443
-Obj.0.data2=5
-Obj.0.description=Collect 5 fetishes of life
+Obj.0.data2=1
+Obj.0.description=Collect 1 fetish of life
 Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
-Obj.0.completeText=0 of 5
+Obj.0.completeText=0 of 1
 Obj.0.markerLocations=2253.67,175.626,1093.85,39;
 [ACT]
 Act.BodyText=Return to Sonny "The Snail".
@@ -1039,9 +1032,8 @@ Obj.0.markerLocations=3818,509,2993,60;
 Requires=800
 ID=801
 Title=The Second Empowerment: Magic is King
-BodyText="Well we have the life and death items we need for enchantment,"  Sonny lets out a sigh,  "we just need materials to focus them into the next orb.  Please return to me when you obtain 50 magic essence.  I heard a rumor there is also a vendor for these items in Camelot."
-
-(You must have the Glinting Ring, and it must be unequipped.  You can get Essence of Magic by dismantling rings and amulets of uncommon quality or higher.)
+BodyText="Well we have the life and death items we need for enchantment,"  Sonny lets out a sigh,  "we just need materials to focus them into the next orb.  Please return to me when you obtain 5 magic essence."
+(You must have the Glinting Ring, and it must be unequipped.  You can get Essence of Magic by channeling energy from forgotten shrines hidden across Anglorum and Midlands)
 CompleteText=When you become more experienced (reach level 30) speak to me again.
 Level=20
 Suggested=20
@@ -1057,9 +1049,7 @@ sGiver=3818,509,2993,60
 sEnder=3818,509,2993,60
 Heroism=10
 [ACT]
-Act.BodyText=Talk to Sonny "The Snail" to complete the empowerment.  You must have the Glinting Ring, and it must be unequipped.  You must also have 50 Essence of Magic.  You can get them by dismantling rings and amulets of uncommon quality or higher.
-Obj.0.type=talk
-Obj.0.data1=0
+Act.BodyText=Talk to Sonny "The Snail" to complete the empowerment.  You must have the Glinting Ring, and it must be unequipped.  You must also have 5 Essence of Magic.  You can get them by channeling energy from forgotten shrines hidden across Anglorum and Midlands
 Obj.0.data2=0
 Obj.0.description=Talk to Sonny "The Snail"
 Obj.0.complete=0
@@ -1068,8 +1058,8 @@ Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=3818,509,2993,60;
 RewardItem.0=7068,1,1
-ScriptCompleteCondition=has_item 7067 1;has_item 21430 50
-ScriptCompleteAction=remove_item 7067 1;remove_item 21430 50
+ScriptCompleteCondition=has_item 7067 1;has_item 21430 5
+ScriptCompleteAction=remove_item 7067 1;remove_item 21430 5
 
 
 [ENTRY]
@@ -1129,16 +1119,26 @@ sGiver=7285.25,269.853,60835.7,9
 sEnder=7285.25,269.853,60835.7,9
 Heroism=14
 [ACT]
-Act.BodyText=Kill 500 shadows.  Hell Twelve will think you're cool.
+Act.BodyText=Kill 50 shadows.  Hell Twelve will think you're cool.
 Obj.0.type=kill
 Obj.0.data1=650,651,980
-Obj.0.data2=500
-Obj.0.description=Kill 500 shadows
+Obj.0.data2=50
+Obj.0.description=Kill 50 shadows
 Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
-Obj.0.completeText=0 of 500
+Obj.0.completeText=0 of 50
 Obj.0.markerLocations=8269.53,274.779,60566.6,9;
+[ACT]
+Act.BodyText=Kill Casiel "The Guardian."  Hell Twelve will think you're really cool!
+Obj.0.type=kill
+Obj.0.data1=3691
+Obj.0.data2=1
+Obj.0.description=Kill Casiel
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 1
+Obj.0.markerLocations=8302.64,265,60397,9
 [ACT]
 Act.BodyText=Return to Hell Twelve.
 Obj.0.type=talk
@@ -1229,7 +1229,7 @@ Suggested=40
 Exp=12000
 PartySize=5
 NumRewards=0
-Coin=50000
+Coin=150000
 Unabandon=0
 QuestGiverID=3628
 QuestEnderID=3628

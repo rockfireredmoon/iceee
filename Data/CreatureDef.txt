@@ -10687,18 +10687,18 @@ total_size=25
 [ENTRY]
 ID=443
 ExtraData=namedmob=1
-strength=29
-dexterity=29
-constitution=43
-psyche=37
-spirit=43
-base_damage_melee=53
+strength=54
+dexterity=54
+constitution=80
+psyche=85
+spirit=85
+base_damage_melee=75
 damage_resist_melee=1255
 damage_resist_fire=1255
 damage_resist_frost=1255
 damage_resist_mystic=1092
 damage_resist_death=2184
-base_health=237
+base_health=700
 will_regen=1
 might_regen=1
 offhand_weapon_damage=500
@@ -10706,12 +10706,12 @@ casting_setback_chance=500
 channeling_break_chance=500
 appearance=c2:{["a"]=[{["type"]="Armor-Cloth-Epic3-Helmet",["node"]="helmet",["colors"]=["8F8577","3F3634","944D0D","940000"]},{["type"]="Item-1hMace-Medium5",["node"]="right_hand"}],["c"]={["leggings"]={["type"]="Armor-Medium-High1",["colors"]=["947d07","67553b","947d07","f7941d","f7941d","4c3930"]},["collar"]={["type"]="Armor-Medium-Low1",["colors"]=["67553b","947d07","f7941d","6d7f69"]},["belt"]={["type"]="Armor-Light-Mid4",["colors"]=["f7941d","67553b","6d7f69","947d07","7c6c63"]},["gloves"]={["type"]="Armor-Medium-Low1",["colors"]=["67553b","f7941d","6d7f69","947d07"]}},["b"]="n",["sk"]={["hands_feet"]="6A6A6A",["goatee"]="AA0F0F",["eye_white"]="000000",["snout"]="7F2222",["horns"]="E96A6A",["face_highlight"]="AAAAAA",["eye"]="940D0D",["hoves"]="7F7F7F",["eye_lid"]="7F2222",["base"]="7F1100"},["sz"]="1.3",["h"]=1,["g"]="m",["r"]="c"}
 level=25
-rarity=1
+rarity=2
 display_name=Frietz Splithoof
 sub_name=Witchdoctor
 profession=5
 creature_category=Mortal
-ai_package=death_creature_brave_6
+ai_package=custom_heathendel_deathdruid40
 total_size=5
 
 [ENTRY]
@@ -42738,18 +42738,18 @@ total_size=7
 [ENTRY]
 ID=1841
 ExtraData=namedmob=1
-strength=39
-dexterity=47
-constitution=39
-psyche=85
-spirit=79
-base_damage_melee=41
+strength=65
+dexterity=65
+constitution=75
+psyche=90
+spirit=87
+base_damage_melee=65
 damage_resist_melee=774
 damage_resist_fire=1354
 damage_resist_frost=1354
 damage_resist_mystic=928
 damage_resist_death=928
-base_health=429
+base_health=750
 will_regen=1
 might_regen=1
 offhand_weapon_damage=500
@@ -42761,7 +42761,7 @@ display_name=Stormwitch Cyclona
 profession=4
 creature_category=Mortal
 rarity=2
-ai_package=mage_frost_brave_6
+ai_package=custom_heathendel_mage40
 total_size=2
 
 [ENTRY]
