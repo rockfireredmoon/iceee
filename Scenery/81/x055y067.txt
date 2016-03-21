@@ -26,7 +26,7 @@ Scale=3,3,3
 ID=1133453
 Asset=Prop-Interact1#Prop-Interact_Rectangle
 Name=Untitled
-Pos=55344.8,383.046,67714.5
+Pos=55342,387.563,67711.7
 Orient=0,0,0.748235,0.663433
 Scale=2,2,2
 
@@ -46,6 +46,14 @@ Pos=55328.4,417.569,67781.3
 Orient=0,0.0149994,0,0.999888
 Scale=1,1,1
 spawnPackage=#F1572
+
+[ENTRY]
+ID=1133461
+Asset=Prop-Loot1#Prop-Loot-Bag1
+Name=
+Pos=55327.4,410.318,67780
+Orient=0,0,0,337.082
+Scale=2,2,2
 
 [ENTRY]
 ID=1358955238
@@ -615,4 +623,5 @@ Pos=55275.7,303.525,67805.3
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=HOLIDAY_Easter_Egg
+mobTotal=1
 
