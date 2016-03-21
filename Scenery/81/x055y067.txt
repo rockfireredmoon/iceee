@@ -17,7 +17,7 @@ Scale=1.425,1.425,1.425
 [ENTRY]
 ID=1133452
 Asset=CL-Rock-Clutter
-Name=
+Name=Untitled
 Pos=55089.9,290.834,67685.8
 Orient=0,0,0,1
 Scale=3,3,3
@@ -25,7 +25,7 @@ Scale=3,3,3
 [ENTRY]
 ID=1133453
 Asset=Prop-Interact1#Prop-Interact_Rectangle
-Name=
+Name=Untitled
 Pos=55344.8,383.046,67714.5
 Orient=0,0,0.748235,0.663433
 Scale=2,2,2
@@ -33,7 +33,7 @@ Scale=2,2,2
 [ENTRY]
 ID=1133456
 Asset=CL-Hills#CL-Hills_Bush5
-Name=
+Name=Untitled
 Pos=55075.7,302.664,67681.4
 Orient=0,0,0,1
 Scale=1,1,1
@@ -41,20 +41,11 @@ Scale=1,1,1
 [ENTRY]
 ID=1133457
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
-Pos=55315.3,462.692,67789.9
+Name=Untitled
+Pos=55292.1,462.923,67785.3
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=#F1572
-
-[ENTRY]
-ID=1133458
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=
-Pos=55305.1,442.129,67660
-Orient=0,0,0,1
-Scale=1,1,1
-spawnPackage=#3133
 
 [ENTRY]
 ID=1358955238
