@@ -55,7 +55,7 @@ defHints=8
 ID=4504
 will_regen=1
 might_regen=1
-appearance=p1:{["a"]="Prop-Loot-Boss_Chest1"}
+appearance=p1:{["a"]="Prop-Loot-Gold_Chest1"}
 level=1
 display_name=Bounders Day Treasure
 profession=1
@@ -70,7 +70,7 @@ defHints=8
 ID=4505
 will_regen=1
 might_regen=1
-appearance=p1:{["a"]="Prop-Loot-Boss_Chest1"}
+appearance=p1:{["a"]="Prop-Loot-Gold_Chest1"}
 level=1
 display_name=Bounders Day Treasure
 profession=1
@@ -85,7 +85,7 @@ defHints=8
 ID=4506
 will_regen=1
 might_regen=1
-appearance=p1:{["a"]="Prop-Loot-Boss_Chest1"}
+appearance=p1:{["a"]="Prop-Loot-Gold_Chest1"}
 level=1
 display_name=Bounders Day Treasure
 profession=1

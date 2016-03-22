@@ -590,15 +590,28 @@ Item=10030,1  ; Ossuary Relic - M
 Item=10031,1  ; Rusted Burial Sword - K
 Item=10033,1  ; Rusted Burial Knives - R
 
-; Bounders Day Rewards - Camelot
+; Bounders Day Rewards - Bremen
 [ENTRY]
-CratureDefID=4504
-EssenceID=7521
-Item=7500,1	; Eggcellent Wand
-Item=7503,1	; Eggacutioner
-Item=7506,1	; Spring Sword
-Item=7509,1	; Pastel Staff
-Item=7512,1	; Renewal Shield
-Item=7515,1	; Pastel Bow
-Item=7518,1	; Lucky Rabbits Foot
+CratureDefID=4505
+EssenceID=7522
+Item=7501,1	; Eggcellent Wand
+Item=7504,1	; Eggacutioner
+Item=7507,1	; Spring Sword
+Item=7510,1	; Pastel Staff
+Item=7513,1	; Renewal Shield
+Item=7516,1	; Pastel Bow
+Item=7519,1	; Lucky Rabbits Foot
+Item=5783,1 ; Bunny Ears
+
+; Bounders Day Rewards - Heartwood
+[ENTRY]
+CratureDefID=4506
+EssenceID=7523
+Item=7502,1	; Eggcellent Wand
+Item=7505,1	; Eggacutioner
+Item=7508,1	; Spring Sword
+Item=7511,1	; Pastel Staff
+Item=7514,1	; Renewal Shield
+Item=7517,1	; Pastel Bow
+Item=7520,1	; Lucky Rabbits Foot
 Item=5783,1 ; Bunny Ears
