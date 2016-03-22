@@ -589,3 +589,16 @@ Item=10009,1  ; Death Chanter Bow - D
 Item=10030,1  ; Ossuary Relic - M
 Item=10031,1  ; Rusted Burial Sword - K
 Item=10033,1  ; Rusted Burial Knives - R
+
+; Bounders Day Rewards - Camelot
+[ENTRY]
+CratureDefID=4504
+EssenceID=7521
+Item=7500,1	; Eggcellent Wand
+Item=7503,1	; Eggacutioner
+Item=7506,1	; Spring Sword
+Item=7509,1	; Pastel Staff
+Item=7512,1	; Renewal Shield
+Item=7515,1	; Pastel Bow
+Item=7518,1	; Lucky Rabbits Foot
+Item=5783,1 ; Bunny Ears
