@@ -2005,11 +2005,11 @@ creature_category=Mortal
 ai_package=example
 rarity=1
 
-[Entry]
+[ENTRY]
 ID=7862
 strength=180
 dexterity=180
-consitution=230
+constitution=230
 psyche=180
 spirit=180
 base_damage_melee=105

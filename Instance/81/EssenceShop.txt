@@ -213,7 +213,7 @@ Item=143569,3
 
 ; Bounders Day Rewards - Camelot
 [ENTRY]
-CratureDefID=4504
+CreatureDefID=4504
 EssenceID=7521
 Item=7500,1	; Eggcellent Wand
 Item=7503,1	; Eggacutioner

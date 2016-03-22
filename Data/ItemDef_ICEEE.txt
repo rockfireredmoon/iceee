@@ -4,7 +4,7 @@ mType=2
 mDisplayName=Eggcellent Wand 
 mAppearance=[{["a"]={["type"]="Item-Wand-Medium2",["node"]="right_hand",["colors"]=["00FFFF","07D498","D49053"],["effect"]="Par-DizzyStars"}},null]
 mIcon=Icon-32-Staff1.png|Icon-32-BG-Blue.png
-mLevel=16
+mLevel=17
 mBindingType=1
 mEquipType=6
 mWeaponType=5
@@ -14,7 +14,7 @@ mBonusPsyche=4
 mBonusConstitution=2
 mValue=669
 mQualityLevel=3
-mMinUseLevel=16
+mMinUseLevel=17
 
 [ENTRY]
 mID=7501
@@ -110,7 +110,6 @@ mMinUseLevel=33
 mID=7506
 mType=2
 mDisplayName=Spring Sword
-{["a"]={["type"]="Item-1hSword-Medium5"}}
 mAppearance=[{["a"]={["type"]="Item-1hSword-Basic10",["colors"]=["455555","150E05","150E05"]}},null]
 mIcon=Icon-32-1hSword_Basic1.png|Icon-32-BG-Blue.png
 mLevel=17
@@ -130,7 +129,6 @@ mMinUseLevel=17
 mID=7507
 mType=2
 mDisplayName=Spring Sword
-{["a"]={["type"]="Item-1hSword-Medium5"}}
 mAppearance=[{["a"]={["type"]="Item-1hSword-Basic10",["colors"]=["455555","150E05","150E05"]}},null]
 mIcon=Icon-32-1hSword_Basic1.png|Icon-32-BG-Blue.png
 mLevel=27
@@ -150,7 +148,6 @@ mMinUseLevel=27
 mID=7508
 mType=2
 mDisplayName=Spring Sword
-{["a"]={["type"]="Item-1hSword-Medium5"}}
 mAppearance=[{["a"]={["type"]="Item-1hSword-Basic10",["colors"]=["455555","150E05","150E05"]}},null]
 mIcon=Icon-32-1hSword_Basic1.png|Icon-32-BG-Blue.png
 mLevel=33
@@ -239,7 +236,7 @@ mBonusConstitution=6
 mValue=807
 mQualityLevel=3
 mMinUseLevel=17
-mods=mod_health_regen=1
+mRegenHealthMod=1
 
 [ENTRY]
 mID=7513
@@ -260,7 +257,7 @@ mBonusConstitution=6
 mValue=1744
 mQualityLevel=3
 mMinUseLevel=17
-mods=mod_health_regen=1
+mRegenHealthMod=1
 
 [ENTRY]
 mID=7514
@@ -281,7 +278,7 @@ mBonusConstitution=8
 mValue=2338
 mQualityLevel=3
 mMinUseLevel=33
-mods=mod_health_regen=1
+mRegenHealthMod=1
 
 [ENTRY]
 mID=7515
@@ -354,7 +351,7 @@ mArmorResistFire=10
 mValue=902
 mQualityLevel=3
 mMinUseLevel=17
-mods=mod_magic_to_crit=10
+mMagicCritMod=10
 
 [ENTRY]
 mID=7519
@@ -373,7 +370,7 @@ mArmorResistFire=20
 mValue=1802
 mQualityLevel=3
 mMinUseLevel=27
-mods=mod_magic_to_crit=10
+mMagicCritMod=10
 
 [ENTRY]
 mID=7520
@@ -392,7 +389,7 @@ mArmorResistFire=25
 mValue=1802
 mQualityLevel=3
 mMinUseLevel=33
-mods=mod_magic_to_crit=10
+mMagicCritMod=10
 
 [ENTRY]
 mID=7521

@@ -592,7 +592,7 @@ Item=10033,1  ; Rusted Burial Knives - R
 
 ; Bounders Day Rewards - Bremen
 [ENTRY]
-CratureDefID=4505
+CreatureDefID=4505
 EssenceID=7522
 Item=7501,1	; Eggcellent Wand
 Item=7504,1	; Eggacutioner
@@ -605,7 +605,7 @@ Item=5783,1 ; Bunny Ears
 
 ; Bounders Day Rewards - Heartwood
 [ENTRY]
-CratureDefID=4506
+CreatureDefID=4506
 EssenceID=7523
 Item=7502,1	; Eggcellent Wand
 Item=7505,1	; Eggacutioner
