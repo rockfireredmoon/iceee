@@ -46,7 +46,7 @@ Obj.0.myCreatureDefID=4500
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=43662.1,188.455,65704.0,81;
-RewardItem.0=7521,1,0
+RewardItem.0=7521,1,1
 
 //[ENTRY]
 //ID=643
@@ -58,10 +58,9 @@ RewardItem.0=7521,1,0
 //CompleteText=You have a true skill for finding hidden eggs my friend. Take a well-deserved Bounders Day reward!  
 //Level=15
 //Suggested=15
-//Exp=2
+//Exp=1
 //PartySize=1
-//NumRewards=1
-//Coin=23
+//Coin=1
 //Unabandon=0
 //QuestGiverID=4500
 //QuestEnderID=4500
@@ -69,7 +68,6 @@ RewardItem.0=7521,1,0
 //RepeatDelay=1D
 //sGiver=43644.0,195.418,65700.0,81
 //sEnder=43644.0,195.418,65700.0,81
-//Heroism=6
 //[ACT]
 //Act.BodyText=Gather 7 Emerald Eggs.
 //Obj.0.type=gather
@@ -143,7 +141,7 @@ Obj.0.myCreatureDefID=4501
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=43662.1,188.455,65704.0,9;
-RewardItem.0=7521,1,0
+RewardItem.0=7521,1,1
 
 //[ENTRY]
 //ID=645
@@ -156,10 +154,9 @@ RewardItem.0=7521,1,0
 //Level=25
 //RepeatDelay=1D
 //Suggested=25
-//Exp=4
+//Exp=1
 //PartySize=1
-//NumRewards=1
-//Coin=46
+//Coin=1
 //Unabandon=0
 //QuestGiverID=4501
 //QuestEnderID=4501
@@ -213,9 +210,8 @@ Unabandon=0
 QuestGiverID=4502
 QuestEnderID=4502
 Repeat=1
-sGiver=43644.0,195.418,65700.0,9
-sEnder=43644.0,195.418,65700.0,9
-Heroism=6
+sGiver=28950.3,508.002,62973.2,9
+sEnder=28950.3,508.002,62973.2,9
 [ACT]
 Act.BodyText=Gather 7 Emerald Eggs.
 Obj.0.type=gather
@@ -226,7 +222,7 @@ Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=500296
 Obj.0.completeText=0 of 7
-Obj.0.markerLocations=45803.5,176.013,67018.4,9;
+Obj.0.markerLocations=28950.3,508.002,62973.2,9;
 Obj.0.ActivateTime=2000
 Obj.0.ActivateText=Taking Egg!
 [ACT]
@@ -239,8 +235,8 @@ Obj.0.complete=0
 Obj.0.myCreatureDefID=4502
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=43662.1,188.455,65704.0,9;
-RewardItem.0=7521,1,0
+Obj.0.markerLocations=28950.3,508.002,62973.2,9;
+RewardItem.0=7521,1,1
 
 //[ENTRY]
 //ID=647
@@ -254,15 +250,14 @@ RewardItem.0=7521,1,0
 //Suggested=25
 //Exp=8
 //PartySize=1
-//NumRewards=1
 //Coin=65
 //Unabandon=0
 //QuestGiverID=4502
 //QuestEnderID=4502
 //Repeat=1
 //RepeatDelay=1D
-//sGiver=43644.0,195.418,65700.0,9
-//sEnder=43644.0,195.418,65700.0,9
+//sGiver=28950.3,508.002,62973.2,9
+//sEnder=28950.3,508.002,62973.2,9
 //Heroism=6
 //[ACT]
 //Act.BodyText=Gather 7 Emerald Eggs.
@@ -318,4 +313,4 @@ Obj.0.myCreatureDefID=4500
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=43662.1,188.455,65704.0,81;
-RewardItem.0=7524,1,0
+RewardItem.0=7524,1,1
