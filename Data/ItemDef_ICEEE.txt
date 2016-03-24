@@ -129,7 +129,7 @@ mMinUseLevel=17
 mID=7507
 mType=2
 mDisplayName=Spring Sword
-mAppearance=[{["a"]={["type"]="Item-1hSword-Basic10",["colors"]=["455555","150E05","150E05"]}},null]
+mAppearance=[{["a"]={["type"]="Item-1hSword-Medium5",["colors"]=["455555","150E05","150E05"]}},null]
 mIcon=Icon-32-1hSword_Basic1.png|Icon-32-BG-Blue.png
 mLevel=27
 mQualityLevel=3
@@ -148,7 +148,7 @@ mMinUseLevel=27
 mID=7508
 mType=2
 mDisplayName=Spring Sword
-mAppearance=[{["a"]={["type"]="Item-1hSword-Basic10",["colors"]=["455555","150E05","150E05"]}},null]
+mAppearance=[{["a"]={["type"]="Item-1hSword-Medium5",["colors"]=["455555","150E05","150E05"]}},null]
 mIcon=Icon-32-1hSword_Basic1.png|Icon-32-BG-Blue.png
 mLevel=33
 mQualityLevel=3
