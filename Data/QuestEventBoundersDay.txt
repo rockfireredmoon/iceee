@@ -13,7 +13,6 @@ Level=15
 Suggested=15
 Exp=1
 PartySize=1
-NumRewards=1
 Coin=1
 Unabandon=0
 QuestGiverID=4500
@@ -22,7 +21,6 @@ Repeat=1
 RepeatDelay=1D
 sGiver=43644.0,195.418,65700.0,81
 sEnder=43644.0,195.418,65700.0,81
-Heroism=6
 ScriptAcceptCondition=below_level 27
 [ACT]
 Act.BodyText=Gather 7 Emerald Eggs.
@@ -48,7 +46,7 @@ Obj.0.myCreatureDefID=4500
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=43662.1,188.455,65704.0,81;
-RewardItem.0=7521
+RewardItem.0=7521,1,0
 
 //[ENTRY]
 //ID=643
@@ -113,7 +111,6 @@ Level=25
 Suggested=25
 Exp=1
 PartySize=1
-NumRewards=1
 Coin=1
 Unabandon=0
 QuestGiverID=4501
@@ -146,7 +143,7 @@ Obj.0.myCreatureDefID=4501
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=43662.1,188.455,65704.0,9;
-RewardItem.0=7521
+RewardItem.0=7521,1,0
 
 //[ENTRY]
 //ID=645
@@ -211,7 +208,6 @@ Level=25
 Suggested=25
 Exp=1
 PartySize=1
-NumRewards=1
 Coin=1
 Unabandon=0
 QuestGiverID=4502
@@ -244,7 +240,7 @@ Obj.0.myCreatureDefID=4502
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=43662.1,188.455,65704.0,9;
-RewardItem.0=7521
+RewardItem.0=7521,1,0
 
 //[ENTRY]
 //ID=647
@@ -303,7 +299,6 @@ Level=17
 Suggested=17
 Exp=1
 PartySize=1
-NumRewards=1
 Coin=1
 Unabandon=0
 QuestGiverID=4503
@@ -321,4 +316,4 @@ Obj.0.myCreatureDefID=4500
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=43662.1,188.455,65704.0,81;
-RewardItem.0=7524
+RewardItem.0=7524,1,0
