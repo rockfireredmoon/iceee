@@ -110,7 +110,7 @@ mMinUseLevel=33
 mID=7506
 mType=2
 mDisplayName=Spring Sword
-mAppearance=[{["a"]={["type"]="Item-1hSword-Basic10",["colors"]=["455555","150E05","150E05"]}},null]
+mAppearance=[{["a"]={["type"]="Item-1hSword-Medium5"}},null]
 mIcon=Icon-32-1hSword_Basic1.png|Icon-32-BG-Blue.png
 mLevel=17
 mQualityLevel=3
@@ -438,6 +438,38 @@ mValue=1
 mQualityLevel=2
 mMinUseLevel=1
 mFlavorText=Redeem your rewards at Heartwood
+
+[ENTRY]
+mID=7524
+mType=5
+mDisplayName=Holiday Purse
+mAppearance=[{}]
+mIcon=Icon-32-Chest1.png|Icon-32-BG-Blue.png
+mIvType1=1
+mIvMax1=1
+mLevel=1
+mBindingType=1
+mValue=1
+mFlavorText=Double click to open!
+mQualityLevel=3
+mMinUseLevel=17
+Params=credits=1000&abilitypoints=10
+
+[ENTRY]
+mID=7525
+mType=7
+mDisplayName=The Golden Egg
+mIcon=Icon-32-Rabbit_Foot.png|Icon-32-BG-Green.png
+mIvType1=1
+mIvMax1=20
+mIvType2=8
+mIvMax2=1
+mLevel=1
+mBindingType=1
+mValue=1
+mQualityLevel=2
+mMinUseLevel=1
+mFlavorText=Redeem your rewards at Camelot
 
 [ENTRY]
 mID=8001
