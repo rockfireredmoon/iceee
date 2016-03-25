@@ -42,7 +42,7 @@ ID=4503
 will_regen=1
 might_regen=1
 appearance=n4:{["sk"]={["third"]="FFFE53",["first"]="FFFE7E",["second"]="D4D300",["fourth"]="FFFD00",["fifth"]="FFFE53"},["c"]="Horde-Easter_Egg",["sz"]=".2"}
-level=55
+level=1
 display_name=The Golden Egg
 profession=1
 creature_category=Inanimate
@@ -57,7 +57,7 @@ will_regen=1
 might_regen=1
 appearance=p1:{["a"]="Prop-Loot-Gold_Chest1"}
 level=1
-display_name=Bounders Day Treasure
+display_name=Bounders Day Chest of Gold
 profession=1
 creature_category=Inanimate
 rarity=1
@@ -72,7 +72,7 @@ will_regen=1
 might_regen=1
 appearance=p1:{["a"]="Prop-Loot-Gold_Chest1"}
 level=1
-display_name=Bounders Day Treasure
+display_name=Bounders Day Chest of Gold
 profession=1
 creature_category=Inanimate
 rarity=1
@@ -87,7 +87,7 @@ will_regen=1
 might_regen=1
 appearance=p1:{["a"]="Prop-Loot-Gold_Chest1"}
 level=1
-display_name=Bounders Day Treasure
+display_name=Bounders Day Chest of Gold
 profession=1
 creature_category=Inanimate
 rarity=1
