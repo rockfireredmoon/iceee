@@ -9,7 +9,7 @@ Bring me seven of these Emerald Eggs and I will provide you with some Bounder-ri
 CompleteText=I count seven Emerald Eggs, good for you! 
 
 Has Bounders Day taught you the importance of peace and how we must strive to preserve it? Did you at least have fun looking for the eggs?! 
-Level=15
+Level=10
 Suggested=15
 Exp=1
 PartySize=1
@@ -201,8 +201,8 @@ Bring me seven of these Emerald Eggs and I will provide you with some Bounder-ri
 CompleteText=I count seven Emerald Eggs, good for you! 
 
 Has Bounders Day taught you the importance of peace and how we must strive to preserve it? Did you at least have fun looking for the eggs?! 
-Level=25
-Suggested=25
+Level=31
+Suggested=31
 Exp=1
 PartySize=1
 Coin=1
@@ -210,6 +210,7 @@ Unabandon=0
 QuestGiverID=4502
 QuestEnderID=4502
 Repeat=1
+RepeatDelay=1D
 sGiver=28950.3,508.002,62973.2,9
 sEnder=28950.3,508.002,62973.2,9
 [ACT]

@@ -25,21 +25,21 @@ const MAX_SECONDS = 32;
 phrases <- {
 	// Hopps
 	creature_4500 = [
-		"PHRASE 1 - Happy Bounders Day!",
-		"PHRASE 2 - Eggs, eggs, everywhere! How many can you find?",
-		"PHRASE 3 - Rumor is, one of us has hidden a Golden Egg somewhere in Camelot. Can you find it?"
+		"Happy Bounders Day!",
+		"Eggs, eggs, everywhere! How many can you find?",
+		"Rumour is, one of us has hidden a Golden Egg somewhere in Camelot. Can you find it?"
 	],
 	// Lightfoot
 	creature_4501 = [
-		"PHRASE 1 - Happy Bounders Day!",
-		"PHRASE 2 - Ah! There's nothing better than Emerald Eggs and a Shamrock!",
-		"PHRASE 3 - Rumor is, one of us has hidden a Golden Egg somewhere in Camelot. Can you find it?"
+		"Happy Bounders Day!",
+		"Ah! There's nothing better than Emerald Eggs and a Shamrock!",
+		"Rumour is, one of us has hidden a Golden Egg somewhere in Camelot. Can you find it?"
 	],
 	// Cottentail
 	creature_4502 = [
-		"PHRASE 1 - Happy Bounders Day!",
-		"PHRASE 2 - The Great Forest looks so lovely in Springtime!",
-		"PHRASE 3 - Rumor is, one of us has hidden a Golden Egg somewhere in Camelot. Can you find it?"
+		"Happy Bounders Day!",
+		"The Great Forest looks so lovely in Springtime!",
+		"Rumour is, one of us has hidden a Golden Egg somewhere in Camelot. Can you find it?"
 	]
 };
 
@@ -50,7 +50,7 @@ function say_something() {
 	ai.speak(phrases["creature_" + ai.get_self_def_id()][randmodrng(0, phrases.len())]);
 	
 	/* Requeue this function for some random point between MIN_SECONDS and MAX_SECONDS */		
-	ai.queue(say_something, ( MIN_SECONDS + randmodrng(0, MAX_SECONDS) ) * 1000);
+	ai.queue(say_something, ( MIN_SECONDS + randmodrng(0, MAX_SECONDS - MIN_SECONDS) ) * 1000);
 }
 
 /* We need to queue the function once to get it started */

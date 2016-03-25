@@ -585,8 +585,7 @@ CreatureInstance * SpawnTile :: SpawnCreature(ActiveInstance *inst, ActiveSpawne
 		setFlags = true;
 	}
 
-	if(setFlags == true)
-	{
+	if(setFlags == true) {
 		ptr->_AddStatusList(StatusEffects::INVINCIBLE, -1);
 		ptr->_AddStatusList(StatusEffects::UNATTACKABLE, -1);
 		ptr->_AddStatusList(StatusEffects::IS_USABLE, -1);
@@ -750,8 +749,6 @@ void SpawnTile :: RemoveSpawnPointCreatures(ActiveSpawner *spawner)
 
 void SpawnTile :: RemoveSpawnPointCreature(ActiveSpawner *spawner, int creatureID)
 {
-	g_Log.AddMessageFormat("[REMOVEME] RemoveSpawnPointCreature %d", creatureID);
-
 	//Removes all creatures spawned by this point. 
 #ifndef CREATUREMAP
 	std::list<CreatureInstance>::iterator cit;

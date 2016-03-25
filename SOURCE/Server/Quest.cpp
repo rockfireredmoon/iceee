@@ -1341,9 +1341,9 @@ int QuestReferenceContainer :: HasObjectInteraction(int CreatureDefID)
 			{
 				if(itemList[a].ObjComplete[b] != 0)
 					continue;
-
 				if(qdef->actList[act].objective[b].type == QuestObjective::OBJECTIVE_TYPE_ACTIVATE)
 				{
+
 					int r = qdef->actList[act].objective[b].HasObjectiveCDef(QuestObjective::OBJECTIVE_TYPE_ACTIVATE, CreatureDefID);
 					if(r >= 0)
 						return a;

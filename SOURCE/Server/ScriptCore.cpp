@@ -1877,7 +1877,6 @@ bool ScriptPlayer :: RunSingleInstruction(void)
 	switch(instr->opCode)
 	{
 	case OP_END:
-		g_Log.AddMessageFormat("[REMOVEME] Ending script %s because OP_END.", def->scriptName.c_str());
 		EndExecution();
 		breakScript = true;
 		break;
@@ -2108,7 +2107,6 @@ bool ScriptPlayer::PerformJumpRequest(const char *name, int callStyle)
 		//an event queue, it probably needs to be stopped.
 		if(def->UseEventQueue() == false)
 		{
-			g_Log.AddMessageFormat("[REMOVEME] Ending script %s on call to label %s because it doesn't exist.", def->scriptName.c_str(), name);
 			EndExecution();
 		}
 	}

@@ -149,26 +149,20 @@ void QuestNutManager::RemoveActiveScripts(int CID) {
 	for (list<QuestNutPlayer*>::iterator it = l.begin(); it != l.end(); ++it) {
 		QuestNutPlayer* player = *it;
 		if(player->source != NULL && player->source->actInst != NULL) {
-			g_Log.AddMessageFormat("[REMOVEME] Removing an actual nut player for %d", CID);
 			player->source->actInst->questNutScriptList.erase(
 					std::remove(player->source->actInst->questNutScriptList.begin(), player->source->actInst->questNutScriptList.end(), player), player->source->actInst->questNutScriptList.end());
 		}
 		if(player->mActive) {
-			g_Log.AddMessageFormat("[REMOVEME] Halting executing for %d", CID);
 			player->HaltExecution();
 		}
-		g_Log.AddMessageFormat("[REMOVEME] Deleting %d", CID);
 		delete (*it);
 	}
-	g_Log.AddMessageFormat("[REMOVEME] Clearing %d", CID);
 	l.clear();
-	g_Log.AddMessageFormat("[REMOVEME] Erasing %d", CID);
 
 	std::map<int, std::list<QuestNutPlayer*> >::iterator it = questAct.find(CID);
 	if(it != questAct.end())
 		questAct.erase(it);
 
-	g_Log.AddMessageFormat("[REMOVEME] Erased, leaving %d", CID);
 	cs.Leave();
 }
 
