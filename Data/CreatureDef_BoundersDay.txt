@@ -39,6 +39,7 @@ ai_package=example
 
 [ENTRY]
 ID=4503
+defHints=48
 will_regen=1
 might_regen=1
 appearance=n4:{["sk"]={["third"]="FFFE53",["first"]="FFFE7E",["second"]="D4D300",["fourth"]="FFFD00",["fifth"]="FFFE53"},["c"]="Horde-Easter_Egg",["sz"]=".2"}

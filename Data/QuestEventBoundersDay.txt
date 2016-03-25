@@ -296,6 +296,7 @@ Suggested=17
 Exp=1
 PartySize=1
 Coin=1
+AccountQuest=1
 Unabandon=0
 QuestGiverID=4503
 QuestEnderID=4500
