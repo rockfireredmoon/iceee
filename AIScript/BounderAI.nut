@@ -25,21 +25,21 @@ const MAX_SECONDS = 32;
 phrases <- {
 	// Hopps
 	creature_4500 = [
-		"PHRASE 1 - CHANGEME",
-		"PHRASE 2 - CHANGEME",
-		"PHRASE 3 - CHANGEME"
+		"PHRASE 1 - Happy Bounders Day!",
+		"PHRASE 2 - Eggs, eggs, everywhere! How many can you find?",
+		"PHRASE 3 - Rumor is, one of us has hidden a Golden Egg somewhere in Camelot. Can you find it?"
 	],
 	// Lightfoot
 	creature_4501 = [
-		"PHRASE 1 - CHANGEME",
-		"PHRASE 2 - CHANGEME",
-		"PHRASE 3 - CHANGEME"
+		"PHRASE 1 - Happy Bounders Day!",
+		"PHRASE 2 - Ah! There's nothing better than Emerald Eggs and a Shamrock!",
+		"PHRASE 3 - Rumor is, one of us has hidden a Golden Egg somewhere in Camelot. Can you find it?"
 	],
 	// Cottentail
 	creature_4502 = [
-		"PHRASE 1 - CHANGEME",
-		"PHRASE 2 - CHANGEME",
-		"PHRASE 3 - CHANGEME"
+		"PHRASE 1 - Happy Bounders Day!",
+		"PHRASE 2 - The Great Forest looks so lovely in Springtime!",
+		"PHRASE 3 - Rumor is, one of us has hidden a Golden Egg somewhere in Camelot. Can you find it?"
 	]
 };
 
