@@ -55,7 +55,7 @@ mMinUseLevel=33
 [ENTRY]
 mID=7503
 mType=2
-mDisplayName=Eggacutioner
+mDisplayName=Eggsecutioner
 mAppearance=[{["a"]={["type"]="Item-2hMace-Epic3",["colors"]=["00FFFF","08FFB7","E99F5B","A6A66E","E99F5B","69661D"]}},null]
 mIcon=Icon-32-Mace2.png|Icon-32-BG-Blue.png
 mLevel=17
@@ -73,7 +73,7 @@ mMinUseLevel=17
 [ENTRY]
 mID=7504
 mType=2
-mDisplayName=Eggacutioner
+mDisplayName=Eggsecutioner
 mAppearance=[{["a"]={["type"]="Item-2hMace-Epic3",["colors"]=["00FFFF","08FFB7","E99F5B","A6A66E","E99F5B","69661D"]}},null]
 mIcon=Icon-32-Mace2.png|Icon-32-BG-Blue.png
 mLevel=27
@@ -91,7 +91,7 @@ mMinUseLevel=27
 [ENTRY]
 mID=7505
 mType=2
-mDisplayName=Eggacutioner
+mDisplayName=Eggsecutioner
 mAppearance=[{["a"]={["type"]="Item-2hMace-Epic3",["colors"]=["00FFFF","08FFB7","E99F5B","A6A66E","E99F5B","69661D"]}},null]
 mIcon=Icon-32-Mace2.png|Icon-32-BG-Blue.png
 mLevel=33
@@ -337,7 +337,7 @@ mMinUseLevel=33
 [ENTRY]
 mID=7518
 mType=3
-mDisplayName=Lucky Rabbits Foot
+mDisplayName=Lucky Rabbit's Foot
 mIcon=Icon-32-Amulet3.png|Icon-32-BG-Blue.png
 mLevel=17
 mBindingType=1
@@ -356,7 +356,7 @@ mMagicCritMod=10
 [ENTRY]
 mID=7519
 mType=3
-mDisplayName=Lucky Rabbits Foot
+mDisplayName=Lucky Rabbit's Foot
 mIcon=Icon-32-Amulet3.png|Icon-32-BG-Blue.png
 mLevel=27
 mBindingType=1
@@ -375,7 +375,7 @@ mMagicCritMod=10
 [ENTRY]
 mID=7520
 mType=3
-mDisplayName=Lucky Rabbits Foot
+mDisplayName=Lucky Rabbit's Foot
 mIcon=Icon-32-Amulet3.png|Icon-32-BG-Blue.png
 mLevel=33
 mBindingType=1
@@ -394,7 +394,7 @@ mMagicCritMod=10
 [ENTRY]
 mID=7521
 mType=7
-mDisplayName=Bounders Day Token
+mDisplayName=Camelot Bounders Day Token
 mIcon=Icon-32-Rabbit_Foot.png|Icon-32-BG-Green.png
 mIvType1=1
 mIvMax1=20
@@ -405,12 +405,12 @@ mBindingType=1
 mValue=1
 mQualityLevel=2
 mMinUseLevel=1
-mFlavorText=Redeem your rewards at Camelot
+mFlavorText=Redeem for rewards in Camelot!
 
 [ENTRY]
 mID=7522
 mType=7
-mDisplayName=Bounders Day Token
+mDisplayName=Bremen Bounders Day Token
 mIcon=Icon-32-Rabbit_Foot.png|Icon-32-BG-Green.png
 mIvType1=1
 mIvMax1=20
@@ -421,12 +421,12 @@ mBindingType=1
 mValue=1
 mQualityLevel=2
 mMinUseLevel=1
-mFlavorText=Redeem your rewards at Bremen
+mFlavorText=Redeem for rewards in Bremen!
 
 [ENTRY]
 mID=7523
 mType=7
-mDisplayName=Bounders Day Token
+mDisplayName=Heartwood Bounders Day Token
 mIcon=Icon-32-Rabbit_Foot.png|Icon-32-BG-Green.png
 mIvType1=1
 mIvMax1=20
@@ -437,7 +437,7 @@ mBindingType=1
 mValue=1
 mQualityLevel=2
 mMinUseLevel=1
-mFlavorText=Redeem your rewards at Heartwood
+mFlavorText=Redeem for rewards in Heartwood!
 
 [ENTRY]
 mID=7524
@@ -454,22 +454,6 @@ mFlavorText=Double click to open!
 mQualityLevel=3
 mMinUseLevel=17
 Params=credits=1000&abilitypoints=10
-
-[ENTRY]
-mID=7525
-mType=7
-mDisplayName=The Golden Egg
-mIcon=Icon-32-Rabbit_Foot.png|Icon-32-BG-Green.png
-mIvType1=1
-mIvMax1=20
-mIvType2=8
-mIvMax2=1
-mLevel=1
-mBindingType=1
-mValue=1
-mQualityLevel=2
-mMinUseLevel=1
-mFlavorText=Redeem your rewards at Camelot
 
 [ENTRY]
 mID=8001
