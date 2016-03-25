@@ -452,6 +452,7 @@ public:
 	NutPlayer();
 	virtual ~NutPlayer();
 
+	std::string GetStatus();
 	virtual void RegisterFunctions();
 	void RegisterCoreFunctions(NutPlayer *instance, Sqrat::Class<NutPlayer> *clazz);
 	virtual void HaltDerivedExecution();

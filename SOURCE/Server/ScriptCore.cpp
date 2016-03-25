@@ -307,6 +307,18 @@ namespace ScriptCore
 		ClearQueue();
 	}
 
+	std::string NutPlayer::GetStatus() {
+		if(mHalting) {
+			return "Halting";
+		}
+		else if(mActive) {
+			return "Active";
+		}
+		else {
+			return "Inactive";
+		}
+	}
+
 	int NutPlayer::GC() {
 		return sq_collectgarbage(vm);
 	}

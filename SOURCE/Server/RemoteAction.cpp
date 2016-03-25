@@ -368,8 +368,14 @@ void Helper_OutputCreature(ReportBuffer &report, int index, CreatureInstance *ob
 	if(obj->aiScript != NULL && obj->aiScript->mActive)
 		report.AddLine("TSL %s", obj->aiScript->def->scriptName.c_str());
 	if(obj->aiNut != NULL)
-		report.AddLine("Squirrel %s calls: %lu ptime: %lu itime: %l exec: %s, halting: %s active: %s", obj->aiNut->def->scriptName.c_str(),obj->aiNut->mCalls,
-				obj->aiNut->mProcessingTime, obj->aiNut->mInitTime, obj->aiNut->mExecuting ? "yes" : "no", obj->aiNut->mHalting ? "yes" : "no", obj->aiNut->mActive ? "yes" : "no");
+			report.AddLine("Squirrel %s calls: %lu ptime: %lu itime: %lu exec: %s, halting: %s status: %s",
+					obj->aiNut->def->scriptName.c_str(),
+					obj->aiNut->mCalls,
+					obj->aiNut->mProcessingTime,
+					obj->aiNut->mInitTime,
+					obj->aiNut->GetStatus().c_str(),
+					obj->aiNut->mHalting ? "yes" : "no",
+					obj->aiNut->mActive ? "yes" : "no");
 
 	report.AddLine("%d,%d,%d", obj->CurrentX, obj->CurrentY, obj->CurrentZ);
 	for(d = 0; d < 2; d++)

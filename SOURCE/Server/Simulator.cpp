@@ -6136,8 +6136,9 @@ void SimulatorThread :: handle_query_creature_isusable(void)
 		if(target->serverFlags & ServerFlags::IsUnusable)
 			failed = true;
 	}
-	else
+	else {
 		failed = true;
+	}
 
 	if(failed == true)
 	{
