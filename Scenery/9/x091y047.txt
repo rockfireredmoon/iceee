@@ -14,6 +14,7 @@ Pos=68932.8,422.401,35603.6
 Orient=0,0.76945,0,0.638707
 Scale=1,1,1
 spawnPackage=#F4501
+aiModule=BounderAI
 
 [ENTRY]
 ID=1132535
