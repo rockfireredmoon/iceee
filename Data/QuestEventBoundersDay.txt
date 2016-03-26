@@ -140,7 +140,7 @@ Obj.0.myCreatureDefID=4501
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=68932.1,424.353,35597.3,9
-RewardItem.0=7521,1,1
+RewardItem.0=7522,1,1
 
 //[ENTRY]
 //ID=645
@@ -235,7 +235,7 @@ Obj.0.myCreatureDefID=4502
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=28950.3,508.002,62973.2,9;
-RewardItem.0=7521,1,1
+RewardItem.0=7523,1,1
 
 //[ENTRY]
 //ID=647
