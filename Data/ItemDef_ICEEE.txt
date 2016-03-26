@@ -336,60 +336,51 @@ mMinUseLevel=33
 
 [ENTRY]
 mID=7518
-mType=3
+mType=5
 mDisplayName=Lucky Rabbit's Foot
 mIcon=Icon-32-Amulet3.png|Icon-32-BG-Blue.png
-mLevel=17
-mBindingType=1
-mEquipType=19
-mArmorType=1
-mArmorResistMelee=10
-mArmorResistFrost=10
-mArmorResistMystic=10
-mArmorResistDeath=10
-mArmorResistFire=10
+mIvType1=1
+mIvMax1=20
+mLevel=1
+mUseAbilityId=163
 mValue=902
+mValueType=1
 mQualityLevel=3
 mMinUseLevel=17
-mMagicCritMod=10
+Params=verifycast=1
+mFlavorText=Double click to wear your lucky rabbit's foot
 
 [ENTRY]
 mID=7519
-mType=3
+mType=5
 mDisplayName=Lucky Rabbit's Foot
 mIcon=Icon-32-Amulet3.png|Icon-32-BG-Blue.png
-mLevel=27
-mBindingType=1
-mEquipType=19
-mArmorType=1
-mArmorResistMelee=20
-mArmorResistFrost=20
-mArmorResistMystic=20
-mArmorResistDeath=20
-mArmorResistFire=20
-mValue=1802
+mIvType1=1
+mIvMax1=20
+mLevel=1
+mUseAbilityId=163
+mValue=1660
+mValueType=1
 mQualityLevel=3
 mMinUseLevel=27
-mMagicCritMod=10
+Params=verifycast=1
+mFlavorText=Double click to wear your lucky rabbit's foot
 
 [ENTRY]
 mID=7520
-mType=3
+mType=5
 mDisplayName=Lucky Rabbit's Foot
 mIcon=Icon-32-Amulet3.png|Icon-32-BG-Blue.png
-mLevel=33
-mBindingType=1
-mEquipType=19
-mArmorType=1
-mArmorResistMelee=25
-mArmorResistFrost=25
-mArmorResistMystic=25
-mArmorResistDeath=25
-mArmorResistFire=25
+mIvType1=1
+mIvMax1=20
+mLevel=1
+mUseAbilityId=163
 mValue=1802
+mValueType=1
 mQualityLevel=3
 mMinUseLevel=33
-mMagicCritMod=10
+Params=verifycast=1
+mFlavorText=Double click to wear your lucky rabbit's foot
 
 [ENTRY]
 mID=7521
