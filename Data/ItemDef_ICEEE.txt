@@ -244,7 +244,7 @@ mType=3
 mDisplayName=Renewal Shield
 mAppearance=[{["a"]={["type"]="Item-Shield-Medium5",["colors"]=["4EFF36","FFD70D","FFD78A"]}},null]
 mIcon=Icon-32-Kite_Shield.png|Icon-32-BG-Blue.png
-mLevel=17
+mLevel=27
 mBindingType=1
 mEquipType=7
 mArmorType=5
@@ -256,7 +256,7 @@ mArmorResistFire=157
 mBonusConstitution=6
 mValue=1744
 mQualityLevel=3
-mMinUseLevel=17
+mMinUseLevel=27
 mRegenHealthMod=1
 
 [ENTRY]
