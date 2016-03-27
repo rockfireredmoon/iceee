@@ -586,7 +586,7 @@ CreatureInstance * SpawnTile :: SpawnCreature(ActiveInstance *inst, ActiveSpawne
 /*	if(strstr(cdef->css.appearance, "p1:") != NULL)
 		setFlags = true;
 */
-	if(cdef->css.IsPropAppearance() == true)
+	if(cdef->css.IsPropAppearance() == true || ( SpawnFlags & SpawnPackageDef::FLAG_STATIONARY))
 	{
 		ptr->SetServerFlag(ServerFlags::Stationary, true);
 		setFlags = true;

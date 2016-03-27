@@ -53,6 +53,7 @@ public:
 	int GetIdleMob(int CDefID);
 	int GetTarget();
 	int GetSelf();
+	int GetSelfDefID();
 	void SetOtherTarget(int CID, int targetCID);
 	bool IsTargetEnemy();
 	bool IsTargetFriendly();

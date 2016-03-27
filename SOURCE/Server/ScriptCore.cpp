@@ -809,7 +809,7 @@ namespace ScriptCore
 		}
 
 		if(mActive && !mHalting && mQueue.size() > 0 && index < mQueue.size()) {
-			g_Logs.script->debug("Maybe retry active: %v", mActive ? "yes" : "no");
+			g_Logs.script->trace("Maybe retry active: %v", mActive ? "yes" : "no");
 			/*
 			 * If the VM wasn't suspended while handling this event, and the
 			 * event returned false, then we requeue this event for retry

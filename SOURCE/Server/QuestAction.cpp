@@ -26,6 +26,7 @@ const QuestScriptCommandDef* ExtendedQuestAction :: GetCommandDef(const std::str
 		{"has_quest",    CONDITION_HAS_QUEST, 1, CommandParam::INTEGER, CommandParam::NONE, CommandParam::NONE },
 		{"transformed", CONDITION_TRANSFORMED, 1, CommandParam::INTEGER, CommandParam::NONE, CommandParam::NONE },
 		{"untransformed", CONDITION_UNTRANSFORMED, 0, CommandParam::NONE, CommandParam::NONE, CommandParam::NONE },
+		{"below_level", CONDITION_BELOW_LEVEL, 1, CommandParam::INTEGER, CommandParam::NONE, CommandParam::NONE },
 		
 		//Actions
 		{"change_heroism", ACTION_CHANGE_HEROISM, 1, CommandParam::INTEGER, CommandParam::NONE, CommandParam::NONE },
@@ -223,6 +224,15 @@ int QuestActionContainer :: ExecuteSingleCommand(SimulatorThread *caller, Extend
 			int questID = e.param[0];
 			if(caller->pld.charPtr->questJournal.activeQuests.HasQuestID(questID) > -1)
 				return 0;
+			return -1;
+		}
+		break;
+	case CONDITION_BELOW_LEVEL:
+		{
+			int maxLevel = e.param[0];
+			if(caller->pld.charPtr->cdef.css.level < maxLevel)
+				return 0;
+			caller->SendInfoMessage("You are too high a level to accept this quest.", INFOMSG_ERROR);
 			return -1;
 		}
 		break;
