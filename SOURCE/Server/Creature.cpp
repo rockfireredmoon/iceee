@@ -508,21 +508,15 @@ bool CreatureInstance :: KillAI(void)
 	bool killed = false;
 	if(aiScript != NULL)
 	{
-		g_Log.AddMessageFormat("[REMOVEME] Killing TSL AI for %d", CreatureID);
 		aiScript->EndExecution();
-		g_Log.AddMessageFormat("[REMOVEME] Killed TSL AI for %d, removing", CreatureID);
 		aiScriptManager.RemoveActiveScript(aiScript);
-		g_Log.AddMessageFormat("[REMOVEME] Removed TSL AI for %d", CreatureID);
 		aiScript = NULL;
 		killed = true;
 	}
 	if(aiNut != NULL)
 	{
-		g_Log.AddMessageFormat("[REMOVEME] Killing Squirrel AI for %d", CreatureID);
 		aiNut->HaltExecution();
-		g_Log.AddMessageFormat("[REMOVEME] Killed Squirrel AI for %d, removing", CreatureID);
 		aiNutManager.RemoveActiveScript(aiNut);
-		g_Log.AddMessageFormat("[REMOVEME] Removed Squirrel AI for %d", CreatureID);
 		aiNut = NULL;
 		killed = true;
 	}
@@ -3570,7 +3564,6 @@ void CreatureInstance :: CancelPending_Ex(ActiveAbilityInfo *ability)
 		case ABILITYID_INTERACT_OBJECT:
 			actInst->ScriptCallUseHalt(CreatureID, LastUseDefID);
 			int wpos;
-			g_Log.AddMessageFormat("[REMOVEME] CancelUseEvent for %d (%d)", CreatureID, LastUseDefID);
 			wpos = PrepExt_CancelUseEvent(GSendBuf, CreatureID);
 			SendToOneSimulator(GSendBuf, wpos, simulatorPtr);
 
@@ -3587,7 +3580,6 @@ void CreatureInstance :: CancelPending_Ex(ActiveAbilityInfo *ability)
 		size += PrepExt_AbilityActivateEmpty(&GSendBuf[size], this, ability, AbilityStatus::INTERRUPTED);
 		actInst->LSendToLocalSimulator(GSendBuf, size, CurrentX, CurrentZ);
 	}
-	g_Log.AddMessageFormat("[REMOVEME] Clearing abilities");
 	ability->Clear("CreatureInstance :: CancelPending_Ex");
 }
 
@@ -7160,7 +7152,6 @@ void CreatureInstance :: CheckQuestInteract(int CreatureDefID)
 
 void CreatureInstance :: RunQuestObjectInteraction(CreatureInstance *target, bool deleteObject)
 {
-	g_Log.AddMessageFormat("[REMOVEME] RunQuestObjectInteraction %d (del %s)", target->CreatureDefID, deleteObject ? "YES" : "NO");
 	if(target == NULL)
 		return;
 	if(!(serverFlags & ServerFlags::IsPlayer))
@@ -7176,7 +7167,6 @@ void CreatureInstance :: RunQuestObjectInteraction(CreatureInstance *target, boo
 	/* Determine if target creature is Warp interact as well as a Quest object interaction.
 	 * If it is, we don't activate for the rest of the party, they must do it themselves
 	 */
-	g_Log.AddMessageFormat("[REMOVEME] Testing if interact warp for %d (%d zone %s)", target->CreatureDefID, target->actInst == NULL ? 0 : target->actInst->mZone, target->actInst == NULL ? "NULL!!!!!" : "OK");
 	InteractObject *ob = target->actInst == NULL ? NULL : g_InteractObjectContainer.GetObjectByID(target->CreatureDefID, target->actInst->mZone);
 	if(ob == NULL || ob->opType != InteractObject::TYPE_WARP) {
 		/*
@@ -7202,7 +7192,6 @@ void CreatureInstance :: RunQuestObjectInteraction(CreatureInstance *target, boo
 	}
 
 	if(deleteObject == true) {
-		g_Log.AddMessageFormat("[REMOVEME] Will removenpc instance because delete object %d", target->CreatureID);
 		target->actInst->RemoveNPCInstance(target->CreatureID);
 	}
 }

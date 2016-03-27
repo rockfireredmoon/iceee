@@ -447,7 +447,6 @@ CreatureInstance * SpawnTile :: SpawnCreature(ActiveInstance *inst, ActiveSpawne
 		{
 			CDefID = atoi(&spawner->spawnPoint->extraData->spawnPackage[cOffset]);
 		}
-		//g_Log.AddMessageFormat("[WARNING] SpawnCreature() resolved direct spawn: %d", CDefID);
 	}
 	else
 	{
@@ -465,7 +464,6 @@ CreatureInstance * SpawnTile :: SpawnCreature(ActiveInstance *inst, ActiveSpawne
 
 	if(CDefID == -1)
 	{
-		g_Log.AddMessageFormat("[WARNING] SpawnCreature() could not determine spawn for package [%s]", spawner->spawnPackage->packageName);
 
 		//Bump it to never.  Prevents logging spam from repeated attempts.
 		spawner->Invalidate();
@@ -579,14 +577,13 @@ CreatureInstance * SpawnTile :: SpawnCreature(ActiveInstance *inst, ActiveSpawne
 /*	if(strstr(cdef->css.appearance, "p1:") != NULL)
 		setFlags = true;
 */
-	if(cdef->css.IsPropAppearance() == true)
+	if(cdef->css.IsPropAppearance() == true || ( SpawnFlags & SpawnPackageDef::FLAG_STATIONARY))
 	{
 		ptr->SetServerFlag(ServerFlags::Stationary, true);
 		setFlags = true;
 	}
 
-	if(setFlags == true)
-	{
+	if(setFlags == true) {
 		ptr->_AddStatusList(StatusEffects::INVINCIBLE, -1);
 		ptr->_AddStatusList(StatusEffects::UNATTACKABLE, -1);
 		ptr->_AddStatusList(StatusEffects::IS_USABLE, -1);
@@ -678,8 +675,6 @@ CreatureInstance * SpawnTile :: SpawnCreature(ActiveInstance *inst, ActiveSpawne
 
 	attachedCreatureID.push_back(ptr->CreatureID);
 
-	//g_Log.AddMessageFormat("[DEBUG] Pushed %d onto %d,%d", ptr->CreatureID, TileX, TileY);
-
 	return ptr;
 }
 
@@ -750,8 +745,6 @@ void SpawnTile :: RemoveSpawnPointCreatures(ActiveSpawner *spawner)
 
 void SpawnTile :: RemoveSpawnPointCreature(ActiveSpawner *spawner, int creatureID)
 {
-	g_Log.AddMessageFormat("[REMOVEME] RemoveSpawnPointCreature %d", creatureID);
-
 	//Removes all creatures spawned by this point. 
 #ifndef CREATUREMAP
 	std::list<CreatureInstance>::iterator cit;
@@ -1344,6 +1337,7 @@ int SpawnPackageList :: LoadFromFile(const char *filename)
 	while(lfr.FileOpen() == true)
 	{
 		lfr.ReadLine();
+
 		r = lfr.MultiBreak("=,");
 		if(r > 0)
 		{
@@ -1382,7 +1376,7 @@ int SpawnPackageList :: LoadFromFile(const char *filename)
 			}
 			else if(strcmp(lfr.SecBuffer, "Flags") == 0)
 			{
-				newItem.SpawnFlags = lfr.BlockToIntC(1) & newItem.FLAG_ALLBITS;
+				newItem.SpawnFlags = lfr.BlockToIntC(1)  & newItem.FLAG_ALLBITS;
 			}
 			else if(strcmp(lfr.SecBuffer, "Divide") == 0)
 			{
@@ -1442,6 +1436,7 @@ void SpawnPackageList :: AddIfValid(SpawnPackageDef &newItem)
 		return;
 
 	defList.push_back(newItem);
+
 	newItem.Clear();
 }
 
