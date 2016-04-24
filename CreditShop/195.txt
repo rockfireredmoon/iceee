@@ -1,0 +1,9 @@
+[ENTRY]
+Description=Player Made Set
+PriceCurrency=CREDITS
+PriceCopper=0
+PriceCredits=100
+ItemID=7030
+Category=ARMOR
+Status=NEW
+
