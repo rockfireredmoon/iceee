@@ -2161,7 +2161,7 @@ int QuestJournal :: FilterEmote(int CID, char *outbuf, const char *message, int 
 			if(qo->type != QuestObjective::OBJECTIVE_TYPE_EMOTE)
 				continue;
 
-			if(Util::CaseInsensitiveStringCompare(qo->ActivateText, message))
+			if(!Util::CaseInsensitiveStringCompare(qo->ActivateText, message))
 				continue;
 			if(qo->data1.size() < 4)
 			{
