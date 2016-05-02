@@ -2351,6 +2351,11 @@ DngScaleHandler::DngScaleHandler() :
 int DngScaleHandler::handleCommand(SimulatorThread *sim,
 		CharacterServerData *pld, SimulatorQuery *query,
 		CreatureInstance *creatureInstance) {
+	if(pld->zoneDef->IsDungeon()) {
+		sim->SendInfoMessage("You may not set your dungeon scaler inside a dungeon. Once the scale has been set, it remains until the dungeon instance completely closes (which may be some time after all of your party exit the dungeon)", INFOMSG_ERROR);
+		return PrepExt_QueryResponseError(sim->SendBuf, query->ID, "You may not set your dungeon scaler inside a dungeon.");
+	}
+
 	std::string outputMsg;
 	if (query->argCount > 0) {
 		const char *profName = query->GetString(0);
