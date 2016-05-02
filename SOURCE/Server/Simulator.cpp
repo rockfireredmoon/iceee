@@ -14544,6 +14544,11 @@ int SimulatorThread :: handle_command_grovepermission(void)
 
 int SimulatorThread :: handle_command_dngscale(void)
 {
+	if(pld.zoneDef->IsDungeon()) {
+		SendInfoMessage("You may not set your dungeon scaler inside a dungeon.", INFOMSG_ERROR);
+		return PrepExt_QueryResponseError(SendBuf, query.ID, "You may not set your dungeon scaler inside a dungeon.");
+	}
+
 	std::string outputMsg;
 	if(query.argCount > 0)
 	{
