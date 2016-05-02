@@ -2207,7 +2207,7 @@ int QuestJournal::FilterEmote(int CID, char *outbuf, const char *message,
 			if (qo->type != QuestObjective::OBJECTIVE_TYPE_EMOTE)
 				continue;
 
-			if (Util::CaseInsensitiveStringCompare(qo->ActivateText, message))
+			if (!Util::CaseInsensitiveStringCompare(qo->ActivateText, message))
 				continue;
 			if (qo->data1.size() < 4) {
 				g_Logs.server->warn("Not enough objective data for QID:%v, Act:%v, Obj:%v",
