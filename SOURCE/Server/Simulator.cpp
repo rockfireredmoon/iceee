@@ -14545,7 +14545,7 @@ int SimulatorThread :: handle_command_grovepermission(void)
 int SimulatorThread :: handle_command_dngscale(void)
 {
 	if(pld.zoneDef->IsDungeon()) {
-		SendInfoMessage("You may not set your dungeon scaler inside a dungeon.", INFOMSG_ERROR);
+		SendInfoMessage("You may not set your dungeon scaler inside a dungeon. Once the scale has been set, it remains until the dungeon instance completely closes (which may be some time after all of your party exit the dungeon)", INFOMSG_ERROR);
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "You may not set your dungeon scaler inside a dungeon.");
 	}
 
