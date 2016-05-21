@@ -733,11 +733,11 @@ mBindingType=2
 mBonusConstitution=8
 mBonusStrength=7
 mArmorType=1
-mArmorResistMelee=1
-mArmorResistFire=1
-mArmorResistFrost=1
-mArmorResistMystic=1
-mArmorResistDeath=1
+mArmorResistMelee=97
+mArmorResistFire=97
+mArmorResistFrost=97
+mArmorResistMystic=97
+mArmorResistDeath=97
 
 [ENTRY]
 mID=10041
@@ -754,11 +754,11 @@ mBindingType=2
 mBonusConstitution=8
 mBonusDexterity=7
 mArmorType=1
-mArmorResistMelee=1
-mArmorResistFire=1
-mArmorResistFrost=1
-mArmorResistMystic=1
-mArmorResistDeath=1
+mArmorResistMelee=97
+mArmorResistFire=97
+mArmorResistFrost=97
+mArmorResistMystic=97
+mArmorResistDeath=97
 
 [ENTRY]
 mID=10042
@@ -775,11 +775,11 @@ mBindingType=2
 mBonusConstitution=8
 mBonusPsyche=7
 mArmorType=1
-mArmorResistMelee=1
-mArmorResistFire=1
-mArmorResistFrost=1
-mArmorResistMystic=1
-mArmorResistDeath=1
+mArmorResistMelee=97
+mArmorResistFire=97
+mArmorResistFrost=97
+mArmorResistMystic=97
+mArmorResistDeath=97
 
 [ENTRY]
 mID=10043
@@ -796,8 +796,8 @@ mBindingType=2
 mBonusConstitution=8
 mBonusSpirit=7
 mArmorType=1
-mArmorResistMelee=1
-mArmorResistFire=1
-mArmorResistFrost=1
-mArmorResistMystic=1
-mArmorResistDeath=1
+mArmorResistMelee=97
+mArmorResistFire=97
+mArmorResistFrost=97
+mArmorResistMystic=97
+mArmorResistDeath=97

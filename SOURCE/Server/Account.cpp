@@ -1824,7 +1824,7 @@ void AccountManager :: DeleteCharacter(int index, AccountData *accPtr)
 
 	cs.Enter("AccountManager::DeleteCharacter");
 
-	for(int i = AccountData::MAX_CHARACTER_SLOTS - 2; i >= index; i--)
+	for(int i = index; i < AccountData::MAX_CHARACTER_SLOTS - 1; i++)
 		accPtr->CharacterSet[i] = accPtr->CharacterSet[i + 1];
 	accPtr->CharacterSet[AccountData::MAX_CHARACTER_SLOTS - 1] = 0;
 	accPtr->characterCache.RemoveCharacter(CDefID);

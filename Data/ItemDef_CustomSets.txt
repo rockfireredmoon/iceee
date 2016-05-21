@@ -296,7 +296,7 @@ mArmorType=1
 mID=7022
 mType=3
 mDisplayName=Ghost Rogue Pants
-mAppearance=[{["c"]={["colors"]=["fff8dc","fff8dc","fff8dc","fff8dc","fff8dc","fff8dc"],["type"]="Armor-Light-Mid4"}}]
+mAppearance=[{["c"]={["type"]="Armor-Light-Mid4",["colors"]=["fff8dc","fff8dc","fff8dc","fff8dc","fff8dc","fff8dc"]}},null]
 mIcon=Icon-32-H_Armor-Legs04.png|Icon-32-BG-Aqua.png
 mLevel=20
 mValue=1000
@@ -624,7 +624,7 @@ mArmorType=1
 mID=7047
 mType=3
 mDisplayName=Toxic Rogue Pants
-mAppearance=[{["c"]={["colors"]=["3f3f3f","43107f","43107f","43107f"],["type"]="Armor-Medium-Low1"}}]
+mAppearance=[{["c"]={["type"]="Armor-Medium-Low1",["colors"]=["3f3f3f","43107f","43107f","43107f"]}},null]
 mIcon=Icon-32-M_Armor-Legs02.png|Icon-32-BG-Blue.png
 mLevel=20
 mValue=1000
@@ -993,7 +993,7 @@ mArmorType=1
 mID=7121
 mType=3
 mDisplayName=Royal Commander Pants
-mAppearance=[{["c"]={["colors"]=["fff8dc","fff8dc","fff8dc","fff8dc","fff8dc","fff8dc"],["type"]="Armor-Light-Mid4"}}]
+mAppearance=[{["c"]={["type"]="Armor-Medium-Low4",["colors"]=["57586a","55000b","55000b","94660d","464755","55000b","3f3503","55000b"]}},null]
 mIcon=Icon-32-C_Armor-Legs04.png|Icon-32-BG-Aqua.png
 mLevel=20
 mValue=1000
@@ -1045,7 +1045,7 @@ mArmorType=1
 mID=7125
 mType=3
 mDisplayName=Royal Commander Pauldrons
-mAppearance=[{["a"]=[{["type"]="Armor-Heavy-Low1-Helmet",["node"]="helmet",["colors"]=["464755","55000B","94660D"]},{["type"]="Armor-Heavy-Epic6-Right_Pauldron",["node"]="right_shoulder",["colors"]=["57586A","AA750E"]},{["type"]="Armor-Heavy-Epic6-Left_Pauldron",["node"]="left_shoulder",["colors"]=["57586A","AA750E"]}}]
+mAppearance=[{["a"]={["type"]="Armor-Heavy-Epic6-Left_Pauldron",["colors"]=["57586A","AA750E"],["node"]="left_shoulder"}},{["a"]={["type"]="Armor-Heavy-Epic6-Right_Pauldron",["colors"]=["57586a","aa750e"],["node"]="right_shoulder"}}]
 mIcon=Icon-32-H_Armor-Shldr02.png|Icon-32-BG-Aqua.png
 mLevel=20
 mValue=1000
