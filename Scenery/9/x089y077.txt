@@ -1,18 +1,10 @@
 [ENTRY]
-ID=1127525
-Asset=Prop-Bridge_a#Prop-Bridge_Broken
-Name=Untitled
-Pos=67419.3,668.588,58234.7
-Orient=0,-0.710353,0,0.703845
-Scale=2,2,2
-
-[ENTRY]
-ID=1127526
-Asset=Prop-Bridge_a#Prop-Bridge_Broken
-Name=Untitled
-Pos=67264.1,395.702,58208.9
-Orient=-0.182797,0.818258,0.071663,-0.540281
-Scale=2,2,2
+ID=1133641
+Asset=Prop-Bridge_a#Prop-Bridge-Large_Wooden1
+Name=
+Pos=67002.2,709.887,58243.2
+Orient=0,0.717356,0,0.696707
+Scale=2.2,2.2,2.2
 
 [ENTRY]
 ID=151018258
