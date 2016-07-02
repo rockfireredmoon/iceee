@@ -1,7 +1,7 @@
 [ENTRY]
 ID=1133651
 Asset=Prop-Crypt_Props#Prop-Crypt_Statue1
-Name=
+Name=Untitled
 Pos=74271.3,887.53,51060.3
 Orient=0,-0.994924,0,0.100626
 Scale=3,3,3
@@ -9,7 +9,7 @@ Scale=3,3,3
 [ENTRY]
 ID=1133652
 Asset=Bldg-Graveyard_Ruins1#Bldg-Graveyard_Ruins1?ATS=ATS-Ruins
-Name=
+Name=Untitled
 Pos=74449,873.381,51104.9
 Orient=0,-0.0749297,0,0.997189
 Scale=1,1,1
@@ -17,7 +17,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1133654
 Asset=CL-Graveyard#CL-Graveyard2
-Name=
+Name=Untitled
 Pos=74563.8,876.062,51413.1
 Orient=0,0.807558,0,0.589788
 Scale=1,1,1
@@ -25,7 +25,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1133658
 Asset=Prop-Crypt_Props#Prop-Crypt-Skull_Pile_Large
-Name=
+Name=Untitled
 Pos=74506.8,870.295,51353.1
 Orient=0,0,0,1
 Scale=3,3,3
@@ -33,7 +33,7 @@ Scale=3,3,3
 [ENTRY]
 ID=1133661
 Asset=Prop-Chunks#Prop-Chunks1
-Name=
+Name=Untitled
 Pos=74255.8,888.901,51037.3
 Orient=-0.124673,0.000623371,-0.00496097,0.992185
 Scale=3,3,3
@@ -41,7 +41,7 @@ Scale=3,3,3
 [ENTRY]
 ID=1133664
 Asset=Bldg-Ruins#Bldg-Ruins-Small_House1?ATS=ATS-Ruins
-Name=
+Name=Untitled
 Pos=74918.4,876.105,51160
 Orient=0,0,0,1
 Scale=1,1,1
@@ -49,15 +49,15 @@ Scale=1,1,1
 [ENTRY]
 ID=1133665
 Asset=Prop-Crypt_Props#Prop-Crypt_Statue1
-Name=
-Pos=74706.8,891.351,51098.3
+Name=Untitled
+Pos=74708.1,891.351,51096.2
 Orient=0,-0.223106,0,0.974794
 Scale=2,2,2
 
 [ENTRY]
 ID=1133666
 Asset=Prop-Crypt_Plinth
-Name=
+Name=Untitled
 Pos=74709.3,854.613,51096.4
 Orient=0,0,0,1
 Scale=4,4,4
@@ -65,7 +65,7 @@ Scale=4,4,4
 [ENTRY]
 ID=1133672
 Asset=Prop-Dead-Forest-Tree#Prop-Dead-Forest-Tree2
-Name=
+Name=Untitled
 Pos=74477.2,869.464,51208.9
 Orient=0,0,0,1
 Scale=1,1,1
