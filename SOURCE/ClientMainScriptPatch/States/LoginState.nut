@@ -100,7 +100,7 @@ class this.States.LoginState extends this.State
 			function onActionPerformed( b )
 			{
 				//::_URLManager.LaunchURL("ForgotPassword");
-				this.System.openURL("http://iceee.servegame.com/ResetPassword.html");
+				this.System.openURL("http://scourge.theanubianwar.com/ResetPassword.html");
 			}
 
 		});
@@ -110,7 +110,7 @@ class this.States.LoginState extends this.State
 			function onActionPerformed( b )
 			{
 				//::_URLManager.LaunchURL("ManageAccount");
-				this.System.openURL("http://iceee.servegame.com/Account.html");
+				this.System.openURL("http://scourge.theanubianwar.com/Account.html");
 			}
 
 		});
@@ -355,7 +355,7 @@ class this.States.LoginState extends this.State
 		else
 		{
 			//::_URLManager.LaunchURL("Account");
-			this.System.openURL("http://iceee.servegame.com/Account.html");
+			this.System.openURL("http://scourge.theanubianwar.com/Account.html");
 		}
 	}
 
