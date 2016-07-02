@@ -385,7 +385,7 @@ class this.LoadScreenManager
 			}
 		};
 		local txt = "";
-		req.open("GET", "http://armouree.vm.bytemark.co.uk/iceee/loading_announcements");
+		req.open("GET", "http://files.theanubianwar.com/gameinfo/scourge/loading_announcements");
 		req.send(txt);
 	}
 
@@ -414,7 +414,7 @@ class this.LoadScreenManager
 			}
 		};
 		local txt = "";
-		req.open("GET", "http://armouree.vm.bytemark.co.uk/iceee/tips");
+		req.open("GET", "http://files.theanubianwar.com/gameinfo/scourge/tips");
 		req.send(txt);
 	}
 

@@ -4,12 +4,12 @@
 ; or different page name.
 ; Each entry has Key=Value format, where the Key is the page name, and Value is the URL.
 
-Homepage=http://armouree.vm.bytemark.co.uk
+Homepage=http://www.theanubianwar.com/thescourgeofabidan
 Reference=http://planetforevergame.com:81/Reference.html
-Advanced Crafting=http://iceee.servegame.com/AdvancedCrafting.html
-Chat Channel Colors=http://planetforevergame.com:81/ChatChannelColors.html
-ForTesters=http://armouree.vm.bytemark.co.uk/dokuwiki/doku.php?id=iceee:development:betatesters
+Advanced Crafting=http://files.theanubianwar.com/gameinfo/scourge/AdvancedCrafting.html
+Chat Channel Colors=http://files.theanubianwar.com/gameinfo/scourge/ChatChannelColors.html
+ForTesters=http://armouree.theanubianwar.com/dokuwiki/doku.php?id=iceee:development:betatesters
 Project=https://github.com/rockfireredmoon/iceee/
-ForgotPassword=http://iceee.servegame.com/ResetPassword.html
-ManageAccount=http://iceee.servegame.com/Account.html
-Account=http://iceee.servegame.com/Account.html
+ForgotPassword=http://scourge.theanubianwar.com/ResetPassword.html
+ManageAccount=http://scourge.theanubianwar.com/Account.html
+Account=http://scourge.theanubianwar.com/Account.html

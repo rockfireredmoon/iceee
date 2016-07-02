@@ -90,7 +90,7 @@ class this.States.LoginState extends this.State
 			function onActionPerformed( b )
 			{			
 				//::_URLManager.LaunchURL("ForTesters");
-				this.System.openURL("http://armouree.vm.bytemark.co.uk/dokuwiki/doku.php?id=iceee:development:betatesters");
+				this.System.openURL("http://armouree.theanubianwar.com/dokuwiki/doku.php?id=iceee:development:betatesters");
 			}
 
 		});
@@ -310,7 +310,7 @@ class this.States.LoginState extends this.State
 			}
 		};
 		local txt = "";
-		req.open("GET", "http://armouree.vm.bytemark.co.uk/iceee/in_game_news");
+		req.open("GET", "http://files.theanubianwar.com/gameinfo/scourge/in_game_news");
 		req.send(txt);
 	}
 
