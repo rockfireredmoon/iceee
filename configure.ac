@@ -2,7 +2,7 @@ dnl
 dnl Initialisation
 dnl
 
-AC_INIT(soad, 1.0, emerald.icemoon@gmail.com)
+AC_INIT(vald, 1.0, emerald.icemoon@gmail.com)
 	
 AC_CONFIG_AUX_DIR(config)
 AC_CONFIG_MACRO_DIR([m4])

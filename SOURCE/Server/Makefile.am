@@ -1,13 +1,13 @@
 if WINSERVICE
-bin_PROGRAMS = soad soadsvc
+bin_PROGRAMS = vald valdsvc
 else
-bin_PROGRAMS = soad
+bin_PROGRAMS = vald
 endif
 
-soad_CPPFLAGS = -I../squirrel/include
-soad_LDADD = ../squirrel/squirrel/libsquirrel.a ../squirrel/sqstdlib/libsqstdlib.a
-soad_LDFLAGS = -v
-soad_SOURCES = md5.cc \
+vald_CPPFLAGS = -I../squirrel/include
+vald_LDADD = ../squirrel/squirrel/libsquirrel.a ../squirrel/sqstdlib/libsqstdlib.a
+vald_LDFLAGS = -v
+vald_SOURCES = md5.cc \
 	Ability2.cpp \
 	AbilityTime.cpp \
 	Account.cpp \
@@ -169,9 +169,9 @@ soad_SOURCES = md5.cc \
 	
 if WINSERVICE
 
-soadsvc_CPPFLAGS = -I../squirrel/include -DWINDOWS_SERVICE=1
-soadsvc_LDADD = ../squirrel/squirrel/libsquirrel.a ../squirrel/sqstdlib/libsqstdlib.a
-soadsvc_SOURCES = md5.cc \
+valdsvc_CPPFLAGS = -I../squirrel/include -DWINDOWS_SERVICE=1
+valdsvc_LDADD = ../squirrel/squirrel/libsquirrel.a ../squirrel/sqstdlib/libsqstdlib.a
+valdsvc_SOURCES = md5.cc \
 	Ability2.cpp \
 	AbilityTime.cpp \
 	Account.cpp \

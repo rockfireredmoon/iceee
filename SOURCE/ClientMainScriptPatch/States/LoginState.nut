@@ -90,7 +90,7 @@ class this.States.LoginState extends this.State
 			function onActionPerformed( b )
 			{			
 				//::_URLManager.LaunchURL("ForTesters");
-				this.System.openURL("http://armouree.vm.bytemark.co.uk/dokuwiki/doku.php?id=iceee:development:betatesters");
+				this.System.openURL("http://armouree.theanubianwar.com/dokuwiki/doku.php?id=iceee:development:betatesters");
 			}
 
 		});
@@ -100,7 +100,7 @@ class this.States.LoginState extends this.State
 			function onActionPerformed( b )
 			{
 				//::_URLManager.LaunchURL("ForgotPassword");
-				this.System.openURL("http://iceee.servegame.com/ResetPassword.html");
+				this.System.openURL("http://valkal.theanubianwar.com/ResetPassword.html");
 			}
 
 		});
@@ -110,7 +110,7 @@ class this.States.LoginState extends this.State
 			function onActionPerformed( b )
 			{
 				//::_URLManager.LaunchURL("ManageAccount");
-				this.System.openURL("http://iceee.servegame.com/Account.html");
+				this.System.openURL("http://valkal.theanubianwar.com/Account.html");
 			}
 
 		});
@@ -310,7 +310,7 @@ class this.States.LoginState extends this.State
 			}
 		};
 		local txt = "";
-		req.open("GET", "http://armouree.vm.bytemark.co.uk/iceee/in_game_news");
+		req.open("GET", "http://files.theanubianwar.com/gameinfo/valkal/in_game_news");
 		req.send(txt);
 	}
 
@@ -355,7 +355,7 @@ class this.States.LoginState extends this.State
 		else
 		{
 			//::_URLManager.LaunchURL("Account");
-			this.System.openURL("http://iceee.servegame.com/Account.html");
+			this.System.openURL("http://valkal.theanubianwar.com/Account.html");
 		}
 	}
 

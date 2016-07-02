@@ -166,13 +166,13 @@ class this.LoadScreen.GUI extends this.GUI.Component
 		this.mTip.setSize(624, 34);
 		this.mTip.setPreferredSize(624, 34);
 		this.mTip.addActionListener(this);
-		this.mTip.setText("Welcome to Planet Forever - IceEE!");
+		this.mTip.setText("Welcome to Earth Eternal - Valkal's Shadow!");
 		tipComp.add(this.mTip);
 		this.mAnnouncementTexts = [
-			"Welcome to Planet Forever - IceEE!"
+			"Welcome to Earth Eternal - Valkal's Shadow!"
 		];
 		this.mTipTexts = [
-			"Welcome to Planet Forever - IceEE!"
+			"Welcome to Earth Eternal - Valkal's Shadow!"
 		];
 		this.validate();
 		this.setVisible(true);
@@ -385,7 +385,7 @@ class this.LoadScreenManager
 			}
 		};
 		local txt = "";
-		req.open("GET", "http://armouree.vm.bytemark.co.uk/iceee/loading_announcements");
+		req.open("GET", "http://files.theanubianwar.com/gameinfo/valkal/loading_announcements");
 		req.send(txt);
 	}
 
@@ -414,7 +414,7 @@ class this.LoadScreenManager
 			}
 		};
 		local txt = "";
-		req.open("GET", "http://armouree.vm.bytemark.co.uk/iceee/tips");
+		req.open("GET", "http://files.theanubianwar.com/gameinfo/valkal/tips");
 		req.send(txt);
 	}
 
