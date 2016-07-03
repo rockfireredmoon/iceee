@@ -66,7 +66,7 @@ Position=79356.0,711.0,56438.0
 [ENTRY]
 Name=Grunes - Swineland Bridge
 Comment=[Comment here]
-Position=67429.0,668.0,58240.0
+Position=29494.0,218.0,65503.0
 
 [ENTRY]
 Name=Lurkers Entrance
