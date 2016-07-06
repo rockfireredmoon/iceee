@@ -1092,3 +1092,33 @@ WarpName=earthsending
 DefLoc=1,100,37
 Instance=1
 PageSize=1000
+
+[ENTRY]
+ID=1200
+NAME=Blank 1
+ENVIRONMENTTYPE=Dungeon1
+ShardName=Europe 1
+WarpName=blank1
+DefLoc=1,1,1
+PageSize=1000
+Instance=1
+
+[ENTRY]
+ID=1201
+NAME=Blank 2
+ENVIRONMENTTYPE=Dungeon1
+ShardName=Europe 1
+WarpName=blank2
+DefLoc=1,1,1
+PageSize=1000
+Instance=1
+
+[ENTRY]
+ID=1202
+NAME=Blank 3
+ENVIRONMENTTYPE=Dungeon1
+ShardName=Europe 1
+WarpName=blank3
+DefLoc=1,1,1
+PageSize=1000
+Instance=1
