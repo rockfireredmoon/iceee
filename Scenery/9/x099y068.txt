@@ -71,6 +71,15 @@ Orient=0,0,0,1
 Scale=1,1,1
 
 [ENTRY]
+ID=1133696
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=74567,879.804,51023.1
+Orient=0,-0.40319,0,0.915116
+Scale=1,1,1
+spawnPackage=#F3
+
+[ENTRY]
 ID=151028230
 Asset=CL-Burnt-Pine4#CL-Burnt-Pine4
 Name=Untitled
