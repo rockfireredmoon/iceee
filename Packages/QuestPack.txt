@@ -1,5 +1,6 @@
 ; Defines a list of quest files to load.
 
+Data\QuestAnglorumExt.txt
 Data\QuestAnglorum.txt
 Data\QuestMushroomIsle.txt
 Data\QuestCorsica.txt
