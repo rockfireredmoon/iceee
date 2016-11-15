@@ -311,6 +311,227 @@ RewardItem.3=7065,1,0
 
 
 [ENTRY]
+ID=1000
+Title=The Greysun Bandits
+BodyText=Hello there, Beast friend! I have been told you have decided to join us here in the Heartwood in our long fight against the Pact of Decay that continually threatens the forest. There is another threat I wish to bring to your attention, though.
+
+We Treekin highly value our Beast allies and will do our utmost to fight alongside them. Even so, there are some members of your kind we utterly detest. Some time ago a group of ruthless thieves from your own people have decided to make the Great Forest their home and they have become quite a problem. They call themselves the Greysun Bandits and have set up several encampments all across the western spanse of the forest.
+
+Most troublesome of all is that they have begun to patrol the one and only road leading to the town of Far Reach at the far western edge of Great Forest. We have received reports they have been plundering merchants and other travellers that attempt to travel between the Heartwood, Green Line Thicket to the east and Far Reach. This has effectively cut off our bretheren in Far Reach from the rest of us.
+
+Recently though, we have received reports that the Greysuns seem to be organizing in a far more sinister manner. If this is the case, we must find out what they are up to and stop them before they become a serious threat. Because the Pact of Decay is already a constant threat to us,,we, unfortunately, do not have the resources to deal with these bandits ourselves. Thus, my request to you.
+
+Locate five of their camps and see what they are up to. Once you have done so, return to me and tell me what you have discovered."
+
+CompleteText=I see. It is just as I feared. If what you have seen is accurate, then not only have the Greysun Bandits become a threat, it would seem they are planning something dire against the inhabitants of Great Forest. As such they must be eliminated and soon."
+Suggested=34
+Exp=4126
+PartySize=1
+NumRewards=0
+Coin=1028
+Unabandon=0
+QuestGiverID=671
+QuestEnderID=671
+Repeat=0
+sGiver=29824.3,647.221,62866.8,9
+sEnder=29824.3,647.221,62866.8,9
+[ACT]
+Act.BodyText=Travel to the first Greysun Camp
+Obj.0.type=travel
+Obj.0.data1=21896.7,237.566,61779.2,9
+Obj.0.data2=150
+Obj.0.description=Travel to the first camp
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=21896.7,237.566,61779.2,9
+Obj.1.type=travel
+Obj.1.data1=21767.8,155.857,58980,9
+Obj.1.data2=150
+Obj.1.description=Travel to the Second camp
+Obj.1.complete=0
+Obj.1.myCreatureDefID=
+Obj.1.myItemID=
+Obj.1.completeText=
+Obj.1.markerLocations=21767.8,155.857,58980,9
+Obj.2.type=travel
+Obj.2.data1=23827.4,150.378,55061.6,9
+Obj.2.data2=200
+Obj.2.description=Travel to the Third camp
+Obj.2.complete=0
+Obj.2.myCreatureDefID=
+Obj.2.myItemID=
+Obj.2.completeText=
+Obj.2.markerLocations=23827.4,150.378,55061.6,9
+Obj.3.type=travel
+Obj.3.data1=25248.7,184.229,53788,9
+Obj.3.data2=150
+Obj.3.description=Travel to the Fourth camp
+Obj.3.complete=0
+Obj.3.myCreatureDefID=
+Obj.3.myItemID=
+Obj.3.completeText=
+Obj.3.markerLocations=25248.7,184.229,53788,9
+Obj.4.type=travel
+Obj.4.data1=21670.2,146.962,52836.2,9
+Obj.4.data2=150
+Obj.4.description=Travel to the Fifth camp
+Obj.4.complete=0
+Obj.4.myCreatureDefID=
+Obj.4.myItemID=
+Obj.4.completeText=
+Obj.4.markerLocations=21670.2,146.962,52836.2,9
+[ACT
+Act.BodyText=Deliver your report to Councilor Willowbeard
+Obj.0.type=talk
+Obj.0.data1=671
+Obj.0.data2=
+Obj.0.description=Return to Councilor Willowbeard
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=29824.3,647.221,62866.8,9
+
+
+[ENTRY]
+Requires=1000
+ID=1001
+Title=Taking Down the Bandits
+BodyText=Now that we know the Greysuns are intent on causing serious harm to those who call the Great Forest home, we must eliminate them before they have a chance to fully organise an offensive. Your next task is to enter their camps and thin out their numbers. The fewer members they have, the less chance they have of being a further threat. Further, it would hopefully give relief to those trying to travel the road the bandits have been frequenting. Go now and remove these thieves from the forest!
+CompleteText=Excellent work. Now for your next task.
+Suggested=34
+Exp=4237
+PartySize=1
+NumRewards=0
+Coin=1298
+Unabandon=0
+QuestGiver=671
+QuestEnder=671
+Repeat=0
+sGiver=29824.3,647.221,62866.8,9
+sEnder=29824.3,647.221,62866.8,9
+[ACT]
+Act.BodyText=Defeat 25 Greysun Bandits
+Obj.0.type=kill
+Obj.0.data1=1093,1094
+Obj.0.data2=25
+Obj.0.description=kill 25 Greysun Bandits
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 25
+Obj.0.markerLocations=21741.9,209.569,60236.5,9
+[ACT]
+Act.BodyText=Return to Councilor Willowbeard
+Obj.0.type=talk
+Obj.0.data1=671
+Obj.0.data2=
+Obj.0.description=Return to Councilor Willowbeard
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=29824.3,647.221,62866.8,9
+
+
+[ENTRY]
+Requires=1001
+ID=1002
+Title=Assaulting the Main Camps
+BodyText=Now that the Greysuns have felt the sting of a big loss in number, it is time to deal a truly damaging blow to them!
+
+In the northwest portion of Great Forest, you will find the two main encampments of the Greysun Bandits. Unlike their lower ranking members, the bandits you will find protecting these locations are a bit more dangerous. In the northernmost of these two camps, you will also find one of the two leaders of the Greysun Bandits. Intel has said his name is Galen Frostfist. Take care as he is both a powerful mage as well as the Commander of the Greysuns.
+
+Once you have removed Galen and his cohorts as a threat, return again to me.
+CompleteText=Head to the two main Greysun Camps in the northwest of Great Forest and defeat the Greysun Commander Galen Frostfist and his followers.
+Exp=4637
+PartySize=2
+NumRewards=0
+Coin=1358
+Unabandon=0
+QuestGiver=671
+QuestEnder=671
+Repeat=0
+sGiver=29824.3,647.221,62866.8,9
+sEnder=29824.3,647.221,62866.8,9
+[ACT]
+Act.BodyText=Head to the main Greysun camps and defeat Galen Frostfist and his followers
+Obj.0.type=kill
+Obj.0.data1=1091,1090
+Obj.0.data2=15
+Obj.0.description=kill 15 Greysun
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 15
+Obj.0.markerLocations=24114.6,241.329,54297.9,9
+Obj.1.type=kill
+Obj.1.data1=1092
+Obj.1.data2=1
+Obj.1.description=kill Galen Frostfist
+Obj.1.complete=0
+Obj.1.myCreatureDefID=
+Obj.1.myItemID=
+Obj.1.completeText=0 of 1
+Obj.1.markerLocations=24114.6,241.329,54297.9,9
+[ACT]
+Act.BodyText=Return to Councilor Willowbeard
+Obj.0.type=talk
+Obj.0.data1=671
+Obj.0.data2=
+Obj.0.description=Return to Councilor Willowbeard
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=29824.3,647.221,62866.8,9
+
+
+[ENTRY]
+Requires=1002
+ID=1003
+Title=The Greysun Captain
+BodyText=Now that the Greysun Bandits are in disarray, we must take this opportunity to deliver the final blow to these vile creatures. While Galen was indeed the Greysuns' commander, there is one whom even he took orders from. Intel has informed me that the true leader of the Greysun Bandits is a fellow named Ezra Darktouch. It was Ezra, the Captain of the Greysun Bandits, who led them into the Great Forest in the first place. We must not allow Ezra to reorganize the Greysuns or all our efforts up to now will have been for naught.
+
+Thus, I must request that you find and eliminate Ezra Darktouch before he has the chance to rebuild his group. Intel has reported that he was last seen on the road to Far Reach. Return to me again once you have sent Ezra to meet his end.
+CompleteText=So, Ezra is no more then. Thank you, beast friend of the Treekin. Without your help, we could not have taken care of those bandits. Now that both of their leaders are gone, hopefully any surviving members of the Greysun Bandits will depart our forest. If not, they should be easy to eliminate now that they are more disorganized. For your efforts, please accept one of these with my thanks and the gratitude of those who should now be able to travel to and from Far Reach without fear of being harmed. Farewell.
+Exp=5137
+PartySize=2
+NumRewards=0
+Coin=1458
+Unabandon=0
+QuestGiver=671
+QuestEnder=671
+Repeat=0
+sGiver=29824.3,647.221,62866.8,9
+sEnder=29824.3,647.221,62866.8,9
+[ACT]
+Act.BodyText=Find and defeat Ezra Darktouch, the Greysun Captain on the road to Far Reach
+Obj.0.type=kill
+Obj.0.data1=1095
+Obj.0.data2=1
+Obj.0.description=Kill Ezra Darktouch
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 1
+Obj.0.markerLocations=27781.8,193.153,68038.7,9
+[ACT]
+Act.BodyText=Return to Councilor Willowbeard
+Obj.0.type=talk
+Obj.0.data1=671
+Obj.0.data2=
+Obj.0.description=Return to Councilor Willowbeard
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=29824.3,647.221,62866.8,9
+
+
+[ENTRY]
 Requires=215
 ID=781
 Title=Lords of the Rot
