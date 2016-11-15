@@ -232,6 +232,276 @@ RewardItem.0=21160,1,1
 
 
 [ENTRY]
+ID=780
+Title=The Trailblazers
+BodyText=Beast friend of the Treekin, you have already done much in our fight against the Pact of Decay and their ilk against our forest; however, there is another matter I would like for you to deal with.
+
+To the south of the Dire Murk at the very edge of the Great Forest you will find a portion of the forest that has been cut down. Roaming in that vicinity you will find a foolhardy group of enterprising members of your own kind who call themselves the Trailblazers. Some time ago, they came to the Treekin offering to help in our fight with the Pact of Decay. We were a bit wary of their methods, though, as they suggested we divide the forest between the healthy trees and the ones infected with decay. At length, we discussed the proposal and decided such measures were not in our interests as our goal is not only to stop the spread of the decay but to force its retreat.
+
+The Trailblazers did not seem too pleased with our decision and eventually departed the Heartwood, their seeming venture rejected. Recently, we have received reports they have returned to our forest uninvited and have been indiscriminately cutting down everything in sight. We, the Treekin, cannot allow this to stand, yet with nearly all of our resources focused on dealing with the Pact of Decay, we have been unable to get them to stop their operation.
+
+As much as I do not wish to make such a request, I ask that you go to the Trailblazers' encampment and thin their numbers. With fewer workers chopping down our trees, the damage done can be minimized. However, to truly get the Trailblazers to cease their activities, you must defeat those in charge as well. 
+
+Without their superiors, the remaining Trailblazers should abandon their little venture and return from wherever it is they came. Intel says their supervisor is called simply "Babe the Blue" or some such nonsense. Then there is the Trailblazers' Foreman, Pawl. Pawl will not show himself unless their operations are disrupted and Babe the Blue will likely not make an appearance unless Pawl is eliminated.
+
+Go now and drive these uninvited pests from the forest!
+CompleteText=So, those foolhardy pests have finally been dealt with? Excellent. I greatly appreciate your handling of this matter. With the Trailblazers eliminated, the areas they affected with their incessant logging efforts can begin the slow process of recovery. In the meantime, we the Treekin will continue our efforts at holding back the Pact of Decay. For your efforts, please accept one of these with my thanks and the thanks of all in the Great Forest.
+Level=33
+Suggested=34
+Exp=5447
+PartySize=2
+NumRewards=1
+Coin=1418
+Unabandon=0
+QuestGiverID=668
+QuestEnderID=668
+Repeat=0
+sGiver=28442,635,62453,9
+sEnder=28442,635,62453,9
+[ACT]
+Act.BodyText=Kill 20 Trailblazers, including Lumberjacks or Choppers.
+
+Pawl may only show himself when enough of his Trailblazer minions have been defeated.  Likewise, Babe may seek vengeance only after Pawl has fallen.
+Obj.0.type=kill
+Obj.0.data1=1096,1097
+Obj.0.data2=20
+Obj.0.description=Kill 20 Trailblazers
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 20
+Obj.0.markerLocations=21847.1,92.9187,68303,9;
+[ACT]
+Act.BodyText=Pawl may only show himself when enough of his Trailblazer minions have been defeated.  Likewise, Babe may seek vengeance only after Pawl has fallen.
+Obj.0.type=kill
+Obj.0.data1=1098
+Obj.0.data2=1
+Obj.0.description=Defeat Pawl the Foreman
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 1
+Obj.0.markerLocations=22240.7,108.774,68386.6,9;
+[ACT]
+Act.BodyText=Pawl may only show himself when enough of his Trailblazer minions have been defeated.  Likewise, Babe may seek vengeance only after Pawl has fallen.
+Obj.0.type=kill
+Obj.0.data1=1099
+Obj.0.data2=1
+Obj.0.description=Defeat Babe the Blue
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 1
+Obj.0.markerLocations=22240.7,108.774,68386.6,9;
+[ACT]
+Act.BodyText=Return to Councilor Sapclaw.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Councilor Sapclaw
+Obj.0.complete=0
+Obj.0.myCreatureDefID=668
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=28442,635,62453,9;
+RewardItem.0=7062,1,0
+RewardItem.1=7063,1,0
+RewardItem.2=7064,1,0
+RewardItem.3=7065,1,0
+
+
+[ENTRY]
+Requires=215
+ID=781
+Title=Lords of the Rot
+BodyText=So, you would like to help us in our fight here at the front lines do you? Well, perhaps you can begin by heading deep into the Deadwood and locating the three Rotted Groves within the Box Blight. These groves are tainted with the rot and serve to aid in the propagation of the black shroomie spores throughout Box Blight.
+
+Lording over these groves are three minions of the Pact of Decay. Both Buxusbane and Volutella are often seen within the western and northeastern groves, while the third, Blighton Deadroot, is reported to make his rounds between the two eastern groves near the lake.
+
+Head to the Rotted Groves of the Box Blight and destroy these lords of the rot and poison that is the Pact of Decay!
+CompleteText=You made short work of them. Most excellent. The next task I have for you, though, will not be as easy.
+Level=39
+Suggested=40
+Exp=6947
+PartySize=1
+NumRewards=0
+Coin=1980
+Unabandon=0
+QuestGiverID=1088
+QuestEnderID=1088
+Repeat=0
+sGiver=41068.5,227.817,66105.0,9
+sEnder=41068.5,227.817,66105.0,9
+[ACT]
+Act.BodyText=Defeat Buxusbane in the Western Rotted Grove.
+Defeat Volutella in the Northeastern Rotted Grove.
+Defeat Blighton Deadroot, who may be found near the Eastern Rotted Groves by the Lake.
+Obj.0.type=kill
+Obj.0.data1=1117
+Obj.0.data2=1
+Obj.0.description=Kill Buxusbane
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 1
+Obj.0.markerLocations=43950.8,76.2544,70178.3,9;
+Obj.1.type=kill
+Obj.1.data1=1116
+Obj.1.data2=1
+Obj.1.description=Kill Volutella
+Obj.1.complete=0
+Obj.1.myCreatureDefID=
+Obj.1.myItemID=
+Obj.1.completeText=0 of 1
+Obj.1.markerLocations=47432.8,212.797,67996.6,9;
+Obj.2.type=kill
+Obj.2.data1=1110
+Obj.2.data2=1
+Obj.2.description=Kill Blighton Deadroot
+Obj.2.complete=0
+Obj.2.myCreatureDefID=
+Obj.2.myItemID=
+Obj.2.completeText=0 of 1
+Obj.2.markerLocations=48870.9,227,68624,9;
+[ACT]
+Act.BodyText=Return to Gustavo Belladona.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Gustavo Belladona
+Obj.0.complete=0
+Obj.0.myCreatureDefID=1088
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=41068.5,227.817,66105.0,9;
+
+
+[ENTRY]
+Requires=781
+ID=782
+Title=Wither-Root
+BodyText=Now that the Rotted Groves are no longer a threat it is time to press the issue by crippling the Pact of Decay where they start.
+
+To the south of Green Line Thicket you will find a most vile grove which we have learned is the 'breeding grounds', as it were, of the Rotted. The 'Rotted Nursery' they call it. Now, they don't multiply as Mother Gaia intended, no. The Pact of Decay's method of increasing their numbers is much more vile. I won't go into the details of what horrors are wrought within that place; however, I will tell you of a specific Rotted known as Wither-Root. This particular Rotted is a nasty fellow and many young seedlings fall prey to his machinations within that corrupted grove.
+
+With him are two 'assistants', if you could call them that. One is a corrupted dryad named Branchesca. Reports claim she is the one who assists in the corruption process of the Treekin saplings and nurses the newly turned Rotted into powerful members of the Pact of Decay. The other is a Black Shroomie called Sparren Rotgut. This fellow lords over the others of his kind within the Nursery and directly aids in the spreading of the deadly spores which infects the saplings.
+
+Head to the Rotted Nursery and eliminate both Branchesca and Sparren Rotgut. Once these two vile beings have been dealt with, you must find and defeat Wither-Root himself. Reports claim he will not show himself that easily; however, you might get him to come out of hiding by destroying his minions.
+
+Return here once they have felt the true sting of death!
+CompleteText=So, Wither-Root and his followers are finally destroyed? That is great news indeed. This will put a nice dent in the goals of the Pact of Decay for sure! Thank you for all your help in driving back our enemies!
+Level=39
+Suggested=40
+Exp=6947
+PartySize=5
+NumRewards=0
+Coin=1980
+Unabandon=0
+QuestGiverID=1088
+QuestEnderID=1088
+Repeat=0
+sGiver=41068.5,227.817,66105.0,9
+sEnder=41068.5,227.817,66105.0,9
+[ACT]
+Act.BodyText=Enter the Rotted Nursery.
+Obj.0.type=travel
+Obj.0.data1=3309,200,1919,73
+Obj.0.data2=1000
+Obj.0.description=Enter the Rotted Nursery
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=44157.7,249.622,72061.8,9;
+[ACT]
+Act.BodyText=Enter the Rotted Nursery and defeat the two assistants, Branchesca and Sparren Rotgut.
+Obj.0.type=kill
+Obj.0.data1=1158
+Obj.0.data2=1
+Obj.0.description=Kill Branchesca
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 1
+Obj.0.markerLocations=3100.02,165.288,885.565,73;
+Obj.1.type=kill
+Obj.1.data1=2608
+Obj.1.data2=1
+Obj.1.description=Kill Sparren Rotgut
+Obj.1.complete=0
+Obj.1.myCreatureDefID=
+Obj.1.myItemID=
+Obj.1.completeText=0 of 1
+Obj.1.markerLocations=2668.24,207.966,2384.64,73;
+[ACT]
+Act.BodyText=Locate and defeat Wither-Root himself, within the Rotted Nursery. Reports claim he will not show himself that easily; however, you might get him to come out of hiding by destroying his minions.
+Obj.0.type=kill
+Obj.0.data1=2607
+Obj.0.data2=1
+Obj.0.description=Kill Wither-Root
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 1
+Obj.0.markerLocations=880.319,233.391,2342.95,73;
+[ACT]
+Act.BodyText=Return to Gustavo Belladona.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Gustavo Belladona
+Obj.0.complete=0
+Obj.0.myCreatureDefID=1088
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=41068.5,227.817,66105.0,9;
+
+
+[ENTRY]
+ID=793
+Title=Fashionable Needles
+BodyText=Hello there! Yes, you! Could you do me a favor? My name is Camille Kefir of Kefir Fashions here in Bazaart. I am a seamstress that excels in all the latest in desert fashion. I have a slight problem though that I hope you can assist me with. You see, my supply of needles has run dry and I have been unable to procure more thanks to the recent problems in the Merchants' Guild.
+
+I have been told that the needles of the wandering Pinface Prickler cacti in the Dust Fields are quite strong as they are sharp. The problem is, I am a seamstress not a fighter! I would be killed before I could get even one needle decent enough for my use. You seem able-bodied enough though. Do me this favor and get me a dozen of those cactus needles for me. Good ones, not mediocre ones! I want them to last! I shall pay you for the trouble.
+CompleteText=You got them?! Oh my, these look rather strong indeed! So strong in fact, I might even be able to use them in my fashions as accessories and not just for sewing! Thank you so much! Here's the payment I promised!
+Level=46
+Suggested=47
+Exp=9219
+PartySize=1
+NumRewards=0
+Coin=2813
+Unabandon=0
+QuestGiverID=848
+QuestEnderID=848
+Repeat=0
+sGiver=22386,380,76723,9
+sEnder=22386,380,76723,9
+Heroism=10
+[ACT]
+Act.BodyText=Gather a dozen needles from the Pinface Pricklers in the Dust Fields.
+Obj.0.type=kill
+Obj.0.data1=1472
+Obj.0.data2=12
+Obj.0.description=Gather Pinface Prickler Needles
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 12
+Obj.0.markerLocations=25704.2,242.066,79061.6,9;
+[ACT]
+Act.BodyText=Return to Camille Kefir.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=848
+Obj.0.description=Return to Camille Kefir
+Obj.0.complete=0
+Obj.0.myCreatureDefID=848
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=22386,380,76723,9;
+
+
+[ENTRY]
 ID=483
 Title=Sand Goliaths
 BodyText=Hello once again, friend! When we last met, I told you I would ask for your help when the time was right. That time has now come. Recently, we in Bazaart have begun to actively trade with the peaceful Outcast encampment of Oslis high up in Cracked Rock in the hopes of establishing a good relationship with them. Unfortunately, our merchants have encountered a stumbling block of sorts...well, more like stumbling ROCKS to be more accurate.
@@ -286,6 +556,7 @@ Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=21782.5,597.483,76948.2,9
 
+
 [ENTRY]
 Requires=483
 ID=484
@@ -337,6 +608,7 @@ Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=21782.5,597.483,76948.2,9
 
+
 [ENTRY]
 Requires=484
 ID=485
@@ -385,3 +657,201 @@ Obj.0.myCreatureDefID=2463
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=21782.5,597.483,76948.2,9
+
+
+
+[ENTRY]
+Requires=802
+ID=803
+Title=Shadows, Shadows, Everywhere
+BodyText=You explain you were sent by Sonny.
+
+"Sonny's apprentice, eh?  That scrub is just too lazy to do anything himself!  You know why we call him a snail?  Because he's slow to act."
+
+Hell clenched both his hands in anger.
+
+"I'll be frank, the shadows around here need to be dispersed.  Go crazy on them.  No, go batshit crazy on them!  As long as they die, we're cool."
+CompleteText="Hot damn, you remind me of my youth!  I used to rampage like that against hordes of Grim Phantoms all the time!"
+Level=30
+Suggested=35
+Exp=5675
+PartySize=1
+NumRewards=0
+Coin=1508
+Unabandon=0
+QuestGiverID=3628
+QuestEnderID=3628
+Repeat=0
+sGiver=7285.25,269.853,60835.7,9
+sEnder=7285.25,269.853,60835.7,9
+Heroism=14
+[ACT]
+Act.BodyText=Kill 500 shadows.  Hell Twelve will think you're cool.
+Obj.0.type=kill
+Obj.0.data1=650,651,980
+Obj.0.data2=500
+Obj.0.description=Kill 500 shadows
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 500
+Obj.0.markerLocations=8269.53,274.779,60566.6,9;
+[ACT]
+Act.BodyText=Return to Hell Twelve.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Hell Twelve
+Obj.0.complete=0
+Obj.0.myCreatureDefID=3628
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=7285.25,269.853,60835.7,9;
+ScriptAcceptAction=play_sound Sound-ModSound|Sound-vo_woe_illidan_escort_03.ogg
+ScriptCompleteAction=play_sound Sound-ModSound|Sound-vo_woe_illidan_bossvictory_01.ogg
+
+
+[ENTRY]
+Requires=803
+ID=804
+Title=Where Did I Put It Again?
+BodyText="Where did I put that f***ing sigil!"
+
+Hell Twelve sees you still standing by him.  "Oh hey, listen pal."  The taurian puts his hand on your shoulder.
+
+"I seem to have mispla...forgotten to grab a magical sigil.  Can you grab it for me?  It's in Bremen... think."
+
+Before you can ask for any more details he pushes you away from him.
+
+CompleteText=Excellent work.  These shadows have a leader somewhere, and that's where "It" must be.  The sigil will help you get there.
+Level=30
+Suggested=35
+Exp=2837
+PartySize=1
+NumRewards=0
+Coin=754
+Unabandon=0
+QuestGiverID=3628
+QuestEnderID=3628
+Repeat=0
+sGiver=7285.25,269.853,60835.7,9
+sEnder=7285.25,269.853,60835.7,9
+Heroism=6
+[ACT]
+Act.BodyText=Find the magical sigil somewhere in Bremen.
+Obj.0.type=gather
+Obj.0.data1=3629
+Obj.0.data2=1
+Obj.0.description=Find the sigil
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 1
+Obj.0.markerLocations=
+Obj.0.ActivateTime=2000
+Obj.0.ActivateText=Taking the sigil...
+[ACT]
+Act.BodyText=Return the sigil to Hell Twelve.  If it was important, you'd think he wouldn't have forgotten it behind...
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Hell Twelve
+Obj.0.complete=0
+Obj.0.myCreatureDefID=3628
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=7285.25,269.853,60835.7,9;
+ScriptAcceptAction=play_sound Sound-ModSound|Sound-vo_woe_illidan_mannoroth_07.ogg
+ScriptCompleteAction=play_sound Sound-ModSound|Sound-vo_woe_illidan_mannoroth_06.ogg
+
+
+[ENTRY]
+Requires=804
+ID=805
+Title="It"
+BodyText="You are a great beast.  Prove to me in battle you are a legendary one."
+
+You ready your weapons in hasty caution as Hell says those words.
+
+"Not against me, you idiot!  Help me in battle against... It!"
+
+"The shadows enter from somewhere, a rift.  The sigil can help weaken the barrier and cross over.  We shall slay everything on the other side and nullify any energy sources."
+CompleteText="The Grey Circle is done here.  I'll remain and pick off any shadows that are still left.  May we meet again."
+
+As you depart you notice your ring has a new flicker to it. (Return at level 40).
+Level=30
+Suggested=40
+Exp=12000
+PartySize=5
+NumRewards=0
+Coin=50000
+Unabandon=0
+QuestGiverID=3628
+QuestEnderID=3628
+Repeat=0
+sGiver=7285.25,269.853,60835.7,9
+sEnder=7285.25,269.853,60835.7,9
+Heroism=14
+[ACT]
+Act.BodyText=The sigil's power can help cross through the already weakened rift into the Shadow world.  Enter the realm.
+Obj.0.type=travel
+Obj.0.data1=8256,278,60837,9
+Obj.0.data2=150
+Obj.0.description=Travel to the portal
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=8256.07,278.096,60837.2,9;
+[ACT]
+Act.BodyText=Travel through the rift into the Shadow world.
+Obj.0.type=travel
+Obj.0.data1=5609,8,2522,112
+Obj.0.data2=2500
+Obj.0.description=Travel through the portal
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=8256.07,278.096,60837.2,9;
+[ACT]
+Act.BodyText=Defeat the shadow that Hell calls "It."
+Obj.0.type=kill
+Obj.0.data1=3630
+Obj.0.data2=1
+Obj.0.description=Kill the shadow called "It"
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 1
+Obj.0.markerLocations=8269.53,274.779,60566.6,9;
+[ACT]
+Act.BodyText=Use the sigil to nullify the crystal's power.
+Obj.0.type=activate
+Obj.0.data1=3633
+Obj.0.data2=1
+Obj.0.description=Use the sigil to nullify the crystal
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=
+Obj.0.ActivateTime=2000
+Obj.0.ActivateText=Nullifying the crystal...
+[ACT]
+Act.BodyText=Meet Hell Twelve outside at his post.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Meet Hell Twelve outside at his post
+Obj.0.complete=0
+Obj.0.myCreatureDefID=3628
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=7285.25,269.853,60835.7,9;
+RewardItem.0=7069,1,1
+ScriptAcceptAction=play_sound Sound-ModSound|Sound-vo_woe_illidan_greeting_02.ogg
+ScriptCompleteCondition=has_item 7068 1
+ScriptCompleteAction=remove_item 7068 1;send_text "You have upgraded your ring!";play_sound Sound-ModSound|Sound-vo_woe_illidan_bossvictory_02.ogg
+
+
