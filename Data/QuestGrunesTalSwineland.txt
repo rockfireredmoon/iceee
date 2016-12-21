@@ -1517,7 +1517,9 @@ Title=Message to Front Line Camp
 BodyText=Friend, perhaps you can perform another favor for me? As it now seems I must return to the Redeemer's Camp to inform my fellow Redeemers of my contact's death, would you deliver the documents you were able to retrieve to Damian Talamasca in Front Line Camp in my place? Damian is the commanding officer of our forces stationed at the Front Line and I am certain the information contained in these notes will be of great assistance there. I assure you they can use all the help they can get. 
 
 Thank you so much!
-CompleteText=A message from Zahn? Give it here... Hmmm this is tragic news indeed... Thank you for delivering this message!
+CompleteText=Welcome to Front Line Camp friend! Not sure why you would come way out here, what with the Vampires on our doorstep and all.
+Hmm? Delivering documents along with a message from Zahn? Give them here then.
+I see... This is tragic news indeed. Thank you for delivering these to us and I can only hope the original messenger may rest in peace. We will put this new imformation to use so their sacrifice is not wasted!
 Suggested=45
 Exp=8211
 PartySize=1
@@ -1530,7 +1532,7 @@ Repeat=0
 sGiver=63985.6,780.358,56930.7,9
 sEnder=
 [ACT]
-Act.BodyText=Travel to the Frontline Camp in Swineland and deliver the message to Damian Talamasca
+Act.BodyText=Travel to the Front Line Camp in Swineland and deliver the notes retrieved to Damian Talamasca
 Obj.0.type=talk
 Obj.0.data1=1318
 Obj.0.data2=
@@ -1547,7 +1549,7 @@ ID=901
 Title=Black Gold 
 BodyText=Unikorns are a necessary evil in this land, foul as their prescence may be. We do our best to keep the population healthy, but never so large a herd that they are uncontrollable. 
 
-You see, the local Night-Mares provide us Redeemers with a valuable resource: Vile Bihyl. This thick ichor, extracted from Night-Mare spleens protects us against vampires by turning our blood repugnant to vampires. The taste is foul beyond measure, but a necessary evil if you wish to survive here at the Front Line. 
+You see, the local Night-Mares provide us Redeemers with a valuable resource: Vile Bihyl. This thick ichor, extracted from Night-Mare spleens, protects us against vampires by turning our blood repugnant to vampires. The taste is foul beyond measure, but a necessary evil if you wish to survive here at the Front Line. 
 
 Take to the wilds and harvest eight pints of Vile Bihyl from Night-Mares, and kill twelve of their handlers, the Valkal Steedmasters. It may save your own life one day! 
 CompleteText=Excellent work! This will replenish our supply as well as allow us to treat more Redeemer blood and increase our numbers in the fight against Valkal's legions.
