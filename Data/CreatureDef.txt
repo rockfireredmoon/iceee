@@ -16109,6 +16109,7 @@ creature_category=Mortal
 rarity=1
 ai_package=example
 total_size=45
+defHints=48
 
 [ENTRY]
 defHints=48
