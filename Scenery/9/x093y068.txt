@@ -1,12 +1,22 @@
 [ENTRY]
 ID=1091091
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=70152.3,1044.37,51060.6
 Orient=0,0,0,1
 Scale=1,1,1
 links_count=1
 link=1091092,1
+
+[ENTRY]
+ID=1150282
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=69834.1,995.56,51632.4
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=12_wpg_Wilds_44_45
+wanderRadius=160
 
 [ENTRY]
 ID=151018664
@@ -72,11 +82,12 @@ Scale=2.95,2.95,2.95
 Flags=1
 
 [ENTRY]
-ID=151030371
+ID=151030370
 Asset=Manipulator-SpawnPoint
 Name=Untitled
-Pos=69944,1023.95,51696
+Pos=69751.6,1020.55,51344.5
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_wpg_Wilds_44_45
+wanderRadius=100
 

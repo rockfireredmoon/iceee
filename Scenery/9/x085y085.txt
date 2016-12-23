@@ -37,14 +37,6 @@ Orient=0,0,0,1
 Scale=1,1,1
 
 [ENTRY]
-ID=1129260
-Asset=Prop-Interact1#Prop-Interact_Rectangle
-Name=
-Pos=64484,963.449,64303
-Orient=0.692537,0,0,0.721382
-Scale=11,11,11
-
-[ENTRY]
 ID=151015239
 Asset=CL-UndeadTree5#CL-UndeadTree5
 Name=Untitled

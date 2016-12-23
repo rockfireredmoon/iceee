@@ -1,0 +1,16 @@
+[ENTRY]
+ID=1150032
+Asset=Prop-Swineland_Junk#Prop-Swineland-Junk_Pile2
+Name=
+Pos=62979.3,613.617,51646
+Orient=0,0,0,1
+Scale=2,2,2
+
+[ENTRY]
+ID=1150035
+Asset=CL-Forest#CL-Sick-Pine4
+Name=
+Pos=62872.1,778.35,51116
+Orient=0,0,0,1
+Scale=1,1,1
+

@@ -1,39 +1,30 @@
 [ENTRY]
 ID=151030389
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=68851,1302.18,54281
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_wpg_Wilds_44_45
-outerRadius=200
-
-[ENTRY]
-ID=151030448
-Asset=Manipulator-SpawnPoint
-Pos=68616,1328.99,54737
-Orient=0,0,0,1
-Scale=1,1,1
-innerRadius=50
-spawnPackage=12_wpg_Wilds_44_45
-outerRadius=100
+wanderRadius=200
 
 [ENTRY]
 ID=151030455
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=68563,1245.05,54521
 Orient=0,0,0,1
 Scale=1,1,1
-innerRadius=50
 spawnPackage=12_wpg_Wilds_44_45
-outerRadius=100
+wanderRadius=100
 
 [ENTRY]
 ID=151030456
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=68328,1131.97,54252
 Orient=0,0,0,1
 Scale=1,1,1
-innerRadius=50
 spawnPackage=12_wpg_Wilds_44_45
-outerRadius=100
+wanderRadius=100
 

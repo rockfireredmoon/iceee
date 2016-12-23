@@ -1,10 +1,12 @@
 [ENTRY]
-ID=1128578
-Asset=Prop-Interact_Rectangle
+ID=1150171
+Asset=Manipulator#Manipulator-PathNode
 Name=
-Pos=63195.4,314.164,53472.9
-Orient=0.614349,0.303659,-0.34217,0.642873
-Scale=35,35,35
+Pos=63578.7,677.59,53491.7
+Orient=0,0,0,1
+Scale=1,1,1
+links_count=1
+link=151030504,1
 
 [ENTRY]
 ID=151049917

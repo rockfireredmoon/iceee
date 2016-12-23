@@ -1,12 +1,4 @@
 [ENTRY]
-ID=1127894
-Asset=Prop-Interact1#Prop-Interact_Rectangle
-Name=
-Pos=66179.4,961.378,61627.3
-Orient=0,-0.252245,0,0.967663
-Scale=8,8,8
-
-[ENTRY]
 ID=151047576
 Asset=Prop-Boulder_Scary#Prop-Boulder_Scary2
 Name=Untitled

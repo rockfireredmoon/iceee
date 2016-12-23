@@ -1,10 +1,23 @@
 [ENTRY]
-ID=1128579
-Asset=Prop-Interact_Rectangle
+ID=1150196
+Asset=Manipulator#Manipulator-PathNode
 Name=
-Pos=64831,758.978,54726
-Orient=0.614349,0.303659,-0.34217,0.642873
-Scale=30,30,30
+Pos=64501.2,671.628,54168.6
+Orient=0,0,0,1
+Scale=1,1,1
+links_count=2
+link=1150198,1
+link=1150199,1
+
+[ENTRY]
+ID=1150201
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=65154.6,683.992,54483.1
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=12_wpg_Wilds_44_45
+wanderRadius=130
 
 [ENTRY]
 ID=151017810
@@ -25,29 +38,22 @@ Scale=1.35,1.35,1.35
 Flags=1
 
 [ENTRY]
-ID=151030493
-Asset=Manipulator-SpawnPoint
-Name=Untitled
-Pos=65080.2,688.452,54486
-Orient=0,0,0,1
-Scale=1,1,1
-spawnPackage=12_wpg_Wilds_44_45
-
-[ENTRY]
 ID=151030497
 Asset=Manipulator-SpawnPoint
 Name=Untitled
-Pos=64859.9,687.687,54513
+Pos=64894.7,708.587,54544.2
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_wpg_Wilds_44_45
+wanderRadius=100
 
 [ENTRY]
 ID=151030499
 Asset=Manipulator-SpawnPoint
 Name=Untitled
-Pos=64591.5,686.304,54466
+Pos=64563,685.539,54492.1
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_wpg_Wilds_44_45
+wanderRadius=100
 

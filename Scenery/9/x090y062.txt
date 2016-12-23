@@ -177,11 +177,3 @@ links_count=2
 link=151029869,1
 link=151029871,1
 
-[ENTRY]
-ID=151058280
-Asset=Prop-Dambat-Gate#Prop-Dambat-Gate
-Name=Untitled
-Pos=68209,605.401,46772
-Orient=0,0.811428,0,-0.584452
-Scale=3.6,3.6,3.6
-

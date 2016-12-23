@@ -2,7 +2,7 @@
 ID=1091140
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=Untitled
-Pos=73751.9,877.617,60006.5
+Pos=73754.2,880.576,60006.7
 Orient=0,0.999958,0,-0.00920352
 Scale=1,1,1
 spawnPackage=#F1355

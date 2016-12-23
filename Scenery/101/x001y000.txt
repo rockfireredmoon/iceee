@@ -1,0 +1,16 @@
+[ENTRY]
+ID=1150133
+Asset=Cav-Hall_Straight1?ATS=ATS-Cave_Skrill
+Name=
+Pos=2004.58,600.614,726.862
+Orient=0,0.706825,0,0.707388
+Scale=1,1,1
+
+[ENTRY]
+ID=1150134
+Asset=Cav-Hall_Cap1?ATS=ATS-Cave_Skrill
+Name=
+Pos=2152.91,600.636,727.033
+Orient=0,-0.706825,0,0.707388
+Scale=1,1,1
+

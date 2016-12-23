@@ -25,14 +25,6 @@ Scale=1,1,1
 spawnPackage=11_dth_wilds_44_45_north
 
 [ENTRY]
-ID=1129261
-Asset=Prop-Interact_Rectangle
-Name=
-Pos=64413.9,968.986,64675.6
-Orient=0.668016,-0.152892,0.162482,0.709915
-Scale=11,11,11
-
-[ENTRY]
 ID=151040367
 Asset=CL-GrunsBush_3#CL-GrunsBush_3
 Name=Untitled

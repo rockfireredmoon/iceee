@@ -1,6 +1,7 @@
 [ENTRY]
 ID=151021390
 Asset=CL-AridBush2#CL-AridBush2
+Name=Untitled
 Pos=65098.7,830.496,52563
 Orient=0,0.0799147,0,0.996802
 Scale=2.05,2.05,2.05
@@ -9,6 +10,7 @@ Flags=1
 [ENTRY]
 ID=151021414
 Asset=CL-Swinland_JunkPile1#CL-Swinland_JunkPile1
+Name=Untitled
 Pos=65248.6,975.714,53047
 Orient=0,0,0,1
 Scale=1.325,1.325,1.325
@@ -17,30 +19,20 @@ Flags=1
 [ENTRY]
 ID=151030512
 Asset=Manipulator-SpawnPoint
-Pos=64910.3,726.643,52927
+Name=Untitled
+Pos=64997.4,723.466,52951.1
 Orient=0,0,0,1
 Scale=1,1,1
-innerRadius=50
 spawnPackage=12_wpg_Wilds_44_45
-outerRadius=60
+wanderRadius=60
 
 [ENTRY]
 ID=151030513
 Asset=Manipulator-SpawnPoint
-Pos=64743.9,737.428,52942
+Name=Untitled
+Pos=64730.4,722.918,52777.2
 Orient=0,0,0,1
 Scale=1,1,1
-innerRadius=50
 spawnPackage=12_wpg_Wilds_44_45
-outerRadius=60
-
-[ENTRY]
-ID=151030514
-Asset=Manipulator-SpawnPoint
-Pos=64757.8,721.026,52741
-Orient=0,0,0,1
-Scale=1,1,1
-innerRadius=50
-spawnPackage=12_wpg_Wilds_44_45
-outerRadius=60
+wanderRadius=100
 

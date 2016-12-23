@@ -1,6 +1,7 @@
 [ENTRY]
 ID=151018542
 Asset=Prop-Lamp_Post_Junk#Prop-Lamp_Post_Junk1
+Name=Untitled
 Pos=64139,681.888,52613
 Orient=0,-0.366273,0,0.930508
 Scale=1,1,1
@@ -9,8 +10,19 @@ Flags=1
 [ENTRY]
 ID=151018550
 Asset=CL-AridRock4#CL-AridRock4
+Name=Untitled
 Pos=64146.9,685.214,52616
 Orient=0,0.990327,0,-0.138754
 Scale=0.525,0.525,0.525
 Flags=1
+
+[ENTRY]
+ID=151030506
+Asset=Manipulator-SpawnPoint
+Name=Untitled
+Pos=63818.1,725.814,53009.4
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=12_wpg_Wilds_44_45
+wanderRadius=100
 

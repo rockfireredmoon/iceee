@@ -1,7 +1,8 @@
 [ENTRY]
 ID=151020793
 Asset=Bldg-Junk_Palace#Bldg-Junk_Palace?ATS=ATS-Warpig
-Pos=66777,1394.28,52327
+Name=Untitled
+Pos=66777,1380.18,52327
 Orient=0,-0.955571,0,-0.29476
 Scale=1.675,1.675,1.675
 Flags=1
@@ -9,6 +10,7 @@ Flags=1
 [ENTRY]
 ID=151021411
 Asset=Prop-The_Great_Nook_Scaffold
+Name=Untitled
 Pos=67120,1479.69,52058
 Orient=0,0,0,1
 Scale=2.45,2.45,2.45

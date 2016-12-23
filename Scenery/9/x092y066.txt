@@ -1,6 +1,7 @@
 [ENTRY]
 ID=151018657
 Asset=Prop-Lamp_Post_Junk#Prop-Lamp_Post_Junk1
+Name=Untitled
 Pos=69528,989.519,50211
 Orient=0,-0.636537,0,0.771246
 Scale=1,1,1
@@ -9,6 +10,7 @@ Flags=1
 [ENTRY]
 ID=151018663
 Asset=CL-AridBush3#CL-AridBush3
+Name=Untitled
 Pos=69520,987.849,50208
 Orient=0,0,0,1
 Scale=1,1,1
@@ -17,20 +19,19 @@ Flags=1
 [ENTRY]
 ID=151030358
 Asset=Manipulator-SpawnPoint
-Pos=69155,898.633,50013
+Name=Untitled
+Pos=69090.3,901.954,50065.9
 Orient=0,0,0,1
 Scale=1,1,1
-innerRadius=50
 spawnPackage=12_wpg_Wilds_44_45
-outerRadius=100
+wanderRadius=100
 
 [ENTRY]
 ID=151030359
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=69586,944.444,49865
 Orient=0,0,0,1
 Scale=1,1,1
-innerRadius=50
 spawnPackage=12_wpg_Wilds_44_45
-outerRadius=100
 

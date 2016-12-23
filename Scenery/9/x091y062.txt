@@ -1,6 +1,7 @@
 [ENTRY]
 ID=151019875
 Asset=CL-AridBush4#CL-AridBush4
+Name=Untitled
 Pos=68264,773.215,47241
 Orient=0,0,0,1
 Scale=1,1,1
@@ -9,7 +10,16 @@ Flags=1
 [ENTRY]
 ID=151019887
 Asset=Prop-Lamp_Post_Junk#Prop-Lamp_Post_Junk1
+Name=Untitled
 Pos=68293,588.378,46714
 Orient=0.00228283,-0.890285,0.109755,0.441974
 Scale=1.85,1.85,1.85
+
+[ENTRY]
+ID=151058280
+Asset=Prop-Dambat-Gate#Prop-Dambat-Gate
+Name=Untitled
+Pos=68362.5,607.248,46793.1
+Orient=0,0.811428,0,-0.584452
+Scale=3.6,3.6,3.6
 
