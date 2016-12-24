@@ -4288,5 +4288,21 @@
 	["Terrain-Testing_Gauntlet_x9y7"] = true,
 	["Terrain-Testing_Gauntlet_x9y8"] = true,
 	["Terrain-Testing_Gauntlet_x9y9"] = true,
-	["Terrain-Zhushis_Lair_x0y0"] = true
+	["Terrain-Zhushis_Lair_x0y0"] = true,	
+	["Terrain-Winterland_x0y0"] = true,	
+	["Terrain-Winterland_x0y1"] = true,	
+	["Terrain-Winterland_x0y2"] = true,	
+	["Terrain-Winterland_x0y3"] = true,	
+	["Terrain-Winterland_x1y0"] = true,	
+	["Terrain-Winterland_x1y1"] = true,	
+	["Terrain-Winterland_x1y2"] = true,	
+	["Terrain-Winterland_x1y3"] = true,	
+	["Terrain-Winterland_x2y0"] = true,	
+	["Terrain-Winterland_x2y1"] = true,	
+	["Terrain-Winterland_x2y2"] = true,	
+	["Terrain-Winterland_x2y3"] = true,		
+	["Terrain-Winterland_x3y0"] = true,	
+	["Terrain-Winterland_x3y1"] = true,	
+	["Terrain-Winterland_x3y2"] = true,	
+	["Terrain-Winterland_x3y3"] = true
 };
