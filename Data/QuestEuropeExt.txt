@@ -985,7 +985,7 @@ Obj.0.markerLocations=21782.5,597.483,76948.2,9
 
 [ENTRY]
 Requires=806
-ID=807
+ID=808
 Title=The Cult of the Sand Dragon
 BodyText=While you were out taking care of the Sand Goliaths, we in Bazaart received some grave news.
 
@@ -1036,8 +1036,8 @@ Obj.0.markerLocations=21782.5,597.483,76948.2,9
 
 
 [ENTRY]
-Requires=807
-ID=808
+Requires=808
+ID=809
 Title=The Dragon's Nest
 BodyText=Now that most of the Brood of Kerakura has been dealt with, it is time to deal the fatal blow.
 

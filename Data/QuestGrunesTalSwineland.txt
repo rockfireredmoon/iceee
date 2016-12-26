@@ -586,16 +586,16 @@ Obj.0.myItemID=
 Obj.0.completeText=0 of 6
 Obj.0.markerLocations=62180.2,750.44,63087.8,9
 [ACT]
-Act.BodtText=Kill Geoffry Thistlefur
-Obj.1.type=kill
-Obj.1.data1=3452
-Obj.1.data2=1
-Obj.1.description=Kill Geoffry Thistlefur
-Obj.1.complete=0
-Obj.1.myCreatureDefID=
-Obj.1.myItemID=
-Obj.1.completeText=0 of 1
-Obj.1.markerLocations=61811.7,787.118,62807.1,9
+Act.BodyText=Kill Geoffry Thistlefur
+Obj.0.type=kill
+Obj.0.data1=3452
+Obj.0.data2=1
+Obj.0.description=Kill Geoffry Thistlefur
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 1
+Obj.0.markerLocations=61811.7,787.118,62807.1,9
 [ACT]
 Act.BodyText=Return to Garus Greyson
 Obj.0.type=talk
@@ -706,7 +706,7 @@ Obj.1.completeText=
 Obj.1.markerLocations=65902.2,820.963,59745.7,9
 Obj.1.ActivateTime=5000
 Obj.1.ActivateText=Carefully placing TV
-[Act]
+[ACT]
 Act.BodyText=Return to Dirty Thunder
 Obj.0.type=talk
 Obj.0.data1=
