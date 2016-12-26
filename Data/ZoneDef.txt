@@ -116,7 +116,7 @@ NAME=Winterland
 TERRAINCONFIG=Terrain-Winterland#Terrain-Winterland.cfg
 ENVIRONMENTTYPE=CloudyDay
 ShardName=Winterland
-WarpName=Winterland
+WarpName=Winterland20
 DefLoc=2958,260,3821
 
 [ENTRY]
@@ -125,7 +125,7 @@ NAME=Winterland
 TERRAINCONFIG=Terrain-Winterland#Terrain-Winterland.cfg
 ENVIRONMENTTYPE=CloudyDay
 ShardName=Winterland
-WarpName=Winterland
+WarpName=Winterland30
 DefLoc=2958,260,3821
 
 [ENTRY]
@@ -134,7 +134,7 @@ NAME=Winterland
 TERRAINCONFIG=Terrain-Winterland#Terrain-Winterland.cfg
 ENVIRONMENTTYPE=CloudyDay
 ShardName=Winterland
-WarpName=Winterland
+WarpName=Winterland35
 DefLoc=2958,260,3821
 
 [ENTRY]
@@ -1148,3 +1148,9 @@ WarpName=blank3
 DefLoc=1,1,1
 PageSize=1000
 Instance=1
+
+[ENTRY]
+ID=8
+NAME=asdsadasdsa
+Mode=2
+DefLoc=0,0,0
