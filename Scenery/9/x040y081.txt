@@ -49,5 +49,5 @@ Asset=Manipulator-SpawnPoint
 Pos=30388.1,608.341,61350.4
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=HOLIDAY_Easter_Egg
+spawnPackage=Europe_Europe_HOLIDAY_Easter_Egg
 

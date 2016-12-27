@@ -279,7 +279,7 @@ Asset=Manipulator-SpawnPoint
 Pos=28690.2,508.002,63003.3
 Orient=0,-0.926499,0,0.376297
 Scale=1,1,1
-spawnPackage=HOLIDAY_Easter_Egg
+spawnPackage=Europe_Europe_HOLIDAY_Easter_Egg
 
 [ENTRY]
 ID=151062306
@@ -287,5 +287,5 @@ Asset=Manipulator-SpawnPoint
 Pos=28748.7,508.002,63148.8
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=HOLIDAY_Easter_Egg
+spawnPackage=Europe_Europe_HOLIDAY_Easter_Egg
 

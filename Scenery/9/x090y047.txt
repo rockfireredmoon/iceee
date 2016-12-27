@@ -309,7 +309,7 @@ Asset=Manipulator-SpawnPoint
 Pos=67556.9,676.127,35610.1
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=HOLIDAY_Easter_Egg
+spawnPackage=Europe_Europe_HOLIDAY_Easter_Egg
 
 [ENTRY]
 ID=151062264
@@ -317,7 +317,7 @@ Asset=Manipulator-SpawnPoint
 Pos=67617.8,675.881,35804
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=HOLIDAY_Easter_Egg
+spawnPackage=Europe_Europe_HOLIDAY_Easter_Egg
 
 [ENTRY]
 ID=151062293
@@ -325,7 +325,7 @@ Asset=Manipulator-SpawnPoint
 Pos=67890.4,674.974,35404.5
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=HOLIDAY_Easter_Egg
+spawnPackage=Europe_Europe_HOLIDAY_Easter_Egg
 
 [ENTRY]
 ID=151062294
@@ -333,5 +333,5 @@ Asset=Manipulator-SpawnPoint
 Pos=67503.5,676.128,35529.2
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=HOLIDAY_Easter_Egg
+spawnPackage=Europe_Europe_HOLIDAY_Easter_Egg
 

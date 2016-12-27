@@ -305,5 +305,5 @@ Name=Untitled
 Pos=69304.1,425.208,35954.6
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=HOLIDAY_Easter_Egg
+spawnPackage=Europe_Europe_HOLIDAY_Easter_Egg
 

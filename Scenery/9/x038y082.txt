@@ -506,7 +506,7 @@ Name=Untitled
 Pos=28622.2,304.054,62149.9
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=HOLIDAY_Easter_Egg
+spawnPackage=Europe_Europe_HOLIDAY_Easter_Egg
 
 [ENTRY]
 ID=151062301
@@ -515,7 +515,7 @@ Name=Untitled
 Pos=28514.6,301.415,62119.2
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=HOLIDAY_Easter_Egg
+spawnPackage=Europe_Europe_HOLIDAY_Easter_Egg
 
 [ENTRY]
 ID=151062315
@@ -524,7 +524,7 @@ Name=Untitled
 Pos=29185.1,770.386,62139.9
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=HOLIDAY_Easter_Egg
+spawnPackage=Europe_Europe_HOLIDAY_Easter_Egg
 
 [ENTRY]
 ID=151062336
@@ -533,7 +533,7 @@ Name=Untitled
 Pos=28596.3,770.115,61945.5
 Orient=0,-0.232843,0,0.972514
 Scale=1,1,1
-spawnPackage=HOLIDAY_Easter_Egg
+spawnPackage=Europe_Europe_HOLIDAY_Easter_Egg
 
 [ENTRY]
 ID=151062354
@@ -542,5 +542,5 @@ Name=Untitled
 Pos=28695.6,305.104,61964.8
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=HOLIDAY_Easter_Egg
+spawnPackage=Europe_Europe_HOLIDAY_Easter_Egg
 

@@ -314,7 +314,7 @@ Name=Untitled
 Pos=27889.4,196.3,62255.6
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=HOLIDAY_Easter_Egg
+spawnPackage=Europe_Europe_HOLIDAY_Easter_Egg
 
 [ENTRY]
 ID=151062303
@@ -323,7 +323,7 @@ Name=Untitled
 Pos=27791.6,278.684,62426.7
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=HOLIDAY_Easter_Egg
+spawnPackage=Europe_Europe_HOLIDAY_Easter_Egg
 
 [ENTRY]
 ID=151062332
@@ -332,5 +332,5 @@ Name=Untitled
 Pos=28422,635.116,62637.2
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=HOLIDAY_Easter_Egg
+spawnPackage=Europe_Europe_HOLIDAY_Easter_Egg
 

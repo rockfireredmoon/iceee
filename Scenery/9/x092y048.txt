@@ -296,7 +296,7 @@ Name=Untitled
 Pos=69310.6,425.269,36286.2
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=HOLIDAY_Easter_Egg
+spawnPackage=Europe_Europe_HOLIDAY_Easter_Egg
 
 [ENTRY]
 ID=151062273
@@ -305,5 +305,5 @@ Name=Untitled
 Pos=69302.2,424.625,36215.6
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=HOLIDAY_Easter_Egg
+spawnPackage=Europe_Europe_HOLIDAY_Easter_Egg
 

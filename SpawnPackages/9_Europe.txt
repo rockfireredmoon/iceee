@@ -20,11 +20,6 @@
 ;   4_Trailblazer_StepUp
 ;   4_quest_EyegoreStepup
 ;
-; CONFLICT: 2a_obji_deepBlueCrystal with zone 44 (Sea Cave)
-;   Scan for 9:  Spawn=2966,100  ;Crystal Stump (1) at 8
-;   Scan for 44: Spawn=2965,100  ;Deep Blue Crystal (1) at 0
-; Using 44 so it doesn't break a quest.
-;
 ; Check out dividers for
 ; 2a_stc_sectionB7_general
 
@@ -2945,13 +2940,6 @@ Spawn=2964,100  ;Jewelry Box (1) at 0
 
 ; TODO: not sure about this
 [ENTRY]
-Flags=6
-Name=2a_obji_deepBlueCrystal
-Spawn=2965,100  ;Deep Blue Crystal (1) at 0    ; FROM SEA CAVE
-;Spawn=2966,100  ;Crystal Stump (1) at 8
-
-; TODO: not sure about this
-[ENTRY]
 Flags=3
 Name=4a_obji_BlueFlame
 Spawn=2966,100  ;Crystal Stump (1) at 11
@@ -2978,7 +2966,7 @@ Spawn=638,50  ;Woodland Grazer (31) at 0
 
 ; TODO: no appropriate spawns
 [ENTRY]
-Name=HOLIDAY_Easter_Egg
+Name=Europe_HOLIDAY_Easter_Egg
 
 [ENTRY]
 Name=Europe_overlandboss_thara_SP

@@ -1690,5 +1690,5 @@ Asset=Manipulator-SpawnPoint
 Pos=525,100,680
 Orient=0,0.707107,0,0.707107
 Scale=1,1,1
-spawnPackage=1a_bograts_14_15
+spawnPackage=1b_bograts_14_15
 
