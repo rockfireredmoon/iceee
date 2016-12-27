@@ -1,5 +1,5 @@
 [ENTRY]
-ID=1127678
+ID=1150581
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=
 Pos=63291.4,854.678,64689.6
@@ -9,7 +9,7 @@ spawnPackage=11_dth_wilds_42_43
 wanderRadius=100
 
 [ENTRY]
-ID=1127699
+ID=1150582
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=
 Pos=63707.1,764.363,65221.2

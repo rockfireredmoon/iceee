@@ -25,7 +25,7 @@ Scale=1,1,1
 spawnPackage=11_irh_vampiderCamp_32_33
 
 [ENTRY]
-ID=1127766
+ID=1150107
 Asset=CL-Dead-Forest#CL-Dead-Web_Forest3
 Name=Untitled
 Pos=53829.8,757.799,68477.9

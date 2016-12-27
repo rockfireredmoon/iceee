@@ -18,7 +18,7 @@ spawnPackage=11_dth_wilds_44_45_north
 wanderRadius=100
 
 [ENTRY]
-ID=1127696
+ID=1150592
 Asset=CL-Bramble_Thicket1
 Name=Untitled
 Pos=63511.9,750.18,65473.5

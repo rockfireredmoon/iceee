@@ -60,7 +60,7 @@ Scale=1,1,1
 spawnPackage=#1260
 
 [ENTRY]
-ID=1126556
+ID=1150577
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=Untitled
 Pos=63081.3,1263.87,63125.5

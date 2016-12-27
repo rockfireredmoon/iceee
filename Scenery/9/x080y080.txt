@@ -8,7 +8,7 @@ Scale=1,1,1
 spawnPackage=11_jld_junderbroodWorkskrill_k_43
 
 [ENTRY]
-ID=1127536
+ID=1150106
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=
 Pos=60180.2,908,60277.4

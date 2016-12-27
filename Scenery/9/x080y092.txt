@@ -1,5 +1,5 @@
 [ENTRY]
-ID=1127771
+ID=1150593
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=
 Pos=60038.3,942.212,69713.7
@@ -263,7 +263,7 @@ links_count=4
 link=151028635,1
 link=151028637,1
 link=151028643,1
-link=1127771,1
+link=1150593,1
 
 [ENTRY]
 ID=151028643

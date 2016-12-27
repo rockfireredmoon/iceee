@@ -31,7 +31,7 @@ Orient=0,0.908633,0,0.417595
 Scale=1,1,1
 
 [ENTRY]
-ID=1127770
+ID=1150578
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=
 Pos=53253.6,605.416,69200.6
@@ -50,7 +50,7 @@ spawnPackage=11_irh_vampiderCamp_42_43
 wanderRadius=100
 
 [ENTRY]
-ID=1127777
+ID=1150579
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=Untitled
 Pos=53948.5,607.904,69138.2
