@@ -256,19 +256,18 @@ appearance=n4:{["sk"]={["water"]="3F0000",["water_blend"]="940000",["water_highl
 
 [ENTRY]
 ID=7760
-strength=225
-dexterity=225
-constitution=400
-psyche=325
-spirit=325
-base_damage_melee=275
-damage_resist_melee=6000
-damage_resist_fire=6000
-damage_resist_frost=6000
+strength=150
+dexterity=125
+constitution=300
+psyche=115
+spirit=175
+damage_resist_melee=7000
+damage_resist_fire=500
+damage_resist_frost=500
 damage_resist_mystic=6000
-damage_resist_death=6000
+damage_resist_death=7000
 will_regen=1
-might_regen=1
+might_regen=2
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
@@ -277,6 +276,7 @@ display_name=Skrill Queen
 profession=5
 creature_category=Mortal
 rarity=2
+base_damage_melee=275
 ai_package=mystic_creature_brave_6
 appearance=n4:{["c"]="Boss-Hive_Queen",["sz"]="1.0824"}
 
