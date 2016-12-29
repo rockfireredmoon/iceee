@@ -1723,6 +1723,8 @@ Pos=3060.89,721.057,2429.45
 Orient=0,-0.651834,0,0.758362
 Scale=1,1,1
 spawnPackage=#7760
+aiModule=skrill_queen
+sequential=1
 
 [ENTRY]
 ID=1127141
@@ -1826,5 +1828,37 @@ Asset=Prop-Marker1#Prop-Corpse_Marker
 Name=Untitled
 Pos=2864.74,718.53,2584.47
 Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
+ID=1150553
+Asset=Prop-Path_Helper#Prop-Path_Helper
+Name=Untitled
+Pos=3181.9,720.414,2603.16
+Orient=0,0.29074,0,0.956802
+Scale=1,1,1
+
+[ENTRY]
+ID=1150554
+Asset=Prop-Path_Helper#Prop-Path_Helper
+Name=Untitled
+Pos=2848.89,719.71,2575.04
+Orient=0,-0.457338,0,0.889293
+Scale=1,1,1
+
+[ENTRY]
+ID=1150555
+Asset=Prop-Path_Helper#Prop-Path_Helper
+Name=Untitled
+Pos=2907.09,720,2209.75
+Orient=0,0.319309,0,0.947651
+Scale=1,1,1
+
+[ENTRY]
+ID=1150556
+Asset=Prop-Path_Helper#Prop-Path_Helper
+Name=Untitled
+Pos=3223.17,719.036,2267.94
+Orient=0,-0.40319,0,0.915116
 Scale=1,1,1
 

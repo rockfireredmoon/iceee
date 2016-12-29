@@ -1,7 +1,7 @@
 [ENTRY]
 ID=1150473
 Asset=Prop-Warpig_Walls#Prop-Warpig_Wall1
-Name=
+Name=Untitled
 Pos=66791.4,1382.15,52775.8
 Orient=0,0.999574,0,-0.0291994
 Scale=1,1,1
@@ -9,10 +9,18 @@ Scale=1,1,1
 [ENTRY]
 ID=1150504
 Asset=CL-Plants#CL-Burnt-Pine6
-Name=
-Pos=66765.7,1378.47,52747.8
+Name=Untitled
+Pos=66764,1378.75,52750.8
 Orient=0,0,0,1
 Scale=1,1,1
+
+[ENTRY]
+ID=1150544
+Asset=Prop-Interact1#Prop-Interact_Sphere
+Name=
+Pos=66850.8,1397.68,52748.9
+Orient=0,0,0,1
+Scale=7,7,7
 
 [ENTRY]
 ID=151020852

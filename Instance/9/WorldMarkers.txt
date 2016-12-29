@@ -41,7 +41,7 @@ Position=71586.0,932.0,63326.0
 [ENTRY]
 Name=Dambat Pass
 Comment=Swineland
-Position=79356.0,711.0,56438.0
+Position=29560.0,214.0,65552.0
 
 [ENTRY]
 Name=Grunes - Swineland Bridge
@@ -129,7 +129,7 @@ Comment=near the nook
 Position=62328.0,392.0,48997.0
 
 [ENTRY]
-Name=!possible tiles for  isntances 
+Name=!possible tiles for  isntances
 Comment=there is  a serise of tiles ehre that might make good instance maps
 Position=97246.0,57.0,33395.0
 
