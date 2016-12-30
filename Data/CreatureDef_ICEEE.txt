@@ -2029,3 +2029,4 @@ creature_category=Mortal
 rarity=1
 base_damage_melee=169
 ai_package=4_rogue_30
+appearance=n4:{ ["sk"]={ ["stripe2"]="5D49BF", ["skin"]="949494", ["wings"]="7D61FF", ["stripe1"]="7D61FF" }, ["c"]="Horde-Skrill-Trooper", ["sz"]=".8" }
