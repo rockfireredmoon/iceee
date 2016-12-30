@@ -53,3 +53,4 @@ custom_heathendel_tehuti.txt
 custom_heathendel_epicmagefrost40.txt
 custom_heathendel_frostmage40.txt
 custom_wailing.txt
+skrill_queen.nut
