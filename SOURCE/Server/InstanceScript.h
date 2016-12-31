@@ -32,9 +32,13 @@ public:
 	AbstractInstanceNutPlayer();
 	virtual ~AbstractInstanceNutPlayer();
 	void SetInstancePointer(ActiveInstance *parent);
+
+	static SQInteger GetEnemiesNearCreature(HSQUIRRELVM v);
 	static SQInteger CIDs(HSQUIRRELVM v);
+
 	int GetNPCID(int CDefID);
 	int GetCIDForPropID(int propID);
+	int GetCreatureDistance(int CID, int CID2);
 	void Info(const char *message);
 	void Message(const char *message, int type);
 	void LocalBroadcast(const char *message);

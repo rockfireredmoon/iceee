@@ -168,6 +168,14 @@ void AbstractInstanceNutPlayer::LocalBroadcast(const char *message)
 	actInst->BroadcastMessage(message);
 }
 
+int AbstractInstanceNutPlayer::GetCreatureDistance(int CID, int CID2) {
+	CreatureInstance *targ1 = actInst->GetInstanceByCID(CID);
+	CreatureInstance *targ2 = actInst->GetInstanceByCID(CID2);
+	if(targ1 == NULL || targ2)
+		return -1;
+	return targ1->GetDistance(targ2, SANE_DISTANCE);
+}
+
 int AbstractInstanceNutPlayer::GetCIDForPropID(int propID)
 {
 	return actInst->spawnsys.GetCIDForProp(propID);
@@ -177,6 +185,35 @@ int AbstractInstanceNutPlayer::GetNPCID(int CDefID) {
 	CreatureInstance *targ = actInst->GetNPCInstanceByCDefID(
 			CDefID);
 	return targ == NULL ? 0 : targ->CreatureID;
+}
+
+SQInteger AbstractInstanceNutPlayer::GetEnemiesNearCreature(HSQUIRRELVM v)
+{
+		// int range, float x, float z
+    if (sq_gettop(v) == 3) {
+        Sqrat::Var<AINutPlayer&> left(v, 1);
+        if (!Sqrat::Error::Occurred(v)) {
+            Sqrat::Var<int> range(v, 2);
+            Sqrat::Var<int> cid(v, 3);
+            //std::vector<CreatureInstance*> vv;
+            CreatureInstance::CREATURE_PTR_SEARCH vv;
+			CreatureInstance* target = left.value.actInst->GetNPCInstanceByCID(cid.value);
+			if(target != NULL) {
+				float x = (float)target->CurrentX;
+				float z = (float)target->CurrentZ;
+				target->AIFillEnemyNear(range.value, x, z, vv);
+			}
+            sq_newarray(v, vv.size());
+            for (std::size_t i = 0; i < vv.size(); ++i) {
+                Sqrat::PushVar(v, i);
+                Sqrat::PushVar(v, vv[i]);
+                sq_rawset(v, -2);
+            }
+            return 1;
+        }
+        return sq_throwerror(v, Sqrat::Error::Message(v).c_str());
+    }
+    return sq_throwerror(v, _SC("wrong number of parameters"));
 }
 
 SQInteger AbstractInstanceNutPlayer::CIDs(HSQUIRRELVM v)
@@ -313,6 +350,7 @@ void InstanceNutPlayer::RegisterInstanceFunctions(NutPlayer *instance, Sqrat::De
 	instanceClass->Func(_SC("ai"), &InstanceNutPlayer::AI);
 	instanceClass->Func(_SC("count_alive"), &InstanceNutPlayer::CountAlive);
 	instanceClass->Func(_SC("get_health_pc"), &InstanceNutPlayer::GetHealthPercent);
+	instanceClass->Func(_SC("get_creature_distance"), &InstanceNutPlayer::GetCreatureDistance);
 	instanceClass->Func(_SC("walk"), &InstanceNutPlayer::Walk);
 	instanceClass->Func(_SC("walk_then"), &InstanceNutPlayer::WalkThen);
 	instanceClass->Func(_SC("despawn"), &InstanceNutPlayer::Despawn);
@@ -329,6 +367,7 @@ void InstanceNutPlayer::RegisterInstanceFunctions(NutPlayer *instance, Sqrat::De
 
 	// Functions that return arrays or tables have to be dealt with differently
 	instanceClass->SquirrelFunc(_SC("cids"), &InstanceNutPlayer::CIDs);
+	instanceClass->SquirrelFunc(_SC("get_enemies_near_creature"), &InstanceNutPlayer::GetEnemiesNearCreature);
 
 	// Common instance functions (TODO register in abstract class somehow)
 	instanceClass->Func(_SC("broadcast"), &InstanceNutPlayer::Broadcast);
