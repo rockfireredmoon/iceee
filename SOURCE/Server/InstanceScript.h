@@ -39,6 +39,9 @@ public:
 	int GetNPCID(int CDefID);
 	int GetCIDForPropID(int propID);
 	int GetCreatureDistance(int CID, int CID2);
+	int GetAbilityID(const char *name);
+
+	bool CreatureUse(int CID, int abilityID);
 	void Info(const char *message);
 	void Message(const char *message, int type);
 	void LocalBroadcast(const char *message);
@@ -119,6 +122,18 @@ private:
 	void DoUnremoveProp(int propID);
 	ActiveParty * DoCreateParty(int leaderCID, int team);
 
+};
+
+class InstanceUseCallback : public ScriptCore::NutCallback
+{
+public:
+	int mAbilityID;
+	int mCID;
+	AbstractInstanceNutPlayer* mInstanceNut;
+
+	InstanceUseCallback(AbstractInstanceNutPlayer *instanceNut, int CID, int abilityID);
+	~InstanceUseCallback();
+	bool Execute();
 };
 
 class WalkCondition : public ScriptCore::NutCondition

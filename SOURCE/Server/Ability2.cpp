@@ -1332,6 +1332,7 @@ void AbilityManager2 :: LoadData(void)
 
 	//Clear it in case we got a request to reload the ability table during run-time.
 	mAbilityIndex.clear();
+	mAbilityStringIndex.clear();
 
 	std::string path;
 	Platform::GenerateFilePath(path, "Data", "AbilityTable.txt");
@@ -1496,6 +1497,7 @@ void AbilityManager2 :: LoadAbilityTable(const char *filename)
 void AbilityManager2 :: InsertAbility(int abilityID, const STRINGLIST &rowData)
 {
 	mAbilityIndex[abilityID].ImportRow(rowData);
+	mAbilityStringIndex[mAbilityIndex[abilityID].GetRowAsCString(ABROW::NAME)] = abilityID;
 }
 
 void AbilityManager2 :: DebugPrint(void)
@@ -2212,6 +2214,19 @@ const char* AbilityManager2 :: GetAbilityNameByID(int abilityID)
 		return it->second.GetRowAsCString(ABROW::NAME);
 	return "<invalid ability>";
 }
+
+
+//Return the ability name.  Intended for use by scripting.
+int AbilityManager2 :: GetAbilityIDByName(const char *name)
+{
+	std::map<std::string, int>::iterator it;
+	it = mAbilityStringIndex.find(name);
+	if(it != mAbilityStringIndex.end())
+		return it->second;
+	return -1;
+}
+
+
 
 
 

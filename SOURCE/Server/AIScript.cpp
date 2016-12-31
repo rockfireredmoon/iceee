@@ -12,8 +12,6 @@
 #include "Report.h"
 #include "Config.h"
 
-const int USE_FAIL_DELAY = 250;  //Milliseconds to wait before retrying a failed script "use" command.
-
 
 AIScriptManager aiScriptManager;
 

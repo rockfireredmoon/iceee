@@ -793,6 +793,7 @@ public:
 
 	void GetCooldownCategoryStrings(STRINGLIST &output);
 	const char* GetAbilityNameByID(int abilityID);
+	int GetAbilityIDByName(const char *name);
 
 private:
 
@@ -802,6 +803,7 @@ private:
 	 //Stores all ability definitions.
 	typedef std::map<int, AbilityEntry2>::iterator ABILITY_ITERATOR;
 	std::map<int, AbilityEntry2> mAbilityIndex;
+	std::map<std::string, int> mAbilityStringIndex;
 	void InsertAbility(int abilityID, const STRINGLIST &rowData);
 	void LoadAbilityTable(const char *filename);
 

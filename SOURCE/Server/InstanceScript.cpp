@@ -1,12 +1,14 @@
 #include "InstanceScript.h"
 #include "AIScript.h"
 #include "AIScript2.h"
+#include "Ability2.h"
 #include "Instance.h"
 #include "CommonTypes.h"
 #include "StringList.h"
 #include "Simulator.h"
 #include "Squirrel.h"
 #include "Creature.h"
+#include "Config.h"
 #include <stdlib.h>
 #include "../squirrel/sqrat/sqrat.h"
 #include <algorithm>    // std::remove
@@ -166,6 +168,49 @@ void AbstractInstanceNutPlayer::Broadcast(const char *message)
 void AbstractInstanceNutPlayer::LocalBroadcast(const char *message)
 {
 	actInst->BroadcastMessage(message);
+}
+
+int AbstractInstanceNutPlayer::GetAbilityID(const char *name)
+{
+	return g_AbilityManager.GetAbilityIDByName(name);
+}
+
+bool AbstractInstanceNutPlayer::CreatureUse(int CID, int abilityID) {
+	CreatureInstance *attachedCreature = actInst->GetInstanceByCID(CID);
+	if (attachedCreature != NULL && attachedCreature->ab[0].bPending == false) {
+		//DEBUG OUTPUT
+		if (g_Config.DebugLogAIScriptUse == true) {
+			const Ability2::AbilityEntry2* abptr =
+					g_AbilityManager.GetAbilityPtrByID(abilityID);
+			g_Log.AddMessageFormat("Using: %s",
+					abptr->GetRowAsCString(Ability2::ABROW::NAME));
+		}
+		//END DEBUG OUTPUT
+
+		int r = attachedCreature->CallAbilityEvent(abilityID,
+				EventType::onRequest);
+		if (r != 0) {
+			//Notify the creature we failed, may need a distance check.
+			//The script should wait and retry soon.
+			attachedCreature->AICheckAbilityFailure(r);
+
+			if (g_Config.DebugLogAIScriptUse == true) {
+				const Ability2::AbilityEntry2* abptr =
+						g_AbilityManager.GetAbilityPtrByID(abilityID);
+				g_Log.AddMessageFormat("Using: %s   Failed: %d",
+						abptr->GetRowAsCString(Ability2::ABROW::NAME),
+						g_AbilityManager.GetAbilityErrorCode(r));
+			}
+
+			if (attachedCreature->AIAbilityFailureAllowRetry(r) == true)
+				QueueAdd(new ScriptCore::NutScriptEvent(
+							new ScriptCore::TimeCondition(USE_FAIL_DELAY),
+							new InstanceUseCallback(this, CID, abilityID)));
+		}
+		else
+			return true;
+	}
+	return false;
 }
 
 int AbstractInstanceNutPlayer::GetCreatureDistance(int CID, int CID2) {
@@ -352,6 +397,8 @@ void InstanceNutPlayer::RegisterInstanceFunctions(NutPlayer *instance, Sqrat::De
 	instanceClass->Func(_SC("count_alive"), &InstanceNutPlayer::CountAlive);
 	instanceClass->Func(_SC("get_health_pc"), &InstanceNutPlayer::GetHealthPercent);
 	instanceClass->Func(_SC("get_creature_distance"), &InstanceNutPlayer::GetCreatureDistance);
+	instanceClass->Func(_SC("creature_use"), &InstanceNutPlayer::CreatureUse);
+	instanceClass->Func(_SC("get_ab_id"), &InstanceNutPlayer::GetAbilityID);
 	instanceClass->Func(_SC("walk"), &InstanceNutPlayer::Walk);
 	instanceClass->Func(_SC("walk_then"), &InstanceNutPlayer::WalkThen);
 	instanceClass->Func(_SC("despawn"), &InstanceNutPlayer::Despawn);
@@ -385,6 +432,14 @@ void InstanceNutPlayer::RegisterInstanceFunctions(NutPlayer *instance, Sqrat::De
 	Sqrat::ConstTable(vm).Const(_SC("CREATURE_JOG_SPEED"), CREATURE_JOG_SPEED);
 	Sqrat::ConstTable(vm).Const(_SC("CREATURE_RUN_SPEED"), CREATURE_RUN_SPEED);
 
+	Sqrat::ConstTable(vm).Const(_SC("TS_NONE"), TargetStatus::None);
+	Sqrat::ConstTable(vm).Const(_SC("TS_ALIVE"), TargetStatus::Alive);
+	Sqrat::ConstTable(vm).Const(_SC("TS_DEAD"), TargetStatus::Dead);
+	Sqrat::ConstTable(vm).Const(_SC("TS_ENEMY"), TargetStatus::Enemy);
+	Sqrat::ConstTable(vm).Const(_SC("TS_ALIVE"), TargetStatus::Enemy_Alive);
+	Sqrat::ConstTable(vm).Const(_SC("TS_FRIEND"), TargetStatus::Friend);
+	Sqrat::ConstTable(vm).Const(_SC("TS_FRIEND_ALIVE"), TargetStatus::Friend_Alive);
+	Sqrat::ConstTable(vm).Const(_SC("TS_FRIEND_DEAD"), TargetStatus::Friend_Dead);
 
 }
 
@@ -1436,6 +1491,18 @@ CreatureInstance* InstanceScriptPlayer::GetNPCPtr(int CID)
 	return actInst->GetNPCInstanceByCID(CID);
 }
 
+InstanceUseCallback::InstanceUseCallback(AbstractInstanceNutPlayer *instanceNut, int CID, int abilityID) {
+	mInstanceNut = instanceNut;
+	mAbilityID = abilityID;
+	mCID = CID;
+}
+InstanceUseCallback::~InstanceUseCallback() {
+}
+
+bool InstanceUseCallback::Execute() {
+	mInstanceNut->CreatureUse(mCID, mAbilityID);
+	return true;
+}
 
 } //namespace InstanceScript
 
