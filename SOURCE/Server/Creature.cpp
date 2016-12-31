@@ -6124,6 +6124,32 @@ bool CreatureInstance :: AICheckIfAbilityBusy(void)
 	return ab[0].bPending;
 }
 
+int CreatureInstance :: AIFillEnemyNear(int range, float x, float z,  CREATURE_PTR_SEARCH& enemies)
+{
+	for(size_t i = 0; i < actInst->PlayerListPtr.size(); i++)
+	{
+		if(ActiveInstance::GetPointRangeXZ(actInst->PlayerListPtr[i], x, z, range) > range)
+			continue;
+		if(_ValidTargetFlag(actInst->PlayerListPtr[i], TargetStatus::Enemy_Alive) == true)
+			enemies.push_back(actInst->PlayerListPtr[i]);
+	}
+	for(size_t i = 0; i < actInst->NPCListPtr.size(); i++)
+	{
+		if(ActiveInstance::GetPointRangeXZ(actInst->NPCListPtr[i], x, z, range) > range)
+			continue;
+		if(_ValidTargetFlag(actInst->NPCListPtr[i], TargetStatus::Enemy_Alive) == true)
+			enemies.push_back(actInst->NPCListPtr[i]);
+	}
+	for(size_t i = 0; i < actInst->SidekickListPtr.size(); i++)
+	{
+		if(ActiveInstance::GetPointRangeXZ(actInst->SidekickListPtr[i], x, z, range) > range)
+			continue;
+		if(_ValidTargetFlag(actInst->SidekickListPtr[i], TargetStatus::Enemy_Alive) == true)
+			enemies.push_back(actInst->NPCListPtr[i]);
+	}
+	return enemies.size();
+}
+
 int CreatureInstance :: AICountEnemyNear(int range, float x, float z)
 {
 	int count = 0;
@@ -8229,6 +8255,21 @@ bool CreatureInstance :: IsObjectInRange(CreatureInstance *object, float distanc
 		return true;
 
 	return false;
+}
+
+int CreatureInstance :: GetDistance(CreatureInstance *object, int threshold)
+{
+	if(object == NULL)
+		return -1;
+
+	//Quick check for self, always in range.
+	if(this == object)
+		return 0;
+
+	float tolerance = GetTotalSize() + object->GetTotalSize();
+
+	//Don't include Y axis since the server doesn't know about elevation differences.
+	return ActiveInstance::GetPlaneRange(this, object, static_cast<int>(tolerance));
 }
 
 bool CreatureInstance :: IsSelfNearPoint(float x, float z, float distance)

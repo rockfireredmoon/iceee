@@ -582,6 +582,7 @@ public:
 	void AICheckAbilityFailure(int abilityReturnInfo);
 	bool AIAbilityFailureAllowRetry(int abilityReturnInfo);
 	bool AICheckIfAbilityBusy(void);
+	int AIFillEnemyNear(int range, float x, float z, CREATURE_PTR_SEARCH& enemies);
 	int AICountEnemyNear(int range, float x, float z);
 	int AIGetIdleMob(int creatureDefID);
 	void AIOtherSetTarget(int creatureID, int creatureIDTarget);
@@ -617,6 +618,7 @@ public:
 	float GetMaxInvisibilityDistance(bool dexBased);
 	float GetRegenInvisibilityDistance(bool dexBased);
 	bool IsCombatReactive(void);
+	int GetDistance(CreatureInstance *object, int threshold);
 
 	//Skill activation requirements.  These functions all return true if the
 	//condition passes

@@ -28,6 +28,8 @@ public:
 	virtual void HaltedDerived();
 	void Initialize(CreatureInstance *creature, AINutDef *defPtr, std::string &errors);
 
+	static SQInteger GetEnemiesNear(HSQUIRRELVM v);
+
 	// Exposed to scripts
 //	void Queue(Sqrat::Function function, int fireDelay);
 	bool HasTarget();
@@ -39,6 +41,7 @@ public:
 	short GetLevel();
 	bool IsOnCooldown(const char *category);
 	bool IsBusy();
+
 	short CountEnemyNear(int range);
 	short CountEnemyAt(int range);
 	short HealthPercent();
@@ -66,6 +69,7 @@ public:
 	bool IsTargetInRange(float distance);
 	int GetTargetRange();
 	void SetGTAE();
+	int GetDistance(int CID);
 	int GetSpeed(int CID);
 	bool IsCIDBusy(int CID);
 	void Speak(const char *message);

@@ -118,6 +118,31 @@ bool AINutPlayer::IsBusy() {
 	return attachedCreature->AICheckIfAbilityBusy();
 }
 
+SQInteger AINutPlayer::GetEnemiesNear(HSQUIRRELVM v)
+{
+		// int range, float x, float z
+    if (sq_gettop(v) == 2) {
+        Sqrat::Var<AINutPlayer&> left(v, 1);
+        if (!Sqrat::Error::Occurred(v)) {
+            Sqrat::Var<int> range(v, 2);
+            //std::vector<CreatureInstance*> vv;
+            CreatureInstance::CREATURE_PTR_SEARCH vv;
+			float x = (float)left.value.attachedCreature->CurrentX;
+			float z = (float)left.value.attachedCreature->CurrentZ;
+        	left.value.attachedCreature->AIFillEnemyNear(range.value, x, z, vv);
+            sq_newarray(v, vv.size());
+            for (std::size_t i = 0; i < vv.size(); ++i) {
+                Sqrat::PushVar(v, i);
+                Sqrat::PushVar(v, vv[i]);
+                sq_rawset(v, -2);
+            }
+            return 1;
+        }
+        return sq_throwerror(v, Sqrat::Error::Message(v).c_str());
+    }
+    return sq_throwerror(v, _SC("wrong number of parameters"));
+}
+
 short AINutPlayer::CountEnemyNear(int range) {
 	return attachedCreature->AICountEnemyNear(range,
 			(float) attachedCreature->CurrentX,
@@ -254,6 +279,13 @@ int AINutPlayer::GetSpeed(int CID) {
 	return targ == NULL ? 0 : targ->Speed;
 }
 
+int AINutPlayer::GetDistance(int CID) {
+	CreatureInstance *targ = ResolveCreatureInstance(CID);
+	if(targ == NULL)
+		return -1;
+	return attachedCreature->GetDistance(targ, DISTANCE_FAILED);
+}
+
 bool AINutPlayer::IsCIDBusy(int CID) {
 	CreatureInstance *targ = ResolveCreatureInstance(CID);
 	return targ == NULL ? 0 : targ->AICheckIfAbilityBusy();
@@ -324,6 +356,7 @@ void AINutPlayer::RegisterAIFunctions(NutPlayer *instance,
 	clazz->Func(_SC("get_target_range"), &AINutPlayer::GetTargetRange);
 	clazz->Func(_SC("set_gtae"), &AINutPlayer::SetGTAE);
 	clazz->Func(_SC("get_speed"), &AINutPlayer::GetSpeed);
+	clazz->Func(_SC("get_distance"), &AINutPlayer::GetDistance);
 	clazz->Func(_SC("is_cid_busy"), &AINutPlayer::IsCIDBusy);
 	clazz->Func(_SC("get_npc_id"), &AINutPlayer::GetNPCID);
 	clazz->Func(_SC("speak"), &AINutPlayer::Speak);
@@ -340,6 +373,7 @@ void AINutPlayer::RegisterAIFunctions(NutPlayer *instance,
 
 	// Functions that return arrays or tables have to be dealt with differently
 	clazz->SquirrelFunc(_SC("cids"), &AINutPlayer::CIDs);
+	clazz->SquirrelFunc(_SC("get_enemies_near"), &AINutPlayer::GetEnemiesNear);
 
 }
 
