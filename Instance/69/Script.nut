@@ -52,14 +52,14 @@ function find_queen() {
 function activate_minions(cid_minions) {
 	foreach(cid_minion in cid_minions) {
         /* Find all enemies (players) within the minions range */
-        /*local targets = inst.get_enemies_near_creature(10000, cid_minion);
+        local targets = inst.get_nearby_creature(10000, cid_minion, 0, 0, 0);
         local closestCID = -1;
-        local closestDistance = 9999999;*/
+        local closestDistance = 9999999;
 
         info("C: " + cid_minion);
 
-        /* Find the closest enemy 
-        for(t in targets) {
+        /* Find the closest enemy */
+        foreach(t in targets) {
             info("T: " + t);
             local dist = inst.get_creature_distance(t, cid_minion);
             if(dist > -1 && dist < closestDistance) {
@@ -68,14 +68,12 @@ function activate_minions(cid_minions) {
             }
         }
         info("Closest to " + cid_minion + " is " + closestCID + " at "  + closestDistance);
-        */
 
-        /* Target and attack the found enemy 
+        /* Target and attack the found enemy */
         if(closestCID != -1) {
 		    inst.set_target(cid_minion, closestCID);
 		    inst.ai(cid_minion, "tryMelee");
         }
-        */
 	}
 }
 

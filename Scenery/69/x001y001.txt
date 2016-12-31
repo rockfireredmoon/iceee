@@ -1733,6 +1733,9 @@ Name=Untitled
 Pos=2817.96,719.133,2086.64
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=#E7862
+maxActive=0
+aiModule=rogue_brave_6
 
 [ENTRY]
 ID=1127142
@@ -1741,6 +1744,9 @@ Name=Untitled
 Pos=3371.85,720,2142.16
 Orient=0,0.987354,0,-0.158532
 Scale=1,1,1
+spawnPackage=#7862
+maxActive=0
+aiModule=rogue_brave_6
 
 [ENTRY]
 ID=1127143
@@ -1749,6 +1755,9 @@ Name=Untitled
 Pos=3272.24,720,2735.69
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=#7862
+maxActive=0
+aiModule=rogue_brave_6
 
 [ENTRY]
 ID=1127144
@@ -1757,6 +1766,9 @@ Name=Untitled
 Pos=2730.51,719.59,2653.21
 Orient=0,0.514136,0,0.857709
 Scale=1,1,1
+spawnPackage=#7862
+maxActive=0
+aiModule=rogue_brave_6
 
 [ENTRY]
 ID=1127145
