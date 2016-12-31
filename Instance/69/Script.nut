@@ -5,11 +5,11 @@
  * final fight with the Skrill Queen.
  *
  */
- 
+
 // Creature Definition IDs
- 
+
 const CDEF_SKRILL_QUEEN = 7760;
-const CDEF_HATCHLING = 1401;
+const CDEF_HATCHLING = 7862;
 
 // Prop IDs
 
@@ -40,59 +40,76 @@ function kill_minions() {
 }
 
 function find_queen() {
-    info("Looking for queen ");
+	info("Looking for queen ");
 	cid_skrill_queen = inst.scan_npc(loc_queen_room, CDEF_SKRILL_QUEEN);
 	inst.queue(cid_skrill_queen == 0 ? find_queen : queen_health, 5000);
 }
 
 /*
- * The adds should now be spawned, but we need them
- * to target whoever is attacking the queen and start
- * attacking them.
+ * The adds should then locate, target and attack the nearest
+ * player
  */
 function activate_minions(cid_minions) {
-	local queen_target = inst.get_target(cid_skrill_queen);
-	if(queen_target > 0) {
-		foreach(cid_minion in cid_minions) {
-			inst.set_target(cid_minion, queen_target);
-			inst.ai(cid_minion, "tryMelee");
-		}
+	foreach(cid_minion in cid_minions) {
+        /* Find all enemies (players) within the minions range */
+        /*local targets = inst.get_enemies_near_creature(10000, cid_minion);
+        local closestCID = -1;
+        local closestDistance = 9999999;*/
+
+        info("C: " + cid_minion);
+
+        /* Find the closest enemy 
+        for(t in targets) {
+            info("T: " + t);
+            local dist = inst.get_creature_distance(t, cid_minion);
+            if(dist > -1 && dist < closestDistance) {
+                closestDistance = dist;
+                closestCID = t;
+            }
+        }
+        info("Closest to " + cid_minion + " is " + closestCID + " at "  + closestDistance);
+        */
+
+        /* Target and attack the found enemy 
+        if(closestCID != -1) {
+		    inst.set_target(cid_minion, closestCID);
+		    inst.ai(cid_minion, "tryMelee");
+        }
+        */
 	}
 }
 
 function spawn_minions() {
-    info("Spawning adds");
+	info("Spawning adds");
 	activate_minions([
-		inst.spawn(1127143, CDEF_HATCHLING, 32), 
-		inst.spawn(1127144, CDEF_HATCHLING, 32), 
-		inst.spawn(1127141, CDEF_HATCHLING, 32),  
+		inst.spawn(1127143, CDEF_HATCHLING, 32),
+		inst.spawn(1127144, CDEF_HATCHLING, 32),
+		inst.spawn(1127141, CDEF_HATCHLING, 32),
 		inst.spawn(1127142, CDEF_HATCHLING, 32)
 	]);
 }
 
-function queen_health() { 
+function queen_health() {
 
 	if(cid_skrill_queen == 0)
 		return;
-	
+
 	local health = inst.get_health_pc(cid_skrill_queen);
-		
+
 	if(stage == 99 || health == 0) {
 		stage = 0;
 		inst.queue(find_queen, 5000);
 		return;
 	}
 
-    info("Test queen health: " + health);
-	
 	print("Queen health: " + health + ", stage " + stage + "\n");
-	
-    if(health == 0) {
-        info("Health zero, assuming mob died");
+
+	if(health == 0) {
+		info("Health zero, assuming mob died");
 		stage = 0;
 		inst.queue(find_queen, 5000);
-        return;
-    }
+		return;
+	}
 
 	if(stage != 0 && health == 100) {
 		/* If we have past the first phase, and the wailer returns to full health
@@ -104,27 +121,27 @@ function queen_health() {
 		 return;
 	}
 
-	
+
 	if(stage == 0) {
 		if(health <= 90) {
-            stage = 1;
-            info("Queen health < 90, trying to cast swarm");
-    		inst.ai(cid_skrill_queen, "try_swarm");
+			stage = 1;
+			info("Queen health < 90, trying to cast swarm");
+			inst.ai(cid_skrill_queen, "try_swarm");
 		}
 		inst.queue(queen_health, 3000);
-		return; 
+		return;
 	}
-	
+
 	if(stage == 1) {
 		if(health <= 85) {
 			// 85% The queen calls 4 hatchlings to fight the group.
 			spawn_minions();
 			stage = 2;
-	    }
+		}
 		inst.queue(queen_health, 3000);
-		return; 
+		return;
 	}
-	
+
 	inst.queue(queen_health, 3000);
 }
 
