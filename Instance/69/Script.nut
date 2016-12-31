@@ -40,7 +40,6 @@ function kill_minions() {
 }
 
 function find_queen() {
-	info("Looking for queen ");
 	cid_skrill_queen = inst.scan_npc(loc_queen_room, CDEF_SKRILL_QUEEN);
 	inst.queue(cid_skrill_queen == 0 ? find_queen : queen_health, 5000);
 }
@@ -68,13 +67,12 @@ function activate_minions(cid_minions) {
         /* Target and attack the found enemy */
         if(closestCID != -1) {
 		    inst.set_target(cid_minion, closestCID);
-		    inst.ai(cid_minion, "tryMelee");
+		    inst.creature_use(cid_minion, _AB("melee"));
         }
 	}
 }
 
 function spawn_minions() {
-	info("Spawning adds");
 	activate_minions([
 		inst.spawn(1127143, CDEF_HATCHLING, 32),
 		inst.spawn(1127144, CDEF_HATCHLING, 32),
@@ -95,8 +93,6 @@ function queen_health() {
 		inst.queue(find_queen, 5000);
 		return;
 	}
-
-	print("Queen health: " + health + ", stage " + stage + "\n");
 
 	if(health == 0) {
 		info("Health zero, assuming mob died");

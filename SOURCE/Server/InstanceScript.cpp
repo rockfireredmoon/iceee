@@ -398,7 +398,6 @@ void InstanceNutPlayer::RegisterInstanceFunctions(NutPlayer *instance, Sqrat::De
 	instanceClass->Func(_SC("get_health_pc"), &InstanceNutPlayer::GetHealthPercent);
 	instanceClass->Func(_SC("get_creature_distance"), &InstanceNutPlayer::GetCreatureDistance);
 	instanceClass->Func(_SC("creature_use"), &InstanceNutPlayer::CreatureUse);
-	instanceClass->Func(_SC("get_ab_id"), &InstanceNutPlayer::GetAbilityID);
 	instanceClass->Func(_SC("walk"), &InstanceNutPlayer::Walk);
 	instanceClass->Func(_SC("walk_then"), &InstanceNutPlayer::WalkThen);
 	instanceClass->Func(_SC("despawn"), &InstanceNutPlayer::Despawn);
@@ -426,6 +425,8 @@ void InstanceNutPlayer::RegisterInstanceFunctions(NutPlayer *instance, Sqrat::De
 	instanceClass->Func(_SC("get_cid_for_prop"), &InstanceNutPlayer::GetCIDForPropID);
 	instanceClass->Func(_SC("chat"), &InstanceNutPlayer::Chat);
 	instanceClass->Func(_SC("creature_chat"), &InstanceNutPlayer::CreatureChat);
+
+	Sqrat::RootTable(vm).Func(_SC("_AB"), &InstanceNutPlayer::GetAbilityID);
 
 	// Some constants
 	Sqrat::ConstTable(vm).Const(_SC("CREATURE_WALK_SPEED"), CREATURE_WALK_SPEED);

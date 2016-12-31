@@ -39,7 +39,8 @@ public:
 	int GetNPCID(int CDefID);
 	int GetCIDForPropID(int propID);
 	int GetCreatureDistance(int CID, int CID2);
-	int GetAbilityID(const char *name);
+
+	static int GetAbilityID(const char *name);
 
 	bool CreatureUse(int CID, int abilityID);
 	void Info(const char *message);
