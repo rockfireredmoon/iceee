@@ -121,19 +121,23 @@ bool AINutPlayer::IsBusy() {
 SQInteger AINutPlayer::GetEnemiesNear(HSQUIRRELVM v)
 {
 		// int range, float x, float z
-    if (sq_gettop(v) == 2) {
+    if (sq_gettop(v) == 5) {
         Sqrat::Var<AINutPlayer&> left(v, 1);
         if (!Sqrat::Error::Occurred(v)) {
-            Sqrat::Var<int> range(v, 2);
-            //std::vector<CreatureInstance*> vv;
-            CreatureInstance::CREATURE_PTR_SEARCH vv;
-			float x = (float)left.value.attachedCreature->CurrentX;
-			float z = (float)left.value.attachedCreature->CurrentZ;
-        	left.value.attachedCreature->AIFillEnemyNear(range.value, x, z, vv);
-            sq_newarray(v, vv.size());
+        	Sqrat::Var<int> range(v, 2);
+			Sqrat::Var<int> playerAbilityRestrict(v, 3);
+			Sqrat::Var<int> npcAbilityRestrict(v, 4);
+			Sqrat::Var<int> sidekickAbilityRestrict(v, 5);
+			//std::vector<CreatureInstance*> vv;
+			CreatureInstance::CREATURE_PTR_SEARCH vv;
+			CreatureInstance* target = left.value.attachedCreature;
+			float x = (float)target->CurrentX;
+			float z = (float)target->CurrentZ;
+			target->AIFillCreaturesNear(range.value, x, z, playerAbilityRestrict.value, npcAbilityRestrict.value, sidekickAbilityRestrict.value, vv);
+            sq_newarray(v, 0);
             for (std::size_t i = 0; i < vv.size(); ++i) {
                 Sqrat::PushVar(v, i);
-                Sqrat::PushVar(v, vv[i]);
+                Sqrat::PushVar(v, vv[i]->CreatureID);
                 sq_rawset(v, -2);
             }
             return 1;
@@ -283,7 +287,7 @@ int AINutPlayer::GetDistance(int CID) {
 	CreatureInstance *targ = ResolveCreatureInstance(CID);
 	if(targ == NULL)
 		return -1;
-	return attachedCreature->GetDistance(targ, DISTANCE_FAILED);
+	return attachedCreature->GetDistance(targ, SANE_DISTANCE);
 }
 
 bool AINutPlayer::IsCIDBusy(int CID) {
@@ -373,7 +377,7 @@ void AINutPlayer::RegisterAIFunctions(NutPlayer *instance,
 
 	// Functions that return arrays or tables have to be dealt with differently
 	clazz->SquirrelFunc(_SC("cids"), &AINutPlayer::CIDs);
-	clazz->SquirrelFunc(_SC("get_enemies_near"), &AINutPlayer::GetEnemiesNear);
+	clazz->SquirrelFunc(_SC("get_nearby"), &AINutPlayer::GetEnemiesNear);
 
 }
 

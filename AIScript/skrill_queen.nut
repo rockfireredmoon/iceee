@@ -33,25 +33,25 @@ function try_swarm() {
 function main() {
 	ai.use(32766);
 
-    /* When we have at least 3 charges, there is 1 in 3 chance we use it */
-	if(ai.get_might() > 1 && ai.get_might_charge() >= 3 && randmodrng(0, 3) == 2) {
-        if(randmodrng(0, 2) > 0)
-            ai.use(291);
-        else
-    		ai.use(5277);
-	}
-
     /* When we have at least 4 might, cast the debuf */
 	if(ai.get_might() >= 4 && !ai.is_on_cooldown("MeleeSpeedDebuff")) {
 		ai.use(5146);
 	}
-
+	
     /* When we have at least 3 might, there is 50% chance we attack */
 	if(ai.get_might() >= 3 && randmodrng(0, 2) == 0) {
         if(randmodrng(0, 2) > 0)
             ai.use(229);
         else
     		ai.use(283);
+	}
+	
+    /* When we have at least 3 charges, there is 1 in 3 chance we use it */
+	if(ai.get_might() > 1 && ai.get_might_charge() >= 3 && randmodrng(0, 3) == 2) {
+        if(randmodrng(0, 2) > 0)
+            ai.use(291);
+        else
+    		ai.use(5277);
 	}
 	ai.queue(main, 1000);
 }

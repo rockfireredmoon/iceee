@@ -321,7 +321,7 @@ int CreditShopManager::LoadItems(void) {
 	for (it = r.fileList.begin(); it != r.fileList.end(); ++it) {
 		std::string p = *it;
 		if (Util::HasEnding(p, ".txt")) {
-			LoadItem(atoi(Platform::Basename(p.c_str())));
+			LoadItem(atoi(Platform::Basename(p.c_str()).c_str()));
 		}
 	}
 

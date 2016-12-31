@@ -236,7 +236,7 @@ char * Platform::GenerateFilePath(char *resultBuffer, const char *folderName, co
 	return resultBuffer;
 }
 
-const char * Platform::Filename(const char *path)
+std::string Platform::Filename(const char *path)
 {
 	STRINGLIST v;
 	const std::string p = path;
@@ -245,10 +245,10 @@ const char * Platform::Filename(const char *path)
 	if(v.size() == 0)
 		return "";
 	else
-		return v[v.size() - 1].c_str();
+		return v[v.size() - 1];
 }
 
-const char * Platform::Basename(const char *path)
+std::string Platform::Basename(const char *path)
 {
 	STRINGLIST v;
 	const std::string p = Filename(path);
@@ -260,11 +260,11 @@ const char * Platform::Basename(const char *path)
 		std::string t;
 		v.erase(v.end() - 1);
 		Util::Join(v, d.c_str(), t);
-		return t.c_str();
+		return t;
 	}
 }
 
-const char * Platform::Extension(const char *path)
+std::string Platform::Extension(const char *path)
 {
 	STRINGLIST v;
 	const std::string p = Filename(path);
@@ -278,7 +278,7 @@ const char * Platform::Extension(const char *path)
 		return v[v.size() - 1].c_str();
 }
 
-const char * Platform::Dirname(const char *path)
+std::string Platform::Dirname(const char *path)
 {
 	STRINGLIST v;
 	const std::string p = path;

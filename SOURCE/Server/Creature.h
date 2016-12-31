@@ -582,7 +582,7 @@ public:
 	void AICheckAbilityFailure(int abilityReturnInfo);
 	bool AIAbilityFailureAllowRetry(int abilityReturnInfo);
 	bool AICheckIfAbilityBusy(void);
-	int AIFillEnemyNear(int range, float x, float z, CREATURE_PTR_SEARCH& enemies);
+	int AIFillCreaturesNear(int range, float x, float z, int playerAbilityRestrict, int npcAbilityRestrict, int sidekickAbilityRestrict, CREATURE_PTR_SEARCH& creatures);
 	int AICountEnemyNear(int range, float x, float z);
 	int AIGetIdleMob(int creatureDefID);
 	void AIOtherSetTarget(int creatureID, int creatureIDTarget);

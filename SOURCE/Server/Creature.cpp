@@ -6124,30 +6124,36 @@ bool CreatureInstance :: AICheckIfAbilityBusy(void)
 	return ab[0].bPending;
 }
 
-int CreatureInstance :: AIFillEnemyNear(int range, float x, float z,  CREATURE_PTR_SEARCH& enemies)
+int CreatureInstance :: AIFillCreaturesNear(int range, float x, float z, int playerAbilityRestrict, int npcAbilityRestrict, int sidekickAbilityRestrict, CREATURE_PTR_SEARCH& creatures)
 {
 	for(size_t i = 0; i < actInst->PlayerListPtr.size(); i++)
 	{
+		if(actInst->PlayerListPtr[i]->CreatureID == CreatureID)
+			continue;
 		if(ActiveInstance::GetPointRangeXZ(actInst->PlayerListPtr[i], x, z, range) > range)
 			continue;
-		if(_ValidTargetFlag(actInst->PlayerListPtr[i], TargetStatus::Enemy_Alive) == true)
-			enemies.push_back(actInst->PlayerListPtr[i]);
+		if(_ValidTargetFlag(actInst->PlayerListPtr[i], playerAbilityRestrict) == true)
+			creatures.push_back(actInst->PlayerListPtr[i]);
 	}
 	for(size_t i = 0; i < actInst->NPCListPtr.size(); i++)
 	{
+		if(actInst->NPCListPtr[i]->CreatureID == CreatureID)
+			continue;
 		if(ActiveInstance::GetPointRangeXZ(actInst->NPCListPtr[i], x, z, range) > range)
 			continue;
-		if(_ValidTargetFlag(actInst->NPCListPtr[i], TargetStatus::Enemy_Alive) == true)
-			enemies.push_back(actInst->NPCListPtr[i]);
+		if(_ValidTargetFlag(actInst->NPCListPtr[i], npcAbilityRestrict) == true)
+			creatures.push_back(actInst->NPCListPtr[i]);
 	}
 	for(size_t i = 0; i < actInst->SidekickListPtr.size(); i++)
 	{
+		if(actInst->SidekickListPtr[i]->CreatureID == CreatureID)
+			continue;
 		if(ActiveInstance::GetPointRangeXZ(actInst->SidekickListPtr[i], x, z, range) > range)
 			continue;
-		if(_ValidTargetFlag(actInst->SidekickListPtr[i], TargetStatus::Enemy_Alive) == true)
-			enemies.push_back(actInst->NPCListPtr[i]);
+		if(_ValidTargetFlag(actInst->SidekickListPtr[i], sidekickAbilityRestrict) == true)
+			creatures.push_back(actInst->NPCListPtr[i]);
 	}
-	return enemies.size();
+	return creatures.size();
 }
 
 int CreatureInstance :: AICountEnemyNear(int range, float x, float z)
@@ -8266,10 +8272,12 @@ int CreatureInstance :: GetDistance(CreatureInstance *object, int threshold)
 	if(this == object)
 		return 0;
 
+
 	float tolerance = GetTotalSize() + object->GetTotalSize();
+	float acceptDist = tolerance + threshold;
 
 	//Don't include Y axis since the server doesn't know about elevation differences.
-	return ActiveInstance::GetPlaneRange(this, object, static_cast<int>(tolerance));
+	return ActiveInstance::GetPlaneRange(this, object, static_cast<int>(acceptDist));
 }
 
 bool CreatureInstance :: IsSelfNearPoint(float x, float z, float distance)

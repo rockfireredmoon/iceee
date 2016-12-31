@@ -171,7 +171,7 @@ void AbstractInstanceNutPlayer::LocalBroadcast(const char *message)
 int AbstractInstanceNutPlayer::GetCreatureDistance(int CID, int CID2) {
 	CreatureInstance *targ1 = actInst->GetInstanceByCID(CID);
 	CreatureInstance *targ2 = actInst->GetInstanceByCID(CID2);
-	if(targ1 == NULL || targ2)
+	if(targ1 == NULL || targ2 == NULL)
 		return -1;
 	return targ1->GetDistance(targ2, SANE_DISTANCE);
 }
@@ -187,27 +187,28 @@ int AbstractInstanceNutPlayer::GetNPCID(int CDefID) {
 	return targ == NULL ? 0 : targ->CreatureID;
 }
 
-SQInteger AbstractInstanceNutPlayer::GetEnemiesNearCreature(HSQUIRRELVM v)
+SQInteger AbstractInstanceNutPlayer::GetCreaturesNearCreature(HSQUIRRELVM v)
 {
-		// int range, float x, float z
-    if (sq_gettop(v) == 3) {
-        Sqrat::Var<AINutPlayer&> left(v, 1);
+    if (sq_gettop(v) == 6) {
+        Sqrat::Var<AbstractInstanceNutPlayer&> left(v, 1);
         if (!Sqrat::Error::Occurred(v)) {
             Sqrat::Var<int> range(v, 2);
             Sqrat::Var<int> cid(v, 3);
+            Sqrat::Var<int> playerAbilityRestrict(v, 4);
+            Sqrat::Var<int> npcAbilityRestrict(v, 5);
+            Sqrat::Var<int> sidekickAbilityRestrict(v, 6);
             //std::vector<CreatureInstance*> vv;
             CreatureInstance::CREATURE_PTR_SEARCH vv;
 			CreatureInstance* target = left.value.actInst->GetNPCInstanceByCID(cid.value);
 			if(target != NULL) {
 				float x = (float)target->CurrentX;
 				float z = (float)target->CurrentZ;
-				target->AIFillEnemyNear(range.value, x, z, vv);
+				target->AIFillCreaturesNear(range.value, x, z, playerAbilityRestrict.value, npcAbilityRestrict.value, sidekickAbilityRestrict.value, vv);
 			}
-            sq_newarray(v, vv.size());
+            sq_newarray(v, 0);
             for (std::size_t i = 0; i < vv.size(); ++i) {
-                Sqrat::PushVar(v, i);
-                Sqrat::PushVar(v, vv[i]);
-                sq_rawset(v, -2);
+            	sq_pushinteger(v,vv[i]->CreatureID);
+                sq_arrayappend(v,-2);
             }
             return 1;
         }
@@ -366,8 +367,8 @@ void InstanceNutPlayer::RegisterInstanceFunctions(NutPlayer *instance, Sqrat::De
 	instanceClass->Func(_SC("get_npc_id"), &InstanceNutPlayer::GetNPCID);
 
 	// Functions that return arrays or tables have to be dealt with differently
+	instanceClass->SquirrelFunc(_SC("get_nearby_creature"), &InstanceNutPlayer::GetCreaturesNearCreature);
 	instanceClass->SquirrelFunc(_SC("cids"), &InstanceNutPlayer::CIDs);
-	instanceClass->SquirrelFunc(_SC("get_enemies_near_creature"), &InstanceNutPlayer::GetEnemiesNearCreature);
 
 	// Common instance functions (TODO register in abstract class somehow)
 	instanceClass->Func(_SC("broadcast"), &InstanceNutPlayer::Broadcast);

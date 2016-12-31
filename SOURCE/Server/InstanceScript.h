@@ -33,7 +33,7 @@ public:
 	virtual ~AbstractInstanceNutPlayer();
 	void SetInstancePointer(ActiveInstance *parent);
 
-	static SQInteger GetEnemiesNearCreature(HSQUIRRELVM v);
+	static SQInteger GetCreaturesNearCreature(HSQUIRRELVM v);
 	static SQInteger CIDs(HSQUIRRELVM v);
 
 	int GetNPCID(int CDefID);
