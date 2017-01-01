@@ -30753,6 +30753,7 @@ defHints=48
 ID=1320
 will_regen=1
 might_regen=1
+appearance=n4:{["a"]=[{["node"]="back_sheathe",["type"]="Item-2hMace-Medium3",["colors"]=[]}],["c"]="Horde-Warpig",["sk"]={["armor"]="091836",["bone"]="ffd6b1",["cloth"]="ff8516",["eye"]="913901",["leather"]="7e3f18",["skin"]="e9e973",["trim"]="6b5a7f"},["sz"]="1"}
 level=50
 display_name=Mason
 sub_name=Priest of Nook
@@ -30766,6 +30767,7 @@ total_size=5
 ID=1321
 will_regen=1
 might_regen=1
+appearance=n4:{["a"]=[{["node"]="left_shoulder",["type"]="Armor-Medium-High1-Left_Pauldron",["colors"]=[]},{["node"]="right_shoulder",["type"]="Armor-Medium-High1-Right_Pauldron",["colors"]=[]},{["node"]="back_sheathe",["type"]="Item-2hMace-Medium2",["colors"]=[]}],["c"]="Horde-Warpig",["sk"]={["armor"]="6a0000",["bone"]="f8eadb",["cloth"]="ffcb72",["eye"]="000994",["leather"]="550000",["skin"]="e6b695",["trim"]="947d20"},["sz"]="1"}
 level=50
 display_name=Dixon
 sub_name=Priest of Nook
@@ -31400,6 +31402,7 @@ ai_package=example
 ID=1353
 will_regen=1
 might_regen=1
+appearance=n4:{["a"]=[{["node"]="helmet",["type"]="Armor-Light-Mid1-Helmet",["colors"]=[]},{["node"]="left_shoulder",["type"]="Armor-Light-Mid1-Left_Pauldron",["colors"]=[]},{["node"]="right_shoulder",["type"]="Armor-Light-Mid1-Right_Pauldron",["colors"]=[]},{["node"]="left_hand",["type"]="Item-Shield-Speed_Sign",["colors"]=[]},{["node"]="right_hand",["type"]="Item-Warpig_Blade1",["colors"]=[]}],["c"]="Horde-Warpig2",["sz"]="1"}
 level=50
 display_name=Mercenary
 sub_name=Smooshin' Clan
@@ -31452,6 +31455,7 @@ appearance=n4:{["a"]=[{["type"]="Item-2hAxe-Basic4",["node"]="right_hand",["colo
 ID=1356
 will_regen=1
 might_regen=1
+appearance=n4:{["a"]=[{["node"]="left_shoulder",["type"]="Armor-Cloth-Epic1-Left_Pauldron",["colors"]=["557f46","550000","f16629"]},{["node"]="right_shoulder",["type"]="Armor-Cloth-Epic1-Right_Pauldron",["colors"]=["639451","550000","f16629"]},{["node"]="right_hand",["type"]="Item-Staff-Medium3",["colors"]=["7f5543","2a2a2a","2fff61"]}],["c"]="Horde-Warpig2",["sk"]={["cloth1"]="555555",["cloth2"]="7f2b07",["eye"]="7f7f7f",["nails"]="b5815d",["skin"]="e99f5b",["trim"]="166a3b"},["sz"]="1"}
 level=50
 display_name=Nook-Whisperer
 sub_name=Priest of Nook
