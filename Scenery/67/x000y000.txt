@@ -306,6 +306,7 @@ Pos=1469.51,297.687,1466.39
 Orient=0,-0.761095,0,0.64864
 Scale=1,1,1
 spawnPackage=#E1387
+aiModule=boss_hawg
 
 [ENTRY]
 ID=1127174
@@ -318,7 +319,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1150558
 Asset=Prop-Swineland_Junk#Prop-Swineland-Junk_Missle1
-Name=
+Name=Untitled
 Pos=1669.34,229.687,1868.46
 Orient=0,0,0,1
 Scale=1,1,1
@@ -326,7 +327,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1150559
 Asset=Prop-Swineland_Junk#Prop-Swineland-Junk_Missle1
-Name=
+Name=Untitled
 Pos=1179.39,229.687,1860.09
 Orient=0,0,0,1
 Scale=1,1,1
@@ -334,7 +335,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1150560
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=1660.5,229.687,1871.08
 Orient=0,0,0,1
 Scale=1,1,1
@@ -342,7 +343,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1150561
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=1185.22,229.687,1864.15
 Orient=0,0,0,1
 Scale=1,1,1

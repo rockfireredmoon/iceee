@@ -111,28 +111,61 @@ function queen_health() {
 		 return;
 	}
 
-
-	if(stage == 0) {
-		if(health <= 90) {
-			stage = 1;
-			info("Queen health < 90, trying to cast swarm");
-			inst.ai(cid_skrill_queen, "try_swarm");
-		}
-		inst.queue(queen_health, 3000);
-		return;
-	}
-
-	if(stage == 1) {
-		if(health <= 85) {
-			// 85% The queen calls 4 hatchlings to fight the group.
+    if(health < 100) {
+        if(health <= 10 && stage < 12) {
+            stage = 12;
 			spawn_minions();
-			stage = 2;
-		}
-		inst.queue(queen_health, 3000);
-		return;
-	}
+			spawn_minions();
+        }
+        else if(health <= 15 && stage < 11) {
+            stage = 11;
+			inst.ai(cid_skrill_queen, "try_swarm");
+        }
+        else if(health <= 25 && stage < 10) {
+            stage = 10;
+			spawn_minions();
+			spawn_minions();
+        }
+        else if(health <= 30 && stage < 9) {
+            stage = 9;
+			inst.ai(cid_skrill_queen, "try_swarm");
+        }
+        else if(health <= 40 && stage < 8) {
+            stage = 8;
+			spawn_minions();
+			spawn_minions();
+        }
+        else if(health <= 45 && stage < 7) {
+            stage = 7;
+			inst.ai(cid_skrill_queen, "try_swarm");
+        }
+        else if(health <= 55 && stage < 6) {
+            stage = 6;
+			spawn_minions();
+        }
+        else if(health <= 60 && stage < 5) {
+            stage = 5;
+			inst.ai(cid_skrill_queen, "try_swarm");
+        }
+        else if(health <= 70 && stage < 4) {
+            stage = 4;
+			spawn_minions();
+        }
+        else if(health <= 75 && stage < 3) {
+            stage = 3;
+			inst.ai(cid_skrill_queen, "try_swarm");
+        }
+        else if(health <= 85 && stage < 2) {
+            stage = 2;
+			spawn_minions();
+        }
+        else if(health <= 90 && stage < 1) {
+            stage = 1;
+			inst.ai(cid_skrill_queen, "try_swarm");
+        }
+    }
 
-	inst.queue(queen_health, 3000);
+	inst.queue(queen_health, 1000);
 }
 
 inst.queue(find_queen, 5000);
