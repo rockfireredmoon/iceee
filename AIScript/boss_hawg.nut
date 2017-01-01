@@ -17,6 +17,9 @@ info <- {
 	description = "Boss Hawg AI"
 }
 
+const SUCCESS_INTERVAL = 2000;
+const RETRY_INTERVAL = 1000;
+
 cycle <- 0;
 
 function on_target_lost(targetCID) {
@@ -30,40 +33,64 @@ function on_target_acquired(targetCID) {
 }
 
 function main() {
-	ai.use(32766);
 
     /* Always try Spellbreaker when possible */
-    if(ai.get_might() > 3 && !ai.is_on_cooldown("Special")) {
-        ai.use(347);
+    if(ai.get_might() > 3 && !ai.is_on_cooldown("Spellbreaker")) {
+    	ai.info("Do spellcaster!");
+        ai.use_once(347);
+    	ai.queue(main, SUCCESS_INTERVAL);
+    	return;
     }
+    
     /* Maybe Overstrike when at least 3 charges and 1 might */
-	else if(ai.get_might() > 1 && ai.get_might_charge() >= 3 && randmodrng(0, 3) == 2) {
-        ai.use(477);
+	if(ai.get_might() > 1 && ai.get_might_charge() >= 3 && randmodrng(0, 3) == 2 && !ai.has_buff(6, 72000)) {
+        ai.use_once(477);
+    	ai.queue(main, SUCCESS_INTERVAL);
+    	return;
     }
+    
     /* Cycle 0 - Assault */
-    else if(cycle == 0) {
-        if(ai.get_might() >= 3)
-    		ai.use(347);
-        cycle = 1;
+    if(cycle == 0) {
+       if(ai.get_might() >= 3) {
+    		ai.use_once(228);
+       		cycle = 1;
+	    	ai.queue(main, SUCCESS_INTERVAL);
+	    	return;
+       }
     }
+    
     /* Cycle 1 - Concussion */
-    else if(cycle == 1) {
-        if(ai.get_might() >= 3)
-    		ai.use(539);
-        cycle = 2;
+    if(cycle == 1) {
+        if(ai.get_might() >= 3) {
+        	cycle = 2;
+        	if(ai.use_once(539)) {
+		    	ai.queue(main, SUCCESS_INTERVAL);
+		    	return;
+		    }
+		}
     }
+    
     /* Cycle 2 - Can Opener */
-    else if(cycle == 2) {
-        if(ai.get_might() >= 4)
-    		ai.use(539);
-        cycle = 3;
+    if(cycle == 2) {
+        if(ai.get_might() >= 4) {
+    		ai.use_once(5254);
+        	cycle = 3;
+	    	ai.queue(main, SUCCESS_INTERVAL);
+	    	return;
+    	}
     }
+    
     /* Cycle 3 - Disarm (if not cooling down and have might) */
-	else if(cycle == 3) {
-        if(ai.get_might() >= 4 && !ai.is_on_cooldown("Special"))
-    		ai.use(5146);
-        cycle = 0;
+	if(cycle == 3) {
+        if(ai.get_might() >= 4) {
+        	cycle = 0;
+        	if(ai.use_once(5278)) {
+    			;
+	    		ai.queue(main, SUCCESS_INTERVAL);
+	    		return
+	    	}
+	    }
 	}
-
-    ai.queue(main, 2000);
+	
+    ai.queue(main, RETRY_INTERVAL);
 }

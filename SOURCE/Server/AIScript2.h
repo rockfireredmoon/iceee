@@ -33,7 +33,10 @@ public:
 	// Exposed to scripts
 //	void Queue(Sqrat::Function function, int fireDelay);
 	bool HasTarget();
-	void Use(int abilityID);
+	bool HasBuff(int tier, int buffType);
+	bool Use(int abilityID);
+	bool UseNoRetry(int abilityID);
+	bool DoUse(int abilityID, bool retry);
 	short GetWill();
 	short GetWillCharge();
 	short GetMight();

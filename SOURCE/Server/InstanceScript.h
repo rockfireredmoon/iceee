@@ -43,6 +43,8 @@ public:
 	static int GetAbilityID(const char *name);
 
 	bool CreatureUse(int CID, int abilityID);
+	bool CreatureUseNoRetry(int CID, int abilityID);
+	bool DoCreatureUse(int CID, int abilityID, bool retry);
 	void Info(const char *message);
 	void Message(const char *message, int type);
 	void LocalBroadcast(const char *message);

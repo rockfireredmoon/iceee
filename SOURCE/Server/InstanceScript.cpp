@@ -176,6 +176,12 @@ int AbstractInstanceNutPlayer::GetAbilityID(const char *name)
 }
 
 bool AbstractInstanceNutPlayer::CreatureUse(int CID, int abilityID) {
+	return DoCreatureUse(CID, abilityID, true);
+}
+bool AbstractInstanceNutPlayer::CreatureUseNoRetry(int CID, int abilityID) {
+	return DoCreatureUse(CID, abilityID, false);
+}
+bool AbstractInstanceNutPlayer::DoCreatureUse(int CID, int abilityID, bool retry) {
 	CreatureInstance *attachedCreature = actInst->GetInstanceByCID(CID);
 	if (attachedCreature != NULL && attachedCreature->ab[0].bPending == false) {
 		//DEBUG OUTPUT
@@ -202,7 +208,7 @@ bool AbstractInstanceNutPlayer::CreatureUse(int CID, int abilityID) {
 						g_AbilityManager.GetAbilityErrorCode(r));
 			}
 
-			if (attachedCreature->AIAbilityFailureAllowRetry(r) == true)
+			if (retry && attachedCreature->AIAbilityFailureAllowRetry(r) == true)
 				QueueAdd(new ScriptCore::NutScriptEvent(
 							new ScriptCore::TimeCondition(USE_FAIL_DELAY),
 							new InstanceUseCallback(this, CID, abilityID)));
@@ -398,6 +404,7 @@ void InstanceNutPlayer::RegisterInstanceFunctions(NutPlayer *instance, Sqrat::De
 	instanceClass->Func(_SC("get_health_pc"), &InstanceNutPlayer::GetHealthPercent);
 	instanceClass->Func(_SC("get_creature_distance"), &InstanceNutPlayer::GetCreatureDistance);
 	instanceClass->Func(_SC("creature_use"), &InstanceNutPlayer::CreatureUse);
+	instanceClass->Func(_SC("creature_use_once"), &InstanceNutPlayer::CreatureUseNoRetry);
 	instanceClass->Func(_SC("walk"), &InstanceNutPlayer::Walk);
 	instanceClass->Func(_SC("walk_then"), &InstanceNutPlayer::WalkThen);
 	instanceClass->Func(_SC("despawn"), &InstanceNutPlayer::Despawn);

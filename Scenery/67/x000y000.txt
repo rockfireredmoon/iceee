@@ -307,6 +307,7 @@ Orient=0,-0.761095,0,0.64864
 Scale=1,1,1
 spawnPackage=#E1387
 aiModule=boss_hawg
+maxLeash=750
 
 [ENTRY]
 ID=1127174

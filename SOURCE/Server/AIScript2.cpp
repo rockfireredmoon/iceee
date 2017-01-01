@@ -52,7 +52,19 @@ bool AINutPlayer::HasTarget() {
 	return attachedCreature->CurrentTarget.targ != NULL;
 }
 
-void AINutPlayer::Use(int abilityID) {
+bool AINutPlayer::HasBuff(int tier, int buffType) {
+	return attachedCreature->buffManager.HasBuff(tier, buffType);
+}
+
+bool AINutPlayer::Use(int abilityID) {
+	return DoUse(abilityID, true);
+}
+
+bool AINutPlayer::UseNoRetry(int abilityID) {
+	return DoUse(abilityID, false);
+}
+
+bool AINutPlayer::DoUse(int abilityID, bool retry) {
 
 	if (attachedCreature->ab[0].bPending == false) {
 		//DEBUG OUTPUT
@@ -79,12 +91,15 @@ void AINutPlayer::Use(int abilityID) {
 						g_AbilityManager.GetAbilityErrorCode(r));
 			}
 
-			if (attachedCreature->AIAbilityFailureAllowRetry(r) == true)
+			if (retry && attachedCreature->AIAbilityFailureAllowRetry(r) == true)
 				QueueAdd(new ScriptCore::NutScriptEvent(
 							new ScriptCore::TimeCondition(USE_FAIL_DELAY),
 							new UseCallback(this, abilityID)));
 		}
+		else
+			return true;
 	}
+	return false;
 }
 
 short AINutPlayer::GetWill() {
@@ -322,7 +337,9 @@ void AINutPlayer::RegisterFunctions() {
 void AINutPlayer::RegisterAIFunctions(NutPlayer *instance,
 		Sqrat::DerivedClass<AINutPlayer, InstanceScript::InstanceNutPlayer> *clazz) {
 	clazz->Func(_SC("has_target"), &AINutPlayer::HasTarget);
+	clazz->Func(_SC("has_buff"), &AINutPlayer::HasBuff);
 	clazz->Func(_SC("use"), &AINutPlayer::Use);
+	clazz->Func(_SC("use_once"), &AINutPlayer::UseNoRetry);
 	clazz->Func(_SC("get_will"), &AINutPlayer::GetWill);
 	clazz->Func(_SC("get_will_charge"), &AINutPlayer::GetWillCharge);
 	clazz->Func(_SC("get_might"), &AINutPlayer::GetMight);
