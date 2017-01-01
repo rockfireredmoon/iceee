@@ -32217,27 +32217,28 @@ ai_package=4_knight_30
 
 [ENTRY]
 ID=1387
-strength=131
-dexterity=112
-constitution=131
-psyche=92
-spirit=92
-base_damage_melee=164
-damage_resist_melee=2292
-damage_resist_fire=2292
-damage_resist_frost=2292
-damage_resist_mystic=2292
-damage_resist_death=2292
+strength=150
+dexterity=142
+constitution=2500
+psyche=110
+spirit=110
+damage_resist_melee=4000
+damage_resist_fire=4000
+damage_resist_frost=4000
+damage_resist_mystic=4000
+damage_resist_death=4000
 will_regen=1
 might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
+appearance=n4:{["sk"]={["armor1"]="2a577c",["armor2"]="a7651f",["armor3"]="741510",["base"]="ca8864",["belt"]="885b41",["flag"]="ddd0c3",["hair"]="a18a4b",["skull"]="9a8e82"},["c"]="Boss-Boss_Hog",["sz"]="2.4"}
 level=49
 display_name=Boss Hawg
 profession=2
 creature_category=Mortal
 rarity=2
+base_damage_melee=200
 ai_package=4_knight_30
 
 [ENTRY]
