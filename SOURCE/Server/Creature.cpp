@@ -81,6 +81,7 @@ void SelectedObject :: Clear(bool UNUSED_eraseAutoAttack)
 	//if(eraseAutoAttack == true)
 	//	aaTarg = NULL;
 	desiredRange = 0;
+	desiredSpeed = 0;
 	bInstigated = false;
 	DesLocX = 0;
 	DesLocZ = 0;
@@ -3534,6 +3535,10 @@ void CreatureInstance :: CancelPending_Ex(ActiveAbilityInfo *ability)
 			if(simulatorPtr == NULL)
 				break;
 
+			if(actInst->nutScriptPlayer != NULL) {
+				actInst->nutScriptPlayer->InterruptInteraction(CreatureID);
+			}
+
 			std::list<QuestScript::QuestNutPlayer*> l = g_QuestNutManager.GetActiveScripts(CreatureID);
 			std::list<QuestScript::QuestNutPlayer*>::iterator it = l.begin();
 			for(; it != l.end(); ++it) {
@@ -5088,7 +5093,7 @@ void CreatureInstance :: MoveToTarget(void)
 				//int maxmove = (int)(115.0F * ((float)Speed / 100.0F));
 				if(distRemain > maxmove)
 					distRemain = maxmove;
-				//g_Log.AddMessageFormat("Dist: %d, Remain: %d, YOffs: %d", dist, distRemain, CurrentY - CurrentTarget.targ->CurrentY);
+				g_Log.AddMessageFormat("Dist: %d, Remain: %d, YOffs: %d speed: %d", dist, distRemain, CurrentY - CurrentTarget.targ->CurrentY, Speed);
 
 				float angle = (float)Heading * 6.283185F / 256.0F;
 				CurrentZ += (int)((float)distRemain * cos(angle));
@@ -5480,6 +5485,12 @@ int CreatureInstance :: RunMovementStep(void)
 		{
 			//Improve movement accuracy in active combat by reducing the delays between updates.
 			int moveSpeed = CREATURE_WALK_SPEED;
+
+			// Scripting can request a particular speed
+			if(CurrentTarget.desiredSpeed != 0) {
+				moveSpeed = CurrentTarget.desiredSpeed;
+			}
+
 			if(CurrentTarget.targ != NULL)
 			{
 				nextMoveTime = CREATURE_MOVEMENT_COMBAT_FREQUENCY;
@@ -7081,30 +7092,30 @@ int CreatureInstance :: ProcessQuestRewards(int QuestID, const std::vector<Quest
 	return 1;
 }
 
-int CreatureInstance :: QuestInteractObject(QuestObjective *objectiveData)
+int CreatureInstance :: QuestInteractObject(char *buffer, const char *text, float time, bool gather)
 {
 	Interrupt();
 
 	int wpos = 0;
-	wpos += PutByte(&GSendBuf[wpos], 4);  //_handleCreatureEventMsg
-	wpos += PutShort(&GSendBuf[wpos], 0);  //size
-	wpos += PutInteger(&GSendBuf[wpos], CreatureID);
-	wpos += PutByte(&GSendBuf[wpos], 11);  //creature "used" event
-	wpos += PutStringUTF(&GSendBuf[wpos], objectiveData->ActivateText.c_str());
-	wpos += PutFloat(&GSendBuf[wpos], (float)objectiveData->ActivateTime);
-	PutShort(&GSendBuf[1], wpos - 3);  //size
+	wpos += PutByte(&buffer[wpos], 4);  //_handleCreatureEventMsg
+	wpos += PutShort(&buffer[wpos], 0);  //size
+	wpos += PutInteger(&buffer[wpos], CreatureID);
+	wpos += PutByte(&buffer[wpos], 11);  //creature "used" event
+	wpos += PutStringUTF(&buffer[wpos], text);
+	wpos += PutFloat(&buffer[wpos], time);
+	PutShort(&buffer[1], wpos - 3);  //size
 
 	//We can't call RegisterCast, but the client doesn't have a corresponding
 	//ability effect.  The server needs to know this information
 
 	//g_Log.AddMessageFormat("[DEBUG] Adding ability event to trigger in: %d ms", objectiveData->ActivateTime);
-	if(objectiveData->gather == true)
+	if(gather)
 		ab[0].abilityID = ABILITYID_QUEST_GATHER_OBJECT;
 	else
 		ab[0].abilityID = ABILITYID_QUEST_INTERACT_OBJECT;
 
 	ab[0].type = AbilityType::Cast;
-	ab[0].fireTime = g_ServerTime + objectiveData->ActivateTime;
+	ab[0].fireTime = g_ServerTime + time;
 	ab[0].mightChargesSpent = 0;
 	ab[0].willChargesSpent = 0;
 	ab[0].bPending = true;

@@ -52,7 +52,19 @@ bool AINutPlayer::HasTarget() {
 	return attachedCreature->CurrentTarget.targ != NULL;
 }
 
-void AINutPlayer::Use(int abilityID) {
+bool AINutPlayer::HasBuff(int tier, int buffType) {
+	return attachedCreature->buffManager.HasBuff(tier, buffType);
+}
+
+bool AINutPlayer::Use(int abilityID) {
+	return DoUse(abilityID, true);
+}
+
+bool AINutPlayer::UseNoRetry(int abilityID) {
+	return DoUse(abilityID, false);
+}
+
+bool AINutPlayer::DoUse(int abilityID, bool retry) {
 
 	if (attachedCreature->ab[0].bPending == false) {
 		//DEBUG OUTPUT
@@ -79,12 +91,15 @@ void AINutPlayer::Use(int abilityID) {
 						g_AbilityManager.GetAbilityErrorCode(r));
 			}
 
-			if (attachedCreature->AIAbilityFailureAllowRetry(r) == true)
+			if (retry && attachedCreature->AIAbilityFailureAllowRetry(r) == true)
 				QueueAdd(new ScriptCore::NutScriptEvent(
 							new ScriptCore::TimeCondition(USE_FAIL_DELAY),
 							new UseCallback(this, abilityID)));
 		}
+		else
+			return true;
 	}
+	return false;
 }
 
 short AINutPlayer::GetWill() {
@@ -300,6 +315,7 @@ void AINutPlayer::RegisterFunctions() {
 	Sqrat::RootTable(vm).Bind(_SC("Core"), nutClass);
 	RegisterCoreFunctions(this, &nutClass);
 	Sqrat::DerivedClass<InstanceScript::AbstractInstanceNutPlayer, NutPlayer> abstractInstanceClass(vm, _SC("AbstractInstance"));
+	RegisterAbstractInstanceFunctions(this, &abstractInstanceClass);
 	Sqrat::DerivedClass<InstanceScript::InstanceNutPlayer, AbstractInstanceNutPlayer> instanceClass(vm, _SC("Instance"));
 	Sqrat::DerivedClass<AINutPlayer, InstanceScript::InstanceNutPlayer> aiClass(vm, _SC("AI"));
 	Sqrat::RootTable(vm).Bind(_SC("AI"), aiClass);
@@ -322,7 +338,9 @@ void AINutPlayer::RegisterFunctions() {
 void AINutPlayer::RegisterAIFunctions(NutPlayer *instance,
 		Sqrat::DerivedClass<AINutPlayer, InstanceScript::InstanceNutPlayer> *clazz) {
 	clazz->Func(_SC("has_target"), &AINutPlayer::HasTarget);
+	clazz->Func(_SC("has_buff"), &AINutPlayer::HasBuff);
 	clazz->Func(_SC("use"), &AINutPlayer::Use);
+	clazz->Func(_SC("use_once"), &AINutPlayer::UseNoRetry);
 	clazz->Func(_SC("get_will"), &AINutPlayer::GetWill);
 	clazz->Func(_SC("get_will_charge"), &AINutPlayer::GetWillCharge);
 	clazz->Func(_SC("get_might"), &AINutPlayer::GetMight);
@@ -360,21 +378,9 @@ void AINutPlayer::RegisterAIFunctions(NutPlayer *instance,
 	clazz->Func(_SC("get_speed"), &AINutPlayer::GetSpeed);
 	clazz->Func(_SC("get_distance"), &AINutPlayer::GetDistance);
 	clazz->Func(_SC("is_cid_busy"), &AINutPlayer::IsCIDBusy);
-	clazz->Func(_SC("get_npc_id"), &AINutPlayer::GetNPCID);
 	clazz->Func(_SC("speak"), &AINutPlayer::Speak);
 
-	// Common instance functions (TODO register in abstract class somehow)
-	clazz->Func(_SC("broadcast"), &AINutPlayer::Broadcast);
-	clazz->Func(_SC("local_broadcast"), &AINutPlayer::LocalBroadcast);
-	clazz->Func(_SC("info"), &AINutPlayer::Info);
-	clazz->Func(_SC("message"), &AINutPlayer::Message);
-	clazz->Func(_SC("error"), &AINutPlayer::Error);
-	clazz->Func(_SC("get_cid_for_prop"), &AINutPlayer::GetCIDForPropID);
-	clazz->Func(_SC("chat"), &AINutPlayer::Chat);
-	clazz->Func(_SC("creature_chat"), &AINutPlayer::CreatureChat);
-
 	// Functions that return arrays or tables have to be dealt with differently
-	clazz->SquirrelFunc(_SC("cids"), &AINutPlayer::CIDs);
 	clazz->SquirrelFunc(_SC("get_nearby"), &AINutPlayer::GetEnemiesNear);
 
 }

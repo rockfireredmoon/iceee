@@ -67,6 +67,7 @@ this.ProtocolDef <- {
 		[71] = "_handleItemDefUpdateMsg",
 		[80] = "_handlePVPStatUpdateMessage",
 		[90] = "_handleHeartbeatMessage",
+		[97] = "_handleShake",
 		[98] = "_handleSceneryEffectMsg",
 		[99] = "_handleGuildUpdateMsg",
 		inspectCreatureDef = 0,
@@ -3101,6 +3102,10 @@ class this.Connection extends this.MessageBroadcaster
 		{
 			qa._handler.onQueryTimeout(qa);
 		}
+	}
+	
+	function _handleShake(data) {
+		::_playTool.addShaky(::_avatar.getPosition(), data.getFloat(), data.getFloat(), data.getFloat());
 	}
 	
 	function _handleSceneryEffectMsg(data)

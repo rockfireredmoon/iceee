@@ -203,7 +203,7 @@ function on_remove(cid) {
 	}
 }
 
-function on_use(sourceCId, targetCDefId) {
+function on_use(sourceCId, targetCId, targetCDefId) {
 
 	if(targetCDefId == CDEFID_RED_TEAM_REGISTRAR) {
 		if(check_team(sourceCId)) {		

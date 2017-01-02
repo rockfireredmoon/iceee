@@ -148,6 +148,7 @@ struct SelectedObject
 	bool bInstigated;         //If true, this entity is hostile because it was attacked by a player
 	int DesLocX;              //For the new movement system, the desired X location to move.
 	int DesLocZ;              //For the new movement system, the desired Z location to move.
+	int desiredSpeed;		  //For scripting to specify a desired speed
 	SelectedObject();
 	void Clear(bool UNUSED_eraseAutoAttack);
 	bool hasTargetCDef(int CDefID);
@@ -466,7 +467,7 @@ public:
 	void CheckQuestKill(CreatureInstance *target);
 	void CheckQuestInteract(int CreatureDefID);
 	int ProcessQuestRewards(int QuestID, const std::vector<QuestItemReward>& itemsToGive);
-	int QuestInteractObject(QuestObjective *objectiveData);
+	int QuestInteractObject(char *buffer, const char *text, float time, bool gather);
 	int NormalInteractObject(char *outBuf, InteractObject *interactObj);
 	void RunQuestObjectInteraction(CreatureInstance *target, bool deleteObject);
 	void RunObjectInteraction(CreatureInstance *target);

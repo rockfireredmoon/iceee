@@ -321,6 +321,7 @@ public:
 	void UpdateCreatureLocalStatus(void);  //Scans NPCs to determine which ones should stay active for detailed processing
 
 	void SendPlaySound(const char *assetPackage, const char *soundFile);
+	int Shake(char *outbuf, float amount, float time, float range);
 	int AddSceneryEffect(char *outbuf, SceneryEffect *effect);
 	int DetachSceneryEffect(char *outBuf, int sceneryId, int effectType, int tag);
 	SceneryEffectList * GetSceneryEffectList(int PropID);
@@ -393,10 +394,10 @@ public:
 	bool RunScript(std::string &errors);
 	void ScriptCallPackageKill(const char *name);
 	void ScriptCallKill(int CreatureDefID, int CreatureID);
-	void ScriptCallUse(int sourceCreatureID, int usedCreatureDefID);
+	bool ScriptCallUse(int sourceCreatureID, int usedCreatureID, int usedCreatureDefID);
 	void ScriptCallUseHalt(int sourceCreatureID, int usedCreatureDefID);
 	void ScriptCallUseFinish(int sourceCreatureID, int usedCreatureDefID);
-	void ScriptCall(const char *name);
+	bool ScriptCall(const char *name);
 	void FetchNearbyCreatures(SimulatorThread *simPtr, CreatureInstance *player);
 	void RunObjectInteraction(SimulatorThread *simPtr, int CDef);
 	void ApplyCreatureScale(CreatureInstance *target);

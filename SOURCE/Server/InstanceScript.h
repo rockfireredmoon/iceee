@@ -26,6 +26,13 @@ private:
 	std::map<std::string, Squirrel::Area> mLocationDef;
 };
 
+class ActiveInteraction {
+public:
+	CreatureInstance *mCreature;
+	ScriptCore::NutScriptEvent *mEvent;
+	~ActiveInteraction();
+	ActiveInteraction(CreatureInstance *mCreature, ScriptCore::NutScriptEvent *mEvent);
+};
 
 class AbstractInstanceNutPlayer: public ScriptCore::NutPlayer {
 public:
@@ -33,16 +40,25 @@ public:
 	virtual ~AbstractInstanceNutPlayer();
 	void SetInstancePointer(ActiveInstance *parent);
 
+
+	void RegisterAbstractInstanceFunctions(NutPlayer *instance, Sqrat::DerivedClass<AbstractInstanceNutPlayer, NutPlayer> *instanceClass);
+
 	static SQInteger GetCreaturesNearCreature(HSQUIRRELVM v);
 	static SQInteger CIDs(HSQUIRRELVM v);
+	static SQInteger AllCIDs(HSQUIRRELVM v);
 
 	int GetNPCID(int CDefID);
 	int GetCIDForPropID(int propID);
 	int GetCreatureDistance(int CID, int CID2);
+	int GetCreatureSpawnProp(int CID);
 
 	static int GetAbilityID(const char *name);
 
+	void Shake(float amount, float time, float range);
+	void RotateCreature(int CID, int rotation);
 	bool CreatureUse(int CID, int abilityID);
+	bool CreatureUseNoRetry(int CID, int abilityID);
+	bool DoCreatureUse(int CID, int abilityID, bool retry);
 	void Info(const char *message);
 	void Message(const char *message, int type);
 	void LocalBroadcast(const char *message);
@@ -54,6 +70,7 @@ protected:
 	CreatureInstance* GetNPCPtr(int CID);
 	CreatureInstance* GetCreaturePtr(int CID);
 	ActiveInstance *actInst;
+	std::vector<ActiveInteraction> interactions;
 };
 
 class InstanceNutPlayer: public AbstractInstanceNutPlayer {
@@ -66,6 +83,7 @@ public:
 	void RegisterInstanceFunctions(NutPlayer *instance, Sqrat::DerivedClass<InstanceNutPlayer, AbstractInstanceNutPlayer> *instanceClass);
 	virtual void HaltDerivedExecution();
 	virtual void HaltedDerived();
+//	virtual void RegisterAbstractInstanceFunctions(NutPlayer *instance, Sqrat::DerivedClass<AbstractInstanceNutPlayer, NutPlayer> *instanceClass);
 
 	// Exposed to scripts
 //	void Queue(Sqrat::Function function, int fireDelay);
@@ -117,12 +135,26 @@ public:
 	std::vector<int>  Scan(Squirrel::Area *location);
 	int ScanNPC(Squirrel::Area *location, int CDefID);
 	std::vector<int> ScanNPCs(Squirrel::Area *location, int CDefID);
+	bool Interact(int CID, const char *text, float time, bool gather, Sqrat::Function function);
+	void RemoveInteraction(int CID);
+	void InterruptInteraction(int CID);
 
 private:
 	std::vector<SceneryEffect> activeEffects;
 	void DoUnremoveProp(int propID);
 	ActiveParty * DoCreateParty(int leaderCID, int team);
 
+};
+
+class InteractCallback : public ScriptCore::NutCallback
+{
+public:
+	InstanceNutPlayer* mNut;
+	Sqrat::Function mFunction;		//Function to jump to
+	int mCID;
+	InteractCallback(InstanceNutPlayer *nut, Sqrat::Function function, int CID);
+	~InteractCallback();
+	bool Execute();
 };
 
 class InstanceUseCallback : public ScriptCore::NutCallback
