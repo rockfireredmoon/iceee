@@ -26,6 +26,7 @@ public:
 	void RegisterAIFunctions(NutPlayer *instance, Sqrat::DerivedClass<AINutPlayer, InstanceScript::InstanceNutPlayer> *clazz);
 	virtual void HaltDerivedExecution();
 	virtual void HaltedDerived();
+//	virtual void RegisterAbstractInstanceFunctions(NutPlayer *instance, Sqrat::DerivedClass<AbstractInstanceNutPlayer, NutPlayer> *instanceClass);
 	void Initialize(CreatureInstance *creature, AINutDef *defPtr, std::string &errors);
 
 	static SQInteger GetEnemiesNear(HSQUIRRELVM v);

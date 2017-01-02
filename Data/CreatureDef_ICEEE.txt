@@ -2030,3 +2030,14 @@ rarity=1
 base_damage_melee=169
 ai_package=4_rogue_30
 appearance=n4:{ ["sk"]={ ["stripe2"]="5D49BF", ["skin"]="949494", ["wings"]="7D61FF", ["stripe1"]="7D61FF" }, ["c"]="Horde-Skrill-Trooper", ["sz"]=".8" }
+
+[ENTRY]
+ID=7863
+will_regen=0
+might_regen=0
+appearance=p1:{["a"]="Prop-Interact_Sphere",["sz"]="4"}
+level=1
+display_name=Nuclear Missile
+profession=1
+creature_category=Inanimate
+ai_package=nothing

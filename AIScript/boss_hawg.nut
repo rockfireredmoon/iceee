@@ -36,7 +36,6 @@ function main() {
 
     /* Always try Spellbreaker when possible */
     if(ai.get_might() > 3 && !ai.is_on_cooldown("Spellbreaker")) {
-    	ai.info("Do spellcaster!");
         ai.use_once(347);
     	ai.queue(main, SUCCESS_INTERVAL);
     	return;

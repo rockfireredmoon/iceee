@@ -468,6 +468,8 @@ public:
 	int GC(void);
 	bool JumpToLabel(const char *name);
 	bool JumpToLabel(const char *name, std::vector<ScriptParam> parms);
+	std::string RunFunctionWithStringReturn(std::string name, std::vector<ScriptParam> parms, bool time);
+	bool RunFunctionWithBoolReturn(std::string name, std::vector<ScriptParam> parms, bool time);
 	bool RunFunction(std::string name, std::vector<ScriptParam> parms, bool time);
 	void Broadcast(const char *message);
 	unsigned long GetServerTime();
@@ -502,6 +504,8 @@ public:
 
 private:
 	bool ExecEvent(NutScriptEvent *nse, int index);
+	bool DoRunFunction(std::string name, std::vector<ScriptParam> parms, bool time, bool retval);
+	void MaybeWakeVM(std::string reason);
 
 protected:
 	static const size_t MAX_QUEUE_SIZE = 16;

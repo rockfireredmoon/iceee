@@ -2866,6 +2866,17 @@ int ActiveInstance :: DetachSceneryEffect(char *outBuf, int sceneryId, int effec
 	return wpos;
 }
 
+int ActiveInstance :: Shake(char *outbuf, float amount, float time, float range) {
+	int wpos = 0;
+	wpos += PutByte(&outbuf[wpos], 97);       //_handleShake
+	wpos += PutShort(&outbuf[wpos], 0);      //Placeholder for size
+	wpos += PutFloat(&outbuf[wpos], amount);
+	wpos += PutFloat(&outbuf[wpos], time);
+	wpos += PutFloat(&outbuf[wpos], range);
+	PutShort(&outbuf[1], wpos - 3);
+	return wpos;
+}
+
 int ActiveInstance :: AddSceneryEffect(char *outbuf, SceneryEffect *effect)
 {
 	int wpos = 0;
@@ -3319,20 +3330,22 @@ void ActiveInstance :: ScriptCallPackageKill(const char *name)
 		ScriptCall(name);
 }
 
-void ActiveInstance :: ScriptCallUse(int sourceCreatureID, int usedCreatureDefID)
+bool ActiveInstance :: ScriptCallUse(int sourceCreatureID, int usedCreatureID, int usedCreatureDefID)
 {
 	char buffer[64];
 	if(nutScriptPlayer != NULL) {
 		std::vector<ScriptCore::ScriptParam> p;
 		Util::SafeFormat(buffer, sizeof(buffer), "on_use_%d", usedCreatureDefID);
-		nutScriptPlayer->JumpToLabel(buffer, p);
+		bool ok1 = nutScriptPlayer->RunFunctionWithBoolReturn(buffer, p, true);
 		p.push_back(ScriptCore::ScriptParam(sourceCreatureID));
+		p.push_back(ScriptCore::ScriptParam(usedCreatureID));
 		p.push_back(ScriptCore::ScriptParam(usedCreatureDefID));
-		nutScriptPlayer->JumpToLabel("on_use", p);
+		bool ok2 = nutScriptPlayer->RunFunctionWithBoolReturn("on_use", p, true);
+		return ok1 | ok2;
 	}
 	else {
 		Util::SafeFormat(buffer, sizeof(buffer), "onUse_%d", usedCreatureDefID);
-		ScriptCall(buffer);
+		return ScriptCall(buffer);
 	}
 }
 
@@ -3372,7 +3385,7 @@ void ActiveInstance :: ScriptCallUseFinish(int sourceCreatureID, int usedCreatur
 }
 
 //Calls a script jump label.  Can be used for any generic purpose.
-void ActiveInstance :: ScriptCall(const char *name)
+bool ActiveInstance :: ScriptCall(const char *name)
 {
 	bool called = false;
 	if(nutScriptPlayer != NULL) {
@@ -3399,6 +3412,7 @@ void ActiveInstance :: ScriptCall(const char *name)
 	if(!called) {
 		g_Log.AddMessageFormat("Nothing handled script %s", name);
 	}
+	return called;
 }
 
 bool ActiveInstance :: RunScript(std::string &errors)

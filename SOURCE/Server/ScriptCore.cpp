@@ -236,9 +236,16 @@ namespace ScriptCore
 
 	bool SquirrelFunctionCallback::Execute()
 	{
-		Sqrat::SharedPtr<bool> ptr = mFunction.Evaluate<bool>();
-		return ptr.Get() == NULL || ptr.Get();
+		try {
+			Sqrat::SharedPtr<bool> ptr = mFunction.Evaluate<bool>();
+			return ptr.Get() == NULL || ptr.Get();
+		}
+		catch(Sqrat::Exception &e) {
+			g_Log.AddMessageFormat("Exception while execute script function.");
+		}
+		return false;
 	}
+
 
 	//
 	// Run a named function.
@@ -259,7 +266,8 @@ namespace ScriptCore
 
 	bool RunFunctionCallback::Execute()
 	{
-		return mNut->RunFunction(mFunctionName, mArgs, false);
+		mNut->RunFunction(mFunctionName, mArgs, false);
+		return true;
 	}
 
 	//
@@ -633,22 +641,105 @@ namespace ScriptCore
 		}
 	}
 
-	bool NutPlayer::RunFunction(std::string name, std::vector<ScriptParam> parms, bool time) {
+	std::string NutPlayer::RunFunctionWithStringReturn(std::string name, std::vector<ScriptParam> parms, bool time) {
+		if(!mActive) {
+			g_Log.AddMessageFormat("[WARNING] Attempt to run function on inactive script %s.", name.c_str());
+			return "";
+		}
+		unsigned long now = g_PlatformTime.getMilliseconds();
+		mRunning = true;
+		MaybeWakeVM(name);
+		SQInteger top = sq_gettop(vm);
+		const SQChar* val;
+		try {
+			if(DoRunFunction(name, parms, time, true)) {
+				sq_getstring(vm,-1,&val);
+			}
+			else {
+				val = "";
+			}
+		}
+		catch(int e) {
+			g_Log.AddMessageFormat("Exception when running function %s, failed with %d", name.c_str(), e);
+		}
+		sq_settop(vm,top);
+		if(time) {
+			mCalls++;
+			mGCCounter++;
+			mProcessingTime += g_PlatformTime.getMilliseconds() - now;
+		}
+		mRunning = false;
+		return val;
+	}
+
+	bool NutPlayer::RunFunctionWithBoolReturn(std::string name, std::vector<ScriptParam> parms, bool time) {
 		if(!mActive) {
 			g_Log.AddMessageFormat("[WARNING] Attempt to run function on inactive script %s.", name.c_str());
 			return false;
 		}
-		g_Log.AddMessageFormat("RunFunction(%s)", name.c_str());
 		unsigned long now = g_PlatformTime.getMilliseconds();
 		mRunning = true;
+		MaybeWakeVM(name);
+		SQInteger top = sq_gettop(vm);
+		SQBool val = SQFalse;
+		try {
+			if(DoRunFunction(name, parms, time, true)) {
+				sq_getbool(vm,-1,&val);
+			}
+		}
+		catch(int e) {
+			g_Log.AddMessageFormat("Exception when running function %s, failed with %d", name.c_str(), e);
+		}
+		sq_settop(vm,top);
+		if(time) {
+			mCalls++;
+			mGCCounter++;
+			mProcessingTime += g_PlatformTime.getMilliseconds() - now;
+		}
+		mRunning = false;
+		return val;
+	}
 
+	bool NutPlayer::RunFunction(std::string name, std::vector<ScriptParam> parms, bool time) {
+
+		if(!mActive) {
+			g_Log.AddMessageFormat("[WARNING] Attempt to run function on inactive script %s.", name.c_str());
+			return false;
+		}
+		unsigned long now = g_PlatformTime.getMilliseconds();
+		mRunning = true;
+		MaybeWakeVM(name);
+		SQInteger top = sq_gettop(vm);
+		bool ok;
+		try {
+			ok = DoRunFunction(name, parms, time, false);
+		}
+		catch(int e) {
+			g_Log.AddMessageFormat("Exception when running function %s, failed with %d", name.c_str(), e);
+		}
+		sq_settop(vm,top);
+
+		if(time) {
+			mCalls++;
+			mGCCounter++;
+			mProcessingTime += g_PlatformTime.getMilliseconds() - now;
+		}
+
+		mRunning = false;
+		return ok;
+	}
+
+	void NutPlayer::MaybeWakeVM(std::string name) {
 		// Wake the VM up if it is suspend so the onFinish can be run
 		if(sq_getvmstate(vm) == SQ_VMSTATE_SUSPENDED) {
 			g_Log.AddMessageFormat("Waking up VM to run %s.", name.c_str());
 			sq_wakeupvm(vm, false, false, false, true);
 		}
 
-		SQInteger top = sq_gettop(vm);
+	}
+
+
+	bool NutPlayer::DoRunFunction(std::string name, std::vector<ScriptParam> parms, bool time, bool retVal) {
 		sq_pushroottable(vm);
 		sq_pushstring(vm,_SC(name.c_str()),-1);
 		if(SQ_SUCCEEDED(sq_get(vm,-2))) {
@@ -671,19 +762,10 @@ namespace ScriptCore
 					break;
 				}
 			}
-			sq_call(vm,parms.size() + 1,SQFalse,SQTrue); //calls the function
+			sq_call(vm,parms.size() + 1,retVal ? SQTrue : SQFalse, Sqrat::ErrorHandling::IsEnabled()); //calls the function
+			return true;
 		}
-		sq_settop(vm,top);
-
-		if(time) {
-			mCalls++;
-			mGCCounter++;
-			mProcessingTime += g_PlatformTime.getMilliseconds() - now;
-		}
-
-		mRunning = false;
-
-		return true;
+		return false;
 	}
 
 	bool NutPlayer :: ExecEvent(NutScriptEvent *nse, int index)

@@ -3568,6 +3568,7 @@ class this.SceneObject extends this.MessageBroadcaster
 	function attachParticleSystem(name, tag, size)
 	{
 			// TODO make more unique
+			print("ICE! Attach scenery effect " + name + ","  + tag + "," + size + "\n"); 
 			local uniqueName = this.mNode.getName() + "/" + name;
 			local particle = ::_scene.createParticleSystem(uniqueName, name);
 			particle.setVisibilityFlags(this.VisibilityFlags.ANY);

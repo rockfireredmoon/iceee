@@ -315,6 +315,7 @@ void AINutPlayer::RegisterFunctions() {
 	Sqrat::RootTable(vm).Bind(_SC("Core"), nutClass);
 	RegisterCoreFunctions(this, &nutClass);
 	Sqrat::DerivedClass<InstanceScript::AbstractInstanceNutPlayer, NutPlayer> abstractInstanceClass(vm, _SC("AbstractInstance"));
+	RegisterAbstractInstanceFunctions(this, &abstractInstanceClass);
 	Sqrat::DerivedClass<InstanceScript::InstanceNutPlayer, AbstractInstanceNutPlayer> instanceClass(vm, _SC("Instance"));
 	Sqrat::DerivedClass<AINutPlayer, InstanceScript::InstanceNutPlayer> aiClass(vm, _SC("AI"));
 	Sqrat::RootTable(vm).Bind(_SC("AI"), aiClass);
@@ -377,21 +378,9 @@ void AINutPlayer::RegisterAIFunctions(NutPlayer *instance,
 	clazz->Func(_SC("get_speed"), &AINutPlayer::GetSpeed);
 	clazz->Func(_SC("get_distance"), &AINutPlayer::GetDistance);
 	clazz->Func(_SC("is_cid_busy"), &AINutPlayer::IsCIDBusy);
-	clazz->Func(_SC("get_npc_id"), &AINutPlayer::GetNPCID);
 	clazz->Func(_SC("speak"), &AINutPlayer::Speak);
 
-	// Common instance functions (TODO register in abstract class somehow)
-	clazz->Func(_SC("broadcast"), &AINutPlayer::Broadcast);
-	clazz->Func(_SC("local_broadcast"), &AINutPlayer::LocalBroadcast);
-	clazz->Func(_SC("info"), &AINutPlayer::Info);
-	clazz->Func(_SC("message"), &AINutPlayer::Message);
-	clazz->Func(_SC("error"), &AINutPlayer::Error);
-	clazz->Func(_SC("get_cid_for_prop"), &AINutPlayer::GetCIDForPropID);
-	clazz->Func(_SC("chat"), &AINutPlayer::Chat);
-	clazz->Func(_SC("creature_chat"), &AINutPlayer::CreatureChat);
-
 	// Functions that return arrays or tables have to be dealt with differently
-	clazz->SquirrelFunc(_SC("cids"), &AINutPlayer::CIDs);
 	clazz->SquirrelFunc(_SC("get_nearby"), &AINutPlayer::GetEnemiesNear);
 
 }
