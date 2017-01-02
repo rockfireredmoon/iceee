@@ -117,41 +117,39 @@ function on_use(cid, target_cid, target_cdef_id) {
     			inst.queue(function() {
     				inst.remove_prop(missile_prop);
     				
-    				/* Stun everyone in the dungeon */
-    				foreach(c in inst.all_cids()) {
-    					if(c != boss_cid) {
-	    					if(inst.set_target(target_cid, c)) {
-	    						inst.creature_use(target_cid, _AB("Nuclear Stun"));
-	    					}
-	    				}
-    				}
-    				
-    				/* The boss gets special treatment */
-    				inst.set_target(cid, boss_cid);
-    				
-    				/* Send the boss back home when his stun ends */
-    				if(phase == 1) {
-    					inst.creature_use(boss_cid, _AB("Nuclear Sickness"));
+    				/* Stun/Damage everyone in the area of effect */
+	    			if(!inst.creature_use(target_cid, _AB("Nuclear Fallout"))) {
+	    				inst.info("STUN FAILED :(");
+	    			}
+	    			
+		    		/* The boss gets special treatment. Delay slightly to let to player attack work first */
+	    			inst.queue(function() {
+	    				inst.set_target(cid, boss_cid);
+	    				
+	    				/* Send the boss back home when his stun ends */
+	    				if(phase == 1) {
+	    					inst.creature_use(target_cid, _AB("Nuclear Sickness"));
+		    				inst.queue(function() {
+								inst.walk_then(boss_cid, boss_home, CREATURE_RUN_SPEED * 2, 00, function() {
+									inst.creature_chat(boss_cid, "s/", "Hahaha I'm still too strong for you!");
+									inst.rotate_creature(boss_cid, 70);
+								});
+							}, 5500);
+						}
+						else if(phase == 2) {
+	    					inst.creature_use(target_cid, _AB("Nuclear Death"));
+		    				inst.queue(function() {
+								inst.walk_then(boss_cid, center, CREATURE_RUN_SPEED, 00, function() {
+									inst.creature_chat(boss_cid, "s/", "Come on! Face me!");
+									inst.rotate_creature(boss_cid, 70);
+								});
+							}, 5500);
+						}
+	    				
 	    				inst.queue(function() {
-							inst.walk_then(boss_cid, boss_home, CREATURE_RUN_SPEED * 2, 00, function() {
-								inst.creature_chat(boss_cid, "s/", "Hahaha I'm still too strong for you!");
-								inst.rotate_creature(boss_cid, 70);
-							});
-						}, 5500);
-					}
-					else if(phase == 2) {
-    					inst.creature_use(boss_cid, _AB("Nuclear Death"));
-	    				inst.queue(function() {
-							inst.walk_then(boss_cid, center, CREATURE_RUN_SPEED, 00, function() {
-								inst.creature_chat(boss_cid, "s/", "Come on! Face me!");
-								inst.rotate_creature(boss_cid, 70);
-							});
-						}, 5500);
-					}
-    				
-    				inst.queue(function() {
-    					inst.despawn(target_cid);
-    				}, 2000);
+	    					inst.despawn(target_cid);
+	    				}, 2000);
+	    			}, 500);
     				
     			}, 1000);
 				inst.queue(function() {
