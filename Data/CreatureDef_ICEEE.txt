@@ -1438,6 +1438,7 @@ appearance=n4:{ ["sk"]={ ["stripe2"]="5D49BF", ["skin"]="949494", ["wings"]="7D6
 
 [ENTRY]
 ID=7863
+Effects=INVINCIBLE,UNATTACKABLE
 will_regen=0
 might_regen=0
 appearance=p1:{["a"]="Prop-Interact_Sphere",["sz"]="4"}
