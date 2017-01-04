@@ -78,7 +78,7 @@ function on_use(cid, target_cid, target_cdef_id) {
 			
     			inst.set_target(boss_cid, target_cid);
 			
-				local missile_loc= inst.get_location(cid);
+				local missile_loc=  inst.get_location(cid);
 				inst.creature_chat(boss_cid, "s/", "No! Why did you do that! You'll kill us all..");
 				inst.walk_then(boss_cid, Point(missile_loc.x,missile_loc.z), CREATURE_RUN_SPEED * 2, 00, function() {
 					inst.creature_chat(boss_cid, "s/", "The green wire, the red wire, which is it !?!");
@@ -124,7 +124,7 @@ function on_use(cid, target_cid, target_cdef_id) {
 	    			
 		    		/* The boss gets special treatment. Delay slightly to let to player attack work first */
 	    			inst.queue(function() {
-	    				inst.set_target(cid, boss_cid);
+    					inst.set_target(target_cid, boss_cid);
 	    				
 	    				/* Send the boss back home when his stun ends */
 	    				if(phase == 1) {
@@ -149,7 +149,7 @@ function on_use(cid, target_cid, target_cdef_id) {
 	    				inst.queue(function() {
 	    					inst.despawn(target_cid);
 	    				}, 2000);
-	    			}, 500);
+	    			}, 1000);
     				
     			}, 1000);
 				inst.queue(function() {

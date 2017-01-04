@@ -764,7 +764,7 @@ void CreatureInstance :: Instantiate(void)
 	{
 		css.constitution = 1;
 	}
-	css.health = GetMaxHealth(true);
+	css.health = CalcRestrictedHealth(-1, true);
 
 	//int cdef = CreatureDef.GetIndex(CreatureDefID);
 
@@ -2086,6 +2086,19 @@ bool CreatureInstance :: RemoveAbilityBuffWithStat(int statID, float sign)
 	return false;
 }
 
+
+int CreatureInstance :: CalcRestrictedHealth(int health, bool addmod)
+{
+	if(health == -1)
+		 health = GetMaxHealth(addmod);
+	if(css.max_health_pc != 100) {
+		int maxHealth = (int)( ( (float)GetMaxHealth(addmod) / 100.0) * css.max_health_pc );
+		if(health > maxHealth)
+			health = maxHealth;
+	}
+	return health;
+}
+
 int CreatureInstance :: GetMaxHealth(bool addmod)
 {
 	int rarity = Util::ClipInt(css.rarity, 0, MAX_RARITY_INDEX);
@@ -2122,7 +2135,7 @@ void CreatureInstance :: LimitValueOverflows(void)
 		float healthPerCon = HealthConModifier * RarityTypeHealthModifier[rarity];
 		float trimCon = (overflowHealth / healthPerCon) + 1;
 		css.constitution -= (int)trimCon;
-		int newHP = GetMaxHealth(true);
+		int newHP = CalcRestrictedHealth(-1, true);
 		css.health = newHP;
 		g_Log.AddMessageFormat("[WARNING] Constitution overflow! OldHP:%d, ConReduct:%d, NewHP:%d", max, (int)trimCon, newHP);
 	}
@@ -2156,7 +2169,7 @@ void CreatureInstance :: RunHealTick(void)
 	int health = css.health + (int)regen;
 	if(health > maxhealth)
 		health = maxhealth;
-	css.health = health;
+	css.health = CalcRestrictedHealth(health, true);
 	int size = PrepExt_SendHealth(GSendBuf, CreatureID, css.health);
 	actInst->LSendToLocalSimulator(GSendBuf, size, CurrentX, CurrentZ);
 }
@@ -2171,7 +2184,7 @@ void CreatureInstance :: Heal(int amount)
 	int chealth = css.health;
 	if(health > maxhealth)
 		health = maxhealth;
-	css.health = health;
+	css.health = CalcRestrictedHealth(health, true);
 	int size = PrepExt_SendHealth(GSendBuf, CreatureID, css.health);
 	//actInst->LSendToAllSimulator(GSendBuf, size, -1);
 	actInst->LSendToLocalSimulator(GSendBuf, size, CurrentX, CurrentZ);
@@ -2607,7 +2620,7 @@ void CreatureInstance :: Resurrect(float healthratio, float luckratio, int abili
 	if(health < 1)
 		health = 1;
 
-	css.health = health;
+	css.health = CalcRestrictedHealth(health, true);
 
 	//_ClearStatusFlag(StatusEffects::DEAD, true);
 	_RemoveStatusList(StatusEffects::DEAD);
@@ -2670,7 +2683,7 @@ void CreatureInstance :: ApplyRawDamage(int amount)
 	if(health < 0)
 		health = 0;
 
-	css.health = health;
+	css.health = CalcRestrictedHealth(health, true);
 
 	//According to a comment in the client code, if the client health is set to zero before
 	//it has been flagged as dead (StatusEffects::DEAD) then there can be a 5 second delay
@@ -4700,7 +4713,7 @@ void CreatureInstance :: ProcessRegen(void)
 	}
 	else if(health > maxhealth)
 	{
-		css.health = maxhealth;
+		css.health = CalcRestrictedHealth(maxhealth, true);
 		int wpos = 0;
 		wpos = PrepExt_SendHealth(GSendBuf, CreatureID, css.health);
 		//actInst->LSendToAllSimulator(GSendBuf, wpos, -1);
@@ -5730,7 +5743,7 @@ void CreatureInstance :: CheckLeashMovement(void)
 			UnHate();
 			RemoveAttachedHateProfile();
 			SetServerFlag(ServerFlags::LeashRecall, true);
-			css.health = GetMaxHealth(true);
+			css.health = CalcRestrictedHealth(-1, true);
 			int size = PrepExt_SendHealth(GSendBuf, this->CreatureID, css.health);
 			actInst->LSendToLocalSimulator(GSendBuf, size, CurrentX, CurrentZ);
 		}
@@ -7558,7 +7571,7 @@ void CreatureInstance :: SetLevel(int newLevel)
 	SendUpdatedBuffs();
 
 	//Since proper stats are filled in again, proceed.
-	int health = GetMaxHealth(true);
+	int health = CalcRestrictedHealth(-1, true);
 	if(css.health > health)
 		css.health = health;
 
@@ -7997,7 +8010,7 @@ void CreatureInstance :: OnEquipmentChange(float oldHealthRatio)
 	//Also update heroism since the bonus must reflect a percentage of health.
 	int newMax = GetMaxHealth(true);
 	int newHealth = (int)((float)newMax * oldHealthRatio);
-	css.health = Util::ClipInt(newHealth, 0, newMax); 
+	css.health = CalcRestrictedHealth(Util::ClipInt(newHealth, 0, newMax), true);
 	SendStatUpdate(STAT::HEALTH);
 	OnHeroismChange();
 }
@@ -8094,7 +8107,7 @@ void CreatureInstance :: PerformLevelScale(const InstanceScaleProfile *scaleProf
 	}
 
 	//Adjust health and clamp limits in case they're too high.
-	css.health = GetMaxHealth(true);
+	css.health = CalcRestrictedHealth(-1, true);
 	LimitValueOverflows();
 	
 }

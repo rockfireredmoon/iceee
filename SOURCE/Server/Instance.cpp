@@ -1887,7 +1887,7 @@ CreatureInstance* ActiveInstance :: SpawnCreate(CreatureInstance * sourceActor, 
 	newItem.CurrentZ = sourceActor->CurrentZ;
 	newItem.Faction = FACTION_PLAYERHOSTILE;
 	newItem.BuildZoneString(mInstanceID, mZone, 0);
-	newItem.css.health = newItem.GetMaxHealth(false);
+	newItem.css.health = newItem.CalcRestrictedHealth(-1, false);
 	newItem.css.aggro_players = 1;
 	newItem.tetherNodeX = newItem.CurrentX;
 	newItem.tetherNodeZ = newItem.CurrentZ;
@@ -1928,7 +1928,7 @@ CreatureInstance* ActiveInstance :: SpawnGeneric(int CDefID, int x, int y, int z
 	newItem.Rotation = facing;
 	newItem.Faction = FACTION_PLAYERHOSTILE;
 	newItem.BuildZoneString(mInstanceID, mZone, 0);
-	newItem.css.health = newItem.GetMaxHealth(false);
+	newItem.css.health = newItem.CalcRestrictedHealth(-1, false);
 	newItem.tetherNodeX = newItem.CurrentX;
 	newItem.tetherNodeZ = newItem.CurrentZ;
 
@@ -2049,7 +2049,7 @@ CreatureInstance* ActiveInstance :: SpawnAtProp(int CDefID, int PropID, int dura
 	newItem.CurrentY = y + elevationOffset;
 	newItem.CurrentZ = z;
 	newItem.BuildZoneString(mInstanceID, mZone, 0);
-	newItem.css.health = newItem.GetMaxHealth(false);
+	newItem.css.health = newItem.CalcRestrictedHealth(-1, false);
 	newItem.css.aggro_players = 1;
 	newItem.SetServerFlag(ServerFlags::IsNPC, true);
 	newItem.SetServerFlag(ServerFlags::LocalActive, true);

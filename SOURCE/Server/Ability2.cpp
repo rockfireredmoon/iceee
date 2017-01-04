@@ -1208,6 +1208,7 @@ void AbilityManager2 :: InitFunctionTables(void)
 	InsertFunction("WalkInShadows", &AbilityCalculator::WalkInShadows);
 	InsertFunction("AddWDesc", &AbilityCalculator::AddWDesc);
 	InsertFunction("HealthSacrifice", &AbilityCalculator::HealthSacrifice);
+	InsertFunction("HealthRestrict", &AbilityCalculator::HealthRestrict);
 	InsertFunction("DoNothing", &AbilityCalculator::DoNothing);
 	InsertFunction("Reagent", &AbilityCalculator::Reagent);
 
@@ -3177,6 +3178,21 @@ int AbilityCalculator :: AddWDesc(ARGUMENT_LIST args)
 //	int iterationTimeSec = static_cast<int>(args.GetEvaluation(1, &g_AbilityManager));
 //	int durationTimeSec = static_cast<int>(args.GetEvaluation(2, &g_AbilityManager));
 //	const char *descText = args.GetString(3);
+	return ABILITY_SUCCESS;
+}
+
+//Action.  Set the targets max health.
+int AbilityCalculator :: HealthRestrict(ARGUMENT_LIST args)
+{
+	float amount = args.GetEvaluation(0, &g_AbilityManager);
+	int timeSec = static_cast<int>(args.GetEvaluation(1, &g_AbilityManager));
+	int buffType = ResolveBuffCategoryID(mAbilityEntry->GetRowAsCString(ABROW::BUFF_CATEGORY));
+	float max = ciTarget->GetMaxHealth(true);
+	ciTarget->Add(mAbilityEntry->mTier, buffType, mAbilityEntry->mAbilityID, mAbilityEntry->mAbilityGroupID, STAT::MAX_HEALTH_PC, -(100-amount), -(100-amount), timeSec);
+	float maxH = max * ( amount / 100.0 );
+	if(ciTarget->css.health > maxH) {
+		ciTarget->Harm(ciTarget->css.health - maxH);
+	}
 	return ABILITY_SUCCESS;
 }
 

@@ -553,6 +553,7 @@ public:
 	void SendAutoAttack(int abilityID, int targetID);
 
 	//Utility functions
+	int CalcRestrictedHealth(int health, bool addmod);
 	int GetMaxHealth(bool addmod);
 	void LimitValueOverflows(void);
 	float GetHealthRatio(void);
@@ -663,6 +664,7 @@ public:
 	bool Reagent(int itemID, int amount);
 	int Add(unsigned char tier, unsigned char buffCategory, int abID, int abgID, int statID, float calcAmount, float descAmount, float durationSec);
 	void Heal(int amount);
+	void RestrictHealth();
 	bool hasOffHandWeapon(void);
 	bool hasMeleeWeapon(void);
 	bool hasShield(void);

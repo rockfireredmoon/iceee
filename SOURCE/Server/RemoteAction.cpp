@@ -48,7 +48,7 @@ int RunRemoteAction(ReportBuffer &report, MULTISTRING &header, MULTISTRING &para
 	if(g_Config.RemotePasswordMatch(auth) == false)
 	{
 		g_Log.AddMessageFormat("[ERROR] Invalid remote authentication string.");
-		//g_Log.AddMessageFormat("Has:[%s], Need:[%s]", auth, g_Config.RemoteAuthenticationPassword.c_str());
+		g_Log.AddMessageFormat("Has:[%s], Need:[%s]", auth, g_Config.RemoteAuthenticationPassword.c_str());
 		return REMOTE_AUTHFAILED;
 	}
 

@@ -199,6 +199,8 @@ StatDefinition StatList[] =
 	{STAT::HEROISM_GAIN_RATE           , StatType::SHORT,    "short",  "heroism_gain_rate",     "Heroism Gain Rate",  NULL, 0, msizeof(CharacterStatSet, heroism_gain_rate), offsetof(CharacterStatSet, heroism_gain_rate), SUT_All },
 	{STAT::QUEST_EXP_GAIN_RATE         , StatType::SHORT,    "short",  "quest_exp_gain_rate",   "Quest Experience Gain Rate",  NULL, 0, msizeof(CharacterStatSet, quest_exp_gain_rate), offsetof(CharacterStatSet, quest_exp_gain_rate), SUT_All },
 	{STAT::DROP_GAIN_RATE              , StatType::SHORT,    "short",  "drop_gain_rate",        "Treasure Gain Rate",  NULL, 0, msizeof(CharacterStatSet, drop_gain_rate), offsetof(CharacterStatSet, drop_gain_rate), SUT_All },
+	{STAT::TAGS 					   , StatType::STRING,   "string", "tags",        			"Tags",  NULL, 0, msizeof(CharacterStatSet, tags), offsetof(CharacterStatSet, tags), SUT_All },
+	{STAT::MAX_HEALTH_PC	           , StatType::SHORT,    "short",  "max_health_pc",        	"Maximum Health %",  NULL, 0, msizeof(CharacterStatSet, max_health_pc), offsetof(CharacterStatSet, max_health_pc), SUT_All }
 
 };
 const int MaxStatList = sizeof(StatList) / sizeof(StatList[0]);
@@ -396,6 +398,7 @@ CharacterStatSet :: CharacterStatSet()
 	credit_drops = 0;
 	heroism_gain_rate = 0;
 	drop_gain_rate = 0;
+	max_health_pc = 100;
 	quest_exp_gain_rate = 0;
 	offhand_weapon_damage = 0;
 	magic_attack_speed = 0;
@@ -539,6 +542,9 @@ void CharacterStatSet :: Clear(void)
 		case StatType::STRING:  ((std::string*)data)->clear(); break;
 		}
 	}
+
+	// TODO Why????
+	max_health_pc = 100;
 }
 
 void CharacterStatSet :: SetAppearance(const char *data)

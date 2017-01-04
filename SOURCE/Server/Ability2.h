@@ -662,6 +662,7 @@ public:
 	int Invisible(ARGUMENT_LIST args);
 	int WalkInShadows(ARGUMENT_LIST args);
 	int AddWDesc(ARGUMENT_LIST args);
+	int HealthRestrict(ARGUMENT_LIST args);
 	int HealthSacrifice(ARGUMENT_LIST args);
 	int DoNothing(ARGUMENT_LIST args);
 	int Reagent(ARGUMENT_LIST args);

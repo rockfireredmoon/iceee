@@ -180,6 +180,8 @@ struct CharacterStatSet
 	short heroism_gain_rate;
 	short quest_exp_gain_rate;
 	short drop_gain_rate;
+	std::string tags;
+	short max_health_pc;
 
 	CharacterStatSet();
 	void CopyFrom(CharacterStatSet *source);
@@ -410,6 +412,8 @@ namespace STAT
 	HEROISM_GAIN_RATE        = 161,
 	QUEST_EXP_GAIN_RATE      = 162,
 	DROP_GAIN_RATE      	 = 163,
+	TAGS			      	 = 164,
+	MAX_HEALTH_PC      	 	 = 165,
 	};
 }
 
@@ -577,8 +581,8 @@ extern const int MAX_LEVEL;
 extern short LevelBaseStats[71][3];
 extern short ProfBaseStats[6][5];
 
-const int NumStats = 129;
-extern StatDefinition StatList[129];
+const int NumStats = 131;
+extern StatDefinition StatList[131];
 
 int GetStatIndex(short StatID);
 int GetStatIndexByName(const char *name);
