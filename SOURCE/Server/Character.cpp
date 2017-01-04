@@ -714,6 +714,8 @@ void CharacterData :: OnFinishedLoading(void)
 	cdef.css.mod_luck = 0.0F;
 	cdef.css.bonus_health = 0;
 	cdef.css.damage_shield = 0;
+//	cdef.css.max_health_pc = 100;
+//	cdef.css.health_regen = 1;
 
 	UpdateBaseStats(NULL, true);
 

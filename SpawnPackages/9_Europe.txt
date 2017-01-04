@@ -1075,21 +1075,21 @@ Spawn=1135,100  ;Life-Blighter (41) at 5
 
 [ENTRY]
 Name=10_bfg_rottedTimberfiends_38_39
+Spawn=921,50 ;Rotted Timberfiend (38) at 0
+Spawn=922,50 ;Rotted Timberfiend (39) at 0
 spawnDelay=300
-Spawn=921,50  ;Rotted Timberfiend (38) at 0
-Spawn=922,50  ;Rotted Timberfiend (39) at 0
 
 [ENTRY]
 Name=10_bfg_rootrotShroomies_38_39
+Spawn=924,50 ;Rootrot Shroomie (38) at 0
+Spawn=925,50 ;Rootrot Shroomie (39) at 0
 spawnDelay=300
-Spawn=924,50  ;Rootrot Shroomie (38) at 0
-Spawn=925,50  ;Rootrot Shroomie (39) at 0
 wanderRadius=40
 
 [ENTRY]
 Name=10_bfg_rottedRootsoaker_d_39
+Spawn=1138,100 ;Rotted Rootsoaker (39) at 0
 spawnDelay=300
-Spawn=1138,100  ;Rotted Rootsoaker (39) at 0
 
 [ENTRY]
 Name=10_bfg_arvil_k_40
@@ -1109,7 +1109,7 @@ Spawn=926,100  ;Rootrot Shroomie (40) at 0
 ; Only spawns at the SpawnPoint at: 44892 117.054 66539 (ID:151026364)
 [ENTRY]
 Name=10_bfg_rottedJuggernaut_40
-Spawn=1146,100  ; Rotted Juggernaut (40)
+Spawn=1146,100 ; Rotted Juggernaut (40)
 
 ; TODO: not sure about Pyreguard
 [ENTRY]

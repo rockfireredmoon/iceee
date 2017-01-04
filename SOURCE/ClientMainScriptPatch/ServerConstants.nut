@@ -1383,7 +1383,7 @@ this.Stat <- {
 	},
 	HEALTH_REGEN = 155,
 	[155] = {
-		type = "short",
+		type = "float",
 		name = "health_regen",
 		prettyName = "Health Regen"
 	},

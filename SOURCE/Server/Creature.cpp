@@ -2158,6 +2158,7 @@ void CreatureInstance :: RunHealTick(void)
 {
 	double regen = (css.spirit * RegenSpiritMod) + (css.constitution * RegenConMod) + (css.level * RegenLevelMod);
 	regen += css.mod_health_regen;
+	regen *= css.health_regen;
 	if(HasStatus(StatusEffects::IN_COMBAT))
 	{
 		regen *= RegenCombatModifier;

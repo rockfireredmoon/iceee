@@ -169,7 +169,8 @@ struct CharacterStatSet
 
 	//Were in 8.8 but not 06
 	float mod_luck;
-	short health_regen;
+	// Changed to float in ICEEE
+	float health_regen;
 	short bleeding;
 	int damage_shield;
 	short hide_nameboard;

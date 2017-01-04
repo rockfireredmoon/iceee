@@ -186,7 +186,7 @@ StatDefinition StatList[] =
 	{STAT::AGGRO_PLAYERS               , StatType::SHORT,    "short",  "aggro_players",     "Aggro Players",     NULL, 0, msizeof(CharacterStatSet, aggro_players), offsetof(CharacterStatSet, aggro_players), SUT_NonPlayer },
 
 	{STAT::MOD_LUCK                    , StatType::FLOAT,    "float",  "mod_luck",          "Mod Luck",          NULL, 0, msizeof(CharacterStatSet, mod_luck), offsetof(CharacterStatSet, mod_luck), SUT_None },
-	{STAT::HEALTH_REGEN                , StatType::SHORT,    "short",  "health_regen",      "Health Regen",      NULL, 0, msizeof(CharacterStatSet, health_regen), offsetof(CharacterStatSet, health_regen), SUT_None },
+	{STAT::HEALTH_REGEN                , StatType::FLOAT,    "float",  "health_regen",      "Health Regen",      NULL, 0, msizeof(CharacterStatSet, health_regen), offsetof(CharacterStatSet, health_regen), SUT_All },
 	{STAT::BLEEDING                    , StatType::SHORT,    "short",  "bleeding",          "Bleeding",          NULL, 0, msizeof(CharacterStatSet, bleeding), offsetof(CharacterStatSet, bleeding), SUT_None },
 	{STAT::DAMAGE_SHIELD               , StatType::INTEGER,    "int",    "damage_shield",     "Damage Shield",     NULL, 0, msizeof(CharacterStatSet, damage_shield), offsetof(CharacterStatSet, damage_shield), SUT_None },
 	{STAT::HIDE_NAMEBOARD              , StatType::SHORT,    "short",  "hide_nameboard",    "Hide Nameboard",    NULL, 0, msizeof(CharacterStatSet, hide_nameboard), offsetof(CharacterStatSet, hide_nameboard), SUT_None },
