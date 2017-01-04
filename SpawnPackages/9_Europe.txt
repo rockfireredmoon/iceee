@@ -1557,6 +1557,7 @@ Spawn=1333,100  ;Bloodmending Coffin (1)
 
 [ENTRY]
 Name=12_vmp_bloodchanterAlchemist_46_47
+shares=200
 spawnDelay=300
 Spawn=1334,100  ;Bloodchanter Alchemist (46)
 Spawn=1335,100  ;Bloodchanter Alchemist (47)
