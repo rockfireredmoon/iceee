@@ -30265,6 +30265,7 @@ profession=1
 creature_category=Mortal
 rarity=3
 ai_package=example
+appearance=n4:{["sk"]={["bone"]="F8EADB",["skin"]="C07574",["cloth"]="FFCB72",["eye"]="8D0F0B",["trim"]="FFE8C1",["armor"]="091836",["leather"]="7E3F18"},["c"]="Horde-Warpig",["sz"]="1"}
 
 [ENTRY]
 ID=1298
@@ -30330,6 +30331,7 @@ profession=1
 creature_category=Mortal
 rarity=3
 ai_package=example
+appearance=c2:{["a"]=[{["type"]="Item-Staff-High1",["node"]="back_sheathe",["colors"]=["543D0F","93133D","138AAC","17B5BF"]}],["c"]={["boots"]={["type"]="Armor-Medium-Epic2",["colors"]=[]},["chest"]={["type"]="Armor-Medium-Epic2",["colors"]=[]},["arms"]={["type"]="Armor-Medium-Epic2",["colors"]=[]},["leggings"]={["type"]="Armor-Medium-Epic2",["colors"]=[]},["collar"]={["type"]="Armor-Medium-Epic2",["colors"]=[]},["belt"]={["type"]="Armor-Medium-Epic2",["colors"]=[]},["gloves"]={["type"]="Armor-Medium-Epic2",["colors"]=[]}},["b"]="m",["sk"]={["base"]="BF622B",["eye"]="FFFFFF",["eye_white"]="FFFFFF",["highlights"]="3F0000"},["sz"]="1",["h"]=0,["g"]="m",["r"]="u"}
 
 [ENTRY]
 ID=1301
@@ -30482,6 +30484,7 @@ profession=1
 creature_category=Mortal
 rarity=3
 ai_package=example
+appearance=c2:{["a"]=[{["type"]="Armor-Warrior-Redeemer_Ranger-Left_Pauldron",["node"]="left_shoulder",["colors"]=["FFFFFF","000000","0054A6"]},{["type"]="Armor-Warrior-Redeemer_Ranger-Right_Pauldron",["node"]="right_shoulder"},{["type"]="Item-1hAxe-Basic7",["node"]="right_hand"},{["type"]="Item-1hAxe-Basic3",["node"]="left_hand"}],["c"]={["boots"]={["type"]="Armor-Warrior-Redeemer_Ranger",["colors"]=[]},["chest"]={["type"]="Armor-Warrior-Redeemer_Ranger",["colors"]=[]},["arms"]={["type"]="Armor-Warrior-Redeemer_Ranger",["colors"]=[]},["leggings"]={["type"]="Armor-Warrior-Redeemer_Ranger",["colors"]=[]},["collar"]={["type"]="Armor-Warrior-Redeemer_Captain",["colors"]=[]},["belt"]={["type"]="Armor-Warrior-Redeemer_Ranger",["colors"]=[]},["gloves"]={["type"]="Armor-Warrior-Redeemer_Ranger",["colors"]=[]}},["b"]="m",["sk"]={["hair"]="7D6994",["inner_ear"]="B08957",["snout"]="9F7B4F",["base"]="6A5656",["horns"]="80400F",["eye"]="73FFFF",["nails"]="D40000",["nose"]="9C4F14",["eye_white"]="EBAC83"},["sz"]="1",["h"]=2,["g"]="f",["r"]="t"}
 
 [ENTRY]
 ID=1308
@@ -30670,6 +30673,7 @@ profession=1
 creature_category=Mortal
 rarity=3
 ai_package=example
+appearance=c2:{["a"]=[{["type"]="Armor-Warrior-Redeemer_Captain-Left_Pauldron",["node"]="left_shoulder",["colors"]=["E9C4A2","000000","7F6A7F"]},{["type"]="Armor-Warrior-Redeemer_Captain-Right_Pauldron",["node"]="right_shoulder"},{["type"]="Item-2hMace-Basic4",["node"]="right_hand"}],["c"]={["boots"]={["type"]="Armor-Warrior-Redeemer_Captain",["colors"]=[]},["chest"]={["type"]="Armor-Warrior-Redeemer_Captain",["colors"]=[]},["arms"]={["type"]="Armor-Warrior-Redeemer_Captain",["colors"]=[]},["leggings"]={["type"]="Armor-Warrior-Redeemer_Captain",["colors"]=[]},["collar"]={["type"]="Armor-Warrior-Redeemer_Captain",["colors"]=[]},["belt"]={["type"]="Armor-Warrior-Redeemer_Captain",["colors"]=[]},["gloves"]={["type"]="Armor-Warrior-Redeemer_Captain",["colors"]=[]}},["b"]="n",["sk"]={["hands_feet"]="BFAE9C",["goatee"]="A18065",["eye_white"]="DCDCDC",["snout"]="E5DDD0",["horns"]="90735C",["face_highlight"]="C9B6A4",["eye"]="809497",["hoves"]="89745C",["eye_lid"]="D4CDC2",["base"]="A78A6F"},["sz"]="1",["h"]=0,["g"]="m",["r"]="c"}
 
 [ENTRY]
 ID=1316
@@ -30747,6 +30751,7 @@ profession=1
 creature_category=Mortal
 rarity=3
 ai_package=example
+appearance=c2:{["a"]=[{["type"]="Item-Shield-Basic4",["node"]="left_hand",["colors"]=["FFFFFF","000000","0054A6"]},{["type"]="Item-1hSword-Basic5",["node"]="right_hand"}],["c"]={["boots"]={["type"]="Armor-Warrior-Redeemer_Captain",["colors"]=[]},["chest"]={["type"]="Armor-Warrior-Redeemer_Captain",["colors"]=[]},["arms"]={["type"]="Armor-Warrior-Redeemer_Captain",["colors"]=[]},["leggings"]={["type"]="Armor-Warrior-Redeemer_Captain",["colors"]=[]},["collar"]={["type"]="Armor-Warrior-Redeemer_Captain",["colors"]=[]},["belt"]={["type"]="Armor-Warrior-Redeemer_Captain",["colors"]=[]},["gloves"]={["type"]="Armor-Warrior-Redeemer_Captain",["colors"]=[]}},["b"]="n",["sk"]={["feet"]="7F7F7F",["head_feathers"]="34353F",["beak"]="FFFED4",["eye_white"]="E9BFBF",["crest"]="111115",["shoulders"]="2A2A2A",["tail"]="3F3F3F",["base"]="2A2A2A",["eye_lid"]="343F3F",["face_highlight"]="000000",["eye"]="4C57FF",["chest"]="DACFB9",["legs_hands"]="23232A",["diamonds"]="4C57FF"},["sz"]="1",["h"]=1,["g"]="f",["r"]="v"}e
 
 [ENTRY]
 defHints=48
@@ -30854,6 +30859,7 @@ profession=1
 creature_category=Mortal
 rarity=3
 ai_package=example
+appearance=n4:{["a"]=[{["type"]="Armor-Heavy-Epic2-Right_Pauldron",["node"]="right_shoulder"},{["type"]="Armor-Heavy-Epic2-Left_Pauldron",["node"]="left_shoulder"},{["type"]="Item-2hAxe-High1",["node"]="right_hand"}],["c"]="Horde-Warpig",["sk"]={["bone"]="F8EADB",["skin"]="E99494",["cloth"]="FFCB72",["eye"]="913901",["trim"]="551C04",["armor"]="091836",["leather"]="7E3F18"},["sz"]="1"}
 
 [ENTRY]
 ID=1326
@@ -30917,6 +30923,7 @@ profession=1
 creature_category=Mortal
 rarity=3
 ai_package=example
+appearance=n4:{["a"]=[{["type"]="Item-Shovel",["node"]="right_hand",["colors"]=["543D0F","93133D","138AAC","17B5BF"]}],["c"]="Horde-Warpig",["sk"]={["bone"]="202DFF",["skin"]="E6B695",["cloth"]="AE6AFF",["eye"]="000994",["trim"]="D88EFF",["armor"]="000000",["leather"]="000000"},["sz"]="1"}
 
 [ENTRY]
 ID=1329
@@ -31397,6 +31404,7 @@ sub_name=Squisher Clan
 profession=2
 creature_category=Mortal
 ai_package=example
+appearance=n4:{["a"]=[{["type"]="Armor-Medium-High3-Left_Pauldron",["node"]="left_shoulder"},{["type"]="Armor-Medium-High3-Right_Pauldron",["node"]="right_shoulder"},{["type"]="Armor-Cloth-Low7-Helmet",["node"]="helmet"},{["type"]="Item-1hAxe-Basic3",["node"]="right_hand"}],["c"]="Horde-Warpig2",["sk"]={["cloth2"]="817263",["skin"]="AA6C6C",["cloth1"]="943208",["eye"]="8D0F0B",["nails"]="B5815D",["trim"]="954806"},["sz"]="1"}
 
 [ENTRY]
 ID=1353
