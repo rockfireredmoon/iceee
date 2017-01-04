@@ -133,3 +133,8 @@ Name=!possible tiles for  isntances
 Comment=there is  a serise of tiles ehre that might make good instance maps
 Position=97246.0,57.0,33395.0
 
+[ENTRY]
+Name=Valkals Bloodkeep
+Comment=[Comment here]
+Position=79278.0,1300.0,52845.0
+

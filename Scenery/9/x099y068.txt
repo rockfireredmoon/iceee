@@ -71,6 +71,14 @@ Orient=0,0,0,1
 Scale=1,1,1
 
 [ENTRY]
+ID=1150572
+Asset=CL-Forest#CL-Dead-Forest2
+Name=
+Pos=74950.9,881.959,51059.4
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
 ID=151028230
 Asset=CL-Burnt-Pine4#CL-Burnt-Pine4
 Name=Untitled

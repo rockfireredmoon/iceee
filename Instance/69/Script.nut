@@ -8,7 +8,7 @@
 
 // Creature Definition IDs
 
-const CDEF_SKRILL_QUEEN = 7760;
+const CDEF_SKRILL_QUEEN = 1412;
 const CDEF_HATCHLING = 7862;
 
 // Prop IDs
@@ -50,25 +50,25 @@ function find_queen() {
  */
 function activate_minions(cid_minions) {
 	foreach(cid_minion in cid_minions) {
-        /* Find all players, sidekicks and enemies of the minion within the range */
-        local targets = inst.get_nearby_creature(10000, cid_minion, TS_NONE, TS_ENEMY, TS_NONE);
-        local closestCID = -1;
-        local closestDistance = 9999999;
+		/* Find all players, sidekicks and enemies of the minion within the range */
+		local targets = inst.get_nearby_creature(10000, cid_minion, TS_NONE, TS_ENEMY, TS_NONE);
+		local closestCID = -1;
+		local closestDistance = 9999999;
 
-        /* Find the closest enemy */
-        foreach(t in targets) {
-            local dist = inst.get_creature_distance(t, cid_minion);
-            if(dist > -1 && dist < closestDistance) {
-                closestDistance = dist;
-                closestCID = t;
-            }
-        }
+		/* Find the closest enemy */
+		foreach(t in targets) {
+			local dist = inst.get_creature_distance(t, cid_minion);
+			if(dist > -1 && dist < closestDistance) {
+				closestDistance = dist;
+				closestCID = t;
+			}
+		}
 
-        /* Target and attack the found enemy */
-        if(closestCID != -1) {
-		    inst.set_target(cid_minion, closestCID);
-		    inst.creature_use(cid_minion, _AB("melee"));
-        }
+		/* Target and attack the found enemy */
+		if(closestCID != -1) {
+			inst.set_target(cid_minion, closestCID);
+			inst.creature_use(cid_minion, _AB("melee"));
+		}
 	}
 }
 
@@ -111,59 +111,59 @@ function queen_health() {
 		 return;
 	}
 
-    if(health < 100) {
-        if(health <= 10 && stage < 12) {
-            stage = 12;
+	if(health < 100) {
+		if(health <= 10 && stage < 12) {
+			stage = 12;
 			spawn_minions();
 			spawn_minions();
-        }
-        else if(health <= 15 && stage < 11) {
-            stage = 11;
+		}
+		else if(health <= 15 && stage < 11) {
+			stage = 11;
 			inst.ai(cid_skrill_queen, "try_swarm");
-        }
-        else if(health <= 25 && stage < 10) {
-            stage = 10;
+		}
+		else if(health <= 25 && stage < 10) {
+			stage = 10;
 			spawn_minions();
 			spawn_minions();
-        }
-        else if(health <= 30 && stage < 9) {
-            stage = 9;
+		}
+		else if(health <= 30 && stage < 9) {
+			stage = 9;
 			inst.ai(cid_skrill_queen, "try_swarm");
-        }
-        else if(health <= 40 && stage < 8) {
-            stage = 8;
+		}
+		else if(health <= 40 && stage < 8) {
+			stage = 8;
 			spawn_minions();
 			spawn_minions();
-        }
-        else if(health <= 45 && stage < 7) {
-            stage = 7;
+		}
+		else if(health <= 45 && stage < 7) {
+			stage = 7;
 			inst.ai(cid_skrill_queen, "try_swarm");
-        }
-        else if(health <= 55 && stage < 6) {
-            stage = 6;
+		}
+		else if(health <= 55 && stage < 6) {
+			stage = 6;
 			spawn_minions();
-        }
-        else if(health <= 60 && stage < 5) {
-            stage = 5;
+		}
+		else if(health <= 60 && stage < 5) {
+			stage = 5;
 			inst.ai(cid_skrill_queen, "try_swarm");
-        }
-        else if(health <= 70 && stage < 4) {
-            stage = 4;
+		}
+		else if(health <= 70 && stage < 4) {
+			stage = 4;
 			spawn_minions();
-        }
-        else if(health <= 75 && stage < 3) {
-            stage = 3;
+		}
+		else if(health <= 75 && stage < 3) {
+			stage = 3;
 			inst.ai(cid_skrill_queen, "try_swarm");
-        }
-        else if(health <= 85 && stage < 2) {
-            stage = 2;
+		}
+		else if(health <= 85 && stage < 2) {
+			stage = 2;
 			spawn_minions();
-        }
-        else if(health <= 90 && stage < 1) {
-            stage = 1;
+		}
+		else if(health <= 90 && stage < 1) {
+			stage = 1;
 			inst.ai(cid_skrill_queen, "try_swarm");
-        }
-    }
+		}
+	}
 
 	inst.queue(queen_health, 1000);
 }

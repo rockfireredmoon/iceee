@@ -745,7 +745,7 @@ Name=Untitled
 Pos=4301.45,513.725,2789.45
 Orient=0,0.999991,0,-0.00420359
 Scale=1,1,1
-spawnPackage=#7757
+spawnPackage=#1385
 
 [ENTRY]
 ID=1127184
@@ -791,7 +791,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1133632
 Asset=Par-Green_Blast
-Name=
+Name=Untitled
 Pos=4068.25,480,2769.72
 Orient=0,0,0,1
 Scale=1,1,1
@@ -799,7 +799,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1133633
 Asset=Par-Hadrian_Glow-Emitter
-Name=
+Name=Untitled
 Pos=4070.72,519.378,2780.79
 Orient=0,0,0,1
 Scale=1,1,1

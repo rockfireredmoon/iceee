@@ -1722,7 +1722,7 @@ Name=Untitled
 Pos=3060.89,721.057,2429.45
 Orient=0,-0.651834,0,0.758362
 Scale=1,1,1
-spawnPackage=#7760
+spawnPackage=#1412
 aiModule=skrill_queen
 sequential=1
 

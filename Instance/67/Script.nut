@@ -128,7 +128,9 @@ function on_use(cid, target_cid, target_cdef_id) {
 	    				
 	    				/* Send the boss back home when his stun ends */
 	    				if(phase == 1) {
-	    					inst.creature_use(target_cid, _AB("Nuclear Sickness"));
+                            inst.info("target:  "  + target_cid + " : " + _AB("Nuclear Sickness"));
+	    					if(!inst.creature_use(target_cid, _AB("Nuclear Sickness")))
+                                inst.info("failed to make sick");
 		    				inst.queue(function() {
 								inst.walk_then(boss_cid, boss_home, CREATURE_RUN_SPEED * 2, 00, function() {
 									inst.creature_chat(boss_cid, "s/", "Hahaha I'm still too strong for you!");
