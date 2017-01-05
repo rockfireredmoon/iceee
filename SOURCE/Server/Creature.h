@@ -172,6 +172,7 @@ public:
 	bool operator < (const CreatureDefinition& other) const;
 	bool IsNamedMob(void) const;
 	float GetDropRateMult(void) const;
+	void SaveToStream(FILE *output);
 };
 
 class ActiveInstance;  //Forward declaration is required
@@ -780,6 +781,7 @@ public:
 
 	CREATURE_MAP NPC;
 
+	void SaveCreatureTweak(CreatureDefinition *def);
 	void AddNPCDef(CreatureDefinition &newItem);
 	CreatureDefinition* GetPointerByCDef(int CDefID);
 	CreatureDefinition* GetPointerByName(const char *name);
@@ -790,6 +792,8 @@ public:
 	int GetSpawnList(const char *searchType, const char *searchStr, vector<int> &resultList);
 
 	void Clear(void);                 //Clear all data
+private:
+	const char * GetIndividualFilename(char *buffer, int bufsize, int accountID);
 };
 
 extern CreatureDefManager CreatureDef;

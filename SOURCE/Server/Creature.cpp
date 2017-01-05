@@ -381,6 +381,29 @@ float CreatureDefinition :: GetDropRateMult(void) const
 	return data.GetValueFloat("dropratemult");
 }
 
+void CreatureDefinition :: SaveToStream(FILE *output)
+{
+	fprintf(output, "[ENTRY]\r\n");
+	fprintf(output, "ID=%d\r\n", CreatureDefID);
+	if(DefHints > 0)
+		fprintf(output, "defHints=%d\r\n", DefHints);
+	if(ExtraData.length() > 0)
+		fprintf(output, "ExtraData=%s\r\n", ExtraData.c_str());
+	if(DefaultEffects.size() > 0) {
+		fprintf(output, "Effects=");
+		for(std::vector<int>::iterator it = DefaultEffects.begin(); it != DefaultEffects.end(); it++) {
+			if(it != DefaultEffects.begin())
+				fprintf(output, ",");
+			fprintf(output, "%s", GetStatusNameByID(*it));
+		}
+		fprintf(output, "\r\n");
+	}
+	int a;
+	for(a = 0; a < NumStats; a++)
+		if(isStatZero(a, &css) == false)
+			WriteStatToFile(a, &css, output);
+}
+
 //**************************************************
 //               CreatureInstance
 //**************************************************
@@ -8460,6 +8483,29 @@ int CreatureDefManager :: GetIndex(long CDefID)
 }
 */
 
+void CreatureDefManager :: SaveCreatureTweak(CreatureDefinition *def)
+{
+
+	char buffer[256];
+	GetIndividualFilename(buffer, sizeof(buffer), def->CreatureDefID);
+	FILE *output = fopen(buffer, "wb");
+	if(output == NULL)
+	{
+		g_Log.AddMessageFormat("[ERROR] SaveAccountToStream could not open: %s", buffer);
+		return;
+	}
+	def->SaveToStream(output);
+	fflush(output);
+	fclose(output);
+}
+
+const char * CreatureDefManager :: GetIndividualFilename(char *buffer, int bufsize, int accountID)
+{
+	Util::SafeFormat(buffer, bufsize, "Creatures\\%08d.txt", accountID);
+	Platform::FixPaths(buffer);
+	return buffer;
+}
+
 int CreatureDefManager :: LoadPackages(const char *listFile)
 {
 	FileReader lfr;
@@ -8479,6 +8525,25 @@ int CreatureDefManager :: LoadPackages(const char *listFile)
 		}
 	}
 	lfr.CloseCurrent();
+
+	/* Now load any creatures from the separate files (as written by creature tweak), replacing those we
+	 * have already loaded. The should be periodically moved into the static data files.
+	 */
+	Platform::MakeDirectory("Creatures");
+	Platform_DirectoryReader r;
+	string dir = r.GetDirectory();
+	r.SetDirectory("Creatures");
+	r.ReadFiles();
+	r.SetDirectory(dir.c_str());
+	vector<std::string>::iterator it;
+	for (it = r.fileList.begin(); it != r.fileList.end(); ++it) {
+		std::string p = *it;
+		if (Util::HasEnding(p, ".txt")) {
+			LoadFile(p.c_str());
+		}
+	}
+
+
 	return 0;
 }
 

@@ -127,7 +127,7 @@ function on_use(cid, target_cid, target_cdef_id) {
 	    				if(phase == 1) {
                             inst.info("target:  "  + target_cid + " : " + _AB("Nuclear Sickness"));
 	    					if(!inst.creature_use(target_cid, _AB("Nuclear Sickness")))
-                                inst.info("failed to make sick");
+                                inst.info("failed Nuclear Sickness");
 		    				inst.queue(function() {
 								inst.walk_then(boss_cid, boss_home, CREATURE_RUN_SPEED * 2, 00, function() {
 									inst.creature_chat(boss_cid, "s/", "Hahaha I'm still too strong for you!");
@@ -137,6 +137,10 @@ function on_use(cid, target_cid, target_cdef_id) {
 						}
 						else if(phase == 2) {
 	    					inst.creature_use(target_cid, _AB("Nuclear Death"));
+	    					inst.queue(function() {
+    							inst.set_target(target_cid, boss_cid);
+	    						inst.creature_use(target_cid, _AB("Nuclear Poison"));
+	    					}, 500);
 		    				inst.queue(function() {
 								inst.walk_then(boss_cid, center, CREATURE_RUN_SPEED, 00, function() {
 									inst.creature_chat(boss_cid, "s/", "Come on! Face me!");

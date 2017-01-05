@@ -7020,10 +7020,24 @@ int SimulatorThread :: handle_query_creature_def_edit(void)
 
 	if(pld.CreatureDefID == CDefID)
 	{
+		// Tweak Self
+
 		//Set this so the main thread won't try to auto update
 		//the character data for this simulator.
 		//The message broadcast will take care of it.
 		LastUpdate = g_ServerTime;
+	}
+	else
+	{
+		if(charData != NULL)
+		{
+			// Tweak other
+		}
+		else
+		{
+			// Tweak NPC
+			CreatureDef.SaveCreatureTweak(cDef);
+		}
 	}
 	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
 }
@@ -13563,7 +13577,7 @@ int SimulatorThread :: handle_query_mod_itempreview(void)
 
 int SimulatorThread :: handle_query_mod_restoreappearance(void)
 {
-	//One string per row.
+	//One string per row.f
 	MULTISTRING output;
 	STRINGLIST row;
 	row.push_back(pld.charPtr->cdef.css.appearance);
