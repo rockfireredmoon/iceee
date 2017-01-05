@@ -75,9 +75,6 @@ function on_use(cid, target_cid, target_cdef_id) {
 		
 			/* Make Boss Hawg run towards the missile to try to disarm */
 			if(boss_cid != 0) {
-			
-    			inst.set_target(boss_cid, target_cid);
-			
 				local missile_loc=  inst.get_location(cid);
 				inst.creature_chat(boss_cid, "s/", "No! Why did you do that! You'll kill us all..");
 				inst.walk_then(boss_cid, Point(missile_loc.x,missile_loc.z), CREATURE_RUN_SPEED * 2, 00, function() {

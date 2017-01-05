@@ -674,6 +674,7 @@ public:
 	void AddHate(CreatureInstance *attacker, int amount);
 	void Taunt(CreatureInstance *attacker, int seconds);
 	void Amp(unsigned char tier, unsigned char buffType, int abID, int abgID, int statID, float percent, int time);
+	void Set(unsigned char tier, unsigned char buffType, int abID, int abgID, int statID, float amount, int time);
 	void WalkInShadows(int duration, int counter);
 
 	void GoSanctuary(void);

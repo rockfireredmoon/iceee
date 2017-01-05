@@ -625,6 +625,7 @@ public:
 	int hasWand(ARGUMENT_LIST args);
 
 	int Status(ARGUMENT_LIST args);
+	int Set(ARGUMENT_LIST args);
 	int Amp(ARGUMENT_LIST args);
 	int Add(ARGUMENT_LIST args);
 	int AddDeliveryBox(ARGUMENT_LIST args);

@@ -35,7 +35,7 @@ function on_target_acquired(targetCID) {
 function main() {
 
     /* Always try Spellbreaker when possible */
-    if(ai.get_might() > 3 && !ai.is_on_cooldown("Spellbreaker")) {
+    if(ai.get_might() > 3 && !ai.is_on_cooldown("Spellbreaker") && randmodrng(0, 3) == 2) {
         ai.use_once(347);
     	ai.queue(main, SUCCESS_INTERVAL);
     	return;
@@ -84,7 +84,6 @@ function main() {
         if(ai.get_might() >= 4) {
         	cycle = 0;
         	if(ai.use_once(5278)) {
-    			;
 	    		ai.queue(main, SUCCESS_INTERVAL);
 	    		return
 	    	}

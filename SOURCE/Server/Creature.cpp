@@ -2337,6 +2337,26 @@ void CreatureInstance :: Amp(unsigned char tier, unsigned char buffType, int abI
 	Add(tier, buffType, abID, abgID, statID, amount, percent, time);
 }
 
+void CreatureInstance :: Set(unsigned char tier, unsigned char buffType, int abID, int abgID, int statID, float amount, int time)
+{
+	//Get integer value, run the percent, and forward that amount and everything
+	//else into the Add() function, which handles the actual buff management.
+
+	int statIndex = GetStatIndex(statID);
+	if(statIndex == -1)
+		return;
+
+	float val = GetStatValueByID(statID, &css);
+	val = -val + amount;
+
+	//Round integral types, but not floats.  Float stats like MIGHT_REGEN and WILL_REGEN in particular
+	//explicitly require floating point values to function correctly.
+	if((StatList[statIndex].etype == StatType::SHORT) || (StatList[statIndex].etype == StatType::INTEGER))
+		amount = Util::Round(amount);
+
+	Add(tier, buffType, abID, abgID, statID, amount, val, time);
+}
+
 void CreatureInstance :: WalkInShadows(int duration, int counter)
 {
 	_RemoveStatusList(StatusEffects::WALK_IN_SHADOWS);

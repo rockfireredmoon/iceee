@@ -506,9 +506,9 @@ CharacterStatSet :: CharacterStatSet()
 	dexterity = 0;
 	spawn_table_points = 0;
 	armor_rating = 0;
-
-
+	Clear();
 }
+
 void CharacterStatSet :: CopyFrom(CharacterStatSet *source)
 {
 	if(source == this)
@@ -543,7 +543,12 @@ void CharacterStatSet :: Clear(void)
 		}
 	}
 
-	// TODO Why????
+	// Some have non zero defaults
+	health_regen = 1;
+	size = 1.0F;
+	mod_casting_speed = 1.4013e-045F;
+	will_regen = 1.0F;
+	might_regen = 1.0F;
 	max_health_pc = 100;
 }
 

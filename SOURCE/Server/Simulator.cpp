@@ -13723,6 +13723,12 @@ int SimulatorThread :: handle_command_dtrig(void)
 				g_Log.AddMessageFormat("sflags=%d", ptr->serverFlags);
 				for(size_t i = 0; i <= 62; i++)
 					if(ptr->HasStatus(i)) g_Log.AddMessageFormat("Status:%s", GetStatusNameByID(i));
+
+				char ConvBuf[32];
+				size_t i;
+				for(i = 0; i < NumStats; i++) {
+					g_Log.AddMessageFormat("%s=%s", StatList[i].name, GetStatValueAsString(i, ConvBuf, &ptr->css));
+				}
 			}
 		}
 		break;

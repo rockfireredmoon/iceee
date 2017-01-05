@@ -1156,6 +1156,7 @@ void AbilityManager2 :: InitFunctionTables(void)
 
 	InsertFunction("Status", &AbilityCalculator::Status);
 	InsertFunction("Amp", &AbilityCalculator::Amp);
+	InsertFunction("Set", &AbilityCalculator::Set);
 	InsertFunction("Add", &AbilityCalculator::Add);
 	InsertFunction("AddSlot", &AbilityCalculator::AddSlot);
 	InsertFunction("AddDeliveryBox", &AbilityCalculator::AddDeliveryBox);
@@ -1231,6 +1232,7 @@ void AbilityManager2 :: InitFunctionTables(void)
 	InsertVerifier("Interrupt", ABVerifier());                            //Interrupt()
 
 	InsertVerifier("Add",     ABVerifier(ABVerifier::STATID, ABVerifier::AMOUNT, ABVerifier::TIME));  //Add(statID, amount, time)
+	InsertVerifier("Set",     ABVerifier(ABVerifier::STATID, ABVerifier::AMOUNT, ABVerifier::TIME));  //Set(statID, amount, time)
 	InsertVerifier("Amp",     ABVerifier(ABVerifier::STATID, ABVerifier::AMOUNT, ABVerifier::TIME));  //Amp(statID, amount, time)
 	InsertVerifier("AmpCore", ABVerifier(ABVerifier::AMOUNT, ABVerifier::TIME));    //AmpCore(amount, time)
 	InsertVerifier("Nullify", ABVerifier(ABVerifier::STATID, ABVerifier::AMOUNT));  //Nullify(amount, time)
@@ -2553,6 +2555,21 @@ int AbilityCalculator :: Amp(ARGUMENT_LIST args)
 	int buffType = ResolveBuffCategoryID(mAbilityEntry->GetRowAsCString(ABROW::BUFF_CATEGORY));
 
 	ciTarget->Amp(mAbilityEntry->mTier, buffType, mAbilityEntry->mAbilityID, mAbilityEntry->mAbilityGroupID, StatID, percent, timeSec);
+	return ABILITY_SUCCESS;
+}
+
+int AbilityCalculator :: Set(ARGUMENT_LIST args)
+{
+	int StatID = g_AbilityManager.ResolveStatID(args.GetString(0));
+	if(StatID == -1)
+		return ABILITY_GENERIC;
+
+	float amount = args.GetFloat(1);
+	int timeSec = static_cast<int>(args.GetEvaluation(2, &g_AbilityManager));
+
+	int buffType = ResolveBuffCategoryID(mAbilityEntry->GetRowAsCString(ABROW::BUFF_CATEGORY));
+
+	ciTarget->Set(mAbilityEntry->mTier, buffType, mAbilityEntry->mAbilityID, mAbilityEntry->mAbilityGroupID, StatID, amount, timeSec);
 	return ABILITY_SUCCESS;
 }
 
