@@ -8536,10 +8536,12 @@ int CreatureDefManager :: LoadPackages(const char *listFile)
 	r.ReadFiles();
 	r.SetDirectory(dir.c_str());
 	vector<std::string>::iterator it;
+	char StrBuf[256] = {0};
 	for (it = r.fileList.begin(); it != r.fileList.end(); ++it) {
 		std::string p = *it;
 		if (Util::HasEnding(p, ".txt")) {
-			LoadFile(p.c_str());
+			Util::SafeFormat(StrBuf, sizeof(StrBuf), "Creatures/%s", p.c_str());
+			LoadFile(StrBuf);
 		}
 	}
 
