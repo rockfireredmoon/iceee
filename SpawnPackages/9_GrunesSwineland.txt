@@ -21,3 +21,11 @@ Spawn=3523,100  ;Damain Talamasca (50) [NPC]
 [ENTRY]
 Name=z9_eur_Joan_Darkeye
 Spawn=3524,100  ;Joan Darkeye (50) [NPC]
+
+[ENTRY]
+Name=z9_eur_Hazard_46_47
+Spawn=1391,20
+Spawn=1392,20
+Spawn=1390,20
+Spawn=1393,20
+Spawn=1394,20
