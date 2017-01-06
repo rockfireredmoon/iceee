@@ -74691,3 +74691,32 @@ ai_package=example
 
 
 
+[ENTRY]
+defHints=256
+ID=3453
+strength=75
+dexterity=75
+constitution=75
+psyche=75
+spirit=75
+damage_resist_melee=5000
+damage_resist_fire=5000
+damage_resist_frost=5000
+damage_resist_mystic=5000
+damage_resist_death=5000
+will_regen=1
+might_regen=1
+offhand_weapon_damage=100
+casting_setback_chance=500
+channeling_break_chance=500
+appearance=c2:{["h"]=0,["b"]="r",["sk"]={["base"]="9b6d3a",["beak"]="e48828",["beard"]="a29058",["chest_ankles"]="805a30",["eye"]="ffd83f",["eye_brows"]="a97b4e",["eye_lid"]="8a7b4b",["hands"]="b44d38",["head_top"]="c94125",["mask"]="ad6e2c",["nails"]="745f56",["neck_belly"]="817650",["spots"]="9b8e61"},["r"]="n",["g"]="m",["sz"]="1.1"}
+level=50
+display_name=Heath's Test Mob
+sub_name=Kronos for Life
+profession=5
+creature_category=Unliving
+rarity=3
+base_damage_melee=150
+base_health=8000
+ai_package=4_mage_30
+total_size=1.2000000476837158
