@@ -1462,3 +1462,16 @@ UseTime=500
 Message=Stealing the blue flag
 ScriptFunction=blue_flag_stolen
 
+[ENTRY]
+Name=valkals_blood_keep_to_sanctum_sanguis
+Type=warp
+ObjectID=7865
+WarpTo=4723,670,2826,66
+Message=Entering Sanctum Sanguis
+
+[ENTRY]
+Name=sanctum_sanguis_to_valkals_blood_keep
+Type=warp
+ObjectID=7864
+WarpTo=4357,5511,2767,66
+Message=Exit To Valkals Blood Keep
