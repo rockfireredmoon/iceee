@@ -1,7 +1,7 @@
 [ENTRY]
 ID=1150464
 Asset=Bldg-Urban-Medium_Facade2?ATS=ATS-Warpig
-Name=
+Name=Untitled
 Pos=65912.4,1119.44,53188.8
 Orient=0,0.706825,0,0.707388
 Scale=1,1,1
@@ -9,7 +9,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1150491
 Asset=CL-Plants#CL-Burnt-Pine2
-Name=
+Name=Untitled
 Pos=65737,1123.52,53127.3
 Orient=0,0,0,1
 Scale=1,1,1
@@ -17,7 +17,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1150511
 Asset=CL-Plants#CL-AridBush1
-Name=
+Name=Untitled
 Pos=65638.7,1123.07,53185.2
 Orient=0,0,0,1
 Scale=1,1,1
@@ -25,10 +25,29 @@ Scale=1,1,1
 [ENTRY]
 ID=1150527
 Asset=CL-Junk#CL-Junk_Table2
-Name=
+Name=Untitled
 Pos=65772,1123.08,53211.5
 Orient=0,0,0,1
 Scale=1,1,1
+
+[ENTRY]
+ID=1150592
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=Untitled
+Pos=65660.4,1121.21,53212.3
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=z9_eur_Hazard_46_47
+
+[ENTRY]
+ID=1150621
+Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
+Pos=65640.7,1123.33,53244.2
+Orient=0,0,0,1
+Scale=1,1,1
+links_count=1
+link=1150620,1
 
 [ENTRY]
 ID=151020846

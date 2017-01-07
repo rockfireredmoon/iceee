@@ -454,7 +454,7 @@ Scale=0.5,0.5,0.5
 ID=1127135
 Asset=Dng-Dungeon1?ATS=ATS-Dungeon_Vampire
 Name=Untitled
-Pos=5387.25,510,2484.65
+Pos=5391.19,510.002,2494.7
 Orient=0,0,0,1
 Scale=1,1,1
 
@@ -746,15 +746,7 @@ Pos=4301.45,513.725,2789.45
 Orient=0,0.999991,0,-0.00420359
 Scale=1,1,1
 spawnPackage=#1385
-
-[ENTRY]
-ID=1127184
-Asset=Prop-Braziers#Prop-Brazier_Purple
-Name=Untitled
-Pos=5395.06,550.7,2472.62
-Orient=0,0,0,1
-Scale=1.5,1.5,1.5
-spawnPackage=#7758
+sequential=1
 
 [ENTRY]
 ID=1127185
@@ -768,7 +760,7 @@ Scale=1,1,1
 ID=1127186
 Asset=Prop-Vampire1#Prop-Vampire_Coffin
 Name=Untitled
-Pos=5343.63,530.7,2437.8
+Pos=5351.16,530.7,2438.52
 Orient=0,-0.713864,0,0.700285
 Scale=1,1,1
 
@@ -789,18 +781,53 @@ Orient=0,0.361615,0,0.932327
 Scale=1,1,1
 
 [ENTRY]
-ID=1133632
-Asset=Par-Green_Blast
+ID=1150646
+Asset=Prop-Blood_Pool#Prop-Blood_Pool
 Name=Untitled
-Pos=4068.25,480,2769.72
+Pos=5378.9,488.624,2415.37
+Orient=0,0,0,1
+Scale=10,10,10
+
+[ENTRY]
+ID=1150648
+Asset=Dng-Pillar?ATS=ATS-Dungeon_Vampire
+Name=Untitled
+Pos=5390.39,531.149,2380.27
 Orient=0,0,0,1
 Scale=1,1,1
 
 [ENTRY]
-ID=1133633
-Asset=Par-Hadrian_Glow-Emitter
+ID=1150649
+Asset=Prop-Vampire_Fountain_Blood
 Name=Untitled
-Pos=4070.72,519.378,2780.79
+Pos=5389.16,487.29,2381.74
 Orient=0,0,0,1
+Scale=8,8,8
+
+[ENTRY]
+ID=1150654
+Asset=Prop-Instance_Entrance#Prop-Instance_Entrance
+Name=Untitled
+Pos=4694.14,682.998,2823.62
+Orient=0,1,0,7.54979e-08
+Scale=0.6,0.6,0.6
+
+[ENTRY]
+ID=1150656
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=Untitled
+Pos=4361.28,510,2770.87
+Orient=0,0.714978,0,-0.699147
 Scale=1,1,1
+spawnPackage=#F7865
+maxActive=0
+
+[ENTRY]
+ID=1150657
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=Untitled
+Pos=4695.18,670.702,2824.13
+Orient=0,0.710353,0,0.703845
+Scale=1,1,1
+spawnPackage=#F7864
 

@@ -1473,5 +1473,5 @@ Message=Entering Sanctum Sanguis
 Name=sanctum_sanguis_to_valkals_blood_keep
 Type=warp
 ObjectID=7864
-WarpTo=4357,5511,2767,66
+WarpTo=4358,510,2770,66
 Message=Exit To Valkals Blood Keep

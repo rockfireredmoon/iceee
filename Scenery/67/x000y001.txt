@@ -475,7 +475,7 @@ Flags=1
 [ENTRY]
 ID=1127144
 Asset=Bldg-Pridelord_Chamber#Bldg-Pridelord_Chamber?ATS=ATS-Warpig
-Name=
+Name=Untitled
 Pos=1383.34,229.687,1962.22
 Orient=0,-0.731146,0,0.682221
 Scale=1.7,1.7,1.7
@@ -483,8 +483,16 @@ Scale=1.7,1.7,1.7
 [ENTRY]
 ID=1127152
 Asset=CL-Swinland_JunkPile1#CL-Swinland_JunkPile1
-Name=
+Name=Untitled
 Pos=1748.89,229.687,1937.97
 Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
+ID=1150640
+Asset=Prop-Interact1#Prop-Interact_Rectangle
+Name=
+Pos=1381.68,297.435,2699.75
+Orient=0,-0.703279,0,0.710914
 Scale=1,1,1
 

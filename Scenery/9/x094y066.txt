@@ -78,7 +78,7 @@ link=1091100,1
 [ENTRY]
 ID=1091444
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=70663.7,993.883,50003.1
 Orient=0,-0.300293,0,0.953847
 Scale=1,1,1

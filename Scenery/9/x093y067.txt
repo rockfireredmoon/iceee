@@ -10,6 +10,15 @@ link=1091091,1
 link=1091093,1
 
 [ENTRY]
+ID=1150638
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=70464.2,1000.6,50839.3
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#F1338
+
+[ENTRY]
 ID=151024043
 Asset=Warpig_Walls#Prop-Warpig_Wall1
 Name=Untitled

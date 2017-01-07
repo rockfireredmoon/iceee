@@ -17,10 +17,19 @@ Scale=1,1,1
 [ENTRY]
 ID=1150552
 Asset=Prop-Instance_Entrance#Prop-Instance_Entrance
-Name=
+Name=Untitled
 Pos=66735.8,1455.54,52386.1
 Orient=0,0.463912,0,0.885881
 Scale=1,1,1
+
+[ENTRY]
+ID=1150586
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=Untitled
+Pos=66614,1380.18,52494.7
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=z9_eur_Hazard_46_47
 
 [ENTRY]
 ID=151021351
