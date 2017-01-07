@@ -745,6 +745,7 @@ NAME=Valkals_Bloodkeep
 ENVIRONMENTTYPE=Dungeon1
 ShardName=Europe 1
 WarpName=Valkals Bloodkeep
+Instance=1
 DefLoc=701,660,2794
 
 [ENTRY]
@@ -753,6 +754,7 @@ NAME=Junk_Palace
 ENVIRONMENTTYPE=Dungeon1
 ShardName=Unknown
 WarpName=Junk Palace
+Instance=1
 DefLoc=1419,284,2315
 
 [ENTRY]
@@ -772,6 +774,7 @@ NAME=Skrill_Queen_Lair
 ENVIRONMENTTYPE=Dungeon1
 ShardName=Europe 1
 WarpName=Skrill Queen Lair
+Instance=1
 DefLoc=2662,1081,4301
 
 [ENTRY]
