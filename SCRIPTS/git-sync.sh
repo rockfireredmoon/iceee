@@ -55,22 +55,18 @@ fi
 
 pushd "${GAME_DIR}"
 listen_port=$(grep "^HTTPListenPort=" -- ServerConfig.txt|tr -d '\r'|awk -F= '{ print $2 }'|awk '{ print $1 }')
-echo "lp: $listen_port" >&2
 if [ -n "${listen_port}" ] ; then
 	listen_port=":${listen_port}"
 fi
-echo "la: $listen_address" >&2
 listen_address=$(grep "^BindAddress=" -- ServerConfig.txt|tr -d '\r'|awk -F= '{ print $2 }'|awk '{ print $1 }')
 if [ -z "${listen_address}" ] ; then
 	listen_address="127.0.0.1"
 fi
 export server_url="http://${listen_address}${listen_port}"
-echo "su: $server_url" >&2
 export auth_token=$(grep "^RemoteAuthenticationPassword=" -- ServerConfig.txt|tr -d '\r'|awk -F= '{ print $2 }'|awk '{ print $1 }')
-echo "at: $auth_token" >&2
-popd
+popd >/dev/null
 
-pushd "${GIT_DIR}"
+pushd "${GIT_DIR}" >/dev/null
 
 # First fetch
 if ! git fetch >&2 ; then
@@ -92,10 +88,10 @@ if [ ${lines} -gt 0 ] ; then
 	incoming=y
 	service $SERVICE stop
 fi
-popd
+popd >/dev/null
 
 # Tar up the files from the instance
-pushd "${GAME_DIR}"
+pushd "${GAME_DIR}" >/dev/null
 find -L ${DATA_DIRS} > /tmp/$$.tarlist
 if ! tar czhf /tmp/$$-gf-tmp.tgz -T /tmp/$$.tarlist ; then
     echo "$0: failed to archive game files" >&2
@@ -103,11 +99,11 @@ if ! tar czhf /tmp/$$-gf-tmp.tgz -T /tmp/$$.tarlist ; then
     exit 1
 fi
 rm -f /tmp/$$.tarlist
-popd
+popd >/dev/null
 
 # Build message from audits
 echo "Building audit message .."
-pushd /var/lib/tawd/Audit
+pushd /var/lib/tawd/Audit >/dev/null
 echo "AutoSync from ${GAME_DIR}" > /tmp/$$.msg
 for i in ""$(ls) ; do
     if [ -n "$i" ] ; then
@@ -118,10 +114,10 @@ for i in ""$(ls) ; do
 done
 MESG=$(</tmp/$$.msg)
 rm -f /tmp/$$.msg
-popd
+popd >/dev/null
 
 # Extract new files over Git ones
-pushd "${GIT_DIR}"
+pushd "${GIT_DIR}" >/dev/null
 echo "Extracting changed files .."
 if ! tar xzf /tmp/$$-gf-tmp.tgz ; then
     echo "$0: failed to extract files onto workspac" >&2
@@ -168,12 +164,12 @@ fi
 
 #
 
-popd
+popd >/dev/null
 
 # Rebuild/restart the server if we stopped it
 
 if [ "$incoming" = "y" ] ; then
-	pushd $GIT_DIR
+	pushd $GIT_DIR >/dev/null
 	
 	if ! make ; then
 		echo "$0: Failed to make" >&2
@@ -195,6 +191,6 @@ if [ "$incoming" = "y" ] ; then
 	
 	service $SERVICE start
 	
-	popd
+	popd >/dev/null
 fi
 
