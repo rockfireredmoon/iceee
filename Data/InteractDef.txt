@@ -1488,9 +1488,9 @@ Message=Entering Valkals Blood Keep
 Name=valkals_blood_keep_to_swineland
 Type=warp
 ObjectID=7867
-Facing=107
 WarpTo=79437,1316,53082,9
 Message=Entering Swineland
+Facing=107
 
 [ENTRY]
 Name=junk_palace_to_swineland
@@ -1511,7 +1511,7 @@ Facing=127
 [ENTRY]
 Name=skrill_queen_lair_to_swineland
 Type=warp
-ObjectID=7869
+ObjectID=7871
 WarpTo=71209,1128,44587,9
 Message=Exiting To Swineland
 Facing=127
