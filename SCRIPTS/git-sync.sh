@@ -133,7 +133,7 @@ fi
 
 # Commit
 if [ $outgoing = y ] ; then
-    git commit -a -m "${MESG}"
+    git commit -a -m "${MESG}" >/dev/null
     ret=$?
     if [ $ret != 0 -a $ret != 1 ] ; then
         echo "$0: failed to commit changes - $ret" >&2
@@ -152,7 +152,7 @@ fi
 
 # Push
 if [ $outgoing = y ] ; then
-    if ! git push ; then
+    if ! git push  >/dev/null ; then
         echo "$0: failed to push" >&2
         exit 1
     fi
