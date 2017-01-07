@@ -2869,6 +2869,8 @@ bool SimulatorThread :: HandleCommand(int &PendingData)
 		PendingData = handle_command_health();
 	else if(query.name.compare("speed") == 0)
 		PendingData = handle_command_speed();
+	else if(query.name.compare("rot") == 0)
+		PendingData = handle_command_rot();
 	else if(query.name.compare("fa") == 0)
 		PendingData = handle_command_fa();
 	else if(query.name.compare("skadd") == 0)
@@ -5147,6 +5149,21 @@ int SimulatorThread :: handle_command_health(void)
 	creatureInst->css.health = amount;
 	AddMessage(pld.CreatureID, amount, BCM_SendHealth);
 
+	WritePos = PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
+	return WritePos;
+}
+
+int SimulatorThread :: handle_command_rot(void)
+{
+	/*  Query: rot
+		Change or show rotation.
+		Args : [0] = Rotation (optional).
+    */
+	if(query.argCount > 0) {
+		SetRotation(query.GetInteger(0), 1);
+	}
+	Util::SafeFormat(Aux1, sizeof(Aux1), "Rotation: %d", creatureInst->Rotation);
+	SendInfoMessage(Aux1, INFOMSG_INFO);
 	WritePos = PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
 	return WritePos;
 }
