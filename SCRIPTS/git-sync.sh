@@ -68,7 +68,7 @@ popd >/dev/null
 pushd "${GIT_DIR}" >/dev/null
 
 # First fetch
-if ! git fetch >&2 ; then
+if ! git fetch >/dev/null >&2 ; then
 	echo "$0: Fetch failed!" >&2
 	exit 1
 fi
