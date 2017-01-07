@@ -1469,3 +1469,25 @@ display_name=Entrance To Sanctum Sanguis
 profession=1
 creature_category=Inanimate
 ai_package=nothing
+
+[ENTRY]
+ID=7866
+will_regen=1
+might_regen=1
+appearance=p1:{["sz"]="1",["a"]="Prop-Interact_Rectangle"}
+level=1
+display_name=Entrance To Blood Keep
+profession=1
+creature_category=Inanimate
+ai_package=nothing
+
+[ENTRY]
+ID=7867
+will_regen=1
+might_regen=1
+appearance=p1:{["sz"]="1",["a"]="Prop-Interact_Rectangle"}
+level=1
+display_name=Exit To Swineland
+profession=1
+creature_category=Inanimate
+ai_package=nothing
