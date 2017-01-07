@@ -1520,6 +1520,6 @@ Facing=127
 Name=swineland_to_skrill_queen_lair
 Type=warp
 ObjectID=7870
-WarpTo=2668,1080,4359,69
+WarpTo=2671,1080,4334,69
 Message=Entering Skrill Queen Lair
 Facing=123
