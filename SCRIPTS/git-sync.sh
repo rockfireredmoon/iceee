@@ -9,7 +9,6 @@ incoming=n
 outgoing=n
 
 message_server() {
-	echo "authtoken: $auth_token (${server_url})) date=$*" >&2
 	if ! curl --data "action=syschat&authtoken=${auth_token}&data=$*" ${server_url}/remoteaction >/dev/null 2>&1 ; then
 		echo "$0: Failed to send message to server." >&2
 		exit 1
@@ -109,9 +108,9 @@ for i in ""$(ls) ; do
         cat ${i} >> /tmp/$$.msg
     fi
 done
-MESG=$(</tmp/$$.msg)
-if [ -z "$MESG" ] ; then
-	MESG="Synchronize"
+MESG="Synchronize"
+if [ -f /tmp/$$.msg ] ; then
+    MESG=$(</tmp/$$.msg)
 fi
 rm -f /tmp/$$.msg
 popd >/dev/null
