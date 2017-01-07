@@ -489,10 +489,19 @@ Orient=0,0,0,1
 Scale=1,1,1
 
 [ENTRY]
-ID=1150640
-Asset=Prop-Interact1#Prop-Interact_Rectangle
+ID=1150672
+Asset=Manipulator#Manipulator-SpawnPoint
 Name=
-Pos=1381.68,297.435,2699.75
-Orient=0,-0.703279,0,0.710914
+Pos=1382.29,282.453,2707.49
+Orient=0,0.999784,0,0.0207949
+Scale=1,1,1
+spawnPackage=#F7869
+
+[ENTRY]
+ID=1150673
+Asset=Prop-Instance_Entrance#Prop-Instance_Entrance
+Name=
+Pos=1383.09,303.662,2696.16
+Orient=0,-0.706825,0,0.707388
 Scale=1,1,1
 

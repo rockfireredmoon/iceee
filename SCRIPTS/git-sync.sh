@@ -6,22 +6,12 @@ trap "rm -f /tmp/$$-gf-tmp.tgz /tmp/$$.tarlist" 0 1 2 3 15
 DATA_DIRS="Instance AIScript Scenery QuestScripts Creatures"
 
 incoming=n
-
-
-listen_port=$(grep "^HTTPListenPort=" -- ServerConfig.txt|tr -d '\r'|awk -F= '{ print $2 }')
-if [ -n "${listen_port}" ] ; then
-	listen_port=":${listen_port}"
-fi
-listen_address=$(grep "^BindAddress=" -- ServerConfig.txt|tr -d '\r'|awk -F= '{ print $2 }')
-if [ -z "${listen_address}" ] ; then
-	listen_address="127.0.0.1"
-fi
-server_url="http://${listen_address}${listen_port}"
-auth_token=$(grep "^RemoteAuthenticationPassword=" -- ServerConfig.txt|tr -d '\r'|awk -F= '{ print $2 }')
+outgoing=n
 
 message_server() {
-	if ! curl --data "action=syschat&authtoken=${auth_token}&data=$*" ${server_url}/remoteaction >/dev/null 2>&1 ; then
-		echo "$0: Failed to send message to server." &2
+	echo "authtoken: $auth_token (${server_url})) date=$*" >&2
+	if ! curl --data "action=syschat&authtoken=${auth_token}&data=$*" ${server_url}/remoteaction ; then
+		echo "$0: Failed to send message to server." >&2
 		exit 1
 	fi
 }
@@ -62,6 +52,24 @@ if [ -z "$UPDATES" ] ; then
     exit 1
 fi
 
+
+pushd "${GAME_DIR}"
+listen_port=$(grep "^HTTPListenPort=" -- ServerConfig.txt|tr -d '\r'|awk -F= '{ print $2 }'|awk '{ print $1 }')
+echo "lp: $listen_port" >&2
+if [ -n "${listen_port}" ] ; then
+	listen_port=":${listen_port}"
+fi
+echo "la: $listen_address" >&2
+listen_address=$(grep "^BindAddress=" -- ServerConfig.txt|tr -d '\r'|awk -F= '{ print $2 }'|awk '{ print $1 }')
+if [ -z "${listen_address}" ] ; then
+	listen_address="127.0.0.1"
+fi
+export server_url="http://${listen_address}${listen_port}"
+echo "su: $server_url" >&2
+export auth_token=$(grep "^RemoteAuthenticationPassword=" -- ServerConfig.txt|tr -d '\r'|awk -F= '{ print $2 }'|awk '{ print $1 }')
+echo "at: $auth_token" >&2
+popd
+
 pushd "${GIT_DIR}"
 
 # First fetch
@@ -99,7 +107,7 @@ popd
 
 # Build message from audits
 echo "Building audit message .."
-pushd ${GAME_DIR}/Audit
+pushd /var/lib/tawd/Audit
 echo "AutoSync from ${GAME_DIR}" > /tmp/$$.msg
 for i in ""$(ls) ; do
     if [ -n "$i" ] ; then
@@ -108,6 +116,8 @@ for i in ""$(ls) ; do
         cat ${i} >> /tmp/$$.msg
     fi
 done
+MESG=$(</tmp/$$.msg)
+rm -f /tmp/$$.msg
 popd
 
 # Extract new files over Git ones
@@ -120,19 +130,28 @@ if ! tar xzf /tmp/$$-gf-tmp.tgz ; then
 fi
 rm -f /tmp/$$-gf-tmp.tgz
 
-# Commit
-echo "Committing .."
-git commit -a -m "${MESG}"
-ret=$?
-echo "Committed $ret"
-if [ $ret != 0 -a $ret != 1 ] ; then
-    echo "$0: failed to commit changes - $ret" >&2
-    exit 1
-fi
-if [ $ret = 0 ] ; then
-    rm -f ${GAME_DIR}/Audit/*
+if git status 2>&1|grep $'\t' >/dev/null 2>&1; then
+    outgoing=y
+    if [ $incoming = n ] ; then
+        message_server "There are outgoing changes now being commited to GitHub."
+    fi
 fi
 
+# Commit
+if [ $outgoing = y ] ; then
+    echo "Committing .."
+    git commit -a -m "${MESG}"
+    ret=$?
+    echo "Committed $ret"
+    if [ $ret != 0 -a $ret != 1 ] ; then
+        echo "$0: failed to commit changes - $ret" >&2
+        exit 1
+    fi
+    if [ $ret = 0 ] ; then
+        rm -f ${GAME_DIR}/Audit/*
+    fi
+fi
+    
 # Pull
 if ! git pull >&2 ; then
     echo "$0: Pull failed!" >&2
@@ -140,9 +159,11 @@ if ! git pull >&2 ; then
 fi
 
 # Push
-if ! git push ; then
-    echo "$0: failed to push" >&2
-    exit 1
+if [ $outgoing = y ] ; then
+    if ! git push ; then
+        echo "$0: failed to push" >&2
+        exit 1
+    fi
 fi
 
 #
@@ -176,40 +197,4 @@ if [ "$incoming" = "y" ] ; then
 	
 	popd
 fi
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-cd "$(dirname $0)"/..
-base=$(pwd)
-
-server_url="http://127.0.0.1:8080"
-auth_token=$(grep "^RemoteAuthenticationPassword=" -- ServerConfig.txt|tr -d '\r'|awk -F= '{ print $2 }')
-
-message_to_server() {
-	if ! curl --data "action=syschat&authtoken=${auth_token}&data=$*" ${server_url}/remoteaction ; then
-		echo "ERR: Failed to send the test message."
-		exit 1
-	fi
-}
-
-# First fetch
-if ! git fetch ; then
-	message_to_server "Git Fetch failed. Current status unknown." >&2
-	exit 1
-fi
-
-
-
-	
 

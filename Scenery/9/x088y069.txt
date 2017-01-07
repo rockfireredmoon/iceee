@@ -32,6 +32,15 @@ Scale=1,1,1
 spawnPackage=z9_eur_Hazard_46_47
 
 [ENTRY]
+ID=1150674
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=66739,1433.01,52384.8
+Orient=0,-0.319309,0,0.947651
+Scale=1,1,1
+spawnPackage=#F7868
+
+[ENTRY]
 ID=151021351
 Asset=Prop-Burnt_Pines#Prop-Burnt_Pine3
 Name=Untitled
