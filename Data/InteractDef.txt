@@ -1507,3 +1507,19 @@ ObjectID=7868
 WarpTo=1384,280,2681,67
 Message=Entrance To Junk Palace
 Facing=127
+
+[ENTRY]
+Name=skrill_queen_lair_to_swineland
+Type=warp
+ObjectID=7869
+WarpTo=71209,1128,44587,9
+Message=Exiting To Swineland
+Facing=127
+
+[ENTRY]
+Name=swineland_to_skrill_queen_lair
+Type=warp
+ObjectID=7870
+WarpTo=2668,1080,4359,69
+Message=Entering Skrill Queen Lair
+Facing=123
