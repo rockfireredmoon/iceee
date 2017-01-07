@@ -1489,3 +1489,19 @@ Type=warp
 ObjectID=7867
 WarpTo=79437,1316,53082,9
 Message=Entering Swineland
+
+[ENTRY]
+Name=junk_palace_to_swineland
+Type=warp
+ObjectID=7869
+WarpTo=66727,1426,52401,9
+Message=Exiting To Swineland
+Facing=230
+
+[ENTRY]
+Name=swineland_to_junk_palace
+Type=warp
+ObjectID=7868
+WarpTo=1384,280,2681,67
+Message=Entrance To Junk Palace
+Facing=127
