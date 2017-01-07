@@ -1,0 +1,16 @@
+[ENTRY]
+ID=1150569
+Asset=CL-Forest#CL-Dead-Forest4
+Name=
+Pos=74107.8,896.276,50744.5
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
+ID=1150570
+Asset=CL-Forest#CL-Dead-Forest5
+Name=
+Pos=74074.4,941.96,50697
+Orient=0,0,0,1
+Scale=1,1,1
+
