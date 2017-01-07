@@ -6,7 +6,17 @@ trap "rm -f /tmp/$$-gf-tmp.tgz /tmp/$$.tarlist" 0 1 2 3 15
 DATA_DIRS="Instance AIScript Scenery QuestScripts Creatures"
 
 incoming=n
-server_url="http://127.0.0.1:8080"
+
+
+listen_port=$(grep "^HTTPListenPort=" -- ServerConfig.txt|tr -d '\r'|awk -F= '{ print $2 }')
+if [ -n "${listen_port}" ] ; then
+	listen_port=":${listen_port}"
+fi
+listen_address=$(grep "^BindAddress=" -- ServerConfig.txt|tr -d '\r'|awk -F= '{ print $2 }')
+if [ -z "${listen_address}" ] ; then
+	listen_address="127.0.0.1"
+fi
+server_url="http://${listen_address}${listen_port}"
 auth_token=$(grep "^RemoteAuthenticationPassword=" -- ServerConfig.txt|tr -d '\r'|awk -F= '{ print $2 }')
 
 message_server() {
