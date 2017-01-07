@@ -1442,7 +1442,7 @@ this.Stat <- {
 		prettyName = "Tags"
 	},
 	MAX_HEALTH_PC = 165,
-	[164] = {
+	[165] = {
 		type = "string",
 		name = "max_health_pc",
 		prettyName = "Max Health %"

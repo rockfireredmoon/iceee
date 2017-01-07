@@ -2869,6 +2869,8 @@ bool SimulatorThread :: HandleCommand(int &PendingData)
 		PendingData = handle_command_health();
 	else if(query.name.compare("speed") == 0)
 		PendingData = handle_command_speed();
+	else if(query.name.compare("rot") == 0)
+		PendingData = handle_command_rot();
 	else if(query.name.compare("fa") == 0)
 		PendingData = handle_command_fa();
 	else if(query.name.compare("skadd") == 0)
@@ -3133,6 +3135,28 @@ void SimulatorThread :: SendSetMap(void)
 	PutShort(&SendBuf[1], wpos - 3);       //Set message size
 	AttemptSend(SendBuf, wpos);
 }
+
+void SimulatorThread :: SetRotation(int rot, int update)
+{
+	creatureInst->Heading = creatureInst->Rotation = rot;
+
+	if(update == 1)
+	{
+		pld.MovementBlockTime = g_ServerTime + g_Config.WarpMovementBlockTime;
+
+		// Tell everyone else
+		if(!IsGMInvisible())
+		{
+			int size = PrepExt_UpdateVelocity(SendBuf, creatureInst);
+			creatureInst->actInst->LSendToLocalSimulator(SendBuf, size, creatureInst->CurrentX, creatureInst->CurrentZ);
+		}
+
+		// Tell player
+		int size = PrepExt_VelocityEvent(SendBuf, creatureInst);
+		AttemptSend(SendBuf, size);
+	}
+}
+
 
 void SimulatorThread :: SetPosition(int xpos, int ypos, int zpos, int update)
 {
@@ -5125,6 +5149,21 @@ int SimulatorThread :: handle_command_health(void)
 	creatureInst->css.health = amount;
 	AddMessage(pld.CreatureID, amount, BCM_SendHealth);
 
+	WritePos = PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
+	return WritePos;
+}
+
+int SimulatorThread :: handle_command_rot(void)
+{
+	/*  Query: rot
+		Change or show rotation.
+		Args : [0] = Rotation (optional).
+    */
+	if(query.argCount > 0) {
+		SetRotation(query.GetInteger(0), 1);
+	}
+	Util::SafeFormat(Aux1, sizeof(Aux1), "Rotation: %d", creatureInst->Rotation);
+	SendInfoMessage(Aux1, INFOMSG_INFO);
 	WritePos = PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
 	return WritePos;
 }
@@ -13756,6 +13795,8 @@ int SimulatorThread :: handle_command_dtrig(void)
 				g_Log.AddMessageFormat("ai=%s", ptr->css.ai_package);
 				g_Log.AddMessageFormat("faction=%d", ptr->Faction);
 				g_Log.AddMessageFormat("sflags=%d", ptr->serverFlags);
+				g_Log.AddMessageFormat("Rotation=%d", ptr->Rotation);
+				g_Log.AddMessageFormat("Heading=%d", ptr->Heading);
 				for(size_t i = 0; i <= 62; i++)
 					if(ptr->HasStatus(i)) g_Log.AddMessageFormat("Status:%s", GetStatusNameByID(i));
 

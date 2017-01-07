@@ -1480,6 +1480,7 @@ Message=Exit To Valkals Blood Keep
 Name=swineland_to_valkals_blood_keep
 Type=warp
 ObjectID=7866
+Facing=64
 WarpTo=676,660,2791,66
 Message=Entering Valkals Blood Keep
 
@@ -1487,6 +1488,7 @@ Message=Entering Valkals Blood Keep
 Name=valkals_blood_keep_to_swineland
 Type=warp
 ObjectID=7867
+Facing=107
 WarpTo=79437,1316,53082,9
 Message=Entering Swineland
 

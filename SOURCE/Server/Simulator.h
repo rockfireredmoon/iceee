@@ -431,6 +431,7 @@ public:
 	void BroadcastGuildChange(int guildDefID);
 	void BroadcastShardChanged(void);
 	void SendSetMap(void);
+	void SetRotation(int rot, int update);
 	void SetPosition(int xpos, int ypos, int zpos, int update);
 	void UpdateEqAppearance(void);
 	void ActivateSavedAbilities(void);
@@ -459,6 +460,7 @@ public:
 	int handle_command_warpext(void);
 	int handle_command_health(void);
 	int handle_command_speed(void);
+	int handle_command_rot(void);
 	int handle_command_fa(void);
 	int handle_command_skadd(void);
 	void handle_command_skremove(void);
