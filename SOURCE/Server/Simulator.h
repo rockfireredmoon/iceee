@@ -431,6 +431,7 @@ public:
 	void BroadcastGuildChange(int guildDefID);
 	void BroadcastShardChanged(void);
 	void SendSetMap(void);
+	void SetRotation(int rot, int update);
 	void SetPosition(int xpos, int ypos, int zpos, int update);
 	void UpdateEqAppearance(void);
 	void ActivateSavedAbilities(void);

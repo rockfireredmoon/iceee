@@ -28,7 +28,7 @@ void InteractObject :: Clear(void)
 	questReq = 0;
 	questComp = false;
 	zoneReq = 0;
-	facing = 0;
+	facing = -1;
 
 	WarpX = 0;
 	WarpY = 0;

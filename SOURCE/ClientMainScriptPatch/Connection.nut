@@ -2079,6 +2079,9 @@ class this.Connection extends this.MessageBroadcaster
 
 			if (::_avatar)
 			{
+				print("ICE! 26 - Server velocity update " + heading + "," + rotation + "," + speed + "\n");
+				// TODO ... not suure about this, just trying to force an update
+				::_avatar.mLastServerUpdate = null;
 				::_avatar.onServerVelocity(heading, rotation, speed);
 			}
 

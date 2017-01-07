@@ -3528,6 +3528,7 @@ void ActiveInstance :: RunObjectInteraction(SimulatorThread *simPtr, int CDef)
 	InteractObject *intObj = g_InteractObjectContainer.GetObjectByID(CDef, simPtr->pld.CurrentZoneID);
 	if(intObj != NULL)
 	{
+
 		if(intObj->opType == InteractObject::TYPE_WARP)
 		{
 			simPtr->MainCallSetZone(intObj->WarpID, 0, false);
@@ -3550,6 +3551,10 @@ void ActiveInstance :: RunObjectInteraction(SimulatorThread *simPtr, int CDef)
 				p.push_back(ScriptCore::ScriptParam(CDef));
 				nutScriptPlayer->JumpToLabel(intObj->scriptFunction, p);
 			}
+		}
+
+		if(intObj->facing != -1) {
+			simPtr->SetRotation(intObj->facing, 1);
 		}
 
 		ScriptCallUseFinish(simPtr->creatureInst->CreatureID,  CDef);

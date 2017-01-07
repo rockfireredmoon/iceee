@@ -3134,6 +3134,28 @@ void SimulatorThread :: SendSetMap(void)
 	AttemptSend(SendBuf, wpos);
 }
 
+void SimulatorThread :: SetRotation(int rot, int update)
+{
+	creatureInst->Heading = creatureInst->Rotation = rot;
+
+	if(update == 1)
+	{
+		pld.MovementBlockTime = g_ServerTime + g_Config.WarpMovementBlockTime;
+
+		// Tell everyone else
+		if(!IsGMInvisible())
+		{
+			int size = PrepExt_UpdateVelocity(SendBuf, creatureInst);
+			creatureInst->actInst->LSendToLocalSimulator(SendBuf, size, creatureInst->CurrentX, creatureInst->CurrentZ);
+		}
+
+		// Tell player
+		int size = PrepExt_VelocityEvent(SendBuf, creatureInst);
+		AttemptSend(SendBuf, size);
+	}
+}
+
+
 void SimulatorThread :: SetPosition(int xpos, int ypos, int zpos, int update)
 {
 	creatureInst->CurrentX = xpos;
@@ -13756,6 +13778,8 @@ int SimulatorThread :: handle_command_dtrig(void)
 				g_Log.AddMessageFormat("ai=%s", ptr->css.ai_package);
 				g_Log.AddMessageFormat("faction=%d", ptr->Faction);
 				g_Log.AddMessageFormat("sflags=%d", ptr->serverFlags);
+				g_Log.AddMessageFormat("Rotation=%d", ptr->Rotation);
+				g_Log.AddMessageFormat("Heading=%d", ptr->Heading);
 				for(size_t i = 0; i <= 62; i++)
 					if(ptr->HasStatus(i)) g_Log.AddMessageFormat("Status:%s", GetStatusNameByID(i));
 

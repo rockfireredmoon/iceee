@@ -837,6 +837,7 @@ int PrepExt_UpdateAppearance(char *buffer, CreatureInstance *cInst);
 int PrepExt_CreatureInstance(char *buffer, CreatureInstance *cInst);
 int PrepExt_CreatureFullInstance(char *buffer, CreatureInstance *cInst);
 int PrepExt_CreaturePos(char *buffer, CreatureInstance *cInst);
+int PrepExt_VelocityEvent(char *buffer, CreatureInstance *cInst);
 int PrepExt_UpdateVelocity(char *buffer, CreatureInstance *cInst);
 int PrepExt_UpdatePosInc(char *buffer, CreatureInstance *cInst);
 int PrepExt_GeneralMoveUpdate(char *buffer, CreatureInstance *cInst);  //General server movement update (combines 3 flags of data)

@@ -9151,7 +9151,6 @@ int PrepExt_CreatureInstance(char *buffer, CreatureInstance *cInst)
 
 int PrepExt_CreatureFullInstance(char *buffer, CreatureInstance *cInst)
 {
-
 	TIMETRACK("PrepExt_CreatureFullInstance");
 	int wpos = 0;
 	wpos += PutByte(&buffer[wpos], 0x05);      //_handleCreatureUpdateMsg
@@ -9276,6 +9275,7 @@ int PrepExt_CreaturePos(char *buffer, CreatureInstance *cInst)
 
 int PrepExt_UpdateVelocity(char *buffer, CreatureInstance *cInst)
 {
+	/* This is for characters other than the player */
 	int wpos = 0;
 	wpos += PutByte(&buffer[wpos], 5);  //_handleCreatureUpdateMsg
 	wpos += PutShort(&buffer[wpos], 0);
@@ -9294,6 +9294,23 @@ int PrepExt_UpdateVelocity(char *buffer, CreatureInstance *cInst)
 	PutShort(&buffer[1], wpos - 3);       //Set message size
 	return wpos;
 }
+
+int PrepExt_VelocityEvent(char *buffer, CreatureInstance *cInst)
+{
+	int wpos = 0;
+	wpos += PutByte(&buffer[wpos], 4);  //_handleCreatureEventMsg
+	wpos += PutShort(&buffer[wpos], 0x0000);
+	wpos += PutInteger(&buffer[wpos], cInst->CreatureID);
+	wpos += PutByte(&buffer[wpos], 26);
+
+	wpos += PutByte(&buffer[wpos], cInst->Heading);
+	wpos += PutByte(&buffer[wpos], cInst->Rotation);
+	wpos += PutByte(&buffer[wpos], cInst->Speed);
+
+	PutShort(&buffer[1], wpos - 3);       //Set message size
+	return wpos;
+}
+
 
 int PrepExt_UpdatePosInc(char *buffer, CreatureInstance *cInst)
 {
