@@ -420,6 +420,27 @@ void SimulatorManager :: FlushHangingSimulators(void)
 	}
 }
 
+void SimulatorManager :: BroadcastChat(int characterID, const char *display_name, const char *channel, const char *message)
+{
+	char SendBuf[512];
+	int wpos = PrepExt_Chat(SendBuf, 0, "System", "*SysChat", message);
+	SIMULATOR_IT it;
+	for(it = Simulator.begin(); it != Simulator.end(); ++it)
+	{
+		if(it->ProtocolState == 0) {
+			continue;
+		}
+
+		if(it->isConnected == false)
+			continue;
+
+		if(it->pld.charPtr == NULL)
+			continue;
+
+		it->AttemptSend(SendBuf, wpos);
+	}
+}
+
 void SimulatorManager :: BroadcastMessage(const char *message)
 {
 

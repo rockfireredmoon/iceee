@@ -605,6 +605,7 @@ public:
 	void AddPendingDisconnect(SimulatorThread *callObject);
 	void AddPendingPacketData(SimulatorThread *callObject);
 	void BroadcastMessage(const char *message);
+	void BroadcastChat(int characterID, const char *display_name, const char *channel, const char *message);
 
 	//CreatureInstance* GetPlayerByID(int CreatureID);
 
