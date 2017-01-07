@@ -74,7 +74,7 @@ if ! git fetch >/dev/null >&2 ; then
 fi
 
 # See if there are any incoming changes
-lines=$(git log "..origin/${BRANCH}" >&1|wc -l)
+lines=$(git log "..origin/${BRANCH}" 2>&1|wc -l)
 if [ ${lines} -gt 0 ] ; then
 	message_server "There are incoming Git changes. The Rebuild/Restart procedure will start in 10 minutes, please logoff before then."
 	sleep 5m
@@ -133,7 +133,7 @@ fi
 
 # Commit
 if [ $outgoing = y ] ; then
-    git commit -a -m "${MESG}" >/dev/null
+    git commit -a -m "${MESG}" >/dev/null 2>&1
     ret=$?
     if [ $ret != 0 -a $ret != 1 ] ; then
         echo "$0: failed to commit changes - $ret" >&2
