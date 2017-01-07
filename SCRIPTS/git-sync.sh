@@ -10,7 +10,7 @@ outgoing=n
 
 message_server() {
 	echo "authtoken: $auth_token (${server_url})) date=$*" >&2
-	if ! curl --data "action=syschat&authtoken=${auth_token}&data=$*" ${server_url}/remoteaction ; then
+	if ! curl --data "action=syschat&authtoken=${auth_token}&data=$*" ${server_url}/remoteaction >/dev/null 2>&1 ; then
 		echo "$0: Failed to send message to server." >&2
 		exit 1
 	fi
@@ -53,7 +53,7 @@ if [ -z "$UPDATES" ] ; then
 fi
 
 
-pushd "${GAME_DIR}"
+pushd "${GAME_DIR}" >/dev/null
 listen_port=$(grep "^HTTPListenPort=" -- ServerConfig.txt|tr -d '\r'|awk -F= '{ print $2 }'|awk '{ print $1 }')
 if [ -n "${listen_port}" ] ; then
 	listen_port=":${listen_port}"
@@ -102,23 +102,22 @@ rm -f /tmp/$$.tarlist
 popd >/dev/null
 
 # Build message from audits
-echo "Building audit message .."
 pushd /var/lib/tawd/Audit >/dev/null
-echo "AutoSync from ${GAME_DIR}" > /tmp/$$.msg
 for i in ""$(ls) ; do
     if [ -n "$i" ] ; then
         echo "------${i}------" >> /tmp/$$.msg
-        echo "Adding $i"
         cat ${i} >> /tmp/$$.msg
     fi
 done
 MESG=$(</tmp/$$.msg)
+if [ -z "$MESG" ] ; then
+	MESG="Synchronize"
+fi
 rm -f /tmp/$$.msg
 popd >/dev/null
 
 # Extract new files over Git ones
 pushd "${GIT_DIR}" >/dev/null
-echo "Extracting changed files .."
 if ! tar xzf /tmp/$$-gf-tmp.tgz ; then
     echo "$0: failed to extract files onto workspac" >&2
     rm -f /tmp/$$-gf-tmp.tgz
@@ -135,10 +134,8 @@ fi
 
 # Commit
 if [ $outgoing = y ] ; then
-    echo "Committing .."
     git commit -a -m "${MESG}"
     ret=$?
-    echo "Committed $ret"
     if [ $ret != 0 -a $ret != 1 ] ; then
         echo "$0: failed to commit changes - $ret" >&2
         exit 1
