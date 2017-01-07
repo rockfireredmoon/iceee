@@ -145,7 +145,7 @@ if [ $outgoing = y ] ; then
 fi
     
 # Pull
-if ! git pull >&2 ; then
+if ! git pull >/dev/null >&2 ; then
     echo "$0: Pull failed!" >&2
     exit 1
 fi
