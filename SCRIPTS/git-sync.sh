@@ -3,7 +3,7 @@
 # Synchronizes server created and edited assets with Git as well as
 # retrieving external changes. 
 
-trap "rm -f /tmp/$$-gf-tmp.tgz /tmp/$$.tarlist" 0 1 2 3 15
+trap "rm -f /tmp/zz-$BRANCH.lock /tmp/$$-gf-tmp.tgz /tmp/$$.tarlist" 0 1 2 3 15
 
 export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/ee-bin:
 DATA_DIRS="Instance AIScript Scenery QuestScripts Creatures"
@@ -54,6 +54,10 @@ if [ -z "$UPDATES" ] ; then
     exit 1
 fi
 
+if [ -f /tmp/zz-$BRANCH.lock ] ; then
+	exit 0
+fi
+touch /tmp/zz-$BRANCH.lock
 
 pushd "${GAME_DIR}" >/dev/null
 listen_port=$(grep "^HTTPListenPort=" -- ServerConfig.txt|tr -d '\r'|awk -F= '{ print $2 }'|awk '{ print $1 }')
