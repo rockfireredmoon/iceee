@@ -46,6 +46,7 @@ public:
 	static SQInteger GetCreaturesNearCreature(HSQUIRRELVM v);
 	static SQInteger CIDs(HSQUIRRELVM v);
 	static SQInteger AllCIDs(HSQUIRRELVM v);
+	static SQInteger AllPlayers(HSQUIRRELVM v);
 
 	int GetNPCID(int CDefID);
 	int GetCIDForPropID(int propID);
@@ -56,6 +57,7 @@ public:
 
 	void Shake(float amount, float time, float range);
 	void RotateCreature(int CID, int rotation);
+	bool Untarget(int CID);
 	bool CreatureUse(int CID, int abilityID);
 	bool CreatureUseNoRetry(int CID, int abilityID);
 	bool DoCreatureUse(int CID, int abilityID, bool retry);
