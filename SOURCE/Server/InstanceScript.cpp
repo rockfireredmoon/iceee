@@ -154,6 +154,8 @@ void AbstractInstanceNutPlayer::RegisterAbstractInstanceFunctions(NutPlayer *ins
 	instanceClass->Func(_SC("broadcast"), &AbstractInstanceNutPlayer::Broadcast);
 	instanceClass->Func(_SC("local_broadcast"), &AbstractInstanceNutPlayer::LocalBroadcast);
 	instanceClass->Func(_SC("info"), &AbstractInstanceNutPlayer::Info);
+	instanceClass->Func(_SC("unhate"), &AbstractInstanceNutPlayer::Unhate);
+	instanceClass->Func(_SC("interrupt"), &AbstractInstanceNutPlayer::Interrupt);
 	instanceClass->Func(_SC("message"), &AbstractInstanceNutPlayer::Message);
 	instanceClass->Func(_SC("untarget"), &AbstractInstanceNutPlayer::Untarget);
 	instanceClass->Func(_SC("error"), &AbstractInstanceNutPlayer::Error);
@@ -307,6 +309,14 @@ void AbstractInstanceNutPlayer::Shake(float amount, float time, float range) {
 }
 
 
+void AbstractInstanceNutPlayer::Unhate(int CID) {
+	CreatureInstance *ci = GetCreaturePtr(CID);
+	if (ci != NULL)
+		ci->UnHate();
+	else
+		g_Logs.script->error("Could not find creature with ID %v in this instance to unhate.", CID);
+}
+
 bool AbstractInstanceNutPlayer::Untarget(int CID)
 {
 	CreatureInstance *source = actInst->GetInstanceByCID(CID);
@@ -323,6 +333,17 @@ bool AbstractInstanceNutPlayer::CreatureUse(int CID, int abilityID) {
 bool AbstractInstanceNutPlayer::CreatureUseNoRetry(int CID, int abilityID) {
 	return DoCreatureUse(CID, abilityID, false);
 }
+
+
+void AbstractInstanceNutPlayer::Interrupt(int CID) {
+	CreatureInstance *ci = GetCreaturePtr(CID);
+	if(ci != NULL)
+		ci->Interrupt();
+	else
+		g_Logs.script->error("Could not find creature with ID %d in this instance to interrupt.", CID);
+}
+
+
 bool AbstractInstanceNutPlayer::DoCreatureUse(int CID, int abilityID, bool retry) {
 	CreatureInstance *attachedCreature = actInst->GetInstanceByCID(CID);
 	if (attachedCreature != NULL && attachedCreature->ab[0].bPending == false) {
@@ -759,7 +780,6 @@ void InstanceNutPlayer::RegisterInstanceFunctions(HSQUIRRELVM vm,
 			&InstanceNutPlayer::GetVirtualPartyLeader);
 	instanceClass->Func(_SC("attach_item"), &InstanceNutPlayer::AttachItem);
 	instanceClass->Func(_SC("detach_item"), &InstanceNutPlayer::DetachItem);
-	instanceClass->Func(_SC("unhate"), &InstanceNutPlayer::Unhate);
 	instanceClass->Func(_SC("get_ai"), &InstanceNutPlayer::GetAI);
 	instanceClass->Func(_SC("clear_target"), &InstanceNutPlayer::ClearTarget);
 	instanceClass->Func(_SC("spawn_prop"), &InstanceNutPlayer::SpawnProp);
@@ -1006,14 +1026,6 @@ void InstanceNutPlayer::ClearTarget(int CID) {
 		ci->SetAutoAttack(NULL, 0);
 	} else
 		g_Logs.script->error("Could not find creature with ID %v in this instance to clear targets from.", CID);
-}
-
-void InstanceNutPlayer::Unhate(int CID) {
-	CreatureInstance *ci = GetCreaturePtr(CID);
-	if (ci != NULL)
-		ci->UnHate();
-	else
-		g_Logs.script->error("Could not find creature with ID %v in this instance to unhate.", CID);
 }
 
 void InstanceNutPlayer::DetachItem(int CID, const char *type,

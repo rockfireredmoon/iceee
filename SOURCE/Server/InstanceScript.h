@@ -98,6 +98,8 @@ public:
 	void CreatureChat(int cid, const char *channel, const char *message);
 	void SetServerFlags(int CID, unsigned long flags);
 	void SetServerFlag(int CID, unsigned long flag, bool state);
+	void Unhate(int CID);
+	void Interrupt(int CID);
 	unsigned long GetServerFlags(int CID);
 	static SQInteger Scan(HSQUIRRELVM v);
 	static SQInteger ScanNPCs(HSQUIRRELVM v);
@@ -145,7 +147,6 @@ public:
 	void UnremoveProp(int propID);
 	bool RemoveProp(int propID);
 	void PlaySound(const char *name);
-	void Unhate(int CID);
 	void ClearTarget(int CID);
 	bool AI(int CID, const char *label);
 	int GetPartyID(int CID);
