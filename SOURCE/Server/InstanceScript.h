@@ -114,6 +114,7 @@ public:
 	bool RemoveProp(int propID);
 	void PlaySound(const char *name);
 	void Unhate(int CID);
+	void Interrupt(int CID);
 	void ClearTarget(int CID);
 	bool AI(int CID, const char *label);
 	int GetPartyID(int CID);

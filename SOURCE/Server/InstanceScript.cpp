@@ -572,6 +572,7 @@ void InstanceNutPlayer::RegisterInstanceFunctions(NutPlayer *instance, Sqrat::De
 	instanceClass->Func(_SC("attach_item"), &InstanceNutPlayer::AttachItem);
 	instanceClass->Func(_SC("detach_item"), &InstanceNutPlayer::DetachItem);
 	instanceClass->Func(_SC("unhate"), &InstanceNutPlayer::Unhate);
+	instanceClass->Func(_SC("interrupt"), &InstanceNutPlayer::Interrupt);
 	instanceClass->Func(_SC("clear_target"), &InstanceNutPlayer::ClearTarget);
 	instanceClass->Func(_SC("spawn"), &InstanceNutPlayer::Spawn);
 	instanceClass->Func(_SC("play_sound"), &InstanceNutPlayer::PlaySound);
@@ -791,6 +792,15 @@ void InstanceNutPlayer::Unhate(int CID)
 		ci->UnHate();
 	else
 		g_Log.AddMessageFormat("Could not find creature with ID %d in this instance to unhate.", CID);
+}
+
+void InstanceNutPlayer::Interrupt(int CID)
+{
+	CreatureInstance *ci = GetCreaturePtr(CID);
+	if(ci != NULL)
+		ci->Interrupt();
+	else
+		g_Log.AddMessageFormat("Could not find creature with ID %d in this instance to interrupt.", CID);
 }
 
 void InstanceNutPlayer::DetachItem(int CID, const char *type, const char *node)
