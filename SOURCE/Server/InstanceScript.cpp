@@ -151,6 +151,8 @@ void AbstractInstanceNutPlayer::RegisterAbstractInstanceFunctions(NutPlayer *ins
 	instanceClass->Func(_SC("chat"), &AbstractInstanceNutPlayer::Chat);
 	instanceClass->Func(_SC("creature_chat"), &AbstractInstanceNutPlayer::CreatureChat);
 	instanceClass->Func(_SC("rotate_creature"), &AbstractInstanceNutPlayer::RotateCreature);
+	instanceClass->Func(_SC("set_flags"), &AbstractInstanceNutPlayer::SetServerFlags);
+	instanceClass->Func(_SC("get_flags"), &AbstractInstanceNutPlayer::GetServerFlags);
 
 	// Functions that return arrays or tables have to be dealt with differently
 	instanceClass->SquirrelFunc(_SC("get_nearby_creature"), &AbstractInstanceNutPlayer::GetCreaturesNearCreature);
@@ -171,6 +173,26 @@ void AbstractInstanceNutPlayer::RegisterAbstractInstanceFunctions(NutPlayer *ins
 	Sqrat::ConstTable(vm).Const(_SC("TS_FRIEND_ALIVE"), TargetStatus::Friend_Alive);
 	Sqrat::ConstTable(vm).Const(_SC("TS_FRIEND_DEAD"), TargetStatus::Friend_Dead);
 
+	/* NOTE: Not all */
+	Sqrat::ConstTable(vm).Const(_SC("SF_LOCAL_ACTIVE"), ServerFlags::LocalActive);
+	Sqrat::ConstTable(vm).Const(_SC("SF_IS_PLAYER"), ServerFlags::IsPlayer);
+	Sqrat::ConstTable(vm).Const(_SC("SF_IS_NPC"), ServerFlags::IsNPC);
+	Sqrat::ConstTable(vm).Const(_SC("SF_IS_SIDEKICK"), ServerFlags::IsSidekick);
+	Sqrat::ConstTable(vm).Const(_SC("SF_INIT_ATTACK"), ServerFlags::InitAttack);
+	Sqrat::ConstTable(vm).Const(_SC("SF_AUTO_TARGET"), ServerFlags::AutoTarget);
+	Sqrat::ConstTable(vm).Const(_SC("SF_CALLED_BACK"), ServerFlags::CalledBack);
+	Sqrat::ConstTable(vm).Const(_SC("SF_PATH_NODE"), ServerFlags::PathNode);
+	Sqrat::ConstTable(vm).Const(_SC("SF_LEASH_RECALL"), ServerFlags::LeashRecall);
+	Sqrat::ConstTable(vm).Const(_SC("SF_IS_TRANSFORMED"), ServerFlags::IsTransformed);
+	Sqrat::ConstTable(vm).Const(_SC("SF_NEUTRAL_INACTIVE"), ServerFlags::NeutralInactive);
+	Sqrat::ConstTable(vm).Const(_SC("SF_STATIONARY"), ServerFlags::Stationary);
+	Sqrat::ConstTable(vm).Const(_SC("SF_HAS_MELEE_WEAPON"), ServerFlags::HasMeleeWeapon);
+	Sqrat::ConstTable(vm).Const(_SC("SF_HAS_SHIELD"), ServerFlags::HasShield);
+	Sqrat::ConstTable(vm).Const(_SC("SF_NON_COMBATANT"), ServerFlags::Noncombatant);
+	Sqrat::ConstTable(vm).Const(_SC("SF_TAUNTED"), ServerFlags::Taunted);
+	Sqrat::ConstTable(vm).Const(_SC("SF_SCRIPT_MOVEMENT"), ServerFlags::ScriptMovement);
+
+
 }
 
 
@@ -186,6 +208,25 @@ void AbstractInstanceNutPlayer::CreatureChat(int CID, const char *channel, const
 		actInst->LSendToAllSimulator(buffer, PrepExt_GenericChatMessage(buffer, CID, ci->css.display_name, channel, message), -1);
 	else
 		g_Log.AddMessageFormat("Could not find creature with ID %d in this instance to communicate.", CID);
+}
+
+void AbstractInstanceNutPlayer::SetServerFlags(int CID, int flags) {
+	CreatureInstance *ci = actInst->GetInstanceByCID(CID);
+	if(ci != NULL) {
+		ci->serverFlags = flags;
+	}
+	else
+		g_Log.AddMessageFormat("Could not find creature with ID %d in this instance to set server flags.", CID);
+}
+
+int AbstractInstanceNutPlayer::GetServerFlags(int CID) {
+	CreatureInstance *ci = actInst->GetInstanceByCID(CID);
+	if(ci != NULL) {
+		return ci->serverFlags;
+	}
+	else
+		g_Log.AddMessageFormat("Could not find creature with ID %d in this instance to set server flags.", CID);
+	return -1;
 }
 
 void AbstractInstanceNutPlayer::RotateCreature(int CID, int rotation) {
