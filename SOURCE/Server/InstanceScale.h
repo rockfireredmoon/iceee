@@ -33,7 +33,7 @@ public:
 		QUALITY_LEGENDARY = 5,
 		QUALITY_ARTIFACT  = 6
 	};
-	enum
+	enum : signed short
 	{
 		FLAG_RARITY_NONE                     = 0,
 		FLAG_RARITY_NORMAL            = (1 << 0),    
@@ -54,7 +54,7 @@ public:
 		FLAG_RARITY_ALL_NAMED         = FLAG_RARITY_NORMAL_NAMED | FLAG_RARITY_HEROIC_NAMED | FLAG_RARITY_EPIC_NAMED | FLAG_RARITY_LEGEND_NAMED,
 		FLAG_RARITY_ALL_ALL           = FLAG_RARITY_NORMAL_ALL | FLAG_RARITY_HEROIC_ALL | FLAG_RARITY_EPIC_ALL | FLAG_RARITY_LEGEND_ALL,
 
-		FLAG_ALL                      = 0xFFFFFFFF,
+		FLAG_ALL                      = 0x0FFF,
 	};
 
 	//Reserve extra space so that index [MAX_QUALITY] is valid.

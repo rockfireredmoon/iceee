@@ -283,7 +283,7 @@ enum StatUpdateType
 
 namespace STAT
 {
-	enum StatEnum
+	enum StatEnum : signed short
 	{
 	APPEARANCE               = 0,
 	EQ_APPEARANCE            = 1,
@@ -525,9 +525,9 @@ namespace StatusEffects
 
 struct StatusEffectBitInfo
 {
-	short effectID;
+	unsigned int effectID;
 	short arrayIndex;
-	unsigned int bit;
+	int bit;
 	const char *name;
 };
 
