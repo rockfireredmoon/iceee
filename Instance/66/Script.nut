@@ -13,5 +13,6 @@ function on_kill_1385() {
 	// Portal
   inst.info("on kill!");
 	inst.spawn(1150656, 0, 0);
+	inst.spawn(1127135, 0, 0);
 }
 
