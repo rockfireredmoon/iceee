@@ -67,7 +67,7 @@ this.ProtocolDef <- {
 		[71] = "_handleItemDefUpdateMsg",
 		[80] = "_handlePVPStatUpdateMessage",
 		[90] = "_handleHeartbeatMessage",
-		[97] = "_handleShake",
+		[91] = "_handleShake",
 		[98] = "_handleSceneryEffectMsg",
 		[99] = "_handleGuildUpdateMsg",
 		inspectCreatureDef = 0,

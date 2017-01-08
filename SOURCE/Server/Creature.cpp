@@ -5547,10 +5547,6 @@ int CreatureInstance :: RunMovementStep(void)
 			int moveSpeed = CREATURE_WALK_SPEED;
 
 			// Scripting can request a particular speed
-			if(CurrentTarget.desiredSpeed != 0) {
-				moveSpeed = CurrentTarget.desiredSpeed;
-			}
-
 			if(CurrentTarget.targ != NULL)
 			{
 				nextMoveTime = CREATURE_MOVEMENT_COMBAT_FREQUENCY;
@@ -5561,6 +5557,10 @@ int CreatureInstance :: RunMovementStep(void)
 				nextMoveTime = CREATURE_MOVEMENT_NONCOMBAT_FREQUENCY;
 				if(serverFlags & ServerFlags::LeashRecall)
 					moveSpeed = CREATURE_RUN_SPEED;
+			}
+
+			if(CurrentTarget.desiredSpeed != 0) {
+				moveSpeed = CurrentTarget.desiredSpeed;
 			}
 
 			int maxSpeed = moveSpeed + css.mod_movement;  //the mod may be negative

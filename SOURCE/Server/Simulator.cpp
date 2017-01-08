@@ -6264,10 +6264,10 @@ void SimulatorThread :: handle_query_creature_isusable(void)
 
 			if(status[0] == 'N') {
 				CreatureDefinition *cdef = CreatureDef.GetPointerByCDef(target->CreatureDefID);
-				if(cdef != NULL && (cdef->DefHints & CDEF_HINT_USABLE))
-					status = "Y";
-				else if(cdef != NULL && (cdef->DefHints & CDEF_HINT_USABLE_SPARKLY))
+				if(cdef != NULL && (cdef->DefHints & CDEF_HINT_USABLE_SPARKLY))
 					status = "Q";
+				else if(cdef != NULL && (cdef->DefHints & CDEF_HINT_USABLE))
+					status = "Y";
 				else if(target->HasStatus(StatusEffects::HENGE))
 					status = "Y";
 			}

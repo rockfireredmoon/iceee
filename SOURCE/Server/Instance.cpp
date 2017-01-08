@@ -2868,7 +2868,7 @@ int ActiveInstance :: DetachSceneryEffect(char *outBuf, int sceneryId, int effec
 
 int ActiveInstance :: Shake(char *outbuf, float amount, float time, float range) {
 	int wpos = 0;
-	wpos += PutByte(&outbuf[wpos], 97);       //_handleShake
+	wpos += PutByte(&outbuf[wpos], 91);       //_handleShake
 	wpos += PutShort(&outbuf[wpos], 0);      //Placeholder for size
 	wpos += PutFloat(&outbuf[wpos], amount);
 	wpos += PutFloat(&outbuf[wpos], time);
