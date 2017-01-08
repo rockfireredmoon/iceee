@@ -1,5 +1,7 @@
 #!/bin/bash
 #
+# Synchronizes server created and edited assets with Git as well as
+# retrieving external changes. 
 
 trap "rm -f /tmp/$$-gf-tmp.tgz /tmp/$$.tarlist" 0 1 2 3 15
 
