@@ -134,6 +134,7 @@ void AbstractInstanceNutPlayer::RegisterAbstractInstanceFunctions(NutPlayer *ins
 	// Functions that return arrays or tables have to be dealt with differently
 	instanceClass->SquirrelFunc(_SC("cids"), &InstanceNutPlayer::CIDs);
 	instanceClass->SquirrelFunc(_SC("all_cids"), &InstanceNutPlayer::AllCIDs);
+	instanceClass->SquirrelFunc(_SC("all_players"), &InstanceNutPlayer::AllPlayers);
 
 	// Common instance functions (TODO register in abstract class somehow)
 	instanceClass->Func(_SC("get_creature_distance"), &AbstractInstanceNutPlayer::GetCreatureDistance);
@@ -146,6 +147,7 @@ void AbstractInstanceNutPlayer::RegisterAbstractInstanceFunctions(NutPlayer *ins
 	instanceClass->Func(_SC("local_broadcast"), &AbstractInstanceNutPlayer::LocalBroadcast);
 	instanceClass->Func(_SC("info"), &AbstractInstanceNutPlayer::Info);
 	instanceClass->Func(_SC("message"), &AbstractInstanceNutPlayer::Message);
+	instanceClass->Func(_SC("untarget"), &AbstractInstanceNutPlayer::Untarget);
 	instanceClass->Func(_SC("error"), &AbstractInstanceNutPlayer::Error);
 	instanceClass->Func(_SC("get_cid_for_prop"), &AbstractInstanceNutPlayer::GetCIDForPropID);
 	instanceClass->Func(_SC("chat"), &AbstractInstanceNutPlayer::Chat);
@@ -288,6 +290,17 @@ void AbstractInstanceNutPlayer::Shake(float amount, float time, float range) {
 	actInst->LSendToAllSimulator(buffer, wpos, -1);
 }
 
+
+bool AbstractInstanceNutPlayer::Untarget(int CID)
+{
+	CreatureInstance *source = actInst->GetInstanceByCID(CID);
+	if(source != NULL)
+	{
+		source->SelectTarget(NULL);
+		return true;
+	}
+	return false;
+}
 bool AbstractInstanceNutPlayer::CreatureUse(int CID, int abilityID) {
 	return DoCreatureUse(CID, abilityID, true);
 }
@@ -404,6 +417,24 @@ SQInteger AbstractInstanceNutPlayer::AllCIDs(HSQUIRRELVM v)
                 sq_arrayappend(v,-2);
 			}
 			for(it = left.value.actInst->SidekickListPtr.begin(); it != left.value.actInst->SidekickListPtr.end(); ++it) {
+            	sq_pushinteger(v,(*it)->CreatureID);
+                sq_arrayappend(v,-2);
+			}
+            return 1;
+        }
+        return sq_throwerror(v, Sqrat::Error::Message(v).c_str());
+    }
+    return sq_throwerror(v, _SC("wrong number of parameters"));
+}
+
+SQInteger AbstractInstanceNutPlayer::AllPlayers(HSQUIRRELVM v)
+{
+    if (sq_gettop(v) == 1) {
+        Sqrat::Var<InstanceNutPlayer&> left(v, 1);
+        if (!Sqrat::Error::Occurred(v)) {
+            sq_newarray(v, 0);
+            std::vector<CreatureInstance*>::iterator it;
+			for(it = left.value.actInst->PlayerListPtr.begin(); it != left.value.actInst->PlayerListPtr.end(); ++it) {
             	sq_pushinteger(v,(*it)->CreatureID);
                 sq_arrayappend(v,-2);
 			}
