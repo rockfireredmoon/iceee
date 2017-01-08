@@ -152,7 +152,7 @@ fi
 
 # Push
 if [ $outgoing = y ] ; then
-    if ! git push  >/dev/null ; then
+    if ! git push  ; then
         echo "$0: failed to push" >&2
         exit 1
     fi
