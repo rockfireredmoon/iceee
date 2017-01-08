@@ -66,6 +66,9 @@ public:
 	void Error(const char *message);
 	void Chat(const char *name, const char *channel, const char *message);
 	void CreatureChat(int cid, const char *channel, const char *message);
+	void SetServerFlags(int CID, int flags);
+	int GetServerFlags(int CID);
+
 protected:
 	CreatureInstance* GetNPCPtr(int CID);
 	CreatureInstance* GetCreaturePtr(int CID);
