@@ -5,6 +5,7 @@
 
 trap "rm -f /tmp/$$-gf-tmp.tgz /tmp/$$.tarlist" 0 1 2 3 15
 
+export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/ee-bin:
 DATA_DIRS="Instance AIScript Scenery QuestScripts Creatures"
 
 incoming=n
