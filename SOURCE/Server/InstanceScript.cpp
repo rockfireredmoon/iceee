@@ -154,6 +154,7 @@ void AbstractInstanceNutPlayer::RegisterAbstractInstanceFunctions(NutPlayer *ins
 	instanceClass->Func(_SC("creature_chat"), &AbstractInstanceNutPlayer::CreatureChat);
 	instanceClass->Func(_SC("rotate_creature"), &AbstractInstanceNutPlayer::RotateCreature);
 	instanceClass->Func(_SC("set_flags"), &AbstractInstanceNutPlayer::SetServerFlags);
+	instanceClass->Func(_SC("set_flag"), &AbstractInstanceNutPlayer::SetServerFlag);
 	instanceClass->Func(_SC("get_flags"), &AbstractInstanceNutPlayer::GetServerFlags);
 
 	// Functions that return arrays or tables have to be dealt with differently
@@ -212,7 +213,16 @@ void AbstractInstanceNutPlayer::CreatureChat(int CID, const char *channel, const
 		g_Log.AddMessageFormat("Could not find creature with ID %d in this instance to communicate.", CID);
 }
 
-void AbstractInstanceNutPlayer::SetServerFlags(int CID, int flags) {
+void AbstractInstanceNutPlayer::SetServerFlag(int CID, unsigned long flag, bool state) {
+	CreatureInstance *ci = actInst->GetInstanceByCID(CID);
+	if(ci != NULL) {
+		ci->SetServerFlag(flag, state);
+	}
+	else
+		g_Log.AddMessageFormat("Could not find creature with ID %d in this instance to set server flag.", CID);
+}
+
+void AbstractInstanceNutPlayer::SetServerFlags(int CID, unsigned long flags) {
 	CreatureInstance *ci = actInst->GetInstanceByCID(CID);
 	if(ci != NULL) {
 		ci->serverFlags = flags;
@@ -221,7 +231,7 @@ void AbstractInstanceNutPlayer::SetServerFlags(int CID, int flags) {
 		g_Log.AddMessageFormat("Could not find creature with ID %d in this instance to set server flags.", CID);
 }
 
-int AbstractInstanceNutPlayer::GetServerFlags(int CID) {
+unsigned long AbstractInstanceNutPlayer::GetServerFlags(int CID) {
 	CreatureInstance *ci = actInst->GetInstanceByCID(CID);
 	if(ci != NULL) {
 		return ci->serverFlags;

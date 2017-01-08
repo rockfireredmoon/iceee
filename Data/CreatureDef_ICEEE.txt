@@ -1461,6 +1461,7 @@ ai_package=nothing
 
 [ENTRY]
 ID=7865
+defHints=2048
 will_regen=1
 might_regen=1
 appearance=p1:{["sz"]="0.5",["a"]="Prop-Interact_Sphere"}

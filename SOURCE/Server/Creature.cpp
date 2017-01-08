@@ -1234,6 +1234,9 @@ void CreatureInstance :: RegisterHostility(CreatureInstance *attacker, int hosti
 	if(serverFlags & ServerFlags::IsPlayer)
 		return;
 
+	if(serverFlags & ServerFlags::Noncombatant)
+		return;
+
 	SetServerFlag(ServerFlags::LocalActive, true);
 
 	CreatureInstance *oldTarget = CurrentTarget.targ;

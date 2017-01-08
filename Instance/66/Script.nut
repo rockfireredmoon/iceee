@@ -18,6 +18,9 @@ loc_trap_door <- Point(4363, 2769);
 const VALKAL2_SPAWN_PROP = 1150656;
 const TRAP_DOOR_SPAWN_PROP = 1150652;
 
+// Tile locations
+valkal2_spawn_tile <- Point(10,3);
+
 // State variables
 cid_valkal1 <- 0;
 
@@ -29,30 +32,40 @@ function find_valkal1() {
         valkal1_health();
 }
 
+function t1() {
+	inst.despawn_all(CDEF_VALKAL1);
+}
+
 function valkal1_health() {
 	if(cid_valkal1 == 0)
 		return;
 
 	local health = inst.get_health_pc(cid_valkal1);
-    if(health < 5) {
-        inst.set_flags(cid_valkal1, SF_NON_COMBATANT);
-		inst.creature_chat(cid_valkal1, "s/", "This is not over...");
+    if(health < 90) {
+        inst.set_flag(cid_valkal1, SF_NON_COMBATANT, true);
+        inst.set_status_effect(cid_valkal1, "INVINCIBLE", -1);
+        inst.set_status_effect(cid_valkal1, "UNATTACKABLE", -1);
+        inst.set_status_effect(cid_valkal1, "UNKILLABLE", -1);
+        inst.unhate(cid_valkal1);
+		
         foreach(a in inst.all_players())
             inst.untarget(a);
         inst.untarget(cid_valkal1);
-        //inst.set_status_effect(cid_valkal1, "UNATTACKABLE", 99999);
-        //inst.set_status_effect(cid_valkal1, "UNKILLABLE", 99999);
-        inst.unhate(cid_valkal1);
-        //inst.creature_use(cid_valkal1, _AB("Healing Potion: Level 50"));
+        
+		inst.creature_chat(cid_valkal1, "s/", "This is not over...");
+        inst.creature_use(cid_valkal1, _AB("Healing Potion: Level 50"));
         inst.queue(function() {
             inst.walk_then(cid_valkal1, loc_trap_door, CREATURE_RUN_SPEED, 0, function() {
 		        inst.creature_chat(cid_valkal1, "s/", "... Follow if you dare");
-                inst.despawn(cid_valkal1);
+		        inst.queue(function() {
+		        	inst.despawn(cid_valkal1)
+		        }, 1000);
 
 	            // Portal
 	            inst.spawn(TRAP_DOOR_SPAWN_PROP, 0, 0);
               
-	            // Valkal 2
+	            // Valkal 2. He is in another tile that probably is not loaded, so make sure it is
+	            inst.load_spawn_tile(valkal2_spawn_tile);
 	            inst.spawn(VALKAL2_SPAWN_PROP, 0, 0);
 			});
         }, 1000);    
