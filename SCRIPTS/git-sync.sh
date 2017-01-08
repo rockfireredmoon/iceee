@@ -189,7 +189,6 @@ if [ "$incoming" = "y" ] ; then
 	# TODO not right for TAWD
 	if ! cp SOURCE/Server/$SERVICE  /opt/$SERVICE/$SERVICE ; then
 	   echo "Failed to copy server binary" >&2
-	   exit 1
 	fi
 	
 	service $SERVICE start
