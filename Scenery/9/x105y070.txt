@@ -33,19 +33,10 @@ Scale=1,1,1
 [ENTRY]
 ID=1129216
 Asset=Prop-Instance_Entrance#Prop-Instance_Entrance
-Name=Untitled
+Name=
 Pos=79425.5,1337.99,53100.5
 Orient=0,-0.859862,0,0.510526
 Scale=1,1,1
-
-[ENTRY]
-ID=1150670
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=
-Pos=79426,1310,53102.4
-Orient=0,-0.247404,0,0.968912
-Scale=1,1,1
-spawnPackage=#F7866
 
 [ENTRY]
 ID=151026591
