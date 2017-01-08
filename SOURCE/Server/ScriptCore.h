@@ -13,6 +13,8 @@
 #include "sqrat.h"
 #include "util/SquirrelObjects.h"
 
+const int USE_FAIL_DELAY = 250; //Milliseconds to wait before retrying a failed script "use" command.
+
 void PrintFunc(HSQUIRRELVM v, const SQChar *s, ...);
 void Errorfunc(HSQUIRRELVM v, const SQChar *s, ...);
 
@@ -471,6 +473,8 @@ public:
 	std::string GetStatus();
 	bool JumpToLabel(const char *name);
 	bool JumpToLabel(const char *name, std::vector<ScriptParam> parms);
+	std::string RunFunctionWithStringReturn(std::string name, std::vector<ScriptParam> parms, bool time);
+	bool RunFunctionWithBoolReturn(std::string name, std::vector<ScriptParam> parms, bool time);
 	bool RunFunction(std::string name, std::vector<ScriptParam> parms, bool time);
 	void Broadcast(const char *message);
 	unsigned long GetServerTime();
@@ -508,6 +512,7 @@ public:
 
 private:
 	bool ExecEvent(NutScriptEvent *nse, int index);
+	bool DoRunFunction(std::string name, std::vector<ScriptParam> parms, bool time, bool retval);
 
 };
 

@@ -1,14 +1,4 @@
 [ENTRY]
-Name=The Tent
-Comment=A weird tent
-Position=63800.0,875.0,64967.0
-
-[ENTRY]
-Name=Standing here
-Comment=[Comment here]
-Position=58271.0,792.0,66942.0
-
-[ENTRY]
 Name=Grunes Tal -  North Warpig Town
 Comment=Next to Entrance to swineline
 Position=60178.0,595.0,55121.0
@@ -61,7 +51,7 @@ Position=71586.0,932.0,63326.0
 [ENTRY]
 Name=Dambat Pass
 Comment=Swineland
-Position=79356.0,711.0,56438.0
+Position=29560.0,214.0,65552.0
 
 [ENTRY]
 Name=Grunes - Swineland Bridge
@@ -99,24 +89,24 @@ Comment=Grunes
 Position=59987.0,595.0,55540.0
 
 [ENTRY]
-Name=Redeemers Camp
+Name=Junderbrood Spitterskrill
 Comment=[Comment here]
-Position=58229.0,787.0,66856.0
+Position=57701.0,738.0,61520.0
 
 [ENTRY]
-Name=Ironbirch
-Comment=[Comment here]
-Position=52805.0,696.0,77818.0
+Name=Jump test 1
+Comment=Ascending eifel tower
+Position=29051.0,500.0,62577.0
 
 [ENTRY]
-Name=Midlands Listerm
-Comment=[Comment here]
-Position=41599.0,273.0,59906.0
+Name=1 Swineland SW cornerish
+Comment=here where the map turns to frost peak in about a step\n
+Position=67435.0,964.0,61427.0
 
 [ENTRY]
-Name=Hogcatchers
-Comment=[Comment here]
-Position=66004.0,820.0,59750.0
+Name=1 Swineland SE Corner
+Comment=on the compass star
+Position=82105.0,727.0,61393.0
 
 [ENTRY]
 Name=Grunes Entrance
@@ -124,14 +114,19 @@ Comment=[Comment here]
 Position=29484.0,218.0,65514.0
 
 [ENTRY]
-Name=Behemoth
-Comment=[Comment here]
-Position=52607.0,788.0,68996.0
+Name=1 Swineland NW corner
+Comment=in the mountains above nooktown
+Position=61676.0,1221.0,48258.0
 
 [ENTRY]
-Name=Junderbrood Spitterskrill
-Comment=[Comment here]
-Position=57701.0,738.0,61520.0
+Name=1 Swineland NE
+Comment=map may need to be reworked this is as far as i can get north east
+Position=78015.0,722.0,50191.0
+
+[ENTRY]
+Name=1 Swineland South center
+Comment= road referance
+Position=73653.0,879.0,60018.0
 
 [ENTRY]
 Name=Dustshore - Bazzart
@@ -167,4 +162,34 @@ Position=29051.0,500.0,62577.0
 Name=Breman
 Comment=[Comment here]
 Position=67658.0,420.0,37036.0
+
+[ENTRY]
+Name=1 Swineland N Centerish
+Comment=Road Referance
+Position=29694.0,225.0,65698.0
+
+[ENTRY]
+Name=! Water low spot that needs to be fixed
+Comment=between grune and swine we need to fix this or block it off
+Position=65327.0,600.0,66938.0
+
+[ENTRY]
+Name=Swineland Boss Hawgs
+Comment=[Comment here]
+Position=67475.0,1368.0,54254.0
+
+[ENTRY]
+Name=Swineland Nooktown
+Comment=near the nook
+Position=62328.0,392.0,48997.0
+
+[ENTRY]
+Name=!possible tiles for  isntances
+Comment=there is  a serise of tiles ehre that might make good instance maps
+Position=97246.0,57.0,33395.0
+
+[ENTRY]
+Name=Valkals Bloodkeep
+Comment=[Comment here]
+Position=79278.0,1300.0,52845.0
 

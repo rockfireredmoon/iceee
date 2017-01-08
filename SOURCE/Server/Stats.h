@@ -198,7 +198,8 @@ struct CharacterStatSet
 
 	//Were in 8.8 but not 06
 	float mod_luck;
-	short health_regen;
+	// Changed to float in ICEEE
+	float health_regen;
 	short bleeding;
 	int damage_shield;
 	short hide_nameboard;
@@ -210,6 +211,7 @@ struct CharacterStatSet
 	short quest_exp_gain_rate;
 	short drop_gain_rate;
 	std::string tags;
+	short max_health_pc;
 
 	CharacterStatSet();
 	void CopyFrom(CharacterStatSet *source);
@@ -441,6 +443,7 @@ namespace STAT
 	QUEST_EXP_GAIN_RATE      = 162,
 	DROP_GAIN_RATE      	 = 163,
 	TAGS			      	 = 164,
+	MAX_HEALTH_PC      	 	 = 165,
 	};
 }
 
@@ -611,8 +614,8 @@ extern const int MAX_LEVEL;
 extern short LevelBaseStats[71][3];
 extern short ProfBaseStats[6][5];
 
-const int NumStats = 130;
-extern StatDefinition StatList[130];
+const int NumStats = 131;
+extern StatDefinition StatList[131];
 
 int GetStatIndex(short StatID);
 int GetStatIndexByName(const char *name);

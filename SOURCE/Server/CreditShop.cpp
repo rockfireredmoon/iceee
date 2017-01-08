@@ -443,9 +443,6 @@ int CreditShopManager::LoadItems(void) {
 		}
 	}
 
-
-
-
 	return 0;
 }
 

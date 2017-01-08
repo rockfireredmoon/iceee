@@ -183,7 +183,7 @@ Spawn=2992,10  ;Mournful Visitor (34) at 5
 ; TODO: from creature file
 [ENTRY]
 Name=1_dng_db_UnivitedGuest_k_34
-Spawn=248,100  Uninvited Guest (34)
+Spawn=248,100 ;Uninvited Guest (34)
 
 [ENTRY]
 Name=1_dng_db_guests/Visitors_33_34_BACK

@@ -1996,9 +1996,17 @@ int DtrigHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
 			g_Logs.simulator->info("ai=%v", ptr->css.ai_package);
 			g_Logs.simulator->info("faction=%v", ptr->Faction);
 			g_Logs.simulator->info("sflags=%v", ptr->serverFlags);
+			g_Logs.simulator->info("Rotation=%d", ptr->Rotation);
+			g_Logs.simulator->info("Heading=%d", ptr->Heading);
 			for (size_t i = 0; i <= 62; i++)
 				if (ptr->HasStatus(i))
 					g_Logs.simulator->info("Status:%v", GetStatusNameByID(i));
+
+			char ConvBuf[32];
+			size_t i;
+			for(i = 0; i < NumStats; i++) {
+				g_Logs.simulator->info("%s=%s", StatList[i].name, GetStatValueAsString(i, ConvBuf, &ptr->css));
+			}
 		}
 	}
 		break;
@@ -3167,3 +3175,24 @@ int ScriptClearQueueHandler::handleCommand(SimulatorThread *sim,
 }
 
 
+
+
+//
+// ScriptExecHandler
+//
+
+RotHandler::RotHandler() :
+		AbstractCommandHandler(
+				"Usage: /rot [<amount>]", 1) {
+}
+
+int RotHandler::handleCommand(SimulatorThread *sim,
+	CharacterServerData *pld, SimulatorQuery *query,
+	CreatureInstance *creatureInstance) {
+	if(query->argCount > 0) {
+		sim->SetRotation(query->GetInteger(0), 1);
+	}
+	Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1), "Rotation: %d", creatureInstance->Rotation);
+	sim->SendInfoMessage(sim->Aux1, INFOMSG_INFO);
+	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
+}

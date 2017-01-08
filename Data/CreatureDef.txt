@@ -16109,6 +16109,7 @@ creature_category=Mortal
 rarity=1
 ai_package=example
 total_size=45
+defHints=48
 
 [ENTRY]
 defHints=48
@@ -30264,6 +30265,7 @@ profession=1
 creature_category=Mortal
 rarity=3
 ai_package=example
+appearance=n4:{["sk"]={["bone"]="F8EADB",["skin"]="C07574",["cloth"]="FFCB72",["eye"]="8D0F0B",["trim"]="FFE8C1",["armor"]="091836",["leather"]="7E3F18"},["c"]="Horde-Warpig",["sz"]="1"}
 
 [ENTRY]
 ID=1298
@@ -30329,6 +30331,7 @@ profession=1
 creature_category=Mortal
 rarity=3
 ai_package=example
+appearance=c2:{["a"]=[{["type"]="Item-Staff-High1",["node"]="back_sheathe",["colors"]=["543D0F","93133D","138AAC","17B5BF"]}],["c"]={["boots"]={["type"]="Armor-Medium-Epic2",["colors"]=[]},["chest"]={["type"]="Armor-Medium-Epic2",["colors"]=[]},["arms"]={["type"]="Armor-Medium-Epic2",["colors"]=[]},["leggings"]={["type"]="Armor-Medium-Epic2",["colors"]=[]},["collar"]={["type"]="Armor-Medium-Epic2",["colors"]=[]},["belt"]={["type"]="Armor-Medium-Epic2",["colors"]=[]},["gloves"]={["type"]="Armor-Medium-Epic2",["colors"]=[]}},["b"]="m",["sk"]={["base"]="BF622B",["eye"]="FFFFFF",["eye_white"]="FFFFFF",["highlights"]="3F0000"},["sz"]="1",["h"]=0,["g"]="m",["r"]="u"}
 
 [ENTRY]
 ID=1301
@@ -30481,6 +30484,7 @@ profession=1
 creature_category=Mortal
 rarity=3
 ai_package=example
+appearance=c2:{["a"]=[{["type"]="Armor-Warrior-Redeemer_Ranger-Left_Pauldron",["node"]="left_shoulder",["colors"]=["FFFFFF","000000","0054A6"]},{["type"]="Armor-Warrior-Redeemer_Ranger-Right_Pauldron",["node"]="right_shoulder"},{["type"]="Item-1hAxe-Basic7",["node"]="right_hand"},{["type"]="Item-1hAxe-Basic3",["node"]="left_hand"}],["c"]={["boots"]={["type"]="Armor-Warrior-Redeemer_Ranger",["colors"]=[]},["chest"]={["type"]="Armor-Warrior-Redeemer_Ranger",["colors"]=[]},["arms"]={["type"]="Armor-Warrior-Redeemer_Ranger",["colors"]=[]},["leggings"]={["type"]="Armor-Warrior-Redeemer_Ranger",["colors"]=[]},["collar"]={["type"]="Armor-Warrior-Redeemer_Captain",["colors"]=[]},["belt"]={["type"]="Armor-Warrior-Redeemer_Ranger",["colors"]=[]},["gloves"]={["type"]="Armor-Warrior-Redeemer_Ranger",["colors"]=[]}},["b"]="m",["sk"]={["hair"]="7D6994",["inner_ear"]="B08957",["snout"]="9F7B4F",["base"]="6A5656",["horns"]="80400F",["eye"]="73FFFF",["nails"]="D40000",["nose"]="9C4F14",["eye_white"]="EBAC83"},["sz"]="1",["h"]=2,["g"]="f",["r"]="t"}
 
 [ENTRY]
 ID=1308
@@ -30669,6 +30673,7 @@ profession=1
 creature_category=Mortal
 rarity=3
 ai_package=example
+appearance=c2:{["a"]=[{["type"]="Armor-Warrior-Redeemer_Captain-Left_Pauldron",["node"]="left_shoulder",["colors"]=["E9C4A2","000000","7F6A7F"]},{["type"]="Armor-Warrior-Redeemer_Captain-Right_Pauldron",["node"]="right_shoulder"},{["type"]="Item-2hMace-Basic4",["node"]="right_hand"}],["c"]={["boots"]={["type"]="Armor-Warrior-Redeemer_Captain",["colors"]=[]},["chest"]={["type"]="Armor-Warrior-Redeemer_Captain",["colors"]=[]},["arms"]={["type"]="Armor-Warrior-Redeemer_Captain",["colors"]=[]},["leggings"]={["type"]="Armor-Warrior-Redeemer_Captain",["colors"]=[]},["collar"]={["type"]="Armor-Warrior-Redeemer_Captain",["colors"]=[]},["belt"]={["type"]="Armor-Warrior-Redeemer_Captain",["colors"]=[]},["gloves"]={["type"]="Armor-Warrior-Redeemer_Captain",["colors"]=[]}},["b"]="n",["sk"]={["hands_feet"]="BFAE9C",["goatee"]="A18065",["eye_white"]="DCDCDC",["snout"]="E5DDD0",["horns"]="90735C",["face_highlight"]="C9B6A4",["eye"]="809497",["hoves"]="89745C",["eye_lid"]="D4CDC2",["base"]="A78A6F"},["sz"]="1",["h"]=0,["g"]="m",["r"]="c"}
 
 [ENTRY]
 ID=1316
@@ -30746,12 +30751,14 @@ profession=1
 creature_category=Mortal
 rarity=3
 ai_package=example
+appearance=c2:{["a"]=[{["type"]="Item-Shield-Basic4",["node"]="left_hand",["colors"]=["FFFFFF","000000","0054A6"]},{["type"]="Item-1hSword-Basic5",["node"]="right_hand"}],["c"]={["boots"]={["type"]="Armor-Warrior-Redeemer_Captain",["colors"]=[]},["chest"]={["type"]="Armor-Warrior-Redeemer_Captain",["colors"]=[]},["arms"]={["type"]="Armor-Warrior-Redeemer_Captain",["colors"]=[]},["leggings"]={["type"]="Armor-Warrior-Redeemer_Captain",["colors"]=[]},["collar"]={["type"]="Armor-Warrior-Redeemer_Captain",["colors"]=[]},["belt"]={["type"]="Armor-Warrior-Redeemer_Captain",["colors"]=[]},["gloves"]={["type"]="Armor-Warrior-Redeemer_Captain",["colors"]=[]}},["b"]="n",["sk"]={["feet"]="7F7F7F",["head_feathers"]="34353F",["beak"]="FFFED4",["eye_white"]="E9BFBF",["crest"]="111115",["shoulders"]="2A2A2A",["tail"]="3F3F3F",["base"]="2A2A2A",["eye_lid"]="343F3F",["face_highlight"]="000000",["eye"]="4C57FF",["chest"]="DACFB9",["legs_hands"]="23232A",["diamonds"]="4C57FF"},["sz"]="1",["h"]=1,["g"]="f",["r"]="v"}e
 
 [ENTRY]
 defHints=48
 ID=1320
 will_regen=1
 might_regen=1
+appearance=n4:{["a"]=[{["node"]="back_sheathe",["type"]="Item-2hMace-Medium3",["colors"]=[]}],["c"]="Horde-Warpig",["sk"]={["armor"]="091836",["bone"]="ffd6b1",["cloth"]="ff8516",["eye"]="913901",["leather"]="7e3f18",["skin"]="e9e973",["trim"]="6b5a7f"},["sz"]="1"}
 level=50
 display_name=Mason
 sub_name=Priest of Nook
@@ -30765,6 +30772,7 @@ total_size=5
 ID=1321
 will_regen=1
 might_regen=1
+appearance=n4:{["a"]=[{["node"]="left_shoulder",["type"]="Armor-Medium-High1-Left_Pauldron",["colors"]=[]},{["node"]="right_shoulder",["type"]="Armor-Medium-High1-Right_Pauldron",["colors"]=[]},{["node"]="back_sheathe",["type"]="Item-2hMace-Medium2",["colors"]=[]}],["c"]="Horde-Warpig",["sk"]={["armor"]="6a0000",["bone"]="f8eadb",["cloth"]="ffcb72",["eye"]="000994",["leather"]="550000",["skin"]="e6b695",["trim"]="947d20"},["sz"]="1"}
 level=50
 display_name=Dixon
 sub_name=Priest of Nook
@@ -30851,6 +30859,7 @@ profession=1
 creature_category=Mortal
 rarity=3
 ai_package=example
+appearance=n4:{["a"]=[{["type"]="Armor-Heavy-Epic2-Right_Pauldron",["node"]="right_shoulder"},{["type"]="Armor-Heavy-Epic2-Left_Pauldron",["node"]="left_shoulder"},{["type"]="Item-2hAxe-High1",["node"]="right_hand"}],["c"]="Horde-Warpig",["sk"]={["bone"]="F8EADB",["skin"]="E99494",["cloth"]="FFCB72",["eye"]="913901",["trim"]="551C04",["armor"]="091836",["leather"]="7E3F18"},["sz"]="1"}
 
 [ENTRY]
 ID=1326
@@ -30914,6 +30923,7 @@ profession=1
 creature_category=Mortal
 rarity=3
 ai_package=example
+appearance=n4:{["a"]=[{["type"]="Item-Shovel",["node"]="right_hand",["colors"]=["543D0F","93133D","138AAC","17B5BF"]}],["c"]="Horde-Warpig",["sk"]={["bone"]="202DFF",["skin"]="E6B695",["cloth"]="AE6AFF",["eye"]="000994",["trim"]="D88EFF",["armor"]="000000",["leather"]="000000"},["sz"]="1"}
 
 [ENTRY]
 ID=1329
@@ -31043,7 +31053,8 @@ level=46
 display_name=Bloodchanter Alchemist
 profession=5
 creature_category=Unliving
-ai_package=example
+ai_package=mage_fire_brave_6
+appearance=n4:{["sk"]={["hair"]="C0C3E9",["ear"]="AA8B8B",["neck"]="55473B",["cloth2"]="373955",["skin"]="6A6A6A",["cloth1"]="57586A",["tattoos"]="FFFFFF",["accent"]="150E05"},["c"]="Horde-Vampire_Mage",["sz"]="1.0216"}
 
 [ENTRY]
 ID=1335
@@ -31067,7 +31078,8 @@ level=47
 display_name=Bloodchanter Alchemist
 profession=5
 creature_category=Unliving
-ai_package=example
+ai_package= mage_frost_brave_6
+appearance=n4:{["sk"]={["hair"]="C0C3E9",["ear"]="AA8B8B",["neck"]="55473B",["cloth2"]="552626",["skin"]="6A6A6A",["cloth1"]="6A3847",["tattoos"]="6A0E00",["accent"]="150E05"},["c"]="Horde-Vampire_Mage",["sz"]="1.0216"} 
 
 [ENTRY]
 ID=1336
@@ -31394,11 +31406,13 @@ sub_name=Squisher Clan
 profession=2
 creature_category=Mortal
 ai_package=example
+appearance=n4:{["a"]=[{["type"]="Armor-Medium-High3-Left_Pauldron",["node"]="left_shoulder"},{["type"]="Armor-Medium-High3-Right_Pauldron",["node"]="right_shoulder"},{["type"]="Armor-Cloth-Low7-Helmet",["node"]="helmet"},{["type"]="Item-1hAxe-Basic3",["node"]="right_hand"}],["c"]="Horde-Warpig2",["sk"]={["cloth2"]="817263",["skin"]="AA6C6C",["cloth1"]="943208",["eye"]="8D0F0B",["nails"]="B5815D",["trim"]="954806"},["sz"]="1"}
 
 [ENTRY]
 ID=1353
 will_regen=1
 might_regen=1
+appearance=n4:{["a"]=[{["node"]="helmet",["type"]="Armor-Light-Mid1-Helmet",["colors"]=[]},{["node"]="left_shoulder",["type"]="Armor-Light-Mid1-Left_Pauldron",["colors"]=[]},{["node"]="right_shoulder",["type"]="Armor-Light-Mid1-Right_Pauldron",["colors"]=[]},{["node"]="left_hand",["type"]="Item-Shield-Speed_Sign",["colors"]=[]},{["node"]="right_hand",["type"]="Item-Warpig_Blade1",["colors"]=[]}],["c"]="Horde-Warpig2",["sz"]="1"}
 level=50
 display_name=Mercenary
 sub_name=Smooshin' Clan
@@ -31431,7 +31445,9 @@ display_name=Vaj Coltres
 profession=2
 creature_category=Unliving
 rarity=1
-ai_package=example
+ai_package=custom_heathendel_deathknight40
+appearance=n4:{["sk"]={["skin"]="2A2A2A",["armor"]="000000",["eye"]="ED1C24",["hair"]="C0C3E9",["mouth"]="3F0000",["trim"]="7F0000"},["c"]="Horde-Vampire_Fury",["sz"]="1.0216"}
+
 
 [ENTRY]
 ID=1355
@@ -31451,6 +31467,7 @@ appearance=n4:{["a"]=[{["type"]="Item-2hAxe-Basic4",["node"]="right_hand",["colo
 ID=1356
 will_regen=1
 might_regen=1
+appearance=n4:{["a"]=[{["node"]="left_shoulder",["type"]="Armor-Cloth-Epic1-Left_Pauldron",["colors"]=["557f46","550000","f16629"]},{["node"]="right_shoulder",["type"]="Armor-Cloth-Epic1-Right_Pauldron",["colors"]=["639451","550000","f16629"]},{["node"]="right_hand",["type"]="Item-Staff-Medium3",["colors"]=["7f5543","2a2a2a","2fff61"]}],["c"]="Horde-Warpig2",["sk"]={["cloth1"]="555555",["cloth2"]="7f2b07",["eye"]="7f7f7f",["nails"]="b5815d",["skin"]="e99f5b",["trim"]="166a3b"},["sz"]="1"}
 level=50
 display_name=Nook-Whisperer
 sub_name=Priest of Nook
@@ -31482,6 +31499,9 @@ level=46
 display_name=Soulstriker Cutthroat
 profession=2
 creature_category=Mortal
+ai_package=death_creature_brave_6
+appearance=n4:{["sk"]={["skin"]="1D4955",["accent"]="A66570",["eye"]="9D0A0E",["armor"]="534741",["hair"]="554720",["teeth"]="8F9281"},["c"]="Horde-Vampire_Mehirim",["sz"]="1.0"}
+=Mortal
 ai_package=example
 
 [ENTRY]
@@ -31506,7 +31526,8 @@ level=47
 display_name=Soulstriker Cutthroat
 profession=2
 creature_category=Unliving
-ai_package=example
+ai_package=knight_brave_6
+appearance=n4:{["sk"]={["eye_mouth"]="A60006",["hair"]="554720",["tattoo"]="4D6082",["nose_ear"]="7297C6",["skin"]="1D4955",["cloth"]="AA6D35",["cape"]="36596B",["belt"]="705E07"},["c"]="Horde-Vampire",["sz"]="1.0"}
 
 [ENTRY]
 ID=1359
@@ -31685,42 +31706,43 @@ appearance=n4:{["sk"]={["stinger"]="FFFFFF",["eyes"]="FF2300",["shell"]="7F1100"
 
 [ENTRY]
 ID=1366
-strength=131
-dexterity=112
-constitution=131
-psyche=92
-spirit=92
-base_damage_melee=164
-damage_resist_melee=2292
-damage_resist_fire=2292
-damage_resist_frost=2292
-damage_resist_mystic=2292
-damage_resist_death=2292
+strength=195
+dexterity=195
+constitution=220
+psyche=150
+spirit=150
+base_damage_melee=218
+damage_resist_melee=4250
+damage_resist_fire=4250
+damage_resist_frost=4250
+damage_resist_mystic=4250
+damage_resist_death=4250
 will_regen=1
 might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
-level=49
+level=50
 display_name=Palatine Guard
 profession=2
 creature_category=Unliving
 rarity=1
 ai_package=4_knight_30
+appearance=n4:{["a"]=[{["type"]="Armor-Base1A-Right_Pauldron",["node"]="right_shoulder",["colors"]=["940D0D","940D0D","BFBF9F"]},{["type"]="Armor-Base1A-Left_Pauldron",["node"]="left_shoulder",["colors"]=["940D0D","940D0D","BFBF9F"]},{["type"]="Item-1hMace-Epic4",["colors"]=["5F6878","A79C80","D17F19","2147DF","56FEFF"],["effect"]="Par-WE-1hMace-Fire",["node"]="right_hand"},{["type"]="Item-1hMace-High3",["node"]="left_hand",["colors"]=["71856E","EBAF20","652C2C","816F2B"]}],["c"]="Horde-Vampire_Bloodletter",["sk"]={["accent1"]="7F0000",["skin"]="7986AD",["cloth"]="000000",["eye"]="ED1C24",["accent2"]="590E0E",["mouth"]="A87077",["teeth"]="A99D94"},["sz"]="1.4"}
 
 [ENTRY]
 ID=1367
-strength=135
-dexterity=115
-constitution=135
-psyche=92
-spirit=92
-base_damage_melee=169
-damage_resist_melee=2341
-damage_resist_fire=2341
-damage_resist_frost=2341
-damage_resist_mystic=2341
-damage_resist_death=2341
+strength=195
+dexterity=195
+constitution=220
+psyche=150
+spirit=150
+base_damage_melee=218
+damage_resist_melee=4250
+damage_resist_fire=4250
+damage_resist_frost=4250
+damage_resist_mystic=4250
+damage_resist_death=4250
 will_regen=1
 might_regen=1
 offhand_weapon_damage=500
@@ -31732,95 +31754,74 @@ profession=2
 creature_category=Unliving
 rarity=1
 ai_package=4_knight_30
+appearance=n4:{["a"]=[{["type"]="Armor-Base1A-Right_Pauldron",["node"]="right_shoulder",["colors"]=["940D0D","940D0D","BFBF9F"]},{["type"]="Armor-Base1A-Left_Pauldron",["node"]="left_shoulder",["colors"]=["940D0D","940D0D","BFBF9F"]},{["type"]="Item-1hMace-Epic4",["colors"]=["5F6878","A79C80","D17F19","2147DF","56FEFF"],["effect"]="Par-WE-1hMace-Fire",["node"]="right_hand"},{["type"]="Item-1hMace-High3",["node"]="left_hand",["colors"]=["71856E","EBAF20","652C2C","816F2B"]}],["c"]="Horde-Vampire_Bloodletter",["sk"]={["accent1"]="7F0000",["skin"]="7986AD",["cloth"]="000000",["eye"]="ED1C24",["accent2"]="590E0E",["mouth"]="A87077",["teeth"]="A99D94"},["sz"]="1.4"}
 
 [ENTRY]
 ID=1368
-strength=89
-dexterity=89
-constitution=128
-psyche=110
-spirit=128
-base_damage_melee=160
-damage_resist_melee=2243
-damage_resist_fire=2243
-damage_resist_frost=2243
-damage_resist_mystic=2243
-damage_resist_death=2243
+strength=150
+dexterity=150
+constitution=190
+psyche=185
+spirit=185
+base_damage_melee=195
+damage_resist_melee=3500
+damage_resist_fire=3500
+damage_resist_frost=3500
+damage_resist_mystic=3500
+damage_resist_death=3500
 will_regen=1
 might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
-level=48
+level=49
 display_name=Koltai Bloodsworn
 profession=5
 creature_category=Unliving
 rarity=1
 ai_package=4_druid_melee_30
+appearance=n4:{["a"]=[{["type"]="Armor-Base1A-Right_Pauldron",["node"]="right_shoulder",["colors"]=["940D0D","940D0D","BFBF9F"]},{["type"]="Armor-Base1A-Left_Pauldron",["node"]="left_shoulder",["colors"]=["940D0D","940D0D","BFBF9F"]},{["type"]="Item-1hMace-Epic4",["colors"]=["5F6878","A79C80","D17F19","2147DF","56FEFF"],["effect"]="Par-WE-1hMace-Fire",["node"]="right_hand"},{["type"]="Item-1hMace-High3",["node"]="left_hand",["colors"]=["71856E","EBAF20","652C2C","816F2B"]}],["c"]="Horde-Vampire_Mage",["sk"]={["hair"]="B49F95",["ear"]="A99184",["neck"]="550000",["cloth2"]="23232A",["skin"]="7986AD",["cloth1"]="45476A",["tattoos"]="A42F24",["accent"]="554015"},["sz"]="1.4"}
+
 
 [ENTRY]
 ID=1369
-strength=92
-dexterity=92
-constitution=131
-psyche=112
-spirit=131
-base_damage_melee=164
-damage_resist_melee=2292
-damage_resist_fire=2292
-damage_resist_frost=2292
-damage_resist_mystic=2292
-damage_resist_death=2292
+strength=150
+dexterity=150
+constitution=200
+psyche=200
+spirit=200
+base_damage_melee=198
+damage_resist_melee=3850
+damage_resist_fire=3850
+damage_resist_frost=3850
+damage_resist_mystic=3850
+damage_resist_death=3850
 will_regen=1
 might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
-level=49
+level=50
 display_name=Koltai Bloodsworn
 profession=5
 creature_category=Unliving
 rarity=1
 ai_package=4_druid_melee_30
+appearance=n4:{["a"]=[{["type"]="Armor-Base1A-Right_Pauldron",["node"]="right_shoulder",["colors"]=["940D0D","940D0D","BFBF9F"]},{["type"]="Armor-Base1A-Left_Pauldron",["node"]="left_shoulder",["colors"]=["940D0D","940D0D","BFBF9F"]},{["type"]="Item-1hMace-Epic4",["colors"]=["5F6878","A79C80","D17F19","2147DF","56FEFF"],["effect"]="Par-WE-1hMace-Fire",["node"]="right_hand"},{["type"]="Item-1hMace-High3",["node"]="left_hand",["colors"]=["71856E","EBAF20","652C2C","816F2B"]}],["c"]="Horde-Vampire_Mage",["sk"]={["hair"]="B49F95",["ear"]="A99184",["neck"]="382E55",["cloth2"]="2A1C10",["skin"]="7986AD",["cloth1"]="2A0000",["tattoos"]="A42F24",["accent"]="554015"},["sz"]="1.4"}
 
 [ENTRY]
 ID=1370
-strength=92
-dexterity=92
-constitution=131
-psyche=112
-spirit=131
-base_damage_melee=164
-damage_resist_melee=2292
-damage_resist_fire=2292
-damage_resist_frost=2292
-damage_resist_mystic=2292
-damage_resist_death=2292
-will_regen=1
-might_regen=1
-offhand_weapon_damage=500
-casting_setback_chance=500
-channeling_break_chance=500
-level=49
-display_name=Koltai Bloodbound
-profession=5
-creature_category=Unliving
-rarity=1
-ai_package=4_druid_range_30
-
-[ENTRY]
-ID=1371
-strength=92
-dexterity=92
-constitution=135
-psyche=115
-spirit=135
-base_damage_melee=169
-damage_resist_melee=2341
-damage_resist_fire=2341
-damage_resist_frost=2341
-damage_resist_mystic=2341
-damage_resist_death=2341
+strength=145
+dexterity=145
+constitution=200
+psyche=185
+spirit=185
+base_damage_melee=185
+damage_resist_melee=3500
+damage_resist_fire=3500
+damage_resist_frost=3500
+damage_resist_mystic=3500
+damage_resist_death=3500
 will_regen=1
 might_regen=1
 offhand_weapon_damage=500
@@ -31832,6 +31833,34 @@ profession=5
 creature_category=Unliving
 rarity=1
 ai_package=4_druid_range_30
+appearance=n4:{["a"]=[{["type"]="Armor-Base1A-Right_Pauldron",["node"]="right_shoulder",["colors"]=["940D0D","940D0D","BFBF9F"]},{["type"]="Armor-Base1A-Left_Pauldron",["node"]="left_shoulder",["colors"]=["940D0D","940D0D","BFBF9F"]},{["type"]="Item-1hMace-Epic4",["colors"]=["5F6878","A79C80","D17F19","2147DF","56FEFF"],["effect"]="Par-WE-1hMace-Fire",["node"]="right_hand"},{["type"]="Item-1hMace-High3",["node"]="left_hand",["colors"]=["71856E","EBAF20","652C2C","816F2B"]}],["c"]="Horde-Vampire",["sk"]={["eye_mouth"]="A60006",["hair"]="B49F95",["tattoo"]="4D6082",["nose_ear"]="7297C6",["skin"]="553B47",["cloth"]="0F2A17",["cape"]="25396A",["belt"]="705E07"},["sz"]="1.4"}
+
+
+[ENTRY]
+ID=1371
+strength=145
+dexterity=145
+constitution=200
+psyche=190
+spirit=190
+base_damage_melee=175
+damage_resist_melee=3250
+damage_resist_fire=3250
+damage_resist_frost=3250
+damage_resist_mystic=3250
+damage_resist_death=3250
+will_regen=1
+might_regen=1
+offhand_weapon_damage=500
+casting_setback_chance=500
+channeling_break_chance=500
+level=49
+display_name=Koltai Bloodbound
+profession=5
+creature_category=Unliving
+rarity=1
+ai_package=4_druid_range_30
+appearance=n4:{["a"]=[{["type"]="Armor-Base1A-Right_Pauldron",["node"]="right_shoulder",["colors"]=["940D0D","940D0D","BFBF9F"]},{["type"]="Armor-Base1A-Left_Pauldron",["node"]="left_shoulder",["colors"]=["940D0D","940D0D","BFBF9F"]},{["type"]="Item-1hMace-Epic4",["colors"]=["5F6878","A79C80","D17F19","2147DF","56FEFF"],["effect"]="Par-WE-1hMace-Fire",["node"]="right_hand"},{["type"]="Item-1hMace-High3",["node"]="left_hand",["colors"]=["71856E","EBAF20","652C2C","816F2B"]}],["c"]="Horde-Vampire",["sk"]={["eye_mouth"]="A60006",["hair"]="7F7F7F",["tattoo"]="4D6082",["nose_ear"]="7297C6",["skin"]="465547",["cloth"]="464B94",["cape"]="232A1E",["belt"]="705E07"},["sz"]="1.4"}
 
 [ENTRY]
 ID=1372
@@ -31936,27 +31965,27 @@ appearance=n4:{["a"]=[{["type"]="Item-Particle-Elemental_Air_Base",["node"]="bas
 [ENTRY]
 ID=1376
 strength=92
-dexterity=112
+dexterity=115
 constitution=92
-psyche=131
-spirit=131
-base_damage_melee=164
-damage_resist_melee=2292
-damage_resist_fire=2292
-damage_resist_frost=2292
-damage_resist_mystic=2292
-damage_resist_death=2292
+psyche=135
+spirit=135
+base_damage_melee=169
+damage_resist_melee=2341
+damage_resist_fire=2341
+damage_resist_frost=2341
+damage_resist_mystic=2341
+damage_resist_death=2341
 will_regen=1
 might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
-level=49
+level=50
 display_name=Blood Elemental
 profession=4
 creature_category=Unliving
 rarity=1
-ai_package=4_mage_30
+ai_package=custom_heathendel_deathmage40
 appearance=n4:{["sk"]={["water"]="3F0000",["water_blend"]="940000",["water_highlight"]="D40000"},["c"]="Horde-Elemental_Water",["sz"]="1.1"}
 
 [ENTRY]
@@ -31987,17 +32016,17 @@ ai_package=4_mage_30
 
 [ENTRY]
 ID=1378
-strength=89
-dexterity=110
-constitution=89
-psyche=128
-spirit=128
-base_damage_melee=160
-damage_resist_melee=2243
-damage_resist_fire=2243
-damage_resist_frost=2243
-damage_resist_mystic=2243
-damage_resist_death=2243
+strength=150
+dexterity=150
+constitution=185
+psyche=175
+spirit=175
+base_damage_melee=170
+damage_resist_melee=3750
+damage_resist_fire=3750
+damage_resist_frost=3750
+damage_resist_mystic=3750
+damage_resist_death=3750
 will_regen=1
 might_regen=1
 offhand_weapon_damage=500
@@ -32009,20 +32038,21 @@ profession=4
 creature_category=Unliving
 rarity=1
 ai_package=4_mage_30
+appearance=n4:{["a"]=[{["type"]="Armor-Base1A-Right_Pauldron",["node"]="right_shoulder",["colors"]=["940D0D","940D0D","BFBF9F"]},{["type"]="Armor-Base1A-Left_Pauldron",["node"]="left_shoulder",["colors"]=["940D0D","940D0D","BFBF9F"]},{["type"]="Item-1hMace-Epic4",["colors"]=["5F6878","A79C80","D17F19","2147DF","56FEFF"],["effect"]="Par-WE-1hMace-Fire",["node"]="right_hand"},{["type"]="Item-1hMace-High3",["node"]="left_hand",["colors"]=["71856E","EBAF20","652C2C","816F2B"]}],["c"]="Horde-Wandering_Eye",["sk"]={["pupil"]="7F6B58",["flesh"]="6A5656",["eye"]="FF7373",["veins"]="AA0000"},["sz"]="1.2"}
 
 [ENTRY]
 ID=1379
-strength=92
-dexterity=112
-constitution=92
-psyche=131
-spirit=131
-base_damage_melee=164
-damage_resist_melee=2292
-damage_resist_fire=2292
-damage_resist_frost=2292
-damage_resist_mystic=2292
-damage_resist_death=2292
+strength=150
+dexterity=150
+constitution=185
+psyche=175
+spirit=175
+base_damage_melee=177
+damage_resist_melee=3750
+damage_resist_fire=3750
+damage_resist_frost=3750
+damage_resist_mystic=3750
+damage_resist_death=3750
 will_regen=1
 might_regen=1
 offhand_weapon_damage=500
@@ -32034,6 +32064,7 @@ profession=4
 creature_category=Unliving
 rarity=1
 ai_package=4_mage_30
+appearance=n4:{["a"]=[{["type"]="Armor-Base1A-Right_Pauldron",["node"]="right_shoulder",["colors"]=["940D0D","940D0D","BFBF9F"]},{["type"]="Armor-Base1A-Left_Pauldron",["node"]="left_shoulder",["colors"]=["940D0D","940D0D","BFBF9F"]},{["type"]="Item-1hMace-Epic4",["colors"]=["5F6878","A79C80","D17F19","2147DF","56FEFF"],["effect"]="Par-WE-1hMace-Fire",["node"]="right_hand"},{["type"]="Item-1hMace-High3",["node"]="left_hand",["colors"]=["71856E","EBAF20","652C2C","816F2B"]}],["c"]="Horde-Wandering_Eye",["sk"]={["pupil"]="7F0000",["flesh"]="6A4919",["eye"]="FFD0D0",["veins"]="AA0000"},["sz"]="1.2"}
 
 [ENTRY]
 ID=1380
@@ -32062,17 +32093,17 @@ ai_package=4_knight_30
 
 [ENTRY]
 ID=1381
-strength=131
-dexterity=112
-constitution=131
-psyche=92
-spirit=92
-base_damage_melee=164
-damage_resist_melee=2292
-damage_resist_fire=2292
-damage_resist_frost=2292
-damage_resist_mystic=2292
-damage_resist_death=2292
+strength=195
+dexterity=175
+constitution=200
+psyche=150
+spirit=150
+base_damage_melee=200
+damage_resist_melee=4000
+damage_resist_fire=4000
+damage_resist_frost=4000
+damage_resist_mystic=4000
+damage_resist_death=4000
 will_regen=1
 might_regen=1
 offhand_weapon_damage=500
@@ -32083,46 +32114,49 @@ display_name=Sethisite Impaler
 profession=2
 creature_category=Unliving
 rarity=1
-ai_package=4_knight_30
+ai_package=custom_heathendel_knight_40
+appearance=n4:{["a"]=[{["type"]="Armor-Base1A-Right_Pauldron",["node"]="right_shoulder",["colors"]=["940D0D","940D0D","BFBF9F"]},{["type"]="Armor-Base1A-Left_Pauldron",["node"]="left_shoulder",["colors"]=["940D0D","940D0D","BFBF9F"]},{["type"]="Item-1hMace-Epic4",["colors"]=["5F6878","A79C80","D17F19","2147DF","56FEFF"],["effect"]="Par-WE-1hMace-Fire",["node"]="right_hand"},{["type"]="Item-1hMace-High3",["node"]="left_hand",["colors"]=["71856E","EBAF20","652C2C","816F2B"]}],["c"]="Horde-Vampire_Fury",["sk"]={["skin"]="AAA98D",["armor"]="151515",["eye"]="FFD0D0",["hair"]="000000",["mouth"]="C76D62",["trim"]="6A0000"},["sz"]="1.4"}
+
 
 [ENTRY]
 ID=1382
-strength=92
-dexterity=92
-constitution=135
-psyche=115
-spirit=135
-base_damage_melee=169
-damage_resist_melee=2341
-damage_resist_fire=2341
-damage_resist_frost=2341
-damage_resist_mystic=2341
-damage_resist_death=2341
+strength=200
+dexterity=185
+constitution=225
+psyche=150
+spirit=150
+base_damage_melee=225
+damage_resist_melee=4250
+damage_resist_fire=4250
+damage_resist_frost=4250
+damage_resist_mystic=4250
+damage_resist_death=4250
 will_regen=1
 might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
 level=50
-display_name=Nocterror
-profession=5
+display_name=Sethisite Impaler
+profession=2
 creature_category=Unliving
 rarity=1
-ai_package=4_druid_melee_30
+ai_package=custom_heathendel_knight_40
+appearance=n4:{["a"]=[{["type"]="Armor-Base1A-Right_Pauldron",["node"]="right_shoulder",["colors"]=["940D0D","940D0D","BFBF9F"]},{["type"]="Armor-Base1A-Left_Pauldron",["node"]="left_shoulder",["colors"]=["940D0D","940D0D","BFBF9F"]},{["type"]="Item-1hMace-Epic4",["colors"]=["5F6878","A79C80","D17F19","2147DF","56FEFF"],["effect"]="Par-WE-1hMace-Fire",["node"]="right_hand"},{["type"]="Item-1hMace-High3",["node"]="left_hand",["colors"]=["71856E","EBAF20","652C2C","816F2B"]}],["c"]="Horde-Vampire_Fury",["sk"]={["skin"]="AA8F5C",["armor"]="465547",["eye"]="FFD0D0",["hair"]="292A3F",["mouth"]="C76D62",["trim"]="34286A"},["sz"]="1.4"}
 
 [ENTRY]
 ID=1383
-strength=135
-dexterity=135
-constitution=115
-psyche=92
-spirit=92
-base_damage_melee=169
-damage_resist_melee=2341
-damage_resist_fire=2341
-damage_resist_frost=2341
-damage_resist_mystic=2341
-damage_resist_death=2341
+strength=275
+dexterity=275
+constitution=350
+psyche=165
+spirit=165
+base_damage_melee=245
+damage_resist_melee=5000
+damage_resist_fire=5000
+damage_resist_frost=5000
+damage_resist_mystic=5000
+damage_resist_death=5000
 will_regen=1
 might_regen=1
 offhand_weapon_damage=500
@@ -32134,20 +32168,21 @@ profession=3
 creature_category=Unliving
 rarity=1
 ai_package=4_rogue_30
+appearance=n4:{["a"]=[{["type"]="Armor-Base1A-Right_Pauldron",["node"]="right_shoulder",["colors"]=["940D0D","940D0D","BFBF9F"]},{["type"]="Armor-Base1A-Left_Pauldron",["node"]="left_shoulder",["colors"]=["940D0D","940D0D","BFBF9F"]},{["type"]="Item-1hMace-Epic4",["colors"]=["5F6878","A79C80","D17F19","2147DF","56FEFF"],["effect"]="Par-WE-1hMace-Fire",["node"]="right_hand"},{["type"]="Item-1hMace-High3",["node"]="left_hand",["colors"]=["71856E","EBAF20","652C2C","816F2B"]}],["c"]="Horde-Vampire",["sk"]={["eye_mouth"]="A60006",["hair"]="242A10",["tattoo"]="4D6082",["nose_ear"]="550000",["skin"]="7F6B45",["cloth"]="2A140F",["cape"]="3F0000",["belt"]="947D07"},["sz"]="1.7"}
 
 [ENTRY]
 ID=1384
-strength=92
-dexterity=115
-constitution=92
-psyche=135
-spirit=135
-base_damage_melee=169
-damage_resist_melee=2341
-damage_resist_fire=2341
-damage_resist_frost=2341
-damage_resist_mystic=2341
-damage_resist_death=2341
+strength=240
+dexterity=250
+constitution=350
+psyche=190
+spirit=190
+base_damage_melee=280
+damage_resist_melee=5500
+damage_resist_fire=5500
+damage_resist_frost=5500
+damage_resist_mystic=5500
+damage_resist_death=5500
 will_regen=1
 might_regen=1
 offhand_weapon_damage=500
@@ -32158,32 +32193,35 @@ display_name=Hemator
 profession=4
 creature_category=Unliving
 rarity=1
-ai_package=4_mage_30
+ai_package=knight_brave_6
+appearance=n4:{["sk"]={["skin"]="6A5939",["accent"]="554015",["eye"]="FF0000",["armor"]="AAAAAA",["hair"]="FFFFFF",["teeth"]="FFFED4"},["c"]="Horde-Vampire_Mehirim",["sz"]="1.7"}
+
 
 [ENTRY]
 ID=1385
-strength=135
-dexterity=115
-constitution=135
-psyche=92
-spirit=92
-base_damage_melee=169
-damage_resist_melee=2341
-damage_resist_fire=2341
-damage_resist_frost=2341
-damage_resist_mystic=2341
-damage_resist_death=2341
+level=50
+display_name=Valkal
+creature_category=Unliving
+rarity=2
+appearance=n4:{["a"]=[{["type"]="Armor-Base1A-Right_Pauldron",["node"]="right_shoulder",["colors"]=["940D0D","940D0D","BFBF9F"]},{["type"]="Armor-Base1A-Left_Pauldron",["node"]="left_shoulder",["colors"]=["940D0D","940D0D","BFBF9F"]},{["type"]="Item-1hMace-Epic4",["colors"]=["5F6878","A79C80","D17F19","2147DF","56FEFF"],["effect"]="Par-WE-1hMace-Fire",["node"]="right_hand"},{["type"]="Item-1hMace-High3",["node"]="left_hand",["colors"]=["71856E","EBAF20","652C2C","816F2B"]}],["c"]="Horde-Vampire_Lord",["sk"]={["trim"]="000000",["mouth"]="3F3434",["skin"]="7491AA",["cloth"]="2A0000",["accent"]="FF0000",["eye"]="FF0000",["hair"]="000000",["armor"]="3F3F3F"},["sz"]="1.6"}
+strength=350
+dexterity=275
+constitution=425
+psyche=225
+spirit=225
+base_damage_melee=300
+damage_resist_melee=5500
+damage_resist_fire=5500
+damage_resist_frost=5500
+damage_resist_mystic=5500
+damage_resist_death=5500
 will_regen=1
 might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
-level=50
-display_name=Valkal
 profession=2
-creature_category=Unliving
-rarity=2
-ai_package=4_knight_30
+ai_package=custom_heathendel_deathdruid40
 
 [ENTRY]
 ID=1386
@@ -32212,27 +32250,29 @@ ai_package=4_knight_30
 
 [ENTRY]
 ID=1387
-strength=131
-dexterity=112
+strength=150
+dexterity=142
 constitution=131
-psyche=92
-spirit=92
-base_damage_melee=164
-damage_resist_melee=2292
-damage_resist_fire=2292
-damage_resist_frost=2292
-damage_resist_mystic=2292
-damage_resist_death=2292
+psyche=110
+spirit=110
+damage_resist_melee=4000
+damage_resist_fire=4000
+damage_resist_frost=4000
+damage_resist_mystic=4000
+damage_resist_death=4000
 will_regen=1
 might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
+appearance=n4:{["sk"]={["armor1"]="2a577c",["armor2"]="a7651f",["armor3"]="741510",["base"]="ca8864",["belt"]="885b41",["flag"]="ddd0c3",["hair"]="a18a4b",["skull"]="9a8e82"},["c"]="Boss-Boss_Hog",["sz"]="2.4"}
 level=49
 display_name=Boss Hawg
+health_regen=100
 profession=2
 creature_category=Mortal
 rarity=2
+base_damage_melee=200
 ai_package=4_knight_30
 
 [ENTRY]
@@ -32308,7 +32348,8 @@ display_name=Haz'ard Scout
 profession=3
 creature_category=Mortal
 rarity=1
-ai_package=4_rogue_30
+ai_package=custom_heathendel_rogue40
+appearance=c2:{["a"]=[{["type"]="Item-1hAxe-Epic1",["node"]="right_hand"},{["type"]="Item-Shield-Medium4",["node"]="left_hand"}],["c"]={["boots"]={["type"]="Armor-Light-Epic3",["colors"]=[]},["chest"]={["type"]="Armor-Light-Epic3",["colors"]=[]},["arms"]={["type"]="Armor-Light-Epic3",["colors"]=[]},["leggings"]={["type"]="Armor-Light-Epic3",["colors"]=[]},["collar"]={["type"]="Armor-Light-Epic3",["colors"]=[]},["belt"]={["type"]="Armor-Light-Epic3",["colors"]=[]},["gloves"]={["type"]="Armor-Light-Epic3",["colors"]=[]}},["b"]="n",["sk"]={["hands_feet"]="816A5D",["eye_white"]="EEE0D0",["nails"]="444444",["ear_tips"]="9B785D",["base"]="6A5949",["eye"]="A1664B",["inner_ear"]="C9A680",["nose"]="84746C",["head_highlight"]="B4926E"},["sz"]="1.0216",["h"]=0,["g"]="m",["r"]="x"}
 
 [ENTRY]
 ID=1391
@@ -32832,19 +32873,18 @@ ai_package=4_knight_30
 
 [ENTRY]
 ID=1412
-strength=92
-dexterity=92
-constitution=135
+strength=150
+dexterity=125
+constitution=300
 psyche=115
-spirit=135
-base_damage_melee=169
-damage_resist_melee=2341
-damage_resist_fire=2341
-damage_resist_frost=2341
-damage_resist_mystic=2341
-damage_resist_death=2341
+spirit=175
+damage_resist_melee=7000
+damage_resist_fire=500
+damage_resist_frost=500
+damage_resist_mystic=6000
+damage_resist_death=7000
 will_regen=1
-might_regen=1
+might_regen=2
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
@@ -32853,7 +32893,9 @@ display_name=Skrill Queen
 profession=5
 creature_category=Mortal
 rarity=2
+base_damage_melee=275
 ai_package=mystic_creature_brave_6
+appearance=n4:{["c"]="Boss-Hive_Queen",["sz"]="1.0824"}
 
 [ENTRY]
 ID=1413
@@ -32947,7 +32989,8 @@ level=47
 display_name=Vampider
 profession=5
 creature_category=Unliving
-ai_package=example
+ai_package=death_creature_brave_6
+appearance=n4:{["sk"]={["base"]="151500",["trim"]="474554",["eye"]="71A6AC",["shell"]="35385C",["hair"]="292A3C",["webbing"]="A4B1D1"},["c"]="Horde-Vampider",["sz"]="1.0216"}
 
 [ENTRY]
 defHints=2
@@ -74651,3 +74694,59 @@ ai_package=example
 
 
 
+[ENTRY]
+defHints=256
+ID=3453
+strength=75
+dexterity=75
+constitution=75
+psyche=75
+spirit=75
+damage_resist_melee=5000
+damage_resist_fire=5000
+damage_resist_frost=5000
+damage_resist_mystic=5000
+damage_resist_death=5000
+will_regen=1
+might_regen=1
+offhand_weapon_damage=100
+casting_setback_chance=500
+channeling_break_chance=500
+appearance=c2:{["h"]=0,["b"]="r",["sk"]={["base"]="9b6d3a",["beak"]="e48828",["beard"]="a29058",["chest_ankles"]="805a30",["eye"]="ffd83f",["eye_brows"]="a97b4e",["eye_lid"]="8a7b4b",["hands"]="b44d38",["head_top"]="c94125",["mask"]="ad6e2c",["nails"]="745f56",["neck_belly"]="817650",["spots"]="9b8e61"},["r"]="n",["g"]="m",["sz"]="1.1"}
+level=50
+display_name=Heath's Test Mob
+sub_name=Kronos for Life
+profession=5
+creature_category=Unliving
+rarity=3
+base_damage_melee=150
+base_health=8000
+ai_package=4_mage_30
+total_size=1.2000000476837158
+
+[ENTRY]
+ID=3351
+strength=350
+dexterity=275
+constitution=425
+psyche=225
+spirit=225
+damage_resist_melee=5500
+damage_resist_fire=5500
+damage_resist_frost=5500
+damage_resist_mystic=5500
+damage_resist_death=5500
+will_regen=1
+might_regen=1
+offhand_weapon_damage=500
+casting_setback_chance=500
+channeling_break_chance=500
+appearance=n4:{["a"]=[{["type"]="Armor-Base1A-Right_Pauldron",["node"]="right_shoulder",["colors"]=["940D0D","940D0D","BFBF9F"]},{["type"]="Armor-Base1A-Left_Pauldron",["node"]="left_shoulder",["colors"]=["940D0D","940D0D","BFBF9F"]},{["type"]="Item-1hMace-Epic4",["colors"]=["5F6878","A79C80","D17F19","2147DF","56FEFF"],["effect"]="Par-WE-1hMace-Fire",["node"]="right_hand"},{["type"]="Item-1hMace-High3",["node"]="left_hand",["colors"]=["71856E","EBAF20","652C2C","816F2B"]}],["c"]="Horde-Vampire_Lord",["sz"]="1.6"}
+level=50
+display_name=Valkal
+sub_name=(TEMP 2nd Boss)
+profession=2
+creature_category=Unliving
+rarity=2
+base_damage_melee=300
+ai_package=custom_heathendel_deathdruid40

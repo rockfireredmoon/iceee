@@ -168,6 +168,17 @@ int RunRemoteAction(ReportBuffer &report, MULTISTRING &header, MULTISTRING &para
 		g_MOTD_Message = data;
 		return REMOTE_COMPLETE;
 	}
+	else if(strcmp(action, "syschat") == 0)
+	{
+		const char *data = GetValueOfKey(params, "data");
+		if(data == NULL)
+			return REMOTE_FAILED;
+
+		g_SimulatorManager.BroadcastChat(0, "System", "*SysChat", data);
+
+
+		return REMOTE_COMPLETE;
+	}
 	else if(strcmp(action, "importkeys") == 0)
 	{
 		g_AccountManager.ImportKeys();

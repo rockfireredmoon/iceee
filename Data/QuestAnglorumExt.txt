@@ -741,5 +741,3 @@ Obj.0.myCreatureDefID=3628
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=7285.25,269.853,60835.7,9;
-
-

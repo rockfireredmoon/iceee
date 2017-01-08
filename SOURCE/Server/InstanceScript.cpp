@@ -1,11 +1,13 @@
 #include "InstanceScript.h"
 #include "AIScript.h"
 #include "AIScript2.h"
+#include "Ability2.h"
 #include "Instance.h"
 #include "CommonTypes.h"
 
 #include "Simulator.h"
 #include "Creature.h"
+#include "Config.h"
 #include <stdlib.h>
 #include "sqrat.h"
 #include <algorithm>    // std::remove
@@ -113,6 +115,16 @@ std::string InstanceNutDef::GetInstanceScriptPath(int zoneID,
 	return strBuf;
 }
 
+ActiveInteraction::ActiveInteraction(CreatureInstance *creature, ScriptCore::NutScriptEvent *event)
+{
+	mCreature = creature;
+	mEvent = event;
+}
+
+ActiveInteraction::~ActiveInteraction() {
+}
+
+
 //
 // Abstract player class for scripts that run in instances. This includes instance scripts
 // and AI scripts
@@ -123,6 +135,103 @@ AbstractInstanceNutPlayer::AbstractInstanceNutPlayer() {
 
 AbstractInstanceNutPlayer::~AbstractInstanceNutPlayer() {
 
+}
+
+void AbstractInstanceNutPlayer::RegisterAbstractInstanceFunctions(NutPlayer *instance,  Sqrat::DerivedClass<AbstractInstanceNutPlayer, NutPlayer> *instanceClass) {
+
+	// Functions that return arrays or tables have to be dealt with differently
+	instanceClass->SquirrelFunc(_SC("cids"), &InstanceNutPlayer::CIDs);
+	instanceClass->SquirrelFunc(_SC("all_cids"), &InstanceNutPlayer::AllCIDs);
+	instanceClass->SquirrelFunc(_SC("all_players"), &InstanceNutPlayer::AllPlayers);
+
+	// Common instance functions (TODO register in abstract class somehow)
+	instanceClass->Func(_SC("get_creature_distance"), &AbstractInstanceNutPlayer::GetCreatureDistance);
+	instanceClass->Func(_SC("creature_spawn_prop"), &AbstractInstanceNutPlayer::GetCreatureSpawnProp);
+	instanceClass->Func(_SC("get_npc_id"), &AbstractInstanceNutPlayer::GetNPCID);
+	instanceClass->Func(_SC("shake"), &AbstractInstanceNutPlayer::Shake);
+	instanceClass->Func(_SC("creature_use"), &AbstractInstanceNutPlayer::CreatureUse);
+	instanceClass->Func(_SC("creature_use_once"), &AbstractInstanceNutPlayer::CreatureUseNoRetry);
+	instanceClass->Func(_SC("broadcast"), &AbstractInstanceNutPlayer::Broadcast);
+	instanceClass->Func(_SC("local_broadcast"), &AbstractInstanceNutPlayer::LocalBroadcast);
+	instanceClass->Func(_SC("info"), &AbstractInstanceNutPlayer::Info);
+	instanceClass->Func(_SC("message"), &AbstractInstanceNutPlayer::Message);
+	instanceClass->Func(_SC("untarget"), &AbstractInstanceNutPlayer::Untarget);
+	instanceClass->Func(_SC("error"), &AbstractInstanceNutPlayer::Error);
+	instanceClass->Func(_SC("get_cid_for_prop"), &AbstractInstanceNutPlayer::GetCIDForPropID);
+	instanceClass->Func(_SC("chat"), &AbstractInstanceNutPlayer::Chat);
+	instanceClass->Func(_SC("creature_chat"), &AbstractInstanceNutPlayer::CreatureChat);
+	instanceClass->Func(_SC("rotate_creature"), &AbstractInstanceNutPlayer::RotateCreature);
+	instanceClass->Func(_SC("set_flags"), &AbstractInstanceNutPlayer::SetServerFlags);
+	instanceClass->Func(_SC("set_flag"), &AbstractInstanceNutPlayer::SetServerFlag);
+	instanceClass->Func(_SC("get_flags"), &AbstractInstanceNutPlayer::GetServerFlags);
+
+	// Functions that return arrays or tables have to be dealt with differently
+	instanceClass->SquirrelFunc(_SC("get_nearby_creature"), &AbstractInstanceNutPlayer::GetCreaturesNearCreature);
+
+	Sqrat::RootTable(vm).Func(_SC("_AB"), &InstanceNutPlayer::GetAbilityID);
+
+	// Some constants
+	Sqrat::ConstTable(vm).Const(_SC("CREATURE_WALK_SPEED"), CREATURE_WALK_SPEED);
+	Sqrat::ConstTable(vm).Const(_SC("CREATURE_JOG_SPEED"), CREATURE_JOG_SPEED);
+	Sqrat::ConstTable(vm).Const(_SC("CREATURE_RUN_SPEED"), CREATURE_RUN_SPEED);
+
+	Sqrat::ConstTable(vm).Const(_SC("TS_NONE"), TargetStatus::None);
+	Sqrat::ConstTable(vm).Const(_SC("TS_ALIVE"), TargetStatus::Alive);
+	Sqrat::ConstTable(vm).Const(_SC("TS_DEAD"), TargetStatus::Dead);
+	Sqrat::ConstTable(vm).Const(_SC("TS_ENEMY"), TargetStatus::Enemy);
+	Sqrat::ConstTable(vm).Const(_SC("TS_ALIVE"), TargetStatus::Enemy_Alive);
+	Sqrat::ConstTable(vm).Const(_SC("TS_FRIEND"), TargetStatus::Friend);
+	Sqrat::ConstTable(vm).Const(_SC("TS_FRIEND_ALIVE"), TargetStatus::Friend_Alive);
+	Sqrat::ConstTable(vm).Const(_SC("TS_FRIEND_DEAD"), TargetStatus::Friend_Dead);
+
+	Sqrat::ConstTable(vm).Const(_SC("HATE_SIDEKICK"),
+			SidekickObject::HATE_SIDEKICK);
+	Sqrat::ConstTable(vm).Const(_SC("HATE_OFFICER"),
+			SidekickObject::HATE_OFFICER);
+	Sqrat::ConstTable(vm).Const(_SC("HATE_BOTH"), SidekickObject::HATE_BOTH);
+	Sqrat::ConstTable(vm).Const(_SC("HATE_SIDEKICK_MORE"),
+			SidekickObject::HATE_SIDEKICK_MORE);
+	Sqrat::ConstTable(vm).Const(_SC("HATE_OFFICER_MORE"),
+			SidekickObject::HATE_OFFICER_MORE);
+	Sqrat::ConstTable(vm).Const(_SC("HATE_NEITHER"),
+			SidekickObject::HATE_NEITHER);
+
+	Sqrat::ConstTable(vm).Const(_SC("SIDEKICK_GENERIC"),
+			SidekickObject::GENERIC);
+	Sqrat::ConstTable(vm).Const(_SC("SIDEKICK_ABILITY"),
+			SidekickObject::ABILITY);
+	Sqrat::ConstTable(vm).Const(_SC("SIDEKICK_PET"), SidekickObject::PET);
+	Sqrat::ConstTable(vm).Const(_SC("SIDEKICK_QUEST"), SidekickObject::QUEST);
+
+	Sqrat::ConstTable(vm).Const(_SC("STATUS_EFFECT_INVINCIBLE"),
+			StatusEffects::INVINCIBLE);
+	Sqrat::ConstTable(vm).Const(_SC("STATUS_EFFECT_USABLE_BY_COMBATANT"),
+			StatusEffects::USABLE_BY_COMBATANT);
+	Sqrat::ConstTable(vm).Const(_SC("STATUS_EFFECT_IS_USABLE"),
+			StatusEffects::IS_USABLE);
+	Sqrat::ConstTable(vm).Const(_SC("STATUS_EFFECT_UNATTACKABLE"),
+			StatusEffects::UNATTACKABLE);
+
+
+
+	/* NOTE: Not all */
+	Sqrat::ConstTable(vm).Const(_SC("SF_LOCAL_ACTIVE"), ServerFlags::LocalActive);
+	Sqrat::ConstTable(vm).Const(_SC("SF_IS_PLAYER"), ServerFlags::IsPlayer);
+	Sqrat::ConstTable(vm).Const(_SC("SF_IS_NPC"), ServerFlags::IsNPC);
+	Sqrat::ConstTable(vm).Const(_SC("SF_IS_SIDEKICK"), ServerFlags::IsSidekick);
+	Sqrat::ConstTable(vm).Const(_SC("SF_INIT_ATTACK"), ServerFlags::InitAttack);
+	Sqrat::ConstTable(vm).Const(_SC("SF_AUTO_TARGET"), ServerFlags::AutoTarget);
+	Sqrat::ConstTable(vm).Const(_SC("SF_CALLED_BACK"), ServerFlags::CalledBack);
+	Sqrat::ConstTable(vm).Const(_SC("SF_PATH_NODE"), ServerFlags::PathNode);
+	Sqrat::ConstTable(vm).Const(_SC("SF_LEASH_RECALL"), ServerFlags::LeashRecall);
+	Sqrat::ConstTable(vm).Const(_SC("SF_IS_TRANSFORMED"), ServerFlags::IsTransformed);
+	Sqrat::ConstTable(vm).Const(_SC("SF_NEUTRAL_INACTIVE"), ServerFlags::NeutralInactive);
+	Sqrat::ConstTable(vm).Const(_SC("SF_STATIONARY"), ServerFlags::Stationary);
+	Sqrat::ConstTable(vm).Const(_SC("SF_HAS_MELEE_WEAPON"), ServerFlags::HasMeleeWeapon);
+	Sqrat::ConstTable(vm).Const(_SC("SF_HAS_SHIELD"), ServerFlags::HasShield);
+	Sqrat::ConstTable(vm).Const(_SC("SF_NON_COMBATANT"), ServerFlags::Noncombatant);
+	Sqrat::ConstTable(vm).Const(_SC("SF_TAUNTED"), ServerFlags::Taunted);
+	Sqrat::ConstTable(vm).Const(_SC("SF_SCRIPT_MOVEMENT"), ServerFlags::ScriptMovement);
 }
 
 void AbstractInstanceNutPlayer::Info(const char *message) {
@@ -141,6 +250,17 @@ void AbstractInstanceNutPlayer::CreatureChat(int CID, const char *channel,
 		g_Logs.script->error(
 				"Could not find creature with ID %v in this instance to communicate.",
 				CID);
+}
+
+void AbstractInstanceNutPlayer::RotateCreature(int CID, int rotation) {
+	CreatureInstance *ci = actInst->GetInstanceByCID(CID);
+	if(ci != NULL) {
+		ci->Rotation = rotation;
+		ci->Heading = rotation;
+		ci->SetServerFlag(ServerFlags::ScriptMovement, true);
+	}
+	else
+		g_Logs.script->error("Could not find creature with ID %d in this instance to rotate.", CID);
 }
 
 void AbstractInstanceNutPlayer::Chat(const char *name, const char *channel,
@@ -174,8 +294,120 @@ void AbstractInstanceNutPlayer::LocalBroadcast(const char *message) {
 	actInst->BroadcastMessage(message);
 }
 
+int AbstractInstanceNutPlayer::GetAbilityID(const char *name)
+{
+	return g_AbilityManager.GetAbilityIDByName(name);
+}
+
+
+void AbstractInstanceNutPlayer::Shake(float amount, float time, float range) {
+	char buffer[256];
+	int wpos = actInst->Shake(buffer, amount, time, range);
+	actInst->LSendToAllSimulator(buffer, wpos, -1);
+}
+
+
+bool AbstractInstanceNutPlayer::Untarget(int CID)
+{
+	CreatureInstance *source = actInst->GetInstanceByCID(CID);
+	if(source != NULL)
+	{
+		source->SelectTarget(NULL);
+		return true;
+	}
+	return false;
+}
+bool AbstractInstanceNutPlayer::CreatureUse(int CID, int abilityID) {
+	return DoCreatureUse(CID, abilityID, true);
+}
+bool AbstractInstanceNutPlayer::CreatureUseNoRetry(int CID, int abilityID) {
+	return DoCreatureUse(CID, abilityID, false);
+}
+bool AbstractInstanceNutPlayer::DoCreatureUse(int CID, int abilityID, bool retry) {
+	CreatureInstance *attachedCreature = actInst->GetInstanceByCID(CID);
+	if (attachedCreature != NULL && attachedCreature->ab[0].bPending == false) {
+		//DEBUG OUTPUT
+		if (g_Config.DebugLogAIScriptUse == true) {
+			const Ability2::AbilityEntry2* abptr =
+					g_AbilityManager.GetAbilityPtrByID(abilityID);
+			g_Logs.script->debug("Using: %s", abptr->GetRowAsCString(Ability2::ABROW::NAME));
+		}
+		//END DEBUG OUTPUT
+
+		int r = attachedCreature->CallAbilityEvent(abilityID,
+				EventType::onRequest);
+		if (r != 0) {
+			//Notify the creature we failed, may need a distance check.
+			//The script should wait and retry soon.
+			attachedCreature->AICheckAbilityFailure(r);
+
+			if (g_Config.DebugLogAIScriptUse == true) {
+				const Ability2::AbilityEntry2* abptr =
+						g_AbilityManager.GetAbilityPtrByID(abilityID);
+				g_Logs.script->debug("Using: %s   Failed: %d",
+						abptr->GetRowAsCString(Ability2::ABROW::NAME),
+						g_AbilityManager.GetAbilityErrorCode(r));
+			}
+
+			if (retry && attachedCreature->AIAbilityFailureAllowRetry(r) == true)
+				QueueAdd(new ScriptCore::NutScriptEvent(
+							new ScriptCore::TimeCondition(USE_FAIL_DELAY),
+							new InstanceUseCallback(this, CID, abilityID)));
+		}
+		else
+			return true;
+	}
+	return false;
+}
+
+int AbstractInstanceNutPlayer::GetCreatureSpawnProp(int CID) {
+	CreatureInstance *creature = actInst->GetInstanceByCID(CID);
+	if(creature != NULL && creature->spawnGen != NULL && creature->spawnGen->spawnPoint != NULL) {
+		return creature->spawnGen->spawnPoint->ID;
+	}
+	return 0;
+}
+
+int AbstractInstanceNutPlayer::GetCreatureDistance(int CID, int CID2) {
+	CreatureInstance *targ1 = actInst->GetInstanceByCID(CID);
+	CreatureInstance *targ2 = actInst->GetInstanceByCID(CID2);
+	if(targ1 == NULL || targ2 == NULL)
+		return -1;
+	return targ1->GetDistance(targ2, SANE_DISTANCE);
+}
+
 int AbstractInstanceNutPlayer::GetCIDForPropID(int propID) {
 	return actInst->spawnsys.GetCIDForProp(propID);
+}
+
+SQInteger AbstractInstanceNutPlayer::GetCreaturesNearCreature(HSQUIRRELVM v)
+{
+    if (sq_gettop(v) == 6) {
+        Sqrat::Var<AbstractInstanceNutPlayer&> left(v, 1);
+        if (!Sqrat::Error::Occurred(v)) {
+            Sqrat::Var<int> range(v, 2);
+            Sqrat::Var<int> cid(v, 3);
+            Sqrat::Var<int> playerAbilityRestrict(v, 4);
+            Sqrat::Var<int> npcAbilityRestrict(v, 5);
+            Sqrat::Var<int> sidekickAbilityRestrict(v, 6);
+            //std::vector<CreatureInstance*> vv;
+            CreatureInstance::CREATURE_PTR_SEARCH vv;
+			CreatureInstance* target = left.value.actInst->GetNPCInstanceByCID(cid.value);
+			if(target != NULL) {
+				float x = (float)target->CurrentX;
+				float z = (float)target->CurrentZ;
+				target->AIFillCreaturesNear(range.value, x, z, playerAbilityRestrict.value, npcAbilityRestrict.value, sidekickAbilityRestrict.value, vv);
+			}
+            sq_newarray(v, 0);
+            for (std::size_t i = 0; i < vv.size(); ++i) {
+            	sq_pushinteger(v,vv[i]->CreatureID);
+                sq_arrayappend(v,-2);
+            }
+            return 1;
+        }
+        return sq_throwerror(v, Sqrat::Error::Message(v).c_str());
+    }
+    return sq_throwerror(v, _SC("wrong number of parameters"));
 }
 
 int AbstractInstanceNutPlayer::GetNPCID(int CDefID) {
@@ -286,6 +518,35 @@ int AbstractInstanceNutPlayer::ScanNPC(Squirrel::Area *location, int CDefID) {
 	return v.size() == 0 ? 0 : v[0];
 }
 
+void AbstractInstanceNutPlayer::SetServerFlag(int CID, unsigned long flag, bool state) {
+	CreatureInstance *ci = actInst->GetInstanceByCID(CID);
+	if(ci != NULL) {
+		ci->SetServerFlag(flag, state);
+	}
+	else
+		g_Logs.script->error("Could not find creature with ID %d in this instance to set server flag.", CID);
+}
+
+void AbstractInstanceNutPlayer::SetServerFlags(int CID, unsigned long flags) {
+	CreatureInstance *ci = actInst->GetInstanceByCID(CID);
+	if(ci != NULL) {
+		ci->serverFlags = flags;
+	}
+	else
+		g_Logs.script->error("Could not find creature with ID %d in this instance to set server flags.", CID);
+}
+
+unsigned long AbstractInstanceNutPlayer::GetServerFlags(int CID) {
+	CreatureInstance *ci = actInst->GetInstanceByCID(CID);
+	if(ci != NULL) {
+		return ci->serverFlags;
+	}
+	else
+		g_Logs.script->error("Could not find creature with ID %d in this instance to set server flags.", CID);
+	return -1;
+}
+
+
 SQInteger AbstractInstanceNutPlayer::ScanNPCs(HSQUIRRELVM v) {
 	if (sq_gettop(v) == 3) {
 		Sqrat::Var<AbstractInstanceNutPlayer&> left(v, 1);
@@ -353,6 +614,48 @@ SQInteger AbstractInstanceNutPlayer::GetHated(HSQUIRRELVM v) {
 		return sq_throwerror(v, Sqrat::Error::Message(v).c_str());
 	}
 	return sq_throwerror(v, _SC("wrong number of parameters"));
+}
+
+SQInteger AbstractInstanceNutPlayer::AllCIDs(HSQUIRRELVM v) {
+    if (sq_gettop(v) == 1) {
+        Sqrat::Var<InstanceNutPlayer&> left(v, 1);
+        if (!Sqrat::Error::Occurred(v)) {
+            sq_newarray(v, 0);
+            std::vector<CreatureInstance*>::iterator it;
+			for(it = left.value.actInst->NPCListPtr.begin(); it != left.value.actInst->NPCListPtr.end(); ++it) {
+            	sq_pushinteger(v,(*it)->CreatureID);
+                sq_arrayappend(v,-2);
+			}
+			for(it = left.value.actInst->PlayerListPtr.begin(); it != left.value.actInst->PlayerListPtr.end(); ++it) {
+            	sq_pushinteger(v,(*it)->CreatureID);
+                sq_arrayappend(v,-2);
+			}
+			for(it = left.value.actInst->SidekickListPtr.begin(); it != left.value.actInst->SidekickListPtr.end(); ++it) {
+            	sq_pushinteger(v,(*it)->CreatureID);
+                sq_arrayappend(v,-2);
+			}
+            return 1;
+        }
+        return sq_throwerror(v, Sqrat::Error::Message(v).c_str());
+    }
+    return sq_throwerror(v, _SC("wrong number of parameters"));
+}
+
+SQInteger AbstractInstanceNutPlayer::AllPlayers(HSQUIRRELVM v) {
+    if (sq_gettop(v) == 1) {
+        Sqrat::Var<InstanceNutPlayer&> left(v, 1);
+        if (!Sqrat::Error::Occurred(v)) {
+            sq_newarray(v, 0);
+            std::vector<CreatureInstance*>::iterator it;
+			for(it = left.value.actInst->PlayerListPtr.begin(); it != left.value.actInst->PlayerListPtr.end(); ++it) {
+            	sq_pushinteger(v,(*it)->CreatureID);
+                sq_arrayappend(v,-2);
+			}
+            return 1;
+        }
+        return sq_throwerror(v, Sqrat::Error::Message(v).c_str());
+    }
+    return sq_throwerror(v, _SC("wrong number of parameters"));
 }
 
 SQInteger AbstractInstanceNutPlayer::CIDs(HSQUIRRELVM v) {
@@ -432,6 +735,7 @@ void InstanceNutPlayer::HaltDerivedExecution() {
 
 void InstanceNutPlayer::RegisterInstanceFunctions(HSQUIRRELVM vm,
 		Sqrat::DerivedClass<InstanceNutPlayer, AbstractInstanceNutPlayer> *instanceClass) {
+	instanceClass->Func(_SC("interact"), &InstanceNutPlayer::Interact);
 	instanceClass->Func(_SC("transform"), &InstanceNutPlayer::Transform);
 	instanceClass->Func(_SC("pvp_goal"), &InstanceNutPlayer::PVPGoal);
 	instanceClass->Func(_SC("set_status_effect"),
@@ -499,7 +803,6 @@ void InstanceNutPlayer::RegisterInstanceFunctions(HSQUIRRELVM vm,
 	instanceClass->Func(_SC("unremove_prop"), &InstanceNutPlayer::UnremoveProp);
 	instanceClass->Func(_SC("unremove_props"),
 			&InstanceNutPlayer::UnremoveProps);
-	instanceClass->Func(_SC("get_npc_id"), &InstanceNutPlayer::GetNPCID);
 	instanceClass->Func(_SC("scan_npc"), &InstanceNutPlayer::ScanNPC);
 	instanceClass->Func(_SC("monitor_area"), &InstanceNutPlayer::MonitorArea);
 	instanceClass->Func(_SC("unmonitor_area"),
@@ -507,57 +810,10 @@ void InstanceNutPlayer::RegisterInstanceFunctions(HSQUIRRELVM vm,
 	instanceClass->Func(_SC("quest_advance"), &InstanceNutPlayer::AdvanceQuest);
 
 	// Functions that return arrays or tables have to be dealt with differently
-	instanceClass->SquirrelFunc(_SC("cids"), &InstanceNutPlayer::CIDs);
 	instanceClass->SquirrelFunc(_SC("get_hated"), &InstanceNutPlayer::GetHated);
 	instanceClass->SquirrelFunc(_SC("scan_npcs"),
 			&AbstractInstanceNutPlayer::ScanNPCs);
 	instanceClass->SquirrelFunc(_SC("scan"), &AbstractInstanceNutPlayer::Scan);
-
-	// Common instance functions (TODO register in abstract class somehow)
-	instanceClass->Func(_SC("broadcast"), &InstanceNutPlayer::Broadcast);
-	instanceClass->Func(_SC("local_broadcast"),
-			&InstanceNutPlayer::LocalBroadcast);
-	instanceClass->Func(_SC("info"), &InstanceNutPlayer::Info);
-	instanceClass->Func(_SC("message"), &InstanceNutPlayer::Message);
-	instanceClass->Func(_SC("error"), &InstanceNutPlayer::Error);
-	instanceClass->Func(_SC("get_cid_for_prop"),
-			&InstanceNutPlayer::GetCIDForPropID);
-	instanceClass->Func(_SC("chat"), &InstanceNutPlayer::Chat);
-	instanceClass->Func(_SC("creature_chat"), &InstanceNutPlayer::CreatureChat);
-
-	// Some constants
-	Sqrat::ConstTable(vm).Const(_SC("CREATURE_WALK_SPEED"),
-			CREATURE_WALK_SPEED);
-	Sqrat::ConstTable(vm).Const(_SC("CREATURE_JOG_SPEED"), CREATURE_JOG_SPEED);
-	Sqrat::ConstTable(vm).Const(_SC("CREATURE_RUN_SPEED"), CREATURE_RUN_SPEED);
-
-	Sqrat::ConstTable(vm).Const(_SC("HATE_SIDEKICK"),
-			SidekickObject::HATE_SIDEKICK);
-	Sqrat::ConstTable(vm).Const(_SC("HATE_OFFICER"),
-			SidekickObject::HATE_OFFICER);
-	Sqrat::ConstTable(vm).Const(_SC("HATE_BOTH"), SidekickObject::HATE_BOTH);
-	Sqrat::ConstTable(vm).Const(_SC("HATE_SIDEKICK_MORE"),
-			SidekickObject::HATE_SIDEKICK_MORE);
-	Sqrat::ConstTable(vm).Const(_SC("HATE_OFFICER_MORE"),
-			SidekickObject::HATE_OFFICER_MORE);
-	Sqrat::ConstTable(vm).Const(_SC("HATE_NEITHER"),
-			SidekickObject::HATE_NEITHER);
-
-	Sqrat::ConstTable(vm).Const(_SC("SIDEKICK_GENERIC"),
-			SidekickObject::GENERIC);
-	Sqrat::ConstTable(vm).Const(_SC("SIDEKICK_ABILITY"),
-			SidekickObject::ABILITY);
-	Sqrat::ConstTable(vm).Const(_SC("SIDEKICK_PET"), SidekickObject::PET);
-	Sqrat::ConstTable(vm).Const(_SC("SIDEKICK_QUEST"), SidekickObject::QUEST);
-
-	Sqrat::ConstTable(vm).Const(_SC("STATUS_EFFECT_INVINCIBLE"),
-			StatusEffects::INVINCIBLE);
-	Sqrat::ConstTable(vm).Const(_SC("STATUS_EFFECT_USABLE_BY_COMBATANT"),
-			StatusEffects::USABLE_BY_COMBATANT);
-	Sqrat::ConstTable(vm).Const(_SC("STATUS_EFFECT_IS_USABLE"),
-			StatusEffects::IS_USABLE);
-	Sqrat::ConstTable(vm).Const(_SC("STATUS_EFFECT_UNATTACKABLE"),
-			StatusEffects::UNATTACKABLE);
 
 }
 
@@ -568,6 +824,7 @@ void InstanceNutPlayer::RegisterFunctions() {
 
 	Sqrat::DerivedClass<AbstractInstanceNutPlayer, NutPlayer> abstractInstanceClass(
 			vm, _SC("AbstractInstance"));
+	RegisterAbstractInstanceFunctions(this, &abstractInstanceClass);
 	Sqrat::DerivedClass<InstanceNutPlayer, AbstractInstanceNutPlayer> instanceClass(
 			vm, _SC("Instance"));
 	Sqrat::RootTable(vm).Bind(_SC("Instance"), instanceClass);
@@ -1138,7 +1395,7 @@ void InstanceNutPlayer::WalkThen(int CID, Squirrel::Point point, int speed,
 		ci->CurrentTarget.DesLocZ = point.mZ;
 		ci->CurrentTarget.desiredRange = range;
 		ci->movementTime = g_ServerTime;
-		ci->Speed = speed;
+		ci->Speed = ci->CurrentTarget.desiredSpeed = speed;
 
 		ScriptCore::NutScriptEvent* nse;
 		for (std::vector<ScriptCore::NutScriptEvent*>::iterator it =
@@ -1195,7 +1452,7 @@ void InstanceNutPlayer::Walk(int CID, Squirrel::Point point, int speed,
 		ci->CurrentTarget.DesLocZ = point.mZ;
 		ci->CurrentTarget.desiredRange = range;
 		ci->movementTime = g_ServerTime;
-		ci->Speed = speed;
+		ci->Speed = ci->CurrentTarget.desiredSpeed = speed;
 
 		ScriptCore::NutScriptEvent* nse;
 		for (std::vector<ScriptCore::NutScriptEvent*>::iterator it =
@@ -1595,7 +1852,7 @@ void InstanceScriptPlayer::RunImplementationCommands(int opcode) {
 			ci->CurrentTarget.DesLocX = instr->param2;
 			ci->CurrentTarget.DesLocZ = instr->param3;
 			ci->CurrentTarget.desiredRange = 30;
-			ci->Speed = 20;
+			ci->Speed = ci->CurrentTarget.desiredSpeed = 20;
 		}
 	}
 		break;
@@ -1706,6 +1963,90 @@ CreatureInstance* InstanceScriptPlayer::GetNPCPtr(int CID) {
 	if (actInst == NULL)
 		return NULL;
 	return actInst->GetNPCInstanceByCID(CID);
+}bool InstanceNutPlayer::Interact(int CID, const char *text, float time, bool gather, Sqrat::Function function) {
+	CreatureInstance *creature = actInst->GetInstanceByCID(CID);
+	if(creature == NULL )
+		return false;
+	else {
+		char strBuf[1024];
+		int wpos = creature->QuestInteractObject(strBuf, text, time, gather);
+		creature->simulatorPtr->AttemptSend(strBuf, wpos);
+		ScriptCore::NutScriptEvent *evt = new ScriptCore::NutScriptEvent(
+				new ScriptCore::TimeCondition(time),
+				new InteractCallback(this, function, CID));
+		interactions.push_back(ActiveInteraction(creature, evt));
+		QueueAdd(evt);
+		return true;
+	}
+}
+
+void InstanceNutPlayer::RemoveInteraction(int CID)
+{
+	CreatureInstance *creature = actInst->GetInstanceByCID(CID);
+	if(creature != NULL ) {
+		std::vector<ActiveInteraction>::iterator eit;
+		for(eit = interactions.begin(); eit != interactions.end(); ++eit) {
+			if(creature == eit->mCreature) {
+				interactions.erase(eit);
+				return;
+			}
+		}
+	}
+}
+
+void InstanceNutPlayer::InterruptInteraction(int CID)
+{
+	CreatureInstance *creature = actInst->GetInstanceByCID(CID);
+	if(creature != NULL ) {
+		std::vector<ActiveInteraction>::iterator eit;
+		for(eit = interactions.begin(); eit != interactions.end(); ++eit) {
+			if(creature == eit->mCreature) {
+				interactions.erase(eit);
+				QueueRemove(eit->mEvent);
+				std::vector<ScriptCore::ScriptParam> p;
+				p.push_back(ScriptCore::ScriptParam(CID));
+				RunFunction("on_interrupt", p, false);
+				return;
+			}
+		}
+	}
+}
+
+//
+// InteractCallback
+//
+
+InteractCallback::InteractCallback(InstanceNutPlayer *nut, Sqrat::Function function, int CID) {
+	mNut = nut;
+	mFunction = function;
+	mCID = CID;
+}
+
+InteractCallback::~InteractCallback() {
+}
+
+bool InteractCallback::Execute()
+{
+	mNut->RemoveInteraction(mCID);
+	Sqrat::SharedPtr<bool> ptr = mFunction.Evaluate<bool>();
+	return ptr.Get() == NULL || ptr.Get();
+}
+
+//
+// InstanceUseCallback
+//
+
+InstanceUseCallback::InstanceUseCallback(AbstractInstanceNutPlayer *instanceNut, int CID, int abilityID) {
+	mInstanceNut = instanceNut;
+	mAbilityID = abilityID;
+	mCID = CID;
+}
+InstanceUseCallback::~InstanceUseCallback() {
+}
+
+bool InstanceUseCallback::Execute() {
+	mInstanceNut->CreatureUse(mCID, mAbilityID);
+	return true;
 }
 
 } //namespace InstanceScript

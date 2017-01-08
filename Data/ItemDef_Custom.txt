@@ -1531,3 +1531,21 @@ mValue=1
 mFlavorText=It's sand.  Not even magic sand.  Just sand.
 mQualityLevel=0
 mMinUseLevel=1
+
+[ENTRY]
+mID=2050012
+mType=2
+mDisplayName=Hateful Talon
+mAppearance=[null]
+mIcon=Icon-32-Claw7.png|
+mLevel=47
+mValue=50000
+mMinUseLevel=47
+mQualityLevel=6
+mEquipType=3
+mBindingType=0
+mBonusConstitution=21
+mBonusDexterity=43
+mWeaponType=1
+mWeaponDamageMin=136
+mWeaponDamageMax=172

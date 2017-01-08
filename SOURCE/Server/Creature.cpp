@@ -84,6 +84,7 @@ void SelectedObject :: Clear(bool UNUSED_eraseAutoAttack)
 	//if(eraseAutoAttack == true)
 	//	aaTarg = NULL;
 	desiredRange = 0;
+	desiredSpeed = 0;
 	bInstigated = false;
 	DesLocX = 0;
 	DesLocZ = 0;
@@ -402,6 +403,28 @@ void CreatureDefinition :: WriteToJSON(Json::Value &value)
 
 
 	value["css"] = jcss;
+}
+
+void CreatureDefinition :: SaveToStream(FILE *output) {
+	fprintf(output, "[ENTRY]\r\n");
+	fprintf(output, "ID=%d\r\n", CreatureDefID);
+	if(DefHints > 0)
+		fprintf(output, "defHints=%d\r\n", DefHints);
+	if(ExtraData.length() > 0)
+		fprintf(output, "ExtraData=%s\r\n", ExtraData.c_str());
+	if(DefaultEffects.size() > 0) {
+		fprintf(output, "Effects=");
+		for(std::vector<int>::iterator it = DefaultEffects.begin(); it != DefaultEffects.end(); it++) {
+			if(it != DefaultEffects.begin())
+				fprintf(output, ",");
+			fprintf(output, "%s", GetStatusNameByID(*it));
+		}
+		fprintf(output, "\r\n");
+	}
+	int a;
+	for(a = 0; a < NumStats; a++)
+		if(isStatZero(a, &css) == false)
+			WriteStatToFile(a, &css, output);
 }
 
 //**************************************************
@@ -774,7 +797,7 @@ void CreatureInstance :: Instantiate(void)
 	{
 		css.constitution = 1;
 	}
-	css.health = GetMaxHealth(true);
+	css.health = CalcRestrictedHealth(-1, true);
 
 	//int cdef = CreatureDef.GetIndex(CreatureDefID);
 
@@ -1259,6 +1282,9 @@ void CreatureInstance :: RegisterHostility(CreatureInstance *attacker, int hosti
 
 	//Everything below is for AI purposes and is not applicable to human players.
 	if(serverFlags & ServerFlags::IsPlayer)
+		return;
+
+	if(serverFlags & ServerFlags::Noncombatant)
 		return;
 
 	SetServerFlag(ServerFlags::LocalActive, true);
@@ -2136,6 +2162,19 @@ bool CreatureInstance :: RemoveAbilityBuffWithStat(int statID, float sign)
 	return false;
 }
 
+
+int CreatureInstance :: CalcRestrictedHealth(int health, bool addmod)
+{
+	if(health == -1)
+		 health = GetMaxHealth(addmod);
+	if(css.max_health_pc != 100) {
+		int maxHealth = (int)( ( (float)GetMaxHealth(addmod) / 100.0) * css.max_health_pc );
+		if(health > maxHealth)
+			health = maxHealth;
+	}
+	return health;
+}
+
 int CreatureInstance :: GetMaxHealth(bool addmod)
 {
 	int rarity = Util::ClipInt(css.rarity, 0, MAX_RARITY_INDEX);
@@ -2172,7 +2211,7 @@ void CreatureInstance :: LimitValueOverflows(void)
 		float healthPerCon = HealthConModifier * RarityTypeHealthModifier[rarity];
 		float trimCon = (overflowHealth / healthPerCon) + 1;
 		css.constitution -= (int)trimCon;
-		int newHP = GetMaxHealth(true);
+		int newHP = CalcRestrictedHealth(-1, true);
 		css.health = newHP;
 		g_Logs.server->warn("Constitution overflow! OldHP:%v, ConReduct:%v, NewHP:%v", max, (int)trimCon, newHP);
 	}
@@ -2195,6 +2234,7 @@ void CreatureInstance :: RunHealTick(void)
 {
 	double regen = (css.spirit * RegenSpiritMod) + (css.constitution * RegenConMod) + (css.level * RegenLevelMod);
 	regen += css.mod_health_regen;
+	regen *= css.health_regen;
 	if(HasStatus(StatusEffects::IN_COMBAT))
 	{
 		regen *= RegenCombatModifier;
@@ -2206,7 +2246,7 @@ void CreatureInstance :: RunHealTick(void)
 	int health = css.health + (int)regen;
 	if(health > maxhealth)
 		health = maxhealth;
-	css.health = health;
+	css.health = CalcRestrictedHealth(health, true);
 	int size = PrepExt_SendHealth(GSendBuf, CreatureID, css.health);
 	actInst->LSendToLocalSimulator(GSendBuf, size, CurrentX, CurrentZ);
 }
@@ -2221,7 +2261,7 @@ void CreatureInstance :: Heal(int amount)
 	int chealth = css.health;
 	if(health > maxhealth)
 		health = maxhealth;
-	css.health = health;
+	css.health = CalcRestrictedHealth(health, true);
 	int size = PrepExt_SendHealth(GSendBuf, CreatureID, css.health);
 	//actInst->LSendToAllSimulator(GSendBuf, size, -1);
 	actInst->LSendToLocalSimulator(GSendBuf, size, CurrentX, CurrentZ);
@@ -2371,6 +2411,26 @@ void CreatureInstance :: Amp(unsigned char tier, unsigned char buffType, int abI
 		amount = Util::Round(amount);
 
 	Add(tier, buffType, abID, abgID, statID, amount, percent, time);
+}
+
+void CreatureInstance :: Set(unsigned char tier, unsigned char buffType, int abID, int abgID, int statID, float amount, int time)
+{
+	//Get integer value, run the percent, and forward that amount and everything
+	//else into the Add() function, which handles the actual buff management.
+
+	int statIndex = GetStatIndex(statID);
+	if(statIndex == -1)
+		return;
+
+	float val = GetStatValueByID(statID, &css);
+	val = -val + amount;
+
+	//Round integral types, but not floats.  Float stats like MIGHT_REGEN and WILL_REGEN in particular
+	//explicitly require floating point values to function correctly.
+	if((StatList[statIndex].etype == StatType::SHORT) || (StatList[statIndex].etype == StatType::INTEGER))
+		amount = Util::Round(amount);
+
+	Add(tier, buffType, abID, abgID, statID, amount, val, time);
 }
 
 void CreatureInstance :: WalkInShadows(int duration, int counter)
@@ -2657,7 +2717,7 @@ void CreatureInstance :: Resurrect(float healthratio, float luckratio, int abili
 	if(health < 1)
 		health = 1;
 
-	css.health = health;
+	css.health = CalcRestrictedHealth(health, true);
 
 	//_ClearStatusFlag(StatusEffects::DEAD, true);
 	_RemoveStatusList(StatusEffects::DEAD);
@@ -2720,7 +2780,7 @@ void CreatureInstance :: ApplyRawDamage(int amount)
 	if(health < 0)
 		health = 0;
 
-	css.health = health;
+	css.health = CalcRestrictedHealth(health, true);
 
 	//According to a comment in the client code, if the client health is set to zero before
 	//it has been flagged as dead (StatusEffects::DEAD) then there can be a 5 second delay
@@ -3696,6 +3756,10 @@ void CreatureInstance :: CancelPending_Ex(ActiveAbilityInfo *ability)
 			QuestScript::QuestScriptPlayer *script;
 			if(simulatorPtr == NULL)
 				break;
+
+			if(actInst->nutScriptPlayer != NULL) {
+				actInst->nutScriptPlayer->InterruptInteraction(CreatureID);
+			}
 
 			std::list<QuestScript::QuestNutPlayer*> l = g_QuestNutManager.GetActiveScripts(CreatureID);
 			std::list<QuestScript::QuestNutPlayer*>::iterator it = l.begin();
@@ -4855,7 +4919,7 @@ void CreatureInstance :: ProcessRegen(void)
 	}
 	else if(health > maxhealth)
 	{
-		css.health = maxhealth;
+		css.health = CalcRestrictedHealth(maxhealth, true);
 		int wpos = 0;
 		wpos = PrepExt_SendHealth(GSendBuf, CreatureID, css.health);
 		//actInst->LSendToAllSimulator(GSendBuf, wpos, -1);
@@ -5248,7 +5312,8 @@ void CreatureInstance :: MoveToTarget(void)
 				//int maxmove = (int)(115.0F * ((float)Speed / 100.0F));
 				if(distRemain > maxmove)
 					distRemain = maxmove;
-				//g_Log.AddMessageFormat("Dist: %d, Remain: %d, YOffs: %d", dist, distRemain, CurrentY - CurrentTarget.targ->CurrentY);
+
+				g_Logs.server->debug("Dist: %d, Remain: %d, YOffs: %d speed: %d", dist, distRemain, CurrentY - CurrentTarget.targ->CurrentY, Speed);
 
 				float angle = (float)Heading * 6.283185F / 256.0F;
 				CurrentZ += (int)((float)distRemain * cos(angle));
@@ -5641,28 +5706,39 @@ int CreatureInstance :: RunMovementStep(void)
 			/*Improve movement accuracy in active combat by reducing the delays between updates.
 			 * If scripted, don't change the speed
 			 */
+			int moveSpeed = CREATURE_WALK_SPEED;
 
-			if(!(serverFlags & ServerFlags::ScriptMovement)) {
-				int moveSpeed = CREATURE_WALK_SPEED;
-				if(CurrentTarget.targ != NULL)
-				{
-					nextMoveTime = CREATURE_MOVEMENT_COMBAT_FREQUENCY;
-					moveSpeed = CREATURE_RUN_SPEED;
-				}
-				else
-				{
-					nextMoveTime = CREATURE_MOVEMENT_NONCOMBAT_FREQUENCY;
-					if(serverFlags & ServerFlags::LeashRecall)
-						moveSpeed = CREATURE_RUN_SPEED;
-				}
+			// Scripting can request a particular speed
 
-				int maxSpeed = moveSpeed + css.mod_movement;  //the mod may be negative
-				if(css.level <= SLOW_CREATURE_LEVEL_THRESHOLD)
-					maxSpeed -= SLOW_CREATURE_SPEED_PENALTY;
-
-				maxSpeed = Util::ClipInt(maxSpeed, 0, 255);  //Maximum byte representation
-				Speed = maxSpeed;
+			if(CurrentTarget.desiredSpeed != 0) {
+				moveSpeed = CurrentTarget.desiredSpeed;
 			}
+
+			// if(!(serverFlags & ServerFlags::ScriptMovement)) {
+
+			if(CurrentTarget.targ != NULL) {
+				nextMoveTime = CREATURE_MOVEMENT_COMBAT_FREQUENCY;
+				moveSpeed = CREATURE_RUN_SPEED;
+			}
+			else {
+				nextMoveTime = CREATURE_MOVEMENT_NONCOMBAT_FREQUENCY;
+				if(serverFlags & ServerFlags::LeashRecall)
+					moveSpeed = CREATURE_RUN_SPEED;
+			}
+
+			// }
+
+			// Scripting can request a particular speed
+			if(CurrentTarget.desiredSpeed != 0) {
+				moveSpeed = CurrentTarget.desiredSpeed;
+			}
+
+			int maxSpeed = moveSpeed + css.mod_movement;  //the mod may be negative
+			if(css.level <= SLOW_CREATURE_LEVEL_THRESHOLD)
+				maxSpeed -= SLOW_CREATURE_SPEED_PENALTY;
+
+			maxSpeed = Util::ClipInt(maxSpeed, 0, 255);  //Maximum byte representation
+			Speed = maxSpeed;
 
 			//The number of units moved per second at this speed.
 			float distPerSecond = ((float)Speed / 100.0F) * DEFAULT_CREATURE_SPEED;
@@ -5884,7 +5960,7 @@ void CreatureInstance :: CheckLeashMovement(void)
 			UnHate();
 			RemoveAttachedHateProfile();
 			SetServerFlag(ServerFlags::LeashRecall, true);
-			css.health = GetMaxHealth(true);
+			css.health = CalcRestrictedHealth(-1, true);
 			int size = PrepExt_SendHealth(GSendBuf, this->CreatureID, css.health);
 			actInst->LSendToLocalSimulator(GSendBuf, size, CurrentX, CurrentZ);
 		}
@@ -6293,6 +6369,38 @@ bool CreatureInstance :: AIAbilityFailureAllowRetry(int abilityReturnInfo)
 bool CreatureInstance :: AICheckIfAbilityBusy(void)
 {
 	return ab[0].bPending;
+}
+
+int CreatureInstance :: AIFillCreaturesNear(int range, float x, float z, int playerAbilityRestrict, int npcAbilityRestrict, int sidekickAbilityRestrict, CREATURE_PTR_SEARCH& creatures)
+{
+	for(size_t i = 0; i < actInst->PlayerListPtr.size(); i++)
+	{
+		if(actInst->PlayerListPtr[i]->CreatureID == CreatureID)
+			continue;
+		if(ActiveInstance::GetPointRangeXZ(actInst->PlayerListPtr[i], x, z, range) > range)
+			continue;
+		if(_ValidTargetFlag(actInst->PlayerListPtr[i], playerAbilityRestrict) == true)
+			creatures.push_back(actInst->PlayerListPtr[i]);
+	}
+	for(size_t i = 0; i < actInst->NPCListPtr.size(); i++)
+	{
+		if(actInst->NPCListPtr[i]->CreatureID == CreatureID)
+			continue;
+		if(ActiveInstance::GetPointRangeXZ(actInst->NPCListPtr[i], x, z, range) > range)
+			continue;
+		if(_ValidTargetFlag(actInst->NPCListPtr[i], npcAbilityRestrict) == true)
+			creatures.push_back(actInst->NPCListPtr[i]);
+	}
+	for(size_t i = 0; i < actInst->SidekickListPtr.size(); i++)
+	{
+		if(actInst->SidekickListPtr[i]->CreatureID == CreatureID)
+			continue;
+		if(ActiveInstance::GetPointRangeXZ(actInst->SidekickListPtr[i], x, z, range) > range)
+			continue;
+		if(_ValidTargetFlag(actInst->SidekickListPtr[i], sidekickAbilityRestrict) == true)
+			creatures.push_back(actInst->NPCListPtr[i]);
+	}
+	return creatures.size();
 }
 
 int CreatureInstance :: AICountEnemyNear(int range, float x, float z)
@@ -7226,30 +7334,30 @@ int CreatureInstance :: ProcessQuestRewards(int QuestID, int outcomeIdx, const s
 	return 1;
 }
 
-int CreatureInstance :: QuestInteractObject(QuestObjective *objectiveData)
+int CreatureInstance :: QuestInteractObject(char *buffer, const char *text, float time, bool gather)
 {
 	Interrupt();
 
 	int wpos = 0;
-	wpos += PutByte(&GSendBuf[wpos], 4);  //_handleCreatureEventMsg
-	wpos += PutShort(&GSendBuf[wpos], 0);  //size
-	wpos += PutInteger(&GSendBuf[wpos], CreatureID);
-	wpos += PutByte(&GSendBuf[wpos], 11);  //creature "used" event
-	wpos += PutStringUTF(&GSendBuf[wpos], objectiveData->ActivateText.c_str());
-	wpos += PutFloat(&GSendBuf[wpos], (float)objectiveData->ActivateTime);
-	PutShort(&GSendBuf[1], wpos - 3);  //size
+	wpos += PutByte(&buffer[wpos], 4);  //_handleCreatureEventMsg
+	wpos += PutShort(&buffer[wpos], 0);  //size
+	wpos += PutInteger(&buffer[wpos], CreatureID);
+	wpos += PutByte(&buffer[wpos], 11);  //creature "used" event
+	wpos += PutStringUTF(&buffer[wpos], text);
+	wpos += PutFloat(&buffer[wpos], time);
+	PutShort(&buffer[1], wpos - 3);  //size
 
 	//We can't call RegisterCast, but the client doesn't have a corresponding
 	//ability effect.  The server needs to know this information
 
 	//g_Log.AddMessageFormat("[DEBUG] Adding ability event to trigger in: %d ms", objectiveData->ActivateTime);
-	if(objectiveData->gather == true)
+	if(gather)
 		ab[0].abilityID = ABILITYID_QUEST_GATHER_OBJECT;
 	else
 		ab[0].abilityID = ABILITYID_QUEST_INTERACT_OBJECT;
 
 	ab[0].type = AbilityType::Cast;
-	ab[0].fireTime = g_ServerTime + objectiveData->ActivateTime;
+	ab[0].fireTime = g_ServerTime + time;
 	ab[0].mightChargesSpent = 0;
 	ab[0].willChargesSpent = 0;
 	ab[0].bPending = true;
@@ -7686,7 +7794,7 @@ void CreatureInstance :: SetLevel(int newLevel)
 	SendUpdatedBuffs();
 
 	//Since proper stats are filled in again, proceed.
-	int health = GetMaxHealth(true);
+	int health = CalcRestrictedHealth(-1, true);
 	if(css.health > health)
 		css.health = health;
 
@@ -8124,7 +8232,7 @@ void CreatureInstance :: OnEquipmentChange(float oldHealthRatio)
 	//Also update heroism since the bonus must reflect a percentage of health.
 	int newMax = GetMaxHealth(true);
 	int newHealth = (int)((float)newMax * oldHealthRatio);
-	css.health = Util::ClipInt(newHealth, 0, newMax); 
+	css.health = CalcRestrictedHealth(Util::ClipInt(newHealth, 0, newMax), true);
 	SendStatUpdate(STAT::HEALTH);
 	OnHeroismChange();
 }
@@ -8221,7 +8329,7 @@ void CreatureInstance :: PerformLevelScale(const InstanceScaleProfile *scaleProf
 	}
 
 	//Adjust health and clamp limits in case they're too high.
-	css.health = GetMaxHealth(true);
+	css.health = CalcRestrictedHealth(-1, true);
 	LimitValueOverflows();
 	
 }
@@ -8401,6 +8509,23 @@ bool CreatureInstance :: IsObjectInRange(CreatureInstance *object, float distanc
 	return false;
 }
 
+int CreatureInstance :: GetDistance(CreatureInstance *object, int threshold)
+{
+	if(object == NULL)
+		return -1;
+
+	//Quick check for self, always in range.
+	if(this == object)
+		return 0;
+
+
+	float tolerance = GetTotalSize() + object->GetTotalSize();
+	float acceptDist = tolerance + threshold;
+
+	//Don't include Y axis since the server doesn't know about elevation differences.
+	return ActiveInstance::GetPlaneRange(this, object, static_cast<int>(acceptDist));
+}
+
 bool CreatureInstance :: IsSelfNearPoint(float x, float z, float distance)
 {
 	float tolerance = GetTotalSize();
@@ -8536,6 +8661,29 @@ int CreatureDefManager :: GetIndex(long CDefID)
 }
 */
 
+void CreatureDefManager :: SaveCreatureTweak(CreatureDefinition *def)
+{
+
+	char buffer[256];
+	GetIndividualFilename(buffer, sizeof(buffer), def->CreatureDefID);
+	FILE *output = fopen(buffer, "wb");
+	if(output == NULL)
+	{
+		g_Logs.data->error("[ERROR] SaveAccountToStream could not open: %s", buffer);
+		return;
+	}
+	def->SaveToStream(output);
+	fflush(output);
+	fclose(output);
+}
+
+const char * CreatureDefManager :: GetIndividualFilename(char *buffer, int bufsize, int accountID)
+{
+	Util::SafeFormat(buffer, bufsize, "Creatures\\%08d.txt", accountID);
+	Platform::FixPaths(buffer);
+	return buffer;
+}
+
 int CreatureDefManager :: LoadPackages(const char *listFile)
 {
 	FileReader lfr;
@@ -8555,6 +8703,27 @@ int CreatureDefManager :: LoadPackages(const char *listFile)
 		}
 	}
 	lfr.CloseCurrent();
+
+	/* Now load any creatures from the separate files (as written by creature tweak), replacing those we
+	 * have already loaded. The should be periodically moved into the static data files.
+	 */
+	Platform::MakeDirectory("Creatures");
+	Platform_DirectoryReader r;
+	string dir = r.GetDirectory();
+	r.SetDirectory("Creatures");
+	r.ReadFiles();
+	r.SetDirectory(dir.c_str());
+	vector<std::string>::iterator it;
+	char StrBuf[256] = {0};
+	for (it = r.fileList.begin(); it != r.fileList.end(); ++it) {
+		std::string p = *it;
+		if (Util::HasEnding(p, ".txt")) {
+			Util::SafeFormat(StrBuf, sizeof(StrBuf), "Creatures/%s", p.c_str());
+			LoadFile(StrBuf);
+		}
+	}
+
+
 	return 0;
 }
 
@@ -9160,7 +9329,6 @@ int PrepExt_CreatureInstance(char *buffer, CreatureInstance *cInst)
 
 int PrepExt_CreatureFullInstance(char *buffer, CreatureInstance *cInst)
 {
-
 	TIMETRACK("PrepExt_CreatureFullInstance");
 	int wpos = 0;
 	wpos += PutByte(&buffer[wpos], 0x05);      //_handleCreatureUpdateMsg
@@ -9285,6 +9453,7 @@ int PrepExt_CreaturePos(char *buffer, CreatureInstance *cInst)
 
 int PrepExt_UpdateVelocity(char *buffer, CreatureInstance *cInst)
 {
+	/* This is for characters other than the player */
 	int wpos = 0;
 	wpos += PutByte(&buffer[wpos], 5);  //_handleCreatureUpdateMsg
 	wpos += PutShort(&buffer[wpos], 0);
@@ -9303,6 +9472,23 @@ int PrepExt_UpdateVelocity(char *buffer, CreatureInstance *cInst)
 	PutShort(&buffer[1], wpos - 3);       //Set message size
 	return wpos;
 }
+
+int PrepExt_VelocityEvent(char *buffer, CreatureInstance *cInst)
+{
+	int wpos = 0;
+	wpos += PutByte(&buffer[wpos], 4);  //_handleCreatureEventMsg
+	wpos += PutShort(&buffer[wpos], 0x0000);
+	wpos += PutInteger(&buffer[wpos], cInst->CreatureID);
+	wpos += PutByte(&buffer[wpos], 26);
+
+	wpos += PutByte(&buffer[wpos], cInst->Heading);
+	wpos += PutByte(&buffer[wpos], cInst->Rotation);
+	wpos += PutByte(&buffer[wpos], cInst->Speed);
+
+	PutShort(&buffer[1], wpos - 3);       //Set message size
+	return wpos;
+}
+
 
 int PrepExt_UpdatePosInc(char *buffer, CreatureInstance *cInst)
 {

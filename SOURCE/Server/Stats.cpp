@@ -186,7 +186,7 @@ StatDefinition StatList[] =
 	{STAT::AGGRO_PLAYERS               , StatType::SHORT,    "short",  "aggro_players",     "Aggro Players",     NULL, 0, msizeof(CharacterStatSet, aggro_players), offsetof(CharacterStatSet, aggro_players), SUT_NonPlayer },
 
 	{STAT::MOD_LUCK                    , StatType::FLOAT,    "float",  "mod_luck",          "Mod Luck",          NULL, 0, msizeof(CharacterStatSet, mod_luck), offsetof(CharacterStatSet, mod_luck), SUT_None },
-	{STAT::HEALTH_REGEN                , StatType::SHORT,    "short",  "health_regen",      "Health Regen",      NULL, 0, msizeof(CharacterStatSet, health_regen), offsetof(CharacterStatSet, health_regen), SUT_None },
+	{STAT::HEALTH_REGEN                , StatType::FLOAT,    "float",  "health_regen",      "Health Regen",      NULL, 0, msizeof(CharacterStatSet, health_regen), offsetof(CharacterStatSet, health_regen), SUT_All },
 	{STAT::BLEEDING                    , StatType::SHORT,    "short",  "bleeding",          "Bleeding",          NULL, 0, msizeof(CharacterStatSet, bleeding), offsetof(CharacterStatSet, bleeding), SUT_None },
 	{STAT::DAMAGE_SHIELD               , StatType::INTEGER,    "int",    "damage_shield",     "Damage Shield",     NULL, 0, msizeof(CharacterStatSet, damage_shield), offsetof(CharacterStatSet, damage_shield), SUT_None },
 	{STAT::HIDE_NAMEBOARD              , StatType::SHORT,    "short",  "hide_nameboard",    "Hide Nameboard",    NULL, 0, msizeof(CharacterStatSet, hide_nameboard), offsetof(CharacterStatSet, hide_nameboard), SUT_All },
@@ -200,6 +200,7 @@ StatDefinition StatList[] =
 	{STAT::QUEST_EXP_GAIN_RATE         , StatType::SHORT,    "short",  "quest_exp_gain_rate",   "Quest Experience Gain Rate",  NULL, 0, msizeof(CharacterStatSet, quest_exp_gain_rate), offsetof(CharacterStatSet, quest_exp_gain_rate), SUT_All },
 	{STAT::DROP_GAIN_RATE              , StatType::SHORT,    "short",  "drop_gain_rate",        "Treasure Gain Rate",  NULL, 0, msizeof(CharacterStatSet, drop_gain_rate), offsetof(CharacterStatSet, drop_gain_rate), SUT_All },
 	{STAT::TAGS 					   , StatType::STRING,   "string", "tags",        			"Tags",  NULL, 0, msizeof(CharacterStatSet, tags), offsetof(CharacterStatSet, tags), SUT_All },
+	{STAT::MAX_HEALTH_PC	           , StatType::SHORT,    "short",  "max_health_pc",        	"Maximum Health %",  NULL, 0, msizeof(CharacterStatSet, max_health_pc), offsetof(CharacterStatSet, max_health_pc), SUT_All }
 
 };
 const int MaxStatList = sizeof(StatList) / sizeof(StatList[0]);
@@ -400,6 +401,7 @@ CharacterStatSet :: CharacterStatSet()
 	credit_drops = 0;
 	heroism_gain_rate = 0;
 	drop_gain_rate = 0;
+	max_health_pc = 100;
 	quest_exp_gain_rate = 0;
 	offhand_weapon_damage = 0;
 	magic_attack_speed = 0;
@@ -509,6 +511,7 @@ CharacterStatSet :: CharacterStatSet()
 	armor_rating = 0;
 	tags = "";
 
+	Clear();
 
 }
 void CharacterStatSet :: CopyFrom(CharacterStatSet *source)
@@ -544,6 +547,14 @@ void CharacterStatSet :: Clear(void)
 		case StatType::STRING:  ((std::string*)data)->clear(); break;
 		}
 	}
+
+	// Some have non zero defaults
+	health_regen = 1;
+	size = 1.0F;
+	mod_casting_speed = 1.4013e-045F;
+	will_regen = 1.0F;
+	might_regen = 1.0F;
+	max_health_pc = 100;
 }
 
 void CharacterStatSet :: SetAppearance(const char *data)

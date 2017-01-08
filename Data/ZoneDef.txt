@@ -119,6 +119,23 @@ ShardName=Winterland
 WarpName=Winterland
 DefLoc=2958,260,3821
 
+[ENTRY]
+ID=1071
+NAME=Winterland
+TERRAINCONFIG=Terrain-Winterland#Terrain-Winterland.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=Winterland
+WarpName=Winterland
+DefLoc=2958,260,3821
+
+[ENTRY]
+ID=1072
+NAME=Winterland
+TERRAINCONFIG=Terrain-Winterland#Terrain-Winterland.cfg
+ENVIRONMENTTYPE=CloudyDay
+ShardName=Winterland
+WarpName=Winterland
+DefLoc=2958,260,3821
 
 [ENTRY]
 DESC=Fix Cor

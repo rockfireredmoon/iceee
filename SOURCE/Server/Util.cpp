@@ -46,7 +46,18 @@ ChangeData SessionVarsChangeData;
 //	g_Log.AddMessage(XLogBuffer);
 //}
 
-
+int PrepExt_Chat(char *buffer, int characterID,const char *display_name, const char *channel, const char *message)
+{
+	int wpos = 0;
+	wpos += PutByte(&buffer[wpos], 50);       //_handleCommunicationMsg
+	wpos += PutShort(&buffer[wpos], 0);         //Placeholder for size
+	wpos += PutInteger(&buffer[wpos], characterID);    //Character ID who's sending the message
+	wpos += PutStringUTF(&buffer[wpos], display_name); //pld.charPtr->cdef.css.display_name);  //Character name
+	wpos += PutStringUTF(&buffer[wpos], channel);
+	wpos += PutStringUTF(&buffer[wpos], message);
+	PutShort(&buffer[1], wpos - 3);     //Set size
+	return wpos;
+}
 
 int PrepExt_Broadcast(char *buffer, const char *message)
 {

@@ -321,9 +321,9 @@ Most troublesome of all is that they have begun to patrol the one and only road 
 
 Recently though, we have received reports that the Greysuns seem to be organizing in a far more sinister manner. If this is the case, we must find out what they are up to and stop them before they become a serious threat. Because the Pact of Decay is already a constant threat to us,,we, unfortunately, do not have the resources to deal with these bandits ourselves. Thus, my request to you.
 
-Locate five of their camps and see what they are up to. Once you have done so, return to me and tell me what you have discovered."
+Locate five of their camps and see what they are up to. Once you have done so, return to me and tell me what you have discovered.
 
-CompleteText=I see. It is just as I feared. If what you have seen is accurate, then not only have the Greysun Bandits become a threat, it would seem they are planning something dire against the inhabitants of Great Forest. As such they must be eliminated and soon."
+CompleteText=I see. It is just as I feared. If what you have seen is accurate, then not only have the Greysun Bandits become a threat, it would seem they are planning something dire against the inhabitants of Great Forest. As such they must be eliminated and soon.
 Suggested=34
 Exp=4126
 PartySize=1
@@ -336,7 +336,7 @@ Repeat=0
 sGiver=29824.3,647.221,62866.8,9
 sEnder=29824.3,647.221,62866.8,9
 [ACT]
-Act.BodyText=Travel to the first Greysun Camp
+Act.BodyText=Travel to the first Greysun Camp.
 Obj.0.type=travel
 Obj.0.data1=21896.7,237.566,61779.2,9
 Obj.0.data2=150
@@ -346,50 +346,58 @@ Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=21896.7,237.566,61779.2,9
-Obj.1.type=travel
-Obj.1.data1=21767.8,155.857,58980,9
-Obj.1.data2=150
-Obj.1.description=Travel to the Second camp
-Obj.1.complete=0
-Obj.1.myCreatureDefID=
-Obj.1.myItemID=
-Obj.1.completeText=
-Obj.1.markerLocations=21767.8,155.857,58980,9
-Obj.2.type=travel
-Obj.2.data1=23827.4,150.378,55061.6,9
-Obj.2.data2=200
-Obj.2.description=Travel to the Third camp
-Obj.2.complete=0
-Obj.2.myCreatureDefID=
-Obj.2.myItemID=
-Obj.2.completeText=
-Obj.2.markerLocations=23827.4,150.378,55061.6,9
-Obj.3.type=travel
-Obj.3.data1=25248.7,184.229,53788,9
-Obj.3.data2=150
-Obj.3.description=Travel to the Fourth camp
-Obj.3.complete=0
-Obj.3.myCreatureDefID=
-Obj.3.myItemID=
-Obj.3.completeText=
-Obj.3.markerLocations=25248.7,184.229,53788,9
-Obj.4.type=travel
-Obj.4.data1=21670.2,146.962,52836.2,9
-Obj.4.data2=150
-Obj.4.description=Travel to the Fifth camp
-Obj.4.complete=0
-Obj.4.myCreatureDefID=
-Obj.4.myItemID=
-Obj.4.completeText=
-Obj.4.markerLocations=21670.2,146.962,52836.2,9
-[ACT
-Act.BodyText=Deliver your report to Councilor Willowbeard
-Obj.0.type=talk
-Obj.0.data1=671
-Obj.0.data2=
-Obj.0.description=Return to Councilor Willowbeard
+[ACT]
+Act.BodyText=Travel to the second Greysun Camp.
+Obj.0.type=travel
+Obj.0.data1=21767.8,155.857,58980,9
+Obj.0.data2=150
+Obj.0.description=Travel to the second camp
 Obj.0.complete=0
 Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=21767.8,155.857,58980,9
+[ACT]
+Act.BodyText=Travel to the third Greysun Camp.
+Obj.0.type=travel
+Obj.0.data1=23827.4,150.378,55061.6,9
+Obj.0.data2=200
+Obj.0.description=Travel to the third camp
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=23827.4,150.378,55061.6,9
+[ACT]
+Act.BodyText=Travel to the fourth Greysun Camp.
+Obj.0.type=travel
+Obj.0.data1=25248.7,184.229,53788,9
+Obj.0.data2=150
+Obj.0.description=Travel to the fourth camp
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=25248.7,184.229,53788,9
+[ACT]
+Act.BodyText=Travel to the fifth Greysun Camp.
+Obj.0.type=travel
+Obj.0.data1=21670.2,146.962,52836.2,9
+Obj.0.data2=150
+Obj.0.description=Travel to the fifth camp
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=21670.2,146.962,52836.2,9
+[ACT]
+Act.BodyText=Deliver your report to Councilor Willowbeard.
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Councilor Willowbeard
+Obj.0.complete=0
+Obj.0.myCreatureDefID=671
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=29824.3,647.221,62866.8,9
@@ -407,8 +415,8 @@ PartySize=1
 NumRewards=0
 Coin=1298
 Unabandon=0
-QuestGiver=671
-QuestEnder=671
+QuestGiverID=671
+QuestEnderID=671
 Repeat=0
 sGiver=29824.3,647.221,62866.8,9
 sEnder=29824.3,647.221,62866.8,9
@@ -426,11 +434,11 @@ Obj.0.markerLocations=21741.9,209.569,60236.5,9
 [ACT]
 Act.BodyText=Return to Councilor Willowbeard
 Obj.0.type=talk
-Obj.0.data1=671
-Obj.0.data2=
+Obj.0.data1=0
+Obj.0.data2=0
 Obj.0.description=Return to Councilor Willowbeard
 Obj.0.complete=0
-Obj.0.myCreatureDefID=
+Obj.0.myCreatureDefID=671
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=29824.3,647.221,62866.8,9
@@ -445,23 +453,23 @@ BodyText=Now that the Greysuns have felt the sting of a big loss in number, it i
 In the northwest portion of Great Forest, you will find the two main encampments of the Greysun Bandits. Unlike their lower ranking members, the bandits you will find protecting these locations are a bit more dangerous. In the northernmost of these two camps, you will also find one of the two leaders of the Greysun Bandits. Intel has said his name is Galen Frostfist. Take care as he is both a powerful mage as well as the Commander of the Greysuns.
 
 Once you have removed Galen and his cohorts as a threat, return again to me.
-CompleteText=Head to the two main Greysun Camps in the northwest of Great Forest and defeat the Greysun Commander Galen Frostfist and his followers.
+CompleteText=Again you have returned, beastkin. With their Commander eliminated, the Greysun Bandits must surely be reeling. It is time to bring an end to this problem once and for all!
 Exp=4637
 PartySize=2
 NumRewards=0
 Coin=1358
 Unabandon=0
-QuestGiver=671
-QuestEnder=671
+QuestGiverID=671
+QuestEnderID=671
 Repeat=0
 sGiver=29824.3,647.221,62866.8,9
 sEnder=29824.3,647.221,62866.8,9
 [ACT]
-Act.BodyText=Head to the main Greysun camps and defeat Galen Frostfist and his followers
+Act.BodyText=Head to the two main Greysun Camps in the northwest of Great Forest and defeat the Greysun Commander Galen Frostfist along with fifteen of his followers.
 Obj.0.type=kill
 Obj.0.data1=1091,1090
-Obj.0.data2=15
-Obj.0.description=kill 15 Greysun
+Obj.0.data2=15,1
+Obj.0.description=Kill 15 Greysuns
 Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
@@ -470,7 +478,7 @@ Obj.0.markerLocations=24114.6,241.329,54297.9,9
 Obj.1.type=kill
 Obj.1.data1=1092
 Obj.1.data2=1
-Obj.1.description=kill Galen Frostfist
+Obj.1.description=Kill Galen Frostfist
 Obj.1.complete=0
 Obj.1.myCreatureDefID=
 Obj.1.myItemID=
@@ -479,11 +487,11 @@ Obj.1.markerLocations=24114.6,241.329,54297.9,9
 [ACT]
 Act.BodyText=Return to Councilor Willowbeard
 Obj.0.type=talk
-Obj.0.data1=671
-Obj.0.data2=
+Obj.0.data1=0
+Obj.0.data2=0
 Obj.0.description=Return to Councilor Willowbeard
 Obj.0.complete=0
-Obj.0.myCreatureDefID=
+Obj.0.myCreatureDefID=671
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=29824.3,647.221,62866.8,9
@@ -502,8 +510,8 @@ PartySize=2
 NumRewards=0
 Coin=1458
 Unabandon=0
-QuestGiver=671
-QuestEnder=671
+QuestGiverID=671
+QuestEnderID=671
 Repeat=0
 sGiver=29824.3,647.221,62866.8,9
 sEnder=29824.3,647.221,62866.8,9
@@ -521,15 +529,18 @@ Obj.0.markerLocations=27781.8,193.153,68038.7,9
 [ACT]
 Act.BodyText=Return to Councilor Willowbeard
 Obj.0.type=talk
-Obj.0.data1=671
-Obj.0.data2=
+Obj.0.data1=0
+Obj.0.data2=0
 Obj.0.description=Return to Councilor Willowbeard
 Obj.0.complete=0
-Obj.0.myCreatureDefID=
+Obj.0.myCreatureDefID=671
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=29824.3,647.221,62866.8,9
-
+RewardItem.0=
+RewardItem.1=
+RewardItem.2=
+RewardItem.3=
 
 [ENTRY]
 Requires=215
@@ -720,166 +731,6 @@ Obj.0.myCreatureDefID=848
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=22386,380,76723,9;
-
-
-[ENTRY]
-ID=483
-Title=Sand Goliaths
-BodyText=Hello once again, friend! When we last met, I told you I would ask for your help when the time was right. That time has now come. Recently, we in Bazaart have begun to actively trade with the peaceful Outcast encampment of Oslis high up in Cracked Rock in the hopes of establishing a good relationship with them. Unfortunately, our merchants have encountered a stumbling block of sorts...well, more like stumbling ROCKS to be more accurate.
-
-You see, along the nearest road between Bazaart and Oslis at the base of the cliffs there is a large gathering of Sand Goliaths. Normally docile unless disturbed, these creatures have recently become rather aggressive and have been attacking any caravans that attempt the road between here and Oslis. I have been told the Merchants' Guild has ordered all subsequent caravans to use the more northern pass to avoid the Goliaths and more losses.
-
-Reports claim that there is a Goliath, they call it Brewtus, that seems to have begun leading them on these raids. Do everyone in both Bazaart and Oslis this favor and travel to the base of the cliffs just southeast of Bazaart and eliminate both Brewtus and as many Sand Goliaths as you can. With the loss of their new-found leader and thinned numbers, the Goliaths will hopefully return to being mostly docile allowing the caravans to once again use the road.
-
-Return to me once they have been dealt with.
-CompleteText=Excellent work! Now that the Sand Goliaths are no longer a threat, we can reinforce our trade with Oslis. Unfortunately, we have an even bigger problem now.
-Level=48
-Suggested=50
-Exp=10578
-PartySize=1
-NumRewards=0
-Coin=4167
-Unabandon=0
-QuestGiverID=2463
-QuestEnderID=2463
-Repeat=0
-sGiver=21782.5,597.483,76948.2,9
-sEnder=21782.5,597.483,76948.2,9
-[ACT]
-Act.BodyText=Kill 10 of Sand Goliaths
-Obj.0.type=kill
-Obj.0.data1=1469,1470
-Obj.0.data2=10
-Obj.0.description=Kill 10 Sand Goliaths
-Obj.0.complete=0
-Obj.0.myCreatureDefID=
-Obj.0.myItemID=
-Obj.0.completeText=0 of 10
-Obj.0.markerLocations=27256.4,371.038,81766.1,9
-Obj.1.type=kill
-Obj.1.data1=1471
-Obj.1.data2=1
-Obj.1.description=Kill Brewtus
-Obj.1.complete=0
-Obj.1.myCreatureDefID=
-Obj.1.myItemID=
-Obj.1.completeText=0 of 1
-Obj.1.markerLocations=27104.5,366.492,83081.6,9
-[ACT]
-Act.BodyText=Return to Mal Hazza
-Obj.0.type=talk
-Obj.0.data1=
-Obj.0.data2=
-Obj.0.description=Return to Mal Hazza
-Obj.0.complete=0
-Obj.0.myCreatureDefID=2463
-Obj.0.myItemID=
-Obj.0.completeText=
-Obj.0.markerLocations=21782.5,597.483,76948.2,9
-
-
-[ENTRY]
-Requires=483
-ID=484
-Title=The Cult of the Sand Dragon
-BodyText=While you were out taking care of the Sand Goliaths, we in Bazaart received some grave news.
-
-You might have noticed the numerous piles of dragon skeletons scattered around the Dust Fields just east of Bazaart while in your travels. The large sandstone hills to the southeast are covered in them at the top and some of us here in Bazaart have come to call that place 'The Dragon's Nest'.
-
-I assure you, this name was chosen for good reason. High atop the Dragon's Nest, lies a dragon very much alive and well. For the longest time it has slept peacefully and left the people of Dustshore and Cracked Rock alone for the most part. However, I have been informed that the creature might be awake once more.
-
-Some time ago, a strange group of lisians moved into the Sand Fields and took residence among the dragon bones littering the land. We have been cautiously observing them because of their apparent fascination with the sleeping dragon high atop the Nest. Reports have stated they claim to be the offspring of the dragon and they worship it like a god. They have even given the dragon a name: Kerakura.
-
-Up until recently, this so-called 'Brood of Kerakura' cult has been mostly harmless; however, now it seems they have become a threat. I have been told it seems their close proximity to Bazaart was no accident and that, with their increasing numbers, they could easily stage an attack on this town.
-
-On behalf of the people of Bazaart and, indeed all of Dustshore and those up in Cracked Rock, I ask you to head to the encampments of the Kerakura Brood and utterly destroy them. The incursions of the Anubians in recent times have already cost us much and we do not need a bunch of cultists stirring up even more trouble. 
-CompleteText=You return safely I see, but, there is yet one final task to be undertaken.
-Level=49
-Suggested=50
-Exp=11765
-PartySize=1
-NumRewards=0
-Coin=4297
-Unabandon=0
-QuestGiverID=2463
-QuestEnderID=2463
-Repeat=0
-sGiver=21782.5,597.483,76948.2,9
-sEnder=21782.5,597.483,76948.2,9
-[ACT]
-Act.BodyText=Kill 36 of Kerakura's Brood
-Obj.0.type=kill
-Obj.0.data1=1475,1473,1474
-Obj.0.data2=36
-Obj.0.description=Kill 36 Sand Brood
-Obj.0.complete=0
-Obj.0.myCreatureDefID=
-Obj.0.myItemID=
-Obj.0.completeText=0 of 36
-Obj.0.markerLocations=26006.8,223.929,76375.9,9
-[ACT]
-Act.BodyText=Return to Mal Hazza
-Obj.0.type=talk
-Obj.0.data1=
-Obj.0.data2=
-Obj.0.description=Return to Mal Hazza
-Obj.0.complete=0
-Obj.0.myCreatureDefID=2463
-Obj.0.myItemID=
-Obj.0.completeText=
-Obj.0.markerLocations=21782.5,597.483,76948.2,9
-
-
-[ENTRY]
-Requires=484
-ID=485
-Title=The Dragon's Nest
-BodyText=Now that most of the Brood of Kerakura has been dealt with, it is time to deal the fatal blow.
-
-As mentioned before, the dragon Kerakura resides at the top of the craggy sandstone hills dubbed 'The Dragon's Nest'. Reports state that there are a few members of the Kerakura cult that directly attend the dragon and stay in close proximity to it.
-
-You must head to the Dragon's Nest and not only finish off the cultists, but, defeat Kerakura as well. Should Kerakura fully awaken, it would be a catastrophe to everyone in not only Dustshore, but, the surrounding regions as well.
-
-Because Kerakura is likely to be quite dangerous, I would suggest taking friends along with you. Return to me after you have slain Kerakura and put an end to the cult's fascination with her.
-CompleteText=You return safely! What news do you bring? The dragon is dead? That is great news! With Kerakura gone, we can all once again breathe a sigh of relief.
-
-Friend, you have done so much for the people of Dustshore. Although this isn't much, please accept one of these items as a show of gratitude for your deeds. Safe journey on your travels, friend!
-Level=50
-Suggested=50
-Exp=32000
-PartySize=5
-NumRewards=0
-Coin=103789
-Unabandon=0
-QuestGiverID=2463
-QuestEnderID=2463
-Repeat=0
-sGiver=21782.5,597.483,76948.2,9
-sEnder=21782.5,597.483,76948.2,9
-[ACT]
-Act.BodyText=Kill Kerakura
-Obj.0.type=kill
-Obj.0.data1=3690
-Obj.0.data2=1
-Obj.0.description=Travel to the Dragon's Nest in the Dust Fields of Dustshore and kill Kerakura                      
-Obj.0.complete=0
-Obj.0.myCreatureDefID=
-Obj.0.myItemID=
-Obj.0.completeText=0 of 1
-Obj.0.markerLocations=27188.3,606.084,79850.9,9
-[ACT]
-Act.BodyText=Return to Mal Hazza
-Obj.0.type=talk
-Obj.0.data1=
-Obj.0.data2=
-Obj.0.description=Return to Mal Hazza
-Obj.0.complete=0
-Obj.0.myCreatureDefID=2463
-Obj.0.myItemID=
-Obj.0.completeText=
-Obj.0.markerLocations=21782.5,597.483,76948.2,9
-
-
 
 [ENTRY]
 Requires=802
@@ -1076,3 +927,163 @@ ScriptCompleteCondition=has_item 7068 1
 ScriptCompleteAction=remove_item 7068 1;send_text "You have upgraded your ring!";play_sound Sound-ModSound|Sound-vo_woe_illidan_bossvictory_02.ogg
 
 
+[ENTRY]
+ID=806
+Title=Sand Goliaths
+BodyText=Hello once again, friend! When we last met, I told you I would ask for your help when the time was right. That time has now come. Recently, we in Bazaart have begun to actively trade with the peaceful Outcast encampment of Oslis high up in Cracked Rock in the hopes of establishing a good relationship with them. Unfortunately, our merchants have encountered a stumbling block of sorts...well, more like stumbling ROCKS to be more accurate.
+
+You see, along the nearest road between Bazaart and Oslis at the base of the cliffs there is a large gathering of Sand Goliaths. Normally docile unless disturbed, these creatures have recently become rather aggressive and have been attacking any caravans that attempt the road between here and Oslis. I have been told the Merchants' Guild has ordered all subsequent caravans to use the more northern pass to avoid the Goliaths and more losses.
+
+Reports claim that there is a Goliath, they call it Brewtus, that seems to have begun leading them on these raids. Do everyone in both Bazaart and Oslis this favor and travel to the base of the cliffs just southeast of Bazaart and eliminate both Brewtus and as many Sand Goliaths as you can. With the loss of their new-found leader and thinned numbers, the Goliaths will hopefully return to being mostly docile allowing the caravans to once again use the road.
+
+Return to me once they have been dealt with.
+CompleteText=Excellent work! Now that the Sand Goliaths are no longer a threat, we can reinforce our trade with Oslis. Unfortunately, we have an even bigger problem now.
+Level=48
+Suggested=50
+Exp=10578
+PartySize=1
+NumRewards=0
+Coin=4167
+Unabandon=0
+QuestGiverID=2463
+QuestEnderID=2463
+Repeat=0
+sGiver=21782.5,597.483,76948.2,9
+sEnder=21782.5,597.483,76948.2,9
+[ACT]
+Act.BodyText=Kill 10 of Sand Goliaths
+Obj.0.type=kill
+Obj.0.data1=1469,1470
+Obj.0.data2=10
+Obj.0.description=Kill 10 Sand Goliaths
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 10
+Obj.0.markerLocations=27256.4,371.038,81766.1,9
+Obj.1.type=kill
+Obj.1.data1=1471
+Obj.1.data2=1
+Obj.1.description=Kill Brewtus
+Obj.1.complete=0
+Obj.1.myCreatureDefID=
+Obj.1.myItemID=
+Obj.1.completeText=0 of 1
+Obj.1.markerLocations=27104.5,366.492,83081.6,9
+[ACT]
+Act.BodyText=Return to Mal Hazza
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Mal Hazza
+Obj.0.complete=0
+Obj.0.myCreatureDefID=2463
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=21782.5,597.483,76948.2,9
+
+
+[ENTRY]
+Requires=806
+ID=808
+Title=The Cult of the Sand Dragon
+BodyText=While you were out taking care of the Sand Goliaths, we in Bazaart received some grave news.
+
+You might have noticed the numerous piles of dragon skeletons scattered around the Dust Fields just east of Bazaart while in your travels. The large sandstone hills to the southeast are covered in them at the top and some of us here in Bazaart have come to call that place 'The Dragon's Nest'.
+
+I assure you, this name was chosen for good reason. High atop the Dragon's Nest, lies a dragon very much alive and well. For the longest time it has slept peacefully and left the people of Dustshore and Cracked Rock alone for the most part. However, I have been informed that the creature might be awake once more.
+
+Some time ago, a strange group of lisians moved into the Sand Fields and took residence among the dragon bones littering the land. We have been cautiously observing them because of their apparent fascination with the sleeping dragon high atop the Nest. Reports have stated they claim to be the offspring of the dragon and they worship it like a god. They have even given the dragon a name: Kerakura.
+
+Up until recently, this so-called 'Brood of Kerakura' cult has been mostly harmless; however, now it seems they have become a threat. I have been told it seems their close proximity to Bazaart was no accident and that, with their increasing numbers, they could easily stage an attack on this town.
+
+On behalf of the people of Bazaart and, indeed all of Dustshore and those up in Cracked Rock, I ask you to head to the encampments of the Kerakura Brood and utterly destroy them. The incursions of the Anubians in recent times have already cost us much and we do not need a bunch of cultists stirring up even more trouble. 
+CompleteText=You return safely I see, but, there is yet one final task to be undertaken.
+Level=49
+Suggested=50
+Exp=11765
+PartySize=1
+NumRewards=0
+Coin=4297
+Unabandon=0
+QuestGiverID=2463
+QuestEnderID=2463
+Repeat=0
+sGiver=21782.5,597.483,76948.2,9
+sEnder=21782.5,597.483,76948.2,9
+[ACT]
+Act.BodyText=Kill 36 members of the Kerakura's Brood cult. (Scaleblades, Sandmothers and Dustspinners)
+Obj.0.type=kill
+Obj.0.data1=1475,1473,1474
+Obj.0.data2=36
+Obj.0.description=Kill 36 Sand Brood
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 36
+Obj.0.markerLocations=26006.8,223.929,76375.9,9
+[ACT]
+Act.BodyText=Return to Mal Hazza
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Mal Hazza
+Obj.0.complete=0
+Obj.0.myCreatureDefID=2463
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=21782.5,597.483,76948.2,9
+
+
+[ENTRY]
+Requires=808
+ID=809
+Title=The Dragon's Nest
+BodyText=Now that most of the Brood of Kerakura has been dealt with, it is time to deal the fatal blow.
+
+As mentioned before, the dragon Kerakura resides at the top of the craggy sandstone hills dubbed 'The Dragon's Nest'. Reports state that there are a few members of the Kerakura cult that directly attend the dragon and stay in close proximity to it.
+
+You must head to the Dragon's Nest and not only finish off the cultists, but, defeat Kerakura as well. Should Kerakura fully awaken, it would be a catastrophe to everyone in not only Dustshore, but, the surrounding regions as well.
+
+Because Kerakura is likely to be quite dangerous, I would suggest taking friends along with you. Return to me after you have slain Kerakura and put an end to the cult's fascination with her.
+CompleteText=You return safely! What news do you bring? The dragon is dead? That is great news! With Kerakura gone, we can all once again breathe a sigh of relief.
+
+Friend, you have done so much for the people of Dustshore. Although this isn't much, please accept one of these items as a show of gratitude for your deeds. Safe journey on your travels, friend!
+Level=50
+Suggested=50
+Exp=32000
+PartySize=5
+NumRewards=0
+Coin=103789
+Unabandon=0
+QuestGiverID=2463
+QuestEnderID=2463
+Repeat=0
+sGiver=21782.5,597.483,76948.2,9
+sEnder=21782.5,597.483,76948.2,9
+[ACT]
+Act.BodyText=Kill Kerakura
+Obj.0.type=kill
+Obj.0.data1=3690
+Obj.0.data2=1
+Obj.0.description=Travel to the Dragon's Nest in the Dust Fields of Dustshore and kill Kerakura                      
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 1
+Obj.0.markerLocations=27188.3,606.084,79850.9,9
+[ACT]
+Act.BodyText=Return to Mal Hazza
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Mal Hazza
+Obj.0.complete=0
+Obj.0.myCreatureDefID=2463
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=21782.5,597.483,76948.2,9
+RewardItem.0=
+RewardItem.1=
+RewardItem.2=
+RewardItem.3=

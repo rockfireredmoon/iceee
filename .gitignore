@@ -47,3 +47,6 @@ aclocal.m4
 /ServerLog.txt
 /Logs/
 /LogConfig.txt
+/BACKUP/
+/aclocal.m4
+/*.txt

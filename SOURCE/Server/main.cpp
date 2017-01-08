@@ -592,6 +592,17 @@ int InitServerMain(int argc, char *argv[]) {
 
 	g_Logs.server->info("Loading data files...");
 
+
+
+	//
+	// TODO
+	//
+	// Get to the bottom of this. When errors (such as missing script functions) throw an
+	// exception (during event handling?), it seems to mess up the stack. I am not sure
+	// if this is only in the Sqrat type of handling (e.g. .Evaluate() functions) or
+	// more general to Squirrel (e.g. when throw exception is true)
+	//	Sqrat::ErrorHandling::Enable(false);
+
 	//Init the time.  When the environment config is set during the load phase, it needs
 	//to know the present time to initialize the first time cycle.
 	g_ServerTime = g_PlatformTime.getMilliseconds();
@@ -772,6 +783,7 @@ int InitServerMain(int argc, char *argv[]) {
 	g_QueryManager.queryHandlers["stailsize"] = new StailSizeHandler();
 	g_QueryManager.queryHandlers["daily"] = new DailyHandler();
 	g_QueryManager.queryHandlers["warp"] = new WarpHandler();
+	g_QueryManager.queryHandlers["rot"] = new RotHandler();
 	g_QueryManager.queryHandlers["warpi"] = new WarpInstanceHandler();
 	g_QueryManager.queryHandlers["warpg"] = new WarpPullHandler();
 	g_QueryManager.queryHandlers["warpt"] = new WarpTileHandler();

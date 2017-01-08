@@ -63,4 +63,57 @@ In order to run a server, the basic steps are :-
 
 ### Compiling The Server
 
-This project is distributed as an 'autotools' projects. 
+This project is distributed as an 'autotools' project. 
+
+#### Preparing the source tree
+
+Before compilation of the source tree can take place, the raw source tree from GitHub must
+be processed, creating additional files to aid configuration of the source appropriate for
+your platform.
+
+If you have downloaded a source bundle, this step is not required so you can jump straight
+to Configure The Source.  
+
+You will need the following packages installed :-
+
+* autoconf
+* automake
+* libtool
+* g++
+
+Other packages may be needed for various common libraries used. All of these should be
+easily obtainable for your OS/Distribution. 
+ 
+Now run :-
+
+```bash
+autoreconf -fi
+```
+
+#### Configuration of the source tree
+
+Now all of the autotools files are in place, you can configure the tree for compilation on
+your platform.
+
+Run :-
+
+```bash
+./configure  
+```
+
+The configure script will examine your system for the required libraries and tools and produce a report 
+as to which compile time options have been selected. You can alter the behavior of the build by passing
+options to ./configure. For example, to enable debuggin symbols (recommended), use :-
+
+```bash
+./configure --enable-debug
+```
+
+#### Compile
+
+All that remains now is to compile the source. The '-j 4' makes the compiler use up to 4 cores for compilation. 
+This greatly speeds up the build. Adjust depending on the nuumber of cores you have (or want to use of course).
+
+```bash
+make -j4
+```

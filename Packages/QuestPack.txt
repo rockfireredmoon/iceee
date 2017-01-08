@@ -9,7 +9,7 @@ Data\QuestEurope.txt
 Data\QuestDownBelow.txt
 Data\QuestEuropeExt.txt
 Data\QuestGrunesTalSwineland.txt
-Data\QuestNewCorsica.txt
+;Data\QuestNewCorsica.txt
 Data\QuestICEEE.txt
 Data\QuestBastionIsland.txt
 Data\QuestNewEarthrise.txt

@@ -1160,6 +1160,7 @@ void AbilityManager2 :: InitFunctionTables(void)
 
 	InsertFunction("Status", &AbilityCalculator::Status);
 	InsertFunction("Amp", &AbilityCalculator::Amp);
+	InsertFunction("Set", &AbilityCalculator::Set);
 	InsertFunction("Add", &AbilityCalculator::Add);
 	InsertFunction("AddSlot", &AbilityCalculator::AddSlot);
 	InsertFunction("AddDeliveryBox", &AbilityCalculator::AddDeliveryBox);
@@ -1212,6 +1213,7 @@ void AbilityManager2 :: InitFunctionTables(void)
 	InsertFunction("WalkInShadows", &AbilityCalculator::WalkInShadows);
 	InsertFunction("AddWDesc", &AbilityCalculator::AddWDesc);
 	InsertFunction("HealthSacrifice", &AbilityCalculator::HealthSacrifice);
+	InsertFunction("HealthRestrict", &AbilityCalculator::HealthRestrict);
 	InsertFunction("DoNothing", &AbilityCalculator::DoNothing);
 	InsertFunction("Reagent", &AbilityCalculator::Reagent);
 
@@ -1234,6 +1236,7 @@ void AbilityManager2 :: InitFunctionTables(void)
 	InsertVerifier("Interrupt", ABVerifier());                            //Interrupt()
 
 	InsertVerifier("Add",     ABVerifier(ABVerifier::STATID, ABVerifier::AMOUNT, ABVerifier::TIME));  //Add(statID, amount, time)
+	InsertVerifier("Set",     ABVerifier(ABVerifier::STATID, ABVerifier::AMOUNT, ABVerifier::TIME));  //Set(statID, amount, time)
 	InsertVerifier("Amp",     ABVerifier(ABVerifier::STATID, ABVerifier::AMOUNT, ABVerifier::TIME));  //Amp(statID, amount, time)
 	InsertVerifier("AmpCore", ABVerifier(ABVerifier::AMOUNT, ABVerifier::TIME));    //AmpCore(amount, time)
 	InsertVerifier("Nullify", ABVerifier(ABVerifier::STATID, ABVerifier::AMOUNT));  //Nullify(amount, time)
@@ -1336,6 +1339,7 @@ void AbilityManager2 :: LoadData(void)
 
 	//Clear it in case we got a request to reload the ability table during run-time.
 	mAbilityIndex.clear();
+	mAbilityStringIndex.clear();
 
 	std::string path;
 	Platform::GenerateFilePath(path, "Data", "AbilityTable.txt");
@@ -1500,6 +1504,7 @@ void AbilityManager2 :: LoadAbilityTable(const char *filename)
 void AbilityManager2 :: InsertAbility(int abilityID, const STRINGLIST &rowData)
 {
 	mAbilityIndex[abilityID].ImportRow(rowData);
+	mAbilityStringIndex[mAbilityIndex[abilityID].GetRowAsCString(ABROW::NAME)] = abilityID;
 }
 
 void AbilityManager2 :: DebugPrint(void)
@@ -2219,6 +2224,19 @@ const char* AbilityManager2 :: GetAbilityNameByID(int abilityID)
 }
 
 
+//Return the ability name.  Intended for use by scripting.
+int AbilityManager2 :: GetAbilityIDByName(const char *name)
+{
+	std::map<std::string, int>::iterator it;
+	it = mAbilityStringIndex.find(name);
+	if(it != mAbilityStringIndex.end())
+		return it->second;
+	return -1;
+}
+
+
+
+
 
 
 
@@ -2542,6 +2560,21 @@ int AbilityCalculator :: Amp(ARGUMENT_LIST args)
 	int buffType = ResolveBuffCategoryID(mAbilityEntry->GetRowAsCString(ABROW::BUFF_CATEGORY));
 
 	ciTarget->Amp(mAbilityEntry->mTier, buffType, mAbilityEntry->mAbilityID, mAbilityEntry->mAbilityGroupID, StatID, percent, timeSec);
+	return ABILITY_SUCCESS;
+}
+
+int AbilityCalculator :: Set(ARGUMENT_LIST args)
+{
+	int StatID = g_AbilityManager.ResolveStatID(args.GetString(0));
+	if(StatID == -1)
+		return ABILITY_GENERIC;
+
+	float amount = args.GetFloat(1);
+	int timeSec = static_cast<int>(args.GetEvaluation(2, &g_AbilityManager));
+
+	int buffType = ResolveBuffCategoryID(mAbilityEntry->GetRowAsCString(ABROW::BUFF_CATEGORY));
+
+	ciTarget->Set(mAbilityEntry->mTier, buffType, mAbilityEntry->mAbilityID, mAbilityEntry->mAbilityGroupID, StatID, amount, timeSec);
 	return ABILITY_SUCCESS;
 }
 
@@ -3151,6 +3184,21 @@ int AbilityCalculator :: AddWDesc(ARGUMENT_LIST args)
 //	int iterationTimeSec = static_cast<int>(args.GetEvaluation(1, &g_AbilityManager));
 //	int durationTimeSec = static_cast<int>(args.GetEvaluation(2, &g_AbilityManager));
 //	const char *descText = args.GetString(3);
+	return ABILITY_SUCCESS;
+}
+
+//Action.  Set the targets max health.
+int AbilityCalculator :: HealthRestrict(ARGUMENT_LIST args)
+{
+	float amount = args.GetEvaluation(0, &g_AbilityManager);
+	int timeSec = static_cast<int>(args.GetEvaluation(1, &g_AbilityManager));
+	int buffType = ResolveBuffCategoryID(mAbilityEntry->GetRowAsCString(ABROW::BUFF_CATEGORY));
+	float max = ciTarget->GetMaxHealth(true);
+	ciTarget->Add(mAbilityEntry->mTier, buffType, mAbilityEntry->mAbilityID, mAbilityEntry->mAbilityGroupID, STAT::MAX_HEALTH_PC, -(100-amount), -(100-amount), timeSec);
+	float maxH = max * ( amount / 100.0 );
+	if(ciTarget->css.health > maxH) {
+		ciTarget->Harm(ciTarget->css.health - maxH);
+	}
 	return ABILITY_SUCCESS;
 }
 

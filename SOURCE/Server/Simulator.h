@@ -370,6 +370,7 @@ public:
 	void BroadcastGuildChange(int guildDefID);
 	void BroadcastShardChanged(void);
 	void SendSetMap(void);
+	void SetRotation(int rot, int update);
 	void SetPosition(int xpos, int ypos, int zpos, int update);
 	void UpdateEqAppearance(void);
 	void ActivateSavedAbilities(void);
@@ -408,6 +409,7 @@ public:
 	//void VerifySendBufSize(int length);
 	void VerifyGenericBuffer(const char *buffer, unsigned int buflen);
 	void LogPingStatistics(bool server, bool client);
+	const char * GetScriptUsable(CreatureInstance *target);
 
 	void Debug_GenerateReport(ReportBuffer *report);
 	void Debug_GenerateCreatureReport(ReportBuffer &report);
@@ -472,6 +474,7 @@ public:
 	void AddPendingDisconnect(SimulatorThread *callObject);
 	void AddPendingPacketData(SimulatorThread *callObject);
 	void BroadcastMessage(const char *message);
+	void BroadcastChat(int characterID, const char *display_name, const char *channel, const char *message);
 
 	//CreatureInstance* GetPlayerByID(int CreatureID);
 

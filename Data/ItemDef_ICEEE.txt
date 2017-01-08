@@ -1022,6 +1022,25 @@ mSpecialItemType=3
 mQualityLevel=4
 mMinUseLevel=1
 mUseAbilityId=27005
+[ENTRY]
+mID=8501
+mType=3
+mDisplayName=Emeralds Strong Hat
+mAppearance=[{["a"]={["type"]="Armor-Light-High2-Helmet",["colors"]=["23232A","D18E4E","6A6A6A","6A0909","69372C"]}},null]
+mIcon=Icon-32-C_Armor-Head01.png|Icon-32-BG-Yellow.png
+mLevel=50
+mValue=10000
+mQualityLevel=6
+mEquipType=8
+mFlavorText=It's Really Strong
+mBonusConstitution=9999
+mArmorType=4
+mArmorResistMelee=20000
+mArmorResistFire=20000
+mArmorResistFrost=20000
+mArmorResistMystic=20000
+mArmorResistDeath=20000
+mFlavorText=It's Really Strong
 
 [ENTRY]
 mID=8600

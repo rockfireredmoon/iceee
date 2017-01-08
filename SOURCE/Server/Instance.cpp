@@ -1927,7 +1927,7 @@ CreatureInstance* ActiveInstance :: SpawnCreate(CreatureInstance * sourceActor, 
 	newItem.CurrentZ = sourceActor->CurrentZ;
 	newItem.Faction = FACTION_PLAYERHOSTILE;
 	newItem.BuildZoneString(mInstanceID, mZone, 0);
-	newItem.css.health = newItem.GetMaxHealth(false);
+	newItem.css.health = newItem.CalcRestrictedHealth(-1, false);
 	newItem.css.aggro_players = 1;
 	newItem.tetherNodeX = newItem.CurrentX;
 	newItem.tetherNodeZ = newItem.CurrentZ;
@@ -1976,7 +1976,7 @@ CreatureInstance* ActiveInstance :: SpawnGeneric(int CDefID, int x, int y, int z
 	newItem.Rotation = facing;
 	newItem.Faction = FACTION_PLAYERHOSTILE;
 	newItem.BuildZoneString(mInstanceID, mZone, 0);
-	newItem.css.health = newItem.GetMaxHealth(false);
+	newItem.css.health = newItem.CalcRestrictedHealth(-1, false);
 	newItem.tetherNodeX = newItem.CurrentX;
 	newItem.tetherNodeZ = newItem.CurrentZ;
 
@@ -2105,7 +2105,7 @@ CreatureInstance* ActiveInstance :: SpawnAtProp(int CDefID, int PropID, int dura
 	newItem.CurrentY = y + elevationOffset;
 	newItem.CurrentZ = z;
 	newItem.BuildZoneString(mInstanceID, mZone, 0);
-	newItem.css.health = newItem.GetMaxHealth(false);
+	newItem.css.health = newItem.CalcRestrictedHealth(-1, false);
 	newItem.css.aggro_players = 1;
 	newItem.SetServerFlag(ServerFlags::IsNPC, true);
 	newItem.SetServerFlag(ServerFlags::LocalActive, true);
@@ -3007,6 +3007,17 @@ int ActiveInstance :: DetachSceneryEffect(char *outBuf, int sceneryId, int effec
 	return wpos;
 }
 
+int ActiveInstance :: Shake(char *outbuf, float amount, float time, float range) {
+	int wpos = 0;
+	wpos += PutByte(&outbuf[wpos], 91);       //_handleShake
+	wpos += PutShort(&outbuf[wpos], 0);      //Placeholder for size
+	wpos += PutFloat(&outbuf[wpos], amount);
+	wpos += PutFloat(&outbuf[wpos], time);
+	wpos += PutFloat(&outbuf[wpos], range);
+	PutShort(&outbuf[1], wpos - 3);
+	return wpos;
+}
+
 int ActiveInstance :: AddSceneryEffect(char *outbuf, SceneryEffect *effect)
 {
 	int wpos = 0;
@@ -3472,21 +3483,22 @@ void ActiveInstance :: ScriptCallPackageKill(const char *name)
 		ScriptCall(name);
 }
 
-void ActiveInstance :: ScriptCallUse(int sourceCreatureID, int usedCreatureID, int usedCreatureDefID)
+bool ActiveInstance :: ScriptCallUse(int sourceCreatureID, int usedCreatureID, int usedCreatureDefID)
 {
 	char buffer[64];
 	if(nutScriptPlayer != NULL) {
 		std::vector<ScriptCore::ScriptParam> p;
 		Util::SafeFormat(buffer, sizeof(buffer), "on_use_%d", usedCreatureDefID);
-		nutScriptPlayer->JumpToLabel(buffer, p);
+		bool ok1 = nutScriptPlayer->RunFunctionWithBoolReturn(buffer, p, true);
 		p.push_back(ScriptCore::ScriptParam(sourceCreatureID));
 		p.push_back(ScriptCore::ScriptParam(usedCreatureID));
 		p.push_back(ScriptCore::ScriptParam(usedCreatureDefID));
-		nutScriptPlayer->JumpToLabel("on_use", p);
+		bool ok2 = nutScriptPlayer->RunFunctionWithBoolReturn("on_use", p, true);
+		return ok1 | ok2;
 	}
 	else {
 		Util::SafeFormat(buffer, sizeof(buffer), "onUse_%d", usedCreatureDefID);
-		ScriptCall(buffer);
+		return ScriptCall(buffer);
 	}
 }
 
@@ -3538,7 +3550,7 @@ void ActiveInstance :: ScriptCallUseFinish(int sourceCreatureID, int usedCreatur
 }
 
 //Calls a script jump label.  Can be used for any generic purpose.
-void ActiveInstance :: ScriptCall(const char *name)
+bool ActiveInstance :: ScriptCall(const char *name)
 {
 	bool called = false;
 	if(nutScriptPlayer != NULL) {
@@ -3565,6 +3577,7 @@ void ActiveInstance :: ScriptCall(const char *name)
 	if(!called) {
 		g_Logs.script->debug("Nothing handled script %v", name);
 	}
+	return called;
 }
 
 bool ActiveInstance :: RunScript(std::string &errors)
@@ -3707,6 +3720,10 @@ void ActiveInstance :: RunObjectInteraction(SimulatorThread *simPtr, int CID)
 					p.push_back(ScriptCore::ScriptParam(cinst->CreatureID));
 					nutScriptPlayer->JumpToLabel(intObj->scriptFunction, p);
 				}
+			}
+
+			if(intObj->facing != -1) {
+				simPtr->SetRotation(intObj->facing, 1);
 			}
 
 			ScriptCallUseFinish(simPtr->creatureInst->CreatureID,  cinst->CreatureDefID, cinst->CreatureID);

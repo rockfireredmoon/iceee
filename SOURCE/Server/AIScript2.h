@@ -29,12 +29,18 @@ public:
 	void RegisterAIFunctions(NutPlayer *instance, Sqrat::DerivedClass<AINutPlayer, InstanceScript::InstanceNutPlayer> *clazz);
 	virtual void HaltDerivedExecution();
 	virtual void HaltedDerived();
+//	virtual void RegisterAbstractInstanceFunctions(NutPlayer *instance, Sqrat::DerivedClass<AbstractInstanceNutPlayer, NutPlayer> *instanceClass);
 	void Initialize(CreatureInstance *creature, AINutDef *defPtr, std::string &errors);
+
+	static SQInteger GetEnemiesNear(HSQUIRRELVM v);
 
 	// Exposed to scripts
 //	void Queue(Sqrat::Function function, int fireDelay);
 	bool HasTarget();
-	void Use(int abilityID);
+	bool HasBuff(int tier, int buffType);
+	bool Use(int abilityID);
+	bool UseNoRetry(int abilityID);
+	bool DoUse(int abilityID, bool retry);
 	short GetWill();
 	short GetWillCharge();
 	short GetMight();
@@ -42,6 +48,7 @@ public:
 	short GetLevel();
 	bool IsOnCooldown(const char *category);
 	bool IsBusy();
+
 	short CountEnemyNear(int range);
 	short CountEnemyAt(int range);
 	short HealthPercent();
@@ -69,6 +76,7 @@ public:
 	bool IsTargetInRange(float distance);
 	int GetTargetRange();
 	void SetGTAE();
+	int GetDistance(int CID);
 	int GetSpeed(int CID);
 	bool IsCIDBusy(int CID);
 	void Speak(const char *message);

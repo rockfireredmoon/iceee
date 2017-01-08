@@ -528,4 +528,11 @@ public:
 	int handleCommand(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
 };
 
+class RotHandler : public AbstractCommandHandler {
+public:
+	RotHandler();
+	~RotHandler() {};
+	int handleCommand(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
+};
+
 #endif

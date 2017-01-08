@@ -1462,3 +1462,64 @@ UseTime=500
 Message=Stealing the blue flag
 ScriptFunction=blue_flag_stolen
 
+[ENTRY]
+Name=valkals_blood_keep_to_sanctum_sanguis
+Type=warp
+ObjectID=7865
+WarpTo=4723,670,2826,66
+Message=Entering Sanctum Sanguis
+
+[ENTRY]
+Name=sanctum_sanguis_to_valkals_blood_keep
+Type=warp
+ObjectID=7864
+WarpTo=4358,510,2770,66
+Message=Exit To Valkals Blood Keep
+
+[ENTRY]
+Name=swineland_to_valkals_blood_keep
+Type=warp
+ObjectID=7866
+Facing=64
+WarpTo=676,660,2791,66
+Message=Entering Valkals Blood Keep
+
+[ENTRY]
+Name=valkals_blood_keep_to_swineland
+Type=warp
+ObjectID=7867
+WarpTo=79437,1316,53082,9
+Message=Entering Swineland
+Facing=107
+
+[ENTRY]
+Name=junk_palace_to_swineland
+Type=warp
+ObjectID=7869
+WarpTo=66727,1426,52401,9
+Message=Exiting To Swineland
+Facing=230
+
+[ENTRY]
+Name=swineland_to_junk_palace
+Type=warp
+ObjectID=7868
+WarpTo=1384,280,2681,67
+Message=Entrance To Junk Palace
+Facing=127
+
+[ENTRY]
+Name=skrill_queen_lair_to_swineland
+Type=warp
+ObjectID=7871
+WarpTo=71209,1128,44587,9
+Message=Exiting To Swineland
+Facing=127
+
+[ENTRY]
+Name=swineland_to_skrill_queen_lair
+Type=warp
+ObjectID=7870
+WarpTo=2671,1080,4334,69
+Message=Entering Skrill Queen Lair
+Facing=123

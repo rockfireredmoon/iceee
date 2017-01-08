@@ -1,0 +1,10 @@
+[ENTRY]
+Name=Entrance
+Comment=[Comment here]
+Position=2661.0,1080.0,4323.0
+
+[ENTRY]
+Name=Queens Lair
+Comment=[Comment here]
+Position=3118.0,780.0,2769.0
+

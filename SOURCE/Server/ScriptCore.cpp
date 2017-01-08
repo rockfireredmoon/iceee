@@ -237,12 +237,18 @@ namespace ScriptCore
 	SquirrelFunctionCallback::~SquirrelFunctionCallback() {
 	}
 
-	bool SquirrelFunctionCallback::Execute()
-	{
+	bool SquirrelFunctionCallback::Execute() {
 		bool wasRunning = mNut->mRunning;
 		mNut->mRunning = true;
 		Sqrat::SharedPtr<bool> ptr = mFunction.Evaluate<bool>();
-		bool v = ptr.Get() == NULL || ptr.Get();
+		bool v ;
+		try {
+			Sqrat::SharedPtr<bool> ptr = mFunction.Evaluate<bool>();
+			v = ptr.Get() == NULL || ptr.Get();
+		}
+		catch(Sqrat::Exception &e) {
+			g_Logs.script->error("Exception while execute script function.");
+		}
 		mNut->mRunning = wasRunning;
 		return v;
 	}
@@ -266,7 +272,8 @@ namespace ScriptCore
 
 	bool RunFunctionCallback::Execute()
 	{
-		return mNut->RunFunction(mFunctionName, mArgs, false);
+		mNut->RunFunction(mFunctionName, mArgs, false);
+		return true;
 	}
 
 	//
@@ -718,6 +725,65 @@ namespace ScriptCore
 			g_Logs.script->debug("Request to halt an inactive VM [%v]", def->scriptName.c_str());
 	}
 
+	std::string NutPlayer::RunFunctionWithStringReturn(std::string name, std::vector<ScriptParam> parms, bool time) {
+		if(!mActive) {
+			g_Logs.script->warn("Attempt to run function on inactive script %s.", name.c_str());
+			return "";
+		}
+		unsigned long now = g_PlatformTime.getMilliseconds();
+		mRunning = true;
+		WakeVM(name);
+		SQInteger top = sq_gettop(vm);
+		const SQChar* val;
+		try {
+			if(DoRunFunction(name, parms, time, true)) {
+				sq_getstring(vm,-1,&val);
+			}
+			else {
+				val = "";
+			}
+		}
+		catch(int e) {
+			g_Logs.script->error("Exception when running function %s, failed with %d", name.c_str(), e);
+		}
+		sq_settop(vm,top);
+		if(time) {
+			mCalls++;
+			mGCCounter++;
+			mProcessingTime += g_PlatformTime.getMilliseconds() - now;
+		}
+		mRunning = false;
+		return val;
+	}
+
+	bool NutPlayer::RunFunctionWithBoolReturn(std::string name, std::vector<ScriptParam> parms, bool time) {
+		if(!mActive) {
+			g_Logs.script->warn("Attempt to run function on inactive script %s.", name.c_str());
+			return false;
+		}
+		unsigned long now = g_PlatformTime.getMilliseconds();
+		mRunning = true;
+		WakeVM(name);
+		SQInteger top = sq_gettop(vm);
+		SQBool val = SQFalse;
+		try {
+			if(DoRunFunction(name, parms, time, true)) {
+				sq_getbool(vm,-1,&val);
+			}
+		}
+		catch(int e) {
+			g_Logs.script->error("Exception when running function %s, failed with %d", name.c_str(), e);
+		}
+		sq_settop(vm,top);
+		if(time) {
+			mCalls++;
+			mGCCounter++;
+			mProcessingTime += g_PlatformTime.getMilliseconds() - now;
+		}
+		mRunning = false;
+		return val;
+	}
+
 	bool NutPlayer::RunFunction(std::string name, std::vector<ScriptParam> parms, bool time) {
 
 //		g_Log.AddMessageFormat("[REMOVEME] Run function %s in %s", name.c_str(), def->mSourceFile.c_str());
@@ -735,8 +801,43 @@ namespace ScriptCore
 		mRunning = true;
 
 		WakeVM(name);
-
 		SQInteger top = sq_gettop(vm);
+		bool ok;
+		try {
+			ok = DoRunFunction(name, parms, time, false);
+		}
+		catch(int e) {
+			g_Logs.script->error("Exception when running function %s, failed with %d", name.c_str(), e);
+		}
+		sq_settop(vm,top);
+
+		if(time) {
+			mCalls++;
+			mGCCounter++;
+			mProcessingTime += g_PlatformTime.getMilliseconds() - now;
+		}
+
+		mRunning = false;
+		return ok;
+	}
+
+	bool NutPlayer :: WakeVM(std::string name) {
+
+		// Wake the VM up if it is suspend so the onFinish can be run
+		if(sq_getvmstate(vm) == SQ_VMSTATE_SUSPENDED) {
+			g_Logs.script->debug("Waking up VM to run %v.", name.c_str());
+			sq_pushbool(vm, true);
+			sq_throwerror(vm, _SC("Sleep interrupted."));
+			sq_wakeupvm(vm, true, false, false, true);
+			return true;
+		}
+		else {
+			g_Logs.script->debug("Request to wake an already awake VM to run %v.", name.c_str());
+		}
+		return false;
+	}
+
+	bool NutPlayer::DoRunFunction(std::string name, std::vector<ScriptParam> parms, bool time, bool retVal) {
 		sq_pushroottable(vm);
 		sq_pushstring(vm,_SC(name.c_str()),-1);
 		if(SQ_SUCCEEDED(sq_get(vm,-2))) {
@@ -755,40 +856,12 @@ namespace ScriptCore
 					sq_pushstring(vm,_SC(it->strValue.c_str()), it->strValue.size());
 					break;
 				default:
-					g_Logs.script->error("Unsupported parameter type for Squirrel script. %v", it->type);
+					g_Logs.script->error("Unsupported parameter type for Squirrel script. %d", it->type);
 					break;
 				}
 			}
-			sq_call(vm,parms.size() + 1,SQFalse,SQTrue); //calls the function
-		}
-//		g_Log.AddMessageFormat("[REMOVEME] Before top function %s in %s (active: %s)", name.c_str(), def->mSourceFile.c_str(), mActive ? "yes" : "no");
-		if(mActive && !mHalting)
-			sq_settop(vm,top);
-
-		if(time) {
-			mCalls++;
-			mGCCounter++;
-			mProcessingTime += g_PlatformTime.getMilliseconds() - now;
-		}
-
-		mRunning = wasRunning;
-//		g_Log.AddMessageFormat("[REMOVEME] Complete function %s in %s.", name.c_str(), def->mSourceFile.c_str());
-
-		return true;
-	}
-
-	bool NutPlayer :: WakeVM(std::string name) {
-
-		// Wake the VM up if it is suspend so the onFinish can be run
-		if(sq_getvmstate(vm) == SQ_VMSTATE_SUSPENDED) {
-			g_Logs.script->debug("Waking up VM to run %v.", name.c_str());
-			sq_pushbool(vm, true);
-			sq_throwerror(vm, _SC("Sleep interrupted."));
-			sq_wakeupvm(vm, true, false, false, true);
+			sq_call(vm,parms.size() + 1,retVal ? SQTrue : SQFalse, Sqrat::ErrorHandling::IsEnabled()); //calls the function
 			return true;
-		}
-		else {
-			g_Logs.script->debug("Request to wake an already awake VM to run %v.", name.c_str());
 		}
 		return false;
 	}

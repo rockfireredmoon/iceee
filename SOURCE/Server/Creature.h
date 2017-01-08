@@ -153,6 +153,7 @@ struct SelectedObject
 	bool bInstigated;         //If true, this entity is hostile because it was attacked by a player
 	int DesLocX;              //For the new movement system, the desired X location to move.
 	int DesLocZ;              //For the new movement system, the desired Z location to move.
+	int desiredSpeed;		  //For scripting to specify a desired speed
 	SelectedObject();
 	void Clear(bool UNUSED_eraseAutoAttack);
 	bool hasTargetCDef(int CDefID);
@@ -176,6 +177,7 @@ public:
 	bool operator < (const CreatureDefinition& other) const;
 	bool IsNamedMob(void) const;
 	float GetDropRateMult(void) const;
+	void SaveToStream(FILE *output);
 	void WriteToJSON(Json::Value &value);
 };
 
@@ -473,7 +475,7 @@ public:
 	void CheckQuestKill(CreatureInstance *target);
 	void CheckQuestInteract(int CreatureID, int CreatureDefID);
 	int ProcessQuestRewards(int QuestID, int Outcome, const std::vector<QuestItemReward>& itemsToGive);
-	int QuestInteractObject(QuestObjective *objectiveData);
+	int QuestInteractObject(char *buffer, const char *text, float time, bool gather);
 	int NormalInteractObject(char *outBuf, InteractObject *interactObj);
 	void RunQuestObjectInteraction(CreatureInstance *target, bool deleteObject);
 	void RunObjectInteraction(CreatureInstance *target);
@@ -559,6 +561,7 @@ public:
 	void SendAutoAttack(int abilityID, int targetID);
 
 	//Utility functions
+	int CalcRestrictedHealth(int health, bool addmod);
 	int GetMaxHealth(bool addmod);
 	void LimitValueOverflows(void);
 	float GetHealthRatio(void);
@@ -589,6 +592,7 @@ public:
 	void AICheckAbilityFailure(int abilityReturnInfo);
 	bool AIAbilityFailureAllowRetry(int abilityReturnInfo);
 	bool AICheckIfAbilityBusy(void);
+	int AIFillCreaturesNear(int range, float x, float z, int playerAbilityRestrict, int npcAbilityRestrict, int sidekickAbilityRestrict, CREATURE_PTR_SEARCH& creatures);
 	int AICountEnemyNear(int range, float x, float z);
 	int AIGetIdleMob(int creatureDefID);
 	void AIOtherSetTarget(int creatureID, int creatureIDTarget);
@@ -624,6 +628,7 @@ public:
 	float GetMaxInvisibilityDistance(bool dexBased);
 	float GetRegenInvisibilityDistance(bool dexBased);
 	bool IsCombatReactive(void);
+	int GetDistance(CreatureInstance *object, int threshold);
 
 	//Skill activation requirements.  These functions all return true if the
 	//condition passes
@@ -667,6 +672,7 @@ public:
 	bool Reagent(int itemID, int amount);
 	int Add(unsigned char tier, unsigned char buffCategory, int abID, int abgID, int statID, float calcAmount, float descAmount, float durationSec);
 	void Heal(int amount);
+	void RestrictHealth();
 	bool hasOffHandWeapon(void);
 	bool hasMeleeWeapon(void);
 	bool hasShield(void);
@@ -676,6 +682,7 @@ public:
 	void AddHate(CreatureInstance *attacker, int amount);
 	void Taunt(CreatureInstance *attacker, int seconds);
 	void Amp(unsigned char tier, unsigned char buffType, int abID, int abgID, int statID, float percent, int time);
+	void Set(unsigned char tier, unsigned char buffType, int abID, int abgID, int statID, float amount, int time);
 	void WalkInShadows(int duration, int counter);
 
 	void GoSanctuary(void);
@@ -781,6 +788,7 @@ public:
 
 	CREATURE_MAP NPC;
 
+	void SaveCreatureTweak(CreatureDefinition *def);
 	void AddNPCDef(CreatureDefinition &newItem);
 	CreatureDefinition* GetPointerByCDef(int CDefID);
 	CreatureDefinition* GetPointerByName(const char *name);
@@ -791,6 +799,8 @@ public:
 	int GetSpawnList(const char *searchType, const char *searchStr, vector<int> &resultList);
 
 	void Clear(void);                 //Clear all data
+private:
+	const char * GetIndividualFilename(char *buffer, int bufsize, int accountID);
 };
 
 extern CreatureDefManager CreatureDef;
@@ -834,6 +844,7 @@ int PrepExt_UpdateAppearance(char *buffer, CreatureInstance *cInst);
 int PrepExt_CreatureInstance(char *buffer, CreatureInstance *cInst);
 int PrepExt_CreatureFullInstance(char *buffer, CreatureInstance *cInst);
 int PrepExt_CreaturePos(char *buffer, CreatureInstance *cInst);
+int PrepExt_VelocityEvent(char *buffer, CreatureInstance *cInst);
 int PrepExt_UpdateVelocity(char *buffer, CreatureInstance *cInst);
 int PrepExt_UpdatePosInc(char *buffer, CreatureInstance *cInst);
 int PrepExt_GeneralMoveUpdate(char *buffer, CreatureInstance *cInst);  //General server movement update (combines 3 flags of data)

@@ -13,9 +13,6 @@
 #include "Config.h"
 #include "util/Log.h"
 
-const int USE_FAIL_DELAY = 250;  //Milliseconds to wait before retrying a failed script "use" command.
-
-
 AIScriptManager aiScriptManager;
 
 OpCodeInfo extCoreOpCode[] = {

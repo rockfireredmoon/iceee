@@ -625,6 +625,7 @@ public:
 	int hasWand(ARGUMENT_LIST args);
 
 	int Status(ARGUMENT_LIST args);
+	int Set(ARGUMENT_LIST args);
 	int Amp(ARGUMENT_LIST args);
 	int Add(ARGUMENT_LIST args);
 	int AddDeliveryBox(ARGUMENT_LIST args);
@@ -662,6 +663,7 @@ public:
 	int Invisible(ARGUMENT_LIST args);
 	int WalkInShadows(ARGUMENT_LIST args);
 	int AddWDesc(ARGUMENT_LIST args);
+	int HealthRestrict(ARGUMENT_LIST args);
 	int HealthSacrifice(ARGUMENT_LIST args);
 	int DoNothing(ARGUMENT_LIST args);
 	int Reagent(ARGUMENT_LIST args);
@@ -793,6 +795,7 @@ public:
 
 	void GetCooldownCategoryStrings(STRINGLIST &output);
 	const char* GetAbilityNameByID(int abilityID);
+	int GetAbilityIDByName(const char *name);
 
 private:
 
@@ -802,6 +805,7 @@ private:
 	 //Stores all ability definitions.
 	typedef std::map<int, AbilityEntry2>::iterator ABILITY_ITERATOR;
 	std::map<int, AbilityEntry2> mAbilityIndex;
+	std::map<std::string, int> mAbilityStringIndex;
 	void InsertAbility(int abilityID, const STRINGLIST &rowData);
 	void LoadAbilityTable(const char *filename);
 

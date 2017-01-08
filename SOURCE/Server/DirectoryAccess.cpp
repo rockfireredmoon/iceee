@@ -335,7 +335,7 @@ std::string Platform::Filename(const char *path)
 	if(v.size() == 0)
 		return "";
 	else
-		return v[v.size() - 1].c_str();
+		return v[v.size() - 1];
 }
 
 std::string Platform::Basename(const char *path)

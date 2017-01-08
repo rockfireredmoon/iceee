@@ -429,6 +429,26 @@ void SimulatorManager::SendToAllSimulators(const char *buffer,
 	cs.Leave();
 }
 
+void SimulatorManager :: BroadcastChat(int characterID, const char *display_name, const char *channel, const char *message){
+	char SendBuf[512];
+	int wpos = PrepExt_Chat(SendBuf, 0, "System", "*SysChat", message);
+	SIMULATOR_IT it;
+	for(it = Simulator.begin(); it != Simulator.end(); ++it)
+	{
+		if(it->ProtocolState == 0) {
+			continue;
+		}
+
+		if(it->isConnected == false)
+			continue;
+
+		if(it->pld.charPtr == NULL)
+			continue;
+
+		it->AttemptSend(SendBuf, wpos);
+	}
+}
+
 void SimulatorManager::BroadcastMessage(const char *message) {
 
 	cs.Enter("SimulatorManager::BroadcastMessage");
@@ -2439,6 +2459,28 @@ void SimulatorThread::SendSetMap(void) {
 	AttemptSend(SendBuf, wpos);
 }
 
+
+void SimulatorThread :: SetRotation(int rot, int update)
+{
+	creatureInst->Heading = creatureInst->Rotation = rot;
+
+	if(update == 1)
+	{
+		pld.MovementBlockTime = g_ServerTime + g_Config.WarpMovementBlockTime;
+
+		// Tell everyone else
+		if(!IsGMInvisible())
+		{
+			int size = PrepExt_UpdateVelocity(SendBuf, creatureInst);
+			creatureInst->actInst->LSendToLocalSimulator(SendBuf, size, creatureInst->CurrentX, creatureInst->CurrentZ);
+		}
+
+		// Tell player
+		int size = PrepExt_VelocityEvent(SendBuf, creatureInst);
+		AttemptSend(SendBuf, size);
+	}
+}
+
 void SimulatorThread::SetPosition(int xpos, int ypos, int zpos, int update) {
 	creatureInst->CurrentX = xpos;
 	creatureInst->CurrentY = ypos;
@@ -3879,6 +3921,16 @@ bool SimulatorThread::HasQueryArgs(unsigned int minCount) {
 	return true;
 }
 
+const char * SimulatorThread :: GetScriptUsable(CreatureInstance *target) {
+
+	std::vector<ScriptCore::ScriptParam> parms;
+	parms.push_back(ScriptCore::ScriptParam(target->CreatureID));
+	parms.push_back(ScriptCore::ScriptParam(target->CreatureDefID));
+	parms.push_back(ScriptCore::ScriptParam(creatureInst->CreatureID));
+	parms.push_back(ScriptCore::ScriptParam(creatureInst->CreatureDefID));
+	return creatureInst->actInst->nutScriptPlayer->RunFunctionWithStringReturn("is_usable", parms, true).c_str();
+}
+
 void SimulatorThread::handle_query_creature_isusable(void) {
 	/*  Query: creature.isusable
 	 Determines whether a creature can be used by a specific player.
@@ -3928,36 +3980,42 @@ void SimulatorThread::handle_query_creature_isusable(void) {
 			WritePos = PrepExt_QueryResponseString(SendBuf, query.ID, "Q");
 	} else {
 		const char *status = pld.charPtr->questJournal.CreatureIsusable(CDef);
-		if (status[0] == 'N') {
-			InteractObject *ptr = g_InteractObjectContainer.GetObjectByID(CDef,
-					pld.CurrentZoneID);
-			if (ptr != NULL) {
-				bool hasReq = false;
-				if (ptr->questReq != 0) {
-					if (pld.charPtr->questJournal.completedQuests.HasQuestID(
-							ptr->questReq) >= 0)
-						hasReq = true;
-					else {
-						if (ptr->questComp == false)
-							if (pld.charPtr->questJournal.activeQuests.HasQuestID(
-									ptr->questReq) >= 0)
-								hasReq = true;
-					}
-				} else
-					hasReq = true;
+		if(status[0] == 'N')
+		{
 
-				status = (hasReq == true) ? "Y" : "N";
+			if(creatureInst->actInst->nutScriptPlayer != NULL) {
+				status = GetScriptUsable(target);
 			}
 
-			CreatureDefinition *cdef = CreatureDef.GetPointerByCDef(
-					target->CreatureDefID);
-			if (cdef != NULL && (cdef->DefHints & CDEF_HINT_USABLE))
-				status = "Y";
-			else if (cdef != NULL
-					&& (cdef->DefHints & CDEF_HINT_USABLE_SPARKLY))
-				status = "Q";
-			else if (target->HasStatus(StatusEffects::HENGE))
-				status = "Y";
+			if(status[0] == 'N') {
+				InteractObject *ptr = g_InteractObjectContainer.GetObjectByID(CDef, pld.CurrentZoneID);
+				if(ptr != NULL)	{
+					bool hasReq = false;
+					if(ptr->questReq != 0) {
+						if(pld.charPtr->questJournal.completedQuests.HasQuestID(ptr->questReq) >= 0)
+							hasReq = true;
+						else {
+							if(ptr->questComp == false)
+								if(pld.charPtr->questJournal.activeQuests.HasQuestID(ptr->questReq) >= 0)
+									hasReq = true;
+						}
+					}
+					else
+						hasReq = true;
+
+					status = (hasReq == true) ? "Y" : "N";
+				}
+			}
+
+			if(status[0] == 'N') {
+				CreatureDefinition *cdef = CreatureDef.GetPointerByCDef(target->CreatureDefID);
+				if(cdef != NULL && (cdef->DefHints & CDEF_HINT_USABLE_SPARKLY))
+					status = "Q";
+				else if(cdef != NULL && (cdef->DefHints & CDEF_HINT_USABLE))
+					status = "Y";
+				else if(target->HasStatus(StatusEffects::HENGE))
+					status = "Y";
+			}
 		}
 		WritePos = PrepExt_QueryResponseString(SendBuf, query.ID, status);
 		//LogMessageL(MSG_SHOW, "  creature.isusable: %d (%d) = %s", CID, CDef, status);
@@ -4745,11 +4803,22 @@ int SimulatorThread::handle_query_creature_def_edit(void) {
 		cInst->simulatorPtr->AddMessage((long) cDef, 0, BCM_UpdateCreatureDef);
 	}
 
-	if (pld.CreatureDefID == CDefID) {
+	if(pld.CreatureDefID == CDefID)	{
+		// Tweak Self
+
 		//Set this so the main thread won't try to auto update
 		//the character data for this simulator.
 		//The message broadcast will take care of it.
 		LastUpdate = g_ServerTime;
+	}
+	else {
+		if(charData != NULL) {
+			// Tweak other
+		}
+		else {
+			// Tweak NPC
+			CreatureDef.SaveCreatureTweak(cDef);
+		}
 	}
 	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
 }
@@ -5375,10 +5444,6 @@ int SimulatorThread::handle_query_creature_use(void) {
 		return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
 	}
 
-	//For any other interact besides henge, notify the instance on the off chance that it needs to do something.
-	creatureInst->actInst->ScriptCallUse(creatureInst->CreatureID,
-			target->CreatureID, CDef);
-
 	int QuestID = 0;
 	int QuestAct = 0;
 	QuestObjective *qo = pld.charPtr->questJournal.CreatureUse(CDef, QuestID,
@@ -5455,6 +5520,11 @@ int SimulatorThread::handle_query_creature_use(void) {
 			return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
 		}
 
+		//For any other interact notify the instance on the off chance that it needs to do something.
+		if(creatureInst->actInst->ScriptCallUse(creatureInst->CreatureID, target->CreatureID, CDef)) {
+			return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
+		}
+
 		return PrepExt_QueryResponseError(SendBuf, query.ID,
 				"Cannot use object.");
 	}
@@ -5471,7 +5541,8 @@ int SimulatorThread::handle_query_creature_use(void) {
 				// Old script system
 				questScript.def = &g_QuestScript;
 				questScript.simCall = this;
-				int wpos = creatureInst->QuestInteractObject(qo);
+				int wpos = creatureInst->QuestInteractObject(GSendBuf, qo->ActivateText.c_str(), (float)qo->ActivateTime, qo->gather);
+				sprintf(Aux1, "onActivate_%d_%d", QuestID, QuestAct);
 				sprintf(Aux1, "onActivate_%d_%d", QuestID, QuestAct);
 				if (questScript.JumpToLabel(Aux1) == true) {
 					questScript.mActive = true;
@@ -5494,7 +5565,7 @@ int SimulatorThread::handle_query_creature_use(void) {
 				AttemptSend(GSendBuf, wpos);
 			} else {
 				// New script system
-				int wpos = creatureInst->QuestInteractObject(qo);
+				int wpos = creatureInst->QuestInteractObject(GSendBuf, qo->ActivateText.c_str(), (float)qo->ActivateTime, qo->gather);
 				questNutScript->source = creatureInst;
 //				questNutScript->target = target;
 //				questNutScript->CurrentQuestAct = QuestAct;

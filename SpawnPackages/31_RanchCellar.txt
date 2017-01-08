@@ -9,7 +9,7 @@ Spawn=1883,33  ;Strongarm (15) at 0
 Spawn=1884,33  ;Siren (15) at 0
 
 [ENTRY]
-Name=1a_bograts_14_15
+Name=1b_bograts_14_15
 Spawn=1882,34  ;Scoundrel (14) at 0
 Spawn=1883,33  ;Strongarm (15) at 0
 Spawn=1884,33  ;Siren (15) at 0

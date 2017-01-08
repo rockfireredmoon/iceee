@@ -16,8 +16,6 @@
 #include "DirectoryAccess.h"
 #include "util/Log.h"
 
-const int USE_FAIL_DELAY = 250; //Milliseconds to wait before retrying a failed script "use" command.
-
 AINutManager aiNutManager;
 
 AINutDef::~AINutDef() {
@@ -56,7 +54,19 @@ bool AINutPlayer::HasTarget() {
 	return attachedCreature->CurrentTarget.targ != NULL;
 }
 
-void AINutPlayer::Use(int abilityID) {
+bool AINutPlayer::HasBuff(int tier, int buffType) {
+	return attachedCreature->buffManager.HasBuff(tier, buffType);
+}
+
+bool AINutPlayer::Use(int abilityID) {
+	return DoUse(abilityID, true);
+}
+
+bool AINutPlayer::UseNoRetry(int abilityID) {
+	return DoUse(abilityID, false);
+}
+
+bool AINutPlayer::DoUse(int abilityID, bool retry) {
 
 	if (attachedCreature->ab[0].bPending == false) {
 		//DEBUG OUTPUT
@@ -83,12 +93,15 @@ void AINutPlayer::Use(int abilityID) {
 						g_AbilityManager.GetAbilityErrorCode(r));
 			}
 
-			if (attachedCreature->AIAbilityFailureAllowRetry(r) == true)
+			if (retry && attachedCreature->AIAbilityFailureAllowRetry(r) == true)
 				QueueAdd(new ScriptCore::NutScriptEvent(
 							new ScriptCore::TimeCondition(USE_FAIL_DELAY),
 							new UseCallback(this, abilityID)));
 		}
+		else
+			return true;
 	}
+	return false;
 }
 
 short AINutPlayer::GetWill() {
@@ -118,6 +131,35 @@ bool AINutPlayer::IsOnCooldown(const char *category) {
 
 bool AINutPlayer::IsBusy() {
 	return attachedCreature->AICheckIfAbilityBusy();
+}
+
+SQInteger AINutPlayer::GetEnemiesNear(HSQUIRRELVM v)
+{
+		// int range, float x, float z
+    if (sq_gettop(v) == 5) {
+        Sqrat::Var<AINutPlayer&> left(v, 1);
+        if (!Sqrat::Error::Occurred(v)) {
+        	Sqrat::Var<int> range(v, 2);
+			Sqrat::Var<int> playerAbilityRestrict(v, 3);
+			Sqrat::Var<int> npcAbilityRestrict(v, 4);
+			Sqrat::Var<int> sidekickAbilityRestrict(v, 5);
+			//std::vector<CreatureInstance*> vv;
+			CreatureInstance::CREATURE_PTR_SEARCH vv;
+			CreatureInstance* target = left.value.attachedCreature;
+			float x = (float)target->CurrentX;
+			float z = (float)target->CurrentZ;
+			target->AIFillCreaturesNear(range.value, x, z, playerAbilityRestrict.value, npcAbilityRestrict.value, sidekickAbilityRestrict.value, vv);
+            sq_newarray(v, 0);
+            for (std::size_t i = 0; i < vv.size(); ++i) {
+                Sqrat::PushVar(v, i);
+                Sqrat::PushVar(v, vv[i]->CreatureID);
+                sq_rawset(v, -2);
+            }
+            return 1;
+        }
+        return sq_throwerror(v, Sqrat::Error::Message(v).c_str());
+    }
+    return sq_throwerror(v, _SC("wrong number of parameters"));
 }
 
 short AINutPlayer::CountEnemyNear(int range) {
@@ -256,6 +298,13 @@ int AINutPlayer::GetSpeed(int CID) {
 	return targ == NULL ? 0 : targ->Speed;
 }
 
+int AINutPlayer::GetDistance(int CID) {
+	CreatureInstance *targ = ResolveCreatureInstance(CID);
+	if(targ == NULL)
+		return -1;
+	return attachedCreature->GetDistance(targ, SANE_DISTANCE);
+}
+
 bool AINutPlayer::IsCIDBusy(int CID) {
 	CreatureInstance *targ = ResolveCreatureInstance(CID);
 	return targ == NULL ? 0 : targ->AICheckIfAbilityBusy();
@@ -268,6 +317,7 @@ void AINutPlayer::RegisterFunctions() {
 	Sqrat::RootTable(vm).Bind(_SC("Core"), nutClass);
 	RegisterCoreFunctions(this, &nutClass);
 	Sqrat::DerivedClass<InstanceScript::AbstractInstanceNutPlayer, NutPlayer> abstractInstanceClass(vm, _SC("AbstractInstance"));
+	RegisterAbstractInstanceFunctions(this, &abstractInstanceClass);
 	Sqrat::DerivedClass<InstanceScript::InstanceNutPlayer, AbstractInstanceNutPlayer> instanceClass(vm, _SC("Instance"));
 	Sqrat::DerivedClass<AINutPlayer, InstanceScript::InstanceNutPlayer> aiClass(vm, _SC("AI"));
 	Sqrat::RootTable(vm).Bind(_SC("AI"), aiClass);
@@ -290,7 +340,9 @@ void AINutPlayer::RegisterFunctions() {
 void AINutPlayer::RegisterAIFunctions(NutPlayer *instance,
 		Sqrat::DerivedClass<AINutPlayer, InstanceScript::InstanceNutPlayer> *clazz) {
 	clazz->Func(_SC("has_target"), &AINutPlayer::HasTarget);
+	clazz->Func(_SC("has_buff"), &AINutPlayer::HasBuff);
 	clazz->Func(_SC("use"), &AINutPlayer::Use);
+	clazz->Func(_SC("use_once"), &AINutPlayer::UseNoRetry);
 	clazz->Func(_SC("get_will"), &AINutPlayer::GetWill);
 	clazz->Func(_SC("get_will_charge"), &AINutPlayer::GetWillCharge);
 	clazz->Func(_SC("get_might"), &AINutPlayer::GetMight);
@@ -326,22 +378,12 @@ void AINutPlayer::RegisterAIFunctions(NutPlayer *instance,
 	clazz->Func(_SC("get_target_range"), &AINutPlayer::GetTargetRange);
 	clazz->Func(_SC("set_gtae"), &AINutPlayer::SetGTAE);
 	clazz->Func(_SC("get_speed"), &AINutPlayer::GetSpeed);
+	clazz->Func(_SC("get_distance"), &AINutPlayer::GetDistance);
 	clazz->Func(_SC("is_cid_busy"), &AINutPlayer::IsCIDBusy);
-	clazz->Func(_SC("get_npc_id"), &AINutPlayer::GetNPCID);
 	clazz->Func(_SC("speak"), &AINutPlayer::Speak);
 
-	// Common instance functions (TODO register in abstract class somehow)
-	clazz->Func(_SC("broadcast"), &AINutPlayer::Broadcast);
-	clazz->Func(_SC("local_broadcast"), &AINutPlayer::LocalBroadcast);
-	clazz->Func(_SC("info"), &AINutPlayer::Info);
-	clazz->Func(_SC("message"), &AINutPlayer::Message);
-	clazz->Func(_SC("error"), &AINutPlayer::Error);
-	clazz->Func(_SC("get_cid_for_prop"), &AINutPlayer::GetCIDForPropID);
-	clazz->Func(_SC("chat"), &AINutPlayer::Chat);
-	clazz->Func(_SC("creature_chat"), &AINutPlayer::CreatureChat);
-
 	// Functions that return arrays or tables have to be dealt with differently
-	clazz->SquirrelFunc(_SC("cids"), &AINutPlayer::CIDs);
+	clazz->SquirrelFunc(_SC("get_nearby"), &AINutPlayer::GetEnemiesNear);
 
 }
 

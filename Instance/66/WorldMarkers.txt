@@ -1,0 +1,15 @@
+[ENTRY]
+Name=Sanctum Sanguis
+Comment=FINAL boss fight
+Position=5823.0,550.0,2215.0
+
+[ENTRY]
+Name=Exit from Sanctum Sanguis
+Comment=[Comment here]
+Position=4721.0,670.0,2827.0
+
+[ENTRY]
+Name=Valkals Throne Room
+Comment=[Comment here]
+Position=4039.0,480.0,2794.0
+
