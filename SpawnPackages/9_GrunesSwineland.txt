@@ -95,3 +95,7 @@ Spawn=1385,100
 Name=VBloodkeep_Vaj
 Spawn=1359,50
 Spawn=1336,50
+
+[ENTRY]
+Name=Valkal_Eternal
+Flags=224

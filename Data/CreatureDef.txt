@@ -31083,28 +31083,29 @@ appearance=n4:{["sk"]={["hair"]="C0C3E9",["ear"]="AA8B8B",["neck"]="55473B",["cl
 
 [ENTRY]
 ID=1336
-strength=85
-dexterity=107
-constitution=85
-psyche=125
-spirit=125
-base_damage_melee=155
-damage_resist_melee=2194
-damage_resist_fire=2194
-damage_resist_frost=2194
-damage_resist_mystic=2194
-damage_resist_death=2194
+strength=125
+dexterity=125
+constitution=350
+psyche=200
+spirit=200
+damage_resist_melee=4000
+damage_resist_fire=4000
+damage_resist_frost=4000
+damage_resist_mystic=4000
+damage_resist_death=4000
 will_regen=1
 might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
-level=47
+level=49
 display_name=Vaj Venae
 profession=4
 creature_category=Unliving
-rarity=1
-ai_package=example
+rarity=2
+base_damage_melee=180
+ai_package=custom_heathendel_deathdruid40
+total_size=1.2999999523162842
 
 [ENTRY]
 ID=1337
@@ -31531,28 +31532,29 @@ appearance=n4:{["sk"]={["eye_mouth"]="A60006",["hair"]="554720",["tattoo"]="4D60
 
 [ENTRY]
 ID=1359
-strength=128
-dexterity=110
-constitution=128
-psyche=89
-spirit=89
-base_damage_melee=160
-damage_resist_melee=2243
-damage_resist_fire=2243
-damage_resist_frost=2243
-damage_resist_mystic=2243
-damage_resist_death=2243
+strength=200
+dexterity=200
+constitution=350
+psyche=125
+spirit=125
+damage_resist_melee=4000
+damage_resist_fire=4000
+damage_resist_frost=4000
+damage_resist_mystic=4000
+damage_resist_death=4000
 will_regen=1
 might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
-level=48
+level=49
 display_name=Vaj Samir
 profession=2
 creature_category=Unliving
-rarity=1
-ai_package=example
+rarity=2
+base_damage_melee=210
+ai_package=custom_heathendel_deathknight40b
+total_size=1.2999999523162842
 
 [ENTRY]
 ID=1360
@@ -32199,17 +32201,11 @@ appearance=n4:{["sk"]={["skin"]="6A5939",["accent"]="554015",["eye"]="FF0000",["
 
 [ENTRY]
 ID=1385
-level=50
-display_name=Valkal
-creature_category=Unliving
-rarity=2
-appearance=n4:{["a"]=[{["type"]="Armor-Base1A-Right_Pauldron",["node"]="right_shoulder",["colors"]=["940D0D","940D0D","BFBF9F"]},{["type"]="Armor-Base1A-Left_Pauldron",["node"]="left_shoulder",["colors"]=["940D0D","940D0D","BFBF9F"]},{["type"]="Item-1hMace-Epic4",["colors"]=["5F6878","A79C80","D17F19","2147DF","56FEFF"],["effect"]="Par-WE-1hMace-Fire",["node"]="right_hand"},{["type"]="Item-1hMace-High3",["node"]="left_hand",["colors"]=["71856E","EBAF20","652C2C","816F2B"]}],["c"]="Horde-Vampire_Lord",["sk"]={["trim"]="000000",["mouth"]="3F3434",["skin"]="7491AA",["cloth"]="2A0000",["accent"]="FF0000",["eye"]="FF0000",["hair"]="000000",["armor"]="3F3F3F"},["sz"]="1.6"}
-strength=350
-dexterity=275
-constitution=425
-psyche=225
-spirit=225
-base_damage_melee=300
+strength=250
+dexterity=250
+constitution=500
+psyche=250
+spirit=250
 damage_resist_melee=5500
 damage_resist_fire=5500
 damage_resist_frost=5500
@@ -32220,8 +32216,16 @@ might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
-profession=2
+appearance=n4:{["a"]=[{["type"]="Armor-Base1A-Right_Pauldron",["node"]="right_shoulder",["colors"]=["940D0D","940D0D","BFBF9F"]},{["type"]="Armor-Base1A-Left_Pauldron",["node"]="left_shoulder",["colors"]=["940D0D","940D0D","BFBF9F"]},{["type"]="Item-1hMace-Epic4",["colors"]=["5F6878","A79C80","D17F19","2147DF","56FEFF"],["effect"]="Par-WE-1hMace-Fire",["node"]="right_hand"},{["type"]="Item-1hMace-High3",["node"]="left_hand",["colors"]=["71856E","EBAF20","652C2C","816F2B"]}],["c"]="Horde-Vampire_Lord",["sz"]="1.6"}
+level=50
+display_name=Valkal
+sub_name=The Eternal
+profession=5
+creature_category=Unliving
+rarity=0
+base_damage_melee=250
 ai_package=custom_heathendel_deathdruid40
+total_size=1.399999976158142
 
 [ENTRY]
 ID=1386
@@ -74744,6 +74748,6 @@ display_name=Valkal
 sub_name=(TEMP 2nd Boss)
 profession=2
 creature_category=Unliving
-rarity=2
+rarity=0
 base_damage_melee=300
 ai_package=custom_heathendel_deathdruid40
