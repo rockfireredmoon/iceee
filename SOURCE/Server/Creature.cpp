@@ -4795,10 +4795,12 @@ void CreatureInstance :: ProcessAutoAttack(void)
 	//g_Log.AddMessageFormat("timer_autoattack: %d", timer_autoattack);
 
 	int atRes = 0;
-	if(HasStatus(StatusEffects::AUTO_ATTACK))
+	if(HasStatus(StatusEffects::AUTO_ATTACK)) {
 		atRes = CallAbilityEvent(ABILITYID_AUTO_ATTACK, EventType::onActivate);
-	if(HasStatus(StatusEffects::AUTO_ATTACK_RANGED))
+	}
+	if(HasStatus(StatusEffects::AUTO_ATTACK_RANGED)) {
 		atRes = CallAbilityEvent(ABILITYID_AUTO_ATTACK_RANGED, EventType::onActivate);
+	}
 
 	//Ability error handling for mobs, since auto attacks don't have a range check like
 	//scripted explicit ability attacks do.  Without this check, creatures with

@@ -42,23 +42,16 @@ function valkal1_health() {
 
 	local health = inst.get_health_pc(cid_valkal1);
 	if(health < 80) {
-		inst.set_flag(cid_valkal1, SF_NON_COMBATANT, true);
-		inst.set_status_effect(cid_valkal1, "INVINCIBLE", -1);
-		inst.set_status_effect(cid_valkal1, "UNATTACKABLE", -1);
-		inst.set_status_effect(cid_valkal1, "UNKILLABLE", -1);
+		// TODO might be able to get rid of more of these
 		inst.unhate(cid_valkal1);
-
-		/*foreach(a in inst.all_players())
-			inst.untarget(a);
-		inst.untarget(cid_valkal1);*/
-
 		inst.interrupt(cid_valkal1);
-		inst.set_target(cid_valkal1, cid_valkal1);
+		inst.stop_ai(cid_valkal1);
+		inst.set_flag(cid_valkal1, SF_NON_COMBATANT, true);
+		
+		inst.clear_target(cid_valkal1);
 		foreach(a in inst.all_players()) {
-			inst.interrupt(a);
-			inst.set_target(a, a);
+			inst.clear_target(a);
         }
-
 		inst.creature_chat(cid_valkal1, "s/", "This is not over...");
 		inst.creature_use(cid_valkal1, _AB("Healing Potion: Level 50"));
 		inst.queue(function() {
