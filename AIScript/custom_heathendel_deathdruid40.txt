@@ -167,10 +167,8 @@ if VAR >= 95
   return
 endif
 
-use 217
+;use 217
 reset_goto begin
-
-
 
 :castBuffs
 get_buff_tier 37 VAR

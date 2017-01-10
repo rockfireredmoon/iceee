@@ -1543,7 +1543,7 @@ Flags=1
 [ENTRY]
 ID=1150671
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=654.147,660,2790.26
 Orient=0,0.710353,0,0.703845
 Scale=1,1,1
