@@ -1489,7 +1489,7 @@ Name=valkals_blood_keep_to_swineland
 Type=warp
 ObjectID=7867
 WarpTo=79437,1316,53082,9
-Message=Entering Swineland
+Message=Exiting To Swineland
 Facing=107
 
 [ENTRY]
