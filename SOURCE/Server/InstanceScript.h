@@ -70,6 +70,7 @@ public:
 	void CreatureChat(int cid, const char *channel, const char *message);
 	void SetServerFlags(int CID, unsigned long flags);
 	void SetServerFlag(int CID, unsigned long flag, bool state);
+	void StopAI(int CID);
 	unsigned long GetServerFlags(int CID);
 
 protected:

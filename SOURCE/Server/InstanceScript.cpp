@@ -156,6 +156,7 @@ void AbstractInstanceNutPlayer::RegisterAbstractInstanceFunctions(NutPlayer *ins
 	instanceClass->Func(_SC("set_flags"), &AbstractInstanceNutPlayer::SetServerFlags);
 	instanceClass->Func(_SC("set_flag"), &AbstractInstanceNutPlayer::SetServerFlag);
 	instanceClass->Func(_SC("get_flags"), &AbstractInstanceNutPlayer::GetServerFlags);
+	instanceClass->Func(_SC("stop_ai"), &AbstractInstanceNutPlayer::StopAI);
 
 	// Functions that return arrays or tables have to be dealt with differently
 	instanceClass->SquirrelFunc(_SC("get_nearby_creature"), &AbstractInstanceNutPlayer::GetCreaturesNearCreature);
@@ -256,6 +257,16 @@ void AbstractInstanceNutPlayer::Chat(const char *name, const char *channel, cons
 	char buffer[4096];
 	int wpos = PrepExt_GenericChatMessage(buffer, 0, name, channel, message);
 	actInst->LSendToAllSimulator(buffer, wpos, -1);
+}
+
+
+void AbstractInstanceNutPlayer::StopAI(int CID)
+{
+	CreatureInstance *ci = GetNPCPtr(CID);
+	if(ci->aiScript != NULL)
+		ci->aiScript->EndExecution();
+	if(ci->aiNut != NULL)
+		ci->aiNut->Halt();
 }
 
 void AbstractInstanceNutPlayer::Error(const char *message)
