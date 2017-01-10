@@ -1065,7 +1065,7 @@ void CreatureInstance :: OnApplyDamage(CreatureInstance *attacker, int amount)
 		return;
 	//Players are not given hate profiles, since they have no use for them.
 	//Experience and objectives are based on enemy kills, not players.
-	if(!(serverFlags & ServerFlags::IsPlayer) || IsValidForPVP())
+	if(!(serverFlags & ServerFlags::Noncombatant) && (!(serverFlags & ServerFlags::IsPlayer) || IsValidForPVP()))
 	{
 		HateProfile *hprof = GetHateProfile();
 		if(hprof != NULL)
@@ -2294,9 +2294,11 @@ void CreatureInstance :: AddHate(CreatureInstance *attacker, int amount)
 	HateProfile *hprof = GetHateProfile();
 	if(hprof == NULL)
 		return;
-	hprof->Add(attacker->CreatureDefID, attacker->css.level, 0, amount);
-	hprof->SetImmediateRefresh();
-	SetServerFlag(ServerFlags::HateInfoChanged, true);
+	if(!(serverFlags & ServerFlags::Noncombatant)) {
+		hprof->Add(attacker->CreatureDefID, attacker->css.level, 0, amount);
+		hprof->SetImmediateRefresh();
+		SetServerFlag(ServerFlags::HateInfoChanged, true);
+	}
 }
 
 void CreatureInstance :: Taunt(CreatureInstance *attacker, int seconds)
