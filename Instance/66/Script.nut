@@ -68,7 +68,7 @@ function spawn_adds() {
 		inst.walk_then(cid, v.pos, CREATURE_JOG_SPEED, 0, function() {
 
 		    /* Find all players, sidekicks and enemies of the minion within the range */
-		    local targets = inst.get_nearby_creature(10000, v, TS_NONE, TS_ENEMY, TS_NONE);
+		    local targets = inst.get_nearby_creature(10000, cid, TS_NONE, TS_ENEMY, TS_NONE);
 		    local closest_cid = -1;
 		    local closest_distance = 9999999;
 
@@ -83,8 +83,8 @@ function spawn_adds() {
 
 		    /* Target and attack the found enemy */
 		    if(closest_cid != -1) {
-			    inst.set_target(v, closest_cid);
-			    inst.creature_use(v, _AB("melee"));
+			    inst.set_target(cid, closest_cid);
+			    inst.creature_use(cid, _AB("melee"));
 		    }
 
 		});

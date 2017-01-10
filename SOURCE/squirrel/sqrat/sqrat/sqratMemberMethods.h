@@ -141,11 +141,13 @@ public:
         ptr = Var<C*>(vm, 1).value;
         SQCATCH_NOEXCEPT(vm) {
             SQCLEAR(vm); // clear the previous error
-            assert(0); // may fail because C is not a type bound in the VM
+            // EM - Commented this out, it seems to prevent us catching exceptions ??
+//            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, SQWHAT_NOEXCEPT(vm));
         }
         SQCATCH(vm) {
-            assert(0); // may fail because C is not a type bound in the VM
+            // EM - Commented this out, it seems to prevent us catching exceptions ??
+//            assert(0); // may fail because C is not a type bound in the VM
             return sq_throwerror(vm, SQWHAT(vm));
         }
 
