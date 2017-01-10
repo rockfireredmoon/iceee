@@ -259,3 +259,17 @@ int SidekickPartyHandler::handleQuery(SimulatorThread *sim,
 	sim->PendingSend = true;
 	return WritePos;
 }
+
+//
+//SidekickNotifyExpHandler
+//
+int SidekickNotifyExpHandler::handleQuery(SimulatorThread *sim,
+		CharacterServerData *pld, SimulatorQuery *query,
+		CreatureInstance *creatureInstance) {
+
+	/*  Query: sidekick.notifyexp
+	 Only sent in 0.8.9.  Requests the sidekick experience that was gained
+	 while the user was offline.
+	 */
+	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "0");
+}

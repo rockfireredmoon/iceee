@@ -15,27 +15,32 @@
  * along with TAWD.  If not, see <http://www.gnu.org/licenses/
  */
 
-#ifndef GMHANDLERS_H
-#define GMHANDLERS_H
+#ifndef PETHANDLERS_H
+#define PETHANDLERS_H
 
 #include "Query.h"
 
-class AddFundsHandler : public QueryHandler {
+class PetListHandler : public QueryHandler {
 public:
-	~AddFundsHandler() {};
+	~PetListHandler() {};
 	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
 };
 
-class PVPZoneModeHandler : public QueryHandler {
+class PetPreviewHandler : public QueryHandler {
 public:
-	~PVPZoneModeHandler() {};
+	~PetPreviewHandler() {};
 	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
 };
 
-class GMSpawnHandler : public QueryHandler {
+class PetPurchaseHandler : public QueryHandler {
 public:
-	~GMSpawnHandler() {};
+	~PetPurchaseHandler() {};
 	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
 };
 
+class GetPetHandler : public QueryHandler {
+public:
+	~GetPetHandler() {};
+	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
+};
 #endif

@@ -20,6 +20,8 @@
 #include "../Instance.h"
 #include "../Debug.h"
 #include "../Config.h"
+#include "../Components.h"
+#include "../Ability2.h"
 #include "../util/Log.h"
 
 //
@@ -104,5 +106,138 @@ int AddFundsHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 				"Failed to add funds. %s", err.c_str());
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID, sim->Aux2);
 	}
+}
+
+//
+//PVPZoneModeHandler
+//
+
+int PVPZoneModeHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
+		SimulatorQuery *query, CreatureInstance *creatureInstance) {
+
+	bool ok = sim->CheckPermissionSimple(Perm_Account, Permission_Sage);
+	if (!ok) {
+		if (pld->zoneDef->mGrove == true
+				&& pld->zoneDef->mAccountID != pld->accPtr->ID)
+			ok = true;
+	}
+	if (!ok)
+		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+				"Permission denied.");
+	ActiveInstance *inst = creatureInstance->actInst;
+	if (inst != NULL && query->argCount > 0) {
+		if (inst->mZoneDefPtr->mArena == true)
+			return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+					"Cannot change area PVP mode.");
+		int mode = query->GetInteger(0);
+		sim->SetZoneMode(mode);
+		return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
+	} else {
+		Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1), "Zone mode for %d is %s",
+				inst->mZoneDefPtr->mID,
+				PVP::GameMode::GetNameByID(inst->mZoneDefPtr->mMode));
+		sim->SendInfoMessage(sim->Aux1, INFOMSG_INFO);
+		return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
+	}
+}
+
+
+//
+//GMSpawnHandler
+//
+
+int GMSpawnHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
+		SimulatorQuery *query, CreatureInstance *creatureInstance) {
+
+	bool ok = sim->CheckPermissionSimple(Perm_Account, Permission_Sage);
+	if (!ok) {
+		if (pld->zoneDef->mGrove == true
+				&& pld->zoneDef->mAccountID != pld->accPtr->ID)
+			ok = true;
+	}
+	if (!ok)
+		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+				"Permission denied.");
+
+	if (query->args.size() < 6)
+		return PrepExt_QueryResponseError(sim->SendBuf, query->ID, "Invalid query.");
+
+	int creatureID = query->GetInteger(0);
+	int qty = query->GetInteger(1);
+	int spawnType = query->GetInteger(2);
+	std::string data = query->GetString(3);
+	int flags = query->GetInteger(4);
+	int attackType = query->GetInteger(5);
+	int abilityID = query->GetInteger(6);
+
+	CreatureInstance *c = creatureInstance;
+	if (c->CurrentTarget.targ != NULL) {
+		c = c->CurrentTarget.targ;
+	}
+
+	CreatureInstance *s = NULL;
+
+	for (int i = 0; i < qty; i++) {
+		if (spawnType == 0) {
+			// Random position around the players positions
+			int radius = atoi(data.c_str());
+			s = creatureInstance->actInst->SpawnGeneric(creatureID,
+					c->CurrentX + randmodrng(1, radius) - (radius / 2),
+					c->CurrentY,
+					c->CurrentZ + randmodrng(1, radius) - (radius / 2),
+					c->Rotation, flags);
+
+		} else {
+			// Random position around the players positions
+			int propID = atoi(data.c_str());
+			s = creatureInstance->actInst->SpawnAtProp(creatureID, propID, 99999,
+					flags);
+		}
+
+		if (s == NULL)
+			return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+					"Failed to spawn.");
+
+		int r;
+		CreatureInstance *targ;
+		std::vector<CreatureInstance*> l;
+
+		switch (attackType) {
+		case 0:
+			s->SelectTarget(c);
+			r = s->CallAbilityEvent(abilityID, EventType::onRequest);
+			if (r != 0)
+				g_Logs.simulator->error(
+						"Failed to use ability %v on spawn master creature %v",
+						abilityID, creatureID);
+			break;
+		case 1:
+			l = creatureInstance->actInst->PlayerListPtr;
+			if (l.size() > 0) {
+				targ = l[randmodrng(0, l.size())];
+				s->SelectTarget(targ);
+				r = s->CallAbilityEvent(abilityID, EventType::onRequest);
+				if (r != 0)
+					g_Logs.simulator->error(
+							"Failed to use ability %v for spawn master creature %v",
+							abilityID, creatureID);
+			}
+			break;
+		case 2:
+			l = creatureInstance->actInst->NPCListPtr;
+			if (l.size() > 0) {
+				targ = l[randmodrng(0, l.size())];
+				s->SelectTarget(targ);
+				r = s->CallAbilityEvent(abilityID, EventType::onRequest);
+				if (r != 0)
+					g_Logs.simulator->error(
+							"Failed to use ability %v for spawn master creature %v",
+							abilityID, creatureID);
+			}
+			break;
+		}
+	}
+
+	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
 }
 

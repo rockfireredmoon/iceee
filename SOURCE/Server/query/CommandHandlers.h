@@ -535,4 +535,25 @@ public:
 	int handleCommand(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
 };
 
+class PVPTeamHandler : public AbstractCommandHandler {
+public:
+	PVPTeamHandler();
+	~PVPTeamHandler() {};
+	int handleCommand(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
+};
+
+class PVPModeHandler : public AbstractCommandHandler {
+public:
+	PVPModeHandler();
+	~PVPModeHandler() {};
+	int handleCommand(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
+};
+
+class InstanceHandler : public AbstractCommandHandler {
+public:
+	InstanceHandler();
+	~InstanceHandler() {};
+	int handleCommand(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
+};
+
 #endif

@@ -71,5 +71,10 @@ public:
 	~SidekickPartyHandler() {};
 	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
 };
+class SidekickNotifyExpHandler : public QueryHandler {
+public:
+	~SidekickNotifyExpHandler() {};
+	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
+};
 
 #endif

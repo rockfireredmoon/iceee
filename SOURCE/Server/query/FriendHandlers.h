@@ -15,26 +15,38 @@
  * along with TAWD.  If not, see <http://www.gnu.org/licenses/
  */
 
-#ifndef GMHANDLERS_H
-#define GMHANDLERS_H
+#ifndef FRIENDHANDLERS_H
+#define FRIENDHANDLERS_H
 
 #include "Query.h"
 
-class AddFundsHandler : public QueryHandler {
+class AddFriendHandler : public QueryHandler {
 public:
-	~AddFundsHandler() {};
+	~AddFriendHandler() {};
 	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
 };
 
-class PVPZoneModeHandler : public QueryHandler {
+class ListFriendsHandler : public QueryHandler {
 public:
-	~PVPZoneModeHandler() {};
+	~ListFriendsHandler() {};
 	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
 };
 
-class GMSpawnHandler : public QueryHandler {
+class RemoveFriendHandler : public QueryHandler {
 public:
-	~GMSpawnHandler() {};
+	~RemoveFriendHandler() {};
+	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
+};
+
+class FriendStatusHandler : public QueryHandler {
+public:
+	~FriendStatusHandler() {};
+	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
+};
+
+class GetFriendStatusHandler : public QueryHandler {
+public:
+	~GetFriendStatusHandler() {};
 	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
 };
 

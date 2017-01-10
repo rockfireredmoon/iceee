@@ -15,27 +15,44 @@
  * along with TAWD.  If not, see <http://www.gnu.org/licenses/
  */
 
-#ifndef GMHANDLERS_H
-#define GMHANDLERS_H
+#ifndef ZONEHANDLERS_H
+#define ZONEHANDLERS_H
 
 #include "Query.h"
 
-class AddFundsHandler : public QueryHandler {
+class GoHandler : public QueryHandler {
 public:
-	~AddFundsHandler() {};
+	~GoHandler() {};
 	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
 };
 
-class PVPZoneModeHandler : public QueryHandler {
+class GroveEnvironmentCycleToggleHandler : public QueryHandler {
 public:
-	~PVPZoneModeHandler() {};
+	~GroveEnvironmentCycleToggleHandler() {};
 	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
 };
 
-class GMSpawnHandler : public QueryHandler {
+class SetEnvironmentHandler : public QueryHandler {
 public:
-	~GMSpawnHandler() {};
+	~SetEnvironmentHandler() {};
 	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
 };
 
+class ShardListHandler : public QueryHandler {
+public:
+	~ShardListHandler() {};
+	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
+};
+
+class ShardSetHandler : public QueryHandler {
+public:
+	~ShardSetHandler() {};
+	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
+};
+
+class HengeSetDestHandler : public QueryHandler {
+public:
+	~HengeSetDestHandler() {};
+	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
+};
 #endif

@@ -52,6 +52,9 @@
 //since the connecting function will halt until a connection is established.
 PLATFORM_THREADRETURN SimulatorThreadProc(PLATFORM_THREADARGS lpParam);
 
+const int UNREFASHION_LOWERBOUND = 8980; //These items remove a refashioned effect.
+const int UNREFASHION_UPPERBOUND = 8989;
+
 struct StatFormat {
 	static const int TYPE_INT = 1;
 	static const int TYPE_PINT = 2;
@@ -141,9 +144,6 @@ std::list<SimulatorThread> Simulator;
 SimulatorManager g_SimulatorManager;
 
 const int MapTickChange = 20;
-
-const int UNREFASHION_LOWERBOUND = 8980; //These items remove a refashioned effect.
-const int UNREFASHION_UPPERBOUND = 8989;
 
 extern char GAuxBuf[1024];
 extern char GSendBuf[32767];
@@ -805,6 +805,70 @@ void SimulatorThread::Disconnect(const char *debugCaller) {
 	 */
 
 }
+int SimulatorThread::ItemMorph(bool command) {
+	g_Logs.simulator->debug("[%v] protected_helper_query_item_morph: %v",
+			InternalID, command);
+	if (query.argCount < 3)
+		return QueryErrorMsg::GENERIC;
+
+	unsigned long origLook = strtol(query.args[0].c_str(), NULL, 16);
+	unsigned long newLook = strtol(query.args[1].c_str(), NULL, 16);
+	int creatureID = strtol(query.args[2].c_str(), NULL, 10);
+
+	// Run a distance check for a normal query->  The /refashion command
+	// also uses this function but with a spoofed query->
+	if (command == false) {
+		// Make sure this object isn't too far away.
+		int distCheck = CheckDistance(creatureID);
+		if (distCheck != 0)
+			return distCheck;
+	}
+
+	InventorySlot * origPtr = pld.charPtr->inventory.GetItemPtrByCCSID(
+			origLook);
+	InventorySlot * newPtr = pld.charPtr->inventory.GetItemPtrByCCSID(newLook);
+	if (origPtr == NULL || newPtr == NULL)
+		return QueryErrorMsg::INVMISSING;
+
+	ItemDef *itemPtr1 = g_ItemManager.GetPointerByID(origPtr->IID);
+	ItemDef *itemPtr2 = g_ItemManager.GetPointerByID(newPtr->IID);
+	if (itemPtr1 == NULL || itemPtr2 == NULL)
+		return QueryErrorMsg::INVALIDITEM;
+
+	int cost = (itemPtr1->mValue + itemPtr2->mValue) / 2;
+	if (creatureInst->css.copper < cost)
+		return QueryErrorMsg::COIN;
+	creatureInst->css.copper -= cost;
+
+	//Log just before the actual refashion so we can print the look ID before it's modified.
+	g_Logs.event->info("[REFASHION] %v : CCSID Orig:%v (%v), Look:%v (%v)",
+			creatureInst->css.display_name, origLook, origPtr->IID, newLook,
+			newPtr->IID);
+	g_Logs.event->info(
+			"[REFASHION] %v : Look %v (%v, %v) applied to %v (%v, %v)",
+			creatureInst->css.display_name, itemPtr1->mDisplayName.c_str(),
+			itemPtr1->mID, origPtr->GetLookID(), itemPtr2->mDisplayName.c_str(),
+			itemPtr2->mID, newPtr->GetLookID());
+
+	origPtr->customLook = newPtr->GetLookID();
+	if (origPtr->customLook >= UNREFASHION_LOWERBOUND
+			&& origPtr->customLook <= UNREFASHION_UPPERBOUND)
+		origPtr->customLook = 0;
+
+	int wpos = 0;
+
+	static const short statSend = STAT::COPPER;
+	wpos += PrepExt_SendSpecificStats(&SendBuf[wpos], creatureInst, &statSend,
+			1);
+
+	wpos += RemoveItemUpdate(&SendBuf[wpos], Aux3, newPtr);
+	pld.charPtr->inventory.RemItem(newLook);
+	wpos += AddItemUpdate(&SendBuf[wpos], Aux3, origPtr);
+
+	wpos += PrepExt_QueryResponseString(&SendBuf[wpos], query.ID, "OK");
+	return wpos;
+}
+
 
 void SimulatorThread::AddPendingDisconnect(void) {
 	g_SimulatorManager.AddPendingDisconnect(this);
@@ -2162,122 +2226,42 @@ void SimulatorThread::handle_game_query(void) {
 bool SimulatorThread::HandleQuery(int &PendingData) {
 	if (query.name.compare("client.loading") == 0)
 		handle_query_client_loading();
-	else if (query.name.compare("scenery.list") == 0)
-		PendingData = handle_query_scenery_list();
-	else if (query.name.compare("creature.isusable") == 0)
-		handle_query_creature_isusable();
-	else if (query.name.compare("creature.def.edit") == 0)
-		PendingData = handle_query_creature_def_edit();
 	else if (query.name.compare("admin.check") == 0)
 		PendingData = handle_query_admin_check();
 	else if (query.name.compare("account.fulfill") == 0)
 		handle_query_account_fulfill();
-	else if (query.name.compare("ab.remainingcooldowns") == 0)
-		PendingData = handle_query_ab_remainingcooldowns();
 	else if (query.name.compare("map.marker") == 0)
 		PendingData = handle_query_map_marker();
-	else if (query.name.compare("loot.list") == 0)
-		handle_query_loot_list();
-	else if (query.name.compare("loot.item") == 0)
-		handle_query_loot_item();
-	else if (query.name.compare("loot.exit") == 0)
-		handle_query_loot_exit();
-	else if (query.name.compare("creature.use") == 0)
-		PendingData = handle_query_creature_use();
 	else if (query.name.compare("account.info") == 0)
 		PendingData = handle_query_account_info();
 	else if (query.name.compare("statuseffect.set") == 0)
 		PendingData = handle_query_statuseffect_set();
-	else if (query.name.compare("friends.list") == 0)
-		PendingData = handle_query_friends_list();
-	else if (query.name.compare("friends.add") == 0)
-		handle_query_friends_add();
-	else if (query.name.compare("friends.remove") == 0)
-		PendingData = handle_query_friends_remove();
-	else if (query.name.compare("friends.status") == 0)
-		handle_query_friends_status();
-	else if (query.name.compare("friends.getstatus") == 0)
-		handle_query_friends_getstatus();
 	else if (query.name.compare("guild.info") == 0)
 		PendingData = handle_query_guild_info();
-	else if (query.name.compare("petition.send") == 0)
-		PendingData = handle_query_petition_send();
-	else if (query.name.compare("petition.list") == 0)
-		PendingData = handle_query_petition_list();
-	else if (query.name.compare("petition.doaction") == 0)
-		PendingData = handle_query_petition_doaction();
-	else if (query.name.compare("itemdef.contents") == 0)
-		PendingData = handle_query_itemdef_contents();
-	else if (query.name.compare("itemdef.delete") == 0)
-		PendingData = handle_query_itemdef_delete();
 	else if (query.name.compare("validate.name") == 0)
 		PendingData = handle_query_validate_name();
 	else if (query.name.compare("user.auth.reset") == 0)
 		PendingData = handle_query_user_auth_reset();
-	else if (query.name.compare("item.create") == 0)
-		PendingData = handle_query_item_create();
-	else if (query.name.compare("bug.report") == 0)
-		PendingData = handle_query_bug_report();
-	else if (query.name.compare("gm.spawn") == 0)
-		PendingData = handle_query_gm_spawn();
 	else if (query.name.compare("guild.leave") == 0)
 		PendingData = handle_query_guild_leave();
-	else if (query.name.compare("scenery.edit") == 0)
-		handle_query_scenery_edit();
-	else if (query.name.compare("scenery.delete") == 0)
-		handle_query_scenery_delete();
-	else if (query.name.compare("ab.ownage.list") == 0)
-		handle_query_ab_ownage_list();
-	else if (query.name.compare("ab.buy") == 0)
-		PendingData = handle_query_ab_buy();
-	else if (query.name.compare("ab.respec") == 0)
-		handle_query_ab_respec();
 	else if (query.name.compare("buff.remove") == 0)
 		PendingData = handle_query_buff_remove();
 	else if (query.name.compare("util.pingsim") == 0)
 		handle_query_util_pingsim();
 	else if (query.name.compare("util.pingrouter") == 0)
 		handle_query_util_pingrouter();
-	else if (query.name.compare("essenceShop.contents") == 0)
-		handle_query_essenceShop_contents();
-	else if (query.name.compare("shop.contents") == 0)
-		handle_query_shop_contents();
 	else if (query.name.compare("visWeapon") == 0)
 		PendingData = handle_query_visWeapon();
-	else if (query.name.compare("henge.setDest") == 0)
-		PendingData = handle_query_henge_setDest();
 	else if (query.name.compare("portal.acceptRequest") == 0)
 		PendingData = handle_query_portal_acceptRequest();
 	else if (query.name.compare("craft.create") == 0)
 		PendingData = handle_query_craft_create();
-	else if (query.name.compare("item.morph") == 0)
-		PendingData = handle_query_item_morph();
-	else if (query.name.compare("shard.list") == 0)
-		PendingData = handle_query_shard_list();
-	else if (query.name.compare("sidekick.notifyexp") == 0)
-		PendingData = handle_query_sidekick_notifyexp();
-	else if (query.name.compare("ab.respec.price") == 0)
-		PendingData = handle_query_ab_respec_price();
 	else if (query.name.compare("util.version") == 0)
 		PendingData = handle_query_util_version();
 	else if (query.name.compare("persona.resCost") == 0)
 		PendingData = handle_query_persona_resCost();
-	else if (query.name.compare("spawn.list") == 0)
-		PendingData = handle_query_spawn_list();
-	else if (query.name.compare("spawn.create") == 0)
-		PendingData = handle_query_spawn_create();
-	else if (query.name.compare("creature.delete") == 0)
-		PendingData = handle_query_creature_delete();
 	else if (query.name.compare("build.template.list") == 0)
 		PendingData = handle_query_build_template_list();
-	else if (query.name.compare("spawn.property") == 0)
-		PendingData = handle_query_spawn_property();
-	else if (query.name.compare("spawn.emitters") == 0)
-		PendingData = handle_query_spawn_emitters();
-	else if (query.name.compare("scenery.link.add") == 0)
-		PendingData = handle_query_scenery_link_add();
-	else if (query.name.compare("scenery.link.del") == 0)
-		PendingData = handle_query_scenery_link_del();
 	else if (query.name.compare("ps.join") == 0)
 		PendingData = handle_query_ps_join();
 	else if (query.name.compare("ps.leave") == 0)
@@ -2286,52 +2270,26 @@ bool SimulatorThread::HandleQuery(int &PendingData) {
 		PendingData = handle_query_persona_gm();
 	else if (query.name.compare("party") == 0)
 		PendingData = handle_query_party();
-	else if (query.name.compare("quest.share") == 0)
-		PendingData = handle_query_quest_share();
 	else if (query.name.compare("mod.emote") == 0)
 		PendingData = handle_query_mod_emote();
 	else if (query.name.compare("mod.emotecontrol") == 0)
 		PendingData = handle_query_mod_emotecontrol();
-	else if (query.name.compare("mod.getpet") == 0)
-		PendingData = handle_query_mod_getpet();
 	else if (query.name.compare("mod.setgrovestart") == 0)
 		PendingData = handle_query_mod_setgrovestart();
-	else if (query.name.compare("mod.setenvironment") == 0)
-		PendingData = handle_query_mod_setenvironment();
-	else if (query.name.compare("mod.grove.togglecycle") == 0)
-		PendingData = handle_query_mod_grove_togglecycle();
 	else if (query.name.compare("mod.setats") == 0)
 		PendingData = handle_query_mod_setats();
 	else if (query.name.compare("mod.itempreview") == 0)
 		PendingData = handle_query_mod_itempreview();
 	else if (query.name.compare("mod.restoreappearance") == 0)
 		PendingData = handle_query_mod_restoreappearance();
-	else if (query.name.compare("mod.pet.list") == 0)
-		PendingData = handle_query_mod_pet_list();
-	else if (query.name.compare("mod.pet.purchase") == 0)
-		PendingData = handle_query_mod_pet_purchase();
-	else if (query.name.compare("mod.pet.preview") == 0)
-		PendingData = handle_query_mod_pet_preview();
 	else if (query.name.compare("mod.ping.statistics") == 0)
 		PendingData = handle_query_mod_ping_statistics();
 	else if (query.name.compare("mod.craft") == 0)
 		PendingData = handle_query_mod_craft();
 	else if (query.name.compare("mod.getdungeonprofiles") == 0)
 		PendingData = handle_query_mod_getdungeonprofiles();
-	else if (query.name.compare("mod.morestats") == 0)
-		PendingData = handle_query_mod_morestats();
 	else if (query.name.compare("updateContent") == 0)
 		PendingData = handle_query_updateContent();
-	else if (query.name.compare("instance") == 0)
-		PendingData = handle_query_instance();
-	else if (query.name.compare("go") == 0)
-		PendingData = handle_query_go();
-	else if (query.name.compare("zone.mode") == 0)
-		PendingData = handle_query_zone_mode();
-	else if (query.name.compare("mode") == 0)
-		PendingData = handle_query_mode();
-	else if (query.name.compare("team") == 0)
-		PendingData = handle_query_team();
 	else {
 		g_Logs.simulator->warn("Unhandled query '%v'.", query.name.c_str());
 		return false;
@@ -2817,47 +2775,6 @@ int SimulatorThread::SendInventoryData(std::vector<InventorySlot> &cont) {
 	return tproc;
 }
 
-int SimulatorThread::handle_query_scenery_list(void) {
-	/* Query: scenery.list
-	 Args : 0=ZoneID, 1=TileX, 2=TileZ
-	 */
-
-	if (HasQueryArgs(3) == false)
-		return PrepExt_QueryResponseNull(SendBuf, query.ID);
-
-	int zone = query.GetInteger(0);
-	int x = query.GetInteger(1);
-	int y = query.GetInteger(2);
-
-//	LogMessageL(MSG_SHOW, "[DEBUG] scenery.list: %d, %d, %d", zone, x, y);
-
-	bool skipQuery = false;
-	if (g_Config.ProperSceneryList == 0
-			|| (CheckPermissionSimple(Perm_Account, Permission_FastLoad) == true))
-		skipQuery = true;
-
-	g_SceneryManager.GetThread("SimulatorThread::handle_query_scenery_list");
-	std::list<int> excludedProps;
-
-	/* If this is a request for the players current zone and active instance, retrieve the list
-	 * of props to exclude (that may be the result of script prop removal)
-	 */
-	if (creatureInst != NULL && creatureInst->actInst != NULL
-			&& creatureInst->actInst->mZone == zone) {
-		excludedProps.insert(excludedProps.begin(),
-				creatureInst->actInst->RemovedProps.begin(),
-				creatureInst->actInst->RemovedProps.end());
-	}
-
-	g_SceneryManager.AddPageRequest(sc.ClientSocket, query.ID, zone, x, y,
-			skipQuery, excludedProps);
-	g_SceneryManager.ReleaseThread();
-
-	if (skipQuery == true)
-		return PrepExt_QueryResponseNull(SendBuf, query.ID);
-	return 0;
-}
-
 void SimulatorThread::handle_query_account_fulfill(void) {
 	/* Query: account.fulfill
 	 Args : none
@@ -2865,35 +2782,6 @@ void SimulatorThread::handle_query_account_fulfill(void) {
 	 */
 	WritePos = PrepExt_QueryResponseString(SendBuf, query.ID, "0");
 	PendingSend = true;
-}
-
-int SimulatorThread::handle_query_ab_remainingcooldowns(void) {
-	/* Query: ab.remainingcooldowns
-	 Args : none
-	 */
-	//Each row sent back to the client must have:
-	// [0] = category name, [1] = remaining time(ms), [2] = time elapsed(ms)
-	MULTISTRING response;
-	STRINGLIST row;
-	for (size_t i = 0; i < creatureInst->cooldownManager.cooldownList.size();
-			i++) {
-		ActiveCooldown *cd = &creatureInst->cooldownManager.cooldownList[i];
-		long remain = cd->castEndTimeMS - g_ServerTime;
-		if (remain > 0) {
-			const char *cooldownName =
-					g_AbilityManager.ResolveCooldownCategoryName(cd->category);
-			if (cooldownName == NULL)
-				continue;
-			row.push_back(cooldownName);  // [0] = category name
-			sprintf(Aux1, "%d", cd->GetRemainTimeMS());
-			row.push_back(Aux1);
-			sprintf(Aux1, "%d", cd->GetElapsedTimeMS());
-			row.push_back(Aux1);
-			response.push_back(row);
-			row.clear();
-		}
-	}
-	return PrepExt_QueryResponseMultiString(SendBuf, query.ID, response);
 }
 
 int SimulatorThread::handle_query_map_marker(void) {
@@ -3592,30 +3480,6 @@ bool SimulatorThread::CheckWriteFlush(int &curPos) {
 	return false;
 }
 
-void SimulatorThread::handle_query_loot_list(void) {
-	/*  Query: loot.list
-	 Retrieves a list of loot for a particular dead creature.
-	 Args : [0] = Creature Instance ID.
-	 */
-
-	if (HasQueryArgs(1) == false)
-		return;
-
-	WritePos = 0;
-
-	int CreatureID = atoi(query.args[0].c_str());
-
-	int r = creatureInst->actInst->lootsys.GetCreature(CreatureID);
-	if (r == -1)
-		WritePos = PrepExt_QueryResponseString2(SendBuf, query.ID, "FAIL",
-				"Creature does not have any loot.");
-	else
-		WritePos = creatureInst->actInst->lootsys.WriteLootQueryToBuffer(r,
-				SendBuf, Aux2, query.ID);
-
-	PendingSend = true;
-}
-
 int SimulatorThread::protected_CheckDistance(int creatureID) {
 	return protected_CheckDistanceBetweenCreatures(creatureInst, creatureID);
 }
@@ -3767,100 +3631,6 @@ int SimulatorThread::protected_helper_query_loot_item(void) {
 	return QueryErrorMsg::NONE;
 }
 
-int SimulatorThread::protected_helper_query_loot_need_greed_pass(void) {
-	ActiveParty *party = g_PartyManager.GetPartyByID(creatureInst->PartyID);
-	if (party == NULL)
-		return QueryErrorMsg::GENERIC;
-
-	if (query.argCount < 2)
-		return QueryErrorMsg::GENERIC;
-
-	ActiveInstance *aInst = creatureInst->actInst;
-	int lootTag = atoi(query.args[1].c_str());
-	LootTag *tag = party->lootTags[lootTag];
-	if (tag == NULL) {
-		g_Logs.simulator->warn("[%v] Loot tag missing %v", InternalID, lootTag);
-		return QueryErrorMsg::INVALIDITEM;
-	}
-	ActiveLootContainer *loot =
-			&aInst->lootsys.creatureList[tag->mLootCreatureId];
-	if (tag == NULL) {
-		g_Logs.simulator->warn("[%v] Loot container missing %v", InternalID,
-				tag->mLootCreatureId);
-		return QueryErrorMsg::INVALIDITEM;
-	}
-	g_Logs.simulator->info("[%v] %v is choosing on %v (%v / %v)", InternalID,
-			creatureInst->CreatureID, lootTag, tag->mItemId, tag->mCreatureId,
-			tag->mLootCreatureId);
-	if (loot->HasAnyDecided(tag->mItemId, creatureInst->CreatureID)) {
-		g_Logs.simulator->warn("[%v] %v has already made loot decision on %v",
-				InternalID, creatureInst->CreatureID, tag->mItemId);
-		return QueryErrorMsg::LOOTDENIED;
-	}
-	if (tag->mCreatureId != creatureInst->CreatureID) {
-		g_Logs.simulator->warn(
-				"[%d] Loot tag %d is for a different creature. The tag said %d, but this player is %d.",
-				InternalID, lootTag, tag->mCreatureId,
-				creatureInst->CreatureID);
-		return QueryErrorMsg::LOOTDENIED;
-	}
-
-	const char *command = query.args[0].c_str();
-	if (strcmp(command, "loot.need") == 0) {
-		loot->Need(tag->mItemId, tag->mCreatureId);
-	} else if (strcmp(command, "loot.greed") == 0) {
-		loot->Greed(tag->mItemId, tag->mCreatureId);
-	} else if (strcmp(command, "loot.pass") == 0) {
-		loot->Pass(tag->mItemId, tag->mCreatureId);
-	}
-	CheckIfLootReadyToDistribute(loot, tag);
-	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-}
-
-void SimulatorThread::handle_query_loot_need_greed_pass(void) {
-	/*  Query: loot.need
-	 Signals players interested in being needy.
-	 Args : [0] = Loot tag
-	 */
-
-	if (HasQueryArgs(2) == false)
-		return;
-
-	WritePos = 0;
-	WritePos = protected_helper_query_loot_need_greed_pass();
-	if (WritePos <= 0)
-		WritePos = PrepExt_QueryResponseString2(SendBuf, query.ID, "FAIL",
-				GetErrorString(WritePos));
-	PendingSend = true;
-}
-
-void SimulatorThread::handle_query_loot_item(void) {
-	/*  Query: loot.item
-	 Loots a particular item off a creature.
-	 Args : [0] = Creature Instance ID
-	 [1] = Item Definition ID
-	 */
-
-	if (HasQueryArgs(2) == false)
-		return;
-
-	WritePos = 0;
-
-	int result = protected_helper_query_loot_item();
-	if (result < 0)
-		WritePos = PrepExt_QueryResponseString2(SendBuf, query.ID, "FAIL",
-				GetErrorString(result));
-	PendingSend = true;
-}
-
-void SimulatorThread::handle_query_loot_exit(void) {
-	/*  Query: loot.exit
-	 Signals the server that the loot window has been closed.
-	 The server currently does not process this information.
-	 */
-	WritePos = PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-	PendingSend = true;
-}
 
 const char * SimulatorThread::GetErrorString(int error) {
 	switch (error) {
@@ -3931,103 +3701,6 @@ const char * SimulatorThread :: GetScriptUsable(CreatureInstance *target) {
 	return creatureInst->actInst->nutScriptPlayer->RunFunctionWithStringReturn("is_usable", parms, true).c_str();
 }
 
-void SimulatorThread::handle_query_creature_isusable(void) {
-	/*  Query: creature.isusable
-	 Determines whether a creature can be used by a specific player.
-	 Commonly indicated in the client with a shimmer effect and/or paw icon
-	 during mouse over.
-	 Args : [0] = Creature Instance ID
-	 */
-
-	if (HasQueryArgs(1) == false)
-		return;
-
-	//Creatures cannot be used in groves, to prevent abuse of shops.
-	if (creatureInst->actInst->mZoneDefPtr->mGrove == true) {
-		WritePos = PrepExt_QueryResponseString(SendBuf, query.ID, "N");
-		PendingSend = true;
-		return;
-	}
-
-	WritePos = 0;
-
-	WritePos = 0;
-	int CID = query.GetInteger(0);
-	int CDef = -1;
-	CreatureInstance *target = creatureInst->actInst->GetNPCInstanceByCID(CID);
-	bool failed = false;
-	if (target != NULL) {
-		CDef = target->CreatureDefID;
-		if (target->serverFlags & ServerFlags::IsUnusable)
-			failed = true;
-	} else
-		failed = true;
-
-	if (failed == true) {
-		WritePos = PrepExt_QueryResponseString(SendBuf, query.ID, "N");
-		PendingSend = true;
-		return;
-	}
-
-	//creatureInst->actInst->ResolveCreatureDef(CID, &CDef);
-
-	int lootable = creatureInst->actInst->lootsys.GetCreature(CID);
-	if (lootable > 0) {
-		int self =
-				creatureInst->actInst->lootsys.creatureList[lootable].HasLootableID(
-						creatureInst->CreatureDefID);
-		if (self >= 0)
-			WritePos = PrepExt_QueryResponseString(SendBuf, query.ID, "Q");
-	} else {
-		const char *status = pld.charPtr->questJournal.CreatureIsusable(CDef);
-		if(status[0] == 'N')
-		{
-
-			if(creatureInst->actInst->nutScriptPlayer != NULL) {
-				status = GetScriptUsable(target);
-			}
-
-			if(status[0] == 'N') {
-				InteractObject *ptr = g_InteractObjectContainer.GetObjectByID(CDef, pld.CurrentZoneID);
-				if(ptr != NULL)	{
-					bool hasReq = false;
-					if(ptr->questReq != 0) {
-						if(pld.charPtr->questJournal.completedQuests.HasQuestID(ptr->questReq) >= 0)
-							hasReq = true;
-						else {
-							if(ptr->questComp == false)
-								if(pld.charPtr->questJournal.activeQuests.HasQuestID(ptr->questReq) >= 0)
-									hasReq = true;
-						}
-					}
-					else
-						hasReq = true;
-
-					status = (hasReq == true) ? "Y" : "N";
-				}
-			}
-
-			if(status[0] == 'N') {
-				CreatureDefinition *cdef = CreatureDef.GetPointerByCDef(target->CreatureDefID);
-				if(cdef != NULL && (cdef->DefHints & CDEF_HINT_USABLE_SPARKLY))
-					status = "Q";
-				else if(cdef != NULL && (cdef->DefHints & CDEF_HINT_USABLE))
-					status = "Y";
-				else if(target->HasStatus(StatusEffects::HENGE))
-					status = "Y";
-			}
-		}
-		WritePos = PrepExt_QueryResponseString(SendBuf, query.ID, status);
-		//LogMessageL(MSG_SHOW, "  creature.isusable: %d (%d) = %s", CID, CDef, status);
-	}
-
-	if (WritePos == 0) {
-		//LogMessageL(MSG_WARN, "[DEBUG] Unhandled creature.isusable for object ID:%d CDef:%d", CID, CDef);
-		WritePos = PrepExt_QueryResponseString(SendBuf, query.ID, "N");
-	}
-	PendingSend = true;
-}
-
 /*
  Check for build permission at the specified coordinate (in the player's current standing
  zone.  If a prop is supplied, use the coordinates of the prop instead.
@@ -4068,403 +3741,6 @@ bool SimulatorThread::HasPropEditPermission(SceneryObject *prop, float x,
 		return true;
 
 	return false;
-}
-
-int SimulatorThread::protected_helper_query_scenery_edit(void) {
-	if (query.argCount < 1)
-		return QueryErrorMsg::GENERIC;
-
-	if (pld.zoneDef == NULL)
-		return QueryErrorMsg::GENERIC;
-
-	SceneryObject prop;
-	SceneryObject *propPtr = NULL;
-	bool newProp = false;
-
-	SceneryObject oldPropData;
-
-	int PropID = 0;
-	if (query.args[0].compare("NEW") != 0) {
-		//If not a new prop, get the existing one.
-		PropID = query.GetInteger(0);
-		//LogMessageL(MSG_SHOW, "[DEBUG] scenery.edit: %d", PropID);
-
-		g_SceneryManager.GetThread(
-				"SimulatorThread::protected_helper_query_scenery_edit");
-		//propPtr = g_SceneryManager.GetPropPtr(pld.CurrentZoneID, PropID, NULL);
-		propPtr = g_SceneryManager.GlobalGetPropPtr(pld.CurrentZoneID, PropID,
-				NULL);
-		g_SceneryManager.ReleaseThread();
-
-		if (propPtr == NULL)
-			return QueryErrorMsg::PROPNOEXIST;
-		prop.copyFrom(propPtr);
-
-		//Save the existing prop data in case there's an error
-		oldPropData.copyFrom(&prop);
-
-		if (HasPropEditPermission(&prop) == false) {
-			int wpos = PrepExt_UpdateScenery(SendBuf, &oldPropData);
-			AttemptSend(SendBuf, wpos);
-			return QueryErrorMsg::PROPLOCATION;
-		}
-	} else {
-		//New prop, give it an ID.
-		newProp = true;
-		prop.ID = g_SceneryVars.BaseSceneryID + g_SceneryVars.SceneryAdditive++;
-		SessionVarsChangeData.AddChange();
-		g_Logs.simulator->debug("[%v] scenery.edit: (new) %v", InternalID,
-				prop.ID);
-	}
-
-	for (unsigned int i = 1; i < query.argCount; i += 2) {
-		const char *field = query.args[i].c_str();
-		const char *data = query.args[i + 1].c_str();
-
-		if (strcmp(field, "asset") == 0)
-			prop.SetAsset(data);
-		else if (strcmp(field, "p") == 0) {
-			prop.SetPosition(data);
-		} else if (strcmp(field, "q") == 0) {
-			prop.SetQ(data);
-		} else if (strcmp(field, "s") == 0)
-			prop.SetS(data);
-		else if (strcmp(field, "flags") == 0)
-			prop.Flags = atoi(data);
-		else if (strcmp(field, "name") == 0)
-			prop.SetName(data);
-		else if (strcmp(field, "layer") == 0)
-			prop.Layer = atoi(data);
-		else if (strcmp(field, "patrolSpeed") == 0)
-			prop.patrolSpeed = atoi(data);
-		else if (strcmp(field, "patrolEvent") == 0)
-			prop.SetPatrolEvent(data);
-		else if (strcmp(field, "ID") == 0) {
-			//Don't do anything for this, otherwise it might create a
-			//duplicate entry.
-			//prop.ID = atoi(data);
-		} else if (prop.SetExtendedProperty(field, data) == true) {
-			g_Logs.simulator->debug(
-					"[%d] scenery.edit extended property was set [%s=%s]",
-					InternalID, field, data);
-		} else
-			g_Logs.simulator->warn("Unknown property [%v] for scenery.edit",
-					field);
-	}
-
-	if (strlen(prop.Asset) == 0)
-		return QueryErrorMsg::PROPASSETNULL;
-
-	//The client makes changes internally without waiting for confirmation.
-	//If the prop edit fails, we need to send back the old prop data to force
-	//the client to revert to its prior state.
-
-	//if(pld.accPtr->CheckBuildPermissionAdv(pld.zoneDef->mID, pld.zoneDef->mPageSize, prop.LocationX, prop.LocationZ) == false)
-	if (HasPropEditPermission(&prop) == false) {
-		if (newProp == false) {
-			int wpos = PrepExt_UpdateScenery(SendBuf, &oldPropData);
-			AttemptSend(SendBuf, wpos);
-		}
-		return QueryErrorMsg::PROPLOCATION;
-	}
-
-	//Check valid asset
-	if (g_SceneryManager.VerifyATS(prop) == false) {
-		if (newProp == false) {
-			int wpos = PrepExt_UpdateScenery(SendBuf, &oldPropData);
-			AttemptSend(SendBuf, wpos);
-		}
-		return QueryErrorMsg::PROPATS;
-	}
-
-	//Prop is good to add.
-	g_SceneryManager.GetThread(
-			"SimulatorThread::protected_helper_query_scenery_edit");
-
-	bool isSpawnPoint = prop.IsSpawnPoint();
-
-	SceneryObject *retProp = NULL;
-	if (PropID == 0) {
-		retProp = g_SceneryManager.AddProp(pld.zoneDef->mID, prop);
-		//LogMessageL(MSG_SHOW, "Added prop: %d, %s", prop.ID, prop.Asset);
-	} else {
-		if (isSpawnPoint == true)
-			creatureInst->actInst->spawnsys.RemoveSpawnPoint(prop.ID);
-
-		retProp = g_SceneryManager.ReplaceProp(pld.zoneDef->mID, prop);
-		//LogMessageL(MSG_SHOW, "Replaced prop: %d, %s", prop.ID, prop.Asset);
-	}
-
-	// The spawn system needs to reference a stable prop location.  If it tries to
-	// reference this prop, it will crash after this local instance is destructed.
-	// So we use retProp instead, which returns with a valid pointer if AddProp()
-	// or ReplaceProp() was successful.
-	if (isSpawnPoint == true && retProp != NULL)
-		creatureInst->actInst->spawnsys.UpdateSpawnPoint(retProp);
-
-	g_SceneryManager.ReleaseThread();
-
-	int opType = (
-			(newProp == true) ? SceneryAudit::OP_NEW : SceneryAudit::OP_EDIT);
-	pld.zoneDef->AuditScenery(creatureInst->css.display_name, pld.CurrentZoneID,
-			&prop, opType);
-
-	int wpos = PrepExt_UpdateScenery(SendBuf, &prop);
-	//creatureInst->actInst->LSendToAllSimulator(SendBuf, wpos, -1);
-	creatureInst->actInst->LSendToLocalSimulator(SendBuf, wpos,
-			creatureInst->CurrentX, creatureInst->CurrentZ);
-
-	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-}
-
-void SimulatorThread::handle_query_scenery_edit(void) {
-	/*  Query: scenery.edit
-	 Creates a new scenery object or edits an existing one.
-	 Args : [variable]
-	 */
-
-	WritePos = 0;
-
-	WritePos = protected_helper_query_scenery_edit();
-	if (WritePos <= 0) {
-		SendInfoMessage(GetErrorString(WritePos), INFOMSG_ERROR);
-		WritePos = PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-	}
-	PendingSend = true;
-}
-
-void SimulatorThread::handle_query_scenery_delete(void) {
-	WritePos = 0;
-
-	WritePos = protected_helper_query_scenery_delete();
-	if (WritePos <= 0) {
-		SendInfoMessage(GetErrorString(WritePos), INFOMSG_ERROR);
-		WritePos = PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-	}
-	PendingSend = true;
-}
-
-int SimulatorThread::protected_helper_query_scenery_delete(void) {
-	if (query.argCount < 1)
-		return QueryErrorMsg::GENERIC;
-
-	int PropID = query.GetInteger(0);
-	SceneryObject *propPtr = NULL;
-
-	g_Logs.simulator->debug("[%v] scenery.delete: %v", InternalID, PropID);
-
-	g_SceneryManager.GetThread(
-			"SimulatorThread::protected_helper_query_scenery_delete");
-	//propPtr = g_SceneryManager.pageData.GlobalFindProp(PropID, pld.CurrentZoneID, NULL);
-	propPtr = g_SceneryManager.GlobalGetPropPtr(pld.CurrentZoneID, PropID,
-			NULL);
-	g_SceneryManager.ReleaseThread();
-
-	if (propPtr == NULL)
-		return QueryErrorMsg::PROPNOEXIST;
-
-	if (HasPropEditPermission(propPtr) == false)
-		return QueryErrorMsg::PROPLOCATION;
-	/* OLD
-	 if(pld.accPtr->CheckBuildPermissionAdv(pld.zoneDef->mID, pld.zoneDef->mPageSize, propPtr->LocationX, propPtr->LocationZ) == false)
-	 return QueryErrorMsg::PROPLOCATION;
-	 */
-
-	pld.zoneDef->AuditScenery(creatureInst->css.display_name, pld.CurrentZoneID,
-			propPtr, SceneryAudit::OP_DELETE);
-
-	//Spawn point must be deactivated before it is deleted, otherwise pointers
-	//will be invalidated and it may crash.
-	creatureInst->actInst->spawnsys.RemoveSpawnPoint(PropID);
-
-	g_SceneryManager.GetThread(
-			"SimulatorThread::protected_helper_query_scenery_delete");
-	//g_SceneryManager.pageData.DeleteProp(pld.CurrentZoneID, PropID);
-	g_SceneryManager.DeleteProp(pld.CurrentZoneID, PropID);
-	g_SceneryManager.ReleaseThread();
-
-	//Generate a bare prop that only has the necessary data for a delete
-	//operation.
-	SceneryObject prop;
-	prop.ID = PropID;
-	prop.Asset[0] = 0;
-	int wpos = PrepExt_UpdateScenery(SendBuf, &prop);
-	//creatureInst->actInst->LSendToAllSimulator(SendBuf, wpos, -1);
-	creatureInst->actInst->LSendToLocalSimulator(SendBuf, wpos,
-			creatureInst->CurrentX, creatureInst->CurrentZ);
-
-	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-}
-
-int SimulatorThread::handle_query_friends_list(void) {
-	/*  Query: friends.list
-	 Retrieves the friend list, with information like name, level, shard, etc.
-	 Args : [none]
-	 */
-
-	if (pld.zoneDef == NULL) {
-		g_Logs.simulator->error(
-				"[%d] HandleQuery_friends_list() ZoneDef is NULL", InternalID);
-		return PrepExt_QueryResponseNull(SendBuf, query.ID);
-	}
-
-	FriendListManager::SEARCH_INPUT search;
-	FriendListManager::SEARCH_OUTPUT resList;
-	for (size_t i = 0; i < pld.charPtr->friendList.size(); i++)
-		search.push_back(
-				FriendListManager::SEARCH_PAIR(
-						pld.charPtr->friendList[i].CDefID,
-						pld.charPtr->friendList[i].Name));
-	g_FriendListManager.EnumerateFriends(search, resList);
-
-	int wpos = 0;
-	wpos += PutByte(&SendBuf[wpos], 1);            //_handleQueryResultMsg
-	wpos += PutShort(&SendBuf[wpos], 0);           //Message size
-	wpos += PutInteger(&SendBuf[wpos], query.ID);
-
-	wpos += PutShort(&SendBuf[wpos], resList.size());   //Array count
-	for (size_t i = 0; i < resList.size(); i++) {
-		wpos += PutByte(&SendBuf[wpos], 6);  //String count
-
-		//Character Name
-		wpos += PutStringUTF(&SendBuf[wpos], resList[i].name.c_str());
-
-		//Level
-		sprintf(Aux1, "%d", resList[i].level);
-		wpos += PutStringUTF(&SendBuf[wpos], Aux1);
-
-		//Profession (integer)
-		sprintf(Aux1, "%d", resList[i].profession);
-		wpos += PutStringUTF(&SendBuf[wpos], Aux1);
-
-		//Online ("true", "false")
-		wpos += PutStringUTF(&SendBuf[wpos],
-				(resList[i].online == true) ? "true" : "false");
-
-		//Status Message
-		wpos += PutStringUTF(&SendBuf[wpos], resList[i].status.c_str());
-
-		//Shard
-		wpos += PutStringUTF(&SendBuf[wpos], resList[i].shard.c_str());
-	}
-	PutShort(&SendBuf[1], wpos - 3);
-	return wpos;
-}
-
-void SimulatorThread::handle_query_friends_add(void) {
-	/*  Query: friends.add
-	 Adds a player to the friend list.
-	 Args : [0] = Character name to add.
-	 */
-
-	if (HasQueryArgs(1) == false)
-		return;
-
-	const char *friendName = query.args[0].c_str();
-
-	if (strcmp(friendName, creatureInst->css.display_name) == 0) {
-		SendInfoMessage("You cannot add yourself as a friend.", INFOMSG_ERROR);
-		WritePos = PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-		PendingSend = true;
-		return;
-	}
-
-	g_CharacterManager.GetThread("SimulatorThread::handle_query_friends_add");
-	CharacterData *friendPtr = g_CharacterManager.GetCharacterByName(
-			friendName);
-	if (friendPtr != NULL) {
-		pld.charPtr->AddFriend(friendPtr->cdef.CreatureDefID,
-				friendPtr->cdef.css.display_name);
-		UpdateSocialEntry(true, true);
-		int wpos = PrepExt_FriendsAdd(SendBuf, friendPtr);
-		AttemptSend(SendBuf, wpos);
-	}
-	g_CharacterManager.ReleaseThread();
-
-	if (friendPtr == NULL) {
-		Util::SafeFormat(LogBuffer, sizeof(LogBuffer),
-				"Character is not online, or does not exist [%s]", friendName);
-		SendInfoMessage(LogBuffer, INFOMSG_ERROR);
-	}
-	WritePos = PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-	PendingSend = true;
-}
-
-int SimulatorThread::handle_query_friends_remove(void) {
-	/*  Query: friends.remove
-	 Removes a player from the friend list.
-	 Args : [0] = Character name to remove.
-	 */
-
-	if (HasQueryArgs(1) == false)
-		return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-
-	const char *friendName = query.args[0].c_str();
-
-	g_CharacterManager.GetThread(
-			"SimulatorThread::handle_query_friends_remove");
-	int res = pld.charPtr->RemoveFriend(friendName);
-	UpdateSocialEntry(true, true);
-	g_CharacterManager.ReleaseThread();
-
-	if (res == 0) {
-		Util::SafeFormat(LogBuffer, sizeof(LogBuffer),
-				"Character [%s] was not found in friend list", friendName);
-		SendInfoMessage(LogBuffer, INFOMSG_ERROR);
-	}
-
-	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-}
-
-void SimulatorThread::handle_query_friends_status(void) {
-	/*  Query: friends.status
-	 Changes the player's status text.
-	 Args : [0] = New status text.
-	 */
-
-	if (HasQueryArgs(1) == false)
-		return;
-
-	const char *newStatus = query.args[0].c_str();
-
-	pld.charPtr->StatusText = newStatus;
-	int wpos = 0;
-
-	wpos += PutByte(&SendBuf[wpos], 43);  //_handleFriendNotificationMsg
-	wpos += PutShort(&SendBuf[wpos], 0);  //size
-	wpos += PutByte(&SendBuf[wpos], 3);   //message type for status changed
-	wpos += PutStringUTF(&SendBuf[wpos], pld.charPtr->cdef.css.display_name);
-	wpos += PutStringUTF(&SendBuf[wpos], newStatus);
-	PutShort(&SendBuf[1], wpos - 3);
-
-	size_t b;
-
-	SIMULATOR_IT it;
-	for (it = Simulator.begin(); it != Simulator.end(); ++it) {
-		if (it->ProtocolState == 1 && it->isConnected == true) {
-			for (b = 0; b < it->pld.charPtr->friendList.size(); b++) {
-				if ((it->pld.charPtr->friendList[b].CDefID == pld.CreatureDefID)
-						|| (it->pld.CreatureDefID == pld.CreatureDefID)) {
-					it->AttemptSend(SendBuf, wpos);
-					break;
-				}
-			}
-		}
-	}
-
-	WritePos = PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-	PendingSend = true;
-}
-
-void SimulatorThread::handle_query_friends_getstatus(void) {
-	/*  Query: friends.getstatus
-	 Retrieves the player's friend status text.
-	 Args : [none]
-	 */
-
-	WritePos = PrepExt_QueryResponseString(SendBuf, query.ID,
-			pld.charPtr->StatusText.c_str());
-	PendingSend = true;
 }
 
 int SimulatorThread::handle_query_statuseffect_set(void) {
@@ -4626,203 +3902,6 @@ void SimulatorThread::SetAccountCharacterCache(void) {
 	pld.accPtr->PendingMinorUpdates++;
 }
 
-int SimulatorThread::handle_query_creature_def_edit(void) {
-	/*  Query: creature.def.edit
-	 Notifies the server of an updated creature definition, as modified by
-	 CreatureTweak
-	 Args : [0] = Creature Def ID
-	 [n+0] = Property name to change.
-	 [n+1] = New value for property.
-	 [...]
-	 */
-
-	//::_Connection.sendQuery("creature.def.edit", this, [
-	//				"REASON",
-//					this.mRenameReasonPopup.getText(),
-//					targetId,
-//					"name",
-//					name
-//				]);
-//				::_Connection.sendQuery("creature.def.edit", this, [
-//					"REASON",
-//					this.mRenameReasonPopup.getText(),
-//					targetId,
-//					"DISPLAY_NAME",
-//					name
-//				]);
-	if (HasQueryArgs(1) == false)
-		return PrepExt_QueryResponseError(SendBuf, query.ID, "Invalid query.");
-
-	// Em - If the first argument is 'REASON', then this is a character rename
-	// from the GM screen. Weird they overloaded this
-	int argOffset = 0;
-	if (strcmp(query.GetString(0), "REASON") == 0) {
-		argOffset = 2;
-	}
-
-	int CDefID = atoi(query.args[argOffset].c_str());
-
-	CreatureInstance* cInst = NULL;
-	CreatureDefinition* cDef = NULL;
-	CharacterData* charData = NULL;
-	cInst = creatureInst->actInst->GetPlayerByCDefID(CDefID);
-	if (cInst == NULL) {
-		cDef = CreatureDef.GetPointerByCDef(CDefID);
-		/*
-		 int index = CreatureDef.GetIndex(CDefID);
-		 if(index >= 0)
-		 cDef = &CreatureDef.NPC[index];
-		 */
-	} else {
-		charData = g_CharacterManager.GetPointerByID(CDefID);
-		if (charData != NULL)
-			cDef = &charData->cdef;
-	}
-
-	if (cDef == NULL) {
-		SendInfoMessage("Could not resolve creature template.", INFOMSG_ERROR);
-		return PrepExt_QueryResponseNull(SendBuf, query.ID);
-	}
-
-	if (argOffset > 0) {
-		// A character rename, so sage permissions needed
-		if (CheckPermissionSimple(0, Permission_Sage) == false) {
-			SendInfoMessage(
-					"Permission denied: Only sages can rename characters.",
-					INFOMSG_ERROR);
-			return PrepExt_QueryResponseNull(SendBuf, query.ID);
-		}
-	} else {
-		if (CheckPermissionSimple(0, Permission_TweakClient) == true) {
-			const char *appearance = NULL;
-			for (unsigned int i = 1 + argOffset; i < query.argCount; i += 2) {
-				const char *name = query.args[i].c_str();
-				const char *value = query.args[i + 1].c_str();
-				if (strcmp(name, "appearance") == 0) {
-					appearance = value;
-					break;
-				}
-			}
-			int size = 0;
-			if (appearance != NULL) {
-				std::vector<short> statID;
-				statID.push_back(STAT::APPEARANCE);
-				CharacterStatSet data;
-				//Util::SafeCopy(data.appearance, appearance, sizeof(data.appearance));
-				data.SetAppearance(appearance);
-				size = PrepExt_UpdateCreatureDef(SendBuf, CDefID,
-						cDef->DefHints, statID, &data);
-			}
-			size += PrepExt_QueryResponseString(&SendBuf[size], query.ID, "OK");
-			return size;
-		}
-		if (pld.CreatureDefID == CDefID) {
-			if (CheckPermissionSimple(0, Permission_TweakSelf) == false) {
-				SendInfoMessage("Permission denied: cannot edit self.",
-						INFOMSG_ERROR);
-				return PrepExt_QueryResponseNull(SendBuf, query.ID);
-			}
-		} else {
-			if (charData != NULL) {
-				if (CheckPermissionSimple(0, Permission_TweakOther) == false) {
-					SendInfoMessage(
-							"Permission denied: cannot edit other players.",
-							INFOMSG_ERROR);
-					return PrepExt_QueryResponseNull(SendBuf, query.ID);
-				}
-			} else {
-				if (CheckPermissionSimple(0, Permission_TweakNPC) == false) {
-					SendInfoMessage("Permission denied: cannot edit creatures.",
-							INFOMSG_ERROR);
-					return PrepExt_QueryResponseNull(SendBuf, query.ID);
-				}
-			}
-		}
-	}
-
-	CharacterStatSet *css = &cDef->css;
-
-	//Now there should be an even number of data pairs of a key
-	//and value.  The key specifies which item to change,
-	//(appearance so far), and the value contains the information
-	//to apply.
-	for (unsigned int i = 1 + argOffset; i < query.argCount; i += 2) {
-		std::string n = query.args[i];
-		std::transform(n.begin(), n.end(), n.begin(), ::tolower);
-		const char *name = n.c_str();
-		const char *value = query.args[i + 1].c_str();
-
-		g_Logs.simulator->trace("[%v]   Name: %v", InternalID, name);
-		g_Logs.simulator->trace("[%v]   Value: %v", InternalID, value);
-
-		if (strcmp(name, "name") == 0) {
-			if (charData == NULL) {
-				SendInfoMessage("Error setting name, no character data.",
-						INFOMSG_ERROR);
-				return PrepExt_QueryResponseNull(SendBuf, query.ID);
-			}
-			AccountData * acc = g_AccountManager.FetchIndividualAccount(
-					charData->AccountID);
-			if (acc == NULL) {
-				SendInfoMessage("Error setting name. Missing account",
-						INFOMSG_ERROR);
-				return PrepExt_QueryResponseNull(SendBuf, query.ID);
-			}
-			CharacterCacheEntry *ce = acc->characterCache.GetCacheCharacter(
-					cInst->CreatureDefID);
-			if (ce == NULL) {
-				SendInfoMessage("Error setting name. Missing cache entry",
-						INFOMSG_ERROR);
-				return PrepExt_QueryResponseNull(SendBuf, query.ID);
-			}
-
-			// Update used names
-			g_AccountManager.RemoveUsedCharacterName(ce->creatureDefID);
-			g_AccountManager.AddUsedCharacterName(ce->creatureDefID, value);
-
-			ce->display_name = value;
-			acc->PendingMinorUpdates++;
-		} else if (strcmp(name, "appearance") == 0
-				|| strcmp(name, "display_name") == 0) {
-			int wr = WriteStatToSetByName(name, value, css);
-			if (wr == -1) {
-				SendInfoMessage("Error setting attribute.", INFOMSG_ERROR);
-				return PrepExt_QueryResponseNull(SendBuf, query.ID);
-			}
-		}
-	}
-
-	//Update the associated definition for a player.
-	if (cInst != NULL)
-		cInst->css.CopyFrom(css);
-
-	AddMessage((long) cDef, 0, BCM_UpdateCreatureDef);
-
-	if (argOffset > 0 && cInst != NULL) {
-		// If update from a sage, sent the updates to the target as well
-		cInst->simulatorPtr->AddMessage((long) cDef, 0, BCM_UpdateCreatureDef);
-	}
-
-	if(pld.CreatureDefID == CDefID)	{
-		// Tweak Self
-
-		//Set this so the main thread won't try to auto update
-		//the character data for this simulator.
-		//The message broadcast will take care of it.
-		LastUpdate = g_ServerTime;
-	}
-	else {
-		if(charData != NULL) {
-			// Tweak other
-		}
-		else {
-			// Tweak NPC
-			CreatureDef.SaveCreatureTweak(cDef);
-		}
-	}
-	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-}
-
 void SimulatorThread::DecrementStack(InventorySlot *slot) {
 	if (slot == NULL)
 		return;
@@ -4859,110 +3938,6 @@ bool SimulatorThread::CanMoveItems(void) {
 	return true;
 }
 
-void SimulatorThread::handle_query_ab_ownage_list(void) {
-	/*  Query: ab.ownage.list
-	 Retrieves the list of abilities which the player is able to use.
-	 Args : [none]
-	 */
-
-	WritePos = 0;
-	WritePos += PutByte(&SendBuf[WritePos], 1);   //_handleQueryResultMsg
-	WritePos += PutShort(&SendBuf[WritePos], 0);          //Message size
-	WritePos += PutInteger(&SendBuf[WritePos], query.ID);
-
-	int size = pld.charPtr->abilityList.AbilityList.size();
-	WritePos += PutShort(&SendBuf[WritePos], size);      //Row count
-
-	int a;
-	for (a = 0; a < size; a++) {
-		WritePos += PutByte(&SendBuf[WritePos], 1);
-		sprintf(Aux3, "%d", pld.charPtr->abilityList.AbilityList[a]);
-		WritePos += PutStringUTF(&SendBuf[WritePos], Aux3);
-	}
-
-	PutShort(&SendBuf[1], WritePos - 3);             //Set message size
-	PendingSend = true;
-}
-
-int SimulatorThread::handle_query_ab_buy(void) {
-	/*  Query: ab.buy
-	 Attempt to purchase an ability.
-	 Args : [0] = Ability ID to purchase.
-	 */
-
-	if (HasQueryArgs(1) == false)
-		return PrepExt_QueryResponseError(SendBuf, query.ID, "Query error.");
-
-	int abilityID = query.GetInteger(0);
-	if (abilityID >= Ability2::AbilityManager2::NON_PURCHASE_ID_THRESHOLD)
-		return PrepExt_QueryResponseError(SendBuf, query.ID,
-				"You cannot purchase that ability.");
-
-	if (pld.charPtr->abilityList.GetAbilityIndex(abilityID) >= 0)
-		return PrepExt_QueryResponseError(SendBuf, query.ID,
-				"You already have that ability.");
-
-	const Ability2::AbilityEntry2 *abData = g_AbilityManager.GetAbilityPtrByID(
-			abilityID);
-	if (abData == NULL)
-		return PrepExt_QueryResponseError(SendBuf, query.ID,
-				"Ability does not exist.");
-
-	int pointCost = abData->GetPurchaseCost();
-	if (creatureInst->css.current_ability_points < pointCost)
-		return PrepExt_QueryResponseError(SendBuf, query.ID,
-				"Not enough ability points.");
-
-	if (creatureInst->css.level < abData->GetPurchaseLevel())
-		return PrepExt_QueryResponseError(SendBuf, query.ID,
-				"Your level is not high enough.");
-
-	if (abData->IsPurchaseableBy(creatureInst->css.profession) == false)
-		return PrepExt_QueryResponseError(SendBuf, query.ID,
-				"Your class cannot use that ability.");
-
-	std::vector<short> preReq;
-	abData->GetPurchasePrereqList(preReq);
-	for (size_t i = 0; i < preReq.size(); i++) {
-		if (preReq[i] > 0)
-			if (pld.charPtr->abilityList.GetAbilityIndex(preReq[i]) == -1)
-				return PrepExt_QueryResponseError(SendBuf, query.ID,
-						"You are missing prerequisite abilities.");
-	}
-
-	pld.charPtr->abilityList.AddAbility(abilityID);
-	creatureInst->css.current_ability_points -= pointCost;
-
-	if (abData->IsPassive() == true) {
-		creatureInst->CallAbilityEvent(abilityID, EventType::onRequest);
-		creatureInst->CallAbilityEvent(abilityID, EventType::onActivate);
-
-		//creatureInst->actInst->ActivateAbility(creatureInst, abilityID, Action::onRequest, 0);
-		//creatureInst->actInst->ActivateAbility(creatureInst, abilityID, Action::onActivate, 0);
-	}
-
-	AddMessage((long) creatureInst, 0, BCM_UpdateCreatureInstance);
-	return PrepExt_QueryResponseString(SendBuf, query.ID, query.GetString(0));
-}
-
-void SimulatorThread::handle_query_ab_respec(void) {
-	/*  Query: ab.respec
-	 Remove all abilities from the purchase list.
-	 Args : [none]
-	 */
-
-	creatureInst->Respec();
-	pld.charPtr->AbilityRespec(creatureInst);
-	ActivatePassiveAbilities();
-	UpdateEqAppearance();
-
-	AddMessage((long) creatureInst, 0, BCM_UpdateCreatureInstance);
-	AddMessage((long) &pld.charPtr->cdef, 0, BCM_CreatureDefRequest);
-
-	WritePos = PrepExt_QueryResponseString(SendBuf, query.ID, "true");
-	PendingSend = true;
-}
-
 int SimulatorThread::handle_query_buff_remove(void) {
 	/*  Query: buff.remove
 	 Sent when a player attempts to cancel a buff on their character.
@@ -4993,31 +3968,6 @@ void SimulatorThread::handle_query_util_pingrouter(void) {
 	 */
 
 	WritePos = PrepExt_QueryResponseNull(SendBuf, query.ID);
-	PendingSend = true;
-}
-
-void SimulatorThread::handle_query_essenceShop_contents(void) {
-	/*  Query: essenceShop.contents
-	 Sent when an essence shop (chest) is clicked on.
-	 Args : [0] = Creature ID of the chest spawn object.
-	 */
-
-	if (HasQueryArgs(1) == false)
-		return;
-
-	int CID = atoi(query.args[0].c_str());
-	g_Logs.simulator->trace("[%v] essenceShop.contents: %v", InternalID, CID);
-
-	int CDef = ResolveCreatureDef(CID);
-
-	WritePos = creatureInst->actInst->essenceShopList.ProcessQueryEssenceShop(
-			SendBuf, Aux1, CDef, query.ID);
-	if (WritePos == 0) {
-		g_Logs.simulator->warn("[%v] EssenceShop not found for [%v]",
-				InternalID, CDef);
-		sprintf(Aux3, "EssenceShop not found for [%d]", CDef);
-		WritePos = PrepExt_QueryResponseError(SendBuf, query.ID, Aux3);
-	}
 	PendingSend = true;
 }
 
@@ -5140,64 +4090,6 @@ CreatureInstance* SimulatorThread::ResolveCreatureInstance(int CreatureID,
 	return NULL;
 }
 
-void SimulatorThread::handle_query_shop_contents(void) {
-	/*  Query: shop.contents
-	 Sent when an NPC shop is clicked on.
-	 Args : [0] = Creature ID of NPC.
-	 */
-
-	if (HasQueryArgs(1) == false)
-		return;
-
-	int CID = atoi(query.args[0].c_str());
-	g_Logs.simulator->debug("[%v] shop.contents: %v", InternalID, CID);
-
-	if (CID == creatureInst->CreatureID) {
-		helper_shop_contents_self(); //query contents and pending status are set here
-		return;
-	}
-
-	int CDef = ResolveCreatureDef(CID);
-
-	int wpos = creatureInst->actInst->itemShopList.ProcessQueryShop(SendBuf,
-			Aux1, CDef, query.ID);
-	if (wpos == 0) {
-		g_Logs.simulator->warn("[%v] Shop Contents not found for [%v]",
-				InternalID, CDef);
-		sprintf(Aux3, "Shop Contents not found for [%d]", CDef);
-		wpos = PrepExt_QueryResponseError(SendBuf, query.ID, Aux3);
-	}
-	WritePos = wpos;
-
-	PendingSend = true;
-}
-
-void SimulatorThread::helper_shop_contents_self(void) {
-	//Fill the query with the contents of the buyback information.
-	g_Logs.simulator->debug("[%v] Shop contents self.", InternalID);
-	int wpos = 0;
-	wpos += PutByte(&SendBuf[wpos], 1);              //_handleQueryResultMsg
-	wpos += PutShort(&SendBuf[wpos], 0);          //Placeholder for message size
-	wpos += PutInteger(&SendBuf[wpos], query.ID);     //Query response ID
-
-	int rowCount =
-			(int) pld.charPtr->inventory.containerList[BUYBACK_CONTAINER].size();
-	wpos += PutShort(&SendBuf[wpos], rowCount);
-
-	//Note: low index = newest, also highest slot number
-	for (int index = 0; index < rowCount; index++) {
-		wpos += PutByte(&SendBuf[wpos], 1); //Always one string for regular items.
-		GetItemProto(Aux3,
-				pld.charPtr->inventory.containerList[BUYBACK_CONTAINER][index].IID,
-				0);
-		wpos += PutStringUTF(&SendBuf[wpos], Aux3);
-	}
-	PutShort(&SendBuf[1], wpos - 3);
-
-	WritePos = wpos;
-	PendingSend = true;
-}
-
 int SimulatorThread::CheckValidHengeDestination(const char *destName,
 		int creatureID) {
 	if (pld.zoneDef == NULL || creatureInst == NULL)
@@ -5297,100 +4189,6 @@ int SimulatorThread::CheckValidHengeDestination(const char *destName,
 	return true;
 }
 
-int SimulatorThread::handle_query_henge_setDest(void) {
-	/*  Query: henge.setDest
-	 Sent when a henge selection is made.
-	 Args : [0] = Destination Name
-	 [1] = Creature ID (when using henge interacts, but also uses custom values for certain things like groves).
-	 */
-
-	if (query.argCount >= 2) {
-		const char *destName = query.GetString(0);
-		int sourceID = query.GetInteger(1);
-
-		if (CheckValidHengeDestination(destName, sourceID) == true) {
-			ZoneDefInfo *zoneDef = NULL;
-			InteractObject *interact = NULL;
-			bool blockAttempt = false;
-
-			if ((strcmp(destName, EXIT_GROVE) == 0)
-					|| (strcmp(destName, EXIT_PVP) == 0)
-					|| (strcmp(destName, EXIT_GUILD_HALL) == 0)) {
-				int destID = pld.charPtr->groveReturnPoint[3]; //x, y, z, zoneID
-				if (destID == 0) {
-					if (creatureInst->css.level < 3)
-						destID = 59;
-					else if (creatureInst->css.level < 11)
-						destID = 58;
-					else
-						destID = 81;
-				}
-				zoneDef = g_ZoneDefManager.GetPointerByID(destID);
-			} else {
-				interact = g_InteractObjectContainer.GetHengeByTargetName(
-						destName);
-				if (interact == NULL)
-					zoneDef = g_ZoneDefManager.GetPointerByExactWarpName(
-							destName);
-				else
-					zoneDef = g_ZoneDefManager.GetPointerByID(interact->WarpID);
-			}
-
-			if (interact != NULL) {
-				if (pld.CurrentZoneID == interact->WarpID) {
-					if (creatureInst->IsSelfNearPoint((float) interact->WarpX,
-							(float) interact->WarpZ, INTERACT_RANGE * 4)
-							== true) {
-						SendInfoMessage("You are already at that location.",
-								INFOMSG_ERROR);
-						blockAttempt = true;
-					}
-				}
-
-				if (blockAttempt == false && interact->cost != 0) {
-					if (creatureInst->css.copper < interact->cost) {
-						SendInfoMessage("Not enough coin.", INFOMSG_ERROR);
-						blockAttempt = true;
-					} else {
-						creatureInst->AdjustCopper(-interact->cost);
-					}
-				}
-			}
-
-			if (zoneDef == NULL) {
-				Util::SafeFormat(Aux1, sizeof(Aux1),
-						"Warp target not found: %s", destName);
-				SendInfoMessage(Aux1, INFOMSG_ERROR);
-			} else if (blockAttempt == false) {
-				//Ready to warp!
-				int xLoc = 0, yLoc = 0, zLoc = 0;
-				if (interact != NULL) {
-					xLoc = interact->WarpX;
-					yLoc = interact->WarpY;
-					zLoc = interact->WarpZ;
-				}
-				WarpToZone(zoneDef, xLoc, yLoc, zLoc);
-			}
-		}
-	}
-
-	/*
-	 //We need to verify the warp is acceptable.  This adds some exploit protection since it
-	 //could otherwise technically be entered as a chat command and interpreted as a valid warp
-	 //for civilian players.
-	 if(verificationRequired == true)
-	 {
-	 int errCode = CheckValidWarpZone(zoneDef->mID);
-	 if(errCode != ERROR_NONE)
-	 {
-	 SendInfoMessage(GetGenericErrorString(errCode), INFOMSG_ERROR);
-	 goto endfunction;
-	 }
-	 }
-	 */
-	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-}
-
 int SimulatorThread::handle_query_portal_acceptRequest(void) {
 	AddMessage((long) this, 0, BCM_RunPortalRequest);
 	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
@@ -5402,197 +4200,6 @@ int SimulatorThread::handle_query_portal_acceptRequest(void) {
  pld.charPtr->questJournal.CheckInventoryItems(pld.charPtr->inventory);
  }
  */
-
-int SimulatorThread::handle_query_creature_use(void) {
-	/*  Query: creature.use
-	 Sent when a usable creature is clicked on (quest giver/ender, quest objective
-	 gather/interact, etc)
-	 Args : [0] = Creature Instance ID
-	 */
-	creatureInst->RemoveNoncombatantStatus("creature_use");
-
-	if (query.argCount < 1)
-		return PrepExt_QueryResponseError(SendBuf, query.ID, "Invalid query.");
-
-	//Creatures cannot be interacted with in groves.
-	if (creatureInst->actInst->mZoneDefPtr->mGrove == true)
-		return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-
-	if (creatureInst->HasStatus(StatusEffects::DEAD)) {
-		SendInfoMessage("You must be alive.", INFOMSG_ERROR);
-		return PrepExt_QueryResponseNull(SendBuf, query.ID);
-	}
-
-	creatureInst->CancelInvisibility();
-
-	int CID = atoi(query.args[0].c_str());
-
-	CreatureInstance *target = creatureInst->actInst->GetNPCInstanceByCID(CID);
-
-	if (target == NULL)
-		return PrepExt_QueryResponseNull(SendBuf, query.ID);
-	if (creatureInst->actInst->GetBoxRange(creatureInst, target)
-			> INTERACT_RANGE)
-		return PrepExt_QueryResponseNull(SendBuf, query.ID);
-
-	//LogMessageL(MSG_DIAG, "  Request creature.use for %d", CID);
-	//int CDef = ResolveCreatureDef(CID);
-	int CDef = target->CreatureDefID;
-
-	if (target->HasStatus(StatusEffects::HENGE)) {
-		CreatureUseHenge(CID, CDef);
-		return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-	}
-
-	int QuestID = 0;
-	int QuestAct = 0;
-	QuestObjective *qo = pld.charPtr->questJournal.CreatureUse(CDef, QuestID,
-			QuestAct);
-	if (qo == NULL) {
-		//Not a quest interact, check for interactibles.
-		InteractObject *intObj = g_InteractObjectContainer.GetObjectByID(CDef,
-				pld.CurrentZoneID);
-		if (intObj != NULL) {
-			if (intObj->opType == InteractObject::TYPE_WARP
-					|| intObj->opType == InteractObject::TYPE_LOCATIONRETURN) {
-				if (intObj->WarpID != pld.CurrentZoneID) {
-					g_Logs.server->info("%v is a warp interact to %v", CDef, intObj->WarpID);
-					ZoneDefInfo *zoneDef = g_ZoneDefManager.GetPointerByID(
-							intObj->WarpID);
-					if (zoneDef != NULL) {
-						PlayerInstancePlacementData pd;
-						FillPlayerInstancePlacementData(pd, intObj->WarpID, 0);
-						ActiveInstance *inst =
-								g_ActiveInstanceManager.ResolveExistingInstance(
-										pd, zoneDef);
-						std::string outputMsg;
-						if (inst != NULL) {
-							g_Logs.server->info("There is an active instance for zone %v for player %v", intObj->WarpID, creatureInst->CreatureDefID);
-							if (inst->scaleConfig.IsScaled() == true) {
-								outputMsg =
-										"You are entering a scaled instance. Difficulty: ";
-								if (inst->scaleProfile != NULL)
-									outputMsg.append(
-											inst->scaleProfile->mDifficultyName);
-							}
-						} else {
-							g_Logs.server->info("There is no active instance for zone %v for player %v", intObj->WarpID, creatureInst->CreatureDefID);
-
-							if (zoneDef->IsMobScalable()
-									== true&& pd.in_scaleProfile != NULL) {
-								outputMsg =
-										"You are about to create a new scaled instance. Difficulty: ";
-								outputMsg.append(
-										pd.in_scaleProfile->mDifficultyName);
-							}
-						}
-						if (outputMsg.size() > 0) {
-							SendInfoMessage(outputMsg.c_str(), INFOMSG_INFO);
-						}
-					}
-					else {
-						g_Logs.server->error("Zone %v does not exist. %v cannot be warped.", intObj->WarpID, CDef );
-					}
-				}
-			}
-
-			creatureInst->LastUseDefID = CDef;
-			int size = creatureInst->NormalInteractObject(SendBuf, intObj);
-			if (size > 0) {
-				g_Logs.server->info("Creature %v is a normal interact being used by %v", CDef, creatureInst->CreatureDefID);
-				AttemptSend(SendBuf, size);
-			}
-
-			return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-		}
-
-		if (target->HasStatus(StatusEffects::USABLE_BY_SCRIPT)) {
-			g_Logs.server->info("Creature %v is usable by scripts by %v", CDef, creatureInst->CreatureDefID);
-			return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-		}
-
-		CreatureDefinition *cdef = CreatureDef.GetPointerByCDef(
-				target->CreatureDefID);
-		if (cdef != NULL
-				&& ((cdef->DefHints & CDEF_HINT_USABLE)
-						|| (cdef->DefHints & CDEF_HINT_USABLE_SPARKLY))) {
-			g_Logs.server->info("Creature %v is usable by %v", CDef, creatureInst->CreatureDefID);
-			return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-		}
-
-		//For any other interact notify the instance on the off chance that it needs to do something.
-		if(creatureInst->actInst->ScriptCallUse(creatureInst->CreatureID, target->CreatureID, CDef)) {
-			return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-		}
-
-		return PrepExt_QueryResponseError(SendBuf, query.ID,
-				"Cannot use object.");
-	}
-
-	int wpos = 0;
-	if (qo->type == QuestObjective::OBJECTIVE_TYPE_ACTIVATE) {
-		if (creatureInst->CurrentTarget.targ != NULL) {
-			creatureInst->LastUseDefID = CDef;
-
-			QuestScript::QuestNutPlayer *questNutScript =
-					g_QuestNutManager.GetActiveScript(creatureInst->CreatureID,
-							QuestID);
-			if (questNutScript == NULL) {
-				// Old script system
-				questScript.def = &g_QuestScript;
-				questScript.simCall = this;
-				int wpos = creatureInst->QuestInteractObject(GSendBuf, qo->ActivateText.c_str(), (float)qo->ActivateTime, qo->gather);
-				sprintf(Aux1, "onActivate_%d_%d", QuestID, QuestAct);
-				sprintf(Aux1, "onActivate_%d_%d", QuestID, QuestAct);
-				if (questScript.JumpToLabel(Aux1) == true) {
-					questScript.mActive = true;
-					questScript.nextFire = 0;
-					questScript.sourceID = creatureInst->CreatureID;
-					questScript.targetID = CID;
-					questScript.targetCDef = CDef;
-					questScript.QuestID = QuestID;
-					questScript.QuestAct = QuestAct;
-					questScript.actInst = creatureInst->actInst;
-					questScript.RunFlags = 0;
-					questScript.activateX = target->CurrentX;
-					questScript.activateY = target->CurrentY;
-					questScript.activateZ = target->CurrentZ;
-					//questScript.RunScript();
-					creatureInst->actInst->questScriptList.push_back(
-							questScript);
-				}
-				//creatureInst->actInst->ScriptCallUse(CDef);
-				AttemptSend(GSendBuf, wpos);
-			} else {
-				// New script system
-				int wpos = creatureInst->QuestInteractObject(GSendBuf, qo->ActivateText.c_str(), (float)qo->ActivateTime, qo->gather);
-				questNutScript->source = creatureInst;
-//				questNutScript->target = target;
-//				questNutScript->CurrentQuestAct = QuestAct;
-				questNutScript->activate.Set(target->CurrentX, target->CurrentY,
-						target->CurrentZ);
-				sprintf(Aux1, "on_activate_%d", QuestAct);
-				questNutScript->JumpToLabel(Aux1);
-				AttemptSend(GSendBuf, wpos);
-
-				// Queue up the on_activated as well, this MIGHT not be get called if the activation is interrupted
-				sprintf(Aux1, "on_activated_%d", QuestAct);
-				questNutScript->activateEvent = new ScriptCore::NutScriptEvent(
-						new ScriptCore::TimeCondition(qo->ActivateTime),
-						new ScriptCore::RunFunctionCallback(questNutScript,
-								string(Aux1)));
-				questNutScript->QueueAdd(questNutScript->activateEvent);
-
-			}
-		}
-	} else {
-		wpos += pld.charPtr->questJournal.CheckQuestTalk(&SendBuf[wpos], CDef,
-				CID, creatureInst->CreatureID);
-	}
-
-	wpos += PrepExt_QueryResponseString(&SendBuf[wpos], query.ID, "OK");
-	return wpos;
-}
 
 int SimulatorThread::handle_query_visWeapon(void) {
 	/*  Query: visWeapon
@@ -5635,7 +4242,7 @@ int SimulatorThread::protected_helper_query_craft_create(void) {
 	int CreatureID = atoi(query.args[1].c_str());
 
 	// Make sure this object isn't too far away.
-	int distCheck = protected_helper_checkdistance(CreatureID);
+	int distCheck = CheckDistance(CreatureID);
 	if (distCheck != 0)
 		return distCheck;
 
@@ -5725,86 +4332,7 @@ int SimulatorThread::protected_helper_query_craft_create(void) {
 	return wpos;
 }
 
-int SimulatorThread::handle_query_item_morph(void) {
-	/*  Query: item.morph
-	 Sent when an item is refashioned via the NPC.
-	 Args : [0] Item Inventory Hex ID (Original Item)
-	 [1] Item Inventory Hex ID (New Equipment Look)
-	 [2] = Creature Instance ID of the vendor who processed this action.
-	 */
-	int rval = protected_helper_query_item_morph(false);
-	if (rval <= 0)
-		rval = PrepExt_QueryResponseError(SendBuf, query.ID,
-				GetErrorString(rval));
-
-	return rval;
-}
-
-int SimulatorThread::protected_helper_query_item_morph(bool command) {
-	g_Logs.simulator->debug("[%v] protected_helper_query_item_morph: %v",
-			InternalID, command);
-	if (query.argCount < 3)
-		return QueryErrorMsg::GENERIC;
-
-	unsigned long origLook = strtol(query.args[0].c_str(), NULL, 16);
-	unsigned long newLook = strtol(query.args[1].c_str(), NULL, 16);
-	int creatureID = strtol(query.args[2].c_str(), NULL, 10);
-
-	// Run a distance check for a normal query.  The /refashion command
-	// also uses this function but with a spoofed query.
-	if (command == false) {
-		// Make sure this object isn't too far away.
-		int distCheck = protected_helper_checkdistance(creatureID);
-		if (distCheck != 0)
-			return distCheck;
-	}
-
-	InventorySlot * origPtr = pld.charPtr->inventory.GetItemPtrByCCSID(
-			origLook);
-	InventorySlot * newPtr = pld.charPtr->inventory.GetItemPtrByCCSID(newLook);
-	if (origPtr == NULL || newPtr == NULL)
-		return QueryErrorMsg::INVMISSING;
-
-	ItemDef *itemPtr1 = g_ItemManager.GetPointerByID(origPtr->IID);
-	ItemDef *itemPtr2 = g_ItemManager.GetPointerByID(newPtr->IID);
-	if (itemPtr1 == NULL || itemPtr2 == NULL)
-		return QueryErrorMsg::INVALIDITEM;
-
-	int cost = (itemPtr1->mValue + itemPtr2->mValue) / 2;
-	if (creatureInst->css.copper < cost)
-		return QueryErrorMsg::COIN;
-	creatureInst->css.copper -= cost;
-
-	//Log just before the actual refashion so we can print the look ID before it's modified.
-	g_Logs.event->info("[REFASHION] %v : CCSID Orig:%v (%v), Look:%v (%v)",
-			creatureInst->css.display_name, origLook, origPtr->IID, newLook,
-			newPtr->IID);
-	g_Logs.event->info(
-			"[REFASHION] %v : Look %v (%v, %v) applied to %v (%v, %v)",
-			creatureInst->css.display_name, itemPtr1->mDisplayName.c_str(),
-			itemPtr1->mID, origPtr->GetLookID(), itemPtr2->mDisplayName.c_str(),
-			itemPtr2->mID, newPtr->GetLookID());
-
-	origPtr->customLook = newPtr->GetLookID();
-	if (origPtr->customLook >= UNREFASHION_LOWERBOUND
-			&& origPtr->customLook <= UNREFASHION_UPPERBOUND)
-		origPtr->customLook = 0;
-
-	int wpos = 0;
-
-	static const short statSend = STAT::COPPER;
-	wpos += PrepExt_SendSpecificStats(&SendBuf[wpos], creatureInst, &statSend,
-			1);
-
-	wpos += RemoveItemUpdate(&SendBuf[wpos], Aux3, newPtr);
-	pld.charPtr->inventory.RemItem(newLook);
-	wpos += AddItemUpdate(&SendBuf[wpos], Aux3, origPtr);
-
-	wpos += PrepExt_QueryResponseString(&SendBuf[wpos], query.ID, "OK");
-	return wpos;
-}
-
-int SimulatorThread::protected_helper_checkdistance(int creatureID) {
+int SimulatorThread::CheckDistance(int creatureID) {
 	//Could only be called from within a guarded thread operation.
 	if (creatureInst == NULL)
 		return QueryErrorMsg::GENERIC;
@@ -5820,32 +4348,6 @@ int SimulatorThread::protected_helper_checkdistance(int creatureID) {
 		return QueryErrorMsg::OUTOFRANGE;
 
 	return 0;
-}
-
-
-
-int SimulatorThread::handle_query_shard_list(void) {
-	/*  Query: shard.list
-	 Requests a list of shards for use in the minimap dropdown list.
-	 */
-	return PrepExt_QueryResponseString(SendBuf, query.ID,
-			pld.zoneDef->mName.c_str());
-}
-
-int SimulatorThread::handle_query_sidekick_notifyexp(void) {
-	/*  Query: sidekick.notifyexp
-	 Only sent in 0.8.9.  Requests the sidekick experience that was gained
-	 while the user was offline.
-	 */
-	return PrepExt_QueryResponseString(SendBuf, query.ID, "0");
-}
-
-int SimulatorThread::handle_query_ab_respec_price(void) {
-	/*  Query: ab.respec.price
-	 Only sent in 0.8.9.  Seems to be a different way of fetching the
-	 respec cost.
-	 */
-	return PrepExt_QueryResponseString(SendBuf, query.ID, "0");
 }
 
 int SimulatorThread::handle_query_util_version(void) {
@@ -5887,98 +4389,6 @@ int SimulatorThread::handle_query_persona_resCost(void) {
 	return wpos;
 }
 
-int SimulatorThread::handle_query_spawn_list(void) {
-	/*  Query: spawn.list
-	 Retrieves a list of spawn types that match the search query.
-	 Args: [0] = Category (ex: "", "Creatures", "Packages", "NoAppearanceCreatures"
-	 [1] = Search text to match.
-	 */
-
-	if (query.argCount < 2)
-		return PrepExt_QueryResponseError(SendBuf, query.ID, "Invalid query.");
-
-	const char *category = query.args[0].c_str();
-	const char *search = query.args[1].c_str();
-
-	//Response for each creature
-	//  {id=row[0],name=row[1],type=mTypeMap[row[2]]};
-	//  type should be "C" for Creature or "P" for Package.
-
-	vector<int> resList;
-	CreatureDef.GetSpawnList(category, search, resList);
-
-	int wpos = 0;
-	wpos += PutByte(&SendBuf[wpos], 1);          //_handleQueryResultMsg
-	wpos += PutShort(&SendBuf[wpos], 0);         //Placeholder for message size
-	wpos += PutInteger(&SendBuf[wpos], query.ID);  //Query response index
-	wpos += PutShort(&SendBuf[wpos], resList.size());         //Number of rows
-	for (size_t a = 0; a < resList.size(); a++) {
-		//3 elements: ID, Name (Level), Package Type
-		wpos += PutByte(&SendBuf[wpos], 3);
-
-		sprintf(Aux3, "%d", CreatureDef.NPC[resList[a]].CreatureDefID);
-		wpos += PutStringUTF(&SendBuf[wpos], Aux3);
-
-		sprintf(Aux3, "%s (%d)", CreatureDef.NPC[resList[a]].css.display_name,
-				CreatureDef.NPC[resList[a]].css.level);
-		wpos += PutStringUTF(&SendBuf[wpos], Aux3);
-
-		wpos += PutStringUTF(&SendBuf[wpos], "C");
-	}
-
-	PutShort(&SendBuf[1], wpos - 3);             //Set message size
-	resList.clear();
-	return wpos;
-}
-
-int SimulatorThread::handle_query_spawn_create(void) {
-	/*  Query: spawn.create
-	 Sent when a spawn is requested by /creaturebrowse
-	 Args: [0] = Object Type (ex: "CREATURE")
-	 [1] = CreatureDef ID.
-	 */
-
-	if (CheckPermissionSimple(Perm_Account, Permission_Debug) == false)
-		return PrepExt_QueryResponseError(SendBuf, query.ID,
-				"Permission denied.");
-
-	if (query.argCount < 2)
-		return PrepExt_QueryResponseError(SendBuf, query.ID, "Invalid query.");
-
-	//For now, just ignore the object type and spawn the desired creature def.
-	int CDef = atoi(query.args[1].c_str());
-	AddMessage((long) creatureInst, CDef, BCM_SpawnCreateCreature);
-
-	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-}
-
-int SimulatorThread::handle_query_creature_delete(void) {
-	/*  Query: creature.delete
-	 Sent when a selected creature is deleted while in build mode (/togglebuilding)
-	 Args: [0] = Creature ID
-	 [1] = Operation Type (ex: "PERMANENT")
-	 */
-
-	if (query.argCount < 2)
-		return PrepExt_QueryResponseError(SendBuf, query.ID, "Invalid query.");
-
-	int CreatureID = query.GetInteger(0);
-	CreatureInstance *creature = creatureInst->actInst->GetNPCInstanceByCID(
-			CreatureID);
-	if (creature != NULL) {
-		if (HasPropEditPermission(NULL, (float) creature->CurrentX,
-				(float) creature->CurrentZ) == true) {
-			AddMessage(CreatureID, 0, BCM_CreatureDelete);
-		}
-	}
-
-	/* OLD
-	 if(pld.accPtr->CheckBuildPermissionAdv(pld.CurrentZoneID, pld.zoneDef->mPageSize, (float)creatureInst->CurrentX, (float)creatureInst->CurrentZ) == false)
-	 return PrepExt_QueryResponseError(SendBuf, query.ID, "Creature location is off limits.");
-	 */
-	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-}
-
 int SimulatorThread::handle_query_build_template_list(void) {
 	/*  Query: build.template.list
 	 Sent when build mode is activated in the client.  Only sent for the first
@@ -6001,67 +4411,6 @@ int SimulatorThread::handle_query_build_template_list(void) {
 	wpos += PutStringUTF(&SendBuf[wpos], "Crate3");  //String data
 	PutShort(&SendBuf[1], wpos - 3);               //Set message size
 	return wpos;
-}
-
-int SimulatorThread::handle_query_spawn_property(void) {
-	if (query.argCount < 2)
-		return PrepExt_QueryResponseError(SendBuf, query.ID, "Query error.");
-
-	//LogMessageL(MSG_SHOW, "spawn.property");
-	//for(int i = 0; i < query.argCount; i++)
-	//	LogMessageL(MSG_SHOW, "[%d]=[%s]", i, query.args[i].c_str());
-
-	int propID = atoi(query.args[0].c_str());
-	const char *propName = query.args[1].c_str();
-	g_SceneryManager.GetThread("SimulatorThread::handle_query_spawn_property");
-	//SceneryObject *so = g_SceneryManager.pageData.GlobalFindProp(propID, pld.CurrentZoneID, NULL);
-	SceneryObject *so = g_SceneryManager.GlobalGetPropPtr(pld.CurrentZoneID,
-			propID, NULL);
-	Aux1[0] = 0;
-	if (so != NULL) {
-		if (so->extraData != NULL) {
-			if (strcmp(propName, "spawnName") == 0)
-				Util::SafeCopy(Aux1, so->extraData->spawnName, sizeof(Aux1));
-			else if (strcmp(propName, "leaseTime") == 0)
-				sprintf(Aux1, "%d", so->extraData->leaseTime);
-			else if (strcmp(propName, "spawnPackage") == 0)
-				Util::SafeCopy(Aux1, so->extraData->spawnPackage, sizeof(Aux1));
-			else if (strcmp(propName, "mobTotal") == 0)
-				sprintf(Aux1, "%d", so->extraData->mobTotal);
-			else if (strcmp(propName, "maxActive") == 0)
-				sprintf(Aux1, "%d", so->extraData->maxActive);
-			else if (strcmp(propName, "aiModule") == 0)
-				Util::SafeCopy(Aux1, so->extraData->aiModule, sizeof(Aux1));
-			else if (strcmp(propName, "maxLeash") == 0)
-				sprintf(Aux1, "%d", so->extraData->maxLeash);
-			else if (strcmp(propName, "loyaltyRadius") == 0)
-				sprintf(Aux1, "%d", so->extraData->loyaltyRadius);
-			else if (strcmp(propName, "wanderRadius") == 0)
-				sprintf(Aux1, "%d", so->extraData->wanderRadius);
-			else if (strcmp(propName, "despawnTime") == 0)
-				sprintf(Aux1, "%d", so->extraData->despawnTime);
-			else if (strcmp(propName, "sequential") == 0)
-				sprintf(Aux1, "%d", so->extraData->sequential);
-			else if (strcmp(propName, "spawnLayer") == 0)
-				Util::SafeCopy(Aux1, so->extraData->spawnLayer, sizeof(Aux1));
-			else
-				g_Logs.simulator->warn(
-						"[%d] spawn.property unknown request: [%s]", InternalID,
-						propName);
-		} else
-			g_Logs.simulator->warn(
-					"[%d] spawn.property requested for standard object [%d, %s]",
-					InternalID, so->ID, so->Asset);
-	}
-	g_SceneryManager.ReleaseThread();
-	return PrepExt_QueryResponseString(SendBuf, query.ID, Aux1);
-}
-
-int SimulatorThread::handle_query_spawn_emitters(void) {
-	//LogMessageL(MSG_SHOW, "spawn.emitters");
-	//for(int i = 0; i < query.argCount; i++)
-	//	LogMessageL(MSG_SHOW, "[%d]=%s", i, query.args[i].c_str());
-	return PrepExt_QueryResponseNull(SendBuf, query.ID);
 }
 
 int SimulatorThread::handle_query_party(void) {
@@ -6281,10 +4630,6 @@ int SimulatorThread::handle_query_party(void) {
 				party->BroadCast(SendBuf, wpos);
 			}
 		}
-	} else if (strcmp(command, "loot.need") == 0
-			|| strcmp(command, "loot.greed") == 0
-			|| strcmp(command, "loot.pass") == 0) {
-		handle_query_loot_need_greed_pass();
 	} else if (strcmp(command, "quit") == 0) {
 		g_PartyManager.DoQuit(creatureInst);
 		int wpos = PartyManager::WriteLeftParty(SendBuf);
@@ -6303,29 +4648,6 @@ int SimulatorThread::handle_query_party(void) {
 	 return wpos;
 	 */
 }
-
-int SimulatorThread::handle_query_quest_share(void) {
-	if (query.argCount < 1)
-		return PrepExt_QueryResponseNull(SendBuf, query.ID);
-
-	int questID = atoi(query.args[0].c_str());
-	int res = pld.charPtr->questJournal.CheckQuestShare(questID);
-	if (res != QuestJournal::SHARE_SUCCESS_QUALIFIES)
-		SendInfoMessage(QuestJournal::GetQuestShareErrorString(res),
-				INFOMSG_ERROR);
-	else {
-		if (pld.charPtr->questJournal.QuestJoin_Helper(questID) == 0) {
-			int wpos = QuestJournal::WriteQuestJoin(SendBuf, questID);
-			wpos += PrepExt_SendInfoMessage(&SendBuf[wpos],
-					"You have joined the quest.", INFOMSG_INFO);
-			AttemptSend(SendBuf, wpos);
-		}
-	}
-
-	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-}
-
-
 
 void SimulatorThread::Debug_GenerateReport(ReportBuffer *report) {
 	report->AddLine("Sim:%d", InternalIndex);
@@ -6504,52 +4826,6 @@ void SimulatorThread::CheckSpawnTileUpdate(bool force) {
 	}
 }
 
-int SimulatorThread::handle_query_scenery_link_add(void) {
-	/* Query: scenery.link.add
-	 Args : 3, [0] = PropID, [1] = PropID, [2] = type
-	 */
-	if (query.argCount < 3)
-		return PrepExt_QueryResponseNull(SendBuf, query.ID);
-
-	int p1 = query.GetInteger(0);
-	int p2 = query.GetInteger(1);
-	int type = query.GetInteger(2);
-
-	g_SceneryManager.GetThread(
-			"SimulatorThread::handle_query_scenery_link_add");
-	bool result = g_SceneryManager.UpdateLink(pld.CurrentZoneID, p1, p2, type);
-	g_SceneryManager.ReleaseThread();
-
-	if (result == false)
-		return PrepExt_QueryResponseError(SendBuf, query.ID, "Link failed.");
-
-	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-}
-
-int SimulatorThread::handle_query_scenery_link_del(void) {
-	/* Query: scenery.link.del
-	 Args : 2, [0] = PropID, [1] = PropID
-	 */
-	if (query.argCount < 2)
-		return PrepExt_QueryResponseNull(SendBuf, query.ID);
-
-	int p1 = atoi(query.args[0].c_str());
-	int p2 = atoi(query.args[1].c_str());
-
-	g_Logs.simulator->debug("[%v] scenery.link.del: %v, %v", InternalID, p1,
-			p2);
-
-	g_SceneryManager.GetThread(
-			"SimulatorThread::handle_query_scenery_link_del");
-	int r = g_SceneryManager.UpdateLink(pld.CurrentZoneID, p1, p2, -1);
-	g_SceneryManager.ReleaseThread();
-
-	if (r == -1)
-		return PrepExt_QueryResponseError(SendBuf, query.ID, "Unlink failed.");
-
-	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-}
-
 void SimulatorThread::WarpToZone(ZoneDefInfo *zoneDef, int xOverride,
 		int yOverride, int zOverride) {
 	if (zoneDef == NULL)
@@ -6619,165 +4895,6 @@ void SimulatorThread::WarpToZone(ZoneDefInfo *zoneDef, int xOverride,
 	CheckMapUpdate(true);
 }
 
-int SimulatorThread::handle_query_petition_list(void) {
-	if (!CheckPermissionSimple(Perm_Account, Permission_Sage))
-		return PrepExt_QueryResponseError(SendBuf, query.ID,
-				"Permission denied.");
-
-	int wpos = 0;
-	wpos += PutByte(&SendBuf[wpos], 1);       //_handleQueryResultMsg
-	wpos += PutShort(&SendBuf[wpos], 0);      //Message size
-	wpos += PutInteger(&SendBuf[wpos], query.ID);  //Query response index
-
-	vector<Petition> pets = g_PetitionManager.GetPetitions(
-			pld.charPtr->cdef.CreatureDefID);
-	vector<Petition>::iterator it;
-	wpos += PutShort(&SendBuf[wpos], pets.size());
-	struct tm * timeinfo;
-	g_CharacterManager.GetThread("SimulatorThread::PetitionList");
-	for (it = pets.begin(); it != pets.end(); ++it) {
-		wpos += PutByte(&SendBuf[wpos], 8);
-		wpos += PutStringUTF(&SendBuf[wpos],
-				it->status == PENDING ? "pending" : "mine");
-		CharacterData *petitioner = g_CharacterManager.GetPointerByID(
-				it->petitionerCDefID);
-		if (petitioner == NULL)
-			wpos += PutStringUTF(&SendBuf[wpos], "<Deleted>");
-		else
-			wpos += PutStringUTF(&SendBuf[wpos],
-					petitioner->cdef.css.display_name);
-		sprintf(Aux1, "%d", it->petitionId);
-		wpos += PutStringUTF(&SendBuf[wpos], Aux1);
-		if (petitioner == NULL)
-			wpos += PutStringUTF(&SendBuf[wpos], "");
-		else {
-			AccountData * accData = g_AccountManager.FetchIndividualAccount(
-					petitioner->AccountID);
-			if (accData == NULL)
-				wpos += PutStringUTF(&SendBuf[wpos], "<Missing account>");
-			else {
-				int c = 0;
-				memset(&Aux1, 0, sizeof(Aux1));
-				for (unsigned int i = 0; i < accData->MAX_CHARACTER_SLOTS;
-						i++) {
-					if (accData->CharacterSet[i] != 0
-							&& accData->CharacterSet[i]
-									!= petitioner->cdef.CreatureDefID) {
-						CharacterCacheEntry *cce =
-								accData->characterCache.ForceGetCharacter(
-										accData->CharacterSet[i]);
-						if (cce != NULL) {
-							if (c > 0)
-								strcat(Aux1, ",");
-							strcat(Aux1, cce->display_name.c_str());
-							c++;
-						}
-					}
-				}
-				wpos += PutStringUTF(&SendBuf[wpos], Aux1);
-			}
-		}
-		sprintf(Aux1, "%d", it->category);
-		wpos += PutStringUTF(&SendBuf[wpos], Aux1);
-		wpos += PutStringUTF(&SendBuf[wpos], it->description);
-		wpos += PutStringUTF(&SendBuf[wpos], "0");  // TODO score
-		time_t ts;
-		timeinfo = localtime(&ts);
-		sprintf(Aux1, "%s", asctime(timeinfo));
-		wpos += PutStringUTF(&SendBuf[wpos], Aux1);
-	}
-	g_CharacterManager.ReleaseThread();
-
-	PutShort(&SendBuf[1], wpos - 3);
-	return wpos;
-}
-
-int SimulatorThread::handle_query_itemdef_contents(void) {
-	if (!CheckPermissionSimple(Perm_Account, Permission_Sage))
-		return PrepExt_QueryResponseError(SendBuf, query.ID,
-				"Permission denied.");
-
-	int wpos = 0;
-	wpos += PutByte(&SendBuf[wpos], 1);       //_handleQueryResultMsg
-	wpos += PutShort(&SendBuf[wpos], 0);      //Message size
-	wpos += PutInteger(&SendBuf[wpos], query.ID);  //Query response index
-	wpos += PutShort(&SendBuf[wpos], 0);
-	int id = atoi(query.args[0].c_str());
-	g_CharacterManager.GetThread("SimulatorThread::PetitionList");
-	CreatureInstance *creature = creatureInst->actInst->GetPlayerByID(id);
-	int count = 0;
-	if (creature != NULL) {
-		CharacterData *cdata = creature->charPtr;
-		int size = cdata->inventory.containerList[INV_CONTAINER].size();
-		int a;
-		WritePos = 0;
-		for (a = 0; a < size; a++) {
-			InventorySlot *slot =
-					&cdata->inventory.containerList[INV_CONTAINER][a];
-			if (slot != NULL) {
-				wpos += PutByte(&SendBuf[wpos], 2);
-				Util::SafeFormat(Aux1, sizeof(Aux1), "%d", slot->IID);
-				wpos += PutStringUTF(&SendBuf[wpos], Aux1);
-				wpos += PutStringUTF(&SendBuf[wpos],
-						slot->dataPtr->mDisplayName.c_str());
-				count++;
-			}
-		}
-	}
-	g_CharacterManager.ReleaseThread();
-	PutShort(&SendBuf[7], count);
-	PutShort(&SendBuf[1], wpos - 3);
-	return wpos;
-}
-
-int SimulatorThread::handle_query_itemdef_delete(void) {
-	if (!CheckPermissionSimple(Perm_Account, Permission_Sage))
-		return PrepExt_QueryResponseError(SendBuf, query.ID,
-				"Permission denied.");
-	int itemID = atoi(query.args[0].c_str());
-	int targetID = atoi(query.args[1].c_str());
-	g_CharacterManager.GetThread("SimulatorThread::ItemCreate");
-	CreatureInstance *creature = creatureInst->actInst->GetPlayerByID(targetID);
-	if (creature != NULL) {
-		ItemDef * item;
-		if (itemID == 0) {
-			item = g_ItemManager.GetSafePointerByPartialName(
-					query.args[0].c_str());
-		} else {
-			item = g_ItemManager.GetSafePointerByID(itemID);
-		}
-		if (item != NULL) {
-
-			CharacterData *cdata = creature->charPtr;
-			int size = cdata->inventory.containerList[INV_CONTAINER].size();
-			int a;
-			for (a = 0; a < size; a++) {
-				InventorySlot *slot =
-						&cdata->inventory.containerList[INV_CONTAINER][a];
-				if (slot != NULL) {
-					if (slot->IID == item->mID) {
-						g_Logs.event->info(
-								"[SAGE] %v removed %v from %v because '%v'",
-								pld.charPtr->cdef.css.display_name,
-								item->mDisplayName.c_str(),
-								creature->charPtr->cdef.css.display_name,
-								query.args[2].c_str());
-						int wpos = RemoveItemUpdate(&Aux1[0], Aux2, slot);
-						g_CharacterManager.ReleaseThread();
-						creature->simulatorPtr->AttemptSend(Aux1, wpos);
-						cdata->inventory.RemItem(slot->CCSID);
-						return PrepExt_QueryResponseString(SendBuf, query.ID,
-								"OK");
-					}
-				}
-			}
-		}
-	}
-	g_CharacterManager.ReleaseThread();
-	return PrepExt_QueryResponseError(SendBuf, query.ID,
-			"Failed to delete item.");
-}
-
 int SimulatorThread::handle_query_user_auth_reset() {
 	if (!CheckPermissionSimple(Perm_Account, Permission_Sage))
 		return PrepExt_QueryResponseError(SendBuf, query.ID,
@@ -6838,259 +4955,6 @@ int SimulatorThread::handle_query_validate_name() {
 	}
 }
 
-int SimulatorThread::handle_query_item_create(void) {
-	if (!CheckPermissionSimple(Perm_Account, Permission_Sage))
-		return PrepExt_QueryResponseError(SendBuf, query.ID,
-				"Permission denied.");
-	int itemID = atoi(query.args[0].c_str());
-	int targetID = atoi(query.args[1].c_str());
-	g_CharacterManager.GetThread("SimulatorThread::ItemCreate");
-	CreatureInstance *creature = creatureInst->actInst->GetPlayerByID(targetID);
-	if (creature != NULL) {
-		ItemDef * item;
-		if (itemID == 0) {
-			item = g_ItemManager.GetSafePointerByPartialName(
-					query.args[0].c_str());
-		} else {
-			item = g_ItemManager.GetSafePointerByID(itemID);
-		}
-		if (item != NULL) {
-			int slot = pld.charPtr->inventory.GetFreeSlot(INV_CONTAINER);
-			if (slot != -1) {
-				InventorySlot *sendSlot =
-						creature->charPtr->inventory.AddItem_Ex(INV_CONTAINER,
-								item->mID, 1);
-				if (sendSlot != NULL) {
-					g_Logs.event->info(
-							"[SAGE] %v gave %v to %v because '%v'",
-							pld.charPtr->cdef.css.display_name,
-							item->mDisplayName.c_str(),
-							creature->charPtr->cdef.css.display_name,
-							query.args[2].c_str());
-					int wpos = AddItemUpdate(&Aux1[0], Aux2, sendSlot);
-					ActivateActionAbilities(sendSlot);
-					g_CharacterManager.ReleaseThread();
-					creature->simulatorPtr->AttemptSend(Aux1, wpos);
-					return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-				}
-			}
-
-		}
-	}
-	g_CharacterManager.ReleaseThread();
-	return PrepExt_QueryResponseError(SendBuf, query.ID, "Failed to give item.");
-}
-
-int SimulatorThread::handle_query_petition_doaction(void) {
-	if (!CheckPermissionSimple(Perm_Account, Permission_Sage))
-		return PrepExt_QueryResponseError(SendBuf, query.ID,
-				"Permission denied.");
-
-	int id = atoi(query.args[0].c_str());
-	if (query.args[1].compare("take") == 0) {
-		if (g_PetitionManager.Take(id, pld.CreatureDefID)) {
-			return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-		} else {
-			return PrepExt_QueryResponseError(SendBuf, query.ID,
-					"Failed to take petition.");
-		}
-	} else if (query.args[1].compare("untake") == 0) {
-		if (g_PetitionManager.Untake(id, pld.CreatureDefID)) {
-			return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-		} else {
-			return PrepExt_QueryResponseError(SendBuf, query.ID,
-					"Failed to untake petition.");
-		}
-	} else if (query.args[1].compare("close") == 0) {
-		if (g_PetitionManager.Close(id, pld.CreatureDefID)) {
-			return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-		} else {
-			return PrepExt_QueryResponseError(SendBuf, query.ID,
-					"Failed to close petition.");
-		}
-	} else {
-		return PrepExt_QueryResponseError(SendBuf, query.ID,
-				"Unknown petition op.");
-	}
-
-}
-
-int SimulatorThread::handle_query_petition_send(void) {
-	int pet = g_PetitionManager.NewPetition(pld.CreatureDefID,
-			atoi(query.args[0].c_str()), query.args[1].c_str());
-	if (pet > -1) {
-		Util::SafeFormat(Aux1, sizeof(Aux1),
-				"**%s has submitted petition %d, could the next available Earthsage please take the petition**",
-				pld.charPtr->cdef.css.display_name, pet);
-		char buffer[4096];
-		int wpos = PrepExt_GenericChatMessage(buffer, 0, "Petition Manager",
-				"gm/earthsages", Aux1);
-		SIMULATOR_IT it;
-		for (it = Simulator.begin(); it != Simulator.end(); ++it)
-			if (it->isConnected == true && it->ProtocolState == 1
-					&& it->pld.accPtr->HasPermission(Perm_Account,
-							Permission_Sage))
-				it->AttemptSend(buffer, wpos);
-		return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-	} else {
-		g_Logs.simulator->error("Failed to create petition.");
-		return PrepExt_QueryResponseString(SendBuf, query.ID, "Failed"); //??
-	}
-}
-
-int SimulatorThread::handle_query_gm_spawn(void) {
-	bool ok = CheckPermissionSimple(Perm_Account, Permission_Sage);
-	if (!ok) {
-		if (pld.zoneDef->mGrove == true
-				&& pld.zoneDef->mAccountID != pld.accPtr->ID)
-			ok = true;
-	}
-	if (!ok)
-		return PrepExt_QueryResponseError(SendBuf, query.ID,
-				"Permission denied.");
-
-	if (query.args.size() < 6)
-		return PrepExt_QueryResponseError(SendBuf, query.ID, "Invalid query.");
-
-	int creatureID = query.GetInteger(0);
-	int qty = query.GetInteger(1);
-	int spawnType = query.GetInteger(2);
-	std::string data = query.GetString(3);
-	int flags = query.GetInteger(4);
-	int attackType = query.GetInteger(5);
-	int abilityID = query.GetInteger(6);
-
-	CreatureInstance *c = creatureInst;
-	if (c->CurrentTarget.targ != NULL) {
-		c = c->CurrentTarget.targ;
-	}
-
-	CreatureInstance *s = NULL;
-
-	for (int i = 0; i < qty; i++) {
-		if (spawnType == 0) {
-			// Random position around the players positions
-			int radius = atoi(data.c_str());
-			s = creatureInst->actInst->SpawnGeneric(creatureID,
-					c->CurrentX + randmodrng(1, radius) - (radius / 2),
-					c->CurrentY,
-					c->CurrentZ + randmodrng(1, radius) - (radius / 2),
-					c->Rotation, flags);
-
-		} else {
-			// Random position around the players positions
-			int propID = atoi(data.c_str());
-			s = creatureInst->actInst->SpawnAtProp(creatureID, propID, 99999,
-					flags);
-		}
-
-		if (s == NULL)
-			return PrepExt_QueryResponseError(SendBuf, query.ID,
-					"Failed to spawn.");
-
-		int r;
-		CreatureInstance *targ;
-		std::vector<CreatureInstance*> l;
-
-		switch (attackType) {
-		case 0:
-			s->SelectTarget(c);
-			r = s->CallAbilityEvent(abilityID, EventType::onRequest);
-			if (r != 0)
-				g_Logs.simulator->error(
-						"Failed to use ability %v on spawn master creature %v",
-						abilityID, creatureID);
-			break;
-		case 1:
-			l = creatureInst->actInst->PlayerListPtr;
-			if (l.size() > 0) {
-				targ = l[randmodrng(0, l.size())];
-				s->SelectTarget(targ);
-				r = s->CallAbilityEvent(abilityID, EventType::onRequest);
-				if (r != 0)
-					g_Logs.simulator->error(
-							"Failed to use ability %v for spawn master creature %v",
-							abilityID, creatureID);
-			}
-			break;
-		case 2:
-			l = creatureInst->actInst->NPCListPtr;
-			if (l.size() > 0) {
-				targ = l[randmodrng(0, l.size())];
-				s->SelectTarget(targ);
-				r = s->CallAbilityEvent(abilityID, EventType::onRequest);
-				if (r != 0)
-					g_Logs.simulator->error(
-							"Failed to use ability %v for spawn master creature %v",
-							abilityID, creatureID);
-			}
-			break;
-		}
-	}
-
-	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-}
-
-int SimulatorThread::handle_query_bug_report(void) {
-	std::string summary = query.GetString(0);
-	std::string desc = query.GetString(2);
-	std::string auth = g_Config.GitHubToken;
-	Util::SafeFormat(Aux1, sizeof(Aux1),
-			"{ \"title\": \"%s\", \"body\": \"Reported By: %s\\nCategory: %s\\n\\n%s\", \"labels\": [ \"bug\", \"in game\" ] }",
-			Util::EncodeJSONString(summary).c_str(),
-			pld.charPtr->cdef.css.display_name, query.GetString(1),
-			Util::EncodeJSONString(desc).c_str());
-	g_Logs.simulator->info(
-			"Posting bug report with summary %v and category of %v",
-			query.GetString(0), query.GetString(2));
-
-	struct curl_slist *headers = NULL;
-	CURL *curl;
-	curl = curl_easy_init();
-	if (curl) {
-		curl_easy_setopt(curl, CURLOPT_URL,
-				"https://api.github.com/repos/rockfireredmoon/iceee/issues");
-		curl_easy_setopt(curl, CURLOPT_USERAGENT, "PlanetForever");
-
-		curl_easy_setopt(curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-		curl_easy_setopt(curl, CURLOPT_USERPWD, auth.c_str());
-
-		headers = curl_slist_append(headers, "Expect:");
-		headers = curl_slist_append(headers, "Content-Type: application/json");
-		curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
-
-		curl_easy_setopt(curl, CURLOPT_POSTFIELDS, Aux1);
-		curl_easy_setopt(curl, CURLOPT_POSTFIELDSIZE, -1L);
-
-#ifdef OUTPUT_TO_CONSOLE
-		curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
-#endif
-
-		// TODO might need config item to disable SSL verification
-		//curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 0L);
-		//curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, 0L);
-
-		CURLcode res;
-		res = curl_easy_perform(curl);
-
-		curl_slist_free_all(headers);
-		curl_easy_cleanup(curl);
-		int wpos;
-		if (res == CURLE_OK) {
-			wpos = PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-		} else {
-			Util::SafeFormat(Aux1, sizeof(Aux1),
-					"Failed to send bug report to Github. Response code %d",
-					res);
-			wpos = PrepExt_QueryResponseError(SendBuf, query.ID, Aux1);
-		}
-		return wpos;
-	}
-
-	return PrepExt_QueryResponseError(SendBuf, query.ID,
-			"Failed to configure HTTP connection.");
-}
-
 int SimulatorThread::handle_query_guild_info(void) {
 	/*  Query: guild.info
 	 Retrieves the guild info of the Simulator player.
@@ -7148,6 +5012,75 @@ int SimulatorThread::handle_query_guild_info(void) {
 
 	PutShort(&SendBuf[1], wpos - 3);
 	return wpos;
+}
+
+void SimulatorThread::SetZoneMode(int mode) {
+	creatureInst->actInst->mZoneDefPtr->mMode = mode;
+	creatureInst->actInst->arenaRuleset.mEnabled = creatureInst->actInst->mZoneDefPtr->mMode
+			!= PVP::GameMode::PVE_ONLY;
+	creatureInst->actInst->arenaRuleset.mPVPStatus = mode;
+
+	cs.Enter("Simulator::SetZoneMode");
+
+	switch (mode) {
+	case PVP::GameMode::PVP:
+		for (std::vector<CreatureInstance*>::iterator it =
+				creatureInst->actInst->PlayerListPtr.begin();
+				it != creatureInst->actInst->PlayerListPtr.end(); ++it) {
+			if ((*it)->charPtr->Mode == PVP::GameMode::PVP
+					&& (*it)->_HasStatusList(StatusEffects::PVPABLE) == -1)
+				(*it)->_AddStatusList(StatusEffects::PVPABLE, -1);
+		}
+		Util::SafeFormat(Aux1, sizeof(Aux1), "%s is now a PVP zone",
+				creatureInst->actInst->mZoneDefPtr->mName.c_str());
+		break;
+	case PVP::GameMode::PVP_ONLY:
+		for (std::vector<CreatureInstance*>::iterator it =
+				creatureInst->actInst->PlayerListPtr.begin();
+				it != creatureInst->actInst->PlayerListPtr.end(); ++it) {
+			if ((*it)->_HasStatusList(StatusEffects::PVPABLE) == -1)
+				(*it)->_AddStatusList(StatusEffects::PVPABLE, -1);
+		}
+		Util::SafeFormat(Aux1, sizeof(Aux1), "%s is now a PVP only zone",
+				creatureInst->actInst->mZoneDefPtr->mName.c_str());
+		break;
+	case PVP::GameMode::PVE_ONLY:
+		for (std::vector<CreatureInstance*>::iterator it =
+				creatureInst->actInst->PlayerListPtr.begin();
+				it != creatureInst->actInst->PlayerListPtr.end(); ++it) {
+			if ((*it)->_HasStatusList(StatusEffects::PVPABLE) != -1)
+				(*it)->_RemoveStatusList(StatusEffects::PVPABLE);
+		}
+		Util::SafeFormat(Aux1, sizeof(Aux1), "%s is now a PVE only zone",
+				creatureInst->actInst->mZoneDefPtr->mName.c_str());
+		break;
+	case PVP::GameMode::SPECIAL_EVENT:
+		for (std::vector<CreatureInstance*>::iterator it =
+				creatureInst->actInst->PlayerListPtr.begin();
+				it != creatureInst->actInst->PlayerListPtr.end(); ++it) {
+			if ((*it)->_HasStatusList(StatusEffects::PVPABLE) == -1)
+				(*it)->_AddStatusList(StatusEffects::PVPABLE, -1);
+		}
+		Util::SafeFormat(Aux1, sizeof(Aux1),
+				"%s is now a special event zone!",
+				creatureInst->actInst->mZoneDefPtr->mName.c_str());
+		break;
+	default:
+		for (std::vector<CreatureInstance*>::iterator it =
+				creatureInst->actInst->PlayerListPtr.begin();
+				it != creatureInst->actInst->PlayerListPtr.end(); ++it) {
+			if ((*it)->charPtr->Mode == PVP::GameMode::PVE
+					&& (*it)->_HasStatusList(StatusEffects::PVPABLE) != -1)
+				(*it)->_RemoveStatusList(StatusEffects::PVPABLE);
+		}
+		Util::SafeFormat(Aux1, sizeof(Aux1), "%s is now a PVE zone",
+				creatureInst->actInst->mZoneDefPtr->mName.c_str());
+		break;
+	}
+
+	cs.Leave();
+
+	g_SimulatorManager.BroadcastMessage(Aux1);
 }
 
 int SimulatorThread::handle_query_guild_leave(void) {
@@ -7603,48 +5536,6 @@ int SimulatorThread::handle_query_mod_setgrovestart(void) {
 	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
 }
 
-int SimulatorThread::handle_query_mod_setenvironment(void) {
-	if (query.argCount < 1)
-		return PrepExt_QueryResponseError(SendBuf, query.ID, "Invalid query.");
-
-	if (pld.zoneDef->mGrove == false)
-		return PrepExt_QueryResponseError(SendBuf, query.ID,
-				"You are not in a grove.");
-	if (pld.zoneDef->mAccountID != pld.accPtr->ID)
-		return PrepExt_QueryResponseError(SendBuf, query.ID,
-				"You must be in your grove.");
-
-	const char *env = query.args[0].c_str();
-
-	pld.zoneDef->ChangeEnvironment(env);
-	g_ZoneDefManager.NotifyConfigurationChange();
-	SendInfoMessage("Environment type changed.", INFOMSG_INFO);
-
-	int wpos = PrepExt_SendEnvironmentUpdateMsg(SendBuf, pld.CurrentZone,
-			pld.zoneDef, -1, -1);
-	wpos += PrepExt_SendTimeOfDayMsg(&SendBuf[wpos], GetTimeOfDay());
-	creatureInst->actInst->LSendToAllSimulator(SendBuf, wpos, -1);
-
-	//	SendZoneInfo();
-	//LogMessageL(MSG_SHOW, "Environment set.");
-	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-}
-
-int SimulatorThread::handle_query_mod_grove_togglecycle(void) {
-	if (pld.zoneDef->mGrove == false)
-		return PrepExt_QueryResponseError(SendBuf, query.ID,
-				"You are not in a grove.");
-	if (pld.zoneDef->mAccountID != pld.accPtr->ID)
-		return PrepExt_QueryResponseError(SendBuf, query.ID,
-				"You must be in your grove.");
-	pld.zoneDef->ChangeEnvironmentUsage();
-	g_ZoneDefManager.NotifyConfigurationChange();
-	Util::SafeFormat(Aux1, sizeof(Aux1), "Environment cycling is now %s",
-			(pld.zoneDef->mEnvironmentCycle ? "ON" : "OFF"));
-	SendInfoMessage(Aux1, INFOMSG_INFO);
-	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-}
-
 int SimulatorThread::handle_query_mod_setats(void) {
 	if (query.argCount < 1)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Invalid query.");
@@ -7968,21 +5859,6 @@ void SimulatorThread::ShardSet(const char *shardName, const char *charName) {
 	 */
 }
 
-int SimulatorThread::handle_query_shard_set(void) {
-	//Un-modified client only sets 1 row.  Modified client contains an additional field.
-	//[0] Shard Same
-	//[1] Character Name  [modded client]
-	const char *shardName = NULL;
-	const char *charName = NULL;
-	if (query.argCount >= 1)
-		shardName = query.args[0].c_str();
-	if (query.argCount >= 2)
-		charName = query.args[0].c_str();
-
-	ShardSet(shardName, charName);
-	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-}
-
 /*
  void SimulatorThread :: VerifySendBufSize(int length)
  {
@@ -8040,88 +5916,6 @@ bool SimulatorThread::TargetRarityAboveNormal(void) {
 		return true;
 
 	return false;
-}
-
-int SimulatorThread::handle_query_mod_pet_list(void) {
-	/* Query: mod.pet.list
-	 Args : [none]
-	 Response: Send back a table with the pet data.   */
-
-	MULTISTRING response;
-	g_PetDefManager.FillQueryResponse(response);
-	return PrepExt_QueryResponseMultiString(SendBuf, query.ID, response);
-}
-
-int SimulatorThread::handle_query_mod_pet_purchase(void) {
-	/* Query: mod.pet.purchase
-	 Args : 1 [required] : integer of the CreatureDefID to purchase.  */
-	int CDefID = 0;
-	if (query.argCount > 0)
-		CDefID = query.GetInteger(0);
-
-	PetDef *petDef = g_PetDefManager.GetEntry(CDefID);
-	if (petDef == NULL)
-		return PrepExt_QueryResponseError(SendBuf, query.ID, "Pet not found.");
-
-	if (creatureInst->css.copper < petDef->mCost)
-		return PrepExt_QueryResponseError(SendBuf, query.ID, "Not enough coin.");
-
-	if (creatureInst->css.level < petDef->mLevel)
-		return PrepExt_QueryResponseError(SendBuf, query.ID,
-				"You are not high enough level.");
-
-	//Check item ID too because an improper line in the file may leave it zero.
-	ItemDef *itemDef = g_ItemManager.GetPointerByID(petDef->mItemDefID);
-	if (itemDef == NULL || petDef->mItemDefID == 0)
-		return PrepExt_QueryResponseError(SendBuf, query.ID,
-				"Item does not exist.");
-
-	InventoryManager &im = pld.charPtr->inventory;
-	int slot = im.GetFreeSlot(INV_CONTAINER);
-	if (slot == -1)
-		return PrepExt_QueryResponseError(SendBuf, query.ID,
-				"No free backpack slots.");
-
-	creatureInst->AdjustCopper(-petDef->mCost);
-
-	int wpos = 0;
-	InventorySlot *sendSlot = im.AddItem_Ex(INV_CONTAINER, petDef->mItemDefID,
-			1);
-	if (sendSlot != NULL) {
-		ActivateActionAbilities(sendSlot);
-		wpos += AddItemUpdate(&SendBuf[wpos], Aux1, sendSlot);
-	}
-
-	wpos += PrepExt_QueryResponseString(&SendBuf[wpos], query.ID, "OK");
-	return wpos;
-}
-
-int SimulatorThread::handle_query_mod_pet_preview(void) {
-	/* Query: mod.pet.preview
-	 Args : 1 [required] : integer of the CreatureDefID to preview.  */
-	int CDefID = 0;
-	if (query.argCount > 0)
-		CDefID = query.GetInteger(0);
-
-	PetDef *petDef = g_PetDefManager.GetEntry(CDefID);
-	if (petDef == NULL)
-		return PrepExt_QueryResponseString(SendBuf, query.ID, "Pet not found.");
-
-	CreatureDefinition *creatureDef = CreatureDef.GetPointerByCDef(CDefID);
-	if (creatureDef == NULL)
-		return PrepExt_QueryResponseString(SendBuf, query.ID, "Pet not found.");
-
-	CreatureInstance preview;
-	preview.CurrentX = creatureInst->CurrentX;
-	preview.CurrentY = creatureInst->CurrentY;
-	preview.CurrentZ = creatureInst->CurrentZ;
-	preview.CreatureDefID = CDefID;
-	preview.CreatureID = creatureInst->actInst->GetNewActorID();
-	preview.css.CopyFrom(&creatureDef->css);
-	int wpos = PrepExt_CreatureFullInstance(SendBuf, &preview);
-	AttemptSend(SendBuf, wpos);
-
-	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
 }
 
 int SimulatorThread::handle_query_mod_ping_statistics(void) {
@@ -8231,15 +6025,6 @@ int SimulatorThread::handle_query_mod_emotecontrol(void) {
 	creatureInst->actInst->LSendToLocalSimulator(SendBuf, wpos,
 			creatureInst->CurrentX, creatureInst->CurrentZ);
 	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-}
-
-int SimulatorThread::handle_query_mod_getpet(void) {
-	//Return the ID of the player's sidekick.
-	int result = ResolveEmoteTarget(1);  //See function for parameter details.
-	if (result == creatureInst->CreatureID)
-		result = 0;  //Let the client know if no sidekick was found
-	sprintf(Aux1, "%d", result);
-	return PrepExt_QueryResponseString(SendBuf, query.ID, Aux1);
 }
 
 int SimulatorThread::handle_query_mod_craft(void) {
@@ -8353,25 +6138,6 @@ int SimulatorThread::handle_query_mod_craft(void) {
 int SimulatorThread::handle_query_mod_getdungeonprofiles(void) {
 	MULTISTRING response;
 	g_InstanceScaleManager.EnumProfileList(response);
-	return PrepExt_QueryResponseMultiString(SendBuf, query.ID, response);
-}
-
-int SimulatorThread::handle_query_mod_morestats(void) {
-	MULTISTRING response;
-	StatInfo::GeneratePrettyStatTable(response, &creatureInst->css);
-	STRINGLIST row;
-	row.push_back("Spirit Resist Percentage");
-	sprintf(Aux3, "%d%%",
-			Combat::GetSpiritResistReduction(100, creatureInst->css.spirit));
-	row.push_back(Aux3);
-	response.push_back(row);
-
-	row.clear();
-	row.push_back("Psyche Resist Percentage");
-	sprintf(Aux3, "%d%%",
-			Combat::GetPsycheResistReduction(100, creatureInst->css.psyche));
-	row.push_back(Aux3);
-	response.push_back(row);
 	return PrepExt_QueryResponseMultiString(SendBuf, query.ID, response);
 }
 
@@ -8504,340 +6270,6 @@ int SimulatorThread::handle_query_updateContent(void) {
 		return PrepExt_QueryResponseError(SendBuf, query.ID,
 				"Permission denied.");
 
-	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-}
-
-int SimulatorThread::handle_query_instance(void) {
-	ActiveInstance *inst = creatureInst->actInst;
-	if (inst != NULL) {
-		Util::SafeFormat(Aux1, sizeof(Aux1), "Total mobs killed: %d",
-				inst->mKillCount);
-		SendInfoMessage(Aux1, INFOMSG_INFO);
-
-		if (inst->mZoneDefPtr->IsDungeon() == true
-				|| CheckPermissionSimple(Perm_Account, Permission_Debug)
-						== true) {
-			Util::SafeFormat(Aux1, sizeof(Aux1), "Drop rate bonus: %gx",
-					inst->mDropRateBonusMultiplier);
-			SendInfoMessage(Aux1, INFOMSG_INFO);
-		}
-
-		if (inst->mZoneDefPtr->IsDungeon() == true) {
-			if (inst->mOwnerPartyID > 0) {
-				ActiveParty *party = g_PartyManager.GetPartyByID(
-						inst->mOwnerPartyID);
-				if (party != NULL) {
-					Util::SafeFormat(Aux1, sizeof(Aux1),
-							"Dungeon party leader: %s",
-							party->mLeaderName.c_str());
-					SendInfoMessage(Aux1, INFOMSG_INFO);
-				}
-			} else {
-				Util::SafeFormat(Aux1, sizeof(Aux1), "Dungeon owner: %s",
-						inst->mOwnerName.c_str());
-				SendInfoMessage(Aux1, INFOMSG_INFO);
-			}
-		}
-
-		if (inst->scaleProfile != NULL) {
-			Util::SafeFormat(Aux1, sizeof(Aux1), "Dungeon scaler: %s",
-					inst->scaleProfile->mDifficultyName.c_str());
-			SendInfoMessage(Aux1, INFOMSG_INFO);
-		}
-
-		if (CheckPermissionSimple(Perm_Account, Permission_Debug)
-				== true&& inst->dropRateProfile != NULL) {
-			Util::SafeFormat(Aux1, sizeof(Aux1), "Drop rate profile: %s",
-					inst->dropRateProfile->mName.c_str());
-			SendInfoMessage(Aux1, INFOMSG_INFO);
-		}
-	}
-	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-}
-
-int SimulatorThread::handle_query_team(void) {
-	if (query.argCount > 0) {
-
-		if (pld.accPtr->HasPermission(Perm_Account, Permission_Sage) == false)
-			return PrepExt_QueryResponseError(SendBuf, query.ID,
-					"Permission denied.");
-
-		CreatureInstance *targ = creatureInst->CurrentTarget.targ;
-		if (targ == NULL) {
-			targ = creatureInst;
-		} else {
-			if (targ->charPtr == NULL)
-				return PrepExt_QueryResponseError(SendBuf, query.ID,
-						"Must select a player.");
-		}
-
-		targ->css.pvp_team = PVP::PVPTeams::GetIDByName(query.GetString(0));
-		if (targ->css.pvp_team == PVP::PVPTeams::NONE)
-			if (targ == creatureInst) {
-				SendInfoMessage("Your are now not in a PVP team.",
-						INFOMSG_INFO);
-			} else {
-				Util::SafeFormat(Aux1, sizeof(Aux1),
-						"%s is now not in PVP team.", targ->css.display_name,
-						PVP::PVPTeams::GetNameByID(targ->css.pvp_team));
-				SendInfoMessage(Aux1, INFOMSG_INFO);
-			}
-		else {
-			if (targ == creatureInst) {
-				Util::SafeFormat(Aux1, sizeof(Aux1),
-						"You are now in the %s team.",
-						PVP::PVPTeams::GetNameByID(targ->css.pvp_team));
-			} else {
-				Util::SafeFormat(Aux1, sizeof(Aux1),
-						"%s is now in the %s team.", targ->css.display_name,
-						PVP::PVPTeams::GetNameByID(targ->css.pvp_team));
-			}
-			SendInfoMessage(Aux1, INFOMSG_INFO);
-		}
-	} else {
-		if (creatureInst->css.pvp_team == PVP::PVPTeams::NONE)
-			SendInfoMessage("Your are not in a PVP team.", INFOMSG_INFO);
-		else {
-			Util::SafeFormat(Aux1, sizeof(Aux1), "You are in the %s team.",
-					PVP::PVPTeams::GetNameByID(creatureInst->css.pvp_team));
-			SendInfoMessage(Aux1, INFOMSG_INFO);
-		}
-	}
-	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-}
-
-int SimulatorThread::handle_query_mode(void) {
-	if (query.argCount > 0) {
-		if (creatureInst->actInst->mZoneDefPtr->mArena == true)
-			return PrepExt_QueryResponseError(SendBuf, query.ID,
-					"Cannot change PVP mode when in arena.");
-
-		if (creatureInst->_HasStatusList(StatusEffects::IN_COMBAT) != -1)
-			return PrepExt_QueryResponseError(SendBuf, query.ID,
-					"Cannot change PVP mode when in combat.");
-
-		std::string mode = query.GetString(0);
-		if (mode.compare("pvp") == 0) {
-			if (creatureInst->actInst->arenaRuleset.mPVPStatus
-					!= PVP::GameMode::PVE_ONLY) {
-				if (creatureInst->_HasStatusList(StatusEffects::PVPABLE) == -1)
-					creatureInst->_AddStatusList(StatusEffects::PVPABLE, -1);
-			}
-			if (creatureInst->charPtr->Mode == PVP::GameMode::PVP) {
-				return PrepExt_QueryResponseError(SendBuf, query.ID,
-						"Default for character is already PVP mode.");
-			}
-			creatureInst->charPtr->Mode = PVP::GameMode::PVP;
-			creatureInst->charPtr->pendingChanges++;
-			if (creatureInst->actInst->arenaRuleset.mPVPStatus
-					== PVP::GameMode::PVE_ONLY)
-				SendInfoMessage(
-						"Default is now PVP mode, but you are in a PVE only zone",
-						INFOMSG_INFO);
-			else
-				SendInfoMessage("Now in PVP mode", INFOMSG_INFO);
-		} else if (mode.compare("pve") == 0) {
-			if (creatureInst->actInst->arenaRuleset.mPVPStatus
-					!= PVP::GameMode::PVP_ONLY
-					&& creatureInst->actInst->arenaRuleset.mPVPStatus
-							!= PVP::GameMode::SPECIAL_EVENT) {
-				if (creatureInst->_HasStatusList(StatusEffects::PVPABLE) != -1)
-					creatureInst->_RemoveStatusList(StatusEffects::PVPABLE);
-			}
-			if (creatureInst->charPtr->Mode == PVP::GameMode::PVE) {
-				return PrepExt_QueryResponseError(SendBuf, query.ID,
-						"Default for character is already PVE mode.");
-			}
-			creatureInst->charPtr->Mode = PVP::GameMode::PVE;
-			creatureInst->charPtr->pendingChanges++;
-			if (creatureInst->actInst->arenaRuleset.mPVPStatus
-					== PVP::GameMode::PVP_ONLY)
-				SendInfoMessage(
-						"Default is now PVE mode, but you are in a PVP only zone so your status will not yet change.",
-						INFOMSG_INFO);
-			else if (creatureInst->actInst->arenaRuleset.mPVPStatus
-					== PVP::GameMode::SPECIAL_EVENT)
-				SendInfoMessage(
-						"Default is now PVE mode, but a special event is active so your status will not yet change.",
-						INFOMSG_INFO);
-			else
-				SendInfoMessage("Now in PVE mode", INFOMSG_INFO);
-		} else {
-			return PrepExt_QueryResponseError(SendBuf, query.ID,
-					"Invalid parameters.");
-		}
-	} else {
-		if (creatureInst->actInst->mZoneDefPtr->mArena == true)
-			SendInfoMessage("You are in an arena.", INFOMSG_INFO);
-		else {
-			if (creatureInst->actInst->arenaRuleset.mPVPStatus
-					== PVP::GameMode::SPECIAL_EVENT) {
-				if (creatureInst->charPtr->Mode == PVP::GameMode::PVE) {
-					if (creatureInst->_HasStatusList(StatusEffects::PVPABLE)
-							== -1) {
-						SendInfoMessage(
-								"Your are currently in PVE mode and a special event is active.",
-								INFOMSG_INFO);
-					} else {
-						SendInfoMessage(
-								"Your are currently in PVE mode during a special event, but have a PVP status.",
-								INFOMSG_INFO);
-					}
-				} else {
-					if (creatureInst->_HasStatusList(StatusEffects::PVPABLE)
-							!= -1) {
-						SendInfoMessage(
-								"Your are currently in PVP mode during a special event.",
-								INFOMSG_INFO);
-					} else {
-						SendInfoMessage(
-								"Your are currently in PVP mode during a special event, but have no PVP status.",
-								INFOMSG_INFO);
-					}
-				}
-			} else {
-				if (creatureInst->charPtr->Mode == PVP::GameMode::PVE) {
-					if (creatureInst->_HasStatusList(StatusEffects::PVPABLE)
-							== -1) {
-						SendInfoMessage("Your are currently in PVE mode.",
-								INFOMSG_INFO);
-					} else {
-						SendInfoMessage(
-								"Your are currently in PVE mode, but have a PVP status.",
-								INFOMSG_INFO);
-					}
-				} else {
-					if (creatureInst->_HasStatusList(StatusEffects::PVPABLE)
-							!= -1) {
-						SendInfoMessage("Your are currently in PVP mode.",
-								INFOMSG_INFO);
-					} else {
-						SendInfoMessage(
-								"Your are currently in PVP mode, but have no PVP status.",
-								INFOMSG_INFO);
-					}
-				}
-			}
-		}
-	}
-	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-}
-
-int SimulatorThread::handle_query_zone_mode(void) {
-	bool ok = CheckPermissionSimple(Perm_Account, Permission_Sage);
-	if (!ok) {
-		if (pld.zoneDef->mGrove == true
-				&& pld.zoneDef->mAccountID != pld.accPtr->ID)
-			ok = true;
-	}
-	if (!ok)
-		return PrepExt_QueryResponseError(SendBuf, query.ID,
-				"Permission denied.");
-	ActiveInstance *inst = creatureInst->actInst;
-	if (inst != NULL && query.argCount > 0) {
-		if (inst->mZoneDefPtr->mArena == true)
-			return PrepExt_QueryResponseError(SendBuf, query.ID,
-					"Cannot change area PVP mode.");
-
-		int mode = query.GetInteger(0);
-
-		inst->mZoneDefPtr->mMode = mode;
-		inst->arenaRuleset.mEnabled = inst->mZoneDefPtr->mMode
-				!= PVP::GameMode::PVE_ONLY;
-		creatureInst->actInst->arenaRuleset.mPVPStatus = mode;
-
-		cs.Enter("Simulator::SetZoneMode");
-
-		switch (mode) {
-		case PVP::GameMode::PVP:
-			for (std::vector<CreatureInstance*>::iterator it =
-					inst->PlayerListPtr.begin();
-					it != inst->PlayerListPtr.end(); ++it) {
-				if ((*it)->charPtr->Mode == PVP::GameMode::PVP
-						&& (*it)->_HasStatusList(StatusEffects::PVPABLE) == -1)
-					(*it)->_AddStatusList(StatusEffects::PVPABLE, -1);
-			}
-			Util::SafeFormat(Aux1, sizeof(Aux1), "%s is now a PVP zone",
-					inst->mZoneDefPtr->mName.c_str());
-			break;
-		case PVP::GameMode::PVP_ONLY:
-			for (std::vector<CreatureInstance*>::iterator it =
-					inst->PlayerListPtr.begin();
-					it != inst->PlayerListPtr.end(); ++it) {
-				if ((*it)->_HasStatusList(StatusEffects::PVPABLE) == -1)
-					(*it)->_AddStatusList(StatusEffects::PVPABLE, -1);
-			}
-			Util::SafeFormat(Aux1, sizeof(Aux1), "%s is now a PVP only zone",
-					inst->mZoneDefPtr->mName.c_str());
-			break;
-		case PVP::GameMode::PVE_ONLY:
-			for (std::vector<CreatureInstance*>::iterator it =
-					inst->PlayerListPtr.begin();
-					it != inst->PlayerListPtr.end(); ++it) {
-				if ((*it)->_HasStatusList(StatusEffects::PVPABLE) != -1)
-					(*it)->_RemoveStatusList(StatusEffects::PVPABLE);
-			}
-			Util::SafeFormat(Aux1, sizeof(Aux1), "%s is now a PVE only zone",
-					inst->mZoneDefPtr->mName.c_str());
-			break;
-		case PVP::GameMode::SPECIAL_EVENT:
-			for (std::vector<CreatureInstance*>::iterator it =
-					inst->PlayerListPtr.begin();
-					it != inst->PlayerListPtr.end(); ++it) {
-				if ((*it)->_HasStatusList(StatusEffects::PVPABLE) == -1)
-					(*it)->_AddStatusList(StatusEffects::PVPABLE, -1);
-			}
-			Util::SafeFormat(Aux1, sizeof(Aux1),
-					"%s is now a special event zone!",
-					inst->mZoneDefPtr->mName.c_str());
-			break;
-		default:
-			for (std::vector<CreatureInstance*>::iterator it =
-					inst->PlayerListPtr.begin();
-					it != inst->PlayerListPtr.end(); ++it) {
-				if ((*it)->charPtr->Mode == PVP::GameMode::PVE
-						&& (*it)->_HasStatusList(StatusEffects::PVPABLE) != -1)
-					(*it)->_RemoveStatusList(StatusEffects::PVPABLE);
-			}
-			Util::SafeFormat(Aux1, sizeof(Aux1), "%s is now a PVE zone",
-					inst->mZoneDefPtr->mName.c_str());
-			break;
-		}
-
-		cs.Leave();
-
-		g_SimulatorManager.BroadcastMessage(Aux1);
-
-		return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-	} else {
-		Util::SafeFormat(Aux1, sizeof(Aux1), "Zone mode for %d is %s",
-				inst->mZoneDefPtr->mID,
-				PVP::GameMode::GetNameByID(inst->mZoneDefPtr->mMode));
-		SendInfoMessage(Aux1, INFOMSG_INFO);
-		return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-	}
-}
-
-int SimulatorThread::handle_query_go(void) {
-	//Sent by the client when pressing 'C' when the build tool is open.  Intended function is to
-	//warp the player to the camera position.
-	// [0], [1], [2] = x, y, z coordinates, respectively.
-
-	if (pld.zoneDef->mGrove == false)
-		if (CheckPermissionSimple(Perm_Account, Permission_Debug) == false)
-			return PrepExt_QueryResponseError(SendBuf, query.ID,
-					"Permission denied.");
-
-	int x = creatureInst->CurrentX;
-	int y = creatureInst->CurrentY;
-	int z = creatureInst->CurrentZ;
-
-	if (query.argCount >= 3) {
-		x = static_cast<int>(query.GetFloat(0)); //The arguments come in as floats but we use ints.
-		y = static_cast<int>(query.GetFloat(1));
-		z = static_cast<int>(query.GetFloat(2));
-	}
-	DoWarp(pld.CurrentZoneID, pld.CurrentInstanceID, x, y, z);
 	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
 }
 

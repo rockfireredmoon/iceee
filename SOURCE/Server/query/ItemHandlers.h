@@ -65,4 +65,40 @@ public:
 	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
 };
 
+class ItemCreateHandler : public QueryHandler {
+public:
+	~ItemCreateHandler() {};
+	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
+};
+
+class ItemDefDeleteHandler : public QueryHandler {
+public:
+	~ItemDefDeleteHandler() {};
+	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
+};
+
+class ItemDefContentsHandler : public QueryHandler {
+public:
+	~ItemDefContentsHandler() {};
+	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
+};
+
+class ItemMorphHandler : public QueryHandler {
+public:
+	~ItemMorphHandler() {};
+	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
+};
+
+class ShopContentsHandler : public QueryHandler {
+public:
+	~ShopContentsHandler() {};
+	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
+};
+
+class EssenceShopContentsHandler : public QueryHandler {
+public:
+	~EssenceShopContentsHandler() {};
+	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
+};
+
 #endif

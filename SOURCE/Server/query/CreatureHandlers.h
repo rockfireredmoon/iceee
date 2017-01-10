@@ -14,27 +14,32 @@
  * You should have received a copy of the GNU General Public License
  * along with TAWD.  If not, see <http://www.gnu.org/licenses/
  */
-
-#ifndef GMHANDLERS_H
-#define GMHANDLERS_H
+#ifndef CREATUREHANDLERS_H
+#define CREATUREHANDLERS_H
 
 #include "Query.h"
 
-class AddFundsHandler : public QueryHandler {
+class CreatureIsUsableHandler : public QueryHandler {
 public:
-	~AddFundsHandler() {};
+	~CreatureIsUsableHandler() {};
 	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
 };
 
-class PVPZoneModeHandler : public QueryHandler {
+class CreatureDefEditHandler : public QueryHandler {
 public:
-	~PVPZoneModeHandler() {};
+	~CreatureDefEditHandler() {};
 	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
 };
 
-class GMSpawnHandler : public QueryHandler {
+class CreatureUseHandler : public QueryHandler {
 public:
-	~GMSpawnHandler() {};
+	~CreatureUseHandler() {};
+	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
+};
+
+class CreatureDeleteHandler : public QueryHandler {
+public:
+	~CreatureDeleteHandler() {};
 	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
 };
 

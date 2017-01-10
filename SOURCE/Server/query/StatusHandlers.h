@@ -15,26 +15,14 @@
  * along with TAWD.  If not, see <http://www.gnu.org/licenses/
  */
 
-#ifndef GMHANDLERS_H
-#define GMHANDLERS_H
+#ifndef STATUSHANDLERS_H
+#define STATUSHANDLERS_H
 
 #include "Query.h"
 
-class AddFundsHandler : public QueryHandler {
+class MoreStatsHandler : public QueryHandler {
 public:
-	~AddFundsHandler() {};
-	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
-};
-
-class PVPZoneModeHandler : public QueryHandler {
-public:
-	~PVPZoneModeHandler() {};
-	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
-};
-
-class GMSpawnHandler : public QueryHandler {
-public:
-	~GMSpawnHandler() {};
+	~MoreStatsHandler() {};
 	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
 };
 

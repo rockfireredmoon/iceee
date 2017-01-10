@@ -15,27 +15,35 @@
  * along with TAWD.  If not, see <http://www.gnu.org/licenses/
  */
 
-#ifndef GMHANDLERS_H
-#define GMHANDLERS_H
+#ifndef LOOTHANDLERS_H
+#define LOOTHANDLERS_H
 
 #include "Query.h"
 
-class AddFundsHandler : public QueryHandler {
+class LootListHandler : public QueryHandler {
 public:
-	~AddFundsHandler() {};
+	~LootListHandler() {};
 	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
 };
 
-class PVPZoneModeHandler : public QueryHandler {
+class LootItemHandler : public QueryHandler {
 public:
-	~PVPZoneModeHandler() {};
+	~LootItemHandler() {};
 	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
 };
 
-class GMSpawnHandler : public QueryHandler {
+class LootExitHandler : public QueryHandler {
 public:
-	~GMSpawnHandler() {};
+	~LootExitHandler() {};
 	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
 };
 
+class LootNeedGreedPassHandler : public QueryHandler {
+public:
+	~LootNeedGreedPassHandler() {};
+	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
+private:
+	int protected_helper_query_loot_need_greed_pass(SimulatorThread *sim, CharacterServerData *pld,
+			SimulatorQuery *query, CreatureInstance *creatureInstance);
+};
 #endif

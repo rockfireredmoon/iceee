@@ -1062,7 +1062,7 @@ int RefashionHandler::handleCommand(SimulatorThread *sim,
 	query->argCount = query->args.size();
 
 	//Run the virtual query->
-	int rval = sim->protected_helper_query_item_morph(true);
+	int rval = sim->ItemMorph(true);
 	if (rval <= 0)
 		rval = PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 				sim->GetErrorString(rval));
@@ -3196,3 +3196,254 @@ int RotHandler::handleCommand(SimulatorThread *sim,
 	sim->SendInfoMessage(sim->Aux1, INFOMSG_INFO);
 	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
 }
+
+
+
+//
+//PVPTeamHandler
+//
+PVPTeamHandler::PVPTeamHandler() :
+		AbstractCommandHandler("Usage: /team [<team>]", 0) {
+}
+
+int PVPTeamHandler::handleCommand(SimulatorThread *sim,
+		CharacterServerData *pld, SimulatorQuery *query,
+		CreatureInstance *creatureInstance) {
+	ActiveInstance *inst = creatureInstance->actInst;
+	if (query->argCount > 0) {
+
+		if (pld->accPtr->HasPermission(Perm_Account, Permission_Sage) == false)
+			return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+					"Permission denied.");
+
+		CreatureInstance *targ = creatureInstance->CurrentTarget.targ;
+		if (targ == NULL) {
+			targ = creatureInstance;
+		} else {
+			if (targ->charPtr == NULL)
+				return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+						"Must select a player.");
+		}
+
+		targ->css.pvp_team = PVP::PVPTeams::GetIDByName(query->GetString(0));
+		if (targ->css.pvp_team == PVP::PVPTeams::NONE)
+			if (targ == creatureInstance) {
+				sim->SendInfoMessage("Your are now not in a PVP team.",
+						INFOMSG_INFO);
+			} else {
+				Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1),
+						"%s is now not in PVP team.", targ->css.display_name,
+						PVP::PVPTeams::GetNameByID(targ->css.pvp_team));
+				sim->SendInfoMessage(sim->Aux1, INFOMSG_INFO);
+			}
+		else {
+			if (targ == creatureInstance) {
+				Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1),
+						"You are now in the %s team.",
+						PVP::PVPTeams::GetNameByID(targ->css.pvp_team));
+			} else {
+				Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1),
+						"%s is now in the %s team.", targ->css.display_name,
+						PVP::PVPTeams::GetNameByID(targ->css.pvp_team));
+			}
+			sim->SendInfoMessage(sim->Aux1, INFOMSG_INFO);
+		}
+	} else {
+		if (creatureInstance->css.pvp_team == PVP::PVPTeams::NONE)
+			sim->SendInfoMessage("Your are not in a PVP team.", INFOMSG_INFO);
+		else {
+			Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1), "You are in the %s team.",
+					PVP::PVPTeams::GetNameByID(creatureInstance->css.pvp_team));
+			sim->SendInfoMessage(sim->Aux1, INFOMSG_INFO);
+		}
+	}
+	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
+}
+
+//
+//PVPModeHandler
+//
+PVPModeHandler::PVPModeHandler() :
+		AbstractCommandHandler("Usage: /mode [pvp|pve]", 1) {
+}
+
+int PVPModeHandler::handleCommand(SimulatorThread *sim,
+		CharacterServerData *pld, SimulatorQuery *query,
+		CreatureInstance *creatureInstance) {
+
+	if (query->argCount > 0) {
+		if (creatureInstance->actInst->mZoneDefPtr->mArena == true)
+			return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+					"Cannot change PVP mode when in arena.");
+
+		if (creatureInstance->_HasStatusList(StatusEffects::IN_COMBAT) != -1)
+			return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+					"Cannot change PVP mode when in combat.");
+
+		std::string mode = query->GetString(0);
+		if (mode.compare("pvp") == 0) {
+			if (creatureInstance->actInst->arenaRuleset.mPVPStatus
+					!= PVP::GameMode::PVE_ONLY) {
+				if (creatureInstance->_HasStatusList(StatusEffects::PVPABLE) == -1)
+					creatureInstance->_AddStatusList(StatusEffects::PVPABLE, -1);
+			}
+			if (creatureInstance->charPtr->Mode == PVP::GameMode::PVP) {
+				return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+						"Default for character is already PVP mode.");
+			}
+			creatureInstance->charPtr->Mode = PVP::GameMode::PVP;
+			creatureInstance->charPtr->pendingChanges++;
+			if (creatureInstance->actInst->arenaRuleset.mPVPStatus
+					== PVP::GameMode::PVE_ONLY)
+				sim->SendInfoMessage(
+						"Default is now PVP mode, but you are in a PVE only zone",
+						INFOMSG_INFO);
+			else
+				sim->SendInfoMessage("Now in PVP mode", INFOMSG_INFO);
+		} else if (mode.compare("pve") == 0) {
+			if (creatureInstance->actInst->arenaRuleset.mPVPStatus
+					!= PVP::GameMode::PVP_ONLY
+					&& creatureInstance->actInst->arenaRuleset.mPVPStatus
+							!= PVP::GameMode::SPECIAL_EVENT) {
+				if (creatureInstance->_HasStatusList(StatusEffects::PVPABLE) != -1)
+					creatureInstance->_RemoveStatusList(StatusEffects::PVPABLE);
+			}
+			if (creatureInstance->charPtr->Mode == PVP::GameMode::PVE) {
+				return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+						"Default for character is already PVE mode.");
+			}
+			creatureInstance->charPtr->Mode = PVP::GameMode::PVE;
+			creatureInstance->charPtr->pendingChanges++;
+			if (creatureInstance->actInst->arenaRuleset.mPVPStatus
+					== PVP::GameMode::PVP_ONLY)
+				sim->SendInfoMessage(
+						"Default is now PVE mode, but you are in a PVP only zone so your status will not yet change.",
+						INFOMSG_INFO);
+			else if (creatureInstance->actInst->arenaRuleset.mPVPStatus
+					== PVP::GameMode::SPECIAL_EVENT)
+				sim->SendInfoMessage(
+						"Default is now PVE mode, but a special event is active so your status will not yet change.",
+						INFOMSG_INFO);
+			else
+				sim->SendInfoMessage("Now in PVE mode", INFOMSG_INFO);
+		} else {
+			return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+					"Invalid parameters.");
+		}
+	} else {
+		if (creatureInstance->actInst->mZoneDefPtr->mArena == true)
+			sim->SendInfoMessage("You are in an arena.", INFOMSG_INFO);
+		else {
+			if (creatureInstance->actInst->arenaRuleset.mPVPStatus
+					== PVP::GameMode::SPECIAL_EVENT) {
+				if (creatureInstance->charPtr->Mode == PVP::GameMode::PVE) {
+					if (creatureInstance->_HasStatusList(StatusEffects::PVPABLE)
+							== -1) {
+						sim->SendInfoMessage(
+								"Your are currently in PVE mode and a special event is active.",
+								INFOMSG_INFO);
+					} else {
+						sim->SendInfoMessage(
+								"Your are currently in PVE mode during a special event, but have a PVP status.",
+								INFOMSG_INFO);
+					}
+				} else {
+					if (creatureInstance->_HasStatusList(StatusEffects::PVPABLE)
+							!= -1) {
+						sim->SendInfoMessage(
+								"Your are currently in PVP mode during a special event.",
+								INFOMSG_INFO);
+					} else {
+						sim->SendInfoMessage(
+								"Your are currently in PVP mode during a special event, but have no PVP status.",
+								INFOMSG_INFO);
+					}
+				}
+			} else {
+				if (creatureInstance->charPtr->Mode == PVP::GameMode::PVE) {
+					if (creatureInstance->_HasStatusList(StatusEffects::PVPABLE)
+							== -1) {
+						sim->SendInfoMessage("Your are currently in PVE mode.",
+								INFOMSG_INFO);
+					} else {
+						sim->SendInfoMessage(
+								"Your are currently in PVE mode, but have a PVP status.",
+								INFOMSG_INFO);
+					}
+				} else {
+					if (creatureInstance->_HasStatusList(StatusEffects::PVPABLE)
+							!= -1) {
+						sim->SendInfoMessage("Your are currently in PVP mode.",
+								INFOMSG_INFO);
+					} else {
+						sim->SendInfoMessage(
+								"Your are currently in PVP mode, but have no PVP status.",
+								INFOMSG_INFO);
+					}
+				}
+			}
+		}
+	}
+	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
+}
+
+
+
+//
+//InstanceHandler
+//
+InstanceHandler::InstanceHandler() :
+		AbstractCommandHandler("Usage: /instance", 0) {
+}
+
+int InstanceHandler::handleCommand(SimulatorThread *sim,
+		CharacterServerData *pld, SimulatorQuery *query,
+		CreatureInstance *creatureInstance) {
+
+	ActiveInstance *inst = creatureInstance->actInst;
+	if (inst != NULL) {
+		Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1), "Total mobs killed: %d",
+				inst->mKillCount);
+		sim->SendInfoMessage(sim->Aux1, INFOMSG_INFO);
+
+		if (inst->mZoneDefPtr->IsDungeon() == true
+				|| sim->CheckPermissionSimple(Perm_Account, Permission_Debug)
+						== true) {
+			Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1), "Drop rate bonus: %gx",
+					inst->mDropRateBonusMultiplier);
+			sim->SendInfoMessage(sim->Aux1, INFOMSG_INFO);
+		}
+
+		if (inst->mZoneDefPtr->IsDungeon() == true) {
+			if (inst->mOwnerPartyID > 0) {
+				ActiveParty *party = g_PartyManager.GetPartyByID(
+						inst->mOwnerPartyID);
+				if (party != NULL) {
+					Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1),
+							"Dungeon party leader: %s",
+							party->mLeaderName.c_str());
+					sim->SendInfoMessage(sim->Aux1, INFOMSG_INFO);
+				}
+			} else {
+				Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1), "Dungeon owner: %s",
+						inst->mOwnerName.c_str());
+				sim->SendInfoMessage(sim->Aux1, INFOMSG_INFO);
+			}
+		}
+
+		if (inst->scaleProfile != NULL) {
+			Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1), "Dungeon scaler: %s",
+					inst->scaleProfile->mDifficultyName.c_str());
+			sim->SendInfoMessage(sim->Aux1, INFOMSG_INFO);
+		}
+
+		if (sim->CheckPermissionSimple(Perm_Account, Permission_Debug)
+				== true&& inst->dropRateProfile != NULL) {
+			Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1), "Drop rate profile: %s",
+					inst->dropRateProfile->mName.c_str());
+			sim->SendInfoMessage(sim->Aux1, INFOMSG_INFO);
+		}
+	}
+	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
+}
+

@@ -119,6 +119,14 @@ tawd_SOURCES = md5.cc \
 	query/BookHandlers.cpp \
 	query/ItemHandlers.cpp \
 	query/CommandHandlers.cpp \
+	query/LootHandlers.cpp \
+	query/FriendHandlers.cpp \
+	query/AbilityHandlers.cpp \
+	query/CreatureHandlers.cpp \
+	query/PetHandlers.cpp \
+	query/SpawnHandlers.cpp \
+	query/ZoneHandlers.cpp \
+	query/StatusHandlers.cpp \
 	util/base64.cpp \
 	util/JsonHelpers.cpp \
 	util/SquirrelObjects.cpp \
@@ -260,6 +268,14 @@ tawd_SOURCES = md5.cc \
 	query/BookHandlers.h \
 	query/ItemHandlers.h \
 	query/CommandHandlers.h \
+	query/LootHandlers.h \
+	query/FriendHandlers.h \
+	query/AbilityHandlers.h \
+	query/CreatureHandlers.h \
+	query/PetHandlers.h \
+	query/SpawnHandlers.h \
+	query/ZoneHandlers.h \
+	query/StatusHandlers.h \
 	util/base64.h \
 	util/Log.h \
 	util/JsonHelpers.h \
@@ -382,6 +398,14 @@ tawdsvc_SOURCES = md5.cc \
 	query/BookHandlers.cpp \
 	query/ItemHandlers.cpp \
 	query/CommandHandlers.cpp \
+	query/LootHandlers.cpp \
+	query/FriendHandlers.cpp \
+	query/AbilityHandlers.cpp \
+	query/CreatureHandlers.cpp \
+	query/PetHandlers.cpp \
+	query/SpawnHandlers.cpp \
+	query/ZoneHandlers.cpp \
+	query/StatusHandlers.cpp \
 	util/base64.cpp \
 	util/JsonHelpers.cpp \
 	util/SquirrelObjects.cpp \
@@ -522,9 +546,17 @@ tawdsvc_SOURCES = md5.cc \
 	query/SceneryHandlers.h \
 	query/ItemHandlers.h \
 	query/CommandHandlers.h \
+	query/SupportHandlers.h \
+	query/LootHandlers.h \
+	query/FriendHandlers.h \
+	query/AbilityHandlers.h \
+	query/CreatureHandlers.h \
+	query/PetHandlers.h \
+	query/SpawnHandlers.h \
+	query/ZoneHandlers.h \
+	query/StatusHandlers.h \
 	util/base64.h \
 	util/Log.h \
 	util/JsonHelpers.h \
-	util/SquirrelObjects.h \
-	query/SupportHandlers.cpp
+	util/SquirrelObjects.h
 endif

@@ -199,6 +199,14 @@ INITIALIZE_EASYLOGGINGPP
 #include "query/BookHandlers.h"
 #include "query/ItemHandlers.h"
 #include "query/CommandHandlers.h"
+#include "query/LootHandlers.h"
+#include "query/FriendHandlers.h"
+#include "query/AbilityHandlers.h"
+#include "query/CreatureHandlers.h"
+#include "query/PetHandlers.h"
+#include "query/SpawnHandlers.h"
+#include "query/ZoneHandlers.h"
+#include "query/StatusHandlers.h"
 #include <curl/curl.h>
 
 #ifdef OUTPUT_TO_CONSOLE
@@ -633,6 +641,7 @@ int InitServerMain(int argc, char *argv[]) {
 	g_QueryManager.queryHandlers["pref.get"] = new PrefGetHandler();
 	g_QueryManager.queryHandlers["pref.set"] = new PrefSetHandler();
 	g_QueryManager.queryHandlers["util.addFunds"] = new AddFundsHandler();
+	g_QueryManager.queryHandlers["zone.mode"] = new PVPZoneModeHandler();
 	g_QueryManager.queryHandlers["item.market.buy"] = new CreditShopBuyHandler();
 	g_QueryManager.queryHandlers["item.market.list"] = new CreditShopListHandler();
 	g_QueryManager.queryHandlers["item.market.edit"] = new CreditShopEditHandler();
@@ -649,6 +658,7 @@ int InitServerMain(int argc, char *argv[]) {
 	g_QueryManager.queryHandlers["sklow"] = new SidekickLowHandler();
 	g_QueryManager.queryHandlers["skparty"] = new SidekickPartyHandler();
 	g_QueryManager.queryHandlers["skscatter"] = new SidekickScatterHandler();
+	g_QueryManager.queryHandlers["sidekick.notifyex"] = new SidekickNotifyExpHandler();
 
 	g_QueryManager.queryHandlers["vault.size"] = new VaultSizeHandler();
 	g_QueryManager.queryHandlers["vault.send"] = new VaultSendHandler();
@@ -667,7 +677,6 @@ int InitServerMain(int argc, char *argv[]) {
 	g_QueryManager.queryHandlers["marker.edit"] = new MarkerEditHandler();
 	g_QueryManager.queryHandlers["marker.del"] = new MarkerDelHandler();
 
-
 	g_QueryManager.queryHandlers["quest.indicator"] = new QuestIndicatorHandler();
 	g_QueryManager.queryHandlers["quest.getquestoffer"] = new QuestGetOfferHandler();
 	g_QueryManager.queryHandlers["quest.genericdata"] = new QuestGenericDataHandler();
@@ -678,7 +687,7 @@ int InitServerMain(int argc, char *argv[]) {
 	g_QueryManager.queryHandlers["quest.complete"] = new QuestCompleteHandler();
 	g_QueryManager.queryHandlers["quest.leave"] = new QuestLeaveHandler();
 	g_QueryManager.queryHandlers["quest.hack"] = new QuestHackHandler();
-
+	g_QueryManager.queryHandlers["quest.share"] = new QuestShareHandler();
 
 	g_QueryManager.queryHandlers["mod.igforum.getcategory"] = new IGFGetCategoryHandler();
 	g_QueryManager.queryHandlers["mod.igforum.opencategory"] = new IGFOpenCategoryHandler();
@@ -722,8 +731,56 @@ int InitServerMain(int argc, char *argv[]) {
 	g_QueryManager.queryHandlers["item.move"] = new ItemMoveHandler();
 	g_QueryManager.queryHandlers["item.split"] = new ItemSplitHandler();
 	g_QueryManager.queryHandlers["item.delete"] = new ItemDeleteHandler();
+	g_QueryManager.queryHandlers["item.create"] = new ItemCreateHandler();
+	g_QueryManager.queryHandlers["itemdef.contents"] = new ItemDefContentsHandler();
+	g_QueryManager.queryHandlers["itemdef.delete"] = new ItemDefDeleteHandler();
+	g_QueryManager.queryHandlers["item.morph"] = new ItemMorphHandler();
+	g_QueryManager.queryHandlers["shop.contents"] = new ShopContentsHandler();
+	g_QueryManager.queryHandlers["essenceShop.contents"] = new EssenceShopContentsHandler();
+
+	g_QueryManager.queryHandlers["loot.list"] = new LootListHandler();
+	g_QueryManager.queryHandlers["loot.item"] = new LootItemHandler();
+	g_QueryManager.queryHandlers["loot.exit"] = new LootExitHandler();
+
+	g_QueryManager.queryHandlers["friends.add"] = new AddFriendHandler();
+	g_QueryManager.queryHandlers["friends.list"] = new ListFriendsHandler();
+	g_QueryManager.queryHandlers["friends.remove"] = new RemoveFriendHandler();
+	g_QueryManager.queryHandlers["friends.status"] = new FriendStatusHandler();
+	g_QueryManager.queryHandlers["friends.getstatus"] = new GetFriendStatusHandler();
+
+	g_QueryManager.queryHandlers["ab.remainingcooldowns"] = new AbilityRemainingCooldownsHandler();
+	g_QueryManager.queryHandlers["ab.ownage.list"] = new AbilityOwnageListHandler();
+	g_QueryManager.queryHandlers["ab.buy"] = new AbilityBuyHandler();
+	g_QueryManager.queryHandlers["ab.respec"] = new AbilityRespecHandler();
+	g_QueryManager.queryHandlers["ab.respec.price"] = new AbilityRespecPriceHandler();
+
+	g_QueryManager.queryHandlers["creature.isusable"] = new CreatureIsUsableHandler();
+	g_QueryManager.queryHandlers["creature.def.edit"] = new CreatureDefEditHandler();
+	g_QueryManager.queryHandlers["creature.use"] = new CreatureUseHandler();
+	g_QueryManager.queryHandlers["creature.delete"] = new CreatureDeleteHandler();
+
+	g_QueryManager.queryHandlers["mod.pet.list"] = new PetListHandler();
+	g_QueryManager.queryHandlers["mod.pet.purchase"] = new PetPurchaseHandler();
+	g_QueryManager.queryHandlers["mod.pet.preview"] = new PetPreviewHandler();
+	g_QueryManager.queryHandlers["mod.getpet"] = new GetPetHandler();
+
+	g_QueryManager.queryHandlers["spawn.list"] = new SpawnListHandler();
+	g_QueryManager.queryHandlers["spawn.create"] = new SpawnCreateHandler();
+	g_QueryManager.queryHandlers["spawn.property"] = new SpawnPropertyHandler();
+	g_QueryManager.queryHandlers["spawn.emitters"] = new SpawnEmittersHandler();
+
+	g_QueryManager.queryHandlers["go"] = new GoHandler();
+	g_QueryManager.queryHandlers["mod.grove.togglecycle"] = new GroveEnvironmentCycleToggleHandler();
+	g_QueryManager.queryHandlers["mod.setenvironment"] = new SetEnvironmentHandler();
+	g_QueryManager.queryHandlers["shard.list"] = new ShardListHandler();
+	g_QueryManager.queryHandlers["shard.set"] = new ShardSetHandler();
+	g_QueryManager.queryHandlers["gm.spawn"] = new GMSpawnHandler();
+	g_QueryManager.queryHandlers["henge.setDest"] = new HengeSetDestHandler();
+	g_QueryManager.queryHandlers["mod.morestats"] = new MoreStatsHandler();
 
 	// Commands
+	g_QueryManager.queryHandlers["team"] = new PVPTeamHandler();
+	g_QueryManager.queryHandlers["mode"] = new PVPModeHandler();
 	g_QueryManager.queryHandlers["help"] = new HelpHandler();
 	g_QueryManager.queryHandlers["adjustexp"] = new AdjustExpHandler();
 	g_QueryManager.queryHandlers["unstick"] = new UnstickHandler();
@@ -790,6 +847,7 @@ int InitServerMain(int argc, char *argv[]) {
 	g_QueryManager.queryHandlers["warpg"] = new WarpGroveHandler();
 	g_QueryManager.queryHandlers["warpextoff"] = new WarpExternalOfflineHandler();
 	g_QueryManager.queryHandlers["warpext"] = new WarpExternalHandler();
+	g_QueryManager.queryHandlers["instance"] = new InstanceHandler();
 	g_QueryManager.queryHandlers["script.exec"] = new ScriptExecHandler();
 	g_QueryManager.queryHandlers["script.time"] = new ScriptTimeHandler();
 	g_QueryManager.queryHandlers["script.gc"] = new ScriptGCHandler();
@@ -797,6 +855,10 @@ int InitServerMain(int argc, char *argv[]) {
 	g_QueryManager.queryHandlers["script.clearqueue"] = new ScriptClearQueueHandler();
 
 	// Some are shared
+	LootNeedGreedPassHandler *lootNeedGreedPassHandler = new LootNeedGreedPassHandler();
+	g_QueryManager.queryHandlers["loot.need"] = lootNeedGreedPassHandler;
+	g_QueryManager.queryHandlers["loot.greed"] = lootNeedGreedPassHandler;
+	g_QueryManager.queryHandlers["loot.pass"] = lootNeedGreedPassHandler;
 
 	PrefSetAHandler* prefSetAHandler = new PrefSetAHandler();
 	g_QueryManager.lobbyQueryHandlers["pref.setA"] = prefSetAHandler;

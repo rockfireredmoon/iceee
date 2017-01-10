@@ -705,3 +705,266 @@ int ItemDeleteHandler::handleQuery(SimulatorThread *sim,
 
 	return PrepExt_QueryResponseNull(sim->SendBuf, query->ID);
 }
+
+
+//
+//ItemCreateHandler
+//
+
+int ItemCreateHandler::handleQuery(SimulatorThread *sim,
+		CharacterServerData *pld, SimulatorQuery *query,
+		CreatureInstance *creatureInstance) {
+
+	if (!sim->CheckPermissionSimple(Perm_Account, Permission_Sage))
+		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+				"Permission denied.");
+	int itemID = atoi(query->args[0].c_str());
+	int targetID = atoi(query->args[1].c_str());
+	g_CharacterManager.GetThread("SimulatorThread::ItemCreate");
+	CreatureInstance *creature = creatureInstance->actInst->GetPlayerByID(targetID);
+	if (creature != NULL) {
+		ItemDef * item;
+		if (itemID == 0) {
+			item = g_ItemManager.GetSafePointerByPartialName(
+					query->args[0].c_str());
+		} else {
+			item = g_ItemManager.GetSafePointerByID(itemID);
+		}
+		if (item != NULL) {
+			int slot = pld->charPtr->inventory.GetFreeSlot(INV_CONTAINER);
+			if (slot != -1) {
+				InventorySlot *sendSlot =
+						creature->charPtr->inventory.AddItem_Ex(INV_CONTAINER,
+								item->mID, 1);
+				if (sendSlot != NULL) {
+					g_Logs.event->info(
+							"[SAGE] %v gave %v to %v because '%v'",
+							pld->charPtr->cdef.css.display_name,
+							item->mDisplayName.c_str(),
+							creature->charPtr->cdef.css.display_name,
+							query->args[2].c_str());
+					int wpos = AddItemUpdate(&sim->Aux1[0], sim->Aux2, sendSlot);
+					sim->ActivateActionAbilities(sendSlot);
+					g_CharacterManager.ReleaseThread();
+					creature->simulatorPtr->AttemptSend(sim->Aux1, wpos);
+					return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
+				}
+			}
+
+		}
+	}
+	g_CharacterManager.ReleaseThread();
+	return PrepExt_QueryResponseError(sim->SendBuf, query->ID, "Failed to give item.");
+}
+
+
+
+//
+//ItemDefDeleteHandler
+//
+
+int ItemDefDeleteHandler::handleQuery(SimulatorThread *sim,
+		CharacterServerData *pld, SimulatorQuery *query,
+		CreatureInstance *creatureInstance) {
+
+	if (!sim->CheckPermissionSimple(Perm_Account, Permission_Sage))
+		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+				"Permission denied.");
+	int itemID = atoi(query->args[0].c_str());
+	int targetID = atoi(query->args[1].c_str());
+	g_CharacterManager.GetThread("SimulatorThread::ItemCreate");
+	CreatureInstance *creature = creatureInstance->actInst->GetPlayerByID(targetID);
+	if (creature != NULL) {
+		ItemDef * item;
+		if (itemID == 0) {
+			item = g_ItemManager.GetSafePointerByPartialName(
+					query->args[0].c_str());
+		} else {
+			item = g_ItemManager.GetSafePointerByID(itemID);
+		}
+		if (item != NULL) {
+
+			CharacterData *cdata = creature->charPtr;
+			int size = cdata->inventory.containerList[INV_CONTAINER].size();
+			int a;
+			for (a = 0; a < size; a++) {
+				InventorySlot *slot =
+						&cdata->inventory.containerList[INV_CONTAINER][a];
+				if (slot != NULL) {
+					if (slot->IID == item->mID) {
+						g_Logs.event->info(
+								"[SAGE] %v removed %v from %v because '%v'",
+								pld->charPtr->cdef.css.display_name,
+								item->mDisplayName.c_str(),
+								creature->charPtr->cdef.css.display_name,
+								query->args[2].c_str());
+						int wpos = RemoveItemUpdate(&sim->Aux1[0], sim->Aux2, slot);
+						g_CharacterManager.ReleaseThread();
+						creature->simulatorPtr->AttemptSend(sim->Aux1, wpos);
+						cdata->inventory.RemItem(slot->CCSID);
+						return PrepExt_QueryResponseString(sim->SendBuf, query->ID,
+								"OK");
+					}
+				}
+			}
+		}
+	}
+	g_CharacterManager.ReleaseThread();
+	return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+			"Failed to delete item.");
+}
+
+//
+//ItemDefContentsHandler
+//
+
+int ItemDefContentsHandler::handleQuery(SimulatorThread *sim,
+		CharacterServerData *pld, SimulatorQuery *query,
+		CreatureInstance *creatureInstance) {
+	if (!sim->CheckPermissionSimple(Perm_Account, Permission_Sage))
+				return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+						"Permission denied.");
+
+	int wpos = 0;
+	wpos += PutByte(&sim->SendBuf[wpos], 1);       //_handleQueryResultMsg
+	wpos += PutShort(&sim->SendBuf[wpos], 0);      //Message size
+	wpos += PutInteger(&sim->SendBuf[wpos], query->ID);  //Query response index
+	wpos += PutShort(&sim->SendBuf[wpos], 0);
+	int id = atoi(query->args[0].c_str());
+	g_CharacterManager.GetThread("SimulatorThread::ItemDefContents");
+	CreatureInstance *creature = creatureInstance->actInst->GetPlayerByID(id);
+	int count = 0;
+	if (creature != NULL) {
+		CharacterData *cdata = creature->charPtr;
+		int size = cdata->inventory.containerList[INV_CONTAINER].size();
+		int a;
+		for (a = 0; a < size; a++) {
+			InventorySlot *slot =
+					&cdata->inventory.containerList[INV_CONTAINER][a];
+			if (slot != NULL) {
+				wpos += PutByte(&sim->SendBuf[wpos], 2);
+				Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1), "%d", slot->IID);
+				wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux1);
+				wpos += PutStringUTF(&sim->SendBuf[wpos],
+						slot->dataPtr->mDisplayName.c_str());
+				count++;
+			}
+		}
+	}
+	g_CharacterManager.ReleaseThread();
+	PutShort(&sim->SendBuf[7], count);
+	PutShort(&sim->SendBuf[1], wpos - 3);
+	return wpos;
+}
+
+//
+//ItemMorphHandler
+//
+
+int ItemMorphHandler::handleQuery(SimulatorThread *sim,
+		CharacterServerData *pld, SimulatorQuery *query,
+		CreatureInstance *creatureInstance) {
+
+	/*  Query: item.morph
+	 Sent when an item is refashioned via the NPC.
+	 Args : [0] Item Inventory Hex ID (Original Item)
+	 [1] Item Inventory Hex ID (New Equipment Look)
+	 [2] = Creature Instance ID of the vendor who processed this action.
+	 */
+	int rval = sim->ItemMorph(false);
+	if (rval <= 0)
+		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+				sim->GetErrorString(rval));
+
+	return rval;
+}
+
+//
+//ShopContentsHandler
+//
+
+int ShopContentsHandler::handleQuery(SimulatorThread *sim,
+		CharacterServerData *pld, SimulatorQuery *query,
+		CreatureInstance *creatureInstance) {
+
+	/*  Query: shop.contents
+	 Sent when an NPC shop is clicked on.
+	 Args : [0] = Creature ID of NPC.
+	 */
+
+	if (query->argCount < 1)
+		return 0;
+
+	int CID = atoi(query->args[0].c_str());
+	g_Logs.simulator->debug("[%v] shop.contents: %v", sim->InternalID, CID);
+
+	if (CID == creatureInstance->CreatureID) {
+
+		//Fill the query with the contents of the buyback information.
+		g_Logs.simulator->debug("[%v] Shop contents self.", sim->InternalID);
+		int wpos = 0;
+		wpos += PutByte(&sim->SendBuf[wpos], 1);              //_handleQueryResultMsg
+		wpos += PutShort(&sim->SendBuf[wpos], 0);          //Placeholder for message size
+		wpos += PutInteger(&sim->SendBuf[wpos], query->ID);     //Query response ID
+
+		int rowCount =
+				(int) pld->charPtr->inventory.containerList[BUYBACK_CONTAINER].size();
+		wpos += PutShort(&sim->SendBuf[wpos], rowCount);
+
+		//Note: low index = newest, also highest slot number
+		for (int index = 0; index < rowCount; index++) {
+			wpos += PutByte(&sim->SendBuf[wpos], 1); //Always one string for regular items.
+			GetItemProto(sim->Aux3,
+					pld->charPtr->inventory.containerList[BUYBACK_CONTAINER][index].IID,
+					0);
+			wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux3);
+		}
+		PutShort(&sim->SendBuf[1], wpos - 3);
+		return wpos;
+	}
+
+	int CDef = sim->ResolveCreatureDef(CID);
+
+	int wpos = creatureInstance->actInst->itemShopList.ProcessQueryShop(sim->SendBuf,
+			sim->Aux1, CDef, query->ID);
+	if (wpos == 0) {
+		g_Logs.simulator->warn("[%v] Shop Contents not found for [%v]",
+				sim->InternalID, CDef);
+		sprintf(sim->Aux3, "Shop Contents not found for [%d]", CDef);
+		wpos = PrepExt_QueryResponseError(sim->SendBuf, query->ID, sim->Aux3);
+	}
+	return wpos;
+}
+
+//
+//EssenceShopContentsHandler
+//
+
+int EssenceShopContentsHandler::handleQuery(SimulatorThread *sim,
+		CharacterServerData *pld, SimulatorQuery *query,
+		CreatureInstance *creatureInstance) {
+
+	/*  Query: essenceShop.contents
+	 Sent when an essence shop (chest) is clicked on.
+	 Args : [0] = Creature ID of the chest spawn object.
+	 */
+
+	if (query->argCount < 1)
+		return 0;
+
+	int CID = atoi(query->args[0].c_str());
+	g_Logs.simulator->trace("[%v] essenceShop.contents: %v", sim->InternalID, CID);
+
+	int CDef = sim->ResolveCreatureDef(CID);
+
+	int WritePos = creatureInstance->actInst->essenceShopList.ProcessQueryEssenceShop(
+			sim->SendBuf, sim->Aux1, CDef, query->ID);
+	if (WritePos == 0) {
+		g_Logs.simulator->warn("[%v] EssenceShop not found for [%v]",
+				sim->InternalID, CDef);
+		sprintf(sim->Aux3, "EssenceShop not found for [%d]", CDef);
+		WritePos = PrepExt_QueryResponseError(sim->SendBuf, query->ID, sim->Aux3);
+	}
+	return WritePos;
+}
+

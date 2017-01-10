@@ -388,7 +388,6 @@ int QuestCompleteHandler::handleQuery(SimulatorThread *sim,
 
 }
 
-
 //
 // QuestLeaveHandler
 //
@@ -419,7 +418,6 @@ int QuestLeaveHandler::handleQuery(SimulatorThread *sim,
 
 }
 
-
 //
 // QuestHackHandler
 //
@@ -427,8 +425,6 @@ int QuestLeaveHandler::handleQuery(SimulatorThread *sim,
 int QuestHackHandler::handleQuery(SimulatorThread *sim,
 		CharacterServerData *pld, SimulatorQuery *query,
 		CreatureInstance *creatureInstance) {
-
-
 
 	if (!sim->CheckPermissionSimple(Perm_Account, Permission_Sage))
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
@@ -490,4 +486,29 @@ int QuestHackHandler::handleQuery(SimulatorThread *sim,
 
 }
 
+//
+// QuestShareHandler
+//
 
+int QuestShareHandler::handleQuery(SimulatorThread *sim,
+		CharacterServerData *pld, SimulatorQuery *query,
+		CreatureInstance *creatureInstance) {
+	if (query->argCount < 1)
+			return PrepExt_QueryResponseNull(sim->SendBuf, query->ID);
+
+	int questID = atoi(query->args[0].c_str());
+	int res = pld->charPtr->questJournal.CheckQuestShare(questID);
+	if (res != QuestJournal::SHARE_SUCCESS_QUALIFIES)
+		sim->SendInfoMessage(QuestJournal::GetQuestShareErrorString(res),
+				INFOMSG_ERROR);
+	else {
+		if (pld->charPtr->questJournal.QuestJoin_Helper(questID) == 0) {
+			int wpos = QuestJournal::WriteQuestJoin(sim->SendBuf, questID);
+			wpos += PrepExt_SendInfoMessage(&sim->SendBuf[wpos],
+					"You have joined the quest.", INFOMSG_INFO);
+			sim->AttemptSend(sim->SendBuf, wpos);
+		}
+	}
+
+	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
+}
