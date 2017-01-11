@@ -2994,3 +2994,9 @@ Spawn=3634,100  ; Hell "Twelve"
 Flags=3
 Name=gt01_mushroomChunks
 Spawn=7797,100  ;Mushroom Chunks
+
+[ENTRY]
+Name=Valley_Guardian
+Flags=224
+loyaltyRadius=50
+wanderRadius=50
