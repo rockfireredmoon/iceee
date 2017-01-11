@@ -31098,6 +31098,7 @@ might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
+appearance=n4:{["sk"]={["accent"]="ffffff",["cloth1"]="2a2a2a",["cloth2"]="151515",["ear"]="3f3f3f",["hair"]="2a1509",["neck"]="0a0f55",["skin"]="7f1d41",["tattoos"]="000000"},["c"]="Horde-Vampire_Mage",["sz"]="1.3"}
 level=49
 display_name=Vaj Venae
 profession=4
@@ -31547,6 +31548,7 @@ might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
+appearance=n4:{["sk"]={["belt"]="705e07",["cape"]="000000",["cloth"]="2a2a2a",["eye_mouth"]="ff0000",["hair"]="000000",["nose_ear"]="e9e9e9",["skin"]="55472e",["tattoo"]="ffffff"},["c"]="Horde-Vampire",["sz"]="1.3"}
 level=49
 display_name=Vaj Samir
 profession=2
