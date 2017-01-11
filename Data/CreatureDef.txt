@@ -74767,6 +74767,7 @@ damage_resist_mystic=2500
 damage_resist_death=2500
 will_regen=1
 might_regen=1
+appearance=n4:{["sk"]={["carapace"]="453c49",["head_wing"]="ffc51b",["wing1"]="165153",["wing2"]="cd1312",["wing3"]="4e51fd",["wing4"]="760e9b",["wing5"]="36adb2"},["c"]="Horde-Dreamfly",["sz"]="1.1"}
 level=55
 display_name=Valley Guardian
 profession=2
