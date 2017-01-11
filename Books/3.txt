@@ -8,32 +8,4 @@ Party Size: <b>5</b>
 Estimated Time: <b>3 hours</b>
 Difficulty: Extremely Hard
 
-Welcome to the end of the game ....
-[PAGE]
-TEXT=This is page 2
-[BOOK]
-TITLE=The Book Of Blood Keep
-
-[PAGE]
-TEXT=<font size="24"><b>Valkals Blood Keep</b></font><br><br>
-
-Party Size: <b>5</b>
-Estimated Time: <b>3 hours</b>
-Difficulty: Extremely Hard
-
-WARNING you have entered an Elite Dungeon.  The difficulty and duration of this dungeon is great. We hope you enjoy the challenge but are aware that failure if you dont have the necessary time to complete the dungeon you should be prepared to lose your dungeon progress upon logging out."  Maybe its unnecessary and we dont need to add it but i always felt that dungeons like the downbelow or rotted maze should have a form of warning of length before you get started so you know what to expect and dont have to restart because your on a time crunch.a
-[PAGE]
-TEXT=This is page 2
-[BOOK]
-TITLE=The Book Of Blood Keep
-
-[PAGE]
-TEXT=<font size="24"><b>Valkals Blood Keep</b></font><br><br>
-
-Party Size: <b>5</b>
-Estimated Time: <b>3 hours</b>
-Difficulty: Extremely Hard
-
 <b>WARNING</b> You have entered an Elite Dungeon.  The difficulty and duration of this dungeon is great. We hope you enjoy the challenge but are aware that failure if you dont have the necessary time to complete the dungeon you should be prepared to lose your dungeon progress upon logging out."  Maybe its unnecessary and we dont need to add it but i always felt that dungeons like the downbelow or rotted maze should have a form of warning of length before you get started so you know what to expect and dont have to restart because your on a time crunch.a
-[PAGE]
-TEXT=This is page 2
