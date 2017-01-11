@@ -74752,3 +74752,26 @@ creature_category=Unliving
 rarity=0
 base_damage_melee=300
 ai_package=custom_heathendel_deathdruid40
+
+[ENTRY]
+ID=3454
+strength=120
+dexterity=120
+constitution=140
+psyche=120
+spirit=120
+damage_resist_melee=2500
+damage_resist_fire=2500
+damage_resist_frost=2500
+damage_resist_mystic=2500
+damage_resist_death=2500
+will_regen=1
+might_regen=1
+level=55
+display_name=Valley Guardian
+profession=2
+creature_category=Divine
+rarity=3
+base_damage_melee=160
+ai_package=4_rogue_30
+total_size=1.2999999523162842

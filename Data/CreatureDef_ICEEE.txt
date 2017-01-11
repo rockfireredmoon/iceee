@@ -1414,6 +1414,10 @@ rarity=1
 ID=7862
 strength=95
 dexterity=95
+[ENTRY]
+ID=7862
+strength=95
+dexterity=95
 constitution=20
 psyche=50
 spirit=50
@@ -1427,18 +1431,14 @@ might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
+appearance=n4:{["c"]="Horde-Skrill-Trooper",["sz"]=".8"}
 level=50
 display_name=Skrill Hatchling
 profession=3
 creature_category=Mortal
-rarity=0
+rarity=3
 base_damage_melee=125
 ai_package=4_rogue_30
-appearance=n4:{ ["sk"]={ ["stripe2"]="5D49BF", ["skin"]="949494", ["wings"]="7D61FF", ["stripe1"]="7D61FF" }, ["c"]="Horde-Skrill-Trooper", ["sz"]=".8" }
-
-[ENTRY]
-ID=7863
-Effects=INVINCIBLE,UNATTACKABLE
 will_regen=0
 might_regen=0
 appearance=p1:{["a"]="Prop-Interact_Sphere",["sz"]="4"}
