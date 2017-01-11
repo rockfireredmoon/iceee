@@ -834,7 +834,7 @@ spawnPackage=#F7864
 [ENTRY]
 ID=1150679
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=4014.52,484.917,3089.3
 Orient=0,0.703279,0,0.710914
 Scale=1,1,1
@@ -844,7 +844,7 @@ maxActive=0
 [ENTRY]
 ID=1150680
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=4015.83,484.377,2473.83
 Orient=0,-0.688921,0,0.724836
 Scale=1,1,1
@@ -854,7 +854,7 @@ maxActive=0
 [ENTRY]
 ID=1150681
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=4352.31,480,2552.16
 Orient=0,-0.975723,0,0.219007
 Scale=1,1,1
@@ -862,11 +862,11 @@ spawnPackage=VBloodkeep_Palatine
 maxActive=0
 
 [ENTRY]
-ID=1150682
+ID=1150687
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=
-Pos=4346.31,480,3032.42
-Orient=0,0.945784,0,0.324796
+Pos=4353.45,480,3041.8
+Orient=0,0.933839,0,0.357693
 Scale=1,1,1
 spawnPackage=VBloodkeep_Palatine
 maxActive=0

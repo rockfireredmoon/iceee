@@ -31,9 +31,11 @@ vampire_adds <- [
     VampireAdd(1150679, Point(4011,2931), 128),
     VampireAdd(1150680, Point(4011,2631), 0),
     VampireAdd(1150681, Point(4155,2697), 214),
-    VampireAdd(1150682, Point(4159,2874), 168),
+    VampireAdd(1150687, Point(4159,2874), 168),
     VampireAdd(1150683, Point(3861,2901), 92),
-    VampireAdd(1150684, Point(3859,2683), 40)
+    VampireAdd(1150684, Point(3859,2683), 40),
+    VampireAdd(1150685, Point(3803,2820), 66),
+    VampireAdd(1150686, Point(3805,2762), 63)
 ];
 
 
@@ -61,33 +63,31 @@ function t1() {
 }
 
 function spawn_adds() {
-    inst.info("Spawning adds");
     foreach(v in vampire_adds) {
 		local cid = inst.spawn(v.prop_id, 0, 0);
-        inst.info("prop " + v.prop_id + " = " + cid);
-		inst.walk_then(cid, v.pos, CREATURE_JOG_SPEED, 0, function() {
+        inst.walk_then(cid, v.pos, CREATURE_JOG_SPEED, 0, function() {
 
-		    /* Find all players, sidekicks and enemies of the minion within the range */
-		    local targets = inst.get_nearby_creature(10000, cid, TS_NONE, TS_ENEMY, TS_NONE);
-		    local closest_cid = -1;
-		    local closest_distance = 9999999;
+            /* Find all players, sidekicks and enemies of the minion within the range */
+            local targets = inst.get_nearby_creature(10000, cid, TS_NONE, TS_ENEMY, TS_NONE);
+            local closest_cid = -1;
+            local closest_distance = 9999999;
 
-		    /* Find the closest enemy */
-		    foreach(t in targets) {
-			    local dist = inst.get_creature_distance(t, cid_minion);
-			    if(dist > -1 && dist < closest_distance) {
-				    closest_distance = dist;
-				    closest_cid = t;
-			    }
-		    }
+            /* Find the closest enemy */
+            foreach(t in targets) {
+	            local dist = inst.get_creature_distance(t, cid);
+	            if(dist > -1 && dist < closest_distance) {
+		            closest_distance = dist;
+		            closest_cid = t;
+	            }
+            }
 
-		    /* Target and attack the found enemy */
-		    if(closest_cid != -1) {
-			    inst.set_target(cid, closest_cid);
-			    inst.creature_use(cid, _AB("melee"));
-		    }
+            /* Target and attack the found enemy */
+            if(closest_cid != -1) {
+	            inst.set_target(cid, closest_cid);
+	            inst.creature_use(cid, _AB("melee"));
+            }
 
-		});
+        });
     }
 }
 
