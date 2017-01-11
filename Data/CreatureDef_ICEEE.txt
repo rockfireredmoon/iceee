@@ -2,10 +2,6 @@
 ID=7773
 strength=180
 dexterity=180
-[ENTRY]
-ID=7773
-strength=180
-dexterity=180
 constitution=350
 psyche=265
 spirit=265
@@ -1410,10 +1406,6 @@ creature_category=Mortal
 ai_package=example
 rarity=1
 
-[ENTRY]
-ID=7862
-strength=95
-dexterity=95
 [ENTRY]
 ID=7862
 strength=95
