@@ -123,7 +123,7 @@ function disengage_valkal(text) {
 	inst.set_flag(cid_valkal1, SF_NON_COMBATANT, true);
 }
 
-/* Monitor Valkal1's health and trigger the various fight stages. *//
+/* Monitor Valkal1's health and trigger the various fight stages. */
 function valkal1_health() {
 	if(cid_valkal1 == 0)
 		return;
