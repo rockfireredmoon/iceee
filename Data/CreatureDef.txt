@@ -32155,7 +32155,6 @@ dexterity=275
 constitution=350
 psyche=165
 spirit=165
-base_damage_melee=245
 damage_resist_melee=5000
 damage_resist_fire=5000
 damage_resist_frost=5000
@@ -32166,13 +32165,14 @@ might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
+appearance=n4:{["a"]=[{["node"]="left_shoulder",["type"]="Armor-Base1A-Left_Pauldron",["colors"]=["940d0d","940d0d","bfbf9f"]},{["node"]="right_shoulder",["type"]="Armor-Base1A-Right_Pauldron",["colors"]=["940d0d","940d0d","bfbf9f"]},{["node"]="right_hand",["type"]="Item-1hMace-Epic4",["colors"]=["5f6878","a79c80","d17f19","2147df","56feff"]},{["node"]="left_hand",["type"]="Item-1hMace-High3",["colors"]=["71856e","ebaf20","652c2c","816f2b"]}],["c"]="Horde-Vampider",["sk"]={["base"]="7f570b",["eye"]="ffffff",["hair"]="aaaaaa",["shell"]="000000",["trim"]="e9c57f",["webbing"]="222a2a"},["sz"]="2"}
 level=50
 display_name=Silkula
 profession=3
 creature_category=Unliving
 rarity=1
+base_damage_melee=245
 ai_package=4_rogue_30
-appearance=n4:{["a"]=[{["type"]="Armor-Base1A-Right_Pauldron",["node"]="right_shoulder",["colors"]=["940D0D","940D0D","BFBF9F"]},{["type"]="Armor-Base1A-Left_Pauldron",["node"]="left_shoulder",["colors"]=["940D0D","940D0D","BFBF9F"]},{["type"]="Item-1hMace-Epic4",["colors"]=["5F6878","A79C80","D17F19","2147DF","56FEFF"],["effect"]="Par-WE-1hMace-Fire",["node"]="right_hand"},{["type"]="Item-1hMace-High3",["node"]="left_hand",["colors"]=["71856E","EBAF20","652C2C","816F2B"]}],["c"]="Horde-Vampire",["sk"]={["eye_mouth"]="A60006",["hair"]="242A10",["tattoo"]="4D6082",["nose_ear"]="550000",["skin"]="7F6B45",["cloth"]="2A140F",["cape"]="3F0000",["belt"]="947D07"},["sz"]="1.7"}
 
 [ENTRY]
 ID=1384
@@ -32181,7 +32181,6 @@ dexterity=250
 constitution=350
 psyche=190
 spirit=190
-base_damage_melee=280
 damage_resist_melee=5500
 damage_resist_fire=5500
 damage_resist_frost=5500
@@ -32192,14 +32191,14 @@ might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
+appearance=n4:{["sk"]={["eye"]="e96a6a",["flesh"]="550b00",["pupil"]="7f420b",["veins"]="0a0f55"},["c"]="Horde-Wandering_Eye",["sz"]="1.7"}
 level=50
 display_name=Hemator
 profession=4
 creature_category=Unliving
 rarity=1
+base_damage_melee=280
 ai_package=knight_brave_6
-appearance=n4:{["sk"]={["skin"]="6A5939",["accent"]="554015",["eye"]="FF0000",["armor"]="AAAAAA",["hair"]="FFFFFF",["teeth"]="FFFED4"},["c"]="Horde-Vampire_Mehirim",["sz"]="1.7"}
-
 
 [ENTRY]
 ID=1385
