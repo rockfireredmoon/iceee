@@ -44,12 +44,34 @@ vampire_adds <- [
 const VALKAL2_SPAWN_PROP = 1150656;
 const TRAP_DOOR_SPAWN_PROP = 1150652;
 
+// Item IDS
+const BOOK_ITEMID = 8707;
+const BOOK_NO = 3;
+
 // Tile locations
 valkal2_spawn_tile <- Point(10,3);
 
 // State variables
 cid_valkal1 <- 0;
 
+/* Handles the bookcase at the start of the dungeon, giving the players fair
+   warning as to what is to come! */
+function on_use_7872(cid, used_cid) {
+	if(inst.has_item(cid, BOOK_ITEMID))
+		inst.message_to(cid, "You already have the Book of Blood Keep", INFOMSG_INFO);
+	else {
+		inst.interact(cid, "Taking the book", 3000, false, function() {
+			inst.message_to(cid, "The Book of Blood Keep is now in your inventory.", INFOMSG_INFO);
+			inst.give_item(cid, BOOK_ITEMID);
+			inst.open_book(cid, BOOK_NO, 1);
+		});
+		return true;
+	
+	}
+		
+}
+
+/* Keep scanning for Valkal1 until he spawns. When he does, we start to monitor his health  */ 
 function find_valkal1() {
 	cid_valkal1 = inst.scan_npc(loc_throne_room, CDEF_VALKAL1);
 	if(cid_valkal1 == 0)
@@ -58,10 +80,8 @@ function find_valkal1() {
 		valkal1_health();
 }
 
-function t1() {
-	inst.despawn_all(CDEF_VALKAL1);
-}
-
+/* Spawn Valkals adds. Each one will be instructed to run to a defined place,
+   then locate the nearest player and attack them. */
 function spawn_adds() {
     foreach(v in vampire_adds) {
 		local cid = inst.spawn(v.prop_id, 0, 0);
@@ -91,6 +111,7 @@ function spawn_adds() {
     }
 }
 
+/* Totally disengage Valkal from the fight and make him invincible */
 function disengage_valkal(text) {
     if(text.len() > 0)
     	inst.creature_chat(cid_valkal1, "s/", text);
@@ -102,6 +123,7 @@ function disengage_valkal(text) {
 	inst.set_flag(cid_valkal1, SF_NON_COMBATANT, true);
 }
 
+/* Monitor Valkal1's health and trigger the various fight stages. *//
 function valkal1_health() {
 	if(cid_valkal1 == 0)
 		return;
@@ -124,9 +146,12 @@ function valkal1_health() {
 				// Portal
 				inst.spawn(TRAP_DOOR_SPAWN_PROP, 0, 0);
 
-				// Valkal 2. He is in another tile that probably is not loaded, so make sure it is
+				/* Valkal 2. He is in another tile that probably is not loaded, so make sure it is and
+				   spawn after a short delay */
 				inst.load_spawn_tile(valkal2_spawn_tile);
-				inst.spawn(VALKAL2_SPAWN_PROP, 0, 0);
+				inst.queue(function() {
+					inst.spawn(VALKAL2_SPAWN_PROP, 0, 0);
+				}, 1000);
 			});
 		}, 1000);
 		return;
@@ -139,4 +164,5 @@ function valkal1_health() {
 
 }
 
+/* Initialisation. Start scanning for Valkal1 to spawn */
 inst.queue(find_valkal1, 1000);

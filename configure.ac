@@ -106,6 +106,14 @@ if test "x${mingw}" = xtrue; then
 	CPPFLAGS="$CPPFLAGS -DWINDOWS_PLATFORM=1"
 fi
 
+# This disables asserts, primarily done because of possible bug in scripting.
+# When assertions are enabled, sqrat will throw one when a Squirrel script
+# exception occurs. Although we catch the exception, we don't catch the
+# assertion (can we?). Disabling this seems to have no ill affects anywhere
+# else, and I dont think assert is used anywhere else
+#
+CPPFLAGS="$CPPFLAGS -DNDEBUG=1"
+
 # Static linking
 static=""
 if test "x${selfcontained}" = xtrue; then

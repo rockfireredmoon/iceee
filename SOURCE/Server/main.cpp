@@ -117,7 +117,6 @@ If using Code::Blocks on LINUX
 
 */
 
-
 //Enable to include memory leak detection using CRT runtimes (Windows only)
 //#define _CRTDEBUGGING
 
@@ -178,6 +177,7 @@ If using Code::Blocks on LINUX
 #include "CreditShop.h"
 #include "Guilds.h"
 #include "Daily.h"
+#include "Books.h"
 
 //extern GuildManager g_GuildManager;
 
@@ -597,6 +597,9 @@ int InitServerMain() {
 	g_Log.AddMessageFormat("Loaded %d Daily Profiles.", g_DailyProfileManager.GetNumberOfProfiles());
 
 	g_FriendListManager.LoadAllData();
+
+	g_BookManager.Init();
+	g_Log.AddMessageFormat("Loaded %d Books.", g_BookManager.books.size());
 
 	aiScriptManager.LoadScripts();
 	aiNutManager.LoadScripts();

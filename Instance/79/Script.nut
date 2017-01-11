@@ -11,7 +11,7 @@ info <- {
 
 trigger <- 0;
 
-function on_use_2134() {
+function on_use_2134(cid, used_cid) {
 	inst.sleep(7500);
 	
 	// Phase 1

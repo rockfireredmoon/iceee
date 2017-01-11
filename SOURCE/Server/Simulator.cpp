@@ -2833,6 +2833,10 @@ bool SimulatorThread :: HandleQuery(int &PendingData)
 		PendingData = handle_query_mode();
 	else if(query.name.compare("team") == 0)
 		PendingData = handle_query_team();
+	else if(query.name.compare("book.list") == 0)
+		PendingData = handle_book_list();
+	else if(query.name.compare("book.get") == 0)
+		PendingData = handle_book_get();
 	else {
 		g_Log.AddMessageFormat("Unhandled query '%s'.", query.name.c_str());
 		return false;
@@ -3134,6 +3138,84 @@ void SimulatorThread :: SendSetMap(void)
 
 	PutShort(&SendBuf[1], wpos - 3);       //Set message size
 	AttemptSend(SendBuf, wpos);
+}
+
+int SimulatorThread :: handle_book_get(void)
+{
+	if (query.argCount < 1)
+		return PrepExt_QueryResponseError(SendBuf, query.ID,
+				"Invalid query");
+
+	BookDefinition def = g_BookManager.GetBookDefinition(query.GetInteger(0));
+	if(def.bookID == 0)
+		return PrepExt_QueryResponseError(SendBuf, query.ID,
+				"Invalid book");
+
+
+	int wpos = 0;
+	wpos += PutByte(&SendBuf[wpos], 1);       //_handleQueryResultMsg
+	wpos += PutShort(&SendBuf[wpos], 0);      //Message size
+	wpos += PutInteger(&SendBuf[wpos], query.ID);  //Query response index
+	wpos += PutShort(&SendBuf[wpos], 0);  //Have pages
+
+	InventoryManager inv = creatureInst->charPtr->inventory;
+	int pagesFound = 0;
+	std::set<int> pagesFoundSet;
+	for(size_t a = 0; a < inv.containerList[INV_CONTAINER].size(); a++) {
+		int slot = inv.containerList[INV_CONTAINER][a].GetSlot();
+		int ID = inv.containerList[INV_CONTAINER][a].IID;
+		ItemDef *itemDef = inv.containerList[INV_CONTAINER][a].ResolveSafeItemPtr();
+		if(itemDef != NULL) {
+			if(itemDef->mIvType1 == ItemIntegerType::BOOK_PAGE && itemDef->mIvMax1 == def.bookID && pagesFoundSet.find(itemDef->mIvMax2) == pagesFoundSet.end()) {
+				pagesFoundSet.insert(itemDef->mIvMax2);
+				wpos += PutByte(&SendBuf[wpos], 2);
+				Util::SafeFormat(Aux2, sizeof(Aux2), "%d", itemDef->mIvMax2 - 1);
+				wpos += PutStringUTF(&SendBuf[wpos], Aux2);
+				wpos += PutStringUTF(&SendBuf[wpos], def.pages[itemDef->mIvMax2 - 1].c_str());
+				pagesFound++;
+			}
+		}
+	}
+	PutShort(&SendBuf[7], pagesFound);
+	PutShort(&SendBuf[1], wpos - 3);
+	return wpos;
+}
+
+int SimulatorThread :: handle_book_list(void)
+{
+	int wpos = 0;
+	wpos += PutByte(&SendBuf[wpos], 1);       //_handleQueryResultMsg
+	wpos += PutShort(&SendBuf[wpos], 0);      //Message size
+	wpos += PutInteger(&SendBuf[wpos], query.ID);  //Query response index
+	wpos += PutShort(&SendBuf[wpos], 0);      //Books
+
+	InventoryManager inv = creatureInst->charPtr->inventory;
+	std::set<int> booksFound;
+	for(size_t a = 0; a < inv.containerList[INV_CONTAINER].size(); a++) {
+		int slot = inv.containerList[INV_CONTAINER][a].GetSlot();
+		int ID = inv.containerList[INV_CONTAINER][a].IID;
+		ItemDef *itemDef = inv.containerList[INV_CONTAINER][a].ResolveSafeItemPtr();
+		if(itemDef != NULL) {
+			if(itemDef->mIvType1 == ItemIntegerType::BOOK_PAGE && booksFound.find(itemDef->mIvMax1) == booksFound.end()) {
+				BookDefinition def = g_BookManager.GetBookDefinition(itemDef->mIvMax1);
+				if(def.bookID > 0) {
+					booksFound.insert(itemDef->mIvMax1);
+					wpos += PutByte(&SendBuf[wpos], 3);
+					Util::SafeFormat(Aux2, sizeof(Aux2), "%d", def.bookID);
+					wpos += PutStringUTF(&SendBuf[wpos], Aux2);
+					wpos += PutStringUTF(&SendBuf[wpos], def.title.c_str());
+					Util::SafeFormat(Aux2, sizeof(Aux2), "%d", def.pages.size());
+					wpos += PutStringUTF(&SendBuf[wpos], Aux2);
+				}
+				else {
+					g_Log.AddMessageFormat("Item %d refers to an invalid book, %d", ID, itemDef->mIvMax1);
+				}
+			}
+		}
+	}
+	PutShort(&SendBuf[7], booksFound.size());
+	PutShort(&SendBuf[1], wpos - 3);
+	return wpos;
 }
 
 void SimulatorThread :: SetRotation(int rot, int update)
@@ -6170,7 +6252,11 @@ const char * SimulatorThread :: GetScriptUsable(CreatureInstance *target) {
 	parms.push_back(ScriptCore::ScriptParam(target->CreatureDefID));
 	parms.push_back(ScriptCore::ScriptParam(creatureInst->CreatureID));
 	parms.push_back(ScriptCore::ScriptParam(creatureInst->CreatureDefID));
-	return creatureInst->actInst->nutScriptPlayer->RunFunctionWithStringReturn("is_usable", parms, true).c_str();
+	std::string str = creatureInst->actInst->nutScriptPlayer->RunFunctionWithStringReturn("is_usable", parms, true);
+	if(str.length() == 0)
+		return "N";
+	else
+		return str.c_str();
 }
 
 void SimulatorThread :: handle_query_creature_isusable(void)
@@ -6273,7 +6359,7 @@ void SimulatorThread :: handle_query_creature_isusable(void)
 			}
 		}
 		WritePos = PrepExt_QueryResponseString(SendBuf, query.ID, status);
-		//LogMessageL(MSG_SHOW, "  creature.isusable: %d (%d) = %s", CID, CDef, status);
+//		LogMessageL(MSG_SHOW, "  creature.isusable: %d (%d) = %s", CID, CDef, status);
 	}
 
 	if(WritePos == 0)
@@ -7162,7 +7248,8 @@ int SimulatorThread :: UseItem(unsigned int CCSID)
 		return -1;
 	}
 
-	if(itemDef->mType != ItemType::CONSUMABLE)
+	if (itemDef->mType != ItemType::CONSUMABLE
+			&& itemDef->mType != ItemType::SPECIAL)
 		return -1;
 
 	if(creatureInst->css.level < itemDef->mMinUseLevel)
@@ -7208,42 +7295,47 @@ int SimulatorThread :: UseItem(unsigned int CCSID)
 	}
 	else
 	{
-		ConfigString cfg(itemDef->Params);
-		int petSpawnID = cfg.GetValueInt("pet");
-		if(petSpawnID != 0)
-		{
-			AddPet(petSpawnID);
-			removeOnUse = false;
+		if(itemDef->mType == ItemType::SPECIAL && itemDef->mIvType1 == ItemIntegerType::BOOK_PAGE) {
+			AttemptSend(Aux1, PrepExt_SendBookOpen(Aux1, itemDef->mIvMax1, itemDef->mIvMax2 - 1));
 		}
-		else
-		{
-			int credits = cfg.GetValueInt("credits");
-			int abPoints = cfg.GetValueInt("abilitypoints");
-			if(credits > 0)
+		else {
+			ConfigString cfg(itemDef->Params);
+			int petSpawnID = cfg.GetValueInt("pet");
+			if(petSpawnID != 0)
 			{
-				if(g_Config.AccountCredits) {
-					creatureInst->css.credits = pld.accPtr->Credits;
-				}
-				creatureInst->css.credits += credits;
-				if(g_Config.AccountCredits) {
-					pld.accPtr->Credits = creatureInst->css.credits;
-					pld.accPtr->PendingMinorUpdates++;
-				}
+				AddPet(petSpawnID);
+				removeOnUse = false;
+			}
+			else
+			{
+				int credits = cfg.GetValueInt("credits");
+				int abPoints = cfg.GetValueInt("abilitypoints");
+				if(credits > 0)
+				{
+					if(g_Config.AccountCredits) {
+						creatureInst->css.credits = pld.accPtr->Credits;
+					}
+					creatureInst->css.credits += credits;
+					if(g_Config.AccountCredits) {
+						pld.accPtr->Credits = creatureInst->css.credits;
+						pld.accPtr->PendingMinorUpdates++;
+					}
 
-				Util::SafeFormat(Aux1, sizeof(Aux1), "You gain %d credits.", credits);
-				SendInfoMessage(Aux1, INFOMSG_INFO);
-				creatureInst->SendStatUpdate(STAT::CREDITS);
+					Util::SafeFormat(Aux1, sizeof(Aux1), "You gain %d credits.", credits);
+					SendInfoMessage(Aux1, INFOMSG_INFO);
+					creatureInst->SendStatUpdate(STAT::CREDITS);
+				}
+				if(abPoints > 0)
+				{
+					creatureInst->css.current_ability_points += abPoints;
+					creatureInst->css.total_ability_points += abPoints;
+					pld.charPtr->AddAbilityPoints(abPoints);
+					creatureInst->SendStatUpdate(STAT::CURRENT_ABILITY_POINTS);
+					creatureInst->SendStatUpdate(STAT::TOTAL_ABILITY_POINTS);
+					//We don't need to send a text notification for ability points, the client will notify the user.
+				}
+				removeOnUse = true;
 			}
-			if(abPoints > 0)
-			{
-				creatureInst->css.current_ability_points += abPoints;
-				creatureInst->css.total_ability_points += abPoints;
-				pld.charPtr->AddAbilityPoints(abPoints);
-				creatureInst->SendStatUpdate(STAT::CURRENT_ABILITY_POINTS);
-				creatureInst->SendStatUpdate(STAT::TOTAL_ABILITY_POINTS);
-				//We don't need to send a text notification for ability points, the client will notify the user.
-			}
-			removeOnUse = true;
 		}
 	}
 
@@ -8405,17 +8497,19 @@ int SimulatorThread :: handle_query_creature_use(void)
 			return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
 		}
 
-
+		bool ok = false;
 		CreatureDefinition *cdef = CreatureDef.GetPointerByCDef(target->CreatureDefID);
 		if(cdef != NULL && ((cdef->DefHints & CDEF_HINT_USABLE) ||(cdef->DefHints & CDEF_HINT_USABLE_SPARKLY)))
-			return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
+			ok = true;
 
 		//For any other interact notify the instance on the off chance that it needs to do something.
-		if(creatureInst->actInst->ScriptCallUse(creatureInst->CreatureID, target->CreatureID, CDef)) {
-			return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-		}
+		if(creatureInst->actInst->ScriptCallUse(creatureInst->CreatureID, target->CreatureID, CDef))
+			ok = true;
 
-		return PrepExt_QueryResponseError(SendBuf, query.ID, "Cannot use object.");
+		if(ok)
+			return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
+		else
+			return PrepExt_QueryResponseError(SendBuf, query.ID, "Cannot use object.");
 	}
 
 	int wpos = 0;

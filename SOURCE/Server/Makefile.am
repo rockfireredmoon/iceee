@@ -16,6 +16,7 @@ vald_SOURCES = md5.cc \
 	AIScript2.cpp \
 	Arena.cpp \
 	Audit.cpp \
+	Books.cpp \
 	BroadCast.cpp \
 	ByteBuffer.cpp \
 	Character.cpp \
@@ -91,6 +92,7 @@ vald_SOURCES = md5.cc \
 	AIScript2.h \
 	Arena.h \
 	Audit.h \
+	Books.h \
 	BroadCast.h \
 	ByteBuffer.h \
 	Character.h \
@@ -180,6 +182,7 @@ valdsvc_SOURCES = md5.cc \
 	AIScript2.cpp \
 	Arena.cpp \
 	Audit.cpp \
+	Books.cpp \
 	BroadCast.cpp \
 	ByteBuffer.cpp \
 	Character.cpp \
@@ -255,6 +258,7 @@ valdsvc_SOURCES = md5.cc \
 	AIScript2.h \
 	Arena.h \
 	Audit.h \
+	Books.h \
 	BroadCast.h \
 	ByteBuffer.h \
 	Character.h \

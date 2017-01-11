@@ -3335,6 +3335,8 @@ bool ActiveInstance :: ScriptCallUse(int sourceCreatureID, int usedCreatureID, i
 	char buffer[64];
 	if(nutScriptPlayer != NULL) {
 		std::vector<ScriptCore::ScriptParam> p;
+		p.push_back(ScriptCore::ScriptParam(sourceCreatureID));
+		p.push_back(ScriptCore::ScriptParam(usedCreatureID));
 		Util::SafeFormat(buffer, sizeof(buffer), "on_use_%d", usedCreatureDefID);
 		bool ok1 = nutScriptPlayer->RunFunctionWithBoolReturn(buffer, p, true);
 		p.push_back(ScriptCore::ScriptParam(sourceCreatureID));

@@ -272,7 +272,8 @@ struct ItemIntegerType
 		KEY_COMPONENT		=	7,
 		REQUIRE_ROLLING		=	8,
 		LIFETIME			=	9,
-		BONUS_VALUE			=	10
+		BONUS_VALUE			=	10,
+		BOOK_PAGE			=   11
 	};
 };
 

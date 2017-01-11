@@ -399,7 +399,8 @@ this.ItemIntegerType <- {
 	KEY_COMPONENT = 7,
 	REQUIRE_ROLLING = 8,
 	LIFETIME = 9,
-	BONUS_VALUE = 10
+	BONUS_VALUE = 10,
+	BOOK_PAGE = 11
 };
 this.ItemIntegerTypeNameMapping <- {
 	[this.ItemIntegerType.NONE] = "None",
@@ -412,7 +413,8 @@ this.ItemIntegerTypeNameMapping <- {
 	[this.ItemIntegerType.KEY_COMPONENT] = "Key Component",
 	[this.ItemIntegerType.REQUIRE_ROLLING] = "Require Rolling",
 	[this.ItemIntegerType.LIFETIME] = "Lifetime",
-	[this.ItemIntegerType.BONUS_VALUE] = "Bonus Value"
+	[this.ItemIntegerType.BONUS_VALUE] = "Bonus Value",
+	[this.ItemIntegerType.BOOK_PAGE] = "Book Page"
 };
 this.WeaponType <- {
 	NONE = 0,

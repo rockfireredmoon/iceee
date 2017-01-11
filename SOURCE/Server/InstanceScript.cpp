@@ -3,12 +3,14 @@
 #include "AIScript2.h"
 #include "Ability2.h"
 #include "Instance.h"
+#include "Inventory.h"
 #include "CommonTypes.h"
 #include "StringList.h"
 #include "Simulator.h"
 #include "Squirrel.h"
 #include "Creature.h"
 #include "Config.h"
+#include "Util.h"
 #include <stdlib.h>
 #include "../squirrel/sqrat/sqrat.h"
 #include <algorithm>    // std::remove
@@ -147,6 +149,7 @@ void AbstractInstanceNutPlayer::RegisterAbstractInstanceFunctions(NutPlayer *ins
 	instanceClass->Func(_SC("local_broadcast"), &AbstractInstanceNutPlayer::LocalBroadcast);
 	instanceClass->Func(_SC("info"), &AbstractInstanceNutPlayer::Info);
 	instanceClass->Func(_SC("message"), &AbstractInstanceNutPlayer::Message);
+	instanceClass->Func(_SC("message_to"), &AbstractInstanceNutPlayer::MessageTo);
 	instanceClass->Func(_SC("untarget"), &AbstractInstanceNutPlayer::Untarget);
 	instanceClass->Func(_SC("error"), &AbstractInstanceNutPlayer::Error);
 	instanceClass->Func(_SC("get_cid_for_prop"), &AbstractInstanceNutPlayer::GetCIDForPropID);
@@ -164,6 +167,13 @@ void AbstractInstanceNutPlayer::RegisterAbstractInstanceFunctions(NutPlayer *ins
 	Sqrat::RootTable(vm).Func(_SC("_AB"), &InstanceNutPlayer::GetAbilityID);
 
 	// Some constants
+
+	Sqrat::ConstTable(vm).Const(_SC("INFOMSG_INFO"), INFOMSG_INFO);
+	Sqrat::ConstTable(vm).Const(_SC("INFOMSG_ERROR"), INFOMSG_ERROR);
+	Sqrat::ConstTable(vm).Const(_SC("INFOMSG_SYSNOTIFY"), INFOMSG_SYSNOTIFY);
+	Sqrat::ConstTable(vm).Const(_SC("INFOMSG_SHARD"), INFOMSG_SHARD);
+	Sqrat::ConstTable(vm).Const(_SC("INFOMSG_MAPNAME"), INFOMSG_MAPNAME);
+
 	Sqrat::ConstTable(vm).Const(_SC("CREATURE_WALK_SPEED"), CREATURE_WALK_SPEED);
 	Sqrat::ConstTable(vm).Const(_SC("CREATURE_JOG_SPEED"), CREATURE_JOG_SPEED);
 	Sqrat::ConstTable(vm).Const(_SC("CREATURE_RUN_SPEED"), CREATURE_RUN_SPEED);
@@ -280,6 +290,17 @@ void AbstractInstanceNutPlayer::Message(const char *message, int type)
 	char buffer[4096];
 	int wpos = PrepExt_SendInfoMessage(buffer, message, type);
 	actInst->LSendToAllSimulator(buffer, wpos, -1);
+}
+
+void AbstractInstanceNutPlayer::MessageTo(int CID, const char *message, int type)
+{
+	CreatureInstance *creature = actInst->GetInstanceByCID(CID);
+	if(creature != NULL && creature->simulatorPtr != NULL)
+	{
+		char buffer[4096];
+		int wpos = PrepExt_SendInfoMessage(buffer, message, type);
+		creature->simulatorPtr->AttemptSend(buffer, wpos);
+	}
 }
 
 void AbstractInstanceNutPlayer::Broadcast(const char *message)
@@ -607,7 +628,9 @@ void InstanceNutPlayer::RegisterInstanceFunctions(NutPlayer *instance, Sqrat::De
 	instanceClass->Func(_SC("walk_then"), &InstanceNutPlayer::WalkThen);
 	instanceClass->Func(_SC("despawn"), &InstanceNutPlayer::Despawn);
 	instanceClass->Func(_SC("despawn_all"), &InstanceNutPlayer::DespawnAll);
-	// TODO deprecated
+	instanceClass->Func(_SC("has_item"), &InstanceNutPlayer::HasItem);
+	instanceClass->Func(_SC("open_book"), &InstanceNutPlayer::OpenBook);
+	instanceClass->Func(_SC("give_item"), &InstanceNutPlayer::GiveItem);
 	instanceClass->Func(_SC("effect"), &InstanceNutPlayer::ParticleAttach);
 	instanceClass->Func(_SC("restore"), &InstanceNutPlayer::DetachSceneryEffect);
 	instanceClass->Func(_SC("asset"), &InstanceNutPlayer::Asset);
@@ -1337,6 +1360,55 @@ void InstanceNutPlayer::RemoveInteraction(int CID)
 			}
 		}
 	}
+}
+
+bool InstanceNutPlayer::OpenBook(int CID, int id, int page)
+{
+	CreatureInstance *creature = actInst->GetInstanceByCID(CID);
+	if(creature == NULL || creature->simulatorPtr == NULL)
+		return false;
+
+	char buf[64];
+	creature->simulatorPtr->AttemptSend(buf, PrepExt_SendBookOpen(buf, id, page - 1));
+	return false;
+}
+
+bool InstanceNutPlayer::HasItem(int CID, int itemID)
+{
+	CreatureInstance *creature = actInst->GetInstanceByCID(CID);
+	if(creature == NULL || creature->simulatorPtr == NULL)
+		return false;
+
+	return creature->charPtr->inventory.GetItemPtrByID(itemID) != NULL;
+}
+
+bool InstanceNutPlayer::GiveItem(int CID, int itemID)
+{
+	if(actInst->mZoneDefPtr->mGrove)
+		return false;
+
+	CreatureInstance *creature = actInst->GetInstanceByCID(CID);
+	if(creature == NULL || creature->simulatorPtr == NULL)
+		return false;
+
+	ItemDef *item = g_ItemManager.GetSafePointerByID(itemID);
+	if(item->mID == 0)
+		return false;
+
+	int slot = creature->charPtr->inventory.GetFreeSlot(INV_CONTAINER);
+	if(slot == -1)
+		return false;
+
+	InventorySlot *sendSlot = creature->charPtr->inventory.AddItem_Ex(INV_CONTAINER, item->mID, 1);
+	if(sendSlot != NULL) {
+		creature->simulatorPtr->ActivateActionAbilities(sendSlot);
+		char buf[128];
+		char buf2[64];
+		int wpos = AddItemUpdate(buf, buf2, sendSlot);
+		creature->simulatorPtr->AttemptSend(buf, wpos);
+	}
+
+	return true;
 }
 
 void InstanceNutPlayer::InterruptInteraction(int CID)

@@ -62,6 +62,7 @@ public:
 	bool CreatureUseNoRetry(int CID, int abilityID);
 	bool DoCreatureUse(int CID, int abilityID, bool retry);
 	void Info(const char *message);
+	void MessageTo(int CID, const char *message, int type);
 	void Message(const char *message, int type);
 	void LocalBroadcast(const char *message);
 	void Broadcast(const char *message);
@@ -116,6 +117,9 @@ public:
 	void PlaySound(const char *name);
 	void Unhate(int CID);
 	void Interrupt(int CID);
+	bool HasItem(int CID, int itemID);
+	bool GiveItem(int CID, int itemID);
+	bool OpenBook(int CID, int id, int page);
 	void ClearTarget(int CID);
 	bool AI(int CID, const char *label);
 	int GetPartyID(int CID);

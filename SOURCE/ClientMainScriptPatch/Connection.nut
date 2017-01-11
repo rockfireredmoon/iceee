@@ -68,6 +68,7 @@ this.ProtocolDef <- {
 		[80] = "_handlePVPStatUpdateMessage",
 		[90] = "_handleHeartbeatMessage",
 		[91] = "_handleShake",
+		[96] = "_handleBooks",
 		[98] = "_handleSceneryEffectMsg",
 		[99] = "_handleGuildUpdateMsg",
 		inspectCreatureDef = 0,
@@ -3202,6 +3203,23 @@ class this.Connection extends this.MessageBroadcaster
 		default:
 			print("ICE: Unknown effect message message type " + type);
 			break;
+		}
+	}
+	
+	function _handleBooks(data) {
+		local type = data.getByte();
+		print("ICE! Books " + type + "\n");
+		switch(type) {
+			case 1: 			
+				local bookId = data.getInteger();
+				local pageNumber = data.getInteger();
+				print("ICE! Open Book " + bookId + ", page " + pageNumber + "\n");
+				local bookScreen = this.Screens.get("Books", true);
+				if(bookScreen) {
+					Screens.show("Books");
+					bookScreen.showBookPage(bookId, pageNumber);
+				}
+				break;
 		}
 	}
 	
