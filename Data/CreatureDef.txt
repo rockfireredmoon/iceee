@@ -32223,7 +32223,7 @@ display_name=Valkal
 sub_name=The Eternal
 profession=5
 creature_category=Unliving
-rarity=0
+rarity=3
 base_damage_melee=250
 ai_package=custom_heathendel_deathdruid40
 total_size=1.399999976158142
@@ -74764,7 +74764,7 @@ display_name=Valkal
 sub_name=(TEMP 2nd Boss)
 profession=2
 creature_category=Unliving
-rarity=0
+rarity=3
 base_damage_melee=300
 ai_package=custom_heathendel_deathdruid40
 
@@ -74782,12 +74782,12 @@ damage_resist_mystic=2500
 damage_resist_death=2500
 will_regen=1
 might_regen=1
-appearance=n4:{["sk"]={["carapace"]="453c49",["head_wing"]="ffc51b",["wing1"]="165153",["wing2"]="cd1312",["wing3"]="4e51fd",["wing4"]="760e9b",["wing5"]="36adb2"},["c"]="Horde-Dreamfly",["sz"]="1.1"}
+appearance=n4:{["c"]="Horde-Dreamfly",["sz"]="1.1"}
 level=55
 display_name=Valley Guardian
 profession=2
 creature_category=Divine
-rarity=3
+rarity=0
 base_damage_melee=160
 ai_package=4_rogue_30
 total_size=1.2999999523162842

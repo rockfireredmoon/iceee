@@ -6,8 +6,8 @@ TEXT=<font size="24"><b>Valkals Blood Keep</b></font><br><br>
 
 Party Size: <b>5</b>
 Estimated Time: <b>3 hours</b>
-Difficulty: Extremely Hard
+Difficulty: <b><font color="#ff0000">Extremely Hard</font></b>
 
 <b>WARNING</b> You have entered an Elite Dungeon.  The difficulty and duration of this dungeon is great. We hope you enjoy the challenge but are aware that failure if you dont have the necessary time to complete the dungeon you should be prepared to lose your dungeon progress upon logging out.
-  
+
 Look out for other pages of The Book Of Blood Keep scattered around the dungeon for hints, tips and storyline.
