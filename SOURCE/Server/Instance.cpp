@@ -3339,6 +3339,7 @@ bool ActiveInstance :: ScriptCallUse(int sourceCreatureID, int usedCreatureID, i
 		p.push_back(ScriptCore::ScriptParam(usedCreatureID));
 		Util::SafeFormat(buffer, sizeof(buffer), "on_use_%d", usedCreatureDefID);
 		bool ok1 = nutScriptPlayer->RunFunctionWithBoolReturn(buffer, p, true);
+		p.clear();
 		p.push_back(ScriptCore::ScriptParam(sourceCreatureID));
 		p.push_back(ScriptCore::ScriptParam(usedCreatureID));
 		p.push_back(ScriptCore::ScriptParam(usedCreatureDefID));

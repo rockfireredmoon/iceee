@@ -31,6 +31,14 @@ function on_kill_2378() {
 	//inst.spawn(1090520592, 0, 0);
 }
 
+function disengage(cid) {
+	// TODO might be able to get rid of more of these
+	inst.unhate(cid);
+	inst.interrupt(cid);
+	//inst.stop_ai(cid);
+	inst.set_flag(cid, SF_NON_COMBATANT, true);
+}
+
 function find_boss() {
 	boss_cid = inst.get_npc_id(CDEF_BOSS_HAWG);
 	if(boss_cid == 0) 
@@ -52,6 +60,7 @@ function is_launched(v) {
 }
 	
 function is_usable(cid, cdef_id, by_cid, by_cdef_id) {
+	print("Is usable " + cid + "," + cdef_id + "\n");
 	if(cdef_id == CDEF_INTERACT_SPHERE && !is_launched(cid)) {
 		return "Y";
 	}
@@ -75,7 +84,8 @@ function on_use(cid, target_cid, target_cdef_id) {
 		
 			/* Make Boss Hawg run towards the missile to try to disarm */
 			if(boss_cid != 0) {
-				local missile_loc=  inst.get_location(cid);
+				disengage(boss_cid);
+				local missile_loc = inst.get_location(cid);
 				inst.creature_chat(boss_cid, "s/", "No! Why did you do that! You'll kill us all..");
 				inst.walk_then(boss_cid, Point(missile_loc.x,missile_loc.z), CREATURE_RUN_SPEED * 2, 00, function() {
 					inst.creature_chat(boss_cid, "s/", "The green wire, the red wire, which is it !?!");
@@ -132,6 +142,7 @@ function on_use(cid, target_cid, target_cdef_id) {
 								inst.walk_then(boss_cid, boss_home, CREATURE_RUN_SPEED * 2, 00, function() {
 									inst.creature_chat(boss_cid, "s/", "Hahaha I'm still too strong for you!");
 									inst.rotate_creature(boss_cid, 70);
+									inst.set_flag(boss_cid, SF_NON_COMBATANT, false);
 								});
 							}, 5500);
 						}
@@ -145,6 +156,7 @@ function on_use(cid, target_cid, target_cdef_id) {
 								inst.walk_then(boss_cid, center, CREATURE_RUN_SPEED, 00, function() {
 									inst.creature_chat(boss_cid, "s/", "Come on! Face me!");
 									inst.rotate_creature(boss_cid, 70);
+									inst.set_flag(boss_cid, SF_NON_COMBATANT, false);
 								});
 							}, 5500);
 						}
