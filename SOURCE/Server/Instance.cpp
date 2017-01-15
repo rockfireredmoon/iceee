@@ -221,47 +221,52 @@ int MapDefContainer :: CreateMap(void)
 	return mMapList.size() - 1;
 }
 
+int MapDefContainer :: CalcPriority(string type, int priority) {
+	if(type.compare("Local") == 0) {
+		priority -= 4000;
+	}
+	else if(type.compare("Region") == 0) {
+		priority -= 3000;
+	}
+	else if(type.compare("World") == 0) {
+		priority -= 2000;
+	}
+	else if(type.compare("SuperWorld") == 0) {
+		priority -= 1000;
+	}
+	return priority;
+}
+
 int MapDefContainer :: SearchMap(const char *primary, int xpos, int ypos)
 {
 	//Search through the map definitions for the map name best matching the given
 	//location.  <primary> refers to the main world to search for, such as
 	//"Maps-Anglorum" or "Maps-Europe".
-	//All maps with a type of "Region" are compared with the given coordinates.
-	//If two maps overlap coordinates, the one with the lower priority is selected.
+	//The total priority is calculated for each map, which uses the type and the
+	//priority attributes. If two maps overlap coordinates, the one with the lower priority is selected.
 	//Returns an index into the array of the matching item, or returns -1 if none found.
 
 	int fIndex = -1;
-	int fPriority = 255;
+	int fPriority = 9999;
+	int cPriority = 0;
 
 	for(size_t a = 0; a < mMapList.size(); a++)
 	{
 		if(xpos >= mMapList[a].u0 && xpos <= mMapList[a].u1)
 			if(ypos >= mMapList[a].v0 && ypos <= mMapList[a].v1)
+			{
 				if(strcmp(mMapList[a].Primary.c_str(), primary) == 0)
-					if(strcmp(mMapList[a].Type.c_str(), "Region") == 0)
-						if(fIndex == -1 || mMapList[a].priority < fPriority)
+				{
+						int cPriority = CalcPriority(mMapList[a].Type, mMapList[a].priority);
+						if(fIndex == -1 || cPriority < fPriority)
 						{
 							fIndex = a;
-							fPriority = mMapList[a].priority;
+							fPriority = cPriority;
 						}
+				}
+			}
 	}
 
-	if(fIndex == -1)
-	{
-		//No local maps found, search for a world map this time.
-		for(size_t a = 0; a < mMapList.size(); a++)
-		{
-			if(xpos >= mMapList[a].u0 && xpos <= mMapList[a].u1)
-				if(ypos >= mMapList[a].v0 && ypos <= mMapList[a].v1)
-					if(strcmp(mMapList[a].Primary.c_str(), primary) == 0)
-						if(strcmp(mMapList[a].Type.c_str(), "World") == 0)
-							if(fIndex == -1 || mMapList[a].priority < fPriority)
-							{
-								fIndex = a;
-								fPriority = mMapList[a].priority;
-							}
-		}
-	}
 	return fIndex;
 }
 

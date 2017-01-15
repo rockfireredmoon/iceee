@@ -105,6 +105,8 @@ public:
 	int GetIndexByName(const char *name, const char *type);
 	int LoadFile(const char *fileName);
 	void FreeList(void);
+private:
+	int CalcPriority(string type, int priority);
 };
 
 // Locations are subdivisions of a primary region.  Specific locations on the overworld
