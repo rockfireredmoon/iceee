@@ -597,6 +597,7 @@ public:
 	int AIGetTargetRange(void);
 	void AIDispelTargetProperty(const char *propName, int sign);
 	void AISetGTAE(void);
+	void AISetGTAETo(int x, int y, int z);
 
 	void SendEffect(const char *effectName, int targetCID);
 	void SendSay(const char *message);

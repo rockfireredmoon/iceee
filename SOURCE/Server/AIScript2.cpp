@@ -287,6 +287,10 @@ void AINutPlayer::SetGTAE() {
 	attachedCreature->AISetGTAE();
 }
 
+void AINutPlayer::SetGTAETo(Squirrel::Vector3I loc) {
+	attachedCreature->AISetGTAETo(loc.mX, loc.mY, loc.mZ);
+}
+
 void AINutPlayer::Speak(const char *message) {
 	CreatureChat(attachedCreature->CreatureID, "s/", message);
 }
@@ -375,6 +379,7 @@ void AINutPlayer::RegisterAIFunctions(NutPlayer *instance,
 	clazz->Func(_SC("is_target_in_range"), &AINutPlayer::IsTargetInRange);
 	clazz->Func(_SC("get_target_range"), &AINutPlayer::GetTargetRange);
 	clazz->Func(_SC("set_gtae"), &AINutPlayer::SetGTAE);
+	clazz->Func(_SC("set_gtae_to"), &AINutPlayer::SetGTAETo);
 	clazz->Func(_SC("get_speed"), &AINutPlayer::GetSpeed);
 	clazz->Func(_SC("get_distance"), &AINutPlayer::GetDistance);
 	clazz->Func(_SC("is_cid_busy"), &AINutPlayer::IsCIDBusy);

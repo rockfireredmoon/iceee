@@ -1846,6 +1846,12 @@ this.StatusEffects <- {
 		prettyName = "Maybe interacted with by someone in combat.",
 		icon = "",
 		type = "Buff"
+	},
+	LEECHING = 66,
+	[66] = {
+		prettyName = "Damage given turns into health.",
+		icon = "",
+		type = "Buff"
 	}
 };
 this.AbilityUseType <- {

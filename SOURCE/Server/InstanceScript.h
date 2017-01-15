@@ -132,6 +132,8 @@ public:
 	int ParticleAttach(int propID, const char *effect, float scale, float offsetX, float offsetY, float offsetZ);
 	void Emote(int cid, const char *emotion);
 	int CDefIDForCID(int cid);
+	void SetCreatureGTAE(int CID);
+	void SetCreatureGTAETo(int CID, Squirrel::Vector3I loc);
 	bool Despawn(int CID);
 	int LoadSpawnTileFor(Squirrel::Point location);
 	int LoadSpawnTile(Squirrel::Point location);

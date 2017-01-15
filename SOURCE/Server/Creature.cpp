@@ -6378,11 +6378,9 @@ void CreatureInstance :: AIDispelTargetProperty(const char *propName, int sign)
 	targ->RemoveAbilityBuffWithStat(StatList[r].ID, static_cast<float>(sign));
 }
 
-void CreatureInstance :: AISetGTAE(void)
+
+void CreatureInstance :: AISetGTAETo(int x, int y, int z)
 {
-	int x = CurrentX;
-	int y = CurrentY;
-	int z = CurrentZ;
 	if(CurrentTarget.targ != NULL)
 	{
 		x = CurrentTarget.targ->CurrentX;
@@ -6390,6 +6388,12 @@ void CreatureInstance :: AISetGTAE(void)
 		z = CurrentTarget.targ->CurrentZ;
 	}
 	ab[0].SetPosition(x, y, z);
+}
+
+
+void CreatureInstance :: AISetGTAE(void)
+{
+	AISetGTAETo(CurrentX, CurrentY, CurrentZ);
 }
 
 

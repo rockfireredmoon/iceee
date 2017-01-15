@@ -621,6 +621,8 @@ void InstanceNutPlayer::RegisterInstanceFunctions(NutPlayer *instance, Sqrat::De
 	instanceClass->Func(_SC("get_location"), &InstanceNutPlayer::GetLocation);
 	instanceClass->Func(_SC("get_party_id"), &InstanceNutPlayer::GetPartyID);
 	instanceClass->Func(_SC("set_target"), &InstanceNutPlayer::SetTarget);
+	instanceClass->Func(_SC("set_creature_gtae"), &InstanceNutPlayer::SetCreatureGTAE);
+	instanceClass->Func(_SC("set_creature_gtae_to"), &InstanceNutPlayer::SetCreatureGTAETo);
 	instanceClass->Func(_SC("ai"), &InstanceNutPlayer::AI);
 	instanceClass->Func(_SC("count_alive"), &InstanceNutPlayer::CountAlive);
 	instanceClass->Func(_SC("get_health_pc"), &InstanceNutPlayer::GetHealthPercent);
@@ -1235,6 +1237,18 @@ bool InstanceNutPlayer::SetTarget(int CID, int targetCID)
 		return true;
 	}
 	return false;
+}
+
+void InstanceNutPlayer::SetCreatureGTAE(int CID) {
+	CreatureInstance *source = actInst->GetInstanceByCID(CID);
+	if(source != NULL)
+		source->AISetGTAE();
+}
+
+void InstanceNutPlayer::SetCreatureGTAETo(int CID, Squirrel::Vector3I loc) {
+	CreatureInstance *source = actInst->GetInstanceByCID(CID);
+	if(source != NULL)
+		source->AISetGTAETo(loc.mX, loc.mY, loc.mZ);
 }
 
 int InstanceNutPlayer::ScanNPC(Squirrel::Area *location, int CDefID) {

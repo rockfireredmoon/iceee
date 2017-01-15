@@ -2839,8 +2839,6 @@ class this.EffectDef.WildFireSecondaryHit extends this.EffectDef.TemplateBasic
 
 }
 
-
-
 class this.EffectDef.BringingDowntheHouse extends this.EffectDef.TemplateBasic
 {
 	static mEffectName = "BringingDowntheHouse";
@@ -3021,7 +3019,7 @@ class this.EffectDef.BringingDowntheHouse extends this.EffectDef.TemplateBasic
 			orient = true
 		});
 		proj.add("Mesh", {
-			mesh = "Item-Mountain.mesh",
+			mesh = "Item-Shard.mesh",
 			fadeInTime = 0.050000001
 		});
 		proj.add("ParticleSystem", {
