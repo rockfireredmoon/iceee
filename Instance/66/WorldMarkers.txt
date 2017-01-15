@@ -13,3 +13,28 @@ Name=Valkals Throne Room
 Comment=[Comment here]
 Position=4039.0,480.0,2794.0
 
+[ENTRY]
+Name=Silkula's Room
+Comment=[Comment here]
+Position=3117.0,550.0,2796.0
+
+[ENTRY]
+Name=Hemator's Room
+Comment=[Comment here]
+Position=3023.0,600.0,1997.0
+
+[ENTRY]
+Name=Vaj Venae's Chamber
+Comment=[Comment here]
+Position=2779.0,630.0,1105.0
+
+[ENTRY]
+Name=Vaj Samir's Chamber
+Comment=[Comment here]
+Position=2781.0,630.0,4467.0
+
+[ENTRY]
+Name=Nocterror's Room
+Comment=[Comment here]
+Position=3130.0,610.0,3577.0
+

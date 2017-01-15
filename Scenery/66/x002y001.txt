@@ -864,7 +864,7 @@ maxActive=0
 [ENTRY]
 ID=1150687
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=4353.45,480,3041.8
 Orient=0,0.933839,0,0.357693
 Scale=1,1,1

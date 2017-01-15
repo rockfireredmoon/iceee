@@ -1,7 +1,7 @@
 [ENTRY]
 ID=1150436
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=67687.5,1216.56,52922.1
 Orient=0,-0.509841,0,0.860269
 Scale=1,1,1

@@ -195,7 +195,7 @@ ID=1150584
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=Untitled
 Pos=66555.6,1365.52,52538.5
-Orient=0,-0.425067,0,0.905162
+Orient=0,-0.720162,0,0.693806
 Scale=1,1,1
 spawnPackage=z9_eur_Hazard_46_47
 
@@ -204,7 +204,7 @@ ID=1150585
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=Untitled
 Pos=66661.9,1362.96,52629.7
-Orient=0,0,0,1
+Orient=0,-0.973485,0,0.228753
 Scale=1,1,1
 spawnPackage=z9_eur_Hazard_46_47
 
@@ -212,8 +212,8 @@ spawnPackage=z9_eur_Hazard_46_47
 ID=1150587
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=Untitled
-Pos=66695.4,1380.18,52538
-Orient=0,0,0,1
+Pos=66695.4,1380.18,52539.7
+Orient=0,0.985719,0,-0.168397
 Scale=1,1,1
 spawnPackage=z9_eur_Hazard_46_47
 
@@ -243,17 +243,19 @@ link=1150627,1
 ID=1150598
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=Untitled
-Pos=66178.7,1279.08,52864.8
-Orient=0,0,0,1
+Pos=66184.6,1279.21,52859.8
+Orient=0,0.309816,0,0.950796
 Scale=1,1,1
 spawnPackage=z9_eur_Hazard_46_47
+links_count=1
+link=1150601,0
 
 [ENTRY]
 ID=1150599
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=Untitled
 Pos=66548.8,1340.73,52745.9
-Orient=0,0,0,1
+Orient=0,0.971148,0,0.238476
 Scale=1,1,1
 spawnPackage=z9_eur_Hazard_46_47
 
@@ -272,10 +274,12 @@ link=1150636,1
 ID=1150601
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=Untitled
-Pos=66283.8,1279.74,52808.2
-Orient=0,0,0,1
+Pos=66216.9,1279.44,52831.8
+Orient=0,-0.9001,0,0.435682
 Scale=1,1,1
 spawnPackage=z9_eur_Hazard_46_47
+links_count=1
+link=1150598,0
 
 [ENTRY]
 ID=1150608

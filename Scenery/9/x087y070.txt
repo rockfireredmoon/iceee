@@ -35,7 +35,7 @@ ID=1150592
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=Untitled
 Pos=65660.4,1121.21,53212.3
-Orient=0,0,0,1
+Orient=0,-0.585097,0,0.810963
 Scale=1,1,1
 spawnPackage=z9_eur_Hazard_46_47
 
