@@ -88,7 +88,7 @@ struct ServerFlags
 		Noncombatant      = (1 << 20),  //This prevents acquisition of targets, and being targeted.
 		Taunted           = (1 << 21),  //Indicates that the creature is taunted and should attempt to enter melee range.
 		ScriptMovement    = (1 << 22),  //This creature has been granted arbitrary movement by a script.  It bends the rules somewhat when dealing with leash and wander radius.
-		ScriptNoLinkLoyal = (1 << 23),  //This creature has been specifically disabled from 
+		ScriptNoLinkLoyal = (1 << 23),  //This creature has been specifically disabled from
 
 		// NOTE: if any more are added, check to make sure the following
 		// variable and function support the required number of bits.
@@ -388,6 +388,7 @@ public:
 
 	AIScriptPlayer *aiScript;
 	AINutPlayer *aiNut;
+	long scriptMoveEvent;
 
 	union
 	{
@@ -436,6 +437,7 @@ public:
 	void ApplyItemStatModFromConfig(int itemID, const std::string configStr);
 	void SubtractAbilityBuffStat(int statID, int abgID, float amount);
 	void CheckRemovedBuffs(void);
+	bool IsAtTether();
 	void AddBaseStatMod(int statID, float amount);
 	void SubtractBaseStatMod(int statID, float amount);
 	void UpdateBaseStatMinimum(int statID, float amount);

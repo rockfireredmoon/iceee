@@ -160,6 +160,11 @@ void AbstractInstanceNutPlayer::RegisterAbstractInstanceFunctions(NutPlayer *ins
 	instanceClass->Func(_SC("set_flag"), &AbstractInstanceNutPlayer::SetServerFlag);
 	instanceClass->Func(_SC("get_flags"), &AbstractInstanceNutPlayer::GetServerFlags);
 	instanceClass->Func(_SC("stop_ai"), &AbstractInstanceNutPlayer::StopAI);
+	instanceClass->Func(_SC("pause_ai"), &AbstractInstanceNutPlayer::PauseAI);
+	instanceClass->Func(_SC("resume_ai"), &AbstractInstanceNutPlayer::ResumeAI);
+	instanceClass->Func(_SC("clear_ai_queue"), &AbstractInstanceNutPlayer::ClearAIQueue);
+	instanceClass->Func(_SC("is_at_tether"), &AbstractInstanceNutPlayer::IsAtTether);
+	instanceClass->Func(_SC("target_self"), &AbstractInstanceNutPlayer::TargetSelf);
 
 	// Functions that return arrays or tables have to be dealt with differently
 	instanceClass->SquirrelFunc(_SC("get_nearby_creature"), &AbstractInstanceNutPlayer::GetCreaturesNearCreature);
@@ -182,7 +187,7 @@ void AbstractInstanceNutPlayer::RegisterAbstractInstanceFunctions(NutPlayer *ins
 	Sqrat::ConstTable(vm).Const(_SC("TS_ALIVE"), TargetStatus::Alive);
 	Sqrat::ConstTable(vm).Const(_SC("TS_DEAD"), TargetStatus::Dead);
 	Sqrat::ConstTable(vm).Const(_SC("TS_ENEMY"), TargetStatus::Enemy);
-	Sqrat::ConstTable(vm).Const(_SC("TS_ALIVE"), TargetStatus::Enemy_Alive);
+	Sqrat::ConstTable(vm).Const(_SC("TS_ENEMY_ALIVE"), TargetStatus::Enemy_Alive);
 	Sqrat::ConstTable(vm).Const(_SC("TS_FRIEND"), TargetStatus::Friend);
 	Sqrat::ConstTable(vm).Const(_SC("TS_FRIEND_ALIVE"), TargetStatus::Friend_Alive);
 	Sqrat::ConstTable(vm).Const(_SC("TS_FRIEND_DEAD"), TargetStatus::Friend_Dead);
@@ -208,7 +213,16 @@ void AbstractInstanceNutPlayer::RegisterAbstractInstanceFunctions(NutPlayer *ins
 
 
 }
-
+bool AbstractInstanceNutPlayer::TargetSelf(int CID)
+{
+	CreatureInstance *source = actInst->GetInstanceByCID(CID);
+	if(source != NULL)
+	{
+		source->SelectTarget(source);
+		return true;
+	}
+	return false;
+}
 
 void AbstractInstanceNutPlayer::Info(const char *message)
 {
@@ -270,13 +284,66 @@ void AbstractInstanceNutPlayer::Chat(const char *name, const char *channel, cons
 }
 
 
-void AbstractInstanceNutPlayer::StopAI(int CID)
+bool AbstractInstanceNutPlayer::StopAI(int CID)
 {
 	CreatureInstance *ci = GetNPCPtr(CID);
-	if(ci->aiScript != NULL)
+	bool ok = false;
+	if(ci->aiScript != NULL) {
 		ci->aiScript->EndExecution();
-	if(ci->aiNut != NULL)
+		ok = true;
+	}
+	if(ci->aiNut != NULL) {
 		ci->aiNut->Halt();
+		ok = true;
+	}
+	return ok;
+}
+
+
+bool AbstractInstanceNutPlayer::PauseAI(int CID)
+{
+	CreatureInstance *ci = GetNPCPtr(CID);
+	if(ci != NULL) {
+		if(ci->aiNut != NULL) {
+			return ci->aiNut->Pause();
+		}
+		else if(ci->aiScript != NULL) {
+			ci->aiScript->mActive = false;
+			return true;
+		}
+	}
+	return false;
+}
+
+bool AbstractInstanceNutPlayer::ResumeAI(int CID)
+{
+	CreatureInstance *ci = GetNPCPtr(CID);
+	if(ci != NULL) {
+		if(ci->aiNut != NULL) {
+			return ci->aiNut->Resume();
+		}
+		else if(ci->aiScript != NULL) {
+			return ci->aiScript->mActive = true;
+		}
+	}
+	return false;
+}
+
+void AbstractInstanceNutPlayer::ClearAIQueue(int CID)
+{
+	CreatureInstance *ci = GetNPCPtr(CID);
+	if(ci != NULL && ci->aiNut != NULL)
+		ci->aiNut->QueueClear();
+	if(ci != NULL && ci->aiScript != NULL)
+		ci->aiScript->ClearQueue();
+}
+
+bool AbstractInstanceNutPlayer::IsAtTether(int CID)
+{
+	CreatureInstance *ci = GetNPCPtr(CID);
+	if(ci != NULL)
+		return ci->IsAtTether();
+	return false;
 }
 
 void AbstractInstanceNutPlayer::Error(const char *message)
@@ -426,7 +493,7 @@ SQInteger AbstractInstanceNutPlayer::GetCreaturesNearCreature(HSQUIRRELVM v)
             Sqrat::Var<int> sidekickAbilityRestrict(v, 6);
             //std::vector<CreatureInstance*> vv;
             CreatureInstance::CREATURE_PTR_SEARCH vv;
-			CreatureInstance* target = left.value.actInst->GetNPCInstanceByCID(cid.value);
+			CreatureInstance* target = left.value.actInst->GetInstanceByCID(cid.value);
 			if(target != NULL) {
 				float x = (float)target->CurrentX;
 				float z = (float)target->CurrentZ;
@@ -582,6 +649,7 @@ void InstanceNutPlayer::RegisterFunctions() {
 	Sqrat::RootTable(vm).Bind(_SC("Instance"), instanceClass);
 	RegisterInstanceFunctions(this, &instanceClass);
 	Sqrat::RootTable(vm).SetInstance(_SC("inst"), this);
+
 }
 
 void InstanceNutPlayer::RegisterInstanceFunctions(NutPlayer *instance, Sqrat::DerivedClass<InstanceNutPlayer, AbstractInstanceNutPlayer> *instanceClass)
@@ -605,7 +673,7 @@ void InstanceNutPlayer::RegisterInstanceFunctions(NutPlayer *instance, Sqrat::De
 	instanceClass->Func(_SC("detach_item"), &InstanceNutPlayer::DetachItem);
 	instanceClass->Func(_SC("unhate"), &InstanceNutPlayer::Unhate);
 	instanceClass->Func(_SC("interrupt"), &InstanceNutPlayer::Interrupt);
-	instanceClass->Func(_SC("clear_target"), &InstanceNutPlayer::ClearTarget);
+	instanceClass->Func(_SC("leave_combat"), &InstanceNutPlayer::LeaveCombat);
 	instanceClass->Func(_SC("spawn"), &InstanceNutPlayer::Spawn);
 	instanceClass->Func(_SC("play_sound"), &InstanceNutPlayer::PlaySound);
 	instanceClass->Func(_SC("get_display_name"), &InstanceNutPlayer::GetDisplayName);
@@ -628,6 +696,7 @@ void InstanceNutPlayer::RegisterInstanceFunctions(NutPlayer *instance, Sqrat::De
 	instanceClass->Func(_SC("get_health_pc"), &InstanceNutPlayer::GetHealthPercent);
 	instanceClass->Func(_SC("walk"), &InstanceNutPlayer::Walk);
 	instanceClass->Func(_SC("walk_then"), &InstanceNutPlayer::WalkThen);
+	instanceClass->Func(_SC("temp_walk_then"), &InstanceNutPlayer::TempWalkThen);
 	instanceClass->Func(_SC("despawn"), &InstanceNutPlayer::Despawn);
 	instanceClass->Func(_SC("despawn_all"), &InstanceNutPlayer::DespawnAll);
 	instanceClass->Func(_SC("has_item"), &InstanceNutPlayer::HasItem);
@@ -810,12 +879,11 @@ ActiveParty * InstanceNutPlayer::DoCreateParty(int leaderCID, int team)
 //	return party->mPartyID;
 //	*/
 //}
-void InstanceNutPlayer::ClearTarget(int CID)
+void InstanceNutPlayer::LeaveCombat(int CID)
 {
 	CreatureInstance *ci = GetCreaturePtr(CID);
 	if(ci != NULL) {
-		ci->SelectTarget(NULL);
-		ci->SetAutoAttack(NULL, 0);
+		ci->LeaveCombat();
 	}
 	else
 		g_Log.AddMessageFormat("Could not find creature with ID %d in this instance to clear targets from.", CID);
@@ -1074,10 +1142,23 @@ WalkCondition::WalkCondition(CreatureInstance *c)
 bool WalkCondition::CheckCondition() {
 	if(cInst->CurrentTarget.DesLocX == 0 &&
 	   cInst->CurrentTarget.DesLocZ == 0 &&
-	   cInst->CurrentTarget.desiredRange == 0) {
+	   cInst->CurrentTarget.desiredRange == 0 &&
+	   cInst->CurrentTarget.desiredSpeed == 0) {
 		return true;
 	}
 	return false;
+}
+
+void InstanceNutPlayer::TempWalkThen(int CID, Squirrel::Point point, int speed, int range, Sqrat::Function onArrival) {
+
+	CreatureInstance *ci = GetNPCPtr(CID);
+	if(ci)
+	{
+		QueueAdd(new ScriptCore::NutScriptEvent(
+				new WalkCondition(ci),
+				new WalkCallback(this, ci, point, speed, range, onArrival, true)
+				));
+	}
 }
 
 void InstanceNutPlayer::WalkThen(int CID, Squirrel::Point point, int speed, int range, Sqrat::Function onArrival) {
@@ -1085,19 +1166,9 @@ void InstanceNutPlayer::WalkThen(int CID, Squirrel::Point point, int speed, int 
 	CreatureInstance *ci = GetNPCPtr(CID);
 	if(ci)
 	{
-		ci->SetServerFlag(ServerFlags::ScriptMovement, true);
-		ci->previousPathNode = 0;   //Disable any path links.
-		ci->nextPathNode = 0;
-		ci->tetherNodeX = point.mX;
-		ci->tetherNodeZ = point.mZ;
-		ci->CurrentTarget.DesLocX = point.mX;
-		ci->CurrentTarget.DesLocZ = point.mZ;
-		ci->CurrentTarget.desiredRange = range;
-		ci->CurrentTarget.desiredSpeed = speed;
-
 		QueueAdd(new ScriptCore::NutScriptEvent(
 				new WalkCondition(ci),
-				new ScriptCore::SquirrelFunctionCallback(this, onArrival)
+				new WalkCallback(this, ci, point, speed, range, onArrival, false)
 				));
 	}
 }
@@ -1115,15 +1186,10 @@ void InstanceNutPlayer::Walk(int CID, Squirrel::Point point, int speed, int rang
 	CreatureInstance *ci = GetNPCPtr(CID);
 	if(ci)
 	{
-		ci->SetServerFlag(ServerFlags::ScriptMovement, true);
-		ci->previousPathNode = 0;   //Disable any path links.
-		ci->nextPathNode = 0;
-		ci->tetherNodeX = point.mX;
-		ci->tetherNodeZ = point.mZ;
-		ci->CurrentTarget.DesLocX = point.mX;
-		ci->CurrentTarget.DesLocZ = point.mX;
-		ci->CurrentTarget.desiredRange = range;
-		ci->CurrentTarget.desiredSpeed = speed;
+		QueueAdd(new ScriptCore::NutScriptEvent(
+				new WalkCondition(ci),
+				new WalkCallback(this, ci, point, speed, range, false)
+				));
 	}
 }
 
@@ -1218,7 +1284,7 @@ bool InstanceNutPlayer::AI(int CID, const char *label)
 int InstanceNutPlayer::GetTarget(int CID)
 {
 	int targetID = 0;
-	CreatureInstance *ci = GetNPCPtr(CID);
+	CreatureInstance *ci = actInst->GetInstanceByCID(CID);
 	if(ci)
 	{
 		if(ci->CurrentTarget.targ != NULL)
@@ -1828,6 +1894,88 @@ bool InteractCallback::Execute()
 	mNut->RemoveInteraction(mCID);
 	Sqrat::SharedPtr<bool> ptr = mFunction.Evaluate<bool>();
 	return ptr.Get() == NULL || ptr.Get();
+}
+
+//
+// WallCallback
+//
+
+WalkCallback::WalkCallback(ScriptCore::NutPlayer *nut, CreatureInstance *creature, Squirrel::Point point, int speed, int range, bool reset) {
+	mRunFunction = false;
+	Init(nut, creature, point, speed, range, reset);
+}
+
+WalkCallback::WalkCallback(ScriptCore::NutPlayer *nut, CreatureInstance *creature, Squirrel::Point point, int speed, int range, Sqrat::Function onArrival, bool reset) {
+	mFunction = onArrival;
+	mRunFunction = true;
+	Init(nut, creature, point, speed, range, reset);
+}
+
+void WalkCallback::Init(ScriptCore::NutPlayer *nut, CreatureInstance *creature, Squirrel::Point point, int speed, int range, bool reset) {
+	// Cancel previous walk
+	if(creature->scriptMoveEvent != -1) {
+		nut->Cancel(creature->scriptMoveEvent);
+	}
+
+
+	mNut = nut;
+	mCreature = creature;
+	mReset = reset;
+
+	sScriptMovement = ( creature->serverFlags & ServerFlags::ScriptMovement ) != 0;
+	sPreviousPathNode = creature->previousPathNode;
+	sNextPathNode = creature->nextPathNode;
+	sTetherNodeX = creature->tetherNodeX;
+	sTetherNodeZ = creature->tetherNodeZ;
+	sDesLocX = creature->CurrentTarget.DesLocX;
+	sDesLocZ = creature->CurrentTarget.DesLocZ;
+	sDesiredRange = creature->CurrentTarget.desiredRange;
+	sDesiredSpeed = creature->CurrentTarget.desiredSpeed;
+
+	creature->SetServerFlag(ServerFlags::ScriptMovement, true);
+	creature->previousPathNode = 0;   //Disable any path links.
+	creature->nextPathNode = 0;
+	creature->tetherNodeX = point.mX;
+	creature->tetherNodeZ = point.mZ;
+	creature->CurrentTarget.DesLocX = point.mX;
+	creature->CurrentTarget.DesLocZ = point.mZ;
+	creature->CurrentTarget.desiredRange = range;
+	creature->CurrentTarget.desiredSpeed = speed;
+
+}
+
+WalkCallback::~WalkCallback() {
+}
+
+void WalkCallback::Reset() {
+	// Always reset these
+	mCreature->CurrentTarget.desiredRange = 0;
+	mCreature->CurrentTarget.desiredSpeed = 0;
+	mCreature->CurrentTarget.DesLocX = 0;
+	mCreature->CurrentTarget.DesLocZ = 0;
+	mCreature->SetServerFlag(ServerFlags::ScriptMovement, sScriptMovement);
+
+	if(mReset) {
+		mCreature->previousPathNode = sPreviousPathNode;
+		mCreature->nextPathNode = sNextPathNode;
+		mCreature->tetherNodeX = sTetherNodeX;
+		mCreature->tetherNodeZ = sTetherNodeZ;
+	}
+}
+
+bool WalkCallback::Execute()
+{
+	Reset();
+	if(mRunFunction) {
+		try {
+			Sqrat::SharedPtr<bool> ptr = mFunction.Evaluate<bool>();
+			return ptr.Get() == NULL || ptr.Get();
+		}
+		catch(Sqrat::Exception &e) {
+			g_Log.AddMessageFormat("Exception while execute script function.");
+		}
+	}
+	return false;
 }
 
 //

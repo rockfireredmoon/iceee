@@ -186,6 +186,20 @@ namespace ScriptCore
 	}
 
 	//
+	// 'Pause' condition implementation. Is true when mPaused becomes fale
+	//
+
+	PauseCondition::PauseCondition()
+	{
+		mPaused = true;
+	}
+	PauseCondition::~PauseCondition() {}
+
+	bool PauseCondition::CheckCondition() {
+		return !mPaused;
+	}
+
+	//
 	// 'Resume' callback implementation. Resumes a suspended Squirrel VM, probably
 	// suspended as the result of a sleep() call.
 	//
@@ -200,6 +214,8 @@ namespace ScriptCore
 
 	bool ResumeCallback::Execute()
 	{
+    	mNut->mSleeping = 0;
+    	mNut->mPause = NULL;
 		sq_wakeupvm(mNut->vm, false, false, false, false);
 		return true;
 	}
@@ -280,6 +296,7 @@ namespace ScriptCore
 		mCallback = callback;
 		mRunWhenSuspended = false;
 		mCancelled = false;
+		mId = -1;
 	}
 
 	NutScriptEvent::~NutScriptEvent() {
@@ -297,6 +314,8 @@ namespace ScriptCore
 
 	NutPlayer::NutPlayer() {
 		mInitTime = 0;
+		mPause = NULL;
+		mSleeping = 0;
 		vm = NULL;
 		def = NULL;
 		mActive = false;
@@ -309,6 +328,7 @@ namespace ScriptCore
 		mCalls = 0;
 		mRunning = false;
 		mHalting = false;
+		mNextId = 1;
 	}
 
 	NutPlayer::~NutPlayer() {
@@ -485,8 +505,16 @@ namespace ScriptCore
 					new ScriptCore::SquirrelFunctionCallback(this, function)));
 	}
 
-	void NutPlayer::Queue(Sqrat::Function function, int fireDelay) {
-		QueueAdd(new ScriptCore::NutScriptEvent(
+	bool NutPlayer::Cancel(long id) {
+		NutScriptEvent* nse = GetEvent(id);
+		if(nse == NULL)
+			return false;
+		QueueRemove(nse);
+		return true;
+	}
+
+	long NutPlayer::Queue(Sqrat::Function function, int fireDelay) {
+		return QueueAdd(new ScriptCore::NutScriptEvent(
 					new ScriptCore::TimeCondition(fireDelay),
 					new ScriptCore::SquirrelFunctionCallback(this, function)));
 	}
@@ -535,6 +563,7 @@ namespace ScriptCore
 		vector3FClass.Var("z", &Squirrel::Vector3::mZ);
 
 		clazz->Func(_SC("exec"), &NutPlayer::Exec);
+		clazz->Func(_SC("cancel"), &NutPlayer::Cancel);
 		clazz->Func(_SC("queue"), &NutPlayer::Queue);
 		clazz->Func(_SC("clear_queue"), &NutPlayer::QueueClear);
 		clazz->Func(_SC("broadcast"), &NutPlayer::Broadcast);
@@ -738,7 +767,6 @@ namespace ScriptCore
 
 	}
 
-
 	bool NutPlayer::DoRunFunction(std::string name, std::vector<ScriptParam> parms, bool time, bool retVal) {
 		sq_pushroottable(vm);
 		sq_pushstring(vm,_SC(name.c_str()),-1);
@@ -871,18 +899,21 @@ namespace ScriptCore
 		return ok;
 	}
 
-	void NutPlayer::QueueInsert(NutScriptEvent *evt)
+	long NutPlayer::QueueInsert(NutScriptEvent *evt)
 	{
 		if(!mActive) {
 			PrintMessage("[WARNING] Script event when not active");
-			return;
+			return -1;
 		}
+
+		evt->mId = mNextId++;
+
 		if(mExecuting)
 		{
 			if(mQueueInsert.size() >= MAX_QUEUE_SIZE)
 			{
 				PrintMessage("[ERROR] Script error: Deferred QueueEvent() list is full %d of %d", mQueueInsert.size(), MAX_QUEUE_SIZE);
-				return;
+				return -1;
 			}
 			mQueueInsert.insert(mQueueInsert.begin(), evt);
 		} else
@@ -891,10 +922,11 @@ namespace ScriptCore
 			if(mQueue.size() >= MAX_QUEUE_SIZE)
 			{
 				PrintMessage("[ERROR] Script error: QueueEvent() list is full [script: %s]", def->scriptName.c_str());
-				return;
+				return -1;
 			}
 			mQueue.insert(mQueue.begin(), evt);
 		}
+		return evt->mId;
 	}
 
 	void NutPlayer::QueueClear()
@@ -912,8 +944,22 @@ namespace ScriptCore
 		}
 	}
 
+
+	NutScriptEvent* NutPlayer::GetEvent(long id) {
+		// Look for the event in all queues
+		std::vector<ScriptCore::NutScriptEvent*>::iterator it;
+		for(it = mQueue.begin(); it != mQueue.end(); ++it) {
+			if((*it)->mId == id) {
+				return *it;
+			}
+		}
+		return NULL;
+	}
+
 	void NutPlayer::QueueRemove(NutScriptEvent *evt)
 	{
+		mQueueAdd.erase(std::find(mQueueAdd.begin(), mQueueAdd.end(), evt));
+		mQueueRemove.erase(std::find(mQueueRemove.begin(), mQueueRemove.end(), evt));
 		if(mExecuting)
 		{
 			mQueueRemove.insert(mQueueRemove.begin(), evt);
@@ -924,19 +970,21 @@ namespace ScriptCore
 		}
 	}
 
-	void NutPlayer::QueueAdd(NutScriptEvent *evt)
+	long NutPlayer::QueueAdd(NutScriptEvent *evt)
 	{
 		if(!mActive) {
 			PrintMessage("[WARNING] Script event when not active");
-			return;
+			return -1;
 		}
+
+		evt->mId = mNextId++;
 
 		if(mExecuting)
 		{
 			if(mQueueAdd.size() >= MAX_QUEUE_SIZE)
 			{
 				PrintMessage("[ERROR] Script error: Deferred QueueEvent() list is full %d of %d", mQueueAdd.size(), MAX_QUEUE_SIZE);
-				return;
+				return -1;
 			}
 			mQueueAdd.push_back(evt);
 		} else
@@ -945,10 +993,12 @@ namespace ScriptCore
 			if(mQueue.size() >= MAX_QUEUE_SIZE)
 			{
 				PrintMessage("[ERROR] Script error: QueueEvent() list is full [script: %s]", def->scriptName.c_str());
-				return;
+				return -1;
 			}
 			mQueue.push_back(evt);
 		}
+
+		return evt->mId;
 	}
 
 	void NutPlayer::Broadcast(const char *message)
@@ -956,13 +1006,49 @@ namespace ScriptCore
 		g_SimulatorManager.BroadcastMessage(message);
 	}
 
+	bool NutPlayer::Resume()
+	{
+		if(mPause == NULL) {
+			g_Log.AddMessage("Attempt to resume not paused script");
+		}
+		else if(mPause->mPaused) {
+			mPause->mPaused = false;
+			return true;
+		}
+		return false;
+	}
+
+	bool NutPlayer::Pause()
+	{
+		if(mPause != NULL) {
+			g_Log.AddMessage("Attempt to pause already paused script");
+			return false;
+		}
+		if(mSleeping > 0) {
+			g_Log.AddMessage("Attempt to pause already sleeping script");
+			return false;
+		}
+
+		ResumeCallback *cb = new ResumeCallback(this);
+		mPause = new PauseCondition ();
+		NutScriptEvent *nse = new NutScriptEvent(mPause, cb);
+		nse->mRunWhenSuspended = true;
+		QueueAdd(nse);
+		return sq_suspendvm(vm);
+	}
+
 	SQInteger NutPlayer::Sleep(HSQUIRRELVM v)
 	{
 	    if (sq_gettop(v) == 2) {
 	        Sqrat::Var<NutPlayer&> left(v, 1);
 	        if (!Sqrat::Error::Occurred(v)) {
+	        	if((&left.value)->mPause != NULL)
+	    	        return sq_throwerror(v, _SC("already sleeping"));
+	        	if((&left.value)->mSleeping > 0)
+	    	        return sq_throwerror(v, _SC("already sleeping"));
 	            Sqrat::Var<unsigned long> right(v, 2);
 	        	std::vector<int> vv;
+	        	(&left.value)->mSleeping = right.value;
 	        	ResumeCallback *cb = new ResumeCallback(&left.value);
 	        	NutScriptEvent *nse = new NutScriptEvent(new TimeCondition (right.value), cb);
 	        	nse->mRunWhenSuspended = true;
@@ -1945,6 +2031,11 @@ void ScriptPlayer :: RunScript(void)
 {
 	while(mExecuting && mActive)
 		RunSingleInstruction();
+}
+
+void ScriptPlayer :: ClearQueue(void)
+{
+	scriptEventQueue.clear();
 }
 
 bool ScriptPlayer :: RunSingleInstruction(void)

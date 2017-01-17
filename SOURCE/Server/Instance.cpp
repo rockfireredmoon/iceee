@@ -2086,7 +2086,6 @@ CreatureInstance* ActiveInstance :: SpawnAtProp(int CDefID, int PropID, int dura
 void ActiveInstance :: EraseAllCreatureReference(CreatureInstance *object)
 {
 
-
 	object->UnloadResources();
 	pendingOperations.UpdateList_Remove(object);
 	pendingOperations.DeathList_Remove(object);
@@ -2124,6 +2123,10 @@ void ActiveInstance :: RunDeath(CreatureInstance *object)
 
 int ActiveInstance :: EraseIndividualReference(CreatureInstance *object)
 {
+	if(object->scriptMoveEvent != -1 && nutScriptPlayer != NULL) {
+		nutScriptPlayer->Cancel(object->scriptMoveEvent);
+	}
+
 	//Search for a creature instance and remove all possible references to it
 	if(PlayerList.size() != PlayerListPtr.size())
 		g_Log.AddMessageFormat("[CRITICAL] PlayerList mismatch: %d, %d", PlayerList.size(), PlayerListPtr.size());

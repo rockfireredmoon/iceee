@@ -36,7 +36,6 @@ custom_dekkerquest_it.txt
 custom_dekkerquest_healer.txt
 custom_dekkerquest_offense.txt
 custom_dekkerquest_hell12.txt
-custom_heathendel_deathdruid40.txt
 custom_heathendel_deathknight40.txt
 custom_heathendel_deathknight40b.txt
 custom_heathendel_deathknight40c.txt

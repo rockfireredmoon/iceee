@@ -31,6 +31,7 @@ namespace ABGlobals
 enum
 {
 	ABILITYID_AUTO_ATTACK = 32766,
+	ABILITYID_AUTO_ATTACK_STOP_MELEE = 32759,
 	ABILITYID_AUTO_ATTACK_RANGED = 32760,
 	ABILITYID_QUEST_INTERACT_OBJECT = 32700,  //Simulates quest interactions.
 	ABILITYID_QUEST_GATHER_OBJECT = 32701,    //Simulates quest gather (deleted when successful).

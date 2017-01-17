@@ -416,6 +416,7 @@ CreatureInstance :: CreatureInstance()
 	aiNut = NULL;
 	hateProfilePtr = NULL;
 	activeLootID = 0;
+	scriptMoveEvent = -1;
 
 	spawnGen = NULL;
 	spawnTile = NULL;
@@ -3321,6 +3322,7 @@ void CreatureInstance :: UnHate(void)
 void CreatureInstance :: LeaveCombat(void)
 {
 	SetAutoAttack(NULL, 0);
+	SelectTarget(NULL);
 	if(HasStatus(StatusEffects::IN_COMBAT))
 		_RemoveStatusList(StatusEffects::IN_COMBAT);
 	if(HasStatus(StatusEffects::IN_COMBAT_STAND))
@@ -3911,9 +3913,9 @@ bool CreatureInstance :: _ValidTargetFlag(CreatureInstance *target, int abilityR
 	//if(abilityRestrict & TSB_ENEMY)
 	//	if((serverFlags & ServerFlags::IsPlayer) && (target->serverFlags & ServerFlags::IsPlayer))
 	//		return false;
-
-	if((target == this) && (abilityRestrict & TargetStatus::TSB_ENEMY))
-		return false;
+//
+//	if((target == this) && (abilityRestrict & TargetStatus::TSB_ENEMY))
+//		return false;
 
 	if(abilityRestrict & TargetStatus::TSB_FRIEND)
 	{
@@ -4876,6 +4878,15 @@ void CreatureInstance :: CheckMostHatedTarget(bool forceCheck)
 		targ = actInst->GetPlayerByCDefID(CDefID);
 		if(targ == NULL)
 			continue;
+
+		if((serverFlags & ServerFlags::Noncombatant) !=0)
+		{
+			//Set hate to zero.  On the next sort, this creature will drop to the bottom of the list
+			//to help avoid rechecking this creature again during every update cycle.
+			hateProfilePtr->hateList[i].hate = 0;
+			continue;
+		}
+
 		if(targ->HasStatus(StatusEffects::DEAD))
 		{
 			//Set hate to zero.  On the next sort, this creature will drop to the bottom of the list
@@ -5137,6 +5148,7 @@ void CreatureInstance :: MoveToTarget(void)
 		if(dist <= CurrentTarget.desiredRange)
 		{
 			CurrentTarget.desiredRange = 0;
+			CurrentTarget.desiredSpeed = 0;
 			CurrentTarget.bInstigated = false;
 			Speed = 0;
 		}
@@ -5410,6 +5422,7 @@ void CreatureInstance :: MoveToTarget_Ex(void)
 		CurrentTarget.DesLocX = 0;
 		CurrentTarget.DesLocZ = 0;
 		CurrentTarget.desiredRange = 0;
+		CurrentTarget.desiredSpeed = 0;
 		int size = PrepExt_GeneralMoveUpdate(GSendBuf, this);
 		//actInst->LSendToAllSimulator(GSendBuf, size, -1);
 		actInst->LSendToLocalSimulator(GSendBuf, size, CurrentX, CurrentZ);
@@ -5536,6 +5549,7 @@ int CreatureInstance :: RunMovementStep(void)
 		CurrentTarget.DesLocX = 0;
 		CurrentTarget.DesLocZ = 0;
 		CurrentTarget.desiredRange = 0;
+		CurrentTarget.desiredSpeed = 0;
 		SetServerFlag(ServerFlags::CalledBack, false);
 	}
 	else
@@ -5660,6 +5674,7 @@ int CreatureInstance :: RunMovementStep2(void)
 		CurrentTarget.DesLocX = 0;
 		CurrentTarget.DesLocZ = 0;
 		CurrentTarget.desiredRange = 0;
+		CurrentTarget.desiredSpeed = 0;
 		SetServerFlag(ServerFlags::CalledBack, false);
 	}
 	else
@@ -5683,6 +5698,7 @@ int CreatureInstance :: RunMovementStep2(void)
 			CurrentTarget.DesLocX = 0;
 			CurrentTarget.DesLocZ = 0;
 			CurrentTarget.desiredRange = 0;
+			CurrentTarget.desiredSpeed = 0;
 		}
 		else if(updateDist > reqMoveDist * 2)
 		{
@@ -5974,6 +5990,7 @@ void CreatureInstance :: MoveToTarget_Ex2(void)
 		CurrentTarget.DesLocX = 0;
 		CurrentTarget.DesLocZ = 0;
 		CurrentTarget.desiredRange = 0;
+		CurrentTarget.desiredSpeed = 0;
 		int size = PrepExt_GeneralMoveUpdate(GSendBuf, this);
 		//actInst->LSendToAllSimulator(GSendBuf, size, -1);
 		actInst->LSendToLocalSimulator(GSendBuf, size, CurrentX, CurrentZ);
@@ -6075,6 +6092,10 @@ void CreatureInstance :: RequestTarget(int CreatureID)
 	SelectTarget(actInst->GetInstanceByCID(CreatureID));
 }
 
+bool CreatureInstance :: IsAtTether() {
+	return CurrentX == tetherNodeX && CurrentZ == tetherNodeZ;
+}
+
 void CreatureInstance :: SelectTarget(CreatureInstance *newTarget)
 {
 	if(newTarget != CurrentTarget.targ)
@@ -6090,6 +6111,8 @@ void CreatureInstance :: SelectTarget(CreatureInstance *newTarget)
 		{
 			if(HasStatus(StatusEffects::DEAD))
 				return;
+
+			g_Log.AddMessageFormat("%s is now targeting %s", css.display_name, newTarget->css.display_name);
 
 			//If in a patrol, abort the movement so the ability system can take over.
 			if(serverFlags & ServerFlags::PathNode)
@@ -6121,6 +6144,7 @@ void CreatureInstance :: SelectTarget(CreatureInstance *newTarget)
 		}
 		else
 		{
+			g_Log.AddMessageFormat("%s is now targeting nothing", css.display_name);
 			UpdateAggroPlayers(0);
 			CurrentTarget.Clear(false);
 		}

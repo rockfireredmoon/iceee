@@ -210,7 +210,7 @@ class this.EffectDef.TelekinesisTarget extends this.EffectDef.TemplateBasic
 			emitterPoint = "node"
 		});
 		this.fireIn(1.5, "onInitialDone");
-		this.fireIn(10.0, "onAnimDone");
+		this.fireIn(8.0, "onAnimDone");
 	}
 
 	function onInitialDone( ... )

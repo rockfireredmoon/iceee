@@ -310,6 +310,7 @@ public:
 	bool JumpToLabel(const char *name); //Immediately jump script execution to the beginning of a specific label.
 	void FullReset(void);
 	bool IsWaiting(void);
+	void ClearQueue(void);
 	bool CanRunIdle(void);
 	void EndExecution(void);
 
@@ -422,6 +423,7 @@ public:
 //Holds a triggered event.
 class NutScriptEvent {
 public:
+	unsigned long mId;
 	NutCondition *mCondition;
 	NutCallback *mCallback;
 	bool mRunWhenSuspended;
@@ -429,6 +431,16 @@ public:
 	~NutScriptEvent();
 	NutScriptEvent(NutCondition *condition, NutCallback *callback);
 	void Cancel();
+};
+
+class PauseCondition : public NutCondition
+{
+public:
+	unsigned long mPaused;         //Time to fire this event.
+	PauseCondition();
+	~PauseCondition();
+
+	bool CheckCondition();
 };
 
 class NutPlayer {
@@ -440,6 +452,9 @@ public:
 	bool mHalting; //If true, the script is currently halting (subsequent halts will do nothing).
 	bool mExecuting;
 	bool mRunning; //If true, a function call is currently running (will make halts be queued)
+	unsigned long mNextId;
+	PauseCondition *mPause; // If non-null is the current pause condition
+	long mSleeping; // If non-zero, how long the VM is sleeping for
 
 	std::vector<std::string> mArgs; // Scripts may be called with arguments. This vector should be set before initialising the player
 
@@ -459,26 +474,32 @@ public:
 	void RegisterCoreFunctions(NutPlayer *instance, Sqrat::Class<NutPlayer> *clazz);
 	virtual void HaltDerivedExecution();
 	virtual void HaltedDerived();
+	NutScriptEvent* GetEvent(long id);
 	void HaltExecution();
 	void Initialize(NutDef *defPtr, std::string &errors);
 	bool Tick(void);     //Run a single instruction.
 	void RunScript(void);                //Run the script until it ends.
 	void FullReset(void);
 	void Halt(void);
+	bool Pause(void);
+	bool Resume(void);
 	int GC(void);
 	bool JumpToLabel(const char *name);
 	bool JumpToLabel(const char *name, std::vector<ScriptParam> parms);
 	std::string RunFunctionWithStringReturn(std::string name, std::vector<ScriptParam> parms, bool time);
 	bool RunFunctionWithBoolReturn(std::string name, std::vector<ScriptParam> parms, bool time);
 	bool RunFunction(std::string name, std::vector<ScriptParam> parms, bool time);
+
+	// Script functions
 	void Broadcast(const char *message);
 	unsigned long GetServerTime();
 	void QueueClear();
 	void QueueRemove(NutScriptEvent *evt);
-	void QueueAdd(NutScriptEvent *evt);
-	void QueueInsert(NutScriptEvent *evt);
+	long QueueAdd(NutScriptEvent *evt);
+	long QueueInsert(NutScriptEvent *evt);
+	bool Cancel(long id);
 	void Exec(Sqrat::Function function);
-	void Queue(Sqrat::Function function, int fireDelay);
+	long Queue(Sqrat::Function function, int fireDelay);
 //	void DoQueue(Sqrat::Function function, int fireDelay);
 	bool ExecQueue(void);
 
@@ -512,7 +533,6 @@ protected:
 	void ClearQueue();
 
 };
-
 
 class TimeCondition : public NutCondition
 {

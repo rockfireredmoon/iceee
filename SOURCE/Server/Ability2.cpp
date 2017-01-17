@@ -1674,7 +1674,6 @@ int AbilityManager2 :: ActivateAbility(CreatureInstance *cInst, short abilityID,
 	if(result != ABILITY_NOT_SPECIAL)
 		return result;
 
-
 	ABILITY_ITERATOR it;
 	it = mAbilityIndex.find(abilityID);
 	if(it == mAbilityIndex.end())
@@ -1743,7 +1742,11 @@ int AbilityManager2 :: ActivateAbility(CreatureInstance *cInst, short abilityID,
 		if(abProcessing.ciTarget == NULL)
 		{
 			g_Log.AddMessageFormat("[CRITICAL] Target index [%d] is NULL", targIndex);
-			return 0;
+			continue;
+		}
+		if((abProcessing.ciTarget->serverFlags & ServerFlags::Noncombatant) != 0 && abProcessing.ciTarget != abProcessing.ciSource) {
+			g_Log.AddMessageFormat("[ERROR] Target index [%d] is Non-combatant", targIndex);
+			continue;
 		}
 		for(size_t f = 0; f < abEvent->mFunctionList.size(); f++)
 		{
@@ -1923,11 +1926,11 @@ int AbilityManager2 :: CheckActivateSpecialAbility(CreatureInstance *cInst, shor
 		if(eventType == EventType::onActivate)
 			cInst->RunObjectInteraction(cInst->ab[0].TargetList[0]);
 		break;
-	case 32759:		//stop_melee : 1
+	case ABILITYID_AUTO_ATTACK_STOP_MELEE:		//stop_melee : 1
 		if(eventType == EventType::onRequest)
 			cInst->SetAutoAttack(NULL, -1);
 		break;
-	case 32760:		//ranged_melee : 1
+	case ABILITYID_AUTO_ATTACK_RANGED:		//ranged_melee : 1
 		if(eventType == EventType::onRequest)
 		{
 			cInst->SetAutoAttack(cInst->CurrentTarget.targ, StatusEffects::AUTO_ATTACK_RANGED);
@@ -1964,7 +1967,7 @@ int AbilityManager2 :: CheckActivateSpecialAbility(CreatureInstance *cInst, shor
 			cInst->SendAutoAttack(32760, cInst->CurrentTarget.targ->CreatureID);
 		}
 		break;
-	case 32766:		//melee : 1
+	case ABILITYID_AUTO_ATTACK:		//melee : 1
 		if(eventType == EventType::onRequest)
 		{
 			cInst->SetAutoAttack(cInst->CurrentTarget.targ, StatusEffects::AUTO_ATTACK);
@@ -2001,7 +2004,7 @@ int AbilityManager2 :: CheckActivateSpecialAbility(CreatureInstance *cInst, shor
 			abProcessing._AttackMelee(0);
 			abProcessing.SendDamageString("melee");
 			cInst->RegisterCooldown(ResolveCooldownCategoryID("autoMelee"), 0);
-			cInst->SendAutoAttack(32766, cInst->CurrentTarget.targ->CreatureID);
+			cInst->SendAutoAttack(ABILITYID_AUTO_ATTACK, cInst->CurrentTarget.targ->CreatureID);
 		}
 		break;
 	default:
@@ -2178,9 +2181,9 @@ bool AbilityManager2 :: IsGlobalIntrinsicAbility(int abilityID)
 	case 10001:  //Resurrect
 	case 10002:  //Rebirth
 	case 10006:  //Unstick
-	case 32759:  //stop autoattack
-	case 32760:  //ranged attack
-	case 32766:  //melee autoattack
+	case ABILITYID_AUTO_ATTACK_STOP_MELEE:  //stop autoattack
+	case ABILITYID_AUTO_ATTACK_RANGED:  //ranged attack
+	case ABILITYID_AUTO_ATTACK:  //melee autoattack
 	case 32767:  //jump
 		return true;
 	}
