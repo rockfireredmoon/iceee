@@ -351,7 +351,7 @@ function valkal1_health() {
 	        tribute();
 	        return;
 	    }
-	    else if(health <= 90 && phase < 2) {
+	    else if(health <= 75 && phase < 2) {
 	        // Heal 1
 	        if(debug)
 	        	inst.info("Heal 1");
@@ -359,7 +359,7 @@ function valkal1_health() {
 	        heal_sequence();
 	        return;
 	    }
-	    else if(health <= 95 && phase < 1) {
+	    else if(health <= 80 && phase < 1) {
 	        // Tribute 1
 	        if(debug)
 	        	inst.info("Tribute 1");
