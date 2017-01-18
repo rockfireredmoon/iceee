@@ -405,8 +405,22 @@ public:
 	NutScriptCallStringParser(std::string string);
 };
 
+struct Result
+{
+	enum
+	{
+		OK = 0,
+		INTERRUPTED = 1,
+		FAILED = 2,
+		WAITING = 3
+	};
+};
+
 class NutCallback {
+
 public:
+	int mResult;
+
 	NutCallback();
 
 	virtual ~NutCallback();
@@ -431,6 +445,12 @@ public:
 	~NutScriptEvent();
 	NutScriptEvent(NutCondition *condition, NutCallback *callback);
 	void Cancel();
+};
+
+class NeverCondition : public ScriptCore::NutCondition
+{
+public:
+	virtual bool CheckCondition();
 };
 
 class PauseCondition : public NutCondition

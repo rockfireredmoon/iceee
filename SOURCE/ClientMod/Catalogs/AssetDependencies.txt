@@ -261,6 +261,7 @@
 ["CL-Camp2"]=["Prop-Wooden_Furniture","Prop-Campfires","Prop-Burlap_Sack"],
 ["CL-Camp3"]=["Prop-Tents1","Prop-Wooden_Furniture","Prop-Cooking","Prop-Campfires","Prop-Rope_Coil"],
 ["CL-Candelabra"]=["Prop-Iron-Candles"],
+["CL-Candelabra2"]=["Prop-ModAddons1"],
 ["CL-Carrionite_1Platform_A"]=["Prop-Carrionite_Nests","Prop-Carrionite_Props"],
 ["CL-Carrionite_3Platforms_A"]=["Prop-Carrionite_Nests","Prop-Carrionite_Props"],
 ["CL-Carrionite_4Platforms_A"]=["Prop-Carrionite_Nests","Prop-Carrionite_Props"],

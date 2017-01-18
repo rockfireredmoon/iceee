@@ -87,7 +87,7 @@ function on_use(cid, target_cid, target_cdef_id) {
 				disengage(boss_cid);
 				local missile_loc = inst.get_location(cid);
 				inst.creature_chat(boss_cid, "s/", "No! Why did you do that! You'll kill us all..");
-				inst.walk_then(boss_cid, Point(missile_loc.x,missile_loc.z), CREATURE_RUN_SPEED * 2, 00, function() {
+				inst.walk_then(boss_cid, Point(missile_loc.x,missile_loc.z), -1, CREATURE_RUN_SPEED * 2, 00, function() {
 					inst.creature_chat(boss_cid, "s/", "The green wire, the red wire, which is it !?!");
 					inst.emote(boss_cid, "Dig_Shovel");
 				});
@@ -141,7 +141,7 @@ function on_use(cid, target_cid, target_cdef_id) {
                                 inst.info("failed Nuclear Sickness");
 							inst.set_flag(boss_cid, SF_NON_COMBATANT, true);
 		    				inst.queue(function() {
-								inst.walk_then(boss_cid, boss_home, CREATURE_RUN_SPEED * 2, 00, function() {
+								inst.walk_then(boss_cid, boss_home, -1, CREATURE_RUN_SPEED * 2, 00, function(res) {
 									inst.creature_chat(boss_cid, "s/", "Hahaha I'm still too strong for you!");
 									inst.rotate_creature(boss_cid, 70);
 									inst.set_flag(boss_cid, SF_NON_COMBATANT, false);
@@ -155,7 +155,7 @@ function on_use(cid, target_cid, target_cdef_id) {
 	    						inst.creature_use(target_cid, _AB("Nuclear Poison"));
 	    					}, 500);
 		    				inst.queue(function() {
-								inst.walk_then(boss_cid, center, CREATURE_RUN_SPEED, 00, function() {
+								inst.walk_then(boss_cid, center, -1, CREATURE_RUN_SPEED, 00, function(res) {
 									inst.creature_chat(boss_cid, "s/", "Come on! Face me!");
 									inst.rotate_creature(boss_cid, 70);
 									inst.set_flag(boss_cid, SF_NON_COMBATANT, false);

@@ -1,5 +1,5 @@
 ::info <- {
-	name = "Valkals Bloodkeep",
+	name = "Valkals Blood Keep",
 	author = "Emerald Icemoon",
 	description = "Handles the final fight!",
 	queue_events = true
@@ -19,9 +19,10 @@ class VampireAdd {
 }
 
 // Abilities
-const HEALING_HAND = 5118;
+const HEALING_SCREAM = 24009;
 const SELF_STUN = 24008;
 const TRIBUTE = 24005;
+const BRINGING_DOWN_THE_HOUSE = 24006;
 
 // Creature Definition IDs
 
@@ -124,15 +125,17 @@ function attack_closest(cid) {
 }
 
 /*  Helper function to Spawn Valkals adds. Each one will be instructed to run to a defined place,
-   then locate the nearest player and attack them. */
+   then locate the nearest player and attack them (or anyone who aggros them on the way). */
 function spawn_adds() {
 	if(debug)
 		inst.info("Spawing adds");
     foreach(v in vampire_adds) {
 		local cid = inst.spawn(v.prop_id, 0, 0);
-        inst.walk_then(cid, v.pos, CREATURE_JOG_SPEED, 0, function() {
-        	inst.rotate_creature(cid, v.rot);
-            attack_closest(cid);
+        inst.walk_then(cid, v.pos, -1, CREATURE_JOG_SPEED, 0, function(res) {
+        	if(res == RES_OK) {
+	        	inst.rotate_creature(cid, v.rot);
+	            attack_closest(cid);
+	        }
         });
     }
 }
@@ -151,24 +154,26 @@ function disengage_valkal() {
 /*  Helper function to return Valkal to the center of the room, and picks the closest player
    to attack */
 function valkal_engage() {
-	disengage_valkal();
 	if(debug)
 		inst.info("Engaging");
-	inst.walk_then(cid_valkal1, loc_room_centre, CREATURE_JOG_SPEED, 0, function() {
-		inst.set_flag(cid_valkal1, SF_NON_COMBATANT, false);
-		inst.resume_ai(cid_valkal1);
-        attack_closest(cid_valkal1);
+	inst.set_flag(cid_valkal1, SF_NON_COMBATANT, false);
+	inst.resume_ai(cid_valkal1);
+	inst.walk_then(cid_valkal1, loc_room_centre, -1, CREATURE_JOG_SPEED, 0, function(res) {
+		if(res == RES_OK) {
+			/* If we got to the centre of the room without aggro attack the closes */
+        	attack_closest(cid_valkal1);
+        }
         
         /* Start health check loop again */
 		inst.exec(valkal1_health);
 	});
 }
 
-/* Keeping a creature self healing until he gets to a limit, then queue
+/* Keeping a creature self healing until they gets to a limit, then queue
  * another function */
 function heal(cid, limit, on_healed) {
 	if(inst.get_health_pc(cid) < limit) {
-    	inst.creature_use(cid, HEALING_HAND);
+    	inst.creature_use(cid, HEALING_SCREAM);
     	inst.exec(function() {
     		heal(cid, limit, on_healed);
     	});
@@ -182,7 +187,7 @@ function heal(cid, limit, on_healed) {
 function heal_sequence() {
 	spawn_adds();
     disengage_valkal();
-	inst.walk_then(cid_valkal1, loc_platform_centre, CREATURE_JOG_SPEED, 0, function() {
+	inst.walk_then(cid_valkal1, loc_platform_centre, -1, CREATURE_JOG_SPEED, 0, function(res) {
         inst.rotate_creature(cid_valkal1, 192);
         heal(cid_valkal1, 95, valkal_engage); 
 	});
@@ -195,7 +200,7 @@ function valkal_flee() {
    	inst.creature_chat(cid_valkal1, "s/", "This is not over...");
     disengage_valkal();
 	inst.queue(function() {
-		inst.walk_then(cid_valkal1, loc_trap_door, CREATURE_RUN_SPEED, 0, function() {
+		inst.walk_then(cid_valkal1, loc_trap_door, -1, CREATURE_RUN_SPEED, 0, function(res) {
 			inst.creature_chat(cid_valkal1, "s/", "... Follow if you dare");
         	inst.rotate_creature(cid_valkal1, 192);
 			inst.queue(function() {
@@ -220,9 +225,11 @@ function valkal_flee() {
    and picking another player to fight */
 function tribute() {
     disengage_valkal();
-	inst.walk_then(cid_valkal1, loc_platform_front, CREATURE_JOG_SPEED, 0, function() {
-        inst.rotate_creature(cid_valkal1, 192);
+	inst.walk_then(cid_valkal1, loc_platform_front, 192, CREATURE_JOG_SPEED, 0, function(res) {
+        if(debug)
+        	inst.info("Valkal home");
         inst.queue(function() {
+        	inst.info("Finding targets");
 	        local targets = inst.get_nearby_creature(300, cid_valkal1, TS_ENEMY_ALIVE, TS_NONE, TS_NONE);
 	        if(targets.len() > 0) {
 	            local cid = targets[randmodrng(0, targets.len())];
@@ -260,7 +267,23 @@ function tribute() {
 			}
 	    }, 1000);
     });
-    
+}
+
+/* Starts the Bringing Down The House sequence. Runs Valkal to just in front of the platform to
+   cast on the the centre of the room */
+function bringing_down_the_house() {
+    disengage_valkal();
+	inst.walk_then(cid_valkal1, loc_platform_front, 192, CREATURE_JOG_SPEED, 0, function(res) {
+		inst.set_creature_gtae_to(cid_valkal1, Vector3I(loc_room_centre.x, 480, loc_room_centre.z));
+        if(!inst.creature_use(cid_valkal1, BRINGING_DOWN_THE_HOUSE)) {
+        	if(debug)
+            	inst.info("Failed to bring down the house");
+            valkal_engage();
+        }
+        else {
+            inst.queue(valkal_engage, 10000);
+	    }
+    });
 }
 
 /* Reset the Valkal1 fight if the party wipe out */
@@ -269,21 +292,27 @@ function reset_valkal1() {
     disengage_valkal();
    	inst.creature_chat(cid_valkal1, "s/", "Will no one face me? ... Cowards");
 	valkal1_full_health_count = 0;
-	inst.walk_then(cid_valkal1, loc_platform_centre, CREATURE_WALK_SPEED, 0, function() {
+	inst.walk_then(cid_valkal1, loc_platform_centre, 192, CREATURE_WALK_SPEED, 0, function(res) {
 		inst.set_flag(cid_valkal1, SF_NON_COMBATANT, false);
-		inst.rotate_creature(cid_valkal1, 192);
 	});
 }
 
 /* Monitor Valkal1's health and trigger the various fight stages. */
 function valkal1_health() {
-	if(cid_valkal1 == 0)
+	if(cid_valkal1 == 0 || cid_valkal1 != 0)
 		return;
 
 	local health = inst.get_health_pc(cid_valkal1);
 
-	if(health == 100) {
-		if(valkal1_full_health_count == 50 && inst.is_at_tether(cid_valkal1)) {
+	if(health == -1) {
+		/* Valkal creature has disappeared (maybe an admin resetting a spawn?) 
+		 * so reset this stage entirely */
+		phase = 0;
+		inst.info("Resetting Valkal1");
+		inst.exec(find_valkal1);
+	}
+	else if(health == 100) {
+		if(valkal1_full_health_count == 12 && inst.is_at_tether(cid_valkal1)) {
 			// After a while at full health, reset entirely
 			reset_valkal1();
 		}
@@ -308,24 +337,28 @@ function valkal1_health() {
 	        if(debug)
 	        	inst.info("Bringing Down the House 3");
 	        phase = 9;        
+	        bringing_down_the_house();
 	    }
 	    else if(health <= 20 && phase < 8) {
 	        // Bringing Down the House 2
 	        if(debug)
 	        	inst.info("Bringing Down the House 2");
 	        phase = 8;
+	        bringing_down_the_house();
 	    }
 	    else if(health <= 25 && phase < 7) {
 	        // Heal 3
 	        if(debug)
 	        	inst.info("Heal 3");
 	        phase = 7;
+	        heal_sequence();
 	    }
 	    else if(health <= 30 && phase < 6) {
 	        // Bringing Down the House 1
 	        if(debug)
 	        	inst.info("Bringing Down the House 1");
 	        phase = 6;
+	        bringing_down_the_house();
 	    }
 	    else if(health <= 40 && phase < 5) {
 	        // Tribute 3
@@ -371,6 +404,12 @@ function valkal1_health() {
 		inst.exec(valkal1_health);
 	}
 
+}
+
+/* Debug function that can be run externally to set the phase */
+function debug_setphase(p) {
+	inst.info("Phase is now " + p);
+	phase = p.tointeger();
 }
 
 /* Initialisation. Start scanning for Valkal1 to spawn */

@@ -47,6 +47,8 @@ extern const double Cone_90;
 
 const float DEFAULT_CREATURE_SPEED = 50.0F;      //Should match the 'gDefaultCreatureSpeed' value in the client.  Number of units a creature moves per second.
 
+const int MOVEMENT_THRESHOLD = 30;
+
 //Helps determines where a buff came from.  This assists any function that may need to
 //add, update, or erase buffs from a particular source.
 struct BuffSource
@@ -505,6 +507,7 @@ public:
 	int lastIdleZ;          //If aggro, this is the previous idle location.
 	int tetherNodeX;        //The anchor point of the current tether location.
 	int tetherNodeZ;        //The anchor point of the current tether location.
+	int tetherFacing;		//The direction to face when tethered
 
 	bool initialisingAbilities; // Set to true when persistent abilities are being set up
 
@@ -608,13 +611,12 @@ public:
 	//Internal processing
 	int RemoveCreatureReference(CreatureInstance *target);
 	void RunAIScript(void);
-	void MoveToTarget(void);
-	void MoveToTarget_Ex(void);
 	int RotateToTarget(void);
 	int RunMovementStep(void);
-	int RunMovementStep2(void);
 	void UpdateDestination(void);
 	void MoveToTarget_Ex2(void);
+	void StopMovement(int result);
+	void MoveTo(int x, int z, int range, int speed);
 	void ProcessRegen(void);
 	void ProcessAutoAttack(void);
 	bool isNPCReadyMovement(void);

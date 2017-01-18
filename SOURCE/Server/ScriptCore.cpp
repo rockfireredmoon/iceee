@@ -164,6 +164,7 @@ namespace ScriptCore
 
 	NutCallback::NutCallback()
 	{
+		mResult = Result::WAITING;
 	}
 
 	NutCallback::~NutCallback()
@@ -183,6 +184,14 @@ namespace ScriptCore
 
 	bool TimeCondition::CheckCondition() {
 		return g_PlatformTime.getElapsedMilliseconds() >= mFireTime;
+	}
+
+	//
+	// 'Never' condition implementation. Prevents from ever running (until removed?)
+	//
+
+	bool NeverCondition::CheckCondition() {
+		return false;
 	}
 
 	//

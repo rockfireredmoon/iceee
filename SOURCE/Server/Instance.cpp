@@ -1894,6 +1894,7 @@ CreatureInstance* ActiveInstance :: SpawnCreate(CreatureInstance * sourceActor, 
 	newItem.BuildZoneString(mInstanceID, mZone, 0);
 	newItem.css.health = newItem.CalcRestrictedHealth(-1, false);
 	newItem.css.aggro_players = 1;
+	newItem.tetherFacing = sourceActor->Rotation;
 	newItem.tetherNodeX = newItem.CurrentX;
 	newItem.tetherNodeZ = newItem.CurrentZ;
 
@@ -2060,6 +2061,10 @@ CreatureInstance* ActiveInstance :: SpawnAtProp(int CDefID, int PropID, int dura
 	newItem.SetServerFlag(ServerFlags::LocalActive, true);
 	newItem.tetherNodeX = newItem.CurrentX;
 	newItem.tetherNodeZ = newItem.CurrentZ;
+
+	int facing = Util::QuaternionToByteFacing(so->QuatX, so->QuatY, so->QuatZ, so->QuatW);
+	newItem.tetherFacing =facing;
+
 #ifndef CREATUREMAP
 	NPCList.push_back(newItem); 
 	CreatureInstance *add = &NPCList.back();
@@ -2123,9 +2128,7 @@ void ActiveInstance :: RunDeath(CreatureInstance *object)
 
 int ActiveInstance :: EraseIndividualReference(CreatureInstance *object)
 {
-	if(object->scriptMoveEvent != -1 && nutScriptPlayer != NULL) {
-		nutScriptPlayer->Cancel(object->scriptMoveEvent);
-	}
+	object->StopMovement(ScriptCore::Result::INTERRUPTED);
 
 	//Search for a creature instance and remove all possible references to it
 	if(PlayerList.size() != PlayerListPtr.size())
