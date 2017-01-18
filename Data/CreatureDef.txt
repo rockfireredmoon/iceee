@@ -31873,7 +31873,6 @@ dexterity=131
 constitution=112
 psyche=92
 spirit=92
-base_damage_melee=164
 damage_resist_melee=2292
 damage_resist_fire=2292
 damage_resist_frost=2292
@@ -31884,11 +31883,13 @@ might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
+appearance=n4:{["a"]=[{["node"]="left_shoulder",["type"]="Armor-Base1A-Left_Pauldron",["colors"]=["940d0d","940d0d","bfbf9f"]},{["node"]="right_shoulder",["type"]="Armor-Base1A-Right_Pauldron",["colors"]=["940d0d","940d0d","bfbf9f"]},{["node"]="right_hand",["type"]="Item-1hMace-Epic4",["colors"]=["5f6878","a79c80","d17f19","2147df","56feff"]},{["node"]="left_hand",["type"]="Item-1hMace-High3",["colors"]=["71856e","ebaf20","652c2c","816f2b"]}],["c"]="Horde-Vampider",["sk"]={["base"]="576a58",["eye"]="ff0000",["hair"]="2a231d",["shell"]="6a4738",["trim"]="000000",["webbing"]="2a1c16"},["sz"]="1.2"}
 level=49
 display_name=Sanguispider
 profession=3
 creature_category=Mortal
 rarity=1
+base_damage_melee=164
 ai_package=4_rogue_30
 
 [ENTRY]
@@ -31923,7 +31924,6 @@ dexterity=128
 constitution=110
 psyche=89
 spirit=89
-base_damage_melee=160
 damage_resist_melee=2243
 damage_resist_fire=2243
 damage_resist_frost=2243
@@ -31934,11 +31934,13 @@ might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
+appearance=n4:{["a"]=[{["node"]="left_shoulder",["type"]="Armor-Base1A-Left_Pauldron",["colors"]=["940d0d","940d0d","bfbf9f"]},{["node"]="right_shoulder",["type"]="Armor-Base1A-Right_Pauldron",["colors"]=["940d0d","940d0d","bfbf9f"]},{["node"]="right_hand",["type"]="Item-1hMace-Epic4",["colors"]=["5f6878","a79c80","d17f19","2147df","56feff"]},{["node"]="left_hand",["type"]="Item-1hMace-High3",["colors"]=["71856e","ebaf20","652c2c","816f2b"]}],["c"]="Horde-Vampider",["sk"]={["base"]="c17646",["eye"]="ff4b4a",["hair"]="292a3c",["shell"]="35385c",["trim"]="474554",["webbing"]="a4b1d1"},["sz"]="1.2"}
 level=48
 display_name=Sanguispider
 profession=3
 creature_category=Unliving
 rarity=1
+base_damage_melee=160
 ai_package=4_rogue_30
 
 [ENTRY]
@@ -31999,7 +32001,6 @@ dexterity=115
 constitution=92
 psyche=135
 spirit=135
-base_damage_melee=169
 damage_resist_melee=2341
 damage_resist_fire=2341
 damage_resist_frost=2341
@@ -32010,13 +32011,14 @@ might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
+appearance=n4:{["sk"]={["water"]="3f0000",["water_blend"]="940000",["water_highlight"]="d40000"},["c"]="Horde-Elemental_Water",["sz"]="1.1"}
 level=50
 display_name=Blood Elemental
 profession=4
 creature_category=Unliving
 rarity=1
+base_damage_melee=169
 ai_package=4_mage_30
-
 
 [ENTRY]
 ID=1378
