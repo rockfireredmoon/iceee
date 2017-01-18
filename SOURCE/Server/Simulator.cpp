@@ -1901,6 +1901,8 @@ void SimulatorThread :: SetPersona(int personaIndex)
 		return;
 	}
 
+	int size = PrepExt_VelocityEvent(SendBuf, creatureInst);
+
 	//If an instance, reset players back to the start if nothing has been killed.
 	//Prevents an exploit with boss camping and relogging into spawned instances.
 	if(pld.zoneDef->IsDungeon() == true && creatureInst->actInst->mKillCount == 0)
@@ -3256,6 +3258,7 @@ void SimulatorThread :: SetPosition(int xpos, int ypos, int zpos, int update)
 			size += PrepExt_GeneralMoveUpdate(&SendBuf[size],creatureInst);
 			if(g_Config.UseStopSwim == true)
 				size += PrepExt_ModStopSwimFlag(&SendBuf[size], false);
+			size += PrepExt_VelocityEvent(&SendBuf[size], creatureInst);
 			AttemptSend(SendBuf, size);
 		}
 		else
@@ -3263,6 +3266,7 @@ void SimulatorThread :: SetPosition(int xpos, int ypos, int zpos, int update)
 			int size = PrepExt_UpdateFullPosition(SendBuf, creatureInst);
 			if(g_Config.UseStopSwim == true)
 				size += PrepExt_ModStopSwimFlag(&SendBuf[size], false);
+			size += PrepExt_VelocityEvent(&SendBuf[size], creatureInst);
 			creatureInst->actInst->LSendToLocalSimulator(SendBuf, size, creatureInst->CurrentX, creatureInst->CurrentZ);
 		}
 
@@ -15211,7 +15215,8 @@ int SimulatorThread :: handle_query_script_exec(void)
 		if(inst->nutScriptPlayer != NULL) {
 			std::vector<ScriptCore::ScriptParam> p;
 			for(uint i = 1 ; i < query.argCount; i++) {
-				p.push_back(ScriptCore::ScriptParam(query.GetString(i)));
+				string s = query.GetString(i);
+				p.push_back(ScriptCore::ScriptParam(s));
 			}
 			inst->nutScriptPlayer->JumpToLabel(funcName.c_str(), p);
 		}

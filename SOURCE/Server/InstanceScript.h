@@ -36,6 +36,7 @@ public:
 
 class AbstractInstanceNutPlayer: public ScriptCore::NutPlayer {
 public:
+
 	AbstractInstanceNutPlayer();
 	virtual ~AbstractInstanceNutPlayer();
 	void SetInstancePointer(ActiveInstance *parent);
@@ -145,9 +146,9 @@ public:
 	int LoadSpawnTile(Squirrel::Point location);
 	int DespawnAll(int CDefID);
 	int GetHealthPercent(int cid);
-	void Walk(int CID, Squirrel::Point point, int speed, int range);
-	void WalkThen(int CID, Squirrel::Point point, int speed, int range, Sqrat::Function onArrival);
-	void TempWalkThen(int CID, Squirrel::Point point, int speed, int range, Sqrat::Function onArrival);
+	long Walk(int CID, Squirrel::Point point, int facing, int speed, int range);
+	long WalkThen(int CID, Squirrel::Point point, int facing, int speed, int range, Sqrat::Function onArrival);
+	long TempWalkThen(int CID, Squirrel::Point point, int facing, int speed, int range, Sqrat::Function onArrival);
 	int Spawn(int propID, int creatureID, int flags);
 	int SpawnAt(int creatureID, Squirrel::Vector3I location, int facing, int flags);
 	int OLDSpawnAt(int creatureID, float x, float y, float z, int facing, int flags);
@@ -194,36 +195,23 @@ class WalkCallback : public ScriptCore::NutCallback
 {
 public:
 	CreatureInstance *mCreature;
-	bool sScriptMovement;
 	int sPreviousPathNode;
 	int sNextPathNode;
 	int sTetherNodeX;
 	int sTetherNodeZ;
-	int sDesLocX;
-	int sDesLocZ;
-	int sDesiredRange;
-	int sDesiredSpeed;
+	int sTetherNodeFacing;
 
-	bool mRunFunction;
 	bool mReset;
 	ScriptCore::NutPlayer* mNut;
 	Sqrat::Function mFunction;		//Function to jump to
 
-	WalkCallback(ScriptCore::NutPlayer *nut, CreatureInstance *creature, Squirrel::Point point, int speed, int range, bool mReset);
-	WalkCallback(ScriptCore::NutPlayer *nut, CreatureInstance *creature, Squirrel::Point point, int speed, int range, Sqrat::Function onArrival, bool mReset);
+	WalkCallback(ScriptCore::NutPlayer *nut, CreatureInstance *creature, Squirrel::Point point, int facing, int speed, int range, bool mReset);
+	WalkCallback(ScriptCore::NutPlayer *nut, CreatureInstance *creature, Squirrel::Point point, int facing, int speed, int range, Sqrat::Function onArrival, bool mReset);
 	~WalkCallback ();
 	bool Execute();
 	void Reset();
 private:
-	void Init(ScriptCore::NutPlayer *nut, CreatureInstance *creature, Squirrel::Point point, int speed, int range, bool reset);
-};
-
-class WalkCondition : public ScriptCore::NutCondition
-{
-public:
-	CreatureInstance *cInst;
-	WalkCondition(CreatureInstance *c);
-	virtual bool CheckCondition();
+	void Init(ScriptCore::NutPlayer *nut, CreatureInstance *creature, Squirrel::Point point, int facing, int speed, int range, bool reset);
 };
 
 class InstanceScriptDef: public ScriptCore::ScriptDef {

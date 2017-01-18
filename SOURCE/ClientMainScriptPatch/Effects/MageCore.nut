@@ -2839,9 +2839,43 @@ class this.EffectDef.WildFireSecondaryHit extends this.EffectDef.TemplateBasic
 
 }
 
-class this.EffectDef.BringingDowntheHouse extends this.EffectDef.TemplateBasic
+class this.EffectDef.BringingDownTheHouseWarmup extends this.EffectDef.TemplateWarmup
 {
-	static mEffectName = "BringingDowntheHouse";
+	static mEffectName = "BringingDownTheHouseWarmup";
+	mLoopSound = "Sound-Ability-Energy2_Warmup.ogg";
+	function onStart( ... )
+	{
+		if (!this._sourceCheck())
+		{
+			return;
+		}
+
+		local warmup = this.createGroup("Warmup", this.getSource());
+		warmup.add("ParticleSystem", {
+			particleSystem = "Par-Elemental_Earth_Core",
+			emitterPoint = "casting"
+		});
+		warmup.add("ParticleSystem", {
+			particleSystem = "Par-House_Down_Warmup_Rocks",
+			emitterPoint = "casting"
+		});
+		warmup.add("ParticleSystem", {
+			particleSystem = "Par-House_Down_Warmup_Smoke",
+			emitterPoint = "casting"
+		});
+		warmup.add("FFAnimation", {
+			animation = "Magic_Casting",
+			loop = true
+		});
+		this.onLoopSound();
+		this.fireIn(this.mMaxWarmupTime, "onAbilityCancel");
+	}
+
+}
+
+class this.EffectDef.BringingDownTheHouse extends this.EffectDef.TemplateBasic
+{
+	static mEffectName = "BringingDownTheHouse";
 	mSound = "Sound-Ability-Froststorm_Effect.ogg";
 	mCount = 0;
 	mCTargets = null;
@@ -2933,11 +2967,11 @@ class this.EffectDef.BringingDowntheHouse extends this.EffectDef.TemplateBasic
 		});
 		local particles = this.createGroup("Particles", this.getSource());
 		particles.add("ParticleSystem", {
-			particleSystem = "Par-Ice_Hand4",
+			particleSystem = "Par-Rock_Hand",
 			emitterPoint = "casting"
 		});
 		particles.add("ParticleSystem", {
-			particleSystem = "Par-Ice_Hand_Mist",
+			particleSystem = "Par-Elemental_Earth_Core",
 			emitterPoint = "casting"
 		});
 		this.fireIn(0.40000001, "onStormCloud");
@@ -2950,7 +2984,7 @@ class this.EffectDef.BringingDowntheHouse extends this.EffectDef.TemplateBasic
 		this.get("Particles").finish();
 		local burst = this.createGroup("Burst", this.getSource());
 		burst.add("ParticleSystem", {
-			particleSystem = "Par-Frost_Storm_Cast_Burst",
+			particleSystem = "Par-WalkInShadow_Burst",
 			emitterPoint = "right_hand"
 		});
 		this.fireIn(0.1, "onBurstStop");
@@ -2965,11 +2999,11 @@ class this.EffectDef.BringingDowntheHouse extends this.EffectDef.TemplateBasic
 			fadeIn = 500,
 			fadeOut = 500,
 			target = cloud.getObject(),
-			textureName = "FrostStorm_Ring.png",
-			orthoWidth = 300,
-			orthoHeight = 300,
+			textureName = "bigcracks.png",
+			orthoWidth = 500,
+			orthoHeight = 500,
 			offset = this.Vector3(0, 200, 0),
-			far = 300,
+			far = 500,
 			additive = true
 		});
 		local time = 0.40000001;
@@ -2995,6 +3029,7 @@ class this.EffectDef.BringingDowntheHouse extends this.EffectDef.TemplateBasic
 	function onProjectile( ... )
 	{
 		local botTarget;
+		this.addShaky(65, 0.5, 300.0);
 
 		if (this.mInitialCount < 5 || this.mMainTargets.len() <= this.mMainCount)
 		{
@@ -3013,36 +3048,36 @@ class this.EffectDef.BringingDowntheHouse extends this.EffectDef.TemplateBasic
 		proj.add("MoveToTarget", {
 			source = topTarget.getObject(),
 			target = botTarget.getObject(),
-			intVelocity = 6.0,
-			accel = 12.0,
-			topSpeed = 100.0,
+			intVelocity = 2.0,
+			accel = 6.0,
+			topSpeed = 30.0,
 			orient = true
 		});
 		proj.add("Mesh", {
-			mesh = "Item-Shard.mesh",
+			mesh = "Item-Orbit_Rock1.mesh",
 			fadeInTime = 0.050000001
 		});
 		proj.add("ParticleSystem", {
-			particleSystem = "Par-Frost_Storm_Ball",
+			particleSystem = "Par-House_Down_Ball",
 			emitterPoint = "node"
 		});
 		proj.add("ParticleSystem", {
-			particleSystem = "Par-Frost_Storm_Snow",
+			particleSystem = "Par-House_Down_Bits",
 			emitterPoint = "node"
 		});
-		proj.add("Ribbon", {
+		/*proj.add("Ribbon", {
 			offset = -3.0,
 			width = 6.0,
 			height = 5.0,
 			maxSegments = 32,
-			initialColor = "009cff",
+			initialColor = "7788aa",
 			colorChange = [
 				2.0,
 				2.0,
 				2.0,
 				2.0
 			]
-		});
+		});*/
 		proj.add("ScaleTo", {
 			size = 2.0,
 			maintain = true,
@@ -3079,7 +3114,7 @@ class this.EffectDef.BringingDowntheHouse extends this.EffectDef.TemplateBasic
 				{
 					if (botTarget == k)
 					{
-						botTarget.cue("FrostStormHit", botTarget);
+						botTarget.cue("BringingDownTheHouseHit", botTarget);
 						botTarget.uncork();
 					}
 				}
@@ -3090,6 +3125,29 @@ class this.EffectDef.BringingDowntheHouse extends this.EffectDef.TemplateBasic
 				this.mCTargets.remove(i);
 			}
 		}
+	}
+
+}
+
+class this.EffectDef.BringingDownTheHouseHit extends this.EffectDef.TemplateBasic
+{
+	static mEffectName = "BringingDownTheHouseHit";
+	function onStart( ... )
+	{
+		if (!this._sourceCheck())
+		{
+			return;
+		}
+
+		local hit = this.createGroup("Hit", this.getSource());
+		hit.add("FFAnimation", {
+			animation = "$HIT$"
+		});
+		hit.add("ParticleSystem", {
+			particleSystem = "Par-PelletHit",
+			emitterPoint = "node"
+		});
+		this.fireIn(0.75, "onDone");
 	}
 
 }

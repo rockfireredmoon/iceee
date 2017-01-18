@@ -545,7 +545,7 @@ CreatureInstance * SpawnTile :: SpawnCreature(ActiveInstance *inst, ActiveSpawne
 		if(strlen(spawner->spawnPoint->extraData->aiModule) > 0)
 			newItem.css.SetAIPackage(spawner->spawnPoint->extraData->aiModule);
 	}
-	
+	newItem.tetherFacing = facing;
 	newItem.Speed = 0;
 	newItem.Heading = facing;
 	newItem.Rotation = facing;

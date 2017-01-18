@@ -2077,10 +2077,12 @@ class this.Connection extends this.MessageBroadcaster
 			local heading = this.rot2rad(hb);
 			local rotation = this.rot2rad(rb);
 			local speed = data.getByte() & 255;
+			
+			print("ICE! 26 - Server velocity update " + heading + "," + rotation + "," + speed + "\n");
 
 			if (::_avatar)
 			{
-				print("ICE! 26 - Server velocity update " + heading + "," + rotation + "," + speed + "\n");
+				print("ICE! 26 - Avatar Server velocity update " + heading + "," + rotation + "," + speed + "\n");
 				// TODO ... not suure about this, just trying to force an update
 				::_avatar.mLastServerUpdate = null;
 				::_avatar.onServerVelocity(heading, rotation, speed);

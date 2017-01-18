@@ -72702,3 +72702,313 @@ particle_system Par-Hellfire_Impact_FireRing
 	}
 }
 
+
+
+particle_system Par-House_Down_Warmup_Smoke
+{
+	quota	60
+	material	Particles/smoke
+	particle_width	3
+	particle_height	3
+	cull_each	false
+	renderer	billboard
+	sorted	false
+	local_space	true
+	iteration_interval	0
+	nonvisible_update_timeout	0
+	billboard_type	oriented_self
+	billboard_origin	center
+	billboard_rotation_type	vertex
+	common_up_vector	0 1 0
+	point_rendering	false
+	accurate_facing	false
+
+	emitter Point
+	{
+		angle	180
+		colour	0 0 0 1
+		colour_range_start	0 0 0 1
+		colour_range_end	0 0 0 1
+		direction	0 1 0
+		emission_rate	60
+		position	0 0 0
+		velocity	10
+		velocity_min	10
+		velocity_max	20
+		time_to_live	0.2
+		time_to_live_min	0.2
+		time_to_live_max	0.4
+		duration	0
+		duration_min	0
+		duration_max	0
+		repeat_delay	0
+		repeat_delay_min	0
+		repeat_delay_max	0
+	}
+
+	affector ColourInterpolator
+	{
+		colour0	0 0 0 1
+		time0	0
+		colour1	0.752941 0.752941 0.752941 1
+		time1	0.2
+		colour2	0.501961 0.501961 0.501961 1
+		time2	0.4
+		colour3	0.901961 0.901961 0.901961 1
+		time3	0.6
+		colour4	0.601961 0.601961 0.601961 1
+		time4	0.8
+		colour5	0 0 0 1
+		time5	1
+	}
+
+	affector Rotator
+	{
+		rotation_speed_range_start	0
+		rotation_speed_range_end	0
+		rotation_range_start	0
+		rotation_range_end	0
+	}
+
+	affector Scaler
+	{
+		rate	-2
+	}
+}
+
+
+
+particle_system Par-House_Down_Warmup_Rocks
+{
+	quota	40
+	material	Particles/rockchunk1
+	particle_width	5
+	particle_height	5
+	cull_each	false
+	renderer	billboard
+	sorted	false
+	local_space	false
+	iteration_interval	0
+	nonvisible_update_timeout	0
+	billboard_type	point
+	billboard_origin	center
+	billboard_rotation_type	vertex
+	common_up_vector	0 1 0
+	point_rendering	false
+	accurate_facing	false
+
+	emitter Point
+	{
+		angle	76
+		colour	1 1 1 1
+		colour_range_start	1 1 1 1
+		colour_range_end	1 1 1 1
+		direction	0 0 1
+		emission_rate	20
+		position	0 0 0
+		velocity	-20
+		velocity_min	-20
+		velocity_max	-30
+		time_to_live	1.5
+		time_to_live_min	1.5
+		time_to_live_max	1.5
+		duration	0
+		duration_min	0
+		duration_max	0
+		repeat_delay	0
+		repeat_delay_min	0
+		repeat_delay_max	0
+	}
+
+	affector ColourInterpolator
+	{
+		colour0	1 1 1 1
+		time0	0
+		colour1	1 1 1 1
+		time1	0.2
+		colour2	0.752941 0.752941 0.752941 1
+		time2	0.4
+		colour3	0.501961 0.501961 0.501961 1
+		time3	0.6
+		colour4	0.247059 0.247059 0.247059 1
+		time4	0.8
+		colour5	0 0 0 1
+		time5	1
+	}
+
+	affector Scaler
+	{
+		rate	-2
+	}
+
+	affector Rotator
+	{
+		rotation_speed_range_start	40
+		rotation_speed_range_end	80
+		rotation_range_start	0
+		rotation_range_end	360
+	}
+
+	affector LinearForce
+	{
+		force_vector	0 -30 0
+		force_application	add
+	}
+}
+
+
+
+particle_system Par-House_Down_Ball
+{
+	quota	500
+	material	Particles/Fog1
+	particle_width	20
+	particle_height	20
+	cull_each	false
+	renderer	billboard
+	sorted	false
+	local_space	true
+	iteration_interval	0
+	nonvisible_update_timeout	0
+	billboard_type	point
+	billboard_origin	center
+	billboard_rotation_type	vertex
+	common_up_vector	0 1 0
+	point_rendering	false
+	accurate_facing	false
+
+	emitter Point
+	{
+		angle	180
+		colour	0 0 0 1
+		colour_range_start	0 0 0 1
+		colour_range_end	0 0 0 1
+		direction	0 0 -1
+		emission_rate	50
+		position	0 0 0
+		velocity	3
+		velocity_min	3
+		velocity_max	3
+		time_to_live	0.4
+		time_to_live_min	0.4
+		time_to_live_max	0.6
+		duration	0
+		duration_min	0
+		duration_max	0
+		repeat_delay	0
+		repeat_delay_min	0
+		repeat_delay_max	0
+	}
+
+	affector Scaler
+	{
+		rate	-30
+	}
+
+	affector ColourInterpolator
+	{
+		colour0	0 0 0 0
+		time0	0
+		colour1	0.8 0.8 0.8 0.5
+		time1	0.2
+		colour2	0.7 0.7 0.7 0.8
+		time2	0.4
+		colour3	0.8 0.8 0.8 0.9
+		time3	0.6
+		colour4	0.6 0.6 0.6 1
+		time4	0.8
+		colour5	0 0 0 0
+		time5	1
+	}
+
+	affector LinearForce
+	{
+		force_vector	0 0 200
+		force_application	add
+	}
+
+	affector Rotator
+	{
+		rotation_speed_range_start	90
+		rotation_speed_range_end	0
+		rotation_range_start	360
+		rotation_range_end	0
+	}
+}
+
+
+
+particle_system Par-House_Down_Bits
+{
+	quota	40
+	material	Particles/Snowflake_Add
+	particle_width	5
+	particle_height	5
+	cull_each	false
+	renderer	billboard
+	sorted	false
+	local_space	false
+	iteration_interval	0
+	nonvisible_update_timeout	0
+	billboard_type	point
+	billboard_origin	center
+	billboard_rotation_type	vertex
+	common_up_vector	0 1 0
+	point_rendering	false
+	accurate_facing	false
+
+	emitter Point
+	{
+		angle	76
+		colour	1 1 1 1
+		colour_range_start	1 1 1 1
+		colour_range_end	1 1 1 1
+		direction	0 0 1
+		emission_rate	20
+		position	0 0 0
+		velocity	-20
+		velocity_min	-20
+		velocity_max	-30
+		time_to_live	1.5
+		time_to_live_min	1.5
+		time_to_live_max	1.5
+		duration	0
+		duration_min	0
+		duration_max	0
+		repeat_delay	0
+		repeat_delay_min	0
+		repeat_delay_max	0
+	}
+
+	affector ColourInterpolator
+	{
+		colour0	1 1 1 1
+		time0	0
+		colour1	1 1 1 1
+		time1	0.2
+		colour2	0.752941 0.752941 0.752941 1
+		time2	0.4
+		colour3	0.501961 0.501961 0.501961 1
+		time3	0.6
+		colour4	0.247059 0.247059 0.247059 1
+		time4	0.8
+		colour5	0 0 0 1
+		time5	1
+	}
+
+	affector Rotator
+	{
+		rotation_speed_range_start	40
+		rotation_speed_range_end	80
+		rotation_range_start	0
+		rotation_range_end	360
+	}
+
+	affector LinearForce
+	{
+		force_vector	0 -30 0
+		force_application	add
+	}
+}
+
+

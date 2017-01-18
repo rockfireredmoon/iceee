@@ -516,6 +516,7 @@ void CreatureInstance :: Clear(void)
 	lastIdleZ = 0;
 	tetherNodeX = 0;
 	tetherNodeZ = 0;
+	tetherFacing = 0;
 
 	ClearAppearanceModifiers();
 
@@ -4904,11 +4905,7 @@ void CreatureInstance :: CheckMostHatedTarget(bool forceCheck)
 			{
 				SetServerFlag(ServerFlags::Taunted, false);
 				if(dist > TAUNT_BECKON_DISTANCE)
-				{
-					CurrentTarget.DesLocX = targ->CurrentX;
-					CurrentTarget.DesLocZ = targ->CurrentZ;
-					CurrentTarget.desiredRange = TAUNT_BECKON_DISTANCE;
-				}
+					MoveTo(targ->CurrentX, targ->CurrentZ, TAUNT_BECKON_DISTANCE, 0);
 			}
 			return;
 		}
@@ -5116,365 +5113,6 @@ void CreatureInstance :: CheckPathLocation(void)
 	Speed = CREATURE_WALK_SPEED;
 }
 
-void CreatureInstance :: MoveToTarget(void)
-{
-	if(CurrentTarget.targ == NULL)
-		return;
-
-	int nextMoveTime = 1000;
-	if(CurrentTarget.targ != NULL)
-		nextMoveTime = 500;
-
-	bool update = false;
-
-	int tx = CurrentTarget.targ->CurrentX;
-	int tz = CurrentTarget.targ->CurrentZ;
-	int xlen = tx - CurrentX;
-	int zlen = tz - CurrentZ;
-	float rotf = (float)atan2((double)xlen, (double)zlen);
-
-	unsigned char rot = (unsigned char)(rotf * 256.0F / 6.283185F);
-	if(rot != Rotation)
-	{
-		Rotation = rot;
-		Heading = rot;
-		update = true;
-	}
-
-	int dist = actInst->GetPlaneRange(this, CurrentTarget.targ, SANE_DISTANCE);
-	if(CurrentTarget.desiredRange > 0)
-	{
-		update = true;
-		if(dist <= CurrentTarget.desiredRange)
-		{
-			CurrentTarget.desiredRange = 0;
-			CurrentTarget.desiredSpeed = 0;
-			CurrentTarget.bInstigated = false;
-			Speed = 0;
-		}
-		else
-		{
-			if(Speed == 0)
-			{
-				Speed = 100;
-			}
-			else
-			{
-				//Estimated in game, 500 units in 10 seconds at 100% speed
-				// = 112.5 units in 2.25 seconds at 100% speed
-
-				float stepAmount = 50.0F * ((float)nextMoveTime / 1000.0F);
-				int maxmove = (int)(stepAmount * ((float)Speed / 100.0F));
-				int distRemain = dist - CurrentTarget.desiredRange + 5;
-				//int maxmove = (int)(115.0F * ((float)Speed / 100.0F));
-				if(distRemain > maxmove)
-					distRemain = maxmove;
-				g_Log.AddMessageFormat("Dist: %d, Remain: %d, YOffs: %d speed: %d", dist, distRemain, CurrentY - CurrentTarget.targ->CurrentY, Speed);
-
-				float angle = (float)Heading * 6.283185F / 256.0F;
-				CurrentZ += (int)((float)distRemain * cos(angle));
-				CurrentX += (int)((float)distRemain * sin(angle));
-				if((dist - CurrentTarget.desiredRange - distRemain) < maxmove)
-				{
-					nextMoveTime = (int)(500 * ((float)(dist - CurrentTarget.desiredRange - distRemain) / (float)maxmove));
-					if(nextMoveTime < 150)
-						nextMoveTime = 150;
-				}
-				//Speed = (int)((float)Speed * ((float)distRemain / (float)maxmove));
-				//update = true;
-			}
-		}
-	}
-
-	movementTime = g_ServerTime + nextMoveTime;
-
-	if(dist > MAX_ATTACK_RANGE)
-	{
-		if(CurrentTarget.bInstigated == false)
-		{
-			SelectTarget(NULL);
-			Speed = 0;
-			update = true;
-		}
-	}
-
-	if(update == true)
-	{
-		int size = PrepExt_GeneralMoveUpdate(GSendBuf, this);
-		//actInst->LSendToAllSimulator(GSendBuf, size, -1);
-		actInst->LSendToLocalSimulator(GSendBuf, size, CurrentX, CurrentZ);
-	}
-
-
-	/*
-	if(CurrentTarget.targ == NULL)
-		return;
-
-	int nextMoveTime = 2250;
-	bool velChange = false;
-	bool posChange = false;
-
-	int tx = CurrentTarget.targ->CurrentX;
-	int tz = CurrentTarget.targ->CurrentZ;
-	int xlen = tx - CurrentX;
-	int zlen = tz - CurrentZ;
-	float rotf = (float)atan2((double)xlen, (double)zlen);
-
-	unsigned char rot = (unsigned char)(rotf * 256.0F / 6.283185F);
-	if(rot != Rotation)
-	{
-		Rotation = rot;
-		Heading = rot;
-		velChange = true;
-	}
-
-	int dist = actInst->GetActualRange(this, CurrentTarget.targ);
-	if(CurrentTarget.desiredRange > 0)
-	{
-		if(dist <= CurrentTarget.desiredRange)
-		{
-			CurrentTarget.desiredRange = 0;
-			Speed = 0;
-			velChange = true;
-		}
-		else
-		{
-			//Estimated in game, 500 units in 10 seconds at 100% speed
-			int testTime = (int)(((float)dist / 45.0F) * 1000.F);
-			if(testTime > 1000)
-				testTime = 1000;
-			nextMoveTime = testTime;
-
-			//Update location
-			if(Speed == 0)
-			{
-				if(testTime < 1000)
-					Speed = (int)(45.0F * ((float)testTime / 1000.F) + 1);
-				else
-					Speed = 45;
-				velChange = true;
-			}
-			float angle = (float)Heading * 6.283185F / 256.0F;
-			CurrentZ += (int)((float)Speed * cos(angle));
-			CurrentX += (int)((float)Speed * sin(angle));
-			posChange = true;
-		}
-	}
-
-	movementTime = g_ServerTime + nextMoveTime;
-
-	if(dist >= DEFAULT_AGGRO_RANGE)
-	{
-		Speed = 0;
-		CurrentTarget.targ = NULL;
-		velChange = true;
-	}
-
-	int size = 0;
-	if(velChange == true)
-		size += PrepExt_UpdateVelocity(GSendBuf, this);
-	if(posChange == true)
-		size += PrepExt_UpdatePosInc(&GSendBuf[size], this);
-
-	if(size > 0)
-		actInst->LSendToAllSimulator(GSendBuf, size, -1);
-		*/
-}
-
-void CreatureInstance :: MoveToTarget_Ex(void)
-{
-	const static int MOV_REQDIST = 50;
-	const static int REQDIST = 100;
-	const static int FARDIST = 350;
-	const static int YOFFSET = 50;
-	const static int CLOSE_SCATTER_RANGE = 15;
-	if(CurrentTarget.DesLocX == 0)
-	{
-		if(CurrentTarget.targ == NULL)
-		{
-			if(AnchorObject == NULL)
-				return;
-
-			int dist = actInst->GetPlaneRange(this, AnchorObject, SANE_DISTANCE);
-			int yoffs = abs(CurrentY - AnchorObject->CurrentY);
-			if(dist > FARDIST || yoffs > YOFFSET)
-			{
-				CurrentX = AnchorObject->CurrentX + randint(-CLOSE_SCATTER_RANGE, CLOSE_SCATTER_RANGE);
-				CurrentY = AnchorObject->CurrentY;
-				CurrentZ = AnchorObject->CurrentZ + randint(-CLOSE_SCATTER_RANGE, CLOSE_SCATTER_RANGE);
-				int size = PrepExt_UpdateFullPosition(GSendBuf, this);
-				//actInst->LSendToAllSimulator(GSendBuf, size, -1);
-				actInst->LSendToLocalSimulator(GSendBuf, size, CurrentX, CurrentZ);
-				movementTime = g_ServerTime + 1000;
-				return;
-			}
-			int cmp = REQDIST;
-			if(AnchorObject->Speed != 0)
-				cmp = MOV_REQDIST;
-			if(dist > cmp)
-			{
-				//Get angle from the perspective of the host (target is self)
-				int xlen = CurrentX - AnchorObject->CurrentX;
-				int zlen = CurrentZ - AnchorObject->CurrentZ;
-				//int xlen = AnchorObject->CurrentX - CurrentX;
-				//int zlen = AnchorObject->CurrentZ - CurrentZ;
-				float rotf = (float)atan2((double)xlen, (double)zlen);
-
-				//Take this angle and project a point location away from it that's just within
-				//the desired range.
-				CurrentTarget.desiredRange = cmp;
-
-				if(AnchorObject->Speed == 0)
-				{
-					CurrentTarget.DesLocZ = AnchorObject->CurrentZ + (int)((float)(REQDIST - 5) * cos(rotf));
-					CurrentTarget.DesLocX = AnchorObject->CurrentX + (int)((float)(REQDIST - 5) * sin(rotf));
-				}
-				else
-				{
-					CurrentTarget.DesLocX = AnchorObject->CurrentX + randint(-CLOSE_SCATTER_RANGE, CLOSE_SCATTER_RANGE);
-					CurrentTarget.DesLocZ = AnchorObject->CurrentZ + randint(-CLOSE_SCATTER_RANGE, CLOSE_SCATTER_RANGE);
-				}
-			}
-		}
-		else
-		{
-			if(CurrentTarget.desiredRange != 0)
-			{
-				int dist = actInst->GetPlaneRange(this, CurrentTarget.targ, SANE_DISTANCE);
-				if(dist > CurrentTarget.desiredRange)
-				{
-					int xlen = CurrentX - CurrentTarget.targ->CurrentX;
-					int zlen = CurrentZ - CurrentTarget.targ->CurrentZ;
-					float rotf = (float)atan2((double)xlen, (double)zlen);
-
-					//Take this angle and project a point location away from it that's just within
-					//the desired range.
-
-					CurrentTarget.DesLocZ = CurrentTarget.targ->CurrentZ + (int)((float)(CurrentTarget.desiredRange - 5) * cos(rotf));
-					CurrentTarget.DesLocX = CurrentTarget.targ->CurrentX + (int)((float)(CurrentTarget.desiredRange - 5) * sin(rotf));
-				}
-			}
-		}
-	}
-
-	int nextMoveTime = 1000; //2250;
-
-	int tx;
-	int tz;
-	if(CurrentTarget.DesLocX == 0)
-	{
-		if(CurrentTarget.targ != NULL)
-		{
-			tx = CurrentTarget.targ->CurrentX;
-			tz = CurrentTarget.targ->CurrentZ;
-			nextMoveTime = 500;
-		}
-		else if(AnchorObject != NULL)
-		{
-			tx = AnchorObject->CurrentX;
-			tz = AnchorObject->CurrentZ;
-		}
-	}
-	else
-	{
-		tx = CurrentTarget.DesLocX;
-		tz = CurrentTarget.DesLocZ;
-		nextMoveTime = 500;
-	}
-
-	//Get current distance from target point
-	int xlen = tx - CurrentX;
-	int zlen = tz - CurrentZ;
-	//int xlen = CurrentX - CurrentTarget.DesLocX;
-	//int zlen = CurrentZ - CurrentTarget.DesLocZ;
-	float rotf = (float)atan2((double)xlen, (double)zlen);
-
-	bool update = false;
-	unsigned char rot = (unsigned char)(rotf * 256.0F / 6.283185F);
-	if(rot != Rotation)
-	{
-		Rotation = rot;
-		Heading = rot;
-		update = true;
-	}
-
-	if(CurrentTarget.DesLocX == 0)
-	{
-		if(update == true)
-		{
-			//Just update rotation and quit.
-			int size = PrepExt_UpdateVelocity(GSendBuf, this);
-			//actInst->LSendToAllSimulator(GSendBuf, size, -1);
-			actInst->LSendToLocalSimulator(GSendBuf, size, CurrentX, CurrentZ);
-		}
-		movementTime = g_ServerTime + nextMoveTime;
-		return;
-	}
-
-	update = true;
-	int dist = (int)sqrt((double)((xlen * xlen) + (zlen * zlen)));
-	if(dist < 30)
-	{
-		//g_Log.AddMessageFormat("Stopping (Dist: %d) (Desired: %d)", (int)dist, CurrentTarget.desiredRange);
-		Speed = 0;
-		CurrentX = CurrentTarget.DesLocX;
-		CurrentZ = CurrentTarget.DesLocZ;
-		CurrentTarget.DesLocX = 0;
-		CurrentTarget.DesLocZ = 0;
-		CurrentTarget.desiredRange = 0;
-		CurrentTarget.desiredSpeed = 0;
-		int size = PrepExt_GeneralMoveUpdate(GSendBuf, this);
-		//actInst->LSendToAllSimulator(GSendBuf, size, -1);
-		actInst->LSendToLocalSimulator(GSendBuf, size, CurrentX, CurrentZ);
-		movementTime = g_ServerTime + nextMoveTime;
-		SetServerFlag(ServerFlags::CalledBack, false);
-		return;
-	}
-	else
-	{
-		int tSpeed = 100;
-		if(AnchorObject != NULL)
-			if(AnchorObject->Speed > 100)
-				tSpeed = AnchorObject->Speed + 20;
-		if(tSpeed <= 255)
-			Speed = tSpeed;
-		else
-			Speed = 255;
-
-		//Estimated in game, 500 units in 10 seconds at 100% speed
-		// = 112.5 units in 2.25 seconds at 100% speed
-		// = 50.0 units in 1.0 seconds.
-
-		int distRemain = dist;
-
-		float stepAmount = 50.0F * ((float)nextMoveTime / 1000.0F);
-		int maxmove = (int)(stepAmount * ((float)Speed / 100.0F));
-		if(distRemain > maxmove)
-			distRemain = maxmove;
-
-		float angle = (float)Heading * 6.283185F / 256.0F;
-		CurrentZ += (int)((float)distRemain * cos(angle));
-		CurrentX += (int)((float)distRemain * sin(angle));
-		//g_Log.AddMessageFormat("distRemain:%d, dist:%d", distRemain, dist);
-		if(distRemain < maxmove)
-		{
-			//nextMoveTime = (int)(900 * ((float)distRemain / (float)maxmove));
-			if(nextMoveTime < 150)
-				nextMoveTime = 150;
-		}
-	}
-
-	movementTime = g_ServerTime + nextMoveTime;
-	//g_Log.AddMessageFormat("Movement step:%d", nextMoveTime);
-
-	if(update == true)
-	{
-		int size = PrepExt_GeneralMoveUpdate(GSendBuf, this);
-		//actInst->LSendToAllSimulator(GSendBuf, size, -1);
-		actInst->LSendToLocalSimulator(GSendBuf, size, CurrentX, CurrentZ);
-	}
-}
-
 int CreatureInstance :: RotateToTarget(void)
 {
 	if(CurrentTarget.targ == NULL)
@@ -5546,10 +5184,7 @@ int CreatureInstance :: RunMovementStep(void)
 		}
 
 		Speed = 0;
-		CurrentTarget.DesLocX = 0;
-		CurrentTarget.DesLocZ = 0;
-		CurrentTarget.desiredRange = 0;
-		CurrentTarget.desiredSpeed = 0;
+		StopMovement(ScriptCore::Result::OK);
 		SetServerFlag(ServerFlags::CalledBack, false);
 	}
 	else
@@ -5635,87 +5270,6 @@ int CreatureInstance :: RunMovementStep(void)
 	return 1;
 }
 
-int CreatureInstance :: RunMovementStep2(void)
-{
-	int nextMoveTime = 2000;
-
-	if(CurrentTarget.targ != NULL)
-		nextMoveTime = 500;
-
-	if(CurrentTarget.DesLocX == 0 && CurrentTarget.DesLocZ == 0)
-	{
-		movementTime = g_ServerTime + 2000;
-		return 0;
-	}
-
-	int xlen = CurrentTarget.DesLocX - CurrentX;
-	int zlen = CurrentTarget.DesLocZ - CurrentZ;
-	int dist = (int)sqrt((double)((xlen * xlen) + (zlen * zlen)));
-	float rotf = (float)atan2((double)xlen, (double)zlen);
-	unsigned char rot = (unsigned char)(rotf * 255.0F / 6.283185F);
-	Rotation = rot;
-	Heading = rot;
-
-	int reqMoveDist = dist - CurrentTarget.desiredRange - 5;
-	if(reqMoveDist < 15)
-	{
-		if(serverFlags & ServerFlags::PathNode)
-			SetServerFlag(ServerFlags::PathNode, false);
-
-		if(serverFlags & ServerFlags::LeashRecall)
-		{
-			SetServerFlag(ServerFlags::LeashRecall, false);
-			//_RemoveStatusList(StatusEffects::UNATTACKABLE);
-		}
-
-		Speed = 0;
-		CurrentX = CurrentTarget.DesLocX;
-		CurrentZ = CurrentTarget.DesLocZ;
-		CurrentTarget.DesLocX = 0;
-		CurrentTarget.DesLocZ = 0;
-		CurrentTarget.desiredRange = 0;
-		CurrentTarget.desiredSpeed = 0;
-		SetServerFlag(ServerFlags::CalledBack, false);
-	}
-	else
-	{
-		Speed = 0;
-		int cSpeed = CREATURE_WALK_SPEED;
-		if(CurrentTarget.targ != NULL)
-			cSpeed = CREATURE_RUN_SPEED;;
-
-		//The number of units moved per second at this speed.
-		float distPerSecond = ((float)cSpeed / 100.0F) * 40.0F;
-
-		//The number of units to move for this update.
-		int updateDist = (int)(distPerSecond * ((float)nextMoveTime / 1000.0F));
-
-		if(updateDist > reqMoveDist)
-		{
-			Speed = 0;
-			CurrentX = CurrentTarget.DesLocX;
-			CurrentZ = CurrentTarget.DesLocZ;
-			CurrentTarget.DesLocX = 0;
-			CurrentTarget.DesLocZ = 0;
-			CurrentTarget.desiredRange = 0;
-			CurrentTarget.desiredSpeed = 0;
-		}
-		else if(updateDist > reqMoveDist * 2)
-		{
-			Speed = 0;
-		}
-		else
-		{
-			float angle = (float)Rotation * 6.283185F / 255.0F;
-			CurrentZ += (int)((float)updateDist * cos(angle));
-			CurrentX += (int)((float)updateDist * sin(angle));
-		}
-	}
-
-	movementTime = g_ServerTime + nextMoveTime;
-	return 1;
-}
-
 void CreatureInstance :: UpdateDestination(void)
 {
 	//Update the destination point based on pathfinding, target location, etc.
@@ -5738,7 +5292,7 @@ void CreatureInstance :: UpdateDestination(void)
 	{
 		//If the script system has set a desired range, it means the
 		//creature needs to be closer to its target.
-		if(CurrentTarget.desiredRange != 0)
+		if(CurrentTarget.desiredRange != 0 )
 		{
 			CurrentTarget.DesLocX = CurrentTarget.targ->CurrentX;
 			CurrentTarget.DesLocZ = CurrentTarget.targ->CurrentZ;
@@ -5804,8 +5358,7 @@ void CreatureInstance :: CheckLeashMovement(void)
 			SelectTarget(NULL);
 
 			Speed = CREATURE_RUN_SPEED;
-			CurrentTarget.DesLocX = tetherNodeX;
-			CurrentTarget.DesLocZ = tetherNodeZ;
+			MoveTo(tetherNodeX, tetherNodeZ, 0, 0);
 
 			UnHate();
 			RemoveAttachedHateProfile();
@@ -5823,8 +5376,7 @@ void CreatureInstance :: CheckLeashMovement(void)
 				if((xlen > minLeashRange) || (zlen > minLeashRange))
 				{
 					Speed = CREATURE_JOG_SPEED;
-					CurrentTarget.DesLocX = tetherNodeX;
-					CurrentTarget.DesLocZ = tetherNodeZ;
+					MoveTo(tetherNodeX, tetherNodeZ, 0, 0);
 				}
 			}
 		}
@@ -5837,10 +5389,43 @@ void CreatureInstance :: CheckLeashMovement(void)
 
 	if(wanderRadius > 0 && CurrentTarget.DesLocX == 0 && CurrentTarget.DesLocZ == 0)
 	{
-		CurrentTarget.DesLocX = tetherNodeX + randint(-wanderRadius, wanderRadius);
-		CurrentTarget.DesLocZ = tetherNodeZ + randint(-wanderRadius, wanderRadius);
+		MoveTo(tetherNodeX + randint(-wanderRadius, wanderRadius), tetherNodeZ + randint(-wanderRadius, wanderRadius), 0, 0);
 		Speed = CREATURE_WALK_SPEED;
 	}
+}
+
+void CreatureInstance :: StopMovement(int result)
+{
+	if((CurrentTarget.DesLocX != 0 || CurrentTarget.DesLocZ != 0) && IsAtTether() && tetherFacing != -1) {
+		Rotation = tetherFacing;
+		Heading = tetherFacing;
+		g_Log.AddMessageFormat("REMOVEME rotation to tether rot %d", Rotation);
+	}
+
+	if(scriptMoveEvent != -1) {
+		if(actInst != NULL && actInst->nutScriptPlayer != NULL) {
+			ScriptCore::NutScriptEvent *nse = actInst->nutScriptPlayer->GetEvent(scriptMoveEvent);
+			if(nse != NULL) {
+				nse->mCallback->mResult = result;
+				ScriptCore::NutCondition *nsc = nse->mCondition;
+				nse->mCondition = new ScriptCore::TimeCondition(0);
+				delete nsc;
+			}
+		}
+		scriptMoveEvent = -1;
+	}
+	CurrentTarget.DesLocX = 0;
+	CurrentTarget.DesLocZ = 0;
+	CurrentTarget.desiredRange = 0;
+	CurrentTarget.desiredSpeed = 0;
+}
+void CreatureInstance :: MoveTo(int x, int z, int range, int speed)
+{
+	StopMovement(ScriptCore::Result::INTERRUPTED);
+	CurrentTarget.DesLocX = x;
+	CurrentTarget.DesLocZ = z;
+	CurrentTarget.desiredRange = range;
+	CurrentTarget.desiredSpeed = speed;
 }
 
 void CreatureInstance :: MoveToTarget_Ex2(void)
@@ -5981,16 +5566,13 @@ void CreatureInstance :: MoveToTarget_Ex2(void)
 
 	update = true;
 	int dist = (int)sqrt((double)((xlen * xlen) + (zlen * zlen)));
-	if(dist < 30)
+	if(dist < MOVEMENT_THRESHOLD)
 	{
 		//g_Log.AddMessageFormat("Stopping (Dist: %d) (Desired: %d)", (int)dist, CurrentTarget.desiredRange);
 		Speed = 0;
 		CurrentX = CurrentTarget.DesLocX;
 		CurrentZ = CurrentTarget.DesLocZ;
-		CurrentTarget.DesLocX = 0;
-		CurrentTarget.DesLocZ = 0;
-		CurrentTarget.desiredRange = 0;
-		CurrentTarget.desiredSpeed = 0;
+		StopMovement(ScriptCore::Result::OK);
 		int size = PrepExt_GeneralMoveUpdate(GSendBuf, this);
 		//actInst->LSendToAllSimulator(GSendBuf, size, -1);
 		actInst->LSendToLocalSimulator(GSendBuf, size, CurrentX, CurrentZ);
@@ -6093,7 +5675,11 @@ void CreatureInstance :: RequestTarget(int CreatureID)
 }
 
 bool CreatureInstance :: IsAtTether() {
-	return CurrentX == tetherNodeX && CurrentZ == tetherNodeZ;
+
+	int xlen = tetherNodeX - CurrentX;
+	int zlen = tetherNodeZ - CurrentZ;
+	int dist = (int)sqrt((double)((xlen * xlen) + (zlen * zlen)));
+	return dist < MOVEMENT_THRESHOLD;
 }
 
 void CreatureInstance :: SelectTarget(CreatureInstance *newTarget)
@@ -6135,8 +5721,7 @@ void CreatureInstance :: SelectTarget(CreatureInstance *newTarget)
 					if(CurrentTarget.DesLocX != 0 || CurrentTarget.DesLocZ != 0)
 					{
 						Speed = 0;
-						CurrentTarget.DesLocX = 0;
-						CurrentTarget.DesLocZ = 0;
+						StopMovement(ScriptCore::Result::INTERRUPTED);
 					}
 				}
 			}
