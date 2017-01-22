@@ -206,7 +206,7 @@ class this.EffectDef.TelekinesisTarget extends this.EffectDef.TemplateBasic
 		this.onSound();
 		local residual = this.createGroup("Residual", this.getSource());
 		residual.add("ParticleSystem", {
-			particleSystem = "Par-Root_Fill",
+			particleSystem = "Par-Telekinesis_Fill",
 			emitterPoint = "node"
 		});
 		this.fireIn(1.5, "onInitialDone");

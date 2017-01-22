@@ -37,4 +37,6 @@ AssetDependencies["CL-Garden_Fence_Oval"] <- ["Prop-Fence-Stone"];
 AssetDependencies["CL-Strange_Device"] <- ["Prop-Crystals", "Prop-Alchemy1"];
 //AssetDependencies["CL-Tent_Barricade"] <- ["Prop-Tents1", "Prop-Fences"];
 
+/* Valkals Shadow additions */
+AssetDependencies["CL-Candelabra2"] <- ["Prop-Iron-Candles"];
 

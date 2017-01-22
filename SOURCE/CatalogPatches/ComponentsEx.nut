@@ -18,7 +18,7 @@ ComponentIndex["Prop-Rug_Teal"] <- "Prop-ModAddons1";
 ComponentIndex["CL-LitCandle1"] <- "Prop-ModAddons1";
 ComponentIndex["CL-LitCandle2"] <- "Prop-ModAddons1";
 ComponentIndex["CL-LitCandle3"] <- "Prop-ModAddons1";
-ComponentIndex["CL-Candelabrar1"] <- "Prop-ModAddons1";
+ComponentIndex["CL-Candelabra2"] <- "";
 
 ComponentIndex["Prop-Painting1-WantedShadow"] <- "Prop-ModWantedShadow";
 
