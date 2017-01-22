@@ -64,7 +64,10 @@ valkal2_spawn_tile <- Point(10,3);
 cid_valkal1 <- 0;
 phase <- 0;
 valkal1_full_health_count <- 0;
+
+// Debug
 debug <- true;
+manual_trigger <- true;
 
 /* Handles the bookcase at the start of the dungeon, giving the players fair
    warning as to what is to come! */
@@ -96,7 +99,7 @@ function find_closest(cid, player) {
 
     /* Find all players, sidekicks and enemies of the minion within the range */
     local targets = inst.get_nearby_creature(10000, cid, 
-    		player ? TS_ENEMY_ALIVE : TS_NONE, player ? TS_ENEMY_ALIVE : TS_NONE, TS_NONE);
+    		player ? TS_ENEMY_ALIVE : TS_NONE, player ? TS_ENEMY_ALIVE : TS_NONE, player ? TS_ENEMY_ALIVE : TS_NONE);
     local closest_cid = -1;
     local closest_distance = 9999999;
 
@@ -126,10 +129,20 @@ function attack_closest(cid) {
 
 /*  Helper function to Spawn Valkals adds. Each one will be instructed to run to a defined place,
    then locate the nearest player and attack them (or anyone who aggros them on the way). */
-function spawn_adds() {
+function spawn_adds(max) {
+
+    max = max.tointeger();
 	if(debug)
-		inst.info("Spawing adds");
-    foreach(v in vampire_adds) {
+		inst.info("Spawing " + max + " adds");
+
+    local l = [];
+    foreach(v in vampire_adds)
+        l.append(v);
+
+    for(local i = 0 ; i < vampire_adds.len() - max ; i++)
+        l.remove(randmodrng(0, l.len()));
+
+    foreach(v in l) {
 		local cid = inst.spawn(v.prop_id, 0, 0);
         inst.walk_then(cid, v.pos, -1, CREATURE_JOG_SPEED, 0, function(res) {
         	if(res == RES_OK) {
@@ -185,7 +198,7 @@ function heal(cid, limit, on_healed) {
 /* Starts the sequence of Valkal running from the fight his platform to
    heal */
 function heal_sequence() {
-	spawn_adds();
+	spawn_adds(vampire_adds.len());
     disengage_valkal();
 	inst.walk_then(cid_valkal1, loc_platform_centre, -1, CREATURE_JOG_SPEED, 0, function(res) {
         inst.rotate_creature(cid_valkal1, 192);
@@ -224,13 +237,17 @@ function valkal_flee() {
    Tribute, and does so. Valkal is then stunned for 15 seconds before running back to centre
    and picking another player to fight */
 function tribute() {
+	spawn_adds(vampire_adds.len() / 2);
     disengage_valkal();
 	inst.walk_then(cid_valkal1, loc_platform_front, 192, CREATURE_JOG_SPEED, 0, function(res) {
         if(debug)
         	inst.info("Valkal home");
         inst.queue(function() {
         	inst.info("Finding targets");
-	        local targets = inst.get_nearby_creature(300, cid_valkal1, TS_ENEMY_ALIVE, TS_NONE, TS_NONE);
+	        local targets = inst.get_nearby_creature(300, cid_valkal1, TS_ENEMY_ALIVE, TS_ENEMY_ALIVE, TS_ENEMY_ALIVE);
+            foreach(l in targets) {
+                inst.info("  " + l + " " + inst.get_display_name(l));
+            }
 	        if(targets.len() > 0) {
 	            local cid = targets[randmodrng(0, targets.len())];
 	            inst.set_target(cid_valkal1, cid);
@@ -274,7 +291,7 @@ function tribute() {
 function bringing_down_the_house() {
     disengage_valkal();
 	inst.walk_then(cid_valkal1, loc_platform_front, 192, CREATURE_JOG_SPEED, 0, function(res) {
-		inst.set_creature_gtae_to(cid_valkal1, Vector3I(loc_room_centre.x, 480, loc_room_centre.z));
+		inst.set_creature_gtae(cid_valkal1);
         if(!inst.creature_use(cid_valkal1, BRINGING_DOWN_THE_HOUSE)) {
         	if(debug)
             	inst.info("Failed to bring down the house");
@@ -299,7 +316,7 @@ function reset_valkal1() {
 
 /* Monitor Valkal1's health and trigger the various fight stages. */
 function valkal1_health() {
-	if(cid_valkal1 == 0 || cid_valkal1 != 0)
+	if(cid_valkal1 == 0 || manual_trigger)
 		return;
 
 	local health = inst.get_health_pc(cid_valkal1);
