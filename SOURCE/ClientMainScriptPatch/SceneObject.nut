@@ -1819,7 +1819,23 @@ class this.SceneObjectManager extends this.MessageBroadcaster
 				else
 				{
 					so.mAssemblyQueueTime = null;
-					local res = so.reassemble(true);
+					local res;
+					try {
+						res = so.reassemble(true);
+					}
+					catch(e) {
+						res = false;
+						try {
+							if(so.mAssembler)
+								so.mAssembler.mRequiredArchivesError = e;
+						}
+						catch(e2) {											
+							this.log.warn("Failed to set error .. errr" + e2);
+						}
+							
+						so.mAssemblyQueueTime = null;				
+						this.log.warn("An object failed to assemble: " + so.getName() + " (" + e + ") - " + so);
+					}
 
 					if (typeof res == "integer")
 					{

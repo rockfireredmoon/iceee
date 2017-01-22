@@ -138,3 +138,8 @@ Name=Valkals Bloodkeep
 Comment=[Comment here]
 Position=79278.0,1300.0,52845.0
 
+[ENTRY]
+Name=Nook Town
+Comment=[Comment here]
+Position=63405.0,717.0,50014.0
+

@@ -3010,6 +3010,7 @@ bool SimulatorThread :: HandleCommand(int &PendingData)
 	{
 		if(CheckPermissionSimple(Perm_Account, Permission_Debug) == true)
 			g_EnvironmentCycleManager.EndCurrentCycle();
+		g_Log.AddMessageFormat("Cycle is now: %u (%s)", g_EnvironmentCycleManager.mCurrentCycleIndex, g_EnvironmentCycleManager.GetCurrentTimeOfDay());
 		PendingData = PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
 	}
 	else if(query.name.compare("searsize") == 0)

@@ -526,7 +526,6 @@ int PrepExt_SendTimeOfDayMsg(char *buffer, const char *envType)
 	wpos += PutShort(&buffer[wpos], 0);  //zonePageSize
 	wpos += PutStringUTF(&buffer[wpos], "");   //Terrain
 	wpos += PutStringUTF(&buffer[wpos], envType);   //envtype
-	wpos += PutStringUTF(&buffer[wpos], "");   //mapName
 
 	PutShort(&buffer[1], wpos - 3);       //Set message size
 	return wpos;

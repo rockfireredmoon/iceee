@@ -164,8 +164,9 @@ class Assembler.Scenery extends Assembler.Factory {
 			}
 		}
 
-		if (mAssetRef == null)
+		if (mAssetRef == null) {
 			throw Exception("No asset defined");
+		}
 
 		// Just use a stand-in object if we ran into an archive error
 		

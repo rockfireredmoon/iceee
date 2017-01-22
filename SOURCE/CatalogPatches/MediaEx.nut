@@ -12018,6 +12018,9 @@ function Hack_MergeMediaAssets()
 		],
 		["Terrain-Zhushis_Lair"] = [
 			1505
+		],
+		["CL-Candelabra2"] = [
+			476
 		]
 	};
 	local skipped = 0;
