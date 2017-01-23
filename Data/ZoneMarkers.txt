@@ -249,3 +249,15 @@ Sanctuary=27301.4,630.152,79634.2,Kerakura's Lair
 [ENTRY]
 ZoneID=1059
 Sanctuary=5819.58,694.726,5874.88,Museum
+
+[ENTRY]
+ZoneID=66
+Sanctuary=746.592,668,2733.56,Valkals Blood Keep
+
+[ENTRY]
+ZoneID=69
+Sanctuary=2719.67,1086.95,4333.1,Skrill Queen Lair
+
+[ENTRY]
+ZoneID=67
+Sanctuary=1503.09,290.687,2630.67,Junk Palace
