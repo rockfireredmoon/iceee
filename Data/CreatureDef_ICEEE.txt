@@ -1544,3 +1544,4 @@ display_name=Interesting Bookshelf
 profession=1
 creature_category=Inanimate
 ai_package=nothing
+

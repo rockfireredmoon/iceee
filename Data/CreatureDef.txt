@@ -32009,7 +32009,7 @@ might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
-appearance=n4:{["c"]="Horde-Elemental_Water",["sz"]="1.1"}
+appearance=n4:{["sk"]={["water"]="3f0000",["water_blend"]="940000",["water_highlight"]="d40000"},["c"]="Horde-Elemental_Water",["sz"]="1.1"}
 level=50
 display_name=Blood Elemental
 profession=4
@@ -74819,3 +74819,27 @@ rarity=2
 base_damage_melee=112
 ai_package=4_knight_30
 total_size=5
+
+[ENTRY]
+ID=3456
+strength=150
+dexterity=150
+constitution=250
+psyche=200
+spirit=200
+damage_resist_melee=4000
+damage_resist_fire=4000
+damage_resist_frost=4000
+damage_resist_mystic=4000
+damage_resist_death=4000
+will_regen=1
+might_regen=1
+offhand_weapon_damage=120
+appearance=n4:{["sk"]={["armor"]="3f3f35",["armor_marking"]="fffd00",["eye"]="d20003",["main"]="550000",["main2"]="550000",["main3"]="550000"},["c"]="Horde-Elemental_Air",["sz"]="1.1"}
+level=50
+display_name=Nocterror
+profession=3
+creature_category=Elemental
+rarity=1
+base_damage_melee=185
+ai_package=custom_heathendel_mage40
