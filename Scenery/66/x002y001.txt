@@ -97,7 +97,6 @@ Name=Scenery/82156
 Pos=4059.97,480,2845.54
 Orient=0,0,0,1
 Scale=1.5,1.5,1.5
-Flags=1
 
 [ENTRY]
 ID=938472
