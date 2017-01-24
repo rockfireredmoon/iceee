@@ -1549,7 +1549,7 @@ ai_package=nothing
 ID=7873
 will_regen=0
 might_regen=0
-appearance=p1:{["sz"]="1.5",["a"]="CL-Candelabra2"}
+appearance=p1:{["sz"]="1.5",["a"]="Prop-Candelabra2"}
 level=1
 display_name=Candelabra
 profession=1

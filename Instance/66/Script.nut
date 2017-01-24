@@ -27,6 +27,7 @@ const BRINGING_DOWN_THE_HOUSE = 24006;
 // Creature Definition IDs
 
 const CDEF_VALKAL1 = 1385;
+const CDEF_CANDELABRA_1 = 7873;
 
 // The locations of the room
 loc_throne_room <- Area(4160,2556, 4336, 2981);
@@ -47,7 +48,6 @@ vampire_adds <- [
     VampireAdd(1150686, Point(3805,2762), 63)
 ];
 
-
 // Prop IDS
 
 const VALKAL2_SPAWN_PROP = 1150656;
@@ -64,6 +64,7 @@ valkal2_spawn_tile <- Point(10,3);
 cid_valkal1 <- 0;
 phase <- 0;
 valkal1_full_health_count <- 0;
+lit_candelabras <- [];
 
 // Debug
 debug <- true;
@@ -81,7 +82,26 @@ function on_use_7872(cid, used_cid) {
 			inst.open_book(cid, BOOK_NO, 1);
 		});
 		return true;
-	
+	}
+}
+
+function is_usable(cid, cdef_id, by_cid, by_cdef_id) {
+	print("is_usable " + cid + "/" + cdef_id + "\n");
+	if(cdef_id == CDEF_CANDELABRA_1 && !array_contains(lit_candelabras, cid)) {
+		return "Y";
+	}
+	return "N";
+}
+
+function on_use(cid, target_cid, target_cdef_id) {
+	if(target_cdef_id == CDEF_CANDELABRA_1) {
+		inst.interact(cid, "Lighting the candelabra", 3000, false, function() {
+			lit_candelabras.append(cid);			
+			local candelabra_prop = inst.creature_spawn_prop(target_cid);
+			inst.asset(candelabra_prop, "CL-Candelabra2", 1.5);
+			return true;
+		});
+		return true;
 	}
 }
 

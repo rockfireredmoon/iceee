@@ -508,8 +508,8 @@ Scale=1,1,1
 [ENTRY]
 ID=1151407
 Asset=Prop-Sanctuary_Stone#Prop-Sanctuary_Stone
-Name=
-Pos=1503.19,280.687,2630.76
-Orient=0,-0.159318,0,0.987227
+Name=Untitled
+Pos=1508.16,280.687,2644.32
+Orient=0,-0.757842,0,0.652438
 Scale=1,1,1
 
