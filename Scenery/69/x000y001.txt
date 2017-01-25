@@ -697,9 +697,10 @@ link=1151096,1
 ID=1151100
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=Untitled
-Pos=1769.39,1095,2664.01
-Orient=0,-0.764329,0,0.644827
+Pos=1769.39,1095,2678.11
+Orient=0,-0.692537,0,0.721383
 Scale=1,1,1
+spawnPackage=#3457
 
 [ENTRY]
 ID=1151101

@@ -183,15 +183,6 @@ Orient=0,0.358437,0,-0.933554
 Scale=1,1,1
 
 [ENTRY]
-ID=1150641
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=
-Pos=70827.2,995.425,50262.6
-Orient=0,0,0,1
-Scale=1,1,1
-spawnPackage=#1378
-
-[ENTRY]
 ID=151024100
 Asset=Bldg-Urban-Inn2#Bldg-Urban-Inn2?ATS=ATS-Warpig
 Name=Untitled

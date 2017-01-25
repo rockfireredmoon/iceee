@@ -110,7 +110,7 @@ Name=Untitled
 Pos=71305.8,1201.99,52812.2
 Orient=0,-0.963558,0,0.267499
 Scale=1,1,1
-spawnPackage=#F1353
+spawnPackage=#1353
 
 [ENTRY]
 ID=151021659

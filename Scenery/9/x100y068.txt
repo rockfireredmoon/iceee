@@ -54,15 +54,17 @@ Pos=75364.5,795.308,51456.7
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_vmp_wilds_46_47
+wanderRadius=65
 
 [ENTRY]
 ID=151031331
 Asset=Manipulator-SpawnPoint
 Name=Untitled
-Pos=75430,734.129,51714.4
+Pos=75376.3,754.866,51672.2
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_vmp_wilds_46_47
+wanderRadius=65
 
 [ENTRY]
 ID=151031332
@@ -72,6 +74,7 @@ Pos=75237,895.172,51014
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_vmp_wilds_46_47
+wanderRadius=55
 
 [ENTRY]
 ID=151031337
@@ -81,6 +84,7 @@ Pos=75201,821.94,51325
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_vmp_wilds_46_47
+wanderRadius=55
 
 [ENTRY]
 ID=151031339
@@ -90,4 +94,5 @@ Pos=75139,816.841,51629.8
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_vmp_wilds_46_47
+wanderRadius=55
 

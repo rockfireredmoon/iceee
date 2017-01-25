@@ -1,7 +1,7 @@
 [ENTRY]
 ID=1150133
 Asset=Cav-Hall_Straight1?ATS=ATS-Cave_Skrill
-Name=
+Name=Untitled
 Pos=2004.58,600.614,726.862
 Orient=0,0.706825,0,0.707388
 Scale=1,1,1
@@ -9,8 +9,19 @@ Scale=1,1,1
 [ENTRY]
 ID=1150134
 Asset=Cav-Hall_Cap1?ATS=ATS-Cave_Skrill
-Name=
+Name=Untitled
 Pos=2152.91,600.636,727.033
 Orient=0,-0.706825,0,0.707388
 Scale=1,1,1
+
+[ENTRY]
+ID=1151802
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=2061.42,600.614,732.736
+Orient=0,0.999232,0,-0.0391936
+Scale=1,1,1
+spawnPackage=9_skrillCamps_mounds
+links_count=1
+link=1151805,1
 
