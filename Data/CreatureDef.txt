@@ -32609,7 +32609,6 @@ dexterity=131
 constitution=112
 psyche=92
 spirit=92
-base_damage_melee=164
 damage_resist_melee=2292
 damage_resist_fire=2292
 damage_resist_frost=2292
@@ -32620,11 +32619,13 @@ might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
+appearance=n4:{["sk"]={["stripe2"]="8069bf",["skin"]="553636",["wings"]="7c80bf",["stripe1"]="609463"},["c"]="Horde-Skrill-Trooper",["sz"]="1.2"}
 level=49
 display_name=Skrill Hivesoldier
 profession=3
 creature_category=Mortal
 rarity=1
+base_damage_melee=164
 ai_package=4_rogue_30
 
 [ENTRY]
@@ -32634,7 +32635,6 @@ dexterity=135
 constitution=115
 psyche=92
 spirit=92
-base_damage_melee=169
 damage_resist_melee=2341
 damage_resist_fire=2341
 damage_resist_frost=2341
@@ -32645,11 +32645,13 @@ might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
+appearance=n4:{["sk"]={["stripe2"]="83bf4f",["skin"]="7f6b30",["wings"]="7cbf80",["stripe1"]="606394"},["c"]="Horde-Skrill-Trooper",["sz"]="1.2"}
 level=50
 display_name=Skrill Hivesoldier
 profession=3
 creature_category=Mortal
 rarity=1
+base_damage_melee=169
 ai_package=4_rogue_30
 
 [ENTRY]
@@ -32686,7 +32688,6 @@ dexterity=92
 constitution=131
 psyche=112
 spirit=131
-base_damage_melee=164
 damage_resist_melee=2292
 damage_resist_fire=2292
 damage_resist_frost=2292
@@ -32697,11 +32698,13 @@ might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
+appearance=n4:{["sz"]="1.2",["sk"]={["base"]="343f3f",["eyes"]="443832",["stripes"]="3f0000"},["c"]="Horde-Skrill-Worker"}
 level=49
 display_name=Skrill Hivemender
 profession=5
 creature_category=Mortal
 rarity=1
+base_damage_melee=164
 ai_package=4_druid_melee_30
 
 [ENTRY]
@@ -32711,7 +32714,6 @@ dexterity=92
 constitution=135
 psyche=115
 spirit=135
-base_damage_melee=169
 damage_resist_melee=2341
 damage_resist_fire=2341
 damage_resist_frost=2341
@@ -32722,11 +32724,13 @@ might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
+appearance=n4:{["sk"]={["base"]="687f7f",["eyes"]="443832",["stripes"]="bf3c21"},["c"]="Horde-Skrill-Worker",["sz"]="1.2"}
 level=50
 display_name=Skrill Hivemender
 profession=5
 creature_category=Mortal
 rarity=1
+base_damage_melee=169
 ai_package=4_druid_melee_30
 
 [ENTRY]
@@ -32763,7 +32767,6 @@ dexterity=92
 constitution=131
 psyche=112
 spirit=131
-base_damage_melee=164
 damage_resist_melee=2292
 damage_resist_fire=2292
 damage_resist_frost=2292
@@ -32774,11 +32777,13 @@ might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
+appearance=n4:{["sk"]={["stripe2"]="b78338",["skin"]="5c5e46",["wings"]="abc8c6",["stripe1"]="921101"},["c"]="Horde-Skrill-Trooper",["sz"]="1.2"}
 level=49
 display_name=Skrill Hivedrone
 profession=5
 creature_category=Mortal
 rarity=1
+base_damage_melee=164
 ai_package=4_druid_range_30
 
 [ENTRY]
@@ -32788,7 +32793,6 @@ dexterity=92
 constitution=135
 psyche=115
 spirit=135
-base_damage_melee=169
 damage_resist_melee=2341
 damage_resist_fire=2341
 damage_resist_frost=2341
@@ -32799,11 +32803,13 @@ might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
+appearance=n4:{["sk"]={["stripe2"]="b78338",["skin"]="5c5e46",["wings"]="abc8c6",["stripe1"]="464b94"},["c"]="Horde-Skrill-Trooper",["sz"]="1.2"}
 level=50
 display_name=Skrill Hivedrone
 profession=5
 creature_category=Mortal
 rarity=1
+base_damage_melee=169
 ai_package=4_druid_range_30
 
 [ENTRY]
@@ -32840,7 +32846,6 @@ dexterity=112
 constitution=92
 psyche=131
 spirit=131
-base_damage_melee=164
 damage_resist_melee=2292
 damage_resist_fire=2292
 damage_resist_frost=2292
@@ -32851,11 +32856,13 @@ might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
+appearance=n4:{["sk"]={["base"]="94677d",["eyes"]="443832",["stripes"]="274b6a"},["c"]="Horde-Skrill-Worker",["sz"]="1.2"}
 level=49
 display_name=Skrill Hivemaker
 profession=4
 creature_category=Mortal
 rarity=1
+base_damage_melee=164
 ai_package=4_mage_30
 
 [ENTRY]
@@ -32865,7 +32872,6 @@ dexterity=115
 constitution=92
 psyche=135
 spirit=135
-base_damage_melee=169
 damage_resist_melee=2341
 damage_resist_fire=2341
 damage_resist_frost=2341
@@ -32876,11 +32882,13 @@ might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
+appearance=n4:{["sk"]={["base"]="5e9494",["eyes"]="443832",["stripes"]="5a2a6a"},["c"]="Horde-Skrill-Worker",["sz"]="1.2"}
 level=50
 display_name=Skrill Hivemaker
 profession=4
 creature_category=Mortal
 rarity=1
+base_damage_melee=169
 ai_package=4_mage_30
 
 [ENTRY]
@@ -74861,10 +74869,9 @@ damage_resist_death=3500
 will_regen=1
 might_regen=1
 offhand_weapon_damage=120
-appearance=n4:{["a"]=[{["node"]="left_shoulder",["type"]="Armor-Skrill-Warrior2-Left_Pauldron",["colors"]=["94947b","b78337"]},{["node"]="right_shoulder",["type"]="Armor-Skrill-Warrior2-Right_Pauldron",["colors"]=["aaaaaa","b78337"]},{["node"]="right_hand",["type"]="Item-2hSword-Basic3",["colors"]=[]}],["c"]="Horde-Skrill-Worker",["sk"]={["base"]="7f6b45",["eyes"]="3f3f35",["stripes"]="576d7f"},["sz"]="1.4"}
+appearance=n4:{["c"]="Horde-Skrill-Trooper",["sk"]={["stripe2"]="83bf4f",["skin"]="7f6b30",["wings"]="7cbf80",["stripe1"]="606394"},["sz"]="1.2"}
 level=49
 display_name=Krigon
-sub_name=Skrill Captain
 profession=1
 creature_category=Mortal
 rarity=2
@@ -74895,3 +74902,110 @@ creature_category=Mortal
 rarity=2
 base_damage_melee=150
 ai_package=custom_heathendel_rogueknight40
+
+[ENTRY]
+ID=3459
+strength=150
+dexterity=150
+constitution=50
+psyche=100
+spirit=100
+damage_resist_melee=500
+damage_resist_fire=500
+damage_resist_frost=500
+damage_resist_mystic=500
+damage_resist_death=500
+will_regen=0
+might_regen=0
+offhand_weapon_damage=150
+casting_setback_chance=500
+channeling_break_chance=500
+appearance=n4:{["sk"]={["skin"]="5c5e46",["accent"]="a66570",["eye"]="9d0a0e",["armor"]="534741",["hair"]="005951",["teeth"]="8f9281"},["c"]="Horde-Vampire_Mehirim",["sz"]="1.2"}
+level=50
+display_name=Valkal's Mehirim
+profession=2
+creature_category=Unliving
+rarity=0
+base_damage_melee=160
+ai_package=rogue_brave_6
+
+[ENTRY]
+ID=3460
+strength=150
+dexterity=150
+constitution=220
+psyche=180
+spirit=180
+damage_resist_melee=3500
+damage_resist_fire=2000
+damage_resist_frost=3500
+damage_resist_mystic=3500
+damage_resist_death=3500
+will_regen=1
+might_regen=1
+offhand_weapon_damage=180
+casting_setback_chance=500
+channeling_break_chance=500
+level=49
+display_name=Meleth
+profession=4
+creature_category=Mortal
+rarity=2
+base_damage_melee=180
+ai_package=custom_heathendel_druid40
+total_size=1.399999976158142
+
+[ENTRY]
+ID=3461
+strength=180
+dexterity=180
+constitution=220
+psyche=100
+spirit=100
+damage_resist_melee=4000
+damage_resist_fire=2500
+damage_resist_frost=4000
+damage_resist_mystic=4000
+damage_resist_death=4000
+will_regen=1
+might_regen=1
+offhand_weapon_damage=190
+casting_setback_chance=500
+channeling_break_chance=500
+appearance=n4:{["sk"]={["stripe2"]="2a0000",["skin"]="2a2a2a",["wings"]="ffffff",["stripe1"]="150200"},["c"]="Horde-Skrill-Trooper",["sz"]="1.7"}
+level=49
+display_name=Crollh
+profession=1
+creature_category=Mortal
+rarity=2
+base_damage_melee=190
+ai_package=custom_heathendel_knightrogue40p
+total_size=1.7000000476837158
+
+[ENTRY]
+ID=3462
+strength=180
+dexterity=180
+constitution=250
+psyche=180
+spirit=180
+damage_resist_melee=4000
+damage_resist_fire=3000
+damage_resist_frost=4000
+damage_resist_mystic=4000
+damage_resist_death=4000
+will_regen=1
+might_regen=1
+offhand_weapon_damage=200
+casting_setback_chance=500
+channeling_break_chance=500
+appearance=n4:{["sk"]={["base"]="6a346a",["eyes"]="ff0000",["stripes"]="14102a"},["c"]="Horde-Skrill-Worker",["sz"]="1.7"}
+level=50
+display_name=Alagos
+sub_name=Queen's Consort
+profession=4
+creature_category=Mortal
+rarity=2
+base_damage_melee=200
+ai_package=custom_heathendel_deathdruid40
+total_size=1.7000000476837158
