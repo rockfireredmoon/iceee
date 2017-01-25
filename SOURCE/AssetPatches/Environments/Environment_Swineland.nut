@@ -8,7 +8,7 @@
 };
 ::Environments.SwinelandSunrise <- {
 	Sun = {
-		r = 1.8,
+		r = 0.8,
 		g = 0.8,
 		b = 0.3
 	},
@@ -106,7 +106,8 @@
 		b = 0.35
 	},
 	Sky = [
-		"DarkClouds"
+		"SunsetGradient",
+		"DarkClouds" 
 	],
 	Adjust_Channels = [
 		[
@@ -119,7 +120,7 @@
 	Ambient_Sound = [
 		"Sound-Ambient-GrunesLife.ogg"
 	],
-	Ambient_Music_Delay = 40
+	Ambient_Music_Delay = 0
 };
 ::Environments.SwinelandNight <- {
 	Sun = {
