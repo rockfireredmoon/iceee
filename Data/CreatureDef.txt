@@ -75026,15 +75026,13 @@ damage_resist_fire=2286
 damage_resist_frost=2285
 damage_resist_mystic=2285
 damage_resist_death=2286
-will_regen=1
-might_regen=1
 offhand_weapon_damage=143
 casting_setback_chance=500
 channeling_break_chance=500
-appearance=n4:{["sk"]={["cloth1"]="3f2105",["cloth2"]="3f2105",["eye"]="ff0000",["nails"]="000bbf",["skin"]="c6e95c",["trim"]="552b13"},["c"]="Horde-Warpig2",["sz"]="1.2"}
+appearance=n4:{["sk"]={["cloth2"]="3f2105",["skin"]="c6e95c",["cloth1"]="3f2105",["eye"]="ff0000",["nails"]="000bbf",["trim"]="552b13"},["c"]="Horde-Warpig2",["sz"]="1.2",["a"]=[{["node"]="right_hand",["type"]="Item-Warpig_Blade1",["colors"]=["736257","a36109","0076a3"]},{["node"]="left_hand",["type"]="Item-Shield-Stop_Sign",["colors"]=[]}]}
 level=45
 display_name=Nook Warrior
-sub_name=The Cult of the Waste
+sub_name=Cult of the Waste
 profession=2
 creature_category=Mortal
 rarity=0
@@ -75053,15 +75051,13 @@ damage_resist_fire=2001
 damage_resist_frost=2001
 damage_resist_mystic=2001
 damage_resist_death=2001
-will_regen=1
-might_regen=1
 offhand_weapon_damage=125
 casting_setback_chance=500
 channeling_break_chance=500
-appearance=n4:{["sk"]={["cloth2"]="3f2105",["skin"]="98e99d",["cloth1"]="3f2105",["eye"]="ff0000",["nails"]="bf29a1",["trim"]="552b13"},["c"]="Horde-Warpig2",["sz"]="1.2"}
+appearance=n4:{["sk"]={["cloth2"]="3f2105",["skin"]="98e99d",["cloth1"]="3f2105",["eye"]="ff0000",["nails"]="bf29a1",["trim"]="552b13"},["c"]="Horde-Warpig2",["sz"]="1.2",["a"]=[{["node"]="right_hand",["type"]="Item-Staff-Basic4",["colors"]=["736257","a36109","0076a3"]}]}
 level=46
 display_name=Radioactive Cultist
-sub_name=The Cult of the Waste
+sub_name=Cult of the Waste
 profession=4
 creature_category=Mortal
 rarity=0
@@ -75080,15 +75076,13 @@ damage_resist_fire=2285
 damage_resist_frost=2285
 damage_resist_mystic=2285
 damage_resist_death=2285
-will_regen=1
-might_regen=1
 offhand_weapon_damage=151
 casting_setback_chance=500
 channeling_break_chance=500
-appearance=c2:{["sz"]="1.2",["a"]=[{["node"]="right_hand",["type"]="Item-Dagger-Basic6",["colors"]=[]},{["node"]="left_hand",["type"]="Item-Dagger-Basic3",["colors"]=[]}],["sk"]={["skin"]="bf3ebe",["head_detail"]="6c7f47",["tusks"]="e9c559",["eye"]="e90000",["eyeball"]="bf0000",["hair_highlight"]="80bf69",["hair"]="7cbf80"},["g"]="m",["r"]="s",["b"]="n",["c"]={["boots"]={["type"]="Armor-Light-Low7",["colors"]=[]},["chest"]={["type"]="Armor-Light-Low7",["colors"]=[]},["arms"]={["type"]="Armor-Light-Low5",["colors"]=[]},["leggings"]={["type"]="Armor-Light-Low7",["colors"]=[]},["collar"]={["type"]="Armor-Light-Low7",["colors"]=[]},["belt"]={["type"]="Armor-Light-Low5",["colors"]=[]},["gloves"]={["type"]="Armor-Light-Low7",["colors"]=[]}}}
+appearance=n4:{["sz"]="1.2",["sk"]={["cloth1"]="3f2105",["cloth2"]="3f2105",["eye"]="ff0000",["nails"]="bf29a1",["skin"]="98e99d",["trim"]="552b13"},["g"]="m",["r"]="s",["b"]="n",["c"]="Horde-Warpig2",["a"]=[{["node"]="right_hand",["type"]="Item-Staff-Basic4",["colors"]=["736257","a36109","0076a3"]}]}
 level=45
 display_name=Polluted Soul
-sub_name=The Cult of the Waste
+sub_name=Cult of the Waste
 profession=2
 creature_category=Mortal
 rarity=0
@@ -75107,15 +75101,13 @@ damage_resist_fire=2001
 damage_resist_frost=2001
 damage_resist_mystic=2001
 damage_resist_death=2001
-will_regen=1
-might_regen=1
 offhand_weapon_damage=130
 casting_setback_chance=500
 channeling_break_chance=500
-appearance=c2:{["sz"]="1.2",["a"]=[{["node"]="left_hand",["type"]="Item-Wand-Basic4",["colors"]=[]},{["node"]="right_hand",["type"]="Item-Talisman-Book",["colors"]=[]}],["sk"]={["tattoo_face"]="bcb157",["hair"]="c87e49",["ribbon"]="d085be",["tusks"]="cfc252",["hair_highlight"]="674d50",["lips"]="6f494d",["skin"]="0cd478",["eye"]="c66b3f",["eyeball"]="c7c5c5",["jewelry"]="f4ca6a"},["g"]="f",["r"]="s",["b"]="n",["c"]={["boots"]={["type"]="Armor-Cloth-Low8",["colors"]=["552047","8f784e","853b16","d4c9b3"]},["chest"]={["type"]="Armor-Cloth-Low8",["colors"]=["ff61d7","8f784e","853b16","d4c9b3"]},["arms"]={["type"]="Armor-Cloth-Low8",["colors"]=["552047","8f784e","853b16","d46f12"]},["leggings"]={["type"]="Armor-Cloth-Low8",["colors"]=["656bd4","d473b3","853b16","d4c9b3"]},["collar"]={["type"]="Armor-Cloth-Low8",["colors"]=["55073a","8f784e","853b16","656bd4"]},["belt"]={["type"]="Armor-Cloth-Low8",["colors"]=["482155","8f784e","853b16","d4c9b3"]},["gloves"]={["type"]="Armor-Cloth-Low8",["colors"]=["551247","8f784e","7f7e00","d4d469"]}}}
+appearance=n4:{["sz"]="1.2",["sk"]={["cloth1"]="3f2105",["cloth2"]="3f2105",["eye"]="ff0000",["nails"]="bf29a1",["skin"]="98e99d",["trim"]="552b13"},["g"]="f",["r"]="s",["b"]="n",["c"]="Horde-Warpig2",["a"]=[{["node"]="right_hand",["type"]="Item-Staff-Basic4",["colors"]=["736257","a36109","0076a3"]}]}
 level=46
 display_name=Irradiated Sorceress
-sub_name=The Cult of the Waste
+sub_name=Cult of the Waste
 profession=3
 creature_category=Mortal
 rarity=0
@@ -75186,12 +75178,10 @@ damage_resist_fire=3500
 damage_resist_frost=3500
 damage_resist_mystic=3500
 damage_resist_death=3500
-will_regen=1
-might_regen=1
 offhand_weapon_damage=175
 casting_setback_chance=500
 channeling_break_chance=500
-appearance=n4:{["sk"]={["armor"]="3f2b05",["bone"]="ae6aff",["cloth"]="2a1c10",["eye"]="ff2300",["leather"]="7e3f18",["skin"]="6c7f32",["trim"]="2a231d"},["c"]="Horde-Warpig",["sz"]="1.2"}
+appearance=n4:{["sk"]={["armor"]="3f2b05",["bone"]="ae6aff",["cloth"]="2a1c10",["eye"]="ff2300",["leather"]="7e3f18",["skin"]="6c7f32",["trim"]="2a231d"},["c"]="Horde-Warpig",["sz"]="1.2",["a"]=[{["node"]="right_hand",["type"]="Item-2hAxe-High1",["colors"]=["736257","a36109","0076a3","00ffff"]}]}
 level=46
 display_name=Borris
 sub_name=Arbiter of the Waste

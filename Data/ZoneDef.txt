@@ -1157,3 +1157,14 @@ ID=8
 NAME=asdsadasdsa
 Mode=2
 DefLoc=0,0,0
+
+[ENTRY]
+ID=3080
+NAME=The Mausoleum
+ENVIRONMENTTYPE=Dungeon1
+ShardName=Europe 1
+WarpName=mausoleum
+Instance=1
+MaxLeashRange=1000
+DefLoc=0,0,0
+PageSize=1000
