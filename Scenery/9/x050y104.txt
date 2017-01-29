@@ -1,6 +1,23 @@
 [ENTRY]
+ID=1152153
+Asset=Prop-Cave#Prop-Cave_Entrance1
+Name=
+Pos=37894.7,1052,78521.6
+Orient=0,0.632673,0,0.774419
+Scale=4,4,4
+
+[ENTRY]
+ID=1152155
+Asset=Prop-Bones_Dragon#Prop-Bones_DragonSkull1
+Name=
+Pos=37833.4,1197.08,78508.4
+Orient=0.0112783,-0.116857,0.219079,0.968619
+Scale=4,4,4
+
+[ENTRY]
 ID=151039258
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=37787.3,1061.54,78127
 Orient=0,0,0,1
 Scale=1,1,1
@@ -11,6 +28,7 @@ link=151039259,1
 [ENTRY]
 ID=151039259
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=37619.6,1058.84,78175
 Orient=0,0,0,1
 Scale=1,1,1
@@ -21,18 +39,18 @@ link=151039258,1
 [ENTRY]
 ID=151039260
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=37739.6,1045.24,78331
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=9_wilds_37_38
-outerRadius=10
 
 [ENTRY]
 ID=151039261
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=37556.2,1019.18,78526
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=9_wilds_37_38
-outerRadius=10
 

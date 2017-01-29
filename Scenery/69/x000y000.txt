@@ -37,7 +37,7 @@ Name=Untitled
 Pos=1791.77,1020,1882.36
 Orient=0,-0.640385,0,0.768054
 Scale=1,1,1
-spawnPackage=#1403
+spawnPackage=skrill_mix
 
 [ENTRY]
 ID=1151133
@@ -46,7 +46,7 @@ Name=Untitled
 Pos=1889.06,1020,1832.26
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#1403
+spawnPackage=skrill_mix
 links_count=1
 link=1151144,1
 
@@ -57,7 +57,7 @@ Name=Untitled
 Pos=1899.83,1020,1657.8
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#1404
+spawnPackage=skrill_mix
 links_count=1
 link=1151144,1
 

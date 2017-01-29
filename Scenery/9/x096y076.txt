@@ -113,6 +113,7 @@ Name=Untitled
 Pos=72660,964.524,57320
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=wastecult_cultist
 
 [ENTRY]
 ID=1091411
@@ -121,6 +122,7 @@ Name=Untitled
 Pos=72715.8,963.131,57322.5
 Orient=0,0.999526,0,0.0307915
 Scale=1,1,1
+spawnPackage=wastecult_cultist
 
 [ENTRY]
 ID=1091412
@@ -129,14 +131,17 @@ Name=Untitled
 Pos=72683.9,963.647,57390.9
 Orient=0,0.754571,0,0.656219
 Scale=1,1,1
+spawnPackage=wastecult_cultist
 
 [ENTRY]
 ID=1091413
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=Untitled
-Pos=72561.2,975.485,57295.8
+Pos=72546,978.359,57334.3
 Orient=0,-0.696135,0,0.717911
 Scale=1,1,1
+spawnPackage=wastecult_creature
+wanderRadius=55
 
 [ENTRY]
 ID=1091430
@@ -145,6 +150,7 @@ Name=Untitled
 Pos=72552.5,963.729,57027.6
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=wastecult_cultist
 
 [ENTRY]
 ID=1091432
@@ -153,6 +159,7 @@ Name=Untitled
 Pos=72553.4,958.603,57590.7
 Orient=0,-0.953607,0,0.301053
 Scale=1,1,1
+spawnPackage=wastecult_cultist
 
 [ENTRY]
 ID=1091433
@@ -161,6 +168,7 @@ Name=Untitled
 Pos=72456.8,979.814,57500
 Orient=0,-0.703279,0,0.710914
 Scale=1,1,1
+spawnPackage=wastecult_cultist
 
 [ENTRY]
 ID=151020234

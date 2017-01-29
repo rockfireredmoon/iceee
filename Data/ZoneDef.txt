@@ -582,11 +582,12 @@ MaxLeashRange=375
 ID=50
 NAME=Iron Maw
 TERRAINCONFIG=Terrain-Iron_Maw#Terrain-Iron_Maw.cfg
-ENVIRONMENTTYPE=CorsicaDay
+ENVIRONMENTTYPE=Midlands
 ShardName=Iron Maw
 DropRateProfile=generousinstance
 WarpName=Iron Maw
 DefLoc=18938,1266,18778
+PageSize=1000
 
 
 [ENTRY]

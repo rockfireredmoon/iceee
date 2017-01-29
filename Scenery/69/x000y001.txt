@@ -569,7 +569,7 @@ Name=Untitled
 Pos=1899.41,1080,3451.48
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#1397
+spawnPackage=skrill_mix
 
 [ENTRY]
 ID=1151078
@@ -578,7 +578,7 @@ Name=Untitled
 Pos=1911.97,1080,3309.4
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#1397
+spawnPackage=skrill_mix
 
 [ENTRY]
 ID=1151081
@@ -587,7 +587,7 @@ Name=Untitled
 Pos=1741.04,1080,3197.78
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#1398
+spawnPackage=skrill_mix
 links_count=1
 link=1151098,1
 
@@ -596,8 +596,9 @@ ID=1151082
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=Untitled
 Pos=1836.52,1081.02,3155.44
-Orient=0,0,0,1
+Orient=0,-0.501213,0,0.865324
 Scale=1,1,1
+spawnPackage=skrill_mix
 
 [ENTRY]
 ID=1151085
@@ -606,7 +607,7 @@ Name=Untitled
 Pos=1771.2,1078.28,2963.08
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#1398
+spawnPackage=skrill_mix
 links_count=2
 link=1151096,1
 link=1151097,1
@@ -618,7 +619,7 @@ Name=Untitled
 Pos=1830.14,1078.96,2925.97
 Orient=0,0.999991,0,-0.00420359
 Scale=1,1,1
-spawnPackage=#1397
+spawnPackage=skrill_mix
 links_count=1
 link=1151087,0
 
@@ -629,7 +630,7 @@ Name=Untitled
 Pos=1714.01,1080.1,2925.57
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#1398
+spawnPackage=skrill_mix
 links_count=1
 link=1151086,0
 
@@ -640,7 +641,7 @@ Name=Untitled
 Pos=1815.3,1080,3051.85
 Orient=0,0.999899,0,-0.0142031
 Scale=1,1,1
-spawnPackage=#1398
+spawnPackage=skrill_mix
 
 [ENTRY]
 ID=1151089
@@ -649,7 +650,7 @@ Name=Untitled
 Pos=1718.06,1080,3096.64
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#1397
+spawnPackage=skrill_mix
 
 [ENTRY]
 ID=1151096
@@ -689,7 +690,7 @@ Name=Untitled
 Pos=1905.73,1080,3225.71
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#1397
+spawnPackage=skrill_mix
 links_count=1
 link=1151096,1
 
@@ -709,7 +710,7 @@ Name=Untitled
 Pos=1558.15,1080,2632.17
 Orient=0,-0.737931,0,0.674876
 Scale=1,1,1
-spawnPackage=#1398
+spawnPackage=skrill_mix
 
 [ENTRY]
 ID=1151102
@@ -718,7 +719,7 @@ Name=Untitled
 Pos=1590.45,1081.67,2668.16
 Orient=0,0.998152,0,0.0607589
 Scale=1,1,1
-spawnPackage=#1397
+spawnPackage=skrill_mix
 
 [ENTRY]
 ID=1151103
@@ -727,7 +728,7 @@ Name=Untitled
 Pos=1556.46,1080,2701.02
 Orient=0,0.724287,0,0.689498
 Scale=1,1,1
-spawnPackage=#1397
+spawnPackage=skrill_mix
 
 [ENTRY]
 ID=1151104
@@ -782,7 +783,7 @@ Name=Untitled
 Pos=1721.71,1080,2431.14
 Orient=0,-0.757843,0,0.652438
 Scale=1,1,1
-spawnPackage=#1397
+spawnPackage=skrill_mix
 links_count=1
 link=1151111,0
 
@@ -793,7 +794,7 @@ Name=Untitled
 Pos=1810.77,1080.04,2436.42
 Orient=0,-0.795602,0,0.60582
 Scale=1,1,1
-spawnPackage=#1398
+spawnPackage=skrill_mix
 links_count=1
 link=1151110,0
 
@@ -826,7 +827,7 @@ Name=Untitled
 Pos=1769.4,1020,2158.44
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#1397
+spawnPackage=skrill_mix
 links_count=1
 link=1151124,1
 
@@ -837,7 +838,7 @@ Name=Untitled
 Pos=1620.34,1079.97,2574.59
 Orient=0,0,0,1
 Scale=1.025,1.025,1.025
-spawnPackage=#1398
+spawnPackage=skrill_mix
 links_count=1
 link=1151116,1
 
@@ -922,7 +923,7 @@ Name=Untitled
 Pos=1801.36,1020,2239.78
 Orient=0,0.999667,0,0.0257935
 Scale=1,1,1
-spawnPackage=#1398
+spawnPackage=skrill_mix
 
 [ENTRY]
 ID=1151127
@@ -931,7 +932,7 @@ Name=Untitled
 Pos=1828.51,1020,2042.44
 Orient=0,-0.998444,0,0.0557674
 Scale=1,1,1
-spawnPackage=#1404
+spawnPackage=skrill_mix
 
 [ENTRY]
 ID=1151128
@@ -940,7 +941,7 @@ Name=Untitled
 Pos=1708.48,1020,2020.62
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#1403
+spawnPackage=skrill_mix
 
 [ENTRY]
 ID=1151131
@@ -949,7 +950,7 @@ Name=Untitled
 Pos=1778.52,1019.01,1973.24
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#1403
+spawnPackage=skrill_mix
 links_count=2
 link=1151142,1
 link=1151143,1

@@ -18,7 +18,7 @@ Scale=3,3,3
 ID=1150571
 Asset=CL-Forest#CL-Dead-Forest3
 Name=Untitled
-Pos=74556.6,885.967,50894.5
+Pos=74531.9,887.994,50860.2
 Orient=0,0,0,1
 Scale=1,1,1
 
@@ -33,18 +33,18 @@ Scale=1.3,1.3,1.3
 [ENTRY]
 ID=1151734
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=74402.5,880.035,50898.5
 Orient=0,0.939099,0,0.343646
 Scale=1,1,1
-spawnPackage=#2
+spawnPackage=#3470
 links_count=1
 link=1151754,1
 
 [ENTRY]
 ID=1151735
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=74821.6,840.414,50974
 Orient=0,0,0,1
 Scale=1,1,1
@@ -54,10 +54,26 @@ wanderRadius=65
 [ENTRY]
 ID=1151737
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=74524.5,877.302,50991.3
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_vmp_wilds_46_47
 wanderRadius=55
+
+[ENTRY]
+ID=1152147
+Asset=Prop-Crypt
+Name=
+Pos=74650.2,1034.18,50649.9
+Orient=0,0.997495,0,0.0707372
+Scale=2,2,2
+
+[ENTRY]
+ID=1152149
+Asset=Prop-Crypt_Props#Prop-Crypt-Skull_Pile_Large
+Name=
+Pos=74694.1,1033.2,50671.6
+Orient=0,0,0,1
+Scale=2,2,2
 

@@ -26,6 +26,8 @@ Name=Untitled
 Pos=73604.6,1195.93,57444.6
 Orient=0,-0.706825,0,0.707388
 Scale=1,1,1
+spawnPackage=wastecult_creature
+wanderRadius=55
 
 [ENTRY]
 ID=1091398
@@ -34,15 +36,16 @@ Name=Untitled
 Pos=73532.8,1195.7,57606
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=wastecult_cultist
 
 [ENTRY]
 ID=1091399
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=Untitled
 Pos=73578.2,1195.7,57566.7
-Orient=0,0.792562,0,0.609791
+Orient=0,0.582331,0,-0.812952
 Scale=1,1,1
-spawnPackage=#3
+spawnPackage=wastecult_cultist
 
 [ENTRY]
 ID=1091400
@@ -51,6 +54,7 @@ Name=Untitled
 Pos=73635.5,1195.82,57603
 Orient=0,-0.971148,0,0.238476
 Scale=1,1,1
+spawnPackage=wastecult_cultist
 
 [ENTRY]
 ID=1091401
@@ -59,6 +63,7 @@ Name=Untitled
 Pos=73630.9,1196.97,57660.2
 Orient=0,0.955101,0,0.296281
 Scale=1,1,1
+spawnPackage=wastecult_cultist
 
 [ENTRY]
 ID=1091402
@@ -67,6 +72,7 @@ Name=Untitled
 Pos=73573.3,1198.29,57680.3
 Orient=0,0.628793,0,0.777573
 Scale=1,1,1
+spawnPackage=wastecult_cultist
 
 [ENTRY]
 ID=1091407
@@ -75,19 +81,22 @@ Name=Untitled
 Pos=73726.6,1198.22,57652.2
 Orient=0,0.984588,0,0.174892
 Scale=1,1,1
+spawnPackage=wastecult_creature
 
 [ENTRY]
 ID=1091428
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=Untitled
-Pos=73707.8,1204.31,57491
+Pos=73668.2,1204.31,57491
 Orient=0,0.995083,0,-0.099041
 Scale=1,1,1
+spawnPackage=wastecult_creature
+wanderRadius=55
 
 [ENTRY]
 ID=1151732
 Asset=Prop-Fog#Prop-Fog_Green_Ground
-Name=
+Name=Untitled
 Pos=73557,1198.29,57599.4
 Orient=0,0,0,1
 Scale=1.5,1.5,1.5

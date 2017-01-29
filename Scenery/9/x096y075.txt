@@ -102,6 +102,7 @@ Name=Untitled
 Pos=72578.6,962.463,56673.2
 Orient=0,-0.830497,0,0.557023
 Scale=1,1,1
+spawnPackage=wastecult_cultist
 links_count=1
 link=1091337,1
 
@@ -134,6 +135,7 @@ Name=Untitled
 Pos=72495.5,962.783,56587.9
 Orient=0,-0.285952,0,0.958244
 Scale=1,1,1
+spawnPackage=wastecult_cultist
 links_count=1
 link=1091335,1
 
@@ -144,6 +146,7 @@ Name=Untitled
 Pos=72358,969.184,56269.7
 Orient=0,0.501213,0,0.865324
 Scale=1,1,1
+spawnPackage=wastecult_cultist
 
 [ENTRY]
 ID=1091384
@@ -152,6 +155,7 @@ Name=Untitled
 Pos=72435.2,967.96,56373.7
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=wastecult_cultist
 
 [ENTRY]
 ID=1091385
@@ -160,6 +164,7 @@ Name=Untitled
 Pos=72711.3,970.507,56468.1
 Orient=0,0.992904,0,-0.118922
 Scale=1,1,1
+spawnPackage=wastecult_cultist
 
 [ENTRY]
 ID=1091388
@@ -168,6 +173,7 @@ Name=Untitled
 Pos=72481,964.838,56463.6
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=wastecult_cultist
 
 [ENTRY]
 ID=1091389
@@ -176,6 +182,8 @@ Name=Untitled
 Pos=72701.5,977.208,56285.3
 Orient=0,0.941344,0,-0.337447
 Scale=1,1,1
+spawnPackage=wastecult_creature
+wanderRadius=55
 
 [ENTRY]
 ID=1091409
@@ -184,6 +192,7 @@ Name=Untitled
 Pos=72663.9,960.555,56924
 Orient=0,0.928369,0,0.37166
 Scale=1,1,1
+spawnPackage=wastecult_creature
 
 [ENTRY]
 ID=1091414
@@ -192,11 +201,12 @@ Name=Untitled
 Pos=72635.3,964.808,56722.1
 Orient=0,0.846832,0,0.531861
 Scale=1,1,1
+spawnPackage=wastecult_creature
 
 [ENTRY]
 ID=1151733
 Asset=Prop-Fog#Prop-Fog_Green_Ground
-Name=
+Name=Untitled
 Pos=72630.6,959.748,56996.4
 Orient=0,0,0,1
 Scale=1,1,1

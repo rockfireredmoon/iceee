@@ -82,6 +82,7 @@ Name=Untitled
 Pos=72974.5,1107.3,57185.8
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=wastecult_creature
 
 [ENTRY]
 ID=1091396
@@ -90,6 +91,7 @@ Name=Untitled
 Pos=73250.8,1110.44,57227.5
 Orient=0,0.999816,0,-0.0192024
 Scale=1,1,1
+spawnPackage=wastecult_cultist
 
 [ENTRY]
 ID=1091405
@@ -98,6 +100,7 @@ Name=Untitled
 Pos=73422.3,1195.72,57693.7
 Orient=0,0.333487,0,0.942755
 Scale=1,1,1
+spawnPackage=wastecult_cultist
 
 [ENTRY]
 ID=1091406
@@ -106,6 +109,7 @@ Name=Untitled
 Pos=73381.1,1196.13,57580
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=wastecult_cultist
 
 [ENTRY]
 ID=1091408
@@ -114,6 +118,8 @@ Name=Untitled
 Pos=73159.7,1109.25,57346.7
 Orient=0,0.539632,0,0.841901
 Scale=1,1,1
+spawnPackage=wastecult_creature
+wanderRadius=55
 
 [ENTRY]
 ID=1091427
@@ -122,6 +128,7 @@ Name=Untitled
 Pos=73348.8,1170.29,57445
 Orient=0,0.859862,0,0.510526
 Scale=1,1,1
+spawnPackage=wastecult_cultist
 
 [ENTRY]
 ID=1091429
@@ -130,6 +137,7 @@ Name=Untitled
 Pos=73492.5,1191.89,57422.9
 Orient=0,0.9871,0,0.160104
 Scale=1,1,1
+spawnPackage=wastecult_cultist
 
 [ENTRY]
 ID=151020213

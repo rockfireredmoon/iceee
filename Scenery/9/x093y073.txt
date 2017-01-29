@@ -1,7 +1,7 @@
 [ENTRY]
 ID=1091292
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=70229.5,1171.34,55431.7
 Orient=0,0,0,1
 Scale=1,1,1
@@ -11,7 +11,7 @@ link=1091293,1
 [ENTRY]
 ID=1091293
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=70338.1,1142.91,55407.7
 Orient=0,0,0,1
 Scale=1,1,1
@@ -22,7 +22,7 @@ link=1091294,1
 [ENTRY]
 ID=1091294
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=70430.3,1099.74,55444.8
 Orient=0,0,0,1
 Scale=1,1,1
@@ -33,10 +33,11 @@ link=1091295,1
 [ENTRY]
 ID=1091438
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=70412.4,1127.68,55360.5
 Orient=0,-0.937369,0,0.348337
 Scale=1,1,1
+spawnPackage=wastecult_cultist
 
 [ENTRY]
 ID=151017937
