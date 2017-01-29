@@ -3158,28 +3158,27 @@ ai_package=example
 
 [ENTRY]
 ID=123
-strength=89
-dexterity=76
-constitution=89
-psyche=60
-spirit=60
-base_damage_melee=109
-damage_resist_melee=1599
-damage_resist_fire=1599
-damage_resist_frost=1599
-damage_resist_mystic=1599
-damage_resist_death=1599
-will_regen=1
-might_regen=1
+strength=300
+dexterity=300
+constitution=400
+psyche=300
+spirit=300
+damage_resist_melee=6000
+damage_resist_fire=6000
+damage_resist_frost=6000
+damage_resist_mystic=6000
+damage_resist_death=6000
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
-appearance=n4:{["c"]="Boss-Dragon"}
-level=43
+appearance=n4:{["c"]="Boss-Sand_Dragon",["sz"]="2.5",["sk"]={["base"]="625048",["belly"]="736a42",["claws"]="6e624c",["eye"]="961a1a",["horns"]="553a14",["mouth"]="703430",["teeth"]="c0bbaa",["wing"]="968560"}}
+level=55
 display_name=Fengarian
 profession=2
 creature_category=Dragonkin
 rarity=3
+base_damage_melee=300
+base_health=20000
 ai_package=example
 
 [ENTRY]
@@ -32216,12 +32215,10 @@ damage_resist_fire=5500
 damage_resist_frost=5500
 damage_resist_mystic=5500
 damage_resist_death=5500
-will_regen=1
-might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
-appearance=n4:{["a"]=[{["type"]="Armor-Base1A-Right_Pauldron",["node"]="right_shoulder",["colors"]=["940D0D","940D0D","BFBF9F"]},{["type"]="Armor-Base1A-Left_Pauldron",["node"]="left_shoulder",["colors"]=["940D0D","940D0D","BFBF9F"]},{["type"]="Item-1hMace-Epic4",["colors"]=["5F6878","A79C80","D17F19","2147DF","56FEFF"],["effect"]="Par-WE-1hMace-Fire",["node"]="right_hand"},{["type"]="Item-1hMace-High3",["node"]="left_hand",["colors"]=["71856E","EBAF20","652C2C","816F2B"]}],["c"]="Horde-Vampire_Lord",["sz"]="1.6"}
+appearance=n4:{["c"]="Horde-Vampire_Lord",["sz"]="2.0",["sk"]={["trim"]="2a2a2a",["mouth"]="dfa8ae",["skin"]="3f3f3f",["cloth"]="550000",["accent"]="ffffff",["eye"]="ed1c24",["hair"]="c6c6c6",["armor"]="949494"}}
 level=50
 display_name=Valkal
 sub_name=The Eternal
@@ -32230,7 +32227,7 @@ creature_category=Unliving
 rarity=3
 base_damage_melee=250
 ai_package=custom_heathendel_deathdruid40
-total_size=1.399999976158142
+total_size=2
 
 [ENTRY]
 ID=1386
@@ -32697,12 +32694,10 @@ damage_resist_fire=2292
 damage_resist_frost=2292
 damage_resist_mystic=2292
 damage_resist_death=2292
-will_regen=1
-might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
-appearance=n4:{["sz"]="1.2",["sk"]={["base"]="343f3f",["eyes"]="443832",["stripes"]="3f0000"},["c"]="Horde-Skrill-Worker"}
+appearance=n4:{["sz"]="1.2",["sk"]={["base"]="94677d",["eyes"]="443832",["stripes"]="274b6a"},["c"]="Horde-Skrill-Worker",["a"]=[{["node"]="right_hand",["type"]="Item-Staff-Medium3",["colors"]=[]},{["node"]="right_shoulder",["type"]="Armor-Base3A-Right_Pauldron",["colors"]=[]},{["node"]="left_shoulder",["type"]="Armor-Base3A-Left_Pauldron",["colors"]=[]}]}
 level=49
 display_name=Skrill Hivemender
 profession=5
@@ -32723,12 +32718,10 @@ damage_resist_fire=2341
 damage_resist_frost=2341
 damage_resist_mystic=2341
 damage_resist_death=2341
-will_regen=1
-might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
-appearance=n4:{["sk"]={["base"]="687f7f",["eyes"]="443832",["stripes"]="bf3c21"},["c"]="Horde-Skrill-Worker",["sz"]="1.2"}
+appearance=n4:{["sk"]={["base"]="687f7f",["eyes"]="443832",["stripes"]="bf3c21"},["c"]="Horde-Skrill-Worker",["sz"]="1.2",["a"]=[{["node"]="left_shoulder",["type"]="Armor-Base3B-Left_Pauldron",["colors"]=[]},{["node"]="right_shoulder",["type"]="Armor-Base3B-Right_Pauldron",["colors"]=[]},{["node"]="right_hand",["type"]="Item-Staff-Medium2",["colors"]=[]}]}
 level=50
 display_name=Skrill Hivemender
 profession=5
@@ -72884,29 +72877,27 @@ ai_package=knight_brave_6
 
 [ENTRY]
 ID=3322
-strength=105
-dexterity=90
-constitution=105
-psyche=74
-spirit=74
-base_damage_melee=131
-damage_resist_melee=1833
-damage_resist_fire=1833
-damage_resist_frost=1833
-damage_resist_mystic=1833
-damage_resist_death=1833
-base_health=12128
-will_regen=1
-might_regen=1
+strength=300
+dexterity=300
+constitution=400
+psyche=300
+spirit=300
+damage_resist_melee=6000
+damage_resist_fire=6000
+damage_resist_frost=6000
+damage_resist_mystic=6000
+damage_resist_death=6000
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
-appearance=n4:{["sk"]={["wing"]="968560",["mouth"]="703430",["belly"]="736A42",["base"]="625048",["eye"]="961A1A",["horns"]="553A14",["claws"]="6E624C",["teeth"]="C0BBAA"},["c"]="Boss-Sand_Dragon",["sz"]="2"}
-level=50
+appearance=n4:{["sk"]={["base"]="625048",["belly"]="736a42",["claws"]="6e624c",["eye"]="961a1a",["horns"]="553a14",["mouth"]="703430",["teeth"]="c0bbaa",["wing"]="968560"},["c"]="Boss-Sand_Dragon",["sz"]="2.5"}
+level=55
 display_name=Valkara
 profession=2
-creature_category=Mortal
-rarity=1
+creature_category=Dragonkin
+rarity=3
+base_damage_melee=295
+base_health=20000
 ai_package=knight_brave_6
 
 [ENTRY]
@@ -74767,20 +74758,19 @@ damage_resist_fire=5500
 damage_resist_frost=5500
 damage_resist_mystic=5500
 damage_resist_death=5500
-will_regen=1
-might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
-appearance=n4:{["a"]=[{["type"]="Armor-Base1A-Right_Pauldron",["node"]="right_shoulder",["colors"]=["940D0D","940D0D","BFBF9F"]},{["type"]="Armor-Base1A-Left_Pauldron",["node"]="left_shoulder",["colors"]=["940D0D","940D0D","BFBF9F"]},{["type"]="Item-1hMace-Epic4",["colors"]=["5F6878","A79C80","D17F19","2147DF","56FEFF"],["effect"]="Par-WE-1hMace-Fire",["node"]="right_hand"},{["type"]="Item-1hMace-High3",["node"]="left_hand",["colors"]=["71856E","EBAF20","652C2C","816F2B"]}],["c"]="Horde-Vampire_Lord",["sz"]="1.6"}
+appearance=n4:{["c"]="Horde-Vampire_Lord",["sz"]="2.0",["sk"]={["accent"]="ffffff",["armor"]="949494",["cloth"]="550000",["eye"]="ed1c24",["hair"]="c6c6c6",["mouth"]="dfa8ae",["skin"]="3f3f3f",["trim"]="2a2a2a"}}
 level=50
 display_name=Valkal
-sub_name=(TEMP 2nd Boss)
+sub_name=The Eternal
 profession=2
 creature_category=Unliving
 rarity=3
 base_damage_melee=300
 ai_package=custom_heathendel_deathdruid40
+total_size=2
 
 [ENTRY]
 ID=3454
@@ -74870,10 +74860,8 @@ damage_resist_fire=2000
 damage_resist_frost=3500
 damage_resist_mystic=3500
 damage_resist_death=3500
-will_regen=1
-might_regen=1
 offhand_weapon_damage=120
-appearance=n4:{["c"]="Horde-Skrill-Trooper",["sk"]={["stripe2"]="83bf4f",["skin"]="7f6b30",["wings"]="7cbf80",["stripe1"]="606394"},["sz"]="1.2"}
+appearance=n4:{["c"]="Horde-Skrill-Trooper",["sk"]={["skin"]="7f6b30",["stripe1"]="606394",["stripe2"]="83bf4f",["wings"]="7cbf80"},["sz"]="1.8"}
 level=49
 display_name=Krigon
 profession=1
@@ -74881,6 +74869,7 @@ creature_category=Mortal
 rarity=2
 base_damage_melee=160
 ai_package=custom_heathendel_knight40b
+total_size=1.7999999523162842
 
 [ENTRY]
 ID=3458
@@ -74945,19 +74934,19 @@ damage_resist_fire=2000
 damage_resist_frost=3500
 damage_resist_mystic=3500
 damage_resist_death=3500
-will_regen=1
-might_regen=1
 offhand_weapon_damage=180
 casting_setback_chance=500
 channeling_break_chance=500
+appearance=n4:{["sz"]="1.8",["sk"]={["base"]="32356a",["eyes"]="ff0000",["stripes"]="64bf86"},["c"]="Horde-Skrill-Worker",["a"]=[{["node"]="left_shoulder",["type"]="Armor-Skrill-Mage2-Left_Pauldron",["colors"]=["94077d","555555"]},{["node"]="right_shoulder",["type"]="Armor-Skrill-Mage2-Right_Pauldron",["colors"]=["94207d","6a6a6a"]},{["node"]="right_forearm",["type"]="Armor-Medium-Mid2-Right_Gauntlet",["colors"]=["551b54","552047","ff61d7"]},{["node"]="left_forearm",["type"]="Armor-Medium-Mid2-Left_Gauntlet",["colors"]=["552047","55143a","552047"]},{["node"]="right_hand",["type"]="Item-1hMace-High3",["colors"]=["343f35","ff53fe","ffffff","ffffff"]},{["node"]="left_hand",["type"]="Item-1hAxe-MiningPick",["colors"]=[]}]}
 level=49
 display_name=Meleth
+sub_name=Skrill Architect
 profession=4
 creature_category=Mortal
 rarity=2
 base_damage_melee=180
 ai_package=custom_heathendel_druid40
-total_size=1.399999976158142
+total_size=1.7999999523162842
 
 [ENTRY]
 ID=3461
@@ -74971,14 +74960,13 @@ damage_resist_fire=2500
 damage_resist_frost=4000
 damage_resist_mystic=4000
 damage_resist_death=4000
-will_regen=1
-might_regen=1
 offhand_weapon_damage=190
 casting_setback_chance=500
 channeling_break_chance=500
-appearance=n4:{["sk"]={["stripe2"]="2a0000",["skin"]="2a2a2a",["wings"]="ffffff",["stripe1"]="150200"},["c"]="Horde-Skrill-Trooper",["sz"]="1.7"}
+appearance=n4:{["sk"]={["stripe2"]="2a0000",["skin"]="2a2a2a",["wings"]="ffffff",["stripe1"]="150200"},["c"]="Horde-Skrill-Trooper",["sz"]="1.8"}
 level=49
 display_name=Crollh
+sub_name=Skrill Captain
 profession=1
 creature_category=Mortal
 rarity=2
@@ -74998,12 +74986,10 @@ damage_resist_fire=3000
 damage_resist_frost=4000
 damage_resist_mystic=4000
 damage_resist_death=4000
-will_regen=1
-might_regen=1
 offhand_weapon_damage=200
 casting_setback_chance=500
 channeling_break_chance=500
-appearance=n4:{["sk"]={["base"]="6a346a",["eyes"]="ff0000",["stripes"]="14102a"},["c"]="Horde-Skrill-Worker",["sz"]="1.7"}
+appearance=n4:{["sk"]={["base"]="6a346a",["eyes"]="ff0000",["stripes"]="14102a"},["c"]="Horde-Skrill-Worker",["sz"]="1.7",["a"]=[{["node"]="left_shoulder",["type"]="Armor-Skrill-Warrior2-Left_Pauldron",["colors"]=["151515","ffffff"]},{["node"]="right_shoulder",["type"]="Armor-Skrill-Warrior2-Right_Pauldron",["colors"]=["150411","ffffff"]},{["node"]="left_forearm",["type"]="Armor-Heavy-Mid3-Left_Gauntlet",["colors"]=["2a2a2a","ffffff"]},{["node"]="right_forearm",["type"]="Armor-Heavy-Mid3-Right_Gauntlet",["colors"]=["2a2a2a","ffffff"]},{["node"]="right_hand",["type"]="Item-Spear-High1",["colors"]=[]},{["node"]="left_hand",["type"]="Item-Shield-Medium3",["colors"]=["2a2a2a","ffffff","ffffff"]}]}
 level=50
 display_name=Alagos
 sub_name=Queen's Consort
@@ -75230,12 +75216,10 @@ damage_resist_fire=1950
 damage_resist_frost=1950
 damage_resist_mystic=1950
 damage_resist_death=1950
-will_regen=1
-might_regen=1
 offhand_weapon_damage=139
 casting_setback_chance=500
 channeling_break_chance=500
-appearance=n4:{["sk"]={["bone"]="c7b29d",["armor"]="9b5239",["trim"]="cd924e",["metal"]="4d575e",["loincloth"]="626262",["straps"]="be7348"},["c"]="Horde-Skeleton",["sz"]="1.4"}
+appearance=n4:{["sk"]={["bone"]="c7b29d",["armor"]="9b5239",["trim"]="cd924e",["metal"]="4d575e",["loincloth"]="626262",["straps"]="be7348"},["c"]="Horde-Skeleton",["sz"]="1.4",["a"]=[{["node"]="right_hand",["type"]="Item-2hSword-Medium2",["colors"]=[]}]}
 level=45
 display_name=Restless Local
 profession=1
@@ -75256,12 +75240,10 @@ damage_resist_fire=1950
 damage_resist_frost=1950
 damage_resist_mystic=1950
 damage_resist_death=1950
-will_regen=1
-might_regen=1
 offhand_weapon_damage=145
 casting_setback_chance=500
 channeling_break_chance=500
-appearance=n4:{["sk"]={["armor_details"]="bd8a31",["belt"]="596a3a",["bone"]="c7b29d",["boots"]="2f474b",["collar"]="942222",["collar_skull"]="868f93",["robe"]="5f5578",["wrist_guard"]="ffb23c",["wrist_wrap"]="c7cccf"},["c"]="Horde-Skeleton_Spellcaster",["sz"]="1.4"}
+appearance=n4:{["sk"]={["bone"]="c7b29d",["collar"]="942222",["wrist_guard"]="ffb23c",["collar_skull"]="868f93",["wrist_wrap"]="c7cccf",["armor_details"]="bd8a31",["belt"]="596a3a",["robe"]="5f5578",["boots"]="2f474b"},["c"]="Horde-Skeleton_Spellcaster",["sz"]="1.4",["a"]=[{["node"]="right_hand",["type"]="Item-Staff-Basic4",["colors"]=[]}]}
 level=45
 display_name=Decaying Priest
 profession=4
@@ -75361,12 +75343,10 @@ damage_resist_fire=4000
 damage_resist_frost=4000
 damage_resist_mystic=4000
 damage_resist_death=4000
-will_regen=1
-might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
-appearance=c2:{["a"]=[{["type"]="Armor-Skrill-Warrior2-Left_Pauldron",["node"]="left_shoulder",["colors"]=["3F3F3F","AA0000"]},{["type"]="Armor-Skrill-Warrior2-Right_Pauldron",["node"]="right_shoulder",["colors"]=["3F3F3F","AA0000"]},{["type"]="Item-1hMace-Epic1",["colors"]=["7A8395","787B5A","D8CBBE","34A7B5"],["effect"]="Par-WE-1hMace-Fire",["node"]="right_hand"},{["type"]="Item-Shield-Medium4",["node"]="left_hand",["colors"]=["FF0000","E90000","000FFF"]}],["c"]={["boots"]={["type"]="Armor-Heavy-Epic2",["colors"]=["aa0000","151515","555555"]},["chest"]={["type"]="Armor-Heavy-Epic2",["colors"]=["aa0000","151515","555555"]},["arms"]={["type"]="Armor-Heavy-Epic2",["colors"]=["aa0000","151515","555555"]},["leggings"]={["type"]="Armor-Heavy-Epic2",["colors"]=["aa0000","151515","555555"]},["collar"]={["type"]="Armor-Heavy-Epic2",["colors"]=["aa0000","151515","555555"]},["belt"]={["type"]="Armor-Heavy-Epic2",["colors"]=["aa0000","151515","555555"]},["gloves"]={["type"]="Armor-Heavy-Epic2",["colors"]=["aa0000","151515","555555"]}},["b"]="m",["sk"]={["ear"]="6A5905",["lower_jaw"]="2A2A2A",["nails"]="2A2A2A",["horns"]="AA580F",["stripes"]="2A2A2A",["eye"]="AA580F",["base"]="7F7F54",["diamonds"]="2A2A2A"},["sz"]="2",["h"]=0,["g"]="m",["r"]="l"}
+appearance=c2:{["a"]=[{["node"]="left_shoulder",["type"]="Armor-Skrill-Warrior2-Left_Pauldron",["colors"]=["3f3f3f","aa0000"]},{["node"]="right_shoulder",["type"]="Armor-Skrill-Warrior2-Right_Pauldron",["colors"]=["3f3f3f","aa0000"]},{["node"]="right_hand",["type"]="Item-1hMace-Epic1",["colors"]=["7a8395","787b5a","d8cbbe","34a7b5"]},{["node"]="left_hand",["type"]="Item-Shield-Medium4",["colors"]=["ff0000","e90000","000fff"]}],["c"]={["boots"]={["type"]="Armor-Heavy-Epic2",["colors"]=["aa0000","151515","555555"]},["chest"]={["type"]="Armor-Heavy-Epic2",["colors"]=["aa0000","151515","555555"]},["arms"]={["type"]="Armor-Heavy-Epic2",["colors"]=["aa0000","151515","555555"]},["leggings"]={["type"]="Armor-Heavy-Epic2",["colors"]=["aa0000","151515","555555"]},["collar"]={["type"]="Armor-Heavy-Epic2",["colors"]=["aa0000","151515","555555"]},["belt"]={["type"]="Armor-Heavy-Epic2",["colors"]=["aa0000","151515","555555"]},["gloves"]={["type"]="Armor-Heavy-Epic2",["colors"]=["aa0000","151515","555555"]}},["b"]="m",["sk"]={["base"]="7f7f54",["diamonds"]="2a2a2a",["ear"]="6a5905",["eye"]="aa580f",["horns"]="aa580f",["lower_jaw"]="2a2a2a",["nails"]="2a2a2a",["stripes"]="2a2a2a"},["sz"]="2.0",["h"]=0,["g"]="m",["r"]="l"}
 level=50
 display_name=Wormtongue
 sub_name=The Dragon Priest
@@ -75374,4 +75354,5 @@ profession=2
 creature_category=Mortal
 rarity=2
 base_damage_melee=210
-ai_package=nothing
+ai_package=taw_knight_medium
+total_size=1.7999999523162842
