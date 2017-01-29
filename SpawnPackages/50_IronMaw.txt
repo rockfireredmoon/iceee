@@ -40,3 +40,32 @@ Spawn=7834,100  ;Subterranean Crawler (49)
 Spawn=7835,100  ;Subterranean Crawler (49)
 Spawn=7836,105  ;Krostakin (49)
 Spawn=7837,105  ;Krostakin (50)
+
+[ENTRY]
+Name=im_undead_mix
+Flags=224
+Spawn=7821,9
+Spawn=7822,9
+Spawn=7823,9
+Spawn=7824,9
+Spawn=7825,9
+Spawn=7826,9
+Spawn=7829,9
+Spawn=7827,9
+Spawn=7828,9
+Spawn=7830,9
+Spawn=7831,9
+loyaltyRadius=50
+wanderRadius=50
+
+[ENTRY]
+Name=im_creature_mix
+Flags=224
+Spawn=7836,17
+Spawn=7837,17
+Spawn=7832,16
+Spawn=7833,17
+Spawn=7834,17
+Spawn=7835,16
+loyaltyRadius=50
+wanderRadius=50
