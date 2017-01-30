@@ -261,3 +261,7 @@ Sanctuary=2719.67,1086.95,4333.1,Skrill Queen Lair
 [ENTRY]
 ZoneID=67
 Sanctuary=1503.09,290.687,2630.67,Junk Palace
+
+[ENTRY]
+ZoneID=50
+Sanctuary=19371,1361,17918,Dungeon: Iron Maw

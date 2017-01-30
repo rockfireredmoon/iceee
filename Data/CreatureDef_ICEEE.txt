@@ -1533,14 +1533,14 @@ display_name=Exit To Swineland
 profession=1
 creature_category=Inanimate
 ai_package=nothing
-
 [ENTRY]
-ID=7872
-defHints=2048
-will_regen=1
-might_regen=1
-appearance=p1:{["sz"]="1",["a"]="Prop-Interact_Rectangle"}
+ID=7874
+appearance=p1:{["sz"]="4.0",["a"]="Prop-Interact_Rectangle"}
 level=1
+display_name=Entrance To Iron Maw
+profession=1
+creature_category=Inanimate
+ai_package=nothing
 display_name=Interesting Bookshelf
 profession=1
 creature_category=Inanimate
