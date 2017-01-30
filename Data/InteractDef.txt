@@ -1523,3 +1523,18 @@ ObjectID=7870
 WarpTo=2671,1080,4334,69
 Message=Entering Skrill Queen Lair
 Facing=123
+
+[ENTRY]
+Name=iron_maw_to_grunes_tal
+Type=warp
+ObjectID=3477
+WarpTo=61870,891,70941,9
+Message=Exiting To Grunes Tal
+Facing=130
+
+[ENTRY]
+Name=grunes_tal_to_iron_maw
+Type=warp
+ObjectID=7874
+WarpTo=19352,1458,17513,50
+Message=Entrance To Junk Palace

@@ -2821,3 +2821,11 @@ creature_category=Animal
 rarity=1
 ai_package=FailsafeAI
 
+[ENTRY]
+ID=3477
+appearance=p1:{["sz"]="2.3",["a"]="Prop-Interact_Rectangle"}
+level=1
+display_name=Exit to Grunes Tal
+profession=1
+creature_category=Inanimate
+ai_package=nothing

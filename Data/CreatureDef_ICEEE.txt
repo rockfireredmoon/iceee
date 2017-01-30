@@ -1557,3 +1557,12 @@ profession=1
 creature_category=Inanimate
 ai_package=nothing
 Effects=INVINCIBLE,UNATTACKABLE
+
+[ENTRY]
+ID=7874
+appearance=p1:{["sz"]="1.0",["a"]="Prop-Interact_Rectangle"}
+level=1
+display_name=Entrance To Iron Maw
+profession=1
+creature_category=Inanimate
+ai_package=nothing
