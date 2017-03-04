@@ -1,27 +1,35 @@
 [ENTRY]
+ID=1153848
+Asset=Autumn_Forest?d=0.5&s=2&sz=1920
+Name=
+Pos=61550.6,412.062,45859.6
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
 ID=151056430
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=61502.4,424.668,45918
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=2a_rhl_sectionA9_general
-outerRadius=30
 
 [ENTRY]
 ID=151056433
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=61833.4,440.753,46232
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=2a_rhl_sectionA9_general
-outerRadius=30
 
 [ENTRY]
 ID=151056436
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=62032,401.868,45791
 Orient=0,0.00499998,0,0.999987
 Scale=1,1,1
 spawnPackage=2a_rhl_sectionA9_general
-outerRadius=30
 

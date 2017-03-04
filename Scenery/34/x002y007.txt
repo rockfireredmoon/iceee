@@ -1,7 +1,16 @@
 [ENTRY]
-ID=570427371
-Asset=Prop-Spider_Webs#Prop-Spider_Webs1
-Pos=2344.26,195,7015.22
-Orient=0,0.872355,0,0.488872
-Scale=1.85,1.85,1.85
+ID=1152794
+Asset=Cav-Room_Wall?ATS=ATS-Cave_Moss
+Name=Untitled
+Pos=2311.2,252.983,7014.73
+Orient=0,0.724287,0,0.689498
+Scale=1,1,1
+
+[ENTRY]
+ID=570427374
+Asset=Prop-Spider_Webs1
+Name=Untitled
+Pos=2948.69,189.757,7017.15
+Orient=-0.00101947,-0.998856,-0.024977,0.0407723
+Scale=1.4,1.4,1.4
 

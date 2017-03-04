@@ -1,7 +1,7 @@
 [ENTRY]
 ID=1127030
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=3620.53,170,3749.7
 Orient=0,0,0,1
 Scale=1,1,1
@@ -11,7 +11,7 @@ link=469763414,1
 [ENTRY]
 ID=1127031
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=3585.09,170,3498.83
 Orient=0,0,0,1
 Scale=1,1,1
@@ -21,7 +21,7 @@ link=469763417,1
 [ENTRY]
 ID=1127032
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=3733.83,170,3498.53
 Orient=0,0,0,1
 Scale=1,1,1
@@ -31,7 +31,7 @@ link=469763417,1
 [ENTRY]
 ID=1127033
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=3533.89,170,3486.01
 Orient=0,0,0,1
 Scale=1,1,1
@@ -41,7 +41,7 @@ link=469763415,1
 [ENTRY]
 ID=1127034
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=3345.32,170,3545.61
 Orient=0,0,0,1
 Scale=1,1,1
@@ -51,7 +51,7 @@ link=469764039,1
 [ENTRY]
 ID=1127036
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=3946.19,170,3410.12
 Orient=0,0,0,1
 Scale=1,1,1
@@ -61,12 +61,20 @@ link=469763437,1
 [ENTRY]
 ID=1127038
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=3992.75,170,3833.1
 Orient=0,0,0,1
 Scale=1,1,1
 links_count=1
 link=469764252,1
+
+[ENTRY]
+ID=1153845
+Asset=Effects#Par-CauldronSmoke
+Name=
+Pos=3205.19,193.356,3299.84
+Orient=0,0,0,1
+Scale=1,1,1
 
 [ENTRY]
 ID=469762080

@@ -1,6 +1,7 @@
 [ENTRY]
 ID=151061943
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=60450.1,220.705,46642.5
 Orient=0,0,0,1
 Scale=1,1,1
@@ -8,22 +9,13 @@ links_count=1
 link=151061942,1
 
 [ENTRY]
-ID=151061946
-Asset=Manipulator-SpawnPoint
-Pos=60749.2,230.451,47201.1
-Orient=0,0,0,1
-Scale=1,1,1
-links_count=1
-link=151061947,1
-spawnPackage=2a_rhl_hulkhogs_25_26
-
-[ENTRY]
 ID=151061952
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=60645.2,186.911,46735.2
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=2a_rhl_hulkhogs_25_26
 links_count=1
 link=151061953,1
-spawnPackage=2a_rhl_hulkhogs_25_26
 

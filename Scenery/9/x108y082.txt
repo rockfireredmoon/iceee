@@ -1,6 +1,7 @@
 [ENTRY]
 ID=151019311
 Asset=CL-SnowyPine5#CL-SnowyPine5
+Name=Untitled
 Pos=81064,661.998,61871
 Orient=0,0.281158,0,0.959662
 Scale=1,1,1
@@ -9,27 +10,28 @@ Flags=1
 [ENTRY]
 ID=151029395
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=81047,659.907,61843
 Orient=0,0.764329,0,0.644827
 Scale=1,1,1
 spawnPackage=12_yti_maiYetiCamps
-outerRadius=1
 
 [ENTRY]
 ID=151029396
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=81031,666.677,61979
 Orient=0,0.822049,0,0.569417
 Scale=1,1,1
+spawnPackage=12_yti_maiYetiCamps
 links_count=2
 link=151029397,1
 link=151029401,1
-spawnPackage=12_yti_maiYetiCamps
-outerRadius=1
 
 [ENTRY]
 ID=151029400
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=81026,654.46,61765
 Orient=0,0,0,1
 Scale=1,1,1
@@ -40,6 +42,7 @@ link=151029407,1
 [ENTRY]
 ID=151029401
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=81002,659.651,61878
 Orient=0,0,0,1
 Scale=1,1,1
@@ -50,24 +53,25 @@ link=151029400,1
 [ENTRY]
 ID=151029402
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=81005,663.272,61944
 Orient=0,0.757843,0,0.652437
 Scale=1,1,1
 spawnPackage=12_yti_maiYetiCamps
-outerRadius=1
 
 [ENTRY]
 ID=151029404
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=81032,654.383,61587
 Orient=0,0.663135,0,0.7485
 Scale=1,1,1
 spawnPackage=12_yti_maiYetiCamps
-outerRadius=1
 
 [ENTRY]
 ID=151029406
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=81000,654.774,61616
 Orient=0,0,0,1
 Scale=1,1,1
@@ -78,6 +82,7 @@ link=151029407,1
 [ENTRY]
 ID=151029407
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=81051,655.262,61626
 Orient=0,0,0,1
 Scale=1,1,1

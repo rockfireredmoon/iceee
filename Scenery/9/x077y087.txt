@@ -55,17 +55,9 @@ Orient=0,0,0,1
 Scale=1,1,1
 
 [ENTRY]
-ID=1127915
-Asset=Prop-Burnt_Pine3
-Name=
-Pos=57759.1,840.428,65307.6
-Orient=0,0,0,1
-Scale=1,1,1
-
-[ENTRY]
 ID=1127916
 Asset=CL-GrunsBush_5
-Name=
+Name=Untitled
 Pos=57774.3,839.494,65321.3
 Orient=0,0,0,1
 Scale=1,1,1
@@ -73,7 +65,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1127923
 Asset=CL-Undead#CL-UndeadTree3
-Name=
+Name=Untitled
 Pos=58313.4,770.12,65475.2
 Orient=2.45869e-07,0,0,1
 Scale=1,1,1

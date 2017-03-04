@@ -1,6 +1,7 @@
 [ENTRY]
 ID=151048841
 Asset=Prop-Ice-Gate#Prop-Ice-Gate
+Name=Untitled
 Pos=83166,1184.39,61551
 Orient=0,0.119712,0,0.992809
 Scale=1.8,1.8,1.8
