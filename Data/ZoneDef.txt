@@ -1169,3 +1169,13 @@ Instance=1
 MaxLeashRange=1000
 DefLoc=0,0,0
 PageSize=1000
+
+[ENTRY]
+ID=3082
+NAME=Cursed Cathedral
+ENVIRONMENTTYPE=Dungeon1
+ShardName=Europe 1
+WarpName=Cursed Cathedral
+MaxLeashRange=375
+DefLoc=0,0,0
+PageSize=1000
