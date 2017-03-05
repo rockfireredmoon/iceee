@@ -1,12 +1,4 @@
 [ENTRY]
-ID=1127913
-Asset=Prop-Interact1#Prop-Interact_Rectangle
-Name=
-Pos=81766.9,423.791,40610.6
-Orient=0,-0.452886,0,0.891568
-Scale=3,3,3
-
-[ENTRY]
 ID=151039998
 Asset=CL-SnowyPine1#CL-SnowyPine1
 Name=Untitled

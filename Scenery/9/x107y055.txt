@@ -1,21 +1,24 @@
 [ENTRY]
-ID=151054964
-Asset=Prop-Bridge_a#Prop-Bridge_Broken
-Pos=80741,489.103,41542
-Orient=0,0.744643,0,0.667463
-Scale=1,1,1
+ID=1153993
+Asset=Prop-Bridge_a#Prop-Bridge2
+Name=
+Pos=80954.6,492.746,41499.7
+Orient=-0.0206113,0.754246,0.0217975,0.655906
+Scale=1.85,1.85,1.85
 
 [ENTRY]
 ID=151054971
 Asset=Prop-Lamp_Post_NB1
-Pos=80733,487.779,41489
+Name=Untitled
+Pos=80726.7,507.74,41469.8
 Orient=0,0.0848978,0,0.99639
 Scale=1.425,1.425,1.425
 
 [ENTRY]
 ID=151054972
 Asset=Prop-Lamp_Post_NB1
-Pos=80737,489.581,41598
-Orient=0,-0.692537,0,0.721382
+Name=Untitled
+Pos=80739.8,514.512,41593.6
+Orient=0,-0.632673,0,0.774419
 Scale=1.425,1.425,1.425
 
