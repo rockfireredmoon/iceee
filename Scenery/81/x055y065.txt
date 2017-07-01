@@ -17,7 +17,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1133274
 Asset=Prop-Tents1#Prop-Tent_Pavilion1
-Name=
+Name=Untitled
 Pos=55936.8,348.547,65689.7
 Orient=0,0,0,1
 Scale=1,1,1
@@ -25,7 +25,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1133276
 Asset=Prop-Bar
-Name=
+Name=Untitled
 Pos=55887.2,355.982,65733.3
 Orient=0,-0.394019,0,0.919102
 Scale=1,1,1
@@ -33,7 +33,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1133277
 Asset=Prop-Bar
-Name=
+Name=Untitled
 Pos=55892.3,356.037,65728.6
 Orient=0,-0.398609,0,0.917121
 Scale=1,1,1
@@ -41,7 +41,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1133278
 Asset=Prop-Bar
-Name=
+Name=Untitled
 Pos=55899.5,352.132,65726.7
 Orient=0.058194,-0.403182,-0.137642,0.902836
 Scale=1,1,1
@@ -49,7 +49,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1133279
 Asset=Prop-Bar
-Name=
+Name=Untitled
 Pos=55891.9,348.25,65718.2
 Orient=-0.641304,0.65512,-0.282406,0.282477
 Scale=1,1,1
@@ -57,7 +57,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1133280
 Asset=Prop-Wooden_Furniture#Prop-Signpost-Bremen
-Name=
+Name=Untitled
 Pos=55894,363.037,65728.2
 Orient=0,0,0,1
 Scale=0.2,0.2,0.2
@@ -65,7 +65,7 @@ Scale=0.2,0.2,0.2
 [ENTRY]
 ID=1133282
 Asset=Prop-Statues#Prop-Statue-Plaque1
-Name=
+Name=Untitled
 Pos=55894,370.261,65728.3
 Orient=0.290247,-0.87585,-0.121279,0.365971
 Scale=1,1,1
@@ -73,7 +73,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1133283
 Asset=Prop-Statues#Prop-Statue-Plaque1
-Name=
+Name=Untitled
 Pos=55894.1,370.07,65728.1
 Orient=0.339776,-0.125768,0.891285,-0.272665
 Scale=1,1,1
@@ -81,7 +81,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1133284
 Asset=Prop-Wooden_Furniture#Prop-Bench2
-Name=
+Name=Untitled
 Pos=55933.4,355.5,65723
 Orient=0,0.777072,0,0.629412
 Scale=1,1,1
@@ -89,7 +89,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1133285
 Asset=Prop-Wooden_Furniture#Prop-Bench2
-Name=
+Name=Untitled
 Pos=55908.4,354.702,65685.1
 Orient=0,-0.059964,0,0.998201
 Scale=1,1,1
@@ -97,7 +97,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1133286
 Asset=Prop-Wooden_Furniture#Prop-Bench2
-Name=
+Name=Untitled
 Pos=55912.7,355.06,65666.4
 Orient=0,-0.0799147,0,0.996802
 Scale=1,1,1
@@ -105,10 +105,18 @@ Scale=1,1,1
 [ENTRY]
 ID=1133287
 Asset=Prop-Wooden_Furniture#Prop-Bench2
-Name=
+Name=Untitled
 Pos=55952.6,356.325,65719.4
 Orient=0,0.783327,0,0.62161
 Scale=1,1,1
+
+[ENTRY]
+ID=1133701
+Asset=Prop-Nordic_Props#Prop-Boat-Fishing
+Name=
+Pos=55837.6,63.1307,65156
+Orient=0,0,0,1
+Scale=2,2,2
 
 [ENTRY]
 ID=1358955037

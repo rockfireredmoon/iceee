@@ -9,12 +9,20 @@ Scale=1.1,1.1,1.1
 [ENTRY]
 ID=1128406
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=54175.3,119.127,65862.2
 Orient=0,0,0,1
 Scale=1,1,1
 links_count=1
 link=1358955424,1
+
+[ENTRY]
+ID=1133700
+Asset=Prop-Nordic_Props#Prop-Boat-Fishing
+Name=
+Pos=54540.9,59.5605,65506.6
+Orient=0,-0.720831,0,0.693111
+Scale=1,1,1
 
 [ENTRY]
 ID=10000191
