@@ -326,7 +326,7 @@ spawnPackage=#2611
 [ENTRY]
 ID=1133763
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=21268.3,1148.61,28500.4
 Orient=0,0,0,1
 Scale=1,1,1
@@ -336,7 +336,7 @@ wanderRadius=60
 [ENTRY]
 ID=1133764
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=21350.9,1122.85,28593.6
 Orient=0,0,0,1
 Scale=1,1,1
@@ -346,7 +346,7 @@ wanderRadius=60
 [ENTRY]
 ID=1133765
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=21207.2,1164.62,28647.1
 Orient=0,0,0,1
 Scale=1,1,1
@@ -356,7 +356,7 @@ wanderRadius=60
 [ENTRY]
 ID=1133766
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=21320.1,1119.91,28756.2
 Orient=0,0,0,1
 Scale=1,1,1
@@ -366,7 +366,7 @@ wanderRadius=60
 [ENTRY]
 ID=1133769
 Asset=Prop-Anubian_Shipwreck#Prop-Shipwreck-Anubian3
-Name=
+Name=Untitled
 Pos=21458.2,1105.02,28587.2
 Orient=0,0,0,1
 Scale=1,1,1
@@ -374,7 +374,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1133770
 Asset=Prop-Anubian_Shipwreck#Prop-Shipwreck-Anubian2
-Name=
+Name=Untitled
 Pos=21514.3,1082.29,28676.2
 Orient=0,0,0,1
 Scale=1,1,1
@@ -382,7 +382,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1133771
 Asset=Prop-Anubian_Shipwreck#Prop-Shipwreck-Anubian1
-Name=
+Name=Untitled
 Pos=21494.4,1095.7,28631.2
 Orient=0,0,0,1
 Scale=1,1,1
@@ -390,7 +390,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1133784
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=21441.4,1110.27,28351.6
 Orient=0,0.996322,0,0.0856911
 Scale=1,1,1
