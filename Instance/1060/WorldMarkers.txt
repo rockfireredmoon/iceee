@@ -1,7 +1,7 @@
 [ENTRY]
-Name=Lt Willard
-Comment=[Comment here]
-Position=16790.0,1205.0,15454.0
+Name=Starting Earthrise
+Comment=First camp out of south passage
+Position=21258.0,1700.0,27601.0
 
 [ENTRY]
 Name=Landing Beach
