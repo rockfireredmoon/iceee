@@ -69,7 +69,7 @@ Name=Untitled
 Pos=9.68337,61.3737,1065.64
 Orient=0,0.720831,0,0.693111
 Scale=1,1,1
-spawnPackage=#F3339
+spawnPackage=77_lighthouse_anglordren_5
 
 [ENTRY]
 ID=1131836
@@ -90,7 +90,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1131956
 Asset=Prop-Dvergar_Accessories#Prop-Dvergar_Smelter
-Name=
+Name=Untitled
 Pos=-87.2928,51.7889,1135.43
 Orient=0,0.731146,0,0.682221
 Scale=0.6,0.6,0.6
@@ -98,7 +98,7 @@ Scale=0.6,0.6,0.6
 [ENTRY]
 ID=1131957
 Asset=Prop-Dvergar_Accessories#Prop-Dvergar_Forge
-Name=
+Name=Untitled
 Pos=-75.7979,60.9481,1114.19
 Orient=0,-0.169182,0,0.985585
 Scale=0.5,0.5,0.5

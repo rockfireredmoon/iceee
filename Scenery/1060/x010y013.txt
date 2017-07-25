@@ -242,6 +242,7 @@ Name=
 Pos=19826.8,1124.32,25010.4
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=58_earthrise_anubianarchitect_6_7
 links_count=1
 link=1133901,1
 
@@ -273,6 +274,7 @@ Name=
 Pos=20216.5,1158.78,25306
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=58_earthrise_anubianarchitect_6_7
 links_count=2
 link=1133905,1
 link=1133909,1
@@ -284,6 +286,7 @@ Name=
 Pos=19968.9,1112.44,25020.9
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=58_earthrise_simiangrunt_6
 links_count=1
 link=1133905,1
 
