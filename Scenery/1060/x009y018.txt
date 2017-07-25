@@ -372,18 +372,18 @@ spawnPackage=#F3361
 [ENTRY]
 ID=1132591
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=18572.2,1478.71,34826.5
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#F1980, #F1983
+spawnPackage=#F1980
 links_count=1
 link=1132608,1
 
 [ENTRY]
 ID=1132600
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=18913.7,1704.53,34606.8
 Orient=0,0,0,1
 Scale=1,1,1
@@ -394,7 +394,7 @@ link=1132601,1
 [ENTRY]
 ID=1132601
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=18903.4,1705.13,34670.9
 Orient=0,0,0,1
 Scale=1,1,1
@@ -405,7 +405,7 @@ link=1132602,1
 [ENTRY]
 ID=1132602
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=18836,1691.77,34692.2
 Orient=0,0,0,1
 Scale=1,1,1
@@ -416,7 +416,7 @@ link=1132603,1
 [ENTRY]
 ID=1132603
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=18754.2,1664.75,34684
 Orient=0,0,0,1
 Scale=1,1,1
@@ -427,7 +427,7 @@ link=1132604,1
 [ENTRY]
 ID=1132604
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=18695.8,1615.44,34597
 Orient=0,0,0,1
 Scale=1,1,1
@@ -438,7 +438,7 @@ link=1132605,1
 [ENTRY]
 ID=1132608
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=18516.3,1478.26,34826.2
 Orient=0,0,0,1
 Scale=1,1,1
@@ -449,7 +449,7 @@ link=1132609,1
 [ENTRY]
 ID=1132609
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=18464.2,1475.66,34747
 Orient=0,0,0,1
 Scale=1,1,1
@@ -460,7 +460,7 @@ link=1132610,1
 [ENTRY]
 ID=1132610
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=18414.1,1474.36,34621.3
 Orient=0,0,0,1
 Scale=1,1,1
@@ -471,27 +471,35 @@ link=1132611,1
 [ENTRY]
 ID=1132619
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=18642.7,1480.37,34918.5
 Orient=0,0.981854,0,0.189641
 Scale=1,1,1
-spawnPackage=#F1980, #F1983
+spawnPackage=#F1980
 
 [ENTRY]
 ID=1132620
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=18613.2,1480.23,34916.9
 Orient=0,0.213347,0,0.976976
 Scale=1,1,1
-spawnPackage=#F3387, #F3388
+spawnPackage=#F3387
 
 [ENTRY]
 ID=1132628
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=19146.8,1724.29,34598.6
 Orient=0,0.844162,0,0.536088
 Scale=1,1,1
 spawnPackage=#F1983
+
+[ENTRY]
+ID=1133973
+Asset=Prop-Lamp_Posts1#Prop-Lamp_Post_NB2
+Name=
+Pos=17688.3,1256.5,34656.7
+Orient=0,0,0,1
+Scale=1,1,1
 
