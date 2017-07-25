@@ -154,7 +154,7 @@ Scale=1,1,1
 ID=1131464
 Asset=Earthrise Forest?d=1&s=2&sz=500
 Name=Untitled
-Pos=18021.6,1281.66,34109
+Pos=17924.1,1270.4,34283.9
 Orient=0,0,0,1
 Scale=1,1,1
 
@@ -202,7 +202,7 @@ Scale=1,1,1
 ID=1131470
 Asset=Earthrise Forest?d=1&s=6&sz=500
 Name=Untitled
-Pos=18469.1,1303.94,33692.8
+Pos=18522.6,1314.71,33687
 Orient=0,0,0,1
 Scale=1,1,1
 
@@ -250,7 +250,7 @@ Scale=1,1,1
 ID=1131476
 Asset=Prop-Anubian_Camp#Prop-Anubian_Palisade
 Name=Untitled
-Pos=17547.1,1302.52,33547.9
+Pos=17537.9,1302.78,33543.8
 Orient=0,0.601198,0,0.7991
 Scale=1,1,1
 
@@ -274,7 +274,7 @@ Scale=1,1,1
 ID=1131479
 Asset=Prop-Anubian_Camp#Prop-Anubian_Palisade
 Name=Untitled
-Pos=17532.5,1304.32,33596.6
+Pos=17526.8,1303.38,33591.8
 Orient=0,0.632673,0,0.774419
 Scale=1,1,1
 
@@ -295,14 +295,6 @@ Orient=0,-0.741297,0,0.671178
 Scale=1,1,1
 
 [ENTRY]
-ID=1131482
-Asset=Prop-Anubian_Camp#Prop-Anubian_Watchtower
-Name=Untitled
-Pos=17563.1,1301.74,33502.4
-Orient=0,-0.0998334,0,0.995004
-Scale=2,2,2
-
-[ENTRY]
 ID=1131483
 Asset=Prop-Anubian_Camp#Prop-Anubian_Watchtower
 Name=Untitled
@@ -315,7 +307,7 @@ ID=1131484
 Asset=Prop-Anubian_Camp#Prop-Anubian_Watchtower
 Name=Untitled
 Pos=17766.4,1292.07,33457.6
-Orient=0.613117,0,0,0.789992
+Orient=0.014998,0.00394001,0.0144727,0.999775
 Scale=1.5,1.5,1.5
 
 [ENTRY]
@@ -1097,7 +1089,7 @@ link=1133971,1
 ID=1133969
 Asset=Manipulator#Manipulator-PathNode
 Name=
-Pos=17825.7,1304.14,33596.7
+Pos=17841.7,1304.27,33598.3
 Orient=0,0,0,1
 Scale=1,1,1
 links_count=2
@@ -1108,7 +1100,7 @@ link=1133968,1
 ID=1133970
 Asset=Manipulator#Manipulator-PathNode
 Name=
-Pos=17836,1283.28,33289.1
+Pos=17876.4,1283.65,33288
 Orient=0,0,0,1
 Scale=1,1,1
 links_count=2
@@ -1168,9 +1160,9 @@ Scale=1,1,1
 
 [ENTRY]
 ID=1133988
-Asset=Bldg-Ruins#Bldg-Ruins-Old_Keep1
+Asset=Bldg-Ruins#Bldg-Ruins-Old_Keep1?ATS=ATS-Roman
 Name=
-Pos=18034.2,1308.78,33467.9
-Orient=0,0,0,1
+Pos=17755.7,1282.1,33607.4
+Orient=0,-0.425939,0,0.904752
 Scale=1,1,1
 

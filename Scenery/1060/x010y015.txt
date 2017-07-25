@@ -43,8 +43,8 @@ Scale=1,1,1
 ID=1131143
 Asset=Earthrise Forest?d=1&s=1&sz=1000
 Name=Untitled
-Pos=19252,1504.06,30382.3
-Orient=0,0,0,1
+Pos=19230,1496.8,30529
+Orient=0,0,-0.059964,0.998201
 Scale=1,1,1
 
 [ENTRY]
@@ -184,7 +184,7 @@ spawnPackage=#2059
 [ENTRY]
 ID=1133757
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=20601.8,1284.58,28867
 Orient=0,0,0,1
 Scale=1,1,1
@@ -195,7 +195,7 @@ link=1133775,1
 [ENTRY]
 ID=1133759
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=20823.5,1214.36,28944.9
 Orient=0,0,0,1
 Scale=1,1,1
@@ -205,7 +205,7 @@ wanderRadius=60
 [ENTRY]
 ID=1133760
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=20922.4,1200.24,28840.9
 Orient=0,0,0,1
 Scale=1,1,1
@@ -215,7 +215,7 @@ wanderRadius=75
 [ENTRY]
 ID=1133767
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=21022.8,1159.6,28926.9
 Orient=0,0,0,1
 Scale=1,1,1
@@ -225,7 +225,7 @@ wanderRadius=60
 [ENTRY]
 ID=1133783
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=20767.4,1249.84,28811.7
 Orient=0,0,0,1
 Scale=1,1,1
@@ -234,7 +234,7 @@ spawnPackage=#F1980
 [ENTRY]
 ID=1133785
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=21094,1129.81,29071.7
 Orient=0,0.968715,0,0.248176
 Scale=1,1,1

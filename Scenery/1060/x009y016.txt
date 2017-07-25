@@ -589,18 +589,10 @@ Orient=0,0,-0.0898785,0.995953
 Scale=1,1,1
 
 [ENTRY]
-ID=1133981
-Asset=Bldg-Earthend#Bldg-Earthend_Tower2?ATS=ATS-Roman
-Name=
-Pos=18203.6,1241.92,32503.2
-Orient=0,-0.556361,0,0.830941
-Scale=1,1,1
-
-[ENTRY]
 ID=1133982
 Asset=Effects#Par-Flame-Emitter
 Name=
-Pos=18158.4,1292.89,32531.8
+Pos=18192.5,1220.95,32531.8
 Orient=0,0,0,1
 Scale=6,6,6
 
@@ -608,7 +600,7 @@ Scale=6,6,6
 ID=1133983
 Asset=Effects#Par-Black_Smoke-Emitter
 Name=
-Pos=18168.1,1359.64,32535
+Pos=18177.7,1317.42,32535
 Orient=0,0,0,1
 Scale=1,1,1
 
@@ -619,4 +611,12 @@ Name=
 Pos=18024.5,1320.56,32550.6
 Orient=0,0,0,1
 Scale=3,3,3
+
+[ENTRY]
+ID=1133989
+Asset=Bldg-Ruins#Bldg-Ruins2?ATS=ATS-Roman
+Name=
+Pos=18141.2,1180.62,32585.6
+Orient=0,0.164252,0,0.986418
+Scale=1,1,1
 
