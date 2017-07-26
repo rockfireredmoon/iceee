@@ -110,6 +110,7 @@ Pos=17660.2,1250.44,26784.7
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=#2050
+wanderRadius=75
 
 [ENTRY]
 ID=1132210
@@ -119,6 +120,7 @@ Pos=17668.1,1268.41,26610.2
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=#2050
+wanderRadius=75
 
 [ENTRY]
 ID=1132211
@@ -128,6 +130,7 @@ Pos=17378.8,1226.98,26500.7
 Orient=0,-0.535416,0,0.844589
 Scale=1,1,1
 spawnPackage=#2050
+wanderRadius=75
 
 [ENTRY]
 ID=1132213
@@ -137,6 +140,7 @@ Pos=17989.3,1279.35,26712.7
 Orient=0,0.988652,0,0.150226
 Scale=1,1,1
 spawnPackage=#2050
+wanderRadius=75
 
 [ENTRY]
 ID=1132217
@@ -146,6 +150,7 @@ Pos=17748.9,1293.92,26257.8
 Orient=0,-0.479426,0,0.877583
 Scale=1,1,1
 spawnPackage=#2050
+wanderRadius=75
 
 [ENTRY]
 ID=1132218
@@ -155,6 +160,7 @@ Pos=17955.9,1301.77,26505.2
 Orient=0,-0.659385,0,0.751806
 Scale=1,1,1
 spawnPackage=#2050
+wanderRadius=75
 
 [ENTRY]
 ID=1132363
@@ -324,4 +330,90 @@ Pos=18928.4,1570.1,25892.1
 Orient=0,-0.996024,0,-0.0890854
 Scale=1,1,1
 spawnPackage=#3441
+
+[ENTRY]
+ID=1134131
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=18122,1469.35,25192.6
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=58_earthrise_mix_southernsimiancamp
+
+[ENTRY]
+ID=1134132
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=18142.3,1448.52,25268.6
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=58_earthrise_mix_southernsimiancamp
+
+[ENTRY]
+ID=1134133
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=18127.1,1457.41,25235.9
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=58_earthrise_mix_southernsimiancamp
+
+[ENTRY]
+ID=1134134
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=18034.5,1446.59,25320.8
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=58_earthrise_mix_southernsimiancamp
+
+[ENTRY]
+ID=1134135
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=18011,1459.13,25272.7
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=58_earthrise_mix_southernsimiancamp
+
+[ENTRY]
+ID=1134136
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=17971.4,1468.26,25203.1
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=58_earthrise_mix_southernsimiancamp
+
+[ENTRY]
+ID=1134137
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=18486.9,1502.44,25805.3
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
+ID=1134138
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=18163,1409.08,25466.4
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
+ID=1134139
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=18073.9,1490.01,24968.9
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
+ID=1134140
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=18780,1548.73,26046.8
+Orient=0,0,0,1
+Scale=1,1,1
 

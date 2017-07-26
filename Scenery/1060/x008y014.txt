@@ -22,6 +22,7 @@ Pos=16914.7,1361.81,27306.3
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=#2050
+wanderRadius=75
 
 [ENTRY]
 ID=1132203
@@ -31,6 +32,7 @@ Pos=17122.2,1347.25,27478.1
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=#2050
+wanderRadius=75
 
 [ENTRY]
 ID=1132204
@@ -40,6 +42,7 @@ Pos=16643.1,1329.18,27106.9
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=#2050
+wanderRadius=75
 
 [ENTRY]
 ID=1132205
@@ -49,6 +52,7 @@ Pos=17017.2,1236.44,27038.1
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=#2050
+wanderRadius=75
 
 [ENTRY]
 ID=1132325

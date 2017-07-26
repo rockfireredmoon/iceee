@@ -175,6 +175,7 @@ Name=
 Pos=18133.5,1538.99,24301
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=58_earthrise_mix_southernsimiancamp
 
 [ENTRY]
 ID=1134107
@@ -183,6 +184,7 @@ Name=
 Pos=18249.1,1535.56,24299
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=58_earthrise_mix_southernsimiancamp
 
 [ENTRY]
 ID=1134108
@@ -191,6 +193,10 @@ Name=
 Pos=18181.5,1531.88,24317.4
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=58_earthrise_mix_southernsimiancamp
+links_count=2
+link=1134129,1
+link=1134127,1
 
 [ENTRY]
 ID=1134109
@@ -199,4 +205,50 @@ Name=
 Pos=18086.4,1501.68,24875.1
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=58_earthrise_mix_southernsimiancamp
+links_count=1
+link=1134128,1
+
+[ENTRY]
+ID=1134127
+Asset=Manipulator#Manipulator-PathNode
+Name=
+Pos=18171.2,1525.33,24520
+Orient=0,0,0,1
+Scale=1,1,1
+links_count=2
+link=1134108,1
+link=1134128,1
+
+[ENTRY]
+ID=1134128
+Asset=Manipulator#Manipulator-PathNode
+Name=
+Pos=18138.1,1517.35,24706.4
+Orient=0,0,0,1
+Scale=1,1,1
+links_count=2
+link=1134127,1
+link=1134109,1
+
+[ENTRY]
+ID=1134129
+Asset=Manipulator#Manipulator-PathNode
+Name=
+Pos=18188.4,1532.2,24238.7
+Orient=0,0,0,1
+Scale=1,1,1
+links_count=2
+link=1134130,1
+link=1134108,1
+
+[ENTRY]
+ID=1134130
+Asset=Manipulator#Manipulator-PathNode
+Name=
+Pos=18175.4,1553.53,24172.6
+Orient=0,0,0,1
+Scale=1,1,1
+links_count=1
+link=1134129,1
 
