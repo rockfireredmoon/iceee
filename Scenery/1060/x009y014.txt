@@ -700,7 +700,7 @@ spawnPackage=#2047
 [ENTRY]
 ID=1133789
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=19166.5,1529.3,27802.6
 Orient=0,-0.789504,0,0.613746
 Scale=1,1,1
@@ -709,7 +709,7 @@ spawnPackage=58_earthrise_kepi_7
 [ENTRY]
 ID=1133790
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=19146.5,1454.99,28465.1
 Orient=0,-0.761095,0,0.64864
 Scale=1,1,1
@@ -718,7 +718,7 @@ spawnPackage=58_earthrise_mix_southernsimiancamp
 [ENTRY]
 ID=1133791
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=19025.3,1456.98,28457.2
 Orient=0,-0.713864,0,0.700285
 Scale=1,1,1
@@ -727,7 +727,7 @@ spawnPackage=58_earthrise_mix_southernsimiancamp
 [ENTRY]
 ID=1133792
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=19059.4,1459,28286.9
 Orient=0,0,0,1
 Scale=1,1,1
@@ -738,7 +738,7 @@ link=1133806,1
 [ENTRY]
 ID=1133795
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=19079.2,1477.07,28104.8
 Orient=0,0,0,1
 Scale=1,1,1
@@ -748,7 +748,7 @@ wanderRadius=65
 [ENTRY]
 ID=1133799
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=19075.4,1493.67,28033.9
 Orient=0,0,0,1
 Scale=1,1,1
@@ -758,7 +758,7 @@ wanderRadius=55
 [ENTRY]
 ID=1133800
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=18946.8,1463.49,28135.8
 Orient=0,0,0,1
 Scale=1,1,1
@@ -769,7 +769,7 @@ link=1133810,1
 [ENTRY]
 ID=1133801
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=18929.7,1461.45,28357.4
 Orient=0,0,0,1
 Scale=1,1,1
@@ -780,7 +780,7 @@ link=1133805,1
 [ENTRY]
 ID=1133802
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=19032,1522.21,27932.5
 Orient=0,0,0,1
 Scale=1,1,1
@@ -791,7 +791,7 @@ link=1133815,1
 [ENTRY]
 ID=1133803
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=19081.2,1522.38,27862
 Orient=0,0,0,1
 Scale=1,1,1
@@ -801,7 +801,7 @@ wanderRadius=60
 [ENTRY]
 ID=1133805
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=19089.8,1455.7,28390.4
 Orient=0,0,0,1
 Scale=1,1,1
@@ -811,7 +811,7 @@ link=1133801,1
 [ENTRY]
 ID=1133806
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=19171.3,1460.61,28367
 Orient=0,0,0,1
 Scale=1,1,1
@@ -822,7 +822,7 @@ link=1133807,1
 [ENTRY]
 ID=1133808
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=19122.3,1473.33,28136.1
 Orient=0,0,0,1
 Scale=1,1,1
@@ -833,7 +833,7 @@ link=1133794,1
 [ENTRY]
 ID=1133809
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=19047.6,1457.43,28214.9
 Orient=0,0,0,1
 Scale=1,1,1
@@ -843,7 +843,7 @@ link=1133808,1
 [ENTRY]
 ID=1133810
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=19052.7,1464.81,28156.3
 Orient=0,0,0,1
 Scale=1,1,1
@@ -853,7 +853,7 @@ link=1133800,1
 [ENTRY]
 ID=1133811
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=19184.5,1510.77,27943.1
 Orient=0,0,0,1
 Scale=1,1,1
@@ -865,7 +865,7 @@ link=1133812,1
 [ENTRY]
 ID=1133812
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=19184.1,1478.47,28088.9
 Orient=0,0,0,1
 Scale=1,1,1
@@ -877,7 +877,7 @@ link=1133820,1
 [ENTRY]
 ID=1133814
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=19124,1523.66,27850.8
 Orient=0,0,0,1
 Scale=1,1,1
@@ -888,7 +888,7 @@ link=1133811,1
 [ENTRY]
 ID=1133815
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=19136,1514.69,27932.1
 Orient=0,0,0,1
 Scale=1,1,1
@@ -898,7 +898,7 @@ link=1133802,1
 [ENTRY]
 ID=1133817
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=19129.5,1456.76,28412.5
 Orient=0,0,0,1
 Scale=1,1,1
@@ -910,7 +910,7 @@ link=1133819,1
 [ENTRY]
 ID=1133819
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=19027.4,1458.99,28281.5
 Orient=0,0,0,1
 Scale=1,1,1
@@ -921,7 +921,7 @@ link=1133820,1
 [ENTRY]
 ID=1133820
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=19122.9,1481.67,28084.3
 Orient=0,0,0,1
 Scale=1,1,1
@@ -932,7 +932,7 @@ link=1133812,1
 [ENTRY]
 ID=1133821
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=19175.6,1461.99,28277.1
 Orient=0,-0.605186,0,0.796084
 Scale=1,1,1
@@ -941,7 +941,7 @@ spawnPackage=58_earthrise_npc_soldier
 [ENTRY]
 ID=1133822
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=19118.8,1460.58,28261.6
 Orient=0,-0.688921,0,0.724836
 Scale=1,1,1
@@ -950,7 +950,7 @@ spawnPackage=58_earthrise_npc_soldier
 [ENTRY]
 ID=1133823
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=19190.1,1465.2,28197.3
 Orient=0,0,0,1
 Scale=1,1,1
@@ -959,9 +959,20 @@ spawnPackage=58_earthrise_npc_soldier
 [ENTRY]
 ID=1133824
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=19133.6,1466.52,28184.7
 Orient=0,0.786425,0,0.617686
 Scale=1,1,1
 spawnPackage=58_earthrise_npc_soldier
+
+[ENTRY]
+ID=1134088
+Asset=Manipulator#Manipulator-PathNode
+Name=
+Pos=19167,1424.81,28739.7
+Orient=0,0,0,1
+Scale=1,1,1
+links_count=2
+link=1134094,1
+link=1134103,1
 
