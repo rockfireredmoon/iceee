@@ -62,6 +62,7 @@ Pos=20250.6,1208.58,33309.9
 Orient=0,0.624897,0,0.780707
 Scale=1,1,1
 spawnPackage=#2056
+wanderRadius=75
 
 [ENTRY]
 ID=1132452
@@ -71,6 +72,7 @@ Pos=20155.7,1187.53,33200.9
 Orient=0,-0.60247,0,-0.798141
 Scale=1,1,1
 spawnPackage=#2058
+wanderRadius=100
 
 [ENTRY]
 ID=1132453
@@ -80,6 +82,7 @@ Pos=19969,1116.78,33607
 Orient=0,0.886627,0,0.462485
 Scale=1,1,1
 spawnPackage=#2056
+wanderRadius=75
 
 [ENTRY]
 ID=1132454
@@ -89,6 +92,7 @@ Pos=19944,1153.41,33384.3
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=#2056
+wanderRadius=75
 
 [ENTRY]
 ID=1132455
@@ -98,6 +102,7 @@ Pos=20073.4,1112.56,33510
 Orient=0,0.780209,0,0.625519
 Scale=1,1,1
 spawnPackage=#2056
+wanderRadius=75
 
 [ENTRY]
 ID=1132456
@@ -107,6 +112,7 @@ Pos=19890.5,1185.6,33212.8
 Orient=0,-0.617059,0,0.786917
 Scale=1,1,1
 spawnPackage=#2056
+wanderRadius=75
 
 [ENTRY]
 ID=1132457
@@ -116,6 +122,7 @@ Pos=20419.4,1266.03,33212.4
 Orient=0,0.960835,0,0.277121
 Scale=1,1,1
 spawnPackage=#2056
+wanderRadius=75
 
 [ENTRY]
 ID=1132458
@@ -125,6 +132,7 @@ Pos=19819.6,1216.77,33003.3
 Orient=0,0.777072,0,0.629412
 Scale=1,1,1
 spawnPackage=#2056
+wanderRadius=75
 
 [ENTRY]
 ID=1132459
@@ -134,6 +142,7 @@ Pos=20040.6,1211.99,32957.8
 Orient=0,0.974616,0,0.223883
 Scale=1,1,1
 spawnPackage=#2056
+wanderRadius=75
 
 [ENTRY]
 ID=1132460
@@ -143,6 +152,7 @@ Pos=20270.9,1264.79,32915.4
 Orient=0,-0.731146,0,0.682221
 Scale=1,1,1
 spawnPackage=#2056
+wanderRadius=75
 
 [ENTRY]
 ID=1132461
@@ -152,6 +162,7 @@ Pos=20451.6,1291.98,32808
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=#2056
+wanderRadius=75
 
 [ENTRY]
 ID=1132462
@@ -161,6 +172,7 @@ Pos=19976.5,1238.33,32760.8
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=#2056
+wanderRadius=75
 
 [ENTRY]
 ID=1132463
@@ -170,6 +182,7 @@ Pos=20400.2,1261.14,32669.6
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=#2056
+wanderRadius=75
 
 [ENTRY]
 ID=1132464
@@ -179,20 +192,21 @@ Pos=19687.8,1252.19,33241.4
 Orient=0,0.804599,0,0.593818
 Scale=1,1,1
 spawnPackage=#2056
+wanderRadius=75
 
 [ENTRY]
 ID=1132587
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=19213.9,1410.72,33735.6
 Orient=0,0.548024,0,0.836463
 Scale=1,1,1
-spawnPackage=#F3387, #F3388
+spawnPackage=#F3387
 
 [ENTRY]
 ID=1132597
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=19226.6,1372.43,33634.9
 Orient=0,0,0,1
 Scale=1,1,1
@@ -203,7 +217,7 @@ link=1132598,1
 [ENTRY]
 ID=1132598
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=19310.6,1329.86,33495.2
 Orient=0,0,0,1
 Scale=1,1,1

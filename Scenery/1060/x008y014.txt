@@ -15,14 +15,6 @@ Orient=0,0,0,1
 Scale=1,1,1
 
 [ENTRY]
-ID=1131435
-Asset=Prop-Marker1#Prop-Monster_Marker
-Name=Untitled
-Pos=17274.7,1390.72,26980.8
-Orient=0,0,0,1
-Scale=4,4,4
-
-[ENTRY]
 ID=1131437
 Asset=Prop-Marker1#Prop-Monster_Marker
 Name=Untitled
@@ -370,7 +362,7 @@ spawnPackage=#2012
 [ENTRY]
 ID=1133450
 Asset=Prop-Dungeon_Accents1#Prop-Dungeon-Entrance-Mine1
-Name=
+Name=Untitled
 Pos=16754.5,1368.07,27428.2
 Orient=0,0.920751,0,0.390152
 Scale=2,2,2

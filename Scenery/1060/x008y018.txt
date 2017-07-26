@@ -294,6 +294,7 @@ Pos=15377,1230.84,35085
 Orient=0,0.522687,0,0.852525
 Scale=1,1,1
 spawnPackage=#2040
+wanderRadius=75
 
 [ENTRY]
 ID=1132237
@@ -303,6 +304,7 @@ Pos=15634.8,1270.31,35145.9
 Orient=0,-0.66687,0,0.745174
 Scale=1,1,1
 spawnPackage=#2040
+wanderRadius=75
 
 [ENTRY]
 ID=1132238
@@ -312,6 +314,7 @@ Pos=15381.2,1260.75,35360.1
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=#2040
+wanderRadius=75
 
 [ENTRY]
 ID=1132241
@@ -321,6 +324,7 @@ Pos=15517.8,1251.37,35326
 Orient=0,0.49688,0,0.867819
 Scale=1,1,1
 spawnPackage=#2040
+wanderRadius=75
 
 [ENTRY]
 ID=1132246
@@ -330,6 +334,7 @@ Pos=15556.5,1224.78,34888.7
 Orient=0,0.710353,0,0.703845
 Scale=1,1,1
 spawnPackage=#2030
+wanderRadius=75
 
 [ENTRY]
 ID=1132277
@@ -339,6 +344,7 @@ Pos=16122.7,1297.6,34988.7
 Orient=0,-0.792563,0,0.609791
 Scale=1,1,1
 spawnPackage=#2030
+wanderRadius=75
 
 [ENTRY]
 ID=1132278
@@ -348,6 +354,7 @@ Pos=15930.1,1303.33,34835.3
 Orient=0,-0.589145,0,0.808028
 Scale=1,1,1
 spawnPackage=#2030
+wanderRadius=75
 
 [ENTRY]
 ID=1132279
@@ -357,6 +364,7 @@ Pos=16137.8,1318.19,34656.6
 Orient=0,0.998952,0,0.0457803
 Scale=1,1,1
 spawnPackage=#2030
+wanderRadius=75
 
 [ENTRY]
 ID=1132280
@@ -366,6 +374,7 @@ Pos=16391.7,1318.08,35029.7
 Orient=0,-0.767543,0,0.640997
 Scale=1,1,1
 spawnPackage=#2030
+wanderRadius=75
 
 [ENTRY]
 ID=1132281
@@ -375,6 +384,7 @@ Pos=15945.9,1284.39,35036.3
 Orient=0,0.333487,0,0.942755
 Scale=1,1,1
 spawnPackage=#2030
+wanderRadius=75
 
 [ENTRY]
 ID=1132282
@@ -384,6 +394,7 @@ Pos=15852.7,1296.74,35228.4
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=#2030
+wanderRadius=75
 
 [ENTRY]
 ID=1132283
@@ -393,6 +404,7 @@ Pos=16200.6,1268.2,35213
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=#2030
+wanderRadius=75
 
 [ENTRY]
 ID=1132292
@@ -402,6 +414,7 @@ Pos=16479,1325.47,34756.9
 Orient=0,-0.947396,0,0.320063
 Scale=1,1,1
 spawnPackage=#2030
+wanderRadius=75
 
 [ENTRY]
 ID=1132549

@@ -348,14 +348,6 @@ Scale=1,1,1
 spawnPackage=#F2013
 
 [ENTRY]
-ID=1131431
-Asset=Prop-Marker1#Prop-Monster_Marker
-Name=Untitled
-Pos=18811.9,1170.94,31253.4
-Orient=0,0,0,1
-Scale=3.5,3.5,3.5
-
-[ENTRY]
 ID=1132294
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=Untitled

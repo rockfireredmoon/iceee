@@ -151,14 +151,6 @@ Orient=0,0,0,1
 Scale=1,1,1
 
 [ENTRY]
-ID=1131438
-Asset=Prop-Marker1#Prop-Monster_Marker
-Name=Untitled
-Pos=16797.3,1377.39,29030.8
-Orient=0,0,0,1
-Scale=4,4,4
-
-[ENTRY]
 ID=1131503
 Asset=Prop-Battlefield1#Prop-Camelot_Standard
 Name=Untitled
@@ -313,7 +305,7 @@ spawnPackage=#2053
 [ENTRY]
 ID=1132518
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=17054.7,1595.46,30278.5
 Orient=0,0,0,1
 Scale=1,1,1
@@ -324,7 +316,7 @@ link=1132527,1
 [ENTRY]
 ID=1132519
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=17054.3,1597.74,30137.8
 Orient=0,0,0,1
 Scale=1,1,1
@@ -335,7 +327,7 @@ link=1132518,1
 [ENTRY]
 ID=1132520
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=17076.4,1643.89,29978.6
 Orient=0,0,0,1
 Scale=1,1,1
@@ -346,7 +338,7 @@ link=1132519,1
 [ENTRY]
 ID=1132522
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=17136.7,1666.5,29787.1
 Orient=0,0,0,1
 Scale=1,1,1
@@ -357,7 +349,7 @@ link=1132521,1
 [ENTRY]
 ID=1132524
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=16918.4,1657.41,29863.8
 Orient=0,0,0,1
 Scale=1,1,1
@@ -367,7 +359,7 @@ link=1132526,1
 [ENTRY]
 ID=1132525
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=16985.7,1640.33,29728
 Orient=0,0,0,1
 Scale=1,1,1
@@ -377,11 +369,11 @@ link=1132526,1
 [ENTRY]
 ID=1132526
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=17037.6,1658.05,29850.9
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#F1980, #F1983
+spawnPackage=#F1980
 links_count=4
 link=1132524,1
 link=1132525,1
@@ -391,11 +383,11 @@ link=1132520,1
 [ENTRY]
 ID=1132527
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=17165.3,1623.39,30325.2
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#F1980, #F1983
+spawnPackage=#F1980
 links_count=1
 link=1132518,1
 

@@ -48,14 +48,6 @@ Orient=0,0,-0.059964,0.998201
 Scale=1,1,1
 
 [ENTRY]
-ID=1131433
-Asset=Prop-Marker1#Prop-Monster_Marker
-Name=Untitled
-Pos=19938.7,1519.8,29774.7
-Orient=0,0,0,1
-Scale=5,5,5
-
-[ENTRY]
 ID=1132311
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=Untitled
@@ -180,6 +172,7 @@ Pos=20875.9,1144.43,30677.8
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=#2059
+wanderRadius=75
 
 [ENTRY]
 ID=1133757
