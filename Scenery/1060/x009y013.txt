@@ -164,6 +164,7 @@ Pos=17937.9,1397.99,25601
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=#2047
+wanderRadius=75
 
 [ENTRY]
 ID=1132364
@@ -173,6 +174,7 @@ Pos=18151.4,1403.67,25748
 Orient=0,0.685289,0,0.728272
 Scale=1,1,1
 spawnPackage=#2047
+wanderRadius=75
 
 [ENTRY]
 ID=1132365
@@ -182,6 +184,7 @@ Pos=17853.5,1353.75,25890.3
 Orient=0,0.285952,0,0.958244
 Scale=1,1,1
 spawnPackage=#2047
+wanderRadius=75
 
 [ENTRY]
 ID=1132366
@@ -191,6 +194,7 @@ Pos=18286,1429.96,26064.8
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=#2047
+wanderRadius=75
 
 [ENTRY]
 ID=1132367
@@ -200,6 +204,7 @@ Pos=18451,1491.64,25967.1
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=#2047
+wanderRadius=75
 
 [ENTRY]
 ID=1132368
@@ -209,6 +214,7 @@ Pos=18352,1452.69,26248.8
 Orient=0,-0.974971,0,-0.22233
 Scale=1,1,1
 spawnPackage=#2047
+wanderRadius=75
 
 [ENTRY]
 ID=1132369
@@ -218,6 +224,7 @@ Pos=18439.1,1486.86,26406.4
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=#2047
+wanderRadius=75
 
 [ENTRY]
 ID=1132370
@@ -227,6 +234,7 @@ Pos=18530.4,1498.89,26267
 Orient=0,0.872356,0,0.488872
 Scale=1,1,1
 spawnPackage=#2047
+wanderRadius=75
 
 [ENTRY]
 ID=1132371
@@ -236,6 +244,7 @@ Pos=18695.1,1560.63,26460
 Orient=0,0.412321,0,0.911039
 Scale=1,1,1
 spawnPackage=#2047
+wanderRadius=75
 
 [ENTRY]
 ID=1132372
@@ -245,6 +254,7 @@ Pos=18491,1556.66,26626.9
 Orient=0,-0.466208,0,0.884675
 Scale=1,1,1
 spawnPackage=#2047
+wanderRadius=75
 
 [ENTRY]
 ID=1132378
@@ -254,6 +264,7 @@ Pos=19078.5,1622.61,26853.6
 Orient=0,0.644218,0,0.764842
 Scale=1,1,1
 spawnPackage=#2047
+wanderRadius=75
 
 [ENTRY]
 ID=1132379
@@ -263,6 +274,7 @@ Pos=18931.2,1573.27,26482.3
 Orient=0,0.605186,0,0.796084
 Scale=1,1,1
 spawnPackage=#2047
+wanderRadius=75
 
 [ENTRY]
 ID=1132380
@@ -272,6 +284,7 @@ Pos=19054.6,1589.49,26592.5
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=#2047
+wanderRadius=75
 
 [ENTRY]
 ID=1132381
@@ -281,6 +294,7 @@ Pos=18114.6,1358.74,26371.3
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=#2047
+wanderRadius=75
 
 [ENTRY]
 ID=1132382
@@ -290,6 +304,7 @@ Pos=17906.7,1345.68,26070.3
 Orient=0,-0.581035,0,0.813878
 Scale=1,1,1
 spawnPackage=#2047
+wanderRadius=75
 
 [ENTRY]
 ID=1132390
@@ -299,6 +314,7 @@ Pos=19130.3,1592.81,26492.4
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=#2047
+wanderRadius=75
 
 [ENTRY]
 ID=1133825

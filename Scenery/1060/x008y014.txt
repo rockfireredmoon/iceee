@@ -15,14 +15,6 @@ Orient=0,0,0,1
 Scale=1,1,1
 
 [ENTRY]
-ID=1131437
-Asset=Prop-Marker1#Prop-Monster_Marker
-Name=Untitled
-Pos=16598.3,1539.31,28027.9
-Orient=0,0,0,1
-Scale=4,4,4
-
-[ENTRY]
 ID=1131886
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=Untitled
@@ -106,6 +98,7 @@ Pos=16652.7,1423.84,28218.3
 Orient=0,-0.183947,0,0.982936
 Scale=1,1,1
 spawnPackage=#2010
+wanderRadius=75
 
 [ENTRY]
 ID=1132333
@@ -115,6 +108,7 @@ Pos=16508.8,1375.29,28393.7
 Orient=0,-0.9001,0,0.435682
 Scale=1,1,1
 spawnPackage=#2010
+wanderRadius=75
 
 [ENTRY]
 ID=1132334
@@ -124,6 +118,7 @@ Pos=16355.1,1386.69,28385.1
 Orient=0,-0.461779,0,0.886995
 Scale=1,1,1
 spawnPackage=#2010
+wanderRadius=75
 
 [ENTRY]
 ID=1132335
@@ -133,6 +128,7 @@ Pos=16595,1370.46,28430.2
 Orient=0,-0.822049,0,0.569417
 Scale=1,1,1
 spawnPackage=#2010
+wanderRadius=75
 
 [ENTRY]
 ID=1132336
@@ -142,6 +138,7 @@ Pos=16706.4,1400.62,28314.3
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=#2010
+wanderRadius=75
 
 [ENTRY]
 ID=1132337
@@ -151,6 +148,7 @@ Pos=16701.5,1463.72,28078.9
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=#2010
+wanderRadius=75
 
 [ENTRY]
 ID=1132338
@@ -160,6 +158,7 @@ Pos=16732.8,1369.4,28480.5
 Orient=0,-0.556361,0,0.830941
 Scale=1,1,1
 spawnPackage=#2010
+wanderRadius=75
 
 [ENTRY]
 ID=1132339
@@ -169,6 +168,7 @@ Pos=16898,1416.04,28361.8
 Orient=0,-0.628793,0,0.777573
 Scale=1,1,1
 spawnPackage=#2010
+wanderRadius=75
 
 [ENTRY]
 ID=1132340
@@ -178,6 +178,7 @@ Pos=17088,1485.93,28409.5
 Orient=0,0.977865,0,0.209239
 Scale=1,1,1
 spawnPackage=#2010
+wanderRadius=75
 
 [ENTRY]
 ID=1132341
@@ -187,6 +188,7 @@ Pos=16912.5,1533.85,28003.6
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=#2010
+wanderRadius=75
 
 [ENTRY]
 ID=1132342
@@ -196,6 +198,7 @@ Pos=17001.6,1516.63,28088.9
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=#2010
+wanderRadius=75
 
 [ENTRY]
 ID=1132343
@@ -205,6 +208,7 @@ Pos=16176.7,1473.75,27925
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=#2010
+wanderRadius=75
 
 [ENTRY]
 ID=1132344
@@ -214,6 +218,7 @@ Pos=16184.1,1466.84,27742.5
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=#2010
+wanderRadius=75
 
 [ENTRY]
 ID=1132345
@@ -223,6 +228,7 @@ Pos=16461.1,1498.47,27896.9
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=#2010
+wanderRadius=75
 
 [ENTRY]
 ID=1132346
@@ -232,6 +238,7 @@ Pos=16492.9,1526.58,27713.6
 Orient=0,-0.971527,0,-0.236929
 Scale=1,1,1
 spawnPackage=#2010
+wanderRadius=75
 
 [ENTRY]
 ID=1132347
@@ -241,6 +248,7 @@ Pos=16742.6,1568.28,27695.7
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=#2010
+wanderRadius=75
 
 [ENTRY]
 ID=1132348
@@ -250,6 +258,7 @@ Pos=16871.8,1555.84,27794.7
 Orient=0,-0.996457,0,-0.0841042
 Scale=1,1,1
 spawnPackage=#2010
+wanderRadius=75
 
 [ENTRY]
 ID=1132349
@@ -259,6 +268,7 @@ Pos=17003.1,1571.09,27889.5
 Orient=0,-0.977146,0,-0.212569
 Scale=1,1,1
 spawnPackage=#2010
+wanderRadius=75
 
 [ENTRY]
 ID=1132352
@@ -268,6 +278,7 @@ Pos=16103.7,1376.66,28335.8
 Orient=0,-0.42141,0,0.90687
 Scale=1,1,1
 spawnPackage=#2010
+wanderRadius=75
 
 [ENTRY]
 ID=1132353
@@ -277,6 +288,7 @@ Pos=16238.7,1318,28599.7
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=#2010
+wanderRadius=75
 
 [ENTRY]
 ID=1132354
@@ -286,6 +298,7 @@ Pos=16508.1,1273.96,28623.8
 Orient=0,-0.457338,0,0.889293
 Scale=1,1,1
 spawnPackage=#2010
+wanderRadius=75
 
 [ENTRY]
 ID=1132355
@@ -295,6 +308,7 @@ Pos=16649,1291.65,28671.8
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=#2010
+wanderRadius=75
 
 [ENTRY]
 ID=1132356
@@ -304,6 +318,7 @@ Pos=16880,1339.29,28612.8
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=#2010
+wanderRadius=75
 
 [ENTRY]
 ID=1132357
@@ -313,6 +328,7 @@ Pos=16424.4,1532.05,27383
 Orient=0,-0.352274,0,0.935897
 Scale=1,1,1
 spawnPackage=#2010
+wanderRadius=75
 
 [ENTRY]
 ID=1132358
@@ -322,6 +338,7 @@ Pos=16599.6,1542.99,27497.5
 Orient=0,-0.819192,0,0.57352
 Scale=1,1,1
 spawnPackage=#2010
+wanderRadius=75
 
 [ENTRY]
 ID=1132359
@@ -331,6 +348,7 @@ Pos=15951.5,1372.4,27832.6
 Orient=0,-0.66687,0,0.745174
 Scale=1,1,1
 spawnPackage=#2010
+wanderRadius=75
 
 [ENTRY]
 ID=1132360
@@ -340,6 +358,7 @@ Pos=15966.8,1395.96,27610.6
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=#2010
+wanderRadius=75
 
 [ENTRY]
 ID=1132361
@@ -349,6 +368,7 @@ Pos=16390,1473.4,27111.8
 Orient=0,-0.767543,0,0.640997
 Scale=1,1,1
 spawnPackage=#2010
+wanderRadius=75
 
 [ENTRY]
 ID=1132362

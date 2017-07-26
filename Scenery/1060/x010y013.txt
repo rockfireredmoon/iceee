@@ -54,6 +54,7 @@ Pos=19240.2,1625.61,26737.4
 Orient=0,0.994409,0,0.105599
 Scale=1,1,1
 spawnPackage=#2047
+wanderRadius=75
 
 [ENTRY]
 ID=1132389
@@ -63,6 +64,7 @@ Pos=19222.4,1616.7,26647
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=#2047
+wanderRadius=75
 
 [ENTRY]
 ID=1133739

@@ -471,6 +471,7 @@ Pos=17312.4,1316.52,29200.2
 Orient=0,0.981854,0,0.189641
 Scale=1,1,1
 spawnPackage=#2053
+wanderRadius=75
 
 [ENTRY]
 ID=1132465

@@ -166,6 +166,7 @@ Pos=16890.3,1173.16,29065.5
 Orient=0,0.159318,0,0.987227
 Scale=1,1,1
 spawnPackage=#2055
+wanderRadius=100
 
 [ENTRY]
 ID=1132411
@@ -175,6 +176,7 @@ Pos=16958.9,1243.18,29449.2
 Orient=0,0.66687,0,0.745174
 Scale=1,1,1
 spawnPackage=#2053
+wanderRadius=75
 
 [ENTRY]
 ID=1132412
@@ -184,6 +186,7 @@ Pos=16563.7,1109.42,29321.6
 Orient=0,-0.314567,0,0.949235
 Scale=1,1,1
 spawnPackage=#2053
+wanderRadius=75
 
 [ENTRY]
 ID=1132413
@@ -193,6 +196,7 @@ Pos=16566.1,1110.53,29660.2
 Orient=0,0.601198,0,0.7991
 Scale=1,1,1
 spawnPackage=#2053
+wanderRadius=75
 
 [ENTRY]
 ID=1132414
@@ -202,6 +206,7 @@ Pos=16785.2,1146.15,29267
 Orient=0,0.49688,0,0.867819
 Scale=1,1,1
 spawnPackage=#2053
+wanderRadius=75
 
 [ENTRY]
 ID=1132415
@@ -211,6 +216,7 @@ Pos=16736.9,1149.47,29108.9
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=#2053
+wanderRadius=75
 
 [ENTRY]
 ID=1132416
@@ -220,6 +226,7 @@ Pos=17136.8,1258.55,29275.8
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=#2053
+wanderRadius=75
 
 [ENTRY]
 ID=1132417
@@ -229,6 +236,7 @@ Pos=16555.2,1111.34,29153.2
 Orient=0,0.342898,0,0.939373
 Scale=1,1,1
 spawnPackage=#2053
+wanderRadius=75
 
 [ENTRY]
 ID=1132418
@@ -238,6 +246,7 @@ Pos=16632,1169.69,28961.3
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=#2053
+wanderRadius=75
 
 [ENTRY]
 ID=1132419
@@ -247,6 +256,7 @@ Pos=16331.6,1111.74,28954.8
 Orient=0,-0.522687,0,0.852525
 Scale=1,1,1
 spawnPackage=#2053
+wanderRadius=75
 
 [ENTRY]
 ID=1132420
@@ -256,6 +266,7 @@ Pos=16800,1218.37,28903.9
 Orient=0,-0.810497,0,0.585743
 Scale=1,1,1
 spawnPackage=#2053
+wanderRadius=75
 
 [ENTRY]
 ID=1132421
@@ -265,6 +276,8 @@ Pos=16912.8,1249.13,28819.7
 Orient=0,-0.703279,0,0.710914
 Scale=1,1,1
 spawnPackage=#2053
+loyaltyRadius=75
+wanderRadius=75
 
 [ENTRY]
 ID=1132422
@@ -274,6 +287,7 @@ Pos=17073.6,1226.21,29027
 Orient=0,0.91071,0,0.413046
 Scale=1,1,1
 spawnPackage=#2053
+wanderRadius=75
 
 [ENTRY]
 ID=1132423
@@ -283,6 +297,7 @@ Pos=17245.7,1263.36,29057.2
 Orient=0,0.998531,0,-0.0541771
 Scale=1,1,1
 spawnPackage=#2053
+wanderRadius=75
 
 [ENTRY]
 ID=1132424
@@ -292,6 +307,7 @@ Pos=17093.7,1229.99,28895.9
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=#2053
+wanderRadius=75
 
 [ENTRY]
 ID=1132426

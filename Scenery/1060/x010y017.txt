@@ -72,7 +72,7 @@ Pos=20155.7,1187.53,33200.9
 Orient=0,-0.60247,0,-0.798141
 Scale=1,1,1
 spawnPackage=#2058
-wanderRadius=100
+wanderRadius=150
 
 [ENTRY]
 ID=1132453
