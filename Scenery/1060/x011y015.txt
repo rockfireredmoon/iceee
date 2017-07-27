@@ -17,17 +17,17 @@ Scale=1.5,1.5,1.5
 [ENTRY]
 ID=1133768
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=21147,1122.2,28955.5
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#2016
+spawnPackage=58_earthrise_mix_southernsimiancamp
 wanderRadius=60
 
 [ENTRY]
 ID=1133772
 Asset=Prop-Nordic_Props#Prop-Boat-Anubian
-Name=
+Name=Untitled
 Pos=21361,1093.03,28903.8
 Orient=0,-0.174108,0,0.984727
 Scale=1,1,1

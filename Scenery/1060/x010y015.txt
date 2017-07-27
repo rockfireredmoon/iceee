@@ -196,7 +196,7 @@ Name=Untitled
 Pos=20601.8,1284.58,28867
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#2019
+spawnPackage=58_earthrise_mix_southernsimiancamp
 links_count=1
 link=1133775,1
 
@@ -207,7 +207,7 @@ Name=Untitled
 Pos=20823.5,1214.36,28944.9
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#2016
+spawnPackage=58_earthrise_mix_southernsimiancamp
 wanderRadius=60
 
 [ENTRY]
@@ -217,7 +217,7 @@ Name=Untitled
 Pos=20922.4,1200.24,28840.9
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#2016
+spawnPackage=58_earthrise_mix_southernsimiancamp
 wanderRadius=75
 
 [ENTRY]
@@ -227,7 +227,7 @@ Name=Untitled
 Pos=21022.8,1159.6,28926.9
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#2019
+spawnPackage=58_earthrise_mix_southernsimiancamp
 wanderRadius=60
 
 [ENTRY]
