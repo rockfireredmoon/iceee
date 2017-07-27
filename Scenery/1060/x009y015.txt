@@ -1060,3 +1060,24 @@ Pos=18951.9,1560.14,29698.7
 Orient=0,0,0,1
 Scale=1,1,1
 
+[ENTRY]
+ID=1134184
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=18024.5,1455.13,30595.4
+Orient=0,0,0,1
+Scale=1,1,1
+links_count=1
+link=1134188,1
+
+[ENTRY]
+ID=1134188
+Asset=Manipulator#Manipulator-PathNode
+Name=
+Pos=17918.4,1388.57,30686.7
+Orient=0,0,0,1
+Scale=1,1,1
+links_count=2
+link=1134184,1
+link=1134189,1
+
