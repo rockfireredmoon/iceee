@@ -424,6 +424,7 @@ Name=Untitled
 Pos=18222.2,1167.38,31735.7
 Orient=0,0.720831,0,0.693111
 Scale=1,1,1
+spawnPackage=58_earthrise_mix_anubianwarcamp
 
 [ENTRY]
 ID=1132310
@@ -432,6 +433,7 @@ Name=Untitled
 Pos=18129.5,1171.99,31447.1
 Orient=0,-0.761095,0,0.64864
 Scale=1,1,1
+spawnPackage=58_earthrise_mix_anubianwarcamp
 
 [ENTRY]
 ID=1133400
@@ -482,6 +484,7 @@ Name=
 Pos=17768.3,1213.33,31342.3
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=58_earthrise_mix_anubianwarcamp
 
 [ENTRY]
 ID=1133931
@@ -490,6 +493,7 @@ Name=
 Pos=17783.9,1211.23,31360.8
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=58_earthrise_mix_anubianwarcamp
 
 [ENTRY]
 ID=1133932
@@ -498,6 +502,7 @@ Name=
 Pos=17801.9,1206.91,31378.2
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=58_earthrise_mix_anubianwarcamp
 
 [ENTRY]
 ID=1133933
@@ -506,6 +511,7 @@ Name=
 Pos=17766.2,1199.63,31482.5
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=58_earthrise_mix_anubianwarcamp
 
 [ENTRY]
 ID=1133934
@@ -514,6 +520,7 @@ Name=
 Pos=17740.8,1200.58,31490.2
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=58_earthrise_mix_anubianwarcamp
 
 [ENTRY]
 ID=1133935
@@ -522,6 +529,7 @@ Name=
 Pos=17721.6,1201.84,31489.9
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=58_earthrise_mix_anubianwarcamp
 
 [ENTRY]
 ID=1133936
@@ -530,6 +538,7 @@ Name=
 Pos=17582.8,1200.5,31399.7
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=58_earthrise_mix_anubianwarcamp
 
 [ENTRY]
 ID=1133937
@@ -538,6 +547,7 @@ Name=
 Pos=17586,1200.17,31369.3
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=58_earthrise_mix_anubianwarcamp
 
 [ENTRY]
 ID=1133938
@@ -546,6 +556,7 @@ Name=
 Pos=17583.6,1201.79,31343
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=58_earthrise_mix_anubianwarcamp
 
 [ENTRY]
 ID=1133939
@@ -554,6 +565,7 @@ Name=
 Pos=17715.2,1208.63,31310.1
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=58_earthrise_mix_anubianwarcamp
 
 [ENTRY]
 ID=1133940
@@ -562,6 +574,7 @@ Name=
 Pos=17693.5,1204.39,31299.6
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=58_earthrise_mix_anubianwarcamp
 
 [ENTRY]
 ID=1133941
@@ -570,6 +583,7 @@ Name=
 Pos=17667.6,1201.46,31296.2
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=58_earthrise_mix_anubianwarcamp
 
 [ENTRY]
 ID=1133977
@@ -578,6 +592,7 @@ Name=
 Pos=18026,1185.14,32141
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=58_earthrise_mix_anubianwarcamp
 links_count=2
 link=1134012,1
 link=1134013,1
@@ -651,17 +666,7 @@ Orient=0,0,0,1
 Scale=1,1,1
 links_count=2
 link=1133977,1
-link=1134014,1
-
-[ENTRY]
-ID=1134014
-Asset=Manipulator#Manipulator-PathNode
-Name=
-Pos=18046,1165.63,31820.4
-Orient=0,0,0,1
-Scale=1,1,1
-links_count=1
-link=1134013,1
+link=1134233,1
 
 [ENTRY]
 ID=1134017
@@ -702,6 +707,7 @@ Name=
 Pos=17923.9,1174.68,31536.3
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=#F2014
 links_count=1
 link=1134017,1
 
@@ -817,6 +823,7 @@ Name=
 Pos=17654.7,1200.85,31172
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=#F2013
 links_count=1
 link=1134186,1
 
@@ -827,6 +834,7 @@ Name=
 Pos=17738,1234.16,30952.1
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=58_earthrise_mix_southernsimiancamp
 links_count=1
 link=1134190,1
 
@@ -872,4 +880,15 @@ Scale=1,1,1
 links_count=2
 link=1134189,1
 link=1134185,1
+
+[ENTRY]
+ID=1134233
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=18047.4,1165.56,31818.6
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=58_earthrise_mix_anubianwarcamp
+links_count=1
+link=1134013,1
 
