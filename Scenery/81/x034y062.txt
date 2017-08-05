@@ -1,6 +1,15 @@
 [ENTRY]
+ID=1134314
+Asset=Prop-Wooden_Barricade_Sm1
+Name=
+Pos=34878.7,67.2299,62023.6
+Orient=0,-0.813416,0,0.581683
+Scale=1,1,1
+
+[ENTRY]
 ID=1358958691
 Asset=Prop-Boat1
+Name=Untitled
 Pos=34590.4,94.2354,62016
 Orient=0,0.916803,0,0.39934
 Scale=1.9,1.9,1.9
@@ -8,6 +17,7 @@ Scale=1.9,1.9,1.9
 [ENTRY]
 ID=1358962751
 Asset=Effects#Par-Waves-1-Emitter
+Name=Untitled
 Pos=34019,60.5868,62218.5
 Orient=0,0,0,1
 Scale=3,3,3
@@ -16,6 +26,7 @@ Flags=1
 [ENTRY]
 ID=1358962752
 Asset=Par-Waves-1-Emitter
+Name=Untitled
 Pos=34580.6,60.3415,62118
 Orient=0,0,0,1
 Scale=1.5,1.5,1.5
