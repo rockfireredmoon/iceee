@@ -15,6 +15,22 @@ Orient=0,0,0,1
 Scale=1,1,1
 
 [ENTRY]
+ID=1134409
+Asset=Effects#Par-Flame-Emitter
+Name=
+Pos=22041.5,96.0889,79743.3
+Orient=0,0,0,1
+Scale=7,7,7
+
+[ENTRY]
+ID=1134410
+Asset=Effects#Par-Black_Smoke-Emitter
+Name=
+Pos=22015.2,166.596,79691.3
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
 ID=151007748
 Asset=Anubian_Shipwreck#Prop-Shipwreck-Anubian1
 Name=Untitled

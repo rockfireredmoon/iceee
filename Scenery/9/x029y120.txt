@@ -1,6 +1,39 @@
 [ENTRY]
+ID=1134412
+Asset=Prop-Fences#Prop-Wooden_Barricade1
+Name=
+Pos=22198.2,387.216,90311.3
+Orient=-0.174108,0,0,0.984727
+Scale=1.2,1.2,1.2
+
+[ENTRY]
+ID=1134413
+Asset=Prop-Fences#Prop-Wooden_Barricade2
+Name=
+Pos=22287.5,382.133,90289
+Orient=0,0.059964,0,0.998201
+Scale=1.2,1.2,1.2
+
+[ENTRY]
+ID=1134414
+Asset=Prop-Battlefield1#Prop-Camelot_Standard
+Name=
+Pos=22215.5,384.188,90295.9
+Orient=-0.048997,0.611156,-0.063132,0.787466
+Scale=1,1,1
+
+[ENTRY]
+ID=1134415
+Asset=Prop-Battlefield1#Prop-Camelot_Standard
+Name=
+Pos=22268.9,379.207,90277.6
+Orient=0,-0.281157,0,0.959662
+Scale=1,1,1
+
+[ENTRY]
 ID=151009556
 Asset=CL-AridRock2#CL-AridRock2
+Name=Untitled
 Pos=22194.9,387.081,90495
 Orient=0,0.993486,0,-0.113956
 Scale=1,1,1
@@ -9,6 +42,7 @@ Flags=1
 [ENTRY]
 ID=151009557
 Asset=Prop-Palm-Tree#Prop-Palm-Tree4
+Name=Untitled
 Pos=22367.9,400.35,90391
 Orient=0,0,0,1
 Scale=1,1,1
@@ -17,6 +51,7 @@ Flags=1
 [ENTRY]
 ID=151009562
 Asset=Prop-Cactus#Prop-Cactus1
+Name=Untitled
 Pos=22390.2,423.817,90684
 Orient=0,0,0,1
 Scale=1,1,1
@@ -25,6 +60,7 @@ Flags=1
 [ENTRY]
 ID=151009563
 Asset=Prop-Cactus1
+Name=Untitled
 Pos=22227,389.965,90491
 Orient=0,0,0,1
 Scale=1.875,1.875,1.875
@@ -33,6 +69,7 @@ Flags=1
 [ENTRY]
 ID=151009564
 Asset=Prop-Cactus#Prop-Cactus2
+Name=Untitled
 Pos=22369.5,402.95,90405
 Orient=0,0,0,1
 Scale=1.325,1.325,1.325
@@ -41,6 +78,7 @@ Flags=1
 [ENTRY]
 ID=151009570
 Asset=CL-Junk1
+Name=Untitled
 Pos=22425,415.501,90688
 Orient=0,-0.0499786,0,0.99875
 Scale=2.125,2.125,2.125
@@ -49,6 +87,7 @@ Flags=1
 [ENTRY]
 ID=151009574
 Asset=Prop-Desert_Accent#Prop-Desert_Accent2
+Name=Untitled
 Pos=21911.3,299.07,90532
 Orient=0,0,0,1
 Scale=1,1,1
@@ -57,6 +96,7 @@ Flags=1
 [ENTRY]
 ID=151033902
 Asset=Manipulator#Manipulator-Sanctuary
+Name=Untitled
 Pos=22190.8,397.178,90407
 Orient=0,0,0,1
 Scale=1,1,1
@@ -65,6 +105,7 @@ Flags=1
 [ENTRY]
 ID=151034946
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=22438.7,424.307,90653
 Orient=0,0,0,1
 Scale=1,1,1
@@ -75,6 +116,7 @@ link=151035012,1
 [ENTRY]
 ID=151034947
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=22428.6,422.231,90578
 Orient=0,0,0,1
 Scale=1,1,1
@@ -85,6 +127,7 @@ link=151034948,1
 [ENTRY]
 ID=151034948
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=22361.4,408.824,90522
 Orient=0,0,0,1
 Scale=1,1,1
@@ -95,6 +138,7 @@ link=151034949,1
 [ENTRY]
 ID=151034949
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=22301.7,393.908,90436
 Orient=0,0,0,1
 Scale=1,1,1
@@ -105,6 +149,7 @@ link=151034950,1
 [ENTRY]
 ID=151034950
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=22267.3,388.041,90355
 Orient=0,0,0,1
 Scale=1,1,1
@@ -115,6 +160,7 @@ link=151034951,1
 [ENTRY]
 ID=151034951
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=22236.9,372.643,90245
 Orient=0,0,0,1
 Scale=1,1,1
@@ -125,6 +171,7 @@ link=151034952,1
 [ENTRY]
 ID=151034952
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=22223.2,360.014,90192
 Orient=0,0,0,1
 Scale=1,1,1
@@ -136,6 +183,7 @@ link=151034960,1
 [ENTRY]
 ID=151034954
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=22287.4,371.767,90095
 Orient=0,0,0,1
 Scale=1,1,1
@@ -146,6 +194,7 @@ link=151034955,1
 [ENTRY]
 ID=151034955
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=22376.2,394.363,90015
 Orient=0,0,0,1
 Scale=1,1,1
@@ -157,6 +206,7 @@ link=151034958,1
 [ENTRY]
 ID=151034960
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=22173.1,348.436,90160
 Orient=0,0,0,1
 Scale=1,1,1
@@ -167,6 +217,7 @@ link=151034962,1
 [ENTRY]
 ID=151034962
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=22153.9,338.235,90124
 Orient=0,0,0,1
 Scale=1,1,1
@@ -177,6 +228,7 @@ link=151034963,1
 [ENTRY]
 ID=151034963
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=21982.1,289.913,90019
 Orient=0,0,0,1
 Scale=1,1,1
@@ -187,17 +239,18 @@ link=151034964,1
 [ENTRY]
 ID=151035012
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=22458.8,426.35,90661
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=5_npc_agc_ResearchAssistants
 links_count=1
 link=151034946,1
-spawnPackage=5_npc_agc_ResearchAssistants
-outerRadius=5
 
 [ENTRY]
 ID=151040936
 Asset=Prop-Sanctuary_Stone#Prop-Sanctuary_Stone
+Name=Untitled
 Pos=22190.8,391.91,90407
 Orient=0,0.734548,0,0.678557
 Scale=1,1,1

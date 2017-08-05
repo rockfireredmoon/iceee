@@ -7,6 +7,14 @@ Orient=0,-0.276356,0,0.961055
 Scale=4,4,4
 
 [ENTRY]
+ID=1134398
+Asset=Bldg-Ruins#Bldg-Ruins_DS5?ATS=ATS-Ruins
+Name=
+Pos=20931.1,145.827,80442.9
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
 ID=151007734
 Asset=Anubian_Shipwreck#Prop-Shipwreck-Anubian3
 Name=Untitled
@@ -40,7 +48,7 @@ link=151033534,1
 ID=151014848
 Asset=Manipulator-SpawnPoint
 Name=Untitled
-Pos=20883.4,125.257,80796
+Pos=20904.3,125.597,80760.7
 Orient=0,-0.844162,0,0.536088
 Scale=1,1,1
 spawnPackage=5_sailorCamps_39_40
@@ -118,7 +126,7 @@ link=151033537,1
 ID=151033539
 Asset=Manipulator-PathNode
 Name=Untitled
-Pos=20913.9,126.605,80944
+Pos=20930.6,130.135,80935.8
 Orient=0,0,0,1
 Scale=1,1,1
 links_count=2
@@ -129,7 +137,7 @@ link=151033540,1
 ID=151033540
 Asset=Manipulator-PathNode
 Name=Untitled
-Pos=20959.8,137.771,80849
+Pos=20984.4,141.644,80877
 Orient=0,0,0,1
 Scale=1,1,1
 links_count=2

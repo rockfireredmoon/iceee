@@ -50,8 +50,8 @@ Scale=1,1,1
 ID=1134363
 Asset=Prop-Anubian_Catapult#Prop-Anubian_Catapult
 Name=
-Pos=21588,233.673,80786.8
-Orient=0.0678025,0.539592,0.104626,0.832645
+Pos=21428.1,216.632,80707.1
+Orient=0.121915,-0.206833,0.0260867,0.9704
 Scale=1,1,1
 
 [ENTRY]
@@ -68,6 +68,22 @@ Asset=Prop-Anubian_Camp#Prop-Anubian_Banner1
 Name=
 Pos=21727.9,201.036,80947.2
 Orient=0,0.589145,0,0.808028
+Scale=1,1,1
+
+[ENTRY]
+ID=1134399
+Asset=Bldg-Ruins#Bldg-Ruins_DS6?ATS=ATS-Ruins
+Name=
+Pos=21317.6,216.062,80668.5
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
+ID=1134402
+Asset=Bldg-Ruins#Bldg-Ruins-Small_House1?ATS=ATS-Ruins
+Name=
+Pos=21267.9,167.785,80960.7
+Orient=0,-0.324043,0,0.946042
 Scale=1,1,1
 
 [ENTRY]
@@ -263,7 +279,7 @@ link=151033527,1
 ID=151033541
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
-Pos=21670.8,207.216,80886
+Pos=21670.4,208.266,80906.5
 Orient=0,0,0,1
 Scale=1,1,1
 links_count=2
@@ -274,7 +290,7 @@ link=151033542,1
 ID=151033542
 Asset=Manipulator-PathNode
 Name=Untitled
-Pos=21686.4,221.935,80819
+Pos=21663.1,227.88,80809.6
 Orient=0,0,0,1
 Scale=1,1,1
 links_count=1
