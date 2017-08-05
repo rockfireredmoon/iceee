@@ -1,22 +1,24 @@
 [ENTRY]
 ID=151007743
 Asset=Prop-Shipwreck-Anubian
+Name=Untitled
 Pos=20245.1,36.7488,84061
 Orient=0,0,0,1
-Scale=6.8,6.8,6.8
+Scale=5.8,5.8,5.8
 
 [ENTRY]
 ID=151014870
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=20207.3,128.113,84498
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=5_sailorCamps_39_40
-outerRadius=10
 
 [ENTRY]
 ID=151030028
 Asset=Prop-Palm-Tree#Prop-Palm-Tree4
+Name=Untitled
 Pos=19574.8,90.3728,84354
 Orient=0,0,0,1
 Scale=4.975,4.975,4.975
@@ -24,6 +26,7 @@ Scale=4.975,4.975,4.975
 [ENTRY]
 ID=151033382
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=20140.7,181.621,84703
 Orient=0,0,0,1
 Scale=1,1,1
@@ -34,6 +37,7 @@ link=151033385,1
 [ENTRY]
 ID=151033385
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=20046.2,176.368,84690
 Orient=0,0,0,1
 Scale=1,1,1
@@ -44,6 +48,7 @@ link=151033386,1
 [ENTRY]
 ID=151033407
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=20046.7,177.053,84692
 Orient=0,0,0,1
 Scale=1,1,1
@@ -54,6 +59,7 @@ link=151033408,1
 [ENTRY]
 ID=151033408
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=20150.2,182.616,84706
 Orient=0,0,0,1
 Scale=1,1,1
@@ -64,18 +70,19 @@ link=151033409,1
 [ENTRY]
 ID=151033665
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=19985.5,137.464,84445
 Orient=0,-0.992297,0,-0.123885
 Scale=1,1,1
+spawnPackage=5_sailorCamps_39_40
 links_count=2
 link=151033666,1
 link=151033670,1
-spawnPackage=5_sailorCamps_39_40
-outerRadius=10
 
 [ENTRY]
 ID=151033666
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=19745,133.927,84325
 Orient=0,0,0,1
 Scale=1,1,1
@@ -86,6 +93,7 @@ link=151033667,1
 [ENTRY]
 ID=151033667
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=19584.5,94.0715,84234
 Orient=0,0,0,1
 Scale=1,1,1
@@ -96,6 +104,7 @@ link=151033668,1
 [ENTRY]
 ID=151033670
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=19781.7,130.393,84465
 Orient=0,0,0,1
 Scale=1,1,1
@@ -106,15 +115,16 @@ link=151033669,1
 [ENTRY]
 ID=151033671
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=19802.2,174.9,84672
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=5_sailorCamps_39_40
-outerRadius=10
 
 [ENTRY]
 ID=151033821
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=20160.9,80.5881,84274
 Orient=0,0,0,1
 Scale=1,1,1
@@ -125,6 +135,7 @@ link=151033822,1
 [ENTRY]
 ID=151033822
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=20030.8,78.8257,84235
 Orient=0,0,0,1
 Scale=1,1,1
@@ -135,6 +146,7 @@ link=151033823,1
 [ENTRY]
 ID=151033823
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=20006.7,71.7217,84175
 Orient=0,0,0,1
 Scale=1,1,1
@@ -145,6 +157,7 @@ link=151033824,1
 [ENTRY]
 ID=151033824
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=20143.3,68.8876,84194
 Orient=0,0,0,1
 Scale=1,1,1
@@ -155,18 +168,19 @@ link=151033825,1
 [ENTRY]
 ID=151033826
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=19984.5,79.5366,84224
 Orient=0,-0.999023,0,-0.0441893
 Scale=1.025,1.025,1.025
+spawnPackage=5_ambercoastCrabquatch_39_40
 links_count=2
 link=151033827,1
 link=151033831,1
-spawnPackage=5_ambercoastCrabquatch_39_40
-outerRadius=10
 
 [ENTRY]
 ID=151033827
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=19851.7,88.4941,84202
 Orient=0,0,0,1
 Scale=1.025,1.025,1.025
@@ -177,6 +191,7 @@ link=151033828,1
 [ENTRY]
 ID=151033828
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=19620.3,97.402,84074
 Orient=0,0,0,1
 Scale=1.025,1.025,1.025
@@ -187,6 +202,7 @@ link=151033829,1
 [ENTRY]
 ID=151033829
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=19640.5,97.1555,84044
 Orient=0,0,0,1
 Scale=1.025,1.025,1.025
@@ -197,6 +213,7 @@ link=151033830,1
 [ENTRY]
 ID=151033830
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=19850.8,85.6103,84153
 Orient=0,0,0,1
 Scale=1.025,1.025,1.025
@@ -207,6 +224,7 @@ link=151033831,1
 [ENTRY]
 ID=151033831
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=19980.7,69.9901,84150
 Orient=0,0,0,1
 Scale=1.025,1.025,1.025
@@ -217,6 +235,7 @@ link=151033830,1
 [ENTRY]
 ID=151033837
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=19711.7,94.9916,84025
 Orient=0,0,0,1
 Scale=1,1,1
@@ -227,6 +246,7 @@ link=151033838,1
 [ENTRY]
 ID=151033842
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=19600.3,92.6423,84012
 Orient=0,0,0,1
 Scale=1,1,1
