@@ -4,15 +4,15 @@ Asset=Prop-Tents1#Prop-Tent3
 Name=
 Pos=35136.3,69.491,61899.1
 Orient=0,0.66687,0,0.745174
-Scale=1,1,1
+Scale=1.1,1.1,1.1
 
 [ENTRY]
 ID=1134309
 Asset=Prop-Tents1#Prop-Tent3
 Name=
-Pos=35263.8,68.3201,61964.7
-Orient=0,0.266731,0,0.963771
-Scale=1,1,1
+Pos=35269.5,68.1483,61971.6
+Orient=0,0.333487,0,0.942755
+Scale=1.1,1.1,1.1
 
 [ENTRY]
 ID=1134310
@@ -20,6 +20,22 @@ Asset=Prop-Hide_Tent1#Prop-Hide_Tent1
 Name=
 Pos=35207.2,69.3286,61923.8
 Orient=0,0.466208,0,0.884675
+Scale=1.5,1.5,1.5
+
+[ENTRY]
+ID=1134331
+Asset=Prop-Table2
+Name=
+Pos=35214.6,70.1701,61913.7
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
+ID=1134332
+Asset=Prop-Desk_Set#Prop-Paper
+Name=
+Pos=35214.2,77.1655,61913.3
+Orient=0,0,0,1
 Scale=1,1,1
 
 [ENTRY]

@@ -15,6 +15,22 @@ Orient=0,0.651834,0,0.758362
 Scale=1,1,1
 
 [ENTRY]
+ID=1134325
+Asset=Prop-Wooden_Tower2#Prop-Wooden_Tower2
+Name=
+Pos=34905,74.1618,61989.2
+Orient=0,0,0,1
+Scale=0.4,0.4,0.4
+
+[ENTRY]
+ID=1134326
+Asset=Prop-Wooden_Tower2#Prop-Wooden_Tower2
+Name=
+Pos=34916,75.4039,61909.9
+Orient=0,0,0,1
+Scale=0.4,0.4,0.4
+
+[ENTRY]
 ID=1358958703
 Asset=Prop-Boat1#Prop-Boat1
 Name=Untitled
