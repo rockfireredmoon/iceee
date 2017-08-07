@@ -7,6 +7,22 @@ Orient=0,0,0,1
 Scale=1,1,1
 
 [ENTRY]
+ID=1134533
+Asset=Prop-Burnt_Palms#Prop-Burnt_Palm4
+Name=
+Pos=21102,96.2504,83446.9
+Orient=0,0,0,1
+Scale=3,3,3
+
+[ENTRY]
+ID=1134534
+Asset=Prop-Burnt_Palms#Prop-Burnt_Palm3
+Name=
+Pos=21058.6,83.0715,83640.7
+Orient=0,0,0,1
+Scale=3,3,3
+
+[ENTRY]
 ID=151007790
 Asset=CL-Camp_Raider1#CL-Camp_Raider1
 Name=Untitled
@@ -48,14 +64,6 @@ Name=Untitled
 Pos=21073.9,81.1595,83581
 Orient=0,0,-0.13459,0.990901
 Scale=3.2,3.2,3.2
-
-[ENTRY]
-ID=151030159
-Asset=Prop-Palm-Tree#Prop-Palm-Tree5
-Name=Untitled
-Pos=21044.7,80.5404,83628
-Orient=0,0,0,1
-Scale=2.8,2.8,2.8
 
 [ENTRY]
 ID=151030160
@@ -412,14 +420,6 @@ Name=Untitled
 Pos=21512.8,172.771,83323.3
 Orient=-0.0249175,-0.00199766,0.0798897,0.99649
 Scale=1.675,1.675,1.675
-
-[ENTRY]
-ID=151062075
-Asset=Prop-Desert_Palm#Prop-Desert_Palm2
-Name=Untitled
-Pos=21098.9,95.161,83454.9
-Orient=-0.0388374,0.776101,0.0314575,0.628625
-Scale=1.65,1.65,1.65
 
 [ENTRY]
 ID=151062076

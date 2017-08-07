@@ -47,14 +47,6 @@ Orient=0,0,0,1
 Scale=1,1,1
 
 [ENTRY]
-ID=1134363
-Asset=Prop-Anubian_Catapult#Prop-Anubian_Catapult
-Name=
-Pos=21428.1,216.632,80707.1
-Orient=0.121915,-0.206833,0.0260867,0.9704
-Scale=1,1,1
-
-[ENTRY]
 ID=1134374
 Asset=Prop-Anubian_Camp#Prop-Anubian_Banner1
 Name=

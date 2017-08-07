@@ -1,4 +1,12 @@
 [ENTRY]
+ID=1134531
+Asset=Prop-Nordic_Props#Prop-Boat-Anubian
+Name=
+Pos=18468.1,3.34664,84145.9
+Orient=0.00496622,0.398485,-0.0244991,0.916834
+Scale=6,6,6
+
+[ENTRY]
 ID=151033862
 Asset=Manipulator-SpawnPoint
 Name=Untitled
