@@ -31,6 +31,15 @@ Orient=0,0,0,1
 Scale=1,1,1
 
 [ENTRY]
+ID=1134483
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=22043.6,101.796,79761.6
+Orient=0,-0.0349929,0,0.999388
+Scale=1,1,1
+spawnPackage=#7860
+
+[ENTRY]
 ID=151007748
 Asset=Anubian_Shipwreck#Prop-Shipwreck-Anubian1
 Name=Untitled

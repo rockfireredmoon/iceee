@@ -58,7 +58,7 @@ Scale=1,1,1
 ID=1134356
 Asset=Prop-Anubian_Camp#Prop-Anubian_Tent1
 Name=
-Pos=21423.2,144.744,80009
+Pos=21423.2,141.551,80009
 Orient=0,0.394019,0,0.919102
 Scale=1,1,1
 

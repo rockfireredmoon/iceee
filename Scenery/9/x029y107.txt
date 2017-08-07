@@ -23,6 +23,16 @@ Orient=0,0,0,1
 Scale=1,1,1
 
 [ENTRY]
+ID=1134486
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=22089.7,259.354,80694.2
+Orient=0,0.836026,0,0.54869
+Scale=1,1,1
+spawnPackage=#F3183
+aiModule=Bastion_NPC_CatapultFiringAnimation(7860)
+
+[ENTRY]
 ID=151014815
 Asset=Manipulator-SpawnPoint
 Name=Untitled

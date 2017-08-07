@@ -1,6 +1,23 @@
 [ENTRY]
+ID=1134521
+Asset=Prop-Battlefield1#Prop-Battlefield_Siege_Tower
+Name=
+Pos=19337.8,71.3068,84442.1
+Orient=0,0,0,1
+Scale=1.3,1.3,1.3
+
+[ENTRY]
+ID=1134526
+Asset=Battlefield?d=0.2&s=1&sz=750
+Name=
+Pos=19269.5,120.588,84726.9
+Orient=0,-0.159318,0,0.987227
+Scale=1,1,1
+
+[ENTRY]
 ID=151030030
 Asset=Prop-Palm-Tree#Prop-Palm-Tree1
+Name=Untitled
 Pos=19488.3,79.0535,84376
 Orient=-0.15438,0,0,0.988012
 Scale=2.275,2.275,2.275
@@ -8,6 +25,7 @@ Scale=2.275,2.275,2.275
 [ENTRY]
 ID=151030163
 Asset=CL-AridBush5#CL-AridBush5
+Name=Untitled
 Pos=19476.8,79.8598,84415
 Orient=0,0,0,1
 Scale=1.575,1.575,1.575
@@ -15,6 +33,7 @@ Scale=1.575,1.575,1.575
 [ENTRY]
 ID=151033668
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=19384.4,75.4835,84314
 Orient=0,0,0,1
 Scale=1,1,1
@@ -25,6 +44,7 @@ link=151033669,1
 [ENTRY]
 ID=151033669
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=19455.9,86.5695,84506
 Orient=0,0,0,1
 Scale=1,1,1
@@ -35,18 +55,19 @@ link=151033670,1
 [ENTRY]
 ID=151033673
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=19254.8,80.7694,84232
 Orient=0,-0.947396,0,0.320063
 Scale=1,1,1
+spawnPackage=5_sailorCamps_39_40
 links_count=2
 link=151033674,1
 link=151033679,1
-spawnPackage=5_sailorCamps_39_40
-outerRadius=10
 
 [ENTRY]
 ID=151033674
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=19172.5,97.7602,84286
 Orient=0,0,0,1
 Scale=1,1,1
@@ -57,7 +78,8 @@ link=151033675,1
 [ENTRY]
 ID=151033675
 Asset=Manipulator-PathNode
-Pos=19144.3,96.0866,84392
+Name=Untitled
+Pos=19140.1,98.008,84418.5
 Orient=0,0,0,1
 Scale=1,1,1
 links_count=2
@@ -67,6 +89,7 @@ link=151033676,1
 [ENTRY]
 ID=151033676
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=18875.2,77.27,84469
 Orient=0,0,0,1
 Scale=1,1,1
@@ -77,6 +100,7 @@ link=151033677,1
 [ENTRY]
 ID=151033677
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=18912.1,89.6152,84624
 Orient=0,0,0,1
 Scale=1,1,1
@@ -87,6 +111,7 @@ link=151033678,1
 [ENTRY]
 ID=151033678
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=19153.9,119.91,84548
 Orient=0,0,0,1
 Scale=1,1,1
@@ -97,6 +122,7 @@ link=151033679,1
 [ENTRY]
 ID=151033679
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=19399.5,80.3201,84519
 Orient=0,0,0,1
 Scale=1,1,1
@@ -107,6 +133,7 @@ link=151033678,1
 [ENTRY]
 ID=151033843
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=19477.5,82.2122,84055
 Orient=0,0,0,1
 Scale=1,1,1
@@ -117,6 +144,7 @@ link=151033844,1
 [ENTRY]
 ID=151033844
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=19386.4,65.1111,84169
 Orient=0,0,0,1
 Scale=1,1,1
@@ -127,6 +155,7 @@ link=151033845,1
 [ENTRY]
 ID=151033845
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=19341.1,61.7136,84118
 Orient=0,0,0,1
 Scale=1,1,1
@@ -137,6 +166,7 @@ link=151033846,1
 [ENTRY]
 ID=151033846
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=19440.8,73.0317,84006
 Orient=0,0,0,1
 Scale=1,1,1
@@ -147,17 +177,18 @@ link=151033845,1
 [ENTRY]
 ID=151033848
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=19306.4,60.8164,84128
 Orient=0,0.9871,0,0.160104
 Scale=1,1,1
+spawnPackage=5_ambercoastCrabquatch_39_40
 links_count=1
 link=151033849,1
-spawnPackage=5_ambercoastCrabquatch_39_40
-outerRadius=1
 
 [ENTRY]
 ID=151033849
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=19188.8,62.7556,84096
 Orient=0,0,0,1
 Scale=1,1,1
@@ -168,6 +199,7 @@ link=151033851,1
 [ENTRY]
 ID=151033851
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=19080.3,65.1156,84118
 Orient=0,0,0,1
 Scale=1,1,1
@@ -177,18 +209,19 @@ link=151033849,1
 [ENTRY]
 ID=151033852
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=19018.2,63.8349,84157
 Orient=0,-0.964884,0,0.262678
 Scale=1,1,1
+spawnPackage=5_ambercoastCrabquatch_39_40
 links_count=2
 link=151033854,1
 link=151033860,1
-spawnPackage=5_ambercoastCrabquatch_39_40
-outerRadius=10
 
 [ENTRY]
 ID=151033854
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=18935.1,62.0335,84176
 Orient=0,0,0,1
 Scale=1,1,1
@@ -199,6 +232,7 @@ link=151033855,1
 [ENTRY]
 ID=151033855
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=18855.6,61.3535,84255
 Orient=0,0,0,1
 Scale=1,1,1
@@ -209,6 +243,7 @@ link=151033856,1
 [ENTRY]
 ID=151033856
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=18791.3,61.1891,84310
 Orient=0,0,0,1
 Scale=1,1,1
@@ -219,6 +254,7 @@ link=151033857,1
 [ENTRY]
 ID=151033857
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=18839.7,63.3644,84367
 Orient=0,0,0,1
 Scale=1,1,1
@@ -229,6 +265,7 @@ link=151033858,1
 [ENTRY]
 ID=151033858
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=18918.1,62.262,84296
 Orient=0,0,0,1
 Scale=1,1,1
@@ -239,6 +276,7 @@ link=151033859,1
 [ENTRY]
 ID=151033859
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=19029.5,63.7897,84305
 Orient=0,0,0,1
 Scale=1,1,1
@@ -249,6 +287,7 @@ link=151033860,1
 [ENTRY]
 ID=151033860
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=19013.8,65.1152,84226
 Orient=0,0,0,1
 Scale=1,1,1
@@ -259,6 +298,7 @@ link=151033859,1
 [ENTRY]
 ID=151033866
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=18774.5,66.3621,84640
 Orient=0,0,0,1
 Scale=0.95,0.95,0.95
@@ -269,6 +309,7 @@ link=151033867,1
 [ENTRY]
 ID=151033867
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=18780,65.8185,84572
 Orient=0,0,0,1
 Scale=0.95,0.95,0.95
@@ -279,6 +320,7 @@ link=151033868,1
 [ENTRY]
 ID=151033868
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=18754.6,62.8408,84449
 Orient=0,0,0,1
 Scale=0.95,0.95,0.95
@@ -289,6 +331,7 @@ link=151033869,1
 [ENTRY]
 ID=151033869
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=18795.7,62.463,84369
 Orient=0,0,0,1
 Scale=0.95,0.95,0.95
@@ -299,12 +342,12 @@ link=151033868,1
 [ENTRY]
 ID=151033870
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=18761.5,66.2992,84670
 Orient=0,-0.535416,0,0.844589
 Scale=1,1,1
+spawnPackage=5_ambercoastCrabquatch_39_40
 links_count=2
 link=151033871,1
 link=151033874,1
-spawnPackage=5_ambercoastCrabquatch_39_40
-outerRadius=10
 
