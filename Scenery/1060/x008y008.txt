@@ -1575,14 +1575,6 @@ Scale=1,1,1
 spawnPackage=#1997
 
 [ENTRY]
-ID=1130577
-Asset=Prop-Path_Helper#Prop-Path_Helper
-Name=Untitled
-Pos=16612.1,1202.44,15612.2
-Orient=0,0.305059,0,0.952334
-Scale=0.3,0.3,0.3
-
-[ENTRY]
 ID=1130579
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=Untitled

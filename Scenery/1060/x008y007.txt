@@ -1132,14 +1132,6 @@ spawnPackage=#3175
 aiModule=Bastion_NPC_GuardMeleeAnimation1
 
 [ENTRY]
-ID=1130446
-Asset=Prop-Marker1#Prop-Monster_Marker
-Name=Untitled
-Pos=16161.8,1134.88,14833.7
-Orient=0,0,0,1
-Scale=1,1,1
-
-[ENTRY]
 ID=1130447
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=Untitled
@@ -1378,14 +1370,6 @@ Name=Untitled
 Pos=16625.8,1202.55,15320.6
 Orient=0,0,0,1
 Scale=3,3,3
-
-[ENTRY]
-ID=1130578
-Asset=Prop-Path_Helper
-Name=Untitled
-Pos=16601,1203.14,15359.8
-Orient=0,-0.252245,0,0.967663
-Scale=0.3,0.3,0.3
 
 [ENTRY]
 ID=1130581
@@ -1694,7 +1678,7 @@ link=1130585,1
 [ENTRY]
 ID=1133411
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=15491.1,1153.79,13996.6
 Orient=0,0,0,1
 Scale=1,1,1
