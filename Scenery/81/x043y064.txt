@@ -1,6 +1,47 @@
 [ENTRY]
+ID=1134582
+Asset=Prop-Nordic_Props#Prop-Dock1
+Name=
+Pos=43037.4,16.0297,64566.5
+Orient=0,-0.92269,0,0.385543
+Scale=1,1,1
+
+[ENTRY]
+ID=1134583
+Asset=Prop-Nordic_Props#Prop-Dock1
+Name=
+Pos=43079.5,16.3562,64523.4
+Orient=0,-0.920751,0,0.390152
+Scale=1,1,1
+
+[ENTRY]
+ID=1134589
+Asset=CL-Junk#CL-Junk_Crate-Stack3
+Name=
+Pos=43054.1,68.3358,64525.7
+Orient=0,0.430458,0,0.902611
+Scale=1,1,1
+
+[ENTRY]
+ID=1134591
+Asset=Prop-Nordic_Props#Prop-Boat-Fishing
+Name=
+Pos=43111.5,58.4155,64497.6
+Orient=0,-0.380188,0,0.924909
+Scale=1.5,1.5,1.5
+
+[ENTRY]
+ID=1134592
+Asset=Par-Waves-1-Emitter?ATS=ATS-Stonelion_Tents
+Name=
+Pos=43145.8,61.8814,64577.4
+Orient=0,0.999991,0,-0.00420365
+Scale=1,1,1
+
+[ENTRY]
 ID=1358955121
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=43924.6,127.735,64989
 Orient=0,0,0,1
 Scale=1,1,1
@@ -11,6 +52,7 @@ link=1358955124,1
 [ENTRY]
 ID=1358955122
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=43962,110.324,64945
 Orient=0,0,0,1
 Scale=1,1,1
@@ -21,6 +63,7 @@ link=1358955136,1
 [ENTRY]
 ID=1358955129
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=43797.3,92.0704,64788
 Orient=0,0,0,1
 Scale=1,1,1
@@ -31,6 +74,7 @@ link=1358955144,1
 [ENTRY]
 ID=1358955130
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=43818.3,96.7498,64809
 Orient=0,0,0,1
 Scale=1,1,1
@@ -41,6 +85,7 @@ link=1358955131,1
 [ENTRY]
 ID=1358955131
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=43839.1,96.2364,64826
 Orient=0,0,0,1
 Scale=1,1,1
@@ -51,6 +96,7 @@ link=1358955132,1
 [ENTRY]
 ID=1358955132
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=43868.5,94.2394,64839
 Orient=0,0,0,1
 Scale=1,1,1
@@ -61,6 +107,7 @@ link=1358955133,1
 [ENTRY]
 ID=1358955133
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=43897.9,95.5499,64858
 Orient=0,0,0,1
 Scale=1,1,1
@@ -71,6 +118,7 @@ link=1358955134,1
 [ENTRY]
 ID=1358955134
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=43927.6,99.9509,64887
 Orient=0,0,0,1
 Scale=1,1,1
@@ -81,6 +129,7 @@ link=1358955135,1
 [ENTRY]
 ID=1358955135
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=43948,102.026,64904
 Orient=0,0,0,1
 Scale=1,1,1
@@ -91,6 +140,7 @@ link=1358955136,1
 [ENTRY]
 ID=1358955136
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=43960.2,105.432,64925
 Orient=0,0,0,1
 Scale=1,1,1
@@ -101,6 +151,7 @@ link=1358955135,1
 [ENTRY]
 ID=1358955141
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=43703.6,83.0899,64719
 Orient=0,0,0,1
 Scale=1,1,1
@@ -110,6 +161,7 @@ link=1358955142,1
 [ENTRY]
 ID=1358955142
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=43721.4,84.5386,64733
 Orient=0,0,0,1
 Scale=1,1,1
@@ -120,6 +172,7 @@ link=1358955143,1
 [ENTRY]
 ID=1358955143
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=43749.4,85.9978,64751
 Orient=0,0,0,1
 Scale=1,1,1
@@ -130,6 +183,7 @@ link=1358955144,1
 [ENTRY]
 ID=1358955144
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=43774.5,87.0716,64767
 Orient=0,0,0,1
 Scale=1,1,1
@@ -140,6 +194,7 @@ link=1358955143,1
 [ENTRY]
 ID=1358955233
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=43992.2,116.2,64981
 Orient=0,0,0,1
 Scale=1,1,1
@@ -150,6 +205,7 @@ link=1358955232,1
 [ENTRY]
 ID=1358964784
 Asset=Prop-Mills#Prop-Water_Mill
+Name=Untitled
 Pos=43291.6,72.3864,64816
 Orient=0,-0.948985,0,0.315322
 Scale=2,2,2
@@ -157,6 +213,7 @@ Scale=2,2,2
 [ENTRY]
 ID=1358964952
 Asset=Bldg-Urban-Small_Facade3?ATS=ATS-Camelot
+Name=Untitled
 Pos=43697.7,78.2871,64669
 Orient=0,-0.909297,0,-0.416147
 Scale=1,1,1
