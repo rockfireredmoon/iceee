@@ -1,6 +1,6 @@
 [ENTRY]
 ID=1134495
-Asset=Bldg-Castle#Bldg-Castle-Small_Keep1?ATS=ATS-Castle_Underground
+Asset=Bldg-Castle#Bldg-Castle-Small_Keep1?ATS=ATS-Castle
 Name=
 Pos=19901.7,215.442,84872.9
 Orient=0,0.979908,0,0.19945
@@ -8,7 +8,7 @@ Scale=1,1,1
 
 [ENTRY]
 ID=1134498
-Asset=Bldg-Castle#Bldg-Castle_Extension?ATS=ATS-Castle_Underground
+Asset=Bldg-Castle#Bldg-Castle_Extension?ATS=ATS-Castle
 Name=
 Pos=19674.2,188.506,84828
 Orient=0,-0.981202,0,-0.192985
@@ -16,7 +16,7 @@ Scale=1.1,1.1,1.1
 
 [ENTRY]
 ID=1134499
-Asset=Bldg-Castle#Bldg-Castle_Extension?ATS=ATS-Castle_Underground
+Asset=Bldg-Castle#Bldg-Castle_Extension?ATS=ATS-Castle
 Name=
 Pos=19659,191.959,84882.1
 Orient=0,-0.773915,0,0.63329

@@ -1,6 +1,6 @@
 [ENTRY]
 ID=1134405
-Asset=Bldg-Bastion1#Bldg-Bastion1?ATS=ATS-Ruins
+Asset=Bldg-Bastion1#Bldg-Bastion1?ATS=ATS-Roman
 Name=
 Pos=21478.5,189.15,81996.6
 Orient=0,0,0,1

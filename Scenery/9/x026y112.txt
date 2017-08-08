@@ -1,12 +1,4 @@
 [ENTRY]
-ID=1134516
-Asset=Prop-Castle1#Prop-Castle_Tower1?ATS=ATS-Castle_Underground
-Name=
-Pos=19630.1,109.076,84438.8
-Orient=-0.322389,0.386364,0.0263313,0.863768
-Scale=1,1,1
-
-[ENTRY]
 ID=1134517
 Asset=Prop-Chunks#Prop-Chunks2
 Name=
@@ -45,6 +37,23 @@ Name=
 Pos=19836.7,185.095,84712.8
 Orient=0,0.998152,0,0.0607589
 Scale=1.5,1.5,1.5
+
+[ENTRY]
+ID=1134619
+Asset=Prop-Castle1#Prop-Castle_Tower1?ATS=ATS-Castle
+Name=
+Pos=19641.3,110.403,84420.8
+Orient=-0.0595182,-0.309338,0.208464,0.925911
+Scale=1,1,1
+
+[ENTRY]
+ID=1134621
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=19876.7,146.373,84371.1
+Orient=0,0.780209,0,0.625519
+Scale=1,1,1
+spawnPackage=#2075
 
 [ENTRY]
 ID=151007743

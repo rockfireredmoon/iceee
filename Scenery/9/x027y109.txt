@@ -1,8 +1,8 @@
 [ENTRY]
-ID=1134404
-Asset=Bldg-Bastion3#Bldg-Bastion3?ATS=ATS-Ruins
+ID=1134620
+Asset=Bldg-Bastion3#Bldg-Bastion3?ATS=ATS-Roman
 Name=
-Pos=20642.1,114.392,81945.1
+Pos=20629.3,113.673,81936.2
 Orient=0,0,0,1
 Scale=1,1,1
 
