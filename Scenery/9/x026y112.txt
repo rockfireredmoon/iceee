@@ -2,7 +2,7 @@
 ID=1134517
 Asset=Prop-Chunks#Prop-Chunks2
 Name=
-Pos=19647,111.687,84424.2
+Pos=19647,108.5,84424.2
 Orient=0,0,0.109778,0.993956
 Scale=2,2,2
 
@@ -54,6 +54,15 @@ Pos=19876.7,146.373,84371.1
 Orient=0,0.780209,0,0.625519
 Scale=1,1,1
 spawnPackage=#2075
+
+[ENTRY]
+ID=1134622
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=19902.9,143.759,84364.2
+Orient=0,0.854714,0,0.519099
+Scale=1,1,1
+spawnPackage=#3643
 
 [ENTRY]
 ID=151007743
