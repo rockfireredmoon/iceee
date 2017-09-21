@@ -1846,6 +1846,13 @@ void AccountManager :: RunUpdateCycle(bool force)
 	}
 }
 
+void AccountManager :: ImportKey(const char *key)
+{
+	KeyList.push_back(key);
+	KeyListChanges.AddChange();
+	g_Log.AddMessageFormat("[KEY] Single key imported from external source");
+}
+
 void AccountManager :: ImportKeys(void)
 {
 	STRINGLIST importList;

@@ -1261,6 +1261,24 @@ bool CaseInsensitiveStringCompare(const std::string& str1, const std::string& st
     return true;
 }
 
+
+std::string URLDecode(std::string const &src) {
+    string ret;
+    char ch;
+    int i, ii;
+    for (i=0; i<src.length(); i++) {
+        if (int(src[i])==37) {
+            sscanf(src.substr(i+1,2).c_str(), "%x", &ii);
+            ch=static_cast<char>(ii);
+            ret+=ch;
+            i=i+2;
+        } else {
+            ret+=src[i];
+        }
+    }
+    return (ret);
+}
+
 void ToLowerCase(std::string &input)
 {
 	for(size_t i = 0; i < input.size(); i++)
