@@ -883,6 +883,9 @@ void HTTPDistribute :: HandleHTTP_POST(char *dataStart, MULTISTRING &header)
 				const char *password = GetValueOfKey(params, "password");
 				const char *auth = GetValueOfKey(params, "authtoken");
 
+				if(username == NULL || password == NULL || auth == NULL ) {
+					g_Log.AddMessageFormat("[ERROR] Missing link account parameters.");
+				}
 				if(g_Config.RemotePasswordMatch(auth) == false)
 				{
 					g_Log.AddMessageFormat("[ERROR] Invalid remote authentication string.");
