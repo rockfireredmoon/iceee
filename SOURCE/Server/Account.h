@@ -135,7 +135,7 @@ public:
 	void SaveToStream(FILE *output);
 	bool QualifyGarbage(bool force);
 
-	void GenerateClientPasswordHash(const char *username, const char *password, std::string &outputString);
+	static void GenerateClientPasswordHash(const char *username, const char *password, std::string &outputString);
 	static void GenerateSaltedHash(const char *inputString, std::string &outputString);
 	void GenerateAndApplyRegistrationKeyRecovery(void);
 	bool MatchRecoveryKey(const char *type, const char *hash);
@@ -256,6 +256,7 @@ public:
 
 	void LoadKeyList(const char *fileName);
 	void ImportKeys(void);
+	void ImportKey(const char *key);
 	int GetRegistrationKey(const char *authKey);
 	int CreateAccount(const char *username, const char *password, const char *regKey, const char *grovename);
 	int ResetPassword(const char *username, const char *newpassword, const char *regKey);

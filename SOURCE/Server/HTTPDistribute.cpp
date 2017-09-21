@@ -444,7 +444,7 @@ int ExtractPairs(char *incdata, MULTISTRING &extract)
 		{
 			char temp = *end;
 			*end = 0;
-			extract[row].push_back(curpos);
+			extract[row].push_back(Util::URLDecode(curpos));
 			*end = temp;
 
 			if(temp == '=')
@@ -462,7 +462,7 @@ int ExtractPairs(char *incdata, MULTISTRING &extract)
 		}
 		else
 		{
-			extract[row].push_back(curpos);
+			extract[row].push_back(Util::URLDecode(curpos));
 			break;
 		}
 	} while(end != NULL);
@@ -873,6 +873,40 @@ void HTTPDistribute :: HandleHTTP_POST(char *dataStart, MULTISTRING &header)
 				wpos += sprintf(&SendBuf[wpos], "\r\n");
 				wpos += sprintf(&SendBuf[wpos], "%s", g_AccountManager.GetErrorMessage(r));
 				TotalSendBytes += sc.AttemptSend(SendBuf, wpos);
+			}
+			else if(header[a][1].compare("/linkaccount") == 0)
+			{
+				MULTISTRING params;
+				ExtractPairs(dataStart, params);
+
+				const char *username = GetValueOfKey(params, "username");
+				const char *password = GetValueOfKey(params, "password");
+				const char *auth = GetValueOfKey(params, "authtoken");
+
+				if(g_Config.RemotePasswordMatch(auth) == false)
+				{
+					g_Log.AddMessageFormat("[ERROR] Invalid remote authentication string.");
+				}
+				else
+				{
+
+					std::string pwHash;
+					AccountData::GenerateClientPasswordHash(username, password, pwHash);
+					AccountData::GenerateSaltedHash(pwHash.c_str(), pwHash);
+
+					int retval = 0;
+					g_AccountManager.cs.Enter("RunAccountCreation");
+					AccountData * ad = g_AccountManager.GetValidLogin(username, pwHash.c_str());
+					int wpos = 0;
+					wpos += sprintf(&SendBuf[wpos], "HTTP/1.1 200 OK\r\n");
+					wpos += sprintf(&SendBuf[wpos], "Content-Type: text/html\r\n");
+					wpos += sprintf(&SendBuf[wpos], "\r\n");
+					if(ad != NULL)
+						wpos += sprintf(&SendBuf[wpos], "%s:%s", ad->RegKey, ad->GroveName.c_str());
+					TotalSendBytes += sc.AttemptSend(SendBuf, wpos);
+					g_AccountManager.cs.Leave();
+				}
+
 			}
 			else if(header[a][1].compare("/resetpassword") == 0)
 			{

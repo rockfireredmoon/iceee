@@ -615,6 +615,23 @@ int RunAccountCreation(MULTISTRING &params)
 	const char *username = GetValueOfKey(params, "username");
 	const char *password = GetValueOfKey(params, "password");
 	const char *grove = GetValueOfKey(params, "grove");
+	const char *auth = GetValueOfKey(params, "authtoken");
+
+	if(regkey != NULL && auth != NULL) {
+		if(g_Config.RemotePasswordMatch(auth) == false)
+		{
+			g_Log.AddMessageFormat("[ERROR] Invalid remote authentication string.");
+			g_Log.AddMessageFormat("Has:[%s], Need:[%s]", auth, g_Config.RemoteAuthenticationPassword.c_str());
+			return REMOTE_AUTHFAILED;
+		}
+		int keyIndex = g_AccountManager.GetRegistrationKey(regkey);
+		if(keyIndex == -1) {
+			/* Key is not found, authtoken provided, so import this key as it is so
+			 * it can be immediately used to create an account */
+			g_AccountManager.ImportKey(regkey);
+		}
+	}
+
 	int retval = 0;
 	g_AccountManager.cs.Enter("RunAccountCreation");
 	retval = g_AccountManager.CreateAccount(username, password, regkey, grove);
