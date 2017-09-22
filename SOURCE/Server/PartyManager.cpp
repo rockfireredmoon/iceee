@@ -179,6 +179,8 @@ bool ActiveParty :: UpdatePlayerReferences(CreatureInstance* member)
 
 bool ActiveParty :: RemovePlayerReferences(int memberDefID, bool disconnect)
 {
+	RemoveCreatureTags(-1, memberDefID);
+
 	for(size_t i = 0; i < mMemberList.size(); i++)
 	{
 		if(mMemberList[i].mCreatureDefID == memberDefID)
@@ -580,6 +582,7 @@ void PartyManager :: UpdatePlayerReferences(CreatureInstance* member)
 
 void PartyManager :: RemovePlayerReferences(int memberDefID, bool disconnect)
 {
+
 	for(size_t i = 0; i < mPartyList.size(); i++)
 		if(mPartyList[i].RemovePlayerReferences(memberDefID, disconnect) == true)
 			return;
@@ -713,8 +716,15 @@ int PartyManager :: WriteLootRoll(char *outbuf, const char *itemDefName, char ro
 LootTag * ActiveParty :: GetTag(int itemId, int creatureId)
 {
 	for(it_type iterator = lootTags.begin(); iterator != lootTags.end(); ++iterator) {
-		if((*iterator->second).mItemId == itemId && (*iterator->second).mCreatureId == creatureId) {
-			return iterator->second;
+		LootTag * t;
+		t = iterator->second;
+		if(t == NULL) {
+			g_Log.AddMessageFormat("GetTag HUH!!!! NULL value in loot tags map for %d in creature %d, item %d", iterator->first, creatureId, itemId);
+		}
+		else {
+			if((*iterator->second).mItemId == itemId && (*iterator->second).mCreatureId == creatureId) {
+				return iterator->second;
+			}
 		}
 	}
 	return NULL;
@@ -722,18 +732,25 @@ LootTag * ActiveParty :: GetTag(int itemId, int creatureId)
 
 void ActiveParty :: RemoveTagsForLootCreatureId(int lootCreatureId, int itemId, int creatureId)
 {
-	g_Log.AddMessageFormat("Removing loot tags for loot creature ID %d and item ID %d", lootCreatureId, itemId);
+	g_Log.AddMessageFormat("Removing loot tags for loot creature ID %d, item ID %d and creature %d", lootCreatureId, itemId, creatureId);
 	std::map<int, LootTag*>::iterator itr = lootTags.begin();
 	while (itr != lootTags.end()) {
-		g_Log.AddMessageFormat("  ---> remove %d - %d ?", (*itr->second).lootTag, (*itr->second).mCreatureId,  (*itr->second).mItemId);
-		if ((*itr->second).mLootCreatureId == lootCreatureId && (itemId == 0 || (*itr->second).mItemId == itemId)
-				&& (creatureId == 0 || (*itr->second).mCreatureId == creatureId)) {
-			delete itr->second;
-			lootTags.erase(itr++);
-			g_Log.AddMessageFormat("  ---> yes!");
-		}
-		else
+		LootTag * t;
+		t = itr->second;
+		if(t == NULL) {
+			g_Log.AddMessageFormat("  ---> !!!!NULL loot tags for %d", itr->first);
 			++itr;
+		}
+		else { g_Log.AddMessageFormat("  ---> remove %d - %d ?", (*itr->second).lootTag, (*itr->second).mCreatureId,  (*itr->second).mItemId);
+			if ((*itr->second).mLootCreatureId == lootCreatureId && (itemId == 0 || (*itr->second).mItemId == itemId)
+					&& (creatureId == 0 || (*itr->second).mCreatureId == creatureId)) {
+				delete itr->second;
+				lootTags.erase(itr++);
+				g_Log.AddMessageFormat("  ---> yes!");
+			}
+			else
+				++itr;
+		}
 	}
 }
 
@@ -741,8 +758,15 @@ bool ActiveParty:: HasTags(int lootCreatureID, int itemId)
 {
 	typedef std::map<int, LootTag*>::iterator it_type;
 	for(it_type iterator = lootTags.begin(); iterator != lootTags.end(); ++iterator) {
-		if((*iterator->second).mLootCreatureId == lootCreatureID && (*iterator->second).mItemId == itemId) {
-			return true;
+		LootTag * t;
+		t = iterator->second;
+		if(t == NULL) {
+			g_Log.AddMessageFormat("HasTags HUH!!!! NULL value in loot tags map for %d in loot creature %d, item %d", iterator->first, lootCreatureID, itemId);
+		}
+		else {
+			if((*iterator->second).mLootCreatureId == lootCreatureID && (*iterator->second).mItemId == itemId) {
+				return true;
+			}
 		}
 	}
 	return false;
@@ -750,13 +774,21 @@ bool ActiveParty:: HasTags(int lootCreatureID, int itemId)
 
 void ActiveParty :: RemoveCreatureTags(int itemId, int creatureId)
 {
+	g_Log.AddMessageFormat("RemoveCreatureTags in creature %d, item %d", creatureId, itemId);
 	std::map<int, LootTag*>::iterator itr = lootTags.begin();
 	while (itr != lootTags.end()) {
-		if ((*itr->second).mItemId == itemId && (*itr->second).mCreatureId == creatureId) {
-			delete itr->second;
-			lootTags.erase(itr++);
-		} else
-			++itr;
+		LootTag * t;
+		t = itr->second;
+		if(t == NULL) {
+			g_Log.AddMessageFormat("RemoveCreatureTags HUH!!!! NULL value in loot tags map for %d in creature %d, item %d", itr->first, creatureId, itemId);
+		}
+		else {
+			if ((itemId == -1 || (*itr->second).mItemId == itemId ) && (*itr->second).mCreatureId == creatureId) {
+				delete itr->second;
+				lootTags.erase(itr++);
+			} else
+				++itr;
+		}
 	}
 }
 
