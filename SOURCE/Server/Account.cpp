@@ -939,7 +939,7 @@ int AccountManager :: CreateAccount(const char *username, const char *password, 
 }
 
 // Attempt to reset a password, given the supplied information from the password reset web form.
-int AccountManager :: ResetPassword(const char *username, const char *newpassword, const char *regKey)
+int AccountManager :: ResetPassword(const char *username, const char *newpassword, const char *regKey, bool checkPermission)
 {
 	if(username == NULL)  return ACCOUNT_SIZENAME;
 	if(newpassword == NULL)  return ACCOUNT_SIZEPASS;
@@ -954,7 +954,7 @@ int AccountManager :: ResetPassword(const char *username, const char *newpasswor
 	if(accPtr == NULL)
 		return ACCOUNT_USERNOTFOUND;
 
-	if(accPtr->HasPermission(Perm_Account, Permission_PasswordReset) == false)
+	if(checkPermission && accPtr->HasPermission(Perm_Account, Permission_PasswordReset) == false)
 		return ACCOUNT_PERMISSIONRESET;
 
 	if(accPtr->MatchRegistrationKey(regKey) == false)
@@ -970,7 +970,8 @@ int AccountManager :: ResetPassword(const char *username, const char *newpasswor
 		AccountQuickDataChanges.AddChange();
 	}
 
-	accPtr->SetPermission(Perm_Account, "passwordreset", false);
+	if(checkPermission)
+		accPtr->SetPermission(Perm_Account, "passwordreset", false);
 	accPtr->PendingMinorUpdates++;
 	return ACCOUNT_PASSWORDRESETOK;
 }
