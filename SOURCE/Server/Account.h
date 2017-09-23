@@ -259,7 +259,7 @@ public:
 	void ImportKey(const char *key);
 	int GetRegistrationKey(const char *authKey);
 	int CreateAccount(const char *username, const char *password, const char *regKey, const char *grovename);
-	int ResetPassword(const char *username, const char *newpassword, const char *regKey);
+	int ResetPassword(const char *username, const char *newpassword, const char *regKey, bool checkPermission);
 	int AccountRecover(const char *username, const char *keypass, const char *type);
 	bool ValidString(const char *str);
 	bool ValidGroveString(std::string &nameToAdjust);

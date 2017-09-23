@@ -644,9 +644,14 @@ int RunPasswordReset(MULTISTRING &params)
 	const char *regkey = GetValueOfKey(params, "regkey");
 	const char *username = GetValueOfKey(params, "username");
 	const char *newpassword = GetValueOfKey(params, "password");
+	const char *auth = GetValueOfKey(params, "authtoken");
+	bool checkPermission = true;
+	if(auth != NULL && g_Config.RemotePasswordMatch(auth) == true)
+		checkPermission = false;
+
 	int retval = 0;
 	g_AccountManager.cs.Enter("RunPasswordReset");
-	retval = g_AccountManager.ResetPassword(username, newpassword, regkey);
+	retval = g_AccountManager.ResetPassword(username, newpassword, regkey, checkPermission);
 	g_AccountManager.cs.Leave();
 	return retval;
 }
