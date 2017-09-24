@@ -4651,10 +4651,16 @@ void SimulatorThread :: handle_communicate(void)
 					break;
 				log = true;
 				send = true;
+
 				break;
 			case CHAT_SCOPE_SERVER:
 				log = true;
 				send = true;
+
+				if(strcmp(channel, "gm/earthsages") == 0 && !it->pld.accPtr->HasPermission(Perm_Account, Permission_GMChat) && !it->pld.accPtr->HasPermission(Perm_Account, Permission_Admin)) {
+					send = false;
+					log = false;
+				}
 				break;
 			case CHAT_SCOPE_FRIEND:
 				if(it->pld.CreatureDefID == pld.CreatureDefID)  //Send to self
