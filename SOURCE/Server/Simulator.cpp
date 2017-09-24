@@ -2082,15 +2082,19 @@ void SimulatorThread :: LoadCharacterSession(void)
 
 	// Determine if we should give a daily reward for the account
 	if(pld.accPtr->LastLogOn[0] == 0) {
-		pld.accPtr->DueDailyRewards = true;
+		pld.accPtr->DueDailyRewards = false;
 	}
 	else {
-		// Test on the date portion only
-		STRINGLIST thisDate;
-		STRINGLIST lastLogonDate;
-		Util::Split(pld.accPtr->LastLogOn, ",", thisDate);
-		Util::Split(pld.charPtr->LastLogOn, ",", lastLogonDate);
-		pld.accPtr->DueDailyRewards = strcmp(thisDate[0].c_str(), lastLogonDate[0].c_str()) != 0;
+		long loginDay = (long)(pld.accPtr->LastLogOnTimeSec / 86400 );
+		long todayDay = (long)(curtime / 86400 );
+		if(loginDay != todayDay) {
+			LogMessageL(MSG_SHOW, "%s, last login days are different (%d [%d] vs %d [%d])", pld.accPtr->Name, loginDay, pld.accPtr->LastLogOnTimeSec, todayDay, curtime);
+			pld.accPtr->DueDailyRewards = true;
+		}
+		else {
+			LogMessageL(MSG_SHOW, "%s, last login days are same (%d)", pld.accPtr->Name, loginDay);
+			pld.accPtr->DueDailyRewards = false;
+		}
 	}
 	if(pld.accPtr->DueDailyRewards) {
 		LogMessageL(MSG_SHOW, "%s is logging on for the first time today", pld.accPtr->Name);
@@ -2099,6 +2103,7 @@ void SimulatorThread :: LoadCharacterSession(void)
 		// Is this a consecutive day?
 		unsigned long lastLoginDay = pld.accPtr->LastLogOnTimeSec / 86400;
 		pld.accPtr->LastLogOnTimeSec = time(NULL);
+		strftime(pld.accPtr->LastLogOn, sizeof(pld.accPtr->LastLogOn), "%Y-%m-%d", localtime(&curtime));
 		unsigned long today =  pld.accPtr->LastLogOnTimeSec / 86400;
 		if(lastLoginDay == 0 || today == lastLoginDay + 1) {
 			// It is!
@@ -2108,6 +2113,7 @@ void SimulatorThread :: LoadCharacterSession(void)
 		else {
 			// Not a consecutive day, so not due daily rewards
 			pld.accPtr->DueDailyRewards = false;
+			pld.accPtr->ConsecutiveDaysLoggedIn = 0;
 		}
 
 		pld.accPtr->PendingMinorUpdates++;
