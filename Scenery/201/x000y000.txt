@@ -1469,7 +1469,7 @@ Name=Untitled
 Pos=259.342,100.053,728.122
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=77_lighthouse_madvine_5
+spawnPackage=#5019
 wanderRadius=30
 
 [ENTRY]
@@ -1479,7 +1479,7 @@ Name=Untitled
 Pos=260.033,99.3353,640.78
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=77_lighthouse_madvine_5
+spawnPackage=#5019
 wanderRadius=30
 
 [ENTRY]
@@ -1489,8 +1489,17 @@ Name=Untitled
 Pos=254.704,100.109,580.677
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=77_lighthouse_madvine_5
+spawnPackage=#5019
 wanderRadius=30
+
+[ENTRY]
+ID=1131962
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=Untitled
+Pos=45.985,92.9571,189.3
+Orient=0,0.754571,0,0.656219
+Scale=1,1,1
+spawnPackage=#E1625
 
 [ENTRY]
 ID=1131999
@@ -1739,7 +1748,7 @@ Name=Untitled
 Pos=-3.41243,100.331,177.912
 Orient=0,0.617059,0,0.786917
 Scale=1,1,1
-spawnPackage=58_earthrise_mix_summonercamp
+spawnPackage=#N893
 
 [ENTRY]
 ID=1132091
@@ -1748,7 +1757,7 @@ Name=Untitled
 Pos=-115.544,100.01,208.162
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=58_earthrise_mix_summonercamp
+spawnPackage=#N893
 
 [ENTRY]
 ID=1132092
@@ -1757,7 +1766,7 @@ Name=Untitled
 Pos=-123.501,100.01,242.573
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=58_earthrise_mix_summonercamp
+spawnPackage=#N893
 
 [ENTRY]
 ID=1132093
@@ -1766,7 +1775,7 @@ Name=Untitled
 Pos=17.5451,100,347.099
 Orient=0,0.720831,0,0.693111
 Scale=1,1,1
-spawnPackage=58_earthrise_mix_summonercamp
+spawnPackage=#N893
 
 [ENTRY]
 ID=1132094
@@ -1775,7 +1784,7 @@ Name=Untitled
 Pos=-31.1408,99.841,332.274
 Orient=0,0.655617,0,0.755093
 Scale=1,1,1
-spawnPackage=58_earthrise_mix_summonercamp
+spawnPackage=#N893
 
 [ENTRY]
 ID=1132095
@@ -1784,7 +1793,7 @@ Name=Untitled
 Pos=135.811,100,248.485
 Orient=0,0.997495,0,0.0707372
 Scale=1,1,1
-spawnPackage=58_earthrise_mix_summonercamp
+spawnPackage=#N893
 
 [ENTRY]
 ID=1132096
@@ -1793,7 +1802,7 @@ Name=Untitled
 Pos=132.565,99.8187,212.127
 Orient=0,0.995881,0,0.0906716
 Scale=1,1,1
-spawnPackage=58_earthrise_mix_summonercamp
+spawnPackage=#N893
 
 [ENTRY]
 ID=1132097
@@ -1802,7 +1811,7 @@ Name=Untitled
 Pos=-109.773,100,183.587
 Orient=0,-0.556361,0,0.830941
 Scale=1,1,1
-spawnPackage=58_earthrise_mix_summonercamp
+spawnPackage=#N893
 links_count=1
 link=1132099,1
 
@@ -1813,7 +1822,7 @@ Name=Untitled
 Pos=-84.591,100.633,317.52
 Orient=0,0.29552,0,0.955337
 Scale=1,1,1
-spawnPackage=58_earthrise_mix_summonercamp
+spawnPackage=#N893
 links_count=1
 link=1132105,1
 
@@ -1910,7 +1919,7 @@ Name=Untitled
 Pos=108.561,100.127,317.746
 Orient=0,0.971148,0,0.238476
 Scale=1,1,1
-spawnPackage=58_earthrise_mix_summonercamp
+spawnPackage=#N893
 links_count=1
 link=1132108,1
 
@@ -1953,7 +1962,7 @@ Name=Untitled
 Pos=-508.525,129.706,293.313
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=58_earthrise_mix_summonercamp
+spawnPackage=#N893
 links_count=1
 link=1132116,1
 
@@ -1964,7 +1973,7 @@ Name=Untitled
 Pos=-162.763,99.9838,229.705
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=58_earthrise_mix_summonercamp
+spawnPackage=#N893
 links_count=1
 link=1132114,1
 
@@ -2051,7 +2060,7 @@ Name=Untitled
 Pos=-398.303,100,50.8086
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=58_earthrise_mix_summonercamp
+spawnPackage=#N893
 links_count=1
 link=1132120,1
 
@@ -2062,7 +2071,7 @@ Name=Untitled
 Pos=-331.769,99.98,6.43578
 Orient=0,-0.713864,0,0.700285
 Scale=1,1,1
-spawnPackage=58_earthrise_mix_summonercamp
+spawnPackage=#N893
 
 [ENTRY]
 ID=1132124
@@ -2071,7 +2080,7 @@ Name=Untitled
 Pos=-298.298,99.98,20.5172
 Orient=0,-0.928369,0,0.37166
 Scale=1,1,1
-spawnPackage=58_earthrise_mix_summonercamp
+spawnPackage=#N893
 
 [ENTRY]
 ID=1132125
@@ -2080,7 +2089,7 @@ Name=Untitled
 Pos=-416.429,100,39.0211
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=58_earthrise_mix_summonercamp
+spawnPackage=#N893
 
 [ENTRY]
 ID=1132126
@@ -2089,7 +2098,7 @@ Name=Untitled
 Pos=-354.535,100.593,221.727
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=58_earthrise_mix_summonercamp
+spawnPackage=#N893
 
 [ENTRY]
 ID=1132127
@@ -2098,7 +2107,7 @@ Name=Untitled
 Pos=-257.599,100,244.786
 Orient=0,0.655617,0,0.755093
 Scale=1,1,1
-spawnPackage=58_earthrise_mix_summonercamp
+spawnPackage=#N893
 
 [ENTRY]
 ID=1132128
@@ -2107,7 +2116,7 @@ Name=Untitled
 Pos=-391.274,100,272.474
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=58_earthrise_mix_summonercamp
+spawnPackage=#N893
 
 [ENTRY]
 ID=1132129
@@ -2116,7 +2125,7 @@ Name=Untitled
 Pos=-390.706,100,297.693
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=58_earthrise_mix_summonercamp
+spawnPackage=#N893
 
 [ENTRY]
 ID=1132130
@@ -2125,7 +2134,7 @@ Name=Untitled
 Pos=-657.988,129.809,180.926
 Orient=0,-0.483807,0,0.875174
 Scale=1,1,1
-spawnPackage=58_earthrise_mix_summonercamp
+spawnPackage=#N893
 
 [ENTRY]
 ID=1132131
@@ -2134,7 +2143,7 @@ Name=Untitled
 Pos=-662.001,129.408,356.585
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=58_earthrise_mix_summonercamp
+spawnPackage=#N893
 
 [ENTRY]
 ID=1132132
@@ -2143,16 +2152,16 @@ Name=Untitled
 Pos=-589.903,129.533,410.167
 Orient=0,0.674288,0,0.738469
 Scale=1,1,1
-spawnPackage=58_earthrise_mix_summonercamp
+spawnPackage=#N893
 
 [ENTRY]
 ID=1132133
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=Untitled
-Pos=-570.75,130.072,400.07
+Pos=-570.749,130.072,400.069
 Orient=0,0.920751,0,0.390152
 Scale=0.95,0.95,0.95
-spawnPackage=58_earthrise_mix_summonercamp
+spawnPackage=#N893
 links_count=1
 link=1132147,1
 
@@ -2163,7 +2172,7 @@ Name=Untitled
 Pos=-636.34,129.589,391.683
 Orient=0,0.40319,0,0.915116
 Scale=1,1,1
-spawnPackage=58_earthrise_mix_summonercamp
+spawnPackage=#N893
 
 [ENTRY]
 ID=1132135
@@ -2172,7 +2181,7 @@ Name=Untitled
 Pos=-560.046,129.342,321.775
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=58_earthrise_mix_summonercamp
+spawnPackage=#N893
 
 [ENTRY]
 ID=1132136
@@ -2181,7 +2190,7 @@ Name=Untitled
 Pos=-557.359,129.142,359.983
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=58_earthrise_mix_summonercamp
+spawnPackage=#N893
 
 [ENTRY]
 ID=1132137
@@ -2190,7 +2199,7 @@ Name=Untitled
 Pos=-664.854,129.408,260.885
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=58_earthrise_mix_summonercamp
+spawnPackage=#N893
 
 [ENTRY]
 ID=1132138
@@ -2199,7 +2208,7 @@ Name=Untitled
 Pos=-432.139,129.408,226.664
 Orient=0,-0.999232,0,-0.0391936
 Scale=1,1,1
-spawnPackage=58_earthrise_mix_summonercamp
+spawnPackage=#N893
 
 [ENTRY]
 ID=1132139
@@ -2208,7 +2217,7 @@ Name=Untitled
 Pos=-504.004,129.408,171.902
 Orient=0,-0.720831,0,0.693111
 Scale=1,1,1
-spawnPackage=58_earthrise_mix_summonercamp
+spawnPackage=#N893
 links_count=2
 link=1132143,1
 link=1132142,1
@@ -2362,7 +2371,7 @@ Name=Untitled
 Pos=-1.46671,100,663.91
 Orient=0,0.767543,0,0.640997
 Scale=1,1,1
-spawnPackage=58_earthrise_mix_summonercamp
+spawnPackage=#N893
 links_count=1
 link=1132150,1
 
@@ -2373,7 +2382,7 @@ Name=Untitled
 Pos=1.52313,100,394.627
 Orient=0,-0.737931,0,0.674876
 Scale=1,1,1
-spawnPackage=58_earthrise_mix_summonercamp
+spawnPackage=#N893
 links_count=1
 link=1132152,1
 
@@ -2384,7 +2393,7 @@ Name=Untitled
 Pos=141.469,100,628.013
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=77_lighthouse_madvine_5
+spawnPackage=#5019
 links_count=1
 link=1132157,1
 
@@ -2450,7 +2459,7 @@ Name=Untitled
 Pos=11.7364,100,820.352
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=77_lighthouse_madvine_5
+spawnPackage=#5019
 links_count=1
 link=1132162,1
 
@@ -2461,7 +2470,7 @@ Name=Untitled
 Pos=149.737,100.039,750.353
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=77_lighthouse_madvine_5
+spawnPackage=#5019
 
 [ENTRY]
 ID=1132165
@@ -2470,7 +2479,7 @@ Name=Untitled
 Pos=-8.16245,100,825.569
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=58_earthrise_mix_summonercamp
+spawnPackage=#N893
 
 [ENTRY]
 ID=1132166
@@ -2479,7 +2488,7 @@ Name=Untitled
 Pos=-14.6964,100,874.67
 Orient=0,0.628793,0,0.777573
 Scale=1,1,1
-spawnPackage=58_earthrise_mix_summonercamp
+spawnPackage=#N893
 
 [ENTRY]
 ID=1132167
@@ -2488,5 +2497,5 @@ Name=Untitled
 Pos=15.6441,100,878.173
 Orient=0,0.605186,0,0.796084
 Scale=1,1,1
-spawnPackage=58_earthrise_mix_summonercamp
+spawnPackage=#N893
 

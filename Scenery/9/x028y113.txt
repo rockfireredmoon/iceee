@@ -1,7 +1,6 @@
 [ENTRY]
 ID=151030172
 Asset=Prop-Palm-Tree#Prop-Palm-Tree1
-Name=Untitled
 Pos=21416.2,231.498,84980
 Orient=0,0,0,1
 Scale=4.9,4.9,4.9
@@ -10,7 +9,6 @@ Flags=1
 [ENTRY]
 ID=151030173
 Asset=Prop-Palm-Tree#Prop-Palm-Tree2
-Name=Untitled
 Pos=21373.8,231.368,84955
 Orient=-0.164363,0.483671,-0.0930197,0.854631
 Scale=2.225,2.225,2.225
@@ -19,7 +17,6 @@ Flags=1
 [ENTRY]
 ID=151030175
 Asset=CL-AridBush3#CL-AridBush3
-Name=Untitled
 Pos=21370.2,231.989,84989
 Orient=0,0,0,1
 Scale=1,1,1
@@ -27,7 +24,6 @@ Scale=1,1,1
 [ENTRY]
 ID=151030176
 Asset=CL-AridBush4#CL-AridBush4
-Name=Untitled
 Pos=21479.5,234.258,85021
 Orient=0,0,0,1
 Scale=1,1,1
@@ -36,9 +32,9 @@ Flags=1
 [ENTRY]
 ID=151033612
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=21438.2,226.251,84811
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=5_sailorCamps_39_40
+outerRadius=10
 

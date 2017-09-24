@@ -16,7 +16,6 @@ Name=Untitled
 Pos=76631.8,979.385,50109.8
 Orient=0,0.994043,0,-0.108987
 Scale=1,1,1
-spawnPackage=#F3664
 links_count=1
 link=1091260,1
 
@@ -27,7 +26,6 @@ Name=Untitled
 Pos=76646.8,979.256,50107.8
 Orient=0,0.247404,0,0.968912
 Scale=1,1,1
-spawnPackage=#F3663
 links_count=1
 link=1091263,1
 
@@ -99,7 +97,6 @@ Name=Untitled
 Pos=77100.6,974.934,50012.2
 Orient=0,-0.706825,0,0.707388
 Scale=1,1,1
-spawnPackage=#F3664
 
 [ENTRY]
 ID=1091274
@@ -108,7 +105,6 @@ Name=Untitled
 Pos=77083.2,975.106,50092.7
 Orient=0,0.576959,0,0.816774
 Scale=1,1,1
-spawnPackage=#F3663
 
 [ENTRY]
 ID=1091275
@@ -134,7 +130,6 @@ Name=Untitled
 Pos=76991.2,968.835,50117.6
 Orient=0,0.80162,0,0.597834
 Scale=1,1,1
-spawnPackage=#F3664
 
 [ENTRY]
 ID=1091282

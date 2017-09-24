@@ -16,7 +16,6 @@ Pos=17250.3,1143.78,15955.1
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=#3191
-wanderRadius=55
 
 [ENTRY]
 ID=1028819
@@ -85,7 +84,7 @@ Name=Untitled
 Pos=16689.3,1231.89,16127.4
 Orient=0,-0.416871,0,0.908966
 Scale=1,1,1
-spawnPackage=#3180
+spawnPackage=#893
 wanderRadius=50
 
 [ENTRY]
@@ -360,7 +359,7 @@ Name=Untitled
 Pos=15441.5,1113.4,15500.9
 Orient=0,0.671473,0,-0.741029
 Scale=1,1,1
-spawnPackage=#3179
+spawnPackage=#3180
 links_count=1
 link=1130412,1
 
@@ -1065,7 +1064,7 @@ Name=Untitled
 Pos=15688.6,1123.19,16085.5
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#3179
+spawnPackage=#3180
 wanderRadius=50
 
 [ENTRY]
@@ -1075,7 +1074,7 @@ Name=Untitled
 Pos=15646.3,1122.41,15945.5
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#3179
+spawnPackage=#3180
 wanderRadius=50
 
 [ENTRY]
@@ -1237,7 +1236,7 @@ Name=Untitled
 Pos=15494.6,1137.18,16159.5
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#3179
+spawnPackage=#3180
 links_count=1
 link=1130420,1
 
@@ -1575,6 +1574,14 @@ Scale=1,1,1
 spawnPackage=#1997
 
 [ENTRY]
+ID=1130577
+Asset=Prop-Path_Helper#Prop-Path_Helper
+Name=Untitled
+Pos=16612.1,1202.44,15612.2
+Orient=0,0.305059,0,0.952334
+Scale=0.3,0.3,0.3
+
+[ENTRY]
 ID=1130579
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=Untitled
@@ -1808,7 +1815,7 @@ Name=Untitled
 Pos=16200.9,1294.78,16413.1
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#3179
+spawnPackage=#3238
 links_count=1
 link=1130633,1
 
@@ -1819,7 +1826,7 @@ Name=Untitled
 Pos=15922.6,1386.27,16576.8
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#3179
+spawnPackage=#3238
 links_count=1
 link=1130635,1
 
@@ -1872,7 +1879,7 @@ Name=Untitled
 Pos=16565.5,1217.31,16227.1
 Orient=0,0.998248,0,-0.0591691
 Scale=1,1,1
-spawnPackage=#3180
+spawnPackage=#3200
 
 [ENTRY]
 ID=1130633
@@ -1977,7 +1984,7 @@ Name=Untitled
 Pos=16791.4,1255.89,16202.6
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#3180
+spawnPackage=#893
 wanderRadius=50
 
 [ENTRY]
@@ -1987,7 +1994,7 @@ Name=Untitled
 Pos=16875.7,1242.46,16267.2
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#3180
+spawnPackage=#893
 wanderRadius=50
 
 [ENTRY]

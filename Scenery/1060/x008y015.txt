@@ -151,6 +151,14 @@ Orient=0,0,0,1
 Scale=1,1,1
 
 [ENTRY]
+ID=1131438
+Asset=Prop-Marker1#Prop-Monster_Marker
+Name=Untitled
+Pos=16797.3,1377.39,29030.8
+Orient=0,0,0,1
+Scale=4,4,4
+
+[ENTRY]
 ID=1131503
 Asset=Prop-Battlefield1#Prop-Camelot_Standard
 Name=Untitled
@@ -166,7 +174,6 @@ Pos=16890.3,1173.16,29065.5
 Orient=0,0.159318,0,0.987227
 Scale=1,1,1
 spawnPackage=#2055
-wanderRadius=100
 
 [ENTRY]
 ID=1132411
@@ -176,7 +183,6 @@ Pos=16958.9,1243.18,29449.2
 Orient=0,0.66687,0,0.745174
 Scale=1,1,1
 spawnPackage=#2053
-wanderRadius=75
 
 [ENTRY]
 ID=1132412
@@ -186,7 +192,6 @@ Pos=16563.7,1109.42,29321.6
 Orient=0,-0.314567,0,0.949235
 Scale=1,1,1
 spawnPackage=#2053
-wanderRadius=75
 
 [ENTRY]
 ID=1132413
@@ -196,7 +201,6 @@ Pos=16566.1,1110.53,29660.2
 Orient=0,0.601198,0,0.7991
 Scale=1,1,1
 spawnPackage=#2053
-wanderRadius=75
 
 [ENTRY]
 ID=1132414
@@ -206,7 +210,6 @@ Pos=16785.2,1146.15,29267
 Orient=0,0.49688,0,0.867819
 Scale=1,1,1
 spawnPackage=#2053
-wanderRadius=75
 
 [ENTRY]
 ID=1132415
@@ -216,7 +219,6 @@ Pos=16736.9,1149.47,29108.9
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=#2053
-wanderRadius=75
 
 [ENTRY]
 ID=1132416
@@ -226,7 +228,6 @@ Pos=17136.8,1258.55,29275.8
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=#2053
-wanderRadius=75
 
 [ENTRY]
 ID=1132417
@@ -236,7 +237,6 @@ Pos=16555.2,1111.34,29153.2
 Orient=0,0.342898,0,0.939373
 Scale=1,1,1
 spawnPackage=#2053
-wanderRadius=75
 
 [ENTRY]
 ID=1132418
@@ -246,7 +246,6 @@ Pos=16632,1169.69,28961.3
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=#2053
-wanderRadius=75
 
 [ENTRY]
 ID=1132419
@@ -256,7 +255,6 @@ Pos=16331.6,1111.74,28954.8
 Orient=0,-0.522687,0,0.852525
 Scale=1,1,1
 spawnPackage=#2053
-wanderRadius=75
 
 [ENTRY]
 ID=1132420
@@ -266,7 +264,6 @@ Pos=16800,1218.37,28903.9
 Orient=0,-0.810497,0,0.585743
 Scale=1,1,1
 spawnPackage=#2053
-wanderRadius=75
 
 [ENTRY]
 ID=1132421
@@ -276,8 +273,6 @@ Pos=16912.8,1249.13,28819.7
 Orient=0,-0.703279,0,0.710914
 Scale=1,1,1
 spawnPackage=#2053
-loyaltyRadius=75
-wanderRadius=75
 
 [ENTRY]
 ID=1132422
@@ -287,7 +282,6 @@ Pos=17073.6,1226.21,29027
 Orient=0,0.91071,0,0.413046
 Scale=1,1,1
 spawnPackage=#2053
-wanderRadius=75
 
 [ENTRY]
 ID=1132423
@@ -297,7 +291,6 @@ Pos=17245.7,1263.36,29057.2
 Orient=0,0.998531,0,-0.0541771
 Scale=1,1,1
 spawnPackage=#2053
-wanderRadius=75
 
 [ENTRY]
 ID=1132424
@@ -307,7 +300,6 @@ Pos=17093.7,1229.99,28895.9
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=#2053
-wanderRadius=75
 
 [ENTRY]
 ID=1132426
@@ -321,7 +313,7 @@ spawnPackage=#2053
 [ENTRY]
 ID=1132518
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
+Name=
 Pos=17054.7,1595.46,30278.5
 Orient=0,0,0,1
 Scale=1,1,1
@@ -332,7 +324,7 @@ link=1132527,1
 [ENTRY]
 ID=1132519
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
+Name=
 Pos=17054.3,1597.74,30137.8
 Orient=0,0,0,1
 Scale=1,1,1
@@ -343,7 +335,7 @@ link=1132518,1
 [ENTRY]
 ID=1132520
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
+Name=
 Pos=17076.4,1643.89,29978.6
 Orient=0,0,0,1
 Scale=1,1,1
@@ -354,7 +346,7 @@ link=1132519,1
 [ENTRY]
 ID=1132522
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
+Name=
 Pos=17136.7,1666.5,29787.1
 Orient=0,0,0,1
 Scale=1,1,1
@@ -365,7 +357,7 @@ link=1132521,1
 [ENTRY]
 ID=1132524
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
+Name=
 Pos=16918.4,1657.41,29863.8
 Orient=0,0,0,1
 Scale=1,1,1
@@ -375,7 +367,7 @@ link=1132526,1
 [ENTRY]
 ID=1132525
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
+Name=
 Pos=16985.7,1640.33,29728
 Orient=0,0,0,1
 Scale=1,1,1
@@ -385,11 +377,11 @@ link=1132526,1
 [ENTRY]
 ID=1132526
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=Untitled
+Name=
 Pos=17037.6,1658.05,29850.9
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#F1980
+spawnPackage=#F1980, #F1983
 links_count=4
 link=1132524,1
 link=1132525,1
@@ -399,11 +391,11 @@ link=1132520,1
 [ENTRY]
 ID=1132527
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=Untitled
+Name=
 Pos=17165.3,1623.39,30325.2
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#F1980
+spawnPackage=#F1980, #F1983
 links_count=1
 link=1132518,1
 

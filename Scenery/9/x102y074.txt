@@ -1,7 +1,6 @@
 [ENTRY]
 ID=151018008
 Asset=Arid_Clutter?d=0.9&s=8456777&sz=800
-Name=Untitled
 Pos=76667,664.38,55700
 Orient=0,0,0,1
 Scale=1,1,1
@@ -10,7 +9,6 @@ Flags=1
 [ENTRY]
 ID=151019974
 Asset=CL-Vampire_Camp6#CL-Vampire_Camp6
-Name=Untitled
 Pos=77193,899.968,56187
 Orient=0,-0.804599,0,0.593818
 Scale=1,1,1
@@ -19,7 +17,6 @@ Flags=1
 [ENTRY]
 ID=151019981
 Asset=CL-Vampire_Roadside1
-Name=Untitled
 Pos=77214,898.956,55883
 Orient=0,-0.237703,0,0.971338
 Scale=2.175,2.175,2.175
@@ -28,7 +25,6 @@ Flags=1
 [ENTRY]
 ID=151020304
 Asset=Prop-Burnt_Pines#Prop-Burnt_Pine2
-Name=Untitled
 Pos=77125,892.758,56234
 Orient=-0.0556852,-0.855489,-0.0334397,0.513732
 Scale=2.55,2.55,2.55
@@ -37,7 +33,6 @@ Flags=1
 [ENTRY]
 ID=151020352
 Asset=Prop-Bush_AridDead3#Prop-Bush_AridDead3
-Name=Untitled
 Pos=77095,897.604,56238
 Orient=0,0,0,1
 Scale=2.65,2.65,2.65
@@ -46,7 +41,6 @@ Flags=1
 [ENTRY]
 ID=151020353
 Asset=CL-Vampire_Roadside1
-Name=Untitled
 Pos=77044,898.956,56073
 Orient=0,0.761095,0,0.648641
 Scale=1.575,1.575,1.575
@@ -55,7 +49,6 @@ Flags=1
 [ENTRY]
 ID=151020354
 Asset=CL-Vampire_Roadside1
-Name=Untitled
 Pos=77044,898.956,56218
 Orient=0,0.761095,0,0.648641
 Scale=1.575,1.575,1.575
@@ -64,7 +57,6 @@ Flags=1
 [ENTRY]
 ID=151020366
 Asset=Prop-Spider_Webs#Prop-Spider_Webs1
-Name=Untitled
 Pos=77194,903.731,55913
 Orient=0,0,0,1
 Scale=1,1,1
@@ -73,7 +65,6 @@ Flags=1
 [ENTRY]
 ID=151020391
 Asset=Prop-BonesTex_A#Prop-Bones2
-Name=Untitled
 Pos=77160,903.184,55901
 Orient=0,0,0,1
 Scale=1,1,1
@@ -81,7 +72,6 @@ Scale=1,1,1
 [ENTRY]
 ID=151020393
 Asset=Prop-BonesTex_A#Prop-Bones-Femur
-Name=Untitled
 Pos=77108,901.411,55967
 Orient=0.0771208,-0.0915609,0.639585,0.759342
 Scale=1,1,1
@@ -90,7 +80,6 @@ Flags=1
 [ENTRY]
 ID=151026660
 Asset=Prop-Burnt_Pines#Prop-Burnt_Pine5
-Name=Untitled
 Pos=76935,755.565,56244
 Orient=0.02904,0.470857,0.088176,0.877312
 Scale=2.425,2.425,2.425
@@ -99,7 +88,6 @@ Flags=1
 [ENTRY]
 ID=151028247
 Asset=CL-Burnt-Pine4#CL-Burnt-Pine4
-Name=Untitled
 Pos=76609,643.442,55722
 Orient=0,0,0,1
 Scale=2.8,2.8,2.8
@@ -107,36 +95,35 @@ Scale=2.8,2.8,2.8
 [ENTRY]
 ID=151030243
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=77228,902.741,55996
 Orient=0,-0.531186,0,0.847255
 Scale=1,1,1
 spawnPackage=12_vmp_nightMare
+outerRadius=1
 
 [ENTRY]
 ID=151030244
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=77121,897.055,56185
 Orient=0,-0.0299955,0,0.99955
 Scale=1,1,1
 spawnPackage=12_vmp_nightMare
+outerRadius=1
 
 [ENTRY]
 ID=151030245
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=77142,899.711,55972
 Orient=0,-0.466208,0,0.884675
 Scale=1,1,1
-spawnPackage=12_vmp_nightMare
 links_count=1
 link=151030246,1
+spawnPackage=12_vmp_nightMare
+outerRadius=1
 
 [ENTRY]
 ID=151030246
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=77203,899.57,56059
 Orient=0,0,0,1
 Scale=1,1,1
@@ -147,18 +134,17 @@ link=151030247,1
 [ENTRY]
 ID=151030271
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=77084,896.304,56086
 Orient=0,0.872355,0,0.488872
 Scale=1,1,1
-spawnPackage=12_vmp_nightMare
 links_count=1
 link=151030272,1
+spawnPackage=12_vmp_nightMare
+outerRadius=1
 
 [ENTRY]
 ID=151030272
 Asset=Manipulator#Manipulator-PathNode
-Name=Untitled
 Pos=77090,895.264,55993
 Orient=0,0,0,1
 Scale=1,1,1
@@ -169,7 +155,6 @@ link=151030273,1
 [ENTRY]
 ID=151030273
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=77177,902.96,55935
 Orient=0,0,0,1
 Scale=1,1,1
@@ -180,7 +165,6 @@ link=151030274,1
 [ENTRY]
 ID=151030274
 Asset=Manipulator-PathNode
-Name=Untitled
 Pos=77204,902.887,55960
 Orient=0,0,0,1
 Scale=1,1,1
@@ -190,18 +174,19 @@ link=151030273,1
 [ENTRY]
 ID=151031376
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=76551,632.476,56206
 Orient=0,0,0,1
 Scale=1,1,1
+innerRadius=75
 spawnPackage=12_vmp_wilds_46_47
+outerRadius=80
 
 [ENTRY]
 ID=151031377
 Asset=Manipulator-SpawnPoint
-Name=Untitled
 Pos=76708,686.599,55957
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_vmp_wilds_46_47
+outerRadius=10
 

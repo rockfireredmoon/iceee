@@ -1,7 +1,7 @@
 [ENTRY]
 ID=1127496
 Asset=Manipulator-PathNode
-Name=Untitled
+Name=
 Pos=66300,614.78,57805
 Orient=0,0,0,1
 Scale=1,1,1
@@ -11,7 +11,7 @@ link=151027859,1
 [ENTRY]
 ID=1127497
 Asset=Manipulator-PathNode
-Name=Untitled
+Name=
 Pos=66625,650.811,57870
 Orient=0,0,0,1
 Scale=1,1,1
@@ -21,7 +21,7 @@ link=151027862,1
 [ENTRY]
 ID=1127498
 Asset=Manipulator-PathNode
-Name=Untitled
+Name=
 Pos=66405,656.251,58000
 Orient=0,0,0,1
 Scale=1,1,1
@@ -31,12 +31,20 @@ link=151027861,1
 [ENTRY]
 ID=1127499
 Asset=Manipulator-PathNode
-Name=Untitled
+Name=
 Pos=66615,679.402,58105
 Orient=0,0,0,1
 Scale=1,1,1
 links_count=1
 link=151027860,1
+
+[ENTRY]
+ID=1127524
+Asset=Prop-Bridge_a#Prop-Bridge_Broken
+Name=
+Pos=66630.5,667.208,58255.7
+Orient=0,0.727726,0,0.685868
+Scale=2,2,2
 
 [ENTRY]
 ID=151017416

@@ -29,7 +29,6 @@ Name=Untitled
 Pos=76331.1,895.363,50505.5
 Orient=0,0.333487,0,0.942755
 Scale=1,1,1
-spawnPackage=#F3664
 
 [ENTRY]
 ID=1091288

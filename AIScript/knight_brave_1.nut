@@ -32,7 +32,6 @@ function main() {
 		if(ai.sleep(2000))
 			return;
 	}
-	if(ai.has_target())
-		ai.exec(main);
+	ai.exec(main);
 }
 
