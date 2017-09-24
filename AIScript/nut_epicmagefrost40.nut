@@ -52,7 +52,8 @@ function main_actions() {
 			check_might();
 		}
 	}
-	ai.queue(main_actions, 100);
+	if(ai.has_target())
+		ai.queue(main_actions, 100);
 }
 
 function check_will_charge() {

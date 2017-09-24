@@ -26,14 +26,14 @@ function main() {
 	ai.use(32766);
 	if(ai.get_might_charge() >= 2) {
 		ai.use(5221);
-		if(ai.sleep(1000)) 
-			return;
+		ai.sleep(1000);
 	}
 	if(ai.get_might() >= 3) {
 		ai.use(5157);
-		if(ai.sleep(1000))
-			return;
+		ai.sleep(1000);
 	}
+	if(ai.has_target())
+		ai.exec(main);
 }
 
 
