@@ -69,6 +69,7 @@ int PrepExt_CreatureEventPortalRequest(char *buffer, int actorID, const char *ca
 int PrepExt_CreatureEventVaultSize(char *buffer, int actorID, int vaultSize, int deliverySlots);
 int PrepExt_SendTimeOfDayMsg(char *buffer, const char *envType);
 int PrepExt_Broadcast(char *buffer, const char *message);
+int PrepExt_Info(char *buffer, const char *message, char eventID);
 int PrepExt_Chat(char *buffer, int characterID, const char *display_name, const char *channel, const char *message);
 
 int randint(int min, int max);

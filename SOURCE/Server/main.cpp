@@ -181,6 +181,9 @@ INITIALIZE_EASYLOGGINGPP
 #include "Books.h"
 #include "Leaderboard.h"
 #include "http/HTTPService.h"
+#include "message/LobbyMessage.h"
+#include "message/SharedMessage.h"
+#include "message/GameMessage.h"
 #include "query/Lobby.h"
 #include "query/ClanHandlers.h"
 #include "query/PreferenceHandlers.h"
@@ -207,6 +210,7 @@ INITIALIZE_EASYLOGGINGPP
 #include "query/SpawnHandlers.h"
 #include "query/ZoneHandlers.h"
 #include "query/StatusHandlers.h"
+#include "query/PlayerHandlers.h"
 #include <curl/curl.h>
 
 #ifdef OUTPUT_TO_CONSOLE
@@ -246,7 +250,6 @@ void RunUpgradeCheck(void);
 
 void BroadcastLocationToParty(SimulatorThread &player);
 
-char LogBuffer[4096];
 bool crashing;
 
 void Debug_FullDump(void);
@@ -620,6 +623,26 @@ int InitServerMain(int argc, char *argv[]) {
 
 	g_Logs.server->info("Working directory %v.", g_WorkingDirectory);
 
+	// Lobby Message Handlers
+	g_MessageManager.lobbyMessageHandlers[20] = new AcknowledgeHeartbeatMessage();
+	g_MessageManager.lobbyMessageHandlers[1] = new LobbyAuthenticateMessage();
+	g_MessageManager.lobbyMessageHandlers[4] = new InspectItemDefMessage();
+	g_MessageManager.lobbyMessageHandlers[2] = new SelectPersonaMessage();
+	g_MessageManager.lobbyMessageHandlers[3] = new LobbyQueryMessage();
+
+	// Game Message Handlers
+	g_MessageManager.messageHandlers[0] = new InspectCreatureDefMessage();
+	g_MessageManager.messageHandlers[1] = new UpdateVelocityMessage();
+	g_MessageManager.messageHandlers[2] = new GameQueryMessage();
+	g_MessageManager.messageHandlers[3] = new SelectTargetMessage();
+	g_MessageManager.messageHandlers[4] = new CommunicateMessage();
+	g_MessageManager.messageHandlers[5] = new InspectCreatureMessage();
+	g_MessageManager.messageHandlers[6] = new AbilityActiveMessage();
+	g_MessageManager.messageHandlers[9] = new InspectItemDefMessage();
+	g_MessageManager.messageHandlers[10] = new SwimStateChangeMessage();
+	g_MessageManager.messageHandlers[11] = new DisconnectMessage();
+	g_MessageManager.messageHandlers[20] = new AcknowledgeHeartbeatMessage();
+
 	// Lobby Query Handlers
 	g_QueryManager.lobbyQueryHandlers["account.tracking"] = new AccountTrackingHandler();
 	g_QueryManager.lobbyQueryHandlers["persona.list"] = new PersonaListHandler();
@@ -640,13 +663,18 @@ int InitServerMain(int argc, char *argv[]) {
 	g_QueryManager.queryHandlers["clan.rank"] = new ClanRankHandler();
 	g_QueryManager.queryHandlers["pref.get"] = new PrefGetHandler();
 	g_QueryManager.queryHandlers["pref.set"] = new PrefSetHandler();
-	g_QueryManager.queryHandlers["util.addFunds"] = new AddFundsHandler();
-	g_QueryManager.queryHandlers["zone.mode"] = new PVPZoneModeHandler();
 	g_QueryManager.queryHandlers["item.market.buy"] = new CreditShopBuyHandler();
 	g_QueryManager.queryHandlers["item.market.list"] = new CreditShopListHandler();
 	g_QueryManager.queryHandlers["item.market.edit"] = new CreditShopEditHandler();
 	g_QueryManager.queryHandlers["item.market.reload"] = new CreditShopReloadHandler();
 	g_QueryManager.queryHandlers["item.market.purchase.name"] = new CreditShopPurchaseNameHandler();
+
+
+	g_QueryManager.queryHandlers["util.addFunds"] = new AddFundsHandler();
+	g_QueryManager.queryHandlers["zone.mode"] = new PVPZoneModeHandler();
+	g_QueryManager.queryHandlers["updateContent"] = new UpdateContentHandler();
+	g_QueryManager.queryHandlers["statuseffect.set"] = new StatusEffectSetHandler();
+	g_QueryManager.queryHandlers["gm.spawn"] = new GMSpawnHandler();
 
 	g_QueryManager.queryHandlers["skadd"] = new SidekickAddHandler();
 	g_QueryManager.queryHandlers["skremove"] = new SidekickRemoveHandler();
@@ -737,6 +765,9 @@ int InitServerMain(int argc, char *argv[]) {
 	g_QueryManager.queryHandlers["item.morph"] = new ItemMorphHandler();
 	g_QueryManager.queryHandlers["shop.contents"] = new ShopContentsHandler();
 	g_QueryManager.queryHandlers["essenceShop.contents"] = new EssenceShopContentsHandler();
+	g_QueryManager.queryHandlers["mod.itempreview"] = new ItemPreviewHandler();
+	g_QueryManager.queryHandlers["craft.create"] = new CraftCreateHandler();
+	g_QueryManager.queryHandlers["mod.craft"] = new ModCraftHandler();
 
 	g_QueryManager.queryHandlers["loot.list"] = new LootListHandler();
 	g_QueryManager.queryHandlers["loot.item"] = new LootItemHandler();
@@ -753,6 +784,7 @@ int InitServerMain(int argc, char *argv[]) {
 	g_QueryManager.queryHandlers["ab.buy"] = new AbilityBuyHandler();
 	g_QueryManager.queryHandlers["ab.respec"] = new AbilityRespecHandler();
 	g_QueryManager.queryHandlers["ab.respec.price"] = new AbilityRespecPriceHandler();
+	g_QueryManager.queryHandlers["buff.remove"] = new BuffRemoveHandler();
 
 	g_QueryManager.queryHandlers["creature.isusable"] = new CreatureIsUsableHandler();
 	g_QueryManager.queryHandlers["creature.def.edit"] = new CreatureDefEditHandler();
@@ -774,9 +806,35 @@ int InitServerMain(int argc, char *argv[]) {
 	g_QueryManager.queryHandlers["mod.setenvironment"] = new SetEnvironmentHandler();
 	g_QueryManager.queryHandlers["shard.list"] = new ShardListHandler();
 	g_QueryManager.queryHandlers["shard.set"] = new ShardSetHandler();
-	g_QueryManager.queryHandlers["gm.spawn"] = new GMSpawnHandler();
 	g_QueryManager.queryHandlers["henge.setDest"] = new HengeSetDestHandler();
+	g_QueryManager.queryHandlers["map.marker"] = new MapMarkerHandler();
+	g_QueryManager.queryHandlers["mod.setgrovestart"] = new SetGroveStartHandler();
+	g_QueryManager.queryHandlers["portal.acceptRequest"] = new PortalAcceptRequestHandler();
+	g_QueryManager.queryHandlers["build.template.list"] = new BuildTemplateListHandler();
+	g_QueryManager.queryHandlers["mod.getdungeonprofiles"] = new GetDungeonProfilesHandler();
+	g_QueryManager.queryHandlers["mod.setats"] = new SetATSHandler();
+
 	g_QueryManager.queryHandlers["mod.morestats"] = new MoreStatsHandler();
+	g_QueryManager.queryHandlers["client.loading"] = new ClientLoadingHandler();
+	g_QueryManager.queryHandlers["util.pingsim"] = new PingSimHandler();
+	g_QueryManager.queryHandlers["util.pingrouter"] = new PingRouterHandler();
+	g_QueryManager.queryHandlers["admin.check"] = new AdminCheckHandler();
+	g_QueryManager.queryHandlers["persona.gm"] = new PersonaGMHandler();
+	g_QueryManager.queryHandlers["util.version"] = new VersionHandler();
+
+	g_QueryManager.queryHandlers["mod.restoreappearance"] = new RestoreAppearanceHandler();
+	g_QueryManager.queryHandlers["account.info"] = new AccountInfoHandler();
+	g_QueryManager.queryHandlers["account.fulfill"] = new AccountFulfillHandler();
+	g_QueryManager.queryHandlers["mod.emote"] = new EmoteHandler();
+	g_QueryManager.queryHandlers["mod.emotecontrol"] = new EmoteControlHandler();
+	g_QueryManager.queryHandlers["persona.resCost"] = new ResCostHandler();
+	g_QueryManager.queryHandlers["guild.info"] = new GuildInfoHandler();
+	g_QueryManager.queryHandlers["guild.leave"] = new GuildLeaveHandler();
+	g_QueryManager.queryHandlers["validate.name"] = new ValidateNameHandler();
+	g_QueryManager.queryHandlers["visWeapon"] = new VisWeaponHandler();
+	g_QueryManager.queryHandlers["party"] = new PartyHandler();
+	g_QueryManager.queryHandlers["ps.join"] = new PrivateChannelJoinHandler();
+	g_QueryManager.queryHandlers["ps.leave"] = new PrivateChannelLeaveHandler();
 
 	// Commands
 	g_QueryManager.queryHandlers["team"] = new PVPTeamHandler();
@@ -853,6 +911,7 @@ int InitServerMain(int argc, char *argv[]) {
 	g_QueryManager.queryHandlers["script.gc"] = new ScriptGCHandler();
 	g_QueryManager.queryHandlers["script.wakevm"] = new ScriptWakeVMHandler();
 	g_QueryManager.queryHandlers["script.clearqueue"] = new ScriptClearQueueHandler();
+	g_QueryManager.queryHandlers["user.auth.reset"] = new UserAuthResetHandler();
 
 	// Some are shared
 	LootNeedGreedPassHandler *lootNeedGreedPassHandler = new LootNeedGreedPassHandler();
@@ -1684,8 +1743,6 @@ void SendDebugPings(void)
 		}
 		it->pld.DebugPingServerSent++;
 		it->AttemptSend(sendBuf, wpos);
-		if(report == true)
-			it->LogPingStatistics(true, false);
 	}
 }
 

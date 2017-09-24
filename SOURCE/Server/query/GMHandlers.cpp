@@ -112,8 +112,9 @@ int AddFundsHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 //PVPZoneModeHandler
 //
 
-int PVPZoneModeHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
-		SimulatorQuery *query, CreatureInstance *creatureInstance) {
+int PVPZoneModeHandler::handleQuery(SimulatorThread *sim,
+		CharacterServerData *pld, SimulatorQuery *query,
+		CreatureInstance *creatureInstance) {
 
 	bool ok = sim->CheckPermissionSimple(Perm_Account, Permission_Sage);
 	if (!ok) {
@@ -141,7 +142,6 @@ int PVPZoneModeHandler::handleQuery(SimulatorThread *sim, CharacterServerData *p
 	}
 }
 
-
 //
 //GMSpawnHandler
 //
@@ -160,7 +160,8 @@ int GMSpawnHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 				"Permission denied.");
 
 	if (query->args.size() < 6)
-		return PrepExt_QueryResponseError(sim->SendBuf, query->ID, "Invalid query.");
+		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+				"Invalid query.");
 
 	int creatureID = query->GetInteger(0);
 	int qty = query->GetInteger(1);
@@ -190,8 +191,8 @@ int GMSpawnHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 		} else {
 			// Random position around the players positions
 			int propID = atoi(data.c_str());
-			s = creatureInstance->actInst->SpawnAtProp(creatureID, propID, 99999,
-					flags);
+			s = creatureInstance->actInst->SpawnAtProp(creatureID, propID,
+					99999, flags);
 		}
 
 		if (s == NULL)
@@ -241,3 +242,122 @@ int GMSpawnHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
 }
 
+//
+//StatsEffectSetHandler
+//
+
+int StatusEffectSetHandler::handleQuery(SimulatorThread *sim,
+		CharacterServerData *pld, SimulatorQuery *query,
+		CreatureInstance *creatureInstance) {
+
+	if (query->argCount < 3)
+		return 0;
+
+	if (!sim->CheckPermissionSimple(0, Permission_Sage)
+			&& !sim->CheckPermissionSimple(0, Permission_Admin)) {
+		sim->SendInfoMessage("Permission denied.", INFOMSG_ERROR);
+	} else {
+		int CDefID = atoi(query->args[0].c_str());
+		int statusEffect = atoi(query->args[1].c_str());
+		int state = atoi(query->args[2].c_str());
+
+//		::_Connection.sendQuery("statuseffect.set", this, [
+//						targetId,
+//						this.StatusEffects.GM_SILENCED,
+//						1,
+//						time,
+//						this.mGMSilenceReasonPopup.getText()
+//					]);
+
+		CreatureInstance *creature = creatureInstance->actInst->GetPlayerByID(
+				CDefID);
+		if (creature == NULL)
+			sim->SendInfoMessage("No target!", INFOMSG_ERROR);
+		else {
+			if (state == 1) {
+				int time =
+						query->argCount > 2 ? atoi(query->args[3].c_str()) : 1;
+				creature->_AddStatusList(statusEffect, time * 1000 * 60);
+				Util::SafeFormat(sim->Aux2, sizeof(sim->Aux2),
+						"Status effect %d turned on for %s for %d minutes",
+						statusEffect, creature->css.display_name, time);
+				sim->SendInfoMessage(sim->Aux2, INFOMSG_INFO);
+				if (statusEffect == StatusEffects::GM_SILENCED) {
+					Util::SafeFormat(sim->Aux2, sizeof(sim->Aux2),
+							"You have been silenced by %s for %d minutes because '%s'",
+							pld->charPtr->cdef.css.display_name, time,
+							query->args[4].c_str());
+					creature->simulatorPtr->SendInfoMessage(sim->Aux2,
+							INFOMSG_INFO);
+					g_Logs.event->info(
+							"[SAGE] %v silenced %v for %v minutes because",
+							pld->charPtr->cdef.css.display_name,
+							creature->charPtr->cdef.css.display_name, time,
+							query->args[4].c_str());
+				} else if (statusEffect == StatusEffects::GM_FROZEN) {
+					Util::SafeFormat(sim->Aux2, sizeof(sim->Aux2),
+							"You have been frozen by %s for %d minutes.",
+							pld->charPtr->cdef.css.display_name, time);
+					creature->simulatorPtr->SendInfoMessage(sim->Aux2,
+							INFOMSG_INFO);
+					g_Logs.event->info("[SAGE] %v froze %v for %v minutes",
+							pld->charPtr->cdef.css.display_name,
+							creature->charPtr->cdef.css.display_name, time);
+				} else {
+					g_Logs.event->info(
+							"[SAGE] %v removed status effect %v from %v",
+							pld->charPtr->cdef.css.display_name, statusEffect,
+							creature->charPtr->cdef.css.display_name);
+				}
+			} else {
+				creature->_RemoveStatusList(statusEffect);
+				Util::SafeFormat(sim->Aux2, sizeof(sim->Aux2),
+						"Status effect %d turned off for %s", statusEffect,
+						creature->css.display_name);
+				sim->SendInfoMessage(sim->Aux2, INFOMSG_INFO);
+				if (statusEffect == StatusEffects::GM_SILENCED) {
+					Util::SafeFormat(sim->Aux2, sizeof(sim->Aux2),
+							"You have been unsilenced by %s",
+							pld->charPtr->cdef.css.display_name);
+					creature->simulatorPtr->SendInfoMessage(sim->Aux2,
+							INFOMSG_INFO);
+					g_Logs.event->info("[SAGE] %v unsilenced %v",
+							pld->charPtr->cdef.css.display_name,
+							creature->charPtr->cdef.css.display_name);
+				} else if (statusEffect == StatusEffects::GM_FROZEN) {
+					Util::SafeFormat(sim->Aux2, sizeof(sim->Aux2),
+							"You have been unfrozen by %s",
+							pld->charPtr->cdef.css.display_name);
+					creature->simulatorPtr->SendInfoMessage(sim->Aux2,
+							INFOMSG_INFO);
+					g_Logs.event->info("[SAGE] %v unfroze %v",
+							pld->charPtr->cdef.css.display_name,
+							creature->charPtr->cdef.css.display_name);
+				} else {
+					g_Logs.event->info(
+							"[SAGE] %v set status effect %v for %v minutes on %v",
+							pld->charPtr->cdef.css.display_name, statusEffect,
+							time, creature->charPtr->cdef.css.display_name);
+				}
+			}
+		}
+	}
+
+	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
+}
+
+//
+//UpdateContentHandler
+//
+
+int UpdateContentHandler::handleQuery(SimulatorThread *sim,
+		CharacterServerData *pld, SimulatorQuery *query,
+		CreatureInstance *creatureInstance) {
+
+	/* Called by the client ability import.  Placeholder function. */
+	if (pld->accPtr->HasPermission(Perm_Account, Permission_Admin) == false)
+		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+				"Permission denied.");
+
+	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
+}

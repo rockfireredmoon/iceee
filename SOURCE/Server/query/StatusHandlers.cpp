@@ -47,3 +47,142 @@ int MoreStatsHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld
 	response.push_back(row);
 	return PrepExt_QueryResponseMultiString(sim->SendBuf, query->ID, response);
 }
+
+//
+//ClientLoadingHandler
+//
+
+int ClientLoadingHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
+		SimulatorQuery *query, CreatureInstance *creatureInstance) {
+
+	/* Query: client.loading
+	 Args : [0] = status to notify, either "true" or "false"
+	 Response: Standard query success "OK"
+	 */
+
+	if (query->argCount > 0) {
+		if (query->args[0].compare("true") == 0)
+			sim->SetLoadingStatus(true, false);
+		else
+			sim->SetLoadingStatus(false, false);
+	}
+
+	if (sim->LoadStage == SimulatorThread::LOADSTAGE_LOADED)
+		sim->SendSetAvatar(creatureInstance->CreatureID);
+
+	int WritePos = PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
+
+	if (sim->LoadStage == SimulatorThread::LOADSTAGE_LOADED) {
+		if (creatureInstance == NULL) {
+			WritePos += PrepExt_SetMap(&sim->SendBuf[WritePos], pld, -1, -1);
+		} else {
+			WritePos += PrepExt_SetMap(&sim->SendBuf[WritePos], pld,
+					creatureInstance->CurrentX, creatureInstance->CurrentZ);
+		}
+		sim->LoadStage = SimulatorThread::LOADSTAGE_GAMEPLAY;
+
+		if (pld->charPtr->PrivateChannelName.size() > 0)
+			sim->JoinPrivateChannel(pld->charPtr->PrivateChannelName.c_str(),
+					pld->charPtr->PrivateChannelPassword.c_str());
+	}
+	if (sim->LoadStage == SimulatorThread::LOADSTAGE_GAMEPLAY) //Note: Every time the client triggers a load screen this will be resent.
+			{
+		std::vector<short> stats;
+		stats.push_back(STAT::MOD_MOVEMENT);
+		stats.push_back(STAT::BASE_MOVEMENT);
+		//Seems to fix the 120% speed problem when first logging in
+		WritePos += PrepExt_SendSpecificStats(&sim->SendBuf[WritePos], creatureInstance,
+				stats);
+		//pld.ResendSpeedTime = g_ServerTime + 2000;
+
+		if (g_Config.DebugPingClient == true) {
+			int mpos = WritePos;
+			WritePos += PutByte(&sim->SendBuf[WritePos], 100); //_handleModMessage   REQUIRES MODDED CLIENT
+			WritePos += PutShort(&sim->SendBuf[WritePos], 0);    //Reserve for size
+			WritePos += PutByte(&sim->SendBuf[WritePos],
+					MODMESSAGE_EVENT_PING_START);
+			WritePos += PutInteger(&sim->SendBuf[WritePos],
+					g_Config.DebugPingFrequency);
+			PutShort(&sim->SendBuf[mpos + 1], WritePos - mpos - 3); //Set message size
+		}
+	}
+	return WritePos;
+}
+
+//
+// AdminCheckHandler
+//
+int AdminCheckHandler::handleQuery(SimulatorThread *sim,
+		CharacterServerData *pld, SimulatorQuery *query,
+		CreatureInstance *creatureInstance) {
+
+	/* Query: admin.check
+	 Args : none
+	 Response: Return an error if the account does not have admin permissions.
+
+	 This is used to unlock some debug features in the client.
+	 */
+
+	if (sim->CheckPermissionSimple(Perm_Account, Permission_Debug) == false)
+		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+				"Permission denied.");
+
+	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
+}
+//
+// PingSimHandler
+//
+int PingSimHandler::handleQuery(SimulatorThread *sim,
+		CharacterServerData *pld, SimulatorQuery *query,
+		CreatureInstance *creatureInstance) {
+	/*  Query: util.pingsim
+	 Sent by the /ping command.
+	 Args : [none]
+	 */
+
+	return PrepExt_QueryResponseNull(sim->SendBuf, query->ID);
+}
+
+//
+// PingRouterHandler
+//
+int PingRouterHandler::handleQuery(SimulatorThread *sim,
+		CharacterServerData *pld, SimulatorQuery *query,
+		CreatureInstance *creatureInstance) {
+
+	/*  Query: util.pingrouter
+	 Sent by the /ping command.
+	 Args : [none]
+	 */
+
+	return PrepExt_QueryResponseNull(sim->SendBuf, query->ID);
+}
+//
+// PersonaGMHandler
+//
+int PersonaGMHandler::handleQuery(SimulatorThread *sim,
+		CharacterServerData *pld, SimulatorQuery *query,
+		CreatureInstance *creatureInstance) {
+
+	if (sim->CheckPermissionSimple(Perm_Account, Permission_Sage) == false)
+		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+				"Permission denied.");
+
+	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
+}
+//
+// VersionHandler
+//
+int VersionHandler::handleQuery(SimulatorThread *sim,
+		CharacterServerData *pld, SimulatorQuery *query,
+		CreatureInstance *creatureInstance) {
+
+	/*  Query: util.version
+	 Args: [none]
+	 */
+
+	// The client seems to expect a list of rows, each with two strings for name
+	// and value.
+	return PrepExt_QueryResponseString2(sim->SendBuf, query->ID, "Build",
+			VersionString);
+}

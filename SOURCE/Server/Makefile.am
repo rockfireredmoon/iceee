@@ -100,6 +100,10 @@ tawd_SOURCES = md5.cc \
 	auth/Auth.cpp \
 	auth/DevAuthentication.cpp \
 	auth/ServiceAuthentication.cpp \
+	message/MessageHandler.cpp \
+	message/LobbyMessage.cpp \
+	message/SharedMessage.cpp \
+	message/GameMessage.cpp \
 	query/ClanHandlers.cpp \
 	query/Query.cpp \
 	query/Lobby.cpp \
@@ -127,6 +131,7 @@ tawd_SOURCES = md5.cc \
 	query/SpawnHandlers.cpp \
 	query/ZoneHandlers.cpp \
 	query/StatusHandlers.cpp \
+	query/PlayerHandlers.cpp \
 	util/base64.cpp \
 	util/JsonHelpers.cpp \
 	util/SquirrelObjects.cpp \
@@ -249,6 +254,10 @@ tawd_SOURCES = md5.cc \
 	auth/Auth.h \
 	auth/DevAuthentication.h \
 	auth/ServiceAuthentication.h \
+	message/MessageHandler.h \
+	message/LobbyMessage.h \
+	message/SharedMessage.h \
+	message/GameMessage.h \
 	query/Query.h \
 	query/PreferenceHandlers.h \
 	query/Lobby.h \
@@ -276,6 +285,7 @@ tawd_SOURCES = md5.cc \
 	query/SpawnHandlers.h \
 	query/ZoneHandlers.h \
 	query/StatusHandlers.h \
+	query/PlayerHandlers.h \
 	util/base64.h \
 	util/Log.h \
 	util/JsonHelpers.h \
@@ -378,6 +388,10 @@ tawdsvc_SOURCES = md5.cc \
 	auth/Auth.cpp \
 	auth/DevAuthentication.cpp \
 	auth/ServiceAuthentication.cpp \
+	message/MessageHandler.cpp \
+	message/LobbyMessage.cpp \
+	message/SharedMessage.cpp \
+	message/GameMessage.cpp \
 	query/Query.cpp \
 	query/Lobby.cpp \
 	query/ClanHandlers.cpp \
@@ -406,6 +420,7 @@ tawdsvc_SOURCES = md5.cc \
 	query/SpawnHandlers.cpp \
 	query/ZoneHandlers.cpp \
 	query/StatusHandlers.cpp \
+	query/PlayerHandlers.cpp \
 	util/base64.cpp \
 	util/JsonHelpers.cpp \
 	util/SquirrelObjects.cpp \
@@ -528,6 +543,10 @@ tawdsvc_SOURCES = md5.cc \
 	auth/Auth.h \
 	auth/DevAuthentication.h \
 	auth/ServiceAuthentication.h \
+	message/MessageHandler.h \
+	message/LobbyMessage.h \
+	message/SharedMessage.h \
+	message/GameMessage.h \
 	query/PreferenceHandlers.h \
 	query/Query.h \
 	query/Lobby.h \
@@ -555,6 +574,7 @@ tawdsvc_SOURCES = md5.cc \
 	query/SpawnHandlers.h \
 	query/ZoneHandlers.h \
 	query/StatusHandlers.h \
+	query/PlayerHandlers.h \
 	util/base64.h \
 	util/Log.h \
 	util/JsonHelpers.h \

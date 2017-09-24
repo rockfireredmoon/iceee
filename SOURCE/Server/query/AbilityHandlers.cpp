@@ -192,3 +192,21 @@ int AbilityRemainingCooldownsHandler::handleQuery(SimulatorThread *sim, Characte
 		return PrepExt_QueryResponseMultiString(sim->SendBuf, query->ID, response);
 }
 
+
+//BuffRemoveHandler
+//
+
+int BuffRemoveHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
+		SimulatorQuery *query, CreatureInstance *creatureInstance) {
+
+	/*  Query: buff.remove
+	 Sent when a player attempts to cancel a buff on their character.
+	 Args : [0] = Ability ID
+	 */
+
+	if (query->argCount > 0) {
+		int abilityID = query->GetInteger(0);
+		creatureInstance->RemoveBuffsFromAbility(abilityID, true);
+	}
+	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
+}

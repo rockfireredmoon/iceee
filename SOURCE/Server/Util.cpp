@@ -72,7 +72,18 @@ int PrepExt_Broadcast(char *buffer, const char *message)
 	return wpos;
 }
 
+int PrepExt_Info(char *buffer, const char *message, char eventID)
+{
+	int wpos = 0;
+	wpos += PutByte(&buffer[wpos], 0);       //_handleInfoMsg
+	wpos += PutShort(&buffer[wpos], 0);      //Placeholder for size
 
+	wpos += PutStringUTF(&buffer[wpos], message);
+	wpos += PutByte(&buffer[wpos], eventID);     //Event type for error message
+
+	PutShort(&buffer[1], wpos - 3);     //Set size
+	return wpos;
+}
 
 int PrepExt_SetAvatar(char *buffer, int creatureID)
 {

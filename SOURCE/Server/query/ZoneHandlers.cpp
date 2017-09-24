@@ -18,6 +18,7 @@
 #include "ZoneHandlers.h"
 #include "../Creature.h"
 #include "../Instance.h"
+#include "../InstanceScale.h"
 #include "../Interact.h"
 #include "../Debug.h"
 #include "../Config.h"
@@ -55,8 +56,9 @@ int GoHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 //GroveEnvironmentCycleToggleHandler
 //
 
-int GroveEnvironmentCycleToggleHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
-		SimulatorQuery *query, CreatureInstance *creatureInstance) {
+int GroveEnvironmentCycleToggleHandler::handleQuery(SimulatorThread *sim,
+		CharacterServerData *pld, SimulatorQuery *query,
+		CreatureInstance *creatureInstance) {
 
 	if (pld->zoneDef->mGrove == false)
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
@@ -66,22 +68,24 @@ int GroveEnvironmentCycleToggleHandler::handleQuery(SimulatorThread *sim, Charac
 				"You must be in your grove.");
 	pld->zoneDef->ChangeEnvironmentUsage();
 	g_ZoneDefManager.NotifyConfigurationChange();
-	Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1), "Environment cycling is now %s",
+	Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1),
+			"Environment cycling is now %s",
 			(pld->zoneDef->mEnvironmentCycle ? "ON" : "OFF"));
 	sim->SendInfoMessage(sim->Aux1, INFOMSG_INFO);
 	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
 }
 
-
 //
 //SetEnvironmentHandler
 //
 
-int SetEnvironmentHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
-		SimulatorQuery *query, CreatureInstance *creatureInstance) {
+int SetEnvironmentHandler::handleQuery(SimulatorThread *sim,
+		CharacterServerData *pld, SimulatorQuery *query,
+		CreatureInstance *creatureInstance) {
 
 	if (query->argCount < 1)
-		return PrepExt_QueryResponseError(sim->SendBuf, query->ID, "Invalid query.");
+		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+				"Invalid query.");
 
 	if (pld->zoneDef->mGrove == false)
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
@@ -106,14 +110,13 @@ int SetEnvironmentHandler::handleQuery(SimulatorThread *sim, CharacterServerData
 	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
 }
 
-
-
 //
 //ShardListHandler
 //
 
-int ShardListHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
-		SimulatorQuery *query, CreatureInstance *creatureInstance) {
+int ShardListHandler::handleQuery(SimulatorThread *sim,
+		CharacterServerData *pld, SimulatorQuery *query,
+		CreatureInstance *creatureInstance) {
 	/*  Query: shard.list
 	 Requests a list of shards for use in the minimap dropdown list.
 	 */
@@ -127,7 +130,6 @@ int ShardListHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld
 
 int ShardSetHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 		SimulatorQuery *query, CreatureInstance *creatureInstance) {
-
 
 	//Un-modified client only sets 1 row.  Modified client contains an additional field.
 	//[0] Shard Same
@@ -147,8 +149,9 @@ int ShardSetHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 //HengeSetDestHandler
 //
 
-int HengeSetDestHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
-		SimulatorQuery *query, CreatureInstance *creatureInstance) {
+int HengeSetDestHandler::handleQuery(SimulatorThread *sim,
+		CharacterServerData *pld, SimulatorQuery *query,
+		CreatureInstance *creatureInstance) {
 
 	/*  Query: henge.setDest
 	 Sent when a henge selection is made.
@@ -190,10 +193,11 @@ int HengeSetDestHandler::handleQuery(SimulatorThread *sim, CharacterServerData *
 
 			if (interact != NULL) {
 				if (pld->CurrentZoneID == interact->WarpID) {
-					if (creatureInstance->IsSelfNearPoint((float) interact->WarpX,
-							(float) interact->WarpZ, SimulatorThread::INTERACT_RANGE * 4)
-							== true) {
-						sim->SendInfoMessage("You are already at that location.",
+					if (creatureInstance->IsSelfNearPoint(
+							(float) interact->WarpX, (float) interact->WarpZ,
+							SimulatorThread::INTERACT_RANGE * 4) == true) {
+						sim->SendInfoMessage(
+								"You are already at that location.",
 								INFOMSG_ERROR);
 						blockAttempt = true;
 					}
@@ -243,4 +247,236 @@ int HengeSetDestHandler::handleQuery(SimulatorThread *sim, CharacterServerData *
 	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
 }
 
+//
+//MapMarkerHandler
+//
 
+int MapMarkerHandler::handleQuery(SimulatorThread *sim,
+		CharacterServerData *pld, SimulatorQuery *query,
+		CreatureInstance *creatureInstance) {
+
+	/* Query: map.marker
+	 Args : at least 1
+	 [0] = Zone ID
+	 [...] typically a list, "Shop", "Vault", "QuestGiver", "Henge", "Sanctuary"
+	 */
+	//TODO: this doesn't yet handle all the client requests
+	if (query->argCount < 1)
+		return PrepExt_QueryResponseNull(sim->SendBuf, query->ID);
+	int zoneID = strtol(query->args[0].c_str(), NULL, 10);
+	if (zoneID != pld->CurrentZoneID)
+		return PrepExt_QueryResponseNull(sim->SendBuf, query->ID);
+	MULTISTRING qRes;
+	for (unsigned int i = 1; i < query->argCount; i++) {
+		if (query->args[i].compare("QuestGiver") == 0) {
+			for (size_t qi = 0;
+					qi
+							< pld->charPtr->questJournal.availableQuests.itemList.size();
+					qi++) {
+				QuestDefinition *qd =
+						pld->charPtr->questJournal.availableQuests.itemList[qi].GetQuestPointer();
+				if (qd == NULL)
+					continue;
+				if (qd->giverZone != pld->CurrentZoneID)
+					continue;
+				if (creatureInstance->css.level < qd->levelMin)
+					continue;
+				if (qd->levelMax != 0)
+					if (creatureInstance->css.level > qd->levelMax)
+						continue;
+				if (abs(creatureInstance->CurrentX - qd->giverX) > 1920)
+					continue;
+				if (abs(creatureInstance->CurrentZ - qd->giverZ) > 1920)
+					continue;
+				if (qd->Requires > 0)
+					if (pld->charPtr->questJournal.completedQuests.HasQuestID(
+							qd->Requires) == -1)
+						continue;
+
+				// Guild start quest
+				if (qd->guildStart
+						&& creatureInstance->charPtr->IsInGuildAndHasValour(
+								qd->guildId, 0))
+					continue;
+
+				// Guild requirements
+				if (!qd->guildStart && qd->guildId != 0
+						&& !creatureInstance->charPtr->IsInGuildAndHasValour(
+								qd->guildId, qd->valourRequired))
+					continue;
+
+				qRes.push_back(STRINGLIST());
+				qRes.back().push_back(qd->title.c_str());
+				Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1), "(%d %d %d)",
+						qd->giverX, qd->giverY, qd->giverZ);
+				qRes.back().push_back(sim->Aux1);
+				qRes.back().push_back("QuestGiver");
+			}
+		}
+	}
+	return PrepExt_QueryResponseMultiString(sim->SendBuf, query->ID, qRes);
+}
+//
+//SetGroveStartHandler
+//
+
+int SetGroveStartHandler::handleQuery(SimulatorThread *sim,
+		CharacterServerData *pld, SimulatorQuery *query,
+		CreatureInstance *creatureInstance) {
+
+	if (pld->zoneDef->mGrove == false)
+		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+				"You are not in a grove.");
+	if (pld->zoneDef->mAccountID != pld->accPtr->ID)
+		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+				"You must be in your grove.");
+
+	pld->zoneDef->ChangeDefaultLocation(creatureInstance->CurrentX,
+			creatureInstance->CurrentY, creatureInstance->CurrentZ);
+	g_ZoneDefManager.NotifyConfigurationChange();
+	sim->SendInfoMessage("Set grove entrance location to your coordinates.",
+			INFOMSG_INFO);
+	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
+}
+
+//
+//PortalAcceptRequestHandler
+//
+
+int PortalAcceptRequestHandler::handleQuery(SimulatorThread *sim,
+		CharacterServerData *pld, SimulatorQuery *query,
+		CreatureInstance *creatureInstance) {
+
+	sim->AddMessage((long) this, 0, BCM_RunPortalRequest);
+	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
+}
+
+//
+//BuildTemplateListHandler
+//
+
+int BuildTemplateListHandler::handleQuery(SimulatorThread *sim,
+		CharacterServerData *pld, SimulatorQuery *query,
+		CreatureInstance *creatureInstance) {
+
+	/*  Query: build.template.list
+	 Sent when build mode is activated in the client.  Only sent for the first
+	 activation.
+	 Not sure what the purpose of this data is for.  It seems to form a list
+	 of valid searchable templates.
+	 Args: [none]
+	 */
+
+	//The client script code indicates that only one row is used, but with a variable
+	//number of elements.
+	int wpos = 0;
+	wpos += PutByte(&sim->SendBuf[wpos], 1);            //_handleQueryResultMsg
+	wpos += PutShort(&sim->SendBuf[wpos], 0);           //Message size
+	wpos += PutInteger(&sim->SendBuf[wpos], query->ID);    //Query response index
+	wpos += PutShort(&sim->SendBuf[wpos], 1);           //Array count
+	wpos += PutByte(&sim->SendBuf[wpos], 3);            //String count
+	wpos += PutStringUTF(&sim->SendBuf[wpos], "Crate1");  //String data
+	wpos += PutStringUTF(&sim->SendBuf[wpos], "Crate2");  //String data
+	wpos += PutStringUTF(&sim->SendBuf[wpos], "Crate3");  //String data
+	PutShort(&sim->SendBuf[1], wpos - 3);               //Set message size
+	return wpos;
+}
+
+//
+//GetDungeonProfilesHandler
+//
+
+int GetDungeonProfilesHandler::handleQuery(SimulatorThread *sim,
+		CharacterServerData *pld, SimulatorQuery *query,
+		CreatureInstance *creatureInstance) {
+
+	MULTISTRING response;
+	g_InstanceScaleManager.EnumProfileList(response);
+	return PrepExt_QueryResponseMultiString(sim->SendBuf, query->ID, response);
+}
+
+//
+//SetATSHandler
+//
+
+int SetATSHandler::handleQuery(SimulatorThread *sim,
+		CharacterServerData *pld, SimulatorQuery *query,
+		CreatureInstance *creatureInstance) {
+
+	if (query->argCount < 1)
+		return PrepExt_QueryResponseError(sim->SendBuf, query->ID, "Invalid query->");
+	//if(pld->zoneDef->mGrove == false)
+	//	return PrepExt_QueryResponseError(sim->SendBuf, query->ID, "You are not in a grove.");
+	//if(pld->zoneDef->mAccountID != pld->accPtr->ID)
+	//	return PrepExt_QueryResponseError(sim->SendBuf, query->ID, "You must be in your grove.");
+
+	const char *atsName = query->args[0].c_str();
+	if (g_SceneryManager.ValidATSEntry(atsName) == false)
+		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+				"ATS name is not valid.");
+
+	int success = 0;
+	int failed = 0;
+	int wpos = 0;
+	g_SceneryManager.GetThread("SimulatorThread::handle_query_mod_setats");
+	for (unsigned int i = 1; i < query->argCount; i += 2) {
+		int propID = atoi(query->args[i].c_str());
+		const char *assetStr = query->args[i + 1].c_str();
+
+		//SceneryObject *so = g_SceneryManager.GetPropPtr(pld->CurrentZoneID, propID, NULL);
+		SceneryObject *so = g_SceneryManager.GlobalGetPropPtr(pld->CurrentZoneID,
+				propID, NULL);
+		if (so != NULL) {
+			int check = 0;
+			if (strstr(assetStr, "Bldg-") != NULL)
+				check++;
+			if (strstr(assetStr, "Cav-") != NULL)
+				check++;
+			if (strstr(assetStr, "Dng-") != NULL)
+				check++;
+			if (check == 0) {
+				failed++;
+				continue;
+			}
+			SceneryObject replaceProp;
+			replaceProp.copyFrom(so);
+			std::string newAsset = replaceProp.Asset;
+			size_t pos = newAsset.find("?ATS=");
+			if (pos != string::npos) {
+				newAsset.erase(pos + 5, newAsset.length()); //Erase everything after "?ATS="
+				newAsset.append(atsName);
+			} else {
+				newAsset.append("?ATS=");
+				newAsset.append(atsName);
+			}
+			replaceProp.SetAsset(newAsset.c_str());
+			g_Logs.simulator->info("[%v] Setting prop: %v to asset: %v",
+					sim->InternalID, propID, newAsset.c_str());
+
+			if (sim->HasPropEditPermission(&replaceProp) == true) {
+				g_SceneryManager.ReplaceProp(pld->CurrentZoneID, replaceProp);
+
+				wpos += PrepExt_UpdateScenery(&sim->SendBuf[wpos], &replaceProp);
+				if (wpos >= Global::MAX_SEND_CHUNK_SIZE) {
+					creatureInstance->actInst->LSendToLocalSimulator(sim->SendBuf, wpos,
+							creatureInstance->CurrentX, creatureInstance->CurrentZ);
+					wpos = 0;
+				}
+				success++;
+			} else
+				failed++;
+		}
+	}
+	g_SceneryManager.ReleaseThread();
+
+	if (wpos > 0)
+		creatureInstance->actInst->LSendToLocalSimulator(sim->SendBuf, wpos,
+				creatureInstance->CurrentX, creatureInstance->CurrentZ);
+
+	Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1),
+			"Attempted on %d props (%d success, %d failed)", success + failed,
+			success, failed);
+	sim->SendInfoMessage(sim->Aux1, INFOMSG_INFO);
+
+	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
+}

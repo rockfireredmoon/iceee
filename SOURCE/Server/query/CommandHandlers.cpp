@@ -22,9 +22,10 @@
 #include "../Crafting.h"
 #include "../Instance.h"
 #include "../Character.h"
+#include "../Config.h"
 #include "../Account.h"
 #include "../InstanceScale.h"
-#include "../Config.h"
+#include "../ConfigString.h"
 #include "../Scenery2.h"
 #include "../IGForum.h"
 #include "../Ability2.h"
@@ -1811,8 +1812,7 @@ int PartyInviteHandler::handleCommand(SimulatorThread *sim,
 	query->args.push_back("invite");
 	query->args.push_back(charName);
 	query->argCount = query->args.size();
-
-	return sim->handle_query_party();
+	g_QueryManager.getQueryHandler("party")->handleQuery(sim, pld, query, creatureInstance);
 }
 
 //
@@ -3387,8 +3387,6 @@ int PVPModeHandler::handleCommand(SimulatorThread *sim,
 	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
 }
 
-
-
 //
 //InstanceHandler
 //
@@ -3447,3 +3445,55 @@ int InstanceHandler::handleCommand(SimulatorThread *sim,
 	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
 }
 
+
+//
+//UserAuthResetHandler
+//
+UserAuthResetHandler::UserAuthResetHandler() :
+		AbstractCommandHandler("Usage: /user.auth.reset", 0) {
+	mAllowedPermissions.push_back(Permission_Sage);
+	mAllowedPermissions.push_back(Permission_Admin);
+}
+
+int UserAuthResetHandler::handleCommand(SimulatorThread *sim,
+		CharacterServerData *pld, SimulatorQuery *query,
+		CreatureInstance *creatureInstance) {
+
+
+	std::string accName = query->GetString(0);
+	AccountData * acc = g_AccountManager.FetchAccountByUsername(
+			accName.c_str());
+	if (acc == NULL) {
+		return PrepExt_QueryResponseError(sim->SendBuf, query->ID, "No such account.");
+	}
+
+	// Generate a new recovery key
+	std::string newKey = Util::RandomStr(32, false);
+
+	// Remove the existing registration key
+	Util::SafeFormat(acc->RegKey, sizeof(acc->RegKey), "%s", newKey.c_str());
+
+//	// Generate a salt hash for the key
+//	std::string convertedKey;
+//	acc->GenerateSaltedHash(newKey.c_str(), convertedKey);
+
+	// Build a new recovery key
+	ConfigString str(acc->RecoveryKeys);
+	str.SetKeyValue("regkey", "");
+	str.GenerateString(acc->RecoveryKeys);
+
+	Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1),
+			"Give the player this key :-\n   %s\n.. and tell them to visit the password reset URL",
+			newKey.c_str());
+	sim->SendInfoMessage(sim->Aux1, INFOMSG_INFO);
+
+	// Give player password reset permission
+	acc->SetPermission(Perm_Account, "passwordreset", true);
+
+	acc->PendingMinorUpdates++;
+
+	g_Logs.event->info("[SAGE] User key and password reset for %v by %v",
+			creatureInstance->css.display_name, accName.c_str());
+
+	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
+}

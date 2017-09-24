@@ -16,13 +16,14 @@
  */
 
 #include "ItemHandlers.h"
+#include "../Creature.h"
+#include "../Instance.h"
+#include "../Debug.h"
+#include "../Config.h"
+#include "../Crafting.h"
+#include "../ConfigString.h"
+#include "../Ability2.h"
 #include "../util/Log.h"
-#include "Ability2.h"
-#include "Account.h"
-#include "Config.h"
-#include "Creature.h"
-#include "Instance.h"
-#include "ConfigString.h"
 
 void AddPet(SimulatorThread *sim, CharacterServerData *pld,
 		SimulatorQuery *query, CreatureInstance *creatureInstance, int CDefID) {
@@ -968,3 +969,396 @@ int EssenceShopContentsHandler::handleQuery(SimulatorThread *sim,
 	return WritePos;
 }
 
+
+//
+//ItemPreviewHandler
+//
+
+int ItemPreviewHandler::handleQuery(SimulatorThread *sim,
+		CharacterServerData *pld, SimulatorQuery *query,
+		CreatureInstance *creatureInstance) {
+
+	//[0] = Type (0 = invisible, 1 = nude, 2 = clone)
+	//[1] = Item ID
+	if (query->argCount < 2 || query->argCount > 66) //32 slots * 2, + 2 params should be plenty.  Bail on greater to be safe.
+		return PrepExt_QueryResponseError(sim->SendBuf, query->ID, "Invalid query->");
+
+	static const char *invis =
+			"n4:{[\"c\"]=\"Horde-Invisible_Biped\",[\"sk\"]={[\"main\"]=\"FFFFFF\"},[\"sz\"]=\"1.0\"}";
+
+	int type = atoi(query->args[0].c_str());
+	int itemID = atoi(query->args[1].c_str());
+
+	ItemDef *itemDef = g_ItemManager.GetPointerByID(itemID);
+	if (itemDef == NULL)
+		return PrepExt_QueryResponseError(sim->SendBuf, query->ID, "Server error.");
+
+	std::vector<int> eqArray;
+	for (unsigned int i = 2; i < query->argCount; i++)
+		eqArray.push_back(atoi(query->args[i].c_str()));
+
+	int targetEquipSlot = 0;
+	switch (itemDef->mEquipType) {
+	case ItemEquipType::NONE:
+		targetEquipSlot = ItemEquipSlot::NONE;
+		break;
+	case ItemEquipType::WEAPON_1H:
+		targetEquipSlot = ItemEquipSlot::WEAPON_MAIN_HAND;
+		break;
+	case ItemEquipType::WEAPON_1H_UNIQUE:
+		targetEquipSlot = ItemEquipSlot::WEAPON_MAIN_HAND;
+		break;
+	case ItemEquipType::WEAPON_1H_MAIN:
+		targetEquipSlot = ItemEquipSlot::WEAPON_MAIN_HAND;
+		break;
+	case ItemEquipType::WEAPON_1H_OFF:
+		targetEquipSlot = ItemEquipSlot::WEAPON_OFF_HAND;
+		break;
+	case ItemEquipType::WEAPON_2H:
+		targetEquipSlot = ItemEquipSlot::WEAPON_MAIN_HAND;
+		break;
+	case ItemEquipType::WEAPON_RANGED:
+		targetEquipSlot = ItemEquipSlot::WEAPON_RANGED;
+		break;
+	case ItemEquipType::ARMOR_SHIELD:
+		targetEquipSlot = ItemEquipSlot::WEAPON_OFF_HAND;
+		break;
+	case ItemEquipType::ARMOR_HEAD:
+		targetEquipSlot = ItemEquipSlot::ARMOR_HEAD;
+		break;
+	case ItemEquipType::ARMOR_NECK:
+		targetEquipSlot = ItemEquipSlot::ARMOR_NECK;
+		break;
+	case ItemEquipType::ARMOR_SHOULDER:
+		targetEquipSlot = ItemEquipSlot::ARMOR_SHOULDER;
+		break;
+	case ItemEquipType::ARMOR_CHEST:
+		targetEquipSlot = ItemEquipSlot::ARMOR_CHEST;
+		break;
+	case ItemEquipType::ARMOR_ARMS:
+		targetEquipSlot = ItemEquipSlot::ARMOR_ARMS;
+		break;
+	case ItemEquipType::ARMOR_HANDS:
+		targetEquipSlot = ItemEquipSlot::ARMOR_HANDS;
+		break;
+	case ItemEquipType::ARMOR_WAIST:
+		targetEquipSlot = ItemEquipSlot::ARMOR_WAIST;
+		break;
+	case ItemEquipType::ARMOR_LEGS:
+		targetEquipSlot = ItemEquipSlot::ARMOR_LEGS;
+		break;
+	case ItemEquipType::ARMOR_FEET:
+		targetEquipSlot = ItemEquipSlot::ARMOR_FEET;
+		break;
+	case ItemEquipType::ARMOR_RING:
+		targetEquipSlot = ItemEquipSlot::ARMOR_RING_L;
+		break;
+	case ItemEquipType::ARMOR_RING_UNIQUE:
+		targetEquipSlot = ItemEquipSlot::ARMOR_RING_L;
+		break;
+	case ItemEquipType::ARMOR_AMULET:
+		targetEquipSlot = ItemEquipSlot::ARMOR_AMULET;
+		break;
+	default:
+		targetEquipSlot = ItemEquipSlot::NONE;
+	}
+	if (targetEquipSlot == ItemEquipSlot::NONE)
+		return PrepExt_QueryResponseError(sim->SendBuf, query->ID, "Server error.");
+
+	if (type == 0 || type == 1) {
+		eqArray.clear();
+		eqArray.push_back(targetEquipSlot);
+		eqArray.push_back(itemID);
+	} else {
+		for (size_t i = 0; i < eqArray.size(); i += 2) {
+			if (eqArray[i] == targetEquipSlot)
+				eqArray[i + 1] = itemID;
+		}
+	}
+
+	int wpos = 0;
+	sim->Aux1[wpos++] = '{';
+	for (size_t i = 0; i < eqArray.size(); i += 2) {
+		if (i > 0)
+			sim->Aux1[wpos++] = ',';
+		wpos += sprintf(&sim->Aux1[wpos], "[%d]=%d", eqArray[i], eqArray[i + 1]);
+	}
+	sim->Aux1[wpos++] = '}';
+
+	CreatureInstance *cptr = creatureInstance->actInst->SpawnCreate(creatureInstance,
+			3509);  //Generic interact object, the details will be replaced.
+	if (cptr == NULL)
+		return PrepExt_QueryResponseError(sim->SendBuf, query->ID, "Server error.");
+
+	Util::SafeCopy(cptr->css.display_name, creatureInstance->css.display_name,
+			sizeof(cptr->css.display_name));
+	Util::SafeCopy(cptr->css.sub_name, "Item Preview",
+			sizeof(cptr->css.sub_name));
+	cptr->css.aggro_players = 0;
+	cptr->_AddStatusList(StatusEffects::UNATTACKABLE, -1);
+	cptr->_AddStatusList(StatusEffects::INVINCIBLE, -1);
+
+	if (type == 0)
+		cptr->css.SetAppearance(invis);
+	else
+		cptr->css.SetAppearance(creatureInstance->css.appearance.c_str());
+	cptr->css.SetEqAppearance(sim->Aux1);
+
+	cptr->SetServerFlag(ServerFlags::TriggerDelete, true);
+	cptr->deathTime = g_ServerTime;
+
+	CreatureDefinition cd;
+	cd.CopyFrom(pld->charPtr->cdef);
+	cd.DefHints = 0;
+	cd.CreatureDefID = 1;
+	cd.css.CopyFrom(&cptr->css);
+
+	cptr->CreatureDefID = 1;
+
+	int size = PrepExt_CreatureDef(sim->SendBuf, &cd);
+	creatureInstance->actInst->LSendToLocalSimulator(sim->SendBuf, size,
+			creatureInstance->CurrentX, creatureInstance->CurrentZ);
+
+	size = PrepExt_CreatureFullInstance(sim->SendBuf, cptr);
+	//int size = PrepExt_GeneralMoveUpdate(sim->SendBuf, cptr);
+	creatureInstance->actInst->LSendToLocalSimulator(sim->SendBuf, size,
+			creatureInstance->CurrentX, creatureInstance->CurrentZ);
+
+	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
+}
+
+//
+//CraftCreateHandler
+//
+
+int CraftCreateHandler::handleQuery(SimulatorThread *sim,
+		CharacterServerData *pld, SimulatorQuery *query,
+		CreatureInstance *creatureInstance) {
+
+	/*  Query: craft.create
+	 Sent when an item is crafted via the crafting NPC.
+	 Args : [0] Item ID of the plan to create from.
+	 [1] Creature Instance ID of the vendor who processed this action.
+	 */
+	int rval = protected_helper_query_craft_create(sim, pld, query, creatureInstance);
+	if (rval <= 0)
+		rval = PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+				sim->GetErrorString(rval));
+
+	return rval;
+}
+
+int CraftCreateHandler::protected_helper_query_craft_create(SimulatorThread *sim,
+		CharacterServerData *pld, SimulatorQuery *query,
+		CreatureInstance *creatureInstance) {
+	if (query->argCount < 2)
+		return QueryErrorMsg::GENERIC;
+
+	int ItemID = atoi(query->args[0].c_str());
+	int CreatureID = atoi(query->args[1].c_str());
+
+	// Make sure this object isn't too far away.
+	int distCheck = sim->CheckDistance(CreatureID);
+	if (distCheck != 0)
+		return distCheck;
+
+	//Check that the item plan exists in the database.
+	ItemDef *itemPlan = g_ItemManager.GetPointerByID(ItemID);
+	if (itemPlan == NULL)
+		return QueryErrorMsg::INVALIDITEM;
+
+	//Check that the resulting item exists in the database.
+	ItemDef *resultItem = g_ItemManager.GetPointerByID(itemPlan->resultItemId);
+	if (resultItem == NULL)
+		return QueryErrorMsg::INVALIDITEM;
+
+	//Create an alias to make the code a bit cleaner.
+	InventoryManager &inv = pld->charPtr->inventory;
+
+	// Check that the crafting component exists in the player's inventory.
+	int count = inv.GetItemCount(INV_CONTAINER, itemPlan->keyComponentId);
+	if (count < 1)
+		return QueryErrorMsg::INVMISSING;
+
+	//Build a list of component counts.
+	std::vector<int> CraftID;
+	std::vector<int> CraftReq;
+	for (size_t i = 0; i < itemPlan->craftItemDefId.size(); i++) {
+		int materialID = itemPlan->craftItemDefId[i];
+
+		bool bFound = false;
+		for (size_t s = 0; s < CraftID.size(); s++) {
+			if (CraftID[s] == materialID) {
+				bFound = true;
+				CraftReq[s]++;
+				break;
+			}
+		}
+		if (bFound == false) {
+			CraftID.push_back(materialID);
+			CraftReq.push_back(1);
+		}
+	}
+
+	//Check that the player has the required components.
+	for (size_t i = 0; i < CraftID.size(); i++) {
+		ItemDef *craftItem = g_ItemManager.GetPointerByID(CraftID[i]);
+		if (craftItem == NULL)
+			return QueryErrorMsg::INVALIDITEM;
+		count = inv.GetItemCount(INV_CONTAINER, CraftID[i]);
+		if (count < CraftReq[i])
+			return QueryErrorMsg::INVMISSING;
+	}
+
+	//Check that the player has a free slot.
+	int slotIndex = inv.GetFreeSlot(INV_CONTAINER);
+	if (slotIndex == -1)
+		return QueryErrorMsg::INVSPACE;
+
+	//Good to go, create the item.
+	InventorySlot *itemPtr = NULL;
+	itemPtr = inv.AddItem_Ex(INV_CONTAINER, itemPlan->resultItemId, 1);
+	if (itemPtr == NULL)
+		return QueryErrorMsg::INVCREATE;
+
+	sim->ActivateActionAbilities(itemPtr);
+
+	int wpos = AddItemUpdate(sim->SendBuf, sim->Aux3, itemPtr);
+
+	//Remove the crafting materials.
+	for (size_t i = 0; i < CraftID.size(); i++)
+		wpos += inv.RemoveItemsAndUpdate(INV_CONTAINER, CraftID[i], CraftReq[i],
+				&sim->SendBuf[wpos]);
+
+	vector<InventoryQuery> iq;
+
+	//Remove the crafting component.
+	inv.ScanRemoveItems(INV_CONTAINER, itemPlan->keyComponentId, 1, iq);
+	if (iq.size() > 0)
+		wpos += RemoveItemUpdate(&sim->SendBuf[wpos], sim->Aux3, iq[0].ptr);
+	inv.RemoveItems(INV_CONTAINER, iq);
+
+	//Remove the plan.
+	inv.ScanRemoveItems(INV_CONTAINER, itemPlan->mID, 1, iq);
+	if (iq.size() > 0)
+		wpos += RemoveItemUpdate(&sim->SendBuf[wpos], sim->Aux3, iq[0].ptr);
+	inv.RemoveItems(INV_CONTAINER, iq);
+
+	wpos += PrepExt_QueryResponseString(&sim->SendBuf[wpos], query->ID, "OK");
+	return wpos;
+}
+
+//
+//ModCraftHandler
+//
+
+int ModCraftHandler::handleQuery(SimulatorThread *sim,
+		CharacterServerData *pld, SimulatorQuery *query,
+		CreatureInstance *creatureInstance) {
+
+	//Requires a modded client to perform this action.
+	// Arguments: list of container/slot IDs in hexadecimal notation.
+
+	InventoryManager &inv = pld->charPtr->inventory;
+
+	//Resolve inputs.
+	std::vector<CraftInputSlot> inputs;
+	std::vector<CraftInputSlot> outputs;
+	for (unsigned int i = 0; i < query->argCount; i++) {
+		unsigned int CCSID = inv.GetCCSIDFromHexID(query->GetString(i));
+		InventorySlot *slot = inv.GetItemPtrByCCSID(CCSID);
+		if (slot == NULL)
+			continue;
+
+		int itemID = slot->IID;
+		int stackCount = slot->GetStackCount();
+		ItemDef *itemDef = g_ItemManager.GetPointerByID(itemID);
+		if (itemDef == NULL)
+			continue;
+
+		inputs.push_back(CraftInputSlot(CCSID, itemID, stackCount, itemDef));
+	}
+	if (inputs.size() == 0)
+		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+				"You must provide some input items.");
+
+	const CraftRecipe *recipe = g_CraftManager.GetRecipe(inputs);
+	if (recipe == NULL) {
+		Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1),
+				"%s not match a known combination.",
+				((inputs.size() == 1) ? "That item does" : "Those items do"));
+		return PrepExt_QueryResponseError(sim->SendBuf, query->ID, sim->Aux1);
+	}
+
+	int requiredSlots = recipe->GetOutputCount();
+	if (inv.CountFreeSlots(INV_CONTAINER) < requiredSlots) {
+		Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1),
+				"You must have %d empty inventory %s.", requiredSlots,
+				((requiredSlots == 1) ? "slot" : "slots"));
+		return PrepExt_QueryResponseError(sim->SendBuf, query->ID, sim->Aux1);
+	}
+
+	bool success = false;
+	STRINGVECTOR outputMsg;
+	if (g_CraftManager.RunRecipe(recipe, inputs, outputs) == true) {
+		//Verify whether the items exist in the item database.
+		bool verified = true;
+		for (size_t i = 0; i < outputs.size(); i++) {
+			if (g_ItemManager.GetPointerByID(outputs[i].mID) == NULL) {
+				verified = false;
+				break;
+			}
+		}
+
+		if (verified == true) {
+			//Give resulting items.
+			for (size_t i = 0; i < outputs.size(); i++) {
+				InventorySlot *newItem = inv.AddItem_Ex(INV_CONTAINER,
+						outputs[i].mID, outputs[i].mStackCount);
+				if (newItem) {
+					ItemDef *itemDef = g_ItemManager.GetPointerByID(
+							outputs[i].mID);
+					std::string msg = "Obtained ";
+					Util::StringAppendInt(msg, outputs[i].mStackCount);
+					msg.append(" ");
+					msg.append(itemDef->mDisplayName);
+					outputMsg.push_back(msg);
+
+					sim->ActivateActionAbilities(newItem);
+					int wpos = AddItemUpdate(sim->Aux1, sim->Aux2, newItem);
+					sim->AttemptSend(sim->Aux1, wpos);
+				}
+			}
+
+			//Remove crafting components.
+			for (size_t i = 0; i < inputs.size(); i++) {
+				InventorySlot *remItem = inv.GetItemPtrByCCSID(
+						inputs[i].mCCSID);
+				if (remItem) {
+					if (remItem->GetStackCount() == 1)
+						g_ItemManager.NotifyDestroy(remItem->IID, "mod.craft");
+					int wpos = RemoveItemUpdate(sim->Aux1, sim->Aux2, remItem);
+					sim->AttemptSend(sim->Aux1, wpos);
+				}
+				inv.RemItem(inputs[i].mCCSID);
+			}
+			success = true;
+		}
+	}
+
+	if (success == false)
+		sim->SendInfoMessage("Unable to craft.", INFOMSG_INFO);
+	else {
+		int wpos = 0;
+		if (outputMsg.size() > 0)
+			wpos = PrepExt_SendInfoMessage(sim->SendBuf, "Succesful craft!",
+					INFOMSG_INFO);
+		for (size_t i = 0; i < outputMsg.size(); i++)
+			wpos += PrepExt_SendInfoMessage(&sim->SendBuf[wpos],
+					outputMsg[i].c_str(), INFOMSG_INFO);
+		sim->AttemptSend(sim->SendBuf, wpos);
+		g_Logs.event->info("[CRAFT] Crafted %v", recipe->GetName());
+	}
+
+	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
+}

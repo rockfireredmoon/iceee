@@ -162,22 +162,8 @@ public:
 	void HandleReceivedMessage2(void);
 	void HandleGameMsg(int msgType);
 	void HandleLobbyMsg(int msgType);
-	void handle_lobby_authenticate(void);
-	void handle_lobby_selectPersona(void);
-	void handle_lobby_query(void);
-	void handle_swimStateChange(void);
-	void handle_inspectItemDef(void);
-	void handle_updateVelocity(void);
-	void handle_communicate(void);
-	void handle_disconnect(void);
 
-	void handle_debugServerPing(void);
-
-	void handle_acknowledgeHeartbeat(void);
 	void ReadQueryFromMessage(void);
-
-	void handle_game_query(void);
-	bool HandleQuery(int &PendingData);
 
 	void ClearAuxBuffers(void);
 	void BroadcastMessage(const char *message);
@@ -199,59 +185,6 @@ public:
 	int CheckDistance(int creatureID);
 	int ItemMorph(bool command);
 	void SetZoneMode(int mode);
-
-	int handle_query_account_info(void);
-	int handle_query_statuseffect_set(void);
-	void handle_query_persona_list(void);
-	int handle_query_persona_create(void);
-	int handle_query_persona_delete(void);
-	void handle_query_pref_getA(void);
-	void handle_query_pref_get(void);
-	void handle_query_pref_setA(void);
-	void handle_query_pref_set(void);
-	void handle_query_client_loading(void);
-	int handle_query_admin_check(void);
-	int handle_query_persona_gm(void);
-	void handle_query_account_tracking(void);
-	void handle_query_account_fulfill(void);
-	int handle_query_map_marker(void);
-	int handle_query_buff_remove(void);
-	int handle_query_util_ping(void);
-	void handle_query_util_pingsim(void);
-	void handle_query_util_pingrouter(void);
-	int handle_query_portal_acceptRequest(void);
-	int handle_query_visWeapon(void);
-	int handle_query_craft_create(void);
-	int protected_helper_query_craft_create(void);
-	int handle_query_item_morph(void);
-	int protected_helper_query_item_morph(bool command);
-	int handle_query_util_version(void);
-	int handle_query_persona_resCost(void);
-	int handle_query_itemdef_contents(void);
-	int handle_query_itemdef_delete(void);
-	int handle_query_user_auth_reset();
-	int handle_query_validate_name();
-	int handle_query_gm_spawn(void);
-	int handle_query_guild_info(void);
-	int handle_query_guild_leave(void);
-	int handle_query_clan_info(void);
-	int handle_query_clan_list(void);
-	int handle_query_build_template_list(void);
-	int handle_query_ps_join(void);
-	int handle_query_ps_leave(void);
-	int handle_query_party(void);
-
-	int handle_query_mod_setgrovestart(void);
-	int handle_query_mod_setats(void);
-	int handle_query_mod_getURL(void);
-	int handle_query_mod_itempreview(void);
-	int handle_query_mod_restoreappearance(void);
-	int handle_query_mod_ping_statistics(void);
-	int handle_query_mod_emote(void);
-	int handle_query_mod_emotecontrol(void);
-	int handle_query_mod_craft(void);
-	int handle_query_mod_getdungeonprofiles(void);
-	int handle_query_updateContent(void);
 
 	int protected_CheckDistanceBetweenCreatures(CreatureInstance *sourceCreatureInst, int creatureID);
 	int protected_CheckDistanceBetweenCreaturesFor(CreatureInstance *sourceCreatureInst, int creatureID, int range);
@@ -285,8 +218,6 @@ public:
 	CreatureInstance defcInst;
 	unsigned long TimeOnline;
 	unsigned long TimeLastAutoSave;
-	std::string chatHeader;
-	std::string chatFooter;
 
 	ThreadRequest threadsys;
 
@@ -324,9 +255,6 @@ public:
 	void ActivatePassiveAbilities(void);
 	void CheckSpawnTileUpdate(bool force);
 
-	void handle_inspectCreatureDef(void);
-	void handle_inspectCreature(void);
-	void handle_selectTarget(void);
 	void handle_abilityActivate(void);
 	void AddMessage(long param1, long param2, int message);
 	bool CheckPermissionSimple(int permissionSet, unsigned int permissionFlag);
@@ -355,7 +283,6 @@ public:
 	bool TargetRarityAboveNormal(void);
 	//void VerifySendBufSize(int length);
 	void VerifyGenericBuffer(const char *buffer, unsigned int buflen);
-	void LogPingStatistics(bool server, bool client);
 	const char * GetScriptUsable(CreatureInstance *target);
 
 	void Debug_GenerateReport(ReportBuffer *report);

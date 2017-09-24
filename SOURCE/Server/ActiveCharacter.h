@@ -79,15 +79,6 @@ struct CharacterServerData
 	int DebugPingServerLastMsgReceived;
 	int DebugPingServerTotalMsgReceived;
 
-	int DebugPingClientID;
-	int DebugPingClientSuccessCount;
-	int DebugPingClientFailCount;
-	int DebugPingClientTimeoutCount;
-	int DebugPingClientLowestTime;
-	int DebugPingClientHighestTime;
-	int DebugPingClientTotalTime;
-	int DebugPingClientReceivedCount;
-	
 	CharacterServerData();
 	void Reset(void);
 	void SetPortalRequestDest(const char *locationName);

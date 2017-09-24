@@ -15,111 +15,80 @@
  * along with TAWD.  If not, see <http://www.gnu.org/licenses/
  */
 
-#ifndef ITEMHANDLERS_H
-#define ITEMHANDLERS_H
+#ifndef PLAYERHANDLERS_H
+#define PLAYERHANDLERS_H
 
 #include "Query.h"
 
-void AddPet(SimulatorThread *sim,
-		CharacterServerData *pld, SimulatorQuery *query,
-		CreatureInstance *creatureInstance, int CDefID);
-
-int UseItem(SimulatorThread *sim,
-		CharacterServerData *pld, SimulatorQuery *query,
-		CreatureInstance *creatureInstance, unsigned int CCSID);
-
-
-class ItemUseHandler : public QueryHandler {
+class RestoreAppearanceHandler : public QueryHandler {
 public:
-	~ItemUseHandler() {};
+	~RestoreAppearanceHandler() {};
 	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
 };
 
-class ItemDefUseHandler : public QueryHandler {
+class AccountInfoHandler : public QueryHandler {
 public:
-	~ItemDefUseHandler() {};
+	~AccountInfoHandler() {};
 	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
 };
 
-class ItemContentsHandler : public QueryHandler {
+class AccountFulfillHandler : public QueryHandler {
 public:
-	~ItemContentsHandler() {};
+	~AccountFulfillHandler() {};
 	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
 };
 
-class ItemMoveHandler : public QueryHandler {
+class EmoteHandler : public QueryHandler {
 public:
-	~ItemMoveHandler() {};
+	~EmoteHandler() {};
 	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
 };
 
-class ItemDeleteHandler : public QueryHandler {
+class EmoteControlHandler : public QueryHandler {
 public:
-	~ItemDeleteHandler() {};
+	~EmoteControlHandler() {};
 	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
 };
 
-class ItemSplitHandler : public QueryHandler {
+class ResCostHandler : public QueryHandler {
 public:
-	~ItemSplitHandler() {};
+	~ResCostHandler() {};
 	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
 };
 
-class ItemCreateHandler : public QueryHandler {
+class GuildInfoHandler : public QueryHandler {
 public:
-	~ItemCreateHandler() {};
+	~GuildInfoHandler() {};
 	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
 };
-
-class ItemDefDeleteHandler : public QueryHandler {
+class GuildLeaveHandler : public QueryHandler {
 public:
-	~ItemDefDeleteHandler() {};
+	~GuildLeaveHandler() {};
 	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
 };
-
-class ItemDefContentsHandler : public QueryHandler {
+class ValidateNameHandler : public QueryHandler {
 public:
-	~ItemDefContentsHandler() {};
+	~ValidateNameHandler() {};
 	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
 };
-
-class ItemMorphHandler : public QueryHandler {
+class VisWeaponHandler : public QueryHandler {
 public:
-	~ItemMorphHandler() {};
+	~VisWeaponHandler() {};
 	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
 };
-
-class ShopContentsHandler : public QueryHandler {
+class PartyHandler : public QueryHandler {
 public:
-	~ShopContentsHandler() {};
+	~PartyHandler() {};
 	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
 };
-
-class EssenceShopContentsHandler : public QueryHandler {
+class PrivateChannelJoinHandler : public QueryHandler {
 public:
-	~EssenceShopContentsHandler() {};
+	~PrivateChannelJoinHandler() {};
 	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
 };
-
-class ItemPreviewHandler : public QueryHandler {
+class PrivateChannelLeaveHandler : public QueryHandler {
 public:
-	~ItemPreviewHandler() {};
-	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
-};
-
-class CraftCreateHandler : public QueryHandler {
-public:
-	~CraftCreateHandler() {};
-	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
-private:
-	int protected_helper_query_craft_create(SimulatorThread *sim,
-			CharacterServerData *pld, SimulatorQuery *query,
-			CreatureInstance *creatureInstance);
-};
-
-class ModCraftHandler : public QueryHandler {
-public:
-	~ModCraftHandler() {};
+	~PrivateChannelLeaveHandler() {};
 	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
 };
 

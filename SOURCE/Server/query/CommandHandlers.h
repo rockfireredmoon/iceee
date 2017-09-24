@@ -556,4 +556,11 @@ public:
 	int handleCommand(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
 };
 
+class UserAuthResetHandler : public AbstractCommandHandler {
+public:
+	UserAuthResetHandler();
+	~UserAuthResetHandler() {};
+	int handleCommand(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
+};
+
 #endif

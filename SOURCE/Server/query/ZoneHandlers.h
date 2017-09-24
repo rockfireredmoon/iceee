@@ -55,4 +55,40 @@ public:
 	~HengeSetDestHandler() {};
 	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
 };
+
+class MapMarkerHandler : public QueryHandler {
+public:
+	~MapMarkerHandler() {};
+	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
+};
+
+class SetGroveStartHandler : public QueryHandler {
+public:
+	~SetGroveStartHandler() {};
+	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
+};
+
+class PortalAcceptRequestHandler : public QueryHandler {
+public:
+	~PortalAcceptRequestHandler() {};
+	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
+};
+
+class BuildTemplateListHandler : public QueryHandler {
+public:
+	~BuildTemplateListHandler() {};
+	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
+};
+
+class GetDungeonProfilesHandler : public QueryHandler {
+public:
+	~GetDungeonProfilesHandler() {};
+	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
+};
+
+class SetATSHandler : public QueryHandler {
+public:
+	~SetATSHandler() {};
+	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
+};
 #endif
