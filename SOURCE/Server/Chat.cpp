@@ -381,6 +381,11 @@ bool ChatManager ::SendChatMessage(ChatMessage &message, CreatureInstance *sendi
 				break;
 			case CHAT_SCOPE_SERVER:
 				send = true;
+
+				if(message.mChannelName.compare("gm/earthsages") == 0 && !it->pld.accPtr->HasPermission(Perm_Account, Permission_GMChat) && !it->pld.accPtr->HasPermission(Perm_Account, Permission_Admin)) {
+					send = false;
+				}
+
 				break;
 			case CHAT_SCOPE_FRIEND:
 				if(it->pld.CreatureDefID == message.mSenderCreatureDefID)  //Send to self
