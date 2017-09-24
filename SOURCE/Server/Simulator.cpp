@@ -1562,6 +1562,48 @@ void SimulatorThread::LoadCharacterSession(void) {
 			"%Y-%m-%d, %I:%M %p", localtime(&curtime));
 
 	// Determine if we should give a daily reward for the account
+		if(pld.accPtr->LastLogOn[0] == 0) {
+			pld.accPtr->DueDailyRewards = false;
+		}
+		else {
+			long loginDay = (long)(pld.accPtr->LastLogOnTimeSec / 86400 );
+			long todayDay = (long)(curtime / 86400 );
+			if(loginDay != todayDay) {
+				pld.accPtr->DueDailyRewards = true;
+			}
+			else {
+				pld.accPtr->DueDailyRewards = false;
+			}
+		}
+		if(pld.accPtr->DueDailyRewards) {
+			g_Logs.simulator->info("[%v] %v is logging on for the first time today",
+					InternalID, pld.accPtr->Name);
+			strcpy(pld.accPtr->LastLogOn, pld.charPtr->LastLogOn);
+
+			// Is this a consecutive day?
+			unsigned long lastLoginDay = pld.accPtr->LastLogOnTimeSec / 86400;
+			pld.accPtr->LastLogOnTimeSec = time(NULL);
+			strftime(pld.accPtr->LastLogOn, sizeof(pld.accPtr->LastLogOn), "%Y-%m-%d", localtime(&curtime));
+			unsigned long today =  pld.accPtr->LastLogOnTimeSec / 86400;
+			if(lastLoginDay == 0 || today == lastLoginDay + 1) {
+				// It is!
+				pld.accPtr->ConsecutiveDaysLoggedIn++;
+				g_Logs.simulator->info(
+						"[%d] %s has now logged in %d consecutive days.",
+						InternalID, pld.accPtr->Name,
+						pld.accPtr->ConsecutiveDaysLoggedIn);
+			}
+			else {
+				// Not a consecutive day, so not due daily rewards
+				pld.accPtr->DueDailyRewards = false;
+				pld.accPtr->ConsecutiveDaysLoggedIn = 0;
+			}
+
+			pld.accPtr->PendingMinorUpdates++;
+		}
+
+
+	// Determine if we should give a daily reward for the account
 	if (pld.accPtr->LastLogOn[0] == 0) {
 		pld.accPtr->DueDailyRewards = true;
 	} else {
