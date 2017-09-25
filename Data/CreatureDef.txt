@@ -74645,6 +74645,30 @@ profession=2
 creature_category=Mortal
 ai_package=example
 
-
+[ENTRY]
+ID=3484
+strength=235
+dexterity=235
+constitution=446
+psyche=235
+spirit=235
+damage_resist_melee=4000
+damage_resist_fire=4000
+damage_resist_frost=4000
+damage_resist_mystic=4000
+damage_resist_death=4000
+offhand_weapon_damage=210
+casting_setback_chance=500
+channeling_break_chance=500
+level=55
+display_name=L'ough Garoum
+sub_name=The Snow Wanderer
+profession=1
+creature_category=Divine
+rarity=3
+base_damage_melee=210
+base_health=3000
+ai_package=custom_heathendel_rogueknight40p
+total_size=2.700000047683716
 
 
