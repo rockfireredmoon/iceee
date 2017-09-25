@@ -14,8 +14,9 @@ dnl
 
 m4_include([ax_check_openssl.m4])
 m4_include([ax_pthread.m4])
-m4_include([libcurl.m4])
 m4_include([ax_cxx_compile_stdcxx_11.m4])
+
+PKG_CHECK_MODULES([libcurl], [libcurl])
 
 
 dnl
@@ -141,9 +142,8 @@ fi
 #
 CPPFLAGS="$CPPFLAGS -DELPP_THREAD_SAFE=1"
 
-LIBCURL_CHECK_CONFIG()
-CPPFLAGS="$CPPFLAGS $LIBCURL_CPPFLAGS"
-LIBS="$LIBS $LIBCURL"
+CPPFLAGS="$CPPFLAGS ${libcurl_CFLAGS}"
+LIBS="$LIBS ${libcurl_LIBS}"
 
 AX_PTHREAD([has_pthread=true],[has_pthread=false])
 if test "x${has_pthread}" != xtrue; then
