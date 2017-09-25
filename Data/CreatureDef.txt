@@ -3171,7 +3171,6 @@ damage_resist_death=6000
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
-appearance=n4:{["c"]="Boss-Sand_Dragon",["sz"]="2.5",["sk"]={["base"]="625048",["belly"]="736a42",["claws"]="6e624c",["eye"]="961a1a",["horns"]="553a14",["mouth"]="703430",["teeth"]="c0bbaa",["wing"]="968560"}}
 level=55
 display_name=Fengarian
 profession=2
@@ -3180,6 +3179,7 @@ rarity=3
 base_damage_melee=300
 base_health=20000
 ai_package=example
+total_size=2
 
 [ENTRY]
 ID=124
@@ -74163,33 +74163,29 @@ ai_package=example
 
 [ENTRY]
 ID=3411
-ExtraData=namedmob=1
 strength=249
 dexterity=222
 constitution=416
 psyche=144
 spirit=144
-base_damage_melee=190
 damage_resist_melee=2538
 damage_resist_fire=2538
 damage_resist_frost=2538
 damage_resist_mystic=2538
 damage_resist_death=2538
-base_health=2288
-will_regen=1
-might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
-appearance=n4:{["sk"]={["base"]="FFFFFF",["teeth"]="8B8C82",["eye"]="AA0000",["horn"]="6E5747",["wing1"]="7F6868",["wing2"]="796F73"},["c"]="Boss-Black_Dragon",["sz"]="2"}
 level=55
 display_name=Kilvath L'vithian
 sub_name=Aspect of the Timeless
 profession=1
 creature_category=Divine
-;ai_package=example
-ai_package=mage_fire_brave_6
 rarity=3
+base_damage_melee=190
+base_health=2288
+ExtraData=namedmob=1
+ai_package=custom_heathendel_mage40
 total_size=60
 
 [ENTRY]
@@ -74450,32 +74446,29 @@ total_size=5
 
 [ENTRY]
 ID=3433
-ExtraData=namedmob=1
 strength=144
 dexterity=178
 constitution=144
 psyche=322
 spirit=208
-base_damage_melee=190
 damage_resist_melee=2538
 damage_resist_fire=2538
 damage_resist_frost=2538
 damage_resist_mystic=2538
 damage_resist_death=2538
-base_health=1584
-will_regen=1
-might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
-appearance=n4:{["sk"]={["water"]="246A0A",["water_blend"]="133F0D",["water_highlight"]="6A5905"},["c"]="Horde-Elemental_Water",["sz"]="8"}
 level=55
 display_name=Thara Vikath
 sub_name=The Plague Bringer
 profession=4
 creature_category=Demon
-ai_package=mage_frost_brave_6
 rarity=3
+base_damage_melee=190
+base_health=1584
+ExtraData=namedmob=1
+ai_package=custom_heathendel_deathdruid40
 total_size=8
 
 [ENTRY]
@@ -74540,31 +74533,28 @@ ai_package=example
 
 [ENTRY]
 ID=3439
-ExtraData=namedmob=1
 strength=103
 dexterity=127
 constitution=180
 psyche=149
 spirit=149
-base_damage_melee=195
 damage_resist_melee=2538
 damage_resist_fire=5076
 damage_resist_frost=1269
 damage_resist_mystic=2538
 damage_resist_death=2538
-will_regen=1
-might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
-appearance=n4:{["sk"]={["body"]="3941BF",["highlight"]="000EE9",["mouth"]="7F0000"},["c"]="Horde-Phoenix",["sz"]="5"}
 level=55
 display_name=Ni'Lania Vexus
 sub_name=The Water Spirit
 profession=4
 creature_category=Divine
 rarity=3
-ai_package=mage_fire_brave_6
+base_damage_melee=195
+ExtraData=namedmob=1
+ai_package=custom_heathendel_mage40
 
 [ENTRY]
 defHints=16
@@ -75372,7 +75362,6 @@ damage_resist_death=3000
 offhand_weapon_damage=100
 casting_setback_chance=500
 channeling_break_chance=500
-appearance=n4:{["sk"]={["inner_glow"]="fa432d",["outer_glow"]="b66964",["main"]="9b7878",["core_glow"]="ff9e4c"},["c"]="Horde-Flame_Goliath",["sz"]="2.5"}
 level=33
 display_name=Thavatham
 sub_name=Reaver of Hell
@@ -75380,7 +75369,7 @@ profession=5
 creature_category=Demon
 rarity=2
 base_damage_melee=100
-ai_package=nothing
+ai_package=custom_heathendel_rogueknight40p
 total_size=2
 
 [ENTRY]
@@ -75520,7 +75509,6 @@ damage_resist_death=4000
 offhand_weapon_damage=210
 casting_setback_chance=500
 channeling_break_chance=500
-appearance=n4:{["sk"]={["eye"]="00ffff",["ice"]="d4d4d4"},["c"]="Horde-Wolf_Ice_Goliath",["sz"]="3.0"}
 level=55
 display_name=L'ough Garoum
 sub_name=The Snow Wanderer
@@ -75529,4 +75517,48 @@ creature_category=Divine
 rarity=3
 base_damage_melee=210
 base_health=3000
-ai_package=nothing
+ai_package=custom_heathendel_rogueknight40p
+total_size=2.700000047683716
+
+[ENTRY]
+ID=3485
+appearance=p1:{["a"]="Prop-Crystal_Blue_Small2",["sz"]="1.0"}
+level=1
+display_name=Gaia's Tear
+profession=1
+creature_category=Inanimate
+ai_package=example
+
+[ENTRY]
+ID=3486
+strength=97
+dexterity=97
+constitution=87
+psyche=50
+spirit=50
+damage_resist_melee=875
+damage_resist_fire=875
+damage_resist_frost=875
+damage_resist_mystic=875
+damage_resist_death=875
+offhand_weapon_damage=85
+casting_setback_chance=500
+channeling_break_chance=500
+appearance=n4:{["sk"]={["bone"]="f8eadb",["skin"]="bfa167",["cloth"]="202dff",["eye"]="d0ffff",["trim"]="2a0e02",["armor"]="353f2d",["leather"]="7e3f18"},["c"]="Horde-Warpig",["sz"]="1.2",["a"]=[{["node"]="left_shoulder",["type"]="Armor-Heavy-Low2-Left_Pauldron",["colors"]=["2a2a2a","cabba9"]},{["node"]="right_shoulder",["type"]="Armor-Heavy-Low2-Right_Pauldron",["colors"]=["151506","d4d4d4","b27144"]},{["node"]="left_hand",["type"]="Item-1hSword-Basic2",["colors"]=[]},{["node"]="right_hand",["type"]="Item-1hAxe-Basic4",["colors"]=[]}]}
+level=44
+display_name=Wartown Gangster
+profession=2
+creature_category=Animal
+rarity=0
+base_damage_melee=85
+base_health=1000
+ai_package=rogue_brave_1
+
+[ENTRY]
+ID=3487
+appearance=p1:{["a"]="Prop-Map",["sz"]="1.0"}
+level=1
+display_name=Boss Hawg's Orders
+profession=1
+creature_category=Inanimate
+ai_package=example

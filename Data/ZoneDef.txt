@@ -1167,7 +1167,7 @@ ShardName=Europe 1
 WarpName=mausoleum
 Instance=1
 MaxLeashRange=1000
-DefLoc=0,0,0
+DefLoc=992,0,844
 PageSize=1000
 
 [ENTRY]
