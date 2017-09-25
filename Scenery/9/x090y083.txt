@@ -1,6 +1,7 @@
 [ENTRY]
 ID=151029676
 Asset=CL-Crystal4#CL-Crystal4
+Name=Untitled
 Pos=67815,887.094,62481
 Orient=0,0,0,1
 Scale=1,1,1
@@ -8,28 +9,28 @@ Scale=1,1,1
 [ENTRY]
 ID=151031044
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=67656,876.69,62338
 Orient=0,0,0,1
 Scale=1,1,1
-innerRadius=50
 spawnPackage=12_ice_Wilds_45_46
-outerRadius=80
+wanderRadius=75
 
 [ENTRY]
 ID=151031194
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=67733,864.043,62917
 Orient=0,0.948985,0,0.315322
 Scale=1,1,1
 spawnPackage=12_ice_Goliaths_45_46
-outerRadius=10
 
 [ENTRY]
 ID=151031195
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=67891,897.113,62916
 Orient=0,0.624897,0,0.780707
 Scale=1,1,1
 spawnPackage=12_ice_Goliaths_45_46
-outerRadius=10
 

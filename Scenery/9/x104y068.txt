@@ -1,10 +1,20 @@
 [ENTRY]
 ID=1109376
 Asset=Prop-Tree_Platforms#Prop-Tree_Platform_Drop_Bridge
-Name=
+Name=Untitled
 Pos=78354.3,755.214,51550.2
 Orient=-0.0495626,0.998324,0.00643954,-0.029163
 Scale=1,1,1
+
+[ENTRY]
+ID=1154432
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=78048.9,636.881,51721.4
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=12_vmp_wilds_46_47
+wanderRadius=85
 
 [ENTRY]
 ID=151018015

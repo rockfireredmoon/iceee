@@ -1,0 +1,5 @@
+[ENTRY]
+Name=Anex boss room
+Comment=[Comment here]
+Position=15952.0,1447.0,17546.0
+

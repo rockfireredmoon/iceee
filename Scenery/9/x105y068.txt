@@ -1,7 +1,7 @@
 [ENTRY]
 ID=1109375
 Asset=Prop-Tree_Platforms#Prop-Tree_Platform_Drop_Bridge
-Name=
+Name=Untitled
 Pos=79034.9,949.88,51575.7
 Orient=0.0149619,-0.999829,-0.00106102,0.0107949
 Scale=1.5,1.5,1.5
@@ -9,16 +9,8 @@ Scale=1.5,1.5,1.5
 [ENTRY]
 ID=1109381
 Asset=Prop-Bridge_a#Prop-Bridge-Large_Wooden1
-Name=
+Name=Untitled
 Pos=79226,1053.69,51703.5
 Orient=-0.183648,0.466129,0.104147,0.859157
 Scale=1,1,1
-
-[ENTRY]
-ID=151061525
-Asset=Environment-Marker?type=Swineland_Dead
-Name=Untitled
-Pos=79111.4,973.551,51657.5
-Orient=0,0,0,1
-Scale=6.425,6.425,6.425
 

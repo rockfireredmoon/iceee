@@ -1,6 +1,17 @@
 [ENTRY]
+ID=1154147
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=71652.5,1222.5,64305.4
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=12_ice_Wilds_45_46
+wanderRadius=75
+
+[ENTRY]
 ID=151018886
 Asset=Prop-Goliath_Mound_Ice#Prop-Goliath_Mound_Ice2
+Name=Untitled
 Pos=71377,1224.16,64018
 Orient=0,-0.648034,0,0.761612
 Scale=1,1,1
@@ -8,56 +19,56 @@ Scale=1,1,1
 [ENTRY]
 ID=151031033
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=71377,1221.08,64466
 Orient=0,0,0,1
 Scale=1,1,1
-innerRadius=50
 spawnPackage=12_ice_Wilds_45_46
-outerRadius=80
+wanderRadius=75
 
 [ENTRY]
 ID=151031034
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=71869,1217.7,64309
 Orient=0,0,0,1
 Scale=1,1,1
-innerRadius=50
 spawnPackage=12_ice_Wilds_45_46
-outerRadius=80
+wanderRadius=75
 
 [ENTRY]
 ID=151031185
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=71318,1227.25,63850
 Orient=0,0.953608,0,0.301052
 Scale=1,1,1
 spawnPackage=12_ice_Goliaths_45_46
-outerRadius=10
 
 [ENTRY]
 ID=151031186
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=71507,1249.33,63864
 Orient=0,0.252245,0,0.967663
 Scale=1,1,1
 spawnPackage=12_ice_Goliaths_45_46
-outerRadius=10
 
 [ENTRY]
 ID=151031187
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=71368,1226.49,64201
 Orient=0,-0.833272,0,0.552863
 Scale=1,1,1
 spawnPackage=12_ice_Goliaths_45_46
-outerRadius=10
 
 [ENTRY]
 ID=151031188
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=71541,1232.27,64105
 Orient=0,-0.470626,0,0.882333
 Scale=1,1,1
 spawnPackage=12_ice_Goliaths_45_46
-outerRadius=10
 

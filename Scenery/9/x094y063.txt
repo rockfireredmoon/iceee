@@ -1,6 +1,7 @@
 [ENTRY]
 ID=151017840
 Asset=Arid_Clutter?d=0.9&s=875677&sz=800
+Name=Untitled
 Pos=70923,773.443,47931
 Orient=0,0,0,1
 Scale=1.725,1.725,1.725
@@ -9,6 +10,7 @@ Flags=1
 [ENTRY]
 ID=151027828
 Asset=CL-Sick-Pine2#CL-Sick-Pine2
+Name=Untitled
 Pos=70900,770.11,47871
 Orient=0,0.867423,0,0.497571
 Scale=4.15,4.15,4.15
@@ -17,6 +19,7 @@ Flags=1
 [ENTRY]
 ID=151029866
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=71195,1013.97,47438
 Orient=0,0,0,1
 Scale=1,1,1
@@ -26,10 +29,10 @@ link=151029865,1
 [ENTRY]
 ID=151030164
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=70880,779.743,47545
 Orient=0,0,0,1
 Scale=1,1,1
-innerRadius=50
 spawnPackage=12_wpg_Wilds_44_45
-outerRadius=80
+wanderRadius=100
 

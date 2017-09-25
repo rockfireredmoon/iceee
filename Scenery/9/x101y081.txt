@@ -1,6 +1,17 @@
 [ENTRY]
+ID=1154294
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=75906,680.009,61375.9
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=12_vmp_wilds_46_47
+wanderRadius=100
+
+[ENTRY]
 ID=151018028
 Asset=Arid_Clutter?d=0.9&s=875677&sz=800
+Name=Untitled
 Pos=76111,683.141,61430
 Orient=0,0,0,1
 Scale=1,1,1
@@ -9,6 +20,7 @@ Flags=1
 [ENTRY]
 ID=151018092
 Asset=Arid_Clutter?d=0.9&s=887656&sz=800
+Name=Untitled
 Pos=76284,627.794,60772
 Orient=0,-0.514136,0,0.857709
 Scale=1,1,1
@@ -17,39 +29,40 @@ Flags=1
 [ENTRY]
 ID=151030796
 Asset=Manipulator-SpawnPoint
-Pos=75835,676.39,61346
+Name=Untitled
+Pos=75781.3,641.55,61099.9
 Orient=0,0,0,1
 Scale=1,1,1
-innerRadius=95
 spawnPackage=12_vmp_wilds_46_47
-outerRadius=100
+wanderRadius=100
 
 [ENTRY]
 ID=151030797
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=75915,653.962,60838
 Orient=0,0,0,1
 Scale=1,1,1
-innerRadius=95
 spawnPackage=12_vmp_wilds_46_47
-outerRadius=100
+wanderRadius=100
 
 [ENTRY]
 ID=151030798
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=76245,642.128,61172
 Orient=0,0,0,1
 Scale=1,1,1
-innerRadius=95
 spawnPackage=12_vmp_wilds_46_47
-outerRadius=100
+wanderRadius=100
 
 [ENTRY]
-ID=151030799
+ID=151030805
 Asset=Manipulator-SpawnPoint
-Pos=76216,631.685,60798
+Name=Untitled
+Pos=76402.8,672.58,61373.8
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_vmp_wilds_46_47
-outerRadius=10
+wanderRadius=100
 

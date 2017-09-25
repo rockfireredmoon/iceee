@@ -1,6 +1,7 @@
 [ENTRY]
 ID=151029430
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=78706,859.124,62517
 Orient=0,0,0,1
 Scale=1,1,1
@@ -11,6 +12,7 @@ link=151029431,1
 [ENTRY]
 ID=151029431
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=78586,810.595,62615
 Orient=0,0,0,1
 Scale=1,1,1
@@ -21,6 +23,7 @@ link=151029432,1
 [ENTRY]
 ID=151029432
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=78490,772.396,62819
 Orient=0,0,0,1
 Scale=1,1,1
@@ -31,6 +34,7 @@ link=151029433,1
 [ENTRY]
 ID=151029433
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=78407,744.453,62949
 Orient=0,0,0,1
 Scale=1,1,1
@@ -41,6 +45,7 @@ link=151029434,1
 [ENTRY]
 ID=151029434
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=78310,724.353,62919
 Orient=0,0,0,1
 Scale=1,1,1
@@ -51,6 +56,7 @@ link=151029435,1
 [ENTRY]
 ID=151029435
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=78239,714.345,62945
 Orient=0,0,0,1
 Scale=1,1,1
@@ -61,6 +67,7 @@ link=151029436,1
 [ENTRY]
 ID=151029436
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=78122,696.311,62861
 Orient=0,0,0,1
 Scale=1,1,1
@@ -70,6 +77,7 @@ link=151029435,1
 [ENTRY]
 ID=151029452
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=78001,672.768,62857
 Orient=0,0,0,1
 Scale=1,1,1
@@ -79,6 +87,7 @@ link=151029451,1
 [ENTRY]
 ID=151029516
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=78446,677.032,62342
 Orient=0,0,0,1
 Scale=1,1,1
@@ -89,6 +98,7 @@ link=151029517,1
 [ENTRY]
 ID=151029517
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=78262,658.417,62604
 Orient=0,0,0,1
 Scale=1,1,1
@@ -98,15 +108,17 @@ link=151029516,1
 [ENTRY]
 ID=151029522
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=78158,659.745,62491
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_yti_lumberingBergbackCamp
-outerRadius=10
+wanderRadius=65
 
 [ENTRY]
 ID=151029529
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=78039,672.159,62804
 Orient=0,0,0,1
 Scale=1,1,1
@@ -117,6 +129,7 @@ link=151029534,1
 [ENTRY]
 ID=151029531
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=78225,712.298,62975
 Orient=0,0,0,1
 Scale=1,1,1
@@ -127,6 +140,7 @@ link=151029532,1
 [ENTRY]
 ID=151029532
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=78088,694.045,62895
 Orient=0,0,0,1
 Scale=1,1,1
@@ -136,6 +150,7 @@ link=151029531,1
 [ENTRY]
 ID=151029534
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=78075,687.823,62850
 Orient=0,0,0,1
 Scale=1,1,1

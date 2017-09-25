@@ -17,11 +17,12 @@ Scale=1,1,1
 spawnPackage=12_wpg_Wilds_45_46
 
 [ENTRY]
-ID=151031017
+ID=151031016
 Asset=Manipulator-SpawnPoint
 Name=Untitled
-Pos=70478,1175.53,57436
+Pos=70423.6,1183.88,57242.1
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_wpg_Wilds_45_46
+wanderRadius=100
 

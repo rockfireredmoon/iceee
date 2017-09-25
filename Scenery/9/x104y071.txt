@@ -1,6 +1,7 @@
 [ENTRY]
 ID=151018799
 Asset=Prop-Burnt_Pines#Prop-Burnt_Pine1
+Name=Untitled
 Pos=78121,499.326,53873
 Orient=0,0,0,1
 Scale=2.2,2.2,2.2
@@ -9,6 +10,7 @@ Flags=1
 [ENTRY]
 ID=151018800
 Asset=Prop-Burnt_Pines#Prop-Burnt_Pine2
+Name=Untitled
 Pos=78098,508.771,53910
 Orient=0,0,0,1
 Scale=1,1,1
@@ -17,6 +19,7 @@ Flags=1
 [ENTRY]
 ID=151026606
 Asset=Prop-Burnt_Pines#Prop-Burnt_Pine4
+Name=Untitled
 Pos=78617,1021.58,53392
 Orient=0,0,0,1
 Scale=4.35,4.35,4.35
@@ -24,6 +27,7 @@ Scale=4.35,4.35,4.35
 [ENTRY]
 ID=151026607
 Asset=Prop-Burnt_Pines#Prop-Burnt_Pine3
+Name=Untitled
 Pos=78697,970.815,53415
 Orient=0.178383,0.0835261,-0.0151992,0.980292
 Scale=3.05,3.05,3.05
@@ -31,15 +35,17 @@ Scale=3.05,3.05,3.05
 [ENTRY]
 ID=151031452
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=78083,510.418,53720
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_vmp_valkalBloodfiend
-outerRadius=10
+wanderRadius=75
 
 [ENTRY]
 ID=151031494
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=78470,952.411,53310
 Orient=0,0,0,1
 Scale=1,1,1
@@ -50,6 +56,7 @@ link=151031495,1
 [ENTRY]
 ID=151031495
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=78534,957.786,53307
 Orient=0,0,0,1
 Scale=1,1,1
@@ -60,6 +67,7 @@ link=151031496,1
 [ENTRY]
 ID=151031496
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=78610,972.947,53254
 Orient=0,0,0,1
 Scale=1,1,1

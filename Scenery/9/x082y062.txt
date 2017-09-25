@@ -1,0 +1,8 @@
+[ENTRY]
+ID=1153850
+Asset=Autumn_Forest?d=0.5&s=4&sz=100
+Name=
+Pos=61631,232.257,47022.4
+Orient=0,0.314567,0,0.949235
+Scale=1,1,1
+

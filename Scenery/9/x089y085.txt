@@ -1,6 +1,7 @@
 [ENTRY]
 ID=151019339
 Asset=CL-SnowyPine4#CL-SnowyPine4
+Name=Untitled
 Pos=67478,852.796,63774
 Orient=0,-0.425939,0,0.904752
 Scale=4.5,4.5,4.5
@@ -9,6 +10,7 @@ Flags=1
 [ENTRY]
 ID=151029554
 Asset=CL-SnowyPine2#CL-SnowyPine2
+Name=Untitled
 Pos=66919,749.481,64459
 Orient=0,-0.97548,0,-0.220086
 Scale=4,4,4
@@ -17,6 +19,7 @@ Flags=1
 [ENTRY]
 ID=151029604
 Asset=Prop-Crystals_Blue#Prop-Crystal_Blue_Med5
+Name=Untitled
 Pos=67361,820.19,64003
 Orient=0,0,0,1
 Scale=1,1,1
@@ -24,6 +27,7 @@ Scale=1,1,1
 [ENTRY]
 ID=151029663
 Asset=CL-Crystal1
+Name=Untitled
 Pos=66945,788.613,63832
 Orient=0,0,0,1
 Scale=1,1,1
@@ -31,20 +35,20 @@ Scale=1,1,1
 [ENTRY]
 ID=151031047
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=66905,790.847,64191
 Orient=0,0,0,1
 Scale=1,1,1
-innerRadius=20
 spawnPackage=12_ice_Wilds_45_46
-outerRadius=40
+wanderRadius=50
 
 [ENTRY]
 ID=151031048
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=66848,794.632,63990
 Orient=0,0,0,1
 Scale=1,1,1
-innerRadius=20
 spawnPackage=12_ice_Wilds_45_46
-outerRadius=40
+wanderRadius=50
 

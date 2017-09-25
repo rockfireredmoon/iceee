@@ -1,27 +1,30 @@
 [ENTRY]
 ID=151029577
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=81997,727.17,61311
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_yti_wilds_46_47
-outerRadius=10
+wanderRadius=100
 
 [ENTRY]
 ID=151029578
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=82442,740.108,61185
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_yti_wilds_46_47
-outerRadius=10
+wanderRadius=100
 
 [ENTRY]
 ID=151030958
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=82030,632.055,60869
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_vmp_ rockDervish
-outerRadius=10
+wanderRadius=110
 

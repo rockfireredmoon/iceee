@@ -1,6 +1,7 @@
 [ENTRY]
 ID=151018734
 Asset=CL-AridBush2#CL-AridBush2
+Name=Untitled
 Pos=75803,636.409,56003
 Orient=0,0,0,1
 Scale=1,1,1
@@ -9,6 +10,7 @@ Flags=1
 [ENTRY]
 ID=151018735
 Asset=CL-AridBush3#CL-AridBush3
+Name=Untitled
 Pos=76102,648.693,56073
 Orient=0,0,0,1
 Scale=1,1,1
@@ -17,6 +19,7 @@ Flags=1
 [ENTRY]
 ID=151018739
 Asset=CL-AridBush5#CL-AridBush5
+Name=Untitled
 Pos=76343,596.47,56133
 Orient=0,0,0,1
 Scale=1.825,1.825,1.825
@@ -25,20 +28,21 @@ Flags=1
 [ENTRY]
 ID=151031375
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=76393,668.163,55846
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_vmp_wilds_46_47
-outerRadius=10
+wanderRadius=85
 
 [ENTRY]
 ID=151031381
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=75766,625.762,56081
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=12_vmp_wilds_46_47
 links_count=1
 link=151031382,1
-spawnPackage=12_vmp_wilds_46_47
-outerRadius=10
 

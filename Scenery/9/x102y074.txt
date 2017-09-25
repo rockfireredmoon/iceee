@@ -195,6 +195,7 @@ Pos=76551,632.476,56206
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_vmp_wilds_46_47
+wanderRadius=85
 
 [ENTRY]
 ID=151031377
@@ -204,4 +205,5 @@ Pos=76708,686.599,55957
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_vmp_wilds_46_47
+wanderRadius=75
 

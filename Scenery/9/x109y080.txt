@@ -1,6 +1,7 @@
 [ENTRY]
 ID=151018046
 Asset=CL-Burnt-Pine5#CL-Burnt-Pine5
+Name=Untitled
 Pos=81822,623.624,60490
 Orient=0,0.309816,0,0.950796
 Scale=3.825,3.825,3.825
@@ -9,6 +10,7 @@ Flags=1
 [ENTRY]
 ID=151018047
 Asset=CL-Burnt-Pine6#CL-Burnt-Pine6
+Name=Untitled
 Pos=82033,627.566,60650
 Orient=0,0,0,1
 Scale=1.775,1.775,1.775
@@ -17,27 +19,30 @@ Flags=1
 [ENTRY]
 ID=151030951
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=81987,650.009,60134
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_vmp_ rockDervish
-outerRadius=10
+wanderRadius=100
 
 [ENTRY]
 ID=151030954
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=82157,650.922,60501
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_vmp_ rockDervish
-outerRadius=10
+wanderRadius=100
 
 [ENTRY]
 ID=151030955
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=82304,675.009,60704
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_vmp_ rockDervish
-outerRadius=10
+wanderRadius=120
 

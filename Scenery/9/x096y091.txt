@@ -1,0 +1,10 @@
+[ENTRY]
+ID=1150742
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=Untitled
+Pos=72062.6,888.075,68298.2
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#3454
+wanderRadius=50
+

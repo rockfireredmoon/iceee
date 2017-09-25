@@ -1,6 +1,17 @@
 [ENTRY]
+ID=1154103
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=76645.2,733.03,59221.9
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=12_vmp_wilds_46_47
+wanderRadius=65
+
+[ENTRY]
 ID=151018025
 Asset=Arid_Clutter?d=0.9&s=875677&sz=800
+Name=Untitled
 Pos=76778,605.924,58528
 Orient=0,0,0,1
 Scale=1.175,1.175,1.175
@@ -9,6 +20,7 @@ Flags=1
 [ENTRY]
 ID=151020302
 Asset=CL-Burnt-Pine3#CL-Burnt-Pine3
+Name=Untitled
 Pos=76537,499.231,58623
 Orient=-0.0130033,0.898584,0.0596659,0.434531
 Scale=2.2,2.2,2.2
@@ -17,18 +29,20 @@ Flags=1
 [ENTRY]
 ID=151031392
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=76711,579.572,58520
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_vmp_wilds_46_47
-outerRadius=10
+wanderRadius=65
 
 [ENTRY]
 ID=151031393
 Asset=Manipulator-SpawnPoint
-Pos=76614,564.875,58758
+Name=Untitled
+Pos=76614,564.875,58782.8
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_vmp_wilds_46_47
-outerRadius=10
+wanderRadius=75
 

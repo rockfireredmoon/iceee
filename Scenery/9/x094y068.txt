@@ -1,6 +1,17 @@
 [ENTRY]
+ID=1154230
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=70565.8,1079.94,51538.9
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=12_wpg_Wilds_44_45
+wanderRadius=75
+
+[ENTRY]
 ID=151017848
 Asset=CL-Sick-Pine5#CL-Sick-Pine5
+Name=Untitled
 Pos=70736,1080.57,51529
 Orient=0,0.0499792,0,0.99875
 Scale=1.875,1.875,1.875
@@ -9,6 +20,7 @@ Flags=1
 [ENTRY]
 ID=151024064
 Asset=Warpig_Walls#Prop-Warpig_Wall1
+Name=Untitled
 Pos=70712,1055.77,51099
 Orient=0,0.996457,0,-0.0841045
 Scale=2.025,2.025,2.025
@@ -17,6 +29,7 @@ Flags=1
 [ENTRY]
 ID=151027992
 Asset=CL-Sick-Pine5#CL-Sick-Pine5
+Name=Untitled
 Pos=71096,1397.85,51709
 Orient=0,-0.380188,0,0.924909
 Scale=1.325,1.325,1.325

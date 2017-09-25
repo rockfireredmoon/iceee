@@ -1,15 +1,17 @@
 [ENTRY]
 ID=151031341
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=74854,846.487,52304
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_vmp_wilds_46_47
-outerRadius=10
+wanderRadius=85
 
 [ENTRY]
 ID=151061635
 Asset=CL-Burnt-Pine3#CL-Burnt-Pine3
+Name=Untitled
 Pos=74589,847.976,52167
 Orient=0,0.731146,0,0.682221
 Scale=2.675,2.675,2.675

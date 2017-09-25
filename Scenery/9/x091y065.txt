@@ -1,4 +1,14 @@
 [ENTRY]
+ID=1154223
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=68876.1,841.727,49091.8
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=12_wpg_Wilds_44_45
+wanderRadius=100
+
+[ENTRY]
 ID=151018592
 Asset=CL-AridBush4#CL-AridBush4
 Name=Untitled
@@ -23,13 +33,4 @@ Name=Untitled
 Pos=68290,749.969,48854
 Orient=0.0193444,-0.0979413,0.192799,0.976146
 Scale=1,1,1
-
-[ENTRY]
-ID=151030345
-Asset=Manipulator-SpawnPoint
-Name=Untitled
-Pos=68975,837.765,48874
-Orient=0,0,0,1
-Scale=1,1,1
-spawnPackage=12_wpg_Wilds_44_45
 

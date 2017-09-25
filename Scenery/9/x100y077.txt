@@ -1,6 +1,17 @@
 [ENTRY]
+ID=1154106
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=75681.2,595.273,57933.9
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=12_vmp_wilds_46_47
+wanderRadius=75
+
+[ENTRY]
 ID=151020301
 Asset=Prop-Pine-Sick_Tree1
+Name=Untitled
 Pos=75703,573.343,58224
 Orient=0,0,0,1
 Scale=6.7,6.7,6.7
@@ -9,11 +20,11 @@ Flags=1
 [ENTRY]
 ID=151031398
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=75539,671.274,58430
 Orient=0,0,0,1
 Scale=0.975,0.975,0.975
+spawnPackage=12_vmp_wilds_46_47
 links_count=1
 link=151031399,1
-spawnPackage=12_vmp_wilds_46_47
-outerRadius=10
 

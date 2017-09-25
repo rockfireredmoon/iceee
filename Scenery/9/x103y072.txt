@@ -1,6 +1,7 @@
 [ENTRY]
 ID=151018004
 Asset=CL-Burnt-Pine5#CL-Burnt-Pine5
+Name=Untitled
 Pos=77942,638.425,54565
 Orient=0,0,0,1
 Scale=2.075,2.075,2.075
@@ -9,17 +10,18 @@ Flags=1
 [ENTRY]
 ID=151031325
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=77971,652.258,54665
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=12_vmp_wilds_46_47
 links_count=1
 link=151031326,1
-spawnPackage=12_vmp_wilds_46_47
-outerRadius=10
 
 [ENTRY]
 ID=151031326
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=77830,663.484,54647
 Orient=0,0,0,1
 Scale=1,1,1
@@ -30,6 +32,7 @@ link=151031327,1
 [ENTRY]
 ID=151031327
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=77811,665.22,54469
 Orient=0,0,0,1
 Scale=1,1,1
@@ -40,18 +43,19 @@ link=151031328,1
 [ENTRY]
 ID=151031329
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=77532,690.865,54361
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_vmp_wilds_46_47
-outerRadius=10
+wanderRadius=100
 
 [ENTRY]
 ID=151031447
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=77985,525.87,54021
 Orient=0,-0.998444,0,0.0557674
 Scale=1,1,1
 spawnPackage=12_vmp_valkalBloodfiend
-outerRadius=1
 

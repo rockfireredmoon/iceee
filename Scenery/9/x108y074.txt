@@ -1,6 +1,7 @@
 [ENTRY]
 ID=151018827
 Asset=Prop-Bush_AridDead1#Prop-Bush_AridDead1
+Name=Untitled
 Pos=81740,754.124,56244
 Orient=0,0,0,1
 Scale=2.825,2.825,2.825
@@ -9,6 +10,7 @@ Flags=1
 [ENTRY]
 ID=151018836
 Asset=Prop-Burnt_Pines#Prop-Burnt_Pine1
+Name=Untitled
 Pos=81700,735.383,56195
 Orient=0,0,0,1
 Scale=1.825,1.825,1.825
@@ -17,6 +19,7 @@ Flags=1
 [ENTRY]
 ID=151018837
 Asset=Prop-Burnt_Pines#Prop-Burnt_Pine5
+Name=Untitled
 Pos=81662,753.595,56186
 Orient=0,0,0,1
 Scale=1,1,1
@@ -25,6 +28,7 @@ Flags=1
 [ENTRY]
 ID=151026684
 Asset=Prop-Burnt_Pine3
+Name=Untitled
 Pos=81669,722.162,55721
 Orient=0,0,0,1
 Scale=1.875,1.875,1.875
@@ -32,28 +36,29 @@ Scale=1.875,1.875,1.875
 [ENTRY]
 ID=151030614
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=81090,677.838,55738
 Orient=0,-0.300294,0,0.953847
 Scale=1,1,1
+spawnPackage=12_vmp_soulstrikerCutthroat_46_47
 links_count=1
 link=151030627,1
-spawnPackage=12_vmp_soulstrikerCutthroat_46_47
-outerRadius=1
 
 [ENTRY]
 ID=151030615
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=81589,665.913,55982
 Orient=0,0.959437,0,0.281922
 Scale=0.95,0.95,0.95
+spawnPackage=12_vmp_soulstrikerCutthroat_46_47
 links_count=1
 link=151030619,1
-spawnPackage=12_vmp_soulstrikerCutthroat_46_47
-outerRadius=1
 
 [ENTRY]
 ID=151030619
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=81561,667.605,55969
 Orient=0,0,0,1
 Scale=0.95,0.95,0.95
@@ -65,6 +70,7 @@ link=151030629,1
 [ENTRY]
 ID=151030620
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=81566,672.951,55884
 Orient=0,0,0,1
 Scale=1,1,1
@@ -75,6 +81,7 @@ link=151030621,1
 [ENTRY]
 ID=151030621
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=81531,677.071,55779
 Orient=0,0,0,1
 Scale=1,1,1
@@ -85,6 +92,7 @@ link=151030623,1
 [ENTRY]
 ID=151030623
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=81459,677.259,55737
 Orient=0,0,0,1
 Scale=1,1,1
@@ -95,6 +103,7 @@ link=151030624,1
 [ENTRY]
 ID=151030624
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=81326,674.454,55716
 Orient=0,0,0,1
 Scale=1,1,1
@@ -105,6 +114,7 @@ link=151030626,1
 [ENTRY]
 ID=151030626
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=81205,674.557,55746
 Orient=0,0,0,1
 Scale=0.95,0.95,0.95
@@ -115,6 +125,7 @@ link=151030627,1
 [ENTRY]
 ID=151030627
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=81109,678.875,55758
 Orient=0,0,0,1
 Scale=0.875,0.875,0.875
@@ -126,6 +137,7 @@ link=151030628,1
 [ENTRY]
 ID=151030628
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=81190,681.492,55867
 Orient=0,0,0,1
 Scale=0.925,0.925,0.925
@@ -136,6 +148,7 @@ link=151030629,1
 [ENTRY]
 ID=151030629
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=81358,681.709,55997
 Orient=0,0,0,1
 Scale=1,1,1
@@ -146,15 +159,16 @@ link=151030628,1
 [ENTRY]
 ID=151030650
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=81682,752.801,56181
 Orient=0,0.703279,0,0.710914
 Scale=1,1,1
 spawnPackage=12_vmp_soulstrikerCutthroat_46_47
-outerRadius=1
 
 [ENTRY]
 ID=151030659
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=81660,703.961,56085
 Orient=0,0,0,1
 Scale=1,1,1
@@ -165,24 +179,26 @@ link=151030666,1
 [ENTRY]
 ID=151030660
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=81665,669.499,55894
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_vmp_soulstrikerCutthroat_46_47
-outerRadius=1
 
 [ENTRY]
 ID=151030661
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=81463,675.622,56113
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_vmp_soulstrikerCutthroat_46_47
-outerRadius=1
+wanderRadius=65
 
 [ENTRY]
 ID=151030666
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=81600,679.19,56063
 Orient=0,0,0,1
 Scale=1,1,1
@@ -193,6 +209,7 @@ link=151030668,1
 [ENTRY]
 ID=151030668
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=81592,671.332,56023
 Orient=0,0,0,1
 Scale=1,1,1

@@ -1,6 +1,17 @@
 [ENTRY]
+ID=1154256
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=70627.8,1253.64,54807.1
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=12_wpg_Wilds_44_45
+wanderRadius=100
+
+[ENTRY]
 ID=151017794
 Asset=CL-Sick-Pine1#CL-Sick-Pine1
+Name=Untitled
 Pos=70638,1268.78,55067
 Orient=0,0,0,1
 Scale=2.075,2.075,2.075
@@ -9,6 +20,7 @@ Flags=1
 [ENTRY]
 ID=151017830
 Asset=Arid_Clutter?d=0.9&s=875677&sz=800
+Name=Untitled
 Pos=71130,1191.05,55012
 Orient=0,-0.247404,0,0.968912
 Scale=1,1,1
@@ -17,6 +29,7 @@ Flags=1
 [ENTRY]
 ID=151018173
 Asset=Prop-Burnt_Pines#Prop-Burnt_Pine4
+Name=Untitled
 Pos=70862,1263.8,55475
 Orient=-0.0533613,-0.581383,-0.0338221,0.811174
 Scale=2.525,2.525,2.525
@@ -25,6 +38,7 @@ Flags=1
 [ENTRY]
 ID=151027814
 Asset=Prop-Burnt_Pines#Prop-Burnt_Pine4
+Name=Untitled
 Pos=70574,1272.94,55238
 Orient=-0.0134914,-0.922125,0.032288,0.385307
 Scale=2.8,2.8,2.8
@@ -33,6 +47,7 @@ Flags=1
 [ENTRY]
 ID=151027815
 Asset=Prop-Burnt_Pines#Prop-Burnt_Pine5
+Name=Untitled
 Pos=70830,1271.88,55439
 Orient=0,0,0,1
 Scale=3.425,3.425,3.425
@@ -41,6 +56,7 @@ Flags=1
 [ENTRY]
 ID=151027823
 Asset=CL-AridBush2#CL-AridBush2
+Name=Untitled
 Pos=70598,1287.51,55243
 Orient=0,0,0,1
 Scale=1,1,1
@@ -49,40 +65,40 @@ Flags=1
 [ENTRY]
 ID=151030423
 Asset=Manipulator-SpawnPoint
-Pos=71129,1184.58,54788
+Name=Untitled
+Pos=71024.9,1184.58,54788
 Orient=0,0,0,1
 Scale=1,1,1
-innerRadius=50
 spawnPackage=12_wpg_Wilds_44_45
-outerRadius=60
+wanderRadius=85
 
 [ENTRY]
 ID=151030424
 Asset=Manipulator-SpawnPoint
-Pos=70982,1256.3,55401
+Name=Untitled
+Pos=71009,1249.09,55366.1
 Orient=0,0,0,1
 Scale=1,1,1
-innerRadius=50
 spawnPackage=12_wpg_Wilds_44_45
-outerRadius=60
+wanderRadius=100
 
 [ENTRY]
 ID=151030425
 Asset=Manipulator-SpawnPoint
-Pos=70821,1292.37,55302
+Name=Untitled
+Pos=70821,1292.37,55287
 Orient=0,0,0,1
 Scale=1,1,1
-innerRadius=50
 spawnPackage=12_wpg_Wilds_44_45
-outerRadius=60
+wanderRadius=75
 
 [ENTRY]
 ID=151030426
 Asset=Manipulator-SpawnPoint
-Pos=70786,1285.58,55113
+Name=Untitled
+Pos=70944.2,1285.58,55113
 Orient=0,0,0,1
 Scale=1,1,1
-innerRadius=50
 spawnPackage=12_wpg_Wilds_44_45
-outerRadius=60
+wanderRadius=100
 

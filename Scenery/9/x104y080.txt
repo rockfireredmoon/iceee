@@ -1,10 +1,20 @@
 [ENTRY]
+ID=1154451
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=78151.3,772.673,60260.8
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=12_vmp_wilds_46_47
+wanderRadius=85
+
+[ENTRY]
 ID=151030844
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=78389,767.403,60110
 Orient=0,0,0,1
 Scale=1,1,1
-innerRadius=75
 spawnPackage=12_vmp_wilds_46_47
-outerRadius=80
+wanderRadius=100
 

@@ -1,6 +1,7 @@
 [ENTRY]
 ID=151030934
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=82186,654.272,58505
 Orient=0,0,0,1
 Scale=1,1,1
@@ -10,38 +11,41 @@ link=151030933,1
 [ENTRY]
 ID=151030935
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=82218,606.548,58682
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_vmp_ rockDervish
-outerRadius=10
+wanderRadius=100
 
 [ENTRY]
 ID=151030938
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=81893,577.192,58710
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_vmp_ rockDervish
-outerRadius=10
+wanderRadius=100
 
 [ENTRY]
 ID=151030939
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=81919,584.273,59000
 Orient=0,-0.40319,0,0.915116
 Scale=1,1,1
+spawnPackage=12_vmp_ rockDervish
 links_count=1
 link=151030940,1
-spawnPackage=12_vmp_ rockDervish
-outerRadius=10
 
 [ENTRY]
 ID=151030947
 Asset=Manipulator-SpawnPoint
-Pos=81822,603.9,59010
+Name=Untitled
+Pos=81806.8,603.9,59010
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_vmp_ rockDervish
-outerRadius=10
+wanderRadius=100
 

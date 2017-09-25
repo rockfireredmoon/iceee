@@ -6,7 +6,7 @@ Pos=72216,1015.79,63771
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_ice_Wilds_45_46
-wanderRadius=30
+wanderRadius=65
 
 [ENTRY]
 ID=151031030
@@ -16,7 +16,7 @@ Pos=72243,1107.7,63941
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_ice_Wilds_45_46
-wanderRadius=30
+wanderRadius=65
 
 [ENTRY]
 ID=151031031
@@ -26,7 +26,7 @@ Pos=72213,1183.67,64084
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_ice_Wilds_45_46
-wanderRadius=30
+wanderRadius=65
 
 [ENTRY]
 ID=151031032
@@ -36,5 +36,5 @@ Pos=72185,1225.46,64230
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_ice_Wilds_45_46
-wanderRadius=30
+wanderRadius=65
 

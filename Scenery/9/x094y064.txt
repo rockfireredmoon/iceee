@@ -114,10 +114,11 @@ Scale=2.45,2.45,2.45
 ID=151030168
 Asset=Manipulator-SpawnPoint
 Name=Untitled
-Pos=70617,780.452,48101
+Pos=70580.2,780.452,48101
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_wpg_Wilds_44_45
+wanderRadius=100
 
 [ENTRY]
 ID=151040114

@@ -1,4 +1,24 @@
 [ENTRY]
+ID=1154129
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=74971.3,832.04,62725.8
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=12_yti_wilds_46_47
+wanderRadius=75
+
+[ENTRY]
+ID=1154130
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=74669.4,889.813,62577.5
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=12_yti_wilds_46_47
+wanderRadius=75
+
+[ENTRY]
 ID=151019333
 Asset=CL-SnowyPine1#CL-SnowyPine1
 Name=Untitled
@@ -15,6 +35,7 @@ Pos=74311,944.945,62472
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_yti_wilds_46_47
+wanderRadius=85
 
 [ENTRY]
 ID=151029566
@@ -24,6 +45,7 @@ Pos=74665,917.509,62938
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_yti_wilds_46_47
+wanderRadius=75
 
 [ENTRY]
 ID=151029567
@@ -33,4 +55,5 @@ Pos=74714,910.925,62391
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_yti_wilds_46_47
+wanderRadius=75
 

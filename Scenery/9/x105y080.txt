@@ -1,6 +1,7 @@
 [ENTRY]
 ID=151018031
 Asset=Arid_Clutter?d=0.9&s=875677&sz=800
+Name=Untitled
 Pos=78956,697.622,60330
 Orient=0,0,0,1
 Scale=1,1,1
@@ -9,26 +10,27 @@ Flags=1
 [ENTRY]
 ID=151030839
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=78811,670.949,60129
 Orient=0,0,0,1
 Scale=1,1,1
-innerRadius=95
 spawnPackage=12_vmp_wilds_46_47
-outerRadius=100
+wanderRadius=100
 
 [ENTRY]
 ID=151030840
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=79272,769.034,60188
 Orient=0,0,0,1
 Scale=1,1,1
-innerRadius=95
 spawnPackage=12_vmp_wilds_46_47
-outerRadius=100
+wanderRadius=100
 
 [ENTRY]
 ID=151061672
 Asset=Prop-Bush_Arid#Prop-Bush_Arid5
+Name=Untitled
 Pos=79339.8,681.753,60019.4
 Orient=-0.00499998,0,0,0.999987
 Scale=2.65,2.65,2.65
@@ -37,6 +39,7 @@ Flags=1
 [ENTRY]
 ID=151061673
 Asset=Prop-Bush_Arid#Prop-Bush_Arid4
+Name=Untitled
 Pos=79322.5,679.212,60036.5
 Orient=0,0,0,1
 Scale=1,1,1
@@ -45,6 +48,7 @@ Flags=1
 [ENTRY]
 ID=151061674
 Asset=Prop-Bush_Arid#Prop-Bush_Arid6
+Name=Untitled
 Pos=79283.5,682.144,60009.5
 Orient=0,0,0,1
 Scale=2.65,2.65,2.65

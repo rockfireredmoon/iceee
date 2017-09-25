@@ -21,6 +21,16 @@ link=1091362,1
 link=1091364,1
 
 [ENTRY]
+ID=1154203
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=72295.6,896.35,58314.6
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=12_wpg_Wilds_45_46
+wanderRadius=100
+
+[ENTRY]
 ID=151017828
 Asset=Arid_Clutter?d=0.9&s=875677&sz=800
 Name=Untitled

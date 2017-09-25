@@ -8,3 +8,13 @@ Scale=1,1,1
 links_count=1
 link=1090983,1
 
+[ENTRY]
+ID=1154421
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=73957.3,1006.93,51991.3
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=12_vmp_wilds_46_47
+wanderRadius=75
+

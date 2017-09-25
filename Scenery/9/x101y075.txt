@@ -1,6 +1,28 @@
 [ENTRY]
+ID=1154118
+Asset=Manipulator#Manipulator-PathNode
+Name=
+Pos=76021.4,601.845,56908.3
+Orient=0,0,0,1
+Scale=1,1,1
+links_count=2
+link=1154119,1
+link=1154117,1
+
+[ENTRY]
+ID=1154119
+Asset=Manipulator#Manipulator-PathNode
+Name=
+Pos=76078.5,593.312,56753.2
+Orient=0,0,0,1
+Scale=1,1,1
+links_count=1
+link=1154118,1
+
+[ENTRY]
 ID=151028242
 Asset=Prop-Pine-Sick_Tree#Prop-Pine-Sick_Tree7
+Name=Untitled
 Pos=76188,530.145,56830
 Orient=0.0998334,0,0,0.995004
 Scale=6.15,6.15,6.15
@@ -8,6 +30,7 @@ Scale=6.15,6.15,6.15
 [ENTRY]
 ID=151028243
 Asset=CL-AridBush5#CL-AridBush5
+Name=Untitled
 Pos=76159,559.378,56909
 Orient=0,0.159318,0,0.987227
 Scale=1.75,1.75,1.75
@@ -15,6 +38,7 @@ Scale=1.75,1.75,1.75
 [ENTRY]
 ID=151028244
 Asset=Prop-Pine-Sick_Tree#Prop-Pine-Sick_Tree6
+Name=Untitled
 Pos=76084,593.51,56618
 Orient=-0.0749297,0,0,0.997189
 Scale=6.15,6.15,6.15
@@ -23,6 +47,7 @@ Flags=1
 [ENTRY]
 ID=151028246
 Asset=CL-Burnt-Pine3#CL-Burnt-Pine3
+Name=Untitled
 Pos=76142,585.568,56512
 Orient=0,-0.854714,0,0.519099
 Scale=1.975,1.975,1.975
@@ -30,6 +55,7 @@ Scale=1.975,1.975,1.975
 [ENTRY]
 ID=151030077
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=75767,664.182,56947
 Orient=0,0,0,1
 Scale=1,1,1
@@ -40,6 +66,7 @@ link=151030078,1
 [ENTRY]
 ID=151030078
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=75815,658.945,56953
 Orient=0,0,0,1
 Scale=1,1,1
@@ -50,6 +77,7 @@ link=151030079,1
 [ENTRY]
 ID=151030079
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=75882,646.774,56904
 Orient=0,0,0,1
 Scale=1,1,1
@@ -59,25 +87,27 @@ link=151030078,1
 [ENTRY]
 ID=151031378
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=76201,617.738,56266
 Orient=0,0,0,1
 Scale=1,1,1
-innerRadius=55
 spawnPackage=12_vmp_wilds_46_47
-outerRadius=60
+wanderRadius=85
 
 [ENTRY]
 ID=151031379
 Asset=Manipulator-SpawnPoint
-Pos=76340,628.724,56526
+Name=Untitled
+Pos=76351.3,628.724,56526
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_vmp_wilds_46_47
-outerRadius=10
+wanderRadius=85
 
 [ENTRY]
 ID=151031382
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=75948,626.223,56259
 Orient=0,0,0,1
 Scale=1,1,1
@@ -88,6 +118,7 @@ link=151031383,1
 [ENTRY]
 ID=151031383
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=76047,623.342,56441
 Orient=0,0,0,1
 Scale=1,1,1

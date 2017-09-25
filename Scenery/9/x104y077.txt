@@ -1,6 +1,17 @@
 [ENTRY]
+ID=1154365
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=78257.3,868.941,58040.5
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=12_vmp_wilds_46_47
+wanderRadius=110
+
+[ENTRY]
 ID=151018020
 Asset=CL-Sick-Pine1#CL-Sick-Pine1
+Name=Untitled
 Pos=78197,874.716,58317
 Orient=0,0,0,1
 Scale=3.65,3.65,3.65
@@ -9,6 +20,7 @@ Flags=1
 [ENTRY]
 ID=151018021
 Asset=CL-Sick-Pine4#CL-Sick-Pine4
+Name=Untitled
 Pos=78147,854.867,58489
 Orient=0,0,0,1
 Scale=1.65,1.65,1.65
@@ -17,30 +29,30 @@ Flags=1
 [ENTRY]
 ID=151030878
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=78013,800.349,58049
 Orient=0,0,0,1
 Scale=1,1,1
-innerRadius=95
 spawnPackage=12_vmp_wilds_46_47
-outerRadius=100
+wanderRadius=110
 
 [ENTRY]
 ID=151030883
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=78553,816.576,58363
 Orient=0,0,0,1
 Scale=1,1,1
-innerRadius=65
 spawnPackage=12_vmp_wilds_46_47
-outerRadius=70
+wanderRadius=150
 
 [ENTRY]
 ID=151030884
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=78487,855.093,57832
 Orient=0,0,0,1
 Scale=1,1,1
-innerRadius=95
 spawnPackage=12_vmp_wilds_46_47
-outerRadius=100
+wanderRadius=85
 

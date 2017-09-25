@@ -1,6 +1,7 @@
 [ENTRY]
 ID=151028308
 Asset=Prop-Battlefield_Barricade
+Name=Untitled
 Pos=76137,629.977,51519
 Orient=0,-0.767543,0,0.640997
 Scale=6.3,6.3,6.3
@@ -8,6 +9,7 @@ Scale=6.3,6.3,6.3
 [ENTRY]
 ID=151028309
 Asset=Prop-Battlefield_Barricade
+Name=Untitled
 Pos=76113,633.007,51247
 Orient=0,-0.535416,0,0.844589
 Scale=9.7,9.7,9.7
@@ -15,6 +17,7 @@ Scale=9.7,9.7,9.7
 [ENTRY]
 ID=151028310
 Asset=Prop-Battlefield_Barricade
+Name=Untitled
 Pos=76011,629.522,51318
 Orient=0,-0.535416,0,0.844589
 Scale=4.475,4.475,4.475
@@ -22,19 +25,20 @@ Scale=4.475,4.475,4.475
 [ENTRY]
 ID=151031336
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=75772,765.261,51241
 Orient=0,0,0,1
 Scale=1,1,1
-innerRadius=65
 spawnPackage=12_vmp_wilds_46_47
-outerRadius=70
+wanderRadius=100
 
 [ENTRY]
 ID=151031340
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=75842,673.986,51591
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_vmp_wilds_46_47
-outerRadius=10
+wanderRadius=85
 

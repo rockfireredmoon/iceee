@@ -1,7 +1,7 @@
 [ENTRY]
 ID=1091146
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=74352.9,858.877,59898.5
 Orient=0,0,0,1
 Scale=1,1,1
@@ -12,7 +12,7 @@ link=1091147,1
 [ENTRY]
 ID=1091147
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=74620.6,824.404,59919.3
 Orient=0,0,0,1
 Scale=1,1,1
@@ -23,12 +23,22 @@ link=1091148,1
 [ENTRY]
 ID=1091148
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=74814.9,799.796,59941.4
 Orient=0,0,0,1
 Scale=1,1,1
 links_count=1
 link=1091147,1
+
+[ENTRY]
+ID=1154093
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=74876.2,828.929,59681.2
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=12_vmp_wilds_46_47
+wanderRadius=75
 
 [ENTRY]
 ID=151024226

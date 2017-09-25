@@ -100,13 +100,15 @@ Pos=75851,795.524,50608
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_vmp_wilds_46_47
+wanderRadius=100
 
 [ENTRY]
 ID=151031335
 Asset=Manipulator-SpawnPoint
 Name=Untitled
-Pos=75853,796.687,50879
+Pos=75881.6,796.687,50879.2
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_vmp_wilds_46_47
+wanderRadius=100
 

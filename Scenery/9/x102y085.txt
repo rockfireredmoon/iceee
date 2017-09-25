@@ -1,6 +1,17 @@
 [ENTRY]
+ID=1154124
+Asset=Manipulator#Manipulator-PathNode
+Name=
+Pos=77155,811.724,63775.6
+Orient=0,0,0,1
+Scale=1,1,1
+links_count=1
+link=151029443,1
+
+[ENTRY]
 ID=151025292
 Asset=CL-SnowyPine2#CL-SnowyPine2
+Name=Untitled
 Pos=76964,1074.28,64096
 Orient=0.0208876,0.549184,-0.0137325,-0.835328
 Scale=1,1,1

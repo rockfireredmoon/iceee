@@ -1,6 +1,7 @@
 [ENTRY]
 ID=151028036
 Asset=CL-Sick-Pine4#CL-Sick-Pine4
+Name=Untitled
 Pos=70570,835.255,49169
 Orient=0,-0.20846,0,0.978031
 Scale=3,3,3
@@ -9,10 +10,10 @@ Flags=1
 [ENTRY]
 ID=151030189
 Asset=Manipulator-SpawnPoint
-Pos=70535,908.655,49023
+Name=Untitled
+Pos=70534.3,908.82,49021.7
 Orient=0,0,0,1
 Scale=1,1,1
-innerRadius=50
 spawnPackage=12_wpg_Wilds_44_45
-outerRadius=80
+wanderRadius=80
 

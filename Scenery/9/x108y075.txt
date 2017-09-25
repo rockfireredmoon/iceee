@@ -1,6 +1,7 @@
 [ENTRY]
 ID=151018036
 Asset=Arid_Clutter?d=0.9&s=875677&sz=800
+Name=Untitled
 Pos=81044,740.714,56892
 Orient=0,0,0,1
 Scale=1,1,1
@@ -9,6 +10,7 @@ Flags=1
 [ENTRY]
 ID=151026683
 Asset=Prop-Burnt_Pines#Prop-Burnt_Pine5
+Name=Untitled
 Pos=81301,714.892,56313
 Orient=-0.009011,0.954488,0.152754,0.256004
 Scale=4.075,4.075,4.075
@@ -16,6 +18,7 @@ Scale=4.075,4.075,4.075
 [ENTRY]
 ID=151026685
 Asset=Prop-Burnt_Pine5
+Name=Untitled
 Pos=81315,689.36,56369
 Orient=0,0,-0.0499792,0.99875
 Scale=2.05,2.05,2.05
@@ -23,28 +26,30 @@ Scale=2.05,2.05,2.05
 [ENTRY]
 ID=151030987
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=81178,715.245,56673
 Orient=0,0,0,1
 Scale=1,1,1
-innerRadius=65
 spawnPackage=12_vmp_wilds_46_47
-outerRadius=70
+wanderRadius=120
 
 [ENTRY]
 ID=151030988
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=81730,723.857,56773
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_vmp_wilds_46_47
-outerRadius=10
+wanderRadius=150
 
 [ENTRY]
 ID=151030989
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=81439,773.013,56839
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_vmp_wilds_46_47
-outerRadius=10
+wanderRadius=150
 

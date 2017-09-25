@@ -1,6 +1,7 @@
 [ENTRY]
 ID=151018822
 Asset=Prop-Burnt_Pines#Prop-Burnt_Pine1
+Name=Untitled
 Pos=81993,746.427,56274
 Orient=0,0.992297,0,-0.123885
 Scale=3.8,3.8,3.8
@@ -9,6 +10,7 @@ Flags=1
 [ENTRY]
 ID=151018823
 Asset=Prop-Burnt_Pines#Prop-Burnt_Pine2
+Name=Untitled
 Pos=81939,756.895,56277
 Orient=0,0,0,1
 Scale=2.1,2.1,2.1
@@ -17,6 +19,7 @@ Flags=1
 [ENTRY]
 ID=151018830
 Asset=Prop-Bush_Arid3#Prop-Bush_Arid3
+Name=Untitled
 Pos=81937,756.943,56294
 Orient=0,0,0,1
 Scale=1,1,1
@@ -25,26 +28,27 @@ Flags=1
 [ENTRY]
 ID=151030695
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=81840,756.842,56299
 Orient=0,-0.741297,0,0.671178
 Scale=1,1,1
 spawnPackage=12_vmp_soulstrikerCutthroat_46_47
-outerRadius=1
 
 [ENTRY]
 ID=151030696
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=82028,757.519,56313
 Orient=0,-0.999667,0,0.0257932
 Scale=1,1,1
+spawnPackage=12_vmp_soulstrikerCutthroat_46_47
 links_count=1
 link=151030697,1
-spawnPackage=12_vmp_soulstrikerCutthroat_46_47
-outerRadius=1
 
 [ENTRY]
 ID=151030697
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=81937,757.083,56320
 Orient=0,0,0,1
 Scale=1,1,1
@@ -55,6 +59,7 @@ link=151030699,1
 [ENTRY]
 ID=151030699
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=81854,757.217,56331
 Orient=0,0,0,1
 Scale=1,1,1
@@ -65,6 +70,7 @@ link=151030700,1
 [ENTRY]
 ID=151030700
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=81840,757.436,56409
 Orient=0,0,0,1
 Scale=1,1,1
@@ -74,35 +80,38 @@ link=151030699,1
 [ENTRY]
 ID=151030705
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=82093,757.201,56258
 Orient=0,0.412321,0,0.911039
 Scale=1,1,1
+spawnPackage=12_vmp_soulstrikerCutthroat_46_47
 links_count=1
 link=151030706,1
-spawnPackage=12_vmp_soulstrikerCutthroat_46_47
-outerRadius=1
 
 [ENTRY]
 ID=151030912
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=82272,748.443,56674
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_vmp_ rockDervish
-outerRadius=10
+wanderRadius=100
 
 [ENTRY]
 ID=151030916
 Asset=Manipulator-SpawnPoint
-Pos=82047,716.249,56760
+Name=Untitled
+Pos=82048.2,716.449,56760.7
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_vmp_ rockDervish
-outerRadius=10
+wanderRadius=100
 
 [ENTRY]
 ID=151030919
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=82354,733.445,56632
 Orient=0,0,0,1
 Scale=1,1,1
@@ -113,6 +122,7 @@ link=151030920,1
 [ENTRY]
 ID=151030920
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=82366,756.026,56842
 Orient=0,0,0,1
 Scale=1,1,1
@@ -123,6 +133,7 @@ link=151030921,1
 [ENTRY]
 ID=151030921
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=82465,715.003,56941
 Orient=0,0,0,1
 Scale=1,1,1

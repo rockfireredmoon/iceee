@@ -1,0 +1,8 @@
+[ENTRY]
+ID=1150695
+Asset=Prop-Boulder#Prop-Boulder8
+Name=Untitled
+Pos=73456.1,862.218,67245.8
+Orient=-0.0226766,0.647637,0.026651,0.761145
+Scale=10,10,10
+

@@ -1,6 +1,17 @@
 [ENTRY]
+ID=1154298
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=77387.6,727.499,60642.7
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=12_vmp_wilds_46_47
+wanderRadius=100
+
+[ENTRY]
 ID=151018059
 Asset=Arid_Clutter?d=0.9&s=875677&sz=800
+Name=Untitled
 Pos=77905,729.551,60281
 Orient=0,-0.223106,0,0.974794
 Scale=1,1,1
@@ -9,6 +20,7 @@ Flags=1
 [ENTRY]
 ID=151018381
 Asset=Prop-Lamp_Post_Junk#Prop-Lamp_Post_Junk2
+Name=Untitled
 Pos=77900,725.468,60554
 Orient=0,0.959437,0,0.281922
 Scale=1.275,1.275,1.275
@@ -17,6 +29,7 @@ Flags=1
 [ENTRY]
 ID=151018385
 Asset=CL-AridRock2#CL-AridRock2
+Name=Untitled
 Pos=77880,731.729,60550
 Orient=0,0,0,1
 Scale=0.575,0.575,0.575
@@ -25,10 +38,10 @@ Flags=1
 [ENTRY]
 ID=151030845
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=77933,699.634,60035
 Orient=0,0,0,1
 Scale=1,1,1
-innerRadius=95
 spawnPackage=12_vmp_wilds_46_47
-outerRadius=100
+wanderRadius=100
 

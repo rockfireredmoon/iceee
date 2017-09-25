@@ -1,6 +1,7 @@
 [ENTRY]
 ID=151019159
 Asset=CL-SnowyPine2#CL-SnowyPine2
+Name=Untitled
 Pos=76246,793.93,62928
 Orient=0,0,0,1
 Scale=2.675,2.675,2.675
@@ -9,15 +10,17 @@ Flags=1
 [ENTRY]
 ID=151029467
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=75828,771.963,62908
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_yti_pogonipCamp
-outerRadius=10
+wanderRadius=65
 
 [ENTRY]
 ID=151029469
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=76136,850.3,62768
 Orient=0,0,0,1
 Scale=1,1,1
@@ -28,6 +31,7 @@ link=151029504,1
 [ENTRY]
 ID=151029504
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=76163,908.69,62576
 Orient=0,0,0,1
 Scale=1,1,1
@@ -37,6 +41,7 @@ link=151029469,1
 [ENTRY]
 ID=151029505
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=76109,915.824,62495
 Orient=0,0,0,1
 Scale=1,1,1
@@ -46,6 +51,7 @@ link=151029506,1
 [ENTRY]
 ID=151029506
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=75898,902.655,62515
 Orient=0,0,0,1
 Scale=1,1,1
@@ -56,20 +62,21 @@ link=151029510,1
 [ENTRY]
 ID=151029510
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=75885,895.95,62317
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=12_yti_pogonipCamp
 links_count=1
 link=151029506,1
-spawnPackage=12_yti_pogonipCamp
-outerRadius=1
 
 [ENTRY]
 ID=151029511
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=76042,896.904,62337
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_yti_pogonipCamp
-outerRadius=10
+wanderRadius=75
 

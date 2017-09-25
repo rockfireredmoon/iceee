@@ -1,25 +1,26 @@
 [ENTRY]
 ID=151019349
 Asset=Prop-Goliath_Mound_Ice1
-Pos=70608,1302.65,65565
+Name=Untitled
+Pos=70607.7,1301.59,65564.1
 Orient=0,0,0,1
 Scale=1.425,1.425,1.425
 
 [ENTRY]
 ID=151031204
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=70649,1330.21,65399
 Orient=0,0.560509,0,0.828149
 Scale=1,1,1
 spawnPackage=12_ice_Goliaths_45_46
-outerRadius=10
 
 [ENTRY]
 ID=151031205
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=70555,1329.19,65389
 Orient=0,-0.732231,0,-0.681056
 Scale=1,1,1
 spawnPackage=12_ice_Goliaths_45_46
-outerRadius=10
 

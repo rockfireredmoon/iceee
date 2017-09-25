@@ -54,6 +54,7 @@ Pos=76410,754.075,53937
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_vmp_wilds_46_47
+wanderRadius=100
 
 [ENTRY]
 ID=151031361

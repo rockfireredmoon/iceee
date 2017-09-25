@@ -1,28 +1,30 @@
 [ENTRY]
 ID=151029559
 Asset=Manipulator-SpawnPoint
-Pos=73561,887.133,63145
+Name=Untitled
+Pos=73518.1,894.38,63199.8
 Orient=0,0,0,1
 Scale=1,1,1
-innerRadius=75
 spawnPackage=12_yti_wilds_46_47
-outerRadius=80
+wanderRadius=75
 
 [ENTRY]
 ID=151029563
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=74155,976.494,63017
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_yti_wilds_46_47
-outerRadius=10
+wanderRadius=65
 
 [ENTRY]
 ID=151029564
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=74042,976.769,63566
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_yti_wilds_46_47
-outerRadius=10
+wanderRadius=75
 

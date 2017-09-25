@@ -1,0 +1,8 @@
+[ENTRY]
+ID=1153188
+Asset=Dng-Subway-Wall?ATS=ATS-Cave_Subway
+Name=Untitled
+Pos=5273.81,195.009,6906.53
+Orient=0,0.696135,0,0.717911
+Scale=1,1,1
+

@@ -1,6 +1,17 @@
 [ENTRY]
+ID=1154308
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=79601.2,722.541,60303.5
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=12_vmp_wilds_46_47
+wanderRadius=100
+
+[ENTRY]
 ID=151017994
 Asset=CL-Burnt-Pine4#CL-Burnt-Pine4
+Name=Untitled
 Pos=80042,676.077,60106
 Orient=0,0,0,1
 Scale=2.7,2.7,2.7
@@ -8,6 +19,7 @@ Scale=2.7,2.7,2.7
 [ENTRY]
 ID=151017995
 Asset=CL-Burnt-Pine5#CL-Burnt-Pine5
+Name=Untitled
 Pos=79983,691.983,60244
 Orient=0,0,0,1
 Scale=1.025,1.025,1.025
@@ -15,6 +27,7 @@ Scale=1.025,1.025,1.025
 [ENTRY]
 ID=151018376
 Asset=Prop-Lamp_Post_Junk#Prop-Lamp_Post_Junk1
+Name=Untitled
 Pos=79527,688.836,60557
 Orient=0,0,0,1
 Scale=1.35,1.35,1.35
@@ -22,6 +35,7 @@ Scale=1.35,1.35,1.35
 [ENTRY]
 ID=151018378
 Asset=CL-AridBush5#CL-AridBush5
+Name=Untitled
 Pos=79524,689.176,60563
 Orient=0,0,0,1
 Scale=1,1,1

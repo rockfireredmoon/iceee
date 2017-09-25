@@ -1,6 +1,17 @@
 [ENTRY]
+ID=1154353
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=80978.9,728.582,57015.3
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=12_vmp_wilds_46_47
+wanderRadius=85
+
+[ENTRY]
 ID=151017998
 Asset=CL-Burnt-Pine2#CL-Burnt-Pine2
+Name=Untitled
 Pos=80679,688.792,57181
 Orient=0,-0.920751,0,0.390152
 Scale=4.425,4.425,4.425
@@ -9,6 +20,7 @@ Flags=1
 [ENTRY]
 ID=151017999
 Asset=CL-Burnt-Pine3#CL-Burnt-Pine3
+Name=Untitled
 Pos=80427,709.179,57056
 Orient=0,0,0,1
 Scale=2.125,2.125,2.125
@@ -17,19 +29,20 @@ Flags=1
 [ENTRY]
 ID=151030906
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=80372,710.419,57321
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_vmp_wilds_46_47
-outerRadius=10
+wanderRadius=120
 
 [ENTRY]
 ID=151030979
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=80732,670.345,57673
 Orient=0,0,0,1
 Scale=1,1,1
-innerRadius=95
 spawnPackage=12_vmp_wilds_46_47
-outerRadius=100
+wanderRadius=100
 

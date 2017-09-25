@@ -1,6 +1,7 @@
 [ENTRY]
 ID=151018790
 Asset=CL-Vampire_Camp1#CL-Vampire_Camp1
+Name=Untitled
 Pos=77967,504.429,53959
 Orient=0,-0.564642,0,0.825336
 Scale=1,1,1
@@ -9,6 +10,7 @@ Flags=1
 [ENTRY]
 ID=151018794
 Asset=CL-Vampire_Camp5#CL-Vampire_Camp5
+Name=Untitled
 Pos=77825,492.822,53683
 Orient=0,-0.947396,0,0.320063
 Scale=1,1,1
@@ -17,6 +19,7 @@ Flags=1
 [ENTRY]
 ID=151026637
 Asset=Prop-Burnt_Pine2
+Name=Untitled
 Pos=77784,458.23,53340
 Orient=0.0799068,0.996701,-0.00113504,-0.0141577
 Scale=4.4,4.4,4.4
@@ -25,56 +28,58 @@ Flags=1
 [ENTRY]
 ID=151031446
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=77940,518.364,53964
 Orient=0,0.104807,0,0.994493
 Scale=1,1,1
 spawnPackage=12_vmp_valkalCaster
-outerRadius=1
 
 [ENTRY]
 ID=151031448
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=77866,501.7,53596
 Orient=0,-0.838759,0,0.544503
 Scale=1,1,1
 spawnPackage=12_vmp_valkalCaster
-outerRadius=1
 
 [ENTRY]
 ID=151031449
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=77813,497.259,53673
 Orient=0,-0.40776,0,0.913089
 Scale=1,1,1
 spawnPackage=12_vmp_valkalBloodfiend
-outerRadius=1
 
 [ENTRY]
 ID=151031453
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=77973,524.011,53455
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_vmp_valkalCaster
-outerRadius=10
+wanderRadius=75
 
 [ENTRY]
 ID=151031454
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=77728,518.747,53874
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_vmp_valkalBloodfiend
-outerRadius=10
+wanderRadius=75
 
 [ENTRY]
 ID=151031504
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=77920,556.071,53314
 Orient=0,0.849481,0,0.52762
 Scale=1,1,1
+spawnPackage=12_vmp_valkalBloodfiend
 links_count=1
 link=151031505,1
-spawnPackage=12_vmp_valkalBloodfiend
-outerRadius=10
 

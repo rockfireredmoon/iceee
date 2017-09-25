@@ -1,6 +1,27 @@
 [ENTRY]
+ID=1154310
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=81136.9,627.632,61255.8
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=12_vmp_wilds_46_47
+wanderRadius=100
+
+[ENTRY]
+ID=1154332
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=81571.8,655.179,61102.3
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=12_vmp_ rockDervish
+wanderRadius=100
+
+[ENTRY]
 ID=151018043
 Asset=CL-Burnt-Pine2#CL-Burnt-Pine2
+Name=Untitled
 Pos=81142,627.775,60901
 Orient=0,0,0,1
 Scale=2.15,2.15,2.15
@@ -9,10 +30,10 @@ Flags=1
 [ENTRY]
 ID=151030956
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=81702,703.743,60840
 Orient=0,0,0,1
 Scale=1,1,1
-innerRadius=75
 spawnPackage=12_vmp_ rockDervish
-outerRadius=80
+wanderRadius=100
 

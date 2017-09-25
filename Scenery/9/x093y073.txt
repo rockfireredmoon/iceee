@@ -40,6 +40,16 @@ Scale=1,1,1
 spawnPackage=wastecult_cultist
 
 [ENTRY]
+ID=1154259
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=70294,1268.74,55005.1
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=12_wpg_Wilds_44_45
+wanderRadius=95
+
+[ENTRY]
 ID=151017937
 Asset=Prop-Boulder_Arid#Prop-Boulder_Arid3
 Name=Untitled

@@ -1,6 +1,7 @@
 [ENTRY]
 ID=151017894
 Asset=CL-Sick-Pine1#CL-Sick-Pine1
+Name=Untitled
 Pos=71235,1159.39,54730
 Orient=0,0,0,1
 Scale=1,1,1
@@ -9,6 +10,7 @@ Flags=1
 [ENTRY]
 ID=151017896
 Asset=CL-Sick-Pine2#CL-Sick-Pine2
+Name=Untitled
 Pos=71229,1151.9,54563
 Orient=0,0,0,1
 Scale=2.8,2.8,2.8
@@ -17,19 +19,30 @@ Flags=1
 [ENTRY]
 ID=151030386
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=70709,1234.56,54308
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_wpg_Wilds_44_45
-outerRadius=200
+wanderRadius=100
+
+[ENTRY]
+ID=151030395
+Asset=Manipulator-SpawnPoint
+Name=Untitled
+Pos=71021,1194.44,54124.2
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=12_wpg_Wilds_44_45
+wanderRadius=100
 
 [ENTRY]
 ID=151030420
 Asset=Manipulator-SpawnPoint
-Pos=71141,1182.19,54451
+Name=Untitled
+Pos=71061.1,1194.07,54394.6
 Orient=0,0,0,1
 Scale=1,1,1
-innerRadius=50
 spawnPackage=12_wpg_Wilds_44_45
-outerRadius=60
+wanderRadius=75
 

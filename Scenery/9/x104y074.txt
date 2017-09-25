@@ -1,6 +1,17 @@
 [ENTRY]
+ID=1154409
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=78066.6,583.155,55580
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=12_vmp_wilds_46_47
+wanderRadius=85
+
+[ENTRY]
 ID=151019941
 Asset=Bldg-Ruins-Small_House1#Bldg-Ruins-Small_House1?ATS=ATS-Ruins
+Name=Untitled
 Pos=78060,701.408,55998
 Orient=0,0,0,1
 Scale=1,1,1
@@ -9,6 +20,7 @@ Flags=1
 [ENTRY]
 ID=151019943
 Asset=CL-Random-Junk3#CL-Random-Junk3
+Name=Untitled
 Pos=78113,707.865,56184
 Orient=0,-0.581035,0,0.813878
 Scale=1,1,1
@@ -17,18 +29,19 @@ Flags=1
 [ENTRY]
 ID=151030585
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=78016,708.808,56033
 Orient=0,0.124674,0,0.992198
 Scale=1,1,1
+spawnPackage=12_vmp_nightMare
 links_count=2
 link=151030586,1
 link=151030589,1
-spawnPackage=12_vmp_nightMare
-outerRadius=1
 
 [ENTRY]
 ID=151030586
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=78079,708.378,56016
 Orient=0,0,0,1
 Scale=1,1,1
@@ -39,6 +52,7 @@ link=151030587,1
 [ENTRY]
 ID=151030587
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=78106,707.954,56037
 Orient=0,0,0,1
 Scale=1,1,1
@@ -49,6 +63,7 @@ link=151030588,1
 [ENTRY]
 ID=151030588
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=78086,708.859,56071
 Orient=0,0,0,1
 Scale=1,1,1
@@ -59,6 +74,7 @@ link=151030589,1
 [ENTRY]
 ID=151030589
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=78026,708.906,56074
 Orient=0,0,0,1
 Scale=1,1,1
@@ -69,39 +85,39 @@ link=151030588,1
 [ENTRY]
 ID=151030591
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=78199,712.945,56084
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_vmp_nightMare
-outerRadius=1
 
 [ENTRY]
 ID=151030592
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=78077,708.731,56199
 Orient=0,-0.632673,0,0.774419
 Scale=1,1,1
 spawnPackage=12_vmp_valkalSteedmaster
-outerRadius=1
 
 [ENTRY]
 ID=151030604
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=78145,709.636,56197
 Orient=0,-0.720831,0,0.693111
 Scale=1,1,1
+spawnPackage=12_vmp_valkalSteedmaster
 links_count=1
 link=151030605,1
-spawnPackage=12_vmp_valkalSteedmaster
-outerRadius=1
 
 [ENTRY]
 ID=151031314
 Asset=Manipulator-SpawnPoint
-Pos=78367,614.799,55557
+Name=Untitled
+Pos=78331.6,614.799,55525
 Orient=0,0,0,1
 Scale=1,1,1
-innerRadius=55
 spawnPackage=12_vmp_wilds_46_47
-outerRadius=60
+wanderRadius=100
 

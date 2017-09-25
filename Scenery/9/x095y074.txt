@@ -308,6 +308,16 @@ Scale=1,1,1
 spawnPackage=wastecult_creature
 
 [ENTRY]
+ID=1154254
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=71621.1,1058.86,55633.9
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=12_wpg_Wilds_44_45
+wanderRadius=100
+
+[ENTRY]
 ID=151017829
 Asset=Arid_Clutter?d=0.9&s=875677&sz=800
 Name=Untitled

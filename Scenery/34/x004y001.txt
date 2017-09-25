@@ -1,0 +1,8 @@
+[ENTRY]
+ID=570427319
+Asset=CL-Vampire_Pass3#CL-Vampire_Pass3
+Name=Untitled
+Pos=4444.75,435.14,1041.97
+Orient=0,0,0,1
+Scale=1.4,1.4,1.4
+

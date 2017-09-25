@@ -1,6 +1,17 @@
 [ENTRY]
+ID=1154107
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=75705.5,576.404,57744.7
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=12_vmp_wilds_46_47
+wanderRadius=55
+
+[ENTRY]
 ID=151018814
 Asset=CL-Vampire_Camp4#CL-Vampire_Camp4
+Name=Untitled
 Pos=75202,769.776,57057
 Orient=0,0,0,1
 Scale=1,1,1
@@ -9,6 +20,7 @@ Flags=1
 [ENTRY]
 ID=151026669
 Asset=Prop-Burnt_Pines#Prop-Burnt_Pine3
+Name=Untitled
 Pos=75249,776.453,57247
 Orient=0,0,0,1
 Scale=3.35,3.35,3.35
@@ -17,81 +29,82 @@ Flags=1
 [ENTRY]
 ID=151029832
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=75123,771.637,57167
 Orient=0,0.41232,0,0.911039
 Scale=1,1,1
 spawnPackage=12_vmp_fl_02_coffinOfBloodmending
-outerRadius=1
 
 [ENTRY]
 ID=151029839
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=75527,722.783,57037
 Orient=0,0.624897,0,0.780707
 Scale=1,1,1
 spawnPackage=12_vmp_fl_02_coffinOfBloodmending
-outerRadius=1
 
 [ENTRY]
 ID=151029840
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=75314,775.385,57065
 Orient=0,0.998951,0,0.0457808
 Scale=1,1,1
 spawnPackage=12_vmp_fl_02_coffinOfBloodmending
-outerRadius=1
 
 [ENTRY]
 ID=151029851
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=75086,771.146,57055
 Orient=0,0.00499983,0,0.999987
 Scale=1,1,1
 spawnPackage=12_vmp_fl_02_coffinOfBloodmending
-outerRadius=1
 
 [ENTRY]
 ID=151030031
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=75260,772.104,57175
 Orient=0,0.904412,0,0.42666
 Scale=1,1,1
 spawnPackage=12_vmp_fl_02_coffinOfBloodmending
-outerRadius=1
 
 [ENTRY]
 ID=151030037
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=75130,771.254,57094
 Orient=0,0.25708,0,0.96639
 Scale=1,1,1
 spawnPackage=12_vmp_bloodchanterAlchemist_46_47
-outerRadius=1
 
 [ENTRY]
 ID=151030040
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=75256,772.594,57095
 Orient=0,0.963558,0,0.267499
 Scale=1,1,1
 spawnPackage=12_vmp_bloodchanterAlchemist_46_47
-outerRadius=1
 
 [ENTRY]
 ID=151030052
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=75185,771.774,57099
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=12_vmp_bloodchanterAlchemist_46_47
 links_count=2
 link=151030054,1
 link=151030067,1
-spawnPackage=12_vmp_bloodchanterAlchemist_46_47
-outerRadius=1
 
 [ENTRY]
 ID=151030054
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=75225,772.187,57084
 Orient=0,0,0,1
 Scale=1,1,1
@@ -102,6 +115,7 @@ link=151030055,1
 [ENTRY]
 ID=151030055
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=75240,772.128,57025
 Orient=0,0,0,1
 Scale=1,1,1
@@ -112,6 +126,7 @@ link=151030057,1
 [ENTRY]
 ID=151030057
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=75190,771.556,57010
 Orient=0,0,0,1
 Scale=1,1,1
@@ -122,6 +137,7 @@ link=151030058,1
 [ENTRY]
 ID=151030058
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=75153,771.406,57052
 Orient=0,0,0,1
 Scale=1,1,1
@@ -132,6 +148,7 @@ link=151030059,1
 [ENTRY]
 ID=151030059
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=75204,771.935,57094
 Orient=0,0,0,1
 Scale=1,1,1
@@ -142,6 +159,7 @@ link=151030060,1
 [ENTRY]
 ID=151030060
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=75252,772.36,57046
 Orient=0,0,0,1
 Scale=1,1,1
@@ -152,6 +170,7 @@ link=151030061,1
 [ENTRY]
 ID=151030066
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=75182,771.401,57001
 Orient=0,0,0,1
 Scale=1,1,1
@@ -162,6 +181,7 @@ link=151030067,1
 [ENTRY]
 ID=151030067
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=75155,771.452,57068
 Orient=0,0,0,1
 Scale=1,1,1
@@ -172,37 +192,38 @@ link=151030066,1
 [ENTRY]
 ID=151030070
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=75346,767.049,57013
 Orient=0,0.314567,0,0.949235
 Scale=1,1,1
+spawnPackage=12_vmp_bloodchanterAlchemist_46_47
 links_count=1
 link=151030071,1
-spawnPackage=12_vmp_bloodchanterAlchemist_46_47
-outerRadius=1
 
 [ENTRY]
 ID=151030081
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=75265,772.301,57195
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_vmp_bloodchanterAlchemist_46_47
-outerRadius=1
 
 [ENTRY]
 ID=151030085
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=75215,781.06,57265
 Orient=0,-0.989621,0,-0.143704
 Scale=1,1,1
+spawnPackage=12_vmp_bloodchanterAlchemist_46_47
 links_count=1
 link=151030087,1
-spawnPackage=12_vmp_bloodchanterAlchemist_46_47
-outerRadius=1
 
 [ENTRY]
 ID=151030087
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=75126,771.616,57228
 Orient=0,0,0,1
 Scale=1,1,1
@@ -213,6 +234,7 @@ link=151030088,1
 [ENTRY]
 ID=151030088
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=75052,772.567,57154
 Orient=0,0,0,1
 Scale=1,1,1
@@ -222,6 +244,7 @@ link=151030087,1
 [ENTRY]
 ID=151030089
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=75043,771.14,57082
 Orient=0,0,0,1
 Scale=1,1,1
@@ -232,11 +255,11 @@ link=151030092,1
 [ENTRY]
 ID=151030092
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=75042,771.678,57132
 Orient=0,0.731146,0,0.682221
 Scale=1,1,1
+spawnPackage=12_vmp_bloodchanterAlchemist_46_47
 links_count=1
 link=151030089,1
-spawnPackage=12_vmp_bloodchanterAlchemist_46_47
-outerRadius=1
 

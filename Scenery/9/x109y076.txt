@@ -1,6 +1,7 @@
 [ENTRY]
 ID=151018834
 Asset=CL-Burnt-Pine3#CL-Burnt-Pine3
+Name=Untitled
 Pos=81985,673.824,57317
 Orient=0,0,0,1
 Scale=2.325,2.325,2.325
@@ -9,6 +10,7 @@ Flags=1
 [ENTRY]
 ID=151018835
 Asset=CL-Burnt-Pine4#CL-Burnt-Pine4
+Name=Untitled
 Pos=82021,691.74,57436
 Orient=0,0,0,1
 Scale=1,1,1
@@ -17,44 +19,47 @@ Flags=1
 [ENTRY]
 ID=151030913
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=82183,753.21,57013
 Orient=0,0,0,1
 Scale=1,1,1
-innerRadius=95
 spawnPackage=12_vmp_ rockDervish
-outerRadius=100
+wanderRadius=100
 
 [ENTRY]
 ID=151030914
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=82230,709.027,57231
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_vmp_ rockDervish
-outerRadius=10
+wanderRadius=100
 
 [ENTRY]
 ID=151030915
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=82246,722.41,57508
 Orient=0,-0.00499998,0,0.999987
 Scale=1,1,1
-innerRadius=45
 spawnPackage=12_vmp_ rockDervish
-outerRadius=50
+wanderRadius=100
 
 [ENTRY]
 ID=151030917
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=82055,648.784,57689
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_vmp_ rockDervish
-outerRadius=10
+wanderRadius=100
 
 [ENTRY]
 ID=151030922
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=82423,719.516,57097
 Orient=0,0,0,1
 Scale=1,1,1
@@ -64,17 +69,18 @@ link=151030921,1
 [ENTRY]
 ID=151030923
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=82418,717.11,57150
 Orient=0,-0.674288,0,0.738469
 Scale=0.95,0.95,0.95
+spawnPackage=12_vmp_ rockDervish
 links_count=1
 link=151030924,1
-spawnPackage=12_vmp_ rockDervish
-outerRadius=10
 
 [ENTRY]
 ID=151030924
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=82453,715.513,57315
 Orient=0,0,0,1
 Scale=0.95,0.95,0.95
@@ -85,6 +91,7 @@ link=151030925,1
 [ENTRY]
 ID=151030925
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=82389,750.392,57467
 Orient=0,0,0,1
 Scale=0.95,0.95,0.95
@@ -95,6 +102,7 @@ link=151030926,1
 [ENTRY]
 ID=151030926
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=82475,700.97,57626
 Orient=0,0,0,1
 Scale=0.95,0.95,0.95
@@ -105,6 +113,7 @@ link=151030927,1
 [ENTRY]
 ID=151030927
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=82463,678.565,57680
 Orient=0,0,0,1
 Scale=0.95,0.95,0.95

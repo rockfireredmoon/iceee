@@ -1,7 +1,7 @@
 [ENTRY]
 ID=1091417
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=71438.5,1054.51,56326.5
 Orient=0,0,0,1
 Scale=1,1,1
@@ -12,7 +12,7 @@ link=1091422,1
 [ENTRY]
 ID=1091420
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=71332.2,1064.9,56380.3
 Orient=0,0,0,1
 Scale=1,1,1
@@ -23,7 +23,7 @@ link=1091417,1
 [ENTRY]
 ID=1091421
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=71283.4,1070.18,56445.4
 Orient=0,0,0,1
 Scale=1,1,1
@@ -33,7 +33,7 @@ link=1091420,1
 [ENTRY]
 ID=1091422
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=71578.5,999.038,56291.3
 Orient=0,0,0,1
 Scale=1,1,1
@@ -45,7 +45,7 @@ link=1091424,1
 [ENTRY]
 ID=1091436
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=71742.6,973.438,56317.6
 Orient=0,0.816314,0,0.577609
 Scale=1,1,1
@@ -58,13 +58,5 @@ Pos=71578,1061.79,56963
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_wpg_Wilds_45_46
-
-[ENTRY]
-ID=151030741
-Asset=Manipulator-SpawnPoint
-Name=Untitled
-Pos=71867,1083.89,56939
-Orient=0,0,0,1
-Scale=1,1,1
-spawnPackage=12_wpg_Wilds_45_46
+wanderRadius=120
 

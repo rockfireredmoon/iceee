@@ -1,0 +1,8 @@
+[ENTRY]
+ID=1151976
+Asset=Dng-Room_Wall?ATS=ATS-Dungeon_Crypt
+Name=
+Pos=940.176,0.0825043,2017.05
+Orient=0,0,0,1
+Scale=1,1,1
+

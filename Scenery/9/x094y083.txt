@@ -1,4 +1,24 @@
 [ENTRY]
+ID=1154266
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=71020.8,899.306,62259.7
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=12_wpg_Wilds_45_46
+wanderRadius=200
+
+[ENTRY]
+ID=1154268
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=70817,918.528,62505.4
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=12_wpg_Wilds_45_46
+wanderRadius=100
+
+[ENTRY]
 ID=151031027
 Asset=Manipulator-SpawnPoint
 Name=Untitled
@@ -6,6 +26,7 @@ Pos=71100.9,954.787,62894.9
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_ice_Wilds_45_46
+wanderRadius=80
 
 [ENTRY]
 ID=151031090
@@ -15,4 +36,5 @@ Pos=70708,975.907,62943
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_ice_Wilds_45_46
+wanderRadius=80
 
