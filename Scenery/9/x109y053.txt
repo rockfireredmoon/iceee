@@ -1,6 +1,15 @@
 [ENTRY]
+ID=1153957
+Asset=Prop-Battlefield1#Prop-Battlefield_Skeleton3
+Name=
+Pos=82497.4,585.808,40213.7
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
 ID=151054976
 Asset=CL-Fence-Stone_Blue1
+Name=Untitled
 Pos=82115,470.915,40282
 Orient=0,0.37092,0,0.928665
 Scale=1,1,1
@@ -8,6 +17,7 @@ Scale=1,1,1
 [ENTRY]
 ID=151054977
 Asset=Prop-Lamp_Post_NB1
+Name=Untitled
 Pos=82141,472.693,40259
 Orient=0,-0.42141,0,0.90687
 Scale=1.35,1.35,1.35
