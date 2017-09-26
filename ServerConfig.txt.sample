@@ -32,20 +32,13 @@ AuthKey=key                ; Salt to the client's password hash. Will break exis
 
 RouterPort=4242            ; Port to listen to router connections (login screen connect)
 SimulatorPort=4300         ; Port to listen for simulator connections
-HTTPListenPort=80          ; Port to listen to HTTP requests.  Set as zero to disable.
+HTTPListenPort=8080        ; Port to listen to HTTP requests.  Set as zero to disable.
 
 ThreadSleep=1              ;Sleep time for simulator and router threads
 MainSleep=1                ;Sleep time for the main window thread
 ErrorSleep=5000            ;Sleep time for some thread errors
 
-
-
-
-SimulatorLog=1             ;Enable logging of simulator messages
-GlobalLogging=1            ;Can override to disable all message logging.
-
 RebroadcastDelay=18000     ;Milliseconds to wait between sending constant object updates
-
 
 SceneryAutosaveTime=300000   ; Milliseconds between autosaving modified scenery pages
 BaseSceneryID=1000000        ; Starting ID for new props on an empty server
@@ -86,19 +79,6 @@ ItemWeaponTypeOverride=-1   ; Always use this value, or -1 for no override.
 MOTD_Name=Server
 MOTD_Channel=*SysChat
 MOTD_Message=Welcome to the server.
-
-
-; Filter bits for status messages (add values for all included types)
-; 1  - Guaranteed show (usually nonstandard warning and diagnostic messages)
-; 2  - Critical message (exceptions)
-; 4  - Errors
-; 8  - Warnings
-; 16 - Standard diagnostic messages.
-; 32 - Verbose diagnostic messages
-MessageLevel=15         ; Show + Critical + Error + Warnings
-;MessageLevel=255        ; All bits, all messages
-;MessageLevel=31         ; Verbose was too much...
-
 
 ; Password for the administrative web panel
 RemoteAuthenticationPassword=admin
@@ -143,19 +123,6 @@ HTTPDeleteRecheckDelay=5000
 
 PartyPositionSendInterval=10000
 
-; Log levels: Log any messages up to and including the given level.
-;  -1     Basic operation messages are always logged.
-;   0     No logging.
-;   1     Critical errors are usually unexpected events or bad data.
-;   2     General errors.  Investigate to see if they need to be fixed.
-;   3     Warnings.  Not always bad, but may indicate problems.
-;   4     Normal diagnostic messages.
-;   5     Verbose diagnostic message.
-
-LogLevelHTTPBase=3
-LogLevelHTTPDistribute=3
-LogLevelSimulatorBase=4
-
 VaultDefaultSize=16
 VaultInitialPurchaseSize=8
 
@@ -169,7 +136,6 @@ DexParryDivisor=30
 DexDodgeDivisor=90
 SpiResistDivisor=30
 PsyResistDivisor=30
-
 
 ForceMaxPacketSize=1000
 

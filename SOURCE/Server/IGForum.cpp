@@ -497,7 +497,6 @@ IGFManager :: IGFManager()
 	mNextAutosaveCheck = 0;
 	mPlatformLaunchMinute = 0;
 	mForumLocked = false;
-	Init();
 }
 
 void IGFManager :: Init(void)

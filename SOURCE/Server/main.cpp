@@ -1048,6 +1048,8 @@ int InitServerMain(int argc, char *argv[]) {
 	aiScriptManager.LoadScripts();
 	aiNutManager.LoadScripts();
 
+	g_IGFManager.Init();
+
 #ifdef WINDOWS_PLATFORM
 	WSAData wsaData;
 	int res = WSAStartup(MAKEWORD(2, 2), &wsaData);
