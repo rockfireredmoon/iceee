@@ -1122,22 +1122,27 @@ int WriteCharacterStats(CharacterStatSet *css, char *buffer, int &wpos, int flag
 			case StatType::SHORT:
 				wpos += PutShort(&buffer[wpos], StatList[a].ID);
 				wpos += PutShort(&buffer[wpos], *(short*)data);
+				g_Logs.server->info("REMOVEME SHORT Stat (%3d) ID: %3d   VAL: %d", a, StatList[a].ID, *(short*)data );
 				break;
 			case StatType::INTEGER:
 				wpos += PutShort(&buffer[wpos], StatList[a].ID);
 				wpos += PutInteger(&buffer[wpos], *(int*)data);
+				g_Logs.server->info("REMOVEME INT Stat (%3d) ID: %3d   VAL: %d", a, StatList[a].ID, *(int*)data );
 				break;
 			case StatType::FLOAT:
 				wpos += PutShort(&buffer[wpos], StatList[a].ID);
 				wpos += PutFloat(&buffer[wpos], *(float*)data);
+				g_Logs.server->info("REMOVEME INT Stat (%3d) ID: %3d   VAL: %f", a, StatList[a].ID, *(float*)data );
 				break;
 			case StatType::CSTRING:
 				wpos += PutShort(&buffer[wpos], StatList[a].ID);
 				wpos += PutStringUTF(&buffer[wpos], (const char*)data);
+				g_Logs.server->info("REMOVEME CSTR Stat (%3d) ID: %3d   VAL: %s", a, StatList[a].ID, (const char*)data);
 				break;
 			case StatType::STRING:
 				wpos += PutShort(&buffer[wpos], StatList[a].ID);
 				wpos += PutStringUTF(&buffer[wpos], ((std::string*)data)->c_str());
+				g_Logs.server->info("REMOVEME STR Stat (%3d) ID: %3d   VAL: %s", a, StatList[a].ID, ((std::string*)data)->c_str());
 				break;
 			default:
 				g_Logs.server->warn("Unknown data type [%v] for stat [%v]", StatList[a].type, StatList[a].name);
