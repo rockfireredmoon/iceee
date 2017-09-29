@@ -74669,6 +74669,5 @@ rarity=3
 base_damage_melee=210
 base_health=3000
 ai_package=custom_heathendel_rogueknight40p
-total_size=2.700000047683716
-
-
+total_size=2.7
+appearance=n4:{["sk"]={["eye"]="83FFDB",["ice"]="D4D4D4"},["c"]="Horde-Wolf_Ice_Goliath",["sz"]="2."}
