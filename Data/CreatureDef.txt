@@ -75562,3 +75562,5 @@ display_name=Boss Hawg's Orders
 profession=1
 creature_category=Inanimate
 ai_package=example
+total_size=2.7
+appearance=n4:{["sk"]={["eye"]="83FFDB",["ice"]="D4D4D4"},["c"]="Horde-Wolf_Ice_Goliath",["sz"]="2."}
