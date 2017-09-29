@@ -12,6 +12,8 @@ info <- {
 trigger <- 0;
 
 function on_use_2134() {
+	inst.spawn(10000001,0,0);
+		
 	inst.sleep(7500);
 	
 	// Phase 1
