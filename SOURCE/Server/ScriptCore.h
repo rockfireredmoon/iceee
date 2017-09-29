@@ -473,6 +473,7 @@ public:
 	std::string GetStatus();
 	bool JumpToLabel(const char *name);
 	bool JumpToLabel(const char *name, std::vector<ScriptParam> parms);
+	bool JumpToLabel(const char *name, std::vector<ScriptParam> parms, bool queue);
 	std::string RunFunctionWithStringReturn(std::string name, std::vector<ScriptParam> parms, bool time);
 	bool RunFunctionWithBoolReturn(std::string name, std::vector<ScriptParam> parms, bool time);
 	bool RunFunction(std::string name, std::vector<ScriptParam> parms, bool time);
@@ -499,6 +500,9 @@ public:
 	int RandMod(int max);
 	int RandModRng(int min, int max);
 	int RandDbl(double min, double max);
+	static long ElapsedMilliseconds();
+	static long AbsoluteSeconds();
+	static long Milliseconds();
 
 	bool WakeVM(std::string name);
 	int ClearQueue();
@@ -511,6 +515,7 @@ public:
 	std::vector<NutScriptEvent*> mQueueRemove;
 
 private:
+	void FinaliseExecution(std::string name, int top);
 	bool ExecEvent(NutScriptEvent *nse, int index);
 	bool DoRunFunction(std::string name, std::vector<ScriptParam> parms, bool time, bool retval);
 

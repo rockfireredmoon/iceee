@@ -9013,7 +9013,6 @@ int PrepExt_CreatureDef(char *buffer, CreatureDefinition *cdef)
 	int spos = wpos;
 	wpos += PutShort(&buffer[wpos], 0);    //Placeholder for number of stats
 	int r = WriteCharacterStats(&cdef->css, buffer, wpos, StatFlags);
-	g_Logs.server->info("REMOVEME writing %d stats for %d", r, cdef->CreatureDefID);
 	PutShort(&buffer[spos], r);           //Write number of stats
 
 	PutShort(&buffer[1], wpos - 3);       //Set message size

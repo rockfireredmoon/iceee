@@ -6,4 +6,5 @@ PriceCredits=1000
 ItemID=8112
 Category=RECIPES
 Status=<undefined>
+QuantitySold=1
 

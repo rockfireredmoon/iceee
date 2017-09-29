@@ -494,7 +494,6 @@ void SimulatorQuery::Clear(void) {
 	args.clear();
 	argCount = 0;
 }
-;
 
 bool SimulatorQuery::ValidArgIndex(unsigned int argIndex) {
 	if (argIndex < 0 || argIndex >= argCount) {

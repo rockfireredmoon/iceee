@@ -3005,7 +3005,7 @@ int WarpExternalHandler::handleCommand(SimulatorThread *sim,
 
 ScriptExecHandler::ScriptExecHandler() :
 		AbstractCommandHandler(
-				"Usage: /script.exec <function> [<arg1> [<arg2> ..]]", 1) {
+				"Usage: /script.exec [-q] <function> [<arg1> [<arg2> ..]]", 1) {
 }
 
 int ScriptExecHandler::handleCommand(SimulatorThread *sim,
@@ -3021,13 +3021,22 @@ int ScriptExecHandler::handleCommand(SimulatorThread *sim,
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 				"Permission denied.");
 	ActiveInstance *inst = creatureInstance->actInst;
-	string funcName = query->GetString(0);
+	int start = 0;
+	bool queue = false;
+	if(string(query->GetString(0)).compare("-q") == 0) {
+		queue = true;
+		start = 1;
+	}
+	if(start > query->argCount)
+		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+				"Missing arguments.");
+	string funcName = query->GetString(start);
 	if (inst->nutScriptPlayer != NULL) {
 		std::vector<ScriptCore::ScriptParam> p;
 		for (unsigned int i = 1; i < query->argCount; i++) {
 			p.push_back(ScriptCore::ScriptParam(query->GetString(i)));
 		}
-		inst->nutScriptPlayer->JumpToLabel(funcName.c_str(), p);
+		inst->nutScriptPlayer->JumpToLabel(funcName.c_str(), p, queue);
 	}
 	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
 }

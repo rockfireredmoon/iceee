@@ -258,8 +258,12 @@ unsigned long PlatformTime :: getMilliseconds(void)
 #ifdef WINDOWS_PLATFORM
 	return GetTickCount();
 #else
-	clock_gettime(CLOCK_MONOTONIC, &timeSpec);
-	return (timeSpec.tv_sec * 1000) + (timeSpec.tv_nsec / 1000000);
+	clock_getres(CLOCK_MONOTONIC_RAW, &timeSpec);
+//	g_Logs.server->info("[REMOVEME] RES!!! TV_NSEC =  %v  TV_SEC = %v", timeSpec.tv_nsec, timeSpec.tv_sec);
+	clock_gettime(CLOCK_MONOTONIC_RAW, &timeSpec);
+	long tm = (timeSpec.tv_sec * 1000) + (timeSpec.tv_nsec / 1000000);
+//	g_Logs.server->info("[REMOVEME] TIME!!! TV_NSEC =  %v  TV_SEC = %v = TM %v", timeSpec.tv_nsec, timeSpec.tv_sec, tm);
+	return tm;
 	// OBSOLETE, CAUSED PROBLEMS
 	//gettimeofday(&timeData, 0);
 	//return (timeData.tv_sec * 1000) + (timeData.tv_usec / 1000);

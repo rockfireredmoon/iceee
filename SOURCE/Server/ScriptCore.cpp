@@ -1,6 +1,7 @@
 #include "ScriptCore.h"
 
 #include <squirrel.h>
+#include <sqstdaux.h>
 #include "sqrat.h"
 #include <stdarg.h>
 #include <stddef.h>
@@ -194,17 +195,33 @@ namespace ScriptCore
 
 	bool ResumeCallback::Execute()
 	{
-    	g_Logs.script->debug("Waking VM for script %v", mNut->def->scriptName);
-		sq_pushbool(mNut->vm, false);
-		if(SQ_SUCCEEDED(sq_wakeupvm(mNut->vm,SQTrue,SQFalse,SQFalse,SQFalse))) {
-			sq_pop(mNut->vm,1); //pop retval
-			if(sq_getvmstate(mNut->vm) == SQ_VMSTATE_IDLE) {
-				sq_settop(mNut->vm,1); //pop roottable
-			}
+		if(sq_getvmstate(mNut->vm) != SQ_VMSTATE_SUSPENDED) {
+			g_Logs.script->debug("Resume event fired, but VM was already awake for script %v", mNut->def->scriptName);
 			return true;
 		}
+		else {
+			g_Logs.script->debug("Waking VM for script %v. Stack has %v", mNut->def->scriptName, sq_gettop(mNut->vm));
+			sq_pushbool(mNut->vm, false);
+			if(SQ_SUCCEEDED(sq_wakeupvm(mNut->vm,true,false,false, false))) {
+				sq_pop(mNut->vm,1); //pop retval
+				if(sq_getvmstate(mNut->vm) == SQ_VMSTATE_IDLE) {
+					sq_settop(mNut->vm,1); //pop roottable
+				}
+				return true;
+			}
+			else {
+				const SQChar *err;
+				sq_getlasterror(mNut->vm);
+				if(SQ_SUCCEEDED(sq_getstring(mNut->vm,-1,&err))) {
+					g_Logs.script->debug("Wakeup failed for script %v, state now %v. %v", mNut->def->scriptName, sq_getvmstate(mNut->vm), err);
+				}
+				else {
+					g_Logs.script->debug("Wakeup failed for script %v, state now %v. No error code could be determined.", mNut->def->scriptName, sq_getvmstate(mNut->vm));
 
-		return false;
+				}
+			}
+			return false;
+		}
 	}
 
 	//
@@ -240,7 +257,6 @@ namespace ScriptCore
 	bool SquirrelFunctionCallback::Execute() {
 		bool wasRunning = mNut->mRunning;
 		mNut->mRunning = true;
-		Sqrat::SharedPtr<bool> ptr = mFunction.Evaluate<bool>();
 		bool v ;
 		try {
 			Sqrat::SharedPtr<bool> ptr = mFunction.Evaluate<bool>();
@@ -492,8 +508,12 @@ namespace ScriptCore
 
 	bool NutPlayer::JumpToLabel(const char *name, std::vector<ScriptParam> parms)
 	{
-		if(def->mQueueEvents) {
+		return JumpToLabel(name, parms, def->mQueueEvents);
+	}
 
+	bool NutPlayer::JumpToLabel(const char *name, std::vector<ScriptParam> parms, bool queue)
+	{
+		if(queue) {
 			g_Logs.script->debug("Queue Jump to label %v in %v", name, def->scriptName.c_str());
 			QueueAdd(new NutScriptEvent(new TimeCondition(0), new RunFunctionCallback(this, name, parms)));
 			return true;
@@ -586,6 +606,9 @@ namespace ScriptCore
 		Sqrat::RootTable(vm).Func("randdbl", &randdbl);
 		Sqrat::RootTable(vm).Func("rand", &randi);
 		Sqrat::RootTable(vm).Func("array_contains", &ArrayContains);
+		Sqrat::RootTable(vm).Func("elapsed_ms", &ElapsedMilliseconds);
+		Sqrat::RootTable(vm).Func("abs_sec", &AbsoluteSeconds);
+		Sqrat::RootTable(vm).Func("ms", &Milliseconds);
 
 		// Add in the script arguments
 		Sqrat::RootTable(vm).SetValue(_SC("__argc"), SQInteger(mArgs.size()));
@@ -623,6 +646,18 @@ namespace ScriptCore
 			ExecQueue();
 		}
 		return true;
+	}
+
+	long NutPlayer::ElapsedMilliseconds() {
+		return g_PlatformTime.getElapsedMilliseconds();
+	}
+
+	long NutPlayer::AbsoluteSeconds() {
+		return g_PlatformTime.getAbsoluteSeconds();
+	}
+
+	long NutPlayer::Milliseconds() {
+		return g_PlatformTime.getMilliseconds();
 	}
 
 	int NutPlayer::Rand(int max) {
@@ -725,9 +760,19 @@ namespace ScriptCore
 			g_Logs.script->debug("Request to halt an inactive VM [%v]", def->scriptName.c_str());
 	}
 
+	void NutPlayer::FinaliseExecution(std::string name, int top) {
+		const SQInteger state = sq_getvmstate(vm);
+		if( state == SQ_VMSTATE_IDLE ) {
+			sq_settop(vm,top);
+		}
+		else {
+			g_Logs.script->debug("Script engine for %v is not idle, so not resetting stack. State is %v", name.c_str(), state);
+		}
+	}
+
 	std::string NutPlayer::RunFunctionWithStringReturn(std::string name, std::vector<ScriptParam> parms, bool time) {
 		if(!mActive) {
-			g_Logs.script->warn("Attempt to run function on inactive script %s.", name.c_str());
+			g_Logs.script->warn("Attempt to run function on inactive script %v.", name.c_str());
 			return "";
 		}
 		unsigned long now = g_PlatformTime.getMilliseconds();
@@ -744,9 +789,10 @@ namespace ScriptCore
 			}
 		}
 		catch(int e) {
-			g_Logs.script->error("Exception when running function %s, failed with %d", name.c_str(), e);
+			g_Logs.script->error("Exception when running function %v, failed with %v", name.c_str(), e);
 		}
-		sq_settop(vm,top);
+		FinaliseExecution(name, top);
+
 		if(time) {
 			mCalls++;
 			mGCCounter++;
@@ -774,7 +820,7 @@ namespace ScriptCore
 		catch(int e) {
 			g_Logs.script->error("Exception when running function %s, failed with %d", name.c_str(), e);
 		}
-		sq_settop(vm,top);
+		FinaliseExecution(name, top);
 		if(time) {
 			mCalls++;
 			mGCCounter++;
@@ -809,7 +855,7 @@ namespace ScriptCore
 		catch(int e) {
 			g_Logs.script->error("Exception when running function %s, failed with %d", name.c_str(), e);
 		}
-		sq_settop(vm,top);
+		FinaliseExecution(name, top);
 
 		if(time) {
 			mCalls++;
@@ -882,13 +928,11 @@ namespace ScriptCore
 		}
 
 		if(mActive && !mHalting && mQueue.size() > 0 && index < mQueue.size()) {
-			g_Logs.script->trace("Maybe retry active: %v", mActive ? "yes" : "no");
 			/*
 			 * If the VM wasn't suspended while handling this event, and the
 			 * event returned false, then we requeue this event for retry
 			 */
 			if(!res && sq_getvmstate(vm) != SQ_VMSTATE_SUSPENDED) {
-				g_Logs.script->debug("Retry active: %v", mActive ? "yes" : "no");
 				mQueueAdd.push_back(nse);
 				mQueue.erase(mQueue.begin() + index);
 			}
@@ -1088,9 +1132,10 @@ namespace ScriptCore
 	        	ResumeCallback *cb = new ResumeCallback(&left.value);
 	        	NutScriptEvent *nse = new NutScriptEvent(new TimeCondition (right.value), cb);
 	        	nse->mRunWhenSuspended = true;
-	        	g_Logs.script->debug("Suspending VM for %v for %v", (&left.value)->def->scriptName, right.value);
+	        	g_Logs.script->debug("Suspending VM for %v for %v.", (&left.value)->def->scriptName, right.value);
 	        	left.value.QueueAdd(nse);
-	            return sq_suspendvm(v);
+	            SQInteger ret = sq_suspendvm(v);
+	            return ret;
 	        }
 	        return sq_throwerror(v, Sqrat::Error::Message(v).c_str());
 	    }

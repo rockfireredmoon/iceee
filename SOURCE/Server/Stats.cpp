@@ -1122,72 +1122,27 @@ int WriteCharacterStats(CharacterStatSet *css, char *buffer, int &wpos, int flag
 			case StatType::SHORT:
 				wpos += PutShort(&buffer[wpos], StatList[a].ID);
 				wpos += PutShort(&buffer[wpos], *(short*)data);
-				g_Logs.server->info("REMOVEME SHORT Stat (%3d) ID: %3d   VAL: %d", a, StatList[a].ID, *(short*)data );
 				break;
 			case StatType::INTEGER:
 				wpos += PutShort(&buffer[wpos], StatList[a].ID);
 				wpos += PutInteger(&buffer[wpos], *(int*)data);
-				g_Logs.server->info("REMOVEME INT Stat (%3d) ID: %3d   VAL: %d", a, StatList[a].ID, *(int*)data );
 				break;
 			case StatType::FLOAT:
 				wpos += PutShort(&buffer[wpos], StatList[a].ID);
 				wpos += PutFloat(&buffer[wpos], *(float*)data);
-				g_Logs.server->info("REMOVEME INT Stat (%3d) ID: %3d   VAL: %f", a, StatList[a].ID, *(float*)data );
 				break;
 			case StatType::CSTRING:
 				wpos += PutShort(&buffer[wpos], StatList[a].ID);
 				wpos += PutStringUTF(&buffer[wpos], (const char*)data);
-				g_Logs.server->info("REMOVEME CSTR Stat (%3d) ID: %3d   VAL: %s", a, StatList[a].ID, (const char*)data);
 				break;
 			case StatType::STRING:
 				wpos += PutShort(&buffer[wpos], StatList[a].ID);
 				wpos += PutStringUTF(&buffer[wpos], ((std::string*)data)->c_str());
-				g_Logs.server->info("REMOVEME STR Stat (%3d) ID: %3d   VAL: %s", a, StatList[a].ID, ((std::string*)data)->c_str());
 				break;
 			default:
 				g_Logs.server->warn("Unknown data type [%v] for stat [%v]", StatList[a].type, StatList[a].name);
 				stcount--;
 			}
-			/* OBSOLETE
-			if(strcmp(StatList[a].type, "string") == 0)
-			{
-				wpos += PutShort(&buffer[wpos], StatList[a].ID);
-				wpos += PutStringUTF(&buffer[wpos], &TableAddr[StatList[a].offset]);
-			}
-			else if(strcmp(StatList[a].type, "short") == 0)
-			{
-				short value = 0;
-				memcpy(&value, &TableAddr[StatList[a].offset], sizeof(short));
-				wpos += PutShort(&buffer[wpos], StatList[a].ID);
-				wpos += PutShort(&buffer[wpos], value);
-			}
-			else if(strcmp(StatList[a].type, "int") == 0)
-			{
-				int value = 0;
-				memcpy(&value, &TableAddr[StatList[a].offset], sizeof(int));
-				wpos += PutShort(&buffer[wpos], StatList[a].ID);
-				wpos += PutInteger(&buffer[wpos], value);
-			}
-			else if(strcmp(StatList[a].type, "integer") == 0)
-			{
-				int value = 0;
-				memcpy(&value, &TableAddr[StatList[a].offset], sizeof(int));
-				wpos += PutShort(&buffer[wpos], StatList[a].ID);
-				wpos += PutInteger(&buffer[wpos], value);
-			}
-			else if(strcmp(StatList[a].type, "float") == 0)
-			{
-				float value = 0;
-				memcpy(&value, &TableAddr[StatList[a].offset], sizeof(float));
-				wpos += PutShort(&buffer[wpos], StatList[a].ID);
-				wpos += PutFloat(&buffer[wpos], value);
-			}
-			else
-			{
-				g_Log.AddMessageFormat("[WARNING] Unknown data type [%s] for stat [%s]", StatList[a].type, StatList[a].name);
-				stcount--;
-			}
-			*/
 			stcount++;
 		}
 	}
