@@ -2015,13 +2015,17 @@ void InstanceNutPlayer::InterruptInteraction(int CID)
 			if(creature == eit->mCreature) {
 				interactions.erase(eit);
 				QueueRemove(eit->mEvent);
-				std::vector<ScriptCore::ScriptParam> p;
-				p.push_back(ScriptCore::ScriptParam(CID));
-				RunFunction("on_interrupt", p, false);
-				return;
+				break;
 			}
 		}
 	}
+	else {
+		g_Logs.server->warn("Interrupt on a creature that doesn't exist. %v", CID);
+	}
+	std::vector<ScriptCore::ScriptParam> p;
+	p.push_back(ScriptCore::ScriptParam(CID));
+	RunFunction("on_interrupt", p, false);
+	return;
 }
 
 //

@@ -475,7 +475,7 @@ public:
 	bool JumpToLabel(const char *name, std::vector<ScriptParam> parms);
 	bool JumpToLabel(const char *name, std::vector<ScriptParam> parms, bool queue);
 	std::string RunFunctionWithStringReturn(std::string name, std::vector<ScriptParam> parms, bool time);
-	bool RunFunctionWithBoolReturn(std::string name, std::vector<ScriptParam> parms, bool time);
+	bool RunFunctionWithBoolReturn(std::string name, std::vector<ScriptParam> parms, bool time, bool defaultIfNoFunction);
 	bool RunFunction(std::string name, std::vector<ScriptParam> parms, bool time);
 	void Broadcast(const char *message);
 	unsigned long GetServerTime();

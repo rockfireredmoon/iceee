@@ -3483,22 +3483,30 @@ void ActiveInstance :: ScriptCallPackageKill(const char *name)
 		ScriptCall(name);
 }
 
-bool ActiveInstance :: ScriptCallUse(int sourceCreatureID, int usedCreatureID, int usedCreatureDefID)
+bool ActiveInstance :: ScriptCallUse(int sourceCreatureID, int usedCreatureID, int usedCreatureDefID, bool defaultIfNoFunction)
 {
 	char buffer[64];
 	if(nutScriptPlayer != NULL) {
 		std::vector<ScriptCore::ScriptParam> p;
 		Util::SafeFormat(buffer, sizeof(buffer), "on_use_%d", usedCreatureDefID);
-		bool ok1 = nutScriptPlayer->RunFunctionWithBoolReturn(buffer, p, true);
+		bool ok1 = nutScriptPlayer->RunFunctionWithBoolReturn(buffer, p, true, defaultIfNoFunction);
 		p.push_back(ScriptCore::ScriptParam(sourceCreatureID));
 		p.push_back(ScriptCore::ScriptParam(usedCreatureID));
 		p.push_back(ScriptCore::ScriptParam(usedCreatureDefID));
-		bool ok2 = nutScriptPlayer->RunFunctionWithBoolReturn("on_use", p, true);
+		bool ok2 = nutScriptPlayer->RunFunctionWithBoolReturn("on_use", p, true, defaultIfNoFunction);
 		return ok1 | ok2;
 	}
 	else {
 		Util::SafeFormat(buffer, sizeof(buffer), "onUse_%d", usedCreatureDefID);
-		return ScriptCall(buffer);
+		bool called = ScriptCall(buffer);
+		/* TSL scripts cannot return a bool for onUse, so if the default is true, and the
+		 * function was not called we return true. If the default is false, we only return
+		 * true if the function was called (i.e. assume the function always allows use of
+		 * the object
+		 */
+		if(!called && defaultIfNoFunction)
+			called = true;
+		return called;
 	}
 }
 
@@ -3725,12 +3733,14 @@ void ActiveInstance :: RunObjectInteraction(SimulatorThread *simPtr, int CID)
 			if(intObj->facing != -1) {
 				simPtr->SetRotation(intObj->facing, 1);
 			}
-
-			ScriptCallUseFinish(simPtr->creatureInst->CreatureID,  cinst->CreatureDefID, cinst->CreatureID);
 		}
 		else {
 			g_Logs.server->warn("No interact %v", CID);
 		}
+
+		/* Even if not an interact, but we still want the on_use_finish as this may be
+		 * a scripted quest instance such as Alimats */
+		ScriptCallUseFinish(simPtr->creatureInst->CreatureID,  cinst->CreatureDefID, cinst->CreatureID);
 	}
 }
 

@@ -403,7 +403,7 @@ public:
 	bool RunScript(std::string &errors);
 	void ScriptCallPackageKill(const char *name);
 	void ScriptCallKill(int CreatureDefID, int CreatureID);
-	bool ScriptCallUse(int sourceCreatureID, int usedCreatureId, int usedCreatureDefID);
+	bool ScriptCallUse(int sourceCreatureID, int usedCreatureID, int usedCreatureDefID, bool defaultIfNoFunction);
 	void ScriptCallUseHalt(int sourceCreatureID, int usedCreatureDefID);
 	void ScriptCallUseFinish(int sourceCreatureID, int usedCreatureDefID, int usedCreaturedID);
 	bool ScriptCall(const char *name);
