@@ -231,17 +231,18 @@ void segfault_sigaction(int signum, siginfo_t *si, void *arg)
 	handlingSignal = true;
 
 //	g_ServerStatus = SERVER_STATUS_STOPPED;
-	g_Log.AddMessageFormatW(MSG_CRIT, "[CRITICAL] signal encountered: %d", signum);
+	g_Log.AddMessageFormatW(MSG_CRIT, "[CRITICAL] signal encountered: %d error: %d code: %d", signum, si->si_errno, si->si_code);
 	switch(signum)
 	{
-	case SIGABRT: fprintf(stderr, "Caught: SIGABRT\n"); break;
-	case SIGINT: fprintf(stderr, "Caught: SIGINT\n"); break;
-	case SIGSEGV: fprintf(stderr, "Caught: SIGSEGV\n"); break;
-	case SIGPIPE: fprintf(stderr, "Caught: SIGPIPE\n"); break;
-	default: fprintf(stderr, "Caught signal: %d\n", signum); break;
+	case SIGABRT: fprintf(stderr, "Caught: SIGABRT from %d\n", si->si_pid); break;
+	case SIGINT: fprintf(stderr, "Caught: SIGINT from %d\n", si->si_pid); break;
+	case SIGSEGV: fprintf(stderr, "Caught: SIGSEGV from %d\n", si->si_pid); break;
+	case SIGPIPE: fprintf(stderr, "Caught: SIGPIPE from %d\n", si->si_pid); break;
+	default: fprintf(stderr, "Caught signal: %d from %d\n", signum, si->si_pid); break;
 	}
 	void *ptrBuf[256];
 	int numPtr = backtrace(ptrBuf, 256);
+	fprintf(stderr, "Our PID: %d\n", getpid());
 	fprintf(stderr, "Number of pointers: %d\n", numPtr);
 	char **result = backtrace_symbols(ptrBuf, numPtr);
 	fprintf(stderr, "Stack trace:\n");
