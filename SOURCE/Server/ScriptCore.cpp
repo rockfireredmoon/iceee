@@ -673,7 +673,11 @@ namespace ScriptCore
 			}
 			sq_call(vm,parms.size() + 1,SQFalse,SQTrue); //calls the function
 		}
-		sq_settop(vm,top);
+
+		if(sq_getvmstate(vm) != SQ_VMSTATE_SUSPENDED) {
+			sq_settop(vm,top);
+		}
+
 
 		if(time) {
 			mCalls++;
