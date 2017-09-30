@@ -3586,11 +3586,9 @@ void CreatureInstance :: CancelPending(void)
 
 void CreatureInstance :: CancelPending_Ex(ActiveAbilityInfo *ability)
 {
-	g_Log.AddMessageFormat("REMOVEME CancelPending_Ex");
 	bool registeredAbility = true;
 	if(serverFlags & ServerFlags::IsPlayer)
 	{
-		g_Log.AddMessageFormat("REMOVEME CancelPending_Ex IS PLAYERE");
 		if(ability->type == AbilityType::Cast)
 			simulatorPtr->RunFinishedCast(false);
 
@@ -3598,13 +3596,11 @@ void CreatureInstance :: CancelPending_Ex(ActiveAbilityInfo *ability)
 		{
 		case ABILITYID_QUEST_INTERACT_OBJECT:  //intentional fallthrough
 		case ABILITYID_QUEST_GATHER_OBJECT:
-			g_Log.AddMessageFormat("REMOVEME CancelPending_Ex IS QO");
 			QuestScript::QuestScriptPlayer *script;
 			if(simulatorPtr == NULL)
 				break;
 
 			if(actInst->nutScriptPlayer != NULL) {
-				g_Log.AddMessageFormat("REMOVEME Running intr on inst");
 				actInst->nutScriptPlayer->InterruptInteraction(CreatureID);
 			}
 
