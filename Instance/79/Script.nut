@@ -53,22 +53,18 @@ function run_phase() {
 		return;
 	}
 	handle = inst.queue(run_phase, 7500);
-	inst.info("handle now " +handle);
 }
 
 function on_interrupt(cid) {
-	inst.info("intr! " + handle);
 	trigger = 0;
 	inst.cancel(handle);
 }
 
 function on_use_2134(cid, used_cid) {
 	handle = inst.queue(run_phase, 7500);
-	inst.info("handle " +handle);
 	return true;
 }
 
 function on_use_finish_2134() {
-	inst.info("alimat!");
 	inst.spawn(1325400187,0,0);
 }
