@@ -6,7 +6,7 @@
 #
 
 export WINEPREFIX=$HOME/.tawtools
-#export WINEARCH=win32
+export WINEARCH=win32
 
 #
 # Use this function to run windows binary tools, as it will check
