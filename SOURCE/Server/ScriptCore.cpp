@@ -842,7 +842,17 @@ namespace ScriptCore
 		}
 		else
 		{
-			mQueue.erase(std::find(mQueue.begin(), mQueue.end(), evt));
+			if(std::find(mQueue.begin(), mQueue.end(), evt) != mQueue.end())
+				mQueue.erase(std::find(mQueue.begin(), mQueue.end(), evt));
+
+			if(std::find(mQueueAdd.begin(), mQueueAdd.end(), evt) != mQueueAdd.end())
+				mQueueAdd.erase(std::find(mQueueAdd.begin(), mQueueAdd.end(), evt));
+
+			if(std::find(mQueueInsert.begin(), mQueueInsert.end(), evt) != mQueueInsert.end())
+				mQueueAdd.erase(std::find(mQueueAdd.begin(), mQueueAdd.end(), evt));
+
+			if(std::find(mQueueRemove.begin(), mQueueRemove.end(), evt) != mQueueRemove.end())
+				mQueueAdd.erase(std::find(mQueueAdd.begin(), mQueueAdd.end(), evt));
 		}
 	}
 

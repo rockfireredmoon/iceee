@@ -8259,8 +8259,6 @@ int SimulatorThread :: handle_query_creature_use(void)
 	if(creatureInst->actInst->GetBoxRange(creatureInst, target) > INTERACT_RANGE)
 		return PrepExt_QueryResponseNull(SendBuf, query.ID);
 
-	//LogMessageL(MSG_DIAG, "  Request creature.use for %d", CID);
-	//int CDef = ResolveCreatureDef(CID);
 	int CDef = target->CreatureDefID;
 
 	if(target->HasStatus(StatusEffects::HENGE))
