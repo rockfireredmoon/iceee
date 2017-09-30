@@ -710,7 +710,7 @@ namespace ScriptCore
 		return val;
 	}
 
-	bool NutPlayer::RunFunctionWithBoolReturn(std::string name, std::vector<ScriptParam> parms, bool time) {
+	bool NutPlayer::RunFunctionWithBoolReturn(std::string name, std::vector<ScriptParam> parms, bool time, bool defaultIfNoFunction) {
 		if(!mActive) {
 			g_Log.AddMessageFormat("[WARNING] Attempt to run function on inactive script %s.", name.c_str());
 			return false;
@@ -723,6 +723,9 @@ namespace ScriptCore
 		try {
 			if(DoRunFunction(name, parms, time, true)) {
 				sq_getbool(vm,-1,&val);
+			}
+			else {
+				val = defaultIfNoFunction;
 			}
 		}
 		catch(int e) {
@@ -967,15 +970,23 @@ namespace ScriptCore
 
 	void NutPlayer::QueueRemove(NutScriptEvent *evt)
 	{
-		mQueueAdd.erase(std::find(mQueueAdd.begin(), mQueueAdd.end(), evt));
-		mQueueRemove.erase(std::find(mQueueRemove.begin(), mQueueRemove.end(), evt));
 		if(mExecuting)
 		{
 			mQueueRemove.insert(mQueueRemove.begin(), evt);
 		}
 		else
 		{
-			mQueue.erase(std::find(mQueue.begin(), mQueue.end(), evt));
+			if(std::find(mQueue.begin(), mQueue.end(), evt) != mQueue.end())
+				mQueue.erase(std::find(mQueue.begin(), mQueue.end(), evt));
+
+			if(std::find(mQueueAdd.begin(), mQueueAdd.end(), evt) != mQueueAdd.end())
+				mQueueAdd.erase(std::find(mQueueAdd.begin(), mQueueAdd.end(), evt));
+
+			if(std::find(mQueueInsert.begin(), mQueueInsert.end(), evt) != mQueueInsert.end())
+				mQueueAdd.erase(std::find(mQueueAdd.begin(), mQueueAdd.end(), evt));
+
+			if(std::find(mQueueRemove.begin(), mQueueRemove.end(), evt) != mQueueRemove.end())
+				mQueueAdd.erase(std::find(mQueueAdd.begin(), mQueueAdd.end(), evt));
 		}
 	}
 

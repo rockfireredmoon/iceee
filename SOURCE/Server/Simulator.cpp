@@ -8451,12 +8451,16 @@ int SimulatorThread :: handle_query_creature_use(void)
 	if(creatureInst->actInst->GetBoxRange(creatureInst, target) > INTERACT_RANGE)
 		return PrepExt_QueryResponseNull(SendBuf, query.ID);
 
-	//LogMessageL(MSG_DIAG, "  Request creature.use for %d", CID);
-	//int CDef = ResolveCreatureDef(CID);
 	int CDef = target->CreatureDefID;
 
-	if(target->HasStatus(StatusEffects::HENGE))
-	{
+	if(target->HasStatus(StatusEffects::HENGE)) {
+
+		/* Ask the instance script if it's OK for this creature to Henge. If there is no script
+		 * function, assume it's OK
+		 */
+		if(!creatureInst->actInst->ScriptCallUse(creatureInst->CreatureID, target->CreatureID, CDef, true))
+			return PrepExt_QueryResponseError(SendBuf, query.ID, "Cannot use object.");
+
 		CreatureUseHenge(CID, CDef);
 		return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
 	}
@@ -8477,6 +8481,12 @@ int SimulatorThread :: handle_query_creature_use(void)
 					ZoneDefInfo *zoneDef = g_ZoneDefManager.GetPointerByID(intObj->WarpID);
 					if(zoneDef != NULL)
 					{
+						/* Ask the instance script if it's OK for this creature to warp. If there is no script
+						 * function, assume it's OK
+						 */
+						if(!creatureInst->actInst->ScriptCallUse(creatureInst->CreatureID, target->CreatureID, CDef, true))
+							return PrepExt_QueryResponseError(SendBuf, query.ID, "Cannot use object.");
+
 						PlayerInstancePlacementData pd;
 						FillPlayerInstancePlacementData(pd, intObj->WarpID, 0);
 						ActiveInstance *inst = g_ActiveInstanceManager.ResolveExistingInstance(pd, zoneDef);
@@ -8507,6 +8517,15 @@ int SimulatorThread :: handle_query_creature_use(void)
 			}
 
 			creatureInst->LastUseDefID = CDef;
+
+
+			/* Ask the instance script if it's OK for this creature to use this interact. If there is no script
+			 * function, assume it's OK
+			 */
+			if(!creatureInst->actInst->ScriptCallUse(creatureInst->CreatureID, target->CreatureID, CDef, true))
+				return PrepExt_QueryResponseError(SendBuf, query.ID, "Cannot use object.");
+
+
 			int size = creatureInst->NormalInteractObject(SendBuf, intObj);
 			if(size > 0)
 				AttemptSend(SendBuf, size);
@@ -8519,8 +8538,10 @@ int SimulatorThread :: handle_query_creature_use(void)
 		if(cdef != NULL && ((cdef->DefHints & CDEF_HINT_USABLE) ||(cdef->DefHints & CDEF_HINT_USABLE_SPARKLY)))
 			ok = true;
 
-		//For any other interact notify the instance on the off chance that it needs to do something.
-		if(creatureInst->actInst->ScriptCallUse(creatureInst->CreatureID, target->CreatureID, CDef))
+		/* Ask the instance script if it's OK for this creature to use this generic object. Only assume
+		 * this is OK if the script function exists and returns true
+		 */
+		if(creatureInst->actInst->ScriptCallUse(creatureInst->CreatureID, target->CreatureID, CDef, false))
 			ok = true;
 
 		if(ok)
@@ -8534,6 +8555,13 @@ int SimulatorThread :: handle_query_creature_use(void)
 	{
 		if(creatureInst->CurrentTarget.targ != NULL)
 		{
+
+			/* Ask the instance script if it's OK for this creature to use this quest related object. If
+			 * the function doesn't exist, assume it is OK
+			 */
+			if(!creatureInst->actInst->ScriptCallUse(creatureInst->CreatureID, target->CreatureID, CDef, true))
+				return PrepExt_QueryResponseError(SendBuf, query.ID, "Cannot use object.");
+
 			creatureInst->LastUseDefID = CDef;
 
 			QuestScript::QuestNutPlayer *questNutScript = g_QuestNutManager.GetActiveScript(creatureInst->CreatureID, QuestID);

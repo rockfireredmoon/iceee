@@ -507,7 +507,7 @@ public:
 	bool JumpToLabel(const char *name);
 	bool JumpToLabel(const char *name, std::vector<ScriptParam> parms);
 	std::string RunFunctionWithStringReturn(std::string name, std::vector<ScriptParam> parms, bool time);
-	bool RunFunctionWithBoolReturn(std::string name, std::vector<ScriptParam> parms, bool time);
+	bool RunFunctionWithBoolReturn(std::string name, std::vector<ScriptParam> parms, bool time, bool defaultIfNoFunction);
 	bool RunFunction(std::string name, std::vector<ScriptParam> parms, bool time);
 
 	// Script functions

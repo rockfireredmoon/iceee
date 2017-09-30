@@ -3667,7 +3667,6 @@ void AbilityCalculator :: SendDamageString(const char *abilityName)
 
 		//
 		if(ciSource->HasStatus(StatusEffects::LEECHING)) {
-			g_Log.AddMessageFormat("REMOVEME Leeching %d from %s to %s", totalDamage, ciTarget->css.display_name, ciSource->css.display_name);
 			ciSource->Heal(totalDamage);
 		}
 

@@ -1497,13 +1497,17 @@ void InstanceNutPlayer::InterruptInteraction(int CID)
 			if(creature == eit->mCreature) {
 				interactions.erase(eit);
 				QueueRemove(eit->mEvent);
-				std::vector<ScriptCore::ScriptParam> p;
-				p.push_back(ScriptCore::ScriptParam(CID));
-				RunFunction("on_interrupt", p, false);
-				return;
+				break;
 			}
 		}
 	}
+	else {
+		g_Log.AddMessageFormat("[WARNING] Interrupt on a creature that doesn't exist. %d", CID);
+	}
+	std::vector<ScriptCore::ScriptParam> p;
+	p.push_back(ScriptCore::ScriptParam(CID));
+	RunFunction("on_interrupt", p, false);
+	return;
 }
 
 //

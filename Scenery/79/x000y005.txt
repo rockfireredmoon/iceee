@@ -15,6 +15,7 @@ Pos=942,116,5725
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=#2134
+sequential=1
 
 [ENTRY]
 ID=1325400068
