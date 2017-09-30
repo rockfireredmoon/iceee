@@ -115,8 +115,6 @@ popd
 
 echo "Copying mod resources"
 pushd SOURCE/ClientMod/EarthEternal
-find . -name '*.nut' | cpio -updm "${SCRATCH}/content"
-find . -name '*.cnut' | cpio -updm "${SCRATCH}/content"
 find . -name '*.jpg' | cpio -updm "${SCRATCH}/content"
 find . -name '*.jpeg' | cpio -updm "${SCRATCH}/content"
 find . -name '*.png' | cpio -updm "${SCRATCH}/content"
