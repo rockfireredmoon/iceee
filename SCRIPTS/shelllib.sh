@@ -5,8 +5,8 @@
 # not be used on Win32/MinGW
 #
 
-export WINEPREFIX=$HOME/.tawtools
-#export WINEARCH=win32
+export WINEPREFIX=$HOME/.cache/valtools
+export WINEARCH=win32
 
 #
 # Use this function to run windows binary tools, as it will check
