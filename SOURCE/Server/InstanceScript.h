@@ -104,6 +104,7 @@ public:
 	int Spawn(int propID, int creatureID, int flags);
 	int SpawnAt(int creatureID, Squirrel::Vector3I location, int facing, int flags);
 	int OLDSpawnAt(int creatureID, float x, float y, float z, int facing, int flags);
+	void InterruptInteraction(int CID);
 	int GetTarget(int CID);
 	bool SetTarget(int CID, int targetCID);
 	std::vector<int>  Scan(Squirrel::Area *location);

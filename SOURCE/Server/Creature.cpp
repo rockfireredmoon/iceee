@@ -3534,6 +3534,10 @@ void CreatureInstance :: CancelPending_Ex(ActiveAbilityInfo *ability)
 			if(simulatorPtr == NULL)
 				break;
 
+			if(actInst->nutScriptPlayer != NULL) {
+				actInst->nutScriptPlayer->InterruptInteraction(CreatureID);
+			}
+
 			std::list<QuestScript::QuestNutPlayer*> l = g_QuestNutManager.GetActiveScripts(CreatureID);
 			std::list<QuestScript::QuestNutPlayer*>::iterator it = l.begin();
 			for(; it != l.end(); ++it) {
@@ -7146,7 +7150,8 @@ void CreatureInstance :: CheckQuestInteract(int CreatureDefID)
 			nut->JumpToLabel(buffer);
 		}
 
-		//actInst->ScriptCallUseFinish(LastUseDefID);
+		// TODO hmm not sure about this, it seems to work on VALD without it
+		actInst->ScriptCallUseFinish(CreatureDefID, LastUseDefID);
 	}
 }
 

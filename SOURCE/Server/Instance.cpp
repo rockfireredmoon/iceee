@@ -3511,6 +3511,7 @@ void ActiveInstance :: FetchNearbyCreatures(SimulatorThread *simPtr, CreatureIns
 
 void ActiveInstance :: RunObjectInteraction(SimulatorThread *simPtr, int CDef)
 {
+	g_Log.AddMessageFormat("REMOVEME ROI! %d", CDef);
 	InteractObject *intObj = g_InteractObjectContainer.GetObjectByID(CDef, simPtr->pld.CurrentZoneID);
 	if(intObj != NULL)
 	{
@@ -3538,8 +3539,11 @@ void ActiveInstance :: RunObjectInteraction(SimulatorThread *simPtr, int CDef)
 			}
 		}
 
-		ScriptCallUseFinish(simPtr->creatureInst->CreatureID,  CDef);
 	}
+
+	/* Even if not an interact, but we still want the on_use_finish as this may be
+	 * a scripted quest instance such as Alimats */
+	ScriptCallUseFinish(simPtr->creatureInst->CreatureID,  CDef);
 }
 
 void ActiveInstance :: ApplyCreatureScale(CreatureInstance *target)

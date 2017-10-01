@@ -1029,6 +1029,14 @@ int InstanceNutPlayer::OLDSpawnAt(int creatureID, float x, float y, float z, int
 }
 
 
+void InstanceNutPlayer::InterruptInteraction(int CID)
+{
+	std::vector<ScriptCore::ScriptParam> p;
+	p.push_back(ScriptCore::ScriptParam(CID));
+	RunFunction("on_interrupt", p, false);
+	return;
+}
+
 //
 //
 //

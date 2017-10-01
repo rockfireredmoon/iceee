@@ -272,6 +272,7 @@ namespace ScriptCore
 		mCallback = callback;
 		mRunWhenSuspended = false;
 		mCancelled = false;
+		mId = -1;
 	}
 
 	NutScriptEvent::~NutScriptEvent() {
@@ -471,14 +472,22 @@ namespace ScriptCore
 		}
 	}
 
-	void NutPlayer::Exec(Sqrat::Function function) {
-		QueueAdd(new ScriptCore::NutScriptEvent(
+	long NutPlayer::Exec(Sqrat::Function function) {
+		return QueueAdd(new ScriptCore::NutScriptEvent(
 					new ScriptCore::TimeCondition(g_Config.SquirrelQueueSpeed / def->mScriptSpeed),
 					new ScriptCore::SquirrelFunctionCallback(this, function)));
 	}
 
-	void NutPlayer::Queue(Sqrat::Function function, int fireDelay) {
-		QueueAdd(new ScriptCore::NutScriptEvent(
+	bool NutPlayer::Cancel(long id) {
+		NutScriptEvent* nse = GetEvent(id);
+		if(nse == NULL)
+			return false;
+		QueueRemove(nse);
+		return true;
+	}
+
+	long NutPlayer::Queue(Sqrat::Function function, int fireDelay) {
+		return QueueAdd(new ScriptCore::NutScriptEvent(
 					new ScriptCore::TimeCondition(fireDelay),
 					new ScriptCore::SquirrelFunctionCallback(this, function)));
 	}
@@ -527,6 +536,7 @@ namespace ScriptCore
 		vector3FClass.Var("z", &Squirrel::Vector3::mZ);
 
 		clazz->Func(_SC("exec"), &NutPlayer::Exec);
+		clazz->Func(_SC("cancel"), &NutPlayer::Cancel);
 		clazz->Func(_SC("queue"), &NutPlayer::Queue);
 		clazz->Func(_SC("clear_queue"), &NutPlayer::QueueClear);
 		clazz->Func(_SC("broadcast"), &NutPlayer::Broadcast);
@@ -793,18 +803,21 @@ namespace ScriptCore
 		return ok;
 	}
 
-	void NutPlayer::QueueInsert(NutScriptEvent *evt)
+	long NutPlayer::QueueInsert(NutScriptEvent *evt)
 	{
 		if(!mActive) {
 			PrintMessage("[WARNING] Script event when not active");
-			return;
+			return -1;
 		}
+
+		evt->mId = mNextId++;
+
 		if(mExecuting)
 		{
 			if(mQueueInsert.size() >= MAX_QUEUE_SIZE)
 			{
 				PrintMessage("[ERROR] Script error: Deferred QueueEvent() list is full %d of %d", mQueueInsert.size(), MAX_QUEUE_SIZE);
-				return;
+				return -1;
 			}
 			mQueueInsert.insert(mQueueInsert.begin(), evt);
 		} else
@@ -813,10 +826,11 @@ namespace ScriptCore
 			if(mQueue.size() >= MAX_QUEUE_SIZE)
 			{
 				PrintMessage("[ERROR] Script error: QueueEvent() list is full [script: %s]", def->scriptName.c_str());
-				return;
+				return -1;
 			}
 			mQueue.insert(mQueue.begin(), evt);
 		}
+		return evt->mId;
 	}
 
 	void NutPlayer::QueueClear()
@@ -832,6 +846,17 @@ namespace ScriptCore
 		{
 			ClearQueue();
 		}
+	}
+
+	NutScriptEvent* NutPlayer::GetEvent(long id) {
+		// Look for the event in all queues
+		std::vector<ScriptCore::NutScriptEvent*>::iterator it;
+		for(it = mQueue.begin(); it != mQueue.end(); ++it) {
+			if((*it)->mId == id) {
+				return *it;
+			}
+		}
+		return NULL;
 	}
 
 	void NutPlayer::QueueRemove(NutScriptEvent *evt)
@@ -856,19 +881,21 @@ namespace ScriptCore
 		}
 	}
 
-	void NutPlayer::QueueAdd(NutScriptEvent *evt)
+	long NutPlayer::QueueAdd(NutScriptEvent *evt)
 	{
 		if(!mActive) {
 			PrintMessage("[WARNING] Script event when not active");
-			return;
+			return -1;
 		}
+
+		evt->mId = mNextId++;
 
 		if(mExecuting)
 		{
 			if(mQueueAdd.size() >= MAX_QUEUE_SIZE)
 			{
 				PrintMessage("[ERROR] Script error: Deferred QueueEvent() list is full %d of %d", mQueueAdd.size(), MAX_QUEUE_SIZE);
-				return;
+				return -1;
 			}
 			mQueueAdd.push_back(evt);
 		} else
@@ -877,10 +904,12 @@ namespace ScriptCore
 			if(mQueue.size() >= MAX_QUEUE_SIZE)
 			{
 				PrintMessage("[ERROR] Script error: QueueEvent() list is full [script: %s]", def->scriptName.c_str());
-				return;
+				return -1;
 			}
 			mQueue.push_back(evt);
 		}
+
+		return evt->mId;
 	}
 
 	void NutPlayer::Broadcast(const char *message)

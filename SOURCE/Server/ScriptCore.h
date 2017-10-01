@@ -420,6 +420,7 @@ public:
 //Holds a triggered event.
 class NutScriptEvent {
 public:
+	unsigned long mId;
 	NutCondition *mCondition;
 	NutCallback *mCallback;
 	bool mRunWhenSuspended;
@@ -438,6 +439,7 @@ public:
 	bool mHalting; //If true, the script is currently halting (subsequent halts will do nothing).
 	bool mExecuting;
 	bool mRunning; //If true, a function call is currently running (will make halts be queued)
+	unsigned long mNextId;
 
 	std::vector<std::string> mArgs; // Scripts may be called with arguments. This vector should be set before initialising the player
 
@@ -457,6 +459,7 @@ public:
 	void RegisterCoreFunctions(NutPlayer *instance, Sqrat::Class<NutPlayer> *clazz);
 	virtual void HaltDerivedExecution();
 	virtual void HaltedDerived();
+	NutScriptEvent* GetEvent(long id);
 	void HaltExecution();
 	void Initialize(NutDef *defPtr, std::string &errors);
 	bool Tick(void);     //Run a single instruction.
@@ -471,10 +474,11 @@ public:
 	unsigned long GetServerTime();
 	void QueueClear();
 	void QueueRemove(NutScriptEvent *evt);
-	void QueueAdd(NutScriptEvent *evt);
-	void QueueInsert(NutScriptEvent *evt);
-	void Exec(Sqrat::Function function);
-	void Queue(Sqrat::Function function, int fireDelay);
+	long QueueAdd(NutScriptEvent *evt);
+	long QueueInsert(NutScriptEvent *evt);
+	bool Cancel(long id);
+	long Exec(Sqrat::Function function);
+	long Queue(Sqrat::Function function, int fireDelay);
 //	void DoQueue(Sqrat::Function function, int fireDelay);
 	bool ExecQueue(void);
 
