@@ -1,13 +1,11 @@
 [BOOK]
-TITLE=The Book Of Blood Keep
+TITLE=Book of Earthend
 
 [PAGE]
-TEXT=<font size="24"><b>Valkals Blood Keep</b></font><br><br>
-
-Party Size: <b>5</b>
-Estimated Time: <b>3 hours</b>
-Difficulty: <b><font color="#ff0000">Extremely Hard</font></b>
-
-<b>WARNING</b> You have entered an Elite Dungeon.  The difficulty and duration of this dungeon is great. We hope you enjoy the challenge but are aware that failure if you dont have the necessary time to complete the dungeon you should be prepared to lose your dungeon progress upon logging out.
-
-Look out for other pages of The Book Of Blood Keep scattered around the dungeon for hints, tips and storyline.
+TEXT=Serving as both the capital and major port city of Earthrise, Earthend boasts the largest poplulation on the entire island. It is situated on the southern tip of the island and is surrounded by massive walls on its northern, eastern and western sides. Because of its ideal location, many merchants have taken up residence here.
+[PAGE]
+TEXT=The northern portion of the city is primarily a residential area. The northern gate sees goods travel to and from the city on a regular basis. The western side of the city is the slums where the less fortunate Beasts reside. While less clean than the other sections of the city, this section of town isn't as poor as some would have you believe.
+[PAGE]
+TEXT=The eastern portion of Earthend is primarily the administrative area. While the city hall lies in the center of town, the various offices and council members' homes reside here. The central portion of Earthend is where all parts of town converge. The ruling body resides in this part of town and the various roads connecting the other portions of town all converge here.
+[PAGE]
+TEXT=Earthend boasts two large ports that transport goods to and from the island. The first of these lies in the southern portion of the city itself. It is large enough to host a fleet of ships all at once. The buildings in the southeastern part of the city house both the Port Authority and the various sailors who live here. The second port lies just to the north and east of the northern wall just outside of town. This port handles those ships that cannot be accommodated by the main port within the city. Goods from the Isle of Corsica to the north often reach the people of Earthrise from here.

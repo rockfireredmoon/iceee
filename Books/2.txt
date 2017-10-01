@@ -1,15 +1,9 @@
 [BOOK]
-TITLE=The Book Of Classes
+TITLE=Southend Passage Parchment
 
 [PAGE]
-TEXT=<font size="24"><b>Introduction</b></font><br><br>This is the <b>Book Of Classes</b>, and describes each of our new classes in details.
+TEXT=Many years ago, a dispute between the people of Corsica and the neighboring island of Earthrise resulted in many goods between the two being refused entry in their respective ports. In spite of the dispute, the goods from both islands were still in high demand on both sides. Earthrise especially had boasted many foreign goods that would enter their port in the southern town of Earthend, items the Corsicans often enjoyed. Corsica, too, often prided themselves as the makers of fabulous items and often traded with the mainland to the north.
 [PAGE]
-TEXT=<font size="24"><b>The Mage</b></font><br><br>Mages are ....
+TEXT=Because of the high demand for goods only available on the other island, some merchants turned to more unscrupulous means to acquire the items they knew were now illegal in their respective lands. It is said a wealthy merchant living in Southend on Corsica secretly funded the excavation of a tunnel leading into Earthrise from beneath the sea. Once completed, this hidden passage became the central trafficking route for smugglers traveling between both islands.
 [PAGE]
-TEXT=<font size="24"><b>The Mage</b></font><br><br>Druids are ....
-[PAGE]
-TEXT=<font size="24"><b>The Mage</b></font><br><br>Knights are ....
-[PAGE]
-TEXT=<font size="24"><b>The Mage</b></font><br><br>Rogues are ....
-[PAGE]
-TEXT=null
+TEXT=For many years, the hidden tunnel that would later become known as the 'Southend Passage' was frequented by many a Beast willing to risk imprisonment by smuggling goods between both islands. Eventually, though, both Corsica and Earthrise came to an accord and the ban on goods was lifted. With the formerly prohibited goods once more becoming legal, the merchants stopped relying on the smugglers for these items and the Passage was eventually blocked up and abandoned. In the years that followed, the now long abandoned Passage became home to many fell creatures who took to inhabiting what was once a haven for illicit goods trading.
