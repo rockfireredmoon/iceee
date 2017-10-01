@@ -5,7 +5,7 @@
 	queue_events = true
 }
 
-function on_use(book_item_id, book_page) {
+function do_on_use(cid, book_item_id, book_page) {
 	if(inst.has_item(cid, book_item_id))
 		inst.message_to(cid, "You already have page " + book_page + " of the Southend Passage Parchment", INFOMSG_INFO);
 	else {
@@ -18,6 +18,6 @@ function on_use(book_item_id, book_page) {
 	}
 }
 
-function on_use_3489(cid, used_cid) on_use(1500001, 1);
-function on_use_3490(cid, used_cid) on_use(1500002, 2);
-function on_use_3491(cid, used_cid) on_use(1500003, 3);
+function on_use_3489(cid, used_cid) do_on_use(cid, 1500001, 1);
+function on_use_3490(cid, used_cid) do_on_use(cid, 1500002, 2);
+function on_use_3491(cid, used_cid) do_on_use(cid, 1500003, 3);
