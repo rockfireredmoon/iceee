@@ -172,6 +172,8 @@ void AbstractInstanceNutPlayer::RegisterAbstractInstanceFunctions(NutPlayer *ins
 	Sqrat::RootTable(vm).Func(_SC("_AB"), &InstanceNutPlayer::GetAbilityID);
 
 	// Some constants
+	Sqrat::ConstTable(vm).Const(_SC("SPAWN_TILE_SIZE"), SpawnTile::SPAWN_TILE_SIZE);
+	Sqrat::ConstTable(vm).Const(_SC("SPAWN_TILE_RANGE"), SpawnTile::SPAWN_TILE_RANGE);
 
 	Sqrat::ConstTable(vm).Const(_SC("INFOMSG_INFO"), INFOMSG_INFO);
 	Sqrat::ConstTable(vm).Const(_SC("INFOMSG_ERROR"), INFOMSG_ERROR);
