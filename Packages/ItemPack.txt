@@ -13,4 +13,5 @@ Data\ItemDef_NewQuest.txt
 Data\ItemDef_ICEEE.txt
 Data\ItemDef_Transformations.txt
 Data\ItemDef_GrunesAndSwineland.txt
+Data\ItemDef_Books.txt
 ;Data\npcarmoursets.txt

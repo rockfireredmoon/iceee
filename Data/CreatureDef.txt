@@ -41601,7 +41601,7 @@ will_regen=1
 might_regen=1
 appearance=p1:{["a"]="Prop-Bookcase2"}
 level=1
-display_name=book shelf
+display_name=Bookshelf
 profession=1
 creature_category=Inanimate
 ai_package=nothing
@@ -75563,4 +75563,56 @@ profession=1
 creature_category=Inanimate
 ai_package=example
 total_size=2.7
-appearance=n4:{["sk"]={["eye"]="83FFDB",["ice"]="D4D4D4"},["c"]="Horde-Wolf_Ice_Goliath",["sz"]="2."}
+appearance=n4:{["sk"]={["eye"]="83FFDB",["ice"]="D4D4D4"},["c"]="Horde-Wolf_Ice_Goliath",["sz"]="2.7"}
+
+[ENTRY]
+ID=3488
+will_regen=1
+might_regen=1
+appearance=p1:{["a"]="Prop-Bookcase",["sz"]="1.5"}
+level=1
+display_name=Small Bookshelf
+profession=1
+creature_category=Inanimate
+ai_package=nothing
+defHints=6144
+ExtraData=item=1500000
+
+[ENTRY]
+ID=3489
+will_regen=1
+might_regen=1
+appearance=p1:{["a"]="Prop-Scroll1",["sz"]="1"}
+level=1
+display_name=Torn Parchment
+profession=1
+creature_category=Inanimate
+ai_package=nothing
+defHints=6144
+ExtraData=item=1500001
+
+[ENTRY]
+ID=3490
+will_regen=1
+might_regen=1
+appearance=p1:{["a"]="Prop-Scroll1",["sz"]="1"}
+level=1
+display_name=Torn Parchment
+profession=1
+creature_category=Inanimate
+ai_package=nothing
+defHints=6144
+ExtraData=item=1500002
+
+[ENTRY]
+ID=3491
+will_regen=1
+might_regen=1
+appearance=p1:{["a"]="Prop-Scroll1",["sz"]="1"}
+level=1
+display_name=Torn Parchment
+profession=1
+creature_category=Inanimate
+ai_package=nothing
+defHints=6144
+ExtraData=item=1500003

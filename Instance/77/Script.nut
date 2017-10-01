@@ -19,3 +19,16 @@ function on_kill(creatureDefID, creatureID) {
 		}
 	}
 }
+
+function on_use_3488(cid, used_cid) {
+	if(inst.has_item(cid, 1500000))
+		inst.message_to(cid, "You already have the Corsica Lighthouse Note", INFOMSG_INFO);
+	else {
+		inst.interact(cid, "Taking the Corsica Lighthouse Note", 3000, false, function() {
+			inst.message_to(cid, "The Corsica Lighthouse Note is now in your inventory.", INFOMSG_INFO);
+			inst.give_item(cid, 1500000);
+			inst.open_book(cid, 1, 1);
+		});
+		return true;
+	}
+}
