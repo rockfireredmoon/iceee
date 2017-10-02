@@ -684,14 +684,6 @@ Scale=1.5,1.5,1.5
 Flags=1
 
 [ENTRY]
-ID=1291845705
-Asset=Prop-Bookcase
-Name=Untitled
-Pos=236.13,300,897.589
-Orient=0,-0.382684,0,0.923879
-Scale=1.5,1.5,1.5
-
-[ENTRY]
 ID=1291845707
 Asset=Prop-Bookcase2
 Name=Untitled
