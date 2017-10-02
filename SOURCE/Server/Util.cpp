@@ -381,11 +381,11 @@ int PrepExt_QueryResponseError(char *buffer, int queryIndex, const char *message
 	return wpos;
 }
 
-int PrepExt_SendBookOpen(char *buffer, int bookID, int page) {
+int PrepExt_SendBookOpen(char *buffer, int bookID, int page, bool refresh) {
 	int wpos = 0;
 	wpos += PutByte(&buffer[wpos], 96);              //_handleBooks
 	wpos += PutShort(&buffer[wpos], 0);             //Placeholder for message size
-	wpos += PutByte(&buffer[wpos], 1); 				// Open
+	wpos += PutByte(&buffer[wpos], refresh ? 2 : 1); 				// Refresh or Open
 	wpos += PutInteger(&buffer[wpos], bookID);
 	wpos += PutInteger(&buffer[wpos], page);
 	PutShort(&buffer[1], wpos - 3);                 //Message size

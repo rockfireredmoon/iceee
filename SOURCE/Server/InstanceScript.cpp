@@ -1441,14 +1441,14 @@ void InstanceNutPlayer::RemoveInteraction(int CID)
 	}
 }
 
-bool InstanceNutPlayer::OpenBook(int CID, int id, int page)
+bool InstanceNutPlayer::OpenBook(int CID, int id, int page, bool refresh)
 {
 	CreatureInstance *creature = actInst->GetInstanceByCID(CID);
 	if(creature == NULL || creature->simulatorPtr == NULL)
 		return false;
 
 	char buf[64];
-	creature->simulatorPtr->AttemptSend(buf, PrepExt_SendBookOpen(buf, id, page - 1));
+	creature->simulatorPtr->AttemptSend(buf, PrepExt_SendBookOpen(buf, id, page - 1, refresh));
 	return false;
 }
 

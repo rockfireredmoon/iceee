@@ -7298,6 +7298,8 @@ int SimulatorThread :: UseItem(unsigned int CCSID)
 		return -1;
 	}
 
+	g_Log.AddMessageFormat("REMOVEME itemdef %d", itemDef->mID);
+
 	// The AddSidekick() function has its own thread guard, so we don't
 	// need one here.
 	bool removeOnUse = true;
@@ -7336,7 +7338,7 @@ int SimulatorThread :: UseItem(unsigned int CCSID)
 	else
 	{
 		if(itemDef->mType == ItemType::SPECIAL && itemDef->mIvType1 == ItemIntegerType::BOOK_PAGE) {
-			AttemptSend(Aux1, PrepExt_SendBookOpen(Aux1, itemDef->mIvMax1, itemDef->mIvMax2 - 1));
+			AttemptSend(Aux1, PrepExt_SendBookOpen(Aux1, itemDef->mIvMax1, itemDef->mIvMax2 - 1, false));
 		}
 		else {
 			ConfigString cfg(itemDef->Params);
@@ -15542,6 +15544,11 @@ bool SimulatorThread :: ActivateActionAbilities(InventorySlot *slot)
 	else {
 		if(itemDef->mActionAbilityId != 0)
 			return creatureInst->RequestAbilityActivation(itemDef->mActionAbilityId) == Ability2::ABILITY_SUCCESS;
+		else {
+			if(itemDef->mType == ItemType::SPECIAL && itemDef->mIvType1 == ItemIntegerType::BOOK_PAGE) {
+				AttemptSend(Aux1, PrepExt_SendBookOpen(Aux1, itemDef->mIvMax1, itemDef->mIvMax2 - 1, true));
+			}
+		}
 		return true;
 	}
 }

@@ -126,7 +126,7 @@ public:
 	void Interrupt(int CID);
 	bool HasItem(int CID, int itemID);
 	bool GiveItem(int CID, int itemID);
-	bool OpenBook(int CID, int id, int page);
+	bool OpenBook(int CID, int id, int page, bool refresh);
 	void LeaveCombat(int CID);
 	bool AI(int CID, const char *label);
 	int GetPartyID(int CID);

@@ -3212,14 +3212,18 @@ class this.Connection extends this.MessageBroadcaster
 		local type = data.getByte();
 		print("ICE! Books " + type + "\n");
 		switch(type) {
-			case 1: 			
+			case 1:
+			case 2: 	 			
 				local bookId = data.getInteger();
 				local pageNumber = data.getInteger();
 				print("ICE! Open Book " + bookId + ", page " + pageNumber + "\n");
 				local bookScreen = this.Screens.get("Books", true);
 				if(bookScreen) {
 					Screens.show("Books");
-					bookScreen.showBookPage(bookId, pageNumber);
+					if(type == 2)
+						bookScreen.refreshAndShowBookPage(bookId, pageNumber);
+					else
+						bookScreen.showBookPage(bookId, pageNumber);
 				}
 				break;
 		}
