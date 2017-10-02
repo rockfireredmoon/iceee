@@ -71,6 +71,10 @@ Spawn=1366,1
 Spawn=1367,1
 
 [ENTRY]
+Name=VBloodkeep_Mehirim
+Spawn=3459,100
+
+[ENTRY]
 Name=VBloodkeep_Palatine
 Spawn=1366,50
 Spawn=1367,50

@@ -28,6 +28,8 @@ const SELF_STUN = 24008;
 const TRIBUTE = 24005;
 const BRINGING_DOWN_THE_HOUSE = 24006;
 
+//Auto Melee, wither, Malice Blast, can opener, Whiplash, Spell Breaker, Earth Shaker Deathly Dart, Healing Hand (Blood Version red animation)
+
 // Creature Definition IDs
 const CDEF_VALKAL1 = 1385;
 const CDEF_VALKAL2 = 3351;
@@ -46,17 +48,22 @@ loc_chamber_room_centre <- Point(5825, 2120);
 loc_platform_rot <- 4;
 
 // Adds
-vampire_adds <- [
-	/*
-    VampireAdd(1150679, Point(4011,2931), 128),
-    VampireAdd(1150680, Point(4011,2631), 0),
+
+valkal_1_mehirim_adds <- [
     VampireAdd(1150681, Point(4155,2697), 214),
     VampireAdd(1150687, Point(4159,2874), 168),
     VampireAdd(1150683, Point(3861,2901), 92),
     VampireAdd(1150684, Point(3859,2683), 40),
+];
+
+valkal_1_palatine_adds <- [
+    VampireAdd(1150679, Point(4011,2931), 128),
+    VampireAdd(1150680, Point(4011,2631), 0),
     VampireAdd(1150685, Point(3803,2820), 66),
     VampireAdd(1150686, Point(3805,2762), 63)
-    */
+];
+
+valkal_2_adds <- [
     VampireAdd(1154484, Point(5700,2044), 11),
     VampireAdd(1154485, Point(5742,2055), 12),
     VampireAdd(1154486, Point(5764,2117), 38),
@@ -170,17 +177,17 @@ function attack_closest(cid) {
 
 /*  Helper function to Spawn Valkals adds. Each one will be instructed to run to a defined place,
    then locate the nearest player and attack them (or anyone who aggros them on the way). */
-function spawn_adds(max) {
+function spawn_adds(max, adds_list) {
 
     max = max.tointeger();
 	if(debug)
 		inst.info("Spawing " + max + " adds");
 
     local l = [];
-    foreach(v in vampire_adds)
+    foreach(v in adds_list)
         l.append(v);
 
-    for(local i = 0 ; i < vampire_adds.len() - max ; i++)
+    for(local i = 0 ; i < adds_list.len() - max ; i++)
         l.remove(randmodrng(0, l.len()));
 
 	if(debug)
@@ -189,7 +196,7 @@ function spawn_adds(max) {
     foreach(v in l) {
 		local cid = inst.spawn(v.prop_id, 0, 0);
 		if(debug)
-			inst.info("Walking to "  +v.pos + " then Spawning " + cid);
+			inst.info("Walking to "  +v.pos + " then Spawning " + cid + " (" + v.prop_id + ")");
         inst.walk_then(cid, v.pos, -1, CREATURE_JOG_SPEED, 0, function(res) {
         
 			if(debug)
@@ -218,9 +225,27 @@ function disengage_valkal(cid) {
 	inst.pause_ai(cid);
 }
 
-/*  Helper function to return Valkal to the center of the room, and picks the closest player
+/*  Helper function to return Valkal 1 to the center of the room, and picks the closest player
    to attack */
-function valkal_engage() {
+function valkal_1_engage() {
+	if(debug)
+		inst.info("Engaging");
+	inst.set_flag(cid_valkal1, SF_NON_COMBATANT, false);
+	inst.resume_ai(cid_valkal1);
+	inst.walk_then(cid_valkal1, loc_room_centre, -1, CREATURE_JOG_SPEED, 0, function(res) {
+		if(res == RES_OK) {
+			/* If we got to the centre of the room without aggro attack the closes */
+        	attack_closest(cid_valkal1);
+        }
+        
+        /* Start health check loop again */
+		inst.exec(valkal1_health);
+	});
+}
+
+/*  Helper function to return Valkal 2 to the center of the room, and picks the closest player
+   to attack */
+function valkal_2_engage() {
 	if(debug)
 		inst.info("Engaging");
 	inst.set_flag(cid_valkal2, SF_NON_COMBATANT, false);
@@ -249,28 +274,43 @@ function heal(cid, limit, on_healed) {
     	inst.exec(on_healed);
 }
 
-/* Starts the sequence of Valkal running from the fight his platform to
-   heal */
-function heal_sequence() {
+/* Starts the sequence of Valkal 1 running from the fight his platform to
+   heal. This Valkal spawns NO adds */
+function valkal_1_heal_sequence() {
     if(debug)
 		inst.info("Heal sequence");
-	spawn_adds(vampire_adds.len());
+    disengage_valkal(cid_valkal1);
+	inst.walk_then(cid_valkal1, loc_platform_centre, -1, CREATURE_JOG_SPEED, 0, function(res) {
+        inst.rotate_creature(cid_valkal1, loc_platform_rot);
+        heal(cid_valkal1, 95, valkal_1_engage); 
+	});
+}
+
+/* Starts the sequence of Valkal 2 running from the fight his platform to
+   heal. This Valkal also spawns some adds while he does */
+function valkal_2_heal_sequence() {
+    if(debug)
+		inst.info("Heal sequence");
+	spawn_adds(valkal_2_adds.len() / 2, valkal_2_adds);
     disengage_valkal(cid_valkal2);
 	inst.walk_then(cid_valkal2, loc_chamber_platform_centre, -1, CREATURE_JOG_SPEED, 0, function(res) {
         inst.rotate_creature(cid_valkal2, loc_platform_rot);
-        heal(cid_valkal2, 95, valkal_engage); 
+        heal(cid_valkal2, 95, valkal_2_engage); 
 	});
 }
 
 /* Valkal 2. He is in another tile that probably is not loaded, so make sure it is and
    spawn after a short delay */
 function spawn_valkal_2() {
+	/* Reset the phase */
+	phase = 0;
+
     if(debug)
 		inst.info("Spawning Valkal2");
 	inst.load_spawn_tile(valkal2_spawn_tile);
 	
 	/* Preload add tiles as well */
-	foreach(v in vampire_adds) {
+	foreach(v in valkal_2_adds) {
 		inst.load_spawn_tile(v.tile());
     }
     
@@ -308,7 +348,7 @@ function valkal_flee() {
 function tribute() {
     if(debug)
 		inst.info("Tribute");
-	spawn_adds(vampire_adds.len() / 2);
+	spawn_adds(valkal_2_adds.len() / 2, valkal_2_adds);
     disengage_valkal(cid_valkal2);
 	inst.walk_then(cid_valkal2, loc_chamber_platform_front, 192, CREATURE_JOG_SPEED, 0, function(res) {
         if(debug)
@@ -336,14 +376,14 @@ function tribute() {
 							inst.set_flag(cid_valkal2, SF_NON_COMBATANT, true);
 					        inst.queue(function() {
 								inst.leave_combat(cid_valkal2);  
-					            valkal_engage();
+					            valkal_2_engage();
 					        }, 16000);
 					    }
 		            	else {	     
 							inst.leave_combat(cid_valkal2);
 	            			if(debug)       	
 	                			inst.info("Stunned fail"); 
-					        valkal_engage();
+					        valkal_2_engage();
 					    }
 		            }, 6000);
 	            }
@@ -351,7 +391,7 @@ function tribute() {
 	        else {
 	            if(debug)       	
 	            	inst.info("Found no players");            
-				valkal_engage();
+				valkal_2_engage();
 			}
 	    }, 1000);
     });
@@ -366,10 +406,10 @@ function bringing_down_the_house() {
         if(!inst.creature_use(cid_valkal2, BRINGING_DOWN_THE_HOUSE)) {
         	if(debug)
             	inst.info("Failed to bring down the house");
-            valkal_engage();
+            valkal_2_engage();
         }
         else {
-            inst.queue(valkal_engage, 10000);
+            inst.queue(valkal_2_engage, 10000);
 	    }
     });
 }
@@ -424,80 +464,63 @@ function valkal1_health() {
     else {
     	valkal1_full_health_count = 0;
     	
-	    if(health <= 5 && phase < 10) {
+	    if(health <= 5 && phase < 9) {
 	        // Flee and leave this loop
 	        if(debug)
 	        	inst.info("Flee!");
 	        valkal_flee();
 	        return;
 	    }
-		if(health <= 10 && phase < 9) {
-	        // Bringing Down the House 3
+	    else if(health <= 15 && phase < 8) {
 	        if(debug)
-	        	inst.info("Bringing Down the House 3");
-	        phase = 9;        
-	        bringing_down_the_house();
-	    }
-	    else if(health <= 20 && phase < 8) {
-	        // Bringing Down the House 2
-	        if(debug)
-	        	inst.info("Bringing Down the House 2");
+	        	inst.info("TODO: CAST INFERNO");
 	        phase = 8;
-	        bringing_down_the_house();
 	    }
-	    else if(health <= 25 && phase < 7) {
-	        // Heal 3
+	    else if(health <= 30 && phase < 7) {
 	        if(debug)
-	        	inst.info("Heal 3");
+	        	inst.info("Spawn 5");
 	        phase = 7;
-	        heal_sequence();
+			spawn_adds(valkal_1_mehirim_adds.len(), valkal_1_mehirim_adds);
+			spawn_adds(valkal_1_palatine_adds.len() / 2, valkal_1_palatine_adds);
 	    }
-	    else if(health <= 30 && phase < 6) {
-	        // Bringing Down the House 1
+	    else if(health <= 40 && phase < 6) {
 	        if(debug)
-	        	inst.info("Bringing Down the House 1");
+	        	inst.info("Spawn 4");
 	        phase = 6;
-	        bringing_down_the_house();
+			spawn_adds(valkal_1_mehirim_adds.len() / 2, valkal_1_mehirim_adds);
+			spawn_adds(valkal_1_palatine_adds.len() / 2, valkal_1_palatine_adds);
 	    }
-	    else if(health <= 40 && phase < 5) {
-	        // Tribute 3
-	        if(debug)
-	        	inst.info("Tribute 3");
-	        tribute();
-	        phase = 5;
-	        return;
-	    }
-	    else if(health <= 50 && phase < 4) {
-	        // Heal 2
+	    else if(health <= 50 && phase < 5) {
 	        if(debug)
 	        	inst.info("Heal 2");
-	        phase = 4;
-	        heal_sequence();
+	        phase = 5;
+	        valkal_1_heal_sequence();
 	        return;
 	    }
-	    else if(health <= 60 && phase < 3) {
-	        // Tribute 2
+	    else if(health <= 60 && phase < 4) {
 	        if(debug)
-	        	inst.info("Tribute 2");
-	        phase = 3;
-	        tribute();
-	        return;
+	        	inst.info("Spawn 3");
+	        phase = 4;
+			spawn_adds(valkal_1_mehirim_adds.len(), valkal_1_mehirim_adds);
 	    }
-	    else if(health <= 75 && phase < 2) {
-	        // Heal 1
+	    else if(health <= 75 && phase < 3) {
 	        if(debug)
 	        	inst.info("Heal 1");
-	        phase = 2;
-	        heal_sequence();
+	        phase = 3;
+	        valkal_1_heal_sequence();
 	        return;
 	    }
-	    else if(health <= 80 && phase < 1) {
-	        // Tribute 1
+	    else if(health <= 80 && phase < 2) {
 	        if(debug)
-	        	inst.info("Tribute 1");
+	        	inst.info("Spawn 2");
+			spawn_adds(valkal_1_palatine_adds.len() / 2, valkal_1_palatine_adds);
+	        phase = 2;
+	    }
+	    else if(health <= 90 && phase < 1) {
+			spawn_adds(valkal_1_mehirim_adds.len(), valkal_1_mehirim_adds);
+	        if(debug)
+	        	inst.info("Spawn 1");
 	        phase = 1;
-	        tribute();
-	        return;
 	    }
 	    
 		inst.exec(valkal1_health);
@@ -533,14 +556,6 @@ function valkal2_health() {
 	}
     else {
     	valkal1_full_health_count = 0;
-    	
-	    if(health <= 5 && phase < 10) {
-	        // Flee and leave this loop
-	        if(debug)
-	        	inst.info("Flee!");
-	        valkal_flee();
-	        return;
-	    }
 		if(health <= 10 && phase < 9) {
 	        // Bringing Down the House 3
 	        if(debug)
@@ -560,7 +575,7 @@ function valkal2_health() {
 	        if(debug)
 	        	inst.info("Heal 3");
 	        phase = 7;
-	        heal_sequence();
+	        valkal_2_heal_sequence();
 	    }
 	    else if(health <= 30 && phase < 6) {
 	        // Bringing Down the House 1
@@ -582,7 +597,7 @@ function valkal2_health() {
 	        if(debug)
 	        	inst.info("Heal 2");
 	        phase = 4;
-	        heal_sequence();
+	        valkal_2_heal_sequence();
 	        return;
 	    }
 	    else if(health <= 60 && phase < 3) {
@@ -598,7 +613,7 @@ function valkal2_health() {
 	        if(debug)
 	        	inst.info("Heal 1");
 	        phase = 2;
-	        heal_sequence();
+	        valkal_2_heal_sequence();
 	        return;
 	    }
 	    else if(health <= 80 && phase < 1) {

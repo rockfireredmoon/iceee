@@ -1995,7 +1995,7 @@ Name=Untitled
 Pos=3719.4,480,3009.77
 Orient=0,0.452886,0,0.891568
 Scale=1,1,1
-spawnPackage=VBloodkeep_Palatine
+spawnPackage=VBloodkeep_Mehirim
 maxActive=0
 
 [ENTRY]
@@ -2005,7 +2005,7 @@ Name=Untitled
 Pos=3737.9,480,2588.7
 Orient=0,-0.314567,0,0.949235
 Scale=1,1,1
-spawnPackage=VBloodkeep_Palatine
+spawnPackage=VBloodkeep_Mehirim
 maxActive=0
 
 [ENTRY]
@@ -4155,7 +4155,7 @@ link=1151588,1
 [ENTRY]
 ID=1151729
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=2988.25,600,3613.88
 Orient=0,0.688921,0,0.724836
 Scale=1,1,1
