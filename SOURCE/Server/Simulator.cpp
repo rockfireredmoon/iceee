@@ -2,7 +2,7 @@
 #include <math.h>
 #include <fstream>
 #include <string>
-#include <time.h>
+#include <time.h> 
 
 #include "Simulator.h"
 #include "StringList.h"
@@ -8560,64 +8560,46 @@ int SimulatorThread :: handle_query_creature_use(void)
 		CreatureDefinition *cdef = CreatureDef.GetPointerByCDef(target->CreatureDefID);
 		std::string error = "Cannot use object.";
 
-		// TODO
-		// This is the wrong place for this. We need to create a quest interaction
-		// and then execute this code when that completes, not do it directly
+		/* Is the object an ITEM_GIVER? (Item ids given are in Extra Data) */
+		if(cdef != NULL && (cdef->DefHints & CDEF_HINT_ITEM_GIVER) != 0) {
+			/* For now only allow use if the player doesn't have any of the items pointed to by
+			 * the creatures ExtraData. In this case, pick the first item they don't have and add it their
+			 * inventory
+			 */
+			STRINGLIST args;
+			STRINGLIST items;
+			Util::Split(cdef->ExtraData.c_str(), ",", args);
+			std::vector<string>::iterator it;
+			for(it = args.begin(); it != args.end(); ++it) {
+				items.clear();
+				Util::Split((*it).c_str(), "=", items);
+				if(items[0].compare("item") == 0) {
+					/* For now we only allow use if the player doesn't already have
+					 * the item. There could be other uses for this though. I'll
+					 * add logic as and when it's needed
+					 */
+					int id = Util::GetInteger(items[1]);
+					if(creatureInst->charPtr->inventory.GetItemPtrByID(id) == NULL) {
+						ItemDef *item = g_ItemManager.GetSafePointerByID(id);
+						if(item->mID == 0) {
+							Util::SafeFormat(Aux1, sizeof(Aux1), "Item with ID [%d] not found. Incorrect Creature Definition for an ITEM_GIVER.", id);
+							error = Aux1;
+						}
+						else {
+							creatureInst->SelectTarget(target);
+							Util::SafeFormat(Aux1, sizeof(Aux1), "Taking %s", item->mDisplayName.c_str());
+							AttemptSend(GSendBuf, creatureInst->QuestInteractObject(GSendBuf, Aux1, 5000, false));
+							ok = true;
+						}
 
-//		/* Is the object an ITEM_GIVER? (Item ids given are in Extra Data) */
-//		if(cdef != NULL && (cdef->DefHints & CDEF_HINT_ITEM_GIVER) != 0) {
-//			/* For now only allow use if the player doesn't have any of the items pointed to by
-//			 * the creatures ExtraData. In this case, pick the first item they don't have and add it their
-//			 * inventory
-//			 */
-//			STRINGLIST args;
-//			STRINGLIST items;
-//			Util::Split(cdef->ExtraData.c_str(), ",", args);
-//			std::vector<string>::iterator it;
-//			for(it = args.begin(); it != args.end(); ++it) {
-//				items.clear();
-//				Util::Split((*it).c_str(), "=", items);
-//				if(items[0].compare("item") == 0) {
-//					/* For now we only allow use if the player doesn't already have
-//					 * the item. There could be other uses for this though. I'll
-//					 * add logic as and when it's needed
-//					 */
-//					int id = Util::GetInteger(items[1]);
-//					if(creatureInst->charPtr->inventory.GetItemPtrByID(id) == NULL) {
-//
-//						ItemDef *item = g_ItemManager.GetSafePointerByID(id);
-//						if(item->mID == 0) {
-//							Util::SafeFormat(Aux1, sizeof(Aux1), "Item with ID [%d] not found. Incorrect Creature Definition for an ITEM_GIVER.", id);
-//							error = Aux1;
-//						}
-//						else {
-//							int slot = pld.charPtr->inventory.GetFreeSlot(INV_CONTAINER);
-//							if(slot == -1) {
-//								error = "No free backpack slots";
-//							}
-//							else {
-//
-//								InventorySlot *sendSlot = pld.charPtr->inventory.AddItem_Ex(INV_CONTAINER, item->mID, 1);
-//								if(sendSlot != NULL) {
-//									ok = true;
-//									Util::SafeFormat(Aux1, sizeof(Aux1), "You now have have '%s' in your inventory.", item->mDisplayName);
-//									int wpos = PrepExt_SendInfoMessage(SendBuf, Aux1, INFOMSG_INFO);
-//									ActivateActionAbilities(sendSlot);
-//									wpos += AddItemUpdate(&SendBuf[wpos], Aux1, sendSlot);
-//									if(wpos > 0)
-//										AttemptSend(SendBuf, wpos);
-//								}
-//							}
-//						}
-//
-//						break;
-//					}
-//				}
-//			}
-//		}
-//		else
+						break;
+					}
+				}
+			}
+		}
+		else
 			if(cdef != NULL && ((cdef->DefHints & CDEF_HINT_USABLE) ||(cdef->DefHints & CDEF_HINT_USABLE_SPARKLY)))
-			ok = true;
+				ok = true;
 
 		/* Ask the instance script if it's OK for this creature to use this generic object. Only assume
 		 * this is OK if the script function exists and returns true
