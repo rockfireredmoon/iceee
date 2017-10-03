@@ -888,7 +888,6 @@ Pos=4147.76,480,2829.43
 Orient=0,0.999875,0,0.0157957
 Scale=1,1,1
 spawnPackage=VBloodkeep_Palatine
-maxActive=0
 
 [ENTRY]
 ID=1150936
@@ -898,7 +897,6 @@ Pos=4147.94,480,2750.83
 Orient=0,0.999899,0,-0.0142031
 Scale=1,1,1
 spawnPackage=VBloodkeep_Palatine
-maxActive=0
 
 [ENTRY]
 ID=1151044
@@ -908,7 +906,6 @@ Pos=4046.23,480,2769.28
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=VBloodkeep_Palatine
-maxActive=0
 links_count=2
 link=1151045,0
 link=1151047,1
@@ -921,7 +918,6 @@ Pos=4043.92,480,2803.04
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=VBloodkeep_Palatine
-maxActive=0
 links_count=2
 link=1151044,0
 link=1151046,1
