@@ -754,6 +754,7 @@ Pos=4301.45,513.725,2789.45
 Orient=0,0.999991,0,-0.00420359
 Scale=1,1,1
 spawnPackage=#1385
+aiModule=valkal1
 sequential=1
 
 [ENTRY]

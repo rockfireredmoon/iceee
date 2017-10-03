@@ -245,6 +245,10 @@ class ItemDefData {
 
 		case ItemType.SPECIAL:
 			_addNameRow(component);
+			
+			if(mIvType1 == this.ItemIntegerType.BOOK_PAGE) {
+				_addPageRow(component);
+			}
 
 			if (showBindingInfo)
 				_addBindingRow(component, item);
@@ -591,6 +595,13 @@ class ItemDefData {
 		container.add(_buildName());
 	}
 
+	/** 
+		Add a page row to the container
+	*/
+	function _addPageRow( container ) {
+		container.add(_buildPage());
+	}
+
 	/**
 		Creates a row in the container displaying the class restrictions, and level.
 	*/
@@ -617,6 +628,18 @@ class ItemDefData {
 		levellabel.setFont(GUI.Font("Maiandra", 16, true));
 		vitalsrow.add(levellabel);
 		container.add(vitalsrow);
+	}
+	
+	/**
+		Builds a single label indicating the page this book is for
+	*/
+	function _buildPage() {
+		local pagelabel = GUI.Label("Page: " + mIvMax2);
+		pagelabel.setSize(50, 30);
+		pagelabel.setPreferredSize(50, 30);
+		pagelabel.setFont(GUI.Font("Maiandra", 14, true));
+		pagelabel.setAutoFit(true);
+		return pagelabel;
 	}
 	
 	/**

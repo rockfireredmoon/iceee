@@ -4356,9 +4356,12 @@ int SimulatorThread :: handle_query_item_delete(void)
 		if(itemDef->mActionAbilityId > 0) {
 			creatureInst->RemoveBuffsFromAbility(itemDef->mActionAbilityId, true);
 		}
+
+		// If the item is a book page, then inform the client the book is gone
+		if(itemDef->mType == ItemType::SPECIAL && itemDef->mIvType1 == ItemIntegerType::BOOK_PAGE) {
+			AttemptSend(SendBuf, PrepExt_SendBookOpen(SendBuf, itemDef->mIvMax1, itemDef->mIvMax2 - 1, 3));
+		}
 	}
-
-
 
 	//Find the players best (in terms of recoup amount) grinder (if they have one)
 	int invId = GetContainerIDFromName("inv");
@@ -4369,9 +4372,7 @@ int SimulatorThread :: handle_query_item_delete(void)
 	}
 
 	//Append a delete notice to the response string
-	int wpos = 0;
-	wpos += RemoveItemUpdate(&SendBuf[wpos], Aux3, &pld.charPtr->inventory.containerList[origContainer][r]);
-	AttemptSend(SendBuf, wpos);
+	AttemptSend(SendBuf, RemoveItemUpdate(SendBuf, Aux3, &pld.charPtr->inventory.containerList[origContainer][r]));
 
 	//Remove from server's inventory list
 	pld.charPtr->inventory.RemItem(InventoryID);
@@ -7338,7 +7339,7 @@ int SimulatorThread :: UseItem(unsigned int CCSID)
 	else
 	{
 		if(itemDef->mType == ItemType::SPECIAL && itemDef->mIvType1 == ItemIntegerType::BOOK_PAGE) {
-			AttemptSend(Aux1, PrepExt_SendBookOpen(Aux1, itemDef->mIvMax1, itemDef->mIvMax2 - 1, false));
+			AttemptSend(Aux1, PrepExt_SendBookOpen(Aux1, itemDef->mIvMax1, itemDef->mIvMax2 - 1, 1));
 		}
 		else {
 			ConfigString cfg(itemDef->Params);
@@ -15546,7 +15547,7 @@ bool SimulatorThread :: ActivateActionAbilities(InventorySlot *slot)
 			return creatureInst->RequestAbilityActivation(itemDef->mActionAbilityId) == Ability2::ABILITY_SUCCESS;
 		else {
 			if(itemDef->mType == ItemType::SPECIAL && itemDef->mIvType1 == ItemIntegerType::BOOK_PAGE) {
-				AttemptSend(Aux1, PrepExt_SendBookOpen(Aux1, itemDef->mIvMax1, itemDef->mIvMax2 - 1, true));
+				AttemptSend(Aux1, PrepExt_SendBookOpen(Aux1, itemDef->mIvMax1, itemDef->mIvMax2 - 1, 2));
 			}
 		}
 		return true;

@@ -44,7 +44,9 @@ function on_target_acquired(target_cid) {
 	
 	
 	/* If you are executing more than one ability in a cycle, it is often best to queue any
-	   subsequent abilities to the next cycle. Use the exec() function to do this. */ 
+	   subsequent abilities to the next cycle. Use the exec() function to do this. The exec
+	   function either takes an inline function as below (useful for one off tasks), or 
+	   the name of a named function (useful for reusing said function).*/ 
 	ai.exec(function() {
 		/* Activate melee */
 		ai.use(MELEE);

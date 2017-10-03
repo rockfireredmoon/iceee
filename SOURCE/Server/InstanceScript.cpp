@@ -1448,7 +1448,7 @@ bool InstanceNutPlayer::OpenBook(int CID, int id, int page, bool refresh)
 		return false;
 
 	char buf[64];
-	creature->simulatorPtr->AttemptSend(buf, PrepExt_SendBookOpen(buf, id, page - 1, refresh));
+	creature->simulatorPtr->AttemptSend(buf, PrepExt_SendBookOpen(buf, id, page - 1, refresh ? 2 : 1));
 	return false;
 }
 

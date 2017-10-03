@@ -3226,6 +3226,14 @@ class this.Connection extends this.MessageBroadcaster
 						bookScreen.showBookPage(bookId, pageNumber);
 				}
 				break;
+			case 3:
+				local bookId = data.getInteger();
+				local pageNumber = data.getInteger();
+				local bookScreen = this.Screens.get("Books", true);
+				if(bookScreen) {
+					bookScreen.refresh();
+				}
+				break;
 		}
 	}
 	

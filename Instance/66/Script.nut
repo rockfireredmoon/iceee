@@ -1,3 +1,12 @@
+/*
+ * Valkals' Bloodkeep
+ *
+ * This is the most ambitious of any script so far. It consists of two separate
+ * sequences, different adds, custom abilties and lots of scripted movement.
+ *
+ * It also calls in AI scripts and demostrates an engage / disengage technique.
+ */
+
 ::info <- {
 	name = "Valkals Blood Keep",
 	author = "Emerald Icemoon",
@@ -27,8 +36,7 @@ const HEALING_SCREAM = 24009;
 const SELF_STUN = 24008;
 const TRIBUTE = 24005;
 const BRINGING_DOWN_THE_HOUSE = 24006;
-
-//Auto Melee, wither, Malice Blast, can opener, Whiplash, Spell Breaker, Earth Shaker Deathly Dart, Healing Hand (Blood Version red animation)
+const VALKALS_INFERNO = 24010;
 
 // Creature Definition IDs
 const CDEF_VALKAL1 = 1385;
@@ -77,7 +85,7 @@ valkal_2_adds <- [
 // Prop IDS
 
 const VALKAL2_SPAWN_PROP = 1150652;
-const TRAP_DOOR_SPAWN_PROP = 1127134;
+const TRAP_DOOR_SPAWN_PROP = 1150656;
 
 // Item IDS
 const BOOK_ITEMID = 8707;
@@ -401,7 +409,7 @@ function tribute() {
    cast on the the centre of the room */
 function bringing_down_the_house() {
     disengage_valkal(cid_valkal2);
-	inst.walk_then(cid_valkal2, loc_platform_front, 192, CREATURE_JOG_SPEED, 0, function(res) {
+	inst.walk_then(cid_valkal2, loc_chamber_platform_front, 192, CREATURE_JOG_SPEED, 0, function(res) {
 		inst.set_creature_gtae(cid_valkal2);
         if(!inst.creature_use(cid_valkal2, BRINGING_DOWN_THE_HOUSE)) {
         	if(debug)
@@ -410,6 +418,22 @@ function bringing_down_the_house() {
         }
         else {
             inst.queue(valkal_2_engage, 10000);
+	    }
+    });
+}
+
+/* Starts the Valkal's Inferno sequence. Runs Valkal to just in front of the platform to
+   cast on the the centre of the room */
+function valkals_inferno() {
+    disengage_valkal(cid_valkal1);
+	inst.walk_then(cid_valkal1, loc_platform_front, 192, CREATURE_JOG_SPEED, 0, function(res) {
+        if(!inst.creature_use(cid_valkal1, VALKALS_INFERNO)) {
+        	if(debug)
+            	inst.info("Failed to inferno");
+            valkal_1_engage();
+        }
+        else {
+            inst.queue(valkal_1_engage, 10000);
 	    }
     });
 }
@@ -473,8 +497,10 @@ function valkal1_health() {
 	    }
 	    else if(health <= 15 && phase < 8) {
 	        if(debug)
-	        	inst.info("TODO: CAST INFERNO");
+	        	inst.info("Inferno");
 	        phase = 8;
+			valkals_inferno();
+			return;
 	    }
 	    else if(health <= 30 && phase < 7) {
 	        if(debug)
@@ -513,14 +539,14 @@ function valkal1_health() {
 	    else if(health <= 80 && phase < 2) {
 	        if(debug)
 	        	inst.info("Spawn 2");
-			spawn_adds(valkal_1_palatine_adds.len() / 2, valkal_1_palatine_adds);
 	        phase = 2;
+			spawn_adds(valkal_1_palatine_adds.len() / 2, valkal_1_palatine_adds);
 	    }
 	    else if(health <= 90 && phase < 1) {
-			spawn_adds(valkal_1_mehirim_adds.len(), valkal_1_mehirim_adds);
 	        if(debug)
 	        	inst.info("Spawn 1");
 	        phase = 1;
+			spawn_adds(valkal_1_mehirim_adds.len(), valkal_1_mehirim_adds);
 	    }
 	    
 		inst.exec(valkal1_health);
@@ -562,6 +588,7 @@ function valkal2_health() {
 	        	inst.info("Bringing Down the House 3");
 	        phase = 9;        
 	        bringing_down_the_house();
+	        return;
 	    }
 	    else if(health <= 20 && phase < 8) {
 	        // Bringing Down the House 2
@@ -569,6 +596,7 @@ function valkal2_health() {
 	        	inst.info("Bringing Down the House 2");
 	        phase = 8;
 	        bringing_down_the_house();
+	        return;
 	    }
 	    else if(health <= 25 && phase < 7) {
 	        // Heal 3
@@ -576,6 +604,7 @@ function valkal2_health() {
 	        	inst.info("Heal 3");
 	        phase = 7;
 	        valkal_2_heal_sequence();
+	        return;
 	    }
 	    else if(health <= 30 && phase < 6) {
 	        // Bringing Down the House 1
@@ -583,13 +612,14 @@ function valkal2_health() {
 	        	inst.info("Bringing Down the House 1");
 	        phase = 6;
 	        bringing_down_the_house();
+	        return;
 	    }
 	    else if(health <= 40 && phase < 5) {
 	        // Tribute 3
 	        if(debug)
 	        	inst.info("Tribute 3");
-	        tribute();
 	        phase = 5;
+	        tribute();
 	        return;
 	    }
 	    else if(health <= 50 && phase < 4) {

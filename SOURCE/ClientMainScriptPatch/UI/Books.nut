@@ -192,6 +192,11 @@ class Screens.Books extends GUI.Frame {
 		}
 	}
 	
+	function refresh() {
+		mLoaded = false;
+		::_Connection.sendQuery("book.list", this);
+	}
+	
 	function refreshAndShowBookPage(bookId, pageNumber) {
 		mLoaded = false;
 		showBookPage(bookId, pageNumber)
