@@ -48,6 +48,7 @@ Orient=0,0.711473,0,-0.702713
 Scale=1,1,1
 spawnPackage=#3351
 maxActive=0
+aiModule=valkal2
 
 [ENTRY]
 ID=1154489
