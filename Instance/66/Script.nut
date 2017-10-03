@@ -103,7 +103,7 @@ valkal2_full_health_count <- 0;
 lit_candelabras <- [];
 
 // Debug
-debug <- true;
+debug <- false;
 manual_trigger <- false;
 
 function is_usable(cid, cdef_id, by_cid, by_cdef_id) {
