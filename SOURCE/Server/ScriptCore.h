@@ -68,7 +68,8 @@ enum OpCodeParamType {
 	OPT_VAR,      //Operand is a string containing a variable name
 	OPT_APPINT, //An application defined property or variable name (outside the script) which will be fetched and pushed onto the stack as an integer.
 	OPT_INTSTK, //An integer value that is resolved from different source types (OPT_INT, OPT_VAR, OPT_APPINT) and pushed onto the stack as an integer.  Implementation of commands which use this parameter type are responsible for popping the values off the stack.
-	OPT_INTARR    //Operand is a string containing the name of an integer array.
+	OPT_INTARR,    //Operand is a string containing the name of an integer array.
+	OPT_TABLE	   //Operand is a table (Squirrel only)
 };
 
 enum ComparisonType {
@@ -100,12 +101,14 @@ public:
 	float fValue;
 	std::string strValue;
 	bool bValue;
+	Sqrat::Table tValue;
 
 	ScriptParam();
 	ScriptParam(int iValue);
 	ScriptParam(float fValue);
 	ScriptParam(std::string strValue);
 	ScriptParam(bool bValue);
+	ScriptParam(Sqrat::Table tValue);
 };
 
 struct OpData {
@@ -485,6 +488,7 @@ public:
 	unsigned long mProcessingTime;
 	unsigned long mInitTime;
 	unsigned long mGCTime; // How much time GC has taken
+	int mCaller; // Hows the calling creature ID (if called from a creature context such as sim)
 
 	NutPlayer();
 	virtual ~NutPlayer();
@@ -513,6 +517,8 @@ public:
 	// Script functions
 	void Broadcast(const char *message);
 	unsigned long GetServerTime();
+	int GetCaller();
+	void SetCaller(int caller);
 	void QueueClear();
 	void QueueRemove(NutScriptEvent *evt);
 	long QueueAdd(NutScriptEvent *evt);
@@ -570,6 +576,7 @@ public:
 	NutPlayer* mNut;
 	std::string mFunctionName;		//Function to jump to
 	std::vector<ScriptParam> mArgs;
+	int mCaller;
 	RunFunctionCallback(NutPlayer *nut, std::string mFunctionName);
 	RunFunctionCallback(NutPlayer *nut, std::string mFunctionName, std::vector<ScriptParam> args);
 	~RunFunctionCallback ();

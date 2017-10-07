@@ -8,6 +8,7 @@
 #include "Scenery2.h"
 #include "Squirrel.h"
 #include "PartyManager.h"
+#include "Forms.h"
 
 class ActiveInstance;
 class CreatureInstance;
@@ -91,6 +92,7 @@ class InstanceNutPlayer: public AbstractInstanceNutPlayer {
 public:
 	std::vector<int> spawned;
 	std::vector<int> genericSpawned;
+	std::map<int, int> openedForms;
 
 	InstanceNutPlayer();
 	virtual ~InstanceNutPlayer();
@@ -127,6 +129,9 @@ public:
 	bool HasItem(int CID, int itemID);
 	bool GiveItem(int CID, int itemID);
 	bool OpenBook(int CID, int id, int page, bool refresh);
+	void OpenForm(int CID, FormDefinition form);
+	void CloseForm(int CID, int formId);
+
 	void LeaveCombat(int CID);
 	bool AI(int CID, const char *label);
 	int GetPartyID(int CID);

@@ -40,6 +40,7 @@ vald_SOURCES = md5.cc \
 	EssenceShop.cpp \
 	FileReader3.cpp \
 	FileReader.cpp \
+	Forms.cpp \
 	FriendStatus.cpp \
 	Gamble.cpp \
 	Globals.cpp \
@@ -120,6 +121,7 @@ vald_SOURCES = md5.cc \
 	FileReader3.h \
 	FileReader.h \
 	Formula.h \
+	Forms.h \
 	FriendStatus.h \
 	Fun.h \
 	Gamble.h \
@@ -206,6 +208,7 @@ valdsvc_SOURCES = md5.cc \
 	EssenceShop.cpp \
 	FileReader3.cpp \
 	FileReader.cpp \
+	Forms.cpp \
 	FriendStatus.cpp \
 	Gamble.cpp \
 	Globals.cpp \
@@ -286,6 +289,7 @@ valdsvc_SOURCES = md5.cc \
 	FileReader3.h \
 	FileReader.h \
 	Formula.h \
+	Forms.h \
 	FriendStatus.h \
 	Fun.h \
 	Gamble.h \

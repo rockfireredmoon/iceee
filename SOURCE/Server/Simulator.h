@@ -49,6 +49,7 @@ struct SimulatorQuery
 
 	bool ValidArgIndex(uint argIndex);
 	const char* GetString(uint argIndex);
+	std::string GetStringObject(uint argIndex);
 	int GetInteger(uint argIndex);
 	float GetFloat(uint argIndex);
 	bool GetBool(uint argIndex);
@@ -365,6 +366,7 @@ public:
 	int handle_query_team(void);
 	int handle_book_list(void);
 	int handle_book_get(void);
+	int handle_form_submit(void);
 
 	int protected_CheckDistanceBetweenCreatures(CreatureInstance *sourceCreatureInst, int creatureID);
 	int protected_CheckDistanceBetweenCreaturesFor(CreatureInstance *sourceCreatureInst, int creatureID, int range);

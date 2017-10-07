@@ -496,11 +496,9 @@ class URLManager
 	}
 	function LaunchURL(tagName)
 	{
-		print("ICE! LaunchURL " + tagName);
 		if(mLoaded == false)
 		{
 			LoadURLs();
-			print("ICE! LaunchURL pending");
 			mPendingTag = tagName;
 			return;
 		}
@@ -552,7 +550,6 @@ class URLManager
 		{
 			if(row.len() >= 2)
 			{
-				print("ICE! URL = " + row[1]);
 				mURLs[row[0]] <- row[1];
 			}
 		}

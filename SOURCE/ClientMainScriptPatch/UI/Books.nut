@@ -92,8 +92,6 @@ class Screens.Books extends GUI.Frame {
 		mPageLabel.setFont(font);
 		mPageLabel.setAutoFit(true);
 
-		local buttonRow = GUI.Container();
-		
 		local buttonRow = GUI.Container(GUI.BoxLayout());
 		buttonRow.getLayoutManager().setPackAlignment(0.5);
 		buttonRow.add(mButtonPrevious);
@@ -178,7 +176,6 @@ class Screens.Books extends GUI.Frame {
 		mButtonPrevious.setEnabled(false);
 		if(idx != -1) {
 			mSelectedBook = mBookList.mRowContents[idx][0].mBook;
-			print("ICE! selectionChanged " + idx + " sel: " + mSelectedBook);
 			mBookLabel.setText(mSelectedBook.mTitle);
 			::_Connection.sendQuery("book.get", this, [
 				mSelectedBook.mID
@@ -204,20 +201,16 @@ class Screens.Books extends GUI.Frame {
 	}
 	
 	function showBookPage(bookId, pageNumber) {
-		print("ICE! showBookPage " + bookId + " / " + pageNumber + "\n");
 		if(!mLoaded) {
 			// Not loaded yet?
-			print("ICE! showBookPage not loaded yet");
 			mSelectOnLoad = bookId;
 			mSelectedPage = pageNumber;		
 			return;	
 		}
 		else {
-			print("ICE! showBookPage loaded!");
 			for(local i = 0 ; i < mBookList.mRowContents.len(); i++) {
 				local bk = mBookList.mRowContents[i][0].mBook;
 				if(bk.mID == bookId) {
-					print("ICE! Found book at row " + i + "\n");
 					mAdjusting = true;
 					mBookList.setSelectedRows([i]);
 					mAdjusting = false;
@@ -254,7 +247,6 @@ class Screens.Books extends GUI.Frame {
 	}
 	
 	function redisplayPage() {
-		print("ICE! redisplay page " + mSelectedPage + "\n");
 		if(mSelectedBook == null) {		
 			mBookText.setText("Collect <b>Books</b> when looting monsters or during quests, and they may be read here.");
 			mPageLabel.setText("No Pages");			
@@ -285,7 +277,6 @@ class Screens.Books extends GUI.Frame {
 	}
 	
 	function onQueryComplete( qa, results )	{
-		print("ICE! Books: onQueryComplete\n");
 		switch(qa.query) {
 		case "book.list":
 			_handleBookList(qa, results);
@@ -299,10 +290,8 @@ class Screens.Books extends GUI.Frame {
 	}
 	
 	function _handleBook(qa, results) {
-		print("ICE! Book: _handleBook\n");
 		if(mSelectedBook != null) {
 			foreach( item in results ) {
-				print("ICE! Book " + item[0].tointeger() + " = " + item[1]);
 				mSelectedBook.mPages[item[0].tointeger()] = item[1];
 			}
 		}
@@ -310,18 +299,15 @@ class Screens.Books extends GUI.Frame {
 	}
 	
 	function _handleBookList(qa, results) {
-		print("ICE! Books: _handleBookList " + mBookList + "\n");
 		local selRow = mBookList.getSelectedRow();
 		mBookList.removeAllRows();
 		local row = 0;
 		foreach( item in results ) {
-			print("ICE! A book\n");
 			local book = Book();
 			book.mID = item[0].tointeger();
 			book.mTitle = item[1];
 			book.mTotalPages = item[2].tointeger();
 			book.mPages.resize(book.mTotalPages);
-			print("ICE! A book " + book.mID + " " + book.mTitle + " "  + book.mTotalPages + "\n");
 			local obj = BookObject(book);
 			mBookList.addRow([obj]);
 			if(mSelectOnLoad != null && mSelectOnLoad == book.mID) {

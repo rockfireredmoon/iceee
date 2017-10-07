@@ -1182,7 +1182,6 @@ class this.Assembler.Creature extends this.Assembler.Factory
 	function applyEquipment( table )
 	{
 
-		print("ICE! applyEquipment\n");
 		if (this.mEquipmentDef == "" || this.mRequestedItems == null)
 		{
 			return table;
@@ -1367,7 +1366,6 @@ class this.Assembler.Creature extends this.Assembler.Factory
 		}
 		*/
 
-		print("ICE! applyEq: existing attach: " + attachments.len() + "\n");
 		tableCopy.a <- attachments;
 		tableCopy.c <- clothing;
 		return tableCopy;
@@ -1406,7 +1404,6 @@ class this.Assembler.Creature extends this.Assembler.Factory
 
 		case "c2":
 			local sdata = this.unserialize(data);
-			print("ICE! SDATA: " + data);
 			local opts = this.applyEquipment(sdata);
 
 			if (opts == null || this.setViaContentDef2(opts) == false)

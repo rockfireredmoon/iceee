@@ -224,16 +224,13 @@ class ItemAction extends Action {
 		Activate the ability associated with this item.
 	*/
 	function sendActivationRequest() {
-		print("ICE! sendActivationRequest " + mItemId + "\n");
 		if (isAvailableForUse()) {
-			print("ICE! using " + mItemId + "\n");
 			::_Connection.sendQuery("item.use", this, [
 				mItemId
 			]);
 			return true;
 		}
 		else {
-			print("ICE! not usable " + mItemId + "\n");
 			return false;
 		}
 	}

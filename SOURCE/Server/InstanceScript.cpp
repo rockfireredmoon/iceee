@@ -615,6 +615,7 @@ InstanceNutPlayer::InstanceNutPlayer()
 {
 	spawned.clear();
 	genericSpawned.clear();
+	openedForms.clear();
 }
 
 InstanceNutPlayer::~InstanceNutPlayer()
@@ -643,6 +644,17 @@ void InstanceNutPlayer::HaltDerivedExecution()
 			actInst->spawnsys.Despawn(*it);
 	}
 	spawned.clear();
+
+	std::map<int, int>::iterator it2;
+	char buf[32];
+	for(it2 = openedForms.begin(); it2 != openedForms.end(); ++it2)
+	{
+		CreatureInstance *creature = actInst->GetInstanceByCID(it2->second);
+		if(creature != NULL && creature->simulatorPtr != NULL) {
+			creature->simulatorPtr->AttemptSend(buf, PrepExt_SendFormClose(buf, it2->first));
+		}
+	}
+	openedForms.clear();
 }
 
 void InstanceNutPlayer::RegisterFunctions() {
@@ -656,6 +668,41 @@ void InstanceNutPlayer::RegisterFunctions() {
 	Sqrat::RootTable(vm).Bind(_SC("Instance"), instanceClass);
 	RegisterInstanceFunctions(this, &instanceClass);
 	Sqrat::RootTable(vm).SetInstance(_SC("inst"), this);
+
+	// Form objects
+	Sqrat::Class<FormDefinition> formClass(vm, "Form", true);
+	formClass.Ctor<std::string>();
+	formClass.Ctor<std::string, std::string>();
+	Sqrat::RootTable(vm).Bind(_SC("Form"), formClass);
+	formClass.Var("title", &FormDefinition::mTitle);
+	formClass.Var("description", &FormDefinition::mDescription);
+	formClass.Func("add_row", &FormDefinition::AddRow);
+
+	Sqrat::Class<FormRow> formRowClass(vm, "FormRow", true);
+	formRowClass.Ctor();
+	formRowClass.Ctor<std::string>();
+	Sqrat::RootTable(vm).Bind(_SC("FormRow"), formRowClass);
+	formRowClass.Var("group", &FormRow::mGroup);
+	formRowClass.Var("height", &FormRow::mHeight);
+	formRowClass.Func("add_item", &FormRow::AddItem);
+
+	Sqrat::Class<FormItem> formItemClass(vm, "FormItem", true);
+	formItemClass.Ctor<std::string, int>();
+	formItemClass.Ctor<std::string, int, std::string>();
+	formItemClass.Ctor<std::string, int, std::string, int>();
+	Sqrat::RootTable(vm).Bind(_SC("FormItem"), formItemClass);
+	formItemClass.Var("name", &FormItem::mName);
+	formItemClass.Var("type", &FormItem::mType);
+	formItemClass.Var("value", &FormItem::mValue);
+	formItemClass.Var("cells", &FormItem::mCells);
+	formItemClass.Var("width", &FormItem::mWidth);
+	formItemClass.Var("style", &FormItem::mStyle);
+
+	Sqrat::ConstTable(vm).Const(_SC("FORM_BLANK"), BLANK);
+	Sqrat::ConstTable(vm).Const(_SC("FORM_LABEL"), LABEL);
+	Sqrat::ConstTable(vm).Const(_SC("FORM_TEXTFIELD"), TEXTFIELD);
+	Sqrat::ConstTable(vm).Const(_SC("FORM_CHECKBOX"), CHECKBOX);
+	Sqrat::ConstTable(vm).Const(_SC("FORM_BUTTON"), BUTTON);
 
 }
 
@@ -708,6 +755,8 @@ void InstanceNutPlayer::RegisterInstanceFunctions(NutPlayer *instance, Sqrat::De
 	instanceClass->Func(_SC("despawn_all"), &InstanceNutPlayer::DespawnAll);
 	instanceClass->Func(_SC("has_item"), &InstanceNutPlayer::HasItem);
 	instanceClass->Func(_SC("open_book"), &InstanceNutPlayer::OpenBook);
+	instanceClass->Func(_SC("open_form"), &InstanceNutPlayer::OpenForm);
+	instanceClass->Func(_SC("close_form"), &InstanceNutPlayer::CloseForm);
 	instanceClass->Func(_SC("give_item"), &InstanceNutPlayer::GiveItem);
 	instanceClass->Func(_SC("effect"), &InstanceNutPlayer::ParticleAttach);
 	instanceClass->Func(_SC("restore"), &InstanceNutPlayer::DetachSceneryEffect);
@@ -1439,6 +1488,31 @@ void InstanceNutPlayer::RemoveInteraction(int CID)
 			}
 		}
 	}
+}
+
+void InstanceNutPlayer::CloseForm(int CID, int formId)
+{
+	CreatureInstance *creature = actInst->GetInstanceByCID(CID);
+	if(creature == NULL || creature->simulatorPtr == NULL)
+		return;
+
+	std::map<int, int>::iterator it = openedForms.find(formId);
+	if (it != openedForms.end()) {
+	  openedForms.erase(it);
+	}
+	char buf[32];
+	creature->simulatorPtr->AttemptSend(buf, PrepExt_SendFormClose(buf, formId));
+}
+
+void InstanceNutPlayer::OpenForm(int CID, FormDefinition form)
+{
+	CreatureInstance *creature = actInst->GetInstanceByCID(CID);
+	if(creature == NULL || creature->simulatorPtr == NULL)
+		return;
+
+	openedForms.insert(std::map<int, int>::value_type(form.mId, CID));
+	char buf[4096];
+	creature->simulatorPtr->AttemptSend(buf, PrepExt_SendFormOpen(buf, form));
 }
 
 bool InstanceNutPlayer::OpenBook(int CID, int id, int page, bool refresh)

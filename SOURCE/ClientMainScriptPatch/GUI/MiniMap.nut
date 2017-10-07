@@ -53,11 +53,6 @@ class this.GUI.MiniMap extends this.GUI.Component
 			this._root.addMinimapStickerDesc(type, 1.0, 1.0, 1.0, 0.80000001, stickerDesc.texCoord00u, stickerDesc.texCoord00v, stickerDesc.texCoord01u, stickerDesc.texCoord01v, stickerDesc.texCoord10u, stickerDesc.texCoord10v, stickerDesc.texCoord11u, stickerDesc.texCoord11v);
 		}
 		
-		//for(idx, val in this) 
-		//{
-//			print("ICE! MINIMAP OBJECT: " + idx + " = " + val);
-		//}
-
 		this.setScale(4096.0);
 	}
 	

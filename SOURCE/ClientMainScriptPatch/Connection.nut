@@ -62,6 +62,7 @@ this.ProtocolDef <- {
 		[44] = "_handleSpecialOfferMsg",
 		[50] = "_handleCommunicationMsg",
 		[51] = "_handleTradeMsg",
+		[52] = "_handleForm",
 		[60] = "_handleAbilityActivationMsg",
 		[70] = "_handleItemUpdateMsg",
 		[71] = "_handleItemDefUpdateMsg",
@@ -228,6 +229,8 @@ class this.Connection extends this.MessageBroadcaster
 	mAuthData = null;
 	mXCSRFToken = null;
 	mCurrentRegionChannel = "";
+	mForms = {};
+	
 	constructor()
 	{
 		this.mSceneObjectManager = ::_sceneObjectManager;
@@ -939,7 +942,6 @@ class this.Connection extends this.MessageBroadcaster
 				req.setRequestHeader("Content-Type", "application/json");
 				req.setRequestHeader("User-Agent", "EETAW");
 				req.setRequestHeader("Host", Util.extractHostnameAndPortFromUrl(mAuthData));
-				print("ICE! Sending auth to " + mAuthData + "/user/token.json\n");
 				req.open("POST", mAuthData + "/user/token.json", false);
 				req.send();
 			}
@@ -2078,11 +2080,8 @@ class this.Connection extends this.MessageBroadcaster
 			local rotation = this.rot2rad(rb);
 			local speed = data.getByte() & 255;
 			
-			print("ICE! 26 - Server velocity update " + heading + "," + rotation + "," + speed + "\n");
-
 			if (::_avatar)
 			{
-				print("ICE! 26 - Avatar Server velocity update " + heading + "," + rotation + "," + speed + "\n");
 				// TODO ... not suure about this, just trying to force an update
 				::_avatar.mLastServerUpdate = null;
 				::_avatar.onServerVelocity(heading, rotation, speed);
@@ -3111,7 +3110,10 @@ class this.Connection extends this.MessageBroadcaster
 	}
 	
 	function _handleShake(data) {
-		::_playTool.addShaky(::_avatar.getPosition(), data.getFloat(), data.getFloat(), data.getFloat());
+		local v1 = data.getFloat();
+		local v2 = data.getFloat();
+		local v3 = data.getFloat();
+		::_playTool.addShaky(::_avatar.getPosition(), v1, v2, v3);
 	}
 	
 	function _handleSceneryEffectMsg(data)
@@ -3162,13 +3164,12 @@ class this.Connection extends this.MessageBroadcaster
 					scenery.fireUpdate();
 				}
 				else if (effectType == 3) {
-					print("ICE! Transform for " + sceneryId + " : " + effectName + "\n");
 					scenery.setTransformationSequence(unserialize(effectName));
 					scenery.fireUpdate();
 				}
 			}
 			else {
-				print("ICE: No scenery with ID of " + sceneryId + " (" + effectTag + ")\n");
+				print("ICE! No scenery with ID of " + sceneryId + " (" + effectTag + ")\n");
 			}
 			break;
 		case 2:
@@ -3183,8 +3184,6 @@ class this.Connection extends this.MessageBroadcaster
 				else if(effectType == 2) {
 					local previousAsset = scenery.mPreviousAsset;
 					if(previousAsset != null) {
-					
-						print("ICE: Restoring asset of  scenery with ID of " + sceneryId + " to " + effectTag + ")\n");
 						if (scenery.setTypeFromString(previousAsset))
 						{
 							scenery.reassemble();
@@ -3196,27 +3195,77 @@ class this.Connection extends this.MessageBroadcaster
 					// TODO allow multiple sequences
 					scenery.stopTransformationSequence();
 				}
-				print("ICE: remove effect: " + effectTag + " " + sceneryId);
-			}
-			else {
-				print("ICE: No scenery with ID of " + sceneryId + " (" + effectTag + ")");
 			}
 			break;
 		default:
-			print("ICE: Unknown effect message message type " + type);
+			print("ICE! Unknown effect message message type " + type);
 			break;
+		}
+	}
+	
+	function _handleForm(data) {
+		local formId = data.getInteger();
+		local op = data.getShort();
+		
+		if(op == 0) {
+			local formTitle = data.getStringUTF();
+			local formDescription = data.getStringUTF();
+			local rows = data.getShort();
+			local lastGroup = "ZZZZZZZZZZZZ";
+			local form = [];
+			local group;
+			for(local i = 0 ; i < rows ; i++) {
+				local rowGroup = data.getStringUTF();
+				if(rowGroup != lastGroup) {
+					group = {
+						["name"] = rowGroup,
+						["items"] = []
+					};
+					lastGroup = rowGroup;
+					form.append(group);
+				}
+				local rowHeight = data.getShort();
+				local itemCount = data.getShort();
+				local row = {
+					["height"] = rowHeight,
+					["items"] = [],
+				};
+				for(local j = 0 ; j < itemCount; j++) {
+					local name = data.getStringUTF();
+					local type = data.getShort();
+					local value = data.getStringUTF();
+					local cells = data.getShort();
+					local width = data.getShort();
+					local style = data.getStringUTF();
+					row["items"].append({
+						["name"] = name,
+						["type"] = type,
+						["value"] = value,
+						["width"] = width,
+						["cells"] = cells,
+						["style"] = style,
+					});				
+				}
+				group["items"].append(row);				
+			}
+			mForms[formId] <- Screens.ServerForm(formId, formTitle, formDescription, form);
+		}
+		else if(op == 1) {
+			if(formId in mForms) {
+				mForms[formId].setVisible(false);
+				mForms[formId].destroy();
+				delete mForms[formId];			
+			}
 		}
 	}
 	
 	function _handleBooks(data) {
 		local type = data.getByte();
-		print("ICE! Books " + type + "\n");
 		switch(type) {
 			case 1:
 			case 2: 	 			
 				local bookId = data.getInteger();
 				local pageNumber = data.getInteger();
-				print("ICE! Open Book " + bookId + ", page " + pageNumber + "\n");
 				local bookScreen = this.Screens.get("Books", true);
 				if(bookScreen) {
 					Screens.show("Books");
@@ -3894,9 +3943,6 @@ class this.Connection extends this.MessageBroadcaster
 	{
 		local updateType = data.getInteger();
 		local gameType = data.getByte();
-		
-		print("ICE! PVP: " + updateType + " GT:  " + gameType + "\n");
-		
 		local pvpScreen;
 
 		switch(gameType)
@@ -3923,8 +3969,6 @@ class this.Connection extends this.MessageBroadcaster
 		if (updateType & this.PVP_STATE_UPDATE)
 		{
 			local gameState = data.getByte();
-			print("ICE! PVP STATE UPD: " + gameState + "\n");
-
 			if (pvpScreen)
 			{
 				if(gameState == this.PVPGameState.WAITING_TO_START)

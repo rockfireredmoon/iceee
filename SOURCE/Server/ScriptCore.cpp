@@ -82,6 +82,15 @@ namespace ScriptCore
 		bValue = v;
 	}
 
+	ScriptParam::ScriptParam(Sqrat::Table v) {
+		type = OPT_TABLE;
+		iValue = 0;
+		fValue = 0;
+		strValue = "";
+		bValue = false;
+		tValue = v;
+	}
+
 
 	//
 	// Parses script names from things such as AIPackages to allow parameters to
@@ -277,10 +286,12 @@ namespace ScriptCore
 	//
 	RunFunctionCallback::RunFunctionCallback(NutPlayer *nut, std::string functionName) {
 		mNut = nut;
+		mCaller = mNut->mCaller;
 		mFunctionName = functionName;
 	}
 	RunFunctionCallback::RunFunctionCallback(NutPlayer *nut, std::string functionName, std::vector<ScriptParam> args) {
 		mNut = nut;
+		mCaller = mNut->mCaller;
 		mFunctionName = functionName;
 		mArgs = args;
 	}
@@ -291,7 +302,10 @@ namespace ScriptCore
 
 	bool RunFunctionCallback::Execute()
 	{
+		int was = mNut->mCaller;
+		mNut->mCaller = mCaller;
 		mNut->RunFunction(mFunctionName, mArgs, false);
+		mNut->mCaller = was;
 		return true;
 	}
 
@@ -578,6 +592,10 @@ namespace ScriptCore
 		clazz->Func(_SC("broadcast"), &NutPlayer::Broadcast);
 		clazz->Func(_SC("halt"), &NutPlayer::Halt);
 		clazz->Func(_SC("get_server_time"), &NutPlayer::GetServerTime);
+		clazz->Func(_SC("get_caller"), &NutPlayer::GetCaller);
+
+		int GetCaller();
+
 		clazz->SquirrelFunc(_SC("sleep"), &Sleep);
 
 		Sqrat::RootTable(vm).Func("randmodrng", &randmodrng);
@@ -594,6 +612,14 @@ namespace ScriptCore
 		for(std::vector<std::string>::iterator it = mArgs.begin(); it != mArgs.end(); ++it)
 			arr.SetValue(idx++, _SC(*it));
 		Sqrat::RootTable(vm).SetValue(_SC("__argv"), arr);
+	}
+
+	int NutPlayer::GetCaller() {
+		return mCaller;
+	}
+
+	void NutPlayer::SetCaller(int caller) {
+		mCaller = caller;
 	}
 
 	unsigned long NutPlayer::GetServerTime() {
@@ -794,8 +820,15 @@ namespace ScriptCore
 				case OPT_FLOAT:
 					sq_pushfloat(vm,it->fValue);
 					break;
+				case OPT_BOOL:
+					sq_pushbool(vm, it->bValue);
+					break;
 				case OPT_STR:
 					sq_pushstring(vm,_SC(it->strValue.c_str()), it->strValue.size());
+					break;
+				case OPT_TABLE:
+					//Sqrat::Table tb(it->tValue, vm);
+					vm->Push(it->tValue.GetObject());
 					break;
 				default:
 					g_Log.AddMessageFormat("Unsupported parameter type for Squirrel script. %d", it->type);

@@ -508,6 +508,11 @@ const char* SimulatorQuery :: GetString(uint argIndex)
 	return ValidArgIndex(argIndex) ? args[argIndex].c_str() : NULL;
 }
 
+std::string SimulatorQuery :: GetStringObject(uint argIndex)
+{
+	return ValidArgIndex(argIndex) ? args[argIndex] : "";
+}
+
 int SimulatorQuery :: GetInteger(uint argIndex)
 {
 	return ValidArgIndex(argIndex) ? atoi(args[argIndex].c_str()) : 0;
@@ -2845,6 +2850,8 @@ bool SimulatorThread :: HandleQuery(int &PendingData)
 		PendingData = handle_book_list();
 	else if(query.name.compare("book.get") == 0)
 		PendingData = handle_book_get();
+	else if(query.name.compare("form.submit") == 0)
+		PendingData = handle_form_submit();
 	else {
 		g_Log.AddMessageFormat("Unhandled query '%s'.", query.name.c_str());
 		return false;
@@ -3147,6 +3154,35 @@ void SimulatorThread :: SendSetMap(void)
 
 	PutShort(&SendBuf[1], wpos - 3);       //Set message size
 	AttemptSend(SendBuf, wpos);
+}
+
+int SimulatorThread :: handle_form_submit(void)
+{
+	if (query.argCount < 3)
+		return PrepExt_QueryResponseError(SendBuf, query.ID,
+				"Invalid query");
+
+	if(creatureInst->actInst->nutScriptPlayer == NULL)
+		return PrepExt_QueryResponseError(SendBuf, query.ID,
+				"No script running in this instance");
+
+	Sqrat::Table t(creatureInst->actInst->nutScriptPlayer->vm);
+	STRINGLIST args;
+	Util::Split(query.GetString(2), "&", args);
+	for(size_t i = 0; i < args.size(); i++)
+	{
+		STRINGLIST parts;
+		Util::Split(args[i].c_str(), "=", parts);
+		t.SetValue(_SC(parts[0].c_str()), _SC(parts[1].c_str()));
+	}
+
+	std::vector<ScriptCore::ScriptParam> parms;
+	parms.push_back(ScriptCore::ScriptParam(query.GetInteger(0)));
+	parms.push_back(ScriptCore::ScriptParam(creatureInst->CreatureID));
+	parms.push_back(ScriptCore::ScriptParam(query.GetStringObject(1)));
+	parms.push_back(ScriptCore::ScriptParam(t));
+	creatureInst->actInst->nutScriptPlayer->RunFunction("on_form_submit", parms, false);
+	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
 }
 
 int SimulatorThread :: handle_book_get(void)
@@ -15325,7 +15361,9 @@ int SimulatorThread :: handle_query_script_exec(void)
 				string s = query.GetString(i);
 				p.push_back(ScriptCore::ScriptParam(s));
 			}
+			inst->nutScriptPlayer->mCaller = creatureInst->CreatureID;
 			inst->nutScriptPlayer->JumpToLabel(funcName.c_str(), p);
+			inst->nutScriptPlayer->mCaller = 0;
 		}
 	}
 	else

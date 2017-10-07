@@ -234,14 +234,12 @@ class this.ItemDefAction extends this.Action
 
 	function sendActivationRequest()
 	{
-		print("ICE! ItemDefAction sendActivationRequest\n");
 		if (this.isAvailableForUse())
 		{
 			local selection = this._avatar.getTargetObject();
 
 			if (selection)
 			{
-				print("ICE! sendActivationRequest with selection\n");
 				::_Connection.sendQuery("item.def.use", this, [
 					this.mItemDefId,
 					selection
@@ -249,7 +247,6 @@ class this.ItemDefAction extends this.Action
 			}
 			else
 			{
-				print("ICE! sendActivationRequest with default\n");
 				::_Connection.sendQuery("item.def.use", this, [
 					this.mItemDefId
 				]);
@@ -257,8 +254,6 @@ class this.ItemDefAction extends this.Action
 
 			return true;
 		}
-		else
-			print("ICE! sendActivationRequest not available\n");
 
 		return false;
 	}

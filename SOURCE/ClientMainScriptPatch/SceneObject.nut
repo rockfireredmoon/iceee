@@ -3584,7 +3584,6 @@ class this.SceneObject extends this.MessageBroadcaster
 	function attachParticleSystem(name, tag, size)
 	{
 			// TODO make more unique
-			print("ICE! Attach scenery effect " + name + ","  + tag + "," + size + "\n"); 
 			local uniqueName = this.mNode.getName() + "/" + name;
 			local particle = ::_scene.createParticleSystem(uniqueName, name);
 			particle.setVisibilityFlags(this.VisibilityFlags.ANY);
@@ -5139,16 +5138,12 @@ class this.SceneObject extends this.MessageBroadcaster
 		else
 			mCurrentTransformationSequence.index++;
 			
-		print("ICE! Index is now " + mCurrentTransformationSequence.index); 
-			
 		if(!("frames" in mCurrentTransformationSequence)) {
-			print("ICE! No frames in sequence");
 			return false;
 		}
 		
 		local frames = mCurrentTransformationSequence.frames;
 		if(mCurrentTransformationSequence.index >= frames.len()) {
-			print("ICE! At end of sequence at " + mCurrentTransformationSequence.index);
 			mCurrentTransformationFrame = null;
 			return false;
 		}
@@ -5156,7 +5151,6 @@ class this.SceneObject extends this.MessageBroadcaster
 		mCurrentTransformationFrame = frames[mCurrentTransformationSequence.index];
 		
 		if(!("transforms" in mCurrentTransformationFrame)) {
-			print("ICE! No transforms in frame " + mCurrentTransformationSequence.index);
 			return nextTransformationFrame();
 		}
 		
@@ -5164,10 +5158,6 @@ class this.SceneObject extends this.MessageBroadcaster
 		mCurrentTransformationFrame.started <- System.currentTimeMillis();
 		mCurrentTransformationFrame.durationMs <- ( ( ("duration" in mCurrentTransformationFrame) ? mCurrentTransformationFrame.duration.tofloat() : 1.0 ) * 1000).tointeger();  
 		mCurrentTransformationFrame.end <- mCurrentTransformationFrame.started + mCurrentTransformationFrame.durationMs;
-			
-		print("ICE! Frame " + mCurrentTransformationSequence.index + " will run from " + mCurrentTransformationFrame.started + " to " + mCurrentTransformationFrame.end);
-		
-		print("ICE! Scenery: " + mIsScenery + " Should render: " + shouldRender() + " mForceUpdate = " + mForceUpdate);
 			
 		// Setup the interpolators for all of the transforms			
 		foreach(transform in mCurrentTransformationFrame.transforms) {
@@ -5285,7 +5275,6 @@ class this.SceneObject extends this.MessageBroadcaster
 					continue;
 					
 				if(!("asset" in transform)) {
-					print("ICE! No audio asset in transform");
 					continue; 
 				}
 				
@@ -5836,7 +5825,6 @@ class this.SceneObject extends this.MessageBroadcaster
 					this.mVerticalSpeed = 0.0;
 					this.setDistanceToFloor(0.0, terrain.normal);
 					this.mCurrentlyJumping = false;
-					print("ICE! Hit ground 3\n");
 					hitGround = true;
 				}
 				else
@@ -5962,9 +5950,9 @@ class this.SceneObject extends this.MessageBroadcaster
 				checkSwimming = true;
 			}
 			
-			if (::_avatar == this && !sentUpdate && hitGround) {
-				print("ICE! Hit ground!!!!\n");
-			}
+			//if (::_avatar == this && !sentUpdate && hitGround) {
+			//	print("ICE! Hit ground!!!!\n");
+			//}
 		}
 
 		if (checkSwimming)

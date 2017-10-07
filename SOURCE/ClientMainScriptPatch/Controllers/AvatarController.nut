@@ -382,12 +382,10 @@ class this.Controller.Avatar2 extends this.Controller.Server
 
 	function onServerVelocity( pServerHeading, pServerRotation, pServerSpeed )
 	{
-		print("ICE! Server velocity update " + pServerHeading + "," + pServerRotation + "," + pServerSpeed + " : " + this.mSceneObject.mLastServerUpdate + "\n");
 		this.Controller.Server.onServerVelocity(pServerHeading, pServerRotation, pServerSpeed);
 
 		if (!this.mSceneObject.mLastServerUpdate)
 		{
-			print("ICE! Actually rotating\n");
 			this.onHeadingChanged();
 			::_playTool.setYaw(this.Math.rad2deg(this.mSceneObject.getRotation()) + 180);
 		}
