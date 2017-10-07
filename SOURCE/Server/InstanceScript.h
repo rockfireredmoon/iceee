@@ -4,10 +4,12 @@
 
 #include "ScriptCore.h"
 #include <vector>
+#include <map>
 #include <algorithm>
 #include "Callback.h"
 #include "Scenery2.h"
 #include "PartyManager.h"
+#include "Forms.h"
 #include "util/SquirrelObjects.h"
 
 class ActiveInstance;
@@ -117,6 +119,7 @@ class InstanceNutPlayer: public AbstractInstanceNutPlayer {
 public:
 	std::vector<int> spawned;
 	std::vector<int> genericSpawned;
+	std::map<int, int> openedForms;
 	InstanceNutPlayer();
 	virtual ~InstanceNutPlayer();
 	virtual void RegisterFunctions();
@@ -181,6 +184,11 @@ public:
 	bool Interact(int CID, const char *text, float time, bool gather, Sqrat::Function function);
 	void RemoveInteraction(int CID);
 	void InterruptInteraction(int CID);
+	bool HasItem(int CID, int itemID);
+	bool GiveItem(int CID, int itemID);
+	bool OpenBook(int CID, int id, int page, bool refresh);
+	void OpenForm(int CID, FormDefinition form);
+	void CloseForm(int CID, int formId);
 
 private:
 	std::vector<SceneryEffect> activeEffects;

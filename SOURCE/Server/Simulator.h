@@ -52,6 +52,7 @@ struct SimulatorQuery
 
 	bool ValidArgIndex(unsigned int argIndex);
 	const char* GetString(unsigned int argIndex);
+	std::string GetStringObject(unsigned int argIndex);
 	int GetInteger(unsigned int argIndex);
 	long GetLong(unsigned int argIndex);
 	float GetFloat(unsigned int argIndex);

@@ -173,6 +173,9 @@ void AbstractInstanceNutPlayer::RegisterAbstractInstanceFunctions(NutPlayer *ins
 	Sqrat::RootTable(vm).Func(_SC("_AB"), &InstanceNutPlayer::GetAbilityID);
 
 	// Some constants
+	Sqrat::ConstTable(vm).Const(_SC("SPAWN_TILE_SIZE"), SpawnTile::SPAWN_TILE_SIZE);
+	Sqrat::ConstTable(vm).Const(_SC("SPAWN_TILE_RANGE"), SpawnTile::SPAWN_TILE_RANGE);
+
 	Sqrat::ConstTable(vm).Const(_SC("CREATURE_WALK_SPEED"), CREATURE_WALK_SPEED);
 	Sqrat::ConstTable(vm).Const(_SC("CREATURE_JOG_SPEED"), CREATURE_JOG_SPEED);
 	Sqrat::ConstTable(vm).Const(_SC("CREATURE_RUN_SPEED"), CREATURE_RUN_SPEED);
@@ -726,6 +729,7 @@ CreatureInstance* AbstractInstanceNutPlayer::GetCreaturePtr(int CID) {
 InstanceNutPlayer::InstanceNutPlayer() {
 	spawned.clear();
 	genericSpawned.clear();
+	openedForms.clear();
 }
 
 InstanceNutPlayer::~InstanceNutPlayer() {
@@ -752,6 +756,17 @@ void InstanceNutPlayer::HaltDerivedExecution() {
 			actInst->spawnsys.Despawn(*it);
 	}
 	spawned.clear();
+
+	std::map<int, int>::iterator it2;
+	char buf[32];
+	for(it2 = openedForms.begin(); it2 != openedForms.end(); ++it2)
+	{
+		CreatureInstance *creature = actInst->GetInstanceByCID(it2->second);
+		if(creature != NULL && creature->simulatorPtr != NULL) {
+			creature->simulatorPtr->AttemptSend(buf, PrepExt_SendFormClose(buf, it2->first));
+		}
+	}
+	openedForms.clear();
 }
 
 void InstanceNutPlayer::RegisterInstanceFunctions(HSQUIRRELVM vm,
@@ -812,6 +827,11 @@ void InstanceNutPlayer::RegisterInstanceFunctions(HSQUIRRELVM vm,
 	instanceClass->Func(_SC("walk_then"), &InstanceNutPlayer::WalkThen);
 	instanceClass->Func(_SC("despawn"), &InstanceNutPlayer::Despawn);
 	instanceClass->Func(_SC("despawn_all"), &InstanceNutPlayer::DespawnAll);
+	instanceClass->Func(_SC("has_item"), &InstanceNutPlayer::HasItem);
+	instanceClass->Func(_SC("open_book"), &InstanceNutPlayer::OpenBook);
+	instanceClass->Func(_SC("open_form"), &InstanceNutPlayer::OpenForm);
+	instanceClass->Func(_SC("close_form"), &InstanceNutPlayer::CloseForm);
+	instanceClass->Func(_SC("give_item"), &InstanceNutPlayer::GiveItem);
 	instanceClass->Func(_SC("warp_player"), &InstanceNutPlayer::WarpPlayer);
 	// TODO deprecated
 	instanceClass->Func(_SC("effect"), &InstanceNutPlayer::ParticleAttach);
@@ -861,6 +881,41 @@ void InstanceNutPlayer::RegisterFunctions() {
 //	sceneryObjectClass.Var(_SC("id"), &SceneryObject::ID);
 
 	Sqrat::RootTable(vm).SetInstance(_SC("inst"), this);
+
+	// Form objects
+	Sqrat::Class<FormDefinition> formClass(vm, "Form", true);
+	formClass.Ctor<std::string>();
+	formClass.Ctor<std::string, std::string>();
+	Sqrat::RootTable(vm).Bind(_SC("Form"), formClass);
+	formClass.Var("title", &FormDefinition::mTitle);
+	formClass.Var("description", &FormDefinition::mDescription);
+	formClass.Func("add_row", &FormDefinition::AddRow);
+
+	Sqrat::Class<FormRow> formRowClass(vm, "FormRow", true);
+	formRowClass.Ctor();
+	formRowClass.Ctor<std::string>();
+	Sqrat::RootTable(vm).Bind(_SC("FormRow"), formRowClass);
+	formRowClass.Var("group", &FormRow::mGroup);
+	formRowClass.Var("height", &FormRow::mHeight);
+	formRowClass.Func("add_item", &FormRow::AddItem);
+
+	Sqrat::Class<FormItem> formItemClass(vm, "FormItem", true);
+	formItemClass.Ctor<std::string, int>();
+	formItemClass.Ctor<std::string, int, std::string>();
+	formItemClass.Ctor<std::string, int, std::string, int>();
+	Sqrat::RootTable(vm).Bind(_SC("FormItem"), formItemClass);
+	formItemClass.Var("name", &FormItem::mName);
+	formItemClass.Var("type", &FormItem::mType);
+	formItemClass.Var("value", &FormItem::mValue);
+	formItemClass.Var("cells", &FormItem::mCells);
+	formItemClass.Var("width", &FormItem::mWidth);
+	formItemClass.Var("style", &FormItem::mStyle);
+
+	Sqrat::ConstTable(vm).Const(_SC("FORM_BLANK"), BLANK);
+	Sqrat::ConstTable(vm).Const(_SC("FORM_LABEL"), LABEL);
+	Sqrat::ConstTable(vm).Const(_SC("FORM_TEXTFIELD"), TEXTFIELD);
+	Sqrat::ConstTable(vm).Const(_SC("FORM_CHECKBOX"), CHECKBOX);
+	Sqrat::ConstTable(vm).Const(_SC("FORM_BUTTON"), BUTTON);
 }
 
 bool InstanceNutPlayer::DisbandVirtualParty(int partyID) {
@@ -2004,6 +2059,80 @@ void InstanceNutPlayer::RemoveInteraction(int CID)
 			}
 		}
 	}
+}
+
+void InstanceNutPlayer::CloseForm(int CID, int formId)
+{
+	CreatureInstance *creature = actInst->GetInstanceByCID(CID);
+	if(creature == NULL || creature->simulatorPtr == NULL)
+		return;
+
+	std::map<int, int>::iterator it = openedForms.find(formId);
+	if (it != openedForms.end()) {
+	  openedForms.erase(it);
+	}
+	char buf[32];
+	creature->simulatorPtr->AttemptSend(buf, PrepExt_SendFormClose(buf, formId));
+}
+
+void InstanceNutPlayer::OpenForm(int CID, FormDefinition form)
+{
+	CreatureInstance *creature = actInst->GetInstanceByCID(CID);
+	if(creature == NULL || creature->simulatorPtr == NULL)
+		return;
+
+	openedForms.insert(std::map<int, int>::value_type(form.mId, CID));
+	char buf[4096];
+	creature->simulatorPtr->AttemptSend(buf, PrepExt_SendFormOpen(buf, form));
+}
+
+bool InstanceNutPlayer::OpenBook(int CID, int id, int page, bool refresh)
+{
+	CreatureInstance *creature = actInst->GetInstanceByCID(CID);
+	if(creature == NULL || creature->simulatorPtr == NULL)
+		return false;
+
+	char buf[64];
+	creature->simulatorPtr->AttemptSend(buf, PrepExt_SendBookOpen(buf, id, page - 1, refresh ? 2 : 1));
+	return false;
+}
+
+bool InstanceNutPlayer::HasItem(int CID, int itemID)
+{
+	CreatureInstance *creature = actInst->GetInstanceByCID(CID);
+	if(creature == NULL || creature->simulatorPtr == NULL)
+		return false;
+
+	return creature->charPtr->inventory.GetItemPtrByID(itemID) != NULL;
+}
+
+bool InstanceNutPlayer::GiveItem(int CID, int itemID)
+{
+	if(actInst->mZoneDefPtr->mGrove)
+		return false;
+
+	CreatureInstance *creature = actInst->GetInstanceByCID(CID);
+	if(creature == NULL || creature->simulatorPtr == NULL)
+		return false;
+
+	ItemDef *item = g_ItemManager.GetSafePointerByID(itemID);
+	if(item->mID == 0)
+		return false;
+
+	int slot = creature->charPtr->inventory.GetFreeSlot(INV_CONTAINER);
+	if(slot == -1)
+		return false;
+
+	InventorySlot *sendSlot = creature->charPtr->inventory.AddItem_Ex(INV_CONTAINER, item->mID, 1);
+	if(sendSlot != NULL) {
+		creature->simulatorPtr->ActivateActionAbilities(sendSlot);
+		char buf[128];
+		char buf2[64];
+		int wpos = AddItemUpdate(buf, buf2, sendSlot);
+		creature->simulatorPtr->AttemptSend(buf, wpos);
+	}
+
+	return true;
 }
 
 void InstanceNutPlayer::InterruptInteraction(int CID)

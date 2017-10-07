@@ -7,6 +7,7 @@
 #include "Config.h"
 #include "DebugTracer.h"
 #include "ByteBuffer.h"
+#include "Forms.h"
 #include <math.h>
 #include <stdlib.h>
 #include <iostream>
@@ -399,13 +400,50 @@ int PrepExt_QueryResponseError(char *buffer, int queryIndex, const char *message
 	return wpos;
 }
 
-int PrepExt_SendBookOpen(char *buffer, int bookID, int page) {
+int PrepExt_SendBookOpen(char *buffer, int bookID, int page, int op) {
 	int wpos = 0;
 	wpos += PutByte(&buffer[wpos], 96);              //_handleBooks
 	wpos += PutShort(&buffer[wpos], 0);             //Placeholder for message size
-	wpos += PutByte(&buffer[wpos], 1); 				// Open
+	wpos += PutByte(&buffer[wpos], op); 				// Refresh or Open
 	wpos += PutInteger(&buffer[wpos], bookID);
 	wpos += PutInteger(&buffer[wpos], page);
+	PutShort(&buffer[1], wpos - 3);                 //Message size
+	return wpos;
+}
+
+int PrepExt_SendFormClose(char *buffer, int formId) {
+	int wpos = 0;
+	wpos += PutByte(&buffer[wpos], 52);              //_handleForm
+	wpos += PutShort(&buffer[wpos], 0);             //Placeholder for message size
+	wpos += PutInteger(&buffer[wpos], formId);
+	wpos += PutShort(&buffer[wpos], 1);				// close
+	PutShort(&buffer[1], wpos - 3);                 //Message size
+	return wpos;
+}
+
+int PrepExt_SendFormOpen(char *buffer, FormDefinition form) {
+	int wpos = 0;
+	wpos += PutByte(&buffer[wpos], 52);              //_handleForm
+	wpos += PutShort(&buffer[wpos], 0);             //Placeholder for message size
+	wpos += PutInteger(&buffer[wpos], form.mId);
+	wpos += PutShort(&buffer[wpos], 0); 			// open
+	wpos += PutStringUTF(&buffer[wpos], form.mTitle.c_str());
+	wpos += PutStringUTF(&buffer[wpos], form.mDescription.c_str());
+	wpos += PutShort(&buffer[wpos], form.mRows.size());
+	for(int i = 0 ; i < form.mRows.size(); i++) {
+		wpos += PutStringUTF(&buffer[wpos], form.mRows[i].mGroup.c_str());
+		int sz = form.mRows[i].mItems.size();
+		wpos += PutShort(&buffer[wpos], form.mRows[i].mHeight);
+		wpos += PutShort(&buffer[wpos], sz);
+		for(int j = 0 ; j < sz; j++) {
+			wpos += PutStringUTF(&buffer[wpos], form.mRows[i].mItems[j].mName.c_str());
+			wpos += PutShort(&buffer[wpos], form.mRows[i].mItems[j].mType);
+			wpos += PutStringUTF(&buffer[wpos], form.mRows[i].mItems[j].mValue.c_str());
+			wpos += PutShort(&buffer[wpos], form.mRows[i].mItems[j].mCells);
+			wpos += PutShort(&buffer[wpos], form.mRows[i].mItems[j].mWidth);
+			wpos += PutStringUTF(&buffer[wpos], form.mRows[i].mItems[j].mStyle.c_str());
+		}
+	}
 	PutShort(&buffer[1], wpos - 3);                 //Message size
 	return wpos;
 }

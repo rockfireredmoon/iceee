@@ -112,7 +112,7 @@ int UseItem(SimulatorThread *sim, CharacterServerData *pld,
 			g_Logs.simulator->debug("Opening book %v on page %v",
 					itemDef->mIvMax1, itemDef->mIvMax2);
 			return PrepExt_SendBookOpen(sim->SendBuf, itemDef->mIvMax1,
-					itemDef->mIvMax2 - 1);
+					itemDef->mIvMax2 - 1, 1);
 		} else {
 			ConfigString cfg(itemDef->Params);
 			int petSpawnID = cfg.GetValueInt("pet");
@@ -675,6 +675,11 @@ int ItemDeleteHandler::handleQuery(SimulatorThread *sim,
 			creatureInstance->RemoveBuffsFromAbility(itemDef->mActionAbilityId,
 					true);
 		}
+
+		// If the item is a book page, then inform the client the book is gone
+		if(itemDef->mType == ItemType::SPECIAL && itemDef->mIvType1 == ItemIntegerType::BOOK_PAGE) {
+			sim->AttemptSend(sim->SendBuf, PrepExt_SendBookOpen(sim->SendBuf, itemDef->mIvMax1, itemDef->mIvMax2 - 1, 3));
+		}
 	}
 
 	//Find the players best (in terms of recoup amount) grinder (if they have one)
@@ -688,10 +693,8 @@ int ItemDeleteHandler::handleQuery(SimulatorThread *sim,
 	}
 
 	//Append a delete notice to the response string
-	int wpos = 0;
-	wpos += RemoveItemUpdate(&sim->SendBuf[wpos], sim->Aux3,
-			&pld->charPtr->inventory.containerList[origContainer][r]);
-	sim->AttemptSend(sim->SendBuf, wpos);
+	sim->AttemptSend(sim->SendBuf, RemoveItemUpdate(sim->SendBuf, sim->Aux3,
+			&pld->charPtr->inventory.containerList[origContainer][r]));
 
 	//Remove from server's inventory list
 	pld->charPtr->inventory.RemItem(InventoryID);

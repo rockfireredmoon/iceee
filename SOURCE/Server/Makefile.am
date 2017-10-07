@@ -43,6 +43,7 @@ tawd_SOURCES = md5.cc \
 	FileReader3.cpp \
 	FileReader.cpp \
 	FriendStatus.cpp \
+	Forms.cpp \
 	Fun.cpp \
 	Gamble.cpp \
 	Globals.cpp \
@@ -111,6 +112,7 @@ tawd_SOURCES = md5.cc \
 	query/GMHandlers.cpp \
 	query/CreditShopHandlers.cpp \
 	query/VaultHandlers.cpp \
+	query/FormHandlers.cpp \
 	query/AuctionHouseHandlers.cpp \
 	query/ScriptHandlers.cpp \
 	query/MarkerHandlers.cpp \
@@ -174,6 +176,7 @@ tawd_SOURCES = md5.cc \
 	FileReader3.h \
 	FileReader.h \
 	Formula.h \
+	Forms.h \
 	FriendStatus.h \
 	Fun.h \
 	Gamble.h \
@@ -264,6 +267,7 @@ tawd_SOURCES = md5.cc \
 	query/ClanHandlers.h \
 	query/GMHandlers.h \
 	query/CreditShopHandlers.h \
+	query/FormHandlers.h \
 	query/VaultHandlers.h \
 	query/AuctionHouseHandlers.h \
 	query/ScriptHandlers.h \
@@ -331,6 +335,7 @@ tawdsvc_SOURCES = md5.cc \
 	FileReader3.cpp \
 	FileReader.cpp \
 	FriendStatus.cpp \
+	Forms.cpp \
 	Fun.cpp \
 	Gamble.cpp \
 	Globals.cpp \
@@ -400,6 +405,7 @@ tawdsvc_SOURCES = md5.cc \
 	query/CreditShopHandlers.cpp \
 	query/VaultHandlers.cpp \
 	query/AuctionHouseHandlers.cpp \
+	query/FormHandlers.cpp \
 	query/ScriptHandlers.cpp \
 	query/MarkerHandlers.cpp \
 	query/SidekickHandlers.cpp \
@@ -463,6 +469,7 @@ tawdsvc_SOURCES = md5.cc \
 	FileReader3.h \
 	FileReader.h \
 	Formula.h \
+	Forms.h \
 	FriendStatus.h \
 	Fun.h \
 	Gamble.h \
@@ -557,6 +564,7 @@ tawdsvc_SOURCES = md5.cc \
 	query/AuctionHouseHandlers.h \
 	query/BookHandlers.h \
 	query/ScriptHandlers.h \
+	query/FormHandlers.h \
 	query/MarkerHandlers.h \
 	query/SidekickHandlers.h \
 	query/QuestHandlers.h \

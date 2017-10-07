@@ -7,6 +7,7 @@
 #include "FileReader.h"
 
 #include "Instance.h"
+#include "Inventory.h"
 #include "Util.h"
 #include "Globals.h"  //For combat globals
 #include "AIScript.h"
@@ -7337,6 +7338,11 @@ int CreatureInstance :: ProcessQuestRewards(int QuestID, int outcomeIdx, const s
 int CreatureInstance :: QuestInteractObject(char *buffer, const char *text, float time, bool gather)
 {
 	Interrupt();
+	return PrepInteractObject(buffer, text, time, gather, CurrentTarget.targ);
+}
+
+int CreatureInstance :: PrepInteractObject(char *buffer, const char *text, float time, bool gather, CreatureInstance *targ)
+{
 
 	int wpos = 0;
 	wpos += PutByte(&buffer[wpos], 4);  //_handleCreatureEventMsg
@@ -7364,7 +7370,7 @@ int CreatureInstance :: QuestInteractObject(char *buffer, const char *text, floa
 	ab[0].bSecondary = false;
 	ab[0].bUnbreakableChannel = false;
 	ab[0].TargetCount = 1;
-	ab[0].TargetList[0] = CurrentTarget.targ;
+	ab[0].TargetList[0] = targ;
 
 	return wpos;
 }
@@ -7406,7 +7412,7 @@ int CreatureInstance :: NormalInteractObject(char *outBuf, InteractObject *inter
 	return wpos;
 }
 
-void CreatureInstance :: CheckQuestInteract(int targetCreatureID, int targetCreatureDefID)
+void CreatureInstance :: CheckQuestInteract(CreatureInstance *target)
 {
 	if(!(serverFlags & ServerFlags::IsPlayer))
 		return;
@@ -7416,7 +7422,62 @@ void CreatureInstance :: CheckQuestInteract(int targetCreatureID, int targetCrea
 	if(simulatorPtr == NULL)
 		return;
 
-	int wpos = charPtr->questJournal.CreatureUse_Confirmed(CreatureID, GSendBuf, targetCreatureDefID, targetCreatureID);
+	CreatureDefinition *cdef = CreatureDef.GetPointerByCDef(target->CreatureDefID);
+	/* Is the object an ITEM_GIVER? (Item ids given are in Extra Data) */
+	if(cdef != NULL && (cdef->DefHints & CDEF_HINT_ITEM_GIVER) != 0) {
+		/* For now only allow use if the player doesn't have any of the items pointed to by
+		 * the creatures ExtraData. In this case, pick the first item they don't have and add it their
+		 * inventory
+		 */
+		STRINGLIST args;
+		STRINGLIST items;
+		Util::Split(cdef->ExtraData.c_str(), ",", args);
+		std::vector<string>::iterator it;
+		for(it = args.begin(); it != args.end(); ++it) {
+			items.clear();
+			Util::Split((*it).c_str(), "=", items);
+			if(items[0].compare("item") == 0) {
+				/* For now we only allow use if the player doesn't already have
+				 * the item. There could be other uses for this though. I'll
+				 * add logic as and when it's needed
+				 */
+				int id = Util::GetInteger(items[1]);
+				if(charPtr->inventory.GetItemPtrByID(id) == NULL) {
+
+					ItemDef *item = g_ItemManager.GetSafePointerByID(id);
+					if(item->mID == 0) {
+						return;
+					}
+					else {
+						int slot = charPtr->inventory.GetFreeSlot(INV_CONTAINER);
+						if(slot == -1) {
+							return;
+						}
+						else {
+							InventorySlot *sendSlot = charPtr->inventory.AddItem_Ex(INV_CONTAINER, item->mID, 1);
+							if(sendSlot != NULL) {
+								simulatorPtr->ActivateActionAbilities(sendSlot);
+								char buf2[256];
+								char buf[512];
+								int wpos = AddItemUpdate(buf, buf2, sendSlot);
+								Util::SafeFormat(buf2, sizeof(buf2), "You now have '%s' in your inventory.", item->mDisplayName.c_str());
+								wpos += PrepExt_SendInfoMessage(&buf[wpos], buf2, INFOMSG_INFO);
+								simulatorPtr->AttemptSend(buf, wpos);
+								target->_RemoveStatusList(StatusEffects::IS_USABLE);
+								static const short statList[3] = {STAT::APPEARANCE_OVERRIDE, STAT::LOOTABLE_PLAYER_IDS, STAT::LOOT_SEEABLE_PLAYER_IDS};
+								actInst->LSendToLocalSimulator(GSendBuf, PrepExt_SendSpecificStats(GSendBuf, target, &statList[0], 3), target->CurrentX, target->CurrentZ);
+
+							}
+						}
+					}
+
+					break;
+				}
+			}
+		}
+	}
+
+	int wpos = charPtr->questJournal.CreatureUse_Confirmed(CreatureID, GSendBuf, target->CreatureDefID, target->CreatureID);
 	if(wpos > 0)
 	{
 		simulatorPtr->AttemptSend(GSendBuf, wpos);
@@ -7441,7 +7502,7 @@ void CreatureInstance :: RunQuestObjectInteraction(CreatureInstance *target, boo
 
 	int instance = actInst->mInstanceID;
 
-	CheckQuestInteract(target->CreatureID, target->CreatureDefID);
+	CheckQuestInteract(target);
 
 	/* Determine if target creature is Warp interact as well as a Quest object interaction.
 	 * If it is, we don't activate for the rest of the party, they must do it themselves
@@ -7464,7 +7525,7 @@ void CreatureInstance :: RunQuestObjectInteraction(CreatureInstance *target, boo
 						continue;
 					if(actInst->GetPlaneRange(this, member, PARTY_SHARE_DISTANCE) >= PARTY_SHARE_DISTANCE)
 						continue;
-					member->CheckQuestInteract(target->CreatureID, target->CreatureDefID);
+					member->CheckQuestInteract(target);
 				}
 			}
 		}
@@ -9660,8 +9721,12 @@ int PrepExt_AbilityActivate(char *buffer, CreatureInstance *cInst, ActiveAbility
 	if(ability->bSecondary == false)
 	{
 		wpos += PutInteger(&buffer[wpos], ability->TargetCount);   //primary_len
-		for(a = 0; a < ability->TargetCount; a++)
-			wpos += PutInteger(&buffer[wpos], ability->TargetList[a]->CreatureID);   //targets
+		for(a = 0; a < ability->TargetCount; a++)  {
+			if(ability->TargetList[a] == NULL)
+				g_Logs.server->warn("Ability %d for event %d has target count of %d, but target %d is NULL.", ability->abilityID, aevent, ability->TargetCount, a);
+			else
+				wpos += PutInteger(&buffer[wpos], ability->TargetList[a]->CreatureID);   //targets
+		}
 
 		wpos += PutInteger(&buffer[wpos], 0);   //secondary_len
 	}

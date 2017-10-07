@@ -508,6 +508,10 @@ const char* SimulatorQuery::GetString(unsigned int argIndex) {
 	return ValidArgIndex(argIndex) ? args[argIndex].c_str() : NULL;
 }
 
+std::string SimulatorQuery :: GetStringObject(uint argIndex) {
+	return ValidArgIndex(argIndex) ? args[argIndex] : "";
+}
+
 int SimulatorQuery::GetInteger(unsigned int argIndex) {
 	return ValidArgIndex(argIndex) ? atoi(args[argIndex].c_str()) : 0;
 }
@@ -4074,6 +4078,11 @@ bool SimulatorThread::ActivateActionAbilities(InventorySlot *slot) {
 		if (itemDef->mActionAbilityId != 0)
 			return creatureInst->RequestAbilityActivation(
 					itemDef->mActionAbilityId) == Ability2::ABILITY_SUCCESS;
+		else {
+			if(itemDef->mType == ItemType::SPECIAL && itemDef->mIvType1 == ItemIntegerType::BOOK_PAGE) {
+				AttemptSend(Aux1, PrepExt_SendBookOpen(Aux1, itemDef->mIvMax1, itemDef->mIvMax2 - 1, true));
+			}
+		}
 		return true;
 	}
 }

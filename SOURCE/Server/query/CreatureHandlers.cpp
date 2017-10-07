@@ -110,7 +110,30 @@ int CreatureIsUsableHandler::handleQuery(SimulatorThread *sim,
 			if (status[0] == 'N') {
 				CreatureDefinition *cdef = CreatureDef.GetPointerByCDef(
 						target->CreatureDefID);
-				if (cdef != NULL && (cdef->DefHints & CDEF_HINT_USABLE_SPARKLY))
+				if(cdef != NULL && (cdef->DefHints & CDEF_HINT_ITEM_GIVER)) {
+					STRINGLIST args;
+					STRINGLIST items;
+					Util::Split(cdef->ExtraData.c_str(), ",", args);
+					std::vector<string>::iterator it;
+					for(it = args.begin(); it != args.end(); ++it) {
+						items.clear();
+						Util::Split((*it).c_str(), "=", items);
+						if(items[0].compare("item") == 0) {
+							/* For now we only allow use if the player doesn't already have
+							 * the item. There could be other uses for this though. I'll
+							 * add logic as and when it's needed
+							 */
+							if(creatureInstance->charPtr->inventory.GetItemPtrByID(Util::GetInteger(items[1])) == NULL) {
+								if(cdef->DefHints & CDEF_HINT_USABLE_SPARKLY)
+									status = "Q";
+								else
+									status = "Y";
+								break;
+							}
+						}
+					}
+				}
+				else if (cdef != NULL && (cdef->DefHints & CDEF_HINT_USABLE_SPARKLY))
 					status = "Q";
 				else if (cdef != NULL && (cdef->DefHints & CDEF_HINT_USABLE))
 					status = "Y";

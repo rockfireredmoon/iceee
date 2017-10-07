@@ -3036,7 +3036,9 @@ int ScriptExecHandler::handleCommand(SimulatorThread *sim,
 		for (unsigned int i = 1; i < query->argCount; i++) {
 			p.push_back(ScriptCore::ScriptParam(query->GetString(i)));
 		}
+		inst->nutScriptPlayer->mCaller = creatureInstance->CreatureID;
 		inst->nutScriptPlayer->JumpToLabel(funcName.c_str(), p, queue);
+		inst->nutScriptPlayer->mCaller = 0;
 	}
 	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
 }

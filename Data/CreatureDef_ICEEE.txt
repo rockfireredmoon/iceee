@@ -1539,7 +1539,7 @@ ai_package=nothing
 
 
 [ENTRY]
-defHints=4096
+defHints=8192
 ID=7874
 will_regen=1
 might_regen=1

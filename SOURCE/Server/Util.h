@@ -4,6 +4,7 @@
 #include <stdarg.h>
 #include "CommonTypes.h"
 #include "Books.h"
+#include "Forms.h"
 
 const int MODMESSAGE_EVENT_SUPERCRIT = 1;
 const int MODMESSAGE_EVENT_EMOTE = 2;
@@ -48,7 +49,9 @@ int PrepExt_SendFallDamage(char *buffer, int damage);
 int PrepExt_GenericChatMessage(char *buffer, int creatureID, const char *name, const char *channel, const char *message);
 
 //Specific stat updates
-int PrepExt_SendBookOpen(char *buffer, int bookID, int page);
+int PrepExt_SendFormOpen(char *buffer, FormDefinition form);
+int PrepExt_SendFormClose(char *buffer, int formId);
+int PrepExt_SendBookOpen(char *buffer, int bookID, int page, int op);
 int PrepExt_CooldownExpired(char *buffer, long actor, const char *cooldownCategory);
 int PrepExt_ChangeTarget(char *buffer, int sourceID, int targetID);
 int PrepExt_ExperienceGain(char *buffer, int CreatureID, int ExpAmount);

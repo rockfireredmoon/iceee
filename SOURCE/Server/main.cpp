@@ -211,6 +211,7 @@ INITIALIZE_EASYLOGGINGPP
 #include "query/ZoneHandlers.h"
 #include "query/StatusHandlers.h"
 #include "query/PlayerHandlers.h"
+#include "query/FormHandlers.h"
 #include <curl/curl.h>
 
 #ifdef OUTPUT_TO_CONSOLE
@@ -700,6 +701,8 @@ int InitServerMain(int argc, char *argv[]) {
 	g_QueryManager.queryHandlers["script.load"] = new ScriptLoadHandler();
 	g_QueryManager.queryHandlers["script.kill"] = new ScriptKillHandler();
 	g_QueryManager.queryHandlers["script.save"] = new ScriptSaveHandler();
+
+	g_QueryManager.queryHandlers["form.submit"] = new FormSubmitHandler();
 
 	g_QueryManager.queryHandlers["marker.list"] = new MarkerListHandler();
 	g_QueryManager.queryHandlers["marker.edit"] = new MarkerEditHandler();
