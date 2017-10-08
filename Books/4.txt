@@ -1,0 +1,5 @@
+[BOOK]
+TITLE=Castle Camelot Royal Parchment
+
+[PAGE]
+TEXT=Castle Camelot has been the seat of power for the rulers of Anglorum since the days of old King Wilhelm who first built the city. This central chamber within the castle currently houses the famed Round Table as commissioned by His Royal Majesty, King Arthur Pendragon.
