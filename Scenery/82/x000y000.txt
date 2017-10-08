@@ -1,46 +1,56 @@
 [ENTRY]
+ID=1154502
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=Untitled
+Pos=483.729,120.216,804.703
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#F16009
+
+[ENTRY]
 ID=10000000
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=538,120,765
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=252
-sceneryName=generated_King_Arthur_Pendragon
 spawnPackage=#230
 
 [ENTRY]
 ID=10000001
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=561,120,763
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=250
-sceneryName=generated_Queen_Guinevere
 spawnPackage=generated_231
 
 [ENTRY]
 ID=10000002
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=582,120,991
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=250
-sceneryName=generated_City_Watch
 spawnPackage=generated_1718
 
 [ENTRY]
 ID=10000003
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=522,120,992
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=250
-sceneryName=generated_City_Watch
 spawnPackage=generated_1719
 
 [ENTRY]
 ID=1375731713
 Asset=Bldg-Camelot_Chamber#Bldg-Camelot_Chamber?ATS=ATS-Castle_Camelot
+Name=Untitled
 Pos=551.477,120.216,807.495
 Orient=0,0,0,1
 Scale=1,1,1
@@ -49,6 +59,7 @@ Flags=1
 [ENTRY]
 ID=1375731715
 Asset=Prop-Water_Planes#Prop-Water_Plane1
+Name=Untitled
 Pos=551.165,116.249,889.826
 Orient=0,0,0,1
 Scale=0.25,0.25,0.25
@@ -57,6 +68,7 @@ Flags=1
 [ENTRY]
 ID=1375731719
 Asset=Effects#Par-Splash1-Emitter
+Name=Untitled
 Pos=491.065,113.979,925.743
 Orient=0,0,0,1
 Scale=1,1,1
@@ -65,6 +77,7 @@ Flags=1
 [ENTRY]
 ID=1375731722
 Asset=CL-Fountain1
+Name=Untitled
 Pos=475.953,107.535,923.382
 Orient=0,0,0,1
 Scale=1,1,1
@@ -73,6 +86,7 @@ Flags=1
 [ENTRY]
 ID=1375731726
 Asset=Par-Splash1-Emitter
+Name=Untitled
 Pos=482.356,113.979,909.852
 Orient=0,0,0,1
 Scale=1,1,1
@@ -81,6 +95,7 @@ Flags=1
 [ENTRY]
 ID=1375731727
 Asset=Par-Splash1-Emitter
+Name=Untitled
 Pos=466.606,113.979,911.218
 Orient=0,0,0,1
 Scale=1,1,1
@@ -89,6 +104,7 @@ Flags=1
 [ENTRY]
 ID=1375731728
 Asset=Par-Splash1-Emitter
+Name=Untitled
 Pos=479.584,113.979,936.543
 Orient=0,0,0,1
 Scale=1,1,1
@@ -97,6 +113,7 @@ Flags=1
 [ENTRY]
 ID=1375731729
 Asset=Par-Splash1-Emitter
+Name=Untitled
 Pos=460.535,113.979,925.743
 Orient=0,0,0,1
 Scale=1,1,1
@@ -105,6 +122,7 @@ Flags=1
 [ENTRY]
 ID=1375731731
 Asset=Par-Splash1-Emitter
+Name=Untitled
 Pos=630.799,113.979,937.223
 Orient=0,0,0,1
 Scale=1,1,1
@@ -113,6 +131,7 @@ Flags=1
 [ENTRY]
 ID=1375731732
 Asset=Par-Splash1-Emitter
+Name=Untitled
 Pos=642.28,113.979,926.423
 Orient=0,0,0,1
 Scale=1,1,1
@@ -121,6 +140,7 @@ Flags=1
 [ENTRY]
 ID=1375731733
 Asset=CL-Fountain1
+Name=Untitled
 Pos=627.168,107.535,924.062
 Orient=0,0,0,1
 Scale=1,1,1
@@ -129,6 +149,7 @@ Flags=1
 [ENTRY]
 ID=1375731734
 Asset=Par-Splash1-Emitter
+Name=Untitled
 Pos=611.75,113.979,926.423
 Orient=0,0,0,1
 Scale=1,1,1
@@ -137,6 +158,7 @@ Flags=1
 [ENTRY]
 ID=1375731735
 Asset=Par-Splash1-Emitter
+Name=Untitled
 Pos=633.571,113.979,910.532
 Orient=0,0,0,1
 Scale=1,1,1
@@ -145,6 +167,7 @@ Flags=1
 [ENTRY]
 ID=1375731736
 Asset=Par-Splash1-Emitter
+Name=Untitled
 Pos=617.821,113.979,911.898
 Orient=0,0,0,1
 Scale=1,1,1
@@ -153,6 +176,7 @@ Flags=1
 [ENTRY]
 ID=1375731739
 Asset=Prop-Brazier_Blue
+Name=Untitled
 Pos=491.729,115.6,869.441
 Orient=0,0,0,1
 Scale=1.65,1.65,1.65
@@ -161,6 +185,7 @@ Flags=1
 [ENTRY]
 ID=1375731740
 Asset=Prop-Brazier_Blue
+Name=Untitled
 Pos=522.119,115.6,898.042
 Orient=0,0,0,1
 Scale=1.65,1.65,1.65
@@ -169,6 +194,7 @@ Flags=1
 [ENTRY]
 ID=1375731741
 Asset=Prop-Brazier_Blue
+Name=Untitled
 Pos=581.787,115.6,898.042
 Orient=0,0,0,1
 Scale=1.65,1.65,1.65
@@ -177,6 +203,7 @@ Flags=1
 [ENTRY]
 ID=1375731742
 Asset=Prop-Brazier_Blue
+Name=Untitled
 Pos=613.178,115.6,869.441
 Orient=0,0,0,1
 Scale=1.65,1.65,1.65
@@ -185,6 +212,7 @@ Flags=1
 [ENTRY]
 ID=1375731743
 Asset=Prop-Banner-Camelot#Prop-Banner-Camelot1
+Name=Untitled
 Pos=629.805,327.534,903.682
 Orient=0,0,0,1
 Scale=1.875,1.875,1.875
@@ -193,6 +221,7 @@ Flags=1
 [ENTRY]
 ID=1375731749
 Asset=Prop-Banner-Camelot2
+Name=Untitled
 Pos=660.297,230.324,877.632
 Orient=0,0,0,1
 Scale=1.3,1.3,1.3
@@ -201,6 +230,7 @@ Flags=1
 [ENTRY]
 ID=1375731754
 Asset=Prop-Banner-Camelot1
+Name=Untitled
 Pos=470.069,327.534,903.682
 Orient=0,0,0,1
 Scale=1.875,1.875,1.875
@@ -209,6 +239,7 @@ Flags=1
 [ENTRY]
 ID=1375731755
 Asset=Prop-Banner-Camelot1
+Name=Untitled
 Pos=586.49,330.263,782.319
 Orient=0,0,0,1
 Scale=1.3,1.3,1.3
@@ -217,6 +248,7 @@ Flags=1
 [ENTRY]
 ID=1375731756
 Asset=Prop-Banner-Camelot#Prop-Banner-Camelot3
+Name=Untitled
 Pos=610.4,330.263,854.34
 Orient=0,0.707107,0,0.707107
 Scale=1.725,1.725,1.725
@@ -225,6 +257,7 @@ Flags=1
 [ENTRY]
 ID=1375731757
 Asset=Prop-Banner-Camelot1
+Name=Untitled
 Pos=586.23,330.263,821.798
 Orient=0,0,0,1
 Scale=1.3,1.3,1.3
@@ -233,6 +266,7 @@ Flags=1
 [ENTRY]
 ID=1375731758
 Asset=Prop-Banner-Camelot1
+Name=Untitled
 Pos=516.381,330.263,821.798
 Orient=0,0,0,1
 Scale=1.3,1.3,1.3
@@ -241,6 +275,7 @@ Flags=1
 [ENTRY]
 ID=1375731759
 Asset=Prop-Banner-Camelot1
+Name=Untitled
 Pos=516.381,330.263,782.319
 Orient=0,0,0,1
 Scale=1.3,1.3,1.3
@@ -249,6 +284,7 @@ Flags=1
 [ENTRY]
 ID=1375731760
 Asset=Prop-Banner-Camelot3
+Name=Untitled
 Pos=492.867,330.263,854.34
 Orient=0,0.707107,0,0.707107
 Scale=1.725,1.725,1.725
@@ -257,6 +293,7 @@ Flags=1
 [ENTRY]
 ID=1375731761
 Asset=Prop-Banner-Camelot2
+Name=Untitled
 Pos=660.972,230.324,926.967
 Orient=0,0,0,1
 Scale=1.3,1.3,1.3
@@ -265,6 +302,7 @@ Flags=1
 [ENTRY]
 ID=1375731762
 Asset=Prop-Banner-Camelot#Prop-Banner-Camelot1
+Name=Untitled
 Pos=651.247,230.993,811.255
 Orient=0,0,0,1
 Scale=1.725,1.725,1.725
@@ -273,6 +311,7 @@ Flags=1
 [ENTRY]
 ID=1375731763
 Asset=Prop-Banner-Camelot2
+Name=Untitled
 Pos=442.824,230.324,926.967
 Orient=0,0,0,1
 Scale=1.3,1.3,1.3
@@ -281,6 +320,7 @@ Flags=1
 [ENTRY]
 ID=1375731765
 Asset=Prop-Banner-Camelot1
+Name=Untitled
 Pos=451.516,230.993,811.255
 Orient=0,0,0,1
 Scale=1.725,1.725,1.725
@@ -289,6 +329,7 @@ Flags=1
 [ENTRY]
 ID=1375731767
 Asset=Light-Medium?COLOR=1D7CF2
+Name=Untitled
 Pos=607.968,138.87,893.967
 Orient=0,0,0,1
 Scale=1,1,1
@@ -297,6 +338,7 @@ Flags=1
 [ENTRY]
 ID=1375731768
 Asset=Light-Medium?COLOR=1D7CF2
+Name=Untitled
 Pos=502.062,138.87,893.967
 Orient=0,0,0,1
 Scale=1,1,1
@@ -305,6 +347,7 @@ Flags=1
 [ENTRY]
 ID=1375731770
 Asset=Prop-Banner-Camelot2
+Name=Untitled
 Pos=442.824,230.324,877.632
 Orient=0,0,0,1
 Scale=1.3,1.3,1.3
@@ -313,6 +356,7 @@ Flags=1
 [ENTRY]
 ID=1375731785
 Asset=CL-Metal_Candelabra2
+Name=Untitled
 Pos=610.07,120.216,999.569
 Orient=0,-0.333487,0,0.942755
 Scale=1,1,1
@@ -321,6 +365,7 @@ Flags=1
 [ENTRY]
 ID=1375731786
 Asset=Light-Small?COLOR=FF7F00
+Name=Untitled
 Pos=549.994,136.878,750.178
 Orient=0,0,0,1
 Scale=1,1,1
@@ -329,6 +374,7 @@ Flags=1
 [ENTRY]
 ID=1375731788
 Asset=Prop-Banner-Camelot#Prop-Banner-Camelot3
+Name=Untitled
 Pos=582.18,180.523,989.162
 Orient=0,0.707107,0,-0.707107
 Scale=1,1,1
@@ -337,6 +383,7 @@ Flags=1
 [ENTRY]
 ID=1375731790
 Asset=CL-Metal_Candelabra2
+Name=Untitled
 Pos=490.951,120.216,998.717
 Orient=0,-0.333487,0,0.942755
 Scale=1,1,1
@@ -345,6 +392,7 @@ Flags=1
 [ENTRY]
 ID=1375731792
 Asset=Prop-Banner-Camelot3
+Name=Untitled
 Pos=521.679,180.391,988.652
 Orient=0,0.707107,0,-0.707107
 Scale=1,1,1
@@ -353,6 +401,7 @@ Flags=1
 [ENTRY]
 ID=1375731793
 Asset=Light-Medium
+Name=Untitled
 Pos=551.212,271.7,754.3
 Orient=0,0,0,1
 Scale=1,1,1
@@ -361,6 +410,7 @@ Flags=1
 [ENTRY]
 ID=1375731796
 Asset=Effects#Par-Flame-Emitter
+Name=Untitled
 Pos=553.714,120.216,726.973
 Orient=0,0,0,1
 Scale=0.7,0.7,0.7
@@ -368,6 +418,7 @@ Scale=0.7,0.7,0.7
 [ENTRY]
 ID=1375731797
 Asset=Par-Flame-Emitter
+Name=Untitled
 Pos=549.949,120.216,726.973
 Orient=0,0,0,1
 Scale=0.75,0.75,0.75
@@ -375,6 +426,7 @@ Scale=0.75,0.75,0.75
 [ENTRY]
 ID=1375731798
 Asset=Prop-Banner-Camelot#Prop-Banner-Camelot1
+Name=Untitled
 Pos=599.673,199.019,748.27
 Orient=0,0.707107,0,-0.707107
 Scale=1,1,1
@@ -382,6 +434,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1375731799
 Asset=Prop-Banner-Camelot1
+Name=Untitled
 Pos=503.309,198.732,748.27
 Orient=0,0.707107,0,-0.707107
 Scale=1,1,1
@@ -389,6 +442,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1375731800
 Asset=Prop-Round_Table#Prop-Round_Table
+Name=Untitled
 Pos=551.183,119.691,806.443
 Orient=0,0,0,1
 Scale=1,1,1

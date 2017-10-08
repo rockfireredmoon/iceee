@@ -1,4 +1,13 @@
 [ENTRY]
+ID=1154512
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=2162.58,230,4247.54
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#F16016
+
+[ENTRY]
 ID=469762160
 Asset=Dng-Room_Narrow_I?ATS=ATS-Dungeon_Castle
 Name=Untitled
