@@ -1,11 +1,11 @@
 [ENTRY]
-ID=1000004
+ID=1000003
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
-Pos=971.401,539.53,2374.5
+Name=Untitled
+Pos=972.293,541.133,2376.41
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#F3491
+spawnPackage=#F3490
 
 [ENTRY]
 ID=1126693

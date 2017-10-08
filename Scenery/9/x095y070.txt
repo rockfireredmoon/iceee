@@ -110,12 +110,12 @@ Name=Untitled
 Pos=71305.8,1201.99,52812.2
 Orient=0,-0.963558,0,0.267499
 Scale=1,1,1
-spawnPackage=#1353
+spawnPackage=#F1353
 
 [ENTRY]
 ID=1154236
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=71298.5,1201.42,52618.9
 Orient=0,0,0,1
 Scale=1,1,1
@@ -127,7 +127,7 @@ link=1154239,1
 [ENTRY]
 ID=1154237
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=71405.1,1202.93,52573.1
 Orient=0,0,0,1
 Scale=1,1,1
@@ -139,7 +139,7 @@ link=1154239,1
 [ENTRY]
 ID=1154240
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=71265.2,1201.53,52700.9
 Orient=0,0,0,1
 Scale=1,1,1

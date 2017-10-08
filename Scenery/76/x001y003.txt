@@ -1,7 +1,16 @@
 [ENTRY]
+ID=1000004
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=Untitled
+Pos=1387.27,719.309,3354.45
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#F3491
+
+[ENTRY]
 ID=1126714
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=1414.16,720,3073.01
 Orient=0,0,0,1
 Scale=0.925,0.925,0.925
@@ -12,7 +21,7 @@ link=1126716,1
 [ENTRY]
 ID=1126715
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=1418.15,720,3073.21
 Orient=0,0,0,1
 Scale=1,1,1
@@ -23,7 +32,7 @@ link=1126717,1
 [ENTRY]
 ID=1126716
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=1384.94,720,3056.51
 Orient=0,0,0,1
 Scale=1,1,1
@@ -33,7 +42,7 @@ link=1126714,1
 [ENTRY]
 ID=1126717
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=1443.48,720,3056.27
 Orient=0,0,0,1
 Scale=1,1,1
