@@ -1,4 +1,13 @@
 [ENTRY]
+ID=1154514
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=1894.59,48.856,1535.36
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#F16018
+
+[ENTRY]
 ID=469762062
 Asset=Cav-Room_Round_Corner1?ATS=ATS-Cave_Moss
 Name=Untitled

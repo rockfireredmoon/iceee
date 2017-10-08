@@ -241,7 +241,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1127179
 Asset=Dng-Room_Wall?ATS=ATS-Dungeon_Crypt
-Name=
+Name=Untitled
 Pos=6002.96,140,3670.52
 Orient=0,0,0,1
 Scale=1,1,1
@@ -249,7 +249,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1127180
 Asset=Prop-Braziers#Prop-Brazier_Purple
-Name=
+Name=Untitled
 Pos=6056.3,194.918,3854
 Orient=0,0,0,1
 Scale=2,2,2
@@ -257,10 +257,19 @@ Scale=2,2,2
 [ENTRY]
 ID=1127181
 Asset=Prop-Crypt_Props#Prop-Crypt_CoffinB
-Name=
+Name=Untitled
 Pos=6088.23,200.583,3937.18
 Orient=0.478772,0.535375,-0.515312,-0.467551
 Scale=1.3,1.3,1.3
+
+[ENTRY]
+ID=1154508
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=6155.3,170.034,3917.63
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#F16015
 
 [ENTRY]
 ID=486539516

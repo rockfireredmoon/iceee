@@ -1,6 +1,16 @@
 [ENTRY]
+ID=1154506
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=7706.56,80,3890.66
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#F16012
+
+[ENTRY]
 ID=486539537
 Asset=Dng-Hall_Straight1?ATS=ATS-Dungeon_Crypt
+Name=Untitled
 Pos=7100,80,3295
 Orient=0,0.707106,0,-0.707107
 Scale=1,1,1
@@ -9,6 +19,7 @@ Flags=1
 [ENTRY]
 ID=486539540
 Asset=Dng-Room_Corner_1DoorB?ATS=ATS-Dungeon_Crypt
+Name=Untitled
 Pos=7290,80,3295
 Orient=0,-0.707106,0,0.707107
 Scale=1,1,1
@@ -17,70 +28,79 @@ Flags=1
 [ENTRY]
 ID=486539545
 Asset=Dng-Room_Corner?ATS=ATS-Dungeon_Crypt
+Name=Untitled
 Pos=7650,80,3115
-Orient=0,6.09955e-007,0,1
+Orient=0,6.09955e-07,0,1
 Scale=1,1,1
 Flags=1
 
 [ENTRY]
 ID=486539546
 Asset=Dng-Pillar?ATS=ATS-Dungeon_Crypt
+Name=Untitled
 Pos=7650,80,3115
-Orient=0,-1,0,6.85453e-007
+Orient=0,-1,0,6.85453e-07
 Scale=1,1,1
 Flags=1
 
 [ENTRY]
 ID=486539548
 Asset=Dng-Room_1Sided?ATS=ATS-Dungeon_Crypt
+Name=Untitled
 Pos=7290,80,3845
-Orient=0,-1,0,6.85453e-007
+Orient=0,-1,0,6.85453e-07
 Scale=1,1,1
 Flags=1
 
 [ENTRY]
 ID=486539550
 Asset=Dng-Room_1Sided?ATS=ATS-Dungeon_Crypt
+Name=Untitled
 Pos=7470,80,3295
-Orient=0,6.09955e-007,0,1
+Orient=0,6.09955e-07,0,1
 Scale=1,1,1
 Flags=1
 
 [ENTRY]
 ID=486539551
 Asset=Dng-Room_Corner?ATS=ATS-Dungeon_Crypt
+Name=Untitled
 Pos=7290,80,3115
-Orient=0,-1,0,6.85453e-007
+Orient=0,-1,0,6.85453e-07
 Scale=1,1,1
 Flags=1
 
 [ENTRY]
 ID=486539553
 Asset=Dng-Room_Center?ATS=ATS-Dungeon_Crypt
+Name=Untitled
 Pos=7470,80,3115
-Orient=0,6.09955e-007,0,1
+Orient=0,6.09955e-07,0,1
 Scale=1,1,1
 Flags=1
 
 [ENTRY]
 ID=486539555
 Asset=Dng-Room_Center?ATS=ATS-Dungeon_Crypt
+Name=Untitled
 Pos=7470,80,3665
-Orient=0,6.09955e-007,0,1
+Orient=0,6.09955e-07,0,1
 Scale=1,1,1
 Flags=1
 
 [ENTRY]
 ID=486539556
 Asset=Dng-Room_Corner2?ATS=ATS-Dungeon_Crypt
+Name=Untitled
 Pos=7290,80,3665
-Orient=0,-1,0,6.85453e-007
+Orient=0,-1,0,6.85453e-07
 Scale=1,1,1
 Flags=1
 
 [ENTRY]
 ID=486539559
 Asset=Dng-Room_Narrow_I?ATS=ATS-Dungeon_Crypt
+Name=Untitled
 Pos=7470,80,3485
 Orient=0,-0.707106,0,0.707107
 Scale=1,1,1
@@ -89,6 +109,7 @@ Flags=1
 [ENTRY]
 ID=486539560
 Asset=Dng-Room_Divider?ATS=ATS-Dungeon_Crypt
+Name=Untitled
 Pos=7470,80,3390
 Orient=0,-0.707106,0,0.707107
 Scale=1,1,1
@@ -97,6 +118,7 @@ Flags=1
 [ENTRY]
 ID=486539571
 Asset=Dng-Room_Corner2?ATS=ATS-Dungeon_Crypt
+Name=Untitled
 Pos=7650,80,3665
 Orient=0,-0.707107,0,-0.707106
 Scale=1,1,1
@@ -105,22 +127,25 @@ Flags=1
 [ENTRY]
 ID=486539575
 Asset=Dng-Room_Center?ATS=ATS-Dungeon_Crypt
+Name=Untitled
 Pos=7470,80,3845
-Orient=0,6.09955e-007,0,1
+Orient=0,6.09955e-07,0,1
 Scale=1,1,1
 Flags=1
 
 [ENTRY]
 ID=486539576
 Asset=Dng-Room_1Sided?ATS=ATS-Dungeon_Crypt
+Name=Untitled
 Pos=7650,80,3845
-Orient=0,6.09955e-007,0,1
+Orient=0,6.09955e-07,0,1
 Scale=1,1,1
 Flags=1
 
 [ENTRY]
 ID=486540343
 Asset=Prop-Dungeon-Bone_Pit#Prop-Crypt-Bone_Pit
+Name=Untitled
 Pos=7318.16,80,3136.47
 Orient=0,0,0,1
 Scale=1.725,1.725,1.725
@@ -129,6 +154,7 @@ Flags=1
 [ENTRY]
 ID=486540344
 Asset=Prop-Hanging_Cage1#Prop-Hanging_Cage1
+Name=Untitled
 Pos=7394.49,179.457,3168.37
 Orient=0,0,0,1
 Scale=2.25,2.25,2.25
@@ -137,6 +163,7 @@ Flags=1
 [ENTRY]
 ID=486540345
 Asset=Prop-Hanging_Cage1
+Name=Untitled
 Pos=7624.67,182.436,3017.42
 Orient=0,0.795602,0,0.60582
 Scale=2.2,2.2,2.2
@@ -145,6 +172,7 @@ Flags=1
 [ENTRY]
 ID=486540346
 Asset=Prop-Hanging_Cage1
+Name=Untitled
 Pos=7533.17,185.206,3171.13
 Orient=0,0,0,1
 Scale=1,1,1
@@ -153,6 +181,7 @@ Flags=1
 [ENTRY]
 ID=486540347
 Asset=Prop-Hanging_Cage1
+Name=Untitled
 Pos=7499.9,189.652,3017.42
 Orient=0,0,0,1
 Scale=1,1,1
@@ -161,6 +190,7 @@ Flags=1
 [ENTRY]
 ID=486540350
 Asset=Prop-Crypt_Coffin
+Name=Untitled
 Pos=7667.1,80,3933.51
 Orient=0,-0.999983,0,0.00579636
 Scale=1.35,1.35,1.35
@@ -169,6 +199,7 @@ Flags=1
 [ENTRY]
 ID=486540356
 Asset=Prop-Crypt_Coffin
+Name=Untitled
 Pos=7630.24,74.6539,3845.4
 Orient=0,-1,0,0.000796348
 Scale=2.75,2.75,2.75
@@ -177,6 +208,7 @@ Flags=1
 [ENTRY]
 ID=486540357
 Asset=Prop-Crypt_Coffin
+Name=Untitled
 Pos=7623.22,80,3669.88
 Orient=0,-0.972329,0,0.233617
 Scale=2.075,2.075,2.075
@@ -185,6 +217,7 @@ Flags=1
 [ENTRY]
 ID=486540359
 Asset=Prop-Crypt_Props#Prop-Crypt_CoffinB
+Name=Untitled
 Pos=7666.8,80,3755.84
 Orient=0,-0.994043,0,-0.108987
 Scale=1.325,1.325,1.325
@@ -193,6 +226,7 @@ Flags=1
 [ENTRY]
 ID=486540361
 Asset=Prop-Crypt_Coffin
+Name=Untitled
 Pos=7297.4,80,3647.28
 Orient=0,0,0,1
 Scale=1.575,1.575,1.575
@@ -201,6 +235,7 @@ Flags=1
 [ENTRY]
 ID=486540363
 Asset=Prop-Crypt_Coffin
+Name=Untitled
 Pos=7333.73,78.0613,3850.12
 Orient=0,0,0,1
 Scale=2.125,2.125,2.125
@@ -209,6 +244,7 @@ Flags=1
 [ENTRY]
 ID=486540365
 Asset=Prop-Crypt_Coffin
+Name=Untitled
 Pos=7294.47,80,3936.32
 Orient=0,0,0,1
 Scale=1.55,1.55,1.55
@@ -217,6 +253,7 @@ Flags=1
 [ENTRY]
 ID=486540379
 Asset=Prop-Dungeon-Cobwebs1#Prop-Dungeon-Cobwebs1
+Name=Untitled
 Pos=7475.91,196.007,3558.92
 Orient=0,0,0,1
 Scale=1,1,1
@@ -225,6 +262,7 @@ Flags=1
 [ENTRY]
 ID=486540381
 Asset=Prop-Dungeon-Cobwebs1
+Name=Untitled
 Pos=7475.91,235.127,3675.83
 Orient=-0.00521789,-0.285941,0.0349602,0.957595
 Scale=1,1,1
@@ -233,6 +271,7 @@ Flags=1
 [ENTRY]
 ID=486540432
 Asset=Prop-Crypt_CoffinB
+Name=Untitled
 Pos=7292.45,80,3765.51
 Orient=0,0,0,1
 Scale=1.55,1.55,1.55
@@ -241,6 +280,7 @@ Flags=1
 [ENTRY]
 ID=486540434
 Asset=Effects#Par-Ground_Fog1
+Name=Untitled
 Pos=7442.35,80,3891.92
 Orient=0,0,0,1
 Scale=1.45,1.45,1.45
@@ -249,6 +289,7 @@ Flags=1
 [ENTRY]
 ID=486540435
 Asset=Prop-Skulls#Prop-Skull_and_Bones
+Name=Untitled
 Pos=7464.03,80,3724
 Orient=0,0,0,1
 Scale=1,1,1
@@ -257,6 +298,7 @@ Flags=1
 [ENTRY]
 ID=486540436
 Asset=Prop-Battlefield_Skeletons#Prop-Battlefield_Skeleton1
+Name=Untitled
 Pos=7452.48,80,3956.34
 Orient=0,0,0,1
 Scale=1,1,1
@@ -265,6 +307,7 @@ Flags=1
 [ENTRY]
 ID=486540438
 Asset=Prop-Battlefield_Skeletons#Prop-Battlefield_Skeleton3
+Name=Untitled
 Pos=7422.78,80,3629.48
 Orient=0,0.470626,0,0.882333
 Scale=1,1,1
@@ -273,6 +316,7 @@ Flags=1
 [ENTRY]
 ID=486540439
 Asset=Prop-Battlefield_Skeleton3
+Name=Untitled
 Pos=7537.11,80,3906.63
 Orient=0,0,0,1
 Scale=1.4,1.4,1.4
@@ -281,6 +325,7 @@ Flags=1
 [ENTRY]
 ID=486540440
 Asset=Prop-Battlefield_Skeletons#Prop-Battlefield_Skeleton4
+Name=Untitled
 Pos=7512.68,80,3763.86
 Orient=0,0.159318,0,0.987227
 Scale=1.675,1.675,1.675
@@ -289,6 +334,7 @@ Flags=1
 [ENTRY]
 ID=486540441
 Asset=Prop-Battlefield_Skeleton4
+Name=Untitled
 Pos=7413.59,80,3862.05
 Orient=0,0.159318,0,0.987227
 Scale=1.675,1.675,1.675
@@ -297,6 +343,7 @@ Flags=1
 [ENTRY]
 ID=486540444
 Asset=Prop-Spider_Webs#Prop-Spider_Webs1
+Name=Untitled
 Pos=7209.41,95.6729,3840.24
 Orient=0,-0.653041,0,-0.757322
 Scale=2.175,2.175,2.175
@@ -305,6 +352,7 @@ Flags=1
 [ENTRY]
 ID=486540456
 Asset=Prop-Hanging_Cage1
+Name=Untitled
 Pos=7471.02,177.555,3483.54
 Orient=0,0,0,1
 Scale=1,1,1
@@ -313,6 +361,7 @@ Flags=1
 [ENTRY]
 ID=486540459
 Asset=CL-Metal_Chandelier1#CL-Metal_Chandelier1
+Name=Untitled
 Pos=7465.77,350.132,3844.51
 Orient=0,0,0,1
 Scale=1.075,1.075,1.075
@@ -321,6 +370,7 @@ Flags=1
 [ENTRY]
 ID=486540464
 Asset=Prop-Dungeon-Tattered_Carpet1#Prop-Dungeon-Tattered_Carpet1
+Name=Untitled
 Pos=7469.19,80.0501,3635.82
 Orient=0,0.710353,0,0.703845
 Scale=1.95,1.95,1.95
@@ -329,6 +379,7 @@ Flags=1
 [ENTRY]
 ID=486540469
 Asset=Prop-Hanging_Cage1
+Name=Untitled
 Pos=7471.02,178.416,3665.42
 Orient=0,0,0,1
 Scale=2.45,2.45,2.45
@@ -337,6 +388,7 @@ Flags=1
 [ENTRY]
 ID=486540471
 Asset=Prop-Dungeon-Cobwebs1#Prop-Dungeon-Cobwebs1
+Name=Untitled
 Pos=7635.29,240.51,3847.46
 Orient=-0.0900065,-0.687152,0.0934233,0.714838
 Scale=0.85,0.85,0.85
@@ -345,6 +397,7 @@ Flags=1
 [ENTRY]
 ID=486540472
 Asset=Prop-Dungeon-Cobwebs1
+Name=Untitled
 Pos=7587.13,228.884,3847.03
 Orient=0.00604107,-0.754965,-0.0606449,0.652927
 Scale=0.85,0.85,0.85
@@ -353,6 +406,7 @@ Flags=1
 [ENTRY]
 ID=486540475
 Asset=Prop-Crypt_Coffin
+Name=Untitled
 Pos=7730.54,125.626,3991.77
 Orient=-0.183664,-0.122339,0.597524,0.770886
 Scale=2.05,2.05,2.05
@@ -361,6 +415,7 @@ Flags=1
 [ENTRY]
 ID=486540476
 Asset=Prop-Vampire_Grasses#Prop-Vampire_Grass4
+Name=Untitled
 Pos=7615.56,80,3864.9
 Orient=0,0,0,1
 Scale=2.675,2.675,2.675
@@ -369,6 +424,7 @@ Flags=1
 [ENTRY]
 ID=486540477
 Asset=Prop-Vampire_Rocks#Prop-Vampire_Rock1
+Name=Untitled
 Pos=7378.46,80,3696.55
 Orient=0,0,0,1
 Scale=1,1,1
@@ -377,22 +433,25 @@ Flags=1
 [ENTRY]
 ID=486540485
 Asset=Dng-Pillar?ATS=ATS-Dungeon_Crypt
+Name=Untitled
 Pos=7405.44,-38.8623,3840.95
-Orient=0,-1,0,6.85453e-007
+Orient=0,-1,0,6.85453e-07
 Scale=2,2,2
 Flags=1
 
 [ENTRY]
 ID=486540486
 Asset=Dng-Pillar?ATS=ATS-Dungeon_Crypt
+Name=Untitled
 Pos=7531.43,-38.8623,3841.72
-Orient=0,-1,0,6.85453e-007
+Orient=0,-1,0,6.85453e-07
 Scale=2,2,2
 Flags=1
 
 [ENTRY]
 ID=486540494
 Asset=Prop-Spider_Webs1
+Name=Untitled
 Pos=7019.99,95.6729,3841.17
 Orient=0,-0.670587,0,0.741831
 Scale=2.175,2.175,2.175
@@ -401,6 +460,7 @@ Flags=1
 [ENTRY]
 ID=486540624
 Asset=Prop-Vampire_Rocks#Prop-Vampire_Rock3
+Name=Untitled
 Pos=7541.68,80,3226.64
 Orient=0,0,0,1
 Scale=9.65,9.65,9.65
@@ -409,6 +469,7 @@ Flags=1
 [ENTRY]
 ID=486540625
 Asset=Prop-Vampire_Rocks#Prop-Vampire_Rock2
+Name=Untitled
 Pos=7520.65,80,3095.77
 Orient=0,0,0,1
 Scale=3.375,3.375,3.375
@@ -417,6 +478,7 @@ Flags=1
 [ENTRY]
 ID=486540626
 Asset=Prop-Vampire_Rocks#Prop-Vampire_Rock1
+Name=Untitled
 Pos=7548.85,80,3271.15
 Orient=0,0.564642,0,0.825336
 Scale=5.65,5.65,5.65
@@ -425,6 +487,7 @@ Flags=1
 [ENTRY]
 ID=486540717
 Asset=Prop-Vampire_Rock3
+Name=Untitled
 Pos=7503.23,80,3059.94
 Orient=0,0,0,1
 Scale=9.65,9.65,9.65
@@ -433,6 +496,7 @@ Flags=1
 [ENTRY]
 ID=486540736
 Asset=Prop-Spider_Webs1
+Name=Untitled
 Pos=7702.01,95.6729,3853.88
 Orient=-0.006562,0.697305,0.0424827,-0.715485
 Scale=2.175,2.175,2.175
@@ -441,6 +505,7 @@ Flags=1
 [ENTRY]
 ID=486540737
 Asset=Prop-Vampire_Rock2
+Name=Untitled
 Pos=7520.65,80,3250.58
 Orient=0,0,0,1
 Scale=1,1,1
@@ -449,6 +514,7 @@ Flags=1
 [ENTRY]
 ID=486540745
 Asset=Light-Large?COLOR=6666FF
+Name=Untitled
 Pos=7470.71,185.766,3846.13
 Orient=0,0,0,1
 Scale=1,1,1
@@ -457,6 +523,7 @@ Flags=1
 [ENTRY]
 ID=486540765
 Asset=Light-Large?COLOR=3333FF
+Name=Untitled
 Pos=7520.43,185.893,3017.57
 Orient=0,0,0,1
 Scale=1,1,1
@@ -465,6 +532,7 @@ Flags=1
 [ENTRY]
 ID=486541066
 Asset=Prop-Skulls#Prop-Skull_Atavian
+Name=Untitled
 Pos=7436.44,80,3119.39
 Orient=0,0,0,1
 Scale=1,1,1
@@ -473,6 +541,7 @@ Flags=1
 [ENTRY]
 ID=486541067
 Asset=Prop-Skulls#Prop-Skull_and_Bones
+Name=Untitled
 Pos=7677.01,80,3005.07
 Orient=0,0,0,1
 Scale=1,1,1
@@ -481,50 +550,51 @@ Flags=1
 [ENTRY]
 ID=486541150
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=7466.12,80,3913.68
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=1_dng_wc_HighRitualistSquire_d_h_14
 links_count=1
 link=486541981,1
-spawnPackage=1_dng_wc_HighRitualistSquire_d_h_14
-outerRadius=10
 
 [ENTRY]
 ID=486541151
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=7413.35,80,3417.75
 Orient=0,0.703279,0,0.710914
 Scale=1,1,1
+spawnPackage=1_dng_wc_HighRitualistSquire_d_h_14
 links_count=1
 link=486541961,1
-spawnPackage=1_dng_wc_HighRitualistSquire_d_h_14
-outerRadius=10
 
 [ENTRY]
 ID=486541156
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=7368.71,80,3606.83
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=1_dng_wc_BoneThrall_13_14
 links_count=1
 link=486541952,1
-spawnPackage=1_dng_wc_BoneThrall_13_14
-outerRadius=10
 
 [ENTRY]
 ID=486541158
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=7575,80,3612.37
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=1_dng_wc_BoneThrall_13_14
 links_count=1
 link=486541956,1
-spawnPackage=1_dng_wc_BoneThrall_13_14
-outerRadius=10
 
 [ENTRY]
 ID=486541908
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=7699.86,80,3106.77
 Orient=0,0,0,1
 Scale=1,1,1
@@ -535,6 +605,7 @@ link=486541915,1
 [ENTRY]
 ID=486541909
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=7639.42,80,3149.15
 Orient=0,0,0,1
 Scale=1,1,1
@@ -546,6 +617,7 @@ link=486542660,1
 [ENTRY]
 ID=486541910
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=7570,80,3080
 Orient=0,0,0,1
 Scale=1,1,1
@@ -556,6 +628,7 @@ link=486541911,1
 [ENTRY]
 ID=486541911
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=7515,80,3135
 Orient=0,0,0,1
 Scale=1,1,1
@@ -566,6 +639,7 @@ link=486541912,1
 [ENTRY]
 ID=486541912
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=7440,80,3055
 Orient=0,0,0,1
 Scale=1,1,1
@@ -577,6 +651,7 @@ link=486542661,1
 [ENTRY]
 ID=486541950
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=7364.31,80,3995.39
 Orient=0,0,0,1
 Scale=1,1,1
@@ -588,6 +663,7 @@ link=486541980,1
 [ENTRY]
 ID=486541951
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=7232.8,80,3995.29
 Orient=0,0,0,1
 Scale=1,1,1
@@ -599,6 +675,7 @@ link=486541979,1
 [ENTRY]
 ID=486541952
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=7368.08,80,3607.34
 Orient=0,0,0,1
 Scale=1,1,1
@@ -610,6 +687,7 @@ link=486541953,1
 [ENTRY]
 ID=486541953
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=7237.84,80,3605.9
 Orient=0,0,0,1
 Scale=1,1,1
@@ -621,6 +699,7 @@ link=486541976,1
 [ENTRY]
 ID=486541954
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=7705.32,80,3957.41
 Orient=0,0,0,1
 Scale=1,1,1
@@ -632,6 +711,7 @@ link=486541975,1
 [ENTRY]
 ID=486541956
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=7573.65,80,3610.09
 Orient=0,0,0,1
 Scale=1,1,1
@@ -643,6 +723,7 @@ link=486541957,1
 [ENTRY]
 ID=486541957
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=7715.17,80,3614.26
 Orient=0,0,0,1
 Scale=1,1,1
@@ -654,6 +735,7 @@ link=486541974,1
 [ENTRY]
 ID=486541958
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=7535.44,80,3808.2
 Orient=0,0,0,1
 Scale=1,1,1
@@ -665,6 +747,7 @@ link=486541966,1
 [ENTRY]
 ID=486541959
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=7404.92,80,3800.56
 Orient=0,0,0,1
 Scale=1,1,1
@@ -676,6 +759,7 @@ link=486541968,1
 [ENTRY]
 ID=486541960
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=7526.17,80,3421.32
 Orient=0,0,0,1
 Scale=1,1,1
@@ -687,6 +771,7 @@ link=486541969,1
 [ENTRY]
 ID=486541961
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=7412.57,80,3416.68
 Orient=0,0,0,1
 Scale=1,1,1
@@ -698,6 +783,7 @@ link=486541960,1
 [ENTRY]
 ID=486541962
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=7525.15,80,3881.59
 Orient=0,0,0,1
 Scale=1,1,1
@@ -709,6 +795,7 @@ link=486541985,1
 [ENTRY]
 ID=486541963
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=7395.47,80,3882.47
 Orient=0,0,0,1
 Scale=1,1,1
@@ -720,50 +807,51 @@ link=486541984,1
 [ENTRY]
 ID=486541966
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=7533.02,80,3806.59
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=1_dng_wc_HighRitualistSquire_d_h_14
 links_count=1
 link=486541958,1
-spawnPackage=1_dng_wc_HighRitualistSquire_d_h_14
-outerRadius=10
 
 [ENTRY]
 ID=486541967
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=7467.14,80,3442.36
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=1_dng_wc_HighRitualistSquire_d_h_14
 links_count=1
 link=486541970,1
-spawnPackage=1_dng_wc_HighRitualistSquire_d_h_14
-outerRadius=10
 
 [ENTRY]
 ID=486541968
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=7406.63,80,3801.06
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=1_dng_wc_HighRitualistSquire_d_h_14
 links_count=1
 link=486541959,1
-spawnPackage=1_dng_wc_HighRitualistSquire_d_h_14
-outerRadius=10
 
 [ENTRY]
 ID=486541969
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=7525.46,80,3422.35
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=1_dng_wc_HighRitualistSquire_d_h_14
 links_count=1
 link=486541960,1
-spawnPackage=1_dng_wc_HighRitualistSquire_d_h_14
-outerRadius=10
 
 [ENTRY]
 ID=486541970
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=7467.33,80,3442.06
 Orient=0,0,0,1
 Scale=1,1,1
@@ -774,6 +862,7 @@ link=486541971,1
 [ENTRY]
 ID=486541971
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=7470.55,80,3786.78
 Orient=0,0,0,1
 Scale=1,1,1
@@ -783,79 +872,80 @@ link=486541970,1
 [ENTRY]
 ID=486541973
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=7617.21,80,3801.34
 Orient=0,0.967462,0,0.253016
 Scale=1,1,1
 spawnPackage=1_dng_wc_BoneThrall_13_14
-outerRadius=10
 
 [ENTRY]
 ID=486541974
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=7715.04,80,3615.45
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=1_dng_wc_BoneThrall_13_14
 links_count=1
 link=486541957,1
-spawnPackage=1_dng_wc_BoneThrall_13_14
-outerRadius=10
 
 [ENTRY]
 ID=486541975
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=7705.95,80,3957.86
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=1_dng_wc_BoneThrall_13_14
 links_count=1
 link=486541954,1
-spawnPackage=1_dng_wc_BoneThrall_13_14
-outerRadius=10
 
 [ENTRY]
 ID=486541976
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=7237.99,80,3605.73
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=1_dng_wc_BoneThrall_13_14
 links_count=1
 link=486541953,1
-spawnPackage=1_dng_wc_BoneThrall_13_14
-outerRadius=10
 
 [ENTRY]
 ID=486541977
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=7348.94,80,3872.28
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=1_dng_wc_BoneThrall_13_14
-outerRadius=10
 
 [ENTRY]
 ID=486541979
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=7238.42,80,3993.37
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=1_dng_wc_BoneThrall_13_14
 links_count=1
 link=486541951,1
-spawnPackage=1_dng_wc_BoneThrall_13_14
-outerRadius=10
 
 [ENTRY]
 ID=486541980
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=7364.5,80,3994.72
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=1_dng_wc_BoneThrall_13_14
 links_count=1
 link=486541950,1
-spawnPackage=1_dng_wc_BoneThrall_13_14
-outerRadius=10
 
 [ENTRY]
 ID=486541981
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=7466.47,80,3916.15
 Orient=0,0,0,1
 Scale=1,1,1
@@ -866,54 +956,58 @@ link=486541982,1
 [ENTRY]
 ID=486541984
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=7396.44,80,3882.6
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=1_dng_wc_HighRitualistSquire_d_h_14
 links_count=1
 link=486541963,1
-spawnPackage=1_dng_wc_HighRitualistSquire_d_h_14
-outerRadius=10
 
 [ENTRY]
 ID=486541985
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=7526.81,80,3881.15
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=1_dng_wc_HighRitualistSquire_d_h_14
 links_count=1
 link=486541962,1
-spawnPackage=1_dng_wc_HighRitualistSquire_d_h_14
-outerRadius=10
 
 [ENTRY]
 ID=486542631
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=7175,80,3270
-Orient=0,-1,0,7.54979e-008
+Orient=0,-1,0,7.54979e-08
 Scale=1,1,1
 spawnPackage=1a_dng_wc_undeadHeroic_soldiers
 
 [ENTRY]
 ID=486542632
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=7175,80,3320
-Orient=0,-1,0,7.54979e-008
+Orient=0,-1,0,7.54979e-08
 Scale=1,1,1
 spawnPackage=1a_dng_wc_undeadHeroic_soldiers
 
 [ENTRY]
 ID=486542633
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=7480,80,3215
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=1a_dng_wc_undeadHeroic_soldiers
 links_count=1
 link=486542636,1
-spawnPackage=1a_dng_wc_undeadHeroic_soldiers
 
 [ENTRY]
 ID=486542634
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=7245,80,3345
 Orient=0,0,0,1
 Scale=1,1,1
@@ -925,6 +1019,7 @@ link=486542638,1
 [ENTRY]
 ID=486542635
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=7245,80,3215
 Orient=0,0,0,1
 Scale=1,1,1
@@ -935,6 +1030,7 @@ link=486542636,1
 [ENTRY]
 ID=486542636
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=7480,80,3215
 Orient=0,0,0,1
 Scale=1,1,1
@@ -946,6 +1042,7 @@ link=486542637,1
 [ENTRY]
 ID=486542637
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=7480,80,3345
 Orient=0,0,0,1
 Scale=1,1,1
@@ -956,24 +1053,27 @@ link=486542636,1
 [ENTRY]
 ID=486542638
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=7245,80,3345
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=1a_dng_wc_undeadHeroic_soldiers
 links_count=1
 link=486542634,1
-spawnPackage=1a_dng_wc_undeadHeroic_soldiers
 
 [ENTRY]
 ID=486542639
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=7520,80,3275
-Orient=0,-1,0,7.54979e-008
+Orient=0,-1,0,7.54979e-08
 Scale=1,1,1
 spawnPackage=1a_dng_wc_undeadHeroic_soldiers
 
 [ENTRY]
 ID=486542640
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=7240,80,3195
 Orient=0,0,0,1
 Scale=1,1,1
@@ -984,6 +1084,7 @@ link=486542643,1
 [ENTRY]
 ID=486542641
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=7240,80,3065
 Orient=0,0,0,1
 Scale=1,1,1
@@ -994,6 +1095,7 @@ link=486542642,1
 [ENTRY]
 ID=486542642
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=7400,80,3065
 Orient=0,0,0,1
 Scale=1,1,1
@@ -1003,16 +1105,18 @@ link=486542641,1
 [ENTRY]
 ID=486542643
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=7240,80,3195
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=1a_dng_wc_undeadHeroic_soldiers
 links_count=1
 link=486542640,1
-spawnPackage=1a_dng_wc_undeadHeroic_soldiers
 
 [ENTRY]
 ID=486542645
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=7325,83.8822,3150
 Orient=0,-0.707107,0,0.707107
 Scale=1,1,1
@@ -1021,6 +1125,7 @@ spawnPackage=1a_dng_wc_undeadHeroic_soldiers
 [ENTRY]
 ID=486542646
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=7290,80,3380
 Orient=0,0.707107,0,0.707107
 Scale=1,1,1
@@ -1029,17 +1134,19 @@ spawnPackage=1a_dng_wc_undeadHeroic_soldiers
 [ENTRY]
 ID=486542647
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=7360,80,3300
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=1a_dng_wc_undeadHeroic_soldiers
 links_count=2
 link=486542648,1
 link=486542654,1
-spawnPackage=1a_dng_wc_undeadHeroic_soldiers
 
 [ENTRY]
 ID=486542648
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=7380,80,3250
 Orient=0,0,0,1
 Scale=1,1,1
@@ -1050,6 +1157,7 @@ link=486542649,1
 [ENTRY]
 ID=486542649
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=7305,80,3255
 Orient=0,0,0,1
 Scale=1,1,1
@@ -1060,6 +1168,7 @@ link=486542650,1
 [ENTRY]
 ID=486542650
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=7410,80,3290
 Orient=0,0,0,1
 Scale=1,1,1
@@ -1070,6 +1179,7 @@ link=486542651,1
 [ENTRY]
 ID=486542651
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=7420,80,3245
 Orient=0,0,0,1
 Scale=1,1,1
@@ -1080,6 +1190,7 @@ link=486542652,1
 [ENTRY]
 ID=486542652
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=7320,80,3285
 Orient=0,0,0,1
 Scale=1,1,1
@@ -1090,6 +1201,7 @@ link=486542653,1
 [ENTRY]
 ID=486542653
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=7395,80,3305
 Orient=0,0,0,1
 Scale=1,1,1
@@ -1100,6 +1212,7 @@ link=486542654,1
 [ENTRY]
 ID=486542654
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=7360,80,3235
 Orient=0,0,0,1
 Scale=1,1,1
@@ -1110,16 +1223,18 @@ link=486542653,1
 [ENTRY]
 ID=486542655
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=7220,80,3295
-Orient=0,-1,0,7.54979e-008
+Orient=0,-1,0,7.54979e-08
 Scale=1,1,1
+spawnPackage=1a_dng_wc_undeadHeroic_soldiers
 links_count=1
 link=486542656,1
-spawnPackage=1a_dng_wc_undeadHeroic_soldiers
 
 [ENTRY]
 ID=486542656
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=7025,80,3295
 Orient=0,0,0,1
 Scale=1,1,1
@@ -1129,6 +1244,7 @@ link=486542655,1
 [ENTRY]
 ID=486542658
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=7495,80,3095
 Orient=0,-0.92388,0,0.382683
 Scale=1,1,1
@@ -1137,26 +1253,29 @@ spawnPackage=1a_dng_wc_undeadHeroic_soldiers
 [ENTRY]
 ID=486542660
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=7640,80,3150
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=1a_dng_wc_undeadHeroic_soldiers
 links_count=1
 link=486541909,1
-spawnPackage=1a_dng_wc_undeadHeroic_soldiers
 
 [ENTRY]
 ID=486542661
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=7440,80,3055
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=1a_dng_wc_undeadHeroic_soldiers
 links_count=1
 link=486541912,1
-spawnPackage=1a_dng_wc_undeadHeroic_soldiers
 
 [ENTRY]
 ID=486542663
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=7590,80,3190
 Orient=0,0.707107,0,0.707107
 Scale=1,1,1
@@ -1165,6 +1284,7 @@ spawnPackage=1a_dng_wc_undeadHeroic_soldiers
 [ENTRY]
 ID=486542667
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=7720,80,3180
 Orient=0,0,0,1
 Scale=1,1,1
@@ -1175,6 +1295,7 @@ link=486542668,1
 [ENTRY]
 ID=486542668
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=7635,80,3180
 Orient=0,0,0,1
 Scale=1,1,1

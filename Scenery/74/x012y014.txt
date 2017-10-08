@@ -1,7 +1,7 @@
 [ENTRY]
 ID=1126768
 Asset=Prop-Anubian_Camp#Prop-Anubian_Watchtower
-Name=
+Name=Untitled
 Pos=12482.8,217.212,14015.9
 Orient=0,0,0,1
 Scale=1,1,1
@@ -9,7 +9,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1126769
 Asset=Prop-Anubian_Camp#Prop-Anubian_Watchtower
-Name=
+Name=Untitled
 Pos=12475,217.212,14114
 Orient=0,0,0,1
 Scale=1,1,1
@@ -17,7 +17,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1126770
 Asset=Prop-Anubian_Camp#Prop-Anubian_Palisade
-Name=
+Name=Untitled
 Pos=12505.5,213.601,14108.9
 Orient=-0.273493,-0.46198,-0.183795,0.823405
 Scale=1,1,1
@@ -25,7 +25,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1126771
 Asset=Prop-Anubian_Camp#Prop-Anubian_Palisade
-Name=
+Name=Untitled
 Pos=12501.5,213.875,14025.7
 Orient=0.184168,0.380518,-0.0579087,0.904398
 Scale=1,1,1
@@ -33,7 +33,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1126772
 Asset=Prop-Anubian_Camp#Prop-Anubian_Tent1
-Name=
+Name=Untitled
 Pos=12412.6,216.068,14209.6
 Orient=0,0.425939,0,0.904752
 Scale=1,1,1
@@ -41,7 +41,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1126773
 Asset=Prop-Anubian_Camp#Prop-Anubian_Tent2
-Name=
+Name=Untitled
 Pos=12262.5,212.551,14165.7
 Orient=-0.00490031,-0.198667,-0.000993342,0.980054
 Scale=1,1,1
@@ -49,7 +49,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1126775
 Asset=Prop-Anubian_Camp#Prop-Anubian_Tent1
-Name=
+Name=Untitled
 Pos=12291.4,215.905,14003.8
 Orient=0,0,0,1
 Scale=1,1,1
@@ -57,7 +57,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1126776
 Asset=Prop-Anubian_Camp#Prop-Anubian_Tent1
-Name=
+Name=Untitled
 Pos=12393.7,212.34,14000.9
 Orient=0,0.169182,0,0.985585
 Scale=1,1,1
@@ -65,7 +65,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1126778
 Asset=Prop-Campfires#Prop-Campfire2
-Name=
+Name=Untitled
 Pos=12337.7,216.301,14114.9
 Orient=0,0,0,1
 Scale=2,2,2
@@ -73,7 +73,7 @@ Scale=2,2,2
 [ENTRY]
 ID=1126779
 Asset=Prop-Dungeon_Accents1#Prop-Dungeon-Iron_Maiden
-Name=
+Name=Untitled
 Pos=12353.7,215.668,14212.5
 Orient=0,0,0,1
 Scale=1,1,1
@@ -81,7 +81,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1126780
 Asset=Prop-Dungeon_Accents1#Prop-Dungeon-Iron_Maiden
-Name=
+Name=Untitled
 Pos=12318.8,215.61,14201.5
 Orient=0,0,0,1
 Scale=1,1,1
@@ -89,7 +89,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1126781
 Asset=Prop-Dungeon_Accents1#Prop-Dungeon-Iron_Maiden
-Name=
+Name=Untitled
 Pos=12297.4,215.61,14179
 Orient=0,0,0,1
 Scale=1.2,1.2,1.2
@@ -97,7 +97,7 @@ Scale=1.2,1.2,1.2
 [ENTRY]
 ID=1126782
 Asset=Prop-Dungeon_Accents1#Prop-Dungeon-Iron_Maiden
-Name=
+Name=Untitled
 Pos=12221,215.398,14143.9
 Orient=0,0,0,1
 Scale=1,1,1
@@ -105,7 +105,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1126783
 Asset=Prop-Dungeon_Accents1#Prop-Dungeon-Iron_Maiden
-Name=
+Name=Untitled
 Pos=12230.9,215.61,14123.3
 Orient=0,0,0,1
 Scale=1.2,1.2,1.2
@@ -113,7 +113,7 @@ Scale=1.2,1.2,1.2
 [ENTRY]
 ID=1126784
 Asset=Prop-Dungeon_Accents1#Prop-Dungeon-Iron_Maiden
-Name=
+Name=Untitled
 Pos=12207.8,215.61,14114.5
 Orient=0,0,0,1
 Scale=1.2,1.2,1.2
@@ -121,7 +121,7 @@ Scale=1.2,1.2,1.2
 [ENTRY]
 ID=1126791
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=12207.1,215.61,14116.3
 Orient=0,0.539632,0,0.841901
 Scale=1,1,1
@@ -130,7 +130,7 @@ spawnPackage=#F3223
 [ENTRY]
 ID=1126792
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=12230.9,215.61,14123.5
 Orient=0,0.556361,0,0.830941
 Scale=1,1,1
@@ -139,7 +139,7 @@ spawnPackage=#F3222
 [ENTRY]
 ID=1126793
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=12220.6,215.385,14144.1
 Orient=0,0.457338,0,0.889293
 Scale=1,1,1
@@ -148,7 +148,7 @@ spawnPackage=#F3221
 [ENTRY]
 ID=1126794
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=12297.5,215.61,14179.8
 Orient=0,0.448423,0,0.893822
 Scale=1,1,1
@@ -157,7 +157,7 @@ spawnPackage=#F3219
 [ENTRY]
 ID=1126795
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=12317.4,215.61,14202.4
 Orient=0,0.328769,0,0.94441
 Scale=1,1,1
@@ -166,7 +166,7 @@ spawnPackage=#F1329
 [ENTRY]
 ID=1126796
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=12352.6,215.663,14213
 Orient=0,0.361615,0,0.932327
 Scale=1,1,1
@@ -175,7 +175,7 @@ spawnPackage=#F3220
 [ENTRY]
 ID=1126797
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=12404.5,217.211,14039.2
 Orient=0,-0.531186,0,0.847255
 Scale=1,1,1
@@ -184,7 +184,7 @@ spawnPackage=74_earthend_mix_a_9_10
 [ENTRY]
 ID=1126798
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=12481.1,217.213,14055.2
 Orient=0,0,0,1
 Scale=1,1,1
@@ -195,7 +195,7 @@ link=1241514441,0
 [ENTRY]
 ID=1126799
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=12334.1,215.137,14240.7
 Orient=0,0.693685,0,-0.720278
 Scale=1,1,1
@@ -204,7 +204,7 @@ spawnPackage=74_earthend_mix_a_9_10
 [ENTRY]
 ID=1126800
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=12190.2,214.69,14164.3
 Orient=0,-0.731146,0,0.682221
 Scale=1,1,1
@@ -213,7 +213,7 @@ spawnPackage=74_earthend_mix_a_9_10
 [ENTRY]
 ID=1126801
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=12228.9,216.8,14059
 Orient=0,0,0,1
 Scale=1,1,1
@@ -224,7 +224,7 @@ link=1126803,1
 [ENTRY]
 ID=1126802
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=12312.8,215.806,14156.3
 Orient=0,0,0,1
 Scale=1,1,1
@@ -235,7 +235,7 @@ link=1126806,1
 [ENTRY]
 ID=1126803
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=12343.4,216.502,14087.5
 Orient=0,0,0,1
 Scale=1,1,1
@@ -246,7 +246,7 @@ link=1126801,1
 [ENTRY]
 ID=1126804
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=12432.3,217.212,14076.5
 Orient=0,0,0,1
 Scale=1,1,1
@@ -256,7 +256,7 @@ link=1126803,1
 [ENTRY]
 ID=1126805
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=12380.3,216.245,14122.6
 Orient=0,0,0,1
 Scale=1,1,1
@@ -267,7 +267,7 @@ link=1126806,1
 [ENTRY]
 ID=1126806
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=12354.4,216.218,14162.3
 Orient=0,0,0,1
 Scale=1,1,1
@@ -278,7 +278,7 @@ link=1126802,1
 [ENTRY]
 ID=1126807
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=12438.8,217.197,14102
 Orient=0,0,0,1
 Scale=1,1,1
@@ -288,7 +288,7 @@ link=1126805,1
 [ENTRY]
 ID=1126816
 Asset=Prop-Anubian_Camp#Prop-Anubian_Banner1
-Name=
+Name=Untitled
 Pos=12430.8,217.212,14149.8
 Orient=0,0,0,1
 Scale=1,1,1
@@ -296,7 +296,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1126817
 Asset=Prop-Anubian_Camp#Prop-Anubian_Banner1
-Name=
+Name=Untitled
 Pos=12157.2,216.777,14040.8
 Orient=0,0.560509,0,0.828149
 Scale=1,1,1
@@ -304,10 +304,19 @@ Scale=1,1,1
 [ENTRY]
 ID=1126819
 Asset=Prop-Ballista
-Name=
+Name=Untitled
 Pos=12073.7,215.476,14101.3
 Orient=0,0.836026,0,0.54869
 Scale=1,1,1
+
+[ENTRY]
+ID=1154499
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=12929.5,214.196,14404.3
+Orient=0,-0.505533,0,0.862807
+Scale=1,1,1
+spawnPackage=#F16007
 
 [ENTRY]
 ID=1241514071

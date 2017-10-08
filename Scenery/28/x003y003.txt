@@ -71,10 +71,19 @@ link=469764252,1
 [ENTRY]
 ID=1153845
 Asset=Effects#Par-CauldronSmoke
-Name=
+Name=Untitled
 Pos=3205.19,193.356,3299.84
 Orient=0,0,0,1
 Scale=1,1,1
+
+[ENTRY]
+ID=1154513
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=3771.29,110,3183.28
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#F16017
 
 [ENTRY]
 ID=469762080
