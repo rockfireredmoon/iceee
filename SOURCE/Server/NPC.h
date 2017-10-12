@@ -98,6 +98,72 @@ public:
 };
 
 extern PetDefManager g_PetDefManager;
+namespace Trigger
+{
+	enum
+	{
+		UNDEFINED = -1,
+		SEQUENTIAL = 0,
+		RANDOM = 1,
+		LOOP = 2,
+		TIME_OF_DAY = 3,
+		MAX
+	};
+}
 
+namespace ParagraphType
+{
+	enum
+	{
+		UNDEFINED = -1,
+		SAY = 0,
+		EMOTE = 1,
+		WAIT = 2,
+		MAX
+	};
+}
+
+class NPCDialogParagraph
+{
+public:
+	NPCDialogParagraph();
+	NPCDialogParagraph(const NPCDialogParagraph &other);
+	~NPCDialogParagraph();
+
+	std::string mValue;
+	int mType;
+
+};
+
+class NPCDialogItem
+{
+public:
+	NPCDialogItem();
+	~NPCDialogItem();
+
+	std::string mName;
+	std::vector<NPCDialogParagraph> mParagraphs;
+	int mTrigger;
+	int mInterval;
+
+};
+
+class NPCDialogManager
+{
+public:
+
+	NPCDialogManager();
+	~NPCDialogManager();
+	std::map<std::string, NPCDialogItem*> mItems;
+	NPCDialogItem* LoadItem(std::string name);
+	int LoadItems(void);
+	NPCDialogItem* GetItem(std::string name);
+	bool RemoveItem(std::string name);
+	std::string GetPath(std::string name);
+	bool SaveItem(NPCDialogItem * item);
+
+};
+
+extern NPCDialogManager g_NPCDialogManager;
 
 #endif //#define NPC_H

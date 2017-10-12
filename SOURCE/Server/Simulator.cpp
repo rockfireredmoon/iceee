@@ -10459,6 +10459,8 @@ int SimulatorThread :: handle_query_spawn_property(void)
 				sprintf(Aux1, "%d", so->extraData->leaseTime);
 			else if(strcmp(propName, "spawnPackage") == 0)
 				Util::SafeCopy(Aux1, so->extraData->spawnPackage, sizeof(Aux1));
+			else if(strcmp(propName, "dialog") == 0)
+				Util::SafeCopy(Aux1, so->extraData->dialog, sizeof(Aux1));
 			else if(strcmp(propName, "mobTotal") == 0)
 				sprintf(Aux1, "%d", so->extraData->mobTotal);
 			else if(strcmp(propName, "maxActive") == 0)

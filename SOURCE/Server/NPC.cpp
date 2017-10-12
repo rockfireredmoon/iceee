@@ -1,7 +1,10 @@
 #include <algorithm>
+#include <string.h>
 #include "NPC.h"
 #include "StringList.h" //For debugging
 #include "FileReader.h"
+#include "DirectoryAccess.h"
+#include "Util.h"
 
 PetDefManager g_PetDefManager;
 
@@ -261,3 +264,170 @@ void PetDefManager :: FillQueryResponse(MULTISTRING& output)
 		row.clear();
 	}
 }
+
+
+//
+NPCDialogParagraph::NPCDialogParagraph() {
+	mType = 0;
+	mValue = "";
+}
+NPCDialogParagraph::~NPCDialogParagraph() {}
+
+NPCDialogParagraph::NPCDialogParagraph(const NPCDialogParagraph &other) {
+	mType = other.mType;
+	mValue  = other.mValue;
+}
+
+
+//
+NPCDialogItem::NPCDialogItem() {
+	mInterval = 0;
+	mTrigger = 0;
+}
+
+NPCDialogItem::~NPCDialogItem() {}
+
+NPCDialogManager::NPCDialogManager() {
+}
+
+NPCDialogManager g_NPCDialogManager;
+
+NPCDialogManager::~NPCDialogManager() {
+}
+
+bool NPCDialogManager::SaveItem(NPCDialogItem * item) {
+	std::string path = GetPath(item->mName);
+	g_Log.AddMessageFormat("Saving dialog item to %s.", path.c_str());
+	FILE *output = fopen(path.c_str(), "wb");
+	if (output == NULL) {
+		g_Log.AddMessageFormat("[ERROR] Saving petition could not open: %s",
+				path.c_str());
+		return false;
+	}
+
+	fprintf(output, "[ENTRY]\r\n");
+	fprintf(output, "Trigger=%d\r\n", item->mTrigger);
+	fprintf(output, "Interval=%d\r\n", item->mInterval);
+
+	std::vector<NPCDialogParagraph>::iterator it;
+	for (it = item->mParagraphs.begin(); it != item->mParagraphs.end(); ++it) {
+		NPCDialogParagraph p = *it;
+		fprintf(output, "\r\n[PARAGRAPH]\r\n");
+		fprintf(output, "Type=%d\r\n", p.mType);
+		fprintf(output, "Value=%s\r\n", p.mValue.c_str());
+	}
+
+	fflush(output);
+	fclose(output);
+
+	return true;
+}
+
+NPCDialogItem * NPCDialogManager::LoadItem(std::string name) {
+	std::string buf = GetPath(name);
+	if (!Platform::FileExists(buf.c_str())) {
+		g_Log.AddMessageFormat("No file for dialog item [%s]", buf.c_str());
+		return NULL;
+	}
+
+	NPCDialogItem *item = new NPCDialogItem();
+	item->mName = name;
+
+	FileReader lfr;
+	if (lfr.OpenText(buf.c_str()) != Err_OK) {
+		g_Log.AddMessageFormat("Could not open file [%s]", buf.c_str());
+		return NULL;
+	}
+
+	lfr.CommentStyle = Comment_Semi;
+	int r = 0;
+	long amt = -1;
+	while (lfr.FileOpen() == true) {
+		r = lfr.ReadLine();
+		lfr.SingleBreak("=");
+		lfr.BlockToStringC(0, Case_Upper);
+		if (r > 0) {
+			if (strcmp(lfr.SecBuffer, "[ENTRY]") == 0) {
+			}
+			else if (strcmp(lfr.SecBuffer, "[PARAGRAPH]") == 0) {
+				NPCDialogParagraph para;
+				item->mParagraphs.push_back(para);
+			}
+			else if (strcmp(lfr.SecBuffer, "VALUE") == 0)
+				item->mParagraphs.back().mValue = lfr.BlockToStringC(1, 0);
+			else if (strcmp(lfr.SecBuffer, "TYPE") == 0)
+				item->mParagraphs.back().mType = lfr.BlockToIntC(1);
+			else if (strcmp(lfr.SecBuffer, "TRIGGER") == 0)
+				item->mTrigger = lfr.BlockToIntC(1);
+			else if (strcmp(lfr.SecBuffer, "INTERVAL") == 0)
+				item->mInterval = lfr.BlockToIntC(1);
+			else
+				g_Log.AddMessageFormat("Unknown identifier [%s] in file [%s]",
+						lfr.SecBuffer, buf.c_str());
+		}
+	}
+	lfr.CloseCurrent();
+
+	mItems[name] = item;
+
+	return item;
+}
+
+
+bool NPCDialogManager::RemoveItem(std::string name) {
+	const char * path = GetPath(name).c_str();
+	if (!Platform::FileExists(path)) {
+		g_Log.AddMessageFormat("No file for NPC dialog item [%s] to remove", path);
+		return false;
+	}
+	std::map<std::string, NPCDialogItem*>::iterator it = mItems.find(name);
+	if(it != mItems.end()) {
+		delete it->second;
+		mItems.erase(it);
+	}
+	char buf[128];
+	Util::SafeFormat(buf, sizeof(buf), "Dialog/%s.del", name.c_str());
+	Platform::FixPaths(buf);
+	if(!Platform::FileExists(buf) || remove(buf) == 0) {
+		if(!rename(path, buf) == 0) {
+			g_Log.AddMessageFormat("Failed to remove NPC dialog item %s", name.c_str());
+			return false;
+		}
+	}
+	return true;
+}
+
+std::string NPCDialogManager::GetPath(std::string name) {
+	char buf[128];
+	Util::SafeFormat(buf, sizeof(buf), "Dialog/%s.txt", name.c_str());
+	Platform::FixPaths(buf);
+	return buf;
+}
+
+int NPCDialogManager::LoadItems(void) {
+	for(std::map<std::string, NPCDialogItem*>::iterator it = mItems.begin(); it != mItems.end(); ++it)
+		delete it->second;
+	mItems.clear();
+
+	Platform_DirectoryReader r;
+	std::string dir = r.GetDirectory();
+	r.SetDirectory("Dialog");
+	r.ReadFiles();
+	r.SetDirectory(dir.c_str());
+
+	std::vector<std::string>::iterator it;
+	for (it = r.fileList.begin(); it != r.fileList.end(); ++it) {
+		std::string p = *it;
+		if (Util::HasEnding(p, ".txt")) {
+			LoadItem(Platform::Basename(p.c_str()).c_str());
+		}
+	}
+
+	return 0;
+}
+
+NPCDialogItem * NPCDialogManager::GetItem(std::string name) {
+	std::map<std::string, NPCDialogItem*>::iterator it = mItems.find(name);
+	return it == mItems.end() ? NULL : it->second;
+}
+

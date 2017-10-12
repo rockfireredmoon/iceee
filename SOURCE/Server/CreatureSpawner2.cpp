@@ -1582,6 +1582,7 @@ void CreatureSpawnDef :: copyFrom(CreatureSpawnDef *source)
 	memcpy(spawnName, source->spawnName, sizeof(spawnName));
 	leaseTime = source->leaseTime;
 	memcpy(spawnPackage, source->spawnPackage, sizeof(spawnPackage));
+	memcpy(dialog, source->dialog, sizeof(dialog));
 	mobTotal = source->mobTotal;
 	maxActive = source->maxActive;
 	memcpy(aiModule, source->aiModule, sizeof(aiModule));
