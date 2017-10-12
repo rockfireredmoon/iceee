@@ -73225,8 +73225,8 @@ particle_system Par-House_Down_Warmup_Rocks
 {
 	quota	40
 	material	Particles/rockchunk1
-	particle_width	5
-	particle_height	5
+	particle_width	1
+	particle_height	1
 	cull_each	false
 	renderer	billboard
 	sorted	false
@@ -73304,7 +73304,7 @@ particle_system Par-House_Down_Warmup_Rocks
 particle_system Par-House_Down_Ball
 {
 	quota	500
-	material	Particles/Fog1
+	material	Particles/rockchunk1
 	particle_width	20
 	particle_height	20
 	cull_each	false
@@ -73366,7 +73366,7 @@ particle_system Par-House_Down_Ball
 
 	affector LinearForce
 	{
-		force_vector	0 0 200
+		force_vector	0 -100 0
 		force_application	add
 	}
 
@@ -73383,14 +73383,14 @@ particle_system Par-House_Down_Ball
 
 particle_system Par-House_Down_Bits
 {
-	quota	40
-	material	Particles/Snowflake_Add
-	particle_width	5
-	particle_height	5
+	quota	500
+	material	Particles/rockchunk2
+	particle_width	20
+	particle_height	20
 	cull_each	false
 	renderer	billboard
 	sorted	false
-	local_space	false
+	local_space	true
 	iteration_interval	0
 	nonvisible_update_timeout	0
 	billboard_type	point
@@ -73402,19 +73402,19 @@ particle_system Par-House_Down_Bits
 
 	emitter Point
 	{
-		angle	76
-		colour	1 1 1 1
-		colour_range_start	1 1 1 1
-		colour_range_end	1 1 1 1
-		direction	0 0 1
-		emission_rate	20
+		angle	180
+		colour	0 0 0 1
+		colour_range_start	0 0 0 1
+		colour_range_end	0 0 0 1
+		direction	0 0 -1
+		emission_rate	50
 		position	0 0 0
-		velocity	-20
-		velocity_min	-20
-		velocity_max	-30
-		time_to_live	1.5
-		time_to_live_min	1.5
-		time_to_live_max	1.5
+		velocity	3
+		velocity_min	3
+		velocity_max	3
+		time_to_live	0.4
+		time_to_live_min	0.4
+		time_to_live_max	0.6
 		duration	0
 		duration_min	0
 		duration_max	0
@@ -73423,34 +73423,39 @@ particle_system Par-House_Down_Bits
 		repeat_delay_max	0
 	}
 
-	affector ColourInterpolator
+	affector Scaler
 	{
-		colour0	1 1 1 1
-		time0	0
-		colour1	1 1 1 1
-		time1	0.2
-		colour2	0.752941 0.752941 0.752941 1
-		time2	0.4
-		colour3	0.501961 0.501961 0.501961 1
-		time3	0.6
-		colour4	0.247059 0.247059 0.247059 1
-		time4	0.8
-		colour5	0 0 0 1
-		time5	1
+		rate	-30
 	}
 
-	affector Rotator
+	affector ColourInterpolator
 	{
-		rotation_speed_range_start	40
-		rotation_speed_range_end	80
-		rotation_range_start	0
-		rotation_range_end	360
+		colour0	0 0 0 0
+		time0	0
+		colour1	0.8 0.8 0.8 0.5
+		time1	0.2
+		colour2	0.7 0.7 0.7 0.8
+		time2	0.4
+		colour3	0.8 0.8 0.8 0.9
+		time3	0.6
+		colour4	0.6 0.6 0.6 1
+		time4	0.8
+		colour5	0 0 0 0
+		time5	1
 	}
 
 	affector LinearForce
 	{
-		force_vector	0 -30 0
+		force_vector	0 -100 0
 		force_application	add
+	}
+
+	affector Rotator
+	{
+		rotation_speed_range_start	90
+		rotation_speed_range_end	0
+		rotation_range_start	360
+		rotation_range_end	0
 	}
 }
 

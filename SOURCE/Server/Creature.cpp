@@ -3670,8 +3670,6 @@ void CreatureInstance :: OverrideCurrentAbility(int abilityID)
 
 void CreatureInstance :: RegisterInstant(int abilityID)
 {
-	g_Log.AddMessageFormat("[REMOVEME] RegisterInstant %d", abilityID);
-
 	if(HasStatus(StatusEffects::DAZE))
 		return;
 
@@ -3800,7 +3798,6 @@ void CreatureInstance :: RegisterChannel(int abilityID, int duration, int interv
 
 void CreatureInstance :: RegisterCast(int abilityID, int warmupTime)
 {
-	g_Log.AddMessageFormat("[REMOVEME] RegisterCast %d %d", abilityID, warmupTime);
 	if(HasStatus(StatusEffects::DAZE))
 		return;
 

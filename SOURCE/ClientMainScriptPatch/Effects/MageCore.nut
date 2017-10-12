@@ -2876,7 +2876,7 @@ class this.EffectDef.BringingDownTheHouseWarmup extends this.EffectDef.TemplateW
 class this.EffectDef.BringingDownTheHouse extends this.EffectDef.TemplateBasic
 {
 	static mEffectName = "BringingDownTheHouse";
-	mSound = "Sound-Ability-Froststorm_Effect.ogg";
+	mSound = "Sound-Ability-HouseDown_Effect.ogg";
 	mCount = 0;
 	mCTargets = null;
 	mMainTargets = null;
