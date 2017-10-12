@@ -393,6 +393,25 @@ material Particles/ringflare
 	}
 }
 
+material Particles/ringflareRed
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			depth_write off
+			scene_blend add
+			fog_override true
+
+			texture_unit
+			{
+				texture ring_flare_red.png
+			}
+		}
+	}
+}
+
 material Particles/Ring
 {
 	technique
@@ -526,6 +545,25 @@ material Particles/ringflare2Green
 			texture_unit
 			{
 				texture ring_flare2_green.png
+			}
+		}
+	}
+}
+
+material Particles/ringflare2Red
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			depth_write off
+			scene_blend add
+			fog_override true
+
+			texture_unit
+			{
+				texture ring_flare2_red.png
 			}
 		}
 	}
@@ -1145,6 +1183,25 @@ material Particles/Iceball
 	}
 }
 
+material Particles/Bloodball
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			depth_write off
+			scene_blend add
+			fog_override true
+
+			texture_unit
+			{
+				texture bloodball.png
+			}
+		}
+	}
+}
+
 
 material Particles/IceShield
 {
@@ -1357,6 +1414,26 @@ material Particles/Leaf3
 			texture_unit
 			{
 				texture Leaf3.png
+			}
+		}
+	}
+}
+
+material Particles/BloodDrop
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			depth_write off
+			scene_blend add
+			fog_override true
+			cull_hardware none
+
+			texture_unit
+			{
+				texture Blood_Drop.png
 			}
 		}
 	}

@@ -64,6 +64,7 @@ public:
 	char spawnName[48];      //Internal name for this spawner entity
 	int leaseTime;           //Original purpose unknown... spawn delay?
 	char spawnPackage[56];   //Package to base spawn types on
+	char dialog[56];   		 //Name of NPC Dialog file
 	int mobTotal;            //Total mobs (including dead?) that can be anchored to this point?
 	int maxActive;           //Total active that can be anchored to this point?
 	char aiModule[48];       //Unused?

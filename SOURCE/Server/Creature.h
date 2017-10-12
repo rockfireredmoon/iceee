@@ -403,9 +403,11 @@ public:
 	unsigned long timer_mightregen;   //Time when next might regen tick will fire
 	unsigned long timer_willregen;    //Time when next will regen tick will fire
 	unsigned long timer_lasthealthupdate; //Time when the next health regen tick will fire
+	unsigned long timer_dialog; //Time when the next NPC dialog should appear
 
 	HateProfile *hateProfilePtr;
 	int activeLootID;
+	int dialogIndex;
 
 	CharacterStatSet css;   //Contains the active character stat set
 	vector<ActiveStatMod> activeStatMod;
@@ -612,6 +614,7 @@ public:
 	//Internal processing
 	int RemoveCreatureReference(CreatureInstance *target);
 	void RunAIScript(void);
+	void RunDialog(void);
 	int RotateToTarget(void);
 	int RunMovementStep(void);
 	void UpdateDestination(void);

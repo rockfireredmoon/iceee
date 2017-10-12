@@ -1,0 +1,8 @@
+[ENTRY]
+Interval=10000
+[PARAGRAPH]
+Value=Hello world!
+[PARAGRAPH]
+Value=Hello world again!
+[PARAGRAPH]
+Value=Hello world yet again!

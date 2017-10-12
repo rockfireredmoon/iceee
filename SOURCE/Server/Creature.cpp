@@ -477,6 +477,9 @@ void CreatureInstance :: Clear(void)
 	Rotation = 0;
 	Speed = 0;
 
+	dialogIndex = -1;
+	timer_dialog = 0;
+
 	memset(&MainDamage, 0, sizeof(MainDamage));
 	memset(&OffhandDamage, 0, sizeof(OffhandDamage));
 	memset(&RangedDamage, 0, sizeof(RangedDamage));
@@ -4663,6 +4666,66 @@ int CreatureInstance :: RemoveCreatureReference(CreatureInstance *target)
 	return rcount;
 }
 
+void CreatureInstance :: RunDialog(void)
+{
+	if(timer_dialog != 1) {
+		/* Special value of 1 for timer indicates we have checked this NPC before and it doesn't need
+		 * dialog
+		 */
+		if(CurrentTarget.targ == NULL && (timer_dialog == 0 || g_ServerTime > timer_dialog))
+		{
+			if(strcmp(spawnGen->spawnPoint->extraData->dialog, "") != 0) {
+				/* Only run dialog when there is 1) a new timer or timer triggers 2) no target */
+				NPCDialogItem *diag = g_NPCDialogManager.GetItem(spawnGen->spawnPoint->extraData->dialog);
+				if(diag != NULL && diag->mParagraphs.size() > 0) {
+					/* If the index is -1, this is the very first dialog paragraph, so wait for the
+					 * initial delay before actually performing it
+					 */
+					if(dialogIndex == -1) {
+						dialogIndex = 0;
+						timer_dialog = g_ServerTime +  diag->mInterval;
+					}
+					else {
+						int delay = diag->mInterval;
+
+						/* Otherwise perform this item */
+						NPCDialogParagraph para = diag->mParagraphs[dialogIndex];
+						switch(para.mType) {
+						case ParagraphType::SAY:
+							g_Log.AddMessageFormat("[DEBUG] %d [%s] %s says %s", CreatureID, spawnGen->spawnPoint->extraData->dialog, css.display_name, para.mValue.c_str());
+							actInst->LSendToAllSimulator(GSendBuf, PrepExt_GenericChatMessage(GSendBuf, CreatureID, css.display_name, "s/", para.mValue.c_str()), -1);
+							break;
+						case ParagraphType::WAIT:
+							delay = atoi(para.mValue.c_str());
+							break;
+						case ParagraphType::EMOTE:
+							actInst->LSendToAllSimulator(GSendBuf, PrepExt_GenericChatMessage(GSendBuf, CreatureID, css.display_name, "emote", para.mValue.c_str()), -1);
+							break;
+						}
+
+						timer_dialog = g_ServerTime + delay;
+
+						/* Wait for next action, reseting if needed */
+						dialogIndex++;
+						if(dialogIndex >= diag->mParagraphs.size())
+							dialogIndex = 0;
+					}
+				}
+				else {
+					g_Log.AddMessageFormat("[WARNING] Request for unknown or empty NPC dialog %s", spawnGen->spawnPoint->extraData->dialog);
+					/* Never bother again */
+					timer_dialog = -1;
+				}
+			}
+			else {
+				/* Never bother again */
+				timer_dialog = -1;
+			}
+		}
+	}
+
+}
+
 void CreatureInstance :: RunAIScript(void)
 {
 	if(aiScript != NULL)
@@ -4985,6 +5048,7 @@ void CreatureInstance :: RunProcessingCycle(void)
 				}
 				RunAutoTargetSelection();
 				RunAIScript();
+				RunDialog();
 			}
 		}
 		else if(serverFlags & ServerFlags::IsPlayer)

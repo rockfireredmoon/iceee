@@ -19,7 +19,7 @@ if (!("gPositionDebugObjects" in this.getroottable()))
 
 ::TerrainPageDef <- {};
 ::TerrainEnvDef <- {};
-function ReplaceDeps()
+function ReplaceDeps(dir)
 {
 	foreach( k, v in ::AssetDependencies )
 	{
@@ -50,7 +50,7 @@ function ReplaceDeps()
 		{
 			local out = "require( \"AssetDependencies\" );\r\n";
 			out += "::AssetDependencies[\"" + k + "\"] <- " + this.serialize(v) + ";";
-			::System.writeToFile("../../../EE/Client/Earth Eternal/Catalogs/AssetDependencies/" + k + ".deps.nut", out);
+			::System.writeToFile(dir + "/" + k + ".deps.nut", out);
 		}
 	}
 }
@@ -61,7 +61,7 @@ foreach( k, v in ::_args )
 	this.log.debug("ARGS: " + k + ", " + v);
 }
 
-::Screen.setTitle("Earth Eternal - Planet Forever - IceEE");
+::Screen.setTitle("Earth Eternal - Valkal's Shadow");
 this.System.setLoggingLevel(3);
 this.MovableObject.setDefaultQueryFlags(this.QueryFlags.ANY | this.QueryFlags.LIGHT_OCCLUDER);
 this._scene.setTerrainFlags(this.QueryFlags.ANY | this.QueryFlags.LIGHT_OCCLUDER | this.QueryFlags.FLOOR, this.VisibilityFlags.ANY | this.VisibilityFlags.SCENERY | this.VisibilityFlags.LIGHT_GROUP_0 | this.VisibilityFlags.LIGHT_GROUP_2 | this.VisibilityFlags.LIGHT_GROUP_3);

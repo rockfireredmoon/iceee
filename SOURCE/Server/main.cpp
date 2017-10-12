@@ -178,6 +178,7 @@ If using Code::Blocks on LINUX
 #include "Guilds.h"
 #include "Daily.h"
 #include "Books.h"
+#include "NPC.h"
 
 //extern GuildManager g_GuildManager;
 
@@ -555,6 +556,9 @@ int InitServerMain() {
 
 	g_CSManager.LoadItems();
 	g_Log.AddMessageFormat("Loaded %d Credit Shop items.", g_CSManager.mItems.size());
+
+	g_NPCDialogManager.LoadItems();
+	g_Log.AddMessageFormat("Loaded %d NPC Dialog items.", g_NPCDialogManager.mItems.size());
 
 	g_ZoneDefManager.LoadData();
 	g_GroveTemplateManager.LoadData();

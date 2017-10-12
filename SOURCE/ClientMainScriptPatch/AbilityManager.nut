@@ -933,6 +933,21 @@ this.RequirementTable <- {
 		return "the player not to be transformed";
 	}
 
+	function NotSilenced()
+	{
+		return "the player not to be silenced";
+	}
+
+	function Facing()
+	{
+		return "the player is facing the target";
+	}
+
+	function CheckBuffLimits(val, buff_str)
+	{
+		return "the player buffs are within limits";
+	}
+
 	function NotStatus( status )
 	{
 		return "the player not to be " + status;
@@ -1424,7 +1439,6 @@ class this.Ability extends this.Action
 					{
 						mStatusRequirements.append(req);
 					}
-					
 					local res = eval("return " + req + ";", RequirementTable);
 					return res;
 				}
