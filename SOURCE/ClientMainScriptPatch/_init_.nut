@@ -19,7 +19,7 @@ if (!("gPositionDebugObjects" in this.getroottable()))
 
 ::TerrainPageDef <- {};
 ::TerrainEnvDef <- {};
-function ReplaceDeps()
+function ReplaceDeps(dir)
 {
 	foreach( k, v in ::AssetDependencies )
 	{
@@ -50,7 +50,7 @@ function ReplaceDeps()
 		{
 			local out = "require( \"AssetDependencies\" );\r\n";
 			out += "::AssetDependencies[\"" + k + "\"] <- " + this.serialize(v) + ";";
-			::System.writeToFile("../../../EE/Client/Earth Eternal/Catalogs/AssetDependencies/" + k + ".deps.nut", out);
+			::System.writeToFile(dir + "/" + k + ".deps.nut", out);
 		}
 	}
 }

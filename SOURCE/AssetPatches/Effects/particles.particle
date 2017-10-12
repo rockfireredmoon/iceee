@@ -34619,7 +34619,7 @@ particle_system Par-Healing-2GlowingGlobes
 particle_system Par-Healing-2GlowingGlobesRed
 {
 	quota	60
-	material	Particles/ringflare2
+	material	Particles/ringflare2Red
 	particle_width	4
 	particle_height	4
 	cull_each	false
@@ -34920,11 +34920,156 @@ particle_system Par-Healing-Cross
 	}
 }
 
-
 particle_system Par-Healing-Imbue
 {
 	quota	40
 	material	Particles/ringflare
+	particle_width	3
+	particle_height	3
+	cull_each	false
+	renderer	billboard
+	sorted	false
+	local_space	true
+	iteration_interval	0
+	nonvisible_update_timeout	0
+	billboard_type	point
+	billboard_origin	center
+	billboard_rotation_type	texcoord
+	common_up_vector	0 1 0
+	point_rendering	false
+	accurate_facing	false
+
+	emitter Cylinder
+	{
+		angle	10
+		colour	0 0 0 1
+		colour_range_start	0 0 0 1
+		colour_range_end	0 0 0 1
+		direction	0 0 1
+		emission_rate	6
+		position	-3 0 -5
+		velocity	6
+		velocity_min	6
+		velocity_max	12
+		time_to_live	0.75
+		time_to_live_min	0.75
+		time_to_live_max	0.8
+		duration	0
+		duration_min	0
+		duration_max	0
+		repeat_delay	0
+		repeat_delay_min	0
+		repeat_delay_max	0
+		width	10
+		height	10
+		depth	0
+	}
+
+	emitter Cylinder
+	{
+		angle	10
+		colour	0 0 0 1
+		colour_range_start	0 0 0 1
+		colour_range_end	0 0 0 1
+		direction	0 -1 0
+		emission_rate	6
+		position	-3 5 0
+		velocity	6
+		velocity_min	6
+		velocity_max	12
+		time_to_live	0.75
+		time_to_live_min	0.75
+		time_to_live_max	0.8
+		duration	0
+		duration_min	0
+		duration_max	0
+		repeat_delay	0
+		repeat_delay_min	0
+		repeat_delay_max	0
+		width	10
+		height	10
+		depth	0
+	}
+
+	emitter Cylinder
+	{
+		angle	10
+		colour	0 0 0 1
+		colour_range_start	0 0 0 1
+		colour_range_end	0 0 0 1
+		direction	0 0 -1
+		emission_rate	6
+		position	-3 0 5
+		velocity	6
+		velocity_min	6
+		velocity_max	12
+		time_to_live	0.75
+		time_to_live_min	0.75
+		time_to_live_max	0.8
+		duration	0
+		duration_min	0
+		duration_max	0
+		repeat_delay	0
+		repeat_delay_min	0
+		repeat_delay_max	0
+		width	10
+		height	10
+		depth	0
+	}
+
+	emitter Cylinder
+	{
+		angle	10
+		colour	0 0 0 1
+		colour_range_start	0 0 0 1
+		colour_range_end	0 0 0 1
+		direction	0 1 0
+		emission_rate	6
+		position	-3 -5 0
+		velocity	6
+		velocity_min	6
+		velocity_max	12
+		time_to_live	0.75
+		time_to_live_min	0.75
+		time_to_live_max	0.8
+		duration	0
+		duration_min	0
+		duration_max	0
+		repeat_delay	0
+		repeat_delay_min	0
+		repeat_delay_max	0
+		width	10
+		height	10
+		depth	0
+	}
+
+	affector ColourInterpolator
+	{
+		colour0	0 0 0 0
+		time0	0
+		colour1	0.501961 1 0.501961 1
+		time1	0.2
+		colour2	0.501961 1 0.501961 1
+		time2	0.4
+		colour3	0.501961 1 0.501961 1
+		time3	0.6
+		colour4	0.501961 1 0.501961 1
+		time4	0.8
+		colour5	0 0 0 1
+		time5	1
+	}
+
+	affector Scaler
+	{
+		rate	2
+	}
+}
+
+
+particle_system Par-Healing-ImbueRed
+{
+	quota	40
+	material	Particles/ringflareRed
 	particle_width	3
 	particle_height	3
 	cull_each	false
@@ -35615,6 +35760,83 @@ particle_system Par-Healing_Warmup_Fill
 	}
 }
 
+particle_system Par-Healing_Warmup_FillRed
+{
+	quota	40
+	material	Particles/Bloodball
+	particle_width	3
+	particle_height	3
+	cull_each	false
+	renderer	billboard
+	sorted	false
+	local_space	true
+	iteration_interval	0
+	nonvisible_update_timeout	0
+	billboard_type	point
+	billboard_origin	center
+	billboard_rotation_type	vertex
+	common_up_vector	0 1 0
+	point_rendering	false
+	accurate_facing	false
+
+	emitter HollowEllipsoid
+	{
+		angle	180
+		colour	0 0 0 1
+		colour_range_start	0 0 0 1
+		colour_range_end	0 0 0 1
+		direction	1 0 0
+		emission_rate	30
+		position	0 0 0
+		velocity	0
+		velocity_min	0
+		velocity_max	0
+		time_to_live	1
+		time_to_live_min	1
+		time_to_live_max	1
+		duration	0
+		duration_min	0
+		duration_max	0
+		repeat_delay	0
+		repeat_delay_min	0
+		repeat_delay_max	0
+		width	3.5
+		height	2.5
+		depth	1.25
+		inner_width	0.9
+		inner_height	0.9
+		inner_depth	0.9
+	}
+
+	affector Rotator
+	{
+		rotation_speed_range_start	50
+		rotation_speed_range_end	75
+		rotation_range_start	0
+		rotation_range_end	360
+	}
+
+	affector ColourInterpolator
+	{
+		colour0	0 0 0 1
+		time0	0
+		colour1	0 0 0 1
+		time1	0
+		colour2	0.0941176 0.0470588 0.027451 1
+		time2	0.5
+		colour3	0.0941176 0.0470588 0.027451 1
+		time3	0.5
+		colour4	0 0 0 1
+		time4	0.99
+		colour5	0 0 0 1
+		time5	1
+	}
+
+	affector Scaler
+	{
+		rate	-0
+	}
+}
 
 particle_system Par-Healing_Warmup_Leaves
 {
@@ -35694,6 +35916,83 @@ particle_system Par-Healing_Warmup_Leaves
 	}
 }
 
+particle_system Par-Healing_Warmup_BloodDrops
+{
+	quota	60
+	material	Particles/BloodDrop
+	particle_width	2
+	particle_height	2
+	cull_each	false
+	renderer	billboard
+	sorted	false
+	local_space	false
+	iteration_interval	0
+	nonvisible_update_timeout	0
+	billboard_type	oriented_self
+	billboard_origin	center
+	billboard_rotation_type	vertex
+	common_up_vector	0 1 0
+	point_rendering	false
+	accurate_facing	false
+
+	emitter Point
+	{
+		angle	180
+		colour	0 0 0 1
+		colour_range_start	0 0 0 1
+		colour_range_end	0 0 0 1
+		direction	0 1 0
+		emission_rate	20
+		position	0 0 0
+		velocity	3
+		velocity_min	3
+		velocity_max	5
+		time_to_live	0.5
+		time_to_live_min	0.5
+		time_to_live_max	1
+		duration	0
+		duration_min	0
+		duration_max	0
+		repeat_delay	0
+		repeat_delay_min	0
+		repeat_delay_max	0
+	}
+
+	affector ColourInterpolator
+	{
+		colour0	0 0 0 1
+		time0	0
+		colour1	0.501961 0.501961 0.501961 1
+		time1	0.2
+		colour2	0.501961 0.501961 0.501961 1
+		time2	0.4
+		colour3	0.533333 0.533333 0.533333 1
+		time3	0.6
+		colour4	0.243137 0.243137 0.243137 1
+		time4	0.8
+		colour5	0 0 0 1
+		time5	1
+	}
+
+	affector Rotator
+	{
+		rotation_speed_range_start	-200
+		rotation_speed_range_end	200
+		rotation_range_start	0
+		rotation_range_end	0
+	}
+
+	affector Scaler
+	{
+		rate	0
+	}
+
+	affector LinearForce
+	{
+		force_vector	0 -8 0
+		force_application	add
+	}
+}
 
 particle_system Par-Healing_Warmup_Lines
 {
@@ -35748,6 +36047,79 @@ particle_system Par-Healing_Warmup_Lines
 		colour3	0.776471 1 0.776471 1
 		time3	0.6
 		colour4	0.65098 0.823529 1 1
+		time4	0.8
+		colour5	0 0 0 1
+		time5	1
+	}
+
+	affector Rotator
+	{
+		rotation_speed_range_start	0
+		rotation_speed_range_end	0
+		rotation_range_start	0
+		rotation_range_end	0
+	}
+
+	affector Scaler
+	{
+		rate	-2
+	}
+}
+
+
+particle_system Par-Healing_Warmup_LinesRed
+{
+	quota	60
+	material	Particles/SpinBeam2
+	particle_width	2
+	particle_height	4
+	cull_each	false
+	renderer	billboard
+	sorted	false
+	local_space	true
+	iteration_interval	0
+	nonvisible_update_timeout	0
+	billboard_type	oriented_self
+	billboard_origin	center
+	billboard_rotation_type	vertex
+	common_up_vector	0 1 0
+	point_rendering	false
+	accurate_facing	false
+
+	emitter Point
+	{
+		angle	180
+		colour	0 0 0 1
+		colour_range_start	0 0 0 1
+		colour_range_end	0 0 0 1
+		direction	0 1 0
+		emission_rate	60
+		position	0 0 0
+		velocity	10
+		velocity_min	10
+		velocity_max	20
+		time_to_live	0.2
+		time_to_live_min	0.2
+		time_to_live_max	0.4
+		duration	0
+		duration_min	0
+		duration_max	0
+		repeat_delay	0
+		repeat_delay_min	0
+		repeat_delay_max	0
+	}
+
+	affector ColourInterpolator
+	{
+		colour0	0 0 0 1
+		time0	0
+		colour1	1 0.776471 0.776471 1
+		time1	0.2
+		colour2	1 0.768627 0.768627 1
+		time2	0.4
+		colour3	1 0.776471 0.776471 1
+		time3	0.6
+		colour4	0.823529 0.65098 1 1
 		time4	0.8
 		colour5	0 0 0 1
 		time5	1

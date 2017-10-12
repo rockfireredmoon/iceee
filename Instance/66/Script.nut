@@ -299,7 +299,7 @@ function valkal_1_heal_sequence() {
 function valkal_2_heal_sequence() {
     if(debug)
 		inst.info("Heal sequence");
-	spawn_adds(valkal_2_adds.len() / 2, valkal_2_adds);
+	spawn_adds(valkal_2_adds.len() / 4, valkal_2_adds);
     disengage_valkal(cid_valkal2);
 	inst.walk_then(cid_valkal2, loc_chamber_platform_centre, -1, CREATURE_JOG_SPEED, 0, function(res) {
         inst.rotate_creature(cid_valkal2, loc_platform_rot);
@@ -438,7 +438,7 @@ function valkals_inferno() {
     });
 }
 
-/* Reset the Valkal1 fight if the party wipe out */
+/* Reset the Valkal1 fight if the party wipes out */
 function reset_valkal1() {
 	phase = 0;
     disengage_valkal(cid_valkal1);
@@ -449,7 +449,7 @@ function reset_valkal1() {
 	});
 }
 
-/* Reset the Valkal2 fight if the party wipe out */
+/* Reset the Valkal2 fight if the party wipes out */
 function reset_valkal2() {
 	phase = 0;
     disengage_valkal(cid_valkal2);
