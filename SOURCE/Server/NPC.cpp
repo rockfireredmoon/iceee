@@ -281,8 +281,9 @@ NPCDialogParagraph::NPCDialogParagraph(const NPCDialogParagraph &other) {
 
 //
 NPCDialogItem::NPCDialogItem() {
-	mInterval = 0;
-	mTrigger = 0;
+	mMinInterval = 0;
+	mMaxInterval = 0;
+	mSequence = 0;
 }
 
 NPCDialogItem::~NPCDialogItem() {}
@@ -306,8 +307,9 @@ bool NPCDialogManager::SaveItem(NPCDialogItem * item) {
 	}
 
 	fprintf(output, "[ENTRY]\r\n");
-	fprintf(output, "Trigger=%d\r\n", item->mTrigger);
-	fprintf(output, "Interval=%d\r\n", item->mInterval);
+	fprintf(output, "Sequence=%d\r\n", item->mSequence);
+	fprintf(output, "MinInterval=%d\r\n", item->mMinInterval);
+	fprintf(output, "MaxInterval=%d\r\n", item->mMaxInterval);
 
 	std::vector<NPCDialogParagraph>::iterator it;
 	for (it = item->mParagraphs.begin(); it != item->mParagraphs.end(); ++it) {
@@ -357,10 +359,12 @@ NPCDialogItem * NPCDialogManager::LoadItem(std::string name) {
 				item->mParagraphs.back().mValue = lfr.BlockToStringC(1, 0);
 			else if (strcmp(lfr.SecBuffer, "TYPE") == 0)
 				item->mParagraphs.back().mType = lfr.BlockToIntC(1);
-			else if (strcmp(lfr.SecBuffer, "TRIGGER") == 0)
-				item->mTrigger = lfr.BlockToIntC(1);
-			else if (strcmp(lfr.SecBuffer, "INTERVAL") == 0)
-				item->mInterval = lfr.BlockToIntC(1);
+			else if (strcmp(lfr.SecBuffer, "SEQUENCE") == 0)
+				item->mSequence = lfr.BlockToIntC(1);
+			else if (strcmp(lfr.SecBuffer, "MININTERVAL") == 0)
+				item->mMinInterval = lfr.BlockToIntC(1);
+			else if (strcmp(lfr.SecBuffer, "MAXINTERVAL") == 0)
+				item->mMaxInterval = lfr.BlockToIntC(1);
 			else
 				g_Log.AddMessageFormat("Unknown identifier [%s] in file [%s]",
 						lfr.SecBuffer, buf.c_str());

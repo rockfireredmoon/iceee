@@ -1,8 +1,14 @@
 [ENTRY]
-Interval=10000
+MinInterval=20000
+MaxInterval=30000
+Sequence=0
+
 [PARAGRAPH]
-Value=Hello world!
+Type=0
+Value=Hello world
 [PARAGRAPH]
+Type=0
 Value=Hello world again!
 [PARAGRAPH]
+Type=0
 Value=Hello world yet again!

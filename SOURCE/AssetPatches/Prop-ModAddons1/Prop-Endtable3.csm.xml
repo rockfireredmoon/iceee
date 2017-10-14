@@ -1,0 +1,6 @@
+<?xml version="1.0" ?>
+<Component id="Prop-Endtable3" xmlns="http://ee.ironrealms.com/CMS_XML.xsd">
+  <Entity mesh="Prop-Endtable3.mesh"/>
+  <Entity mesh="Prop-Endtable3-WalkMesh.mesh" qf="2" vf="2"/>
+  <Entity mesh="Prop-Endtable3-Blocking.mesh" qf="4" vf="2"/>
+</Component>
