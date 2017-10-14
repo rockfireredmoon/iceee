@@ -1,0 +1,26 @@
+<mesh>
+    <submeshes>
+        <submesh material="CSM/Walkable" usesharedvertices="false" use32bitindexes="false" operationtype="triangle_list">
+            <faces count="2">
+                <face v1="0" v2="1" v3="2" />
+                <face v1="1" v2="0" v3="3" />
+            </faces>
+            <geometry vertexcount="4">
+                <vertexbuffer positions="true">
+                    <vertex>
+                        <position x="3.72826" y="6.80323" z="3.64416" />
+                    </vertex>
+                    <vertex>
+                        <position x="-3.72826" y="6.80323" z="-3.64416" />
+                    </vertex>
+                    <vertex>
+                        <position x="-3.72826" y="6.80323" z="3.64416" />
+                    </vertex>
+                    <vertex>
+                        <position x="3.72826" y="6.80323" z="-3.64416" />
+                    </vertex>
+                </vertexbuffer>
+            </geometry>
+        </submesh>
+    </submeshes>
+</mesh>

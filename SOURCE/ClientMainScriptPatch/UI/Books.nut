@@ -191,6 +191,12 @@ class Screens.Books extends GUI.Frame {
 	
 	function refresh() {
 		mLoaded = false;
+		if(mSelectedBook != null)			
+			mSelectOnLoad = mSelectedBook.mId;
+		else
+			mSelectOnLoad = null;
+		mSelectedPage = 1;
+		mSelectedBook = null;
 		::_Connection.sendQuery("book.list", this);
 	}
 	
@@ -291,8 +297,14 @@ class Screens.Books extends GUI.Frame {
 	
 	function _handleBook(qa, results) {
 		if(mSelectedBook != null) {
+			for(local i = 0 ; i < mSelectedBook.mPages.len(); i++)
+				mSelectedBook.mPages[i] = "";
 			foreach( item in results ) {
-				mSelectedBook.mPages[item[0].tointeger()] = item[1];
+				local idx = item[0].tointeger();
+				if(idx >= mSelectedBook.mPages.len())
+					log.error("Want book page " + idx + " but there are only " + mSelectedBook.mPages.len() + " pages in the book object");
+				else
+					mSelectedBook.mPages[idx] = item[1];
 			}
 		}
 		redisplayPage();
@@ -307,7 +319,9 @@ class Screens.Books extends GUI.Frame {
 			book.mID = item[0].tointeger();
 			book.mTitle = item[1];
 			book.mTotalPages = item[2].tointeger();
-			book.mPages.resize(book.mTotalPages);
+			while(book.mPages.len() < book.mTotalPages) 
+				book.mPages.append("");
+
 			local obj = BookObject(book);
 			mBookList.addRow([obj]);
 			if(mSelectOnLoad != null && mSelectOnLoad == book.mID) {

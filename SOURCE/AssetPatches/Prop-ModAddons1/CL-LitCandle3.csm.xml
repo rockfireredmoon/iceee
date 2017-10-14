@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+<Component id="CL-LitCandle3" xmlns="http://ee.ironrealms.com/CMS_XML.xsd">
+  <LOD dist="" mesh=""/>
+  <XRef cref="Prop-Candle3" p="0 0 -0"/>
+  <XRef cref="Par-Candle_Glow1" p="0.05 5.594 0.21"/>
+</Component>
+
