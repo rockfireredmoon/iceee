@@ -98,15 +98,13 @@ public:
 };
 
 extern PetDefManager g_PetDefManager;
-namespace Trigger
+namespace Sequence
 {
 	enum
 	{
 		UNDEFINED = -1,
 		SEQUENTIAL = 0,
 		RANDOM = 1,
-		LOOP = 2,
-		TIME_OF_DAY = 3,
 		MAX
 	};
 }
@@ -143,8 +141,9 @@ public:
 
 	std::string mName;
 	std::vector<NPCDialogParagraph> mParagraphs;
-	int mTrigger;
-	int mInterval;
+	int mSequence;
+	int mMinInterval;
+	int mMaxInterval;
 
 };
 

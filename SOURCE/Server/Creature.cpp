@@ -4682,17 +4682,23 @@ void CreatureInstance :: RunDialog(void)
 					 * initial delay before actually performing it
 					 */
 					if(dialogIndex == -1) {
-						dialogIndex = 0;
-						timer_dialog = g_ServerTime +  diag->mInterval;
+						switch(diag->mSequence) {
+						case Sequence::SEQUENTIAL:
+							dialogIndex = 0;
+							break;
+						case Sequence::RANDOM:
+							dialogIndex = randmodrng(0, diag->mParagraphs.size());
+							break;
+						}
+						timer_dialog = g_ServerTime + randmodrng(diag->mMinInterval, diag->mMaxInterval);
 					}
 					else {
-						int delay = diag->mInterval;
+						int delay = randmodrng(diag->mMinInterval, diag->mMaxInterval);
 
 						/* Otherwise perform this item */
 						NPCDialogParagraph para = diag->mParagraphs[dialogIndex];
 						switch(para.mType) {
 						case ParagraphType::SAY:
-							g_Log.AddMessageFormat("[DEBUG] %d [%s] %s says %s", CreatureID, spawnGen->spawnPoint->extraData->dialog, css.display_name, para.mValue.c_str());
 							actInst->LSendToAllSimulator(GSendBuf, PrepExt_GenericChatMessage(GSendBuf, CreatureID, css.display_name, "s/", para.mValue.c_str()), -1);
 							break;
 						case ParagraphType::WAIT:
@@ -4703,12 +4709,19 @@ void CreatureInstance :: RunDialog(void)
 							break;
 						}
 
+						/* Wait for next action, reseting if needed */
 						timer_dialog = g_ServerTime + delay;
 
-						/* Wait for next action, reseting if needed */
-						dialogIndex++;
-						if(dialogIndex >= diag->mParagraphs.size())
-							dialogIndex = 0;
+						switch(diag->mSequence) {
+						case Sequence::SEQUENTIAL:
+							dialogIndex++;
+							if(dialogIndex >= diag->mParagraphs.size())
+								dialogIndex = 0;
+							break;
+						case Sequence::RANDOM:
+							dialogIndex = randmodrng(0, diag->mParagraphs.size());
+							break;
+						}
 					}
 				}
 				else {
