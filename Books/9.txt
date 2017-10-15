@@ -1,0 +1,11 @@
+[BOOK]
+TITLE=Book of Spibear
+
+[PAGE]
+TEXT=No one knows when or how the spibears came into being. Some claim they were created by the effects of the Cataclysm that ended the Age of Man while others claim they were created from fell magics by the agents of Djall. Still others blame the Gloom Witches for their appearance. In spite of the rumors regarding these creatures, most often they appear to be mostly docile unless attacked. Exceptions to this seem to be when the spibears are in large numbers or when their local denmother is ready to produce another generation.
+[PAGE]
+TEXT=Controlling spibear populations is a very delicate task. Most often it involves eliminating a good number of them from the area while taking care not to completely wipe them out. If numbers become too great, though, the local authorities will often put a price on the denmother's head in the hopes of eliminating the lair altogether. Typically these population control methods are only employed once every few years to allow the spibears to rebound after their numbers have been reduced or a lair has been destroyed.
+[PAGE]
+TEXT=Some spibears grow to unusually large sizes making even one a threat to nearby towns. While not often seen outside a lair, these large spibears tend to be quite powerful. Hunting parties are cautioned to take appropriate measures when engaging these beasts.
+[PAGE]
+TEXT=When a new denmother is made, she will travel sometimes very long distances to find the ideal location to establish her own lair. Spibear denmothers will feed on anything in the chosen area until her brood is ready to hatch. After this, the first generation of the new lair will guard the denmother while bringing her food. They will also guard the young of the next generation after they have hatched.

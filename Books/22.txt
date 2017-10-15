@@ -1,0 +1,7 @@
+[BOOK]
+TITLE=Report to General Thothmes
+
+[PAGE]
+TEXT=General, I send forth my deepest regrets as to the recent disaster that has befallen our troops in the lands beyond the mountains. The Beasts have proven more resourceful than anticipated and have halted our advance. Currently our forces are holding strong, but, we cannot say how long that will last. I am sure they will fight to the last soldier should Anubis will it!
+[PAGE]
+TEXT=That said, General, I must congratulate you on your successful blockade of the mountain tunnel that the Beasts have been using as a supply route. The Beasts of Cazador must be struggling to survive by now and without aid from their allies to the north, it is only a matter of time before that fortress falls. I eagerly await news of our victory.

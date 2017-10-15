@@ -1,0 +1,21 @@
+[BOOK]
+TITLE=Witchdoctor’s Prescription Notes
+
+[PAGE]
+TEXT=It looks to be the recipe for an herbal remedy of some sort.
+
+
+
+(Do you dare try it out?)
+[PAGE]
+TEXT=It looks to be the recipe for some sort of potion.
+
+
+
+(You are not certain you want to see what it does.)
+[PAGE]
+TEXT=It looks to be the recipe for a crudely devised poultice.
+
+
+
+(You grimace at the ingredients list deciding a second look is a bad idea.)

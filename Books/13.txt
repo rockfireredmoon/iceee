@@ -1,0 +1,5 @@
+[BOOK]
+TITLE=Blood Stained Scroll
+
+[PAGE]
+TEXT=(The contents of this strange scroll are illegible, however, you get the feeling from the blood stains covering the parchment, along with where it was found, that it might not be a good idea to attempt to decipher what might very well involve the same fell magics that inhabit the Chamber.)

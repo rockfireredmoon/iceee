@@ -1,0 +1,11 @@
+[BOOK]
+TITLE=Tower Spellbook Primer – Adept’s Curriculum
+
+[PAGE]
+TEXT=This Spellbook contains the advanced level spells of Arcane magic. Prized by those students well on their way to becoming master level Mages at The Tower.
+[PAGE]
+TEXT=This Spellbook contains the advanced level spells of Arcane magic. Prized by those students well on their way to becoming master level Mages at The Tower.
+[PAGE]
+TEXT=This Spellbook contains the advanced level spells of Arcane magic. Prized by those students well on their way to becoming master level Mages at The Tower.
+[PAGE]
+TEXT=This Spellbook contains the advanced level spells of Arcane magic. Prized by those students well on their way to becoming master level Mages at The Tower.

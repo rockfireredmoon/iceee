@@ -1,0 +1,9 @@
+[BOOK]
+TITLE=VonGruber Family History
+
+[PAGE]
+TEXT=Distantly related to the ill-fated Otto House, the noble House of VonGruber has been a notable fixture in New Badari politics for generations. Being one of several noble houses to oppose the ruling Emberson family on more than one occasion, periodic tensions between the Emberson regency and the VonGruber barony have occurred.
+[PAGE]
+TEXT=Once a lesser noble house, the VonGrubers gained notoriety while defending the ill-fated Otto family in a civil war in which the Otto family, for a time, gained the regent's throne. As supporters of the Ottos, the VonGruber family patriarch of the time was granted the title of 'Baron'. After the Emberson family regained the regency two generations later, the now established VonGruber Barony was permitted to remain as part of the effort to fully reunite the felines of New Badari who were tired of civil wars.
+[PAGE]
+TEXT=In more recent years, the generational tensions between the VonGruber House and the Emberson House have begun to renew once more. Fears of a new civil war in New Badari have begun to surface among the populace with some outspoken supporters of the newest Baron of House VonGruber claiming the current ruling Emberson Regent should be deposed.

@@ -1,0 +1,21 @@
+[BOOK]
+TITLE=Grimm's Tales
+
+[PAGE]
+TEXT=It looks to be part of some sort of enchanted children's book. The title says it is called “Snow White and the Seven Dvergar”.
+[PAGE]
+TEXT=It looks to be part of some sort of enchanted children's book. The title says it is called “The Legend of Old Scratch”.
+[PAGE]
+TEXT=It looks to be part of some sort of enchanted children's book. The title says it is called “Jack the Giant Slayer”.
+[PAGE]
+TEXT=It looks to be part of some sort of enchanted children's book. The title says it is called “Little Red Hood and the Bad Wolf”.
+[PAGE]
+TEXT=It looks to be part of some sort of enchanted children's book. The title says it is called “Cinderella”.
+[PAGE]
+TEXT=It looks to be part of some sort of enchanted children's book. The title says it is called “The Sleeping Beauty”.
+[PAGE]
+TEXT=It looks to be part of some sort of enchanted children's book. The title says it is called “The Pied Piper of Hamlin”.
+[PAGE]
+TEXT=It looks to be part of some sort of enchanted children's book. The title says it is called “Rumplestiltzkin”.
+[PAGE]
+TEXT=It looks to be part of some sort of enchanted children's book. The title says it is called “Beauty and The Beast”.
