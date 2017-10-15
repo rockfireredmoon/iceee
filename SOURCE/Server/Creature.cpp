@@ -5767,7 +5767,11 @@ void CreatureInstance :: SelectTarget(CreatureInstance *newTarget)
 		if(CurrentTarget.targ != NULL && aiNut != NULL) {
 			std::vector<ScriptCore::ScriptParam> p;
 			p.push_back(CurrentTarget.targ->CreatureID);
-			aiNut->JumpToLabel("on_target_lost", p);
+
+			/* This MUST run immediately (and not be queued) as the script probably wants to clear out
+			 * the queue entirely, which might need to re-activated by on_target_acquired.
+			 */
+			aiNut->RunFunction("on_target_lost", p, false);
 		}
 
 		if(newTarget != NULL)
