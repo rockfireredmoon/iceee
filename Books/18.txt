@@ -1,0 +1,9 @@
+[BOOK]
+TITLE=Grey Circle Memo Fragment
+
+[PAGE]
+TEXT=(It appears to be part of a discarded note probably from the pen of Alter Volt.)
+
+
+
+"...can't believe the Boss and the Lady are going through with the plan. I tried to tell them it is too soon to act, but, Lucius insists that now is the time. Can we really trust the individual the Lady wishes to hire for the job? Perhaps a test of strength first..."

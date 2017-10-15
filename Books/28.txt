@@ -1,0 +1,5 @@
+[BOOK]
+TITLE=Junk Palace Scrap of Paper
+
+[PAGE]
+TEXT=(You go to read the dingy scrap of paper. Instead of words, you find a very crude sketch, barely good enough to be called a 'drawing', of what appears to be a warpig wearing a crown made of some strange material prancing around a pile of junk while other warpigs are bowing down to him. You can only surmise from what you guess is a 'signature' by the 'pig's head' at the bottom, that this "drawing" was either made by Boss Hawg himself or someone admiring him.)

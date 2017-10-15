@@ -285,3 +285,948 @@ mFlavorText=Double-click to open, or use /books
 mIvMax1=6
 mIvMax2=4
 mIvType1=11
+
+[ENTRY]
+mID=1500019
+mType=8
+mDisplayName=Hollow Tree Page Fragment
+mIcon=Icon-32-Torn_Page.png|Icon-32-BG-Yellow.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=7
+mIvMax2=1
+mIvType1=11
+
+[ENTRY]
+mID=1500020
+mType=8
+mDisplayName=Jod's Journal
+mIcon=Icon-32-Paper.png|Icon-32-BG-Red.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=8
+mIvMax2=1
+mIvType1=11
+
+[ENTRY]
+mID=1500021
+mType=8
+mDisplayName=Jod's Journal
+mIcon=Icon-32-Paper.png|Icon-32-BG-Red.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=8
+mIvMax2=2
+mIvType1=11
+
+[ENTRY]
+mID=1500022
+mType=8
+mDisplayName=Jod's Journal
+mIcon=Icon-32-Paper.png|Icon-32-BG-Red.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=8
+mIvMax2=3
+mIvType1=11
+
+[ENTRY]
+mID=1500023
+mType=8
+mDisplayName=Book of Spibear
+mIcon=Icon-32-Torn_Page.png|Icon-32-BG-Blue.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=9
+mIvMax2=1
+mIvType1=11
+
+[ENTRY]
+mID=1500024
+mType=8
+mDisplayName=Book of Spibear
+mIcon=Icon-32-Torn_Page.png|Icon-32-BG-Blue.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=9
+mIvMax2=2
+mIvType1=11
+
+[ENTRY]
+mID=1500025
+mType=8
+mDisplayName=Book of Spibear
+mIcon=Icon-32-Torn_Page.png|Icon-32-BG-Blue.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=9
+mIvMax2=3
+mIvType1=11
+
+[ENTRY]
+mID=1500026
+mType=8
+mDisplayName=Book of Spibear
+mIcon=Icon-32-Torn_Page.png|Icon-32-BG-Blue.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=9
+mIvMax2=4
+mIvType1=11
+
+[ENTRY]
+mID=1500027
+mType=8
+mDisplayName=VonGruber Family History
+mIcon=Icon-32-Crumpled_Paper.png|Icon-32-BG-Purple.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=10
+mIvMax2=1
+mIvType1=11
+
+[ENTRY]
+mID=1500028
+mType=8
+mDisplayName=VonGruber Family History
+mIcon=Icon-32-Crumpled_Paper.png|Icon-32-BG-Purple.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=10
+mIvMax2=2
+mIvType1=11
+
+[ENTRY]
+mID=1500029
+mType=8
+mDisplayName=VonGruber Family History
+mIcon=Icon-32-Crumpled_Paper.png|Icon-32-BG-Purple.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=10
+mIvMax2=3
+mIvType1=11
+
+[ENTRY]
+mID=1500030
+mType=8
+mDisplayName=Monasterial Tome
+mIcon=Icon-32-Paper.png|Icon-32-BG-Green.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=11
+mIvMax2=1
+mIvType1=11
+
+[ENTRY]
+mID=1500031
+mType=8
+mDisplayName=Monasterial Tome
+mIcon=Icon-32-Paper.png|Icon-32-BG-Green.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=11
+mIvMax2=2
+mIvType1=11
+
+[ENTRY]
+mID=1500032
+mType=8
+mDisplayName=Monasterial Tome
+mIcon=Icon-32-Paper.png|Icon-32-BG-Green.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=11
+mIvMax2=3
+mIvType1=11
+
+[ENTRY]
+mID=1500033
+mType=8
+mDisplayName=Monasterial Tome
+mIcon=Icon-32-Paper.png|Icon-32-BG-Green.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=11
+mIvMax2=4
+mIvType1=11
+
+[ENTRY]
+mID=1500034
+mType=8
+mDisplayName=Monasterial Tome
+mIcon=Icon-32-Paper.png|Icon-32-BG-Green.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=11
+mIvMax2=5
+mIvType1=11
+
+[ENTRY]
+mID=1500035
+mType=8
+mDisplayName=Monasterial Tome
+mIcon=Icon-32-Paper.png|Icon-32-BG-Green.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=11
+mIvMax2=6
+mIvType1=11
+
+[ENTRY]
+mID=1500036
+mType=8
+mDisplayName=Inventory Memorandum
+mIcon=Icon-32-Crumpled_Paper.png|Icon-32-BG-Cyan.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=12
+mIvMax2=1
+mIvType1=11
+
+[ENTRY]
+mID=1500037
+mType=8
+mDisplayName=Blood Stained Scroll
+mIcon=Icon-32-Scroll1.png|Icon-32-BG-Red.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=13
+mIvMax2=1
+mIvType1=11
+
+[ENTRY]
+mID=1500038
+mType=8
+mDisplayName=Tower Spellbook Primer – Beginner’s Curriculum
+mIcon=Icon-32-Torn_Page.png|Icon-32-BG-Black.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=14
+mIvMax2=1
+mIvType1=11
+
+[ENTRY]
+mID=1500039
+mType=8
+mDisplayName=Tower Spellbook Primer – Beginner’s Curriculum
+mIcon=Icon-32-Torn_Page.png|Icon-32-BG-Black.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=14
+mIvMax2=2
+mIvType1=11
+
+[ENTRY]
+mID=1500040
+mType=8
+mDisplayName=Tower Spellbook Primer – Beginner’s Curriculum
+mIcon=Icon-32-Torn_Page.png|Icon-32-BG-Black.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=14
+mIvMax2=3
+mIvType1=11
+
+[ENTRY]
+mID=1500041
+mType=8
+mDisplayName=Tower Spellbook Primer – Beginner’s Curriculum
+mIcon=Icon-32-Torn_Page.png|Icon-32-BG-Black.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=14
+mIvMax2=4
+mIvType1=11
+
+[ENTRY]
+mID=1500042
+mType=8
+mDisplayName=Tower Spellbook Primer – Novice’s Curriculum
+mIcon=Icon-32-Torn_Page.png|Icon-32-BG-Black.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=15
+mIvMax2=1
+mIvType1=11
+
+[ENTRY]
+mID=1500043
+mType=8
+mDisplayName=Tower Spellbook Primer – Novice’s Curriculum
+mIcon=Icon-32-Torn_Page.png|Icon-32-BG-Black.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=15
+mIvMax2=2
+mIvType1=11
+
+[ENTRY]
+mID=1500044
+mType=8
+mDisplayName=Tower Spellbook Primer – Novice’s Curriculum
+mIcon=Icon-32-Torn_Page.png|Icon-32-BG-Black.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=15
+mIvMax2=3
+mIvType1=11
+
+[ENTRY]
+mID=1500045
+mType=8
+mDisplayName=Tower Spellbook Primer – Novice’s Curriculum
+mIcon=Icon-32-Torn_Page.png|Icon-32-BG-Black.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=15
+mIvMax2=4
+mIvType1=11
+
+[ENTRY]
+mID=1500046
+mType=8
+mDisplayName=Tower Spellbook Primer – Adept’s Curriculum
+mIcon=Icon-32-Torn_Page.png|Icon-32-BG-Black.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=16
+mIvMax2=1
+mIvType1=11
+
+[ENTRY]
+mID=1500047
+mType=8
+mDisplayName=Tower Spellbook Primer – Adept’s Curriculum
+mIcon=Icon-32-Torn_Page.png|Icon-32-BG-Black.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=16
+mIvMax2=2
+mIvType1=11
+
+[ENTRY]
+mID=1500048
+mType=8
+mDisplayName=Tower Spellbook Primer – Adept’s Curriculum
+mIcon=Icon-32-Torn_Page.png|Icon-32-BG-Black.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=16
+mIvMax2=3
+mIvType1=11
+
+[ENTRY]
+mID=1500049
+mType=8
+mDisplayName=Tower Spellbook Primer – Adept’s Curriculum
+mIcon=Icon-32-Torn_Page.png|Icon-32-BG-Black.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=16
+mIvMax2=4
+mIvType1=11
+
+[ENTRY]
+mID=1500050
+mType=8
+mDisplayName=Witchdoctor’s Prescription Notes
+mIcon=Icon-32-Paper.png|Icon-32-BG-Pink.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=17
+mIvMax2=1
+mIvType1=11
+
+[ENTRY]
+mID=1500051
+mType=8
+mDisplayName=Witchdoctor’s Prescription Notes
+mIcon=Icon-32-Paper.png|Icon-32-BG-Pink.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=17
+mIvMax2=2
+mIvType1=11
+
+[ENTRY]
+mID=1500052
+mType=8
+mDisplayName=Witchdoctor’s Prescription Notes
+mIcon=Icon-32-Paper.png|Icon-32-BG-Pink.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=17
+mIvMax2=3
+mIvType1=11
+
+[ENTRY]
+mID=1500053
+mType=8
+mDisplayName=Grey Circle Memo Fragment
+mIcon=Icon-32-Torn_Page.png|Icon-32-BG-Grey.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=18
+mIvMax2=1
+mIvType1=11
+
+[ENTRY]
+mID=1500054
+mType=8
+mDisplayName=Grimm's Tales
+mIcon=Icon-32-Paper.png|Icon-32-BG-Aqua.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=19
+mIvMax2=1
+mIvType1=11
+
+[ENTRY]
+mID=1500055
+mType=8
+mDisplayName=Grimm's Tales
+mIcon=Icon-32-Paper.png|Icon-32-BG-Aqua.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=19
+mIvMax2=2
+mIvType1=11
+
+[ENTRY]
+mID=1500056
+mType=8
+mDisplayName=Grimm's Tales
+mIcon=Icon-32-Paper.png|Icon-32-BG-Aqua.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=19
+mIvMax2=3
+mIvType1=11
+
+[ENTRY]
+mID=1500057
+mType=8
+mDisplayName=Grimm's Tales
+mIcon=Icon-32-Paper.png|Icon-32-BG-Aqua.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=19
+mIvMax2=4
+mIvType1=11
+
+[ENTRY]
+mID=1500058
+mType=8
+mDisplayName=Grimm's Tales
+mIcon=Icon-32-Paper.png|Icon-32-BG-Aqua.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=19
+mIvMax2=5
+mIvType1=11
+
+[ENTRY]
+mID=1500059
+mType=8
+mDisplayName=Grimm's Tales
+mIcon=Icon-32-Paper.png|Icon-32-BG-Aqua.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=19
+mIvMax2=6
+mIvType1=11
+
+[ENTRY]
+mID=1500060
+mType=8
+mDisplayName=Grimm's Tales
+mIcon=Icon-32-Paper.png|Icon-32-BG-Aqua.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=19
+mIvMax2=7
+mIvType1=11
+
+[ENTRY]
+mID=1500061
+mType=8
+mDisplayName=Grimm's Tales
+mIcon=Icon-32-Paper.png|Icon-32-BG-Aqua.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=19
+mIvMax2=8
+mIvType1=11
+
+[ENTRY]
+mID=1500062
+mType=8
+mDisplayName=Grimm's Tales
+mIcon=Icon-32-Paper.png|Icon-32-BG-Aqua.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=19
+mIvMax2=9
+mIvType1=11
+
+[ENTRY]
+mID=1500063
+mType=8
+mDisplayName=The Hedorah Report Parchment
+mIcon=Icon-32-Crumpled_Paper.png|Icon-32-BG-Purple.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=20
+mIvMax2=1
+mIvType1=11
+
+[ENTRY]
+mID=1500064
+mType=8
+mDisplayName=Hell’s Shadow Report
+mIcon=Icon-32-Torn_Page.png|Icon-32-BG-Black.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=21
+mIvMax2=1
+mIvType1=11
+
+[ENTRY]
+mID=1500065
+mType=8
+mDisplayName=Report to General Thothmes
+mIcon=Icon-32-Paper.png|Icon-32-BG-Grey.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=22
+mIvMax2=1
+mIvType1=11
+
+[ENTRY]
+mID=1500066
+mType=8
+mDisplayName=Report to General Thothmes
+mIcon=Icon-32-Paper.png|Icon-32-BG-Grey.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=22
+mIvMax2=2
+mIvType1=11
+
+[ENTRY]
+mID=1500067
+mType=8
+mDisplayName=The Dragon’s Nest Memo
+mIcon=Icon-32-Crumpled_Paper.png|Icon-32-BG-Divine.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=23
+mIvMax2=1
+mIvType1=11
+
+[ENTRY]
+mID=1500068
+mType=8
+mDisplayName=Hall of Bones Parchment
+mIcon=Icon-32-Paper.png|Icon-32-BG-Blue.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=24
+mIvMax2=1
+mIvType1=11
+
+[ENTRY]
+mID=1500069
+mType=8
+mDisplayName=Missive to the Pridelord
+mIcon=Icon-32-Crumpled_Paper.png|Icon-32-BG-Cyan.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=25
+mIvMax2=1
+mIvType1=11
+
+[ENTRY]
+mID=1500070
+mType=8
+mDisplayName=Zhushi’s Lair Parchment - Zhushi – A Study
+mIcon=Icon-32-Torn_Page.png|Icon-32-BG-Grey.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=26
+mIvMax2=1
+mIvType1=11
+
+[ENTRY]
+mID=1500071
+mType=8
+mDisplayName=Warpig Protectorate Scrap of Paper
+mIcon=Icon-32-Torn_Page.png|Icon-32-BG-Divine.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=27
+mIvMax2=1
+mIvType1=11
+
+[ENTRY]
+mID=1500072
+mType=8
+mDisplayName=Junk Palace Scrap of Paper
+mIcon=Icon-32-Paper.png|Icon-32-BG-Yellow.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=28
+mIvMax2=1
+mIvType1=11
+
+[ENTRY]
+mID=1500073
+mType=8
+mDisplayName=Blood Keep Tome
+mIcon=Icon-32-Paper.png|Icon-32-BG-Red.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=29
+mIvMax2=1
+mIvType1=11
+
+[ENTRY]
+mID=1500074
+mType=8
+mDisplayName=Blood Keep Tome
+mIcon=Icon-32-Paper.png|Icon-32-BG-Red.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=29
+mIvMax2=2
+mIvType1=11
+
+[ENTRY]
+mID=1500075
+mType=8
+mDisplayName=Blood Keep Tome
+mIcon=Icon-32-Paper.png|Icon-32-BG-Red.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=29
+mIvMax2=3
+mIvType1=11
+
+[ENTRY]
+mID=1500076
+mType=8
+mDisplayName=Blood Keep Tome
+mIcon=Icon-32-Paper.png|Icon-32-BG-Red.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=29
+mIvMax2=4
+mIvType1=11
+
+[ENTRY]
+mID=1500077
+mType=8
+mDisplayName=Blood Keep Tome
+mIcon=Icon-32-Paper.png|Icon-32-BG-Red.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=29
+mIvMax2=5
+mIvType1=11
+
+[ENTRY]
+mID=1500078
+mType=8
+mDisplayName=Blood Keep Tome
+mIcon=Icon-32-Paper.png|Icon-32-BG-Red.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=29
+mIvMax2=6
+mIvType1=11
+
+[ENTRY]
+mID=1500079
+mType=8
+mDisplayName=Blood Keep Tome
+mIcon=Icon-32-Paper.png|Icon-32-BG-Red.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=29
+mIvMax2=7
+mIvType1=11
+
+[ENTRY]
+mID=1500080
+mType=8
+mDisplayName=Blood Keep Tome
+mIcon=Icon-32-Paper.png|Icon-32-BG-Red.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=29
+mIvMax2=8
+mIvType1=11
+
+[ENTRY]
+mID=1500081
+mType=8
+mDisplayName=Blood Keep Tome
+mIcon=Icon-32-Paper.png|Icon-32-BG-Red.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=29
+mIvMax2=9
+mIvType1=11

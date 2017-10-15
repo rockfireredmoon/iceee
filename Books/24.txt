@@ -1,0 +1,5 @@
+[BOOK]
+TITLE=Hall of Bones Parchment
+
+[PAGE]
+TEXT=Deep in the heart of Vulturia high up on the Cracked Rock plateau, sits a massive structure in the city of the Carrionites. Constructed of large bones, possibly from long dead dragons, the so-called 'Hall of Bones' is considered a marvel of primitive construction in spite of the fact that the Carrionites themselves have been too busy warring with both the Stone Lions of Pumaria to the south and the more peaceful Beasts of Oslis to really bother with works of art or engineering. The Hall of Bones is the seat of power in Vulturia and the Flock Lord rules with an iron-taloned fist on his Throne of Bone within the Hall.

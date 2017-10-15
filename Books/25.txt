@@ -1,0 +1,9 @@
+[BOOK]
+TITLE=Missive to the Pridelord
+
+[PAGE]
+TEXT=(It looks to be some sort of crumpled parchment.)
+
+
+
+"Great Lord of the Pride, I have received the latest reports from my scouts regarding the activities of those peace-loving cowards in the Beast town of Oslis to the north. It would seem there has been more than the usual activity in the last few days and I fear they may be up to something. Yesterday, the scouts reported sightings of a group of Stone Lions from Oslis setting up camp within the borders of Pumaria itself. Will do what I can to monitor the situation, though, I cannot say what this new development portends."

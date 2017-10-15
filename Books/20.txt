@@ -1,0 +1,13 @@
+[BOOK]
+TITLE=The Hedorah Report Parchment
+
+[PAGE]
+TEXT=(It appears to be part of some sort of important message)
+
+
+
+"After observing the ancient Hedorah for the past month, I believe I can confirm the concerns from the Green Line scouting parties. On the outside of this long dead tree, one only sees the signs from the Pact of Decay; however, upon stepping inside the tree, it is quite evident that Hedorah has well and truly taken it over. Hedorah's fell spawn are numerous and continue to multiply. It is only a matter of time before..."
+
+
+
+(the bottom of the message is missing)

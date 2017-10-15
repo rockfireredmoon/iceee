@@ -1,0 +1,21 @@
+[BOOK]
+TITLE=Warpig Protectorate Scrap of Paper
+
+[PAGE]
+TEXT=(You go to read the not-exactly-clean scrap of paper which looks as if it was stained repeatedly by Gaia knows what over time. Surprisingly, it seems as if some warpig actually attempted to write on it though the words are scrawled and horridly misspelled.)
+
+
+
+"Grittins fro da gret a mitti Potatoratt (a pig's head is drawn here) I iz Nowiz an Iz coman yooz wapiggz. Soze lon asz yooz a leevn har yooz no far boz haagg. Staa log azz yooz likks har. Potatoratt Nowiz"
+
+
+
+(It takes you a bit to decipher the message, but, once translated, you are able to read the following:)
+
+
+
+"Greetings from the great and mighty Protectorate. (pig's head is probably being used as a signature or official marking) I am Norris and I command you warpigs. So long as you are living here, you need not fear Boss Hawg. Stay long as you like here. Protectorate Norris"
+
+
+
+(You realize it is Norris' attempt at an official proclamation in writing. Perhaps the other warpigs couldn't understand the message and it was trashed, later to be used as a napkin or coaster.)

@@ -1,0 +1,5 @@
+[BOOK]
+TITLE=The Dragon’s Nest Memo
+
+[PAGE]
+TEXT=High atop the windswept, sand blasted plateaus of Dustshore sits a massive dragon skeleton. For some reason, one of the larger hills on which this skeleton rests has become known by the rather dubious moniker "The Dragon's Nest". Rumors abound that a very much living dragon has taken up residence in the Nest, resting among the bones of its long dead kin.

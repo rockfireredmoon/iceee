@@ -1,0 +1,5 @@
+[BOOK]
+TITLE=Inventory Memorandum
+
+[PAGE]
+TEXT=(You see what appears to be a list of some sort crudely scrawled onto a scrap of paper. Judging from where the paper has been found, you can only guess one of the Bandits must have attempted to catalog their ill gotten gains. Floro himself maybe or perhaps one of his lackeys?)

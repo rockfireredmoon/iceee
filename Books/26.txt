@@ -1,0 +1,9 @@
+[BOOK]
+TITLE=Zhushi’s Lair Parchment - Zhushi – A Study
+
+[PAGE]
+TEXT=Although Zhushi has been dubbed the 'Grandweaver' by many, it is believed this centuries old arachnid is the matriarch of all of Deadwood's spider populations. Contrary to popular belief, though, it is quite likely that her spawn has not made it too far beyond Deadwood's borders.
+
+
+
+Zhushi has never been seen away from her consort Grizhu who viciously guards her lair. There is a rumor, however, that claims Grishu to be the patriarch and originator of the Spibear sub-species, though no solid evidence to this claim has ever been substantiated.

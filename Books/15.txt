@@ -1,0 +1,11 @@
+[BOOK]
+TITLE=Tower Spellbook Primer – Novice’s Curriculum
+
+[PAGE]
+TEXT=This Spellbook contains the more intermediate level spells of Arcane magic. Useful for Mages who have already mastered the basics at The Tower.
+[PAGE]
+TEXT=This Spellbook contains the more intermediate level spells of Arcane magic. Useful for Mages who have already mastered the basics at The Tower.
+[PAGE]
+TEXT=This Spellbook contains the more intermediate level spells of Arcane magic. Useful for Mages who have already mastered the basics at The Tower.
+[PAGE]
+TEXT=This Spellbook contains the more intermediate level spells of Arcane magic. Useful for Mages who have already mastered the basics at The Tower.
