@@ -12,7 +12,7 @@ TEXT=It looks to be part of some sort of enchanted children's book. The title sa
 [PAGE]
 TEXT=It looks to be part of some sort of enchanted children's book. The title says it is called “Cinderella”.
 [PAGE]
-TEXT=It looks to be part of some sort of enchanted children's book. The title says it is called “The Sleeping Beauty”.
+TEXT=It looks to be part of some sort of enchanted children's book. The title says it is called "The Sleeping Beauty".
 [PAGE]
 TEXT=It looks to be part of some sort of enchanted children's book. The title says it is called “The Pied Piper of Hamlin”.
 [PAGE]

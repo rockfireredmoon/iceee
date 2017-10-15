@@ -2,8 +2,8 @@
 TITLE=Hell’s Shadow Report
 
 [PAGE]
-TEXT=“So many Shadows! I had heard there would be a Rift in this part of the Great Forest, yet I had not anticipated it would be so large. This expanse... the very size of this pocket dimension... I cannot imagine what sort of Shadow would be capable of creating such a place!
+TEXT="So many Shadows! I had heard there would be a Rift in this part of the Great Forest, yet I had not anticipated it would be so large. This expanse... the very size of this pocket dimension... I cannot imagine what sort of Shadow would be capable of creating such a place!
 
 
 
-I have seen a massive Shadow further in. I know a menace of raw strength and power when I see it and that one surely must be the one keeping the Rift from closing. The thing is hard to describe so I have settled on calling the Shadow simply “It”. It would seem I must withdraw from this place and return with more power. “It” mocks me in my retreat. Oh I cannot wait to return and show the Legion who’s boss!”
+I have seen a massive Shadow further in. I know a menace of raw strength and power when I see it and that one surely must be the one keeping the Rift from closing. The thing is hard to describe so I have settled on calling the Shadow simply "It". It would seem I must withdraw from this place and return with more power. "It" mocks me in my retreat. Oh I cannot wait to return and show the Legion who's boss!"

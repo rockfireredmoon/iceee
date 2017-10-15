@@ -6,7 +6,7 @@ TEXT=(You go to read the not-exactly-clean scrap of paper which looks as if it w
 
 
 
-“Grittins fro da gret a mitti Potatoratt (a pig's head is drawn here) I iz Nowiz an Iz coman yooz wapiggz. Soze lon asz yooz a leevn har yooz no far boz haagg. Staa log azz yooz likks har. Potatoratt Nowiz”
+"Grittins fro da gret a mitti Potatoratt (a pig's head is drawn here) I iz Nowiz an Iz coman yooz wapiggz. Soze lon asz yooz a leevn har yooz no far boz haagg. Staa log azz yooz likks har. Potatoratt Nowiz"
 
 
 
@@ -14,7 +14,7 @@ TEXT=(You go to read the not-exactly-clean scrap of paper which looks as if it w
 
 
 
-“Greetings from the great and mighty Protectorate. (pig's head is probably being used as a signature or official marking) I am Norris and I command you warpigs. So long as you are living here, you need not fear Boss Hawg. Stay long as you like here. Protectorate Norris”
+"Greetings from the great and mighty Protectorate. (pig's head is probably being used as a signature or official marking) I am Norris and I command you warpigs. So long as you are living here, you need not fear Boss Hawg. Stay long as you like here. Protectorate Norris"
 
 
 
