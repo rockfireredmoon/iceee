@@ -2765,7 +2765,6 @@ particle_system Par-Base_Hit1
 	}
 }
 
-
 particle_system Par-Base_Hit2
 {
 	quota	45
@@ -73456,6 +73455,737 @@ particle_system Par-House_Down_Bits
 		rotation_speed_range_end	0
 		rotation_range_start	360
 		rotation_range_end	0
+	}
+}
+
+particle_system Par-BloodBath_Hand
+{
+	quota	10
+	material	Particles/Bloodball
+	particle_width	5
+	particle_height	5
+	cull_each	false
+	renderer	billboard
+	sorted	false
+	local_space	true
+	iteration_interval	0
+	nonvisible_update_timeout	0
+	billboard_type	point
+	billboard_origin	center
+	billboard_rotation_type	vertex
+	common_up_vector	0 1 0
+	point_rendering	false
+	accurate_facing	false
+
+	emitter Cylinder
+	{
+		angle	180
+		colour	0 0 0 1
+		colour_range_start	0 0 0 1
+		colour_range_end	0 0 0 1
+		direction	1 0 0
+		emission_rate	3
+		position	0 0 0
+		velocity	0
+		velocity_min	0
+		velocity_max	0
+		time_to_live	3
+		time_to_live_min	3
+		time_to_live_max	3
+		duration	0
+		duration_min	0
+		duration_max	0
+		repeat_delay	0
+		repeat_delay_min	0
+		repeat_delay_max	0
+		width	1
+		height	1
+		depth	1
+	}
+
+	affector Rotator
+	{
+		rotation_speed_range_start	100
+		rotation_speed_range_end	200
+		rotation_range_start	0
+		rotation_range_end	360
+	}
+
+	affector ColourInterpolator
+	{
+		colour0	0 0 0 1
+		time0	0
+		colour1	0.333333 0.333333 0.333333 1
+		time1	0.1
+		colour2	0.290196 0.290196 0.290196 1
+		time2	0.4
+		colour3	0.207843 0.207843 0.207843 1
+		time3	0.6
+		colour4	0.121569 0.121569 0.121569 1
+		time4	0.8
+		colour5	0 0 0 1
+		time5	1
+	}
+
+	affector Scaler
+	{
+		rate	-0
+	}
+}
+
+particle_system Par-BloodBath_Lines
+{
+	quota	60
+	material	Particles/BloodDrop
+	particle_width	1
+	particle_height	4
+	cull_each	false
+	renderer	billboard
+	sorted	false
+	local_space	true
+	iteration_interval	0
+	nonvisible_update_timeout	0
+	billboard_type	oriented_self
+	billboard_origin	center
+	billboard_rotation_type	vertex
+	common_up_vector	0 1 0
+	point_rendering	false
+	accurate_facing	false
+
+	emitter Point
+	{
+		angle	180
+		colour	0 0 0 1
+		colour_range_start	0 0 0 1
+		colour_range_end	0 0 0 1
+		direction	0 1 0
+		emission_rate	60
+		position	0 0 0
+		velocity	10
+		velocity_min	10
+		velocity_max	20
+		time_to_live	0.2
+		time_to_live_min	0.2
+		time_to_live_max	0.4
+		duration	0
+		duration_min	0
+		duration_max	0
+		repeat_delay	0
+		repeat_delay_min	0
+		repeat_delay_max	0
+	}
+
+	affector ColourInterpolator
+	{
+		colour0	0 0 0 1
+		time0	0
+		colour1	1 0 0.501961 1
+		time1	0.2
+		colour2	1 0 0.501961 1
+		time2	0.4
+		colour3	1 0 0.501961 1
+		time3	0.6
+		colour4	1 0 0.25098 1
+		time4	0.8
+		colour5	0 0 0 1
+		time5	1
+	}
+
+	affector Rotator
+	{
+		rotation_speed_range_start	0
+		rotation_speed_range_end	0
+		rotation_range_start	0
+		rotation_range_end	0
+	}
+
+	affector Scaler
+	{
+		rate	-2
+	}
+}
+
+particle_system Par-BloodBath_Ring
+{
+	quota	1000
+	material	Particles/Lightning3
+	particle_width	20
+	particle_height	20
+	cull_each	false
+	renderer	billboard
+	sorted	false
+	local_space	false
+	iteration_interval	0
+	nonvisible_update_timeout	0
+	billboard_type	point
+	billboard_origin	center
+	billboard_rotation_type	vertex
+	common_up_vector	0 1 0
+	point_rendering	false
+	accurate_facing	false
+
+	emitter Ring
+	{
+		angle	54
+		colour	0 0 0 1
+		colour_range_start	0 0 0 1
+		colour_range_end	0 0 0 1
+		direction	0 1 0
+		emission_rate	1000
+		position	0 0 0
+		velocity	20
+		velocity_min	20
+		velocity_max	20
+		time_to_live	0.3
+		time_to_live_min	0.3
+		time_to_live_max	0.8
+		duration	0
+		duration_min	0
+		duration_max	0
+		repeat_delay	0
+		repeat_delay_min	0
+		repeat_delay_max	0
+		width	300
+		height	300
+		depth	0
+		inner_width	0.95
+		inner_height	0.95
+	}
+
+	affector ColourInterpolator
+	{
+		colour0	0 0 0 1
+		time0	0
+		colour1	0.7501961 0 0.15098 1
+		time1	0.2
+		colour2	0.7501961 0 0.150196 1
+		time2	0.4
+		colour3	0.7501961 0 1 1
+		time3	0.6
+		colour4	0.7501961 0 0.25098 1
+		time4	0.8
+		colour5	0 0 0 1
+		time5	1
+	}
+
+	affector Rotator
+	{
+		rotation_speed_range_start	100
+		rotation_speed_range_end	100
+		rotation_range_start	0
+		rotation_range_end	360
+	}
+}
+
+particle_system Par-BloodBath_Explosion
+{
+	quota	500
+	material	Particles/Bloodball
+	particle_width	2
+	particle_height	2
+	cull_each	false
+	renderer	billboard
+	sorted	false
+	local_space	true
+	iteration_interval	0
+	nonvisible_update_timeout	0
+	billboard_type	point
+	billboard_origin	center
+	billboard_rotation_type	vertex
+	common_up_vector	0 1 0
+	point_rendering	false
+	accurate_facing	false
+
+	emitter Ellipsoid
+	{
+		angle	180
+		colour	1 1 1 1
+		colour_range_start	1 1 1 1
+		colour_range_end	1 1 1 1
+		direction	0 -1 0
+		emission_rate	70
+		position	0 0 0
+		velocity	0
+		velocity_min	0
+		velocity_max	0
+		time_to_live	0.3
+		time_to_live_min	0.3
+		time_to_live_max	0.3
+		duration	0
+		duration_min	0
+		duration_max	0
+		repeat_delay	0
+		repeat_delay_min	0
+		repeat_delay_max	0
+		width	5
+		height	5
+		depth	5
+	}
+
+	affector Scaler
+	{
+		rate	50
+	}
+
+	affector Rotator
+	{
+		rotation_speed_range_start	200
+		rotation_speed_range_end	200
+		rotation_range_start	360
+		rotation_range_end	0
+	}
+
+	affector ColourInterpolator
+	{
+		colour0	0.501961 0.501961 0.501961 1
+		time0	0
+		colour1	0.501961 0.501961 0.501961 1
+		time1	0.2
+		colour2	0.501961 0.501961 0.501961 1
+		time2	0.4
+		colour3	0.501961 0.501961 0.501961 1
+		time3	0.6
+		colour4	0.227451 0.227451 0.227451 1
+		time4	0.8
+		colour5	0 0 0 1
+		time5	1
+	}
+}
+
+particle_system Par-BloodBath_Explosion2
+{
+	quota	60
+	material	Particles/BloodDrop
+	particle_width	0.8
+	particle_height	2
+	cull_each	false
+	renderer	billboard
+	sorted	false
+	local_space	false
+	iteration_interval	0
+	nonvisible_update_timeout	0
+	billboard_type	oriented_self
+	billboard_origin	center
+	billboard_rotation_type	vertex
+	common_up_vector	0 1 0
+	point_rendering	false
+	accurate_facing	false
+
+	emitter Box
+	{
+		angle	180
+		colour	1 1 1 1
+		colour_range_start	1 1 1 1
+		colour_range_end	1 1 1 1
+		direction	0 1 0
+		emission_rate	10000
+		position	0 0 0
+		velocity	20
+		velocity_min	20
+		velocity_max	25
+		time_to_live	0.5
+		time_to_live_min	0.5
+		time_to_live_max	0.5
+		duration	0.1
+		duration_min	0.1
+		duration_max	0.1
+		repeat_delay	0
+		repeat_delay_min	0
+		repeat_delay_max	0
+		width	1
+		height	1
+		depth	1
+	}
+
+	affector LinearForce
+	{
+		force_vector	0 -10 0
+		force_application	add
+	}
+
+	affector ColourInterpolator
+	{
+		colour0	1 0 0.501961 1
+		time0	0
+		colour1	1 0 0.501961 1
+		time1	0.2
+		colour2	1 0 0.501961 1
+		time2	0.4
+		colour3	1 0 0.501961 1
+		time3	0.6
+		colour4	0.501961 0 0.25098 1
+		time4	0.8
+		colour5	0 0 0 1
+		time5	1
+	}
+}
+
+particle_system Par-ThousandBats_Ring
+{
+	quota	500
+	material	Particles/Bat
+	particle_width	4
+	particle_height	4
+	cull_each	false
+	renderer	billboard
+	sorted	false
+	local_space	true
+	iteration_interval	0
+	nonvisible_update_timeout	0
+	billboard_type	oriented_self
+	billboard_origin	center
+	billboard_rotation_type	texcoord
+	common_up_vector	0 1 0
+	point_rendering	false
+	accurate_facing	false
+
+	emitter Ring
+	{
+		angle	84
+		colour	1 1 1 1
+		colour_range_start	1 1 1 1
+		colour_range_end	1 1 1 1
+		direction	0 1 0
+		emission_rate	200
+		position	0 5 0
+		velocity	10
+		velocity_min	10
+		velocity_max	20
+		time_to_live	1
+		time_to_live_min	1.0
+		time_to_live_max	2.5
+		duration	0
+		duration_min	0
+		duration_max	0
+		repeat_delay	0
+		repeat_delay_min	0
+		repeat_delay_max	0
+		width	300
+		height	300
+		depth	0
+		inner_width	0.25
+		inner_height	0.25
+	}
+
+	affector DirectionRandomiser
+	{
+		randomness	20
+		scope	1
+		keep_velocity	true
+	}
+
+	affector ColourFader
+	{
+		red	0
+		green	0
+		blue	0
+		alpha	-0.1
+	}
+
+}
+
+particle_system Par-ThousandBats_Particles
+{
+	quota	40
+	material	Particles/Bat
+	particle_width	5
+	particle_height	5
+	cull_each	false
+	renderer	billboard
+	sorted	false
+	local_space	true
+	iteration_interval	0
+	nonvisible_update_timeout	0
+	billboard_type	oriented_self
+	billboard_origin	center
+	billboard_rotation_type	texcoord
+	common_up_vector	0 1 0
+	point_rendering	false
+	accurate_facing	false
+
+	emitter Ellipsoid
+	{
+		angle	180
+		colour	1 1 1 1
+		colour_range_start	1 1 1 1
+		colour_range_end	1 1 1 1
+		direction	1 0 0
+		emission_rate	20
+		position	0 0 0
+		velocity	7
+		velocity_min	2
+		velocity_max	7
+		time_to_live	0.5
+		time_to_live_min	0.5
+		time_to_live_max	5
+		duration	0
+		duration_min	0
+		duration_max	0
+		repeat_delay	0
+		repeat_delay_min	0
+		repeat_delay_max	0
+		width	4
+		height	4
+		depth	4
+	}
+
+	affector ColourFader
+	{
+		red	0
+		green	0
+		blue	0
+		alpha	-0.05
+	}
+
+	affector DirectionRandomiser
+	{
+		randomness	50
+		scope	1
+		keep_velocity	true
+	}
+
+	affector Scaler
+	{
+		rate	0
+	}
+}
+
+
+particle_system Par-ThousandBats_ParticlesSmall
+{
+	quota	20
+	material	Particles/Bat
+	particle_width	1
+	particle_height	1
+	cull_each	false
+	renderer	billboard
+	sorted	false
+	local_space	true
+	iteration_interval	0
+	nonvisible_update_timeout	0
+	billboard_type	oriented_self
+	billboard_origin	center
+	billboard_rotation_type	texcoord
+	common_up_vector	0 1 0
+	point_rendering	false
+	accurate_facing	false
+
+	emitter Ellipsoid
+	{
+		angle	180
+		colour	1 1 1 1
+		colour_range_start	1 1 1 1
+		colour_range_end	1 1 1 1
+		direction	1 0 0
+		emission_rate	20
+		position	0 0 0
+		velocity	2
+		velocity_min	2
+		velocity_max	3
+		time_to_live	0.5
+		time_to_live_min	0.5
+		time_to_live_max	5
+		duration	0
+		duration_min	0
+		duration_max	0
+		repeat_delay	0
+		repeat_delay_min	0
+		repeat_delay_max	0
+		width	4
+		height	4
+		depth	4
+	}
+
+	affector ColourFader
+	{
+		red	0
+		green	0
+		blue	0
+		alpha	-0.05
+	}
+
+	affector DirectionRandomiser
+	{
+		randomness	50
+		scope	1
+		keep_velocity	true
+	}
+
+	affector Scaler
+	{
+		rate	0
+	}
+}
+
+particle_system Par-ThousandBats_Hit
+{
+	quota	45
+	material	Particles/Blooddrop
+	particle_width	5
+	particle_height	5
+	cull_each	false
+	renderer	billboard
+	sorted	true
+	local_space	false
+	iteration_interval	0
+	nonvisible_update_timeout	0
+	billboard_type	point
+	billboard_origin	center
+	billboard_rotation_type	vertex
+	common_up_vector	0 1 0
+	point_rendering	false
+	accurate_facing	false
+
+	emitter Ring
+	{
+		angle	122
+		colour	1 1 1 1
+		colour_range_start	1 1 1 1
+		colour_range_end	1 1 1 1
+		direction	0 -1 0
+		emission_rate	10
+		position	0 7 0
+		velocity	10
+		velocity_min	10
+		velocity_max	15
+		time_to_live	0.75
+		time_to_live_min	0.75
+		time_to_live_max	0.75
+		duration	3
+		duration_min	3
+		duration_max	3
+		repeat_delay	0
+		repeat_delay_min	0
+		repeat_delay_max	0
+		width	15
+		height	15
+		depth	15
+		inner_width	0.75
+		inner_height	0.75
+	}
+
+	affector Scaler
+	{
+		rate	-10
+	}
+
+	affector LinearForce
+	{
+		force_vector	0 -10 0
+		force_application	add
+	}
+}
+
+particle_system Par-ThousandBats_Burst
+{
+	quota	200
+	material	Particles/Blooddrop
+	particle_width	5
+	particle_height	5
+	cull_each	false
+	renderer	billboard
+	sorted	false
+	local_space	false
+	iteration_interval	0
+	nonvisible_update_timeout	0
+	billboard_type	point
+	billboard_origin	center
+	billboard_rotation_type	vertex
+	common_up_vector	0 1 0
+	point_rendering	false
+	accurate_facing	false
+
+	emitter Point
+	{
+		angle	90
+		colour	1 0.501961 0 1
+		colour_range_start	1 1 1 1
+		colour_range_end	1 1 1 1
+		direction	-1 0 0
+		emission_rate	300
+		position	0 0 0
+		velocity	20
+		velocity_min	20
+		velocity_max	30
+		time_to_live	0.3
+		time_to_live_min	0.3
+		time_to_live_max	0.4
+		duration	0.1
+		duration_min	0.1
+		duration_max	0.1
+		repeat_delay	0
+		repeat_delay_min	0
+		repeat_delay_max	0
+	}
+
+	affector Scaler
+	{
+		rate	-10
+	}
+
+	affector Rotator
+	{
+		rotation_speed_range_start	300
+		rotation_speed_range_end	300
+		rotation_range_start	0
+		rotation_range_end	360
+	}
+
+	affector LinearForce
+	{
+		force_vector	20 -60 0
+		force_application	add
+	}
+}
+
+particle_system Par-ThousandBats_Hand
+{
+	quota	10
+	material	Particles/BloodDrop
+	particle_width	1
+	particle_height	1
+	cull_each	false
+	renderer	billboard
+	sorted	false
+	local_space	false
+	iteration_interval	0
+	nonvisible_update_timeout	0
+	billboard_type	point
+	billboard_origin	center
+	billboard_rotation_type	vertex
+	common_up_vector	0 1 0.04
+	point_rendering	false
+	accurate_facing	false
+
+	emitter Point
+	{
+		angle	180
+		colour	1 1 1 1
+		colour_range_start	1 1 1 1
+		colour_range_end	1 1 1 1
+		direction	1 0 0
+		emission_rate	10
+		position	0 0 0
+		velocity	4
+		velocity_min	4
+		velocity_max	5
+		time_to_live	1
+		time_to_live_min	1
+		time_to_live_max	1
+		duration	0
+		duration_min	0
+		duration_max	0
+		repeat_delay	0
+		repeat_delay_min	0
+		repeat_delay_max	0
+	}
+
+	affector ColourFader
+	{
+		red	0
+		green	0
+		blue	0
+		alpha	-0.05
 	}
 }
 
