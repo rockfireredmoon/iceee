@@ -104,6 +104,7 @@ valkal2_full_health_count <- 0;
 lit_candelabras <- [];
 
 // Debug
+no_adds <- false;
 debug <- false;
 manual_trigger <- false;
 
@@ -187,6 +188,10 @@ function attack_closest(cid) {
 /*  Helper function to Spawn Valkals adds. Each one will be instructed to run to a defined place,
    then locate the nearest player and attack them (or anyone who aggros them on the way). */
 function spawn_adds(max, adds_list) {
+	if(no_adds) {		
+		inst.info("Simulate spawn of " + max + " of adds [adds disabled to aid testing]");
+		return;
+	}
 
     max = max.tointeger();
 	if(debug)
