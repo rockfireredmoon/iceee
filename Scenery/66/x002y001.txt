@@ -726,7 +726,7 @@ Scale=1,1,1
 ID=1127178
 Asset=Effects#Par-Flame_Blue-Emitter
 Name=Untitled
-Pos=5093.44,610.7,2874.58
+Pos=5093.44,610.7,2885.22
 Orient=0,0,0,1
 Scale=1.5,1.5,1.5
 
@@ -734,7 +734,7 @@ Scale=1.5,1.5,1.5
 ID=1127179
 Asset=Effects#Par-Flame_Blue-Emitter
 Name=Untitled
-Pos=5091.3,610.7,2754.93
+Pos=5091.3,610.7,2762.92
 Orient=0,0,0,1
 Scale=1.5,1.5,1.5
 
@@ -965,4 +965,13 @@ Scale=1,1,1
 spawnPackage=VBloodkeep_Palatine
 maxActive=0
 sequential=1
+
+[ENTRY]
+ID=1154516
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=5355.23,535.051,2438.67
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#F16082
 
