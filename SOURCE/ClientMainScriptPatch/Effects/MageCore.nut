@@ -3151,3 +3151,328 @@ class this.EffectDef.BringingDownTheHouseHit extends this.EffectDef.TemplateBasi
 	}
 
 }
+
+class this.EffectDef.BloodBath extends this.EffectDef.TemplateWarmup
+{
+	static mEffectName = "BloodBath";
+	mLoopSound = "Sound-Ability-Nefritarisaura_Warmup.ogg";
+	mDuration = 10.0;
+	mCount = 0.0;
+	function onStart( ... )
+	{
+		if (!this._sourceCheck())
+		{
+			return;
+		}
+
+		local warmup = this.createGroup("Warmup", this.getSource());
+		warmup.add("ParticleSystem", {
+			particleSystem = "Par-BloodBath_Hand",
+			emitterPoint = "casting"
+		});
+		warmup.add("ParticleSystem", {
+			particleSystem = "Par-BloodBath_Lines",
+			emitterPoint = "casting"
+		});
+		warmup.add("FFAnimation", {
+			animation = "Magic_Spell_Channel",
+			loop = true
+		});
+		this.onLoopSound();
+		local aoe = this.createGroup("AOE");
+		this._detachGroup(aoe, this.getSource().getNode().getWorldPosition());
+		aoe.add("Projector", {
+			duration = 10000,
+			fadeIn = 500,
+			fadeOut = 500,
+			target = aoe.getObject(),
+			textureName = "BloodBath.png",
+			orthoWidth = 300,
+			orthoHeight = 300,
+			far = 150,
+			offset = this.Vector3(0, 60, 0),
+			additive = true
+		});
+		aoe.add("ParticleSystem", {
+			particleSystem = "Par-BloodBath_Ring",
+			emitterPoint = "node"
+		});
+		this.fireIn(this.mMaxWarmupTime, "onAbilityCancel");
+		this.onHit();
+	}
+
+	function onHit( ... )
+	{
+		if (this.mDuration <= this.mCount)
+		{
+			this.onAbilityCancel();
+			return;
+		}
+
+		this._cueSecondary("BloodBathHit");
+		this.mCount++;
+		this.fireIn(1.0, "onHit");
+	}
+
+	function onAbilityCancel( ... )
+	{
+		this.mCount = this.mDuration;
+		::EffectDef.TemplateWarmup.onAbilityCancel();
+	}
+
+}
+
+class this.EffectDef.BloodBathHit extends this.EffectDef.TemplateBasic
+{
+	static mEffectName = "BloodBathHit";
+	mSound = "Sound-Ability-Nefritarisaura_Effect.ogg";
+	function onStart( ... )
+	{
+		if (!this._sourceCheck())
+		{
+			return;
+		}
+
+		local hit = this.createGroup("Hit", this.getSource());
+		hit.add("FFAnimation", {
+			animation = "$HIT$"
+		});
+		hit.add("ParticleSystem", {
+			particleSystem = "Par-BloodBath_Explosion",
+			emitterPoint = "spell_target"
+		});
+		hit.add("ParticleSystem", {
+			particleSystem = "Par-BloodBath_Explosion2",
+			emitterPoint = "spell_target"
+		});
+		this.onSound();
+		this.fireIn(0.5, "onDone");
+	}
+
+}
+
+class this.EffectDef.ThousandBatsWarmup extends this.EffectDef.TemplateWarmup
+{
+	static mEffectName = "ThousandBats";
+	mLoopSound = "Sound-Ability-Swarm_Warmup.ogg";
+	function onStart( ... )
+	{
+		if (!this._sourceCheck())
+		{
+			return;
+		}
+
+		local warmup = this.createGroup("Warmup", this.getSource());
+		warmup.add("ParticleSystem", {
+			particleSystem = "Par-ThousandBats_Hand",
+			emitterPoint = "casting"
+		});
+		warmup.add("FFAnimation", {
+			animation = "Magic_Casting",
+			loop = true
+		});
+		this.onLoopSound();
+		this.fireIn(this.mMaxWarmupTime, "onAbilityCancel");
+	}
+
+}
+
+class this.EffectDef.ThousandBats extends this.EffectDef.TemplateBasic
+{
+	static mEffectName = "ThousandBats";
+	mDuration = 8.0;
+	mSound = "Sound-Ability-ThousandBats_Effect.ogg";
+	mScreamSound = "Sound-Ability-Healingscream_Effect.ogg";
+	
+	function onStart( ... )
+	{
+		if (!this._positionalCheck())
+		{
+			return;
+		}
+
+		this.add("Dummy");
+		this.mEffectsPackage = this._getEffectsPackage(this.getSource());
+
+		if (this.mEffectsPackage == null)
+		{
+			return;
+		}
+
+		if (this.mEffectsPackage == "Biped")
+		{
+			this.onBiped();
+		}
+		else
+		{
+			this.onCreature();
+		}
+	}
+
+	function onBiped( ... )
+	{
+		local cast = this.createGroup("Cast", this.getSource());
+		cast.add("FFAnimation", {
+			animation = "Victory"
+		});
+		this.onParticles();
+	}
+
+	function onCreature( ... )
+	{
+		local cast = this.createGroup("Cast", this.getSource());
+
+		if (this.mEffectsPackage == "Horde-Shroomie")
+		{
+			cast.add("FFAnimation", {
+				animation = "Attack"
+			});
+			this.fireIn(0.60000002, "onStopCastFire");
+		}
+		else if (this.mEffectsPackage == "Horde-Vulture" || this.mEffectsPackage == "Horde-Behemoth" || this.mEffectsPackage == "Horde-Wolf" || this.mEffectsPackage == "Horde-Vampire")
+		{
+			cast.add("FFAnimation", {
+				animation = "Attack2"
+			});
+			this.fireIn(0.60000002, "onStopCastFire");
+		}
+		else if (this.mEffectsPackage == "Horde-Lion" || this.mEffectsPackage == "Horde-Snail" || this.mEffectsPackage == "Horde-Chicken" || this.mEffectsPackage == "Horde-Revenant" || this.mEffectsPackage == "Horde-Salamander" || this.mEffectsPackage == "Horde-Spibear" || this.mEffectsPackage == "Horde-Vespin")
+		{
+			cast.add("FFAnimation", {
+				animation = "Attack1"
+			});
+			this.fireIn(0.5, "onStopCastFire");
+		}
+		else if (this.mEffectsPackage == "Horde-Spider")
+		{
+			cast.add("FFAnimation", {
+				animation = "Attack1"
+			});
+			this.fireIn(0.69999999, "onStopCastFire");
+		}
+		else if (this.mEffectsPackage == "Horde-Stag")
+		{
+			cast.add("FFAnimation", {
+				animation = "Attack1"
+			});
+			this.fireIn(0.5, "onStopCastFire");
+		}
+		else if (this.mEffectsPackage == "Horde-Boar" || this.mEffectsPackage == "Horde-Biter")
+		{
+			cast.add("FFAnimation", {
+				animation = "RearHit"
+			});
+			this.fireIn(0.5, "onStopCastFire");
+		}
+		else if (this.mEffectsPackage == "Horde-Rabbit" || this.mEffectsPackage == "Horde-Treekin")
+		{
+			this.fireIn(0.5, "onStopCastFire");
+		}
+		else
+		{
+			cast.add("FFAnimation", {
+				animation = "Attack1"
+			});
+			this.fireIn(0.60000002, "onStopCastFire");
+		}
+
+		this.onParticles();
+	}
+
+	function onParticles( ... )
+	{
+		local particles = this.createGroup("Particles", this.getSource());
+		particles.add("ParticleSystem", {
+			particleSystem = "Par-ThousandBats_Hand",
+			emitterPoint = "right_hand"
+		});
+		particles.add("ParticleSystem", {
+			particleSystem = "Par-ThousandBats_Hand",
+			emitterPoint = "horde_caster"
+		});
+
+		for( local i = 1; i <= this.mDuration; i++ )
+		{
+			local time = i * 1.0;
+			this.fireIn(time, "onSecondaryHit");
+		}
+
+		this.fireIn(0.5, "onHitFinal");
+		this.fireIn(0.69999999, "onBurst");
+		this.fireIn(this.mDuration + 0.5, "onDone");
+	}
+
+	function onBurst( ... )
+	{
+		this.get("Particles").finish();
+	}
+
+	function onHitFinal( ... )
+	{
+		local aoe = this.createGroup("AOE");
+		this._detachGroup(aoe, this.getPositionalTarget());
+		aoe.add("Projector", {
+			duration = 10000,
+			fadeIn = 500,
+			fadeOut = 500,
+			target = aoe.getObject(),
+			textureName = "ThousandBats.png",
+			orthoWidth = 300,
+			orthoHeight = 300,
+			far = 150,
+			offset = this.Vector3(0, 60, 0),
+			additive = true
+		});
+		aoe.add("ParticleSystem", {
+			particleSystem = "Par-ThousandBats_Ring",
+			emitterPoint = "node"
+		});
+		aoe.add("ParticleSystem", {
+			particleSystem = "Par-BloodBath_Ring",
+			emitterPoint = "node"
+		});
+		local sound = this.createGroup("Sound");
+		this._detachGroup(sound, this.getPositionalTarget());
+		sound.add("Sound", {
+			sound = this.mSound
+		});
+		sound.add("Scream", {
+			sound = this.mScreamSound
+		});
+	}
+
+	function onSecondaryHit( ... )
+	{
+		this._cueSecondary("ThousandBatsHit");
+	}
+
+}
+
+class this.EffectDef.ThousandBatsHit extends this.EffectDef.TemplateBasic
+{
+	static mEffectName = "ThousandBatsHit";
+	mSound = "Sound-Ability-Soulburst_Effect.ogg";
+	function onStart( ... )
+	{
+		if (!this._sourceCheck())
+		{
+			return;
+		}
+
+		local hit = this.createGroup("Hit", this.getSource());
+		hit.add("FFAnimation", {
+			animation = "$HIT$"
+		});
+		hit.add("ParticleSystem", {
+			particleSystem = "Par-ThousandBats_Hit",
+			emitterPoint = "spell_target"
+		});
+		hit.add("ParticleSystem", {
+			particleSystem = "Par-Swarm_Burst",
+			emitterPoint = "spell_target"
+		});
+		this.onSound();
+		this.fireIn(0.5, "onDone");
+	}
+
+}
