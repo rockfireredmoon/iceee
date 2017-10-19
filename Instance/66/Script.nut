@@ -36,7 +36,7 @@ const HEALING_SCREAM = 24009;
 const SELF_STUN = 24008;
 const TRIBUTE = 24005;
 const BRINGING_DOWN_THE_HOUSE = 24006;
-const VALKALS_INFERNO = 24010;
+const THOUSAND_BATS = 24012;
 
 // Creature Definition IDs
 const CDEF_VALKAL1 = 1385;
@@ -53,7 +53,8 @@ loc_chamber_platform_front <- Point(5821, 1936);
 loc_platform_front <- Point(4141, 2790);
 loc_room_centre <- Point(3971, 2790);
 loc_chamber_room_centre <- Point(5825, 2120);
-loc_platform_rot <- 4;
+loc_platform_rot <- 192;
+loc_chamber_platform_rot <- 0;
 
 // Adds
 
@@ -302,7 +303,7 @@ function valkal_2_heal_sequence() {
 	spawn_adds(valkal_2_adds.len() / 4, valkal_2_adds);
     disengage_valkal(cid_valkal2);
 	inst.walk_then(cid_valkal2, loc_chamber_platform_centre, -1, CREATURE_JOG_SPEED, 0, function(res) {
-        inst.rotate_creature(cid_valkal2, loc_platform_rot);
+        inst.rotate_creature(cid_valkal2, loc_chamber_platform_rot);
         heal(cid_valkal2, 95, valkal_2_engage); 
 	});
 }
@@ -422,14 +423,14 @@ function bringing_down_the_house() {
     });
 }
 
-/* Starts the Valkal's Inferno sequence. Runs Valkal to just in front of the platform to
+/* Starts the Valkal's desperation sequence. Runs Valkal to just in front of the platform to
    cast on the the centre of the room */
-function valkals_inferno() {
+function valkals_desperation() {
     disengage_valkal(cid_valkal1);
 	inst.walk_then(cid_valkal1, loc_platform_front, 192, CREATURE_JOG_SPEED, 0, function(res) {
-        if(!inst.creature_use(cid_valkal1, VALKALS_INFERNO)) {
+        if(!inst.creature_use(cid_valkal1, THOUSAND_BATS)) {
         	if(debug)
-            	inst.info("Failed to inferno");
+            	inst.info("Failed to THOUSAND_BATS");
             valkal_1_engage();
         }
         else {
@@ -497,9 +498,9 @@ function valkal1_health() {
 	    }
 	    else if(health <= 15 && phase < 8) {
 	        if(debug)
-	        	inst.info("Inferno");
+	        	inst.info("Desperation");
 	        phase = 8;
-			valkals_inferno();
+			valkals_desperation();
 			return;
 	    }
 	    else if(health <= 30 && phase < 7) {

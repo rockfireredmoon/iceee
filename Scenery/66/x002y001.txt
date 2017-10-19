@@ -814,6 +814,22 @@ Orient=0,0,0,1
 Scale=8,8,8
 
 [ENTRY]
+ID=1150650
+Asset=Prop-Blood_Pool#Prop-Blood_Pool
+Name=Untitled
+Pos=5672.39,531.483,2018.77
+Orient=0,0.257081,0,0.96639
+Scale=5,5,5
+
+[ENTRY]
+ID=1150651
+Asset=Prop-Vampire1#Prop-Vampire_Fountain_Blood
+Name=Untitled
+Pos=5681.18,523.799,2019.86
+Orient=0,0.548024,0,0.836463
+Scale=5,5,5
+
+[ENTRY]
 ID=1150654
 Asset=Prop-Instance_Entrance#Prop-Instance_Entrance
 Name=Untitled
@@ -965,4 +981,12 @@ Scale=1,1,1
 spawnPackage=VBloodkeep_Palatine
 maxActive=0
 sequential=1
+
+[ENTRY]
+ID=1041198756
+Asset=Prop-Vampire_Fountain
+Name=
+Pos=5673.74,526.986,2020.37
+Orient=0,0.257081,0,0.96639
+Scale=5,5,5
 
