@@ -2,7 +2,8 @@
 TITLE=Hollow Tree Page Fragment
 
 [PAGE]
-TEXT=<i>(It appears to be part of a page torn from someone's journal.)</i><br/><br/>
-Progress is slow yet going well. Sometimes we think Isa worries too much. If only she were like Osi. Then again, Isa is somewhat of a slave driver. Gate should be done in a few we...<br/>
-<br/>
-<i>(the rest of the message is missing)</i>
+TEXT=(It appears to be part of a page torn from someone's journal.)
+
+Progress is slow yet going well. Sometimes we think Isa worries too much. If only she were like Osi. Then again, Isa is somewhat of a slave driver. Gate should be done in a few we...
+
+(the rest of the message is missing)
