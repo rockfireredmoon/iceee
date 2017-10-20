@@ -75616,3 +75616,27 @@ creature_category=Inanimate
 ai_package=nothing
 defHints=6144
 ExtraData=item=1500003
+
+[ENTRY]
+ID=3492
+strength=130
+dexterity=130
+constitution=110
+psyche=130
+spirit=130
+damage_resist_melee=2500
+damage_resist_fire=2500
+damage_resist_frost=2500
+damage_resist_mystic=2500
+damage_resist_death=2500
+casting_setback_chance=1
+channeling_break_chance=1
+appearance=n4:{["sk"]={["skin"]="3f200e",["accent"]="a66570",["eye"]="d2d5ff",["armor"]="534741",["hair"]="34353f",["teeth"]="8f9281"},["c"]="Horde-Vampire_Mehirim",["sz"]="2.2"}
+level=50
+display_name=Sabian
+sub_name=The Devastating
+profession=1
+creature_category=Unliving
+rarity=1
+base_damage_melee=100
+ai_package=custom_heathendel_knight40

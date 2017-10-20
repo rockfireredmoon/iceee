@@ -371,10 +371,10 @@ ID=30
 NAME=Monastery Cloister
 ENVIRONMENTTYPE=Dungeon1
 ShardName=Anglorum 1
-WarpName=Monastary Cloister
-DefLoc=3415,170,538
+WarpName=Monastery Cloister
 Instance=1
 MaxLeashRange=375
+DefLoc=3415,170,538
 
 [ENTRY]
 ID=31
@@ -483,14 +483,14 @@ MaxLeashRange=375
 
 [ENTRY]
 ID=41
-NAME=Rupunzels Tower
+NAME=Rapunzels Tower
 ENVIRONMENTTYPE=Bremen
 ShardName=Europe 1
-WarpName=Rupunzels Tower
-DefLoc=719,50,849
+WarpName=Rapunzels Tower
 Instance=1
-PageSize=1000
 MaxLeashRange=375
+DefLoc=719,50,849
+PageSize=1000
 
 [ENTRY]
 ID=42

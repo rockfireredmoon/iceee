@@ -2,18 +2,26 @@
 TITLE=Jod's Journal
 
 [PAGE]
-TEXT=Coastal Cave Expedition – Day Fifteen:
-
-
-
-Gyta and I began our journey three days past as requested by the Guild. Surely the rumors regarding that old cave by the coast are wrong. Either way, we are both adventurers and the prospect that a new opening has been discovered is too tempting to ignore. Because the Mayor himself sent us personally, the two of us will do our utmost to investigate this new section of the cave. We should reach the cave by tomorrow.
-[PAGE]
-TEXT=Coastal Cave Expedition – Day Sixteen:
-
-I am completely at a loss. The ruins by the coast have been overrun by strange and hideous creatures! Worse, the entire countryside along the coast has become infested with these horrible abominations that can only be called 'wolf' in someone's worst nightmares. Gyta and I have made camp by the cave entrance and will explore it on the morrow. It took us the entire day just to fight our way to the coast. If that isn't enough, there's this bloodcurdling howl that has been emanating from within the cave itself. Hopefully we can get to sleep tonight…
-[PAGE]
 TEXT=Coastal Cave Expedition - Day Fifteen:
 
 
 
 Gyta and I began our journey three days past as requested by the Guild. Surely the rumors regarding that old cave by the coast are wrong. Either way, we are both adventurers and the prospect that a new opening has been discovered is too tempting to ignore. Because the Mayor himself sent us personally, the two of us will do our utmost to investigate this new section of the cave. We should reach the cave by tomorrow.
+[PAGE]
+TEXT=Coastal Cave Expedition - Day Sixteen:
+
+I am completely at a loss. The ruins by the coast have been overrun by strange and hideous creatures! Worse, the entire countryside along the coast has become infested with these horrible abominations that can only be called 'wolf' in someone's worst nightmares. Gyta and I have made camp by the cave entrance and will explore it on the morrow. It took us the entire day just to fight our way to the coast. If that isn't enough, there's this bloodcurdling howl that has been emanating from within the cave itself. Hopefully we can get to sleep tonight...
+[PAGE]
+TEXT=Coastal Cave Expedition - Day Seventeen:
+
+ 
+
+Gyta and I are uneasy. We were awakened by that nightmarish howl that we heard coming from inside the cave last night. After breaking camp, we ventured inside the cave. To say that the rumors were true would be a gross understatement. The new corridors look like the entire ground was set aflame and melted. The fell creatures we encountered on the surface are numerous here along with new ones just as terrible.
+
+ 
+
+Both of us are on edge as we explore this place. That horrible howl grows ever louder as we venture deeper into these new passages. We have just entered a large chamber that seems to be the cave's new terminus and Gyta is wanting me to stop writing so I'll stop here while we explore. The source of that howl must be close...
+
+ 
+
+(the bottom of the page is spattered with blood)
