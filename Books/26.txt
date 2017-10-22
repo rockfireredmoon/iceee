@@ -1,5 +1,5 @@
 [BOOK]
-TITLE=Zhushi’s Lair Parchment - Zhushi – A Study
+TITLE=Zhushi's Lair Parchment - Zhushi - A Study
 
 [PAGE]
 TEXT=Although Zhushi has been dubbed the 'Grandweaver' by many, it is believed this centuries old arachnid is the matriarch of all of Deadwood's spider populations. Contrary to popular belief, though, it is quite likely that her spawn has not made it too far beyond Deadwood's borders.

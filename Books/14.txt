@@ -1,5 +1,5 @@
 [BOOK]
-TITLE=Tower Spellbook Primer – Beginner’s Curriculum
+TITLE=Tower Spellbook Primer - Beginner's Curriculum
 
 [PAGE]
 TEXT=This Spellbook contains the most basic spells of Arcane magic. Handy for the Apprentice Mage just starting out their time at The Tower.

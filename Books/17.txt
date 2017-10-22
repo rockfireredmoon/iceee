@@ -1,5 +1,5 @@
 [BOOK]
-TITLE=Witchdoctor’s Prescription Notes
+TITLE=Witchdoctor's Prescription Notes
 
 [PAGE]
 TEXT=It looks to be the recipe for an herbal remedy of some sort.
