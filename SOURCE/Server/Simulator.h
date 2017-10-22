@@ -429,7 +429,6 @@ public:
 	void SendSetAvatar(int CreatureID);
 	void SendZoneInfo(void);
 	const char * GetTimeOfDay(void);
-	void SendTimeOfDay(const char *envType);
 	void CheckMapUpdate(bool force);
 	void UpdateSocialEntry(bool newOnlineStatus, bool onlyUpdateFriendList);
 	void BroadcastGuildChange(int guildDefID);

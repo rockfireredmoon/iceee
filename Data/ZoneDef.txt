@@ -743,7 +743,7 @@ MaxLeashRange=375
 [ENTRY]
 ID=66
 NAME=Valkals_Bloodkeep
-ENVIRONMENTTYPE=Dungeon1
+ENVIRONMENTTYPE=Bloodkeep
 ShardName=Europe 1
 WarpName=Valkals Bloodkeep
 Instance=1

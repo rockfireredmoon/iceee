@@ -839,6 +839,13 @@ void CreatureInstance :: Instantiate(void)
 	css.mod_casting_speed = ABGlobals::MINIMAL_FLOAT;
 
 	ApplyGlobalInstanceBuffs();
+
+	if(actInst != NULL && actInst->nutScriptPlayer != NULL && actInst->nutScriptPlayer->mActive) {
+		std::vector<ScriptCore::ScriptParam> parms;
+		parms.push_back(ScriptCore::ScriptParam(CreatureID));
+		parms.push_back(ScriptCore::ScriptParam(CreatureDefID));
+		actInst->nutScriptPlayer->JumpToLabel("on_spawn", parms);
+	}
 }
 
 int CreatureInstance :: GetMitigatedDamage(int damageAmount, int armorRating, int reductionMod)

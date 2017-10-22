@@ -115,6 +115,7 @@ namespace ScriptCore
 	NutDef::NutDef() {
 		mQueueEvents = true;
 		mFlags = 0;
+		mVMSize = 0;
 		queueCallStyle = 0;
 		queueExternalJumps = false;
 		mScriptIdleSpeed = 1;
@@ -352,6 +353,7 @@ namespace ScriptCore
 		mRunning = false;
 		mHalting = false;
 		mNextId = 1;
+		mCaller = 0;
 	}
 
 	NutPlayer::~NutPlayer() {
@@ -476,13 +478,21 @@ namespace ScriptCore
 				if(!idleSpeed.IsNull()) {
 					def->mScriptIdleSpeed = idleSpeed.Cast<int>();
 				}
+				Sqrat::Object vmSize = infoObject.GetSlot("vm_size");
+				if(!vmSize.IsNull()) {
+					def->mVMSize = vmSize.Cast<int>();
+				}
 				Sqrat::Object speed = infoObject.GetSlot("speed");
 				if(!speed.IsNull()) {
 					def->mScriptSpeed = Util::ClipInt(speed.Cast<int>(), 1, 100);
 				}
+
+				if(def->mVMSize != 0 && def->mVMSize != g_Config.SquirrelVMStackSize) {
+					vm->_stack.resize(def->mVMSize);
+					g_Log.AddMessageFormat("Squirrel script  %s has requested a different VM size (%d) to the default (%d), reinitializing. ", def->mSourceFile.c_str(), def->mVMSize, g_Config.SquirrelVMStackSize);
+				}
 			}
 		}
-
 
 
 //		if (SQ_SUCCEEDED(sqstd_dofile(vm, _SC(def->mSourceFile), SQFalse, SQTrue))) // also prints syntax errors if any

@@ -2288,10 +2288,9 @@ void SimulatorThread :: SendZoneInfo(void)
 		return;
 	}
 
-	int wpos = PrepExt_SendEnvironmentUpdateMsg(SendBuf, pld.CurrentZone, pld.zoneDef, creatureInst->CurrentX, creatureInst->CurrentZ);
+	int wpos = PrepExt_SendEnvironmentUpdateMsg(SendBuf, creatureInst->actInst, pld.CurrentZone, pld.zoneDef, creatureInst->CurrentX, creatureInst->CurrentZ);
+	wpos += PrepExt_SetTimeOfDay(&SendBuf[wpos], creatureInst->actInst->GetTimeOfDay().c_str());
 	AttemptSend(SendBuf, wpos);
-
-	SendTimeOfDay(NULL);
 }
 
 const char * SimulatorThread :: GetTimeOfDay(void)
@@ -2300,50 +2299,12 @@ const char * SimulatorThread :: GetTimeOfDay(void)
 
 	if(CheckPermissionSimple(Perm_Account, Permission_Troll))
 		return DEFAULT;
-
-	if(pld.zoneDef == NULL)
-		return DEFAULT;
-
-	//If the environment time string is null, attempt to find the active time for the
-	//current zone, if applicable.
-	if(pld.zoneDef->mEnvironmentCycle == true)
-		return g_EnvironmentCycleManager.GetCurrentTimeOfDay();
 	
-	return DEFAULT;
-}
-
-void SimulatorThread :: SendTimeOfDay(const char *envType)
-{
-	/*
-	if(CheckPermissionSimple(Perm_Account, Permission_Troll))
-		envType = "Day";
-
-	if(pld.zoneDef == NULL)
-		return;
-
-	//If the environment time string is null, attempt to find the active time for the
-	//current zone, if applicable.
-	if(envType == NULL)
-	{
-		if(pld.zoneDef->mEnvironmentCycle == false)
-			return;
-
-		envType = g_EnvironmentCycleManager.GetCurrentTimeOfDay();
+	if(creatureInst != NULL) {
+		return creatureInst->actInst->GetTimeOfDay().c_str();
 	}
 
-	if(envType == NULL)
-		return;
-	*/
-
-	//If not specified (NULL), get the current string from the zone.  If still NULL, there's nothing
-	//to send.
-	if(envType == NULL)
-		envType = GetTimeOfDay();
-	if(envType == NULL)
-		return;
-
-	int wpos = PrepExt_SendTimeOfDayMsg(SendBuf, envType);
-	AttemptSend(SendBuf, wpos);
+	return DEFAULT;
 }
 
 void SimulatorThread :: CheckMapUpdate(bool force)
@@ -2387,9 +2348,9 @@ void SimulatorThread :: CheckMapUpdate(bool force)
 		// EM - Added this for tile specific environments, the message always gets sent,
 		// hopefully the client will ignore it if the environment is already correct
 		if(creatureInst != NULL) {
-			std::string * tEnv = pld.zoneDef->GetTileEnvironment(creatureInst->CurrentX, creatureInst->CurrentZ);
-			if(strcmp(tEnv->c_str(), pld.CurrentEnv) != 0) {
-				g_Log.AddMessageFormat("Sending environment change to %s", tEnv->c_str());
+			std::string tEnv = creatureInst->actInst->GetEnvironment(creatureInst->CurrentX, creatureInst->CurrentZ);
+			if(strcmp(tEnv.c_str(), pld.CurrentEnv) != 0) {
+				g_Log.AddMessageFormat("Sending environment change to %s", tEnv.c_str());
 				SendSetMap();
 			}
 		}
@@ -3136,24 +3097,8 @@ void SimulatorThread :: SendSetMap(void)
 		return;
 	}
 
-	int wpos = 0;
-	wpos += PutByte(&SendBuf[wpos], 42);   //_handleEnvironmentUpdateMsg
-	wpos += PutShort(&SendBuf[wpos], 0);
-
-	wpos += PutByte(&SendBuf[wpos], 1);   //Mask
-
-	wpos += PutStringUTF(&SendBuf[wpos], pld.CurrentZone);    //zoneID
-	wpos += PutInteger(&SendBuf[wpos], pld.zoneDef->mID);      //zoneDefID
-	wpos += PutShort(&SendBuf[wpos], pld.zoneDef->mPageSize);  //zonePageSize
-	wpos += PutStringUTF(&SendBuf[wpos], pld.zoneDef->mTerrainConfig.c_str());   //Terrain
-	std::string * tEnv = pld.zoneDef->GetTileEnvironment(creatureInst->CurrentX, creatureInst->CurrentZ);
-	wpos += PutStringUTF(&SendBuf[wpos], tEnv->c_str());   //envtype
-	wpos += PutStringUTF(&SendBuf[wpos], pld.zoneDef->mMapName.c_str());   //mapName
-
-	strcpy(pld.CurrentEnv, tEnv->c_str());
-
-	PutShort(&SendBuf[1], wpos - 3);       //Set message size
-	AttemptSend(SendBuf, wpos);
+	strcpy(pld.CurrentEnv, creatureInst->actInst->GetEnvironment(creatureInst->CurrentX, creatureInst->CurrentZ).c_str());
+	AttemptSend(SendBuf, PrepExt_SendEnvironmentUpdateMsg(SendBuf, creatureInst->actInst, pld.CurrentZone, pld.zoneDef, creatureInst->CurrentX, creatureInst->CurrentZ));
 }
 
 int SimulatorThread :: handle_form_submit(void)
@@ -3389,10 +3334,10 @@ void SimulatorThread :: handle_query_client_loading(void)
 	if(LoadStage == LOADSTAGE_LOADED)
 	{
 		if(creatureInst == NULL) {
-			WritePos += PrepExt_SetMap(&SendBuf[WritePos], &pld, -1, -1);
+			WritePos += PrepExt_SendEnvironmentUpdateMsg(&SendBuf[WritePos], NULL, pld.zoneDef->mName.c_str(), pld.zoneDef, -1, -1);
 		}
 		else {
-			WritePos += PrepExt_SetMap(&SendBuf[WritePos], &pld, creatureInst->CurrentX, creatureInst->CurrentZ);
+			WritePos += PrepExt_SendEnvironmentUpdateMsg(&SendBuf[WritePos], creatureInst->actInst, pld.zoneDef->mName.c_str(), pld.zoneDef, creatureInst->CurrentX, creatureInst->CurrentZ);
 		}
 		LoadStage = LOADSTAGE_GAMEPLAY;
 
@@ -13425,8 +13370,8 @@ int SimulatorThread :: handle_query_mod_setenvironment(void)
 	g_ZoneDefManager.NotifyConfigurationChange();
 	SendInfoMessage("Environment type changed.", INFOMSG_INFO);
 
-	int wpos = PrepExt_SendEnvironmentUpdateMsg(SendBuf, pld.CurrentZone, pld.zoneDef, -1, -1);
-	wpos += PrepExt_SendTimeOfDayMsg(&SendBuf[wpos], GetTimeOfDay());
+	int wpos = PrepExt_SendEnvironmentUpdateMsg(SendBuf, creatureInst->actInst, pld.CurrentZone, pld.zoneDef, -1, -1);
+	wpos += PrepExt_SetTimeOfDay(&SendBuf[wpos], GetTimeOfDay());
 	creatureInst->actInst->LSendToAllSimulator(SendBuf, wpos, -1);
 
 	//	SendZoneInfo();

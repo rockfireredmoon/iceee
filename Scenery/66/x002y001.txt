@@ -426,15 +426,6 @@ Scale=1,1,1
 Flags=1
 
 [ENTRY]
-ID=1000005
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=Untitled
-Pos=4015.74,480,2839.04
-Orient=0,0,0,1
-Scale=1,1,1
-spawnPackage=#F7873
-
-[ENTRY]
 ID=1127131
 Asset=Prop-Door#Prop-Door2
 Name=Untitled
@@ -841,7 +832,7 @@ Scale=0.6,0.6,0.6
 ID=1150656
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=Untitled
-Pos=4361.28,510,2770.87
+Pos=4361.28,511.302,2770.87
 Orient=0,0.714978,0,-0.699147
 Scale=1,1,1
 spawnPackage=#F7865
@@ -956,7 +947,7 @@ Name=Untitled
 Pos=5738.48,556.571,1933.61
 Orient=0,-0.706825,0,0.707388
 Scale=1,1,1
-spawnPackage=VBloodkeep_Palatine
+spawnPackage=VBloodkeep_SanctumVaj1
 maxActive=0
 sequential=1
 
@@ -967,7 +958,7 @@ Name=Untitled
 Pos=5702.09,550.702,2094.2
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=VBloodkeep_Palatine
+spawnPackage=VBloodkeep_SanctumVaj1
 maxActive=0
 sequential=1
 
@@ -978,7 +969,7 @@ Name=Untitled
 Pos=5706.8,550.702,2207.64
 Orient=0,0.198669,0,0.980067
 Scale=1,1,1
-spawnPackage=VBloodkeep_Palatine
+spawnPackage=VBloodkeep_SanctumVaj1
 maxActive=0
 sequential=1
 
@@ -994,7 +985,7 @@ spawnPackage=#F16082
 [ENTRY]
 ID=1041198756
 Asset=Prop-Vampire_Fountain
-Name=
+Name=Untitled
 Pos=5673.74,526.986,2020.37
 Orient=0,0.257081,0,0.96639
 Scale=5,5,5

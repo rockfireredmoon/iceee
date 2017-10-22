@@ -25,7 +25,7 @@ info <- {
 	enabled = true,
 	author = "Heathendel",
 	description = "Valkals primary AI"
-	speed = 2
+	speed = 10
 }
 
 function on_target_lost(target_cid)
@@ -63,6 +63,9 @@ function main() {
 		}
 		else
 			ai.use(CAN_OPENER);
+	}
+	else {
+		ai.use(MELEE);
 	}
 	ai.exec(main);
 }

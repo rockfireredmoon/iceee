@@ -10,6 +10,7 @@
 #include "Report.h"
 #include "Character.h"
 #include "Globals.h"
+#include "Instance.h"
 
 ZoneDefManager g_ZoneDefManager;
 ZoneBarrierManager g_ZoneBarrierManager;
@@ -423,7 +424,7 @@ void ZoneDefInfo :: SaveToStream(FILE *output)
 	fprintf(output, "\r\n");
 }
 
-std::string * ZoneDefInfo :: GetTileEnvironment(int x, int y)
+std::string ZoneDefInfo :: GetTileEnvironment(int x, int y)
 {
 	// Convert to scenery tile (use /info scenerytile to help with this)
 	int px = x / mPageSize;
@@ -435,10 +436,10 @@ std::string * ZoneDefInfo :: GetTileEnvironment(int x, int y)
 		etk.y = py;
 		it = mTileEnvironment.find(etk);
 		if(it != mTileEnvironment.end()) {
-			return &it->second;
+			return it->second;
 		}
 	}
-	return &mEnvironmentType;
+	return mEnvironmentType;
 }
 
 void ZoneDefInfo :: AddPlayerFilterID(int CreatureDefID, bool loadStage)
@@ -1636,7 +1637,7 @@ void GroveTemplateManager :: ResolveTerrainMap(void)
 }
 
 
-int PrepExt_SendEnvironmentUpdateMsg(char *buffer, const char *zoneIDString, ZoneDefInfo *zoneDef, int x, int z)
+int PrepExt_SendEnvironmentUpdateMsg(char *buffer, ActiveInstance *instance, const char *zoneIDString, ZoneDefInfo *zoneDef, int x, int z)
 {
 	int wpos = 0;
 	wpos += PutByte(&buffer[wpos], 42);   //_handleEnvironmentUpdateMsg
@@ -1648,7 +1649,14 @@ int PrepExt_SendEnvironmentUpdateMsg(char *buffer, const char *zoneIDString, Zon
 	wpos += PutInteger(&buffer[wpos], zoneDef->mID);
 	wpos += PutShort(&buffer[wpos], zoneDef->mPageSize);
 	wpos += PutStringUTF(&buffer[wpos], zoneDef->mTerrainConfig.c_str());
-	wpos += PutStringUTF(&buffer[wpos], zoneDef->GetTileEnvironment(x, z)->c_str());
+	if(instance == NULL) {
+		g_Log.AddMessageFormat("REMOVEME SendEnvironmentUpdateMsg %s : %s", zoneIDString, zoneDef->GetTileEnvironment(x, z).c_str());
+		wpos += PutStringUTF(&buffer[wpos], zoneDef->GetTileEnvironment(x, z).c_str());
+	}
+	else {
+		g_Log.AddMessageFormat("REMOVEME SendEnvironmentUpdateMsg %s : %s", zoneIDString, instance->GetEnvironment(x, z).c_str());
+		wpos += PutStringUTF(&buffer[wpos], instance->GetEnvironment(x, z).c_str());
+	}
 	wpos += PutStringUTF(&buffer[wpos], zoneDef->mMapName.c_str());
 
 	PutShort(&buffer[1], wpos - 3);       //Set message size

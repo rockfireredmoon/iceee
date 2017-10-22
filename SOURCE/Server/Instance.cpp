@@ -588,6 +588,7 @@ void ActiveInstance :: Clear(void)
 	mNextCreatureLocalScan = 0;
 	mNextCreatureDeleteScan = 0;
 	mExpireTime = 0;
+	mTimeOfDay = "";
 
 	mSceneryEffects.clear();
 	PlayerList.clear();
@@ -595,6 +596,7 @@ void ActiveInstance :: Clear(void)
 	mNextEffectTag = 0;
 	uniqueSpawnManager.Clear();
 	worldMarkers.Clear();
+	mEnvironments.clear();
 
 	StopPVP();
 
@@ -937,6 +939,61 @@ int ActiveInstance :: RemList(int value, vector<int> &list)
 	return 0;
 }
 */
+
+
+void ActiveInstance ::ClearEnvironments() {
+	mEnvironments.clear();
+	int wpos = PrepExt_SendEnvironmentUpdateMsg(GSendBuf, this, mZoneDefPtr->mName.c_str(), mZoneDefPtr, -1, -1);
+	wpos += PrepExt_SetTimeOfDay(&GSendBuf[wpos], GetTimeOfDay().c_str());
+	for(size_t i = 0; i < PlayerListPtr.size(); i++)
+		PlayerListPtr[i]->simulatorPtr->AttemptSend(GSendBuf, wpos);
+}
+void ActiveInstance ::PushEnvironment(std::string environment) {
+	mEnvironments.push_back(environment);
+	int wpos = PrepExt_SendEnvironmentUpdateMsg(GSendBuf, this, mZoneDefPtr->mName.c_str(), mZoneDefPtr, -1, -1);
+	wpos += PrepExt_SetTimeOfDay(&GSendBuf[wpos], GetTimeOfDay().c_str());
+	for(size_t i = 0; i < PlayerListPtr.size(); i++)
+		PlayerListPtr[i]->simulatorPtr->AttemptSend(GSendBuf, wpos);
+}
+
+std::string ActiveInstance ::PopEnvironment() {
+	if(mEnvironments.size() > 0) {
+		std::string env = mEnvironments[mEnvironments.size() - 1];
+		mEnvironments.erase(mEnvironments.end());
+		int wpos = PrepExt_SendEnvironmentUpdateMsg(GSendBuf, this, mZoneDefPtr->mName.c_str(), mZoneDefPtr, -1, -1);
+		wpos += PrepExt_SetTimeOfDay(&GSendBuf[wpos], GetTimeOfDay().c_str());
+		for(size_t i = 0; i < PlayerListPtr.size(); i++)
+			PlayerListPtr[i]->simulatorPtr->AttemptSend(GSendBuf, wpos);
+		return env;
+	}
+	return "";
+}
+
+std::string ActiveInstance ::GetEnvironment(int x, int y) {
+	if(mEnvironments.size() == 0) {
+		return mZoneDefPtr->GetTileEnvironment(x,y);
+	}
+	return mEnvironments[mEnvironments.size() - 1];
+}
+
+void ActiveInstance :: SetTimeOfDay(std::string timeOfDay) {
+	mTimeOfDay = timeOfDay;
+	int wpos = PrepExt_SetTimeOfDay(GSendBuf, GetTimeOfDay().c_str());
+	for(size_t i = 0; i < PlayerListPtr.size(); i++)
+		PlayerListPtr[i]->simulatorPtr->AttemptSend(GSendBuf, wpos);
+}
+
+std::string ActiveInstance :: GetTimeOfDay() {
+	if(mTimeOfDay.length() != 0)
+		return mTimeOfDay;
+
+	//If the environment time string is null, attempt to find the active time for the
+	//current zone, if applicable.
+	if(mZoneDefPtr->mEnvironmentCycle == true)
+		return g_EnvironmentCycleManager.GetCurrentTimeOfDay();
+
+	return "Day";
+}
 
 int ActiveInstance :: ProcessMessage(MessageComponent *msg)
 {
@@ -2158,6 +2215,13 @@ int ActiveInstance :: EraseIndividualReference(CreatureInstance *object)
 
 int ActiveInstance :: RemoveNPCInstance(int CreatureID)
 {
+	if(nutScriptPlayer != NULL && nutScriptPlayer->mActive) {
+		std::vector<ScriptCore::ScriptParam> parms;
+		parms.push_back(ScriptCore::ScriptParam(CreatureID));
+		nutScriptPlayer->JumpToLabel("on_despawn", parms);
+	}
+
+
 #ifndef CREATUREMAP
 	list<CreatureInstance>::iterator it;
 #else
@@ -3292,8 +3356,11 @@ void ActiveInstance :: UpdateEnvironmentCycle(const char *timeOfDay)
 		return;
 	if(mZoneDefPtr->mEnvironmentCycle == false)
 		return;
+
+	int wpos = PrepExt_SetTimeOfDay(GSendBuf, GetTimeOfDay().c_str());
 	for(size_t i = 0; i < PlayerListPtr.size(); i++)
-		PlayerListPtr[i]->simulatorPtr->SendTimeOfDay(timeOfDay);
+		PlayerListPtr[i]->simulatorPtr->AttemptSend(GSendBuf, wpos);
+
 }
 
 //Calls a script with a particular kill event.

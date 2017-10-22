@@ -38,7 +38,7 @@ enum InfoMsgEnum
 
 
 int PrepExt_SetAvatar(char *buffer, int creatureID);
-int PrepExt_SetTimeOfDay(char *buffer, char *envType);
+int PrepExt_SetTimeOfDay(char *buffer, const char *envType);
 int PrepExt_AbilityEvent(char *buffer, int creatureID, int abilityID, int abilityEvent);
 int PrepExt_SendAbilityOwn(char *buffer, int CID, int abilityID, int eventID);
 int PrepExt_CancelUseEvent(char *buffer, int CreatureID);
@@ -70,7 +70,6 @@ int PrepExt_ModStopSwimFlag(char *buffer, bool swim);
 int PrepExt_TradeCurrencyOffer(char *buffer, int offeringPlayerID, int tradeAmount);
 int PrepExt_CreatureEventPortalRequest(char *buffer, int actorID, const char *casterName, const char *locationName);
 int PrepExt_CreatureEventVaultSize(char *buffer, int actorID, int vaultSize, int deliverySlots);
-int PrepExt_SendTimeOfDayMsg(char *buffer, const char *envType);
 int PrepExt_Broadcast(char *buffer, const char *message);
 int PrepExt_Chat(char *buffer, int characterID, const char *display_name, const char *channel, const char *message);
 

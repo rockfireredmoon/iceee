@@ -47,8 +47,6 @@ local NewMedia = {
 ["Terrain-Testing_Gauntlet"]=[1577],
 ["Terrain-Zhushis_Lair"]=[1505],
 
-
-
 /*   List of Torchlight 2 pets  */
 ["Pet-Alpaca"]=[452471],
 ["Pet-Bigcat"]=[512787],
@@ -74,11 +72,20 @@ local NewMedia = {
 /* Custom sounds  */
 ["Sound-ModSound"]=[677507],
 
-
 /*   Some bonus props and stuff are added here   */
 ["Prop-ModAddons1"]=[18283],
 ["Prop-ModWantedShadow"]=[0],
 
+/* New assets for SOA and VAL */
+["Music-GloomHorizon"]=[1577486],
+["Music-DarkWalk"]=[1390359],
+["Music-DarkTimes"]=[2249246],
+["Music-SomeAmountOfEvil"]=[1467149],
+["Music-Hyperfun"]=[3152569],
+["Music-FailingDefense"]=[1453566],
+["Music-LandOfPhantoms"]=[1467134],
+["Music-Killers"]=[6084347],
+["CL-Candelabra2"]=[456],
 
 /* Extra assets from EER, just to make sure they're in the full download for
    the public server release.

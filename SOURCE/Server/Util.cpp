@@ -81,8 +81,9 @@ int PrepExt_SetAvatar(char *buffer, int creatureID)
 	return wpos;
 }
 
-int PrepExt_SetTimeOfDay(char *buffer, char *envType)
+int PrepExt_SetTimeOfDay(char *buffer, const char *envType)
 {
+	g_Log.AddMessageFormat("REMOVEME SetTimeOfDay %s", envType);
 	int wpos = 0;
 
 	wpos += PutByte(&buffer[wpos], 42);   //_handleEnvironmentUpdateMsg
@@ -550,25 +551,6 @@ int PrepExt_CreatureEventVaultSize(char *buffer, int actorID, int vaultSize, int
 	PutShort(&buffer[1], wpos - 3);       //Set message size
 	return wpos;
 }
-
-int PrepExt_SendTimeOfDayMsg(char *buffer, const char *envType)
-{
-	int wpos = 0;
-	wpos += PutByte(&buffer[wpos], 42);   //_handleEnvironmentUpdateMsg
-	wpos += PutShort(&buffer[wpos], 0);
-
-	wpos += PutByte(&buffer[wpos], 2);   //Mask: Time of day update event
-
-	wpos += PutStringUTF(&buffer[wpos], "");    //zoneIDString
-	wpos += PutInteger(&buffer[wpos], 0);      //zoneDefID
-	wpos += PutShort(&buffer[wpos], 0);  //zonePageSize
-	wpos += PutStringUTF(&buffer[wpos], "");   //Terrain
-	wpos += PutStringUTF(&buffer[wpos], envType);   //envtype
-
-	PutShort(&buffer[1], wpos - 3);       //Set message size
-	return wpos;
-}
-
 
 int randmod(int max) {
 	// Max is exclusive, e.g, max of 10 would give numbers between 0 and 9
