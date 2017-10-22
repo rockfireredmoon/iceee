@@ -6973,15 +6973,18 @@ void CreatureInstance :: CheckQuestInteract(CreatureInstance *target)
 					}
 					else {
 						int slot = charPtr->inventory.GetFreeSlot(INV_CONTAINER);
+						char buf[512];
+						char buf2[256];
 						if(slot == -1) {
+							Util::SafeFormat(buf2, sizeof(buf2), "Cannot take book, your inventory is full.", item->mDisplayName.c_str());
+							int wpos = PrepExt_SendInfoMessage(buf, buf2, INFOMSG_INFO);
+							simulatorPtr->AttemptSend(buf, wpos);
 							return;
 						}
 						else {
 							InventorySlot *sendSlot = charPtr->inventory.AddItem_Ex(INV_CONTAINER, item->mID, 1);
 							if(sendSlot != NULL) {
 								simulatorPtr->ActivateActionAbilities(sendSlot);
-								char buf2[256];
-								char buf[512];
 								int wpos = AddItemUpdate(buf, buf2, sendSlot);
 								Util::SafeFormat(buf2, sizeof(buf2), "You now have '%s' in your inventory.", item->mDisplayName.c_str());
 								wpos += PrepExt_SendInfoMessage(&buf[wpos], buf2, INFOMSG_INFO);
