@@ -103,7 +103,7 @@ ID=1030430
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=Untitled
 Pos=5607.01,8.3767,2520.71
-Orient=0,1,0,7.54979e-008
+Orient=0,1,0,7.54979e-08
 Scale=1,1,1
 spawnPackage=dng_shvo_Hell_Twelve
 maxActive=0
@@ -214,7 +214,7 @@ ID=1091921
 Asset=Prop-Henge-Gate
 Name=Untitled
 Pos=5632.87,8.80333,2521.25
-Orient=0,1,0,7.54979e-008
+Orient=0,1,0,7.54979e-08
 Scale=1,1,1
 
 [ENTRY]
@@ -354,7 +354,7 @@ ID=1091954
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=Untitled
 Pos=5557.06,3.45298,2227.91
-Orient=0,-1,0,7.54979e-008
+Orient=0,-1,0,7.54979e-08
 Scale=1,1,1
 spawnPackage=dng_shvo_minion
 maxActive=0
@@ -367,7 +367,7 @@ ID=1091955
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=Untitled
 Pos=5571.17,3.61667,2828.98
-Orient=0,-1,0,7.54979e-008
+Orient=0,-1,0,7.54979e-08
 Scale=1,1,1
 spawnPackage=dng_shvo_minion
 maxActive=0
@@ -392,4 +392,13 @@ Pos=5630,10.0814,2520.93
 Orient=0,-0.707107,0,0.707107
 Scale=1,1,1
 spawnPackage=dng_shvo_obj_exit
+
+[ENTRY]
+ID=1154528
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=5612.36,8.31702,2698.48
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#F16065
 

@@ -1,6 +1,14 @@
 [ENTRY]
+ID=1154533
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=5132.26,50,363.06
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#F16058
+
+[ENTRY]
 ID=687865875
-PlacedBy=0
 Asset=Dng-Room_Divider?ATS=ATS-Dungeon_Temple
 Name=Untitled
 Pos=5195,50,700
@@ -10,57 +18,51 @@ Flags=1
 
 [ENTRY]
 ID=687865882
-PlacedBy=0
 Asset=Dng-Room_Narrow_Cap1?ATS=ATS-Dungeon_Temple
 Name=Untitled
 Pos=5005,50,545
-Orient=0,-1.58933e-008,0,-1
+Orient=0,-1.58933e-08,0,-1
 Scale=1,1,1
 Flags=1
 
 [ENTRY]
 ID=687865883
-PlacedBy=0
 Asset=Dng-Room_Extender1?ATS=ATS-Dungeon_Temple
 Name=Untitled
 Pos=5195,50,425
-Orient=0,-5.96046e-008,0,-1
+Orient=0,-5.96046e-08,0,-1
 Scale=1,1,1
 Flags=1
 
 [ENTRY]
 ID=687865889
-PlacedBy=0
 Asset=Dng-Room_Narrow_I?ATS=ATS-Dungeon_Temple
 Name=Untitled
 Pos=5015,50,795
-Orient=0,-1,0,-5.96046e-008
+Orient=0,-1,0,-5.96046e-08
 Scale=1,1,1
 Flags=1
 
 [ENTRY]
 ID=687865890
-PlacedBy=0
 Asset=Dng-Room_Corner2?ATS=ATS-Dungeon_Temple
 Name=Untitled
 Pos=5195,50,795
-Orient=0,-7.7486e-007,0,1
+Orient=0,-7.7486e-07,0,1
 Scale=1,1,1
 Flags=1
 
 [ENTRY]
 ID=687865891
-PlacedBy=0
 Asset=Dng-Room_Narrow_I?ATS=ATS-Dungeon_Temple
 Name=Untitled
 Pos=5015,50,305
-Orient=0,-5.96046e-008,0,-1
+Orient=0,-5.96046e-08,0,-1
 Scale=1,1,1
 Flags=1
 
 [ENTRY]
 ID=687865892
-PlacedBy=0
 Asset=Dng-Room_Narrow_I?ATS=ATS-Dungeon_Temple
 Name=Untitled
 Pos=5195,50,605
@@ -70,7 +72,6 @@ Flags=1
 
 [ENTRY]
 ID=687865893
-PlacedBy=0
 Asset=Dng-Room_Corner2?ATS=ATS-Dungeon_Temple
 Name=Untitled
 Pos=5195,50,305
@@ -80,17 +81,15 @@ Flags=1
 
 [ENTRY]
 ID=687865897
-PlacedBy=0
 Asset=Dng-Room_Extender1?ATS=ATS-Dungeon_Temple
 Name=Untitled
 Pos=5195,50,485
-Orient=0,-5.96046e-008,0,-1
+Orient=0,-5.96046e-08,0,-1
 Scale=1,1,1
 Flags=1
 
 [ENTRY]
 ID=687866146
-PlacedBy=0
 Asset=Prop-Giant_Mushroom#Prop-Giant_Mushroom-Glowing1
 Name=Untitled
 Pos=5055.27,223.708,752.585
@@ -100,7 +99,6 @@ Flags=1
 
 [ENTRY]
 ID=687866149
-PlacedBy=0
 Asset=Prop-Giant_Mushroom-Glowing1
 Name=Untitled
 Pos=5059.82,223.708,856.657
@@ -110,7 +108,6 @@ Flags=1
 
 [ENTRY]
 ID=687866150
-PlacedBy=0
 Asset=Prop-Giant_Mushroom-Glowing2
 Name=Untitled
 Pos=5283.69,147.169,739.091
@@ -120,7 +117,6 @@ Flags=1
 
 [ENTRY]
 ID=687866151
-PlacedBy=0
 Asset=Prop-Giant_Mushroom-Glowing2
 Name=Untitled
 Pos=5124.56,166.176,769.598
@@ -130,7 +126,6 @@ Flags=1
 
 [ENTRY]
 ID=687866152
-PlacedBy=0
 Asset=Prop-Giant_Mushroom-Glowing2
 Name=Untitled
 Pos=5013.11,124.364,870.943
@@ -139,7 +134,6 @@ Scale=0.25,0.25,0.25
 
 [ENTRY]
 ID=687866153
-PlacedBy=0
 Asset=Prop-Giant_Mushroom-Glowing2
 Name=Untitled
 Pos=5273.18,145.901,846.297
@@ -149,7 +143,6 @@ Flags=1
 
 [ENTRY]
 ID=687866154
-PlacedBy=0
 Asset=Prop-Giant_Mushroom-Glowing2
 Name=Untitled
 Pos=5032.48,222.968,803.938
@@ -159,7 +152,6 @@ Flags=1
 
 [ENTRY]
 ID=687866155
-PlacedBy=0
 Asset=Prop-Giant_Mushroom-Glowing2
 Name=Untitled
 Pos=5226.85,166.176,869.333
@@ -169,7 +161,6 @@ Flags=1
 
 [ENTRY]
 ID=687866156
-PlacedBy=0
 Asset=Prop-Giant_Mushroom-Glowing2
 Name=Untitled
 Pos=5243.22,166.176,791.677
@@ -179,7 +170,6 @@ Flags=1
 
 [ENTRY]
 ID=687866157
-PlacedBy=0
 Asset=Prop-Giant_Mushroom-Glowing2
 Name=Untitled
 Pos=5279.5,101.297,866.762
@@ -189,7 +179,6 @@ Flags=1
 
 [ENTRY]
 ID=687866159
-PlacedBy=0
 Asset=Prop-Giant_Mushroom-Glowing2
 Name=Untitled
 Pos=5136.84,166.176,840.389
@@ -199,7 +188,6 @@ Flags=1
 
 [ENTRY]
 ID=687866161
-PlacedBy=0
 Asset=Lights#Light-Large?COLOR=3399FF
 Name=Untitled
 Pos=5002.87,174.743,797.23
@@ -209,7 +197,6 @@ Flags=1
 
 [ENTRY]
 ID=687866162
-PlacedBy=0
 Asset=Lights#Light-Large?COLOR=3399FF
 Name=Untitled
 Pos=5200.53,110.699,797.23
@@ -219,7 +206,6 @@ Flags=1
 
 [ENTRY]
 ID=687866164
-PlacedBy=0
 Asset=Prop-Giant_Mushroom-Glowing2
 Name=Untitled
 Pos=5184.39,166.176,783.966
@@ -229,7 +215,6 @@ Flags=1
 
 [ENTRY]
 ID=687866165
-PlacedBy=0
 Asset=Prop-Giant_Mushroom-Glowing2
 Name=Untitled
 Pos=5200.79,166.176,727.191
@@ -239,7 +224,6 @@ Flags=1
 
 [ENTRY]
 ID=687866166
-PlacedBy=0
 Asset=Prop-Giant_Mushroom-Glowing2
 Name=Untitled
 Pos=5279.5,90.7284,736.663
@@ -249,7 +233,6 @@ Flags=1
 
 [ENTRY]
 ID=687866179
-PlacedBy=0
 Asset=Prop-Tree2
 Name=Untitled
 Pos=5283.33,179.293,511.297
@@ -259,7 +242,6 @@ Flags=1
 
 [ENTRY]
 ID=687866187
-PlacedBy=0
 Asset=Prop-Tree1
 Name=Untitled
 Pos=5280.44,203.852,439.736
@@ -269,7 +251,6 @@ Flags=1
 
 [ENTRY]
 ID=687866188
-PlacedBy=0
 Asset=Prop-Tree1
 Name=Untitled
 Pos=5288.73,217.452,482.882
@@ -279,7 +260,6 @@ Flags=1
 
 [ENTRY]
 ID=687866189
-PlacedBy=0
 Asset=Prop-Tree1
 Name=Untitled
 Pos=5288.73,137.925,509.28
@@ -289,7 +269,6 @@ Flags=1
 
 [ENTRY]
 ID=687866191
-PlacedBy=0
 Asset=Prop-Tree1
 Name=Untitled
 Pos=5268.4,122.117,604.398
@@ -299,7 +278,6 @@ Flags=1
 
 [ENTRY]
 ID=687866195
-PlacedBy=0
 Asset=Prop-Tree1
 Name=Untitled
 Pos=5293.61,142.499,562.044
@@ -309,7 +287,6 @@ Flags=1
 
 [ENTRY]
 ID=687866196
-PlacedBy=0
 Asset=Prop-Tree1
 Name=Untitled
 Pos=5280.69,122.763,392.782
@@ -319,7 +296,6 @@ Flags=1
 
 [ENTRY]
 ID=687866197
-PlacedBy=0
 Asset=Prop-Tree1
 Name=Untitled
 Pos=5280.69,128.58,536.337
@@ -329,7 +305,6 @@ Flags=1
 
 [ENTRY]
 ID=687866198
-PlacedBy=0
 Asset=Prop-Tree1
 Name=Untitled
 Pos=5280.69,139.777,659.734
@@ -339,7 +314,6 @@ Flags=1
 
 [ENTRY]
 ID=687866199
-PlacedBy=0
 Asset=Prop-Tree1
 Name=Untitled
 Pos=5280.69,120.36,360.797
@@ -349,7 +323,6 @@ Flags=1
 
 [ENTRY]
 ID=687866200
-PlacedBy=0
 Asset=Prop-Tree1
 Name=Untitled
 Pos=5280.69,130.653,451.317
@@ -359,7 +332,6 @@ Flags=1
 
 [ENTRY]
 ID=687866201
-PlacedBy=0
 Asset=Prop-Tree1
 Name=Untitled
 Pos=5103.13,166.281,439.281
@@ -369,7 +341,6 @@ Flags=1
 
 [ENTRY]
 ID=687866203
-PlacedBy=0
 Asset=Prop-Tree1
 Name=Untitled
 Pos=5106.7,221.552,485.755
@@ -379,7 +350,6 @@ Flags=1
 
 [ENTRY]
 ID=687866204
-PlacedBy=0
 Asset=Prop-Tree1
 Name=Untitled
 Pos=5103.13,214.968,437.991
@@ -389,7 +359,6 @@ Flags=1
 
 [ENTRY]
 ID=687866205
-PlacedBy=0
 Asset=Prop-Tree1
 Name=Untitled
 Pos=5103.13,145.016,501.326
@@ -399,7 +368,6 @@ Flags=1
 
 [ENTRY]
 ID=687866208
-PlacedBy=0
 Asset=Prop-Tree1
 Name=Untitled
 Pos=5117.36,203.848,589.603
@@ -409,7 +377,6 @@ Flags=1
 
 [ENTRY]
 ID=687866209
-PlacedBy=0
 Asset=Prop-Tree1
 Name=Untitled
 Pos=5117.36,166.281,598.706
@@ -419,7 +386,6 @@ Flags=1
 
 [ENTRY]
 ID=687866210
-PlacedBy=0
 Asset=Par-FireFlies1
 Name=Untitled
 Pos=5120.06,131.733,682.406
@@ -429,7 +395,6 @@ Flags=1
 
 [ENTRY]
 ID=687866213
-PlacedBy=0
 Asset=Prop-Tree1
 Name=Untitled
 Pos=5109.33,214.968,530.439
@@ -439,7 +404,6 @@ Flags=1
 
 [ENTRY]
 ID=687866215
-PlacedBy=0
 Asset=Prop-Tree1
 Name=Untitled
 Pos=5106.7,204.171,544.424
@@ -449,7 +413,6 @@ Flags=1
 
 [ENTRY]
 ID=687866216
-PlacedBy=0
 Asset=Prop-Tree1
 Name=Untitled
 Pos=5103.13,214.968,469.298
@@ -459,7 +422,6 @@ Flags=1
 
 [ENTRY]
 ID=687866221
-PlacedBy=0
 Asset=Prop-Tree1
 Name=Untitled
 Pos=5103.13,151.564,415.723
@@ -469,7 +431,6 @@ Flags=1
 
 [ENTRY]
 ID=687866223
-PlacedBy=0
 Asset=Prop-Tree1
 Name=Untitled
 Pos=5107.75,120.735,424.169
@@ -479,7 +440,6 @@ Flags=1
 
 [ENTRY]
 ID=687866225
-PlacedBy=0
 Asset=Prop-Tree1
 Name=Untitled
 Pos=5106.7,132.46,608.114
@@ -489,7 +449,6 @@ Flags=1
 
 [ENTRY]
 ID=687866230
-PlacedBy=0
 Asset=Prop-Tree1
 Name=Untitled
 Pos=5268.4,188.371,604.398
@@ -499,7 +458,6 @@ Flags=1
 
 [ENTRY]
 ID=687866231
-PlacedBy=0
 Asset=Prop-Tree1
 Name=Untitled
 Pos=5268.4,160.793,604.398
@@ -509,7 +467,6 @@ Flags=1
 
 [ENTRY]
 ID=687866232
-PlacedBy=0
 Asset=Par-FireFlies1
 Name=Untitled
 Pos=5120.06,131.733,339.428
@@ -519,7 +476,6 @@ Flags=1
 
 [ENTRY]
 ID=687866234
-PlacedBy=0
 Asset=Prop-Pedestal1
 Name=Untitled
 Pos=5060.47,-18.9211,483.091
@@ -529,7 +485,6 @@ Flags=1
 
 [ENTRY]
 ID=687866235
-PlacedBy=0
 Asset=Prop-Pedestal1
 Name=Untitled
 Pos=5060.4,2.78727,482.928
@@ -539,7 +494,6 @@ Flags=1
 
 [ENTRY]
 ID=687866238
-PlacedBy=0
 Asset=CL-Wooden_Fence1
 Name=Untitled
 Pos=5011.9,50,469.756
@@ -549,7 +503,6 @@ Flags=1
 
 [ENTRY]
 ID=687866242
-PlacedBy=0
 Asset=Prop-Lamp_Post1
 Name=Untitled
 Pos=5073.99,50,547.861
@@ -559,7 +512,6 @@ Flags=1
 
 [ENTRY]
 ID=687866248
-PlacedBy=0
 Asset=CL-Grasses5#CL-Grasses5
 Name=Untitled
 Pos=5042.68,50,542.026
@@ -569,7 +521,6 @@ Flags=1
 
 [ENTRY]
 ID=687866252
-PlacedBy=0
 Asset=CL-Wooden_Fence1
 Name=Untitled
 Pos=5128.03,63.3304,540.613
@@ -579,7 +530,6 @@ Flags=1
 
 [ENTRY]
 ID=687866253
-PlacedBy=0
 Asset=CL-Wooden_Fence1
 Name=Untitled
 Pos=5264.21,65.9578,546.436
@@ -589,7 +539,6 @@ Flags=1
 
 [ENTRY]
 ID=687866255
-PlacedBy=0
 Asset=CL-Wooden_Fence1
 Name=Untitled
 Pos=5017.15,62.2621,371.2
@@ -599,7 +548,6 @@ Flags=1
 
 [ENTRY]
 ID=687866258
-PlacedBy=0
 Asset=CL-Wooden_Fence1
 Name=Untitled
 Pos=5121.03,64.549,237.13
@@ -609,7 +557,6 @@ Flags=1
 
 [ENTRY]
 ID=687866259
-PlacedBy=0
 Asset=Prop-Rock5
 Name=Untitled
 Pos=5107.65,50,400.351
@@ -619,7 +566,6 @@ Flags=1
 
 [ENTRY]
 ID=687866268
-PlacedBy=0
 Asset=Prop-Fences#Prop-Fence_Piece2
 Name=Untitled
 Pos=5252.57,50,269.074
@@ -629,7 +575,6 @@ Flags=1
 
 [ENTRY]
 ID=687866270
-PlacedBy=0
 Asset=CL-Wooden_Fence1
 Name=Untitled
 Pos=5082.42,50,534.494
@@ -639,7 +584,6 @@ Flags=1
 
 [ENTRY]
 ID=687866277
-PlacedBy=0
 Asset=CL-Grasses3#CL-Grasses3
 Name=Untitled
 Pos=5119.42,50,565.826
@@ -649,7 +593,6 @@ Flags=1
 
 [ENTRY]
 ID=687866278
-PlacedBy=0
 Asset=CL-Grasses3
 Name=Untitled
 Pos=5198.75,50,608.226
@@ -659,7 +602,6 @@ Flags=1
 
 [ENTRY]
 ID=687866279
-PlacedBy=0
 Asset=CL-Grasses3
 Name=Untitled
 Pos=5198.75,50,438.079
@@ -669,7 +611,6 @@ Flags=1
 
 [ENTRY]
 ID=687866280
-PlacedBy=0
 Asset=CL-Grasses3
 Name=Untitled
 Pos=5198.75,50,330.125
@@ -679,7 +620,6 @@ Flags=1
 
 [ENTRY]
 ID=687866281
-PlacedBy=0
 Asset=Prop-Rock2
 Name=Untitled
 Pos=5078.7,50,230.416
@@ -689,7 +629,6 @@ Flags=1
 
 [ENTRY]
 ID=687866283
-PlacedBy=0
 Asset=CL-Grasses3
 Name=Untitled
 Pos=5119.42,50,330.125
@@ -699,7 +638,6 @@ Flags=1
 
 [ENTRY]
 ID=687866285
-PlacedBy=0
 Asset=Lights#Light-Huge?COLOR=FFCC00
 Name=Untitled
 Pos=5231.27,127.169,268.341
@@ -709,7 +647,6 @@ Flags=1
 
 [ENTRY]
 ID=687866288
-PlacedBy=0
 Asset=Bldg-Urban-Small_Facade2?ATS=ATS-Bremen
 Name=Untitled
 Pos=5082.1,50,566.937
@@ -719,7 +656,6 @@ Flags=1
 
 [ENTRY]
 ID=687866289
-PlacedBy=0
 Asset=CL-Wooden_Fence1
 Name=Untitled
 Pos=5009.2,50,622.22
@@ -729,7 +665,6 @@ Flags=1
 
 [ENTRY]
 ID=687866290
-PlacedBy=0
 Asset=CL-Wooden_Fence1
 Name=Untitled
 Pos=5055.41,50,622.883
@@ -739,7 +674,6 @@ Flags=1
 
 [ENTRY]
 ID=687866293
-PlacedBy=0
 Asset=CL-Wooden_Fence1
 Name=Untitled
 Pos=5082.42,50,610.237
@@ -749,7 +683,6 @@ Flags=1
 
 [ENTRY]
 ID=687866296
-PlacedBy=0
 Asset=Prop-Lamp_Post1
 Name=Untitled
 Pos=5240.7,42.5636,230.22
@@ -759,7 +692,6 @@ Flags=1
 
 [ENTRY]
 ID=687866299
-PlacedBy=0
 Asset=CL-Grasses3
 Name=Untitled
 Pos=5031.42,50,330.125
@@ -769,7 +701,6 @@ Flags=1
 
 [ENTRY]
 ID=687866588
-PlacedBy=0
 Asset=Prop-Tree1
 Name=Untitled
 Pos=5106.7,130.666,544.424
@@ -779,7 +710,6 @@ Flags=1
 
 [ENTRY]
 ID=687866694
-PlacedBy=0
 Asset=Prop-Lamp_Post1
 Name=Untitled
 Pos=5040.59,50,624.941
@@ -788,7 +718,6 @@ Scale=0.5,0.5,0.5
 
 [ENTRY]
 ID=687866695
-PlacedBy=0
 Asset=Prop-Wagon
 Name=Untitled
 Pos=5061.64,50,584.868
@@ -797,7 +726,6 @@ Scale=0.25,0.25,0.25
 
 [ENTRY]
 ID=687866696
-PlacedBy=0
 Asset=Prop-Willow_Tree#Prop-Willow_Tree4
 Name=Untitled
 Pos=5078.53,50,609.956
@@ -806,7 +734,6 @@ Scale=0.2,0.2,0.2
 
 [ENTRY]
 ID=687866697
-PlacedBy=0
 Asset=Prop-Willow_Tree4
 Name=Untitled
 Pos=5072.2,50,533.438
@@ -815,7 +742,6 @@ Scale=0.2,0.2,0.2
 
 [ENTRY]
 ID=687866698
-PlacedBy=0
 Asset=CL-Junk3#CL-Junk3
 Name=Untitled
 Pos=5072.58,50,551.727
@@ -824,7 +750,6 @@ Scale=0.45,0.45,0.45
 
 [ENTRY]
 ID=687866700
-PlacedBy=0
 Asset=Prop-Well1#Prop-Well1
 Name=Untitled
 Pos=5065.8,50,607.264
@@ -833,7 +758,6 @@ Scale=0.25,0.25,0.25
 
 [ENTRY]
 ID=687866704
-PlacedBy=0
 Asset=Light-Small?COLOR=FFCC00
 Name=Untitled
 Pos=5071.83,56.1708,546.911
@@ -842,7 +766,6 @@ Scale=1,1,1
 
 [ENTRY]
 ID=687866705
-PlacedBy=0
 Asset=Prop-Tombstone#Prop-Tombstone2
 Name=Untitled
 Pos=5068.23,50,619.829
@@ -851,7 +774,6 @@ Scale=0.25,0.25,0.25
 
 [ENTRY]
 ID=687866706
-PlacedBy=0
 Asset=Prop-Tombstone2
 Name=Untitled
 Pos=5071.49,50,619.829
@@ -860,7 +782,6 @@ Scale=0.25,0.25,0.25
 
 [ENTRY]
 ID=687866708
-PlacedBy=0
 Asset=Prop-Giant_Mushroom-Glowing2
 Name=Untitled
 Pos=5109.56,116.161,877.665
@@ -869,7 +790,6 @@ Scale=0.25,0.25,0.25
 
 [ENTRY]
 ID=687866709
-PlacedBy=0
 Asset=Prop-Giant_Mushroom-Glowing2
 Name=Untitled
 Pos=5190.07,146.769,870.943
@@ -878,7 +798,6 @@ Scale=0.25,0.25,0.25
 
 [ENTRY]
 ID=687866710
-PlacedBy=0
 Asset=Prop-Giant_Mushroom-Glowing2
 Name=Untitled
 Pos=5190.07,91.4931,865.732
@@ -887,7 +806,6 @@ Scale=0.2,0.2,0.2
 
 [ENTRY]
 ID=687866792
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=5044.91,50,563.996
@@ -898,7 +816,6 @@ sequential=1
 
 [ENTRY]
 ID=687866841
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=5058.62,53.7872,485.503
@@ -909,7 +826,6 @@ maxActive=0
 
 [ENTRY]
 ID=687866885
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=5235,50,555
@@ -922,7 +838,6 @@ link=687867204,1
 
 [ENTRY]
 ID=687866892
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=5184.31,50,276.793
@@ -934,17 +849,15 @@ link=687867215,1
 
 [ENTRY]
 ID=687867184
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=5255,50,795
-Orient=0,-1,0,7.54979e-008
+Orient=0,-1,0,7.54979e-08
 Scale=1,1,1
 spawnPackage=2_rt_Floor6_4_35
 
 [ENTRY]
 ID=687867185
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=5135,50,720
@@ -954,7 +867,6 @@ spawnPackage=2_rt_Floor6_4_35
 
 [ENTRY]
 ID=687867190
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=5235,50,845
@@ -967,7 +879,6 @@ link=687867199,1
 
 [ENTRY]
 ID=687867191
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=5235,50,815
@@ -979,7 +890,6 @@ link=687867190,1
 
 [ENTRY]
 ID=687867194
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=5235,50,775
@@ -991,7 +901,6 @@ link=687867195,1
 
 [ENTRY]
 ID=687867195
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=5235,50,745
@@ -1003,7 +912,6 @@ link=687867194,1
 
 [ENTRY]
 ID=687867199
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=5235,50,845
@@ -1015,7 +923,6 @@ link=687867190,1
 
 [ENTRY]
 ID=687867200
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=5075,50,870
@@ -1025,7 +932,6 @@ spawnPackage=2_rt_Floor6_4_35
 
 [ENTRY]
 ID=687867201
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=5140,50,565
@@ -1035,7 +941,6 @@ spawnPackage=2_rt_Floor6_4_35
 
 [ENTRY]
 ID=687867202
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=5195,50,660
@@ -1047,7 +952,6 @@ link=687867203,1
 
 [ENTRY]
 ID=687867203
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=5155,50,555
@@ -1059,7 +963,6 @@ link=687867202,1
 
 [ENTRY]
 ID=687867204
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=5235,50,555
@@ -1071,7 +974,6 @@ link=687866885,1
 
 [ENTRY]
 ID=687867205
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=5150,50,540
@@ -1083,7 +985,6 @@ link=687867206,1
 
 [ENTRY]
 ID=687867206
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=5240,50,540
@@ -1094,7 +995,6 @@ link=687867205,1
 
 [ENTRY]
 ID=687867207
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=5235,50,515
@@ -1106,7 +1006,6 @@ link=687867210,1
 
 [ENTRY]
 ID=687867208
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=5155,50,515
@@ -1119,7 +1018,6 @@ link=687867211,1
 
 [ENTRY]
 ID=687867209
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=5155,50,320
@@ -1131,7 +1029,6 @@ link=687867210,1
 
 [ENTRY]
 ID=687867210
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=5235,50,320
@@ -1144,7 +1041,6 @@ link=687867212,1
 
 [ENTRY]
 ID=687867211
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=5155,50,515
@@ -1156,7 +1052,6 @@ link=687867208,1
 
 [ENTRY]
 ID=687867212
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=5235,50,320
@@ -1168,17 +1063,15 @@ link=687867210,1
 
 [ENTRY]
 ID=687867213
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=5255,50,410
-Orient=0,-1,0,7.54979e-008
+Orient=0,-1,0,7.54979e-08
 Scale=1,1,1
 spawnPackage=2_rt_Floor6_4_35
 
 [ENTRY]
 ID=687867215
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=5050,50,345
@@ -1190,7 +1083,6 @@ link=687867214,1
 
 [ENTRY]
 ID=687867216
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=5222.15,50,284.014
@@ -1200,7 +1092,6 @@ spawnPackage=2_rt_Floor6_4_35
 
 [ENTRY]
 ID=687867220
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=5105,50,265

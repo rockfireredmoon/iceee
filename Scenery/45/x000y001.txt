@@ -1,6 +1,7 @@
 [ENTRY]
 ID=754974807
 Asset=Prop-Dead-Forest-Tree#Prop-Dead-Forest-Tree5
+Name=Untitled
 Pos=786.523,194.591,1090.19
 Orient=0,-0.852108,0,0.523366
 Scale=0.875,0.875,0.875
@@ -9,6 +10,7 @@ Flags=1
 [ENTRY]
 ID=754974825
 Asset=Prop-Giant_Mushroom2
+Name=Untitled
 Pos=773.814,212.298,1002.53
 Orient=-0.0848977,0,0,0.99639
 Scale=0.6,0.6,0.6
@@ -17,6 +19,7 @@ Flags=1
 [ENTRY]
 ID=754974834
 Asset=Prop-Bush-Burnt_Med3#Prop-Bush-Burnt_Med3
+Name=Untitled
 Pos=910.34,195.508,1104.29
 Orient=0,0,0,1
 Scale=4.45,4.45,4.45
@@ -25,6 +28,7 @@ Flags=1
 [ENTRY]
 ID=754974850
 Asset=Prop-Spanish_Moss
+Name=Untitled
 Pos=887.932,317.023,1073.27
 Orient=0,0,0,1
 Scale=4.025,4.025,4.025
@@ -33,6 +37,7 @@ Flags=1
 [ENTRY]
 ID=754974854
 Asset=Prop-Spanish_Moss
+Name=Untitled
 Pos=812.84,317.023,1073.27
 Orient=0,0,0,1
 Scale=4.025,4.025,4.025
@@ -41,6 +46,7 @@ Flags=1
 [ENTRY]
 ID=754974962
 Asset=Prop-Sanctuary_Stone
+Name=Untitled
 Pos=956.8,192.467,1122.83
 Orient=0,-0.900793,0,-0.434248
 Scale=1,1,1
@@ -49,6 +55,7 @@ Flags=1
 [ENTRY]
 ID=754974963
 Asset=Manipulator-Sanctuary
+Name=Untitled
 Pos=957.235,197.753,1122.93
 Orient=0,0,0,1
 Scale=1,1,1

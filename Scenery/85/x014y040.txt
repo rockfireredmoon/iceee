@@ -450,9 +450,18 @@ link=1129501,0
 [ENTRY]
 ID=1152152
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=27490.9,619.8,78548.9
 Orient=0,-0.838759,0,0.544503
 Scale=1,1,1
 spawnPackage=#3476
+
+[ENTRY]
+ID=1154525
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=27911.5,637.698,78461.8
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#F16068
 

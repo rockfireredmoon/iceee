@@ -1,6 +1,16 @@
 [ENTRY]
+ID=1154520
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=1310.72,237.311,615.169
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#F16071
+
+[ENTRY]
 ID=1191182461
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=1100,212.602,565
 Orient=0,0,0,1
 Scale=0.85,0.85,0.85
@@ -12,6 +22,7 @@ link=1191182602,1
 [ENTRY]
 ID=1191182462
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=1010,191.982,745
 Orient=0,0,0,1
 Scale=1,1,1
@@ -22,6 +33,7 @@ link=1191182463,1
 [ENTRY]
 ID=1191182508
 Asset=CL-Rotted_Flora6#CL-Rotted_Flora6
+Name=Untitled
 Pos=1341.46,241.993,592.113
 Orient=0,0.795602,0,0.60582
 Scale=1.7,1.7,1.7
@@ -29,6 +41,7 @@ Scale=1.7,1.7,1.7
 [ENTRY]
 ID=1191182511
 Asset=Prop-Spider_Webs1
+Name=Untitled
 Pos=1076.26,577.986,416.104
 Orient=0.0374278,-0.757427,-0.651086,0.0314735
 Scale=10,10,10
@@ -37,6 +50,7 @@ Flags=1
 [ENTRY]
 ID=1191182512
 Asset=Prop-Spider_Webs1
+Name=Untitled
 Pos=1363.48,216.819,661.408
 Orient=-0.0152605,-0.530475,-0.00389624,0.847554
 Scale=5,5,5
@@ -45,6 +59,7 @@ Flags=1
 [ENTRY]
 ID=1191182519
 Asset=Prop-Spider_Webs#Prop-Spider_Webs1
+Name=Untitled
 Pos=1297.98,226.544,948.384
 Orient=0,-0.813416,0,0.581683
 Scale=3.65,3.65,3.65
@@ -53,6 +68,7 @@ Flags=1
 [ENTRY]
 ID=1191182523
 Asset=Prop-Spider_Eggsack2
+Name=Untitled
 Pos=1017.84,783.758,840.396
 Orient=0,0,0,1
 Scale=4.5,4.5,4.5
@@ -60,6 +76,7 @@ Scale=4.5,4.5,4.5
 [ENTRY]
 ID=1191182524
 Asset=Prop-Spider_Eggsack2
+Name=Untitled
 Pos=1017.84,694.055,840.396
 Orient=0,0,0,1
 Scale=4.5,4.5,4.5
@@ -67,6 +84,7 @@ Scale=4.5,4.5,4.5
 [ENTRY]
 ID=1191182525
 Asset=Prop-Spider_Eggsack2
+Name=Untitled
 Pos=1017.84,694.055,557.66
 Orient=-0.232843,0,0,0.972514
 Scale=4.5,4.5,4.5
@@ -74,6 +92,7 @@ Scale=4.5,4.5,4.5
 [ENTRY]
 ID=1191182528
 Asset=Prop-Spider_Eggsack2
+Name=Untitled
 Pos=1060.09,868.203,566.246
 Orient=0.448423,0,0,0.893822
 Scale=5.3,5.3,5.3
@@ -81,6 +100,7 @@ Scale=5.3,5.3,5.3
 [ENTRY]
 ID=1191182529
 Asset=Prop-Spider_Eggsack2
+Name=Untitled
 Pos=1060.09,694.055,944.742
 Orient=0.448423,0,0,0.893822
 Scale=5.3,5.3,5.3
@@ -88,6 +108,7 @@ Scale=5.3,5.3,5.3
 [ENTRY]
 ID=1191182530
 Asset=Prop-Spider_Eggsack2
+Name=Untitled
 Pos=1060.09,746.004,469.583
 Orient=0.448423,0,0,0.893822
 Scale=8.15,8.15,8.15
@@ -95,6 +116,7 @@ Scale=8.15,8.15,8.15
 [ENTRY]
 ID=1191182531
 Asset=Prop-Spider_Eggsack#Prop-Spider_Eggsack2
+Name=Untitled
 Pos=1248.19,342.294,930.376
 Orient=0,0,0,1
 Scale=1,1,1
@@ -103,6 +125,7 @@ Flags=1
 [ENTRY]
 ID=1191182533
 Asset=Prop-Spider_Eggsack#Prop-Spider_Eggsack2
+Name=Untitled
 Pos=1324.72,396.875,681.31
 Orient=-0.276356,0,0,0.961055
 Scale=1.95,1.95,1.95
@@ -110,6 +133,7 @@ Scale=1.95,1.95,1.95
 [ENTRY]
 ID=1191182534
 Asset=Prop-Spider_Eggsack2
+Name=Untitled
 Pos=1265.18,348.758,646.28
 Orient=0,0,0,1
 Scale=1.95,1.95,1.95
@@ -117,6 +141,7 @@ Scale=1.95,1.95,1.95
 [ENTRY]
 ID=1191182535
 Asset=Prop-Spider_Eggsack2
+Name=Untitled
 Pos=1265.18,348.758,638.163
 Orient=-0.276356,0,0,0.961055
 Scale=1.95,1.95,1.95
@@ -124,6 +149,7 @@ Scale=1.95,1.95,1.95
 [ENTRY]
 ID=1191182536
 Asset=Prop-Spider_Eggsack2
+Name=Untitled
 Pos=1230.66,281.134,953.156
 Orient=-0.276356,0,0,0.961055
 Scale=3,3,3
@@ -131,6 +157,7 @@ Scale=3,3,3
 [ENTRY]
 ID=1191182537
 Asset=Prop-Spider_Eggsack2
+Name=Untitled
 Pos=1265.18,348.758,731.851
 Orient=-0.276356,0,0,0.961055
 Scale=1.95,1.95,1.95
@@ -138,6 +165,7 @@ Scale=1.95,1.95,1.95
 [ENTRY]
 ID=1191182538
 Asset=Prop-Spider_Eggsack2
+Name=Untitled
 Pos=1265.18,348.758,942.578
 Orient=-0.276356,0,0,0.961055
 Scale=1.95,1.95,1.95
@@ -145,6 +173,7 @@ Scale=1.95,1.95,1.95
 [ENTRY]
 ID=1191182539
 Asset=Prop-Spider_Eggsack2
+Name=Untitled
 Pos=1202.67,281.134,908.103
 Orient=-0.276356,0,0,0.961055
 Scale=1.95,1.95,1.95
@@ -152,6 +181,7 @@ Scale=1.95,1.95,1.95
 [ENTRY]
 ID=1191182540
 Asset=Prop-Spider_Eggsack2
+Name=Untitled
 Pos=1249.63,281.134,882.635
 Orient=-0.276356,0,0,0.961055
 Scale=1.95,1.95,1.95
@@ -159,6 +189,7 @@ Scale=1.95,1.95,1.95
 [ENTRY]
 ID=1191182552
 Asset=CL-Rotted_Flora5#CL-Rotted_Flora5
+Name=Untitled
 Pos=1225.14,266.896,494.63
 Orient=0,0,0,1
 Scale=2.125,2.125,2.125
@@ -166,6 +197,7 @@ Scale=2.125,2.125,2.125
 [ENTRY]
 ID=1191182567
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=1025,191.99,800
 Orient=0,0,0,1
 Scale=1,1,1
@@ -177,6 +209,7 @@ link=1191182571,1
 [ENTRY]
 ID=1191182568
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=1090,201.688,870
 Orient=0,0,0,1
 Scale=1,1,1
@@ -187,6 +220,7 @@ link=1191182569,1
 [ENTRY]
 ID=1191182569
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=1000,192.035,975
 Orient=0,0,0,1
 Scale=1,1,1
@@ -198,26 +232,29 @@ link=1191182572,1
 [ENTRY]
 ID=1191182571
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=1025,191.89,800
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=10_ht_FateweaverBroodling
 links_count=1
 link=1191182567,1
-spawnPackage=10_ht_FateweaverBroodling
 
 [ENTRY]
 ID=1191182572
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=1000,191.957,975
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=10_ht_FateweaverBroodling
 links_count=1
 link=1191182569,1
-spawnPackage=10_ht_FateweaverBroodling
 
 [ENTRY]
 ID=1191182577
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=1330,249.013,835
 Orient=0,0,0,1
 Scale=1,1,1
@@ -228,6 +265,7 @@ link=1191182579,1
 [ENTRY]
 ID=1191182578
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=1355,237.865,660
 Orient=0,0,0,1
 Scale=1,1,1
@@ -237,16 +275,18 @@ link=1191182577,1
 [ENTRY]
 ID=1191182579
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=1275,262.829,940
 Orient=0,0.707107,0,0.707107
 Scale=1,1,1
+spawnPackage=10_ht_Grizhu_k_41
 links_count=1
 link=1191182577,1
-spawnPackage=10_ht_Grizhu_k_41
 
 [ENTRY]
 ID=1191182580
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=1155,210.414,880
 Orient=0,0,0,1
 Scale=1,1,1
@@ -257,6 +297,7 @@ link=1191182583,1
 [ENTRY]
 ID=1191182581
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=1060,191.806,755
 Orient=0,0,0,1
 Scale=1,1,1
@@ -268,6 +309,7 @@ link=1191182586,1
 [ENTRY]
 ID=1191182582
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=1135,208.592,590
 Orient=0,0,0,1
 Scale=1,1,1
@@ -278,6 +320,7 @@ link=1191182583,1
 [ENTRY]
 ID=1191182583
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=1245,212.102,715
 Orient=0,0,0,1
 Scale=1,1,1
@@ -289,26 +332,29 @@ link=1191182584,1
 [ENTRY]
 ID=1191182584
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=1245,211.138,715
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=10_ht_FateweaverBroodling
 links_count=1
 link=1191182583,1
-spawnPackage=10_ht_FateweaverBroodling
 
 [ENTRY]
 ID=1191182586
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=1060,191.736,755
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=10_ht_FateweaverBroodling
 links_count=1
 link=1191182581,1
-spawnPackage=10_ht_FateweaverBroodling
 
 [ENTRY]
 ID=1191182599
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=1204.09,234.702,949.737
 Orient=0,-0.996322,0,0.0856911
 Scale=1,1,1
@@ -317,16 +363,18 @@ spawnPackage=10_ht_FateweaverBroodling
 [ENTRY]
 ID=1191182602
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=1100,211.873,565
 Orient=0,0,0,1
 Scale=0.85,0.85,0.85
+spawnPackage=10_ht_FateweaverBroodling
 links_count=1
 link=1191182461,1
-spawnPackage=10_ht_FateweaverBroodling
 
 [ENTRY]
 ID=1191182603
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=1165,270.296,410
 Orient=0,0,0,1
 Scale=1,1,1
@@ -338,6 +386,7 @@ link=1191182608,1
 [ENTRY]
 ID=1191182604
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=1170,232.24,535
 Orient=0,0,0,1
 Scale=1,1,1
@@ -348,6 +397,7 @@ link=1191182605,1
 [ENTRY]
 ID=1191182605
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=1025,217.09,475
 Orient=0,0,0,1
 Scale=1,1,1
@@ -359,6 +409,7 @@ link=1191182607,1
 [ENTRY]
 ID=1191182606
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=1010,262.875,355
 Orient=0,0,0,1
 Scale=1,1,1
@@ -369,20 +420,22 @@ link=1191182605,1
 [ENTRY]
 ID=1191182607
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=1025,216.491,475
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=10_ht_FateweaverBroodling
 links_count=1
 link=1191182605,1
-spawnPackage=10_ht_FateweaverBroodling
 
 [ENTRY]
 ID=1191182608
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=1165,268.717,410
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=10_ht_FateweaverBroodling
 links_count=1
 link=1191182603,1
-spawnPackage=10_ht_FateweaverBroodling
 

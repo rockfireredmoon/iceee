@@ -1,6 +1,14 @@
 [ENTRY]
+ID=1154571
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=1751.85,210.07,1421.33
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#F16027
+
+[ENTRY]
 ID=10000001
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=1705,210,1928
@@ -11,7 +19,6 @@ spawnPackage=z37_eur_gen_Dungeon_Loot_2703
 
 [ENTRY]
 ID=620756994
-PlacedBy=0
 Asset=Cav-Room_Round_Corner1?ATS=ATS-Cave_Moss
 Name=Untitled
 Pos=1945,210,1470
@@ -21,27 +28,24 @@ Flags=1
 
 [ENTRY]
 ID=620756995
-PlacedBy=0
 Asset=Cav-Room_Round_Corner1?ATS=ATS-Cave_Moss
 Name=Untitled
 Pos=1945,210,1830
-Orient=0,-5.96046e-008,0,1
+Orient=0,-5.96046e-08,0,1
 Scale=1,1,1
 Flags=1
 
 [ENTRY]
 ID=620756996
-PlacedBy=0
 Asset=Cav-Room_1Sided?ATS=ATS-Cave_Moss
 Name=Untitled
 Pos=1585,210,1650
-Orient=0,-1,0,-1.58933e-008
+Orient=0,-1,0,-1.58933e-08
 Scale=1,1,1
 Flags=1
 
 [ENTRY]
 ID=620756997
-PlacedBy=0
 Asset=Cav-Room_1Sided?ATS=ATS-Cave_Moss
 Name=Untitled
 Pos=1765,210,1470
@@ -51,17 +55,15 @@ Flags=1
 
 [ENTRY]
 ID=620756998
-PlacedBy=0
 Asset=Cav-Room_1Sided?ATS=ATS-Cave_Moss
 Name=Untitled
 Pos=1945,210,1650
-Orient=0,-5.96046e-008,0,-1
+Orient=0,-5.96046e-08,0,-1
 Scale=1,1,1
 Flags=1
 
 [ENTRY]
 ID=620756999
-PlacedBy=0
 Asset=Cav-Room_Center_Pit?ATS=ATS-Cave_Moss
 Name=Untitled
 Pos=1765,210,1650
@@ -71,47 +73,42 @@ Flags=1
 
 [ENTRY]
 ID=620757000
-PlacedBy=0
 Asset=Cav-Pillar?ATS=ATS-Cave_Moss
 Name=Untitled
 Pos=1760.18,210,1480.37
-Orient=-0.0449848,-0.998988,-7.14957e-010,-1.58772e-008
+Orient=-0.0449848,-0.998988,-7.14957e-10,-1.58772e-08
 Scale=1.25,1.25,1.25
 Flags=1
 
 [ENTRY]
 ID=620757001
-PlacedBy=0
 Asset=Cav-Pillar2?ATS=ATS-Cave_Moss
 Name=Untitled
 Pos=1585,275,1650
-Orient=0,-1,0,-1.58933e-008
+Orient=0,-1,0,-1.58933e-08
 Scale=1,1,1
 Flags=1
 
 [ENTRY]
 ID=620757002
-PlacedBy=0
 Asset=Cav-Pillar?ATS=ATS-Cave_Moss
 Name=Untitled
 Pos=1930,210,1650
-Orient=0,-1,0,-1.58933e-008
+Orient=0,-1,0,-1.58933e-08
 Scale=1,1,1
 Flags=1
 
 [ENTRY]
 ID=620757003
-PlacedBy=0
 Asset=Cav-Room_Round_Corner1?ATS=ATS-Cave_Moss
 Name=Untitled
 Pos=1585,210,1470
-Orient=0,-1,0,7.54979e-008
+Orient=0,-1,0,7.54979e-08
 Scale=1,1,1
 Flags=1
 
 [ENTRY]
 ID=620757005
-PlacedBy=0
 Asset=Cav-Room_Center?ATS=ATS-Cave_Moss
 Name=Untitled
 Pos=1765,210,1830
@@ -121,7 +118,6 @@ Flags=1
 
 [ENTRY]
 ID=620757006
-PlacedBy=0
 Asset=Cav-Corner_Patch?ATS=ATS-Cave_Moss
 Name=Untitled
 Pos=1765,210,1830
@@ -131,17 +127,15 @@ Flags=1
 
 [ENTRY]
 ID=620757007
-PlacedBy=0
 Asset=Cav-Corner_Patch?ATS=ATS-Cave_Moss
 Name=Untitled
 Pos=1765,210,1830
-Orient=0,-1,0,-5.96046e-008
+Orient=0,-1,0,-5.96046e-08
 Scale=1,1,1
 Flags=1
 
 [ENTRY]
 ID=620757021
-PlacedBy=0
 Asset=Cav-Room_Round_Corner1?ATS=ATS-Cave_Moss
 Name=Untitled
 Pos=1585,210,1830
@@ -151,7 +145,6 @@ Flags=1
 
 [ENTRY]
 ID=620757267
-PlacedBy=0
 Asset=Prop-Spider_Webs1
 Name=Untitled
 Pos=1764.66,628.169,1720.4
@@ -161,7 +154,6 @@ Flags=1
 
 [ENTRY]
 ID=620757285
-PlacedBy=0
 Asset=Prop-Wall_Torch2#Prop-Wall_Torch2
 Name=Untitled
 Pos=1765.94,294.716,1492.08
@@ -171,7 +163,6 @@ Flags=1
 
 [ENTRY]
 ID=620757286
-PlacedBy=0
 Asset=Prop-Wall_Torch2
 Name=Untitled
 Pos=1921.09,294.716,1651.23
@@ -181,7 +172,6 @@ Flags=1
 
 [ENTRY]
 ID=620757287
-PlacedBy=0
 Asset=Prop-Wall_Torch2
 Name=Untitled
 Pos=1593.03,294.716,1651.1
@@ -191,7 +181,6 @@ Flags=1
 
 [ENTRY]
 ID=620757291
-PlacedBy=0
 Asset=Light-Huge?COLOR=FF3300
 Name=Untitled
 Pos=1776.36,303.608,1646.92
@@ -200,7 +189,6 @@ Scale=1,1,1
 
 [ENTRY]
 ID=620757292
-PlacedBy=0
 Asset=Prop-Braziers#Prop-Brazier2
 Name=Untitled
 Pos=1774.96,300.921,1645.2
@@ -210,7 +198,6 @@ Flags=1
 
 [ENTRY]
 ID=620757301
-PlacedBy=0
 Asset=Prop-Crypt-Skull_Pile_Large#Prop-Crypt-Skull_Pile_Large
 Name=Untitled
 Pos=1769.63,208.51,1489.03
@@ -220,7 +207,6 @@ Flags=1
 
 [ENTRY]
 ID=620757302
-PlacedBy=0
 Asset=Prop-Crypt-Skull_Pile_Large
 Name=Untitled
 Pos=1685.16,207.814,1765.28
@@ -230,7 +216,6 @@ Flags=1
 
 [ENTRY]
 ID=620757303
-PlacedBy=0
 Asset=Prop-Crypt-Skull_Pile_Large
 Name=Untitled
 Pos=1582.95,209.788,1647.84
@@ -239,7 +224,6 @@ Scale=2.175,2.175,2.175
 
 [ENTRY]
 ID=620757304
-PlacedBy=0
 Asset=Prop-Crypt-Skull_Pile_Large
 Name=Untitled
 Pos=1922.96,208.51,1668.71
@@ -249,7 +233,6 @@ Flags=1
 
 [ENTRY]
 ID=620757305
-PlacedBy=0
 Asset=Prop-Crypt-Skull_Pile_Large
 Name=Untitled
 Pos=1695.82,206.216,1743.66
@@ -259,7 +242,6 @@ Flags=1
 
 [ENTRY]
 ID=620757306
-PlacedBy=0
 Asset=Prop-Crypt-Skull_Pile_Large
 Name=Untitled
 Pos=1909.98,208.57,1792.16
@@ -269,7 +251,6 @@ Flags=1
 
 [ENTRY]
 ID=620757307
-PlacedBy=0
 Asset=Prop-Crypt-Skull_Pile_Large
 Name=Untitled
 Pos=1674.36,206.487,1748.73
@@ -279,7 +260,6 @@ Flags=1
 
 [ENTRY]
 ID=620757308
-PlacedBy=0
 Asset=Prop-Crypt-Skull_Pile_Large
 Name=Untitled
 Pos=1662.08,209.256,1765.28
@@ -289,7 +269,6 @@ Flags=1
 
 [ENTRY]
 ID=620757335
-PlacedBy=0
 Asset=Prop-Spider_Webs#Prop-Spider_Webs1
 Name=Untitled
 Pos=1748.91,135.351,1337.33
@@ -299,7 +278,6 @@ Flags=1
 
 [ENTRY]
 ID=620757336
-PlacedBy=0
 Asset=Prop-Spider_Webs1
 Name=Untitled
 Pos=1974.19,243.658,1910.58
@@ -309,7 +287,6 @@ Flags=1
 
 [ENTRY]
 ID=620757337
-PlacedBy=0
 Asset=Prop-Spider_Webs1
 Name=Untitled
 Pos=1604.67,243.658,1939.84
@@ -319,7 +296,6 @@ Flags=1
 
 [ENTRY]
 ID=620757338
-PlacedBy=0
 Asset=Prop-Spider_Webs#Prop-Spider_Webs1
 Name=Untitled
 Pos=1430.2,273.134,1610.76
@@ -329,7 +305,6 @@ Flags=1
 
 [ENTRY]
 ID=620757340
-PlacedBy=0
 Asset=Prop-Spider_Cocoon#Prop-Spider_Cocoon2
 Name=Untitled
 Pos=1944.43,313.608,1868.33
@@ -338,7 +313,6 @@ Scale=1,1,1
 
 [ENTRY]
 ID=620757341
-PlacedBy=0
 Asset=Prop-Spider_Cocoon#Prop-Spider_Cocoon2
 Name=Untitled
 Pos=1952.04,260.569,1845.61
@@ -347,7 +321,6 @@ Scale=1,1,1
 
 [ENTRY]
 ID=620757342
-PlacedBy=0
 Asset=Prop-Spider_Cocoon#Prop-Spider_Cocoon2
 Name=Untitled
 Pos=1636.28,264.472,1901.08
@@ -356,7 +329,6 @@ Scale=1,1,1
 
 [ENTRY]
 ID=620757343
-PlacedBy=0
 Asset=Prop-Spider_Cocoon2
 Name=Untitled
 Pos=1613.31,291.41,1884.9
@@ -365,7 +337,6 @@ Scale=1,1,1
 
 [ENTRY]
 ID=620757344
-PlacedBy=0
 Asset=Prop-Spider_Cocoon#Prop-Spider_Cocoon2
 Name=Untitled
 Pos=1547.03,297.116,1580.11
@@ -374,7 +345,6 @@ Scale=1,1,1
 
 [ENTRY]
 ID=620757345
-PlacedBy=0
 Asset=Prop-Spider_Cocoon#Prop-Spider_Cocoon2
 Name=Untitled
 Pos=1537.73,298.364,1615.51
@@ -383,7 +353,6 @@ Scale=1,1,1
 
 [ENTRY]
 ID=620757346
-PlacedBy=0
 Asset=Prop-Spider_Cocoon2
 Name=Untitled
 Pos=1526.47,316.27,1650.79
@@ -392,7 +361,6 @@ Scale=1,1,1
 
 [ENTRY]
 ID=620757347
-PlacedBy=0
 Asset=Prop-Spider_Eggsack#Prop-Spider_Eggsack1
 Name=Untitled
 Pos=1746.41,324.625,1424.47
@@ -401,7 +369,6 @@ Scale=2.625,2.625,2.625
 
 [ENTRY]
 ID=620757348
-PlacedBy=0
 Asset=Prop-Spider_Eggsack1
 Name=Untitled
 Pos=1824.83,271.152,1438.15
@@ -410,7 +377,6 @@ Scale=2.15,2.15,2.15
 
 [ENTRY]
 ID=620757349
-PlacedBy=0
 Asset=Prop-Spider_Eggsack1
 Name=Untitled
 Pos=1812.44,291.953,1424.47
@@ -419,7 +385,6 @@ Scale=3.525,3.525,3.525
 
 [ENTRY]
 ID=620757350
-PlacedBy=0
 Asset=Prop-Spider_Eggsack1
 Name=Untitled
 Pos=1734.31,271.152,1424.47
@@ -428,7 +393,6 @@ Scale=2.15,2.15,2.15
 
 [ENTRY]
 ID=620757352
-PlacedBy=0
 Asset=Prop-Spider_Cocoon2
 Name=Untitled
 Pos=1928.47,272.29,1868.33
@@ -438,7 +402,6 @@ Flags=1
 
 [ENTRY]
 ID=620757360
-PlacedBy=0
 Asset=Effects#Par-Ground_Fog1
 Name=Untitled
 Pos=1766.64,211.464,1699.41
@@ -447,7 +410,6 @@ Scale=1.95,1.95,1.95
 
 [ENTRY]
 ID=620757401
-PlacedBy=0
 Asset=Prop-Crypt-Skull_Pile_Large
 Name=Untitled
 Pos=1850.23,185.853,1684.73
@@ -457,7 +419,6 @@ Flags=1
 
 [ENTRY]
 ID=620757402
-PlacedBy=0
 Asset=Prop-Crypt-Skull_Pile_Large
 Name=Untitled
 Pos=1800.65,185.465,1561.62
@@ -467,7 +428,6 @@ Flags=1
 
 [ENTRY]
 ID=620757403
-PlacedBy=0
 Asset=Prop-Crypt-Skull_Pile_Large
 Name=Untitled
 Pos=1499.4,209.978,1778.07
@@ -476,7 +436,6 @@ Scale=3.25,3.25,3.25
 
 [ENTRY]
 ID=620757458
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=1765,208.655,1540
@@ -487,7 +446,6 @@ sequential=1
 
 [ENTRY]
 ID=620757730
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=1620.31,209.715,1654.02
@@ -499,7 +457,6 @@ link=620757731,1
 
 [ENTRY]
 ID=620757731
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=1910.23,209.645,1650.41
@@ -510,7 +467,6 @@ link=620757730,1
 
 [ENTRY]
 ID=620757732
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=1710,209.308,1785
@@ -520,7 +476,6 @@ spawnPackage=3_dng_sl_SpibearsBack_22_23
 
 [ENTRY]
 ID=620757733
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=1900,210.405,1715
@@ -532,7 +487,6 @@ link=620757737,1
 
 [ENTRY]
 ID=620757734
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=1835,210.584,1780
@@ -545,7 +499,6 @@ link=620757739,1
 
 [ENTRY]
 ID=620757735
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=1895,210,1875
@@ -557,7 +510,6 @@ link=620757736,1
 
 [ENTRY]
 ID=620757736
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=1970,210,1800
@@ -569,7 +521,6 @@ link=620757737,1
 
 [ENTRY]
 ID=620757737
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=1980,210,1695
@@ -581,7 +532,6 @@ link=620757736,1
 
 [ENTRY]
 ID=620757739
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=1835,211.402,1780
@@ -593,7 +543,6 @@ link=620757734,1
 
 [ENTRY]
 ID=620757741
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=1965,209.608,1625
@@ -605,7 +554,6 @@ link=620757742,1
 
 [ENTRY]
 ID=620757742
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=1930,208.539,1520
@@ -617,7 +565,6 @@ link=620757743,1
 
 [ENTRY]
 ID=620757743
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=1845,209.36,1460
@@ -629,7 +576,6 @@ link=620757744,1
 
 [ENTRY]
 ID=620757744
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=1775,210,1435
@@ -640,7 +586,6 @@ link=620757743,1
 
 [ENTRY]
 ID=620757745
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=1995,209.608,1560
@@ -650,7 +595,6 @@ spawnPackage=3_dng_sl_SpibearsBack_22_23
 
 [ENTRY]
 ID=620757746
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=1765,190.565,1595
@@ -662,7 +606,6 @@ link=620757747,1
 
 [ENTRY]
 ID=620757747
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=1765,210.741,1750
@@ -674,7 +617,6 @@ link=620757748,1
 
 [ENTRY]
 ID=620757749
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=1685,210.125,1840
@@ -687,7 +629,6 @@ link=620757753,1
 
 [ENTRY]
 ID=620757750
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=1605,210,1875
@@ -699,7 +640,6 @@ link=620757751,1
 
 [ENTRY]
 ID=620757751
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=1555,209.873,1795
@@ -711,7 +651,6 @@ link=620757752,1
 
 [ENTRY]
 ID=620757752
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=1570,208.199,1700
@@ -723,7 +662,6 @@ link=620757751,1
 
 [ENTRY]
 ID=620757753
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=1685,210.329,1840
@@ -735,11 +673,10 @@ link=620757749,1
 
 [ENTRY]
 ID=620757754
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=1730,210.384,1445
-Orient=0,-1,0,7.54979e-008
+Orient=0,-1,0,7.54979e-08
 Scale=1,1,1
 spawnPackage=3_dng_sl_SpibearsBack_22_23
 links_count=1
@@ -747,7 +684,6 @@ link=620757755,1
 
 [ENTRY]
 ID=620757755
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=1620,209.676,1440
@@ -759,7 +695,6 @@ link=620757756,1
 
 [ENTRY]
 ID=620757756
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=1550,210,1500
@@ -771,7 +706,6 @@ link=620757757,1
 
 [ENTRY]
 ID=620757757
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=1540,210,1615
@@ -782,7 +716,6 @@ link=620757756,1
 
 [ENTRY]
 ID=620757760
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=1763.66,229.18,1785.96

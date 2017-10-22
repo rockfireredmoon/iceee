@@ -504,3 +504,12 @@ Orient=0,0.714978,0,-0.699147
 Scale=1,1,1
 spawnPackage=#F7791
 
+[ENTRY]
+ID=1154519
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=2086.96,266.536,2461.03
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#F16072
+

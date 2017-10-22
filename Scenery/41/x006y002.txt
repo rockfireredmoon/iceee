@@ -1,16 +1,26 @@
 [ENTRY]
+ID=1154538
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=6854.57,50,2915.24
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#F16063
+
+[ENTRY]
 ID=10000008
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=6666,53,2724
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=157
-sceneryName=generated_spawn
 spawnPackage=z41_rt_gen_Up_2370
 
 [ENTRY]
 ID=687865902
 Asset=Dng-Room_Divider?ATS=ATS-Dungeon_Temple
+Name=Untitled
 Pos=6730,50,2880
 Orient=0,-0.707106,0,-0.707107
 Scale=1,1,1
@@ -19,6 +29,7 @@ Flags=1
 [ENTRY]
 ID=687865960
 Asset=Dng-Room_Narrow_Cap1?ATS=ATS-Dungeon_Temple
+Name=Untitled
 Pos=6730,50,2785
 Orient=0,-0.707106,0,-0.707107
 Scale=1,1,1
@@ -27,6 +38,7 @@ Flags=1
 [ENTRY]
 ID=687865964
 Asset=Dng-Room_Corner2?ATS=ATS-Dungeon_Temple
+Name=Untitled
 Pos=6910,50,2975
 Orient=0,-0.707106,0,-0.707107
 Scale=1,1,1
@@ -35,6 +47,7 @@ Flags=1
 [ENTRY]
 ID=687865966
 Asset=Dng-Room_Center?ATS=ATS-Dungeon_Temple
+Name=Untitled
 Pos=6730,50,2975
 Orient=0,-0.707106,0,-0.707107
 Scale=1,1,1
@@ -43,14 +56,16 @@ Flags=1
 [ENTRY]
 ID=687865967
 Asset=Dng-Room_Corner2?ATS=ATS-Dungeon_Temple
+Name=Untitled
 Pos=6550,50,2975
-Orient=0,-1,0,-7.7486e-007
+Orient=0,-1,0,-7.7486e-07
 Scale=1,1,1
 Flags=1
 
 [ENTRY]
 ID=687866724
 Asset=Cl-Bramble_Lair1#CL-Bramble_Lair1
+Name=Untitled
 Pos=6983.37,39.3348,2897.84
 Orient=0,-0.94302,0,-0.332736
 Scale=2.725,2.725,2.725
@@ -59,6 +74,7 @@ Flags=1
 [ENTRY]
 ID=687866728
 Asset=CL-Bramble_Lair1
+Name=Untitled
 Pos=6485.98,39.3348,2897.84
 Orient=0,-0.928369,0,0.37166
 Scale=2.725,2.725,2.725
@@ -67,6 +83,7 @@ Flags=1
 [ENTRY]
 ID=687866749
 Asset=Lights#Light-Medium
+Name=Untitled
 Pos=6722.85,108.65,2778.2
 Orient=0,0,0,1
 Scale=1,1,1
@@ -74,6 +91,7 @@ Scale=1,1,1
 [ENTRY]
 ID=687866750
 Asset=Prop-Pedestal1
+Name=Untitled
 Pos=6667.71,2.7873,2721.8
 Orient=0,0,0,1
 Scale=5.1,5.1,5.1
@@ -81,6 +99,7 @@ Scale=5.1,5.1,5.1
 [ENTRY]
 ID=687866751
 Asset=Prop-Pedestal1
+Name=Untitled
 Pos=6667.71,-19.2499,2721.8
 Orient=0,0,0,1
 Scale=7.075,7.075,7.075
@@ -88,6 +107,7 @@ Scale=7.075,7.075,7.075
 [ENTRY]
 ID=687867577
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=6935,55,2945
 Orient=0,-0.92388,0,0.382683
 Scale=1,1,1
@@ -96,6 +116,7 @@ spawnPackage=2_rt_Floor3_1_35
 [ENTRY]
 ID=687867578
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=6535,55,2960
 Orient=0,-0.382683,0,0.92388
 Scale=1,1,1
@@ -104,6 +125,7 @@ spawnPackage=2_rt_Floor3_1_35
 [ENTRY]
 ID=687867581
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=6860,50,2955
 Orient=0,0,0,1
 Scale=1,1,1
@@ -114,6 +136,7 @@ link=687867582,1
 [ENTRY]
 ID=687867582
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=6950,50,2990
 Orient=0,0,0,1
 Scale=1,1,1
@@ -124,6 +147,7 @@ link=687867583,1
 [ENTRY]
 ID=687867584
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=6910,50,2945
 Orient=0,0,0,1
 Scale=1,1,1
@@ -134,17 +158,19 @@ link=687867583,1
 [ENTRY]
 ID=687867585
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=6635,55,2960
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=2_rt_Floor3_1_35
 links_count=2
 link=687867586,1
 link=687867589,1
-spawnPackage=2_rt_Floor3_1_35
 
 [ENTRY]
 ID=687867586
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=6575,50,2970
 Orient=0,0,0,1
 Scale=1,1,1
@@ -155,6 +181,7 @@ link=687867587,1
 [ENTRY]
 ID=687867587
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=6605,50,2920
 Orient=0,0,0,1
 Scale=1,1,1
@@ -165,6 +192,7 @@ link=687867588,1
 [ENTRY]
 ID=687867588
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=6615,50,2990
 Orient=0,0,0,1
 Scale=1,1,1
@@ -175,6 +203,7 @@ link=687867589,1
 [ENTRY]
 ID=687867589
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=6570,50,2930
 Orient=0,0,0,1
 Scale=1,1,1
@@ -185,6 +214,7 @@ link=687867588,1
 [ENTRY]
 ID=687867590
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=6710,55,2965
 Orient=0,0.707107,0,0.707107
 Scale=1,1,1
@@ -193,6 +223,7 @@ spawnPackage=2_rt_Floor3_1_35
 [ENTRY]
 ID=687867591
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=6750,55,2965
 Orient=0,0.707107,0,0.707107
 Scale=1,1,1
@@ -201,17 +232,19 @@ spawnPackage=2_rt_Floor3_1_35
 [ENTRY]
 ID=687867598
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=6655,50,2930
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=2_rt_TheBeast_k_h_36
 links_count=2
 link=687867599,1
 link=687867609,1
-spawnPackage=2_rt_TheBeast_k_h_36
 
 [ENTRY]
 ID=687867599
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=6800,50,2930
 Orient=0,0,0,1
 Scale=1,1,1
@@ -222,6 +255,7 @@ link=687867600,1
 [ENTRY]
 ID=687867600
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=6655,50,2930
 Orient=0,0,0,1
 Scale=1,1,1
@@ -232,6 +266,7 @@ link=687867601,1
 [ENTRY]
 ID=687867601
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=6800,50,2930
 Orient=0,0,0,1
 Scale=1,1,1
@@ -242,6 +277,7 @@ link=687867602,1
 [ENTRY]
 ID=687867602
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=6655,50,2930
 Orient=0,0,0,1
 Scale=1,1,1
@@ -252,6 +288,7 @@ link=687867603,1
 [ENTRY]
 ID=687867603
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=6800,50,2930
 Orient=0,0,0,1
 Scale=1,1,1
@@ -262,6 +299,7 @@ link=687867604,1
 [ENTRY]
 ID=687867604
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=6655,50,2930
 Orient=0,0,0,1
 Scale=1,1,1
@@ -272,6 +310,7 @@ link=687867605,1
 [ENTRY]
 ID=687867605
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=6800,50,2930
 Orient=0,0,0,1
 Scale=1,1,1
@@ -282,6 +321,7 @@ link=687867606,1
 [ENTRY]
 ID=687867606
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=6655,50,2930
 Orient=0,0,0,1
 Scale=1,1,1
@@ -292,6 +332,7 @@ link=687867607,1
 [ENTRY]
 ID=687867607
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=6730,50,2930
 Orient=0,0,0,1
 Scale=1,1,1
@@ -302,6 +343,7 @@ link=687867608,1
 [ENTRY]
 ID=687867608
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=6730,50,2860
 Orient=0,0,0,1
 Scale=1,1,1
@@ -312,6 +354,7 @@ link=687867609,1
 [ENTRY]
 ID=687867609
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=6730,50,2930
 Orient=0,0,0,1
 Scale=1,1,1

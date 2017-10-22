@@ -1,7 +1,7 @@
 [ENTRY]
 ID=1127690
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=63850.9,764.919,65277.2
 Orient=0,0.999667,0,0.0257935
 Scale=1,1,1
@@ -10,7 +10,7 @@ spawnPackage=11_dth_wilds_44_45_north
 [ENTRY]
 ID=1127694
 Asset=Prop-BonesTex_A#Prop-Bones_RibsCage1
-Name=
+Name=Untitled
 Pos=63801.8,877.284,65274.2
 Orient=1,0,0,7.54979e-08
 Scale=2,2,2
@@ -18,7 +18,7 @@ Scale=2,2,2
 [ENTRY]
 ID=1127695
 Asset=Effects#Par-Ground_Fog1
-Name=
+Name=Untitled
 Pos=63752.9,771.376,65279.6
 Orient=0,0,0,1
 Scale=1,1,1
@@ -26,7 +26,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1127697
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=63793.8,761.446,65331.1
 Orient=0,0.819192,0,0.57352
 Scale=1,1,1
@@ -35,7 +35,7 @@ spawnPackage=11_dth_wilds_44_45_north
 [ENTRY]
 ID=1127703
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=63823.7,762.574,65277.4
 Orient=0,0,0,1
 Scale=1,1,1

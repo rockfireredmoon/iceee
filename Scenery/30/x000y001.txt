@@ -145,7 +145,7 @@ Scale=2,2,2
 [ENTRY]
 ID=1127092
 Asset=Prop-Dungeon_Accents1#Prop-Dungeon_Chain2
-Name=
+Name=Untitled
 Pos=1219.39,322.32,3416.59
 Orient=0,0,0,1
 Scale=1.3,1.3,1.3
@@ -153,7 +153,7 @@ Scale=1.3,1.3,1.3
 [ENTRY]
 ID=1127093
 Asset=Prop-Dungeon_Accents1#Prop-Dungeon_Chain3
-Name=
+Name=Untitled
 Pos=1345.03,385.844,3279.58
 Orient=0,0,0,1
 Scale=1,1,1
@@ -161,7 +161,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1127094
 Asset=Prop-Battlefield1#Prop-Battlefield_Skeleton1
-Name=
+Name=Untitled
 Pos=1349.09,237.932,3280.73
 Orient=0,0,-0.918788,0.394751
 Scale=1,1,1
@@ -169,7 +169,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1127095
 Asset=Prop-Crypt_Props#Prop-Crypt_Statue1
-Name=
+Name=Untitled
 Pos=1461.35,170,3444.17
 Orient=0,0,0,1
 Scale=2,2,2
@@ -177,7 +177,7 @@ Scale=2,2,2
 [ENTRY]
 ID=1127096
 Asset=Prop-Crypt_Props#Prop-Crypt_Statue1
-Name=
+Name=Untitled
 Pos=1458.72,170,3354.87
 Orient=0,0,0,1
 Scale=2,2,2
@@ -185,7 +185,7 @@ Scale=2,2,2
 [ENTRY]
 ID=1127097
 Asset=Prop-Crypt_Props#Prop-Crypt_Statue1
-Name=
+Name=Untitled
 Pos=1055.69,209.131,3355.07
 Orient=0,0.999168,0,0.040785
 Scale=1,1,1
@@ -193,7 +193,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1127098
 Asset=Prop-Crypt_Props#Prop-Crypt_Statue1
-Name=
+Name=Untitled
 Pos=1054.28,209.287,3424.7
 Orient=0,0.99879,0,-0.0491838
 Scale=1,1,1
@@ -201,7 +201,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1127100
 Asset=Prop-Church1#Prop-Church_Altar1
-Name=
+Name=Untitled
 Pos=964.896,200,3388.14
 Orient=0,-0.703279,0,0.710914
 Scale=1,1,1
@@ -209,7 +209,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1127101
 Asset=Prop-Brazier
-Name=
+Name=Untitled
 Pos=968.355,200,3423.29
 Orient=0,0,0,1
 Scale=1,1,1
@@ -217,7 +217,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1127102
 Asset=Prop-Brazier
-Name=
+Name=Untitled
 Pos=967.085,200,3349.67
 Orient=0,0,0,1
 Scale=1,1,1
@@ -225,7 +225,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1127105
 Asset=Prop-Crypt_Plinth
-Name=
+Name=Untitled
 Pos=1295.54,142.786,3175.8
 Orient=0,0,0,1
 Scale=3,3,3
@@ -233,7 +233,7 @@ Scale=3,3,3
 [ENTRY]
 ID=1127106
 Asset=Prop-Crypt_Plinth
-Name=
+Name=Untitled
 Pos=1294.45,143.188,3595.63
 Orient=0,0,0,1
 Scale=3,3,3
@@ -241,7 +241,7 @@ Scale=3,3,3
 [ENTRY]
 ID=1127107
 Asset=Prop-Crypt_Plinth
-Name=
+Name=Untitled
 Pos=1298.19,133.97,3393.34
 Orient=0,0,0,1
 Scale=4,4,4
@@ -249,7 +249,7 @@ Scale=4,4,4
 [ENTRY]
 ID=1127108
 Asset=Prop-Crypt_Plinth
-Name=
+Name=Untitled
 Pos=1299.52,144.007,3393.68
 Orient=0,0,0,1
 Scale=3,3,3
@@ -257,10 +257,28 @@ Scale=3,3,3
 [ENTRY]
 ID=1127109
 Asset=Prop-Crypt_Plinth
-Name=
+Name=Untitled
 Pos=1300.44,154.151,3393.48
 Orient=0,0,0,1
 Scale=2,2,2
+
+[ENTRY]
+ID=1154561
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=1892.87,170,2213.58
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#F16032
+
+[ENTRY]
+ID=1154562
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=1295.29,170.233,3177.94
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#F16036
 
 [ENTRY]
 ID=10000002

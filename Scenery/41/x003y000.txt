@@ -1,6 +1,14 @@
 [ENTRY]
+ID=1154532
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=3456.57,50,731.762
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#F16057
+
+[ENTRY]
 ID=10000002
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=3635,53,547
@@ -11,17 +19,15 @@ spawnPackage=z41_rt_gen_Up_2376
 
 [ENTRY]
 ID=687865859
-PlacedBy=0
 Asset=Dng-Room_Divider?ATS=ATS-Dungeon_Temple
 Name=Untitled
 Pos=3420,50,800
-Orient=0,1,0,-5.96046e-008
+Orient=0,1,0,-5.96046e-08
 Scale=1,1,1
 Flags=1
 
 [ENTRY]
 ID=687865869
-PlacedBy=0
 Asset=Dng-Room_Extender1?ATS=ATS-Dungeon_Temple
 Name=Untitled
 Pos=3455,50,800
@@ -31,17 +37,15 @@ Flags=1
 
 [ENTRY]
 ID=687865870
-PlacedBy=0
 Asset=Dng-Room_Corner2?ATS=ATS-Dungeon_Temple
 Name=Untitled
 Pos=3575,50,800
-Orient=0,5.96046e-008,0,-1
+Orient=0,5.96046e-08,0,-1
 Scale=1,1,1
 Flags=1
 
 [ENTRY]
 ID=687865871
-PlacedBy=0
 Asset=Dng-Room_Narrow_Cap1?ATS=ATS-Dungeon_Temple
 Name=Untitled
 Pos=3575,50,610
@@ -51,7 +55,6 @@ Flags=1
 
 [ENTRY]
 ID=687865876
-PlacedBy=0
 Asset=Dng-Room_Corner?ATS=ATS-Dungeon_Temple
 Name=Untitled
 Pos=3325,50,800
@@ -61,7 +64,6 @@ Flags=1
 
 [ENTRY]
 ID=687865877
-PlacedBy=0
 Asset=Dng-Room_Divider?ATS=ATS-Dungeon_Temple
 Name=Untitled
 Pos=3325,50,705
@@ -71,7 +73,6 @@ Flags=1
 
 [ENTRY]
 ID=687865880
-PlacedBy=0
 Asset=Dng-Room_Narrow_Cap1?ATS=ATS-Dungeon_Temple
 Name=Untitled
 Pos=3325,50,610
@@ -81,7 +82,6 @@ Flags=1
 
 [ENTRY]
 ID=687865881
-PlacedBy=0
 Asset=Dng-Room_Divider?ATS=ATS-Dungeon_Temple
 Name=Untitled
 Pos=3575,50,705
@@ -91,7 +91,6 @@ Flags=1
 
 [ENTRY]
 ID=687866066
-PlacedBy=0
 Asset=Prop-Pedestal1
 Name=Untitled
 Pos=3264.63,-18.9211,559.417
@@ -100,7 +99,6 @@ Scale=7.075,7.075,7.075
 
 [ENTRY]
 ID=687866067
-PlacedBy=0
 Asset=Prop-Pedestal1
 Name=Untitled
 Pos=3264.63,2.78727,559.417
@@ -109,7 +107,6 @@ Scale=5.1,5.1,5.1
 
 [ENTRY]
 ID=687866068
-PlacedBy=0
 Asset=Prop-Pedestal1
 Name=Untitled
 Pos=3636.5,-18.9211,546.836
@@ -118,7 +115,6 @@ Scale=7.075,7.075,7.075
 
 [ENTRY]
 ID=687866069
-PlacedBy=0
 Asset=Prop-Pedestal1
 Name=Untitled
 Pos=3636.5,2.78727,546.836
@@ -127,7 +123,6 @@ Scale=5.1,5.1,5.1
 
 [ENTRY]
 ID=687866071
-PlacedBy=0
 Asset=Prop-Bookcase2
 Name=Untitled
 Pos=3401.01,50,544.685
@@ -136,7 +131,6 @@ Scale=2,2,2
 
 [ENTRY]
 ID=687866076
-PlacedBy=0
 Asset=Prop-Bookcase
 Name=Untitled
 Pos=3383.59,119.771,714.168
@@ -145,7 +139,6 @@ Scale=2,2,2
 
 [ENTRY]
 ID=687866077
-PlacedBy=0
 Asset=Prop-Vase1#Prop-Vase1
 Name=Untitled
 Pos=3374.16,82.6691,875.219
@@ -154,7 +147,6 @@ Scale=3.75,3.75,3.75
 
 [ENTRY]
 ID=687866079
-PlacedBy=0
 Asset=Prop-Vase_Fancy1#Prop-Vase_Fancy1
 Name=Untitled
 Pos=3297.02,102.296,880.827
@@ -163,7 +155,6 @@ Scale=3.65,3.65,3.65
 
 [ENTRY]
 ID=687866080
-PlacedBy=0
 Asset=Prop-Vase2
 Name=Untitled
 Pos=3352.26,82.39,877.932
@@ -172,7 +163,6 @@ Scale=3.575,3.575,3.575
 
 [ENTRY]
 ID=687866084
-PlacedBy=0
 Asset=Prop-Dungeon-Huge_Bookcase
 Name=Untitled
 Pos=3248.2,143.389,846.801
@@ -181,7 +171,6 @@ Scale=2.5,2.5,2.5
 
 [ENTRY]
 ID=687866085
-PlacedBy=0
 Asset=Prop-Dungeon-Huge_Bookcase
 Name=Untitled
 Pos=3235.91,90.2267,875.609
@@ -190,7 +179,6 @@ Scale=2,2,2
 
 [ENTRY]
 ID=687866086
-PlacedBy=0
 Asset=Prop-Bookcase
 Name=Untitled
 Pos=3369.23,50,887.619
@@ -199,7 +187,6 @@ Scale=5,5,5
 
 [ENTRY]
 ID=687866088
-PlacedBy=0
 Asset=Prop-Bookcase
 Name=Untitled
 Pos=3518.74,169.779,873.379
@@ -208,7 +195,6 @@ Scale=2.55,2.55,2.55
 
 [ENTRY]
 ID=687866090
-PlacedBy=0
 Asset=Prop-Bookcase
 Name=Untitled
 Pos=3333.85,129.189,727.875
@@ -217,7 +203,6 @@ Scale=4,4,4
 
 [ENTRY]
 ID=687866091
-PlacedBy=0
 Asset=Prop-Bookcase
 Name=Untitled
 Pos=3252.97,130.475,785.769
@@ -226,7 +211,6 @@ Scale=4,4,4
 
 [ENTRY]
 ID=687866092
-PlacedBy=0
 Asset=Prop-Bookcase
 Name=Untitled
 Pos=3395.73,131.186,785.769
@@ -235,7 +219,6 @@ Scale=4,4,4
 
 [ENTRY]
 ID=687866093
-PlacedBy=0
 Asset=Prop-Bench1
 Name=Untitled
 Pos=3520.76,171.178,794.648
@@ -244,7 +227,6 @@ Scale=1.5,1.5,1.5
 
 [ENTRY]
 ID=687866094
-PlacedBy=0
 Asset=Prop-Bookcase
 Name=Untitled
 Pos=3636,169.779,798.933
@@ -253,7 +235,6 @@ Scale=2.55,2.55,2.55
 
 [ENTRY]
 ID=687866095
-PlacedBy=0
 Asset=Prop-Bookcase
 Name=Untitled
 Pos=3515.15,169.779,725.364
@@ -262,7 +243,6 @@ Scale=2.55,2.55,2.55
 
 [ENTRY]
 ID=687866096
-PlacedBy=0
 Asset=Prop-Bookcase
 Name=Untitled
 Pos=3635.95,169.779,725.777
@@ -271,7 +251,6 @@ Scale=2.55,2.55,2.55
 
 [ENTRY]
 ID=687866097
-PlacedBy=0
 Asset=Prop-Bookcase
 Name=Untitled
 Pos=3613.08,169.779,872.051
@@ -280,7 +259,6 @@ Scale=2.55,2.55,2.55
 
 [ENTRY]
 ID=687866098
-PlacedBy=0
 Asset=Prop-Wooden_Furniture#Prop-Table5
 Name=Untitled
 Pos=3549.07,180.976,794.898
@@ -289,7 +267,6 @@ Scale=2.5,2.5,2.5
 
 [ENTRY]
 ID=687866099
-PlacedBy=0
 Asset=Prop-Lantern1#Prop-Lantern1
 Name=Untitled
 Pos=3535.52,157.444,788.559
@@ -298,7 +275,6 @@ Scale=3.05,3.05,3.05
 
 [ENTRY]
 ID=687866100
-PlacedBy=0
 Asset=Prop-Books#Prop-Book3
 Name=Untitled
 Pos=3507.61,163.691,761.03
@@ -307,7 +283,6 @@ Scale=1.15,1.15,1.15
 
 [ENTRY]
 ID=687866101
-PlacedBy=0
 Asset=Prop-Books#Prop-Book4
 Name=Untitled
 Pos=3557.74,155.286,799.533
@@ -316,7 +291,6 @@ Scale=1.65,1.65,1.65
 
 [ENTRY]
 ID=687866102
-PlacedBy=0
 Asset=Prop-Bench1
 Name=Untitled
 Pos=3548.85,171.178,831.642
@@ -325,7 +299,6 @@ Scale=1.5,1.5,1.5
 
 [ENTRY]
 ID=687866103
-PlacedBy=0
 Asset=Prop-Bench1
 Name=Untitled
 Pos=3570.78,171.178,864.784
@@ -334,7 +307,6 @@ Scale=1.5,1.5,1.5
 
 [ENTRY]
 ID=687866104
-PlacedBy=0
 Asset=Prop-Bench1
 Name=Untitled
 Pos=3578.31,171.178,794.648
@@ -343,7 +315,6 @@ Scale=1.5,1.5,1.5
 
 [ENTRY]
 ID=687866107
-PlacedBy=0
 Asset=Prop-Books#Prop-Book2
 Name=Untitled
 Pos=3551.16,153.973,801.109
@@ -352,7 +323,6 @@ Scale=1.625,1.625,1.625
 
 [ENTRY]
 ID=687866108
-PlacedBy=0
 Asset=Light-Large?COLOR=FF9900
 Name=Untitled
 Pos=3332.93,113.726,790.452
@@ -361,7 +331,6 @@ Scale=1,1,1
 
 [ENTRY]
 ID=687866109
-PlacedBy=0
 Asset=Prop-Bench1
 Name=Untitled
 Pos=3548.85,171.178,762.095
@@ -370,7 +339,6 @@ Scale=1.5,1.5,1.5
 
 [ENTRY]
 ID=687866110
-PlacedBy=0
 Asset=Prop-Bench1
 Name=Untitled
 Pos=3579.63,171.178,726.062
@@ -379,7 +347,6 @@ Scale=1.5,1.5,1.5
 
 [ENTRY]
 ID=687866111
-PlacedBy=0
 Asset=Prop-Book3
 Name=Untitled
 Pos=3567.56,152.424,794.348
@@ -388,7 +355,6 @@ Scale=1.625,1.625,1.625
 
 [ENTRY]
 ID=687866112
-PlacedBy=0
 Asset=Prop-Book3
 Name=Untitled
 Pos=3609.91,166.969,794.348
@@ -397,7 +363,6 @@ Scale=1.625,1.625,1.625
 
 [ENTRY]
 ID=687866113
-PlacedBy=0
 Asset=Prop-Book3
 Name=Untitled
 Pos=3519.1,166.969,761.927
@@ -406,7 +371,6 @@ Scale=1.625,1.625,1.625
 
 [ENTRY]
 ID=687866114
-PlacedBy=0
 Asset=Prop-Wooden_Furniture#Prop-Chair5
 Name=Untitled
 Pos=3587,170.611,766.097
@@ -415,7 +379,6 @@ Scale=2,2,2
 
 [ENTRY]
 ID=687866115
-PlacedBy=0
 Asset=Prop-Chair5
 Name=Untitled
 Pos=3587,170.611,831.557
@@ -424,7 +387,6 @@ Scale=2,2,2
 
 [ENTRY]
 ID=687866116
-PlacedBy=0
 Asset=Prop-Wooden_Furniture#Prop-Chair5
 Name=Untitled
 Pos=3374.08,85.0204,707.713
@@ -433,7 +395,6 @@ Scale=2,2,2
 
 [ENTRY]
 ID=687866117
-PlacedBy=0
 Asset=Prop-Chair5
 Name=Untitled
 Pos=3297.18,229.33,772.623
@@ -442,7 +403,6 @@ Scale=3,3,3
 
 [ENTRY]
 ID=687866118
-PlacedBy=0
 Asset=Prop-Chair5
 Name=Untitled
 Pos=3237.92,74.2059,835.199
@@ -451,7 +411,6 @@ Scale=3,3,3
 
 [ENTRY]
 ID=687866119
-PlacedBy=0
 Asset=Prop-Braziers#Prop-Brazier2
 Name=Untitled
 Pos=3327.49,141.872,794.862
@@ -460,7 +419,6 @@ Scale=2,2,2
 
 [ENTRY]
 ID=687866120
-PlacedBy=0
 Asset=Light-Large?COLOR=FFFF00
 Name=Untitled
 Pos=3528.8,145.243,790.452
@@ -469,7 +427,6 @@ Scale=1,1,1
 
 [ENTRY]
 ID=687866122
-PlacedBy=0
 Asset=Prop-Bookcase
 Name=Untitled
 Pos=3406.59,50,715.979
@@ -478,7 +435,6 @@ Scale=0.25,0.25,0.25
 
 [ENTRY]
 ID=687866123
-PlacedBy=0
 Asset=Prop-Dungeon-Cobwebs1#Prop-Dungeon-Cobwebs1
 Name=Untitled
 Pos=3337.87,192.797,813.381
@@ -487,7 +443,6 @@ Scale=1,1,1
 
 [ENTRY]
 ID=687866124
-PlacedBy=0
 Asset=Prop-Dungeon-Cobwebs1
 Name=Untitled
 Pos=3337.87,160.504,844.744
@@ -497,7 +452,6 @@ Flags=1
 
 [ENTRY]
 ID=687866125
-PlacedBy=0
 Asset=Prop-Spider_Webs#Prop-Spider_Webs1
 Name=Untitled
 Pos=3432.08,50,716.126
@@ -507,7 +461,6 @@ Flags=1
 
 [ENTRY]
 ID=687866126
-PlacedBy=0
 Asset=Prop-Spider_Webs1
 Name=Untitled
 Pos=3658.93,50,715.892
@@ -517,7 +470,6 @@ Flags=1
 
 [ENTRY]
 ID=687866127
-PlacedBy=0
 Asset=Prop-Spider_Webs1
 Name=Untitled
 Pos=3654.14,50,884.282
@@ -527,7 +479,6 @@ Flags=1
 
 [ENTRY]
 ID=687866128
-PlacedBy=0
 Asset=Prop-Spider_Webs1
 Name=Untitled
 Pos=3437.12,50,881.213
@@ -537,7 +488,6 @@ Flags=1
 
 [ENTRY]
 ID=687866129
-PlacedBy=0
 Asset=Prop-Dungeon-Cobwebs1
 Name=Untitled
 Pos=3337.87,160.504,744.783
@@ -547,7 +497,6 @@ Flags=1
 
 [ENTRY]
 ID=687866131
-PlacedBy=0
 Asset=CL-Furniture1
 Name=Untitled
 Pos=3395.66,50,724.707
@@ -556,7 +505,6 @@ Scale=0.25,0.25,0.25
 
 [ENTRY]
 ID=687866133
-PlacedBy=0
 Asset=Statue_Robed#Prop-Statue-Body_Robed1
 Name=Untitled
 Pos=3506.25,49.5693,678.005
@@ -565,7 +513,6 @@ Scale=4,4,4
 
 [ENTRY]
 ID=687866134
-PlacedBy=0
 Asset=Prop-Statue-Body_Robed1
 Name=Untitled
 Pos=3644.85,49.6189,679.268
@@ -574,7 +521,6 @@ Scale=4,4,4
 
 [ENTRY]
 ID=687866136
-PlacedBy=0
 Asset=Light-Small
 Name=Untitled
 Pos=3273.4,69.6692,570.755
@@ -583,7 +529,6 @@ Scale=1,1,1
 
 [ENTRY]
 ID=687866137
-PlacedBy=0
 Asset=Light-Small
 Name=Untitled
 Pos=3612.49,69.6692,570.755
@@ -592,7 +537,6 @@ Scale=1,1,1
 
 [ENTRY]
 ID=687866138
-PlacedBy=0
 Asset=Prop-Chair5
 Name=Untitled
 Pos=3398.15,49.4177,735.883
@@ -601,7 +545,6 @@ Scale=0.25,0.25,0.25
 
 [ENTRY]
 ID=687866139
-PlacedBy=0
 Asset=Prop-Chair5
 Name=Untitled
 Pos=3237.82,106.819,856.982
@@ -610,7 +553,6 @@ Scale=2,2,2
 
 [ENTRY]
 ID=687866140
-PlacedBy=0
 Asset=Prop-Statue-Body_Robed1
 Name=Untitled
 Pos=3394.23,49.6189,679.268
@@ -619,7 +561,6 @@ Scale=4,4,4
 
 [ENTRY]
 ID=687866141
-PlacedBy=0
 Asset=Prop-Statue-Body_Robed1
 Name=Untitled
 Pos=3252.68,49.5693,678.005
@@ -628,7 +569,6 @@ Scale=4,4,4
 
 [ENTRY]
 ID=687866677
-PlacedBy=0
 Asset=Prop-Bookcase
 Name=Untitled
 Pos=3257.26,50,724.845
@@ -637,7 +577,6 @@ Scale=2.55,2.55,2.55
 
 [ENTRY]
 ID=687866678
-PlacedBy=0
 Asset=Prop-Chair5
 Name=Untitled
 Pos=3255.85,44.9445,752.112
@@ -646,7 +585,6 @@ Scale=2,2,2
 
 [ENTRY]
 ID=687866679
-PlacedBy=0
 Asset=Prop-Chair5
 Name=Untitled
 Pos=3381.97,49.4177,723.425
@@ -655,7 +593,6 @@ Scale=0.25,0.25,0.25
 
 [ENTRY]
 ID=687866680
-PlacedBy=0
 Asset=CL-Furniture1
 Name=Untitled
 Pos=3353.45,50,550.617
@@ -664,7 +601,6 @@ Scale=1.375,1.375,1.375
 
 [ENTRY]
 ID=687866681
-PlacedBy=0
 Asset=Prop-Bookcase
 Name=Untitled
 Pos=3386.41,50,716.511
@@ -673,7 +609,6 @@ Scale=0.25,0.25,0.25
 
 [ENTRY]
 ID=687866682
-PlacedBy=0
 Asset=Prop-Bookcase
 Name=Untitled
 Pos=3397.47,50,715.898
@@ -682,7 +617,6 @@ Scale=0.25,0.25,0.25
 
 [ENTRY]
 ID=687866683
-PlacedBy=0
 Asset=Prop-Bookcase
 Name=Untitled
 Pos=3409.7,50,737.084
@@ -691,7 +625,6 @@ Scale=0.25,0.25,0.25
 
 [ENTRY]
 ID=687866684
-PlacedBy=0
 Asset=Prop-Bookcase
 Name=Untitled
 Pos=3409.7,50,718.251
@@ -700,7 +633,6 @@ Scale=0.25,0.25,0.25
 
 [ENTRY]
 ID=687866685
-PlacedBy=0
 Asset=Prop-Bookcase
 Name=Untitled
 Pos=3409.7,50,726.997
@@ -709,7 +641,6 @@ Scale=0.25,0.25,0.25
 
 [ENTRY]
 ID=687866686
-PlacedBy=0
 Asset=Prop-Chair5
 Name=Untitled
 Pos=3403.47,49.4177,739.117
@@ -718,7 +649,6 @@ Scale=0.25,0.25,0.25
 
 [ENTRY]
 ID=687866687
-PlacedBy=0
 Asset=Prop-Chair5
 Name=Untitled
 Pos=3237.82,110.053,828.216
@@ -727,7 +657,6 @@ Scale=3,3,3
 
 [ENTRY]
 ID=687866688
-PlacedBy=0
 Asset=Prop-Chair5
 Name=Untitled
 Pos=3401.32,85.0204,707.713
@@ -736,7 +665,6 @@ Scale=2,2,2
 
 [ENTRY]
 ID=687866689
-PlacedBy=0
 Asset=Prop-Chair5
 Name=Untitled
 Pos=3399.49,42.3251,840.411
@@ -745,7 +673,6 @@ Scale=3,3,3
 
 [ENTRY]
 ID=687866690
-PlacedBy=0
 Asset=Prop-Chair5
 Name=Untitled
 Pos=3369.3,229.33,849.055
@@ -754,7 +681,6 @@ Scale=3,3,3
 
 [ENTRY]
 ID=687866691
-PlacedBy=0
 Asset=Prop-Chair5
 Name=Untitled
 Pos=3357.39,229.33,772.623
@@ -763,7 +689,6 @@ Scale=3,3,3
 
 [ENTRY]
 ID=687866692
-PlacedBy=0
 Asset=Prop-Vase_Fancy1
 Name=Untitled
 Pos=3252.79,77.617,880.827
@@ -772,7 +697,6 @@ Scale=2.8,2.8,2.8
 
 [ENTRY]
 ID=687866693
-PlacedBy=0
 Asset=Prop-Books#Prop-Book3
 Name=Untitled
 Pos=3298.8,93.0729,872.291
@@ -781,7 +705,6 @@ Scale=1.4,1.4,1.4
 
 [ENTRY]
 ID=687866782
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=3376.27,50,571.118
@@ -792,7 +715,6 @@ sequential=1
 
 [ENTRY]
 ID=687866840
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=3265.91,53.7872,560.456
@@ -803,7 +725,6 @@ maxActive=0
 
 [ENTRY]
 ID=687867164
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=3575,50,860
@@ -813,7 +734,6 @@ spawnPackage=2_rt_Floor6_4_35
 
 [ENTRY]
 ID=687867165
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=3615,50,760
@@ -826,7 +746,6 @@ link=687867170,1
 
 [ENTRY]
 ID=687867166
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=3615,50,840
@@ -838,7 +757,6 @@ link=687867167,1
 
 [ENTRY]
 ID=687867167
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=3475,50,840
@@ -851,7 +769,6 @@ link=687867169,1
 
 [ENTRY]
 ID=687867168
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=3475,50,760
@@ -863,7 +780,6 @@ link=687867167,1
 
 [ENTRY]
 ID=687867169
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=3475,50,840
@@ -875,7 +791,6 @@ link=687867167,1
 
 [ENTRY]
 ID=687867170
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=3615,50,760
@@ -887,7 +802,6 @@ link=687867165,1
 
 [ENTRY]
 ID=687867171
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=3435,50,800
@@ -897,7 +811,6 @@ spawnPackage=2_rt_Floor6_4_35
 
 [ENTRY]
 ID=687867172
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=3355,50,820
@@ -909,7 +822,6 @@ link=687867174,1
 
 [ENTRY]
 ID=687867173
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=3355,50,770
@@ -922,7 +834,6 @@ link=687867177,1
 
 [ENTRY]
 ID=687867174
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=3305,50,820
@@ -935,7 +846,6 @@ link=687867176,1
 
 [ENTRY]
 ID=687867175
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=3305,50,770
@@ -947,7 +857,6 @@ link=687867174,1
 
 [ENTRY]
 ID=687867176
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=3305,50,820
@@ -959,7 +868,6 @@ link=687867174,1
 
 [ENTRY]
 ID=687867177
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=3355,50,770
@@ -971,7 +879,6 @@ link=687867173,1
 
 [ENTRY]
 ID=687867178
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=3375,50,750
@@ -983,7 +890,6 @@ link=687867179,1
 
 [ENTRY]
 ID=687867179
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=3375,50,845
@@ -995,7 +901,6 @@ link=687867180,1
 
 [ENTRY]
 ID=687867180
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=3290,50,845
@@ -1007,7 +912,6 @@ link=687867181,1
 
 [ENTRY]
 ID=687867181
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=3290,50,745
@@ -1019,7 +923,6 @@ link=687867182,1
 
 [ENTRY]
 ID=687867182
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=3325,50,745
@@ -1031,7 +934,6 @@ link=687867183,1
 
 [ENTRY]
 ID=687867183
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=3325,50,620

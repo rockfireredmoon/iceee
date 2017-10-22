@@ -513,3 +513,12 @@ Pos=1508.16,280.687,2644.32
 Orient=0,-0.757842,0,0.652438
 Scale=1,1,1
 
+[ENTRY]
+ID=1154517
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=1658.96,264.254,2249.98
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#F16073
+

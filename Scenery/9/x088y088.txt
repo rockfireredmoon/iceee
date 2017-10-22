@@ -1,10 +1,17 @@
 [ENTRY]
+ID=1154603
+Asset=Prop-Snowy_Rock2
+Name=
+Pos=66085.1,912.271,66650.5
+Orient=-0.535044,-0.669327,0.363638,0.365371
+Scale=37,37,37
+
+[ENTRY]
 ID=151031062
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=66280,634.647,66037
 Orient=0,0,0,1
 Scale=1,1,1
-innerRadius=20
 spawnPackage=12_ice_Wilds_45_46
-outerRadius=40
 

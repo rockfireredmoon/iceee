@@ -1,16 +1,26 @@
 [ENTRY]
+ID=1154553
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=7827.27,200,878.868
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#F16042
+
+[ENTRY]
 ID=10000002
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=7837,205,729
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=161
-sceneryName=generated_Down
 spawnPackage=#2247
 
 [ENTRY]
 ID=553651308
 Asset=Dng-Room_Corner?ATS=ATS-Dungeon_Castle
+Name=Untitled
 Pos=7881.94,200,951.102
 Orient=0,0.707107,0,-0.707107
 Scale=1,1,1
@@ -19,14 +29,16 @@ Flags=1
 [ENTRY]
 ID=553651309
 Asset=Dng-Room_Corner?ATS=ATS-Dungeon_Castle
+Name=Untitled
 Pos=7881.94,200,771.102
-Orient=0,-1,0,7.54979e-008
+Orient=0,-1,0,7.54979e-08
 Scale=1,1,1
 Flags=1
 
 [ENTRY]
 ID=553653455
 Asset=Prop-Crypt_Statue1
+Name=Untitled
 Pos=7928.36,236.123,694.16
 Orient=0,0.707107,0,0.707107
 Scale=1.725,1.725,1.725
@@ -35,6 +47,7 @@ Flags=1
 [ENTRY]
 ID=553653456
 Asset=Prop-Pillar
+Name=Untitled
 Pos=7803.09,205.446,692.715
 Orient=0,0,0,1
 Scale=4.375,4.375,4.375
@@ -42,14 +55,16 @@ Scale=4.375,4.375,4.375
 [ENTRY]
 ID=553653457
 Asset=Prop-Crypt_Statue1
+Name=Untitled
 Pos=7800.52,236.123,823.713
-Orient=0,1,0,7.54979e-008
+Orient=0,1,0,7.54979e-08
 Scale=1.725,1.725,1.725
 Flags=1
 
 [ENTRY]
 ID=553653459
 Asset=Prop-Crypt_Plinth
+Name=Untitled
 Pos=7835.67,144.149,728.239
 Orient=0,0.710353,0,0.703845
 Scale=6.7,6.7,6.7
@@ -58,6 +73,7 @@ Flags=1
 [ENTRY]
 ID=553653460
 Asset=Par-Flame-Emitter
+Name=Untitled
 Pos=7828.91,241.429,822.433
 Orient=0,0,0,1
 Scale=0.675,0.675,0.675
@@ -66,6 +82,7 @@ Flags=1
 [ENTRY]
 ID=553653461
 Asset=Par-Flame-Emitter
+Name=Untitled
 Pos=7927.69,241.429,718.95
 Orient=0,0,0,1
 Scale=0.675,0.675,0.675
@@ -74,6 +91,7 @@ Flags=1
 [ENTRY]
 ID=553653462
 Asset=Light-Medium?COLOR=CC0066
+Name=Untitled
 Pos=7828.48,249,821.343
 Orient=0,0,0,1
 Scale=1,1,1
@@ -82,6 +100,7 @@ Flags=1
 [ENTRY]
 ID=553653463
 Asset=Light-Medium?COLOR=CC0066
+Name=Untitled
 Pos=7927.28,249,720.53
 Orient=0,0,0,1
 Scale=1,1,1
@@ -90,6 +109,7 @@ Flags=1
 [ENTRY]
 ID=553653464
 Asset=Prop-Brazier_Purple
+Name=Untitled
 Pos=7830.02,224.161,823.033
 Orient=0,0,0,1
 Scale=2.575,2.575,2.575
@@ -98,6 +118,7 @@ Flags=1
 [ENTRY]
 ID=553653465
 Asset=Prop-Brazier_Purple
+Name=Untitled
 Pos=7928.94,224.161,720.24
 Orient=0,0,0,1
 Scale=2.575,2.575,2.575
@@ -106,6 +127,7 @@ Flags=1
 [ENTRY]
 ID=553653467
 Asset=Prop-Crypt_Plinth
+Name=Untitled
 Pos=7834.94,110.709,725.699
 Orient=0,0,0,1
 Scale=10,10,10
@@ -114,6 +136,7 @@ Flags=1
 [ENTRY]
 ID=553653468
 Asset=Prop-Crypt_Plinth
+Name=Untitled
 Pos=7927.63,156.228,695.45
 Orient=0,0,0,1
 Scale=5.175,5.175,5.175
@@ -122,6 +145,7 @@ Flags=1
 [ENTRY]
 ID=553653469
 Asset=Prop-Crypt_Plinth
+Name=Untitled
 Pos=7832.56,125.293,725.699
 Orient=0,0,0,1
 Scale=8.6,8.6,8.6
@@ -130,6 +154,7 @@ Flags=1
 [ENTRY]
 ID=553653470
 Asset=Prop-Crypt_Plinth
+Name=Untitled
 Pos=7805.39,156.537,820.073
 Orient=0,0,0,1
 Scale=5.175,5.175,5.175
@@ -138,6 +163,7 @@ Flags=1
 [ENTRY]
 ID=553653471
 Asset=Prop-Pillar
+Name=Untitled
 Pos=7806.31,205.446,754.392
 Orient=0,0,0,1
 Scale=2.5,2.5,2.5
@@ -145,6 +171,7 @@ Scale=2.5,2.5,2.5
 [ENTRY]
 ID=553653474
 Asset=Par-Ground_Fog1
+Name=Untitled
 Pos=7976.83,200.276,852.644
 Orient=0,-0.0699428,0,0.997551
 Scale=1.5,1.5,1.5
@@ -153,6 +180,7 @@ Flags=1
 [ENTRY]
 ID=553655870
 Asset=Prop-Crypt_Plinth
+Name=Untitled
 Pos=7927.63,191.122,695.45
 Orient=0,0,0,1
 Scale=5.025,5.025,5.025
@@ -161,6 +189,7 @@ Flags=1
 [ENTRY]
 ID=553655871
 Asset=Prop-Crypt_Plinth
+Name=Untitled
 Pos=7805.39,191.122,820.073
 Orient=0,0,0,1
 Scale=5.025,5.025,5.025
@@ -169,6 +198,7 @@ Flags=1
 [ENTRY]
 ID=553655872
 Asset=Prop-Pillar
+Name=Untitled
 Pos=7865.21,205.446,692.715
 Orient=0,0,0,1
 Scale=2.5,2.5,2.5

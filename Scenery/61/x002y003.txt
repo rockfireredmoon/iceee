@@ -1,16 +1,23 @@
 [ENTRY]
+ID=1154527
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=2607.89,600.542,3383.7
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#F16067
+
+[ENTRY]
 ID=1023410180
-PlacedBy=0
 Asset=Cav-Room_Round_Corner1#Cav-Room_Round_Corner1?ATS=ATS-Cave_Dvergar
 Name=Untitled
 Pos=2800,600,3480
-Orient=0,-5.96046e-008,0,-1
+Orient=0,-5.96046e-08,0,-1
 Scale=1,1,1
 Flags=1
 
 [ENTRY]
 ID=1023410197
-PlacedBy=0
 Asset=Cav-Room_Narrow_I?ATS=ATS-Cave_Dvergar
 Name=Untitled
 Pos=2620,600,3840
@@ -20,7 +27,6 @@ Flags=1
 
 [ENTRY]
 ID=1023410198
-PlacedBy=0
 Asset=Cav-Corner_Patch#Cav-Corner_Patch?ATS=ATS-Cave_Dvergar
 Name=Untitled
 Pos=2620,600,3300
@@ -30,7 +36,6 @@ Flags=1
 
 [ENTRY]
 ID=1023410199
-PlacedBy=0
 Asset=Cav-Tracks2#Cav-Tracks2?ATS=ATS-Cave_Dvergar
 Name=Untitled
 Pos=2670,600,3200
@@ -40,7 +45,6 @@ Flags=1
 
 [ENTRY]
 ID=1023410202
-PlacedBy=0
 Asset=Cav-Room_1Sided?ATS=ATS-Cave_Dvergar
 Name=Untitled
 Pos=2620,600,3120
@@ -50,7 +54,6 @@ Flags=1
 
 [ENTRY]
 ID=1023410203
-PlacedBy=0
 Asset=Cav-Room_Round_Corner1?ATS=ATS-Cave_Dvergar
 Name=Untitled
 Pos=2260,600,3120
@@ -60,7 +63,6 @@ Flags=1
 
 [ENTRY]
 ID=1023410204
-PlacedBy=0
 Asset=Cav-Tracks1?ATS=ATS-Cave_Dvergar
 Name=Untitled
 Pos=2335,600,3020
@@ -70,7 +72,6 @@ Flags=1
 
 [ENTRY]
 ID=1023410205
-PlacedBy=0
 Asset=Cav-Room_Round_Corner1?ATS=ATS-Cave_Dvergar
 Name=Untitled
 Pos=2800,600,3120
@@ -80,17 +81,15 @@ Flags=1
 
 [ENTRY]
 ID=1023410206
-PlacedBy=0
 Asset=Cav-Room_1Sided?ATS=ATS-Cave_Dvergar
 Name=Untitled
 Pos=2800,600,3300
-Orient=0,5.96046e-008,0,1
+Orient=0,5.96046e-08,0,1
 Scale=1,1,1
 Flags=1
 
 [ENTRY]
 ID=1023410208
-PlacedBy=0
 Asset=Cav-Room_Wall2?ATS=ATS-Cave_Rock
 Name=Untitled
 Pos=2535,576.946,3844.29
@@ -100,7 +99,6 @@ Flags=1
 
 [ENTRY]
 ID=1023410212
-PlacedBy=0
 Asset=Cav-Room_Round_Corner3?ATS=ATS-Cave_Dvergar
 Name=Untitled
 Pos=2440,600,3300
@@ -110,7 +108,6 @@ Flags=1
 
 [ENTRY]
 ID=1023410216
-PlacedBy=0
 Asset=Cav-Room_Center?ATS=ATS-Cave_Dvergar
 Name=Untitled
 Pos=2440,600,3120
@@ -120,7 +117,6 @@ Flags=1
 
 [ENTRY]
 ID=1023410220
-PlacedBy=0
 Asset=Cav-Room_Narrow_I?ATS=ATS-Cave_Dvergar
 Name=Untitled
 Pos=2620,600,3660
@@ -130,27 +126,24 @@ Flags=1
 
 [ENTRY]
 ID=1023410222
-PlacedBy=0
 Asset=Cav-Room_1SidedB?ATS=ATS-Cave_Dvergar
 Name=Untitled
 Pos=2620,600,3480
-Orient=0,-1,0,1.35102e-007
+Orient=0,-1,0,1.35102e-07
 Scale=1,1,1
 Flags=1
 
 [ENTRY]
 ID=1023410223
-PlacedBy=0
 Asset=Cav-Corner_Patch?ATS=ATS-Cave_Dvergar
 Name=Untitled
 Pos=2620,600,3480
-Orient=0,-1,0,1.35102e-007
+Orient=0,-1,0,1.35102e-07
 Scale=1,1,1
 Flags=1
 
 [ENTRY]
 ID=1023410224
-PlacedBy=0
 Asset=Cav-Room_Center?ATS=ATS-Cave_Dvergar
 Name=Untitled
 Pos=2620,600,3300
@@ -160,7 +153,6 @@ Flags=1
 
 [ENTRY]
 ID=1023410225
-PlacedBy=0
 Asset=Cav-Corner_Patch#Cav-Corner_Patch?ATS=ATS-Cave_Dvergar
 Name=Untitled
 Pos=2440,600,3120
@@ -170,7 +162,6 @@ Flags=1
 
 [ENTRY]
 ID=1023410226
-PlacedBy=0
 Asset=Cav-Corner_Patch?ATS=ATS-Cave_Dvergar
 Name=Untitled
 Pos=2440,600,3120
@@ -180,17 +171,15 @@ Flags=1
 
 [ENTRY]
 ID=1023410232
-PlacedBy=0
 Asset=Cav-Room_Wall?ATS=ATS-Cave_Rock
 Name=Untitled
 Pos=2516.87,576.946,3660
-Orient=-0.0749297,-5.9437e-008,4.46615e-009,-0.997189
+Orient=-0.0749297,-5.9437e-08,4.46615e-09,-0.997189
 Scale=1.475,1.475,1.475
 Flags=1
 
 [ENTRY]
 ID=1023410251
-PlacedBy=0
 Asset=Prop-Anubian_Palisade
 Name=Untitled
 Pos=2868.05,586.78,3379.93
@@ -200,7 +189,6 @@ Flags=1
 
 [ENTRY]
 ID=1023410253
-PlacedBy=0
 Asset=Prop-Anubian_Camp#Prop-Anubian_Tent2
 Name=Untitled
 Pos=2848.93,600.593,3213.58
@@ -210,7 +198,6 @@ Flags=1
 
 [ENTRY]
 ID=1023410255
-PlacedBy=0
 Asset=Prop-Anubian_Camp#Prop-Anubian_Palisade
 Name=Untitled
 Pos=2548.65,582.238,3336.26
@@ -220,7 +207,6 @@ Flags=1
 
 [ENTRY]
 ID=1023410256
-PlacedBy=0
 Asset=Prop-Anubian_Palisade
 Name=Untitled
 Pos=2734.46,590.575,3549.7
@@ -230,7 +216,6 @@ Flags=1
 
 [ENTRY]
 ID=1023410257
-PlacedBy=0
 Asset=Prop-Braziers#Prop-Brazier2
 Name=Untitled
 Pos=2311.06,711.604,3046.76
@@ -240,7 +225,6 @@ Flags=1
 
 [ENTRY]
 ID=1023410258
-PlacedBy=0
 Asset=Lights#Light-Huge?COLOR=FF9900
 Name=Untitled
 Pos=2317.6,709.073,3045.58
@@ -250,7 +234,6 @@ Flags=1
 
 [ENTRY]
 ID=1023410260
-PlacedBy=0
 Asset=Effects#Par-Ground_Fog1
 Name=Untitled
 Pos=2703.28,602.491,3264.33
@@ -260,7 +243,6 @@ Flags=1
 
 [ENTRY]
 ID=1023410261
-PlacedBy=0
 Asset=Prop-Anubian_Tent2
 Name=Untitled
 Pos=2775.72,600,3086.92
@@ -270,7 +252,6 @@ Flags=1
 
 [ENTRY]
 ID=1023410263
-PlacedBy=0
 Asset=Prop-Anubian_Camp#Prop-Anubian_Large_Tent
 Name=Untitled
 Pos=2654.05,599.999,3516.82
@@ -280,7 +261,6 @@ Flags=1
 
 [ENTRY]
 ID=1023410266
-PlacedBy=0
 Asset=Prop-Anubian_Palisade
 Name=Untitled
 Pos=2580,591.009,3410.07
@@ -290,7 +270,6 @@ Flags=1
 
 [ENTRY]
 ID=1023410272
-PlacedBy=0
 Asset=Prop-Anubian_Camp#Prop-Anubian_Banner1
 Name=Untitled
 Pos=2593.75,601.104,3399.79
@@ -300,7 +279,6 @@ Flags=1
 
 [ENTRY]
 ID=1023410273
-PlacedBy=0
 Asset=Prop-Anubian_Banner1
 Name=Untitled
 Pos=2763.17,599.492,3472.67
@@ -310,7 +288,6 @@ Flags=1
 
 [ENTRY]
 ID=1023410274
-PlacedBy=0
 Asset=Prop-Brazier2
 Name=Untitled
 Pos=2671.51,710.499,3254.59
@@ -320,7 +297,6 @@ Flags=1
 
 [ENTRY]
 ID=1023410275
-PlacedBy=0
 Asset=Light-Huge?COLOR=FF9900
 Name=Untitled
 Pos=2667.14,709.073,3244.42
@@ -330,7 +306,6 @@ Flags=1
 
 [ENTRY]
 ID=1023410276
-PlacedBy=0
 Asset=Prop-Anubian_Camp#Prop-Anubian_Palisade
 Name=Untitled
 Pos=2839.83,582.302,3135.53
@@ -340,7 +315,6 @@ Flags=1
 
 [ENTRY]
 ID=1023410282
-PlacedBy=0
 Asset=Prop-Chunks#Prop-Chunks2
 Name=Untitled
 Pos=2826.83,600,3483.34
@@ -350,7 +324,6 @@ Flags=1
 
 [ENTRY]
 ID=1023410283
-PlacedBy=0
 Asset=Prop-Chunks#Prop-Chunks2
 Name=Untitled
 Pos=2535.39,601.332,3404.44
@@ -360,7 +333,6 @@ Flags=1
 
 [ENTRY]
 ID=1023410284
-PlacedBy=0
 Asset=Prop-Anubian_Palisade
 Name=Untitled
 Pos=2854.1,586.78,3461.28
@@ -370,7 +342,6 @@ Flags=1
 
 [ENTRY]
 ID=1023410285
-PlacedBy=0
 Asset=Prop-Chunks2
 Name=Untitled
 Pos=2903.33,600.844,3375.37
@@ -380,7 +351,6 @@ Flags=1
 
 [ENTRY]
 ID=1023410286
-PlacedBy=0
 Asset=Prop-Anubian_Palisade
 Name=Untitled
 Pos=2495.58,582.89,3282.21
@@ -390,7 +360,6 @@ Flags=1
 
 [ENTRY]
 ID=1023410287
-PlacedBy=0
 Asset=Prop-Chunks2
 Name=Untitled
 Pos=2478.67,601.919,3339.69
@@ -400,7 +369,6 @@ Flags=1
 
 [ENTRY]
 ID=1023410288
-PlacedBy=0
 Asset=Prop-Anubian_Palisade
 Name=Untitled
 Pos=2792.49,590.575,3503.09
@@ -410,7 +378,6 @@ Flags=1
 
 [ENTRY]
 ID=1023410289
-PlacedBy=0
 Asset=Prop-Chunks#Prop-Chunks2
 Name=Untitled
 Pos=2278.55,600,3207.88
@@ -420,7 +387,6 @@ Flags=1
 
 [ENTRY]
 ID=1023410290
-PlacedBy=0
 Asset=Prop-Chunks2
 Name=Untitled
 Pos=2151.91,602.218,3041.51
@@ -430,7 +396,6 @@ Flags=1
 
 [ENTRY]
 ID=1023410293
-PlacedBy=0
 Asset=Prop-Tribal_Furniture#Prop-Tribal_Table1
 Name=Untitled
 Pos=2742.5,597.528,3423.25
@@ -440,7 +405,6 @@ Flags=1
 
 [ENTRY]
 ID=1023410294
-PlacedBy=0
 Asset=Prop-Map
 Name=Untitled
 Pos=2746.31,609.299,3422.58
@@ -450,7 +414,6 @@ Flags=1
 
 [ENTRY]
 ID=1023410296
-PlacedBy=0
 Asset=Prop-Battlefield_Skeletons#Prop-Battlefield_Sword
 Name=Untitled
 Pos=2746.55,609.299,3423.64
@@ -460,7 +423,6 @@ Flags=1
 
 [ENTRY]
 ID=1023410298
-PlacedBy=0
 Asset=Prop-Barrel
 Name=Untitled
 Pos=2578.28,599.127,3315.16
@@ -470,7 +432,6 @@ Flags=1
 
 [ENTRY]
 ID=1023410299
-PlacedBy=0
 Asset=Prop-Barrel
 Name=Untitled
 Pos=2573.3,600,3330.76
@@ -480,7 +441,6 @@ Flags=1
 
 [ENTRY]
 ID=1023410300
-PlacedBy=0
 Asset=Prop-Barrel
 Name=Untitled
 Pos=2566.4,598.504,3309.9
@@ -490,7 +450,6 @@ Flags=1
 
 [ENTRY]
 ID=1023410301
-PlacedBy=0
 Asset=Prop-Tribal_Furniture#Prop-Tribal_Chair1
 Name=Untitled
 Pos=2762.52,600,3408.68
@@ -500,7 +459,6 @@ Flags=1
 
 [ENTRY]
 ID=1023410302
-PlacedBy=0
 Asset=Prop-Tribal_Chair1
 Name=Untitled
 Pos=2719.11,600.646,3421.4
@@ -510,7 +468,6 @@ Flags=1
 
 [ENTRY]
 ID=1023410303
-PlacedBy=0
 Asset=Prop-Anubian_Camp#Prop-Anubian_Chariot
 Name=Untitled
 Pos=2498.31,600,3013.09
@@ -520,7 +477,6 @@ Flags=1
 
 [ENTRY]
 ID=1023410304
-PlacedBy=0
 Asset=CL-Junk2
 Name=Untitled
 Pos=2380.26,601.762,3188.7
@@ -530,7 +486,6 @@ Flags=1
 
 [ENTRY]
 ID=1023410305
-PlacedBy=0
 Asset=CL-Junk1
 Name=Untitled
 Pos=2414.62,600,3194.63
@@ -540,7 +495,6 @@ Flags=1
 
 [ENTRY]
 ID=1023410306
-PlacedBy=0
 Asset=CL-Junk4
 Name=Untitled
 Pos=2847.08,600,3289.41
@@ -550,7 +504,6 @@ Flags=1
 
 [ENTRY]
 ID=1023410307
-PlacedBy=0
 Asset=Prop-Shovel#Prop-Shovel
 Name=Untitled
 Pos=2430.67,598.759,3013.34
@@ -560,7 +513,6 @@ Flags=1
 
 [ENTRY]
 ID=1023410308
-PlacedBy=0
 Asset=Prop-Shovel#Prop-Shovel
 Name=Untitled
 Pos=2414.99,599.628,3012.76
@@ -570,7 +522,6 @@ Flags=1
 
 [ENTRY]
 ID=1023410370
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=2283.3,600,3108.35
@@ -582,7 +533,6 @@ link=1023410371,1
 
 [ENTRY]
 ID=1023410371
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=2358.05,599.4,3135.76
@@ -594,7 +544,6 @@ link=1023410372,1
 
 [ENTRY]
 ID=1023410372
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=2548.45,600,3082.21
@@ -606,7 +555,6 @@ link=1023410373,1
 
 [ENTRY]
 ID=1023410373
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=2626.49,601.911,3119.31
@@ -618,7 +566,6 @@ link=1023410374,1
 
 [ENTRY]
 ID=1023410374
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=2641.74,599.384,3176.74
@@ -631,7 +578,6 @@ link=1023410425,1
 
 [ENTRY]
 ID=1023410375
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=2557.73,600,3208.3
@@ -643,7 +589,6 @@ link=1023410376,1
 
 [ENTRY]
 ID=1023410376
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=2481.76,599.507,3156.62
@@ -655,7 +600,6 @@ link=1023410377,1
 
 [ENTRY]
 ID=1023410377
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=2397.46,600.961,3001.06
@@ -667,7 +611,6 @@ link=1023410378,1
 
 [ENTRY]
 ID=1023410399
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=2242.6,605.001,3092.56
@@ -677,7 +620,6 @@ spawnPackage=5_cz_cazadoreSlaveless_43
 
 [ENTRY]
 ID=1023410403
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=2494.28,605.001,3034.82
@@ -687,7 +629,6 @@ spawnPackage=5_cz_cazadoreSlaveless_43
 
 [ENTRY]
 ID=1023410404
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=2634.15,600,3394.55
@@ -699,7 +640,6 @@ link=1023410416,1
 
 [ENTRY]
 ID=1023410405
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=2637.53,599.071,3309.87
@@ -712,7 +652,6 @@ link=1023410407,1
 
 [ENTRY]
 ID=1023410406
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=2681.61,600,3087.11
@@ -723,7 +662,6 @@ link=1023410405,1
 
 [ENTRY]
 ID=1023410407
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=2455.05,600,3206.93
@@ -734,7 +672,6 @@ link=1023410405,1
 
 [ENTRY]
 ID=1023410408
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=2800.1,599.779,3387.03
@@ -746,7 +683,6 @@ link=1023410412,1
 
 [ENTRY]
 ID=1023410409
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=2749.2,599.199,3280.75
@@ -759,7 +695,6 @@ link=1023410411,1
 
 [ENTRY]
 ID=1023410410
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=2828.24,599.869,3263.82
@@ -770,7 +705,6 @@ link=1023410409,1
 
 [ENTRY]
 ID=1023410411
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=2712.54,599.934,3090.89
@@ -781,7 +715,6 @@ link=1023410409,1
 
 [ENTRY]
 ID=1023410412
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=2813.18,604.092,3402.2
@@ -793,7 +726,6 @@ link=1023410408,1
 
 [ENTRY]
 ID=1023410413
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=2768.85,605.001,3425.63
@@ -803,7 +735,6 @@ spawnPackage=5_cz_cazadoreSlaveless_43
 
 [ENTRY]
 ID=1023410414
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=2748.46,605.001,3385.31
@@ -813,7 +744,6 @@ spawnPackage=5_cz_cazadoreSlaveless_43
 
 [ENTRY]
 ID=1023410415
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=2741.08,605.078,3448
@@ -823,7 +753,6 @@ spawnPackage=5_cz_cazadoreSlaveless_43
 
 [ENTRY]
 ID=1023410416
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=2650.92,605.001,3403.22
@@ -835,7 +764,6 @@ link=1023410404,1
 
 [ENTRY]
 ID=1023410418
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=2801.51,605.446,3143.17
@@ -845,7 +773,6 @@ spawnPackage=5_cz_cazadoreSlaveless_43
 
 [ENTRY]
 ID=1023410419
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=2816.23,603.974,3167.62
@@ -855,7 +782,6 @@ spawnPackage=5_cz_cazadoreSlaveless_43
 
 [ENTRY]
 ID=1023410420
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=2720.04,605,3070.59
@@ -865,7 +791,6 @@ spawnPackage=5_cz_cazadoreSlaveless_43
 
 [ENTRY]
 ID=1023410421
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=2851.26,605,3268.92
@@ -875,7 +800,6 @@ spawnPackage=5_cz_cazadoreSlaveless_43
 
 [ENTRY]
 ID=1023410422
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=2444.14,605.749,3223.1
@@ -885,7 +809,6 @@ spawnPackage=5_cz_cazadoreSlaveless_43
 
 [ENTRY]
 ID=1023410424
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=2696,600.921,3417
@@ -896,7 +819,6 @@ sequential=1
 
 [ENTRY]
 ID=1023410425
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=2574,599.851,3148
@@ -908,7 +830,6 @@ link=1023410374,1
 
 [ENTRY]
 ID=1023410429
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=2653.69,598.041,3390.97

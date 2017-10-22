@@ -1,6 +1,14 @@
 [ENTRY]
+ID=1154531
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=2280.16,50,704.137
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#F16056
+
+[ENTRY]
 ID=10000001
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=2048,58,553
@@ -11,7 +19,6 @@ spawnPackage=z41_rt_gen_Up_2377
 
 [ENTRY]
 ID=687865860
-PlacedBy=0
 Asset=Dng-Room_Narrow_Cap1?ATS=ATS-Dungeon_Temple
 Name=Untitled
 Pos=2345,50,620
@@ -21,17 +28,15 @@ Flags=1
 
 [ENTRY]
 ID=687865868
-PlacedBy=0
 Asset=Dng-Room_Corner?ATS=ATS-Dungeon_Temple
 Name=Untitled
 Pos=2345,50,800
-Orient=0,5.96046e-008,0,-1
+Orient=0,5.96046e-08,0,-1
 Scale=1,1,1
 Flags=1
 
 [ENTRY]
 ID=687865872
-PlacedBy=0
 Asset=Dng-Room_Narrow_Cap1?ATS=ATS-Dungeon_Temple
 Name=Untitled
 Pos=2105,50,610
@@ -41,7 +46,6 @@ Flags=1
 
 [ENTRY]
 ID=687865873
-PlacedBy=0
 Asset=Dng-Room_Divider?ATS=ATS-Dungeon_Temple
 Name=Untitled
 Pos=2105,50,705
@@ -51,7 +55,6 @@ Flags=1
 
 [ENTRY]
 ID=687865874
-PlacedBy=0
 Asset=Dng-Room_Corner?ATS=ATS-Dungeon_Temple
 Name=Untitled
 Pos=2105,50,800
@@ -61,7 +64,6 @@ Flags=1
 
 [ENTRY]
 ID=687865879
-PlacedBy=0
 Asset=Dng-Room_Extender1?ATS=ATS-Dungeon_Temple
 Name=Untitled
 Pos=2225,50,800
@@ -71,7 +73,6 @@ Flags=1
 
 [ENTRY]
 ID=687866018
-PlacedBy=0
 Asset=Prop-Pedestal1
 Name=Untitled
 Pos=2047.91,-18.9211,551.187
@@ -81,7 +82,6 @@ Flags=1
 
 [ENTRY]
 ID=687866019
-PlacedBy=0
 Asset=Prop-Pedestal1
 Name=Untitled
 Pos=2047.91,2.78725,551.187
@@ -91,7 +91,6 @@ Flags=1
 
 [ENTRY]
 ID=687866021
-PlacedBy=0
 Asset=Prop-Pedestal1
 Name=Untitled
 Pos=2406.17,-18.9211,557.955
@@ -100,7 +99,6 @@ Scale=7.075,7.075,7.075
 
 [ENTRY]
 ID=687866022
-PlacedBy=0
 Asset=Prop-Pedestal1
 Name=Untitled
 Pos=2406.17,2.78726,557.955
@@ -109,7 +107,6 @@ Scale=5.1,5.1,5.1
 
 [ENTRY]
 ID=687866023
-PlacedBy=0
 Asset=Statue_Robed#Prop-Statue-Body_Robed1
 Name=Untitled
 Pos=2414.92,230.19,560.938
@@ -119,7 +116,6 @@ Flags=1
 
 [ENTRY]
 ID=687866026
-PlacedBy=0
 Asset=Prop-Statue-Body_Robed1
 Name=Untitled
 Pos=2404.77,229.372,862.558
@@ -129,7 +125,6 @@ Flags=1
 
 [ENTRY]
 ID=687866028
-PlacedBy=0
 Asset=Prop-Statue-Body_Robed1
 Name=Untitled
 Pos=2175.89,48.3764,544.028
@@ -139,7 +134,6 @@ Flags=1
 
 [ENTRY]
 ID=687866032
-PlacedBy=0
 Asset=Light-Large?COLOR=FF9900
 Name=Untitled
 Pos=2192.54,138.26,796.132
@@ -149,7 +143,6 @@ Flags=1
 
 [ENTRY]
 ID=687866033
-PlacedBy=0
 Asset=Light-Large?COLOR=FF9900
 Name=Untitled
 Pos=2347.09,133.533,621.459
@@ -159,7 +152,6 @@ Flags=1
 
 [ENTRY]
 ID=687866034
-PlacedBy=0
 Asset=Prop-Wooden_Furniture#Prop-Bench2
 Name=Untitled
 Pos=2271.49,230.332,652.485
@@ -169,7 +161,6 @@ Flags=1
 
 [ENTRY]
 ID=687866035
-PlacedBy=0
 Asset=Prop-Bench2
 Name=Untitled
 Pos=2412.32,231.603,652.885
@@ -179,7 +170,6 @@ Flags=1
 
 [ENTRY]
 ID=687866036
-PlacedBy=0
 Asset=Prop-Bench2
 Name=Untitled
 Pos=2141.92,230.849,871.957
@@ -189,7 +179,6 @@ Flags=1
 
 [ENTRY]
 ID=687866037
-PlacedBy=0
 Asset=Prop-Bench2
 Name=Untitled
 Pos=2413.08,232.271,761.033
@@ -199,7 +188,6 @@ Flags=1
 
 [ENTRY]
 ID=687866038
-PlacedBy=0
 Asset=Prop-Bench2
 Name=Untitled
 Pos=2313.78,229.578,873.016
@@ -209,7 +197,6 @@ Flags=1
 
 [ENTRY]
 ID=687866039
-PlacedBy=0
 Asset=Prop-Bench2
 Name=Untitled
 Pos=2144.94,230.585,727.431
@@ -219,7 +206,6 @@ Flags=1
 
 [ENTRY]
 ID=687866040
-PlacedBy=0
 Asset=Prop-Bench2
 Name=Untitled
 Pos=2058.03,227.156,750.645
@@ -229,7 +215,6 @@ Flags=1
 
 [ENTRY]
 ID=687866041
-PlacedBy=0
 Asset=Prop-Bench2
 Name=Untitled
 Pos=2200.78,230.124,738.813
@@ -239,7 +224,6 @@ Flags=1
 
 [ENTRY]
 ID=687866042
-PlacedBy=0
 Asset=Prop-Dungeon-Tattered_Carpet1#Prop-Dungeon-Tattered_Carpet1
 Name=Untitled
 Pos=2343.81,224.812,705.613
@@ -249,7 +233,6 @@ Flags=1
 
 [ENTRY]
 ID=687866043
-PlacedBy=0
 Asset=Prop-Dungeon-Tattered_Carpet1
 Name=Untitled
 Pos=2170.8,224.294,800.155
@@ -259,7 +242,6 @@ Flags=1
 
 [ENTRY]
 ID=687866044
-PlacedBy=0
 Asset=Prop-Wall_Torch2#Prop-Wall_Torch2
 Name=Untitled
 Pos=2421.16,170.515,620.034
@@ -269,7 +251,6 @@ Flags=1
 
 [ENTRY]
 ID=687866045
-PlacedBy=0
 Asset=Prop-Wall_Torch2
 Name=Untitled
 Pos=2194.85,170.515,720.511
@@ -279,7 +260,6 @@ Flags=1
 
 [ENTRY]
 ID=687866046
-PlacedBy=0
 Asset=Prop-Wall_Torch2
 Name=Untitled
 Pos=2269.3,170.515,620.034
@@ -289,7 +269,6 @@ Flags=1
 
 [ENTRY]
 ID=687866047
-PlacedBy=0
 Asset=Prop-Wall_Torch2
 Name=Untitled
 Pos=2194.85,170.515,879.495
@@ -299,7 +278,6 @@ Flags=1
 
 [ENTRY]
 ID=687866049
-PlacedBy=0
 Asset=Prop-Statue-Body_Robed1
 Name=Untitled
 Pos=2038.13,48.1527,677.061
@@ -309,7 +287,6 @@ Flags=1
 
 [ENTRY]
 ID=687866050
-PlacedBy=0
 Asset=Prop-Statue-Body_Robed1
 Name=Untitled
 Pos=2170.23,49.0079,678.924
@@ -319,7 +296,6 @@ Flags=1
 
 [ENTRY]
 ID=687866051
-PlacedBy=0
 Asset=Prop-Statue-Body_Robed1
 Name=Untitled
 Pos=2038.37,229.372,736.112
@@ -329,7 +305,6 @@ Flags=1
 
 [ENTRY]
 ID=687866052
-PlacedBy=0
 Asset=Prop-Statue-Body_Robed1
 Name=Untitled
 Pos=2279.6,230.19,555.153
@@ -339,7 +314,6 @@ Flags=1
 
 [ENTRY]
 ID=687866053
-PlacedBy=0
 Asset=Prop-Statue-Body_Robed1
 Name=Untitled
 Pos=2043.1,229.372,862.558
@@ -349,7 +323,6 @@ Flags=1
 
 [ENTRY]
 ID=687866054
-PlacedBy=0
 Asset=Prop-Bench2
 Name=Untitled
 Pos=2377.84,227.156,846.596
@@ -359,7 +332,6 @@ Flags=1
 
 [ENTRY]
 ID=687866055
-PlacedBy=0
 Asset=Prop-Bench2
 Name=Untitled
 Pos=2060.95,227.156,843.688
@@ -369,7 +341,6 @@ Flags=1
 
 [ENTRY]
 ID=687866056
-PlacedBy=0
 Asset=Prop-Dungeon-Cobwebs1#Prop-Dungeon-Cobwebs1
 Name=Untitled
 Pos=2341.31,118.32,656.61
@@ -379,7 +350,6 @@ Flags=1
 
 [ENTRY]
 ID=687866057
-PlacedBy=0
 Asset=Prop-Dungeon-Cobwebs1
 Name=Untitled
 Pos=2096.69,151.925,798.31
@@ -389,7 +359,6 @@ Flags=1
 
 [ENTRY]
 ID=687866058
-PlacedBy=0
 Asset=Prop-Dungeon-Cobwebs1
 Name=Untitled
 Pos=2285.04,118.32,805.366
@@ -399,7 +368,6 @@ Flags=1
 
 [ENTRY]
 ID=687866059
-PlacedBy=0
 Asset=Effects#Par-Ground_Fog1
 Name=Untitled
 Pos=2236.73,220.1,729.412
@@ -409,7 +377,6 @@ Flags=1
 
 [ENTRY]
 ID=687866062
-PlacedBy=0
 Asset=Prop-Statue-Sword2#Prop-Statue-Sword2
 Name=Untitled
 Pos=2164.83,107.033,559.982
@@ -418,7 +385,6 @@ Scale=5.45,5.45,5.45
 
 [ENTRY]
 ID=687866063
-PlacedBy=0
 Asset=Prop-Statue-Sword2
 Name=Untitled
 Pos=2049.53,107.033,659.035
@@ -427,7 +393,6 @@ Scale=5.45,5.45,5.45
 
 [ENTRY]
 ID=687866064
-PlacedBy=0
 Asset=Prop-Statue-Sword2
 Name=Untitled
 Pos=2150.08,104.421,671.519
@@ -436,7 +401,6 @@ Scale=5.45,5.45,5.45
 
 [ENTRY]
 ID=687866772
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=2285.2,50,559.848
@@ -449,7 +413,6 @@ link=687866863,1
 
 [ENTRY]
 ID=687866839
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=2404.8,61.9415,559.613
@@ -460,7 +423,6 @@ maxActive=0
 
 [ENTRY]
 ID=687866858
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=2335,50,700
@@ -472,7 +434,6 @@ link=687866863,1
 
 [ENTRY]
 ID=687866860
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=2409.98,50,587.581
@@ -484,7 +445,6 @@ link=687866861,1
 
 [ENTRY]
 ID=687866861
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=2275.22,50,673.229
@@ -496,7 +456,6 @@ link=687866862,1
 
 [ENTRY]
 ID=687866862
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=2414.29,50,688.965
@@ -508,7 +467,6 @@ link=687866863,1
 
 [ENTRY]
 ID=687866863
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=2286.14,50,559.028
@@ -521,7 +479,6 @@ link=687866862,1
 
 [ENTRY]
 ID=687867143
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=2040,50,865
@@ -531,7 +488,6 @@ spawnPackage=2_rt_Floor6_4_35
 
 [ENTRY]
 ID=687867144
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=2070,50,750
@@ -543,7 +499,6 @@ link=687867147,1
 
 [ENTRY]
 ID=687867145
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=2245,50,750
@@ -556,7 +511,6 @@ link=687867151,1
 
 [ENTRY]
 ID=687867146
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=2245,50,840
@@ -568,7 +522,6 @@ link=687867147,1
 
 [ENTRY]
 ID=687867147
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=2070,50,840
@@ -581,7 +534,6 @@ link=687867152,1
 
 [ENTRY]
 ID=687867151
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=2245,50,750
@@ -593,7 +545,6 @@ link=687867145,1
 
 [ENTRY]
 ID=687867152
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=2070,50,840
@@ -605,7 +556,6 @@ link=687867147,1
 
 [ENTRY]
 ID=687867154
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=2285,50,880
@@ -615,7 +565,6 @@ spawnPackage=2_rt_Floor6_4_35
 
 [ENTRY]
 ID=687867155
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=2285,50,850
@@ -628,7 +577,6 @@ link=687867160,1
 
 [ENTRY]
 ID=687867156
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=2285,50,730
@@ -640,7 +588,6 @@ link=687867157,1
 
 [ENTRY]
 ID=687867157
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=2400,50,730
@@ -653,7 +600,6 @@ link=687867161,1
 
 [ENTRY]
 ID=687867158
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=2400,50,850
@@ -665,7 +611,6 @@ link=687867157,1
 
 [ENTRY]
 ID=687867160
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=2285,50,850
@@ -677,7 +622,6 @@ link=687867155,1
 
 [ENTRY]
 ID=687867161
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=2400,50,730
@@ -689,11 +633,10 @@ link=687867157,1
 
 [ENTRY]
 ID=687867162
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=2413.66,50,800
-Orient=0,-1,0,7.54979e-008
+Orient=0,-1,0,7.54979e-08
 Scale=1,1,1
 spawnPackage=2_rt_Floor6_4_35
 

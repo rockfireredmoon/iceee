@@ -703,7 +703,7 @@ loyaltyRadius=65
 [ENTRY]
 ID=1151508
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=1977.49,600,1273.39
 Orient=0,0,0,1
 Scale=1,1,1
@@ -715,7 +715,7 @@ link=1151510,1
 [ENTRY]
 ID=1151509
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=1977.4,600,1301.16
 Orient=0,0,0,1
 Scale=1,1,1
@@ -727,7 +727,7 @@ link=1151511,1
 [ENTRY]
 ID=1151512
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=2067.7,600,1259.14
 Orient=0,0,0,1
 Scale=1,1,1
@@ -737,7 +737,7 @@ wanderRadius=55
 [ENTRY]
 ID=1151513
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=2141.68,600,1226.81
 Orient=0,0,0,1
 Scale=1,1,1
@@ -747,7 +747,7 @@ wanderRadius=55
 [ENTRY]
 ID=1151514
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=2100.58,600,1312.77
 Orient=0,0,0,1
 Scale=1,1,1
@@ -757,7 +757,7 @@ wanderRadius=55
 [ENTRY]
 ID=1151515
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=2105.93,600,1107.8
 Orient=0,0,0,1
 Scale=1,1,1
@@ -767,7 +767,7 @@ wanderRadius=65
 [ENTRY]
 ID=1151516
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=2217.56,600,1177.1
 Orient=0,0.677972,0,0.735088
 Scale=1,1,1
@@ -776,7 +776,7 @@ spawnPackage=VBloodkeep_Vampire_Mix
 [ENTRY]
 ID=1151517
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=2219.4,600,1054.8
 Orient=0,-0.767543,0,0.640997
 Scale=1,1,1
@@ -785,7 +785,7 @@ spawnPackage=VBloodkeep_Vampire_Mix
 [ENTRY]
 ID=1151518
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=2032.06,600,1199.38
 Orient=0,0,0,1
 Scale=1,1,1
@@ -794,7 +794,7 @@ spawnPackage=VBloodkeep_Vampire_Mix
 [ENTRY]
 ID=1151519
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=2473.07,600,1087.79
 Orient=0,0,0,1
 Scale=1,1,1
@@ -806,7 +806,7 @@ link=1151522,1
 [ENTRY]
 ID=1151520
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=2473.62,600,1133.27
 Orient=0,0,0,1
 Scale=1,1,1
@@ -818,7 +818,7 @@ link=1151521,1
 [ENTRY]
 ID=1151521
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=2221.47,600,1135.19
 Orient=0,0,0,1
 Scale=1,1,1
@@ -828,7 +828,7 @@ link=1151520,1
 [ENTRY]
 ID=1151522
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=2221.58,600,1084.13
 Orient=0,0,0,1
 Scale=1,1,1
@@ -838,7 +838,7 @@ link=1151519,1
 [ENTRY]
 ID=1151523
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=2484.23,600,1037.3
 Orient=0,-0.737931,0,0.674876
 Scale=1,1,1
@@ -847,9 +847,18 @@ spawnPackage=VBloodkeep_Vampire_Mix
 [ENTRY]
 ID=1151524
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=2484.72,600,1179.68
 Orient=0,0.819192,0,0.57352
 Scale=1,1,1
 spawnPackage=VBloodkeep_Vampire_Mix
+
+[ENTRY]
+ID=1154514
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=2370.83,600,952.273
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#F16078
 

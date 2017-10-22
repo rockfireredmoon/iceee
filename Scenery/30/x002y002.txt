@@ -1,14 +1,25 @@
 [ENTRY]
+ID=1154563
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=4782.4,170,4257.31
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#F16033
+
+[ENTRY]
 ID=503316657
 Asset=Dng-Room_Corner?ATS=ATS-Dungeon_Temple
+Name=Untitled
 Pos=4975,170,3870
-Orient=0,-1,0,3.27826e-007
+Orient=0,-1,0,3.27826e-07
 Scale=1,1,1
 Flags=1
 
 [ENTRY]
 ID=503316775
 Asset=Dng-Pillar?ATS=ATS-Dungeon_Temple
+Name=Untitled
 Pos=3955,170,4110
 Orient=0,0.707107,0,-0.707107
 Scale=1,1,1
@@ -17,30 +28,34 @@ Flags=1
 [ENTRY]
 ID=503316780
 Asset=Dng-Room_Corner?ATS=ATS-Dungeon_Temple
+Name=Untitled
 Pos=3955,170,4110
-Orient=0,1.053e-007,0,-1
+Orient=0,1.053e-07,0,-1
 Scale=1,1,1
 Flags=1
 
 [ENTRY]
 ID=503316790
 Asset=Dng-Room_1Sided?ATS=ATS-Dungeon_Temple
+Name=Untitled
 Pos=3955,170,3930
-Orient=0,1.053e-007,0,-1
+Orient=0,1.053e-07,0,-1
 Scale=1,1,1
 Flags=1
 
 [ENTRY]
 ID=503316893
 Asset=Dng-Hall_Straight1?ATS=ATS-Dungeon_Temple
+Name=Untitled
 Pos=4165,170,4130
-Orient=0,-2.98023e-008,0,1
+Orient=0,-2.98023e-08,0,1
 Scale=1,1,1
 Flags=1
 
 [ENTRY]
 ID=503316896
 Asset=Dng-Room_1Sided?ATS=ATS-Dungeon_Temple
+Name=Untitled
 Pos=5155,170,3870
 Orient=0,0.707107,0,0.707107
 Scale=1,1,1
@@ -49,6 +64,7 @@ Flags=1
 [ENTRY]
 ID=503316929
 Asset=Dng-Room_Corner_1Door?ATS=ATS-Dungeon_Temple
+Name=Untitled
 Pos=5335,170,3870
 Orient=0,-0.707107,0,-0.707107
 Scale=1,1,1
@@ -57,38 +73,43 @@ Flags=1
 [ENTRY]
 ID=503316930
 Asset=Dng-Room_Center_Pit?ATS=ATS-Dungeon_Temple
+Name=Untitled
 Pos=5155,170,4050
-Orient=0,2.98023e-008,0,1
+Orient=0,2.98023e-08,0,1
 Scale=1,1,1
 Flags=1
 
 [ENTRY]
 ID=503316931
 Asset=Dng-Room_Corner?ATS=ATS-Dungeon_Temple
+Name=Untitled
 Pos=5335,170,4230
-Orient=0,-2.98023e-008,0,-1
+Orient=0,-2.98023e-08,0,-1
 Scale=1,1,1
 Flags=1
 
 [ENTRY]
 ID=503316932
 Asset=Dng-Room_1Sided?ATS=ATS-Dungeon_Temple
+Name=Untitled
 Pos=4975,170,4050
-Orient=0,-1,0,1.053e-007
+Orient=0,-1,0,1.053e-07
 Scale=1,1,1
 Flags=1
 
 [ENTRY]
 ID=503316933
 Asset=Dng-Room_1Sided?ATS=ATS-Dungeon_Temple
+Name=Untitled
 Pos=5335,170,4050
-Orient=0,2.98023e-008,0,1
+Orient=0,2.98023e-08,0,1
 Scale=1,1,1
 Flags=1
 
 [ENTRY]
 ID=503316934
 Asset=Dng-Room_Corner?ATS=ATS-Dungeon_Temple
+Name=Untitled
 Pos=4975,170,4230
 Orient=0,0.707107,0,-0.707107
 Scale=1,1,1
@@ -97,6 +118,7 @@ Flags=1
 [ENTRY]
 ID=503316935
 Asset=Dng-Room_1Sided?ATS=ATS-Dungeon_Temple
+Name=Untitled
 Pos=5155,170,4230
 Orient=0,-0.707107,0,0.707107
 Scale=1,1,1
@@ -105,14 +127,16 @@ Flags=1
 [ENTRY]
 ID=503316939
 Asset=Dng-Hall_L1?ATS=ATS-Dungeon_Temple
+Name=Untitled
 Pos=4165,170,4400
-Orient=0,-1,0,4.56956e-008
+Orient=0,-1,0,4.56956e-08
 Scale=1,1,1
 Flags=1
 
 [ENTRY]
 ID=503316940
 Asset=Dng-Room_Corner?ATS=ATS-Dungeon_Temple
+Name=Untitled
 Pos=4355,170,4310
 Orient=0,-0.707107,0,0.707107
 Scale=1,1,1
@@ -121,22 +145,25 @@ Flags=1
 [ENTRY]
 ID=503316941
 Asset=Dng-Room_1Sided?ATS=ATS-Dungeon_Temple
+Name=Untitled
 Pos=4355,170,4130
-Orient=0,1,0,2.98023e-008
+Orient=0,1,0,2.98023e-08
 Scale=1,1,1
 Flags=1
 
 [ENTRY]
 ID=503316942
 Asset=Dng-Room_Corner_1Door?ATS=ATS-Dungeon_Temple
+Name=Untitled
 Pos=4355,170,3950
-Orient=0,-1,0,-2.98023e-008
+Orient=0,-1,0,-2.98023e-08
 Scale=1,1,1
 Flags=1
 
 [ENTRY]
 ID=503316943
 Asset=Dng-Room_Center_Pit?ATS=ATS-Dungeon_Temple
+Name=Untitled
 Pos=4535,170,4130
 Orient=0,0.707107,0,0.707107
 Scale=1,1,1
@@ -145,6 +172,7 @@ Flags=1
 [ENTRY]
 ID=503316944
 Asset=Dng-Room_Corner?ATS=ATS-Dungeon_Temple
+Name=Untitled
 Pos=4715,170,3950
 Orient=0,-0.707107,0,-0.707107
 Scale=1,1,1
@@ -153,6 +181,7 @@ Flags=1
 [ENTRY]
 ID=503316945
 Asset=Dng-Room_1Sided?ATS=ATS-Dungeon_Temple
+Name=Untitled
 Pos=4535,170,4310
 Orient=0,-0.707107,0,0.707107
 Scale=1,1,1
@@ -161,6 +190,7 @@ Flags=1
 [ENTRY]
 ID=503316946
 Asset=Dng-Room_1Sided?ATS=ATS-Dungeon_Temple
+Name=Untitled
 Pos=4535,170,3950
 Orient=0,0.707107,0,0.707107
 Scale=1,1,1
@@ -169,30 +199,34 @@ Flags=1
 [ENTRY]
 ID=503316947
 Asset=Dng-Room_Corner?ATS=ATS-Dungeon_Temple
+Name=Untitled
 Pos=4715,170,4310
-Orient=0,2.98023e-008,0,-1
+Orient=0,2.98023e-08,0,-1
 Scale=1,1,1
 Flags=1
 
 [ENTRY]
 ID=503316948
 Asset=Dng-Room_1Sided?ATS=ATS-Dungeon_Temple
+Name=Untitled
 Pos=4715,170,4130
-Orient=0,-2.98023e-008,0,1
+Orient=0,-2.98023e-08,0,1
 Scale=1,1,1
 Flags=1
 
 [ENTRY]
 ID=503316952
 Asset=Dng-Hall_T2?ATS=ATS-Dungeon_Temple
+Name=Untitled
 Pos=4165,170,3950
-Orient=0,-2.98023e-008,0,1
+Orient=0,-2.98023e-08,0,1
 Scale=1,1,1
 Flags=1
 
 [ENTRY]
 ID=503316961
 Asset=Dng-Hall_Short2?ATS=ATS-Dungeon_Temple
+Name=Untitled
 Pos=3980,170,4400
 Orient=0,-0.707107,0,0.707107
 Scale=1,1,1
@@ -201,6 +235,7 @@ Flags=1
 [ENTRY]
 ID=503317229
 Asset=Prop-Water_Planes#Prop-Water_Plane1
+Name=Untitled
 Pos=4538.74,162.161,4132.59
 Orient=0,0,0,1
 Scale=0.25,0.25,0.25
@@ -208,6 +243,7 @@ Scale=0.25,0.25,0.25
 [ENTRY]
 ID=503317230
 Asset=CL-Fountain1
+Name=Untitled
 Pos=4538.44,155.303,4129.94
 Orient=0,0,0,1
 Scale=0.65,0.65,0.65
@@ -215,6 +251,7 @@ Scale=0.65,0.65,0.65
 [ENTRY]
 ID=503317231
 Asset=Effects#Par-Splash1-Emitter
+Name=Untitled
 Pos=4538.21,160,4120.3
 Orient=0,0,0,1
 Scale=1,1,1
@@ -222,6 +259,7 @@ Scale=1,1,1
 [ENTRY]
 ID=503317232
 Asset=Par-Splash1-Emitter
+Name=Untitled
 Pos=4528.19,160,4129.88
 Orient=0,0,0,1
 Scale=1,1,1
@@ -229,6 +267,7 @@ Scale=1,1,1
 [ENTRY]
 ID=503317233
 Asset=Par-Splash1-Emitter
+Name=Untitled
 Pos=4538.21,160,4140.26
 Orient=0,0,0,1
 Scale=1,1,1
@@ -236,6 +275,7 @@ Scale=1,1,1
 [ENTRY]
 ID=503317234
 Asset=Par-Splash1-Emitter
+Name=Untitled
 Pos=4546.91,160,4129.88
 Orient=0,0,0,1
 Scale=1,1,1
@@ -243,6 +283,7 @@ Scale=1,1,1
 [ENTRY]
 ID=503317235
 Asset=Prop-Crypt_Statue1#Prop-Crypt_Statue1
+Name=Untitled
 Pos=4796.19,170,3874.54
 Orient=0,0.410223,0,0.911985
 Scale=2.575,2.575,2.575
@@ -250,6 +291,7 @@ Scale=2.575,2.575,2.575
 [ENTRY]
 ID=503317236
 Asset=Prop-Crypt_Statue1
+Name=Untitled
 Pos=4276.25,170,4382.16
 Orient=0,-0.928369,0,0.37166
 Scale=2.575,2.575,2.575
@@ -257,6 +299,7 @@ Scale=2.575,2.575,2.575
 [ENTRY]
 ID=503317237
 Asset=Prop-Mats#Prop-Mat1
+Name=Untitled
 Pos=4537.34,170,3968.93
 Orient=0,-0.999991,0,-0.00420276
 Scale=2.275,2.275,2.275
@@ -264,6 +307,7 @@ Scale=2.275,2.275,2.275
 [ENTRY]
 ID=503317238
 Asset=Prop-Mat1
+Name=Untitled
 Pos=4688.95,170,4126.42
 Orient=0,-0.666869,0,0.745175
 Scale=2.275,2.275,2.275
@@ -271,6 +315,7 @@ Scale=2.275,2.275,2.275
 [ENTRY]
 ID=503317239
 Asset=Prop-Mat1
+Name=Untitled
 Pos=4363.47,170,4090.48
 Orient=0,-0.761095,0,0.648641
 Scale=2.275,2.275,2.275
@@ -278,6 +323,7 @@ Scale=2.275,2.275,2.275
 [ENTRY]
 ID=503317241
 Asset=Prop-Bench1
+Name=Untitled
 Pos=4794.03,168.581,4071.23
 Orient=0,0.707107,0,0.707107
 Scale=1.4,1.4,1.4
@@ -285,6 +331,7 @@ Scale=1.4,1.4,1.4
 [ENTRY]
 ID=503317242
 Asset=Prop-Bench1
+Name=Untitled
 Pos=4476.02,168.581,4390.91
 Orient=0,0,0,1
 Scale=1.4,1.4,1.4
@@ -292,6 +339,7 @@ Scale=1.4,1.4,1.4
 [ENTRY]
 ID=503317243
 Asset=Prop-Bench1
+Name=Untitled
 Pos=4487.9,168.581,3870.62
 Orient=0,0,0,1
 Scale=1.4,1.4,1.4
@@ -299,6 +347,7 @@ Scale=1.4,1.4,1.4
 [ENTRY]
 ID=503317244
 Asset=Prop-Bench1
+Name=Untitled
 Pos=4274.06,168.581,4070.33
 Orient=0,0.707107,0,0.707107
 Scale=1.4,1.4,1.4
@@ -306,6 +355,7 @@ Scale=1.4,1.4,1.4
 [ENTRY]
 ID=503317245
 Asset=Prop-Bench1
+Name=Untitled
 Pos=4794.03,168.581,4192.81
 Orient=0,0.707107,0,0.707107
 Scale=1.4,1.4,1.4
@@ -313,6 +363,7 @@ Scale=1.4,1.4,1.4
 [ENTRY]
 ID=503317246
 Asset=Prop-Bench1
+Name=Untitled
 Pos=4274.06,168.581,4188.5
 Orient=0,0.707107,0,0.707107
 Scale=1.4,1.4,1.4
@@ -320,6 +371,7 @@ Scale=1.4,1.4,1.4
 [ENTRY]
 ID=503317248
 Asset=Effects#Par-Candle_Glow1
+Name=Untitled
 Pos=4534.88,185.011,3861.61
 Orient=0,0,0,1
 Scale=1,1,1
@@ -327,6 +379,7 @@ Scale=1,1,1
 [ENTRY]
 ID=503317249
 Asset=Prop-Bench1
+Name=Untitled
 Pos=4594.33,168.581,4390.91
 Orient=0,0,0,1
 Scale=1.4,1.4,1.4
@@ -334,6 +387,7 @@ Scale=1.4,1.4,1.4
 [ENTRY]
 ID=503317250
 Asset=Prop-Bench1
+Name=Untitled
 Pos=4594.33,168.581,3870.62
 Orient=0,0,0,1
 Scale=1.4,1.4,1.4
@@ -341,6 +395,7 @@ Scale=1.4,1.4,1.4
 [ENTRY]
 ID=503317251
 Asset=Prop-Mat1
+Name=Untitled
 Pos=4537.34,170,4310.66
 Orient=0,-0.999816,0,-0.0192016
 Scale=2.275,2.275,2.275
@@ -348,6 +403,7 @@ Scale=2.275,2.275,2.275
 [ENTRY]
 ID=503317252
 Asset=Prop-Crypt_Statue1
+Name=Untitled
 Pos=4782.18,170,4382.16
 Orient=0,-0.335656,0,0.941985
 Scale=2.575,2.575,2.575
@@ -355,13 +411,15 @@ Scale=2.575,2.575,2.575
 [ENTRY]
 ID=503317257
 Asset=Prop-Banner_Old#Prop-Banner_Old2
+Name=Untitled
 Pos=4353.26,251.291,3879.78
-Orient=0,1,0,7.54979e-008
+Orient=0,1,0,7.54979e-08
 Scale=1.45,1.45,1.45
 
 [ENTRY]
 ID=503317349
 Asset=Prop-Crypt_Statue1
+Name=Untitled
 Pos=4885.36,164.964,4296.12
 Orient=0,-0.928369,0,0.37166
 Scale=2.575,2.575,2.575
@@ -369,6 +427,7 @@ Scale=2.575,2.575,2.575
 [ENTRY]
 ID=503317350
 Asset=Prop-Mat1
+Name=Untitled
 Pos=5146.45,170,4219.35
 Orient=0,-0.97033,0,-0.241783
 Scale=2.275,2.275,2.275
@@ -376,6 +435,7 @@ Scale=2.275,2.275,2.275
 [ENTRY]
 ID=503317351
 Asset=Prop-Mat1
+Name=Untitled
 Pos=5298.06,170,4040.38
 Orient=0,-0.666869,0,0.745175
 Scale=2.275,2.275,2.275
@@ -383,6 +443,7 @@ Scale=2.275,2.275,2.275
 [ENTRY]
 ID=503317352
 Asset=Prop-Mat1
+Name=Untitled
 Pos=4972.58,170,4004.44
 Orient=0,-0.761095,0,0.648641
 Scale=2.275,2.275,2.275
@@ -390,6 +451,7 @@ Scale=2.275,2.275,2.275
 [ENTRY]
 ID=503317353
 Asset=Prop-Bench1
+Name=Untitled
 Pos=5416.13,169.009,3985.19
 Orient=0,0.707107,0,0.707107
 Scale=1.4,1.4,1.4
@@ -397,6 +459,7 @@ Scale=1.4,1.4,1.4
 [ENTRY]
 ID=503317354
 Asset=Prop-Bench1
+Name=Untitled
 Pos=5085.13,170,4311.75
 Orient=0,0,0,1
 Scale=1.4,1.4,1.4
@@ -404,6 +467,7 @@ Scale=1.4,1.4,1.4
 [ENTRY]
 ID=503317355
 Asset=Prop-Bench1
+Name=Untitled
 Pos=4883.17,164.964,3984.29
 Orient=0,0.707107,0,0.707107
 Scale=1.4,1.4,1.4
@@ -411,6 +475,7 @@ Scale=1.4,1.4,1.4
 [ENTRY]
 ID=503317356
 Asset=Prop-Bench1
+Name=Untitled
 Pos=5416.73,169.23,4106.77
 Orient=0,0.707107,0,0.707107
 Scale=1.4,1.4,1.4
@@ -418,6 +483,7 @@ Scale=1.4,1.4,1.4
 [ENTRY]
 ID=503317357
 Asset=Prop-Bench1
+Name=Untitled
 Pos=4883.17,164.964,4102.46
 Orient=0,0.707107,0,0.707107
 Scale=1.4,1.4,1.4
@@ -425,6 +491,7 @@ Scale=1.4,1.4,1.4
 [ENTRY]
 ID=503317358
 Asset=Prop-Bench1
+Name=Untitled
 Pos=5203.44,170,4311.6
 Orient=0,0,0,1
 Scale=1.4,1.4,1.4
@@ -432,6 +499,7 @@ Scale=1.4,1.4,1.4
 [ENTRY]
 ID=503317360
 Asset=Prop-Crypt_Statue1
+Name=Untitled
 Pos=5391.29,164.964,4296.12
 Orient=0,-0.335656,0,0.941985
 Scale=2.575,2.575,2.575
@@ -439,6 +507,7 @@ Scale=2.575,2.575,2.575
 [ENTRY]
 ID=503317364
 Asset=Prop-Banner_Old2
+Name=Untitled
 Pos=5405.06,250.579,3871.08
 Orient=0,0.696707,0,0.717356
 Scale=1.45,1.45,1.45
@@ -446,6 +515,7 @@ Scale=1.45,1.45,1.45
 [ENTRY]
 ID=503317372
 Asset=Prop-Water_Plane1
+Name=Untitled
 Pos=5147.89,161.211,4046.43
 Orient=0,0,0,1
 Scale=0.25,0.25,0.25
@@ -453,6 +523,7 @@ Scale=0.25,0.25,0.25
 [ENTRY]
 ID=503317376
 Asset=Prop-Fountain1_Base#Prop-Fountain1_Base
+Name=Untitled
 Pos=5163.31,148.055,4042.98
 Orient=-0.0799147,0,0,0.996802
 Scale=0.85,0.85,0.85
@@ -460,6 +531,7 @@ Scale=0.85,0.85,0.85
 [ENTRY]
 ID=503317377
 Asset=Prop-Battlefield_Skeletons#Prop-Battlefield_Skeleton1
+Name=Untitled
 Pos=5155.88,162.568,4096.94
 Orient=-0.148739,0.582508,-0.197701,0.774258
 Scale=1.125,1.125,1.125
@@ -467,6 +539,7 @@ Scale=1.125,1.125,1.125
 [ENTRY]
 ID=503317378
 Asset=Prop-Mat1
+Name=Untitled
 Pos=5146.45,170,3882.89
 Orient=0,-0.999991,0,-0.00420276
 Scale=2.275,2.275,2.275
@@ -474,6 +547,7 @@ Scale=2.275,2.275,2.275
 [ENTRY]
 ID=503317379
 Asset=Prop-Chunks#Prop-Chunks2
+Name=Untitled
 Pos=5104.95,160,4001.29
 Orient=0,0,0,1
 Scale=1.475,1.475,1.475
@@ -481,6 +555,7 @@ Scale=1.475,1.475,1.475
 [ENTRY]
 ID=503317380
 Asset=Light-Huge?COLOR=8fd8d8
+Name=Untitled
 Pos=5144.23,198.131,4096.86
 Orient=0,0,0,1
 Scale=1,1,1
@@ -488,6 +563,7 @@ Scale=1,1,1
 [ENTRY]
 ID=503317387
 Asset=Prop-Brazier2
+Name=Untitled
 Pos=4165.68,226.429,4401.09
 Orient=0,0,0,1
 Scale=1.85,1.85,1.85
@@ -495,6 +571,7 @@ Scale=1.85,1.85,1.85
 [ENTRY]
 ID=503317389
 Asset=Light-Small?COLOR=8fd8d8
+Name=Untitled
 Pos=4215.46,198.131,3951.41
 Orient=0,0,0,1
 Scale=1,1,1
@@ -502,6 +579,7 @@ Scale=1,1,1
 [ENTRY]
 ID=503317393
 Asset=Light-Medium?COLOR=fcb514
+Name=Untitled
 Pos=4182.89,215.764,4400.66
 Orient=0,0,0,1
 Scale=1,1,1
@@ -509,6 +587,7 @@ Scale=1,1,1
 [ENTRY]
 ID=503317834
 Asset=Light-Huge?COLOR=8fd8d8
+Name=Untitled
 Pos=4528.09,198.131,4144.77
 Orient=0,0,0,1
 Scale=1,1,1
@@ -516,6 +595,7 @@ Scale=1,1,1
 [ENTRY]
 ID=503317845
 Asset=Prop-Bench1
+Name=Untitled
 Pos=3940.68,167.641,4102.48
 Orient=0,-0.891207,0,0.453596
 Scale=1.65,1.65,1.65
@@ -523,6 +603,7 @@ Scale=1.65,1.65,1.65
 [ENTRY]
 ID=503317853
 Asset=Prop-Crypt_Statue1#Prop-Crypt_Statue1
+Name=Untitled
 Pos=4035.22,170,3933.83
 Orient=0,0,0,1
 Scale=2.4,2.4,2.4
@@ -530,6 +611,7 @@ Scale=2.4,2.4,2.4
 [ENTRY]
 ID=503317854
 Asset=Prop-Crypt_Statue1
+Name=Untitled
 Pos=4021.51,170,4182.28
 Orient=0,-0.333487,0,0.942755
 Scale=2.4,2.4,2.4
@@ -537,181 +619,180 @@ Scale=2.4,2.4,2.4
 [ENTRY]
 ID=503317882
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=3928.15,170,4138.64
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=1_dng_am_full_mix_16_17
 links_count=1
 link=503318308,1
-spawnPackage=1_dng_am_full_mix_16_17
-outerRadius=10
 
 [ENTRY]
 ID=503317948
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=5148.97,165,4056.66
 Orient=0,0,0,1
 Scale=1,1,1
-innerRadius=175
 spawnPackage=1_dng_am_wyrms_16
-outerRadius=200
 
 [ENTRY]
 ID=503317949
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=4536.46,163.824,4131.84
 Orient=0,0,0,1
 Scale=1,1,1
-innerRadius=175
 spawnPackage=1_dng_am_wyrms_16
-outerRadius=200
 
 [ENTRY]
 ID=503317984
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=5156.96,179.15,3973.44
 Orient=0,-0.628793,0,0.777573
 Scale=1,1,1
 spawnPackage=1_dng_am_RavingCenobiteRND_h17
-outerRadius=20
 
 [ENTRY]
 ID=503317985
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=5225.64,179.15,3986.22
 Orient=0,0.952576,0,-0.3043
 Scale=1,1,1
 spawnPackage=1_dng_am_RavingCenobiteRND_h17
-outerRadius=20
 
 [ENTRY]
 ID=503317986
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=5068.51,179.15,3973.47
 Orient=0,-0.0898785,0,0.995953
 Scale=1,1,1
 spawnPackage=1_dng_am_RavingCenobiteRND_h17
-outerRadius=20
 
 [ENTRY]
 ID=503317987
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=5236.52,179.15,4063.1
 Orient=0,0.99879,0,-0.0491838
 Scale=1,1,1
 spawnPackage=1_dng_am_RavingCenobiteRND_h17
-outerRadius=20
 
 [ENTRY]
 ID=503317988
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=5072.11,179.15,4058.92
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=1_dng_am_RavingCenobiteRND_h17
-outerRadius=20
 
 [ENTRY]
 ID=503317989
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=5093.56,179.15,4123.78
 Orient=0,0.492535,0,0.870293
 Scale=1,1,1
 spawnPackage=1_dng_am_RavingCenobiteRND_h17
-outerRadius=20
 
 [ENTRY]
 ID=503317990
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=5226.06,179.15,4128.17
 Orient=0,0.972329,0,0.233617
 Scale=1,1,1
 spawnPackage=1_dng_am_RavingCenobiteRND_h17
-outerRadius=20
 
 [ENTRY]
 ID=503317991
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=5163.44,179.15,4137.61
 Orient=0,0.670587,0,0.741831
 Scale=1,1,1
 spawnPackage=1_dng_am_RavingCenobiteRND_h17
-outerRadius=20
 
 [ENTRY]
 ID=503317992
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=4454.12,179.15,4125.69
 Orient=0,0.999667,0,0.0257935
 Scale=1,1,1
 spawnPackage=1_dng_am_RavingCenobiteRND_h17
-outerRadius=20
 
 [ENTRY]
 ID=503317993
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=4525.63,179.15,4045.67
 Orient=0,0.624897,0,0.780707
 Scale=1,1,1
 spawnPackage=1_dng_am_RavingCenobiteRND_h17
-outerRadius=20
 
 [ENTRY]
 ID=503317994
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=4534.48,179.15,4207.6
 Orient=0,-0.706825,0,0.707388
 Scale=1,1,1
 spawnPackage=1_dng_am_RavingCenobiteRND_h17
-outerRadius=20
 
 [ENTRY]
 ID=503317995
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=4615.28,179.15,4130.84
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=1_dng_am_RavingCenobiteRND_h17
-outerRadius=20
 
 [ENTRY]
 ID=503317996
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=4563.07,169.15,4151.06
 Orient=0,-0.300293,0,0.953847
 Scale=1,1,1
 spawnPackage=1_dng_am_RavingCenobiteRND_h17
-outerRadius=20
 
 [ENTRY]
 ID=503317997
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=4561.27,169.15,4102.73
 Orient=0,0.439462,0,0.898261
 Scale=1,1,1
 spawnPackage=1_dng_am_RavingCenobiteRND_h17
-outerRadius=20
 
 [ENTRY]
 ID=503317998
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=4504.28,169.15,4102.2
 Orient=0,0.897911,0,0.440178
 Scale=1,1,1
 spawnPackage=1_dng_am_RavingCenobiteRND_h17
-outerRadius=20
 
 [ENTRY]
 ID=503317999
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=4507.27,169.15,4147.92
 Orient=0,-0.741296,0,0.671178
 Scale=1,1,1
 spawnPackage=1_dng_am_RavingCenobiteRND_h17
-outerRadius=20
 
 [ENTRY]
 ID=503318307
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=3974.4,170,4081.49
 Orient=0,0,0,1
 Scale=1,1,1
@@ -723,6 +804,7 @@ link=503318377,1
 [ENTRY]
 ID=503318308
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=3927.98,170,4138.39
 Orient=0,0,0,1
 Scale=1,1,1
@@ -734,6 +816,7 @@ link=503318310,1
 [ENTRY]
 ID=503318309
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=3927.23,170,4086.47
 Orient=0,0,0,1
 Scale=1,1,1
@@ -745,46 +828,47 @@ link=503318378,1
 [ENTRY]
 ID=503318375
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=3877.67,170,4070.34
 Orient=0,0.193767,0,0.981048
 Scale=1,1,1
 spawnPackage=1_dng_am_full_mix_16_17
-outerRadius=10
 
 [ENTRY]
 ID=503318376
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=3893.19,170,4040.44
 Orient=0,-0.798621,0,0.601835
 Scale=1,1,1
 spawnPackage=1_dng_am_full_mix_16_17
-outerRadius=10
 
 [ENTRY]
 ID=503318377
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=3975.16,170,4081.67
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=1_dng_am_full_mix_16_17
 links_count=1
 link=503318307,1
-spawnPackage=1_dng_am_full_mix_16_17
-outerRadius=10
 
 [ENTRY]
 ID=503318378
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=3927.69,170,4087.73
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=1_dng_am_full_mix_16_17
 links_count=1
 link=503318309,1
-spawnPackage=1_dng_am_full_mix_16_17
-outerRadius=10
 
 [ENTRY]
 ID=503318646
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=4124.91,170,4383.45
 Orient=0,0,0,1
 Scale=1,1,1
@@ -795,6 +879,7 @@ link=503318647,1
 [ENTRY]
 ID=503318647
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=4128.26,170,4423.54
 Orient=0,0,0,1
 Scale=1,1,1

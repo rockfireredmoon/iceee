@@ -1,7 +1,7 @@
 [ENTRY]
 ID=1150698
 Asset=Prop-Boulder#Prop-Waterfall_Rock
-Name=
+Name=Untitled
 Pos=69277.1,538.047,67298.9
 Orient=0,0,0,1
 Scale=1,1,1
@@ -9,7 +9,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1150699
 Asset=Prop-Boulder#Prop-Waterfall_Rock
-Name=
+Name=Untitled
 Pos=69250.4,557.638,67286.5
 Orient=0,0,0,1
 Scale=1,1,1
@@ -17,7 +17,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1150700
 Asset=Prop-Boulder#Prop-Waterfall_Rock
-Name=
+Name=Untitled
 Pos=69231.7,571.51,67294.2
 Orient=0,0,0,1
 Scale=1,1,1

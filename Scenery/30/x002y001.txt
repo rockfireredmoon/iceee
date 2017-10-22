@@ -1,4 +1,13 @@
 [ENTRY]
+ID=1154564
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=5211.49,170,2992.24
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#F16031
+
+[ENTRY]
 ID=503316555
 Asset=Dng-Hall_T2?ATS=ATS-Dungeon_Temple
 Name=Untitled
@@ -2277,7 +2286,7 @@ spawnPackage=1_dng_am_RavingCenobiteRND_h17
 ID=503318000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
-Pos=5562.04,209.15,2365.17
+Pos=5562.04,209.014,2365.17
 Orient=0,-0.724287,0,0.689498
 Scale=1,1,1
 spawnPackage=1_dng_am_FolioRND_h17
@@ -2295,7 +2304,7 @@ spawnPackage=1_dng_am_FolioRND_h17
 ID=503318003
 Asset=Manipulator-SpawnPoint
 Name=Untitled
-Pos=5452.92,197.033,2350.29
+Pos=5452.92,204.707,2350.29
 Orient=0,-0.706825,0,0.707389
 Scale=1,1,1
 spawnPackage=1_dng_am_CodexRND_h17
