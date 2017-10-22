@@ -1,5 +1,5 @@
 [BOOK]
-TITLE=Hell’s Shadow Report
+TITLE=Hell's Shadow Report
 
 [PAGE]
 TEXT="So many Shadows! I had heard there would be a Rift in this part of the Great Forest, yet I had not anticipated it would be so large. This expanse... the very size of this pocket dimension... I cannot imagine what sort of Shadow would be capable of creating such a place!
