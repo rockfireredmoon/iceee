@@ -101,6 +101,14 @@ Spawn=1359,50
 Spawn=1336,50
 
 [ENTRY]
+Name=VBloodkeep_SanctumVaj1
+Spawn=1354,100
+
+[ENTRY]
+Name=VBloodkeep_SanctumVaj2
+Spawn=1332,100
+
+[ENTRY]
 Name=Valkal_Eternal
 Flags=224
 

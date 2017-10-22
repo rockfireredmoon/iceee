@@ -6,6 +6,7 @@
 #include <string.h>  //For memset
 #include "Stats.h"
 #include "Character.h"  //For IntContainer
+#include "Instance.h"  //For IntContainer
 
 class AccountData;
 class ZoneDefInfo;
@@ -99,7 +100,5 @@ struct CharacterServerData
 	QuestJournal* GetQuestJournal(void);
 };
 
-
-int PrepExt_SetMap(char *buffer, CharacterServerData *pldata, int x, int z);
 
 #endif //ACTIVECHARACTER_H

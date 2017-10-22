@@ -21,11 +21,11 @@ const SPELLBREAKER = 347;		//  Spellbreaker (40)
 const THORS_MIGHTY_BLOW = 344;	//  Thors Mighty Blow (50)
 
 info <- {
-	name = "valkal2",
+	name = "valkal1",
 	enabled = true,
 	author = "Heathendel",
-	description = "Valkals primary AI (phase 2)"
-	speed = 2
+	description = "Valkals primary AI"
+	speed = 10
 }
 
 function on_target_lost(target_cid)
@@ -63,6 +63,9 @@ function main() {
 		}
 		else
 			ai.use(CAN_OPENER);
+	}
+	else {
+		ai.use(MELEE);
 	}
 	ai.exec(main);
 }

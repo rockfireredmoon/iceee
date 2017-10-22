@@ -8,6 +8,7 @@
 
 #include <vector>
 #include <list>
+#include <string>
 
 #include "BroadCast.h"
 #include "ActiveCharacter.h" //For CharacterServerData class definition
@@ -231,6 +232,8 @@ public:
 	int mOwnerCreatureDefID;  //This is the DefID of the player who created this instance (actived for Instance-type zones)
 	int mOwnerPartyID;        //If nonzero, this instance (if a dungeon) will be assigned ownership to a party ID to assist in lookups when placing players into dungeons.
 	std::string mOwnerName;   //The owner's display_name.
+	std::vector<std::string> mEnvironments; // stack of environments
+	std::string mTimeOfDay; // overriden time of day
 	unsigned long mLastHealthUpdate;  //Time of the last health increment.  TODO: OBSOLETE
 	unsigned long mNextCreatureBroadcast;
 	unsigned long mLastMovementUpdate;
@@ -403,6 +406,12 @@ public:
 	void FetchNearbyCreatures(SimulatorThread *simPtr, CreatureInstance *player);
 	void RunObjectInteraction(SimulatorThread *simPtr, int CDef);
 	void ApplyCreatureScale(CreatureInstance *target);
+	std::string GetEnvironment(int x, int y);
+	std::string GetTimeOfDay();
+	void SetTimeOfDay(std::string timeOfDay);
+	void PushEnvironment(std::string environment);
+	void ClearEnvironments();
+	std::string PopEnvironment();
 	const DropRateProfile* GetDropRateProfile(void);
 
 	int CountAlive(int creatureDefID);

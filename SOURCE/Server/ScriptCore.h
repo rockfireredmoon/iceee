@@ -367,6 +367,7 @@ public:
 	std::string mDescription;
 	bool mQueueEvents;
 	int mScriptIdleSpeed;
+	unsigned long mVMSize;
 
 	NutDef();
 	virtual ~NutDef();
@@ -550,6 +551,7 @@ public:
 	std::vector<NutScriptEvent*> mQueueRemove;
 
 private:
+	void DoInitialize(int stackSize, NutDef *defPtr, std::string &errors);
 	bool ExecEvent(NutScriptEvent *nse, int index);
 	bool DoRunFunction(std::string name, std::vector<ScriptParam> parms, bool time, bool retval);
 	void MaybeWakeVM(std::string reason);

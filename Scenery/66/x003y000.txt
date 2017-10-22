@@ -53,7 +53,7 @@ Name=Untitled
 Pos=5943.2,560.702,1851.79
 Orient=0,-0.685289,0,0.728272
 Scale=1,1,1
-spawnPackage=VBloodkeep_Palatine
+spawnPackage=VBloodkeep_SanctumVaj2
 maxActive=0
 sequential=1
 

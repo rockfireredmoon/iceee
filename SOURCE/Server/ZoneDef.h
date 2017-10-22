@@ -150,7 +150,7 @@ public:
 	void ChangeEnvironment(const char *newEnvironment);
 	void ChangeEnvironmentUsage(void);
 	bool QualifyDelete(void);
-	std::string * GetTileEnvironment(int x, int y);
+	std::string GetTileEnvironment(int x, int y);
 
 	bool AllowSceneryAudits(void);
 	void AuditScenery(const char *username, int zone, const SceneryObject *sceneryObject, int opType);
@@ -322,6 +322,6 @@ extern ZoneBarrierManager g_ZoneBarrierManager;
 extern EnvironmentCycleManager g_EnvironmentCycleManager;
 extern GroveTemplateManager g_GroveTemplateManager;
 
-int PrepExt_SendEnvironmentUpdateMsg(char *buffer, const char *zoneIDString, ZoneDefInfo *zoneDef, int x, int z);
+int PrepExt_SendEnvironmentUpdateMsg(char *buffer, ActiveInstance *instance, const char *zoneIDString, ZoneDefInfo *zoneDef, int x, int z);
 
 #endif  //ZONEDEF_H

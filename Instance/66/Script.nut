@@ -5,13 +5,18 @@
  * sequences, different adds, custom abilties and lots of scripted movement.
  *
  * It also calls in AI scripts and demostrates an engage / disengage technique.
+ *
+ * This script requests a larger VM than usual, but still only 4K. It is
+ * doubtful there would be more than one or two of these instances running at
+ * any one time.
  */
 
 ::info <- {
 	name = "Valkals Blood Keep",
 	author = "Emerald Icemoon",
 	description = "Handles the final fight!",
-	queue_events = true
+	queue_events = true,
+	vm_size = 4098
 }
 
 // Supporting classes
@@ -41,7 +46,6 @@ const THOUSAND_BATS = 24012;
 // Creature Definition IDs
 const CDEF_VALKAL1 = 1385;
 const CDEF_VALKAL2 = 3351;
-const CDEF_CANDELABRA_1 = 7873;
 
 // The locations of the room
 loc_chamber <- Area(5679, 1842, 5953, 2225);
@@ -72,11 +76,14 @@ valkal_1_palatine_adds <- [
     VampireAdd(1150686, Point(3805,2762), 63)
 ];
 
-valkal_2_adds <- [
+valkal_2_adds_left <- [
     VampireAdd(1154484, Point(5700,2044), 11),
     VampireAdd(1154485, Point(5742,2055), 12),
     VampireAdd(1154486, Point(5764,2117), 38),
-    VampireAdd(1154487, Point(5771,2215), 89),
+    VampireAdd(1154487, Point(5771,2215), 89)
+];
+
+valkal_2_adds_right <- [
     VampireAdd(1154488, Point(5936,2051), 237),
     VampireAdd(1154489, Point(5900,2046), 238),
     VampireAdd(1154490, Point(5857,2120), 208),
@@ -101,32 +108,12 @@ cid_valkal2 <- 0;
 phase <- 0;
 valkal1_full_health_count <- 0;
 valkal2_full_health_count <- 0;
-lit_candelabras <- [];
+blood_sky <- false;
 
 // Debug
 no_adds <- false;
-debug <- false;
+debug <- true;
 manual_trigger <- false;
-
-function is_usable(cid, cdef_id, by_cid, by_cdef_id) {
-	print("is_usable " + cid + "/" + cdef_id + "\n");
-	if(cdef_id == CDEF_CANDELABRA_1 && !array_contains(lit_candelabras, cid)) {
-		return "Y";
-	}
-	return "N";
-}
-
-function on_use(cid, target_cid, target_cdef_id) {
-	if(target_cdef_id == CDEF_CANDELABRA_1) {
-		inst.interact(cid, "Lighting the candelabra", 3000, false, function() {
-			lit_candelabras.append(cid);			
-			local candelabra_prop = inst.creature_spawn_prop(target_cid);
-			inst.asset(candelabra_prop, "CL-Candelabra2", 1.5);
-			return true;
-		});
-		return true;
-	}
-}
 
 /* Keep scanning for Valkal1 until he spawns. When he does, we start to monitor his health  */ 
 function find_valkal1() {
@@ -305,7 +292,6 @@ function valkal_1_heal_sequence() {
 function valkal_2_heal_sequence() {
     if(debug)
 		inst.info("Heal sequence");
-	spawn_adds(valkal_2_adds.len() / 4, valkal_2_adds);
     disengage_valkal(cid_valkal2);
 	inst.walk_then(cid_valkal2, loc_chamber_platform_centre, -1, CREATURE_JOG_SPEED, 0, function(res) {
         inst.rotate_creature(cid_valkal2, loc_chamber_platform_rot);
@@ -324,9 +310,10 @@ function spawn_valkal_2() {
 	inst.load_spawn_tile(valkal2_spawn_tile);
 	
 	/* Preload add tiles as well */
-	foreach(v in valkal_2_adds) {
+	foreach(v in valkal_2_adds_left)
 		inst.load_spawn_tile(v.tile());
-    }
+    foreach(v in valkal_2_adds_right)
+    	inst.load_spawn_tile(v.tile());
     
 	inst.queue(function() {
 		inst.spawn(VALKAL2_SPAWN_PROP, 0, 0);
@@ -335,12 +322,21 @@ function spawn_valkal_2() {
 	}, 5000);
 }
 
+/* Remove the fight scene environment if it is set */
+function remove_blood_sky() {
+    if(blood_sky) {
+    	inst.pop_env();
+    	blood_sky = false;
+    }
+}
+
 /* Starts the sequence of Valkal running from the throne room to the
    Sanctum */
 function valkal_flee() {
 
    	inst.creature_chat(cid_valkal1, "s/", "This is not over...");
     disengage_valkal(cid_valkal1);
+    remove_blood_sky();
 	inst.queue(function() {
 		inst.walk_then(cid_valkal1, loc_trap_door, -1, CREATURE_RUN_SPEED, 0, function(res) {
 			inst.creature_chat(cid_valkal1, "s/", "... Follow if you dare");
@@ -362,7 +358,6 @@ function valkal_flee() {
 function tribute() {
     if(debug)
 		inst.info("Tribute");
-	spawn_adds(valkal_2_adds.len() / 2, valkal_2_adds);
     disengage_valkal(cid_valkal2);
 	inst.walk_then(cid_valkal2, loc_chamber_platform_front, 192, CREATURE_JOG_SPEED, 0, function(res) {
         if(debug)
@@ -433,6 +428,9 @@ function bringing_down_the_house() {
 function valkals_desperation() {
     disengage_valkal(cid_valkal1);
 	inst.walk_then(cid_valkal1, loc_platform_front, 192, CREATURE_JOG_SPEED, 0, function(res) {
+		inst.set_flag(cid_valkal1, SF_NON_COMBATANT, false);
+		inst.resume_ai(cid_valkal1);
+		inst.set_creature_gtae(cid_valkal1);
         if(!inst.creature_use(cid_valkal1, THOUSAND_BATS)) {
         	if(debug)
             	inst.info("Failed to THOUSAND_BATS");
@@ -447,6 +445,7 @@ function valkals_desperation() {
 /* Reset the Valkal1 fight if the party wipes out */
 function reset_valkal1() {
 	phase = 0;
+	remove_blood_sky();
     disengage_valkal(cid_valkal1);
    	inst.creature_chat(cid_valkal1, "s/", "Will no one face me? ... Cowards");
 	valkal1_full_health_count = 0;
@@ -458,6 +457,7 @@ function reset_valkal1() {
 /* Reset the Valkal2 fight if the party wipes out */
 function reset_valkal2() {
 	phase = 0;
+	remove_blood_sky();
     disengage_valkal(cid_valkal2);
    	inst.creature_chat(cid_valkal2, "s/", "You've failed! You've all failed! ... You'll ALWAYS fail ....");
 	valkal2_full_health_count = 0;
@@ -481,7 +481,7 @@ function valkal1_health() {
 		inst.exec(find_valkal1);
 	}
 	else if(health == 100) {
-		if(valkal1_full_health_count == 12 && inst.is_at_tether(cid_valkal1)) {
+		if(valkal1_full_health_count == 4 && inst.is_at_tether(cid_valkal1)) {
 			// After a while at full health, reset entirely
 			reset_valkal1();
 		}
@@ -492,6 +492,9 @@ function valkal1_health() {
 		inst.queue(valkal1_health, 5000);
 	}
     else {
+    	if(!blood_sky)
+    		blood_sky = inst.push_env("Bloodkeep2");
+    		
     	valkal1_full_health_count = 0;
     	
 	    if(health <= 5 && phase < 9) {
@@ -513,20 +516,19 @@ function valkal1_health() {
 	        	inst.info("Spawn 5");
 	        phase = 7;
 			spawn_adds(valkal_1_mehirim_adds.len(), valkal_1_mehirim_adds);
-			spawn_adds(valkal_1_palatine_adds.len() / 2, valkal_1_palatine_adds);
 	    }
 	    else if(health <= 40 && phase < 6) {
 	        if(debug)
 	        	inst.info("Spawn 4");
 	        phase = 6;
 			spawn_adds(valkal_1_mehirim_adds.len() / 2, valkal_1_mehirim_adds);
-			spawn_adds(valkal_1_palatine_adds.len() / 2, valkal_1_palatine_adds);
 	    }
 	    else if(health <= 50 && phase < 5) {
 	        if(debug)
 	        	inst.info("Heal 2");
 	        phase = 5;
 	        valkal_1_heal_sequence();
+			spawn_adds(valkal_1_palatine_adds.len() / 2, valkal_1_palatine_adds);
 	        return;
 	    }
 	    else if(health <= 60 && phase < 4) {
@@ -540,19 +542,19 @@ function valkal1_health() {
 	        	inst.info("Heal 1");
 	        phase = 3;
 	        valkal_1_heal_sequence();
+			spawn_adds(valkal_1_palatine_adds.len() / 2, valkal_1_palatine_adds);
 	        return;
 	    }
 	    else if(health <= 80 && phase < 2) {
 	        if(debug)
 	        	inst.info("Spawn 2");
 	        phase = 2;
-			spawn_adds(valkal_1_palatine_adds.len() / 2, valkal_1_palatine_adds);
 	    }
 	    else if(health <= 90 && phase < 1) {
 	        if(debug)
 	        	inst.info("Spawn 1");
 	        phase = 1;
-			spawn_adds(valkal_1_mehirim_adds.len(), valkal_1_mehirim_adds);
+			spawn_adds(valkal_1_mehirim_adds.len() / 2, valkal_1_mehirim_adds);
 	    }
 	    
 		inst.exec(valkal1_health);
@@ -576,7 +578,7 @@ function valkal2_health() {
 		inst.exec(find_valkal2);
 	}
 	else if(health == 100) {
-		if(valkal2_full_health_count == 12 && inst.is_at_tether(cid_valkal2)) {
+		if(valkal2_full_health_count == 40 && inst.is_at_tether(cid_valkal2)) {
 			// After a while at full health, reset entirely
 			reset_valkal2();
 		}
@@ -587,6 +589,9 @@ function valkal2_health() {
 		inst.queue(valkal2_health, 5000);
 	}
     else {
+    	if(!blood_sky)
+    		blood_sky = inst.push_env("Bloodkeep2");
+    		
     	valkal1_full_health_count = 0;
 		if(health <= 10 && phase < 9) {
 	        // Bringing Down the House 3
@@ -609,6 +614,7 @@ function valkal2_health() {
 	        if(debug)
 	        	inst.info("Heal 3");
 	        phase = 7;
+			spawn_adds(1, valkal_2_adds_right);
 	        valkal_2_heal_sequence();
 	        return;
 	    }
@@ -633,6 +639,7 @@ function valkal2_health() {
 	        if(debug)
 	        	inst.info("Heal 2");
 	        phase = 4;
+			spawn_adds(1, valkal_2_adds_left);
 	        valkal_2_heal_sequence();
 	        return;
 	    }
@@ -665,6 +672,18 @@ function valkal2_health() {
 	}
 
 }
+
+/* Handle Valkal2's death */
+function on_kill_3351() {
+	remove_blood_sky();	
+	inst.broadcast("Valkal has been defeated! The victorious team consisted of ...");
+	foreach(idx, cid in inst.all_players()) {
+		inst.queue(function() {
+			inst.broadcast(inst.get_display_name(cid));
+		}, ( idx + 1 ) * 5000);
+	}
+}
+
 
 /* Debug function that can be run externally to set the phase */
 function debug_setphase(p) {

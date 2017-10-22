@@ -3271,6 +3271,14 @@ class this.EffectDef.ThousandBatsWarmup extends this.EffectDef.TemplateWarmup
 			animation = "Magic_Casting",
 			loop = true
 		});
+		warmup.add("ParticleSystem", {
+			particleSystem = "Par-Fire_Cast",
+			emitterPoint = "right_hand"
+		});
+		warmup.add("ParticleSystem", {
+			particleSystem = "Par-Fire_Cast",
+			emitterPoint = "horde_caster"
+		});
 		this.onLoopSound();
 		this.fireIn(this.mMaxWarmupTime, "onAbilityCancel");
 	}
@@ -3417,8 +3425,8 @@ class this.EffectDef.ThousandBats extends this.EffectDef.TemplateBasic
 			fadeOut = 500,
 			target = aoe.getObject(),
 			textureName = "ThousandBats.png",
-			orthoWidth = 300,
-			orthoHeight = 300,
+			orthoWidth = 500,
+			orthoHeight = 500,
 			far = 150,
 			offset = this.Vector3(0, 60, 0),
 			additive = true
@@ -3436,7 +3444,7 @@ class this.EffectDef.ThousandBats extends this.EffectDef.TemplateBasic
 		sound.add("Sound", {
 			sound = this.mSound
 		});
-		sound.add("Scream", {
+		sound.add("Sound", {
 			sound = this.mScreamSound
 		});
 	}
