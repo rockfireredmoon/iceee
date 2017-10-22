@@ -574,7 +574,7 @@ mIvType1=11
 [ENTRY]
 mID=1500038
 mType=8
-mDisplayName=Tower Spellbook Primer – Beginner’s Curriculum
+mDisplayName=Tower Spellbook Primer - Beginner's Curriculum
 mIcon=Icon-32-Torn_Page.png|Icon-32-BG-Black.png
 mLevel=1
 mValue=1
@@ -589,7 +589,7 @@ mIvType1=11
 [ENTRY]
 mID=1500039
 mType=8
-mDisplayName=Tower Spellbook Primer – Beginner’s Curriculum
+mDisplayName=Tower Spellbook Primer - Beginner's Curriculum
 mIcon=Icon-32-Torn_Page.png|Icon-32-BG-Black.png
 mLevel=1
 mValue=1
@@ -604,7 +604,7 @@ mIvType1=11
 [ENTRY]
 mID=1500040
 mType=8
-mDisplayName=Tower Spellbook Primer – Beginner’s Curriculum
+mDisplayName=Tower Spellbook Primer - Beginner's Curriculum
 mIcon=Icon-32-Torn_Page.png|Icon-32-BG-Black.png
 mLevel=1
 mValue=1
@@ -619,7 +619,7 @@ mIvType1=11
 [ENTRY]
 mID=1500041
 mType=8
-mDisplayName=Tower Spellbook Primer – Beginner’s Curriculum
+mDisplayName=Tower Spellbook Primer - Beginner's Curriculum
 mIcon=Icon-32-Torn_Page.png|Icon-32-BG-Black.png
 mLevel=1
 mValue=1
@@ -634,7 +634,7 @@ mIvType1=11
 [ENTRY]
 mID=1500042
 mType=8
-mDisplayName=Tower Spellbook Primer – Novice’s Curriculum
+mDisplayName=Tower Spellbook Primer - Novice's Curriculum
 mIcon=Icon-32-Torn_Page.png|Icon-32-BG-Black.png
 mLevel=1
 mValue=1
@@ -649,7 +649,7 @@ mIvType1=11
 [ENTRY]
 mID=1500043
 mType=8
-mDisplayName=Tower Spellbook Primer – Novice’s Curriculum
+mDisplayName=Tower Spellbook Primer - Novice's Curriculum
 mIcon=Icon-32-Torn_Page.png|Icon-32-BG-Black.png
 mLevel=1
 mValue=1
@@ -664,7 +664,7 @@ mIvType1=11
 [ENTRY]
 mID=1500044
 mType=8
-mDisplayName=Tower Spellbook Primer – Novice’s Curriculum
+mDisplayName=Tower Spellbook Primer - Novice's Curriculum
 mIcon=Icon-32-Torn_Page.png|Icon-32-BG-Black.png
 mLevel=1
 mValue=1
@@ -679,7 +679,7 @@ mIvType1=11
 [ENTRY]
 mID=1500045
 mType=8
-mDisplayName=Tower Spellbook Primer – Novice’s Curriculum
+mDisplayName=Tower Spellbook Primer - Novice's Curriculum
 mIcon=Icon-32-Torn_Page.png|Icon-32-BG-Black.png
 mLevel=1
 mValue=1
@@ -694,7 +694,7 @@ mIvType1=11
 [ENTRY]
 mID=1500046
 mType=8
-mDisplayName=Tower Spellbook Primer – Adept’s Curriculum
+mDisplayName=Tower Spellbook Primer - Adept's Curriculum
 mIcon=Icon-32-Torn_Page.png|Icon-32-BG-Black.png
 mLevel=1
 mValue=1
@@ -709,7 +709,7 @@ mIvType1=11
 [ENTRY]
 mID=1500047
 mType=8
-mDisplayName=Tower Spellbook Primer – Adept’s Curriculum
+mDisplayName=Tower Spellbook Primer - Adept's Curriculum
 mIcon=Icon-32-Torn_Page.png|Icon-32-BG-Black.png
 mLevel=1
 mValue=1
@@ -724,7 +724,7 @@ mIvType1=11
 [ENTRY]
 mID=1500048
 mType=8
-mDisplayName=Tower Spellbook Primer – Adept’s Curriculum
+mDisplayName=Tower Spellbook Primer - Adept's Curriculum
 mIcon=Icon-32-Torn_Page.png|Icon-32-BG-Black.png
 mLevel=1
 mValue=1
@@ -739,7 +739,7 @@ mIvType1=11
 [ENTRY]
 mID=1500049
 mType=8
-mDisplayName=Tower Spellbook Primer – Adept’s Curriculum
+mDisplayName=Tower Spellbook Primer - Adept's Curriculum
 mIcon=Icon-32-Torn_Page.png|Icon-32-BG-Black.png
 mLevel=1
 mValue=1
@@ -754,7 +754,7 @@ mIvType1=11
 [ENTRY]
 mID=1500050
 mType=8
-mDisplayName=Witchdoctor’s Prescription Notes
+mDisplayName=Witchdoctor's Prescription Notes
 mIcon=Icon-32-Paper.png|Icon-32-BG-Pink.png
 mLevel=1
 mValue=1
@@ -769,7 +769,7 @@ mIvType1=11
 [ENTRY]
 mID=1500051
 mType=8
-mDisplayName=Witchdoctor’s Prescription Notes
+mDisplayName=Witchdoctor's Prescription Notes
 mIcon=Icon-32-Paper.png|Icon-32-BG-Pink.png
 mLevel=1
 mValue=1
@@ -784,7 +784,7 @@ mIvType1=11
 [ENTRY]
 mID=1500052
 mType=8
-mDisplayName=Witchdoctor’s Prescription Notes
+mDisplayName=Witchdoctor's Prescription Notes
 mIcon=Icon-32-Paper.png|Icon-32-BG-Pink.png
 mLevel=1
 mValue=1
@@ -964,7 +964,7 @@ mIvType1=11
 [ENTRY]
 mID=1500064
 mType=8
-mDisplayName=Hell’s Shadow Report
+mDisplayName=Hell's Shadow Report
 mIcon=Icon-32-Torn_Page.png|Icon-32-BG-Black.png
 mLevel=1
 mValue=1
@@ -1009,7 +1009,7 @@ mIvType1=11
 [ENTRY]
 mID=1500067
 mType=8
-mDisplayName=The Dragon’s Nest Memo
+mDisplayName=The Dragon's Nest Memo
 mIcon=Icon-32-Crumpled_Paper.png|Icon-32-BG-Divine.png
 mLevel=1
 mValue=1
@@ -1054,7 +1054,7 @@ mIvType1=11
 [ENTRY]
 mID=1500070
 mType=8
-mDisplayName=Zhushi’s Lair Parchment - Zhushi – A Study
+mDisplayName=Zhushi's Lair Parchment - Zhushi – A Study
 mIcon=Icon-32-Torn_Page.png|Icon-32-BG-Grey.png
 mLevel=1
 mValue=1
