@@ -143,3 +143,8 @@ Name=Nook Town
 Comment=[Comment here]
 Position=63405.0,717.0,50014.0
 
+[ENTRY]
+Name=Tip Of Frost Peak
+Comment=Entrance to Lurkers
+Position=84532.0,1006.0,61277.0
+

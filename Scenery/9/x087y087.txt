@@ -1,4 +1,12 @@
 [ENTRY]
+ID=1154606
+Asset=Prop-Marker1#Prop-Marker_Medium
+Name=
+Pos=65271.6,649.525,65940.9
+Orient=0,0,0,1
+Scale=10,10,10
+
+[ENTRY]
 ID=151017941
 Asset=Prop-Snow#Prop-Snow_Drift1
 Name=Untitled

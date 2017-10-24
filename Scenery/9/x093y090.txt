@@ -1,8 +1,24 @@
 [ENTRY]
 ID=1150703
 Asset=Prop-Interact1#Prop-Interact_Rectangle
-Name=
-Pos=70228.4,204.392,67583.8
+Name=Untitled
+Pos=70230.9,204.363,67586.2
 Orient=0.357445,0.492035,-0.231641,0.759261
 Scale=20,20,20
+
+[ENTRY]
+ID=1154607
+Asset=Prop-Path_Helper#Prop-Path_Helper
+Name=
+Pos=70267.8,620.631,67596.3
+Orient=-0.188243,0.535407,0.100407,0.817204
+Scale=1.7,1.7,1.7
+
+[ENTRY]
+ID=1154608
+Asset=Prop-Path_Helper
+Name=
+Pos=70456.1,786.137,67679.9
+Orient=-0.188243,0.535407,0.100407,0.817204
+Scale=1.7,1.7,1.7
 
