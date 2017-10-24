@@ -656,7 +656,7 @@ void InstanceNutPlayer::HaltDerivedExecution()
 	}
 	openedForms.clear();
 
-	actInst->ClearEnvironments();
+	actInst->SetEnvironment("");
 }
 
 void InstanceNutPlayer::RegisterFunctions() {
@@ -712,8 +712,8 @@ void InstanceNutPlayer::RegisterInstanceFunctions(NutPlayer *instance, Sqrat::De
 {
 	instanceClass->Func(_SC("set_timeofday"), &InstanceNutPlayer::SetTimeOfDay);
 	instanceClass->Func(_SC("get_timeofday"), &InstanceNutPlayer::GetTimeOfDay);
-	instanceClass->Func(_SC("push_env"), &InstanceNutPlayer::PushEnvironment);
-	instanceClass->Func(_SC("pop_env"), &InstanceNutPlayer::PopEnvironment);
+	instanceClass->Func(_SC("set_env"), &InstanceNutPlayer::SetEnvironment);
+	instanceClass->Func(_SC("get_env"), &InstanceNutPlayer::GetEnvironment);
 	instanceClass->Func(_SC("interact"), &InstanceNutPlayer::Interact);
 	instanceClass->Func(_SC("transform"), &InstanceNutPlayer::Transform);
 	instanceClass->Func(_SC("pvp_goal"), &InstanceNutPlayer::PVPGoal);
@@ -1464,8 +1464,8 @@ int InstanceNutPlayer::OLDSpawnAt(int creatureID, float x, float y, float z, int
 	}
 }
 
-bool InstanceNutPlayer::PushEnvironment(const char *environment) {
-	actInst->PushEnvironment(environment);
+bool InstanceNutPlayer::SetEnvironment(const char *environment) {
+	actInst->SetEnvironment(environment);
 	return true;
 }
 
@@ -1477,8 +1477,8 @@ void InstanceNutPlayer::SetTimeOfDay(std::string timeOfDay) {
 	actInst->SetTimeOfDay(timeOfDay);
 }
 
-std::string InstanceNutPlayer::PopEnvironment() {
-	return actInst->PopEnvironment();
+std::string InstanceNutPlayer::GetEnvironment(int x, int y) {
+	return actInst->GetEnvironment(x, y);
 }
 
 bool InstanceNutPlayer::Interact(int CID, const char *text, float time, bool gather, Sqrat::Function function) {

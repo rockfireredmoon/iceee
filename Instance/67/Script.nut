@@ -12,6 +12,7 @@ boss_cid <- 0;
 boss_home <- Point(0,0);
 center <- Point(1457,1865);
 phase <- 0;
+debug <- false;
 
 // Locations
 
@@ -60,7 +61,6 @@ function is_launched(v) {
 }
 	
 function is_usable(cid, cdef_id, by_cid, by_cdef_id) {
-	print("Is usable " + cid + "," + cdef_id + "\n");
 	if(cdef_id == CDEF_INTERACT_SPHERE && !is_launched(cid)) {
 		return "Y";
 	}
@@ -87,7 +87,7 @@ function on_use(cid, target_cid, target_cdef_id) {
 				disengage(boss_cid);
 				local missile_loc = inst.get_location(cid);
 				inst.creature_chat(boss_cid, "s/", "No! Why did you do that! You'll kill us all..");
-				inst.walk_then(boss_cid, Point(missile_loc.x,missile_loc.z), -1, CREATURE_RUN_SPEED * 2, 00, function() {
+				inst.walk_then(boss_cid, Point(missile_loc.x,missile_loc.z), -1, CREATURE_RUN_SPEED * 2, 00, function(res) {
 					inst.creature_chat(boss_cid, "s/", "The green wire, the red wire, which is it !?!");
 					inst.emote(boss_cid, "Dig_Shovel");
 				});
@@ -126,7 +126,8 @@ function on_use(cid, target_cid, target_cdef_id) {
     				
     				/* Stun/Damage everyone in the area of effect */
 	    			if(!inst.creature_use(target_cid, _AB("Nuclear Fallout"))) {
-	    				inst.info("STUN FAILED :(");
+	    				if(debug)
+	    					inst.info("STUN FAILED :(");
 	    			}
 	    			
 		    		/* The boss gets special treatment. Delay slightly to let to player attack work first */
@@ -135,10 +136,11 @@ function on_use(cid, target_cid, target_cdef_id) {
 	    				
 	    				/* Send the boss back home when his stun ends */
 	    				if(phase == 1) {
-                            inst.info("target:  "  + target_cid + " : " + _AB("Nuclear Sickness"));
 							inst.set_flag(boss_cid, SF_NON_COMBATANT, false);
-	    					if(!inst.creature_use(target_cid, _AB("Nuclear Sickness")))
-                                inst.info("failed Nuclear Sickness");
+	    					if(!inst.creature_use(target_cid, _AB("Nuclear Sickness"))) {
+			    				if(debug)
+		                        	inst.info("failed Nuclear Sickness");
+	    					}
 							inst.set_flag(boss_cid, SF_NON_COMBATANT, true);
 		    				inst.queue(function() {
 								inst.walk_then(boss_cid, boss_home, -1, CREATURE_RUN_SPEED * 2, 00, function(res) {

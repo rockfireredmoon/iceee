@@ -145,6 +145,46 @@ material Env-GreenClouds
 
 }
 
+material Env-RedClouds
+{
+	receive_shadows off
+	technique
+	{
+		pass
+		{
+			ambient 1 1 1 0.99
+			diffuse 1 1 1 0.99
+			specular 1 1 1 0.99 20
+			emissive 1 1 1 0.99
+			fog_override true
+			scene_blend alpha_blend
+			depth_bias 16
+			depth_write off
+			depth_check off
+
+			texture_unit
+			{
+				texture_alias Map#5
+				texture Env-Horizon_Mask.png
+				colour_op_ex blend_texture_alpha src_texture src_current
+				colour_op_multipass_fallback dest_colour zero
+			}
+
+			texture_unit
+			{
+				texture_alias Map#3
+				texture RedClouds.png
+				colour_op_ex blend_diffuse_alpha src_texture src_current
+				colour_op_multipass_fallback dest_colour zero
+				scale 0.25 0.25
+				scroll_anim 0.02 0.02
+			}
+		}
+
+	}
+
+}
+
 material Env-Stars
 {
 	receive_shadows off
@@ -213,6 +253,45 @@ material Env-BlueGradient
 			{
 				texture_alias Map#3
 				texture BlueGradient.png
+				colour_op_ex blend_texture_alpha src_texture src_current
+				colour_op_multipass_fallback dest_colour zero
+				scale 0.8 0.8
+			}
+		}
+
+	}
+
+}
+
+material Env-RedGradient
+{
+	receive_shadows off
+	technique
+	{
+		pass
+		{
+			ambient 1 1 1 0.99
+			diffuse 1 1 1 0.99
+			specular 1 1 1 0.99 20
+			emissive 1 1 1 0.99
+			fog_override true
+			scene_blend alpha_blend
+			depth_bias 16
+			depth_write off
+			depth_check off
+
+			texture_unit
+			{
+				texture_alias Map#5
+				texture Env-Horizon_Mask.png
+				colour_op_ex source2 src_texture src_current
+				colour_op_multipass_fallback dest_colour zero
+			}
+
+			texture_unit
+			{
+				texture_alias Map#3
+				texture RedGradient.png
 				colour_op_ex blend_texture_alpha src_texture src_current
 				colour_op_multipass_fallback dest_colour zero
 				scale 0.8 0.8

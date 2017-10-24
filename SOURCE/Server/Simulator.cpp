@@ -2288,7 +2288,7 @@ void SimulatorThread :: SendZoneInfo(void)
 		return;
 	}
 
-	int wpos = PrepExt_SendEnvironmentUpdateMsg(SendBuf, creatureInst->actInst, pld.CurrentZone, pld.zoneDef, creatureInst->CurrentX, creatureInst->CurrentZ);
+	int wpos = PrepExt_SendEnvironmentUpdateMsg(SendBuf, creatureInst->actInst, pld.CurrentZone, pld.zoneDef, creatureInst->CurrentX, creatureInst->CurrentZ, 0);
 	wpos += PrepExt_SetTimeOfDay(&SendBuf[wpos], creatureInst->actInst->GetTimeOfDay().c_str());
 	AttemptSend(SendBuf, wpos);
 }
@@ -2984,8 +2984,14 @@ bool SimulatorThread :: HandleCommand(int &PendingData)
 	{
 		if(CheckPermissionSimple(Perm_Account, Permission_Debug) == true)
 			g_EnvironmentCycleManager.EndCurrentCycle();
-		g_Log.AddMessageFormat("Cycle is now: %u (%s)", g_EnvironmentCycleManager.mCurrentCycleIndex, g_EnvironmentCycleManager.GetCurrentTimeOfDay());
+		g_Log.AddMessageFormat("Cycle is now: %u (%s)", g_EnvironmentCycleManager.mCurrentCycleIndex, g_EnvironmentCycleManager.GetCurrentTimeOfDay().c_str());
 		PendingData = PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
+	}
+	else if(query.name.compare("env") == 0)
+	{
+		sprintf(Aux1, "%s:%s", creatureInst->actInst->GetEnvironment(-1,-1).c_str(), creatureInst->actInst->GetTimeOfDay().c_str());
+		PendingData = ::PrepExt_SendInfoMessage(SendBuf, Aux1, INFOMSG_INFO);
+		PendingData += PrepExt_QueryResponseString(&SendBuf[PendingData], query.ID, "OK");
 	}
 	else if(query.name.compare("searsize") == 0)
 		PendingData = handle_command_set_earsize();
@@ -3098,7 +3104,7 @@ void SimulatorThread :: SendSetMap(void)
 	}
 
 	strcpy(pld.CurrentEnv, creatureInst->actInst->GetEnvironment(creatureInst->CurrentX, creatureInst->CurrentZ).c_str());
-	AttemptSend(SendBuf, PrepExt_SendEnvironmentUpdateMsg(SendBuf, creatureInst->actInst, pld.CurrentZone, pld.zoneDef, creatureInst->CurrentX, creatureInst->CurrentZ));
+	AttemptSend(SendBuf, PrepExt_SendEnvironmentUpdateMsg(SendBuf, creatureInst->actInst, pld.CurrentZone, pld.zoneDef, creatureInst->CurrentX, creatureInst->CurrentZ, 1));
 }
 
 int SimulatorThread :: handle_form_submit(void)
@@ -3334,10 +3340,10 @@ void SimulatorThread :: handle_query_client_loading(void)
 	if(LoadStage == LOADSTAGE_LOADED)
 	{
 		if(creatureInst == NULL) {
-			WritePos += PrepExt_SendEnvironmentUpdateMsg(&SendBuf[WritePos], NULL, pld.zoneDef->mName.c_str(), pld.zoneDef, -1, -1);
+			WritePos += PrepExt_SendEnvironmentUpdateMsg(&SendBuf[WritePos], NULL, pld.zoneDef->mName.c_str(), pld.zoneDef, -1, -1, 0);
 		}
 		else {
-			WritePos += PrepExt_SendEnvironmentUpdateMsg(&SendBuf[WritePos], creatureInst->actInst, pld.zoneDef->mName.c_str(), pld.zoneDef, creatureInst->CurrentX, creatureInst->CurrentZ);
+			WritePos += PrepExt_SendEnvironmentUpdateMsg(&SendBuf[WritePos], creatureInst->actInst, pld.zoneDef->mName.c_str(), pld.zoneDef, creatureInst->CurrentX, creatureInst->CurrentZ, 0);
 		}
 		LoadStage = LOADSTAGE_GAMEPLAY;
 
@@ -13369,13 +13375,9 @@ int SimulatorThread :: handle_query_mod_setenvironment(void)
 	pld.zoneDef->ChangeEnvironment(env);
 	g_ZoneDefManager.NotifyConfigurationChange();
 	SendInfoMessage("Environment type changed.", INFOMSG_INFO);
-
-	int wpos = PrepExt_SendEnvironmentUpdateMsg(SendBuf, creatureInst->actInst, pld.CurrentZone, pld.zoneDef, -1, -1);
+	int wpos = PrepExt_SendEnvironmentUpdateMsg(SendBuf, creatureInst->actInst, pld.CurrentZone, pld.zoneDef, -1, -1, 0);
 	wpos += PrepExt_SetTimeOfDay(&SendBuf[wpos], GetTimeOfDay());
 	creatureInst->actInst->LSendToAllSimulator(SendBuf, wpos, -1);
-
-	//	SendZoneInfo();
-	//LogMessageL(MSG_SHOW, "Environment set.");
 	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
 }
 
@@ -14746,6 +14748,9 @@ int SimulatorThread :: handle_command_info(void)
 			sprintf(Aux1, "Spawn Tile: %d, %d", pld.oldSpawnX, pld.oldSpawnZ);
 		if(query.args[0].compare("scenerytile") == 0)
 			sprintf(Aux1, "Scenery Tile: %d, %d", creatureInst->CurrentX / pld.zoneDef->mPageSize, creatureInst->CurrentZ / pld.zoneDef->mPageSize);
+		if(query.args[0].compare("terraintile") == 0)
+			// TODO is this always correct?
+			sprintf(Aux1, "Terrain Tile: %d, %d", creatureInst->CurrentX / 1920, creatureInst->CurrentZ / 1920);
 		if(Aux1[0] != 0)
 			SendInfoMessage(Aux1, INFOMSG_INFO);
 	}

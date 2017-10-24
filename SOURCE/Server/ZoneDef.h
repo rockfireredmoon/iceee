@@ -277,7 +277,7 @@ public:
 	~EnvironmentCycleManager();
 	void ApplyConfig(const char *str);
 	bool HasCycleUpdated(void);
-	const char *GetCurrentTimeOfDay(void);
+	std::string GetCurrentTimeOfDay(void);
 	void EndCurrentCycle(void);
 };
 
@@ -322,6 +322,6 @@ extern ZoneBarrierManager g_ZoneBarrierManager;
 extern EnvironmentCycleManager g_EnvironmentCycleManager;
 extern GroveTemplateManager g_GroveTemplateManager;
 
-int PrepExt_SendEnvironmentUpdateMsg(char *buffer, ActiveInstance *instance, const char *zoneIDString, ZoneDefInfo *zoneDef, int x, int z);
+int PrepExt_SendEnvironmentUpdateMsg(char *buffer, ActiveInstance *instance, const char *zoneIDString, ZoneDefInfo *zoneDef, int x, int z, int mask);
 
 #endif  //ZONEDEF_H

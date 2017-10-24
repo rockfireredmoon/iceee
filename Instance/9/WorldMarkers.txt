@@ -46,7 +46,7 @@ Position=29560.0,214.0,65552.0
 [ENTRY]
 Name=Grunes - Swineland Bridge
 Comment=[Comment here]
-Position=29494.0,218.0,65503.0
+Position=67453.0,669.0,58236.0
 
 [ENTRY]
 Name=Unknown Destroyed Town

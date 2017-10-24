@@ -232,7 +232,7 @@ public:
 	int mOwnerCreatureDefID;  //This is the DefID of the player who created this instance (actived for Instance-type zones)
 	int mOwnerPartyID;        //If nonzero, this instance (if a dungeon) will be assigned ownership to a party ID to assist in lookups when placing players into dungeons.
 	std::string mOwnerName;   //The owner's display_name.
-	std::vector<std::string> mEnvironments; // stack of environments
+	std::string mEnvironment; //overridden environment
 	std::string mTimeOfDay; // overriden time of day
 	unsigned long mLastHealthUpdate;  //Time of the last health increment.  TODO: OBSOLETE
 	unsigned long mNextCreatureBroadcast;
@@ -394,7 +394,7 @@ public:
 	QuestScript::QuestScriptPlayer* GetSimulatorQuestScript(SimulatorThread *simulatorPtr);
 	QuestScript::QuestNutPlayer* GetSimulatorQuestNutScript(SimulatorThread *simulatorPtr);
 	void RunProcessingCycle(void);
-	void UpdateEnvironmentCycle(const char *timeOfDay);
+	void UpdateEnvironmentCycle(std::string timeOfDay);
 	bool KillScript();
 	bool RunScript(std::string &errors);
 	void ScriptCallPackageKill(const char *name);
@@ -409,11 +409,8 @@ public:
 	std::string GetEnvironment(int x, int y);
 	std::string GetTimeOfDay();
 	void SetTimeOfDay(std::string timeOfDay);
-	void PushEnvironment(std::string environment);
-	void ClearEnvironments();
-	std::string PopEnvironment();
+	void SetEnvironment(std::string environment);
 	const DropRateProfile* GetDropRateProfile(void);
-
 	int CountAlive(int creatureDefID);
 	void LoadStaticObjects(const char *filename);
 

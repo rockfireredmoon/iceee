@@ -1,7 +1,7 @@
 [ENTRY]
 ID=1151954
 Asset=Dng-Ent_Up?ATS=ATS-Dungeon_Crypt
-Name=
+Name=Untitled
 Pos=988.014,0,943.307
 Orient=0,0.696135,0,0.717911
 Scale=1,1,1
@@ -9,17 +9,18 @@ Scale=1,1,1
 [ENTRY]
 ID=1152067
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=973.904,1.52588e-05,965.909
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=Maus_vamp
 
 [ENTRY]
-ID=1152133
-Asset=Prop-Instance_Entrance#Prop-Instance_Entrance
+ID=1041198760
+Asset=Manipulator#Manipulator-SpawnPoint
 Name=
-Pos=988.806,22.3045,843.304
-Orient=0,0.66687,0,0.745174
+Pos=990.251,1.52588e-05,851.305
+Orient=0,-0.710353,0,0.703845
 Scale=1,1,1
+spawnPackage=#F7876
 
