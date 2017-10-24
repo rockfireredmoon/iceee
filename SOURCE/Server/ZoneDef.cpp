@@ -1520,11 +1520,11 @@ bool EnvironmentCycleManager :: HasCycleUpdated(void)
 	return true;
 }
 
-const char * EnvironmentCycleManager :: GetCurrentTimeOfDay(void)
+std::string EnvironmentCycleManager :: GetCurrentTimeOfDay(void)
 {
 	if(mCurrentCycleIndex >= mCycleStrings.size())
-		return NULL;
-	return mCycleStrings[mCurrentCycleIndex].c_str();
+		return "";
+	return mCycleStrings[mCurrentCycleIndex];
 }
 
 void EnvironmentCycleManager :: EndCurrentCycle(void)
@@ -1637,13 +1637,13 @@ void GroveTemplateManager :: ResolveTerrainMap(void)
 }
 
 
-int PrepExt_SendEnvironmentUpdateMsg(char *buffer, ActiveInstance *instance, const char *zoneIDString, ZoneDefInfo *zoneDef, int x, int z)
+int PrepExt_SendEnvironmentUpdateMsg(char *buffer, ActiveInstance *instance, const char *zoneIDString, ZoneDefInfo *zoneDef, int x, int z, int mask)
 {
 	int wpos = 0;
 	wpos += PutByte(&buffer[wpos], 42);   //_handleEnvironmentUpdateMsg
 	wpos += PutShort(&buffer[wpos], 0);
 
-	wpos += PutByte(&buffer[wpos], 0);   //Mask
+	wpos += PutByte(&buffer[wpos], mask);   //Mask
 
 	wpos += PutStringUTF(&buffer[wpos], zoneIDString);
 	wpos += PutInteger(&buffer[wpos], zoneDef->mID);

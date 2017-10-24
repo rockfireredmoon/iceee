@@ -252,11 +252,6 @@ Persist=1
 DefLoc=29560,214,65552
 PageSize=750
 EnvironmentCycle=1
-AreaEnvironment=74,72,10,10,Swineland
-AreaEnvironment=84,74,5,9,Swineland
-AreaEnvironment=74,82,15,1,Swineland_Dead
-AreaEnvironment=73,83,14,1,Swineland_Dead
-AreaEnvironment=67,84,20,10,Swineland_Dead
 
 [ENTRY]
 ID=10

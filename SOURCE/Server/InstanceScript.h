@@ -162,9 +162,9 @@ public:
 	std::vector<int>  Scan(Squirrel::Area *location);
 	int ScanNPC(Squirrel::Area *location, int CDefID);
 	std::vector<int> ScanNPCs(Squirrel::Area *location, int CDefID);
-	bool PushEnvironment(const char *environment);
-	std::string PopEnvironment();
+	bool SetEnvironment(const char *environment);
 	std::string GetTimeOfDay();
+	std::string GetEnvironment(int x, int y);
 	void SetTimeOfDay(std::string timeOfDay);
 	bool Interact(int CID, const char *text, float time, bool gather, Sqrat::Function function);
 	void RemoveInteraction(int CID);

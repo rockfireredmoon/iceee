@@ -177,7 +177,7 @@ function attack_closest(cid) {
 function spawn_adds(max, adds_list) {
 	if(no_adds) {		
 		inst.info("Simulate spawn of " + max + " of adds [adds disabled to aid testing]");
-		return;
+		return [];
 	}
 
     max = max.tointeger();
@@ -194,8 +194,10 @@ function spawn_adds(max, adds_list) {
 	if(debug)
 		inst.info("Picking from " + l.len() + " adds");
 		
+	local spawns = [];
     foreach(v in l) {
 		local cid = inst.spawn(v.prop_id, 0, 0);
+		spawns.append(cid);
 		if(debug)
 			inst.info("Walking to "  +v.pos + " then Spawning " + cid + " (" + v.prop_id + ")");
         inst.walk_then(cid, v.pos, -1, CREATURE_JOG_SPEED, 0, function(res) {
@@ -213,6 +215,8 @@ function spawn_adds(max, adds_list) {
 			}
         });
     }
+    
+    return spawns;
 }
 
 /*  Helper function to totally disengage Valkal from the fight and make him invincible */
@@ -276,7 +280,7 @@ function heal(cid, limit, on_healed) {
 }
 
 /* Starts the sequence of Valkal 1 running from the fight his platform to
-   heal. This Valkal spawns NO adds */
+   heal. */
 function valkal_1_heal_sequence() {
     if(debug)
 		inst.info("Heal sequence");
@@ -288,14 +292,24 @@ function valkal_1_heal_sequence() {
 }
 
 /* Starts the sequence of Valkal 2 running from the fight his platform to
-   heal. This Valkal also spawns some adds while he does */
-function valkal_2_heal_sequence() {
+   heal. Once healed he will wait for the all of the spawns in the
+   list provided to be killed before rreturning to the action 
+ */
+function valkal_2_heal_sequence(spawns) {
     if(debug)
 		inst.info("Heal sequence");
     disengage_valkal(cid_valkal2);
 	inst.walk_then(cid_valkal2, loc_chamber_platform_centre, -1, CREATURE_JOG_SPEED, 0, function(res) {
         inst.rotate_creature(cid_valkal2, loc_chamber_platform_rot);
-        heal(cid_valkal2, 95, valkal_2_engage); 
+        heal(cid_valkal2, 95, function() {
+        	
+        	//
+        	// TODO have valkal walk back and forth for a bit waiting for SPAWNS to 
+        	// die, THEN valkal_2_engage
+        	//
+        	
+        	valkal_2_engage();
+        }); 
 	});
 }
 
@@ -325,7 +339,7 @@ function spawn_valkal_2() {
 /* Remove the fight scene environment if it is set */
 function remove_blood_sky() {
     if(blood_sky) {
-    	inst.pop_env();
+    	inst.set_env("");
     	blood_sky = false;
     }
 }
@@ -493,7 +507,7 @@ function valkal1_health() {
 	}
     else {
     	if(!blood_sky)
-    		blood_sky = inst.push_env("Bloodkeep2");
+    		blood_sky = inst.set_env("Bloodkeep2");
     		
     	valkal1_full_health_count = 0;
     	
@@ -590,73 +604,63 @@ function valkal2_health() {
 	}
     else {
     	if(!blood_sky)
-    		blood_sky = inst.push_env("Bloodkeep2");
+    		blood_sky = inst.set_env("Bloodkeep2");
     		
     	valkal1_full_health_count = 0;
-		if(health <= 10 && phase < 9) {
+		if(health <= 10 && phase < 8) {
 	        // Bringing Down the House 3
 	        if(debug)
 	        	inst.info("Bringing Down the House 3");
-	        phase = 9;        
+	        phase = 8;        
 	        bringing_down_the_house();
 	        return;
 	    }
-	    else if(health <= 20 && phase < 8) {
+	    else if(health <= 20 && phase < 7) {
 	        // Bringing Down the House 2
 	        if(debug)
 	        	inst.info("Bringing Down the House 2");
-	        phase = 8;
-	        bringing_down_the_house();
-	        return;
-	    }
-	    else if(health <= 25 && phase < 7) {
-	        // Heal 3
-	        if(debug)
-	        	inst.info("Heal 3");
 	        phase = 7;
-			spawn_adds(1, valkal_2_adds_right);
-	        valkal_2_heal_sequence();
-	        return;
-	    }
-	    else if(health <= 30 && phase < 6) {
-	        // Bringing Down the House 1
-	        if(debug)
-	        	inst.info("Bringing Down the House 1");
-	        phase = 6;
 	        bringing_down_the_house();
 	        return;
 	    }
-	    else if(health <= 40 && phase < 5) {
-	        // Tribute 3
-	        if(debug)
-	        	inst.info("Tribute 3");
-	        phase = 5;
-	        tribute();
-	        return;
-	    }
-	    else if(health <= 50 && phase < 4) {
+	    else if(health <= 25 && phase < 6) {
 	        // Heal 2
 	        if(debug)
 	        	inst.info("Heal 2");
-	        phase = 4;
-			spawn_adds(1, valkal_2_adds_left);
-	        valkal_2_heal_sequence();
+	        phase = 6;
+	        valkal_2_heal_sequence(spawn_adds(1, valkal_2_adds_right));
 	        return;
 	    }
-	    else if(health <= 60 && phase < 3) {
-	        // Tribute 2
+	    else if(health <= 30 && phase < 5) {
+	        // Bringing Down the House 1
 	        if(debug)
-	        	inst.info("Tribute 2");
-	        phase = 3;
+	        	inst.info("Bringing Down the House 1");
+	        phase = 5;
+	        bringing_down_the_house();
+	        return;
+	    }
+	    else if(health <= 40 && phase < 4) {
+	        // Tribute 3
+	        if(debug)
+	        	inst.info("Tribute 3");
+	        phase = 4;
 	        tribute();
 	        return;
 	    }
-	    else if(health <= 75 && phase < 2) {
+	    else if(health <= 50 && phase < 3) {
 	        // Heal 1
 	        if(debug)
 	        	inst.info("Heal 1");
+	        phase = 3;
+	        valkal_2_heal_sequence(spawn_adds(1, valkal_2_adds_left));
+	        return;
+	    }
+	    else if(health <= 60 && phase < 2) {
+	        // Tribute 2
+	        if(debug)
+	        	inst.info("Tribute 2");
 	        phase = 2;
-	        valkal_2_heal_sequence();
+	        tribute();
 	        return;
 	    }
 	    else if(health <= 80 && phase < 1) {

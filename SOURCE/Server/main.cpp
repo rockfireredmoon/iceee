@@ -1283,7 +1283,7 @@ void RunMessageListQueue(void)
 void RunActiveInstances(void)
 {
 	bool envUpdated = g_EnvironmentCycleManager.HasCycleUpdated();
-	const char * envString = NULL;
+	std::string envString = "";
 	if(envUpdated == true)
 		envString = g_EnvironmentCycleManager.GetCurrentTimeOfDay();
 

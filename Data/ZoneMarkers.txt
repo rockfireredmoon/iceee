@@ -194,7 +194,7 @@ Sanctuary=22190.8,391.91,90407,Dustshore: Dig Site,Dustshore
 Sanctuary=22992.7,329.063,77925,Dustshore: Bazarrt,Dustshore
 Sanctuary=25498.2,1261.6,94738,Cracked Rock: Southern Road Entrance,CrackedRock
 Sanctuary=29850.3,372.58,61463,Great Forest: Heartwood,Great Forest
-Sanctuary=29605.4,174.063,71775,Dustshore: Nante's Waystation,Dustshore
+Sanctuary=29605.4,174.063,71775,Dustshore: Nantes Waystation,Dustshore
 Sanctuary=29894.5,1178.07,80808,Cracked Rock: Oslis,CrackedRock
 Sanctuary=34952.6,1221.51,88009,Cracked Rock: Southern Stonelion Camps,CrackedRock
 Sanctuary=40054.6,209.24,49035,Midlands: Bafflegate,Midlands
@@ -212,11 +212,14 @@ Sanctuary=60325.2,404.414,43756.7,New Badari: East Bridge,NewBadari
 Sanctuary=65093.4,420.641,34078.6,New Badari: Seascape,NewBadari
 Sanctuary=67749,424.811,37044,New Badari: Bremen,NewBadari
 Sanctuary=77682.9,440.637,39260,New Badari: Rolsburg,NewBadari
-Sanctuary=57012.5,902.82,60755,9,Grunes Tal: Junterland
 Sanctuary=50863.1,739.994,67641,Grunes Tal: Undead area
 Sanctuary=57781.8,802.854,66779.7,Grunes Tal: Redeemer Camp
-Sanctuary=63782.3,902.156,63883.8,Grunes Tal: Folkirk
-Sanctuary=65495.8,574.755,57431.3,Grunes Tal: Hogcatchers
+Sanctuary=63782.3,902.156,63883.8,Grunes Tal: Near Folkirk Manor
+Sanctuary=65495.8,574.755,57431.3,Grunes Tal: Warpig Protectorate Compound
+Sanctuary=72697,1084,51718,Swineland: War Town
+Sanctuary=63213,678,49496,Swineland: Nook Town
+Sanctuary=76815.4,993.71,50440.8,Swineland: Redeemer's Camp
+Sanctuary=73059.8,891.294,60257.6,Swineland: Front Line Camp
 
 [ENTRY]
 ZoneID=89
@@ -265,3 +268,7 @@ Sanctuary=1503.09,290.687,2630.67,Junk Palace
 [ENTRY]
 ZoneID=50
 Sanctuary=19371,1361,17918,Dungeon: Iron Maw
+
+[ENTRY]
+ZoneID=3080
+Sanctuary=1044,8,884,Dungeon: The Mausoleum

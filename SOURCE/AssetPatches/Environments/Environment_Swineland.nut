@@ -19,7 +19,7 @@
 	},
 	Sky = [
 		"SunriseGradient",
-		"WhiteClouds"
+		"RedClouds"
 	],
 	Adjust_Channels = [
 		[
@@ -62,8 +62,8 @@
 		b = 0.39999999
 	},
 	Sky = [
-		"BlueGradient",
-		"DarkClouds"
+		"RedGradient",
+		"RedClouds"
 	],
 	Adjust_Channels = [
 		[
@@ -107,7 +107,7 @@
 	},
 	Sky = [
 		"SunsetGradient",
-		"DarkClouds" 
+		"RedClouds" 
 	],
 	Adjust_Channels = [
 		[
@@ -134,7 +134,7 @@
 		b = 0.25
 	},
 	Sky = [
-		"DarkClouds"
+		"RedClouds"
 	],
 	Adjust_Channels = [
 		[
