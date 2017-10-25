@@ -4681,7 +4681,7 @@ void CreatureInstance :: RunDialog(void)
 		 */
 		if(CurrentTarget.targ == NULL && (timer_dialog == 0 || g_ServerTime > timer_dialog))
 		{
-			if(strcmp(spawnGen->spawnPoint->extraData->dialog, "") != 0) {
+			if(spawnGen != NULL && spawnGen->spawnPoint != NULL && spawnGen->spawnPoint->extraData != NULL && spawnGen->spawnPoint->extraData != NULL && strcmp( spawnGen->spawnPoint->extraData->dialog, "") != 0) {
 				/* Only run dialog when there is 1) a new timer or timer triggers 2) no target */
 				NPCDialogItem *diag = g_NPCDialogManager.GetItem(spawnGen->spawnPoint->extraData->dialog);
 				if(diag != NULL && diag->mParagraphs.size() > 0) {
