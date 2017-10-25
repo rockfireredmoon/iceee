@@ -1921,7 +1921,7 @@ void SimulatorThread :: SetPersona(int personaIndex)
 
 	//The zone change updates the map, but need to resend again otherwise the
 	//terrain won't load when you first log in.
-	SendSetMap();
+//	SendSetMap();
 	UpdateSocialEntry(true, false);
 	UpdateSocialEntry(true, true);
 	BroadcastShardChanged();
@@ -2345,15 +2345,15 @@ void SimulatorThread :: CheckMapUpdate(bool force)
 			SendInfoMessage(pld.zoneDef->mShardName.c_str(), INFOMSG_SHARD);
 		}
 
-		// EM - Added this for tile specific environments, the message always gets sent,
-		// hopefully the client will ignore it if the environment is already correct
-		if(creatureInst != NULL) {
-			std::string tEnv = creatureInst->actInst->GetEnvironment(creatureInst->CurrentX, creatureInst->CurrentZ);
-			if(strcmp(tEnv.c_str(), pld.CurrentEnv) != 0) {
-				g_Log.AddMessageFormat("Sending environment change to %s", tEnv.c_str());
-				SendSetMap();
-			}
-		}
+//		// EM - Added this for tile specific environments, the message always gets sent,
+//		// hopefully the client will ignore it if the environment is already correct
+//		if(creatureInst != NULL) {
+//			std::string tEnv = creatureInst->actInst->GetEnvironment(creatureInst->CurrentX, creatureInst->CurrentZ);
+//			if(strcmp(tEnv.c_str(), pld.CurrentEnv) != 0) {
+//				g_Log.AddMessageFormat("Sending environment change to %s", tEnv.c_str());
+//				SendSetMap();
+//			}
+//		}
 	}
 }
 
@@ -3092,19 +3092,19 @@ void SimulatorThread :: AddMessage(long param1, long param2, int message)
 
 void SimulatorThread :: SendSetMap(void)
 {
-	if(creatureInst == NULL)
-	{
-		LogMessageL(MSG_ERROR, "[ERROR] SendSetMap() creature instance is NULL");
-		return;
-	}
-	if(creatureInst->actInst == NULL)
-	{
-		LogMessageL(MSG_ERROR, "[ERROR] SendSetMap() creature active instance is NULL");
-		return;
-	}
-
-	strcpy(pld.CurrentEnv, creatureInst->actInst->GetEnvironment(creatureInst->CurrentX, creatureInst->CurrentZ).c_str());
-	AttemptSend(SendBuf, PrepExt_SendEnvironmentUpdateMsg(SendBuf, creatureInst->actInst, pld.CurrentZone, pld.zoneDef, creatureInst->CurrentX, creatureInst->CurrentZ, 1));
+//	if(creatureInst == NULL)
+//	{
+//		LogMessageL(MSG_ERROR, "[ERROR] SendSetMap() creature instance is NULL");
+//		return;
+//	}
+//	if(creatureInst->actInst == NULL)
+//	{
+//		LogMessageL(MSG_ERROR, "[ERROR] SendSetMap() creature active instance is NULL");
+//		return;
+//	}
+//
+//	strcpy(pld.CurrentEnv, creatureInst->actInst->GetEnvironment(creatureInst->CurrentX, creatureInst->CurrentZ).c_str());
+//	AttemptSend(SendBuf, PrepExt_SendEnvironmentUpdateMsg(SendBuf, creatureInst->actInst, pld.CurrentZone, pld.zoneDef, creatureInst->CurrentX, creatureInst->CurrentZ, 1));
 }
 
 int SimulatorThread :: handle_form_submit(void)
@@ -3339,12 +3339,12 @@ void SimulatorThread :: handle_query_client_loading(void)
 
 	if(LoadStage == LOADSTAGE_LOADED)
 	{
-		if(creatureInst == NULL) {
-			WritePos += PrepExt_SendEnvironmentUpdateMsg(&SendBuf[WritePos], NULL, pld.zoneDef->mName.c_str(), pld.zoneDef, -1, -1, 0);
-		}
-		else {
-			WritePos += PrepExt_SendEnvironmentUpdateMsg(&SendBuf[WritePos], creatureInst->actInst, pld.zoneDef->mName.c_str(), pld.zoneDef, creatureInst->CurrentX, creatureInst->CurrentZ, 0);
-		}
+//		if(creatureInst == NULL) {
+//			WritePos += PrepExt_SendEnvironmentUpdateMsg(&SendBuf[WritePos], NULL, pld.zoneDef->mName.c_str(), pld.zoneDef, -1, -1, 0);
+//		}
+//		else {
+//			WritePos += PrepExt_SendEnvironmentUpdateMsg(&SendBuf[WritePos], creatureInst->actInst, pld.zoneDef->mName.c_str(), pld.zoneDef, creatureInst->CurrentX, creatureInst->CurrentZ, 0);
+//		}
 		LoadStage = LOADSTAGE_GAMEPLAY;
 
 		if(pld.charPtr->PrivateChannelName.size() > 0)

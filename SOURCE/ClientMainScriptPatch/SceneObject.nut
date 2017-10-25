@@ -4832,7 +4832,7 @@ class this.SceneObject extends this.MessageBroadcaster
 
 	function getNodeName()
 	{
-		return this.mNode.getName();
+		return this.mNode != null ? this.mNode.getName() : "UnknownNodeName";
 	}
 
 	function getNode()

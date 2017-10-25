@@ -975,7 +975,8 @@ std::string ActiveInstance :: GetTimeOfDay() {
 	//current zone, if applicable.
 	if(mZoneDefPtr->mEnvironmentCycle == true)
 		return g_EnvironmentCycleManager.GetCurrentTimeOfDay();
-
+	else if(mZoneDefPtr->mTimeOfDay.length() > 0)
+		return mZoneDefPtr->mTimeOfDay;
 	return "Day";
 }
 
