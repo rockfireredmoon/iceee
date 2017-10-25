@@ -82,6 +82,7 @@ public:
 	std::string mShardName;        //Prefix of the shard name.
 	std::string mGroveName;        //For groves, the special grove name that is provided when creating an account, used to help trace a grove back to its owner.
 	std::string mWarpName;         //Internal name used for on-demand warping.
+	std::string mTimeOfDay;		   //Start time of day (for when using TOD, but not cycling)
 	int DefX;                 //Default X coordinate when entering the region.
 	int DefY;                 //Default Y coordinate when entering the region.
 	int DefZ;                 //Default Z coordinate when entering the region.

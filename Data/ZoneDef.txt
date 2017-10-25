@@ -739,6 +739,7 @@ MaxLeashRange=375
 ID=66
 NAME=Valkals_Bloodkeep
 ENVIRONMENTTYPE=Bloodkeep
+TimeOfDay=Day
 ShardName=Europe 1
 WarpName=Valkals Bloodkeep
 Instance=1

@@ -976,7 +976,7 @@ sequential=1
 [ENTRY]
 ID=1154516
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=5355.23,535.051,2438.67
 Orient=0,0,0,1
 Scale=1,1,1

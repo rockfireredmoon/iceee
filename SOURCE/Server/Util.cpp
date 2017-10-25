@@ -83,7 +83,6 @@ int PrepExt_SetAvatar(char *buffer, int creatureID)
 
 int PrepExt_SetTimeOfDay(char *buffer, const char *envType)
 {
-	g_Log.AddMessageFormat("REMOVEME SetTimeOfDay %s", envType);
 	int wpos = 0;
 
 	wpos += PutByte(&buffer[wpos], 42);   //_handleEnvironmentUpdateMsg

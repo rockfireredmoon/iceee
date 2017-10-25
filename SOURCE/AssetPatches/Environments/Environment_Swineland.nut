@@ -1,3 +1,4 @@
+this.require("Environment_Default");
 ::Environments.Swineland <- {
 	TimeOfDay = {
 		Sunrise = "SwinelandSunrise",
@@ -6,7 +7,7 @@
 		Night = "SwinelandNight"
 	}
 };
-::Environments.SwinelandSunrise <- {
+::Environments.SwinelandSunrise <- delegate ::Environments.Sunrise : {
 	Sun = {
 		r = 0.8,
 		g = 0.8,
@@ -17,40 +18,33 @@
 		g = 0.33000001,
 		b = 0.20000001
 	},
-	Sky = [
-		"SunriseGradient",
-		"RedClouds"
-	],
 	Adjust_Channels = [
 		[
-			"Spooky",
-			0.2
+			"Desert",
+			0.89999998
+		],
+		[
+			"Cloudy",
+			0.0
 		],
 		[
 			"Music",
-			0.30000001
+			0.40000001
 		]
 	],
-	Fog = {
-		color = {
-			r = 1.0,
-			g = 0.1,
-			b = 0.1
-		},
-		exp = 0.006,
-		start = 0.5,
-		end = 0.94999999
-	},
+	Activate_Music = [],
 	Ambient_Music = [
-		"Music-DarkWalk.ogg"
+		"Music-CrossingTheChasm.ogg"
+	],
+	Ambient_Noise = [
+		"Sound-Ambient-Cloudyday.ogg"
 	],
 	Ambient_Sound = [
-		"Sound-Ambient-GrunesLife.ogg"
+		"Sound-Ambient-Desertloop.ogg"
 	],
-	Ambient_Music_Delay = 180,
-	Blend_Time = 2.5
+	Ambient_Music_Delay = 300
 };
-::Environments.SwinelandDay <- {
+::Environments.SwinelandDay <- delegate ::Environments.CloudyDay : {
 	Sun = {
 		r = 0.84999999,
 		g = 0.7,
@@ -61,40 +55,29 @@
 		g = 0.3999999,
 		b = 0.39999999
 	},
-	Sky = [
-		"RedGradient",
-		"RedClouds"
-	],
 	Adjust_Channels = [
 		[
-			"Spooky",
-			0.4
+			"Desert",
+			0.89999998
+		],
+		[
+			"Cloudy",
+			0.0
 		],
 		[
 			"Music",
-			0.30000001
+			0.40000001
 		]
 	],
-	Fog = {
-		color = {
-			r = 0.80000002,
-			g = 0.69999999,
-			b = 0.69999998
-		},
-		exp = 0.001,
-		start = 0.40000001,
-		end = 0.94999999
-	},
-	Ambient_Music = [
-		"Music-DarkWalk.ogg"
-	],
+	Activate_Music = [],
+	Ambient_Music = [],
+	Ambient_Noise = [],
 	Ambient_Sound = [
-		"Sound-Ambient-GrunesLife.ogg"
+		"Sound-Ambient-Desertloop.ogg"
 	],
-	Ambient_Music_Delay = 180,
-	Blend_Time = 2.5
+	Ambient_Music_Delay = 40
 };
-::Environments.SwinelandSunset <- {
+::Environments.SwinelandSunset <- delegate ::Environments.Sunset : {
 	Sun = {
 		r = 0.30000001,
 		g = 0.20000001,
@@ -105,24 +88,29 @@
 		g = 0.35,
 		b = 0.35
 	},
-	Sky = [
-		"SunsetGradient",
-		"RedClouds" 
-	],
 	Adjust_Channels = [
 		[
-			"Spooky",
-			0.2
+			"Desert",
+			0.89999998
+		],
+		[
+			"Cloudy",
+			0.0
+		],
+		[
+			"Music",
+			0.40000001
 		]
 	],
+	Activate_Music = [],
 	Ambient_Music = [],
 	Ambient_Noise = [],
 	Ambient_Sound = [
-		"Sound-Ambient-GrunesLife.ogg"
+		"Sound-Ambient-Desertloop.ogg"
 	],
-	Ambient_Music_Delay = 0
+	Ambient_Music_Delay = 40
 };
-::Environments.SwinelandNight <- {
+::Environments.SwinelandNight <- delegate ::Environments.NightSky : {
 	Sun = {
 		r = 0.50000001,
 		g = 0.30000001,
@@ -133,36 +121,23 @@
 		g = 0.25,
 		b = 0.25
 	},
-	Sky = [
-		"RedClouds"
-	],
 	Adjust_Channels = [
 		[
-			"Spooky",
-			0.4
+			"Desert",
+			0.30000001
 		],
 		[
-			"Music",
-			0.30000001
+			"Crowds",
+			0.0
 		]
 	],
-	Fog = {
-		color = {
-			r = 0.150000001,
-			g = 0,
-			b = 0
-		},
-		exp = 0.005,
-		start = 0.050000001,
-		end = 0.40000001
-	},
 	Activate_Music = [],
 	Ambient_Music = [
-		"Music-DarkWalk.ogg"
+		"Music-CrossingTheChasm.ogg"
 	],
-	Ambient_Sound = [
-		"Sound-Ambient-GrunesLife.ogg"
+	Ambient_Noise = [
+		"Sound-Ambient-Desertnightloop.ogg"
 	],
-	Ambient_Music_Delay = 180,
-	Blend_Time = 2.5
+	Ambient_Sound = [],
+	Ambient_Music_Delay = 300
 };

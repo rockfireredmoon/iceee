@@ -339,7 +339,7 @@ function spawn_valkal_2() {
 /* Remove the fight scene environment if it is set */
 function remove_blood_sky() {
     if(blood_sky) {
-    	inst.set_env("");
+    	inst.set_timeofday("Day");
     	blood_sky = false;
     }
 }
@@ -506,8 +506,10 @@ function valkal1_health() {
 		inst.queue(valkal1_health, 5000);
 	}
     else {
-    	if(!blood_sky)
-    		blood_sky = inst.set_env("Bloodkeep2");
+    	if(!blood_sky) {
+    		inst.set_timeofday("Sunset");
+    		blood_sky = true;
+    	}
     		
     	valkal1_full_health_count = 0;
     	
@@ -603,10 +605,13 @@ function valkal2_health() {
 		inst.queue(valkal2_health, 5000);
 	}
     else {
-    	if(!blood_sky)
-    		blood_sky = inst.set_env("Bloodkeep2");
+    	if(!blood_sky) {
+    		inst.set_timeofday("Sunset");
+    		blood_sky = true;
+    	}
     		
-    	valkal1_full_health_count = 0;
+    	valkal2_full_health_count = 0;
+
 		if(health <= 10 && phase < 8) {
 	        // Bringing Down the House 3
 	        if(debug)

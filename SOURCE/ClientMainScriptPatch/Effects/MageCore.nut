@@ -820,31 +820,38 @@ class this.EffectDef.Firebolt extends this.EffectDef.TemplateBasic
 		local proj = this.createGroup("Projectile");
 		this._detachGroup(proj, this.getSource().getNode().getPosition());
 
-		if (this.mEffectsPackage == "Biped")
-		{
-			proj.add("MoveToTarget", {
-				source = this.getSource(),
-				sourcePoint = "right_hand",
-				target = this.getTarget(),
-				targetPoint = "spell_target",
-				intVelocity = 6.0,
-				accel = 12.0,
-				topSpeed = 100.0,
-				orient = true
-			});
+		try {
+			if (this.mEffectsPackage == "Biped")
+			{
+				proj.add("MoveToTarget", {
+					source = this.getSource(),
+					sourcePoint = "right_hand",
+					target = this.getTarget(),
+					targetPoint = "spell_target",
+					intVelocity = 6.0,
+					accel = 12.0,
+					topSpeed = 100.0,
+					orient = true
+				});
+			}
+			else
+			{
+				proj.add("MoveToTarget", {
+					source = this.getSource(),
+					sourcePoint = "horde_caster",
+					target = this.getTarget(),
+					targetPoint = "spell_target",
+					intVelocity = 6.0,
+					accel = 12.0,
+					topSpeed = 100.0,
+					orient = true
+				});
+			}
 		}
-		else
-		{
-			proj.add("MoveToTarget", {
-				source = this.getSource(),
-				sourcePoint = "horde_caster",
-				target = this.getTarget(),
-				targetPoint = "spell_target",
-				intVelocity = 6.0,
-				accel = 12.0,
-				topSpeed = 100.0,
-				orient = true
-			});
+		catch(e) {
+			/* An attempt to work around a weird bug when using abmin ability with
+			firebolt. */
+			print("[WARNING] Error during effect setup." + e + "\n");
 		}
 
 		proj.add("Mesh", {

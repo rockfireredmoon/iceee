@@ -31023,8 +31023,7 @@ appearance=n4:{["sk"]={["accent1"]="6A0000",["skin"]="947D67",["cloth"]="000000"
 
 [ENTRY]
 ID=1333
-will_regen=1
-might_regen=1
+appearance=p1:{["a"]="Prop-Vampire_Coffin",["sz"]="1.0"}
 level=1
 display_name=Bloodmending Coffin
 profession=1
@@ -31110,8 +31109,7 @@ total_size=1.2999999523162842
 
 [ENTRY]
 ID=1337
-will_regen=1
-might_regen=1
+appearance=n4:{["sk"]={["bone"]="f8eadb",["skin"]="c07574",["cloth"]="ffcb72",["eye"]="8d0f0b",["trim"]="954806",["armor"]="091836",["leather"]="7e3f18"},["c"]="Horde-Warpig",["sz"]="1.3",["a"]=[{["node"]="back_sheathe",["type"]="Item-2hMace-Basic2",["colors"]=[]}]}
 level=50
 display_name=Jeb
 sub_name=Smooshin' Clan
@@ -31136,8 +31134,7 @@ ai_package=example
 
 [ENTRY]
 ID=1339
-will_regen=1
-might_regen=1
+appearance=n4:{["sk"]={["cloth2"]="817263",["skin"]="c07574",["cloth1"]="ffffff",["eye"]="8d0f0b",["nails"]="b5815d",["trim"]="954806"},["c"]="Horde-Warpig2",["sz"]="1.3",["a"]=[{["node"]="back_sheathe",["type"]="Item-2hAxe-Basic6",["colors"]=[]}]}
 level=50
 display_name=Elvis
 sub_name=Smooshin' Clan
@@ -75631,12 +75628,87 @@ damage_resist_mystic=2500
 damage_resist_death=2500
 casting_setback_chance=1
 channeling_break_chance=1
-appearance=n4:{["sk"]={["skin"]="3f200e",["accent"]="a66570",["eye"]="d2d5ff",["armor"]="534741",["hair"]="34353f",["teeth"]="8f9281"},["c"]="Horde-Vampire_Mehirim",["sz"]="2.2"}
+appearance=n4:{["sk"]={["cloth2"]="7f0000",["skin"]="aa7429",["cloth1"]="000000",["eye"]="8d0f0b",["nails"]="b5815d",["trim"]="954806"},["c"]="Horde-Warpig2",["sz"]="1.3"}
 level=50
 display_name=Sabian
 sub_name=The Devastating
 profession=1
 creature_category=Unliving
-rarity=1
+rarity=2
 base_damage_melee=100
 ai_package=custom_heathendel_knight40
+
+[ENTRY]
+ID=3493
+strength=98
+dexterity=98
+constitution=87
+psyche=80
+spirit=80
+damage_resist_melee=1000
+damage_resist_fire=1000
+damage_resist_frost=1000
+damage_resist_mystic=1000
+damage_resist_death=1000
+casting_setback_chance=1
+channeling_break_chance=1
+appearance=n4:{["sk"]={["cloth2"]="7f0000",["skin"]="aa7429",["cloth1"]="000000",["eye"]="8d0f0b",["nails"]="b5815d",["trim"]="954806"},["c"]="Horde-Warpig2",["sz"]="1.3"}
+level=45
+display_name=Hoodlum
+profession=2
+creature_category=Mortal
+rarity=0
+base_damage_melee=60
+ai_package=4_rogue_30
+
+[ENTRY]
+ID=3494
+strength=190
+dexterity=190
+constitution=300
+psyche=285
+spirit=285
+damage_resist_melee=4000
+damage_resist_fire=4000
+damage_resist_frost=4000
+damage_resist_mystic=4000
+damage_resist_death=4000
+will_regen=2
+casting_setback_chance=1
+channeling_break_chance=1
+appearance=n4:{["sk"]={["accent1"]="ffffff",["skin"]="6a4959",["cloth"]="d2d5ff",["eye"]="f33333",["accent2"]="ffffff",["mouth"]="c76d62",["teeth"]="a99d94"},["c"]="Horde-Vampire_Bloodletter",["sz"]="1.6"}
+level=50
+display_name=Vaj Angelus
+sub_name=First Born
+profession=3
+creature_category=Unliving
+rarity=2
+base_damage_melee=175
+ai_package=custom_heathendel_deathmage40
+total_size=1.600000023841858
+
+[ENTRY]
+ID=3495
+strength=285
+dexterity=285
+constitution=300
+psyche=190
+spirit=190
+damage_resist_melee=4000
+damage_resist_fire=4000
+damage_resist_frost=4000
+damage_resist_mystic=4000
+damage_resist_death=4000
+might_regen=2
+casting_setback_chance=1
+channeling_break_chance=1
+appearance=n4:{["sk"]={["accent1"]="ffffff",["skin"]="6a4959",["cloth"]="d2d5ff",["eye"]="f33333",["accent2"]="ffffff",["mouth"]="c76d62",["teeth"]="a99d94"},["c"]="Horde-Vampire_Bloodletter",["sz"]="1.6"}
+level=50
+display_name=Vaj Duradel
+sub_name=First Born
+profession=1
+creature_category=Unliving
+rarity=2
+base_damage_melee=225
+ai_package=custom_heathendel_deathknight40
+total_size=1.600000023841858
