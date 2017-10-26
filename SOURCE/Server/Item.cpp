@@ -1183,7 +1183,7 @@ bool ItemManager :: CheckVirtualItemGamble(ItemDef *in_itemDef, int in_charLevel
 	out_spawnParams->mWeaponType = in_itemDef->mWeaponType;
 	out_spawnParams->SetAllDropMult(dropratebonus);
 
-	out_spawnParams->dropRateProfile = &g_DropRateProfileManager.GetProfileByName(dropRateProfile);
+	out_spawnParams->dropRateProfile.CopyFrom(g_DropRateProfileManager.GetProfileByName(dropRateProfile));
 	return true;
 }
 

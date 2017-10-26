@@ -369,28 +369,6 @@ int WorldLootContainer :: WriteLootQueryToBuffer(int creatureID, char *buffer, c
 }
 
 
-int randint_32bit(int min, int max)
-{
-	// Generate a 32 bit random number.
-
-	/*
-		Explanation:
-		rand() doesn't work well for larger numbers.
-		RAND_MAX is limited to 32767.
-		There are other quirks, where powers of two seem to generate more even
-		distributions of numbers.
-
-		Since smaller numbers have better distribution, use a sequence
-		of random numbers and use those to fill the bits of a larger number.
-	*/
-
-	// RAND_MAX (as defined with a value of 0x7fff) is only 15 bits wide.
-	unsigned long rand_build = (rand() << 15) | rand();
-	//unsigned long rand_build = ((rand() & 0xFF) << 24) | ((rand() & 0xFF) << 16) | ((rand() & 0xFF) << 8) | ((rand() & 0xFF));
-	return min + (rand_build % (max - min + 1));
-}
-
-
 DropSetDefinition :: DropSetDefinition()
 {
 	Clear();
