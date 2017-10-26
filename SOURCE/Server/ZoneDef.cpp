@@ -538,11 +538,6 @@ void ZoneDefInfo :: UpdateGrovePermission(STRINGLIST &params)
 	}
 }
 
-const DropRateProfile& ZoneDefInfo::GetDropRateProfile(void)
-{
-	return g_DropRateProfileManager.GetProfileByName(mDropRateProfile);
-}
-
 void ZoneDefInfo :: ChangeDefaultLocation(int newX, int newY, int newZ)
 {
 	DefX = newX;

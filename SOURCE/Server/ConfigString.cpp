@@ -15,6 +15,11 @@ ConfigString :: ConfigString(const std::string &data)
 	Assign(data);
 }
 
+void ConfigString :: Clear()
+{
+	mData.clear();
+}
+
 void ConfigString :: Assign(const std::string &data)
 {
 	if(data.size() == 0)
@@ -36,6 +41,11 @@ void ConfigString :: Assign(const std::string &data)
 
 int ConfigString :: GetValueInt(const char *key)
 {
+	return GetValueIntOrDefault(key, 0);
+}
+
+int ConfigString :: GetValueIntOrDefault(const char *key, int def)
+{
 	for(size_t i = 0; i < mData.size(); i++)
 	{
 		if(mData[i].size() == 0)
@@ -44,13 +54,18 @@ int ConfigString :: GetValueInt(const char *key)
 		{
 			if(mData[i].size() >= 2)
 				return atoi(mData[i][1].c_str());
-			return 0;
+			return def;
 		}
 	}
-	return 0;
+	return def;
 }
 
 float ConfigString :: GetValueFloat(const char *key)
+{
+	return GetValueFloatOrDefault(key, 0.0);
+}
+
+float ConfigString :: GetValueFloatOrDefault(const char *key, float def)
 {
 	for(size_t i = 0; i < mData.size(); i++)
 	{
@@ -60,10 +75,10 @@ float ConfigString :: GetValueFloat(const char *key)
 		{
 			if(mData[i].size() >= 2)
 				return static_cast<float>(atof(mData[i][1].c_str()));
-			return 0.0F;
+			return def;
 		}
 	}
-	return 0.0F;
+	return def;
 }
 
 void ConfigString :: GetValueString(const char *key, std::string &output)
@@ -79,6 +94,11 @@ void ConfigString :: GetValueString(const char *key, std::string &output)
 				output = mData[i][1];
 		}
 	}
+}
+
+bool ConfigString :: IsEmpty()
+{
+	return mData.size() == 0;
 }
 
 bool ConfigString :: HasKey(const char *key)

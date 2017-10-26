@@ -114,8 +114,6 @@ VirtualItemSpawnParams :: VirtualItemSpawnParams()
 	rarity = 0;
 	namedMob = false;
 
-	dropRateProfile = NULL;
-
 	mEquipType = 0;
 	mWeaponType = 0;
 	minimumQuality = -1;
@@ -2206,12 +2204,12 @@ int VirtualItemModSystem :: GetDropRarity(const VirtualItemSpawnParams &params)
 		{
 			int compare = rarityConfig[q].chance;
 			
-			if(params.dropRateProfile != NULL)
+			if(!params.dropRateProfile.IsDefault())
 			{
-				if(params.dropRateProfile->IsCreatureAllowed(q, params.rarity, params.namedMob) == false)
-					break;
+				if(params.dropRateProfile.IsCreatureAllowed(q, params.rarity, params.namedMob) == false)
+					continue;
 
-				compare = params.dropRateProfile->Chance.QData[q];
+				compare = params.dropRateProfile.Chance.QData[q];
 			}
 
 			if(Util::FloatEquivalent(params.dropMult[q], 0.0F) == false)

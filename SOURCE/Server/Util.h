@@ -73,6 +73,7 @@ int PrepExt_CreatureEventVaultSize(char *buffer, int actorID, int vaultSize, int
 int PrepExt_Broadcast(char *buffer, const char *message);
 int PrepExt_Chat(char *buffer, int characterID, const char *display_name, const char *channel, const char *message);
 
+int randint_32bit(int min, int max);
 int randint(int min, int max);
 int randmod(int max);
 int randi(int max);

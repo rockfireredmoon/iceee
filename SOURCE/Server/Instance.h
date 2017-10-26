@@ -286,7 +286,6 @@ public:
 
 	ScaleConfig scaleConfig;
 	const InstanceScaleProfile *scaleProfile;
-	const DropRateProfile *dropRateProfile;
 	float mDropRateBonusMultiplier;   //Progressive drop rate multiplier, increased slightly per mob kill.  Only applies to dungeons.
 	int mKillCount;                   //Total kill count of the dungeon.  No purpose than some generic tracking.
 	
@@ -410,7 +409,6 @@ public:
 	std::string GetTimeOfDay();
 	void SetTimeOfDay(std::string timeOfDay);
 	void SetEnvironment(std::string environment);
-	const DropRateProfile* GetDropRateProfile(void);
 	int CountAlive(int creatureDefID);
 	void LoadStaticObjects(const char *filename);
 

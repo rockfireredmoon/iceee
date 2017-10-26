@@ -143,8 +143,6 @@ public:
 	bool HasEditPermission(int accountID, int characterDefID, const char *characterName, float x, float z);
 	void UpdateGrovePermission(STRINGLIST &params);
 
-	const DropRateProfile& GetDropRateProfile(void);
-
 	void ChangeDefaultLocation(int newX, int newY, int newZ);
 	void ChangeShardName(const char *newName);
 	void ChangeName(const char *newName);

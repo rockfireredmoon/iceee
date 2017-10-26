@@ -25,6 +25,18 @@ rarity=1
 ai_package=custom_heathendel_mage40
 appearance=c2:{["a"]=[{["type"]="Armor-Light-Low7-Left_Pauldron",["node"]="left_shoulder",["colors"]=["0D4955","56341D","473A6A","A18489","267F2B"]},{["type"]="Armor-Light-Low7-Right_Pauldron",["node"]="right_shoulder",["colors"]=["0D4955","0D6A13","473A6A","A18489","267F2B"]},{["type"]="Item-Wand-Epic2",["node"]="right_hand",["colors"]=["553A14","B044FF","BF1111"]},{["type"]="Item-Talisman-Bone",["node"]="left_hand",["colors"]=["BF7979"]}],["c"]={["boots"]={["type"]="Armor-Cloth-Low8",["colors"]=["0d4955","473a6a","267f2b","d4b373"]},["chest"]={["type"]="Armor-Cloth-Low8",["colors"]=["0d4955","473a6a","267f2b","d4b373"]},["arms"]={["type"]="Armor-Cloth-Low8",["colors"]=["0d4955","473a6a","267f2b","d4b373"]},["leggings"]={["type"]="Armor-Cloth-Low8",["colors"]=["0d4955","473a6a","267f2b","d4b373"]},["collar"]={["type"]="Armor-Cloth-Low8",["colors"]=["0d4955","473a6a","267f2b","d4b373"]},["belt"]={["type"]="Armor-Cloth-Low8",["colors"]=["0d4955","473a6a","267f2b","d4b373"]},["gloves"]={["type"]="Armor-Cloth-Low8",["colors"]=["0d4955","473a6a","267f2b","d4b373"]}},["b"]="n",["sk"]={["hair"]="3F2B19",["leg_patches"]="553921",["chest_patch"]="6A4829",["tusks"]="E9E9C2",["eye_white"]="ADADAD",["nails"]="63594E",["base"]="AA8F5C",["inner_ear"]="6A4829",["eye"]="9418D4",["eye_brows"]="553921",["snout"]="553636",["arm_patches"]="3F2B19"},["sz"]="1.17",["h"]=0,["g"]="m",["r"]="k"}
 
+[ENTRY]
+ID=3599
+Effects=INVINCIBLE,HENGE,IS_USABLE,UNATTACKABLE
+will_regen=1
+might_regen=1
+appearance=p1:{["a"]="Prop-Interact_Cylinder",["sz"]="1.5"}
+level=1
+display_name=Keystone Sanctuary
+sub_name=Grunes Tal
+profession=1
+creature_category=Mortal
+ai_package=nothing
 
 [ENTRY]
 ID=3600
