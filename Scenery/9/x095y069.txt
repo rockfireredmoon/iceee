@@ -38,7 +38,7 @@ Name=Untitled
 Pos=71740.3,1206.37,52268
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#3N
+spawnPackage=#N3493
 
 [ENTRY]
 ID=1150349
@@ -47,7 +47,7 @@ Name=Untitled
 Pos=71741.3,1205.24,52337.6
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=#3N
+spawnPackage=#N3493
 
 [ENTRY]
 ID=1150350
@@ -56,12 +56,12 @@ Name=Untitled
 Pos=71790.7,1223.84,52251.8
 Orient=0,-0.663135,0,0.748499
 Scale=1,1,1
-spawnPackage=#3N
+spawnPackage=#N3493
 
 [ENTRY]
 ID=1154028
 Asset=Prop-Map
-Name=
+Name=Untitled
 Pos=71689.9,1218.95,52425.8
 Orient=0,0,0,1
 Scale=1,1,1
@@ -69,23 +69,25 @@ Scale=1,1,1
 [ENTRY]
 ID=1154029
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=71715,1211.95,52410.4
 Orient=0,-0.430458,0,0.902611
 Scale=1,1,1
+spawnPackage=#N3493
 
 [ENTRY]
 ID=1154030
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=71696.6,1211.95,52449.4
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=#N3493
 
 [ENTRY]
 ID=1154234
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=71311,1201.25,52446.9
 Orient=0,0,0,1
 Scale=1,1,1
@@ -98,7 +100,7 @@ link=1154236,1
 [ENTRY]
 ID=1154238
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=71415.3,1201.77,52371.8
 Orient=0,0,0,1
 Scale=1,1,1
@@ -110,7 +112,7 @@ link=1154237,1
 [ENTRY]
 ID=1154239
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=71352.6,1201.42,52499.9
 Orient=0,0,0,1
 Scale=1,1,1

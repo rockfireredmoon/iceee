@@ -29,9 +29,9 @@ Comment=[Comment here]
 Position=56354.0,684.0,57918.0
 
 [ENTRY]
-Name=Protectorate Compound
-Comment=Outside instance
-Position=63797.0,779.0,56573.0
+Name=Swineland Keystone Sanctuary
+Comment=
+Position=57007.0,902.0,60763.0
 
 [ENTRY]
 Name=Frost Peak Henge

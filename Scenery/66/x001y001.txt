@@ -4164,8 +4164,8 @@ spawnPackage=#3
 [ENTRY]
 ID=1154509
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
-Pos=2454.81,553.845,2833.07
+Name=Untitled
+Pos=2454.81,552.432,2833.07
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=#F16079
@@ -4173,7 +4173,7 @@ spawnPackage=#F16079
 [ENTRY]
 ID=1154510
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=3416.97,660,3342.49
 Orient=0,0,0,1
 Scale=1,1,1
@@ -4182,7 +4182,7 @@ spawnPackage=#F16076
 [ENTRY]
 ID=1154515
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=2116.23,600,1925.4
 Orient=0,0,0,1
 Scale=1,1,1
