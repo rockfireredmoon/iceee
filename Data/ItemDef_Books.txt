@@ -1054,7 +1054,7 @@ mIvType1=11
 [ENTRY]
 mID=1500070
 mType=8
-mDisplayName=Zhushi's Lair Parchment - Zhushi – A Study
+mDisplayName=Zhushi's Lair Parchment - Zhushi - A Study
 mIcon=Icon-32-Torn_Page.png|Icon-32-BG-Grey.png
 mLevel=1
 mValue=1
