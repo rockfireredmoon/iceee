@@ -32160,8 +32160,6 @@ damage_resist_fire=5000
 damage_resist_frost=5000
 damage_resist_mystic=5000
 damage_resist_death=5000
-will_regen=1
-might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
@@ -32172,6 +32170,7 @@ profession=3
 creature_category=Unliving
 rarity=1
 base_damage_melee=245
+ExtraData=namedmob=
 ai_package=4_rogue_30
 
 [ENTRY]
@@ -32186,8 +32185,6 @@ damage_resist_fire=5500
 damage_resist_frost=5500
 damage_resist_mystic=5500
 damage_resist_death=5500
-will_regen=1
-might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
@@ -32198,6 +32195,7 @@ profession=4
 creature_category=Unliving
 rarity=1
 base_damage_melee=280
+ExtraData=namedmob=
 ai_package=knight_brave_6
 
 [ENTRY]
