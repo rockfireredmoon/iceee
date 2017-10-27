@@ -15022,9 +15022,9 @@ int SimulatorThread :: handle_query_instance(void)
 			SendInfoMessage(Aux1, INFOMSG_INFO);
 		}
 
-		if(CheckPermissionSimple(Perm_Account, Permission_Debug) == true && inst->mZoneDefPtr->mDropRateProfile.length() > 0)
+		if(CheckPermissionSimple(Perm_Account, Permission_Debug) == true)
 		{
-			Util::SafeFormat(Aux1, sizeof(Aux1), "Drop rate profile: %s", inst->mZoneDefPtr->mDropRateProfile.c_str());
+			Util::SafeFormat(Aux1, sizeof(Aux1), "Drop rate profile: %s", inst->mZoneDefPtr->GetDropRateProfile().c_str());
 			SendInfoMessage(Aux1, INFOMSG_INFO);
 		}
 	}

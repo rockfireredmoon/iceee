@@ -7353,7 +7353,7 @@ void  CreatureInstance :: CreateLoot(int finderLevel, int partySize)
 
 	DropRateProfile dropRateProfile;
 	if(cdef->DropRateProfile.length() == 0 && actInst != NULL)
-		dropRateProfile.CopyFrom(g_DropRateProfileManager.GetProfileByName(actInst->mZoneDefPtr->mDropRateProfile));
+		dropRateProfile.CopyFrom(g_DropRateProfileManager.GetProfileByName(actInst->mZoneDefPtr->GetDropRateProfile()));
 	else
 		dropRateProfile.CopyFrom(g_DropRateProfileManager.GetProfileByName(cdef->DropRateProfile));
 

@@ -385,6 +385,10 @@ bool ZoneDefInfo :: CanPlayerWarp(int CreatureDefID, int AccountID)
 	return false;
 }
 
+void ZoneDefInfo :: SetDropRateProfile(std::string profile) {
+	mDropRateProfile = profile;
+}
+
 void ZoneDefInfo :: SaveToStream(FILE *output)
 {
 	fprintf(output, "[ENTRY]\r\n");
@@ -535,6 +539,19 @@ void ZoneDefInfo :: UpdateGrovePermission(STRINGLIST &params)
 			mEditPermissions.erase(mEditPermissions.begin() + index);
 			PendingChanges++;
 		}
+	}
+}
+
+std::string ZoneDefInfo :: GetDropRateProfile()
+{
+	if(mDropRateProfile.length() > 0)
+		return mDropRateProfile;
+	else {
+		if(mInstance) {
+			return "instance";
+		}
+		else
+			return "standard";
 	}
 }
 
@@ -757,7 +774,7 @@ int ZoneDefManager :: LoadFile(const char *fileName)
 				else if(strcmp(lfr.SecBuffer, "AUDIT") == 0)
 					newItem.mAudit = lfr.BlockToBoolC(1);
 				else if(strcmp(lfr.SecBuffer, "DROPRATEPROFILE") == 0)
-					newItem.mDropRateProfile = lfr.BlockToStringC(1, 0);
+					newItem.SetDropRateProfile(lfr.BlockToStringC(1, 0));
 				else if(strcmp(lfr.SecBuffer, "ENVIRONMENTCYCLE") == 0)
 					newItem.mEnvironmentCycle = lfr.BlockToBoolC(1);
 				else if(strcmp(lfr.SecBuffer, "PLAYERFILTERTYPE") == 0)

@@ -1,15 +1,16 @@
 [ENTRY]
 ID=1358959260
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=40273.4,441.025,67103
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=1a_rockBearCamp02_general
-outerRadius=1
 
 [ENTRY]
 ID=1358959841
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=40786,225.783,67907
 Orient=0,0,0,1
 Scale=1,1,1
@@ -20,26 +21,27 @@ link=1358959846,1
 [ENTRY]
 ID=1358959842
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=40598.5,252.125,67826
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=1a_chomperCamp01_general
-outerRadius=10
 
 [ENTRY]
 ID=1358959843
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=40557.1,225.434,67983
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=1a_chomperCamp01_general
 links_count=1
 link=1358959846,1
-spawnPackage=1a_chomperCamp01_general
-outerRadius=10
 
 [ENTRY]
 ID=1358959844
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=40991.5,186.809,67996
 Orient=0,0,0,1
 Scale=1,1,1
@@ -50,6 +52,7 @@ link=1358959847,1
 [ENTRY]
 ID=1358959846
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=40637.7,215.71,67986
 Orient=0,0,0,1
 Scale=1,1,1
@@ -61,15 +64,16 @@ link=1358959847,1
 [ENTRY]
 ID=1358959881
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=40909.9,225.386,67885
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=1a_chomperCamp01_general
-outerRadius=10
 
 [ENTRY]
 ID=1358965300
 Asset=CL-Hills_Bush6#CL-Hills_Bush6
+Name=Untitled
 Pos=40094.7,276.944,67416
 Orient=0,0,0,1
 Scale=1,1,1
@@ -77,6 +81,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1358965395
 Asset=CL-Hills_Bush2#CL-Hills_Bush2
+Name=Untitled
 Pos=40887.8,297.575,67356
 Orient=0,0,0,1
 Scale=1,1,1
@@ -85,6 +90,7 @@ Flags=1
 [ENTRY]
 ID=1358965763
 Asset=Prop-Bush-Med1#Prop-Bush-Med1
+Name=Untitled
 Pos=40926.2,298.902,67345
 Orient=0,0,0,1
 Scale=1.575,1.575,1.575
@@ -93,6 +99,7 @@ Flags=1
 [ENTRY]
 ID=1358965771
 Asset=CL-Hills_Bush1#CL-Hills_Bush1
+Name=Untitled
 Pos=40330.8,225.743,67988
 Orient=0,0,0,1
 Scale=1,1,1
@@ -100,6 +107,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1358965773
 Asset=Prop-Hill_Tree#Prop-Hill_Tree2
+Name=Untitled
 Pos=40669.7,490.05,67086
 Orient=0,0,0,1
 Scale=2.075,2.075,2.075

@@ -66,11 +66,13 @@ class Screens.Books extends GUI.Frame {
 	mBookText = null;
 	mPages = [];
 	mBookList = null;
+	mBooks = [];
 	mSelectedPage = 1;
 	mSelectedBook = null;
 	mBookLabel = null;
 	mPageLabel = null;
 	mSelectOnLoad = null;
+	mSelectPageOnLoad = null;
 	mLoaded = false;
 	mAdjusting = false;
 	mInited = false; 
@@ -114,11 +116,11 @@ class Screens.Books extends GUI.Frame {
 		mBookText.setInsets(10, 10, 10, 10);
 
 		local scrollArea = ::GUI.ScrollPanel();
-		scrollArea.setPreferredSize(310, 368);	
+		scrollArea.setPreferredSize(310, 398);	
 		scrollArea.attach(mBookText);
 		
 		mBookList = GUI.ColumnList();
-		mBookList.setPreferredSize(180, 368);
+		mBookList.setPreferredSize(180, 338);
 		mBookList.addColumn("Name", 100);
 		mBookList.setShowingHeaders(false);
 		mBookList.setAppearance("DarkBorder");
@@ -140,12 +142,16 @@ class Screens.Books extends GUI.Frame {
 		readerBox.add(mBookLabel);
 		readerBox.add(scrollArea);
 		readerBox.add(buttonRow);
+
+		local listScrollArea = ::GUI.ScrollPanel();
+		listScrollArea.setPreferredSize(180, 338);	
+		listScrollArea.attach(mBookList);
 		
 		mScreenContainer = GUI.Container(GUI.GridLayout(1, 2));
 		mScreenContainer.setInsets(5);
 		mScreenContainer.getLayoutManager().setColumns(180, "*");
 		mScreenContainer.getLayoutManager().setRows("*");
-		mScreenContainer.add(mBookList);
+		mScreenContainer.add(listScrollArea);
 		mScreenContainer.add(readerBox);
 		
 		setContentPane(mScreenContainer);
@@ -175,7 +181,7 @@ class Screens.Books extends GUI.Frame {
 		mButtonNext.setEnabled(false);			
 		mButtonPrevious.setEnabled(false);
 		if(idx != -1) {
-			mSelectedBook = mBookList.mRowContents[idx][0].mBook;
+			mSelectedBook = mBooks[idx];
 			mBookLabel.setText(mSelectedBook.mTitle);
 			::_Connection.sendQuery("book.get", this, [
 				mSelectedBook.mID
@@ -191,10 +197,14 @@ class Screens.Books extends GUI.Frame {
 	
 	function refresh() {
 		mLoaded = false;
-		if(mSelectedBook != null)			
+		if(mSelectedBook != null) {			
 			mSelectOnLoad = mSelectedBook.mId;
-		else
+			mSelectPageOnLoad = mSelectedPage;
+		}
+		else {
 			mSelectOnLoad = null;
+			mSelectPageOnLoad = null;
+		}
 		mSelectedPage = 1;
 		mSelectedBook = null;
 		::_Connection.sendQuery("book.list", this);
@@ -210,12 +220,12 @@ class Screens.Books extends GUI.Frame {
 		if(!mLoaded) {
 			// Not loaded yet?
 			mSelectOnLoad = bookId;
-			mSelectedPage = pageNumber;		
+			mSelectPageOnLoad  = pageNumber;
 			return;	
 		}
 		else {
-			for(local i = 0 ; i < mBookList.mRowContents.len(); i++) {
-				local bk = mBookList.mRowContents[i][0].mBook;
+			for(local i = 0 ; i < mBooks.len(); i++) {
+				local bk = mBooks[i];
 				if(bk.mID == bookId) {
 					mAdjusting = true;
 					mBookList.setSelectedRows([i]);
@@ -313,7 +323,10 @@ class Screens.Books extends GUI.Frame {
 	function _handleBookList(qa, results) {
 		local selRow = mBookList.getSelectedRow();
 		mBookList.removeAllRows();
+		mBooks = [];
 		local row = 0;
+		mAdjusting = true;
+		local selPage = mSelectedPage;
 		foreach( item in results ) {
 			local book = Book();
 			book.mID = item[0].tointeger();
@@ -324,15 +337,20 @@ class Screens.Books extends GUI.Frame {
 
 			local obj = BookObject(book);
 			mBookList.addRow([obj]);
+			mBooks.append(book);
 			if(mSelectOnLoad != null && mSelectOnLoad == book.mID) {
 				selRow = row;
+				selPage = mSelectPageOnLoad;
 				mSelectOnLoad = null;
+				mSelectPageOnLoad = null;
 			}
 			row++;
 		}
+		mAdjusting = false;
 		mLoaded = true;
-		if(mBookList.mRowContents.len() > 0) {
+		if(mBooks.len() > 0) {
 			mAdjusting = true;
+			mSelectedPage = selPage;
 			mBookList.setSelectedRows([selRow == -1 ? 0 : selRow]);
 			selectionChanged();
 			mAdjusting = false;

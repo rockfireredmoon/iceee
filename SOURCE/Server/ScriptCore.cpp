@@ -233,10 +233,33 @@ namespace ScriptCore
 
 	bool ResumeCallback::Execute()
 	{
-    	mNut->mSleeping = 0;
-    	mNut->mPause = NULL;
-		sq_wakeupvm(mNut->vm, false, false, false, false);
-		return true;
+		if(sq_getvmstate(mNut->vm) != SQ_VMSTATE_SUSPENDED) {
+			g_Log.AddMessageFormat("Resume event fired, but VM was already awake for script %s", mNut->def->scriptName.c_str());
+			return true;
+		}
+		else {
+			sq_pushbool(mNut->vm, false);
+			if(SQ_SUCCEEDED(sq_wakeupvm(mNut->vm,true,false,false, false))) {
+				mNut->mSleeping = false;
+				sq_pop(mNut->vm,1); //pop retval
+				if(sq_getvmstate(mNut->vm) == SQ_VMSTATE_IDLE) {
+					sq_settop(mNut->vm,1); //pop roottable
+				}
+				return true;
+			}
+			else {
+				const SQChar *err;
+				sq_getlasterror(mNut->vm);
+				if(SQ_SUCCEEDED(sq_getstring(mNut->vm,-1,&err))) {
+					g_Log.AddMessageFormat("Wakeup failed for script %s, state now %d. %d", mNut->def->scriptName.c_str(), sq_getvmstate(mNut->vm), err);
+				}
+				else {
+					g_Log.AddMessageFormat("Wakeup failed for script %s, state now %d. No error code could be determined.", mNut->def->scriptName.c_str(), sq_getvmstate(mNut->vm));
+
+				}
+			}
+			return false;
+		}
 	}
 
 	//
@@ -1106,7 +1129,7 @@ namespace ScriptCore
 	        Sqrat::Var<NutPlayer&> left(v, 1);
 	        if (!Sqrat::Error::Occurred(v)) {
 	        	if((&left.value)->mPause != NULL)
-	    	        return sq_throwerror(v, _SC("already sleeping"));
+	    	        return sq_throwerror(v, _SC("already paused"));
 	        	if((&left.value)->mSleeping > 0)
 	    	        return sq_throwerror(v, _SC("already sleeping"));
 	            Sqrat::Var<unsigned long> right(v, 2);

@@ -258,7 +258,6 @@ class this.Environment
 
 	function setCurrent( name )
 	{
-		print("ICE! Environment.setCurrent " + name + "\n");
 		if (name == null)
 		{
 			name = this.mDefault;
@@ -389,8 +388,6 @@ class this.Environment
 			local terrain = ::_sceneObjectManager.getCurrentTerrainBase();
 			local terrainDef = ::TerrainEnvDef;
 
-			print("ICE! Environment.update " + pageStr + " / " + terrain + "\n");
-	
 			if (terrain in ::TerrainEnvDef)
 			{
 				local pageMap = ::TerrainEnvDef[terrain];
@@ -399,12 +396,9 @@ class this.Environment
 					newEnv = pageMap[pageStr].Environment;
 				}
 			}
-			print("ICE! Environment.update newEnv " + newEnv + "\n");
-
 			this.mLastTerrain = tpos;
 		}
 		else {
-			print("ICE! No TPOS for " + this.mZoneEnv + "\n");
 			newEnv = this.mZoneEnv;
 		}
 		
@@ -422,7 +416,6 @@ class this.Environment
 		}
 		else if (this.mZoneEnv in ::Environments)
 		{
-			print("ICE! Environment.update mZoneEnv " + this.mZoneEnv + "\n");
 			local env = ::Environments[this.mZoneEnv];
 
 			if (("TimeOfDay" in env) && this.mTimeOfDay in env.TimeOfDay)
