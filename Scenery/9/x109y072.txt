@@ -1,6 +1,52 @@
 [ENTRY]
+ID=1154628
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=Untitled
+Pos=82349.9,785.077,54663.1
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#3492
+links_count=2
+link=1154672,1
+link=1154674,1
+
+[ENTRY]
+ID=1154672
+Asset=Manipulator#Manipulator-PathNode
+Name=
+Pos=82348.7,785.077,54734.1
+Orient=0,0,0,1
+Scale=1,1,1
+links_count=2
+link=1154628,1
+link=1154673,1
+
+[ENTRY]
+ID=1154673
+Asset=Manipulator#Manipulator-PathNode
+Name=
+Pos=82227.2,785.077,54696.6
+Orient=0,0,0,1
+Scale=1,1,1
+links_count=2
+link=1154672,1
+link=1154674,1
+
+[ENTRY]
+ID=1154674
+Asset=Manipulator#Manipulator-PathNode
+Name=
+Pos=82283.7,785.077,54606.3
+Orient=0,0,0,1
+Scale=1,1,1
+links_count=2
+link=1154673,1
+link=1154628,1
+
+[ENTRY]
 ID=151019913
 Asset=CL-AridBush1#CL-AridBush1
+Name=Untitled
 Pos=81859,791.071,54214
 Orient=0,0,0,1
 Scale=1.475,1.475,1.475
@@ -9,6 +55,7 @@ Flags=1
 [ENTRY]
 ID=151020455
 Asset=CL-Random-Junk3#CL-Random-Junk3
+Name=Untitled
 Pos=82195,785.541,54674
 Orient=0,0,0,1
 Scale=1,1,1
@@ -17,6 +64,7 @@ Flags=1
 [ENTRY]
 ID=151020461
 Asset=CL-Battlefield3#CL-Battlefield3
+Name=Untitled
 Pos=82459,785.306,54654
 Orient=0,0,0,1
 Scale=1,1,1
@@ -25,6 +73,7 @@ Flags=1
 [ENTRY]
 ID=151020462
 Asset=CL-Battlefield4#CL-Battlefield4
+Name=Untitled
 Pos=82073,785.6,54449
 Orient=0,0,0,1
 Scale=1,1,1
@@ -33,6 +82,7 @@ Flags=1
 [ENTRY]
 ID=151020464
 Asset=CL-Battlefield5#CL-Battlefield5
+Name=Untitled
 Pos=82499,789.564,54669
 Orient=0,0,0,1
 Scale=1,1,1
@@ -41,6 +91,7 @@ Flags=1
 [ENTRY]
 ID=151020465
 Asset=CL-Battlefield6#CL-Battlefield6
+Name=Untitled
 Pos=81986,785.603,54580
 Orient=0,0,0,1
 Scale=1,1,1
@@ -49,6 +100,7 @@ Flags=1
 [ENTRY]
 ID=151020466
 Asset=CL-Battlefield7#CL-Battlefield7
+Name=Untitled
 Pos=81777,789.654,54121
 Orient=0,0,0,1
 Scale=1,1,1
@@ -57,6 +109,7 @@ Flags=1
 [ENTRY]
 ID=151020468
 Asset=CL-Battlefield8#CL-Battlefield8
+Name=Untitled
 Pos=81846,790.769,54297
 Orient=0,0,0,1
 Scale=1,1,1
@@ -65,6 +118,7 @@ Flags=1
 [ENTRY]
 ID=151020486
 Asset=CL-Vampire_Camp6#CL-Vampire_Camp6
+Name=Untitled
 Pos=82241,785.22,54489
 Orient=0,0.747971,0,0.663731
 Scale=1,1,1
@@ -73,6 +127,7 @@ Flags=1
 [ENTRY]
 ID=151020488
 Asset=Prop-Burnt_Pines#Prop-Burnt_Pine1
+Name=Untitled
 Pos=81983,789.923,54400
 Orient=0.030215,-0.217957,0.0398117,0.974678
 Scale=3.125,3.125,3.125
@@ -81,6 +136,7 @@ Flags=1
 [ENTRY]
 ID=151020624
 Asset=CL-Dead-Forest2#CL-Dead-Forest2
+Name=Untitled
 Pos=82437,785.293,54550
 Orient=0,0,0,1
 Scale=1,1,1
@@ -89,6 +145,7 @@ Flags=1
 [ENTRY]
 ID=151020633
 Asset=Prop-Rubble2#Prop-Rubble2
+Name=Untitled
 Pos=82420,792.479,54502
 Orient=0,-0.834152,0,-0.551535
 Scale=5.225,5.225,5.225
@@ -97,6 +154,7 @@ Flags=1
 [ENTRY]
 ID=151020654
 Asset=Prop-Vampire_Lamps#Prop-Vampire_Lamp2
+Name=Untitled
 Pos=81862,790.456,54454
 Orient=0.0442896,0.415474,0.0126672,0.908438
 Scale=1.775,1.775,1.775
@@ -105,6 +163,7 @@ Flags=1
 [ENTRY]
 ID=151020657
 Asset=Prop-Vampire_Lamp2
+Name=Untitled
 Pos=82414,785.306,54695
 Orient=-0.0737123,0.420195,-0.0865784,0.900282
 Scale=2.4,2.4,2.4
@@ -113,6 +172,7 @@ Flags=1
 [ENTRY]
 ID=151020658
 Asset=Prop-Bush_AridDead1#Prop-Bush_AridDead1
+Name=Untitled
 Pos=82415,785.306,54702
 Orient=0,0,0,1
 Scale=2,2,2
@@ -121,6 +181,7 @@ Flags=1
 [ENTRY]
 ID=151020660
 Asset=Prop-Bush_AridDead2#Prop-Bush_AridDead2
+Name=Untitled
 Pos=82053,785.855,54483
 Orient=0,0,0,1
 Scale=1.375,1.375,1.375
@@ -129,6 +190,7 @@ Flags=1
 [ENTRY]
 ID=151020689
 Asset=Effects#Par-Ground_Fog1
+Name=Untitled
 Pos=82291,789.093,54708
 Orient=0,0,0,1
 Scale=1,1,1
@@ -137,6 +199,7 @@ Flags=1
 [ENTRY]
 ID=151020692
 Asset=Effects#Par-Ground_Fog1
+Name=Untitled
 Pos=81968,791.893,54478
 Orient=0,0,0,1
 Scale=1,1,1
@@ -145,6 +208,7 @@ Flags=1
 [ENTRY]
 ID=151028632
 Asset=CL-Random-Junk1#CL-Random-Junk1
+Name=Untitled
 Pos=81808,790.174,54232
 Orient=0,0,0,1
 Scale=1,1,1
@@ -152,35 +216,36 @@ Scale=1,1,1
 [ENTRY]
 ID=151031414
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=82161,785.077,54474
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_vmp_valkalBloodfiend
-outerRadius=1
 
 [ENTRY]
 ID=151031415
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=82291,785.077,54530
 Orient=0,-0.999784,0,0.0207949
 Scale=1,1,1
 spawnPackage=12_vmp_valkalBloodfiend
-outerRadius=1
 
 [ENTRY]
 ID=151031416
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=82342,785.077,54614
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=12_vmp_valkalCaster
 links_count=1
 link=151031417,1
-spawnPackage=12_vmp_valkalCaster
-outerRadius=1
 
 [ENTRY]
 ID=151031417
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=82436,785.077,54658
 Orient=0,0,0,1
 Scale=1,1,1
@@ -191,26 +256,27 @@ link=151031418,1
 [ENTRY]
 ID=151031419
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=82000,785.305,54556
 Orient=0,0.572868,0,0.819648
 Scale=1,1,1
 spawnPackage=12_vmp_valkalBloodfiend
-outerRadius=1
 
 [ENTRY]
 ID=151031420
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=81952,787.946,54469
 Orient=0,-0.333487,0,0.942755
 Scale=1,1,1
+spawnPackage=12_vmp_valkalBloodfiend
 links_count=1
 link=151031421,1
-spawnPackage=12_vmp_valkalBloodfiend
-outerRadius=1
 
 [ENTRY]
 ID=151031421
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=82137,785.306,54573
 Orient=0,0,0,1
 Scale=1,1,1
@@ -221,20 +287,20 @@ link=151031422,1
 [ENTRY]
 ID=151031428
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=81823,789.456,54132
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_vmp_valkalBloodfiend
-outerRadius=10
 
 [ENTRY]
 ID=151031429
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=81924,789.902,54446
 Orient=0,0.945784,0,0.324796
 Scale=1,1,1
+spawnPackage=12_vmp_valkalCaster
 links_count=1
 link=151031430,1
-spawnPackage=12_vmp_valkalCaster
-outerRadius=10
 

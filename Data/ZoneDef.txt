@@ -743,6 +743,7 @@ ShardName=Europe 1
 WarpName=Valkals Bloodkeep
 Instance=1
 DefLoc=701,660,2794
+DropRateProfile=bloodkeep
 
 [ENTRY]
 ID=67

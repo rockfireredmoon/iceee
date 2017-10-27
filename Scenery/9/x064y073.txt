@@ -1,16 +1,17 @@
 [ENTRY]
 ID=10000336
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=48516,303,54786
 Orient=0,0,0,1
 Scale=1,1,1
 Facing=114
-sceneryName=generated_spawn
 spawnPackage=z9_eur_gen_Julius_Aryl_2202
 
 [ENTRY]
 ID=151001767
 Asset=Prop-Walls#Prop-Wooden_Wall
+Name=Untitled
 Pos=48488.7,236.035,54977
 Orient=0,-0.686448,0,-0.727179
 Scale=1.525,1.525,1.525
@@ -19,6 +20,7 @@ Flags=1
 [ENTRY]
 ID=151001768
 Asset=Prop-Walls#Prop-Wooden_Tower
+Name=Untitled
 Pos=48595.5,310.292,55448
 Orient=0,-0.42594,0,0.904751
 Scale=1.225,1.225,1.225
@@ -27,6 +29,7 @@ Flags=1
 [ENTRY]
 ID=151001772
 Asset=Prop-Wooden_Tower
+Name=Untitled
 Pos=48499.2,285.68,54826
 Orient=0,-0.688922,0,0.724836
 Scale=1.25,1.25,1.25
@@ -35,6 +38,7 @@ Flags=1
 [ENTRY]
 ID=151001774
 Asset=Prop-Wooden_Tower
+Name=Untitled
 Pos=48481.1,273.747,55158
 Orient=0,-0.681639,0,0.731689
 Scale=1.4,1.4,1.4
@@ -43,6 +47,7 @@ Flags=1
 [ENTRY]
 ID=151001775
 Asset=Prop-Wooden_Wall
+Name=Untitled
 Pos=48535.3,280.818,55310
 Orient=0,-0.825785,0,-0.563985
 Scale=1.4,1.4,1.4
@@ -51,6 +56,7 @@ Flags=1
 [ENTRY]
 ID=151001794
 Asset=Prop-Forest_Tree7
+Name=Untitled
 Pos=48625.5,203.132,55051
 Orient=0,0.886627,0,0.462485
 Scale=1.7,1.7,1.7
@@ -59,6 +65,7 @@ Flags=1
 [ENTRY]
 ID=151001795
 Asset=Prop-Fences#Prop-Wooden_Barricade2
+Name=Untitled
 Pos=48446.7,306.884,54799
 Orient=0.08134,-0.912411,0.0580948,0.396882
 Scale=1.2,1.2,1.2
@@ -67,6 +74,7 @@ Flags=1
 [ENTRY]
 ID=151001847
 Asset=Prop-Lamp_Post1#Prop-Lamp_Post1
+Name=Untitled
 Pos=48492.7,304.559,54786
 Orient=0,0,0,1
 Scale=2.175,2.175,2.175
@@ -75,6 +83,7 @@ Flags=1
 [ENTRY]
 ID=151001874
 Asset=Prop-Bush-Small1#Prop-Bush-Small1
+Name=Untitled
 Pos=48639.7,299.016,55453
 Orient=0,0,0,1
 Scale=2.9,2.9,2.9
@@ -83,6 +92,7 @@ Flags=1
 [ENTRY]
 ID=151001879
 Asset=Forest?d=0.9&s=123456&sz=800
+Name=Untitled
 Pos=48321.9,299.873,55213
 Orient=0,0,0,1
 Scale=1.7,1.7,1.7
@@ -91,6 +101,7 @@ Flags=1
 [ENTRY]
 ID=151053980
 Asset=Prop-Sanctuary_Stone
+Name=Untitled
 Pos=48644.6,302.97,54803
 Orient=0,0.965773,0,-0.259388
 Scale=1,1,1
@@ -98,6 +109,7 @@ Scale=1,1,1
 [ENTRY]
 ID=151053981
 Asset=Manipulator-Sanctuary
+Name=Untitled
 Pos=48644.5,312.97,54802
 Orient=0,0,0,1
 Scale=1,1,1
@@ -105,6 +117,7 @@ Scale=1,1,1
 [ENTRY]
 ID=151054058
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=48670,303.842,55460
 Orient=0,-0.731146,0,0.682221
 Scale=1,1,1
@@ -113,6 +126,7 @@ spawnPackage=3_npc_mid_guards
 [ENTRY]
 ID=151054061
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=48455.2,312.774,54762
 Orient=0,0.939099,0,0.343646
 Scale=1,1,1

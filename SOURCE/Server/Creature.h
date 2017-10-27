@@ -23,6 +23,8 @@ class SimulatorThread;
 #include "../squirrel/sqrat/sqrat.h"
 #include "Daily.h"
 #include "Globals.h"
+#include "ConfigString.h"
+#include "InstanceScale.h"
 
 class CreatureInstance;  //Forward declaration for a pointer in the SelectedObject structure
 class AIScriptPlayer;    //Forward declaration for AI script
@@ -168,12 +170,16 @@ public:
 	CharacterStatSet css;
 	int CreatureDefID;             //Creature Definition ID
 	unsigned short DefHints;       //extra creature data
-	std::string ExtraData;
-	std::vector<int>DefaultEffects;
+	std::vector<int> DefaultEffects;
+	std::vector<int> Items;
+	std::string DropRateProfile;
+	float DropRateMult;
+	bool NamedMob;
 	
 	bool operator < (const CreatureDefinition& other) const;
-	bool IsNamedMob(void) const;
-	float GetDropRateMult(void) const;
+	bool IsNamedMob(void);
+	float GetDropRateMult(void);
+	std::string GetDropRateProfileName(void);
 	void SaveToStream(FILE *output);
 };
 
@@ -481,10 +487,11 @@ public:
 	void RunObjectInteraction(CreatureInstance *target);
 
 	void SendUpdatedLoot(void);
+
 	float GetDropRateMultiplier(CreatureDefinition *cdef);
 
 	void PlayerLoot(int level, std::vector<DailyProfile> profiles);
-	void CreateLoot(int finderLevel);
+	void CreateLoot(int finderLevel, int partySize);
 	void AddLootableID(int newLootableID);
 
 	void ApplyRawDamage(int amount);
@@ -581,6 +588,7 @@ public:
 	void AddCreaturePointer(CREATURE_SEARCH& output, CreatureInstance* ptr, int attacked);
 	void ResolveAttackers(CREATURE_SEARCH& results);
 	int GetHighestLevel(CREATURE_SEARCH& creatureList);
+	int GetHighestPartySize(CREATURE_SEARCH& creatureList);
 	void _OnModChanged(void);
 	void _UpdateHealthMod(void);
 	void UpdateAggroPlayers(short state);

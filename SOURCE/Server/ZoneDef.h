@@ -82,6 +82,7 @@ public:
 	std::string mShardName;        //Prefix of the shard name.
 	std::string mGroveName;        //For groves, the special grove name that is provided when creating an account, used to help trace a grove back to its owner.
 	std::string mWarpName;         //Internal name used for on-demand warping.
+	std::string mTimeOfDay;		   //Start time of day (for when using TOD, but not cycling)
 	int DefX;                 //Default X coordinate when entering the region.
 	int DefY;                 //Default Y coordinate when entering the region.
 	int DefZ;                 //Default Z coordinate when entering the region.
@@ -141,8 +142,6 @@ public:
 	bool HasPlayerFilterID(int CreatureDefID);
 	bool HasEditPermission(int accountID, int characterDefID, const char *characterName, float x, float z);
 	void UpdateGrovePermission(STRINGLIST &params);
-
-	const DropRateProfile& GetDropRateProfile(void);
 
 	void ChangeDefaultLocation(int newX, int newY, int newZ);
 	void ChangeShardName(const char *newName);

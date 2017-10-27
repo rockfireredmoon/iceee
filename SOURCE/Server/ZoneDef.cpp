@@ -220,6 +220,7 @@ void ZoneDefInfo :: Clear(void)
 	mGuildHall = false;
 	mArena = false;
 	mAudit = false;
+	mTimeOfDay = "";
 	mEnvironmentCycle = false;
 
 	mPlayerFilterType = FILTER_PLAYER_NONE;
@@ -244,6 +245,7 @@ void ZoneDefInfo :: CopyFrom(const ZoneDefInfo& other)
 	mEnvironmentType = other.mEnvironmentType;
 	mMapName = other.mMapName;
 	mRegions = other.mRegions;
+	mTimeOfDay = other.mTimeOfDay;
 
 	mShardName = other.mShardName;
 	mGroveName = other.mGroveName;
@@ -397,6 +399,7 @@ void ZoneDefInfo :: SaveToStream(FILE *output)
 	Util::WriteIntegerIfNot(output, "Mode", mPageSize, PVP::GameMode::PVE_ONLY);
 	Util::WriteString(output, "ShardName", mShardName);
 	Util::WriteString(output, "GroveName", mGroveName);
+	Util::WriteString(output, "TimeOfDay", mTimeOfDay);
 	Util::WriteString(output, "WarpName", mWarpName);
 	Util::WriteString(output, "DropRateProfile", mDropRateProfile);
 
@@ -533,11 +536,6 @@ void ZoneDefInfo :: UpdateGrovePermission(STRINGLIST &params)
 			PendingChanges++;
 		}
 	}
-}
-
-const DropRateProfile& ZoneDefInfo::GetDropRateProfile(void)
-{
-	return g_DropRateProfileManager.GetProfileByName(mDropRateProfile);
 }
 
 void ZoneDefInfo :: ChangeDefaultLocation(int newX, int newY, int newZ)
@@ -719,6 +717,8 @@ int ZoneDefManager :: LoadFile(const char *fileName)
 					newItem.mTerrainConfig = lfr.BlockToStringC(1, 0);
 				else if(strcmp(lfr.SecBuffer, "ENVIRONMENTTYPE") == 0)
 					newItem.mEnvironmentType = lfr.BlockToStringC(1, 0);
+				else if(strcmp(lfr.SecBuffer, "TIMEOFDAY") == 0)
+					newItem.mTimeOfDay = lfr.BlockToStringC(1, 0);
 				else if(strcmp(lfr.SecBuffer, "MAPNAME") == 0)
 					newItem.mMapName = lfr.BlockToStringC(1, 0);
 				else if(strcmp(lfr.SecBuffer, "REGIONS") == 0)
@@ -1019,6 +1019,7 @@ int ZoneDefManager :: CreateGrove(int accountID, const char *grovename)
 	newZone.mName = "Grove";
 	newZone.mTerrainConfig = "Terrain-Blend#Terrain-Blend.cfg";
 	newZone.mEnvironmentType = "CloudyDay";
+	newZone.mTimeOfDay = "";
 
 	newZone.mPageSize = DEFAULT_GROVE_PAGE_SIZE;
 
@@ -1650,11 +1651,9 @@ int PrepExt_SendEnvironmentUpdateMsg(char *buffer, ActiveInstance *instance, con
 	wpos += PutShort(&buffer[wpos], zoneDef->mPageSize);
 	wpos += PutStringUTF(&buffer[wpos], zoneDef->mTerrainConfig.c_str());
 	if(instance == NULL) {
-		g_Log.AddMessageFormat("REMOVEME SendEnvironmentUpdateMsg %s : %s", zoneIDString, zoneDef->GetTileEnvironment(x, z).c_str());
 		wpos += PutStringUTF(&buffer[wpos], zoneDef->GetTileEnvironment(x, z).c_str());
 	}
 	else {
-		g_Log.AddMessageFormat("REMOVEME SendEnvironmentUpdateMsg %s : %s", zoneIDString, instance->GetEnvironment(x, z).c_str());
 		wpos += PutStringUTF(&buffer[wpos], instance->GetEnvironment(x, z).c_str());
 	}
 	wpos += PutStringUTF(&buffer[wpos], zoneDef->mMapName.c_str());

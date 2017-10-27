@@ -1921,7 +1921,7 @@ void SimulatorThread :: SetPersona(int personaIndex)
 
 	//The zone change updates the map, but need to resend again otherwise the
 	//terrain won't load when you first log in.
-	SendSetMap();
+//	SendSetMap();
 	UpdateSocialEntry(true, false);
 	UpdateSocialEntry(true, true);
 	BroadcastShardChanged();
@@ -2345,15 +2345,15 @@ void SimulatorThread :: CheckMapUpdate(bool force)
 			SendInfoMessage(pld.zoneDef->mShardName.c_str(), INFOMSG_SHARD);
 		}
 
-		// EM - Added this for tile specific environments, the message always gets sent,
-		// hopefully the client will ignore it if the environment is already correct
-		if(creatureInst != NULL) {
-			std::string tEnv = creatureInst->actInst->GetEnvironment(creatureInst->CurrentX, creatureInst->CurrentZ);
-			if(strcmp(tEnv.c_str(), pld.CurrentEnv) != 0) {
-				g_Log.AddMessageFormat("Sending environment change to %s", tEnv.c_str());
-				SendSetMap();
-			}
-		}
+//		// EM - Added this for tile specific environments, the message always gets sent,
+//		// hopefully the client will ignore it if the environment is already correct
+//		if(creatureInst != NULL) {
+//			std::string tEnv = creatureInst->actInst->GetEnvironment(creatureInst->CurrentX, creatureInst->CurrentZ);
+//			if(strcmp(tEnv.c_str(), pld.CurrentEnv) != 0) {
+//				g_Log.AddMessageFormat("Sending environment change to %s", tEnv.c_str());
+//				SendSetMap();
+//			}
+//		}
 	}
 }
 
@@ -3092,19 +3092,19 @@ void SimulatorThread :: AddMessage(long param1, long param2, int message)
 
 void SimulatorThread :: SendSetMap(void)
 {
-	if(creatureInst == NULL)
-	{
-		LogMessageL(MSG_ERROR, "[ERROR] SendSetMap() creature instance is NULL");
-		return;
-	}
-	if(creatureInst->actInst == NULL)
-	{
-		LogMessageL(MSG_ERROR, "[ERROR] SendSetMap() creature active instance is NULL");
-		return;
-	}
-
-	strcpy(pld.CurrentEnv, creatureInst->actInst->GetEnvironment(creatureInst->CurrentX, creatureInst->CurrentZ).c_str());
-	AttemptSend(SendBuf, PrepExt_SendEnvironmentUpdateMsg(SendBuf, creatureInst->actInst, pld.CurrentZone, pld.zoneDef, creatureInst->CurrentX, creatureInst->CurrentZ, 1));
+//	if(creatureInst == NULL)
+//	{
+//		LogMessageL(MSG_ERROR, "[ERROR] SendSetMap() creature instance is NULL");
+//		return;
+//	}
+//	if(creatureInst->actInst == NULL)
+//	{
+//		LogMessageL(MSG_ERROR, "[ERROR] SendSetMap() creature active instance is NULL");
+//		return;
+//	}
+//
+//	strcpy(pld.CurrentEnv, creatureInst->actInst->GetEnvironment(creatureInst->CurrentX, creatureInst->CurrentZ).c_str());
+//	AttemptSend(SendBuf, PrepExt_SendEnvironmentUpdateMsg(SendBuf, creatureInst->actInst, pld.CurrentZone, pld.zoneDef, creatureInst->CurrentX, creatureInst->CurrentZ, 1));
 }
 
 int SimulatorThread :: handle_form_submit(void)
@@ -3339,12 +3339,12 @@ void SimulatorThread :: handle_query_client_loading(void)
 
 	if(LoadStage == LOADSTAGE_LOADED)
 	{
-		if(creatureInst == NULL) {
-			WritePos += PrepExt_SendEnvironmentUpdateMsg(&SendBuf[WritePos], NULL, pld.zoneDef->mName.c_str(), pld.zoneDef, -1, -1, 0);
-		}
-		else {
-			WritePos += PrepExt_SendEnvironmentUpdateMsg(&SendBuf[WritePos], creatureInst->actInst, pld.zoneDef->mName.c_str(), pld.zoneDef, creatureInst->CurrentX, creatureInst->CurrentZ, 0);
-		}
+//		if(creatureInst == NULL) {
+//			WritePos += PrepExt_SendEnvironmentUpdateMsg(&SendBuf[WritePos], NULL, pld.zoneDef->mName.c_str(), pld.zoneDef, -1, -1, 0);
+//		}
+//		else {
+//			WritePos += PrepExt_SendEnvironmentUpdateMsg(&SendBuf[WritePos], creatureInst->actInst, pld.zoneDef->mName.c_str(), pld.zoneDef, creatureInst->CurrentX, creatureInst->CurrentZ, 0);
+//		}
 		LoadStage = LOADSTAGE_GAMEPLAY;
 
 		if(pld.charPtr->PrivateChannelName.size() > 0)
@@ -6356,25 +6356,18 @@ void SimulatorThread :: handle_query_creature_isusable(void)
 			if(status[0] == 'N') {
 				CreatureDefinition *cdef = CreatureDef.GetPointerByCDef(target->CreatureDefID);
 				if(cdef != NULL && (cdef->DefHints & CDEF_HINT_ITEM_GIVER)) {
-					STRINGLIST args;
-					STRINGLIST items;
-					Util::Split(cdef->ExtraData.c_str(), ",", args);
-					std::vector<string>::iterator it;
-					for(it = args.begin(); it != args.end(); ++it) {
-						items.clear();
-						Util::Split((*it).c_str(), "=", items);
-						if(items[0].compare("item") == 0) {
-							/* For now we only allow use if the player doesn't already have
-							 * the item. There could be other uses for this though. I'll
-							 * add logic as and when it's needed
-							 */
-							if(creatureInst->charPtr->inventory.GetItemPtrByID(Util::GetInteger(items[1])) == NULL) {
-								if(cdef->DefHints & CDEF_HINT_USABLE_SPARKLY)
-									status = "Q";
-								else
-									status = "Y";
-								break;
-							}
+					for(std::vector<int>::iterator it = cdef->Items.begin(); it != cdef->Items.end(); it++) {
+						/* For now we only allow use if the player doesn't already have
+						 * the item. There could be other uses for this though. I'll
+						 * add logic as and when it's needed
+						 */
+						int id = (*it);
+						if(creatureInst->charPtr->inventory.GetItemPtrByID(id) == NULL) {
+							if(cdef->DefHints & CDEF_HINT_USABLE_SPARKLY)
+								status = "Q";
+							else
+								status = "Y";
+							break;
 						}
 					}
 				}
@@ -7285,8 +7278,6 @@ int SimulatorThread :: UseItem(unsigned int CCSID)
 		SendInfoMessage("Your level is too low.", INFOMSG_ERROR);
 		return -1;
 	}
-
-	g_Log.AddMessageFormat("REMOVEME itemdef %d", itemDef->mID);
 
 	// The AddSidekick() function has its own thread guard, so we don't
 	// need one here.
@@ -8552,38 +8543,27 @@ int SimulatorThread :: handle_query_creature_use(void)
 
 		/* Is the object an ITEM_GIVER? (Item ids given are in Extra Data) */
 		if(cdef != NULL && (cdef->DefHints & CDEF_HINT_ITEM_GIVER) != 0) {
-			/* For now only allow use if the player doesn't have any of the items pointed to by
-			 * the creatures ExtraData. In this case, pick the first item they don't have and add it their
-			 * inventory
-			 */
-			STRINGLIST args;
-			STRINGLIST items;
-			Util::Split(cdef->ExtraData.c_str(), ",", args);
-			std::vector<string>::iterator it;
-			for(it = args.begin(); it != args.end(); ++it) {
-				items.clear();
-				Util::Split((*it).c_str(), "=", items);
-				if(items[0].compare("item") == 0) {
-					/* For now we only allow use if the player doesn't already have
-					 * the item. There could be other uses for this though. I'll
-					 * add logic as and when it's needed
-					 */
-					int id = Util::GetInteger(items[1]);
-					if(creatureInst->charPtr->inventory.GetItemPtrByID(id) == NULL) {
-						ItemDef *item = g_ItemManager.GetSafePointerByID(id);
-						if(item->mID == 0) {
-							Util::SafeFormat(Aux1, sizeof(Aux1), "Item with ID [%d] not found. Incorrect Creature Definition for an ITEM_GIVER.", id);
-							error = Aux1;
-						}
-						else {
-							creatureInst->SelectTarget(target);
-							Util::SafeFormat(Aux1, sizeof(Aux1), "Taking %s", item->mDisplayName.c_str());
-							AttemptSend(GSendBuf, creatureInst->QuestInteractObject(GSendBuf, Aux1, 5000, false));
-							ok = true;
-						}
 
-						break;
+			for(std::vector<int>::iterator it = cdef->Items.begin() ; it != cdef->Items.end(); it++) {
+				/* For now we only allow use if the player doesn't already have
+				 * the item. There could be other uses for this though. I'll
+				 * add logic as and when it's needed
+				 */
+				int id = (*it);
+				if(creatureInst->charPtr->inventory.GetItemPtrByID(id) == NULL) {
+					ItemDef *item = g_ItemManager.GetSafePointerByID(id);
+					if(item->mID == 0) {
+						Util::SafeFormat(Aux1, sizeof(Aux1), "Item with ID [%d] not found. Incorrect Creature Definition for an ITEM_GIVER.", id);
+						error = Aux1;
 					}
+					else {
+						creatureInst->SelectTarget(target);
+						Util::SafeFormat(Aux1, sizeof(Aux1), "Taking %s", item->mDisplayName.c_str());
+						AttemptSend(GSendBuf, creatureInst->QuestInteractObject(GSendBuf, Aux1, 5000, false));
+						ok = true;
+					}
+
+					break;
 				}
 			}
 		}
@@ -15042,9 +15022,9 @@ int SimulatorThread :: handle_query_instance(void)
 			SendInfoMessage(Aux1, INFOMSG_INFO);
 		}
 
-		if(CheckPermissionSimple(Perm_Account, Permission_Debug) == true && inst->dropRateProfile != NULL)
+		if(CheckPermissionSimple(Perm_Account, Permission_Debug) == true && inst->mZoneDefPtr->mDropRateProfile.length() > 0)
 		{
-			Util::SafeFormat(Aux1, sizeof(Aux1), "Drop rate profile: %s", inst->dropRateProfile->mName.c_str());
+			Util::SafeFormat(Aux1, sizeof(Aux1), "Drop rate profile: %s", inst->mZoneDefPtr->mDropRateProfile.c_str());
 			SendInfoMessage(Aux1, INFOMSG_INFO);
 		}
 	}

@@ -29,7 +29,8 @@ Fireworks	2	1	0,requireid,20522,15|1,requireid,21429,1	Giveid,40067,5	;15 Infuse
 GateScrollStonehenge	3	1	0,requireid,20526,3|1,requireid,20943,6|2,requireid,21429,1	Giveid,40059,1	;3 Portal Stone + 6 Polished Stone + 1 Blank Scroll = 1 Gate Scroll: Stonehenge [BOUND]
 GateScrollHadriansWall	3	1	0,requireid,20526,3|1,requireid,20946,6|2,requireid,21429,1	Giveid,40060,1	;3 Portal Stone + 6 Glowtop Mushroom + 1 Blank Scroll = 1 Gate Scroll: Hadrian's Wall [BOUND]
 GateScrollNewBadari	3	1	0,requireid,20526,3|1,requireid,20953,6|2,requireid,21429,1	Giveid,40061,1	;3 Portal Stone + 6 Glow Stone + 1 Blank Scroll = 1 Gate Scroll: New Badari [BOUND]
-GateScrollGreatForest	3	1	0,requireid,20526,3|1,requireid,20958,6|2,requireid,21429,1	Giveid,40062,1	;3 Portal Stone + 6 Mystic Ore + Blank Scroll = 1 Gate Scroll: Great Forest [BOUND]
+GateScrollGreatForest	3	1	0,requireid,20526,3|1,requireid,20958,6|2,requireid,21429,1	Giveid,40063,1	;3 Portal Stone + 6 Mystic Ore + Blank Scroll = 1 Gate Scroll: Great Forest [BOUND]
+GateScrollSwineland	3	1	0,requireid,20526,4|1,requireid,20957,6|2,requireid,21429,1	Giveid,40062,1	;4 Portal Stone + 6 Royal Cloth + Blank Scroll = 1 Gate Scroll: Swineland [BOUND]
 GreenRingToEssenceOfMagic	2	1	0,quality,2|0,cmp,equiptype,=,17|1,requireid,20525,3	Giveid,21430,1	;1 Green Ring + 3 Black Pearl = 1 Essence of Magic
 GreenAmuletToEssenceOfMagic	2	1	0,quality,2|0,cmp,equiptype,=,19|1,requireid,20525,3	Giveid,21430,1	;1 Green Amulet + 3 Black Pearl = 1 Essence of Magic
 BlueRingToEssenceOfMagic	2	1	0,quality,3|0,cmp,equiptype,=,17|1,requireid,20525,3	Giveid,21430,2	;1 Blue Ring + 3 Black Pearl = 2 Essence of Magic

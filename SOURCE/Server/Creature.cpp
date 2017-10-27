@@ -27,7 +27,6 @@
 #include "Combat.h"
 #include "InstanceScale.h"
 #include "VirtualItem.h"
-#include "ConfigString.h"
 #include "Guilds.h"
 #include "Stats.h"
 #include "Util.h"
@@ -346,7 +345,10 @@ void CreatureDefinition :: Clear(void)
 	CreatureDefID = 0;
 	DefHints = 0;
 	DefaultEffects.clear();
-	ExtraData.clear();
+	DropRateMult = 1.0;
+	DropRateProfile = "";
+	NamedMob = false;
+	Items.clear();
 }
 
 void CreatureDefinition :: CopyFrom(CreatureDefinition& source)
@@ -355,31 +357,15 @@ void CreatureDefinition :: CopyFrom(CreatureDefinition& source)
 	CreatureDefID = source.CreatureDefID;
 	DefHints = source.DefHints;
 	DefaultEffects.assign(source.DefaultEffects.begin(), source.DefaultEffects.end());
-	ExtraData = source.ExtraData;
+	DropRateMult = source.DropRateMult;
+	DropRateProfile = source.DropRateProfile;
+	NamedMob = source.NamedMob;
+	Items = source.Items;
 }
 
 bool CreatureDefinition :: operator < (const CreatureDefinition& other) const
 {
 	return (CreatureDefID < other.CreatureDefID);
-}
-
-// Determine if creature configuration has identified this to be a unique, "named" mob.
-bool CreatureDefinition :: IsNamedMob(void) const
-{
-	//No need to break apart the string, we can just search for the raw text.
-	if(ExtraData.find("namedmob") != std::string::npos)
-		return true;
-	return false;
-}
-
-// Returns the arbitrary multiplier to bonus drop rates (virtual items only).
-float CreatureDefinition :: GetDropRateMult(void) const
-{
-	if(ExtraData.size() == 0)
-		return 0.0F;
-
-	ConfigString data(ExtraData);
-	return data.GetValueFloat("dropratemult");
 }
 
 void CreatureDefinition :: SaveToStream(FILE *output)
@@ -388,8 +374,29 @@ void CreatureDefinition :: SaveToStream(FILE *output)
 	fprintf(output, "ID=%d\r\n", CreatureDefID);
 	if(DefHints > 0)
 		fprintf(output, "defHints=%d\r\n", DefHints);
-	if(ExtraData.length() > 0)
-		fprintf(output, "ExtraData=%s\r\n", ExtraData.c_str());
+
+	ConfigString ExtraData;
+	if(NamedMob)
+		ExtraData.SetKeyValue("namedmob", "");
+	if(DropRateProfile.length() > 0)
+		ExtraData.SetKeyValue("droprateprofile", DropRateProfile.c_str());
+	if(DropRateMult != 1) {
+		char buf[20];
+		Util::SafeFormat(buf, sizeof(buf), "%f", DropRateMult);
+		ExtraData.SetKeyValue("dropratemulti", buf);
+	}
+	for(std::vector<int>::iterator it = Items.begin() ; it != Items.end(); it++) {
+		STRINGLIST str;
+		str.push_back("item");
+		str.push_back("");
+		ExtraData.mData.push_back(str);
+	}
+
+	if(!ExtraData.IsEmpty()) {
+		std::string str;
+		ExtraData.GenerateString(str);
+		fprintf(output, "ExtraData=%s\r\n", str.c_str());
+	}
 	if(DefaultEffects.size() > 0) {
 		fprintf(output, "Effects=");
 		for(std::vector<int>::iterator it = DefaultEffects.begin(); it != DefaultEffects.end(); it++) {
@@ -2955,11 +2962,14 @@ void CreatureInstance :: ProcessDeath(void)
 
 		//Get highest level from the hate profile.
 		int highestLev = 0;
+		int highestPartySize = 1;
 		if(hate != NULL)
 			highestLev = hate->GetHighestLevel();
 
-		if(attackerList.size() > 0)
+		if(attackerList.size() > 0) {
 			highestLev = GetHighestLevel(attackerList);
+			highestPartySize = GetHighestPartySize(attackerList);
+		}
 
 
 		/* Players can only be looted if they are in PVP mode, the attacker is in PVP
@@ -3053,7 +3063,7 @@ void CreatureInstance :: ProcessDeath(void)
 		}
 		else {
 			// Ordinary creature
-			CreateLoot(highestLev);
+			CreateLoot(highestLev, highestPartySize);
 		}
 
 		// Calculate how many credits should be awarded if the creature 'drops' them.
@@ -3067,7 +3077,7 @@ void CreatureInstance :: ProcessDeath(void)
 			CreatureDefinition *cdef = CreatureDef.GetPointerByCDef(CreatureDefID);
 			if(cdef != NULL)
 			{
-				if(cdef->IsNamedMob()) {
+				if(cdef->NamedMob) {
 					creditDrops = g_Config.NamedMobCreditDrops;
 				}
 			}
@@ -3169,6 +3179,39 @@ void CreatureInstance :: AddCreaturePointer(CREATURE_SEARCH& output, CreatureIns
 	newItem.ptr = ptr;
 	newItem.attacked = attacked;
 	output.push_back(newItem);
+}
+
+int CreatureInstance :: GetHighestPartySize(CREATURE_SEARCH& creatureList)
+{
+	int highest = 1;
+	int CDefID;
+	int instance = actInst->mInstanceID;
+	CreatureInstance *lookup;
+	for(size_t i = 0; i < creatureList.size(); i++)
+		if(creatureList[i].ptr->PartyID != 0) {
+			ActiveParty *party = g_PartyManager.GetPartyByID(creatureList[i].ptr->PartyID);
+			if(party != NULL) {
+				int members = 0;
+				for(size_t pm = 0; pm < party->mMemberList.size(); pm++)
+				{
+					CDefID = party->mMemberList[pm].mCreatureDefID;
+					lookup = actInst->GetPlayerByCDefID(CDefID);
+					if(lookup == NULL)
+						continue;
+					if(lookup->actInst->mInstanceID != instance)
+						continue;
+
+					if(actInst->GetPlaneRange(this, lookup, PARTY_SHARE_DISTANCE) >= PARTY_SHARE_DISTANCE)
+						continue;
+
+					members++;
+				}
+
+				if(members > highest)
+					highest = members;
+			}
+		}
+	return highest;
 }
 
 int CreatureInstance :: GetHighestLevel(CREATURE_SEARCH& creatureList)
@@ -4681,7 +4724,7 @@ void CreatureInstance :: RunDialog(void)
 		 */
 		if(CurrentTarget.targ == NULL && (timer_dialog == 0 || g_ServerTime > timer_dialog))
 		{
-			if(strcmp(spawnGen->spawnPoint->extraData->dialog, "") != 0) {
+			if(spawnGen != NULL && spawnGen->spawnPoint != NULL && spawnGen->spawnPoint->extraData != NULL && spawnGen->spawnPoint->extraData != NULL && strcmp( spawnGen->spawnPoint->extraData->dialog, "") != 0) {
 				/* Only run dialog when there is 1) a new timer or timer triggers 2) no target */
 				NPCDialogItem *diag = g_NPCDialogManager.GetItem(spawnGen->spawnPoint->extraData->dialog);
 				if(diag != NULL && diag->mParagraphs.size() > 0) {
@@ -6952,55 +6995,49 @@ void CreatureInstance :: CheckQuestInteract(CreatureInstance *target)
 		 * the creatures ExtraData. In this case, pick the first item they don't have and add it their
 		 * inventory
 		 */
-		STRINGLIST args;
-		STRINGLIST items;
-		Util::Split(cdef->ExtraData.c_str(), ",", args);
-		std::vector<string>::iterator it;
-		for(it = args.begin(); it != args.end(); ++it) {
-			items.clear();
-			Util::Split((*it).c_str(), "=", items);
-			if(items[0].compare("item") == 0) {
-				/* For now we only allow use if the player doesn't already have
-				 * the item. There could be other uses for this though. I'll
-				 * add logic as and when it's needed
-				 */
-				int id = Util::GetInteger(items[1]);
-				if(charPtr->inventory.GetItemPtrByID(id) == NULL) {
 
-					ItemDef *item = g_ItemManager.GetSafePointerByID(id);
-					if(item->mID == 0) {
+		for(std::vector<int>::iterator it = cdef->Items.begin(); it != cdef->Items.end(); ++it) {
+			/* For now we only allow use if the player doesn't already have
+			 * the item. There could be other uses for this though. I'll
+			 * add logic as and when it's needed
+			 */
+			int id = (*it);
+			if(charPtr->inventory.GetItemPtrByID(id) == NULL) {
+
+				ItemDef *item = g_ItemManager.GetSafePointerByID(id);
+				if(item->mID == 0) {
+					return;
+				}
+				else {
+					int slot = charPtr->inventory.GetFreeSlot(INV_CONTAINER);
+					char buf[512];
+					char buf2[256];
+					if(slot == -1) {
+						Util::SafeFormat(buf2, sizeof(buf2), "Cannot take book, your inventory is full.", item->mDisplayName.c_str());
+						int wpos = PrepExt_SendInfoMessage(buf, buf2, INFOMSG_INFO);
+						simulatorPtr->AttemptSend(buf, wpos);
 						return;
 					}
 					else {
-						int slot = charPtr->inventory.GetFreeSlot(INV_CONTAINER);
-						char buf[512];
-						char buf2[256];
-						if(slot == -1) {
-							Util::SafeFormat(buf2, sizeof(buf2), "Cannot take book, your inventory is full.", item->mDisplayName.c_str());
-							int wpos = PrepExt_SendInfoMessage(buf, buf2, INFOMSG_INFO);
+						InventorySlot *sendSlot = charPtr->inventory.AddItem_Ex(INV_CONTAINER, item->mID, 1);
+						if(sendSlot != NULL) {
+							simulatorPtr->ActivateActionAbilities(sendSlot);
+							int wpos = AddItemUpdate(buf, buf2, sendSlot);
+							Util::SafeFormat(buf2, sizeof(buf2), "You now have '%s' in your inventory.", item->mDisplayName.c_str());
+							wpos += PrepExt_SendInfoMessage(&buf[wpos], buf2, INFOMSG_INFO);
 							simulatorPtr->AttemptSend(buf, wpos);
-							return;
-						}
-						else {
-							InventorySlot *sendSlot = charPtr->inventory.AddItem_Ex(INV_CONTAINER, item->mID, 1);
-							if(sendSlot != NULL) {
-								simulatorPtr->ActivateActionAbilities(sendSlot);
-								int wpos = AddItemUpdate(buf, buf2, sendSlot);
-								Util::SafeFormat(buf2, sizeof(buf2), "You now have '%s' in your inventory.", item->mDisplayName.c_str());
-								wpos += PrepExt_SendInfoMessage(&buf[wpos], buf2, INFOMSG_INFO);
-								simulatorPtr->AttemptSend(buf, wpos);
-								target->_RemoveStatusList(StatusEffects::IS_USABLE);
-								static const short statList[3] = {STAT::APPEARANCE_OVERRIDE, STAT::LOOTABLE_PLAYER_IDS, STAT::LOOT_SEEABLE_PLAYER_IDS};
-								actInst->LSendToLocalSimulator(GSendBuf, PrepExt_SendSpecificStats(GSendBuf, target, &statList[0], 3), target->CurrentX, target->CurrentZ);
+							target->_RemoveStatusList(StatusEffects::IS_USABLE);
+							static const short statList[3] = {STAT::APPEARANCE_OVERRIDE, STAT::LOOTABLE_PLAYER_IDS, STAT::LOOT_SEEABLE_PLAYER_IDS};
+							actInst->LSendToLocalSimulator(GSendBuf, PrepExt_SendSpecificStats(GSendBuf, target, &statList[0], 3), target->CurrentX, target->CurrentZ);
 
-							}
 						}
 					}
-
-					break;
 				}
+
+				break;
 			}
 		}
+
 	}
 
 	int wpos = charPtr->questJournal.CreatureUse_Confirmed(CreatureID, GSendBuf, CreatureDefID);
@@ -7128,13 +7165,13 @@ float CreatureInstance :: GetDropRateMultiplier(CreatureDefinition *cdef)
 	float dropRateBonus = 1.0F;
 	if(cdef != NULL)
 	{
-		if(cdef->IsNamedMob() == true)
+		if(cdef->NamedMob)
 		{
 			if(g_Config.NamedMobDropMultiplier > 0.0F)
 				dropRateBonus *= g_Config.NamedMobDropMultiplier;
 		}
 
-		float extra = cdef->GetDropRateMult();
+		float extra = cdef->DropRateMult;
 		if(Util::FloatEquivalent(extra, 0.0F) == false)
 			dropRateBonus *= extra;
 	}
@@ -7222,7 +7259,7 @@ void CreatureInstance :: PlayerLoot(int level, std::vector<DailyProfile> profile
 				}
 			}
 
-			params.dropRateProfile = &g_DropRateProfileManager.GetProfileByName(profile.virtualItemReward.dropRateProfileName);
+			params.dropRateProfile = g_DropRateProfileManager.GetProfileByName(profile.virtualItemReward.dropRateProfileName);
 			params.ClampLimits();
 
 			int itemID = g_ItemManager.RollVirtualItem(params);
@@ -7270,7 +7307,7 @@ void CreatureInstance :: PlayerLoot(int level, std::vector<DailyProfile> profile
 		activeLootID = actInst->lootsys.AttachLootToCreature(loot, CreatureID);
 }
 
-void  CreatureInstance :: CreateLoot(int finderLevel)
+void  CreatureInstance :: CreateLoot(int finderLevel, int partySize)
 {
 	//Called whenever this creature dies.  Generates and associates a list of loot to this creature,
 	//if applicable.
@@ -7312,10 +7349,50 @@ void  CreatureInstance :: CreateLoot(int finderLevel)
 
 	params.level = css.level;
 	params.rarity = css.rarity;
-	params.namedMob = cdef->IsNamedMob();
-	params.dropRateProfile = actInst->GetDropRateProfile();
+	params.namedMob = cdef->NamedMob;
+
+	DropRateProfile dropRateProfile;
+	if(cdef->DropRateProfile.length() == 0 && actInst != NULL)
+		dropRateProfile.CopyFrom(g_DropRateProfileManager.GetProfileByName(actInst->mZoneDefPtr->mDropRateProfile));
+	else
+		dropRateProfile.CopyFrom(g_DropRateProfileManager.GetProfileByName(cdef->DropRateProfile));
+
+	params.dropRateProfile = dropRateProfile;
 	params.ClampLimits();
-	loot.AddItem(g_ItemManager.RollVirtualItem(params));
+
+
+	/* Decide how many random items to actually drop. This is determined by the
+	 * drop profile
+	 */
+	int amount = 0;
+	int amountMultiply = 1;
+	if(dropRateProfile.GetAmountChance(0) == -1) {
+		amountMultiply = partySize;
+	}
+
+	/* Work backwards from 6 items to 1, testing if there is a chance to get that
+	 * many items
+	 */
+	for(int i = 6 ; i >= 1 ; i--) {
+		int baseRoll = randint_32bit(1, VirtualItemModSystem::DROP_SHARES);
+		int compare = dropRateProfile.Amount.QData[i];
+		if(baseRoll <= compare) {
+			amount = i;
+			break;
+		}
+	}
+
+	/* Didn't get any amount, use the default? */
+	if(amount == 0 && dropRateProfile.GetAmountChance(0) > 0) {
+		/* Default amount is > 0, so use this as a default as none of the other levels have values */
+		amount = dropRateProfile.GetAmountChance(0);
+	}
+
+	amount *= amountMultiply;
+
+	for(int i = 0 ; i < amount; i++) {
+		loot.AddItem(g_ItemManager.RollVirtualItem(params));
+	}
 
 	//New drop system.  Uses the drop tables found in the Loot subfolder.
 	//Roll the drops then merge them into the single container that will be assigned
@@ -8360,7 +8437,18 @@ int CreatureDefManager :: LoadFile(const char *filename)
 			}
 			else if(strcmp(lfr.SecBuffer, "ExtraData") == 0)
 			{
-				newItem.ExtraData = lfr.BlockToStringC(1, 0);
+				ConfigString str(lfr.BlockToStringC(1, 0));
+				newItem.NamedMob = str.HasKey("namedmob");
+				newItem.DropRateMult = str.GetValueFloatOrDefault("dropratemult", 1);
+				newItem.DropRateProfile = "";
+				str.GetValueString("droprateprofile", newItem.DropRateProfile);
+				for(MULTISTRING::iterator it = str.mData.begin(); it != str.mData.end(); it++) {
+					STRINGLIST sl = *it;
+					if(sl[0].compare("item") == 0) {
+						newItem.Items.push_back(Util::GetInteger(sl[1].c_str()));
+					}
+				}
+
 			}
 			else if(strcmp(lfr.SecBuffer, "Effects") == 0)
 			{

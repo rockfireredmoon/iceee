@@ -640,7 +640,6 @@ void ActiveInstance :: Clear(void)
 	spawnsys.Clear();
 
 	scaleProfile = NULL;
-	dropRateProfile = NULL;
 	mDropRateBonusMultiplier = 1.0F;
 	mKillCount = 0;
 
@@ -975,7 +974,8 @@ std::string ActiveInstance :: GetTimeOfDay() {
 	//current zone, if applicable.
 	if(mZoneDefPtr->mEnvironmentCycle == true)
 		return g_EnvironmentCycleManager.GetCurrentTimeOfDay();
-
+	else if(mZoneDefPtr->mTimeOfDay.length() > 0)
+		return mZoneDefPtr->mTimeOfDay;
 	return "Day";
 }
 
@@ -2379,7 +2379,6 @@ ActiveInstance * ActiveInstanceManager :: CreateInstance(int zoneID, PlayerInsta
 	newItem.mMode = zoneDef->mMode;
 	newItem.mZone = zoneDef->mID;
 	newItem.mZoneDefPtr = zoneDef;
-	newItem.dropRateProfile = &zoneDef->GetDropRateProfile();
 	newItem.mLastHealthUpdate = g_ServerTime;
 	
 	if(pd.in_scaleProfile != NULL && zoneDef->IsMobScalable() == true)
@@ -2398,8 +2397,6 @@ ActiveInstance * ActiveInstanceManager :: CreateInstance(int zoneID, PlayerInsta
 		newItem.scaleConfig.mPLayerLevel = playerLevel;
 		newItem.scaleConfig.mIsScaled = true;
 		newItem.scaleProfile = pd.in_scaleProfile;
-		if(newItem.scaleProfile->mDropRateProfileName.size() > 0)
-			newItem.dropRateProfile = &g_DropRateProfileManager.GetProfileByName(newItem.scaleProfile->mDropRateProfileName);
 	}
 	
 	cs.Enter("ActiveInstanceManager::CreateInstance");
@@ -3646,14 +3643,6 @@ void ActiveInstance :: ApplyCreatureScale(CreatureInstance *target)
 		return;
 
 	target->PerformLevelScale(scaleProfile, scaleConfig.mPLayerLevel);
-}
-
-const DropRateProfile* ActiveInstance :: GetDropRateProfile(void)
-{
-	if(dropRateProfile == NULL && mZoneDefPtr != NULL)
-		dropRateProfile = &mZoneDefPtr->GetDropRateProfile();
-
-	return dropRateProfile;
 }
 
 //This is a potential command call from an instance script.

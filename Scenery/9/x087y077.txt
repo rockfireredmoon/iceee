@@ -17,6 +17,22 @@ Scale=1,1,1
 spawnPackage=#F1355
 
 [ENTRY]
+ID=1154613
+Asset=Prop-Marker_Far
+Name=
+Pos=65880.5,616.931,57884.6
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
+ID=1154622
+Asset=Prop-Marker1#Prop-Marker_Far
+Name=
+Pos=65306.2,606.103,58448.4
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
 ID=151016697
 Asset=Warpig_Walls#Prop-Warpig_Tower
 Name=Untitled

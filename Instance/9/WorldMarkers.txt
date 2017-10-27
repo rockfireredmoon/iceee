@@ -29,9 +29,9 @@ Comment=[Comment here]
 Position=56354.0,684.0,57918.0
 
 [ENTRY]
-Name=Protectorate Compound
-Comment=Outside instance
-Position=63797.0,779.0,56573.0
+Name=Swineland Keystone Sanctuary
+Comment=
+Position=57007.0,902.0,60763.0
 
 [ENTRY]
 Name=Frost Peak Henge
@@ -142,4 +142,9 @@ Position=79278.0,1300.0,52845.0
 Name=Nook Town
 Comment=[Comment here]
 Position=63405.0,717.0,50014.0
+
+[ENTRY]
+Name=Tip Of Frost Peak
+Comment=Entrance to Lurkers
+Position=84532.0,1006.0,61277.0
 

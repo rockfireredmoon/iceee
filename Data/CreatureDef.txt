@@ -30996,30 +30996,28 @@ appearance=n4:{["sk"]={["hair"]="3F0800",["ear"]="A99184",["neck"]="555555",["cl
 
 [ENTRY]
 ID=1332
-ExtraData=namedmob=1
 strength=125
 dexterity=125
 constitution=107
 psyche=85
 spirit=85
-base_damage_melee=155
 damage_resist_melee=2194
 damage_resist_fire=2194
 damage_resist_frost=2194
 damage_resist_mystic=2194
 damage_resist_death=2194
-will_regen=1
-might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
+appearance=n4:{["sk"]={["accent1"]="6A0000",["skin"]="947D67",["cloth"]="000000",["eye"]="ED1C24",["accent2"]="FF0000",["mouth"]="DFA8AE",["teeth"]="A99D94"},["c"]="Horde-Vampire_Bloodletter",["sz"]="1.55"}
 level=47
 display_name=Vaj Cruentes
 profession=3
 creature_category=Unliving
 rarity=1
+base_damage_melee=155
+ExtraData=namedmob=
 ai_package=example
-appearance=n4:{["sk"]={["accent1"]="6A0000",["skin"]="947D67",["cloth"]="000000",["eye"]="ED1C24",["accent2"]="FF0000",["mouth"]="DFA8AE",["teeth"]="A99D94"},["c"]="Horde-Vampire_Bloodletter",["sz"]="1.55"}
 
 [ENTRY]
 ID=1333
@@ -31092,8 +31090,6 @@ damage_resist_fire=4000
 damage_resist_frost=4000
 damage_resist_mystic=4000
 damage_resist_death=4000
-will_regen=1
-might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
@@ -31104,6 +31100,7 @@ profession=4
 creature_category=Unliving
 rarity=2
 base_damage_melee=180
+ExtraData=namedmob=&droprateprofile=bloodkeep_vajs
 ai_package=custom_heathendel_deathdruid40
 total_size=1.2999999523162842
 
@@ -31425,31 +31422,28 @@ ai_package=example
 
 [ENTRY]
 ID=1354
-ExtraData=namedmob=1
 strength=125
 dexterity=107
 constitution=125
 psyche=85
 spirit=85
-base_damage_melee=155
 damage_resist_melee=2194
 damage_resist_fire=2194
 damage_resist_frost=2194
 damage_resist_mystic=2194
 damage_resist_death=2194
-will_regen=1
-might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
+appearance=n4:{["sk"]={["skin"]="2A2A2A",["armor"]="000000",["eye"]="ED1C24",["hair"]="C0C3E9",["mouth"]="3F0000",["trim"]="7F0000"},["c"]="Horde-Vampire_Fury",["sz"]="1.0216"}
 level=47
 display_name=Vaj Coltres
 profession=2
 creature_category=Unliving
 rarity=1
+base_damage_melee=155
+ExtraData=namedmob=
 ai_package=custom_heathendel_deathknight40
-appearance=n4:{["sk"]={["skin"]="2A2A2A",["armor"]="000000",["eye"]="ED1C24",["hair"]="C0C3E9",["mouth"]="3F0000",["trim"]="7F0000"},["c"]="Horde-Vampire_Fury",["sz"]="1.0216"}
-
 
 [ENTRY]
 ID=1355
@@ -31543,8 +31537,6 @@ damage_resist_fire=4000
 damage_resist_frost=4000
 damage_resist_mystic=4000
 damage_resist_death=4000
-will_regen=1
-might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
@@ -31555,6 +31547,7 @@ profession=2
 creature_category=Unliving
 rarity=2
 base_damage_melee=210
+ExtraData=namedmob=&droprateprofile=bloodkeep_vajs
 ai_package=custom_heathendel_deathknight40b
 total_size=1.2999999523162842
 
@@ -75682,6 +75675,7 @@ profession=3
 creature_category=Unliving
 rarity=2
 base_damage_melee=175
+ExtraData=namedmob=&droprateprofile=bloodkeep_vajs
 ai_package=custom_heathendel_deathmage40
 total_size=1.600000023841858
 
@@ -75708,5 +75702,6 @@ profession=1
 creature_category=Unliving
 rarity=2
 base_damage_melee=225
+ExtraData=namedmob=&droprateprofile=bloodkeep_vajs
 ai_package=custom_heathendel_deathknight40
 total_size=1.600000023841858

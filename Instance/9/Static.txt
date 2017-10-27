@@ -4,7 +4,7 @@
 3601=22150,228,83582,128   ; Keystone Sanctuary <Dustshore
 3602=34973,1247,87996,128  ; Keystone Sanctuary <Cracked Rock>
 3603=56843,269,72589,128   ; Keystone Sanctuary <Deadwood>
-
+3599=57010,902,60762,152   ; Keystone Sanctuary <Grunes Tal>
 
 
 ; HARVEST FEST NPCS - BREMEN

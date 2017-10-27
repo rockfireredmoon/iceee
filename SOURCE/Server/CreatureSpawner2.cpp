@@ -643,7 +643,7 @@ CreatureInstance * SpawnTile :: SpawnCreature(ActiveInstance *inst, ActiveSpawne
 	{
 		if(ptr->Faction == FACTION_PLAYERFRIENDLY || aggro == 0)
 			tryElite = false;
-		if(cdef->IsNamedMob() == true)
+		if(cdef->NamedMob)
 			tryElite = false;
 		if(inst->mZoneDefPtr->IsDungeon())
 			tryElite = false;

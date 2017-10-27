@@ -1341,6 +1341,15 @@ Message=Deadwood
 Cost=5300
 
 [ENTRY]
+Name=henge_sanct_grunes
+Type=henge
+ObjectID=3599
+WarpTo=50863,739,67641,9
+Facing=140
+Message=Grunes Tal
+Cost=6300
+
+[ENTRY]
 Name=grunes_to_wailingcrypt
 Type=warp
 ObjectID=7786
@@ -1386,13 +1395,13 @@ WarpTo=63798,780,56598,9
 Message=Exiting Protectorates' Compound
 
 [ENTRY]
-Name=henge_frostpeak
+Name=henge_swineland
 Type=henge
 ObjectID=7792
 WarpTo=71586,932,63326,9
 Facing=124
-Message=Frost Peak
-Cost=5547
+Message=Swineland
+Cost=7547
 
 [ENTRY]
 Name=folkirk_manor_upper_to_lower
