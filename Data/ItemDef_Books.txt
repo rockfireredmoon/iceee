@@ -1230,3 +1230,63 @@ mFlavorText=Double-click to open, or use /books
 mIvMax1=29
 mIvMax2=9
 mIvType1=11
+
+[ENTRY]
+mID=1500082
+mType=8
+mDisplayName=Stefan's Adventurer's Journal
+mIcon=Icon-32-Torn_Page.png|Icon-32-BG-Cyan.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=30
+mIvMax2=1
+mIvType1=11
+
+[ENTRY]
+mID=1500083
+mType=8
+mDisplayName=Stefan's Adventurer's Journal
+mIcon=Icon-32-Torn_Page.png|Icon-32-BG-Cyan.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=30
+mIvMax2=2
+mIvType1=11
+
+[ENTRY]
+mID=1500084
+mType=8
+mDisplayName=Stefan's Adventurer's Journal
+mIcon=Icon-32-Torn_Page.png|Icon-32-BG-Cyan.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=30
+mIvMax2=3
+mIvType1=11
+
+[ENTRY]
+mID=1500085
+mType=8
+mDisplayName=Stefan's Adventurer's Journal
+mIcon=Icon-32-Torn_Page.png|Icon-32-BG-Cyan.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=30
+mIvMax2=4
+mIvType1=11

@@ -939,3 +939,47 @@ profession=4
 creature_category=Inanimate
 ExtraData=item=1500081
 ai_package=nothing
+
+[ENTRY]
+defHints=6144
+ID=16083
+appearance=p1:{["a"]="Prop-Paper",["sz"]="1.0"}
+level=1
+display_name=Muddied Page
+profession=4
+creature_category=Inanimate
+ExtraData=item=1500082
+ai_package=nothing
+
+[ENTRY]
+defHints=6144
+ID=16084
+appearance=p1:{["a"]="Prop-Paper",["sz"]="1.0"}
+level=1
+display_name=Muddied Page
+profession=4
+creature_category=Inanimate
+ExtraData=item=1500083
+ai_package=nothing
+
+[ENTRY]
+defHints=6144
+ID=16085
+appearance=p1:{["a"]="Prop-Paper",["sz"]="1.0"}
+level=1
+display_name=Muddied Page
+profession=4
+creature_category=Inanimate
+ExtraData=item=1500084
+ai_package=nothing
+
+[ENTRY]
+defHints=6144
+ID=16086
+appearance=p1:{["a"]="Prop-Paper",["sz"]="1.0"}
+level=1
+display_name=Muddied Page
+profession=4
+creature_category=Inanimate
+ExtraData=item=1500085
+ai_package=nothing
