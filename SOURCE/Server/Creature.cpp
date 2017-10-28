@@ -1231,31 +1231,31 @@ void CreatureInstance :: CastSetback(void)
 	}
 }
 
-void CreatureInstance :: RegisterHostility(CreatureInstance *attacker, int hostility)
+bool CreatureInstance :: RegisterHostility(CreatureInstance *attacker, int hostility)
 {
 	if(attacker == NULL)
 	{
 		g_Log.AddMessageFormat("[CRITICAL] RegisterHostility attacker is null");
-		return;
+		return false;
 	}
 
 	if(hostility < 1)
-		return;
+		return false;
 
 	if(HasStatus(StatusEffects::DEAD) == true)
-		return;
+		return false;
 	if(attacker->HasStatus(StatusEffects::DEAD) == true)
-		return;
+		return false;
+
+	if(serverFlags & ServerFlags::Noncombatant)
+		return false;
 
 	Status(StatusEffects::IN_COMBAT, 5);
 	Status(StatusEffects::IN_COMBAT_STAND, 5);
 
 	//Everything below is for AI purposes and is not applicable to human players.
 	if(serverFlags & ServerFlags::IsPlayer)
-		return;
-
-	if(serverFlags & ServerFlags::Noncombatant)
-		return;
+		return false;
 
 	SetServerFlag(ServerFlags::LocalActive, true);
 
@@ -1282,7 +1282,7 @@ void CreatureInstance :: RegisterHostility(CreatureInstance *attacker, int hosti
 	if(serverFlags & ServerFlags::IsNPC)
 	{
 		if(spawnGen == NULL)
-			return;
+			return true;
 
 		int loyaltyRadius = spawnGen->GetLoyaltyRadius();
 		if(loyaltyRadius > 0)
@@ -1293,12 +1293,18 @@ void CreatureInstance :: RegisterHostility(CreatureInstance *attacker, int hosti
 			actInst->SendLoyaltyLinks(attacker, this, spawnGen->spawnPoint);
 		}
 	}
+
+	return true;
 }
 
 void CreatureInstance :: SetCombatStatus(void)
 {
 	if(HasStatus(StatusEffects::DEAD) == true)
 		return;
+
+	if(serverFlags & ServerFlags::Noncombatant)
+		return;
+
 	Status(StatusEffects::IN_COMBAT, 5);
 	Status(StatusEffects::IN_COMBAT_STAND, 5);
 	Untransform();
@@ -2328,16 +2334,17 @@ void CreatureInstance :: Taunt(CreatureInstance *attacker, int seconds)
 
 	//Note: register hostility first to instigate linked mobs.  As of implementing this, loyalty
 	//instigation will not be invoked if the creature already has a target.
-	RegisterHostility(attacker, 1);
+	if(RegisterHostility(attacker, 1)) {
 
-	SelectTarget(attacker);
+		SelectTarget(attacker);
 
-	HateProfile *hprof = GetHateProfile();
-	if(hprof == NULL)
-		return;
-	hprof->ExtendTauntRelease(seconds);
-	SetServerFlag(ServerFlags::HateInfoChanged, true);
-	SetServerFlag(ServerFlags::Taunted, true);
+		HateProfile *hprof = GetHateProfile();
+		if(hprof == NULL)
+			return;
+		hprof->ExtendTauntRelease(seconds);
+		SetServerFlag(ServerFlags::HateInfoChanged, true);
+		SetServerFlag(ServerFlags::Taunted, true);
+	}
 }
 
 void CreatureInstance :: Amp(unsigned char tier, unsigned char buffType, int abID, int abgID, int statID, float percent, int time)
@@ -3885,14 +3892,11 @@ bool CreatureInstance :: CanPVPTarget(CreatureInstance *target)
 	if(this == target)
 		return false;
 
-	if(target->HasStatus(StatusEffects::UNATTACKABLE)) {
-//		g_Log.AddMessageFormat("REMOVEME no pvp because unattackable");
+	if(target->HasStatus(StatusEffects::UNATTACKABLE))
 		return false;
-	}
-	if(target->HasStatus(StatusEffects::INVINCIBLE)) {
-//		g_Log.AddMessageFormat("REMOVEME no pvp because invincible");
+
+	if(target->HasStatus(StatusEffects::INVINCIBLE))
 		return false;
-	}
 
 	//Due to client limitations, both players need PVPABLE status or else one player may not
 	//initiate autoattacks against the other, because target selection is still considered
@@ -3922,23 +3926,14 @@ bool CreatureInstance :: CanPVPTarget(CreatureInstance *target)
 		//given PVP status among others instead of creating an environment where everyone can
 		//attack each other.
 
-//		g_Log.AddMessageFormat("REMOVEME zone mode is %d, team 1 is %d and team 2 is %d", actInst->mZoneDefPtr->mMode, css.pvp_team, target->css.pvp_team);
-
 		if(actInst->mZoneDefPtr->mMode == PVP::GameMode::SPECIAL_EVENT && css.pvp_team != target->css.pvp_team)
 			return true;
-
-
-//		g_Log.AddMessageFormat("REMOVEME no pvp not special event");
 
 		//If we get here, we are not in an area, and not in a team, check the zone itself to see
 		//if PVP is allowed
 		if(actInst != NULL && actInst->mZoneDefPtr != NULL && ( actInst->mZoneDefPtr->mMode == PVP::GameMode::PVP || actInst->mZoneDefPtr->mMode == PVP::GameMode::PVP_ONLY))
 			return true;
 
-//		g_Log.AddMessageFormat("REMOVEME no pvp not pvp zone");
-	}
-	else {
-//		g_Log.AddMessageFormat("REMOVEME not pvp'ing because either target or source does not have PVP flag");
 	}
 
 
@@ -5054,7 +5049,7 @@ void CreatureInstance :: RunAutoTargetSelection(void)
 	if(serverFlags & ServerFlags::LeashRecall)
 		return;
 
-	if((serverFlags & ServerFlags::NeutralInactive) || (serverFlags & ServerFlags::Stationary))
+	if((serverFlags & ServerFlags::NeutralInactive) || (serverFlags & ServerFlags::Stationary) ||  (serverFlags & ServerFlags::Noncombatant))
 		return;
 
 	CreatureInstance *targ = NULL;
@@ -5548,6 +5543,7 @@ void CreatureInstance :: StopMovement(int result)
 }
 void CreatureInstance :: MoveTo(int x, int z, int range, int speed)
 {
+
 	StopMovement(ScriptCore::Result::INTERRUPTED);
 	CurrentTarget.DesLocX = x;
 	CurrentTarget.DesLocZ = z;

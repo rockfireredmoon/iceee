@@ -36,6 +36,16 @@ class VampireAdd {
     prop_id = null;
 }
 
+class TargetPos {
+    constructor(pos, rot) {
+        this.pos = pos;
+        this.rot = rot;
+    }
+    
+    rot = 0;
+    pos = null;
+}
+
 // Abilities
 const HEALING_SCREAM = 24009;
 const SELF_STUN = 24008;
@@ -46,19 +56,18 @@ const THOUSAND_BATS = 24012;
 // Creature Definition IDs
 const CDEF_VALKAL1 = 1385;
 const CDEF_VALKAL2 = 3351;
+const CDEF_VAJ_1 = 3494;
+const CDEF_VAJ_2 = 3495;
 
 // The locations of the room
 loc_chamber <- Area(5679, 1842, 5953, 2225);
 loc_throne_room <- Area(4160,2556, 4336, 2981);
 loc_trap_door <- Point(4363, 2769);
 loc_platform_centre <- Point(4300, 2788);
-loc_chamber_platform_centre <- Point(5821, 1861);
-loc_chamber_platform_front <- Point(5821, 1936);
 loc_platform_front <- Point(4141, 2790);
 loc_room_centre <- Point(3971, 2790);
 loc_chamber_room_centre <- Point(5825, 2120);
 loc_platform_rot <- 192;
-loc_chamber_platform_rot <- 0;
 
 // Adds
 
@@ -90,6 +99,27 @@ valkal_2_adds_right <- [
     VampireAdd(1154491, Point(5865,2211), 183)
 ];
 
+/* Positions valkal 2 walks to while his Vaj's are active */
+valkal_2_positions <- [
+	TargetPos(Point(5708,1856), 18),
+	TargetPos(Point(5748,1912), 6),
+	TargetPos(Point(5816,1918), 254),
+	TargetPos(Point(5820,1918), 255),
+	TargetPos(Point(5891,1917), 239),
+	TargetPos(Point(5943,1870), 241)
+];
+
+/* Phrases spoken by valkal 2 while Vaj's are active */
+valkal_2_phrases <- [
+	"Teach them the meaning of pain my son.",
+	"You think you'll live? Hah!.",
+	"Your blood belongs to me now.",
+	"Blood of my blood .. show these little beasts why they can never win.",
+	"Fools! you should never have entered here. There can be only one outcome.",
+	"See how my family protect me, I am Eternal!",
+	"Taste them my kin..."
+];
+
 // Prop IDS
 
 const VALKAL2_SPAWN_PROP = 1150652;
@@ -108,11 +138,13 @@ cid_valkal2 <- 0;
 phase <- 0;
 valkal1_full_health_count <- 0;
 valkal2_full_health_count <- 0;
-blood_sky <- false;
+death_toll <- [];
+env <- "";
 
 // Debug
 no_adds <- false;
 debug <- true;
+verbose_debug <- false;
 manual_trigger <- false;
 
 /* Keep scanning for Valkal1 until he spawns. When he does, we start to monitor his health  */ 
@@ -199,7 +231,7 @@ function spawn_adds(max, adds_list) {
 		local cid = inst.spawn(v.prop_id, 0, 0);
 		spawns.append(cid);
 		if(debug)
-			inst.info("Walking to "  +v.pos + " then Spawning " + cid + " (" + v.prop_id + ")");
+			inst.info("Walking to "  + v.pos + " then attacking. " + cid + " (" + v.prop_id + ")");
         inst.walk_then(cid, v.pos, -1, CREATURE_JOG_SPEED, 0, function(res) {
         
 			if(debug)
@@ -211,7 +243,7 @@ function spawn_adds(max, adds_list) {
 	        }
 	        else {
 				if(debug)
-					inst.info("Spawn failed " + cid + " / " + res);
+					inst.info("Walk interrupted " + cid + " / " + res);
 			}
         });
     }
@@ -223,11 +255,13 @@ function spawn_adds(max, adds_list) {
 function disengage_valkal(cid) {
 	if(debug)
 		inst.info("Disengaging Valkal");
+	print("Disengage!!\n");
 		
-	inst.interrupt(cid);
-	inst.leave_combat(cid);
-	inst.set_flag(cid, SF_NON_COMBATANT, true);
 	inst.pause_ai(cid);
+	inst.leave_combat(cid);
+	inst.unhate(cid);
+	inst.interrupt(cid);
+	inst.set_flag(cid, SF_NON_COMBATANT, true);
 }
 
 /*  Helper function to return Valkal 1 to the center of the room, and picks the closest player
@@ -293,24 +327,76 @@ function valkal_1_heal_sequence() {
 
 /* Starts the sequence of Valkal 2 running from the fight his platform to
    heal. Once healed he will wait for the all of the spawns in the
-   list provided to be killed before rreturning to the action 
+   list provided to be killed before returning to the action 
  */
 function valkal_2_heal_sequence(spawns) {
     if(debug)
 		inst.info("Heal sequence");
     disengage_valkal(cid_valkal2);
-	inst.walk_then(cid_valkal2, loc_chamber_platform_centre, -1, CREATURE_JOG_SPEED, 0, function(res) {
-        inst.rotate_creature(cid_valkal2, loc_chamber_platform_rot);
+	inst.walk_then(cid_valkal2, valkal_2_positions[3].pos, -1, CREATURE_JOG_SPEED, 0, function(res) {
+        inst.rotate_creature(cid_valkal2, valkal_2_positions[3].rot);
         heal(cid_valkal2, 95, function() {
-        	
-        	//
-        	// TODO have valkal walk back and forth for a bit waiting for SPAWNS to 
-        	// die, THEN valkal_2_engage
-        	//
-        	
-        	valkal_2_engage();
+        	if(debug)
+        		inst.info("Looking for spot to walk to");
+       		valkal_2_pick_spot(spawns);
         }); 
 	});
+}
+
+/* Return true if every spawn in the list is dead */
+function is_list_dead(l) {
+    if(debug)
+		inst.info("is_list_dead " + l.len());
+	local dead = 0;
+	foreach(s in l) {
+	    if(debug)
+			inst.info("test " + s);
+		if(array_contains(death_toll, s))
+			dead++;
+	    if(debug)
+			inst.info("dead now " + dead);
+	}
+	return dead == l.len();
+}
+
+/* Pick a spot for valkal 2 to walk to while the list of spawns are not yet dead */
+function valkal_2_pick_spot(spawns) {
+	if(is_list_dead(spawns))  {
+	    if(debug)
+			inst.info("list of " + l.len() + " now dead, engaging");      	
+    	valkal_2_engage();
+	}
+    else {
+	    if(debug)
+			inst.info("pick spot");      	
+			
+    	/* Pick a spot to run to */
+	    local spot = valkal_2_positions[randmodrng(0, valkal_2_positions.len())];
+	    if(debug)
+			inst.info("walk to " + spot.x + " " + spot.z);      	
+			
+		inst.walk_then(cid_valkal2, spot.pos, -1, CREATURE_RUN_SPEED, 0, function(res) {
+			/* Face direction */
+			
+		    if(debug)
+				inst.info("rotate to " + spot.rot);
+			
+        	inst.rotate_creature(cid_valkal2, spot.rot);
+			
+	    	/* Pick a phrase to say  */
+	    	local phrase = valkal_2_phrases[randmodrng(0, valkal_2_phrases.len())];
+	    	
+		    if(debug)
+				inst.info("phrase " + phrase);
+				
+			inst.creature_chat(cid_valkal2, "s/", phrase);
+        	
+        	/* Pick another spot */    	
+	    	inst.queue(function() {
+	    		valkal_2_pick_spot(spawns);
+	    	}, 5000);
+		});
+    }	
 }
 
 /* Valkal 2. He is in another tile that probably is not loaded, so make sure it is and
@@ -337,10 +423,11 @@ function spawn_valkal_2() {
 }
 
 /* Remove the fight scene environment if it is set */
-function remove_blood_sky() {
-    if(blood_sky) {
-    	inst.set_timeofday("Day");
-    	blood_sky = false;
+function tod(e) {
+    if(e != env) {
+    	inst.info("Set " + e);
+    	env = e;
+    	inst.set_timeofday(e);
     }
 }
 
@@ -350,7 +437,7 @@ function valkal_flee() {
 
    	inst.creature_chat(cid_valkal1, "s/", "This is not over...");
     disengage_valkal(cid_valkal1);
-    remove_blood_sky();
+    tod("Day");
 	inst.queue(function() {
 		inst.walk_then(cid_valkal1, loc_trap_door, -1, CREATURE_RUN_SPEED, 0, function(res) {
 			inst.creature_chat(cid_valkal1, "s/", "... Follow if you dare");
@@ -373,21 +460,23 @@ function tribute() {
     if(debug)
 		inst.info("Tribute");
     disengage_valkal(cid_valkal2);
-	inst.walk_then(cid_valkal2, loc_chamber_platform_front, 192, CREATURE_JOG_SPEED, 0, function(res) {
+	inst.walk_then(cid_valkal2, valkal_2_positions[2].pos, valkal_2_positions[2].rot, CREATURE_RUN_SPEED, 0, function(res) {
         if(debug)
         	inst.info("Valkal home");
         inst.queue(function() {
         	inst.info("Finding targets");
 	        local targets = inst.get_nearby_creature(300, cid_valkal2, TS_ENEMY_ALIVE, TS_ENEMY_ALIVE, TS_ENEMY_ALIVE);
-            foreach(l in targets) {
-                inst.info("  " + l + " " + inst.get_display_name(l));
-            }
+	        if(debug) {
+	            foreach(l in targets) {
+	                inst.info("  " + l + " " + inst.get_display_name(l));
+	            }
+	        }
 	        if(targets.len() > 0) {
 	            local cid = targets[randmodrng(0, targets.len())];
 	            inst.set_target(cid_valkal2, cid);
 	            if(debug)
 	            	inst.info("Targetted " + inst.get_display_name(cid));
-				inst.set_flag(cid_valkal2, SF_NON_COMBATANT, false);
+				
 	            if(!inst.creature_use(cid_valkal2, TRIBUTE)) {
 	            	if(debug)
 	                	inst.info("Failed to tribute " + cid);
@@ -396,11 +485,10 @@ function tribute() {
 	                inst.queue(function() {
 	            		inst.target_self(cid_valkal2);
 		            	if(inst.creature_use(cid_valkal2, SELF_STUN)) {
-							inst.set_flag(cid_valkal2, SF_NON_COMBATANT, true);
 					        inst.queue(function() {
 								inst.leave_combat(cid_valkal2);  
 					            valkal_2_engage();
-					        }, 16000);
+					        }, 12000);
 					    }
 		            	else {	     
 							inst.leave_combat(cid_valkal2);
@@ -424,7 +512,7 @@ function tribute() {
    cast on the the centre of the room */
 function bringing_down_the_house() {
     disengage_valkal(cid_valkal2);
-	inst.walk_then(cid_valkal2, loc_chamber_platform_front, 192, CREATURE_JOG_SPEED, 0, function(res) {
+	inst.walk_then(cid_valkal2, valkal_2_positions[2].pos, 192, CREATURE_JOG_SPEED, 0, function(res) {
 		inst.set_creature_gtae(cid_valkal2);
         if(!inst.creature_use(cid_valkal2, BRINGING_DOWN_THE_HOUSE)) {
         	if(debug)
@@ -458,8 +546,10 @@ function valkals_desperation() {
 
 /* Reset the Valkal1 fight if the party wipes out */
 function reset_valkal1() {
+	if(debug)
+		inst.info("Restting valkal 1");
 	phase = 0;
-	remove_blood_sky();
+	tod("Day");
     disengage_valkal(cid_valkal1);
    	inst.creature_chat(cid_valkal1, "s/", "Will no one face me? ... Cowards");
 	valkal1_full_health_count = 0;
@@ -470,12 +560,15 @@ function reset_valkal1() {
 
 /* Reset the Valkal2 fight if the party wipes out */
 function reset_valkal2() {
+	if(debug)
+		inst.info("Restting valkal 2");
 	phase = 0;
-	remove_blood_sky();
+	death_toll = [];
+	tod("Day");
     disengage_valkal(cid_valkal2);
    	inst.creature_chat(cid_valkal2, "s/", "You've failed! You've all failed! ... You'll ALWAYS fail ....");
 	valkal2_full_health_count = 0;
-	inst.walk_then(cid_valkal2, loc_chamber_platform_centre, 192, CREATURE_WALK_SPEED, 0, function(res) {
+	inst.walk_then(cid_valkal2, loc_chamvalkal_2_positions[3].pos, 192, CREATURE_WALK_SPEED, 0, function(res) {
 		inst.set_flag(cid_valkal2, SF_NON_COMBATANT, false);
 	});
 }
@@ -486,6 +579,8 @@ function valkal1_health() {
 		return;
 
 	local health = inst.get_health_pc(cid_valkal1);
+	if(verbose_debug)
+		inst.info("Valkal1 at " + health + ". Phase " + phase + " FHC " + valkal1_full_health_count);
 
 	if(health == -1) {
 		/* Valkal creature has disappeared (maybe an admin resetting a spawn?) 
@@ -506,11 +601,7 @@ function valkal1_health() {
 		inst.queue(valkal1_health, 5000);
 	}
     else {
-    	if(!blood_sky) {
-    		inst.set_timeofday("Sunset");
-    		blood_sky = true;
-    	}
-    		
+		tod("Sunset");
     	valkal1_full_health_count = 0;
     	
 	    if(health <= 5 && phase < 9) {
@@ -583,8 +674,8 @@ function valkal2_health() {
 		return;
 
 	local health = inst.get_health_pc(cid_valkal2);
-	if(debug)
-		inst.info("Valkal at " + health + ". Phase " + phase + " FHC " + valkal2_full_health_count);
+	if(verbose_debug)
+		inst.info("Valkal2 at " + health + ". Phase " + phase + " FHC " + valkal2_full_health_count);
 
 	if(health == -1) {
 		/* Valkal creature has disappeared (maybe an admin resetting a spawn?) 
@@ -605,10 +696,7 @@ function valkal2_health() {
 		inst.queue(valkal2_health, 5000);
 	}
     else {
-    	if(!blood_sky) {
-    		inst.set_timeofday("Sunset");
-    		blood_sky = true;
-    	}
+		tod("Sunset");
     		
     	valkal2_full_health_count = 0;
 
@@ -682,17 +770,30 @@ function valkal2_health() {
 
 }
 
-/* Handle Valkal2's death */
-function on_kill_3351() {
-	remove_blood_sky();	
-	inst.broadcast("Valkal has been defeated! The victorious team consisted of ...");
-	foreach(idx, cid in inst.all_players()) {
-		inst.queue(function() {
-			inst.broadcast(inst.get_display_name(cid));
-		}, ( idx + 1 ) * 5000);
+/* Handle deaths */
+function on_kill(cdefid, cid) {
+	if(debug && phase != 0)
+		inst.info("Death - " + cdefid + " / " + cid);
+	if(cid == CDEF_VALKAL2) {
+		/* Valkal 2 is dead! */
+		tod("Sunrise");	
+		inst.broadcast("Valkal has been defeated! The victorious team consisted of ...");
+		foreach(idx, cid in inst.all_players()) {
+			inst.queue(function() {
+				inst.broadcast(inst.get_display_name(cid));
+			}, ( idx + 1 ) * 5000);
+		}
 	}
+	else if(cid == CDEF_VAJ_1) {
+		death_toll.append(cid);
+   		inst.creature_chat(cid_valkal1, "s/", "No! This cannot be! My son ..");
+	}
+	else if(cid == CDEF_VAJ_2) {
+		death_toll.append(cid);
+   		inst.creature_chat(cid_valkal1, "s/", "You .. you will pay .. I swear ...");
+	}
+	
 }
-
 
 /* Debug function that can be run externally to set the phase */
 function debug_setphase(p) {
@@ -701,4 +802,6 @@ function debug_setphase(p) {
 }
 
 /* Initialisation. Start scanning for Valkal1 to spawn */
+print("ZZZZ\n");
+tod("Day");
 inst.exec(find_valkal1);

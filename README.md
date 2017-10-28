@@ -62,6 +62,11 @@ Kevin MacLeod (incompetech.com)
 Licensed under Creative Commons: By Attribution 3.0
 http://creativecommons.org/licenses/by/3.0/
 
+#####Tap - Finale in Valkal's Bloodkeep
+Music: Alexander Nakarada (www.serpentsoundstudios.com)
+Licensed under Creative Commons: By Attribution 4.0 License
+http://creativecommons.org/licenses/by/4.0/
+
 Lots of sound effects used as background or spot effects throughout the
 game came from freesound.org. All of these are 
 Licensed under Creative Commons: By Attribution 3.0

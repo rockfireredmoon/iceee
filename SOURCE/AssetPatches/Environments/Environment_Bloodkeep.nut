@@ -1,6 +1,6 @@
 ::Environments.Bloodkeep <- {
 	TimeOfDay = {
-		Sunrise = "BloodkeepMain",
+		Sunrise = "BloodkeepFinale",
 		Day = "BloodkeepMain",
 		Sunset = "BloodkeepFight",
 		Night = "BloodkeepDarkness"
@@ -153,6 +153,55 @@
 	],
 	Ambient_Sound = [
 		"Sound-Ambient-BloodkeepBackground.ogg"
+	],
+	Ambient_Music_Delay = 300
+};
+::Environments.BloodkeepFinale <- {
+	Sun = {
+		r = 0.24999999,
+		g = 0.24999999,
+		b = 0.24999999
+	},
+	Ambient = {
+		r = 0.4,
+		g = 0.4,
+		b = 0.4
+	},
+	Sky = [],
+	Fog = {
+		color = {
+			r = 0.05,
+			g = 0.05,
+			b = 0.05
+		},
+		exp = 0.001,
+		start = 0.050000001,
+		end = 0.40000001
+	},
+	Adjust_Channels = [
+		[
+			"Cloudy",
+			0.0
+		],
+		[
+			"Crowds",
+			0.0
+		],
+		[
+			"Dungeon",
+			0.30000001
+		],
+		[
+			"Music",
+			1.0
+		]
+	],
+	Ambient_Music = [
+	],
+	Activate_Music = [
+		"Music-Tap.ogg"
+	],
+	Ambient_Sound = [
 	],
 	Ambient_Music_Delay = 300
 };

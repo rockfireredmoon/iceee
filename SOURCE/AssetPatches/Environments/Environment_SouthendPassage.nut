@@ -34,12 +34,14 @@
 			0.40000001
 		]
 	],
-	Ambient_Music = [],
+	Ambient_Music = [
+		"Music-CheeZeeCave.ogg"
+	],
 	Ambient_Noise = [
 	],
 	Activate_Music = [
 		"Music-CheeZeeCave.ogg"
 	],
 	Ambient_Sound = [],
-	Ambient_Music_Delay = 180
+	Ambient_Music_Delay = 0
 };
