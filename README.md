@@ -1,25 +1,39 @@
-# About IceEE - A Planet Forever Server
+# About VALD - A Server for Earth Eternal - Valkal's Shadow
 
 ## Introduction
-This is the Git repository for the server data and source for IceEE, the continuation of Grethnefar's Planetforever Server. Changes on the dev server will periodically be pushed to this, as will changes by developers and their local server. 
+This is the Git repository for the server data and source for Earth Eternal - Valkal's Shadow, the continuation of Grethnefar's "Planet Forever" Server. Changes on the developer server will periodically be pushed to this, as will changes by developers and their local server. 
+
+Find out much more at our website.
+
+http://www.theanubianwar.com
  
-### Source Modifications
+### Changes 
  
- I will try to keep an overview of changes to the server source it was released.
- 
-  * Allow scripts to use Tab (\t) characters so improve compatibility and readability of scripts.
-  * Add SO_REUSEADDR socket option so the server can be started and stopped quickly without having to wait for sockets to timeout.
-  * Added ability to choose address for server to bind to. This allows multiple servers to be run on the same host without making client modifications by multihoming the host (mulitple IP addresses). Each server has it's own ServerConfig.txt that specifies the address to bind to, instead of listening to all addresses on the host. 
-  * Added new instance script command 'despawn' to remove spawns given their PropID
-  * Added new ability action 'RemoveHealthBuff' that can remove BONUS_HEALTH buffers (and con and health)
-  * Added 'Guilds', kind of like clans, but fixed groups in game, opening quests and other guild specific content.
+This is a very rough list of some of the larger changes made since the official "Earth Eternal" and the subsequent
+"Planet Forever"
+   
   * Transformation potions
   * Full and working GM screen (/gm)
-  * Server side Squirrel scripting
-  * New script commands to spawns effects and props
+  * Server side Squirrel scripting and a much larger API for making quests and dungeons more interesting
+  * Server-scripted animation. Simple animations such as moving, scaling, rotating and fading may be performed 
+    on props. 
   * Markers command to help developers warp quickly (/markers)
   * Zone definitions can specify environments for individual tiles or rectangular areas.
   * In-game script editor (/iscript)
+  * "Books" for delivering lore and other non-critical information 
+  * Dungeons can have day cycles (separate from overworld or linked)
+  * Two new regions
+  * New audio content
+  * Daily rewards
+  * NPC dialog
+  * New special effects, abilities and ability functions
+  * Credits now active
+  * Credit Shop now active including new player made armour sets.
+  * Lots of bug fixes and minor changes
+  * Ability to buy new groves
+  * Temporary buffs
+  * Persistent buffs
+  * Improved registration system
 
 ### Credits
 
@@ -30,26 +44,33 @@ Many thanks to all those involved in making this game, and keeping it alive.
  * Heathendel Dustrunner - Quest, content and battle design and more.
  * Rictar Gasper - World building
  * Liska Quicksilver - Quest design and Lore Master
- * Rivers Slypaw - Item and armour design
- * And all the other IGF contributors
+ * And all the other contributors, players and community members
  
 #### Audio
 
 Credits for additional audio content added to the game.
 
 #####Gloom Horizon - Ambient music used in Grunes Tal undead region
+#####Crossing The Chasm - Ambient music used in Swineland region
+#####Dark Times - Activate music used in Bloodkeep
+#####Land Of Phantoms - Ambient music used in Bloodkeep
+#####Some Amount Of Evil - Ambient music used in Bloodkeep
+#####Killers - Ambient music used in penultimate fight scene in Bloodkeep
+#####CheeZeeCave - Activate music used in Southend Passage
 
 Kevin MacLeod (incompetech.com)
 Licensed under Creative Commons: By Attribution 3.0
 http://creativecommons.org/licenses/by/3.0/
 
-#####Kankbeeld Horror Pack - Ambient background used in Grunes Tal
+Lots of sound effects used as background or spot effects throughout the
+game came from freesound.org. All of these are 
+Licensed under Creative Commons: By Attribution 3.0
 
-Sound from http://www.freesound.org/people/klankbeeld/
-
-#####Forest Evening - Ambient background now using in Grunes Tal
-
-Sound from https://www.freesound.org/people/cediez/
+#####Forest Evening - cediez - https://www.freesound.org/people/cediez/ 
+#####Kankbeeld Horror Pack - Kankbeeld - http://www.freesound.org/people/klankbeeld/
+#####Dungeon Ambiance - https://freesound.org/people/phlair/sounds/388340/
+#####Lava loop - Audionautics - https://freesound.org/people/Audionautics/sounds/133901/
+#####Dripping Cave - dobroide - https://freesound.org/people/dobroide/sounds/396314/
 
 ## Configuring A Server From This Repository
 

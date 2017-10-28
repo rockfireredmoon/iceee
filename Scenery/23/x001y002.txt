@@ -1,6 +1,7 @@
 [ENTRY]
 ID=385876438
 Asset=Cav-Hall_Doorway1?ATS=ATS-Cave_Moss
+Name=Untitled
 Pos=1795,200,2205
 Orient=0,-0.707107,0,0.707107
 Scale=1,1,1
@@ -9,6 +10,7 @@ Flags=1
 [ENTRY]
 ID=385876450
 Asset=Cav-Hall_L1?ATS=ATS-Cave_Lava
+Name=Untitled
 Pos=1795,200,2400
 Orient=0,-0.707107,0,-0.707107
 Scale=1,1,1
@@ -17,6 +19,7 @@ Flags=1
 [ENTRY]
 ID=385876452
 Asset=Cav-Hall_L1?ATS=ATS-Cave_Moss
+Name=Untitled
 Pos=1795,200,2020
 Orient=0,-0.707107,0,0.707107
 Scale=1,1,1
@@ -25,6 +28,7 @@ Flags=1
 [ENTRY]
 ID=385876453
 Asset=Cav-Room_Narrow_DoorB?ATS=ATS-Cave_Moss
+Name=Untitled
 Pos=1520,200,2020
 Orient=0,-0.707107,0,0.707107
 Scale=1,1,1
@@ -33,6 +37,7 @@ Flags=1
 [ENTRY]
 ID=385876475
 Asset=Cav-Hall_Doorway1?ATS=ATS-Cave_Lava
+Name=Untitled
 Pos=1795,200,2215
 Orient=0,-0.707107,0,0.707107
 Scale=1,1,1
@@ -41,6 +46,7 @@ Flags=1
 [ENTRY]
 ID=385876478
 Asset=Effects#Par-Ground_Fog1
+Name=Untitled
 Pos=1774.48,201.534,2081.43
 Orient=0,0,0,1
 Scale=1.15,1.15,1.15
@@ -49,6 +55,7 @@ Flags=1
 [ENTRY]
 ID=385876483
 Asset=CL-Vampire_Pass3#CL-Vampire_Pass3
+Name=Untitled
 Pos=1518.19,202.014,2016.36
 Orient=0,0,0,1
 Scale=1,1,1
@@ -57,6 +64,7 @@ Flags=1
 [ENTRY]
 ID=385876489
 Asset=Prop-Vampire_Rock3
+Name=Untitled
 Pos=1487.38,186.162,2011.44
 Orient=0,0.959885,0,-0.280393
 Scale=4.35,4.35,4.35
@@ -65,6 +73,7 @@ Flags=1
 [ENTRY]
 ID=385876501
 Asset=Prop-Vampire_Rock3
+Name=Untitled
 Pos=1524.97,186.162,2027.65
 Orient=0,0.833272,0,0.552863
 Scale=8.075,8.075,8.075
@@ -73,6 +82,7 @@ Flags=1
 [ENTRY]
 ID=385876503
 Asset=Prop-Vampire_Rock3
+Name=Untitled
 Pos=1531.54,184.705,2079.07
 Orient=0,0.833272,0,0.552863
 Scale=4.975,4.975,4.975
@@ -81,6 +91,7 @@ Flags=1
 [ENTRY]
 ID=385876506
 Asset=Prop-Wall_Torch2#Prop-Wall_Torch2
+Name=Untitled
 Pos=1734.87,246.788,2080.46
 Orient=0,-0.911367,0,-0.411595
 Scale=1.175,1.175,1.175
@@ -89,6 +100,7 @@ Flags=1
 [ENTRY]
 ID=385876507
 Asset=Lights#Light-Large?COLOR=FF6600
+Name=Untitled
 Pos=1747.68,262.156,2072.42
 Orient=0,0,0,1
 Scale=1,1,1
@@ -97,6 +109,7 @@ Flags=1
 [ENTRY]
 ID=385876508
 Asset=Prop-Vampire_Rocks#Prop-Vampire_Rock3
+Name=Untitled
 Pos=1668.07,195.439,2051.41
 Orient=0,-0.755615,0,-0.655016
 Scale=2.35,2.35,2.35
@@ -105,6 +118,7 @@ Flags=1
 [ENTRY]
 ID=385876513
 Asset=CL-Vampire_Pass3#CL-Vampire_Pass3
+Name=Untitled
 Pos=1788.64,200,2054.74
 Orient=0,0,0,1
 Scale=1,1,1
@@ -113,6 +127,7 @@ Flags=1
 [ENTRY]
 ID=385876515
 Asset=CL-Vampire_Pass3#CL-Vampire_Pass3
+Name=Untitled
 Pos=1805.47,200,2111.48
 Orient=0,0,0,1
 Scale=1,1,1
@@ -121,6 +136,7 @@ Flags=1
 [ENTRY]
 ID=385876516
 Asset=CL-Vampire_Pass3#CL-Vampire_Pass3
+Name=Untitled
 Pos=1703.41,200,2026.92
 Orient=0,0,0,1
 Scale=1,1,1
@@ -129,6 +145,7 @@ Flags=1
 [ENTRY]
 ID=385876517
 Asset=CL-Vampire_Pass3#CL-Vampire_Pass3
+Name=Untitled
 Pos=1759.34,200,2038.6
 Orient=0,0,0,1
 Scale=1,1,1
@@ -137,6 +154,7 @@ Flags=1
 [ENTRY]
 ID=385876518
 Asset=Prop-Vampire_Rock3
+Name=Untitled
 Pos=1727.77,186.669,2109.08
 Orient=0,0,0,1
 Scale=7,7,7
@@ -145,6 +163,7 @@ Flags=1
 [ENTRY]
 ID=385876519
 Asset=Prop-Vampire_Rock3
+Name=Untitled
 Pos=1668.07,179.625,2063.34
 Orient=0,-0.475032,0,0.879969
 Scale=8.375,8.375,8.375
@@ -153,6 +172,7 @@ Flags=1
 [ENTRY]
 ID=385876520
 Asset=Prop-Vampire_Rock3
+Name=Untitled
 Pos=1795.53,187.187,2030.45
 Orient=0,0,0,1
 Scale=5.1,5.1,5.1
@@ -161,6 +181,7 @@ Flags=1
 [ENTRY]
 ID=385876524
 Asset=Lights#Light-Large?COLOR=FF6600
+Name=Untitled
 Pos=1841.01,274.3,2351.8
 Orient=0,0,0,1
 Scale=1,1,1
@@ -169,6 +190,7 @@ Flags=1
 [ENTRY]
 ID=385876527
 Asset=Prop-Wall_Torch2#Prop-Wall_Torch2
+Name=Untitled
 Pos=1853.88,260.504,2341.12
 Orient=0,-0.39861,0,0.917121
 Scale=1.85,1.85,1.85
@@ -177,6 +199,7 @@ Flags=1
 [ENTRY]
 ID=385876528
 Asset=Light-Large?COLOR=FF6600
+Name=Untitled
 Pos=1999.48,274.621,2396.9
 Orient=0,0,0,1
 Scale=1,1,1
@@ -185,6 +208,7 @@ Flags=1
 [ENTRY]
 ID=385876535
 Asset=Par-Lava_Smoke-Emitter
+Name=Untitled
 Pos=1871.9,200,2392.87
 Orient=0,0,0,1
 Scale=1.775,1.775,1.775
@@ -193,6 +217,7 @@ Flags=1
 [ENTRY]
 ID=385876555
 Asset=Prop-Bush-Burnt_Med3#Prop-Bush-Burnt_Med3
+Name=Untitled
 Pos=1880.51,201.962,2450.69
 Orient=0,0.398609,0,0.917121
 Scale=3.025,3.025,3.025
@@ -201,6 +226,7 @@ Flags=1
 [ENTRY]
 ID=385876557
 Asset=Prop-Bush-Burnt_Med3
+Name=Untitled
 Pos=1833.71,200,2230.92
 Orient=0,0,0,1
 Scale=3.025,3.025,3.025
@@ -209,6 +235,7 @@ Flags=1
 [ENTRY]
 ID=385876571
 Asset=Prop-Bush-Burnt_Med3
+Name=Untitled
 Pos=1851.26,199.443,2348.53
 Orient=0,0,0,1
 Scale=3.025,3.025,3.025
@@ -217,6 +244,7 @@ Flags=1
 [ENTRY]
 ID=385876574
 Asset=Prop-Wall_Torch2#Prop-Wall_Torch2
+Name=Untitled
 Pos=1985.94,261.805,2397.42
 Orient=0,-0.718465,0,-0.695563
 Scale=1.6,1.6,1.6
@@ -225,6 +253,7 @@ Flags=1
 [ENTRY]
 ID=385876584
 Asset=Effects#Par-Slow_Drip-Emitter
+Name=Untitled
 Pos=1773.61,317.415,2072.27
 Orient=0,0,0,1
 Scale=3.675,3.675,3.675
@@ -233,6 +262,7 @@ Flags=1
 [ENTRY]
 ID=385876588
 Asset=Prop-Bush-Burnt_Med3
+Name=Untitled
 Pos=1765.22,200,2421.87
 Orient=0,0,0,1
 Scale=3.025,3.025,3.025
@@ -241,6 +271,7 @@ Flags=1
 [ENTRY]
 ID=385876589
 Asset=Prop-Bush-Burnt_Med3
+Name=Untitled
 Pos=1757.63,200,2230.92
 Orient=0,0,0,1
 Scale=3.025,3.025,3.025
@@ -249,6 +280,7 @@ Flags=1
 [ENTRY]
 ID=385876619
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=1573.11,200,2015.26
 Orient=0,0,0,1
 Scale=1,1,1
@@ -259,6 +291,7 @@ link=385876624,1
 [ENTRY]
 ID=385876620
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=1571.69,200,2032.24
 Orient=0,0,0,1
 Scale=1,1,1
@@ -270,6 +303,7 @@ link=385876678,1
 [ENTRY]
 ID=385876621
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=1756.64,200,2032.34
 Orient=0,0,0,1
 Scale=1,1,1
@@ -280,6 +314,7 @@ link=385876622,1
 [ENTRY]
 ID=385876622
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=1783.6,200,2225.32
 Orient=0,0,0,1
 Scale=1,1,1
@@ -290,6 +325,7 @@ link=385876623,1
 [ENTRY]
 ID=385876623
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=1807.97,200,2224.56
 Orient=0,0,0,1
 Scale=1,1,1
@@ -301,6 +337,7 @@ link=385876679,1
 [ENTRY]
 ID=385876624
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=1823.2,201.366,2008.67
 Orient=0,0,0,1
 Scale=1,1,1
@@ -311,6 +348,7 @@ link=385876623,1
 [ENTRY]
 ID=385876627
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=1775,200,2265
 Orient=0,0,0,1
 Scale=1,1,1
@@ -321,6 +359,7 @@ link=385876681,1
 [ENTRY]
 ID=385876628
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=1810,200,2295
 Orient=0,0,0,1
 Scale=1,1,1
@@ -331,6 +370,7 @@ link=385876683,1
 [ENTRY]
 ID=385876630
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=1785.96,200.698,2407.01
 Orient=0,0,0,1
 Scale=1,1,1
@@ -341,6 +381,7 @@ link=385876631,1
 [ENTRY]
 ID=385876633
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=1820,200,2385
 Orient=0,0,0,1
 Scale=1,1,1
@@ -351,6 +392,7 @@ link=385876634,1
 [ENTRY]
 ID=385876634
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=1975,200,2385
 Orient=0,0,0,1
 Scale=1,1,1
@@ -360,34 +402,38 @@ link=385876633,1
 [ENTRY]
 ID=385876678
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=1570,200,2030
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=3_dng_cc_lavaWolves_21_22
 links_count=1
 link=385876620,1
-spawnPackage=3_dng_cc_lavaWolves_21_22
 
 [ENTRY]
 ID=385876679
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=1805,200.011,2220
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=3_dng_cc_lavaWolves_21_22
 links_count=1
 link=385876623,1
-spawnPackage=3_dng_cc_lavaWolves_21_22
 
 [ENTRY]
 ID=385876680
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=1785,200,2030
-Orient=0,-1,0,7.54979e-008
+Orient=0,-1,0,7.54979e-08
 Scale=1,1,1
 spawnPackage=3_dng_cc_lavaWolves_21_22
 
 [ENTRY]
 ID=385876681
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=1795,200,2245
 Orient=0,0,0,1
 Scale=1,1,1
@@ -397,6 +443,7 @@ link=385876627,1
 [ENTRY]
 ID=385876682
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=1765,200,2295
 Orient=0,0.382683,0,0.92388
 Scale=1,1,1
@@ -405,18 +452,36 @@ spawnPackage=3_dng_cc_lavaWolves_21_22
 [ENTRY]
 ID=385876683
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=1810,200,2295
 Orient=0,-0.707107,0,0.707107
 Scale=1,1,1
+spawnPackage=3_dng_cc_lavaWolves_21_22
 links_count=1
 link=385876628,1
-spawnPackage=3_dng_cc_lavaWolves_21_22
 
 [ENTRY]
 ID=385876685
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=1955,200,2370
-Orient=0,-1,0,7.54979e-008
+Orient=0,-1,0,7.54979e-08
 Scale=1,1,1
 spawnPackage=3_dng_cc_lavaWolves_21_22
+
+[ENTRY]
+ID=1041198768
+Asset=Sound?SOUND=Sound-Ambient-DrippingCave.ogg&GAIN=1
+Name=Untitled
+Pos=1781.89,214.434,2019.1
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
+ID=1041198769
+Asset=Sound?SOUND=Sound-Ambient-DrippingCave.ogg&GAIN=1
+Name=Untitled
+Pos=1526.63,214.434,2019.1
+Orient=0,0,0,1
+Scale=1,1,1
 

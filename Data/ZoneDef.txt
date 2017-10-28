@@ -291,7 +291,7 @@ DefLoc=1626,240,2982
 [ENTRY]
 ID=23
 NAME=Coastal Cave
-ENVIRONMENTTYPE=Dungeon1
+ENVIRONMENTTYPE=LavaCave
 ShardName=Europe 1
 WarpName=Coastal Cave
 DefLoc=1498,200,1828
@@ -850,7 +850,7 @@ Instance=1
 [ENTRY]
 ID=76
 NAME=Southend Passage
-ENVIRONMENTTYPE=Dungeon1
+ENVIRONMENTTYPE=SouthendPassage
 ShardName=Corsica 1
 WarpName=Southend Passage
 DefLoc=873,601,762

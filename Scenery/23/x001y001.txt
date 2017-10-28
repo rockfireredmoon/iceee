@@ -1,7 +1,7 @@
 [ENTRY]
 ID=1154574
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=1821.85,201.728,1985.77
 Orient=0,0,0,1
 Scale=1,1,1
@@ -371,6 +371,14 @@ ID=385876753
 Asset=Manipulator-Sanctuary
 Name=Untitled
 Pos=1481.64,210,1714.71
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
+ID=1041198767
+Asset=Sound?SOUND=Sound-Ambient-DrippingCave.ogg&GAIN=1
+Name=
+Pos=1526.63,214.434,1883.05
 Orient=0,0,0,1
 Scale=1,1,1
 
