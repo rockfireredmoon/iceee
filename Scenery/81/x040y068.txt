@@ -1,6 +1,7 @@
 [ENTRY]
 ID=1358959840
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=40945.4,186.448,68148
 Orient=0,0,0,1
 Scale=1,1,1
@@ -11,6 +12,7 @@ link=1358959845,1
 [ENTRY]
 ID=1358959847
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=40678.5,190.82,68121
 Orient=0,0,0,1
 Scale=1,1,1
@@ -21,15 +23,16 @@ link=1358959846,1
 [ENTRY]
 ID=1358959848
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=40627.1,193.903,68184
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=1a_chomperCamp01_general
-outerRadius=10
 
 [ENTRY]
 ID=1358959875
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=40882,220.005,68709
 Orient=0,0,0,1
 Scale=1,1,1
@@ -39,6 +42,7 @@ link=1358959876,1
 [ENTRY]
 ID=1358959876
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=40904.1,229.995,68892
 Orient=0,0,0,1
 Scale=1,1,1
@@ -49,18 +53,19 @@ link=1358959877,1
 [ENTRY]
 ID=1358959887
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=40292.5,393.092,68674
 Orient=0,-0.999958,0,-0.00920347
 Scale=0.95,0.95,0.95
+spawnPackage=1a_chomperCamp01_Clampton
 links_count=2
 link=1358959892,1
 link=1358959897,1
-spawnPackage=1a_chomperCamp01_Clampton
-outerRadius=10
 
 [ENTRY]
 ID=1358959890
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=40263.3,358.038,68479
 Orient=0,0,0,1
 Scale=0.95,0.95,0.95
@@ -71,6 +76,7 @@ link=1358959893,1
 [ENTRY]
 ID=1358959891
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=40208,398.573,68679
 Orient=0,0,0,1
 Scale=0.95,0.95,0.95
@@ -81,6 +87,7 @@ link=1358959897,1
 [ENTRY]
 ID=1358959892
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=40270.1,386.536,68581
 Orient=0,0,0,1
 Scale=0.95,0.95,0.95
@@ -91,6 +98,7 @@ link=1358959893,1
 [ENTRY]
 ID=1358959893
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=40335.2,365.612,68479
 Orient=0,0,0,1
 Scale=0.95,0.95,0.95
@@ -101,6 +109,7 @@ link=1358959892,1
 [ENTRY]
 ID=1358959895
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=40407.9,326.012,68815
 Orient=0,-0.548024,0,0.836463
 Scale=1,1,1
@@ -109,15 +118,16 @@ spawnPackage=1a_chomperCamp01_general
 [ENTRY]
 ID=1358959896
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=40252.4,288.532,68300
 Orient=0,0.841471,0,0.540302
 Scale=1,1,1
 spawnPackage=1a_chomperCamp01_general
-outerRadius=10
 
 [ENTRY]
 ID=1358959897
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=40295.2,387.319,68571
 Orient=0,0,0,1
 Scale=0.95,0.95,0.95
@@ -128,24 +138,25 @@ link=1358959891,1
 [ENTRY]
 ID=1358959947
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=40161.9,217.797,68038
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=1a_hedgehogCamp01_generalLower
-outerRadius=10
 
 [ENTRY]
 ID=1358960180
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=40743,220.333,68497
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=1a_chomperCamp01_general
-outerRadius=10
 
 [ENTRY]
 ID=1358963236
 Asset=CL-Boulder3
+Name=Untitled
 Pos=40232.9,386.062,68447
 Orient=0,0,0,1
 Scale=1,1,1
@@ -153,6 +164,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1358963260
 Asset=CL-Hills_Tree2#CL-Hills_Tree2
+Name=Untitled
 Pos=40338.2,386.953,68581
 Orient=0,0.9001,0,0.435683
 Scale=1,1,1
@@ -161,6 +173,7 @@ Flags=1
 [ENTRY]
 ID=1358965294
 Asset=CL-Hills_Rock1#CL-Hills_Rock1
+Name=Untitled
 Pos=40917.9,207.363,68313
 Orient=0,0,0,1
 Scale=1,1,1
@@ -168,6 +181,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1358965753
 Asset=CL-Hills_Bush1#CL-Hills_Bush1
+Name=Untitled
 Pos=40957.9,177.872,68106
 Orient=0,0,0,1
 Scale=1,1,1
@@ -175,6 +189,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1358965754
 Asset=CL-Hills_Bush2#CL-Hills_Bush2
+Name=Untitled
 Pos=40926.2,176.668,68072
 Orient=0,0,0,1
 Scale=1,1,1
@@ -182,6 +197,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1358965772
 Asset=Prop-Hill_Tree#Prop-Hill_Tree4
+Name=Untitled
 Pos=40968,192.535,68079
 Orient=-0.132167,0.819603,0.0447682,0.555678
 Scale=0.975,0.975,0.975
@@ -190,6 +206,7 @@ Flags=1
 [ENTRY]
 ID=1358965774
 Asset=Prop-Hill_Tree4
+Name=Untitled
 Pos=40741.2,209.757,68024
 Orient=-0.044452,0.938631,0.132274,-0.315437
 Scale=1.275,1.275,1.275

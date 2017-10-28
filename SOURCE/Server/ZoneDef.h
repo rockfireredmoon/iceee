@@ -102,7 +102,6 @@ public:
 	int mPlayerFilterType;    //If nonzero, filter players according to type.
 	std::vector<int> mPlayerFilterID;  //Creature Def IDs of the players to filter.
 
-	std::string mDropRateProfile;
 	std::map<EnvironmentTileKey, std::string> mTileEnvironment; // Use a specific environment for certain tiles (the key is a string "<x>,<y>")
 	
 	int PendingChanges;  //Used internally to track whether this zone needs to be saved back to file.
@@ -150,12 +149,15 @@ public:
 	void ChangeEnvironmentUsage(void);
 	bool QualifyDelete(void);
 	std::string GetTileEnvironment(int x, int y);
+	std::string GetDropRateProfile();
+	void SetDropRateProfile(std::string profile);
 
 	bool AllowSceneryAudits(void);
 	void AuditScenery(const char *username, int zone, const SceneryObject *sceneryObject, int opType);
 	void AutosaveAudits(bool force);
 
 private:
+	std::string mDropRateProfile;
 	void CreateDefaultGrovePermission(void);
 };
 

@@ -528,7 +528,7 @@ public:
 	bool _ValidTargetFlag(CreatureInstance *compare, int abilityRestrict);  //Return true if the creature is a valid target with the given faction and targeting flags.
 	int _AddTargetsInCone(double halfAngle, int targetType, int distance, int abilityRestrict);  //Fill target list with valid targets within the required range and distance
 	bool isTargetInCone(CreatureInstance * target, double amount);
-	void RegisterHostility(CreatureInstance *attacker, int hostility);
+	bool RegisterHostility(CreatureInstance *attacker, int hostility);
 	void SetCombatStatus(void);
 	void Untransform(void);
 	int GetOrbRegenerationTime(float regenFactor);

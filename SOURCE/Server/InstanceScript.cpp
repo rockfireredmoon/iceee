@@ -657,6 +657,7 @@ void InstanceNutPlayer::HaltDerivedExecution()
 	openedForms.clear();
 
 	actInst->SetEnvironment("");
+	actInst->SetTimeOfDay("");
 }
 
 void InstanceNutPlayer::RegisterFunctions() {
@@ -1216,7 +1217,6 @@ long InstanceNutPlayer::WalkThen(int CID, Squirrel::Point point, int facing, int
 	CreatureInstance *ci = GetNPCPtr(CID);
 	if(ci)
 	{
-		ci->StopMovement(ScriptCore::Result::INTERRUPTED);
 		return ci->scriptMoveEvent = QueueAdd(new ScriptCore::NutScriptEvent(
 				new ScriptCore::NeverCondition(),
 				new WalkCallback(this, ci, point, facing, speed, range, onArrival, false)
@@ -2047,8 +2047,9 @@ bool WalkCallback::Execute()
 			g_Log.AddMessageFormat("Exception while execute script function.");
 		}
 
-		mCreature->SetServerFlag(ServerFlags::ScriptMovement, false);
 	}
+
+	mCreature->SetServerFlag(ServerFlags::ScriptMovement, false);
 
 //	mCreature->CurrentTarget.desiredRange = 0;
 //	mCreature->CurrentTarget.desiredSpeed = 0;
