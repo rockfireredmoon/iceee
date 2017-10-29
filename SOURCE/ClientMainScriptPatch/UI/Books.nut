@@ -356,6 +356,17 @@ class Screens.Books extends GUI.Frame {
 			mAdjusting = false;
 		}	
 	}
+	
+
+	function setVisible( value ) {
+		this.GUI.Panel.setVisible(value);
+		if (value) {
+			::Audio.playSound("Sound-QuestLogOpen.ogg");
+		}
+		else {
+			::Audio.playSound("Sound-QuestLogClose.ogg");
+		}
+	}
 }
 
 function InputCommands::Books(args) {

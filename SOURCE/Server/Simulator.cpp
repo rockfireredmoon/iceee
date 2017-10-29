@@ -13345,15 +13345,20 @@ int SimulatorThread :: handle_query_mod_setenvironment(void)
 	if(query.argCount < 1)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Invalid query.");
 
-	if(pld.zoneDef->mGrove == false)
-		return PrepExt_QueryResponseError(SendBuf, query.ID, "You are not in a grove.");
-	if(pld.zoneDef->mAccountID != pld.accPtr->ID)
-		return PrepExt_QueryResponseError(SendBuf, query.ID, "You must be in your grove.");
+
+	if(CheckPermissionSimple(Perm_Account, Permission_Admin) == false && CheckPermissionSimple(Perm_Account, Permission_Sage) == false) {
+		if(pld.zoneDef->mGrove == false)
+			return PrepExt_QueryResponseError(SendBuf, query.ID, "You are not in a grove.");
+		if(pld.zoneDef->mAccountID != pld.accPtr->ID)
+			return PrepExt_QueryResponseError(SendBuf, query.ID, "You must be in your grove.");
+	}
 
 	const char *env = query.args[0].c_str();
 
 	pld.zoneDef->ChangeEnvironment(env);
-	g_ZoneDefManager.NotifyConfigurationChange();
+	if(pld.zoneDef->IsPlayerGrove())
+		g_ZoneDefManager.NotifyConfigurationChange();
+
 	SendInfoMessage("Environment type changed.", INFOMSG_INFO);
 	int wpos = PrepExt_SendEnvironmentUpdateMsg(SendBuf, creatureInst->actInst, pld.CurrentZone, pld.zoneDef, -1, -1, 0);
 	wpos += PrepExt_SetTimeOfDay(&SendBuf[wpos], GetTimeOfDay());
@@ -13363,12 +13368,16 @@ int SimulatorThread :: handle_query_mod_setenvironment(void)
 
 int SimulatorThread :: handle_query_mod_grove_togglecycle(void)
 {
-	if(pld.zoneDef->mGrove == false)
-		return PrepExt_QueryResponseError(SendBuf, query.ID, "You are not in a grove.");
-	if(pld.zoneDef->mAccountID != pld.accPtr->ID)
-		return PrepExt_QueryResponseError(SendBuf, query.ID, "You must be in your grove.");
+
+	if(CheckPermissionSimple(Perm_Account, Permission_Admin) == false && CheckPermissionSimple(Perm_Account, Permission_Sage) == false) {
+		if(pld.zoneDef->mGrove == false)
+			return PrepExt_QueryResponseError(SendBuf, query.ID, "You are not in a grove.");
+		if(pld.zoneDef->mAccountID != pld.accPtr->ID)
+			return PrepExt_QueryResponseError(SendBuf, query.ID, "You must be in your grove.");
+	}
 	pld.zoneDef->ChangeEnvironmentUsage();
-	g_ZoneDefManager.NotifyConfigurationChange();
+	if(pld.zoneDef->IsPlayerGrove())
+		g_ZoneDefManager.NotifyConfigurationChange();
 	Util::SafeFormat(Aux1, sizeof(Aux1), "Environment cycling is now %s", (pld.zoneDef->mEnvironmentCycle ? "ON":"OFF"));
 	SendInfoMessage(Aux1, INFOMSG_INFO);
 	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");

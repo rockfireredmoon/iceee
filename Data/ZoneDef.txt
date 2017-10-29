@@ -457,7 +457,7 @@ MaxLeashRange=375
 [ENTRY]
 ID=39
 NAME=Forest Cavern
-ENVIRONMENTTYPE=Dungeon1
+ENVIRONMENTTYPE=ForestCavern
 ShardName=Europe 1
 WarpName=Forest Cavern
 DefLoc=3492,220,2382

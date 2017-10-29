@@ -93,6 +93,7 @@ this.LoadGate.Gates <- {
 		"#Clutter",
 		"#Sound1",
 		"Music-Newb2",
+		"Music-CheeZeeCave",
 		"Terrain-Common",
 		"Item-Fireball",
 		"Biped-Anim-Combat",
@@ -691,6 +692,7 @@ this.LoadGate.Gates <- {
 		"Music-Explore2_Part1",
 		"Music-Explore2_Part2",
 		"Music-Gothic",
+		"Music-NightCave",
 		"Music-Morningtime",
 		"Music-Mystical_Ambient1",
 		"Music-Mystical_Ambient2",
@@ -710,6 +712,7 @@ this.LoadGate.Gates <- {
 		"Music-FailingDefense",
 		"Music-Killers",
 		"Music-Tavern",
+		"Music-Tap",
 		"Music-Theme",
 		"Music-Tribal"
 	],

@@ -201,7 +201,10 @@ function attack_closest(cid) {
     if(closest_cid != -1) {
         inst.set_target(cid, closest_cid);
         inst.creature_use(cid, _AB("melee"));
+        return true;
     }
+    else
+    	return false;
 }
 
 /*  Helper function to Spawn Valkals adds. Each one will be instructed to run to a defined place,
@@ -232,13 +235,8 @@ function spawn_adds(max, adds_list) {
 		spawns.append(cid);
 		if(debug)
 			inst.info("Walking to "  + v.pos + " then attacking. " + cid + " (" + v.prop_id + ")");
-        inst.walk_then(cid, v.pos, -1, CREATURE_JOG_SPEED, 0, function(res) {
-        
-			if(debug)
-				inst.info("Walking to "  + v.pos + " then Spawning " + cid);
-			
+        inst.walk_then(cid, v.pos, v.rot, CREATURE_JOG_SPEED, 0, function(res) {
         	if(res == RES_OK) {
-	        	inst.rotate_creature(cid, v.rot);
 	            attack_closest(cid);
 	        }
 	        else {
@@ -274,7 +272,9 @@ function valkal_1_engage() {
 	inst.walk_then(cid_valkal1, loc_room_centre, -1, CREATURE_JOG_SPEED, 0, function(res) {
 		if(res == RES_OK) {
 			/* If we got to the centre of the room without aggro attack the closes */
-        	attack_closest(cid_valkal1);
+        	if(!attack_closest(cid_valkal1)) {
+        		reset_valkal1();
+        	}
         }
         
         /* Start health check loop again */
@@ -291,8 +291,19 @@ function valkal_2_engage() {
 	inst.resume_ai(cid_valkal2);
 	inst.walk_then(cid_valkal2, loc_chamber_room_centre, -1, CREATURE_JOG_SPEED, 0, function(res) {
 		if(res == RES_OK) {
-			/* If we got to the centre of the room without aggro attack the closes */
-        	attack_closest(cid_valkal2);
+			/* If we got to the centre of the room without aggro attack the closest */
+        	if(!attack_closest(cid_valkal2)) {
+        		reset_valkal2();
+        		
+				if(debug)
+					inst.info("Reset after failed attack");
+					
+					
+        		heal(cid_valkal2, 100, function() {
+        			valkal2_health();
+        		});
+        		return; 
+        	}
         }
         
         /* Start health check loop again */
@@ -319,8 +330,7 @@ function valkal_1_heal_sequence() {
     if(debug)
 		inst.info("Heal sequence");
     disengage_valkal(cid_valkal1);
-	inst.walk_then(cid_valkal1, loc_platform_centre, -1, CREATURE_JOG_SPEED, 0, function(res) {
-        inst.rotate_creature(cid_valkal1, loc_platform_rot);
+	inst.walk_then(cid_valkal1, loc_platform_centre, loc_platform_rot, CREATURE_JOG_SPEED, 0, function(res) {
         heal(cid_valkal1, 95, valkal_1_engage); 
 	});
 }
@@ -333,8 +343,7 @@ function valkal_2_heal_sequence(spawns) {
     if(debug)
 		inst.info("Heal sequence");
     disengage_valkal(cid_valkal2);
-	inst.walk_then(cid_valkal2, valkal_2_positions[3].pos, -1, CREATURE_JOG_SPEED, 0, function(res) {
-        inst.rotate_creature(cid_valkal2, valkal_2_positions[3].rot);
+	inst.walk_then(cid_valkal2, valkal_2_positions[3].pos, valkal_2_positions[3].rot, CREATURE_JOG_SPEED, 0, function(res) {
         heal(cid_valkal2, 95, function() {
         	if(debug)
         		inst.info("Looking for spot to walk to");
@@ -363,7 +372,7 @@ function is_list_dead(l) {
 function valkal_2_pick_spot(spawns) {
 	if(is_list_dead(spawns))  {
 	    if(debug)
-			inst.info("list of " + l.len() + " now dead, engaging");      	
+			inst.info("list of " + spawns.len() + " now dead, engaging");      	
     	valkal_2_engage();
 	}
     else {
@@ -372,23 +381,11 @@ function valkal_2_pick_spot(spawns) {
 			
     	/* Pick a spot to run to */
 	    local spot = valkal_2_positions[randmodrng(0, valkal_2_positions.len())];
-	    if(debug)
-			inst.info("walk to " + spot.x + " " + spot.z);      	
-			
-		inst.walk_then(cid_valkal2, spot.pos, -1, CREATURE_RUN_SPEED, 0, function(res) {
-			/* Face direction */
-			
-		    if(debug)
-				inst.info("rotate to " + spot.rot);
-			
-        	inst.rotate_creature(cid_valkal2, spot.rot);
+		inst.walk_then(cid_valkal2, spot.pos, spot.rot, CREATURE_RUN_SPEED, 0, function(res) {
 			
 	    	/* Pick a phrase to say  */
 	    	local phrase = valkal_2_phrases[randmodrng(0, valkal_2_phrases.len())];
 	    	
-		    if(debug)
-				inst.info("phrase " + phrase);
-				
 			inst.creature_chat(cid_valkal2, "s/", phrase);
         	
         	/* Pick another spot */    	
@@ -439,9 +436,8 @@ function valkal_flee() {
     disengage_valkal(cid_valkal1);
     tod("Day");
 	inst.queue(function() {
-		inst.walk_then(cid_valkal1, loc_trap_door, -1, CREATURE_RUN_SPEED, 0, function(res) {
+		inst.walk_then(cid_valkal1, loc_trap_door, 192, CREATURE_RUN_SPEED, 0, function(res) {
 			inst.creature_chat(cid_valkal1, "s/", "... Follow if you dare");
-        	inst.rotate_creature(cid_valkal1, 192);
 			inst.queue(function() {
 				inst.despawn(cid_valkal1)
 			}, 1000);
@@ -568,7 +564,7 @@ function reset_valkal2() {
     disengage_valkal(cid_valkal2);
    	inst.creature_chat(cid_valkal2, "s/", "You've failed! You've all failed! ... You'll ALWAYS fail ....");
 	valkal2_full_health_count = 0;
-	inst.walk_then(cid_valkal2, loc_chamvalkal_2_positions[3].pos, 192, CREATURE_WALK_SPEED, 0, function(res) {
+	inst.walk_then(cid_valkal2, valkal_2_positions[2].pos, valkal_2_positions[2].rot, CREATURE_RUN_SPEED, 0, function(res) {
 		inst.set_flag(cid_valkal2, SF_NON_COMBATANT, false);
 	});
 }
@@ -685,12 +681,14 @@ function valkal2_health() {
 		inst.exec(find_valkal2);
 	}
 	else if(health == 100) {
-		if(valkal2_full_health_count == 40 && inst.is_at_tether(cid_valkal2)) {
-			// After a while at full health, reset entirely
-			reset_valkal2();
+		if(phase > 0) {
+			if(valkal2_full_health_count == 40 && inst.is_at_tether(cid_valkal2)) {
+				// After a while at full health, reset entirely
+				reset_valkal2();
+			}
+			else
+				valkal2_full_health_count++;
 		}
-		else
-			valkal2_full_health_count++;
 			
 		// Slower check
 		inst.queue(valkal2_health, 5000);

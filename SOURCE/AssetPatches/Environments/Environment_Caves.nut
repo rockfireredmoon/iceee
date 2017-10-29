@@ -142,3 +142,48 @@
 	Ambient_Sound = [],
 	Ambient_Music_Delay = 180
 };
+
+::Environments.ForestCavern <- {
+	Sun = {
+		r = 0.20000001,
+		g = 0.40000001,
+		b = 0.20000001
+	},
+	Ambient = {
+		r = 0.35000001,
+		g = 0.45000001,
+		b = 0.3
+	},
+	Sky = [],
+	Fog = {
+		color = {
+			r = 0.1,
+			g = 0.24,
+			b = 0.1
+		},
+		exp = 0.005,
+		start = 0.05,
+		end = 0.80000001
+	},
+	Adjust_Channels = [
+		[
+			"Music",
+			0.3
+		],
+		[
+			"Shadows",
+			0.2
+		]
+	],
+	Ambient_Music = [
+		"Music-NightCave.ogg"
+	],
+	Ambient_Noise = [],
+	Activate_Music = [
+		"Music-NightCave.ogg"
+	],
+	Ambient_Sound = [
+		"Sound-Ambient-InTheShadows.ogg"
+	],
+	Ambient_Music_Delay = 80
+};

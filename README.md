@@ -29,11 +29,12 @@ This is a very rough list of some of the larger changes made since the official 
   * New special effects, abilities and ability functions
   * Credits now active
   * Credit Shop now active including new player made armour sets.
-  * Lots of bug fixes and minor changes
   * Ability to buy new groves
+  * Ability to buy character slots (up to 8)
   * Temporary buffs
   * Persistent buffs
   * Improved registration system
+  * Lots of bug fixes and minor changes
 
 ### Credits
 
@@ -56,7 +57,8 @@ Credits for additional audio content added to the game.
 #####Land Of Phantoms - Ambient music used in Bloodkeep
 #####Some Amount Of Evil - Ambient music used in Bloodkeep
 #####Killers - Ambient music used in penultimate fight scene in Bloodkeep
-#####CheeZeeCave - Activate music used in Southend Passage
+#####CheeZeeCave - Music used in Southend Passage
+#####NightCave - Music used in Southend Passage
 
 Kevin MacLeod (incompetech.com)
 Licensed under Creative Commons: By Attribution 3.0
@@ -76,6 +78,11 @@ Licensed under Creative Commons: By Attribution 3.0
 #####Dungeon Ambiance - https://freesound.org/people/phlair/sounds/388340/
 #####Lava loop - Audionautics - https://freesound.org/people/Audionautics/sounds/133901/
 #####Dripping Cave - dobroide - https://freesound.org/people/dobroide/sounds/396314/
+
+ And some from https://tabletopaudio.com
+ Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License.
+
+#####In The Shadows - Ambient background 
 
 ## Configuring A Server From This Repository
 
