@@ -1,0 +1,26 @@
+[BOOK]
+TITLE=Stefan's Adventurer's Journal
+
+[PAGE]
+TEXT=Day 5
+
+Our group has been idle for weeks and it seems the boss still has no new tasks for us. Surely there is some sort of adventure for us to partake in, right? Ombwah and I have discussed some of the recent happenings and he's still a bit miffed that Gyta and Jod got to investigate the old cave on the western coast while we are here sitting on our laurels in Listerm.
+
+
+Just got a message from Iona. We have a job! Finally! It seems boss Fendle wants us to investigate that old grove near the border with Grunes Tal. Apparently there are rather recent rumors going around of some sort of haunting going on there and he wants us to investigate. Snype as always will be leading our expedition as the senior member of our group. Time to get ready.
+[PAGE]
+TEXT=Day 7
+
+Didn't get to write yesterday because we were too busy dealing with the Goliaths on our way to what Iona has been calling the "Haunted Grove". She still insists it wasn't her doing and that the people of Listerm have been calling the place that. Snype has even stated that the rumors claim the haunting is being caused by the very Legions of Sheol itself and we should be on our guard. Still, rumors are rumors and both Ombwah and I are a bit skeptical. Still, we are adventurers and it's our job to find out the truth of the matter!
+[PAGE]
+TEXT=Day 8
+
+Okay, I admit it, the rumors about the Grove being haunted might be more accurate than we thought. The place gives all of us the creeps and already the trees have lost their foliage. Iona has said they seem to have been sapped of all life. We are trying to muster the courage to venture inside to see what is in there. Could Abidan's forces really have made it into the Midlands? We have decided to investigate on the morrow. I have a bad feeling about this...
+[PAGE]
+TEXT=(You notice the writing on this page is scrawled as if the writer was trembling when penning it.)
+
+Day 9
+
+This is beyond our worst nightmares! That... that Grove! We entered it this afternoon in the hopes of getting to the bottom of the rumors about it. What we found was far worse than we expected. Not only are the Legions of Sheol itself inhabiting the place, but, they are in substantial numbers. I... I am having difficulty writing this because my nerves are still on edge. I believe the feelings are mutual with everyone else as well. We have eaten very little since fleeing that horrible place! It was Snype's idea to set up camp some distance from the Grove. Hopefully we can get out of here come morning. The sooner we leave the better! As much as we are dedicated adventurers from the Guild, that grove is far beyond our ability! Ombwah noticed some of the Undead were following us as we fled. Surely we are safe now that we are far beyond the Grove's borders. I can't wait to see the morning sun tomorrow.
+
+(The page is smudged with something unidentifiable at the bottom.)
