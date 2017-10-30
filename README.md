@@ -57,8 +57,9 @@ Credits for additional audio content added to the game.
 #####Land Of Phantoms - Ambient music used in Bloodkeep
 #####Some Amount Of Evil - Ambient music used in Bloodkeep
 #####Killers - Ambient music used in penultimate fight scene in Bloodkeep
-#####CheeZeeCave - Music used in Southend Passage
-#####NightCave - Music used in Southend Passage
+#####Chee Zee Cave - Music used in Southend Passage
+#####Night Cave - Music used in Southend Passage
+#####Curse Of The Scarab - Music used in Djinn Temple
 
 Kevin MacLeod (incompetech.com)
 Licensed under Creative Commons: By Attribution 3.0

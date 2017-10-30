@@ -713,6 +713,7 @@ this.LoadGate.Gates <- {
 		"Music-Killers",
 		"Music-Tavern",
 		"Music-Tap",
+		"Music-CurseOfTheScarab",
 		"Music-Theme",
 		"Music-Tribal"
 	],

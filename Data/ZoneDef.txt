@@ -565,7 +565,7 @@ MaxLeashRange=375
 [ENTRY]
 ID=49
 NAME=Djinn Temple
-ENVIRONMENTTYPE=Dungeon1
+ENVIRONMENTTYPE=DjinnTemple
 ShardName=Europe 1
 WarpName=Djinn Temple
 DefLoc=886,60,1896
