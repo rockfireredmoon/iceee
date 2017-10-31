@@ -15,8 +15,9 @@ void CharacterServerData:: Reset(void)
 	memset(this, 0, sizeof(CharacterServerData));
 }
 
-void CharacterServerData :: SetPortalRequestDest(const char *locationName)
+void CharacterServerData :: SetPortalRequestDest(const char *locationName, int type)
 {
+	PortalRequestType = type;
 	Util::SafeCopy(PortalRequestDest, locationName, sizeof(PortalRequestDest));
 }
 

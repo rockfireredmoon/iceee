@@ -31,11 +31,12 @@ class this.Screens.GMScreen extends this.GUI.Frame
 	mSilenceOffButton = null;
 	mGMSilenceReasonPopup = null;
 	mQuestInputArea = null;
+	mSummonInputArea = null;
 	constructor()
 	{
 		this.GUI.Frame.constructor("GM Screen");
 		this.mainScreen = this._buildMainScreen();
-		this.setSize(435, 405);
+		this.setSize(435, 445);
 		this.setContentPane(this.mainScreen);
 	}
 
@@ -633,6 +634,7 @@ class this.Screens.GMScreen extends this.GUI.Frame
 		container.add(this._buildInvisibleSection());
 		container.add(this._buildSilenceSection());
 		container.add(this._buildQuestSection());
+		container.add(this._buildSummonSection());
 		return container;
 	}
 
@@ -707,6 +709,31 @@ class this.Screens.GMScreen extends this.GUI.Frame
 		return container;
 	}
 
+	function _buildSummonSection()
+	{
+		local container = this.GUI.Container();
+		this.mSummonInputArea = this.GUI.InputArea();
+		this.mSummonInputArea.setSize(150, 15);
+		local playerButton = this.GUI.Button("Player");
+		playerButton.addActionListener(this);
+		playerButton.setData("player");
+		playerButton.setReleaseMessage("onSummonCommand");
+		local zoneButton = this.GUI.Button("Zone");
+		zoneButton.addActionListener(this);
+		zoneButton.setData("zone");
+		zoneButton.setReleaseMessage("onSummonCommand");
+		local worldButton = this.GUI.Button("World");
+		worldButton.addActionListener(this);
+		worldButton.setData("world");
+		worldButton.setReleaseMessage("onSummonCommand");
+		container.add(this.GUI.Label("Player/Zone"));
+		container.add(this.mSummonInputArea);
+		container.add(playerButton);
+		container.add(zoneButton);
+		container.add(worldButton);
+		return container;
+	}
+
 	function onQuestCommand( button )
 	{
 		local selectedTarget = ::_avatar.getTargetObject();
@@ -725,6 +752,15 @@ class this.Screens.GMScreen extends this.GUI.Frame
 		{
 			this.IGIS.info("Please select a target to change their quest information.");
 		}
+	}
+
+	function onSummonCommand( button )
+	{
+		local data = button.getData();
+		::_Connection.sendQuery("gm.summon", this, [
+			data,
+			this.mSummonInputArea.getText()
+		]);
 	}
 
 }

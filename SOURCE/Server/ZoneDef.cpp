@@ -598,6 +598,16 @@ bool ZoneDefInfo :: QualifyDelete(void)
 	return false;
 }
 
+std::string ZoneDefInfo :: GetTimeOfDay() {
+	//If the environment time string is null, attempt to find the active time for the
+	//current zone, if applicable.
+	if(mEnvironmentCycle == true)
+		return g_EnvironmentCycleManager.GetCurrentTimeOfDay();
+	else if(mTimeOfDay.length() > 0)
+		return mTimeOfDay;
+	return "Day";
+}
+
 
 bool ZoneDefInfo :: AllowSceneryAudits(void)
 {

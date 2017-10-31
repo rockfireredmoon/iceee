@@ -2614,7 +2614,7 @@ void CreatureInstance :: PortalRequest(CreatureInstance *caster, const char *int
 	if(!(serverFlags & ServerFlags::IsPlayer))
 		return;
 
-	simulatorPtr->pld.SetPortalRequestDest(externalname);
+	simulatorPtr->pld.SetPortalRequestDest(externalname, 0);
 
 	if(caster == this)
 		bcm.AddEvent2(simulatorPtr->InternalID, (long)simulatorPtr, 0, BCM_RunPortalRequest, actInst);

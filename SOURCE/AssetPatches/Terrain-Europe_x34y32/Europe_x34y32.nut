@@ -1,3 +1,4 @@
-this.TerrainPageDef.x52y82 <- {
-	Environment = "Swineland"
+this.TerrainPageDef.x34y32 <- {
+    Environment = "IceSwineland"
 };
+

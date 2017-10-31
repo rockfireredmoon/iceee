@@ -261,6 +261,7 @@ public:
 	int handle_query_quest_getcompletequest(void);
 	int handle_query_quest_complete(void);
 	int handle_query_quest_leave(void);
+	int handle_query_summon(void);
 	int handle_query_trade_start(void);
 	int protected_helper_query_trade_start(void);
 	int handle_query_trade_items(void);
@@ -427,7 +428,6 @@ public:
 	void ChangeProtocol(int newProto);
 	bool ValidPointers(void);
 	void SendSetAvatar(int CreatureID);
-	void SendZoneInfo(void);
 	const char * GetTimeOfDay(void);
 	void CheckMapUpdate(bool force);
 	void UpdateSocialEntry(bool newOnlineStatus, bool onlyUpdateFriendList);

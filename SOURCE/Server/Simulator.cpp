@@ -2043,7 +2043,10 @@ bool SimulatorThread :: MainCallSetZone(int newZoneID, int newInstanceID, bool s
 
 	Util::SafeFormat(pld.CurrentZone, sizeof(pld.CurrentZone), "[%d-%d-0]", pld.CurrentInstanceID, pld.CurrentZoneID);
 	pld.LastMapTick = MapTickChange;
-	SendZoneInfo();
+
+	int wpos = PrepExt_SendEnvironmentUpdateMsg(SendBuf, creatureInst->actInst, pld.CurrentZone, pld.zoneDef, creatureInst->CurrentX, creatureInst->CurrentZ, 0);
+	wpos += PrepExt_SetTimeOfDay(&SendBuf[wpos],  creatureInst->actInst->GetTimeOfDay().c_str());
+	AttemptSend(SendBuf, wpos);
 
 	CheckSpawnTileUpdate(true);
 
@@ -2270,27 +2273,6 @@ void SimulatorThread :: MainCallHelperInstanceRegister(int ZoneID, int InstanceI
 		LogMessageL(MSG_SHOW, "[CRITICAL] InstanceRegister() failed (Zone:%d)", ZoneID);
 		creatureInst = &defcInst;
 	}
-}
-
-void SimulatorThread :: SendZoneInfo(void)
-{
-	//Sends zone information to the client.  This includes terrain and
-	//environment info.
-
-	if(creatureInst == NULL)
-	{
-		LogMessageL(MSG_ERROR, "[ERROR] SendSetMap() creature instance is NULL");
-		return;
-	}
-	if(creatureInst->actInst == NULL)
-	{
-		LogMessageL(MSG_ERROR, "[ERROR] SendSetMap() creature active instance is NULL");
-		return;
-	}
-
-	int wpos = PrepExt_SendEnvironmentUpdateMsg(SendBuf, creatureInst->actInst, pld.CurrentZone, pld.zoneDef, creatureInst->CurrentX, creatureInst->CurrentZ, 0);
-	wpos += PrepExt_SetTimeOfDay(&SendBuf[wpos], creatureInst->actInst->GetTimeOfDay().c_str());
-	AttemptSend(SendBuf, wpos);
 }
 
 const char * SimulatorThread :: GetTimeOfDay(void)
@@ -2663,6 +2645,8 @@ bool SimulatorThread :: HandleQuery(int &PendingData)
 		PendingData = handle_query_quest_leave();
 	else if(query.name.compare("quest.hack") == 0)
 		PendingData = handle_query_quest_hack();
+	else if(query.name.compare("gm.summon") == 0)
+		PendingData = handle_query_summon();
 	else if(query.name.compare("henge.setDest") == 0)
 		PendingData = handle_query_henge_setDest();
 	else if(query.name.compare("portal.acceptRequest") == 0)
@@ -3738,9 +3722,39 @@ int SimulatorThread :: handle_query_map_marker(void)
 				qRes.push_back(STRINGLIST());
 				qRes.back().push_back(qd->title.c_str());
 				Util::SafeFormat(Aux1, sizeof(Aux1), "(%d %d %d)", qd->giverX, qd->giverY, qd->giverZ);
-//				LogMessageL(MSG_SHOW, "FOUND MARKER: %s", Aux1);
 				qRes.back().push_back(Aux1);
 				qRes.back().push_back("QuestGiver");
+			}
+
+		}
+		else if(query.args[i].compare("Henge") == 0)
+		{
+			/* All henges in zone */
+			for(std::vector<InteractObject>::iterator it = g_InteractObjectContainer.objList.begin(); it != g_InteractObjectContainer.objList.end(); it++) {
+				if((*it).opType == InteractObject::TYPE_HENGE && (*it).WarpID == pld.CurrentZoneID) {
+					qRes.push_back(STRINGLIST());
+					qRes.back().push_back((*it).useMessage);
+					Util::SafeFormat(Aux1, sizeof(Aux1), "(%d %d %d)", (*it).WarpX, (*it).WarpY, (*it).WarpZ);
+					qRes.back().push_back(Aux1);
+					qRes.back().push_back("Henge");
+				}
+			}
+		}
+		else if(query.args[i].compare("Sanctuary") == 0)
+		{
+			/* All sanctuaries within 1000 */
+			ZoneMarkerData *zmd = g_ZoneMarkerDataManager.GetPtrByZoneID(pld.CurrentZoneID);
+			for(std::vector<WorldCoord>::iterator it = zmd->sanctuary.begin(); it != zmd->sanctuary.end(); it++) {
+				int xlen = abs((int)(*it).x - creatureInst->CurrentX);
+				int zlen = abs((int)(*it).z - creatureInst->CurrentZ);
+				double dist = sqrt((double)((xlen * xlen) + (zlen * zlen)));
+				if(dist < 1000) {
+					qRes.push_back(STRINGLIST());
+					qRes.back().push_back((*it).descName.c_str());
+					Util::SafeFormat(Aux1, sizeof(Aux1), "(%d %d %d)", (int)((*it).x), (int)((*it).y), (int)((*it).z));
+					qRes.back().push_back(Aux1);
+					qRes.back().push_back("Sanctuary");
+				}
 			}
 		}
 	}
@@ -8980,6 +8994,75 @@ int SimulatorThread :: handle_query_quest_leave(void)
 	return PrepExt_QueryResponseString(SendBuf, query.ID, Aux1);
 }
 
+int SimulatorThread :: handle_query_summon(void)
+{
+
+	if(!CheckPermissionSimple(Perm_Account, Permission_Sage) && !CheckPermissionSimple(Perm_Account, Permission_Admin))
+		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
+
+	std::string op = query.GetString(0);
+	std::string data = query.GetString(1);
+
+	if(op.compare("player") == 0) {
+
+		SimulatorThread *sim = GetSimulatorByCharacterName(data.c_str());
+		if(sim == NULL) {
+			return PrepExt_QueryResponseError(SendBuf, query.ID, "Unknown player.");
+		}
+		if(creatureInst != sim->creatureInst) {
+			sim->pld.SetPortalRequestDest(creatureInst->css.display_name, 1);
+			sim->AttemptSend(GSendBuf, PrepExt_CreatureEventPortalRequest(GSendBuf, sim->creatureInst->CreatureID, creatureInst->css.display_name, creatureInst->css.display_name));
+		}
+
+	}
+	else if(op.compare("zone") == 0) {
+		int zId;
+		if(data.length() == 0) {
+			zId = creatureInst->actInst->mZone;
+		}
+		else {
+			ZoneDefInfo *zd = g_ZoneDefManager.GetPointerByPartialWarpName(data.c_str());
+			if(zd == NULL) {
+				return PrepExt_QueryResponseError(SendBuf, query.ID, "Unknown zone.");
+			}
+			zId = zd->mID;
+		}
+
+		SIMULATOR_IT it;
+		for(it = Simulator.begin(); it != Simulator.end(); ++it)
+		{
+			if(it->isConnected == false)
+				continue;
+
+			if(it->LoadStage != LOADSTAGE_GAMEPLAY)
+				continue;
+
+			if(creatureInst != it->creatureInst && zId == it->creatureInst->actInst->mZone) {
+				it->pld.SetPortalRequestDest(creatureInst->css.display_name, 1);
+				it->AttemptSend(GSendBuf, PrepExt_CreatureEventPortalRequest(GSendBuf, it->creatureInst->CreatureID, creatureInst->css.display_name, creatureInst->css.display_name));
+			}
+		}
+	}
+	else if(op.compare("world") == 0) {
+		SIMULATOR_IT it;
+		for(it = Simulator.begin(); it != Simulator.end(); ++it)
+		{
+			if(it->isConnected == false)
+				continue;
+
+			if(it->LoadStage != LOADSTAGE_GAMEPLAY)
+				continue;
+
+			if(creatureInst != it->creatureInst) {
+				it->pld.SetPortalRequestDest(creatureInst->css.display_name, 1);
+				it->AttemptSend(GSendBuf, PrepExt_CreatureEventPortalRequest(GSendBuf, it->creatureInst->CreatureID, creatureInst->css.display_name, creatureInst->css.display_name));
+			}
+		}
+	}
+
+	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
+}
+
 int SimulatorThread :: handle_query_quest_hack(void)
 {
 
@@ -13176,10 +13259,42 @@ void SimulatorThread :: RunPortalRequest(void)
 		return;
 	}
 
-	InteractObject *iobj = g_InteractObjectContainer.GetHengeByTargetName(pld.PortalRequestDest);
-	if(iobj == NULL)
-	{
-		Util::SafeFormat(Aux1, sizeof(Aux1), "Portal request target not found: %s", pld.PortalRequestDest);
+	int zone = 0;
+	int x;
+	int y;
+	int z;
+
+	if(pld.PortalRequestType == 0) {
+
+		InteractObject *iobj = g_InteractObjectContainer.GetHengeByTargetName(pld.PortalRequestDest);
+		if(iobj == NULL)
+		{
+			Util::SafeFormat(Aux1, sizeof(Aux1), "Portal request target not found: %s", pld.PortalRequestDest);
+			LogMessageL(MSG_WARN, "[WARNING] %s", Aux1);
+			SendInfoMessage(Aux1, INFOMSG_ERROR);
+			return;
+		}
+
+		zone = iobj->WarpID;
+		x = iobj->WarpX;
+		y = iobj->WarpY;
+		z = iobj->WarpZ;
+	}
+	else if(pld.PortalRequestType == 1) {
+		SimulatorThread *sim = GetSimulatorByCharacterName(pld.PortalRequestDest);
+		if(sim == NULL  || sim->LoadStage != LOADSTAGE_GAMEPLAY) {
+			Util::SafeFormat(Aux1, sizeof(Aux1), "Portal request target not found: %s", pld.PortalRequestDest);
+			LogMessageL(MSG_WARN, "[WARNING] %s", Aux1);
+			SendInfoMessage(Aux1, INFOMSG_ERROR);
+			return;
+		}
+		x = sim->creatureInst->CurrentX + randmodrng(5, 20);
+		y = sim->creatureInst->CurrentY;
+		z = sim->creatureInst->CurrentZ + randmodrng(5, 20);
+		zone =sim->creatureInst->actInst->mZone;
+	}
+	else {
+		Util::SafeFormat(Aux1, sizeof(Aux1), "Portal request type not found: %s (%d)", pld.PortalRequestDest, pld.PortalRequestType);
 		LogMessageL(MSG_WARN, "[WARNING] %s", Aux1);
 		SendInfoMessage(Aux1, INFOMSG_ERROR);
 		return;
@@ -13188,9 +13303,9 @@ void SimulatorThread :: RunPortalRequest(void)
 	int wpos = PrepExt_RemoveCreature(SendBuf, creatureInst->CreatureID);
 	creatureInst->actInst->LSendToLocalSimulator(SendBuf, wpos, creatureInst->CurrentX, creatureInst->CurrentZ, InternalID);
 
-	MainCallSetZone(iobj->WarpID, 0, false);
+	MainCallSetZone(zone, 0, false);
 
-	SetPosition(iobj->WarpX, iobj->WarpY, iobj->WarpZ, 1);
+	SetPosition(x, y, z, 1);
 	CheckSpawnTileUpdate(true);
 	CheckMapUpdate(true);
 	pld.ClearPortalRequestDest();

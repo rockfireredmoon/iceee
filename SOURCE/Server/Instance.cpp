@@ -434,6 +434,20 @@ int MapLocationHandler :: AddLocation(int zone, MapLocationDef &data)
 	return found;
 }
 
+
+void MapLocationHandler :: GetZone(int zone, std::vector<MapLocationDef> &defs)
+{
+	size_t a;
+	for(a = 0; a < mLocationSet.size(); a++)
+	{
+		if(mLocationSet[a].mZone == zone) {
+			for(std::vector<MapLocationDef>::iterator it = mLocationSet[a].mLocationList.begin(); it != mLocationSet[a].mLocationList.end(); it++) {
+				defs.push_back(*it);
+			}
+		}
+	}
+}
+
 int MapLocationHandler :: SearchLocation(int zone, int x, int z)
 {
 	int found = ZoneExist(zone);
@@ -970,13 +984,7 @@ std::string ActiveInstance :: GetTimeOfDay() {
 	if(mTimeOfDay.length() != 0)
 		return mTimeOfDay;
 
-	//If the environment time string is null, attempt to find the active time for the
-	//current zone, if applicable.
-	if(mZoneDefPtr->mEnvironmentCycle == true)
-		return g_EnvironmentCycleManager.GetCurrentTimeOfDay();
-	else if(mZoneDefPtr->mTimeOfDay.length() > 0)
-		return mZoneDefPtr->mTimeOfDay;
-	return "Day";
+	return mZoneDefPtr->GetTimeOfDay();
 }
 
 int ActiveInstance :: ProcessMessage(MessageComponent *msg)

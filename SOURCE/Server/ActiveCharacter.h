@@ -63,6 +63,7 @@ struct CharacterServerData
 	short CurrentMapInt;    //Internal Mapdef index
 	short LastMapTick;      //Current tick of the map changing system
 	char PortalRequestDest[32];
+	int PortalRequestType;
 	char CurrentEnv[40]; //Internal current environment
 
 	int DeltaY;
@@ -91,7 +92,7 @@ struct CharacterServerData
 	
 	CharacterServerData();
 	void Reset(void);
-	void SetPortalRequestDest(const char *locationName);
+	void SetPortalRequestDest(const char *locationName, int type);
 	void ClearPortalRequestDest(void);
 	void UpdateNextIdleCheckTime(void);
 	bool VerifyIdle(void);

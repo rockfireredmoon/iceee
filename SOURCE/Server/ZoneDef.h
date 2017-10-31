@@ -150,6 +150,7 @@ public:
 	bool QualifyDelete(void);
 	std::string GetTileEnvironment(int x, int y);
 	std::string GetDropRateProfile();
+	std::string GetTimeOfDay();
 	void SetDropRateProfile(std::string profile);
 
 	bool AllowSceneryAudits(void);

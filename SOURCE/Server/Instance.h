@@ -169,6 +169,7 @@ public:
 	vector<MapLocationSet> mLocationSet;
 	int AddLocation(int zone, MapLocationDef &data);
 	int ZoneExist(int zone);
+	void GetZone(int zone, std::vector<MapLocationDef> &defs);
 	int SearchLocation(int zone, int x, int z);
 	const char* GetInternalMapName(int zone, int x, int z);
 	int ResolveItems(void);

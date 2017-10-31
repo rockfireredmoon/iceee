@@ -549,6 +549,7 @@ class States.CharacterSelectionState extends State
 		
 		::_Environment.setOverride("CloudyDay");
 		::_Environment.setTimeOfDay("Daytime");
+		this.Audio.playMusic("Music-Theme.ogg", Audio.DEFAULT_CHANNEL);
 		
 		// Select the last picked character
 		

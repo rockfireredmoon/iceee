@@ -281,7 +281,7 @@ this.MapDef <- {
 					v1 = 78720,
 					numPagesAcross = 16,
 					numPagesDown = 9,
-					priority = 5,
+					priority = 15,
 					parentMapImage = "MapWorldBG",
 					extraMarkers = [
 						{
@@ -749,14 +749,19 @@ this.MapDef <- {
 					parentMapImage = "MapWorldBG",
 					extraMarkers = [
 						{
-							name = "1 Stub",
-							x = 350,
-							y = 100
+							name = "Junk Palace",
+							x = 216,
+							y = 256
 						},
 						{
-							name = "2 Stub",
-							x = 400,
-							y = 150
+							name = "Skrill Queen Lair",
+							x = 350,
+							y = 76
+						},
+						{
+							name = "Valkal's Bloodkeep",
+							x = 548,
+							y = 249
 						}
 					]
 				},
