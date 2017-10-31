@@ -1344,10 +1344,10 @@ Cost=5300
 Name=henge_sanct_grunes
 Type=henge
 ObjectID=3599
-WarpTo=50863,739,67641,9
-Facing=140
+WarpTo=50711,930,60757,9
 Message=Grunes Tal
 Cost=6300
+Facing=252
 
 [ENTRY]
 Name=grunes_to_wailingcrypt
