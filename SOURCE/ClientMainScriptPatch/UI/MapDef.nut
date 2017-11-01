@@ -762,6 +762,11 @@ this.MapDef <- {
 							name = "Valkal's Bloodkeep",
 							x = 548,
 							y = 249
+						},
+						{
+							name = "The Mausoleum",
+							x = 443,
+							y = 204
 						}
 					]
 				},
