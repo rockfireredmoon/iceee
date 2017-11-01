@@ -1586,6 +1586,7 @@ ai_package=nothing
 
 [ENTRY]
 ID=7877
+appearance=p1:{["a"]="Prop-Interact_Rectangle",["sz"]="1.0"}
 level=1
 display_name=Entrance To The Mausoleum
 profession=1
