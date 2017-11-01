@@ -1,4 +1,12 @@
 [ENTRY]
+ID=1154702
+Asset=Effects#Par-Snow1-Emitter
+Name=
+Pos=78498.7,824.053,62790.4
+Orient=0,-0.342898,0,0.939373
+Scale=1,1,1
+
+[ENTRY]
 ID=151029430
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled

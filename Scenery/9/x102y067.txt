@@ -103,6 +103,14 @@ Scale=1,1,1
 spawnPackage=#F3664
 
 [ENTRY]
+ID=1154682
+Asset=Sound?SOUND=crackling_fire_loop.ogg&GAIN=1
+Name=
+Pos=76822.6,991.801,50280.5
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
 ID=151023967
 Asset=Prop-Campfires#Prop-Campfire2
 Name=Untitled

@@ -1,4 +1,12 @@
 [ENTRY]
+ID=1154475
+Asset=Prop-ModAddons1#Par-Snow3-Emitter
+Name=Untitled
+Pos=77906.4,797.201,63291
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
 ID=151019160
 Asset=CL-SnowyPine3#CL-SnowyPine3
 Name=Untitled

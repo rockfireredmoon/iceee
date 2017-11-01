@@ -1,7 +1,7 @@
 [ENTRY]
 ID=1154125
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=76907.9,810.291,63634.8
 Orient=0,0,0,1
 Scale=1,1,1
@@ -11,7 +11,7 @@ link=151029443,1
 [ENTRY]
 ID=1154126
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=77155.4,810.433,63532.4
 Orient=0,0,0,1
 Scale=1,1,1
@@ -21,7 +21,7 @@ link=151029443,1
 [ENTRY]
 ID=1154127
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=77001,809.737,63388.7
 Orient=0,0,0,1
 Scale=1,1,1
@@ -32,12 +32,28 @@ link=151029445,1
 [ENTRY]
 ID=1154128
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=76881.3,808.846,63296.4
 Orient=0,0,0,1
 Scale=1,1,1
 links_count=1
 link=1154127,1
+
+[ENTRY]
+ID=1154698
+Asset=Par-Snow1-Emitter
+Name=
+Pos=76988.7,825.531,63554.7
+Orient=0,0.29074,0,0.956802
+Scale=1,1,1
+
+[ENTRY]
+ID=1154705
+Asset=Effects#Par-Snow1-Emitter
+Name=
+Pos=76997.7,827.69,63141.5
+Orient=0,0.314567,0,0.949235
+Scale=1,1,1
 
 [ENTRY]
 ID=151018873

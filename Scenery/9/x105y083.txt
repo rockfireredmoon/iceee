@@ -1,7 +1,7 @@
 [ENTRY]
 ID=1154454
 Asset=CL-Yeti_Camp#CL-Yeti_Camp1
-Name=
+Name=Untitled
 Pos=79021.2,924.754,62425.3
 Orient=0,0,0,1
 Scale=1,1,1
@@ -9,7 +9,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1154455
 Asset=Prop-Skulls#Prop-Skull_Mammal
-Name=
+Name=Untitled
 Pos=78901,934.167,62979.4
 Orient=0.0231616,0.933872,-0.351512,0.0615342
 Scale=1,1,1
@@ -17,7 +17,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1154456
 Asset=Prop-Bones#Prop-Bones_Arm1
-Name=
+Name=Untitled
 Pos=78899,922.768,62980.4
 Orient=0,-0.998444,0,0.0557674
 Scale=1.4,1.4,1.4
@@ -25,8 +25,24 @@ Scale=1.4,1.4,1.4
 [ENTRY]
 ID=1154458
 Asset=Prop-Snowy_Rock#Prop-Snowy_Rock3
-Name=
+Name=Untitled
 Pos=78897.3,922.716,62981.7
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
+ID=1154703
+Asset=Effects#Par-Snow1-Emitter
+Name=
+Pos=78960,945.396,62578.8
+Orient=0,0.366273,0,0.930508
+Scale=1,1,1
+
+[ENTRY]
+ID=1154704
+Asset=Effects#Par-Snow1-Emitter
+Name=
+Pos=78893,963.513,62905.2
 Orient=0,0,0,1
 Scale=1,1,1
 

@@ -1,6 +1,16 @@
 [ENTRY]
+ID=1154678
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=Untitled
+Pos=2221.58,202.288,886.146
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#F16083
+
+[ENTRY]
 ID=1308622849
 Asset=CL-UndeadTree3#CL-UndeadTree3
+Name=Untitled
 Pos=2070.54,265.564,584.107
 Orient=0,-0.448423,0,0.893822
 Scale=1,1,1
@@ -9,6 +19,7 @@ Flags=1
 [ENTRY]
 ID=1308622902
 Asset=Prop-Burnt_Pine4
+Name=Untitled
 Pos=2378.5,371.543,264.799
 Orient=0,0.539632,0,0.841901
 Scale=4.325,4.325,4.325
@@ -17,6 +28,7 @@ Flags=1
 [ENTRY]
 ID=1308622903
 Asset=Prop-Burnt_Pine4
+Name=Untitled
 Pos=2695.55,345.42,177.329
 Orient=0,0,0,1
 Scale=3.125,3.125,3.125
@@ -25,6 +37,7 @@ Flags=1
 [ENTRY]
 ID=1308622904
 Asset=Prop-Burnt_Pine4
+Name=Untitled
 Pos=2922.58,469.881,165.376
 Orient=0,0,0,1
 Scale=3.125,3.125,3.125
@@ -33,6 +46,7 @@ Flags=1
 [ENTRY]
 ID=1308622906
 Asset=Prop-Burnt_Pine4
+Name=Untitled
 Pos=2995.85,412.281,123.155
 Orient=0,-0.844162,0,0.536088
 Scale=3.125,3.125,3.125
@@ -41,6 +55,7 @@ Flags=1
 [ENTRY]
 ID=1308622944
 Asset=CL-UndeadTree3
+Name=Untitled
 Pos=2797.58,204.616,608.573
 Orient=0,-0.814341,0,-0.580387
 Scale=1.175,1.175,1.175
@@ -49,6 +64,7 @@ Flags=1
 [ENTRY]
 ID=1308622945
 Asset=Prop-Burnt_Pine2
+Name=Untitled
 Pos=2263.51,444.443,404.065
 Orient=0,0.710353,0,0.703845
 Scale=2.225,2.225,2.225
@@ -57,6 +73,7 @@ Flags=1
 [ENTRY]
 ID=1308623139
 Asset=Prop-Lamp_Post_NB1
+Name=Untitled
 Pos=2339.65,205.971,943.282
 Orient=0,0.974971,0,-0.22233
 Scale=2.25,2.25,2.25
@@ -64,6 +81,7 @@ Scale=2.25,2.25,2.25
 [ENTRY]
 ID=1308623140
 Asset=Prop-Fence-Stone_Blue2
+Name=Untitled
 Pos=2397.49,210.765,924.525
 Orient=0,0.984865,0,-0.173325
 Scale=1.25,1.25,1.25
@@ -71,6 +89,7 @@ Scale=1.25,1.25,1.25
 [ENTRY]
 ID=1308623141
 Asset=Prop-Fence-Stone_Blue1
+Name=Untitled
 Pos=2447.01,203.472,920.052
 Orient=0.0595377,0.994163,-0.0680414,-0.058865
 Scale=1.25,1.25,1.25
@@ -78,6 +97,7 @@ Scale=1.25,1.25,1.25
 [ENTRY]
 ID=1308623142
 Asset=Prop-Fence-Stone_Blue1
+Name=Untitled
 Pos=2292.16,212.28,979.603
 Orient=-0.0715193,0.270682,0.0220538,0.959755
 Scale=1.25,1.25,1.25
@@ -85,6 +105,7 @@ Scale=1.25,1.25,1.25
 [ENTRY]
 ID=1308623143
 Asset=Prop-Fence-Stone_Blue1
+Name=Untitled
 Pos=2216.62,211.258,870.301
 Orient=-0.0715193,0.270682,0.0220538,0.959755
 Scale=1.25,1.25,1.25
@@ -92,6 +113,7 @@ Scale=1.25,1.25,1.25
 [ENTRY]
 ID=1308623144
 Asset=Prop-Fence-Stone_Blue2
+Name=Untitled
 Pos=2311.09,211.532,824.216
 Orient=0,0.984865,0,-0.173325
 Scale=1.25,1.25,1.25
@@ -99,6 +121,7 @@ Scale=1.25,1.25,1.25
 [ENTRY]
 ID=1308623145
 Asset=Prop-Fence-Stone_Blue1
+Name=Untitled
 Pos=2351,203.92,796.159
 Orient=0.0742636,0.950197,-0.0515683,-0.298248
 Scale=1.25,1.25,1.25
@@ -106,6 +129,7 @@ Scale=1.25,1.25,1.25
 [ENTRY]
 ID=1308623161
 Asset=CL-GrunsBush_4#CL-GrunsBush_4
+Name=Untitled
 Pos=2246.57,204.635,871.829
 Orient=0,0,0,1
 Scale=1,1,1
@@ -113,6 +137,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1308623162
 Asset=CL-GrunsBush_3#CL-GrunsBush_3
+Name=Untitled
 Pos=2296.79,206.581,964.006
 Orient=0,0.328769,0,0.94441
 Scale=1,1,1
@@ -120,6 +145,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1308623163
 Asset=CL-GrunsBush_3
+Name=Untitled
 Pos=2366.4,204.751,920.237
 Orient=0,-0.983701,0,0.179813
 Scale=0.525,0.525,0.525
@@ -127,6 +153,7 @@ Scale=0.525,0.525,0.525
 [ENTRY]
 ID=1308623164
 Asset=CL-GrunsBush_5#CL-GrunsBush_5
+Name=Untitled
 Pos=2638.82,219.194,935.035
 Orient=0,0,0,1
 Scale=1,1,1
@@ -134,6 +161,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1308623165
 Asset=CL-GrunsBush_2#CL-GrunsBush_2
+Name=Untitled
 Pos=2062.73,214.488,916.836
 Orient=0,0,0,1
 Scale=1,1,1
@@ -141,6 +169,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1308623225
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=2230,204.624,895
 Orient=0,0,0,1
 Scale=1,1,1
@@ -152,6 +181,7 @@ link=1308623475,1
 [ENTRY]
 ID=1308623226
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=2250,204.624,945
 Orient=0,0,0,1
 Scale=1,1,1
@@ -162,6 +192,7 @@ link=1308623228,1
 [ENTRY]
 ID=1308623227
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=2618.53,204.623,733.699
 Orient=0,0,0,1
 Scale=1,1,1
@@ -172,6 +203,7 @@ link=1308623229,1
 [ENTRY]
 ID=1308623228
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=2600.3,204.166,805.078
 Orient=0,0,0,1
 Scale=1,1,1
@@ -183,6 +215,7 @@ link=1308623476,1
 [ENTRY]
 ID=1308623229
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=2901.88,204.623,646.612
 Orient=0,0,0,1
 Scale=1,1,1
@@ -194,6 +227,7 @@ link=1308623477,1
 [ENTRY]
 ID=1308623230
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=2924.13,205.668,872.286
 Orient=0,0,0,1
 Scale=1,1,1
@@ -204,6 +238,7 @@ link=1308623229,1
 [ENTRY]
 ID=1308623418
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=2005,208.782,970
 Orient=0,0,0,1
 Scale=1,1,1
@@ -214,6 +249,7 @@ link=1308623422,1
 [ENTRY]
 ID=1308623422
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=2130,205.225,930
 Orient=0,0,0,1
 Scale=1,1,1
@@ -225,16 +261,18 @@ link=1308623423,1
 [ENTRY]
 ID=1308623423
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=2130,200.433,930
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=3_hg_undeadGeneralFront
 links_count=1
 link=1308623422,1
-spawnPackage=3_hg_undeadGeneralFront
 
 [ENTRY]
 ID=1308623426
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=2020,205.858,930
 Orient=0,-0.599358,0,0.800481
 Scale=1,1,1
@@ -243,36 +281,40 @@ spawnPackage=3_hg_undeadGeneralFront
 [ENTRY]
 ID=1308623475
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=2235,199.746,895
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=3_hg_undeadGeneralFront
 links_count=1
 link=1308623225,1
-spawnPackage=3_hg_undeadGeneralFront
 
 [ENTRY]
 ID=1308623476
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=2605,199.288,805
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=3_hg_undeadGeneralFront
 links_count=1
 link=1308623228,1
-spawnPackage=3_hg_undeadGeneralFront
 
 [ENTRY]
 ID=1308623477
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=2905,199.722,645
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=3_hg_undeadGeneralFront
 links_count=1
 link=1308623229,1
-spawnPackage=3_hg_undeadGeneralFront
 
 [ENTRY]
 ID=1308623478
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=2331.07,199.746,926.462
 Orient=0,0.86144,0,0.50786
 Scale=1,1,1
@@ -281,6 +323,7 @@ spawnPackage=3_hg_undeadGeneralFront
 [ENTRY]
 ID=1308623479
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=2802.55,199.722,647.088
 Orient=0,-0.737931,0,0.674876
 Scale=1,1,1
@@ -289,16 +332,18 @@ spawnPackage=3_hg_undeadGeneralFront
 [ENTRY]
 ID=1308623480
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=2670.5,205.165,594.217
 Orient=0,-0.707107,0,0.707107
 Scale=1,1,1
+spawnPackage=3_hg_vultures_24_25
 links_count=1
 link=1308623481,1
-spawnPackage=3_hg_vultures_24_25
 
 [ENTRY]
 ID=1308623481
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=2680,204.623,670
 Orient=0,0,0,1
 Scale=1,1,1
@@ -309,6 +354,7 @@ link=1308623482,1
 [ENTRY]
 ID=1308623482
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=2590,204.651,595
 Orient=0,0,0,1
 Scale=1,1,1
@@ -319,6 +365,7 @@ link=1308623483,1
 [ENTRY]
 ID=1308623483
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=2590,204.613,710
 Orient=0,0,0,1
 Scale=1,1,1
@@ -329,6 +376,7 @@ link=1308623484,1
 [ENTRY]
 ID=1308623484
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=2495,207.541,720
 Orient=0,0,0,1
 Scale=1,1,1
@@ -338,6 +386,7 @@ link=1308623483,1
 [ENTRY]
 ID=1308623825
 Asset=Prop-Fence-Stone_Blue2
+Name=Untitled
 Pos=2397.49,210.765,924.525
 Orient=0,0.984865,0,-0.173325
 Scale=1.25,1.25,1.25
@@ -345,6 +394,7 @@ Scale=1.25,1.25,1.25
 [ENTRY]
 ID=1308623829
 Asset=Prop-Sanctuary_Stone
+Name=Untitled
 Pos=2039.05,265.957,482.774
 Orient=0,-0.496881,0,0.867819
 Scale=1,1,1
@@ -352,6 +402,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1308623830
 Asset=Manipulator-Sanctuary
+Name=Untitled
 Pos=2038.82,275.957,480.539
 Orient=0,0,0,1
 Scale=1,1,1

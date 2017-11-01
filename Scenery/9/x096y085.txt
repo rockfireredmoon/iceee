@@ -1,4 +1,12 @@
 [ENTRY]
+ID=1154689
+Asset=Effects#Par-Snow1-Emitter
+Name=
+Pos=72128.1,1288.41,64174.4
+Orient=0,-0.366273,0,0.930508
+Scale=1,1,1
+
+[ENTRY]
 ID=151031029
 Asset=Manipulator-SpawnPoint
 Name=Untitled

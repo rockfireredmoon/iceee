@@ -1,6 +1,16 @@
 [ENTRY]
+ID=1154680
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=2535.11,207.141,2778.35
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#F16085
+
+[ENTRY]
 ID=1308622859
 Asset=CL-UndeadTree3
+Name=Untitled
 Pos=2004.07,194.263,2059.89
 Orient=0,-0.814341,0,-0.580387
 Scale=1.175,1.175,1.175
@@ -9,6 +19,7 @@ Flags=1
 [ENTRY]
 ID=1308622874
 Asset=Prop-Burnt_Pines#Prop-Burnt_Pine1
+Name=Untitled
 Pos=2981.42,406.051,2122.24
 Orient=0,0,0,1
 Scale=2.55,2.55,2.55
@@ -17,6 +28,7 @@ Flags=1
 [ENTRY]
 ID=1308622875
 Asset=Prop-Burnt_Pine4
+Name=Untitled
 Pos=2927.41,427.37,2134.4
 Orient=0,-0.35695,0,0.934124
 Scale=2.15,2.15,2.15
@@ -25,6 +37,7 @@ Flags=1
 [ENTRY]
 ID=1308622876
 Asset=Prop-Burnt_Pine4
+Name=Untitled
 Pos=2888.3,353.314,2071.93
 Orient=0,-0.443949,0,0.896052
 Scale=2.15,2.15,2.15
@@ -33,6 +46,7 @@ Flags=1
 [ENTRY]
 ID=1308622878
 Asset=Prop-Burnt_Pine4
+Name=Untitled
 Pos=2594.81,514.045,2114.83
 Orient=0,-0.443949,0,0.896052
 Scale=2.15,2.15,2.15
@@ -41,6 +55,7 @@ Flags=1
 [ENTRY]
 ID=1308622879
 Asset=Prop-Burnt_Pine4
+Name=Untitled
 Pos=2615.11,521.656,2033.61
 Orient=0,-0.999942,0,0.010795
 Scale=2.15,2.15,2.15
@@ -49,6 +64,7 @@ Flags=1
 [ENTRY]
 ID=1308622901
 Asset=Prop-Burnt_Pine2
+Name=Untitled
 Pos=2209.36,440.591,2108.94
 Orient=0,0,0,1
 Scale=3,3,3
@@ -57,6 +73,7 @@ Flags=1
 [ENTRY]
 ID=1308622911
 Asset=Prop-Burnt_Pine4
+Name=Untitled
 Pos=2240.48,343.56,2734.12
 Orient=0,-0.443949,0,0.896052
 Scale=2.15,2.15,2.15
@@ -65,6 +82,7 @@ Flags=1
 [ENTRY]
 ID=1308622912
 Asset=Prop-Burnt_Pine4
+Name=Untitled
 Pos=2006.78,431.706,2868.7
 Orient=0,0.514135,0,0.857709
 Scale=2.15,2.15,2.15
@@ -73,6 +91,7 @@ Flags=1
 [ENTRY]
 ID=1308622913
 Asset=Prop-Burnt_Pine4
+Name=Untitled
 Pos=2248.16,343.507,2692.93
 Orient=0,-0.443949,0,0.896052
 Scale=1.3,1.3,1.3
@@ -81,6 +100,7 @@ Flags=1
 [ENTRY]
 ID=1308622948
 Asset=Prop-Burnt_Pine4
+Name=Untitled
 Pos=2157.75,343.128,2890.44
 Orient=0,0.543834,0,0.839193
 Scale=2.15,2.15,2.15
@@ -89,6 +109,7 @@ Flags=1
 [ENTRY]
 ID=1308622951
 Asset=CL-UndeadTree2#CL-UndeadTree2
+Name=Untitled
 Pos=2805.98,210.372,2276.03
 Orient=0,0.380189,0,0.924909
 Scale=1.425,1.425,1.425
@@ -97,6 +118,7 @@ Flags=1
 [ENTRY]
 ID=1308622952
 Asset=Prop-Burnt_Pine4
+Name=Untitled
 Pos=2698.48,361.199,2841.8
 Orient=0,0.993868,0,0.11057
 Scale=2.75,2.75,2.75
@@ -105,6 +127,7 @@ Flags=1
 [ENTRY]
 ID=1308622954
 Asset=Prop-Burnt_Pine2
+Name=Untitled
 Pos=2654.65,442.215,2984.54
 Orient=0,-0.975723,0,0.219007
 Scale=2.5,2.5,2.5
@@ -113,6 +136,7 @@ Flags=1
 [ENTRY]
 ID=1308622955
 Asset=Prop-Burnt_Pine2
+Name=Untitled
 Pos=2541.99,469.42,2965.37
 Orient=0,0,0,1
 Scale=3.25,3.25,3.25
@@ -121,6 +145,7 @@ Flags=1
 [ENTRY]
 ID=1308622964
 Asset=CL-UndeadTree5#CL-UndeadTree5
+Name=Untitled
 Pos=2387.06,207.494,2260.66
 Orient=0,0.70328,0,0.710913
 Scale=0.5,0.5,0.5
@@ -129,6 +154,7 @@ Flags=1
 [ENTRY]
 ID=1308622993
 Asset=CL-UndeadTree3#CL-UndeadTree3
+Name=Untitled
 Pos=2579.88,207.37,2753.85
 Orient=0,0.488178,0,0.872744
 Scale=0.875,0.875,0.875
@@ -137,6 +163,7 @@ Flags=1
 [ENTRY]
 ID=1308623015
 Asset=Prop-Fence-Stone_Blue#Prop-Fence-Stone_Blue_Post
+Name=Untitled
 Pos=2173.48,225.043,2322.22
 Orient=0,0.620986,0,0.783822
 Scale=1.175,1.175,1.175
@@ -145,6 +172,7 @@ Flags=1
 [ENTRY]
 ID=1308623016
 Asset=Prop-Lamp_Post_NB#Prop-Lamp_Post_NB1
+Name=Untitled
 Pos=2018.08,202.683,2272.05
 Orient=0,-0.232843,0,0.972514
 Scale=2.25,2.25,2.25
@@ -153,6 +181,7 @@ Flags=1
 [ENTRY]
 ID=1308623022
 Asset=Prop-Fence-Stone_Blue#Prop-Fence-Stone_Blue2
+Name=Untitled
 Pos=2061.42,199.724,2313.01
 Orient=0,-0.923303,0,-0.384073
 Scale=1.25,1.25,1.25
@@ -161,6 +190,7 @@ Flags=1
 [ENTRY]
 ID=1308623023
 Asset=Prop-Fence-Stone_Blue#Prop-Fence-Stone_Blue1
+Name=Untitled
 Pos=2114.92,215.397,2312.52
 Orient=0.149301,-0.988023,-0.0373048,-0.011317
 Scale=1.25,1.25,1.25
@@ -169,6 +199,7 @@ Flags=1
 [ENTRY]
 ID=1308623025
 Asset=Prop-Fence-Stone_Blue#Prop-Fence-Stone_Blue1
+Name=Untitled
 Pos=2062.32,198.805,2363.58
 Orient=0.00877605,0.721093,-0.0238749,0.692371
 Scale=1.25,1.25,1.25
@@ -177,6 +208,7 @@ Flags=1
 [ENTRY]
 ID=1308623068
 Asset=CL-GrunsBush_3#CL-GrunsBush_3
+Name=Untitled
 Pos=2024.33,191.184,2304.82
 Orient=0,0,0,1
 Scale=1,1,1
@@ -185,6 +217,7 @@ Flags=1
 [ENTRY]
 ID=1308623101
 Asset=Prop-Dirt_Borough
+Name=Untitled
 Pos=2672.83,192.614,2698.79
 Orient=0,-0.685289,0,0.728272
 Scale=1.2,1.2,1.2
@@ -193,6 +226,7 @@ Flags=1
 [ENTRY]
 ID=1308623102
 Asset=Prop-Tombstone1
+Name=Untitled
 Pos=2672.5,200.251,2717.31
 Orient=0.0699428,0,0,0.997551
 Scale=4.125,4.125,4.125
@@ -201,6 +235,7 @@ Flags=1
 [ENTRY]
 ID=1308623120
 Asset=Light-Large?COLOR=FF9900
+Name=Untitled
 Pos=2002.02,280.387,2290.88
 Orient=0,0,0,1
 Scale=1,1,1
@@ -209,6 +244,7 @@ Flags=1
 [ENTRY]
 ID=1308623173
 Asset=Prop-Fence-Stone_Blue_Post
+Name=Untitled
 Pos=2261.15,209.206,2320.29
 Orient=0,0.940806,0,0.338946
 Scale=1.175,1.175,1.175
@@ -217,14 +253,16 @@ Flags=1
 [ENTRY]
 ID=1308623470
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=2050,192.305,2340
-Orient=0,-1,0,7.54979e-008
+Orient=0,-1,0,7.54979e-08
 Scale=1,1,1
 spawnPackage=3_hg_undeadGeneralBack
 
 [ENTRY]
 ID=1308623562
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=2030,189.052,2325
 Orient=0,0,0,1
 Scale=1,1,1
@@ -234,6 +272,7 @@ link=1308623561,1
 [ENTRY]
 ID=1308623576
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=2368.81,207.007,2898.71
 Orient=0,0.446364,0,0.894851
 Scale=1,1,1
@@ -242,17 +281,19 @@ spawnPackage=3_hg_groveGiant_25
 [ENTRY]
 ID=1308623578
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=2350,203.818,2930
 Orient=0,-0.92388,0,0.382683
 Scale=1,1,1
+spawnPackage=3_hg_snails_24_25
 links_count=2
 link=1308623579,1
 link=1308623581,1
-spawnPackage=3_hg_snails_24_25
 
 [ENTRY]
 ID=1308623726
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=2090,202.301,2345
 Orient=0,0,0,1
 Scale=1.05,1.05,1.05
@@ -264,6 +305,7 @@ link=1308623730,1
 [ENTRY]
 ID=1308623727
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=2090,195.345,2460
 Orient=0,0,0,1
 Scale=1,1,1
@@ -274,6 +316,7 @@ link=1308623728,1
 [ENTRY]
 ID=1308623728
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=2330,206.491,2470
 Orient=0,0,0,1
 Scale=1,1,1
@@ -285,6 +328,7 @@ link=1308623731,1
 [ENTRY]
 ID=1308623729
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=2330,207.065,2340
 Orient=0,0,0,1
 Scale=1,1,1
@@ -295,26 +339,29 @@ link=1308623728,1
 [ENTRY]
 ID=1308623730
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=2090,201.396,2345
 Orient=0,0,0,1
 Scale=1.05,1.05,1.05
+spawnPackage=3_hg_undeadGeneralBack
 links_count=1
 link=1308623726,1
-spawnPackage=3_hg_undeadGeneralBack
 
 [ENTRY]
 ID=1308623731
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=2330,204.652,2470
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=3_hg_undeadGeneralBack
 links_count=1
 link=1308623728,1
-spawnPackage=3_hg_undeadGeneralBack
 
 [ENTRY]
 ID=1308623732
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=2345,205.796,2330
 Orient=0,-0.92388,0,0.382683
 Scale=1,1,1
@@ -323,17 +370,19 @@ spawnPackage=3_hg_undeadGeneralBack
 [ENTRY]
 ID=1308623733
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=2455,207.747,2295
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=3_hg_snails_24_25
 links_count=2
 link=1308623734,1
 link=1308623740,1
-spawnPackage=3_hg_snails_24_25
 
 [ENTRY]
 ID=1308623734
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=2530,207.646,2335
 Orient=0,0,0,1
 Scale=1,1,1
@@ -344,6 +393,7 @@ link=1308623735,1
 [ENTRY]
 ID=1308623735
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=2570,210.546,2285
 Orient=0,0,0,1
 Scale=1,1,1
@@ -354,6 +404,7 @@ link=1308623736,1
 [ENTRY]
 ID=1308623736
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=2655,207.543,2330
 Orient=0,0,0,1
 Scale=1,1,1
@@ -364,6 +415,7 @@ link=1308623737,1
 [ENTRY]
 ID=1308623737
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=2655,208.022,2275
 Orient=0,0,0,1
 Scale=1,1,1
@@ -374,6 +426,7 @@ link=1308623738,1
 [ENTRY]
 ID=1308623738
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=2560,208.307,2315
 Orient=0,0,0,1
 Scale=1,1,1
@@ -384,6 +437,7 @@ link=1308623739,1
 [ENTRY]
 ID=1308623739
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=2505,208.59,2295
 Orient=0,0,0,1
 Scale=1,1,1
@@ -394,6 +448,7 @@ link=1308623740,1
 [ENTRY]
 ID=1308623740
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=2450,206.988,2335
 Orient=0,0,0,1
 Scale=1,1,1
@@ -404,6 +459,7 @@ link=1308623739,1
 [ENTRY]
 ID=1308623741
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=2732.35,205.336,2382.49
 Orient=0,-0.863968,0,0.503546
 Scale=1,1,1
@@ -412,16 +468,18 @@ spawnPackage=3_hg_undeadGeneralBack
 [ENTRY]
 ID=1308623742
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=2694.43,208.191,2703.63
 Orient=0,0.707107,0,0.707107
 Scale=1,1,1
+spawnPackage=3_hg_undeadGraveyardGENERAL
 links_count=1
 link=1308623744,1
-spawnPackage=3_hg_undeadGraveyardGENERAL
 
 [ENTRY]
 ID=1308623743
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=2610.37,207.141,2685.32
 Orient=0,0.659684,0,0.751543
 Scale=1,1,1
@@ -430,6 +488,7 @@ spawnPackage=3_hg_undeadGraveyardGENERAL
 [ENTRY]
 ID=1308623744
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=2684.43,207.362,2670.76
 Orient=0,0,0,1
 Scale=1,1,1
@@ -440,6 +499,7 @@ link=1308623745,1
 [ENTRY]
 ID=1308623745
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=2645.75,207.142,2685.27
 Orient=0,0,0,1
 Scale=1,1,1
@@ -450,6 +510,7 @@ link=1308623746,1
 [ENTRY]
 ID=1308623746
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=2620.18,207.142,2674
 Orient=0,0,0,1
 Scale=1,1,1
@@ -459,16 +520,18 @@ link=1308623745,1
 [ENTRY]
 ID=1308623747
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=2465,207.238,2470
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=3_hg_groveGiant_25
 links_count=1
 link=1308623748,1
-spawnPackage=3_hg_groveGiant_25
 
 [ENTRY]
 ID=1308623748
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=2460,207.419,2470
 Orient=0,0,0,1
 Scale=1,1,1
@@ -480,6 +543,7 @@ link=1308623750,1
 [ENTRY]
 ID=1308623749
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=2590,209.442,2455
 Orient=0,0,0,1
 Scale=1,1,1
@@ -490,6 +554,7 @@ link=1308623750,1
 [ENTRY]
 ID=1308623750
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=2530,207.158,2575
 Orient=0,0,0,1
 Scale=1,1,1
@@ -500,16 +565,18 @@ link=1308623749,1
 [ENTRY]
 ID=1308623751
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=2390,205.339,2870
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=3_hg_undeadGeneralBack
 links_count=1
 link=1308623752,1
-spawnPackage=3_hg_undeadGeneralBack
 
 [ENTRY]
 ID=1308623752
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=2465,207.141,2725
 Orient=0,0,0,1
 Scale=1,1,1
@@ -520,6 +587,7 @@ link=1308623753,1
 [ENTRY]
 ID=1308623753
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=2500,207.141,2595
 Orient=0,0,0,1
 Scale=1,1,1
@@ -529,6 +597,7 @@ link=1308623752,1
 [ENTRY]
 ID=1308623754
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=2775,208.525,2430
 Orient=0,0,0,1
 Scale=1,1,1
@@ -539,6 +608,7 @@ link=1308623757,1
 [ENTRY]
 ID=1308623755
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=2640,207.314,2570
 Orient=0,0,0,1
 Scale=1,1,1
@@ -550,6 +620,7 @@ link=1308623759,1
 [ENTRY]
 ID=1308623756
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=2895,221.733,2825
 Orient=0,0,0,1
 Scale=1,1,1
@@ -560,27 +631,30 @@ link=1308623757,1
 [ENTRY]
 ID=1308623759
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=2640,206.646,2575
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=3_hg_undeadGeneralBack
 links_count=1
 link=1308623755,1
-spawnPackage=3_hg_undeadGeneralBack
 
 [ENTRY]
 ID=1308623760
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=2820,207.4,2335
 Orient=0,0,0,1
 Scale=0.975,0.975,0.975
+spawnPackage=3_hg_snails_24_25
 links_count=2
 link=1308623761,1
 link=1308623765,1
-spawnPackage=3_hg_snails_24_25
 
 [ENTRY]
 ID=1308623761
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=2885,214.363,2450
 Orient=0,0,0,1
 Scale=1,1,1
@@ -591,6 +665,7 @@ link=1308623762,1
 [ENTRY]
 ID=1308623762
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=2975,212.613,2430
 Orient=0,0,0,1
 Scale=1,1,1
@@ -601,6 +676,7 @@ link=1308623763,1
 [ENTRY]
 ID=1308623763
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=2940,221.514,2505
 Orient=0,0,0,1
 Scale=1,1,1
@@ -611,6 +687,7 @@ link=1308623764,1
 [ENTRY]
 ID=1308623764
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=2910,208.655,2360
 Orient=0,0,0,1
 Scale=1,1,1
@@ -621,6 +698,7 @@ link=1308623765,1
 [ENTRY]
 ID=1308623765
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=2855,209.987,2410
 Orient=0,0,0,1
 Scale=1,1,1
@@ -631,17 +709,19 @@ link=1308623764,1
 [ENTRY]
 ID=1308623766
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=2975,216.802,2485
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=3_hg_snails_24_25
 links_count=2
 link=1308623767,1
 link=1308623768,1
-spawnPackage=3_hg_snails_24_25
 
 [ENTRY]
 ID=1308623770
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=2864.86,242.394,2956.11
 Orient=0,0.533471,0,0.845818
 Scale=1,1,1
@@ -650,6 +730,7 @@ spawnPackage=3_hg_undeadGeneralBack
 [ENTRY]
 ID=1308623773
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=2955,231.488,2875
 Orient=0,0,0,1
 Scale=1,1,1
@@ -661,10 +742,11 @@ link=1308623776,1
 [ENTRY]
 ID=1308623776
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=2955,232.876,2875
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=3_hg_undeadGeneralBack
 links_count=1
 link=1308623773,1
-spawnPackage=3_hg_undeadGeneralBack
 

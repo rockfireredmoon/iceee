@@ -1,7 +1,7 @@
 [ENTRY]
 ID=1154151
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=70389.8,984.461,64170.3
 Orient=0,0,0,1
 Scale=1,1,1
@@ -11,7 +11,7 @@ wanderRadius=75
 [ENTRY]
 ID=1154153
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=70247.3,975.555,63925.6
 Orient=0,0,0,1
 Scale=1,1,1
@@ -21,7 +21,7 @@ wanderRadius=75
 [ENTRY]
 ID=1154154
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=70218.6,974.641,64328.2
 Orient=0,0,0,1
 Scale=1,1,1
@@ -31,7 +31,7 @@ wanderRadius=75
 [ENTRY]
 ID=1154155
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=70055.3,992.042,64030.1
 Orient=0,0,0,1
 Scale=1,1,1
@@ -41,12 +41,28 @@ wanderRadius=75
 [ENTRY]
 ID=1154156
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=70460.5,961.396,63858.4
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_ice_Wilds_45_46
 wanderRadius=80
+
+[ENTRY]
+ID=1154685
+Asset=Par-Snow1-Emitter
+Name=
+Pos=69816,1028.89,64014.1
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
+ID=1154687
+Asset=Effects#Par-Snow1-Emitter
+Name=
+Pos=70216.5,1039.84,64146.8
+Orient=0,0.483807,0,0.875174
+Scale=1,1,1
 
 [ENTRY]
 ID=151019365

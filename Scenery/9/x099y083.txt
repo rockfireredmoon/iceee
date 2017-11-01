@@ -1,7 +1,7 @@
 [ENTRY]
 ID=1154129
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=74971.3,832.04,62725.8
 Orient=0,0,0,1
 Scale=1,1,1
@@ -11,12 +11,20 @@ wanderRadius=75
 [ENTRY]
 ID=1154130
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=74669.4,889.813,62577.5
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_yti_wilds_46_47
 wanderRadius=75
+
+[ENTRY]
+ID=1154692
+Asset=Effects#Par-Snow1-Emitter
+Name=
+Pos=74358.2,1007.68,62590.3
+Orient=0,0.601198,0,0.7991
+Scale=1,1,1
 
 [ENTRY]
 ID=151019333

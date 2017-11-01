@@ -1,6 +1,5 @@
 [ENTRY]
 ID=1029381
-PlacedBy=-400000000
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=963.6,276.556,950.926
@@ -10,8 +9,16 @@ links_count=1
 link=1029380,1
 
 [ENTRY]
+ID=1154681
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=723.086,271.458,911.606
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#F16086
+
+[ENTRY]
 ID=1308622886
-PlacedBy=0
 Asset=Prop-Burnt_Pines#Prop-Burnt_Pine3
 Name=Untitled
 Pos=966.465,439.909,-21.8027
@@ -21,7 +28,6 @@ Flags=1
 
 [ENTRY]
 ID=1308622924
-PlacedBy=0
 Asset=Prop-Burnt_Pines#Prop-Burnt_Pine2
 Name=Untitled
 Pos=626.213,439.909,-26.0277
@@ -31,7 +37,6 @@ Flags=1
 
 [ENTRY]
 ID=1308622925
-PlacedBy=0
 Asset=CL-UndeadTree3
 Name=Untitled
 Pos=763.602,271.981,811.027
@@ -41,7 +46,6 @@ Flags=1
 
 [ENTRY]
 ID=1308623113
-PlacedBy=0
 Asset=Prop-Dirt_Borough
 Name=Untitled
 Pos=862.6,255.388,989.813
@@ -51,7 +55,6 @@ Flags=1
 
 [ENTRY]
 ID=1308623114
-PlacedBy=0
 Asset=Prop-Dirt_Borough
 Name=Untitled
 Pos=910.077,256.287,921.357
@@ -61,7 +64,6 @@ Flags=1
 
 [ENTRY]
 ID=1308623115
-PlacedBy=0
 Asset=Prop-Dirt_Borough
 Name=Untitled
 Pos=961.222,256.881,996.573
@@ -71,7 +73,6 @@ Flags=1
 
 [ENTRY]
 ID=1308623116
-PlacedBy=0
 Asset=Prop-Dirt_Borough
 Name=Untitled
 Pos=852.042,252.887,968.588
@@ -81,7 +82,6 @@ Flags=1
 
 [ENTRY]
 ID=1308623117
-PlacedBy=0
 Asset=Prop-Dirt_Borough
 Name=Untitled
 Pos=901.657,252.976,961.128
@@ -91,7 +91,6 @@ Flags=1
 
 [ENTRY]
 ID=1308623195
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=780,277.72,980
@@ -103,7 +102,6 @@ link=1308623196,1
 
 [ENTRY]
 ID=1308623196
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=850,271.688,920
@@ -115,7 +113,6 @@ link=1308623197,1
 
 [ENTRY]
 ID=1308623197
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=865,271.688,945
@@ -127,7 +124,6 @@ link=1308623198,1
 
 [ENTRY]
 ID=1308623198
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=905,272.538,905
@@ -138,7 +134,6 @@ link=1308623197,1
 
 [ENTRY]
 ID=1308623221
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=690,271.687,885
@@ -150,7 +145,6 @@ link=1308623385,1
 
 [ENTRY]
 ID=1308623222
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=763.314,272.408,905.598
@@ -162,7 +156,6 @@ link=1308623223,1
 
 [ENTRY]
 ID=1308623223
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=820.908,272.124,880.833
@@ -174,7 +167,6 @@ link=1308623224,1
 
 [ENTRY]
 ID=1308623224
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=815.989,273.553,721.496
@@ -185,7 +177,6 @@ link=1308623223,1
 
 [ENTRY]
 ID=1308623384
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=795,272.094,805
@@ -195,7 +186,6 @@ spawnPackage=3_hg_undeadGeneralFront
 
 [ENTRY]
 ID=1308623385
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=685,271.961,990
@@ -207,7 +197,6 @@ link=1308623221,1
 
 [ENTRY]
 ID=1308623388
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=910,273.047,925
@@ -218,7 +207,6 @@ sequential=1
 
 [ENTRY]
 ID=1308623390
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=975,274.284,970
@@ -230,7 +218,6 @@ link=1308623391,1
 
 [ENTRY]
 ID=1308623391
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=925,273.417,945
@@ -241,11 +228,10 @@ link=1308623390,1
 
 [ENTRY]
 ID=1308623392
-PlacedBy=-400000000
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=945,274.1,975
-Orient=0,-1,0,7.54979e-008
+Orient=0,-1,0,7.54979e-08
 Scale=1,1,1
 spawnPackage=3_hg_undeadGraveyardSTEPUP
 sequential=1
@@ -254,7 +240,6 @@ link=1308623393,1
 
 [ENTRY]
 ID=1308623396
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=975,272.259,595
@@ -267,7 +252,6 @@ link=1308623399,1
 
 [ENTRY]
 ID=1308623398
-PlacedBy=0
 Asset=Manipulator#Manipulator-PathNode
 Name=Untitled
 Pos=870,272.151,835
@@ -280,7 +264,6 @@ link=1308623403,1
 
 [ENTRY]
 ID=1308623399
-PlacedBy=0
 Asset=Manipulator-PathNode
 Name=Untitled
 Pos=855,279.343,645
@@ -292,7 +275,6 @@ link=1308623398,1
 
 [ENTRY]
 ID=1308623403
-PlacedBy=0
 Asset=Manipulator-SpawnPoint
 Name=Untitled
 Pos=870,272.344,835

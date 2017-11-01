@@ -7,6 +7,14 @@ Orient=0,0,0,1
 Scale=1,1,1
 
 [ENTRY]
+ID=1154690
+Asset=Effects#Par-Snow1-Emitter
+Name=
+Pos=72748.3,933.438,63069.8
+Orient=0,-0.356949,0,0.934124
+Scale=1,1,1
+
+[ENTRY]
 ID=151019334
 Asset=CL-SnowyPine1#CL-SnowyPine1
 Name=Untitled
