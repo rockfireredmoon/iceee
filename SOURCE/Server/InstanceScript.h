@@ -79,6 +79,10 @@ public:
 	void ClearAIQueue(int CID);
 	bool IsAtTether(int CID);
 	bool TargetSelf(int CID);
+	bool SetEnvironment(const char *environment);
+	std::string GetTimeOfDay();
+	std::string GetEnvironment(int x, int y);
+	void SetTimeOfDay(std::string timeOfDay);
 	unsigned long GetServerFlags(int CID);
 
 protected:
@@ -107,6 +111,7 @@ public:
 	int PVPStart(int type);
 	bool PVPGoal(int cid);
 	bool PVPStop();
+	bool HasStatusEffect(int CID, const char *effect);
 	bool SetStatusEffect(int CID, const char *effect, long durationMS);
 	bool RemoveStatusEffect(int CID, const char *effect);
 	void RestoreOriginalAppearance(int CID);
@@ -162,10 +167,6 @@ public:
 	std::vector<int>  Scan(Squirrel::Area *location);
 	int ScanNPC(Squirrel::Area *location, int CDefID);
 	std::vector<int> ScanNPCs(Squirrel::Area *location, int CDefID);
-	bool SetEnvironment(const char *environment);
-	std::string GetTimeOfDay();
-	std::string GetEnvironment(int x, int y);
-	void SetTimeOfDay(std::string timeOfDay);
 	bool Interact(int CID, const char *text, float time, bool gather, Sqrat::Function function);
 	void RemoveInteraction(int CID);
 	void InterruptInteraction(int CID);

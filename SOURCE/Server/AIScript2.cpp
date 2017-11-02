@@ -46,7 +46,10 @@ void AINutPlayer::Initialize(CreatureInstance *creature, AINutDef *defPtr,
 }
 
 void AINutPlayer::HaltedDerived() {}
-void AINutPlayer::HaltDerivedExecution() {}
+void AINutPlayer::HaltDerivedExecution() {
+	actInst->SetEnvironment("");
+	actInst->SetTimeOfDay("");
+}
 
 bool AINutPlayer::HasTarget() {
 	return attachedCreature->CurrentTarget.targ != NULL;

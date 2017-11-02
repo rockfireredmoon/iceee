@@ -165,6 +165,10 @@ void AbstractInstanceNutPlayer::RegisterAbstractInstanceFunctions(NutPlayer *ins
 	instanceClass->Func(_SC("clear_ai_queue"), &AbstractInstanceNutPlayer::ClearAIQueue);
 	instanceClass->Func(_SC("is_at_tether"), &AbstractInstanceNutPlayer::IsAtTether);
 	instanceClass->Func(_SC("target_self"), &AbstractInstanceNutPlayer::TargetSelf);
+	instanceClass->Func(_SC("set_timeofday"), &AbstractInstanceNutPlayer::SetTimeOfDay);
+	instanceClass->Func(_SC("get_timeofday"), &AbstractInstanceNutPlayer::GetTimeOfDay);
+	instanceClass->Func(_SC("set_env"), &AbstractInstanceNutPlayer::SetEnvironment);
+	instanceClass->Func(_SC("get_env"), &AbstractInstanceNutPlayer::GetEnvironment);
 
 	// Functions that return arrays or tables have to be dealt with differently
 	instanceClass->SquirrelFunc(_SC("get_nearby_creature"), &AbstractInstanceNutPlayer::GetCreaturesNearCreature);
@@ -334,6 +338,23 @@ bool AbstractInstanceNutPlayer::ResumeAI(int CID)
 		}
 	}
 	return false;
+}
+
+bool AbstractInstanceNutPlayer::SetEnvironment(const char *environment) {
+	actInst->SetEnvironment(environment);
+	return true;
+}
+
+std::string AbstractInstanceNutPlayer::GetTimeOfDay() {
+	return actInst->GetTimeOfDay();
+}
+
+void AbstractInstanceNutPlayer::SetTimeOfDay(std::string timeOfDay) {
+	actInst->SetTimeOfDay(timeOfDay);
+}
+
+std::string AbstractInstanceNutPlayer::GetEnvironment(int x, int y) {
+	return actInst->GetEnvironment(x, y);
 }
 
 void AbstractInstanceNutPlayer::ClearAIQueue(int CID)
@@ -711,13 +732,10 @@ void InstanceNutPlayer::RegisterFunctions() {
 
 void InstanceNutPlayer::RegisterInstanceFunctions(NutPlayer *instance, Sqrat::DerivedClass<InstanceNutPlayer, AbstractInstanceNutPlayer> *instanceClass)
 {
-	instanceClass->Func(_SC("set_timeofday"), &InstanceNutPlayer::SetTimeOfDay);
-	instanceClass->Func(_SC("get_timeofday"), &InstanceNutPlayer::GetTimeOfDay);
-	instanceClass->Func(_SC("set_env"), &InstanceNutPlayer::SetEnvironment);
-	instanceClass->Func(_SC("get_env"), &InstanceNutPlayer::GetEnvironment);
 	instanceClass->Func(_SC("interact"), &InstanceNutPlayer::Interact);
 	instanceClass->Func(_SC("transform"), &InstanceNutPlayer::Transform);
 	instanceClass->Func(_SC("pvp_goal"), &InstanceNutPlayer::PVPGoal);
+	instanceClass->Func(_SC("has_status_effect"), &InstanceNutPlayer::HasStatusEffect);
 	instanceClass->Func(_SC("set_status_effect"), &InstanceNutPlayer::SetStatusEffect);
 	instanceClass->Func(_SC("remove_status_effect"), &InstanceNutPlayer::RemoveStatusEffect);
 	instanceClass->Func(_SC("pvp_start"), &InstanceNutPlayer::PVPStart);
@@ -1247,6 +1265,21 @@ long InstanceNutPlayer::Walk(int CID, Squirrel::Point point, int facing, int spe
 	return -1;
 }
 
+bool InstanceNutPlayer::HasStatusEffect(int CID, const char *effect)
+{
+	CreatureInstance *ci = GetCreaturePtr(CID);
+	if(ci)
+	{
+		int EffectID = GetStatusIDByName(effect);
+		if(EffectID != -1)
+		{
+			return ci->HasStatus(EffectID);
+		}
+
+	}
+	return false;
+}
+
 
 bool InstanceNutPlayer::SetStatusEffect(int CID, const char *effect, long durationMS)
 {
@@ -1462,23 +1495,6 @@ int InstanceNutPlayer::OLDSpawnAt(int creatureID, float x, float y, float z, int
 		g_Log.AddMessageFormat("Spawn at returned temp creature ID of %d", creature->CreatureID);
 		return creature->CreatureID;
 	}
-}
-
-bool InstanceNutPlayer::SetEnvironment(const char *environment) {
-	actInst->SetEnvironment(environment);
-	return true;
-}
-
-std::string InstanceNutPlayer::GetTimeOfDay() {
-	return actInst->GetTimeOfDay();
-}
-
-void InstanceNutPlayer::SetTimeOfDay(std::string timeOfDay) {
-	actInst->SetTimeOfDay(timeOfDay);
-}
-
-std::string InstanceNutPlayer::GetEnvironment(int x, int y) {
-	return actInst->GetEnvironment(x, y);
 }
 
 bool InstanceNutPlayer::Interact(int CID, const char *text, float time, bool gather, Sqrat::Function function) {

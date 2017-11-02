@@ -143,7 +143,7 @@ env <- "";
 
 // Debug
 no_adds <- false;
-debug <- true;
+debug <- false;
 verbose_debug <- false;
 manual_trigger <- false;
 
@@ -253,7 +253,6 @@ function spawn_adds(max, adds_list) {
 function disengage_valkal(cid) {
 	if(debug)
 		inst.info("Disengaging Valkal");
-	print("Disengage!!\n");
 		
 	inst.pause_ai(cid);
 	inst.leave_combat(cid);
@@ -800,6 +799,5 @@ function debug_setphase(p) {
 }
 
 /* Initialisation. Start scanning for Valkal1 to spawn */
-print("ZZZZ\n");
 tod("Day");
 inst.exec(find_valkal1);

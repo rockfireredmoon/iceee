@@ -87,6 +87,8 @@ local NewMedia = {
 ["Music-Killers"]=[6084347],
 ["Music-CheeZeeCave"]=[3394649],
 ["Music-NightCave"]=[3394649],
+["Music-DragonAndToast"]=[5711142],
+["Music-GrimIdol"]=[4706254],
 ["CL-Candelabra2"]=[456],
 
 /* Extra assets from EER, just to make sure they're in the full download for

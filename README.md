@@ -58,8 +58,10 @@ Credits for additional audio content added to the game.
 #####Some Amount Of Evil - Ambient music used in Bloodkeep
 #####Killers - Ambient music used in penultimate fight scene in Bloodkeep
 #####Chee Zee Cave - Music used in Southend Passage
-#####Night Cave - Music used in Southend Passage
+#####Night Cave - Music used in Forest Cave
 #####Curse Of The Scarab - Music used in Djinn Temple
+#####Dragon And Toast - Music used in Fangarian's Lair
+#####Grim Idol - Fight Music used in Fangarian's Lair
 
 Kevin MacLeod (incompetech.com)
 Licensed under Creative Commons: By Attribution 3.0

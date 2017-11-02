@@ -145,6 +145,14 @@ Scale=1,1,1
 spawnPackage=wastecult_creature
 
 [ENTRY]
+ID=1154717
+Asset=Sound?SOUND=Sound-Ambient-Radiation2.ogg&GAIN=1
+Name=Untitled
+Pos=72257.4,977.076,56002.8
+Orient=0,-0.770739,0,0.637151
+Scale=1,1,1
+
+[ENTRY]
 ID=151020212
 Asset=CL-Random-Junk2#CL-Random-Junk2
 Name=Untitled
