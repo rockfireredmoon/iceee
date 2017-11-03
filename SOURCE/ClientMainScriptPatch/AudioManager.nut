@@ -131,7 +131,7 @@ class this.AudioManager
 			if (!exists)
 			{
 				::_contentLoader.prefetch(archive);
-				return;
+				//return;
 			}
 		}
 		else
