@@ -343,6 +343,14 @@ bool ZoneDefInfo :: IsDungeon(void)
 	return false;
 }
 
+bool ZoneDefInfo :: IsOverworld(void)
+{
+	if(mGuildHall == false && mGrove == false && mArena == false && mInstance == false)
+		return true;
+
+	return false;
+}
+
 bool ZoneDefInfo :: IsMobScalable(void)
 {
 	if(mInstance == true)

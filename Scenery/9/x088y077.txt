@@ -39,19 +39,9 @@ links_count=1
 link=151027860,1
 
 [ENTRY]
-ID=1154610
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=
-Pos=66566.9,670.452,58293.7
-Orient=0,0,0,1
-Scale=1,1,1
-spawnPackage=#F1234
-dialog=generic_weapon_merchant
-
-[ENTRY]
 ID=1154614
 Asset=Prop-Marker_Far
-Name=
+Name=Untitled
 Pos=66036.5,613.591,57907.9
 Orient=0,0,0,1
 Scale=1,1,1
@@ -59,7 +49,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1154618
 Asset=Prop-Marker1#Prop-Marker_Far
-Name=
+Name=Untitled
 Pos=66411,654.676,58152.4
 Orient=0,0,0,1
 Scale=1,1,1
@@ -67,7 +57,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1154619
 Asset=Prop-Marker1#Prop-Marker_Far
-Name=
+Name=Untitled
 Pos=66553.6,673.459,58077.4
 Orient=0,0,0,1
 Scale=1,1,1
@@ -75,7 +65,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1154620
 Asset=Prop-Marker1#Prop-Marker_Far
-Name=
+Name=Untitled
 Pos=66408.9,616.306,57884.5
 Orient=0,0,0,1
 Scale=1,1,1
@@ -83,7 +73,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1154621
 Asset=Prop-Marker1#Prop-Marker_Far
-Name=
+Name=Untitled
 Pos=66135.4,616.417,57847.1
 Orient=0,0,0,1
 Scale=1,1,1

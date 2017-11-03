@@ -693,6 +693,7 @@ this.LoadGate.Gates <- {
 		"Music-Explore2_Part1",
 		"Music-Explore2_Part2",
 		"Music-Gothic",
+		"Music-TheRule",
 		"Music-GrimIdol",
 		"Music-NightCave",
 		"Music-Morningtime",

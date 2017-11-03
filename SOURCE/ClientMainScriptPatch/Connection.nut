@@ -3403,7 +3403,7 @@ class this.Connection extends this.MessageBroadcaster
 		local mask = data.getByte();
 		local zoneId = this.mProtocolVersionId > 16 ? data.getStringUTF() : data.getInteger();
 		local zoneDefId = data.getInteger();
-		local zonePageSize = data.getShort();
+		local zonePageSize = data.getShort(); 
 		local terrain = data.getStringUTF();
 		local envType = data.getStringUTF();
 

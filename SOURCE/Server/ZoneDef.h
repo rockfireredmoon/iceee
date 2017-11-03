@@ -131,6 +131,7 @@ public:
 	bool IsPVPArena(void);
 	bool IsFreeTravel(void);
 	bool IsDungeon(void);
+	bool IsOverworld(void);
 	bool IsMobScalable(void);
 	bool HasDeathPenalty(void);
 	bool CanPlayerWarp(int CreatureDefID, int AccountID);

@@ -428,7 +428,7 @@ public:
 	void ChangeProtocol(int newProto);
 	bool ValidPointers(void);
 	void SendSetAvatar(int CreatureID);
-	const char * GetTimeOfDay(void);
+	std::string GetTimeOfDay(void);
 	void CheckMapUpdate(bool force);
 	void UpdateSocialEntry(bool newOnlineStatus, bool onlyUpdateFriendList);
 	void BroadcastGuildChange(int guildDefID);

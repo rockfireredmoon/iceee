@@ -4,6 +4,7 @@ this.require("UI/UI");
 ::_password <- null;
 ::_authtoken <- null;
 ::_accountPermissionGroup <- null;
+
 class this.States.LoginState extends this.State
 {
 	static mClassName = "LoginState";
@@ -42,7 +43,7 @@ class this.States.LoginState extends this.State
 		this.mGUI.setOverlay("GUI/Overlay");
 		::Pref.setAccount(null);
 		local logo = ::GUI.Component();
-		logo.setAppearance("EELogo/New");
+		logo.setAppearance("ValkalTitle");
 		logo.setSticky("center", "center");
 		logo.setPosition(-375, -285);
 		logo.setSize(752, 235);

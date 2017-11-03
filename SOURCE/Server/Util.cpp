@@ -90,10 +90,12 @@ int PrepExt_SetTimeOfDay(char *buffer, const char *envType)
 
 	wpos += PutByte(&buffer[wpos], 2);   //Mask for time of day update
 
-	wpos += PutStringUTF(&buffer[wpos], "");    //zoneID
-	wpos += PutInteger(&buffer[wpos], 0);   //zoneDefID
-	wpos += PutShort(&buffer[wpos], 0);  //zonePageSize
-	wpos += PutStringUTF(&buffer[wpos], "");   //Terrain
+	/* The following 4 are all ignored when mask is 2 */
+	wpos += PutStringUTF(&buffer[wpos], "NA");    //zoneID
+	wpos += PutInteger(&buffer[wpos], 999);   //zoneDefID
+	wpos += PutShort(&buffer[wpos], 999);  //zonePageSize
+	wpos += PutStringUTF(&buffer[wpos], "NA");   //Terrain
+
 	wpos += PutStringUTF(&buffer[wpos], envType);   //envtype
 	//When the mask is 2, the function changes the time of day using the EnvironmentType string
 	//the function returns from that point and never gets to the rest of the map stuff.

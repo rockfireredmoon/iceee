@@ -924,7 +924,7 @@ Mode=1
 [ENTRY]
 ID=82
 NAME=Camelot Chamber
-ENVIRONMENTTYPE=Genericindoor
+ENVIRONMENTTYPE=CamelotCourt
 ShardName=Anglorum 1
 WarpName=Camelot Chamber
 DefLoc=550,120,1048

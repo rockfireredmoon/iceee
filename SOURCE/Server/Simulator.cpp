@@ -2045,7 +2045,7 @@ bool SimulatorThread :: MainCallSetZone(int newZoneID, int newInstanceID, bool s
 	pld.LastMapTick = MapTickChange;
 
 	int wpos = PrepExt_SendEnvironmentUpdateMsg(SendBuf, creatureInst->actInst, pld.CurrentZone, pld.zoneDef, creatureInst->CurrentX, creatureInst->CurrentZ, 0);
-	wpos += PrepExt_SetTimeOfDay(&SendBuf[wpos],  creatureInst->actInst->GetTimeOfDay().c_str());
+	wpos += PrepExt_SetTimeOfDay(&SendBuf[wpos], GetTimeOfDay().c_str());
 	AttemptSend(SendBuf, wpos);
 
 	CheckSpawnTileUpdate(true);
@@ -2275,18 +2275,16 @@ void SimulatorThread :: MainCallHelperInstanceRegister(int ZoneID, int InstanceI
 	}
 }
 
-const char * SimulatorThread :: GetTimeOfDay(void)
+std::string SimulatorThread :: GetTimeOfDay(void)
 {
-	static const char *DEFAULT = "Day";
-
 	if(CheckPermissionSimple(Perm_Account, Permission_Troll))
-		return DEFAULT;
+		return "Day";
 	
 	if(creatureInst != NULL) {
 		return creatureInst->actInst->GetTimeOfDay().c_str();
 	}
 
-	return DEFAULT;
+	return "Day";
 }
 
 void SimulatorThread :: CheckMapUpdate(bool force)
@@ -2973,7 +2971,7 @@ bool SimulatorThread :: HandleCommand(int &PendingData)
 	}
 	else if(query.name.compare("env") == 0)
 	{
-		sprintf(Aux1, "%s:%s", creatureInst->actInst->GetEnvironment(-1,-1).c_str(), creatureInst->actInst->GetTimeOfDay().c_str());
+		sprintf(Aux1, "%s:%s", creatureInst->actInst->GetEnvironment(-1,-1).c_str(), GetTimeOfDay().c_str());
 		PendingData = ::PrepExt_SendInfoMessage(SendBuf, Aux1, INFOMSG_INFO);
 		PendingData += PrepExt_QueryResponseString(&SendBuf[PendingData], query.ID, "OK");
 	}
@@ -3730,13 +3728,15 @@ int SimulatorThread :: handle_query_map_marker(void)
 		else if(query.args[i].compare("Henge") == 0)
 		{
 			/* All henges in zone */
-			for(std::vector<InteractObject>::iterator it = g_InteractObjectContainer.objList.begin(); it != g_InteractObjectContainer.objList.end(); it++) {
-				if((*it).opType == InteractObject::TYPE_HENGE && (*it).WarpID == pld.CurrentZoneID) {
-					qRes.push_back(STRINGLIST());
-					qRes.back().push_back((*it).useMessage);
-					Util::SafeFormat(Aux1, sizeof(Aux1), "(%d %d %d)", (*it).WarpX, (*it).WarpY, (*it).WarpZ);
-					qRes.back().push_back(Aux1);
-					qRes.back().push_back("Henge");
+			if(pld.zoneDef != NULL && !pld.zoneDef->IsOverworld()) {
+				for(std::vector<InteractObject>::iterator it = g_InteractObjectContainer.objList.begin(); it != g_InteractObjectContainer.objList.end(); it++) {
+					if((*it).opType == InteractObject::TYPE_HENGE && (*it).WarpID == pld.CurrentZoneID) {
+						qRes.push_back(STRINGLIST());
+						qRes.back().push_back((*it).useMessage);
+						Util::SafeFormat(Aux1, sizeof(Aux1), "(%d %d %d)", (*it).WarpX, (*it).WarpY, (*it).WarpZ);
+						qRes.back().push_back(Aux1);
+						qRes.back().push_back("Henge");
+					}
 				}
 			}
 		}
@@ -3744,16 +3744,18 @@ int SimulatorThread :: handle_query_map_marker(void)
 		{
 			/* All sanctuaries within 1000 */
 			ZoneMarkerData *zmd = g_ZoneMarkerDataManager.GetPtrByZoneID(pld.CurrentZoneID);
-			for(std::vector<WorldCoord>::iterator it = zmd->sanctuary.begin(); it != zmd->sanctuary.end(); it++) {
-				int xlen = abs((int)(*it).x - creatureInst->CurrentX);
-				int zlen = abs((int)(*it).z - creatureInst->CurrentZ);
-				double dist = sqrt((double)((xlen * xlen) + (zlen * zlen)));
-				if(dist < 1000) {
-					qRes.push_back(STRINGLIST());
-					qRes.back().push_back((*it).descName.c_str());
-					Util::SafeFormat(Aux1, sizeof(Aux1), "(%d %d %d)", (int)((*it).x), (int)((*it).y), (int)((*it).z));
-					qRes.back().push_back(Aux1);
-					qRes.back().push_back("Sanctuary");
+			if(zmd != NULL && pld.zoneDef != NULL && !pld.zoneDef->IsOverworld()) {
+				for(std::vector<WorldCoord>::iterator it = zmd->sanctuary.begin(); it != zmd->sanctuary.end(); it++) {
+					int xlen = abs((int)(*it).x - creatureInst->CurrentX);
+					int zlen = abs((int)(*it).z - creatureInst->CurrentZ);
+					double dist = sqrt((double)((xlen * xlen) + (zlen * zlen)));
+					if(dist < 1000) {
+						qRes.push_back(STRINGLIST());
+						qRes.back().push_back((*it).descName.c_str());
+						Util::SafeFormat(Aux1, sizeof(Aux1), "(%d %d %d)", (int)((*it).x), (int)((*it).y), (int)((*it).z));
+						qRes.back().push_back(Aux1);
+						qRes.back().push_back("Sanctuary");
+					}
 				}
 			}
 		}
@@ -13476,7 +13478,7 @@ int SimulatorThread :: handle_query_mod_setenvironment(void)
 
 	SendInfoMessage("Environment type changed.", INFOMSG_INFO);
 	int wpos = PrepExt_SendEnvironmentUpdateMsg(SendBuf, creatureInst->actInst, pld.CurrentZone, pld.zoneDef, -1, -1, 0);
-	wpos += PrepExt_SetTimeOfDay(&SendBuf[wpos], GetTimeOfDay());
+	wpos += PrepExt_SetTimeOfDay(&SendBuf[wpos], GetTimeOfDay().c_str());
 	creatureInst->actInst->LSendToAllSimulator(SendBuf, wpos, -1);
 	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
 }

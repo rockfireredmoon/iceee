@@ -4,8 +4,14 @@ this.require("GUI/HTML");
 ::LoadScreen <- {};
 ::_LoadScreenGUI <- null;
 ::gFirstTimeUser <- null;
+
+this.BG_WIDTH <- 1841;
+this.BG_HEIGHT <- 1011;
+this.mBgIdx <- 0;
+
 class this.LoadScreen.GUI extends this.GUI.Component
 {
+	
 	mLoadAppearance = "LoadScreen";
 	mBackground = null;
 	mText = "";
@@ -25,23 +31,26 @@ class this.LoadScreen.GUI extends this.GUI.Component
 	mAnnouncementTexts = null;
 	mTipTexts = null;
 	mRandmomTipEvent = null;
+	
 	constructor()
 	{
 		::print("Load Screen Activated");
 		::GUI.Component.constructor();
-		this.setAppearance("GoldBorder");
+		//this.setAppearance("GoldBorder");
+		
 		this.setSize(::Screen.getWidth(), ::Screen.getHeight());
+		
 		::Screen.setOverlayVisible("GUI/LoadScreen", true);
 		this.mBackground = ::GUI.Component();
-		this.mBackground.setAppearance(this.mLoadAppearance);
+		this.mBackground.setAppearance(this.mLoadAppearance + "1");
 		this.mBackground.setSticky("center", "center");
-		local width = ::Screen.getHeight() * 1.7708;
-		this.mBackground.setSize(width.tointeger(), ::Screen.getHeight());
-		this.mBackground.setPosition(this.mBackground.getWidth() / 2 * -1, this.mBackground.getHeight() / 2 * -1);
+		
+		this._adjustBg();
+		
 		this.mBackground.setVisible(true);
 		this.add(this.mBackground);
 		local panel = ::GUI.Component();
-		panel.setAppearance("GoldBorder");
+		//panel.setAppearance("GoldBorder");
 		panel.setSticky("center", "bottom");
 		panel.setPosition(-320, -100);
 		panel.setSize(640, 90);
@@ -212,6 +221,14 @@ class this.LoadScreen.GUI extends this.GUI.Component
 	{
 		local announcementIndex = 0;
 		local tipIndex = 0;
+		
+		if(this.mBgIdx == 0)
+			this.mBgIdx = 2;
+		else {
+			this.mBackground.setAppearance(this.mLoadAppearance + (this.mBgIdx++));
+			if(this.mBgIdx > 4)
+				this.mBgIdx = 1;
+		}
 
 		do
 		{
@@ -312,9 +329,7 @@ class this.LoadScreen.GUI extends this.GUI.Component
 	function onScreenResize()
 	{
 		this.setSize(::Screen.getWidth(), ::Screen.getHeight());
-		local width = ::Screen.getHeight() * 1.7708;
-		this.mBackground.setSize(width.tointeger(), ::Screen.getHeight());
-		this.mBackground.setPosition(this.mBackground.getWidth() / 2 * -1, this.mBackground.getHeight() / 2 * -1);
+		this._adjustBg();
 	}
 
 	function onKeyPressed( evt )
@@ -330,6 +345,23 @@ class this.LoadScreen.GUI extends this.GUI.Component
 	{
 		this.mDownloadLabel.setText(this.mText);
 		this.mErrorLabel.setText(this.mError);
+	}
+	
+	function _adjustBg() {
+		local tr = ::Screen.getWidth().tofloat() / ::Screen.getHeight().tofloat();
+		local sr = this.BG_WIDTH.tofloat() / this.BG_HEIGHT.tofloat();
+		local w;
+		local h;
+		if(sr >= tr) {
+			h = ::Screen.getHeight();
+			w = (h.tofloat() * sr).tointeger();
+		}
+		else {
+			w = ::Screen.getWidth();
+			h = ( w.tofloat() / sr ).tointeger();
+		}
+		this.mBackground.setSize(w, h);		
+		this.mBackground.setPosition(w / 2 * -1, h / 2 * -1);
 	}
 
 	static mClassName = "LoadScreen";
