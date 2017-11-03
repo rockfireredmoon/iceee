@@ -81,7 +81,7 @@ int PrepExt_SetAvatar(char *buffer, int creatureID)
 	return wpos;
 }
 
-int PrepExt_SetTimeOfDay(char *buffer, const char *envType)
+int PrepExt_SetTimeOfDay(char *buffer, const char *timeOfDay)
 {
 	int wpos = 0;
 
@@ -96,7 +96,7 @@ int PrepExt_SetTimeOfDay(char *buffer, const char *envType)
 	wpos += PutShort(&buffer[wpos], 999);  //zonePageSize
 	wpos += PutStringUTF(&buffer[wpos], "NA");   //Terrain
 
-	wpos += PutStringUTF(&buffer[wpos], envType);   //envtype
+	wpos += PutStringUTF(&buffer[wpos], timeOfDay);   //envtype
 	//When the mask is 2, the function changes the time of day using the EnvironmentType string
 	//the function returns from that point and never gets to the rest of the map stuff.
 

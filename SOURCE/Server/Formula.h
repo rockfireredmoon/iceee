@@ -379,7 +379,6 @@ private:
 
 	static bool isNumber(const std::string& token)
 	{
-		g_Log.AddMessageFormat("REMOVEME isNumber %s", token.c_str());
 		size_t len = token.length();
 		//Need to distinguish an operator token '-' operator from a negative number like "-5".
 		//The token will always have a length of 1 character.

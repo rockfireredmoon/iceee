@@ -553,7 +553,6 @@ float AbilityFunction2 :: GetFloat(size_t argIndex) const
 
 float AbilityFunction2 :: GetEvaluation(size_t argIndex, AbilityManager2 *symbolResolver)
 {
-	g_Log.AddMessageFormat("REMOVEME GetEvaluation %s - %d", mFunctionName.c_str(), argIndex);
 	if(argIndex >= mArguments.size())
 	{
 		g_Log.AddMessageFormat("GetEvaluation() not enough arguments");
