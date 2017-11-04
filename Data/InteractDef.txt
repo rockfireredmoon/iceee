@@ -1552,7 +1552,7 @@ Message=Entrance To Junk Palace
 Name=swineland_to_the_mausoleum
 Type=warp
 ObjectID=7877
-WarpTo=988,0,877,3080
+WarpTo=985,0,876,3080
 Message=Entering The Mausoleum
 Facing=1
 

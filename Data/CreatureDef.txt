@@ -75705,3 +75705,148 @@ base_damage_melee=225
 ExtraData=namedmob=&droprateprofile=bloodkeep_vajs
 ai_package=custom_heathendel_deathknight40
 total_size=1.600000023841858
+
+[ENTRY]
+ID=3496
+strength=1
+dexterity=1
+constitution=1
+appearance=n4:{["sk"]={["base"]="c17646",["trim"]="474554",["eye"]="ff4b4a",["shell"]="35385c",["hair"]="292a3c",["webbing"]="a4b1d1"},["c"]="Horde-Vampider",["sz"]="0.7"}
+level=1
+display_name=Vampider Hatchling
+sub_name=Valkal's Legion
+profession=2
+creature_category=Unliving
+rarity=0
+base_damage_melee=5
+ai_package=Newb_Knight
+
+[ENTRY]
+ID=3497
+strength=3
+dexterity=3
+constitution=2
+psyche=1
+spirit=1
+damage_resist_melee=15
+damage_resist_fire=15
+damage_resist_frost=15
+damage_resist_mystic=15
+damage_resist_death=15
+casting_setback_chance=1
+channeling_break_chance=1
+appearance=n4:{["sk"]={["eye_mouth"]="a60006",["hair"]="949aa6",["tattoo"]="4d6082",["nose_ear"]="7297c6",["skin"]="6b8898",["cloth"]="aa6d35",["cape"]="36596b",["belt"]="705e07"},["c"]="Horde-Vampire",["sz"]="1.0"}
+level=1
+display_name=Vampire Raider
+sub_name=Valkal's Legion
+profession=2
+creature_category=Unliving
+rarity=0
+base_damage_melee=5
+ai_package=Newb_Knight
+
+[ENTRY]
+ID=3498
+strength=3
+dexterity=3
+constitution=2
+psyche=3
+spirit=3
+damage_resist_melee=15
+damage_resist_fire=15
+damage_resist_frost=15
+damage_resist_mystic=15
+damage_resist_death=15
+appearance=n4:{["sk"]={["skin"]="66747b",["accent"]="554015",["eye"]="9d0a0e",["armor"]="534741",["hair"]="6a7b75",["teeth"]="8f9281"},["c"]="Horde-Vampire_Mehirim",["sz"]="1.0",["a"]=[{["node"]="right_hand",["type"]="Item-2hSword-Basic3",["colors"]=["c7c9cb","947d07","3f3f3f"]}]}
+level=1
+display_name=Vampire Raider
+sub_name=Valkal's Legion
+profession=2
+creature_category=Unliving
+rarity=0
+base_damage_melee=5
+ai_package=Newb_Knight
+
+[ENTRY]
+defHints=48
+ID=3499
+appearance=c2:{["a"]=[{["node"]="left_shoulder",["type"]="Armor-Warrior-Redeemer_Captain-Left_Pauldron",["colors"]=[]},{["node"]="right_shoulder",["type"]="Armor-Warrior-Redeemer_Captain-Right_Pauldron",["colors"]=[]},{["node"]="right_hand",["type"]="Item-2hSword-Medium1",["colors"]=["000000","940d0d","442100"]}],["sk"]={["skin"]="606044",["head_detail"]="657380",["tusks"]="cec151",["eye"]="e8d057",["eyeball"]="c7c5c5",["hair_highlight"]="b6b0b4",["hair"]="c77d48"},["sz"]="1.4",["g"]="m",["r"]="s",["b"]="m",["c"]={["boots"]={["type"]="Armor-Warrior-Redeemer_Captain",["colors"]=[]},["chest"]={["type"]="Armor-Warrior-Redeemer_Captain",["colors"]=[]},["arms"]={["type"]="Armor-Warrior-Redeemer_Captain",["colors"]=[]},["leggings"]={["type"]="Armor-Warrior-Redeemer_Captain",["colors"]=[]},["collar"]={["type"]="Armor-Warrior-Redeemer_Captain",["colors"]=[]},["belt"]={["type"]="Armor-Warrior-Redeemer_Captain",["colors"]=[]},["gloves"]={["type"]="Armor-Warrior-Redeemer_Captain",["colors"]=[]}}}
+level=50
+display_name=Orso Ironhide
+sub_name=Redeemer Captain
+profession=1
+creature_category=Mortal
+rarity=2
+ai_package=nothing
+
+[ENTRY]
+defHints=8
+ID=3514
+appearance=c2:{["sk"]={["tattoo_face"]="bcb157",["hair"]="c87e49",["ribbon"]="d085be",["tusks"]="cfc252",["hair_highlight"]="674d50",["lips"]="6f494d",["skin"]="616145",["eye"]="c66b3f",["eyeball"]="c7c5c5",["jewelry"]="f4ca6a"},["sz"]="1.3",["g"]="f",["h"]=0,["r"]="s",["b"]="n",["c"]={["boots"]={["type"]="Armor-Cloth-Female-Casual1",["colors"]=[]},["chest"]={["type"]="Armor-Cloth-Female-Casual1",["colors"]=[]},["leggings"]={["type"]="Armor-Cloth-Female-Casual1",["colors"]=[]},["belt"]={["type"]="Armor-Cloth-Female-Casual1",["colors"]=[]},["collar"]={["type"]="Armor-Cloth-Female-Casual1",["colors"]=[]},["arms"]={["type"]="Armor-Cloth-Female-Casual1",["colors"]=[]}}}
+level=50
+display_name=Betty Olive
+sub_name=General Merchant
+profession=4
+creature_category=Mortal
+rarity=2
+ai_package=nothing
+
+[ENTRY]
+defHints=8
+ID=3515
+appearance=c2:{["sk"]={["hair"]="843c2b",["leg_patches"]="843c2b",["chest_patch"]="974632",["tusks"]="c8bba5",["eye_white"]="adadad",["nails"]="63594e",["base"]="847668",["inner_ear"]="994936",["eye"]="b18b65",["eye_brows"]="b25540",["snout"]="6f6152",["arm_patches"]="6e3325"},["sz"]="1.0",["g"]="m",["h"]=0,["r"]="k",["b"]="n",["c"]={["boots"]={["type"]="Armor-Cloth-Male-Casual2",["colors"]=[]},["chest"]={["type"]="Armor-Cloth-Male-Casual2",["colors"]=[]},["leggings"]={["type"]="Armor-Cloth-Male-Casual2",["colors"]=[]},["belt"]={["type"]="Armor-Cloth-Male-Casual2",["colors"]=[]},["collar"]={["type"]="Armor-Cloth-Male-Casual2",["colors"]=[]},["arms"]={["type"]="Armor-Cloth-Male-Casual2",["colors"]=[]}}}
+level=50
+display_name=Wilbur Snore
+sub_name=Weapons Merchant
+profession=5
+creature_category=Mortal
+rarity=2
+ai_package=nothing
+
+[ENTRY]
+defHints=8
+ID=3516
+appearance=c2:{["sk"]={["eye"]="e8d057",["eyeball"]="c7c5c5",["hair"]="2a1c10",["hair_highlight"]="b6b0b4",["head_detail"]="657380",["skin"]="6a5656",["tusks"]="cec151"},["sz"]="1.0",["g"]="m",["h"]=0,["r"]="s",["b"]="n",["c"]={["boots"]={["type"]="Armor-Heavy-Mid2",["colors"]=[]},["chest"]={["type"]="Armor-Heavy-Mid2",["colors"]=[]},["arms"]={["type"]="Armor-Heavy-Mid2",["colors"]=[]},["leggings"]={["type"]="Armor-Heavy-Mid2",["colors"]=[]},["collar"]={["type"]="Armor-Heavy-Mid2",["colors"]=[]},["belt"]={["type"]="Armor-Heavy-Mid2",["colors"]=[]},["gloves"]={["type"]="Armor-Heavy-Mid2",["colors"]=[]}}}
+level=50
+display_name=Stodaag Gaz'um
+sub_name=Armor Refashioner
+profession=5
+creature_category=Mortal
+rarity=2
+ai_package=nothing
+
+[ENTRY]
+defHints=8
+ID=3517
+appearance=c2:{["sk"]={["hair"]="8f735e",["hands_feet"]="8f735e",["inner_ear"]="9f9984",["snout"]="8e8976",["base"]="785e49",["eye_white"]="e2d8bd",["eye"]="be4e4b",["shoulders"]="8e8976",["nails"]="473224",["eye_lid"]="b87f53"},["sz"]="1.0",["g"]="f",["h"]=1,["r"]="c",["b"]="r",["c"]={["boots"]={["type"]="Armor-Cloth-High1",["colors"]=[]},["chest"]={["type"]="Armor-Cloth-High1",["colors"]=[]},["arms"]={["type"]="Armor-Cloth-High1",["colors"]=[]},["leggings"]={["type"]="Armor-Cloth-High1",["colors"]=[]},["collar"]={["type"]="Armor-Heavy-Mid2",["colors"]=[]},["belt"]={["type"]="Armor-Heavy-Mid2",["colors"]=[]},["gloves"]={["type"]="Armor-Heavy-Mid2",["colors"]=[]}}}
+level=50
+display_name=Bailey Sage
+sub_name=General Merchant
+profession=5
+creature_category=Mortal
+rarity=2
+ai_package=nothing
+
+[ENTRY]
+defHints=8
+ID=3518
+appearance=c2:{["sk"]={["base"]="c77d4b",["eye"]="00c6ff",["eye_white"]="ffffff",["highlights"]="efb469"},["sz"]="1.0",["g"]="m",["h"]=1,["r"]="u",["b"]="n",["c"]={["boots"]={["type"]="Armor-Medium-High2",["colors"]=[]},["chest"]={["type"]="Armor-Medium-High2",["colors"]=[]},["arms"]={["type"]="Armor-Medium-High2",["colors"]=[]},["leggings"]={["type"]="Armor-Medium-High2",["colors"]=[]},["collar"]={["type"]="Armor-Medium-High1",["colors"]=[]},["belt"]={["type"]="Armor-Medium-High2",["colors"]=[]},["gloves"]={["type"]="Armor-Medium-High2",["colors"]=[]}}}
+level=50
+display_name=Acun Ciftci
+sub_name=General Merchant
+profession=5
+creature_category=Mortal
+rarity=2
+ai_package=nothing
+
+[ENTRY]
+defHints=256
+ID=3519
+appearance=n4:{["sk"]={["cloth2"]="817263",["skin"]="c07574",["cloth1"]="94077d",["eye"]="8d0f0b",["nails"]="b5815d",["trim"]="954806"},["c"]="Horde-Warpig2",["sz"]="1.3",["a"]=[{["node"]="left_shoulder",["type"]="Armor-Cloth-Low1-Left_Pauldron",["colors"]=["aa098f","cea35b"]},{["node"]="right_shoulder",["type"]="Armor-Cloth-Low1-Right_Pauldron",["colors"]=["aa098f","cea35b"]}]}
+level=50
+display_name=Doris Hamlet
+sub_name=Vault keeper
+profession=5
+creature_category=Mortal
+rarity=2
+ai_package=nothing

@@ -82197,23 +82197,26 @@ mMinUseLevel=43
 [ENTRY]
 mID=1003282
 mType=3
-mDisplayName=Old Skrill Leather Chestguard
-mAppearance={["c"]={["type"]="Armor-Medium-Low8",["colors"]=["bf824b","aa5971","ffd6b1","bf824b"]}}
+mDisplayName=Skrill Leather Chestguard
+mAppearance=[{["c"]={["type"]="Armor-Medium-Low8",["colors"]=["bf824b","aa5971","ffd6b1","bf824b"]}},null]
 mIcon=Icon-32-M_Armor-Chest01.png|Icon-32-BG-Blue.png
-mLevel=43
-mQualityLevel=0
-mBindingType=1
+mLevel=47
+mValue=6746
+mMinUseLevel=47
+mQualityLevel=3
 mEquipType=11
+mBindingType=1
+mBonusConstitution=25
+mBonusDexterity=18
+mBonusPsyche=18
+mBonusSpirit=18
+mBonusStrength=18
 mArmorType=2
-mArmorResistMelee=500
-mArmorResistFire=564
-mArmorResistFrost=564
-mArmorResistMystic=500
-mArmorResistDeath=500
-mBonusSpirit=11
-mValue=946
-mValueType=0
-mMinUseLevel=43
+mArmorResistMelee=165
+mArmorResistFire=165
+mArmorResistFrost=165
+mArmorResistMystic=165
+mArmorResistDeath=165
 
 [ENTRY]
 mID=1003283
