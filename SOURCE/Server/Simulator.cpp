@@ -15843,12 +15843,19 @@ void SimulatorThread :: CheckIfLootReadyToDistribute(ActiveLootContainer *loot, 
 
 			LogMessageL(MSG_WARN, "There is now %d items in loot container %d.", loot->itemList.size(), loot->CreatureID);
 
+			/* Reset the loot tags etc, we don't need them anymore.
+			 * NOTE: Be careful not to use the lootTag object after this point as it may have been
+			 * deleted.
+			 */
+			int lootCreatureID = lootTag->mLootCreatureId;
+			ResetLoot(party, loot, lootTag->mItemId);
+
 			if(loot->itemList.size() == 0)
 			{
 				ClearLoot(party, loot);
 
 				// Loot container now empty, remove it
-				CreatureInstance *lootCreature = creatureInst->actInst->GetNPCInstanceByCID(lootTag->mLootCreatureId);
+				CreatureInstance *lootCreature = creatureInst->actInst->GetNPCInstanceByCID(lootCreatureID);
 				if(lootCreature != NULL)
 				{
 					lootCreature->activeLootID = 0;
@@ -15860,21 +15867,15 @@ void SimulatorThread :: CheckIfLootReadyToDistribute(ActiveLootContainer *loot, 
 					WritePos = PrepExt_SendSpecificStats(SendBuf, lootCreature, &statList[0], 3);
 					creatureInst->actInst->LSendToLocalSimulator(SendBuf, WritePos, creatureInst->CurrentX, creatureInst->CurrentZ);
 				}
-				creatureInst->actInst->lootsys.RemoveCreature(lootTag->mLootCreatureId);
+				creatureInst->actInst->lootsys.RemoveCreature(lootCreatureID);
 
 				LogMessageL(MSG_WARN, "Loot %d is now empty (%d tags now in the party).",
 						loot->CreatureID, party->lootTags.size());
 			}
 
 			if(newItem != NULL && receivingCreature != NULL)
-			{
 				// Send an update to the actual of the item
-				WritePos = AddItemUpdate(SendBuf, Aux3, newItem);
-				receivingCreature->actInst->LSendToOneSimulator(SendBuf, WritePos, receivingCreature->simulatorPtr);
-			}
-
-			// Reset the loot tags etc, we don't need them anymore
-			ResetLoot(party, loot, lootTag->mItemId);
+				receivingCreature->actInst->LSendToOneSimulator(SendBuf,  AddItemUpdate(SendBuf, Aux3, newItem), receivingCreature->simulatorPtr);
 		}
 	}
 	else {
