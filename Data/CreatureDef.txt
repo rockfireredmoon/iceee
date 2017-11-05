@@ -32161,7 +32161,7 @@ level=50
 display_name=Silkula
 profession=3
 creature_category=Unliving
-rarity=1
+rarity=2
 base_damage_melee=245
 ExtraData=namedmob=
 ai_package=4_rogue_30
@@ -32186,7 +32186,7 @@ level=50
 display_name=Hemator
 profession=4
 creature_category=Unliving
-rarity=1
+rarity=2
 base_damage_melee=280
 ExtraData=namedmob=
 ai_package=knight_brave_6
@@ -38084,21 +38084,16 @@ total_size=11
 
 [ENTRY]
 ID=1654
-ExtraData=namedmob=1
 strength=25
 dexterity=22
-constitution=27
+constitution=50
 psyche=17
 spirit=17
-base_damage_melee=23
-damage_resist_melee=778
+damage_resist_melee=755
 damage_resist_fire=556
 damage_resist_frost=556
 damage_resist_mystic=556
-damage_resist_death=556
-base_health=138
-will_regen=1
-might_regen=1
+damage_resist_death=755
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
@@ -38107,8 +38102,12 @@ level=16
 display_name=Snatchclaw
 profession=2
 creature_category=Animal
+rarity=2
+base_damage_melee=35
+base_health=138
+ExtraData=dropratemult=2.0&namedmob=&droprateprofile=generousinstance2
 ai_package=melee_creature_brave_6
-total_size=24.2
+total_size=24.200000762939453
 
 [ENTRY]
 ID=1655
@@ -39740,29 +39739,28 @@ ai_package=rogue_brave_6
 
 [ENTRY]
 ID=1716
-ExtraData=namedmob=1
 strength=19
 dexterity=25
-constitution=18
+constitution=50
 psyche=15
 spirit=15
-base_damage_melee=18
 damage_resist_melee=641
 damage_resist_fire=458
 damage_resist_frost=458
 damage_resist_mystic=458
-damage_resist_death=458
-base_health=99
-will_regen=1
-might_regen=1
+damage_resist_death=641
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
 appearance=n4:{["c"]="Horde-Roc",["sk"]={["eyeball"]="DFC8B0",["feet"]="BFA167",["beak"]="FFAF3E",["body"]="7F411D",["mouth"]="FF2300",["tail"]="FFAF3E",["eye"]="FF2300",["head"]="FFD737"}}
-level=14
+level=15
 display_name=Petrie
 profession=3
 creature_category=Animal
+rarity=2
+base_damage_melee=28
+base_health=120
+ExtraData=dropratemult=2.0&namedmob=&droprateprofile=generousinstance2
 ai_package=melee_creature_brave_6
 total_size=15
 
@@ -74815,17 +74813,16 @@ damage_resist_fire=4000
 damage_resist_frost=4000
 damage_resist_mystic=4000
 damage_resist_death=4000
-will_regen=1
-might_regen=1
 offhand_weapon_damage=120
 appearance=n4:{["sk"]={["armor"]="3f3f35",["armor_marking"]="fffd00",["eye"]="d20003",["main"]="550000",["main2"]="550000",["main3"]="550000"},["c"]="Horde-Elemental_Air",["sz"]="1.1"}
 level=50
 display_name=Nocterror
 profession=3
 creature_category=Elemental
-rarity=1
+rarity=2
 base_damage_melee=185
 ai_package=custom_heathendel_mage40
+total_size=2
 
 [ENTRY]
 ID=3457

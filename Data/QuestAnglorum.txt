@@ -793,8 +793,8 @@ Obj.0.markerLocations=54909.3,154.673,63594.9,81;
 
 [ENTRY]
 ID=553
-Title=BOUNTY: Fierce Fowlbeast
-BodyText=Kill 10 Fierce Fowlbeasts.
+Title=Daily: Snatchclaw
+BodyText=Test your heroism by hunting down and killing the vicious Hulking Crab known as Snatchclaw.  He can be found Northwest of Fort Stonehenge along the water.
 CompleteText=
 Level=15,16
 Exp=5000
@@ -806,19 +806,19 @@ Unabandon=0
 QuestGiverID=2787
 QuestEnderID=2787
 Repeat=1
-RepeatDelay=3D
+RepeatDelay=4D
 sGiver=54792.0,63594.0,148.0,81
 sEnder=54792.0,63594.0,148.0,81
 [ACT]
-Act.BodyText=Kill 10 Fierce Fowlbeasts.
+Act.BodyText=Hunt down and kill Snatchclaw
 Obj.0.type=kill
-Obj.0.data1=1685,1686
-Obj.0.data2=10
-Obj.0.description=Kill 10 Fierce Fowlbeasts
+Obj.0.data1=1654
+Obj.0.data2=1
+Obj.0.description=Find and kill Snatchclaw
 Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
-Obj.0.completeText=0 of 10
+Obj.0.completeText=0 of 1
 Obj.0.markerLocations=54510.1,61405.0,178.341,81;
 [ACT]
 Act.BodyText=Return to the Bounty Board!
@@ -835,21 +835,22 @@ RewardItem.0=21329,1,1
 
 [ENTRY]
 ID=554
-Title=BOUNTY: Steppe-Slimer 
-BodyText=Kill 10 Steppe-Slimers.
+Title=Daily: Petrie
+BodyText=Test your Heroism by hunting down and killing aerial predator known as Petrie.  He can be found East of Tallgrass Farm.
 CompleteText=
-Level=12,16
-Exp=825
-PartySize=1
+Level=15,16
+Exp=5000
+PartySize=2
 NumRewards=0
-Coin=99
+Coin=10000
+Heroism=50
 Unabandon=0
 QuestGiverID=2788
 QuestEnderID=2788
 Repeat=1
-sGiver=43652.0,186.0,65635.0,81
-sEnder=43652.0,186.0,65635.0,81
-Heroism=6
+RepeatDelay=4D
+sGiver=43652.0,65635.0,186.0,81
+sEnder=43652.0,65635.0,186.0,81
 [ACT]
 Act.BodyText=Kill 10 Steppe-Slimers.
 Obj.0.type=kill
@@ -860,7 +861,7 @@ Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=0 of 10
-Obj.0.markerLocations=53385,292.998,67891,81;
+Obj.0.markerLocations=53385.0,67891.0,292.998,81;
 [ACT]
 Act.BodyText=Return to the Bounty Board!
 Obj.0.type=talk
@@ -871,9 +872,8 @@ Obj.0.complete=0
 Obj.0.myCreatureDefID=2788
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=54649.2,233.192,67553.8,81;
+Obj.0.markerLocations=54649.2,67553.8,233.192,81;
 RewardItem.0=21329,1,1
-
 
 [ENTRY]
 ID=281
