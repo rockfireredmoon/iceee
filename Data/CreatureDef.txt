@@ -32899,19 +32899,19 @@ damage_resist_fire=500
 damage_resist_frost=500
 damage_resist_mystic=6000
 damage_resist_death=7000
-will_regen=1
 might_regen=2
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
+appearance=n4:{["c"]="Boss-Hive_Queen",["sz"]="1.0824"}
 level=50
 display_name=Skrill Queen
 profession=5
 creature_category=Mortal
 rarity=2
 base_damage_melee=275
+ExtraData=droprateprofile=skrillqueen
 ai_package=mystic_creature_brave_6
-appearance=n4:{["c"]="Boss-Hive_Queen",["sz"]="1.0824"}
 
 [ENTRY]
 ID=1413

@@ -796,18 +796,19 @@ ID=553
 Title=BOUNTY: Fierce Fowlbeast
 BodyText=Kill 10 Fierce Fowlbeasts.
 CompleteText=
-Level=12,16
-Exp=893
-PartySize=1
+Level=15,16
+Exp=5000
+PartySize=2
 NumRewards=0
-Coin=117
+Coin=10000
+Heroism=50
 Unabandon=0
 QuestGiverID=2787
 QuestEnderID=2787
 Repeat=1
-sGiver=54792.0,148.0,63594.0,81
-sEnder=54792.0,148.0,63594.0,81
-Heroism=6
+RepeatDelay=3D
+sGiver=54792.0,63594.0,148.0,81
+sEnder=54792.0,63594.0,148.0,81
 [ACT]
 Act.BodyText=Kill 10 Fierce Fowlbeasts.
 Obj.0.type=kill
@@ -818,7 +819,7 @@ Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=0 of 10
-Obj.0.markerLocations=54510.1,178.341,61405.0,81;
+Obj.0.markerLocations=54510.1,61405.0,178.341,81;
 [ACT]
 Act.BodyText=Return to the Bounty Board!
 Obj.0.type=talk
@@ -829,7 +830,7 @@ Obj.0.complete=0
 Obj.0.myCreatureDefID=2787
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=54792.9,148.167,63594.5,81;
+Obj.0.markerLocations=54792.9,63594.5,148.167,81;
 RewardItem.0=21329,1,1
 
 [ENTRY]
