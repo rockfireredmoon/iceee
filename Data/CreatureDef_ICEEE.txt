@@ -1619,3 +1619,16 @@ profession=1
 creature_category=Inanimate
 rarity=1
 ai_package=nothing
+
+[ENTRY]
+defHints=8
+ID=7880
+will_regen=1
+might_regen=1
+appearance=p1:{["a"]="Prop-Chest1"}
+level=1
+display_name=Skrill Chest
+profession=1
+creature_category=Inanimate
+rarity=1
+ai_package=nothing

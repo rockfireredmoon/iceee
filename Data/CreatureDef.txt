@@ -32501,6 +32501,7 @@ damage_resist_death=2194
 will_regen=1
 might_regen=1
 offhand_weapon_damage=500
+
 [ENTRY]
 ID=1397
 strength=131

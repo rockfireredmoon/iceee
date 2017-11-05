@@ -1,0 +1,13 @@
+; Skrill Hive Dungeon Chest
+[ENTRY]
+CreatureDefID=7880
+EssenceID=10046
+Item=3402,5
+Item=4869,5
+Item=3522,5
+Item=3477,5
+Item=3582,5
+Item=1003282,5
+Item=3220,5
+Item=3342,5
+Item=3628,5

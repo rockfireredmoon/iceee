@@ -176,6 +176,7 @@ token_rolsburgmine	0	20	21264		 Rolsburg Mine Token
 token_rottedmaze	0	20	21274		 Rotted Maze Token
 token_rottednursery	0	20	21271		 Rotted Nursery Token
 token_spibearlair	0	20	21257		 Spibear Lair Token
+token_skrillqueenlair	0	20	10046		 Skrill Queen Lair Token
 token_underhenge	0	20	21250		 Underhenge Token
 token_wailingcrypt	0	20	8102		 Wailing Crypt Token
 token_wilhelmscrypt	0	20	21252		 Wilhelm's Crypt Token

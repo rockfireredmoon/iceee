@@ -1813,6 +1813,16 @@ DefID	Explicit	PackageList	Name
 2554	0	token_spibearlair	;Karronath
 2686	0	token_spibearlair	;Blightbiter Spibear
 2687	0	token_spibearlair	;Blightbighter Spibear
+1397	0	token_skrillqueenlair	;Skrill Hivegaurd
+1398	0	token_skrillqueenlair	;Skrill Hiveguard
+1400	0	token_skrillqueenlair	;Skrill Hivesoldier
+1401	0	token_skrillqueenlair	;Skrill Hivesoldier
+1403	0	token_skrillqueenlair	;Skrill Hivemender
+1404	0	token_skrillqueenlair	;Skrill Hivemender
+1406	0	token_skrillqueenlair	;Skrill Hivedrone
+1407	0	token_skrillqueenlair	;Skrill Hivedrone
+1409	0	token_skrillqueenlair	;Skrill Hivemaker
+1410	0	token_skrillqueenlair	;Skrill Hivemaker
 282	0	token_underhenge	;Templar
 283	0	token_underhenge	;Dweamorist
 284	0	token_underhenge	;Templar
