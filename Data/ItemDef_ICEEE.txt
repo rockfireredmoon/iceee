@@ -487,7 +487,7 @@ mMinUseLevel=1
 [ENTRY]
 mID=8117
 mType=5
-mDisplayName=Ghastly Purse
+mDisplayName=Vampidersilk Purse
 mAppearance=[{}]
 mIcon=Icon-32-Loot-Bag1.png|Icon-32-BG-Blue.png
 mIvType1=1
@@ -495,10 +495,10 @@ mIvMax1=1
 mLevel=1
 mBindingType=1
 mValue=1
-mFlavorText=Double click to open! Contains credits for use in the new Credit Shop
+mFlavorText=Double click to open! Contains credits for use in the Credit Shop and 100 heroism
 mQualityLevel=3
 mMinUseLevel=1
-Params=credits=1000
+Params=credits=1000,heroism=100
 
 [ENTRY]
 mID=8200

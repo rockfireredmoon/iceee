@@ -151,3 +151,19 @@ mValue=800
 mFlavorText=Makes all of your clothes invisible.
 mQualityLevel=1
 mMinUseLevel=10
+
+[ENTRY]
+mID=50012
+mType=5
+mDisplayName=Reusable Scroll: Vampiders' Form
+mIcon=Icon-32-Scroll2.png|Icon-32-BG-Divine.png
+mIvType1=0
+mIvMax1=0
+mLevel=1
+mUseAbilityId=27009
+mValue=1
+mValueType=1
+mQualityLevel=4
+mMinUseLevel=1
+mFlavorText=A Reusable skill scroll that transforms you into a Vampider, increasing movement speed by 50% for 10 minutes. Drag the item to your ability bars to use. 
+Params=verifycast=1&keep=1

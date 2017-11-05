@@ -1,5 +1,9 @@
 ﻿; Gift Box
 [ENTRY]
 CreatureDefID=7808
-EssenceID=8116  ; Key
-Item=8117,1   ; Ghastly Purse
+EssenceID=8116 ; Key
+Item=8117,1    ; Ghastly Purse
+Item=900062,1  ; Vampire Skull Helment
+Item=900063,1  ; Vampire Hunter Bag
+Item=50012,1   ; Vampider Transformation Scroll
+Item=900064,1    ; Valkal's Experience Tome
