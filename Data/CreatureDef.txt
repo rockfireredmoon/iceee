@@ -32528,6 +32528,7 @@ rarity=1
 base_damage_melee=164
 ai_package=4_knight_30
 will_regen=1
+
 [ENTRY]
 ID=1398
 strength=135
