@@ -1747,13 +1747,11 @@ WeatherState :: ~WeatherState() {
 
 void WeatherState :: RunCycle(ActiveInstance *instance) {
 	if(mThunder && g_ServerTime >= mNextThunder) {
-		g_Log.AddMessageFormat("Thunder state change");
 		mNextThunder = g_ServerTime + ( randmodrng(mDefinition.mThunderGapMin, mDefinition.mThunderGapMax) * 1000);
 		SendThunder(instance);
 	}
 
 	if(mNextStateChange != 0 && g_ServerTime > mNextStateChange) {
-		g_Log.AddMessageFormat("Weather state change");
 
 		if(mEscalateState == WeatherState::ONE_OFF) {
 			if(PickNewWeather())

@@ -8,22 +8,22 @@ HeavyChance=10
 WeatherMin=120
 WeatherMax=700
 WeatherType=R
-ThunderChance=100
+ThunderChance=33
 ThunderGapMin=30
 ThunderGapMax=60
 Escalate=75
 
 [ENTRY]
 Name=Anglorum
-FineMin=30
-FineMax=60
-LightChance=30
+FineMin=300
+FineMax=1200
+LightChance=100
 MediumChance=60
 HeavyChance=10
-WeatherMin=40
-WeatherMax=70
+WeatherMin=120
+WeatherMax=700
 WeatherType=R
-ThunderChance=100
+ThunderChance=33
 ThunderGapMin=30
 ThunderGapMax=60
 Escalate=100
@@ -32,15 +32,3 @@ Escalate=100
 Name=Camelot
 Use=Anglorum
 
-[ENTRY]
-Name=Dustshore
-FineMin=30
-FineMax=60
-LightChance=30
-MediumChance=60
-HeavyChance=10
-WeatherMin=40
-WeatherMax=70
-WeatherType=S
-ThunderChance=0
-Escalate=50
