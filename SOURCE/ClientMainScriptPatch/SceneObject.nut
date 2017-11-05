@@ -1548,6 +1548,7 @@ class this.SceneObjectManager extends this.MessageBroadcaster
 		{
 			::_avatar.setHeadLight(true);
 		}
+		
 	}
 
 	function queueAssembly( so, ... )
@@ -3244,6 +3245,10 @@ class this.SceneObject extends this.MessageBroadcaster
 
 		if (value)
 		{
+			if (::_avatar == this) {
+				::_Environment.playerAvatarAssembled();
+			}
+			
 			if (this.mEffectsHandler != null)
 			{
 				this.mEffectsHandler.onAssembled();
@@ -3898,6 +3903,10 @@ class this.SceneObject extends this.MessageBroadcaster
 		{
 			this.setResetTabTarget(true);
 			this.setTargetObject(null);
+		}
+		
+		if(this == ::_avatar) {
+			::_Environment.playerAvatarDisassembled();
 		}
 
 		if (::_Environment.isMarker(this))

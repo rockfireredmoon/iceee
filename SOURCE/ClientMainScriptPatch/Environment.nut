@@ -237,9 +237,9 @@ class this.Environment
 		emitter.play();
 	}
 	
-	function onAvatarSet() {
+	function playerAvatarAssembled() {
 		if(this.mSetWeatherOnAvatar) {
-			print("ICE! now got avatar, setting weather to " + this.mWeatherType);
+			print("ICE! now got player avatar, setting weather to " + this.mWeatherType + "\n");
 			if(this.mWeatherType != this.WeatherType.FINE)  
 				_doSetWeather();
 			this.mSetWeatherOnAvatar = false;
@@ -293,6 +293,13 @@ class this.Environment
 		local snd = "Sound-Ambient-" + fx + ".ogg";
 		this.Audio.playMusic(snd, this.Audio.WEATHER_CHANNEL);
 	}
+	
+	function playerAvatarDisassembled() 
+	{
+		print("ICE! lost  player avatar, setting weather to null\n");
+		this._stopWeather();
+		this.Audio.stopMusic(this.Audio.WEATHER_CHANNEL);
+	}
 
 	function onWeatherUpdate( weatherType, weatherWeight )
 	{
@@ -301,24 +308,14 @@ class this.Environment
 			this.mWeatherType = weatherType;
 			this.mWeatherWeight = weatherWeight;
 			
-			if(this.mWeatherEffect != null) {
-				print("ICE! Stopping weather");
-				foreach(e in this.mWeatherEffect.mEffects) {
-					e.stop();
-				}
-				this.mWeatherEffect.stop();
-				this.mWeatherEffect = null;
-				print("ICE! Stopped weather");
-			}
-			else {
-				print("ICE! no weather to stop!?");
-			}
+			this._stopWeather();
 				
 			if(this.mWeatherType != this.WeatherType.FINE) {
 				this._doSetWeather();				
 			}
-			else
+			else {
 				this.Audio.stopMusic(this.Audio.WEATHER_CHANNEL);
+			}
 		}
 	}
 	
@@ -931,6 +928,22 @@ class this.Environment
 		}
 
 		throw this.Exception("Invalid color specification: " + value);
+	}
+	
+	function _stopWeather() {
+		mSetWeatherOnAvatar = false;
+		if(this.mWeatherEffect != null) {
+			print("ICE! Stopping weather");
+			foreach(e in this.mWeatherEffect.mEffects) {
+				e.stop();
+			}
+			this.mWeatherEffect.stop();
+			this.mWeatherEffect = null;
+			print("ICE! Stopped weather");
+		}
+		else {
+			print("ICE! no weather to stop!?");
+		}
 	}
 
 	function getSunPosition()

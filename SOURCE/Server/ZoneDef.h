@@ -112,6 +112,7 @@ public:
 
 	std::string mMapName;
 	std::string mTimeOfDay;
+	std::string mUse; // an alternative definition to use for this region
 	unsigned long mFineMin; // minimum number of seconds the weather is fine for (zero means never fine)
 	unsigned long mFineMax; // maximum number of seconds the weather is fine for
 	int mLightChance; //  chance (out of 100) that the new weather will be light
@@ -151,10 +152,11 @@ public:
 		DEESCALATING
 	};
 
-	WeatherState(WeatherKey key, WeatherDef &def);
+	WeatherState(int instanceId, WeatherDef &def);
 	~WeatherState();
+	std::vector<std::string> mMapNames; //all the map names this state is for
 	WeatherDef mDefinition; // the weather definition this state was derived from
-	WeatherKey mKey; // the map/instance the weather applies to
+	int mInstanceId; // the instance the weather applies to
 	unsigned long mNextStateChange; // server time when the next state change occurs
 	int mWeatherType; // the type of weather chosen for this activation
 	int mWeatherWeight; // whether currently light, medium or heavy
@@ -379,6 +381,8 @@ public:
 	void Deregister(std::vector<WeatherState*> states); // when an instance dies, we stop maintaining its weather regions (i.e. map names)
 	int LoadFromFile(const char *filename);
 	WeatherState* GetWeather(std::string mapName, int instanceId);
+private:
+	bool MaybeAddWeatherDef(int instanceID, std::string actualMapName, std::vector<WeatherState*> &m);
 };
 
 class EnvironmentCycleManager

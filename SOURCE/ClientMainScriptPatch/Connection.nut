@@ -501,6 +501,7 @@ class this.Connection extends this.MessageBroadcaster
 		if (this.connectionState == 2)
 		{
 			this._clear();
+			this.broadcastMessage("onDisconnect");
 			::_stateManager.onEvent("Disconnect");
 			this.ResetNetworkCachedData();
 		}

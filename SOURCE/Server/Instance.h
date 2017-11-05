@@ -104,6 +104,7 @@ public:
 	int CreateMap(void);
 	int SearchMap(const char *primary, int xpos, int ypos);
 	int GetIndexByName(const char *name, const char *type);
+	void GetZone(const char *name, std::vector<MapDefInfo> &defs);
 	int LoadFile(const char *fileName);
 	void FreeList(void);
 private:

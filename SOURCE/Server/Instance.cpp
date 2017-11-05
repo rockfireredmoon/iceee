@@ -281,6 +281,14 @@ int MapDefContainer :: GetIndexByName(const char *name, const char *type)
 	return -1;
 }
 
+void MapDefContainer :: GetZone(const char *primary, std::vector<MapDefInfo> &defs)
+{
+	for(size_t a = 0; a < mMapList.size(); a++)
+		if(mMapList[a].Primary.compare(primary) == 0)
+			defs.push_back(mMapList[a]);
+}
+
+
 int MapDefContainer :: LoadFile(const char *fileName)
 {
 	FileReader lfr;

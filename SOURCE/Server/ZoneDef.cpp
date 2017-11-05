@@ -1688,6 +1688,7 @@ WeatherDef :: WeatherDef(const WeatherDef &other) {
 
 void WeatherDef :: CopyFrom(const WeatherDef &other) {
 	mMapName = other.mMapName;
+	mUse = other.mUse;
 	mTimeOfDay = other.mTimeOfDay;
 	mFineMin = other.mFineMin;
 	mFineMax = other.mFineMax;
@@ -1705,6 +1706,7 @@ void WeatherDef :: CopyFrom(const WeatherDef &other) {
 
 void WeatherDef :: Clear() {
 	mMapName = "";
+	mUse = "";
 	mTimeOfDay = "";
 	mFineMin = 0;
 	mFineMax = 99999999;
@@ -1725,8 +1727,8 @@ void WeatherDef :: SetDefaults() {
 	Clear();
 }
 
-WeatherState :: WeatherState(WeatherKey key, WeatherDef &def) {
-	mKey = key;
+WeatherState :: WeatherState(int instanceId, WeatherDef &def) {
+	mInstanceId = instanceId;
 	mDefinition = def;
 	mNextStateChange = g_ServerTime + ( randmodrng(def.mFineMin, def.mFineMax) * 1000 );
 	mWeatherType = WeatherDef::FINE;
@@ -1797,21 +1799,22 @@ void WeatherState :: RunCycle(ActiveInstance *instance) {
 }
 
 void WeatherState :: SendWeatherUpdate(ActiveInstance *instance) {
-	/* TODO send weather change message */
-	g_Log.AddMessageFormat("REMOVEME SendWeatherUpdate type: %d  weight: %d  sc: %d  th: %s  tn: %d   esc: %d   to %d (%d)", mWeatherType, mWeatherWeight, mNextStateChange, mThunder ? "yes" : "no", mNextThunder, mEscalateState, instance->mInstanceID, instance->mZone);
 	for(std::vector<SimulatorThread*>::iterator it = instance->RegSim.begin(); it != instance->RegSim.end(); it++) {
-		g_Log.AddMessageFormat("REMOVEME >> %d : %d : %s : %s", (*it)->InternalID, (*it)->pld.CurrentMapInt, MapDef.mMapList[(*it)->pld.CurrentMapInt].Name.c_str(), mDefinition.mMapName.c_str());
-		if((*it)->pld.CurrentMapInt == -1 || MapDef.mMapList[(*it)->pld.CurrentMapInt].Name.compare(mDefinition.mMapName) == 0) {
-			(*it)->AttemptSend((*it)->Aux1, PrepExt_SetWeather((*it)->Aux1, mWeatherType, mWeatherWeight));
+		for(std::vector<std::string>::iterator it2 = mMapNames.begin(); it2 != mMapNames.end(); it2++) {
+			if((*it)->pld.CurrentMapInt == -1 || MapDef.mMapList[(*it)->pld.CurrentMapInt].Name.compare(*it2) == 0) {
+				(*it)->AttemptSend((*it)->Aux1, PrepExt_SetWeather((*it)->Aux1, mWeatherType, mWeatherWeight));
+				break;
+			}
 		}
 	}
 }
 void WeatherState :: SendThunder(ActiveInstance *instance) {
-	/* TODO send thunder message */
-	g_Log.AddMessageFormat("REMOVEME SendThunder %d (%d)", instance->mInstanceID, instance->mZone);
 	for(std::vector<SimulatorThread*>::iterator it = instance->RegSim.begin(); it != instance->RegSim.end(); it++) {
-		if((*it)->pld.CurrentMapInt == -1 || MapDef.mMapList[(*it)->pld.CurrentMapInt].Name.compare(mDefinition.mMapName) == 0) {
-			(*it)->AttemptSend((*it)->Aux1, PrepExt_Thunder((*it)->Aux1, mWeatherWeight));
+		for(std::vector<std::string>::iterator it2 = mMapNames.begin(); it2 != mMapNames.end(); it2++) {
+			if((*it)->pld.CurrentMapInt == -1 || MapDef.mMapList[(*it)->pld.CurrentMapInt].Name.compare(*it2) == 0) {
+				(*it)->AttemptSend((*it)->Aux1, PrepExt_Thunder((*it)->Aux1, mWeatherWeight));
+				break;
+			}
 		}
 	}
 }
@@ -1871,39 +1874,75 @@ bool WeatherState :: PickNewWeather() {
 	return true;
 }
 
-std::vector<WeatherState*> WeatherManager :: RegisterInstance(ActiveInstance *instance) {
-	std::vector<MapLocationDef> l;
-	std::vector<WeatherState*> m;
+bool WeatherManager :: MaybeAddWeatherDef(int instanceID, std::string actualMapName, std::vector<WeatherState*> &m) {
+	if(mWeatherDefinitions.find(actualMapName) == mWeatherDefinitions.end())
+		return false;
 
-	MapLocation.GetZone(instance->mZone, l);
-	if(l.size() == 0) {
-		/* If no mapdefs for this zone, assume a single area of weather for the whole instance */
-		MapLocationDef d;
-		d.MapName = instance->mZoneDefPtr->mName;
-		l.push_back(d);
+	WeatherDef wdef = mWeatherDefinitions[actualMapName];
+	while(wdef.mUse.length() != 0)
+		wdef = mWeatherDefinitions[wdef.mUse];
+
+	/* When 'use' is used, both the parent map name and this map name are stored in the
+	 * mWeather map, but both pointing to the same state instance
+	 */
+	WeatherKey k;
+	k.instance = instanceID;
+	k.mapName = actualMapName;
+
+	WeatherState *state = NULL;
+
+	if(mWeather.find(k) == mWeather.end()) {
+		/* Not currently available under the actual map name, is it availabe under the parent? */
+		if(wdef.mMapName.compare(actualMapName) != 0) {
+			/* Using 'use' */
+			k.mapName = wdef.mMapName;
+			if(mWeather.find(k) == mWeather.end()) {
+				/* Not available under parent, create it as parent */
+				state = new WeatherState(instanceID, wdef);
+				m.push_back(state);
+				mWeather[k] = state;
+				mWeather[k]->mMapNames.push_back(wdef.mMapName);
+			}
+
+			/* Available under the parent map name, add the actual name to the weather map */
+			WeatherKey k2;
+			k2.instance = instanceID;
+			k2.mapName = actualMapName;
+			mWeather[k2] = mWeather[k];
+			mWeather[k]->mMapNames.push_back(actualMapName);
+		}
+		else {
+			/* Not using 'use' */
+			state = new WeatherState(instanceID, wdef);
+			m.push_back(state);
+			mWeather[k] = state;
+		}
 	}
 
+	return true;
+}
+
+std::vector<WeatherState*> WeatherManager :: RegisterInstance(ActiveInstance *instance) {
+	std::vector<MapDefInfo> d;
+	std::vector<WeatherState*> m;
 	bool hasWeather = false;
 
-	/* Set up a weather state for all the map locations in this instance that have a weather def */
-	for(std::vector<MapLocationDef>::iterator it = l.begin(); it != l.end(); it++) {
+	MapDef.GetZone(instance->mZoneDefPtr->mMapName.c_str(), d);
 
-		MapLocationDef def = (*it);
+	if(d.size() == 0) {
+		/* If no mapdefs for this zone, assume a single area of weather for the whole instance */
+		MapDefInfo dd;
+		dd.Name = instance->mZoneDefPtr->mName;
+		d.push_back(dd);
+	}
 
-		if(mWeatherDefinitions.find(def.MapName) == mWeatherDefinitions.end())
+	/* Set up a weather state for all the MapDefInfo in this instance that have a weather def */
+	for(std::vector<MapDefInfo>::iterator it = d.begin(); it != d.end(); it++) {
+
+		if(!MaybeAddWeatherDef(instance->mInstanceID, (*it).Name, m))
 			continue;
 
-		WeatherDef wdef = mWeatherDefinitions[def.MapName];
-
 		hasWeather = true;
-
-		WeatherKey k;
-		k.instance = instance->mInstanceID;
-		k.mapName = (*it).MapName;
-
-		WeatherState *state = new WeatherState(k, wdef);
-		m.push_back(state);
-		mWeather[k] = state;
 	}
 
 	return m;
@@ -1920,9 +1959,19 @@ WeatherState* WeatherManager :: GetWeather(std::string mapName, int instanceId) 
 void WeatherManager :: Deregister(std::vector<WeatherState*> states) {
 
 	/* Set up a weather state for all the map locations in this instance that have a weather def */
+	int s;
 	for(std::vector<WeatherState*>::iterator it = states.begin(); it != states.end(); it++) {
-		delete mWeather[(*it)->mKey];
-		mWeather.erase((*it)->mKey);
+		s = 0;
+		for(std::vector<std::string>::iterator it2 = (*it)->mMapNames.begin(); it2 != (*it)->mMapNames.end(); it2++) {
+			WeatherKey k;
+			k.instance = (*it)->mInstanceId;
+			k.mapName = *it2;
+			if(s == 0)
+				/* Only delete the state in the first key, as the other keys have a copy */
+				delete mWeather[k];
+			mWeather.erase(k);
+			s++;
+		}
 	}
 }
 
@@ -1959,6 +2008,8 @@ int WeatherManager :: LoadFromFile(const char *fileName) {
 			{
 				if(strcmp(lfr.SecBuffer, "NAME") == 0)
 					newItem.mMapName = lfr.BlockToStringC(1, 0);
+				else if(strcmp(lfr.SecBuffer, "USE") == 0)
+					newItem.mUse = lfr.BlockToStringC(1, 0);
 				else if(strcmp(lfr.SecBuffer, "FINEMIN") == 0)
 					newItem.mFineMin = lfr.BlockToULongC(1);
 				else if(strcmp(lfr.SecBuffer, "FINEMAX") == 0)
