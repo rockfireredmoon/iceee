@@ -11,11 +11,13 @@
 #include "Character.h"
 #include "Globals.h"
 #include "Instance.h"
+#include "Simulator.h"
 
 ZoneDefManager g_ZoneDefManager;
 ZoneBarrierManager g_ZoneBarrierManager;
 EnvironmentCycleManager g_EnvironmentCycleManager;
 GroveTemplateManager g_GroveTemplateManager;
+WeatherManager g_WeatherManager;
 
 ZoneEditPermission::ZoneEditPermission()
 {
@@ -1672,6 +1674,345 @@ void GroveTemplateManager :: ResolveTerrainMap(void)
 	}
 }
 
+//
+// Weather
+//
+
+WeatherDef :: WeatherDef() {
+	Clear();
+}
+
+WeatherDef :: WeatherDef(const WeatherDef &other) {
+	CopyFrom(other);
+}
+
+void WeatherDef :: CopyFrom(const WeatherDef &other) {
+	mMapName = other.mMapName;
+	mTimeOfDay = other.mTimeOfDay;
+	mFineMin = other.mFineMin;
+	mFineMax = other.mFineMax;
+	mLightChance = other.mLightChance;
+	mMediumChance = other.mMediumChance;
+	mHeavyChance = other.mHeavyChance;
+	mWeatherMin = other.mWeatherMin;
+	mWeatherMax = other.mWeatherMax;
+	mWeatherTypes = other.mWeatherTypes;
+	mThunderChance = other.mThunderChance;
+	mThunderGapMin = other.mThunderGapMin;
+	mThunderGapMax = other.mThunderGapMax;
+	mEscalateChance = other.mEscalateChance;
+}
+
+void WeatherDef :: Clear() {
+	mMapName = "";
+	mTimeOfDay = "";
+	mFineMin = 0;
+	mFineMax = 99999999;
+	mLightChance = 0;
+	mMediumChance = 0;
+	mHeavyChance = 0;
+	mWeatherMin = 0;
+	mWeatherMax = 0;
+	mWeatherTypes.clear();
+	mThunderChance = 0;
+	mThunderGapMin = 0;
+	mThunderGapMax = 0;
+	mEscalateChance = 0;
+
+}
+
+void WeatherDef :: SetDefaults() {
+	Clear();
+}
+
+WeatherState :: WeatherState(WeatherKey key, WeatherDef &def) {
+	mKey = key;
+	mDefinition = def;
+	mNextStateChange = g_ServerTime + ( randmodrng(def.mFineMin, def.mFineMax) * 1000 );
+	mWeatherType = WeatherDef::FINE;
+	mWeatherWeight = WeatherState::LIGHT;
+	mEscalateState = WeatherState::ONE_OFF;
+	mThunder = false;
+	mNextThunder = 0;
+
+	if(g_ServerTime >= mNextStateChange) {
+		PickNewWeather();
+	}
+}
+
+WeatherState :: ~WeatherState() {
+}
+
+void WeatherState :: RunCycle(ActiveInstance *instance) {
+	if(mThunder && g_ServerTime >= mNextThunder) {
+		g_Log.AddMessageFormat("Thunder state change");
+		mNextThunder = g_ServerTime + ( randmodrng(mDefinition.mThunderGapMin, mDefinition.mThunderGapMax) * 1000);
+		SendThunder(instance);
+	}
+
+	if(mNextStateChange != 0 && g_ServerTime > mNextStateChange) {
+		g_Log.AddMessageFormat("Weather state change");
+
+		if(mEscalateState == WeatherState::ONE_OFF) {
+			if(PickNewWeather())
+				SendWeatherUpdate(instance);
+		}
+		else if(mEscalateState == WeatherState::ESCALATING) {
+			mWeatherWeight++;
+			if(mWeatherWeight >= WeatherState::MAX_WEIGHT) {
+				mEscalateState = WeatherState::DEESCALATING;
+				mWeatherWeight = WeatherState::MAX_WEIGHT - 2;
+			}
+			mNextStateChange = g_ServerTime + ( randmodrng(mDefinition.mWeatherMin, mDefinition.mWeatherMax) * 1000 );
+			SendWeatherUpdate(instance);
+
+			/* During escalation we also roll for thunder to start */
+			if(!mThunder)
+				RollThunder();
+		}
+		else if(mEscalateState == WeatherState::DEESCALATING) {
+			mWeatherWeight--;
+			if(mWeatherWeight < 0) {
+				/* Completely de-escalated */
+				if(PickNewWeather())
+					SendWeatherUpdate(instance);
+			}
+			else {
+				mNextStateChange = g_ServerTime + ( randmodrng(mDefinition.mWeatherMin, mDefinition.mWeatherMax) * 1000 );
+				SendWeatherUpdate(instance);
+			}
+
+			/* During de-escalation we also roll for thunder to stop using the inverse chance that was used to start */
+			if(mThunder) {
+				int chance = randmodrng(0, 100);
+				mThunder = chance < ( 100 - mDefinition.mThunderChance );
+				if(!mThunder) {
+					mNextThunder = 0;
+				}
+			}
+		}
+		else
+			mNextStateChange = 0;
+	}
+}
+
+void WeatherState :: SendWeatherUpdate(ActiveInstance *instance) {
+	/* TODO send weather change message */
+	g_Log.AddMessageFormat("REMOVEME SendWeatherUpdate type: %d  weight: %d  sc: %d  th: %s  tn: %d   esc: %d   to %d (%d)", mWeatherType, mWeatherWeight, mNextStateChange, mThunder ? "yes" : "no", mNextThunder, mEscalateState, instance->mInstanceID, instance->mZone);
+	for(std::vector<SimulatorThread*>::iterator it = instance->RegSim.begin(); it != instance->RegSim.end(); it++) {
+		g_Log.AddMessageFormat("REMOVEME >> %d : %d : %s : %s", (*it)->InternalID, (*it)->pld.CurrentMapInt, MapDef.mMapList[(*it)->pld.CurrentMapInt].Name.c_str(), mDefinition.mMapName.c_str());
+		if((*it)->pld.CurrentMapInt == -1 || MapDef.mMapList[(*it)->pld.CurrentMapInt].Name.compare(mDefinition.mMapName) == 0) {
+			(*it)->AttemptSend((*it)->Aux1, PrepExt_SetWeather((*it)->Aux1, mWeatherType, mWeatherWeight));
+		}
+	}
+}
+void WeatherState :: SendThunder(ActiveInstance *instance) {
+	/* TODO send thunder message */
+	g_Log.AddMessageFormat("REMOVEME SendThunder %d (%d)", instance->mInstanceID, instance->mZone);
+	for(std::vector<SimulatorThread*>::iterator it = instance->RegSim.begin(); it != instance->RegSim.end(); it++) {
+		if((*it)->pld.CurrentMapInt == -1 || MapDef.mMapList[(*it)->pld.CurrentMapInt].Name.compare(mDefinition.mMapName) == 0) {
+			(*it)->AttemptSend((*it)->Aux1, PrepExt_Thunder((*it)->Aux1, mWeatherWeight));
+		}
+	}
+}
+
+void WeatherState :: RollThunder() {
+	int chance = randmodrng(0, 100);
+	mThunder = chance < mDefinition.mThunderChance;
+	mNextThunder = 0;
+	if(mThunder) {
+		mNextThunder = g_ServerTime + ( randmodrng(mDefinition.mThunderGapMin, mDefinition.mThunderGapMax) * 1000 );
+	}
+}
+
+bool WeatherState :: PickNewWeather() {
+	if(mWeatherType == WeatherDef::FINE) {
+		/* Weather is starting */
+		int chance = randmodrng(0, 100);
+		if(chance < mDefinition.mHeavyChance) {
+			mWeatherWeight == WeatherState::HEAVY;
+		}
+		else if(chance < mDefinition.mMediumChance) {
+			mWeatherWeight == WeatherState::MEDIUM;
+		}
+		else if(chance < mDefinition.mLightChance) {
+			mWeatherWeight == WeatherState::LIGHT;
+		}
+		else {
+			/* No weather to start, wait for next cycle */
+			mNextStateChange = g_ServerTime + ( randmodrng(mDefinition.mFineMin, mDefinition.mFineMax) * 1000 );
+			return false;
+		}
+
+		mNextStateChange = g_ServerTime + ( randmodrng(mDefinition.mWeatherMin, mDefinition.mWeatherMax) * 1000 );
+
+		mWeatherType = mDefinition.mWeatherTypes[randmodrng(0, mDefinition.mWeatherTypes.size())];
+
+		/* Roll for thunder */
+		RollThunder();
+
+		/* Roll for escalation */
+		chance = randmodrng(0, 100);
+		mEscalateState = WeatherState::ONE_OFF;
+		if(chance < mDefinition.mEscalateChance) {
+			mEscalateState = WeatherState::ESCALATING;
+		}
+	}
+	else {
+		/* Weather is stopping */
+		mThunder = false;
+		mNextThunder = 0;
+		mNextStateChange = g_ServerTime + ( randmodrng(mDefinition.mFineMin, mDefinition.mFineMax) * 1000 );
+		mWeatherType = WeatherDef::FINE;
+		mWeatherWeight = WeatherState::LIGHT;
+		mEscalateState = WeatherState::ONE_OFF;
+	}
+
+	return true;
+}
+
+std::vector<WeatherState*> WeatherManager :: RegisterInstance(ActiveInstance *instance) {
+	std::vector<MapLocationDef> l;
+	std::vector<WeatherState*> m;
+
+	MapLocation.GetZone(instance->mZone, l);
+	if(l.size() == 0) {
+		/* If no mapdefs for this zone, assume a single area of weather for the whole instance */
+		MapLocationDef d;
+		d.MapName = instance->mZoneDefPtr->mName;
+		l.push_back(d);
+	}
+
+	bool hasWeather = false;
+
+	/* Set up a weather state for all the map locations in this instance that have a weather def */
+	for(std::vector<MapLocationDef>::iterator it = l.begin(); it != l.end(); it++) {
+
+		MapLocationDef def = (*it);
+
+		if(mWeatherDefinitions.find(def.MapName) == mWeatherDefinitions.end())
+			continue;
+
+		WeatherDef wdef = mWeatherDefinitions[def.MapName];
+
+		hasWeather = true;
+
+		WeatherKey k;
+		k.instance = instance->mInstanceID;
+		k.mapName = (*it).MapName;
+
+		WeatherState *state = new WeatherState(k, wdef);
+		m.push_back(state);
+		mWeather[k] = state;
+	}
+
+	return m;
+}
+
+WeatherState* WeatherManager :: GetWeather(std::string mapName, int instanceId) {
+
+	WeatherKey k;
+	k.instance = instanceId;
+	k.mapName = mapName;
+	return mWeather[k];
+}
+
+void WeatherManager :: Deregister(std::vector<WeatherState*> states) {
+
+	/* Set up a weather state for all the map locations in this instance that have a weather def */
+	for(std::vector<WeatherState*>::iterator it = states.begin(); it != states.end(); it++) {
+		delete mWeather[(*it)->mKey];
+		mWeather.erase((*it)->mKey);
+	}
+}
+
+int WeatherManager :: LoadFromFile(const char *fileName) {
+	//Note: the official grove file is loaded first, then the custom grove file.
+	//This should point here.
+	FileReader lfr;
+	if(lfr.OpenText(fileName) != Err_OK)
+	{
+		g_Log.AddMessageFormat("Error: Could not open file [%s]", fileName);
+		return -1;
+	}
+
+	lfr.CommentStyle = Comment_Semi;
+	WeatherDef newItem;
+
+	while(lfr.FileOpen() == true)
+	{
+		int r = lfr.ReadLine();
+		if(r > 0)
+		{
+			r = lfr.BreakUntil("=", '=');  //Don't use SingleBreak since we won't be able to re-split later.
+			lfr.BlockToStringC(0, Case_Upper);
+			if(strcmp(lfr.SecBuffer, "[ENTRY]") == 0)
+			{
+				if(newItem.mMapName.length() != 0)
+				{
+					WeatherDef d(newItem);
+					mWeatherDefinitions[newItem.mMapName] = d;
+					newItem.Clear();
+				}
+			}
+			else
+			{
+				if(strcmp(lfr.SecBuffer, "NAME") == 0)
+					newItem.mMapName = lfr.BlockToStringC(1, 0);
+				else if(strcmp(lfr.SecBuffer, "FINEMIN") == 0)
+					newItem.mFineMin = lfr.BlockToULongC(1);
+				else if(strcmp(lfr.SecBuffer, "FINEMAX") == 0)
+					newItem.mFineMax = lfr.BlockToULongC(1);
+				else if(strcmp(lfr.SecBuffer, "LIGHTCHANCE") == 0)
+					newItem.mLightChance = lfr.BlockToIntC(1);
+				else if(strcmp(lfr.SecBuffer, "MEDIUMCHANCE") == 0)
+					newItem.mMediumChance = lfr.BlockToIntC(1);
+				else if(strcmp(lfr.SecBuffer, "HEAVYCHANCE") == 0)
+					newItem.mHeavyChance = lfr.BlockToIntC(1);
+				else if(strcmp(lfr.SecBuffer, "WEATHERMIN") == 0)
+					newItem.mWeatherMin = lfr.BlockToULongC(1);
+				else if(strcmp(lfr.SecBuffer, "WEATHERMAX") == 0)
+					newItem.mWeatherMax = lfr.BlockToULongC(1);
+				else if(strcmp(lfr.SecBuffer, "WEATHERTYPE") == 0) {
+					r = lfr.MultiBreak("=,"); //Re-split for this particular data.
+					for(int s = 1; s < r; s++) {
+						std::string typeStr = lfr.BlockToStringC(1, 0);
+						if(strcmp(lfr.SecBuffer, "S") == 0)
+							newItem.mWeatherTypes.push_back(WeatherDef::SNOW);
+						else if(strcmp(lfr.SecBuffer, "H") == 0)
+							newItem.mWeatherTypes.push_back(WeatherDef::HAIL);
+						else if(strcmp(lfr.SecBuffer, "S") == 0)
+							newItem.mWeatherTypes.push_back(WeatherDef::SAND);
+						else if(strcmp(lfr.SecBuffer, "L") == 0)
+							newItem.mWeatherTypes.push_back(WeatherDef::LAVA);
+						else
+							newItem.mWeatherTypes.push_back(WeatherDef::RAIN);
+					}
+				}
+				else if(strcmp(lfr.SecBuffer, "THUNDERCHANCE") == 0)
+					newItem.mThunderChance = lfr.BlockToIntC(1);
+				else if(strcmp(lfr.SecBuffer, "THUNDERGAPMIN") == 0)
+					newItem.mThunderGapMin = lfr.BlockToULongC(1);
+				else if(strcmp(lfr.SecBuffer, "THUNDERGAPMAX") == 0)
+					newItem.mThunderGapMax = lfr.BlockToULongC(1);
+				else if(strcmp(lfr.SecBuffer, "ESCALATE") == 0)
+					newItem.mEscalateChance = lfr.BlockToIntC(1);
+				else
+					g_Log.AddMessageFormat("Unknown identifier [%s] while reading from file %s.", lfr.SecBuffer, fileName);
+			}
+		}
+	}
+	lfr.CloseCurrent();
+
+	if(newItem.mMapName.length() != 0)
+	{
+		WeatherDef d;
+		d.SetDefaults();
+		d.CopyFrom(newItem);
+		mWeatherDefinitions[newItem.mMapName] = d;
+	}
+	return 0;
+}
 
 int PrepExt_SendEnvironmentUpdateMsg(char *buffer, ActiveInstance *instance, const char *zoneIDString, ZoneDefInfo *zoneDef, int x, int z, int mask)
 {

@@ -3401,11 +3401,33 @@ class this.Connection extends this.MessageBroadcaster
 	function _handleEnvironmentUpdateMsg( data )
 	{
 		local mask = data.getByte();
+		
+		if(mask == 4) 
+		{
+			local weight = data.getShort();
+			// TODO thunder clap
+			print("ICE! thunder: " + weight + "\n");
+			this.broadcastMessage("onThunder", weight);
+			return;
+		}
+		
+		if(mask == 3) 
+		{
+			local type = data.getShort();
+			local weight = data.getShort();
+			// TODO weather change
+			print("ICE! weather: " + type + " : " + weight + "\n");
+			this.broadcastMessage("onWeatherUpdate", type, weight);
+			return;
+		}
+		
 		local zoneId = this.mProtocolVersionId > 16 ? data.getStringUTF() : data.getInteger();
 		local zoneDefId = data.getInteger();
 		local zonePageSize = data.getShort(); 
 		local terrain = data.getStringUTF();
 		local envType = data.getStringUTF();
+		
+		
 
 		if (mask == 2)
 		{

@@ -767,6 +767,36 @@ this.MapDef <- {
 							name = "The Mausoleum",
 							x = 443,
 							y = 204
+						},
+						{
+							name = "The Mausoleum",
+							x = 443,
+							y = 204
+						},
+						{
+							name = "Redeemer Camp",
+							x = 502,
+							y = 187
+						},
+						{
+							name = "Soul Striker Camp",
+							x = 645,
+							y = 308
+						},
+						{
+							name = "Front Line Camp",
+							x = 469,
+							y = 397
+						},
+						{
+							name = "Moonsull Camp",
+							x = 564,
+							y = 367
+						},
+						{
+							name = "Crystal Shores Camp",
+							x = 219,
+							y = 468
 						}
 					]
 				},

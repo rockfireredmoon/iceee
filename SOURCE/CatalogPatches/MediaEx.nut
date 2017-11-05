@@ -91,6 +91,9 @@ local NewMedia = {
 ["Music-GrimIdol"]=[4706254],
 ["Music-TheRule"]=[4706254],
 ["CL-Candelabra2"]=[456],
+["Item-Rain1"]=[21571],
+["Item-Rain2"]=[21571],
+["Item-Rain3"]=[21571],
 
 /* Extra assets from EER, just to make sure they're in the full download for
    the public server release.

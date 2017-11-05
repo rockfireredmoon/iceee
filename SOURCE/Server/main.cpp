@@ -575,6 +575,9 @@ int InitServerMain() {
 	MapLocation.LoadFile(Platform::GenerateFilePath(GAuxBuf, "Data", "MapLocations.txt"));
 	g_Log.AddMessageFormat("Loaded %d MapLocation zones.", MapLocation.mLocationSet.size());
 
+	g_WeatherManager.LoadFromFile(Platform::GenerateFilePath(GAuxBuf, "Data", "Weather.txt"));
+	g_Log.AddMessageFormat("Loaded %d weather definitions.", g_WeatherManager.mWeatherDefinitions.size());
+
 	g_SceneryManager.LoadData();
 
 	g_SpawnPackageManager.LoadFromFile("SpawnPackages", "SpawnPackageList.txt");

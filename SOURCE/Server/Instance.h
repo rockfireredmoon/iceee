@@ -300,6 +300,9 @@ public:
 
 	WorldMarkerContainer worldMarkers;
 
+	std::vector<WeatherState*> mWeather;
+
+
 	CreatureInstance * GetPlayerByID(int id);  //Searches PlayerList for a character ID, return pointer
 	CreatureInstance * GetPlayerByCDefID(int CDefID);  //All player characters have unique creatureDefs.
 	CreatureInstance * GetPlayerByName(const char *name);

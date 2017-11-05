@@ -3,6 +3,7 @@
 
 #include <string>
 #include <list>
+#include <map>
 
 #include "Components.h"
 #include "Audit.h"
@@ -62,6 +63,111 @@ struct EnvironmentTileKey
 			return (y < other.y);
 		return false;
 	}
+};
+
+
+struct WeatherKey
+{
+	int instance;
+	std::string mapName;
+	WeatherKey(const WeatherKey &other) { instance = other.instance; mapName = other.mapName; };
+	WeatherKey() { instance = 0; mapName = ""; }
+	WeatherKey(int pInstance, int pMapName) { instance = pInstance; mapName = pMapName; }
+	bool Compare(const WeatherKey& other) const
+	{
+		return ((instance == other.instance) && (mapName.compare(other.mapName) == 0));
+	}
+	bool operator <(const WeatherKey& other) const
+	{
+		if(instance < other.instance)
+			return true;
+		else if(instance == other.instance)
+			return mapName.compare(other.mapName) < 0;
+		return false;
+	}
+	bool operator >(const WeatherKey& other) const
+	{
+		if(instance > other.instance)
+			return true;
+		else if(instance == other.instance)
+			return mapName.compare(other.mapName) > 0;
+		return false;
+	}
+};
+
+
+class WeatherDef
+{
+public:
+	enum WeatherType
+	{
+		FINE = 0,
+		RAIN,
+		SNOW,
+		HAIL,
+		SAND,
+		LAVA,
+		MAX
+	};
+
+	std::string mMapName;
+	std::string mTimeOfDay;
+	unsigned long mFineMin; // minimum number of seconds the weather is fine for (zero means never fine)
+	unsigned long mFineMax; // maximum number of seconds the weather is fine for
+	int mLightChance; //  chance (out of 100) that the new weather will be light
+	int mMediumChance; //  chance (out of 100) that the new weather will be medium
+	int mHeavyChance; //  chance (out of 100) that the new weather will be heavy
+	unsigned long mWeatherMin; // minimum number of seconds the weather will last
+	unsigned long mWeatherMax; // maximum number of seconds the weather will last
+	std::vector<int> mWeatherTypes; // types of weather 0 = rain, 1 = snow, 2 = hail, 3 = sand, 4 = lava
+	int mThunderChance; // chance that there will be thunder with the new weather
+	unsigned long mThunderGapMin; // minimum number of seconds between thunder
+	unsigned long mThunderGapMax; // maximum number of seconds between thunder
+	int mEscalateChance; // chance (out of 100) that the weather will escalate (and de-escalate)
+
+	WeatherDef(const WeatherDef &other);
+	WeatherDef();
+	void CopyFrom(const WeatherDef& other);
+	void SetDefaults(void);
+	void Clear(void);
+};
+
+class WeatherState
+{
+public:
+
+	enum WeatherWeight
+	{
+		LIGHT = 0,
+		MEDIUM,
+		HEAVY,
+		MAX_WEIGHT
+	};
+
+	enum WeatherEscalate
+	{
+		ONE_OFF = 0,
+		ESCALATING,
+		DEESCALATING
+	};
+
+	WeatherState(WeatherKey key, WeatherDef &def);
+	~WeatherState();
+	WeatherDef mDefinition; // the weather definition this state was derived from
+	WeatherKey mKey; // the map/instance the weather applies to
+	unsigned long mNextStateChange; // server time when the next state change occurs
+	int mWeatherType; // the type of weather chosen for this activation
+	int mWeatherWeight; // whether currently light, medium or heavy
+	int mEscalateState; // the current state of escalation, 0 - dont escalate, 1 - escalating, 2 - de-escalating
+	bool mThunder; // whether or not thunder will occur
+	unsigned long mNextThunder; // -1, thunder won't occur, otherwise server time when it next occurs
+	void RunCycle(ActiveInstance *instance); // run the cycle for the active instance
+	void SendWeatherUpdate(ActiveInstance *instance); // send the weather update message to everyone in this instance/area
+	void SendThunder(ActiveInstance *instance); // send the thunder message to everyone in this instance/area
+
+private:
+	bool PickNewWeather();
+	void RollThunder(); // send the thunder message to everyone in this instance/area
 };
 
 class ZoneDefInfo
@@ -264,6 +370,17 @@ public:
 	int GetLoadedCount(void);
 };
 
+class WeatherManager
+{
+public:
+	std::map<WeatherKey, WeatherState*> mWeather; // all currently maintained weather
+	std::map<std::string, WeatherDef> mWeatherDefinitions; // all weather definitions
+	std::vector<WeatherState*> RegisterInstance(ActiveInstance *instance); // when an instance loads, we find all of it's weather regions (i.e. map names) and start maintaining them if there is a weather definition
+	void Deregister(std::vector<WeatherState*> states); // when an instance dies, we stop maintaining its weather regions (i.e. map names)
+	int LoadFromFile(const char *filename);
+	WeatherState* GetWeather(std::string mapName, int instanceId);
+};
+
 class EnvironmentCycleManager
 {
 public:
@@ -324,6 +441,7 @@ extern ZoneDefManager g_ZoneDefManager;
 extern ZoneBarrierManager g_ZoneBarrierManager;
 extern EnvironmentCycleManager g_EnvironmentCycleManager;
 extern GroveTemplateManager g_GroveTemplateManager;
+extern WeatherManager g_WeatherManager;
 
 int PrepExt_SendEnvironmentUpdateMsg(char *buffer, ActiveInstance *instance, const char *zoneIDString, ZoneDefInfo *zoneDef, int x, int z, int mask);
 

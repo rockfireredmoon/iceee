@@ -62,9 +62,14 @@ class this.Environment
 	mUsingDefault = false;
 	mLastTerrain = null;
 	mZoneEnv = "";
+	mWeatherType = this.WeatherType.FINE;
+	mWeatherWeight = this.WeatherWeight.LIGHT;
+	mWeatherEffect = null;
 	mMusicCooldowns = null;
 	mLastTimeOfDayOveride = null;
 	mOverideTimeOfDay = false;
+	mSetWeatherOnAvatar = false;
+	
 	constructor()
 	{
 		this.mRandom = this.Random();
@@ -224,6 +229,99 @@ class this.Environment
 		this.mMarkers[marker.getID()] <- marker;
 	}
 
+	function onThunder( thunderWeight )
+	{
+		local number = this._random.nextInt(3);
+		local emitter = this.Audio.prepareSound("Sound-Ambient-Thunder" + (number + 1) + ".ogg");
+		emitter.setGain(0.33 * (thunderWeight + 1).tofloat() );
+		emitter.play();
+	}
+	
+	function onAvatarSet() {
+		if(this.mSetWeatherOnAvatar) {
+			print("ICE! now got avatar, setting weather to " + this.mWeatherType);
+			if(this.mWeatherType != this.WeatherType.FINE)  
+				_doSetWeather();
+			this.mSetWeatherOnAvatar = false;
+		}
+	}
+	
+	function _doSetWeather() {
+		
+		local fx = "";
+		switch(this.mWeatherWeight) {
+		case this.WeatherWeight.LIGHT:
+			fx += "Light";
+			break;
+		case this.WeatherWeight.MEDIUM:
+			fx += "Medium";
+			break;
+		case this.WeatherWeight.HEAVY:
+			fx += "Heavy";
+			break;
+		}
+		
+		switch(this.mWeatherType) {
+		case this.WeatherType.RAIN:
+			fx += "Rain";
+			break;
+		case this.WeatherType.SNOW:
+			fx += "Snow";
+			break;
+		case this.WeatherType.SAND:
+			fx += "Sand";
+			break;
+		case this.WeatherType.HAIL:
+			fx += "Hail";
+			break;
+		case this.WeatherType.LAVA:
+			fx += "Lava";
+			break;
+		}
+		
+		print("ICE! cueing effect " + fx);
+		mWeatherEffect = ::_avatar.cue(fx);
+		if(mWeatherEffect != null) {
+			mWeatherEffect.loopForever();
+			mSetWeatherOnAvatar = false;
+		}
+		else {
+			print("ICE! huh? no effect " + fx);
+			mSetWeatherOnAvatar = true;
+		}
+		
+		local snd = "Sound-Ambient-" + fx + ".ogg";
+		this.Audio.playMusic(snd, this.Audio.WEATHER_CHANNEL);
+	}
+
+	function onWeatherUpdate( weatherType, weatherWeight )
+	{
+		if(weatherType != mWeatherType || weatherWeight != mWeatherWeight) 
+		{
+			this.mWeatherType = weatherType;
+			this.mWeatherWeight = weatherWeight;
+			
+			if(this.mWeatherEffect != null) {
+				print("ICE! Stopping weather");
+				foreach(e in this.mWeatherEffect.mEffects) {
+					e.stop();
+				}
+				this.mWeatherEffect.stop();
+				this.mWeatherEffect = null;
+				print("ICE! Stopped weather");
+			}
+			else {
+				print("ICE! no weather to stop!?");
+			}
+				
+			if(this.mWeatherType != this.WeatherType.FINE) {
+				this._doSetWeather();				
+			}
+			else
+				this.Audio.stopMusic(this.Audio.WEATHER_CHANNEL);
+		}
+	}
+	
 	function onEnvironmentUpdate( zoneId, zoneDefId, zonePageSize, mapName, envType )
 	{
 		if (this.mZoneEnv != envType)

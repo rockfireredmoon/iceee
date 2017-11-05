@@ -587,6 +587,9 @@ ActiveInstance :: ~ActiveInstance()
 
 void ActiveInstance :: Clear(void)
 {
+	g_WeatherManager.Deregister(mWeather);
+
+	mWeather.clear();
 	mZone = 0;
 	mMode = PVP::GameMode::PVE_ONLY;
 	mZoneDefPtr = NULL;
@@ -2496,6 +2499,8 @@ void ActiveInstance :: InitializeData(void)
 	if(mZoneDefPtr->mMode != PVP::GameMode::PVE_ONLY) {
 		arenaRuleset.mEnabled = true;
 	}
+
+	mWeather = g_WeatherManager.RegisterInstance(this);
 }
 
 
@@ -3326,6 +3331,11 @@ void ActiveInstance :: RunProcessingCycle(void)
 		mNextTargetUpdate = g_ServerTime + 1000;
 
 	spawnsys.RunProcessing(false);
+
+	for(std::vector<WeatherState*>::iterator it = mWeather.begin(); it != mWeather.end(); it++) {
+		(*it)->RunCycle(this);
+	}
+
 	RunScripts();
 	RemoveDeadCreatures();
 }

@@ -2313,6 +2313,11 @@ void SimulatorThread :: CheckMapUpdate(bool force)
 				SendInfoMessage(MapDef.mMapList[pld.CurrentMapInt].Name.c_str(), INFOMSG_LOCATION);
 				SendInfoMessage(pld.zoneDef->mShardName.c_str(), INFOMSG_SHARD);
 				SendInfoMessage(MapDef.mMapList[pld.CurrentMapInt].image.c_str(), INFOMSG_MAPNAME);
+
+				WeatherState *ws = g_WeatherManager.GetWeather(MapDef.mMapList[pld.CurrentMapInt].Name, pld.CurrentInstanceID);
+				if(ws != NULL) {
+					AttemptSend(SendBuf, PrepExt_SetWeather(SendBuf, ws->mWeatherType, ws->mWeatherWeight));
+				}
 			}
 		}
 		else
@@ -2323,6 +2328,11 @@ void SimulatorThread :: CheckMapUpdate(bool force)
 
 			SendInfoMessage(pld.zoneDef->mName.c_str(), INFOMSG_LOCATION);
 			SendInfoMessage(pld.zoneDef->mShardName.c_str(), INFOMSG_SHARD);
+
+			WeatherState *ws = g_WeatherManager.GetWeather(pld.zoneDef->mName, pld.CurrentInstanceID);
+			if(ws != NULL) {
+				AttemptSend(SendBuf, PrepExt_SetWeather(SendBuf, ws->mWeatherType, ws->mWeatherWeight));
+			}
 		}
 
 //		// EM - Added this for tile specific environments, the message always gets sent,

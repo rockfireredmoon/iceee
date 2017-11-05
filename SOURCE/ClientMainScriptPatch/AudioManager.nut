@@ -3,7 +3,8 @@ this.Audio <- {
 	AMBIENT_CHANNEL_2 = "Ambient2",
 	DEFAULT_CHANNEL = "Default",
 	COMBAT_CHANNEL = "Combat",
-	NOISE_CHANNEL = "Noise"
+	NOISE_CHANNEL = "Noise",
+	WEATHER_CHANNEL = "Weather"
 };
 class this.AudioTrack 
 {
@@ -357,6 +358,14 @@ class this.AudioManager
 		this.mSounds.append(emitter);
 	}
 
+	function prepareSound( sound, group, ... )
+	{
+		local emitter = this.createSoundEmitter(sound);
+		emitter.setGain(1.0);
+		this.mSounds.append(emitter);
+		return emitter;
+	}
+
 	mForceAmbientMuted = false;
 	mAmbientMuted = false;
 	mMusicMuted = false;
@@ -404,6 +413,10 @@ this.Audio.playMusic <- function ( name, ... )
 this.Audio.playSound <- function ( name )
 {
 	this._audioManager.playSound(name, "");
+};
+this.Audio.prepareSound <- function ( name )
+{
+	return this._audioManager.prepareSound(name, "");
 };
 this.Audio.isMusicPlaying <- function ( channel )
 {

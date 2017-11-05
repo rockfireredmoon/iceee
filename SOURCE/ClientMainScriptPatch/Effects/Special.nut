@@ -1183,3 +1183,48 @@ class this.EffectDef.BlueFireworkHit extends this.EffectDef.TemplateBasic
 
 }
 
+class this.EffectDef.LightRain extends this.EffectDef.TemplateBasic
+{
+	static mEffectName = "LightRain";
+
+	function onStart( ... )
+	{
+		this.mMaxTime = -1;
+		local rain = this.createGroup("Weather", this.getSource());
+		rain.add("ParticleSystem", {
+			particleSystem = "Par-Rain1",
+			emitterPoint = "head_particles"
+		});
+	}
+
+}
+
+class this.EffectDef.MediumRain extends this.EffectDef.TemplateBasic
+{
+	static mEffectName = "MediumRain";
+	
+	function onStart( ... )
+	{
+		local rain = this.createGroup("Weather", this.getSource());
+		rain.add("ParticleSystem", {
+			particleSystem = "Par-Rain2",
+			emitterPoint = "head_particles"
+		});
+	}
+
+}
+
+class this.EffectDef.HeavyRain extends this.EffectDef.TemplateBasic
+{
+	static mEffectName = "HeavyRain";
+	
+	function onStart( ... )
+	{
+		local rain = this.createGroup("Weather", this.getSource());
+		rain.add("ParticleSystem", {
+			particleSystem = "Par-Rain3",
+			emitterPoint = "head_particles"
+		});
+	}
+
+}

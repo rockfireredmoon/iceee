@@ -21,4 +21,7 @@ AttachableIndex["Item-Shield-Anubian2"] <- "";
 AttachableIndex["Item-Staff-Epic3"] <- "";
 AttachableIndex["Item-Staff-Epic4"] <- "";
 AttachableIndex["Item-Staff-Epic5"] <- "";
+AttachableIndex["Particle-Rain1"] <- "Item-Particle-Rain1";
+AttachableIndex["Particle-Rain2"] <- "Item-Particle-Rain2";
+AttachableIndex["Particle-Rain3"] <- "Item-Particle-Rain3";
 

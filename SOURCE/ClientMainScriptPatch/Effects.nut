@@ -14,6 +14,13 @@ class this.EffectBase
 	mComplete = false;
 	mPriority = null;
 	mStartTime = null;
+	mMaxTime = 30000;
+	
+	function loopForever() 
+	{
+		this.mMaxTime = -1;
+	}
+	
 	function getState()
 	{
 		return this.mState;
@@ -136,13 +143,13 @@ class this.EffectBase
 			}
 
 			this.mState = this.RUNNING;
-			try {
+			//try {
 				this._effectStart();
-			}
-			catch(e) {
-				print("ICE! Failed to start effect. ", e);
-				this.mState = this.OFF;
-			}
+			//}
+			//catch(e) {
+				//print("ICE! Failed to start effect. " + e);
+				//this.mState = this.OFF;
+			//}
 		}
 	}
 
@@ -252,11 +259,21 @@ class this.EffectBase
 
 		this._effectThaw();
 	}
+	
+	function getMaxTime()
+	{
+		if(this.mParent) {
+			return this.mParent.getMaxTime();
+		}
+		return this.mMaxTime;
+	}
 
 	function onEnterFrame()
 	{
-		if (::_gameTime.getGameTimeMiliseconds() - this.mStartTime > 30000)
+		local mt = this.getMaxTime();
+		if (mt != -1 && ( ::_gameTime.getGameTimeMiliseconds() - this.mStartTime > mt ) )
 		{
+			print("ICE! mMaxTime of " + this.getMaxTime() + " reached!\n");
 			this.destroy();
 		}
 		else if (this.mState == this.RUNNING || this.mState == this.STOPPING)
