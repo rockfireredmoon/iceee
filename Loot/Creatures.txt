@@ -1193,6 +1193,7 @@ DefID	Explicit	PackageList	Name
 307	0	essence_wilhelmscrypt_kingwilhelm	;King Wilhelm
 943	0	essence_zhushislair_zhushi	;Zhushi
 1259	0	essence_wailingcrypt_wailer	;Wailer
+3351	0	essence_bloodkeep_valkal	;Valkal
 2889	0	HOLIDAY_BremenCornCobPipe	;Chillkin
 2890	0	HOLIDAY_BremenCornCobPipe	;Chillkin
 2891	0	HOLIDAY_BremenCornCobPipe	;Chillkin

@@ -1,0 +1,8 @@
+; Valkals's Ash Chest
+[ENTRY]
+CreatureDefID=7878
+EssenceID=10044
+Item=900046,1
+Item=900050,1
+Item=900044,1
+Item=900061,1

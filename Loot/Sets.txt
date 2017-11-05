@@ -155,6 +155,7 @@ essence_spibearlair_denmotherursarach	0	150	21291		 Denmother Ursarach's Essence
 essence_underhenge_bramblebane	0	150	20873		 Bramblebane's Essence
 essence_vespinlair_hivequeenfrelon	0	100	20531		 Frelon's Essence
 essence_wailingcrypt_wailer	0	300	10011		 The Wailers's Essence
+essence_bloodkeep_valkal	0	300	10044		 Valkal's Essence
 essence_wilhelmscrypt_kingwilhelm	0	250	20872		 Willhelm's Essence
 essence_zhushislair_zhushi	0	100	20781		 Zhushi's Essence
 token_abandonedmonastery	0	20	21253		 Abandoned Monastery Token

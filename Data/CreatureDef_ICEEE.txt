@@ -1593,3 +1593,16 @@ display_name=Entrance To The Mausoleum
 profession=1
 creature_category=Inanimate
 ai_package=nothing
+
+[ENTRY]
+defHints=8
+ID=7878
+will_regen=1
+might_regen=1
+appearance=p1:{["a"]="Prop-Loot-Boss_Chest1"}
+level=1
+display_name=Valkal's Treasure
+profession=1
+creature_category=Inanimate
+rarity=1
+ai_package=nothing
