@@ -1194,6 +1194,7 @@ DefID	Explicit	PackageList	Name
 943	0	essence_zhushislair_zhushi	;Zhushi
 1259	0	essence_wailingcrypt_wailer	;Wailer
 3351	0	essence_bloodkeep_valkal	;Valkal
+3352	0	essence_junkpalace_bosshawg	;Boss Hawg
 2889	0	HOLIDAY_BremenCornCobPipe	;Chillkin
 2890	0	HOLIDAY_BremenCornCobPipe	;Chillkin
 2891	0	HOLIDAY_BremenCornCobPipe	;Chillkin

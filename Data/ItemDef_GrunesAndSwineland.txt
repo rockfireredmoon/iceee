@@ -814,3 +814,18 @@ mBindingType=1
 mValue=1
 mQualityLevel=2
 mMinUseLevel=1
+
+[ENTRY]
+mID=10045
+mType=7
+mDisplayName=Essence of Boss Hawg
+mIcon=Icon-32-Bacon.png|Icon-32-BG-Purple.png
+mIvType1=1
+mIvMax1=20
+mIvType2=8
+mIvMax2=1
+mLevel=1
+mBindingType=1
+mValue=1
+mQualityLevel=2
+mMinUseLevel=1

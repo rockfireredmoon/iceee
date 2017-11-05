@@ -158,6 +158,7 @@ essence_wailingcrypt_wailer	0	300	10011		 The Wailers's Essence
 essence_bloodkeep_valkal	0	300	10044		 Valkal's Essence
 essence_wilhelmscrypt_kingwilhelm	0	250	20872		 Willhelm's Essence
 essence_zhushislair_zhushi	0	100	20781		 Zhushi's Essence
+essence_junkpalace_bosshawg	0	100	10045		 Boss Hawg's Essence
 token_abandonedmonastery	0	20	21253		 Abandoned Monastery Token
 token_bremenasylum	0	20	21261		 Bremen Asylum Token
 token_brewerycellar	0	20	21262		 Dunklehimer Brewery Token
