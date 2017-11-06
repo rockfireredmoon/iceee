@@ -250,8 +250,8 @@ Scale=1,1,1
 ID=1091443
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=Untitled
-Pos=72349.5,1075.07,52560.1
-Orient=0,0.407761,0,0.913089
+Pos=72340.5,1074.92,52583.4
+Orient=0,0.807558,0,0.589788
 Scale=1,1,1
 
 [ENTRY]
@@ -279,7 +279,15 @@ Name=Untitled
 Pos=72601.7,1075.42,52702.6
 Orient=0,0.780209,0,0.625519
 Scale=1,1,1
-spawnPackage=#3493
+spawnPackage=#N3493
+
+[ENTRY]
+ID=1154751
+Asset=CL-Market#CL-Market_Stall-Refashioner
+Name=
+Pos=72341.1,1074.93,52583.2
+Orient=0,-0.999667,0,0.0257935
+Scale=1,1,1
 
 [ENTRY]
 ID=151021658
@@ -449,15 +457,6 @@ Asset=CL-Market_Stall-Wares1#CL-Market_Stall-Wares1
 Name=Untitled
 Pos=72398,1075.03,52590
 Orient=0,0.983701,0,0.179813
-Scale=1,1,1
-Flags=1
-
-[ENTRY]
-ID=151021909
-Asset=CL-Market_Stall-Wares2#CL-Market_Stall-Wares2
-Name=Untitled
-Pos=72343,1074.94,52589
-Orient=0,0.999023,0,-0.0441893
 Scale=1,1,1
 Flags=1
 

@@ -148,3 +148,8 @@ Name=Tip Of Frost Peak
 Comment=Entrance to Lurkers
 Position=84532.0,1006.0,61277.0
 
+[ENTRY]
+Name=The Mausoleum
+Comment=[Comment here]
+Position=74345.0,875.0,50945.0
+

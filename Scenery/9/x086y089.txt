@@ -1,0 +1,16 @@
+[ENTRY]
+ID=1154580
+Asset=Prop-Snow_Drift3
+Name=
+Pos=64778.7,698.648,66785.3
+Orient=0,-0.764329,0,0.644827
+Scale=9,9,9
+
+[ENTRY]
+ID=1154593
+Asset=Prop-Snowy_Rock2
+Name=
+Pos=64740.8,760.107,67026.8
+Orient=0,0,0,1
+Scale=59,100,59
+

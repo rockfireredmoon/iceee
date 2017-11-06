@@ -1,0 +1,16 @@
+[ENTRY]
+ID=1154579
+Asset=Prop-Snow_Drift3
+Name=
+Pos=63887.9,855.503,67110.8
+Orient=0,-0.764329,0,0.644827
+Scale=12,12,12
+
+[ENTRY]
+ID=1154581
+Asset=Prop-Snow#Prop-Snow_Drift1
+Name=
+Pos=64243.4,775.913,66984.9
+Orient=0,0,0,1
+Scale=8,8,8
+

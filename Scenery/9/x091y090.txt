@@ -1,0 +1,8 @@
+[ENTRY]
+ID=1154576
+Asset=Prop-WaterFall#Prop-WaterFall_WideLong
+Name=
+Pos=68963.9,525.474,67707.4
+Orient=0,0.707107,0,-0.707107
+Scale=6.5,6.5,6.5
+

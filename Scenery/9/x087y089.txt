@@ -1,0 +1,16 @@
+[ENTRY]
+ID=1154575
+Asset=Prop-Interact1#Prop-Interact_Rectangle
+Name=
+Pos=65726.1,1344.24,67011
+Orient=0.500199,-0.499801,0.499801,0.500199
+Scale=65,65,65
+
+[ENTRY]
+ID=1154578
+Asset=Prop-Snow#Prop-Snow_Drift3
+Name=
+Pos=65405.9,859.145,66999
+Orient=0,-0.764329,0,0.644827
+Scale=9,9,9
+

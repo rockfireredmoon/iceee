@@ -1,0 +1,10 @@
+[ENTRY]
+Name=Welcome To Corsica
+Comment=
+Position=15871.0,1112.0,12724.0
+
+[ENTRY]
+Name=The Lighthouse
+Comment=
+Position=19645.0,1693.0,13565.0
+

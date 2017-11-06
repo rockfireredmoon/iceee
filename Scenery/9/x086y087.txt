@@ -1,0 +1,8 @@
+[ENTRY]
+ID=1154605
+Asset=Prop-Marker1#Prop-Marker_Medium
+Name=
+Pos=65224.4,606.443,65962.5
+Orient=0,0,0,1
+Scale=1,1,1
+
