@@ -31,4 +31,4 @@ Obj.0.myCreatureDefID=7813
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=5628.72,682.027,5964.53,59
-RewardItem.0=8116,1,1
+RewardItem.0=8116,5,1
