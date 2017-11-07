@@ -63,7 +63,7 @@ Act.BodyText=We must move like the wind, for battle is nearly upon you!
 * Press '2' (or 2nd button on quickbar) to engage auto-attack with your bow.
 * Press '3' or the third button on your quickbar to use the Sting ability, which uses three Might - the green orbs above your health bar in the upper-left part of the screen. Kill three Flamemoths by the ocean cliffs to the southwest and then talk to me again.
 Obj.0.type=kill
-Obj.0.data1=2168
+Obj.0.data1=3496
 Obj.0.data2=3
 Obj.0.description=Slay 3 Vampider Hatchlings
 Obj.0.complete=0 of 3
@@ -200,7 +200,7 @@ Act.BodyText=Greetings, fellow seeker of the mystical arts. I must instruct you 
 * Press '2' (or 2nd button on quickbar) to engage auto-attack with your wand.
 * Press '3' (or 3rd button on quickbar) to use the Firebolt ability, which uses three Will - the blue orbs under your health bar in the upper-left part of the screen. Kill three Flamemoths by the ocean cliffs to the southwest and then talk to me again.
 Obj.0.type=kill
-Obj.0.data1=2168
+Obj.0.data1=3496
 Obj.0.data2=3
 Obj.0.description=Slay 3 Vampider Hatchlings
 Obj.0.complete=0 of 3
@@ -335,7 +335,7 @@ Act.BodyText=Let's get to it, soldier! No time to lose, as you'll be in the thic
 * Press '1' (or 1st button on quickbar) to engage auto-attack (you must be in close range to attack with your sword).
 * Press '3' (or 3rd button on quickbar) to use the Assault ability, which uses three Might - the green orbs above your health bar in the upper-left part of the screen. Kill three Flamemoths by the ocean cliffs to the southwest and then talk to me again.
 Obj.0.type=kill
-Obj.0.data1=2168
+Obj.0.data1=3496
 Obj.0.data2=3
 Obj.0.description=Slay 3 Vampider Hatchlings
 Obj.0.complete=0 of 3
@@ -468,7 +468,7 @@ Act.BodyText=Hail and well met! We must get started for there's dark work to be 
 * Press '1' (or first button on quickbar) to engage auto-attack with your weapon.
 * Press '3' (or 3rd button on quickbar) to use the Assail ability, which uses three Might - the green orbs above your health bar in the upper-left part of the screen. Kill three Flamemoths by the ocean cliffs to the southwest and then talk to me again.
 Obj.0.type=kill
-Obj.0.data1=2168
+Obj.0.data1=3496
 Obj.0.data2=3
 Obj.0.description=Slay 3 Vampider Hatchlings
 Obj.0.complete=0 of 3
