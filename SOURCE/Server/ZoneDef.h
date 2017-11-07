@@ -99,17 +99,6 @@ struct WeatherKey
 class WeatherDef
 {
 public:
-	enum WeatherType
-	{
-		FINE = 0,
-		RAIN,
-		SNOW,
-		HAIL,
-		SAND,
-		LAVA,
-		MAX
-	};
-
 	std::string mMapName;
 	std::string mTimeOfDay;
 	std::string mUse; // an alternative definition to use for this region
@@ -120,7 +109,7 @@ public:
 	int mHeavyChance; //  chance (out of 100) that the new weather will be heavy
 	unsigned long mWeatherMin; // minimum number of seconds the weather will last
 	unsigned long mWeatherMax; // maximum number of seconds the weather will last
-	std::vector<int> mWeatherTypes; // types of weather 0 = rain, 1 = snow, 2 = hail, 3 = sand, 4 = lava
+	std::vector<std::string> mWeatherTypes;
 	int mThunderChance; // chance that there will be thunder with the new weather
 	unsigned long mThunderGapMin; // minimum number of seconds between thunder
 	unsigned long mThunderGapMax; // maximum number of seconds between thunder
@@ -158,7 +147,7 @@ public:
 	WeatherDef mDefinition; // the weather definition this state was derived from
 	int mInstanceId; // the instance the weather applies to
 	unsigned long mNextStateChange; // server time when the next state change occurs
-	int mWeatherType; // the type of weather chosen for this activation
+	std::string mWeatherType; // the type of weather chosen for this activation
 	int mWeatherWeight; // whether currently light, medium or heavy
 	int mEscalateState; // the current state of escalation, 0 - dont escalate, 1 - escalating, 2 - de-escalating
 	bool mThunder; // whether or not thunder will occur

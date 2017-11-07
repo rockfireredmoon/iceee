@@ -21,7 +21,10 @@ AttachableIndex["Item-Shield-Anubian2"] <- "";
 AttachableIndex["Item-Staff-Epic3"] <- "";
 AttachableIndex["Item-Staff-Epic4"] <- "";
 AttachableIndex["Item-Staff-Epic5"] <- "";
-AttachableIndex["Particle-Rain1"] <- "Item-Particle-Rain1";
-AttachableIndex["Particle-Rain2"] <- "Item-Particle-Rain2";
-AttachableIndex["Particle-Rain3"] <- "Item-Particle-Rain3";
+AttachableIndex["Particle-Weather_Rain1"] <- "Item-Particle-Weather_Rain1";
+AttachableIndex["Particle-Weather_Rain2"] <- "Item-Particle-Weather_Rain2";
+AttachableIndex["Particle-Weather_Rain3"] <- "Item-Particle-Weather_Rain3";
+AttachableIndex["Particle-Weather_Snow1"] <- "Item-Particle-Weather_Snow1";
+AttachableIndex["Particle-Weather_Snow2"] <- "Item-Particle-Weather_Snow2";
+AttachableIndex["Particle-Weather_Snow3"] <- "Item-Particle-Weather_Snow3";
 

@@ -3251,3 +3251,23 @@ material Particles/Bat
 		}
 	}
 }
+
+material Particles/Flake
+{
+	technique
+	{
+		queue_bias 3
+
+		pass
+		{
+			lighting off
+			depth_write off
+			scene_blend add
+
+			texture_unit
+			{
+				texture flake.png
+			}
+		}
+	}
+}

@@ -498,7 +498,7 @@ mValue=1
 mFlavorText=Double click to open! Contains credits for use in the Credit Shop and 100 heroism
 mQualityLevel=3
 mMinUseLevel=1
-Params=credits=1000,heroism=100
+Params=credits=1000&heroism=100
 
 [ENTRY]
 mID=8200
@@ -1019,7 +1019,7 @@ mFlavorText=It's Really Strong
 mID=8600
 mType=3
 mDisplayName=Ring of Light Rain
-mAppearance=[{["a"]={["type"]="Particle-Rain1",["effect"]="Par-Rain1",["point_override"]="head_particles"}}]
+mAppearance=[{["a"]={["type"]="Particle-Weather_Rain1",["effect"]="Par-Weather_Rain1",["point_override"]="head_particles"}}]
 mIcon=Icon-32-Ring3.png|Icon-IGIS-Alert-Glow.png
 mLevel=1
 mBindingType=1
@@ -1034,7 +1034,7 @@ mMinUseLevel=1
 mID=8601
 mType=3
 mDisplayName=Ring of Medium Rain
-mAppearance=[{["a"]={["type"]="Particle-Rain2",["effect"]="Par-Rain2",["point_override"]="head_particles"}}]
+mAppearance=[{["a"]={["type"]="Particle-Weather_Rain2",["effect"]="Par-Weather_Rain2",["point_override"]="head_particles"}}]
 mIcon=Icon-32-Ring3.png|Icon-IGIS-Alert-Glow.png
 mLevel=1
 mBindingType=1
@@ -1049,7 +1049,7 @@ mMinUseLevel=1
 mID=8602
 mType=3
 mDisplayName=Ring of Heavy Rain
-mAppearance=[{["a"]={["type"]="Particle-Rain3",["effect"]="Par-Rain3",["point_override"]="head_particles"}}]
+mAppearance=[{["a"]={["type"]="Particle-Weather_Rain3",["effect"]="Par-Weather_Rain3",["point_override"]="head_particles"}}]
 mIcon=Icon-32-Ring3.png|Icon-IGIS-Alert-Glow.png
 mLevel=1
 mBindingType=1
@@ -1057,5 +1057,50 @@ mEquipType=17
 mArmorType=1
 mValue=69
 mFlavorText=A rainy day.
+mQualityLevel=5
+mMinUseLevel=1
+
+[ENTRY]
+mID=8603
+mType=3
+mDisplayName=Ring of Light Snow
+mAppearance=[{["a"]={["type"]="Particle-Weather_Snow1",["effect"]="Par-Weather_Snow1",["point_override"]="head_particles"}}]
+mIcon=Icon-32-Ring3.png|Icon-IGIS-Alert-Glow.png
+mLevel=1
+mBindingType=1
+mEquipType=17
+mArmorType=1
+mValue=69
+mFlavorText=A snowy day.
+mQualityLevel=5
+mMinUseLevel=1
+
+[ENTRY]
+mID=8604
+mType=3
+mDisplayName=Ring of Medium Snow
+mAppearance=[{["a"]={["type"]="Particle-Weather_Snow2",["effect"]="Par-Weather_Snow2",["point_override"]="head_particles"}}]
+mIcon=Icon-32-Ring3.png|Icon-IGIS-Alert-Glow.png
+mLevel=1
+mBindingType=1
+mEquipType=17
+mArmorType=1
+mValue=69
+mFlavorText=A snowy day.
+mQualityLevel=5
+mMinUseLevel=1
+
+[ENTRY]
+mID=8605
+mType=3
+mDisplayName=Ring of Heavy Snow
+mAppearance=[{["a"]={["type"]="Particle-Weather_Snow3",["effect"]="Par-Weather_Snow3",["point_override"]="head_particles"}}]
+mIcon=Icon-32-Ring3.png|Icon-IGIS-Alert-Glow.png
+mLevel=1
+mBindingType=1
+mEquipType=17
+mArmorType=1
+mValue=69
+mFlavorText=A snowy day.
 mQualityLevel=5
 mMinUseLevel=1

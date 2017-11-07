@@ -1192,7 +1192,7 @@ class this.EffectDef.LightRain extends this.EffectDef.TemplateBasic
 		this.mMaxTime = -1;
 		local rain = this.createGroup("Weather", this.getSource());
 		rain.add("ParticleSystem", {
-			particleSystem = "Par-Rain1",
+			particleSystem = "Par-Weather_Rain1",
 			emitterPoint = "head_particles"
 		});
 	}
@@ -1207,7 +1207,7 @@ class this.EffectDef.MediumRain extends this.EffectDef.TemplateBasic
 	{
 		local rain = this.createGroup("Weather", this.getSource());
 		rain.add("ParticleSystem", {
-			particleSystem = "Par-Rain2",
+			particleSystem = "Par-Weather_Rain2",
 			emitterPoint = "head_particles"
 		});
 	}
@@ -1222,7 +1222,53 @@ class this.EffectDef.HeavyRain extends this.EffectDef.TemplateBasic
 	{
 		local rain = this.createGroup("Weather", this.getSource());
 		rain.add("ParticleSystem", {
-			particleSystem = "Par-Rain3",
+			particleSystem = "Par-Weather_Rain3",
+			emitterPoint = "head_particles"
+		});
+	}
+
+}
+
+class this.EffectDef.LightSnow extends this.EffectDef.TemplateBasic
+{
+	static mEffectName = "LightSnow";
+
+	function onStart( ... )
+	{
+		this.mMaxTime = -1;
+		local rain = this.createGroup("Weather", this.getSource());
+		rain.add("ParticleSystem", {
+			particleSystem = "Par-Weather_Snow1",
+			emitterPoint = "head_particles"
+		});
+	}
+
+}
+
+class this.EffectDef.MediumSnow extends this.EffectDef.TemplateBasic
+{
+	static mEffectName = "MediumSnow";
+	
+	function onStart( ... )
+	{
+		local rain = this.createGroup("Weather", this.getSource());
+		rain.add("ParticleSystem", {
+			particleSystem = "Par-Weather_Snow2",
+			emitterPoint = "head_particles"
+		});
+	}
+
+}
+
+class this.EffectDef.HeavySnow extends this.EffectDef.TemplateBasic
+{
+	static mEffectName = "HeavySnow";
+	
+	function onStart( ... )
+	{
+		local rain = this.createGroup("Weather", this.getSource());
+		rain.add("ParticleSystem", {
+			particleSystem = "Par-Weather_Snow3",
 			emitterPoint = "head_particles"
 		});
 	}

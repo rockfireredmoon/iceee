@@ -51691,7 +51691,7 @@ particle_system Par-RageOfAres_Impact
 	}
 }
 
-particle_system Par-Rain1
+particle_system Par-Weather_Rain1
 {
 	quota	100
 	material	Particles/Streak1
@@ -51737,7 +51737,7 @@ particle_system Par-Rain1
 	}
 }
 
-particle_system Par-Rain2
+particle_system Par-Weather_Rain2
 {
 	quota	175
 	material	Particles/Streak1
@@ -51783,7 +51783,7 @@ particle_system Par-Rain2
 	}
 }
 
-particle_system Par-Rain3
+particle_system Par-Weather_Rain3
 {
 	quota	350
 	material	Particles/Streak1
@@ -51829,6 +51829,140 @@ particle_system Par-Rain3
 	}
 }
 
+particle_system Par-Weather_Snow1
+{
+	material	Particles/Flake
+	particle_width 2.0
+	particle_height 2.0
+	quota 100
+	cull_each false
+	sorted false
+	local_space false
+	iteration_interval 0.0
+	nonvisible_update_timeout 0.0
+	billboard_type point
+	billboard_origin center
+	billboard_rotation_type texcoord
+	point_rendering false
+	accurate_facing false
+
+	emitter Box
+	{
+		position 0.0 120 0.0
+		direction 0.0 -1 0
+		angle 0
+		width 300
+		height 300
+		depth 120
+		emission_rate 50
+		velocity_min 10
+		velocity_max 15
+		time_to_live_min 4
+		time_to_live_max 4
+		duration_min 0
+		duration_max 0
+		repeat_delay_min 0
+		repeat_delay_max 0
+		colour_range_start 1 1 1 1
+		colour_range_end 1 1 1 0.35
+	}
+
+	affector LinearForce
+	{
+		force_vector 0.0 -10.0 0.0
+		force_application add
+	}
+}
+
+particle_system Par-Weather_Snow2
+{
+	material	Particles/Flake
+	particle_width 2.5
+	particle_height 2.5
+	quota 200
+	cull_each false
+	sorted false
+	local_space false
+	iteration_interval 0.0
+	nonvisible_update_timeout 0.0
+	billboard_type point
+	billboard_origin center
+	billboard_rotation_type texcoord
+	point_rendering false
+	accurate_facing false
+
+	emitter Box
+	{
+		position 0.0 120 0.0
+		direction 0.0 -1 0
+		angle 0
+		width 300
+		height 300
+		depth 120
+		emission_rate 100
+		velocity_min 25
+		velocity_max 30
+		time_to_live_min 3
+		time_to_live_max 3
+		duration_min 0
+		duration_max 0
+		repeat_delay_min 0
+		repeat_delay_max 0
+		colour_range_start 1 1 1 1
+		colour_range_end 1 1 1 0.5
+	}
+
+	affector LinearForce
+	{
+		force_vector 0.0 -10.0 0.0
+		force_application add
+	}
+}
+
+particle_system Par-Weather_Snow3
+{
+	material	Particles/Flake
+	particle_width 3
+	particle_height 3
+	quota 400
+	cull_each false
+	sorted false
+	local_space false
+	iteration_interval 0.0
+	nonvisible_update_timeout 0.0
+	billboard_type point
+	billboard_origin center
+	billboard_rotation_type texcoord
+	point_rendering false
+	accurate_facing false
+
+	emitter Box
+	{
+		position 0.0 120 0.0
+		direction 0.0 -1 0
+		angle 0
+		width 300
+		height 300
+		depth 120
+		emission_rate 200
+		velocity_min 40
+		velocity_max 50
+		time_to_live_min 2
+		time_to_live_max 2
+		duration_min 0
+		duration_max 0
+		repeat_delay_min 0
+		repeat_delay_max 0
+		colour_range_start 1 1 1 1
+		colour_range_end 1 1 1 0.75
+	}
+
+	affector LinearForce
+	{
+		force_vector 0.0 -10.0 0.0
+		force_application add
+	}
+}
 
 particle_system Par-Rampage_Burst
 {

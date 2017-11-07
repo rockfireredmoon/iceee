@@ -29,6 +29,59 @@ this.Environments.Default <- {
 	Ambient_Music = [],
 	Activate_Music = []
 };
+
+::WeatherDefs <- {};
+::WeatherDefs.Rain <- [
+	{
+		Weight = WeatherWeight.LIGHT,
+		Sound = "Sound-Ambient-LightRain.ogg",
+		Effect = "LightRain"
+	},
+	{
+		Weight = WeatherWeight.MEDIUM,
+		Sound = "Sound-Ambient-MediumRain.ogg",
+		Effect = "MediumRain"
+	},
+	{
+		Weight = WeatherWeight.HEAVY,
+		Sound = "Sound-Ambient-HeavyRain.ogg",
+		Effect = "HeavyRain"
+	}
+];
+::WeatherDefs.Snow <- [
+	{
+		Weight = WeatherWeight.LIGHT,
+		Effect = "LightSnow"
+	},
+	{
+		Weight = WeatherWeight.MEDIUM,
+		Effect = "MediumSnow"
+	},
+	{
+		Weight = WeatherWeight.HEAVY,
+		Effect = "HeavySnow"
+	}
+];
+/*
+::WeatherDefs.SnowStorm <- [
+	{
+		Weight = WeatherWeight.LIGHT,
+		Effect = "LightSnowStorm",
+		Sound = "Sound-Ambient-LightWind.ogg"
+	},
+	{
+		Weight = WeatherWeight.MEDIUM,
+		Sound = "Sound-Ambient-MediumWind.ogg",
+		Effect = "MediumSnowStorm"
+	},
+	{
+		Weight = WeatherWeight.HEAVY,
+		Sound = "Sound-Ambient-HeavyWind.ogg",
+		Effect = "HeavySnowStorm"
+	}
+];
+*/
+
 class this.Environment 
 {
 	DEFAULT_FADE_TIME = 2.5;
@@ -62,7 +115,7 @@ class this.Environment
 	mUsingDefault = false;
 	mLastTerrain = null;
 	mZoneEnv = "";
-	mWeatherType = this.WeatherType.FINE;
+	mWeatherType = "";
 	mWeatherWeight = this.WeatherWeight.LIGHT;
 	mWeatherEffect = null;
 	mMusicCooldowns = null;
@@ -239,64 +292,45 @@ class this.Environment
 	
 	function playerAvatarAssembled() {
 		if(this.mSetWeatherOnAvatar) {
-			print("ICE! now got player avatar, setting weather to " + this.mWeatherType + "\n");
-			if(this.mWeatherType != this.WeatherType.FINE)  
+			if(this.mWeatherType != "")  
 				_doSetWeather();
 			this.mSetWeatherOnAvatar = false;
 		}
 	}
 	
+	function _getWeatherDef(type, weight) {
+		local t = this.WeatherDefs[type];
+		foreach(k in t) {
+			if(k["Weight"] == weight) {
+				return k;
+			}
+		}
+		return null;
+	}
+	
 	function _doSetWeather() {
-		
-		local fx = "";
-		switch(this.mWeatherWeight) {
-		case this.WeatherWeight.LIGHT:
-			fx += "Light";
-			break;
-		case this.WeatherWeight.MEDIUM:
-			fx += "Medium";
-			break;
-		case this.WeatherWeight.HEAVY:
-			fx += "Heavy";
-			break;
+		local w = _getWeatherDef(this.mWeatherType, this.mWeatherWeight);
+		if(w == null) {
+			return;
 		}
-		
-		switch(this.mWeatherType) {
-		case this.WeatherType.RAIN:
-			fx += "Rain";
-			break;
-		case this.WeatherType.SNOW:
-			fx += "Snow";
-			break;
-		case this.WeatherType.SAND:
-			fx += "Sand";
-			break;
-		case this.WeatherType.HAIL:
-			fx += "Hail";
-			break;
-		case this.WeatherType.LAVA:
-			fx += "Lava";
-			break;
+		if("Effect" in w) {
+			local fx = w["Effect"];
+			mWeatherEffect = ::_avatar.cue(fx);
+			if(mWeatherEffect != null) {
+				mWeatherEffect.loopForever();
+				mSetWeatherOnAvatar = false;
+			}
+			else {
+				mSetWeatherOnAvatar = true;
+			}
 		}
-		
-		print("ICE! cueing effect " + fx);
-		mWeatherEffect = ::_avatar.cue(fx);
-		if(mWeatherEffect != null) {
-			mWeatherEffect.loopForever();
-			mSetWeatherOnAvatar = false;
+		if("Sound" in w) {
+			this.Audio.playMusic(w["Sound"], this.Audio.WEATHER_CHANNEL);
 		}
-		else {
-			print("ICE! huh? no effect " + fx);
-			mSetWeatherOnAvatar = true;
-		}
-		
-		local snd = "Sound-Ambient-" + fx + ".ogg";
-		this.Audio.playMusic(snd, this.Audio.WEATHER_CHANNEL);
 	}
 	
 	function playerAvatarDisassembled() 
 	{
-		print("ICE! lost  player avatar, setting weather to null\n");
 		this._stopWeather();
 		this.Audio.stopMusic(this.Audio.WEATHER_CHANNEL);
 	}
@@ -310,11 +344,11 @@ class this.Environment
 			
 			this._stopWeather();
 				
-			if(this.mWeatherType != this.WeatherType.FINE) {
-				this._doSetWeather();				
+			if(this.mWeatherType == "") {
+				this.Audio.stopMusic(this.Audio.WEATHER_CHANNEL);				
 			}
 			else {
-				this.Audio.stopMusic(this.Audio.WEATHER_CHANNEL);
+				this._doSetWeather();
 			}
 		}
 	}
@@ -933,16 +967,11 @@ class this.Environment
 	function _stopWeather() {
 		mSetWeatherOnAvatar = false;
 		if(this.mWeatherEffect != null) {
-			print("ICE! Stopping weather");
 			foreach(e in this.mWeatherEffect.mEffects) {
 				e.stop();
 			}
 			this.mWeatherEffect.stop();
 			this.mWeatherEffect = null;
-			print("ICE! Stopped weather");
-		}
-		else {
-			print("ICE! no weather to stop!?");
 		}
 	}
 

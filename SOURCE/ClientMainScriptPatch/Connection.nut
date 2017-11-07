@@ -3406,18 +3406,14 @@ class this.Connection extends this.MessageBroadcaster
 		if(mask == 4) 
 		{
 			local weight = data.getShort();
-			// TODO thunder clap
-			print("ICE! thunder: " + weight + "\n");
 			this.broadcastMessage("onThunder", weight);
 			return;
 		}
 		
 		if(mask == 3) 
 		{
-			local type = data.getShort();
+			local type = data.getStringUTF();
 			local weight = data.getShort();
-			// TODO weather change
-			print("ICE! weather: " + type + " : " + weight + "\n");
 			this.broadcastMessage("onWeatherUpdate", type, weight);
 			return;
 		}

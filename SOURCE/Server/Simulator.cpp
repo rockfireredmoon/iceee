@@ -5818,7 +5818,7 @@ int SimulatorThread :: handle_command_giveall(void)
 			newItem.IID = resultList[i]->mID;
 			newItem.ApplyFromItemDef(resultList[i]);
 			newItem.CCSID = (INV_CONTAINER << 16) | slot;
-			pld.charPtr->inventory.AddItem(INV_CONTAINER, newItem);
+			ActivateActionAbilities(&newItem);
 			wpos += AddItemUpdate(&SendBuf[wpos], Aux3, &newItem);
 		}
 		else
@@ -7357,6 +7357,7 @@ int SimulatorThread :: UseItem(unsigned int CCSID)
 			{
 				int credits = cfg.GetValueInt("credits");
 				int abPoints = cfg.GetValueInt("abilitypoints");
+				int heroism = cfg.GetValueInt("heroism");
 				if(credits > 0)
 				{
 					if(g_Config.AccountCredits) {
@@ -7371,6 +7372,12 @@ int SimulatorThread :: UseItem(unsigned int CCSID)
 					Util::SafeFormat(Aux1, sizeof(Aux1), "You gain %d credits.", credits);
 					SendInfoMessage(Aux1, INFOMSG_INFO);
 					creatureInst->SendStatUpdate(STAT::CREDITS);
+				}
+				if(heroism > 0)
+				{
+					creatureInst->AddHeroism(heroism);
+					Util::SafeFormat(Aux1, sizeof(Aux1), "You gain %d heroism.", heroism);
+					SendInfoMessage(Aux1, INFOMSG_INFO);
 				}
 				if(abPoints > 0)
 				{

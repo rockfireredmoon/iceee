@@ -91,9 +91,12 @@ local NewMedia = {
 ["Music-GrimIdol"]=[4706254],
 ["Music-TheRule"]=[4706254],
 ["CL-Candelabra2"]=[456],
-["Item-Rain1"]=[21571],
-["Item-Rain2"]=[21571],
-["Item-Rain3"]=[21571],
+["Item-Particle-Weather_Rain1"]=[21571],
+["Item-Particle-Weather_Rain2"]=[21571],
+["Item-Particle-Weather_Rain3"]=[21571],
+["Item-Particle-Weather_Snow1"]=[21571],
+["Item-Particle-Weather_Snow2"]=[21571],
+["Item-Particle-Weather_Snow3"]=[21571],
 
 /* Extra assets from EER, just to make sure they're in the full download for
    the public server release.

@@ -1,11 +1,3 @@
-this.WeatherType <- {
-	FINE = 0,
-	RAIN = 1,
-	SNOW = 2,
-	HAIL = 3,
-	SAND = 4,
-	LAVA = 5
-};
 this.WeatherWeight <- {
 	LIGHT = 0,
 	MEDIUM = 1,

@@ -1731,7 +1731,7 @@ WeatherState :: WeatherState(int instanceId, WeatherDef &def) {
 	mInstanceId = instanceId;
 	mDefinition = def;
 	mNextStateChange = g_ServerTime + ( randmodrng(def.mFineMin, def.mFineMax) * 1000 );
-	mWeatherType = WeatherDef::FINE;
+	mWeatherType = "";
 	mWeatherWeight = WeatherState::LIGHT;
 	mEscalateState = WeatherState::ONE_OFF;
 	mThunder = false;
@@ -1827,7 +1827,7 @@ void WeatherState :: RollThunder() {
 }
 
 bool WeatherState :: PickNewWeather() {
-	if(mWeatherType == WeatherDef::FINE) {
+	if(mWeatherType.length() == 0) {
 		/* Weather is starting */
 		int chance = randmodrng(0, 100);
 		if(chance < mDefinition.mHeavyChance) {
@@ -1864,7 +1864,7 @@ bool WeatherState :: PickNewWeather() {
 		mThunder = false;
 		mNextThunder = 0;
 		mNextStateChange = g_ServerTime + ( randmodrng(mDefinition.mFineMin, mDefinition.mFineMax) * 1000 );
-		mWeatherType = WeatherDef::FINE;
+		mWeatherType = "";
 		mWeatherWeight = WeatherState::LIGHT;
 		mEscalateState = WeatherState::ONE_OFF;
 	}
@@ -2026,16 +2026,7 @@ int WeatherManager :: LoadFromFile(const char *fileName) {
 					r = lfr.MultiBreak("=,"); //Re-split for this particular data.
 					for(int s = 1; s < r; s++) {
 						std::string typeStr = lfr.BlockToStringC(1, 0);
-						if(strcmp(lfr.SecBuffer, "S") == 0)
-							newItem.mWeatherTypes.push_back(WeatherDef::SNOW);
-						else if(strcmp(lfr.SecBuffer, "H") == 0)
-							newItem.mWeatherTypes.push_back(WeatherDef::HAIL);
-						else if(strcmp(lfr.SecBuffer, "S") == 0)
-							newItem.mWeatherTypes.push_back(WeatherDef::SAND);
-						else if(strcmp(lfr.SecBuffer, "L") == 0)
-							newItem.mWeatherTypes.push_back(WeatherDef::LAVA);
-						else
-							newItem.mWeatherTypes.push_back(WeatherDef::RAIN);
+						newItem.mWeatherTypes.push_back(typeStr);
 					}
 				}
 				else if(strcmp(lfr.SecBuffer, "THUNDERCHANCE") == 0)

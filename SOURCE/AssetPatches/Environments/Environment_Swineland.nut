@@ -29,7 +29,7 @@ this.require("Environment_Default");
 		],
 		[
 			"Music",
-			0.40000001
+			0.3
 		]
 	],
 	Activate_Music = [],
@@ -61,7 +61,7 @@ this.require("Environment_Default");
 		],
 		[
 			"Music",
-			0.40000001
+			0.3
 		]
 	],
 	Activate_Music = [],
@@ -96,7 +96,7 @@ this.require("Environment_Default");
 		],
 		[
 			"Music",
-			0.40000001
+			0.3
 		]
 	],
 	Activate_Music = [],
@@ -130,7 +130,7 @@ this.require("Environment_Default");
 		],
 		[
 			"Music",
-			0.4
+			0.3
 		]
 	],
 	Activate_Music = [
@@ -181,7 +181,7 @@ this.require("Environment_Default");
 		],
 		[
 			"Music",
-			0.40000001
+			0.3
 		]
 	],
 	Activate_Music = [],
@@ -219,7 +219,7 @@ this.require("Environment_Default");
 		],
 		[
 			"Music",
-			0.40000001
+			0.3
 		]
 	],
 	Activate_Music = [],
@@ -260,7 +260,7 @@ this.require("Environment_Default");
 		],
 		[
 			"Music",
-			0.40000001
+			0.3
 		]
 	],
 	Activate_Music = [],
@@ -300,7 +300,7 @@ this.require("Environment_Default");
 		],
 		[
 			"Music",
-			0.4
+			0.3
 		]
 	],
 	Activate_Music = [
@@ -351,7 +351,7 @@ this.require("Environment_Default");
 		],
 		[
 			"Music",
-			0.40000001
+			0.3
 		]
 	],
 	Activate_Music = [],
@@ -389,7 +389,7 @@ this.require("Environment_Default");
 		],
 		[
 			"Music",
-			0.40000001
+			0.3
 		]
 	],
 	Activate_Music = [],
@@ -430,7 +430,7 @@ this.require("Environment_Default");
 		],
 		[
 			"Music",
-			0.40000001
+			0.3
 		]
 	],
 	Activate_Music = [],
@@ -470,7 +470,7 @@ this.require("Environment_Default");
 		],
 		[
 			"Music",
-			0.4
+			0.3
 		]
 	],
 	Activate_Music = [

@@ -104,13 +104,13 @@ int PrepExt_SetTimeOfDay(char *buffer, const char *timeOfDay)
 	return wpos;
 }
 
-int PrepExt_SetWeather(char *buffer, int type, int weight)
+int PrepExt_SetWeather(char *buffer, std::string type, int weight)
 {
 	int wpos = 0;
 	wpos += PutByte(&buffer[wpos], 42);   //_handleEnvironmentUpdateMsg
 	wpos += PutShort(&buffer[wpos], 0);
 	wpos += PutByte(&buffer[wpos], 3);   //Mask for weather
-	wpos += PutShort(&buffer[wpos], type);  //weather typew
+	wpos += PutStringUTF(&buffer[wpos], type.c_str());  //weather type
 	wpos += PutShort(&buffer[wpos], weight);  //weight
 	PutShort(&buffer[1], wpos - 3);       //Set message size
 	return wpos;
