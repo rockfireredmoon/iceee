@@ -802,6 +802,8 @@ namespace ScriptCore
 
 	bool NutPlayer::RunFunction(std::string name, std::vector<ScriptParam> parms, bool time) {
 
+		g_Log.AddMessageFormat("REMOVE run function %s", name.c_str());
+
 		if(!mActive) {
 			g_Log.AddMessageFormat("[WARNING] Attempt to run function on inactive script %s.", name.c_str());
 			return false;
@@ -980,7 +982,7 @@ namespace ScriptCore
 	long NutPlayer::QueueInsert(NutScriptEvent *evt)
 	{
 		if(!mActive) {
-			PrintMessage("[WARNING] Script event when not active");
+			PrintMessage("[WARNING] Squirrel Script event when not active");
 			return -1;
 		}
 
@@ -990,7 +992,7 @@ namespace ScriptCore
 		{
 			if(mQueueInsert.size() >= MAX_QUEUE_SIZE)
 			{
-				PrintMessage("[ERROR] Script error: Deferred QueueEvent() list is full %d of %d", mQueueInsert.size(), MAX_QUEUE_SIZE);
+				PrintMessage("[ERROR] Squirrel Script error: Deferred QueueInsert() list is full %d of %d", mQueueInsert.size(), MAX_QUEUE_SIZE);
 				return -1;
 			}
 			mQueueInsert.insert(mQueueInsert.begin(), evt);
@@ -999,7 +1001,7 @@ namespace ScriptCore
 
 			if(mQueue.size() >= MAX_QUEUE_SIZE)
 			{
-				PrintMessage("[ERROR] Script error: QueueEvent() list is full [script: %s]", def->scriptName.c_str());
+				PrintMessage("[ERROR] Squirrel Script error: QueueInsert() list is full [script: %s] %d of %d", def->scriptName.c_str(), mQueue.size(), MAX_QUEUE_SIZE);
 				return -1;
 			}
 			mQueue.insert(mQueue.begin(), evt);
@@ -1059,7 +1061,7 @@ namespace ScriptCore
 	long NutPlayer::QueueAdd(NutScriptEvent *evt)
 	{
 		if(!mActive) {
-			PrintMessage("[WARNING] Script event when not active");
+			PrintMessage("[WARNING] Squirrel Script event when not active");
 			return -1;
 		}
 
@@ -1069,7 +1071,7 @@ namespace ScriptCore
 		{
 			if(mQueueAdd.size() >= MAX_QUEUE_SIZE)
 			{
-				PrintMessage("[ERROR] Script error: Deferred QueueEvent() list is full %d of %d", mQueueAdd.size(), MAX_QUEUE_SIZE);
+				PrintMessage("[ERROR] Squirrel Script error: Deferred QueueAdd() list is full %d of %d", mQueueAdd.size(), MAX_QUEUE_SIZE);
 				return -1;
 			}
 			mQueueAdd.push_back(evt);
@@ -1078,7 +1080,7 @@ namespace ScriptCore
 
 			if(mQueue.size() >= MAX_QUEUE_SIZE)
 			{
-				PrintMessage("[ERROR] Script error: QueueEvent() list is full [script: %s]", def->scriptName.c_str());
+				PrintMessage("[ERROR] Squirrel Script error: QueueAdd() list is full [script: %s] %d of %d", def->scriptName.c_str(), mQueue.size(), MAX_QUEUE_SIZE);
 				return -1;
 			}
 			mQueue.push_back(evt);
@@ -2420,7 +2422,7 @@ int ScriptPlayer :: GetApplicationPropertyAsInteger(const char *propertyName)
 void ScriptPlayer :: PushVarStack(int value)
 {
 	if(varStack.size() > MAX_STACK_SIZE)
-		PrintMessage("[ERROR] Script error: PushVarStack() stack is full [script: %s]", def->scriptName.c_str());
+		PrintMessage("[ERROR] TSL Script error: PushVarStack() stack is full [script: %s]", def->scriptName.c_str());
 	else
 		varStack.push_back(value);
 }
@@ -2429,7 +2431,7 @@ int ScriptPlayer :: PopVarStack(void)
 {
 	int retval = 0;
 	if(varStack.size() == 0)
-		PrintMessage("[ERROR] Script error: PopVarStack() stack is empty [script: %s]", def->scriptName.c_str());
+		PrintMessage("[ERROR] TSL Script error: PopVarStack() stack is empty [script: %s]", def->scriptName.c_str());
 	else
 	{
 		retval = varStack[varStack.size() - 1];
@@ -2441,7 +2443,7 @@ int ScriptPlayer :: PopVarStack(void)
 void ScriptPlayer :: PushCallStack(int value)
 {
 	if(callStack.size() > MAX_STACK_SIZE)
-		PrintMessage("[ERROR] Script error: PushCallStack() stack is full [script: %s]", def->scriptName.c_str());
+		PrintMessage("[ERROR] TSL Script error: PushCallStack() stack is full [script: %s]", def->scriptName.c_str());
 	else
 		callStack.push_back(value);
 }
@@ -2463,7 +2465,7 @@ void ScriptPlayer :: QueueEvent(const char *labelName, unsigned long fireDelay)
 {
 	if(scriptEventQueue.size() >= MAX_QUEUE_SIZE)
 	{
-		PrintMessage("[ERROR] Script error: QueueEvent() list is full [script: %s]", def->scriptName.c_str());
+		PrintMessage("[ERROR] TSL Script error: QueueEvent() list is full [script: %s] %d %d", def->scriptName.c_str());
 		return;
 	}
 

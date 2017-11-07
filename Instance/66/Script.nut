@@ -421,7 +421,6 @@ function spawn_valkal_2() {
 /* Remove the fight scene environment if it is set */
 function tod(e) {
     if(e != env) {
-    	inst.info("Set " + e);
     	env = e;
     	inst.set_timeofday(e);
     }

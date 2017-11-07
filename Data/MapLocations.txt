@@ -10,7 +10,6 @@
 ; RT=Location,x,y,xlen,ylen        Rectangular area of tiles at (x,y) with dimensions (xlen,ylen).
 ;
 
-
 ; EUROPE
 
 ZoneID=9

@@ -62,6 +62,8 @@ Credits for additional audio content added to the game.
 #####Curse Of The Scarab - Music used in Djinn Temple
 #####Dragon And Toast - Music used in Fangarian's Lair
 #####Grim Idol - Fight Music used in Fangarian's Lair
+#####The Hive - Background Music used in Skrill Queen Lair
+#####Constance - Figh Music used in Skrill Queen Lair
 
 Kevin MacLeod (incompetech.com)
 Licensed under Creative Commons: By Attribution 3.0

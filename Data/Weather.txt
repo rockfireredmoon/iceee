@@ -11,7 +11,7 @@ WeatherType=Rain
 ThunderChance=33
 ThunderGapMin=30
 ThunderGapMax=60
-Escalate=75
+Escalate=50
 
 [ENTRY]
 Name=Anglorum
@@ -26,7 +26,7 @@ WeatherType=Rain
 ThunderChance=33
 ThunderGapMin=30
 ThunderGapMax=60
-Escalate=100
+Escalate=50
 
 [ENTRY]
 Name=Camelot
@@ -39,8 +39,8 @@ FineMax=1200
 LightChance=100
 MediumChance=60
 HeavyChance=10
-WeatherMin=80
-WeatherMax=500
+WeatherMin=120
+WeatherMax=700
 WeatherType=Snow
 ThunderChance=0
 Escalate=50

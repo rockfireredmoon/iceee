@@ -847,12 +847,13 @@ void CreatureInstance :: Instantiate(void)
 
 	ApplyGlobalInstanceBuffs();
 
-	if(actInst != NULL && actInst->nutScriptPlayer != NULL && actInst->nutScriptPlayer->mActive) {
+	// TODO floods events
+	/*if(actInst != NULL && actInst->nutScriptPlayer != NULL && actInst->nutScriptPlayer->mActive) {
 		std::vector<ScriptCore::ScriptParam> parms;
 		parms.push_back(ScriptCore::ScriptParam(CreatureID));
 		parms.push_back(ScriptCore::ScriptParam(CreatureDefID));
 		actInst->nutScriptPlayer->JumpToLabel("on_spawn", parms);
-	}
+	}*/
 }
 
 int CreatureInstance :: GetMitigatedDamage(int damageAmount, int armorRating, int reductionMod)

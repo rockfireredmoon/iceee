@@ -557,7 +557,7 @@ private:
 	void MaybeWakeVM(std::string reason);
 
 protected:
-	static const size_t MAX_QUEUE_SIZE = 128;
+	static const size_t MAX_QUEUE_SIZE = 32;
 	void ClearQueue();
 
 };

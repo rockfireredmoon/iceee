@@ -769,7 +769,8 @@ MaxLeashRange=375
 [ENTRY]
 ID=69
 NAME=Skrill_Queen_Lair
-ENVIRONMENTTYPE=Dungeon1
+ENVIRONMENTTYPE=SkrillQueenLair
+TimeOfDay=Day
 ShardName=Europe 1
 WarpName=Skrill Queen Lair
 Instance=1

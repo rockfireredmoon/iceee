@@ -2218,11 +2218,13 @@ int ActiveInstance :: EraseIndividualReference(CreatureInstance *object)
 
 int ActiveInstance :: RemoveNPCInstance(int CreatureID)
 {
-	if(nutScriptPlayer != NULL && nutScriptPlayer->mActive) {
+	/* TODO floods events
+	  if(nutScriptPlayer != NULL && nutScriptPlayer->mActive) {
 		std::vector<ScriptCore::ScriptParam> parms;
 		parms.push_back(ScriptCore::ScriptParam(CreatureID));
 		nutScriptPlayer->JumpToLabel("on_despawn", parms);
 	}
+	*/
 
 
 #ifndef CREATUREMAP
@@ -3382,7 +3384,7 @@ void ActiveInstance :: ScriptCallKill(int CreatureDefID, int CreatureID)
 
 		char buffer[64];
 		Util::SafeFormat(buffer, sizeof(buffer), "on_kill_%d", CreatureDefID);
-		ScriptCall(buffer);
+		nutScriptPlayer->JumpToLabel(buffer);
 	}
 	else if(scriptPlayer && scriptPlayer->mActive)
 	{

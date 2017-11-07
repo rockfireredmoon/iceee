@@ -118,6 +118,19 @@ v0=38400
 u1=72000
 v1=74880
 
+[ENTRY]
+Name=Ironstone
+Primary=Maps-Anglorum
+Type=Local
+numPagesAcross=27.5
+numPagesDown=19
+parentMapImage=MapWorldBG
+image=Europe_Map_Region_Anglorum
+priority=0
+u0=24959
+v0=63365
+u1=35380
+v1=72039
 
 [ENTRY]
 Name=World

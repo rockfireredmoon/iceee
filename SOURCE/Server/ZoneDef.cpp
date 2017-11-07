@@ -1828,6 +1828,7 @@ void WeatherState :: RollThunder() {
 
 bool WeatherState :: PickNewWeather() {
 	if(mWeatherType.length() == 0) {
+
 		/* Weather is starting */
 		int chance = randmodrng(0, 100);
 		if(chance < mDefinition.mHeavyChance) {
@@ -1846,7 +1847,6 @@ bool WeatherState :: PickNewWeather() {
 		}
 
 		mNextStateChange = g_ServerTime + ( randmodrng(mDefinition.mWeatherMin, mDefinition.mWeatherMax) * 1000 );
-
 		mWeatherType = mDefinition.mWeatherTypes[randmodrng(0, mDefinition.mWeatherTypes.size())];
 
 		/* Roll for thunder */
@@ -1912,6 +1912,7 @@ bool WeatherManager :: MaybeAddWeatherDef(int instanceID, std::string actualMapN
 		else {
 			/* Not using 'use' */
 			state = new WeatherState(instanceID, wdef);
+			state->mMapNames.push_back(actualMapName);
 			m.push_back(state);
 			mWeather[k] = state;
 		}
@@ -1936,7 +1937,6 @@ std::vector<WeatherState*> WeatherManager :: RegisterInstance(ActiveInstance *in
 
 	/* Set up a weather state for all the MapDefInfo in this instance that have a weather def */
 	for(std::vector<MapDefInfo>::iterator it = d.begin(); it != d.end(); it++) {
-
 		if(!MaybeAddWeatherDef(instance->mInstanceID, (*it).Name, m))
 			continue;
 

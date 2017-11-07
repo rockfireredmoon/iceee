@@ -11,28 +11,32 @@
 const CDEF_SKRILL_QUEEN = 1412;
 const CDEF_HATCHLING = 7862;
 
-// Prop IDs
-
-// TODO actual prop
-const PROP_ESSENCE_CHEST = 1127658;
-
 // The locations of the room
 loc_queen_room <- Area(2815,2106, 3278, 2712);
 
-// The current stage the fight is at
+// State
 stage <- 99;
-
-// The CIDs of various creatures
 cid_skrill_queen <- 0;
+env <- "";
+fhc <- 0;
+
+function tod(e) {
+    if(e != env) {
+    	env = e;
+    	inst.set_timeofday(e);
+    }
+}
 
 /*
  * When the skrill queen dies, remove all of her minions and stop checking her
  * health
  */
-function on_kill_7760() {
+function on_kill_1412() {
 	kill_minions();
-	/* inst.spawn(PROP_ESSENCE_CHEST, 0, 0); */
 	cid_skrill_queen = 0;
+	stage = 0;
+	tod("Sunrise");	
+	inst.clear_queue();
 }
 
 function kill_minions() {
@@ -93,25 +97,24 @@ function queen_health() {
 		inst.queue(find_queen, 5000);
 		return;
 	}
-
-	if(health == 0) {
-		info("Health zero, assuming mob died");
+	
+	if(health == -1) {
 		stage = 0;
-		inst.queue(find_queen, 5000);
-		return;
+		inst.exec(find_queen);
 	}
-
-	if(stage != 0 && health == 100) {
-		/* If we have past the first phase, and the wailer returns to full health
-		 * dismiss the adds and return to the waiting for the first phase
-		 */
-		 kill_minions();
-		 stage = 0;
-		 inst.queue(queen_health, 3000);
-		 return;
+	else if(health == 100) {
+		if(fhc == 4 && inst.is_at_tether(cid_skrill_queen)) {
+			stage = 0;
+		 	kill_minions();
+		}
+		else
+			fhc++;
+			
+		inst.queue(queen_health, 5000);
 	}
-
-	if(health < 100) {
+    else {
+		tod("Sunset");
+		
 		if(health <= 10 && stage < 12) {
 			stage = 12;
 			spawn_minions();
@@ -168,4 +171,5 @@ function queen_health() {
 	inst.queue(queen_health, 1000);
 }
 
+tod("Day");
 inst.queue(find_queen, 5000);
