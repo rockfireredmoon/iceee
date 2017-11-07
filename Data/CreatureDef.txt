@@ -75707,9 +75707,14 @@ total_size=1.600000023841858
 
 [ENTRY]
 ID=3496
-strength=1
-dexterity=1
-constitution=1
+strength=2
+dexterity=2
+constitution=4
+damage_resist_melee=23
+damage_resist_fire=23
+damage_resist_frost=23
+damage_resist_mystic=23
+damage_resist_death=23
 appearance=n4:{["sk"]={["base"]="c17646",["trim"]="474554",["eye"]="ff4b4a",["shell"]="35385c",["hair"]="292a3c",["webbing"]="a4b1d1"},["c"]="Horde-Vampider",["sz"]="0.7"}
 level=1
 display_name=Vampider Hatchling
@@ -75718,6 +75723,7 @@ profession=2
 creature_category=Unliving
 rarity=0
 base_damage_melee=5
+base_health=23
 ai_package=Newb_Knight
 
 [ENTRY]
