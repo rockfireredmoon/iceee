@@ -749,7 +749,8 @@ DropRateProfile=bloodkeep
 [ENTRY]
 ID=67
 NAME=Junk_Palace
-ENVIRONMENTTYPE=Dungeon1
+ENVIRONMENTTYPE=JunkPalace
+TimeOfDay=Day
 ShardName=Unknown
 WarpName=Junk Palace
 Instance=1

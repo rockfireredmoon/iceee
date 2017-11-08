@@ -116,6 +116,7 @@ struct ActiveAbilityInfo
 	bool bUnbreakableChannel;  //For special channels only, indicates casting may not be broken by incoming attacks.
 	bool bParallel;           //If true, this is an independently parallel operation (like bleeding damage over time) that might have special freedoms, like continuing operation even if the caster is stunned.
 	bool bSecondary;          //If true, the ability data sent to the client should write the target details in the secondary target list.
+	bool bForce;			  //If true, the ability activates even when Noncombatant (and others?) are set
 	short interruptChanceMod;    //Additional chance to interrupt, solely for this ability.
 	float x;
 	float y;
@@ -546,6 +547,7 @@ public:
 	void RegisterImplicit(int eventType, int abID, int abGroup);
 
 	int CallAbilityEvent(int abilityID, int eventType);
+	int CallAbilityEvent(int abilityID, int eventType, bool force);
 	int RequestAbilityActivation(int abilityID);
 	void ProcessAbility_Ex(ActiveAbilityInfo *ability);
 	void RunActiveAbilities(void);  //Called by the main thread to run ability processing for this entity

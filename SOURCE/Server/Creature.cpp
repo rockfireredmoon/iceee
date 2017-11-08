@@ -121,6 +121,7 @@ void ActiveAbilityInfo :: Clear(const char *debugCaller)
 	ClearTargetList();
 
 	bPending = false;
+	bForce = false;
 	bSecondary = false;
 	bUnbreakableChannel = false;
 	interruptChanceMod = 0;
@@ -1573,10 +1574,16 @@ int CreatureInstance :: _CountStatusFlags(void)
 void CreatureInstance :: SetServerFlag(unsigned long flag, bool status)
 {
 
-	if(status == true)
+	if(status == true) {
+		if(serverFlags != ( serverFlags | flag ))
+			g_Log.AddMessageFormat("Set server flag for %d - %d to true", CreatureDefID, flag);
 		serverFlags |= flag;
-	else
+	}
+	else {
+		if(serverFlags != ( serverFlags & ~(flag) ))
+			g_Log.AddMessageFormat("Unset server flag %d - %d to false", CreatureDefID, flag);
 		serverFlags &= (~(flag));
+	}
 }
 
 bool CreatureInstance :: Reagent(int itemID, int amount)
@@ -4352,6 +4359,12 @@ void CreatureInstance :: RegisterImplicit(int eventType, int abID, int abGroup)
 
 int CreatureInstance :: CallAbilityEvent(int abilityID, int eventType)
 {
+	return CallAbilityEvent(abilityID, eventType, false);
+}
+
+int CreatureInstance :: CallAbilityEvent(int abilityID, int eventType, bool force)
+{
+	ab[0].bForce = force;
 	return actInst->ActivateAbility(this, abilityID, eventType, &ab[0]);
 }
 
@@ -7037,7 +7050,7 @@ void CreatureInstance :: CheckQuestInteract(CreatureInstance *target)
 
 	}
 
-	int wpos = charPtr->questJournal.CreatureUse_Confirmed(CreatureID, GSendBuf, CreatureDefID);
+	int wpos = charPtr->questJournal.CreatureUse_Confirmed(target->CreatureID, GSendBuf, target->CreatureDefID);
 	if(wpos > 0)
 	{
 		simulatorPtr->AttemptSend(GSendBuf, wpos);
@@ -7048,7 +7061,7 @@ void CreatureInstance :: CheckQuestInteract(CreatureInstance *target)
 		QuestScript::QuestNutPlayer *nut = actInst->GetSimulatorQuestNutScript(simulatorPtr);
 		if(nut != NULL) {
 			char buffer[64];
-			Util::SafeFormat(buffer, sizeof(buffer), "on_use_finish_%d", CreatureDefID);
+			Util::SafeFormat(buffer, sizeof(buffer), "on_use_finish_%d", target->CreatureDefID);
 			nut->JumpToLabel(buffer);
 		}
 

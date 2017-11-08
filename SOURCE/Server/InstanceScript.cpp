@@ -456,8 +456,10 @@ bool AbstractInstanceNutPlayer::DoCreatureUse(int CID, int abilityID, bool retry
 		}
 		//END DEBUG OUTPUT
 
+		/* We use 'force' so Noncombatant doesn't affect scripts (used heavily by Valkal, Boss Hawg etc) */
 		int r = attachedCreature->CallAbilityEvent(abilityID,
-				EventType::onRequest);
+				EventType::onRequest, true);
+
 		if (r != 0) {
 			//Notify the creature we failed, may need a distance check.
 			//The script should wait and retry soon.
