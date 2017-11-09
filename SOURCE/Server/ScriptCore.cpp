@@ -2110,7 +2110,8 @@ ScriptPlayer :: ~ScriptPlayer()
 
 void ScriptPlayer :: Initialize(ScriptDef *defPtr)
 {
-	g_Log.AddMessageFormat("Initialising TSL script %s", defPtr->scriptName.c_str());
+	if(g_Config.DebugLogAIScriptUse)
+		g_Log.AddMessageFormat("Initialising TSL script %s", defPtr->scriptName.c_str());
 	def = defPtr;
 	FullReset();
 }

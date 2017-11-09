@@ -1459,6 +1459,26 @@ material Particles/BloodDrop
 	}
 }
 
+material Particles/AcidDrop
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			depth_write off
+			scene_blend add
+			fog_override true
+			cull_hardware none
+
+			texture_unit
+			{
+				texture aciddrop.png
+			}
+		}
+	}
+}
+
 material Particles/piegoo
 {
 	technique

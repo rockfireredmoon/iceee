@@ -2985,6 +2985,20 @@ bool SimulatorThread :: HandleCommand(int &PendingData)
 		PendingData = ::PrepExt_SendInfoMessage(SendBuf, Aux1, INFOMSG_INFO);
 		PendingData += PrepExt_QueryResponseString(&SendBuf[PendingData], query.ID, "OK");
 	}
+	else if(query.name.compare("weather") == 0)
+	{
+		WeatherState *ws = g_WeatherManager.GetWeather(MapDef.mMapList[pld.CurrentMapInt].Name, pld.CurrentInstanceID);
+		if(ws != NULL) {
+			if(!CheckPermissionSimple(Perm_Account, Permission_Sage))
+				PendingData = PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
+			else {
+				ws->PickNewWeather();
+				PendingData += PrepExt_QueryResponseString(&SendBuf[PendingData], query.ID, "OK");
+			}
+		}
+		else
+			PendingData = PrepExt_QueryResponseError(SendBuf, query.ID, "No weather configured for region.");
+	}
 	else if(query.name.compare("searsize") == 0)
 		PendingData = handle_command_set_earsize();
 	else if(query.name.compare("stailsize") == 0)

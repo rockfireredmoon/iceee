@@ -481,8 +481,8 @@ public:
 	void CheckQuestKill(CreatureInstance *target);
 	void CheckQuestInteract(CreatureInstance *target);
 	int ProcessQuestRewards(int QuestID, const std::vector<QuestItemReward>& itemsToGive);
-	int QuestInteractObject(char *buffer, const char *text, float time, bool gather);
-	int PrepInteractObject(char *buffer, const char *text, float time, bool gather, CreatureInstance *targ);
+	int QuestInteractObject(char *buffer, const char *text, int time, bool gather);
+	int PrepInteractObject(char *buffer, const char *text, int time, bool gather, CreatureInstance *targ);
 	int NormalInteractObject(char *outBuf, InteractObject *interactObj);
 	void RunQuestObjectInteraction(CreatureInstance *target, bool deleteObject);
 	void RunObjectInteraction(CreatureInstance *target);

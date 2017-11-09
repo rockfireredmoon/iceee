@@ -423,6 +423,8 @@ void LoadConfig(const char *filename)
 				g_Config.VerifyMovement = lfr.BlockToBool(1);
 			else if(strcmp(NameBlock, "DebugLogAIScriptUse") == 0)
 				g_Config.DebugLogAIScriptUse = lfr.BlockToBool(1);
+			else if(strcmp(NameBlock, "DebugVerbose") == 0)
+				g_Config.DebugVerbose = lfr.BlockToBool(1);
 			else if(strcmp(NameBlock, "SquirrelGCCallCount") == 0)
 				g_Config.SquirrelGCCallCount = lfr.BlockToIntC(1);
 			else if(strcmp(NameBlock, "SquirrelGCDelay") == 0)
@@ -662,6 +664,7 @@ GlobalConfigData :: GlobalConfigData()
 
 	VerifyMovement = false;
 	DebugLogAIScriptUse = false;
+	DebugVerbose = false;
 
 	SquirrelGCCallCount = 1000;
 	SquirrelGCDelay = 10000;

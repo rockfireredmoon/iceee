@@ -1747,7 +1747,7 @@ class this.Connection extends this.MessageBroadcaster
 
 		case 11:
 			local name = data.getStringUTF();
-			local delay = data.getFloat();
+			local delay = data.getInteger.tofloat();
 			local countdown = this.Screens.get("CreatureActionCountdown", true);
 
 			if (countdown)

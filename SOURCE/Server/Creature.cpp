@@ -1575,13 +1575,9 @@ void CreatureInstance :: SetServerFlag(unsigned long flag, bool status)
 {
 
 	if(status == true) {
-		if(serverFlags != ( serverFlags | flag ))
-			g_Log.AddMessageFormat("Set server flag for %d - %d to true", CreatureDefID, flag);
 		serverFlags |= flag;
 	}
 	else {
-		if(serverFlags != ( serverFlags & ~(flag) ))
-			g_Log.AddMessageFormat("Unset server flag %d - %d to false", CreatureDefID, flag);
 		serverFlags &= (~(flag));
 	}
 }
@@ -6910,13 +6906,13 @@ int CreatureInstance :: ProcessQuestRewards(int QuestID, const std::vector<Quest
 	return 1;
 }
 
-int CreatureInstance :: QuestInteractObject(char *buffer, const char *text, float time, bool gather)
+int CreatureInstance :: QuestInteractObject(char *buffer, const char *text, int time, bool gather)
 {
 	Interrupt();
 	return PrepInteractObject(buffer, text, time, gather, CurrentTarget.targ);
 }
 
-int CreatureInstance :: PrepInteractObject(char *buffer, const char *text, float time, bool gather, CreatureInstance *targ)
+int CreatureInstance :: PrepInteractObject(char *buffer, const char *text, int time, bool gather, CreatureInstance *targ)
 {
 
 	int wpos = 0;
@@ -6925,7 +6921,7 @@ int CreatureInstance :: PrepInteractObject(char *buffer, const char *text, float
 	wpos += PutInteger(&buffer[wpos], CreatureID);
 	wpos += PutByte(&buffer[wpos], 11);  //creature "used" event
 	wpos += PutStringUTF(&buffer[wpos], text);
-	wpos += PutFloat(&buffer[wpos], time);
+	wpos += PutInteger(&buffer[wpos], time);
 	PutShort(&buffer[1], wpos - 3);  //size
 
 	//We can't call RegisterCast, but the client doesn't have a corresponding

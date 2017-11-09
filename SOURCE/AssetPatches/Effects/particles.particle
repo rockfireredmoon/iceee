@@ -51964,6 +51964,282 @@ particle_system Par-Weather_Snow3
 	}
 }
 
+particle_system Par-Weather_BloodRain1
+{
+	quota	100
+	material	Particles/BloodDrop
+	particle_width	1.5
+	particle_height	3
+	cull_each	false
+	renderer	billboard
+	sorted	false
+	local_space	false
+	iteration_interval	0
+	nonvisible_update_timeout	0
+	billboard_type	point
+	billboard_origin	center
+	billboard_rotation_type	texcoord
+	common_up_vector	0 1 0
+	point_rendering	false
+	accurate_facing	false
+
+	emitter Cylinder
+	{
+		angle	0
+		colour	0.501961 0.501961 1 0.75
+		colour_range_start	0.501961 0.501961 1 0.75
+		colour_range_end	0.501961 0.501961 1 0.5
+		direction	0 -1 0
+		emission_rate	100
+		position	0 120 0
+		velocity	100
+		velocity_min	100
+		velocity_max	160
+		time_to_live	1.2
+		time_to_live_min	1.2
+		time_to_live_max	1.4
+		duration	0
+		duration_min	0
+		duration_max	0
+		repeat_delay	0
+		repeat_delay_min	0
+		repeat_delay_max	0
+		width	600
+		height	600
+		depth	2
+	}
+}
+
+particle_system Par-Weather_BloodRain2
+{
+	quota	175
+	material	Particles/BloodDrop
+	particle_width	1.5
+	particle_height	3
+	cull_each	false
+	renderer	billboard
+	sorted	false
+	local_space	false
+	iteration_interval	0
+	nonvisible_update_timeout	0
+	billboard_type	point
+	billboard_origin	center
+	billboard_rotation_type	texcoord
+	common_up_vector	0 1 0
+	point_rendering	false
+	accurate_facing	false
+
+	emitter Cylinder
+	{
+		angle	0
+		colour	0.501961 0.501961 1 0.9
+		colour_range_start	0.501961 0.501961 1 0.9
+		colour_range_end	0.501961 0.501961 1 0.65
+		direction	0 -1 0
+		emission_rate	175
+		position	0 120 0
+		velocity	150
+		velocity_min	150
+		velocity_max	180
+		time_to_live	1.0
+		time_to_live_min	1.0
+		time_to_live_max	1.1
+		duration	0
+		duration_min	0
+		duration_max	0
+		repeat_delay	0
+		repeat_delay_min	0
+		repeat_delay_max	0
+		width	600
+		height	600
+		depth	2
+	}
+}
+
+particle_system Par-Weather_BloodRain3
+{
+	quota	350
+	material	Particles/BloodDrop
+	particle_width	1.5
+	particle_height	3
+	cull_each	false
+	renderer	billboard
+	sorted	false
+	local_space	false
+	iteration_interval	0
+	nonvisible_update_timeout	0
+	billboard_type	point
+	billboard_origin	center
+	billboard_rotation_type	texcoord
+	common_up_vector	0 1 0
+	point_rendering	false
+	accurate_facing	false
+
+	emitter Cylinder
+	{
+		angle	0
+		colour	0.501961 0.501961 1 1
+		colour_range_start	0.501961 0.501961 1 1
+		colour_range_end	0.501961 0.501961 1 1
+		direction	0 -1 0
+		emission_rate	350
+		position	0 120 0
+		velocity	200
+		velocity_min	200
+		velocity_max	220
+		time_to_live	0.7
+		time_to_live_min	0.7
+		time_to_live_max	0.8
+		duration	0
+		duration_min	0
+		duration_max	0
+		repeat_delay	0
+		repeat_delay_min	0
+		repeat_delay_max	0
+		width	600
+		height	600
+		depth	2
+	}
+}
+
+particle_system Par-Weather_AcidRain1
+{
+	quota	100
+	material	Particles/AcidDrop
+	particle_width	1.5
+	particle_height	3
+	cull_each	false
+	renderer	billboard
+	sorted	false
+	local_space	false
+	iteration_interval	0
+	nonvisible_update_timeout	0
+	billboard_type	point
+	billboard_origin	center
+	billboard_rotation_type	texcoord
+	common_up_vector	0 1 0
+	point_rendering	false
+	accurate_facing	false
+
+	emitter Cylinder
+	{
+		angle	0
+		colour	0.501961 0.501961 1 0.75
+		colour_range_start	0.501961 0.501961 1 0.75
+		colour_range_end	0.501961 0.501961 1 0.5
+		direction	0 -1 0
+		emission_rate	100
+		position	0 120 0
+		velocity	100
+		velocity_min	100
+		velocity_max	160
+		time_to_live	1.2
+		time_to_live_min	1.2
+		time_to_live_max	1.4
+		duration	0
+		duration_min	0
+		duration_max	0
+		repeat_delay	0
+		repeat_delay_min	0
+		repeat_delay_max	0
+		width	600
+		height	600
+		depth	2
+	}
+}
+
+particle_system Par-Weather_AcidRain2
+{
+	quota	175
+	material	Particles/AcidDrop
+	particle_width	1.5
+	particle_height	3
+	cull_each	false
+	renderer	billboard
+	sorted	false
+	local_space	false
+	iteration_interval	0
+	nonvisible_update_timeout	0
+	billboard_type	point
+	billboard_origin	center
+	billboard_rotation_type	texcoord
+	common_up_vector	0 1 0
+	point_rendering	false
+	accurate_facing	false
+
+	emitter Cylinder
+	{
+		angle	0
+		colour	0.501961 0.501961 1 0.9
+		colour_range_start	0.501961 0.501961 1 0.9
+		colour_range_end	0.501961 0.501961 1 0.65
+		direction	0 -1 0
+		emission_rate	175
+		position	0 120 0
+		velocity	150
+		velocity_min	150
+		velocity_max	180
+		time_to_live	1.0
+		time_to_live_min	1.0
+		time_to_live_max	1.1
+		duration	0
+		duration_min	0
+		duration_max	0
+		repeat_delay	0
+		repeat_delay_min	0
+		repeat_delay_max	0
+		width	600
+		height	600
+		depth	2
+	}
+}
+
+particle_system Par-Weather_AcidRain3
+{
+	quota	350
+	material	Particles/AcidDrop
+	particle_width	1.5
+	particle_height	3
+	cull_each	false
+	renderer	billboard
+	sorted	false
+	local_space	false
+	iteration_interval	0
+	nonvisible_update_timeout	0
+	billboard_type	point
+	billboard_origin	center
+	billboard_rotation_type	texcoord
+	common_up_vector	0 1 0
+	point_rendering	false
+	accurate_facing	false
+
+	emitter Cylinder
+	{
+		angle	0
+		colour	0.501961 0.501961 1 1
+		colour_range_start	0.501961 0.501961 1 1
+		colour_range_end	0.501961 0.501961 1 1
+		direction	0 -1 0
+		emission_rate	350
+		position	0 120 0
+		velocity	200
+		velocity_min	200
+		velocity_max	220
+		time_to_live	0.7
+		time_to_live_min	0.7
+		time_to_live_max	0.8
+		duration	0
+		duration_min	0
+		duration_max	0
+		repeat_delay	0
+		repeat_delay_min	0
+		repeat_delay_max	0
+		width	600
+		height	600
+		depth	2
+	}
+}
+
 particle_system Par-Rampage_Burst
 {
 	quota	200

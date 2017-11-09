@@ -155,9 +155,9 @@ public:
 	void RunCycle(ActiveInstance *instance); // run the cycle for the active instance
 	void SendWeatherUpdate(ActiveInstance *instance); // send the weather update message to everyone in this instance/area
 	void SendThunder(ActiveInstance *instance); // send the thunder message to everyone in this instance/area
+	bool PickNewWeather();
 
 private:
-	bool PickNewWeather();
 	void RollThunder(); // send the thunder message to everyone in this instance/area
 };
 

@@ -62,6 +62,57 @@ this.Environments.Default <- {
 		Effect = "HeavySnow"
 	}
 ];
+::WeatherDefs.BloodRain <- [
+	{
+		Weight = WeatherWeight.LIGHT,
+		Sound = "Sound-Ambient-LightRain.ogg",
+		Effect = "LightRain"
+	},
+	{
+		Weight = WeatherWeight.MEDIUM,
+		Sound = "Sound-Ambient-MediumRain.ogg",
+		Effect = "MediumRain"
+	},
+	{
+		Weight = WeatherWeight.HEAVY,
+		Sound = "Sound-Ambient-HeavyRain.ogg",
+		Effect = "HeavyRain"
+	}
+];
+::WeatherDefs.AcidRain <- [
+	{
+		Weight = WeatherWeight.LIGHT,
+		Sound = "Sound-Ambient-LightRain.ogg",
+		Effect = "LightAcidRain"
+	},
+	{
+		Weight = WeatherWeight.MEDIUM,
+		Sound = "Sound-Ambient-MediumRain.ogg",
+		Effect = "MediumAcidRain"
+	},
+	{
+		Weight = WeatherWeight.HEAVY,
+		Sound = "Sound-Ambient-HeavyRain.ogg",
+		Effect = "HeavyAcidRain"
+	}
+];
+::WeatherDefs.BloodRain <- [
+	{
+		Weight = WeatherWeight.LIGHT,
+		Sound = "Sound-Ambient-LightRain.ogg",
+		Effect = "LightBloodRain"
+	},
+	{
+		Weight = WeatherWeight.MEDIUM,
+		Sound = "Sound-Ambient-MediumRain.ogg",
+		Effect = "MediumBloodRain"
+	},
+	{
+		Weight = WeatherWeight.HEAVY,
+		Sound = "Sound-Ambient-HeavyRain.ogg",
+		Effect = "HeavyBloodRain"
+	}
+];
 /*
 ::WeatherDefs.SnowStorm <- [
 	{

@@ -1274,3 +1274,95 @@ class this.EffectDef.HeavySnow extends this.EffectDef.TemplateBasic
 	}
 
 }
+
+class this.EffectDef.LightAcidRain extends this.EffectDef.TemplateBasic
+{
+	static mEffectName = "LightAcidRain";
+
+	function onStart( ... )
+	{
+		this.mMaxTime = -1;
+		local rain = this.createGroup("Weather", this.getSource());
+		rain.add("ParticleSystem", {
+			particleSystem = "Par-Weather_AcidRain1",
+			emitterPoint = "head_particles"
+		});
+	}
+
+}
+
+class this.EffectDef.MediumAcidRain extends this.EffectDef.TemplateBasic
+{
+	static mEffectName = "MediumAcidRain";
+	
+	function onStart( ... )
+	{
+		local rain = this.createGroup("Weather", this.getSource());
+		rain.add("ParticleSystem", {
+			particleSystem = "Par-Weather_AcidRain2",
+			emitterPoint = "head_particles"
+		});
+	}
+
+}
+
+class this.EffectDef.HeavyAcidRain extends this.EffectDef.TemplateBasic
+{
+	static mEffectName = "HeavyAcidRain";
+	
+	function onStart( ... )
+	{
+		local rain = this.createGroup("Weather", this.getSource());
+		rain.add("ParticleSystem", {
+			particleSystem = "Par-Weather_AcidRain3",
+			emitterPoint = "head_particles"
+		});
+	}
+
+}
+
+class this.EffectDef.LightBloodRain extends this.EffectDef.TemplateBasic
+{
+	static mEffectName = "LightBloodRain";
+
+	function onStart( ... )
+	{
+		this.mMaxTime = -1;
+		local rain = this.createGroup("Weather", this.getSource());
+		rain.add("ParticleSystem", {
+			particleSystem = "Par-Weather_BloodRain1",
+			emitterPoint = "head_particles"
+		});
+	}
+
+}
+
+class this.EffectDef.MediumBloodRain extends this.EffectDef.TemplateBasic
+{
+	static mEffectName = "MediumBloodRain";
+	
+	function onStart( ... )
+	{
+		local rain = this.createGroup("Weather", this.getSource());
+		rain.add("ParticleSystem", {
+			particleSystem = "Par-Weather_BloodRain2",
+			emitterPoint = "head_particles"
+		});
+	}
+
+}
+
+class this.EffectDef.HeavyBloodRain extends this.EffectDef.TemplateBasic
+{
+	static mEffectName = "HeavyBloodRain";
+	
+	function onStart( ... )
+	{
+		local rain = this.createGroup("Weather", this.getSource());
+		rain.add("ParticleSystem", {
+			particleSystem = "Par-Weather_BloodRain3",
+			emitterPoint = "head_particles"
+		});
+	}
+
+}
