@@ -284,7 +284,7 @@ spawnPackage=#N3493
 [ENTRY]
 ID=1154751
 Asset=CL-Market#CL-Market_Stall-Refashioner
-Name=
+Name=Untitled
 Pos=72341.1,1074.93,52583.2
 Orient=0,-0.999667,0,0.0257935
 Scale=1,1,1
@@ -293,7 +293,7 @@ Scale=1,1,1
 ID=151021658
 Asset=Bldg-Urban-Warehouse#Bldg-Urban-Warehouse?ATS=ATS-Warpig
 Name=Untitled
-Pos=72671,1081.29,52612
+Pos=72671,1073.36,52612
 Orient=0,-0.761095,0,0.64864
 Scale=1,1,1
 Flags=1

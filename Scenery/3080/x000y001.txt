@@ -1,7 +1,7 @@
 [ENTRY]
 ID=1151958
 Asset=Dng-Room_Divider?ATS=ATS-Dungeon_Crypt
-Name=
+Name=Untitled
 Pos=836.351,7.62939e-06,1382.01
 Orient=0,0,0,1
 Scale=1,1,1
@@ -9,7 +9,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1151961
 Asset=Dng-Room_Center?ATS=ATS-Dungeon_Crypt
-Name=
+Name=Untitled
 Pos=741.323,7.62939e-06,1381.94
 Orient=0,0,0,1
 Scale=1,1,1
@@ -17,7 +17,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1151962
 Asset=Dng-Room_Center?ATS=ATS-Dungeon_Crypt
-Name=
+Name=Untitled
 Pos=561.312,7.62939e-06,1381.86
 Orient=0,0,0,1
 Scale=1,1,1
@@ -25,7 +25,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1151963
 Asset=Dng-Room_Center?ATS=ATS-Dungeon_Crypt
-Name=
+Name=Untitled
 Pos=561.344,7.62939e-06,1561.81
 Orient=0,0,0,1
 Scale=1,1,1
@@ -33,7 +33,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1151964
 Asset=Dng-Room_Center?ATS=ATS-Dungeon_Crypt
-Name=
+Name=Untitled
 Pos=741.091,-3.05176e-05,1561.94
 Orient=0,0,0,1
 Scale=1,1,1
@@ -41,7 +41,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1151973
 Asset=Dng-Room_Center_PillarB?ATS=ATS-Dungeon_Crypt
-Name=
+Name=Untitled
 Pos=841.344,0.0052681,1841.61
 Orient=0,0,0,1
 Scale=1,1,1
@@ -49,7 +49,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1151978
 Asset=Dng-Room_Wall?ATS=ATS-Dungeon_Crypt
-Name=
+Name=Untitled
 Pos=761.515,0.0052681,1836.97
 Orient=0,0,0,1
 Scale=1,1,1
@@ -57,7 +57,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1151982
 Asset=Dng-Room_Wall?ATS=ATS-Dungeon_Crypt
-Name=
+Name=Untitled
 Pos=483.531,7.62939e-06,1385.2
 Orient=0,0,0,1
 Scale=1,1,1
@@ -65,7 +65,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1151983
 Asset=Dng-Room_Wall?ATS=ATS-Dungeon_Crypt
-Name=
+Name=Untitled
 Pos=482.716,7.62939e-06,1563.9
 Orient=0,0,0,1
 Scale=1,1,1
@@ -73,7 +73,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1151984
 Asset=Dng-Room_Wall?ATS=ATS-Dungeon_Crypt
-Name=
+Name=Untitled
 Pos=836.699,0,1562.26
 Orient=0,0,0,1
 Scale=1,1,1
@@ -81,7 +81,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1151986
 Asset=Dng-Room_Wall?ATS=ATS-Dungeon_Crypt
-Name=
+Name=Untitled
 Pos=940.028,1.52588e-05,1654.03
 Orient=0,0,0,1
 Scale=1,1,1
@@ -89,7 +89,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1151993
 Asset=Dng-Room_Wall?ATS=ATS-Dungeon_Crypt
-Name=
+Name=Untitled
 Pos=733.281,7.62939e-06,1296.63
 Orient=0,0.703279,0,0.710914
 Scale=1,1,1
@@ -97,7 +97,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1151994
 Asset=Dng-Room_Wall?ATS=ATS-Dungeon_Crypt
-Name=
+Name=Untitled
 Pos=554.64,7.62939e-06,1294.39
 Orient=0,0.699716,0,0.714421
 Scale=1,1,1
@@ -105,7 +105,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1151995
 Asset=Dng-Room_Wall?ATS=ATS-Dungeon_Crypt
-Name=
+Name=Untitled
 Pos=563.599,0,1640.72
 Orient=0,0.710353,0,0.703845
 Scale=1,1,1
@@ -113,7 +113,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1151996
 Asset=Dng-Room_Wall?ATS=ATS-Dungeon_Crypt
-Name=
+Name=Untitled
 Pos=748.313,-3.05176e-05,1639.54
 Orient=0,0.713864,0,0.700285
 Scale=1,1,1
@@ -121,7 +121,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1151998
 Asset=Dng-Room_Wall?ATS=ATS-Dungeon_Crypt
-Name=
+Name=Untitled
 Pos=852.254,0.00526816,1919.73
 Orient=0,0.710353,0,0.703845
 Scale=1,1,1
@@ -129,7 +129,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1151999
 Asset=Dng-Room_Wall?ATS=ATS-Dungeon_Crypt
-Name=
+Name=Untitled
 Pos=850.852,0.00526804,1749.64
 Orient=0,-0.692537,0,0.721382
 Scale=1,1,1
@@ -137,7 +137,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1152008
 Asset=Prop-Crypt_Props#Prop-Crypt_CoffinB
-Name=
+Name=Untitled
 Pos=527.655,7.62939e-06,1580.84
 Orient=0,0,0,1
 Scale=1,1,1
@@ -145,7 +145,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1152009
 Asset=Prop-Crypt_Coffin
-Name=
+Name=Untitled
 Pos=540.745,7.56979e-06,1610.38
 Orient=0,0.425939,0,0.904752
 Scale=1,1,1
@@ -153,7 +153,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1152010
 Asset=Prop-Chunks#Prop-Chunks2
-Name=
+Name=Untitled
 Pos=519.425,7.62939e-06,1603.35
 Orient=0,0,0,1
 Scale=1,1,1
@@ -161,7 +161,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1152013
 Asset=Prop-Spider_Webs#Prop-Spider_Webs1
-Name=
+Name=Untitled
 Pos=817.538,7.62939e-06,1300.97
 Orient=0,0,0,1
 Scale=1,1,1
@@ -169,7 +169,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1152014
 Asset=Prop-Spider_Webs#Prop-Spider_Webs1
-Name=
+Name=Untitled
 Pos=491.5,7.62939e-06,1456.54
 Orient=0,0.888928,0,0.458046
 Scale=1,1,1
@@ -177,7 +177,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1152018
 Asset=Prop-Crypt_Props#Prop-Crypt-Skull_Pile_Large
-Name=
+Name=Untitled
 Pos=814.253,-3.05176e-05,1620.25
 Orient=0,0,0,1
 Scale=3,3,3
@@ -185,7 +185,7 @@ Scale=3,3,3
 [ENTRY]
 ID=1152019
 Asset=Prop-Crypt_Props#Prop-Crypt-Bone_Pit
-Name=
+Name=Untitled
 Pos=670.07,-3.00407e-05,1556.87
 Orient=0,0,0,1
 Scale=1,1,1
@@ -193,7 +193,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1152020
 Asset=Prop-Crypt_Props#Prop-Crypt-Bone_Pit
-Name=
+Name=Untitled
 Pos=669.647,7.62939e-06,1408.83
 Orient=0,0,0,1
 Scale=1,1,1
@@ -201,7 +201,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1152021
 Asset=Prop-Wooden_Furniture#Prop-Bench2
-Name=
+Name=Untitled
 Pos=611.367,8.10623e-06,1316.05
 Orient=0,0,0,1
 Scale=1,1,1
@@ -209,7 +209,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1152022
 Asset=Prop-Wooden_Furniture#Prop-Bench2
-Name=
+Name=Untitled
 Pos=722.136,7.62939e-06,1316.01
 Orient=0,0,0,1
 Scale=1,1,1
@@ -217,7 +217,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1152023
 Asset=Prop-Wooden_Furniture#Prop-Bench2
-Name=
+Name=Untitled
 Pos=603.074,7.62939e-06,1627.26
 Orient=0,0,0,1
 Scale=1,1,1
@@ -225,7 +225,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1152024
 Asset=Prop-Wooden_Furniture#Prop-Bench2
-Name=
+Name=Untitled
 Pos=703.788,-3.05176e-05,1629
 Orient=0,0,0,1
 Scale=1,1,1
@@ -233,7 +233,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1152026
 Asset=Prop-Accessories1#Prop-Wall_Torch2
-Name=
+Name=Untitled
 Pos=613.199,28.1924,1305.63
 Orient=0,0,0,1
 Scale=1,1,1
@@ -241,7 +241,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1152027
 Asset=Prop-Accessories1#Prop-Wall_Torch1
-Name=
+Name=Untitled
 Pos=684.665,25.1226,1639.76
 Orient=0,-0.0799148,0,0.996802
 Scale=1,1,1
@@ -249,7 +249,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1152030
 Asset=Light-Large?Group=1&COLOR=FF8516
-Name=
+Name=Untitled
 Pos=609.93,28.213,1311.6
 Orient=0,0,0,1
 Scale=1,1,1
@@ -257,7 +257,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1152031
 Asset=Light-Large?Group=1&COLOR=FF8516
-Name=
+Name=Untitled
 Pos=688.061,29.8508,1635.08
 Orient=0,0,0,1
 Scale=1,1,1
@@ -265,7 +265,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1152032
 Asset=Prop-Accessories1#Prop-Wall_Torch2
-Name=
+Name=Untitled
 Pos=484.004,30.4935,1503.54
 Orient=0,0.663135,0,0.748499
 Scale=1,1,1
@@ -273,7 +273,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1152033
 Asset=Light-Large?Group=1&COLOR=FF8516
-Name=
+Name=Untitled
 Pos=496.202,18.7921,1500.52
 Orient=0,0,0,1
 Scale=1,1,1
@@ -281,7 +281,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1152034
 Asset=Prop-Chunks#Prop-Chunks1
-Name=
+Name=Untitled
 Pos=674.21,-0.814474,1428.56
 Orient=0,0,0,1
 Scale=1,1,1
@@ -289,7 +289,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1152035
 Asset=Prop-Crypt_Props#Prop-Crypt_CoffinB
-Name=
+Name=Untitled
 Pos=487.58,20.68,1392.52
 Orient=0.600404,0.789793,0.0759296,0.0998806
 Scale=1,1,1
@@ -297,7 +297,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1152036
 Asset=Prop-Crypt_Coffin
-Name=
+Name=Untitled
 Pos=521.081,7.56979e-06,1378.75
 Orient=0,0,0,1
 Scale=1,1,1
@@ -305,7 +305,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1152037
 Asset=Prop-Vampire_Fountain
-Name=
+Name=Untitled
 Pos=843.039,0.0052681,1841.03
 Orient=0,0,0,1
 Scale=1,1,1
@@ -313,7 +313,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1152038
 Asset=Prop-Chunks#Prop-Chunks2
-Name=
+Name=Untitled
 Pos=841.907,-3.48443,1833.72
 Orient=0,0,0,1
 Scale=1,1,1
@@ -321,7 +321,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1152041
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=541.917,7.62939e-06,1514.76
 Orient=0,0,0,1
 Scale=1,1,1
@@ -333,7 +333,7 @@ link=1152058,1
 [ENTRY]
 ID=1152042
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=526.284,7.56979e-06,1343.5
 Orient=0,0,0,1
 Scale=1,1,1
@@ -344,7 +344,7 @@ link=1152056,1
 [ENTRY]
 ID=1152043
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=672.634,-3.05176e-05,1500.86
 Orient=0,0,0,1
 Scale=1,1,1
@@ -356,7 +356,7 @@ link=1152050,1
 [ENTRY]
 ID=1152044
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=759.451,7.62939e-06,1384.49
 Orient=0,0,0,1
 Scale=1,1,1
@@ -368,7 +368,7 @@ link=1152052,1
 [ENTRY]
 ID=1152045
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=606.297,7.62939e-06,1371.18
 Orient=0,0,0,1
 Scale=1,1,1
@@ -380,7 +380,7 @@ link=1152054,1
 [ENTRY]
 ID=1152046
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=618.893,7.56979e-06,1600.53
 Orient=0,0,0,1
 Scale=1,1,1
@@ -391,7 +391,7 @@ link=1152059,1
 [ENTRY]
 ID=1152047
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=777.179,-3.05176e-05,1516.65
 Orient=0,0,0,1
 Scale=1,1,1
@@ -403,7 +403,7 @@ link=1152049,1
 [ENTRY]
 ID=1152048
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=741.883,-3.05772e-05,1579.6
 Orient=0,0,0,1
 Scale=1,1,1
@@ -414,7 +414,7 @@ link=1152049,1
 [ENTRY]
 ID=1152049
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=722.431,-3.05176e-05,1486.19
 Orient=0,0,0,1
 Scale=1,1,1
@@ -425,7 +425,7 @@ link=1152047,1
 [ENTRY]
 ID=1152050
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=738.099,7.62939e-06,1431.88
 Orient=0,0,0,1
 Scale=1,1,1
@@ -435,7 +435,7 @@ link=1152043,1
 [ENTRY]
 ID=1152051
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=597.594,7.62939e-06,1452.25
 Orient=0,0,0,1
 Scale=1,1,1
@@ -445,7 +445,7 @@ link=1152043,1
 [ENTRY]
 ID=1152052
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=743.247,7.62939e-06,1338.72
 Orient=0,0,0,1
 Scale=1,1,1
@@ -456,7 +456,7 @@ link=1152044,1
 [ENTRY]
 ID=1152053
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=695.572,7.56979e-06,1369.47
 Orient=0,0,0,1
 Scale=1,1,1
@@ -467,7 +467,7 @@ link=1152052,1
 [ENTRY]
 ID=1152054
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=607.558,7.56979e-06,1430.47
 Orient=0,0,0,1
 Scale=1,1,1
@@ -478,7 +478,7 @@ link=1152055,1
 [ENTRY]
 ID=1152055
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=552.55,7.62939e-06,1392.14
 Orient=0,0,0,1
 Scale=1,1,1
@@ -489,7 +489,7 @@ link=1152054,1
 [ENTRY]
 ID=1152056
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=664.422,7.62939e-06,1343.23
 Orient=0,0,0,1
 Scale=1,1,1
@@ -499,7 +499,7 @@ link=1152042,1
 [ENTRY]
 ID=1152057
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=553.915,7.62939e-06,1442.08
 Orient=0,0,0,1
 Scale=1,1,1
@@ -510,7 +510,7 @@ link=1152058,1
 [ENTRY]
 ID=1152058
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=610.048,7.62939e-06,1551.66
 Orient=0,0,0,1
 Scale=1,1,1
@@ -521,7 +521,7 @@ link=1152057,1
 [ENTRY]
 ID=1152059
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=740.704,-3.05176e-05,1603.74
 Orient=0,0,0,1
 Scale=1,1,1
@@ -531,7 +531,7 @@ link=1152046,1
 [ENTRY]
 ID=1152060
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=681.126,7.62939e-06,1318.99
 Orient=0,-0.757843,0,0.652438
 Scale=1,1,1
@@ -540,7 +540,7 @@ spawnPackage=maus_mix
 [ENTRY]
 ID=1152061
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=807.881,7.62939e-06,1443.74
 Orient=0,0.999983,0,0.00579636
 Scale=1,1,1
@@ -549,7 +549,7 @@ spawnPackage=Maus_vamp
 [ENTRY]
 ID=1152062
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=577.051,7.62939e-06,1622.25
 Orient=0,0.696135,0,0.717911
 Scale=1,1,1
@@ -558,7 +558,7 @@ spawnPackage=maus_mix
 [ENTRY]
 ID=1152063
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=861.117,1.64509e-05,1354.99
 Orient=0,0,0,1
 Scale=1,1,1
@@ -567,7 +567,7 @@ spawnPackage=Maus_vamp
 [ENTRY]
 ID=1152064
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=863.717,1.65105e-05,1410.62
 Orient=0,0,0,1
 Scale=1,1,1
@@ -576,7 +576,7 @@ spawnPackage=maus_mix
 [ENTRY]
 ID=1152065
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=892.693,1.61529e-05,1377.49
 Orient=0,0,0,1
 Scale=1,1,1
@@ -585,9 +585,18 @@ links_count=1
 link=1152066,1
 
 [ENTRY]
+ID=1152067
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=Untitled
+Pos=973.904,1.52588e-05,1067.51
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=Maus_vamp
+
+[ENTRY]
 ID=1152075
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=986.534,1.52588e-05,1282.74
 Orient=0,0,0,1
 Scale=1,1,1
@@ -598,7 +607,7 @@ link=1152076,1
 [ENTRY]
 ID=1152076
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=980.94,1.52588e-05,1083.83
 Orient=0,0,0,1
 Scale=1,1,1
@@ -608,7 +617,7 @@ link=1152075,1
 [ENTRY]
 ID=1152081
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=981.303,1.52588e-05,1443.17
 Orient=0,0,0,1
 Scale=1,1,1
@@ -619,7 +628,7 @@ link=1152082,0
 [ENTRY]
 ID=1152138
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=868.605,0.0052681,1839.05
 Orient=0,0,0,1
 Scale=1,1,1
@@ -628,7 +637,7 @@ spawnPackage=Maus_vamp
 [ENTRY]
 ID=1152139
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=872.478,0.00526804,1836.18
 Orient=0,0,0,1
 Scale=1,1,1

@@ -2,7 +2,7 @@
 ID=1151953
 Asset=Dng-Hall_Straight_Long1?ATS=ATS-Dungeon_Crypt
 Name=Untitled
-Pos=1021.25,1.52588e-05,1022.1
+Pos=1021.25,1.52588e-05,1039.36
 Orient=0,0,0,1
 Scale=1,1,1
 
@@ -226,6 +226,15 @@ links_count=1
 link=1152065,1
 
 [ENTRY]
+ID=1152068
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=Untitled
+Pos=1063.08,1.52588e-05,1085.27
+Orient=0,0.995566,0,-0.0940644
+Scale=1,1,1
+spawnPackage=Maus_vamp
+
+[ENTRY]
 ID=1152070
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=Untitled
@@ -250,10 +259,30 @@ link=1152070,0
 link=1152072,1
 
 [ENTRY]
+ID=1152072
+Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
+Pos=1038.88,1.52588e-05,1048.8
+Orient=0,0,0,1
+Scale=1,1,1
+links_count=1
+link=1152071,1
+
+[ENTRY]
+ID=1152073
+Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
+Pos=1006.77,1.52588e-05,1037.07
+Orient=0,0,0,1
+Scale=1,1,1
+links_count=1
+link=1152070,1
+
+[ENTRY]
 ID=1152074
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=Untitled
-Pos=1070.67,1.52588e-05,1109.98
+Pos=1070.67,1.52588e-05,1166.53
 Orient=0,0.995566,0,-0.0940644
 Scale=1,1,1
 spawnPackage=Maus_vamp

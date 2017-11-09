@@ -22,3 +22,19 @@ Pos=69231.7,571.51,67294.2
 Orient=0,0,0,1
 Scale=1,1,1
 
+[ENTRY]
+ID=1154754
+Asset=Effects#Par-Splash2-Emitter
+Name=
+Pos=69023.1,1542.93,67019.7
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
+ID=1154756
+Asset=Par-Waterfall_Top
+Name=
+Pos=69113.6,1538.37,67330.2
+Orient=0,1,0,7.54979e-08
+Scale=10,10,10
+
