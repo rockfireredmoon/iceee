@@ -4,6 +4,7 @@
 #include "Util.h"
 #include "Instance.h"
 #include "Item.h"
+#include "Config.h"
 #include "CommonTypes.h"
 #include "ByteBuffer.h"
 #include <algorithm>
@@ -145,7 +146,8 @@ QuestNutPlayer * QuestNutManager::AddActiveScript(CreatureInstance *creature, in
 void QuestNutManager::RemoveActiveScripts(int CID) {
 	cs.Enter("QuestNutManager::RemoveActiveScript");
 	std::list<QuestNutPlayer*> l = questAct[CID];
-	g_Log.AddMessageFormat("Removing active scripts for %d - %d", CID, l.size());
+	if(g_Config.DebugVerbose)
+		g_Log.AddMessageFormat("Removing active scripts for %d - %d", CID, l.size());
 	for (list<QuestNutPlayer*>::iterator it = l.begin(); it != l.end(); ++it) {
 		QuestNutPlayer* player = *it;
 		if(player->source != NULL && player->source->actInst != NULL) {

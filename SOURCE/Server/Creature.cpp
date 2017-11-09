@@ -6914,7 +6914,8 @@ int CreatureInstance :: QuestInteractObject(char *buffer, const char *text, int 
 
 int CreatureInstance :: PrepInteractObject(char *buffer, const char *text, int time, bool gather, CreatureInstance *targ)
 {
-	g_Log.AddMessageFormat("PrepInteractObject %s : %d : %s", text, time, gather ? "gather: " : "activate");
+	if(g_Config.DebugVerbose)
+		g_Log.AddMessageFormat("PrepInteractObject %s : %d : %s", text, time, gather ? "gather: " : "activate");
 
 	int wpos = 0;
 	wpos += PutByte(&buffer[wpos], 4);  //_handleCreatureEventMsg
