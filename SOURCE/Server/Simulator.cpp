@@ -8652,7 +8652,7 @@ int SimulatorThread :: handle_query_creature_use(void)
 				questScript.simCall = this;
 
 
-				int wpos = creatureInst->QuestInteractObject(GSendBuf, qo->ActivateText.c_str(), (float)qo->ActivateTime, qo->gather);
+				int wpos = creatureInst->QuestInteractObject(GSendBuf, qo->ActivateText.c_str(), qo->ActivateTime, qo->gather);
 				sprintf(Aux1, "onActivate_%d_%d", QuestID, QuestAct);
 				if(questScript.JumpToLabel(Aux1) == true)
 				{
@@ -8677,7 +8677,7 @@ int SimulatorThread :: handle_query_creature_use(void)
 			else
 			{
 				// New script system
-				int wpos = creatureInst->QuestInteractObject(GSendBuf, qo->ActivateText.c_str(), (float)qo->ActivateTime, qo->gather);
+				int wpos = creatureInst->QuestInteractObject(GSendBuf, qo->ActivateText.c_str(), qo->ActivateTime, qo->gather);
 				questNutScript->target = target;
 				questNutScript->QuestAct = QuestAct;
 				questNutScript->activate.Set(target->CurrentX, target->CurrentY, target->CurrentZ);
