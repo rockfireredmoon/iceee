@@ -18,8 +18,8 @@ Scale=1,1,1
 ID=1154710
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=Untitled
-Pos=991.279,1.52588e-05,849.465
-Orient=0,0,0,1
+Pos=991.279,1.52588e-05,864.343
+Orient=0,-1,0,0.000796277
 Scale=1,1,1
 spawnPackage=#F7876
 

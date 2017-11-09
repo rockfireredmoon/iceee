@@ -347,28 +347,6 @@ ai_package=custom_heathendel_anexima
 
 [ENTRY]
 ID=7800
-strength=350
-dexterity=350
-constitution=450
-psyche=350
-spirit=350
-damage_resist_melee=6000
-damage_resist_fire=6000
-damage_resist_frost=6000
-damage_resist_mystic=6000
-damage_resist_death=6000
-level=50
-display_name=Valkalth
-sub_name=The Merciless
-profession=2
-creature_category=Unliving
-rarity=2
-base_damage_melee=275
-ai_package=example
-total_size=2
-
-[ENTRY]
-ID=7800
 level=50
 display_name=Valkalth
 sub_name=The Merciless
@@ -632,29 +610,6 @@ ai_package=example
 damage_resist_death=6500
 profession=2
 ai_package=custom_heathendel_anexima
-
-[ENTRY]
-ID=7818
-strength=350
-dexterity=350
-constitution=450
-psyche=350
-spirit=350
-damage_resist_melee=6000
-damage_resist_fire=6000
-damage_resist_frost=6000
-damage_resist_mystic=6000
-damage_resist_death=6000
-appearance=n4:{["sk"]={["accent"]="ffffff",["armor"]="949494",["cloth"]="550000",["eye"]="ed1c24",["hair"]="c6c6c6",["mouth"]="dfa8ae",["skin"]="3f3f3f",["trim"]="2a2a2a"},["c"]="Horde-Vampire_Lord",["sz"]="2.0"}
-level=50
-display_name=Valkalth
-sub_name=The Merciless
-profession=2
-creature_category=Unliving
-rarity=2
-base_damage_melee=275
-ai_package=example
-total_size=2
 
 [ENTRY]
 ID=7818
@@ -1559,15 +1514,6 @@ appearance=p1:{["a"]="Prop-Interact_Rectangle",["sz"]="1.0"}
 level=1
 display_name=Entrance to The Old Underground
 profession=1
-creature_category=Inanimate
-ai_package=nothing
-
-[ENTRY]
-ID=7875
-appearance=p1:{["a"]="Prop-Interact_Rectangle",["sz"]="1.0"}
-level=1
-display_name=Entrance to The Old Underground
-profession=4
 creature_category=Inanimate
 ai_package=nothing
 

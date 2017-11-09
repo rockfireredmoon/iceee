@@ -2444,7 +2444,7 @@ QuestGiverID=1338
 QuestEnderID=1338
 Repeat=0
 sGiver=72795.6,1327.27,52898.1,9
-sEnder=66708.9,1103.91.54125.8,9
+sEnder=66708.9,1103.91,54125.8,9
 [ACT]
 Act.BodyText=Enter the Junk Palace Compound and kill 10 Haz'ard Crew.
 Obj.0.type=kill
@@ -2970,3 +2970,47 @@ Obj.0.myCreatureDefID=1325
 Obj.0.myItemID=
 Obj.0.completeText= 
 Obj.0.markerLocations=71482.2,1130.07,47871.1,9
+
+[ENTRY]
+ID=932
+Title=A test new quest
+BodyText=Body text
+CompleteText=asdsadasda
+Level=45,46
+Exp=1231
+PartySize=1
+NumRewards=0
+Coin=0
+Unabandon=0
+QuestGiverID=2766
+QuestEnderID=2766
+Repeat=0
+sGiver=0.0,0.0,0.0,0
+sEnder=0.0,0.0,0.0,0
+[ACT]
+Act.BodyText=An act
+Obj.0.type=kill
+Obj.0.data1=2765
+Obj.0.data2=1
+Obj.0.description=A kill obj
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=comp
+Obj.0.markerLocations=1.0,2.0,3.0,64;
+
+[ENTRY]
+ID=933
+Title=A test new quest
+BodyText=aasadasdasd
+CompleteText=sasdfsdfdsf
+Level=45,46
+Exp=0
+PartySize=1
+NumRewards=0
+Coin=0
+Unabandon=0
+QuestGiverID=2765
+QuestEnderID=2765
+Repeat=0
+sGiver=1.0,2.0,3.0,35
+sEnder=0.0,0.0,0.0,0
