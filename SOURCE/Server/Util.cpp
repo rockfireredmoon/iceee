@@ -174,7 +174,7 @@ int PrepExt_CancelUseEvent(char *buffer, int CreatureID)
 	wpos += PutInteger(&buffer[wpos], CreatureID);
 	wpos += PutByte(&buffer[wpos], 11);  //creature "used" event
 	wpos += PutStringUTF(&buffer[wpos], "");
-	wpos += PutFloat(&buffer[wpos], -1.0F);  //A delay of -1 will interrupt the action
+	wpos += PutInteger(&buffer[wpos], -1);  //A delay of -1 will interrupt the action
 	PutShort(&buffer[1], wpos - 3);  //size
 	return wpos;
 }

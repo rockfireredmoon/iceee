@@ -3629,7 +3629,7 @@ void CreatureInstance :: CancelPending(void)
 			wpos += PutInteger(&GSendBuf[wpos], CreatureID);
 			wpos += PutByte(&GSendBuf[wpos], 11);  //creature "used" event
 			wpos += PutStringUTF(&GSendBuf[wpos], "");
-			wpos += PutFloat(&GSendBuf[wpos], -1.0F);  //A delay of -1 will interrupt the action
+			wpos += PutInteger(&GSendBuf[wpos], -1);  //A delay of -1 will interrupt the action
 			PutShort(&GSendBuf[1], wpos - 3);  //size
 			SendToOneSimulator(GSendBuf, wpos, simulatorPtr);
 
@@ -6964,7 +6964,7 @@ int CreatureInstance :: NormalInteractObject(char *outBuf, InteractObject *inter
 	wpos += PutInteger(&outBuf[wpos], CreatureID);
 	wpos += PutByte(&outBuf[wpos], 11);  //creature "used" event
 	wpos += PutStringUTF(&outBuf[wpos], interactObj->useMessage);
-	wpos += PutFloat(&outBuf[wpos], (float)interactObj->useTime);
+	wpos += PutInteger(&outBuf[wpos], interactObj->useTime);
 	PutShort(&outBuf[1], wpos - 3);  //size
 
 	//We can't call RegisterCast, but the client doesn't have a corresponding
