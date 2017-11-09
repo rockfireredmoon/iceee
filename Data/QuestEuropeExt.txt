@@ -317,12 +317,11 @@ BodyText=Hello there, Beast friend! I have been told you have decided to join us
 
 We Treekin highly value our Beast allies and will do our utmost to fight alongside them. Even so, there are some members of your kind we utterly detest. Some time ago a group of ruthless thieves from your own people have decided to make the Great Forest their home and they have become quite a problem. They call themselves the Greysun Bandits and have set up several encampments all across the western spanse of the forest.
 
-Most troublesome of all is that they have begun to patrol the one and only road leading to the town of Far Reach at the far western edge of Great Forest. We have received reports they have been plundering merchants and other travellers that attempt to travel between the Heartwood, Green Line Thicket to the east and Far Reach. This has effectively cut off our bretheren in Far Reach from the rest of us.
+Most troublesome of all is that they have begun to patrol the one and only road leading to the town of Far Reach at the far western edge of Great Forest. We have received reports they have been plundering merchants and other travelers that attempt to travel between the Heartwood, Green Line Thicket to the east and Far Reach. This has effectively cut off our brethren in Far Reach from the rest of us.
 
-Recently though, we have received reports that the Greysuns seem to be organizing in a far more sinister manner. If this is the case, we must find out what they are up to and stop them before they become a serious threat. Because the Pact of Decay is already a constant threat to us,,we, unfortunately, do not have the resources to deal with these bandits ourselves. Thus, my request to you.
+Recently though, we have received reports that the Greysuns seem to be organizing in a far more sinister manner. If this is the case, we must find out what they are up to and stop them before they become a serious threat. Because the Pact of Decay is already a constant threat to us, we, unfortunately, do not have the resources to deal with these bandits ourselves. Thus, my request to you.
 
 Locate five of their camps and see what they are up to. Once you have done so, return to me and tell me what you have discovered.
-
 CompleteText=I see. It is just as I feared. If what you have seen is accurate, then not only have the Greysun Bandits become a threat, it would seem they are planning something dire against the inhabitants of Great Forest. As such they must be eliminated and soon.
 Suggested=34
 Exp=4126
@@ -402,12 +401,13 @@ Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=29824.3,647.221,62866.8,9
 
-
 [ENTRY]
-Requires=1000
 ID=1001
+Requires=1000
 Title=Taking Down the Bandits
-BodyText=Now that we know the Greysuns are intent on causing serious harm to those who call the Great Forest home, we must eliminate them before they have a chance to fully organise an offensive. Your next task is to enter their camps and thin out their numbers. The fewer members they have, the less chance they have of being a further threat. Further, it would hopefully give relief to those trying to travel the road the bandits have been frequenting. Go now and remove these thieves from the forest!
+BodyText=Now that we know the Greysuns are intent on causing serious harm to those who call the Great Forest home, we must eliminate them before they have a chance to fully organise an offensive.
+
+Your next task is to enter their camps and thin out their numbers. The fewer members they have, the less chance they have of being a further threat. Further, it would hopefully give relief to those trying to travel the road the bandits have been frequenting. Go now and remove these thieves from the forest!
 CompleteText=Excellent work. Now for your next task.
 Suggested=34
 Exp=4237
@@ -442,7 +442,6 @@ Obj.0.myCreatureDefID=671
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=29824.3,647.221,62866.8,9
-
 
 [ENTRY]
 Requires=1001

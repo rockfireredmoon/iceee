@@ -1,20 +1,20 @@
 [ENTRY]
 MinInterval=20000
 MaxInterval=30000
-Sequence=1
+Sequence=0
 
 [PARAGRAPH]
 Type=0
-Value=Ah a Rogue if ever I saw one, come join us! The launch event for 'Earth Eternal - Valkals Shadow' has begun!
+Value=Ah a Rogue if ever I saw one! The launch event for 'Earth Eternal - Valkal's Shadow' has begun! ... Speaking of shadows, we Rogues are masters of hiding in them. You won't regret joining us!
 [PARAGRAPH]
 Type=0
-Value=Sneaks of all species, you want to join the coolest class of all? The Rogues Of Gaia? Of course you do! Well just sign here ...
+Value=Sneaking beasts of all kinds, you want to join the coolest class of all, the Rogues Of Gaia? Of course you do! Well just sign here ...
 [PARAGRAPH]
 Type=0
-Value=Tsks, you startled me! Have you ever considered joining the Rogues? You have? Ah then you want further instruction?
+Value=Tsks. You startled me! Have you ever considered joining the Rogues? You have? Ah, then you want further instruction?
 [PARAGRAPH]
 Type=0
-Value=Come closer budding Rogues, I greet you on behalf of all other Rogues. You look like you'll make a fine addition to our ranks.
+Value=Come closer budding Rogues. I greet you on behalf of all other Rogues. You look like you'll make a fine addition to our ranks.
 [PARAGRAPH]
 Type=0
-Value=Stealth, cunning and guile. We expect this highest standards of all these. Step this way if you think you can make it as a Rogue!
+Value=Stealth, cunning and guile. We expect the highest standards in all of these. Step this way if you think you can make it as a Rogue!

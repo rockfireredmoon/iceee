@@ -75325,7 +75325,7 @@ casting_setback_chance=500
 channeling_break_chance=500
 appearance=c2:{["a"]=[{["node"]="left_shoulder",["type"]="Armor-Skrill-Warrior2-Left_Pauldron",["colors"]=["3f3f3f","aa0000"]},{["node"]="right_shoulder",["type"]="Armor-Skrill-Warrior2-Right_Pauldron",["colors"]=["3f3f3f","aa0000"]},{["node"]="right_hand",["type"]="Item-1hMace-Epic1",["colors"]=["7a8395","787b5a","d8cbbe","34a7b5"]},{["node"]="left_hand",["type"]="Item-Shield-Medium4",["colors"]=["ff0000","e90000","000fff"]}],["c"]={["boots"]={["type"]="Armor-Heavy-Epic2",["colors"]=["aa0000","151515","555555"]},["chest"]={["type"]="Armor-Heavy-Epic2",["colors"]=["aa0000","151515","555555"]},["arms"]={["type"]="Armor-Heavy-Epic2",["colors"]=["aa0000","151515","555555"]},["leggings"]={["type"]="Armor-Heavy-Epic2",["colors"]=["aa0000","151515","555555"]},["collar"]={["type"]="Armor-Heavy-Epic2",["colors"]=["aa0000","151515","555555"]},["belt"]={["type"]="Armor-Heavy-Epic2",["colors"]=["aa0000","151515","555555"]},["gloves"]={["type"]="Armor-Heavy-Epic2",["colors"]=["aa0000","151515","555555"]}},["b"]="m",["sk"]={["base"]="7f7f54",["diamonds"]="2a2a2a",["ear"]="6a5905",["eye"]="aa580f",["horns"]="aa580f",["lower_jaw"]="2a2a2a",["nails"]="2a2a2a",["stripes"]="2a2a2a"},["sz"]="2.0",["h"]=0,["g"]="m",["r"]="l"}
 level=50
-display_name=Wormtongue
+display_name=Wyrmtongue
 sub_name=The Dragon Priest
 profession=2
 creature_category=Mortal
@@ -75669,7 +75669,7 @@ channeling_break_chance=1
 appearance=n4:{["sk"]={["accent1"]="ffffff",["skin"]="6a4959",["cloth"]="d2d5ff",["eye"]="f33333",["accent2"]="ffffff",["mouth"]="c76d62",["teeth"]="a99d94"},["c"]="Horde-Vampire_Bloodletter",["sz"]="1.6"}
 level=50
 display_name=Vaj Angelus
-sub_name=First Born
+sub_name=Third Born
 profession=3
 creature_category=Unliving
 rarity=2
@@ -75696,7 +75696,7 @@ channeling_break_chance=1
 appearance=n4:{["sk"]={["accent1"]="ffffff",["skin"]="6a4959",["cloth"]="d2d5ff",["eye"]="f33333",["accent2"]="ffffff",["mouth"]="c76d62",["teeth"]="a99d94"},["c"]="Horde-Vampire_Bloodletter",["sz"]="1.6"}
 level=50
 display_name=Vaj Duradel
-sub_name=First Born
+sub_name=Fourth Born
 profession=1
 creature_category=Unliving
 rarity=2

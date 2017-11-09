@@ -1,19 +1,19 @@
 [ENTRY]
 ID=853
 Title=Welcome Beast...
-BodyText=Greetings and welcome to Earth Eternal - Valkal's Shadow 
+BodyText=Greetings and welcome to Earth Eternal - Valkal's Shadow!
 
-From all of Team TAW, we thank you for taking the time to join us. To show our thanks, we have put together a little themed gift box. Stuff that might be fun or useful in your quests. Grab it now, for this time it won't be around forever!  
+From all of Team TAW, we thank you for taking the time to join us. To show our thanks, we have put together a little themed gift box. Stuff that might be fun or useful in your quests. Grab it now, for this gift won't be around forever!
 
-We hope you stick around, there will be a reward at the end for your hard work.   
-CompleteText=Oh, didn't I say? You have to use these keys on that chest next to me, pick wisely!
+We hope you stick around as there will be a reward at the end for your hard work.
+CompleteText=Oh, didn't I say? You have to use these keys on that chest next to me. Pick wisely!
 Level=1
 Suggested=1
-AccountQuest=1
 Exp=1
 PartySize=1
 NumRewards=0
 Coin=0
+AccountQuest=1
 Unabandon=0
 QuestGiverID=7813
 QuestEnderID=7813
@@ -23,8 +23,8 @@ sEnder=5628.72,682.027,5964.53,59
 [ACT]
 Act.BodyText=Take the gift box key
 Obj.0.type=talk
-Obj.0.data1=
-Obj.0.data2=
+Obj.0.data1=0
+Obj.0.data2=0
 Obj.0.description=Take the gift box key
 Obj.0.complete=0
 Obj.0.myCreatureDefID=7813

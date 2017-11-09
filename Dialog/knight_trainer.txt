@@ -1,20 +1,20 @@
 [ENTRY]
 MinInterval=20000
 MaxInterval=30000
-Sequence=1
+Sequence=0
 
 [PARAGRAPH]
 Type=0
-Value=The Knights Of Gaia gree you. Come join use for the 'Earth Eternal - Valkals Shadow' launch event!
+Value=The Knights Of Gaia greet you. Come join us for the 'Earth Eternal - Valkal's Shadow' launch event!
 [PARAGRAPH]
 Type=0
-Value=Honourable beasts who wish to follow the path of the Knight, come closer, for I have information for you.
+Value=Honorable beasts who wish to follow the path of the Knight. Come closer, for I have information for you.
 [PARAGRAPH]
 Type=0
-Value=Can you swing a Sword with some accuracy? Well noble beast, come see and I'll put you on the path to learning more..
+Value=Can you swing a Sword with some accuracy? Well noble beast, come here and I'll put you on the path to learning more...
 [PARAGRAPH]
 Type=0
-Value=The Knight is the noblest of professions, and I can help you on your way.
+Value=The Knight is the noblest of professions and I can help guide you on your way.
 [PARAGRAPH]
 Type=0
 Value=Sir, Madam, you look like a Knight in need of direction. Please ... I can help!

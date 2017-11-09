@@ -1,20 +1,20 @@
 [ENTRY]
 MinInterval=20000
 MaxInterval=30000
-Sequence=1
+Sequence=0
 
 [PARAGRAPH]
 Type=0
-Value=The Mages welcome you to the Earth Eternal - Valkals Shadow launch event!
+Value=The Mages welcome you to the 'Earth Eternal - Valkal's Shadow' launch event!
 [PARAGRAPH]
 Type=0
-Value=New beasts who wish to follow the magical profession, come see me, I will set you on your way.
+Value=New beasts who wish to follow the magical profession, come see me and I will set you on your way.
 [PARAGRAPH]
 Type=0
 Value=Are you a budding mage? Well step this way ...
 [PARAGRAPH]
 Type=0
-Value=If Fire and Ice excites you, come see me, and I will set you on adventures you cannot even imagine.
+Value=If Fire and Ice excites you, come see me and I will set you on adventures you cannot even imagine.
 [PARAGRAPH]
 Type=0
 Value=Mages, step this way, I will guide you on your first steps in Gaia!
