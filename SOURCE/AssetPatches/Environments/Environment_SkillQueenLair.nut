@@ -33,11 +33,11 @@
 	Adjust_Channels = [
 		[
 			"Music",
-			0.30000001
+			0.15000001
 		],
 		[
 			"Drone",
-			0.30000001
+			0.20000001
 		]
 	],
 	Ambient_Music = [
@@ -114,7 +114,7 @@
 	Adjust_Channels = [
 		[
 			"Drone",
-			0.40000001
+			0.20000001
 		]
 	],
 	Ambient_Noise = [

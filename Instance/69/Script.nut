@@ -118,7 +118,7 @@ function queen_health() {
 		if(health <= 10 && stage < 12) {
 			stage = 12;
 			spawn_minions();
-			spawn_minions();
+			inst.queue(spawn_minions, 3000);
 		}
 		else if(health <= 15 && stage < 11) {
 			stage = 11;
@@ -127,7 +127,7 @@ function queen_health() {
 		else if(health <= 25 && stage < 10) {
 			stage = 10;
 			spawn_minions();
-			spawn_minions();
+			inst.queue(spawn_minions, 3000);
 		}
 		else if(health <= 30 && stage < 9) {
 			stage = 9;
@@ -136,7 +136,7 @@ function queen_health() {
 		else if(health <= 40 && stage < 8) {
 			stage = 8;
 			spawn_minions();
-			spawn_minions();
+			inst.queue(spawn_minions, 3000);
 		}
 		else if(health <= 45 && stage < 7) {
 			stage = 7;
