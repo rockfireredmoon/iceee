@@ -197,6 +197,15 @@ Scale=1,1,1
 spawnPackage=#F1355
 
 [ENTRY]
+ID=1154809
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=73319.7,880.293,60437.5
+Orient=0,0.777072,0,0.629412
+Scale=1,1,1
+spawnPackage=#F3517
+
+[ENTRY]
 ID=151024213
 Asset=CL-Warpig_Camp2#CL-Warpig_Camp2
 Name=Untitled

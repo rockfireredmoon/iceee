@@ -156,6 +156,7 @@ Pos=70887.5,994.107,50476
 Orient=0,0.996738,0,0.0807086
 Scale=1,1,1
 spawnPackage=#2870
+maxActive=0
 
 [ENTRY]
 ID=1091128
@@ -165,6 +166,7 @@ Pos=70911.5,993.982,50482
 Orient=0,0.628793,0,0.777573
 Scale=1,1,1
 spawnPackage=#2831
+maxActive=0
 
 [ENTRY]
 ID=1091441
@@ -173,6 +175,7 @@ Name=Untitled
 Pos=70844.3,994.252,50509.1
 Orient=0,-0.999983,0,0.00579635
 Scale=1,1,1
+spawnPackage=#F3519
 
 [ENTRY]
 ID=1091442

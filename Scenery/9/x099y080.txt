@@ -17,7 +17,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1154643
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=74499.6,894.099,60724
 Orient=0,0,0,1
 Scale=1,1,1
@@ -29,7 +29,7 @@ link=1154652,1
 [ENTRY]
 ID=1154646
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=74353.1,895.043,60440.4
 Orient=0,0,0,1
 Scale=1,1,1
@@ -40,7 +40,7 @@ link=1154647,1
 [ENTRY]
 ID=1154647
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=74483.8,891.147,60427.5
 Orient=0,0,0,1
 Scale=1,1,1
@@ -52,7 +52,7 @@ link=1154649,1
 [ENTRY]
 ID=1154648
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=74529.9,887.614,60405.7
 Orient=0,0,0,1
 Scale=1,1,1
@@ -64,7 +64,7 @@ link=1154657,1
 [ENTRY]
 ID=1154649
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=74540.6,893.837,60475.5
 Orient=0,0,0,1
 Scale=1,1,1
@@ -75,7 +75,7 @@ link=1154643,1
 [ENTRY]
 ID=1154651
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=74319.5,893.339,60644.8
 Orient=0,0,0,1
 Scale=1,1,1
@@ -86,7 +86,7 @@ link=1154652,1
 [ENTRY]
 ID=1154652
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=74370.9,893.667,60672.9
 Orient=0,0,0,1
 Scale=1,1,1
@@ -98,7 +98,7 @@ link=1154643,1
 [ENTRY]
 ID=1154653
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=74451.8,893.506,60617.7
 Orient=0,0,0,1
 Scale=1,1,1
@@ -109,7 +109,7 @@ link=1154654,1
 [ENTRY]
 ID=1154654
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=74551.6,894.014,60552.6
 Orient=0,0,0,1
 Scale=1,1,1
@@ -120,7 +120,7 @@ link=1154655,1
 [ENTRY]
 ID=1154655
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=74572.9,893.478,60491.1
 Orient=0,0,0,1
 Scale=1,1,1
@@ -131,13 +131,22 @@ link=1154648,1
 [ENTRY]
 ID=1154657
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=74511.5,876.861,60239.4
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=#F1355
 links_count=1
 link=1154648,1
+
+[ENTRY]
+ID=1154832
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=74497.2,836.294,60018.4
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#F1355
 
 [ENTRY]
 ID=151018712

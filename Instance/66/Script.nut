@@ -143,7 +143,7 @@ env <- "";
 
 // Debug
 no_adds <- false;
-debug <- false;
+debug <- true;
 verbose_debug <- false;
 manual_trigger <- false;
 
@@ -770,7 +770,7 @@ function valkal2_health() {
 function on_kill(cdefid, cid) {
 	if(debug && phase != 0)
 		inst.info("Death - " + cdefid + " / " + cid);
-	if(cid == CDEF_VALKAL2) {
+	if(cdefid == CDEF_VALKAL2) {
 		/* Valkal 2 is dead! */
 		tod("Sunrise");	
 		inst.broadcast("Valkal has been defeated! The victorious team consisted of ...");
@@ -780,11 +780,11 @@ function on_kill(cdefid, cid) {
 			}, ( idx + 1 ) * 5000);
 		}
 	}
-	else if(cid == CDEF_VAJ_1) {
+	else if(cdefid == CDEF_VAJ_1) {
 		death_toll.append(cid);
    		inst.creature_chat(cid_valkal1, "s/", "No! This cannot be! My son ..");
 	}
-	else if(cid == CDEF_VAJ_2) {
+	else if(cdefid == CDEF_VAJ_2) {
 		death_toll.append(cid);
    		inst.creature_chat(cid_valkal1, "s/", "You .. you will pay .. I swear ...");
 	}
