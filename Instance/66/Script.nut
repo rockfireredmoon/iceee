@@ -140,7 +140,7 @@ valkal1_full_health_count <- 0;
 valkal2_full_health_count <- 0;
 death_toll <- [];
 env <- "";
-finished -M 
+finished <- false;
 
 // Debug
 no_adds <- false;
