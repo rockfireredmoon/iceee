@@ -32503,8 +32503,9 @@ level=48
 display_name=Skrill Hiveguard
 profession=1
 creature_category=Animal
+rarity=1
 base_damage_melee=155
-ai_package=nothing
+ai_package=knight_brave_6
 
 [ENTRY]
 ID=1397
