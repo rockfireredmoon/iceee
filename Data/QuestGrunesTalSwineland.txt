@@ -835,7 +835,7 @@ Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=57964.9,809.567,66777.6,9
 
-[Entry]
+[ENTRY]
 Requires=829
 ID=830
 Title=Bahmut the Red Nosed Wrath Stag
