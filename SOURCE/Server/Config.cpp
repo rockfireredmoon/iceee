@@ -415,6 +415,8 @@ void LoadConfig(const char *filename)
 				g_Config.UseStopSwim = lfr.BlockToBool(1);
 			else if(strcmp(NameBlock, "InvalidLoginMessage") == 0)
 				g_Config.InvalidLoginMessage = lfr.BlockToStringC(1, 0);
+			else if(strcmp(NameBlock, "MaintenanceMessage") == 0)
+				g_Config.MaintenanceMessage = lfr.BlockToStringC(1, 0);
 			else if(strcmp(NameBlock, "GitHubToken") == 0)
 				g_Config.GitHubToken = lfr.BlockToStringC(1, 0);
 			else if(strcmp(NameBlock, "ServiceAuthURL") == 0)
@@ -692,6 +694,7 @@ GlobalConfigData :: GlobalConfigData()
 	SMTPSender = "";
 
 	InvalidLoginMessage = "Account not found.  Check username and password.";
+	MaintenanceMessage = "";
 
 }
 

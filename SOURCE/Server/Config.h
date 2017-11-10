@@ -184,6 +184,7 @@ public:
 	bool UseMessageBox;                      //If true, send a message to the client that will appear in a popup box rather than a floating info message that disappears after a few seconds.  Requires a modded client.
 	bool UseStopSwim;                        //If true, send a custom "stop swimming" notification to the client when sending reposition updates, like warps.  Requires a modded client for the custom event handler.
 	std::string InvalidLoginMessage;         //The message string to send to the client if the account is wrong.
+	std::string MaintenanceMessage;          //The message string to send to the client if the server is in maintenance mode (sages and admins only).
 
 	bool VerifyMovement;                     //If true, attempt to validate client movement and report unexpected speeds, coordinates, and update intervals.  May issues some false reports, check for consistency.  Accounts with the 'admin' permission are never validated due to conflicts with the speed command. 
 	bool DebugLogAIScriptUse;                //If true, AI Script ability use requests are printed to the log file to help determine which abilities are used.  May cause heavy log spam.

@@ -1199,6 +1199,13 @@ void SimulatorThread :: handle_lobby_authenticate(void)
 		return;
 	}
 
+	if(g_AccountManager.AcceptingLogins() == false)
+	{
+		ForceErrorMessage("Not accepting more logins.", INFOMSG_ERROR);
+		Disconnect("SimulatorThread::handle_lobby_authenticate");
+		return;
+	}
+
 	//Convert client password to server password.
 	AccountData *accPtr = NULL;
 
@@ -1278,6 +1285,14 @@ void SimulatorThread :: handle_lobby_authenticate(void)
 	{
 		LogMessageL(MSG_ERROR, "Could not find account: %s", Aux2);
 		ForceErrorMessage(g_Config.InvalidLoginMessage.c_str(), INFOMSG_ERROR);
+		Disconnect("SimulatorThread::handle_lobby_authenticate");
+		return;
+	}
+
+	if(g_Config.MaintenanceMessage.length() > 0 && accPtr->HasPermission(Perm_Account, Permission_Admin) == false && accPtr->HasPermission(Perm_Account, Permission_Sage) == false)
+	{
+		Util::SafeFormat(Aux1, sizeof(Aux1), "The server is currently unavailable due to mainenance. The reason given was '%s'", g_Config.MaintenanceMessage.c_str());
+		ForceErrorMessage(Aux1, INFOMSG_ERROR);
 		Disconnect("SimulatorThread::handle_lobby_authenticate");
 		return;
 	}
@@ -2978,6 +2993,26 @@ bool SimulatorThread :: HandleCommand(int &PendingData)
 			g_EnvironmentCycleManager.EndCurrentCycle();
 		g_Log.AddMessageFormat("Cycle is now: %u (%s)", g_EnvironmentCycleManager.mCurrentCycleIndex, g_EnvironmentCycleManager.GetCurrentTimeOfDay().c_str());
 		PendingData = PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
+	}
+	else if(query.name.compare("maintain") == 0)
+	{
+		if(CheckPermissionSimple(Perm_Account, Permission_Sage) == true || CheckPermissionSimple(Perm_Account, Permission_Admin) == true)
+		{
+			if(query.argCount > 0) {
+				BroadcastMessage("The server is now in maintenance mode. Further logins by anyone other than Administrators or Sages will be denied.");
+				g_Config.MaintenanceMessage = query.GetString(0);
+			}
+			else {
+				BroadcastMessage("The server has now left maintenance mode. Anyone may login again");
+				g_Config.MaintenanceMessage = "";
+			}
+
+			PendingData = PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
+		}
+		else
+		{
+			PendingData = PrepExt_QueryResponseError(SendBuf, query.ID, "Not allowed.");
+		}
 	}
 	else if(query.name.compare("env") == 0)
 	{
