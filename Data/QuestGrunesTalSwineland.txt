@@ -244,7 +244,7 @@ RewardItem.1=10036,1,0
 RewardItem.2=10037,1,0
 RewardItem.3=10038,1,0
 
-[Entry]
+[ENTRY]
 ID=818
 Requires=787
 Title=The Shadowfield
@@ -290,7 +290,6 @@ sGiver=58221,792.103,67113,9
 sEnder=58221,792.103,67113,9
 [ACT]
 Act.BodyText=Kill Taskmaster Glutt and a dozen Undead Farmhands at the Farms south of Shadowfield City.
-
 Obj.0.type=kill
 Obj.0.data1=1211
 Obj.0.data2=12
@@ -321,7 +320,7 @@ Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=58221,792.103,67113,9
 
-[Entry]
+[ENTRY]
 Requires=818
 ID=819
 Title=General Bodiccea
