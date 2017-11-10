@@ -1,7 +1,7 @@
 [ENTRY]
 MinInterval=20000
 MaxInterval=30000
-Sequence=0
+Sequence=1
 
 [PARAGRAPH]
 Type=0

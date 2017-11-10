@@ -870,57 +870,60 @@ Obj.0.type=travel
 Obj.0.data1=52248,652,68636,9
 Obj.0.data2=250
 Obj.0.description=Travel to the Wailing Crypt
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=52248,652.907,68636.1,9
+Obj.0.markerLocations=52248.0,652.907,68636.1,9;
 [ACT]
 Act.BodyText=Enter the Wailing Crypt
 Obj.0.type=travel
 Obj.0.data1=2125,660,597,56
 Obj.0.data2=250
 Obj.0.description=Enter the Wailing Crypt
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.1.markerLocations=2125.0,660.0,597.0,56
+Obj.0.markerLocations=
+Obj.1.type=none
+Obj.1.data1=0
+Obj.1.data2=0
+Obj.1.description=null
+Obj.1.myCreatureDefID=
+Obj.1.myItemID=
+Obj.1.completeText=
+Obj.1.markerLocations=2125.0,660.0,597.0,56;
 [ACT]
-Act.BodyText=Find Mason Stromfeld and take the Age of Man Relic from his coffin
+Act.BodyText=Find Mason Stromfeld and take the Age of Man Relic from his coffin. You may have to kill him to accomplish this task.
 Obj.0.type=kill
 Obj.0.data1=3674
 Obj.0.data2=1
-Obj.0.description=Kill Mason Stromfeld and take the relic
-Obj.0.complete=0
+Obj.0.description=Kill Mason Stromfeld
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=0 of 1
-Obj.0.markerLocations=3306.31,600,791.158,56
+Obj.0.markerLocations=3306.31,600.0,791.158,56;
 [ACT]
 Act.BodyText=Take the unguarded relic from it's hiding place in the coffin.
 Obj.0.type=activate
 Obj.0.data1=7795
 Obj.0.data2=1
 Obj.0.description=Take the unguarded relic
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=10012
 Obj.0.completeText=0 of 1
-Obj.0.markerLocations=3306.31,600,791.158,56
+Obj.0.markerLocations=3306.31,600.0,791.158,56;
 Obj.0.ActivateTime=4000
 Obj.0.ActivateText=Taking the relic...
 [ACT]
 Act.BodyText= Return to Sarayn Nexsol
 Obj.0.type=talk
-Obj.0.data1=
-Obj.0.data2=
+Obj.0.data1=0
+Obj.0.data2=0
 Obj.0.description=Return to Sarayn Nexsol
-Obj.0.complete=0
 Obj.0.myCreatureDefID=1247
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=58209.1,787.832,66820.6,9
+Obj.0.markerLocations=58209.1,787.832,66820.6,9;
 
 [ENTRY]
 Requires=844
@@ -968,8 +971,8 @@ Obj.0.completeText=
 Obj.0.markerLocations=2216.55,286.536,2523.62,93
 
 [ENTRY]
-Requires=845
 ID=846
+Requires=845
 Title=Hawg's Hogcatchers
 BodyText=Youze wants us warpigs to aid th' Redeemer's at their fancy Hall down south o' here? ...a supply route to th' 'Deemer camp in Swineland eh? I gets it now. This here 'token of appreciation' is more or less a 'tempt by th' Redeemers to get us to helps em!
 
@@ -994,28 +997,25 @@ Repeat=0
 sGiver=2216.55,286.536,2523.62,93
 sEnder=2216.55,286.536,2523.62,93
 [ACT]
-Act.BodyText=Kill 25 Hogcatcher Mages, Hogcatcher Rogues, Hogcatcher Druids and Hogcatcher Knights in the Hogcatcher camps
-
+Act.BodyText=Kill 25 Hogcatcher Mages, Hogcatcher Rogues, Hogcatcher Druids and Hogcatcher Knights in the Hogcatcher camps.
 Obj.0.type=kill
 Obj.0.data1=1216,1218,1219,1220,1221,1222,1223,1224
 Obj.0.data2=25
 Obj.0.description=Kill 25 Hogcatchers
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=0 of 25
-Obj.0.markerLocations=66596.1,614.328,57510,9
+Obj.0.markerLocations=66596.1,614.328,57510.0,9;
 [ACT]
 Act.BodyText=Speak with Norris
 Obj.0.type=talk
-Obj.0.data1=
-Obj.0.data2=
+Obj.0.data1=0
+Obj.0.data2=0
 Obj.0.description=Speak with Norris
-Obj.0.complete=0
 Obj.0.myCreatureDefID=1245
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=63956.4,781.573,56691.6,9;2216.55,286.536,2523.62,93
+Obj.0.markerLocations=63956.4,781.573,56691.6,9;2216.55,286.536,2523.62,93;
 
 [ENTRY]
 ID=847
@@ -1045,40 +1045,38 @@ Repeat=0
 sGiver=64056.2,780.404,56918.8,9
 sEnder=64056.2,780.404,56918.8,9
 [ACT]
-Act.BodyText=Search for the missing Redeemer envoy from Redeemer's Hall
+Act.BodyText=Search for the missing Redeemer envoy from Redeemer's Hall. If they live, relay Zahn's message to them. If not, find and retrieve the documents they were carrying.
 Obj.0.type=activate
 Obj.0.data1=7796
 Obj.0.data2=1
 Obj.0.description=Collect the Redeemers documents
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=10013
 Obj.0.completeText=
-Obj.0.markerLocations=61868.1,970.533,64975,9
+Obj.0.markerLocations=61868.1,970.533,64975.0,9;
 Obj.0.ActivateTime=4000
 Obj.0.ActivateText=Taking the documents...
 [ACT]
 Act.BodyText=Return to Zahn Meris
 Obj.0.type=talk
-Obj.0.data1=
-Obj.0.data2=
+Obj.0.data1=0
+Obj.0.data2=0
 Obj.0.description=Return to Zahn Meris
-Obj.0.complete=0
 Obj.0.myCreatureDefID=7785
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=64056.2,780.404,56918.8,9
+Obj.0.markerLocations=64056.2,780.404,56918.8,9;
 
 [ENTRY]
 ID=848
 Title=The Wailing Crypt
-BodyText=There are crypts south of Redeemer's Hall, which were built as respectful places of rememberance by the Beast-Founders of Grunes Tal years ago. Yes, there are graveyards aplenty which surround us, but these crypts bear all-too-familiar family names. The surviving members of the famlies have a vested interest in making sure their relatives' remains sleep soundly, and never make it to the Village Crier's List of shocking undead murderers. You can also assume that they will pay handsomely for this task, and for your discretion.
+BodyText=There are crypts south of Redeemer's Hall which were built as respectful places of remembrance by the Beast-Founders of Grunes Tal years ago. Yes, there are graveyards aplenty which surround us, but these crypts bear all-too-familiar family names. The surviving members of the families have a vested interest in making sure their relatives' remains sleep soundly, and never make it to the Village Crier's List of shocking undead murderers. You can also assume that they will pay handsomely for this task, and for your discretion.
 
 The largest crypt within the graveyard has been reported as having caused a spot of trouble. There is a pitiful wailing coming from within, which has lured some beasts inside to investigate the source of the sound - never to return. I doubt now that the cries come from a wounded or lost child, as it may sound like at first.
 
-At any rate, you will need to eliminate any likely witnesses, in case The Wailer hails from a family of note. Travel to The Crypts far south of Redeemer's Hall within Iron Hils, and eliminate six Crypt Diggers as well as eight Risen Corpses.
+At any rate, you will need to eliminate any likely witnesses, in case The Wailer hails from a family of note. Travel to the Crypts far south of Redeemer's Hall within the Iron Hills and eliminate six Crypt Diggers as well as eight Risen Corpses.
 
-The Crypt is the home of a Revenant called the Wailer. This crypt is the largest and most evil looking in all of The Crypts. It is made of stone and lavishly decorated. 
+The Crypt is the home of a Revenant called the Wailer. This crypt is the largest and most evil looking in all of The Crypts. It is made of stone and lavishly decorated.
 CompleteText=So, there are no more witnesses to the Wailer's incessant noise? Good. At least now whoever's family the Wailer comes from will not have their loved one's...actions exposed.
 Level=44
 Suggested=44
@@ -1098,38 +1096,35 @@ Obj.0.type=kill
 Obj.0.data1=1187
 Obj.0.data2=6
 Obj.0.description=Kill 6 Crypt Digger
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=0 of 6
-Obj.0.markerLocations=52306.5,678.496,68384.1,9
+Obj.0.markerLocations=52306.5,678.496,68384.1,9;
 Obj.1.type=kill
 Obj.1.data1=1191
 Obj.1.data2=8
-Obj.1.description=Kill 8 Risen Corpses
-Obj.1.complete=0
+Obj.1.description=Kill 8 Risen Corpse
 Obj.1.myCreatureDefID=
 Obj.1.myItemID=
 Obj.1.completeText=0 of 8
-Obj.1.markerLocations=52306.5,678.496,68384.1,9
+Obj.1.markerLocations=52306.5,678.496,68384.1,9;
 [ACT]
 Act.BodyText=Return to Derk Vilander
 Obj.0.type=talk
-Obj.0.data1=
-Obj.0.data2=
+Obj.0.data1=0
+Obj.0.data2=0
 Obj.0.description=Return to Derk Vilander
-Obj.0.complete=0
 Obj.0.myCreatureDefID=1202
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=58956.5,776.751,67025.6,9
+Obj.0.markerLocations=58956.5,776.751,67025.6,9;
 
 [ENTRY]
-Requires=848
 ID=849
+Requires=848
 Title=Sythrex the Overseer
-BodyText=Now that that's taken care of we can move on the next step.  The Overseer.  These Lich like beings seem to keep reanimating corpses from the graveyard it's literally a breeding ground for Abidan's forces! Eliminate the Overseer and his Putrid and report back to me when your finished!
-CompleteText=Ah you've returned! It's taken of then I assume? Good, now I have a even more important matter that requires your attention.
+BodyText=Now that that's taken care of we can move on the next step.  The Overseer.  This Lich seems to keep reanimating corpses from the graveyard. It's literally a breeding ground for Abidan's forces! In addition, this Overseer tends to be accompanied by a rather strong fell creature called in these parts a Putrid Avien. Eliminate both the Overseer and his Putrid Avien 'pet' then report back to me when you're finished!
+CompleteText=Ah you've returned! It's taken of then I assume? Good, now I have an even more important matter that requires your attention.
 Level=45
 Suggested=45
 Exp=8212
@@ -1147,48 +1142,45 @@ Act.BodyText=Travel to the Iron Hills and defeat Sythrex the Overseer and his Pu
 Obj.0.type=kill
 Obj.0.data1=1196
 Obj.0.data2=1
-Obj.0.description=Kill Sythrex The Overseer 
-Obj.0.complete=0
+Obj.0.description=Kill Sythrex The Overseer
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=0 of 1
-Obj.0.markerLocations=52132.9,734.057,68157.2,9
+Obj.0.markerLocations=52132.9,734.057,68157.2,9;
 Obj.1.type=kill
 Obj.1.data1=1203,1226,1227
 Obj.1.data2=1
 Obj.1.description=Kill Putrid Avien
-Obj.1.complete=0
 Obj.1.myCreatureDefID=
 Obj.1.myItemID=
 Obj.1.completeText=0 of 1
-Obj.1.markerLocations=52132.9,734.057,68157.2,9
+Obj.1.markerLocations=52132.9,734.057,68157.2,9;
 [ACT]
 Act.BodyText= Return to Derk Vilander
 Obj.0.type=talk
-Obj.0.data1=
-Obj.0.data2=
+Obj.0.data1=0
+Obj.0.data2=0
 Obj.0.description=Return to Derk Vilander
-Obj.0.complete=0
 Obj.0.myCreatureDefID=1202
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=58956.5,776.751,67025.6,9
+Obj.0.markerLocations=58956.5,776.751,67025.6,9;
 
 [ENTRY]
 ID=850
 Title=A Word To The Wise
-BodyText=Hey! Wait ..... you over there! 
+BodyText=Hey! Wait ..... you over there!
 
-I am sorry, I couldn't but help overhearing your conversation with Derk. Before you go, there is something you must know.
+I am sorry, I couldn't but help overhear your conversation with Derk. Before you go, there is something you must know.
 
 I myself ventured into that place *shivers*, and ... barely made it out alive.
 
 The rest of my party were not so lucky. But maybe ... just maybe ... some good of their misfortune may yet come.
 
-Deep inside the crypt where the wailer wails, there are two strange braziers of unknown origin. The scholar in our party deduced that a sacrifice may spark their coals, releasing ancient magic to take effect and bind the Wailer to our realm.
+Deep inside the crypt where the Wailer wails, there are two strange braziers of unknown origin. The scholar in our party deduced that a sacrifice may spark their coals, releasing ancient magic to take effect and bind the Wailer to our realm.
 
-Alas, my comrades were destroyed before we could test this theory by two of the most powerful inhabitants of the crypt. Ironically by the very two sacrifices we hoped would help us finish our task. Maybe with this information, you will fare better. 
-CompleteText=I knew you could do it, there was a look of determination in your eyes. So my friends' deaths were not in vain, that would be of some comfort to them .. Some ....
+Alas, my comrades were destroyed before we could test this theory by two of the most powerful inhabitants of the crypt. Ironically the very two sacrifices we hoped would help us finish our task. Maybe with this information, you will fare better.
+CompleteText=I knew you could do it, there was a look of determination in your eyes. So my friends' deaths were not in vain. That would be of some comfort to them .. Some ....
 Level=45
 Suggested=46
 Exp=6278
@@ -1202,36 +1194,33 @@ Repeat=0
 sGiver=59097.6,774.803,67046.6,9
 sEnder=59097.6,774.803,67046.6,9
 [ACT]
-Act.BodyText=Sacrifice Alabaster and Kyshf 
+Act.BodyText=Sacrifice the two denizens of the Crypt named Alabaster and Kyshf in the hopes it will activate the braziers in the chamber of the Wailer.
 Obj.0.type=kill
 Obj.0.data1=3649
 Obj.0.data2=1
 Obj.0.description=Sacrifice Alabaster
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=0 of 1
-Obj.0.markerLocations=3638,600,1801,56 
+Obj.0.markerLocations=3638.0,600.0,1801.0,56;
 Obj.1.type=kill
 Obj.1.data1=3648
 Obj.1.data2=1
 Obj.1.description=Sacrifice Kyshf
-Obj.1.complete=0
 Obj.1.myCreatureDefID=
 Obj.1.myItemID=
 Obj.1.completeText=0 of 1
-Obj.1.markerLocations=924.927,600,887.955,56
+Obj.1.markerLocations=924.927,600.0,887.955,56;
 [ACT]
 Act.BodyText=Return to Emaa Wargriver
 Obj.0.type=talk
-Obj.0.data1=
-Obj.0.data2=
+Obj.0.data1=0
+Obj.0.data2=0
 Obj.0.description=Return to Emaa Wargriver
-Obj.0.complete=0
 Obj.0.myCreatureDefID=7803
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=59097.6,774.803,67046.6,9
+Obj.0.markerLocations=59097.6,774.803,67046.6,9;
 
 [ENTRY]
 Requires=849
@@ -1307,7 +1296,7 @@ RewardItem.3=10027,1,0
 [ENTRY]
 ID=854
 Title=Creatures of Grunes Tal
-BodyText=Greetings good beast, it's nice to see another reach the Redeemer camp.  These days that's a rare sight.  Especially due to the increasing threat of the feral creatures of Grunes Tal. They seem to be breeding rather quick and now are starting to wander into our camp, threatening lives.  You seem like you can handle yourself, would you take care of them? 
+BodyText=Greetings good beast, it's nice to see another reach the Redeemer's Hall.  These days that's a rare sight.  Especially due to the increasing threat of the feral creatures of Grunes Tal. They seem to be breeding rather quick and now are starting to wander into our camp, threatening lives.  You seem like you can handle yourself, though. Would you take care of them?
 CompleteText=Fantastic! You've done it, but there are more beasts of the wild that need handling if you're up for it.
 Level=43
 Suggested=43
@@ -1319,37 +1308,35 @@ Unabandon=0
 QuestGiverID=3521
 QuestEnderID=3521
 Repeat=0
-sGiver=58337,789.456,66885.7,9
-sEnder=58337,789.456,66885.7,9
+sGiver=58337.0,789.456,66885.7,9
+sEnder=58337.0,789.456,66885.7,9
 [ACT]
 Act.BodyText=Kill 15 Haunt Hounds
 Obj.0.type=kill
 Obj.0.data1=1237,1238
 Obj.0.data2=15
 Obj.0.description=Kill 15 Haunt Hounds
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=0 of 15
-Obj.0.markerLocations=56914.6,884.166,64884.3,9
+Obj.0.markerLocations=56914.6,884.166,64884.3,9;
 [ACT]
 Act.BodyText=Return to Lanternkeeper Rosco
 Obj.0.type=talk
-Obj.0.data1=
-Obj.0.data2=
+Obj.0.data1=0
+Obj.0.data2=0
 Obj.0.description=Return to Lanternkeeper Rosco
-Obj.0.complete=0
 Obj.0.myCreatureDefID=3521
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=58337,789.456,66885.7,9
+Obj.0.markerLocations=58337.0,789.456,66885.7,9;
 
 [ENTRY]
-Requires=854
 ID=855
+Requires=854
 Title=Creatures of Grunes Tal Part 2
-BodyText=The wolf packs may be decreasing in size but those massive Deathweaving spiders are everywhere. Go exterminate a few of them off and I'll once again reward you.
-CompleteText=Those spiders didnt have a chance did they?! Excellent, there are a few more creatures that need dealing with though.
+BodyText=The wolf packs may be decreasing in size but those massive Deathweaver spiders are everywhere. Go exterminate a few of them off and I'll once again reward you.
+CompleteText=Those spiders didn't have a chance did they?! Excellent, there are a few more creatures that need dealing with though.
 Level=43
 Suggested=43
 Exp=8042
@@ -1360,30 +1347,28 @@ Unabandon=0
 QuestGiverID=3521
 QuestEnderID=3521
 Repeat=0
-sGiver=58337,789.456,66885.7,9
-sEnder=58337,789.456,66885.7,9
+sGiver=58337.0,789.456,66885.7,9
+sEnder=58337.0,789.456,66885.7,9
 [ACT]
 Act.BodyText=Kill 15 Grunes Deathweaver
 Obj.0.type=kill
 Obj.0.data1=1239,1240
 Obj.0.data2=15
 Obj.0.description=Kill 15 Grunes Deathweavers
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=0 of 15
-Obj.0.markerLocations=58947.5,826.188,65413.7,9
+Obj.0.markerLocations=58947.5,826.188,65413.7,9;
 [ACT]
 Act.BodyText=Return to Lanternkeeper Rosco
 Obj.0.type=talk
-Obj.0.data1=
-Obj.0.data2=
+Obj.0.data1=0
+Obj.0.data2=0
 Obj.0.description=Return to Lanternkeeper Rosco
-Obj.0.complete=0
 Obj.0.myCreatureDefID=3521
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=58337,789.456,66885.7,9
+Obj.0.markerLocations=58337.0,789.456,66885.7,9;
 
 [ENTRY]
 Requires=847
@@ -2955,16 +2940,16 @@ Obj.0.completeText=
 Obj.0.markerLocations=76850.6,968.205,49892.6,9
 
 [ENTRY]
-Requires=940
 ID=941
+Requires=940
 Title=Piece of the Puzzle
 BodyText=So, these last few weeks I've been examining the Mark of Death artifact trying to understand what was wrong with it and why it won't work. After many almost-sleepless nights of scrutinizing this thing, it finally hit me! The key itself isn't complete. Look, right there! As you can see, there is a piece missing, a stone by the looks of the rather subtle impression. With us closing in on his Blood Keep I'm willing to bet Valkal decided to pull one over on us and split the key to his Keep in two. He left the largest part of it in that Mausoleum with his shadow as a lure to keep us distracted. However, in the event that piece was somehow taken by us, he likely had the other piece hidden somewhere else.
 
-While some of us set for you, a few others went investigating where that other piece to the Mark of Death might be. They came back only yesterday with information that makes your return all the more timely. A partially torn note was found on one of those bloodsuckers near the base of the Keep that revealed the other piece of the Mark of Death has likely been taken out of Swineland itself. Well, not yet at least. It seems Valkal had been keeping the other piece with one of his 'sons' until you defeated his shadow.
+While some of us sent for you, a few others went investigating where that other piece to the Mark of Death might be. They came back only yesterday with information that makes your return all the more timely. A partially torn note was found on one of those bloodsuckers near the base of the Keep that revealed the other piece of the Mark of Death has likely been taken out of Swineland itself. Well, not yet at least. It seems Valkal had been keeping the other piece with one of his 'sons' until you defeated his shadow.
 
 Realizing a powerful opponent has appeared on our side, Valkal now seems to be trying to get that piece out of Swineland and to a more secure location...which can only mean he's sent it to be taken through the Dambat Door.
 
-The Dambat Door, or so the warpigs call it, is the gate that leads out of Swineland and into the Lurkers Vale beyond. The Vale is a terrible place in recent years as the Blood Clans have gained near complete control over the region. We have reason to believe this is where the stone is being taken by some discreet courier. Hurry to the Dambat Door and intercept that courier carrying the other piece to the Mark of Death before it is too late!!
+The Dambat Door, or so the warpigs call it, is the gate that leads out of Swineland and into the Lurkers Vale beyond. The Vale is a terrible place in recent years as the Blood Broods have gained near complete control over the region. We have reason to believe this is where the stone is being taken by some discreet courier. Hurry to the Dambat Door and intercept that courier carrying the other piece to the Mark of Death before it is too late!!
 CompleteText=The Dambat Door is probably the most dangerous place in Swineland outside of the Blood Keep itself! I can't believe you were able to fight them off and retrieve the stone. INCREDIBLE!
 Suggested=47
 Exp=10857
@@ -2978,38 +2963,33 @@ Repeat=0
 sGiver=71482.2,1130.07,47871.1,9
 sEnder=76850.6,968.205,49892.6,9
 [ACT]
-Act.BodyText=Head to the Dambat Door and kill the courier of the Mark of Death
+Act.BodyText= Defeat Valkal's Legions
 Obj.0.type=kill
 Obj.0.data1=3492
 Obj.0.data2=1
 Obj.0.description=Retrieve the Mark of Death
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
-Obj.0.completeText= 
-Obj.0.markerLocations=82302.1,785.077,54681.8,9
-Act.BodyText= Defeat Valkal's Legions
+Obj.0.completeText=
+Obj.0.markerLocations=82302.1,785.077,54681.8,9;
 Obj.1.type=kill
-Obj.1.data1=1346,1347, 1349,1350,1417
+Obj.1.data1=1346,1347,1349,1350,1417
 Obj.1.data2=20
 Obj.1.description=Defeat Valkal's Legions
-Obj.1.complete=0
 Obj.1.myCreatureDefID=
 Obj.1.myItemID=
 Obj.1.completeText= (0 of 20)
-Obj.1.markerLocations=81868.5,790.799,54416.6,9
+Obj.1.markerLocations=81868.5,790.799,54416.6,9;
 [ACT]
 Act.BodyText=Return to Maddie Paintedhoof
 Obj.0.type=talk
-Obj.0.data1=
-Obj.0.data2=
+Obj.0.data1=0
+Obj.0.data2=0
 Obj.0.description=Return to Maddie Paintedhoof
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
-Obj.0.completeText= 
-Obj.0.markerLocations=76850.6,968.205,49892.6,9
-
+Obj.0.completeText=
+Obj.0.markerLocations=76850.6,968.205,49892.6,9;
 
 [ENTRY]
 Requires=941
@@ -3041,20 +3021,20 @@ Obj.0.completeText=
 Obj.0.markerLocations=76850.6,968.205,49892.6,9
 
 [ENTRY]
-Requires=942
 ID=943
-Title= Tearing Down a Bloodline
-BodyText= Hail Hero of Swineland! I hear you are actually venturing into the Blood Keep itself to face Lord Valkal!! If anyone can put an end to his menance, it's you.
+Requires=942
+Title=Tearing Down a Bloodline
+BodyText=Hail Hero of Swineland! I hear you are actually venturing into the Blood Keep itself to face Lord Valkal!! If anyone can put an end to his menance, it's you.
 
-Now, I hate to ask this of you, especially after everything you have done for the Redeemers; but even if you manage to kill Valkal himself, one of his Vaj 'sons' will likely take his place as Lord of the Keep. To prevent that from happening, you will need to completely end Valkal's House. Somewhere within the Keep you will find two if Valkal's most powerful 'sons'. Their names are Samir and Venae. One of these two Vaj are the most likely to take over should Valkal himself die. Eliminate them before that can happen!
-CompleteText= You succeeded?! Friend, know that to kill one Vampire Lord is considered an amazing feat. To kill more than that is an unspeakable feat beyond comprehension. I don't know how we can properly repay you for your deeds. This isn't much considering all you have done, but, regardless, please accept this as a reward and know that none here will forget you.
+Now, I hate to ask this of you, especially after everything you have done for the Redeemers; but even if you manage to kill Valkal himself, one of his Vaj 'sons' will likely take his place as Lord of the Keep. To prevent that from happening, you will need to completely end Valkal's House. Somewhere within the Keep you will find two of Valkal's most powerful 'sons'. Their names are Samir and Venae. One of these two Vaj are the most likely to take over should Valkal himself die. Eliminate them before that can happen!
+CompleteText=You succeeded?! Friend, know that to kill one Vampire Lord is considered an amazing feat. To kill more than that is an unspeakable feat beyond comprehension. I don't know how we can properly repay you for your deeds. This isn't much considering all you have done, but, regardless, please accept this as a reward and know that none here will forget you.
 Suggested=49
 Exp=25000
 PartySize=3
 NumRewards=1
 Coin=25677
 Unabandon=0
-QuestGiverID=1319	
+QuestGiverID=1319
 QuestEnderID=1319
 Repeat=0
 sGiver=76600.1,978.548,50018.3,9
@@ -3062,54 +3042,50 @@ sEnder=76600.1,978.548,50018.3,9
 [ACT]
 Act.BodyText=Enter Valkal's Blood Keep.
 Obj.0.type=talk
-Obj.0.data1=
-Obj.0.data2=
+Obj.0.data1=0
+Obj.0.data2=0
 Obj.0.description=Enter Valkal's Bloodkeep
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
-Obj.0.completeText= 
-Obj.0.markerLocations=79441.6,1316.56,53071.3,9
+Obj.0.completeText=
+Obj.0.markerLocations=79441.6,1316.56,53071.3,9;
 [ACT]
 Act.BodyText=Defeat the 'sons' of Valkal, Vaj Samir and Vaj Venae.
 Obj.0.type=kill
 Obj.0.data1=1359,1336
 Obj.0.data2=2
 Obj.0.description=Defeat Vaj Venae
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
-Obj.0.completeText= 
-Obj.0.markerLocations=2759.17,625.249,1113.12,66
+Obj.0.completeText=
+Obj.0.markerLocations=2759.17,625.249,1113.12,66;
 Obj.1.type=kill
 Obj.1.data1=1359,1336
-Obj.1.data2=2
-Obj.1.description-=Defeat Vaj Samir
-Obj.1.complete=0
+Obj.1.data2=0
+Obj.1.description=null
 Obj.1.myCreatureDefID=
 Obj.1.myItemID=
-Obj.1.completeText= 
-Obj.1.markerLocations=2766.5,627.68,4472.3,66
+Obj.1.completeText=
+Obj.1.markerLocations=2766.5,627.68,4472.3,66;
 [ACT]
 Act.BodyText=Return to Alain Darkfeather
 Obj.0.type=talk
 Obj.0.data1=1319
-Obj.0.data2=
+Obj.0.data2=0
 Obj.0.description=Return to Alain Darkfeather
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
-Obj.0.completeText= 
-Obj.0.markerLocations=76600.1,978.548,50018.3,9
+Obj.0.completeText=
+Obj.0.markerLocations=76600.1,978.548,50018.3,9;
 
 [ENTRY]
-Requires=943
 ID=944
-Title= Hunting Legends
-BodyText= While it is very true Valkal's Blood Keep is filled with multitudes of Vampires of all sorts, they are not the only things said to be walking its dark halls. I, and others, have heard rumors of three legendary creatures, fell creatures of might and dark power, that Valkal, himself, has personally groomed as his personal pets. It is believed he plans to eventually release these fell creatures into Swineland and use them to lay waste to this fine province and its inhabitants.
+Requires=943
+Title=Hunting Legends
+BodyText=While it is very true Valkal's Blood Keep is filled with multitudes of Vampires of all sorts, they are not the only things said to be walking its dark halls. I, and others, have heard rumors of three legendary creatures, fell creatures of might and dark power, that Valkal, himself, has personally groomed as his personal pets. It is believed he plans to eventually release these fell creatures into Swineland and use them to lay waste to this fine province and it's inhabitants.
 
 We, the Redeemers, cannot let this happen! If you really are planning to enter the Blood Keep of Lord Valkal to end his rule, I ask you to destroy these legendary and fell creations of his while you are at it!
-CompleteText= Excellent work! I cannot imagine any of those 'pets' of Valkal fell easy. Your bravery knows no bounds, hero! Please accept this reward with the gratitude of everyone here.
+CompleteText=Excellent work! I cannot imagine any of those 'pets' of Valkal fell easy. Your bravery knows no bounds, hero! Please accept this reward with the gratitude of everyone here.
 Suggested=49
 Exp=25000
 PartySize=3
@@ -3124,51 +3100,46 @@ sEnder=76721.5,983.165,50317.4,9
 [ACT]
 Act.BodyText=Enter the Blood Keep
 Obj.0.type=talk
-Obj.0.data1=
-Obj.0.data2=
+Obj.0.data1=0
+Obj.0.data2=0
 Obj.0.description=Enter Valkal's Blood Keep
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
-Obj.0.completeText= 
-Obj.0.markerLocations=79441.6,1316.56,53071.3,9
+Obj.0.completeText=
+Obj.0.markerLocations=79441.6,1316.56,53071.3,9;
 [ACT]
 Act.BodyText=Defeat Valkal's pets: Silkula, Hemator and Nocterror
 Obj.0.type=kill
-Obj.0.data1=1383,
+Obj.0.data1=1383
 Obj.0.data2=1
 Obj.0.description=Defeat Silkula the Vampider Queen
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
-Obj.0.completeText= 
-Obj.0.markerLocations=3105.51,549.011,2790.24,66
+Obj.0.completeText=
+Obj.0.markerLocations=3105.51,549.011,2790.24,66;
 Obj.1.type=kill
 Obj.1.data1=1384
 Obj.1.data2=1
 Obj.1.description=Defeat Hemator the Clairvoyant
-Obj.1.complete=0
 Obj.1.myCreatureDefID=
 Obj.1.myItemID=
-Obj.1.completeText= 
-Obj.1.markerLocations=3019.37,600,1997.46,66
+Obj.1.completeText=
+Obj.1.markerLocations=3019.37,600.0,1997.46,66;
 Obj.2.type=kill
 Obj.2.data1=3456
 Obj.2.data2=1
 Obj.2.description=Defeat Nocterror the Relentless
-Obj.2.complete=0
 Obj.2.myCreatureDefID=
 Obj.2.myItemID=
-Obj.2.completeText= 
-Obj.2.markerLocations=3142.6,610,3579.34,66
+Obj.2.completeText=
+Obj.2.markerLocations=3142.6,610.0,3579.34,66;
 [ACT]
 Act.BodyText=Return to Marley Roberts
 Obj.0.type=talk
-Obj.0.data1=
-Obj.0.data2=
+Obj.0.data1=0
+Obj.0.data2=0
 Obj.0.description=Return to Marley Roberts
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
-Obj.0.completeText= 
-Obj.0.markerLocations=76721.5,983.165,50317.4,9
+Obj.0.completeText=
+Obj.0.markerLocations=76721.5,983.165,50317.4,9;
