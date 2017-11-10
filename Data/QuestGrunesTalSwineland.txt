@@ -1473,9 +1473,6 @@ Obj.0.completeText=
 Obj.0.markerLocations=58337.0,789.456,66885.7,9;
 
 [ENTRY]
-Requires=847
-ID=900
-[ENTRY]
 ID=900
 Requires=847
 Title=Message to Front Line Camp
@@ -1507,7 +1504,7 @@ Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=73239.8,856.26,60816.6,9;
-ID=901
+
 [ENTRY]
 ID=901
 Requires=900
@@ -1558,7 +1555,7 @@ Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=73239.8,856.26,60816.6,9;
-ID=902
+
 [ENTRY]
 ID=902
 Requires=900
@@ -1609,7 +1606,7 @@ Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=73175.5,856.287,60806.4,9;
-ID=903
+
 [ENTRY]
 ID=903
 Requires=902
@@ -1656,7 +1653,7 @@ Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=73239.8,856.26,60816.6,9;
-ID=904
+
 [ENTRY]
 ID=904
 Requires=902
@@ -1701,7 +1698,7 @@ Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=73236.1,856.26,60779.3,9;
-Requires=901
+
 [ENTRY]
 ID=905
 Requires=901
@@ -1789,7 +1786,7 @@ Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=73239.8,856.26,60816.6,9;
-ID=907
+
 [ENTRY]
 ID=907
 Requires=906
@@ -1840,7 +1837,7 @@ Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=73239.8,856.26,60816.6,9;
-ID=908
+
 [ENTRY]
 ID=908
 Requires=901
@@ -1875,7 +1872,7 @@ Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=66369.3,630.469,65092.0,9;
-ID=909
+
 [ENTRY]
 ID=909
 Requires=908
@@ -1918,6 +1915,8 @@ Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=66369.3,630.469,65092.0,9;
+
+[ENTRY]
 ID=909
 Title=Snorg's Shinies
 BodyText=Welcome to th' best, most wonderful Shiny Place ye'll ev'r find! Now lissen here, I'm th' smartest Warpig that ever lived! Just nobody knows it as of yet. That keeps me safe, see? If they knew the riches I had, well Boss Hawg hisself would be sendin' his Commandos down here to take me out!
@@ -1962,10 +1961,6 @@ Obj.0.markerLocations=66369.3,630.469,65092,9
 
 [ENTRY]
 Requires=909
-ID=910
-[ENTRY]
-ID=910
-Requires=909
 Title=A Gift To A Friend
 BodyText=Well! Now ya seen' me treasures, but ye can't stay! Tell Waylon I'm fine. Let 'im know that ye never get anythin' with out takin' risks! Give 'im this as yer reminder.
 CompleteText=What's this now? A shiny? I knew he weren't crazy! Thanks for checkin' on him fer me!
@@ -1991,7 +1986,7 @@ Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=73527.3,879.169,60373.5,9;
-ID=922
+
 [ENTRY]
 ID=922
 Requires=910
@@ -2020,7 +2015,7 @@ Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=62380.9,393.845,48938.6,9;
-ID=911
+
 [ENTRY]
 ID=911
 Requires=905
@@ -2071,7 +2066,7 @@ Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=76647.6,979.647,50172.0,9;
-ID=912
+
 [ENTRY]
 ID=912
 Requires=911
@@ -2104,7 +2099,7 @@ Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=76840.2,970.62,49964.3,9;
-ID=913
+
 [ENTRY]
 ID=913
 Requires=912
@@ -2157,7 +2152,7 @@ Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=76840.2,970.62,49964.3,9;
-ID=914
+
 [ENTRY]
 ID=914
 Requires=912
@@ -2208,7 +2203,7 @@ Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=76772.5,978.741,50232.0,9;
-ID=915
+
 [ENTRY]
 ID=915
 Requires=913
@@ -2239,7 +2234,7 @@ Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=72697.3,1074.4,51812.5,9;
-ID=916
+
 [ENTRY]
 ID=916
 Requires=915
@@ -2279,7 +2274,7 @@ Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=72697.3,1074.4,51812.5,9;
-ID=917
+
 [ENTRY]
 ID=917
 Requires=916
@@ -2308,7 +2303,7 @@ Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=72795.6,1327.27,52898.1,9;
-ID=918
+
 [ENTRY]
 ID=918
 Requires=917
@@ -2357,7 +2352,7 @@ Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=72795.6,1327.27,52898.1,9;
-ID=919
+
 [ENTRY]
 ID=919
 Requires=918
@@ -2396,7 +2391,7 @@ Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=72807.1,1328.76,52891.6,9;
-ID=920
+
 [ENTRY]
 ID=920
 Requires=919
@@ -2439,7 +2434,7 @@ Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=67693.7,1215.39,52932.9,9;
-ID=921
+
 [ENTRY]
 ID=921
 Requires=920
@@ -2502,7 +2497,7 @@ Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=72795.6,1327.27,52898.1,9;
-Title=In Need Of A Makeover
+
 [ENTRY]
 ID=923
 Title=In Need Of A Makeover
@@ -2550,7 +2545,7 @@ Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=62380.9,393.845,48938.6,9;
-Title=Bug-Juice
+
 [ENTRY]
 ID=924
 Title=Bug-Juice
@@ -2612,7 +2607,7 @@ Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=61842.3,407.187,49082.4,9;
-ID=925
+
 [ENTRY]
 ID=925
 Requires=923
@@ -2673,7 +2668,7 @@ Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=62380.9,393.845,48938.6,9;
-ID=926
+
 [ENTRY]
 ID=926
 Requires=925
@@ -2724,7 +2719,7 @@ Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=62380.9,393.845,48938.6,9;
-ID=927
+
 [ENTRY]
 ID=927
 Requires=925
@@ -2765,7 +2760,7 @@ Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=61867.7,407.187,49152.7,9;
-ID=928
+
 [ENTRY]
 ID=928
 Requires=926
@@ -2796,7 +2791,7 @@ Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=71482.2,1130.07,47871.1,9;
-ID=929
+
 [ENTRY]
 ID=929
 Requires=928
@@ -2837,7 +2832,7 @@ Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=71482.2,1130.07,47871.1,9;
-ID=930
+
 [ENTRY]
 ID=930
 Requires=929
@@ -2874,7 +2869,7 @@ Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=70543.5,992.447,50150.5,9;
-ID=931
+
 [ENTRY]
 ID=931
 Requires=930
@@ -2907,7 +2902,7 @@ Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=71482.2,1130.07,47871.1,9;
-ID=932
+
 [ENTRY]
 ID=932
 Requires=931
@@ -2974,7 +2969,7 @@ Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=71482.2,1130.07,47871.1,9;
-ID=940
+
 [ENTRY]
 ID=940
 Requires=932
@@ -3003,7 +2998,7 @@ Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=76850.6,968.205,49892.6,9;
-Requires=940
+
 [ENTRY]
 ID=941
 Requires=940
@@ -3056,7 +3051,7 @@ Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=76850.6,968.205,49892.6,9;
-ID=942
+
 [ENTRY]
 ID=942
 Requires=941
@@ -3085,7 +3080,7 @@ Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=76850.6,968.205,49892.6,9;
-Requires=942
+
 [ENTRY]
 ID=943
 Requires=942
@@ -3144,7 +3139,7 @@ Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=76600.1,978.548,50018.3,9;
-Requires=943
+
 [ENTRY]
 ID=944
 Requires=943
