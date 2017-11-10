@@ -6893,10 +6893,33 @@ int CreatureInstance :: ProcessQuestRewards(int QuestID, const std::vector<Quest
 			return -2;
 		}
 
-		InventorySlot *newItem = charPtr->inventory.AddItem_Ex(INV_CONTAINER, itemPtr->mID, count);
+		InventorySlot *newItem = NULL;
+		if(itemPtr->mType == ItemType::SPECIAL && itemPtr->mIvType1 == ItemIntegerType::QUEST_ID) {
+			/* Random quest rewards, so we roll for a different item */
+			VirtualItemSpawnParams params;
+			params.level = qd->levelSuggested;
+			params.rarity = itemPtr->mQualityLevel;
+			params.namedMob = false;
+			params.minimumQuality = itemPtr->mQualityLevel;
+			//params.dropRateProfile = g_DropRateProfileManager.GetProfileByName("");
+			params.ClampLimits();
+
+			int iid = g_ItemManager.RollVirtualItem(params);
+			if(iid != -1)
+				newItem = charPtr->inventory.AddItem_Ex(INV_CONTAINER, iid, count);
+		}
+		else {
+			newItem = charPtr->inventory.AddItem_Ex(INV_CONTAINER, itemPtr->mID, count);
+		}
 		if(newItem != NULL) {
 			simulatorPtr->ActivateActionAbilities(newItem);
 			wpos += AddItemUpdate(&GSendBuf[wpos], GAuxBuf, newItem);
+		}
+		else
+		{
+			wpos += PrepExt_SendInfoMessage(&GSendBuf[wpos], "No item.", INFOMSG_ERROR);
+			simulatorPtr->AttemptSend(GSendBuf, wpos);
+			return -2;
 		}
 	}
 

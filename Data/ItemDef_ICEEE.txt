@@ -1104,3 +1104,18 @@ mValue=69
 mFlavorText=A snowy day.
 mQualityLevel=5
 mMinUseLevel=1
+
+[ENTRY]
+mID=8700
+mType=8
+mDisplayName=Mystery Quest Reward
+mIcon=Icon-32-MysteryBox.png|Icon-32-BG-Green.png
+mLevel=1
+mIvType1=5
+mBindingType=1
+mEquipType=0
+mArmorType=0
+mValue=1
+mFlavorText=Reward will be revealed when the quest is complete.
+mQualityLevel=1
+mMinUseLevel=1
