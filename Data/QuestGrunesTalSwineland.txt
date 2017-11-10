@@ -1960,6 +1960,7 @@ Obj.0.completeText=
 Obj.0.markerLocations=66369.3,630.469,65092,9
 
 [ENTRY]
+ID=910
 Requires=909
 Title=A Gift To A Friend
 BodyText=Well! Now ya seen' me treasures, but ye can't stay! Tell Waylon I'm fine. Let 'im know that ye never get anythin' with out takin' risks! Give 'im this as yer reminder.
