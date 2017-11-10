@@ -75883,3 +75883,15 @@ base_damage_melee=65
 base_health=5000
 ExtraData=dropratemult=2.0&droprateprofile=generousinstance2
 ai_package=custom_heathendel_knightrogue40p
+
+[ENTRY]
+defHints=2
+ID=3526
+appearance=n4:{["sk"]={["cloth2"]="000555",["skin"]="bf832e",["cloth1"]="3f1f16",["eye"]="151eaa",["nails"]="b5815d",["trim"]="550707"},["c"]="Horde-Warpig2",["sz"]="1.0",["a"]=[{["node"]="left_shoulder",["type"]="Armor-Cloth-Silly1-Left_Pauldron",["colors"]=["c34225","282b55","d29e6f","f6f8d0"]},{["node"]="right_shoulder",["type"]="Armor-Cloth-Silly1-Right_Pauldron",["colors"]=["c34225","282b55","d29e6f","f6f8d0"]}]}
+level=1
+display_name=Porklin Klein
+sub_name=General Merchant
+profession=5
+creature_category=Mortal
+rarity=2
+ai_package=nothing
