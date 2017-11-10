@@ -80,7 +80,7 @@ Obj.0.markerLocations=58298,790.683,66901.5,9;
 [ENTRY]
 ID=807
 Title=Behemoth Assembly
-BodyText=The Lady Jana Burnfell was very effective with her curse against the Outcasts, causing generations of infertility and an almost-dead race. What you will note here in Grunes Tal that we have the largest population of Outcasts you will ever encounter - just step outside Redeemer's Hall and you will be greeted with undead, many of which were alive at the time of the Burnfells.
+BodyText=The Lady Jana Burnfell was very effective with her curse against the Outcasts, causing generations of infertility and an almost-dead race. What you will note here in Grunes Tal is that we have the largest population of Outcasts you will ever encounter - just step outside Redeemer's Hall and you will be greeted with undead, many of which were alive at the time of the Burnfells.
 
 Forget your notions of shuffling zombies, and remember that these are conniving predators. It will help keep you alive!
 
@@ -104,33 +104,30 @@ Unabandon=0
 QuestGiverID=1200
 QuestEnderID=1200
 Repeat=0
-sGiver=58436,790,66951,9
-sEnder=58436,790,66951,9
+sGiver=58436.0,790.0,66951.0,9
+sEnder=58436.0,790.0,66951.0,9
 [ACT]
 Act.BodyText=Collect ten Organ-Culler Organs, Limb-Culler Limbs and Bone-Culler Bones at the undead camps west of Redeemer's Hall.
 Obj.0.type=kill
 Obj.0.data1=1205
 Obj.0.data2=10
 Obj.0.description=Collect 10 Organ-Culler Organs
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=500118
 Obj.0.completeText=0 of 10
-Obj.0.markerLocations=54945.5,876.257,63851,9;
+Obj.0.markerLocations=54945.5,876.257,63851.0,9;
 Obj.1.type=kill
 Obj.1.data1=1206
 Obj.1.data2=10
 Obj.1.description=Collect 10 Bone-Culler Bones
-Obj.1.complete=0
 Obj.1.myCreatureDefID=
 Obj.1.myItemID=500119
 Obj.1.completeText=0 of 10
-Obj.1.markerLocations=52665.7,636.901,65700,9;
+Obj.1.markerLocations=52665.7,636.901,65700.0,9;
 Obj.2.type=kill
 Obj.2.data1=1204
 Obj.2.data2=10
 Obj.2.description=Collect 10 Limb-Culler Limbs
-Obj.2.complete=0
 Obj.2.myCreatureDefID=
 Obj.2.myItemID=500120
 Obj.2.completeText=0 of 10
@@ -138,203 +135,25 @@ Obj.2.markerLocations=55637.8,913.24,65599.3,9;
 [ACT]
 Act.BodyText=Return to Moris Banner with the body parts.
 Obj.0.type=talk
-Obj.0.data1=
-Obj.0.data2=
+Obj.0.data1=0
+Obj.0.data2=0
 Obj.0.description=Return to Moris Banner
-Obj.0.complete=0
 Obj.0.myCreatureDefID=1200
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=58436,790,66951,9;
+Obj.0.markerLocations=58436.0,790.0,66951.0,9;
 
 [ENTRY]
-Requires=831
-ID=816
-Title=The True Form Of Nobility
-BodyText=If you have spoken to my friend Shayne, then you know the atrocities which occurred at Haunted Hill. I would send you within the Folkirk Manor itself, to eliminate an ancient Beast family so evil, I believe that they were not turned by any invading zombie to their home. Instead, their dust-filled veins simply took on their true forms when the undead invvaded!
-
-Enter the Manor, friend, and have no fear of the sort of parlour tricks, tickling spiders or creaking doorways  within. Focus on the family Folkirk and eliminate their existance from Gaia's sight! Search for the Uncle Moldyfork, Father Grundy, Mother Cruella and their little dog too! Scraps, I think, is the name of their killer hound. 
-CompleteText=So those vile Folkirks have finally met the end they so long ago deserved? That is good news indeed.
-
-At long last those whose lives were lost because of them have the vengeance they have long cried for. Friend, your deeds have closed the book on one of the most tragic stories ever to come from this now-blighted region.Please take one of these items with you before you go and may Gaia watch over you. Farewell.
-Level=45
-Suggested=46
-Exp=8122
-PartySize=3
-Coin=2318
-NumRewards=1
-Unabandon=0
-QuestGiverID=1198
-QuestEnderID=1198
-Repeat=0
-sGiver=58044.5,806.452,66701.1,9
-sEnder=58044.5,806.452,66701.1,9
-[ACT]
-Act.BodyText=Travel to Folkirk Manor on top of Haunted Hill
-Obj.0.type=travel
-Obj.0.data1=63084,1263,63126,9
-Obj.0.data2=250
-Obj.0.description=Travel to Folkirk Manor
-Obj.0.complete=0
-Obj.0.myCreatureDefID=
-Obj.0.myItemID=
-Obj.0.completeText=
-Obj.0.markerLocations=63084.8,1263.87,63126.6,9
-[ACT]
-Act.BodyText=Enter the family crypt beneath Folkirk Manor
-Obj.0.type=travel
-Obj.0.data1=3478,600,3232,75
-Obj.0.data2=250
-Obj.0.description=Enter the family crypt
-Obj.0.complete=0
-Obj.0.myCreatureDefID=
-Obj.0.myItemID=
-Obj.0.completeText=
-Obj.0.markerLocations=3478,600,3232,75
-[ACT]
-Act.BodyText=Kill the Family Pet, Scraps
-Obj.0.type=kill
-Obj.0.data1=3657
-Obj.0.data2=1
-Obj.0.description=Kill Scraps
-Obj.0.complete=0
-Obj.0.myCreatureDefID=
-Obj.0.myItemID=
-Obj.0.completeText=0 of 1
-Obj.0.markerLocations=4377.0,540,4226.0,75
-[ACT]
-Act.BodyText=Kill the Family Folkirk
-Obj.0.type=kill
-Obj.0.data1=1263
-Obj.0.data2=1
-Obj.0.description=Kill Mother Cruella
-Obj.0.complete=0
-Obj.0.myCreatureDefID=
-Obj.0.myItemID=
-Obj.0.completeText=0 of 1
-Obj.0.markerLocations=3448.24,480,3847.63,75
-Obj.1.type=kill
-Obj.1.data1=1262
-Obj.1.data2=1
-Obj.1.description=Kill Uncle Moldyfork
-Obj.1.complete=0
-Obj.1.myCreatureDefID=
-Obj.1.myItemID=
-Obj.1.completeText=0 of 1
-Obj.1.markerLocations=3448.24,480,3847.63,75
-Obj.2.type=kill
-Obj.2.data1=1261
-Obj.2.data2=1
-Obj.2.description=Kill Father Grundy
-Obj.2.complete=0
-Obj.2.myCreatureDefID=
-Obj.2.myItemID=
-Obj.2.completeText=0 of 1
-Obj.2.markerLocations=3448.24,480,3847.63,75
-[ACT]
-Act.BodyText=Return to Quintus Lunarsong
-Obj.0.type=talk
-Obj.0.data1=
-Obj.0.data2=
-Obj.0.description=Return to Quintus Lunarsong
-Obj.0.complete=0
-Obj.0.myCreatureDefID=1198
-Obj.0.myItemID=
-Obj.0.completeText=
-Obj.0.markerLocations=58044.5,806.452,66701.1,9
-RewardItem.0=10035,1,0
-RewardItem.1=10036,1,0
-RewardItem.2=10037,1,0
-RewardItem.3=10038,1,0
-
-[Entry]
-ID=818
-Requires=787
-Title=The Shadowfield
-BodyText=While our main duties are to stem the tide of the Vampire Palatine Drakul's forces which have already reached deep into Swineland to the northeast, those of us stationed here have a secondary duty to beastkind. Here, deep in the heart of Grunes Tal, we have long held back the advancing forces of Abidan which have spilled out of the underrealm and laid waste to this entire region.
-
-Grunes Tal was once a thriving mining region that prospered through the ores excavated from the mountains here. Chief among the towns that grew wealthy from the ore was Alpenhold. The iron mines of Alpenhold were said to be among the largest in the region and the city became a famous centre of trade.
-
-Unfortunately, this attracted our old foes the Outcasts which set off a series of conflicts today known simply as 'The Outcast Wars'. For years, the beasts of Grunes Tal staved off the Outcasts to protect their mines and wealth; however, little did they know, a much greater threat would soon cast its shadow upon the land.
-
-
-
-It happened in the largest of the mines in the Iron Hills situated to the east near Alpenhold itself. As the miners delved ever deeper into the earth seeking that which made their people rich, they eventually broke through into a previously unknown cavern deep underground. 
-
-Curiosity overcoming caution, the miners began to explore this newly discovered cavern. Finding nothing save that it stretched on and on, they returned to the surface to report what they had discovered.
-
-
-
-Unbeknownst to those unfortunate miners, the cavern they had dug into led into the Underrealm itself. Before long, the agents of Abidan began to pour forth out of the mine, quickly surrounding Alpenhold. All efforts to hold them back failed and, eventually, the great city of Alpenhold fell to the onslaught of the Legions of Sheol.
-
-The survivors who fled the Undead assault retreated west to the fertile lands of the Greenfeld, occupied by both Beast and Outcast alike.  A few notable families, unfortunately, were stubborn in their ways and refused to give up on Alpenhold. Among those families was the now-infamous House of Folkirk. The Folkirks, a wealthy noble family, refused to relocate far from Alpenhold and instead headed north, settling on a hill just south of the Junderlund where they built their new home, Folkirk Manor.
-
-For a number of years, the beasts of the Greenfeld struggled between fighting the Undead threat that continued to spread throughout Grunes Tal and the Outcasts who still remained in the region. 
-
-Unfortunately, it was only a matter of time before the Undead gained enough strength to overcome even the strongest defenses. Around two hundred years past, the Legions of Sheol finally overwhelmed the people living in the Greenfeld and neither Beast nor Outcast got far before falling before the Undead might. Before long, those that did not flee to the neighboring lands were killed.
-
-In these final days of prosperity, Redeemer's Hall was built by some of our members who had been sent West to aid the people of Grunes Tal and it soon became the final bastion of beast life within Grunes Tal. Even today, we, the Redeemers, have done our utmost to make certain the Legions of Sheol have been unable to fully invade other Beast lands still largely untouched by Abidan's forces. As for the Greenfeld, it has become darkened and is now known as the Shadowfield named so in testament to the many losses incurred there.
-
-Now friend, if you truly wish to aid our forces, then here your first task.
-
-Northwest of here lies what was once Greenfeld City. Now called Shadowfield City, it is inhabited by the unliving remains of those who were there when it fell. South of the city there is a series of farms whose undead residents still roam the land. Your task is to open the road by eliminating Taskmaster Glutt. As his name suggests, he is leader of the Farmhands that still tend the farms. Recent intel suggests he has been recently organizing them for a much more sinister purpose and so we want him taken out. While you are there, eliminate a dozen of those Farmhands as well. Without Glutt to lead them, the Farmhands should prove to be easy targets. Return to me with the Taskmaster's Spade as proof that these deeds have been carried out and I will see to it that you are rewarded for your efforts.
-CompleteText=Excellent work! Without Glutt to lead them and their numbers thinned a bit, the remaining Farmhands should be more disorganized and easy to pick off. As promised, here is your reward.
-Level=42
-Suggested=43
-Exp=7438
-PartySize=2
-NumRewards=0
-Coin=1291
-Unabandon=0
-QuestGiverID=1293
-QuestEnderID=1293
-Repeat=0
-sGiver=58221,792.103,67113,9
-sEnder=58221,792.103,67113,9
-[ACT]
-Act.BodyText=Kill Taskmaster Glutt and a dozen Undead Farmhands at the Farms south of Shadowfield City.
-
-Obj.0.type=kill
-Obj.0.data1=1211
-Obj.0.data2=12
-Obj.0.description=Kill 12 Undead Farmhands
-Obj.0.complete=0
-Obj.0.myCreatureDefID=
-Obj.0.myItemID=
-Obj.0.completeText=0 of 12
-Obj.0.markerLocations=58625.6,901.005,64018.8,9
-Obj.1.type=kill
-Obj.1.data1=1217
-Obj.1.data2=1
-Obj.1.description=Kill TaskMaster Glutt
-Obj.1.complete=0
-Obj.1.myCreatureDefID=
-Obj.1.myItemID=
-Obj.1.completeText=0 of 1
-Obj.1.markerLocations=58625.6,901.005,64018.8,9
-[ACT]
-Act.BodyText=Return to Shar Zaris
-Obj.0.type=talk
-Obj.0.data1=
-Obj.0.data2=
-Obj.0.description=Return to Shar Zaris
-Obj.0.complete=0
-Obj.0.myCreatureDefID=1293
-Obj.0.myItemID=
-Obj.0.completeText=
-Obj.0.markerLocations=58221,792.103,67113,9
-
-[Entry]
-Requires=818
 ID=819
+Requires=818
 Title=General Bodiccea
-BodyText=Now that Glutt is out of the way, we can move on Shadowfield itself. Be warned though, that the city will not be taken so easily. Stationed within the city is a warrior with a tragic story.
+BodyText=Now that Glutt is out of the way, we can move on to Shadowfield itself. Be warned though, that the city will not be taken so easily. Stationed within the city is a warrior with a tragic story.
 
-General Bodiccea was once a warrior of great reknown and a highly respected beast. 
+General Bodiccea was once a warrior of great reknown and a highly respected beast.
 
 Legend has it Bodiccea and her troops were able to hold back the Undead for several years before this region fell to their onslaught. Her last stand was in Greenfeld City, now called Shadowfield, where she and her forces fought to the last beast while the citizens were evacuated. The story goes that after several days of battle, the Undead finally infiltrated the city and slaughtered all who remained, including Bodiccea and her troops. Even in death, Bodiccea was not to be deterred and she continues to guard the Shadowfield to this very day.
 
-While her cause in life was selfless and noble, Bodiccea and her troops now fight mindlessly, forever trapped in bodies long since robbed of life. 
+While her cause in life was selfless and noble, Bodiccea and her troops now fight mindlessly, forever trapped in bodies long since robbed of life.
 
 Your task is to enter Shadowfield City and put to rest Bodiccea and her followers once and for all. Return to me once you have freed the General and her troops from their pain and restored those tragic heroes to Gaia's embrace.
 CompleteText=You have again returned safely! With Shadowfield City removed as a threat, we can now move supplies to and from our allies in Swineland much easier. I truly hope Bodiccea is now at peace, along with those who died with her while defending beastkind in their darkest hour here in Grunes Tal. Thank you for finally putting them to rest at last.
@@ -348,50 +167,144 @@ Unabandon=0
 QuestGiverID=1293
 QuestEnderID=1293
 Repeat=0
-sGiver=58221,792.103,67113,9
-sEnder=58221,792.103,67113,9
+sGiver=58221.0,792.103,67113.0,9
+sEnder=58221.0,792.103,67113.0,9
+[ACT]
+Act.BodyText=Travel to Folkirk Manor on top of Haunted Hill
+Obj.0.type=travel
+Obj.0.data1=63084,1263,63126,9
+Obj.0.data2=250
+Obj.0.description=Travel to Folkirk Manor
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=63084.8,1263.87,63126.6,9;
+[ACT]
+Act.BodyText=Enter the family crypt beneath Folkirk Manor
+Obj.0.type=travel
+Obj.0.data1=3478,600,3232,75
+Obj.0.data2=250
+Obj.0.description=Enter the family crypt
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=3478.0,600.0,3232.0,75;
+[ACT]
+Act.BodyText=Kill the Family Pet, Scraps
+Obj.0.type=kill
+Obj.0.data1=3657
+Obj.0.data2=1
+Obj.0.description=Kill Scraps
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 1
+Obj.0.markerLocations=4377.0,540.0,4226.0,75;
+[ACT]
+Act.BodyText=Kill the Family Folkirk
+Obj.0.type=kill
+Obj.0.data1=1263
+Obj.0.data2=1
+Obj.0.description=Kill Mother Cruella
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 1
+Obj.0.markerLocations=3448.24,480.0,3847.63,75;
+Obj.1.type=kill
+Obj.1.data1=1262
+Obj.1.data2=1
+Obj.1.description=Kill Uncle Moldyfork
+Obj.1.myCreatureDefID=
+Obj.1.myItemID=
+Obj.1.completeText=0 of 1
+Obj.1.markerLocations=3448.24,480.0,3847.63,75;
+Obj.2.type=kill
+Obj.2.data1=1261
+Obj.2.data2=1
+Obj.2.description=Kill Father Grundy
+Obj.2.myCreatureDefID=
+Obj.2.myItemID=
+Obj.2.completeText=0 of 1
+Obj.2.markerLocations=3448.24,480.0,3847.63,75;
+[ACT]
+Act.BodyText=Return to Quintus Lunarsong
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Quintus Lunarsong
+Obj.0.myCreatureDefID=1198
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=58044.5,806.452,66701.1,9;
+RewardItem.0=10035,1,0
+RewardItem.1=10036,1,0
+RewardItem.2=10037,1,0
+RewardItem.3=10038,1,0
+[ACT]
+Act.BodyText=Kill Taskmaster Glutt and a dozen Undead Farmhands at the Farms south of Shadowfield City.
+Obj.0.type=kill
+Obj.0.data1=1211
+Obj.0.data2=12
+Obj.0.description=Kill 12 Undead Farmhands
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 12
+Obj.0.markerLocations=58625.6,901.005,64018.8,9;
+Obj.1.type=kill
+Obj.1.data1=1217
+Obj.1.data2=1
+Obj.1.description=Kill TaskMaster Glutt
+Obj.1.myCreatureDefID=
+Obj.1.myItemID=
+Obj.1.completeText=0 of 1
+Obj.1.markerLocations=58625.6,901.005,64018.8,9;
+[ACT]
+Act.BodyText=Return to Shar Zaris
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Shar Zaris
+Obj.0.myCreatureDefID=1293
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=58221.0,792.103,67113.0,9;
 [ACT]
 Act.BodyText=Kill General Bodiccea's Hordes and weaken her footholdon the Shadowfields
 Obj.0.type=kill
 Obj.0.data1=1213
 Obj.0.data2=20
 Obj.0.description=Kill 20 Bodiccea Bonethrall
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=0 of 20
-Obj.0.markerLocations=58834.1,976.883,63182.6,9
+Obj.0.markerLocations=58834.1,976.883,63182.6,9;
 Obj.1.type=kill
 Obj.1.data1=1214
 Obj.1.data2=20
 Obj.1.description=Kill 20 Bodiccea Frostthrall
-Obj.1.complete=0
 Obj.1.myCreatureDefID=
 Obj.1.myItemID=
 Obj.1.completeText=0 of 20
-Obj.1.markerLocations=58834.1,976.883,63182.6,9
+Obj.1.markerLocations=58834.1,976.883,63182.6,9;
 [ACT]
-Act.BodyText=Kill General Bodiccea 
+Act.BodyText=Kill General Bodiccea
 Obj.0.type=kill
 Obj.0.data1=1215
 Obj.0.data2=1
 Obj.0.description=Kill General Bodiccea
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=0 of 1
-Obj.0.markerLocations=58834.1,976.883,63182.6,9
+Obj.0.markerLocations=58834.1,976.883,63182.6,9;
 [ACT]
 Act.BodyText=Return to Shar Zaris
 Obj.0.type=talk
-Obj.0.data1=
-Obj.0.data2=
+Obj.0.data1=0
+Obj.0.data2=0
 Obj.0.description=Return to Shar Zaris
-Obj.0.complete=0
 Obj.0.myCreatureDefID=1293
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=58221,792.103,67113,9
+Obj.0.markerLocations=58221.0,792.103,67113.0,9;
 RewardItem.0=10016,1,0
 RewardItem.1=10017,1,0
 RewardItem.2=10018,1,0
@@ -404,7 +317,7 @@ BodyText=Listen not to the others here who scorn me, and label me vain - I am he
 
 Note the undead you will encounter in this area. Yes, they are a constant menace, but they carry on quite well and keep their facilities about them rather nicely. Of utmost importance to me however, is the distilling of whatever essence they hold which keeps that wee spark of life within them. If I could harness that without all the unsightly side effects of undead life, I could make a mint!
 
-Travel south of Redeemer's Hall, and you will find a small encampment of undead which serves as the "clinic" for any zombies needing repair. The Undead Chirurgeons within that medical camp carry upon them Scrolls of Everlasting Regeneration. I have seen those scrolls repair years of damage, and even attach severed limbs! Can you imagine what that would do for a few wrinkles?
+Travel south of Redeemer's Hall, and you will find a small encampment of Undead which serves as the "clinic" for any zombies needing repair. The Undead Chirurgeons within that medical camp carry upon them Scrolls of Everlasting Regeneration. I have seen those scrolls repair years of damage, and even attach severed limbs! Can you imagine what that would do for a few wrinkles?
 
 Gather fifteen Everlasting Regeneration Scrolls from Undead Chirurgeons, and soon I will be able to begin my life of luxury!
 CompleteText=You have them? Excellent! Give them to me! Yes, yes! Now I can finally enjoy a long and luxurious life without worry of the effects of aging or any malady out there! What? No, you cannot have them for yourself! Take this bit of coin and be off with you!
@@ -421,42 +334,40 @@ Repeat=0
 sGiver=57917.6,802.236,67007.5,9
 sEnder=57917.6,802.236,67007.5,9
 [ACT]
-Act.BodyText=Travel to the undead camps south of Redeemer's Hall and collect fifteen Everlasting Regeneration Scrolls from the Undead Chiurgeons there.
+Act.BodyText=Travel to the Undead camps south of Redeemer's Hall and collect fifteen Everlasting Regeneration Scrolls from the Undead Chiurgeons there.
 Obj.0.type=kill
 Obj.0.data1=1207,1208
 Obj.0.data2=15
 Obj.0.description=Collect Everlasting Regeneration Scroll
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=500121
 Obj.0.completeText=0 of 15
-Obj.0.markerLocations=55361,613.183,69635,9
+Obj.0.markerLocations=55361.0,613.183,69635.0,9;
 [ACT]
 Act.BodyText=Return to Hayden Illsnor
 Obj.0.type=talk
-Obj.0.data1=
-Obj.0.data2=
+Obj.0.data1=0
+Obj.0.data2=0
 Obj.0.description=Return to Hayden Illsnor
-Obj.0.complete=0
 Obj.0.myCreatureDefID=1246
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=57917.6,802.236,67007.5,9
+Obj.0.markerLocations=57917.6,802.236,67007.5,9;
 
 [ENTRY]
-Requires=807
 ID=821
-Title=It Lives
+Requires=807
+Title=It Lives!
 BodyText=Now that you have a good collection of usable parts, bring them to the Construct Altar outside the Wailing Crypt to the south of Redeemer's Hall.
 
-Use the altar, and bring life to the undead hodgepodge you have stitched together!
-CompleteText=What?! Your creation turned on you?! Oh this is terrible. I should have known dabbling in such dark things would turn out badly. At least you were able to destroy the thing before it got out of hand. Still though, with Abidan's forces creating one of their own, we will be hard pressed to fight the thing should it be completed. At any rate, I do thank you for doing this for me. Please accept one of these as a thanks for your assistance
+Use the altar and bring life to the undead hodgepodge you have stitched together!
+CompleteText=What?! Your creation turned on you?! Oh this is terrible. I should have known dabbling in such dark things would turn out badly. At least you were able to destroy the thing before it got out of hand. Still though, with Abidan's forces creating one of their own, we will be hard pressed to fight the thing should it be completed. At any rate, I do thank you for doing this for me. Please accept one of these as a thanks for your assistance.
 Level=42
 Suggested=43
 Exp=7232
 PartySize=2
-Coin=2093
 NumRewards=1
+Coin=2093
 Unabandon=0
 QuestGiverID=1200
 QuestEnderID=1200
@@ -467,35 +378,32 @@ sEnder=58394.5,789.211,66939.2,9
 Act.BodyText=Travel to the Construct Altar near the Wailing Crypt and construct your new Behemoth!
 Obj.0.type=activate
 Obj.0.data1=1241
-Obj.0.data2=
+Obj.0.data2=0
 Obj.0.description=Use the Altar and Construct your Behemoth
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=0 of 1
-Obj.0.markerLocations=52607.3,549.758,68996.9,9
+Obj.0.markerLocations=52607.3,549.758,68996.9,9;
 Obj.0.ActivateTime=5000
 Obj.0.ActivateText=Constructing your Behemoth
 Obj.1.type=kill
 Obj.1.data1=1242
 Obj.1.data2=1
 Obj.1.description=Defeat the newly created Stitched Behemoth.
-Obj.1.complete=0
 Obj.1.myCreatureDefID=
 Obj.1.myItemID=
 Obj.1.completeText=0 of 1
-Obj.1.markerLocations=52607.3,549.758,68996.9,9
+Obj.1.markerLocations=52607.3,549.758,68996.9,9;
 [ACT]
 Act.BodyText=Return to Moris Banner
 Obj.0.type=talk
-Obj.0.data1=
-Obj.0.data2=
+Obj.0.data1=0
+Obj.0.data2=0
 Obj.0.description=Return to Moris Banner
-Obj.0.complete=0
 Obj.0.myCreatureDefID=1200
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=58394.5,789.211,66939.2,9
+Obj.0.markerLocations=58394.5,789.211,66939.2,9;
 RewardItem.0=10040,1,0
 RewardItem.1=10041,1,0
 RewardItem.2=10042,1,0
@@ -513,7 +421,7 @@ Ahhh  - the spicy, succulent taste of Gloom-Spites brings happiness even to my l
 The folk embedded in Redeemer's Hall seem to have a "kill on sight" policy with those of us living the rotted half of un-life;  and this quite puts a damper on my ability to procure my favored snack. Will you collect these tasty treasures for me? Gloom-Spites flock amidst the Spiteful Lanterneyes in the blighted fields of Shadowfield.
 
 Collect ten of them for me, and I shall reward you with my secret recipe!
-CompleteText= You got them! Thank you! heres your reward I have no need for money in my state but Gloom Sprite *eats* mmmmm Delicious...
+CompleteText=You got them! Thank you! Here's your reward. I have no need for money in my state, but Gloom Spites... *eats* mmmmm Delicious...
 Level=42
 Suggested=43
 Exp=7232
@@ -532,22 +440,20 @@ Obj.0.type=kill
 Obj.0.data1=1257
 Obj.0.data2=10
 Obj.0.description=Gather Gloom Spites
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=0 of 10
-Obj.0.markerLocations=58548.4,900.435,64172.8,9
+Obj.0.markerLocations=58548.4,900.435,64172.8,9;
 [ACT]
 Act.BodyText=Return to MJ Price
 Obj.0.type=talk
-Obj.0.data1=
-Obj.0.data2=
+Obj.0.data1=0
+Obj.0.data2=0
 Obj.0.description=Return to MJ Price
-Obj.0.complete=0
 Obj.0.myCreatureDefID=3522
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=59178.3,1109.91,64102.6,9
+Obj.0.markerLocations=59178.3,1109.91,64102.6,9;
 
 [ENTRY]
 ID=823
@@ -558,9 +464,9 @@ I followed Geoffry on one of his far-ranging "walks" one eve, and stumbled upon 
 
 This will not end well if we let it continue, as the undead are conniving and bear an eternal ember of hatred for beast-kind.
 
-Look within Shadowfield for where Geoffry has hidden these Enslaved Zombies, by travelling from the blighted town of Shadowfield and heading east toward Haunted Hill.
+Look within Shadowfield for where Geoffry has hidden these Enslaved Zombies, by traveling from the blighted town of Shadowfield and heading east toward Haunted Hill.
 
-Exterminate the Enslaved Zombies, about six of them I believe, as well as Geoffry Thistlefur. 
+Exterminate the Enslaved Zombies, about six of them I believe, as well as Geoffry Thistlefur.
 CompleteText=Poor Geoffry. He might have meant well, but, sometimes one must stop and consider the consequences before attempting such a foolish task as what he was trying to accomplish. I am sorry you had to kill him, though it was unavoidable as I knew he would try to protect his 'investment' as it were. Perhaps other beasts will learn from Geoffry's mistake and not attempt such a thing in the future.
 Level=43
 Suggested=44
@@ -575,38 +481,35 @@ Repeat=0
 sGiver=58419.4,781.591,66801.9,9
 sEnder=58419.4,781.591,66801.9,9
 [ACT]
-Act.BodyText=Kill 6 Enslaved Zombies and put a end to this wretched experiement
+Act.BodyText=Kill 6 Enslaved Zombies and put an end to this wretched experiment.
 Obj.0.type=kill
 Obj.0.data1=1212
 Obj.0.data2=6
 Obj.0.description=Kill 6 Enslaved Zombies
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=0 of 6
-Obj.0.markerLocations=62180.2,750.44,63087.8,9
+Obj.0.markerLocations=62180.2,750.44,63087.8,9;
 [ACT]
 Act.BodyText=Kill Geoffry Thistlefur
 Obj.0.type=kill
 Obj.0.data1=3452
 Obj.0.data2=1
 Obj.0.description=Kill Geoffry Thistlefur
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=0 of 1
-Obj.0.markerLocations=61811.7,787.118,62807.1,9
+Obj.0.markerLocations=61811.7,787.118,62807.1,9;
 [ACT]
 Act.BodyText=Return to Garus Greyson
 Obj.0.type=talk
-Obj.0.data1=
-Obj.0.data2=
+Obj.0.data1=0
+Obj.0.data2=0
 Obj.0.description=Return to Gasrus Greyson
-Obj.0.complete=0
 Obj.0.myCreatureDefID=1209
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=58419.4,781.591,66801.9,9
+Obj.0.markerLocations=58419.4,781.591,66801.9,9;
 
 [ENTRY]
 ID=825
@@ -655,8 +558,8 @@ Obj.0.markerLocations=64157.2,779.793,56624.6,9
 
 [ENTRY]
 ID=826
-Title= Just Havin' A Laugh
-BodyText=Hey! You got business up here with one o' my boys, eh? Or are you lookin' to be the tough guy that thinks ''es gonna make Dirty Thunder look bad again to Boss Hawg?
+Title=Just Havin' A Laugh
+BodyText=Hey! You got business up here with one o' my boys, eh? Or are you lookin' to be the tough guy that thinks 'es gonna make Dirty Thunder look bad again to Boss Hawg?
 
 Don't think I don't  know what you're up to! Yeahhhh - I'm watching you. Gots eyes in the back o' my head, I do!
 
@@ -666,12 +569,18 @@ To make a long story short, I took his Tee-Vee. That's right, buddy-ol-pal! That
 
 Things was fine for a while then, and I had my laugh. I was even gonna give it back if his lazy butt was ever gonna travel my way, ye know? But that's not good enough for Boss Hawg. He sends 'is boys down here to take his Tee-Vee back, and now there's talk of war!
 
-Hey - me? - I was just havin' Old fart can't take a joke anymore, I swear!
+Hey - me? - I was just havin' a laugh! Old fart can't take a joke anymore, I swear!
 
 Anyways, there's a few camps 'round this Warpig Camp where Hawg's Boys are hangin' about. Now, I need you to get in there all sneaky-like or bashin-like,I gots no preference as to that matter, and takes this Tee-Vee back for me.
 
 I ain't got the time to do this myself, no disrespect. So's if you could get a move on, that'd be great! Don't let the door hit yer behind on the way out! HA!
-CompleteText=
+CompleteText=So yer back eh? Gave Hawg's boys his Tee-Vee too?
+
+Good.
+
+Mebbe that'll make him stop squealin' then! Much obliged. Too bad that ol' lazy butt o' his didn't come git it himself!
+
+Anyway, off with ya now, I'm busy see? Go on, git! Oh, fine! Here's yer payment for the trouble. Now scram.
 Level=44
 Suggested=45
 Exp=8165
@@ -690,33 +599,30 @@ Obj.0.type=kill
 Obj.0.data1=1216,1218,1219,1220,1221,1222,1223,1224
 Obj.0.data2=10
 Obj.0.description=Kill 10 Hogcatchers
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=0 of 10
-Obj.0.markerLocations=65902.2,820.963,59745.7,9
+Obj.0.markerLocations=65902.2,820.963,59745.7,9;
 Obj.1.type=activate
 Obj.1.data1=7815
-Obj.1.data2=
+Obj.1.data2=0
 Obj.1.description=Deliver Boss Hawg's TV
-Obj.1.complete=0
 Obj.1.myCreatureDefID=
 Obj.1.myItemID=
 Obj.1.completeText=
-Obj.1.markerLocations=65902.2,820.963,59745.7,9
+Obj.1.markerLocations=65902.2,820.963,59745.7,9;
 Obj.1.ActivateTime=5000
 Obj.1.ActivateText=Carefully placing TV
 [ACT]
 Act.BodyText=Return to Dirty Thunder
 Obj.0.type=talk
-Obj.0.data1=
-Obj.0.data2=
+Obj.0.data1=0
+Obj.0.data2=0
 Obj.0.description=Return to Dirty Thunder
-Obj.0.complete=0
 Obj.0.myCreatureDefID=3684
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=2142.8,266.536,2676.8,93
+Obj.0.markerLocations=2142.8,266.536,2676.8,93;
 
 [ENTRY]
 ID=827
@@ -742,37 +648,35 @@ Repeat=0
 sGiver=64537.2,793.735,56672.7,9
 sEnder=64537.2,793.735,56672.7,9
 [ACT]
-Act.BodyText=Kill 15 Junderbrood Workskrills in the fallen mushroom forest in northern Junderlund
+Act.BodyText=Kill 15 Junderbrood Workskrills in the fallen mushroom forest in northern Junderlund.
 Obj.0.type=kill
 Obj.0.data1=1186
 Obj.0.data2=15
 Obj.0.description=Kill 15 Junderbrood Workskrill
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=0 of 15
-Obj.0.markerLocations=59924.8,591.578,55377.3,9
+Obj.0.markerLocations=59924.8,591.578,55377.3,9;
 [ACT]
 Act.BodyText=Return to Rheskor
 Obj.0.type=talk
-Obj.0.data1=
-Obj.0.data2=
+Obj.0.data1=0
+Obj.0.data2=0
 Obj.0.description=Return to Rheskor
-Obj.0.complete=0
 Obj.0.myCreatureDefID=3681
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=64537.2,793.735,56672.7,9
+Obj.0.markerLocations=64537.2,793.735,56672.7,9;
 
 [ENTRY]
-Requires=825
 ID=828
+Requires=825
 Title=A Hot Bowl of Soup
 BodyText=You ate them bug wings right proper an' ya didn't even cry! I'se impressed I am. By proving you'se ain't a panzy, I'll reward ya with another recipe o' mine!
 
 I wants youse to try a pot o' my momma's special mushroom soup! If'n there's a one thing she was good at, it was th' heavenly taste o' her soup! Made a warpig cry ever time it did!
 
-I'se a bit low on th' mushrooms, though, so, make yerself useful and go git me some more! Th' recipe calls fer a special type o' mushroom and it only grows in th' giant forest west o' here! 
+I'se a bit low on th' mushrooms, though, so, make yerself useful and go git me some more! Th' recipe calls fer a special type o' mushroom and it only grows in th' giant forest west o' here!
 
 Git me a proper fifteen chunks o' those mushrooms an' hurry back here! Don't want th' soup t' get cold b'fore the main ingredient is added! Oh and don't mind th' dambugs whilst yer out there, just get me th' mushrooms!
 CompleteText=Youse right handy you is! Now, have a bowl o' my momma's special soup! No cryin' over it though!
@@ -789,76 +693,32 @@ Repeat=0
 sGiver=64137.3,780.062,56620.3,9
 sEnder=64137.3,780.062,56620.3,9
 [ACT]
-Act.BodyText=Gather 15 Mushroom Chunks for a bow of momma's soup 
+Act.BodyText=Gather 15 Mushroom Chunks for a bowl of momma's mushroom soup.
 Obj.0.type=gather
 Obj.0.data1=7797
 Obj.0.data2=15
 Obj.0.description=Gather 15 Mushroom Chunks
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=10014
 Obj.0.completeText=0 of 15
-Obj.0.markerLocations=59900,591.671,55525.1,9
-Obj.0.ActivateTime=2000
-Obj.0.ActivateText=Taking chunk
+Obj.0.markerLocations=59900.0,591.671,55525.1,9;
 [ACT]
 Act.BodyText=Return to Billko
 Obj.0.type=talk
-Obj.0.data1=
-Obj.0.data2=
+Obj.0.data1=0
+Obj.0.data2=0
 Obj.0.description=Return to Billko
-Obj.0.complete=0
 Obj.0.myCreatureDefID=1248
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=64137.3,780.062,56620.3,9
+Obj.0.markerLocations=64137.3,780.062,56620.3,9;
 
 [ENTRY]
-ID=829
-Title=Unholy Night
-BodyText=You! Could I speak to you for just a moment? Excellent thank you.  You seem to be helping everyone around here, quite the explorer, quite the... dare I say... Hero? Enough flattery. I wonder if you can help me with a little hunting.  We have been trying to solve the Wailing Crypt problem and restore that part of Grunes Tal to a bit of a more welcoming environment... But these damn Wrath Stags are every near the Crypt.  They'll attack on sight and arent as jolly as you'd think. If could take a few of them out for us just enough to maybe scare them off or give us an advantage of numbers I'll reward you for your efforts of course!
-CompleteText=Amazing! you made quick of those vermin thank you.  What?! An Alpha you say? Ah yes I think I've heard rumours of Bahmut.  Anyways here's your reward as promised.
-Level=44
-Suggested=44
-Exp=8076
-PartySize=1
-NumRewards=0
-Coin=2234
-Unabandon=0
-QuestGiverID=1197
-QuestEnderID=1197
-Repeat=0
-sGiver=57964.9,809.567,66777.6,9
-sEnder=57964.9,809.567,66777.6,9
-[ACT]
-Act.BodyText=Kill 20 Wrath Stags near The Wailing Crypt
-Obj.0.type=kill
-Obj.0.data1=1228,1229
-Obj.0.data2=20
-Obj.0.description=Kill 20 Wrath Stags
-Obj.0.complete=0
-Obj.0.myCreatureDefID=
-Obj.0.myItemID=
-Obj.0.completeText=0 of 20
-Obj.0.markerLocations=51357.5,699.868,69163.6,9
-[ACT]
-Act.BodyText= Return to Jon Darkeye
-Obj.0.type=talk
-Obj.0.data1=
-Obj.0.data2=
-Obj.0.description=Return to Jon Darkeye
-Obj.0.complete=0
-Obj.0.myCreatureDefID=1197
-Obj.0.myItemID=
-Obj.0.completeText=
-Obj.0.markerLocations=57964.9,809.567,66777.6,9
-
-[Entry]
-Requires=829
 ID=830
+Requires=829
 Title=Bahmut the Red Nosed Wrath Stag
-BodyText=Thank you again for helping with the Wrath Stags, I just wish my idea would have worked.  You were right about Bahmut, he's an Alpha Wrath Stag. As long as he's around, the Wrath Stags will stay put, remaining a threat to us while we try to restore order in Grunes Tal.  You don't owe me anything, you've helped us so much, but if you can find it in yourself to travel back and eliminate Bahmut, you could be saving dozens of potential lives!
-CompleteText=You did it! My reports have said that the Wrath Stags have become a bit more timid and aren't showing as much aggression now that you cut the head off the snake.  I can't thank you enough! I know it's not much but here take this coin, and take this too. It was my fathers, but I want you to have it.
+BodyText=Thank you again for helping with the Wrath Stags. I just wish my idea would have worked.  You were right about Bahmut, he's an Alpha Wrath Stag. As long as he's around, the Wrath Stags will stay put, remaining a threat to us while we try to restore order in Grunes Tal.  You don't owe me anything as you've helped us so much, but if you can find it in yourself to travel back and eliminate Bahmut, you could be saving dozens of potential lives!
+CompleteText=You did it! My reports have said that the Wrath Stags have become a bit more timid and aren't showing as much aggression now that you cut the head off the snake.  I can't thank you enough! I know it's not much, but here take this coin, and take this too. It was my father's, but I want you to have it.
 Level=44
 Suggested=45
 Exp=8127
@@ -872,27 +732,45 @@ Repeat=0
 sGiver=57964.9,809.567,66777.6,9
 sEnder=57964.9,809.567,66777.6,9
 [ACT]
+Act.BodyText=Kill 20 Wrath Stags near The Wailing Crypt
+Obj.0.type=kill
+Obj.0.data1=1228,1229
+Obj.0.data2=20
+Obj.0.description=Kill 20 Wrath Stags
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 20
+Obj.0.markerLocations=51357.5,699.868,69163.6,9;
+[ACT]
+Act.BodyText= Return to Jon Darkeye
+Obj.0.type=talk
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Jon Darkeye
+Obj.0.myCreatureDefID=1197
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=57964.9,809.567,66777.6,9;
+[ACT]
 Act.BodyText=Travel to Wrath Stag grounds near the Wailing Crypt and Kill Bahmut
 Obj.0.type=kill
 Obj.0.data1=1232
 Obj.0.data2=1
 Obj.0.description=Kill Bahmut
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=0 of 1
-Obj.0.markerLocations=51357.5,699.868,69163.6,9
+Obj.0.markerLocations=51357.5,699.868,69163.6,9;
 [ACT]
 Act.BodyText= Return to Jon Darkeye
 Obj.0.type=talk
-Obj.0.data1=
-Obj.0.data2=
+Obj.0.data1=0
+Obj.0.data2=0
 Obj.0.description=Return to Jon Darkeye
-Obj.0.complete=0
 Obj.0.myCreatureDefID=1197
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=57964.9,809.567,66777.6,9
+Obj.0.markerLocations=57964.9,809.567,66777.6,9;
 RewardItem.0=10020,1,0
 RewardItem.1=10021,1,0
 RewardItem.2=10022,1,0
