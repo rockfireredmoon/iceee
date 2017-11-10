@@ -779,9 +779,9 @@ RewardItem.3=10023,1,0
 [ENTRY]
 ID=831
 Title=Haunted Hill
-BodyText=There is a slouching peak northeast of here - its true name lost to time, called now "Haunted Hill."
+BodyText=There is a slouching peak northeast of here - it's true name lost to time, called now "Haunted Hill."
 
-You think it trite? When you see the horrors that the earth vomits forth there, you willl be as bereft of description as the rest of us!
+You think it trite? When you see the horrors that the earth vomits forth there, you will be as bereft of description as the rest of us!
 
 Even before the rise of the undead, there was the Outcast Wars  - which ended and began at once a new era in which we cower from hordes of the pustulent undead. The Beasts here fought for their lives, or fled. A few however, tried to "ride the storm out". This, like many things here, did not end well.
 
@@ -794,7 +794,7 @@ The Folkirk family however, was not amused. Not a single Beast was let inside th
 
 Most of the resistance died within a week, if they could flee, less if not. Their vengeance-hungry ghosts still haunt that hill outside the manor to this day, but there is some justice in that the Folkirk family seems to have been "turned" into undead as well.
 
-I cannot bear the anguished cries the wind carries any longer! Please, travel to Haunted Hill north of Redeemer's Camp. Put the Vengance-Singers out of their misery by freeing eleven of them from this realm.
+I cannot bear the anguished cries the wind carries any longer! Please, travel to Haunted Hill north of Redeemer's Hall. Put the Vengance-Singers out of their misery by freeing eleven of them from this realm.
 CompleteText=Ah, at last, the anguished cries on the wind are no more! After you left I heard the cries of the Singers again for a short time, yet soon all went quiet. I was certain the sudden silence was your handiwork and I was right! Finally I can have some peace around here, not that there is much peace in a land filled with undead mind you, yet I will take what I can get!
 
 At any rate, I can only hope those poor souls are finally at peace. I wish upon no beast the horrible fate they had to endure. Thanks again for your help!
@@ -816,18 +816,16 @@ Obj.0.type=kill
 Obj.0.data1=1260
 Obj.0.data2=11
 Obj.0.description=Kill Vengeance Singer
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=0 of 11
-Obj.0.markerLocations=63157,1263.87,62944,9;
+Obj.0.markerLocations=63157.0,1263.87,62944.0,9;
 [ACT]
 Act.BodyText=Return to Shayne Twitchtail
 Obj.0.type=talk
-Obj.0.data1=
-Obj.0.data2=
+Obj.0.data1=0
+Obj.0.data2=0
 Obj.0.description=Return to Shayne Twitchtail
-Obj.0.complete=0
 Obj.0.myCreatureDefID=1199
 Obj.0.myItemID=
 Obj.0.completeText=
