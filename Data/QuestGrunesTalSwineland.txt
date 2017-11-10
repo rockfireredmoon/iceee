@@ -1687,7 +1687,7 @@ Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=73236.1,856.26,60779.3,9
 
-[Entry]
+[ENTRY]
 Requires=901
 ID=905
 Title= The Stinking Roses
@@ -1732,7 +1732,7 @@ Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=76585.8,979.052,50077.1,9
 
-[Entry]
+[ENTRY]
 Requires=903
 ID=906
 Title= Bite Them Back
@@ -1776,7 +1776,7 @@ Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=73239.8,856.26,60816.6,9
 
-[Entry]
+[ENTRY]
 Requires=906
 ID=907
 Title=Breaking The Chain Of Command
@@ -1830,7 +1830,7 @@ Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=73239.8,856.26,60816.6,9
 
-[Entry]
+[ENTRY]
 Requires=901
 ID=908
 Title=The Shiny Place
@@ -1865,7 +1865,7 @@ Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=66369.3,630.469,65092,9
 
-[Entry]
+[ENTRY]
 Requires=908
 ID=909
 Title=Snorg's Shinies
@@ -1909,7 +1909,7 @@ Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=66369.3,630.469,65092,9
 
-[Entry]
+[ENTRY]
 Requires=908
 ID=909
 Title=Snorg's Shinies
@@ -1953,7 +1953,7 @@ Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=66369.3,630.469,65092,9
 
-[Entry]
+[ENTRY]
 Requires=909
 ID=910
 Title=A Gift To A Friend
@@ -1982,7 +1982,7 @@ Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=73527.3,879.169,60373.5,9
 
-[Entry]
+[ENTRY]
 Requires=910
 ID=922
 Title=The Great Speaker Of Nook
