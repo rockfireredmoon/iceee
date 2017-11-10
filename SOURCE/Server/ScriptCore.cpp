@@ -802,8 +802,6 @@ namespace ScriptCore
 
 	bool NutPlayer::RunFunction(std::string name, std::vector<ScriptParam> parms, bool time) {
 
-		g_Log.AddMessageFormat("REMOVE run function %s", name.c_str());
-
 		if(!mActive) {
 			g_Log.AddMessageFormat("[WARNING] Attempt to run function on inactive script %s.", name.c_str());
 			return false;
