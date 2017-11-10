@@ -794,12 +794,53 @@ Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=64137.3,780.062,56620.3,9;
 
+
 [ENTRY]
-ID=830
+ID=829
+Title=Unholy Night
+BodyText=You! Could I speak to you for just a moment? Excellent thank you.  You seem to be helping everyone around here, quite the explorer, quite the... dare I say... Hero? Enough flattery. I wonder if you can help me with a little hunting.  We have been trying to solve the Wailing Crypt problem and restore that part of Grunes Tal to a bit of a more welcoming environment... But these damn Wrath Stags are every near the Crypt.  They'll attack on sight and arent as jolly as you'd think. If could take a few of them out for us just enough to maybe scare them off or give us an advantage of numbers I'll reward you for your efforts of course!
+CompleteText=Amazing! you made quick of those vermin thank you.  What?! An Alpha you say? Ah yes I think I've heard rumours of Bahmut.  Anyways here's your reward as promised.
+Level=44
+Suggested=44
+Exp=8076
+PartySize=1
+NumRewards=0
+Coin=2234
+Unabandon=0
+QuestGiverID=1197
+QuestEnderID=1197
+Repeat=0
+sGiver=57964.9,809.567,66777.6,9
+sEnder=57964.9,809.567,66777.6,9
+[ACT]
+Act.BodyText=Kill 20 Wrath Stags near The Wailing Crypt
+Obj.0.type=kill
+Obj.0.data1=1228,1229
+Obj.0.data2=20
+Obj.0.description=Kill 20 Wrath Stags
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=0 of 20
+Obj.0.markerLocations=51357.5,699.868,69163.6,9
+[ACT]
+Act.BodyText= Return to Jon Darkeye
+Obj.0.type=talk
+Obj.0.data1=
+Obj.0.data2=
+Obj.0.description=Return to Jon Darkeye
+Obj.0.complete=0
+Obj.0.myCreatureDefID=1197
+Obj.0.myItemID=
+Obj.0.completeText=
+Obj.0.markerLocations=57964.9,809.567,66777.6,9
+
+[Entry]
 Requires=829
+ID=830
 Title=Bahmut the Red Nosed Wrath Stag
-BodyText=Thank you again for helping with the Wrath Stags. I just wish my idea would have worked.  You were right about Bahmut, he's an Alpha Wrath Stag. As long as he's around, the Wrath Stags will stay put, remaining a threat to us while we try to restore order in Grunes Tal.  You don't owe me anything as you've helped us so much, but if you can find it in yourself to travel back and eliminate Bahmut, you could be saving dozens of potential lives!
-CompleteText=You did it! My reports have said that the Wrath Stags have become a bit more timid and aren't showing as much aggression now that you cut the head off the snake.  I can't thank you enough! I know it's not much, but here take this coin, and take this too. It was my father's, but I want you to have it.
+BodyText=Thank you again for helping with the Wrath Stags, I just wish my idea would have worked.  You were right about Bahmut, he's an Alpha Wrath Stag. As long as he's around, the Wrath Stags will stay put, remaining a threat to us while we try to restore order in Grunes Tal.  You don't owe me anything, you've helped us so much, but if you can find it in yourself to travel back and eliminate Bahmut, you could be saving dozens of potential lives!
+CompleteText=You did it! My reports have said that the Wrath Stags have become a bit more timid and aren't showing as much aggression now that you cut the head off the snake.  I can't thank you enough! I know it's not much but here take this coin, and take this too. It was my fathers, but I want you to have it.
 Level=44
 Suggested=45
 Exp=8127
@@ -813,45 +854,27 @@ Repeat=0
 sGiver=57964.9,809.567,66777.6,9
 sEnder=57964.9,809.567,66777.6,9
 [ACT]
-Act.BodyText=Kill 20 Wrath Stags near The Wailing Crypt
-Obj.0.type=kill
-Obj.0.data1=1228,1229
-Obj.0.data2=20
-Obj.0.description=Kill 20 Wrath Stags
-Obj.0.myCreatureDefID=
-Obj.0.myItemID=
-Obj.0.completeText=0 of 20
-Obj.0.markerLocations=51357.5,699.868,69163.6,9;
-[ACT]
-Act.BodyText= Return to Jon Darkeye
-Obj.0.type=talk
-Obj.0.data1=0
-Obj.0.data2=0
-Obj.0.description=Return to Jon Darkeye
-Obj.0.myCreatureDefID=1197
-Obj.0.myItemID=
-Obj.0.completeText=
-Obj.0.markerLocations=57964.9,809.567,66777.6,9;
-[ACT]
 Act.BodyText=Travel to Wrath Stag grounds near the Wailing Crypt and Kill Bahmut
 Obj.0.type=kill
 Obj.0.data1=1232
 Obj.0.data2=1
 Obj.0.description=Kill Bahmut
+Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=0 of 1
-Obj.0.markerLocations=51357.5,699.868,69163.6,9;
+Obj.0.markerLocations=51357.5,699.868,69163.6,9
 [ACT]
 Act.BodyText= Return to Jon Darkeye
 Obj.0.type=talk
-Obj.0.data1=0
-Obj.0.data2=0
+Obj.0.data1=
+Obj.0.data2=
 Obj.0.description=Return to Jon Darkeye
+Obj.0.complete=0
 Obj.0.myCreatureDefID=1197
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=57964.9,809.567,66777.6,9;
+Obj.0.markerLocations=57964.9,809.567,66777.6,9
 RewardItem.0=10020,1,0
 RewardItem.1=10021,1,0
 RewardItem.2=10022,1,0
