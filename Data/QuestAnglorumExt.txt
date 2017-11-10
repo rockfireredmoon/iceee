@@ -744,7 +744,7 @@ Obj.0.markerLocations=7285.25,269.853,60835.7,9;
 
 [ENTRY]
 ID=810
-Requires=267
+Requires=266
 Title=Putting the Dead to Rest
 BodyText=Hello again, friend. If you really are going to enter the Crypt to deal with the Thornbringers and Jengal, perhaps you can perform an additional task as well?
 
@@ -764,10 +764,13 @@ Now go quickly! Once you have returned Wilhelm and his courtiers to Gaia's embra
 CompleteText=Praise Gaia you have returned alive from that horrible place! Were you successful?
 
 More things to praise the Earthmother for then! Allow me to thank you for everything you have done here. Gaia's blessings be upon you, friend!
-Exp=0
+Level=13
+Suggested=14
+Exp=2431
 PartySize=5
 NumRewards=0
-Coin=0
+Coin=360
+Heroism=15
 Unabandon=0
 QuestGiverID=327
 QuestEnderID=327
@@ -874,10 +877,12 @@ No, this is not Sned or Hughes' faults. They both mean well, I understand this a
 Tell you what, friend. Since you have gone through all this trouble to deliver this crate to me on their behalf, I will pay you for the goods in their stead. The Sheriff's deputies are less likely to take action so long as money has been exchanged and this way Sned's gift is preserved as technically I would be paying you for the package delivery anyway.
 
 Here, this amount of coin should be enough to cover the cost. Do me this favor and please do not tell either Sned or Hughes about this. I do not wish to burden them with our town's troubles. Thank you again friend and please take care while in town.
-Exp=0
+Level=17
+Suggested=18
+Exp=2744
 PartySize=1
 NumRewards=0
-Coin=0
+Coin=475
 Unabandon=0
 QuestGiverID=184
 QuestEnderID=3455
@@ -894,5 +899,3 @@ Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=
-
-

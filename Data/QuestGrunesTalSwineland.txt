@@ -798,8 +798,8 @@ Obj.0.markerLocations=64137.3,780.062,56620.3,9;
 [ENTRY]
 ID=829
 Title=Unholy Night
-BodyText=You! Could I speak to you for just a moment? Excellent thank you.  You seem to be helping everyone around here, quite the explorer, quite the... dare I say... Hero? Enough flattery. I wonder if you can help me with a little hunting.  We have been trying to solve the Wailing Crypt problem and restore that part of Grunes Tal to a bit of a more welcoming environment... But these damn Wrath Stags are every near the Crypt.  They'll attack on sight and arent as jolly as you'd think. If could take a few of them out for us just enough to maybe scare them off or give us an advantage of numbers I'll reward you for your efforts of course!
-CompleteText=Amazing! you made quick of those vermin thank you.  What?! An Alpha you say? Ah yes I think I've heard rumours of Bahmut.  Anyways here's your reward as promised.
+BodyText=You! Could I speak to you for just a moment? Excellent thank you.  You seem to be helping everyone around here, quite the explorer, quite the... dare I say... Hero? Enough flattery. I wonder if you can help me with a little hunting.  We have been trying to solve the Wailing Crypt problem and restore that part of Grunes Tal to a bit of a more welcoming environment... But these accursed Wrath Stags are always grouping up near the Crypt.  They'll attack on sight and aren't as jolly as you'd think. If could take a few of them out for us, just enough to maybe scare them off or give us an advantage of numbers, we'd appreciate it. I'll reward you for your efforts of course!
+CompleteText=Amazing! You made quick of those vermin, thank you.  What?! An Alpha you say? Ah yes I think I've heard rumors of Bahmut.  Anyways here's your reward as promised.
 Level=44
 Suggested=44
 Exp=8076
@@ -818,22 +818,20 @@ Obj.0.type=kill
 Obj.0.data1=1228,1229
 Obj.0.data2=20
 Obj.0.description=Kill 20 Wrath Stags
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=0 of 20
-Obj.0.markerLocations=51357.5,699.868,69163.6,9
+Obj.0.markerLocations=51357.5,699.868,69163.6,9;
 [ACT]
 Act.BodyText= Return to Jon Darkeye
 Obj.0.type=talk
-Obj.0.data1=
-Obj.0.data2=
+Obj.0.data1=0
+Obj.0.data2=0
 Obj.0.description=Return to Jon Darkeye
-Obj.0.complete=0
 Obj.0.myCreatureDefID=1197
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=57964.9,809.567,66777.6,9
+Obj.0.markerLocations=57964.9,809.567,66777.6,9;
 
 [ENTRY]
 Requires=829
@@ -1477,13 +1475,17 @@ Obj.0.markerLocations=58337.0,789.456,66885.7,9;
 [ENTRY]
 Requires=847
 ID=900
+[ENTRY]
+ID=900
+Requires=847
 Title=Message to Front Line Camp
-BodyText=Friend, perhaps you can perform another favor for me? As it now seems I must return to the Redeemer's Camp to inform my fellow Redeemers of my contact's death, would you deliver the documents you were able to retrieve to Damian Talamasca in Front Line Camp in my place? Damian is the commanding officer of our forces stationed at the Front Line and I am certain the information contained in these notes will be of great assistance there. I assure you they can use all the help they can get. 
+BodyText=Friend, perhaps you can perform another favor for me? As it now seems I must return to the Redeemer's Camp to inform my fellow Redeemers of my contact's death, would you deliver the documents you were able to retrieve to Damian Talamasca in Front Line Camp in my place? Damian is the commanding officer of our forces stationed at the Front Line and I am certain the information contained in these notes will be of great assistance there. I assure you they can use all the help they can get.
 
 Thank you so much!
 CompleteText=A message from Zahn? Give it here... Hmmm this is tragic news indeed... Thank you for going out of your way to deliver the sad tidings to us.
 
 Oh! How rude of me, welcome to the Front Line Camp, friend!
+Level=44
 Suggested=45
 Exp=8211
 PartySize=1
@@ -1494,29 +1496,29 @@ QuestGiverID=7785
 QuestEnderID=1318
 Repeat=0
 sGiver=63985.6,780.358,56930.7,9
-sEnder=
+sEnder=0.0,0.0,0.0,0
 [ACT]
 Act.BodyText=Travel to the Frontline Camp in Swineland and deliver the message to Damian Talamasca.
 Obj.0.type=talk
 Obj.0.data1=1318
-Obj.0.data2=
+Obj.0.data2=0
 Obj.0.description=Deliver the message to Damian Talamasca.
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=73239.8,856.26,60816.6,9
-
-[ENTRY]
-Requires=900
+Obj.0.markerLocations=73239.8,856.26,60816.6,9;
 ID=901
-Title=Black Gold 
-BodyText=Unikorns are a necessary evil in this land, foul as their presence may be. We do our best to keep the population healthy, but never so large a herd that they are uncontrollable. 
+[ENTRY]
+ID=901
+Requires=900
+Title=Black Gold
+BodyText=Unikorns are a necessary evil in this land, foul as their presence may be. We do our best to keep the population healthy, but never so large a herd that they are uncontrollable.
 
-You see, the local Night-Mares provide us Redeemers with a valuable resource: Vile Bihyl. This thick ichor, extracted from Night-Mare spleens protects us against vampires by turning our blood repugnant to vampires. The taste is foul beyond measure, but a necessary evil if you wish to survive here at the Front Line. 
+You see, the local Night-Mares provide us Redeemers with a valuable resource: Vile Bihyl. This thick ichor, extracted from Night-Mare spleens protects us against vampires by turning our blood repugnant to vampires. The taste is foul beyond measure, but a necessary evil if you wish to survive here at the Front Line.
 
-Take to the wilds and harvest eight pints of Vile Bihyl from Night-Mares, and kill twelve of their handlers, the Valkal Steedmasters. It may save your own life one day! 
+Take to the wilds and harvest eight pints of Vile Bihyl from Night-Mares, and kill twelve of their handlers, the Valkal Steedmasters. It may save your own life one day!
 CompleteText=Excellent work! This will replenish our supply as well as allow us to treat more Redeemer blood and increase our numbers in the fight against Valkal's legions.
+Level=44
 Suggested=45
 Exp=9114
 PartySize=1
@@ -1534,42 +1536,40 @@ Obj.0.type=kill
 Obj.0.data1=1345
 Obj.0.data2=8
 Obj.0.description=Collect eight pints of Vile Bihyl
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=0 of 8
-Obj.0.markerLocations=77299.8,899.39,56219.2,9
+Obj.0.markerLocations=77299.8,899.39,56219.2,9;
 Obj.1.type=kill
 Obj.1.data1=1346
 Obj.1.data2=12
 Obj.1.description=Kill 12 Valkal Steedmasters
-Obj.1.complete=0
 Obj.1.myCreatureDefID=
 Obj.1.myItemID=
 Obj.1.completeText=0 of 12
-Obj.1.markerLocations=77299.8,899.39,56219.2,9
+Obj.1.markerLocations=77299.8,899.39,56219.2,9;
 [ACT]
 Act.BodyText=Return to Damian Talamasca
 Obj.0.type=talk
 Obj.0.data1=1318
-Obj.0.data2=
+Obj.0.data2=0
 Obj.0.description=Return to Damian Talamasca
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=73239.8,856.26,60816.6,9
-
-[ENTRY]
-Requires=900
+Obj.0.markerLocations=73239.8,856.26,60816.6,9;
 ID=902
+[ENTRY]
+ID=902
+Requires=900
 Title=The Blood Of The Innocents
-BodyText=South of this Front-Line encampment, the Ice Goliaths are constantly trampling a more precious resource than most of us could ever imagine – Gaia's Tears. We believe that the crystals form as a result of millions of seasons' pressure from the mountains and a constant cold temperature, creating a snow-crystal of distilled aquae so pure that it is practically blessed by Gaia herself! 
+BodyText=South of this Front-Line encampment, the Ice Goliaths are constantly trampling a more precious resource than most of us could ever imagine - Gaia's Tears. We believe that the crystals form as a result of millions of seasons' pressure from the mountains and a constant cold temperature, creating a snow-crystal of distilled aquae so pure that it is practically blessed by Gaia herself!
 
-This purity, of course, makes the resultant liquid a very effective vampire killer. Well, kind of. You see, this only works on those vampires who are weakened, or resting. But we Redeemers will take any chance we can get! 
+This purity, of course, makes the resultant liquid a very effective vampire killer. Well, kind of. You see, this only works on those vampires who are weakened, or resting. But we Redeemers will take any chance we can get!
 
-Travel south until you see the Ice Goliaths - they are easily angered, step wise! Collect six Gaia's Tears from around where the Ice Goliaths have dug their "nests". 
+Travel south until you see the Ice Goliaths - they are easily angered, step wise! Collect six Gaia's Tears from around where the Ice Goliaths have dug their "nests".
 CompleteText=The Ice Goliaths are incredible ancient creatures, but in these desperate times of war, the innocent will take casualties too.  You did great work, thank you...
+Level=44
 Suggested=45
 Exp=9213
 PartySize=1
@@ -1582,51 +1582,49 @@ Repeat=0
 sGiver=73175.5,856.287,60806.4,9
 sEnder=73175.5,856.287,60806.4,9
 [ACT]
-Act.BodyText=Travel south until you see the Ice Goliaths - they are easily angered, step wise! Collect six Gaia's Tears from around where the Ice Goliaths have dug their "nests". 
+Act.BodyText=Travel south until you see the Ice Goliaths - they are easily angered, step wise! Collect six Gaia's Tears from around where the Ice Goliaths have dug their "nests".
 Obj.0.type=kill
 Obj.0.data1=1311,1312
 Obj.0.data2=12
 Obj.0.description=Kill 12 Ice Goliaths
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=0 of 12
-Obj.0.markerLocations=68899.7,415.235,63899.7,9
+Obj.0.markerLocations=68899.7,415.235,63899.7,9;
 Obj.1.type=gather
 Obj.1.data1=3485
 Obj.1.data2=6
 Obj.1.description=Gather 6 of Gaia's Tears
-Obj.1.complete=0
 Obj.1.myCreatureDefID=
 Obj.1.myItemID=
 Obj.1.completeText=0 of 6
-Obj.1.markerLocations=68899.7,415.235,63899.7,9
+Obj.1.markerLocations=68899.7,415.235,63899.7,9;
 [ACT]
 Act.BodyText=Return to Ziggy Emberpaw
 Obj.0.type=talk
 Obj.0.data1=1300
 Obj.0.data2=12
 Obj.0.description=Return to Ziggy Emberpaw
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=73175.5,856.287,60806.4,9
-
-[ENTRY]
-Requires=902
+Obj.0.markerLocations=73175.5,856.287,60806.4,9;
 ID=903
+[ENTRY]
+ID=903
+Requires=902
 Title=Blood Thicker Than Water
-BodyText=Justi Ambereye, once one of the most adored of The Redeemers, now roams the wastelands here in Swineland - forever tainted beyond any semblance of what we consider life. 
+BodyText=Justi Ambereye, once one of the most adored of The Redeemers, now roams the wastelands here in Swineland - forever tainted beyond any semblance of what we consider life.
 
-The Ursine's gentle paws had saved countless lives, ruled fairly in the council, and even taught my son to fish after the death of his father. Now, he bears the same face, and with twisted savagery has torn apart several of his family and friends. 
+The Ursine's gentle paws had saved countless lives, ruled fairly in the council, and even taught my son to fish after the death of his father. Now, he bears the same face, and with twisted savagery has torn apart several of his family and friends.
 
 You see, the Vampires knew what a strategist Justi was, and he brought The Redeemers so very close to defeating the entire brood before they took him. Vampires have not been known to "turn"beasts, I do not even believe they can! Yet one of their mages had sucessfully ensorcelled poor Justi into believing he was of Vampire-Kind! And he believes it today - living in the wastes as a heartless, killing machine.
 
 I cannot stand for this to continue! The beast that once was, no longer exists. He serves no real threat to The Redeemers, but seeing one of our "family"so defiled is an affront to all that exists!
 
-Travel to Old Scraptown, as Justi was seen there last. Bring him peace, friend, and return to me with the Ambereye Signet Ring. 
+Travel to Old Scraptown, as Justi was seen there last. Bring him peace, friend, and return to me with the Ambereye Signet Ring.
 CompleteText=Justi.... He was the best of us and they got him.  Everything he worked so hard to do was undone... His death won't be in vain! Thank you for bringing him peace.
+Level=45
 Suggested=46
 Exp=9612
 PartySize=2
@@ -1639,41 +1637,39 @@ Repeat=0
 sGiver=73239.8,856.26,60816.6,9
 sEnder=73239.8,856.26,60816.6,9
 [ACT]
-Act.BodyText=Travel to Old Scraptown, as Justi was seen there last. Put the formerly gentle Ursine out of his misery and return to Damian with the Ambereye Signet Ring as a proof of the deed. 
+Act.BodyText=Travel to Old Scraptown, as Justi was seen there last. Put the formerly gentle Ursine out of his misery and return to Damian with the Ambereye Signet Ring as a proof of the deed.
 Obj.0.type=kill
 Obj.0.data1=1351
 Obj.0.data2=1
 Obj.0.description=Put Justi Amvereye to rest
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=77917.1,735.081,56885.8,9
+Obj.0.markerLocations=77917.1,735.081,56885.8,9;
 [ACT]
 Act.BodyText=Bring the Ambereye Signet Ring to Damian Talamasca.
 Obj.0.type=talk
 Obj.0.data1=1318
-Obj.0.data2=
+Obj.0.data2=0
 Obj.0.description=Return to Damian Talamasca
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=73239.8,856.26,60816.6,9
-
-
-[ENTRY]
-Requires=902
+Obj.0.markerLocations=73239.8,856.26,60816.6,9;
 ID=904
+[ENTRY]
+ID=904
+Requires=902
 Title=Bergback Mountain
 BodyText=Lumbering Bergbacks! Have you seen the creatures? They are truly glorious, and it is a wonder that such behemoths could thrive in the mountains on the southern borders of Swineland.
 
-They are not like the "usual" creatures of Gaia's creation, but seem to be animated mountains - part flesh and part beast! 
+They are not like the "usual" creatures of Gaia's creation, but seem to be animated mountains - part flesh and part beast!
 
 Their eyes are particularly prized, for their magical focusing qualities as they are gems of a unique clarity. The Redeemers are always in need of funding for our crusade against the Unliving, and this has been a handy source!
 
-Please, travel south of Front Line Camp and extract 13 Lumbering Bergback Eyes from the creatures you find there. Worry not, they seem to reproduce like Bounders so the population will recover quickly! 
+Please, travel south of Front Line Camp and extract 13 Lumbering Bergback Eyes from the creatures you find there. Worry not, they seem to reproduce like Bounders so the population will recover quickly!
 CompleteText=Such noble creatures! We can sell these eyes for a handsome sum.  Here's your cut.
+Level=45
 Suggested=46
 Exp=9415
 PartySize=1
@@ -1691,34 +1687,34 @@ Obj.0.type=kill
 Obj.0.data1=1316,1317
 Obj.0.data2=13
 Obj.0.description=Harvest 13 Lumbering Bergback Eyes
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=0 of 13
-Obj.0.markerLocations=74543.5,899.569,63156.4,9
+Obj.0.markerLocations=74543.5,899.569,63156.4,9;
 [ACT]
 Act.BodyText=Return to Ziggy Emberpaw.
 Obj.0.type=talk
 Obj.0.data1=1300
-Obj.0.data2=
+Obj.0.data2=0
 Obj.0.description=Return to Ziggy Emberpaw
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=73236.1,856.26,60779.3,9
-
-[ENTRY]
+Obj.0.markerLocations=73236.1,856.26,60779.3,9;
 Requires=901
+[ENTRY]
 ID=905
-Title= The Stinking Roses
-BodyText=Oi! 
+Requires=901
+Title=The Stinking Roses
+BodyText=Oi!
 
-You up for a little fetch an' carry? Stinking Roses, which grow north of Old Junktown, are always an effective deterrant in keepin' the Vampires outta our camps. They can't abide the smell, ye know?
+You up for a little fetch an' carry? Stinking Roses, which grow north of Old Junktown, are always an effective deterrent in keepin' the Vampires outta our camps. They can't abide the smell, ye know?
 
-Anyway, gather up about a dozen Stinking Rose bulbs growing around trees north of Old Junktown, and bring the whole lot to Alain Darkfeather at the Redeemer Camp. 
+Anyway, gather up about a dozen Stinking Rose bulbs growing around trees north of Old Junktown, and bring the whole lot to Alain Darkfeather at the Redeemer Camp.
 
-Out here we are always in need of fresh garlands made o' Stinking Roses! 
+Out here we are always in need of fresh garlands made o' Stinking Roses!
 CompleteText=Oh, well, thank you.  It's a generous offering from our Warpig allies, but we have more pressing concerns than our scent!
+Level=45
 Suggested=45
 Exp=9285
 PartySize=1
@@ -1736,32 +1732,32 @@ Obj.0.type=gather
 Obj.0.data1=1415
 Obj.0.data2=12
 Obj.0.description=Gather 12 Stinking Roses
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=0 of 12
-Obj.0.markerLocations=69127.4,1382.73,55173.5,9
+Obj.0.markerLocations=69127.4,1382.73,55173.5,9;
 [ACT]
 Act.BodyText=Deliver the Roses to Alain Darkfeather.
 Obj.0.type=talk
 Obj.0.data1=1319
-Obj.0.data2=
+Obj.0.data2=0
 Obj.0.description=Deliver the Roses to Alain Darkfeather
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=76585.8,979.052,50077.1,9
-
-[ENTRY]
+Obj.0.markerLocations=76585.8,979.052,50077.1,9;
 Requires=903
+[ENTRY]
 ID=906
-Title= Bite Them Back
-BodyText=Such superstitions the Warpigs have! The weak efforts involving blessed waters and stinking roses - well they merely chip away at the tide of Unliving bearing down upon us. 
+Requires=903
+Title=Bite Them Back
+BodyText=Such superstitions the Warpigs have! The weak efforts involving blessed waters and stinking roses - well they merely chip away at the tide of Unliving bearing down upon us.
 
 We have no choice, friend, but to take to the Vampires the only threat they understand - the final death. Surely, nothing frightens the Unliving more than an end to their horrific feasting!
 
-Travel afield, and slay eleven Moonskull Hunters. Show the Vampires that our bark matches our "bite"! 
+Travel afield, and slay eleven Moonskull Hunters. Show the Vampires that our bark matches our "bite"!
 CompleteText=That'll make the Vampires take us a little more seriously. Good work, soldier!
+Level=45
 Suggested=46
 Exp=9497
 PartySize=1
@@ -1779,26 +1775,24 @@ Obj.0.type=kill
 Obj.0.data1=1330,1331
 Obj.0.data2=11
 Obj.0.description=Kill 11 Moonskull Hunters
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=0 of 11
-Obj.0.markerLocations=78712.3,868.15,58974.7,9
+Obj.0.markerLocations=78712.3,868.15,58974.7,9;
 [ACT]
 Act.BodyText=Return to Damian Talamasca.
 Obj.0.type=talk
 Obj.0.data1=1318
-Obj.0.data2=
+Obj.0.data2=0
 Obj.0.description=Return to Damian Talamasca
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=73239.8,856.26,60816.6,9
-
-[ENTRY]
-Requires=906
+Obj.0.markerLocations=73239.8,856.26,60816.6,9;
 ID=907
+[ENTRY]
+ID=907
+Requires=906
 Title=Breaking The Chain Of Command
 BodyText=Now that the Vampires are seeing us as more of threat, they are beginning to mobilize to try and wipe us out.  However, an army without proper leadership is vulnerable and weak.
 
@@ -1806,6 +1800,7 @@ Vaj Cruentes and Vaj Coltres are two of Valkal's so-called 'sons' who have been 
 
 Do this favor for us, friend, and the Redeemers will forever be in your debt. Please do not take the Vajs lightly! I know you are a seasoned warrior, but this is an ancient evil and both of these creatures have immense power.
 CompleteText=I don't believe my eyes, you've returned! I started to worry they got the best of... I won't lie, I had my doubts that you'd survive what with the sorts you had to contend with! You cannot even begin to understand what this means to the war effort!
+Level=46
 Suggested=46
 Exp=10476
 PartySize=2
@@ -1823,46 +1818,43 @@ Obj.0.type=kill
 Obj.0.data1=1332
 Obj.0.data2=1
 Obj.0.description=Kill Vaj Cruentes
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=0 of 1
-Obj.0.markerLocations=78822.1,866.691,59012.2,9
-Act.BodyText=Defeat the two commanders of the Vampire armies, Vaj Cruentes and Vaj Coltres, both 'sons' of Valkal.
+Obj.0.markerLocations=78822.1,866.691,59012.2,9;
 Obj.1.type=kill
 Obj.1.data1=7753
 Obj.1.data2=1
 Obj.1.description=Kill Vaj Coltres
-Obj.1.complete=0
 Obj.1.myCreatureDefID=
 Obj.1.myItemID=
 Obj.1.completeText=0 of 1
-Obj.1.markerLocations=77355,833.321,56531.1,9
+Obj.1.markerLocations=77355.0,833.321,56531.1,9;
 [ACT]
 Act.BodyText=Return to Damian Talamasca
 Obj.0.type=talk
 Obj.0.data1=1318
-Obj.0.data2=
+Obj.0.data2=0
 Obj.0.description=Return to Damian Talamasca
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=73239.8,856.26,60816.6,9
-
-[ENTRY]
-Requires=901
+Obj.0.markerLocations=73239.8,856.26,60816.6,9;
 ID=908
+[ENTRY]
+ID=908
+Requires=901
 Title=The Shiny Place
-BodyText=My buddy Snorg always was tellin' me, "Waylon, don't ever try and be like anybody else and don't be afraid to take risks" - and he never did. In fact, he took his crazy snout down to The Shiny Place, convinced that it was a secret treasure trove of artifacts from the Age of Man. 
+BodyText=My buddy Snorg always was tellin' me, "Waylon, don't ever try and be like anybody else and don't be afraid to take risks" - and he never did. In fact, he took his crazy snout down to The Shiny Place, convinced that it was a secret treasure trove of artifacts from the Age of Man.
 
 Now, if you know anythin' about us Warpigs, you know that we don't take kindly to cold.
 
-I'm sure he's on to somethin', but I worry! 
+I'm sure he's on to somethin', but I worry!
 
-Will you check on my friend for me? Travel south and west from the Front Line Camp to The Shiny Place and speak to Snorg. 
+Will you check on my friend for me? Travel south and west from the Front Line Camp to The Shiny Place and speak to Snorg.
 CompleteText='allo there! Waylon sent ya did 'e?
-Suggested=46
+Level=45
+Suggested=45
 Exp=8816
 PartySize=1
 NumRewards=1
@@ -1872,29 +1864,29 @@ QuestGiverID=1304
 QuestEnderID=1328
 Repeat=0
 sGiver=73527.3,879.169,60373.5,9
-sEnder=66369.3,630.469,65092,9
+sEnder=66369.3,630.469,65092.0,9
 [ACT]
 Act.BodyText=Check up on Snorg at the "The Shiny Place" in the southwest.
 Obj.0.type=talk
 Obj.0.data1=1328
-Obj.0.data2=
+Obj.0.data2=0
 Obj.0.description=Speak with Snorg
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=66369.3,630.469,65092,9
-
-[ENTRY]
-Requires=908
+Obj.0.markerLocations=66369.3,630.469,65092.0,9;
 ID=909
+[ENTRY]
+ID=909
+Requires=908
 Title=Snorg's Shinies
 BodyText=Welcome to th' best, most wonderful Shiny Place ye'll ev'r find! Now lissen here, I'm th' smartest Warpig that ever lived! Just nobody knows it as of yet. That keeps me safe, see? If they knew the riches I had, well Boss Hawg hisself would be sendin' his Commandos down here to take me out!
 
-Just east o' here, where th' Ice Goliaths roam, there's some fancy crystals. These crystals are special, and I've found some itty-bitty pieces o' mankind's relics trapped within! I must have more, but I'se not so dumb as to take on the Ice Goliaths meself. 
+Just east o' here, where th' Ice Goliaths roam, there's some fancy crystals. These crystals are special, and I've found some itty-bitty pieces o' mankind's relics trapped within! I must have more, but I'se not so dumb as to take on the Ice Goliaths meself.
 
-Travel east to th' Ice Goliath camps, and gather eight Crystal-Relics fer me! 
+Travel east to th' Ice Goliath camps, and gather eight Crystal-Relics fer me!
 CompleteText=Wow! Can't believe ya took 'em on and won!! And ya got me Shinies too! Ahaha! Give 'em here an' lemme see what ya found me!
+Level=45
 Suggested=45
 Exp=9672
 PartySize=1
@@ -1904,33 +1896,28 @@ Unabandon=0
 QuestGiverID=1328
 QuestEnderID=1328
 Repeat=0
-sGiver=66369.3,630.469,65092,9
-sEnder=66369.3,630.469,65092,9
+sGiver=66369.3,630.469,65092.0,9
+sEnder=66369.3,630.469,65092.0,9
 [ACT]
 Act.BodyText=Travel east to the camps of the Ice Goliaths and collect 8 Crystal-Relics for Snorg.
 Obj.0.type=gather
-Obj.0.data1=
-Obj.0.data2=
+Obj.0.data1=0
+Obj.0.data2=0
 Obj.0.description=Gather 8 Crystal-Relics
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=0 of 8
-Obj.0.markerLocations=68690.9,414.457,64098.2,9
+Obj.0.markerLocations=68690.9,414.457,64098.2,9;
 [ACT]
 Act.BodyText=Return to Snorg with the Crystal-Relics.
 Obj.0.type=talk
 Obj.0.data1=1328
-Obj.0.data2=
+Obj.0.data2=0
 Obj.0.description=Return to Snorg
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=66369.3,630.469,65092,9
-
-[ENTRY]
-Requires=908
+Obj.0.markerLocations=66369.3,630.469,65092.0,9;
 ID=909
 Title=Snorg's Shinies
 BodyText=Welcome to th' best, most wonderful Shiny Place ye'll ev'r find! Now lissen here, I'm th' smartest Warpig that ever lived! Just nobody knows it as of yet. That keeps me safe, see? If they knew the riches I had, well Boss Hawg hisself would be sendin' his Commandos down here to take me out!
@@ -1976,9 +1963,13 @@ Obj.0.markerLocations=66369.3,630.469,65092,9
 [ENTRY]
 Requires=909
 ID=910
+[ENTRY]
+ID=910
+Requires=909
 Title=A Gift To A Friend
-BodyText=Well! Now ya seen' me treasures, but ye can't stay! Tell Waylon I'm fine. Let 'im know that ye never get anythin' with out takin' risks! Give 'im this as yer reminder. 
+BodyText=Well! Now ya seen' me treasures, but ye can't stay! Tell Waylon I'm fine. Let 'im know that ye never get anythin' with out takin' risks! Give 'im this as yer reminder.
 CompleteText=What's this now? A shiny? I knew he weren't crazy! Thanks for checkin' on him fer me!
+Level=45
 Suggested=45
 Exp=8642
 PartySize=1
@@ -1988,26 +1979,26 @@ Unabandon=0
 QuestGiverID=1328
 QuestEnderID=1304
 Repeat=0
-sGiver=66369.3,630.469,65092,9
+sGiver=66369.3,630.469,65092.0,9
 sEnder=73527.3,879.169,60373.5,9
 [ACT]
 Act.BodyText=Deliver a Crystal-Relic to Waylon.
 Obj.0.type=talk
 Obj.0.data1=1304
-Obj.0.data2=
+Obj.0.data2=0
 Obj.0.description=Speak to Waylon
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=73527.3,879.169,60373.5,9
-
-[ENTRY]
-Requires=910
+Obj.0.markerLocations=73527.3,879.169,60373.5,9;
 ID=922
+[ENTRY]
+ID=922
+Requires=910
 Title=The Great Speaker Of Nook
-BodyText=Hey, if it interests ya, you should head up north to Nook Town! That there place is considered to be th' Mecca of the Warpig world. The Great Nook is an area of worship for the creator of the Warpigs, and considering they worship a huge nuclear bomb they are not far off. The bomb is painted to have the features of a Warpig. There are a few temples made in the typical Warpig fashion surrounding the bomb. The temples are run by the Great Speaker of Nook. 
+BodyText=Hey, if it interests ya, you should head up north to Nook Town! That there place is considered to be th' Mecca of the Warpig world. The Great Nook is an area of worship for the creator of the Warpigs, and considering they worship a huge nuclear bomb they are not far off. The bomb is painted to have the features of a Warpig. There are a few temples made in the typical Warpig fashion surrounding the bomb. The temples are run by the Great Speaker of Nook.
 CompleteText=Who is this that comes before the Great Speaker of the Nook?
+Level=44
 Suggested=44
 Exp=8342
 PartySize=1
@@ -2023,24 +2014,24 @@ sEnder=62380.9,393.845,48938.6,9
 Act.BodyText=Travel to Nook Town and speak to the Great Speaker of Nook.
 Obj.0.type=talk
 Obj.0.data1=1322
-Obj.0.data2=
+Obj.0.data2=0
 Obj.0.description=Find the Great Speaker of Nook
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=62380.9,393.845,48938.6,9
-
-[ENTRY]
-Requires=905
+Obj.0.markerLocations=62380.9,393.845,48938.6,9;
 ID=911
+[ENTRY]
+ID=911
+Requires=905
 Title=Dark Tidings
 BodyText=The Warpigs have their tricks and theories of how to ward off the Vampires but the truth is they aren't going anywhere until we take the fight to them!  Atop the mountain directly south of us is Valkal's Blood Keep.
 
 We've tried several times to send a task force in to eliminate Lord Valkal and his kin, but something is preventing us from gaining entry into the stronghold.  It's almost a barrier of sorts... Some form of evil magic shields the place from the inside.
 
-We've been searching as best we can for a way to break the seal but to no avail.  If you truly want to help us, search the courtyard of the Keep for any clues as to how to gain entrance into the stronghold itself. While you are at it, and if possible, take out a few of those cold bodies with you when you depart! 
+We've been searching as best we can for a way to break the seal but to no avail.  If you truly want to help us, search the courtyard of the Keep for any clues as to how to gain entrance into the stronghold itself. While you are at it, and if possible, take out a few of those cold bodies with you when you depart!
 CompleteText=You've returned! The mark of death? Could this mean only the dead may enter? Impossible, it must be a riddle of sorts...
+Level=45
 Suggested=45
 Exp=9561
 PartySize=1
@@ -2050,43 +2041,40 @@ Unabandon=0
 QuestGiverID=1319
 QuestEnderID=1319
 Repeat=0
-sGiver=76647.6,979.647,50172,9
-sEnder=76647.6,979.647,50172,9
+sGiver=76647.6,979.647,50172.0,9
+sEnder=76647.6,979.647,50172.0,9
 [ACT]
 Act.BodyText=Search the Blood Keep Courtyard for clues on how to gain entry into the Keep itself. While you are at it, defeat twenty of the bloodsuckers roaming around the place!
 Obj.0.type=kill
 Obj.0.data1=1347,1348,1350,1349,1417,7750
 Obj.0.data2=20
 Obj.0.description=Kill 20 Vampires outside the Keep
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=0 of 20
-Obj.0.markerLocations=79042.1,1297.9,52837.1,9
+Obj.0.markerLocations=79042.1,1297.9,52837.1,9;
 Obj.1.type=talk
-Obj.1.data1=
-Obj.1.data2=
+Obj.1.data1=0
+Obj.1.data2=0
 Obj.1.description=Search the Courtyard for Clues
-Obj.1.complete=0
 Obj.1.myCreatureDefID=
 Obj.1.myItemID=
 Obj.1.completeText=
-Obj.1.markerLocations=79042.1,1297.9,52837.1,9
+Obj.1.markerLocations=79042.1,1297.9,52837.1,9;
 [ACT]
 Act.BodyText=Return to Alain Darkfeather with your discovery.
 Obj.0.type=talk
 Obj.0.data1=1319
-Obj.0.data2=
+Obj.0.data2=0
 Obj.0.description=Return to Alain Darkfeather
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=76647.6,979.647,50172,9
-
-[ENTRY]
-Requires=911
+Obj.0.markerLocations=76647.6,979.647,50172.0,9;
 ID=912
+[ENTRY]
+ID=912
+Requires=911
 Title=A Riddle in the Dark
 BodyText=I can't figure this out... Go speak to Maddie Paintedhoof, she's a whiz with riddles and knows the history of the land far better them me. Perhaps she can figure out what this message means.
 CompleteText=You have a riddle for me eh?! Sure, let me take a look... Hmmmm...
@@ -2094,6 +2082,7 @@ CompleteText=You have a riddle for me eh?! Sure, let me take a look... Hmmmm...
 To blackened hearts we hold them close...
 The key is buried with the dead...
 Only the Mark of Death will let you in."
+Level=45
 Suggested=45
 Exp=7561
 PartySize=1
@@ -2103,23 +2092,22 @@ Unabandon=0
 QuestGiverID=1319
 QuestEnderID=1307
 Repeat=0
-sGiver=76647.6,979.647,50172,9
+sGiver=76647.6,979.647,50172.0,9
 sEnder=76840.2,970.62,49964.3,9
 [ACT]
 Act.BodyText=Talk to Maddie Paintedhoof! Perhaps she can solve the riddle
 Obj.0.type=talk
 Obj.0.data1=1307
-Obj.0.data2=
+Obj.0.data2=0
 Obj.0.description=Speak with Maddie Paintedhoof
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=76840.2,970.62,49964.3,9
-
-[ENTRY]
-Requires=912
+Obj.0.markerLocations=76840.2,970.62,49964.3,9;
 ID=913
+[ENTRY]
+ID=913
+Requires=912
 Title=The Mark of Death
 BodyText=Wait, I think I've solved it!! The Mark of Death doesn't literally mean Death itself, it refers to an object! "The Key is buried with the dead" means the artifact is literally buried somewhere. "Only the Mark of Death will let you in" This is basically the answer itself. The Mark of Death itself is the Key!
 
@@ -2127,6 +2115,7 @@ Where would it be hidden though? It wouldn't be too close to the Blood Keep as p
 
 Just west of here is the Old Wartown Cemetery. The place used to be where the city's citizens buried their dead, but, it hasn't been used in generations. Vampires have been sighted in the general area but none have been confirmed to have actually entered the structure itself. Head to the abandoned Mausoleum and see if you can find this Mark of Death that this riddle speaks of. Be careful, though, I can only imagine what must be dwelling in there.
 CompleteText=You have it!! Incredible! Odd though... Such an object as this one would think would emit some sort of power, yet I feel nothing from it. There must be more to this riddle. Thank you for all your help.
+Level=45
 Suggested=45
 Exp=10561
 PartySize=2
@@ -2141,45 +2130,43 @@ sEnder=76840.2,970.62,49964.3,9
 [ACT]
 Act.BodyText=Travel to the old Mausoleum and search for The Mark of Death.
 Obj.0.type=talk
-Obj.0.data1=
-Obj.0.data2=
+Obj.0.data1=0
+Obj.0.data2=0
 Obj.0.description=Search the Old Mausoleum
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=74378.9,874.269,50967.3,9
+Obj.0.markerLocations=74378.9,874.269,50967.3,9;
 [ACT]
 Act.BodyText=Search the old Mausoleum and uncover the secrets it holds.
 Obj.0.type=kill
 Obj.0.data1=3475
 Obj.0.data2=1
 Obj.0.description=Find the Mark of Death
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=0 of 1
-Obj.0.markerLocations=1020.85,1.52588e-005,1734.64,3080
+Obj.0.markerLocations=1020.85,1.52588E-5,1734.64,3080;
 [ACT]
 Act.BodyText=Bring the Mark of Death to Maddie Paintedhoof.
 Obj.0.type=talk
 Obj.0.data1=1307
-Obj.0.data2=
+Obj.0.data2=0
 Obj.0.description=Bring Maddie the Mark of Death
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=76840.2,970.62,49964.3,9
-
-[ENTRY]
-Requires=912
+Obj.0.markerLocations=76840.2,970.62,49964.3,9;
 ID=914
+[ENTRY]
+ID=914
+Requires=912
 Title=A Possible Bloodkin Raid
 BodyText=Hey, I heard you're headed to the Old Wartown Cemetery. Dangerous place, keep your wits about you! I wonder if you can do the Redeemers another favor while you're over there. I was doing my midnight patrol the other day when I spotted a sizable Vampire pack headed in the direction of Wartown. Assuming it was a raid I quickly followed them, but suddenly they seemed to vanish out of sight. My only thought is they are hiding out in the old Mausoleum until they are ready to attack.
 
 To make things worse a Giant Vampider recently took refuge outside the Mausoleum door.  I doubt its a coincedence!  Kill the Vampider and 20 of Valkal's kin as well! Show them they aren't as clever as they think.
 CompleteText=I was right!? I knew it!! I can't thank you enough. I dont know if you fully understand what you may have prevented! The Redeemers and the people of Wartown are forever in your debt.
+Level=45
 Suggested=45
 Exp=9761
 PartySize=2
@@ -2189,50 +2176,48 @@ Unabandon=0
 QuestGiverID=1315
 QuestEnderID=1315
 Repeat=0
-sGiver=76772.5,978.741,50232,9
-sEnder=76772.5,978.741,50232,9
+sGiver=76772.5,978.741,50232.0,9
+sEnder=76772.5,978.741,50232.0,9
 [ACT]
 Act.BodyText=Kill the Giant Vampider that is acting as the Guardian to the Mausoleum in the Old Wartown Cemetery.
 Obj.0.type=kill
 Obj.0.data1=3470
 Obj.0.data2=1
 Obj.0.description=Kill The Guardian
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=0 of 1
-Obj.0.markerLocations=74560.3,881.832,50996.9,9
+Obj.0.markerLocations=74560.3,881.832,50996.9,9;
 [ACT]
 Act.BodyText=Kill twenty of Valkal's bloodkin in the Mausoleum.
 Obj.0.type=kill
 Obj.0.data1=1417,3474,3473
 Obj.0.data2=20
 Obj.0.description=Kill 20 of Valkals bloodkin
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=0 of 20
-Obj.0.markerLocations=1023.15,1.62125e-005,1416.07,3080
+Obj.0.markerLocations=1023.15,1.62125E-5,1416.07,3080;
 [ACT]
 Act.BodyText=Return to Marley Roberts
 Obj.0.type=talk
 Obj.0.data1=1315
-Obj.0.data2=
+Obj.0.data2=0
 Obj.0.description=Return to Marley Roberts
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=76772.5,978.741,50232,9
-
-[ENTRY]
-Requires=913
+Obj.0.markerLocations=76772.5,978.741,50232.0,9;
 ID=915
+[ENTRY]
+ID=915
+Requires=913
 Title=On My Way to Big City
 BodyText=I'll have to study this artifact further to determine it's precise use and how we can use it to get inside Valkal's Blood Keep. I need some time to study this artifact.
 
 Until then, why don't you check in over at Wartown itself? I've heard rumors Boss Hawg and his Crew have been causing problems over there again. When you get into town, speak to Elvis. He's always got a problem or two and usually hangs around near the eastern gate. Good luck!
 CompleteText=Well goo' mornin to ya stranger! Heard about me did ya? Well I just might have some work for ya, iffn' yer intersted.
+Level=45
 Suggested=45
 Exp=7577
 PartySize=1
@@ -2247,22 +2232,22 @@ sEnder=72697.3,1074.4,51812.5,9
 [ACT]
 Act.BodyText=Check in with Elvis near Wartown's eastern gate and see if he has any work for you.
 Obj.0.type=talk
-Obj.0.data1=
-Obj.0.data2=
+Obj.0.data1=0
+Obj.0.data2=0
 Obj.0.description=Check in with Elvis
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=72697.3,1074.4,51812.5,9
-
-[ENTRY]
-Requires=915
+Obj.0.markerLocations=72697.3,1074.4,51812.5,9;
 ID=916
+[ENTRY]
+ID=916
+Requires=915
 Title=Taking Out the Trash
 BodyText=Welcome to Wartown fella, safest place in Swineland... well... err... she use ta be. Wartown is starting to attract a few too many low lifes.  If yer as tough as ya look, go kick in a few Hoodlum skulls fer me. They's been hangin' round town like nobody's bisness and it's high time they go on an' git.
 CompleteText=HAHAHA!! I saw ye in action from over here! Ya sure got fight in yer bones that's fer sure.
 Take this to cover yer troubles!
+Level=45
 Suggested=45
 Exp=9836
 PartySize=1
@@ -2280,29 +2265,28 @@ Obj.0.type=kill
 Obj.0.data1=3486
 Obj.0.data2=12
 Obj.0.description=Defeat 12 Hoodlums
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=72378.9,1075.07,52458.1,9
+Obj.0.markerLocations=72378.9,1075.07,52458.1,9;
 [ACT]
 Act.BodyText=Return to Elvis.
 Obj.0.type=talk
-Obj.0.data1=
-Obj.0.data2=
+Obj.0.data1=0
+Obj.0.data2=0
 Obj.0.description=Return to Elvis
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=72697.3,1074.4,51812.5,9
-
-[ENTRY]
-Requires=916
+Obj.0.markerLocations=72697.3,1074.4,51812.5,9;
 ID=917
+[ENTRY]
+ID=917
+Requires=916
 Title=The Start of Something Big
 BodyText=Somethin' ain't right... Ya got rid of them street scum fer awhile, but I just saw a herd of em causing problems agin. What with the beatin' you laid on 'em, they shoulda been runnin' fer da hills! Go talk to Jeb, he's got more pull in this town then me. Mebbe he's heard somethin' I didn't.
 CompleteText=*sigh* Elvis 'as a good heart, he does, but he jus' stirred a pot we didn't wanna touch. Ya see, them so-called "Hoodlums" he sent you after were actually underlings o' Boss Hawg's gang, Th' 'azard Crew, and now he knows we is on to 'im. We gots ta make our next move quick bfore Hawg can retaliate.
+Level=45
 Suggested=45
 Exp=9536
 PartySize=1
@@ -2317,22 +2301,21 @@ sEnder=72795.6,1327.27,52898.1,9
 [ACT]
 Act.BodyText=Report to Jeb.
 Obj.0.type=talk
-Obj.0.data1=
-Obj.0.data2=
+Obj.0.data1=0
+Obj.0.data2=0
 Obj.0.description=Report to Jeb
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=72795.6,1327.27,52898.1,9
-
-[ENTRY]
-Requires=917
+Obj.0.markerLocations=72795.6,1327.27,52898.1,9;
 ID=918
+[ENTRY]
+ID=918
+Requires=917
 Title=Finding the Haz'ard Crew Hangout
 BodyText=Boss Hawg has been usin' his spies from th' Crew ta keep tabs on us fer some time now. We think they gots a hideout somewhere in town, but, haven't had much luck in findin' it. Since yer th' one who got their 'tention, search the city for clues and talk to the locals. Surely someone knows where they are a hidin'.
 CompleteText=I shoulda guessed it'd be in th' obvious place! That ole tavern is where the most of th' Crew are offen seen night 'n day...
-
+Level=45
 Suggested=45
 Exp=9736
 PartySize=1
@@ -2347,40 +2330,37 @@ sEnder=72795.6,1327.27,52898.1,9
 [ACT]
 Act.BodyText= Find where the Haz'ard Crew have their hideout.
 Obj.0.type=talk
-Obj.0.data1=3487	
-Obj.0.data2=
+Obj.0.data1=3487
+Obj.0.data2=0
 Obj.0.description=Find the Haz'ard Crew Hideout.
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=72807.1,1328.76,52891.6,9
+Obj.0.markerLocations=72807.1,1328.76,52891.6,9;
 [ACT]
 Act.BodyText= Take the Haz'ard Crew Battle Plans.
 Obj.0.type=gather
-Obj.0.data1=	
-Obj.0.data2=
+Obj.0.data1=0
+Obj.0.data2=0
 Obj.0.description=Take the Battle Plans.
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=72807.1,1328.76,52891.6,9
+Obj.0.markerLocations=72807.1,1328.76,52891.6,9;
 [ACT]
 Act.BodyText= Return to Jeb.
 Obj.0.type=talk
-Obj.0.data1=
-Obj.0.data2=
-Obj.0.description=Return to Jeb 
-Obj.0.complete=0
+Obj.0.data1=0
+Obj.0.data2=0
+Obj.0.description=Return to Jeb
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=72795.6,1327.27,52898.1,9
-
-[ENTRY]
-Requires=918
+Obj.0.markerLocations=72795.6,1327.27,52898.1,9;
 ID=919
+[ENTRY]
+ID=919
+Requires=918
 Title=The Spy of Wartown
 BodyText=(You show Jeb the paper you found in the hideout that looks like some sort of battle plan to attack Wartown on it.)
 
@@ -2393,7 +2373,8 @@ Wut is this?!
 Why that dirty rotten...! So, Hawg's a thinkin' he can a retake all a' Wartown fer hisself eh?! That does it, I was a goin' ta send ya there anyways but this is th' last bit o' straw! Head t' me buddy Bert over by Boss Hawg's Junk Palace compound located to th' west o' Wartown an' let 'im know o' Hawg's awdacity. He's been a watchin' th' Haz'ard Crew fer a good while now, an' lets us here in Wartown know of any movements they is up to. Ol' Bert's a right up spy he is and was th' one who told us 'bout th' Crew's hangout you done found an' busted up fer us.
 
 Hurry to 'im afore Hawg makes 'is move!
-CompleteText=An' jes who're you s'posed ta be, huh? Says what?! I sees then... So, Jeb sent ya to me ta let me know what Boss Hawg's aplannin'. An' he thinks youse strong enuf ta' deal with Hawg too?! Fine then. If'n Jeb trusts ya, then so do I. 
+CompleteText=An' jes who're you s'posed ta be, huh? Says what?! I sees then... So, Jeb sent ya to me ta let me know what Boss Hawg's aplannin'. An' he thinks youse strong enuf ta' deal with Hawg too?! Fine then. If'n Jeb trusts ya, then so do I.
+Level=45
 Suggested=45
 Exp=9736
 PartySize=1
@@ -2408,26 +2389,25 @@ sEnder=72795.6,1327.27,52898.1,9
 [ACT]
 Act.BodyText= Speak to Bert near the Junk Palace Compound to the west of Wartown.
 Obj.0.type=talk
-Obj.0.data1=3487	
-Obj.0.data2=
+Obj.0.data1=3487
+Obj.0.data2=0
 Obj.0.description=Speak to Bert
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=72807.1,1328.76,52891.6,9
-
-
-[ENTRY]
-Requires=919
+Obj.0.markerLocations=72807.1,1328.76,52891.6,9;
 ID=920
+[ENTRY]
+ID=920
+Requires=919
 Title=Puttin' A Quiver In His Liver
-BodyText= Now sit a spell, and lissen 'bout ol' Boss Hawg. When they was a passin' out th' brains, he musta been behind th' door an' didn't get any. 
+BodyText=Now sit a spell, and lissen 'bout ol' Boss Hawg. When they was a passin' out th' brains, he musta been behind th' door an' didn't get any.
 
 He's in charge of th' Haz'ard Crew, and none put a hurt on anyone more than that mercenary band! Boss Hawg let greed get th' best o' him - even for a Warpig - when he done let open the Dambat Door! How can we make a profit with all a' this scuttlebutt about!
 
 It's 'bout time we take down Boss Hawg an' his lackeys th' Haz'ard Crew once an' fer all. A'fore we can deal with Hawg hisself, though, there's th' Haz'ard Crew ta deal with first! Don't need em' a squealin' ta Hawg that we is here jus' yet. This here compound is full o' Haz'ard Crew so be careful, but, don't go easy on 'em either!
 CompleteText=Youse cleared out those Haz'ard scum like nobody's bisness, an' pretty quick too! Now I sees why Jeb recomended ya! Now comes th' real fun...
+Level=45
 Suggested=45
 Exp=10276
 PartySize=3
@@ -2440,31 +2420,29 @@ Repeat=0
 sGiver=72795.6,1327.27,52898.1,9
 sEnder=66708.9,1103.91,54125.8,9
 [ACT]
-Act.BodyText=Enter the Junk Palace Compound and kill 10 Haz'ard Crew. (Scouts, 
+Act.BodyText=Enter the Junk Palace Compound and kill 10 Haz'ard Crew. (Scouts,
 Obj.0.type=kill
 Obj.0.data1=1390,7754
 Obj.0.data2=10
 Obj.0.description=Defeat 10 Haz'ard Crew
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=0 of 10
-Obj.0.markerLocations=66708.9,1103.91,54125.8,9
+Obj.0.markerLocations=66708.9,1103.91,54125.8,9;
 [ACT]
 Act.BodyText= Return to Bert
 Obj.0.type=talk
-Obj.0.data1=
-Obj.0.data2=
+Obj.0.data1=0
+Obj.0.data2=0
 Obj.0.description=Return to Bert
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=67693.7,1215.39,52932.9,9
-
-[ENTRY]
-Requires=920
+Obj.0.markerLocations=67693.7,1215.39,52932.9,9;
 ID=921
+[ENTRY]
+ID=921
+Requires=920
 Title=The Junk Palace
 BodyText=Now that the' Haz'ard Crew are outta comission, we can storm th' Junk Palace itself and put an end ta' Boss Hawg's reign once and fer all! Th' Junk Palace is that large mansion sitiated up on th' hill in the back o' th' Compound. I'se sure ya saw it when ya was dealin' with th' Crew.
 
@@ -2474,6 +2452,7 @@ Either way ya do th' job, it ain't gonna be easy, so prepare yerself accordin' l
 CompleteText=So, it's finally over. Boss Hawg done met his maker. Mebbe now things'll finally calm down an' the rest o' us can all get back t' doin' proper bisness an actually make some coin fer once.
 
 I'se gotta admit it, ya did a warpig proud in there. Really, I means it. For yer troubles, take this. It ain't much, but, don't ever let it be said a warpig never gave nothin' fer thanks. Swineland's future looks a little brighter thanks to ya. Now iffn' we can gets rid o' them dambats, things'll really start lookin' up.
+Level=45
 Suggested=45
 Exp=10576
 PartySize=3
@@ -2491,59 +2470,55 @@ Obj.0.type=kill
 Obj.0.data1=1391,1392,1393,1394
 Obj.0.data2=15
 Obj.0.description=Defeat Boss Hawg's bodyguards
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=0 of 15
-Obj.0.markerLocations=1463,280.687,1552.76,67
+Obj.0.markerLocations=1463.0,280.687,1552.76,67;
 [ACT]
 Act.BodyText=Enter the Junk Palace and defeat the Haz'ard Crew Capos and Boss Hawg, the Haz'ard Crew boss.
 Obj.0.type=kill
 Obj.0.data1=1387
 Obj.0.data2=1
 Obj.0.description=Defeat Boss Hawg
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=0 of 1
-Obj.0.markerLocations=1463,280.687,1552.76,67
+Obj.0.markerLocations=1463.0,280.687,1552.76,67;
 Obj.1.type=kill
-Obj.1.data1=
+Obj.1.data1=0
 Obj.1.data2=2
 Obj.1.description=Defeat the Haz'ard Crew Capos
-Obj.1.complete=0
 Obj.1.myCreatureDefID=
 Obj.1.myItemID=
 Obj.1.completeText=0 of 2
-Obj.1.markerLocations=1463,280.687,1552.76,67
+Obj.1.markerLocations=1463.0,280.687,1552.76,67;
 [ACT]
 Act.BodyText= Return to Jeb.
 Obj.0.type=talk
-Obj.0.data1=
-Obj.0.data2=
+Obj.0.data1=0
+Obj.0.data2=0
 Obj.0.description=Return to Jeb
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=72795.6,1327.27,52898.1,9
-
-
+Obj.0.markerLocations=72795.6,1327.27,52898.1,9;
+Title=In Need Of A Makeover
 [ENTRY]
 ID=923
 Title=In Need Of A Makeover
-BodyText=You there - approach us! 
+BodyText=You there - approach us!
 
 I'm th' Great Speaker o' Nook! All o' youse will kiss my ring as I give th' words of our shiny, ticking god!
 
-Nook's been lookin' a bit rough lately, what with all the worshippin' and huggin' Warpigs are givin' 'im - so's I'se a thinkin' we need t' freshen our shiny-one up a bit. 
+Nook's been lookin' a bit rough lately, what with all the worshippin' and huggin' Warpigs are givin' 'im - so's I'se a thinkin' we need t' freshen our shiny-one up a bit.
 
 
-Will ya serve The Great Nook - shiny-one and doom-bringer? He demands it! 
+Will ya serve The Great Nook - shiny-one and doom-bringer? He demands it!
 
 
 Hunt southeast o' here, fer some dambugs. Dambug blood makes fer good an' shiny paint for Nook! Bring us back thirteen gallons o' Dambug Blood as a right offerin' ta Nook.
 CompleteText=It pleases Nook ta see an outsider take such risk for th' tickin' god. Many thanks traveler.
+Level=44
 Suggested=44
 Exp=8634
 PartySize=1
@@ -2558,39 +2533,38 @@ sEnder=62380.9,393.845,48938.6,9
 [ACT]
 Act.BodyText=Travel to the nearby Skrill mounds and collect 13 gallons of Dambug Blood for The Great Nook.
 Obj.0.type=kill
-Obj.0.data1=
+Obj.0.data1=0
 Obj.0.data2=13
 Obj.0.description=Collect 13 gallons of dambug blood
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=0 of 13
-Obj.0.markerLocations=65379.6,909.672,51262.9,9
+Obj.0.markerLocations=65379.6,909.672,51262.9,9;
 [ACT]
 Act.BodyText=Return to Norris.
 Obj.0.type=talk
 Obj.0.data1=1322
-Obj.0.data2=
+Obj.0.data2=0
 Obj.0.description=Return to Norris
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=62380.9,393.845,48938.6,9
-
+Obj.0.markerLocations=62380.9,393.845,48938.6,9;
+Title=Bug-Juice
 [ENTRY]
 ID=924
 Title=Bug-Juice
-BodyText=Oi! 
+BodyText=Oi!
 
-The Great Speaker of Nook - he's in need o' his Bug-Juice sumthin' fierce, and we been kinda busy with other stuff. 
+The Great Speaker of Nook - he's in need o' his Bug-Juice sumthin' fierce, and we been kinda busy with other stuff.
 
-Go kill Dambugs fer me, an' I'll whip some Bug-Juice up for him right quick. He needs th' drink ta hear th' tick-whispers o' the Nook. 
+Go kill Dambugs fer me, an' I'll whip some Bug-Juice up for him right quick. He needs th' drink ta hear th' tick-whispers o' the Nook.
 
 Here's the stuff I'm needin': Spleens from th' Hiveguards, Eyes from th' Hivemenders, and Gooey-Goo from th' Hivesoldiers.
 
 Bring me back seven of each.
 CompleteText=Nook bless you! Now th' Great Speaker will be able ta hear new words from th' ticking god and guide us further!
+Level=44
 Suggested=44
 Exp=8734
 PartySize=1
@@ -2608,44 +2582,40 @@ Obj.0.type=kill
 Obj.0.data1=1398
 Obj.0.data2=7
 Obj.0.description=Gather 7 Skrill Hiveguard Spleens
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=0 of 7
-Obj.0.markerLocations=65379.6,909.672,51262.9,9
+Obj.0.markerLocations=65379.6,909.672,51262.9,9;
 Obj.1.type=kill
 Obj.1.data1=1402
 Obj.1.data2=7
 Obj.1.description=Gather 7 Skrill Hivemender Eyes
-Obj.1.complete=0
 Obj.1.myCreatureDefID=
 Obj.1.myItemID=
 Obj.1.completeText=0 of 7
-Obj.1.markerLocations=65379.6,909.672,51262.9,9
+Obj.1.markerLocations=65379.6,909.672,51262.9,9;
 Obj.2.type=kill
 Obj.2.data1=1399
 Obj.2.data2=7
 Obj.2.description=Gather 7 Skrill Hivesoldier Gooey-Goo
-Obj.2.complete=0
 Obj.2.myCreatureDefID=
 Obj.2.myItemID=
 Obj.2.completeText=0 of 7
-Obj.2.markerLocations=65379.6,909.672,51262.9,9
+Obj.2.markerLocations=65379.6,909.672,51262.9,9;
 [ACT]
 Act.BodyText=Return to Dixon with the ingredients.
 Obj.0.type=talk
 Obj.0.data1=1321
-Obj.0.data2=
+Obj.0.data2=0
 Obj.0.description=Return to Dixon
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=61842.3,407.187,49082.4,9
-
-[ENTRY]
-Requires=923
+Obj.0.markerLocations=61842.3,407.187,49082.4,9;
 ID=925
+[ENTRY]
+ID=925
+Requires=923
 Title=The Nook-le-are Path
 BodyText=Nook has spoken of an outsider who would walk th' Nook-le-are Path and prepare us fer th' Great Splitting. It has happened once before when Man became consumed with hatred to hisself and lost sight o' the Nook's salvation. The Great Nook split then and th' world was reborn... though Man was no more.
 
@@ -2663,7 +2633,8 @@ What utter heresy an' blasphemy!
 
 While youse go on yer own pilgrimage to the Nook-le-are Path for th' ticking god, find those blasphemin' heretics occupyin' Nook's holy path and eliminate 'em. Ye'll be makin' it safe fer all the gen-u-wine true believers ta once again be able ta make their own pilgrimages to th' Path.
 CompleteText=I see we have a new believer in our midst! I can feel Nook's essence radiatin' right offa ya.. ...and ya dealt with th' heretics too? Ya did...? I'se sure Nook is greatly pleased.   ... what's this...?
-Suggested=44
+Level=45
+Suggested=45
 Exp=8814
 PartySize=1
 NumRewards=1
@@ -2677,38 +2648,35 @@ sEnder=62380.9,393.845,48938.6,9
 [ACT]
 Act.BodyText=Travel to the Nook-le-are Path south of Wartown and eliminate 20 members of the Nook-le-are Cult. While on your pilgrimage, see if you can find out what the Cult is up to.
 Obj.0.type=kill
-Obj.0.data1=
+Obj.0.data1=0
 Obj.0.data2=20
 Obj.0.description=Defeat 20 Nook-le-are Cult
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=0 of 20
-Obj.0.markerLocations=65379.6,909.672,51262.9,9
+Obj.0.markerLocations=65379.6,909.672,51262.9,9;
 Obj.1.type=gather
-Obj.1.data1=
+Obj.1.data1=0
 Obj.1.data2=1
 Obj.1.description=Pick up Boris' Plans
-Obj.1.complete=0
 Obj.1.myCreatureDefID=
 Obj.1.myItemID=
 Obj.1.completeText=0 of 1
-Obj.1.markerLocations=65379.6,909.672,51262.9,9
+Obj.1.markerLocations=65379.6,909.672,51262.9,9;
 [ACT]
 Act.BodyText=You read what looks to be a freshly penned message on the parchment. It outlines a plan by Norris' brother Boris to attack the 'heretics' of Nook Town, 'liberate' it and 'rescue' the Great Nook from them. Take this terrible news back to Norris immediately!
 Obj.0.type=talk
 Obj.0.data1=1322
-Obj.0.data2=
+Obj.0.data2=0
 Obj.0.description=Speak with Norris
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=62380.9,393.845,48938.6,9
-
-[ENTRY]
-Requires=925
+Obj.0.markerLocations=62380.9,393.845,48938.6,9;
 ID=926
+[ENTRY]
+ID=926
+Requires=925
 Title=The Blasphemer
 BodyText=What... utterly... foul an' dark news is this?!?
 
@@ -2724,7 +2692,8 @@ Please fergive my outburst there. Mine heart is grieved at th' news ya brought. 
 CompleteText=You has returned I see. So, Boris is feedin' th' vultures and th' Nook-le-are Path is once again open ta all?
 
 I can't thank ya enuf. Ye've only been here a short time, yet, ya done so much in th' Nook's service. While I'se goin' ta miss Boris in spite o' his betrayal, I wants ta give ya somethin' fer yer trouble. Take one o' these with ya when ya go on yer way. Taint much, but, consider it as reward fer th' faithful.
-Suggested=44
+Level=45
+Suggested=45
 Exp=8814
 PartySize=1
 NumRewards=1
@@ -2741,33 +2710,31 @@ Obj.0.type=kill
 Obj.0.data1=1398
 Obj.0.data2=1
 Obj.0.description=Kill Boris the Heretic
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=0 of 1
-Obj.0.markerLocations=65379.6,909.672,51262.9,9
+Obj.0.markerLocations=65379.6,909.672,51262.9,9;
 [ACT]
 Act.BodyText=Return to Norris.
 Obj.0.type=talk
 Obj.0.data1=1322
-Obj.0.data2=
+Obj.0.data2=0
 Obj.0.description=Speak with Norris
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=62380.9,393.845,48938.6,9
-
-
-[ENTRY]
-Requires=925
+Obj.0.markerLocations=62380.9,393.845,48938.6,9;
 ID=927
+[ENTRY]
+ID=927
+Requires=925
 Title=Essence of the Ticking God
 BodyText=I've been told th' Great Speaker wants ta send ya on th' Nook-le-are Path. That is such an honor! It's been so long since I've made th' journey. I wonder if mebbe youse could do me a favor while yer there.
 
 The Nook-le-are Path is full o' th' spirit of Nook, what outsiders might mistake as "Nook-le-are Waste". Iffn you could bring me a jar filled with Nook's Essence I would be extremely grateful.
 CompleteText=Amazin'! I can feel Nook's Power radiatin' in my hands. Such a remarkable feelin', I can't thank youse enough!
-Suggested=44
+Level=45
+Suggested=45
 Exp=8954
 PartySize=1
 NumRewards=1
@@ -2781,34 +2748,33 @@ sEnder=61867.7,407.187,49152.7,9
 [ACT]
 Act.BodyText=Fill a jar with Nook-le-are Waste for Mason.
 Obj.0.type=gather
-Obj.0.data1=
+Obj.0.data1=0
 Obj.0.data2=1
 Obj.0.description=Collect some Nook-le-are Waste
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
-Obj.0.completeText=0 of 1 
-Obj.0.markerLocations=73667.7,1197.3,57738.9,9
+Obj.0.completeText=0 of 1
+Obj.0.markerLocations=73667.7,1197.3,57738.9,9;
 [ACT]
 Act.BodyText=Bring the Jar of Nook-le-are Waste to Mason.
 Obj.0.type=talk
 Obj.0.data1=1320
-Obj.0.data2=
+Obj.0.data2=0
 Obj.0.description=Return to Mason
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
-Obj.0.completeText= 
-Obj.0.markerLocations=61867.7,407.187,49152.7,9
-
-[ENTRY]
-Requires=926
+Obj.0.completeText=
+Obj.0.markerLocations=61867.7,407.187,49152.7,9;
 ID=928
+[ENTRY]
+ID=928
+Requires=926
 Title=Spreading the Word of Nook
 BodyText=Youse proven ta all of us that Nook guides ya and watches over ya. I would likes ta offer ya th' rank of Missionary o' the Great Nook. Go now an' spread the word to our kin. There is a very violant gang east o' here whose leader goes by th' name o' Clint.
 
 Clint is a little ole fashion, ya see. He needs some good spirit iffn ya ask me. Go an' help him in his journey.
 CompleteText=What're ya lookin' at punk? ...Norris sent you? AHAHA!!! Look, yer barkin' up the wrong tree. I ain't inter'sted in any religious mumbo jumbo.
+Level=45
 Suggested=45
 Exp=9354
 PartySize=1
@@ -2824,23 +2790,23 @@ sEnder=71482.2,1130.07,47871.1,9
 Act.BodyText=Speak with Squisher Clan Chief Clint.
 Obj.0.type=talk
 Obj.0.data1=1325
-Obj.0.data2=
+Obj.0.data2=0
 Obj.0.description=Speak with Clint
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
-Obj.0.completeText= 
-Obj.0.markerLocations=71482.2,1130.07,47871.1,9
-
-[ENTRY]
-Requires=928
+Obj.0.completeText=
+Obj.0.markerLocations=71482.2,1130.07,47871.1,9;
 ID=929
+[ENTRY]
+ID=929
+Requires=928
 Title=Fist Full Of Dambugs
 BodyText=Wait a minute... I know who ya are. Yer that punk what took out Boss Hawg! What da hell ya doin' workin' wit' those religious nuts? ...Whatever, to each their own. But listen, since I got such a fighter on my hands, maybe youse can help me.
 
 Not sayin' Ise need help or anythin', but it saves me doin it myself... Uh, ya! That's it! See, those freakin' Dambugs are poppin' out all over. They ain't no pushovers either. Show me what yer worth and squish a few o' their skulls would ya!?
 CompleteText=You ain't half bad kid... Ya handled yourself pretty good, take d'is fer your trouble!
-Suggested=45
+Level=48
+Suggested=49
 Exp=9554
 PartySize=1
 NumRewards=1
@@ -2857,26 +2823,24 @@ Obj.0.type=kill
 Obj.0.data1=1396,1399,1402,1405,1408
 Obj.0.data2=20
 Obj.0.description=Defeat 20 Skrill
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=0 of 20
-Obj.0.markerLocations=71323.9,776.777,45415.9,9
+Obj.0.markerLocations=71323.9,776.777,45415.9,9;
 [ACT]
 Act.BodyText=Return to Clint.
 Obj.0.type=talk
 Obj.0.data1=1325
-Obj.0.data2=
+Obj.0.data2=0
 Obj.0.description=Speak with Clint
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
-Obj.0.completeText= 
-Obj.0.markerLocations=71482.2,1130.07,47871.1,9
-
-[ENTRY]
-Requires=929
+Obj.0.completeText=
+Obj.0.markerLocations=71482.2,1130.07,47871.1,9;
 ID=930
+[ENTRY]
+ID=930
+Requires=929
 Title=You Scratch My Back, I Scratch Yours
 BodyText=Alright kid, now what most folks around here seem ta fergit is we keep these dang dambugs from spillin' into th' rest o' Swineland. Population control see!? Few o' them "Ally" Clans are fergettin' that.
 
@@ -2888,7 +2852,8 @@ CompleteText=Clint's got some new muscle eh? HAH! Why should I give youse a copp
 What!? Hang on... Oh geez, how silly of me! I know who yas are. ...O' course, here ya go. Sorry for da trouble!
 
 Hey listen, iffn yer ever done workin' with Clint, come see me brother an' meself. Hear?
-Suggested=45
+Level=48
+Suggested=48
 Exp=9354
 PartySize=1
 NumRewards=1
@@ -2903,25 +2868,25 @@ sEnder=70543.5,992.447,50150.5,9
 Act.BodyText=Go collect Clint's money from Duke Bodine.
 Obj.0.type=talk
 Obj.0.data1=1340
-Obj.0.data2=
+Obj.0.data2=0
 Obj.0.description=Collect from Duke Bodine
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
-Obj.0.completeText= 
-Obj.0.markerLocations=70543.5,992.447,50150.5,9
-
-[ENTRY]
-Requires=930
+Obj.0.completeText=
+Obj.0.markerLocations=70543.5,992.447,50150.5,9;
 ID=931
+[ENTRY]
+ID=931
+Requires=930
 Title=Payment In Full
 BodyText=Okay, ya got paid now beat it! OH! Before ya go, just remember I got lots of work needin' doin' so if ya ever need sum extra cash I got some Yeti problems that could use an enforcers touch!
 CompleteText=Your back.
 
 (Clint takes Duke's payment from you.)
 
-AHA! Excellent! Dem Dukes are good folk, just need a lesson on what's what every now an' agin'. HAH... Here's yer cut. 
-Suggested=45
+AHA! Excellent! Dem Dukes are good folk, just need a lesson on what's what every now an' agin'. HAH... Here's yer cut.
+Level=48
+Suggested=48
 Exp=9474
 PartySize=1
 NumRewards=1
@@ -2936,31 +2901,31 @@ sEnder=71482.2,1130.07,47871.1,9
 Act.BodyText=Deliver Duke's payment to Clint.
 Obj.0.type=talk
 Obj.0.data1=1325
-Obj.0.data2=
+Obj.0.data2=0
 Obj.0.description=Deliver the money to Clint
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
-Obj.0.completeText= 
-Obj.0.markerLocations=71482.2,1130.07,47871.1,9
-
-[ENTRY]
-Requires=931
+Obj.0.completeText=
+Obj.0.markerLocations=71482.2,1130.07,47871.1,9;
 ID=932
+[ENTRY]
+ID=932
+Requires=931
 Title=You Feelin' Lucky
-BodyText=Sometimes if you want 'ta see a change for tha better, you've gotta take things into yer own hands. Just north o' here is th' most humongous Dambug hive in all o' Europe, where th' Dambug Mother is constantly layin' her eggs in stacks beyond countin'. Now, we ain't got no problem wit' the Dambugs as a general rule - but they'se servin' no purpose for any Warpig clan! No tribute, no good meat - tho' the Great Speaker o' Nook seems ta like th' Bug Juice. 
+BodyText=Sometimes if you want 'ta see a change for tha better, you've gotta take things into yer own hands. Just north o' here is th' most humongous Dambug hive in all o' Europe, where th' Dambug Mother is constantly layin' her eggs in stacks beyond countin'. Now, we ain't got no problem wit' the Dambugs as a general rule - but they'se servin' no purpose for any Warpig clan! No tribute, no good meat - tho' the Great Speaker o' Nook seems ta like th' Bug Juice.
 
-I tried bein' reasonable-like here, an' I didn't like it - it got me nowheres fast. Hey - I know what youse a-thinkin'. I've done killed piles o' those Dambugs and they flow out like a segmented river o' death from th' hives! Th' only way we'll get ahead here, is ta kill da mutant-egg-layer-queen-Dambug. 
+I tried bein' reasonable-like here, an' I didn't like it - it got me nowheres fast. Hey - I know what youse a-thinkin'. I've done killed piles o' those Dambugs and they flow out like a segmented river o' death from th' hives! Th' only way we'll get ahead here, is ta kill da mutant-egg-layer-queen-Dambug.
 
 I'se made some progress, but did I kill a whole generation o' Dambugs or jus' one troop? Well, ta tell ya th' truth, in all this excitement, I'se kinda lost track maself. But being as I'm a Warpig, only of the most powerful fighters in the world, and would chop yer head clean off fer the right price - you've got to ask yerself one question: Do I feel lucky? Well, do ya ruffian? Do you wanna take yer chances against the Dambugs, or risk the knowledge that I'm always out here, in the dark. An' I know wheres you sleep!
 
 If'n you knows what's healthy fer yerself, I'd head north o' here to th' Dambug hives. Ya can't miss 'em unless yer as blind as my grand-sire! Locate th' entrance and ye'll have just begun.
 CompleteText=Ya...ya did it?! I dont buy it...
- 
+
 (You show Clint the Skrill Queen's severed head.)
 
 Holy Jumpin!! What kind o' thing is that ta carry 'round all casual like! Put it away! ...Alright, alright, nice work. With her gone, we can finally start controllin' tha' dambug population right proper! Here's your payment. Now GIT OFF MA LAWN!!
-Suggested=46
+Level=49
+Suggested=50
 Exp=10474
 PartySize=1
 NumRewards=1
@@ -2974,53 +2939,50 @@ sEnder=71482.2,1130.07,47871.1,9
 [ACT]
 Act.BodyText=Enter the Skrill Queen's Lair.
 Obj.0.type=talk
-Obj.0.data1=
-Obj.0.data2=
+Obj.0.data1=0
+Obj.0.data2=0
 Obj.0.description=Enter the Skrill Queen's Lair
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
-Obj.0.completeText= 
-Obj.0.markerLocations=71210.9,1128.34,44596.5,9
+Obj.0.completeText=
+Obj.0.markerLocations=71210.9,1128.34,44596.5,9;
 [ACT]
 Act.BodyText=Exterminate 20 Skrill and the Skrill Queen in the Skrill Queen's Lair.
 Obj.0.type=kill
 Obj.0.data1=1397,1398,1400,1401,1403,1404,1406,1407,1409,1410
 Obj.0.data2=20
 Obj.0.description=Defeat 20 Skrill
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText= 0 of 20
-Obj.0.markerLocations=3008.76,720.981,2469.53,69
+Obj.0.markerLocations=3008.76,720.981,2469.53,69;
 Obj.1.type=kill
 Obj.1.data1=1412
 Obj.1.data2=1
 Obj.1.description=Defeat the Skrill Queen
-Obj.1.complete=0
 Obj.1.myCreatureDefID=
 Obj.1.myItemID=
 Obj.1.completeText=0 of 1
-Obj.1.markerLocations=3008.76,720.981,2469.53,69
+Obj.1.markerLocations=3008.76,720.981,2469.53,69;
 [ACT]
 Act.BodyText=Return to Clint.
 Obj.0.type=talk
 Obj.0.data1=1325
-Obj.0.data2=
-Obj.0.description=Return to Clint 
-Obj.0.complete=0
+Obj.0.data2=0
+Obj.0.description=Return to Clint
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
-Obj.0.completeText= 
-Obj.0.markerLocations=71482.2,1130.07,47871.1,9
-
-[ENTRY]
-Requires=932
+Obj.0.completeText=
+Obj.0.markerLocations=71482.2,1130.07,47871.1,9;
 ID=940
+[ENTRY]
+ID=940
+Requires=932
 Title=Breakthrough With the Bloodkeep
 BodyText=Hey youse! Come back here right quick! One o' my boys just got this here letter from some o' them dambat killers located back east. They sez it's fer you!
 CompleteText=Excellent, you got our letter! To be honest I was rather surprised your travels brought you to the company of Clint and the Squishers. They are an old group, tough as nails but dumb as boards. Anyway, we finally made a breakthrough with the Mark of Death artifact!
-Suggested=46
+Level=49
+Suggested=49
 Exp=9857
 PartySize=1
 NumRewards=1
@@ -3034,15 +2996,14 @@ sEnder=76850.6,968.205,49892.6,9
 [ACT]
 Act.BodyText=Head to the Redeemers' Camp and speak to Maddie Paintedhoof
 Obj.0.type=talk
-Obj.0.data1=
-Obj.0.data2=
+Obj.0.data1=0
+Obj.0.data2=0
 Obj.0.description=Speak with Maddie Paintedhoof
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
-Obj.0.completeText= 
-Obj.0.markerLocations=76850.6,968.205,49892.6,9
-
+Obj.0.completeText=
+Obj.0.markerLocations=76850.6,968.205,49892.6,9;
+Requires=940
 [ENTRY]
 ID=941
 Requires=940
@@ -3055,7 +3016,8 @@ Realizing a powerful opponent has appeared on our side, Valkal now seems to be t
 
 The Dambat Door, or so the warpigs call it, is the gate that leads out of Swineland and into the Lurkers Vale beyond. The Vale is a terrible place in recent years as the Blood Broods have gained near complete control over the region. We have reason to believe this is where the stone is being taken by some discreet courier. Hurry to the Dambat Door and intercept that courier carrying the other piece to the Mark of Death before it is too late!!
 CompleteText=The Dambat Door is probably the most dangerous place in Swineland outside of the Blood Keep itself! I can't believe you were able to fight them off and retrieve the stone. INCREDIBLE!
-Suggested=47
+Level=49
+Suggested=49
 Exp=10857
 PartySize=2
 NumRewards=1
@@ -3094,14 +3056,15 @@ Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=76850.6,968.205,49892.6,9;
-
-[ENTRY]
-Requires=941
 ID=942
+[ENTRY]
+ID=942
+Requires=941
 Title=The End is Near
-BodyText= Whatever this thing is, it now seems to be functioning! You can feel the raw energy emitting from it to the point I'm anxious to be rid of it. Okay, if what we have suspected is true, then by using the Mark of Death we can finally gain entrance into Valkal's Blood Keep. If it works as expected, then we can finally cut the head off the snake, so to speak, and liberate Swineland. This task is far above me, though, so you'll have to report the Captain of the Camp. He's over by the large tent. Good luck friend!
-CompleteText= Greetings warrior! I have been carefully following your progress with the war effort since you first came to our little camp offering assistance. Know that you may have single handedly given us an opportunity to finally put an end to this war that was otherwise a losing battle. Now, let's discuss the assualt plans.
-Suggested=47
+BodyText=Whatever this thing is, it now seems to be functioning! You can feel the raw energy emitting from it to the point I'm anxious to be rid of it. Okay, if what we have suspected is true, then by using the Mark of Death we can finally gain entrance into Valkal's Blood Keep. If it works as expected, then we can finally cut the head off the snake, so to speak, and liberate Swineland. This task is far above me, though, so you'll have to report the Captain of the Camp. He's over by the large tent. Good luck friend!
+CompleteText=Greetings warrior! I have been carefully following your progress with the war effort since you first came to our little camp offering assistance. Know that you may have single handedly given us an opportunity to finally put an end to this war that was otherwise a losing battle. Now, let's discuss the assualt plans.
+Level=50
+Suggested=50
 Exp=11257
 PartySize=1
 NumRewards=1
@@ -3116,14 +3079,13 @@ sEnder=76850.6,968.205,49892.6,9
 Act.BodyText=Report to Orso Ironhide, Captain of the Redeemers Camp.
 Obj.0.type=talk
 Obj.0.data1=1319
-Obj.0.data2=
+Obj.0.data2=0
 Obj.0.description=Report to Orso Ironhide
-Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
-Obj.0.completeText= 
-Obj.0.markerLocations=76850.6,968.205,49892.6,9
-
+Obj.0.completeText=
+Obj.0.markerLocations=76850.6,968.205,49892.6,9;
+Requires=942
 [ENTRY]
 ID=943
 Requires=942
@@ -3132,7 +3094,8 @@ BodyText=Hail Hero of Swineland! I hear you are actually venturing into the Bloo
 
 Now, I hate to ask this of you, especially after everything you have done for the Redeemers; but even if you manage to kill Valkal himself, one of his Vaj 'sons' will likely take his place as Lord of the Keep. To prevent that from happening, you will need to completely end Valkal's House. Somewhere within the Keep you will find two of Valkal's most powerful 'sons'. Their names are Samir and Venae. One of these two Vaj are the most likely to take over should Valkal himself die. Eliminate them before that can happen!
 CompleteText=You succeeded?! Friend, know that to kill one Vampire Lord is considered an amazing feat. To kill more than that is an unspeakable feat beyond comprehension. I don't know how we can properly repay you for your deeds. This isn't much considering all you have done, but, regardless, please accept this as a reward and know that none here will forget you.
-Suggested=49
+Level=50
+Suggested=50
 Exp=25000
 PartySize=3
 NumRewards=1
@@ -3181,7 +3144,7 @@ Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=76600.1,978.548,50018.3,9;
-
+Requires=943
 [ENTRY]
 ID=944
 Requires=943
@@ -3190,7 +3153,8 @@ BodyText=While it is very true Valkal's Blood Keep is filled with multitudes of 
 
 We, the Redeemers, cannot let this happen! If you really are planning to enter the Blood Keep of Lord Valkal to end his rule, I ask you to destroy these legendary and fell creations of his while you are at it!
 CompleteText=Excellent work! I cannot imagine any of those 'pets' of Valkal fell easy. Your bravery knows no bounds, hero! Please accept this reward with the gratitude of everyone here.
-Suggested=49
+Level=50
+Suggested=50
 Exp=25000
 PartySize=3
 NumRewards=1
