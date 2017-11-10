@@ -2894,10 +2894,8 @@ class this.EffectDef.BringingDownTheHouse extends this.EffectDef.TemplateBasic
 	function _randLocation()
 	{
 		local randNumber = this.mRandom.nextInt(150);
-		local x = randNumber - 75.0;
-		randNumber = this.mRandom.nextInt(150);
-		local z = randNumber - 75.0;
-		return this.Vector3(x, 0.0, z);
+		local x = randNumber - 50.0;
+		return this.Vector3(x, 0.0, 20);
 	}
 
 	function _createRandomTarget( groupName, primaryGroupName, ... )
@@ -3009,7 +3007,7 @@ class this.EffectDef.BringingDownTheHouse extends this.EffectDef.TemplateBasic
 			textureName = "bigcracks.png",
 			orthoWidth = 500,
 			orthoHeight = 500,
-			offset = this.Vector3(0, 200, 0),
+			offset = this.Vector3(0, 60, 0),
 			far = 500,
 			additive = true
 		});

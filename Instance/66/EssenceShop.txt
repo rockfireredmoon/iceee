@@ -1,4 +1,4 @@
-; Boss Hawg's Chest
+; Valkal's Chest
 [ENTRY]
 CreatureDefID=7878
 EssenceID=10044

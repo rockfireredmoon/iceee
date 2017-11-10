@@ -777,8 +777,9 @@ function on_kill(cdefid, cid) {
 		foreach(idx, cid in inst.all_players()) {
 			inst.queue(function() {
 				inst.broadcast(inst.get_display_name(cid));
-			}, ( idx + 1 ) * 5000);
+			}, ( idx + 1 ) * 10000);
 		}
+		inst.spawn(1154835, 0, 0);
 	}
 	else if(cdefid == CDEF_VAJ_1) {
 		death_toll.append(cid);
