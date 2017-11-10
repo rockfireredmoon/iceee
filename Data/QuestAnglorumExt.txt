@@ -487,7 +487,7 @@ Obj.1.data2=1
 Obj.1.description=Kill Water-wraith for the ring
 Obj.1.complete=0
 Obj.1.myCreatureDefID=
-Obj.1.myItemID=s
+Obj.1.myItemID=0
 Obj.1.completeText=0 of 1
 Obj.1.markerLocations=40867.5,646.555,66102.7,81;
 [ACT]
