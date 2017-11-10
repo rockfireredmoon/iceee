@@ -140,6 +140,7 @@ valkal1_full_health_count <- 0;
 valkal2_full_health_count <- 0;
 death_toll <- [];
 env <- "";
+finished -M 
 
 // Debug
 no_adds <- false;
@@ -664,7 +665,7 @@ function valkal1_health() {
 
 /* Monitor Valkal2's health and trigger the various fight stages. */
 function valkal2_health() {
-	if(cid_valkal2 == 0 || manual_trigger)
+	if(cid_valkal2 == 0 || manual_trigger || finished)
 		return;
 
 	local health = inst.get_health_pc(cid_valkal2);
@@ -772,12 +773,14 @@ function on_kill(cdefid, cid) {
 		inst.info("Death - " + cdefid + " / " + cid);
 	if(cdefid == CDEF_VALKAL2) {
 		/* Valkal 2 is dead! */
+        finished = true;
 		tod("Sunrise");	
 		inst.broadcast("Valkal has been defeated! The victorious team consisted of ...");
 		foreach(idx, cid in inst.all_players()) {
+            local pn = inst.get_display_name(cid);
 			inst.queue(function() {
-				inst.broadcast(inst.get_display_name(cid));
-			}, ( idx + 1 ) * 10000);
+				inst.broadcast(pn);
+			}, ( idx + 1 ) * 6000);
 		}
 		inst.spawn(1154835, 0, 0);
 	}

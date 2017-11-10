@@ -60,6 +60,16 @@ maxActive=0
 sequential=1
 
 [ENTRY]
+ID=1154835
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=Untitled
+Pos=5822.8,547.866,1986.83
+Orient=0,-0.717356,0,0.696707
+Scale=1,1,1
+spawnPackage=#F7878
+maxActive=0
+
+[ENTRY]
 ID=1041198757
 Asset=Prop-Blood_Pool
 Name=Untitled

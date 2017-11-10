@@ -453,7 +453,7 @@ Scale=0.5,0.5,0.5
 ID=1127135
 Asset=Dng-Dungeon1?ATS=ATS-Dungeon_Vampire
 Name=Untitled
-Pos=5391.19,510.002,2494.7
+Pos=5391.14,510.002,2498.73
 Orient=0,0,0,1
 Scale=1,1,1
 
