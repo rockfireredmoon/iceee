@@ -32492,16 +32492,19 @@ dexterity=107
 constitution=125
 psyche=85
 spirit=85
-base_damage_melee=155
 damage_resist_melee=2194
 damage_resist_fire=2194
 damage_resist_frost=2194
 damage_resist_mystic=2194
 damage_resist_death=2194
-will_regen=1
-might_regen=1
 offhand_weapon_damage=500
 appearance=n4:{["a"]=[{["node"]="left_shoulder",["type"]="Armor-Base2B-Left_Pauldron",["colors"]=[]},{["node"]="right_shoulder",["type"]="Armor-Base2B-Right_Pauldron",["colors"]=[]},{["node"]="right_hand",["type"]="Item-1hAxe-Basic5",["colors"]=[]},{["node"]="left_hand",["type"]="Item-Shield-Basic3",["colors"]=["94634e","2a0b0b","6a6a6a"]}],["c"]="Horde-Skrill-Worker",["sk"]={["base"]="656855",["eyes"]="443832",["stripes"]="7f1100"},["sz"]="1.2"}
+level=48
+display_name=Skrill Hiveguard
+profession=1
+creature_category=Animal
+base_damage_melee=155
+ai_package=nothing
 
 [ENTRY]
 ID=1397
