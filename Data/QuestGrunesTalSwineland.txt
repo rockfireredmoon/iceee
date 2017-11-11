@@ -783,6 +783,8 @@ Obj.0.myCreatureDefID=
 Obj.0.myItemID=10014
 Obj.0.completeText=0 of 15
 Obj.0.markerLocations=59900.0,591.671,55525.1,9;
+Obj.0.ActivateTime=2000
+Obj.0.ActivateText=Taking the mushroom chunks...
 [ACT]
 Act.BodyText=Return to Billko
 Obj.0.type=talk
@@ -1596,6 +1598,8 @@ Obj.1.myCreatureDefID=
 Obj.1.myItemID=10048
 Obj.1.completeText=0 of 6
 Obj.1.markerLocations=68899.7,415.235,63899.7,9;
+Obj.0.ActivateTime=4000
+Obj.0.ActivateText=Taking the tears...
 [ACT]
 Act.BodyText=Return to Ziggy Emberpaw
 Obj.0.type=talk
@@ -2291,6 +2295,8 @@ Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=72807.1,1328.76,52891.6,9;
+Obj.0.ActivateTime=4000
+Obj.0.ActivateText=Taking the plans...
 [ACT]
 Act.BodyText= Return to Jeb.
 Obj.0.type=talk
@@ -2465,7 +2471,7 @@ sEnder=62380.9,393.845,48938.6,9
 [ACT]
 Act.BodyText=Travel to the nearby Skrill mounds and collect 13 gallons of Dambug Blood for The Great Nook.
 Obj.0.type=kill
-Obj.0.data1=0
+Obj.0.data1=3528,3529,3530
 Obj.0.data2=13
 Obj.0.description=Collect 13 gallons of dambug blood
 Obj.0.myCreatureDefID=
@@ -2497,8 +2503,8 @@ Here's the stuff I'm needin': Spleens from th' Hiveguards, Eyes from th' Hivemen
 
 Bring me back seven of each.
 CompleteText=Nook bless you! Now th' Great Speaker will be able ta hear new words from th' ticking god and guide us further!
-Level=44
-Suggested=44
+Level=47
+Suggested=47
 Exp=8734
 PartySize=1
 Coin=3645
@@ -2515,7 +2521,7 @@ Obj.0.data1=1398
 Obj.0.data2=7
 Obj.0.description=Gather 7 Skrill Hiveguard Spleens
 Obj.0.myCreatureDefID=
-Obj.0.myItemID=
+Obj.0.myItemID=10052
 Obj.0.completeText=0 of 7
 Obj.0.markerLocations=65379.6,909.672,51262.9,9;
 Obj.1.type=kill
@@ -2523,7 +2529,7 @@ Obj.1.data1=1402
 Obj.1.data2=7
 Obj.1.description=Gather 7 Skrill Hivemender Eyes
 Obj.1.myCreatureDefID=
-Obj.1.myItemID=
+Obj.1.myItemID=10053
 Obj.1.completeText=0 of 7
 Obj.1.markerLocations=65379.6,909.672,51262.9,9;
 Obj.2.type=kill
@@ -2531,7 +2537,7 @@ Obj.2.data1=1399
 Obj.2.data2=7
 Obj.2.description=Gather 7 Skrill Hivesoldier Gooey-Goo
 Obj.2.myCreatureDefID=
-Obj.2.myItemID=
+Obj.2.myItemID=10054
 Obj.2.completeText=0 of 7
 Obj.2.markerLocations=65379.6,909.672,51262.9,9;
 [ACT]
@@ -2579,21 +2585,23 @@ sEnder=62380.9,393.845,48938.6,9
 [ACT]
 Act.BodyText=Travel to the Nook-le-are Path south of Wartown and eliminate 20 members of the Nook-le-are Cult. While on your pilgrimage, see if you can find out what the Cult is up to.
 Obj.0.type=kill
-Obj.0.data1=0
+Obj.0.data1=3463,3464,3465,3466
 Obj.0.data2=20
 Obj.0.description=Defeat 20 Nook-le-are Cult
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=0 of 20
 Obj.0.markerLocations=65379.6,909.672,51262.9,9;
-Obj.1.type=gather
-Obj.1.data1=0
-Obj.1.data2=1
+Obj.1.type=activate
+Obj.0.data1=3531
+Obj.0.data2=1
 Obj.1.description=Pick up Boris' Plans
 Obj.1.myCreatureDefID=
 Obj.1.myItemID=
 Obj.1.completeText=0 of 1
 Obj.1.markerLocations=65379.6,909.672,51262.9,9;
+Obj.0.ActivateTime=4000
+Obj.0.ActivateText=Taking the plans...
 [ACT]
 Act.BodyText=You read what looks to be a freshly penned message on the parchment. It outlines a plan by Norris' brother Boris to attack the 'heretics' of Nook Town, 'liberate' it and 'rescue' the Great Nook from them. Take this terrible news back to Norris immediately!
 Obj.0.type=talk
@@ -2685,6 +2693,8 @@ Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=0 of 1
 Obj.0.markerLocations=73667.7,1197.3,57738.9,9;
+Obj.0.ActivateTime=4000
+Obj.0.ActivateText=Collecting waste...
 [ACT]
 Act.BodyText=Bring the Jar of Nook-le-are Waste to Mason.
 Obj.0.type=talk
