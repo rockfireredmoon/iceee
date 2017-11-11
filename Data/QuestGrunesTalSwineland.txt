@@ -2298,7 +2298,7 @@ Obj.0.markerLocations=72807.1,1328.76,52891.6,9;
 Obj.0.ActivateTime=4000
 Obj.0.ActivateText=Taking the plans...
 [ACT]
-Act.BodyText= Return to Jeb.
+Act.BodyText=Return to Jeb.
 Obj.0.type=talk
 Obj.0.data1=0
 Obj.0.data2=0

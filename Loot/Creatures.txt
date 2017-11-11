@@ -1888,3 +1888,5 @@ DefID	Explicit	PackageList	Name
 2058	0	named_VaykinScarr_2058	
 2061	0	named_Gromp_2061	
 2029	0	named_Spike_2029	
+7881	0	Event_Barrel	;Event Barrel
+7882	0	Event_Crate	    ;Event Crate

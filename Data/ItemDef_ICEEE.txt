@@ -1164,3 +1164,15 @@ mValue=1
 mFlavorText=Reward will be revealed when the quest is complete.
 mQualityLevel=5
 mMinUseLevel=1
+
+[ENTRY]
+mID=8704
+mType=7
+mDisplayName=Junk Materials
+mIcon=Icon-32-Box.png|Icon-32-BG-Aqua.png
+mIvType1=1
+mIvMax1=20
+mIvType2=8
+mLevel=1
+mValue=1
+mMinUseLevel=1

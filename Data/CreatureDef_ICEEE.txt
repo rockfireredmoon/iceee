@@ -1573,3 +1573,28 @@ profession=1
 creature_category=Inanimate
 rarity=1
 ai_package=nothing
+
+[ENTRY]
+ID=7881
+will_regen=1
+might_regen=1
+appearance=p1:{["a"]="Prop-Barrel"}
+level=1
+display_name=Supply Barrel
+profession=1
+creature_category=Inanimate
+rarity=1
+ai_package=nothing
+
+
+[ENTRY]
+ID=7882
+will_regen=1
+might_regen=1
+appearance=p1:{["a"]="Prop-Crate2"}
+level=1
+display_name=Supply Crate
+profession=1
+creature_category=Inanimate
+rarity=1
+ai_package=nothing
