@@ -75902,7 +75902,7 @@ ai_package=nothing
 
 [ENTRY]
 ID=3527
-appearance=p1:{["a"]="Prop-Crystal_Blue_Small2",["sz"]="0.5"}
+appearance=p1:{["a"]="Prop-Crystal_White_Small2",["sz"]="0.5"}
 level=1
 display_name=Crystal Relic
 profession=1
