@@ -1987,6 +1987,7 @@ Level=45
 Suggested=45
 Exp=9561
 PartySize=1
+NumRewards=0
 Coin=3827
 Unabandon=0
 QuestGiverID=1319
