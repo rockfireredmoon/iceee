@@ -31117,8 +31117,8 @@ rarity=3
 ai_package=example
 
 [ENTRY]
-defHints=16
 ID=1338
+defHints=16
 will_regen=1
 might_regen=1
 appearance=n4:{["sk"]={["armor"]="7f0000",["bone"]="f8eadb",["cloth"]="ffcb72",["eye"]="913901",["leather"]="7e3f18",["skin"]="e99494",["trim"]="000000"},["c"]="Horde-Warpig",["sz"]="1.0"}
@@ -31134,6 +31134,7 @@ ai_package=example
 ID=1339
 appearance=n4:{["sk"]={["cloth2"]="817263",["skin"]="c07574",["cloth1"]="ffffff",["eye"]="8d0f0b",["nails"]="b5815d",["trim"]="954806"},["c"]="Horde-Warpig2",["sz"]="1.3",["a"]=[{["node"]="back_sheathe",["type"]="Item-2hAxe-Basic6",["colors"]=[]}]}
 level=50
+defHints=16
 display_name=Elvis
 sub_name=Smooshin' Clan
 profession=1
@@ -32972,12 +32973,15 @@ ai_package=4_rogue_30
 
 [ENTRY]
 ID=1415
-appearance=p1:{["a"]="Prop-Ground_Flower4",["sz"]="1.0"}
+will_regen=1
+might_regen=1
+appearance=p1:{["a"]="Prop-Ground_Flower2"}
 level=1
 display_name=Stinking Rose
 profession=1
 creature_category=Inanimate
 ai_package=nothing
+
 
 [ENTRY]
 ID=1416
