@@ -6498,7 +6498,7 @@ bool SimulatorThread :: HasPropEditPermission(SceneryObject *prop, float x, floa
 		checkZ = prop->LocationZ;
 	}
 
-	if(pld.accPtr->CheckBuildPermissionAdv(pld.zoneDef->mID, pld.zoneDef->mPageSize, checkX, checkZ) == true)
+	if(CheckPermissionSimple(Perm_Account, Permission_Admin) || pld.accPtr->CheckBuildPermissionAdv(pld.zoneDef->mID, pld.zoneDef->mPageSize, checkX, checkZ) == true)
 		return true;
 
 	if(pld.zoneDef->HasEditPermission(pld.accPtr->ID, pld.CreatureDefID, creatureInst->css.display_name, checkX, checkZ) == true)
