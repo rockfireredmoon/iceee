@@ -866,3 +866,14 @@ mIvMax1=902
 mSv1=The Blood Of The Innocents
 mValue=1
 mQualityLevel=1
+
+[ENTRY]
+mID=10049
+mType=9
+mDisplayName=Crystal Relic
+mIcon=Icon-32-Crystal3.png|Icon-32-BG-Green.png
+mIvType1=5
+mIvMax1=902
+mSv1=Snorg's Shinies
+mValue=1
+mQualityLevel=1

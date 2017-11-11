@@ -1886,7 +1886,7 @@ BodyText=Welcome to th' best, most wonderful Shiny Place ye'll ev'r find! Now li
 
 Just east o' here, where th' Ice Goliaths roam, there's some fancy crystals. These crystals are special, and I've found some itty-bitty pieces o' mankind's relics trapped within! I must have more, but I'se not so dumb as to take on the Ice Goliaths meself.
 
-Travel east to th' Ice Goliath camps, and gather eight Crystal-Relics fer me!
+Go look up that path to th' Crystal Fields, and gather eight Crystal-Relics fer me!
 CompleteText=Wow! Can't believe ya took 'em on and won!! And ya got me Shinies too! Ahaha! Give 'em here an' lemme see what ya found me!
 Level=45
 Suggested=45
@@ -1906,9 +1906,11 @@ Obj.0.type=gather
 Obj.0.data1=0
 Obj.0.data2=0
 Obj.0.description=Gather 8 Crystal-Relics
-Obj.0.myCreatureDefID=
-Obj.0.myItemID=
+Obj.0.myCreatureDefID=3527
+Obj.0.myItemID=10049
 Obj.0.completeText=0 of 8
+Obj.0.ActivateTime=5000
+Obj.0.ActivateText=Taking crystal relic.
 Obj.0.markerLocations=68690.9,414.457,64098.2,9;
 [ACT]
 Act.BodyText=Return to Snorg with the Crystal-Relics.
