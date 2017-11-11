@@ -31106,6 +31106,7 @@ ai_package=custom_heathendel_deathdruid40
 total_size=1.2999999523162842
 
 [ENTRY]
+defHints=48
 ID=1337
 appearance=n4:{["sk"]={["bone"]="f8eadb",["skin"]="c07574",["cloth"]="ffcb72",["eye"]="8d0f0b",["trim"]="954806",["armor"]="091836",["leather"]="7e3f18"},["c"]="Horde-Warpig",["sz"]="1.3",["a"]=[{["node"]="back_sheathe",["type"]="Item-2hMace-Basic2",["colors"]=[]}]}
 level=50
@@ -31131,10 +31132,10 @@ rarity=3
 ai_package=example
 
 [ENTRY]
+defHints=48
 ID=1339
 appearance=n4:{["sk"]={["cloth2"]="817263",["skin"]="c07574",["cloth1"]="ffffff",["eye"]="8d0f0b",["nails"]="b5815d",["trim"]="954806"},["c"]="Horde-Warpig2",["sz"]="1.3",["a"]=[{["node"]="back_sheathe",["type"]="Item-2hAxe-Basic6",["colors"]=[]}]}
 level=50
-defHints=16
 display_name=Elvis
 sub_name=Smooshin' Clan
 profession=1
