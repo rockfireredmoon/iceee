@@ -6905,8 +6905,14 @@ int CreatureInstance :: ProcessQuestRewards(int QuestID, const std::vector<Quest
 			params.ClampLimits();
 
 			int iid = g_ItemManager.RollVirtualItem(params);
-			if(iid != -1)
+			if(iid != -1) {
 				newItem = charPtr->inventory.AddItem_Ex(INV_CONTAINER, iid, count);
+				if(newItem != NULL) {
+					char buffer[256];
+					Util::SafeFormat(buffer, sizeof(buffer), "Your mystery reward is .. %s", newItem->dataPtr->mDisplayName.c_str());
+					wpos += PrepExt_SendInfoMessage(&GSendBuf[wpos], buffer, INFOMSG_INFO);
+				}
+			}
 		}
 		else {
 			newItem = charPtr->inventory.AddItem_Ex(INV_CONTAINER, itemPtr->mID, count);

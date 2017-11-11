@@ -1117,5 +1117,50 @@ mEquipType=0
 mArmorType=0
 mValue=1
 mFlavorText=Reward will be revealed when the quest is complete.
-mQualityLevel=1
+mQualityLevel=2
+mMinUseLevel=1
+
+[ENTRY]
+mID=8701
+mType=8
+mDisplayName=Mystery Quest Reward
+mIcon=Icon-32-MysteryBox.png|Icon-32-BG-Green.png
+mLevel=1
+mIvType1=5
+mBindingType=1
+mEquipType=0
+mArmorType=0
+mValue=1
+mFlavorText=Reward will be revealed when the quest is complete.
+mQualityLevel=3
+mMinUseLevel=1
+
+[ENTRY]
+mID=8702
+mType=8
+mDisplayName=Mystery Quest Reward
+mIcon=Icon-32-MysteryBox.png|Icon-32-BG-Green.png
+mLevel=1
+mIvType1=5
+mBindingType=1
+mEquipType=0
+mArmorType=0
+mValue=1
+mFlavorText=Reward will be revealed when the quest is complete.
+mQualityLevel=4
+mMinUseLevel=1
+
+[ENTRY]
+mID=8703
+mType=8
+mDisplayName=Mystery Quest Reward
+mIcon=Icon-32-MysteryBox.png|Icon-32-BG-Green.png
+mLevel=1
+mIvType1=5
+mBindingType=1
+mEquipType=0
+mArmorType=0
+mValue=1
+mFlavorText=Reward will be revealed when the quest is complete.
+mQualityLevel=5
 mMinUseLevel=1
