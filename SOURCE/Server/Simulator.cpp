@@ -9158,7 +9158,7 @@ int SimulatorThread :: handle_query_quest_hack(void)
 	else {
 		creature = creatureInst->actInst->GetPlayerByID(query.GetInteger(2));
 	}
-	if(creature == NULL) {
+	if(creature == NULL || creature->charPtr == NULL) {
 		g_Log.AddMessageFormat("No creature for  quest hack op for quest %s and creature %s.", query.GetString(1), query.GetString(2));
 		WritePos = PrepExt_QueryResponseError(SendBuf, query.ID, "Selected creature does not exist.");
 	}
@@ -9175,8 +9175,8 @@ int SimulatorThread :: handle_query_quest_hack(void)
 	else if(query.args[0].compare("complete") == 0) {
 		LogMessageL(MSG_DIAGV, "[SAGE] Quest complete (QuestID: %d, CID: %d)", qdef->questID, creature->CreatureID);
 		WritePos = PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-		int wpos = creature->charPtr->questJournal.ForceComplete(creature->CreatureID, qdef->questID, &Aux1[0]);
-		creature->simulatorPtr->AttemptSend(Aux1, wpos);
+		char buf[1024];
+		creature->simulatorPtr->AttemptSend(buf, creature->charPtr->questJournal.ForceComplete(creature->CreatureID, qdef->questID, buf));
 	}
 	else {
 		g_Log.AddMessageFormat("Unknown quest hack op for quest %s and creature %s.", query.GetString(1), query.GetString(2));

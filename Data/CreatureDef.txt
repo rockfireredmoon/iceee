@@ -75515,7 +75515,7 @@ total_size=2.700000047683716
 
 [ENTRY]
 ID=3485
-appearance=p1:{["a"]="Prop-Crystal_Blue_Small2",["sz"]="1.0"}
+appearance=p1:{["a"]="Prop-Crystal_Blue_Small2",["sz"]="0.5"}
 level=1
 display_name=Gaia's Tear
 profession=1
@@ -75899,3 +75899,12 @@ profession=5
 creature_category=Mortal
 rarity=2
 ai_package=nothing
+
+[ENTRY]
+ID=3527
+appearance=p1:{["a"]="Prop-Crystal_White_Small2",["sz"]="0.5"}
+level=1
+display_name=Crystal Relic
+profession=1
+creature_category=Inanimate
+ai_package=example
