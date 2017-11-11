@@ -180,7 +180,7 @@ Obj.0.markerLocations=63084.8,1263.87,63126.6,9
 [ACT]
 Act.BodyText=Enter the family crypt beneath Folkirk Manor
 Obj.0.type=travel
-Obj.0.data1=3478,600,3232,75
+Obj.0.data1=3478,600,3232,75,9
 Obj.0.data2=250
 Obj.0.description=Enter the family crypt
 Obj.0.complete=0
@@ -1360,7 +1360,7 @@ Obj.0.markerLocations=52511,679.786,68243.7,9
 [ACT]
 Act.BodyText=Enter the Wailing Crypt
 Obj.0.type=travel
-Obj.0.data1=2125,660,597,56
+Obj.0.data1=2125,660,597,56,9
 Obj.0.data2=250
 Obj.0.description=Enter the Wailing Crypt
 Obj.0.complete=0
@@ -2005,7 +2005,7 @@ Obj.0.myItemID=
 Obj.0.completeText=0 of 20
 Obj.0.markerLocations=79042.1,1297.9,52837.1,9;
 Obj.1.type=travel
-Obj.1.data1=79236,1305,52383
+Obj.1.data1=79236,1305,52383,9
 Obj.1.data2=30
 Obj.1.description=Search the Courtyard for Clues
 Obj.1.myCreatureDefID=
@@ -2079,7 +2079,7 @@ sEnder=76840.2,970.62,49964.3,9
 [ACT]
 Act.BodyText=Travel to the old Mausoleum and search for The Mark of Death.
 Obj.0.type=travel
-Obj.0.data1=74338,875,50944
+Obj.0.data1=74338,875,50944,9
 Obj.0.data2=20
 Obj.0.description=Search the Old Mausoleum
 Obj.0.myCreatureDefID=
@@ -2274,8 +2274,8 @@ sEnder=72795.6,1327.27,52898.1,9
 [ACT]
 Act.BodyText= Find where the Haz'ard Crew have their hideout.
 Obj.0.type=travel
-Obj.0.data1=0
-Obj.0.data2=0
+Obj.0.data1=71758,1203,52590,9
+Obj.0.data2=30
 Obj.0.description=Find the Haz'ard Crew Hideout.
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
@@ -2330,7 +2330,7 @@ Repeat=0
 sGiver=72795.6,1327.27,52898.1,9
 sEnder=72795.6,1327.27,52898.1,9
 [ACT]
-Act.BodyText= Speak to Bert near the Junk Palace Compound to the west of Wartown.
+Act.BodyText=Speak to Bert near the Junk Palace Compound to the west of Wartown.
 Obj.0.type=talk
 Obj.0.data1=0
 Obj.0.data2=0
@@ -2338,11 +2338,11 @@ Obj.0.description=Speak to Bert
 Obj.0.myCreatureDefID=1338
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=72807.1,1328.76,52891.6,9;
+Obj.0.markerLocations=67690,1216,52924,9;
 
 [ENTRY]
 ID=920
-Requires=919
+Requires=918
 Title=Puttin' A Quiver In His Liver
 BodyText=Now sit a spell, and lissen 'bout ol' Boss Hawg. When they was a passin' out th' brains, he musta been behind th' door an' didn't get any.
 
@@ -2360,7 +2360,7 @@ QuestGiverID=1337
 QuestEnderID=1338
 Repeat=0
 sGiver=72795.6,1327.27,52898.1,9
-sEnder=66708.9,1103.91,54125.8,9
+sGiver=72795.6,1327.27,52898.1,9
 [ACT]
 Act.BodyText=Enter the Junk Palace Compound and kill 10 Haz'ard Crew. (Scouts,
 Obj.0.type=kill
@@ -2380,7 +2380,7 @@ Obj.0.description=Return to Bert
 Obj.0.myCreatureDefID=1338
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=67693.7,1215.39,52932.9,9;
+Obj.0.markerLocations=72795.6,1327.27,52898.1,9;
 
 [ENTRY]
 ID=921
@@ -2400,13 +2400,13 @@ Exp=10576
 PartySize=3
 Coin=4327
 Unabandon=0
-QuestGiverID=1337
+QuestGiverID=1338
 QuestEnderID=1338
 Repeat=0
 sGiver=66708.9,1103.91,54125.8,9
 sEnder=66708.9,1103.91,54125.8,9
 [ACT]
-Act.BodyText=Enter the Junk Palace and defeat the Haz'ard Crew Capos and Boss Hawg, the Haz'ard Crew boss.
+Act.BodyText=Enter the Junk Palace and defeat Boss Hawg, the Haz'ard Crew boss.
 Obj.0.type=kill
 Obj.0.data1=1391,1392,1393,1394
 Obj.0.data2=15
@@ -2416,7 +2416,7 @@ Obj.0.myItemID=
 Obj.0.completeText=0 of 15
 Obj.0.markerLocations=1463.0,280.687,1552.76,67;
 [ACT]
-Act.BodyText=Enter the Junk Palace and defeat the Haz'ard Crew Capos and Boss Hawg, the Haz'ard Crew boss.
+Act.BodyText=Enter the Junk Palace and defeat Boss Hawg, the Haz'ard Crew boss.
 Obj.0.type=kill
 Obj.0.data1=1387
 Obj.0.data2=1
@@ -2425,21 +2425,13 @@ Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=0 of 1
 Obj.0.markerLocations=1463.0,280.687,1552.76,67;
-Obj.1.type=kill
-Obj.1.data1=0
-Obj.1.data2=2
-Obj.1.description=Defeat the Haz'ard Crew Capos
-Obj.1.myCreatureDefID=
-Obj.1.myItemID=
-Obj.1.completeText=0 of 2
-Obj.1.markerLocations=1463.0,280.687,1552.76,67;
 [ACT]
-Act.BodyText= Return to Jeb.
+Act.BodyText=Return to Bert.
 Obj.0.type=talk
 Obj.0.data1=0
 Obj.0.data2=0
-Obj.0.description=Return to Jeb
-Obj.0.myCreatureDefID=1338
+Obj.0.description=Return to Bert
+Obj.0.myCreatureDefID=1333
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=72795.6,1327.27,52898.1,9;
