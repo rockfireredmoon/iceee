@@ -844,3 +844,25 @@ mBindingType=1
 mValue=1
 mQualityLevel=2
 mMinUseLevel=1
+
+[ENTRY]
+mID=10047
+mType=9
+mDisplayName=Vile Bile
+mIcon=Icon-32-GlassBottle2.png|Icon-32-BG-Green.png
+mIvType1=5
+mIvMax1=901
+mSv1=Black Gold
+mValue=1
+mQualityLevel=1
+
+[ENTRY]
+mID=10048
+mType=9
+mDisplayName=Gaia's Tears
+mIcon=Icon-32-Crystal4.png|Icon-32-BG-Green.png
+mIvType1=5
+mIvMax1=902
+mSv1=The Blood Of The Innocents
+mValue=1
+mQualityLevel=1

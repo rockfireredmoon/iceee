@@ -1539,7 +1539,7 @@ Obj.0.data1=1345
 Obj.0.data2=8
 Obj.0.description=Collect eight pints of Vile Bihyl
 Obj.0.myCreatureDefID=
-Obj.0.myItemID=
+Obj.0.myItemID=10047
 Obj.0.completeText=0 of 8
 Obj.0.markerLocations=77299.8,899.39,56219.2,9;
 Obj.1.type=kill
@@ -1598,7 +1598,7 @@ Obj.1.data1=3485
 Obj.1.data2=6
 Obj.1.description=Gather 6 of Gaia's Tears
 Obj.1.myCreatureDefID=
-Obj.1.myItemID=
+Obj.1.myItemID=10048
 Obj.1.completeText=0 of 6
 Obj.1.markerLocations=68899.7,415.235,63899.7,9;
 [ACT]
