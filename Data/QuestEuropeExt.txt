@@ -73,7 +73,6 @@ Obj.0.completeText=
 Obj.0.markerLocations=52749.203,844.777,78509.0,9;
 RewardItem.0=21175,1,1
 
-
 [ENTRY]
 ID=475
 Title=Eye of the Lost One
@@ -125,10 +124,6 @@ Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=67933.0,485.0,36440.0,9;
 RewardItem.0=21161,1,1
-
-
-
-
 
 [ENTRY]
 ID=477
@@ -183,9 +178,6 @@ Obj.0.completeText=
 Obj.0.markerLocations=1194.37,145.948,694.55,68;
 RewardItem.0=21162,1,1
 
-
-
-
 [ENTRY]
 ID=482
 Title=The Quarter Note Quill
@@ -229,7 +221,6 @@ Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=68618.0,541.126,35153.0,9;
 RewardItem.0=21160,1,1
-
 
 [ENTRY]
 ID=780
@@ -309,10 +300,6 @@ RewardItem.1=7063,1,0
 RewardItem.2=7064,1,0
 RewardItem.3=7065,1,0
 
-
-[ENTRY]
-ID=1000
-Title=The Greysun Bandits
 [ENTRY]
 ID=1000
 Title=The Greysun Bandits
@@ -398,7 +385,7 @@ Obj.0.myCreatureDefID=671
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=29824.3,647.221,62866.8,9;
-Requires=1000
+
 [ENTRY]
 ID=1001
 Requires=1000
@@ -439,7 +426,7 @@ Obj.0.myCreatureDefID=671
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=29824.3,647.221,62866.8,9;
-ID=1002
+
 [ENTRY]
 ID=1002
 Requires=1001
@@ -490,7 +477,7 @@ Obj.0.myCreatureDefID=671
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=29824.3,647.221,62866.8,9;
-ID=1003
+
 [ENTRY]
 ID=1003
 Requires=1002
@@ -531,6 +518,8 @@ Obj.0.myCreatureDefID=671
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=29824.3,647.221,62866.8,9;
+
+[ENTRY]
 ID=781
 Title=Lords of the Rot
 BodyText=So, you would like to help us in our fight here at the front lines do you? Well, perhaps you can begin by heading deep into the Deadwood and locating the three Rotted Groves within the Box Blight. These groves are tainted with the rot and serve to aid in the propagation of the black shroomie spores throughout Box Blight.
