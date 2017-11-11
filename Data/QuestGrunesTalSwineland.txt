@@ -1685,7 +1685,7 @@ Obj.0.data1=1316,1317
 Obj.0.data2=13
 Obj.0.description=Harvest 13 Lumbering Bergback Eyes
 Obj.0.myCreatureDefID=
-Obj.0.myItemID=
+Obj.0.myItemID=10050
 Obj.0.completeText=0 of 13
 Obj.0.markerLocations=74543.5,899.569,63156.4,9;
 [ACT]
@@ -1730,7 +1730,7 @@ Obj.0.data1=1415
 Obj.0.data2=12
 Obj.0.description=Gather 12 Stinking Roses
 Obj.0.myCreatureDefID=
-Obj.0.myItemID=
+Obj.0.myItemID=10051
 Obj.0.completeText=0 of 12
 Obj.0.markerLocations=69127.4,1382.73,55173.5,9;
 Obj.0.ActivateTime=2000

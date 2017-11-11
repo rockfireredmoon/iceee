@@ -879,7 +879,7 @@ mValue=1
 mQualityLevel=1
 
 [ENTRY]
-mID=10049
+mID=10050
 mType=9
 mDisplayName=Bergback Eye
 mIcon=Icon-32-Eye_Green.png|Icon-32-BG-Blue.png
@@ -890,7 +890,7 @@ mValue=1
 mQualityLevel=1
 
 [ENTRY]
-mID=10049
+mID=10051
 mType=9
 mDisplayName=Stinkin Rose
 mIcon=Icon-32-Ground_Flower1.png|Icon-32-BG-Black.png
