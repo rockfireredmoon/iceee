@@ -27824,6 +27824,7 @@ display_name=Crypt Digger
 profession=2
 creature_category=Unliving
 ai_package=knight_brave_6
+
 [ENTRY]
 ID=1188
 strength=92
