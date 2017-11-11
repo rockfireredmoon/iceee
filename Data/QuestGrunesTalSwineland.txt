@@ -1733,6 +1733,8 @@ Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=0 of 12
 Obj.0.markerLocations=69127.4,1382.73,55173.5,9;
+Obj.0.ActivateTime=2000
+Obj.0.ActivateText=Picking Rose!
 [ACT]
 Act.BodyText=Deliver the Roses to Alain Darkfeather.
 Obj.0.type=talk
