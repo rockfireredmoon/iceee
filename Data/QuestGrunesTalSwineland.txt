@@ -1903,10 +1903,9 @@ sEnder=66369.3,630.469,65092.0,9
 [ACT]
 Act.BodyText=Travel east to the camps of the Ice Goliaths and collect 8 Crystal-Relics for Snorg.
 Obj.0.type=gather
-Obj.0.data1=0
-Obj.0.data2=0
+Obj.0.data1=3527
+Obj.0.data2=8
 Obj.0.description=Gather 8 Crystal-Relics
-Obj.0.myCreatureDefID=3527
 Obj.0.myItemID=10049
 Obj.0.completeText=0 of 8
 Obj.0.ActivateTime=5000
