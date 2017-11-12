@@ -1,17 +1,18 @@
 [ENTRY]
 ID=1127535
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=64115,1084.66,60510
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_jld_junderbroodSkrillmix_43
+maxActive=0
 wanderRadius=150
 
 [ENTRY]
 ID=1127536
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=63780,1073.22,60375
 Orient=0,0,0,1
 Scale=1,1,1
@@ -21,7 +22,7 @@ wanderRadius=90
 [ENTRY]
 ID=1127540
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=63760,1068.69,60655
 Orient=0,0,0,1
 Scale=1,1,1
@@ -63,6 +64,7 @@ Pos=64123.5,1071.06,60266
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_jld_junderbroodSkrillmix_43
+maxActive=0
 wanderRadius=60
 
 [ENTRY]
@@ -73,6 +75,7 @@ Pos=63890,1080.71,60160
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_jld_junderbroodSkrillmix_43
+maxActive=0
 wanderRadius=100
 
 [ENTRY]

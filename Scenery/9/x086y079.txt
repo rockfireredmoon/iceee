@@ -1,6 +1,16 @@
 [ENTRY]
+ID=1154969
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=64775,581.824,59583.9
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#7882
+
+[ENTRY]
 ID=151017409
 Asset=CL-AridBush1#CL-AridBush1
+Name=Untitled
 Pos=65027,600.294,59347
 Orient=0,0,0,1
 Scale=1,1,1
@@ -9,6 +19,7 @@ Flags=1
 [ENTRY]
 ID=151017410
 Asset=Prop-Lamp_Post_Junk#Prop-Lamp_Post_Junk1
+Name=Untitled
 Pos=65042.4,603.455,59360
 Orient=-0.135825,0.667392,-0.025235,0.731781
 Scale=2.025,2.025,2.025
@@ -17,6 +28,7 @@ Flags=1
 [ENTRY]
 ID=151027608
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=65235.5,799.581,59967
 Orient=0,0,0,1
 Scale=1,1,1

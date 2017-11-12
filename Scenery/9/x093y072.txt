@@ -1,7 +1,7 @@
 [ENTRY]
 ID=1154257
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=70499.3,1255.9,54595.1
 Orient=0,0,0,1
 Scale=1,1,1
@@ -11,7 +11,7 @@ wanderRadius=150
 [ENTRY]
 ID=1154258
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=70441.5,1174.71,54282.1
 Orient=0,0,0,1
 Scale=1,1,1

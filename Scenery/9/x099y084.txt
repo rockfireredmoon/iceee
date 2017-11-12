@@ -5,7 +5,7 @@ Name=Untitled
 Pos=74912.3,875.465,63221.1
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=12_yti_wilds_46_47
+spawnPackage=#1317
 wanderRadius=75
 
 [ENTRY]
@@ -15,13 +15,13 @@ Name=Untitled
 Pos=74635.8,898.86,63203.3
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=12_yti_wilds_46_47
+spawnPackage=#1316
 wanderRadius=75
 
 [ENTRY]
 ID=1154693
 Asset=Effects#Par-Snow1-Emitter
-Name=
+Name=Untitled
 Pos=74786.1,918.158,63173.2
 Orient=0,0.34759,0,0.937647
 Scale=1,1,1
@@ -33,7 +33,7 @@ Name=Untitled
 Pos=74319,920.05,63251
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=12_yti_wilds_46_47
+spawnPackage=#1316
 wanderRadius=75
 
 [ENTRY]
@@ -43,6 +43,6 @@ Name=Untitled
 Pos=74647,928.892,63363
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=12_yti_wilds_46_47
+spawnPackage=#1317
 wanderRadius=75
 

@@ -89,7 +89,7 @@ ID=1091281
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=Untitled
 Pos=76709,984.499,50334.3
-Orient=0,0,0,1
+Orient=0,0.535416,0,0.844589
 Scale=1,1,1
 spawnPackage=#F1315
 
@@ -105,7 +105,7 @@ spawnPackage=#F3664
 [ENTRY]
 ID=1154682
 Asset=Sound?SOUND=crackling_fire_loop.ogg&GAIN=1
-Name=
+Name=Untitled
 Pos=76822.6,991.801,50280.5
 Orient=0,0,0,1
 Scale=1,1,1

@@ -1,8 +1,0 @@
-[ENTRY]
-ID=1127893
-Asset=Prop-Warpig_Walls#Prop-Warpig_Wall1
-Name=Untitled
-Pos=66963,654.853,61267.2
-Orient=0,0,0,1
-Scale=4.4,4.4,4.4
-

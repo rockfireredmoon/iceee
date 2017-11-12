@@ -38,7 +38,7 @@ spawnPackage=#F1355
 ID=1091137
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=Untitled
-Pos=63806.5,773.969,56488.3
+Pos=63831.3,786.143,56524.5
 Orient=0,-0.389418,0,0.921061
 Scale=1,1,1
 spawnPackage=#F1355
@@ -68,6 +68,24 @@ Pos=63950.6,780.194,56920
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=#7785
+
+[ENTRY]
+ID=1154990
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=64325.1,784.047,56911.7
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#7881
+
+[ENTRY]
+ID=1154991
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=64050.4,781.4,56689.5
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#7882
 
 [ENTRY]
 ID=151016770

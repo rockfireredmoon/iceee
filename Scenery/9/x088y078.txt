@@ -6,6 +6,7 @@ Pos=66495,673.466,58675
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_jld_HogcatcherMix_43_44
+maxActive=0
 wanderRadius=200
 
 [ENTRY]
@@ -16,6 +17,7 @@ Pos=66290,699.573,59010
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_jld_HogcatcherMix_43_44
+maxActive=0
 wanderRadius=100
 
 [ENTRY]
@@ -43,28 +45,13 @@ Orient=0,0,0,1
 Scale=1,1,1
 
 [ENTRY]
-ID=1154623
-Asset=Prop-Marker1#Prop-Marker_Far
+ID=1154954
+Asset=Manipulator#Manipulator-SpawnPoint
 Name=
-Pos=66444.3,672.573,58690.4
+Pos=66712.7,706.079,58879.9
 Orient=0,0,0,1
 Scale=1,1,1
-
-[ENTRY]
-ID=1154624
-Asset=Prop-Marker1#Prop-Marker_Far
-Name=
-Pos=66295.2,698.093,58999.5
-Orient=0,0,0,1
-Scale=1,1,1
-
-[ENTRY]
-ID=1154625
-Asset=Prop-Marker1#Prop-Marker_Far
-Name=
-Pos=66590.7,674.967,59030.9
-Orient=0,0,0,1
-Scale=1,1,1
+spawnPackage=#7882
 
 [ENTRY]
 ID=151017095
@@ -92,6 +79,7 @@ Pos=66000,554.923,58790
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_jld_HogcatcherMix_43_44
+maxActive=0
 wanderRadius=60
 
 [ENTRY]
@@ -102,5 +90,6 @@ Pos=66575,677.099,59025
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_jld_HogcatcherMix_43_44
+maxActive=0
 wanderRadius=175
 

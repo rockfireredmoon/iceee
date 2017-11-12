@@ -1,19 +1,11 @@
 [ENTRY]
 ID=1150210
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=65882.3,848.595,48015.9
 Orient=0,-0.452886,0,0.891568
 Scale=1,1,1
 spawnPackage=12_wpg_Wilds_44_45
-
-[ENTRY]
-ID=1150211
-Asset=Prop-Marker1#Prop-Monster_Marker
-Name=
-Pos=65857.4,949.624,48008.7
-Orient=0,0,0,1
-Scale=4,4,4
 
 [ENTRY]
 ID=151030086

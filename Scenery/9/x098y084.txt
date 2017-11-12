@@ -15,7 +15,7 @@ Name=Untitled
 Pos=74155,976.494,63017
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=12_yti_wilds_46_47
+spawnPackage=#1316
 wanderRadius=65
 
 [ENTRY]
@@ -25,6 +25,6 @@ Name=Untitled
 Pos=74042,976.769,63566
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=12_yti_wilds_46_47
+spawnPackage=#1317
 wanderRadius=75
 

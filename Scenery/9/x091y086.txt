@@ -1,10 +1,37 @@
 [ENTRY]
 ID=1154686
 Asset=Effects#Par-Snow1-Emitter
-Name=
+Name=Untitled
 Pos=68956.4,922.504,65241.6
 Orient=0,-0.773915,0,0.63329
 Scale=1,1,1
+
+[ENTRY]
+ID=1154865
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=Untitled
+Pos=68971.1,454.656,64602.2
+Orient=0,-0.918788,0,0.394751
+Scale=1,1,1
+spawnPackage=#F3485
+
+[ENTRY]
+ID=1154867
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=68471.3,561.333,64603.8
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#F3527
+
+[ENTRY]
+ID=1154868
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=68895.8,463.49,64507.8
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#F3527
 
 [ENTRY]
 ID=151031073
@@ -30,19 +57,20 @@ wanderRadius=50
 ID=151031131
 Asset=Manipulator-SpawnPoint
 Name=Untitled
-Pos=68960,484.577,64655
-Orient=0,0,0,1
+Pos=68910.5,487.451,64618.4
+Orient=0,-0.95657,0,0.291502
 Scale=1,1,1
 spawnPackage=12_ice_Goliaths_45_46
 
 [ENTRY]
-ID=151031134
+ID=151031132
 Asset=Manipulator-SpawnPoint
 Name=Untitled
-Pos=68911,487.565,64619
+Pos=68888,510.606,64765
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_ice_Goliaths_45_46
+wanderRadius=50
 
 [ENTRY]
 ID=151031137
@@ -70,10 +98,11 @@ link=151031140,1
 ID=151031169
 Asset=Manipulator-SpawnPoint
 Name=Untitled
-Pos=68634,527.488,64640
+Pos=68719,519.49,64700.8
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_ice_Goliaths_45_46
+wanderRadius=60
 
 [ENTRY]
 ID=151031170
@@ -85,13 +114,4 @@ Scale=1,1,1
 spawnPackage=12_ice_Goliaths_45_46
 links_count=1
 link=151031137,1
-
-[ENTRY]
-ID=151031172
-Asset=Manipulator-SpawnPoint
-Name=Untitled
-Pos=68768,514.483,64587
-Orient=0,0,0,1
-Scale=1,1,1
-spawnPackage=12_ice_Goliaths_45_46
 

@@ -27,7 +27,7 @@ spawnPackage=#F7870
 [ENTRY]
 ID=1154834
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=71172.3,1122.86,44524.1
 Orient=0,0,0,1
 Scale=1,1,1

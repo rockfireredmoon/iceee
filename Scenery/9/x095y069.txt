@@ -59,14 +59,6 @@ Scale=1,1,1
 spawnPackage=#N3493
 
 [ENTRY]
-ID=1154028
-Asset=Prop-Map
-Name=Untitled
-Pos=71689.9,1218.95,52425.8
-Orient=0,0,0,1
-Scale=1,1,1
-
-[ENTRY]
 ID=1154029
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=Untitled
@@ -125,9 +117,9 @@ link=1154237,1
 [ENTRY]
 ID=1154833
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
-Pos=71696.6,1211.95,52429.4
-Orient=0,0,0,1
+Name=Untitled
+Pos=71688.2,1220.67,52425
+Orient=0,-0.0998334,0,0.995004
 Scale=1,1,1
 spawnPackage=#3487
 

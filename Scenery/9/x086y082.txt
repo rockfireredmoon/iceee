@@ -6,6 +6,7 @@ Pos=65075,893.335,61530
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_dth_wilds_42_43
+maxActive=0
 wanderRadius=100
 
 [ENTRY]

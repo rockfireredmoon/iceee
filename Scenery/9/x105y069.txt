@@ -1,7 +1,7 @@
 [ENTRY]
 ID=1154500
 Asset=Prop-Vampire1#Prop-Vampire_Rock2
-Name=
+Name=Untitled
 Pos=79196.2,1013.56,51784.9
 Orient=0,0,0,1
 Scale=1.4,1.4,1.4
@@ -9,7 +9,7 @@ Scale=1.4,1.4,1.4
 [ENTRY]
 ID=1154501
 Asset=Prop-Vampire1#Prop-Vampire_Rock2
-Name=
+Name=Untitled
 Pos=79202.4,1030.79,51795.4
 Orient=0,0,0,1
 Scale=1.5,1.5,1.5
@@ -17,10 +17,18 @@ Scale=1.5,1.5,1.5
 [ENTRY]
 ID=1154502
 Asset=Prop-Vampire1#Prop-Vampire_Rock2
-Name=
+Name=Untitled
 Pos=79211.1,1048.53,51804.9
 Orient=0,0.955572,0,-0.294759
 Scale=1.6,1.6,1.6
+
+[ENTRY]
+ID=1154909
+Asset=Prop-Tombstone#Prop-Tombstone3
+Name=
+Pos=79303.9,1299.64,52365.9
+Orient=0,0,0,1
+Scale=1,1,1
 
 [ENTRY]
 ID=151024530

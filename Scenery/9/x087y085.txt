@@ -1,6 +1,7 @@
 [ENTRY]
 ID=151019351
 Asset=CL-SnowyPine2#CL-SnowyPine2
+Name=Untitled
 Pos=65789,640.151,64455
 Orient=0,-0.677971,0,0.735088
 Scale=4.1,4.1,4.1
@@ -9,6 +10,7 @@ Flags=1
 [ENTRY]
 ID=151019353
 Asset=CL-SnowyPine3#CL-SnowyPine3
+Name=Untitled
 Pos=65909,703.813,63967
 Orient=0,-0.144492,0,0.989506
 Scale=2.575,2.575,2.575
@@ -17,6 +19,7 @@ Flags=1
 [ENTRY]
 ID=151029610
 Asset=Prop-Crystals_Blue#Prop-Crystal_Blue_Huge3
+Name=Untitled
 Pos=65742,658.609,64168
 Orient=-0.250637,0.370349,-0.104494,0.888315
 Scale=1,1,1
@@ -24,6 +27,7 @@ Scale=1,1,1
 [ENTRY]
 ID=151029614
 Asset=Prop-Crystals_Blue#Prop-Crystal_Blue_Huge2
+Name=Untitled
 Pos=65375.5,581.466,63911
 Orient=-0.159318,0,0,0.987227
 Scale=2.3,2.3,2.3
@@ -31,70 +35,63 @@ Scale=2.3,2.3,2.3
 [ENTRY]
 ID=151031054
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=65938,742.219,64160
 Orient=0,0,0,1
 Scale=1,1,1
-innerRadius=20
 spawnPackage=12_ice_Wilds_45_46
-outerRadius=40
 
 [ENTRY]
 ID=151031055
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=65831,712.824,64265
 Orient=0,0,0,1
 Scale=1,1,1
-innerRadius=20
 spawnPackage=12_ice_Wilds_45_46
-outerRadius=40
 
 [ENTRY]
 ID=151031116
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=65558,663.41,63948
 Orient=0,0,0,1
 Scale=1,1,1
-innerRadius=20
 spawnPackage=12_ice_Wilds_45_46
-outerRadius=40
 
 [ENTRY]
 ID=151031117
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=65679,662.638,64105
 Orient=0,0,0,1
 Scale=1,1,1
-innerRadius=20
 spawnPackage=12_ice_Wilds_45_46
-outerRadius=40
 
 [ENTRY]
 ID=151031118
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=65493,624.074,64083
 Orient=0,0,0,1
 Scale=1,1,1
-innerRadius=20
 spawnPackage=12_ice_Wilds_45_46
-outerRadius=40
 
 [ENTRY]
 ID=151031119
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=65476,615.991,64249
 Orient=0,0,0,1
 Scale=1,1,1
-innerRadius=20
 spawnPackage=12_ice_Wilds_45_46
-outerRadius=40
 
 [ENTRY]
 ID=151031120
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=65632,648.679,64272
 Orient=0,0,0,1
 Scale=1,1,1
-innerRadius=20
 spawnPackage=12_ice_Wilds_45_46
-outerRadius=40
 

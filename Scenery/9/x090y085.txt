@@ -1,6 +1,16 @@
 [ENTRY]
+ID=1154866
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=Untitled
+Pos=67977.6,703.952,64267.4
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#F3527
+
+[ENTRY]
 ID=151019366
 Asset=Prop-Boulder1
+Name=Untitled
 Pos=67622,822.203,63914
 Orient=-0.182836,0.666644,-0.173777,0.701397
 Scale=4.425,4.425,4.425
@@ -9,6 +19,7 @@ Flags=1
 [ENTRY]
 ID=151019367
 Asset=Prop-Boulder2
+Name=Untitled
 Pos=67557,822.549,63907
 Orient=0,0,0,1
 Scale=4.45,4.45,4.45
@@ -17,6 +28,7 @@ Flags=1
 [ENTRY]
 ID=151031144
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=68193,648.596,64373
 Orient=0,0,0,1
 Scale=1,1,1
@@ -27,6 +39,7 @@ link=151031145,1
 [ENTRY]
 ID=151031145
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=68116,670.924,64355
 Orient=0,0,0,1
 Scale=1,1,1
@@ -37,6 +50,7 @@ link=151031146,1
 [ENTRY]
 ID=151031146
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=68047,716.48,64419
 Orient=0,0,0,1
 Scale=1,1,1
@@ -46,6 +60,7 @@ link=151031145,1
 [ENTRY]
 ID=151031148
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=68140,410.798,64005
 Orient=0,0,0,1
 Scale=1,1,1
@@ -56,6 +71,7 @@ link=151031149,1
 [ENTRY]
 ID=151031149
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=68160,429.378,63752
 Orient=0,0,0,1
 Scale=1,1,1
@@ -64,32 +80,20 @@ link=151031148,1
 link=151031150,1
 
 [ENTRY]
-ID=151031174
-Asset=Manipulator-SpawnPoint
-Pos=68112,420.513,64049
-Orient=0,0,0,1
-Scale=1,1,1
-innerRadius=20
-spawnPackage=12_ice_Goliaths_45_46
-outerRadius=40
-
-[ENTRY]
 ID=151031175
 Asset=Manipulator-SpawnPoint
-Pos=68040,414.244,63992
-Orient=0,0,0,1
+Name=Untitled
+Pos=67981.9,414.288,63995.6
+Orient=0,0.276356,0,0.961055
 Scale=1,1,1
-innerRadius=20
 spawnPackage=12_ice_Goliaths_45_46
-outerRadius=40
 
 [ENTRY]
 ID=151031176
 Asset=Manipulator-SpawnPoint
-Pos=68072,426.296,63879
+Name=Untitled
+Pos=67915.4,429.538,63860.3
 Orient=0,0,0,1
 Scale=1,1,1
-innerRadius=20
 spawnPackage=12_ice_Goliaths_45_46
-outerRadius=40
 

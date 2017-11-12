@@ -103,7 +103,7 @@ Name=Untitled
 Pos=75056,806.901,62512
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=12_yti_wilds_46_47
+spawnPackage=#1316
 wanderRadius=75
 
 [ENTRY]

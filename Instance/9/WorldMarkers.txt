@@ -9,9 +9,9 @@ Comment=move as needed
 Position=66775.0,760.0,56753.0
 
 [ENTRY]
-Name=Grunes Tal - SE Marker
+Name=Swineland - Frontline Camp
 Comment=[Comment here]
-Position=52517.0,677.0,68409.0
+Position=73234.0,881.0,60068.0
 
 [ENTRY]
 Name=Grunes Tal SW Marker

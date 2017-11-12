@@ -171,6 +171,7 @@ Name=Untitled
 Pos=72340.7,1075.3,52263.5
 Orient=0,-0.581035,0,0.813878
 Scale=1,1,1
+spawnPackage=#3514
 
 [ENTRY]
 ID=1091110
@@ -179,7 +180,7 @@ Name=Untitled
 Pos=72438.6,1074.85,52215
 Orient=0,-0.434966,0,0.900447
 Scale=1,1,1
-spawnPackage=#F3516
+spawnPackage=#F3515
 
 [ENTRY]
 ID=1091115
@@ -254,6 +255,23 @@ Scale=1,1,1
 spawnPackage=#N3493
 
 [ENTRY]
+ID=1154851
+Asset=Prop-Market_Signs#Prop-Market_Sign-Vault
+Name=Untitled
+Pos=72283.9,1135.58,52288.8
+Orient=0,-0.338197,0,0.941076
+Scale=1,1,1
+
+[ENTRY]
+ID=1154852
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=Untitled
+Pos=72189.2,1083.89,52309.6
+Orient=0,0.37092,0,0.928665
+Scale=1,1,1
+spawnPackage=#F3519
+
+[ENTRY]
 ID=151021726
 Asset=Bldg-Urban-Small_Facade2?ATS=ATS-Warpig
 Name=Untitled
@@ -266,7 +284,7 @@ Flags=1
 ID=151021729
 Asset=Bldg-Urban-Small_House1#Bldg-Urban-Small_House1?ATS=ATS-Warpig
 Name=Untitled
-Pos=72223,1073.87,52332
+Pos=72237.1,1073.87,52342.9
 Orient=0,-0.347591,0,0.937646
 Scale=1,1,1
 Flags=1
@@ -356,7 +374,7 @@ Flags=1
 ID=151021880
 Asset=CL-Junk1
 Name=Untitled
-Pos=72250,1075.34,52372
+Pos=72255.9,1075.34,52390.9
 Orient=0,0.560509,0,0.828148
 Scale=1.7,1.7,1.7
 Flags=1
@@ -365,7 +383,7 @@ Flags=1
 ID=151021887
 Asset=Prop-Mining_Cart#Prop-Mine-Cart
 Name=Untitled
-Pos=72293,1075.3,52285
+Pos=72305.5,1075.3,52285
 Orient=0,0,0,1
 Scale=1.15,1.15,1.15
 Flags=1

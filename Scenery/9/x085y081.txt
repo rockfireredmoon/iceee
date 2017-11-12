@@ -1,11 +1,12 @@
 [ENTRY]
 ID=1127544
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=63990,847.959,61190
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_jld_junderbroodSkrillmix_43
+maxActive=0
 wanderRadius=90
 
 [ENTRY]
@@ -60,4 +61,5 @@ Pos=64325.4,865.643,61103
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_jld_junderbroodSkrillmix_43
+maxActive=0
 

@@ -1,13 +1,22 @@
 [ENTRY]
 ID=1150260
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=69245.4,1415,55678.2
 Orient=0,0,0,1
 Scale=1,1,1
 links_count=2
 link=1150261,1
 link=151030437,1
+
+[ENTRY]
+ID=1154879
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=69438,1251.64,55586.3
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#F1415
 
 [ENTRY]
 ID=151030436

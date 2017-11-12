@@ -1,6 +1,7 @@
 [ENTRY]
 ID=151029592
 Asset=Prop-Crystals_Blue#Prop-Crystal_Blue_Huge1
+Name=Untitled
 Pos=66253,578.877,65468
 Orient=-0.0881737,-0.352728,0.126456,0.922939
 Scale=2.075,2.075,2.075
@@ -9,6 +10,7 @@ Flags=1
 [ENTRY]
 ID=151029593
 Asset=Prop-Crystals_Blue#Prop-Crystal_Blue_Huge1
+Name=Untitled
 Pos=66587,639.745,65294
 Orient=0,0,0,1
 Scale=0.9,0.9,0.9
@@ -16,6 +18,7 @@ Scale=0.9,0.9,0.9
 [ENTRY]
 ID=151029605
 Asset=Prop-Crystals_Blue#Prop-Crystal_Blue_Med3
+Name=Untitled
 Pos=66491,622.937,65759
 Orient=0,0,0.0249974,0.999687
 Scale=1,1,1
@@ -24,6 +27,7 @@ Flags=1
 [ENTRY]
 ID=151029606
 Asset=Prop-Crystals_Blue#Prop-Crystal_Blue_Small4
+Name=Untitled
 Pos=66280,659.866,65552
 Orient=0.564381,0.138114,0.193461,0.790551
 Scale=1,1,1
@@ -32,6 +36,7 @@ Flags=1
 [ENTRY]
 ID=151029659
 Asset=CL-SnowyPine4
+Name=Untitled
 Pos=66469,648.62,65533
 Orient=0,-0.391902,0,0.920007
 Scale=5.15,5.15,5.15
@@ -40,6 +45,7 @@ Flags=1
 [ENTRY]
 ID=151029667
 Asset=CL-Crystal5
+Name=Untitled
 Pos=66202,647.518,65466
 Orient=0,0,0,1
 Scale=1,1,1
@@ -47,80 +53,72 @@ Scale=1,1,1
 [ENTRY]
 ID=151031058
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=66134,620.888,65315
 Orient=0,0,0,1
 Scale=1,1,1
-innerRadius=20
 spawnPackage=12_ice_Wilds_45_46
-outerRadius=40
 
 [ENTRY]
 ID=151031059
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=66114,632.003,65495
 Orient=0,0,0,1
 Scale=1,1,1
-innerRadius=20
 spawnPackage=12_ice_Wilds_45_46
-outerRadius=40
 
 [ENTRY]
 ID=151031060
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=66180,656.887,65577
 Orient=0,0,0,1
 Scale=1,1,1
-innerRadius=20
 spawnPackage=12_ice_Wilds_45_46
-outerRadius=40
 
 [ENTRY]
 ID=151031061
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=66350,671.659,65497
 Orient=0,0,0,1
 Scale=1,1,1
-innerRadius=20
 spawnPackage=12_ice_Wilds_45_46
-outerRadius=40
 
 [ENTRY]
 ID=151031063
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=66627,632.805,65767
 Orient=0,0,0,1
 Scale=1,1,1
-innerRadius=20
 spawnPackage=12_ice_Wilds_45_46
-outerRadius=40
 
 [ENTRY]
 ID=151031064
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=66398,632.97,65877
 Orient=0,0,0,1
 Scale=1,1,1
-innerRadius=20
 spawnPackage=12_ice_Wilds_45_46
-outerRadius=40
 
 [ENTRY]
 ID=151031065
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=66216,634.017,65776
 Orient=0,0,0,1
 Scale=1,1,1
-innerRadius=20
 spawnPackage=12_ice_Wilds_45_46
-outerRadius=40
 
 [ENTRY]
 ID=151031066
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=66441,638.101,65735
 Orient=0,0,0,1
 Scale=1,1,1
-innerRadius=20
 spawnPackage=12_ice_Wilds_45_46
-outerRadius=40
 

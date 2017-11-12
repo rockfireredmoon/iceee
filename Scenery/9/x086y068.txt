@@ -78,7 +78,7 @@ link=151030524,1
 [ENTRY]
 ID=1150440
 Asset=CL-Skrill_Mound
-Name=
+Name=Untitled
 Pos=65163.1,873.794,51244.4
 Orient=0,0,0,1
 Scale=1,1,1
@@ -86,7 +86,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1150444
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=65132.6,865.404,51399.6
 Orient=0,0,0,1
 Scale=1,1,1
@@ -96,7 +96,7 @@ wanderRadius=50
 [ENTRY]
 ID=1150447
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=65150.9,886.428,51010.7
 Orient=0,0,0,1
 Scale=1,1,1
@@ -106,7 +106,7 @@ wanderRadius=50
 [ENTRY]
 ID=1150453
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=64989.3,883.249,51119.1
 Orient=0,0,0,1
 Scale=1,1,1
@@ -116,7 +116,7 @@ wanderRadius=50
 [ENTRY]
 ID=1150454
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=65140.4,885.402,51624.9
 Orient=0,0,0,1
 Scale=1,1,1
@@ -126,7 +126,7 @@ wanderRadius=5
 [ENTRY]
 ID=1150455
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=64874.4,890.577,51409.8
 Orient=0,0,0,1
 Scale=1,1,1
@@ -136,7 +136,7 @@ wanderRadius=50
 [ENTRY]
 ID=1150457
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=65206.8,886.18,51597.5
 Orient=0,-0.252245,0,0.967663
 Scale=1,1,1
@@ -145,7 +145,7 @@ spawnPackage=12_dbh_skrillmix_48
 [ENTRY]
 ID=1150458
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=65203,878.023,51684.9
 Orient=0,0,0,1
 Scale=1,1,1
@@ -154,7 +154,7 @@ spawnPackage=12_dbh_skrillmix_48
 [ENTRY]
 ID=1150459
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=65185.5,876.342,51156.5
 Orient=0,-0.804599,0,0.593818
 Scale=1,1,1
@@ -163,7 +163,7 @@ spawnPackage=12_dbh_skrillmix_48
 [ENTRY]
 ID=1150460
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=65226,874.61,51288.2
 Orient=0,0.945784,0,0.324796
 Scale=1,1,1
@@ -172,7 +172,7 @@ spawnPackage=12_dbh_skrillmix_48
 [ENTRY]
 ID=1150461
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=65237.2,876.994,51201.4
 Orient=0,-0.924606,0,0.380925
 Scale=1,1,1
