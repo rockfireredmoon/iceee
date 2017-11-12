@@ -907,7 +907,7 @@ mDisplayName=Hiveguard Spleen
 mIcon=Icon-32-Organ.png|Icon-32-BG-Blue.png
 mIvType1=5
 mIvMax1=924
-mSv1=Big-juice
+mSv1=Bug-juice
 mValue=1
 mQualityLevel=1
 
@@ -918,7 +918,7 @@ mDisplayName=Hivemender Eyes
 mIcon=Icon-32-Eye_Green.png|Icon-32-BG-Blue.png
 mIvType1=5
 mIvMax1=924
-mSv1=Big-juice
+mSv1=Bug-juice
 mValue=1
 mQualityLevel=1
 
@@ -929,6 +929,6 @@ mDisplayName=Hivesoldier Gooey-goo
 mIcon=Icon-32-Goo.png|Icon-32-BG-Blue.png
 mIvType1=5
 mIvMax1=924
-mSv1=Big-juice
+mSv1=Bug-juice
 mValue=1
 mQualityLevel=1

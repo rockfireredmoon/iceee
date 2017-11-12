@@ -2288,7 +2288,7 @@ Obj.0.markerLocations=72807.1,1328.76,52891.6,9;
 [ACT]
 Act.BodyText= Take the Haz'ard Crew Battle Plans.
 Obj.0.type=gather
-Obj.0.data1=3531
+Obj.0.data1=3487
 Obj.0.data2=1
 Obj.0.description=Take the Battle Plans.
 Obj.0.myCreatureDefID=
