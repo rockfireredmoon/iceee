@@ -1663,16 +1663,13 @@ Spawn=1312,50  ;Ice Goliath (46)
 
 [ENTRY]
 Name=12_dbh_skrilldrones_48
+Spawn=1405,100
 spawnDelay=300
-Spawn=1405,100  ;Skrill Hivedrone (48) at 1
 
 [ENTRY]
 Name=12_dbh_skrillmix_48
+Spawn=1402,100
 spawnDelay=300
-Spawn=1396,25  ;Skrill Hiveguard (48) at 0
-Spawn=1399,25  ;Skrill Hivesoldier (48) at 3
-Spawn=1402,25  ;Skrill Hivemender (48) at 1
-Spawn=1408,25  ;Skrill Hivemaker (48) at 1
 
 ; TODO: unknown
 ; Guessed for this one.  A quest involves killing these.
