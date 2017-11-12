@@ -74793,12 +74793,10 @@ damage_resist_fire=1638
 damage_resist_frost=1638
 damage_resist_mystic=1638
 damage_resist_death=1638
-will_regen=1
-might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
-appearance=c2:{["h"]=0,["b"]="m",["g"]="m",["r"]="d"}
+appearance=c2:{["h"]=0,["b"]="n",["g"]="m",["r"]="r",["c"]={["boots"]={["type"]="Armor-Cloth-Male-Fancy1",["colors"]=[]},["chest"]={["type"]="Armor-Cloth-Male-Fancy1",["colors"]=[]},["leggings"]={["type"]="Armor-Cloth-Male-Fancy1",["colors"]=[]},["belt"]={["type"]="Armor-Cloth-Male-Fancy1",["colors"]=[]},["collar"]={["type"]="Armor-Cloth-Male-Fancy1",["colors"]=[]},["arms"]={["type"]="Armor-Cloth-Male-Fancy1",["colors"]=[]}},["sk"]={["ears"]="b5a492",["eye_white"]="ffffff",["highlight"]="a89886",["mask"]="997067",["base"]="87635b",["eye"]="424a4b",["nails"]="795a3d",["nose"]="312419",["eye_brow"]="402f21"},["sz"]="1.0"}
 level=15
 display_name=Ferris MacMillan
 profession=2
