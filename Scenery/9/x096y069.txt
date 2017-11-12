@@ -254,6 +254,15 @@ Scale=1,1,1
 spawnPackage=#N3493
 
 [ENTRY]
+ID=1154836
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=72598.3,1073.46,51905.8
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#E7882
+
+[ENTRY]
 ID=151021726
 Asset=Bldg-Urban-Small_Facade2?ATS=ATS-Warpig
 Name=Untitled

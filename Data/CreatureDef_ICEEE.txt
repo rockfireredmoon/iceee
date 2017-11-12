@@ -1576,25 +1576,52 @@ ai_package=nothing
 
 [ENTRY]
 ID=7881
-will_regen=1
-might_regen=1
 appearance=p1:{["a"]="Prop-Barrel"}
-level=1
 display_name=Supply Barrel
-profession=1
-creature_category=Inanimate
-rarity=1
-ai_package=nothing
+level=1
+strength=1
+dexterity=1
+constitution=1
+psyche=1
+spirit=1
+base_damage_melee=1
+damage_resist_melee=1
+damage_resist_fire=1
+damage_resist_frost=1
+damage_resist_mystic=1
+damage_resist_death=1
+will_regen=0
+might_regen=0
+offhand_weapon_damage=1
+casting_setback_chance=1
+channeling_break_chance=1
+profession=5
+creature_category=Magical
+ai_package=noai
 
 
 [ENTRY]
 ID=7882
-will_regen=1
-might_regen=1
 appearance=p1:{["a"]="Prop-Crate2"}
-level=1
 display_name=Supply Crate
-profession=1
-creature_category=Inanimate
-rarity=1
-ai_package=nothing
+level=1
+strength=1
+dexterity=1
+constitution=1
+psyche=1
+spirit=1
+base_damage_melee=1
+damage_resist_melee=1
+damage_resist_fire=1
+damage_resist_frost=1
+damage_resist_mystic=1
+damage_resist_death=1
+will_regen=0
+might_regen=0
+offhand_weapon_damage=1
+casting_setback_chance=1
+channeling_break_chance=1
+level=1
+profession=5
+creature_category=Magical
+ai_package=noai
