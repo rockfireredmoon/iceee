@@ -1,0 +1,13 @@
+#name noai
+
+set var 0
+
+:begin
+call waitfortarget
+wait 2000
+goto begin
+
+:waitfortarget
+has_target var
+wait 2000
+goto waitfortarget

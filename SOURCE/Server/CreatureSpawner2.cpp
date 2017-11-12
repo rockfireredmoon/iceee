@@ -577,10 +577,13 @@ CreatureInstance * SpawnTile :: SpawnCreature(ActiveInstance *inst, ActiveSpawne
 /*	if(strstr(cdef->css.appearance, "p1:") != NULL)
 		setFlags = true;
 */
-	if(cdef->css.IsPropAppearance() == true || ( SpawnFlags & SpawnPackageDef::FLAG_STATIONARY))
+	if(cdef->css.IsPropAppearance() == true  || ( SpawnFlags & SpawnPackageDef::FLAG_STATIONARY))
 	{
 		ptr->SetServerFlag(ServerFlags::Stationary, true);
-		setFlags = true;
+
+		// TODO event hack
+		if(cdef->CreatureDefID != 7882 && cdef->CreatureDefID != 7881)
+			setFlags = true;
 	}
 
 	if(setFlags == true) {
