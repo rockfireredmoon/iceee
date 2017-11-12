@@ -181,3 +181,12 @@ Name=maus_mix
 Spawn=3471,33
 Spawn=3472,33
 Spawn=1417,33
+
+[ENTRY]
+Name=45_swinelandskrill
+Flags=32
+Spawn=3528,33
+Spawn=3530,33
+Spawn=3529,34
+loyaltyRadius=60
+wanderRadius=60

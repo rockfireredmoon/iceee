@@ -62758,21 +62758,16 @@ total_size=5
 
 [ENTRY]
 ID=2756
-ExtraData=namedmob=1
 strength=139
 dexterity=139
-constitution=198
+constitution=260
 psyche=253
 spirit=297
-base_damage_melee=143
-damage_resist_melee=2439
-damage_resist_fire=2439
-damage_resist_frost=2439
-damage_resist_mystic=4878
-damage_resist_death=2439
-base_health=2178
-will_regen=1
-might_regen=1
+damage_resist_melee=4000
+damage_resist_fire=4000
+damage_resist_frost=4000
+damage_resist_mystic=4000
+damage_resist_death=4000
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
@@ -62782,7 +62777,10 @@ display_name=Grimfrost
 profession=5
 creature_category=Magical
 rarity=2
-ai_package=druid_mystic_brave_6
+base_damage_melee=143
+base_health=2178
+ExtraData=namedmob=
+ai_package=custom_heathendel_frostmage40
 total_size=150
 
 [ENTRY]
@@ -75926,6 +75924,7 @@ damage_resist_death=1111
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
+appearance=n4:{["sk"]={["stripe2"]="b78338",["skin"]="1f553c",["wings"]="abc8c6",["stripe1"]="947d20"},["c"]="Horde-Skrill-Trooper",["sz"]="1.0"}
 level=45
 display_name=Skrill Warrior
 profession=1
@@ -75949,6 +75948,7 @@ damage_resist_death=960
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
+appearance=n4:{["sk"]={["base"]="6a2948",["eyes"]="443832",["stripes"]="bf1111"},["c"]="Horde-Skrill-Worker",["sz"]="1.0",["a"]=[{["node"]="left_hand",["type"]="Item-Wand-Basic5",["colors"]=[]}]}
 level=45
 display_name=Skrill Hiveweaver
 profession=3
@@ -75972,6 +75972,7 @@ damage_resist_death=1000
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
+appearance=n4:{["sk"]={["base"]="6a4829",["eyes"]="443832",["stripes"]="bf49a1"},["c"]="Horde-Skrill-Worker",["sz"]="1.0",["a"]=[{["node"]="right_hand",["type"]="Item-1hHammer-Basic1",["colors"]=[]},{["node"]="left_hand",["type"]="Item-1hAxe-MiningPick",["colors"]=[]}]}
 level=45
 display_name=Skrill Laborer
 profession=2
