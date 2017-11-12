@@ -2045,6 +2045,11 @@ CreatureInstance* ActiveInstance :: SpawnGeneric(int CDefID, int x, int y, int z
 			retPtr->Faction = FACTION_PLAYERHOSTILE;
 			aggro = 1;
 		}
+		if(SpawnFlags & SpawnPackageDef::FLAG_KILLABLE)
+		{
+			retPtr->SetServerFlag(ServerFlags::KillableProp, true);
+			aggro = 1;
+		}
 
 		//if(cdef->css.eq_appearance[0] != 0)
 		//{

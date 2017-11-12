@@ -805,10 +805,9 @@ void CreatureInstance :: Instantiate(void)
 
 	//int cdef = CreatureDef.GetIndex(CreatureDefID);
 
-	if( CreatureDefID != 7882 && CreatureDefID != 7881) {
+	if((serverFlags & ServerFlags::KillableProp)==0) {
 		if((strlen(css.ai_package) == 0) || (strcmp(css.ai_package, "nothing") == 0))
 			SetServerFlag(ServerFlags::NeutralInactive, true);
-		// TODO event hack
 		if(css.IsPropAppearance() == true)
 		{
 			SetServerFlag(ServerFlags::NeutralInactive, true);

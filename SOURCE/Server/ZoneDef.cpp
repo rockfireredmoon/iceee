@@ -1935,6 +1935,11 @@ std::vector<WeatherState*> WeatherManager :: RegisterInstance(ActiveInstance *in
 		d.push_back(dd);
 	}
 
+	if(!g_Config.UseWeather) {
+		g_Log.AddMessageFormat("Not adding weather system as weather is turned off globally.");
+		return m;
+	}
+
 	/* Set up a weather state for all the MapDefInfo in this instance that have a weather def */
 	for(std::vector<MapDefInfo>::iterator it = d.begin(); it != d.end(); it++) {
 		if(!MaybeAddWeatherDef(instance->mInstanceID, (*it).Name, m))
@@ -1974,6 +1979,7 @@ void WeatherManager :: Deregister(std::vector<WeatherState*> states) {
 }
 
 int WeatherManager :: LoadFromFile(const char *fileName) {
+
 	//Note: the official grove file is loaded first, then the custom grove file.
 	//This should point here.
 	FileReader lfr;

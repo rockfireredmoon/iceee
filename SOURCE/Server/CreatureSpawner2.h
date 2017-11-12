@@ -189,7 +189,9 @@ public:
 	static const int FLAG_VISWEAPON_RANGED = 128;
 	static const int FLAG_USABLE = 512;
 	static const int FLAG_USABLE_BY_COMBATANT = 1024;
-	static const int FLAG_STATIONARY = 2048;
+	static const int FLAG_HIDE_NAMEBOARD = 2048;
+	static const int FLAG_STATIONARY = 4096;
+	static const int FLAG_KILLABLE = 8192;
 	static const int FLAG_ALLBITS = 0xFFFF;
 
 	static const int MAX_SPAWNCOUNT = 12;

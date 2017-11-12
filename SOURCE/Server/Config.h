@@ -183,6 +183,7 @@ public:
 	bool UseIntegerHealth;                   //If true, object health is represented as 4 bytes instead of 2.  Requires a modded client!  By default the client uses 2 bytes.  Server and client must match or protocol is broken.
 	bool UseMessageBox;                      //If true, send a message to the client that will appear in a popup box rather than a floating info message that disappears after a few seconds.  Requires a modded client.
 	bool UseStopSwim;                        //If true, send a custom "stop swimming" notification to the client when sending reposition updates, like warps.  Requires a modded client for the custom event handler.
+	bool UseWeather;					     //If true, weather systems will be enabled
 	std::string InvalidLoginMessage;         //The message string to send to the client if the account is wrong.
 	std::string MaintenanceMessage;          //The message string to send to the client if the server is in maintenance mode (sages and admins only).
 

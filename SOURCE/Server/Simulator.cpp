@@ -1432,6 +1432,8 @@ void SimulatorThread :: handle_lobby_query(void)
 		PendingData = handle_query_persona_delete();
 	else if(query.name.compare("pref.getA") == 0)
 		handle_query_pref_getA();
+	else if(query.name.compare("pref.set") == 0)
+		handle_query_pref_set();
 	else if(query.name.compare("account.tracking") == 0)
 		handle_query_account_tracking();
 	else if(query.name.compare("util.ping") == 0)
@@ -2506,6 +2508,8 @@ void SimulatorThread :: handle_game_query(void)
 
 bool SimulatorThread :: HandleQuery(int &PendingData)
 {
+	if(g_Config.DebugVerbose)
+		g_Log.AddMessageFormat("Handle query %s", query.name.c_str());
 	if(query.name.compare("client.loading") == 0)
 		handle_query_client_loading();
 	else if(query.name.compare("scenery.list") == 0)
@@ -5867,6 +5871,9 @@ int SimulatorThread :: handle_command_giveall(void)
 			newItem.IID = resultList[i]->mID;
 			newItem.ApplyFromItemDef(resultList[i]);
 			newItem.CCSID = (INV_CONTAINER << 16) | slot;
+			pld.charPtr->inventory.AddItem(INV_CONTAINER, newItem);
+			if(g_Config.DebugVerbose)
+				g_Log.AddMessageFormat("Adding %s to inventory", newItem.dataPtr->mDisplayName.c_str());
 			ActivateActionAbilities(&newItem);
 			wpos += AddItemUpdate(&SendBuf[wpos], Aux3, &newItem);
 		}

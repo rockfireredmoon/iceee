@@ -1597,7 +1597,7 @@ casting_setback_chance=1
 channeling_break_chance=1
 profession=5
 creature_category=Magical
-ai_package=noai
+ai_package=
 
 
 [ENTRY]
@@ -1624,4 +1624,4 @@ channeling_break_chance=1
 level=1
 profession=5
 creature_category=Magical
-ai_package=noai
+ai_package=

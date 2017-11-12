@@ -410,6 +410,11 @@ CreatureInstance * SpawnTile :: SpawnCreature(ActiveInstance *inst, ActiveSpawne
 				SpawnFlags |= SpawnPackageDef::FLAG_VISWEAPON_RANGED;
 				cOffset++;
 			}
+			else if(p == 'k' || p == 'K')
+			{
+				SpawnFlags |= SpawnPackageDef::FLAG_KILLABLE;
+				cOffset++;
+			}
 			else if(p == 'p' || p == 'P')
 			{
 				propSpawn = true;
@@ -580,18 +585,16 @@ CreatureInstance * SpawnTile :: SpawnCreature(ActiveInstance *inst, ActiveSpawne
 	if(cdef->css.IsPropAppearance() == true  || ( SpawnFlags & SpawnPackageDef::FLAG_STATIONARY))
 	{
 		ptr->SetServerFlag(ServerFlags::Stationary, true);
-
-		// TODO event hack
-		if(cdef->CreatureDefID != 7882 && cdef->CreatureDefID != 7881)
-			setFlags = true;
+		setFlags = true;
 	}
 
-	if(setFlags == true) {
+	if(SpawnFlags & SpawnPackageDef::FLAG_KILLABLE)
+		ptr->SetServerFlag(ServerFlags::KillableProp, true);
+	else  if(setFlags == true) {
 		ptr->_AddStatusList(StatusEffects::INVINCIBLE, -1);
 		ptr->_AddStatusList(StatusEffects::UNATTACKABLE, -1);
 		ptr->_AddStatusList(StatusEffects::IS_USABLE, -1);
 		ptr->Faction = FACTION_PLAYERFRIENDLY;
-		ptr->SetServerFlag(ServerFlags::Noncombatant, true);
 		ptr->SetServerFlag(ServerFlags::NeutralInactive, true);
 		aggro = 0;
 	}
