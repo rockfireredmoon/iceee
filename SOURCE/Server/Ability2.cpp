@@ -1745,7 +1745,7 @@ int AbilityManager2 :: ActivateAbility(CreatureInstance *cInst, short abilityID,
 			g_Log.AddMessageFormat("[CRITICAL] Target index [%d] is NULL", targIndex);
 			continue;
 		}
-		if((abProcessing.ciTarget->serverFlags & ServerFlags::Noncombatant) != 0 && !abInfo->bForce && abProcessing.ciTarget != abProcessing.ciSource) {
+		if((abProcessing.ciTarget->serverFlags & ServerFlags::Noncombatant) != 0 && !ab->bForce && abProcessing.ciTarget != abProcessing.ciSource) {
 			g_Log.AddMessageFormat("[ERROR] Target index [%d] is Non-combatant", targIndex);
 			continue;
 		}
