@@ -32951,7 +32951,7 @@ ai_package=4_rogue_30
 ID=1415
 will_regen=1
 might_regen=1
-appearance=p1:{["a"]="Prop-Ground_Flower2"}
+appearance=p1:{["a"]="Prop-Ground_Flower4"}
 level=1
 display_name=Stinking Rose
 profession=1

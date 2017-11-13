@@ -255,7 +255,6 @@ Scale=1,1,1
 spawnPackage=#N3493
 
 [ENTRY]
-<<<<<<< HEAD
 ID=1154851
 Asset=Prop-Market_Signs#Prop-Market_Sign-Vault
 Name=Untitled
