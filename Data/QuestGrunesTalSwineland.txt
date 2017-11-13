@@ -74,7 +74,7 @@ Obj.0.myCreatureDefID=3520
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=58298,790.683,66901.5,9;
-RewardItem.0=8700,1,0
+RewardItem.0=8700,1,1
 
 
 [ENTRY]
@@ -315,7 +315,7 @@ Obj.0.myCreatureDefID=1293
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=58221.0,792.103,67113.0,9;
-RewardItem.0=8700,1,0
+RewardItem.0=8700,1,1
 
 [ENTRY]
 Requires=818
@@ -534,7 +534,7 @@ Obj.0.myCreatureDefID=3522
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=59178.3,1109.91,64102.6,9;
-RewardItem.0=8700,1,0
+RewardItem.0=8700,1,1
 
 [ENTRY]
 ID=823
@@ -703,7 +703,7 @@ Obj.0.myCreatureDefID=3684
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=2142.8,266.536,2676.8,93;
-RewardItem.0=8700,1,0
+RewardItem.0=8700,1,1
 
 [ENTRY]
 ID=827
@@ -833,7 +833,7 @@ Obj.0.myCreatureDefID=1197
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=57964.9,809.567,66777.6,9;
-RewardItem.0=8700,1,0
+RewardItem.0=8700,1,1
 
 [ENTRY]
 Requires=829
@@ -2488,7 +2488,7 @@ Obj.0.myCreatureDefID=1322
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=62380.9,393.845,48938.6,9;
-RewardItem.0=8700,1,0
+RewardItem.0=8700,1,1
 
 [ENTRY]
 ID=924
@@ -2505,9 +2505,8 @@ Bring me back seven of each.
 CompleteText=Nook bless you! Now th' Great Speaker will be able ta hear new words from th' ticking god and guide us further!
 Level=47
 Suggested=47
-Exp=9734
+Exp=8734
 PartySize=1
-NumRewards=0
 Coin=3645
 Unabandon=0
 QuestGiverID=1321
@@ -2518,7 +2517,7 @@ sEnder=61842.3,407.187,49082.4,9
 [ACT]
 Act.BodyText=Gather 7 Hiveguard Spleens, 7 Eyes of Hivemenders and 7 Gooey-Goo from Hivesoldiers around the Skrill mounds.
 Obj.0.type=kill
-Obj.0.data1=1396
+Obj.0.data1=1398
 Obj.0.data2=7
 Obj.0.description=Gather 7 Skrill Hiveguard Spleens
 Obj.0.myCreatureDefID=
@@ -2574,9 +2573,8 @@ While youse go on yer own pilgrimage to the Nook-le-are Path for th' ticking god
 CompleteText=I see we have a new believer in our midst! I can feel Nook's essence radiatin' right offa ya.. ...and ya dealt with th' heretics too? Ya did...? I'se sure Nook is greatly pleased.   ... what's this...?
 Level=45
 Suggested=45
-Exp=9814
+Exp=8814
 PartySize=1
-NumRewards=0
 Coin=3645
 Unabandon=0
 QuestGiverID=1322
@@ -2587,23 +2585,23 @@ sEnder=62380.9,393.845,48938.6,9
 [ACT]
 Act.BodyText=Travel to the Nook-le-are Path south of Wartown and eliminate 20 members of the Nook-le-are Cult. While on your pilgrimage, see if you can find out what the Cult is up to.
 Obj.0.type=kill
-Obj.0.data1=3531
+Obj.0.data1=3463,3464,3465,3466
 Obj.0.data2=20
 Obj.0.description=Defeat 20 Nook-le-are Cult
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=0 of 20
-Obj.0.markerLocations=73345.1,56488.9,1049.23,9;
+Obj.0.markerLocations=65379.6,909.672,51262.9,9;
 Obj.1.type=activate
-Obj.1.data1=3531
-Obj.1.data2=1
+Obj.0.data1=3531
+Obj.0.data2=1
 Obj.1.description=Pick up Boris' Plans
 Obj.1.myCreatureDefID=
 Obj.1.myItemID=
 Obj.1.completeText=0 of 1
 Obj.1.markerLocations=65379.6,909.672,51262.9,9;
-Obj.1.ActivateTime=3
-Obj.1.ActivateText=Collecting Borris' Plans
+Obj.0.ActivateTime=4000
+Obj.0.ActivateText=Taking the plans...
 [ACT]
 Act.BodyText=You read what looks to be a freshly penned message on the parchment. It outlines a plan by Norris' brother Boris to attack the 'heretics' of Nook Town, 'liberate' it and 'rescue' the Great Nook from them. Take this terrible news back to Norris immediately!
 Obj.0.type=talk
@@ -2664,7 +2662,7 @@ Obj.0.myCreatureDefID=1322
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=62380.9,393.845,48938.6,9;
-RewardItem.0=8700,1,0
+RewardItem.0=8700,1,1
 
 [ENTRY]
 ID=927
@@ -2777,7 +2775,7 @@ Obj.0.myCreatureDefID=1325
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=71482.2,1130.07,47871.1,9;
-RewardItem.0=8700,1,0
+RewardItem.0=8700,1,1
 
 [ENTRY]
 ID=930
@@ -3033,6 +3031,7 @@ Level=50
 Suggested=50
 Exp=25000
 PartySize=3
+NumRewards=0
 Coin=25677
 Unabandon=0
 QuestGiverID=1319
@@ -3078,7 +3077,7 @@ Obj.0.myCreatureDefID=1319
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=76600.1,978.548,50018.3,9;
-RewardItem.0=8702,1,0
+RewardItem.0=8702,1,1
 
 [ENTRY]
 ID=944
