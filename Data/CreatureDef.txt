@@ -30683,23 +30683,21 @@ dexterity=83
 constitution=97
 psyche=66
 spirit=66
-base_damage_melee=120
 damage_resist_melee=1716
 damage_resist_fire=1716
 damage_resist_frost=1716
 damage_resist_mystic=1716
 damage_resist_death=1716
-will_regen=1
-might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
+appearance=n4:{["sk"]={["snow"]="BFBFBF",["skin"]="555555",["fur"]="3F3F3F",["nails"]="BFBFBF",["horn"]="FFFFFF"},["c"]="Horde-Glacial_Walker",["sz"]="1.5"}
 level=46
 display_name=Lumbering Bergback
 profession=2
 creature_category=Magical
-ai_package=example
-appearance=n4:{["sk"]={["snow"]="BFBFBF",["skin"]="555555",["fur"]="3F3F3F",["nails"]="BFBFBF",["horn"]="FFFFFF"},["c"]="Horde-Glacial_Walker",["sz"]="1.5"}
+base_damage_melee=120
+ai_package=4_knight_30
 
 [ENTRY]
 ID=1317
@@ -30708,23 +30706,21 @@ dexterity=85
 constitution=100
 psyche=68
 spirit=68
-base_damage_melee=124
 damage_resist_melee=1755
 damage_resist_fire=1755
 damage_resist_frost=1755
 damage_resist_mystic=1755
 damage_resist_death=1755
-will_regen=1
-might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
+appearance=n4:{["sk"]={["snow"]="BFBFBF",["skin"]="7F7F7F",["fur"]="949494",["nails"]="BFBFBF",["horn"]="D2D5FF"},["c"]="Horde-Glacial_Walker",["sz"]="1.5"}
 level=47
 display_name=Lumbering Bergback
 profession=2
 creature_category=Magical
-ai_package=example
-appearance=n4:{["sk"]={["snow"]="BFBFBF",["skin"]="7F7F7F",["fur"]="949494",["nails"]="BFBFBF",["horn"]="D2D5FF"},["c"]="Horde-Glacial_Walker",["sz"]="1.5"}
+base_damage_melee=124
+ai_package=4_rogue_30
 
 [ENTRY]
 defHints=48
@@ -30958,23 +30954,21 @@ dexterity=83
 constitution=70
 psyche=56
 spirit=56
-base_damage_melee=120
 damage_resist_melee=1716
 damage_resist_fire=1716
 damage_resist_frost=1716
 damage_resist_mystic=1716
 damage_resist_death=1716
-will_regen=1
-might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
+appearance=n4:{["sk"]={["skin"]="7D9469",["armor"]="373955",["eye"]="9D0A0E",["hair"]="3F0800",["mouth"]="C76D62",["trim"]="524F63"},["c"]="Horde-Vampire_Fury",["sz"]="1.3"}
 level=46
 display_name=Moonskull Hunter
 profession=3
 creature_category=Unliving
-ai_package=example
-appearance=n4:{["sk"]={["skin"]="7D9469",["armor"]="373955",["eye"]="9D0A0E",["hair"]="3F0800",["mouth"]="C76D62",["trim"]="524F63"},["c"]="Horde-Vampire_Fury",["sz"]="1.3"}
+base_damage_melee=120
+ai_package=mage_frost_brave_6
 
 [ENTRY]
 ID=1331
@@ -30983,17 +30977,15 @@ dexterity=76
 constitution=65
 psyche=52
 spirit=52
-will_regen=1
-might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
+appearance=n4:{["sk"]={["hair"]="3F0800",["ear"]="A99184",["neck"]="555555",["cloth2"]="2A2A23",["skin"]="7D9469",["cloth1"]="3F3F3F",["tattoos"]="AA351D",["accent"]="555555"},["c"]="Horde-Vampire_Mage",["sz"]="1.3"}
 level=47
 display_name=Moonskull Hunter
 profession=1
 creature_category=Unliving
-ai_package=example
-appearance=n4:{["sk"]={["hair"]="3F0800",["ear"]="A99184",["neck"]="555555",["cloth2"]="2A2A23",["skin"]="7D9469",["cloth1"]="3F3F3F",["tattoos"]="AA351D",["accent"]="555555"},["c"]="Horde-Vampire_Mage",["sz"]="1.3"}
+ai_package=knight_brave_6
 
 [ENTRY]
 ID=1332
@@ -31015,10 +31007,10 @@ level=47
 display_name=Vaj Cruentes
 profession=3
 creature_category=Unliving
-rarity=1
+rarity=2
 base_damage_melee=155
-ExtraData=namedmob=
-ai_package=example
+ExtraData=namedmob=&droprateprofile=generousinstance2
+ai_package=custom_heathendel_deathmage40
 
 [ENTRY]
 ID=1333
@@ -31237,23 +31229,21 @@ dexterity=83
 constitution=70
 psyche=56
 spirit=56
-base_damage_melee=120
 damage_resist_melee=1716
 damage_resist_fire=1716
 damage_resist_frost=1716
 damage_resist_mystic=1716
 damage_resist_death=1716
-will_regen=1
-might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
+appearance=n4:{["sk"]={["skin"]="947D67",["accent"]="7F420B",["eye"]="FF2C50",["armor"]="552C07",["hair"]="BFA085",["teeth"]="AA4D4D"},["c"]="Horde-Vampire_Mehirim",["sz"]="1.0528"}
 level=46
 display_name=Valkal Steedmaster
 profession=3
 creature_category=Unliving
-ai_package=example
-appearance=n4:{["sk"]={["skin"]="947D67",["accent"]="7F420B",["eye"]="FF2C50",["armor"]="552C07",["hair"]="BFA085",["teeth"]="AA4D4D"},["c"]="Horde-Vampire_Mehirim",["sz"]="1.0528"}
+base_damage_melee=120
+ai_package=knight_brave_6
 
 [ENTRY]
 ID=1347
@@ -31262,23 +31252,21 @@ dexterity=83
 constitution=97
 psyche=66
 spirit=66
-base_damage_melee=120
 damage_resist_melee=1716
 damage_resist_fire=1716
 damage_resist_frost=1716
 damage_resist_mystic=1716
 damage_resist_death=1716
-will_regen=1
-might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
+appearance=n4:{["sk"]={["eye_mouth"]="AA0F0F",["hair"]="9D9FBF",["tattoo"]="FF0000",["nose_ear"]="BF85A0",["skin"]="BFBFBF",["cloth"]="7491AA",["cape"]="949494",["belt"]="9CBFBF"},["c"]="Horde-Vampire",["sz"]="1.0528"}
 level=46
 display_name=Valkal Bloodfiend
 profession=2
 creature_category=Unliving
-ai_package=example
-appearance=n4:{["sk"]={["eye_mouth"]="AA0F0F",["hair"]="9D9FBF",["tattoo"]="FF0000",["nose_ear"]="BF85A0",["skin"]="BFBFBF",["cloth"]="7491AA",["cape"]="949494",["belt"]="9CBFBF"},["c"]="Horde-Vampire",["sz"]="1.0528"}
+base_damage_melee=120
+ai_package=rogue_brave_6
 
 [ENTRY]
 ID=1348
@@ -31287,23 +31275,21 @@ dexterity=85
 constitution=100
 psyche=68
 spirit=68
-base_damage_melee=124
 damage_resist_melee=1755
 damage_resist_fire=1755
 damage_resist_frost=1755
 damage_resist_mystic=1755
 damage_resist_death=1755
-will_regen=1
-might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
+appearance=n4:{["sk"]={["eye_mouth"]="D41313",["hair"]="8C8EAA",["tattoo"]="6E72AA",["nose_ear"]="6A6A6A",["skin"]="AFB1D4",["cloth"]="555555",["cape"]="373955",["belt"]="7F7F7F"},["c"]="Horde-Vampire",["sz"]="1.0528"}
 level=47
 display_name=Valkal Bloodfiend
 profession=2
 creature_category=Unliving
-ai_package=example
-appearance=n4:{["sk"]={["eye_mouth"]="D41313",["hair"]="8C8EAA",["tattoo"]="6E72AA",["nose_ear"]="6A6A6A",["skin"]="AFB1D4",["cloth"]="555555",["cape"]="373955",["belt"]="7F7F7F"},["c"]="Horde-Vampire",["sz"]="1.0528"}
+base_damage_melee=124
+ai_package=rogue_brave_6
 
 [ENTRY]
 ID=1349
@@ -31312,23 +31298,21 @@ dexterity=68
 constitution=100
 psyche=85
 spirit=100
-base_damage_melee=124
 damage_resist_melee=1755
 damage_resist_fire=1755
 damage_resist_frost=1755
 damage_resist_mystic=1755
 damage_resist_death=1755
-will_regen=1
-might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
+appearance=n4:{["sk"]={["hair"]="AA8DA9",["ear"]="3F3F3F",["neck"]="552A54",["cloth2"]="1B1C2A",["skin"]="7F6A7F",["cloth1"]="292A3F",["tattoos"]="6A346A",["accent"]="550000"},["c"]="Horde-Vampire_Mage",["sz"]="1.0"}
 level=47
 display_name=Valkal Shadowmancer
 profession=5
 creature_category=Unliving
-ai_package=nothing
-appearance=n4:{["sk"]={["hair"]="AA8DA9",["ear"]="3F3F3F",["neck"]="552A54",["cloth2"]="1B1C2A",["skin"]="7F6A7F",["cloth1"]="292A3F",["tattoos"]="6A346A",["accent"]="550000"},["c"]="Horde-Vampire_Mage",["sz"]="1.0"}
+base_damage_melee=124
+ai_package=druid_death_brave_6
 
 [ENTRY]
 ID=1350
@@ -31337,23 +31321,21 @@ dexterity=83
 constitution=66
 psyche=97
 spirit=97
-base_damage_melee=120
 damage_resist_melee=1716
 damage_resist_fire=1716
 damage_resist_frost=1716
 damage_resist_mystic=1716
 damage_resist_death=1716
-will_regen=1
-might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
+appearance=n4:{["sk"]={["hair"]="8C8EAA",["ear"]="57586A",["neck"]="00092A",["cloth2"]="696A7F",["skin"]="8C8EAA",["cloth1"]="576D7F",["tattoos"]="0FAAAA",["accent"]="550000"},["c"]="Horde-Vampire_Mage",["sz"]="1.1"}
 level=46
 display_name=Valkal Polarmancer
 profession=4
 creature_category=Unliving
-ai_package=example
-appearance=n4:{["sk"]={["hair"]="8C8EAA",["ear"]="57586A",["neck"]="00092A",["cloth2"]="696A7F",["skin"]="8C8EAA",["cloth1"]="576D7F",["tattoos"]="0FAAAA",["accent"]="550000"},["c"]="Horde-Vampire_Mage",["sz"]="1.1"}
+base_damage_melee=120
+ai_package=mage_fire_brave_6
 
 [ENTRY]
 ID=1351
@@ -31441,9 +31423,9 @@ level=47
 display_name=Vaj Coltres
 profession=2
 creature_category=Unliving
-rarity=1
+rarity=2
 base_damage_melee=155
-ExtraData=namedmob=
+ExtraData=namedmob=&droprateprofile=generousinstance2
 ai_package=custom_heathendel_deathknight40
 
 [ENTRY]
@@ -31481,14 +31463,11 @@ dexterity=83
 constitution=97
 psyche=66
 spirit=66
-base_damage_melee=120
 damage_resist_melee=1716
 damage_resist_fire=1716
 damage_resist_frost=1716
 damage_resist_mystic=1716
 damage_resist_death=1716
-will_regen=1
-might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
@@ -31496,10 +31475,8 @@ level=46
 display_name=Soulstriker Cutthroat
 profession=2
 creature_category=Mortal
-ai_package=death_creature_brave_6
-appearance=n4:{["sk"]={["skin"]="1D4955",["accent"]="A66570",["eye"]="9D0A0E",["armor"]="534741",["hair"]="554720",["teeth"]="8F9281"},["c"]="Horde-Vampire_Mehirim",["sz"]="1.0"}
-=Mortal
-ai_package=example
+base_damage_melee=120
+ai_package=rogue_brave_6
 
 [ENTRY]
 ID=1358
@@ -75297,8 +75274,6 @@ damage_resist_fire=3000
 damage_resist_frost=3000
 damage_resist_mystic=3000
 damage_resist_death=3000
-will_regen=1
-might_regen=1
 offhand_weapon_damage=170
 casting_setback_chance=500
 channeling_break_chance=500
@@ -75308,9 +75283,10 @@ display_name=Valkal's Spectre
 sub_name=The False Vaj
 profession=4
 creature_category=Unliving
-rarity=1
+rarity=2
 base_damage_melee=170
-ai_package=custom_heathendel_deathmage40
+ExtraData=droprateprofile=generousinstance2
+ai_package=custom_heathendel_deathdruid40
 
 [ENTRY]
 ID=3476
