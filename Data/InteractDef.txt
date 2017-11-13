@@ -3,7 +3,7 @@
 [ENTRY]
 Name=stonehenge_fortstonehenge
 Type=henge
-WarpTo=henge,43333,263,67813,81
+WarpTo=43333,263,67813,81
 
 [ENTRY]
 Name=stonehenge_northwall
