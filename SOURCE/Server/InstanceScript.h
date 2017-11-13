@@ -151,6 +151,7 @@ public:
 	int CDefIDForCID(int cid);
 	void SetCreatureGTAE(int CID);
 	void SetCreatureGTAETo(int CID, Squirrel::Vector3I loc);
+	void SetSize(int CID, float size);
 	bool Despawn(int CID);
 	int LoadSpawnTileFor(Squirrel::Point location);
 	int LoadSpawnTile(Squirrel::Point location);

@@ -736,6 +736,7 @@ void InstanceNutPlayer::RegisterInstanceFunctions(NutPlayer *instance, Sqrat::De
 {
 	instanceClass->Func(_SC("interact"), &InstanceNutPlayer::Interact);
 	instanceClass->Func(_SC("transform"), &InstanceNutPlayer::Transform);
+	instanceClass->Func(_SC("set_size"), &InstanceNutPlayer::SetSize);
 	instanceClass->Func(_SC("pvp_goal"), &InstanceNutPlayer::PVPGoal);
 	instanceClass->Func(_SC("has_status_effect"), &InstanceNutPlayer::HasStatusEffect);
 	instanceClass->Func(_SC("set_status_effect"), &InstanceNutPlayer::SetStatusEffect);
@@ -1089,6 +1090,20 @@ void InstanceNutPlayer::PlaySound(const char *name) {
 		sub.push_back("");
 	}
 	actInst->SendPlaySound(sub[0].c_str(), sub[1].c_str());
+}
+
+
+void InstanceNutPlayer::SetSize(int CID, float scale) {
+	CreatureInstance *ci = GetNPCPtr(CID);
+	if(ci != NULL)
+	{
+		char buf[20];
+		Util::SafeFormat(buf,sizeof(buf),"%f",scale);
+		CreatureAttributeModifier *cam = new CreatureAttributeModifier("sz", buf);
+		ci->PushAppearanceModifier(cam);
+	}
+	else
+		g_Log.AddMessageFormat("Request to size creature that doesn't exist, [%d] to %f", CID, scale);
 }
 
 int InstanceNutPlayer::Transform(int propID, Sqrat::Table transformation) {

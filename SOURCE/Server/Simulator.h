@@ -444,6 +444,7 @@ public:
 	void handle_inspectCreatureDef(void);
 	void handle_inspectCreature(void);
 	void handle_selectTarget(void);
+	void handle_mouseClick(void);
 	void handle_abilityActivate(void);
 	void AddMessage(long param1, long param2, int message);
 	bool CheckPermissionSimple(int permissionSet, unsigned int permissionFlag);

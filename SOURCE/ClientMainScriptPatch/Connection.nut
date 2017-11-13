@@ -82,7 +82,8 @@ this.ProtocolDef <- {
 		abilityCancel = 7,
 		inspectItem = 8,
 		inspectItemDef = 9,
-		inWater = 10
+		inWater = 10,
+		mouseClick = 21
 	}
 };
 this.PingDelay <- 300.0;
@@ -4270,6 +4271,15 @@ class this.Connection extends this.MessageBroadcaster
 	{
 		this._beginSend("selectTarget");
 		this.mOutBuf.putInteger(creatureId);
+		this._send();
+	}
+
+	function sendMouseClick(x, y, z)
+	{
+		this._beginSend("mouseClick");
+		this.mOutBuf.putInteger(x);
+		this.mOutBuf.putInteger(y);
+		this.mOutBuf.putInteger(z);
 		this._send();
 	}
 
