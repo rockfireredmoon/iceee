@@ -2017,7 +2017,7 @@ void SimulatorThread :: UnregisterMainCall3(void)
 
 bool SimulatorThread :: MainCallSetZone(int newZoneID, int newInstanceID, bool setDefaultLocation)
 {
-	if(CheckValidWarpZone(newZoneID) != ERROR_NONE)
+	if(newZoneID == 0)
 	{
 		return false;
 	}
@@ -2094,9 +2094,10 @@ bool SimulatorThread :: MainCallSetZone(int newZoneID, int newInstanceID, bool s
 
 bool SimulatorThread :: ProtectedSetZone(int newZoneID, int newInstanceID)
 {
+	MainCallSetZone(newZoneID, newInstanceID, false);
 	//The function originally had thread potection when using a faulty method of threading.
 	//Returns false if the operation failed.
-	return MainCallSetZone(newZoneID, newInstanceID, false) && ValidPointers();
+	return ValidPointers();
 }
 
 
