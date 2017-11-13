@@ -1598,8 +1598,8 @@ Obj.1.myCreatureDefID=
 Obj.1.myItemID=10048
 Obj.1.completeText=0 of 6
 Obj.1.markerLocations=68899.7,415.235,63899.7,9;
-Obj.0.ActivateTime=4000
-Obj.0.ActivateText=Taking the tears...
+Obj.1.ActivateTime=4000
+Obj.1.ActivateText=Taking the tears...
 [ACT]
 Act.BodyText=Return to Ziggy Emberpaw
 Obj.0.type=talk
