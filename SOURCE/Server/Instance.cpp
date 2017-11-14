@@ -3634,9 +3634,8 @@ void ActiveInstance :: RunObjectInteraction(SimulatorThread *simPtr, int CDef)
 
 		if(intObj->opType == InteractObject::TYPE_WARP)
 		{
-			if(simPtr->MainCallSetZone(intObj->WarpID, 0, false)) {
-				simPtr->SetPosition(intObj->WarpX, intObj->WarpY, intObj->WarpZ, 1);
-			}
+			simPtr->MainCallSetZone(intObj->WarpID, 0, false);
+			simPtr->SetPosition(intObj->WarpX, intObj->WarpY, intObj->WarpZ, 1);
 		}
 		else if(intObj->opType == InteractObject::TYPE_LOCATIONRETURN)
 		{
@@ -3644,9 +3643,8 @@ void ActiveInstance :: RunObjectInteraction(SimulatorThread *simPtr, int CDef)
 			int y = simPtr->pld.charPtr->groveReturnPoint[1];
 			int z = simPtr->pld.charPtr->groveReturnPoint[2];
 			int zone = simPtr->pld.charPtr->groveReturnPoint[3];
-			if(simPtr->MainCallSetZone(zone, 0, false)) {
-				simPtr->SetPosition(x, y, z, 1);
-			}
+			simPtr->MainCallSetZone(zone, 0, false);
+			simPtr->SetPosition(x, y, z, 1);
 		}
 		else if(intObj->opType == InteractObject::TYPE_SCRIPT)
 		{

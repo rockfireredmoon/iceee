@@ -1162,7 +1162,6 @@ void SimulatorThread :: HandleGameMsg(int msgType)
 
 	case 19: handle_debugServerPing(); break;       //Sent by a modded client only.
 	case 20: handle_acknowledgeHeartbeat(); break;  //Sent by a modded client only.
-	case 21: handle_mouseClick(); break;  //Sent by a modded client only.
 	default:
 		LogMessageL(MSG_ERROR, "Unhandled message in Game mode: %d", msgType);
 	}
@@ -4076,24 +4075,6 @@ void SimulatorThread :: handle_selectTarget(void)
 	creatureInst->RequestTarget(targetID);
 }
 
-void SimulatorThread :: handle_mouseClick(void) {
-
-	int mouseX = GetInteger(&readPtr[ReadPos], ReadPos);
-	int mouseY = GetInteger(&readPtr[ReadPos], ReadPos);
-	int mouseZ = GetInteger(&readPtr[ReadPos], ReadPos);
-
-	std::vector<ScriptCore::ScriptParam> p;
-	p.push_back(ScriptCore::ScriptParam(mouseX));
-	p.push_back(ScriptCore::ScriptParam(mouseY));
-	p.push_back(ScriptCore::ScriptParam(mouseZ));
-
-	if(creatureInst != NULL && creatureInst->actInst != NULL && creatureInst->actInst->nutScriptPlayer != NULL && creatureInst->actInst->nutScriptPlayer->mActive) {
-		creatureInst->actInst->nutScriptPlayer->mCaller = creatureInst->CreatureID;
-		creatureInst->actInst->nutScriptPlayer->JumpToLabel("on_click", p);
-		creatureInst->actInst->nutScriptPlayer->mCaller = 0;
-	}
-}
-
 void SimulatorThread :: handle_abilityActivate(void)
 {
 	creatureInst->RemoveNoncombatantStatus("abilityActivate");
@@ -5312,10 +5293,8 @@ int SimulatorThread :: handle_command_warpext(void)
 			if(strcmp(it->creatureInst->css.display_name, query.args[0].c_str()) == 0)
 			{
 				SendInfoMessage("Warping target.", INFOMSG_INFO);
-				if(it->MainCallSetZone(zoneDef->mID, 0, true))
-					return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-				else
-					return PrepExt_QueryResponseError(SendBuf, query.ID, "Failed to change zone.");
+				it->MainCallSetZone(zoneDef->mID, 0, true);
+				return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
 			}
 	return PrepExt_QueryResponseError(SendBuf, query.ID, "Target not found."); 
 }
@@ -11393,7 +11372,8 @@ void SimulatorThread :: WarpToZone(ZoneDefInfo *zoneDef, int xOverride, int yOve
 	}
 
 	SetPosition(creatureInst->CurrentX, creatureInst->CurrentY, creatureInst->CurrentZ, 1);
-	if(!MainCallSetZone(zoneDef->mID, 0, false) || ValidPointers() == false)
+	MainCallSetZone(zoneDef->mID, 0, false);
+	if(ValidPointers() == false)
 	{
 		ForceErrorMessage("Critical error while changing zones.", INFOMSG_ERROR);
 		Disconnect("SimulatorThread::WarpToZone");
@@ -13346,9 +13326,8 @@ void SimulatorThread :: RunTranslocate(void)
 	}
 	else
 	{
-		if(MainCallSetZone(pld.charPtr->bindReturnPoint[3], 0, false)) {
-			SetPosition(pld.charPtr->bindReturnPoint[0], pld.charPtr->bindReturnPoint[1], pld.charPtr->bindReturnPoint[2], 1);
-		}
+		MainCallSetZone(pld.charPtr->bindReturnPoint[3], 0, false);
+		SetPosition(pld.charPtr->bindReturnPoint[0], pld.charPtr->bindReturnPoint[1], pld.charPtr->bindReturnPoint[2], 1);
 	}
 }
 
@@ -13404,13 +13383,12 @@ void SimulatorThread :: RunPortalRequest(void)
 	int wpos = PrepExt_RemoveCreature(SendBuf, creatureInst->CreatureID);
 	creatureInst->actInst->LSendToLocalSimulator(SendBuf, wpos, creatureInst->CurrentX, creatureInst->CurrentZ, InternalID);
 
-	if(MainCallSetZone(zone, 0, false)) {
+	MainCallSetZone(zone, 0, false);
 
-		SetPosition(x, y, z, 1);
-		CheckSpawnTileUpdate(true);
-		CheckMapUpdate(true);
-		pld.ClearPortalRequestDest();
-	}
+	SetPosition(x, y, z, 1);
+	CheckSpawnTileUpdate(true);
+	CheckMapUpdate(true);
+	pld.ClearPortalRequestDest();
 }
 
 void SimulatorThread :: JoinPrivateChannel(const char *channelname, const char *password)
