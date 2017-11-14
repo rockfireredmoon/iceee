@@ -130,6 +130,10 @@ int PrepExt_Thunder(char *buffer, int weight)
 
 int PrepExt_AbilityEvent(char *buffer, int creatureID, int abilityID, int abilityEvent)
 {
+	if(abilityEvent == 4) {
+		g_Log.AddMessageFormat("REMOVEME PrepExt_AbilityEvent INTERRUPT ABILITY %d : %d", creatureID, abilityID);
+	}
+
 	//Same as AbilityActivate, but target lists and ground are always zero.
 	//Used for the utility messages such as activation requests.
 
@@ -146,23 +150,6 @@ int PrepExt_AbilityEvent(char *buffer, int creatureID, int abilityID, int abilit
 	wpos += PutByte(&buffer[wpos], 0);      //has_ground
 
 	PutShort(&buffer[1], wpos - 3);
-	return wpos;
-}
-
-int PrepExt_SendAbilityOwn(char *buffer, int CID, int abilityID, int eventID)
-{
-	int wpos = 0;
-	wpos += PutByte(&buffer[wpos], 60);  //_handleAbilityActivationMsg
-	wpos += PutShort(&buffer[wpos], 0);
-
-	wpos += PutInteger(&buffer[wpos], CID);   //Creature Instance ID
-	wpos += PutShort(&buffer[wpos], abilityID);  //ability ID
-	wpos += PutByte(&buffer[wpos], eventID);  //7 = ability ownage
-	wpos += PutInteger(&buffer[wpos], 0);   //target_len
-	wpos += PutInteger(&buffer[wpos], 0);   //secondary_len
-	wpos += PutByte(&buffer[wpos], 0);      //has_ground
-
-	PutShort(&buffer[1], wpos - 3);       //Set message size
 	return wpos;
 }
 

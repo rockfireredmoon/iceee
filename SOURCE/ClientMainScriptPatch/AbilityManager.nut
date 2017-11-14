@@ -943,11 +943,6 @@ this.RequirementTable <- {
 		return "the player is facing the target";
 	}
 
-	function CheckBuffLimits(val, buff_str)
-	{
-		return "the player buffs are within limits";
-	}
-
 	function NotStatus( status )
 	{
 		return "the player not to be " + status;
@@ -1453,7 +1448,7 @@ class this.Ability extends this.Action
 			}
 			else
 			{
-				this.log.error("Unregistered Ability Requirement : " + fn_name);
+				this.log.info("Unregistered Ability Requirement : " + fn_name);
 			}
 		}
 		else
@@ -1471,7 +1466,7 @@ class this.Ability extends this.Action
 			}
 			else
 			{
-				this.log.error("Unregistered Ability Requirement : " + req);
+				this.log.info("Unregistered Ability Requirement : " + req);
 			}
 		}
 
@@ -2513,7 +2508,7 @@ class this.Ability extends this.Action
 						StatusRequirementsTable.avatar <- _avatar;
 
 					local rule = ::Util.replace(req, ")", ",avatar)");
-
+					
 					if (!eval("return " + rule + ";", StatusRequirementsTable))
 						return false;
 				}

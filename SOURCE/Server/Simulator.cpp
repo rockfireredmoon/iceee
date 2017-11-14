@@ -3310,8 +3310,10 @@ void SimulatorThread :: SetPosition(int xpos, int ypos, int zpos, int update)
 			int size = PrepExt_UpdateFullPosition(SendBuf, creatureInst);
 			if(g_Config.UseStopSwim == true)
 				size += PrepExt_ModStopSwimFlag(&SendBuf[size], false);
-			size += PrepExt_VelocityEvent(&SendBuf[size], creatureInst);
 			creatureInst->actInst->LSendToLocalSimulator(SendBuf, size, creatureInst->CurrentX, creatureInst->CurrentZ);
+
+			AddMessage((long)creatureInst, 0, BCM_UpdateVelocity);
+			AttemptSend(SendBuf, PrepExt_VelocityEvent(SendBuf, creatureInst));
 		}
 
 		int r = pld.charPtr->questJournal.CheckTravelLocations(creatureInst->CreatureID, Aux1, creatureInst->CurrentX, creatureInst->CurrentY, creatureInst->CurrentZ, pld.CurrentZoneID);

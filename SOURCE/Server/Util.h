@@ -42,7 +42,6 @@ int PrepExt_SetTimeOfDay(char *buffer, const char *envType);
 int PrepExt_SetWeather(char *buffer, std::string type, int weight);
 int PrepExt_Thunder(char *buffer, int weight);
 int PrepExt_AbilityEvent(char *buffer, int creatureID, int abilityID, int abilityEvent);
-int PrepExt_SendAbilityOwn(char *buffer, int CID, int abilityID, int eventID);
 int PrepExt_CancelUseEvent(char *buffer, int CreatureID);
 int PrepExt_ActorJump(char *buffer, int actor);
 int PrepExt_RemoveCreature(char *buffer, int actorID);

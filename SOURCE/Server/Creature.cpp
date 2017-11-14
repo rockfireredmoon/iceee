@@ -4521,6 +4521,10 @@ void CreatureInstance :: RegisterCooldown(int cooldownCategory, int duration)
 
 void CreatureInstance :: ForceAbilityActivate(int abilityID, int abilityEvent, int targetID)
 {
+	if(abilityEvent == 4) {
+		g_Log.AddMessageFormat("REMOVEME ForceAbilityActivate INTERRUPT ABILITY %d : %d", CreatureDefID, abilityID);
+	}
+
 	int wpos = 0;
 	wpos += PutByte(&GSendBuf[wpos], 60);  //_handleAbilityActivationMsg
 	wpos += PutShort(&GSendBuf[wpos], 0);
@@ -9367,6 +9371,11 @@ int PrepExt_UpdateFullPosition(char *buffer, CreatureInstance *cInst)
 
 int PrepExt_AbilityActivate(char *buffer, CreatureInstance *cInst, ActiveAbilityInfo *ability, int aevent, bool ground)
 {
+
+	if(aevent == 4) {
+		g_Log.AddMessageFormat("REMOVEME PrepExt_AbilityActivate INTERRUPT ABILITY %d : %d", cInst->CreatureID, ability->abilityID);
+	}
+
 	int wpos = 0;
 	wpos += PutByte(&buffer[wpos], 60);  //_handleAbilityActivationMsg
 	wpos += PutShort(&buffer[wpos], 0);
@@ -9429,6 +9438,10 @@ int PrepExt_AbilityActivate(char *buffer, CreatureInstance *cInst, ActiveAbility
 
 int PrepExt_AbilityActivateEmpty(char *buffer, CreatureInstance *cInst, ActiveAbilityInfo *ability, int aevent)
 {
+	if(aevent == 4) {
+		g_Log.AddMessageFormat("REMOVEME PrepExt_AbilityActivateEmpty INTERRUPT ABILITY %d : %d", cInst->CreatureID, ability->abilityID);
+	}
+
 	//Same as AbilityActivate, but target lists and ground are always zero.
 	//Used for the utility messages such as activation requests.
 
