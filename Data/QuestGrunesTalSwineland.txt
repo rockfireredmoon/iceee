@@ -2517,7 +2517,7 @@ sEnder=61842.3,407.187,49082.4,9
 [ACT]
 Act.BodyText=Gather 7 Hiveguard Spleens, 7 Eyes of Hivemenders and 7 Gooey-Goo from Hivesoldiers around the Skrill mounds.
 Obj.0.type=kill
-Obj.0.data1=1398
+Obj.0.data1=1396
 Obj.0.data2=7
 Obj.0.description=Gather 7 Skrill Hiveguard Spleens
 Obj.0.myCreatureDefID=
@@ -2945,7 +2945,7 @@ Requires=940
 Title=Piece of the Puzzle
 BodyText=So, these last few weeks I've been examining the Mark of Death artifact trying to understand what was wrong with it and why it won't work. After many almost-sleepless nights of scrutinizing this thing, it finally hit me! The key itself isn't complete. Look, right there! As you can see, there is a piece missing, a stone by the looks of the rather subtle impression. With us closing in on his Blood Keep I'm willing to bet Valkal decided to pull one over on us and split the key to his Keep in two. He left the largest part of it in that Mausoleum with his shadow as a lure to keep us distracted. However, in the event that piece was somehow taken by us, he likely had the other piece hidden somewhere else.
 
-While some of us set for you, a few others went investigating where that other piece to the Mark of Death might be. They came back only yesterday with information that makes your return all the more timely. A partially torn note was found on one of those bloodsuckers near the base of the Keep that revealed the other piece of the Mark of Death has likely been taken out of Swineland itself. Well, not yet at least. It seems Valkal had been keeping the other piece with one of his ‘sons’ until you defeated his shadow.
+While some of us set for you, a few others went investigating where that other piece to the Mark of Death might be. They came back only yesterday with information that makes your return all the more timely. A partially torn note was found on one of those bloodsuckers near the base of the Keep that revealed the other piece of the Mark of Death has likely been taken out of Swineland itself. Well, not yet at least. It seems Valkal had been keeping the other piece with one of his 'sons' until you defeated his shadow.
 
 Realizing a powerful opponent has appeared on our side, Valkal now seems to be trying to get that piece out of Swineland and to a more secure location...which can only mean he's sent it to be taken through the Dambat Door.
 
@@ -2960,10 +2960,10 @@ Unabandon=0
 QuestGiverID=1307
 QuestEnderID=1307
 Repeat=0
-sGiver=71482.2,1130.07,47871.1,9
+sGiver=76850.6,968.205,49892.6,9
 sEnder=76850.6,968.205,49892.6,9
 [ACT]
-Act.BodyText= Defeat Valkal's Legions
+Act.BodyText=Defeat Valkal's Legions
 Obj.0.type=kill
 Obj.0.data1=3492
 Obj.0.data2=1
@@ -2978,7 +2978,7 @@ Obj.1.data2=20
 Obj.1.description=Defeat Valkal's Legions
 Obj.1.myCreatureDefID=
 Obj.1.myItemID=
-Obj.1.completeText= (0 of 20)
+Obj.1.completeText=(0 of 20)
 Obj.1.markerLocations=81868.5,790.799,54416.6,9;
 [ACT]
 Act.BodyText=Return to Maddie Paintedhoof
@@ -3004,32 +3004,32 @@ PartySize=1
 Coin=5278
 Unabandon=0
 QuestGiverID=1307
-QuestEnderID=1319
+QuestEnderID=3499
 Repeat=0
 sGiver=71482.2,1130.07,47871.1,9
-sEnder=76850.6,968.205,49892.6,9
+sEnder=76950.1,971.136,50176.2,9
 [ACT]
 Act.BodyText=Report to Orso Ironhide, Captain of the Redeemers Camp.
 Obj.0.type=talk
 Obj.0.data1=0
 Obj.0.data2=0
 Obj.0.description=Report to Orso Ironhide
-Obj.0.myCreatureDefID=1319
+Obj.0.myCreatureDefID=3499
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=76850.6,968.205,49892.6,9;
+Obj.0.markerLocations=76950.1,971.136,50176.2,9
 
 [ENTRY]
 ID=943
 Requires=942
 Title=The Cost of Peace
-BodyText= Now that we hold the key to Valkal's fortress of death on top the hill that overlooks the Dambat Pass, your objective is clear. However don’t be fooled as this undertaking will be unlike ANYTHING you have ever experienced up until now. Valkal has personally been responsible for the death of thousands and can not be taken lightly. 
+BodyText=Now that we hold the key to Valkal's fortress of death on top the hill that overlooks the Dambat Pass, your objective is clear. However don't be fooled as this undertaking will be unlike ANYTHING you have ever experienced up until now. Valkal has personally been responsible for the death of thousands and can not be taken lightly. 
 
-Even once inside the Keep, Valkal is protected in his fortress by the ancient fell magics of his kind. He cannot be confronted outright by any means. The only way to reach him is to find some way to break the seal that guards him. Only then can he be defeated. Further, because the Vampires within Lord Valkal’s fortress are quite likely very powerful, barring Valkal himself, it would be wise to take strong friends with you in this endeavor. I cannot stress this enough.
+Even once inside the Keep, Valkal is protected in his fortress by the ancient fell magics of his kind. He cannot be confronted outright by any means. The only way to reach him is to find some way to break the seal that guards him. Only then can he be defeated. Further, because the Vampires within Lord Valkal's fortress are quite likely very powerful, barring Valkal himself, it would be wise to take strong friends with you in this endeavor. I cannot stress this enough.
 
 Speak to a few of the other Redeemers before you head to the Blood Keep. They also have tasks for you. Now, go warrior! Go and put an end to the dark shadow that Valkal has cast over Swinelnad once and for all!
 
-CompleteText=So, it is finished. It is finally over! It's funny, you know. Somehow we knew the exact moment that Valkal’s life ended. There was an encumberance lifted off our shoulders. Not a soul in Swineland, nay, in all of Europe, that can express the debt we owe you for what you've done. You have saved so many lives by your deeds. Thank you mighty beast! Take this small token of our gratitude,y ou have more then deserved it.
+CompleteText=So, it is finished. It is finally over! It's funny, you know. Somehow we knew the exact moment that Valkal's life ended. There was an encumberance lifted off our shoulders. Not a soul in Swineland, nay, in all of Europe, that can express the debt we owe you for what you've done. You have saved so many lives by your deeds. Thank you mighty beast! Take this small token of our gratitude, you have more then deserved it.
 Suggested=49
 Exp=60000
 PartySize=4
@@ -3045,7 +3045,7 @@ Act.BodyText=Travel up the hill and enter Valkal's Blood Keep.
 Obj.0.type=travel
 Obj.0.data1=79393,1316,52906,9
 Obj.0.data2=250
-Obj.0.description=Enter Valkal’s Blood Keep
+Obj.0.description=Enter Valkal's Blood Keep
 Obj.0.complete=0
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
@@ -3090,7 +3090,7 @@ PartySize=3
 NumRewards=0
 Coin=25677
 Unabandon=0
-QuestGiverID=1319
+QuestGiverID=3499
 QuestEnderID=1319
 Repeat=0
 sGiver=76600.1,978.548,50018.3,9
@@ -3108,17 +3108,17 @@ Obj.0.markerLocations=79441.6,1316.56,53071.3,9;
 [ACT]
 Act.BodyText=Defeat the 'sons' of Valkal, Vaj Samir and Vaj Venae.
 Obj.0.type=kill
-Obj.0.data1=1359,1336
-Obj.0.data2=2
+Obj.0.data1=1336
+Obj.0.data2=1
 Obj.0.description=Defeat Vaj Venae
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=
 Obj.0.markerLocations=2759.17,625.249,1113.12,66;
 Obj.1.type=kill
-Obj.1.data1=1359,1336
-Obj.1.data2=0
-Obj.1.description=null
+Obj.1.data1=1359
+Obj.1.data2=1
+Obj.1.description=Defeat Vaj Samir
 Obj.1.myCreatureDefID=
 Obj.1.myItemID=
 Obj.1.completeText=
@@ -3136,8 +3136,8 @@ Obj.0.markerLocations=76600.1,978.548,50018.3,9;
 RewardItem.0=8701,1,1
 
 [ENTRY]
-ID=944
-Requires=943
+ID=945
+Requires=944
 Title=Hunting Legends
 BodyText=While it is very true Valkal's Blood Keep is filled with multitudes of Vampires of all sorts, they are not the only things said to be walking its dark halls. I, and others, have heard rumors of three legendary creatures, fell creatures of might and dark power, that Valkal, himself, has personally groomed as his personal pets. It is believed he plans to eventually release these fell creatures into Swineland and use them to lay waste to this fine province and it's inhabitants.
 
@@ -3149,10 +3149,10 @@ Exp=25000
 PartySize=3
 Coin=25000
 Unabandon=0
-QuestGiverID=1315
+QuestGiverID=1319
 QuestEnderID=1315
 Repeat=0
-sGiver=76721.5,983.165,50317.4,9
+sGiver=76600.1,978.548,50018.3,9;
 sEnder=76721.5,983.165,50317.4,9
 [ACT]
 Act.BodyText=Enter the Blood Keep

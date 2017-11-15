@@ -307,6 +307,7 @@ Pos=71218,781.608,45297
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_dbh_skrillmix_48
+wanderRadius=100
 
 [ENTRY]
 ID=151031255
@@ -316,6 +317,7 @@ Pos=71185,783.596,45360
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_dbh_skrillmix_48
+wanderRadius=150
 
 [ENTRY]
 ID=151031258
@@ -325,6 +327,7 @@ Pos=71204,781.357,45453
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_dbh_skrillmix_48
+wanderRadius=100
 
 [ENTRY]
 ID=151040107

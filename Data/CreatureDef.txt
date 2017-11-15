@@ -30767,6 +30767,7 @@ total_size=5
 
 [ENTRY]
 ID=1321
+defHints=48
 will_regen=1
 might_regen=1
 appearance=n4:{["a"]=[{["node"]="left_shoulder",["type"]="Armor-Medium-High1-Left_Pauldron",["colors"]=[]},{["node"]="right_shoulder",["type"]="Armor-Medium-High1-Right_Pauldron",["colors"]=[]},{["node"]="back_sheathe",["type"]="Item-2hMace-Medium2",["colors"]=[]}],["c"]="Horde-Warpig",["sk"]={["armor"]="6a0000",["bone"]="f8eadb",["cloth"]="ffcb72",["eye"]="000994",["leather"]="550000",["skin"]="e6b695",["trim"]="947d20"},["sz"]="1"}
@@ -75776,7 +75777,7 @@ rarity=2
 ai_package=nothing
 
 [ENTRY]
-defHints=8
+defHints=2
 ID=3515
 appearance=c2:{["sk"]={["hair"]="843c2b",["leg_patches"]="843c2b",["chest_patch"]="974632",["tusks"]="c8bba5",["eye_white"]="adadad",["nails"]="63594e",["base"]="847668",["inner_ear"]="994936",["eye"]="b18b65",["eye_brows"]="b25540",["snout"]="6f6152",["arm_patches"]="6e3325"},["sz"]="1.0",["g"]="m",["h"]=0,["r"]="k",["b"]="n",["c"]={["boots"]={["type"]="Armor-Cloth-Male-Casual2",["colors"]=[]},["chest"]={["type"]="Armor-Cloth-Male-Casual2",["colors"]=[]},["leggings"]={["type"]="Armor-Cloth-Male-Casual2",["colors"]=[]},["belt"]={["type"]="Armor-Cloth-Male-Casual2",["colors"]=[]},["collar"]={["type"]="Armor-Cloth-Male-Casual2",["colors"]=[]},["arms"]={["type"]="Armor-Cloth-Male-Casual2",["colors"]=[]}}}
 level=50
@@ -75789,7 +75790,6 @@ ai_package=nothing
 
 [ENTRY]
 ID=3516
-defHints=2
 appearance=c2:{["sk"]={["eye"]="e8d057",["eyeball"]="c7c5c5",["hair"]="2a1c10",["hair_highlight"]="b6b0b4",["head_detail"]="657380",["skin"]="6a5656",["tusks"]="cec151"},["sz"]="1.0",["g"]="m",["h"]=0,["r"]="s",["b"]="n",["c"]={["boots"]={["type"]="Armor-Heavy-Mid2",["colors"]=[]},["chest"]={["type"]="Armor-Heavy-Mid2",["colors"]=[]},["arms"]={["type"]="Armor-Heavy-Mid2",["colors"]=[]},["leggings"]={["type"]="Armor-Heavy-Mid2",["colors"]=[]},["collar"]={["type"]="Armor-Heavy-Mid2",["colors"]=[]},["belt"]={["type"]="Armor-Heavy-Mid2",["colors"]=[]},["gloves"]={["type"]="Armor-Heavy-Mid2",["colors"]=[]}}}
 level=50
 display_name=Stodaag Gaz'um
@@ -75801,7 +75801,7 @@ ai_package=nothing
 Effects=TRANSFORMER,INVINCIBLE,IS_USABLE,UNATTACKABLE
 
 [ENTRY]
-defHints=8
+defHints=2
 ID=3517
 appearance=c2:{["sk"]={["hair"]="8f735e",["hands_feet"]="8f735e",["inner_ear"]="9f9984",["snout"]="8e8976",["base"]="785e49",["eye_white"]="e2d8bd",["eye"]="be4e4b",["shoulders"]="8e8976",["nails"]="473224",["eye_lid"]="b87f53"},["sz"]="1.0",["g"]="f",["h"]=1,["r"]="c",["b"]="r",["c"]={["boots"]={["type"]="Armor-Cloth-High1",["colors"]=[]},["chest"]={["type"]="Armor-Cloth-High1",["colors"]=[]},["arms"]={["type"]="Armor-Cloth-High1",["colors"]=[]},["leggings"]={["type"]="Armor-Cloth-High1",["colors"]=[]},["collar"]={["type"]="Armor-Heavy-Mid2",["colors"]=[]},["belt"]={["type"]="Armor-Heavy-Mid2",["colors"]=[]},["gloves"]={["type"]="Armor-Heavy-Mid2",["colors"]=[]}}}
 level=50
@@ -75813,7 +75813,7 @@ rarity=2
 ai_package=nothing
 
 [ENTRY]
-defHints=8
+defHints=2
 ID=3518
 appearance=c2:{["sk"]={["base"]="c77d4b",["eye"]="00c6ff",["eye_white"]="ffffff",["highlights"]="efb469"},["sz"]="1.0",["g"]="m",["h"]=1,["r"]="u",["b"]="n",["c"]={["boots"]={["type"]="Armor-Medium-High2",["colors"]=[]},["chest"]={["type"]="Armor-Medium-High2",["colors"]=[]},["arms"]={["type"]="Armor-Medium-High2",["colors"]=[]},["leggings"]={["type"]="Armor-Medium-High2",["colors"]=[]},["collar"]={["type"]="Armor-Medium-High1",["colors"]=[]},["belt"]={["type"]="Armor-Medium-High2",["colors"]=[]},["gloves"]={["type"]="Armor-Medium-High2",["colors"]=[]}}}
 level=50

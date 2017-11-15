@@ -1668,7 +1668,11 @@ spawnDelay=300
 
 [ENTRY]
 Name=12_dbh_skrillmix_48
-Spawn=1402,100
+;Spawn=1402,100
+Spawn=1396,25  ;Skrill Hiveguard (48) at 0
+Spawn=1399,25  ;Skrill Hivesoldier (48) at 3
+Spawn=1402,25  ;Skrill Hivemender (48) at 1
+Spawn=1408,25  ;Skrill Hivemaker (48) at 1
 spawnDelay=300
 
 ; TODO: unknown
