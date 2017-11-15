@@ -490,17 +490,17 @@ int InventoryManager :: GetFreeSlot(int containerID)
 	return -1;
 }
 
-ItemDef * InventoryManager :: GetBestSpecialItem(int invID, char specialItemType)
+InventorySlot * InventoryManager :: GetBestSpecialItem(int invID, char specialItemType)
 {
 	std::vector<InventorySlot> inv = containerList[invID];
-	ItemDef *itemDef = NULL;
+	InventorySlot *itemDef = NULL;
 	for(std::vector<InventorySlot>::iterator it = inv.begin(); it != inv.end() ; ++it) {
 		InventorySlot sl = *it;
 		if(!sl.IsExpired()) {
-			ItemDef *iDef = g_ItemManager.GetPointerByID(sl.IID);
+			ItemDef *iDef = sl.dataPtr;
 			if(iDef != NULL && iDef->mSpecialItemType == specialItemType) {
-				if(itemDef == NULL || (itemDef != NULL && iDef->mIvMax1 > itemDef->mIvMax1)) {
-					itemDef = iDef;
+				if(itemDef == NULL || (itemDef != NULL && iDef->mIvMax1 > itemDef->dataPtr->mIvMax1)) {
+					itemDef = &sl;
 				}
 			}
 		}

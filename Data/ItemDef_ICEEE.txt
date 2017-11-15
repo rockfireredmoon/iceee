@@ -1176,3 +1176,35 @@ mIvType2=8
 mLevel=1
 mValue=1
 mMinUseLevel=1
+
+[ENTRY]
+mID=8705
+mType=8
+mSpecialItemType=4
+mDisplayName=Cheap Refashioning Device
+mIcon=Icon-32-Scissors.png|Icon-32-BG-Green.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=0
+mFlavorText=Double-click to refashion items wherever you are. This cheaply made but compact device will only work once!
+mIvMax1=10
+mIvMax2=0
+mIvType1=1
+
+[ENTRY]
+mID=8706
+mType=8
+mSpecialItemType=4
+mDisplayName=Sturdy Refashioning Device
+mIcon=Icon-32-Scissors.png|Icon-32-BG-Yellow.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to refashion items wherever you are. This sturdy device will last a lifetime!
+mIvMax1=1
+mIvMax2=0
+mIvType1=0

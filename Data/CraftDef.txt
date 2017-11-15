@@ -1,4 +1,5 @@
-FilterName	In#	Out#	Conditions	Actions	
+FilterName	In#	Out#	Conditions	Actions
+PortableRefashioningDevice	3	1	0,itemtype,2|1,requireid,20523,1|1,requireid,20943,1|1,requireid,20954,1	Giveid,8705,1	;1 Blood Root + 1 Polished Stone + 1 Steel = 1 Portable Refashioning Device	
 GreenWeapon1to19	2	2	0,itemtype,2|0,quality,2|0,cmp,level,<=,19|1,requireid,20523,1	Giveid,20943,1|giveid,20944,1	;1 Green Weapon + 1 Blood Root = 1 Polished Stone + 1 Raw Iron
 GreenArmor1to19	2	2	0,itemtype,3|0,quality,2|0,cmp,level,<=,19|1,requireid,20523,1	Giveid,20942,1|giveid,20945,1	;1 Green Armor + 1 Blood Root = 1 Fine Wool + 1 Rough Hide
 GreenWeapon20to29	2	2	0,itemtype,2|0,quality,2|0,cmp,level,>=,20|0,cmp,level,<=,29|1,requireid,20523,1	Giveid,20948,1|giveid,20949,1	;1 Green Weapon + 1 Blood Root = 1 Rough Gem + 1 Iron

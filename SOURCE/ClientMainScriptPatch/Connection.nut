@@ -63,6 +63,7 @@ this.ProtocolDef <- {
 		[50] = "_handleCommunicationMsg",
 		[51] = "_handleTradeMsg",
 		[52] = "_handleForm",
+		[53] = "_handleRefashion",
 		[60] = "_handleAbilityActivationMsg",
 		[70] = "_handleItemUpdateMsg",
 		[71] = "_handleItemDefUpdateMsg",
@@ -3259,6 +3260,14 @@ class this.Connection extends this.MessageBroadcaster
 				delete mForms[formId];			
 			}
 		}
+	}
+	
+	function _handleRefashion(data) {
+		local type = data.getByte();
+		local mscreen = this.Screens.get("MorphItemScreen", true);
+		mscreen.reset();
+		mscreen.setMorpherId(::_avatar.getID());
+		this.Screens.show("MorphItemScreen");
 	}
 	
 	function _handleBooks(data) {

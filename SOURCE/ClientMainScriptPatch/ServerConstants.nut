@@ -164,7 +164,8 @@ this.SpecialItemType <- {
 	NONE = 0,
 	REAGENT_GENERATOR = 1,
 	ITEM_GRINDER = 2,
-	XP_BOOST = 3
+	XP_BOOST = 3,
+	PORTABLE_REFASHIONER = 4
 };
 this.SpecialItemTypeNameMapping <- {
 	[this.SpecialItemType.NONE] = {
@@ -178,6 +179,9 @@ this.SpecialItemTypeNameMapping <- {
 	},
 	[this.SpecialItemType.XP_BOOST] = {
 		name = "XP_BOOST"
+	},
+	[this.SpecialItemType.PORTABLE_REFASHIONER] = {
+		name = "PORTABLE_REFASHIONER"
 	}
 };
 this.CharmType <- {

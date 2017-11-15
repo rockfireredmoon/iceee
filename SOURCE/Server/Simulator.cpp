@@ -3579,6 +3579,7 @@ int SimulatorThread :: handle_query_item_contents(void)
 
 	const char *contName = query.args[0].c_str();
 
+	g_Log.AddMessageFormat("REMOVEME Sending inventory: %s", contName);
 
 	int contID = GetContainerIDFromName(contName);
 	if(contID == -1)
@@ -3623,6 +3624,7 @@ int SimulatorThread :: SendInventoryData(std::vector<InventorySlot> &cont)
 	int wpos = 0;  //Current Write position
 	while(proc < count)
 	{
+		g_Log.AddMessageFormat("REMOVEME Sending inventory: ID: %d Count: %d", &cont[proc].IID, &cont[proc].count);
 		wpos += AddItemUpdate(&SendBuf[wpos], Aux3, &cont[proc]);
 		proc++;
 		batch++;
@@ -4438,9 +4440,9 @@ int SimulatorThread :: handle_query_item_delete(void)
 
 	//Find the players best (in terms of recoup amount) grinder (if they have one)
 	int invId = GetContainerIDFromName("inv");
-	ItemDef *grinderDef = pld.charPtr->inventory.GetBestSpecialItem(invId, ITEM_GRINDER);
+	InventorySlot *grinderDef = pld.charPtr->inventory.GetBestSpecialItem(invId, ITEM_GRINDER);
 	if(grinderDef != NULL) {
-		int amt = (int)(((double)itemDef->mValue / 100.0) *  grinderDef->mIvMax1);
+		int amt = (int)(((double)itemDef->mValue / 100.0) *  grinderDef->dataPtr->mIvMax1);
 		creatureInst->AdjustCopper(amt);
 	}
 
@@ -7405,8 +7407,13 @@ int SimulatorThread :: UseItem(unsigned int CCSID)
 	}
 	else
 	{
-		if(itemDef->mType == ItemType::SPECIAL && itemDef->mIvType1 == ItemIntegerType::BOOK_PAGE) {
+		if(itemDef->mType == ItemType::SPECIAL && itemDef->mSpecialItemType == PORTABLE_REFASHIONER) {
+			AttemptSend(Aux1, PrepExt_Refashion(Aux1));
+			removeOnUse = false;
+		}
+		else if(itemDef->mType == ItemType::SPECIAL && itemDef->mIvType1 == ItemIntegerType::BOOK_PAGE) {
 			AttemptSend(Aux1, PrepExt_SendBookOpen(Aux1, itemDef->mIvMax1, itemDef->mIvMax2 - 1, 1));
+			removeOnUse = false;
 		}
 		else {
 			ConfigString cfg(itemDef->Params);
@@ -9916,14 +9923,43 @@ int SimulatorThread :: protected_helper_query_item_morph(bool command)
 	unsigned long newLook = strtol(query.args[1].c_str(), NULL, 16);
 	int creatureID = strtol(query.args[2].c_str(), NULL, 10);
 
+	InventorySlot * reagentPtr = NULL;
+	ItemDef * reagentDef = NULL;
+
 	// Run a distance check for a normal query.  The /refashion command
 	// also uses this function but with a spoofed query.
+	bool free = false;
+	bool unstack = false;
 	if(command == false)
 	{
-		// Make sure this object isn't too far away.
-		int distCheck = protected_helper_checkdistance(creatureID);
-		if(distCheck != 0)
-			return distCheck;
+		/* If the refashioner is the player themselves, then make sure they have
+		 * a refashioning device
+		 */
+		if(creatureID == creatureInst->CreatureID) {
+			free = true;
+			reagentPtr = pld.charPtr->inventory.GetBestSpecialItem(GetContainerIDFromName("inv"), PORTABLE_REFASHIONER);
+			if(reagentPtr == NULL) {
+				return QueryErrorMsg::NOREFASHION;
+			}
+			else {
+				reagentDef = g_ItemManager.GetPointerByID(reagentPtr->IID);
+				if(reagentDef == NULL) {
+					return QueryErrorMsg::NOREFASHION;
+				}
+
+
+				/* Ok to refashion. If item is stackable, then the stack is decreased too (one-off refashion items) */
+				if(reagentPtr->ResolveItemPtr()->mIvMax1 > 1 && reagentPtr->GetStackCount() > 0) {
+					unstack = true;
+				}
+			}
+		}
+		else {
+			// Make sure this object isn't too far away.
+			int distCheck = protected_helper_checkdistance(creatureID);
+			if(distCheck != 0)
+				return distCheck;
+		}
 	}
 
 	InventorySlot * origPtr = pld.charPtr->inventory.GetItemPtrByCCSID(origLook);
@@ -9936,7 +9972,7 @@ int SimulatorThread :: protected_helper_query_item_morph(bool command)
 	if(itemPtr1 == NULL || itemPtr2 == NULL)
 		return QueryErrorMsg::INVALIDITEM;
 
-	int cost = (itemPtr1->mValue + itemPtr2->mValue) / 2;
+	int cost = free ? 0 : (itemPtr1->mValue + itemPtr2->mValue) / 2;
 	if(creatureInst->css.copper < cost)
 		return QueryErrorMsg::COIN;
 	creatureInst->css.copper -= cost;
@@ -9956,6 +9992,14 @@ int SimulatorThread :: protected_helper_query_item_morph(bool command)
 
 	wpos += RemoveItemUpdate(&SendBuf[wpos], Aux3, newPtr);
 	pld.charPtr->inventory.RemItem(newLook);
+
+	if(reagentDef != NULL) {
+		Util::SafeFormat(Aux3, sizeof(Aux3), "You have used 1 %s.", reagentDef->mDisplayName.c_str());
+		wpos += PrepExt_SendInfoMessage(&SendBuf[wpos], Aux3, INFOMSG_INFO);
+		/* This refashion is taking up a reagent of sorts, a portable refashioner */
+		wpos += pld.charPtr->inventory.RemoveItemsAndUpdate(INV_CONTAINER, reagentDef->mID, 1, &SendBuf[wpos]);
+	}
+
 	wpos += AddItemUpdate(&SendBuf[wpos], Aux3, origPtr);
 
 	wpos += PrepExt_QueryResponseString(&SendBuf[wpos], query.ID, "OK");
@@ -9970,6 +10014,12 @@ int SimulatorThread :: handle_command_refashion(void)
 		refashion function can process the request.
 		Args : [0] Exact name of source item (for user verification).
 	*/
+
+	if(CheckPermissionSimple(Perm_Account, Permission_Admin) == false && CheckPermissionSimple(Perm_Account, Permission_Sage) == false) {
+		SendInfoMessage("Free refashioning via the /refashion command has been removed. Instead, you will need to either visit a Refashioner, or obtain a Portable Refashioning Device. These are available as a special crafted item, or via the Credit Shop", INFOMSG_ERROR);
+		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
+	}
+
 
 	sprintf(Aux3, "%d", InternalID + 1);
 

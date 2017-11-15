@@ -404,6 +404,15 @@ int PrepExt_SendBookOpen(char *buffer, int bookID, int page, int op) {
 	return wpos;
 }
 
+int PrepExt_Refashion(char *buffer) {
+	int wpos = 0;
+	wpos += PutByte(&buffer[wpos], 53);              //_handleRefashion
+	wpos += PutShort(&buffer[wpos], 0);             //Placeholder for message size
+	wpos += PutByte(&buffer[wpos], 0); 				// Open
+	PutShort(&buffer[1], wpos - 3);                 //Message size
+	return wpos;
+}
+
 int PrepExt_SendFormClose(char *buffer, int formId) {
 	int wpos = 0;
 	wpos += PutByte(&buffer[wpos], 52);              //_handleForm

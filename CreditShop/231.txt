@@ -2,8 +2,8 @@
 Description=SPM Credit Shop Item
 PriceCurrency=CREDITS
 PriceCopper=0
-PriceCredits=100
-ItemID=5732
-Category=ARMOR
-Status=<undefined>
+PriceCredits=1000
+ItemID=8706
+Category=CONSUMABLES
+Status=NEW
 

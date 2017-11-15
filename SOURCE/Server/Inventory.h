@@ -87,7 +87,7 @@ public:
 
 	unsigned char LastError;
 
-	ItemDef * GetBestSpecialItem(int invID, char specialItemType);
+	InventorySlot * GetBestSpecialItem(int invID, char specialItemType);
 	void SetError(int value);
 	InventorySlot * GetExistingPartialStack(int containerID, ItemDef *itemDef);
 	int AddItem(int containerID, InventorySlot &item);
