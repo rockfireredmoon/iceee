@@ -496,6 +496,7 @@ class URLManager
 	}
 	function LaunchURL(tagName)
 	{
+				print("ICE! LaunchURL " + tagName + "\n");
 		if(mLoaded == false)
 		{
 			LoadURLs();
@@ -505,6 +506,7 @@ class URLManager
 
 		if(tagName in mURLs)
 		{
+				print("ICE! LaunchURL is " + mURLs[tagName] + "\n");
 			System.openURL(mURLs[tagName]);
 		}
 		else
@@ -537,6 +539,8 @@ class URLManager
 	{
 		if(mQueryCalled == false)
 		{
+			
+			print("ICE! requesting URLS!\n");
 			::_Connection.sendQuery("mod.getURL", this, []);
 			mQueryCalled = true;
 		}
@@ -550,6 +554,7 @@ class URLManager
 		{
 			if(row.len() >= 2)
 			{
+				print("ICE! URL " + row[0] + " = " + row[1] + "\n");
 				mURLs[row[0]] <- row[1];
 			}
 		}

@@ -4,12 +4,7 @@
 ; or different page name.
 ; Each entry has Key=Value format, where the Key is the page name, and Value is the URL.
 
-Homepage=http://www.theanubianwar.com/thescourgeofabidan
-Reference=http://planetforevergame.com:81/Reference.html
-Advanced Crafting=http://files.theanubianwar.com/gameinfo/scourge/AdvancedCrafting.html
-Chat Channel Colors=http://files.theanubianwar.com/gameinfo/scourge/ChatChannelColors.html
-ForTesters=http://armouree.theanubianwar.com/dokuwiki/doku.php?id=iceee:development:betatesters
-Project=https://github.com/rockfireredmoon/iceee/
-ForgotPassword=http://scourge.theanubianwar.com/ResetPassword.html
-ManageAccount=http://scourge.theanubianwar.com/Account.html
-Account=http://scourge.theanubianwar.com/Account.html
+Homepage=http://www.theanubianwar.com/valkals-shadow
+Reference=http://www.theanubianwar.com/gameguides
+Advanced Crafting=http://www.theanubianwar.com/gameguides/advancedcrafting
+Chat Channel Colors=http://www.theanubianwar.com/gameguides/chat-channels
