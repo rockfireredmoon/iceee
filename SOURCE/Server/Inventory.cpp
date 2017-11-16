@@ -403,7 +403,9 @@ int InventoryManager :: RemoveExpiredItemsAndUpdate(char *packetBuffer)
 {
 	std::vector<InventoryQuery> iq;
 	ScanExpiredItems(iq);
-	return ProcessIqResults(packetBuffer, iq);
+	int wpos = ProcessIqResults(packetBuffer, iq);
+	FindNextExpunge();
+	return wpos;
 }
 
 int InventoryManager :: ProcessIqResults(char *packetBuffer, std::vector<InventoryQuery> &iq)

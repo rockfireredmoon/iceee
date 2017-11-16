@@ -2368,9 +2368,9 @@ Repeat=0
 sGiver=72795.6,1327.27,52898.1,9
 sGiver=72795.6,1327.27,52898.1,9
 [ACT]
-Act.BodyText=Enter the Junk Palace Compound and kill 10 Haz'ard Crew. (Scouts,
+Act.BodyText=Enter the Junk Palace Compound and kill 10 Haz'ard Crew.
 Obj.0.type=kill
-Obj.0.data1=1390,7754
+Obj.0.data1=1390,7754,1391,1392,1390,1393,1394
 Obj.0.data2=10
 Obj.0.description=Defeat 10 Haz'ard Crew
 Obj.0.myCreatureDefID=
