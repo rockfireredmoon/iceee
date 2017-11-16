@@ -1346,18 +1346,21 @@ this.Util.getTerrainPathInfo <- function ()
 	base = base.slice(8);
 	local basePath = this._cache.getBaseURL();
 
-	if (this.Util.isDevMode() == false)
+	if (this.Util.isDevMode() == false && !Util.hasTerrainPermission())
 	{
 		throw this.Exception("Terrain path info available only in dev mode");
 	}
 
 	if (basePath.slice(0, 8) != "file:///")
 	{
-		throw this.Exception("Terrain path unavailble for base URL: " + basePath);
+		basePath = "Media/Terrain/Terrain-" + base + "/";
+	}
+	else
+	{
+		basePath = basePath.slice(8);
+		basePath = "/../../Media/Terrain/Terrain-" + base + "/";
 	}
 
-	basePath = basePath.slice(8);
-	basePath += "/../../Media/Terrain/Terrain-" + base + "/";
 	return [
 		base,
 		basePath
@@ -1996,9 +1999,9 @@ this.Util.addNewTextLine <- function ( textString, title, value, ... )
 };
 
 
-function Util::hasPermission(permission)
+function Util::hasTerrainPermission()
 {
-	return true;
+	return Util.hasBuildPermission();
 }
 
 function Util::hasSpeedPermission()

@@ -239,7 +239,7 @@ class this.Screens.BuildScreen extends this.GUI.Panel
 		this.mPages.Scenery <- this._createSceneryPage();
 		this.mPages.Template <- this._createTemplatePage();
 
-		if ("dev" in ::_args)
+		if ("dev" in ::_args || Util.hasTerrainPermission())
 		{
 			this.mPages["Terrain Texture"] <- this._createTerrainTexturePage();
 			this.mPages["Terrain Height"] <- this._createTerrainHeightPage();
@@ -252,7 +252,7 @@ class this.Screens.BuildScreen extends this.GUI.Panel
 		this.mSelector.addChoice("Scenery");
 		this.mSelector.addChoice("Template");
 
-		if ("dev" in ::_args)
+		if ("dev" in ::_args || Util.hasTerrainPermission())
 		{
 			this.mSelector.addChoice("Terrain Texture");
 			this.mSelector.addChoice("Terrain Height");

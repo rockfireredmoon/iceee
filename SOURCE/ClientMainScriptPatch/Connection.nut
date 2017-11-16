@@ -3434,7 +3434,7 @@ class this.Connection extends this.MessageBroadcaster
 		local terrain = data.getStringUTF();
 		local envType = data.getStringUTF();
 		
-		
+		print("ICE! mask: " +mask + " zoneId: " + zoneId + " zoneDefId: " + zoneDefId + " zonePageSize: " + zonePageSize + " terrain: " + terrain + " envType: " + envType + "\n"); 
 
 		if (mask == 2)
 		{

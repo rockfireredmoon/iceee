@@ -1939,7 +1939,6 @@ void SimulatorThread :: SetPersona(int personaIndex)
 
 	//The zone change updates the map, but need to resend again otherwise the
 	//terrain won't load when you first log in.
-//	SendSetMap();
 	UpdateSocialEntry(true, false);
 	UpdateSocialEntry(true, true);
 	BroadcastShardChanged();
@@ -3140,23 +3139,6 @@ void SimulatorThread :: AddMessage(long param1, long param2, int message)
 	bcm.AddEventCopy(msg);
 }
 
-void SimulatorThread :: SendSetMap(void)
-{
-//	if(creatureInst == NULL)
-//	{
-//		LogMessageL(MSG_ERROR, "[ERROR] SendSetMap() creature instance is NULL");
-//		return;
-//	}
-//	if(creatureInst->actInst == NULL)
-//	{
-//		LogMessageL(MSG_ERROR, "[ERROR] SendSetMap() creature active instance is NULL");
-//		return;
-//	}
-//
-//	strcpy(pld.CurrentEnv, creatureInst->actInst->GetEnvironment(creatureInst->CurrentX, creatureInst->CurrentZ).c_str());
-//	AttemptSend(SendBuf, PrepExt_SendEnvironmentUpdateMsg(SendBuf, creatureInst->actInst, pld.CurrentZone, pld.zoneDef, creatureInst->CurrentX, creatureInst->CurrentZ, 1));
-}
-
 int SimulatorThread :: handle_form_submit(void)
 {
 	if (query.argCount < 3)
@@ -3579,8 +3561,6 @@ int SimulatorThread :: handle_query_item_contents(void)
 
 	const char *contName = query.args[0].c_str();
 
-	g_Log.AddMessageFormat("REMOVEME Sending inventory: %s", contName);
-
 	int contID = GetContainerIDFromName(contName);
 	if(contID == -1)
 	{
@@ -3624,9 +3604,11 @@ int SimulatorThread :: SendInventoryData(std::vector<InventorySlot> &cont)
 	int wpos = 0;  //Current Write position
 	while(proc < count)
 	{
-		g_Log.AddMessageFormat("REMOVEME Sending inventory: ID: %d Count: %d", &cont[proc].IID, &cont[proc].count);
-		wpos += AddItemUpdate(&SendBuf[wpos], Aux3, &cont[proc]);
-		proc++;
+		InventorySlot *slot = &cont[proc];
+		if(slot->secondsRemaining == -1 || !slot->IsExpired()) {
+			wpos += AddItemUpdate(&SendBuf[wpos], Aux3, slot);
+			proc++;
+		}
 		batch++;
 		tproc++;
 		if(batch > 20)
@@ -9886,13 +9868,13 @@ int SimulatorThread :: protected_helper_query_craft_create(void)
 	inv.ScanRemoveItems(INV_CONTAINER, itemPlan->keyComponentId, 1, iq);
 	if(iq.size() > 0)
 		wpos += RemoveItemUpdate(&SendBuf[wpos], Aux3, iq[0].ptr);
-	inv.RemoveItems(INV_CONTAINER, iq);
+	inv.RemoveItems(iq);
 
 	//Remove the plan.
 	inv.ScanRemoveItems(INV_CONTAINER, itemPlan->mID, 1, iq);
 	if(iq.size() > 0)
 		wpos += RemoveItemUpdate(&SendBuf[wpos], Aux3, iq[0].ptr);
-	inv.RemoveItems(INV_CONTAINER, iq);
+	inv.RemoveItems(iq);
 
 	wpos += PrepExt_QueryResponseString(&SendBuf[wpos], query.ID, "OK");
 	return wpos;
@@ -11812,7 +11794,6 @@ int SimulatorThread :: handle_command_zonename(void)
 				else
 					zoneDef->ChangeName(name);
 				g_ZoneDefManager.NotifyConfigurationChange();
-				SendSetMap();
 				SendInfoMessage(pld.zoneDef->mShardName.c_str(), INFOMSG_SHARD);
 			}
 		}

@@ -86,6 +86,7 @@ public:
 
 
 	unsigned char LastError;
+	unsigned long NextExpunge; //Time when the next item expunge should happen (expired items are removed)
 
 	InventorySlot * GetBestSpecialItem(int invID, char specialItemType);
 	void SetError(int value);
@@ -95,7 +96,11 @@ public:
 	int ScanRemoveItems(int containerID, int itemID, int count, std::vector<InventoryQuery> &resultList);
 	int RemoveItemsAndUpdate(int container, int itemID, int itemCost, char *packetBuffer);
 	int FindNextItem(int containerID, int itemID, int start);
-	int RemoveItems(int containerID, std::vector<InventoryQuery> &resultList);
+	int RemoveItems(std::vector<InventoryQuery> &resultList);
+	int RemoveExpiredItemsAndUpdate(char *packetBuffer);
+	int ScanExpiredItems(std::vector<InventoryQuery> &resultList);
+	int ProcessIqResults(char *packetBuffer, std::vector<InventoryQuery> &iq);
+	void FindNextExpunge();
 
 	int RemItem(unsigned int editCCSID);
 	int GetItemByCCSID(unsigned int findCCSID);

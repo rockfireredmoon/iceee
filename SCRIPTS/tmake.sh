@@ -4,6 +4,7 @@
 # existing terrain template and gives it a new name, renaming all
 # images and config files and contents. 
 #
+source "$(dirname $0)"/shelllib.sh
 
 function get_loc() {
 	case "$1" in
@@ -44,7 +45,7 @@ for i in *.car ; do
 		tdir=${tdir}_${loc}
 	fi
 	
-	wine ../UTILITIES/CARDecode.exe $i
+	run_win_tool ../UTILITIES/CARDecode.exe $i
 
 	rm -fr "${tdir}"
 	mkdir -p "${tdir}"
@@ -66,7 +67,7 @@ for i in *.car ; do
 					sed -i "s/^Texture\\.Coverage=${oldname}_Coverage/Texture.Coverage=${name}_Coverage/g" ${newfname} 
 					sed -i "s/^PerPageConfig=${oldname}_x/PerPageConfig=${name}_x/g" ${newfname} 
 					sed -i "s/^Heightmap\\.image=${oldname}_Height/Heightmap.image=${name}_Height/g" ${newfname} ;;
-			*.cnut) wine ${base}/UTILITIES/nutcracker.exe  ${newfname} > $(basename ${newfname} .cnut).nut 
+			*.cnut) run_win_tool ${base}/UTILITIES/nutcracker.exe  ${newfname} > $(basename ${newfname} .cnut).nut 
 					rm -f ${newfname} ;;
 		esac
 		

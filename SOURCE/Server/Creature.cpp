@@ -5132,6 +5132,12 @@ void CreatureInstance :: RunProcessingCycle(void)
 				actInst->UpdateSidekickTargets(this);
 				serverFlags -= ServerFlags::InitAttack;
 			}
+
+			if(charPtr->inventory.NextExpunge != 0 && g_ServerTime >= charPtr->inventory.NextExpunge) {
+				int r = charPtr->inventory.RemoveExpiredItemsAndUpdate(GSendBuf);
+				if(r > 0)
+					simulatorPtr->AttemptSend(GSendBuf, r);
+			}
 		}
 		else if(serverFlags & ServerFlags::IsSidekick)
 		{

@@ -995,6 +995,7 @@ mSpecialItemType=3
 mQualityLevel=4
 mMinUseLevel=1
 mUseAbilityId=27005
+
 [ENTRY]
 mID=8501
 mType=3
@@ -1014,6 +1015,24 @@ mArmorResistFrost=20000
 mArmorResistMystic=20000
 mArmorResistDeath=20000
 mFlavorText=It's Really Strong
+
+[ENTRY]
+mID=8502
+mType=8
+mDisplayName=Micro Tome of Experience
+mIcon=Icon-32-Book1.png|Icon-32-Ability-Resto_Healing_Breeze.png
+mIvType1=10
+mIvMax1=100
+mIvType2=9
+mIvMax2=1
+mLevel=1
+mBindingType=1
+mValue=1
+mValueType=1
+mSpecialItemType=3
+mQualityLevel=3
+mMinUseLevel=1
+mActionAbilityId=27010
 
 [ENTRY]
 mID=8600

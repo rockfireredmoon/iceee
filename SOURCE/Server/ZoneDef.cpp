@@ -453,6 +453,7 @@ std::string ZoneDefInfo :: GetTileEnvironment(int x, int y)
 		etk.y = py;
 		it = mTileEnvironment.find(etk);
 		if(it != mTileEnvironment.end()) {
+			g_Log.AddMessageFormat("REMOVEME Use tile env %s", it->second.c_str());
 			return it->second;
 		}
 	}
@@ -2062,6 +2063,8 @@ int WeatherManager :: LoadFromFile(const char *fileName) {
 
 int PrepExt_SendEnvironmentUpdateMsg(char *buffer, ActiveInstance *instance, const char *zoneIDString, ZoneDefInfo *zoneDef, int x, int z, int mask)
 {
+	g_Log.AddMessageFormat("REMOVEME PrepExt_SendEnvironmentUpdateMsg %s", zoneIDString);
+
 	int wpos = 0;
 	wpos += PutByte(&buffer[wpos], 42);   //_handleEnvironmentUpdateMsg
 	wpos += PutShort(&buffer[wpos], 0);
