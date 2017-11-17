@@ -1984,7 +1984,7 @@ BodyText=The Warpigs have their tricks and theories of how to ward off the Vampi
 
 We've tried several times to send a task force in to eliminate Lord Valkal and his kin, but something is preventing us from gaining entry into the stronghold.  It's almost a barrier of sorts... Some form of evil magic shields the place from the inside.
 
-We've been searching as best we can for a way to break the seal but to no avail.  If you truly want to help us, search the courtyard of the Keep for any clues as to how to gain entrance into the stronghold itself. While you are at it, and if possible, take out a few of those cold bodies with you when you depart!
+We've been searching as best we can for a way to break the seal but to no avail.  If you truly want to help us, search the grounds of the Keep for any clues as to how to gain entrance into the stronghold itself. While you are at it, and if possible, take out a few of those cold bodies while you are at it!
 CompleteText=You've returned! The mark of death? Could this mean only the dead may enter? Impossible, it must be a riddle of sorts...
 Level=45
 Suggested=45
@@ -1999,23 +1999,38 @@ Repeat=0
 sGiver=76647.6,979.647,50172.0,9
 sEnder=76647.6,979.647,50172.0,9
 [ACT]
-Act.BodyText=Search the Blood Keep Courtyard for clues on how to gain entry into the Keep itself. While you are at it, defeat twenty of the bloodsuckers roaming around the place!
+Act.BodyText=Defeat twenty of the bloodsuckers roaming around the place so you can search in peace!
 Obj.0.type=kill
 Obj.0.data1=1347,1348,1350,1349,1417,7750
 Obj.0.data2=20
-Obj.0.description=Kill 20 Vampires outside the Keep
+Obj.0.description=Kill 15 Vampires outside the Keep
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
-Obj.0.completeText=0 of 20
+Obj.0.completeText=0 of 15
 Obj.0.markerLocations=79042.1,1297.9,52837.1,9;
-Obj.1.type=travel
-Obj.1.data1=79236,1305,52383,9
-Obj.1.data2=30
-Obj.1.description=Search the Courtyard for Clues
-Obj.1.myCreatureDefID=
-Obj.1.myItemID=
-Obj.1.completeText=
-Obj.1.markerLocations=79042.1,1297.9,52837.1,9;
+[ACT]
+Act.BodyText=Search the Blood Keep grounds for clues on how to gain entry into the Keep itself. 
+Obj.0.type=travel
+Obj.0.data1=79133,1299,52748,9
+Obj.0.data2=100
+Obj.0.description=Search the grounds for clues
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.markerLocations=
+Obj.0.completeText=   
+[ACT]
+Act.BodyText=You see a worn and blood spattered message running around the edge of fountain.  
+Obj.0.type=activate
+Obj.0.data1=7883
+Obj.0.data2=1
+Obj.0.description=Examine the inscribed message.
+Obj.0.complete=0
+Obj.0.myCreatureDefID=
+Obj.0.myItemID=
+Obj.0.completeText=You memorise the words of the message
+Obj.0.markerLocations=79133,1299,52748,9;
+Obj.0.ActivateTime=5000
+Obj.0.ActivateText=Examining the inscribed message ...
 [ACT]
 Act.BodyText=Return to Alain Darkfeather with your discovery.
 Obj.0.type=talk
