@@ -110,6 +110,14 @@ Orient=0,0,0,1
 Scale=1,1,1
 
 [ENTRY]
+ID=1154723
+Asset=Sound?SOUND=Sound-Ambient-Radiation3.ogg&GAIN=1
+Name=Untitled
+Pos=73654.2,1219.54,57716.5
+Orient=0,0,0,1
+Scale=1,1,1
+
+[ENTRY]
 ID=1154938
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=Untitled
