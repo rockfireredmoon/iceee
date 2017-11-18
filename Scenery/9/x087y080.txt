@@ -10,15 +10,6 @@ link=151027894,1
 link=1127505,1
 
 [ENTRY]
-ID=1154971
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=
-Pos=65603.8,821.441,60120.7
-Orient=0,0,0,1
-Scale=1,1,1
-spawnPackage=#7882
-
-[ENTRY]
 ID=151016630
 Asset=Prop-Bush_Arid2#Prop-Bush_Arid2
 Name=Untitled
@@ -53,7 +44,6 @@ Pos=65685,1021.73,60685
 Orient=0,0.92388,0,0.382683
 Scale=1,1,1
 spawnPackage=11_jld_HogcatcherMix_43_44
-maxActive=0
 links_count=2
 link=1127507,1
 link=1127505,1
@@ -66,7 +56,6 @@ Pos=65520,1014.25,60500
 Orient=0,0.999899,0,-0.0142031
 Scale=1,1,1
 spawnPackage=11_jld_HogcatcherMix_43_44
-maxActive=0
 wanderRadius=100
 
 [ENTRY]
@@ -77,7 +66,6 @@ Pos=65366.2,1011.11,60582
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_jld_HogcatcherMix_43_44
-maxActive=0
 links_count=1
 link=151027947,1
 

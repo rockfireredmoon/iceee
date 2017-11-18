@@ -9,15 +9,6 @@ spawnPackage=11_jld_junderbroodSkrillmix_43
 wanderRadius=120
 
 [ENTRY]
-ID=1154967
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=
-Pos=63716.1,607.188,59465.3
-Orient=0,0,0,1
-Scale=1,1,1
-spawnPackage=#7882
-
-[ENTRY]
 ID=151027991
 Asset=Manipulator-SpawnPoint
 Name=Untitled

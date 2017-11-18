@@ -83,7 +83,7 @@ link=1150273,1
 [ENTRY]
 ID=1154874
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=69239.9,1341.19,55031.8
 Orient=0,0,0,1
 Scale=1,1,1
@@ -92,7 +92,7 @@ spawnPackage=#F1415
 [ENTRY]
 ID=1154878
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=69111.5,1382.91,55408.3
 Orient=0,0,0,1
 Scale=1,1,1
@@ -101,7 +101,7 @@ spawnPackage=#F1415
 [ENTRY]
 ID=1154880
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=69482.1,1272.99,55210.5
 Orient=0,0,0,1
 Scale=1,1,1
@@ -110,7 +110,7 @@ spawnPackage=#F1415
 [ENTRY]
 ID=1154881
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=69648.5,1285.05,54836.1
 Orient=0,0,0,1
 Scale=1,1,1

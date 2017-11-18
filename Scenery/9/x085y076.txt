@@ -174,24 +174,6 @@ Scale=1,1,1
 spawnPackage=#F7848
 
 [ENTRY]
-ID=1154895
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=Untitled
-Pos=64088.1,801.709,57387.8
-Orient=0,0,0,1
-Scale=1,1,1
-spawnPackage=#7882
-
-[ENTRY]
-ID=1154947
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=
-Pos=63946.1,549.891,57527.9
-Orient=0,0,0,1
-Scale=1,1,1
-spawnPackage=#7881
-
-[ENTRY]
 ID=151016745
 Asset=Prop-Anubian_Palisade
 Name=Untitled

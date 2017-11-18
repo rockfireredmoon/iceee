@@ -117,15 +117,6 @@ Orient=0,0,0,1
 Scale=1,1,1
 
 [ENTRY]
-ID=1154894
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=Untitled
-Pos=63525.5,780.033,57037.2
-Orient=0,0,0,1
-Scale=1,1,1
-spawnPackage=#7881
-
-[ENTRY]
 ID=151024633
 Asset=Prop-Boulder_Arid#Prop-Boulder_Arid4
 Name=Untitled

@@ -17,15 +17,6 @@ Scale=1,1,1
 spawnPackage=#F1355
 
 [ENTRY]
-ID=1154988
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=
-Pos=65411.5,617.037,58357.9
-Orient=0,0,0,1
-Scale=1,1,1
-spawnPackage=#7881
-
-[ENTRY]
 ID=151016697
 Asset=Warpig_Walls#Prop-Warpig_Tower
 Name=Untitled
@@ -100,7 +91,6 @@ Pos=65270,613.424,58420
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_jld_HogcatcherMix_43_44
-maxActive=0
 wanderRadius=60
 
 [ENTRY]
@@ -111,7 +101,6 @@ Pos=65950,617.61,57942
 Orient=0,0.886627,0,0.462485
 Scale=1,1,1
 spawnPackage=11_jld_HogcatcherMix_43_44
-maxActive=0
 
 [ENTRY]
 ID=151028889

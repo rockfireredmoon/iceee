@@ -40,18 +40,8 @@ Pos=66280,1034.91,60850
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_jld_HogcatcherMix_43_44
-maxActive=0
 aiModule=11_jld_HogcatcherMix_43_44
 wanderRadius=80
-
-[ENTRY]
-ID=1154979
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=
-Pos=66185.3,1030.19,60932.2
-Orient=0,0,0,1
-Scale=1,1,1
-spawnPackage=#7881
 
 [ENTRY]
 ID=151029230

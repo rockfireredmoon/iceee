@@ -428,6 +428,7 @@ Pos=2035,338.718,1775
 Orient=0,-0.707107,0,0.707107
 Scale=1,1,1
 spawnPackage=1a_dng_gfl_Grimfrost_d_48
+aiModule=custom_heathendel_frostmage40
 sequential=1
 
 [ENTRY]

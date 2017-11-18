@@ -1,7 +1,7 @@
 [ENTRY]
 ID=1091208
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=62019.7,406.43,49013.8
 Orient=0,0,0,1
 Scale=1,1,1
@@ -12,7 +12,7 @@ link=1091210,1
 [ENTRY]
 ID=1091209
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=62181.3,401.985,48987.2
 Orient=0,0,0,1
 Scale=1,1,1
@@ -23,7 +23,7 @@ link=1091208,1
 [ENTRY]
 ID=1091210
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=62034.2,406.259,49146.3
 Orient=0,0,0,1
 Scale=1,1,1
@@ -34,7 +34,7 @@ link=1091211,1
 [ENTRY]
 ID=1091211
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=61830.8,407.187,49110.1
 Orient=0,0,0,1
 Scale=1,1,1
@@ -44,7 +44,7 @@ link=1091210,1
 [ENTRY]
 ID=1091216
 Asset=Manipulator#Manipulator-PathNode
-Name=
+Name=Untitled
 Pos=62002.5,390.548,49266.1
 Orient=0,0,0,1
 Scale=1,1,1

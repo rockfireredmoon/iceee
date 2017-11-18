@@ -6,7 +6,6 @@ Pos=66495,673.466,58675
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_jld_HogcatcherMix_43_44
-maxActive=0
 wanderRadius=200
 
 [ENTRY]
@@ -17,7 +16,6 @@ Pos=66290,699.573,59010
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_jld_HogcatcherMix_43_44
-maxActive=0
 wanderRadius=100
 
 [ENTRY]
@@ -45,15 +43,6 @@ Orient=0,0,0,1
 Scale=1,1,1
 
 [ENTRY]
-ID=1154954
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=
-Pos=66712.7,706.079,58879.9
-Orient=0,0,0,1
-Scale=1,1,1
-spawnPackage=#7882
-
-[ENTRY]
 ID=151017095
 Asset=CL-AridBush5#CL-AridBush5
 Name=Untitled
@@ -79,7 +68,6 @@ Pos=66000,554.923,58790
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_jld_HogcatcherMix_43_44
-maxActive=0
 wanderRadius=60
 
 [ENTRY]
@@ -90,6 +78,5 @@ Pos=66575,677.099,59025
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_jld_HogcatcherMix_43_44
-maxActive=0
 wanderRadius=175
 

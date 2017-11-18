@@ -1,33 +1,34 @@
 [ENTRY]
 ID=1358959199
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=39284.2,264.557,59734
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=1a_crabCamp01_land
-outerRadius=1
 
 [ENTRY]
 ID=1358959200
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=39016.2,328.736,59568
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=1a_crabCamp01_land
-outerRadius=1
 
 [ENTRY]
 ID=1358959205
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=39954,124.555,59352
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=1a_crabCamp01_land
-outerRadius=1
 
 [ENTRY]
 ID=1358959603
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=39972.7,131.731,59077
 Orient=0,0,0,1
 Scale=1,1,1
@@ -37,6 +38,7 @@ link=1358959604,1
 [ENTRY]
 ID=1358959609
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=39623.8,130.562,59769
 Orient=0,0,0,1
 Scale=1,1,1
@@ -47,6 +49,7 @@ link=1358959610,1
 [ENTRY]
 ID=1358959610
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=39836.3,131.277,59475
 Orient=0,0,0,1
 Scale=1,1,1
@@ -57,6 +60,7 @@ link=1358959609,1
 [ENTRY]
 ID=1358959652
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=39720.5,117.491,59847
 Orient=0,0,0,1
 Scale=1,1,1
@@ -67,6 +71,7 @@ link=1358959666,1
 [ENTRY]
 ID=1358959653
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=39673.8,120.64,59934
 Orient=0,0,0,1
 Scale=1,1,1
@@ -77,6 +82,7 @@ link=1358959656,1
 [ENTRY]
 ID=1358959656
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=39858.5,112.143,59876
 Orient=0,0,0,1
 Scale=1,1,1
@@ -87,6 +93,7 @@ link=1358959666,1
 [ENTRY]
 ID=1358959659
 Asset=Manipulator-PathNode
+Name=Untitled
 Pos=39086.6,288.937,59837
 Orient=0,0,0,1
 Scale=1,1,1
@@ -97,18 +104,19 @@ link=1358959673,1
 [ENTRY]
 ID=1358959666
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=39864.4,112.543,59965
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=1a_crabCamp01_Snatchclaw
 links_count=2
 link=1358959652,1
 link=1358959656,1
-spawnPackage=1a_crabCamp01_Snatchclaw
-outerRadius=10
 
 [ENTRY]
 ID=1358965357
 Asset=CL-Hills_Bush6#CL-Hills_Bush6
+Name=Untitled
 Pos=39069.1,268.144,59706
 Orient=0,0,0,1
 Scale=1,1,1
@@ -116,6 +124,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1358965383
 Asset=CL-Hills_Bush4#CL-Hills_Bush4
+Name=Untitled
 Pos=39759.2,119.933,59737
 Orient=0,0,0,1
 Scale=1,1,1
@@ -123,6 +132,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1358965386
 Asset=CL-Hills_Bush1#CL-Hills_Bush1
+Name=Untitled
 Pos=39897.2,263.719,59667
 Orient=0,0,0,1
 Scale=1,1,1
@@ -131,6 +141,7 @@ Flags=1
 [ENTRY]
 ID=1358965843
 Asset=CL-Hills_Bush4#CL-Hills_Bush4
+Name=Untitled
 Pos=39518.5,153.101,59793
 Orient=0,0,0,1
 Scale=1,1,1
@@ -138,6 +149,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1358965844
 Asset=CL-Hills_Bush1#CL-Hills_Bush1
+Name=Untitled
 Pos=39169.6,309.599,59598
 Orient=0,0,0,1
 Scale=1,1,1
@@ -145,6 +157,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1358965845
 Asset=CL-Hills_Bush3#CL-Hills_Bush3
+Name=Untitled
 Pos=39289.2,265.243,59997
 Orient=0,0,0,1
 Scale=1,1,1
@@ -153,6 +166,7 @@ Flags=1
 [ENTRY]
 ID=1358965846
 Asset=Prop-Hill_Tree#Prop-Hill_Tree6
+Name=Untitled
 Pos=39313.2,195.319,59984
 Orient=0,0,0,1
 Scale=0.775,0.775,0.775

@@ -29,7 +29,7 @@ Name=Untitled
 Pos=65448,925.243,51196.1
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=12_dbh_skrillmix_48
+spawnPackage=45_swinelandskrill
 wanderRadius=50
 
 [ENTRY]
@@ -39,7 +39,7 @@ Name=Untitled
 Pos=65379.9,890.526,51490.8
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=12_dbh_skrillmix_48
+spawnPackage=45_swinelandskrill
 wanderRadius=50
 
 [ENTRY]
@@ -49,7 +49,7 @@ Name=Untitled
 Pos=65331.5,875.104,51062.1
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=12_dbh_skrillmix_48
+spawnPackage=45_swinelandskrill
 wanderRadius=50
 
 [ENTRY]
@@ -59,7 +59,7 @@ Name=Untitled
 Pos=65381.4,911.319,51237.6
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=12_dbh_skrillmix_48
+spawnPackage=45_swinelandskrill
 wanderRadius=50
 
 [ENTRY]
@@ -69,7 +69,7 @@ Name=Untitled
 Pos=65530.6,927.46,51276.8
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=12_dbh_skrillmix_48
+spawnPackage=45_swinelandskrill
 wanderRadius=50
 
 [ENTRY]
@@ -79,5 +79,5 @@ Name=Untitled
 Pos=65270.2,887.295,51580.8
 Orient=0,-0.696135,0,0.717911
 Scale=1,1,1
-spawnPackage=12_dbh_skrillmix_48
+spawnPackage=45_swinelandskrill
 

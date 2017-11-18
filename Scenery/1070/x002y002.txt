@@ -7,14 +7,6 @@ Orient=0,0,0,1
 Scale=1,1,1
 
 [ENTRY]
-ID=1133031
-Asset=Prop-Cave#Prop-Cave_Entrance1
-Name=Untitled
-Pos=3872.49,256.717,4649.42
-Orient=0,0.560509,0,0.828149
-Scale=2,2,2
-
-[ENTRY]
 ID=1133038
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=Untitled

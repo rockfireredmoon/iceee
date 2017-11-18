@@ -123,11 +123,11 @@ link=1150328,1
 [ENTRY]
 ID=1150452
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=65175.3,873.267,50776
 Orient=0,0,0,1
 Scale=1,1,1
-spawnPackage=12_dbh_skrillmix_48
+spawnPackage=45_swinelandskrill
 wanderRadius=50
 
 [ENTRY]

@@ -153,3 +153,8 @@ Name=The Mausoleum
 Comment=[Comment here]
 Position=74345.0,875.0,50945.0
 
+[ENTRY]
+Name=War Town
+Comment=
+Position=72307.0,1075.0,52469.0
+

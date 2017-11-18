@@ -72,20 +72,11 @@ spawnPackage=#7785
 [ENTRY]
 ID=1154990
 Asset=Manipulator#Manipulator-SpawnPoint
-Name=
+Name=Untitled
 Pos=64325.1,784.047,56911.7
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=#7881
-
-[ENTRY]
-ID=1154991
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=
-Pos=64050.4,781.4,56689.5
-Orient=0,0,0,1
-Scale=1,1,1
-spawnPackage=#7882
 
 [ENTRY]
 ID=151016770
