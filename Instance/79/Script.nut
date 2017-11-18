@@ -65,6 +65,6 @@ function on_use_2134(cid, used_cid) {
 	return true;
 }
 
-function on_use_finish_2134() {
+function on_use_finish_2134(cid) {
 	inst.spawn(1325400187,0,0);
 }
