@@ -36,6 +36,7 @@ fi
 
 pushd temp >/dev/null
 for i in *.car ; do
+	echo "Processing $i"
 	bn=$(basename $i .car)
 	loc=$(get_loc $bn)
 	oldname=$(get_terrain_name $bn)
@@ -48,13 +49,18 @@ for i in *.car ; do
 	run_win_tool ../UTILITIES/CARDecode.exe $i
 
 	rm -fr "${tdir}"
+	echo "Creating $tdir"
 	mkdir -p "${tdir}"
 	pushd ${tdir} > /dev/null
+	echo "Unzipping ${bn}.zip to $tdir"
 	unzip ../${bn}.zip
 	
 	for j in * ; do
 		
 		newfname=$(echo $j|sed 's/'${oldname}'/'${name}'/g')
+		if [ "$newfname" = "${j}" ] ; then
+			continue
+		fi
 		
 		if ! mv ${j} ${newfname} ; then
 			echo "$0: failed moving ${j} to ${newfname}" >&2

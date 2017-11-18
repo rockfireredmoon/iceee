@@ -376,6 +376,8 @@ this.LoadGate.Gates <- {
 		"Music-Corsica_Ambient3",
 		"Music-Dungeon_Ambient1",
 		"Music-Dungeon_Ambient2",
+		"Music-ChristmasRap",
+		"Music-WishBackground",
 		"Armor-CC-Clothing5",
 		"Armor-Cloth-High3",
 		"Armor-Cloth-Male-Casual1",

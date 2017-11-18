@@ -1,0 +1,8 @@
+[ENTRY]
+ID=1121142
+Asset=Prop-Cave#Prop-Rough_Cave1
+Name=Untitled
+Pos=26173,1153.96,37074.5
+Orient=0.997606,0,0,-0.0691484
+Scale=1.5,1.5,1.5
+

@@ -18,6 +18,23 @@ spawnPackage=wastecult_creature
 wanderRadius=55
 
 [ENTRY]
+ID=1155116
+Asset=Manipulator#Manipulator-SpawnPoint
+Name=
+Pos=73692.6,1197.59,57774.7
+Orient=0,0,0,1
+Scale=1,1,1
+spawnPackage=#F7884
+
+[ENTRY]
+ID=1155117
+Asset=Sound?SOUND=Sound-Ambient-Radiation3.ogg&GAIN=1&RADIUS=500
+Name=
+Pos=73613.5,1218.27,57823
+Orient=-0.00643682,0.662729,0.0343957,0.748041
+Scale=1,1,1
+
+[ENTRY]
 ID=151020217
 Asset=CL-Random-Junk5#CL-Random-Junk5
 Name=Untitled

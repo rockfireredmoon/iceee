@@ -1,0 +1,8 @@
+[ENTRY]
+ID=1101728
+Asset=Prop-Collision_Wall1
+Name=Untitled
+Pos=26790,-290.124,30039.3
+Orient=0,-0.717356,0,0.696707
+Scale=10,10,10
+

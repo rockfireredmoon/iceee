@@ -63,7 +63,9 @@ Credits for additional audio content added to the game.
 #####Dragon And Toast - Music used in Fangarian's Lair
 #####Grim Idol - Fight Music used in Fangarian's Lair
 #####The Hive - Background Music used in Skrill Queen Lair
-#####Constance - Figh Music used in Skrill Queen Lair
+#####Constance - Fight Music used in Skrill Queen Lair
+#####Christmas Rap - Ambient music used for Winter Dawning region
+#####Wish Backgroud  - Ambient music used for Winter Dawning region
 
 Kevin MacLeod (incompetech.com)
 Licensed under Creative Commons: By Attribution 3.0

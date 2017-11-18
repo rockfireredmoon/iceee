@@ -5649,7 +5649,8 @@ class this.SceneObject extends this.MessageBroadcaster
 
 			this.mController.onEnterFrame();
 		}
-
+		
+		
 		if (this.mAnimationHandler)
 		{
 			this.mAnimationHandler.onEnterFrame();
@@ -5682,6 +5683,11 @@ class this.SceneObject extends this.MessageBroadcaster
 
 		local pos = this.getPosition();
 		local oldPos = this.Vector3(pos.x, pos.y, pos.z);
+		
+		if (::_avatar == this)
+		{
+			::_Environment.updateWeatherPosition(pos);
+		}
 
 		if (!this.mForceUpdate && this.mSpeed < 0.001 && this.mDistanceToFloor < 0.001 && this.mSlopeSlideInertia == null)
 		{
