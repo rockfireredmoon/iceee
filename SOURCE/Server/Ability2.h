@@ -485,6 +485,7 @@ enum AbilityReturnCode
 	ABILITY_STUN,                  //The caster is stunned.
 	ABILITY_DAZE,                  //The caster is dazed.
 	ABILITY_DEAD,                  //The caster is dead.
+	ABILITY_REAGENTS,              //Not enough reagents of the right type.
 };
 
 //A more descriptive way to access which string element in the ability row's data.

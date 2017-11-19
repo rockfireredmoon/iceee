@@ -14943,6 +14943,7 @@ void SimulatorThread :: SendAbilityErrorMessage(int abilityErrorCode)
 	case Ability2::ABILITY_HEALTH_TOO_LOW: messageStr = "You do not have enough health."; break;
 	case Ability2::ABILITY_BEHIND: messageStr = "You must be behind your target."; break;
 	case Ability2::ABILITY_NEARBY_SANCTUARY: messageStr = "You are not near a sanctuary."; break;
+	case Ability2::ABILITY_REAGENTS: messageStr = "You do not have enough reagents of the right type to use this ability."; break;
 	}
 
 	if(messageStr == NULL)

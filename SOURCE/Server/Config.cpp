@@ -415,6 +415,8 @@ void LoadConfig(const char *filename)
 				g_Config.UseStopSwim = lfr.BlockToBool(1);
 			else if(strcmp(NameBlock, "UseWeather") == 0)
 				g_Config.UseWeather = lfr.BlockToBool(1);
+			else if(strcmp(NameBlock, "UseReagents") == 0)
+				g_Config.UseReagents = lfr.BlockToBool(1);
 			else if(strcmp(NameBlock, "InvalidLoginMessage") == 0)
 				g_Config.InvalidLoginMessage = lfr.BlockToStringC(1, 0);
 			else if(strcmp(NameBlock, "MaintenanceMessage") == 0)
@@ -666,6 +668,7 @@ GlobalConfigData :: GlobalConfigData()
 	UseMessageBox = false;
 	UseStopSwim = false;
 	UseWeather = false;
+	UseReagents = false;
 
 	VerifyMovement = false;
 	DebugLogAIScriptUse = false;
