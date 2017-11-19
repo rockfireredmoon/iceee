@@ -2,7 +2,7 @@
 
 #include <squirrel.h>
 #include <sqstdaux.h>
-#include "../squirrel/sqvm.h"
+#include "../squirrel/sqvm.h" // I have no idea ..... won't compile without, something about forward declarations
 #include "sqrat.h"
 #include <stdarg.h>
 #include <stddef.h>
