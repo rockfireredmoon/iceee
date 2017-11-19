@@ -3487,8 +3487,6 @@ void ActiveInstance :: ScriptCallUseHalt(int sourceCreatureID, int usedCreatureD
 
 void ActiveInstance :: ScriptCallUseFinish(int sourceCreatureID, int usedCreatureDefID)
 {
-	if(g_Config.DebugVerbose)
-		g_Log.AddMessageFormat("REMOVEME ScriptCallUseFinish %d %d", sourceCreatureID, usedCreatureDefID);
 	char buffer[64];
 	if(nutScriptPlayer != NULL) {
 		std::vector<ScriptCore::ScriptParam> p;

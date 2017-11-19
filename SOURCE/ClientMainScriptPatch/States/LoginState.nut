@@ -154,7 +154,7 @@ class this.States.LoginState extends this.State
 		local infoPanel = mCS.infoPanel <- ::GUI.Panel();
 		infoPanel.setLayoutManager( GUI.BorderLayout() );
 		infoPanel.setInsets( 6, 6, 6, 6 );
-		infoPanel.setSize( 400, 116 );
+		infoPanel.setSize( 400, 185 );
 		baseContainer.add( infoPanel, GUI.BorderLayout.NORTH );
 		
 		local infoTitle = mCS.infoTitle <- ::GUI.Label("NEWS");
@@ -162,6 +162,7 @@ class this.States.LoginState extends this.State
 		infoPanel.add( infoTitle, GUI.BorderLayout.NORTH );
 		
 		local scrollArea = mCS.scrollArea <- GUI.ScrollPanel();
+		scrollArea.setPreferredSize( 400, 165 );
 		infoPanel.add( scrollArea, GUI.BorderLayout.CENTER );
 		
 		mNews = mCS.infoArea <- ::GUI.HTML();

@@ -453,7 +453,6 @@ std::string ZoneDefInfo :: GetTileEnvironment(int x, int y)
 		etk.y = py;
 		it = mTileEnvironment.find(etk);
 		if(it != mTileEnvironment.end()) {
-			g_Log.AddMessageFormat("REMOVEME Use tile env %s", it->second.c_str());
 			return it->second;
 		}
 	}

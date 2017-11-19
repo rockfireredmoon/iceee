@@ -662,19 +662,22 @@ int InventoryManager :: GetItemCount(int containerID, int itemID)
 
 InventorySlot * InventoryManager :: PickRandomItem(int containerID) {
 
-	std::vector<int> tempCon;
-	tempCon.resize(MaxContainerSlot[containerID]);
+	std::vector<InventorySlot*> tempCon;
 	unsigned int a;
 	unsigned int c = 0;
 	for(a = 0; a < containerList[containerID].size() && a < MaxContainerSlot[containerID]; a++)
 	{
 		unsigned int slot = containerList[containerID][a].CCSID & CONTAINER_SLOT;
 		if(slot < MaxContainerSlot[containerID]) {
-			tempCon.push_back(a);
-			c++;
+			if(containerList[containerID][a].bindStatus == 0) {
+				tempCon.push_back(&containerList[containerID][a]);
+				c++;
+			}
 		}
 	}
-	return &containerList[containerID][tempCon[randmodrng(0, c)]];
+	if(c == 0)
+		return NULL;
+	return tempCon[randmodrng(0, c)];
 
 }
 

@@ -3602,14 +3602,15 @@ class this.SceneObject extends this.MessageBroadcaster
 
 	function useCreature( so )
 	{
-		local pvpable = so.hasStatusEffect(this.StatusEffects.PVPABLE);
+		local pvpable = so.hasStatusEffect(this.StatusEffects.PVPABLE);	
 		local creatureUsed = true;
 		::_avatar.setResetTabTarget(true);
 
 		if (!(so == ::_avatar))
 		{
 			::_avatar.setTargetObject(so);
-		}
+		}	
+		local playerPvpable = ::_avatar.hasStatusEffect(this.StatusEffects.PVPABLE);
 
 		local useageType = "";
 
@@ -3659,7 +3660,7 @@ class this.SceneObject extends this.MessageBroadcaster
 				::_avatar.getController().startFollowing(so, true);
 			}
 		}
-		else if (so.getMeta("persona") && !pvpable)
+		else if (so.getMeta("persona") && (!pvpable || !playerPvpable ) )
 		{
 			::_playTool.setupCreatureMenu(so);
 			::_playTool.mMenu.showMenu();

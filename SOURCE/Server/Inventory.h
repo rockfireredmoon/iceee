@@ -33,6 +33,17 @@ struct InventorySlot
 		secondsRemaining = -1;
 		timeLoaded = 0;
 	}
+	InventorySlot(const InventorySlot &other)
+	{
+		CCSID = other.CCSID;
+		IID = other.IID;
+		dataPtr = other.dataPtr;
+		count = other.count;
+		customLook = other.customLook;
+		bindStatus = other.bindStatus;
+		secondsRemaining = other.secondsRemaining;
+		timeLoaded = other.timeLoaded;
+	}
 
 	void ApplyFromItemDef(ItemDef *def);
 	long AdjustTimes();

@@ -3019,18 +3019,10 @@ void CreatureInstance :: ProcessDeath(void)
 
 					if(items > 0) {
 
-						/* Create a temporary creature for the loot. This allows the loot to live after
-						 * the player has respawned (and solves some other issues)
-						 */
-						CreatureInstance* lootInst = actInst->SpawnGeneric(7861, CurrentX, CurrentY, CurrentZ, 0, 0);
-						lootInst->deathTime = g_ServerTime;
-						lootInst->PrepareDeath();
-
 						// Pick a random item from the players inventory
 						InventoryManager *origInv = &charPtr->inventory;
 
 						ActiveLootContainer loot;
-						loot.CreatureID = lootInst->CreatureID;
 
 						for(int i = 0 ; i < items; i++) {
 							if(origInv->CountUsedSlots(INV_CONTAINER) == 0) {
@@ -3038,6 +3030,8 @@ void CreatureInstance :: ProcessDeath(void)
 								break;
 							}
 							InventorySlot *slot = origInv->PickRandomItem(INV_CONTAINER);
+							if(slot == NULL)
+								break;
 
 							int toLoot = 1;
 
@@ -3056,17 +3050,30 @@ void CreatureInstance :: ProcessDeath(void)
 								simulatorPtr->AttemptSend(buffer, len);
 						}
 
-						lootInst->activeLootID = actInst->lootsys.AttachLootToCreature(loot, lootInst->CreatureID);
+						if(loot.itemList.size() == 0)
+							g_Log.AddMessageFormat("PVP resulted in no loot because losing player had no unbound items");
+						else {
 
-						// Add all PVP attackers as looting creatures as well as the player themselves so they can retrieve the loot if the attacker doesn't take
-						lootInst->AddLootableID(CreatureDefID);
-						for(std::vector<CreatureInstance*>::iterator it = pvpAttackers.begin(); it != pvpAttackers.end(); ++it) {
-							lootInst->AddLootableID((*it)->CreatureDefID);
-						}
+							/* Create a temporary creature for the loot. This allows the loot to live after
+							 * the player has respawned (and solves some other issues)
+							 */
+							CreatureInstance* lootInst = actInst->SpawnGeneric(7861, CurrentX, CurrentY, CurrentZ, 0, 0);
+							lootInst->deathTime = g_ServerTime;
+							lootInst->PrepareDeath();
+							loot.CreatureID = lootInst->CreatureID;
 
-						// Send loot updates
-						if(lootInst->activeLootID != 0) {
-							lootInst->SendUpdatedLoot();
+							lootInst->activeLootID = actInst->lootsys.AttachLootToCreature(loot, lootInst->CreatureID);
+
+							// Add all PVP attackers as looting creatures as well as the player themselves so they can retrieve the loot if the attacker doesn't take
+							lootInst->AddLootableID(CreatureDefID);
+							for(std::vector<CreatureInstance*>::iterator it = pvpAttackers.begin(); it != pvpAttackers.end(); ++it) {
+								lootInst->AddLootableID((*it)->CreatureDefID);
+							}
+
+							// Send loot updates
+							if(lootInst->activeLootID != 0) {
+								lootInst->SendUpdatedLoot();
+							}
 						}
 
 					}
