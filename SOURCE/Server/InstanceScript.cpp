@@ -1514,6 +1514,10 @@ int InstanceNutPlayer::OLDSpawnAt(int creatureID, float x, float y, float z, int
 	}
 }
 
+void InstanceNutPlayer::AddInteraction(CreatureInstance *creature, ScriptCore::NutScriptEvent *evt) {
+	interactions.push_back(ActiveInteraction(creature, evt));
+}
+
 bool InstanceNutPlayer::Interact(int CID, const char *text, float time, bool gather, Sqrat::Function function) {
 	CreatureInstance *creature = actInst->GetInstanceByCID(CID);
 	if(creature == NULL )
@@ -1525,7 +1529,7 @@ bool InstanceNutPlayer::Interact(int CID, const char *text, float time, bool gat
 		ScriptCore::NutScriptEvent *evt = new ScriptCore::NutScriptEvent(
 				new ScriptCore::TimeCondition(time),
 				new InteractCallback(this, function, CID));
-		interactions.push_back(ActiveInteraction(creature, evt));
+		AddInteraction(creature, evt);
 		QueueAdd(evt);
 		return true;
 	}

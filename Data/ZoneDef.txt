@@ -889,7 +889,7 @@ EnvironmentCycle=1
 [ENTRY]
 ID=79
 NAME=Summoning Chamber
-ENVIRONMENTTYPE=UndeadNight
+ENVIRONMENTTYPE=Dungeon1
 ShardName=Anglorum 1
 WarpName=Summoning Chamber
 DefLoc=806,102,5725

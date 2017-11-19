@@ -52,6 +52,7 @@ unsigned long CREATURE_DELETE_RECHECK = 60000; //Delay between rescanning for de
 #include "Chat.h"
 #include "PartyManager.h"
 #include "InstanceScale.h"
+#include "InstanceScript.h"
 #include "ScriptCore.h"
 
 extern char GSendBuf[32767];
@@ -3422,6 +3423,21 @@ void ActiveInstance :: ScriptCallPackageKill(const char *name)
 		ScriptCall(name);
 }
 
+
+bool ActiveInstance :: QueueCallUsed(int sourceCreatureID, int usedCreatureID, int usedCreatureDefID, int time)
+{
+	if(nutScriptPlayer != NULL) {
+		CreatureInstance * creatureInst = GetPlayerByID(sourceCreatureID);
+		ScriptCore::NutScriptEvent *evt = new ScriptCore::NutScriptEvent(
+				new ScriptCore::TimeCondition(time),
+				new OnUsedCallback(this,sourceCreatureID, usedCreatureDefID));
+		nutScriptPlayer->AddInteraction(creatureInst, evt);
+		nutScriptPlayer->QueueAdd(evt);
+		return true;
+	}
+	return false;
+}
+
 bool ActiveInstance :: ScriptCallUse(int sourceCreatureID, int usedCreatureID, int usedCreatureDefID, bool defaultIfNoFunction)
 {
 	char buffer[64];
@@ -3471,14 +3487,17 @@ void ActiveInstance :: ScriptCallUseHalt(int sourceCreatureID, int usedCreatureD
 
 void ActiveInstance :: ScriptCallUseFinish(int sourceCreatureID, int usedCreatureDefID)
 {
+	if(g_Config.DebugVerbose)
+		g_Log.AddMessageFormat("REMOVEME ScriptCallUseFinish %d %d", sourceCreatureID, usedCreatureDefID);
 	char buffer[64];
 	if(nutScriptPlayer != NULL) {
 		std::vector<ScriptCore::ScriptParam> p;
 		Util::SafeFormat(buffer, sizeof(buffer), "on_use_finish_%d", usedCreatureDefID);
 		nutScriptPlayer->JumpToLabel(buffer, p);
-		p.push_back(ScriptCore::ScriptParam(sourceCreatureID));
-		p.push_back(ScriptCore::ScriptParam(usedCreatureDefID));
-		nutScriptPlayer->JumpToLabel("on_use_finish", p);
+		std::vector<ScriptCore::ScriptParam> p2;
+		p2.push_back(ScriptCore::ScriptParam(sourceCreatureID));
+		p2.push_back(ScriptCore::ScriptParam(usedCreatureDefID));
+		nutScriptPlayer->JumpToLabel("on_use_finish", p2);
 
 	}
 	else {
@@ -4059,4 +4078,27 @@ const InstanceScaleProfile* PlayerInstancePlacementData :: GetPartyLeaderInstanc
 	//g_Log.AddMessageFormat("Returning party leader %s [%d] scaler %s", creature->css.display_name, party->mLeaderDefID, charDat->InstanceScaler.c_str());
 	mPartyLeaderDefID = party->mLeaderDefID;
 	return g_InstanceScaleManager.GetProfile(charDat->InstanceScaler);
+}
+
+
+//
+// OnUsedCallback
+//
+
+OnUsedCallback::OnUsedCallback(ActiveInstance *instance, int sourceCreatureID, int usedCreatureDefID) {
+	mInstance = instance;
+	mSourceCreatureID = sourceCreatureID;
+	mUsedCreatureDefID = usedCreatureDefID;
+}
+
+OnUsedCallback::~OnUsedCallback() {
+}
+
+bool OnUsedCallback::Execute()
+{
+	if(mInstance->nutScriptPlayer != NULL) {
+		mInstance->ScriptCallUseFinish(mSourceCreatureID, mUsedCreatureDefID);
+		mInstance->nutScriptPlayer->RemoveInteraction(mSourceCreatureID);
+	}
+	return true;
 }

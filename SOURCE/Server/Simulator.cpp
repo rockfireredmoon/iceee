@@ -8682,6 +8682,13 @@ int SimulatorThread :: handle_query_creature_use(void)
 
 			creatureInst->LastUseDefID = CDef;
 
+			/* Instance Script */
+			if(creatureInst->actInst->nutScriptPlayer != NULL) {
+				creatureInst->actInst->QueueCallUsed(creatureInst->CreatureID, target->CreatureID, CDef, qo->ActivateTime);
+			}
+
+			/* Quest Script */
+
 			QuestScript::QuestNutPlayer *questNutScript = g_QuestNutManager.GetActiveScript(creatureInst->CreatureID, QuestID);
 			if(questNutScript == NULL )
 			{
