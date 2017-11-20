@@ -79,7 +79,8 @@ struct QueryErrorMsg
 	static const int TRADEBUSY     = -25;  //The character is busy with another trade.
 	static const int GENERALBUSY   = -26;  //The character is busy or cannot move items at this time.
 	static const int SELFBUSYSKILL = -27;  //Player is busy casting an ability or using a quest object.
-	static const int OTHERBUSYSKILL = -28;  //Other player is busy casting an ability or using a quest object.
+	static const int OTHERBUSYSKILL = -28; //Other player is busy casting an ability or using a quest object.
+	static const int NOREFASHION = -29;    //Cannot refashion item because ability to do so is missing.
 };
 
 class SimulatorThread

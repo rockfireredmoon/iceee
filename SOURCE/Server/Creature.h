@@ -413,7 +413,7 @@ public:
 	unsigned long timer_mightregen;   //Time when next might regen tick will fire
 	unsigned long timer_willregen;    //Time when next will regen tick will fire
 	unsigned long timer_lasthealthupdate; //Time when the next health regen tick will fire
-	unsigned long timer_dialog; //Time when the next NPC dialog should appear
+	unsigned long timer_dialog; //Time when the next NPC dialog should appearv
 
 	HateProfile *hateProfilePtr;
 	int activeLootID;

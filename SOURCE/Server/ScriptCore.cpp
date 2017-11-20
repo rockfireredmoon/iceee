@@ -747,13 +747,12 @@ namespace ScriptCore
 		mRunning = true;
 		MaybeWakeVM(name);
 		SQInteger top = sq_gettop(vm);
-		const SQChar* val;
+		std::string sval = "";
 		try {
 			if(DoRunFunction(name, parms, time, true)) {
+				const SQChar* val;
 				sq_getstring(vm,-1,&val);
-			}
-			else {
-				val = "";
+				sval = val;
 			}
 		}
 		catch(int e) {
@@ -766,7 +765,7 @@ namespace ScriptCore
 			mProcessingTime += g_PlatformTime.getMilliseconds() - now;
 		}
 		mRunning = false;
-		return val;
+		return sval;
 	}
 
 	bool NutPlayer::RunFunctionWithBoolReturn(std::string name, std::vector<ScriptParam> parms, bool time, bool defaultIfNoFunction) {

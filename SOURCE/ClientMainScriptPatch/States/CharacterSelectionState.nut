@@ -2188,10 +2188,18 @@ class States.CharacterSelectionState extends State
 		{
 			appearanceArgs[8] = appearance.ts;
 		}
+		else
+		{
+			appearanceArgs[8] = "1";
+		}
 
 		if ("es" in appearance)
 		{
 			appearanceArgs[9] = appearance.es;
+		}
+		else
+		{
+			appearanceArgs[9] = "1";
 		}
 
 		if ("sk" in appearance)

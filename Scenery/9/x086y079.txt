@@ -1,13 +1,4 @@
 [ENTRY]
-ID=1154969
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=
-Pos=64775,581.824,59583.9
-Orient=0,0,0,1
-Scale=1,1,1
-spawnPackage=#7882
-
-[ENTRY]
 ID=151017409
 Asset=CL-AridBush1#CL-AridBush1
 Name=Untitled

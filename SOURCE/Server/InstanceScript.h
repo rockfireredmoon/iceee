@@ -168,6 +168,7 @@ public:
 	std::vector<int>  Scan(Squirrel::Area *location);
 	int ScanNPC(Squirrel::Area *location, int CDefID);
 	std::vector<int> ScanNPCs(Squirrel::Area *location, int CDefID);
+	void AddInteraction(CreatureInstance *creature, ScriptCore::NutScriptEvent *evt);
 	bool Interact(int CID, const char *text, float time, bool gather, Sqrat::Function function);
 	void RemoveInteraction(int CID);
 	void InterruptInteraction(int CID);

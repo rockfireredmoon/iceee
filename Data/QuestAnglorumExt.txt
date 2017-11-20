@@ -791,7 +791,7 @@ The tomb of Kerrath Bellington is also likely located in the South Wing section,
 
 Do as Felina has asked and send both of them to Gaia's embrace.
 Obj.0.type=kill
-Obj.0.data1=0
+Obj.0.data1=2482
 Obj.0.data2=1
 Obj.0.description=Kill Templar Cornelius
 Obj.0.myCreatureDefID=
@@ -799,7 +799,7 @@ Obj.0.myItemID=
 Obj.0.completeText=0 of 1
 Obj.0.markerLocations=
 Obj.1.type=kill
-Obj.1.data1=0
+Obj.1.data1=2480
 Obj.1.data2=1
 Obj.1.description=Defeat Kerrath Bellington
 Obj.1.myCreatureDefID=
@@ -817,7 +817,7 @@ The tomb of Commander Adalhelm is also located in the North Wing section of the 
 
 Do as Felina has asked and send these two into Gaia's embrace as well!
 Obj.0.type=kill
-Obj.0.data1=0
+Obj.0.data1=2546
 Obj.0.data2=1
 Obj.0.description=Kill Sage Marlon Wilber
 Obj.0.myCreatureDefID=
@@ -825,7 +825,7 @@ Obj.0.myItemID=
 Obj.0.completeText=0 of 1
 Obj.0.markerLocations=
 Obj.1.type=kill
-Obj.1.data1=0
+Obj.1.data1=2547
 Obj.1.data2=1
 Obj.1.description=Defeat Commander Adalhelm
 Obj.1.myCreatureDefID=
@@ -839,7 +839,7 @@ The notes also mention that King Wilhelm himself was a powerful mage in his own 
 
 Unlike his courtiers or Jengal's accomplices, sending Wilhelm to Gaia's embrace will be no easy task, so take the necessary precautions!
 Obj.0.type=kill
-Obj.0.data1=0
+Obj.0.data1=307
 Obj.0.data2=1
 Obj.0.description=Defeat King Wilhelm
 Obj.0.myCreatureDefID=

@@ -1,40 +1,4 @@
 [ENTRY]
-ID=1154958
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=
-Pos=65989.4,821.515,59954.4
-Orient=0,0,0,1
-Scale=1,1,1
-spawnPackage=#7881
-
-[ENTRY]
-ID=1154959
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=
-Pos=65723.1,823.821,59622.6
-Orient=0,0,0,1
-Scale=1,1,1
-spawnPackage=#7882
-
-[ENTRY]
-ID=1154960
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=
-Pos=65637.4,827.239,59841.4
-Orient=0,0,0,1
-Scale=1,1,1
-spawnPackage=#7881
-
-[ENTRY]
-ID=1154961
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=
-Pos=65310,699.07,59424.5
-Orient=0,0,0,1
-Scale=1,1,1
-spawnPackage=#7882
-
-[ENTRY]
 ID=151016225
 Asset=CL-Warpig_Camp2#CL-Warpig_Camp2
 Name=Untitled
@@ -366,7 +330,6 @@ Pos=65967,816.72,59536
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_jld_HogcatcherMix_43_44
-maxActive=0
 
 [ENTRY]
 ID=151027908
@@ -376,7 +339,6 @@ Pos=65947,809.097,59503
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_jld_HogcatcherMix_43_44
-maxActive=0
 links_count=1
 link=151027587,1
 
@@ -388,7 +350,6 @@ Pos=65938,825.809,59964
 Orient=0,-0.690075,0,-0.723738
 Scale=1,1,1
 spawnPackage=11_jld_HogcatcherMix_43_44
-maxActive=0
 
 [ENTRY]
 ID=151027924
@@ -398,7 +359,6 @@ Pos=65875,827.345,59959
 Orient=0,0.935616,0,0.353019
 Scale=1,1,1
 spawnPackage=11_jld_HogcatcherMix_43_44
-maxActive=0
 
 [ENTRY]
 ID=151027925
@@ -408,7 +368,6 @@ Pos=65979,826.126,59774
 Orient=0,0.893464,0,0.449134
 Scale=1,1,1
 spawnPackage=11_jld_HogcatcherMix_43_44
-maxActive=0
 
 [ENTRY]
 ID=151027927
@@ -418,7 +377,6 @@ Pos=65644,825.054,59726
 Orient=0,0.974616,0,0.223883
 Scale=1,1,1
 spawnPackage=11_jld_HogcatcherMix_43_44
-maxActive=0
 
 [ENTRY]
 ID=151027928
@@ -428,7 +386,6 @@ Pos=65680,829.453,59842
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_jld_HogcatcherMix_43_44
-maxActive=0
 
 [ENTRY]
 ID=151027929
@@ -438,7 +395,6 @@ Pos=65584,825.24,59710
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_jld_HogcatcherMix_43_44
-maxActive=0
 links_count=1
 link=151027611,1
 
@@ -450,7 +406,6 @@ Pos=65644,826.189,59759
 Orient=0,0.997129,0,0.0757238
 Scale=1,1,1
 spawnPackage=11_jld_HogcatcherMix_43_44
-maxActive=0
 links_count=1
 link=151027610,1
 
@@ -462,7 +417,6 @@ Pos=65671,831.128,59882
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_jld_HogcatcherMix_43_44
-maxActive=0
 links_count=1
 link=151027621,1
 
@@ -474,7 +428,6 @@ Pos=65754,827.228,59641
 Orient=0,0.993868,0,0.11057
 Scale=1,1,1
 spawnPackage=11_jld_HogcatcherMix_43_44
-maxActive=0
 
 [ENTRY]
 ID=151027933
@@ -494,7 +447,6 @@ Pos=65659,829.913,59546
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_jld_HogcatcherMix_43_44
-maxActive=0
 
 [ENTRY]
 ID=151027935
@@ -514,7 +466,6 @@ Pos=65650,830.075,59455
 Orient=0,0.319309,0,0.947651
 Scale=1,1,1
 spawnPackage=11_jld_HogcatcherMix_43_44
-maxActive=0
 
 [ENTRY]
 ID=151027937
@@ -524,7 +475,6 @@ Pos=65485,820.856,59780
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_jld_HogcatcherMix_43_44
-maxActive=0
 
 [ENTRY]
 ID=151027938
@@ -534,7 +484,6 @@ Pos=65407.8,820.78,59800
 Orient=0,-0.783327,0,0.62161
 Scale=1,1,1
 spawnPackage=11_jld_HogcatcherMix_43_44
-maxActive=0
 
 [ENTRY]
 ID=151027939
@@ -544,7 +493,6 @@ Pos=65330.4,820.3,59762
 Orient=0,0.42141,0,0.90687
 Scale=1,1,1
 spawnPackage=11_jld_HogcatcherMix_43_44
-maxActive=0
 
 [ENTRY]
 ID=151027940
@@ -554,7 +502,6 @@ Pos=65351,820.744,59705
 Orient=0,-0.807558,0,0.589788
 Scale=1,1,1
 spawnPackage=11_jld_HogcatcherMix_43_44
-maxActive=0
 
 [ENTRY]
 ID=151027941
@@ -564,5 +511,4 @@ Pos=65367.5,821.8,59622
 Orient=0,0.813416,0,0.581683
 Scale=1,1,1
 spawnPackage=11_jld_HogcatcherMix_43_44
-maxActive=0
 

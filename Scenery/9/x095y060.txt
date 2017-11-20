@@ -370,6 +370,7 @@ Pos=71266,781.572,45400
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_dbh_skrillmix_48
+wanderRadius=100
 
 [ENTRY]
 ID=151031257
@@ -379,6 +380,7 @@ Pos=71332,802.591,45309
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_dbh_skrillmix_48
+wanderRadius=100
 
 [ENTRY]
 ID=151031259
@@ -388,6 +390,7 @@ Pos=71495,787.105,45522
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_dbh_skrillmix_48
+wanderRadius=100
 
 [ENTRY]
 ID=151031260
@@ -397,6 +400,7 @@ Pos=71393,775.765,45558
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_dbh_skrillmix_48
+wanderRadius=100
 
 [ENTRY]
 ID=151031261
@@ -406,6 +410,7 @@ Pos=71484,786.686,45629
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_dbh_skrillmix_48
+wanderRadius=100
 
 [ENTRY]
 ID=151031262
@@ -427,6 +432,7 @@ Pos=71529,781.018,45469
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=12_dbh_skrillmix_48
+wanderRadius=100
 links_count=1
 link=151029844,1
 

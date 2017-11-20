@@ -173,6 +173,7 @@ bool InventorySlot :: VerifyItemExist(void)
 InventoryManager :: InventoryManager()
 {
 	LastError = ERROR_NONE;
+	NextExpunge = 0;
 	buybackSlot = 0;
 	memset(MaxContainerSlot, 0, sizeof(MaxContainerSlot));
 }
@@ -191,14 +192,14 @@ int InventoryManager :: AddItem(int containerID, InventorySlot &item)
 
 	if(containerID >= 0 && containerID <= MAXCONTAINER)
 	{
-		//Hack to fix item counts for those that need them.
-		/*
-		if(item.IIndex > 0)
-		{
-			if(ItemList[item.IIndex].mIvType1 == ItemIntegerType::STACKING)
-				if(item.count == 0)
-					item.count = 1;
-		}*/
+
+		if(item.secondsRemaining > -1) {
+			long remain = item.GetTimeRemaining();
+			if(NextExpunge == 0 || g_ServerTime + remain <= NextExpunge) {
+				NextExpunge = g_ServerTime + remain;
+			}
+		}
+
 		containerList[containerID].push_back(item);
 		return (int)containerList[containerID].size() - 1;
 	}
@@ -315,6 +316,49 @@ int InventoryManager :: FindNextItem(int containerID, int itemID, int start)
 	return -1;
 }
 
+
+void InventoryManager :: FindNextExpunge()
+{
+	NextExpunge = 0;
+	for(int i = 0 ; i < MAXCONTAINER; i++) {
+		int size = containerList[i].size();
+		for(std::vector<InventorySlot>::iterator it = containerList[i].begin(); it != containerList[i].end(); it++) {
+			if((*it).secondsRemaining > -1) {
+				long remain = (*it).GetTimeRemaining();
+				if(NextExpunge == 0 || g_ServerTime + remain <= NextExpunge) {
+					NextExpunge = g_ServerTime + remain;
+				}
+			}
+		}
+	}
+}
+
+int InventoryManager :: ScanExpiredItems(std::vector<InventoryQuery> &resultList)
+{
+	if(resultList.size() > 0)
+		resultList.clear();
+
+	InventoryQuery iq;
+	for(int i = 0 ; i < MAXCONTAINER; i++) {
+		int size = containerList[i].size();
+		for(std::vector<InventorySlot>::iterator it = containerList[i].begin(); it != containerList[i].end(); it++) {
+			if((*it).secondsRemaining > -1) {
+				long remain = (*it).GetTimeRemaining();
+				if(remain < 1) {
+					/* Expired */
+					iq.CCSID = (*it).CCSID;
+					iq.ptr = &(*it);
+					iq.count = (*it).GetStackCount();
+					iq.type = iq.TYPE_REMOVE;
+					resultList.push_back(iq);
+				}
+			}
+		}
+	}
+
+	return resultList.size();
+}
+
 int InventoryManager :: ScanRemoveItems(int containerID, int itemID, int count, std::vector<InventoryQuery> &resultList)
 {
 	if(resultList.size() > 0)
@@ -355,12 +399,19 @@ int InventoryManager :: ScanRemoveItems(int containerID, int itemID, int count, 
 	return resultList.size();
 }
 
-int InventoryManager :: RemoveItemsAndUpdate(int container, int itemID, int itemCost, char *packetBuffer)
+int InventoryManager :: RemoveExpiredItemsAndUpdate(char *packetBuffer)
 {
-	int wpos = 0;
-	char ConvBuf[64];
 	std::vector<InventoryQuery> iq;
-	ScanRemoveItems(container, itemID, itemCost, iq);
+	ScanExpiredItems(iq);
+	int wpos = ProcessIqResults(packetBuffer, iq);
+	FindNextExpunge();
+	return wpos;
+}
+
+int InventoryManager :: ProcessIqResults(char *packetBuffer, std::vector<InventoryQuery> &iq)
+{
+	char ConvBuf[64];
+	int wpos = 0;
 	for(size_t i = 0; i < iq.size(); i++)
 	{
 		if(iq[i].type == InventoryQuery::TYPE_REMOVE)
@@ -371,11 +422,20 @@ int InventoryManager :: RemoveItemsAndUpdate(int container, int itemID, int item
 			wpos += AddItemUpdate(&packetBuffer[wpos], ConvBuf, iq[i].ptr);
 		}
 	}
-	RemoveItems(INV_CONTAINER, iq);
+	RemoveItems(iq);
 	return wpos;
 }
 
-int InventoryManager :: RemoveItems(int containerID, std::vector<InventoryQuery> &resultList)
+int InventoryManager :: RemoveItemsAndUpdate(int container, int itemID, int itemCost, char *packetBuffer)
+{
+	std::vector<InventoryQuery> iq;
+	ScanRemoveItems(container, itemID, itemCost, iq);
+	int wpos = ProcessIqResults(packetBuffer, iq);
+	FindNextExpunge();
+	return wpos;
+}
+
+int InventoryManager :: RemoveItems(std::vector<InventoryQuery> &resultList)
 {
 	for(size_t i = 0; i < resultList.size(); i++)
 	{
@@ -490,17 +550,17 @@ int InventoryManager :: GetFreeSlot(int containerID)
 	return -1;
 }
 
-ItemDef * InventoryManager :: GetBestSpecialItem(int invID, char specialItemType)
+InventorySlot * InventoryManager :: GetBestSpecialItem(int invID, char specialItemType)
 {
 	std::vector<InventorySlot> inv = containerList[invID];
-	ItemDef *itemDef = NULL;
+	InventorySlot *itemDef = NULL;
 	for(std::vector<InventorySlot>::iterator it = inv.begin(); it != inv.end() ; ++it) {
 		InventorySlot sl = *it;
 		if(!sl.IsExpired()) {
-			ItemDef *iDef = g_ItemManager.GetPointerByID(sl.IID);
+			ItemDef *iDef = sl.dataPtr;
 			if(iDef != NULL && iDef->mSpecialItemType == specialItemType) {
-				if(itemDef == NULL || (itemDef != NULL && iDef->mIvMax1 > itemDef->mIvMax1)) {
-					itemDef = iDef;
+				if(itemDef == NULL || (itemDef != NULL && iDef->mIvMax1 > itemDef->dataPtr->mIvMax1)) {
+					itemDef = &sl;
 				}
 			}
 		}
@@ -602,19 +662,22 @@ int InventoryManager :: GetItemCount(int containerID, int itemID)
 
 InventorySlot * InventoryManager :: PickRandomItem(int containerID) {
 
-	std::vector<int> tempCon;
-	tempCon.resize(MaxContainerSlot[containerID]);
+	std::vector<InventorySlot*> tempCon;
 	unsigned int a;
 	unsigned int c = 0;
 	for(a = 0; a < containerList[containerID].size() && a < MaxContainerSlot[containerID]; a++)
 	{
 		unsigned int slot = containerList[containerID][a].CCSID & CONTAINER_SLOT;
 		if(slot < MaxContainerSlot[containerID]) {
-			tempCon.push_back(a);
-			c++;
+			if(containerList[containerID][a].bindStatus == 0) {
+				tempCon.push_back(&containerList[containerID][a]);
+				c++;
+			}
 		}
 	}
-	return &containerList[containerID][tempCon[randmodrng(0, c)]];
+	if(c == 0)
+		return NULL;
+	return tempCon[randmodrng(0, c)];
 
 }
 

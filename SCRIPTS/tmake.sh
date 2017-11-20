@@ -4,6 +4,7 @@
 # existing terrain template and gives it a new name, renaming all
 # images and config files and contents. 
 #
+source "$(dirname $0)"/shelllib.sh
 
 function get_loc() {
 	case "$1" in
@@ -35,6 +36,7 @@ fi
 
 pushd temp >/dev/null
 for i in *.car ; do
+	echo "Processing $i"
 	bn=$(basename $i .car)
 	loc=$(get_loc $bn)
 	oldname=$(get_terrain_name $bn)
@@ -44,16 +46,21 @@ for i in *.car ; do
 		tdir=${tdir}_${loc}
 	fi
 	
-	wine ../UTILITIES/CARDecode.exe $i
+	run_win_tool ../UTILITIES/CARDecode.exe $i
 
 	rm -fr "${tdir}"
+	echo "Creating $tdir"
 	mkdir -p "${tdir}"
 	pushd ${tdir} > /dev/null
+	echo "Unzipping ${bn}.zip to $tdir"
 	unzip ../${bn}.zip
 	
 	for j in * ; do
 		
 		newfname=$(echo $j|sed 's/'${oldname}'/'${name}'/g')
+		if [ "$newfname" = "${j}" ] ; then
+			continue
+		fi
 		
 		if ! mv ${j} ${newfname} ; then
 			echo "$0: failed moving ${j} to ${newfname}" >&2
@@ -66,7 +73,7 @@ for i in *.car ; do
 					sed -i "s/^Texture\\.Coverage=${oldname}_Coverage/Texture.Coverage=${name}_Coverage/g" ${newfname} 
 					sed -i "s/^PerPageConfig=${oldname}_x/PerPageConfig=${name}_x/g" ${newfname} 
 					sed -i "s/^Heightmap\\.image=${oldname}_Height/Heightmap.image=${name}_Height/g" ${newfname} ;;
-			*.cnut) wine ${base}/UTILITIES/nutcracker.exe  ${newfname} > $(basename ${newfname} .cnut).nut 
+			*.cnut) run_win_tool ${base}/UTILITIES/nutcracker.exe  ${newfname} > $(basename ${newfname} .cnut).nut 
 					rm -f ${newfname} ;;
 		esac
 		

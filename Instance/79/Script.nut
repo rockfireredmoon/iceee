@@ -18,6 +18,7 @@ info <- {
 trigger <- 0;
 phase <- 0;
 handle <- 0;
+spawned <- false;
 
 function run_phase() {
 	trigger++;
@@ -66,5 +67,6 @@ function on_use_2134(cid, used_cid) {
 }
 
 function on_use_finish_2134() {
+	spawned = true;
 	inst.spawn(1325400187,0,0);
 }

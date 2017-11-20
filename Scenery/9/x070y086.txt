@@ -9,14 +9,6 @@ spawnPackage=11_dth_slimerCamp
 wanderRadius=100
 
 [ENTRY]
-ID=1128576
-Asset=Environment-Marker?type=GrunesUndead
-Name=
-Pos=53027.1,755.973,65079.8
-Orient=0,0,0,1
-Scale=12,12,12
-
-[ENTRY]
 ID=151015277
 Asset=Prop-Boulder_Scary#Prop-Boulder_Scary5
 Name=Untitled

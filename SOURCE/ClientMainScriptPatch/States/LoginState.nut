@@ -80,28 +80,27 @@ class this.States.LoginState extends this.State
 		this.mMenu.privacyButton.addActionListener({
 			function onActionPerformed( b )
 			{
-				//::_URLManager.LaunchURL("Project");
 				this.System.openURL("https://github.com/rockfireredmoon/iceee/");
 			}
 
 		});
-		this.mMenu.forParents <- ::GUI.BigButton("For Testers");
+		
+		
+		this.mMenu.forParents <- ::GUI.BigButton("Support");
 		this.mMenu.container.add(this.mMenu.forParents);
 		this.mMenu.forParents.addActionListener({
 			function onActionPerformed( b )
 			{			
-				//::_URLManager.LaunchURL("ForTesters");
-				this.System.openURL("http://armouree.theanubianwar.com/dokuwiki/doku.php?id=iceee:development:betatesters");
+				this.System.openURL("http://www.theanubianwar.com/support");
 			}
 
 		});
-		this.mMenu.forgotPassword <- ::GUI.BigButton("Forgot Password?");
+		this.mMenu.forgotPassword <- ::GUI.BigButton("Forum");
 		this.mMenu.container.add(this.mMenu.forgotPassword);
 		this.mMenu.forgotPassword.addActionListener({
 			function onActionPerformed( b )
 			{
-				//::_URLManager.LaunchURL("ForgotPassword");
-				this.System.openURL("http://valkal.theanubianwar.com/ResetPassword.html");
+				this.System.openURL("http://www.theanubianwar.com/forum");
 			}
 
 		});
@@ -110,8 +109,7 @@ class this.States.LoginState extends this.State
 		this.mMenu.manageAccount.addActionListener({
 			function onActionPerformed( b )
 			{
-				//::_URLManager.LaunchURL("ManageAccount");
-				this.System.openURL("http://valkal.theanubianwar.com/Account.html");
+				this.System.openURL("http://www.theanubianwar.com/user");
 			}
 
 		});
@@ -156,7 +154,7 @@ class this.States.LoginState extends this.State
 		local infoPanel = mCS.infoPanel <- ::GUI.Panel();
 		infoPanel.setLayoutManager( GUI.BorderLayout() );
 		infoPanel.setInsets( 6, 6, 6, 6 );
-		infoPanel.setSize( 400, 116 );
+		infoPanel.setSize( 400, 185 );
 		baseContainer.add( infoPanel, GUI.BorderLayout.NORTH );
 		
 		local infoTitle = mCS.infoTitle <- ::GUI.Label("NEWS");
@@ -164,6 +162,7 @@ class this.States.LoginState extends this.State
 		infoPanel.add( infoTitle, GUI.BorderLayout.NORTH );
 		
 		local scrollArea = mCS.scrollArea <- GUI.ScrollPanel();
+		scrollArea.setPreferredSize( 400, 165 );
 		infoPanel.add( scrollArea, GUI.BorderLayout.CENTER );
 		
 		mNews = mCS.infoArea <- ::GUI.HTML();
@@ -355,8 +354,7 @@ class this.States.LoginState extends this.State
 		}
 		else
 		{
-			//::_URLManager.LaunchURL("Account");
-			this.System.openURL("http://valkal.theanubianwar.com/Account.html");
+			this.System.openURL("http://www.theanubianwar.com/user/register");
 		}
 	}
 

@@ -1550,11 +1550,14 @@ bool EnvironmentCycleManager :: HasCycleUpdated(void)
 	if(mCycleStrings.size() == 0)
 		return false;
 
+
 	mCurrentCycleIndex++;
 	if(mCurrentCycleIndex >= mCycleStrings.size())
 		mCurrentCycleIndex = 0;
 
 	mNextUpdateTime = g_ServerTime + mCycleTimes[mCurrentCycleIndex];
+
+	g_Log.AddMessageFormat("Environment Cycle has updated to %d. Next update is at %d", mCurrentCycleIndex, mNextUpdateTime);
 	return true;
 }
 
@@ -2062,6 +2065,8 @@ int WeatherManager :: LoadFromFile(const char *fileName) {
 
 int PrepExt_SendEnvironmentUpdateMsg(char *buffer, ActiveInstance *instance, const char *zoneIDString, ZoneDefInfo *zoneDef, int x, int z, int mask)
 {
+	g_Log.AddMessageFormat("REMOVEME PrepExt_SendEnvironmentUpdateMsg %s (%s)", zoneIDString, instance == NULL ? zoneDef->GetTileEnvironment(x, z).c_str() : instance->GetEnvironment(x, z).c_str());
+
 	int wpos = 0;
 	wpos += PutByte(&buffer[wpos], 42);   //_handleEnvironmentUpdateMsg
 	wpos += PutShort(&buffer[wpos], 0);

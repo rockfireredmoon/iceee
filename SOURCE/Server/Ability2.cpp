@@ -13,6 +13,7 @@
 #include "Stats.h"
 #include "Item.h"  //For item ID verification
 #include "Combat.h"
+#include "Inventory.h"
 
 extern double g_FacingTarget;
 extern char GSendBuf[];
@@ -3262,7 +3263,11 @@ int AbilityCalculator :: Reagent(ARGUMENT_LIST args)
 	mReagentItemID = args.GetInteger(0);
 	mReagentItemCount = args.GetInteger(1);
 
-	//TODO: Run an inventory check.
+	if(g_Config.UseReagents) {
+		if(ciSource->charPtr->inventory.GetItemCount(INV_CONTAINER, mReagentItemID) < mReagentItemCount)
+			return ABILITY_REAGENTS;
+	}
+
 	return ABILITY_SUCCESS;
 }
 
@@ -3271,9 +3276,16 @@ void AbilityCalculator :: ConsumeReagent(void)
 {
 	if(mReagentItemID != 0)
 	{
-		//TODO: Remove items from inventory.
+		while(mReagentItemCount > 0) {
+			InventorySlot *slot = ciSource->charPtr->inventory.GetFirstItem(INV_CONTAINER, mReagentItemID);
+			if(slot == NULL)
+				mReagentItemCount = 0;
+			else {
+				ciSource->simulatorPtr->DecrementStack(slot);
+			}
+			mReagentItemCount--;
+		}
 		mReagentItemID = 0;
-		mReagentItemCount = 0;
 	}
 }
 

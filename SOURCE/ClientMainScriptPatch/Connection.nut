@@ -63,6 +63,7 @@ this.ProtocolDef <- {
 		[50] = "_handleCommunicationMsg",
 		[51] = "_handleTradeMsg",
 		[52] = "_handleForm",
+		[53] = "_handleRefashion",
 		[60] = "_handleAbilityActivationMsg",
 		[70] = "_handleItemUpdateMsg",
 		[71] = "_handleItemDefUpdateMsg",
@@ -3261,6 +3262,14 @@ class this.Connection extends this.MessageBroadcaster
 		}
 	}
 	
+	function _handleRefashion(data) {
+		local type = data.getByte();
+		local mscreen = this.Screens.get("MorphItemScreen", true);
+		mscreen.reset();
+		mscreen.setMorpherId(::_avatar.getID());
+		this.Screens.show("MorphItemScreen");
+	}
+	
 	function _handleBooks(data) {
 		local type = data.getByte();
 		switch(type) {
@@ -3425,7 +3434,7 @@ class this.Connection extends this.MessageBroadcaster
 		local terrain = data.getStringUTF();
 		local envType = data.getStringUTF();
 		
-		
+		print("ICE! mask: " +mask + " zoneId: " + zoneId + " zoneDefId: " + zoneDefId + " zonePageSize: " + zonePageSize + " terrain: " + terrain + " envType: " + envType + "\n"); 
 
 		if (mask == 2)
 		{

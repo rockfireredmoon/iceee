@@ -52,6 +52,7 @@ unsigned long CREATURE_DELETE_RECHECK = 60000; //Delay between rescanning for de
 #include "Chat.h"
 #include "PartyManager.h"
 #include "InstanceScale.h"
+#include "InstanceScript.h"
 #include "ScriptCore.h"
 
 extern char GSendBuf[32767];
@@ -3422,6 +3423,21 @@ void ActiveInstance :: ScriptCallPackageKill(const char *name)
 		ScriptCall(name);
 }
 
+
+bool ActiveInstance :: QueueCallUsed(int sourceCreatureID, int usedCreatureID, int usedCreatureDefID, int time)
+{
+	if(nutScriptPlayer != NULL) {
+		CreatureInstance * creatureInst = GetPlayerByID(sourceCreatureID);
+		ScriptCore::NutScriptEvent *evt = new ScriptCore::NutScriptEvent(
+				new ScriptCore::TimeCondition(time),
+				new OnUsedCallback(this,sourceCreatureID, usedCreatureDefID));
+		nutScriptPlayer->AddInteraction(creatureInst, evt);
+		nutScriptPlayer->QueueAdd(evt);
+		return true;
+	}
+	return false;
+}
+
 bool ActiveInstance :: ScriptCallUse(int sourceCreatureID, int usedCreatureID, int usedCreatureDefID, bool defaultIfNoFunction)
 {
 	char buffer[64];
@@ -3476,9 +3492,10 @@ void ActiveInstance :: ScriptCallUseFinish(int sourceCreatureID, int usedCreatur
 		std::vector<ScriptCore::ScriptParam> p;
 		Util::SafeFormat(buffer, sizeof(buffer), "on_use_finish_%d", usedCreatureDefID);
 		nutScriptPlayer->JumpToLabel(buffer, p);
-		p.push_back(ScriptCore::ScriptParam(sourceCreatureID));
-		p.push_back(ScriptCore::ScriptParam(usedCreatureDefID));
-		nutScriptPlayer->JumpToLabel("on_use_finish", p);
+		std::vector<ScriptCore::ScriptParam> p2;
+		p2.push_back(ScriptCore::ScriptParam(sourceCreatureID));
+		p2.push_back(ScriptCore::ScriptParam(usedCreatureDefID));
+		nutScriptPlayer->JumpToLabel("on_use_finish", p2);
 
 	}
 	else {
@@ -3634,9 +3651,8 @@ void ActiveInstance :: RunObjectInteraction(SimulatorThread *simPtr, int CDef)
 
 		if(intObj->opType == InteractObject::TYPE_WARP)
 		{
-			if(simPtr->MainCallSetZone(intObj->WarpID, 0, false)) {
-				simPtr->SetPosition(intObj->WarpX, intObj->WarpY, intObj->WarpZ, 1);
-			}
+			simPtr->MainCallSetZone(intObj->WarpID, 0, false);
+			simPtr->SetPosition(intObj->WarpX, intObj->WarpY, intObj->WarpZ, 1);
 		}
 		else if(intObj->opType == InteractObject::TYPE_LOCATIONRETURN)
 		{
@@ -3644,9 +3660,8 @@ void ActiveInstance :: RunObjectInteraction(SimulatorThread *simPtr, int CDef)
 			int y = simPtr->pld.charPtr->groveReturnPoint[1];
 			int z = simPtr->pld.charPtr->groveReturnPoint[2];
 			int zone = simPtr->pld.charPtr->groveReturnPoint[3];
-			if(simPtr->MainCallSetZone(zone, 0, false)) {
-				simPtr->SetPosition(x, y, z, 1);
-			}
+			simPtr->MainCallSetZone(zone, 0, false);
+			simPtr->SetPosition(x, y, z, 1);
 		}
 		else if(intObj->opType == InteractObject::TYPE_SCRIPT)
 		{
@@ -4061,4 +4076,27 @@ const InstanceScaleProfile* PlayerInstancePlacementData :: GetPartyLeaderInstanc
 	//g_Log.AddMessageFormat("Returning party leader %s [%d] scaler %s", creature->css.display_name, party->mLeaderDefID, charDat->InstanceScaler.c_str());
 	mPartyLeaderDefID = party->mLeaderDefID;
 	return g_InstanceScaleManager.GetProfile(charDat->InstanceScaler);
+}
+
+
+//
+// OnUsedCallback
+//
+
+OnUsedCallback::OnUsedCallback(ActiveInstance *instance, int sourceCreatureID, int usedCreatureDefID) {
+	mInstance = instance;
+	mSourceCreatureID = sourceCreatureID;
+	mUsedCreatureDefID = usedCreatureDefID;
+}
+
+OnUsedCallback::~OnUsedCallback() {
+}
+
+bool OnUsedCallback::Execute()
+{
+	if(mInstance->nutScriptPlayer != NULL) {
+		mInstance->ScriptCallUseFinish(mSourceCreatureID, mUsedCreatureDefID);
+		mInstance->nutScriptPlayer->RemoveInteraction(mSourceCreatureID);
+	}
+	return true;
 }

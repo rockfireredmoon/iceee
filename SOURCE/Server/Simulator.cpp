@@ -1162,7 +1162,6 @@ void SimulatorThread :: HandleGameMsg(int msgType)
 
 	case 19: handle_debugServerPing(); break;       //Sent by a modded client only.
 	case 20: handle_acknowledgeHeartbeat(); break;  //Sent by a modded client only.
-	case 21: handle_mouseClick(); break;  //Sent by a modded client only.
 	default:
 		LogMessageL(MSG_ERROR, "Unhandled message in Game mode: %d", msgType);
 	}
@@ -1940,7 +1939,6 @@ void SimulatorThread :: SetPersona(int personaIndex)
 
 	//The zone change updates the map, but need to resend again otherwise the
 	//terrain won't load when you first log in.
-//	SendSetMap();
 	UpdateSocialEntry(true, false);
 	UpdateSocialEntry(true, true);
 	BroadcastShardChanged();
@@ -2017,7 +2015,7 @@ void SimulatorThread :: UnregisterMainCall3(void)
 
 bool SimulatorThread :: MainCallSetZone(int newZoneID, int newInstanceID, bool setDefaultLocation)
 {
-	if(CheckValidWarpZone(newZoneID) != ERROR_NONE)
+	if(newZoneID == 0)
 	{
 		return false;
 	}
@@ -2094,9 +2092,10 @@ bool SimulatorThread :: MainCallSetZone(int newZoneID, int newInstanceID, bool s
 
 bool SimulatorThread :: ProtectedSetZone(int newZoneID, int newInstanceID)
 {
+	MainCallSetZone(newZoneID, newInstanceID, false);
 	//The function originally had thread potection when using a faulty method of threading.
 	//Returns false if the operation failed.
-	return MainCallSetZone(newZoneID, newInstanceID, false) && ValidPointers();
+	return ValidPointers();
 }
 
 
@@ -3140,23 +3139,6 @@ void SimulatorThread :: AddMessage(long param1, long param2, int message)
 	bcm.AddEventCopy(msg);
 }
 
-void SimulatorThread :: SendSetMap(void)
-{
-//	if(creatureInst == NULL)
-//	{
-//		LogMessageL(MSG_ERROR, "[ERROR] SendSetMap() creature instance is NULL");
-//		return;
-//	}
-//	if(creatureInst->actInst == NULL)
-//	{
-//		LogMessageL(MSG_ERROR, "[ERROR] SendSetMap() creature active instance is NULL");
-//		return;
-//	}
-//
-//	strcpy(pld.CurrentEnv, creatureInst->actInst->GetEnvironment(creatureInst->CurrentX, creatureInst->CurrentZ).c_str());
-//	AttemptSend(SendBuf, PrepExt_SendEnvironmentUpdateMsg(SendBuf, creatureInst->actInst, pld.CurrentZone, pld.zoneDef, creatureInst->CurrentX, creatureInst->CurrentZ, 1));
-}
-
 int SimulatorThread :: handle_form_submit(void)
 {
 	if (query.argCount < 3)
@@ -3310,8 +3292,10 @@ void SimulatorThread :: SetPosition(int xpos, int ypos, int zpos, int update)
 			int size = PrepExt_UpdateFullPosition(SendBuf, creatureInst);
 			if(g_Config.UseStopSwim == true)
 				size += PrepExt_ModStopSwimFlag(&SendBuf[size], false);
-			size += PrepExt_VelocityEvent(&SendBuf[size], creatureInst);
 			creatureInst->actInst->LSendToLocalSimulator(SendBuf, size, creatureInst->CurrentX, creatureInst->CurrentZ);
+
+			AddMessage((long)creatureInst, 0, BCM_UpdateVelocity);
+			AttemptSend(SendBuf, PrepExt_VelocityEvent(SendBuf, creatureInst));
 		}
 
 		int r = pld.charPtr->questJournal.CheckTravelLocations(creatureInst->CreatureID, Aux1, creatureInst->CurrentX, creatureInst->CurrentY, creatureInst->CurrentZ, pld.CurrentZoneID);
@@ -3577,7 +3561,6 @@ int SimulatorThread :: handle_query_item_contents(void)
 
 	const char *contName = query.args[0].c_str();
 
-
 	int contID = GetContainerIDFromName(contName);
 	if(contID == -1)
 	{
@@ -3621,8 +3604,11 @@ int SimulatorThread :: SendInventoryData(std::vector<InventorySlot> &cont)
 	int wpos = 0;  //Current Write position
 	while(proc < count)
 	{
-		wpos += AddItemUpdate(&SendBuf[wpos], Aux3, &cont[proc]);
-		proc++;
+		InventorySlot *slot = &cont[proc];
+		if(slot->secondsRemaining == -1 || !slot->IsExpired()) {
+			wpos += AddItemUpdate(&SendBuf[wpos], Aux3, slot);
+			proc++;
+		}
 		batch++;
 		tproc++;
 		if(batch > 20)
@@ -4075,24 +4061,6 @@ void SimulatorThread :: handle_selectTarget(void)
 	creatureInst->RequestTarget(targetID);
 }
 
-void SimulatorThread :: handle_mouseClick(void) {
-
-	int mouseX = GetInteger(&readPtr[ReadPos], ReadPos);
-	int mouseY = GetInteger(&readPtr[ReadPos], ReadPos);
-	int mouseZ = GetInteger(&readPtr[ReadPos], ReadPos);
-
-	std::vector<ScriptCore::ScriptParam> p;
-	p.push_back(ScriptCore::ScriptParam(mouseX));
-	p.push_back(ScriptCore::ScriptParam(mouseY));
-	p.push_back(ScriptCore::ScriptParam(mouseZ));
-
-	if(creatureInst != NULL && creatureInst->actInst != NULL && creatureInst->actInst->nutScriptPlayer != NULL && creatureInst->actInst->nutScriptPlayer->mActive) {
-		creatureInst->actInst->nutScriptPlayer->mCaller = creatureInst->CreatureID;
-		creatureInst->actInst->nutScriptPlayer->JumpToLabel("on_click", p);
-		creatureInst->actInst->nutScriptPlayer->mCaller = 0;
-	}
-}
-
 void SimulatorThread :: handle_abilityActivate(void)
 {
 	creatureInst->RemoveNoncombatantStatus("abilityActivate");
@@ -4454,9 +4422,9 @@ int SimulatorThread :: handle_query_item_delete(void)
 
 	//Find the players best (in terms of recoup amount) grinder (if they have one)
 	int invId = GetContainerIDFromName("inv");
-	ItemDef *grinderDef = pld.charPtr->inventory.GetBestSpecialItem(invId, ITEM_GRINDER);
+	InventorySlot *grinderDef = pld.charPtr->inventory.GetBestSpecialItem(invId, ITEM_GRINDER);
 	if(grinderDef != NULL) {
-		int amt = (int)(((double)itemDef->mValue / 100.0) *  grinderDef->mIvMax1);
+		int amt = (int)(((double)itemDef->mValue / 100.0) *  grinderDef->dataPtr->mIvMax1);
 		creatureInst->AdjustCopper(amt);
 	}
 
@@ -5311,10 +5279,8 @@ int SimulatorThread :: handle_command_warpext(void)
 			if(strcmp(it->creatureInst->css.display_name, query.args[0].c_str()) == 0)
 			{
 				SendInfoMessage("Warping target.", INFOMSG_INFO);
-				if(it->MainCallSetZone(zoneDef->mID, 0, true))
-					return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
-				else
-					return PrepExt_QueryResponseError(SendBuf, query.ID, "Failed to change zone.");
+				it->MainCallSetZone(zoneDef->mID, 0, true);
+				return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
 			}
 	return PrepExt_QueryResponseError(SendBuf, query.ID, "Target not found."); 
 }
@@ -7423,8 +7389,13 @@ int SimulatorThread :: UseItem(unsigned int CCSID)
 	}
 	else
 	{
-		if(itemDef->mType == ItemType::SPECIAL && itemDef->mIvType1 == ItemIntegerType::BOOK_PAGE) {
+		if(itemDef->mType == ItemType::SPECIAL && itemDef->mSpecialItemType == PORTABLE_REFASHIONER) {
+			AttemptSend(Aux1, PrepExt_Refashion(Aux1));
+			removeOnUse = false;
+		}
+		else if(itemDef->mType == ItemType::SPECIAL && itemDef->mIvType1 == ItemIntegerType::BOOK_PAGE) {
 			AttemptSend(Aux1, PrepExt_SendBookOpen(Aux1, itemDef->mIvMax1, itemDef->mIvMax2 - 1, 1));
+			removeOnUse = false;
 		}
 		else {
 			ConfigString cfg(itemDef->Params);
@@ -8711,6 +8682,13 @@ int SimulatorThread :: handle_query_creature_use(void)
 
 			creatureInst->LastUseDefID = CDef;
 
+			/* Instance Script */
+			if(creatureInst->actInst->nutScriptPlayer != NULL) {
+				creatureInst->actInst->QueueCallUsed(creatureInst->CreatureID, target->CreatureID, CDef, qo->ActivateTime);
+			}
+
+			/* Quest Script */
+
 			QuestScript::QuestNutPlayer *questNutScript = g_QuestNutManager.GetActiveScript(creatureInst->CreatureID, QuestID);
 			if(questNutScript == NULL )
 			{
@@ -9897,13 +9875,13 @@ int SimulatorThread :: protected_helper_query_craft_create(void)
 	inv.ScanRemoveItems(INV_CONTAINER, itemPlan->keyComponentId, 1, iq);
 	if(iq.size() > 0)
 		wpos += RemoveItemUpdate(&SendBuf[wpos], Aux3, iq[0].ptr);
-	inv.RemoveItems(INV_CONTAINER, iq);
+	inv.RemoveItems(iq);
 
 	//Remove the plan.
 	inv.ScanRemoveItems(INV_CONTAINER, itemPlan->mID, 1, iq);
 	if(iq.size() > 0)
 		wpos += RemoveItemUpdate(&SendBuf[wpos], Aux3, iq[0].ptr);
-	inv.RemoveItems(INV_CONTAINER, iq);
+	inv.RemoveItems(iq);
 
 	wpos += PrepExt_QueryResponseString(&SendBuf[wpos], query.ID, "OK");
 	return wpos;
@@ -9934,14 +9912,43 @@ int SimulatorThread :: protected_helper_query_item_morph(bool command)
 	unsigned long newLook = strtol(query.args[1].c_str(), NULL, 16);
 	int creatureID = strtol(query.args[2].c_str(), NULL, 10);
 
+	InventorySlot * reagentPtr = NULL;
+	ItemDef * reagentDef = NULL;
+
 	// Run a distance check for a normal query.  The /refashion command
 	// also uses this function but with a spoofed query.
+	bool free = false;
+	bool unstack = false;
 	if(command == false)
 	{
-		// Make sure this object isn't too far away.
-		int distCheck = protected_helper_checkdistance(creatureID);
-		if(distCheck != 0)
-			return distCheck;
+		/* If the refashioner is the player themselves, then make sure they have
+		 * a refashioning device
+		 */
+		if(creatureID == creatureInst->CreatureID) {
+			free = true;
+			reagentPtr = pld.charPtr->inventory.GetBestSpecialItem(GetContainerIDFromName("inv"), PORTABLE_REFASHIONER);
+			if(reagentPtr == NULL) {
+				return QueryErrorMsg::NOREFASHION;
+			}
+			else {
+				reagentDef = g_ItemManager.GetPointerByID(reagentPtr->IID);
+				if(reagentDef == NULL) {
+					return QueryErrorMsg::NOREFASHION;
+				}
+
+
+				/* Ok to refashion. If item is stackable, then the stack is decreased too (one-off refashion items) */
+				if(reagentPtr->ResolveItemPtr()->mIvMax1 > 1 && reagentPtr->GetStackCount() > 0) {
+					unstack = true;
+				}
+			}
+		}
+		else {
+			// Make sure this object isn't too far away.
+			int distCheck = protected_helper_checkdistance(creatureID);
+			if(distCheck != 0)
+				return distCheck;
+		}
 	}
 
 	InventorySlot * origPtr = pld.charPtr->inventory.GetItemPtrByCCSID(origLook);
@@ -9954,7 +9961,7 @@ int SimulatorThread :: protected_helper_query_item_morph(bool command)
 	if(itemPtr1 == NULL || itemPtr2 == NULL)
 		return QueryErrorMsg::INVALIDITEM;
 
-	int cost = (itemPtr1->mValue + itemPtr2->mValue) / 2;
+	int cost = free ? 0 : (itemPtr1->mValue + itemPtr2->mValue) / 2;
 	if(creatureInst->css.copper < cost)
 		return QueryErrorMsg::COIN;
 	creatureInst->css.copper -= cost;
@@ -9974,6 +9981,14 @@ int SimulatorThread :: protected_helper_query_item_morph(bool command)
 
 	wpos += RemoveItemUpdate(&SendBuf[wpos], Aux3, newPtr);
 	pld.charPtr->inventory.RemItem(newLook);
+
+	if(reagentDef != NULL) {
+		Util::SafeFormat(Aux3, sizeof(Aux3), "You have used 1 %s.", reagentDef->mDisplayName.c_str());
+		wpos += PrepExt_SendInfoMessage(&SendBuf[wpos], Aux3, INFOMSG_INFO);
+		/* This refashion is taking up a reagent of sorts, a portable refashioner */
+		wpos += pld.charPtr->inventory.RemoveItemsAndUpdate(INV_CONTAINER, reagentDef->mID, 1, &SendBuf[wpos]);
+	}
+
 	wpos += AddItemUpdate(&SendBuf[wpos], Aux3, origPtr);
 
 	wpos += PrepExt_QueryResponseString(&SendBuf[wpos], query.ID, "OK");
@@ -9988,6 +10003,12 @@ int SimulatorThread :: handle_command_refashion(void)
 		refashion function can process the request.
 		Args : [0] Exact name of source item (for user verification).
 	*/
+
+	if(CheckPermissionSimple(Perm_Account, Permission_Admin) == false && CheckPermissionSimple(Perm_Account, Permission_Sage) == false) {
+		SendInfoMessage("Free refashioning via the /refashion command has been removed. Instead, you will need to either visit a Refashioner, or obtain a Portable Refashioning Device. These are available as a special crafted item, or via the Credit Shop", INFOMSG_ERROR);
+		return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
+	}
+
 
 	sprintf(Aux3, "%d", InternalID + 1);
 
@@ -11392,7 +11413,8 @@ void SimulatorThread :: WarpToZone(ZoneDefInfo *zoneDef, int xOverride, int yOve
 	}
 
 	SetPosition(creatureInst->CurrentX, creatureInst->CurrentY, creatureInst->CurrentZ, 1);
-	if(!MainCallSetZone(zoneDef->mID, 0, false) || ValidPointers() == false)
+	MainCallSetZone(zoneDef->mID, 0, false);
+	if(ValidPointers() == false)
 	{
 		ForceErrorMessage("Critical error while changing zones.", INFOMSG_ERROR);
 		Disconnect("SimulatorThread::WarpToZone");
@@ -11779,7 +11801,6 @@ int SimulatorThread :: handle_command_zonename(void)
 				else
 					zoneDef->ChangeName(name);
 				g_ZoneDefManager.NotifyConfigurationChange();
-				SendSetMap();
 				SendInfoMessage(pld.zoneDef->mShardName.c_str(), INFOMSG_SHARD);
 			}
 		}
@@ -13345,9 +13366,8 @@ void SimulatorThread :: RunTranslocate(void)
 	}
 	else
 	{
-		if(MainCallSetZone(pld.charPtr->bindReturnPoint[3], 0, false)) {
-			SetPosition(pld.charPtr->bindReturnPoint[0], pld.charPtr->bindReturnPoint[1], pld.charPtr->bindReturnPoint[2], 1);
-		}
+		MainCallSetZone(pld.charPtr->bindReturnPoint[3], 0, false);
+		SetPosition(pld.charPtr->bindReturnPoint[0], pld.charPtr->bindReturnPoint[1], pld.charPtr->bindReturnPoint[2], 1);
 	}
 }
 
@@ -13403,13 +13423,12 @@ void SimulatorThread :: RunPortalRequest(void)
 	int wpos = PrepExt_RemoveCreature(SendBuf, creatureInst->CreatureID);
 	creatureInst->actInst->LSendToLocalSimulator(SendBuf, wpos, creatureInst->CurrentX, creatureInst->CurrentZ, InternalID);
 
-	if(MainCallSetZone(zone, 0, false)) {
+	MainCallSetZone(zone, 0, false);
 
-		SetPosition(x, y, z, 1);
-		CheckSpawnTileUpdate(true);
-		CheckMapUpdate(true);
-		pld.ClearPortalRequestDest();
-	}
+	SetPosition(x, y, z, 1);
+	CheckSpawnTileUpdate(true);
+	CheckMapUpdate(true);
+	pld.ClearPortalRequestDest();
 }
 
 void SimulatorThread :: JoinPrivateChannel(const char *channelname, const char *password)
@@ -14924,6 +14943,7 @@ void SimulatorThread :: SendAbilityErrorMessage(int abilityErrorCode)
 	case Ability2::ABILITY_HEALTH_TOO_LOW: messageStr = "You do not have enough health."; break;
 	case Ability2::ABILITY_BEHIND: messageStr = "You must be behind your target."; break;
 	case Ability2::ABILITY_NEARBY_SANCTUARY: messageStr = "You are not near a sanctuary."; break;
+	case Ability2::ABILITY_REAGENTS: messageStr = "You do not have enough reagents of the right type to use this ability."; break;
 	}
 
 	if(messageStr == NULL)

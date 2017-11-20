@@ -6,7 +6,6 @@ Pos=64805,539.449,58745
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_jld_HogcatcherMix_43_44
-maxActive=0
 links_count=2
 link=1127519,1
 link=1127523,1
@@ -54,15 +53,6 @@ link=1127519,1
 link=1127517,1
 
 [ENTRY]
-ID=1154970
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=
-Pos=64938.4,574.977,58906.8
-Orient=0,0,0,1
-Scale=1,1,1
-spawnPackage=#7881
-
-[ENTRY]
 ID=151015321
 Asset=Prop-Sick-Forest_Tree#Prop-Sick-Forest_Tree2
 Name=Untitled
@@ -87,7 +77,6 @@ Pos=64628.1,567.132,58891
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_jld_HogcatcherMix_43_44
-maxActive=0
 
 [ENTRY]
 ID=151027849
@@ -97,6 +86,5 @@ Pos=64695,553.244,58640
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_jld_HogcatcherMix_43_44
-maxActive=0
 wanderRadius=100
 

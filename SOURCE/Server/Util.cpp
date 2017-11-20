@@ -106,7 +106,6 @@ int PrepExt_SetTimeOfDay(char *buffer, const char *timeOfDay)
 
 int PrepExt_SetWeather(char *buffer, std::string type, int weight)
 {
-	g_Log.AddMessageFormat("REMOVEME Set Weather %s", type.c_str());
 	int wpos = 0;
 	wpos += PutByte(&buffer[wpos], 42);   //_handleEnvironmentUpdateMsg
 	wpos += PutShort(&buffer[wpos], 0);
@@ -130,6 +129,10 @@ int PrepExt_Thunder(char *buffer, int weight)
 
 int PrepExt_AbilityEvent(char *buffer, int creatureID, int abilityID, int abilityEvent)
 {
+	if(abilityEvent == 4) {
+		g_Log.AddMessageFormat("REMOVEME PrepExt_AbilityEvent INTERRUPT ABILITY %d : %d", creatureID, abilityID);
+	}
+
 	//Same as AbilityActivate, but target lists and ground are always zero.
 	//Used for the utility messages such as activation requests.
 
@@ -146,23 +149,6 @@ int PrepExt_AbilityEvent(char *buffer, int creatureID, int abilityID, int abilit
 	wpos += PutByte(&buffer[wpos], 0);      //has_ground
 
 	PutShort(&buffer[1], wpos - 3);
-	return wpos;
-}
-
-int PrepExt_SendAbilityOwn(char *buffer, int CID, int abilityID, int eventID)
-{
-	int wpos = 0;
-	wpos += PutByte(&buffer[wpos], 60);  //_handleAbilityActivationMsg
-	wpos += PutShort(&buffer[wpos], 0);
-
-	wpos += PutInteger(&buffer[wpos], CID);   //Creature Instance ID
-	wpos += PutShort(&buffer[wpos], abilityID);  //ability ID
-	wpos += PutByte(&buffer[wpos], eventID);  //7 = ability ownage
-	wpos += PutInteger(&buffer[wpos], 0);   //target_len
-	wpos += PutInteger(&buffer[wpos], 0);   //secondary_len
-	wpos += PutByte(&buffer[wpos], 0);      //has_ground
-
-	PutShort(&buffer[1], wpos - 3);       //Set message size
 	return wpos;
 }
 
@@ -413,6 +399,15 @@ int PrepExt_SendBookOpen(char *buffer, int bookID, int page, int op) {
 	wpos += PutByte(&buffer[wpos], op); 				// Refresh or Open
 	wpos += PutInteger(&buffer[wpos], bookID);
 	wpos += PutInteger(&buffer[wpos], page);
+	PutShort(&buffer[1], wpos - 3);                 //Message size
+	return wpos;
+}
+
+int PrepExt_Refashion(char *buffer) {
+	int wpos = 0;
+	wpos += PutByte(&buffer[wpos], 53);              //_handleRefashion
+	wpos += PutShort(&buffer[wpos], 0);             //Placeholder for message size
+	wpos += PutByte(&buffer[wpos], 0); 				// Open
 	PutShort(&buffer[1], wpos - 3);                 //Message size
 	return wpos;
 }

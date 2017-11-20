@@ -64,7 +64,6 @@ Pos=64123.5,1071.06,60266
 Orient=0,0,0,1
 Scale=1,1,1
 spawnPackage=11_jld_junderbroodSkrillmix_43
-maxActive=0
 wanderRadius=60
 
 [ENTRY]

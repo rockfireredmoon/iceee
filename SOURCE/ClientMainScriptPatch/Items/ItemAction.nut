@@ -418,6 +418,7 @@ class ItemAction extends Action {
 		mItemDefData = itemDefData;
 		mLookDefData = lookItemDefData;
 		mNumUses = itemData.getStackCount();
+		
 
 		if (itemDefData) {
 			mName = itemDefData.mDisplayName;
@@ -425,7 +426,7 @@ class ItemAction extends Action {
 
 		if(itemDefData && itemDefData.mIvType1 ==  ItemIntegerType.BOOK_PAGE) {
 			// Book pages can always be used
-			mNumUses = 1
+			mNumUses = 1;
 			mIsStacking = false;
 		}
 		else if (mNumUses != null) {

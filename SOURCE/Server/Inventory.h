@@ -33,6 +33,17 @@ struct InventorySlot
 		secondsRemaining = -1;
 		timeLoaded = 0;
 	}
+	InventorySlot(const InventorySlot &other)
+	{
+		CCSID = other.CCSID;
+		IID = other.IID;
+		dataPtr = other.dataPtr;
+		count = other.count;
+		customLook = other.customLook;
+		bindStatus = other.bindStatus;
+		secondsRemaining = other.secondsRemaining;
+		timeLoaded = other.timeLoaded;
+	}
 
 	void ApplyFromItemDef(ItemDef *def);
 	long AdjustTimes();
@@ -86,8 +97,9 @@ public:
 
 
 	unsigned char LastError;
+	unsigned long NextExpunge; //Time when the next item expunge should happen (expired items are removed)
 
-	ItemDef * GetBestSpecialItem(int invID, char specialItemType);
+	InventorySlot * GetBestSpecialItem(int invID, char specialItemType);
 	void SetError(int value);
 	InventorySlot * GetExistingPartialStack(int containerID, ItemDef *itemDef);
 	int AddItem(int containerID, InventorySlot &item);
@@ -95,7 +107,11 @@ public:
 	int ScanRemoveItems(int containerID, int itemID, int count, std::vector<InventoryQuery> &resultList);
 	int RemoveItemsAndUpdate(int container, int itemID, int itemCost, char *packetBuffer);
 	int FindNextItem(int containerID, int itemID, int start);
-	int RemoveItems(int containerID, std::vector<InventoryQuery> &resultList);
+	int RemoveItems(std::vector<InventoryQuery> &resultList);
+	int RemoveExpiredItemsAndUpdate(char *packetBuffer);
+	int ScanExpiredItems(std::vector<InventoryQuery> &resultList);
+	int ProcessIqResults(char *packetBuffer, std::vector<InventoryQuery> &iq);
+	void FindNextExpunge();
 
 	int RemItem(unsigned int editCCSID);
 	int GetItemByCCSID(unsigned int findCCSID);

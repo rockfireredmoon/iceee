@@ -1110,7 +1110,10 @@ class ItemDefData {
 			},
 			[SpecialItemType.XP_BOOST] = {
 				// TODO Em - which stat
-				text = "Grants a " + bonusValue + "% boost to a stat."
+				text = "Grants a " + bonusValue + "% boost to experienced gained."
+			},
+			[SpecialItemType.PORTABLE_REFASHIONER] = {
+				text = "Allows items to be refashioned everywhere."
 			}
 		};
 

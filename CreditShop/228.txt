@@ -5,5 +5,5 @@ PriceCopper=0
 PriceCredits=250
 ItemID=2000012
 Category=ARMOR
-Status=NEW
+Status=<undefined>
 

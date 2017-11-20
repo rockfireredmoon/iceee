@@ -7,23 +7,6 @@ Orient=0,-0.479426,0,0.877583
 Scale=1,1,1
 
 [ENTRY]
-ID=1154887
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=Untitled
-Pos=65721.8,572.393,57134.6
-Orient=0,0,0,1
-Scale=1,1,1
-spawnPackage=#7881
-
-[ENTRY]
-ID=1154898
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=Untitled
-Pos=65259.4,581.513,57219.2
-Orient=0,0,0,1
-Scale=1,1,1
-
-[ENTRY]
 ID=151016715
 Asset=Bldg-Urban-Barracks#Bldg-Urban-Barracks?ATS=ATS-Warpig
 Name=Untitled

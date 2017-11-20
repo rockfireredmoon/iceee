@@ -183,14 +183,6 @@ Scale=1,1,1
 spawnPackage=#F3515
 
 [ENTRY]
-ID=1091115
-Asset=Manipulator#Manipulator-SpawnPoint
-Name=Untitled
-Pos=72367.5,1083.39,52075.6
-Orient=0,-0.443948,0,0.896053
-Scale=1,1,1
-
-[ENTRY]
 ID=1091118
 Asset=Manipulator#Manipulator-SpawnPoint
 Name=Untitled

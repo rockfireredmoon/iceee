@@ -821,6 +821,10 @@ function InputCommands::minimap(args) {
 	}
 }
 
+function InputCommands::saveTerrain(args) {
+	::_buildTool.saveTerrain();
+}
+
 function InputCommands::exportVegetation(args) {
 	if (!Util.hasPermission("debug"))
 		return;
@@ -925,7 +929,7 @@ function InputCommands::toggleBuilding(args) {
 		IGIS.error("You may not use that here.");
 		return;
 	}
-
+	
 	if (gToolMode == "play") {
 		::_buildTool.setPreviewMode(false);
 		_tools.setActiveTool(::_buildTool);

@@ -404,6 +404,7 @@ public:
 	void ScriptCallPackageKill(const char *name);
 	void ScriptCallKill(int CreatureDefID, int CreatureID);
 	bool ScriptCallUse(int sourceCreatureID, int usedCreatureID, int usedCreatureDefID, bool defaultIfNoFunction);
+	bool QueueCallUsed(int sourceCreatureID, int usedCreatureID, int usedCreatureDefID, int time);
 	void ScriptCallUseHalt(int sourceCreatureID, int usedCreatureDefID);
 	void ScriptCallUseFinish(int sourceCreatureID, int usedCreatureDefID);
 	bool ScriptCall(const char *name);
@@ -463,6 +464,19 @@ public:
 	void CheckActiveInstances(void);
 	void DebugFlushInactiveInstances(void);
 	void Clear(void);
+};
+
+
+class OnUsedCallback : public ScriptCore::NutCallback
+{
+public:
+	ActiveInstance *mInstance;
+
+	int mSourceCreatureID;
+	int mUsedCreatureDefID;
+	OnUsedCallback(ActiveInstance *mInstance, int sourceCreatureID, int usedCreatureDefID);
+	~OnUsedCallback();
+	bool Execute();
 };
 
 extern MapDefContainer MapDef;

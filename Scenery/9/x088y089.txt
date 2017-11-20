@@ -1,7 +1,7 @@
 [ENTRY]
 ID=1154923
 Asset=CL-Snowy#CL-SnowyPine5
-Name=
+Name=Untitled
 Pos=66410.4,916.001,67049.6
 Orient=0,-0.864925,0,0.501902
 Scale=2,2,2
@@ -10,7 +10,7 @@ Flags=1
 [ENTRY]
 ID=1154930
 Asset=Prop-Snowy_Rock#Prop-Snowy_Rock1
-Name=
+Name=Untitled
 Pos=66483.1,915.999,67121.7
 Orient=0,0,0,1
 Scale=1,1,1
@@ -18,7 +18,7 @@ Scale=1,1,1
 [ENTRY]
 ID=1154931
 Asset=Prop-Snowy_Rock1
-Name=
+Name=Untitled
 Pos=66457,915.999,67110.8
 Orient=0,0,0,1
 Scale=1,1,1
@@ -26,47 +26,47 @@ Scale=1,1,1
 [ENTRY]
 ID=1154932
 Asset=Prop-Snowy_Rock1
-Name=
-Pos=66436.4,916.136,67137
+Name=Untitled
+Pos=66440.5,916.136,67137
 Orient=0,0,0,1
 Scale=1,1,1
 
 [ENTRY]
 ID=1154933
 Asset=Prop-Snowy_Rock1
-Name=
-Pos=66457.4,916.164,67161.3
+Name=Untitled
+Pos=66457.4,916.164,67159.1
 Orient=0,0,0,1
 Scale=1,1,1
 
 [ENTRY]
 ID=1154934
 Asset=Prop-Snowy_Rock1
-Name=
-Pos=66481.9,916,67149.5
+Name=Untitled
+Pos=66484.3,916,67149.5
 Orient=0,0,0,1
 Scale=1,1,1
 
 [ENTRY]
 ID=1154935
 Asset=Bldg-Tent_Small#Bldg-TentSmall2
-Name=
+Name=Untitled
 Pos=66512.9,915.733,67181.6
 Orient=0,0,0,1
 Scale=1,1,1
 
 [ENTRY]
 ID=1154936
-Asset=Prop-Campfires#Prop-Campfire2
-Name=
-Pos=66459.5,915.999,67135.1
+Asset=Prop-Campfires#Prop-Campfire_Unlit
+Name=Untitled
+Pos=66461.8,915.999,67135.1
 Orient=0,0,0,1
 Scale=1,1,1
 
 [ENTRY]
 ID=1154940
 Asset=Prop-Tent
-Name=
+Name=Untitled
 Pos=66407.3,917.087,67138.4
 Orient=0,0.361615,0,0.932327
 Scale=1,1,1

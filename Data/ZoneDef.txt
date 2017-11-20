@@ -179,9 +179,9 @@ DefLoc=1420,1107,1836
 
 [ENTRY]
 ID=105
-NAME=NewBremen
+NAME=New Bremen
 TERRAINCONFIG=Terrain-NewBremen#Terrain-NewBremen.cfg
-ENVIRONMENTTYPE=CloudyDay
+ENVIRONMENTTYPE=HappyWinter
 ShardName=NewBremen
 WarpName=NewBremen
 DefLoc=24883,122,33093
@@ -889,7 +889,7 @@ EnvironmentCycle=1
 [ENTRY]
 ID=79
 NAME=Summoning Chamber
-ENVIRONMENTTYPE=UndeadNight
+ENVIRONMENTTYPE=Dungeon1
 ShardName=Anglorum 1
 WarpName=Summoning Chamber
 DefLoc=806,102,5725

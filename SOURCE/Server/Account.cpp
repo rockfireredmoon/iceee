@@ -1138,7 +1138,9 @@ const char * AccountManager :: GetCharacterErrorMessage(int message)
 	{
 	case CHARACTER_SUCCESS: return "OK";
 	case CHARACTER_INVQUERY: return "Invalid or malformed query.";
-	case CHARACTER_NOSLOTS: return "No free character slots.";
+	case CHARACTER_NOSLOTS: return {
+		"No free character slots. You may purchase additional slots from the Credit Shop, up to a total of 8."
+	};
 	case CHARACTER_FIRSTINV: return "Invalid first name.";
 	case CHARACTER_FIRSTSHORT: return "First name is too short.";
 	case CHARACTER_FIRSTLONG: return "First name is too long.";
@@ -1361,9 +1363,11 @@ int AccountManager :: CreateCharacter(STRINGLIST &args, AccountData *accPtr)
 		if(args[7].compare("0.85") == 0)
 			args[7] = "1.0";
 		wpos += sprintf(&buffer[wpos], "[\"sz\"]=\"%s\",", args[7].c_str());
+		wpos += sprintf(&buffer[wpos], "[\"es\"]=\"%s\",", args[11].c_str());
+		wpos += sprintf(&buffer[wpos], "[\"ts\"]=\"%s\",", args[12].c_str());
 
 		wpos += sprintf(&buffer[wpos], "[\"sk\"]={");
-		for(size_t i = 11; i < args.size(); i+=2)
+		for(size_t i = 13; i < args.size(); i+=2)
 			wpos += sprintf(&buffer[wpos], "[\"%s\"]=\"%s\",", args[i].c_str(), args[i + 1].c_str());
 
 		wpos--;  //Step back to remove the trailing comma

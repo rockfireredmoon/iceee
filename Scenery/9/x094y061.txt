@@ -1,6 +1,7 @@
 [ENTRY]
 ID=151018934
 Asset=Prop-Boulder#Prop-Boulder7
+Name=Untitled
 Pos=70677,880.56,46130
 Orient=0,0,-0.0749298,0.997189
 Scale=1.05,1.05,1.05
@@ -9,6 +10,7 @@ Flags=1
 [ENTRY]
 ID=151018936
 Asset=Prop-Boulder6
+Name=Untitled
 Pos=70728,793.143,46187
 Orient=0.465589,-0.145247,-0.830214,0.269954
 Scale=2.475,2.475,2.475
@@ -17,6 +19,7 @@ Flags=1
 [ENTRY]
 ID=151018939
 Asset=Prop-Boulder4
+Name=Untitled
 Pos=70802,813.55,45925
 Orient=0,0,0,1
 Scale=1.05,1.05,1.05
@@ -25,6 +28,7 @@ Flags=1
 [ENTRY]
 ID=151018940
 Asset=Prop-Boulder2
+Name=Untitled
 Pos=71238,861.893,45866
 Orient=0,0,-0.213347,0.976977
 Scale=1.425,1.425,1.425
@@ -33,6 +37,7 @@ Flags=1
 [ENTRY]
 ID=151018944
 Asset=Prop-Dirt_Borough#Prop-Dirt_Borough
+Name=Untitled
 Pos=70890,836.046,45807
 Orient=-0.217718,0.672246,0.210456,0.675569
 Scale=0.9,0.9,0.9
@@ -41,6 +46,7 @@ Flags=1
 [ENTRY]
 ID=151018946
 Asset=Prop-Boulder6
+Name=Untitled
 Pos=70701,814.502,45945
 Orient=0,0,0.00500032,0.999987
 Scale=2.475,2.475,2.475
@@ -49,6 +55,7 @@ Flags=1
 [ENTRY]
 ID=151018947
 Asset=Prop-Boulder4
+Name=Untitled
 Pos=70581,782.831,46068
 Orient=0.0869577,-0.651245,-0.269063,0.704218
 Scale=2,2,2
@@ -57,6 +64,7 @@ Flags=1
 [ENTRY]
 ID=151018955
 Asset=CL-Skrill_Mound
+Name=Untitled
 Pos=70772,817.77,45838
 Orient=0.0699428,0,0,0.997551
 Scale=1,1,1
@@ -65,6 +73,7 @@ Flags=1
 [ENTRY]
 ID=151018956
 Asset=CL-Skrill_Mound
+Name=Untitled
 Pos=70667,760.845,46118
 Orient=0,0.741297,0,0.671178
 Scale=0.975,0.975,0.975
@@ -73,6 +82,7 @@ Flags=1
 [ENTRY]
 ID=151018980
 Asset=Prop-Dirt_Borough#Prop-Dirt_Borough
+Name=Untitled
 Pos=70662,874.543,46118
 Orient=0,0,0,1
 Scale=1.3,1.3,1.3
@@ -81,6 +91,7 @@ Flags=1
 [ENTRY]
 ID=151018981
 Asset=Prop-Dirt_Borough
+Name=Untitled
 Pos=71220,851.989,45895
 Orient=0.0236544,-0.842095,-0.0658215,0.534775
 Scale=2.1,2.1,2.1
@@ -89,6 +100,7 @@ Flags=1
 [ENTRY]
 ID=151018984
 Asset=Prop-Amber_Flow1#Prop-Amber_Flow1
+Name=Untitled
 Pos=71207,840.282,45979
 Orient=-0.421744,0.489594,-0.463816,0.606057
 Scale=1.175,1.175,1.175
@@ -97,6 +109,7 @@ Flags=1
 [ENTRY]
 ID=151018985
 Asset=Prop-Dirt_Borough
+Name=Untitled
 Pos=71234,813.393,46035
 Orient=0.0121776,-0.920431,-0.0688746,0.384598
 Scale=1.5,1.5,1.5
@@ -105,6 +118,7 @@ Flags=1
 [ENTRY]
 ID=151018991
 Asset=Prop-Bush_Arid6#Prop-Bush_Arid6
+Name=Untitled
 Pos=71062,835.69,46465
 Orient=0,0,0,1
 Scale=1.7,1.7,1.7
@@ -113,6 +127,7 @@ Flags=1
 [ENTRY]
 ID=151018993
 Asset=Prop-Dirt_Borough
+Name=Untitled
 Pos=70907,825.587,45833
 Orient=-0.00954772,0.636465,-0.0115683,0.771159
 Scale=1.375,1.375,1.375
@@ -121,6 +136,7 @@ Flags=1
 [ENTRY]
 ID=151018994
 Asset=Prop-Dirt_Borough
+Name=Untitled
 Pos=70918,840.636,45812
 Orient=0.0307388,0.706319,-0.205693,0.676653
 Scale=0.9,0.9,0.9
@@ -129,6 +145,7 @@ Flags=1
 [ENTRY]
 ID=151018995
 Asset=Prop-Amber_Flow1
+Name=Untitled
 Pos=70876,814.393,45859
 Orient=-0.356593,0.426895,-0.367568,0.745316
 Scale=0.625,0.625,0.625
@@ -137,6 +154,7 @@ Flags=1
 [ENTRY]
 ID=151018996
 Asset=Prop-Bush_Arid6#Prop-Bush_Arid6
+Name=Untitled
 Pos=71218,807.899,46086
 Orient=0,0,0,1
 Scale=2.525,2.525,2.525
@@ -145,6 +163,7 @@ Flags=1
 [ENTRY]
 ID=151018999
 Asset=Effects#Par-Bugs1-Emitter
+Name=Untitled
 Pos=70903,825.281,45857
 Orient=0,0,0,1
 Scale=2.375,2.375,2.375
@@ -153,6 +172,7 @@ Flags=1
 [ENTRY]
 ID=151019000
 Asset=Effects#Par-Skrill_Spew-Emitter
+Name=Untitled
 Pos=71238,823.302,46042
 Orient=0,-0.956571,0,0.291501
 Scale=4.15,4.15,4.15
@@ -161,6 +181,7 @@ Flags=1
 [ENTRY]
 ID=151019001
 Asset=Effects#Par-Skrill_Spew-Emitter
+Name=Untitled
 Pos=70907,833.671,45840
 Orient=0,-0.838759,0,0.544503
 Scale=5.45,5.45,5.45
@@ -169,6 +190,7 @@ Flags=1
 [ENTRY]
 ID=151019006
 Asset=Prop-Pine-Sick_Tree#Prop-Pine-Sick_Tree8
+Name=Untitled
 Pos=70644,881.748,46479
 Orient=-0.555382,0.314939,-0.664093,0.389031
 Scale=2,2,2
@@ -177,6 +199,7 @@ Flags=1
 [ENTRY]
 ID=151029775
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=70731,824.285,45836
 Orient=0,0,0,1
 Scale=1,1,1
@@ -187,6 +210,7 @@ link=151031219,1
 [ENTRY]
 ID=151029776
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=70742,817.756,45873
 Orient=0,0,0,1
 Scale=1,1,1
@@ -198,6 +222,7 @@ link=151031220,1
 [ENTRY]
 ID=151029777
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=70764,818.279,45886
 Orient=0,0,0,1
 Scale=1,1,1
@@ -209,6 +234,7 @@ link=151031221,1
 [ENTRY]
 ID=151029778
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=70800,818.529,45884
 Orient=0,0,0,1
 Scale=1,1,1
@@ -220,6 +246,7 @@ link=151031222,1
 [ENTRY]
 ID=151029779
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=70830,828.523,45864
 Orient=0,0,0,1
 Scale=1,1,1
@@ -231,6 +258,7 @@ link=151031223,1
 [ENTRY]
 ID=151029780
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=70920,810.697,45964
 Orient=0,0,0,1
 Scale=1,1,1
@@ -241,6 +269,7 @@ link=151029781,1
 [ENTRY]
 ID=151029793
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=70582,863.906,46490
 Orient=0,0,0,1
 Scale=1,1,1
@@ -252,6 +281,7 @@ link=151031232,1
 [ENTRY]
 ID=151029794
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=70608,859.998,46476
 Orient=0,0,0,1
 Scale=1,1,1
@@ -263,6 +293,7 @@ link=151031233,1
 [ENTRY]
 ID=151029795
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=70639,829.345,46423
 Orient=0,0,0,1
 Scale=1,1,1
@@ -273,6 +304,7 @@ link=151029796,1
 [ENTRY]
 ID=151029796
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=70804,813.822,46409
 Orient=0,0,0,1
 Scale=1,1,1
@@ -283,6 +315,7 @@ link=151029797,1
 [ENTRY]
 ID=151029797
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=70812,797.718,46307
 Orient=0,0,0,1
 Scale=1,1,1
@@ -293,6 +326,7 @@ link=151029798,1
 [ENTRY]
 ID=151029798
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=70865,790.91,46187
 Orient=0,0,0,1
 Scale=1,1,1
@@ -303,6 +337,7 @@ link=151029799,1
 [ENTRY]
 ID=151029811
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=70815,814.18,46405
 Orient=0,0,0,1
 Scale=1,1,1
@@ -313,6 +348,7 @@ link=151029812,1
 [ENTRY]
 ID=151029812
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=70825,800.246,46304
 Orient=0,0,0,1
 Scale=1,1,1
@@ -323,6 +359,7 @@ link=151029813,1
 [ENTRY]
 ID=151029813
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=70874,793.153,46199
 Orient=0,0,0,1
 Scale=1,1,1
@@ -333,6 +370,7 @@ link=151029814,1
 [ENTRY]
 ID=151029814
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=71246,832.963,46196
 Orient=0,0,0,1
 Scale=1,1,1
@@ -347,6 +385,7 @@ link=151029819,1
 [ENTRY]
 ID=151029820
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=70639,762.438,46145
 Orient=0,0,0,1
 Scale=0.95,0.95,0.95
@@ -357,6 +396,7 @@ link=151031225,1
 [ENTRY]
 ID=151029821
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=70662,764.952,46162
 Orient=0,0,0,1
 Scale=1,1,1
@@ -368,6 +408,7 @@ link=151031224,1
 [ENTRY]
 ID=151029822
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=70684,768.53,46160
 Orient=0,0,0,1
 Scale=1,1,1
@@ -379,6 +420,7 @@ link=151031226,1
 [ENTRY]
 ID=151029823
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=70709,774.732,46147
 Orient=0,0,0,1
 Scale=1,1,1
@@ -390,6 +432,7 @@ link=151031227,1
 [ENTRY]
 ID=151029824
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=70709,762.485,46126
 Orient=0,0,0,1
 Scale=1,1,1
@@ -401,6 +444,7 @@ link=151031228,1
 [ENTRY]
 ID=151029825
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=70745,793.756,46045
 Orient=0,0,0,1
 Scale=1,1,1
@@ -411,6 +455,7 @@ link=151029826,1
 [ENTRY]
 ID=151029826
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=70881,801.152,46014
 Orient=0,0,0,1
 Scale=1,1,1
@@ -421,6 +466,7 @@ link=151029827,1
 [ENTRY]
 ID=151029827
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=70899,807.329,45979
 Orient=0,0,0,1
 Scale=1,1,1
@@ -431,6 +477,7 @@ link=151029828,1
 [ENTRY]
 ID=151029828
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=70940,812.246,45962
 Orient=0,0,0,1
 Scale=1,1,1
@@ -441,6 +488,7 @@ link=151029829,1
 [ENTRY]
 ID=151029829
 Asset=Manipulator#Manipulator-PathNode
+Name=Untitled
 Pos=71000,872.133,45768
 Orient=0,0,0,1
 Scale=1,1,1
@@ -451,238 +499,239 @@ link=151029830,1
 [ENTRY]
 ID=151031219
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=70717,834.982,45830
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=12_dbh_skrilldrones_48
 links_count=1
 link=151029775,1
-spawnPackage=12_dbh_skrilldrones_48
-outerRadius=10
 
 [ENTRY]
 ID=151031220
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=70730,827.098,45887
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=12_dbh_skrilldrones_48
 links_count=1
 link=151029776,1
-spawnPackage=12_dbh_skrilldrones_48
-outerRadius=10
 
 [ENTRY]
 ID=151031221
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=70752,829.432,45911
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=12_dbh_skrilldrones_48
 links_count=1
 link=151029777,1
-spawnPackage=12_dbh_skrilldrones_48
-outerRadius=10
 
 [ENTRY]
 ID=151031222
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=70798,824.479,45907
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=12_dbh_skrilldrones_48
 links_count=1
 link=151029778,1
-spawnPackage=12_dbh_skrilldrones_48
-outerRadius=10
 
 [ENTRY]
 ID=151031223
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=70823,832.707,45896
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=12_dbh_skrilldrones_48
 links_count=1
 link=151029779,1
-spawnPackage=12_dbh_skrilldrones_48
-outerRadius=10
 
 [ENTRY]
 ID=151031224
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=70654,775.177,46177
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=12_dbh_skrilldrones_48
 links_count=1
 link=151029821,1
-spawnPackage=12_dbh_skrilldrones_48
-outerRadius=10
 
 [ENTRY]
 ID=151031225
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=70627,777.359,46159
 Orient=0,0,0,1
 Scale=0.95,0.95,0.95
+spawnPackage=12_dbh_skrilldrones_48
 links_count=1
 link=151029820,1
-spawnPackage=12_dbh_skrilldrones_48
-outerRadius=10
 
 [ENTRY]
 ID=151031226
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=70688,791.02,46185
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=12_dbh_skrilldrones_48
 links_count=1
 link=151029822,1
-spawnPackage=12_dbh_skrilldrones_48
-outerRadius=10
 
 [ENTRY]
 ID=151031227
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=70725,792.264,46183
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=12_dbh_skrilldrones_48
 links_count=1
 link=151029823,1
-spawnPackage=12_dbh_skrilldrones_48
-outerRadius=10
 
 [ENTRY]
 ID=151031228
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=70731,796.406,46155
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=12_dbh_skrilldrones_48
 links_count=1
 link=151029824,1
-spawnPackage=12_dbh_skrilldrones_48
-outerRadius=10
 
 [ENTRY]
 ID=151031232
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=70565,858.774,46484
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=12_dbh_skrilldrones_48
 links_count=1
 link=151029793,1
-spawnPackage=12_dbh_skrilldrones_48
-outerRadius=10
 
 [ENTRY]
 ID=151031233
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=70593,853.993,46468
 Orient=0,0,0,1
 Scale=1,1,1
+spawnPackage=12_dbh_skrilldrones_48
 links_count=1
 link=151029794,1
-spawnPackage=12_dbh_skrilldrones_48
-outerRadius=10
 
 [ENTRY]
 ID=151031244
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=71057,812.407,46074
 Orient=0,0,0,1
 Scale=1,1,1
-innerRadius=20
 spawnPackage=12_dbh_skrillmix_48
-outerRadius=40
+wanderRadius=200
 
 [ENTRY]
 ID=151031245
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=71146,820.057,46047
 Orient=0,0,0,1
 Scale=1,1,1
-innerRadius=20
 spawnPackage=12_dbh_skrillmix_48
-outerRadius=40
+wanderRadius=200
 
 [ENTRY]
 ID=151031246
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=71142,836.5,45975
 Orient=0,0,0,1
 Scale=1,1,1
-innerRadius=20
 spawnPackage=12_dbh_skrillmix_48
-outerRadius=40
+wanderRadius=200
 
 [ENTRY]
 ID=151031247
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=71042,826.078,45958
 Orient=0,0,0,1
 Scale=1,1,1
-innerRadius=20
 spawnPackage=12_dbh_skrillmix_48
-outerRadius=40
+wanderRadius=200
 
 [ENTRY]
 ID=151031248
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=71125,857.675,45888
 Orient=0,0,0,1
 Scale=1,1,1
-innerRadius=20
 spawnPackage=12_dbh_skrillmix_48
-outerRadius=40
+wanderRadius=200
 
 [ENTRY]
 ID=151031249
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=70928,816.715,46491
 Orient=0,0,0,1
 Scale=1,1,1
-innerRadius=20
 spawnPackage=12_dbh_skrillmix_48
-outerRadius=40
+wanderRadius=100
 
 [ENTRY]
 ID=151031250
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=70901,820.231,46386
 Orient=0,0,0,1
 Scale=1,1,1
-innerRadius=20
 spawnPackage=12_dbh_skrillmix_48
-outerRadius=40
+wanderRadius=150
 
 [ENTRY]
 ID=151031251
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=70993,824.517,46401
 Orient=0,0,0,1
 Scale=1,1,1
-innerRadius=20
 spawnPackage=12_dbh_skrillmix_48
-outerRadius=40
+wanderRadius=100
 
 [ENTRY]
 ID=151031252
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=71012,817.276,46247
 Orient=0,0,0,1
 Scale=1,1,1
-innerRadius=20
 spawnPackage=12_dbh_skrillmix_48
-outerRadius=40
+wanderRadius=100
 
 [ENTRY]
 ID=151031253
 Asset=Manipulator-SpawnPoint
+Name=Untitled
 Pos=71077,835.019,46324
 Orient=0,0,0,1
 Scale=1,1,1
-innerRadius=20
 spawnPackage=12_dbh_skrillmix_48
-outerRadius=40
+wanderRadius=100
 
 [ENTRY]
 ID=151040119
 Asset=Prop-Boulder5
+Name=Untitled
 Pos=70925,775.942,46298
 Orient=0.0776363,-0.550918,0.115952,0.822811
 Scale=4.775,4.775,4.775

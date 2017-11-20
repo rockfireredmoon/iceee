@@ -35,65 +35,65 @@ this.Environments.Default <- {
 	{
 		Weight = WeatherWeight.LIGHT,
 		Sound = "Sound-Ambient-LightRain.ogg",
-		Effect = "LightRain"
+		Effect = "Par-Weather_Rain1"
 	},
 	{
 		Weight = WeatherWeight.MEDIUM,
 		Sound = "Sound-Ambient-MediumRain.ogg",
-		Effect = "MediumRain"
+		Effect = "Par-Weather_Rain2"
 	},
 	{
 		Weight = WeatherWeight.HEAVY,
 		Sound = "Sound-Ambient-HeavyRain.ogg",
-		Effect = "HeavyRain"
+		Effect = "Par-Weather_Rain3"
 	}
 ];
 ::WeatherDefs.Snow <- [
 	{
 		Weight = WeatherWeight.LIGHT,
-		Effect = "LightSnow"
+		Effect = "Par-Weather_Snow1"
 	},
 	{
 		Weight = WeatherWeight.MEDIUM,
-		Effect = "MediumSnow"
+		Effect = "Par-Weather_Snow2"
 	},
 	{
 		Weight = WeatherWeight.HEAVY,
-		Effect = "HeavySnow"
+		Effect = "Par-Weather_Snow3"
 	}
 ];
 ::WeatherDefs.BloodRain <- [
 	{
 		Weight = WeatherWeight.LIGHT,
 		Sound = "Sound-Ambient-LightRain.ogg",
-		Effect = "LightRain"
+		Effect = "Par-Weather_BloodRain1"
 	},
 	{
 		Weight = WeatherWeight.MEDIUM,
 		Sound = "Sound-Ambient-MediumRain.ogg",
-		Effect = "MediumRain"
+		Effect = "Par-Weather_BloodRain2"
 	},
 	{
 		Weight = WeatherWeight.HEAVY,
 		Sound = "Sound-Ambient-HeavyRain.ogg",
-		Effect = "HeavyRain"
+		Effect = "Par-Weather_BloodRain3"
 	}
 ];
 ::WeatherDefs.AcidRain <- [
 	{
 		Weight = WeatherWeight.LIGHT,
 		Sound = "Sound-Ambient-LightRain.ogg",
-		Effect = "LightAcidRain"
+		Effect = "Par-Weather_AcidRain1"
 	},
 	{
 		Weight = WeatherWeight.MEDIUM,
 		Sound = "Sound-Ambient-MediumRain.ogg",
-		Effect = "MediumAcidRain"
+		Effect = "Par-Weather_AcidRain2"
 	},
 	{
 		Weight = WeatherWeight.HEAVY,
 		Sound = "Sound-Ambient-HeavyRain.ogg",
-		Effect = "HeavyAcidRain"
+		Effect = "Par-Weather_AcidRain3"
 	}
 ];
 ::WeatherDefs.BloodRain <- [
@@ -168,11 +168,15 @@ class this.Environment
 	mZoneEnv = "";
 	mWeatherType = "";
 	mWeatherWeight = this.WeatherWeight.LIGHT;
-	mWeatherEffect = null;
+	//mWeatherEffect = null;
 	mMusicCooldowns = null;
 	mLastTimeOfDayOveride = null;
 	mOverideTimeOfDay = false;
 	mSetWeatherOnAvatar = false;
+	mWeatherParticles = null;
+	mWeatherParticlesNode = null;
+	mWeatherBase = null;
+	mWeatherToDetach = [];
 	
 	constructor()
 	{
@@ -192,6 +196,9 @@ class this.Environment
 			this.mSun.getParentSceneNode().setOrientation(sunAngle);
 			this.mSun.setSpecularColor(::Color(1.0, 1.0, 1.0, 1.0));
 		}
+		
+		if(!this.mWeatherParticlesNode)
+			this.mWeatherParticlesNode = ::_scene.getRootSceneNode().createChildSceneNode();
 
 		::_Connection.addListener(this);
 	}
@@ -366,6 +373,16 @@ class this.Environment
 		}
 		if("Effect" in w) {
 			local fx = w["Effect"];
+			
+			local uniqueName = "ParticleEmitterWeather" + fx;
+			this.mWeatherParticles = ::_scene.createParticleSystem(uniqueName, fx);
+			this.mWeatherParticles.setVisibilityFlags(this.VisibilityFlags.ANY);
+			this.mWeatherParticlesNode.attachObject(this.mWeatherParticles);
+			
+			this.mWeatherBase = null;						
+			this.updateWeatherPosition(::_avatar.getPosition());
+			
+			/*
 			mWeatherEffect = ::_avatar.cue(fx);
 			if(mWeatherEffect != null) {
 				mWeatherEffect.loopForever();
@@ -374,6 +391,7 @@ class this.Environment
 			else {
 				mSetWeatherOnAvatar = true;
 			}
+			*/
 		}
 		if("Sound" in w) {
 			this.Audio.playMusic(w["Sound"], this.Audio.WEATHER_CHANNEL);
@@ -1017,12 +1035,42 @@ class this.Environment
 	
 	function _stopWeather() {
 		mSetWeatherOnAvatar = false;
+		/*
 		if(this.mWeatherEffect != null) {
 			foreach(e in this.mWeatherEffect.mEffects) {
 				e.stop();
 			}
 			this.mWeatherEffect.stop();
 			this.mWeatherEffect = null;
+			
+		}
+			*/
+		if(this.mWeatherParticles != null) {
+			this.mWeatherParticles.destroy();
+			this.mWeatherToDetach.append(this.mWeatherParticles);
+			this.mWeatherParticles = null;
+			::_eventScheduler.fireIn(2.0, this, "detachWeatherParticles");
+		}
+	}
+	
+	function detachWeatherParticles() {
+		foreach(k in this.mWeatherToDetach) {		
+			try {			
+				this.mWeatherParticlesNode.detachObject(k);
+			}
+			catch(e) {
+				print("ICE! failed detach of " + k);
+			}	
+		}
+		this.mWeatherToDetach.clear();
+	}
+	
+	function updateWeatherPosition(pos) {
+		if(this.mWeatherParticles != null && ::_avatar != null && pos != this.mWeatherBase ) {
+			this.mWeatherBase = pos;
+			//local ypos = this.Util.getFloorHeightAt(pos, 2.5, this.QueryFlags.FLOOR | this.QueryFlags.BLOCKING, false, ::_avatar.getNode());
+			//this.mWeatherParticlesNode.setPosition(this.Vector3(pos.x, ypos + 25, pos.z));
+			this.mWeatherParticlesNode.setPosition(this.Vector3(pos.x, pos.y + 25, pos.z));
 		}
 	}
 
