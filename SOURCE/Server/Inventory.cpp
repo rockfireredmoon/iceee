@@ -686,9 +686,10 @@ InventorySlot * InventoryManager :: GetFirstItem(int containerID, int itemID)
 	// Quick way to get the pointer of the first item.  Added this function
 	// for crafting, as a way to retrieve single items from the inventory
 	// (disregarding stack size) for deletion.
-	for(size_t a = 0; a < containerList[containerID].size(); a++)
-		if(containerList[containerID][a].IID == itemID)
-			return &containerList[containerID][a];
+	if(containerID < MAXCONTAINER)
+		for(size_t a = 0; a < containerList[containerID].size(); a++)
+			if(containerList[containerID][a].IID == itemID)
+				return &containerList[containerID][a];
 	return NULL;
 }
 

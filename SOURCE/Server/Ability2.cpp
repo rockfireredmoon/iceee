@@ -1797,13 +1797,9 @@ int AbilityManager2 :: ActivateAbility(CreatureInstance *cInst, short abilityID,
 	{
 		abProcessing.ciSourceAb->bResourcesSpent = false;
 
-		// TODO - unused - check if it is!
-		// const char *debugStr = it->second.GetRowAsCString(ABROW::COOLDOWN_CATEGORY);
-
 		int cooldownCategory = ResolveCooldownCategoryID(it->second.GetRowAsCString(ABROW::COOLDOWN_CATEGORY));
 		cInst->RegisterCooldown(cooldownCategory, it->second.mCooldownTime);
 
-		//TODO: Process any reagents that may have been used.
 		if(g_Config.UseReagents)
 			abProcessing.ConsumeReagent();
 
@@ -3264,10 +3260,8 @@ int AbilityCalculator :: Reagent(ARGUMENT_LIST args)
 	mReagentItemID = args.GetInteger(0);
 	mReagentItemCount = args.GetInteger(1);
 
-	if(g_Config.UseReagents) {
-		if(ciSource->charPtr->inventory.GetItemCount(INV_CONTAINER, mReagentItemID) < mReagentItemCount)
-			return ABILITY_REAGENTS;
-	}
+	if(g_Config.UseReagents && ciSource->charPtr != NULL && ciSource->charPtr->inventory.GetItemCount(INV_CONTAINER, mReagentItemID) < mReagentItemCount)
+		return ABILITY_REAGENTS;
 
 	return ABILITY_SUCCESS;
 }
@@ -3275,7 +3269,7 @@ int AbilityCalculator :: Reagent(ARGUMENT_LIST args)
 //Internal helper function to consume any reagents.
 void AbilityCalculator :: ConsumeReagent(void)
 {
-	if(mReagentItemID != 0)
+	if(mReagentItemID != 0 && ciSource->charPtr != NULL)
 	{
 		while(mReagentItemCount > 0) {
 			InventorySlot *slot = ciSource->charPtr->inventory.GetFirstItem(INV_CONTAINER, mReagentItemID);
