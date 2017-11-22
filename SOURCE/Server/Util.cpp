@@ -99,8 +99,9 @@ int PrepExt_SetAvatar(char *buffer, int creatureID)
 	return wpos;
 }
 
-int PrepExt_SetTimeOfDay(char *buffer, char *envType)
+int PrepExt_SetTimeOfDay(char *buffer, const char *timeOfDay)
 {
+	g_Logs.simulator->debug("SetTimeOfDay %v", timeOfDay);
 	int wpos = 0;
 
 	wpos += PutByte(&buffer[wpos], 42);   //_handleEnvironmentUpdateMsg
@@ -108,11 +109,13 @@ int PrepExt_SetTimeOfDay(char *buffer, char *envType)
 
 	wpos += PutByte(&buffer[wpos], 2);   //Mask for time of day update
 
-	wpos += PutStringUTF(&buffer[wpos], "");    //zoneID
-	wpos += PutInteger(&buffer[wpos], 0);   //zoneDefID
-	wpos += PutShort(&buffer[wpos], 0);  //zonePageSize
-	wpos += PutStringUTF(&buffer[wpos], "");   //Terrain
-	wpos += PutStringUTF(&buffer[wpos], envType);   //envtype
+	/* The following 4 are all ignored when mask is 2 */
+	wpos += PutStringUTF(&buffer[wpos], "NA");    //zoneID
+	wpos += PutInteger(&buffer[wpos], 999);   //zoneDefID
+	wpos += PutShort(&buffer[wpos], 999);  //zonePageSize
+	wpos += PutStringUTF(&buffer[wpos], "NA");   //Terrain
+
+	wpos += PutStringUTF(&buffer[wpos], timeOfDay);   //envtype
 	//When the mask is 2, the function changes the time of day using the EnvironmentType string
 	//the function returns from that point and never gets to the rest of the map stuff.
 
@@ -120,10 +123,33 @@ int PrepExt_SetTimeOfDay(char *buffer, char *envType)
 	return wpos;
 }
 
+int PrepExt_SetWeather(char *buffer, std::string type, int weight)
+{
+	g_Logs.server->debug("Set Weather %v", type.c_str());
+	int wpos = 0;
+	wpos += PutByte(&buffer[wpos], 42);   //_handleEnvironmentUpdateMsg
+	wpos += PutShort(&buffer[wpos], 0);
+	wpos += PutByte(&buffer[wpos], 3);   //Mask for weather
+	wpos += PutStringUTF(&buffer[wpos], type.c_str());  //weather type
+	wpos += PutShort(&buffer[wpos], weight);  //weight
+	PutShort(&buffer[1], wpos - 3);       //Set message size
+	return wpos;
+}
 
+int PrepExt_Thunder(char *buffer, int weight)
+{
+	int wpos = 0;
+	wpos += PutByte(&buffer[wpos], 42);   //_handleEnvironmentUpdateMsg
+	wpos += PutShort(&buffer[wpos], 0);
+	wpos += PutByte(&buffer[wpos], 4);   //Mask for thunder
+	wpos += PutShort(&buffer[wpos], weight);  //weight
+	PutShort(&buffer[1], wpos - 3);       //Set message size
+	return wpos;
+}
 
 int PrepExt_AbilityEvent(char *buffer, int creatureID, int abilityID, int abilityEvent)
 {
+
 	//Same as AbilityActivate, but target lists and ground are always zero.
 	//Used for the utility messages such as activation requests.
 
@@ -143,23 +169,6 @@ int PrepExt_AbilityEvent(char *buffer, int creatureID, int abilityID, int abilit
 	return wpos;
 }
 
-int PrepExt_SendAbilityOwn(char *buffer, int CID, int abilityID, int eventID)
-{
-	int wpos = 0;
-	wpos += PutByte(&buffer[wpos], 60);  //_handleAbilityActivationMsg
-	wpos += PutShort(&buffer[wpos], 0);
-
-	wpos += PutInteger(&buffer[wpos], CID);   //Creature Instance ID
-	wpos += PutShort(&buffer[wpos], abilityID);  //ability ID
-	wpos += PutByte(&buffer[wpos], eventID);  //7 = ability ownage
-	wpos += PutInteger(&buffer[wpos], 0);   //target_len
-	wpos += PutInteger(&buffer[wpos], 0);   //secondary_len
-	wpos += PutByte(&buffer[wpos], 0);      //has_ground
-
-	PutShort(&buffer[1], wpos - 3);       //Set message size
-	return wpos;
-}
-
 int PrepExt_CancelUseEvent(char *buffer, int CreatureID)
 {
 	int wpos = 0;
@@ -168,7 +177,7 @@ int PrepExt_CancelUseEvent(char *buffer, int CreatureID)
 	wpos += PutInteger(&buffer[wpos], CreatureID);
 	wpos += PutByte(&buffer[wpos], 11);  //creature "used" event
 	wpos += PutStringUTF(&buffer[wpos], "");
-	wpos += PutFloat(&buffer[wpos], -1.0F);  //A delay of -1 will interrupt the action
+	wpos += PutInteger(&buffer[wpos], -1);  //A delay of -1 will interrupt the action
 	PutShort(&buffer[1], wpos - 3);  //size
 	return wpos;
 }
@@ -411,6 +420,15 @@ int PrepExt_SendBookOpen(char *buffer, int bookID, int page, int op) {
 	return wpos;
 }
 
+int PrepExt_Refashion(char *buffer) {
+	int wpos = 0;
+	wpos += PutByte(&buffer[wpos], 53);              //_handleRefashion
+	wpos += PutShort(&buffer[wpos], 0);             //Placeholder for message size
+	wpos += PutByte(&buffer[wpos], 0); 				// Open
+	PutShort(&buffer[1], wpos - 3);                 //Message size
+	return wpos;
+}
+
 int PrepExt_SendFormClose(char *buffer, int formId) {
 	int wpos = 0;
 	wpos += PutByte(&buffer[wpos], 52);              //_handleForm
@@ -569,25 +587,26 @@ int PrepExt_CreatureEventVaultSize(char *buffer, int actorID, int vaultSize, int
 	return wpos;
 }
 
-int PrepExt_SendTimeOfDayMsg(char *buffer, const char *envType)
+int randint_32bit(int min, int max)
 {
-	int wpos = 0;
-	wpos += PutByte(&buffer[wpos], 42);   //_handleEnvironmentUpdateMsg
-	wpos += PutShort(&buffer[wpos], 0);
+	// Generate a 32 bit random number.
 
-	wpos += PutByte(&buffer[wpos], 2);   //Mask: Time of day update event
+	/*
+		Explanation:
+		rand() doesn't work well for larger numbers.
+		RAND_MAX is limited to 32767.
+		There are other quirks, where powers of two seem to generate more even
+		distributions of numbers.
 
-	wpos += PutStringUTF(&buffer[wpos], "");    //zoneIDString
-	wpos += PutInteger(&buffer[wpos], 0);      //zoneDefID
-	wpos += PutShort(&buffer[wpos], 0);  //zonePageSize
-	wpos += PutStringUTF(&buffer[wpos], "");   //Terrain
-	wpos += PutStringUTF(&buffer[wpos], envType);   //envtype
-	wpos += PutStringUTF(&buffer[wpos], "");   //mapName
+		Since smaller numbers have better distribution, use a sequence
+		of random numbers and use those to fill the bits of a larger number.
+	*/
 
-	PutShort(&buffer[1], wpos - 3);       //Set message size
-	return wpos;
+	// RAND_MAX (as defined with a value of 0x7fff) is only 15 bits wide.
+	unsigned long rand_build = (rand() << 15) | rand();
+	//unsigned long rand_build = ((rand() & 0xFF) << 24) | ((rand() & 0xFF) << 16) | ((rand() & 0xFF) << 8) | ((rand() & 0xFF));
+	return min + (rand_build % (max - min + 1));
 }
-
 
 int randmod(int max) {
 	// Max is exclusive, e.g, max of 10 would give numbers between 0 and 9
@@ -1393,6 +1412,24 @@ bool CaseInsensitiveStringFind(const std::string& str1, const std::string& str2)
     }
     return false;
 }
+
+std::string URLDecode(std::string const &src) {
+    string ret;
+    char ch;
+    int i, ii;
+    for (i=0; i<src.length(); i++) {
+        if (int(src[i])==37) {
+            sscanf(src.substr(i+1,2).c_str(), "%x", &ii);
+            ch=static_cast<char>(ii);
+            ret+=ch;
+            i=i+2;
+        } else {
+            ret+=src[i];
+        }
+    }
+    return (ret);
+}
+
 
 void ToLowerCase(std::string &input)
 {

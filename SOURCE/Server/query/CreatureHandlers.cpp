@@ -108,28 +108,20 @@ int CreatureIsUsableHandler::handleQuery(SimulatorThread *sim,
 			}
 
 			if (status[0] == 'N') {
-				CreatureDefinition *cdef = CreatureDef.GetPointerByCDef(
-						target->CreatureDefID);
+				CreatureDefinition *cdef = CreatureDef.GetPointerByCDef(target->CreatureDefID);
 				if(cdef != NULL && (cdef->DefHints & CDEF_HINT_ITEM_GIVER)) {
-					STRINGLIST args;
-					STRINGLIST items;
-					Util::Split(cdef->ExtraData.c_str(), ",", args);
-					std::vector<string>::iterator it;
-					for(it = args.begin(); it != args.end(); ++it) {
-						items.clear();
-						Util::Split((*it).c_str(), "=", items);
-						if(items[0].compare("item") == 0) {
-							/* For now we only allow use if the player doesn't already have
-							 * the item. There could be other uses for this though. I'll
-							 * add logic as and when it's needed
-							 */
-							if(creatureInstance->charPtr->inventory.GetItemPtrByID(Util::GetInteger(items[1])) == NULL) {
-								if(cdef->DefHints & CDEF_HINT_USABLE_SPARKLY)
-									status = "Q";
-								else
-									status = "Y";
-								break;
-							}
+					for(std::vector<int>::iterator it = cdef->Items.begin(); it != cdef->Items.end(); it++) {
+						/* For now we only allow use if the player doesn't already have
+						 * the item. There could be other uses for this though. I'll
+						 * add logic as and when it's needed
+						 */
+						int id = (*it);
+						if(creatureInstance->charPtr->inventory.GetItemPtrByID(id) == NULL) {
+							if(cdef->DefHints & CDEF_HINT_USABLE_SPARKLY)
+								status = "Q";
+							else
+								status = "Y";
+							break;
 						}
 					}
 				}
@@ -540,6 +532,11 @@ int CreatureUseHandler::handleQuery(SimulatorThread *sim,
 			if(!creatureInstance->actInst->ScriptCallUse(creatureInstance->CreatureID, target->CreatureID, CDef, true))
 				return PrepExt_QueryResponseError(sim->SendBuf, query->ID, "Cannot use object.");
 
+			/* Instance Script */
+			if(creatureInstance->actInst->nutScriptPlayer != NULL) {
+				creatureInstance->actInst->QueueCallUsed(creatureInstance->CreatureID, target->CreatureID, CDef, qo->ActivateTime);
+			}
+
 			QuestScript::QuestNutPlayer *questNutScript =
 					g_QuestNutManager.GetActiveScript(
 							creatureInstance->CreatureID, QuestID);
@@ -548,7 +545,7 @@ int CreatureUseHandler::handleQuery(SimulatorThread *sim,
 				sim->questScript.def = &g_QuestScript;
 				sim->questScript.simCall = sim;
 				int wpos = creatureInstance->QuestInteractObject(GSendBuf,
-						qo->ActivateText.c_str(), (float) qo->ActivateTime,
+						qo->ActivateText.c_str(), qo->ActivateTime,
 						qo->gather);
 				sprintf(sim->Aux1, "onActivate_%d_%d", QuestID, QuestAct);
 				sprintf(sim->Aux1, "onActivate_%d_%d", QuestID, QuestAct);
@@ -574,7 +571,7 @@ int CreatureUseHandler::handleQuery(SimulatorThread *sim,
 			} else {
 				// New script system
 				int wpos = creatureInstance->QuestInteractObject(GSendBuf,
-						qo->ActivateText.c_str(), (float) qo->ActivateTime,
+						qo->ActivateText.c_str(), qo->ActivateTime,
 						qo->gather);
 				questNutScript->source = creatureInstance;
 				//				questNutScript->target = target;

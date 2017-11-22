@@ -17,6 +17,7 @@
 
 #include <stdio.h>
 #include "Util.h"
+#include "Config.h"
 
 Platform_DirectoryReader :: Platform_DirectoryReader()
 {
@@ -322,7 +323,12 @@ void Platform::MakeDirectory(const char *path)
 
 char * Platform::GenerateFilePath(char *resultBuffer, const char *folderName, const char *fileName)
 {
-	sprintf(resultBuffer, "%s%c%s", folderName, PLATFORM_FOLDERVALID, fileName);
+	if(strcmp(folderName, "") == 0 || strcmp(folderName, ".") == 0)
+		folderName = g_WorkingDirectory;
+	if(Util::HasBeginning(fileName, "/"))
+		sprintf(resultBuffer, "%s", fileName);
+	else
+		sprintf(resultBuffer, "%s%c%s", folderName, PLATFORM_FOLDERVALID, fileName);
 	return resultBuffer;
 }
 

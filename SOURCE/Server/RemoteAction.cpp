@@ -658,6 +658,22 @@ int RunAccountCreation(MULTISTRING &params)
 	const char *username = GetValueOfKey(params, "username");
 	const char *password = GetValueOfKey(params, "password");
 	const char *grove = GetValueOfKey(params, "grove");
+	const char *auth = GetValueOfKey(params, "authtoken");
+
+	if(regkey != NULL && auth != NULL) {
+		if(g_Config.RemotePasswordMatch(auth) == false)
+		{
+			g_Logs.http->error("Invalid remote authentication string.");
+			return REMOTE_AUTHFAILED;
+		}
+		int keyIndex = g_AccountManager.GetRegistrationKey(regkey);
+		if(keyIndex == -1) {
+			/* Key is not found, authtoken provided, so import this key as it is so
+			 * it can be immediately used to create an account */
+			g_AccountManager.ImportKey(regkey);
+		}
+	}
+
 	int retval = 0;
 	g_AccountManager.cs.Enter("RunAccountCreation");
 	retval = g_AccountManager.CreateAccount(username, password, regkey, grove);
@@ -670,9 +686,14 @@ int RunPasswordReset(MULTISTRING &params)
 	const char *regkey = GetValueOfKey(params, "regkey");
 	const char *username = GetValueOfKey(params, "username");
 	const char *newpassword = GetValueOfKey(params, "password");
+	const char *auth = GetValueOfKey(params, "authtoken");
+	bool checkPermission = true;
+	if(auth != NULL && g_Config.RemotePasswordMatch(auth) == true)
+		checkPermission = false;
+
 	int retval = 0;
 	g_AccountManager.cs.Enter("RunPasswordReset");
-	retval = g_AccountManager.ResetPassword(username, newpassword, regkey);
+	retval = g_AccountManager.ResetPassword(username, newpassword, regkey, checkPermission);
 	g_AccountManager.cs.Leave();
 	return retval;
 }

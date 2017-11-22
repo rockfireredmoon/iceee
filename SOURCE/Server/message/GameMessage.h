@@ -83,4 +83,10 @@ public:
 	int handleMessage(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
 };
 
+class MouseClickMessage : public MessageHandler {
+public:
+	~MouseClickMessage() {};
+	int handleMessage(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
+};
+
 #endif

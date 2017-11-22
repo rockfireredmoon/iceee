@@ -38,9 +38,10 @@ enum InfoMsgEnum
 
 
 int PrepExt_SetAvatar(char *buffer, int creatureID);
-int PrepExt_SetTimeOfDay(char *buffer, char *envType);
+int PrepExt_SetTimeOfDay(char *buffer, const char *timeOfDay);
+int PrepExt_SetWeather(char *buffer, std::string type, int weight);
+int PrepExt_Thunder(char *buffer, int weight);
 int PrepExt_AbilityEvent(char *buffer, int creatureID, int abilityID, int abilityEvent);
-int PrepExt_SendAbilityOwn(char *buffer, int CID, int abilityID, int eventID);
 int PrepExt_CancelUseEvent(char *buffer, int CreatureID);
 int PrepExt_ActorJump(char *buffer, int actor);
 int PrepExt_RemoveCreature(char *buffer, int actorID);
@@ -52,6 +53,7 @@ int PrepExt_GenericChatMessage(char *buffer, int creatureID, const char *name, c
 int PrepExt_SendFormOpen(char *buffer, FormDefinition form);
 int PrepExt_SendFormClose(char *buffer, int formId);
 int PrepExt_SendBookOpen(char *buffer, int bookID, int page, int op);
+int PrepExt_Refashion(char *buffer);
 int PrepExt_CooldownExpired(char *buffer, long actor, const char *cooldownCategory);
 int PrepExt_ChangeTarget(char *buffer, int sourceID, int targetID);
 int PrepExt_ExperienceGain(char *buffer, int CreatureID, int ExpAmount);
@@ -70,11 +72,11 @@ int PrepExt_ModStopSwimFlag(char *buffer, bool swim);
 int PrepExt_TradeCurrencyOffer(char *buffer, int offeringPlayerID, int tradeAmount);
 int PrepExt_CreatureEventPortalRequest(char *buffer, int actorID, const char *casterName, const char *locationName);
 int PrepExt_CreatureEventVaultSize(char *buffer, int actorID, int vaultSize, int deliverySlots);
-int PrepExt_SendTimeOfDayMsg(char *buffer, const char *envType);
 int PrepExt_Broadcast(char *buffer, const char *message);
 int PrepExt_Info(char *buffer, const char *message, char eventID);
 int PrepExt_Chat(char *buffer, int characterID, const char *display_name, const char *channel, const char *message);
 
+int randint_32bit(int min, int max);
 int randint(int min, int max);
 int randmod(int max);
 int randi(int max);
@@ -122,6 +124,7 @@ namespace Util
 	bool CaseInsensitiveStringCompare(const std::string& str1, const std::string& str2);
 	bool CaseInsensitiveStringFind(const std::string& str1, const std::string& str2);
 	void ToLowerCase(std::string &input);
+	std::string URLDecode(std::string const &src);
 	bool HasBeginning(std::string const &fullString, std::string const &ending);
 	bool HasEnding (std::string const &fullString, std::string const &ending);
 	void TrimWhitespace(std::string &modify);

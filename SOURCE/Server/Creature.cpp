@@ -26,7 +26,6 @@
 #include "Combat.h"
 #include "InstanceScale.h"
 #include "VirtualItem.h"
-#include "ConfigString.h"
 #include "Guilds.h"
 #include "Stats.h"
 #include "Util.h"
@@ -125,6 +124,7 @@ void ActiveAbilityInfo :: Clear(const char *debugCaller)
 	ClearTargetList();
 
 	bPending = false;
+	bForce = false;
 	bSecondary = false;
 	bUnbreakableChannel = false;
 	interruptChanceMod = 0;
@@ -349,7 +349,10 @@ void CreatureDefinition :: Clear(void)
 	CreatureDefID = 0;
 	DefHints = 0;
 	DefaultEffects.clear();
-	ExtraData.clear();
+	DropRateMult = 1.0;
+	DropRateProfile = "";
+	NamedMob = false;
+	Items.clear();
 }
 
 void CreatureDefinition :: CopyFrom(CreatureDefinition& source)
@@ -358,31 +361,15 @@ void CreatureDefinition :: CopyFrom(CreatureDefinition& source)
 	CreatureDefID = source.CreatureDefID;
 	DefHints = source.DefHints;
 	DefaultEffects.assign(source.DefaultEffects.begin(), source.DefaultEffects.end());
-	ExtraData = source.ExtraData;
+	DropRateMult = source.DropRateMult;
+	DropRateProfile = source.DropRateProfile;
+	NamedMob = source.NamedMob;
+	Items = source.Items;
 }
 
 bool CreatureDefinition :: operator < (const CreatureDefinition& other) const
 {
 	return (CreatureDefID < other.CreatureDefID);
-}
-
-// Determine if creature configuration has identified this to be a unique, "named" mob.
-bool CreatureDefinition :: IsNamedMob(void) const
-{
-	//No need to break apart the string, we can just search for the raw text.
-	if(ExtraData.find("namedmob") != std::string::npos)
-		return true;
-	return false;
-}
-
-// Returns the arbitrary multiplier to bonus drop rates (virtual items only).
-float CreatureDefinition :: GetDropRateMult(void) const
-{
-	if(ExtraData.size() == 0)
-		return 0.0F;
-
-	ConfigString data(ExtraData);
-	return data.GetValueFloat("dropratemult");
 }
 
 void CreatureDefinition :: WriteToJSON(Json::Value &value)
@@ -394,7 +381,7 @@ void CreatureDefinition :: WriteToJSON(Json::Value &value)
 		defx.append(*it);
 	}
 	value["defaultEffects"] = defx;
-	value["extraData"]  = ExtraData;
+	value["extraData"]  = GetExtraDataString();
 
 	Json::Value jcss;
 
@@ -406,13 +393,43 @@ void CreatureDefinition :: WriteToJSON(Json::Value &value)
 	value["css"] = jcss;
 }
 
+std::string CreatureDefinition :: GetExtraDataString() {
+	ConfigString ExtraData;
+	if(NamedMob)
+		ExtraData.SetKeyValue("namedmob", "");
+	if(DropRateProfile.length() > 0)
+		ExtraData.SetKeyValue("droprateprofile", DropRateProfile.c_str());
+	if(DropRateMult != 1) {
+		char buf[20];
+		Util::SafeFormat(buf, sizeof(buf), "%f", DropRateMult);
+		ExtraData.SetKeyValue("dropratemulti", buf);
+	}
+	for(std::vector<int>::iterator it = Items.begin() ; it != Items.end(); it++) {
+		STRINGLIST str;
+		str.push_back("item");
+		str.push_back("");
+		ExtraData.mData.push_back(str);
+	}
+
+	if(!ExtraData.IsEmpty()) {
+		std::string str;
+		ExtraData.GenerateString(str);
+		return str;
+	}
+	return "";
+}
+
 void CreatureDefinition :: SaveToStream(FILE *output) {
 	fprintf(output, "[ENTRY]\r\n");
 	fprintf(output, "ID=%d\r\n", CreatureDefID);
 	if(DefHints > 0)
 		fprintf(output, "defHints=%d\r\n", DefHints);
-	if(ExtraData.length() > 0)
-		fprintf(output, "ExtraData=%s\r\n", ExtraData.c_str());
+
+	std::string extraDataString = GetExtraDataString();
+	if(extraDataString.length() > 0) {
+		fprintf(output, "ExtraData=%s\r\n", extraDataString.c_str());
+	}
+
 	if(DefaultEffects.size() > 0) {
 		fprintf(output, "Effects=");
 		for(std::vector<int>::iterator it = DefaultEffects.begin(); it != DefaultEffects.end(); it++) {
@@ -494,6 +511,9 @@ void CreatureInstance :: Clear(void)
 	Rotation = 0;
 	Speed = 0;
 
+	dialogIndex = -1;
+	timer_dialog = 0;
+
 	memset(&MainDamage, 0, sizeof(MainDamage));
 	memset(&OffhandDamage, 0, sizeof(OffhandDamage));
 	memset(&RangedDamage, 0, sizeof(RangedDamage));
@@ -534,6 +554,7 @@ void CreatureInstance :: Clear(void)
 	lastIdleZ = 0;
 	tetherNodeX = 0;
 	tetherNodeZ = 0;
+	tetherFacing = 0;
 
 	ClearAppearanceModifiers();
 
@@ -802,12 +823,14 @@ void CreatureInstance :: Instantiate(void)
 
 	//int cdef = CreatureDef.GetIndex(CreatureDefID);
 
-	if((strlen(css.ai_package) == 0) || (strcmp(css.ai_package, "nothing") == 0))
-		SetServerFlag(ServerFlags::NeutralInactive, true);
-	if(css.IsPropAppearance() == true)
-	{
-		SetServerFlag(ServerFlags::NeutralInactive, true);
-		SetServerFlag(ServerFlags::Noncombatant, true);
+	if((serverFlags & ServerFlags::KillableProp)==0) {
+		if((strlen(css.ai_package) == 0) || (strcmp(css.ai_package, "nothing") == 0))
+			SetServerFlag(ServerFlags::NeutralInactive, true);
+		if(css.IsPropAppearance() == true)
+		{
+			SetServerFlag(ServerFlags::NeutralInactive, true);
+			SetServerFlag(ServerFlags::Noncombatant, true);
+		}
 	}
 
 	std::string errors;
@@ -844,6 +867,14 @@ void CreatureInstance :: Instantiate(void)
 	css.mod_casting_speed = ABGlobals::MINIMAL_FLOAT;
 
 	ApplyGlobalInstanceBuffs();
+
+	// TODO floods events
+	/*if(actInst != NULL && actInst->nutScriptPlayer != NULL && actInst->nutScriptPlayer->mActive) {
+		std::vector<ScriptCore::ScriptParam> parms;
+		parms.push_back(ScriptCore::ScriptParam(CreatureID));
+		parms.push_back(ScriptCore::ScriptParam(CreatureDefID));
+		actInst->nutScriptPlayer->JumpToLabel("on_spawn", parms);
+	}*/
 }
 
 int CreatureInstance :: GetMitigatedDamage(int damageAmount, int armorRating, int reductionMod)
@@ -1262,31 +1293,28 @@ void CreatureInstance :: CastSetback(void)
 	}
 }
 
-void CreatureInstance :: RegisterHostility(CreatureInstance *attacker, int hostility)
+bool CreatureInstance :: RegisterHostility(CreatureInstance *attacker, int hostility)
 {
 	if(attacker == NULL)
 	{
 		g_Logs.server->error("RegisterHostility attacker is null");
-		return;
+		return false;
 	}
 
 	if(hostility < 1)
-		return;
+		return false;
 
 	if(HasStatus(StatusEffects::DEAD) == true)
-		return;
+		return false;
 	if(attacker->HasStatus(StatusEffects::DEAD) == true)
-		return;
+		return false;
 
 	Status(StatusEffects::IN_COMBAT, 5);
 	Status(StatusEffects::IN_COMBAT_STAND, 5);
 
 	//Everything below is for AI purposes and is not applicable to human players.
 	if(serverFlags & ServerFlags::IsPlayer)
-		return;
-
-	if(serverFlags & ServerFlags::Noncombatant)
-		return;
+		return false;
 
 	SetServerFlag(ServerFlags::LocalActive, true);
 
@@ -1313,7 +1341,7 @@ void CreatureInstance :: RegisterHostility(CreatureInstance *attacker, int hosti
 	if(serverFlags & ServerFlags::IsNPC)
 	{
 		if(spawnGen == NULL)
-			return;
+			return true;
 
 		int loyaltyRadius = spawnGen->GetLoyaltyRadius();
 		if(loyaltyRadius > 0)
@@ -1324,12 +1352,18 @@ void CreatureInstance :: RegisterHostility(CreatureInstance *attacker, int hosti
 			actInst->SendLoyaltyLinks(attacker, this, spawnGen->spawnPoint);
 		}
 	}
+
+	return true;
 }
 
 void CreatureInstance :: SetCombatStatus(void)
 {
 	if(HasStatus(StatusEffects::DEAD) == true)
 		return;
+
+	if(serverFlags & ServerFlags::Noncombatant)
+		return;
+
 	Status(StatusEffects::IN_COMBAT, 5);
 	Status(StatusEffects::IN_COMBAT_STAND, 5);
 	Untransform();
@@ -1596,11 +1630,12 @@ int CreatureInstance :: _CountStatusFlags(void)
 
 void CreatureInstance :: SetServerFlag(unsigned long flag, bool status)
 {
-
-	if(status == true)
+	if(status == true) {
 		serverFlags |= flag;
-	else
+	}
+	else {
 		serverFlags &= (~(flag));
+	}
 }
 
 bool CreatureInstance :: Reagent(int itemID, int amount)
@@ -2357,16 +2392,17 @@ void CreatureInstance :: Taunt(CreatureInstance *attacker, int seconds)
 
 	//Note: register hostility first to instigate linked mobs.  As of implementing this, loyalty
 	//instigation will not be invoked if the creature already has a target.
-	RegisterHostility(attacker, 1);
+	if(RegisterHostility(attacker, 1)) {
 
-	SelectTarget(attacker);
+		SelectTarget(attacker);
 
-	HateProfile *hprof = GetHateProfile();
-	if(hprof == NULL)
-		return;
-	hprof->ExtendTauntRelease(seconds);
-	SetServerFlag(ServerFlags::HateInfoChanged, true);
-	SetServerFlag(ServerFlags::Taunted, true);
+		HateProfile *hprof = GetHateProfile();
+		if(hprof == NULL)
+			return;
+		hprof->ExtendTauntRelease(seconds);
+		SetServerFlag(ServerFlags::HateInfoChanged, true);
+		SetServerFlag(ServerFlags::Taunted, true);
+	}
 }
 
 void CreatureInstance :: Amp(unsigned char tier, unsigned char buffType, int abID, int abgID, int statID, float percent, int time)
@@ -2636,7 +2672,7 @@ void CreatureInstance :: PortalRequest(CreatureInstance *caster, const char *int
 	if(!(serverFlags & ServerFlags::IsPlayer))
 		return;
 
-	simulatorPtr->pld.SetPortalRequestDest(externalname);
+	simulatorPtr->pld.SetPortalRequestDest(externalname, 0);
 
 	if(caster == this)
 		bcm.AddEvent2(simulatorPtr->InternalID, (long)simulatorPtr, 0, BCM_RunPortalRequest, actInst);
@@ -3001,11 +3037,14 @@ void CreatureInstance :: ProcessDeath(void)
 
 		//Get highest level from the hate profile.
 		int highestLev = 0;
+		int highestPartySize = 1;
 		if(hate != NULL)
 			highestLev = hate->GetHighestLevel();
 
-		if(attackerList.size() > 0)
+		if(attackerList.size() > 0) {
 			highestLev = GetHighestLevel(attackerList);
+			highestPartySize = GetHighestPartySize(attackerList);
+		}
 
 
 		/* Players can only be looted if they are in PVP mode, the attacker is in PVP
@@ -3078,18 +3117,10 @@ void CreatureInstance :: ProcessDeath(void)
 
 					if(items > 0) {
 
-						/* Create a temporary creature for the loot. This allows the loot to live after
-						 * the player has respawned (and solves some other issues)
-						 */
-						CreatureInstance* lootInst = actInst->SpawnGeneric(7861, CurrentX, CurrentY, CurrentZ, 0, 0);
-						lootInst->deathTime = g_ServerTime;
-						lootInst->PrepareDeath();
-
 						// Pick a random item from the players inventory
 						InventoryManager *origInv = &charPtr->inventory;
 
 						ActiveLootContainer loot;
-						loot.CreatureID = lootInst->CreatureID;
 
 						for(int i = 0 ; i < items; i++) {
 							if(origInv->CountUsedSlots(INV_CONTAINER) == 0) {
@@ -3097,6 +3128,8 @@ void CreatureInstance :: ProcessDeath(void)
 								break;
 							}
 							InventorySlot *slot = origInv->PickRandomItem(INV_CONTAINER);
+							if(slot == NULL)
+								break;
 
 							int toLoot = 1;
 
@@ -3115,17 +3148,30 @@ void CreatureInstance :: ProcessDeath(void)
 								simulatorPtr->AttemptSend(buffer, len);
 						}
 
-						lootInst->activeLootID = actInst->lootsys.AttachLootToCreature(loot, lootInst->CreatureID);
+						if(loot.itemList.size() == 0)
+							g_Logs.server->warn("PVP resulted in no loot because losing player had no unbound items");
+						else {
 
-						// Add all PVP attackers as looting creatures as well as the player themselves so they can retrieve the loot if the attacker doesn't take
-						lootInst->AddLootableID(CreatureDefID);
-						for(std::vector<CreatureInstance*>::iterator it = pvpAttackers.begin(); it != pvpAttackers.end(); ++it) {
-							lootInst->AddLootableID((*it)->CreatureDefID);
-						}
+							/* Create a temporary creature for the loot. This allows the loot to live after
+							 * the player has respawned (and solves some other issues)
+							 */
+							CreatureInstance* lootInst = actInst->SpawnGeneric(7861, CurrentX, CurrentY, CurrentZ, 0, 0);
+							lootInst->deathTime = g_ServerTime;
+							lootInst->PrepareDeath();
+							loot.CreatureID = lootInst->CreatureID;
 
-						// Send loot updates
-						if(lootInst->activeLootID != 0) {
-							lootInst->SendUpdatedLoot();
+							lootInst->activeLootID = actInst->lootsys.AttachLootToCreature(loot, lootInst->CreatureID);
+
+							// Add all PVP attackers as looting creatures as well as the player themselves so they can retrieve the loot if the attacker doesn't take
+							lootInst->AddLootableID(CreatureDefID);
+							for(std::vector<CreatureInstance*>::iterator it = pvpAttackers.begin(); it != pvpAttackers.end(); ++it) {
+								lootInst->AddLootableID((*it)->CreatureDefID);
+							}
+
+							// Send loot updates
+							if(lootInst->activeLootID != 0) {
+								lootInst->SendUpdatedLoot();
+							}
 						}
 
 					}
@@ -3179,7 +3225,7 @@ void CreatureInstance :: ProcessDeath(void)
 		}
 		else {
 			// Ordinary creature
-			CreateLoot(highestLev);
+			CreateLoot(highestLev, highestPartySize);
 
 			for(size_t i = 0; i < attackerList.size(); i++)	{
 				CreatureInstance *attacker = attackerList[i].ptr;
@@ -3215,7 +3261,7 @@ void CreatureInstance :: ProcessDeath(void)
 			CreatureDefinition *cdef = CreatureDef.GetPointerByCDef(CreatureDefID);
 			if(cdef != NULL)
 			{
-				if(cdef->IsNamedMob()) {
+				if(cdef->NamedMob) {
 					creditDrops = g_Config.NamedMobCreditDrops;
 				}
 			}
@@ -3317,6 +3363,39 @@ void CreatureInstance :: AddCreaturePointer(CREATURE_SEARCH& output, CreatureIns
 	newItem.ptr = ptr;
 	newItem.attacked = attacked;
 	output.push_back(newItem);
+}
+
+int CreatureInstance :: GetHighestPartySize(CREATURE_SEARCH& creatureList)
+{
+	int highest = 1;
+	int CDefID;
+	int instance = actInst->mInstanceID;
+	CreatureInstance *lookup;
+	for(size_t i = 0; i < creatureList.size(); i++)
+		if(creatureList[i].ptr->PartyID != 0) {
+			ActiveParty *party = g_PartyManager.GetPartyByID(creatureList[i].ptr->PartyID);
+			if(party != NULL) {
+				int members = 0;
+				for(size_t pm = 0; pm < party->mMemberList.size(); pm++)
+				{
+					CDefID = party->mMemberList[pm].mCreatureDefID;
+					lookup = actInst->GetPlayerByCDefID(CDefID);
+					if(lookup == NULL)
+						continue;
+					if(lookup->actInst->mInstanceID != instance)
+						continue;
+
+					if(actInst->GetPlaneRange(this, lookup, PARTY_SHARE_DISTANCE) >= PARTY_SHARE_DISTANCE)
+						continue;
+
+					members++;
+				}
+
+				if(members > highest)
+					highest = members;
+			}
+		}
+	return highest;
 }
 
 int CreatureInstance :: GetHighestLevel(CREATURE_SEARCH& creatureList)
@@ -3722,7 +3801,7 @@ void CreatureInstance :: CancelPending(void)
 			wpos += PutInteger(&GSendBuf[wpos], CreatureID);
 			wpos += PutByte(&GSendBuf[wpos], 11);  //creature "used" event
 			wpos += PutStringUTF(&GSendBuf[wpos], "");
-			wpos += PutFloat(&GSendBuf[wpos], -1.0F);  //A delay of -1 will interrupt the action
+			wpos += PutInteger(&GSendBuf[wpos], -1);  //A delay of -1 will interrupt the action
 			PutShort(&GSendBuf[1], wpos - 3);  //size
 			SendToOneSimulator(GSendBuf, wpos, simulatorPtr);
 
@@ -4023,23 +4102,14 @@ bool CreatureInstance :: CanPVPTarget(CreatureInstance *target)
 		//given PVP status among others instead of creating an environment where everyone can
 		//attack each other.
 
-//		g_Log.AddMessageFormat("REMOVEME zone mode is %d, team 1 is %d and team 2 is %d", actInst->mZoneDefPtr->mMode, css.pvp_team, target->css.pvp_team);
-
 		if(actInst->mZoneDefPtr->mMode == PVP::GameMode::SPECIAL_EVENT && css.pvp_team != target->css.pvp_team)
 			return true;
-
-
-//		g_Log.AddMessageFormat("REMOVEME no pvp not special event");
 
 		//If we get here, we are not in an area, and not in a team, check the zone itself to see
 		//if PVP is allowed
 		if(actInst != NULL && actInst->mZoneDefPtr != NULL && ( actInst->mZoneDefPtr->mMode == PVP::GameMode::PVP || actInst->mZoneDefPtr->mMode == PVP::GameMode::PVP_ONLY))
 			return true;
 
-//		g_Log.AddMessageFormat("REMOVEME no pvp not pvp zone");
-	}
-	else {
-//		g_Log.AddMessageFormat("REMOVEME not pvp'ing because either target or source does not have PVP flag");
 	}
 
 
@@ -4457,6 +4527,12 @@ void CreatureInstance :: RegisterImplicit(int eventType, int abID, int abGroup)
 
 int CreatureInstance :: CallAbilityEvent(int abilityID, int eventType)
 {
+	return CallAbilityEvent(abilityID, eventType, false);
+}
+
+int CreatureInstance :: CallAbilityEvent(int abilityID, int eventType, bool force)
+{
+	ab[0].bForce = force;
 	return actInst->ActivateAbility(this, abilityID, eventType, &ab[0]);
 }
 
@@ -4615,6 +4691,7 @@ void CreatureInstance :: RegisterCooldown(int cooldownCategory, int duration)
 
 void CreatureInstance :: ForceAbilityActivate(int abilityID, int abilityEvent, int targetID)
 {
+
 	int wpos = 0;
 	wpos += PutByte(&GSendBuf[wpos], 60);  //_handleAbilityActivationMsg
 	wpos += PutShort(&GSendBuf[wpos], 0);
@@ -4815,6 +4892,79 @@ int CreatureInstance :: RemoveCreatureReference(CreatureInstance *target)
 		}
 	}
 	return rcount;
+}
+
+void CreatureInstance :: RunDialog(void)
+{
+	if(timer_dialog != 1) {
+		/* Special value of 1 for timer indicates we have checked this NPC before and it doesn't need
+		 * dialog
+		 */
+		if(CurrentTarget.targ == NULL && (timer_dialog == 0 || g_ServerTime > timer_dialog))
+		{
+			if(spawnGen != NULL && spawnGen->spawnPoint != NULL && spawnGen->spawnPoint->extraData != NULL && spawnGen->spawnPoint->extraData != NULL && strcmp( spawnGen->spawnPoint->extraData->dialog, "") != 0) {
+				/* Only run dialog when there is 1) a new timer or timer triggers 2) no target */
+				NPCDialogItem *diag = g_NPCDialogManager.GetItem(spawnGen->spawnPoint->extraData->dialog);
+				if(diag != NULL && diag->mParagraphs.size() > 0) {
+					/* If the index is -1, this is the very first dialog paragraph, so wait for the
+					 * initial delay before actually performing it
+					 */
+					if(dialogIndex == -1) {
+						switch(diag->mSequence) {
+						case Sequence::SEQUENTIAL:
+							dialogIndex = 0;
+							break;
+						case Sequence::RANDOM:
+							dialogIndex = randmodrng(0, diag->mParagraphs.size());
+							break;
+						}
+						timer_dialog = g_ServerTime + randmodrng(diag->mMinInterval, diag->mMaxInterval);
+					}
+					else {
+						int delay = randmodrng(diag->mMinInterval, diag->mMaxInterval);
+
+						/* Otherwise perform this item */
+						NPCDialogParagraph para = diag->mParagraphs[dialogIndex];
+						switch(para.mType) {
+						case ParagraphType::SAY:
+							actInst->LSendToAllSimulator(GSendBuf, PrepExt_GenericChatMessage(GSendBuf, CreatureID, css.display_name, "s/", para.mValue.c_str()), -1);
+							break;
+						case ParagraphType::WAIT:
+							delay = atoi(para.mValue.c_str());
+							break;
+						case ParagraphType::EMOTE:
+							actInst->LSendToAllSimulator(GSendBuf, PrepExt_GenericChatMessage(GSendBuf, CreatureID, css.display_name, "emote", para.mValue.c_str()), -1);
+							break;
+						}
+
+						/* Wait for next action, reseting if needed */
+						timer_dialog = g_ServerTime + delay;
+
+						switch(diag->mSequence) {
+						case Sequence::SEQUENTIAL:
+							dialogIndex++;
+							if(dialogIndex >= diag->mParagraphs.size())
+								dialogIndex = 0;
+							break;
+						case Sequence::RANDOM:
+							dialogIndex = randmodrng(0, diag->mParagraphs.size());
+							break;
+						}
+					}
+				}
+				else {
+					g_Logs.simulator->warn("Request for unknown or empty NPC dialog %v", spawnGen->spawnPoint->extraData->dialog);
+					/* Never bother again */
+					timer_dialog = -1;
+				}
+			}
+			else {
+				/* Never bother again */
+				timer_dialog = -1;
+			}
+		}
+	}
+
 }
 
 void CreatureInstance :: RunAIScript(void)
@@ -5049,11 +5199,7 @@ void CreatureInstance :: CheckMostHatedTarget(bool forceCheck)
 			{
 				SetServerFlag(ServerFlags::Taunted, false);
 				if(dist > TAUNT_BECKON_DISTANCE)
-				{
-					CurrentTarget.DesLocX = targ->CurrentX;
-					CurrentTarget.DesLocZ = targ->CurrentZ;
-					CurrentTarget.desiredRange = TAUNT_BECKON_DISTANCE;
-				}
+					MoveTo(targ->CurrentX, targ->CurrentZ, TAUNT_BECKON_DISTANCE, 0);
 			}
 			return;
 		}
@@ -5075,7 +5221,7 @@ void CreatureInstance :: RunAutoTargetSelection(void)
 	if(serverFlags & ServerFlags::LeashRecall)
 		return;
 
-	if((serverFlags & ServerFlags::NeutralInactive) || (serverFlags & ServerFlags::Stationary))
+	if((serverFlags & ServerFlags::NeutralInactive) || (serverFlags & ServerFlags::Stationary) ||  (serverFlags & ServerFlags::Noncombatant))
 		return;
 
 	CreatureInstance *targ = NULL;
@@ -5132,6 +5278,7 @@ void CreatureInstance :: RunProcessingCycle(void)
 				}
 				RunAutoTargetSelection();
 				RunAIScript();
+				RunDialog();
 			}
 		}
 		else if(serverFlags & ServerFlags::IsPlayer)
@@ -5140,6 +5287,12 @@ void CreatureInstance :: RunProcessingCycle(void)
 			{
 				actInst->UpdateSidekickTargets(this);
 				serverFlags -= ServerFlags::InitAttack;
+			}
+
+			if(charPtr->inventory.NextExpunge != 0 && g_ServerTime >= charPtr->inventory.NextExpunge) {
+				int r = charPtr->inventory.RemoveExpiredItemsAndUpdate(GSendBuf);
+				if(r > 0)
+					simulatorPtr->AttemptSend(GSendBuf, r);
 			}
 		}
 		else if(serverFlags & ServerFlags::IsSidekick)
@@ -5261,364 +5414,6 @@ void CreatureInstance :: CheckPathLocation(void)
 	Speed = CREATURE_WALK_SPEED;
 }
 
-void CreatureInstance :: MoveToTarget(void)
-{
-	if(CurrentTarget.targ == NULL)
-		return;
-
-	int nextMoveTime = 1000;
-	if(CurrentTarget.targ != NULL)
-		nextMoveTime = 500;
-
-	bool update = false;
-
-	int tx = CurrentTarget.targ->CurrentX;
-	int tz = CurrentTarget.targ->CurrentZ;
-	int xlen = tx - CurrentX;
-	int zlen = tz - CurrentZ;
-	float rotf = (float)atan2((double)xlen, (double)zlen);
-
-	unsigned char rot = (unsigned char)(rotf * 256.0F / 6.283185F);
-	if(rot != Rotation)
-	{
-		Rotation = rot;
-		Heading = rot;
-		update = true;
-	}
-
-	int dist = actInst->GetPlaneRange(this, CurrentTarget.targ, SANE_DISTANCE);
-	if(CurrentTarget.desiredRange > 0)
-	{
-		update = true;
-		if(dist <= CurrentTarget.desiredRange)
-		{
-			CurrentTarget.desiredRange = 0;
-			CurrentTarget.bInstigated = false;
-			Speed = 0;
-		}
-		else
-		{
-			if(Speed == 0)
-			{
-				Speed = 100;
-			}
-			else
-			{
-				//Estimated in game, 500 units in 10 seconds at 100% speed
-				// = 112.5 units in 2.25 seconds at 100% speed
-
-				float stepAmount = 50.0F * ((float)nextMoveTime / 1000.0F);
-				int maxmove = (int)(stepAmount * ((float)Speed / 100.0F));
-				int distRemain = dist - CurrentTarget.desiredRange + 5;
-				//int maxmove = (int)(115.0F * ((float)Speed / 100.0F));
-				if(distRemain > maxmove)
-					distRemain = maxmove;
-
-				g_Logs.server->debug("Dist: %d, Remain: %d, YOffs: %d speed: %d", dist, distRemain, CurrentY - CurrentTarget.targ->CurrentY, Speed);
-
-				float angle = (float)Heading * 6.283185F / 256.0F;
-				CurrentZ += (int)((float)distRemain * cos(angle));
-				CurrentX += (int)((float)distRemain * sin(angle));
-				if((dist - CurrentTarget.desiredRange - distRemain) < maxmove)
-				{
-					nextMoveTime = (int)(500 * ((float)(dist - CurrentTarget.desiredRange - distRemain) / (float)maxmove));
-					if(nextMoveTime < 150)
-						nextMoveTime = 150;
-				}
-				//Speed = (int)((float)Speed * ((float)distRemain / (float)maxmove));
-				//update = true;
-			}
-		}
-	}
-
-	movementTime = g_ServerTime + nextMoveTime;
-
-	if(dist > MAX_ATTACK_RANGE)
-	{
-		if(CurrentTarget.bInstigated == false)
-		{
-			SelectTarget(NULL);
-			Speed = 0;
-			update = true;
-		}
-	}
-
-	if(update == true)
-	{
-		int size = PrepExt_GeneralMoveUpdate(GSendBuf, this);
-		//actInst->LSendToAllSimulator(GSendBuf, size, -1);
-		actInst->LSendToLocalSimulator(GSendBuf, size, CurrentX, CurrentZ);
-	}
-
-
-	/*
-	if(CurrentTarget.targ == NULL)
-		return;
-
-	int nextMoveTime = 2250;
-	bool velChange = false;
-	bool posChange = false;
-
-	int tx = CurrentTarget.targ->CurrentX;
-	int tz = CurrentTarget.targ->CurrentZ;
-	int xlen = tx - CurrentX;
-	int zlen = tz - CurrentZ;
-	float rotf = (float)atan2((double)xlen, (double)zlen);
-
-	unsigned char rot = (unsigned char)(rotf * 256.0F / 6.283185F);
-	if(rot != Rotation)
-	{
-		Rotation = rot;
-		Heading = rot;
-		velChange = true;
-	}
-
-	int dist = actInst->GetActualRange(this, CurrentTarget.targ);
-	if(CurrentTarget.desiredRange > 0)
-	{
-		if(dist <= CurrentTarget.desiredRange)
-		{
-			CurrentTarget.desiredRange = 0;
-			Speed = 0;
-			velChange = true;
-		}
-		else
-		{
-			//Estimated in game, 500 units in 10 seconds at 100% speed
-			int testTime = (int)(((float)dist / 45.0F) * 1000.F);
-			if(testTime > 1000)
-				testTime = 1000;
-			nextMoveTime = testTime;
-
-			//Update location
-			if(Speed == 0)
-			{
-				if(testTime < 1000)
-					Speed = (int)(45.0F * ((float)testTime / 1000.F) + 1);
-				else
-					Speed = 45;
-				velChange = true;
-			}
-			float angle = (float)Heading * 6.283185F / 256.0F;
-			CurrentZ += (int)((float)Speed * cos(angle));
-			CurrentX += (int)((float)Speed * sin(angle));
-			posChange = true;
-		}
-	}
-
-	movementTime = g_ServerTime + nextMoveTime;
-
-	if(dist >= DEFAULT_AGGRO_RANGE)
-	{
-		Speed = 0;
-		CurrentTarget.targ = NULL;
-		velChange = true;
-	}
-
-	int size = 0;
-	if(velChange == true)
-		size += PrepExt_UpdateVelocity(GSendBuf, this);
-	if(posChange == true)
-		size += PrepExt_UpdatePosInc(&GSendBuf[size], this);
-
-	if(size > 0)
-		actInst->LSendToAllSimulator(GSendBuf, size, -1);
-		*/
-}
-
-void CreatureInstance :: MoveToTarget_Ex(void)
-{
-	const static int MOV_REQDIST = 50;
-	const static int REQDIST = 100;
-	const static int FARDIST = 350;
-	const static int YOFFSET = 50;
-	const static int CLOSE_SCATTER_RANGE = 15;
-	if(CurrentTarget.DesLocX == 0)
-	{
-		if(CurrentTarget.targ == NULL)
-		{
-			if(AnchorObject == NULL)
-				return;
-
-			int dist = actInst->GetPlaneRange(this, AnchorObject, SANE_DISTANCE);
-			int yoffs = abs(CurrentY - AnchorObject->CurrentY);
-			if(dist > FARDIST || yoffs > YOFFSET)
-			{
-				CurrentX = AnchorObject->CurrentX + randint(-CLOSE_SCATTER_RANGE, CLOSE_SCATTER_RANGE);
-				CurrentY = AnchorObject->CurrentY;
-				CurrentZ = AnchorObject->CurrentZ + randint(-CLOSE_SCATTER_RANGE, CLOSE_SCATTER_RANGE);
-				int size = PrepExt_UpdateFullPosition(GSendBuf, this);
-				//actInst->LSendToAllSimulator(GSendBuf, size, -1);
-				actInst->LSendToLocalSimulator(GSendBuf, size, CurrentX, CurrentZ);
-				movementTime = g_ServerTime + 1000;
-				return;
-			}
-			int cmp = REQDIST;
-			if(AnchorObject->Speed != 0)
-				cmp = MOV_REQDIST;
-			if(dist > cmp)
-			{
-				//Get angle from the perspective of the host (target is self)
-				int xlen = CurrentX - AnchorObject->CurrentX;
-				int zlen = CurrentZ - AnchorObject->CurrentZ;
-				//int xlen = AnchorObject->CurrentX - CurrentX;
-				//int zlen = AnchorObject->CurrentZ - CurrentZ;
-				float rotf = (float)atan2((double)xlen, (double)zlen);
-
-				//Take this angle and project a point location away from it that's just within
-				//the desired range.
-				CurrentTarget.desiredRange = cmp;
-
-				if(AnchorObject->Speed == 0)
-				{
-					CurrentTarget.DesLocZ = AnchorObject->CurrentZ + (int)((float)(REQDIST - 5) * cos(rotf));
-					CurrentTarget.DesLocX = AnchorObject->CurrentX + (int)((float)(REQDIST - 5) * sin(rotf));
-				}
-				else
-				{
-					CurrentTarget.DesLocX = AnchorObject->CurrentX + randint(-CLOSE_SCATTER_RANGE, CLOSE_SCATTER_RANGE);
-					CurrentTarget.DesLocZ = AnchorObject->CurrentZ + randint(-CLOSE_SCATTER_RANGE, CLOSE_SCATTER_RANGE);
-				}
-			}
-		}
-		else
-		{
-			if(CurrentTarget.desiredRange != 0)
-			{
-				int dist = actInst->GetPlaneRange(this, CurrentTarget.targ, SANE_DISTANCE);
-				if(dist > CurrentTarget.desiredRange)
-				{
-					int xlen = CurrentX - CurrentTarget.targ->CurrentX;
-					int zlen = CurrentZ - CurrentTarget.targ->CurrentZ;
-					float rotf = (float)atan2((double)xlen, (double)zlen);
-
-					//Take this angle and project a point location away from it that's just within
-					//the desired range.
-
-					CurrentTarget.DesLocZ = CurrentTarget.targ->CurrentZ + (int)((float)(CurrentTarget.desiredRange - 5) * cos(rotf));
-					CurrentTarget.DesLocX = CurrentTarget.targ->CurrentX + (int)((float)(CurrentTarget.desiredRange - 5) * sin(rotf));
-				}
-			}
-		}
-	}
-
-	int nextMoveTime = 1000; //2250;
-
-	int tx;
-	int tz;
-	if(CurrentTarget.DesLocX == 0)
-	{
-		if(CurrentTarget.targ != NULL)
-		{
-			tx = CurrentTarget.targ->CurrentX;
-			tz = CurrentTarget.targ->CurrentZ;
-			nextMoveTime = 500;
-		}
-		else if(AnchorObject != NULL)
-		{
-			tx = AnchorObject->CurrentX;
-			tz = AnchorObject->CurrentZ;
-		}
-	}
-	else
-	{
-		tx = CurrentTarget.DesLocX;
-		tz = CurrentTarget.DesLocZ;
-		nextMoveTime = 500;
-	}
-
-	//Get current distance from target point
-	int xlen = tx - CurrentX;
-	int zlen = tz - CurrentZ;
-	//int xlen = CurrentX - CurrentTarget.DesLocX;
-	//int zlen = CurrentZ - CurrentTarget.DesLocZ;
-	float rotf = (float)atan2((double)xlen, (double)zlen);
-
-	bool update = false;
-	unsigned char rot = (unsigned char)(rotf * 256.0F / 6.283185F);
-	if(rot != Rotation)
-	{
-		Rotation = rot;
-		Heading = rot;
-		update = true;
-	}
-
-	if(CurrentTarget.DesLocX == 0)
-	{
-		if(update == true)
-		{
-			//Just update rotation and quit.
-			int size = PrepExt_UpdateVelocity(GSendBuf, this);
-			//actInst->LSendToAllSimulator(GSendBuf, size, -1);
-			actInst->LSendToLocalSimulator(GSendBuf, size, CurrentX, CurrentZ);
-		}
-		movementTime = g_ServerTime + nextMoveTime;
-		return;
-	}
-
-	update = true;
-	int dist = (int)sqrt((double)((xlen * xlen) + (zlen * zlen)));
-	if(dist < 30)
-	{
-		//g_Log.AddMessageFormat("Stopping (Dist: %d) (Desired: %d)", (int)dist, CurrentTarget.desiredRange);
-		Speed = 0;
-		CurrentX = CurrentTarget.DesLocX;
-		CurrentZ = CurrentTarget.DesLocZ;
-		CurrentTarget.DesLocX = 0;
-		CurrentTarget.DesLocZ = 0;
-		CurrentTarget.desiredRange = 0;
-		int size = PrepExt_GeneralMoveUpdate(GSendBuf, this);
-		//actInst->LSendToAllSimulator(GSendBuf, size, -1);
-		actInst->LSendToLocalSimulator(GSendBuf, size, CurrentX, CurrentZ);
-		movementTime = g_ServerTime + nextMoveTime;
-		SetServerFlag(ServerFlags::CalledBack, false);
-		return;
-	}
-	else
-	{
-		int tSpeed = 100;
-		if(AnchorObject != NULL)
-			if(AnchorObject->Speed > 100)
-				tSpeed = AnchorObject->Speed + 20;
-		if(tSpeed <= 255)
-			Speed = tSpeed;
-		else
-			Speed = 255;
-
-		//Estimated in game, 500 units in 10 seconds at 100% speed
-		// = 112.5 units in 2.25 seconds at 100% speed
-		// = 50.0 units in 1.0 seconds.
-
-		int distRemain = dist;
-
-		float stepAmount = 50.0F * ((float)nextMoveTime / 1000.0F);
-		int maxmove = (int)(stepAmount * ((float)Speed / 100.0F));
-		if(distRemain > maxmove)
-			distRemain = maxmove;
-
-		float angle = (float)Heading * 6.283185F / 256.0F;
-		CurrentZ += (int)((float)distRemain * cos(angle));
-		CurrentX += (int)((float)distRemain * sin(angle));
-		//g_Log.AddMessageFormat("distRemain:%d, dist:%d", distRemain, dist);
-		if(distRemain < maxmove)
-		{
-			//nextMoveTime = (int)(900 * ((float)distRemain / (float)maxmove));
-			if(nextMoveTime < 150)
-				nextMoveTime = 150;
-		}
-	}
-
-	movementTime = g_ServerTime + nextMoveTime;
-	//g_Log.AddMessageFormat("Movement step:%d", nextMoveTime);
-
-	if(update == true)
-	{
-		int size = PrepExt_GeneralMoveUpdate(GSendBuf, this);
-		//actInst->LSendToAllSimulator(GSendBuf, size, -1);
-		actInst->LSendToLocalSimulator(GSendBuf, size, CurrentX, CurrentZ);
-	}
-}
-
 int CreatureInstance :: RotateToTarget(void)
 {
 	if(CurrentTarget.targ == NULL)
@@ -5690,9 +5485,7 @@ int CreatureInstance :: RunMovementStep(void)
 		}
 
 		Speed = 0;
-		CurrentTarget.DesLocX = 0;
-		CurrentTarget.DesLocZ = 0;
-		CurrentTarget.desiredRange = 0;
+		StopMovement(ScriptCore::Result::OK);
 		SetServerFlag(ServerFlags::CalledBack, false);
 	}
 	else
@@ -5788,85 +5581,6 @@ int CreatureInstance :: RunMovementStep(void)
 	return 1;
 }
 
-int CreatureInstance :: RunMovementStep2(void)
-{
-	int nextMoveTime = 2000;
-
-	if(CurrentTarget.targ != NULL)
-		nextMoveTime = 500;
-
-	if(CurrentTarget.DesLocX == 0 && CurrentTarget.DesLocZ == 0)
-	{
-		movementTime = g_ServerTime + 2000;
-		return 0;
-	}
-
-	int xlen = CurrentTarget.DesLocX - CurrentX;
-	int zlen = CurrentTarget.DesLocZ - CurrentZ;
-	int dist = (int)sqrt((double)((xlen * xlen) + (zlen * zlen)));
-	float rotf = (float)atan2((double)xlen, (double)zlen);
-	unsigned char rot = (unsigned char)(rotf * 255.0F / 6.283185F);
-	Rotation = rot;
-	Heading = rot;
-
-	int reqMoveDist = dist - CurrentTarget.desiredRange - 5;
-	if(reqMoveDist < 15)
-	{
-		if(serverFlags & ServerFlags::PathNode)
-			SetServerFlag(ServerFlags::PathNode, false);
-
-		if(serverFlags & ServerFlags::LeashRecall)
-		{
-			SetServerFlag(ServerFlags::LeashRecall, false);
-			//_RemoveStatusList(StatusEffects::UNATTACKABLE);
-		}
-
-		Speed = 0;
-		CurrentX = CurrentTarget.DesLocX;
-		CurrentZ = CurrentTarget.DesLocZ;
-		CurrentTarget.DesLocX = 0;
-		CurrentTarget.DesLocZ = 0;
-		CurrentTarget.desiredRange = 0;
-		SetServerFlag(ServerFlags::CalledBack, false);
-	}
-	else
-	{
-		Speed = 0;
-		int cSpeed = CREATURE_WALK_SPEED;
-		if(CurrentTarget.targ != NULL)
-			cSpeed = CREATURE_RUN_SPEED;;
-
-		//The number of units moved per second at this speed.
-		float distPerSecond = ((float)cSpeed / 100.0F) * 40.0F;
-
-		//The number of units to move for this update.
-		int updateDist = (int)(distPerSecond * ((float)nextMoveTime / 1000.0F));
-
-		if(updateDist > reqMoveDist)
-		{
-			Speed = 0;
-			CurrentX = CurrentTarget.DesLocX;
-			CurrentZ = CurrentTarget.DesLocZ;
-			CurrentTarget.DesLocX = 0;
-			CurrentTarget.DesLocZ = 0;
-			CurrentTarget.desiredRange = 0;
-		}
-		else if(updateDist > reqMoveDist * 2)
-		{
-			Speed = 0;
-		}
-		else
-		{
-			float angle = (float)Rotation * 6.283185F / 255.0F;
-			CurrentZ += (int)((float)updateDist * cos(angle));
-			CurrentX += (int)((float)updateDist * sin(angle));
-		}
-	}
-
-	movementTime = g_ServerTime + nextMoveTime;
-	return 1;
-}
-
 void CreatureInstance :: UpdateDestination(void)
 {
 	//Update the destination point based on pathfinding, target location, etc.
@@ -5889,7 +5603,7 @@ void CreatureInstance :: UpdateDestination(void)
 	{
 		//If the script system has set a desired range, it means the
 		//creature needs to be closer to its target.
-		if(CurrentTarget.desiredRange != 0)
+		if(CurrentTarget.desiredRange != 0 )
 		{
 			CurrentTarget.DesLocX = CurrentTarget.targ->CurrentX;
 			CurrentTarget.DesLocZ = CurrentTarget.targ->CurrentZ;
@@ -5955,8 +5669,7 @@ void CreatureInstance :: CheckLeashMovement(void)
 			SelectTarget(NULL);
 
 			Speed = CREATURE_RUN_SPEED;
-			CurrentTarget.DesLocX = tetherNodeX;
-			CurrentTarget.DesLocZ = tetherNodeZ;
+			MoveTo(tetherNodeX, tetherNodeZ, 0, 0);
 
 			UnHate();
 			RemoveAttachedHateProfile();
@@ -5974,8 +5687,7 @@ void CreatureInstance :: CheckLeashMovement(void)
 				if((xlen > minLeashRange) || (zlen > minLeashRange))
 				{
 					Speed = CREATURE_JOG_SPEED;
-					CurrentTarget.DesLocX = tetherNodeX;
-					CurrentTarget.DesLocZ = tetherNodeZ;
+					MoveTo(tetherNodeX, tetherNodeZ, 0, 0);
 				}
 			}
 		}
@@ -5988,10 +5700,49 @@ void CreatureInstance :: CheckLeashMovement(void)
 
 	if(wanderRadius > 0 && CurrentTarget.DesLocX == 0 && CurrentTarget.DesLocZ == 0)
 	{
-		CurrentTarget.DesLocX = tetherNodeX + randint(-wanderRadius, wanderRadius);
-		CurrentTarget.DesLocZ = tetherNodeZ + randint(-wanderRadius, wanderRadius);
+		MoveTo(tetherNodeX + randint(-wanderRadius, wanderRadius), tetherNodeZ + randint(-wanderRadius, wanderRadius), 0, 0);
 		Speed = CREATURE_WALK_SPEED;
 	}
+}
+
+void CreatureInstance :: StopMovement(int result)
+{
+	if((CurrentTarget.DesLocX != 0 || CurrentTarget.DesLocZ != 0) && IsAtTether() && tetherFacing != -1) {
+		Rotation = tetherFacing;
+		Heading = tetherFacing;
+	}
+
+	if(scriptMoveEvent != -1) {
+		if(actInst != NULL && actInst->nutScriptPlayer != NULL) {
+			ScriptCore::NutScriptEvent *nse = actInst->nutScriptPlayer->GetEvent(scriptMoveEvent);
+			if(nse != NULL) {
+				nse->mCallback->mResult = result;
+				ScriptCore::NutCondition *nsc = nse->mCondition;
+				nse->mCondition = new ScriptCore::TimeCondition(0);
+				delete nsc;
+			}
+		}
+		scriptMoveEvent = -1;
+	}
+	CurrentTarget.DesLocX = 0;
+	CurrentTarget.DesLocZ = 0;
+	CurrentTarget.desiredRange = 0;
+	CurrentTarget.desiredSpeed = 0;
+}
+void CreatureInstance :: MoveTo(int x, int z, int range, int speed)
+{
+	StopMovement(ScriptCore::Result::INTERRUPTED);
+	CurrentTarget.DesLocX = x;
+	CurrentTarget.DesLocZ = z;
+	CurrentTarget.desiredRange = range;
+	CurrentTarget.desiredSpeed = speed;
+}
+
+bool CreatureInstance :: IsAtTether() {
+	int xlen = tetherNodeX - CurrentX;
+	int zlen = tetherNodeZ - CurrentZ;
+	int dist = (int)sqrt((double)((xlen * xlen) + (zlen * zlen)));
+	return dist < MOVEMENT_THRESHOLD;
 }
 
 void CreatureInstance :: MoveToTarget_Ex2(void)
@@ -6133,14 +5884,12 @@ void CreatureInstance :: MoveToTarget_Ex2(void)
 
 	update = true;
 	int dist = (int)sqrt((double)((xlen * xlen) + (zlen * zlen)));
-	if(dist < 30)
+	if(dist < MOVEMENT_THRESHOLD)
 	{
 		Speed = 0;
 		CurrentX = CurrentTarget.DesLocX;
 		CurrentZ = CurrentTarget.DesLocZ;
-		CurrentTarget.DesLocX = 0;
-		CurrentTarget.DesLocZ = 0;
-		CurrentTarget.desiredRange = 0;
+		StopMovement(ScriptCore::Result::OK);
 		int size = PrepExt_GeneralMoveUpdate(GSendBuf, this);
 		//actInst->LSendToAllSimulator(GSendBuf, size, -1);
 		actInst->LSendToLocalSimulator(GSendBuf, size, CurrentX, CurrentZ);
@@ -6284,8 +6033,7 @@ void CreatureInstance :: SelectTarget(CreatureInstance *newTarget)
 					if(CurrentTarget.DesLocX != 0 || CurrentTarget.DesLocZ != 0)
 					{
 						Speed = 0;
-						CurrentTarget.DesLocX = 0;
-						CurrentTarget.DesLocZ = 0;
+						StopMovement(ScriptCore::Result::INTERRUPTED);
 					}
 				}
 			}
@@ -6371,6 +6119,33 @@ bool CreatureInstance :: AICheckIfAbilityBusy(void)
 {
 	return ab[0].bPending;
 }
+
+int CreatureInstance :: AIFillEnemyNear(int range, float x, float z,  CREATURE_PTR_SEARCH& enemies)
+{
+	for(size_t i = 0; i < actInst->PlayerListPtr.size(); i++)
+	{
+		if(ActiveInstance::GetPointRangeXZ(actInst->PlayerListPtr[i], x, z, range) > range)
+			continue;
+		if(_ValidTargetFlag(actInst->PlayerListPtr[i], TargetStatus::Enemy_Alive) == true)
+			enemies.push_back(actInst->PlayerListPtr[i]);
+	}
+	for(size_t i = 0; i < actInst->NPCListPtr.size(); i++)
+	{
+		if(ActiveInstance::GetPointRangeXZ(actInst->NPCListPtr[i], x, z, range) > range)
+			continue;
+		if(_ValidTargetFlag(actInst->NPCListPtr[i], TargetStatus::Enemy_Alive) == true)
+			enemies.push_back(actInst->NPCListPtr[i]);
+	}
+	for(size_t i = 0; i < actInst->SidekickListPtr.size(); i++)
+	{
+		if(ActiveInstance::GetPointRangeXZ(actInst->SidekickListPtr[i], x, z, range) > range)
+			continue;
+		if(_ValidTargetFlag(actInst->SidekickListPtr[i], TargetStatus::Enemy_Alive) == true)
+			enemies.push_back(actInst->NPCListPtr[i]);
+	}
+	return enemies.size();
+}
+
 
 int CreatureInstance :: AIFillCreaturesNear(int range, float x, float z, int playerAbilityRestrict, int npcAbilityRestrict, int sidekickAbilityRestrict, CREATURE_PTR_SEARCH& creatures)
 {
@@ -6551,11 +6326,9 @@ void CreatureInstance :: AIDispelTargetProperty(const char *propName, int sign)
 	targ->RemoveAbilityBuffWithStat(StatList[r].ID, static_cast<float>(sign));
 }
 
-void CreatureInstance :: AISetGTAE(void)
+
+void CreatureInstance :: AISetGTAETo(int x, int y, int z)
 {
-	int x = CurrentX;
-	int y = CurrentY;
-	int z = CurrentZ;
 	if(CurrentTarget.targ != NULL)
 	{
 		x = CurrentTarget.targ->CurrentX;
@@ -6565,6 +6338,11 @@ void CreatureInstance :: AISetGTAE(void)
 	ab[0].SetPosition(x, y, z);
 }
 
+
+void CreatureInstance :: AISetGTAE(void)
+{
+	AISetGTAETo(CurrentX, CurrentY, CurrentZ);
+}
 
 void CreatureInstance :: SendEffect(const char *effectName, int targetCID)
 {
@@ -7322,10 +7100,39 @@ int CreatureInstance :: ProcessQuestRewards(int QuestID, int outcomeIdx, const s
 			return -2;
 		}
 
-		InventorySlot *newItem = charPtr->inventory.AddItem_Ex(INV_CONTAINER, itemPtr->mID, count);
+		InventorySlot *newItem = NULL;
+		if(itemPtr->mType == ItemType::SPECIAL && itemPtr->mIvType1 == ItemIntegerType::QUEST_ID) {
+			/* Random quest rewards, so we roll for a different item */
+			VirtualItemSpawnParams params;
+			params.level = qd->levelSuggested;
+			params.rarity = itemPtr->mQualityLevel;
+			params.namedMob = false;
+			params.minimumQuality = itemPtr->mQualityLevel;
+			//params.dropRateProfile = g_DropRateProfileManager.GetProfileByName("");
+			params.ClampLimits();
+
+			int iid = g_ItemManager.RollVirtualItem(params);
+			if(iid != -1) {
+				newItem = charPtr->inventory.AddItem_Ex(INV_CONTAINER, iid, count);
+				if(newItem != NULL) {
+					char buffer[256];
+					Util::SafeFormat(buffer, sizeof(buffer), "Your mystery reward is .. %s", newItem->dataPtr->mDisplayName.c_str());
+					wpos += PrepExt_SendInfoMessage(&GSendBuf[wpos], buffer, INFOMSG_INFO);
+				}
+			}
+		}
+		else {
+			newItem = charPtr->inventory.AddItem_Ex(INV_CONTAINER, itemPtr->mID, count);
+		}
 		if(newItem != NULL) {
 			simulatorPtr->ActivateActionAbilities(newItem);
 			wpos += AddItemUpdate(&GSendBuf[wpos], GAuxBuf, newItem);
+		}
+		else
+		{
+			wpos += PrepExt_SendInfoMessage(&GSendBuf[wpos], "No item.", INFOMSG_ERROR);
+			simulatorPtr->AttemptSend(GSendBuf, wpos);
+			return -2;
 		}
 	}
 
@@ -7335,14 +7142,15 @@ int CreatureInstance :: ProcessQuestRewards(int QuestID, int outcomeIdx, const s
 	return 1;
 }
 
-int CreatureInstance :: QuestInteractObject(char *buffer, const char *text, float time, bool gather)
+int CreatureInstance :: QuestInteractObject(char *buffer, const char *text, int time, bool gather)
 {
 	Interrupt();
 	return PrepInteractObject(buffer, text, time, gather, CurrentTarget.targ);
 }
 
-int CreatureInstance :: PrepInteractObject(char *buffer, const char *text, float time, bool gather, CreatureInstance *targ)
+int CreatureInstance :: PrepInteractObject(char *buffer, const char *text, int time, bool gather, CreatureInstance *targ)
 {
+	g_Logs.server->debug("PrepInteractObject %v : %v : %v", text, time, gather ? "gather: " : "activate");
 
 	int wpos = 0;
 	wpos += PutByte(&buffer[wpos], 4);  //_handleCreatureEventMsg
@@ -7350,7 +7158,7 @@ int CreatureInstance :: PrepInteractObject(char *buffer, const char *text, float
 	wpos += PutInteger(&buffer[wpos], CreatureID);
 	wpos += PutByte(&buffer[wpos], 11);  //creature "used" event
 	wpos += PutStringUTF(&buffer[wpos], text);
-	wpos += PutFloat(&buffer[wpos], time);
+	wpos += PutInteger(&buffer[wpos], time);
 	PutShort(&buffer[1], wpos - 3);  //size
 
 	//We can't call RegisterCast, but the client doesn't have a corresponding
@@ -7391,7 +7199,7 @@ int CreatureInstance :: NormalInteractObject(char *outBuf, InteractObject *inter
 	wpos += PutInteger(&outBuf[wpos], CreatureID);
 	wpos += PutByte(&outBuf[wpos], 11);  //creature "used" event
 	wpos += PutStringUTF(&outBuf[wpos], interactObj->useMessage);
-	wpos += PutFloat(&outBuf[wpos], (float)interactObj->useTime);
+	wpos += PutInteger(&outBuf[wpos], interactObj->useTime);
 	PutShort(&outBuf[1], wpos - 3);  //size
 
 	//We can't call RegisterCast, but the client doesn't have a corresponding
@@ -7429,52 +7237,49 @@ void CreatureInstance :: CheckQuestInteract(CreatureInstance *target)
 		 * the creatures ExtraData. In this case, pick the first item they don't have and add it their
 		 * inventory
 		 */
-		STRINGLIST args;
-		STRINGLIST items;
-		Util::Split(cdef->ExtraData.c_str(), ",", args);
-		std::vector<string>::iterator it;
-		for(it = args.begin(); it != args.end(); ++it) {
-			items.clear();
-			Util::Split((*it).c_str(), "=", items);
-			if(items[0].compare("item") == 0) {
-				/* For now we only allow use if the player doesn't already have
-				 * the item. There could be other uses for this though. I'll
-				 * add logic as and when it's needed
-				 */
-				int id = Util::GetInteger(items[1]);
-				if(charPtr->inventory.GetItemPtrByID(id) == NULL) {
 
-					ItemDef *item = g_ItemManager.GetSafePointerByID(id);
-					if(item->mID == 0) {
+		for(std::vector<int>::iterator it = cdef->Items.begin(); it != cdef->Items.end(); ++it) {
+			/* For now we only allow use if the player doesn't already have
+			 * the item. There could be other uses for this though. I'll
+			 * add logic as and when it's needed
+			 */
+			int id = (*it);
+			if(charPtr->inventory.GetItemPtrByID(id) == NULL) {
+
+				ItemDef *item = g_ItemManager.GetSafePointerByID(id);
+				if(item->mID == 0) {
+					return;
+				}
+				else {
+					int slot = charPtr->inventory.GetFreeSlot(INV_CONTAINER);
+					char buf[512];
+					char buf2[256];
+					if(slot == -1) {
+						Util::SafeFormat(buf2, sizeof(buf2), "Cannot take book, your inventory is full.", item->mDisplayName.c_str());
+						int wpos = PrepExt_SendInfoMessage(buf, buf2, INFOMSG_INFO);
+						simulatorPtr->AttemptSend(buf, wpos);
 						return;
 					}
 					else {
-						int slot = charPtr->inventory.GetFreeSlot(INV_CONTAINER);
-						if(slot == -1) {
-							return;
-						}
-						else {
-							InventorySlot *sendSlot = charPtr->inventory.AddItem_Ex(INV_CONTAINER, item->mID, 1);
-							if(sendSlot != NULL) {
-								simulatorPtr->ActivateActionAbilities(sendSlot);
-								char buf2[256];
-								char buf[512];
-								int wpos = AddItemUpdate(buf, buf2, sendSlot);
-								Util::SafeFormat(buf2, sizeof(buf2), "You now have '%s' in your inventory.", item->mDisplayName.c_str());
-								wpos += PrepExt_SendInfoMessage(&buf[wpos], buf2, INFOMSG_INFO);
-								simulatorPtr->AttemptSend(buf, wpos);
-								target->_RemoveStatusList(StatusEffects::IS_USABLE);
-								static const short statList[3] = {STAT::APPEARANCE_OVERRIDE, STAT::LOOTABLE_PLAYER_IDS, STAT::LOOT_SEEABLE_PLAYER_IDS};
-								actInst->LSendToLocalSimulator(GSendBuf, PrepExt_SendSpecificStats(GSendBuf, target, &statList[0], 3), target->CurrentX, target->CurrentZ);
+						InventorySlot *sendSlot = charPtr->inventory.AddItem_Ex(INV_CONTAINER, item->mID, 1);
+						if(sendSlot != NULL) {
+							simulatorPtr->ActivateActionAbilities(sendSlot);
+							int wpos = AddItemUpdate(buf, buf2, sendSlot);
+							Util::SafeFormat(buf2, sizeof(buf2), "You now have '%s' in your inventory.", item->mDisplayName.c_str());
+							wpos += PrepExt_SendInfoMessage(&buf[wpos], buf2, INFOMSG_INFO);
+							simulatorPtr->AttemptSend(buf, wpos);
+							target->_RemoveStatusList(StatusEffects::IS_USABLE);
+							static const short statList[3] = {STAT::APPEARANCE_OVERRIDE, STAT::LOOTABLE_PLAYER_IDS, STAT::LOOT_SEEABLE_PLAYER_IDS};
+							actInst->LSendToLocalSimulator(GSendBuf, PrepExt_SendSpecificStats(GSendBuf, target, &statList[0], 3), target->CurrentX, target->CurrentZ);
 
-							}
 						}
 					}
-
-					break;
 				}
+
+				break;
 			}
 		}
+
 	}
 
 	int wpos = charPtr->questJournal.CreatureUse_Confirmed(CreatureID, GSendBuf, target->CreatureDefID, target->CreatureID);
@@ -7595,13 +7400,13 @@ float CreatureInstance :: GetDropRateMultiplier(CreatureDefinition *cdef)
 	float dropRateBonus = 1.0F;
 	if(cdef != NULL)
 	{
-		if(cdef->IsNamedMob() == true)
+		if(cdef->NamedMob)
 		{
 			if(g_Config.NamedMobDropMultiplier > 0.0F)
 				dropRateBonus *= g_Config.NamedMobDropMultiplier;
 		}
 
-		float extra = cdef->GetDropRateMult();
+		float extra = cdef->DropRateMult;
 		if(Util::FloatEquivalent(extra, 0.0F) == false)
 			dropRateBonus *= extra;
 	}
@@ -7689,7 +7494,7 @@ void CreatureInstance :: PlayerLoot(int level, std::vector<DailyProfile> profile
 				}
 			}
 
-			params.dropRateProfile = &g_DropRateProfileManager.GetProfileByName(profile.virtualItemReward.dropRateProfileName);
+			params.dropRateProfile = g_DropRateProfileManager.GetProfileByName(profile.virtualItemReward.dropRateProfileName);
 			params.ClampLimits();
 
 			int itemID = g_ItemManager.RollVirtualItem(params);
@@ -7738,7 +7543,7 @@ void CreatureInstance :: PlayerLoot(int level, std::vector<DailyProfile> profile
 		activeLootID = actInst->lootsys.AttachLootToCreature(loot, CreatureID);
 }
 
-void  CreatureInstance :: CreateLoot(int finderLevel)
+void  CreatureInstance :: CreateLoot(int finderLevel, int partySize)
 {
 	//Called whenever this creature dies.  Generates and associates a list of loot to this creature,
 	//if applicable.
@@ -7780,10 +7585,50 @@ void  CreatureInstance :: CreateLoot(int finderLevel)
 
 	params.level = css.level;
 	params.rarity = css.rarity;
-	params.namedMob = cdef->IsNamedMob();
-	params.dropRateProfile = actInst->GetDropRateProfile();
+	params.namedMob = cdef->NamedMob;
+
+	DropRateProfile dropRateProfile;
+	if(cdef->DropRateProfile.length() == 0 && actInst != NULL)
+		dropRateProfile.CopyFrom(g_DropRateProfileManager.GetProfileByName(actInst->mZoneDefPtr->GetDropRateProfile()));
+	else
+		dropRateProfile.CopyFrom(g_DropRateProfileManager.GetProfileByName(cdef->DropRateProfile));
+
+	params.dropRateProfile = dropRateProfile;
 	params.ClampLimits();
-	loot.AddItem(g_ItemManager.RollVirtualItem(params));
+
+
+	/* Decide how many random items to actually drop. This is determined by the
+	 * drop profile
+	 */
+	int amount = 0;
+	int amountMultiply = 1;
+	if(dropRateProfile.GetAmountChance(0) == -1) {
+		amountMultiply = partySize;
+	}
+
+	/* Work backwards from 6 items to 1, testing if there is a chance to get that
+	 * many items
+	 */
+	for(int i = 6 ; i >= 1 ; i--) {
+		int baseRoll = randint_32bit(1, VirtualItemModSystem::DROP_SHARES);
+		int compare = dropRateProfile.Amount.QData[i];
+		if(baseRoll <= compare) {
+			amount = i;
+			break;
+		}
+	}
+
+	/* Didn't get any amount, use the default? */
+	if(amount == 0 && dropRateProfile.GetAmountChance(0) > 0) {
+		/* Default amount is > 0, so use this as a default as none of the other levels have values */
+		amount = dropRateProfile.GetAmountChance(0);
+	}
+
+	amount *= amountMultiply;
+
+	for(int i = 0 ; i < amount; i++) {
+		loot.AddItem(g_ItemManager.RollVirtualItem(params));
+	}
 
 	//New drop system.  Uses the drop tables found in the Loot subfolder.
 	//Roll the drops then merge them into the single container that will be assigned
@@ -8827,7 +8672,18 @@ int CreatureDefManager :: LoadFile(const char *filename)
 			}
 			else if(strcmp(lfr.SecBuffer, "ExtraData") == 0)
 			{
-				newItem.ExtraData = lfr.BlockToStringC(1, 0);
+				ConfigString str(lfr.BlockToStringC(1, 0));
+				newItem.NamedMob = str.HasKey("namedmob");
+				newItem.DropRateMult = str.GetValueFloatOrDefault("dropratemult", 1);
+				newItem.DropRateProfile = "";
+				str.GetValueString("droprateprofile", newItem.DropRateProfile);
+				for(MULTISTRING::iterator it = str.mData.begin(); it != str.mData.end(); it++) {
+					STRINGLIST sl = *it;
+					if(sl[0].compare("item") == 0) {
+						newItem.Items.push_back(Util::GetInteger(sl[1].c_str()));
+					}
+				}
+
 			}
 			else if(strcmp(lfr.SecBuffer, "Effects") == 0)
 			{
@@ -9770,6 +9626,7 @@ int PrepExt_AbilityActivate(char *buffer, CreatureInstance *cInst, ActiveAbility
 
 int PrepExt_AbilityActivateEmpty(char *buffer, CreatureInstance *cInst, ActiveAbilityInfo *ability, int aevent)
 {
+
 	//Same as AbilityActivate, but target lists and ground are always zero.
 	//Used for the utility messages such as activation requests.
 

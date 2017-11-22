@@ -423,6 +423,11 @@ CreatureInstance * SpawnTile :: SpawnCreature(ActiveInstance *inst, ActiveSpawne
 				cOffset++;
 				break;
 			}
+			else if(p == 'k' || p == 'K')
+			{
+				SpawnFlags |= SpawnPackageDef::FLAG_KILLABLE;
+				cOffset++;
+			}
 			else
 				break;
 		}
@@ -554,7 +559,7 @@ CreatureInstance * SpawnTile :: SpawnCreature(ActiveInstance *inst, ActiveSpawne
 		if(strlen(spawner->spawnPoint->extraData->aiModule) > 0)
 			newItem.css.SetAIPackage(spawner->spawnPoint->extraData->aiModule);
 	}
-	
+	newItem.tetherFacing = facing;
 	newItem.Speed = 0;
 	newItem.Heading = facing;
 	newItem.Rotation = facing;
@@ -592,8 +597,9 @@ CreatureInstance * SpawnTile :: SpawnCreature(ActiveInstance *inst, ActiveSpawne
 		setFlags = true;
 	}
 
-	if(setFlags == true)
-	{
+	if(SpawnFlags & SpawnPackageDef::FLAG_KILLABLE)
+		ptr->SetServerFlag(ServerFlags::KillableProp, true);
+	else  if(setFlags == true) {
 		ptr->_AddStatusList(StatusEffects::INVINCIBLE, -1);
 		ptr->_AddStatusList(StatusEffects::UNATTACKABLE, -1);
 		ptr->_AddStatusList(StatusEffects::IS_USABLE, -1);
@@ -657,7 +663,7 @@ CreatureInstance * SpawnTile :: SpawnCreature(ActiveInstance *inst, ActiveSpawne
 	{
 		if(ptr->Faction == FACTION_PLAYERFRIENDLY || aggro == 0)
 			tryElite = false;
-		if(cdef->IsNamedMob() == true)
+		if(cdef->NamedMob)
 			tryElite = false;
 		if(inst->mZoneDefPtr->IsDungeon())
 			tryElite = false;
@@ -1596,6 +1602,7 @@ void CreatureSpawnDef :: copyFrom(CreatureSpawnDef *source)
 	memcpy(spawnName, source->spawnName, sizeof(spawnName));
 	leaseTime = source->leaseTime;
 	memcpy(spawnPackage, source->spawnPackage, sizeof(spawnPackage));
+	memcpy(dialog, source->dialog, sizeof(dialog));
 	mobTotal = source->mobTotal;
 	maxActive = source->maxActive;
 	memcpy(aiModule, source->aiModule, sizeof(aiModule));

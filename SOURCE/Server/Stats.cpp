@@ -294,6 +294,7 @@ StatusEffectBitInfo StatusEffectBitData[] = {
 	{StatusEffects::USABLE_BY_SCRIPT,      2, (1 << 2), "USABLE_BY_SCRIPT" },
 	{StatusEffects::FLOATING,              2, (1 << 3), "FLOATING" },
 	{StatusEffects::HOVERING,              2, (1 << 4), "HOVERING" },
+	{StatusEffects::LEECHING,      		   2, (1 << 5), "LEECHING" },
 };
 const int MAX_STATUSEFFECT = sizeof(StatusEffectBitData) / sizeof(StatusEffectBitInfo);
 

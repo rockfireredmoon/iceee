@@ -332,8 +332,14 @@ void LoadConfig(const char *filename) {
 				g_Config.UseMessageBox = lfr.BlockToBool(1);
 			else if (strcmp(NameBlock, "UseStopSwim") == 0)
 				g_Config.UseStopSwim = lfr.BlockToBool(1);
+			else if (strcmp(NameBlock, "UseWeather") == 0)
+				g_Config.UseWeather = lfr.BlockToBool(1);
+			else if (strcmp(NameBlock, "UseReagents") == 0)
+				g_Config.UseReagents = lfr.BlockToBool(1);
 			else if (strcmp(NameBlock, "InvalidLoginMessage") == 0)
 				g_Config.InvalidLoginMessage = lfr.BlockToStringC(1, 0);
+			else if(strcmp(NameBlock, "MaintenanceMessage") == 0)
+				g_Config.MaintenanceMessage = lfr.BlockToStringC(1, 0);
 			else if (strcmp(NameBlock, "GitHubToken") == 0)
 				g_Config.GitHubToken = lfr.BlockToStringC(1, 0);
 			else if (strcmp(NameBlock, "ServiceAuthURL") == 0)
@@ -427,7 +433,12 @@ void LoadConfig(const char *filename) {
 				g_Config.ShutdownHandlerScript = lfr.BlockToStringC(1, 0);
 			else if (strcmp(NameBlock, "MaxNewCreditShopItemDays") == 0)
 				g_Config.MaxNewCreditShopItemDays = lfr.BlockToFloatC(1);
-
+			else if (strcmp(NameBlock, "StaticDataPath") == 0)
+				g_Config.StaticDataPath = lfr.BlockToStringC(1, 0);
+			else if (strcmp(NameBlock, "VariableDataPath") == 0)
+				g_Config.VariableDataPath = lfr.BlockToStringC(1, 0);
+			else if (strcmp(NameBlock, "UserDataPath") == 0)
+				g_Config.UserDataPath = lfr.BlockToStringC(1, 0);
 			else {
 				g_Logs.data->error("Unknown identifier [%v] in config file [%v]",
 						lfr.BlockToString(0), filename);
@@ -608,9 +619,12 @@ GlobalConfigData::GlobalConfigData() {
 	UseIntegerHealth = false;
 	UseMessageBox = false;
 	UseStopSwim = false;
+	UseWeather = false;
+	UseReagents = false;
 
 	VerifyMovement = false;
 	DebugLogAIScriptUse = false;
+	DebugVerbose = false;
 
 	SquirrelGCCallCount = 1000;
 	SquirrelGCDelay = 10000;
@@ -643,6 +657,7 @@ GlobalConfigData::GlobalConfigData() {
 	APIAuthentication = "api:api";
 
 	InvalidLoginMessage = "Account not found.  Check username and password.";
+	MaintenanceMessage = "";
 
 	HTTPKeepAlive = 0;
 	DirectoryListing = false;
@@ -660,9 +675,29 @@ GlobalConfigData::GlobalConfigData() {
 	MaxNewCreditShopItemDays = 14;
 
 	ShutdownHandlerScript = "";
+
+	StaticDataPath = "";
+	VariableDataPath = "";
+	UserDataPath = "";
 }
 
 GlobalConfigData::~GlobalConfigData() {
+}
+
+std::string GlobalConfigData::ResolveStaticDataPath() {
+	return ResolvePath(StaticDataPath);
+}
+
+std::string GlobalConfigData::ResolveVariableDataPath() {
+	return ResolvePath(VariableDataPath);
+}
+
+std::string GlobalConfigData::ResolveUserDataPath() {
+	return ResolvePath(UserDataPath);
+}
+
+std::string GlobalConfigData::ResolvePath(std::string path) {
+	return path;
 }
 
 bool GlobalConfigData::RemotePasswordMatch(const char *value) {

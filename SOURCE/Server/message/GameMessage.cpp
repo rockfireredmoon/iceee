@@ -28,6 +28,7 @@
 #include "../Debug.h"
 #include "../DebugProfiler.h"
 #include "../Config.h"
+#include "../ScriptCore.h"
 #include "../util/Log.h"
 #include "../http/SiteClient.h"
 
@@ -717,6 +718,7 @@ int SwimStateChangeMessage::handleMessage(SimulatorThread *sim, CharacterServerD
 	if (swim && creatureInstance->IsTransformed()) {
 		creatureInstance->Untransform();
 	}
+	return 0;
 }
 
 //
@@ -733,48 +735,25 @@ int DisconnectMessage::handleMessage(SimulatorThread *sim, CharacterServerData *
 }
 
 //
-//DebugServerPingMessage
+//MouseClickMessage
 //
-int DebugServerPingMessage::handleMessage(SimulatorThread *sim, CharacterServerData *pld,
+int MouseClickMessage::handleMessage(SimulatorThread *sim, CharacterServerData *pld,
 		SimulatorQuery *query, CreatureInstance *creatureInstance) {
+	int mouseX = GetInteger(&sim->readPtr[sim->ReadPos], sim->ReadPos);
+	int mouseY = GetInteger(&sim->readPtr[sim->ReadPos], sim->ReadPos);
+	int mouseZ = GetInteger(&sim->readPtr[sim->ReadPos], sim->ReadPos);
 
-	//Received response from a diagnostic ping initiated by the server (to a modded client).
-	//Verify the data and notify the user if necessary.
+	std::vector<ScriptCore::ScriptParam> p;
+	p.push_back(ScriptCore::ScriptParam(mouseX));
+	p.push_back(ScriptCore::ScriptParam(mouseY));
+	p.push_back(ScriptCore::ScriptParam(mouseZ));
 
-	int MessageID = GetInteger(&sim->readPtr[sim->ReadPos], sim->ReadPos);
-	int InitialSendTime = GetInteger(&sim->readPtr[sim->ReadPos], sim->ReadPos);
-
-	int TimeDiff = static_cast<int>(g_ServerTime - g_ServerLaunchTime)
-			- InitialSendTime;
-
-	pld->DebugPingServerLastMsgReceived = MessageID;
-	pld->DebugPingServerTotalMsgReceived++;
-	pld->DebugPingServerTotalReceived++;
-	pld->DebugPingServerTotalTime += TimeDiff;
-
-	if ((TimeDiff < pld->DebugPingServerLowest)
-			|| (pld->DebugPingServerLowest == 0))
-		pld->DebugPingServerLowest = TimeDiff;
-	else if ((TimeDiff > pld->DebugPingServerHighest)
-			|| (pld->DebugPingServerHighest == 0))
-		pld->DebugPingServerHighest = TimeDiff;
-
-	if ((pld->DebugPingServerNotifyTime != 0)
-			&& (TimeDiff > pld->DebugPingServerNotifyTime)) {
-		sprintf(sim->Aux1, "Server detected a ping of %d ms", TimeDiff);
-		sim->SendInfoMessage(sim->Aux1, INFOMSG_INFO);
+	if(creatureInstance != NULL && creatureInstance->actInst != NULL && creatureInstance->actInst->nutScriptPlayer != NULL && creatureInstance->actInst->nutScriptPlayer->mActive) {
+		creatureInstance->actInst->nutScriptPlayer->mCaller = creatureInstance->CreatureID;
+		creatureInstance->actInst->nutScriptPlayer->JumpToLabel("on_click", p);
+		creatureInstance->actInst->nutScriptPlayer->mCaller = 0;
 	}
-	if (TimeDiff >= g_Config.DebugPingServerLogThreshold) {
-		const char *name = "<unknown>";
-		if (creatureInstance != NULL)
-			name = creatureInstance->css.display_name;
-		int severity = TimeDiff / 1000;
-		unsigned long sec =
-				static_cast<unsigned long>(g_PlatformTime.getAbsoluteSeconds());
-		g_Logs.simulator->warn(
-				"[%d] [PING]%s|ID:%d|sTime:%d|Time:%lu|Difference:%lu|Severity:%02d",
-				sim->InternalID, name, MessageID, InitialSendTime, sec, TimeDiff,
-				severity);
-	}
+
+	return 0;
 }
 

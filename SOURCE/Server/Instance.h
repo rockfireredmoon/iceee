@@ -8,6 +8,7 @@
 
 #include <vector>
 #include <list>
+#include <string>
 
 #include "BroadCast.h"
 #include "ActiveCharacter.h" //For CharacterServerData class definition
@@ -109,6 +110,7 @@ public:
 	int CreateMap(void);
 	int SearchMap(const char *primary, int xpos, int ypos);
 	int GetIndexByName(const char *name, const char *type);
+	void GetZone(const char *name, std::vector<MapDefInfo> &defs);
 	int LoadFile(const char *fileName);
 	void FreeList(void);
 };
@@ -172,6 +174,7 @@ public:
 	vector<MapLocationSet> mLocationSet;
 	int AddLocation(int zone, MapLocationDef &data);
 	int ZoneExist(int zone);
+	void GetZone(int zone, std::vector<MapLocationDef> &defs);
 	int SearchLocation(int zone, int x, int z);
 	const char* GetInternalMapName(int zone, int x, int z);
 	int ResolveItems(void);
@@ -235,6 +238,8 @@ public:
 	int mOwnerCreatureDefID;  //This is the DefID of the player who created this instance (actived for Instance-type zones)
 	int mOwnerPartyID;        //If nonzero, this instance (if a dungeon) will be assigned ownership to a party ID to assist in lookups when placing players into dungeons.
 	std::string mOwnerName;   //The owner's display_name.
+	std::string mEnvironment; //overridden environment
+	std::string mTimeOfDay; // overriden time of day
 	unsigned long mLastHealthUpdate;  //Time of the last health increment.  TODO: OBSOLETE
 	unsigned long mNextCreatureBroadcast;
 	unsigned long mLastMovementUpdate;
@@ -287,7 +292,6 @@ public:
 
 	ScaleConfig scaleConfig;
 	const InstanceScaleProfile *scaleProfile;
-	const DropRateProfile *dropRateProfile;
 	float mDropRateBonusMultiplier;   //Progressive drop rate multiplier, increased slightly per mob kill.  Only applies to dungeons.
 	int mKillCount;                   //Total kill count of the dungeon.  No purpose than some generic tracking.
 	
@@ -300,6 +304,9 @@ public:
 	UniqueSpawnManager uniqueSpawnManager;
 
 	WorldMarkerContainer worldMarkers;
+
+	std::vector<WeatherState*> mWeather;
+
 
 	CreatureInstance * GetPlayerByID(int id);  //Searches PlayerList for a character ID, return pointer
 	CreatureInstance * GetPlayerByCDefID(int CDefID);  //All player characters have unique creatureDefs.
@@ -398,20 +405,23 @@ public:
 	QuestScript::QuestScriptPlayer* GetSimulatorQuestScript(SimulatorThread *simulatorPtr);
 	QuestScript::QuestNutPlayer* GetSimulatorQuestNutScript(SimulatorThread *simulatorPtr);
 	void RunProcessingCycle(void);
-	void UpdateEnvironmentCycle(const char *timeOfDay);
+	void UpdateEnvironmentCycle(std::string timeOfDay);
 	bool KillScript();
 	bool RunScript(std::string &errors);
 	void ScriptCallPackageKill(const char *name);
 	void ScriptCallKill(int CreatureDefID, int CreatureID);
 	bool ScriptCallUse(int sourceCreatureID, int usedCreatureID, int usedCreatureDefID, bool defaultIfNoFunction);
+	bool QueueCallUsed(int sourceCreatureID, int usedCreatureID, int usedCreatureDefID, int time);
 	void ScriptCallUseHalt(int sourceCreatureID, int usedCreatureDefID);
 	void ScriptCallUseFinish(int sourceCreatureID, int usedCreatureDefID, int usedCreaturedID);
 	bool ScriptCall(const char *name);
 	void FetchNearbyCreatures(SimulatorThread *simPtr, CreatureInstance *player);
 	void RunObjectInteraction(SimulatorThread *simPtr, int CDef);
 	void ApplyCreatureScale(CreatureInstance *target);
-	const DropRateProfile* GetDropRateProfile(void);
-
+	std::string GetEnvironment(int x, int y);
+	std::string GetTimeOfDay();
+	void SetTimeOfDay(std::string timeOfDay);
+	void SetEnvironment(std::string environment);
 	int CountAlive(int creatureDefID);
 	void LoadStaticObjects(const char *filename);
 
@@ -464,6 +474,20 @@ public:
 	void CheckActiveInstances(void);
 	void DebugFlushInactiveInstances(void);
 	void Clear(void);
+};
+
+
+class OnUsedCallback : public ScriptCore::NutCallback
+{
+public:
+	ActiveInstance *mInstance;
+
+	int mSourceCreatureID;
+	int mUsedCreatureDefID;
+	int mUsedCreatureID;
+	OnUsedCallback(ActiveInstance *mInstance, int sourceCreatureID, int usedCreatureDefID, int usedCreatureID);
+	~OnUsedCallback();
+	bool Execute();
 };
 
 extern MapDefContainer MapDef;

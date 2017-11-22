@@ -819,13 +819,43 @@ int SimulatorThread::ItemMorph(bool command) {
 	unsigned long newLook = strtol(query.args[1].c_str(), NULL, 16);
 	int creatureID = strtol(query.args[2].c_str(), NULL, 10);
 
+	InventorySlot * reagentPtr = NULL;
+	ItemDef * reagentDef = NULL;
+
 	// Run a distance check for a normal query->  The /refashion command
 	// also uses this function but with a spoofed query->
+
+	bool free = false;
+	bool unstack = false;
 	if (command == false) {
-		// Make sure this object isn't too far away.
-		int distCheck = CheckDistance(creatureID);
-		if (distCheck != 0)
-			return distCheck;
+		/* If the refashioner is the player themselves, then make sure they have
+		 * a refashioning device
+		 */
+		if(creatureID == creatureInst->CreatureID) {
+			free = true;
+			reagentPtr = pld.charPtr->inventory.GetBestSpecialItem(GetContainerIDFromName("inv"), PORTABLE_REFASHIONER);
+			if(reagentPtr == NULL) {
+				return QueryErrorMsg::NOREFASHION;
+			}
+			else {
+				reagentDef = g_ItemManager.GetPointerByID(reagentPtr->IID);
+				if(reagentDef == NULL) {
+					return QueryErrorMsg::NOREFASHION;
+				}
+
+
+				/* Ok to refashion. If item is stackable, then the stack is decreased too (one-off refashion items) */
+				if(reagentPtr->ResolveItemPtr()->mIvMax1 > 1 && reagentPtr->GetStackCount() > 0) {
+					unstack = true;
+				}
+			}
+		}
+		else {
+			// Make sure this object isn't too far away.
+			int distCheck = CheckDistance(creatureID);
+			if(distCheck != 0)
+				return distCheck;
+		}
 	}
 
 	InventorySlot * origPtr = pld.charPtr->inventory.GetItemPtrByCCSID(
@@ -839,7 +869,7 @@ int SimulatorThread::ItemMorph(bool command) {
 	if (itemPtr1 == NULL || itemPtr2 == NULL)
 		return QueryErrorMsg::INVALIDITEM;
 
-	int cost = (itemPtr1->mValue + itemPtr2->mValue) / 2;
+	int cost = free ? 0 : (itemPtr1->mValue + itemPtr2->mValue) / 2;
 	if (creatureInst->css.copper < cost)
 		return QueryErrorMsg::COIN;
 	creatureInst->css.copper -= cost;
@@ -867,6 +897,13 @@ int SimulatorThread::ItemMorph(bool command) {
 
 	wpos += RemoveItemUpdate(&SendBuf[wpos], Aux3, newPtr);
 	pld.charPtr->inventory.RemItem(newLook);
+	if(reagentDef != NULL) {
+		Util::SafeFormat(Aux3, sizeof(Aux3), "You have used 1 %s.", reagentDef->mDisplayName.c_str());
+		wpos += PrepExt_SendInfoMessage(&SendBuf[wpos], Aux3, INFOMSG_INFO);
+		/* This refashion is taking up a reagent of sorts, a portable refashioner */
+		wpos += pld.charPtr->inventory.RemoveItemsAndUpdate(INV_CONTAINER, reagentDef->mID, 1, &SendBuf[wpos]);
+	}
+
 	wpos += AddItemUpdate(&SendBuf[wpos], Aux3, origPtr);
 
 	wpos += PrepExt_QueryResponseString(&SendBuf[wpos], query.ID, "OK");
@@ -1398,7 +1435,6 @@ void SimulatorThread::SetPersona(int personaIndex) {
 
 	//The zone change updates the map, but need to resend again otherwise the
 	//terrain won't load when you first log in.
-	SendSetMap();
 	UpdateSocialEntry(true, false);
 	UpdateSocialEntry(true, true);
 	BroadcastShardChanged();
@@ -1481,6 +1517,10 @@ bool SimulatorThread::MainCallSetZone(int newZoneID, int newInstanceID,
 	g_Logs.simulator->info("[%v] Attempting to set zone: %v", InternalID,
 			newZoneID);
 
+	if(newZoneID == 0) {
+		return false;
+	}
+
 	if (pld.zoneDef != NULL) {
 		//Don't do anything if already in the required zone.
 		if (newZoneID == pld.zoneDef->mID && newInstanceID == 0)
@@ -1522,7 +1562,10 @@ bool SimulatorThread::MainCallSetZone(int newZoneID, int newInstanceID,
 	Util::SafeFormat(pld.CurrentZone, sizeof(pld.CurrentZone), "[%d-%d-0]",
 			pld.CurrentInstanceID, pld.CurrentZoneID);
 	pld.LastMapTick = MapTickChange;
-	SendZoneInfo();
+
+	int wpos = PrepExt_SendEnvironmentUpdateMsg(SendBuf, creatureInst->actInst, pld.CurrentZone, pld.zoneDef, creatureInst->CurrentX, creatureInst->CurrentZ, 0);
+	wpos += PrepExt_SetTimeOfDay(&SendBuf[wpos], GetTimeOfDay().c_str());
+	AttemptSend(SendBuf, wpos);
 
 	CheckSpawnTileUpdate(true);
 
@@ -1550,7 +1593,6 @@ bool SimulatorThread::ProtectedSetZone(int newZoneID, int newInstanceID) {
 	//The function originally had thread potection when using a faulty method of threading.
 	//Returns false if the operation failed.
 	MainCallSetZone(newZoneID, newInstanceID, false);
-
 	return ValidPointers();
 }
 
@@ -1786,77 +1828,16 @@ void SimulatorThread::MainCallHelperInstanceRegister(int ZoneID,
 	}
 }
 
-void SimulatorThread::SendZoneInfo(void) {
-	//Sends zone information to the client.  This includes terrain and
-	//environment info.
+std::string SimulatorThread :: GetTimeOfDay(void)
+{
+	if(CheckPermissionSimple(Perm_Account, Permission_Troll))
+		return "Day";
 
-	if (creatureInst == NULL) {
-		g_Logs.simulator->error("[%v] SendSetMap() creature instance is NULL",
-				InternalID);
-		return;
-	}
-	if (creatureInst->actInst == NULL) {
-		g_Logs.simulator->error(
-				"[%d] SendSetMap() creature active instance is NULL",
-				InternalID);
-		return;
+	if(creatureInst != NULL) {
+		return creatureInst->actInst->GetTimeOfDay().c_str();
 	}
 
-	int wpos = PrepExt_SendEnvironmentUpdateMsg(SendBuf, pld.CurrentZone,
-			pld.zoneDef, creatureInst->CurrentX, creatureInst->CurrentZ);
-	AttemptSend(SendBuf, wpos);
-
-	SendTimeOfDay(NULL);
-}
-
-const char * SimulatorThread::GetTimeOfDay(void) {
-	static const char *DEFAULT = "Day";
-
-	if (CheckPermissionSimple(Perm_Account, Permission_Troll))
-		return DEFAULT;
-
-	if (pld.zoneDef == NULL)
-		return DEFAULT;
-
-	//If the environment time string is null, attempt to find the active time for the
-	//current zone, if applicable.
-	if (pld.zoneDef->mEnvironmentCycle == true)
-		return g_EnvironmentCycleManager.GetCurrentTimeOfDay();
-
-	return DEFAULT;
-}
-
-void SimulatorThread::SendTimeOfDay(const char *envType) {
-	/*
-	 if(CheckPermissionSimple(Perm_Account, Permission_Troll))
-	 envType = "Day";
-
-	 if(pld.zoneDef == NULL)
-	 return;
-
-	 //If the environment time string is null, attempt to find the active time for the
-	 //current zone, if applicable.
-	 if(envType == NULL)
-	 {
-	 if(pld.zoneDef->mEnvironmentCycle == false)
-	 return;
-
-	 envType = g_EnvironmentCycleManager.GetCurrentTimeOfDay();
-	 }
-
-	 if(envType == NULL)
-	 return;
-	 */
-
-	//If not specified (NULL), get the current string from the zone.  If still NULL, there's nothing
-	//to send.
-	if (envType == NULL)
-		envType = GetTimeOfDay();
-	if (envType == NULL)
-		return;
-
-	int wpos = PrepExt_SendTimeOfDayMsg(SendBuf, envType);
-	AttemptSend(SendBuf, wpos);
+	return "Day";
 }
 
 void SimulatorThread::CheckMapUpdate(bool force) {
@@ -1886,6 +1867,11 @@ void SimulatorThread::CheckMapUpdate(bool force) {
 				SendInfoMessage(
 						MapDef.mMapList[pld.CurrentMapInt].image.c_str(),
 						INFOMSG_MAPNAME);
+
+				WeatherState *ws = g_WeatherManager.GetWeather(MapDef.mMapList[pld.CurrentMapInt].Name, pld.CurrentInstanceID);
+				if(ws != NULL) {
+					AttemptSend(SendBuf, PrepExt_SetWeather(SendBuf, ws->mWeatherType, ws->mWeatherWeight));
+				}
 			}
 		} else {
 			//Most instances and smaller maps don't have specific regions, so reset the
@@ -1894,19 +1880,13 @@ void SimulatorThread::CheckMapUpdate(bool force) {
 
 			SendInfoMessage(pld.zoneDef->mName.c_str(), INFOMSG_LOCATION);
 			SendInfoMessage(pld.zoneDef->mShardName.c_str(), INFOMSG_SHARD);
-		}
 
-		// EM - Added this for tile specific environments, the message always gets sent,
-		// hopefully the client will ignore it if the environment is already correct
-		if (creatureInst != NULL) {
-			std::string * tEnv = pld.zoneDef->GetTileEnvironment(
-					creatureInst->CurrentX, creatureInst->CurrentZ);
-			if (strcmp(tEnv->c_str(), pld.CurrentEnv) != 0) {
-				g_Logs.simulator->info("Sending environment change to %v",
-						tEnv->c_str());
-				SendSetMap();
+			WeatherState *ws = g_WeatherManager.GetWeather(pld.zoneDef->mName, pld.CurrentInstanceID);
+			if(ws != NULL) {
+				AttemptSend(SendBuf, PrepExt_SetWeather(SendBuf, ws->mWeatherType, ws->mWeatherWeight));
 			}
 		}
+
 	}
 }
 
@@ -2009,37 +1989,6 @@ void SimulatorThread::AddMessage(long param1, long param2, int message) {
 }
 
 void SimulatorThread::SendSetMap(void) {
-	if (creatureInst == NULL) {
-		g_Logs.simulator->error("[%v] SendSetMap() creature instance is NULL",
-				InternalID);
-		return;
-	}
-	if (creatureInst->actInst == NULL) {
-		g_Logs.simulator->error(
-				"[%d] SendSetMap() creature active instance is NULL",
-				InternalID);
-		return;
-	}
-
-	int wpos = 0;
-	wpos += PutByte(&SendBuf[wpos], 42);   //_handleEnvironmentUpdateMsg
-	wpos += PutShort(&SendBuf[wpos], 0);
-
-	wpos += PutByte(&SendBuf[wpos], 1);   //Mask
-
-	wpos += PutStringUTF(&SendBuf[wpos], pld.CurrentZone);    //zoneID
-	wpos += PutInteger(&SendBuf[wpos], pld.zoneDef->mID);      //zoneDefID
-	wpos += PutShort(&SendBuf[wpos], pld.zoneDef->mPageSize);  //zonePageSize
-	wpos += PutStringUTF(&SendBuf[wpos], pld.zoneDef->mTerrainConfig.c_str()); //Terrain
-	std::string * tEnv = pld.zoneDef->GetTileEnvironment(creatureInst->CurrentX,
-			creatureInst->CurrentZ);
-	wpos += PutStringUTF(&SendBuf[wpos], tEnv->c_str());   //envtype
-	wpos += PutStringUTF(&SendBuf[wpos], pld.zoneDef->mMapName.c_str()); //mapName
-
-	strcpy(pld.CurrentEnv, tEnv->c_str());
-
-	PutShort(&SendBuf[1], wpos - 3);       //Set message size
-	AttemptSend(SendBuf, wpos);
 }
 
 
@@ -2080,6 +2029,7 @@ void SimulatorThread::SetPosition(int xpos, int ypos, int zpos, int update) {
 			size += PrepExt_GeneralMoveUpdate(&SendBuf[size], creatureInst);
 			if (g_Config.UseStopSwim == true)
 				size += PrepExt_ModStopSwimFlag(&SendBuf[size], false);
+			size += PrepExt_VelocityEvent(&SendBuf[size], creatureInst);
 			AttemptSend(SendBuf, size);
 		} else {
 			int size = PrepExt_UpdateFullPosition(SendBuf, creatureInst);
@@ -2087,6 +2037,8 @@ void SimulatorThread::SetPosition(int xpos, int ypos, int zpos, int update) {
 				size += PrepExt_ModStopSwimFlag(&SendBuf[size], false);
 			creatureInst->actInst->LSendToLocalSimulator(SendBuf, size,
 					creatureInst->CurrentX, creatureInst->CurrentZ);
+			AddMessage((long)creatureInst, 0, BCM_UpdateVelocity);
+			AttemptSend(SendBuf, PrepExt_VelocityEvent(SendBuf, creatureInst));
 		}
 
 		int r = pld.charPtr->questJournal.CheckTravelLocations(
@@ -2306,8 +2258,11 @@ int SimulatorThread::SendInventoryData(std::vector<InventorySlot> &cont) {
 	int batch = 0; //Count of the number of items contained in this batch of requests.
 	int wpos = 0;  //Current Write position
 	while (proc < count) {
-		wpos += AddItemUpdate(&SendBuf[wpos], Aux3, &cont[proc]);
-		proc++;
+		InventorySlot *slot = &cont[proc];
+		if(slot->secondsRemaining == -1 || !slot->IsExpired()) {
+			wpos += AddItemUpdate(&SendBuf[wpos], Aux3, slot);
+			proc++;
+		}
 		batch++;
 		tproc++;
 		if (batch > 20) {
@@ -2684,7 +2639,7 @@ bool SimulatorThread::HasPropEditPermission(SceneryObject *prop, float x,
 		checkZ = prop->LocationZ;
 	}
 
-	if (pld.accPtr->CheckBuildPermissionAdv(pld.zoneDef->mID,
+	if (CheckPermissionSimple(Perm_Account, Permission_Admin) || pld.accPtr->CheckBuildPermissionAdv(pld.zoneDef->mID,
 			pld.zoneDef->mPageSize, checkX, checkZ) == true)
 		return true;
 
@@ -3210,8 +3165,9 @@ void SimulatorThread::WarpToZone(ZoneDefInfo *zoneDef, int xOverride,
 
 	SetPosition(creatureInst->CurrentX, creatureInst->CurrentY,
 			creatureInst->CurrentZ, 1);
+
 	MainCallSetZone(zoneDef->mID, 0, false);
-	if (ValidPointers() == false) {
+	if(ValidPointers() == false) {
 		ForceErrorMessage("Critical error while changing zones.",
 				INFOMSG_ERROR);
 		Disconnect("SimulatorThread::WarpToZone");
@@ -3541,23 +3497,49 @@ void SimulatorThread::RunPortalRequest(void) {
 		return;
 	}
 
-	InteractObject *iobj = g_InteractObjectContainer.GetHengeByTargetName(
-			pld.PortalRequestDest);
-	if (iobj == NULL) {
-		Util::SafeFormat(Aux1, sizeof(Aux1),
-				"Portal request target not found: %s", pld.PortalRequestDest);
-		g_Logs.simulator->warn("[%v] %v", InternalID, Aux1);
+	int zone = 0;
+	int x;
+	int y;
+	int z;
+
+	if(pld.PortalRequestType == 0) {
+
+		InteractObject *iobj = g_InteractObjectContainer.GetHengeByTargetName(pld.PortalRequestDest);
+		if(iobj == NULL)
+		{
+			g_Logs.server->warn("Portal request target not found: %v", pld.PortalRequestDest);
+			SendInfoMessage(Aux1, INFOMSG_ERROR);
+			return;
+		}
+
+		zone = iobj->WarpID;
+		x = iobj->WarpX;
+		y = iobj->WarpY;
+		z = iobj->WarpZ;
+	}
+	else if(pld.PortalRequestType == 1) {
+		SimulatorThread *sim = GetSimulatorByCharacterName(pld.PortalRequestDest);
+		if(sim == NULL  || sim->LoadStage != LOADSTAGE_GAMEPLAY) {
+			g_Logs.server->warn("Portal request target not found: %v", pld.PortalRequestDest);
+			SendInfoMessage(Aux1, INFOMSG_ERROR);
+			return;
+		}
+		x = sim->creatureInst->CurrentX + randmodrng(5, 20);
+		y = sim->creatureInst->CurrentY;
+		z = sim->creatureInst->CurrentZ + randmodrng(5, 20);
+		zone =sim->creatureInst->actInst->mZone;
+	}
+	else {
+		g_Logs.server->warn("Portal request type not found: %v (%v)", pld.PortalRequestDest, pld.PortalRequestType);
 		SendInfoMessage(Aux1, INFOMSG_ERROR);
 		return;
 	}
 
 	int wpos = PrepExt_RemoveCreature(SendBuf, creatureInst->CreatureID);
-	creatureInst->actInst->LSendToLocalSimulator(SendBuf, wpos,
-			creatureInst->CurrentX, creatureInst->CurrentZ, InternalID);
+	creatureInst->actInst->LSendToLocalSimulator(SendBuf, wpos, creatureInst->CurrentX, creatureInst->CurrentZ, InternalID);
 
-	MainCallSetZone(iobj->WarpID, 0, false);
-
-	SetPosition(iobj->WarpX, iobj->WarpY, iobj->WarpZ, 1);
+	MainCallSetZone(zone, 0, false);
+	SetPosition(x, y, z, 1);
 	CheckSpawnTileUpdate(true);
 	CheckMapUpdate(true);
 	pld.ClearPortalRequestDest();
@@ -3932,6 +3914,9 @@ void SimulatorThread::SendAbilityErrorMessage(int abilityErrorCode) {
 	case Ability2::ABILITY_NEARBY_SANCTUARY:
 		messageStr = "You are not near a sanctuary.";
 		break;
+	case Ability2::ABILITY_REAGENTS:
+		messageStr = "You do not have enough reagents of the right type to use this ability.";
+		break;
 	}
 
 	if (messageStr == NULL)
@@ -4302,13 +4287,19 @@ void SimulatorThread::CheckIfLootReadyToDistribute(ActiveLootContainer *loot,
 					"[%v] There is now %v items in loot container %v.",
 					InternalID, loot->itemList.size(), loot->CreatureID);
 
+			/* Reset the loot tags etc, we don't need them anymore.
+			 * NOTE: Be careful not to use the lootTag object after this point as it may have been
+			 * deleted.
+			 */
+			int lootCreatureID = lootTag->mLootCreatureId;
+			ResetLoot(party, loot, lootTag->mItemId);
+
 			if (loot->itemList.size() == 0) {
 				ClearLoot(party, loot);
 
 				// Loot container now empty, remove it
 				CreatureInstance *lootCreature =
-						creatureInst->actInst->GetNPCInstanceByCID(
-								lootTag->mLootCreatureId);
+						creatureInst->actInst->GetNPCInstanceByCID(lootCreatureID);
 				if (lootCreature != NULL) {
 					lootCreature->activeLootID = 0;
 					lootCreature->css.ClearLootSeeablePlayerIDs();
@@ -4326,23 +4317,16 @@ void SimulatorThread::CheckIfLootReadyToDistribute(ActiveLootContainer *loot,
 							WritePos, creatureInst->CurrentX,
 							creatureInst->CurrentZ);
 				}
-				creatureInst->actInst->lootsys.RemoveCreature(
-						lootTag->mLootCreatureId);
+				creatureInst->actInst->lootsys.RemoveCreature(lootCreatureID);
 
 				g_Logs.simulator->warn(
 						"[%v] Loot %v is now empty (%v tags now in the party).",
 						InternalID, loot->CreatureID, party->lootTags.size());
 			}
 
-			if (newItem != NULL && receivingCreature != NULL) {
+			if (newItem != NULL && receivingCreature != NULL)
 				// Send an update to the actual of the item
-				WritePos = AddItemUpdate(SendBuf, Aux3, newItem);
-				receivingCreature->actInst->LSendToOneSimulator(SendBuf,
-						WritePos, receivingCreature->simulatorPtr);
-			}
-
-			// Reset the loot tags etc, we don't need them anymore
-			ResetLoot(party, loot, lootTag->mItemId);
+				receivingCreature->actInst->LSendToOneSimulator(SendBuf,  AddItemUpdate(SendBuf, Aux3, newItem), receivingCreature->simulatorPtr);
 		}
 	} else {
 		g_Logs.simulator->info("[%v] Loot %v not ready yet to distribute",

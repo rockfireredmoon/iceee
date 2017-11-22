@@ -64,6 +64,7 @@ public:
 	char spawnName[48];      //Internal name for this spawner entity
 	int leaseTime;           //Original purpose unknown... spawn delay?
 	char spawnPackage[56];   //Package to base spawn types on
+	char dialog[56];   		 //Name of NPC Dialog file
 	int mobTotal;            //Total mobs (including dead?) that can be anchored to this point?
 	int maxActive;           //Total active that can be anchored to this point?
 	char aiModule[48];       //Unused?
@@ -191,6 +192,7 @@ public:
 	static const int FLAG_USABLE_BY_COMBATANT = 1024;
 	static const int FLAG_HIDE_NAMEBOARD = 2048;
 	static const int FLAG_STATIONARY = 4096;
+	static const int FLAG_KILLABLE = 8192;
 
 	static const int MAX_SPAWNCOUNT = 12;
 	static const int DEFAULT_MAXSHARES = 100;

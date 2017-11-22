@@ -22,6 +22,7 @@
 #include "../Interact.h"
 #include "../Debug.h"
 #include "../Config.h"
+#include "../ZoneObject.h"
 #include "../util/Log.h"
 
 //
@@ -60,14 +61,19 @@ int GroveEnvironmentCycleToggleHandler::handleQuery(SimulatorThread *sim,
 		CharacterServerData *pld, SimulatorQuery *query,
 		CreatureInstance *creatureInstance) {
 
-	if (pld->zoneDef->mGrove == false)
-		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
-				"You are not in a grove.");
-	if (pld->zoneDef->mAccountID != pld->accPtr->ID)
-		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
-				"You must be in your grove.");
+	if(sim->CheckPermissionSimple(Perm_Account, Permission_Admin) == false && sim->CheckPermissionSimple(Perm_Account, Permission_Sage) == false) {
+		if (pld->zoneDef->mGrove == false)
+			return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+					"You are not in a grove.");
+		if (pld->zoneDef->mAccountID != pld->accPtr->ID)
+			return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+					"You must be in your grove.");
+	}
+
 	pld->zoneDef->ChangeEnvironmentUsage();
-	g_ZoneDefManager.NotifyConfigurationChange();
+	if(pld->zoneDef->IsPlayerGrove())
+		g_ZoneDefManager.NotifyConfigurationChange();
+
 	Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1),
 			"Environment cycling is now %s",
 			(pld->zoneDef->mEnvironmentCycle ? "ON" : "OFF"));
@@ -87,22 +93,25 @@ int SetEnvironmentHandler::handleQuery(SimulatorThread *sim,
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 				"Invalid query.");
 
-	if (pld->zoneDef->mGrove == false)
-		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
-				"You are not in a grove.");
-	if (pld->zoneDef->mAccountID != pld->accPtr->ID)
-		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
-				"You must be in your grove.");
+	if(sim->CheckPermissionSimple(Perm_Account, Permission_Admin) == false && sim->CheckPermissionSimple(Perm_Account, Permission_Sage) == false) {
+		if (pld->zoneDef->mGrove == false)
+			return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+					"You are not in a grove.");
+		if (pld->zoneDef->mAccountID != pld->accPtr->ID)
+			return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+					"You must be in your grove.");
+	}
 
 	const char *env = query->args[0].c_str();
 
-	pld->zoneDef->ChangeEnvironment(env);
+	if(pld->zoneDef->IsPlayerGrove())
+		pld->zoneDef->ChangeEnvironment(env);
+
 	g_ZoneDefManager.NotifyConfigurationChange();
 	sim->SendInfoMessage("Environment type changed.", INFOMSG_INFO);
 
-	int wpos = PrepExt_SendEnvironmentUpdateMsg(sim->SendBuf, pld->CurrentZone,
-			pld->zoneDef, -1, -1);
-	wpos += PrepExt_SendTimeOfDayMsg(&sim->SendBuf[wpos], sim->GetTimeOfDay());
+	int wpos = PrepExt_SendEnvironmentUpdateMsg(sim->SendBuf, creatureInstance->actInst, pld->CurrentZone, pld->zoneDef, -1, -1, 0);
+	wpos += PrepExt_SetTimeOfDay(&sim->SendBuf[wpos], sim->GetTimeOfDay().c_str());
 	creatureInstance->actInst->LSendToAllSimulator(sim->SendBuf, wpos, -1);
 
 	//	SendZoneInfo();
@@ -311,6 +320,38 @@ int MapMarkerHandler::handleQuery(SimulatorThread *sim,
 						qd->giverX, qd->giverY, qd->giverZ);
 				qRes.back().push_back(sim->Aux1);
 				qRes.back().push_back("QuestGiver");
+			}
+		}
+		else if(query->args[i].compare("Henge") == 0) {
+			/* All henges in zone */
+			if(pld->zoneDef != NULL && !pld->zoneDef->IsOverworld()) {
+				for(std::vector<InteractObject>::iterator it = g_InteractObjectContainer.objList.begin(); it != g_InteractObjectContainer.objList.end(); it++) {
+					if((*it).opType == InteractObject::TYPE_HENGE && (*it).WarpID == pld->CurrentZoneID) {
+						qRes.push_back(STRINGLIST());
+						qRes.back().push_back((*it).useMessage);
+						Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1), "(%d %d %d)", (*it).WarpX, (*it).WarpY, (*it).WarpZ);
+						qRes.back().push_back(sim->Aux1);
+						qRes.back().push_back("Henge");
+					}
+				}
+			}
+		}
+		else if(query->args[i].compare("Sanctuary") == 0) {
+			/* All sanctuaries within 1000 */
+			ZoneMarkerData *zmd = g_ZoneMarkerDataManager.GetPtrByZoneID(pld->CurrentZoneID);
+			if(zmd != NULL && pld->zoneDef != NULL && !pld->zoneDef->IsOverworld()) {
+				for(std::vector<WorldCoord>::iterator it = zmd->sanctuary.begin(); it != zmd->sanctuary.end(); it++) {
+					int xlen = abs((int)(*it).x - creatureInstance->CurrentX);
+					int zlen = abs((int)(*it).z - creatureInstance->CurrentZ);
+					double dist = sqrt((double)((xlen * xlen) + (zlen * zlen)));
+					if(dist < 1000) {
+						qRes.push_back(STRINGLIST());
+						qRes.back().push_back((*it).descName.c_str());
+						Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1), "(%d %d %d)", (int)((*it).x), (int)((*it).y), (int)((*it).z));
+						qRes.back().push_back(sim->Aux1);
+						qRes.back().push_back("Sanctuary");
+					}
+				}
 			}
 		}
 	}

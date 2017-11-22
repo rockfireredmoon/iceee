@@ -2098,6 +2098,7 @@ int QuestJournal::ForceComplete(int CID, int QuestID, char *buffer) {
 			for (int b = 0; b < 3; b++) {
 				int count = 0;
 				switch (qdef->actList[act].objective[b].type) {
+				case QuestObjective::OBJECTIVE_TYPE_GATHER:
 				case QuestObjective::OBJECTIVE_TYPE_ACTIVATE:
 				case QuestObjective::OBJECTIVE_TYPE_KILL:
 					count = qdef->actList[act].objective[b].data2;

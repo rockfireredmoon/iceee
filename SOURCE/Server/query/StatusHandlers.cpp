@@ -73,12 +73,6 @@ int ClientLoadingHandler::handleQuery(SimulatorThread *sim, CharacterServerData 
 	int WritePos = PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
 
 	if (sim->LoadStage == SimulatorThread::LOADSTAGE_LOADED) {
-		if (creatureInstance == NULL) {
-			WritePos += PrepExt_SetMap(&sim->SendBuf[WritePos], pld, -1, -1);
-		} else {
-			WritePos += PrepExt_SetMap(&sim->SendBuf[WritePos], pld,
-					creatureInstance->CurrentX, creatureInstance->CurrentZ);
-		}
 		sim->LoadStage = SimulatorThread::LOADSTAGE_GAMEPLAY;
 
 		if (pld->charPtr->PrivateChannelName.size() > 0)

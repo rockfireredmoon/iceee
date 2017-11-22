@@ -88,7 +88,7 @@ bool ResetPasswordHandler::handlePost(CivetServer *server, struct mg_connection 
 
 		int retval = 0;
 		g_AccountManager.cs.Enter("ResetPassword");
-		retval = g_AccountManager.ResetPassword(username, newpassword, regkey);
+		retval = g_AccountManager.ResetPassword(username, newpassword, regkey, true);
 		g_AccountManager.cs.Leave();
 		writeStatus(server, conn, 200, "OK", g_AccountManager.GetErrorMessage(retval));
 	}

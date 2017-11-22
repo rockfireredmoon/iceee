@@ -53,6 +53,7 @@ unsigned long CREATURE_DELETE_RECHECK = 60000; //Delay between rescanning for de
 #include "Chat.h"
 #include "PartyManager.h"
 #include "InstanceScale.h"
+#include "InstanceScript.h"
 #include "ScriptCore.h"
 
 extern char GSendBuf[32767];
@@ -283,6 +284,14 @@ int MapDefContainer :: GetIndexByName(const char *name, const char *type)
 	return -1;
 }
 
+void MapDefContainer :: GetZone(const char *primary, std::vector<MapDefInfo> &defs)
+{
+	for(size_t a = 0; a < mMapList.size(); a++)
+		if(mMapList[a].Primary.compare(primary) == 0)
+			defs.push_back(mMapList[a]);
+}
+
+
 int MapDefContainer :: LoadFile(const char *fileName)
 {
 	FileReader lfr;
@@ -436,6 +445,20 @@ int MapLocationHandler :: AddLocation(int zone, MapLocationDef &data)
 	return found;
 }
 
+
+void MapLocationHandler :: GetZone(int zone, std::vector<MapLocationDef> &defs)
+{
+	size_t a;
+	for(a = 0; a < mLocationSet.size(); a++)
+	{
+		if(mLocationSet[a].mZone == zone) {
+			for(std::vector<MapLocationDef>::iterator it = mLocationSet[a].mLocationList.begin(); it != mLocationSet[a].mLocationList.end(); it++) {
+				defs.push_back(*it);
+			}
+		}
+	}
+}
+
 int MapLocationHandler :: SearchLocation(int zone, int x, int z)
 {
 	int found = ZoneExist(zone);
@@ -575,6 +598,9 @@ ActiveInstance :: ~ActiveInstance()
 
 void ActiveInstance :: Clear(void)
 {
+	g_WeatherManager.Deregister(mWeather);
+
+	mWeather.clear();
 	mZone = 0;
 	mMode = PVP::GameMode::PVE_ONLY;
 	mZoneDefPtr = NULL;
@@ -590,6 +616,7 @@ void ActiveInstance :: Clear(void)
 	mNextCreatureLocalScan = 0;
 	mNextCreatureDeleteScan = 0;
 	mExpireTime = 0;
+	mTimeOfDay = "";
 
 	mSceneryEffects.clear();
 	PlayerList.clear();
@@ -597,6 +624,7 @@ void ActiveInstance :: Clear(void)
 	mNextEffectTag = 0;
 	uniqueSpawnManager.Clear();
 	worldMarkers.Clear();
+	mEnvironment = "";
 
 	StopPVP();
 
@@ -640,7 +668,6 @@ void ActiveInstance :: Clear(void)
 	spawnsys.Clear();
 
 	scaleProfile = NULL;
-	dropRateProfile = NULL;
 	mDropRateBonusMultiplier = 1.0F;
 	mKillCount = 0;
 
@@ -951,6 +978,40 @@ int ActiveInstance :: RemList(int value, vector<int> &list)
 	return 0;
 }
 */
+
+
+void ActiveInstance ::SetEnvironment(std::string environment) {
+	if(environment.compare(mEnvironment) != 0) {
+		mEnvironment = environment;
+		int wpos = PrepExt_SendEnvironmentUpdateMsg(GSendBuf, this, mZoneDefPtr->mName.c_str(), mZoneDefPtr, -1, -1, 0);
+//		wpos += PrepExt_SetTimeOfDay(&GSendBuf[wpos], GetTimeOfDay().c_str());
+		for(size_t i = 0; i < PlayerListPtr.size(); i++)
+			PlayerListPtr[i]->simulatorPtr->AttemptSend(GSendBuf, wpos);
+	}
+}
+
+std::string ActiveInstance ::GetEnvironment(int x, int y) {
+	if(mEnvironment.length() == 0) {
+		return mZoneDefPtr->GetTileEnvironment(x,y);
+	}
+	return mEnvironment;
+}
+
+void ActiveInstance :: SetTimeOfDay(std::string timeOfDay) {
+	if(timeOfDay.compare(mTimeOfDay) != 0) {
+		mTimeOfDay = timeOfDay;
+		int wpos = PrepExt_SetTimeOfDay(GSendBuf, GetTimeOfDay().c_str());
+		for(size_t i = 0; i < PlayerListPtr.size(); i++)
+			PlayerListPtr[i]->simulatorPtr->AttemptSend(GSendBuf, wpos);
+	}
+}
+
+std::string ActiveInstance :: GetTimeOfDay() {
+	if(mTimeOfDay.length() != 0)
+		return mTimeOfDay;
+
+	return mZoneDefPtr->GetTimeOfDay();
+}
 
 int ActiveInstance :: ProcessMessage(MessageComponent *msg)
 {
@@ -1929,6 +1990,7 @@ CreatureInstance* ActiveInstance :: SpawnCreate(CreatureInstance * sourceActor, 
 	newItem.BuildZoneString(mInstanceID, mZone, 0);
 	newItem.css.health = newItem.CalcRestrictedHealth(-1, false);
 	newItem.css.aggro_players = 1;
+	newItem.tetherFacing = sourceActor->Rotation;
 	newItem.tetherNodeX = newItem.CurrentX;
 	newItem.tetherNodeZ = newItem.CurrentZ;
 
@@ -2027,6 +2089,11 @@ CreatureInstance* ActiveInstance :: SpawnGeneric(int CDefID, int x, int y, int z
 			retPtr->Faction = FACTION_PLAYERHOSTILE;
 			aggro = 1;
 		}
+		if(SpawnFlags & SpawnPackageDef::FLAG_KILLABLE)
+		{
+			retPtr->SetServerFlag(ServerFlags::KillableProp, true);
+			aggro = 1;
+		}
 
 		//if(cdef->css.eq_appearance[0] != 0)
 		//{
@@ -2111,6 +2178,10 @@ CreatureInstance* ActiveInstance :: SpawnAtProp(int CDefID, int PropID, int dura
 	newItem.SetServerFlag(ServerFlags::LocalActive, true);
 	newItem.tetherNodeX = newItem.CurrentX;
 	newItem.tetherNodeZ = newItem.CurrentZ;
+
+	int facing = Util::QuaternionToByteFacing(so->QuatX, so->QuatY, so->QuatZ, so->QuatW);
+	newItem.tetherFacing =facing;
+
 #ifndef CREATUREMAP
 	NPCList.push_back(newItem); 
 	CreatureInstance *add = &NPCList.back();
@@ -2194,6 +2265,8 @@ void ActiveInstance :: RunDeath(CreatureInstance *object)
 
 int ActiveInstance :: EraseIndividualReference(CreatureInstance *object)
 {
+	object->StopMovement(ScriptCore::Result::INTERRUPTED);
+
 	//Search for a creature instance and remove all possible references to it
 	if(PlayerList.size() != PlayerListPtr.size())
 		g_Logs.server->error("PlayerList mismatch: %v, %v", PlayerList.size(), PlayerListPtr.size());
@@ -2222,6 +2295,15 @@ int ActiveInstance :: EraseIndividualReference(CreatureInstance *object)
 
 int ActiveInstance :: RemoveNPCInstance(int CreatureID)
 {
+	/* TODO floods events
+	  if(nutScriptPlayer != NULL && nutScriptPlayer->mActive) {
+		std::vector<ScriptCore::ScriptParam> parms;
+		parms.push_back(ScriptCore::ScriptParam(CreatureID));
+		nutScriptPlayer->JumpToLabel("on_despawn", parms);
+	}
+	*/
+
+
 #ifndef CREATUREMAP
 	list<CreatureInstance>::iterator it;
 #else
@@ -2395,7 +2477,6 @@ ActiveInstance * ActiveInstanceManager :: CreateInstance(int zoneID, PlayerInsta
 	newItem.mMode = zoneDef->mMode;
 	newItem.mZone = zoneDef->mID;
 	newItem.mZoneDefPtr = zoneDef;
-	newItem.dropRateProfile = &zoneDef->GetDropRateProfile();
 	newItem.mLastHealthUpdate = g_ServerTime;
 	
 	if(pd.in_scaleProfile != NULL && zoneDef->IsMobScalable() == true)
@@ -2414,8 +2495,6 @@ ActiveInstance * ActiveInstanceManager :: CreateInstance(int zoneID, PlayerInsta
 		newItem.scaleConfig.mPLayerLevel = playerLevel;
 		newItem.scaleConfig.mIsScaled = true;
 		newItem.scaleProfile = pd.in_scaleProfile;
-		if(newItem.scaleProfile->mDropRateProfileName.size() > 0)
-			newItem.dropRateProfile = &g_DropRateProfileManager.GetProfileByName(newItem.scaleProfile->mDropRateProfileName);
 	}
 	
 	cs.Enter("ActiveInstanceManager::CreateInstance");
@@ -2507,6 +2586,8 @@ void ActiveInstance :: InitializeData(void)
 	if(mZoneDefPtr->mMode != PVP::GameMode::PVE_ONLY) {
 		arenaRuleset.mEnabled = true;
 	}
+
+	mWeather = g_WeatherManager.RegisterInstance(this);
 }
 
 
@@ -3415,6 +3496,11 @@ void ActiveInstance :: RunProcessingCycle(void)
 		mNextTargetUpdate = g_ServerTime + 1000;
 
 	spawnsys.RunProcessing(false);
+
+	for(std::vector<WeatherState*>::iterator it = mWeather.begin(); it != mWeather.end(); it++) {
+		(*it)->RunCycle(this);
+	}
+
 	RunScripts();
 	RemoveDeadCreatures();
 }
@@ -3426,16 +3512,19 @@ void ActiveInstance :: SendPlaySound(const char *assetPackage, const char *sound
 			RegSim[i]->SendPlaySound(assetPackage, soundFile);
 }
 
-void ActiveInstance :: UpdateEnvironmentCycle(const char *timeOfDay)
+void ActiveInstance :: UpdateEnvironmentCycle(std::string timeOfDay)
 {
-	if(timeOfDay == NULL)
+	if(timeOfDay.length() == 0)
 		return;
 	if(PlayerListPtr.size() == 0)
 		return;
 	if(mZoneDefPtr->mEnvironmentCycle == false)
 		return;
+
+	int wpos = PrepExt_SetTimeOfDay(GSendBuf, timeOfDay.c_str());
 	for(size_t i = 0; i < PlayerListPtr.size(); i++)
-		PlayerListPtr[i]->simulatorPtr->SendTimeOfDay(timeOfDay);
+		PlayerListPtr[i]->simulatorPtr->AttemptSend(GSendBuf, wpos);
+
 }
 
 //Calls a script with a particular kill event.
@@ -3450,7 +3539,7 @@ void ActiveInstance :: ScriptCallKill(int CreatureDefID, int CreatureID)
 
 		char buffer[64];
 		Util::SafeFormat(buffer, sizeof(buffer), "on_kill_%d", CreatureDefID);
-		ScriptCall(buffer);
+		nutScriptPlayer->JumpToLabel(buffer);
 	}
 	else if(scriptPlayer && scriptPlayer->mActive)
 	{
@@ -3481,6 +3570,21 @@ void ActiveInstance :: ScriptCallPackageKill(const char *name)
 	}
 	else if(scriptPlayer != NULL && scriptPlayer->mActive)
 		ScriptCall(name);
+}
+
+
+bool ActiveInstance :: QueueCallUsed(int sourceCreatureID, int usedCreatureID, int usedCreatureDefID, int time)
+{
+	if(nutScriptPlayer != NULL) {
+		CreatureInstance * creatureInst = GetPlayerByID(sourceCreatureID);
+		ScriptCore::NutScriptEvent *evt = new ScriptCore::NutScriptEvent(
+				new ScriptCore::TimeCondition(time),
+				new OnUsedCallback(this,sourceCreatureID, usedCreatureDefID, usedCreatureID));
+		nutScriptPlayer->AddInteraction(creatureInst, evt);
+		nutScriptPlayer->QueueAdd(evt);
+		return true;
+	}
+	return false;
 }
 
 bool ActiveInstance :: ScriptCallUse(int sourceCreatureID, int usedCreatureID, int usedCreatureDefID, bool defaultIfNoFunction)
@@ -3550,6 +3654,11 @@ void ActiveInstance :: ScriptCallUseFinish(int sourceCreatureID, int usedCreatur
 				(*it)->JumpToLabel("on_use_finish", p);
 			}
 		}
+
+		std::vector<ScriptCore::ScriptParam> p2;
+		p2.push_back(ScriptCore::ScriptParam(sourceCreatureID));
+		p2.push_back(ScriptCore::ScriptParam(usedCreatureDefID));
+		nutScriptPlayer->JumpToLabel("on_use_finish", p2);
 	}
 	else {
 		Util::SafeFormat(buffer, sizeof(buffer), "onUseFinish_%d", usedCreatureDefID);
@@ -3754,14 +3863,6 @@ void ActiveInstance :: ApplyCreatureScale(CreatureInstance *target)
 		return;
 
 	target->PerformLevelScale(scaleProfile, scaleConfig.mPLayerLevel);
-}
-
-const DropRateProfile* ActiveInstance :: GetDropRateProfile(void)
-{
-	if(dropRateProfile == NULL && mZoneDefPtr != NULL)
-		dropRateProfile = &mZoneDefPtr->GetDropRateProfile();
-
-	return dropRateProfile;
 }
 
 //This is a potential command call from an instance script.
@@ -4158,4 +4259,28 @@ const InstanceScaleProfile* PlayerInstancePlacementData :: GetPartyLeaderInstanc
 	//g_Log.AddMessageFormat("Returning party leader %s [%d] scaler %s", creature->css.display_name, party->mLeaderDefID, charDat->InstanceScaler.c_str());
 	mPartyLeaderDefID = party->mLeaderDefID;
 	return g_InstanceScaleManager.GetProfile(charDat->InstanceScaler);
+}
+
+
+//
+// OnUsedCallback
+//
+
+OnUsedCallback::OnUsedCallback(ActiveInstance *instance, int sourceCreatureID, int usedCreatureDefID, int usedCreatureID) {
+	mInstance = instance;
+	mSourceCreatureID = sourceCreatureID;
+	mUsedCreatureDefID = usedCreatureDefID;
+	mUsedCreatureID = usedCreatureID;
+}
+
+OnUsedCallback::~OnUsedCallback() {
+}
+
+bool OnUsedCallback::Execute()
+{
+	if(mInstance->nutScriptPlayer != NULL) {
+		mInstance->ScriptCallUseFinish(mSourceCreatureID, mUsedCreatureDefID, mUsedCreatureID);
+		mInstance->nutScriptPlayer->RemoveInteraction(mSourceCreatureID);
+	}
+	return true;
 }

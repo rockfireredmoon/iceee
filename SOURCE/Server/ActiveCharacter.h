@@ -6,6 +6,7 @@
 #include <string.h>  //For memset
 #include "Stats.h"
 #include "Character.h"  //For IntContainer
+#include "Instance.h"  //For IntContainer
 
 class AccountData;
 class ZoneDefInfo;
@@ -62,6 +63,7 @@ struct CharacterServerData
 	short CurrentMapInt;    //Internal Mapdef index
 	short LastMapTick;      //Current tick of the map changing system
 	char PortalRequestDest[32];
+	int PortalRequestType;
 	char CurrentEnv[40]; //Internal current environment
 
 	int DeltaY;
@@ -81,7 +83,7 @@ struct CharacterServerData
 
 	CharacterServerData();
 	void Reset(void);
-	void SetPortalRequestDest(const char *locationName);
+	void SetPortalRequestDest(const char *locationName, int type);
 	void ClearPortalRequestDest(void);
 	void UpdateNextIdleCheckTime(void);
 	bool VerifyIdle(void);
@@ -90,7 +92,5 @@ struct CharacterServerData
 	QuestJournal* GetQuestJournal(void);
 };
 
-
-int PrepExt_SetMap(char *buffer, CharacterServerData *pldata, int x, int z);
 
 #endif //ACTIVECHARACTER_H

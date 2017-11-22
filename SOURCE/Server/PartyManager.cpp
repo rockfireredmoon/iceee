@@ -179,6 +179,8 @@ bool ActiveParty :: UpdatePlayerReferences(CreatureInstance* member)
 
 bool ActiveParty :: RemovePlayerReferences(int memberDefID, bool disconnect)
 {
+	RemoveCreatureTags(-1, memberDefID);
+
 	for(size_t i = 0; i < mMemberList.size(); i++)
 	{
 		if(mMemberList[i].mCreatureDefID == memberDefID)
@@ -580,6 +582,7 @@ void PartyManager :: UpdatePlayerReferences(CreatureInstance* member)
 
 void PartyManager :: RemovePlayerReferences(int memberDefID, bool disconnect)
 {
+
 	for(size_t i = 0; i < mPartyList.size(); i++)
 		if(mPartyList[i].RemovePlayerReferences(memberDefID, disconnect) == true)
 			return;
@@ -713,8 +716,15 @@ int PartyManager :: WriteLootRoll(char *outbuf, const char *itemDefName, char ro
 LootTag * ActiveParty :: GetTag(int itemId, int creatureId)
 {
 	for(it_type iterator = lootTags.begin(); iterator != lootTags.end(); ++iterator) {
-		if((*iterator->second).mItemId == itemId && (*iterator->second).mCreatureId == creatureId) {
-			return iterator->second;
+		LootTag * t;
+		t = iterator->second;
+		if(t == NULL) {
+			g_Logs.server->warn("NULL value in loot tags map for %v in creature %v, item %v", iterator->first, creatureId, itemId);
+		}
+		else {
+			if((*iterator->second).mItemId == itemId && (*iterator->second).mCreatureId == creatureId) {
+				return iterator->second;
+			}
 		}
 	}
 	return NULL;
@@ -722,18 +732,22 @@ LootTag * ActiveParty :: GetTag(int itemId, int creatureId)
 
 void ActiveParty :: RemoveTagsForLootCreatureId(int lootCreatureId, int itemId, int creatureId)
 {
-	g_Logs.simulator->info("Removing loot tags for loot creature ID %v and item ID %v", lootCreatureId, itemId);
 	std::map<int, LootTag*>::iterator itr = lootTags.begin();
 	while (itr != lootTags.end()) {
-		g_Logs.server->debug("  ---> remove %v - %v ?", (*itr->second).lootTag, (*itr->second).mCreatureId,  (*itr->second).mItemId);
-		if ((*itr->second).mLootCreatureId == lootCreatureId && (itemId == 0 || (*itr->second).mItemId == itemId)
-				&& (creatureId == 0 || (*itr->second).mCreatureId == creatureId)) {
-			delete itr->second;
-			lootTags.erase(itr++);
-			g_Logs.server->debug("  ---> yes!");
-		}
-		else
+		LootTag * t;
+		t = itr->second;
+		if(t == NULL) {
 			++itr;
+		}
+		else {
+			if ((*itr->second).mLootCreatureId == lootCreatureId && (itemId == 0 || (*itr->second).mItemId == itemId)
+					&& (creatureId == 0 || (*itr->second).mCreatureId == creatureId)) {
+				delete itr->second;
+				lootTags.erase(itr++);
+			}
+			else
+				++itr;
+		}
 	}
 }
 
@@ -741,8 +755,15 @@ bool ActiveParty:: HasTags(int lootCreatureID, int itemId)
 {
 	typedef std::map<int, LootTag*>::iterator it_type;
 	for(it_type iterator = lootTags.begin(); iterator != lootTags.end(); ++iterator) {
-		if((*iterator->second).mLootCreatureId == lootCreatureID && (*iterator->second).mItemId == itemId) {
-			return true;
+		LootTag * t;
+		t = iterator->second;
+		if(t == NULL) {
+			g_Logs.server->warn("NULL value in loot tags map for %v in loot creature %v, item %v", iterator->first, lootCreatureID, itemId);
+		}
+		else {
+			if((*iterator->second).mLootCreatureId == lootCreatureID && (*iterator->second).mItemId == itemId) {
+				return true;
+			}
 		}
 	}
 	return false;
@@ -750,13 +771,21 @@ bool ActiveParty:: HasTags(int lootCreatureID, int itemId)
 
 void ActiveParty :: RemoveCreatureTags(int itemId, int creatureId)
 {
+	g_Logs.server->debug("RemoveCreatureTags in creature %v, item %v", creatureId, itemId);
 	std::map<int, LootTag*>::iterator itr = lootTags.begin();
 	while (itr != lootTags.end()) {
-		if ((*itr->second).mItemId == itemId && (*itr->second).mCreatureId == creatureId) {
-			delete itr->second;
-			lootTags.erase(itr++);
-		} else
-			++itr;
+		LootTag * t;
+		t = itr->second;
+		if(t == NULL) {
+			g_Logs.server->warn("NULL value in loot tags map for %d in creature %d, item %d", itr->first, creatureId, itemId);
+		}
+		else {
+			if ((itemId == -1 || (*itr->second).mItemId == itemId ) && (*itr->second).mCreatureId == creatureId) {
+				delete itr->second;
+				lootTags.erase(itr++);
+			} else
+				++itr;
+		}
 	}
 }
 

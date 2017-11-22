@@ -315,12 +315,13 @@ public:
 	bool JumpToLabel(const char *name); //Immediately jump script execution to the beginning of a specific label.
 	void FullReset(void);
 	bool IsWaiting(void);
+	void ClearQueue();
 	bool CanRunIdle(void);
 	void EndExecution(void);
 
 protected:
 	static const size_t MAX_STACK_SIZE = 16;
-	static const size_t MAX_QUEUE_SIZE = 16;
+	static const size_t MAX_QUEUE_SIZE = 32;
 	std::vector<int> varStack;
 
 	virtual int GetApplicationPropertyAsInteger(const char *propertyName); //Override this function to substitute application-defined variables.
@@ -366,6 +367,7 @@ public:
 	std::string mDescription;
 	bool mQueueEvents;
 	int mScriptIdleSpeed;
+	unsigned long mVMSize;
 
 	NutDef();
 	virtual ~NutDef();
@@ -406,8 +408,22 @@ public:
 	NutScriptCallStringParser(std::string string);
 };
 
+struct Result
+{
+	enum
+	{
+		OK = 0,
+		INTERRUPTED = 1,
+		FAILED = 2,
+		WAITING = 3
+	};
+};
+
 class NutCallback {
+
 public:
+	int mResult;
+
 	NutCallback();
 
 	virtual ~NutCallback();
@@ -421,9 +437,37 @@ public:
 	virtual bool CheckCondition() =0;
 };
 
+
+class TimeCondition : public NutCondition
+{
+public:
+	unsigned long mFireTime;         //Time to fire this event.
+	TimeCondition(unsigned long delay);
+	~TimeCondition();
+
+	bool CheckCondition();
+};
+
+class PauseCondition : public NutCondition
+{
+public:
+	unsigned long mPaused;         //Time to fire this event.
+	PauseCondition();
+	~PauseCondition();
+
+	bool CheckCondition();
+};
+
+class NeverCondition : public ScriptCore::NutCondition
+{
+public:
+	virtual bool CheckCondition();
+};
+
 //Holds a triggered event.
 class NutScriptEvent {
 public:
+	unsigned long mId;
 	NutCondition *mCondition;
 	NutCallback *mCallback;
 	bool mRunWhenSuspended;
@@ -434,7 +478,7 @@ public:
 };
 
 
-#define MAX_QUEUE_SIZE 16
+#define MAX_QUEUE_SIZE 128
 
 class NutPlayer {
 public:
@@ -445,6 +489,9 @@ public:
 	bool mHalting; //If true, the script is currently halting (subsequent halts will do nothing).
 	bool mRunning; //If true, a function call is currently running (will make halts be queued)
 	bool mClear;
+	unsigned long mNextId;
+	PauseCondition *mPause; // If non-null is the current pause condition
+	long mSleeping; // If non-zero, how long the VM is sleeping for
 	NutScriptEvent *mExecutingEvent; // If not NULL, will be the currently executing event
 
 	std::vector<std::string> mArgs; // Scripts may be called with arguments. This vector should be set before initialising the player
@@ -465,6 +512,7 @@ public:
 	void RegisterCoreFunctions(NutPlayer *instance, Sqrat::Class<NutPlayer> *clazz);
 	virtual void HaltDerivedExecution();
 	virtual void HaltedDerived();
+	NutScriptEvent* GetEvent(long id);
 	void HaltExecution();
 	void Initialize(NutDef *defPtr, std::string &errors);
 	bool Tick(void);     //Run a single instruction.
@@ -473,6 +521,8 @@ public:
 	void Halt(void);
 	void HaltVM();
 	void HaltEvent(bool immediate);
+	bool Pause(void);
+	bool Resume(void);
 	int GC(void);
 	std::string GetStatus();
 	bool JumpToLabel(const char *name);
@@ -487,10 +537,11 @@ public:
 	void SetCaller(int caller);
 	void QueueClear();
 	void QueueRemove(NutScriptEvent *evt);
-	void QueueAdd(NutScriptEvent *evt);
-	void QueueInsert(NutScriptEvent *evt);
+	long QueueAdd(NutScriptEvent *evt);
+	long QueueInsert(NutScriptEvent *evt);
+	bool Cancel(long id);
 	void Exec(Sqrat::Function function);
-	void Queue(Sqrat::Function function, int fireDelay);
+	long Queue(Sqrat::Function function, int fireDelay);
 //	void DoQueue(Sqrat::Function function, int fireDelay);
 	bool ExecQueue(void);
 
@@ -521,21 +572,11 @@ public:
 	std::vector<NutScriptEvent*> mQueueRemove;
 
 private:
+	void DoInitialize(int stackSize, NutDef *defPtr, std::string &errors);
 	void FinaliseExecution(std::string name, int top);
 	bool ExecEvent(NutScriptEvent *nse, int index);
 	bool DoRunFunction(std::string name, std::vector<ScriptParam> parms, bool time, bool retval);
 
-};
-
-
-class TimeCondition : public NutCondition
-{
-public:
-	unsigned long mFireTime;         //Time to fire this event.
-	TimeCondition(unsigned long delay);
-	~TimeCondition();
-
-	bool CheckCondition();
 };
 
 class RunFunctionCallback : public NutCallback

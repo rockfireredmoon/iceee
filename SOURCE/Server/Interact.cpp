@@ -4,6 +4,7 @@
 
 #include "FileReader.h"
 #include "util/Log.h"
+#include "ZoneDef.h"
 
 InteractObjectContainer g_InteractObjectContainer;
 
@@ -188,6 +189,9 @@ void InteractObjectContainer :: LoadFromFile(char *filename)
 				newItem.WarpY = lfr.BlockToIntC(2);
 				newItem.WarpZ = lfr.BlockToIntC(3);
 				newItem.WarpID = lfr.BlockToIntC(4);
+				if(newItem.WarpID == 0 || g_ZoneDefManager.GetPointerByID(newItem.WarpID) == NULL) {
+					g_Logs.server->error("Invalid Warp ID %v in InteractDef (%v)", newItem.WarpID, newItem.internalName);
+				}
 			}
 			else if(strcmp(lfr.SecBuffer, "Quest") == 0)
 			{

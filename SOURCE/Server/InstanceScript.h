@@ -67,6 +67,7 @@ public:
 
 class AbstractInstanceNutPlayer: public ScriptCore::NutPlayer {
 public:
+
 	AbstractInstanceNutPlayer();
 	virtual ~AbstractInstanceNutPlayer();
 	void SetInstancePointer(ActiveInstance *parent);
@@ -100,8 +101,16 @@ public:
 	void CreatureChat(int cid, const char *channel, const char *message);
 	void SetServerFlags(int CID, unsigned long flags);
 	void SetServerFlag(int CID, unsigned long flag, bool state);
+	void StopAI(int CID);
 	void Unhate(int CID);
 	void Interrupt(int CID);
+	void ClearAIQueue(int CID);
+	bool IsAtTether(int CID);
+	bool TargetSelf(int CID);
+	bool SetEnvironment(const char *environment);
+	std::string GetTimeOfDay();
+	std::string GetEnvironment(int x, int y);
+	void SetTimeOfDay(std::string timeOfDay);
 	unsigned long GetServerFlags(int CID);
 	static SQInteger Scan(HSQUIRRELVM v);
 	static SQInteger ScanNPCs(HSQUIRRELVM v);
@@ -133,6 +142,7 @@ public:
 	bool PVPGoal(int cid);
 	bool PVPStop();
 	AINutPlayer* GetAI(int CID);
+	bool HasStatusEffect(int CID, const char *effect);
 	bool SetStatusEffect(int CID, const char *effect, long durationMS);
 	bool RemoveStatusEffect(int CID, const char *effect);
 	void RestoreOriginalAppearance(int CID);
@@ -167,21 +177,31 @@ public:
 	int ParticleAttach(int propID, const char *effect, float scale, float offsetX, float offsetY, float offsetZ);
 	void Emote(int cid, const char *emotion);
 	int CDefIDForCID(int cid);
+	void SetCreatureGTAE(int CID);
+	void SetCreatureGTAETo(int CID, Squirrel::Vector3I loc);
+	void SetSize(int CID, float size);
 	bool Despawn(int CID);
 	int LoadSpawnTileFor(Squirrel::Point location);
 	int LoadSpawnTile(Squirrel::Point location);
 	int DespawnAll(int CDefID);
 	int GetHealthPercent(int cid);
 	void WarpPlayer(int CID, int zoneID);
-	void Walk(int CID, Squirrel::Point point, int speed, int range);
-	void WalkThen(int CID, Squirrel::Point point, int speed, int range, Sqrat::Function onArrival);
+	long Walk(int CID, Squirrel::Point point, int facing, int speed, int range);
+	long WalkThen(int CID, Squirrel::Point point, int facing, int speed, int range, Sqrat::Function onArrival);
+	long TempWalkThen(int CID, Squirrel::Point point, int facing, int speed, int range, Sqrat::Function onArrival);
 	int SpawnProp(int propID);
 	int Spawn(int propID, int creatureID, int flags);
 	int SpawnAt(int creatureID, Squirrel::Vector3I location, int facing, int flags);
 	int OLDSpawnAt(int creatureID, float x, float y, float z, int facing, int flags);
 	int GetTarget(int CID);
 	bool SetTarget(int CID, int targetCID);
-	bool Interact(int CID, const char *text, float time, bool gather, Sqrat::Function function);
+	bool SetEnvironment(const char *environment);
+	std::string GetEnvironment(int x, int y);
+	std::string PopEnvironment();
+	std::string GetTimeOfDay();
+	void SetTimeOfDay(std::string timeOfDay);
+	bool Interact(int CID, const char *text, int time, bool gather, Sqrat::Function function);
+	void AddInteraction(CreatureInstance *creature, ScriptCore::NutScriptEvent *evt);
 	void RemoveInteraction(int CID);
 	void InterruptInteraction(int CID);
 	bool HasItem(int CID, int itemID);
@@ -226,6 +246,31 @@ public:
 	CreatureInstance *cInst;
 	WalkCondition(CreatureInstance *c);
 	virtual bool CheckCondition();
+	void Init(ScriptCore::NutPlayer *nut, CreatureInstance *creature, Squirrel::Point point, int facing, int speed, int range, bool reset);
+};
+
+
+class WalkCallback : public ScriptCore::NutCallback
+{
+public:
+	CreatureInstance *mCreature;
+	int sPreviousPathNode;
+	int sNextPathNode;
+	int sTetherNodeX;
+	int sTetherNodeZ;
+	int sTetherNodeFacing;
+
+	bool mReset;
+	ScriptCore::NutPlayer* mNut;
+	Sqrat::Function mFunction;		//Function to jump to
+
+	WalkCallback(ScriptCore::NutPlayer *nut, CreatureInstance *creature, Squirrel::Point point, int facing, int speed, int range, bool mReset);
+	WalkCallback(ScriptCore::NutPlayer *nut, CreatureInstance *creature, Squirrel::Point point, int facing, int speed, int range, Sqrat::Function onArrival, bool mReset);
+	~WalkCallback ();
+	bool Execute();
+	void Reset();
+private:
+	void Init(ScriptCore::NutPlayer *nut, CreatureInstance *creature, Squirrel::Point point, int facing, int speed, int range, bool reset);
 };
 
 class InstanceScriptDef: public ScriptCore::ScriptDef {

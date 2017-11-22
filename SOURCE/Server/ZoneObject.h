@@ -12,7 +12,7 @@ struct WorldCoord
 	std::string descName;         //Descriptive name
 	std::string serverMapName;    //Internal map name used by the server.  Corresponds to "MapLocations.txt" location names.
 	WorldCoord() { Clear(); };
-	WorldCoord(float nx, float ny, float nz) { x = nx; y = ny; z = nz; }
+	WorldCoord(float nx, float ny, float nz, int zn) { x = nx; y = ny; z = nz;  }
 	void Clear(void) { x = 0.0F; y = 0.0F; z = 0.0f; descName.clear(); serverMapName.clear(); };
 };
 

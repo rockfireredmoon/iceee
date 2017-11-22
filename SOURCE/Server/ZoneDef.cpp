@@ -10,12 +10,15 @@
 #include "Report.h"
 #include "Character.h"
 #include "Globals.h"
+#include "Instance.h"
+#include "Simulator.h"
 #include "util/Log.h"
 
 ZoneDefManager g_ZoneDefManager;
 ZoneBarrierManager g_ZoneBarrierManager;
 EnvironmentCycleManager g_EnvironmentCycleManager;
 GroveTemplateManager g_GroveTemplateManager;
+WeatherManager g_WeatherManager;
 
 ZoneEditPermission::ZoneEditPermission()
 {
@@ -220,6 +223,7 @@ void ZoneDefInfo :: Clear(void)
 	mGuildHall = false;
 	mArena = false;
 	mAudit = false;
+	mTimeOfDay = "";
 	mEnvironmentCycle = false;
 
 	mPlayerFilterType = FILTER_PLAYER_NONE;
@@ -244,6 +248,7 @@ void ZoneDefInfo :: CopyFrom(const ZoneDefInfo& other)
 	mEnvironmentType = other.mEnvironmentType;
 	mMapName = other.mMapName;
 	mRegions = other.mRegions;
+	mTimeOfDay = other.mTimeOfDay;
 
 	mShardName = other.mShardName;
 	mGroveName = other.mGroveName;
@@ -341,6 +346,14 @@ bool ZoneDefInfo :: IsDungeon(void)
 	return false;
 }
 
+bool ZoneDefInfo :: IsOverworld(void)
+{
+	if(mGuildHall == false && mGrove == false && mArena == false && mInstance == false)
+		return true;
+
+	return false;
+}
+
 bool ZoneDefInfo :: IsMobScalable(void)
 {
 	if(mInstance == true)
@@ -383,6 +396,10 @@ bool ZoneDefInfo :: CanPlayerWarp(int CreatureDefID, int AccountID)
 	return false;
 }
 
+void ZoneDefInfo :: SetDropRateProfile(std::string profile) {
+	mDropRateProfile = profile;
+}
+
 void ZoneDefInfo :: SaveToStream(FILE *output)
 {
 	fprintf(output, "[ENTRY]\r\n");
@@ -397,6 +414,7 @@ void ZoneDefInfo :: SaveToStream(FILE *output)
 	Util::WriteIntegerIfNot(output, "Mode", mPageSize, PVP::GameMode::PVE_ONLY);
 	Util::WriteString(output, "ShardName", mShardName);
 	Util::WriteString(output, "GroveName", mGroveName);
+	Util::WriteString(output, "TimeOfDay", mTimeOfDay);
 	Util::WriteString(output, "WarpName", mWarpName);
 	Util::WriteString(output, "DropRateProfile", mDropRateProfile);
 
@@ -424,7 +442,7 @@ void ZoneDefInfo :: SaveToStream(FILE *output)
 	fprintf(output, "\r\n");
 }
 
-std::string * ZoneDefInfo :: GetTileEnvironment(int x, int y)
+std::string ZoneDefInfo :: GetTileEnvironment(int x, int y)
 {
 	// Convert to scenery tile (use /info scenerytile to help with this)
 	int px = x / mPageSize;
@@ -436,10 +454,10 @@ std::string * ZoneDefInfo :: GetTileEnvironment(int x, int y)
 		etk.y = py;
 		it = mTileEnvironment.find(etk);
 		if(it != mTileEnvironment.end()) {
-			return &it->second;
+			return it->second;
 		}
 	}
-	return &mEnvironmentType;
+	return mEnvironmentType;
 }
 
 void ZoneDefInfo :: AddPlayerFilterID(int CreatureDefID, bool loadStage)
@@ -535,9 +553,17 @@ void ZoneDefInfo :: UpdateGrovePermission(STRINGLIST &params)
 	}
 }
 
-const DropRateProfile& ZoneDefInfo::GetDropRateProfile(void)
+std::string ZoneDefInfo :: GetDropRateProfile()
 {
-	return g_DropRateProfileManager.GetProfileByName(mDropRateProfile);
+	if(mDropRateProfile.length() > 0)
+		return mDropRateProfile;
+	else {
+		if(mInstance) {
+			return "instance";
+		}
+		else
+			return "standard";
+	}
 }
 
 void ZoneDefInfo :: ChangeDefaultLocation(int newX, int newY, int newZ)
@@ -581,6 +607,16 @@ bool ZoneDefInfo :: QualifyDelete(void)
 		return true;
 
 	return false;
+}
+
+std::string ZoneDefInfo :: GetTimeOfDay() {
+	//If the environment time string is null, attempt to find the active time for the
+	//current zone, if applicable.
+	if(mEnvironmentCycle == true)
+		return g_EnvironmentCycleManager.GetCurrentTimeOfDay();
+	else if(mTimeOfDay.length() > 0)
+		return mTimeOfDay;
+	return "Day";
 }
 
 
@@ -831,6 +867,8 @@ int ZoneDefManager :: LoadFile(const char *fileName)
 					newItem.mTerrainConfig = lfr.BlockToStringC(1, 0);
 				else if(strcmp(lfr.SecBuffer, "ENVIRONMENTTYPE") == 0)
 					newItem.mEnvironmentType = lfr.BlockToStringC(1, 0);
+				else if(strcmp(lfr.SecBuffer, "TIMEOFDAY") == 0)
+					newItem.mTimeOfDay = lfr.BlockToStringC(1, 0);
 				else if(strcmp(lfr.SecBuffer, "MAPNAME") == 0)
 					newItem.mMapName = lfr.BlockToStringC(1, 0);
 				else if(strcmp(lfr.SecBuffer, "REGIONS") == 0)
@@ -869,7 +907,7 @@ int ZoneDefManager :: LoadFile(const char *fileName)
 				else if(strcmp(lfr.SecBuffer, "AUDIT") == 0)
 					newItem.mAudit = lfr.BlockToBoolC(1);
 				else if(strcmp(lfr.SecBuffer, "DROPRATEPROFILE") == 0)
-					newItem.mDropRateProfile = lfr.BlockToStringC(1, 0);
+					newItem.SetDropRateProfile(lfr.BlockToStringC(1, 0));
 				else if(strcmp(lfr.SecBuffer, "ENVIRONMENTCYCLE") == 0)
 					newItem.mEnvironmentCycle = lfr.BlockToBoolC(1);
 				else if(strcmp(lfr.SecBuffer, "PLAYERFILTERTYPE") == 0)
@@ -1151,6 +1189,7 @@ int ZoneDefManager :: CreateGrove(int accountID, const char *grovename)
 	newZone.mName = "Grove";
 	newZone.mTerrainConfig = "Terrain-Blend#Terrain-Blend.cfg";
 	newZone.mEnvironmentType = "CloudyDay";
+	newZone.mTimeOfDay = "";
 
 	newZone.mPageSize = DEFAULT_GROVE_PAGE_SIZE;
 
@@ -1686,19 +1725,22 @@ bool EnvironmentCycleManager :: HasCycleUpdated(void)
 	if(mCycleStrings.size() == 0)
 		return false;
 
+
 	mCurrentCycleIndex++;
 	if(mCurrentCycleIndex >= mCycleStrings.size())
 		mCurrentCycleIndex = 0;
 
 	mNextUpdateTime = g_ServerTime + mCycleTimes[mCurrentCycleIndex];
+
+	g_Logs.server->info("Environment Cycle has updated to %v. Next update is at %v", mCurrentCycleIndex, mNextUpdateTime);
 	return true;
 }
 
-const char * EnvironmentCycleManager :: GetCurrentTimeOfDay(void)
+std::string EnvironmentCycleManager :: GetCurrentTimeOfDay(void)
 {
 	if(mCurrentCycleIndex >= mCycleStrings.size())
-		return NULL;
-	return mCycleStrings[mCurrentCycleIndex].c_str();
+		return "";
+	return mCycleStrings[mCurrentCycleIndex];
 }
 
 void EnvironmentCycleManager :: EndCurrentCycle(void)
@@ -1810,20 +1852,414 @@ void GroveTemplateManager :: ResolveTerrainMap(void)
 	}
 }
 
+//
+// Weather
+//
 
-int PrepExt_SendEnvironmentUpdateMsg(char *buffer, const char *zoneIDString, ZoneDefInfo *zoneDef, int x, int z)
+WeatherDef :: WeatherDef() {
+	Clear();
+}
+
+WeatherDef :: WeatherDef(const WeatherDef &other) {
+	CopyFrom(other);
+}
+
+void WeatherDef :: CopyFrom(const WeatherDef &other) {
+	mMapName = other.mMapName;
+	mUse = other.mUse;
+	mTimeOfDay = other.mTimeOfDay;
+	mFineMin = other.mFineMin;
+	mFineMax = other.mFineMax;
+	mLightChance = other.mLightChance;
+	mMediumChance = other.mMediumChance;
+	mHeavyChance = other.mHeavyChance;
+	mWeatherMin = other.mWeatherMin;
+	mWeatherMax = other.mWeatherMax;
+	mWeatherTypes = other.mWeatherTypes;
+	mThunderChance = other.mThunderChance;
+	mThunderGapMin = other.mThunderGapMin;
+	mThunderGapMax = other.mThunderGapMax;
+	mEscalateChance = other.mEscalateChance;
+}
+
+void WeatherDef :: Clear() {
+	mMapName = "";
+	mUse = "";
+	mTimeOfDay = "";
+	mFineMin = 0;
+	mFineMax = 99999999;
+	mLightChance = 0;
+	mMediumChance = 0;
+	mHeavyChance = 0;
+	mWeatherMin = 0;
+	mWeatherMax = 0;
+	mWeatherTypes.clear();
+	mThunderChance = 0;
+	mThunderGapMin = 0;
+	mThunderGapMax = 0;
+	mEscalateChance = 0;
+
+}
+
+void WeatherDef :: SetDefaults() {
+	Clear();
+}
+
+WeatherState :: WeatherState(int instanceId, WeatherDef &def) {
+	mInstanceId = instanceId;
+	mDefinition = def;
+	mNextStateChange = g_ServerTime + ( randmodrng(def.mFineMin, def.mFineMax) * 1000 );
+	mWeatherType = "";
+	mWeatherWeight = WeatherState::LIGHT;
+	mEscalateState = WeatherState::ONE_OFF;
+	mThunder = false;
+	mNextThunder = 0;
+
+	if(g_ServerTime >= mNextStateChange) {
+		PickNewWeather();
+	}
+}
+
+WeatherState :: ~WeatherState() {
+}
+
+void WeatherState :: RunCycle(ActiveInstance *instance) {
+	if(mThunder && g_ServerTime >= mNextThunder) {
+		g_Logs.server->debug("Thunder state change");
+		mNextThunder = g_ServerTime + ( randmodrng(mDefinition.mThunderGapMin, mDefinition.mThunderGapMax) * 1000);
+		SendThunder(instance);
+	}
+
+	if(mNextStateChange != 0 && g_ServerTime > mNextStateChange) {
+		g_Logs.server->debug("Weather state change");
+
+		if(mEscalateState == WeatherState::ONE_OFF) {
+			if(PickNewWeather())
+				SendWeatherUpdate(instance);
+		}
+		else if(mEscalateState == WeatherState::ESCALATING) {
+			mWeatherWeight++;
+			if(mWeatherWeight >= WeatherState::MAX_WEIGHT) {
+				mEscalateState = WeatherState::DEESCALATING;
+				mWeatherWeight = WeatherState::MAX_WEIGHT - 2;
+			}
+			mNextStateChange = g_ServerTime + ( randmodrng(mDefinition.mWeatherMin, mDefinition.mWeatherMax) * 1000 );
+			SendWeatherUpdate(instance);
+
+			/* During escalation we also roll for thunder to start */
+			if(!mThunder)
+				RollThunder();
+		}
+		else if(mEscalateState == WeatherState::DEESCALATING) {
+			mWeatherWeight--;
+			if(mWeatherWeight < 0) {
+				/* Completely de-escalated */
+				if(PickNewWeather())
+					SendWeatherUpdate(instance);
+			}
+			else {
+				mNextStateChange = g_ServerTime + ( randmodrng(mDefinition.mWeatherMin, mDefinition.mWeatherMax) * 1000 );
+				SendWeatherUpdate(instance);
+			}
+
+			/* During de-escalation we also roll for thunder to stop using the inverse chance that was used to start */
+			if(mThunder) {
+				int chance = randmodrng(0, 100);
+				mThunder = chance < ( 100 - mDefinition.mThunderChance );
+				if(!mThunder) {
+					mNextThunder = 0;
+				}
+			}
+		}
+		else
+			mNextStateChange = 0;
+	}
+}
+
+void WeatherState :: SendWeatherUpdate(ActiveInstance *instance) {
+	for(std::vector<SimulatorThread*>::iterator it = instance->RegSim.begin(); it != instance->RegSim.end(); it++) {
+		for(std::vector<std::string>::iterator it2 = mMapNames.begin(); it2 != mMapNames.end(); it2++) {
+			if((*it)->pld.CurrentMapInt == -1 || MapDef.mMapList[(*it)->pld.CurrentMapInt].Name.compare(*it2) == 0) {
+				(*it)->AttemptSend((*it)->Aux1, PrepExt_SetWeather((*it)->Aux1, mWeatherType, mWeatherWeight));
+				break;
+			}
+		}
+	}
+}
+void WeatherState :: SendThunder(ActiveInstance *instance) {
+	for(std::vector<SimulatorThread*>::iterator it = instance->RegSim.begin(); it != instance->RegSim.end(); it++) {
+		for(std::vector<std::string>::iterator it2 = mMapNames.begin(); it2 != mMapNames.end(); it2++) {
+			if((*it)->pld.CurrentMapInt == -1 || MapDef.mMapList[(*it)->pld.CurrentMapInt].Name.compare(*it2) == 0) {
+				(*it)->AttemptSend((*it)->Aux1, PrepExt_Thunder((*it)->Aux1, mWeatherWeight));
+				break;
+			}
+		}
+	}
+}
+
+void WeatherState :: RollThunder() {
+	int chance = randmodrng(0, 100);
+	mThunder = chance < mDefinition.mThunderChance;
+	mNextThunder = 0;
+	if(mThunder) {
+		mNextThunder = g_ServerTime + ( randmodrng(mDefinition.mThunderGapMin, mDefinition.mThunderGapMax) * 1000 );
+	}
+}
+
+bool WeatherState :: PickNewWeather() {
+	if(mWeatherType.length() == 0) {
+
+		/* Weather is starting */
+		int chance = randmodrng(0, 100);
+		if(chance < mDefinition.mHeavyChance) {
+			mWeatherWeight == WeatherState::HEAVY;
+		}
+		else if(chance < mDefinition.mMediumChance) {
+			mWeatherWeight == WeatherState::MEDIUM;
+		}
+		else if(chance < mDefinition.mLightChance) {
+			mWeatherWeight == WeatherState::LIGHT;
+		}
+		else {
+			/* No weather to start, wait for next cycle */
+			mNextStateChange = g_ServerTime + ( randmodrng(mDefinition.mFineMin, mDefinition.mFineMax) * 1000 );
+			return false;
+		}
+
+		mNextStateChange = g_ServerTime + ( randmodrng(mDefinition.mWeatherMin, mDefinition.mWeatherMax) * 1000 );
+		mWeatherType = mDefinition.mWeatherTypes[randmodrng(0, mDefinition.mWeatherTypes.size())];
+
+		/* Roll for thunder */
+		RollThunder();
+
+		/* Roll for escalation */
+		chance = randmodrng(0, 100);
+		mEscalateState = WeatherState::ONE_OFF;
+		if(chance < mDefinition.mEscalateChance) {
+			mEscalateState = WeatherState::ESCALATING;
+		}
+	}
+	else {
+		/* Weather is stopping */
+		mThunder = false;
+		mNextThunder = 0;
+		mNextStateChange = g_ServerTime + ( randmodrng(mDefinition.mFineMin, mDefinition.mFineMax) * 1000 );
+		mWeatherType = "";
+		mWeatherWeight = WeatherState::LIGHT;
+		mEscalateState = WeatherState::ONE_OFF;
+	}
+
+	return true;
+}
+
+bool WeatherManager :: MaybeAddWeatherDef(int instanceID, std::string actualMapName, std::vector<WeatherState*> &m) {
+	if(mWeatherDefinitions.find(actualMapName) == mWeatherDefinitions.end())
+		return false;
+
+	WeatherDef wdef = mWeatherDefinitions[actualMapName];
+	while(wdef.mUse.length() != 0)
+		wdef = mWeatherDefinitions[wdef.mUse];
+
+	/* When 'use' is used, both the parent map name and this map name are stored in the
+	 * mWeather map, but both pointing to the same state instance
+	 */
+	WeatherKey k;
+	k.instance = instanceID;
+	k.mapName = actualMapName;
+
+	WeatherState *state = NULL;
+
+	if(mWeather.find(k) == mWeather.end()) {
+		/* Not currently available under the actual map name, is it availabe under the parent? */
+		if(wdef.mMapName.compare(actualMapName) != 0) {
+			/* Using 'use' */
+			k.mapName = wdef.mMapName;
+			if(mWeather.find(k) == mWeather.end()) {
+				/* Not available under parent, create it as parent */
+				state = new WeatherState(instanceID, wdef);
+				m.push_back(state);
+				mWeather[k] = state;
+				mWeather[k]->mMapNames.push_back(wdef.mMapName);
+			}
+
+			/* Available under the parent map name, add the actual name to the weather map */
+			WeatherKey k2;
+			k2.instance = instanceID;
+			k2.mapName = actualMapName;
+			mWeather[k2] = mWeather[k];
+			mWeather[k]->mMapNames.push_back(actualMapName);
+		}
+		else {
+			/* Not using 'use' */
+			state = new WeatherState(instanceID, wdef);
+			state->mMapNames.push_back(actualMapName);
+			m.push_back(state);
+			mWeather[k] = state;
+		}
+	}
+
+	return true;
+}
+
+std::vector<WeatherState*> WeatherManager :: RegisterInstance(ActiveInstance *instance) {
+	std::vector<MapDefInfo> d;
+	std::vector<WeatherState*> m;
+	bool hasWeather = false;
+
+	MapDef.GetZone(instance->mZoneDefPtr->mMapName.c_str(), d);
+
+	if(d.size() == 0) {
+		/* If no mapdefs for this zone, assume a single area of weather for the whole instance */
+		MapDefInfo dd;
+		dd.Name = instance->mZoneDefPtr->mName;
+		d.push_back(dd);
+	}
+
+	if(!g_Config.UseWeather) {
+		g_Logs.server->info("Not adding weather system as weather is turned off globally.");
+		return m;
+	}
+
+	/* Set up a weather state for all the MapDefInfo in this instance that have a weather def */
+	for(std::vector<MapDefInfo>::iterator it = d.begin(); it != d.end(); it++) {
+		if(!MaybeAddWeatherDef(instance->mInstanceID, (*it).Name, m))
+			continue;
+
+		hasWeather = true;
+	}
+
+	return m;
+}
+
+WeatherState* WeatherManager :: GetWeather(std::string mapName, int instanceId) {
+
+	WeatherKey k;
+	k.instance = instanceId;
+	k.mapName = mapName;
+	return mWeather[k];
+}
+
+void WeatherManager :: Deregister(std::vector<WeatherState*> states) {
+
+	/* Set up a weather state for all the map locations in this instance that have a weather def */
+	int s;
+	for(std::vector<WeatherState*>::iterator it = states.begin(); it != states.end(); it++) {
+		s = 0;
+		for(std::vector<std::string>::iterator it2 = (*it)->mMapNames.begin(); it2 != (*it)->mMapNames.end(); it2++) {
+			WeatherKey k;
+			k.instance = (*it)->mInstanceId;
+			k.mapName = *it2;
+			if(s == 0)
+				/* Only delete the state in the first key, as the other keys have a copy */
+				delete mWeather[k];
+			mWeather.erase(k);
+			s++;
+		}
+	}
+}
+
+int WeatherManager :: LoadFromFile(const char *fileName) {
+
+	//Note: the official grove file is loaded first, then the custom grove file.
+	//This should point here.
+	FileReader lfr;
+	if(lfr.OpenText(fileName) != Err_OK)
+	{
+		g_Logs.data->error("Could not open file [%v]", fileName);
+		return -1;
+	}
+
+	lfr.CommentStyle = Comment_Semi;
+	WeatherDef newItem;
+
+	while(lfr.FileOpen() == true)
+	{
+		int r = lfr.ReadLine();
+		if(r > 0)
+		{
+			r = lfr.BreakUntil("=", '=');  //Don't use SingleBreak since we won't be able to re-split later.
+			lfr.BlockToStringC(0, Case_Upper);
+			if(strcmp(lfr.SecBuffer, "[ENTRY]") == 0)
+			{
+				if(newItem.mMapName.length() != 0)
+				{
+					WeatherDef d(newItem);
+					mWeatherDefinitions[newItem.mMapName] = d;
+					newItem.Clear();
+				}
+			}
+			else
+			{
+				if(strcmp(lfr.SecBuffer, "NAME") == 0)
+					newItem.mMapName = lfr.BlockToStringC(1, 0);
+				else if(strcmp(lfr.SecBuffer, "USE") == 0)
+					newItem.mUse = lfr.BlockToStringC(1, 0);
+				else if(strcmp(lfr.SecBuffer, "FINEMIN") == 0)
+					newItem.mFineMin = lfr.BlockToULongC(1);
+				else if(strcmp(lfr.SecBuffer, "FINEMAX") == 0)
+					newItem.mFineMax = lfr.BlockToULongC(1);
+				else if(strcmp(lfr.SecBuffer, "LIGHTCHANCE") == 0)
+					newItem.mLightChance = lfr.BlockToIntC(1);
+				else if(strcmp(lfr.SecBuffer, "MEDIUMCHANCE") == 0)
+					newItem.mMediumChance = lfr.BlockToIntC(1);
+				else if(strcmp(lfr.SecBuffer, "HEAVYCHANCE") == 0)
+					newItem.mHeavyChance = lfr.BlockToIntC(1);
+				else if(strcmp(lfr.SecBuffer, "WEATHERMIN") == 0)
+					newItem.mWeatherMin = lfr.BlockToULongC(1);
+				else if(strcmp(lfr.SecBuffer, "WEATHERMAX") == 0)
+					newItem.mWeatherMax = lfr.BlockToULongC(1);
+				else if(strcmp(lfr.SecBuffer, "WEATHERTYPE") == 0) {
+					r = lfr.MultiBreak("=,"); //Re-split for this particular data.
+					for(int s = 1; s < r; s++) {
+						std::string typeStr = lfr.BlockToStringC(1, 0);
+						newItem.mWeatherTypes.push_back(typeStr);
+					}
+				}
+				else if(strcmp(lfr.SecBuffer, "THUNDERCHANCE") == 0)
+					newItem.mThunderChance = lfr.BlockToIntC(1);
+				else if(strcmp(lfr.SecBuffer, "THUNDERGAPMIN") == 0)
+					newItem.mThunderGapMin = lfr.BlockToULongC(1);
+				else if(strcmp(lfr.SecBuffer, "THUNDERGAPMAX") == 0)
+					newItem.mThunderGapMax = lfr.BlockToULongC(1);
+				else if(strcmp(lfr.SecBuffer, "ESCALATE") == 0)
+					newItem.mEscalateChance = lfr.BlockToIntC(1);
+				else
+					g_Logs.server->error("Unknown identifier [%v] while reading from file %v.", lfr.SecBuffer, fileName);
+			}
+		}
+	}
+	lfr.CloseCurrent();
+
+	if(newItem.mMapName.length() != 0)
+	{
+		WeatherDef d;
+		d.SetDefaults();
+		d.CopyFrom(newItem);
+		mWeatherDefinitions[newItem.mMapName] = d;
+	}
+	return 0;
+}
+
+int PrepExt_SendEnvironmentUpdateMsg(char *buffer, ActiveInstance *instance, const char *zoneIDString, ZoneDefInfo *zoneDef, int x, int z, int mask)
 {
 	int wpos = 0;
 	wpos += PutByte(&buffer[wpos], 42);   //_handleEnvironmentUpdateMsg
 	wpos += PutShort(&buffer[wpos], 0);
 
-	wpos += PutByte(&buffer[wpos], 0);   //Mask
+	wpos += PutByte(&buffer[wpos], mask);   //Mask
 
 	wpos += PutStringUTF(&buffer[wpos], zoneIDString);
 	wpos += PutInteger(&buffer[wpos], zoneDef->mID);
 	wpos += PutShort(&buffer[wpos], zoneDef->mPageSize);
 	wpos += PutStringUTF(&buffer[wpos], zoneDef->mTerrainConfig.c_str());
-	wpos += PutStringUTF(&buffer[wpos], zoneDef->GetTileEnvironment(x, z)->c_str());
+	if(instance == NULL) {
+		g_Logs.simulator->debug("SendEnvironmentUpdateMsg %v : %v", zoneIDString, zoneDef->GetTileEnvironment(x, z).c_str());
+		wpos += PutStringUTF(&buffer[wpos], zoneDef->GetTileEnvironment(x, z).c_str());
+	}
+	else {
+		g_Logs.simulator->debug("REMOVEME SendEnvironmentUpdateMsg %v : %v", zoneIDString, instance->GetEnvironment(x, z).c_str());
+		wpos += PutStringUTF(&buffer[wpos], instance->GetEnvironment(x, z).c_str());
+	}
 	wpos += PutStringUTF(&buffer[wpos], zoneDef->mMapName.c_str());
 
 	PutShort(&buffer[1], wpos - 3);       //Set message size

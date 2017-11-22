@@ -563,4 +563,11 @@ public:
 	int handleCommand(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
 };
 
+class MaintainHandler : public AbstractCommandHandler {
+public:
+	MaintainHandler();
+	~MaintainHandler() {};
+	int handleCommand(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
+};
+
 #endif

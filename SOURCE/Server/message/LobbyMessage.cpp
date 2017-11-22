@@ -46,6 +46,13 @@ int LobbyAuthenticateMessage::handleMessage(SimulatorThread *sim, CharacterServe
 	if (accPtr == NULL)
 		return 0;
 
+	if(g_Config.MaintenanceMessage.length() > 0 && accPtr->HasPermission(Perm_Account, Permission_Admin) == false && accPtr->HasPermission(Perm_Account, Permission_Sage) == false)	{
+		Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1), "The server is currently unavailable due to mainenance. The reason given was '%s'", g_Config.MaintenanceMessage.c_str());
+		sim->ForceErrorMessage(sim->Aux1, INFOMSG_ERROR);
+		sim->Disconnect("SimulatorThread::handle_lobby_authenticate");
+		return 0;
+	}
+
 	//Check for ban.
 	if (accPtr->SuspendTimeSec >= 0) {
 		unsigned long timePassed = g_PlatformTime.getAbsoluteSeconds()

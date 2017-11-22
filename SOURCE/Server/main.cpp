@@ -179,6 +179,7 @@ INITIALIZE_EASYLOGGINGPP
 #include "Daily.h"
 #include "Timer.h"
 #include "Books.h"
+#include "NPC.h"
 #include "Leaderboard.h"
 #include "http/HTTPService.h"
 #include "message/LobbyMessage.h"
@@ -286,8 +287,9 @@ void segfault_sigaction(int signum, siginfo_t *si, void *arg)
 	signal(SIGINT, SIG_DFL);
 	signal(SIGTERM, SIG_DFL);
 
+	bool ok = signum == SIGTERM || signum == SIGINT;
 
-	if(signum != SIGTERM) {
+	if(!ok) {
 		g_Logs.server->fatal("Signal encountered: %v", signum);
 		switch(signum)
 		{
@@ -323,7 +325,7 @@ void segfault_sigaction(int signum, siginfo_t *si, void *arg)
 		g_Logs.server->fatal("Stack trace finished");
 	}
 
-	if(signum != SIGTERM) {
+	if(!ok) {
 		g_Logs.server->fatal("Debug::LastAbility: %v", Debug::LastAbility);
 		g_Logs.server->fatal("Debug::CreatureDefID: %v", Debug::CreatureDefID);
 		g_Logs.server->fatal("Debug::LastName: %v", Debug::LastName);
@@ -351,40 +353,39 @@ void segfault_sigaction(int signum, siginfo_t *si, void *arg)
 		SIMULATOR_IT it;
 		for(it = Simulator.begin(); it != Simulator.end(); ++it)
 			g_Logs.server->fatal("Sim:%v %v = %v", it->InternalID, &*it, it->pld.CreatureDefID);
-	}
 
-	if(signum != SIGTERM) {
 		g_Logs.server->fatal("Finished running messages");
 		Debug_FullDump();
 	}
 	ShutDown();
 	UnloadResources();
 
-	if (signum != SIGTERM && g_Config.ServiceAuthURL.size() > 0 && g_Config.SiteServiceUsername.size() > 0) {
-		g_Logs.server->fatal("Posting forum report");
-		SiteClient siteClient(g_Config.ServiceAuthURL);
-		HTTPD::SiteSession siteSession;
-		siteClient.refreshXCSRF(&siteSession);
-		siteClient.login(&siteSession, g_Config.SiteServiceUsername, g_Config.SiteServicePassword);
-		if (siteClient.postCrashReport(&siteSession, signum) == 0) {
-			g_Logs.server->fatal("Posted forum report");
-		} else {
-			g_Logs.server->fatal("Failed to post forum report");
+	if (!ok) {
+		if(g_Config.ServiceAuthURL.size() > 0 && g_Config.SiteServiceUsername.size() > 0) {
+			g_Logs.server->fatal("Posting forum report");
+			SiteClient siteClient(g_Config.ServiceAuthURL);
+			HTTPD::SiteSession siteSession;
+			siteClient.refreshXCSRF(&siteSession);
+			siteClient.login(&siteSession, g_Config.SiteServiceUsername, g_Config.SiteServicePassword);
+			if (siteClient.postCrashReport(&siteSession, signum) == 0) {
+				g_Logs.server->fatal("Posted forum report");
+			} else {
+				g_Logs.server->fatal("Failed to post forum report");
+			}
+		}
+
+		if(g_Config.ShutdownHandlerScript.size() > 0) {
+			char scriptCall[g_Config.ShutdownHandlerScript.size() + 64];
+			g_Logs.server->fatal("Calling shutdown handler script %v", g_Config.ShutdownHandlerScript);
+			Util::SafeFormat(scriptCall, sizeof(scriptCall), "%s %d",
+					g_Config.ShutdownHandlerScript.c_str(),
+					signum);
+
+			g_Logs.server->fatal("Shutdown handler script %v completed with status %v", g_Config.ShutdownHandlerScript, system(scriptCall));
 		}
 	}
 
-	if(signum != SIGTERM && g_Config.ShutdownHandlerScript.size() > 0) {
-		char scriptCall[g_Config.ShutdownHandlerScript.size() + 64];
-		g_Logs.server->fatal("Calling shutdown handler script %v", g_Config.ShutdownHandlerScript);
-		Util::SafeFormat(scriptCall, sizeof(scriptCall), "%s %d",
-				g_Config.ShutdownHandlerScript.c_str(),
-				signum);
-
-		g_Logs.server->fatal("Shutdown handler script %v completed with status %v", g_Config.ShutdownHandlerScript, system(scriptCall));
-	}
-
-	g_Logs.server->fatal("Exiting");
-	g_Logs.FlushAll();
+	g_Logs.server->info("Exiting");
 	exit(signum == SIGTERM ? 0 : 1);
 	return;
 }
@@ -550,6 +551,7 @@ int InitServerMain(int argc, char *argv[]) {
 	}
 
 	START_EASYLOGGINGPP(argc, argv);
+	el::Loggers::setLoggingLevel(el::Level::Fatal);
 
 	bool daemonize = false;
 	std::string pidfile = "";
@@ -643,6 +645,7 @@ int InitServerMain(int argc, char *argv[]) {
 	g_MessageManager.messageHandlers[10] = new SwimStateChangeMessage();
 	g_MessageManager.messageHandlers[11] = new DisconnectMessage();
 	g_MessageManager.messageHandlers[20] = new AcknowledgeHeartbeatMessage();
+	g_MessageManager.messageHandlers[21] = new MouseClickMessage();
 
 	// Lobby Query Handlers
 	g_QueryManager.lobbyQueryHandlers["account.tracking"] = new AccountTrackingHandler();
@@ -676,6 +679,7 @@ int InitServerMain(int argc, char *argv[]) {
 	g_QueryManager.queryHandlers["updateContent"] = new UpdateContentHandler();
 	g_QueryManager.queryHandlers["statuseffect.set"] = new StatusEffectSetHandler();
 	g_QueryManager.queryHandlers["gm.spawn"] = new GMSpawnHandler();
+	g_QueryManager.queryHandlers["gm.summon"] = new SummonHandler();
 
 	g_QueryManager.queryHandlers["skadd"] = new SidekickAddHandler();
 	g_QueryManager.queryHandlers["skremove"] = new SidekickRemoveHandler();
@@ -915,6 +919,7 @@ int InitServerMain(int argc, char *argv[]) {
 	g_QueryManager.queryHandlers["script.wakevm"] = new ScriptWakeVMHandler();
 	g_QueryManager.queryHandlers["script.clearqueue"] = new ScriptClearQueueHandler();
 	g_QueryManager.queryHandlers["user.auth.reset"] = new UserAuthResetHandler();
+	g_QueryManager.queryHandlers["maintain"] = new MaintainHandler();
 
 	// Some are shared
 	LootNeedGreedPassHandler *lootNeedGreedPassHandler = new LootNeedGreedPassHandler();
@@ -1006,6 +1011,9 @@ int InitServerMain(int argc, char *argv[]) {
 	g_AuctionHouseManager.ConnectToSite();
 	g_Logs.data->info("Loaded %v Auction House items.", g_CreditShopManager.mItems.size());
 
+	g_NPCDialogManager.LoadItems();
+	g_Logs.data->info("Loaded %v NPC Dialog items.", g_NPCDialogManager.mItems.size());
+
 	g_ZoneDefManager.LoadData();
 	g_GroveTemplateManager.LoadData();
 
@@ -1020,6 +1028,9 @@ int InitServerMain(int argc, char *argv[]) {
 
 	MapLocation.LoadFile(Platform::GenerateFilePath(GAuxBuf, "Data", "MapLocations.txt"));
 	g_Logs.data->info("Loaded %v MapLocation zones.", MapLocation.mLocationSet.size());
+
+	g_WeatherManager.LoadFromFile(Platform::GenerateFilePath(GAuxBuf, "Data", "Weather.txt"));
+	g_Logs.data->info("Loaded %v weather definitions.", g_WeatherManager.mWeatherDefinitions.size());
 
 	g_SceneryManager.LoadData();
 
@@ -1375,9 +1386,9 @@ void ShutDown(void)
 			SIMULATOR_IT it;
 			for(it = Simulator.begin(); it != Simulator.end(); ++it)
 			{
-				if(it->isThreadExist == true)
+				if(it->isThreadExist == true && it->isThreadActive)
 				{
-					fprintf(stderr, "Forcing Sim:%d to shut down\n", it->InternalID);
+					g_Logs.server->info("Forcing disconnect of clients.");
 					it->isThreadActive = false;
 					it->sc.DisconnectClient();
 				}
@@ -1630,7 +1641,7 @@ void SendHeartbeatMessages(void)
 void RunActiveInstances(void)
 {
 	bool envUpdated = g_EnvironmentCycleManager.HasCycleUpdated();
-	const char * envString = NULL;
+	std::string envString = "";
 	if(envUpdated == true)
 		envString = g_EnvironmentCycleManager.GetCurrentTimeOfDay();
 

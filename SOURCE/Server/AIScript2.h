@@ -76,6 +76,7 @@ public:
 	bool IsTargetInRange(float distance);
 	int GetTargetRange();
 	void SetGTAE();
+	void SetGTAETo(Squirrel::Vector3I loc);
 	int GetDistance(int CID);
 	int GetSpeed(int CID);
 	bool IsCIDBusy(int CID);

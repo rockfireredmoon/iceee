@@ -641,6 +641,7 @@ int GiveAllHandler::handleCommand(SimulatorThread *sim,
 			newItem.ApplyFromItemDef(resultList[i]);
 			newItem.CCSID = (INV_CONTAINER << 16) | slot;
 			pld->charPtr->inventory.AddItem(INV_CONTAINER, newItem);
+			sim->ActivateActionAbilities(&newItem);
 			wpos += AddItemUpdate(&sim->SendBuf[wpos], sim->Aux3, &newItem);
 		} else {
 			g_Logs.simulator->debug("[%v] No more free slots.",
@@ -971,6 +972,8 @@ int HelpHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
 //
 RefashionHandler::RefashionHandler() :
 		AbstractCommandHandler("Usage: /refashion", 0) {
+	mAllowedPermissions.push_back(Permission_Sage);
+	mAllowedPermissions.push_back(Permission_Admin);
 }
 
 int RefashionHandler::handleCommand(SimulatorThread *sim,
@@ -2260,6 +2263,9 @@ int InfoHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
 		sprintf(sim->Aux1, "Scenery Tile: %d, %d",
 				creatureInstance->CurrentX / pld->zoneDef->mPageSize,
 				creatureInstance->CurrentZ / pld->zoneDef->mPageSize);
+	if(query->args[0].compare("terraintile") == 0)
+		// TODO is this always correct?
+		sprintf(sim->Aux1, "Terrain Tile: %d, %d", creatureInstance->CurrentX / 1920, creatureInstance->CurrentZ / 1920);
 	if (sim->Aux1[0] != 0)
 		sim->SendInfoMessage(sim->Aux1, INFOMSG_INFO);
 	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
@@ -2522,6 +2528,7 @@ CycleHandler::CycleHandler() :
 int CycleHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
 		SimulatorQuery *query, CreatureInstance *creatureInstance) {
 	g_EnvironmentCycleManager.EndCurrentCycle();
+	g_Logs.server->info("Cycle is now: %v (%v)", g_EnvironmentCycleManager.mCurrentCycleIndex, g_EnvironmentCycleManager.GetCurrentTimeOfDay());
 	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
 }
 //
@@ -2993,7 +3000,7 @@ int WarpExternalHandler::handleCommand(SimulatorThread *sim,
 				sim->SendInfoMessage("Warping target.", INFOMSG_INFO);
 				it->MainCallSetZone(zoneDef->mID, 0, true);
 				return PrepExt_QueryResponseString(sim->SendBuf, query->ID,
-						"OK");
+							"OK");
 			}
 	return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 			"Target not found.");
@@ -3447,9 +3454,9 @@ int InstanceHandler::handleCommand(SimulatorThread *sim,
 		}
 
 		if (sim->CheckPermissionSimple(Perm_Account, Permission_Debug)
-				== true&& inst->dropRateProfile != NULL) {
+				== true) {
 			Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1), "Drop rate profile: %s",
-					inst->dropRateProfile->mName.c_str());
+					inst->mZoneDefPtr->GetDropRateProfile().c_str());
 			sim->SendInfoMessage(sim->Aux1, INFOMSG_INFO);
 		}
 	}
@@ -3505,6 +3512,29 @@ int UserAuthResetHandler::handleCommand(SimulatorThread *sim,
 
 	g_Logs.event->info("[SAGE] User key and password reset for %v by %v",
 			creatureInstance->css.display_name, accName.c_str());
+
+	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
+}
+
+//
+//MaintainHandler
+//
+MaintainHandler::MaintainHandler() :
+		AbstractCommandHandler("Usage: /maintain", 0) {
+	mAllowedPermissions.push_back(Permission_Admin);
+}
+
+int MaintainHandler::handleCommand(SimulatorThread *sim,
+		CharacterServerData *pld, SimulatorQuery *query,
+		CreatureInstance *creatureInstance) {
+	if(query->argCount > 0) {
+		sim->BroadcastMessage("The server is now in maintenance mode. Further logins by anyone other than Administrators or Sages will be denied.");
+		g_Config.MaintenanceMessage = query->GetString(0);
+	}
+	else {
+		sim->BroadcastMessage("The server has now left maintenance mode. Anyone may login again");
+		g_Config.MaintenanceMessage = "";
+	}
 
 	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
 }

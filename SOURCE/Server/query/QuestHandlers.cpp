@@ -471,9 +471,8 @@ int QuestHackHandler::handleQuery(SimulatorThread *sim,
 		g_Logs.event->info("[SAGE] Quest complete (QuestID: %v, CID: %v)",
 				qdef->questID, creature->CreatureID);
 		WritePos = PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
-		int wpos = creature->charPtr->questJournal.ForceComplete(
-				creature->CreatureID, qdef->questID, &sim->Aux1[0]);
-		creature->simulatorPtr->AttemptSend(sim->Aux1, wpos);
+		char buf[1024];
+		creature->simulatorPtr->AttemptSend(buf, creature->charPtr->questJournal.ForceComplete(creature->CreatureID, qdef->questID, buf));
 	} else {
 		g_Logs.simulator->warn(
 				"Unknown quest hack op for quest %v and creature %v.",

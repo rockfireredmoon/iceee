@@ -83,7 +83,8 @@ struct QueryErrorMsg
 	static const int TRADEBUSY     = -25;  //The character is busy with another trade.
 	static const int GENERALBUSY   = -26;  //The character is busy or cannot move items at this time.
 	static const int SELFBUSYSKILL = -27;  //Player is busy casting an ability or using a quest object.
-	static const int OTHERBUSYSKILL = -28;  //Other player is busy casting an ability or using a quest object.
+	static const int OTHERBUSYSKILL = -28; //Other player is busy casting an ability or using a quest object.
+	static const int NOREFASHION = -29;    //Cannot refashion item because ability to do so is missing.
 };
 
 class SimulatorThread
@@ -241,9 +242,7 @@ public:
 	void ChangeProtocol(int newProto);
 	bool ValidPointers(void);
 	void SendSetAvatar(int CreatureID);
-	void SendZoneInfo(void);
-	const char * GetTimeOfDay(void);
-	void SendTimeOfDay(const char *envType);
+	std::string GetTimeOfDay(void);
 	void CheckMapUpdate(bool force);
 	void UpdateSocialEntry(bool newOnlineStatus, bool onlyUpdateFriendList);
 	void BroadcastGuildChange(int guildDefID);

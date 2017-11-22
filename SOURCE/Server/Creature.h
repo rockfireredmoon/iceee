@@ -23,6 +23,8 @@ class SimulatorThread;
 #include "sqrat.h"
 #include "Daily.h"
 #include "Globals.h"
+#include "ConfigString.h"
+#include "InstanceScale.h"
 #include "json/json.h"
 
 class CreatureInstance;  //Forward declaration for a pointer in the SelectedObject structure
@@ -49,6 +51,8 @@ extern const double Cone_180;
 extern const double Cone_90;
 
 const float DEFAULT_CREATURE_SPEED = 50.0F;      //Should match the 'gDefaultCreatureSpeed' value in the client.  Number of units a creature moves per second.
+
+const int MOVEMENT_THRESHOLD = 30;
 
 //Helps determines where a buff came from.  This assists any function that may need to
 //add, update, or erase buffs from a particular source.
@@ -93,7 +97,8 @@ struct ServerFlags
 		ScriptMovement    = (1 << 22),  //This creature has been granted arbitrary movement by a script.  It bends the rules somewhat when dealing with leash and wander radius.
 		ScriptNoLinkLoyal = (1 << 23),  //This creature has been specifically disabled from
 		Defender		  = (1 << 24),  //This creature should defend the player
-		Defended		  = (1 << 25),  //This creature is defended
+		Defended		  = (1 << 25),
+		KillableProp	  = (1 << 26)   //This creature is a killable prop
 
 		// NOTE: if any more are added, check to make sure the following
 		// variable and function support the required number of bits.
@@ -117,6 +122,7 @@ struct ActiveAbilityInfo
 	bool bUnbreakableChannel;  //For special channels only, indicates casting may not be broken by incoming attacks.
 	bool bParallel;           //If true, this is an independently parallel operation (like bleeding damage over time) that might have special freedoms, like continuing operation even if the caster is stunned.
 	bool bSecondary;          //If true, the ability data sent to the client should write the target details in the secondary target list.
+	bool bForce;			  //If true, the ability activates even when Noncombatant (and others?) are set
 	short interruptChanceMod;    //Additional chance to interrupt, solely for this ability.
 	float x;
 	float y;
@@ -171,12 +177,15 @@ public:
 	CharacterStatSet css;
 	int CreatureDefID;             //Creature Definition ID
 	unsigned short DefHints;       //extra creature data
-	std::string ExtraData;
-	std::vector<int>DefaultEffects;
+	std::vector<int> DefaultEffects;
+	std::vector<int> Items;
+	std::string DropRateProfile;
+	float DropRateMult;
+	bool NamedMob;
 	
 	bool operator < (const CreatureDefinition& other) const;
-	bool IsNamedMob(void) const;
-	float GetDropRateMult(void) const;
+	std::string GetExtraDataString();
+	std::string GetDropRateProfileName(void);
 	void SaveToStream(FILE *output);
 	void WriteToJSON(Json::Value &value);
 };
@@ -395,6 +404,7 @@ public:
 
 	AIScriptPlayer *aiScript;
 	AINutPlayer *aiNut;
+	long scriptMoveEvent;
 
 	union
 	{
@@ -407,9 +417,11 @@ public:
 	unsigned long timer_mightregen;   //Time when next might regen tick will fire
 	unsigned long timer_willregen;    //Time when next will regen tick will fire
 	unsigned long timer_lasthealthupdate; //Time when the next health regen tick will fire
+	unsigned long timer_dialog; //Time when the next NPC dialog should appearv
 
 	HateProfile *hateProfilePtr;
 	int activeLootID;
+	int dialogIndex;
 
 	CharacterStatSet css;   //Contains the active character stat set
 	vector<ActiveStatMod> activeStatMod;
@@ -443,6 +455,7 @@ public:
 	void ApplyItemStatModFromConfig(int itemID, const std::string configStr);
 	void SubtractAbilityBuffStat(int statID, int abgID, float amount);
 	void CheckRemovedBuffs(void);
+	bool IsAtTether();
 	void AddBaseStatMod(int statID, float amount);
 	void SubtractBaseStatMod(int statID, float amount);
 	void UpdateBaseStatMinimum(int statID, float amount);
@@ -475,17 +488,18 @@ public:
 	void CheckQuestKill(CreatureInstance *target);
 	void CheckQuestInteract(CreatureInstance *target);
 	int ProcessQuestRewards(int QuestID, int Outcome, const std::vector<QuestItemReward>& itemsToGive);
-	int QuestInteractObject(char *buffer, const char *text, float time, bool gather);
-	int PrepInteractObject(char *buffer, const char *text, float time, bool gather, CreatureInstance *target);
+	int QuestInteractObject(char *buffer, const char *text, int time, bool gather);
+	int PrepInteractObject(char *buffer, const char *text, int time, bool gather, CreatureInstance *target);
 	int NormalInteractObject(char *outBuf, InteractObject *interactObj);
 	void RunQuestObjectInteraction(CreatureInstance *target, bool deleteObject);
 	void RunObjectInteraction(CreatureInstance *target);
 
 	void SendUpdatedLoot(void);
+
 	float GetDropRateMultiplier(CreatureDefinition *cdef);
 
 	void PlayerLoot(int level, std::vector<DailyProfile> profiles);
-	void CreateLoot(int finderLevel);
+	void CreateLoot(int finderLevel, int partySize);
 	void AddLootableID(int newLootableID);
 
 	void ApplyRawDamage(int amount);
@@ -511,6 +525,7 @@ public:
 	int lastIdleZ;          //If aggro, this is the previous idle location.
 	int tetherNodeX;        //The anchor point of the current tether location.
 	int tetherNodeZ;        //The anchor point of the current tether location.
+	int tetherFacing;		//The direction to face when tethered
 
 	bool initialisingAbilities; // Set to true when persistent abilities are being set up
 
@@ -521,7 +536,7 @@ public:
 	bool _ValidTargetFlag(CreatureInstance *compare, int abilityRestrict);  //Return true if the creature is a valid target with the given faction and targeting flags.
 	int _AddTargetsInCone(double halfAngle, int targetType, int distance, int abilityRestrict);  //Fill target list with valid targets within the required range and distance
 	bool isTargetInCone(CreatureInstance * target, double amount);
-	void RegisterHostility(CreatureInstance *attacker, int hostility);
+	bool RegisterHostility(CreatureInstance *attacker, int hostility);
 	void SetCombatStatus(void);
 	void Untransform(void);
 	int GetOrbRegenerationTime(float regenFactor);
@@ -539,6 +554,7 @@ public:
 	void RegisterImplicit(int eventType, int abID, int abGroup);
 
 	int CallAbilityEvent(int abilityID, int eventType);
+	int CallAbilityEvent(int abilityID, int eventType, bool force);
 	int RequestAbilityActivation(int abilityID);
 	void ProcessAbility_Ex(ActiveAbilityInfo *ability);
 	void RunActiveAbilities(void);  //Called by the main thread to run ability processing for this entity
@@ -581,6 +597,7 @@ public:
 	void AddCreaturePointer(CREATURE_SEARCH& output, CreatureInstance* ptr, int attacked);
 	void ResolveAttackers(CREATURE_SEARCH& results);
 	int GetHighestLevel(CREATURE_SEARCH& creatureList);
+	int GetHighestPartySize(CREATURE_SEARCH& creatureList);
 	void _OnModChanged(void);
 	void _UpdateHealthMod(void);
 	void UpdateAggroPlayers(short state);
@@ -594,6 +611,7 @@ public:
 	bool AIAbilityFailureAllowRetry(int abilityReturnInfo);
 	bool AICheckIfAbilityBusy(void);
 	int AIFillCreaturesNear(int range, float x, float z, int playerAbilityRestrict, int npcAbilityRestrict, int sidekickAbilityRestrict, CREATURE_PTR_SEARCH& creatures);
+	int AIFillEnemyNear(int range, float x, float z, CREATURE_PTR_SEARCH& enemies);
 	int AICountEnemyNear(int range, float x, float z);
 	int AIGetIdleMob(int creatureDefID);
 	void AIOtherSetTarget(int creatureID, int creatureIDTarget);
@@ -605,6 +623,7 @@ public:
 	int AIGetTargetRange(void);
 	void AIDispelTargetProperty(const char *propName, int sign);
 	void AISetGTAE(void);
+	void AISetGTAETo(int x, int y, int z);
 
 	void SendEffect(const char *effectName, int targetCID);
 	void SendSay(const char *message);
@@ -613,13 +632,13 @@ public:
 	//Internal processing
 	int RemoveCreatureReference(CreatureInstance *target);
 	void RunAIScript(void);
-	void MoveToTarget(void);
-	void MoveToTarget_Ex(void);
+	void RunDialog(void);
 	int RotateToTarget(void);
 	int RunMovementStep(void);
-	int RunMovementStep2(void);
 	void UpdateDestination(void);
 	void MoveToTarget_Ex2(void);
+	void StopMovement(int result);
+	void MoveTo(int x, int z, int range, int speed);
 	void ProcessRegen(void);
 	void ProcessAutoAttack(void);
 	bool isNPCReadyMovement(void);

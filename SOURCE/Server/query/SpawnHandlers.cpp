@@ -140,6 +140,8 @@ int SpawnPropertyHandler::handleQuery(SimulatorThread *sim, CharacterServerData 
 				sprintf(sim->Aux1, "%d", so->extraData->leaseTime);
 			else if (strcmp(propName, "spawnPackage") == 0)
 				Util::SafeCopy(sim->Aux1, so->extraData->spawnPackage, sizeof(sim->Aux1));
+			else if(strcmp(propName, "dialog") == 0)
+				Util::SafeCopy(sim->Aux1, so->extraData->dialog, sizeof(sim->Aux1));
 			else if (strcmp(propName, "mobTotal") == 0)
 				sprintf(sim->Aux1, "%d", so->extraData->mobTotal);
 			else if (strcmp(propName, "maxActive") == 0)

@@ -1,0 +1,32 @@
+[ENTRY]
+MinInterval=20000
+MaxInterval=30000
+Sequence=1
+
+[PARAGRAPH]
+Type=0
+Value=Shiny swords! Desirable daggers! We got it all!
+[PARAGRAPH]
+Type=0
+Value=Come peruse my fine wares, you won't be disappointed.
+[PARAGRAPH]
+Type=0
+Value=Please don't ask for credit, as refusal often offends.
+[PARAGRAPH]
+Type=0
+Value=Beasts! Are you a slasher, a slayer, or a stabber? We've got something for you here
+[PARAGRAPH]
+Type=0
+Value=Sir! Madam! Step this way!
+[PARAGRAPH]
+Type=0
+Value=We buy your old weapons too, any condition. You won't get a better deal anywhere on Gaia.
+[PARAGRAPH]
+Type=0
+Value=You won't find better quality, guaranteed! (usual terms and conditions apply)
+[PARAGRAPH]
+Type=0
+Value=Come browse our fine selection, you won't find finer.
+[PARAGRAPH]
+Type=0
+Value=null

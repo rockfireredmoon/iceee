@@ -111,6 +111,7 @@ namespace ScriptCore
 	NutDef::NutDef() {
 		mQueueEvents = true;
 		mFlags = 0;
+		mVMSize = 0;
 		queueCallStyle = 0;
 		queueExternalJumps = false;
 		mScriptIdleSpeed = 1;
@@ -169,6 +170,7 @@ namespace ScriptCore
 
 	NutCallback::NutCallback()
 	{
+		mResult = Result::WAITING;
 	}
 
 	NutCallback::~NutCallback()
@@ -188,6 +190,28 @@ namespace ScriptCore
 
 	bool TimeCondition::CheckCondition() {
 		return g_PlatformTime.getElapsedMilliseconds() >= mFireTime;
+	}
+
+	//
+	// 'Never' condition implementation. Prevents from ever running (until removed?)
+	//
+
+	bool NeverCondition::CheckCondition() {
+		return false;
+	}
+
+	//
+	// 'Pause' condition implementation. Is true when mPaused becomes fale
+	//
+
+	PauseCondition::PauseCondition()
+	{
+		mPaused = true;
+	}
+	PauseCondition::~PauseCondition() {}
+
+	bool PauseCondition::CheckCondition() {
+		return !mPaused;
 	}
 
 	//
@@ -317,6 +341,7 @@ namespace ScriptCore
 		mCallback = callback;
 		mRunWhenSuspended = false;
 		mCancelled = false;
+		mId = -1;
 	}
 
 	NutScriptEvent::~NutScriptEvent() {
@@ -334,6 +359,8 @@ namespace ScriptCore
 
 	NutPlayer::NutPlayer() {
 		mInitTime = 0;
+		mPause = NULL;
+		mSleeping = 0;
 		mClear = false;
 		vm = NULL;
 		def = NULL;
@@ -347,6 +374,8 @@ namespace ScriptCore
 		mCalls = 0;
 		mRunning = false;
 		mHalting = false;
+		mNextId = 1;
+		mCaller = 0;
 	}
 
 	NutPlayer::~NutPlayer() {
@@ -486,13 +515,21 @@ namespace ScriptCore
 				if(!idleSpeed.IsNull()) {
 					def->mScriptIdleSpeed = idleSpeed.Cast<int>();
 				}
+				Sqrat::Object vmSize = infoObject.GetSlot("vm_size");
+				if(!vmSize.IsNull()) {
+					def->mVMSize = vmSize.Cast<int>();
+				}
 				Sqrat::Object speed = infoObject.GetSlot("speed");
 				if(!speed.IsNull()) {
 					def->mScriptSpeed = Util::ClipInt(speed.Cast<int>(), 1, 100);
 				}
+
+				if(def->mVMSize != 0 && def->mVMSize != g_Config.SquirrelVMStackSize) {
+					vm->_stack.resize(def->mVMSize);
+					g_Logs.script->info("Squirrel script %v has requested a different VM size (%v) to the default (%v), reinitializing. ", def->mSourceFile.c_str(), def->mVMSize, g_Config.SquirrelVMStackSize);
+				}
 			}
 		}
-
 
 
 //		if (SQ_SUCCEEDED(sqstd_dofile(vm, _SC(def->mSourceFile), SQFalse, SQTrue))) // also prints syntax errors if any
@@ -552,13 +589,22 @@ namespace ScriptCore
 		}
 	}
 
-	void NutPlayer::Queue(Sqrat::Function function, int fireDelay) {
+	bool NutPlayer::Cancel(long id) {
+		NutScriptEvent* nse = GetEvent(id);
+		if(nse == NULL)
+			return false;
+		QueueRemove(nse);
+		return true;
+	}
+
+	long NutPlayer::Queue(Sqrat::Function function, int fireDelay) {
 		if(def == NULL) {
 			g_Logs.script->error("Exec when there is no script def!");
+			return -1;
 		}
 		else {
 			g_Logs.script->debug("Queueing call in %v in %v", def->scriptName.c_str(), fireDelay);
-			QueueAdd(new ScriptCore::NutScriptEvent(
+			return QueueAdd(new ScriptCore::NutScriptEvent(
 						new ScriptCore::TimeCondition(fireDelay),
 						new ScriptCore::SquirrelFunctionCallback(this, function)));
 		}
@@ -608,6 +654,7 @@ namespace ScriptCore
 		vector3FClass.Var("z", &Squirrel::Vector3::mZ);
 
 		clazz->Func(_SC("exec"), &NutPlayer::Exec);
+		clazz->Func(_SC("cancel"), &NutPlayer::Cancel);
 		clazz->Func(_SC("queue"), &NutPlayer::Queue);
 		clazz->Func(_SC("clear_queue"), &NutPlayer::QueueClear);
 		clazz->Func(_SC("broadcast"), &NutPlayer::Broadcast);
@@ -802,17 +849,19 @@ namespace ScriptCore
 			g_Logs.script->warn("Attempt to run function on inactive script %v.", name.c_str());
 			return "";
 		}
+
+		g_Logs.script->debug("Run function %v", name.c_str());
+
 		unsigned long now = g_PlatformTime.getMilliseconds();
 		mRunning = true;
 		WakeVM(name);
 		SQInteger top = sq_gettop(vm);
-		const SQChar* val;
+		std::string sval = "";
 		try {
 			if(DoRunFunction(name, parms, time, true)) {
+				const SQChar* val;
 				sq_getstring(vm,-1,&val);
-			}
-			else {
-				val = "";
+				sval = val;
 			}
 		}
 		catch(int e) {
@@ -826,7 +875,7 @@ namespace ScriptCore
 			mProcessingTime += g_PlatformTime.getMilliseconds() - now;
 		}
 		mRunning = false;
-		return val;
+		return sval;
 	}
 
 	bool NutPlayer::RunFunctionWithBoolReturn(std::string name, std::vector<ScriptParam> parms, bool time, bool defaultIfNoFunction) {
@@ -1061,22 +1110,23 @@ namespace ScriptCore
 		return ok;
 	}
 
-	void NutPlayer::QueueInsert(NutScriptEvent *evt)
+	long NutPlayer::QueueInsert(NutScriptEvent *evt)
 	{
 		if(mHalting) {
-			g_Logs.script->warn("Script event when halting");
-			return;
+			g_Logs.script->warn("Squirrel script event when halting");
+			return -1;
 		}
 		if(!mActive) {
-			g_Logs.script->warn("Script event when not active");
-			return;
+			g_Logs.script->warn("Squirrel script event when not active");
+			return-1;
 		}
+		evt->mId = mNextId++;
 		if(mExecutingEvent != NULL)
 		{
 			if(mQueueInsert.size() >= MAX_QUEUE_SIZE)
 			{
-				g_Logs.script->error("Script error: Deferred QueueEvent() list is full %v of %v", mQueueInsert.size(), MAX_QUEUE_SIZE);
-				return;
+				g_Logs.script->error("Squirrel Script error: Deferred QueueEvent() list is full %v of %v", mQueueInsert.size(), MAX_QUEUE_SIZE);
+				return -1;
 			}
 			mQueueInsert.insert(mQueueInsert.begin(), evt);
 		} else
@@ -1084,11 +1134,12 @@ namespace ScriptCore
 
 			if(mQueue.size() >= MAX_QUEUE_SIZE)
 			{
-				g_Logs.script->error("Script error: QueueEvent() list is full [script: %v]", def->scriptName.c_str());
-				return;
+				g_Logs.script->error("Squirrel Script error: QueueEvent() list is full [script: %v]", def->scriptName.c_str());
+				return -1;
 			}
 			mQueue.insert(mQueue.begin(), evt);
 		}
+		return evt->mId;
 	}
 
 	void NutPlayer::QueueClear()
@@ -1105,6 +1156,17 @@ namespace ScriptCore
 		{
 			ClearQueue();
 		}
+	}
+
+	NutScriptEvent* NutPlayer::GetEvent(long id) {
+		// Look for the event in all queues
+		std::vector<ScriptCore::NutScriptEvent*>::iterator it;
+		for(it = mQueue.begin(); it != mQueue.end(); ++it) {
+			if((*it)->mId == id) {
+				return *it;
+			}
+		}
+		return NULL;
 	}
 
 	void NutPlayer::QueueRemove(NutScriptEvent *evt)
@@ -1130,24 +1192,25 @@ namespace ScriptCore
 		}
 	}
 
-	void NutPlayer::QueueAdd(NutScriptEvent *evt)
+	long NutPlayer::QueueAdd(NutScriptEvent *evt)
 	{
 		if(mHalting) {
-			g_Logs.script->warn("Script event when halting");
-			return;
+			g_Logs.script->warn("Squirrel script event when halting");
+			return -1;
 		}
 		if(!mActive) {
-			g_Logs.script->warn("Script event when not active");
-			return;
+			g_Logs.script->warn("Squirrel script event when not active");
+			return -1;
 		}
+		evt->mId = mNextId++;
 
 		if(mExecutingEvent != NULL)
 		{
 			if(mExecutingEvent != evt) {
 				if(mQueueAdd.size() >= MAX_QUEUE_SIZE)
 				{
-					g_Logs.script->error("Script error: Deferred QueueEvent() list is full %v of %v", mQueueAdd.size(), MAX_QUEUE_SIZE);
-					return;
+					g_Logs.script->error("Squirrel script error: Deferred QueueEvent() list is full %v of %v", mQueueAdd.size(), MAX_QUEUE_SIZE);
+					return -1;
 				}
 				mQueueAdd.push_back(evt);
 			}
@@ -1156,11 +1219,12 @@ namespace ScriptCore
 
 			if(mQueue.size() >= MAX_QUEUE_SIZE)
 			{
-				g_Logs.script->error("Script error: QueueEvent() list is full [script: %v]", def->scriptName.c_str());
-				return;
+				g_Logs.script->error("Squirrel script error: QueueEvent() list is full [script: %v]", def->scriptName.c_str());
+				return -1;
 			}
 			mQueue.push_back(evt);
 		}
+		return evt->mId;
 	}
 
 	void NutPlayer::Broadcast(const char *message)
@@ -1168,24 +1232,59 @@ namespace ScriptCore
 		g_SimulatorManager.BroadcastMessage(message);
 	}
 
+	bool NutPlayer::Resume()
+	{
+		if(mPause == NULL) {
+			g_Logs.script->warn("Attempt to resume not paused script");
+		}
+		else if(mPause->mPaused) {
+			mPause->mPaused = false;
+			return true;
+		}
+		return false;
+	}
+
+	bool NutPlayer::Pause()
+	{
+		if(mPause != NULL) {
+			g_Logs.script->warn("Attempt to pause already paused script");
+			return false;
+		}
+		if(mSleeping > 0) {
+			g_Logs.script->warn("Attempt to pause already sleeping script");
+			return false;
+		}
+
+		ResumeCallback *cb = new ResumeCallback(this);
+		mPause = new PauseCondition ();
+		NutScriptEvent *nse = new NutScriptEvent(mPause, cb);
+		nse->mRunWhenSuspended = true;
+		QueueAdd(nse);
+		return sq_suspendvm(vm);
+	}
+
+
 	SQInteger NutPlayer::Sleep(HSQUIRRELVM v)
 	{
-	    if (sq_gettop(v) == 2) {
-	        Sqrat::Var<NutPlayer&> left(v, 1);
-	        if (!Sqrat::Error::Occurred(v)) {
-	            Sqrat::Var<unsigned long> right(v, 2);
-	        	std::vector<int> vv;
-	        	ResumeCallback *cb = new ResumeCallback(&left.value);
-	        	NutScriptEvent *nse = new NutScriptEvent(new TimeCondition (right.value), cb);
-	        	nse->mRunWhenSuspended = true;
-	        	g_Logs.script->debug("Suspending VM for %v for %v.", (&left.value)->def->scriptName, right.value);
-	        	left.value.QueueAdd(nse);
-	            SQInteger ret = sq_suspendvm(v);
-	            return ret;
-	        }
-	        return sq_throwerror(v, Sqrat::Error::Message(v).c_str());
-	    }
-	    return sq_throwerror(v, _SC("wrong number of parameters"));
+		if (sq_gettop(v) == 2) {
+			Sqrat::Var<NutPlayer&> left(v, 1);
+			if (!Sqrat::Error::Occurred(v)) {
+				if((&left.value)->mPause != NULL)
+					return sq_throwerror(v, _SC("already paused"));
+				if((&left.value)->mSleeping > 0)
+					return sq_throwerror(v, _SC("already sleeping"));
+				Sqrat::Var<unsigned long> right(v, 2);
+				std::vector<int> vv;
+				(&left.value)->mSleeping = right.value;
+				ResumeCallback *cb = new ResumeCallback(&left.value);
+				NutScriptEvent *nse = new NutScriptEvent(new TimeCondition (right.value), cb);
+				nse->mRunWhenSuspended = true;
+				left.value.QueueAdd(nse);
+				return sq_suspendvm(v);
+			}
+			return sq_throwerror(v, Sqrat::Error::Message(v).c_str());
+		}
+		return sq_throwerror(v, _SC("wrong number of parameters"));
 	}
 
 	bool NutPlayer::ArrayContains(Sqrat::Array arr, int value) {
@@ -2453,7 +2552,7 @@ int ScriptPlayer :: PopVarStack(void)
 {
 	int retval = 0;
 	if(varStack.size() == 0)
-		g_Logs.script->error("Script error: PopVarStack() stack is empty [script: %v]", def->scriptName.c_str());
+		g_Logs.script->error("TSL Script error: PopVarStack() stack is empty [script: %v]", def->scriptName.c_str());
 	else
 	{
 		retval = varStack[varStack.size() - 1];
@@ -2465,7 +2564,7 @@ int ScriptPlayer :: PopVarStack(void)
 void ScriptPlayer :: PushCallStack(int value)
 {
 	if(callStack.size() > MAX_STACK_SIZE)
-		g_Logs.script->error("Script error: PushCallStack() stack is full [script: %v]", def->scriptName.c_str());
+		g_Logs.script->error("TSL Script error: PushCallStack() stack is full [script: %v]", def->scriptName.c_str());
 	else
 		callStack.push_back(value);
 }
@@ -2474,7 +2573,7 @@ int ScriptPlayer :: PopCallStack(void)
 {
 	int retval = 0;
 	if(callStack.size() == 0)
-		g_Logs.script->error("Script error: PopCallStack() stack is empty [script: %v]", def->scriptName.c_str());
+		g_Logs.script->error("TSL Script error: PopCallStack() stack is empty [script: %v]", def->scriptName.c_str());
 	else
 	{
 		retval = callStack[callStack.size() - 1];
@@ -2487,7 +2586,7 @@ void ScriptPlayer :: QueueEvent(const char *labelName, unsigned long fireDelay)
 {
 	if(scriptEventQueue.size() >= MAX_QUEUE_SIZE)
 	{
-		g_Logs.script->error("Script error: QueueEvent() list is full [script: %v]", def->scriptName.c_str());
+		g_Logs.script->error("TSL Script error: QueueEvent() list is full [script: %v]", def->scriptName.c_str());
 		return;
 	}
 
@@ -2505,6 +2604,11 @@ void ScriptPlayer :: QueueEvent(const char *labelName, unsigned long fireDelay)
 
 	//Not found, add a new event.
 	scriptEventQueue.push_back(ScriptEvent(labelName, fireTime));
+}
+
+void ScriptPlayer :: ClearQueue(void)
+{
+	scriptEventQueue.clear();
 }
 
 bool ScriptPlayer :: ExecQueue(void)
@@ -2527,7 +2631,7 @@ const char * ScriptPlayer :: GetStringPtr(int index)
 
 	if(index < 0 || index >= static_cast<int>(def->stringList.size()))
 	{
-		g_Logs.script->error("Script error: string index out of range [%v] for script [%v]", index, def->scriptName.c_str());
+		g_Logs.script->error("TSL Script error: string index out of range [%v] for script [%v]", index, def->scriptName.c_str());
 		return NULL_RESPONSE;
 	}
 	return def->stringList[index].c_str();
@@ -2537,7 +2641,7 @@ int ScriptPlayer :: GetVarValue(int index)
 {
 	int retval = 0;
 	if(index < 0 || index >= (int)vars.size())
-		g_Logs.script->error("Script error: variable index out of range [%v] for script [%v]", index, def->scriptName.c_str());
+		g_Logs.script->error("TSL Script error: variable index out of range [%v] for script [%v]", index, def->scriptName.c_str());
 	else
 		retval = vars[index];
 
@@ -2548,7 +2652,7 @@ const char * ScriptPlayer :: GetStringTableEntry(int index)
 {
 	const char *retval = "";
 	if(index < 0 || index >= (int)def->stringList.size())
-		g_Logs.script->error("Script error: string index out of range [%v] for script [%v]", index, def->scriptName.c_str());
+		g_Logs.script->error("TSL Script error: string index out of range [%v] for script [%v]", index, def->scriptName.c_str());
 	else
 		retval = def->stringList[index].c_str();
 
@@ -2559,7 +2663,7 @@ int ScriptPlayer :: VerifyIntArrayIndex(int index)
 {
 	if(index < 0 || index >= (int)def->mIntArray.size())
 	{
-		g_Logs.script->error("Script error: IntArray index out of range [%v] for script [%v]", index, def->scriptName.c_str());
+		g_Logs.script->error("TSL Script error: IntArray index out of range [%v] for script [%v]", index, def->scriptName.c_str());
 		return -1;
 	}
 	return index;
@@ -2569,7 +2673,7 @@ void ScriptPlayer :: SetVar(unsigned int index, int value)
 {
 	if(index >= vars.size())
 	{
-		g_Logs.script->error("SetVar() index [%v] is outside range [%v]", index, vars.size());
+		g_Logs.script->error("TSL SetVar() index [%v] is outside range [%v]", index, vars.size());
 		return;
 	}
 	vars[index] = value;

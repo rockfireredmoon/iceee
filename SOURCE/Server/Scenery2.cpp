@@ -269,12 +269,12 @@ void SceneryObject :: SetLink(int index, int linkID, int type)
 
 bool SceneryObject :: IsExtendedProperty(const char *propertyName)
 {
-	static const char * extPropNames[15] = {
+	static const char * extPropNames[16] = {
 		"spawnName", "leaseTime", "spawnPackage", "mobTotal",
-		"maxActive", "aiModule", "maxLeash", "loyaltyRadius",
+		"maxActive", "aiModule", "maxLeash", "loyaltyRadius", "dialog",
 		"wanderRadius", "despawnTime", "sequential", "spawnLayer",
 		"sceneryName", "innerRadius", "outerRadius" };
-	for(int i = 0; i < 15; i++)
+	for(int i = 0; i < 16; i++)
 		if(strcmp(propertyName, extPropNames[i]) == 0)
 			return true;
 	return false;
@@ -291,6 +291,8 @@ bool SceneryObject :: SetExtendedProperty(const char *propertyName, const char *
 		extraData->leaseTime = atoi(propertyValue);
 	else if(strcmp(propertyName, "spawnPackage") == 0)
 		Util::SafeCopy(extraData->spawnPackage, propertyValue, sizeof(extraData->spawnPackage));
+	else if(strcmp(propertyName, "dialog") == 0)
+		Util::SafeCopy(extraData->dialog, propertyValue, sizeof(extraData->dialog));
 	else if(strcmp(propertyName, "mobTotal") == 0)
 		extraData->mobTotal = Util::ClipInt(atoi(propertyValue), 0, 5);
 	else if(strcmp(propertyName, "maxActive") == 0)
@@ -478,6 +480,7 @@ void SceneryObject::WriteToStream(FILE *file) const
 		Util::WriteString(file, "spawnName", extraData->spawnName);
 		Util::WriteInteger(file, "leaseTime", extraData->leaseTime);
 		Util::WriteString(file, "spawnPackage", extraData->spawnPackage);
+		Util::WriteString(file, "dialog", extraData->dialog);
 		Util::WriteInteger(file, "mobTotal", extraData->mobTotal);
 		if(extraData->maxActive != CreatureSpawnDef::DEFAULT_MAXACTIVE)
 			fprintf(file, "maxActive=%d\r\n", extraData->maxActive);
@@ -1694,7 +1697,7 @@ int PrepExt_UpdateScenery(char *buffer, SceneryObject *so)
 		//property types, although it seems like values can be
 		//expressed with integers without any conflicts.
 		wpos += PutStringUTF(&buffer[wpos], so->extraData->sceneryName);
-		wpos += PutInteger(&buffer[wpos], 3);  //property count
+		wpos += PutInteger(&buffer[wpos], 4);  //property count
 
 		wpos += PutStringUTF(&buffer[wpos], "innerRadius");
 		wpos += PutByte(&buffer[wpos], PROPERTY_INTEGER);
@@ -1703,6 +1706,10 @@ int PrepExt_UpdateScenery(char *buffer, SceneryObject *so)
 		wpos += PutStringUTF(&buffer[wpos], "package");
 		wpos += PutByte(&buffer[wpos], PROPERTY_STRING);
 		wpos += PutStringUTF(&buffer[wpos], so->extraData->spawnPackage);
+
+		wpos += PutStringUTF(&buffer[wpos], "dialog");
+		wpos += PutByte(&buffer[wpos], PROPERTY_STRING);
+		wpos += PutStringUTF(&buffer[wpos], so->extraData->dialog);
 
 		wpos += PutStringUTF(&buffer[wpos], "outerRadius");
 		wpos += PutByte(&buffer[wpos], PROPERTY_INTEGER);

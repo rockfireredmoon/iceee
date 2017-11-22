@@ -107,12 +107,15 @@ int UseItem(SimulatorThread *sim, CharacterServerData *pld,
 			}
 		}
 	} else {
-		if (itemDef->mType == ItemType::SPECIAL
-				&& itemDef->mIvType1 == ItemIntegerType::BOOK_PAGE) {
+		if(itemDef->mType == ItemType::SPECIAL && itemDef->mSpecialItemType == PORTABLE_REFASHIONER) {
+			sim->AttemptSend(sim->Aux1, PrepExt_Refashion(sim->Aux1));
+			removeOnUse = false;
+		}
+		else if(itemDef->mType == ItemType::SPECIAL && itemDef->mIvType1 == ItemIntegerType::BOOK_PAGE) {
 			g_Logs.simulator->debug("Opening book %v on page %v",
 					itemDef->mIvMax1, itemDef->mIvMax2);
-			return PrepExt_SendBookOpen(sim->SendBuf, itemDef->mIvMax1,
-					itemDef->mIvMax2 - 1, 1);
+			sim->AttemptSend(sim->Aux1, PrepExt_SendBookOpen(sim->Aux1, itemDef->mIvMax1, itemDef->mIvMax2 - 1, 1));
+			removeOnUse = false;
 		} else {
 			ConfigString cfg(itemDef->Params);
 			int petSpawnID = cfg.GetValueInt("pet");
@@ -122,6 +125,7 @@ int UseItem(SimulatorThread *sim, CharacterServerData *pld,
 			} else {
 				int credits = cfg.GetValueInt("credits");
 				int abPoints = cfg.GetValueInt("abilitypoints");
+				int heroism = cfg.GetValueInt("heroism");
 				if (credits > 0) {
 					if (g_Config.AccountCredits) {
 						creatureInstance->css.credits = pld->accPtr->Credits;
@@ -136,6 +140,11 @@ int UseItem(SimulatorThread *sim, CharacterServerData *pld,
 							"You gain %d credits.", credits);
 					sim->SendInfoMessage(sim->Aux1, INFOMSG_INFO);
 					creatureInstance->SendStatUpdate(STAT::CREDITS);
+				}
+				if(heroism > 0) {
+					creatureInstance->AddHeroism(heroism);
+					Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1), "You gain %d heroism.", heroism);
+					sim->SendInfoMessage(sim->Aux1, INFOMSG_INFO);
 				}
 				if (abPoints > 0) {
 					creatureInstance->css.current_ability_points += abPoints;
@@ -684,11 +693,9 @@ int ItemDeleteHandler::handleQuery(SimulatorThread *sim,
 
 	//Find the players best (in terms of recoup amount) grinder (if they have one)
 	int invId = GetContainerIDFromName("inv");
-	ItemDef *grinderDef = pld->charPtr->inventory.GetBestSpecialItem(invId,
-			ITEM_GRINDER);
+	InventorySlot *grinderDef = pld->charPtr->inventory.GetBestSpecialItem(invId, ITEM_GRINDER);
 	if (grinderDef != NULL) {
-		int amt = (int) (((double) itemDef->mValue / 100.0)
-				* grinderDef->mIvMax1);
+		int amt = (int)(((double)itemDef->mValue / 100.0) *  grinderDef->dataPtr->mIvMax1);
 		creatureInstance->AdjustCopper(amt);
 	}
 
@@ -1239,13 +1246,13 @@ int CraftCreateHandler::protected_helper_query_craft_create(SimulatorThread *sim
 	inv.ScanRemoveItems(INV_CONTAINER, itemPlan->keyComponentId, 1, iq);
 	if (iq.size() > 0)
 		wpos += RemoveItemUpdate(&sim->SendBuf[wpos], sim->Aux3, iq[0].ptr);
-	inv.RemoveItems(INV_CONTAINER, iq);
+	inv.RemoveItems(iq);
 
 	//Remove the plan.
 	inv.ScanRemoveItems(INV_CONTAINER, itemPlan->mID, 1, iq);
 	if (iq.size() > 0)
 		wpos += RemoveItemUpdate(&sim->SendBuf[wpos], sim->Aux3, iq[0].ptr);
-	inv.RemoveItems(INV_CONTAINER, iq);
+	inv.RemoveItems(iq);
 
 	wpos += PrepExt_QueryResponseString(&sim->SendBuf[wpos], query->ID, "OK");
 	return wpos;

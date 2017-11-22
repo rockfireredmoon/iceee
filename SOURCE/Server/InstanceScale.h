@@ -67,14 +67,22 @@ public:
 	QualityArray Chance;
 	QualityArray Flags;
 	QualityArray Level;
+	QualityArray Amount; // Abused for drop amounts. Q0 is the global amount, if anything used if amounts are zero.
+						 // If Q0 is -1, then Q1-Q6 amounts are multipled by the largest party size of all attackers.
+						 // Q1-Q6 map to 1 items to 6 items. The value is the denominator of the chance you'll get that amount.
+
 
 	DropRateProfile();
+	DropRateProfile(const DropRateProfile &source);
 	void CopyFrom(const DropRateProfile &source);
 	int GetQualityChance(int qualityLevel);
 	void SetQualityChance(int qualityLevel, int denominator);
+	int GetAmountChance(int amount) const;
+	void SetAmountChance(int qualityLevel, int denominator);
 	void SetQualityFlags(int qualityLevel, const char *flags);
 	void SetMinimumLevel(int qualityLevel, int level);
 	bool HasData(void);
+	bool IsDefault() const;
 	void DebugRunFlagTest(void);
 
 	//External classes not related to the loading phase of profiles should only be concerned about

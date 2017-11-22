@@ -21,6 +21,7 @@
 #include "../Debug.h"
 #include "../Config.h"
 #include "../Components.h"
+#include "../Simulator.h"
 #include "../Ability2.h"
 #include "../util/Log.h"
 
@@ -358,6 +359,79 @@ int UpdateContentHandler::handleQuery(SimulatorThread *sim,
 	if (pld->accPtr->HasPermission(Perm_Account, Permission_Admin) == false)
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 				"Permission denied.");
+
+	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
+}
+
+
+//
+//SummonHandler
+//
+
+int SummonHandler::handleQuery(SimulatorThread *sim,
+		CharacterServerData *pld, SimulatorQuery *query,
+		CreatureInstance *creatureInstance) {
+
+	if(!sim->CheckPermissionSimple(Perm_Account, Permission_Sage) && !sim->CheckPermissionSimple(Perm_Account, Permission_Admin))
+		return PrepExt_QueryResponseError(sim->SendBuf, query->ID, "Permission denied.");
+
+	std::string op = query->GetString(0);
+	std::string data = query->GetString(1);
+
+	if(op.compare("player") == 0) {
+
+		SimulatorThread *sim = GetSimulatorByCharacterName(data.c_str());
+		if(sim == NULL) {
+			return PrepExt_QueryResponseError(sim->SendBuf, query->ID, "Unknown player.");
+		}
+		if(creatureInstance != sim->creatureInst) {
+			sim->pld.SetPortalRequestDest(creatureInstance->css.display_name, 1);
+			sim->AttemptSend(sim->Aux1, PrepExt_CreatureEventPortalRequest(sim->Aux1, sim->creatureInst->CreatureID, creatureInstance->css.display_name, creatureInstance->css.display_name));
+		}
+	}
+	else if(op.compare("zone") == 0) {
+		int zId;
+		if(data.length() == 0) {
+			zId = creatureInstance->actInst->mZone;
+		}
+		else {
+			ZoneDefInfo *zd = g_ZoneDefManager.GetPointerByPartialWarpName(data.c_str());
+			if(zd == NULL) {
+				return PrepExt_QueryResponseError(sim->SendBuf, query->ID, "Unknown zone.");
+			}
+			zId = zd->mID;
+		}
+
+		SIMULATOR_IT it;
+		for(it = Simulator.begin(); it != Simulator.end(); ++it)
+		{
+			if(it->isConnected == false)
+				continue;
+			if(it->LoadStage != SimulatorThread::LOADSTAGE_GAMEPLAY)
+				continue;
+
+			if(creatureInstance != it->creatureInst && zId == it->creatureInst->actInst->mZone) {
+				it->pld.SetPortalRequestDest(creatureInstance->css.display_name, 1);
+				it->AttemptSend(sim->Aux1, PrepExt_CreatureEventPortalRequest(sim->Aux1, it->creatureInst->CreatureID, creatureInstance->css.display_name, creatureInstance->css.display_name));
+			}
+		}
+	}
+	else if(op.compare("world") == 0) {
+		SIMULATOR_IT it;
+		for(it = Simulator.begin(); it != Simulator.end(); ++it)
+		{
+			if(it->isConnected == false)
+				continue;
+
+			if(it->LoadStage != SimulatorThread::LOADSTAGE_GAMEPLAY)
+				continue;
+
+			if(creatureInstance != it->creatureInst) {
+				it->pld.SetPortalRequestDest(creatureInstance->css.display_name, 1);
+				it->AttemptSend(sim->Aux1, PrepExt_CreatureEventPortalRequest(sim->Aux1, it->creatureInst->CreatureID, creatureInstance->css.display_name, creatureInstance->css.display_name));
+			}
+		}
+	}
 
 	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
 }

@@ -2,6 +2,7 @@
 #define VIRTUALITEM_H
 
 #include "Item.h"
+#include "InstanceScale.h"
 #include <string>
 #include <map>
 
@@ -294,7 +295,7 @@ struct VirtualItemSpawnParams
 	int mWeaponType;     //Should only be set if the equipment type is predetermined.
 	int minimumQuality;  //Should only be set if an item MUST be rolled.  This quality will be chosen. even if all tier drop checks fail.
 
-	const DropRateProfile *dropRateProfile; //How to determine drop rates from particular creatures.
+	DropRateProfile dropRateProfile; //How to determine drop rates from particular creatures.
 
 	float dropMult[VirtualItemModSystem::MAX_QUALITY_LEVEL + 1];  //Optional drop rate multipliers to each quality level
 

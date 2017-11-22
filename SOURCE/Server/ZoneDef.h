@@ -3,6 +3,7 @@
 
 #include <string>
 #include <list>
+#include <map>
 
 #include "Components.h"
 #include "Audit.h"
@@ -76,6 +77,102 @@ struct EnvironmentTileKey
 	}
 };
 
+
+struct WeatherKey
+{
+	int instance;
+	std::string mapName;
+	WeatherKey(const WeatherKey &other) { instance = other.instance; mapName = other.mapName; };
+	WeatherKey() { instance = 0; mapName = ""; }
+	WeatherKey(int pInstance, int pMapName) { instance = pInstance; mapName = pMapName; }
+	bool Compare(const WeatherKey& other) const
+	{
+		return ((instance == other.instance) && (mapName.compare(other.mapName) == 0));
+	}
+	bool operator <(const WeatherKey& other) const
+	{
+		if(instance < other.instance)
+			return true;
+		else if(instance == other.instance)
+			return mapName.compare(other.mapName) < 0;
+		return false;
+	}
+	bool operator >(const WeatherKey& other) const
+	{
+		if(instance > other.instance)
+			return true;
+		else if(instance == other.instance)
+			return mapName.compare(other.mapName) > 0;
+		return false;
+	}
+};
+
+
+class WeatherDef
+{
+public:
+	std::string mMapName;
+	std::string mTimeOfDay;
+	std::string mUse; // an alternative definition to use for this region
+	unsigned long mFineMin; // minimum number of seconds the weather is fine for (zero means never fine)
+	unsigned long mFineMax; // maximum number of seconds the weather is fine for
+	int mLightChance; //  chance (out of 100) that the new weather will be light
+	int mMediumChance; //  chance (out of 100) that the new weather will be medium
+	int mHeavyChance; //  chance (out of 100) that the new weather will be heavy
+	unsigned long mWeatherMin; // minimum number of seconds the weather will last
+	unsigned long mWeatherMax; // maximum number of seconds the weather will last
+	std::vector<std::string> mWeatherTypes;
+	int mThunderChance; // chance that there will be thunder with the new weather
+	unsigned long mThunderGapMin; // minimum number of seconds between thunder
+	unsigned long mThunderGapMax; // maximum number of seconds between thunder
+	int mEscalateChance; // chance (out of 100) that the weather will escalate (and de-escalate)
+
+	WeatherDef(const WeatherDef &other);
+	WeatherDef();
+	void CopyFrom(const WeatherDef& other);
+	void SetDefaults(void);
+	void Clear(void);
+};
+
+class WeatherState
+{
+public:
+
+	enum WeatherWeight
+	{
+		LIGHT = 0,
+		MEDIUM,
+		HEAVY,
+		MAX_WEIGHT
+	};
+
+	enum WeatherEscalate
+	{
+		ONE_OFF = 0,
+		ESCALATING,
+		DEESCALATING
+	};
+
+	WeatherState(int instanceId, WeatherDef &def);
+	~WeatherState();
+	std::vector<std::string> mMapNames; //all the map names this state is for
+	WeatherDef mDefinition; // the weather definition this state was derived from
+	int mInstanceId; // the instance the weather applies to
+	unsigned long mNextStateChange; // server time when the next state change occurs
+	std::string mWeatherType; // the type of weather chosen for this activation
+	int mWeatherWeight; // whether currently light, medium or heavy
+	int mEscalateState; // the current state of escalation, 0 - dont escalate, 1 - escalating, 2 - de-escalating
+	bool mThunder; // whether or not thunder will occur
+	unsigned long mNextThunder; // -1, thunder won't occur, otherwise server time when it next occurs
+	void RunCycle(ActiveInstance *instance); // run the cycle for the active instance
+	void SendWeatherUpdate(ActiveInstance *instance); // send the weather update message to everyone in this instance/area
+	void SendThunder(ActiveInstance *instance); // send the thunder message to everyone in this instance/area
+	bool PickNewWeather();
+
+private:
+	void RollThunder(); // send the thunder message to everyone in this instance/area
+};
+
 class ZoneDefInfo
 {
 public:
@@ -94,6 +191,7 @@ public:
 	std::string mShardName;        //Prefix of the shard name.
 	std::string mGroveName;        //For groves, the special grove name that is provided when creating an account, used to help trace a grove back to its owner.
 	std::string mWarpName;         //Internal name used for on-demand warping.
+	std::string mTimeOfDay;		   //Start time of day (for when using TOD, but not cycling)
 	int DefX;                 //Default X coordinate when entering the region.
 	int DefY;                 //Default Y coordinate when entering the region.
 	int DefZ;                 //Default Z coordinate when entering the region.
@@ -113,7 +211,6 @@ public:
 	int mPlayerFilterType;    //If nonzero, filter players according to type.
 	std::vector<int> mPlayerFilterID;  //Creature Def IDs of the players to filter.
 
-	std::string mDropRateProfile;
 	std::map<EnvironmentTileKey, std::string> mTileEnvironment; // Use a specific environment for certain tiles (the key is a string "<x>,<y>")
 	
 	int PendingChanges;  //Used internally to track whether this zone needs to be saved back to file.
@@ -143,6 +240,7 @@ public:
 	bool IsPVPArena(void);
 	bool IsFreeTravel(void);
 	bool IsDungeon(void);
+	bool IsOverworld(void);
 	bool IsMobScalable(void);
 	bool HasDeathPenalty(void);
 	bool CanPlayerWarp(int CreatureDefID, int AccountID);
@@ -154,15 +252,16 @@ public:
 	bool HasEditPermission(int accountID, int characterDefID, const char *characterName, float x, float z);
 	void UpdateGrovePermission(STRINGLIST &params);
 
-	const DropRateProfile& GetDropRateProfile(void);
-
 	void ChangeDefaultLocation(int newX, int newY, int newZ);
 	void ChangeShardName(const char *newName);
 	void ChangeName(const char *newName);
 	void ChangeEnvironment(const char *newEnvironment);
 	void ChangeEnvironmentUsage(void);
 	bool QualifyDelete(void);
-	std::string * GetTileEnvironment(int x, int y);
+	std::string GetTileEnvironment(int x, int y);
+	std::string GetDropRateProfile();
+	std::string GetTimeOfDay();
+	void SetDropRateProfile(std::string profile);
 
 	bool AllowSceneryAudits(void);
 	void AuditScenery(const char *username, int zone, const SceneryObject *sceneryObject, int opType);
@@ -172,6 +271,7 @@ public:
 	void ReadFromJSON(Json::Value &value);
 
 private:
+	std::string mDropRateProfile;
 	void CreateDefaultGrovePermission(void);
 };
 
@@ -279,6 +379,19 @@ public:
 	int GetLoadedCount(void);
 };
 
+class WeatherManager
+{
+public:
+	std::map<WeatherKey, WeatherState*> mWeather; // all currently maintained weather
+	std::map<std::string, WeatherDef> mWeatherDefinitions; // all weather definitions
+	std::vector<WeatherState*> RegisterInstance(ActiveInstance *instance); // when an instance loads, we find all of it's weather regions (i.e. map names) and start maintaining them if there is a weather definition
+	void Deregister(std::vector<WeatherState*> states); // when an instance dies, we stop maintaining its weather regions (i.e. map names)
+	int LoadFromFile(const char *filename);
+	WeatherState* GetWeather(std::string mapName, int instanceId);
+private:
+	bool MaybeAddWeatherDef(int instanceID, std::string actualMapName, std::vector<WeatherState*> &m);
+};
+
 class EnvironmentCycleManager
 {
 public:
@@ -295,7 +408,7 @@ public:
 	~EnvironmentCycleManager();
 	void ApplyConfig(const char *str);
 	bool HasCycleUpdated(void);
-	const char *GetCurrentTimeOfDay(void);
+	std::string GetCurrentTimeOfDay(void);
 	void EndCurrentCycle(void);
 };
 
@@ -339,7 +452,8 @@ extern ZoneDefManager g_ZoneDefManager;
 extern ZoneBarrierManager g_ZoneBarrierManager;
 extern EnvironmentCycleManager g_EnvironmentCycleManager;
 extern GroveTemplateManager g_GroveTemplateManager;
+extern WeatherManager g_WeatherManager;
 
-int PrepExt_SendEnvironmentUpdateMsg(char *buffer, const char *zoneIDString, ZoneDefInfo *zoneDef, int x, int z);
+int PrepExt_SendEnvironmentUpdateMsg(char *buffer, ActiveInstance *instance, const char *zoneIDString, ZoneDefInfo *zoneDef, int x, int z, int mask);
 
 #endif  //ZONEDEF_H

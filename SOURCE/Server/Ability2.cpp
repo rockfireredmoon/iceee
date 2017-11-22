@@ -13,6 +13,7 @@
 #include "Stats.h"
 #include "Item.h"  //For item ID verification
 #include "Combat.h"
+#include "Inventory.h"
 #include "util/Log.h"
 
 extern double g_FacingTarget;
@@ -108,6 +109,7 @@ Resurrect(0.01)
 Resurrect(target_REZ_PENDING)                Unknown.  Only used for [Accept Rez]
 Spin()                                       Spins the target 180 degrees around.
 Status(CAN_USE_BLOCK,-1)                     Set a status effect (statname, duration)   Duration is seconds, -1 for unlimited.
+StatusSelf(STUN,15)                     	 Set a status effect on the caster (statname, duration)   Duration is seconds, -1 for unlimited.
 SummonPet(53)                                Unknown effect.  (unknown parameter).  Only used for [Summon Pet]
 T_AddMightCharge(-1*mightCharges)            Adjust might charges on target (amount).  Negative amount for loss.
 T_AddWillCharge(-1*willCharges)              Adjust will charges on target (amount).  Negative amount for loss.
@@ -1159,6 +1161,7 @@ void AbilityManager2 :: InitFunctionTables(void)
 	InsertFunction("hasWand", &AbilityCalculator::hasWand);
 
 	InsertFunction("Status", &AbilityCalculator::Status);
+	InsertFunction("StatusSelf", &AbilityCalculator::StatusSelf);
 	InsertFunction("Amp", &AbilityCalculator::Amp);
 	InsertFunction("Set", &AbilityCalculator::Set);
 	InsertFunction("Add", &AbilityCalculator::Add);
@@ -1229,6 +1232,7 @@ void AbilityManager2 :: InitFunctionTables(void)
 	//The verifier indicates which argument indexes should be flagged for examination
 	//as valid expressions.
 	InsertVerifier("Status",  ABVerifier(ABVerifier::EFFECT, ABVerifier::TIME));  //Status(statusEffect, time)
+	InsertVerifier("StatusSelf",  ABVerifier(ABVerifier::EFFECT, ABVerifier::TIME));  //Status(statusEffect, time)
 	InsertVerifier("NotSilenced", ABVerifier());                          //NotSilenced()
 	InsertVerifier("NotTransformed", ABVerifier());                          //NotTransformed()
 	InsertVerifier("HasStatus", ABVerifier(ABVerifier::EFFECT));          //HasStatus(effectName)
@@ -1671,7 +1675,7 @@ int AbilityManager2 :: EnumerateTargets(CreatureInstance *actor, int targetType,
 
 int AbilityManager2 :: ActivateAbility(CreatureInstance *cInst, short abilityID, int eventType, ActiveAbilityInfo *abInfo)
 {
-//	g_Log.AddMessageFormat("ActivateAbility [%s] AbID:%d, Evt:%d", cInst->css.display_name, abilityID, eventType);
+	g_Logs.server->debug("ActivateAbility [%v] AbID:%v, Evt:%v", cInst->css.display_name, abilityID, eventType);
 
 	//Hack for autoattacks and quest interaction triggers
 	int result = CheckActivateSpecialAbility(cInst, abilityID, eventType);
@@ -1747,7 +1751,11 @@ int AbilityManager2 :: ActivateAbility(CreatureInstance *cInst, short abilityID,
 		if(abProcessing.ciTarget == NULL)
 		{
 			g_Logs.server->error("Target index [%v] is NULL", targIndex);
-			return 0;
+			continue;
+		}
+		if((abProcessing.ciTarget->serverFlags & ServerFlags::Noncombatant) != 0 && !ab->bForce && abProcessing.ciTarget != abProcessing.ciSource) {
+			g_Logs.server->error("Target index [%v] is Non-combatant", targIndex);
+			continue;
 		}
 		for(size_t f = 0; f < abEvent->mFunctionList.size(); f++)
 		{
@@ -2551,6 +2559,16 @@ int AbilityCalculator :: Status(ARGUMENT_LIST args)
 	return ABILITY_SUCCESS;
 }
 
+int AbilityCalculator :: StatusSelf(ARGUMENT_LIST args)
+{
+	int StatusID = g_AbilityManager.ResolveStatusEffectID(args.GetString(0));
+	if(StatusID == -1)
+		return ABILITY_GENERIC;
+	float durationSec = args.GetEvaluation(1, &g_AbilityManager);
+	ciSource->Status(StatusID, durationSec);
+	return ABILITY_SUCCESS;
+}
+
 int AbilityCalculator :: Amp(ARGUMENT_LIST args)
 {
 	int StatID = g_AbilityManager.ResolveStatID(args.GetString(0));
@@ -3237,7 +3255,11 @@ int AbilityCalculator :: Reagent(ARGUMENT_LIST args)
 	mReagentItemID = args.GetInteger(0);
 	mReagentItemCount = args.GetInteger(1);
 
-	//TODO: Run an inventory check.
+	if(g_Config.UseReagents) {
+		if(ciSource->charPtr->inventory.GetItemCount(INV_CONTAINER, mReagentItemID) < mReagentItemCount)
+			return ABILITY_REAGENTS;
+	}
+
 	return ABILITY_SUCCESS;
 }
 
@@ -3246,9 +3268,16 @@ void AbilityCalculator :: ConsumeReagent(void)
 {
 	if(mReagentItemID != 0)
 	{
-		//TODO: Remove items from inventory.
+		while(mReagentItemCount > 0) {
+			InventorySlot *slot = ciSource->charPtr->inventory.GetFirstItem(INV_CONTAINER, mReagentItemID);
+			if(slot == NULL)
+				mReagentItemCount = 0;
+			else {
+				ciSource->simulatorPtr->DecrementStack(slot);
+			}
+			mReagentItemCount--;
+		}
 		mReagentItemID = 0;
-		mReagentItemCount = 0;
 	}
 }
 
@@ -3638,6 +3667,13 @@ void AbilityCalculator :: SendDamageString(const char *abilityName)
 		ciTarget->CheckStatusInterruptOnHit();
 		ciTarget->CancelInvisibility();
 		ciTarget->ApplyRawDamage(totalDamage);
+
+		//
+		if(ciSource->HasStatus(StatusEffects::LEECHING)) {
+			g_Logs.simulator->debug("Leeching %v from %v to %v", totalDamage, ciTarget->css.display_name, ciSource->css.display_name);
+			ciSource->Heal(totalDamage);
+		}
+
 		ciTarget->CheckInterrupts();
 
 		ciSource->SetCombatStatus();

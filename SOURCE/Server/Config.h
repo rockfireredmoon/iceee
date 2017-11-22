@@ -201,10 +201,14 @@ public:
 	bool UseIntegerHealth;                   //If true, object health is represented as 4 bytes instead of 2.  Requires a modded client!  By default the client uses 2 bytes.  Server and client must match or protocol is broken.
 	bool UseMessageBox;                      //If true, send a message to the client that will appear in a popup box rather than a floating info message that disappears after a few seconds.  Requires a modded client.
 	bool UseStopSwim;                        //If true, send a custom "stop swimming" notification to the client when sending reposition updates, like warps.  Requires a modded client for the custom event handler.
+	bool UseWeather;					     //If true, weather systems will be enabled
+	bool UseReagents;					     //If true, reagents are enabled and required for certain abilities and scrolls
 	std::string InvalidLoginMessage;         //The message string to send to the client if the account is wrong.
+	std::string MaintenanceMessage;          //The message string to send to the client if the server is in maintenance mode (sages and admins only).
 
 	bool VerifyMovement;                     //If true, attempt to validate client movement and report unexpected speeds, coordinates, and update intervals.  May issues some false reports, check for consistency.  Accounts with the 'admin' permission are never validated due to conflicts with the speed command. 
 	bool DebugLogAIScriptUse;                //If true, AI Script ability use requests are printed to the log file to help determine which abilities are used.  May cause heavy log spam.
+	bool DebugVerbose;                		 //If true, verbose debug
 
 	unsigned int SquirrelGCCallCount;				 //How many function calls must be performed before Garbage Collection is triggered
 	unsigned int SquirrelGCDelay;				 	 //How long the queue must be idle for before GC can go ahead.
@@ -258,10 +262,19 @@ public:
 	int MaxNewCreditShopItemDays;
 
 	std::string ShutdownHandlerScript;
+	std::string StaticDataPath;			// Location of static data (not editable in game).
+	std::string VariableDataPath;		// Location of variable data (editable in game).
+	std::string UserDataPath;			// Location of user data (accounts and other game state data).
 
 	unsigned long debugAdministrativeBehaviorFlags;
 	void SetAdministrativeBehaviorFlag(unsigned long bitValue, bool state);
 	bool HasAdministrativeBehaviorFlag(unsigned long bitValue);
+	std::string ResolveStaticDataPath();
+	std::string ResolveVariableDataPath();
+	std::string ResolveUserDataPath();
+
+private:
+	std::string ResolvePath(std::string path);
 };
 
 extern GlobalConfigData g_Config;

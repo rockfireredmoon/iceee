@@ -44,8 +44,15 @@ void QualityArray::SetRawData(int q0, int q1, int q2, int q3, int q4, int q5, in
 	QData[6] = q6;
 }
 
+DropRateProfile::DropRateProfile(const DropRateProfile &source)
+{
+	CopyFrom(source);
+}
+
 DropRateProfile::DropRateProfile()
 {
+	SetAmountChance(0, 1);
+	SetAmountChance(1, 1);
 }
 
 //We only want to copy the data here, not the name.
@@ -53,9 +60,11 @@ void DropRateProfile::CopyFrom(const DropRateProfile &source)
 {
 	if(this == &source)
 		return;
+	mName = source.mName;
 	Chance.CopyFrom(&source.Chance);
 	Flags.CopyFrom(&source.Flags);
 	Level.CopyFrom(&source.Level);
+	Amount.CopyFrom(&source.Amount);
 }
 
 int DropRateProfile::GetQualityChance(int qualityLevel)
@@ -63,6 +72,13 @@ int DropRateProfile::GetQualityChance(int qualityLevel)
 	if(qualityLevel < 0 || qualityLevel >= QualityArray::ARRAY_SIZE)
 		return 0;
 	return Chance.QData[qualityLevel];
+}
+
+int DropRateProfile::GetAmountChance(int amount) const
+{
+	if(amount < 0 || amount >= QualityArray::ARRAY_SIZE)
+		return 0;
+	return Amount.QData[amount];
 }
 
 bool DropRateProfile::IsCreatureAllowed(int qualityLevel, int mobRarityLevel, bool isNamedMob) const
@@ -92,6 +108,20 @@ void DropRateProfile::SetQualityChance(int qualityLevel, int denominator)
 	else
 		Chance.QData[qualityLevel] = 0;
 	
+	//g_Log.AddMessageFormat("[%s] quality[%d]=%d (%d)", mName.c_str(), qualityLevel, denominator, Chance.QData[qualityLevel]);
+}
+
+
+void DropRateProfile::SetAmountChance(int amount, int denominator)
+{
+	if(amount < 0 || amount >= QualityArray::ARRAY_SIZE)
+		return;
+
+	if(denominator > 0)
+		Amount.QData[amount] = LootSystem::ComputeSharesByFraction(denominator);
+	else
+		Amount.QData[amount] = 0;
+
 	//g_Log.AddMessageFormat("[%s] quality[%d]=%d (%d)", mName.c_str(), qualityLevel, denominator, Chance.QData[qualityLevel]);
 }
 
@@ -147,6 +177,10 @@ void DropRateProfile::SetMinimumLevel(int qualityLevel, int level)
 	//g_Log.AddMessageFormat("[%s] level[%d]=%d (%d)", mName.c_str(), qualityLevel, level, Level.QData[qualityLevel]);
 }
 
+bool DropRateProfile::IsDefault() const
+{
+	return mName.length() == 0;
+}
 
 bool DropRateProfile::HasData(void)
 {
@@ -245,6 +279,10 @@ void DropRateProfileManager::LoadTable(const char *filename)
 			//7 columns         15,16,17,18,19,20,21
 			for(int qi = 0; qi <= 6; qi++)
 				entry.SetQualityFlags(qi, fr.BlockToStringC(15 + qi));
+
+			//7 columns         22,23,24,25,26,27,28
+			for(int qi = 0; qi <= 6; qi++)
+				entry.SetAmountChance(qi, fr.BlockToIntC(22 + qi));
 		}
 	}
 	fr.CloseFile();

@@ -484,6 +484,7 @@ enum AbilityReturnCode
 	ABILITY_STUN,                  //The caster is stunned.
 	ABILITY_DAZE,                  //The caster is dazed.
 	ABILITY_DEAD,                  //The caster is dead.
+	ABILITY_REAGENTS,              //Not enough reagents of the right type.
 };
 
 //A more descriptive way to access which string element in the ability row's data.
@@ -625,6 +626,7 @@ public:
 	int hasWand(ARGUMENT_LIST args);
 
 	int Status(ARGUMENT_LIST args);
+	int StatusSelf(ARGUMENT_LIST args);
 	int Set(ARGUMENT_LIST args);
 	int Amp(ARGUMENT_LIST args);
 	int Add(ARGUMENT_LIST args);
