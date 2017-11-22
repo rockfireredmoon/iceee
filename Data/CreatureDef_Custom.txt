@@ -2841,3 +2841,14 @@ display_name=Exit to Grunes Tal
 profession=1
 creature_category=Inanimate
 ai_package=nothing
+
+[ENTRY]
+ID=19001
+appearance=c2:{["a"]=[{["node"]="right_hand",["type"]="Item-Wand-CandyCane",["colors"]=[]},{["node"]="left_hand",["type"]="Item-Shield-Basic4",["colors"]=["ff0000","005505","ffffff"]}],["sk"]={["skin"]="a5b3ce",["detail"]="684106",["headdetail"]="93a0b8",["hair"]="d1daed"},["sz"]="1.2",["g"]="m",["h"]=0,["r"]="y",["b"]="m",["c"]={["boots"]={["type"]="Armor-Light-Mid2",["colors"]=["940d0d","940d0d","940d0d","940d0d","826d5e"]},["chest"]={["type"]="Armor-Light-Mid2",["colors"]=["940d0d","940d0d","ffffff","ffffff","940d0d","940d0d"]},["arms"]={["type"]="Armor-Light-Mid2",["colors"]=["940d0d","12941a","940d0d"]},["leggings"]={["type"]="Armor-Light-Mid2",["colors"]=["0d6a04","550000","e9e9e9","ffffff","4e5668"]},["collar"]={["type"]="Armor-Light-Mid2",["colors"]=["940d0d","a77d19","12941a","4c485f","940d0d","3f0d11"]},["belt"]={["type"]="Armor-Light-Mid2",["colors"]=["12941a","ffffff","940d0d","940d0d","ffffff","940d0d","be8c4d","5e2e22"]},["gloves"]={["type"]="Armor-Light-Mid2",["colors"]=["940d0d","940d0d","ffffff"]}}}
+level=45
+display_name=Holiday Guardian
+sub_name=Town Guard
+profession=1
+creature_category=Mortal
+rarity=2
+ai_package=nothing

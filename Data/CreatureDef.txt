@@ -75475,6 +75475,7 @@ damage_resist_death=4000
 offhand_weapon_damage=210
 casting_setback_chance=500
 channeling_break_chance=500
+appearance=n4:{["sk"]={["eye"]="72cce4",["ice"]="678db4"},["c"]="Horde-Wolf_Ice_Goliath",["sz"]="2.2",["a"]=[{["node"]="left_hand",["type"]="Item-Wand-CandyCane",["colors"]=[]}]}
 level=55
 display_name=L'ough Garoum
 sub_name=The Snow Wanderer
@@ -75596,7 +75597,7 @@ damage_resist_mystic=2500
 damage_resist_death=2500
 casting_setback_chance=1
 channeling_break_chance=1
-appearance=n4:{["sk"]={["cloth2"]="7f0000",["skin"]="aa7429",["cloth1"]="000000",["eye"]="8d0f0b",["nails"]="b5815d",["trim"]="954806"},["c"]="Horde-Warpig2",["sz"]="1.3"}
+appearance=n4:{["sk"]={["skin"]="aa8f5c",["accent"]="000000",["eye"]="9d0a0e",["armor"]="534741",["hair"]="ffffff",["teeth"]="fff3e8"},["c"]="Horde-Vampire_Mehirim",["sz"]="2.0"}
 level=50
 display_name=Sabian
 sub_name=The Devastating
@@ -76041,3 +76042,100 @@ rarity=0
 base_damage_melee=30
 base_health=100
 ai_package=knight_brave_6
+
+[ENTRY]
+defHints=48
+ID=3535
+appearance=c2:{["a"]=[{["node"]="hat",["type"]="Armor-Holiday_Winterfest-Hat",["colors"]=[]}],["sk"]={["base"]="aa8b8b",["eye"]="08b7ff",["eye_white"]="ffffff",["highlights"]="bfbfbf"},["sz"]="1.2",["g"]="m",["h"]=0,["r"]="u",["b"]="r",["c"]={["boots"]={["type"]="Armor-Holiday_Winterfest",["colors"]=[]},["leggings"]={["type"]="Armor-Holiday_Winterfest",["colors"]=[]},["belt"]={["type"]="Armor-Holiday_Winterfest",["colors"]=[]},["chest"]={["type"]="Armor-Holiday_Winterfest",["colors"]=[]},["gloves"]={["type"]="Armor-Holiday_Winterfest",["colors"]=[]}}}
+level=45
+display_name=Jolly Paws
+profession=5
+creature_category=Mortal
+rarity=2
+ai_package=nothing
+
+[ENTRY]
+ID=3536
+appearance=c2:{["a"]=[{["node"]="right_hand",["type"]="Item-Wand-CandyCane",["colors"]=[]},{["node"]="left_hand",["type"]="Item-Shield-Basic4",["colors"]=["ff0000","005505","ffffff"]}],["sk"]={["skin"]="aaaaaa",["detail"]="978e67",["headdetail"]="3d607e",["hair"]="bacae2"},["sz"]="1.2",["g"]="f",["r"]="y",["b"]="m",["c"]={["boots"]={["type"]="Armor-Light-Mid2",["colors"]=["940d0d","940d0d","940d0d","940d0d","826d5e"]},["chest"]={["type"]="Armor-Light-Mid2",["colors"]=["940d0d","940d0d","ffffff","ffffff","940d0d","940d0d"]},["arms"]={["type"]="Armor-Light-Mid2",["colors"]=["940d0d","12941a","940d0d"]},["leggings"]={["type"]="Armor-Light-Mid2",["colors"]=["0d6a04","550000","e9e9e9","ffffff","4e5668"]},["collar"]={["type"]="Armor-Light-Mid2",["colors"]=["940d0d","a77d19","12941a","4c485f","940d0d","3f0d11"]},["belt"]={["type"]="Armor-Light-Mid2",["colors"]=["12941a","ffffff","940d0d","940d0d","ffffff","940d0d","be8c4d","5e2e22"]},["gloves"]={["type"]="Armor-Light-Mid2",["colors"]=["940d0d","940d0d","ffffff"]}}}
+level=45
+display_name=Holiday Guardian
+sub_name=Town Guard
+profession=1
+creature_category=Mortal
+rarity=2
+ai_package=nothing
+
+[ENTRY]
+ID=3537
+strength=39
+dexterity=43
+constitution=27
+psyche=30
+spirit=30
+damage_resist_melee=673
+damage_resist_fire=673
+damage_resist_frost=673
+damage_resist_mystic=673
+damage_resist_death=673
+offhand_weapon_damage=500
+casting_setback_chance=500
+channeling_break_chance=500
+appearance=n4:{["sk"]={["base"]="ffffff",["eye"]="ffffff",["nose_ear"]="f29da0",["highlight"]="34bfbf",["teeth"]="f8e6c3"},["c"]="Horde-Rabbit",["sz"]="2.0",["a"]=[{["node"]="left_hand",["type"]="Item-Wand-CandyCane",["colors"]=[]}]}
+level=20
+display_name=Snowshoe Hare
+profession=2
+creature_category=Animal
+rarity=0
+base_damage_melee=30
+base_health=142
+ai_package=4_knight_30
+
+[ENTRY]
+ID=3538
+strength=40
+dexterity=40
+constitution=30
+psyche=30
+spirit=30
+damage_resist_melee=700
+damage_resist_fire=700
+damage_resist_frost=700
+damage_resist_mystic=700
+damage_resist_death=700
+offhand_weapon_damage=500
+casting_setback_chance=500
+channeling_break_chance=500
+appearance=n4:{["sk"]={["eye"]="8620ff",["ice"]="678db4"},["c"]="Horde-Wolf_Ice_Goliath",["sz"]="1.2",["a"]=[{["node"]="left_hand",["type"]="Item-Wand-CandyCane",["colors"]=[]}]}
+level=20
+display_name=Winter Wolf
+profession=2
+creature_category=Animal
+rarity=0
+base_damage_melee=35
+base_health=172
+ai_package=rogue_brave_6
+
+[ENTRY]
+ID=3539
+strength=30
+dexterity=30
+constitution=30
+psyche=42
+spirit=40
+damage_resist_melee=700
+damage_resist_fire=700
+damage_resist_frost=700
+damage_resist_mystic=700
+damage_resist_death=700
+offhand_weapon_damage=500
+casting_setback_chance=500
+channeling_break_chance=500
+appearance=n4:{["sk"]={["bark"]="2a2317",["hair"]="d0ffff",["eyes"]="007f07",["highlight"]="d49212"},["c"]="Horde-Treekin2",["sz"]="1.5",["a"]=[{["node"]="left_hand",["type"]="Item-Wand-CandyCane",["colors"]=[]}]}
+level=20
+display_name=Twisted Snow Pine
+profession=3
+creature_category=Mortal
+rarity=0
+base_damage_melee=35
+base_health=162
+ai_package=mage_frost_brave_6

@@ -78,3 +78,12 @@ Spawn=2428,50  ;Sparkwing (14) (from cdef list)
 Name=1a_dng_uh_hengeSlugs
 Spawn=2440,50  ;Henge Slug (14) at 0
 Spawn=2441,50  ;Henge Slug (15) at 6
+
+[ENTRY]
+Name=Holiday_Mix
+Flags=32
+Spawn=18006,20
+Spawn=18011,20
+Spawn=18009,20
+Spawn=18007,20
+Spawn=18005,20
