@@ -1804,7 +1804,8 @@ int AbilityManager2 :: ActivateAbility(CreatureInstance *cInst, short abilityID,
 		cInst->RegisterCooldown(cooldownCategory, it->second.mCooldownTime);
 
 		//TODO: Process any reagents that may have been used.
-		abProcessing.ConsumeReagent();
+		if(g_Config.UseReagents)
+			abProcessing.ConsumeReagent();
 
 		//If there's an implicit action attached to this skill, register it with the creature.
 		if(it->second.mAbilityFlags & AbilityFlags::ImplicitParry)
