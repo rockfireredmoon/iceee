@@ -51,8 +51,8 @@ private:
 	std::vector<EliteType> mEliteType;
 	std::vector<AffixEntry> mAffixEntry;
 
-	void LoadTypeTable(const char *filename);
-	void LoadAffixTable(const char *filename);
+	void LoadTypeTable(std::string filename);
+	void LoadAffixTable(std::string filename);
 	
 	void QueryType(int level, std::vector<EliteType*> &outputResults);
 	void QueryAffix(const std::string &name, int level, std::vector<AffixEntry*> &outputResults);

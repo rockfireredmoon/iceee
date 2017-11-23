@@ -60,10 +60,7 @@ bool RemoteActionHandler::handlePost(CivetServer *server,
 			} else if (action.compare("reloadvi") == 0) {
 				g_VirtualItemModSystem.LoadSettings();
 			} else if (action.compare("reloadchecksum") == 0) {
-				char buf[512];
-				g_FileChecksum.LoadFromFile(
-						Platform::GenerateFilePath(buf, "Data",
-								"HTTPChecksum.txt"));
+				g_FileChecksum.LoadFromFile();
 			} else if (action.compare("reloadconfig") == 0) {
 				LoadConfig("ServerConfig.txt");
 			} else if (action.compare("reloadability") == 0) {

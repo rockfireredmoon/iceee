@@ -397,10 +397,10 @@ bool CreditShopManager::RemoveItem(int id) {
 	}
 	cs.Leave();
 	char buf[128];
-	Util::SafeFormat(buf, sizeof(buf), "CreditShop/%d.del", id);
-	Platform::FixPaths(buf);
-	if (!Platform::FileExists(buf) || remove(buf) == 0) {
-		if (!rename(path, buf) == 0) {
+	Util::SafeFormat(buf, sizeof(buf), "%d.del", id);
+	std::string delpath = Platform::JoinPath(Platform::JoinPath(g_Config.ResolveVariableDataPath(), "CreditShop"), buf);
+	if (!Platform::FileExists(delpath.c_str()) || remove(delpath.c_str()) == 0) {
+		if (!rename(path, delpath.c_str()) == 0) {
 			g_Logs.data->error("Failed to remove credit shop item %v", id);
 			return false;
 		}
@@ -411,9 +411,8 @@ bool CreditShopManager::RemoveItem(int id) {
 std::string CreditShopManager::GetPath(int id) {
 
 	char buf[128];
-	Util::SafeFormat(buf, sizeof(buf), "CreditShop/%d.txt", id);
-	Platform::FixPaths(buf);
-	return buf;
+	Util::SafeFormat(buf, sizeof(buf), "%d.txt", id);
+	return Platform::JoinPath(Platform::JoinPath(g_Config.ResolveVariableDataPath(), "CreditShop"), buf);
 }
 
 int CreditShopManager::LoadItems(void) {
@@ -424,7 +423,7 @@ int CreditShopManager::LoadItems(void) {
 
 	Platform_DirectoryReader r;
 	std::string dir = r.GetDirectory();
-	r.SetDirectory("CreditShop");
+	r.SetDirectory(Platform::JoinPath(g_Config.ResolveVariableDataPath(), "CreditShop"));
 	r.ReadFiles();
 	r.SetDirectory(dir);
 
@@ -432,7 +431,7 @@ int CreditShopManager::LoadItems(void) {
 	for (it = r.fileList.begin(); it != r.fileList.end(); ++it) {
 		std::string p = *it;
 		if (Util::HasEnding(p, ".txt")) {
-			CreditShopItem *item = LoadItem(atoi(Platform::Basename(p.c_str()).c_str()));
+			CreditShopItem *item = LoadItem(atoi(Platform::Basename(p).c_str()));
 			g_Logs.data->debug("Credit shop item %v (item ID %v)", item->mId, item->mItemId);
 			if(item != NULL) {
 				if(item->mId >= nextMarketItemID) {

@@ -144,7 +144,7 @@ public:
 };
 
 
-int CheckSection_Inventory(FileReader &fr, InventoryManager &cd, const char *debugFilename, const char *debugName, const char *debugType);
+int CheckSection_Inventory(FileReader &fr, InventoryManager &cd, std::string debugFilename, const char *debugName, const char *debugType);
 int AddItemUpdate(char *buffer, char *convBuf, InventorySlot *slot);
 int RemoveItemUpdate(char *buffer, char *convBuf, InventorySlot *slot);
 int PrepExt_TradeItemOffer(char *buffer, char *convBuf, int offeringPlayerID, std::vector<InventorySlot>& itemList);

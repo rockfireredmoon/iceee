@@ -52,7 +52,7 @@ public:
 
 	std::vector<GuildDefinition> defList;
 
-	void LoadFile(const char *filename);
+	void LoadFile(std::string filename);
 	int GetStandardCount(void);
 	GuildDefinition *GetGuildDefinitionForGuildHallZoneID(int zoneID);
 	GuildDefinition *FindGuildDefinition(std::string name);

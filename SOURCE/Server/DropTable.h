@@ -212,9 +212,9 @@ public:
 private:
 	//These load functions are called separately by the LoadData() function and don't need
 	//to be accessed anywhere else.
-	void LoadSetFile(const char *filename);
-	void LoadPackageFile(const char *filename);
-	void LoadCreatureFile(const char *filename);
+	void LoadSetFile(std::string filename);
+	void LoadPackageFile(std::string filename);
+	void LoadCreatureFile(std::string filename);
 
 	void ResolveClassFlags(void);
 	void ResolveAutotable(void);

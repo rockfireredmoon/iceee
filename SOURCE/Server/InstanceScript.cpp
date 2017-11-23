@@ -88,31 +88,35 @@ InstanceNutDef::~InstanceNutDef() {
 
 std::string InstanceNutDef::GetInstanceNutScriptPath(int zoneID, bool grove) {
 	char strBuf[100];
-	Util::SafeFormat(strBuf, sizeof(strBuf), "%s\\%d\\Script.nut",
-			grove ? "Grove" : "Instance", zoneID);
-	Platform::FixPaths(strBuf);
-	return strBuf;
+	Util::SafeFormat(strBuf, sizeof(strBuf), "%d", zoneID);
+	string p;
+	if(grove)
+		p = Platform::JoinPath(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "Grove"), strBuf), "Script.nut");
+	else
+		p = Platform::JoinPath(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveVariableDataPath(), "Instance"), strBuf), "Script.nut");
+	return p;
 }
 std::string InstanceNutDef::GetInstanceScriptPath(int zoneID,
 		bool pathIfNotExists, bool grove) {
-	char strBuf[100];
-	Util::SafeFormat(strBuf, sizeof(strBuf), "%s\\%d\\Script.nut",
-			grove ? "Grove" : "Instance", zoneID);
-	Platform::FixPaths(strBuf);
-	if (!Platform::FileExists(strBuf)) {
-		Util::SafeFormat(strBuf, sizeof(strBuf), "%s\\%d\\Script.txt",
-				grove ? "Grove" : "Instance", zoneID);
-		Platform::FixPaths(strBuf);
-		if (!Platform::FileExists(strBuf) && !pathIfNotExists) {
+	std::string p = GetInstanceNutScriptPath(zoneID, grove);
+	if (!Platform::FileExists(p.c_str())) {
+		char strBuf[100];
+		Util::SafeFormat(strBuf, sizeof(strBuf), "%d", zoneID);
+		std:string t;
+		if(grove)
+			t = Platform::JoinPath(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "Grove"), strBuf), "Script.txt");
+		else
+			t = Platform::JoinPath(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveVariableDataPath(), "Instance"), strBuf), "Script.txt");
+		if (!Platform::FileExists(t.c_str()) && !pathIfNotExists) {
 			return "";
 		}
-		if (pathIfNotExists) {
-			Util::SafeFormat(strBuf, sizeof(strBuf), "%s\\%d\\Script.nut",
-					grove ? "Grove" : "Instance", zoneID);
-			Platform::FixPaths(strBuf);
+		else if (pathIfNotExists) {
+			return p;
 		}
+		else
+			return t;
 	}
-	return strBuf;
+	return p;
 }
 
 ActiveInteraction::ActiveInteraction(CreatureInstance *creature,
@@ -1845,10 +1849,13 @@ int InstanceNutPlayer::OLDSpawnAt(int creatureID, float x, float y, float z,
 std::string InstanceScriptDef::GetInstanceTslScriptPath(int zoneID,
 		bool grove) {
 	char strBuf[100];
-	Util::SafeFormat(strBuf, sizeof(strBuf), "%s\\%d\\Script.txt",
-			grove ? "Grove" : "Instance", zoneID);
-	Platform::FixPaths(strBuf);
-	return strBuf;
+	Util::SafeFormat(strBuf, sizeof(strBuf), "%d", zoneID);
+	string p;
+	if(grove)
+		p = Platform::JoinPath(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "Grove"), strBuf), "Script.txt");
+	else
+		p = Platform::JoinPath(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveVariableDataPath(), "Instance"), strBuf), "Script.txt");
+	return p;
 }
 
 void InstanceScriptDef::GetExtendedOpCodeTable(OpCodeInfo **arrayStart,

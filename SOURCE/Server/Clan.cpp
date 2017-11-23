@@ -2,6 +2,7 @@
 #include "Util.h"
 #include "Clan.h"
 #include "FileReader.h"
+#include "Config.h"
 #include "DirectoryAccess.h"
 
 #include <string.h>
@@ -138,9 +139,8 @@ ClanManager::~ClanManager() {
 
 std::string ClanManager::GetPath(int id) {
 	char buf[128];
-	Util::SafeFormat(buf, sizeof(buf), "Clan/%d.txt", id);
-	Platform::FixPaths(buf);
-	return buf;
+	Util::SafeFormat(buf, sizeof(buf), "%d.txt", id);
+	return Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "Clan"), buf);
 }
 
 void ClanManager::CreateClan(Clan &clan) {
@@ -229,10 +229,10 @@ bool ClanManager::RemoveClan(Clan &clan) {
 	mClans.erase(mClans.find(clan.mId));
 	cs.Leave();
 	char buf[128];
-	Util::SafeFormat(buf, sizeof(buf), "Clan/%d.del", clan.mId);
-	Platform::FixPaths(buf);
-	if(!Platform::FileExists(buf) || remove(buf) == 0) {
-		if(!rename(path.c_str(), buf) == 0) {
+	Util::SafeFormat(buf, sizeof(buf), "%d.del", clan.mId);
+	std::string delpath = Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "Clan"), buf);
+	if(!Platform::FileExists(delpath) || remove(delpath.c_str()) == 0) {
+		if(!rename(path.c_str(), delpath.c_str()) == 0) {
 			g_Logs.server->info("Failed to remove clan %v", clan.mId);
 			return false;
 		}
@@ -245,7 +245,7 @@ int ClanManager::LoadClans(void) {
 
 	Platform_DirectoryReader r;
 	std::string dir = r.GetDirectory();
-	r.SetDirectory("Clan");
+	r.SetDirectory(Platform::JoinPath(g_Config.ResolveUserDataPath(), "Clan"));
 	r.ReadFiles();
 	r.SetDirectory(dir);
 
@@ -254,7 +254,7 @@ int ClanManager::LoadClans(void) {
 		std::string p = *it;
 		if (Util::HasEnding(p, ".txt")) {
 			Clan c;
-			if (LoadClan(atoi(Platform::Basename(p.c_str()).c_str()), c)) {
+			if (LoadClan(atoi(Platform::Basename(p).c_str()), c)) {
 				mClans[c.mId] = c;
 			}
 		}

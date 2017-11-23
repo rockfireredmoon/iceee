@@ -190,7 +190,7 @@ private:
 	virtual void RunImplementationCommands(int opcode);
 };
 
-void LoadQuestScripts(const char *filename);
+void LoadQuestScripts(std::string filename);
 void ClearQuestScripts(void);
 
 //namespace QuestScript

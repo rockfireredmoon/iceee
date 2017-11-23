@@ -603,12 +603,12 @@ public:
 	void Clear(void);
 	QuestDefinition* GetQuestDefPtrByID(int id);
 	QuestDefinition* GetQuestDefPtrByName(const char *name);
-	void LoadQuestPackages(const char *filename);
+	void LoadQuestPackages(std::string filename);
 	void ResolveQuestMarkers(void);
 	void AddIfValid(QuestDefinition &newItem);
 
 private:
-	void LoadFromFile(const char *filename);
+	void LoadFromFile(std::string filename);
 	bool LimitIndex(int &value, int max);
 	void AppendString(std::string &value, char *appendStr);
 };

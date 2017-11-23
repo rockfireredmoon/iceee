@@ -113,14 +113,14 @@ void AppendString(std::string &dest, char *appendStr) {
  }
  */
 
-void LoadConfig(const char *filename) {
+void LoadConfig(std::string filename) {
 	g_Config.OAuth2Clients.clear();
 
 	//Loads the configuration options from the target file.  These are core options
 	//required for the server to operate.
 
 	FileReader lfr;
-	if (lfr.OpenText(filename) != Err_OK) {
+	if (lfr.OpenText(filename.c_str()) != Err_OK) {
 		g_Logs.data->error("Could not open configuration file: %v", filename);
 		return;
 	}
@@ -472,8 +472,8 @@ void SetHTTPBaseFolderToCurrent(void) {
 				g_HTTPBaseFolder);
 	}
 }
-void LoadFileIntoString(std::string &dest, char *filename) {
-	FILE *input = fopen(filename, "rb");
+void LoadFileIntoString(std::string &dest, std::string filename) {
+	FILE *input = fopen(filename.c_str(), "rb");
 	if (input == NULL) {
 		g_Logs.data->info("Generic error opening file [%v].",
 				filename);
@@ -493,9 +493,9 @@ void LoadFileIntoString(std::string &dest, char *filename) {
 	fclose(input);
 }
 
-int LoadStringsFile(const char *filename, vector<string> &list) {
+int LoadStringsFile(std::string filename, vector<string> &list) {
 	FileReader lfr;
-	if (lfr.OpenText(filename) != Err_OK) {
+	if (lfr.OpenText(filename.c_str()) != Err_OK) {
 		g_Logs.data->error("Error opening file: %v", filename);
 		return -1;
 	}
@@ -511,9 +511,9 @@ int LoadStringsFile(const char *filename, vector<string> &list) {
 	return list.size();
 }
 
-int LoadStringKeyValFile(const char *filename, vector<StringKeyVal> &list) {
+int LoadStringKeyValFile(std::string filename, vector<StringKeyVal> &list) {
 	FileReader lfr;
-	if (lfr.OpenText(filename) != Err_OK) {
+	if (lfr.OpenText(filename.c_str()) != Err_OK) {
 		g_Logs.data->error("Error opening file: %v", filename);
 		return -1;
 	}
@@ -686,6 +686,10 @@ GlobalConfigData::~GlobalConfigData() {
 
 std::string GlobalConfigData::ResolveStaticDataPath() {
 	return ResolvePath(StaticDataPath);
+}
+
+std::string GlobalConfigData::ResolveHTTPBasePath() {
+	return ResolvePath(g_HTTPBaseFolder);
 }
 
 std::string GlobalConfigData::ResolveVariableDataPath() {

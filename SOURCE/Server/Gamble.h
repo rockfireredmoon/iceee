@@ -1,4 +1,5 @@
 #include <vector>
+#include <string>
 
 struct ItemListQuery
 {
@@ -71,7 +72,7 @@ public:
 	};
 	std::vector<GambleDefinition> defList;
 
-	void LoadFile(const char *filename);
+	void LoadFile(std::string filename);
 	int GetSearchType(const char *name);
 	int GetStandardCount(void);
 	GambleDefinition *GetGambleDefByTriggerItemID(int itemID);

@@ -659,12 +659,8 @@ bool SceneryPage::DeleteProp(int propID)
 
 void SceneryPage::LoadScenery(void)
 {
-	char buffer[256];
-	GetFileName(buffer, sizeof(buffer));
-
 	TimeObject to("SceneryPage::LoadScenery");
-	LoadSceneryFromFile(buffer);
-
+	LoadSceneryFromFile(GetFileName());
 	NotifyAccess(false);
 }
 
@@ -673,24 +669,19 @@ void SceneryPage::CheckAutosave(int& debugPagesSaved, int& debugPropsSaved)
 	if(mPendingChanges == 0)
 		return;
 
-	char buffer[256];
-
 	if(mSceneryList.size() == 0)
 	{
-		GetFileName(buffer, sizeof(buffer));
-		RemoveFile(buffer);
+		RemoveFile(GetFileName());
 		mPendingChanges = 0;
 	}
 	else
 	{
 		if(mHasSourceFile == false)
 		{
-			GetFolderName(buffer, sizeof(buffer));
-			Platform::MakeDirectory(buffer);
+			Platform::MakeDirectory(GetFolderName());
 		}
 
-		GetFileName(buffer, sizeof(buffer));
-		if(SaveFile(buffer) == true)
+		if(SaveFile(GetFileName()) == true)
 		{
 			mPendingChanges = 0;
 			debugPropsSaved += mSceneryList.size();
@@ -700,15 +691,15 @@ void SceneryPage::CheckAutosave(int& debugPagesSaved, int& debugPropsSaved)
 	debugPagesSaved++;
 }
 
-void SceneryPage::RemoveFile(const char *fileName)
+void SceneryPage::RemoveFile(std::string fileName)
 {
 	g_Logs.data->info("Removed [%v]", fileName);
-	remove(fileName);
+	remove(fileName.c_str());
 }
 
-bool SceneryPage::SaveFile(const char *fileName)
+bool SceneryPage::SaveFile(std::string fileName)
 {
-	FILE *output = fopen(fileName, "wb");
+	FILE *output = fopen(fileName.c_str(), "wb");
 	if(output == NULL)
 	{
 		g_Logs.data->error("Could not open file for writing [%v] - %v. %v", fileName, errno, strerror(errno));
@@ -726,30 +717,36 @@ bool SceneryPage::SaveFile(const char *fileName)
 	return true;
 }
 
-void SceneryPage::GetFileName(char *buffer, size_t bufferSize)
+std::string SceneryPage::GetFileName()
 {
-	const char *baseFolder = "Scenery";
+	char buf[64];
+	Util::SafeFormat(buf, sizeof(buf), "%d", mZone);
+	char buf2[64];
+	Util::SafeFormat(buf2, sizeof(buf2), "x%03dy%03d.txt", mTileX, mTileY);
+	std::string p;
 	if(mZone >= ZoneDefManager::GROVE_ZONE_ID_DEFAULT)
-		baseFolder = "Grove";
-
-	Util::SafeFormat(buffer, bufferSize, "%s\\%d\\x%03dy%03d.txt", baseFolder, mZone, mTileX, mTileY);
-	Platform::FixPaths(buffer);
+		p = Platform::JoinPath(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "Grove"), buf), buf2);
+	else
+		p = Platform::JoinPath(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "Scenery"), buf), buf2);
+	return p;
 }
 
-void SceneryPage::GetFolderName(char *buffer, size_t bufferSize)
+std::string SceneryPage::GetFolderName()
 {
-	const char *baseFolder = "Scenery";
+	char buf[64];
+	Util::SafeFormat(buf, sizeof(buf), "%d");
+	std::string p;
 	if(mZone >= ZoneDefManager::GROVE_ZONE_ID_DEFAULT)
-		baseFolder = "Grove";
-
-	Util::SafeFormat(buffer, bufferSize, "%s\\%d", baseFolder, mZone);
-	Platform::FixPaths(buffer);
+		p = Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "Grove"), buf);
+	else
+		p = Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "Scenery"), buf);
+	return p;
 }
 
-void SceneryPage::LoadSceneryFromFile(const char *fileName)
+void SceneryPage::LoadSceneryFromFile(std::string fileName)
 {
 	FileReader3 fr;
-	if(fr.OpenFile(fileName) != FileReader3::SUCCESS)
+	if(fr.OpenFile(fileName.c_str()) != FileReader3::SUCCESS)
 	{
 		g_Logs.data->debug("Could not open file to load scenery: [%v]", fileName);
 		return;
@@ -1197,7 +1194,7 @@ SceneryPage* SceneryManager::GetOrCreatePage(int zoneID, int sceneryPageX, int s
 void SceneryManager::LoadData(void)
 {
 	char buffer[256];
-	LoadStringsFile(Platform::GenerateFilePath(buffer, "Data", "Valid_ATS.txt"), mValidATS);
+	LoadStringsFile(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Data"), "Valid_ATS.txt"), mValidATS);
 	g_Logs.server->info("Marked %v valid ATS files.", mValidATS.size());
 }
 

@@ -194,17 +194,17 @@ public:
 	bool DeleteProp(int propID);
 	void LoadScenery(void);
 	void CheckAutosave(int& debugPagesSaved, int& debugPropsSaved);
-	void GetFileName(char *buffer, size_t bufferSize);
-	void GetFolderName(char *buffer, size_t bufferSize);
+	std::string GetFileName();
+	std::string GetFolderName();
 	SceneryObject *GetPropPtr(int propID);
 	void NotifyAccess(bool notifyPendingChange);
 	bool IsTileExpired(void);
-	void LoadSceneryFromFile(const char *fileName);  //Handles the actual work of loading a file.
+	void LoadSceneryFromFile(std::string fileName);  //Handles the actual work of loading a file.
 
 private:
 	PlatformTime::TIME_VALUE mLastAccessTime;
-	void RemoveFile(const char *fileName);
-	bool SaveFile(const char *fileName);
+	void RemoveFile(std::string fileName);
+	bool SaveFile(std::string fileName);
 };
 
 //Contains all scenery in a zone, subdivided into pages.

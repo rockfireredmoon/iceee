@@ -141,10 +141,10 @@ namespace ScriptCore
 		return ((mFlags & flag) != 0);
 	}
 
-	void NutDef::Initialize(const char *sourceFile) {
+	void NutDef::Initialize(std::string sourceFile) {
 		g_Logs.script->info("Initializing Squirrel script '%v'", sourceFile);
 		mSourceFile = sourceFile;
-		scriptName = Platform::Basename(mSourceFile.c_str());
+		scriptName = Platform::Basename(mSourceFile);
 	}
 
 	//
@@ -449,7 +449,7 @@ namespace ScriptCore
 		 * then compile AND write the bytecode
 		 */
 		std::string base = Platform::Basename(def->mSourceFile.c_str());
-		std::string dir = Platform::Dirname(def->mSourceFile.c_str());
+		std::string dir = Platform::Dirname(def->mSourceFile);
 		STRINGLIST v;
 		const std::string d(1, PLATFORM_FOLDERVALID);
 		std::string cnut;
@@ -457,8 +457,8 @@ namespace ScriptCore
 		v.push_back(base);
 		Util::Join(v, d.c_str(), cnut);
 		cnut.append(".cnut");
-		unsigned long cnutMod = Platform::GetLastModified(cnut.c_str());
-		unsigned long nutMod = Platform::GetLastModified(def->mSourceFile.c_str());
+		unsigned long cnutMod = Platform::GetLastModified(cnut);
+		unsigned long nutMod = Platform::GetLastModified(def->mSourceFile);
 
 		Sqrat::Script script(vm);
 
@@ -484,7 +484,7 @@ namespace ScriptCore
 				catch(int e) {
 					g_Logs.script->error("Failed to write Squirrel script bytecode for '%v' to '%v'. Err %v", def->mSourceFile.c_str(), cnut.c_str(), e);
 				}
-				Platform::SetLastModified(cnut.c_str(), nutMod);
+				Platform::SetLastModified(cnut, nutMod);
 			}
 			mActive = true;
 			mRunning = true;
@@ -1413,10 +1413,10 @@ void ScriptDef :: ClearDerived(void)
 {
 }
 
-void ScriptDef :: CompileFromSource(const char *sourceFile)
+void ScriptDef :: CompileFromSource(std::string sourceFile)
 {
 	FileReader lfr;
-	if(lfr.OpenText(sourceFile) != Err_OK)
+	if(lfr.OpenText(sourceFile.c_str()) != Err_OK)
 	{
 		g_Logs.script->warn("InstanceScript::CompileFromSource() unable to open file: %v", sourceFile);
 		return;

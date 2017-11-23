@@ -8,6 +8,7 @@
 #include <algorithm>
 #include "DirectoryAccess.h"
 #include "ScriptCore.h"
+#include "Config.h"
 #include "util/Log.h"
 
 /*
@@ -99,17 +100,15 @@ void CraftManager::LoadData(void)
 {
 	mRecipes.clear();  //Just in case we're reloading for debug purposes.
 
-	std::string filename;
-	Platform::GenerateFilePath(filename, "Data", "CraftDef.txt");
-	LoadRecipeFile(filename.c_str());
+	LoadRecipeFile(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Data"), "CraftDef.txt"));
 
 	g_Logs.data->info("Loaded %v crafting recipes.", mRecipes.size());
 }
 
-void CraftManager::LoadRecipeFile(const char *filename)
+void CraftManager::LoadRecipeFile(std::string filename)
 {
 	FileReader3 fr;
-	if(fr.OpenFile(filename) != FileReader3::SUCCESS)
+	if(fr.OpenFile(filename.c_str()) != FileReader3::SUCCESS)
 	{
 		g_Logs.data->error("Error opening crafting recipe file:%v", filename);
 		return;

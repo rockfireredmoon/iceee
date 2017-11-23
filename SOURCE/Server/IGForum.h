@@ -55,8 +55,8 @@ struct IGFCategoryPage
 	int mPendingChanges;
 	unsigned long mLastAccessTime;
 	IGFCategoryPage();
-	void SaveFile(const char *filename);
-	void LoadFile(const char *filename);
+	void SaveFile(std::string filename);
+	void LoadFile(std::string filename);
 	void InsertEntry(IGFCategory &entry, bool changePending);
 	IGFCategory* GetPointerByID(int ID);
 	void DeleteObject(int objectID);
@@ -93,8 +93,8 @@ struct IGFThreadPage
 	int mPendingChanges;
 	unsigned long mLastAccessTime;
 	IGFThreadPage();
-	void SaveFile(const char *filename);
-	void LoadFile(const char *filename);
+	void SaveFile(std::string filename);
+	void LoadFile(std::string filename);
 	void InsertEntry(IGFThread &entry, bool changePending);
 	IGFThread* GetPointerByID(int ID);
 	bool QualifyGarbage(void);
@@ -125,8 +125,8 @@ struct IGFPostPage
 	int mPendingChanges;
 	unsigned long mLastAccessTime;
 	IGFPostPage();
-	void SaveFile(const char *filename);
-	void LoadFile(const char *filename);
+	void SaveFile(std::string filename);
+	void LoadFile(std::string filename);
 	void InsertEntry(IGFPost &entry, bool changePending);
 	IGFPost* GetPointerByID(int ID);
 	bool QualifyGarbage(void);

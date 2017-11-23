@@ -1012,7 +1012,7 @@ void ItemManager :: CheckVirtualItemAutosave(bool force)
 	if(g_ServerTime < nextVirtualItemAutosave && force == false)
 		return;
 
-	char filename[256];
+	char buf[256];
 	VIRTUALITEMPAGE::iterator it;
 	it = virtualItemPage.begin();
 	while(it != virtualItemPage.end())
@@ -1020,11 +1020,11 @@ void ItemManager :: CheckVirtualItemAutosave(bool force)
 		bool del = false;
 		if(it->second.bPendingSave == true)
 		{
-			Util::SafeFormat(filename, sizeof(filename), "VirtualItems\\%08d.txt", it->second.pageIndex);
-			Platform::FixPaths(filename);
+			Util::SafeFormat(buf, sizeof(buf), "%08d.txt", it->second.pageIndex);
+			std::string filename = Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "VirtualItems"), buf);
 			if(it->second.itemList.size() > 0)
 			{
-				FILE *output = fopen(filename, "wb");
+				FILE *output = fopen(filename.c_str(), "wb");
 				if(output != NULL)
 				{
 					it->second.SaveToStream(output);
@@ -1036,7 +1036,7 @@ void ItemManager :: CheckVirtualItemAutosave(bool force)
 			}
 			else
 			{
-				remove(filename);
+				remove(filename.c_str());
 				g_Logs.server->info("Removing item page [%v]", filename);
 				del = true;
 			}
@@ -1087,11 +1087,11 @@ void ItemManager :: LoadVirtualItemWithID(int itemID)
 
 void ItemManager :: LoadVirtualItemPage(VirtualItemPage* targetPage)
 {
-	char filename[256];
-	Util::SafeFormat(filename, sizeof(filename), "VirtualItems\\%08d.txt", targetPage->pageIndex);
-	Platform::FixPaths(filename);
+	char buf[256];
+	Util::SafeFormat(buf, sizeof(buf), "%08d.txt", targetPage->pageIndex);
+	std::string filename = Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "VirtualItems"), buf);
 	FileReader lfr;
-	if(lfr.OpenText(filename) != Err_OK)
+	if(lfr.OpenText(filename.c_str()) != Err_OK)
 	{
 		g_Logs.server->error("Unable to open VirtualItem page [%v]", filename);
 		return;
@@ -1246,10 +1246,10 @@ void ModTable :: Clear(void)
 	modRow.clear();
 }
 
-void ModTable :: LoadFromFile(const char *filename)
+void ModTable :: LoadFromFile(std::string filename)
 {
 	FileReader lfr;
-	if(lfr.OpenText(filename) != Err_OK)
+	if(lfr.OpenText(filename.c_str()) != Err_OK)
 	{
 		g_Logs.data->error("Could not load ModTable file: %v", filename);
 		return;
@@ -1287,10 +1287,10 @@ ModRow* ModTable :: GetRowByLevel(int level)
 	return NULL;
 }
 
-void ModManager :: LoadFromFile(const char *filename)
+void ModManager :: LoadFromFile(std::string filename)
 {
 	FileReader lfr;
-	if(lfr.OpenText(filename) != Err_OK)
+	if(lfr.OpenText(filename.c_str()) != Err_OK)
 	{
 		g_Logs.data->error("Could not load ModTable list file: %v", filename);
 		return;
@@ -1305,8 +1305,7 @@ void ModManager :: LoadFromFile(const char *filename)
 		{
 			newItem.name = lfr.BlockToStringC(0, 0);
 			lfr.BlockToStringC(1, 0);
-			Platform::FixPaths(lfr.SecBuffer);
-			newItem.LoadFromFile(lfr.SecBuffer);
+			newItem.LoadFromFile(Platform::JoinPath(g_Config.ResolveStaticDataPath(), Platform::FixPaths(lfr.SecBuffer)));
 			modTable.push_back(newItem);
 			newItem.Clear();
 		}
@@ -1362,10 +1361,10 @@ void EquipTemplate :: Clear(void)
 	randomTable.clear();
 }
 
-void EquipTemplateManager :: LoadFromFile(const char *filename)
+void EquipTemplateManager :: LoadFromFile(std::string filename)
 {
 	FileReader lfr;
-	if(lfr.OpenText(filename) != Err_OK)
+	if(lfr.OpenText(filename.c_str()) != Err_OK)
 	{
 		g_Logs.server->error("Error opening Mod Template file: %v", filename);
 		return;
@@ -1474,10 +1473,10 @@ void EquipAppearance :: AddIfValid(EquipAppearanceKey& data)
 	dataEntry.push_back(data);
 }
 
-void EquipAppearance :: LoadFromFile(const char *filename)
+void EquipAppearance :: LoadFromFile(std::string filename)
 {
 	FileReader lfr;
-	if(lfr.OpenText(filename) != Err_OK)
+	if(lfr.OpenText(filename.c_str()) != Err_OK)
 	{
 		g_Logs.server->error("Unable to open EquipAppearance file [%v]", filename);
 		return;
@@ -1516,9 +1515,9 @@ void EquipAppearance :: LoadFromFile(const char *filename)
 	lfr.CloseCurrent();
 }
 
-void EquipAppearance :: DebugSaveToFile(const char *filename)
+void EquipAppearance :: DebugSaveToFile(std::string filename)
 {
-	FILE *output = fopen(filename, "wb");
+	FILE *output = fopen(filename.c_str(), "wb");
 	if(output == NULL)
 		return;
 
@@ -1644,10 +1643,10 @@ EquipTable :: EquipTable()
 	maxShares = 0;
 }
 
-void EquipTable :: LoadFromFile(const char *filename)
+void EquipTable :: LoadFromFile(std::string filename)
 {
 	FileReader lfr;
-	if(lfr.OpenText(filename) != Err_OK)
+	if(lfr.OpenText(filename.c_str()) != Err_OK)
 	{
 		g_Logs.server->error("Unable to open EquipTable file [%v]", filename);
 		return;
@@ -1766,10 +1765,10 @@ void NameTemplateManager :: AddIfValid(NameTemplate &newItem)
 	nameTemplate.push_back(newItem);
 }
 
-void NameTemplateManager :: LoadFromFile(const char *filename)
+void NameTemplateManager :: LoadFromFile(std::string filename)
 {
 	FileReader lfr;
-	if(lfr.OpenText(filename) != Err_OK)
+	if(lfr.OpenText(filename.c_str()) != Err_OK)
 	{
 		g_Logs.server->error("Unable to open Item Name file [%v]", filename);
 		return;
@@ -1817,9 +1816,9 @@ void NameTemplateManager :: LoadFromFile(const char *filename)
 	lfr.CloseCurrent();
 }
 
-void NameTemplateManager :: DebugSaveToFile(const char *filename)
+void NameTemplateManager :: DebugSaveToFile(std::string filename)
 {
-	FILE *output = fopen(filename, "wb");
+	FILE *output = fopen(filename.c_str(), "wb");
 	if(output == NULL)
 		return;
 
@@ -1947,10 +1946,10 @@ NameModManager :: ~NameModManager()
 {
 }
 
-void NameModManager :: LoadFromFile(const char *filename)
+void NameModManager :: LoadFromFile(std::string filename)
 {
 	FileReader lfr;
-	if(lfr.OpenText(filename) != Err_OK)
+	if(lfr.OpenText(filename.c_str()) != Err_OK)
 	{
 		g_Logs.server->error("Unable to open NameMod file [%v]", filename);
 		return;
@@ -2030,10 +2029,10 @@ void NameWeight :: Clear(void)
 	mWeight = 0.0F;
 }
 
-void NameWeightManager :: LoadFromFile(const char *filename)
+void NameWeightManager :: LoadFromFile(std::string filename)
 {
 	FileReader lfr;
-	if(lfr.OpenText(filename) != Err_OK)
+	if(lfr.OpenText(filename.c_str()) != Err_OK)
 	{
 		g_Logs.server->error("Unable to open NameWeight file [%v]", filename);
 		return;
@@ -2118,10 +2117,10 @@ int RarityConfig :: GetAdjustedCorePoints(int numPoints)
 	return (int)((float)numPoints * statPointMult);
 }
 
-void VirtualItemModSystem :: LoadFromFile(const char *filename)
+void VirtualItemModSystem :: LoadFromFile(std::string filename)
 {
 	FileReader lfr;
-	if(lfr.OpenText(filename) != Err_OK)
+	if(lfr.OpenText(filename.c_str()) != Err_OK)
 	{
 		g_Logs.server->error("Unable to open ModConfig file [%v]", filename);
 		return;
@@ -2178,8 +2177,7 @@ void VirtualItemModSystem :: UpdateRarityConfig(RarityConfig& entry)
 
 void VirtualItemModSystem :: LoadSettings(void)
 {
-	char buffer[256];
-	LoadFromFile(Platform::GenerateFilePath(buffer, "ItemMod", "RarityConfig.txt"));
+	LoadFromFile(Platform::JoinPath(g_Config.ResolveStaticDataPath(), Platform::JoinPath("ItemMod", "RarityConfig.txt")));
 	for(int i = 0; i <= MAX_QUALITY_LEVEL; i++)
 	{
 		if(rarityConfig[i].chance <= 0)

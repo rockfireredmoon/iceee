@@ -811,9 +811,9 @@ bool AuctionHouseManager::RemoveItem(int id) {
 	}
 	cs.Leave();
 	char buf[128];
-	Util::SafeFormat(buf, sizeof(buf), "AuctionHouse/%d.del", id);
-	Platform::FixPaths(buf);
-	if (!Platform::FileExists(buf) || remove(buf) == 0) {
+	Util::SafeFormat(buf, sizeof(buf), "%d.del", id);
+	std::string filename = Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "AuctionHouse"), buf);
+	if (!Platform::FileExists(filename) || remove(filename.c_str()) == 0) {
 		if (!rename(path.c_str(), buf) == 0) {
 			g_Logs.data->error("Failed to remove auction house item %v",
 					id);
@@ -826,9 +826,8 @@ bool AuctionHouseManager::RemoveItem(int id) {
 
 std::string AuctionHouseManager::GetPath(int id) {
 	char buf[128];
-	Util::SafeFormat(buf, sizeof(buf), "AuctionHouse/%d.txt", id);
-	Platform::FixPaths(buf);
-	return buf;
+	Util::SafeFormat(buf, sizeof(buf), "%d.txt", id);
+	return Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "AuctionHouse"), buf);
 }
 
 bool remainingSort(const AuctionHouseItem *l1, const AuctionHouseItem *l2) {
@@ -1004,7 +1003,7 @@ int AuctionHouseManager::LoadItems(void) {
 
 	Platform_DirectoryReader r;
 	std::string dir = r.GetDirectory();
-	r.SetDirectory("AuctionHouse");
+	r.SetDirectory(Platform::JoinPath(g_Config.ResolveUserDataPath(), "AuctionHouse"));
 	r.ReadFiles();
 	r.SetDirectory(dir);
 
@@ -1012,7 +1011,7 @@ int AuctionHouseManager::LoadItems(void) {
 	for (it = r.fileList.begin(); it != r.fileList.end(); ++it) {
 		std::string p = *it;
 		if (Util::HasEnding(p, ".txt")) {
-			LoadItem(atoi(Platform::Basename(p.c_str()).c_str()));
+			LoadItem(atoi(Platform::Basename(p).c_str()));
 		}
 	}
 

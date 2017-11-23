@@ -49,10 +49,18 @@ using namespace HTTPD;
 
 FileChecksum g_FileChecksum;
 
-void FileChecksum :: LoadFromFile(const char *filename)
+void FileChecksum :: LoadFromFile()
 {
+	std::string filename = Platform::JoinPath(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveHTTPBasePath(), "Release"),
+			"Current"), "HTTPChecksum.txt");
+	if(!Platform::FileExists(filename)) {
+		g_Logs.http->warn("Could not find newer style checksum %v, trying old location", filename);
+		filename = Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Data"), "HTTPChecksum.txt");
+	}
+
+	g_Logs.http->info("Loading checksums from %v", filename);
 	FileReader lfr;
-	if(lfr.OpenText(filename) != Err_OK)
+	if(lfr.OpenText(filename.c_str()) != Err_OK)
 	{
 		g_Logs.http->warn("Could not open file: %v", filename);
 		return;

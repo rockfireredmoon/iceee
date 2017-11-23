@@ -94,7 +94,7 @@ public:
 
 	void AddEntry(PetDef& data);
 	PetDef* GetEntry(int CreatureDefID);
-	void LoadFile(const char *filename);
+	void LoadFile(std::string filename);
 	int GetStandardCount(void);
 	void FillQueryResponse(MULTISTRING& output);
 };

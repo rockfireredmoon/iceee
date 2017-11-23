@@ -422,7 +422,7 @@ AINutManager::~AINutManager() {
 int AINutManager::LoadScripts(void) {
 	Platform_DirectoryReader r;
 	string dir = r.GetDirectory();
-	r.SetDirectory("AIScript");
+	r.SetDirectory(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "AIScript"));
 	r.ReadFiles();
 	r.SetDirectory(dir);
 
@@ -433,10 +433,7 @@ int AINutManager::LoadScripts(void) {
 			// TODO delete this when finished with
 			AINutDef *def = new AINutDef();
 			aiDef.push_back(def);
-			char buf[128];
-			Util::SafeFormat(buf, sizeof(buf), "AIScript/%s", p.c_str());
-			Platform::FixPaths(buf);
-			def->Initialize(buf);
+			def->Initialize(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "AIScript"), p));
 		}
 	}
 

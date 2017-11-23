@@ -459,7 +459,7 @@ const char *GetContainerNameFromID(int ID);
 int GetEQSlotFromName(char *name);
 
 int SetItemProperty(ItemDef *item, const char *name, const char *value);
-int LoadItemFromStream(FileReader &fr, ItemDef *itemDef, char *debugFilename);
+int LoadItemFromStream(FileReader &fr, ItemDef *itemDef, std::string debugFilename);
 unsigned long GetIDSlot(unsigned long ID, unsigned long slot);
 char *GetItemProto(char *convbuf, int ItemID, int count);
 
@@ -531,8 +531,8 @@ private:
 	void Sort(void);
 	void Finalize(void);
 
-	void LoadItemList(char *filename, bool itemOverride);
-	void LoadItemPackages(char *listFile, bool itemOverride);
+	void LoadItemList(std::string filename, bool itemOverride);
+	void LoadItemPackages(std::string listFile, bool itemOverride);
 };
 
 extern ItemManager g_ItemManager;

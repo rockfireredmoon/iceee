@@ -6,6 +6,7 @@
 #include "Util.h"
 #include "util/Log.h"
 #include "Components.h"
+#include "Config.h"
 
 PetDefManager g_PetDefManager;
 
@@ -158,6 +159,7 @@ PetDef :: PetDef()
 	mCreatureDefID = 0;
 	mLevel = 0;
 	mCost = 0;
+	mItemDefID = 0;
 }
 
 void PetDef	:: Clear(void)
@@ -207,10 +209,10 @@ PetDef* PetDefManager :: GetEntry(int CreatureDefID)
 	return &it->second;
 }
 
-void PetDefManager :: LoadFile(const char *filename)
+void PetDefManager :: LoadFile(std::string filename)
 {
 	FileReader lfr;
-	if(lfr.OpenText(filename) != Err_OK)
+	if(lfr.OpenText(filename.c_str()) != Err_OK)
 	{
 		g_Logs.data->error("Error opening file: %v", filename);
 		return;
@@ -392,10 +394,10 @@ bool NPCDialogManager::RemoveItem(std::string name) {
 		mItems.erase(it);
 	}
 	char buf[128];
-	Util::SafeFormat(buf, sizeof(buf), "Dialog/%s.del", name.c_str());
-	Platform::FixPaths(buf);
-	if(!Platform::FileExists(buf) || remove(buf) == 0) {
-		if(!rename(path, buf) == 0) {
+	Util::SafeFormat(buf, sizeof(buf), "%s.del", name.c_str());
+	std::string filename = Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Dialog"), buf);
+	if(!Platform::FileExists(filename) || remove(filename.c_str()) == 0) {
+		if(!rename(path, filename.c_str()) == 0) {
 			g_Logs.data->error("Failed to remove NPC dialog item %v", name.c_str());
 			return false;
 		}
@@ -405,9 +407,8 @@ bool NPCDialogManager::RemoveItem(std::string name) {
 
 std::string NPCDialogManager::GetPath(std::string name) {
 	char buf[128];
-	Util::SafeFormat(buf, sizeof(buf), "Dialog/%s.txt", name.c_str());
-	Platform::FixPaths(buf);
-	return buf;
+	Util::SafeFormat(buf, sizeof(buf), "%s.txt", name.c_str());
+	return Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Dialog"), buf);
 }
 
 int NPCDialogManager::LoadItems(void) {
@@ -417,7 +418,8 @@ int NPCDialogManager::LoadItems(void) {
 
 	Platform_DirectoryReader r;
 	std::string dir = r.GetDirectory();
-	r.SetDirectory("Dialog");
+	std::string dirpath = Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Dialog");
+	r.SetDirectory(dirpath);
 	r.ReadFiles();
 	r.SetDirectory(dir.c_str());
 
@@ -425,7 +427,7 @@ int NPCDialogManager::LoadItems(void) {
 	for (it = r.fileList.begin(); it != r.fileList.end(); ++it) {
 		std::string p = *it;
 		if (Util::HasEnding(p, ".txt")) {
-			LoadItem(Platform::Basename(p.c_str()).c_str());
+			LoadItem(Platform::JoinPath(dirpath, Platform::Basename(p).c_str()));
 		}
 	}
 

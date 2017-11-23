@@ -1345,12 +1345,8 @@ void AbilityManager2 :: LoadData(void)
 	mAbilityIndex.clear();
 	mAbilityStringIndex.clear();
 
-	std::string path;
-	Platform::GenerateFilePath(path, "Data", "AbilityTable.txt");
-	LoadAbilityTable(path.c_str());
-
-	Platform::GenerateFilePath(path, "Data", "AbilityTableAdmin.txt");
-	LoadAbilityTable(path.c_str());
+	LoadAbilityTable(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Data"), "AbilityTable.txt"));
+	LoadAbilityTable(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Data"), "AbilityTableAdmin.txt"));
 
 	//Need to override special case functions.
 	AbilityEvent2 *evt = NULL;
@@ -1437,9 +1433,9 @@ void AbilityManager2 :: StatNameLowercase(void)
 	}
 }
 
-void AbilityManager2 :: LoadAbilityTable(const char *filename)
+void AbilityManager2 :: LoadAbilityTable(std::string filename)
 {
-	FILE *input = fopen(filename, "rb");
+	FILE *input = fopen(filename.c_str(), "rb");
 	if(input == NULL)
 	{
 		g_Logs.data->error("Cannot open ability table file [%v]", filename);
@@ -1453,7 +1449,6 @@ void AbilityManager2 :: LoadAbilityTable(const char *filename)
 	{
 		buffer[0] = 0;  //Always reset, otherwise the last line will be processed twice
 		if(fgets(buffer, sizeof(buffer), input) == NULL) {
-			g_Logs.data->error("Cannot read ability table file [%v]", filename);
 			break;
 		}
 		lineNumber++;

@@ -3,6 +3,7 @@
 #include "FileReader3.h"
 
 #include "Creature.h"
+#include "Config.h"
 #include "Util.h"
 #include "util/Log.h"
 
@@ -61,21 +62,17 @@ void EliteManager :: LoadData(void)
 	mEliteType.clear();
 	mAffixEntry.clear();
 
-	std::string filename;
-	Platform::GenerateFilePath(filename, "Data", "EliteType.txt");
-	LoadTypeTable(filename.c_str());
-
-	Platform::GenerateFilePath(filename, "Data", "EliteAffix.txt");
-	LoadAffixTable(filename.c_str());
+	LoadTypeTable(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Data"), "EliteType.txt"));
+	LoadAffixTable(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Data"), "EliteAffix.txt"));
 
 	g_Logs.data->info("Loaded %v EliteType", mEliteType.size());
 	g_Logs.data->info("Loaded %v EliteAffix", mAffixEntry.size());
 }
 
-void EliteManager :: LoadTypeTable(const char *filename)
+void EliteManager :: LoadTypeTable(std::string filename)
 {
 	FileReader3 fr;
-	if(fr.OpenFile(filename) != FileReader3::SUCCESS)
+	if(fr.OpenFile(filename.c_str()) != FileReader3::SUCCESS)
 	{
 		g_Logs.data->error("Could not open file: %v", filename);
 		return;
@@ -107,11 +104,11 @@ void EliteManager :: LoadTypeTable(const char *filename)
 	fr.CloseFile();
 }
 
-void EliteManager :: LoadAffixTable(const char *filename)
+void EliteManager :: LoadAffixTable(std::string filename)
 {
 
 	FileReader3 fr;
-	if(fr.OpenFile(filename) != FileReader3::SUCCESS)
+	if(fr.OpenFile(filename.c_str()) != FileReader3::SUCCESS)
 	{
 		g_Logs.data->error("Could not open file: %v", filename);
 		return;

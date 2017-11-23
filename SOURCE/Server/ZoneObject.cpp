@@ -94,10 +94,10 @@ ZoneMarkerDataManager :: ~ZoneMarkerDataManager()
 	zoneList.clear();
 }
 
-void ZoneMarkerDataManager :: LoadFile(const char *filename)
+void ZoneMarkerDataManager :: LoadFile(std::string filename)
 {
 	FileReader lfr;
-	if(lfr.OpenText(filename) != Err_OK)
+	if(lfr.OpenText(filename.c_str()) != Err_OK)
 	{
 		g_Logs.data->error("Could not open file [%v]", filename);
 		return;

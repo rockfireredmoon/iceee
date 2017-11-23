@@ -7,6 +7,7 @@
 
 #include <algorithm>
 #include "Util.h"
+#include "Config.h"
 #include "Instance.h"
 #include "util/Log.h"
 
@@ -927,9 +928,10 @@ void QuestDefinitionContainer::Clear(void) {
 	mQuests.clear();
 }
 
-void QuestDefinitionContainer::LoadQuestPackages(const char *filename) {
+void QuestDefinitionContainer::LoadQuestPackages(std::string filename) {
+	g_Logs.data->info("Loading quest packages file %v", filename);
 	FileReader lfr;
-	if (lfr.OpenText(filename) != Err_OK) {
+	if (lfr.OpenText(filename.c_str()) != Err_OK) {
 		g_Logs.data->error("Could not open Quest list file [%v]", filename);
 		return;
 	}
@@ -937,16 +939,17 @@ void QuestDefinitionContainer::LoadQuestPackages(const char *filename) {
 	while (lfr.FileOpen() == true) {
 		int r = lfr.ReadLine();
 		if (r > 0) {
-			Platform::FixPaths(lfr.DataBuffer);
-			LoadFromFile(lfr.DataBuffer);
+			LoadFromFile(Platform::JoinPath(g_Config.ResolveStaticDataPath(), Platform::FixPaths(lfr.DataBuffer)));
 		}
 	}
 	lfr.CloseCurrent();
 }
 
-void QuestDefinitionContainer::LoadFromFile(const char *filename) {
+void QuestDefinitionContainer::LoadFromFile(std::string filename) {
+	g_Logs.data->info("Loading quests file %v", filename);
+
 	FileReader lfr;
-	if (lfr.OpenText(filename) != Err_OK) {
+	if (lfr.OpenText(filename.c_str()) != Err_OK) {
 		g_Logs.data->error("Could not open quest definition file [%v]",
 				filename);
 		return;

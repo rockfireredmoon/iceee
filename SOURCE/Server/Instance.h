@@ -78,7 +78,7 @@ public:
 	std::vector<WorldMarker> WorldMarkerList;
 	void Save();
 	void Reload();
-	void LoadFromFile(const char *filename);
+	void LoadFromFile(std::string filename);
 
 };
 
@@ -111,7 +111,7 @@ public:
 	int SearchMap(const char *primary, int xpos, int ypos);
 	int GetIndexByName(const char *name, const char *type);
 	void GetZone(const char *name, std::vector<MapDefInfo> &defs);
-	int LoadFile(const char *fileName);
+	int LoadFile(std::string fileName);
 	void FreeList(void);
 };
 
@@ -178,7 +178,7 @@ public:
 	int SearchLocation(int zone, int x, int z);
 	const char* GetInternalMapName(int zone, int x, int z);
 	int ResolveItems(void);
-	int LoadFile(const char *filename);
+	int LoadFile(std::string filename);
 };
 
 struct ScaleConfig
@@ -423,7 +423,7 @@ public:
 	void SetTimeOfDay(std::string timeOfDay);
 	void SetEnvironment(std::string environment);
 	int CountAlive(int creatureDefID);
-	void LoadStaticObjects(const char *filename);
+	void LoadStaticObjects(std::string filename);
 
 	CreatureInstance* GetMatchingSidekick(CreatureInstance *host, int searchID);
 	void SetAllPlayerPVPStatus(int x, int z, int range, bool state);

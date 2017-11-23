@@ -30,7 +30,7 @@ class FileChecksum
 public:
 	typedef std::map<std::string, std::string> CHECKSUM_MAP;
 	CHECKSUM_MAP mChecksumData;
-	void LoadFromFile(const char *filename);
+	void LoadFromFile();
 	std::string MatchChecksum(const std::string filename, const std::string checksum);
 };
 

@@ -705,6 +705,8 @@ int AbilityActiveMessage::handleMessage(SimulatorThread *sim, CharacterServerDat
 			}
 		}
 	}
+
+	return 0;
 }
 
 //

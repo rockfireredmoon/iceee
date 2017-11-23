@@ -8570,12 +8570,11 @@ int CreatureDefManager :: GetIndex(long CDefID)
 void CreatureDefManager :: SaveCreatureTweak(CreatureDefinition *def)
 {
 
-	char buffer[256];
-	GetIndividualFilename(buffer, sizeof(buffer), def->CreatureDefID);
-	FILE *output = fopen(buffer, "wb");
+	std::string filename = GetIndividualFilename(def->CreatureDefID);
+	FILE *output = fopen(filename.c_str(), "wb");
 	if(output == NULL)
 	{
-		g_Logs.data->error("[ERROR] SaveAccountToStream could not open: %s", buffer);
+		g_Logs.data->error("[ERROR] SaveAccountToStream could not open: %s", filename);
 		return;
 	}
 	def->SaveToStream(output);
@@ -8583,17 +8582,19 @@ void CreatureDefManager :: SaveCreatureTweak(CreatureDefinition *def)
 	fclose(output);
 }
 
-const char * CreatureDefManager :: GetIndividualFilename(char *buffer, int bufsize, int accountID)
+std::string CreatureDefManager :: GetIndividualFilename(int accountID)
 {
-	Util::SafeFormat(buffer, bufsize, "Creatures\\%08d.txt", accountID);
-	Platform::FixPaths(buffer);
-	return buffer;
+	char buf[32];
+	Util::SafeFormat(buf, sizeof(buf), "%08d.txt", accountID);
+	return Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Creatures"), buf);
 }
 
-int CreatureDefManager :: LoadPackages(const char *listFile)
+int CreatureDefManager :: LoadPackages(std::string listFile)
 {
+	g_Logs.data->info("Loading creature packages file %v", listFile);
+
 	FileReader lfr;
-	if(lfr.OpenText(listFile) != Err_OK)
+	if(lfr.OpenText(listFile.c_str()) != Err_OK)
 	{
 		g_Logs.data->error("Could not open Creature list file [%v]", listFile);
 		return -1;
@@ -8603,20 +8604,18 @@ int CreatureDefManager :: LoadPackages(const char *listFile)
 	{
 		int r = lfr.ReadLine();
 		if(r > 0)
-		{
-			Platform::FixPaths(lfr.DataBuffer);
-			LoadFile(lfr.DataBuffer);
-		}
+			LoadFile(Platform::JoinPath(g_Config.ResolveStaticDataPath(), Platform::FixPaths(lfr.DataBuffer)));
 	}
 	lfr.CloseCurrent();
 
 	/* Now load any creatures from the separate files (as written by creature tweak), replacing those we
 	 * have already loaded. The should be periodically moved into the static data files.
 	 */
-	Platform::MakeDirectory("Creatures");
+	std::string overridesDir = Platform::JoinPath(g_Config.ResolveVariableDataPath(), "Creatures");
+	Platform::MakeDirectory(overridesDir);
 	Platform_DirectoryReader r;
 	string dir = r.GetDirectory();
-	r.SetDirectory("Creatures");
+	r.SetDirectory(overridesDir);
 	r.ReadFiles();
 	r.SetDirectory(dir.c_str());
 	vector<std::string>::iterator it;
@@ -8624,7 +8623,7 @@ int CreatureDefManager :: LoadPackages(const char *listFile)
 	for (it = r.fileList.begin(); it != r.fileList.end(); ++it) {
 		std::string p = *it;
 		if (Util::HasEnding(p, ".txt")) {
-			Util::SafeFormat(StrBuf, sizeof(StrBuf), "Creatures/%s", p.c_str());
+			Util::SafeFormat(StrBuf, sizeof(StrBuf), "%s/%s", overridesDir.c_str(), p.c_str());
 			LoadFile(StrBuf);
 		}
 	}
@@ -8633,10 +8632,12 @@ int CreatureDefManager :: LoadPackages(const char *listFile)
 	return 0;
 }
 
-int CreatureDefManager :: LoadFile(const char *filename)
+int CreatureDefManager :: LoadFile(std::string filename)
 {
+	g_Logs.data->info("Loading creatures file %v", filename);
+
 	FileReader lfr;
-	if(lfr.OpenText(filename) != Err_OK)
+	if(lfr.OpenText(filename.c_str()) != Err_OK)
 	{
 		g_Logs.data->error("Could not open CreatureDef file [%v]", filename);
 		return -1;

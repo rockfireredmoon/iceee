@@ -89,7 +89,7 @@ public:
 
 private:
 	std::vector<DailyProfile> mProfiles;
-	void LoadTable(const char *filename);
+	void LoadTable(std::string filename);
 
 	static const DailyProfile mNullProfile;
 };

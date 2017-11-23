@@ -809,7 +809,7 @@ private:
 	std::map<int, AbilityEntry2> mAbilityIndex;
 	std::map<std::string, int> mAbilityStringIndex;
 	void InsertAbility(int abilityID, const STRINGLIST &rowData);
-	void LoadAbilityTable(const char *filename);
+	void LoadAbilityTable(std::string filename);
 
 	//Stores all scripted emulation functions.
 	typedef std::map<std::string, FunctionPtr>::iterator FUNCTION_ITERATOR;

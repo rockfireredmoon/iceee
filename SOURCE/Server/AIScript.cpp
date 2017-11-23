@@ -418,10 +418,9 @@ AIScriptManager :: ~AIScriptManager()
 
 int AIScriptManager :: LoadScripts(void)
 {
-	char FileName[256];
-	Platform::GenerateFilePath(FileName, "AIScript", "script_list.txt");
+	std::string FileName = Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "AIScript"), "script_list.txt");
 	FileReader lfr;
-	if(lfr.OpenText(FileName) != Err_OK)
+	if(lfr.OpenText(FileName.c_str()) != Err_OK)
 	{
 		g_Logs.data->error("Error opening master script list [%v]", FileName);
 		return -1;
@@ -436,8 +435,7 @@ int AIScriptManager :: LoadScripts(void)
 		if(r > 0)
 		{
 			aiDef.push_back(newItem);
-			Platform::GenerateFilePath(LoadName, "AIScript", lfr.DataBuffer);
-			aiDef.back().CompileFromSource(LoadName.c_str());
+			aiDef.back().CompileFromSource(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "AIScript"), lfr.DataBuffer));
 		}
 	}
 	lfr.CloseCurrent();

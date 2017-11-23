@@ -5,6 +5,7 @@
 #include "DropTable.h"
 #include "Stats.h"  //For CreatureRarityType.
 #include "CommonTypes.h"
+#include "Config.h"
 #include "util/Log.h"
 
 const char *DropRateProfileManager::STANDARD = "standard";
@@ -240,17 +241,15 @@ void DropRateProfileManager::LoadData(void)
 		instance.SetMinimumLevel(q, initLev.QData[q]);
 	}
 
-	std::string filename;
-	Platform::GenerateFilePath(filename, "Data", "DropRateProfile.txt");
-	LoadTable(filename.c_str());
+	LoadTable(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Data"), "DropRateProfile.txt"));
 
 	g_Logs.data->info("Loaded %v drop rate profiles", mProfiles.size());
 }
 
-void DropRateProfileManager::LoadTable(const char *filename)
+void DropRateProfileManager::LoadTable(std::string filename)
 {
 	FileReader3 fr;
-	if(fr.OpenFile(filename) != FileReader3::SUCCESS)
+	if(fr.OpenFile(filename.c_str()) != FileReader3::SUCCESS)
 	{
 		g_Logs.data->error("Could not open file [%v]", filename);
 		return;
@@ -327,18 +326,14 @@ InstanceScaleManager::InstanceScaleManager()
 void InstanceScaleManager::LoadData(void)
 {
 	mProfiles.clear();  //In case we're reloading.
-
-	std::string filename;
-	Platform::GenerateFilePath(filename, "Data", "ScaledDifficulties.txt");
-
-	LoadTable(filename.c_str());
+	LoadTable(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Data"), "ScaledDifficulties.txt"));
 	g_Logs.data->info("Loaded %v instance scaling profiles", mProfiles.size());
 }
 
-void InstanceScaleManager::LoadTable(const char *filename)
+void InstanceScaleManager::LoadTable(std::string filename)
 {
 	FileReader3 fr;
-	if(fr.OpenFile(filename) != FileReader3::SUCCESS)
+	if(fr.OpenFile(filename.c_str()) != FileReader3::SUCCESS)
 	{
 		g_Logs.data->error("Could not open file [%v]", filename);
 		return;

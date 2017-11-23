@@ -4,6 +4,7 @@
 #include "FileReader3.h"
 
 #include "CommonTypes.h"
+#include "Config.h"
 #include "Util.h"
 #include "util/Log.h"
 
@@ -52,22 +53,18 @@ void ItemSetManager::CheckItem(int itemID, ItemSetTally &tally)
 
 void ItemSetManager::LoadData(void)
 {
-	std::string filename;
-	Platform::GenerateFilePath(filename, "Data", "ItemSet.txt");
-	LoadFile(filename.c_str());
-
-	Platform::GenerateFilePath(filename, "Data", "ItemSetScript.txt");
-	mScriptDef.CompileFromSource(filename.c_str());
+	LoadFile(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Data"), "ItemSet.txt"));
+	mScriptDef.CompileFromSource(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Data"), "ItemSetScript.txt"));
 	
 	UpdateFlavorText();
 	
 	g_Logs.data->info("Loaded %v Item Sets", mRegisteredSets.size());
 }
 
-void ItemSetManager::LoadFile(const char *filename)
+void ItemSetManager::LoadFile(std::string filename)
 {
 	FileReader3 fr;
-	if(fr.OpenFile(filename) != FileReader3::SUCCESS)
+	if(fr.OpenFile(filename.c_str()) != FileReader3::SUCCESS)
 	{
 		g_Logs.data->error("Could not open file [%v]", filename);
 		return;

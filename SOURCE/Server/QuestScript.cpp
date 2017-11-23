@@ -6,7 +6,9 @@
 #include "Instance.h"
 #include "Item.h"
 #include "CommonTypes.h"
+#include "Config.h"
 #include "ByteBuffer.h"
+#include "DirectoryAccess.h"
 #include <algorithm>
 #include "util/Log.h"
 
@@ -24,10 +26,9 @@ QuestNutDef::QuestNutDef(int questID)
 {
 	mQuestID = questID;
 	char strBuf[100];
-	Util::SafeFormat(strBuf, sizeof(strBuf), "QuestScripts\\%d.nut", mQuestID);
-	Platform::FixPaths(strBuf);
-	mSourceFile = string(strBuf);
-	scriptName = std::string(Platform::Basename(mSourceFile.c_str()));
+	Util::SafeFormat(strBuf, sizeof(strBuf), "%d.nut", mQuestID);
+	mSourceFile = Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "QuestScripts"), strBuf);
+	scriptName = std::string(Platform::Basename(mSourceFile));
 }
 
 QuestNutDef::~QuestNutDef()
@@ -897,7 +898,7 @@ void QuestScriptPlayer::TriggerAbort(void)
 //}
 
 
-void LoadQuestScripts(const char *filename)
+void LoadQuestScripts(std::string filename)
 {
 	g_QuestScript.CompileFromSource(filename);
 }

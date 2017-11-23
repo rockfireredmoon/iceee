@@ -43,8 +43,8 @@ public:
 	std::vector<Petition> GetPetitions(int sageCharacterID);
 	int NewPetition(int petitionerCDefID, int category, const char *description);
 private:
-	Petition Load(const char *path, int id);
-	void FillPetitions(std::vector<Petition> *petitions, const char *path, PetitionStatus status);
+	Petition Load(std::string path, int id);
+	void FillPetitions(std::vector<Petition> *petitions, std::string path, PetitionStatus status);
 };
 
 extern PetitionManager g_PetitionManager;

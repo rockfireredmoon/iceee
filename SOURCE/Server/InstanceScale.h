@@ -103,7 +103,7 @@ public:
 
 private:
 	std::map<std::string, DropRateProfile> mProfiles;
-	void LoadTable(const char *filename);
+	void LoadTable(std::string filename);
 
 	static const DropRateProfile mNullProfile;
 };
@@ -162,7 +162,7 @@ public:
 private:
 	//std::map<std::string, InstanceScaleProfile> mProfiles;
 	std::vector<InstanceScaleProfile> mProfiles;
-	void LoadTable(const char *filename);
+	void LoadTable(std::string filename);
 
 	InstanceScaleProfile mNullScaleProfile;
 };

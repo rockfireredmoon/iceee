@@ -3,6 +3,7 @@
 #include "Util.h"
 
 #include "Character.h"
+#include "Config.h"
 #include <dirent.h>
 #include "util/Log.h"
 
@@ -24,16 +25,9 @@ void Petition::RunLoadDefaults(void) {
 
 PetitionManager::PetitionManager() {
 	NextPetitionID = 1;
-	char tempStrBuf[100];
-	Util::SafeFormat(tempStrBuf, sizeof(tempStrBuf), "Petitions");
-	Platform::FixPaths(tempStrBuf);
-	Platform::MakeDirectory(tempStrBuf);
-	Util::SafeFormat(tempStrBuf, sizeof(tempStrBuf), "Petitions\\Pending");
-	Platform::FixPaths(tempStrBuf);
-	Platform::MakeDirectory(tempStrBuf);
-	Util::SafeFormat(tempStrBuf, sizeof(tempStrBuf), "Petitions\\Closed");
-	Platform::FixPaths(tempStrBuf);
-	Platform::MakeDirectory(tempStrBuf);
+	Platform::MakeDirectory(Platform::JoinPath(g_Config.ResolveUserDataPath(), "Petitions"));
+	Platform::MakeDirectory(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "Petitions"), "Pending"));
+	Platform::MakeDirectory(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "Petitions"), "Closed"));
 }
 
 PetitionManager::~PetitionManager() {
@@ -41,55 +35,65 @@ PetitionManager::~PetitionManager() {
 
 
 bool PetitionManager::Take(int petitionId, int sageCharacterId) {
-	char tempStrBuf[100];
-	char tempStrBuf2[100];
-	Util::SafeFormat(tempStrBuf, sizeof(tempStrBuf), "Petitions\\%d", sageCharacterId);
-	Platform::FixPaths(tempStrBuf);
-	if(!Platform::DirExists(tempStrBuf))
-		Platform::MakeDirectory(tempStrBuf);
-	Util::SafeFormat(tempStrBuf, sizeof(tempStrBuf), "Petitions\\Pending\\%d.txt", petitionId);
-	Platform::FixPaths(tempStrBuf);
-	Util::SafeFormat(tempStrBuf2, sizeof(tempStrBuf2), "Petitions\\%d\\%d.txt", sageCharacterId, petitionId);
-	Platform::FixPaths(tempStrBuf2);
-	if(Platform::FileCopy(tempStrBuf, tempStrBuf2) == 0 && remove(tempStrBuf) == 0)
+	char idBuf[32];
+	char idTxtBuf[32];
+	Util::SafeFormat(idBuf, sizeof(idBuf), "%d", sageCharacterId);
+	Util::SafeFormat(idTxtBuf, sizeof(idTxtBuf), "%d.txt", sageCharacterId);
+
+	std::string petfile = Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "Petitions"), idBuf);
+	if(!Platform::DirExists(petfile))
+		Platform::MakeDirectory(petfile);
+
+	std::string srcfile = Platform::JoinPath(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "Petitions"), "Pending"), idTxtBuf);
+	std::string targfile = Platform::JoinPath(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "Petitions"), idBuf), idTxtBuf);
+	if(Platform::FileCopy(srcfile, targfile) == 0 && remove(srcfile.c_str()) == 0)
 		return true;
-	g_Logs.data->error("Failed to take petition to %v", tempStrBuf);
+	g_Logs.data->error("Failed to take petition to %v", srcfile);
 	return false;
 }
+
 bool PetitionManager::Untake(int petitionId, int sageCharacterId) {
-	char tempStrBuf[100];
-	char tempStrBuf2[100];
-	Util::SafeFormat(tempStrBuf, sizeof(tempStrBuf), "Petitions\\%d\\%d.txt", sageCharacterId, petitionId);
-	Platform::FixPaths(tempStrBuf);
-	Util::SafeFormat(tempStrBuf2, sizeof(tempStrBuf2), "Petitions\\Pending\\%d.txt", petitionId);
-	Platform::FixPaths(tempStrBuf2);
-	if(Platform::FileCopy(tempStrBuf, tempStrBuf2) == 0 && remove(tempStrBuf) == 0)
+
+	char idBuf[32];
+	char idTxtBuf[32];
+	Util::SafeFormat(idBuf, sizeof(idBuf), "%d", sageCharacterId);
+	Util::SafeFormat(idTxtBuf, sizeof(idTxtBuf), "%d.txt", sageCharacterId);
+
+	std::string srcfile = Platform::JoinPath(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "Petitions"), idBuf), idTxtBuf);
+	std::string targfile = Platform::JoinPath(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "Petitions"), "Pending"), idTxtBuf);
+
+	if(Platform::FileCopy(srcfile, targfile) == 0 && remove(srcfile.c_str()) == 0)
 		return true;
-	g_Logs.data->error("Failed to untake petition to %v", tempStrBuf);
+	g_Logs.data->error("Failed to untake petition to %v", srcfile);
 	return false;
 }
+
 bool PetitionManager::Close(int petitionId, int sageCharacterId) {
-	char tempStrBuf[100];
-	char tempStrBuf2[100];
-	Util::SafeFormat(tempStrBuf, sizeof(tempStrBuf), "Petitions\\%d\\%d.txt", sageCharacterId, petitionId);
-	Platform::FixPaths(tempStrBuf);
-	Util::SafeFormat(tempStrBuf2, sizeof(tempStrBuf2), "Petitions\\Closed\\%d.txt", petitionId);
-	Platform::FixPaths(tempStrBuf2);
-	if(Platform::FileCopy(tempStrBuf, tempStrBuf2) == 0 && remove(tempStrBuf) == 0)
+	char idBuf[32];
+	char idTxtBuf[32];
+	Util::SafeFormat(idBuf, sizeof(idBuf), "%d", sageCharacterId);
+	Util::SafeFormat(idTxtBuf, sizeof(idTxtBuf), "%d.txt", sageCharacterId);
+
+	std::string srcfile = Platform::JoinPath(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "Petitions"), idBuf), idTxtBuf);
+	std::string targfile = Platform::JoinPath(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "Petitions"), "Closed"), idTxtBuf);
+
+	if(Platform::FileCopy(srcfile, targfile) == 0 && remove(srcfile.c_str()) == 0)
 		return true;
-	g_Logs.data->error("Failed to close petition to %v", tempStrBuf);
+
+	g_Logs.data->error("Failed to close petition to %v", srcfile);
 	return false;
 }
 
 int PetitionManager::NewPetition(int petitionerCDefID, int category, const char *description) {
-	char buffer[256];
+	char idTxtBuf[256];
 	int id = NextPetitionID++;
-	Util::SafeFormat(buffer, sizeof(buffer), "Petitions\\Pending\\%d.txt", id);
-	Platform::FixPaths(buffer);
-	g_Logs.data->info("Saving petition to %v.", buffer);
-	FILE *output = fopen(buffer, "wb");
+	Util::SafeFormat(idTxtBuf, sizeof(idTxtBuf), "%d.txt", id);
+	std::string filename = Platform::JoinPath(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "Petitions"), "Pending"), idTxtBuf);
+
+	g_Logs.data->info("Saving petition to %v.", filename);
+	FILE *output = fopen(filename.c_str(), "wb");
 	if (output == NULL) {
-		g_Logs.data->error("Saving petition could not open: %v", buffer);
+		g_Logs.data->error("Saving petition could not open: %v", filename);
 		return -1;
 	}
 	fprintf(output, "[ENTRY]\r\n");
@@ -114,25 +118,25 @@ int PetitionManager::NewPetition(int petitionerCDefID, int category, const char 
 
 std::vector<Petition> PetitionManager::GetPetitions(int sageCharacterID) {
 	std::vector<Petition> v;
-	char tempStrBuf[100];
-	Util::SafeFormat(tempStrBuf, sizeof(tempStrBuf), "Petitions/Pending");
-	Platform::FixPaths(tempStrBuf);
-	FillPetitions(&v, tempStrBuf, PENDING);
+
+	std::string dir = Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "Petitions"), "Pending");
+	FillPetitions(&v, dir, PENDING);
 	if(sageCharacterID != 0) {
-		Util::SafeFormat(tempStrBuf, sizeof(tempStrBuf), "Petitions/%d", sageCharacterID);
-		Platform::FixPaths(tempStrBuf);
-		if(Platform::DirExists(tempStrBuf)) {
-			FillPetitions(&v, tempStrBuf, TAKEN);
+		char idbuf[32];
+		Util::SafeFormat(idbuf, sizeof(idbuf), "%d", sageCharacterID);
+		dir = Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "Petitions"), idbuf);
+		if(Platform::DirExists(dir)) {
+			FillPetitions(&v, dir, TAKEN);
 		}
 	}
 	return v;
 }
 
 
-void PetitionManager::FillPetitions(std::vector<Petition> *petitions, const char *path, PetitionStatus status) {
+void PetitionManager::FillPetitions(std::vector<Petition> *petitions, std::string path, PetitionStatus status) {
 	DIR *dir;
 	struct dirent *ent;
-	if ((dir = opendir(path)) != NULL) {
+	if ((dir = opendir(path.c_str())) != NULL) {
 		/* print all the files and directories within directory */
 		while ((ent = readdir(dir)) != NULL) {
 			string s = string(ent->d_name);
@@ -151,15 +155,14 @@ void PetitionManager::FillPetitions(std::vector<Petition> *petitions, const char
 	}
 }
 
-Petition PetitionManager::Load(const char *path, int id) {
+Petition PetitionManager::Load(std::string path, int id) {
 	char buffer[256];
-	Util::SafeFormat(buffer, sizeof(buffer), "%s\\%d.txt", path, id);
-	Platform::FixPaths(buffer);
-
+	Util::SafeFormat(buffer, sizeof(buffer), "%d.txt", path, id);
+	std::string filename = Platform::JoinPath(path, buffer);
 	FileReader lfr;
 	Petition newItem;
-	if (lfr.OpenText(buffer) != Err_OK) {
-		g_Logs.data->error("Could not open file [%v]", buffer);
+	if (lfr.OpenText(filename.c_str()) != Err_OK) {
+		g_Logs.data->error("Could not open file [%v]", filename);
 	} else {
 		lfr.CommentStyle = Comment_Semi;
 		int r = 0;

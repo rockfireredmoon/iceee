@@ -137,9 +137,8 @@ int AbstractScriptHandler::handleQuery(SimulatorThread *sim,
 
 		ownPlayer = false;
 		questId = atoi(parameter);
-		Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1), "QuestScripts/%d.nut",
-				questId);
-		path = sim->Aux1;
+		Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1), "%d.nut", questId);
+		path = Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "QuestScripts"), sim->Aux1);
 		break;
 	case 2:
 		// AI script
@@ -458,11 +457,10 @@ int ScriptSaveHandler::handleScriptQuery(bool ownPlayer, int instanceID,
 	}
 
 	// Create the directory
-	string dir = Platform::Dirname(path.c_str());
-	Platform::FixPaths(dir);
-	Platform::MakeDirectory(dir.c_str());
+	string dir = Platform::Dirname(path);
+	Platform::MakeDirectory(dir);
 
-	g_Logs.script->info("Saving to %v in %v", path.c_str(), dir.c_str());
+	g_Logs.script->info("Saving to %v in %v", path, dir);
 
 	// Save to temporary file first in case the save fails (leaving some hope of recovery)
 	string tpath = path;
@@ -470,7 +468,7 @@ int ScriptSaveHandler::handleScriptQuery(bool ownPlayer, int instanceID,
 
 	// If the script is empty, delete it
 	if (scriptText.length() == 0) {
-		Platform::Delete(tpath.c_str());
+		Platform::Delete(tpath);
 		Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1), "Script for %d deleted.",
 				creatureInstance->actInst->mZone);
 		sim->SendInfoMessage(sim->Aux1, INFOMSG_INFO);

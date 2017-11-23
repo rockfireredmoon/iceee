@@ -211,10 +211,10 @@ int EssenceShopContainer :: ResolveItemIdentifier(char *str)
 }
 
 
-void EssenceShopContainer :: LoadFromFile(char *filename)
+void EssenceShopContainer :: LoadFromFile(std::string filename)
 {
 	FileReader lfr;
-	if(lfr.OpenText(filename) != Err_OK)
+	if(lfr.OpenText(filename.c_str()) != Err_OK)
 	{
 		g_Logs.data->error("EssenceShop file [%v] not found.", filename);
 		return;

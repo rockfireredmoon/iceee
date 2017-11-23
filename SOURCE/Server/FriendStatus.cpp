@@ -3,6 +3,7 @@
 
 #include "Util.h"
 #include "DirectoryAccess.h"
+#include "Config.h"
 #include "util/Log.h"
 
 FriendListManager g_FriendListManager;
@@ -38,13 +39,8 @@ void FriendListManager :: LoadAllData(void)
 {
 	char filename[256];
 
-	Platform::GenerateFilePath(filename, "Dynamic", "FriendList.txt");
-	Platform::FixPaths(filename);
-	socialDataFile = filename;
-
-	Platform::GenerateFilePath(filename, "Dynamic", "FriendNetwork.txt");
-	Platform::FixPaths(filename);
-	networkDataFile = filename;
+	socialDataFile = Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "Dynamic"), "FriendList.txt");
+	networkDataFile = Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "Dynamic"), "FriendNetwork.txt");
 
 	LoadSocialData();
 	LoadNetworkData();

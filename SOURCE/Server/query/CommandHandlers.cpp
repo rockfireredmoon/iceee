@@ -1816,6 +1816,7 @@ int PartyInviteHandler::handleCommand(SimulatorThread *sim,
 	query->args.push_back(charName);
 	query->argCount = query->args.size();
 	g_QueryManager.getQueryHandler("party")->handleQuery(sim, pld, query, creatureInstance);
+	return 0;
 }
 
 //
@@ -2065,15 +2066,15 @@ int DtrigHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
 		int y1 = query->GetInteger(2) / pld->zoneDef->mPageSize;
 		int x2 = query->GetInteger(3) / pld->zoneDef->mPageSize;
 		int y2 = query->GetInteger(4) / pld->zoneDef->mPageSize;
-		Platform::MakeDirectory("SceneryCopy");
+		std::string srcdir = Platform::JoinPath(g_Config.ResolveVariableDataPath(), "Scenery");
+		std::string targdir = Platform::JoinPath(g_Config.ResolveVariableDataPath(), "SceneryCopy");
+		Platform::MakeDirectory(targdir);
 		for (int y = y1; y <= y2; y++) {
 			for (int x = x1; x <= x2; x++) {
-				sprintf(sim->Aux1, "Scenery\\%d\\x%03dy%03d.txt",
-						pld->zoneDef->mID, x, y);
-				sprintf(sim->Aux2, "SceneryCopy\\x%03dy%03d.txt", x, y);
-				Platform::FixPaths(sim->Aux1);
-				Platform::FixPaths(sim->Aux2);
-				Platform::FileCopy(sim->Aux1, sim->Aux2);
+				sprintf(sim->Aux1, "%d", pld->zoneDef->mID);
+				sprintf(sim->Aux2, "x%03dy%03d.txt", x, y);
+				Platform::FileCopy(Platform::JoinPath(Platform::JoinPath(srcdir, sim->Aux1),sim->Aux2),
+								   Platform::JoinPath(targdir, sim->Aux2));
 			}
 		}
 	}

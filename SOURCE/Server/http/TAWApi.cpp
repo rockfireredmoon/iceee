@@ -968,15 +968,16 @@ bool ZoneHandler::handleAuthenticatedGet(CivetServer *server,
 			Json::Value root;
 			zone->WriteToJSON(root);
 
-			char buf[128];
+			std::string dir;
+			char buf[16];
+			Util::SafeFormat(buf, sizeof(buf), "%d", zone->mID);
 			if (zone->mGrove)
-				Util::SafeFormat(buf, sizeof(buf), "Grove/%d", zone->mID);
+				dir = Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "Grove"), buf);
 			else
-				Util::SafeFormat(buf, sizeof(buf), "Scenery/%d", zone->mID);
-			Platform::FixPaths(buf);
+				dir = Platform::JoinPath(Platform::JoinPath(g_Config.ResolveVariableDataPath(), "Scenery"), buf);
 
 			Platform_DirectoryReader dr;
-			dr.SetDirectory(buf);
+			dr.SetDirectory(dir);
 			dr.ReadFiles();
 
 			Json::Value tiles;

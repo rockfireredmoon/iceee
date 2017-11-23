@@ -2,6 +2,7 @@
 #define GLOBALS_H
 
 #include "IntArray.h"
+#include <string>
 
 
 #define MAXTARGET   8
@@ -209,7 +210,7 @@ namespace Global
 
 	extern IntArray<71, 3> ResCostTable;   //Row for each level 0-70.  Columns: [0]=Level, [1]=Option2, [2]=Option3
 
-	void LoadResCostTable(const char *filename);
+	void LoadResCostTable(std::string filename);
 	int GetResurrectCost(int playerLevel, int resChoice);
 }
 

@@ -61,7 +61,6 @@ gamedata_DATA = AbilityTableAdmin.txt \
 		ResCost.txt \
 		ScaledDifficulties.txt \
 		UNUSED_WINTER_DAWNING_QUEST.txt \
-		URL.txt \
 		Valid_ATS.txt \
 		ZoneDef.txt \
 		ZoneMarkers.txt

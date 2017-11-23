@@ -345,7 +345,7 @@ private:
 	std::string mDataFileIndex;
 
 	int GetNewZoneID(void);
-	int LoadFile(const char *fileName);
+	int LoadFile(std::string fileName);
 	bool SaveIndex(void);
 	void LoadIndex(void);
 	void InitDefaultZoneIndex(void);
@@ -353,7 +353,7 @@ private:
 	void InsertZone(const ZoneDefInfo& newZone, bool createIndex);
 	ZoneDefInfo * ResolveZoneDef(int ID);
 	ZoneDefInfo * LoadZoneDef(int ID);
-	void GetZoneFileName(int ID, std::string &outStr);
+	std::string GetZoneFileName(int ID);
 };
 
 struct MapBarrierPoint
@@ -375,7 +375,7 @@ public:
 
 	void AddEntry(int zoneID, MapBarrierPoint &data);
 	bool CheckCollision(int zoneID, int &x, int &z);
-	void LoadFromFile(const char *filename);
+	void LoadFromFile(std::string filename);
 	int GetLoadedCount(void);
 };
 
@@ -386,7 +386,7 @@ public:
 	std::map<std::string, WeatherDef> mWeatherDefinitions; // all weather definitions
 	std::vector<WeatherState*> RegisterInstance(ActiveInstance *instance); // when an instance loads, we find all of it's weather regions (i.e. map names) and start maintaining them if there is a weather definition
 	void Deregister(std::vector<WeatherState*> states); // when an instance dies, we stop maintaining its weather regions (i.e. map names)
-	int LoadFromFile(const char *filename);
+	int LoadFromFile(std::string filename);
 	WeatherState* GetWeather(std::string mapName, int instanceId);
 private:
 	bool MaybeAddWeatherDef(int instanceID, std::string actualMapName, std::vector<WeatherState*> &m);
@@ -445,7 +445,7 @@ private:
 	std::map<std::string, GroveTemplate> mTemplateEntries;    //This holds the actual template entries.
 	std::map<std::string, const GroveTemplate*> mTerrainMap;  //This maps GroveTemplate::mTerrainCfg values to their template for faster internal lookups.
 	void ResolveTerrainMap(void);
-	void LoadFile(const char *filename);
+	void LoadFile(std::string filename);
 };
 
 extern ZoneDefManager g_ZoneDefManager;

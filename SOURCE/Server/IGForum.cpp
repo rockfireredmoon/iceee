@@ -2,6 +2,7 @@
 #include <algorithm>
 #include "IGForum.h"
 #include "FileReader.h"
+#include "Config.h"
 #include "DirectoryAccess.h"
 
 #include "util/Log.h"
@@ -45,9 +46,9 @@ IGFCategoryPage :: IGFCategoryPage()
 	mLastAccessTime = 0;
 }
 
-void IGFCategoryPage :: SaveFile(const char *filename)
+void IGFCategoryPage :: SaveFile(std::string filename)
 {
-	FILE *output = fopen(filename, "wb");
+	FILE *output = fopen(filename.c_str(), "wb");
 	if(output == NULL)
 	{
 		g_Logs.data->error("IGFCategoryPage::SaveFile failed to open: %v", filename);
@@ -69,10 +70,10 @@ void IGFCategoryPage :: SaveFile(const char *filename)
 	fclose(output);
 }
 
-void IGFCategoryPage :: LoadFile(const char *filename)
+void IGFCategoryPage :: LoadFile(std::string filename)
 {
 	FileReader lfr;
-	if(lfr.OpenText(filename) != Err_OK)
+	if(lfr.OpenText(filename.c_str()) != Err_OK)
 	{
 		g_Logs.data->error("IGFCategoryPage::LoadFile failed to open file.");
 		return;
@@ -157,9 +158,9 @@ IGFThreadPage :: IGFThreadPage()
 	mPage = 0;
 	mLastAccessTime = 0;
 }
-void IGFThreadPage :: SaveFile(const char *filename)
+void IGFThreadPage :: SaveFile(std::string filename)
 {
-	FILE *output = fopen(filename, "wb");
+	FILE *output = fopen(filename.c_str(), "wb");
 	if(output == NULL)
 	{
 		g_Logs.data->error("IGFThreadPage::SaveFile failed to open file.");
@@ -186,10 +187,10 @@ void IGFThreadPage :: SaveFile(const char *filename)
 	fclose(output);
 }
 
-void IGFThreadPage :: LoadFile(const char *filename)
+void IGFThreadPage :: LoadFile(std::string filename)
 {
 	FileReader lfr;
-	if(lfr.OpenText(filename) != Err_OK)
+	if(lfr.OpenText(filename.c_str()) != Err_OK)
 	{
 		g_Logs.data->error("IGFThreadPage::LoadFile failed to open file.");
 		return;
@@ -275,9 +276,9 @@ IGFPostPage :: IGFPostPage()
 	mLastAccessTime = 0;
 }
 
-void IGFPostPage :: SaveFile(const char *filename)
+void IGFPostPage :: SaveFile(std::string filename)
 {
-	FILE *output = fopen(filename, "wb");
+	FILE *output = fopen(filename.c_str(), "wb");
 	if(output == NULL)
 	{
 		g_Logs.data->error("IGFPostPage::SaveFile failed to open file.");
@@ -301,10 +302,10 @@ void IGFPostPage :: SaveFile(const char *filename)
 	fclose(output);
 }
 
-void IGFPostPage :: LoadFile(const char *filename)
+void IGFPostPage :: LoadFile(std::string filename)
 {
 	FileReader lfr;
-	if(lfr.OpenText(filename) != Err_OK)
+	if(lfr.OpenText(filename.c_str()) != Err_OK)
 	{
 		g_Logs.data->error("IGFPostPage::LoadFile failed to open: %v", filename);
 		return;
@@ -525,21 +526,11 @@ void IGFManager :: Init(void)
 		root.mParentCategory = ROOT_CATEGORY;
 		InsertPagedCategory(root);
 	}
-	char buffer[256];
-	Util::SafeFormat(buffer, sizeof(buffer), "IGForum");
-	Platform::MakeDirectory(buffer);
-
-	Util::SafeFormat(buffer, sizeof(buffer), "IGForum\\Category");
-	Platform::FixPaths(buffer);
-	Platform::MakeDirectory(buffer);
-
-	Util::SafeFormat(buffer, sizeof(buffer), "IGForum\\Thread");
-	Platform::FixPaths(buffer);
-	Platform::MakeDirectory(buffer);
-
-	Util::SafeFormat(buffer, sizeof(buffer), "IGForum\\Post");
-	Platform::FixPaths(buffer);
-	Platform::MakeDirectory(buffer);
+	std::string igfdir = Platform::JoinPath(g_Config.ResolveUserDataPath(), "IGForum");
+	Platform::MakeDirectory(igfdir);
+	Platform::MakeDirectory(Platform::JoinPath(igfdir, "Category"));
+	Platform::MakeDirectory(Platform::JoinPath(igfdir, "Thread"));
+	Platform::MakeDirectory(Platform::JoinPath(igfdir, "Post"));
 }
 
 IGFManager :: ~IGFManager()
@@ -1159,31 +1150,30 @@ IGFPost* IGFManager:: GetPagedPostPtr(int elementID)
 void IGFManager :: LoadCategoryPage(int page)
 {
 	char buffer[256];
-	Util::SafeFormat(buffer, sizeof(buffer), "IGForum\\Category\\%08d.txt", page);
-	Platform::FixPaths(buffer);
-
+	Util::SafeFormat(buffer, sizeof(buffer), "%08d.txt", page);
+	std::string path = Platform::JoinPath(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "IGForum"), "Category"), buffer);
 	mCategoryPages[page].mPage = page;  //Set the page so autosave always write to page zero and overwrite old entries.
-	mCategoryPages[page].LoadFile(buffer);
+	mCategoryPages[page].LoadFile(path);
 }
 
 void IGFManager :: LoadThreadPage(int page)
 {
 	char buffer[256];
-	Util::SafeFormat(buffer, sizeof(buffer), "IGForum\\Thread\\%08d.txt", page);
-	Platform::FixPaths(buffer);
+	Util::SafeFormat(buffer, sizeof(buffer), "%08d.txt", page);
+	std::string path = Platform::JoinPath(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "IGForum"), "Thread"), buffer);
 
 	mThreadPages[page].mPage = page;  //Set the page so autosave always write to page zero and overwrite old entries.
-	mThreadPages[page].LoadFile(buffer);
+	mThreadPages[page].LoadFile(path);
 }
 
 void IGFManager :: LoadPostPage(int page)
 {
 	char buffer[256];
-	Util::SafeFormat(buffer, sizeof(buffer), "IGForum\\Post\\%08d.txt", page);
-	Platform::FixPaths(buffer);
+	Util::SafeFormat(buffer, sizeof(buffer), "%08d.txt", page);
+	std::string path = Platform::JoinPath(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "IGForum"), "Post"), buffer);
 
 	mPostPages[page].mPage = page;  //Set the page so autosave always write to page zero and overwrite old entries.
-	mPostPages[page].LoadFile(buffer);
+	mPostPages[page].LoadFile(path);
 }
 
 void IGFManager :: CheckAutoSave(bool force)
@@ -1224,9 +1214,8 @@ void IGFManager :: AutosaveCategory(void)
 	{
 		if(it->second.mPendingChanges == 0)
 			continue;
-		Util::SafeFormat(buffer, sizeof(buffer), "IGForum\\Category\\%08d.txt", it->second.mPage);
-		Platform::FixPaths(buffer);
-		it->second.SaveFile(buffer);
+		Util::SafeFormat(buffer, sizeof(buffer), "%08d.txt", it->second.mPage);
+		it->second.SaveFile(Platform::JoinPath(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "IGForum"), "Category"), buffer));
 		it->second.mPendingChanges = 0;
 	}
 }
@@ -1239,9 +1228,8 @@ void IGFManager :: AutosaveThread(void)
 	{
 		if(it->second.mPendingChanges == 0)
 			continue;
-		Util::SafeFormat(buffer, sizeof(buffer), "IGForum\\Thread\\%08d.txt", it->second.mPage);
-		Platform::FixPaths(buffer);
-		it->second.SaveFile(buffer);
+		Util::SafeFormat(buffer, sizeof(buffer), "%08d.txt", it->second.mPage);
+		it->second.SaveFile(Platform::JoinPath(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "IGForum"), "Thread"), buffer));
 		it->second.mPendingChanges = 0;
 	}
 }
@@ -1254,21 +1242,19 @@ void IGFManager :: AutosavePost(void)
 	{
 		if(it->second.mPendingChanges == 0)
 			continue;
-		Util::SafeFormat(buffer, sizeof(buffer), "IGForum\\Post\\%08d.txt", it->second.mPage);
-		Platform::FixPaths(buffer);
-		it->second.SaveFile(buffer);
+		Util::SafeFormat(buffer, sizeof(buffer), "%08d.txt", it->second.mPage);
+		it->second.SaveFile(Platform::JoinPath(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "IGForum"), "Post"), buffer));
 		it->second.mPendingChanges = 0;
 	}
 }
 
 void IGFManager :: SaveConfig(void)
 {
-	char buffer[256];
-	Platform::GenerateFilePath(buffer, "IGForum", "IGFSession.txt");
-	FILE *output = fopen(buffer, "wb");
+	std::string filename = Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "IGForum"), "IGFSession.txt");
+	FILE *output = fopen(filename.c_str(), "wb");
 	if(output == NULL)
 	{
-		g_Logs.data->error("IGFManager::SaveConfig failed to open file.");
+		g_Logs.data->error("IGFManager::SaveConfig failed to open file %v.", filename);
 		return;
 	}
 	fprintf(output, "NextCategoryID=%d\r\n", mNextCategoryID);
@@ -1281,12 +1267,11 @@ void IGFManager :: SaveConfig(void)
 
 void IGFManager :: LoadConfig(void)
 {
-	char buffer[256];
-	Platform::GenerateFilePath(buffer, "IGForum", "IGFSession.txt");
+	std::string filename = Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "IGForum"), "IGFSession.txt");
 	FileReader lfr;
-	if(lfr.OpenText(buffer) != Err_OK)
+	if(lfr.OpenText(filename.c_str()) != Err_OK)
 	{
-		g_Logs.data->error("IGFManager::LoadConfig failed to open file.");
+		g_Logs.data->error("IGFManager::LoadConfig failed to open file %v.", filename);
 		return;
 	}
 	lfr.CommentStyle = Comment_Semi;
@@ -1306,7 +1291,7 @@ void IGFManager :: LoadConfig(void)
 			else if(strcmp(lfr.SecBuffer, "PlatformLaunchMinute") == 0)
 				mPlatformLaunchMinute = lfr.BlockToULongC(1);
 			else
-				g_Logs.data->warn("IGFManager::LoadConfig unknown identifier [%v] in file [%v] on line [%v]", lfr.SecBuffer, buffer, lfr.LineNumber);
+				g_Logs.data->warn("IGFManager::LoadConfig unknown identifier [%v] in file [%v] on line [%v]", lfr.SecBuffer, filename, lfr.LineNumber);
 		}
 	}
 	lfr.CloseCurrent();

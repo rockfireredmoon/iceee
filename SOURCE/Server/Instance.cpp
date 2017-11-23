@@ -95,9 +95,9 @@ void WorldMarkerContainer::Clear()
 void WorldMarkerContainer::Save()
 {
 
-	std::string dir = Platform::Dirname(mFilename.c_str());
-	if(!Platform::DirExists(dir.c_str())) {
-		Platform::MakeDirectory(dir.c_str());
+	std::string dir = Platform::Dirname(mFilename);
+	if(!Platform::DirExists(dir)) {
+		Platform::MakeDirectory(dir);
 	}
 
 	g_Logs.data->info("Saving world markers to %v.", mFilename.c_str());
@@ -188,7 +188,7 @@ void WorldMarkerContainer::Reload()
 }
 
 
-void WorldMarkerContainer::LoadFromFile(const char *filename)
+void WorldMarkerContainer::LoadFromFile(std::string filename)
 {
 	mFilename = filename;
 	Reload();
@@ -292,10 +292,10 @@ void MapDefContainer :: GetZone(const char *primary, std::vector<MapDefInfo> &de
 }
 
 
-int MapDefContainer :: LoadFile(const char *fileName)
+int MapDefContainer :: LoadFile(std::string fileName)
 {
 	FileReader lfr;
-	if(lfr.OpenText(fileName) != Err_OK)
+	if(lfr.OpenText(fileName.c_str()) != Err_OK)
 	{
 		g_Logs.data->error("Error: Could not open file %v", fileName);
 		return -1;
@@ -516,10 +516,10 @@ int MapLocationHandler :: ResolveItems(void)
 	return 0;
 }
 
-int MapLocationHandler :: LoadFile(const char *filename)
+int MapLocationHandler :: LoadFile(std::string filename)
 {
 	FileReader lfr;
-	if(lfr.OpenText(filename) != Err_OK)
+	if(lfr.OpenText(filename.c_str()) != Err_OK)
 	{
 		g_Logs.data->error("Could not open file [%v]", filename);
 		return -1;
@@ -2552,28 +2552,25 @@ void ActiveInstance :: InitializeData(void)
 	*/
 
 	//Load essence shop data.
-	char buffer[256];
-	Util::SafeFormat(buffer, sizeof(buffer), "%s\\%d\\EssenceShop.txt", mZoneDefPtr->mGrove ? "Grove" : "Instance", mZone);
-	Platform::FixPaths(buffer);
-	essenceShopList.LoadFromFile(buffer);
+	char buf[64];
+	Util::SafeFormat(buf, sizeof(buf), "%d", mZone);
+
+	std::string p = Platform::JoinPath(Platform::JoinPath(mZoneDefPtr->mGrove ? g_Config.ResolveUserDataPath() : g_Config.ResolveVariableDataPath(), buf), "EssenceShop.txt");
+	essenceShopList.LoadFromFile(p);
 	if(essenceShopList.EssenceShopList.size() > 0)
 		g_Logs.data->info("Loaded %v essence shops.", essenceShopList.EssenceShopList.size());
 
-	Util::SafeFormat(buffer, sizeof(buffer), "%s\\%d\\Shop.txt", mZoneDefPtr->mGrove ? "Grove" : "Instance", mZone);
-	Platform::FixPaths(buffer);
-	itemShopList.LoadFromFile(buffer);
+	p = Platform::JoinPath(Platform::JoinPath(mZoneDefPtr->mGrove ? g_Config.ResolveUserDataPath() : g_Config.ResolveVariableDataPath(), buf), "Shop.txt");
+	itemShopList.LoadFromFile(p);
 	if(itemShopList.EssenceShopList.size() > 0)
 		g_Logs.data->info("Loaded %v item shops.", itemShopList.EssenceShopList.size());
 
-
-	Util::SafeFormat(buffer, sizeof(buffer), "%s\\%d\\Static.txt", mZoneDefPtr->mGrove ? "Grove" : "Instance", mZone);
-	Platform::FixPaths(buffer);
-	LoadStaticObjects(buffer);
+	p = Platform::JoinPath(Platform::JoinPath(mZoneDefPtr->mGrove ? g_Config.ResolveUserDataPath() : g_Config.ResolveVariableDataPath(), buf), "Static.txt");
+	LoadStaticObjects(p);
 
 	//World markers (for devs)
-	Util::SafeFormat(buffer, sizeof(buffer), "%s\\%d\\WorldMarkers.txt", mZoneDefPtr->mGrove ? "Grove" : "Instance", mZone);
-	Platform::FixPaths(buffer);
-	worldMarkers.LoadFromFile(buffer);
+	p = Platform::JoinPath(Platform::JoinPath(mZoneDefPtr->mGrove ? g_Config.ResolveUserDataPath() : g_Config.ResolveVariableDataPath(), buf), "WorldMarkers.txt");
+	worldMarkers.LoadFromFile(p);
 	if(worldMarkers.WorldMarkerList.size() > 0)
 		g_Logs.data->info("Loaded %v world markers.", worldMarkers.WorldMarkerList.size());
 
@@ -3876,10 +3873,10 @@ int ActiveInstance :: CountAlive(int creatureDefID)
 	return count;
 }
 
-void ActiveInstance :: LoadStaticObjects(const char *filename)
+void ActiveInstance :: LoadStaticObjects(std::string filename)
 {
 	FileReader lfr;
-	if(lfr.OpenText(filename) != Err_OK)
+	if(lfr.OpenText(filename.c_str()) != Err_OK)
 		return;
 	lfr.CommentStyle = Comment_Semi;
 	while(lfr.FileOpen() == true)

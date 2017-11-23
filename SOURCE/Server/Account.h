@@ -282,12 +282,12 @@ public:
 	AccountData * GetActiveAccountByID(int accountID);
 	AccountData * FetchIndividualAccount(int accountID);
 	AccountData * LoadAccountID(int accountID);
-	const char * GetIndividualFilename(char *buffer, int bufsize, int accountID);
+	std::string GetIndividualFilename(int accountID);
 
 	AccountData * GetValidLogin(const char *loginName, const char *loginAuth);
 	void ResolveCharacters(void);
 
-	void LoadKeyList(const char *fileName);
+	void LoadKeyList(std::string fileName);
 	void ImportKeys(void);
 	void ImportKey(const char *key);
 	int GetRegistrationKey(const char *authKey);
@@ -319,7 +319,7 @@ public:
 	const char *GetCharacterNameFromCDef(int CDefID);
 	void AddUsedCharacterName(int CDefID, const char *characterName);
 	void RemoveUsedCharacterName(int CDefID);
-	void LoadUsedNameList(const char *fileName);
+	void LoadUsedNameList(std::string fileName);
 	void RunUpdateCycle(bool force);
 	bool AcceptingLogins(void);
 	int ValidateNameParts(const std::string &first, const std::string &last);
@@ -368,9 +368,9 @@ public:
 	};
 	
 private:
-	void LoadAccountFromStream(FileReader &fr, AccountData &ad, const char *debugFilename);
-	void LoadSectionGeneral(FileReader &fr, AccountData &ad, const char *debugFilename);
-	void LoadSectionCharacterCache(FileReader &fr, AccountData &ad, const char *debugFilename);
+	void LoadAccountFromStream(FileReader &fr, AccountData &ad, std::string debugFilename);
+	void LoadSectionGeneral(FileReader &fr, AccountData &ad, std::string debugFilename);
+	void LoadSectionCharacterCache(FileReader &fr, AccountData &ad, std::string debugFilename);
 	Timer TimerGeneralUpdate;
 	std::map<std::string, AccessToken*> Tokens;
 	static const int GENERAL_UPDATE_FREQUENCY = 5000;

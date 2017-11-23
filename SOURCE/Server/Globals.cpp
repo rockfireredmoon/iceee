@@ -265,10 +265,10 @@ namespace Global
 		return AbilityPointTable[level][2];
 	}
 
-	void LoadResCostTable(const char *filename)
+	void LoadResCostTable(std::string filename)
 	{
 		FileReader3 fr;
-		if(fr.OpenFile(filename) != FileReader3::SUCCESS)
+		if(fr.OpenFile(filename.c_str()) != FileReader3::SUCCESS)
 		{
 			g_Logs.data->error("Cannot load file [%v]", filename);
 			fr.CloseFile();

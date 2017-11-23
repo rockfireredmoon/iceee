@@ -16,6 +16,7 @@
 #include "PVP.h"
 #include "InstanceScale.h"
 #include "Inventory.h"
+#include "DirectoryAccess.h"
 #include "util/SquirrelObjects.h"
 #include "util/JsonHelpers.h"
 #include "util/Log.h"
@@ -1150,7 +1151,7 @@ enum CharacterDataFileSections
 	CDFS_Abilities
 };
 
-int CheckSection_General(FileReader &fr, CharacterData &cd, const char *debugFilename)
+int CheckSection_General(FileReader &fr, CharacterData &cd, std::string debugFilename)
 {
 	//Responsible for loading general variables from a character file
 	//Assumes that the line is already extracted and separated
@@ -1400,7 +1401,7 @@ int CheckSection_General(FileReader &fr, CharacterData &cd, const char *debugFil
 	return 0;
 }
 
-int CheckSection_Stats(FileReader &fr, CharacterData &cd, const char *debugFilename)
+int CheckSection_Stats(FileReader &fr, CharacterData &cd, std::string debugFilename)
 {
 	static char StatName[64];
 	fr.BlockToStringC(0, Case_Lower);
@@ -1419,7 +1420,7 @@ int CheckSection_Stats(FileReader &fr, CharacterData &cd, const char *debugFilen
 }
 
 
-int CheckSection_Preference(FileReader &fr, CharacterData &cd, const char *debugFilename)
+int CheckSection_Preference(FileReader &fr, CharacterData &cd, std::string debugFilename)
 {
 	//Singlebreak leaves both strings null terminated, so calling them in this
 	//form won't overwrite the target buffer as the copy function would.
@@ -1430,7 +1431,7 @@ int CheckSection_Preference(FileReader &fr, CharacterData &cd, const char *debug
 }
 
 
-int CheckSection_Quest(FileReader &fr, CharacterData &cd, const char *debugFilename)
+int CheckSection_Quest(FileReader &fr, CharacterData &cd, std::string debugFilename)
 {
 	//Expected formats:
 	//  active=id,act,obj1comp,obj1count,obj2comp,obj2count,obj3comp,obj3count
@@ -1480,7 +1481,7 @@ int CheckSection_Quest(FileReader &fr, CharacterData &cd, const char *debugFilen
 	return 0;
 }
 
-int CheckSection_Cooldown(FileReader &fr, CharacterData &cd, const char *debugFilename)
+int CheckSection_Cooldown(FileReader &fr, CharacterData &cd, std::string debugFilename)
 {
 	//Expected formats:
 	//  cooldownCategoryName=remainingTimeMS,elapsedTimeMS
@@ -1497,7 +1498,7 @@ int CheckSection_Cooldown(FileReader &fr, CharacterData &cd, const char *debugFi
 	return 0;
 }
 
-int CheckSection_Abilities(FileReader &fr, CharacterData &cd, const char *debugFilename)
+int CheckSection_Abilities(FileReader &fr, CharacterData &cd, std::string debugFilename)
 {
 	//Expected formats:
 	//  Ability=tier,buffType,ability ID,ability group ID,remain
@@ -1518,7 +1519,7 @@ int CheckSection_Abilities(FileReader &fr, CharacterData &cd, const char *debugF
 	return 0;
 }
 
-int LoadCharacterFromStream(FileReader &fr, CharacterData &cd, const char *debugFilename)
+int LoadCharacterFromStream(FileReader &fr, CharacterData &cd, std::string debugFilename)
 {
 	//Return codes:
 	//   1  Section end marker reached.
@@ -2179,14 +2180,18 @@ void CharacterManager :: Clear(void)
 	charList.clear();
 }
 
+std::string GetCharacterPath(int CDefID) {
+	char BaseName[256];
+	Util::SafeFormat(BaseName, sizeof(BaseName), "%d.txt", CDefID);
+	return Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "Characters"), BaseName);
+}
+
 int CharacterManager :: LoadCharacter(int CDefID, bool tempResource)
 {
-	char FileName[256];
-	Util::SafeFormat(FileName, sizeof(FileName), "Characters\\%d.txt", CDefID);
-	Platform::FixPaths(FileName);
+	std::string FileName = GetCharacterPath(CDefID);
 
 	FileReader lfr;
-	if(lfr.OpenText(FileName) != Err_OK)
+	if(lfr.OpenText(FileName.c_str()) != Err_OK)
 	{
 		g_Logs.data->error("Could not open character file [%v]", FileName);
 		return -1;
@@ -2453,11 +2458,8 @@ bool CharacterManager :: SaveCharacter(int CDefID)
 		return false;
 	}
 
-	char FileName[256];
-	sprintf(FileName, "Characters\\%d.txt", CDefID);
-	Platform::FixPaths(FileName);
-
-	FILE *output = fopen(FileName, "wb");
+	std::string FileName = GetCharacterPath(CDefID);
+	FILE *output = fopen(FileName.c_str(), "wb");
 	if(output == NULL)
 	{
 		g_Logs.data->error("SaveCharacter() could not open file [%v]", FileName);

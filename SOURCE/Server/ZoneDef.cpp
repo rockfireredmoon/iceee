@@ -823,12 +823,12 @@ void ZoneDefManager :: Free(void)
 	mZoneList.clear();
 }
 
-int ZoneDefManager :: LoadFile(const char *fileName)
+int ZoneDefManager :: LoadFile(std::string fileName)
 {
 	//Note: the official grove file is loaded first, then the custom grove file.
 	//This should point here. 
 	FileReader lfr;
-	if(lfr.OpenText(fileName) != Err_OK)
+	if(lfr.OpenText(fileName.c_str()) != Err_OK)
 	{
 		g_Logs.data->error("Could not open file [%v]", fileName);
 		return -1;
@@ -985,9 +985,7 @@ ZoneDefInfo * ZoneDefManager :: LoadZoneDef(int ID)
 		return NULL;
 	}
 
-	std::string fileName;
-	GetZoneFileName(ID, fileName);
-	LoadFile(fileName.c_str());
+	LoadFile(GetZoneFileName(ID));
 
 	//Search to verify that the entry exists.
 	ZONEDEF_ITERATOR it;
@@ -1000,25 +998,19 @@ ZoneDefInfo * ZoneDefManager :: LoadZoneDef(int ID)
 	return &it->second;
 }
 
-void ZoneDefManager :: GetZoneFileName(int ID, std::string &outStr)
+std::string ZoneDefManager :: GetZoneFileName(int ID)
 {
-	outStr.clear();
-
-	char fileName[256];
-	Util::SafeFormat(fileName, sizeof(fileName), "ZoneDef\\%d.txt", ID);
-	Platform::FixPaths(fileName);
-	outStr = fileName;
+	char baseName[256];
+	Util::SafeFormat(baseName, sizeof(baseName), "%d.txt", ID);
+	return Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "ZoneDef"), baseName);
 }
 
 void ZoneDefManager :: LoadData(void)
 {
-	char fileName[256];
-
 	//Load static entries (usually offical instances, never modified during run time)
-	LoadFile(Platform::GenerateFilePath(fileName, "Data", "ZoneDef.txt"));
+	LoadFile(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Data"), "ZoneDef.txt"));
 
-
-	Platform::GenerateFilePath(mDataFileIndex, "Dynamic", "ZoneIndex.txt");
+	mDataFileIndex = Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "Dynamic"), "ZoneIndex.txt");
 	LoadIndex();
 
 	g_Logs.server->info("Loaded %v ZoneDef.", mZoneList.size());
@@ -1251,7 +1243,6 @@ int ZoneDefManager :: CheckAutoSave(bool force)
 		}
 	}
 
-	std::string fileName;
 	ZONEDEF_ITERATOR it;
 	for(it = mZoneList.begin(); it != mZoneList.end(); ++it)
 	{
@@ -1262,7 +1253,7 @@ int ZoneDefManager :: CheckAutoSave(bool force)
 		if(def->PendingChanges == 0)
 			continue;
 
-		GetZoneFileName(def->mID, fileName);
+		std::string fileName = GetZoneFileName(def->mID);
 		FILE *output = fopen(fileName.c_str(), "wb");
 		if(output == NULL)
 		{
@@ -1618,10 +1609,10 @@ bool ZoneBarrierManager :: CheckCollision(int zoneID, int &x, int &z)
 	return false;
 }
 
-void ZoneBarrierManager :: LoadFromFile(const char *filename)
+void ZoneBarrierManager :: LoadFromFile(std::string filename)
 {
 	FileReader lfr;
-	if(lfr.OpenText(filename) != Err_OK)
+	if(lfr.OpenText(filename.c_str()) != Err_OK)
 	{
 		g_Logs.data->error("Could not load Zone Barrier file: %v", filename);
 		return;
@@ -1776,19 +1767,17 @@ GroveTemplateManager :: GroveTemplateManager()
 
 void GroveTemplateManager :: LoadData(void)
 {
-	char fileName[256];
-	Platform::GenerateFilePath(fileName, "Data", "GroveTemplate.txt");
-	LoadFile(fileName);
+	LoadFile(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Data"), "GroveTemplate.txt"));
 
 	// Need to set up the TerrainCfg lookup table.
 	ResolveTerrainMap();
 	g_Logs.data->info("Loaded %v Grove Templates", mTemplateEntries.size());
 }
 
-void GroveTemplateManager :: LoadFile(const char *filename)
+void GroveTemplateManager :: LoadFile(std::string filename)
 {
 	FileReader3 fr;
-	if(fr.OpenFile(filename) != fr.SUCCESS)
+	if(fr.OpenFile(filename.c_str()) != fr.SUCCESS)
 	{
 		g_Logs.data->error("Unable to open grove template file [%v]", filename);
 		return;
@@ -2158,12 +2147,12 @@ void WeatherManager :: Deregister(std::vector<WeatherState*> states) {
 	}
 }
 
-int WeatherManager :: LoadFromFile(const char *fileName) {
+int WeatherManager :: LoadFromFile(std::string fileName) {
 
 	//Note: the official grove file is loaded first, then the custom grove file.
 	//This should point here.
 	FileReader lfr;
-	if(lfr.OpenText(fileName) != Err_OK)
+	if(lfr.OpenText(fileName.c_str()) != Err_OK)
 	{
 		g_Logs.data->error("Could not open file [%v]", fileName);
 		return -1;

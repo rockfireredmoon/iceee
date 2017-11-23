@@ -2,6 +2,7 @@
 
 #include "FileReader3.h"
 #include "DirectoryAccess.h"
+#include "Config.h"
 #include "util/Log.h"
 
 URLManager g_URLManager;
@@ -13,8 +14,7 @@ URLManager::URLManager()
 
 void URLManager::LoadFile(void)
 {
-	std::string filename;
-	Platform::GenerateFilePath(filename, "Data", "URL.txt");
+	std::string filename = Platform::JoinPath(g_Config.ResolveUserDataPath(), "URL.txt");
 
 	FileReader3 fr;
 	if(fr.OpenFile(filename.c_str()) != FileReader3::SUCCESS)

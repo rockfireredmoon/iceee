@@ -954,21 +954,21 @@ int InitServerMain(int argc, char *argv[]) {
 	g_ItemManager.LoadData();
 	g_ItemSetManager.LoadData();
 
-	g_ModManager.LoadFromFile(Platform::GenerateFilePath(GAuxBuf, "ItemMod", "ModTables.txt"));
+	g_ModManager.LoadFromFile(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "ItemMod"), "ModTables.txt"));
 	g_Logs.data->info("Loaded %v ModTables.", g_ModManager.modTable.size());
-	g_ModTemplateManager.LoadFromFile(Platform::GenerateFilePath(GAuxBuf, "ItemMod", "ModTemplates.txt"));
+	g_ModTemplateManager.LoadFromFile(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "ItemMod"), "ModTemplates.txt"));
 	g_Logs.data->info("Loaded %v ModTemplates.", g_ModTemplateManager.equipTemplate.size());
-	g_EquipAppearance.LoadFromFile(Platform::GenerateFilePath(GAuxBuf, "ItemMod", "Appearances.txt"));
+	g_EquipAppearance.LoadFromFile(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "ItemMod"), "Appearances.txt"));
 	g_Logs.data->info("Loaded %v EquipAppearance.", g_EquipAppearance.dataEntry.size());
-	g_EquipIconAppearance.LoadFromFile(Platform::GenerateFilePath(GAuxBuf, "ItemMod", "Icons.txt"));
+	g_EquipIconAppearance.LoadFromFile(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "ItemMod"), "Icons.txt"));
 	g_Logs.data->info("Loaded %v EquipIconAppearance.", g_EquipIconAppearance.dataEntry.size());
-	g_EquipTable.LoadFromFile(Platform::GenerateFilePath(GAuxBuf, "ItemMod", "EquipTable.txt"));
+	g_EquipTable.LoadFromFile(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "ItemMod"), "EquipTable.txt"));
 	g_Logs.data->info("Loaded %v EquipTable.", g_EquipTable.equipList.size());
-	g_NameTemplateManager.LoadFromFile(Platform::GenerateFilePath(GAuxBuf, "ItemMod", "Names.txt"));
+	g_NameTemplateManager.LoadFromFile(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "ItemMod"), "Names.txt"));
 	g_Logs.data->info("Loaded %v Name Templates.", g_NameTemplateManager.nameTemplate.size());
-	g_NameModManager.LoadFromFile(Platform::GenerateFilePath(GAuxBuf, "ItemMod", "NameMod.txt"));
+	g_NameModManager.LoadFromFile(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "ItemMod"), "NameMod.txt"));
 	g_Logs.data->info("Loaded %v NameMods", g_NameModManager.mModList.size());
-	g_NameWeightManager.LoadFromFile(Platform::GenerateFilePath(GAuxBuf, "ItemMod", "NameWeight.txt"));
+	g_NameWeightManager.LoadFromFile(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "ItemMod"), "NameWeight.txt"));
 	g_Logs.data->info("Loaded %v NameWeight", g_NameWeightManager.mWeightList.size());
 	g_VirtualItemModSystem.LoadSettings();
 	g_DropTableManager.LoadData();
@@ -985,18 +985,18 @@ int InitServerMain(int argc, char *argv[]) {
 	//g_EquipAppearance.Debug_CheckForNames();
 
 
-	CreatureDef.LoadPackages(Platform::GenerateFilePath(GAuxBuf, "Packages", "CreaturePack.txt"));
+	CreatureDef.LoadPackages(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Packages"), "CreaturePack.txt"));
 	g_Logs.data->info("Loaded %v CreatureDefs.", CreatureDef.NPC.size());
 
-	g_PetDefManager.LoadFile(Platform::GenerateFilePath(GAuxBuf, "Data", "Pets.txt"));
+	g_PetDefManager.LoadFile(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Data"), "Pets.txt"));
 	g_Logs.data->info("Loaded %v PetDefs.", g_PetDefManager.GetStandardCount());
 
 	g_AccountManager.LoadAllData();
 
-	g_GambleManager.LoadFile(Platform::GenerateFilePath(GAuxBuf, "Data", "Gamble.txt"));
+	g_GambleManager.LoadFile(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Data"), "Gamble.txt"));
 	g_Logs.data->info("Loaded %v Gamble definitions.", g_GambleManager.GetStandardCount());
 
-	g_GuildManager.LoadFile(Platform::GenerateFilePath(GAuxBuf, "Data", "GuildDef.txt"));
+	g_GuildManager.LoadFile(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Data"), "GuildDef.txt"));
 	g_Logs.data->info("Loaded %v Guild definitions.", g_GuildManager.GetStandardCount());
 
 	g_ClanManager.LoadClans();
@@ -1017,19 +1017,19 @@ int InitServerMain(int argc, char *argv[]) {
 	g_ZoneDefManager.LoadData();
 	g_GroveTemplateManager.LoadData();
 
-	g_ZoneBarrierManager.LoadFromFile(Platform::GenerateFilePath(GAuxBuf, "Data", "MapBarrier.txt"));
+	g_ZoneBarrierManager.LoadFromFile(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Data"), "MapBarrier.txt"));
 	g_Logs.data->info("Loaded %v MapBarrier.", g_ZoneBarrierManager.GetLoadedCount());
 
-	g_ZoneMarkerDataManager.LoadFile(Platform::GenerateFilePath(GAuxBuf, "Data", "ZoneMarkers.txt"));
+	g_ZoneMarkerDataManager.LoadFile(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Data"), "ZoneMarkers.txt"));
 	g_Logs.data->info("Loaded %v zones with marker data.", g_ZoneMarkerDataManager.zoneList.size());
 
-	MapDef.LoadFile(Platform::GenerateFilePath(GAuxBuf, "Data", "MapDef.txt"));
+	MapDef.LoadFile(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Data"), "MapDef.txt"));
 	g_Logs.data->info("Loaded %v MapDef.", MapDef.mMapList.size());
 
-	MapLocation.LoadFile(Platform::GenerateFilePath(GAuxBuf, "Data", "MapLocations.txt"));
+	MapLocation.LoadFile(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Data"), "MapLocations.txt"));
 	g_Logs.data->info("Loaded %v MapLocation zones.", MapLocation.mLocationSet.size());
 
-	g_WeatherManager.LoadFromFile(Platform::GenerateFilePath(GAuxBuf, "Data", "Weather.txt"));
+	g_WeatherManager.LoadFromFile(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Data"), "Weather.txt"));
 	g_Logs.data->info("Loaded %v weather definitions.", g_WeatherManager.mWeatherDefinitions.size());
 
 	g_SceneryManager.LoadData();
@@ -1037,19 +1037,19 @@ int InitServerMain(int argc, char *argv[]) {
 	g_SpawnPackageManager.LoadFromFile("SpawnPackages", "SpawnPackageList.txt");
 	g_Logs.data->info("Loaded %v Spawn Package lists.", g_SpawnPackageManager.packageList.size());
 
-	QuestDef.LoadQuestPackages(Platform::GenerateFilePath(GAuxBuf, "Packages", "QuestPack.txt"));
+	QuestDef.LoadQuestPackages(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Packages"), "QuestPack.txt"));
 	g_Logs.data->info("Loaded %v Quests.", QuestDef.mQuests.size());
-	QuestScript::LoadQuestScripts(Platform::GenerateFilePath(GAuxBuf, "Data", "QuestScript.txt"));
+	QuestScript::LoadQuestScripts(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Data"), "QuestScript.txt"));
 	QuestDef.ResolveQuestMarkers();
 
-	g_InteractObjectContainer.LoadFromFile(Platform::GenerateFilePath(GAuxBuf, "Data", "InteractDef.txt"));
+	g_InteractObjectContainer.LoadFromFile(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Data"), "InteractDef.txt"));
 	g_Logs.data->info("Loaded %v InteractDef.", g_InteractObjectContainer.objList.size());
 
 	g_CraftManager.LoadData();
 
 	g_EliteManager.LoadData();
 
-	Global::LoadResCostTable(Platform::GenerateFilePath(GAuxBuf, "Data", "ResCost.txt"));
+	Global::LoadResCostTable(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Data"), "ResCost.txt"));
 
 	g_InstanceScaleManager.LoadData();
 	g_DropRateProfileManager.LoadData();
@@ -1084,7 +1084,7 @@ int InitServerMain(int argc, char *argv[]) {
 //		HTTPBaseServer.InitThread(0, g_GlobalThreadID++);
 //	}
 
-	g_FileChecksum.LoadFromFile(Platform::GenerateFilePath(GAuxBuf, "Data", "HTTPChecksum.txt"));
+	g_FileChecksum.LoadFromFile();
 
 	if(daemonize) {
 		int ret = daemon(1, DAEMON_NO_CLOSE);

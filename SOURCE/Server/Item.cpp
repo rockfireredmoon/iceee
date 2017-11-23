@@ -705,7 +705,7 @@ void ItemDef :: Debug_WriteReport(ReportBuffer &report)
 	report.AddLine(NULL);
 }
 
-int LoadItemFromStream(FileReader &fr, ItemDef *itemDef, char *debugFilename)
+int LoadItemFromStream(FileReader &fr, ItemDef *itemDef, std::string debugFilename)
 {
 	//Return codes:
 	//   1  Section end marker reached.
@@ -836,17 +836,19 @@ void ItemManager :: Finalize(void)
 void ItemManager :: LoadData(void)
 {
 	char buffer[256];
-	LoadItemPackages(Platform::GenerateFilePath(buffer, "Packages", "ItemPack.txt"), false);
-	LoadItemPackages(Platform::GenerateFilePath(buffer, "Packages", "ItemPackOverride.txt"), true);
+	LoadItemPackages(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Packages"), "ItemPack.txt"), false);
+	LoadItemPackages(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Packages"), "ItemPackOverride.txt"), true);
 	g_Logs.data->info("Loaded %v items.", g_ItemManager.GetStandardCount());
 }
 
-void ItemManager :: LoadItemList(char *filename, bool itemOverride)
+void ItemManager :: LoadItemList(std::string filename, bool itemOverride)
 {
+	g_Logs.data->info("Loading items file %v", filename);
+
 	TimeObject to("ItemManager::LoadItemList");
 
 	FileReader lfr;
-	if(lfr.OpenText(filename) != Err_OK)
+	if(lfr.OpenText(filename.c_str()) != Err_OK)
 	{
 		g_Logs.data->error("Could not open file [%v].", filename);
 		return;
@@ -894,10 +896,11 @@ void ItemManager :: LoadItemList(char *filename, bool itemOverride)
 	lfr.CloseCurrent();
 }
 
-void ItemManager :: LoadItemPackages(char *listFile, bool itemOverride)
+void ItemManager :: LoadItemPackages(std::string listFile, bool itemOverride)
 {
+	g_Logs.data->info("Loading item packages file %v", listFile);
 	FileReader lfr;
-	if(lfr.OpenText(listFile) != Err_OK)
+	if(lfr.OpenText(listFile.c_str()) != Err_OK)
 	{
 		g_Logs.data->error("Could not open Item list file [%v]", listFile);
 		Finalize();
@@ -909,8 +912,7 @@ void ItemManager :: LoadItemPackages(char *listFile, bool itemOverride)
 		int r = lfr.ReadLine();
 		if(r > 0)
 		{
-			Platform::FixPaths(lfr.DataBuffer);
-			LoadItemList(lfr.DataBuffer, itemOverride);
+			LoadItemList(Platform::JoinPath(g_Config.ResolveStaticDataPath(), Platform::FixPaths(lfr.DataBuffer)), itemOverride);
 		}
 	}
 	lfr.CloseCurrent();

@@ -2,6 +2,7 @@
 // Examples are dungeon entrance/exit or room warps.
 
 #include <vector>
+#include <string>
 
 class InteractObject
 {
@@ -55,7 +56,7 @@ public:
 	InteractObject* GetHengeByDefID(int CDefID);
 	InteractObject* GetHengeByTargetName(const char* name);
 
-	void LoadFromFile(char *filename);
+	void LoadFromFile(std::string filename);
 
 private:
 	void AddItem(InteractObject &newObject);

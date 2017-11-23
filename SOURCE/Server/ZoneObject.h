@@ -38,7 +38,7 @@ public:
 	~ZoneMarkerDataManager();
 
 	std::vector<ZoneMarkerData> zoneList;
-	void LoadFile(const char *filename);
+	void LoadFile(std::string filename);
 	void AddZoneMarkers(ZoneMarkerData &details);
 	ZoneMarkerData* GetPtrByZoneID(int zoneID);
 	WorldCoord* GetSanctuaryInRange(int zoneID, int x, int z, int range);

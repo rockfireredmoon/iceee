@@ -813,14 +813,14 @@ public:
 	CreatureDefinition* GetPointerByCDef(int CDefID);
 	CreatureDefinition* GetPointerByName(const char *name);
 
-	int LoadPackages(const char *listFile);
-	int LoadFile(const char *filename);
+	int LoadPackages(std::string listFile);
+	int LoadFile(std::string filename);
 
 	int GetSpawnList(const char *searchType, const char *searchStr, vector<int> &resultList);
 
 	void Clear(void);                 //Clear all data
 private:
-	const char * GetIndividualFilename(char *buffer, int bufsize, int accountID);
+	std::string GetIndividualFilename(int accountID);
 };
 
 extern CreatureDefManager CreatureDef;

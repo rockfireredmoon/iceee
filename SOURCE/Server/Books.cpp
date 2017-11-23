@@ -3,6 +3,7 @@
 #include "Util.h"
 
 #include "Character.h"
+#include "Config.h"
 #include "util/Log.h"
 
 BookManager g_BookManager;
@@ -33,25 +34,23 @@ BookManager::~BookManager() {
 
 void BookManager::Init() {
 	Platform_DirectoryReader r;
+	std::string bookDir = Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Books");
 	std::string dir = r.GetDirectory();
-	r.SetDirectory("Books");
+	r.SetDirectory(bookDir);
 	r.ReadFiles();
 	r.SetDirectory(dir);
 	std::vector<std::string>::iterator it;
 	for (it = r.fileList.begin(); it != r.fileList.end(); ++it) {
 		std::string p = *it;
 		if (Util::HasEnding(p, ".txt")) {
-			char buf[128];
-			Util::SafeFormat(buf, sizeof(buf), "Books/%s", p.c_str());
-			Platform::FixPaths(buf);
-			LoadFile(buf);
+			LoadFile(Platform::JoinPath(bookDir, p));
 		}
 	}
 }
 
-void BookManager::LoadFile(const char *filename) {
+void BookManager::LoadFile(std::string filename) {
 	FileReader lfr;
-	if (lfr.OpenText(filename) != Err_OK) {
+	if (lfr.OpenText(filename.c_str()) != Err_OK) {
 		g_Logs.data->error("Could not open file [%v]", filename);
 		return;
 	}

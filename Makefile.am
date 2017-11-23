@@ -18,6 +18,7 @@ install-exec-hook:
 	mkdir -p $(DESTDIR)$(sysconfdir)/tawd ; \
 	cp -n ServerConfig.txt.sample $(DESTDIR)$(sysconfdir)/tawd/ServerConfig.txt ; \
 	cp -n LogConfig.txt.sample $(DESTDIR)$(sysconfdir)/tawd/LogConfig.txt ; \
+	cp -n URL.txt.sample $(DESTDIR)$(sysconfdir)/tawd/URL.txt ; \
 	\
 	mkdir -p $(DESTDIR)$(localstatedir)/lib/tawd ; \
 	ln -sf $(DESTDIR)$(sysconfdir)/tawd/LogConfig.txt $(DESTDIR)$(localstatedir)/lib/tawd/LogConfig.txt ; \

@@ -725,7 +725,7 @@ AccountManager :: ~AccountManager()
 	UnloadAllData();
 }
 
-void AccountManager :: LoadSectionGeneral(FileReader &fr, AccountData &ad, const char *debugFilename)
+void AccountManager :: LoadSectionGeneral(FileReader &fr, AccountData &ad, std::string debugFilename)
 {
 	char *NameBlock = fr.BlockToStringC(0, Case_Upper);
 
@@ -878,7 +878,7 @@ void AccountManager :: LoadSectionGeneral(FileReader &fr, AccountData &ad, const
 	}
 }
 
-void AccountManager :: LoadSectionCharacterCache(FileReader &fr, AccountData &ad, const char *debugFilename)
+void AccountManager :: LoadSectionCharacterCache(FileReader &fr, AccountData &ad, std::string debugFilename)
 {
 	CharacterCacheEntry entry;
 	while(fr.FileOpen() == true)
@@ -911,7 +911,7 @@ void AccountManager :: LoadSectionCharacterCache(FileReader &fr, AccountData &ad
 	g_Logs.data->info("Finished loading character cache");
 }
 
-void AccountManager :: LoadAccountFromStream(FileReader &fr, AccountData &ad, const char *debugFilename)
+void AccountManager :: LoadAccountFromStream(FileReader &fr, AccountData &ad, std::string debugFilename)
 {
 	bool curEntry = false;
 	int r;
@@ -1216,7 +1216,7 @@ int AccountManager :: AccountRecover(const char *username, const char *keypass, 
 	}
 }
 
-void AccountManager :: LoadKeyList(const char *fileName)
+void AccountManager :: LoadKeyList(std::string fileName)
 {
 	KeyFileName = fileName;
 	LoadStringsFile(fileName, KeyList);
@@ -1792,11 +1792,11 @@ void AccountManager :: AddUsedCharacterName(int CDefID, const char *characterNam
 	*/
 }
 
-void AccountManager :: LoadUsedNameList(const char *fileName)
+void AccountManager :: LoadUsedNameList(std::string fileName)
 {
 	UsedListFileName = fileName;
 	FileReader lfr;
-	if(lfr.OpenText(fileName) != Err_OK)
+	if(lfr.OpenText(fileName.c_str()) != Err_OK)
 	{
 		g_Logs.data->error("Could not open file [%v]", fileName);
 		return;
@@ -1837,15 +1837,14 @@ void AccountManager :: DeleteCharacter(int index, AccountData *accPtr)
 
 	g_Logs.event->info("[CHARACTER] Deleted character ID:%v", CDefID);
 
-	char sourceBuf[256];
-	char destBuf[256];
-	Util::SafeFormat(sourceBuf, sizeof(sourceBuf), "Characters\\%d.txt", CDefID);
-	Util::SafeFormat(destBuf, sizeof(destBuf), "Deleted\\%d.txt", CDefID);
-	Platform::FixPaths(sourceBuf);
-	Platform::FixPaths(destBuf);
-	Platform::MakeDirectory("Deleted");
-	Platform::FileCopy(sourceBuf, destBuf);
-	remove(sourceBuf);
+	char buf[32];
+	Util::SafeFormat(buf, sizeof(buf), "%d.txt", CDefID);
+	std::string deletedDir = Platform::JoinPath(g_Config.ResolveUserDataPath(), "Deleted");
+	std::string deletedFile = Platform::JoinPath(deletedDir, buf);
+	std::string sourceFile = Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "Characters"), buf);
+	Platform::MakeDirectory(deletedDir);
+	Platform::FileCopy(sourceFile, deletedFile);
+	Platform::Delete(sourceFile);
 
 	RemoveUsedCharacterName(CDefID);
 	cs.Leave();
@@ -1885,9 +1884,7 @@ void AccountManager :: AppendQuickData(AccountData *account)
 
 bool AccountManager :: SaveQuickData(void)
 {
-	char buffer[256];
-	Platform::GenerateFilePath(buffer, "Dynamic", "AccountList.txt");
-	FILE *output = Util::OpenSaveFile(buffer);
+	FILE *output = Util::OpenSaveFile(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "Dynamic"), "AccountList.txt").c_str());
 	if(output == NULL)
 		return false;
 
@@ -1915,12 +1912,11 @@ bool AccountManager :: SaveQuickData(void)
 
 void AccountManager :: LoadQuickData(void)
 {
-	char buffer[256];
-	Platform::GenerateFilePath(buffer, "Dynamic", "AccountList.txt");
 	FileReader lfr;
-	if(lfr.OpenText(buffer) != Err_OK)
+	std::string fp = Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "Dynamic"), "AccountList.txt");
+	if(lfr.OpenText(fp.c_str()) != Err_OK)
 	{
-		g_Logs.data->error("Unable to open file: %v", buffer);
+		g_Logs.data->error("Unable to open file: %v", fp);
 		return;
 	}
 	AccountQuickData data;
@@ -1982,20 +1978,19 @@ AccountData * AccountManager :: FetchIndividualAccount(int accountID)
 	return LoadAccountID(accountID);
 }
 
-const char * AccountManager :: GetIndividualFilename(char *buffer, int bufsize, int accountID)
+std::string AccountManager :: GetIndividualFilename(int accountID)
 {
-	Util::SafeFormat(buffer, bufsize, "Accounts\\%08d.txt", accountID);
-	Platform::FixPaths(buffer);
-	return buffer;
+	char buf[32];
+	Util::SafeFormat(buf, sizeof(buf), "%08d.txt", accountID);
+	return Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "Accounts"), buf);
 }
 
 AccountData * AccountManager :: LoadAccountID(int accountID)
 {
-	char filename[48];
-	GetIndividualFilename(filename, sizeof(filename), accountID);
+	std::string filename = GetIndividualFilename(accountID);
 
 	FileReader lfr;
-	if(lfr.OpenText(filename) != Err_OK)
+	if(lfr.OpenText(filename.c_str()) != Err_OK)
 	{
 		g_Logs.data->error("Failed to open account: %v", filename);
 		return NULL;
@@ -2029,8 +2024,8 @@ void AccountManager :: LoadAllData(void)
 {
 	char filebuf[256];
 	LoadQuickData();
-	LoadKeyList(Platform::GenerateFilePath(filebuf, "Dynamic", "RegistrationKeys.txt"));
-	LoadUsedNameList(Platform::GenerateFilePath(filebuf, "Dynamic", "UsedNames.txt"));
+	LoadKeyList(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "Dynamic"), "RegistrationKeys.txt"));
+	LoadUsedNameList(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "Dynamic"), "UsedNames.txt"));
 }
 
 void AccountManager :: UnloadAllData(void)
@@ -2047,12 +2042,11 @@ void AccountManager :: UnloadAllData(void)
 determined by ID, the contents are written, and the file is closed. */
 void AccountManager :: SaveIndividualAccount(AccountData *account)
 {
-	char buffer[256];
-	GetIndividualFilename(buffer, sizeof(buffer), account->ID);
-	FILE *output = fopen(buffer, "wb");
+	std::string filename = GetIndividualFilename(account->ID);
+	FILE *output = fopen(filename.c_str(), "wb");
 	if(output == NULL)
 	{
-		g_Logs.data->error("SaveAccountToStream could not open: %v", buffer);
+		g_Logs.data->error("SaveAccountToStream could not open: %v", filename);
 		return;
 	}
 	account->SaveToStream(output);

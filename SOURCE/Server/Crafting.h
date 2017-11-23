@@ -16,8 +16,8 @@ public:
 	unsigned int mCCSID;
 	int mID;
 	ItemDef *mItemDef;
-	int mStackCount;
 
+	int mStackCount;
 	CraftInputSlot(unsigned int CCSID, int id, int stackCount, ItemDef *itemDef);
 	static bool SortComparator(const CraftInputSlot &lhs, const CraftInputSlot &rhs);
 };
@@ -77,7 +77,7 @@ private:
 	int GetComparator(const char *symbol);
 	int GetProperty(const CraftInputSlot &object, const char *propertyName);
 	bool Compare(int leftValue, int compareOp, int rightValue);
-	void LoadRecipeFile(const char *filename);
+	void LoadRecipeFile(std::string filename);
 };
 
 

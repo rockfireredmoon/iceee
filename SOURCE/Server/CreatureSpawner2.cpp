@@ -1342,10 +1342,10 @@ void SpawnPackageList :: Free(void)
 	defList.clear();
 }
 
-int SpawnPackageList :: LoadFromFile(const char *filename)
+int SpawnPackageList :: LoadFromFile(std::string filename)
 {
 	FileReader lfr;
-	if(lfr.OpenText(filename) != Err_OK)
+	if(lfr.OpenText(filename.c_str()) != Err_OK)
 	{
 		g_Logs.server->error("Cannot open spawn package definition file: %v", filename);
 		return -1;
@@ -1491,14 +1491,13 @@ SpawnPackageManager :: ~SpawnPackageManager()
 	packageList.clear();
 }
 
-void SpawnPackageManager :: LoadFromFile(const char *subfolder, const char *filename)
+void SpawnPackageManager :: LoadFromFile(std::string subfolder, std::string filename)
 {
 	FileReader lfr;
-	char FileName[256];
-	Platform::GenerateFilePath(FileName, subfolder, filename);
-	if(lfr.OpenText(FileName) != Err_OK)
+	std::string f = Platform::JoinPath(subfolder, filename);
+	if(lfr.OpenText(f.c_str()) != Err_OK)
 	{
-		g_Logs.server->error("Could not open master spawn package list [%v].", FileName);
+		g_Logs.server->error("Could not open master spawn package list [%v].", f);
 		return;
 	}
 
@@ -1511,8 +1510,8 @@ void SpawnPackageManager :: LoadFromFile(const char *subfolder, const char *file
 		r = lfr.RemoveBeginningWhitespace();
 		if(r > 0)
 		{
-			Platform::GenerateFilePath(FileName, subfolder, lfr.DataBuffer);
-			if(newItem.LoadFromFile(FileName) >= 0)
+			f = Platform::JoinPath(subfolder, lfr.DataBuffer);
+			if(newItem.LoadFromFile(f) >= 0)
 			{
 				packageList.push_back(newItem);
 				newItem.defList.clear();

@@ -84,7 +84,7 @@ void ZoneAudit::CreateAuditFolder(void)
 {
 	if(mFolderCreated == false)
 	{
-		Platform::MakeDirectory("Audit");
+		Platform::MakeDirectory(Platform::JoinPath(g_Config.ResolveUserDataPath(), "Audit"));
 		mFolderCreated = true;
 	}
 }
@@ -104,10 +104,9 @@ void ZoneAudit::AutosaveAudits(void)
 			{
 				char fileNameBuf[64];
 				Util::SafeFormat(fileNameBuf, sizeof(fileNameBuf), "Scenery_Z_%d.txt", mZone);
-				std::string path;
-				Platform::GenerateFilePath(path, "Audit", fileNameBuf);
-
-				Platform::MakeDirectory("Audit");
+				std::string dir = Platform::JoinPath(g_Config.ResolveUserDataPath(), "Audit");
+				Platform::MakeDirectory(dir);
+				std::string path = Platform::JoinPath(dir, fileNameBuf);
 				output = fopen(path.c_str(), "a");
 				
 				if(output == NULL)
@@ -154,25 +153,3 @@ void ZoneAudit::Clear(void)
 	mZone = 0;
 }
 
-
-/*
-SceneryAuditManager::SceneryAuditManager()
-{
-	mFolderCreated = false;
-}
-
-void SceneryAuditManager::PerformSceneryAudit(const char *username, int zone, const SceneryObject *sceneryObject, int opType)
-{
-	CreateFolder();
-	mZoneAudit[zone].PerformSceneryAudit(username, zone, sceneryObject, opType);
-}
-
-void SceneryAuditManager::CreateFolder(void)
-{
-	if(mFolderCreated == true)
-		return;
-
-	Platform::MakeDirectory("Audit");
-	mFolderCreated = true;
-}
-*/

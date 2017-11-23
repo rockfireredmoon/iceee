@@ -79,6 +79,7 @@ ChatMessage::ChatMessage() {
 	mTime = time(NULL);
 	mChannelName = "";
 	mSimulatorID = -1;
+	mSenderClanID = 0;
 }
 
 
@@ -95,6 +96,7 @@ ChatMessage::ChatMessage(std::string msg)
 	mTime = time(NULL);
 	mChannelName = "";
 	mSimulatorID = -1;
+	mSenderClanID = 0;
 }
 
 ChatMessage::ChatMessage(const ChatMessage &msg)
@@ -111,6 +113,7 @@ ChatMessage::ChatMessage(const ChatMessage &msg)
 	mTime = msg.mTime;
 	mChannelName = msg.mChannelName;
 	mSimulatorID = msg.mSimulatorID;
+	mSenderClanID = 0;
 }
 ChatMessage::ChatMessage(CharacterServerData *pld)
 {
@@ -125,6 +128,7 @@ ChatMessage::ChatMessage(CharacterServerData *pld)
 	mTime = time(NULL);
 	mChannelName = "";
 	mSimulatorID = -1;
+	mSenderClanID = 0;
 }
 
 void ChatMessage::WriteToJSON(Json::Value &value) {

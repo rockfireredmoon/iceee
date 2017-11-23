@@ -1245,7 +1245,7 @@ int PrepExt_TradeItemOffer(char *buffer, char *convBuf, int offeringPlayerID, st
 }
 
 
-int CheckSection_Inventory(FileReader &fr, InventoryManager &cd, const char *debugFilename, const char *debugName, const char *debugType)
+int CheckSection_Inventory(FileReader &fr, InventoryManager &cd, std::string debugFilename, const char *debugName, const char *debugType)
 {
 	//Expected format:
 	//  ContainerName=SlotID=ItemID

@@ -140,7 +140,7 @@ bool CARHandler::handleGet(CivetServer *server, struct mg_connection *conn) {
 		mg_printf(conn,	"Content-Length: %lu\r\n", file.fileSize);
 		mg_printf(conn, "Accept-Range: bytes\r\n");
 		std::string fn;
-		fn = Platform::Filename(ruri.c_str());
+		fn = Platform::Filename(ruri);
 		mg_printf(conn,
 				"Content-Disposition: attachment; filename=\"%s\";\r\n",
 				fn.c_str());

@@ -176,7 +176,7 @@ public:
 	int mCurrentNestLevel;
 	int mLastNestLevel;
 	std::vector<BlockData> mBlockData;
-	const char *mSourceFile;
+	std::string mSourceFile;
 	int mLineNumber;
 	std::vector<std::string> mTokens;
 	int mInlineBeginInstr;
@@ -207,7 +207,7 @@ public:
 	virtual ~ScriptDef();
 	void ClearBase(void); //Initialize all data to their reset state.  It will call ClearDerived()
 	virtual void ClearDerived(void); //Override this to allow clearing of new members present in a derived class.
-	void CompileFromSource(const char *sourceFile);
+	void CompileFromSource(std::string sourceFile);
 	void CompileLine(char *line, ScriptCompiler &compileData);
 	void BeginInlineBlock(ScriptCompiler &compileData); //Begins a block of inline compiled code, essentially resuming compilation elsewhere.  Existing labels, variables, etc are accessible as normal.
 	void FinishInlineBlock(ScriptCompiler &compileData); //Closes a block of inline compiled code, running label resolution on them.
@@ -372,7 +372,7 @@ public:
 	NutDef();
 	virtual ~NutDef();
 	void ClearBase(void); //Initialize all data to their reset state.  It will call ClearDerived()
-	void Initialize(const char *source);
+	void Initialize(std::string source);
 	bool CanIdle();
 	virtual void ClearDerived();
 	bool HasFlag(unsigned int flag);

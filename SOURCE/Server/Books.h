@@ -30,7 +30,7 @@ public:
 	std::map<int, BookDefinition> books;
 
 	void Init();
-	void LoadFile(const char *filename);
+	void LoadFile(std::string filename);
 	BookDefinition GetBookDefinition(int bookID);
 };
 

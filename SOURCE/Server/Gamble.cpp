@@ -96,10 +96,10 @@ int GambleManager :: GetSearchType(const char *name)
 	return SEARCH_NONE;
 }
 
-void GambleManager :: LoadFile(const char *filename)
+void GambleManager :: LoadFile(std::string filename)
 {
 	FileReader lfr;
-	if(lfr.OpenText(filename) != Err_OK)
+	if(lfr.OpenText(filename.c_str()) != Err_OK)
 	{
 		g_Logs.data->error("Could not open file [%v]", filename);
 		return;

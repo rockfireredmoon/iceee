@@ -11,6 +11,7 @@
  */
 
 #include "Daily.h"
+#include "Config.h"
 #include "FileReader3.h"
 #include "DirectoryAccess.h"
 
@@ -180,17 +181,15 @@ void DailyProfileManager::LoadData(void)
 {
 	mProfiles.clear();  //In case we're reloading.
 
-	std::string filename;
-	Platform::GenerateFilePath(filename, "Data", "Daily.txt");
-	LoadTable(filename.c_str());
+	LoadTable(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Data"), "Daily.txt"));
 
 	g_Logs.data->info("Loaded %v daily profiles", mProfiles.size());
 }
 
-void DailyProfileManager::LoadTable(const char *filename)
+void DailyProfileManager::LoadTable(std::string filename)
 {
 	FileReader3 fr;
-	if(fr.OpenFile(filename) != FileReader3::SUCCESS)
+	if(fr.OpenFile(filename.c_str()) != FileReader3::SUCCESS)
 	{
 		g_Logs.data->error("Could not open file [%v]", filename);
 		return;

@@ -65,21 +65,19 @@ namespace Platform
 	bool IsAbsolute(std::string str);
 	std::string GetDirectory();
 	void SetDirectory(std::string path);
-	char * FixPaths(char* pathName);
-	const char* FixPaths(std::string &pathName);
-	void MakeDirectory(const char *path);
-    char * GenerateFilePath(char *resultBuffer, const char *folderName, const char *fileName);
-	void GenerateFilePath(std::string& resultStr, const char *folderName, const char *fileName);
-	int FileCopy(const char *sourceFile, const char *destFile);
-	bool Delete(const char *path);
+	std::string FixPaths(std::string pathName);
+	void MakeDirectory(std::string path);
+	int FileCopy(std::string sourceFile, std::string destFile);
+	bool Delete(std::string path);
     bool FileExists(std::string sourceFile);
-    bool DirExists(const char *path);
-    std::string Dirname(const char *path);
-    std::string Filename(const char *path);
-    std::string Extension(const char *path);
-    std::string Basename(const char *path);
-    unsigned long GetLastModified(const char *path);
-    int SetLastModified(const char *path, unsigned long lastModified);
+    bool DirExists(std::string path);
+    std::string JoinPath(std::string folder, std::string path);
+    std::string Dirname(std::string path);
+    std::string Filename(std::string path);
+    std::string Extension(std::string path);
+    std::string Basename(std::string path);
+    unsigned long GetLastModified(std::string path);
+    int SetLastModified(std::string path, unsigned long lastModified);
 }
 
 #endif //DIRECTORYACCESS_H

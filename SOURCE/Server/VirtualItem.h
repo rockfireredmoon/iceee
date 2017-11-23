@@ -34,7 +34,7 @@ public:
 	ModTable();
 	~ModTable();
 	void Clear(void);
-	void LoadFromFile(const char *filename);
+	void LoadFromFile(std::string filename);
 	ModRow* GetRowByLevel(int level);
 };
 
@@ -42,7 +42,7 @@ class ModManager
 {
 public:
 	std::vector<ModTable> modTable;
-	void LoadFromFile(const char *filename);
+	void LoadFromFile(std::string filename);
 	ModTable* GetModTable(const char *name);
 };
 
@@ -73,7 +73,7 @@ class EquipTemplateManager
 {
 public:
 	std::vector<EquipTemplate> equipTemplate;
-	void LoadFromFile(const char *filename);
+	void LoadFromFile(std::string filename);
 	EquipTemplate* GetTemplate(int equipType, int weaponType);
 };
 
@@ -120,8 +120,8 @@ public:
 	typedef std::vector<EquipAppearanceKey*> SEARCHRESULT;
 	APPENTRY dataEntry;
 	void AddIfValid(EquipAppearanceKey& data);
-	void LoadFromFile(const char *filename);
-	void DebugSaveToFile(const char *filename);
+	void LoadFromFile(std::string filename);
+	void DebugSaveToFile(std::string filename);
 	EquipAppearanceKey* GetOrCreate(EquipAppearanceKey& object);
 	void SearchEntries(int equipType, int weaponType, SEARCHRESULT& results);
 	void SearchEntriesWithAsset(int equipType, int weaponType, const char *asset, SEARCHRESULT& results);
@@ -151,7 +151,7 @@ struct EquipTable
 {
 	std::vector<VirtualItemSpawnType> equipList;
 	int maxShares;
-	void LoadFromFile(const char *filename);
+	void LoadFromFile(std::string filename);
 	void TallyMaxShares(void);
 	VirtualItemSpawnType* GetRandomEntry(void);
 	EquipTable();
@@ -202,8 +202,8 @@ public:
 	NameTemplateManager();
 	~NameTemplateManager();
 	void AddIfValid(NameTemplate &newItem);
-	void LoadFromFile(const char *filename);
-	void DebugSaveToFile(const char *filename);
+	void LoadFromFile(std::string filename);
+	void DebugSaveToFile(std::string filename);
 	const char* RetrieveName(int mEquipType, int mWeaponType, const char* asset);
 	const char* GetDefaultName(int mEquipType, int mWeaponType, const char *asset);
 	bool Debug_HasName(const char* asset, int mEquipType, int mWeaponType);
@@ -230,7 +230,7 @@ public:
 	~NameModManager();
 
 	std::vector<NameModEntry> mModList;
-	void LoadFromFile(const char *filename);
+	void LoadFromFile(std::string filename);
 	void ResolveModifiers(const char *firstStat, const char *secondStat, NameModEntry** firstName, NameModEntry** secondName);
 };
 
@@ -245,7 +245,7 @@ struct NameWeight
 struct NameWeightManager
 {
 	std::vector<NameWeight> mWeightList;
-	void LoadFromFile(const char *filename);
+	void LoadFromFile(std::string filename);
 	float GetWeightForName(const char *statName);
 };
 
@@ -278,7 +278,7 @@ public:
 	static const int MIN_QUALITY_LEVEL = 2;
 	static const int MAX_QUALITY_LEVEL = 6;
 	RarityConfig rarityConfig[MAX_QUALITY_LEVEL + 1];
-	void LoadFromFile(const char *filename);
+	void LoadFromFile(std::string filename);
 	void UpdateRarityConfig(RarityConfig& entry);
 	void LoadSettings(void);
 	int GetDropRarity(const VirtualItemSpawnParams &params);

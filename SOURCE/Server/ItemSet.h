@@ -79,7 +79,7 @@ private:
 	std::map<std::string, ItemSetData> mRegisteredSets;  //Maps set names to the information of a specific set.
 	ItemSetScript::ItemSetScriptDef mScriptDef;
 	
-	void LoadFile(const char *filename);                 //Loads a table file defining sets to be registered.
+	void LoadFile(std::string filename);                 //Loads a table file defining sets to be registered.
 	void UpdateFlavorText(void);
 	void RegisterSet(const ItemSetData &data);
 	void RegisterItem(int itemID, const std::string &setName);  //Register an item into a set.

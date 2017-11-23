@@ -32,6 +32,7 @@ SERVER RESPONSE
 #define ESSENCESHOP_H
 
 #include <vector>
+#include <string>
 
 struct EssenceShopItem
 {
@@ -75,7 +76,7 @@ public:
 	int ProcessQueryEssenceShop(char *buffer, char *convbuf, int cdefid, int queryID);
 	int ProcessQueryShop(char *buffer, char *convbuf, int cdefid, int queryID);
 	EssenceShop * GetEssenceShopPtr(int cdefid);
-	void LoadFromFile(char *filename);
+	void LoadFromFile(std::string filename);
 	EssenceShop * GetEssenceShopPtr(int cdefid, char *itemproto, EssenceShopItem **chosenItem);
 
 private:

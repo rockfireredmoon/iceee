@@ -272,6 +272,7 @@ public:
 	std::string ResolveStaticDataPath();
 	std::string ResolveVariableDataPath();
 	std::string ResolveUserDataPath();
+	std::string ResolveHTTPBasePath();
 
 private:
 	std::string ResolvePath(std::string path);
@@ -280,13 +281,13 @@ private:
 extern GlobalConfigData g_Config;
 
 void AppendString(std::string &dest, char *appendStr);
-void LoadConfig(const char *filename);
+void LoadConfig(std::string filename);
 bool CheckDefaultHTTPBaseFolder(void);
 void SetHTTPBaseFolderToCurrent(void);
-void LoadFileIntoString(std::string &dest, char *filename);
-int SaveSession(const char *filename);
-int LoadSession(const char *filename);
-int LoadStringsFile(const char *filename, vector<string> &list);
-int LoadStringKeyValFile(const char *filename, vector<StringKeyVal> &list);
+void LoadFileIntoString(std::string &dest, std::string filename);
+int SaveSession(std::string filename);
+int LoadSession(std::string filename);
+int LoadStringsFile(std::string filename, vector<string> &list);
+int LoadStringKeyValFile(std::string filename, vector<StringKeyVal> &list);
 
 #endif //CONFIG_H

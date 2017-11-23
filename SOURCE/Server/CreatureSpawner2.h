@@ -244,7 +244,7 @@ public:
 
 	int ZoneID;
 	std::vector<SpawnPackageDef> defList;
-	int LoadFromFile(const char *filename);
+	int LoadFromFile(std::string filename);
 	void AddIfValid(SpawnPackageDef &newItem);
 	SpawnPackageDef * GetPointerByName(const char *name);
 	SpawnPackageDef * HasCreatureDef(int CreatureDefID);
@@ -263,7 +263,7 @@ public:
 	SpawnPackageDef nullSpawnPackage;
 	int fakeCreatureId;
 
-	void LoadFromFile(const char *subfolder, const char *filename);
+	void LoadFromFile(std::string subfolder, std::string filename);
 	SpawnPackageDef * GetPointerByName(const char *name);
 	//SpawnPackageList* GetZone(int zoneID);
 	void EnumPackagesForCreature(int CreatureDefID, STRINGLIST &output);
