@@ -233,6 +233,7 @@ namespace ScriptCore
 
 	bool ResumeCallback::Execute()
 	{
+		mNut->mSleeping = 0;
 		if(sq_getvmstate(mNut->vm) != SQ_VMSTATE_SUSPENDED) {
 			g_Log.AddMessageFormat("Resume event fired, but VM was already awake for script %s", mNut->def->scriptName.c_str());
 			return true;
@@ -240,7 +241,6 @@ namespace ScriptCore
 		else {
 			sq_pushbool(mNut->vm, false);
 			if(SQ_SUCCEEDED(sq_wakeupvm(mNut->vm,true,false,false, false))) {
-				mNut->mSleeping = false;
 				sq_pop(mNut->vm,1); //pop retval
 				if(sq_getvmstate(mNut->vm) == SQ_VMSTATE_IDLE) {
 					sq_settop(mNut->vm,1); //pop roottable
@@ -832,6 +832,7 @@ namespace ScriptCore
 		// Wake the VM up if it is suspend so the onFinish can be run
 		if(sq_getvmstate(vm) == SQ_VMSTATE_SUSPENDED) {
 			g_Log.AddMessageFormat("Waking up VM to run %s.", name.c_str());
+			mSleeping = 0;
 			sq_wakeupvm(vm, false, false, false, true);
 		}
 
@@ -1138,6 +1139,7 @@ namespace ScriptCore
 	        	NutScriptEvent *nse = new NutScriptEvent(new TimeCondition (right.value), cb);
 	        	nse->mRunWhenSuspended = true;
 	        	left.value.QueueAdd(nse);
+				g_Log.AddMessageFormat("Sleeping VM %s.", (&left.value)->def->mSourceFile.c_str(), right.value);
 	            return sq_suspendvm(v);
 	        }
 	        return sq_throwerror(v, Sqrat::Error::Message(v).c_str());
