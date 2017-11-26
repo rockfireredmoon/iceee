@@ -3001,3 +3001,12 @@ Name=Valley_Guardian
 Flags=224
 loyaltyRadius=50
 wanderRadius=50
+
+[ENTRY]
+Name=valkarabrood
+Flags=32
+Spawn=3541,33
+Spawn=3540,34
+Spawn=3542,33
+loyaltyRadius=75
+wanderRadius=75
