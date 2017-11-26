@@ -578,6 +578,29 @@ void HTTPDistribute :: LogInvalidRequest(void)
 	);
 }
 
+bool HTTPDistribute :: UACheck(MULTISTRING &extract) {
+	const char *uaStr = GetValueOfKey(extract, "User-Agent:");
+	if(uaStr != NULL)
+	{
+		if(strcmp(uaStr, "ire-3dply(VERSION)") != 0) {
+			LogMessageL(LOG_WARNING, "Unknown UA %s, dropping\n", uaStr);
+			Finished = false;
+			Disconnect = true;
+			isActive = false;
+			return false;
+		}
+	}
+	else
+	{
+		LogMessageL(LOG_WARNING, "No user agent supplied. Probably not a client\n");
+		Finished = false;
+		Disconnect = true;
+		isActive = false;
+		return false;
+	}
+	return true;
+}
+
 void HTTPDistribute :: ProcessHTTPRequest(void)
 {
 	//g_Log.AddMessageFormat("[%s]", RecBuf);
@@ -592,6 +615,8 @@ void HTTPDistribute :: ProcessHTTPRequest(void)
 		LogMessageL(LOG_WARNING, "Invalid Header (no rows)");
 		LogInvalidRequest();
 		Finished = true;
+		Disconnect = true;
+		isActive = false;
 		return;
 	}
 	if(extract[0].size() == 0)
@@ -599,6 +624,8 @@ void HTTPDistribute :: ProcessHTTPRequest(void)
 		LogMessageL(LOG_WARNING, "Invalid Header (no command");
 		LogInvalidRequest();
 		Finished = true;
+		Disconnect = true;
+		isActive = false;
 		return;
 	}
 
@@ -611,11 +638,14 @@ void HTTPDistribute :: ProcessHTTPRequest(void)
 		{
 			LogMessageL(LOG_WARNING, "Data size mismatch: expected: %d, has: %d\n", expectedDataSize, hasSize);
 			Finished = false;
+			Disconnect = true;
+			isActive = false;
 			return;
 		}
 		else
 			LogMessageL(LOG_VERBOSE, "Content length PASSED (required: %d)\n", expectedDataSize);
 	}
+
 
 	if(extract[0][0].compare("GET") == 0)
 	{
@@ -623,6 +653,9 @@ void HTTPDistribute :: ProcessHTTPRequest(void)
 	}
 	else if(extract[0][0].compare("POST") == 0)
 	{
+		/* ALL posts must have correct user agent, as we are in control of everything that POST's (RemoteServerTools.html and TAW website) */
+		if(!UACheck(extract))
+			return;
 		HandleHTTP_POST(pos, extract);
 	}
 	else
@@ -638,6 +671,8 @@ void HTTPDistribute :: ProcessHTTPRequest(void)
 			);
 		*/
 		Finished = true;
+		Disconnect = true;
+		isActive = false;
 		return;
 	}
 }
@@ -700,6 +735,16 @@ void HTTPDistribute :: HandleHTTP_GET(char *dataStart, MULTISTRING &header)
 			size_t pos = FileNameRequest.rfind(" ");
 			if(pos != std::string::npos)
 				FileNameRequest.erase(pos, FileNameRequest.size());
+
+			/* Only allow get requests for RemoteServerTools.html and  */
+			if(FileNameRequest.compare("/RemoteServerTools.html") != 0 &&
+			   FileNameRequest.compare("/in_game_news") != 0 &&
+			   FileNameRequest.compare("/loading_announcements") != 0 &&
+			   FileNameRequest.compare("/ping.html") != 0 &&
+			   FileNameRequest.compare("/ping.txt") != 0 &&
+			   FileNameRequest.compare("/tips") != 0 &&
+				!UACheck(header))
+				return;
 
 			PrepareFileNames();
 			LogMessageL(LOG_VERBOSE, "Requested file [%s]", FileNameRequest.c_str());

@@ -83,6 +83,7 @@ public:
 	void SendNextFileChunk(void);
 	void LogInvalidRequest(void);
 	void ProcessHTTPRequest(void);
+	bool UACheck(MULTISTRING &header);
 	void HandleHTTP_GET(char *dataStart, MULTISTRING &header);
 	void HandleHTTP_POST(char *dataStart, MULTISTRING &header);
 	bool IsEmptyFileRequest(void);
