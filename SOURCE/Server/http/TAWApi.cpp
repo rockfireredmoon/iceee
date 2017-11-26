@@ -1042,7 +1042,7 @@ bool SceneryHandler::handleAuthenticatedGet(CivetServer *server,
 					it != page->mSceneryList.end(); ++it) {
 				SceneryObject *so = &it->second;
 				Json::Value object;
-				Util::SafeFormat(id, sizeof(id), "%d", so->ID);
+				Util::SafeFormat(id, sizeof(id), "%s", so->ID.c_str());
 				so->WriteToJSON(object);
 				props[id] = object;
 			}

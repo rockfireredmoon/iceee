@@ -5359,7 +5359,7 @@ void CreatureInstance :: CheckPathLocation(void)
 
 	//Build a list of available nodes, excluding any node that would return to the previous
 	//node.
-	vector<int> openNode;
+	vector<std::string> openNode;
 	for(int i = 0; i < so->extraData->linkCount; i++)
 	{
 		if(so->extraData->link[i].type == SceneryObject::LINK_TYPE_PATH && so->extraData->link[i].propID != previousPathNode)
@@ -5370,7 +5370,7 @@ void CreatureInstance :: CheckPathLocation(void)
 	}
 
 	//If there are no new points, defaulting to the previous node is the only choice.
-	int newPathNode = previousPathNode;
+	std::string newPathNode = previousPathNode;
 	if(openNode.size() > 0)
 	{
 		int rndLink = randint(0, openNode.size() - 1);

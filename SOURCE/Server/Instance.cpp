@@ -3116,7 +3116,7 @@ int ActiveInstance :: AddSceneryEffect(char *outbuf, SceneryEffect *effect)
 	return wpos;
 }
 
-SceneryEffect* ActiveInstance :: RemoveSceneryEffect(int PropID, int tag)
+SceneryEffect* ActiveInstance :: RemoveSceneryEffect(std::string PropID, int tag)
 {
 	SceneryEffectMap::iterator it = mSceneryEffects.find(PropID);
 	if(it != mSceneryEffects.end()) {
@@ -3135,7 +3135,7 @@ SceneryEffect* ActiveInstance :: RemoveSceneryEffect(int PropID, int tag)
 	return NULL;
 }
 
-SceneryEffectList* ActiveInstance :: GetSceneryEffectList(int PropID)
+SceneryEffectList* ActiveInstance :: GetSceneryEffectList(std::string PropID)
 {
 	SceneryEffectMap::iterator it = mSceneryEffects.find(PropID);
 	if(it == mSceneryEffects.end()) {
@@ -3359,8 +3359,8 @@ void ActiveInstance :: SendLoyaltyLinks(CreatureInstance *instigator, CreatureIn
 	if(spawnPoint == NULL)
 		return;
 
-	std::vector<int> openList;  //Prop IDs that need to be checked.
-	std::vector<int> propLinks; //The links returned by a prop.
+	std::vector<std::string> openList;  //Prop IDs that need to be checked.
+	std::vector<std::string> propLinks; //The links returned by a prop.
 
 	//Add the first object to the list so we can begin search.  The prop will be searched
 	//for any props it is linked to.  Those linked props will be added to the open list (if

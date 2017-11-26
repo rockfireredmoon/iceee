@@ -51,8 +51,8 @@ extern const int FACTION_PLAYERHOSTILE;
 extern const int PARTY_SHARE_DISTANCE;
 
 typedef std::vector<SceneryEffect>      SceneryEffectList;
-typedef std::pair<int, SceneryEffectList> SceneryEffectPair;
-typedef std::map<int, SceneryEffectList> SceneryEffectMap;
+typedef std::pair<std::string, SceneryEffectList> SceneryEffectPair;
+typedef std::map<std::string, SceneryEffectList> SceneryEffectMap;
 
 
 class WorldMarker {
@@ -275,7 +275,7 @@ public:
 	list<QuestScript::QuestScriptPlayer> questScriptList;
 	vector<QuestScript::QuestNutPlayer*> questNutScriptList;
 
-	list<int> RemovedProps;
+	list<std::string> RemovedProps;
 
 	HateProfileContainer hateProfiles;
 	WorldLootContainer lootsys;

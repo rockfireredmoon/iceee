@@ -748,7 +748,7 @@ void SpawnTile :: UpdateSpawnPoint(SceneryObject *prop)
 	}
 }
 
-bool SpawnTile :: RemoveSpawnPoint(ActiveInstance *inst, int PropID)
+bool SpawnTile :: RemoveSpawnPoint(ActiveInstance *inst, std::string PropID)
 {
 	SPAWN_MAP::iterator it;
 	it = activeSpawn.find(PropID);
@@ -1145,7 +1145,7 @@ void SpawnManager :: UpdateSpawnPoint(SceneryObject *prop)
 		tile->UpdateSpawnPoint(prop);
 }
 
-void SpawnManager :: RemoveSpawnPoint(int PropID)
+void SpawnManager :: RemoveSpawnPoint(std::strinig PropID)
 {
 	// We don't have prop data to find a tile, so brute force
 	// search and remove.
@@ -1647,7 +1647,7 @@ UniqueSpawnEntry :: UniqueSpawnEntry()
 	mRestartTime = 0;
 }
 
-size_t UniqueSpawnEntry :: GetPropIndex(int PropID)
+size_t UniqueSpawnEntry :: GetPropIndex(std::string PropID)
 {
 	for(size_t i = 0; i < mPropID.size(); i++)
 		if(mPropID[i] == PropID)
@@ -1677,7 +1677,7 @@ void UniqueSpawnManager :: Clear(void)
 	mEntryList.clear();
 }
 
-bool UniqueSpawnManager :: TestSpawn(const char *spawnPackageName, int maxSpawnPoints, int callPropID)
+bool UniqueSpawnManager :: TestSpawn(const char *spawnPackageName, int maxSpawnPoints, std::string callPropID)
 {
 	if(maxSpawnPoints <= 1)
 		return true;

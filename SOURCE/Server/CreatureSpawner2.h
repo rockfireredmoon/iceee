@@ -47,7 +47,7 @@ struct ExtraDataProperty
 
 struct ExtraDataLink
 {
-	int propID;
+	std::string propID;
 	char type;
 };
 
@@ -119,8 +119,8 @@ struct ActiveSpawner
 class SpawnTile
 {
 public:
-	typedef std::map<int, ActiveSpawner> SPAWN_MAP;
-	typedef std::pair<int, ActiveSpawner> SPAWN_PAIR;   //Key is Prop ID
+	typedef std::map<std::string, ActiveSpawner> SPAWN_MAP;
+	typedef std::pair<std::string, ActiveSpawner> SPAWN_PAIR;   //Key is Prop ID
 
 	/*	Notes on the following two static constants:
 	SIZE is the width of a tile.
@@ -213,7 +213,7 @@ public:
 
 	static const int MAX_POINT_OVERRIDE = 2;
 	unsigned char numPointOverride;
-	int PointOverridePropID[MAX_POINT_OVERRIDE];
+	std::string PointOverridePropID[MAX_POINT_OVERRIDE];
 	int PointOverrideCDef[MAX_POINT_OVERRIDE];
 	
 	//In rare cases, different locations may share the same spawn points, but have
@@ -315,9 +315,9 @@ struct UniqueSpawnEntry
 	size_t mRandomIndex;      //The chosen random index of a prop in the list to spawn from.
 	int mSpawnTime;        //Delay between restarting the cycle when a reroll is requested.
 	PlatformTime::TIME_VALUE mRestartTime;  //Time required to allow a new spawn cycle.
-	std::vector<int> mPropID;  //IDs of the SpawnPoints that called a request.
+	std::vector<std::string> mPropID;  //IDs of the SpawnPoints that called a request.
 	UniqueSpawnEntry();
-	size_t GetPropIndex(int PropID);
+	size_t GetPropIndex(std::string PropID);
 	void ReRoll(int durationSeconds);
 };
 
