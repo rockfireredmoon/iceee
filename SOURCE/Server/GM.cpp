@@ -157,7 +157,7 @@ void PetitionManager::FillPetitions(std::vector<Petition> *petitions, std::strin
 
 Petition PetitionManager::Load(std::string path, int id) {
 	char buffer[256];
-	Util::SafeFormat(buffer, sizeof(buffer), "%d.txt", path, id);
+	Util::SafeFormat(buffer, sizeof(buffer), "%d.txt", id);
 	std::string filename = Platform::JoinPath(path, buffer);
 	FileReader lfr;
 	Petition newItem;
