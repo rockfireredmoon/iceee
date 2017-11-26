@@ -132,7 +132,7 @@ int SceneryEditHandler::protected_helper_query_scenery_edit(
 	} else {
 		//New prop, give it an ID.
 		newProp = true;
-		prop.ID = g_SceneryVars.NewID();
+		prop.ID = g_SceneryVars.BaseSceneryID + g_SceneryVars.SceneryAdditive++;
 		SessionVarsChangeData.AddChange();
 		g_Logs.simulator->debug("[%v] scenery.edit: (new) %v", sim->InternalID,
 				prop.ID);
@@ -260,7 +260,7 @@ int SceneryDeleteHandler::protected_helper_query_scenery_delete(
 	if (query->argCount < 1)
 		return QueryErrorMsg::GENERIC;
 
-	std::string PropID = query->GetString(0);
+	int PropID = query->GetInteger(0);
 	SceneryObject *propPtr = NULL;
 
 	g_Logs.simulator->debug("[%v] scenery.delete: %v", sim->InternalID, PropID);

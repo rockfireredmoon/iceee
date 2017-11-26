@@ -487,7 +487,7 @@ bool AbstractInstanceNutPlayer::DoCreatureUse(int CID, int abilityID,
 	return false;
 }
 
-std::string AbstractInstanceNutPlayer::GetCreatureSpawnProp(int CID) {
+int AbstractInstanceNutPlayer::GetCreatureSpawnProp(int CID) {
 	CreatureInstance *creature = actInst->GetInstanceByCID(CID);
 	if (creature != NULL && creature->spawnGen != NULL
 			&& creature->spawnGen->spawnPoint != NULL) {
@@ -1262,15 +1262,15 @@ void InstanceNutPlayer::AttachItem(int CID, const char *type,
 }
 
 void InstanceNutPlayer::UnremoveProps() {
-	std::list<std::string>::iterator it;
+	std::list<int>::iterator it;
 	for (it = actInst->RemovedProps.begin(); it != actInst->RemovedProps.end();
 			++it)
 		DoUnremoveProp(*it);
 	actInst->RemovedProps.clear();
 }
 
-void InstanceNutPlayer::UnremoveProp(std::string propID) {
-	std::list<std::string>::iterator found = std::find(actInst->RemovedProps.begin(),
+void InstanceNutPlayer::UnremoveProp(int propID) {
+	std::list<int>::iterator found = std::find(actInst->RemovedProps.begin(),
 			actInst->RemovedProps.end(), propID);
 	if (found != actInst->RemovedProps.end()) {
 		DoUnremoveProp(propID);
@@ -1278,7 +1278,7 @@ void InstanceNutPlayer::UnremoveProp(std::string propID) {
 	}
 }
 
-void InstanceNutPlayer::DoUnremoveProp(std::string propID) {
+void InstanceNutPlayer::DoUnremoveProp(int propID) {
 	SceneryObject *propPtr = NULL;
 	g_SceneryManager.GetThread("InstanceNutPlayer::DoUnremoveProp");
 	propPtr = g_SceneryManager.GlobalGetPropPtr(actInst->mZone, propID, NULL);
@@ -1297,7 +1297,7 @@ void InstanceNutPlayer::DoUnremoveProp(std::string propID) {
 			propPtr->LocationZ);
 }
 
-bool InstanceNutPlayer::RemoveProp(std::string propID) {
+bool InstanceNutPlayer::RemoveProp(int propID) {
 	/* This doesn't physically delete the prop, but will send delete events to all local simulators.
 	 * It also adds the prop to a list that is maintained in the instance of props that have been
 	 * deleted, to prevent the prop from being sent to the client again until the instance is
@@ -1474,7 +1474,7 @@ void InstanceNutPlayer::SetSize(int CID, float scale) {
 		g_Logs.script->warn("Request to size creature that doesn't exist, [%v] to %v", CID, scale);
 }
 
-int InstanceNutPlayer::Transform(std::string propID, Sqrat::Table transformation) {
+int InstanceNutPlayer::Transform(int propID, Sqrat::Table transformation) {
 	char buffer[256];
 	SceneryObject *propPtr = g_SceneryManager.GlobalGetPropPtr(actInst->mZone,
 			propID, NULL);
@@ -1598,12 +1598,12 @@ int InstanceNutPlayer::GetPartyID(int CID) {
 	return ci != NULL ? ci->PartyID : 0;
 }
 
-std::string InstanceNutPlayer::GetPropIDForSpawn(int CID) {
+int InstanceNutPlayer::GetPropIDForSpawn(int CID) {
 	CreatureInstance *ci = GetCreaturePtr(CID);
 	if (ci != NULL && ci->spawnGen != NULL && ci->spawnGen->spawnPoint != NULL) {
 		return ci->spawnGen->spawnPoint->ID;
 	}
-	return "";
+	return -1;
 }
 
 Squirrel::Vector3I InstanceNutPlayer::GetLocation(int CID) {
@@ -2075,8 +2075,8 @@ void InstanceScriptPlayer::RunImplementationCommands(int opcode) {
 		CreatureInstance *ci = GetNPCPtr(GetVarValue(instr->param1));
 		if (ci) {
 			ci->SetServerFlag(ServerFlags::ScriptMovement, true);
-			ci->previousPathNode = "";   //Disable any path links.
-			ci->nextPathNode = "";
+			ci->previousPathNode = 0;   //Disable any path links.
+			ci->nextPathNode = 0;
 			ci->tetherNodeX = instr->param2;
 			ci->tetherNodeZ = instr->param3;
 			ci->tetherFacing = 0;
@@ -2373,8 +2373,8 @@ void WalkCallback::Init(ScriptCore::NutPlayer *nut, CreatureInstance *creature,
 	sTetherNodeZ = creature->tetherNodeZ;
 	sTetherNodeFacing = creature->tetherFacing;
 
-	creature->previousPathNode = "";   //Disable any path links.
-	creature->nextPathNode = "";
+	creature->previousPathNode = 0;   //Disable any path links.
+	creature->nextPathNode = 0;
 
 	creature->tetherNodeX = point.mX;
 	creature->tetherNodeZ = point.mZ;

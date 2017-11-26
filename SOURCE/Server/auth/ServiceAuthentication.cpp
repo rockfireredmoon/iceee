@@ -137,7 +137,8 @@ void ServiceAuthenticationHandler::copyVeteranPlayerDetails(std::string pfUserna
 												spk.x, spk.y);
 
 								// Give prop new ID
-								std::string newPropID = g_SceneryVars.NewID();
+								int newPropID = g_SceneryVars.BaseSceneryID
+										+ g_SceneryVars.SceneryAdditive++;
 								g_Logs.server->info(
 										"       Copying object %v to %v",
 										prop.ID, newPropID);

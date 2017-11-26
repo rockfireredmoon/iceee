@@ -32,7 +32,7 @@ void SceneryAudit::WriteToFile(FILE *output) const
 	case OP_EDIT: opTypeLabel = "EDIT"; break;
 	case OP_DELETE: opTypeLabel = "DELETE"; break;
 	}
-	fprintf(output, "@AUDIT:user=%s&type=%s&ID=%s\r\n", mUsername.c_str(), opTypeLabel, mObject.ID.c_str());
+	fprintf(output, "@AUDIT:user=%s&type=%s&ID=%d\r\n", mUsername.c_str(), opTypeLabel, mObject.ID);
 	mObject.WriteToStream(output);
 }
 
@@ -93,7 +93,7 @@ void ZoneAudit::AutosaveAudits(void)
 {
 	FILE *output = NULL;
 
-	std::map<std::string, std::list<SceneryAudit> >::iterator propIt;
+	std::map<int, std::list<SceneryAudit> >::iterator propIt;
 	
 	propIt = mSceneryAudit.begin();
 	while(propIt != mSceneryAudit.end())
