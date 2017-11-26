@@ -328,7 +328,7 @@ sEnder=29824.3,647.221,62866.8,9
 [ACT]
 Act.BodyText=Travel to the first Greysun Camp.
 Obj.0.type=travel
-Obj.0.data1=21896.7,237.566,61779.2,9
+Obj.0.data1=21896,237,61779,9
 Obj.0.data2=150
 Obj.0.description=Travel to the first camp
 Obj.0.myCreatureDefID=
@@ -338,7 +338,7 @@ Obj.0.markerLocations=21896.7,237.566,61779.2,9;
 [ACT]
 Act.BodyText=Travel to the second Greysun Camp.
 Obj.0.type=travel
-Obj.0.data1=21767.8,155.857,58980,9
+Obj.0.data1=21767,155,58980,9
 Obj.0.data2=150
 Obj.0.description=Travel to the second camp
 Obj.0.myCreatureDefID=
@@ -348,7 +348,7 @@ Obj.0.markerLocations=21767.8,155.857,58980.0,9;
 [ACT]
 Act.BodyText=Travel to the third Greysun Camp.
 Obj.0.type=travel
-Obj.0.data1=23827.4,150.378,55061.6,9
+Obj.0.data1=23827,150,55061,9
 Obj.0.data2=200
 Obj.0.description=Travel to the third camp
 Obj.0.myCreatureDefID=
@@ -358,7 +358,7 @@ Obj.0.markerLocations=23827.4,150.378,55061.6,9;
 [ACT]
 Act.BodyText=Travel to the fourth Greysun Camp.
 Obj.0.type=travel
-Obj.0.data1=25248.7,184.229,53788,9
+Obj.0.data1=25248,184,53788,9
 Obj.0.data2=150
 Obj.0.description=Travel to the fourth camp
 Obj.0.myCreatureDefID=
@@ -368,7 +368,7 @@ Obj.0.markerLocations=25248.7,184.229,53788.0,9;
 [ACT]
 Act.BodyText=Travel to the fifth Greysun Camp.
 Obj.0.type=travel
-Obj.0.data1=21670.2,146.962,52836.2,9
+Obj.0.data1=21670,146,52836,9
 Obj.0.data2=150
 Obj.0.description=Travel to the fifth camp
 Obj.0.myCreatureDefID=
