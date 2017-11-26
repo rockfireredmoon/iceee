@@ -7,18 +7,6 @@
 
 SimulatorAddress=localhost
 
-; For the HTTP server, this is the base folder that contains the file structure for the
-; game assets, to be distributed to clients that require them.
-; For example, if the client requests the following file:
-;     \Release\Current\EarthEternal.car
-; And HTTPBaseFolder is set to this exact path:
-;     C:\Games\EEProject86
-; Then this file must exist in the exact path:
-;     C:\Games\EEProject86\Release\Current\EarthEternal.car
-
-HTTPBaseFolder=asset
-
-
 ;Protocol version should match the client
 ; 0.06a = 19 
 ; 0.06b = 20 
@@ -176,3 +164,30 @@ Upgrade=0
 
 ; A script to execute when the server has crashed
 ShutdownHandlerScript=
+
+; Location of data files and assets
+
+
+; For the HTTP server, this is the base folder that contains the file structure for the
+; game assets, to be distributed to clients that require them.
+; For example, if the client requests the following file:
+;     \Release\Current\EarthEternal.car
+; And HTTPBaseFolder is set to this exact path:
+;     C:\Games\EEProject86
+; Then this file must exist in the exact path:
+;     C:\Games\EEProject86\Release\Current\EarthEternal.car
+
+HTTPBaseFolder=../iceee-assets
+
+; The location of static data files. These are files that do not change during at all
+; during the run time of the server.
+StaticDataPath=../iceee-data/Static
+
+; The location of variable data files. These are files that are not changed during the
+; normal running of the server, but may change when admin or developer tools are used.
+; Includes things such as Scenery and Credit Shop
+VariableDataPath=../iceee-data/Variable
+
+; The location of user files. These are files that change during normal operation of
+; the server. 
+UserDataPath=../iceee-data/User
