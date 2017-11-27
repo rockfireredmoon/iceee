@@ -8570,6 +8570,15 @@ int SimulatorThread :: handle_query_creature_use(void)
 					ZoneDefInfo *zoneDef = g_ZoneDefManager.GetPointerByID(intObj->WarpID);
 					if(zoneDef != NULL)
 					{
+						if(creatureInst->css.level < zoneDef->mMinLevel) {
+							Util::SafeFormat(Aux1, sizeof(Aux1), "You must be of at least level %d to enter this zone.", zoneDef->mMinLevel);
+							return PrepExt_QueryResponseError(SendBuf, query.ID, Aux1);
+						}
+						else if(creatureInst->css.level > zoneDef->mMaxLevel) {
+							Util::SafeFormat(Aux1, sizeof(Aux1), "You can be of no more than level %d to enter this zone.", zoneDef->mMaxLevel);
+							return PrepExt_QueryResponseError(SendBuf, query.ID, Aux1);
+						}
+
 						/* Ask the instance script if it's OK for this creature to warp. If there is no script
 						 * function, assume it's OK
 						 */

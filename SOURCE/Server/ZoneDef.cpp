@@ -214,6 +214,8 @@ void ZoneDefInfo :: Clear(void)
 	mPageSize = DEFAULT_PAGESIZE;
 	mMaxAggroRange = DEFAULT_MAXAGGRORANGE;
 	mMaxLeashRange = DEFAULT_MAXLEASHRANGE;
+	mMinLevel = 0;
+	mMaxLevel = 9999;
 	
 	mReturnZone = 0;
 	mPersist = false;
@@ -267,6 +269,8 @@ void ZoneDefInfo :: CopyFrom(const ZoneDefInfo& other)
 	mEnvironmentCycle = other.mEnvironmentCycle;
 	mMaxAggroRange = other.mMaxAggroRange;
 	mMaxLeashRange = other.mMaxLeashRange;
+	mMinLevel = other.mMinLevel;
+	mMaxLevel = other.mMaxLevel;
 
 	mPlayerFilterType = other.mPlayerFilterType;
 	mPlayerFilterID.assign(other.mPlayerFilterID.begin(), other.mPlayerFilterID.end());
@@ -774,6 +778,10 @@ int ZoneDefManager :: LoadFile(const char *fileName)
 					newItem.mMaxAggroRange = lfr.BlockToIntC(1);
 				else if(strcmp(lfr.SecBuffer, "MAXLEASHRANGE") == 0)
 					newItem.mMaxLeashRange = lfr.BlockToIntC(1);
+				else if(strcmp(lfr.SecBuffer, "MINLEVEL") == 0)
+					newItem.mMinLevel= lfr.BlockToIntC(1);
+				else if(strcmp(lfr.SecBuffer, "MAXLEVEL") == 0)
+					newItem.mMaxLevel= lfr.BlockToIntC(1);
 				else if(strcmp(lfr.SecBuffer, "DEFLOC") == 0)
 				{
 					lfr.MultiBreak("=,"); //Re-split for this particular data.
