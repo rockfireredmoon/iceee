@@ -586,8 +586,8 @@ Obj.0.markerLocations=
 
 
 [ENTRY]
-Requires=798
 ID=799
+Requires=798
 Title=Death Can Be Enchanting
 BodyText="I see you've been entrusted with the key."
 
@@ -601,23 +601,22 @@ Exp=3096
 PartySize=5
 NumRewards=0
 Coin=585
+Heroism=14
 Unabandon=0
 QuestGiverID=3627
 QuestEnderID=3627
 Repeat=0
-sGiver=3818,509,2993,60
-sEnder=3818,509,2993,60
-Heroism=14
+sGiver=3818.0,509.0,2993.0,60
+sEnder=3818.0,509.0,2993.0,60
 [ACT]
 Act.BodyText=Enter the Gloom Witches lair, Cold Storm Cavern in Anglorum, and defeat Stormwitch Cyclona to obtain fetishes of death.
 Obj.0.type=kill
 Obj.0.data1=1841
-Obj.0.data2=5
-Obj.0.description=Collect 5 fetishes of death
-Obj.0.complete=0
+Obj.0.data2=1
+Obj.0.description=Collect 1 fetishes of death
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
-Obj.0.completeText=0 of 5
+Obj.0.completeText=0 of 1
 Obj.0.markerLocations=2205.71,248.456,4185.73,27;
 [ACT]
 Act.BodyText=Return to Sonny "The Snail".
@@ -625,16 +624,14 @@ Obj.0.type=talk
 Obj.0.data1=0
 Obj.0.data2=0
 Obj.0.description=Return to Sonny "The Snail"
-Obj.0.complete=0
 Obj.0.myCreatureDefID=3627
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=3818,509,2993,60;
-
+Obj.0.markerLocations=3818.0,509.0,2993.0,60;
 
 [ENTRY]
-Requires=799
 ID=800
+Requires=799
 Title=Life Can Be Alluring
 BodyText="Now that we have the fetishes of death, we need fetishes of life.  You can obtain them from the witchdoctor in the Forest Cavern.  Blah, blah, blah, danger.  Just make it back to me..."
 CompleteText="Just as expected!  The next part won't be so easy though."
@@ -644,23 +641,22 @@ Exp=3783
 PartySize=1
 NumRewards=0
 Coin=833
+Heroism=14
 Unabandon=0
 QuestGiverID=3627
 QuestEnderID=3627
 Repeat=0
-sGiver=3818,509,2993,60
-sEnder=3818,509,2993,60
-Heroism=14
+sGiver=3818.0,509.0,2993.0,60
+sEnder=3818.0,509.0,2993.0,60
 [ACT]
 Act.BodyText=Enter the Forest Cavern in Midlands, and defeat the witchdoctor to obtain fetishes of life.
 Obj.0.type=kill
 Obj.0.data1=443
-Obj.0.data2=5
-Obj.0.description=Collect 5 fetishes of life
-Obj.0.complete=0
+Obj.0.data2=1
+Obj.0.description=Collect 1 fetishes of life
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
-Obj.0.completeText=0 of 5
+Obj.0.completeText=0 of 1
 Obj.0.markerLocations=2253.67,175.626,1093.85,39;
 [ACT]
 Act.BodyText=Return to Sonny "The Snail".
@@ -668,12 +664,10 @@ Obj.0.type=talk
 Obj.0.data1=0
 Obj.0.data2=0
 Obj.0.description=Return to Sonny "The Snail"
-Obj.0.complete=0
 Obj.0.myCreatureDefID=3627
 Obj.0.myItemID=
 Obj.0.completeText=
-Obj.0.markerLocations=3818,509,2993,60;
-
+Obj.0.markerLocations=3818.0,509.0,2993.0,60;
 
 [ENTRY]
 Requires=800
