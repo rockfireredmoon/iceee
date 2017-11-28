@@ -1543,7 +1543,9 @@ class States.CharacterSelectionState extends State
 	function _createOneColorPalette( def, title, part, color )
 	{
 		local font = ::GUI.Font("Maiandra", 24);
-		local list = this.GUI.ColorPicker(title, part, this.ColorRestrictionType.CHARACTER_CREATION);
+		//local list = this.GUI.ColorPicker(title, part, this.ColorRestrictionType.CHARACTER_CREATION);
+		local list = this.GUI.ColorPicker(title, part, this.ColorRestrictionType.DEVELOPMENT);
+		
 		list.setChangeMessage("onSkinColorChange");
 		list.setColor(color, false);
 		list.addActionListener(this);
