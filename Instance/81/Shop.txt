@@ -625,3 +625,5 @@ Item=40124  ;Armor Boost Potion: Level 20
 
 
 
+[ENTRY]
+CreatureDefID=3544

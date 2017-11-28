@@ -80920,23 +80920,23 @@ mMinUseLevel=43
 [ENTRY]
 mID=1003221
 mType=3
-mDisplayName=Old Carrionite Tribal Collar
-mAppearance={["c"]={["type"]="Armor-Medium-Low6",["colors"]=["000000","555555","1e203f","000000","1e203f","555555"]}}
-mIcon=Icon-32-Armor-Neck03.png|Icon-32-BG-Blue.png
-mLevel=43
-mQualityLevel=0
-mBindingType=1
+mDisplayName=Carrionite Tribal Collar
+mAppearance=[{["c"]={["type"]="Armor-Medium-Low6",["colors"]=["000000","555555","1e203f","000000","1e203f","555555"]}},null]
+mIcon=Icon-32-Armor-Neck03.png|Icon-32-BG-Yellow.png
+mLevel=55
+mValue=10763
+mMinUseLevel=555
+mQualityLevel=5
 mEquipType=9
+mBindingType=1
+mBonusConstitution=13
+mBonusStrength=11
 mArmorType=2
-mArmorResistMelee=106
-mArmorResistFire=106
-mArmorResistFrost=106
-mArmorResistMystic=128
-mArmorResistDeath=106
-mBonusSpirit=9
-mValue=763
-mValueType=0
-mMinUseLevel=43
+mArmorResistMelee=130
+mArmorResistFire=130
+mArmorResistFrost=130
+mArmorResistMystic=130
+mArmorResistDeath=130
 
 [ENTRY]
 mID=1003222
@@ -82176,23 +82176,23 @@ mMinUseLevel=43
 [ENTRY]
 mID=1003281
 mType=3
-mDisplayName=Old Carrionite Tribal Chestguard
-mAppearance={["c"]={["type"]="Armor-Medium-Low8",["colors"]=["000000","555555","1e203f","000000"]}}
-mIcon=Icon-32-M_Armor-Chest01.png|Icon-32-BG-Blue.png
-mLevel=43
-mQualityLevel=0
-mBindingType=1
+mDisplayName=Carrionite Tribal Chestguard
+mAppearance=[{["c"]={["type"]="Armor-Medium-Low8",["colors"]=["000000","555555","1e203f","000000"]}},null]
+mIcon=Icon-32-M_Armor-Chest01.png|Icon-32-BG-Yellow.png
+mLevel=55
+mValue=10731
+mMinUseLevel=55
+mQualityLevel=5
 mEquipType=11
+mBindingType=1
+mBonusConstitution=42
+mBonusStrength=51
 mArmorType=2
-mArmorResistMelee=564
-mArmorResistFire=468
-mArmorResistFrost=468
-mArmorResistMystic=468
-mArmorResistDeath=468
-mBonusPsyche=8
-mValue=731
-mValueType=0
-mMinUseLevel=43
+mArmorResistMelee=310
+mArmorResistFire=310
+mArmorResistFrost=310
+mArmorResistMystic=310
+mArmorResistDeath=310
 
 [ENTRY]
 mID=1003282
@@ -83221,23 +83221,23 @@ mMinUseLevel=43
 [ENTRY]
 mID=1003341
 mType=3
-mDisplayName=Old Carrionite Tribal Gauntlets
-mAppearance={["c"]={["type"]="Armor-Medium-Low8",["colors"]=["000000","555555","1e203f","000000"]}}
-mIcon=Icon-32-M_Armor-Hands01.png|Icon-32-BG-Blue.png
-mLevel=43
-mQualityLevel=0
-mBindingType=1
+mDisplayName=Carrionite Tribal Gauntlets
+mAppearance=[{["c"]={["type"]="Armor-Medium-Low8",["colors"]=["000000","555555","1e203f","000000"]}},null]
+mIcon=Icon-32-M_Armor-Hands01.png|Icon-32-BG-Yellow.png
+mLevel=55
+mValue=10817
+mMinUseLevel=55
+mQualityLevel=5
 mEquipType=13
+mBindingType=1
+mBonusConstitution=16
+mBonusStrength=23
 mArmorType=2
-mArmorResistMelee=227
-mArmorResistFire=257
-mArmorResistFrost=227
-mArmorResistMystic=227
-mArmorResistDeath=227
-mBonusConstitution=8
-mValue=817
-mValueType=0
-mMinUseLevel=43
+mArmorResistMelee=172
+mArmorResistFire=172
+mArmorResistFrost=172
+mArmorResistMystic=172
+mArmorResistDeath=172
 
 [ENTRY]
 mID=1003342
@@ -84139,23 +84139,23 @@ mMinUseLevel=43
 [ENTRY]
 mID=1003401
 mType=3
-mDisplayName=Old Carrionite Tribal Armwraps
-mAppearance={["c"]={["type"]="Armor-Medium-Low8",["colors"]=["000000","555555","1e203f","000000"]}}
-mIcon=Icon-32-Armor-Arms03.png|Icon-32-BG-Blue.png
-mLevel=43
-mQualityLevel=0
-mBindingType=1
+mDisplayName=Carrionite Tribal Armwraps
+mAppearance=[{["c"]={["type"]="Armor-Medium-Low8",["colors"]=["000000","555555","1e203f","000000"]}},null]
+mIcon=Icon-32-Armor-Arms03.png|Icon-32-BG-Yellow.png
+mLevel=55
+mValue=10903
+mMinUseLevel=55
+mQualityLevel=5
 mEquipType=12
+mBindingType=1
+mBonusConstitution=14
+mBonusStrength=13
 mArmorType=2
-mArmorResistMelee=273
-mArmorResistFire=308
-mArmorResistFrost=308
-mArmorResistMystic=273
-mArmorResistDeath=308
-mBonusSpirit=8
-mValue=903
-mValueType=0
-mMinUseLevel=43
+mArmorResistMelee=113
+mArmorResistFire=113
+mArmorResistFrost=113
+mArmorResistMystic=113
+mArmorResistDeath=113
 
 [ENTRY]
 mID=1003402
@@ -85246,23 +85246,23 @@ mMinUseLevel=43
 [ENTRY]
 mID=1003476
 mType=3
-mDisplayName=Old Carrionite Tribal Breeches
-mAppearance={["c"]={["type"]="Armor-Medium-Low8",["colors"]=["000000","555555","1e203f","000000"]}}
-mIcon=Icon-32-M_Armor-Legs01.png|Icon-32-BG-Blue.png
-mLevel=43
-mQualityLevel=0
-mBindingType=1
+mDisplayName=Carrionite Tribal Breeches
+mAppearance=[{["c"]={["type"]="Armor-Medium-Low8",["colors"]=["000000","555555","1e203f","000000"]}},null]
+mIcon=Icon-32-M_Armor-Legs01.png|Icon-32-BG-Yellow.png
+mLevel=55
+mValue=10871
+mMinUseLevel=55
+mQualityLevel=5
 mEquipType=15
+mBindingType=1
+mBonusConstitution=30
+mBonusStrength=30
 mArmorType=2
-mArmorResistMelee=364
-mArmorResistFire=410
-mArmorResistFrost=364
-mArmorResistMystic=410
-mArmorResistDeath=364
-;;mBonusHealth=29
-mValue=871
-mValueType=0
-mMinUseLevel=43
+mArmorResistMelee=310
+mArmorResistFire=310
+mArmorResistFrost=310
+mArmorResistMystic=310
+mArmorResistDeath=310
 
 [ENTRY]
 mID=1003477
@@ -85980,23 +85980,23 @@ mMinUseLevel=43
 [ENTRY]
 mID=1003521
 mType=3
-mDisplayName=Old Carrionite Tribal Boots
-mAppearance={["c"]={["type"]="Armor-Medium-Low8",["colors"]=["000000","555555","1e203f","000000"]}}
-mIcon=Icon-32-M_Armor-Feet01.png|Icon-32-BG-Blue.png
-mLevel=43
-mQualityLevel=0
-mBindingType=1
+mDisplayName=Carrionite Tribal Boots
+mAppearance=[{["c"]={["type"]="Armor-Medium-Low8",["colors"]=["000000","555555","1e203f","000000"]}},null]
+mIcon=Icon-32-M_Armor-Feet01.png|Icon-32-BG-Yellow.png
+mLevel=55
+mValue=10731
+mMinUseLevel=55
+mQualityLevel=5
 mEquipType=16
+mBindingType=1
+mBonusConstitution=11
+mBonusStrength=22
 mArmorType=2
-mArmorResistMelee=257
-mArmorResistFire=198
-mArmorResistFrost=198
-mArmorResistMystic=198
-mArmorResistDeath=257
-;;mBonusHealth=28
-mValue=731
-mValueType=0
-mMinUseLevel=43
+mArmorResistMelee=162
+mArmorResistFire=162
+mArmorResistFrost=162
+mArmorResistMystic=162
+mArmorResistDeath=162
 
 [ENTRY]
 mID=1003522
@@ -86855,23 +86855,23 @@ mMinUseLevel=43
 [ENTRY]
 mID=1003581
 mType=3
-mDisplayName=Old Carrionite Tribal Cap
-mAppearance={["a"]={["type"]="Armor-Medium-Low3-Helmet",["colors"]=["000000","555555","1E203F","000000"]}}
-mIcon=Icon-32-M_Armor-Head01.png|Icon-32-BG-Blue.png
-mLevel=43
-mQualityLevel=0
-mBindingType=1
+mDisplayName=Carrionite Tribal Cap
+mAppearance=[{["a"]={["type"]="Armor-Medium-Low3-Helmet",["colors"]=["000000","555555","1E203F","000000"]}},null]
+mIcon=Icon-32-M_Armor-Head01.png|Icon-32-BG-Yellow.png
+mLevel=55
+mValue=10785
+mMinUseLevel=55
+mQualityLevel=5
 mEquipType=8
+mBindingType=1
+mBonusConstitution=29
+mBonusStrength=42
 mArmorType=2
 mArmorResistMelee=227
 mArmorResistFire=227
 mArmorResistFrost=227
 mArmorResistMystic=227
 mArmorResistDeath=227
-mBonusSpirit=8
-mValue=785
-mValueType=0
-mMinUseLevel=43
 
 [ENTRY]
 mID=1003582
@@ -87664,23 +87664,23 @@ mMinUseLevel=43
 [ENTRY]
 mID=1003627
 mType=3
-mDisplayName=Old Carrionite Tribal Pauldrons
+mDisplayName=Carrionite Tribal Pauldrons
 mAppearance=[{["a"]={["type"]="Armor-Medium-Low8-Left_Pauldron",["colors"]=["000000","555555","1E203F"]}},{["a"]={["type"]="Armor-Medium-Low8-Right_Pauldron",["colors"]=["000000","555555","1E203F"]}}]
-mIcon=Icon-32-M_Armor-Shldr01.png|Icon-32-BG-Blue.png
-mLevel=43
-mQualityLevel=0
-mBindingType=1
+mIcon=Icon-32-M_Armor-Shldr01.png|Icon-32-BG-Yellow.png
+mLevel=55
+mValue=10946
+mMinUseLevel=55
+mQualityLevel=5
 mEquipType=10
+mBindingType=1
+mBonusConstitution=34
+mBonusStrength=47
 mArmorType=2
-mArmorResistMelee=227
-mArmorResistFire=257
-mArmorResistFrost=257
-mArmorResistMystic=227
-mArmorResistDeath=227
-mBonusConstitution=11
-mValue=946
-mValueType=0
-mMinUseLevel=43
+mArmorResistMelee=310
+mArmorResistFire=310
+mArmorResistFrost=310
+mArmorResistMystic=310
+mArmorResistDeath=310
 
 [ENTRY]
 mID=1003628
@@ -88364,23 +88364,23 @@ mMinUseLevel=43
 [ENTRY]
 mID=1003661
 mType=3
-mDisplayName=Old Carrionite Tribal Belt
-mAppearance={["c"]={["type"]="Armor-Medium-Low6",["colors"]=["000000","555555","1e203f","000000","1e203f","555555"]}}
-mIcon=Icon-32-Armor-Belts03.png|Icon-32-BG-Blue.png
-mLevel=43
-mQualityLevel=0
-mBindingType=1
+mDisplayName=Carrionite Tribal Belt
+mAppearance=[{["c"]={["type"]="Armor-Medium-Low6",["colors"]=["000000","555555","1e203f","000000","1e203f","555555"]}},null]
+mIcon=Icon-32-Armor-Belts03.png|Icon-32-BG-Yellow.png
+mLevel=55
+mValue=11064
+mMinUseLevel=55
+mQualityLevel=5
 mEquipType=14
+mBindingType=1
+mBonusConstitution=13
+mBonusStrength=14
 mArmorType=2
 mArmorResistMelee=128
 mArmorResistFire=128
 mArmorResistFrost=143
 mArmorResistMystic=128
 mArmorResistDeath=128
-mBonusSpirit=9
-mValue=1064
-mValueType=0
-mMinUseLevel=43
 
 [ENTRY]
 mID=1003662

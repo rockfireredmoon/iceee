@@ -76214,3 +76214,27 @@ creature_category=Mortal
 rarity=0
 base_damage_melee=185
 ai_package=4_druid_range_30
+
+[ENTRY]
+defHints=48
+ID=3543
+appearance=p1:{["a"]="Prop-Notice_Board",["sz"]="1.0"}
+level=55
+display_name=Weekly
+sub_name=God's of Europe
+profession=5
+creature_category=Inanimate
+rarity=0
+ai_package=nothing
+
+[ENTRY]
+defHints=10
+ID=3544
+appearance=c2:{["a"]=[{["node"]="left_shoulder",["type"]="Armor-Heavy-High1-Left_Pauldron",["colors"]=["000000","2c3394"]},{["node"]="helmet",["type"]="Armor-Light-High1-Helmet",["colors"]=["000000","0d136a","7f7f7f","545148","17307f"]},{["node"]="back_6",["type"]="Item-Shield-Epic1",["colors"]=["3f3f35","151515","bf0000","e9e9e9","151eaa"]},{["node"]="back_2",["type"]="Item-1hSword-High4",["colors"]=["5a6268","000000","2c3394"]}],["sk"]={["wood"]="665a3f",["crest"]="49743e",["eyes"]="e0ddbf",["foliage"]="4e7d42",["fringe"]="3e6e32"},["sz"]="1.2",["g"]="m",["h"]=0,["r"]="q",["b"]="m",["c"]={["boots"]={["type"]="Armor-Heavy-Mid1",["colors"]=["262b7f","949494","000000"]},["chest"]={["type"]="Armor-Heavy-Mid1",["colors"]=["000000","121a94","ffffff"]},["arms"]={["type"]="Armor-Heavy-Mid1",["colors"]=["000000","1f246a","000000"]},["leggings"]={["type"]="Armor-Heavy-Mid1",["colors"]=["3d4f84","000000","ffffff"]},["collar"]={["type"]="Armor-Heavy-Mid1",["colors"]=["000000","a77d19","7f7f7f"]},["belt"]={["type"]="Armor-Heavy-Mid1",["colors"]=["949494","ffffff","000000"]},["gloves"]={["type"]="Armor-Heavy-Mid1",["colors"]=["000000","2c3394","ffffff"]}}}
+level=50
+display_name=Ark Stormbringer
+sub_name=Legends Merchant
+profession=1
+creature_category=Mortal
+rarity=2
+ai_package=nothing

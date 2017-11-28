@@ -206,3 +206,11 @@ Spawn=18006,10
 Spawn=18007,10
 loyaltyRadius=75
 wanderRadius=75
+
+[ENTRY]
+Name=walker_mix
+Flags=32
+Spawn=18008,50
+Spawn=18009,50
+loyaltyRadius=75
+wanderRadius=75
