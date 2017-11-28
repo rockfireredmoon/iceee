@@ -12,18 +12,16 @@ function have_target() {
 	print("Sleeping 10000!\n");
 	
 	/*
-	 * Wait for 10 seconds. The try/catch here is for handling when the sleep is 'interrupted'.
+	 * Wait for 10 seconds. The condition here is for handling when the sleep is 'interrupted'.
   	 * This might be caused by by an external function call.
 	 * These might come from instance scripts, or on death of this creature, or
 	 * if targets change. A well behaved script should catch this and deal with
 	 * it appropriately. It should never sleep again (this may be prevented in 
 	 * future versions). 
 	 */
-	try {
-		ai.sleep(10000);
-	}
-	catch(err) {
+	if(ai.sleep(10000)) {
 		 print("Interrupt " + err);
+	 	 return;
 	}
 	
 	print("Slept 10000!\n");

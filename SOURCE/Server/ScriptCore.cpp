@@ -241,9 +241,9 @@ namespace ScriptCore
 		else {
 			sq_pushbool(mNut->vm, false);
 			if(SQ_SUCCEEDED(sq_wakeupvm(mNut->vm,true,false,false, false))) {
-				sq_pop(mNut->vm,1); //pop retval
+	        	sq_poptop(mNut->vm);
 				if(sq_getvmstate(mNut->vm) == SQ_VMSTATE_IDLE) {
-					sq_settop(mNut->vm,1); //pop roottable
+					sq_settop(mNut->vm, mNut->mSuspendTop); //pop roottable
 				}
 				return true;
 			}
@@ -251,7 +251,7 @@ namespace ScriptCore
 				const SQChar *err;
 				sq_getlasterror(mNut->vm);
 				if(SQ_SUCCEEDED(sq_getstring(mNut->vm,-1,&err))) {
-					g_Log.AddMessageFormat("Wakeup failed for script %s, state now %d. %d", mNut->def->scriptName.c_str(), sq_getvmstate(mNut->vm), err);
+					g_Log.AddMessageFormat("Wakeup failed for script %s, state now %d. %s", mNut->def->scriptName.c_str(), sq_getvmstate(mNut->vm), err);
 				}
 				else {
 					g_Log.AddMessageFormat("Wakeup failed for script %s, state now %d. No error code could be determined.", mNut->def->scriptName.c_str(), sq_getvmstate(mNut->vm));
@@ -831,9 +831,25 @@ namespace ScriptCore
 	void NutPlayer::MaybeWakeVM(std::string name) {
 		// Wake the VM up if it is suspend so the onFinish can be run
 		if(sq_getvmstate(vm) == SQ_VMSTATE_SUSPENDED) {
-			g_Log.AddMessageFormat("Waking up VM to run %s.", name.c_str());
+			g_Log.AddMessageFormat("Interrupt VM to run %s.", name.c_str());
 			mSleeping = 0;
-			sq_wakeupvm(vm, false, false, false, true);
+			sq_pushbool(vm, true); // return true. scripts test this and leave their loop if appropriate on interrupt
+			if(SQ_SUCCEEDED(sq_wakeupvm(vm,true,false,false, false))) {
+				sq_pop(vm,1); //pop retval
+				if(sq_getvmstate(vm) == SQ_VMSTATE_IDLE) {
+					sq_settop(vm, mSuspendTop); //pop roottable
+				}
+			}
+			else {
+				const SQChar *err;
+				sq_getlasterror(vm);
+				if(SQ_SUCCEEDED(sq_getstring(vm,-1,&err))) {
+					g_Log.AddMessageFormat("Interrupt failed for script %s, state now %d. %s", def->scriptName.c_str(), sq_getvmstate(vm), err);
+				}
+				else {
+					g_Log.AddMessageFormat("Interrupt failed for script %s, state now %d. No error code could be determined.", def->scriptName.c_str(), sq_getvmstate(vm));
+				}
+			}
 		}
 
 	}
@@ -1120,7 +1136,9 @@ namespace ScriptCore
 		NutScriptEvent *nse = new NutScriptEvent(mPause, cb);
 		nse->mRunWhenSuspended = true;
 		QueueAdd(nse);
-		return sq_suspendvm(vm);
+		SQInteger ret = sq_suspendvm(vm);
+        mSuspendTop = sq_gettop(vm);
+		return ret;
 	}
 
 	SQInteger NutPlayer::Sleep(HSQUIRRELVM v)
@@ -1139,8 +1157,13 @@ namespace ScriptCore
 	        	NutScriptEvent *nse = new NutScriptEvent(new TimeCondition (right.value), cb);
 	        	nse->mRunWhenSuspended = true;
 	        	left.value.QueueAdd(nse);
-				g_Log.AddMessageFormat("Sleeping VM %s.", (&left.value)->def->mSourceFile.c_str(), right.value);
-	            return sq_suspendvm(v);
+	        	sq_poptop(v);
+	        	sq_poptop(v);
+				g_Log.AddMessageFormat("Sleeping VM %s for %d. Stack at this point is %d", (&left.value)->def->mSourceFile.c_str(), right.value, sq_gettop(v));
+	            SQInteger ret = sq_suspendvm(v);
+				g_Log.AddMessageFormat("REMOVE Slept VM %s for %d. Stack at this point is %d (set suspendTop to this)", (&left.value)->def->mSourceFile.c_str(), right.value, sq_gettop(v));
+				left.value.mSuspendTop = sq_gettop(v);
+	            return ret;
 	        }
 	        return sq_throwerror(v, Sqrat::Error::Message(v).c_str());
 	    }

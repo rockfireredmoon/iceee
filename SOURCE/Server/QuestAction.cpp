@@ -214,7 +214,9 @@ int QuestActionContainer :: ExecuteSingleCommand(SimulatorThread *caller, Extend
 			int count = caller->pld.charPtr->inventory.GetItemCount(INV_CONTAINER, itemID);
 			if(count >= itemCount)
 				return 0;
-			caller->SendInfoMessage("You don't have the required items in your backpack inventory.", INFOMSG_ERROR);
+			char buf[512];
+			Util::SafeFormat(buf, sizeof(buf), "You don't have the required items in your backpack inventory. You need %d of %s", itemCount, g_ItemManager.GetPointerByID(itemID)->mDisplayName.c_str());
+			caller->SendInfoMessage(buf, INFOMSG_ERROR);
 			return -1;
 		}
 		break;

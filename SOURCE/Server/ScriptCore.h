@@ -479,6 +479,7 @@ public:
 	unsigned long mNextId;
 	PauseCondition *mPause; // If non-null is the current pause condition
 	long mSleeping; // If non-zero, how long the VM is sleeping for
+	int mSuspendTop; //Top of stack after a successful suspend, zero other
 
 	std::vector<std::string> mArgs; // Scripts may be called with arguments. This vector should be set before initialising the player
 
