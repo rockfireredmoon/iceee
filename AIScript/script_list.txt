@@ -29,6 +29,7 @@ thunderwalker_brave.txt
 4_mage_30.txt
 4_rogue_30.txt
 4_druid_melee_30.txt
+4_druid_range_30.txt
 FailsafeAI.txt
 druid_bow_brave_1.txt
 custom_henge_glow.txt
