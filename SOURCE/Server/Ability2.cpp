@@ -115,6 +115,7 @@ Translocate()                                Transports to bind location.  Only 
 UnHate()                                     Remove all hate generated against you.
 WalkInShadows(120,A_DEXTERITY*1.0)           Limited unseen movement (duration_sec, movementCounter?)
 Nudify()							 	 	 Removes all clothes
+Scale(1.0)							 	 	 Scales character
 Transform(CDefID)							 Transform into a creature
 Untransform()								 Revert to natural appearance
 
@@ -1222,6 +1223,7 @@ void AbilityManager2 :: InitFunctionTables(void)
 	InsertFunction("InterruptChance", &AbilityCalculator::InterruptChance);
 	InsertFunction("Transform", &AbilityCalculator::Transform);
 	InsertFunction("Nudify", &AbilityCalculator::Nudify);
+	InsertFunction("Scale", &AbilityCalculator::Scale);
 	InsertFunction("Untransform", &AbilityCalculator::Untransform);
 	InsertFunction("NotTransformed", &AbilityCalculator::NotTransformed);
 	
@@ -1235,6 +1237,7 @@ void AbilityManager2 :: InitFunctionTables(void)
 	InsertVerifier("NotStatus", ABVerifier(ABVerifier::EFFECT));          //NotStatus(effectName)
 	InsertVerifier("Interrupt", ABVerifier());                            //Interrupt()
 
+	InsertVerifier("Scale",   ABVerifier(ABVerifier::AMOUNT, ABVerifier::TIME));  //Scale(amount, time)
 	InsertVerifier("Add",     ABVerifier(ABVerifier::STATID, ABVerifier::AMOUNT, ABVerifier::TIME));  //Add(statID, amount, time)
 	InsertVerifier("Set",     ABVerifier(ABVerifier::STATID, ABVerifier::AMOUNT, ABVerifier::TIME));  //Set(statID, amount, time)
 	InsertVerifier("Amp",     ABVerifier(ABVerifier::STATID, ABVerifier::AMOUNT, ABVerifier::TIME));  //Amp(statID, amount, time)
@@ -3309,6 +3312,18 @@ int AbilityCalculator :: Nudify(ARGUMENT_LIST args)
 	int buffType = ResolveBuffCategoryID(mAbilityEntry->GetRowAsCString(ABROW::BUFF_CATEGORY));
 	ActiveBuff * buff = ciTarget->AddMod(mAbilityEntry->mTier, buffType, mAbilityEntry->mAbilityID, mAbilityEntry->mAbilityGroupID, timeSec);
 	ciSource->CAF_Nudify(buff->durationS);
+	return ABILITY_SUCCESS;
+}
+
+//Action.  Scale the player
+int AbilityCalculator :: Scale(ARGUMENT_LIST args)
+{
+	g_Log.AddMessageFormat("Nudify");
+	int timeSec = static_cast<int>(args.GetEvaluation(0, &g_AbilityManager));
+	float scale = args.GetFloat(1);
+	int buffType = ResolveBuffCategoryID(mAbilityEntry->GetRowAsCString(ABROW::BUFF_CATEGORY));
+	ActiveBuff * buff = ciTarget->AddMod(mAbilityEntry->mTier, buffType, mAbilityEntry->mAbilityID, mAbilityEntry->mAbilityGroupID, timeSec);
+	ciSource->CAF_Scale(scale, buff->durationS);
 	return ABILITY_SUCCESS;
 }
 

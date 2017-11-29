@@ -7640,6 +7640,21 @@ bool CreatureInstance :: CAF_Nudify(int durationS)
 	return true;
 
 }
+bool CreatureInstance :: CAF_Scale(float scale, int durationS)
+{
+	if(transformModifier != NULL) {
+		g_Log.AddMessageFormat("%d already transformed", CreatureDefID);
+		return false;
+	}
+	g_Log.AddMessageFormat("Scaling %d (app is %s) to %f", CreatureDefID, css.appearance.c_str(), scale);
+	char buf[64];
+	Util::SafeFormat(buf,sizeof(buf),"%f", scale);
+	transformModifier = new CreatureAttributeModifier("sz", buf);
+	_AddStatusList(StatusEffects::TRANSFORMED, durationS);
+	PushAppearanceModifier(transformModifier);
+	return true;
+
+}
 
 bool CreatureInstance :: CAF_Transform(int CDefID, int abID, int durationS)
 {

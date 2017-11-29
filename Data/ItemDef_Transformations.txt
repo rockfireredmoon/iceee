@@ -169,16 +169,31 @@ mFlavorText=A Reusable skill scroll that transforms you into a Vampider, increas
 Params=verifycast=1&keep=1
 
 [ENTRY]
-mID=50006
+mID=50013
 mType=5
-mDisplayName=Potion of The Felines' Form
-mIcon=Icon-32-Potion_Short_Green.png|Icon-32-BG-Red.png
+mDisplayName=Eat Me
+mIcon=Icon-32-Cake.png|Icon-32-BG-Blue.png
 mIvType1=1
 mIvMax1=20
 mLevel=10
 mBindingType=1
-mUseAbilityId=27004
+mUseAbilityId=27011
 mValue=800
-mFlavorText=Transforms you into a feral form, increasing movement speed by 50% for 10 minutes. 
+mFlavorText=Has an unexpected effect.
+mQualityLevel=1
+mMinUseLevel=10
+
+[ENTRY]
+mID=50014
+mType=5
+mDisplayName=Drink Me
+mIcon=Icon-32-Potion_Short_Green.png|Icon-32-BG-Blue.png
+mIvType1=1
+mIvMax1=20
+mLevel=10
+mBindingType=1
+mUseAbilityId=27012
+mValue=800
+mFlavorText=Has an unexpected effect.
 mQualityLevel=1
 mMinUseLevel=10
