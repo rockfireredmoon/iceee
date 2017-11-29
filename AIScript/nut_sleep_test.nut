@@ -20,7 +20,7 @@ function have_target() {
 	 * future versions). 
 	 */
 	if(ai.sleep(10000)) {
-		 print("Interrupt " + err);
+		 print("Interrupt");
 	 	 return;
 	}
 	

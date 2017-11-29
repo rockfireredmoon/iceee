@@ -375,12 +375,21 @@ namespace ScriptCore
 		mCalls = 0;
 		mRunning = false;
 		mHalting = false;
+		mHalted = false;
 		mNextId = 1;
 		mCaller = 0;
+		mSuspendTop = 0;
 	}
 
 	NutPlayer::~NutPlayer() {
 		ClearQueue();
+		if(mHalted) {
+			if(def == NULL)
+				g_Log.AddMessageFormat("Closing virtual machine for unitialized Squirrel Script");
+			else
+				g_Log.AddMessageFormat("Closing virtual machine for %s", def->mSourceFile.c_str());
+			sq_close(vm);
+		}
 	}
 
 	std::string NutPlayer::GetStatus() {
@@ -730,11 +739,11 @@ namespace ScriptCore
 			HaltDerivedExecution();
 			mActive = false;
 			ClearQueue();
-			sq_close(vm);
 			if(def->HasFlag(NutDef::FLAG_REPORT_END))
 				PrintMessage("Script [%s] has halted", def->scriptName.c_str());
 			mHalting = false;
 			HaltedDerived();
+			mHalted = true;
 		}
 	}
 
@@ -855,6 +864,8 @@ namespace ScriptCore
 	}
 
 	bool NutPlayer::DoRunFunction(std::string name, std::vector<ScriptParam> parms, bool time, bool retVal) {
+		if(g_Config.DebugVerbose)
+			g_Log.AddMessageFormat("Run function %s in %s", name.c_str(), def->mSourceFile.c_str());
 		sq_pushroottable(vm);
 		sq_pushstring(vm,_SC(name.c_str()),-1);
 		if(SQ_SUCCEEDED(sq_get(vm,-2))) {

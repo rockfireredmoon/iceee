@@ -476,6 +476,7 @@ public:
 	bool mHalting; //If true, the script is currently halting (subsequent halts will do nothing).
 	bool mExecuting;
 	bool mRunning; //If true, a function call is currently running (will make halts be queued)
+	bool mHalted; //If true, VM is halted
 	unsigned long mNextId;
 	PauseCondition *mPause; // If non-null is the current pause condition
 	long mSleeping; // If non-zero, how long the VM is sleeping for
