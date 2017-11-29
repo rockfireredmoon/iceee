@@ -477,7 +477,11 @@ int InitServerMain() {
 	}
 #endif
 
-	PLATFORM_GETCWD(g_WorkingDirectory, 256);
+	if(PLATFORM_GETCWD(g_WorkingDirectory, 256) == NULL) {
+		printf("Failed to get working directory");
+		return 0;
+	}
+
 	bcm.mlog.reserve(100);
 
 	LOG_OPEN();
@@ -1445,11 +1449,11 @@ void Debug_OutputCharacter(FILE *output, int index, CreatureInstance *cInst)
 	fprintf(output, "    Might: %d (%d), Will: %d (%d)\r\n", cInst->css.might, cInst->css.might_charges, cInst->css.will, cInst->css.will_charges);
 	fflush(output);
 	if(cInst->charPtr != NULL) {
-		fprintf(output, "    Available quests: %d\r\n", cInst->charPtr->questJournal.availableQuests.itemList.size());
+		fprintf(output, "    Available quests: %lu\r\n", cInst->charPtr->questJournal.availableQuests.itemList.size());
 		fflush(output);
-		fprintf(output, "    Available soon quests: %d\r\n", cInst->charPtr->questJournal.availableSoonQuests.itemList.size());
+		fprintf(output, "    Available soon quests: %lu\r\n", cInst->charPtr->questJournal.availableSoonQuests.itemList.size());
 		fflush(output);
-		fprintf(output, "    Active quests: %d\r\n", cInst->charPtr->questJournal.activeQuests.itemList.size());
+		fprintf(output, "    Active quests: %lu\r\n", cInst->charPtr->questJournal.activeQuests.itemList.size());
 		fflush(output);
 		QuestReferenceContainer act = cInst->charPtr->questJournal.activeQuests;
 		for(std::vector<QuestReference>::iterator it = act.itemList.begin(); it != act.itemList.end(); ++it) {

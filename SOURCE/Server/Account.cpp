@@ -1138,9 +1138,7 @@ const char * AccountManager :: GetCharacterErrorMessage(int message)
 	{
 	case CHARACTER_SUCCESS: return "OK";
 	case CHARACTER_INVQUERY: return "Invalid or malformed query.";
-	case CHARACTER_NOSLOTS: return {
-		"No free character slots. You may purchase additional slots from the Credit Shop, up to a total of 8."
-	};
+	case CHARACTER_NOSLOTS: return 	"No free character slots. You may purchase additional slots from the Credit Shop, up to a total of 8.";
 	case CHARACTER_FIRSTINV: return "Invalid first name.";
 	case CHARACTER_FIRSTSHORT: return "First name is too short.";
 	case CHARACTER_FIRSTLONG: return "First name is too long.";

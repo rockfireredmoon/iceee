@@ -156,6 +156,7 @@ PetDef :: PetDef()
 	mCreatureDefID = 0;
 	mLevel = 0;
 	mCost = 0;
+	mItemDefID = 0;
 }
 
 void PetDef	:: Clear(void)

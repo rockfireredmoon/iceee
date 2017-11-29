@@ -145,6 +145,9 @@ PacketManager :: PacketManager()
 	mCountForceDelay = 0;
 	mCountForceDelayAck = 0;
 
+	mClusterPackets = 0;
+	mClusterPacketBytes = 0;
+
 	mTotalWait = 0;
 	cs.Init();
 }

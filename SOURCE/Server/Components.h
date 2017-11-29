@@ -246,8 +246,8 @@ private:
 namespace Platform
 {
 	//Need these since maximums vary on 32 or 64 bit systems.
-	static const unsigned char MAX_UCHAR = (unsigned char)(~0);
-	static const char MAX_CHAR = MAX_UCHAR >> 1;
+	///static const unsigned char MAX_UCHAR = (unsigned char)(~0);
+	//static const char MAX_CHAR = MAX_UCHAR >> 1;
 
 	static const unsigned short MAX_USHORT = (unsigned short)(~0);
 	static const short MAX_SHORT = MAX_USHORT >> 1;
@@ -255,8 +255,8 @@ namespace Platform
 	static const unsigned int MAX_UINT = (unsigned int)(~0);
 	static const int MAX_INT = MAX_UINT >> 1;
 
-	static const unsigned long MAX_ULONG = (unsigned long)(~0);
-	static const long MAX_LONG = MAX_ULONG >> 1;
+	//static const unsigned long MAX_ULONG = (unsigned long)(~0);
+	//static const long MAX_LONG = MAX_ULONG >> 1;
 }
 
 extern PlatformTime g_PlatformTime;
