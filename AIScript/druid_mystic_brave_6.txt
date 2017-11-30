@@ -1,0 +1,43 @@
+#name druid_mystic_brave_6
+
+; 5044 - Root, 6 will
+; 5045 - Spirit of Solomon, 5 will, buff
+; 5198 - Soul Needles, 3 will, add 1 wcharge
+; 5299 - Soul Burst, 1 will, need 1-3 wcharge
+; 32760 - ranged melee
+; 32766 - melee
+
+set var 0
+use 5045
+use 32760
+
+:begin
+call waitfortarget
+use 32760
+
+getwillcharge var
+if var >= 2
+  use 5299
+  wait 1000
+endif
+
+getwill var
+;;if var >= 9
+;;  use 5044
+;;  wait 2000
+;;endif
+
+if var >= 3
+  use 5198
+  wait 2000
+endif
+
+goto begin
+
+:waitfortarget
+has_target var
+if var = 0
+  wait 2000
+  goto waitfortarget
+endif
+return
