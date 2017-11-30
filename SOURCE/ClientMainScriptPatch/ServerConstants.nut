@@ -1923,3 +1923,4 @@ this.gStopAutoAttackId <- 32759;
 this.gMeleeAttackId <- 32766;
 this.gRangedAttackId <- 32760;
 this.gVendorMarkup <- 2.5;
+this.gMaxObjectives <- 6;

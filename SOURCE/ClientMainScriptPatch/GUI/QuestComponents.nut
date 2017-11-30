@@ -71,10 +71,9 @@ class this.GUI.QuestObjectives extends this.GUI.Component
 {
 	mObjectiveStatus = null;
 	mObjectiveComponents = null;
-	static C_MAX_OBJECTIVES = 3;
 	static C_OBJECTIVE_HEIGHT = 32;
 	static C_BASE_WIDTH = 400;
-	static C_BASE_HEIGHT = 140;
+	static C_BASE_HEIGHT = 260;
 	static C_OBJECTIVE_LABEL_WIDTH = 400 - 60;
 	static QuestButtonType = {
 		DEFAULT_EMPTY_BOX = 0,
@@ -97,7 +96,7 @@ class this.GUI.QuestObjectives extends this.GUI.Component
 		objectiveTitleLabel.setFont(this.GUI.Font("Maiandra", 20));
 		this.add(objectiveTitleLabel);
 
-		for( local i = 0; i < this.C_MAX_OBJECTIVES; i++ )
+		for( local i = 0; i < this.gMaxObjectives; i++ )
 		{
 			local objComp = this._createObjectiveComponent(i);
 			this.mObjectiveComponents.append(objComp);
@@ -156,7 +155,7 @@ class this.GUI.QuestObjectives extends this.GUI.Component
 
 	function updateObjectiveComponent( objectiveIndex, text, isFinished, ... )
 	{
-		if (objectiveIndex < 0 || objectiveIndex >= this.C_MAX_OBJECTIVES)
+		if (objectiveIndex < 0 || objectiveIndex >= this.gMaxObjectives)
 		{
 			return;
 		}

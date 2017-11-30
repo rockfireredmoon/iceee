@@ -1429,7 +1429,7 @@ int CheckSection_Quest(FileReader &fr, CharacterData &cd, const char *debugFilen
 		//    active=id,act,obj1comp,obj1count,obj2comp,obj2count,obj3comp,obj3count
 		newItem.QuestID = fr.BlockToIntC(1);
 		newItem.CurAct = fr.BlockToIntC(2);
-		for(int a = 0; a < 3; a++ )
+		for(int a = 0; a < MAXOBJECTIVES; a++ )
 		{
 			int offset = a * 2;
 			complete = fr.BlockToIntC(3 + offset);
@@ -1754,7 +1754,7 @@ void SaveCharacterToStream(FILE *output, CharacterData &cd)
 	{
 		QuestReference &qref = cd.questJournal.activeQuests.itemList[a];
 		fprintf(output, "active=%d,%d", qref.QuestID, qref.CurAct);
-		for(b = 0; b < 3; b++)
+		for(b = 0; b < MAXOBJECTIVES; b++)
 		{
 			int comp = qref.ObjComplete[b];
 			int count = qref.ObjCounter[b];

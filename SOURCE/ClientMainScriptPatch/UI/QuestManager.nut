@@ -663,8 +663,9 @@ class this.QuestManager extends this.DefaultQueryHandler
 		}
 
 		local objectives = [];
+		local oEnd = 13 + ( this.gMaxObjectives * 6 );
 
-		for( local i = 13; i < 31; i = i + 6 )
+		for( local i = 13; i < oEnd; i = i + 6 )
 		{
 			if (row[i] != "")
 			{
@@ -719,7 +720,7 @@ class this.QuestManager extends this.DefaultQueryHandler
 
 		local rewards = [];
 
-		for( local i = 31; i < 35; i++ )
+		for( local i = oEnd; i < oEnd + 4; i++ )
 		{
 			if (row[i] != "")
 			{
@@ -776,13 +777,13 @@ class this.QuestManager extends this.DefaultQueryHandler
 		{
 			this._handleQuestDataReceiveV3(row);
 		}
-		else if (row.len() == 35)
+		else if (row.len() == (17 + (this.gMaxObjectives * 6)))
 		{
 			this._handleQuestDataReceiveV4(row);
 		}
 		else
 		{
-			throw this.Exception("No longer supported");
+			throw this.Exception("No longer supported. Got " + row.len() + ", expect (for V4) " + (17 + (this.gMaxObjectives * 6)));
 		}
 	}
 

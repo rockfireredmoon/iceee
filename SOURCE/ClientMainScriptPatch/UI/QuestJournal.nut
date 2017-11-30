@@ -21,10 +21,10 @@ class this.Screens.QuestJournal extends this.GUI.Frame
 	mBootstrapQuest = null;
 	static MAX_MARKERS = 4;
 	static C_QUEST_LIST_WIDTH = 250;
-	static C_BASE_HEIGHT = 420;
+	static C_BASE_HEIGHT = 540;
 	static C_BASE_WIDTH = 665;
 	static C_ICON_SIZE = 18;
-	static C_MAX_QUESTS = 15;
+	static C_MAX_QUESTS = 22;
 	static C_QUEST_ITEM_TITLE_STR = "QuestItemTitleLabel";
 	static C_QUEST_PARTY_SIZE_STR = "QuestItemPartySize";
 	static C_MARKER_CHECKBOX_STR = "MarkerCheckBox";

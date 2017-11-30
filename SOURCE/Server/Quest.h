@@ -134,8 +134,8 @@ struct QuestReference
 	int QuestID;
 	int CreatureDefID;  //Typically the quest giver ID
 	QuestDefinition *DefPtr;
-	short ObjCounter[3];    // Number of objects killed/gathered/activated.
-	char ObjComplete[3];    // Objective completed.
+	short ObjCounter[MAXOBJECTIVES];    // Number of objects killed/gathered/activated.
+	char ObjComplete[MAXOBJECTIVES];    // Objective completed.
 	char Complete;
 	short CurAct;
 	QuestReference()
@@ -372,7 +372,7 @@ struct QuestObjective
 
 struct QuestAct
 {
-	QuestObjective objective[3];
+	QuestObjective objective[MAXOBJECTIVES];
 	std::string BodyText;  //Each act has custom body text that differs from the "genericdata" text.
 	~QuestAct()
 	{
@@ -380,7 +380,7 @@ struct QuestAct
 	}
 	void Clear(void)
 	{
-		for(int a = 0; a < 3; a++)
+		for(int a = 0; a < MAXOBJECTIVES; a++)
 			objective[a].Clear();
 		BodyText.clear();
 	}
