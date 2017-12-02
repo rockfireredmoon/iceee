@@ -2826,6 +2826,8 @@ bool SimulatorThread :: HandleQuery(int &PendingData)
 		PendingData = handle_query_team();
 	else if(query.name.compare("book.list") == 0)
 		PendingData = handle_book_list();
+	else if(query.name.compare("book.item") == 0)
+		PendingData = handle_book_item();
 	else if(query.name.compare("book.get") == 0)
 		PendingData = handle_book_get();
 	else if(query.name.compare("form.submit") == 0)
@@ -3195,13 +3197,26 @@ int SimulatorThread :: handle_book_get(void)
 		int slot = inv.containerList[INV_CONTAINER][a].GetSlot();
 		int ID = inv.containerList[INV_CONTAINER][a].IID;
 		ItemDef *itemDef = inv.containerList[INV_CONTAINER][a].ResolveSafeItemPtr();
-		if(itemDef != NULL) {
-			if(itemDef->mIvType1 == ItemIntegerType::BOOK_PAGE && itemDef->mIvMax1 == def.bookID && pagesFoundSet.find(itemDef->mIvMax2) == pagesFoundSet.end()) {
+		if(itemDef != NULL && itemDef->mType == ItemType::SPECIAL) {
+			int pageNo = itemDef->GetDynamicMax(ItemIntegerType::BOOK_PAGE);
+			if(itemDef->GetDynamicMax(ItemIntegerType::BOOK_PAGE) == -1 && itemDef->GetDynamicMax(ItemIntegerType::BOOK) == def.bookID) {
+				/* An item with ItemIntegerType::BOOK but NO ItemIntegerType::BOOK_PAGE is a complete book, so return all the pages */
+				for(int i = 0 ; i < def.pages.size(); i++) {
+					pagesFoundSet.insert(itemDef->mIvMax2);
+					wpos += PutByte(&SendBuf[wpos], 2);
+					Util::SafeFormat(Aux2, sizeof(Aux2), "%d", i);
+					wpos += PutStringUTF(&SendBuf[wpos], Aux2);
+					wpos += PutStringUTF(&SendBuf[wpos], def.pages[i].c_str());
+					pagesFound++;
+				}
+			}
+			else if(itemDef->GetDynamicMax(ItemIntegerType::BOOK) == def.bookID && pageNo > 0 && pagesFoundSet.find(pageNo) == pagesFoundSet.end()) {
+				/* An item with ItemIntegerType::BOOK and a ItemIntegerType::BOOK_PAGE is book page, so return just the pages */
 				pagesFoundSet.insert(itemDef->mIvMax2);
 				wpos += PutByte(&SendBuf[wpos], 2);
-				Util::SafeFormat(Aux2, sizeof(Aux2), "%d", itemDef->mIvMax2 - 1);
+				Util::SafeFormat(Aux2, sizeof(Aux2), "%d", pageNo - 1);
 				wpos += PutStringUTF(&SendBuf[wpos], Aux2);
-				wpos += PutStringUTF(&SendBuf[wpos], def.pages[itemDef->mIvMax2 - 1].c_str());
+				wpos += PutStringUTF(&SendBuf[wpos], def.pages[pageNo - 1].c_str());
 				pagesFound++;
 			}
 		}
@@ -3209,6 +3224,50 @@ int SimulatorThread :: handle_book_get(void)
 	PutShort(&SendBuf[7], pagesFound);
 	PutShort(&SendBuf[1], wpos - 3);
 	return wpos;
+}
+
+int SimulatorThread :: handle_book_item(void)
+{
+	if (query.argCount < 1)
+		return PrepExt_QueryResponseError(SendBuf, query.ID,
+				"Invalid query");
+
+
+	g_Log.AddMessageFormat("REMOVEME Book item request %s", query.GetString(0));
+
+	ItemDef *itemDef = g_ItemManager.GetSafePointerByID(atoi(query.GetString(0)));
+	if(itemDef == NULL)
+		return PrepExt_QueryResponseError(SendBuf, query.ID,
+				"Invalid item");
+
+
+	if(itemDef->mType == ItemType::SPECIAL) {
+		int book = itemDef->GetDynamicMax(ItemIntegerType::BOOK);
+		g_Log.AddMessageFormat("REMOVEME For Book %d", book);
+		if(book > -1) {
+			ItemManager::ITEM_CONT::iterator it;
+			for(it = g_ItemManager.ItemList.begin(); it != g_ItemManager.ItemList.end(); ++it)
+			{
+				if(it->second.GetDynamicMax(ItemIntegerType::BOOK) == book)
+				{
+					WritePos = 0;
+					WritePos += PutByte(&SendBuf[WritePos], 1);       //_handleQueryResultMsg
+					WritePos += PutShort(&SendBuf[WritePos], 0);      //Message size
+					WritePos += PutInteger(&SendBuf[WritePos], query.ID);  //Query response index
+					sprintf(Aux2, "%d", it->second.mID);
+					WritePos += PutShort(&SendBuf[WritePos], 1);      //Array count
+					WritePos += PutByte(&SendBuf[WritePos], 1);       //String count
+					WritePos += PutStringUTF(&SendBuf[WritePos], Aux2);  //ID
+					PutShort(&SendBuf[1], WritePos - 3);             //Set message size
+					g_Log.AddMessageFormat("REMOVEME Sending %d", WritePos);
+					return WritePos;
+				}
+			}
+		}
+	}
+
+	return PrepExt_QueryResponseError(SendBuf, query.ID,
+			"Not a book item");
 }
 
 int SimulatorThread :: handle_book_list(void)
@@ -3225,11 +3284,13 @@ int SimulatorThread :: handle_book_list(void)
 		int slot = inv.containerList[INV_CONTAINER][a].GetSlot();
 		int ID = inv.containerList[INV_CONTAINER][a].IID;
 		ItemDef *itemDef = inv.containerList[INV_CONTAINER][a].ResolveSafeItemPtr();
-		if(itemDef != NULL) {
-			if(itemDef->mIvType1 == ItemIntegerType::BOOK_PAGE && booksFound.find(itemDef->mIvMax1) == booksFound.end()) {
+		if(itemDef != NULL && itemDef->mType == ItemType::SPECIAL) {
+			int book = itemDef->GetDynamicMax(ItemIntegerType::BOOK);
+			if(book > -1 && booksFound.find(itemDef->mIvMax1) == booksFound.end()) {
+				/* An item with ItemIntegerType::BOOK but NO ItemIntegerType::BOOK_PAGE is a complete book, so just add it */
+				booksFound.insert(book);
 				BookDefinition def = g_BookManager.GetBookDefinition(itemDef->mIvMax1);
 				if(def.bookID > 0) {
-					booksFound.insert(itemDef->mIvMax1);
 					wpos += PutByte(&SendBuf[wpos], 3);
 					Util::SafeFormat(Aux2, sizeof(Aux2), "%d", def.bookID);
 					wpos += PutStringUTF(&SendBuf[wpos], Aux2);
@@ -3562,6 +3623,8 @@ int SimulatorThread :: handle_query_item_contents(void)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Invalid query.");
 
 	const char *contName = query.args[0].c_str();
+
+	g_Log.AddMessageFormat("REMOVEME loading inventory from %s", contName);
 
 	int contID = GetContainerIDFromName(contName);
 	if(contID == -1)
@@ -4233,6 +4296,8 @@ int SimulatorThread :: handle_query_item_move(void)
 	int destContainer = GetContainerIDFromName(query.args[1].c_str());
 	int destSlot = strtol(query.args[2].c_str(), NULL, 10);
 
+	g_Log.AddMessageFormat("REMOVEME Move %d:%d to %d:%d (%s)", origContainer, origSlot, destContainer, destSlot, query.args[1].c_str());
+
 	if(destContainer == -1)
 	{
 		LogMessageL(MSG_ERROR, "[ERROR] item.move: unknown destination container [%s] for CCSID [%lu]", query.args[0].c_str(), CCSID);
@@ -4417,8 +4482,8 @@ int SimulatorThread :: handle_query_item_delete(void)
 		}
 
 		// If the item is a book page, then inform the client the book is gone
-		if(itemDef->mType == ItemType::SPECIAL && itemDef->mIvType1 == ItemIntegerType::BOOK_PAGE) {
-			AttemptSend(SendBuf, PrepExt_SendBookOpen(SendBuf, itemDef->mIvMax1, itemDef->mIvMax2 - 1, 3));
+		if(itemDef->mType == ItemType::SPECIAL && itemDef->GetDynamicMax(ItemIntegerType::BOOK) > -1) {
+			AttemptSend(SendBuf, PrepExt_SendBookOpen(SendBuf, itemDef->GetDynamicMax(ItemIntegerType::BOOK), itemDef->GetDynamicMax(ItemIntegerType::BOOK_PAGE) - 1, 3));
 		}
 	}
 
@@ -7395,8 +7460,8 @@ int SimulatorThread :: UseItem(unsigned int CCSID)
 			AttemptSend(Aux1, PrepExt_Refashion(Aux1));
 			removeOnUse = false;
 		}
-		else if(itemDef->mType == ItemType::SPECIAL && itemDef->mIvType1 == ItemIntegerType::BOOK_PAGE) {
-			AttemptSend(Aux1, PrepExt_SendBookOpen(Aux1, itemDef->mIvMax1, itemDef->mIvMax2 - 1, 1));
+		else if(itemDef->mType == ItemType::SPECIAL && itemDef->GetDynamicMax(ItemIntegerType::BOOK) > -1) {
+			AttemptSend(Aux1, PrepExt_SendBookOpen(Aux1, itemDef->GetDynamicMax(ItemIntegerType::BOOK), itemDef->GetDynamicMax(ItemIntegerType::BOOK_PAGE) - 1, 1));
 			removeOnUse = false;
 		}
 		else {
@@ -14807,6 +14872,7 @@ int SimulatorThread :: handle_query_mod_craft(void)
 		if(itemDef == NULL)
 			continue;
 
+		g_Log.AddMessageFormat("REMOVEME Adding craft input %d : %d", itemID, stackCount);
 		inputs.push_back(CraftInputSlot(CCSID, itemID, stackCount, itemDef));
 	}
 	if(inputs.size() == 0)
@@ -15793,8 +15859,8 @@ bool SimulatorThread :: ActivateActionAbilities(InventorySlot *slot)
 		if(itemDef->mActionAbilityId != 0)
 			return creatureInst->RequestAbilityActivation(itemDef->mActionAbilityId) == Ability2::ABILITY_SUCCESS;
 		else {
-			if(itemDef->mType == ItemType::SPECIAL && itemDef->mIvType1 == ItemIntegerType::BOOK_PAGE) {
-				AttemptSend(Aux1, PrepExt_SendBookOpen(Aux1, itemDef->mIvMax1, itemDef->mIvMax2 - 1, 2));
+			if(itemDef->mType == ItemType::SPECIAL && itemDef->GetDynamicMax(ItemIntegerType::BOOK) > -1) {
+				AttemptSend(Aux1, PrepExt_SendBookOpen(Aux1, itemDef->GetDynamicMax(ItemIntegerType::BOOK), itemDef->GetDynamicMax(ItemIntegerType::BOOK_PAGE) - 1, 2));
 			}
 		}
 		return true;

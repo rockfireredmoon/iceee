@@ -792,6 +792,30 @@ this.Util.findMatchingContainer <- function ( containerName, ... )
 		if (vault)
 			actionContainer = vault.getDeliveryBoxContainer();
 	}
+	else if (containerName == "bookshelf")
+	{
+		local vault = this.Screens.get("Books", true);
+		if (vault)
+			actionContainer = vault.getBookshelfContainer();
+	}
+	else if (containerName == "book_binding")
+	{
+		local vault = this.Screens.get("Books", true);
+		if (vault)
+			actionContainer = vault.getBookBindingContainer();
+	}
+	else if (containerName == "book_binding_mats")
+	{
+		local vault = this.Screens.get("Books", true);
+		if (vault)
+			actionContainer = vault.getBookBindingMatsContainer();
+	}
+	else if (containerName == "advcraft")
+	{
+		local vault = this.Screens.get("CraftingWindow", true);
+		if (vault)
+			actionContainer = vault.getAdvCraftContainer();
+	}
 	else if (containerName == "stamps")
 	{
 		local vault = this.Screens.get("Vault", true);

@@ -659,11 +659,16 @@ class Screens.Vault extends GUI.BigFrame
 		mVaultContainer.addMovingToProperties("stamps", MoveToProperties(MovementTypes.MOVE));
 		mVaultContainer.addMovingToProperties("inventory", MoveToProperties(MovementTypes.MOVE));
 		mVaultContainer.addMovingToProperties("vault", MoveToProperties(MovementTypes.MOVE));
+		mVaultContainer.addMovingToProperties("bookshelf", MoveToProperties(MovementTypes.MOVE));
+		mVaultContainer.addMovingToProperties("advcraft", MoveToProperties(MovementTypes.LOCK));
+		mVaultContainer.addMovingToProperties("book_binding", MoveToProperties(MovementTypes.LOCK));
+		mVaultContainer.addMovingToProperties("book_binding_mats", MoveToProperties(MovementTypes.LOCK));
 		mVaultContainer.addMovingToProperties("deliveryBox", MoveToProperties(MovementTypes.MOVE));
 		
 		mVaultContainer.addAcceptingFromProperties("stamps", AcceptFromProperties(this));
 		mVaultContainer.addAcceptingFromProperties("inventory", AcceptFromProperties(this));
 		mVaultContainer.addAcceptingFromProperties("vault", AcceptFromProperties(this));
+		mVaultContainer.addAcceptingFromProperties("bookshelf", AcceptFromProperties(this));
 		mVaultContainer.addAcceptingFromProperties("deliveryBox", AcceptFromProperties(this));
 		
 		mDeliveryBoxAC.addMovingToProperties("inventory", MoveToProperties(MovementTypes.MOVE));

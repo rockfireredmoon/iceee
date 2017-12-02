@@ -368,6 +368,7 @@ public:
 	int handle_query_mode(void);
 	int handle_query_team(void);
 	int handle_book_list(void);
+	int handle_book_item(void);
 	int handle_book_get(void);
 	int handle_form_submit(void);
 

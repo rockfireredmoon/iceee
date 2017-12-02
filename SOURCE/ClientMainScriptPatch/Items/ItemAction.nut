@@ -424,7 +424,7 @@ class ItemAction extends Action {
 			mName = itemDefData.mDisplayName;
 		}
 
-		if(itemDefData && itemDefData.mIvType1 ==  ItemIntegerType.BOOK_PAGE) {
+		if(itemDefData && itemDefData.getDynamicMax(ItemIntegerType.BOOK) != null) {
 			// Book pages can always be used
 			mNumUses = 1;
 			mIsStacking = false;

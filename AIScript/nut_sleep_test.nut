@@ -35,7 +35,7 @@ function have_target() {
 }
 
 function poll() {
-	print("POLL!\n");
+//	print("POLL!\n");
 	ai.queue(poll, 1000);
 }
 

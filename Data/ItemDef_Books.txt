@@ -12,7 +12,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=1
 mIvMax2=1
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500001
@@ -27,7 +28,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=2
 mIvMax2=1
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500002
@@ -42,7 +44,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=2
 mIvMax2=2
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500003
@@ -57,7 +60,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=2
 mIvMax2=3
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500004
@@ -72,7 +76,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=3
 mIvMax2=1
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500005
@@ -87,7 +92,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=3
 mIvMax2=2
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500006
@@ -102,7 +108,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=3
 mIvMax2=3
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500007
@@ -117,7 +124,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=3
 mIvMax2=4
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500008
@@ -132,7 +140,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=4
 mIvMax2=1
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500009
@@ -147,7 +156,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=5
 mIvMax2=1
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 
 [ENTRY]
@@ -163,7 +173,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=5
 mIvMax2=2
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500011
@@ -178,8 +189,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=5
 mIvMax2=3
-mIvType1=11
-
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500012
@@ -194,7 +205,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=5
 mIvMax2=4
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500013
@@ -209,7 +221,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=5
 mIvMax2=5
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500014
@@ -224,7 +237,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=5
 mIvMax2=6
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500015
@@ -239,7 +253,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=6
 mIvMax2=1
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500016
@@ -254,7 +269,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=6
 mIvMax2=2
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500017
@@ -269,7 +285,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=6
 mIvMax2=3
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500018
@@ -284,7 +301,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=6
 mIvMax2=4
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500019
@@ -299,7 +317,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=7
 mIvMax2=1
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500020
@@ -314,7 +333,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=8
 mIvMax2=1
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500021
@@ -329,7 +349,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=8
 mIvMax2=2
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500022
@@ -344,7 +365,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=8
 mIvMax2=3
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500023
@@ -359,7 +381,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=9
 mIvMax2=1
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500024
@@ -374,7 +397,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=9
 mIvMax2=2
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500025
@@ -389,7 +413,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=9
 mIvMax2=3
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500026
@@ -404,7 +429,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=9
 mIvMax2=4
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500027
@@ -419,7 +445,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=10
 mIvMax2=1
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500028
@@ -434,7 +461,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=10
 mIvMax2=2
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500029
@@ -449,7 +477,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=10
 mIvMax2=3
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500030
@@ -464,7 +493,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=11
 mIvMax2=1
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500031
@@ -479,7 +509,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=11
 mIvMax2=2
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500032
@@ -494,7 +525,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=11
 mIvMax2=3
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500033
@@ -509,7 +541,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=11
 mIvMax2=4
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500034
@@ -524,7 +557,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=11
 mIvMax2=5
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500035
@@ -539,7 +573,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=11
 mIvMax2=6
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500036
@@ -554,7 +589,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=12
 mIvMax2=1
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500037
@@ -569,7 +605,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=13
 mIvMax2=1
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500038
@@ -584,7 +621,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=14
 mIvMax2=1
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500039
@@ -599,7 +637,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=14
 mIvMax2=2
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500040
@@ -614,7 +653,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=14
 mIvMax2=3
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500041
@@ -629,7 +669,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=14
 mIvMax2=4
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500042
@@ -644,7 +685,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=15
 mIvMax2=1
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500043
@@ -659,7 +701,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=15
 mIvMax2=2
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500044
@@ -674,7 +717,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=15
 mIvMax2=3
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500045
@@ -689,7 +733,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=15
 mIvMax2=4
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500046
@@ -704,7 +749,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=16
 mIvMax2=1
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500047
@@ -719,7 +765,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=16
 mIvMax2=2
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500048
@@ -734,7 +781,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=16
 mIvMax2=3
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500049
@@ -749,7 +797,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=16
 mIvMax2=4
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500050
@@ -764,7 +813,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=17
 mIvMax2=1
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500051
@@ -779,7 +829,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=17
 mIvMax2=2
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500052
@@ -794,7 +845,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=17
 mIvMax2=3
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500053
@@ -809,7 +861,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=18
 mIvMax2=1
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500054
@@ -824,7 +877,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=19
 mIvMax2=1
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500055
@@ -839,7 +893,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=19
 mIvMax2=2
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500056
@@ -854,7 +909,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=19
 mIvMax2=3
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500057
@@ -869,7 +925,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=19
 mIvMax2=4
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500058
@@ -884,7 +941,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=19
 mIvMax2=5
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500059
@@ -899,7 +957,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=19
 mIvMax2=6
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500060
@@ -914,7 +973,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=19
 mIvMax2=7
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500061
@@ -929,7 +989,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=19
 mIvMax2=8
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500062
@@ -944,7 +1005,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=19
 mIvMax2=9
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500063
@@ -959,7 +1021,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=20
 mIvMax2=1
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500064
@@ -974,7 +1037,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=21
 mIvMax2=1
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500065
@@ -989,7 +1053,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=22
 mIvMax2=1
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500066
@@ -1004,7 +1069,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=22
 mIvMax2=2
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500067
@@ -1019,7 +1085,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=23
 mIvMax2=1
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500068
@@ -1034,7 +1101,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=24
 mIvMax2=1
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500069
@@ -1049,7 +1117,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=25
 mIvMax2=1
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500070
@@ -1064,7 +1133,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=26
 mIvMax2=1
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500071
@@ -1079,7 +1149,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=27
 mIvMax2=1
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500072
@@ -1094,7 +1165,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=28
 mIvMax2=1
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500073
@@ -1109,7 +1181,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=29
 mIvMax2=1
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500074
@@ -1124,7 +1197,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=29
 mIvMax2=2
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500075
@@ -1139,7 +1213,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=29
 mIvMax2=3
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500076
@@ -1154,7 +1229,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=29
 mIvMax2=4
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500077
@@ -1169,7 +1245,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=29
 mIvMax2=5
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500078
@@ -1184,7 +1261,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=29
 mIvMax2=6
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500079
@@ -1199,7 +1277,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=29
 mIvMax2=7
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500080
@@ -1214,7 +1293,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=29
 mIvMax2=8
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500081
@@ -1229,7 +1309,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=29
 mIvMax2=9
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500082
@@ -1244,7 +1325,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=30
 mIvMax2=1
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500083
@@ -1259,7 +1341,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=30
 mIvMax2=2
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500084
@@ -1274,7 +1357,8 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=30
 mIvMax2=3
-mIvType1=11
+mIvType1=12
+mIvType2=11
 
 [ENTRY]
 mID=1500085
@@ -1289,4 +1373,68 @@ mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=30
 mIvMax2=4
-mIvType1=11
+mIvType1=12
+mIvType2=11
+
+;
+; Bound Books
+;
+
+[ENTRY]
+mID=1550001
+mType=8
+mDisplayName=Southend Passage Leaflet
+mIcon=Icon-32-Book.png|Icon-32-BG-White.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=2
+mIvType1=12
+
+[ENTRY]
+mID=1550002
+mType=8
+mDisplayName=Complete Book Of Earthend
+mIcon=Icon-32-Book.png|Icon-32-BG-White.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=3
+mIvType1=12
+
+[ENTRY]
+mID=1550003
+mType=8
+mDisplayName=Bound Book of Wilhelm's Crypt
+mIcon=Icon-32-Book.png|Icon-32-BG-White.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=5
+mIvType1=12
+
+;
+; Binding Materials
+;
+
+[ENTRY]
+mID=1560001
+mType=8
+mDisplayName=Basic Book Binding Glue
+mIcon=Icon-32-GlassBottle1.png|Icon-32-BG-Green.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Stickier than Sticky the Stick Insect
+mIvType1=13

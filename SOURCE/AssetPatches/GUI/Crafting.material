@@ -1,0 +1,111 @@
+material DefaultSkin/Crafting/RecipeScroll
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			scene_blend alpha_blend
+			depth_check off
+			fog_override true
+
+			texture_unit
+			{
+				texture Crafting-Recipe_Scroll.png 0
+
+				tex_address_mode clamp
+				filtering none
+			}
+		}
+	}
+}
+
+material DefaultSkin/Crafting/ResultMarker
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			scene_blend alpha_blend
+			depth_check off
+			fog_override true
+
+			texture_unit
+			{
+				texture Crafting-Result_Marker.png 0
+
+				tex_address_mode clamp
+				filtering none
+			}
+		}
+	}
+}
+
+material DefaultSkin/Crafting/ResultMarkerVertical
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			scene_blend alpha_blend
+			depth_check off
+			fog_override true
+
+			texture_unit
+			{
+				texture Crafting-Result_Marker_Vertical.png 0
+
+				tex_address_mode clamp
+				filtering none
+			}
+		}
+	}
+}
+
+material DefaultSkin/Crafting/AddMarker
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			scene_blend alpha_blend
+			depth_check off
+			fog_override true
+
+			texture_unit
+			{
+				texture Crafting-Add_Marker.png 0
+
+				tex_address_mode clamp
+				filtering none
+			}
+		}
+	}
+}
+
+material DefaultSkin/Crafting/DefaultBG
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			scene_blend alpha_blend
+			depth_check off
+			fog_override true
+
+			texture_unit
+			{
+				texture Crafting-Image_Default.png 0
+
+				tex_address_mode clamp
+				filtering none
+			}
+		}
+	}
+}
+
+

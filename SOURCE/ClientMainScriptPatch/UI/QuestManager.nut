@@ -966,7 +966,7 @@ class this.QuestManager extends this.DefaultQueryHandler
 		local valour = row[10].tointeger();
 		local objectives = [];
 
-		for( local i = 11; i < 20; i = i + 3 )
+		for( local i = 11; i < 17 + this.gMaxObjectives; i = i + 3 )
 		{
 			if (row[i] != "")
 			{
@@ -988,10 +988,11 @@ class this.QuestManager extends this.DefaultQueryHandler
 
 		local rewards = [];
 
-		for( local i = 20; i < 24; i++ )
+		for( local i = 17 + this.gMaxObjectives; i < 21 + this.gMaxObjectives; i++ )
 		{
 			if (row[i] != "")
 			{
+				print("ITEMDATA: " + row[i]);
 				local itemData = ::Util.replace(row[i], "id:", "");
 				itemData = ::Util.replace(itemData, " count:", ",");
 				itemData = ::Util.replace(itemData, " required:", ",");
@@ -1046,13 +1047,13 @@ class this.QuestManager extends this.DefaultQueryHandler
 		{
 			this._handleGenericQuestDataReceiveV3(row);
 		}
-		else if (row.len() == 24)
+		else if (row.len() == (21 + this.gMaxObjectives))
 		{
 			this._handleGenericQuestDataReceiveV4(row);
 		}
 		else
 		{
-			throw this.Exception("No longer supported");
+			throw this.Exception("No longer supported. Got " + row.len() + ", expected " + (21 + this.gMaxObjectives));
 		}
 	}
 

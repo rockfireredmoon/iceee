@@ -831,10 +831,14 @@ class this.Screens.Inventory extends this.GUI.ContainerFrame
 		this.mInventoryContainer.addMovingToProperties("creaturetweak_inventory", this.MoveToProperties(this.MovementTypes.MOVE));
 		this.mInventoryContainer.addMovingToProperties("bag_inventory", this.MoveToProperties(this.MovementTypes.MOVE));
 		this.mInventoryContainer.addMovingToProperties("morph_stats", this.MoveToProperties(this.MovementTypes.LOCK));
+		this.mInventoryContainer.addMovingToProperties("advcraft", this.MoveToProperties(this.MovementTypes.LOCK));
 		this.mInventoryContainer.addMovingToProperties("morph_look", this.MoveToProperties(this.MovementTypes.CLONE));
 		this.mInventoryContainer.addMovingToProperties("crafting_list_container", this.MoveToProperties(this.MovementTypes.CLONE));
 		this.mInventoryContainer.addMovingToProperties("vault", this.MoveToProperties(this.MovementTypes.MOVE));
 		this.mInventoryContainer.addMovingToProperties("stamps", this.MoveToProperties(this.MovementTypes.MOVE));
+		this.mInventoryContainer.addMovingToProperties("bookshelf", this.MoveToProperties(this.MovementTypes.MOVE));
+		this.mInventoryContainer.addMovingToProperties("book_binding", this.MoveToProperties(this.MovementTypes.LOCK));
+		this.mInventoryContainer.addMovingToProperties("book_binding_mats", this.MoveToProperties(this.MovementTypes.LOCK));
 		this.mInventoryContainer.addMovingToProperties("delivery", this.MoveToProperties(this.MovementTypes.MOVE));
 		this.mInventoryContainer.addMovingToProperties("market_edit", this.MoveToProperties(this.MovementTypes.CLONE));
 		this.mBagContainer.addMovingToProperties("inventory", this.MoveToProperties(this.MovementTypes.MOVE));
@@ -854,6 +858,7 @@ class this.Screens.Inventory extends this.GUI.ContainerFrame
 		this.mInventoryContainer.addAcceptingFromProperties("loot", this.AcceptFromProperties(this));
 		this.mInventoryContainer.addAcceptingFromProperties("vault", this.AcceptFromProperties(this));
 		this.mInventoryContainer.addAcceptingFromProperties("delivery", this.AcceptFromProperties(this));
+		this.mInventoryContainer.addAcceptingFromProperties("bookshelf", this.AcceptFromProperties(this));
 		this.mInventoryContainer.addAcceptingFromProperties("stamps", this.AcceptFromProperties(this));
 
 		foreach( equipSlotName in this.EquipmentContainerNames )

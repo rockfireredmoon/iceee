@@ -144,6 +144,8 @@ struct ItemDef
 	void Reset();
 	void CopyFrom(ItemDef *source);
 	void ProcessParams(void);
+	int GetDynamicMax(int type);
+
 	bool operator < (const ItemDef &other) const
 	{
 		return (mID < other.mID);
@@ -274,7 +276,9 @@ struct ItemIntegerType
 		REQUIRE_ROLLING		=	8,
 		LIFETIME			=	9,
 		BONUS_VALUE			=	10,
-		BOOK_PAGE			=   11
+		BOOK_PAGE			=   11,
+		BOOK				=   12,
+		BOOK_MATERIAL		=	13
 	};
 };
 
@@ -431,7 +435,9 @@ enum StandardContainerEnum
 	BANK_CONTAINER = 2,
 	BUYBACK_CONTAINER = 4,
 	STAMPS_CONTAINER = 7,
-	DELIVERY_CONTAINER = 8
+	DELIVERY_CONTAINER = 8,
+	AUCTION_CONTAINER = 9,
+	BOOKSHELF_CONTAINER = 10
 };
 
 #define INV_BASESLOTS   24    //All characters start with 24 slots.

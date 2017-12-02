@@ -1547,7 +1547,7 @@ int QuestJournal :: QuestGenericData(char *buffer, int bufsize, char *convBuf, i
 	wpos += PutInteger(&buffer[wpos], QueryIndex); //Query response index
 
 	wpos += PutShort(&buffer[wpos], 1);           //Array count
-	wpos += PutByte(&buffer[wpos], 24);           //String count
+	wpos += PutByte(&buffer[wpos], 21 + MAXOBJECTIVES);           //String count
 
 	wpos += PutStringUTF(&buffer[wpos], StringFromInt(convBuf, qd->questID));   //[0] = Quest ID
 	wpos += PutStringUTF(&buffer[wpos], qd->title.c_str());   //[1] = Title

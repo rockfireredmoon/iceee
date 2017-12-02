@@ -251,6 +251,7 @@ InventorySlot * InventoryManager :: AddItem_Ex(int containerID, int itemID, int 
 		count += GetItemCount(EQ_CONTAINER, itemDef->mID);
 		count += GetItemCount(DELIVERY_CONTAINER, itemDef->mID);
 		count += GetItemCount(STAMPS_CONTAINER, itemDef->mID);
+		count += GetItemCount(BOOKSHELF_CONTAINER, itemDef->mID);
 		if(count >= itemDef->mOwnershipRestriction) {
 			// Already have the limit of this item
 			SetError(ERROR_LIMIT);

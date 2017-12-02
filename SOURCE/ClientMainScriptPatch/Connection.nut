@@ -3277,6 +3277,8 @@ class this.Connection extends this.MessageBroadcaster
 			case 2: 	 			
 				local bookId = data.getInteger();
 				local pageNumber = data.getInteger();
+				if(pageNumber < 0)
+					pageNumber = 0;
 				local bookScreen = this.Screens.get("Books", true);
 				if(bookScreen) {
 					Screens.show("Books");
@@ -3289,6 +3291,8 @@ class this.Connection extends this.MessageBroadcaster
 			case 3:
 				local bookId = data.getInteger();
 				local pageNumber = data.getInteger();
+				if(pageNumber < 0)
+					pageNumber = 0;
 				local bookScreen = this.Screens.get("Books", true);
 				if(bookScreen) {
 					bookScreen.refresh();

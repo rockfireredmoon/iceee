@@ -53,7 +53,10 @@ this.InventoryMapping <- {
 	buyback = 4,
 	trade = 5,
 	stamps = 7,
-	delivery = 8
+	delivery = 8,
+	auction = 9,
+	bookshelf = 10
+	
 };
 this.ItemEquipSlotToAttachmentPoint <- {
 	[this.ItemEquipSlot.WEAPON_MAIN_HAND] = [
@@ -410,7 +413,9 @@ this.ItemIntegerType <- {
 	REQUIRE_ROLLING = 8,
 	LIFETIME = 9,
 	BONUS_VALUE = 10,
-	BOOK_PAGE = 11
+	BOOK_PAGE = 11,
+	BOOK = 12,
+	BOOK_MATERIAL = 13
 };
 this.ItemIntegerTypeNameMapping <- {
 	[this.ItemIntegerType.NONE] = "None",
@@ -424,7 +429,9 @@ this.ItemIntegerTypeNameMapping <- {
 	[this.ItemIntegerType.REQUIRE_ROLLING] = "Require Rolling",
 	[this.ItemIntegerType.LIFETIME] = "Lifetime",
 	[this.ItemIntegerType.BONUS_VALUE] = "Bonus Value",
-	[this.ItemIntegerType.BOOK_PAGE] = "Book Page"
+	[this.ItemIntegerType.BOOK_PAGE] = "Book Page",
+	[this.ItemIntegerType.BOOK] = "Book",
+	[this.ItemIntegerType.BOOK_MATERIAL] = "Book Material"
 };
 this.WeaponType <- {
 	NONE = 0,

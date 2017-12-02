@@ -246,7 +246,7 @@ class ItemDefData {
 		case ItemType.SPECIAL:
 			_addNameRow(component);
 			
-			if(mIvType1 == this.ItemIntegerType.BOOK_PAGE) {
+			if(getDynamicMax(ItemIntegerType.BOOK_PAGE) != null) {
 				_addPageRow(component);
 			}
 

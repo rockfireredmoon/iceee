@@ -149,7 +149,7 @@ namespace WeaponTypeClassRestrictions
 }
 
 //Note: if entries are changed here, then StandardContainerEnum must also be updated.
-const int InventoryMappingCount = 10;
+const int InventoryMappingCount = 11;
 InventoryMappingDef InventoryMapping[InventoryMappingCount] = {
 	{"inv",       0 },
 	{"inventory", 0 },  //When looking up the string from the ID, "inv" needs to take precedence
@@ -160,7 +160,7 @@ InventoryMappingDef InventoryMapping[InventoryMappingCount] = {
 	{"buyback",   4 },
 	{"trade",     5 },
 	{"stamps",    7 },
-	{"delivery",  8 }
+	{"bookshelf", 9 }
 };
 
 
@@ -450,6 +450,17 @@ void ItemDef :: Reset(void)
 	mMinUseLevel = 0;
 
 	Params.clear();
+}
+
+int ItemDef :: GetDynamicMax(int type ) {
+
+	if (mIvType1 == type)
+		return mIvMax1;
+
+	if (mIvType2 == type)
+		return mIvMax2;
+
+	return -1;
 }
 
 void ItemDef :: CopyFrom(ItemDef *source)

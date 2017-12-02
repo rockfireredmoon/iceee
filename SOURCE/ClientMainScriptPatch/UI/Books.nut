@@ -75,7 +75,14 @@ class Screens.Books extends GUI.Frame {
 	mSelectPageOnLoad = null;
 	mLoaded = false;
 	mAdjusting = false;
-	mInited = false; 
+	mInited = false;
+	mTabPane = null; 
+	mBookShelf = null;
+	mBookInventory = null;
+	mBindingContainer = null;
+	mButtonBind = null;	
+	mBindingAgentsContainer = null;
+	mCompleteBookContainer = null;
 	
 	constructor() {
 		GUI.Frame.constructor("Books");
@@ -154,8 +161,220 @@ class Screens.Books extends GUI.Frame {
 		mScreenContainer.add(listScrollArea);
 		mScreenContainer.add(readerBox);
 		
-		setContentPane(mScreenContainer);
+		// Binding
+		mBindingAgentsContainer = GUI.ActionContainer("book_binding_mats", 4, 1, 0, 0, this, true);
+		mBindingAgentsContainer.setItemPanelVisible(false);
+		mBindingAgentsContainer.setValidDropContainer(true);
+		mBindingAgentsContainer.setAllowButtonDisownership(false);
+		mBindingAgentsContainer.addListener(this);
+		mBindingAgentsContainer.addAcceptingFromProperties("inventory", AcceptFromProperties(this));	
+		mBindingAgentsContainer.addAcceptingFromProperties("vault", AcceptFromProperties(this));
+		
+		mCompleteBookContainer = GUI.ActionContainer("book", 1, 1, 0, 0, this, true);
+		mCompleteBookContainer.setItemPanelVisible(true);
+		mCompleteBookContainer.setValidDropContainer(false);
+		mCompleteBookContainer.setAllowButtonDisownership(false);
+		mCompleteBookContainer.addListener(this);
+		
+		mBindingContainer = GUI.ActionContainer("book_binding", 4, 5, 0, 0, this, true);
+		mBindingContainer.setItemPanelVisible(false);
+		mBindingContainer.setValidDropContainer(true);
+		mBindingContainer.setAllowButtonDisownership(false);
+		mBindingContainer.addListener(this);
+		mBindingContainer.addAcceptingFromProperties("inventory", AcceptFromProperties(this));	
+		mBindingContainer.addAcceptingFromProperties("vault", AcceptFromProperties(this));
+
+		mButtonBind = GUI.NarrowButton("Bind");
+		mButtonBind.addActionListener(this);
+		mButtonBind.setReleaseMessage("onButtonPressed");
+		
+		local addMarker = this.GUI.Component(null);
+		addMarker.setSize(44, 44);
+		addMarker.setPreferredSize(44, 44);
+		addMarker.setAppearance("Crafting/AddMarker");
+		
+		local resultMarker = this.GUI.Component(null);
+		resultMarker.setSize(33, 44);
+		resultMarker.setPreferredSize(33, 44);
+		resultMarker.setAppearance("Crafting/ResultMarkerVertical");
+		
+		local mTopBindContainer = GUI.Container(GUI.BoxLayout());
+		mTopBindContainer.add(mBindingAgentsContainer);
+		mTopBindContainer.add(addMarker);
+		mTopBindContainer.add(mBindingContainer);
+
+		local text = "Drag book pages and binding materials into the slots, then click <font color=\"00FF00\">Bind</font>.<br>" +
+		             "The pages will be combined into a book, and placed in your <i>Bookshelf</i>.";
+		local label = GUI.HTML();
+		label.setText(text);
+
+		local mBindContainer = GUI.Container(GUI.BoxLayoutV());
+		mBindContainer.add(label);
+		mBindContainer.add(GUI.Spacer(0, 10));
+		mBindContainer.add(mTopBindContainer);
+		mBindContainer.add(GUI.Spacer(0, 10));
+		mBindContainer.add(resultMarker);
+		mBindContainer.add(GUI.Spacer(0, 10));
+		mBindContainer.add(mCompleteBookContainer);
+		mBindContainer.add(GUI.Spacer(0, 10));
+		mBindContainer.add(mButtonBind);
+		
+		// Bookshelf
+		mBookShelf = this.GUI.Container(this.GUI.BoxLayoutV());
+		mBookInventory = this.GUI.ActionContainer("bookshelf", 12, 16, 0, 0, this, false);
+		mBookInventory.addListener(this);
+		//mBookInventory.setCallback(this);
+		mBookInventory.setValidDropContainer(true);
+		mBookInventory.setShowEquipmentComparison(false);
+		mBookInventory.setAllowButtonDisownership(false);
+		mBookInventory.addAcceptingFromProperties("inventory", AcceptFromProperties(this));		
+		mBookInventory.addAcceptingFromProperties("vault", AcceptFromProperties(this));		
+		mBookInventory.addMovingToProperties("inventory", MoveToProperties(MovementTypes.MOVE));		
+		mBookInventory.addMovingToProperties("vault", MoveToProperties(MovementTypes.MOVE));
+		
+		mBookShelf.add(mBookInventory);
+		
+		
+		// This
+		mTabPane = this.GUI.TabbedPane();
+		mTabPane.setTabPlacement("top");
+		mTabPane.setTabFontColor("E4E4E4");
+		mTabPane.addTab("Reading Room", mScreenContainer);
+		mTabPane.addTab("Book Binding", mBindContainer);
+		mTabPane.addTab("Bookshelf", mBookShelf);
+		mTabPane.addActionListener(this);
+		mTabPane.setInsets(3);
+		
+		setContentPane(mTabPane);
 		setSize(520, 440);
+		
+		::_ItemDataManager.addListener(this);
+
+	}
+	
+	function getBookshelfContainer()
+		return this.mBookshelfInventory;
+	
+	function getBookBindingContainer()
+		return this.mBindingContainer;
+	
+	function getBookBindingMatsContainer()
+		return this.mBindingAgentsContainer;
+	
+	
+	function onValidDropSlot( newSlot, oldSlot )
+	{
+		local button = oldSlot.getActionButton();
+		local action = button.getAction();
+		local itemData = action.mItemData;
+		
+		if(newSlot.getActionContainer().getContainerName() == "book_binding_mats") 
+		{
+			if (itemData && itemData.getType() == this.ItemType.SPECIAL)
+			{
+				local itemDef = ::_ItemDataManager.getItemDef(itemData.mItemDefId); 
+				if(itemDef && itemDef.getDynamicMax(ItemIntegerType.BOOK_MATERIAL) != null)
+					return true;
+			}
+			this.IGIS.error("You can only place book binding materials in here.");
+		}
+		else if(newSlot.getActionContainer().getContainerName() == "book_binding") 
+		{
+			if (itemData && itemData.getType() == this.ItemType.SPECIAL)
+			{
+				local itemDef = ::_ItemDataManager.getItemDef(itemData.mItemDefId); 
+				if(itemDef && itemDef.getDynamicMax(ItemIntegerType.BOOK_PAGE) != null)
+					return true;
+			}
+			this.IGIS.error("You can only place book pages in here.");
+		}
+		else if(newSlot.getActionContainer().getContainerName() == "bookshelf") 
+		{
+			if (itemData && itemData.getType() == this.ItemType.SPECIAL)
+			{
+				local itemDef = ::_ItemDataManager.getItemDef(itemData.mItemDefId); 
+				if(itemDef && itemDef.getDynamicMax(ItemIntegerType.BOOK) != null )
+					return true;
+			}
+			this.IGIS.error("You can only place book pages or complete books in here.");
+		}
+		else 
+		{
+			if (itemData && itemData.getType() == this.ItemType.SPECIAL)
+			{
+				local itemDef = ::_ItemDataManager.getItemDef(itemData.mItemDefId); 
+				if(itemDef && itemDef.getDynamicMax(ItemIntegerType.BOOK_PAGE) != null)
+					return true;
+			}
+	
+			this.IGIS.error("You can only place book pages in here.");
+		}
+		
+		return false;
+	}
+
+	function onActionButtonDropped( actionContainer, actionButton )
+	{
+		print("ICE! onActionButtonDropped( " + actionContainer + "," +  actionButton + "\n");
+		local equipScreen = this.Screens.get("Equipment", false);
+		if (equipScreen)
+		{
+			equipScreen.handleClearHighlight();
+		}
+		
+	}
+
+	function onItemMovedInContainer( container, slotIndex, oldSlotsButton )
+	{
+		print("ICE! onItemMovedInContainer( " + container + "," +  slotIndex + "," +  oldSlotsButton + "\n");
+		
+		local item = container.getSlotContents(slotIndex);
+		local itemID = item.getActionButton().getAction().mItemId;
+		local queryArgument = [];
+		local previousSlotContainer = oldSlotsButton.getPreviousActionContainer();
+		local oldActionButtonSlot = oldSlotsButton.getActionButtonSlot();
+		local oldSlotContainerName = "";
+		local oldSlotIndex = 0;
+
+		if (previousSlotContainer && oldActionButtonSlot)
+		{
+			oldSlotContainerName = previousSlotContainer.getContainerName();
+			oldSlotIndex = previousSlotContainer.getIndexOfSlot(oldActionButtonSlot);
+		}
+
+		if (container == mBookInventory)
+		{
+			if (item.getSwapped() == true)
+			{
+				item.setSwapped(false);
+			}
+			else
+			{
+				queryArgument.append(itemID);
+				queryArgument.append("bookshelf");
+				queryArgument.append(slotIndex);
+
+				if (::_Connection.getProtocolVersionId() >= 19)
+				{
+					queryArgument.append(oldSlotContainerName);
+					queryArgument.append(oldSlotIndex);
+				}
+
+				this._Connection.sendQuery("item.move", this, queryArgument);
+			}
+			this.onActionButtonDropped(null, null);
+		}
+		
+		if(container == mBindingContainer)
+		{
+			print("ICE! onActionButtonDropped mBindingContainer\n");
+			if(mCompleteBookContainer.isContainerEmpty()) 
+			{
+				/* If empty, query which book item this book page item produces */
+				print("ICE! onActionButtonDropped book.item " + itemID + "\n");
+				this._Connection.sendQuery("book.item", this, [itemID]);
+			}
+		}
 	}
 	
 	function onLinkClicked( message, data )	{
@@ -198,7 +417,7 @@ class Screens.Books extends GUI.Frame {
 	function refresh() {
 		mLoaded = false;
 		if(mSelectedBook != null) {			
-			mSelectOnLoad = mSelectedBook.mId;
+			mSelectOnLoad = mSelectedBook.mID;
 			mSelectPageOnLoad = mSelectedPage;
 		}
 		else {
@@ -241,7 +460,23 @@ class Screens.Books extends GUI.Frame {
 	}
 	
 	function onButtonPressed(button) {
-		if(mSelectedBook != null) {
+		if(button == mButtonBind) {
+			local queryArgument = [];
+			foreach(item in mBindingContainer.getAllActionButtons(true))
+				queryArgument.append(item.mAction.mItemId);
+				
+			foreach(item in mBindingAgentsContainer.getAllActionButtons(true))
+				queryArgument.append(item.mAction.mItemId);
+				
+			if(queryArgument.len() == 0)
+			{
+				IGIS.info("You have not provided any items.");
+				return;
+			}
+			mButtonBind.setEnabled(false);
+			::_Connection.sendQuery("mod.craft", this, queryArgument);
+		}
+		else if(mSelectedBook != null) {
 			if(button == mButtonNext) {
 				if(mSelectedPage < mSelectedBook.mTotalPages - 1)
 					mSelectedPage++;		
@@ -255,11 +490,30 @@ class Screens.Books extends GUI.Frame {
 	}
 	
 	function setVisible(visible) {
+		if (visible) {
+			::Audio.playSound("Sound-QuestLogOpen.ogg");
+		}
+		else {
+			::Audio.playSound("Sound-QuestLogClose.ogg");
+		}
 		if(visible && !mInited) {
 			mInited = true;
-			::_Connection.sendQuery("book.list", this);
+			::_Connection.sendQuery("book.list", this);		
+			refreshBookshelf();
 		}
-		GUI.Frame.setVisible(visible);
+		if(!visible && mBindingContainer)
+			_restoreBindingContainer();
+		this.GUI.Component.setVisible(visible);
+	}
+	
+	function _restoreBindingContainer() {
+		mButtonBind.setEnabled(true);
+		mBindingContainer.removeAllActions();
+		mBindingAgentsContainer.removeAllActions();
+		mCompleteBookContainer.removeAllActions();
+		local inv = ::Screens.get("Inventory",false)
+		if(inv)
+			inv.unlockAllActions();
 	}
 	
 	function redisplayPage() {
@@ -270,9 +524,10 @@ class Screens.Books extends GUI.Frame {
 			mButtonPrevious.setEnabled(false);
 		}
 		else {
-			
 			if(mSelectedPage > mSelectedBook.mTotalPages) 
 				mSelectedPage = mSelectedBook.mTotalPages - 1;
+			else if(mSelectedPage < 0)
+				mSelectedPage = 0;
 				
 			mButtonNext.setEnabled(mSelectedPage < mSelectedBook.mPages.len() - 1);			
 			mButtonPrevious.setEnabled(mSelectedPage > 0);
@@ -289,11 +544,24 @@ class Screens.Books extends GUI.Frame {
 	}
 
 	function onQueryError(qa, error) {
+		switch(qa.query) {
+		case "mod.craft":
+			_restoreBindingContainer();
+			break;
+		}
 		IGIS.error(error);
 	}
 	
 	function onQueryComplete( qa, results )	{
 		switch(qa.query) {
+		case "mod.craft":
+			_restoreBindingContainer();
+			break;
+		case "book.item":
+			local item = ::_ItemManager.getItem(results[0][0].tointeger());
+			mCompleteBookContainer.removeAllActions();
+			mCompleteBookContainer.addAction(item, false, item.mItemData.mContainerSlot);
+			break;
 		case "book.list":
 			_handleBookList(qa, results);
 			break;
@@ -305,12 +573,46 @@ class Screens.Books extends GUI.Frame {
 		}
 	}
 	
+	function refreshBookshelf()
+	{
+		local bookshelf = ::_ItemDataManager.getContents("bookshelf");
+		this.onContainerUpdated("bookshelf", ::_avatar.getID(), bookshelf);
+	}
+	
+	function onContainerUpdated( containerName, creatureId, container )
+	{
+		if (!container.hasAllItems())
+		{
+			return;
+		}
+
+		if (creatureId == ::_avatar.getID())
+		{
+			if (containerName == "bookshelf")
+			{
+				if (mBookInventory)
+				{
+					mBookInventory.removeAllActions();
+					foreach( itemId in container.mContents )
+					{
+						local item = ::_ItemManager.getItem(itemId);
+						mBookInventory.addAction(item, false, item.mItemData.mContainerSlot);
+					}
+					mBookInventory.updateContainer();
+				}
+			}
+			
+		}
+	}
+	
 	function _handleBook(qa, results) {
 		if(mSelectedBook != null) {
 			for(local i = 0 ; i < mSelectedBook.mPages.len(); i++)
 				mSelectedBook.mPages[i] = "";
 			foreach( item in results ) {
 				local idx = item[0].tointeger();
+				if(idx < 0)
+					idx = 0;
 				if(idx >= mSelectedBook.mPages.len())
 					log.error("Want book page " + idx + " but there are only " + mSelectedBook.mPages.len() + " pages in the book object");
 				else
@@ -355,17 +657,6 @@ class Screens.Books extends GUI.Frame {
 			selectionChanged();
 			mAdjusting = false;
 		}	
-	}
-	
-
-	function setVisible( value ) {
-		this.GUI.Panel.setVisible(value);
-		if (value) {
-			::Audio.playSound("Sound-QuestLogOpen.ogg");
-		}
-		else {
-			::Audio.playSound("Sound-QuestLogClose.ogg");
-		}
 	}
 }
 

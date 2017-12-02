@@ -902,6 +902,19 @@ class this.GUI.ActionContainer extends this.GUI.Container
 		return true;
 	}
 
+	function isContainerEmpty()
+	{
+		for( local i = 0; i < this.mActionButtonSlotList.len(); i++ )
+		{
+			if (null != this.mActionButtonSlotList[i].getActionButton())
+			{
+				return false;
+			}
+		}
+
+		return true;
+	}
+
 	function isSlotEmpty( index )
 	{
 		if (index < this.mActionButtonSlotList.len())
