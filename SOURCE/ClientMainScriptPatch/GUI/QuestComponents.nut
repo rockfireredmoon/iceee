@@ -88,8 +88,8 @@ class this.GUI.QuestObjectives extends this.GUI.Component
 	constructor( ... )
 	{
 		this.GUI.InnerPanel.constructor(this.GUI.BoxLayoutV());
-		this.setSize(this.C_BASE_WIDTH, this.C_BASE_HEIGHT + (this.C_OBJECTIVE_HEIGHT * this.gMaxObjectives));
-		this.setPreferredSize(this.C_BASE_WIDTH, this.C_BASE_HEIGHT + (this.C_OBJECTIVE_HEIGHT * this.gMaxObjectives));
+		this.setSize(this.C_BASE_WIDTH, this.C_BASE_HEIGHT + (this.C_OBJECTIVE_HEIGHT * 3));
+		this.setPreferredSize(this.C_BASE_WIDTH, this.C_BASE_HEIGHT + (this.C_OBJECTIVE_HEIGHT * 3));
 		this.mObjectiveStatus = [];
 		this.mObjectiveComponents = [];
 		local objectiveTitleLabel = this.GUI.Label("Objectives");
