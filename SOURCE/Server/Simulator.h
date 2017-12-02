@@ -321,6 +321,7 @@ public:
 	int handle_query_ps_join(void);
 	int handle_query_ps_leave(void);
 	int handle_query_party(void);
+	int handle_query_party_ismember(void);
 	int handle_query_quest_share(void);
 	int handle_query_vault_size(void);
 	int handle_query_vault_send(void);

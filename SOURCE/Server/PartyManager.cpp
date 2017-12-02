@@ -312,8 +312,16 @@ ActiveParty :: ActiveParty() {
 }
 
 ActiveParty :: ~ActiveParty() {
-	for(it_type iterator = lootTags.begin(); iterator != lootTags.end(); ++iterator)
-		delete iterator->second;
+	for(it_type iterator = lootTags.begin(); iterator != lootTags.end(); ++iterator) {
+		LootTag * t;
+		t = iterator->second;
+		if(t == NULL) {
+			g_Log.AddMessageFormat("PartyDestruct HUH!!!! NULL value in loot tags map for %d", iterator->first);
+		}
+		else {
+			delete iterator->second;
+		}
+	}
 	lootTags.clear();
 }
 
@@ -781,6 +789,7 @@ void ActiveParty :: RemoveCreatureTags(int itemId, int creatureId)
 		t = itr->second;
 		if(t == NULL) {
 			g_Log.AddMessageFormat("RemoveCreatureTags HUH!!!! NULL value in loot tags map for %d in creature %d, item %d", itr->first, creatureId, itemId);
+			++itr;
 		}
 		else {
 			if ((itemId == -1 || (*itr->second).mItemId == itemId ) && (*itr->second).mCreatureId == creatureId) {

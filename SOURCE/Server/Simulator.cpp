@@ -2732,6 +2732,8 @@ bool SimulatorThread :: HandleQuery(int &PendingData)
 		PendingData = handle_query_persona_gm();
 	else if(query.name.compare("party") == 0)
 		PendingData = handle_query_party();
+	else if(query.name.compare("party.ismember") == 0)
+		PendingData = handle_query_party_ismember();
 	else if(query.name.compare("vault.send") == 0)
 		PendingData = handle_query_vault_send();
 	else if(query.name.compare("vault.size") == 0)
@@ -10639,6 +10641,27 @@ int SimulatorThread :: handle_query_spawn_emitters(void)
 	//for(int i = 0; i < query.argCount; i++)
 	//	LogMessageL(MSG_SHOW, "[%d]=%s", i, query.args[i].c_str());
 	return PrepExt_QueryResponseNull(SendBuf, query.ID);
+}
+
+int SimulatorThread :: handle_query_party_ismember(void) {
+
+	/*  Query: party
+		Command to query if a creature is in a party.
+		Args: [none]
+	*/
+	if(query.argCount < 2)
+		return PrepExt_QueryResponseNull(SendBuf, query.ID);
+
+	int cdefId = query.GetInteger(0);
+	int cid = query.GetInteger(1);
+
+	ActiveParty* party = g_PartyManager.GetPartyByLeader(cdefId);
+	if(party != NULL) {
+		if(party->GetMemberByID(cid) != NULL)
+			return PrepExt_QueryResponseString(SendBuf, query.ID, "true");
+	}
+
+	return PrepExt_QueryResponseString(SendBuf, query.ID, "false");
 }
 
 int SimulatorThread :: handle_query_party(void)
