@@ -2176,23 +2176,21 @@ dexterity=21
 constitution=31
 psyche=25
 spirit=31
-base_damage_melee=30
 damage_resist_melee=573
 damage_resist_fire=573
 damage_resist_frost=573
 damage_resist_mystic=1146
-damage_resist_death=114
-will_regen=1
-might_regen=1
+damage_resist_death=573
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
 appearance=n4:{["sk"]={["skin"]="006A06",["trim"]="00AA0A",["spots"]="6A0000",["eye"]="00077F",["paper"]="FFFED4",["middletext"]="FFFFFF",["cover"]="D41313"},["c"]="Horde-Bookwyrm",["sz"]="1"}
 level=20
-display_name=Holiday Horror Book
+display_name=Twisted Holiday Tome
 profession=5
-ai_package=druid_mystic_brave_6
 creature_category=Magical
+base_damage_melee=30
+ai_package=druid_mystic_brave_6
 
 [ENTRY]
 ID=18007

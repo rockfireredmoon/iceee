@@ -76428,4 +76428,14 @@ creature_category=Divine
 rarity=1
 base_damage_melee=60
 base_health=300
-ai_package=rogue_brave_6
+[ENTRY]
+defHints=48
+ID=3553
+appearance=p1:{["a"]="Prop-Notice_Board",["sz"]="1.0"}
+level=45
+display_name=Bounty Board
+profession=1
+creature_category=Inanimate
+ai_package=nothing
+creature_category=Inanimate
+ai_package=nothing
