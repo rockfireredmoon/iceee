@@ -966,7 +966,7 @@ class this.QuestManager extends this.DefaultQueryHandler
 		local valour = row[10].tointeger();
 		local objectives = [];
 
-		for( local i = 11; i < 17 + this.gMaxObjectives; i = i + 3 )
+		for( local i = 11; i < 11 + ( this.gMaxObjectives * 3 ); i = i + 3 )
 		{
 			if (row[i] != "")
 			{
@@ -988,21 +988,25 @@ class this.QuestManager extends this.DefaultQueryHandler
 
 		local rewards = [];
 
-		for( local i = 17 + this.gMaxObjectives; i < 21 + this.gMaxObjectives; i++ )
+		for( local i = 11 + ( this.gMaxObjectives * 3 ); i < (15 + ( this.gMaxObjectives * 3 )); i++ )
 		{
 			if (row[i] != "")
 			{
-				print("ITEMDATA: " + row[i]);
-				local itemData = ::Util.replace(row[i], "id:", "");
-				itemData = ::Util.replace(itemData, " count:", ",");
-				itemData = ::Util.replace(itemData, " required:", ",");
-				itemData = this.split(itemData, ",");
-				local rewardData = {
-					itemId = itemData[0].tointeger(),
-					numItems = itemData[1].tointeger(),
-					required = ::Util.atob(itemData[2])
-				};
-				rewards.append(rewardData);
+				try {
+					local itemData = ::Util.replace(row[i], "id:", "");
+					itemData = ::Util.replace(itemData, " count:", ",");
+					itemData = ::Util.replace(itemData, " required:", ",");
+					itemData = this.split(itemData, ",");
+					local rewardData = {
+						itemId = itemData[0].tointeger(),
+						numItems = itemData[1].tointeger(),
+						required = ::Util.atob(itemData[2])
+					};
+					rewards.append(rewardData);
+				}
+				catch(e) {
+					print(e);
+				}
 			}
 		}
 
@@ -1047,7 +1051,7 @@ class this.QuestManager extends this.DefaultQueryHandler
 		{
 			this._handleGenericQuestDataReceiveV3(row);
 		}
-		else if (row.len() == (21 + this.gMaxObjectives))
+		else if (row.len() == (15 + ( this.gMaxObjectives * 3 )))
 		{
 			this._handleGenericQuestDataReceiveV4(row);
 		}
