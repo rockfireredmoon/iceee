@@ -116,7 +116,7 @@ NAME=Winterland
 TERRAINCONFIG=Terrain-Winterland#Terrain-Winterland.cfg
 ENVIRONMENTTYPE=CloudyDay
 ShardName=Winterland
-WarpName=Winterland20
+WarpName=WLP
 DefLoc=2958,260,3821
 
 [ENTRY]
@@ -125,7 +125,7 @@ NAME=Winterland
 TERRAINCONFIG=Terrain-Winterland#Terrain-Winterland.cfg
 ENVIRONMENTTYPE=CloudyDay
 ShardName=Winterland
-WarpName=Winterland30
+WarpName=WLP2
 DefLoc=2958,260,3821
 
 [ENTRY]
@@ -134,7 +134,7 @@ NAME=Winterland
 TERRAINCONFIG=Terrain-Winterland#Terrain-Winterland.cfg
 ENVIRONMENTTYPE=CloudyDay
 ShardName=Winterland
-WarpName=Winterland35
+WarpName=WLP3
 DefLoc=2958,260,3821
 
 [ENTRY]
@@ -179,11 +179,11 @@ DefLoc=1420,1107,1836
 
 [ENTRY]
 ID=105
-NAME=New Bremen
+NAME=Winterland
 TERRAINCONFIG=Terrain-NewBremen#Terrain-NewBremen.cfg
 ENVIRONMENTTYPE=HappyWinter
-ShardName=NewBremen
-WarpName=NewBremen
+ShardName=Winter Land
+WarpName=Winterland
 DefLoc=24883,122,33093
 
 [ENTRY]
@@ -301,16 +301,16 @@ MaxLeashRange=375
 
 [ENTRY]
 ID=24
-NAME=Fangarians Lair
+NAME=Grimfrost's Lair
 TERRAINCONFIG=Terrain-Fangarians_Lair#Terrain-Fangarians_Lair.cfg
 ENVIRONMENTTYPE=Grimfrost
-TimeOfDay=Day
 ShardName=Anglorum 1
-WarpName=Fangarians Lair
-DefLoc=1283,1109,1862
-PageSize=1000
+WarpName=Grimfrost's Lair
 Instance=1
 MaxLeashRange=375
+DefLoc=1283,1109,1862
+PageSize=1000
+TimeOfDay=Day
 
 [ENTRY]
 ID=25

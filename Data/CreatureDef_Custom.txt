@@ -2321,30 +2321,29 @@ total_size=9
 
 [ENTRY]
 ID=18012
-ExtraData=namedmob=1
 strength=39
 dexterity=39
 constitution=57
 psyche=47
 spirit=57
-base_damage_melee=41
 damage_resist_melee=774
 damage_resist_fire=774
-damage_resist_frost=774
+damage_resist_frost=1548
 damage_resist_mystic=1548
 damage_resist_death=774
-base_health=627
-will_regen=1
-might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
 appearance=n4:{["sk"]={["detail"]="A5ABFF",["fur"]="FFF2D5",["highlight"]="BAC0CF"},["c"]="Horde-Yeti_Matron",["sz"]="2"}
 level=20
 display_name=Big Foot
+sub_name=Blizzard Chief
 profession=5
 creature_category=Animal
 rarity=1
+base_damage_melee=41
+base_health=627
+ExtraData=namedmob=
 ai_package=druid_mystic_brave_6
 total_size=5
 

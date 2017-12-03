@@ -65532,9 +65532,7 @@ ai_package=nothing
 [ENTRY]
 defHints=48
 ID=2913
-will_regen=1
-might_regen=1
-appearance=p1:{["a"]="Prop-Interact_Cylinder"}
+appearance=p1:{["a"]="Prop-Book3",["sz"]="1.0"}
 level=1
 display_name=Vargan's Book of Lore
 profession=1
@@ -76437,5 +76435,61 @@ display_name=Bounty Board
 profession=1
 creature_category=Inanimate
 ai_package=nothing
+creature_category=Inanimate
+ai_package=nothing
+
+[ENTRY]
+defHints=48
+ID=3554
+appearance=p1:{["a"]="Prop-Notice_Board",["sz"]="1.0"}
+level=45
+display_name=Holiday Bounty
+profession=1
+creature_category=Animal
+ai_package=nothing
+
+[ENTRY]
+defHints=48
+ID=3555
+appearance=p1:{["a"]="Prop-Notice_Board",["sz"]="1.0"}
+level=45
+display_name=Holiday Bounty
+profession=1
+creature_category=Animal
+ai_package=nothing
+
+[ENTRY]
+ID=3556
+appearance=p1:{["a"]="Prop-Crystal_Red_Small1",["sz"]="0.5"}
+level=1
+display_name=Red Crystal
+profession=1
+creature_category=Inanimate
+ai_package=nothing
+
+[ENTRY]
+ID=3557
+appearance=p1:{["sz"]="0.5",["a"]="Prop-Crystal_Blue_Small4"}
+level=1
+display_name=Blue Crystal
+profession=1
+creature_category=Inanimate
+ai_package=nothing
+
+[ENTRY]
+ID=3558
+appearance=p1:{["a"]="Prop-Crystal_Green_Small2",["sz"]="0.5"}
+level=1
+display_name=Green Crystal
+profession=1
+creature_category=Inanimate
+ai_package=nothing
+
+[ENTRY]
+ID=3559
+appearance=p1:{["a"]="Prop-Crystal_Yellow_Small1",["sz"]="0.5"}
+level=1
+display_name=Yellow Crystal
+profession=1
 creature_category=Inanimate
 ai_package=nothing
