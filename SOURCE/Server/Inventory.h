@@ -1,7 +1,7 @@
 #pragma once
 
 
-#define MAXCONTAINER     10
+#define MAXCONTAINER     11
 
 #ifndef INVENTORY_H
 #define INVENTORY_H
