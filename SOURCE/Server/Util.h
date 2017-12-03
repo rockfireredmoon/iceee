@@ -54,6 +54,7 @@ int PrepExt_SendFormOpen(char *buffer, FormDefinition form);
 int PrepExt_SendFormClose(char *buffer, int formId);
 int PrepExt_SendBookOpen(char *buffer, int bookID, int page, int op);
 int PrepExt_Refashion(char *buffer);
+int PrepExt_Craft(char *buffer);
 int PrepExt_CooldownExpired(char *buffer, long actor, const char *cooldownCategory);
 int PrepExt_ChangeTarget(char *buffer, int sourceID, int targetID);
 int PrepExt_ExperienceGain(char *buffer, int CreatureID, int ExpAmount);

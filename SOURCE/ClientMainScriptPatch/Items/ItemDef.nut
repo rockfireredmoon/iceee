@@ -1114,6 +1114,9 @@ class ItemDefData {
 			},
 			[SpecialItemType.PORTABLE_REFASHIONER] = {
 				text = "Allows items to be refashioned everywhere."
+			},
+			[SpecialItemType.PORTABLE_CRAFTKIT] = {
+				text = "Allows items to be crafter everywhere."
 			}
 		};
 

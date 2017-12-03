@@ -494,7 +494,7 @@ class Screens.Books extends GUI.Frame {
 	
 	function onButtonPressed(button) {
 		if(button == mButtonBind) {
-			local queryArgument = [];
+			local queryArgument = [::_avatar.getID()];
 			foreach(item in mBindingContainer.getAllActionButtons(true))
 				queryArgument.append(item.mAction.mItemId);
 				

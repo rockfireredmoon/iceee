@@ -1224,6 +1224,32 @@ mMinUseLevel=1
 mQualityLevel=1
 mBindingType=1
 mFlavorText=Double-click to refashion items wherever you are. This sturdy device will last a lifetime!
-mIvMax1=1
+
+[ENTRY]
+mID=8707
+mType=8
+mSpecialItemType=5
+mDisplayName=Cheap Crafting Kit
+mIcon=Icon-32-SewingKit.png|Icon-32-BG-Green.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=0
+mFlavorText=Double-click to craft items wherever you are. This cheaply made but compact kit will only work once!
+mIvMax1=10
 mIvMax2=0
-mIvType1=0
+mIvType1=1
+
+[ENTRY]
+mID=8708
+mType=8
+mSpecialItemType=5
+mDisplayName=Sturdy Crafting Kit
+mIcon=Icon-32-SewingKit.png|Icon-32-BG-Yellow.png
+mLevel=1
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to craft items wherever you are. This sturdy kit will last a lifetime!

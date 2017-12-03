@@ -203,9 +203,9 @@ class this.Screens.MorphItemScreen extends this.GUI.Frame
 			eqslot == this.ItemEquipType.BLUE_CHARM || eqslot == this.ItemEquipType.ORANGE_CHARM || 
 			eqslot == this.ItemEquipType.YELLOW_CHARM || eqslot == this.ItemEquipType.PURPLE_CHARM || 
 			eqslot == this.ItemEquipType.ARMOR_RING || eqslot == this.ItemEquipType.ARMOR_RING_UNIQUE || 
-			eqslot == this.ItemEquipType.ARMOR_AMULET || eqslot == this.ItemEquipType.ARMOR_SHIELD)
+			eqslot == this.ItemEquipType.ARMOR_AMULET)
 		{
-			this.IGIS.error("You can only morph armor items.");
+			this.IGIS.error("You can only morph armor, weapon or shield items.");
 			return false;
 		}
 		else if (container == this.mStats)

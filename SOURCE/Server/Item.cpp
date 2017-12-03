@@ -149,7 +149,7 @@ namespace WeaponTypeClassRestrictions
 }
 
 //Note: if entries are changed here, then StandardContainerEnum must also be updated.
-const int InventoryMappingCount = 11;
+const int InventoryMappingCount = 12;
 InventoryMappingDef InventoryMapping[InventoryMappingCount] = {
 	{"inv",       0 },
 	{"inventory", 0 },  //When looking up the string from the ID, "inv" needs to take precedence
@@ -160,7 +160,8 @@ InventoryMappingDef InventoryMapping[InventoryMappingCount] = {
 	{"buyback",   4 },
 	{"trade",     5 },
 	{"stamps",    7 },
-	{"bookshelf", 9 }
+	{"auction",   9 },
+	{"bookshelf", 10 }
 };
 
 

@@ -554,19 +554,24 @@ int InventoryManager :: GetFreeSlot(int containerID)
 InventorySlot * InventoryManager :: GetBestSpecialItem(int invID, char specialItemType)
 {
 	std::vector<InventorySlot> inv = containerList[invID];
-	InventorySlot *itemDef = NULL;
+	unsigned int ccsid = 0;
+	int max = 99999;
 	for(std::vector<InventorySlot>::iterator it = inv.begin(); it != inv.end() ; ++it) {
 		InventorySlot sl = *it;
 		if(!sl.IsExpired()) {
-			ItemDef *iDef = sl.dataPtr;
+			ItemDef *iDef = sl.ResolveItemPtr();
 			if(iDef != NULL && iDef->mSpecialItemType == specialItemType) {
-				if(itemDef == NULL || (itemDef != NULL && iDef->mIvMax1 > itemDef->dataPtr->mIvMax1)) {
-					itemDef = &sl;
+				int stack = iDef->GetDynamicMax(ItemIntegerType::STACKING);
+				if(stack < max) {
+					max = stack;
+					ccsid = sl.CCSID;
 				}
 			}
 		}
 	}
-	return itemDef;
+	if(ccsid == 0)
+		return NULL;
+	return GetItemPtrByCCSID(ccsid);
 }
 
 int InventoryManager :: CountUsedSlots(int containerID)

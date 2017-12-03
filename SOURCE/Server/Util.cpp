@@ -412,6 +412,15 @@ int PrepExt_Refashion(char *buffer) {
 	return wpos;
 }
 
+int PrepExt_Craft(char *buffer) {
+	int wpos = 0;
+	wpos += PutByte(&buffer[wpos], 54);              //_handleCraft
+	wpos += PutShort(&buffer[wpos], 0);             //Placeholder for message size
+	wpos += PutByte(&buffer[wpos], 0); 				// Open
+	PutShort(&buffer[1], wpos - 3);                 //Message size
+	return wpos;
+}
+
 int PrepExt_SendFormClose(char *buffer, int formId) {
 	int wpos = 0;
 	wpos += PutByte(&buffer[wpos], 52);              //_handleForm

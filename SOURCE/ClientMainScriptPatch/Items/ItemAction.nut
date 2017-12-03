@@ -424,7 +424,12 @@ class ItemAction extends Action {
 			mName = itemDefData.mDisplayName;
 		}
 
-		if(itemDefData && itemDefData.getDynamicMax(ItemIntegerType.BOOK) != null) {
+		if(itemDefData && ( itemDefData.mSpecialItemType == SpecialItemType.PORTABLE_REFASHIONER || itemDefData.mSpecialItemType == SpecialItemType.PORTABLE_CRAFTKIT ) ) {
+			// Can always be used
+			mNumUses = 1;
+			mIsStacking = false;
+		}
+		else if(itemDefData && ( itemDefData.getDynamicMax(ItemIntegerType.BOOK) != null || itemDefData.getDynamicMax(ItemIntegerType.BOOK_PAGE) != null )) {
 			// Book pages can always be used
 			mNumUses = 1;
 			mIsStacking = false;

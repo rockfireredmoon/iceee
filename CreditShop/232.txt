@@ -1,0 +1,9 @@
+[ENTRY]
+Description=SPM Credit Shop Item
+PriceCurrency=CREDITS
+PriceCopper=0
+PriceCredits=5
+ItemID=8707
+Category=CONSUMABLES
+Status=NEW
+

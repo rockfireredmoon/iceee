@@ -71,7 +71,7 @@ class this.Screens.CraftingWindow extends this.GUI.Frame
 	
 	function onAdvancedCraftPressed(button) {
 		local items = mAdvancedContainer.getAllActionButtons(true);
-		local queryArgument = [];
+		local queryArgument = [this.mCrafterId];
 		foreach(item in items)
 		{
 			queryArgument.append(item.mAction.mItemId);

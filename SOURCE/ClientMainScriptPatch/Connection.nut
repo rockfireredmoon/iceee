@@ -64,6 +64,7 @@ this.ProtocolDef <- {
 		[51] = "_handleTradeMsg",
 		[52] = "_handleForm",
 		[53] = "_handleRefashion",
+		[54] = "_handleCraft",
 		[60] = "_handleAbilityActivationMsg",
 		[70] = "_handleItemUpdateMsg",
 		[71] = "_handleItemDefUpdateMsg",
@@ -3268,6 +3269,14 @@ class this.Connection extends this.MessageBroadcaster
 		mscreen.reset();
 		mscreen.setMorpherId(::_avatar.getID());
 		this.Screens.show("MorphItemScreen");
+	}
+	
+	function _handleCraft(data) {
+		local type = data.getByte();
+		local mscreen = this.Screens.get("CraftingWindow", true);
+		mscreen.clearCraftingWindow();
+		mscreen.setCrafterId(::_avatar.getID());
+		this.Screens.show("CraftingWindow", true);
 	}
 	
 	function _handleBooks(data) {

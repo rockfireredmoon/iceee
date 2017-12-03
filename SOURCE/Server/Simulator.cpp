@@ -4525,7 +4525,10 @@ int SimulatorThread :: handle_query_item_delete(void)
 	int invId = GetContainerIDFromName("inv");
 	InventorySlot *grinderDef = pld.charPtr->inventory.GetBestSpecialItem(invId, ITEM_GRINDER);
 	if(grinderDef != NULL) {
-		int amt = (int)(((double)itemDef->mValue / 100.0) *  grinderDef->dataPtr->mIvMax1);
+		int stack =  grinderDef->ResolveItemPtr()->GetDynamicMax(ItemIntegerType::STACKING);
+		if(stack < 1)
+			stack = 1;
+		int amt = (int)(((double)itemDef->mValue / 100.0) * stack);
 		creatureInst->AdjustCopper(amt);
 	}
 
@@ -7492,6 +7495,12 @@ int SimulatorThread :: UseItem(unsigned int CCSID)
 	{
 		if(itemDef->mType == ItemType::SPECIAL && itemDef->mSpecialItemType == PORTABLE_REFASHIONER) {
 			AttemptSend(Aux1, PrepExt_Refashion(Aux1));
+			// TODO use when item is refashioned, IF the refashion window was opened this way, and the refashion item is not mulitple use
+			removeOnUse = false;
+		}
+		else if(itemDef->mType == ItemType::SPECIAL && itemDef->mSpecialItemType == PORTABLE_CRAFTKIT) {
+			// TODO use when item is crafted, IF the craft window was opened this way, and the craft kit item is not mulitple use
+			AttemptSend(Aux1, PrepExt_Craft(Aux1));
 			removeOnUse = false;
 		}
 		else if(itemDef->mType == ItemType::SPECIAL && itemDef->GetDynamicMax(ItemIntegerType::BOOK) > -1) {
@@ -9901,11 +9910,6 @@ int SimulatorThread :: protected_helper_query_craft_create(void)
 	int ItemID = atoi(query.args[0].c_str());
 	int CreatureID = atoi(query.args[1].c_str());
 
-	// Make sure this object isn't too far away.
-	int distCheck = protected_helper_checkdistance(CreatureID);
-	if(distCheck != 0)
-		return distCheck;
-
 	//Check that the item plan exists in the database.
 	ItemDef *itemPlan = g_ItemManager.GetPointerByID(ItemID);
 	if(itemPlan == NULL)
@@ -9964,6 +9968,37 @@ int SimulatorThread :: protected_helper_query_craft_create(void)
 	if(slotIndex == -1)
 		return QueryErrorMsg::INVSPACE;
 
+	InventorySlot * reagentPtr = NULL;
+	ItemDef * reagentDef = NULL;
+	bool unstack = false;
+	bool free = false;
+
+	if(CreatureID == creatureInst->CreatureID) {
+		free = true;
+		reagentPtr = pld.charPtr->inventory.GetBestSpecialItem(GetContainerIDFromName("inv"), PORTABLE_CRAFTKIT);
+		if(reagentPtr == NULL) {
+			return QueryErrorMsg::NOCRAFT;
+		}
+		else {
+			reagentDef = g_ItemManager.GetPointerByID(reagentPtr->IID);
+			if(reagentDef == NULL) {
+				return QueryErrorMsg::NOCRAFT;
+			}
+
+			/* Ok to refashion. If item is stackable, then the stack is decreased too (one-off crafting items) */
+			if(reagentPtr->ResolveItemPtr()->GetDynamicMax(ItemIntegerType::STACKING) >= 1 && reagentPtr->GetStackCount() > 0) {
+				unstack = true;
+			}
+
+		}
+	}
+	else {
+		// Make sure this object isn't too far away.
+		int distCheck = protected_helper_checkdistance(CreatureID);
+		if(distCheck != 0)
+			return distCheck;
+	}
+
 	//Good to go, create the item.
 	InventorySlot *itemPtr = NULL;
 	itemPtr = inv.AddItem_Ex(INV_CONTAINER, itemPlan->resultItemId, 1);
@@ -9978,6 +10013,15 @@ int SimulatorThread :: protected_helper_query_craft_create(void)
 	//Remove the crafting materials.
 	for(size_t i = 0; i < CraftID.size(); i++)
 		wpos += inv.RemoveItemsAndUpdate(INV_CONTAINER, CraftID[i], CraftReq[i], &SendBuf[wpos]);
+
+	/*
+	 * If a consumable crafting device used, remove it
+	 */
+	if(unstack) {
+		if(reagentPtr->GetStackCount() == 1)
+			g_ItemManager.NotifyDestroy(reagentPtr->IID, "mod.craft");
+		wpos += RemoveItemUpdate(&SendBuf[wpos], Aux3, reagentPtr);
+	}
 
 	vector<InventoryQuery> iq;
 
@@ -10048,7 +10092,7 @@ int SimulatorThread :: protected_helper_query_item_morph(bool command)
 
 
 				/* Ok to refashion. If item is stackable, then the stack is decreased too (one-off refashion items) */
-				if(reagentPtr->ResolveItemPtr()->mIvMax1 > 1 && reagentPtr->GetStackCount() > 0) {
+				if(reagentPtr->ResolveItemPtr()->GetDynamicMax(ItemIntegerType::STACKING) >= 1 && reagentPtr->GetStackCount() > 0) {
 					unstack = true;
 				}
 			}
@@ -14890,10 +14934,12 @@ int SimulatorThread :: handle_query_mod_craft(void)
 
 	InventoryManager &inv = pld.charPtr->inventory;
 
+	int creatureID = strtol(query.args[0].c_str(), NULL, 10);
+
 	//Resolve inputs.
 	std::vector<CraftInputSlot> inputs;
 	std::vector<CraftInputSlot> outputs;
-	for(uint i = 0; i < query.argCount; i++)
+	for(uint i = 1; i < query.argCount; i++)
 	{
 		unsigned int CCSID = inv.GetCCSIDFromHexID(query.GetString(i));
 		InventorySlot *slot = inv.GetItemPtrByCCSID(CCSID);
@@ -14942,6 +14988,37 @@ int SimulatorThread :: handle_query_mod_craft(void)
 
 		if(verified == true)
 		{
+			InventorySlot * reagentPtr = NULL;
+			ItemDef * reagentDef = NULL;
+			bool unstack = false;
+			bool free = false;
+
+			if(creatureID == creatureInst->CreatureID) {
+				free = true;
+				reagentPtr = pld.charPtr->inventory.GetBestSpecialItem(GetContainerIDFromName("inv"), PORTABLE_CRAFTKIT);
+				if(reagentPtr == NULL) {
+					return QueryErrorMsg::NOCRAFT;
+				}
+				else {
+					reagentDef = g_ItemManager.GetPointerByID(reagentPtr->IID);
+					if(reagentDef == NULL) {
+						return QueryErrorMsg::NOCRAFT;
+					}
+
+					/* Ok to refashion. If item is stackable, then the stack is decreased too (one-off crafting items) */
+					if(reagentPtr->ResolveItemPtr()->GetDynamicMax(ItemIntegerType::STACKING) >= 1 && reagentPtr->GetStackCount() > 0) {
+						unstack = true;
+					}
+
+				}
+			}
+			else {
+				// Make sure this object isn't too far away.
+				int distCheck = protected_helper_checkdistance(creatureID);
+				if(distCheck != 0)
+					return distCheck;
+			}
+
 			//Give resulting items.
 			for(size_t i = 0; i < outputs.size(); i++)
 			{
@@ -14961,6 +15038,17 @@ int SimulatorThread :: handle_query_mod_craft(void)
 				}
 			}
 
+			int wpos = 0;
+
+			/*
+			 * If a consumable crafting device used, remove it
+			 */
+			if(unstack) {
+				if(reagentPtr->GetStackCount() == 1)
+					g_ItemManager.NotifyDestroy(reagentPtr->IID, "mod.craft");
+				wpos += RemoveItemUpdate(Aux1, Aux2, reagentPtr);
+			}
+
 			//Remove crafting components.
 			for(size_t i = 0; i < inputs.size(); i++)
 			{
@@ -14969,11 +15057,14 @@ int SimulatorThread :: handle_query_mod_craft(void)
 				{
 					if(remItem->GetStackCount() == 1)
 						g_ItemManager.NotifyDestroy(remItem->IID, "mod.craft");
-					int wpos = RemoveItemUpdate(Aux1, Aux2, remItem);
-					AttemptSend(Aux1, wpos);
+					wpos += RemoveItemUpdate(&Aux1[wpos], Aux2, remItem);
 				}
 				inv.RemItem(inputs[i].mCCSID);
 			}
+
+			if(wpos > 0)
+				AttemptSend(Aux1, wpos);
+
 			success = true;
 		}
 	}
