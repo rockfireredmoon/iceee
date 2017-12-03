@@ -12,7 +12,7 @@ class this.Screens.QuestGiver extends this.GUI.Frame
 	mCreatureId = null;
 	mAcceptDecline = null;
 	mCheckDistanceEvent = null;
-	static C_BASE_HEIGHT = 450;
+	static C_BASE_HEIGHT = 358;
 	static C_BASE_WIDTH = 415;
 	static C_ICON_SIZE = 18;
 	static C_QUEST_ITEM_TITLE_STR = "QuestItemTitleLabel";
@@ -21,8 +21,8 @@ class this.Screens.QuestGiver extends this.GUI.Frame
 	constructor()
 	{
 		this.GUI.Frame.constructor("Quest");
-		this.setSize(this.C_BASE_WIDTH, this.C_BASE_HEIGHT);
-		this.setPreferredSize(this.C_BASE_WIDTH, this.C_BASE_HEIGHT);
+		this.setSize(this.C_BASE_WIDTH, this.C_BASE_HEIGHT + (gMaxObjectives * 32));
+		this.setPreferredSize(this.C_BASE_WIDTH, this.C_BASE_HEIGHT + (gMaxObjectives * 32));
 		::_questManager.addQuestListener(this);
 		local baseComponent = this.GUI.Container(this.GUI.GridLayout(1, 1));
 		baseComponent.getLayoutManager().setRows("*");

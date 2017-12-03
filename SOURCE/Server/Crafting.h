@@ -40,6 +40,8 @@ private:
 
 public:
 	int GetOutputCount(void) const;  //The craft function needs to know externally whether there is enough space in the inventory.
+	void GetRequiredItems(std::vector<int> &requiredItems) const;
+	int GetRequiredItemCount(int itemID) const;
 	const char *GetName(void) const;
 };
 
@@ -50,6 +52,7 @@ public:
 	void LoadData(void);
 	bool RunRecipe(const CraftRecipe* recipe, std::vector<CraftInputSlot> &inputItems, std::vector<CraftInputSlot> &outputItems);
 	const CraftRecipe* GetRecipe(std::vector<CraftInputSlot> &inputItems);
+	const CraftRecipe* GetFirstRecipeForResult(int resultItemID);
 	
 private:
 

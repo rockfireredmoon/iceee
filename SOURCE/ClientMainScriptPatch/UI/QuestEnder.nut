@@ -14,7 +14,7 @@ class this.Screens.QuestEnder extends this.GUI.Frame
 	mCheckDistanceEvent = null;
 	mQuestData = null;
 	static C_QUEST_LIST_WIDTH = 220;
-	static C_BASE_HEIGHT = 450;
+	static C_BASE_HEIGHT = 358;
 	static C_BASE_WIDTH = 415;
 	static C_ICON_SIZE = 18;
 	static C_INSETS_SIZE = 5;
@@ -23,8 +23,8 @@ class this.Screens.QuestEnder extends this.GUI.Frame
 	constructor()
 	{
 		this.GUI.Frame.constructor("Quest");
-		this.setSize(this.C_BASE_WIDTH, this.C_BASE_HEIGHT);
-		this.setPreferredSize(this.C_BASE_WIDTH, this.C_BASE_HEIGHT);
+		this.setSize(this.C_BASE_WIDTH, this.C_BASE_HEIGHT + (gMaxObjectives * 32));
+		this.setPreferredSize(this.C_BASE_WIDTH, this.C_BASE_HEIGHT + (gMaxObjectives * 32));
 		::_questManager.addQuestListener(this);
 		local baseComponent = this.GUI.Container(this.GUI.GridLayout(1, 1));
 		baseComponent.getLayoutManager().setRows("*");

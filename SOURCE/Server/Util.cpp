@@ -129,8 +129,8 @@ int PrepExt_Thunder(char *buffer, int weight)
 
 int PrepExt_AbilityEvent(char *buffer, int creatureID, int abilityID, int abilityEvent)
 {
-	if(abilityEvent == 4) {
-		g_Log.AddMessageFormat("REMOVEME PrepExt_AbilityEvent INTERRUPT ABILITY %d : %d", creatureID, abilityID);
+	if(abilityEvent == 4 && g_Config.DebugVerbose) {
+		g_Log.AddMessageFormat("PrepExt_AbilityEvent INTERRUPT ABILITY %d : %d", creatureID, abilityID);
 	}
 
 	//Same as AbilityActivate, but target lists and ground are always zero.

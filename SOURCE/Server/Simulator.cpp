@@ -3232,39 +3232,77 @@ int SimulatorThread :: handle_book_item(void)
 		return PrepExt_QueryResponseError(SendBuf, query.ID,
 				"Invalid query");
 
-
-	g_Log.AddMessageFormat("REMOVEME Book item request %s", query.GetString(0));
-
 	ItemDef *itemDef = g_ItemManager.GetSafePointerByID(atoi(query.GetString(0)));
 	if(itemDef == NULL)
 		return PrepExt_QueryResponseError(SendBuf, query.ID,
 				"Invalid item");
 
 
+	int bookItemId = 0;
+	int bookPages = 0;
+
 	if(itemDef->mType == ItemType::SPECIAL) {
 		int book = itemDef->GetDynamicMax(ItemIntegerType::BOOK);
-		g_Log.AddMessageFormat("REMOVEME For Book %d", book);
 		if(book > -1) {
 			ItemManager::ITEM_CONT::iterator it;
 			for(it = g_ItemManager.ItemList.begin(); it != g_ItemManager.ItemList.end(); ++it)
 			{
 				if(it->second.GetDynamicMax(ItemIntegerType::BOOK) == book)
 				{
-					WritePos = 0;
-					WritePos += PutByte(&SendBuf[WritePos], 1);       //_handleQueryResultMsg
-					WritePos += PutShort(&SendBuf[WritePos], 0);      //Message size
-					WritePos += PutInteger(&SendBuf[WritePos], query.ID);  //Query response index
-					sprintf(Aux2, "%d", it->second.mID);
-					WritePos += PutShort(&SendBuf[WritePos], 1);      //Array count
-					WritePos += PutByte(&SendBuf[WritePos], 1);       //String count
-					WritePos += PutStringUTF(&SendBuf[WritePos], Aux2);  //ID
-					PutShort(&SendBuf[1], WritePos - 3);             //Set message size
-					g_Log.AddMessageFormat("REMOVEME Sending %d", WritePos);
-					return WritePos;
+					if(it->second.GetDynamicMax(ItemIntegerType::BOOK_PAGE) == -1)
+					{
+						bookItemId = it->second.mID;
+					}
+					else
+					{
+						bookPages++;
+					}
 				}
 			}
 		}
 	}
+	if(bookPages > 0) {
+
+		/* Now we know the resultant item, look for a crafting definition that produces this item.
+		 * This gives us the list of items required. We scan that list looking for items that
+		 * are BOOK_MATERIAL types and return those as the list of material items
+		 */
+		const CraftRecipe *recipe = g_CraftManager.GetFirstRecipeForResult(bookItemId);
+		if(recipe == NULL) {
+			g_Log.AddMessageFormat("[WARNING] Request for recipe for book item that doesn't exist. Book item ID is %d", bookItemId);
+			return PrepExt_QueryResponseError(SendBuf, query.ID, "Recipe for book missing");
+		}
+
+		std::vector<int> results;
+		std::vector<int> requiredMaterials;
+		recipe->GetRequiredItems(results);
+		for(std::vector<int>::iterator it =results.begin(); it != results.end(); it++) {
+			ItemDef *materialItem = g_ItemManager.GetSafePointerByID(*it);
+			if(materialItem != NULL && materialItem->GetDynamicMax(ItemIntegerType::BOOK_MATERIAL) != -1) {
+				requiredMaterials.push_back(*it);
+				requiredMaterials.push_back(recipe->GetRequiredItemCount(*it));
+			}
+
+		}
+
+		WritePos = 0;
+		WritePos += PutByte(&SendBuf[WritePos], 1);       //_handleQueryResultMsg
+		WritePos += PutShort(&SendBuf[WritePos], 0);      //Message size
+		WritePos += PutInteger(&SendBuf[WritePos], query.ID);  //Query response index
+		WritePos += PutShort(&SendBuf[WritePos], 1);      //Array count
+		WritePos += PutByte(&SendBuf[WritePos], 2 + requiredMaterials.size());       //String count
+		sprintf(Aux2, "%d", bookItemId);
+		WritePos += PutStringUTF(&SendBuf[WritePos], Aux2);  //ID
+		sprintf(Aux2, "%d", bookPages);
+		WritePos += PutStringUTF(&SendBuf[WritePos], Aux2);  //ID
+		for(std::vector<int>::iterator it =requiredMaterials.begin(); it != requiredMaterials.end(); it++) {
+			sprintf(Aux2, "%d", *it);
+			WritePos += PutStringUTF(&SendBuf[WritePos], Aux2);  //ID
+		}
+		PutShort(&SendBuf[1], WritePos - 3);             //Set message size
+		return WritePos;
+	}
+
 
 	return PrepExt_QueryResponseError(SendBuf, query.ID,
 			"Not a book item");
@@ -3623,8 +3661,6 @@ int SimulatorThread :: handle_query_item_contents(void)
 		return PrepExt_QueryResponseError(SendBuf, query.ID, "Invalid query.");
 
 	const char *contName = query.args[0].c_str();
-
-	g_Log.AddMessageFormat("REMOVEME loading inventory from %s", contName);
 
 	int contID = GetContainerIDFromName(contName);
 	if(contID == -1)
@@ -4295,8 +4331,6 @@ int SimulatorThread :: handle_query_item_move(void)
 
 	int destContainer = GetContainerIDFromName(query.args[1].c_str());
 	int destSlot = strtol(query.args[2].c_str(), NULL, 10);
-
-	g_Log.AddMessageFormat("REMOVEME Move %d:%d to %d:%d (%s)", origContainer, origSlot, destContainer, destSlot, query.args[1].c_str());
 
 	if(destContainer == -1)
 	{
@@ -14872,7 +14906,6 @@ int SimulatorThread :: handle_query_mod_craft(void)
 		if(itemDef == NULL)
 			continue;
 
-		g_Log.AddMessageFormat("REMOVEME Adding craft input %d : %d", itemID, stackCount);
 		inputs.push_back(CraftInputSlot(CCSID, itemID, stackCount, itemDef));
 	}
 	if(inputs.size() == 0)

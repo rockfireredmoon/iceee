@@ -2073,7 +2073,8 @@ int WeatherManager :: LoadFromFile(const char *fileName) {
 
 int PrepExt_SendEnvironmentUpdateMsg(char *buffer, ActiveInstance *instance, const char *zoneIDString, ZoneDefInfo *zoneDef, int x, int z, int mask)
 {
-	g_Log.AddMessageFormat("REMOVEME PrepExt_SendEnvironmentUpdateMsg %s (%s)", zoneIDString, instance == NULL ? zoneDef->GetTileEnvironment(x, z).c_str() : instance->GetEnvironment(x, z).c_str());
+	if(g_Config.DebugVerbose)
+		g_Log.AddMessageFormat("PrepExt_SendEnvironmentUpdateMsg %s (%s)", zoneIDString, instance == NULL ? zoneDef->GetTileEnvironment(x, z).c_str() : instance->GetEnvironment(x, z).c_str());
 
 	int wpos = 0;
 	wpos += PutByte(&buffer[wpos], 42);   //_handleEnvironmentUpdateMsg

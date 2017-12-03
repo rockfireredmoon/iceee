@@ -81,8 +81,12 @@ class Screens.Books extends GUI.Frame {
 	mBookInventory = null;
 	mBindingContainer = null;
 	mButtonBind = null;	
+	mButtonCancelBind = null;
 	mBindingAgentsContainer = null;
 	mCompleteBookContainer = null;
+	mPagesToBind = 0;
+	mBookToBind = 0;
+	mBindingAgentsInfoContainer = null;
 	
 	constructor() {
 		GUI.Frame.constructor("Books");
@@ -162,6 +166,11 @@ class Screens.Books extends GUI.Frame {
 		mScreenContainer.add(readerBox);
 		
 		// Binding
+		
+		mBindingAgentsInfoContainer = GUI.ActionContainer("book_binding_mats_info", 4, 1, 0, 0, this, true);
+		mBindingAgentsInfoContainer.setValidDropContainer(false);
+		mBindingAgentsInfoContainer.setPreferredSize(120, 128);
+		
 		mBindingAgentsContainer = GUI.ActionContainer("book_binding_mats", 4, 1, 0, 0, this, true);
 		mBindingAgentsContainer.setItemPanelVisible(false);
 		mBindingAgentsContainer.setValidDropContainer(true);
@@ -187,6 +196,12 @@ class Screens.Books extends GUI.Frame {
 		mButtonBind = GUI.NarrowButton("Bind");
 		mButtonBind.addActionListener(this);
 		mButtonBind.setReleaseMessage("onButtonPressed");
+		mButtonBind.setEnabled(false);
+		
+		mButtonCancelBind = GUI.RedNarrowButton("Cancel");
+		mButtonCancelBind.addActionListener(this);
+		mButtonCancelBind.setReleaseMessage("onCancelButtonPressed");
+		mButtonCancelBind.setEnabled(false);
 		
 		local addMarker = this.GUI.Component(null);
 		addMarker.setSize(44, 44);
@@ -199,14 +214,22 @@ class Screens.Books extends GUI.Frame {
 		resultMarker.setAppearance("Crafting/ResultMarkerVertical");
 		
 		local mTopBindContainer = GUI.Container(GUI.BoxLayout());
+		mTopBindContainer.add(mBindingAgentsInfoContainer);
+		mTopBindContainer.add(GUI.Spacer(10,0));
 		mTopBindContainer.add(mBindingAgentsContainer);
+		mTopBindContainer.add(GUI.Spacer(10,0));
 		mTopBindContainer.add(addMarker);
+		mTopBindContainer.add(GUI.Spacer(10,0));
 		mTopBindContainer.add(mBindingContainer);
 
 		local text = "Drag book pages and binding materials into the slots, then click <font color=\"00FF00\">Bind</font>.<br>" +
 		             "The pages will be combined into a book, and placed in your <i>Bookshelf</i>.";
 		local label = GUI.HTML();
 		label.setText(text);
+		
+		local mBindButtonRow  = GUI.Container(GUI.BoxLayout());
+		mBindButtonRow.add(mButtonBind);
+		mBindButtonRow.add(mButtonCancelBind);
 
 		local mBindContainer = GUI.Container(GUI.BoxLayoutV());
 		mBindContainer.add(label);
@@ -217,7 +240,7 @@ class Screens.Books extends GUI.Frame {
 		mBindContainer.add(GUI.Spacer(0, 10));
 		mBindContainer.add(mCompleteBookContainer);
 		mBindContainer.add(GUI.Spacer(0, 10));
-		mBindContainer.add(mButtonBind);
+		mBindContainer.add(mBindButtonRow);
 		
 		// Bookshelf
 		mBookShelf = this.GUI.Container(this.GUI.BoxLayoutV());
@@ -248,6 +271,7 @@ class Screens.Books extends GUI.Frame {
 		setContentPane(mTabPane);
 		setSize(520, 440);
 		
+		_disableBindingAgentsInfo();
 		::_ItemDataManager.addListener(this);
 
 	}
@@ -283,8 +307,12 @@ class Screens.Books extends GUI.Frame {
 			if (itemData && itemData.getType() == this.ItemType.SPECIAL)
 			{
 				local itemDef = ::_ItemDataManager.getItemDef(itemData.mItemDefId); 
-				if(itemDef && itemDef.getDynamicMax(ItemIntegerType.BOOK_PAGE) != null)
-					return true;
+				if(itemDef && itemDef.getDynamicMax(ItemIntegerType.BOOK_PAGE) != null) {
+					if(mBookToBind = itemDef.getDynamicMax(ItemIntegerType.BOOK))
+						return true;
+					else
+						this.IGIS.error("All book pages must be for the same book.");
+				}
 			}
 			this.IGIS.error("You can only place book pages in here.");
 		}
@@ -315,7 +343,6 @@ class Screens.Books extends GUI.Frame {
 
 	function onActionButtonDropped( actionContainer, actionButton )
 	{
-		print("ICE! onActionButtonDropped( " + actionContainer + "," +  actionButton + "\n");
 		local equipScreen = this.Screens.get("Equipment", false);
 		if (equipScreen)
 		{
@@ -326,8 +353,6 @@ class Screens.Books extends GUI.Frame {
 
 	function onItemMovedInContainer( container, slotIndex, oldSlotsButton )
 	{
-		print("ICE! onItemMovedInContainer( " + container + "," +  slotIndex + "," +  oldSlotsButton + "\n");
-		
 		local item = container.getSlotContents(slotIndex);
 		local itemID = item.getActionButton().getAction().mItemId;
 		local queryArgument = [];
@@ -367,12 +392,16 @@ class Screens.Books extends GUI.Frame {
 		
 		if(container == mBindingContainer)
 		{
-			print("ICE! onActionButtonDropped mBindingContainer\n");
 			if(mCompleteBookContainer.isContainerEmpty()) 
 			{
+				local itemDefId = item.getActionButton().getAction().mItemData.mItemDefId; 
+				
 				/* If empty, query which book item this book page item produces */
-				print("ICE! onActionButtonDropped book.item " + itemID + "\n");
-				this._Connection.sendQuery("book.item", this, [itemID]);
+				this._Connection.sendQuery("book.item", this, [itemDefId]);
+			}
+			else
+			{
+				mButtonBind.setEnabled(mBindingContainer.getAllActionButtons().len() == mPagesToBind);	
 			}
 		}
 	}
@@ -459,6 +488,10 @@ class Screens.Books extends GUI.Frame {
 		IGIS.error("Could not show book " + bookId + ", page " + ( pageNumber + 1 ) );
 	}
 	
+	function onCancelButtonPressed(button) {
+		_restoreBindingContainer();
+	}
+	
 	function onButtonPressed(button) {
 		if(button == mButtonBind) {
 			local queryArgument = [];
@@ -474,6 +507,7 @@ class Screens.Books extends GUI.Frame {
 				return;
 			}
 			mButtonBind.setEnabled(false);
+			mButtonCancelBind.setEnabled(false);
 			::_Connection.sendQuery("mod.craft", this, queryArgument);
 		}
 		else if(mSelectedBook != null) {
@@ -506,10 +540,25 @@ class Screens.Books extends GUI.Frame {
 		this.GUI.Component.setVisible(visible);
 	}
 	
+	function _disableBindingAgentsInfo() {
+		for(local i = 0 ; i < 4; i++) {
+			mBindingAgentsInfoContainer.setValidDropSlot(i, false);
+			mBindingAgentsInfoContainer.setSlotsBackgroundMaterial(i, "BG/ActionHolderPlug_64", true);
+			mBindingAgentsContainer.setValidDropSlot(i, false);
+			mBindingAgentsContainer.setSlotsBackgroundMaterial(i, "BG/ActionHolderPlug_64", true);
+		}
+	}
+	
 	function _restoreBindingContainer() {
-		mButtonBind.setEnabled(true);
+		mBookToBind = 0;
+		mPagesToBind = 0;
+		mButtonBind.setEnabled(false);
+		mButtonCancelBind.setEnabled(false);
 		mBindingContainer.removeAllActions();
 		mBindingAgentsContainer.removeAllActions();
+		mBindingAgentsInfoContainer.removeAllActions();
+		_disableBindingAgentsInfo();
+		
 		mCompleteBookContainer.removeAllActions();
 		local inv = ::Screens.get("Inventory",false)
 		if(inv)
@@ -558,9 +607,53 @@ class Screens.Books extends GUI.Frame {
 			_restoreBindingContainer();
 			break;
 		case "book.item":
-			local item = ::_ItemManager.getItem(results[0][0].tointeger());
+			local itemID = results[0][0];
+			mPagesToBind = results[0][1].tointeger();
+			
+			local itemDef = ::_ItemManager.getItemDef(itemID.tointeger());
+			local itemData = ::_ItemDataManager.getItem(itemID);
+			local itemDataDef = ::_ItemDataManager.getItemDef(itemData.mItemDefId); 
+			mBookToBind = itemDataDef.getDynamicMax(ItemIntegerType.BOOK);
+			local agentsRequired = ( results[0].len() - 2 ) / 2;
+			
+			mBindingAgentsInfoContainer.removeAllActions();
+			for(local i = 2 ; i < ( agentsRequired * 2 ) + 2; i += 2) {
+				local matitemId = results[0][i].tointeger();
+				local count = results[0][i + 1].tointeger();
+				local matitemDef = ::_ItemManager.getItemDef(matitemId);
+				local actionButton = mBindingAgentsInfoContainer.addAction(matitemDef, false);
+				actionButton.setStackCount(count);
+			}
+			mBindingAgentsInfoContainer.updateContainer();
+			
+			for(local i = 0 ; i < 4; i++) {
+				if(i < agentsRequired) {
+					mBindingAgentsInfoContainer.setValidDropSlot(i, true);
+					mBindingAgentsInfoContainer.setSlotsBackgroundMaterial(i, "BG/ActionHolder1_64", true);
+					mBindingAgentsContainer.setValidDropSlot(i, true);
+					mBindingAgentsContainer.setSlotsBackgroundMaterial(i, "BG/ActionHolder1_64", true);
+				}
+				else {
+					mBindingAgentsInfoContainer.setValidDropSlot(i, false);
+					mBindingAgentsInfoContainer.setSlotsBackgroundMaterial(i, "BG/ActionHolderPlug_64", true);
+					mBindingAgentsContainer.setValidDropSlot(i, false);
+					mBindingAgentsContainer.setSlotsBackgroundMaterial(i, "BG/ActionHolderPlug_64", true);
+				}
+			}
+			
 			mCompleteBookContainer.removeAllActions();
-			mCompleteBookContainer.addAction(item, false, item.mItemData.mContainerSlot);
+			mCompleteBookContainer.addAction(itemDef, true);
+			mButtonCancelBind.setEnabled(true);
+			for(local i = 0 ; i < 20; i++) {
+				if(i < mPagesToBind) {
+					mBindingContainer.setValidDropSlot(i, true);
+					mBindingContainer.setSlotsBackgroundMaterial(i, "BG/ActionHolder1_64", true);
+				}
+				else {
+					mBindingContainer.setValidDropSlot(i, false);
+					mBindingContainer.setSlotsBackgroundMaterial(i, "BG/ActionHolderPlug_64", true);
+				}
+			}
 			break;
 		case "book.list":
 			_handleBookList(qa, results);
@@ -571,6 +664,10 @@ class Screens.Books extends GUI.Frame {
 		default:
 			break;
 		}
+	}
+	
+	function onItemUpdated(itemId, itemAction)
+	{
 	}
 	
 	function refreshBookshelf()

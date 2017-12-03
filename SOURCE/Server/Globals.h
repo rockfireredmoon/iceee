@@ -6,7 +6,7 @@
 
 #define MAXTARGET   8
 #define LOCALHOST_ADDRESS "127.0.0.1"
-#define MAXOBJECTIVES 3
+#define MAXOBJECTIVES 4
 
 //Shared between the servers
 extern const int SleepDelayError;

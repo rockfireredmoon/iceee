@@ -285,8 +285,6 @@ class this.Screens.CraftingWindow extends this.GUI.Frame
 
 	function onValidDropSlot( newSlot, oldSlot )
 	{
-		print("ICE! onValidDropSlot " + newSlot + "," + oldSlot + "\n");
-		
 		local button = oldSlot.getActionButton();
 		local action = button.getAction();
 		local itemData = action.mItemData;
@@ -327,8 +325,6 @@ class this.Screens.CraftingWindow extends this.GUI.Frame
 
 	function onItemMovedInContainer( container, slotIndex, oldSlotsButton )
 	{
-		print("ICE! onItemMovedInContainer " + container + "," + slotIndex + "," + oldSlotsButton + "\n");
-		
 		if (this.mListContainer == container)
 		{
 			this.clearCraftingWindow();
@@ -348,7 +344,6 @@ class this.Screens.CraftingWindow extends this.GUI.Frame
 
 	function onActionButtonLost( container, slot )
 	{
-		print("ICE! onActionButtonLost " + container + "," + slot + "\n");
 		this.clearCraftingWindow();
 		this.clearAdvancedWindow();
 	}

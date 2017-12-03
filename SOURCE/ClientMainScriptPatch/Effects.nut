@@ -273,7 +273,6 @@ class this.EffectBase
 		local mt = this.getMaxTime();
 		if (mt != -1 && ( ::_gameTime.getGameTimeMiliseconds() - this.mStartTime > mt ) )
 		{
-			print("ICE! mMaxTime of " + this.getMaxTime() + " reached!\n");
 			this.destroy();
 		}
 		else if (this.mState == this.RUNNING || this.mState == this.STOPPING)
