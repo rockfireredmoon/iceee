@@ -386,7 +386,7 @@ void CreatureDefinition :: SaveToStream(FILE *output)
 		Util::SafeFormat(buf, sizeof(buf), "%f", DropRateMult);
 		ExtraData.SetKeyValue("dropratemulti", buf);
 	}
-	for(std::vector<int>::iterator it = Items.begin() ; it != Items.end(); it++) {
+	for(std::vector<int>::iterator it = Items.begin() ; it != Items.end(); ++it) {
 		STRINGLIST str;
 		str.push_back("item");
 		str.push_back("");
@@ -400,7 +400,7 @@ void CreatureDefinition :: SaveToStream(FILE *output)
 	}
 	if(DefaultEffects.size() > 0) {
 		fprintf(output, "Effects=");
-		for(std::vector<int>::iterator it = DefaultEffects.begin(); it != DefaultEffects.end(); it++) {
+		for(std::vector<int>::iterator it = DefaultEffects.begin(); it != DefaultEffects.end(); ++it) {
 			if(it != DefaultEffects.begin())
 				fprintf(output, ",");
 			fprintf(output, "%s", GetStatusNameByID(*it));
@@ -8513,7 +8513,7 @@ int CreatureDefManager :: LoadFile(const char *filename)
 				newItem.DropRateMult = str.GetValueFloatOrDefault("dropratemult", 1);
 				newItem.DropRateProfile = "";
 				str.GetValueString("droprateprofile", newItem.DropRateProfile);
-				for(MULTISTRING::iterator it = str.mData.begin(); it != str.mData.end(); it++) {
+				for(MULTISTRING::iterator it = str.mData.begin(); it != str.mData.end(); ++it) {
 					STRINGLIST sl = *it;
 					if(sl[0].compare("item") == 0) {
 						newItem.Items.push_back(Util::GetInteger(sl[1].c_str()));

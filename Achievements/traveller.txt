@@ -1,0 +1,17 @@
+[ENTRY]
+Title=Travelling Trophies
+Description=Achieved by visiting various regions.
+Icon1=Icon-64-Achievement_Traveller.png
+Icon2=Icon-64-BG-Green.png
+[OBJECTIVE]
+Name=first-corsica-warp
+Title=Leave Start Area
+Description=Leave the entrance zone to make your first tentative steps on Gaia.
+[OBJECTIVE]
+Name=first-anglorum-warp
+Title=Go To Anglorum
+Description=Leave the starter region to explore the ancient land of Anglorum
+[OBJECTIVE]
+Name=first-europe-warp
+Title=Go To Europe
+Description=Leave Anglorum to experience the beasts and cultures of Europe 

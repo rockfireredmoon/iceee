@@ -1,9 +1,0 @@
-<?xml version="1.0" ?>
-<Component id="CL-Candelabra2" xmlns="http://ee.ironrealms.com/CMS_XML.xsd">
-  <XRef cref="Par-Candle_Glow1" p="-3.1069 21.8308 7.20715"/> <!-- THIS DONE -->
-  <XRef cref="Par-Candle_Glow1" p="1.98477 22.9153 -6.30882"/>
-  <XRef cref="Par-Candle_Glow1" p="-7.46295 23.2019 -2.83377"/> <!-- THIS DONE -->
-  <XRef cref="Par-Candle_Glow1" p="-4.76143 28.3198 3.44362"/> <!-- THIS DONE -->
-  <XRef cref="Par-Candle_Glow1" p="0.80048 34.6378 -3.46477"/> <!-- DONE -->
-  <XRef cref="Prop-Candelabra2"/>
-</Component>

@@ -3564,6 +3564,8 @@ void AbilityCalculator :: CheckCritical(int &amount, int damageType)
 	}
 	//g_Log.AddMessageFormat("Final crit chance: %d (%d)", CritChance, (int)ciSource->css.mod_melee_to_crit);
 
+
+
 	//Roll critical. If CritChance is zero or less, it will never trigger.
 	int rnd = randint(1, 1000);
 	if(rnd <= CritChance)
@@ -3595,14 +3597,12 @@ void AbilityCalculator :: CheckCritical(int &amount, int damageType)
 			int SuperChance = (int)(luckMod * luckMod) * 10;
 
 			rnd = randint(1, 1000);
+
 			if(rnd <= SuperChance)
 			{
-				if(g_ProtocolVersion >= 37)
-					mCriticalHitState = CRITICAL_SUPER;
-				else
-					ciSource->NotifySuperCrit(ciTarget->CreatureID);
+				ciSource->NotifySuperCrit(ciTarget->CreatureID);
+				mCriticalHitState = CRITICAL_SUPER;
 				amount *= 2;
-				//g_Log.AddMessageFormatW(MSG_DIAGV, "Supercrit (chance: %d)", SuperChance);
 			}
 		}
 	}

@@ -1,0 +1,17 @@
+[ENTRY]
+Title=Combat Cups
+Description=Achieved by performing mean feats of Combat.
+Icon1=Icon-64-Achievement_Fighter.png
+Icon2=Icon-64-BG-Green.png
+[OBJECTIVE]
+Name=3-at-once
+Title=Take On 3 Enemies At Once
+Description=Take on and defeat at least 3 enemies at once.
+[OBJECTIVE]
+Name=perfect-fight
+Title=Perfect Fight
+Description=Defeat an enemy without taking any damage at all
+[OBJECTIVE]
+Name=one-shot
+Title=One shot an enemy
+Description=Defeat an enemy with a single shot 

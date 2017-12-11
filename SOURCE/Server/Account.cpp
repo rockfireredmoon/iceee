@@ -239,6 +239,42 @@ bool AccountData :: HasCharacterID(int CDefID)
 	return false;
 }
 
+int AccountData :: GetTotalAchievementObjectives() {
+	int c = 0;
+		for(std::map<std::string, Achievements::Achievement>::iterator it = Achievements.begin(); it != Achievements.end(); ++it) {
+			c += it->second.mCompletedObjectives.size();
+		}
+		return c;
+}
+
+int AccountData :: GetTotalCompletedAchievements() {
+	int c = 0;
+	for(std::map<std::string, Achievements::Achievement>::iterator it = Achievements.begin(); it != Achievements.end(); ++it) {
+		if((*it).second.IsComplete())
+			c++;
+	}
+	return c;
+}
+
+void AccountData :: AddAchievement(std::string achievement)
+{
+	std::vector<std::string> l;
+	Util::Split(achievement, "/", l);
+	if(l.size() > 1) {
+		Achievements::AchievementDef *def = g_AchievementsManager.GetItem(l[0]);
+		if(def == NULL) {
+			g_Log.AddMessageFormat("[WARNING] No such achievement, %s for %s (%d)", l[0].c_str(), Name, ID);
+			return;
+		}
+		if(Achievements.find(l[0]) == Achievements.end()) {
+			Achievements[l[0]] = Achievements::Achievement(def);
+		}
+		Achievements[l[0]].CompleteObjective(l[1]);
+	}
+	else
+		g_Log.AddMessageFormat("[WARNING] Incorrect achievement spec, %s for %s (%d)", achievement.c_str(), Name, ID);
+}
+
 
 bool AccountData :: HasAccountCompletedQuest(int QuestID) {
 	return std::find(AccountQuests.begin(), AccountQuests.end(), QuestID) != AccountQuests.end();
@@ -374,6 +410,20 @@ void AccountData :: SaveToStream(FILE *output)
 	}
 	if(write > 0)
 		fprintf(output, "\r\n");
+
+	for(std::map<std::string,Achievements::Achievement>::iterator it = Achievements.begin(); it != Achievements.end(); ++it)
+	{
+		write = 0;
+		fprintf(output, "Achievements=");
+		for(std::vector<Achievements::AchievementObjectiveDef*>::iterator it2 = (*it).second.mCompletedObjectives.begin(); it2 != (*it).second.mCompletedObjectives.end(); ++it2) {
+			if(write > 0)
+				fputc(',', output);
+			fprintf(output, "%s/%s", (*it).first.c_str(), (*it2)->mName.c_str());
+			write++;
+		}
+
+		fprintf(output, "\r\n");
+	}
 
 	Util::WriteString(output, "GroveName", GroveName);
 	for(size_t i = 0; i < BuildPermissionList.size(); i++)
@@ -682,6 +732,17 @@ void AccountManager :: LoadSectionGeneral(FileReader &fr, AccountData &ad, const
 			{
 				break;
 			}
+		}
+	}
+	else if(strcmp(NameBlock, "ACHIEVEMENTS") == 0)
+	{
+		int a;
+		for(a = 1; a < fr.MULTIBLOCKCOUNT; a++)
+		{
+			if(fr.BlockLen[a] > 0)
+				ad.AddAchievement(fr.BlockToStringC(a, Case_None));
+			else
+				break;
 		}
 	}
 	else if(strcmp(NameBlock, "GROVENAME") == 0)

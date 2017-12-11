@@ -7,6 +7,8 @@
 
 export WINEPREFIX=$HOME/.cache/valtools
 export WINEARCH=win32
+export WINEBIN=$HOME/.PlayOnLinux/wine/linux-x86/2.22
+export PATH="${WINEBIN}/bin:${PATH}"
 
 #
 # Use this function to run windows binary tools, as it will check

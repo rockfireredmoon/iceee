@@ -1,6 +1,0 @@
-<?xml version="1.0" ?>
-<Component id="Prop-Crystal_Red_Small2" xmlns="http://ee.ironrealms.com/CMS_XML.xsd">
-  <LOD dist="" mesh=""/>
-  <Entity mesh="Prop-Crystal_Red_Small2.mesh"/>
-  <Entity mesh="Prop-Crystal_Red_Small2-Blocking.mesh" qf="4" vf="2"/>
-</Component>

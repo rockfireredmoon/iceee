@@ -11,6 +11,7 @@ vald_SOURCES = md5.cc \
 	Ability2.cpp \
 	AbilityTime.cpp \
 	Account.cpp \
+	Achievements.cpp \
 	ActiveCharacter.cpp \
 	AIScript.cpp \
 	AIScript2.cpp \
@@ -88,6 +89,7 @@ vald_SOURCES = md5.cc \
 	Ability2.h \
 	AbilityTime.h \
 	Account.h \
+	Achievements.h \
 	ActiveCharacter.h \
 	AIScript.h \
 	AIScript2.h \
@@ -179,6 +181,7 @@ valdsvc_SOURCES = md5.cc \
 	Ability2.cpp \
 	AbilityTime.cpp \
 	Account.cpp \
+	Achievements.cpp \
 	ActiveCharacter.cpp \
 	AIScript.cpp \
 	AIScript2.cpp \
@@ -256,6 +259,7 @@ valdsvc_SOURCES = md5.cc \
 	Ability2.h \
 	AbilityTime.h \
 	Account.h \
+	Achievements.h \
 	ActiveCharacter.h \
 	AIScript.h \
 	AIScript2.h \

@@ -513,6 +513,8 @@ int InitServerMain() {
 	g_ItemManager.LoadData();
 	g_ItemSetManager.LoadData();
 
+	g_AchievementsManager.LoadItems();
+	g_Log.AddMessageFormat("Loaded %d Achievements.", g_AchievementsManager.mDefs.size());
 	g_ModManager.LoadFromFile(Platform::GenerateFilePath(GAuxBuf, "ItemMod", "ModTables.txt"));
 	g_Log.AddMessageFormat("Loaded %d ModTables.", g_ModManager.modTable.size());
 	g_ModTemplateManager.LoadFromFile(Platform::GenerateFilePath(GAuxBuf, "ItemMod", "ModTemplates.txt"));

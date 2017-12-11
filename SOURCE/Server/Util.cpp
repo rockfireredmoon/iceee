@@ -191,6 +191,23 @@ int PrepExt_RemoveCreature(char *buffer, int actorID)
 	return wpos;
 }
 
+int PrepExt_Damage(char *buffer, int actorID, const char *damageString, const char *ability, int critical, int absorbed)
+{
+	int wpos = 0;
+	wpos += PutByte(&buffer[wpos], 4);  //_handleCreatureEventMsg
+	wpos += PutShort(&buffer[wpos], 0);
+
+	wpos += PutInteger(&buffer[wpos], actorID);   //actorID
+	wpos += PutByte(&buffer[wpos], 7);     //7 - dps
+	wpos += PutStringUTF(&buffer[wpos], damageString);
+	wpos += PutStringUTF(&buffer[wpos], ability);
+	wpos += PutByte(&buffer[wpos], critical);
+	wpos += PutByte(&buffer[wpos], absorbed);
+
+	PutShort(&buffer[1], wpos - 3);       //Set message size
+	return wpos;
+}
+
 int PrepExt_SendInfoMessage(char *buffer, const char *message, unsigned char eventID)
 {
 	int wpos = 0;
@@ -388,6 +405,17 @@ int PrepExt_QueryResponseError(char *buffer, int queryIndex, const char *message
 	wpos += PutInteger(&buffer[wpos], queryIndex);  //Query response index
 	wpos += PutShort(&buffer[wpos], 0x7000);        //Negative number indicates error
 	wpos += PutStringUTF(&buffer[wpos], message);   //String data
+	PutShort(&buffer[1], wpos - 3);                 //Message size
+	return wpos;
+}
+
+int PrepExt_Achievement(char *buffer, int creatureID, const char *achievement, const char *scoreSpec) {
+	int wpos = 0;
+	wpos += PutByte(&buffer[wpos], 55);              //_handleAchievements
+	wpos += PutShort(&buffer[wpos], 0);             //Placeholder for message size
+	wpos += PutInteger(&buffer[wpos], creatureID);  //CID
+	wpos += PutStringUTF(&buffer[wpos], achievement);   //achievement
+	wpos += PutStringUTF(&buffer[wpos], scoreSpec);
 	PutShort(&buffer[1], wpos - 3);                 //Message size
 	return wpos;
 }

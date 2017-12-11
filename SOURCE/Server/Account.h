@@ -8,6 +8,7 @@
 #include "Stats.h"
 #include "Components.h"
 #include "Inventory.h"
+#include "Achievements.h"
 #include "Character.h"
 #include "Util.h"  //ChangeData was moved here
 
@@ -106,6 +107,7 @@ public:
 	std::string GroveName;
 	std::vector<BuildPermissionArea> BuildPermissionList;
 	std::vector<int> AccountQuests;
+	std::map<std::string, Achievements::Achievement> Achievements;
 
 	int MaxCharacters;
 
@@ -114,6 +116,7 @@ public:
 
 	bool HasBuildZone(BuildPermissionArea &bpa);
 
+	void AddAchievement(std::string achievement);
 	bool ExpandCharacterSlots();
 	bool ExpandDeliveryBoxes();
 	void ClearAll(void);
@@ -144,6 +147,8 @@ public:
 	bool MatchRegistrationKey(const char *regkey);
 	bool IsRegistrationKeyEmpty(void);
 	void CheckRecoveryRegistrationKey(const char *regkey);
+	int GetTotalAchievementObjectives();
+	int GetTotalCompletedAchievements();
 private:
 	short SessionLoginCount;   //Number of Simulators logged into this account.
 	unsigned long ExpireTime;  //The server time when the account will be ready for garbage deletion.

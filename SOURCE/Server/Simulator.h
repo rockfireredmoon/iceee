@@ -368,6 +368,8 @@ public:
 	int handle_query_zone_mode(void);
 	int handle_query_mode(void);
 	int handle_query_team(void);
+	int handle_query_player_achievements(void);
+	int handle_query_achievement_def(void);
 	int handle_book_list(void);
 	int handle_book_item(void);
 	int handle_book_get(void);
@@ -520,6 +522,7 @@ public:
 	int handle_command_set_tailsize(void);
 	int handle_command_sping(void);
 	int handle_command_info(void);
+	int handle_command_achievements(void);
 	int handle_command_grovesetting(void);
 	int handle_command_grovepermission(void);
 	int handle_command_dngscale(void);

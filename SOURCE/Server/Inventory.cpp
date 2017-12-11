@@ -323,7 +323,7 @@ void InventoryManager :: FindNextExpunge()
 	NextExpunge = 0;
 	for(int i = 0 ; i < MAXCONTAINER; i++) {
 		int size = containerList[i].size();
-		for(std::vector<InventorySlot>::iterator it = containerList[i].begin(); it != containerList[i].end(); it++) {
+		for(std::vector<InventorySlot>::iterator it = containerList[i].begin(); it != containerList[i].end(); ++it) {
 			if((*it).secondsRemaining > -1) {
 				long remain = (*it).GetTimeRemaining();
 				if(NextExpunge == 0 || g_ServerTime + remain <= NextExpunge) {
@@ -342,7 +342,7 @@ int InventoryManager :: ScanExpiredItems(std::vector<InventoryQuery> &resultList
 	InventoryQuery iq;
 	for(int i = 0 ; i < MAXCONTAINER; i++) {
 		int size = containerList[i].size();
-		for(std::vector<InventorySlot>::iterator it = containerList[i].begin(); it != containerList[i].end(); it++) {
+		for(std::vector<InventorySlot>::iterator it = containerList[i].begin(); it != containerList[i].end(); ++it) {
 			if((*it).secondsRemaining > -1) {
 				long remain = (*it).GetTimeRemaining();
 				if(remain < 1) {

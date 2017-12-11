@@ -450,7 +450,7 @@ void MapLocationHandler :: GetZone(int zone, std::vector<MapLocationDef> &defs)
 	for(a = 0; a < mLocationSet.size(); a++)
 	{
 		if(mLocationSet[a].mZone == zone) {
-			for(std::vector<MapLocationDef>::iterator it = mLocationSet[a].mLocationList.begin(); it != mLocationSet[a].mLocationList.end(); it++) {
+			for(std::vector<MapLocationDef>::iterator it = mLocationSet[a].mLocationList.begin(); it != mLocationSet[a].mLocationList.end(); ++it) {
 				defs.push_back(*it);
 			}
 		}
@@ -3348,7 +3348,7 @@ void ActiveInstance :: RunProcessingCycle(void)
 
 	spawnsys.RunProcessing(false);
 
-	for(std::vector<WeatherState*>::iterator it = mWeather.begin(); it != mWeather.end(); it++) {
+	for(std::vector<WeatherState*>::iterator it = mWeather.begin(); it != mWeather.end(); ++it) {
 		(*it)->RunCycle(this);
 	}
 

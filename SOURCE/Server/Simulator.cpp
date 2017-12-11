@@ -2832,6 +2832,10 @@ bool SimulatorThread :: HandleQuery(int &PendingData)
 		PendingData = handle_book_get();
 	else if(query.name.compare("form.submit") == 0)
 		PendingData = handle_form_submit();
+	else if(query.name.compare("player.achievements") == 0)
+		PendingData = handle_query_player_achievements();
+	else if(query.name.compare("achievement.def") == 0)
+		PendingData = handle_query_achievement_def();
 	else {
 		g_Log.AddMessageFormat("Unhandled query '%s'.", query.name.c_str());
 		return false;
@@ -2970,6 +2974,8 @@ bool SimulatorThread :: HandleCommand(int &PendingData)
 		PendingData = handle_command_sping();
 	else if(query.name.compare("info") == 0)
 		PendingData = handle_command_info();
+	else if(query.name.compare("achievements") == 0)
+		PendingData = handle_command_achievements();
 	else if(query.name.compare("grovesetting") == 0)
 		PendingData = handle_command_grovesetting();
 	else if(query.name.compare("grovepermission") == 0)
@@ -3276,7 +3282,7 @@ int SimulatorThread :: handle_book_item(void)
 		std::vector<int> results;
 		std::vector<int> requiredMaterials;
 		recipe->GetRequiredItems(results);
-		for(std::vector<int>::iterator it =results.begin(); it != results.end(); it++) {
+		for(std::vector<int>::iterator it =results.begin(); it != results.end(); ++it) {
 			ItemDef *materialItem = g_ItemManager.GetSafePointerByID(*it);
 			if(materialItem != NULL && materialItem->GetDynamicMax(ItemIntegerType::BOOK_MATERIAL) != -1) {
 				requiredMaterials.push_back(*it);
@@ -3295,7 +3301,7 @@ int SimulatorThread :: handle_book_item(void)
 		WritePos += PutStringUTF(&SendBuf[WritePos], Aux2);  //ID
 		sprintf(Aux2, "%d", bookPages);
 		WritePos += PutStringUTF(&SendBuf[WritePos], Aux2);  //ID
-		for(std::vector<int>::iterator it =requiredMaterials.begin(); it != requiredMaterials.end(); it++) {
+		for(std::vector<int>::iterator it =requiredMaterials.begin(); it != requiredMaterials.end(); ++it) {
 			sprintf(Aux2, "%d", *it);
 			WritePos += PutStringUTF(&SendBuf[WritePos], Aux2);  //ID
 		}
@@ -3884,7 +3890,7 @@ int SimulatorThread :: handle_query_map_marker(void)
 		{
 			/* All henges in zone */
 			if(pld.zoneDef != NULL && !pld.zoneDef->IsOverworld()) {
-				for(std::vector<InteractObject>::iterator it = g_InteractObjectContainer.objList.begin(); it != g_InteractObjectContainer.objList.end(); it++) {
+				for(std::vector<InteractObject>::iterator it = g_InteractObjectContainer.objList.begin(); it != g_InteractObjectContainer.objList.end(); ++it) {
 					if((*it).opType == InteractObject::TYPE_HENGE && (*it).WarpID == pld.CurrentZoneID) {
 						qRes.push_back(STRINGLIST());
 						qRes.back().push_back((*it).useMessage);
@@ -3900,7 +3906,7 @@ int SimulatorThread :: handle_query_map_marker(void)
 			/* All sanctuaries within 1000 */
 			ZoneMarkerData *zmd = g_ZoneMarkerDataManager.GetPtrByZoneID(pld.CurrentZoneID);
 			if(zmd != NULL && pld.zoneDef != NULL && !pld.zoneDef->IsOverworld()) {
-				for(std::vector<WorldCoord>::iterator it = zmd->sanctuary.begin(); it != zmd->sanctuary.end(); it++) {
+				for(std::vector<WorldCoord>::iterator it = zmd->sanctuary.begin(); it != zmd->sanctuary.end(); ++it) {
 					int xlen = abs((int)(*it).x - creatureInst->CurrentX);
 					int zlen = abs((int)(*it).z - creatureInst->CurrentZ);
 					double dist = sqrt((double)((xlen * xlen) + (zlen * zlen)));
@@ -6533,7 +6539,7 @@ void SimulatorThread :: handle_query_creature_isusable(void)
 			if(status[0] == 'N') {
 				CreatureDefinition *cdef = CreatureDef.GetPointerByCDef(target->CreatureDefID);
 				if(cdef != NULL && (cdef->DefHints & CDEF_HINT_ITEM_GIVER)) {
-					for(std::vector<int>::iterator it = cdef->Items.begin(); it != cdef->Items.end(); it++) {
+					for(std::vector<int>::iterator it = cdef->Items.begin(); it != cdef->Items.end(); ++it) {
 						/* For now we only allow use if the player doesn't already have
 						 * the item. There could be other uses for this though. I'll
 						 * add logic as and when it's needed
@@ -8748,7 +8754,7 @@ int SimulatorThread :: handle_query_creature_use(void)
 		/* Is the object an ITEM_GIVER? (Item ids given are in Extra Data) */
 		if(cdef != NULL && (cdef->DefHints & CDEF_HINT_ITEM_GIVER) != 0) {
 
-			for(std::vector<int>::iterator it = cdef->Items.begin() ; it != cdef->Items.end(); it++) {
+			for(std::vector<int>::iterator it = cdef->Items.begin() ; it != cdef->Items.end(); ++it) {
 				/* For now we only allow use if the player doesn't already have
 				 * the item. There could be other uses for this though. I'll
 				 * add logic as and when it's needed
@@ -15184,6 +15190,41 @@ void SimulatorThread :: SendAbilityErrorMessage(int abilityErrorCode)
 	pld.LastAbilityErrorMessagePriority = priority;
 }
 
+int SimulatorThread :: handle_command_achievements(void)
+{
+	if(query.argCount >= 1)
+	{
+		if(CheckPermissionSimple(Perm_Account, Permission_Admin) == false)
+			return PrepExt_QueryResponseError(SendBuf, query.ID, "Permission denied.");
+
+
+		if(query.args[0].compare("add") == 0) {
+			if(query.argCount > 1) {
+				pld.accPtr->AddAchievement(query.args[1]);
+				pld.accPtr->PendingMinorUpdates++;
+				int wpos = PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
+				Util::SafeFormat(Aux1, sizeof(Aux1), "%d:%d:%d:%d", g_AchievementsManager.GetTotalAchievements(), pld.accPtr->GetTotalCompletedAchievements(), g_AchievementsManager.GetTotalObjectives(), pld.accPtr->GetTotalAchievementObjectives());
+				wpos += PrepExt_Achievement(&SendBuf[wpos], creatureInst->CreatureID, query.args[1].c_str(), Aux1);
+				return wpos;
+			}
+			else
+				return PrepExt_QueryResponseError(SendBuf, query.ID, "Add command requires fully qualified name of achievement.");
+		}
+	}
+	else
+	{
+		for(std::map<std::string, Achievements::Achievement>::iterator it = pld.accPtr->Achievements.begin() ; it != pld.accPtr->Achievements.end() ; ++it)
+		{
+			Achievements::Achievement a = it->second;
+			for(std::vector<Achievements::AchievementObjectiveDef*>::iterator ait = a.mCompletedObjectives.begin() ; ait != a.mCompletedObjectives.end() ; ++ait) {
+				Util::SafeFormat(Aux1, sizeof(Aux1), "%s/%s", a.mDef->mName.c_str(), (*ait)->mName.c_str());
+				SendInfoMessage(Aux1, INFOMSG_INFO);
+			}
+		}
+	}
+	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
+}
+
 int SimulatorThread :: handle_command_info(void)
 {
 	if(CheckPermissionSimple(Perm_Account, Permission_Admin) == false)
@@ -15524,7 +15565,89 @@ int SimulatorThread :: handle_query_script_gc(void)
 	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
 }
 
+int SimulatorThread :: handle_query_achievement_def(void)
+{
+	if(query.argCount > 0) {
+		Achievements::AchievementDef *adata = g_AchievementsManager.GetItem(query.GetString(0));
+		if(adata == NULL)
+			return PrepExt_QueryResponseError(SendBuf, query.ID, "No such achievement.");
 
+		int wpos = 0;
+		wpos += PutByte(&SendBuf[wpos], 1);              //_handleQueryResultMsg
+		wpos += PutShort(&SendBuf[wpos], 0);             //Placeholder for message size
+		wpos += PutInteger(&SendBuf[wpos], query.ID);  //Query response index
+		wpos += PutShort(&SendBuf[wpos], 1 + adata->mObjectives.size());             //Row count
+
+		wpos += PutByte(&SendBuf[wpos], 7); //String count
+		wpos += PutStringUTF(&SendBuf[wpos], adata->mName.c_str());   //name
+		wpos += PutStringUTF(&SendBuf[wpos], adata->mTitle.c_str());   //title
+		Util::SafeFormat(Aux1, sizeof(Aux1), "%d", adata->mCategory);
+		wpos += PutStringUTF(&SendBuf[wpos], Aux1);   //category
+		wpos += PutStringUTF(&SendBuf[wpos], adata->mDescription.c_str());   //description
+		wpos += PutStringUTF(&SendBuf[wpos], adata->mIcon1.c_str());   //icon1
+		wpos += PutStringUTF(&SendBuf[wpos], adata->mIcon2.c_str());   //icon2
+		wpos += PutStringUTF(&SendBuf[wpos], adata->mTag.c_str());   //tag
+
+		for(std::vector<Achievements::AchievementObjectiveDef*>::iterator it = adata->mObjectives.begin(); it != adata->mObjectives.end(); ++it) {
+			Achievements::AchievementObjectiveDef* odef = (*it);
+			wpos += PutByte(&SendBuf[wpos], 6); //String count
+			wpos += PutStringUTF(&SendBuf[wpos], odef->mName.c_str());   //name
+			wpos += PutStringUTF(&SendBuf[wpos], odef->mTitle.c_str());   //title
+			wpos += PutStringUTF(&SendBuf[wpos], odef->mDescription.c_str());   //description
+			wpos += PutStringUTF(&SendBuf[wpos], odef->mIcon1.c_str());   //icon1
+			wpos += PutStringUTF(&SendBuf[wpos], odef->mIcon2.c_str());   //icon2
+			wpos += PutStringUTF(&SendBuf[wpos], odef->mTag.c_str());   //tag
+		}
+		PutShort(&SendBuf[1], wpos - 3);                 //Message size
+		return wpos;
+
+	}
+	else {
+		return PrepExt_QueryResponseError(SendBuf, query.ID, "Missing argument.");
+	}
+	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
+}
+
+int SimulatorThread :: handle_query_player_achievements(void)
+{
+	if(query.argCount > 0) {
+
+		CreatureInstance *cdata = creatureInst->actInst->GetPlayerByID(query.GetInteger(0));
+		if(cdata == NULL) {
+			Util::SafeFormat(Aux1, sizeof(Aux1), "No such character %s", query.GetString(0));
+			return PrepExt_QueryResponseError(SendBuf, query.ID, Aux1);
+		}
+
+		AccountData *acc = g_AccountManager.GetActiveAccountByID(cdata->charPtr->AccountID);
+		if(acc == NULL) {
+			return PrepExt_QueryResponseError(SendBuf, query.ID, "Account is not active.");
+		}
+
+		STRINGLIST l;
+
+		// First row is the player creature ID
+		l.push_back(query.GetString(0));
+
+		// Second row is the player score
+		Util::SafeFormat(Aux1, sizeof(Aux1), "%d:%d:%d:%d", g_AchievementsManager.GetTotalAchievements(), acc->GetTotalCompletedAchievements(), g_AchievementsManager.GetTotalObjectives(), acc->GetTotalAchievementObjectives());
+		l.push_back(Aux1);
+
+		for(std::map<std::string, Achievements::Achievement>::iterator it = pld.accPtr->Achievements.begin() ; it != pld.accPtr->Achievements.end() ; ++it)
+		{
+			Achievements::Achievement a = it->second;
+			for(std::vector<Achievements::AchievementObjectiveDef*>::iterator ait = a.mCompletedObjectives.begin() ; ait != a.mCompletedObjectives.end() ; ++ait ) {
+				Util::SafeFormat(Aux1, sizeof(Aux1), "%s/%s", a.mDef->mName.c_str(), (*ait)->mName.c_str());
+				l.push_back(Aux1);
+			}
+		}
+
+		return PrepExt_QueryResponseStringList(SendBuf, query.ID, l);
+	}
+	else {
+		return PrepExt_QueryResponseError(SendBuf, query.ID, "Missing argument.");
+	}
+	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
+}
 
 
 int SimulatorThread :: handle_query_team(void)
