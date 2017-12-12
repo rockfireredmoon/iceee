@@ -233,6 +233,7 @@ public:
 	void handle_query_friends_status(void);
 	void handle_query_friends_getstatus(void);
 	int handle_query_creature_def_edit(void);
+	int protected_helper_tweak_self(int CDefID, int defhints, int argOffset);
 	int handle_query_item_def_use(void);
 	int handle_query_item_use(void);
 	void handle_query_ab_ownage_list(void);

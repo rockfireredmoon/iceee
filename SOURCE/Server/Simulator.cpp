@@ -7247,38 +7247,18 @@ int SimulatorThread :: handle_query_creature_def_edit(void)
 	}
 	else
 	{
-		if(CheckPermissionSimple(0, Permission_TweakClient) == true)
-		{
-			const char *appearance = NULL;
-			for(uint i = 1 + argOffset; i < query.argCount; i += 2)
-			{
-				const char *name = query.args[i].c_str();
-				const char *value = query.args[i + 1].c_str();
-				if(strcmp(name, "appearance") == 0)
-				{
-					appearance = value;
-					break;
-				}
-			}
-			int size = 0;
-			if(appearance != NULL)
-			{
-				std::vector<short> statID;
-				statID.push_back(STAT::APPEARANCE);
-				CharacterStatSet data;
-				//Util::SafeCopy(data.appearance, appearance, sizeof(data.appearance));
-				data.SetAppearance(appearance);
-				size = PrepExt_UpdateCreatureDef(SendBuf, CDefID, cDef->DefHints, statID, &data);
-			}
-			size += PrepExt_QueryResponseString(&SendBuf[size], query.ID, "OK");
-			return size;
-		}
 		if(pld.CreatureDefID == CDefID)
 		{
 			if(CheckPermissionSimple(0, Permission_TweakSelf) == false)
 			{
-				SendInfoMessage("Permission denied: cannot edit self.", INFOMSG_ERROR);
-				return PrepExt_QueryResponseNull(SendBuf, query.ID);
+				int res = protected_helper_tweak_self(CDefID, cDef->DefHints, argOffset);
+				if(res == -1) {
+					SendInfoMessage("Permission denied: cannot edit self.", INFOMSG_ERROR);
+					return PrepExt_QueryResponseNull(SendBuf, query.ID);
+				}
+				else {
+					return res;
+				}
 			}
 		}
 		else
@@ -7287,16 +7267,26 @@ int SimulatorThread :: handle_query_creature_def_edit(void)
 			{
 				if(CheckPermissionSimple(0, Permission_TweakOther) == false)
 				{
-					SendInfoMessage("Permission denied: cannot edit other players.", INFOMSG_ERROR);
-					return PrepExt_QueryResponseNull(SendBuf, query.ID);
+					int res = protected_helper_tweak_self(CDefID, cDef->DefHints, argOffset);
+					if(res == -1) {
+						SendInfoMessage("Permission denied: cannot edit other players.", INFOMSG_ERROR);
+						return PrepExt_QueryResponseNull(SendBuf, query.ID);
+					}
+					else
+						return res;
 				}
 			}
 			else
 			{
 				if(CheckPermissionSimple(0, Permission_TweakNPC) == false)
 				{
-					SendInfoMessage("Permission denied: cannot edit creatures.", INFOMSG_ERROR);
-					return PrepExt_QueryResponseNull(SendBuf, query.ID);
+					int res = protected_helper_tweak_self(CDefID, cDef->DefHints, argOffset);
+					if(res == -1) {
+						SendInfoMessage("Permission denied: cannot edit creatures.", INFOMSG_ERROR);
+						return PrepExt_QueryResponseNull(SendBuf, query.ID);
+					}
+					else
+						return res;
 				}
 			}
 		}
@@ -7390,6 +7380,38 @@ int SimulatorThread :: handle_query_creature_def_edit(void)
 		}
 	}
 	return PrepExt_QueryResponseString(SendBuf, query.ID, "OK");
+}
+
+int SimulatorThread :: protected_helper_tweak_self(int CDefID, int defhints, int argOffset)
+{
+	if(CheckPermissionSimple(0, Permission_TweakClient) == true)
+	{
+		const char *appearance = NULL;
+		for(uint i = 1 + argOffset; i < query.argCount; i += 2)
+		{
+			const char *name = query.args[i].c_str();
+			const char *value = query.args[i + 1].c_str();
+			if(strcmp(name, "appearance") == 0)
+			{
+				appearance = value;
+				break;
+			}
+		}
+		int size = 0;
+		if(appearance != NULL)
+		{
+			std::vector<short> statID;
+			statID.push_back(STAT::APPEARANCE);
+			CharacterStatSet data;
+			//Util::SafeCopy(data.appearance, appearance, sizeof(data.appearance));
+			data.SetAppearance(appearance);
+			size = PrepExt_UpdateCreatureDef(SendBuf, CDefID, defhints, statID, &data);
+		}
+		size += PrepExt_QueryResponseString(&SendBuf[size], query.ID, "OK");
+		return size;
+	}
+	else
+		return -1;
 }
 
 int SimulatorThread :: handle_query_item_def_use(void)
