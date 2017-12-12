@@ -1,1 +1,1 @@
-../../sparkplayer-eartheternal/bin/assets/Release/Current/HTTPChecksum.txt
+../asset/Release/Current/HTTPChecksum.txt
