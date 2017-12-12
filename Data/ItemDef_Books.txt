@@ -1386,7 +1386,7 @@ mType=8
 mDisplayName=Southend Passage Leaflet
 mIcon=Icon-32-Book.png|Icon-32-BG-White.png
 mLevel=1
-mValue=1
+mValue=120
 mMinUseLevel=1
 mQualityLevel=1
 mBindingType=1
@@ -1400,7 +1400,7 @@ mType=8
 mDisplayName=Complete Book Of Earthend
 mIcon=Icon-32-Book.png|Icon-32-BG-White.png
 mLevel=1
-mValue=1
+mValue=420
 mMinUseLevel=1
 mQualityLevel=1
 mBindingType=1
@@ -1410,16 +1410,198 @@ mIvType1=12
 
 [ENTRY]
 mID=1550003
-mType=8
+mType=813
 mDisplayName=Bound Book of Wilhelm's Crypt
 mIcon=Icon-32-Book.png|Icon-32-BG-White.png
-mLevel=1
+mLevel=
 mValue=1
 mMinUseLevel=1
 mQualityLevel=1
 mBindingType=1
 mFlavorText=Double-click to open, or use /books
 mIvMax1=5
+mIvType1=12
+
+[ENTRY]
+mID=1550004
+mType=8
+mDisplayName=Bound Underhenge Tome
+mIcon=Icon-32-Book1.png|Icon-32-BG-White.png
+mLevel=1
+mValue=1097
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=6
+mIvType1=12
+
+[ENTRY]
+mID=1550005
+mType=8
+mDisplayName=Jod's Complete Journal
+mIcon=Icon-32-Book1.png|Icon-32-BG-White.png
+mLevel=2442
+mValue=1
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=8
+mIvType1=12
+
+[ENTRY]
+mID=1550006
+mType=8
+mDisplayName=The Bound Book of Spibear
+mIcon=Icon-32-Book1.png|Icon-32-BG-White.png
+mLevel=1
+mValue=2369
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=9
+mIvType1=12
+
+[ENTRY]
+mID=1550007
+mType=8
+mDisplayName=The Complete VonGruber Family History
+mIcon=Icon-32-Book1.png|Icon-32-BG-White.png
+mLevel=1
+mValue=4009
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=10
+mIvType1=12
+
+[ENTRY]
+mID=1550008
+mType=8
+mDisplayName=Bound Monasterial Tome
+mIcon=Icon-32-Book2.png|Icon-32-BG-White.png
+mLevel=1
+mValue=1691
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=11
+mIvType1=12
+
+[ENTRY]
+mID=1550009
+mType=8
+mDisplayName=Bound Tower Spellbook Primer - Beginner's Curriculum
+mIcon=Icon-32-Book2.png|Icon-32-BG-White.png
+mLevel=1
+mValue=1756
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=14
+mIvType1=12
+
+[ENTRY]
+mID=1550010
+mType=8
+mDisplayName=Bound Tower Spellbook Primer - Novice's Curriculum
+mIcon=Icon-32-Book2.png|Icon-32-BG-White.png
+mLevel=1
+mValue=2056
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=15
+mIvType1=12
+
+[ENTRY]
+mID=1550011
+mType=8
+mDisplayName=Bound Tower Spellbook Primer - Adept's Curriculum
+mIcon=Icon-32-Book2.png|Icon-32-BG-White.png
+mLevel=1
+mValue=2356
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=16
+mIvType1=12
+
+[ENTRY]
+mID=1550012
+mType=8
+mDisplayName=Witchdoctor's Prescription Book
+mIcon=Icon-32-Book3.png|Icon-32-BG-White.png
+mLevel=1
+mValue=3411
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=17
+mIvType1=12
+
+[ENTRY]
+mID=1550013
+mType=8
+mDisplayName=The Complete Grimm's Tales
+mIcon=Icon-32-Book3.png|Icon-32-BG-White.png
+mLevel=1
+mValue=5433
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=19
+mIvType1=12
+
+[ENTRY]
+mID=1550014
+mType=8
+mDisplayName=General Thothmes Report Book
+mIcon=Icon-32-Book3.png|Icon-32-BG-White.png
+mLevel=1
+mValue=10400
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=22
+mIvType1=12
+
+[ENTRY]
+mID=1550015
+mType=8
+mDisplayName=Bound Blood Keep Tome
+mIcon=Icon-32-Book3.png|Icon-32-BG-White.png
+mLevel=1
+mValue=11200
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=29
+mIvType1=12
+
+[ENTRY]
+mID=1550016
+mType=8
+mDisplayName=Stefan's Complete Adventurer's Journal
+mIcon=Icon-32-Book4.png|Icon-32-BG-White.png
+mLevel=1
+mValue=3200
+mMinUseLevel=1
+mQualityLevel=1
+mBindingType=1
+mFlavorText=Double-click to open, or use /books
+mIvMax1=30
 mIvType1=12
 
 ;
@@ -1432,9 +1614,80 @@ mType=8
 mDisplayName=Basic Book Binding Glue
 mIcon=Icon-32-GlassBottle1.png|Icon-32-BG-Green.png
 mLevel=1
-mValue=1
+mValue=15
 mMinUseLevel=1
 mQualityLevel=1
 mBindingType=1
-mFlavorText=Stickier than Sticky the Stick Insect
+mIvType1=13
+
+[ENTRY]
+mID=1560002
+mType=8
+mDisplayName=Strong Book Binding Glue
+mIcon=Icon-32-GlassBottle1.png|Icon-32-BG-Blue.png
+mLevel=10
+mValue=101
+mMinUseLevel=10
+mQualityLevel=2
+mBindingType=1
+mIvType1=13
+
+[ENTRY]
+mID=1560003
+mType=8
+mDisplayName=Magical Book Binding Glue
+mIcon=Icon-32-GlassBottle1.png|Icon-32-BG-Purple.png
+mLevel=25
+mValue=101
+mMinUseLevel=25
+mQualityLevel=2
+mBindingType=1
+mIvType1=13
+
+[ENTRY]
+mID=1560004
+mType=8
+mDisplayName=Gold Leaf
+mIcon=Icon-32-Gold_Leaf.png|Icon-32-BG-Purple.png
+mLevel=25
+mValue=201
+mMinUseLevel=25
+mQualityLevel=4
+mBindingType=1
+mIvType1=13
+
+[ENTRY]
+mID=1560005
+mType=8
+mDisplayName=Basic Book Cover
+mIcon=Icon-32-Book_Cover.png|Icon-32-BG-Green.png
+mLevel=1
+mValue=30
+mMinUseLevel=1
+mQualityLevel=2
+mBindingType=1
+mIvType1=13
+
+[ENTRY]
+mID=1560006
+mType=8
+mDisplayName=Quality Book Cover
+mIcon=Icon-32-Book_Cover.png|Icon-32-BG-Cyan.png
+mLevel=10
+mValue=210
+mMinUseLevel=10
+mQualityLevel=3
+mBindingType=1
+mIvType1=13
+
+[ENTRY]
+mID=1560007
+mType=8
+mDisplayName=Ornate Book Cover
+mIcon=Icon-32-Book_Cover.png|Icon-32-BG-Purple.png
+mLevel=25
+mValue=660
+mMinUseLevel=25
+mQualityLevel=4
+mBindingType=1
 mIvType1=13

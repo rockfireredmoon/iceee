@@ -5,6 +5,8 @@ Item=20522 ;Infused Crystals
 Item=20523 ;Blood Root
 Item=20524 ;Amber
 Item=20525 ;Black Pearl
+Item=1560001 ; Basic Book Binding Glue
+Item=1560005 ; Basic Book Cover
 
 
 ; Cora Cantrip <Reagent Merchant>, restored version.
@@ -14,6 +16,8 @@ Item=20522 ;Infused Crystals
 Item=20523 ;Blood Root
 Item=20524 ;Amber
 Item=20525 ;Black Pearl
+Item=1560001 ; Basic Book Binding Glue
+Item=1560005 ; Basic Book Cover
 
 
 ; Neville Nickblade <Weaponsmith>, restored version.
@@ -120,6 +124,8 @@ Item=20522 ;Infused Crystals
 Item=20523 ;Blood Root
 Item=20524 ;Amber
 Item=20525 ;Black Pearl
+Item=1560001 ; Basic Book Binding Glue
+Item=1560005 ; Basic Book Cover
 
 ; Nona Nickblade <Weapon Merchant>, south Earthrise
 [ENTRY]
@@ -168,6 +174,8 @@ Item=20522 ;Infused Crystals
 Item=20523 ;Blood Root
 Item=20524 ;Amber
 Item=20525 ;Black Pearl
+Item=1560001 ; Basic Book Binding Glue
+Item=1560005 ; Basic Book Cover
 
 ; Carmine Cantrip <General Merchant>
 [ENTRY]
@@ -176,6 +184,8 @@ Item=20522 ;Infused Crystals
 Item=20523 ;Blood Root
 Item=20524 ;Amber
 Item=20525 ;Black Pearl
+Item=1560001 ; Basic Book Binding Glue
+Item=1560005 ; Basic Book Cover
 
 ; Nuno Nickblade <Weapon Merchant>
 [ENTRY]

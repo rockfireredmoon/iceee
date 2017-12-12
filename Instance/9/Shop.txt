@@ -40,6 +40,11 @@ Item=10
 CreatureDefID=2221
 Item=20969	;Standard Armor Mold
 Item=20970	;Standard Weapon Mold
+Item=1560003 ; Magical Book Binding Glue
+Item=1560007 ; Ornate Book Cover
+Item=1560004 ; Gold Leaf
+Item=1560002 ; Strong Book Binding Glue
+Item=1560006 ; Quality Book Cover
 
 ; Mixi Sparkelle <General Merchant>, Bafflegate  (GUESSED, taken from Snerd Danelaw in Anglorum)
 [ENTRY]
@@ -113,6 +118,8 @@ Item=40118  ;Constitution Potion: Level 10
 Item=40119  ;Constitution Potion: Level 20
 Item=40123  ;Armor Boost Potion: Level 10
 Item=40124  ;Armor Boost Potion: Level 20
+Item=1560002 ; Strong Book Binding Glue
+Item=1560006 ; Quality Book Cover
 
 
 
@@ -165,6 +172,8 @@ Item=40118  ;Constitution Potion: Level 10
 Item=40119  ;Constitution Potion: Level 20
 Item=40123  ;Armor Boost Potion: Level 10
 Item=40124  ;Armor Boost Potion: Level 20
+Item=1560002 ; Strong Book Binding Glue
+Item=1560006 ; Quality Book Cover
 
 
 ; **** LONGTAIL GYPSY CAMP (MIDLANDS) - Quest level 25
@@ -221,6 +230,8 @@ Item=40118  ;Constitution Potion: Level 10
 Item=40119  ;Constitution Potion: Level 20
 Item=40123  ;Armor Boost Potion: Level 10
 Item=40124  ;Armor Boost Potion: Level 20
+Item=1560002 ; Strong Book Binding Glue
+Item=1560006 ; Quality Book Cover
 
 
 
@@ -273,6 +284,8 @@ Item=40118  ;Constitution Potion: Level 10
 Item=40119  ;Constitution Potion: Level 20
 Item=40123  ;Armor Boost Potion: Level 10
 Item=40124  ;Armor Boost Potion: Level 20
+Item=1560002 ; Strong Book Binding Glue
+Item=1560006 ; Quality Book Cover
 
 
 ; **** SEASCAPE (NEW BADARI) - Quest level 26/28
@@ -323,6 +336,8 @@ Item=40118  ;Constitution Potion: Level 10
 Item=40119  ;Constitution Potion: Level 20
 Item=40123  ;Armor Boost Potion: Level 10
 Item=40124  ;Armor Boost Potion: Level 20
+Item=1560002 ; Strong Book Binding Glue
+Item=1560006 ; Quality Book Cover
 
 
 ; **** BREMEN (NEW BADARI) - Quest level 27/30
@@ -406,6 +421,8 @@ Item=40124  ;Armor Boost Potion: Level 20
 Item=40125  ;Armor Boost Potion: Level 30
 Item=40126  ;Armor Boost Potion: Level 40
 Item=40127  ;Armor Boost Potion: Level 50
+Item=1560002 ; Strong Book Binding Glue
+Item=1560006 ; Quality Book Cover
 
 
 ; **** ROLSBURG (NEW BADARI) - Quest level 29/30
@@ -462,6 +479,8 @@ Item=40124  ;Armor Boost Potion: Level 20
 Item=40125  ;Armor Boost Potion: Level 30
 Item=40126  ;Armor Boost Potion: Level 40
 Item=40127  ;Armor Boost Potion: Level 50
+Item=1560002 ; Strong Book Binding Glue
+Item=1560006 ; Quality Book Cover
 
 
 ; **** HEARTWOOD (GREAT FOREST) - Quest level 31/35
@@ -522,6 +541,8 @@ Item=40124  ;Armor Boost Potion: Level 20
 Item=40125  ;Armor Boost Potion: Level 30
 Item=40126  ;Armor Boost Potion: Level 40
 Item=40127  ;Armor Boost Potion: Level 50
+Item=1560002 ; Strong Book Binding Glue
+Item=1560006 ; Quality Book Cover
 
 ; Crighton Barheel <Container Merchant>, Heartwood  (OFFICIAL EER)
 [ENTRY]
@@ -542,6 +563,10 @@ Item=6
 CreatureDefID=1041
 Item=20971	;Expert Armor Mold
 Item=20972	;Expert Weapon Mold
+Item=1560003 ; Magical Book Binding Glue
+Item=1560007 ; Ornate Book Cover
+Item=1560002 ; Strong Book Binding Glue
+Item=1560006 ; Quality Book Cover
 
 
 ; Anton Starque <Weapon Merchant> (GUESSED)
@@ -574,6 +599,8 @@ Item=40119  ;Constitution Potion: Level 20
 Item=40120  ;Constitution Potion: Level 30
 Item=40124  ;Armor Boost Potion: Level 20
 Item=40125  ;Armor Boost Potion: Level 30
+Item=1560002 ; Strong Book Binding Glue
+Item=1560006 ; Quality Book Cover
 
 
 ; **** GREEN LINE THICKET (GREAT FOREST) - Quest level 38/39
@@ -661,6 +688,8 @@ Item=40120  ;Constitution Potion: Level 30
 Item=40121  ;Constitution Potion: Level 40
 Item=40125  ;Armor Boost Potion: Level 30
 Item=40126  ;Armor Boost Potion: Level 40
+Item=1560002 ; Strong Book Binding Glue
+Item=1560006 ; Quality Book Cover
 
 
 
@@ -687,6 +716,8 @@ Item=40120  ;Constitution Potion: Level 30
 Item=40121  ;Constitution Potion: Level 40
 Item=40125  ;Armor Boost Potion: Level 30
 Item=40126  ;Armor Boost Potion: Level 40
+Item=1560002 ; Strong Book Binding Glue
+Item=1560006 ; Quality Book Cover
 
 
 
@@ -713,12 +744,16 @@ Item=40120  ;Constitution Potion: Level 30
 Item=40121  ;Constitution Potion: Level 40
 Item=40125  ;Armor Boost Potion: Level 30
 Item=40126  ;Armor Boost Potion: Level 40
+Item=1560002 ; Strong Book Binding Glue
+Item=1560006 ; Quality Book Cover
 
 ; Veridian Muckeater <Crafting Merchant>  (GUESSED)
 [ENTRY]
 CreatureDefID=1419
 Item=20971	;Expert Armor Mold
 Item=20972	;Expert Weapon Mold
+Item=1560003 ; Magical Book Binding Glue
+Item=1560007 ; Ornate Book Cover
 
 ; Rolande Black <Weapon Merchant>    (GUESSED)
 [ENTRY]
@@ -801,6 +836,8 @@ Item=40120  ;Constitution Potion: Level 30
 Item=40121  ;Constitution Potion: Level 40
 Item=40125  ;Armor Boost Potion: Level 30
 Item=40126  ;Armor Boost Potion: Level 40
+Item=1560002 ; Strong Book Binding Glue
+Item=1560006 ; Quality Book Cover
 
 ; Redeemer Camp (Planetforever / IceEE)
 [ENTRY]
@@ -821,6 +858,8 @@ Item=40120  ;Constitution Potion: Level 30
 Item=40121  ;Constitution Potion: Level 40
 Item=40125  ;Armor Boost Potion: Level 30
 Item=40126  ;Armor Boost Potion: Level 40
+Item=1560002 ; Strong Book Binding Glue
+Item=1560006 ; Quality Book Cover
 
 ; Protectorate Compound (Planetforever / IceEE)
 [ENTRY]
@@ -845,6 +884,8 @@ Item=40121  ;Constitution Potion: Level 40
 Item=40125  ;Armor Boost Potion: Level 30
 Item=40126  ;Armor Boost Potion: Level 40
 Item=20526
+Item=1560002 ; Strong Book Binding Glue
+Item=1560006 ; Quality Book Cover
 
 ; Protectorate Compound (Planetforever / IceEE)
 [ENTRY]
@@ -874,6 +915,8 @@ Item=40103  ;Constitution Potion: Level 50
 Item=40126  ;Armor Boost Potion: Level 40
 Item=40127  ;Armor Boost Potion: Level 50
 Item=20526
+Item=1560002 ; Strong Book Binding Glue
+Item=1560006 ; Quality Book Cover
 
 ; War Town 
 [ENTRY]
@@ -930,6 +973,8 @@ Item=40103  ;Constitution Potion: Level 50
 Item=40126  ;Armor Boost Potion: Level 40
 Item=40127  ;Armor Boost Potion: Level 50
 Item=20526
+Item=1560002 ; Strong Book Binding Glue
+Item=1560006 ; Quality Book Cover
 
 ; Frontline Camp
 CreatureDefID=3517
@@ -944,3 +989,5 @@ Item=40103  ;Constitution Potion: Level 50
 Item=40126  ;Armor Boost Potion: Level 40
 Item=40127  ;Armor Boost Potion: Level 50
 Item=20526
+Item=1560002 ; Strong Book Binding Glue
+Item=1560006 ; Quality Book Cover

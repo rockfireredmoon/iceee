@@ -210,6 +210,10 @@ Item=40116  ;Energy Drink
 Item=40117  ;Agility Potion
 Item=40118  ;Constitution Potion: Level 10
 Item=40123  ;Armor Boost Potion: Level 10
+Item=1560001 ; Basic Book Binding Glue
+Item=1560005 ; Basic Book Cover
+Item=1560002 ; Strong Book Binding Glue
+Item=1560006 ; Quality Book Cover
 
 ; Mara Hur <General Merchant>, Camelot Market
 [ENTRY]
@@ -239,6 +243,10 @@ Item=40124  ;Armor Boost Potion: Level 20
 Item=40125  ;Armor Boost Potion: Level 30
 Item=40126  ;Armor Boost Potion: Level 40
 Item=40127  ;Armor Boost Potion: Level 50
+Item=1560001 ; Basic Book Binding Glue
+Item=1560005 ; Basic Book Cover
+Item=1560002 ; Strong Book Binding Glue
+Item=1560006 ; Quality Book Cover
 
 ; Lex Ridare <Weapon Merchant> (Bath)
 [ENTRY]
@@ -279,6 +287,10 @@ Item=40118  ;Constitution Potion: Level 10
 Item=40119  ;Constitution Potion: Level 20
 Item=40123  ;Armor Boost Potion: Level 10
 Item=40124  ;Armor Boost Potion: Level 20
+Item=1560001 ; Basic Book Binding Glue
+Item=1560005 ; Basic Book Cover
+Item=1560002 ; Strong Book Binding Glue
+Item=1560006 ; Quality Book Cover
 
 
 ; Argus Milentius, Camelot Master Crafting Merchant
@@ -497,6 +509,10 @@ Item=40118  ;Constitution Potion: Level 10
 Item=40119  ;Constitution Potion: Level 20
 Item=40123  ;Armor Boost Potion: Level 10
 Item=40124  ;Armor Boost Potion: Level 20
+Item=1560002 ; Strong Book Binding Glue
+Item=1560006 ; Quality Book Cover
+Item=1560001 ; Basic Book Binding Glue
+Item=1560005 ; Basic Book Cover
 
 ; Camaroon Quid, <Master Armorer>, Southshield
 [ENTRY]
@@ -534,6 +550,10 @@ Item=40118  ;Constitution Potion: Level 10
 Item=40119  ;Constitution Potion: Level 20
 Item=40123  ;Armor Boost Potion: Level 10
 Item=40124  ;Armor Boost Potion: Level 20
+Item=1560002 ; Strong Book Binding Glue
+Item=1560006 ; Quality Book Cover
+Item=1560001 ; Basic Book Binding Glue
+Item=1560005 ; Basic Book Cover
 
 
 ; Adrim Maxeo, <Master Weaponsmith>, Southshield
@@ -620,10 +640,8 @@ Item=40118  ;Constitution Potion: Level 10
 Item=40119  ;Constitution Potion: Level 20
 Item=40123  ;Armor Boost Potion: Level 10
 Item=40124  ;Armor Boost Potion: Level 20
-
-
-
-
+Item=1560002 ; Strong Book Binding Glue
+Item=1560006 ; Quality Book Cover
 
 [ENTRY]
 CreatureDefID=3544
