@@ -325,7 +325,7 @@ int MapMarkerHandler::handleQuery(SimulatorThread *sim,
 		else if(query->args[i].compare("Henge") == 0) {
 			/* All henges in zone */
 			if(pld->zoneDef != NULL && !pld->zoneDef->IsOverworld()) {
-				for(std::vector<InteractObject>::iterator it = g_InteractObjectContainer.objList.begin(); it != g_InteractObjectContainer.objList.end(); it++) {
+				for(std::vector<InteractObject>::iterator it = g_InteractObjectContainer.objList.begin(); it != g_InteractObjectContainer.objList.end(); ++it) {
 					if((*it).opType == InteractObject::TYPE_HENGE && (*it).WarpID == pld->CurrentZoneID) {
 						qRes.push_back(STRINGLIST());
 						qRes.back().push_back((*it).useMessage);
@@ -340,7 +340,7 @@ int MapMarkerHandler::handleQuery(SimulatorThread *sim,
 			/* All sanctuaries within 1000 */
 			ZoneMarkerData *zmd = g_ZoneMarkerDataManager.GetPtrByZoneID(pld->CurrentZoneID);
 			if(zmd != NULL && pld->zoneDef != NULL && !pld->zoneDef->IsOverworld()) {
-				for(std::vector<WorldCoord>::iterator it = zmd->sanctuary.begin(); it != zmd->sanctuary.end(); it++) {
+				for(std::vector<WorldCoord>::iterator it = zmd->sanctuary.begin(); it != zmd->sanctuary.end(); ++it) {
 					int xlen = abs((int)(*it).x - creatureInstance->CurrentX);
 					int zlen = abs((int)(*it).z - creatureInstance->CurrentZ);
 					double dist = sqrt((double)((xlen * xlen) + (zlen * zlen)));

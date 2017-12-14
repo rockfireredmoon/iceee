@@ -30,6 +30,10 @@ using namespace HTTPD;
 
 bool NewAccountHandler::handlePost(CivetServer *server, struct mg_connection *conn) {
 
+	/* Simple protection against drive-by penetration attempts uses user-agent */
+	if(!isUserAgent(server, conn))
+		return false;
+
 	char post_data[1024];
 
 	char username[128];
@@ -69,6 +73,10 @@ bool NewAccountHandler::handlePost(CivetServer *server, struct mg_connection *co
 
 bool ResetPasswordHandler::handlePost(CivetServer *server, struct mg_connection *conn) {
 
+	/* Simple protection against drive-by penetration attempts uses user-agent */
+	if(!isUserAgent(server, conn))
+		return false;
+
 	char post_data[1024];
 
 	char username[128];
@@ -104,6 +112,10 @@ bool ResetPasswordHandler::handlePost(CivetServer *server, struct mg_connection 
 //
 
 bool AccountRecoverHandler::handlePost(CivetServer *server, struct mg_connection *conn) {
+
+	/* Simple protection against drive-by penetration attempts uses user-agent */
+	if(!isUserAgent(server, conn))
+		return false;
 
 	char post_data[1024];
 

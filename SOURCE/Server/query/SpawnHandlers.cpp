@@ -162,11 +162,11 @@ int SpawnPropertyHandler::handleQuery(SimulatorThread *sim, CharacterServerData 
 				Util::SafeCopy(sim->Aux1, so->extraData->spawnLayer, sizeof(sim->Aux1));
 			else
 				g_Logs.simulator->warn(
-						"[%d] spawn.property unknown request: [%s]", sim->InternalID,
+						"[%v] spawn.property unknown request: [%v]", sim->InternalID,
 						propName);
 		} else
 			g_Logs.simulator->warn(
-					"[%d] spawn.property requested for standard object [%d, %s]",
+					"[%v] spawn.property requested for standard object [%v, %v]",
 					sim->InternalID, so->ID, so->Asset);
 	}
 	g_SceneryManager.ReleaseThread();

@@ -1,1 +1,0 @@
-These are Squirrel scripts that are in the process of being fully decompiled, but don't yet work for some reason.

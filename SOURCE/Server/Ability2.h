@@ -676,6 +676,7 @@ public:
 	int InterruptChance(ARGUMENT_LIST args);
 	int Transform(ARGUMENT_LIST args);
 	int Nudify(ARGUMENT_LIST args);
+	int Scale(ARGUMENT_LIST args);
 	int Untransform(ARGUMENT_LIST args);
 	int NotTransformed(ARGUMENT_LIST args);
 

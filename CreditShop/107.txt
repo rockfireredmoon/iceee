@@ -1,9 +1,0 @@
-[ENTRY]
-Description=Make a new home for your character!
-PriceCurrency=CREDITS
-PriceCopper=0
-PriceCredits=1000
-ItemID=8114
-Category=RECIPES
-Status=<undefined>
-

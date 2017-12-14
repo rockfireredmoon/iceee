@@ -1,8 +1,0 @@
-[ENTRY]
-ID=151009906
-Asset=CL-LightHouse
-Name=Untitled
-Pos=7794,424.125,63599
-Orient=0,-0.572867,0,0.819648
-Scale=1,1,1
-

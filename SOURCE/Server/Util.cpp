@@ -208,6 +208,23 @@ int PrepExt_RemoveCreature(char *buffer, int actorID)
 	return wpos;
 }
 
+int PrepExt_Damage(char *buffer, int actorID, const char *damageString, const char *ability, int critical, int absorbed)
+{
+	int wpos = 0;
+	wpos += PutByte(&buffer[wpos], 4);  //_handleCreatureEventMsg
+	wpos += PutShort(&buffer[wpos], 0);
+
+	wpos += PutInteger(&buffer[wpos], actorID);   //actorID
+	wpos += PutByte(&buffer[wpos], 7);     //7 - dps
+	wpos += PutStringUTF(&buffer[wpos], damageString);
+	wpos += PutStringUTF(&buffer[wpos], ability);
+	wpos += PutByte(&buffer[wpos], critical);
+	wpos += PutByte(&buffer[wpos], absorbed);
+
+	PutShort(&buffer[1], wpos - 3);       //Set message size
+	return wpos;
+}
+
 int PrepExt_SendInfoMessage(char *buffer, const char *message, unsigned char eventID)
 {
 	int wpos = 0;
@@ -409,6 +426,17 @@ int PrepExt_QueryResponseError(char *buffer, int queryIndex, const char *message
 	return wpos;
 }
 
+int PrepExt_Achievement(char *buffer, int creatureID, const char *achievement, const char *scoreSpec) {
+	int wpos = 0;
+	wpos += PutByte(&buffer[wpos], 55);              //_handleAchievements
+	wpos += PutShort(&buffer[wpos], 0);             //Placeholder for message size
+	wpos += PutInteger(&buffer[wpos], creatureID);  //CID
+	wpos += PutStringUTF(&buffer[wpos], achievement);   //achievement
+	wpos += PutStringUTF(&buffer[wpos], scoreSpec);
+	PutShort(&buffer[1], wpos - 3);                 //Message size
+	return wpos;
+}
+
 int PrepExt_SendBookOpen(char *buffer, int bookID, int page, int op) {
 	int wpos = 0;
 	wpos += PutByte(&buffer[wpos], 96);              //_handleBooks
@@ -423,6 +451,15 @@ int PrepExt_SendBookOpen(char *buffer, int bookID, int page, int op) {
 int PrepExt_Refashion(char *buffer) {
 	int wpos = 0;
 	wpos += PutByte(&buffer[wpos], 53);              //_handleRefashion
+	wpos += PutShort(&buffer[wpos], 0);             //Placeholder for message size
+	wpos += PutByte(&buffer[wpos], 0); 				// Open
+	PutShort(&buffer[1], wpos - 3);                 //Message size
+	return wpos;
+}
+
+int PrepExt_Craft(char *buffer) {
+	int wpos = 0;
+	wpos += PutByte(&buffer[wpos], 54);              //_handleCraft
 	wpos += PutShort(&buffer[wpos], 0);             //Placeholder for message size
 	wpos += PutByte(&buffer[wpos], 0); 				// Open
 	PutShort(&buffer[1], wpos - 3);                 //Message size

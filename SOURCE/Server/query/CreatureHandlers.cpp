@@ -110,7 +110,7 @@ int CreatureIsUsableHandler::handleQuery(SimulatorThread *sim,
 			if (status[0] == 'N') {
 				CreatureDefinition *cdef = CreatureDef.GetPointerByCDef(target->CreatureDefID);
 				if(cdef != NULL && (cdef->DefHints & CDEF_HINT_ITEM_GIVER)) {
-					for(std::vector<int>::iterator it = cdef->Items.begin(); it != cdef->Items.end(); it++) {
+					for(std::vector<int>::iterator it = cdef->Items.begin(); it != cdef->Items.end(); ++it) {
 						/* For now we only allow use if the player doesn't already have
 						 * the item. There could be other uses for this though. I'll
 						 * add logic as and when it's needed
@@ -219,52 +219,39 @@ int CreatureDefEditHandler::handleQuery(SimulatorThread *sim,
 			return PrepExt_QueryResponseNull(sim->SendBuf, query->ID);
 		}
 	} else {
-		if (sim->CheckPermissionSimple(0, Permission_TweakClient) == true) {
-			const char *appearance = NULL;
-			for (unsigned int i = 1 + argOffset; i < query->argCount; i += 2) {
-				const char *name = query->args[i].c_str();
-				const char *value = query->args[i + 1].c_str();
-				if (strcmp(name, "appearance") == 0) {
-					appearance = value;
-					break;
-				}
-			}
-			int size = 0;
-			if (appearance != NULL) {
-				std::vector<short> statID;
-				statID.push_back(STAT::APPEARANCE);
-				CharacterStatSet data;
-				//Util::SafeCopy(data.appearance, appearance, sizeof(data.appearance));
-				data.SetAppearance(appearance);
-				size = PrepExt_UpdateCreatureDef(sim->SendBuf, CDefID,
-						cDef->DefHints, statID, &data);
-			}
-			size += PrepExt_QueryResponseString(&sim->SendBuf[size], query->ID,
-					"OK");
-			return size;
-		}
 		if (pld->CreatureDefID == CDefID) {
 			if (sim->CheckPermissionSimple(0, Permission_TweakSelf) == false) {
-				sim->SendInfoMessage("Permission denied: cannot edit self.",
-						INFOMSG_ERROR);
-				return PrepExt_QueryResponseNull(sim->SendBuf, query->ID);
+				int res = sim->protected_helper_tweak_self(CDefID, cDef->DefHints, argOffset);
+				if(res == -1) {
+					sim->SendInfoMessage("Permission denied: cannot edit self.", INFOMSG_ERROR);
+					return PrepExt_QueryResponseNull(sim->SendBuf, query->ID);
+				}
+				else {
+					return res;
+				}
 			}
 		} else {
 			if (charData != NULL) {
 				if (sim->CheckPermissionSimple(0, Permission_TweakOther)
 						== false) {
-					sim->SendInfoMessage(
-							"Permission denied: cannot edit other players.",
-							INFOMSG_ERROR);
-					return PrepExt_QueryResponseNull(sim->SendBuf, query->ID);
+					int res = sim->protected_helper_tweak_self(CDefID, cDef->DefHints, argOffset);
+					if(res == -1) {
+						sim->SendInfoMessage("Permission denied: cannot edit other players.", INFOMSG_ERROR);
+						return PrepExt_QueryResponseNull(sim->SendBuf, query->ID);
+					}
+					else
+						return res;
 				}
 			} else {
 				if (sim->CheckPermissionSimple(0, Permission_TweakNPC)
 						== false) {
-					sim->SendInfoMessage(
-							"Permission denied: cannot edit creatures.",
-							INFOMSG_ERROR);
-					return PrepExt_QueryResponseNull(sim->SendBuf, query->ID);
+					int res = sim->protected_helper_tweak_self(CDefID, cDef->DefHints, argOffset);
+					if(res == -1) {
+						sim->SendInfoMessage("Permission denied: cannot edit creatures.", INFOMSG_ERROR);
+						return PrepExt_QueryResponseNull(sim->SendBuf, query->ID);
+					}
+					else
+						return res;
 				}
 			}
 		}
@@ -431,6 +418,16 @@ int CreatureUseHandler::handleQuery(SimulatorThread *sim,
 						return PrepExt_QueryResponseError(sim->SendBuf, query->ID, "Cannot use object.");
 
 					if (zoneDef != NULL) {
+
+						if(creatureInstance->css.level < zoneDef->mMinLevel) {
+							Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1), "You must be of at least level %d to enter this zone.", zoneDef->mMinLevel);
+							return PrepExt_QueryResponseError(sim->SendBuf, query->ID, sim->Aux1);
+						}
+						else if(creatureInstance->css.level > zoneDef->mMaxLevel) {
+							Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1), "You can be of no more than level %d to enter this zone.", zoneDef->mMaxLevel);
+							return PrepExt_QueryResponseError(sim->SendBuf, query->ID, sim->Aux1);
+						}
+
 						PlayerInstancePlacementData pd;
 						sim->FillPlayerInstancePlacementData(pd, intObj->WarpID, 0);
 						ActiveInstance *inst =

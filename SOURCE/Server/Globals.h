@@ -6,6 +6,7 @@
 
 
 #define MAXTARGET   8
+#define MAXOBJECTIVES 4
 
 //Shared between the servers
 extern const int SleepDelayError;

@@ -83,6 +83,10 @@ bool CARHandler::handleGet(CivetServer *server, struct mg_connection *conn) {
 	/* Handler may access the request info using mg_get_request_info */
 	const struct mg_request_info * req_info = mg_get_request_info(conn);
 
+	/* Simple protection against drive-by penetration attempts uses user-agent */
+	if(!isUserAgent(server, conn))
+		return false;
+
 	std::string ruri;
 
 	/* Prepare the URI */

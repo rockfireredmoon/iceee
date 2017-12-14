@@ -164,18 +164,8 @@ dnl
 AC_CONFIG_FILES([
 	Makefile
 	asset/Makefile
-	AIScript/Makefile
-	Data/Makefile
-	Instance/Makefile
-	ItemMod/Makefile
-	ItemMod/Tables/Makefile
-	Loot/Makefile
-	Packages/Makefile
-	QuestScripts/Makefile
-	SpawnPackages/Makefile
 	Etc/Makefile
 	Etc/Linux/Makefile
-	Scenery/Makefile
 	SOURCE/Makefile
 	SOURCE/squirrel/Makefile
 	SOURCE/squirrel/squirrel/Makefile

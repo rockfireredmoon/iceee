@@ -119,6 +119,7 @@ Translocate()                                Transports to bind location.  Only 
 UnHate()                                     Remove all hate generated against you.
 WalkInShadows(120,A_DEXTERITY*1.0)           Limited unseen movement (duration_sec, movementCounter?)
 Nudify()							 	 	 Removes all clothes
+Scale(1.0)							 	 	 Scales character
 Transform(CDefID)							 Transform into a creature
 Untransform()								 Revert to natural appearance
 
@@ -1226,6 +1227,7 @@ void AbilityManager2 :: InitFunctionTables(void)
 	InsertFunction("InterruptChance", &AbilityCalculator::InterruptChance);
 	InsertFunction("Transform", &AbilityCalculator::Transform);
 	InsertFunction("Nudify", &AbilityCalculator::Nudify);
+	InsertFunction("Scale", &AbilityCalculator::Scale);
 	InsertFunction("Untransform", &AbilityCalculator::Untransform);
 	InsertFunction("NotTransformed", &AbilityCalculator::NotTransformed);
 	
@@ -1239,6 +1241,7 @@ void AbilityManager2 :: InitFunctionTables(void)
 	InsertVerifier("NotStatus", ABVerifier(ABVerifier::EFFECT));          //NotStatus(effectName)
 	InsertVerifier("Interrupt", ABVerifier());                            //Interrupt()
 
+	InsertVerifier("Scale",   ABVerifier(ABVerifier::AMOUNT, ABVerifier::TIME));  //Scale(amount, time)
 	InsertVerifier("Add",     ABVerifier(ABVerifier::STATID, ABVerifier::AMOUNT, ABVerifier::TIME));  //Add(statID, amount, time)
 	InsertVerifier("Set",     ABVerifier(ABVerifier::STATID, ABVerifier::AMOUNT, ABVerifier::TIME));  //Set(statID, amount, time)
 	InsertVerifier("Amp",     ABVerifier(ABVerifier::STATID, ABVerifier::AMOUNT, ABVerifier::TIME));  //Amp(statID, amount, time)
@@ -1799,14 +1802,11 @@ int AbilityManager2 :: ActivateAbility(CreatureInstance *cInst, short abilityID,
 	{
 		abProcessing.ciSourceAb->bResourcesSpent = false;
 
-		// TODO - unused - check if it is!
-		// const char *debugStr = it->second.GetRowAsCString(ABROW::COOLDOWN_CATEGORY);
-
 		int cooldownCategory = ResolveCooldownCategoryID(it->second.GetRowAsCString(ABROW::COOLDOWN_CATEGORY));
 		cInst->RegisterCooldown(cooldownCategory, it->second.mCooldownTime);
 
-		//TODO: Process any reagents that may have been used.
-		abProcessing.ConsumeReagent();
+		if(g_Config.UseReagents)
+			abProcessing.ConsumeReagent();
 
 		//If there's an implicit action attached to this skill, register it with the creature.
 		if(it->second.mAbilityFlags & AbilityFlags::ImplicitParry)
@@ -3250,10 +3250,8 @@ int AbilityCalculator :: Reagent(ARGUMENT_LIST args)
 	mReagentItemID = args.GetInteger(0);
 	mReagentItemCount = args.GetInteger(1);
 
-	if(g_Config.UseReagents) {
-		if(ciSource->charPtr->inventory.GetItemCount(INV_CONTAINER, mReagentItemID) < mReagentItemCount)
-			return ABILITY_REAGENTS;
-	}
+	if(g_Config.UseReagents && ciSource->charPtr != NULL && ciSource->charPtr->inventory.GetItemCount(INV_CONTAINER, mReagentItemID) < mReagentItemCount)
+		return ABILITY_REAGENTS;
 
 	return ABILITY_SUCCESS;
 }
@@ -3261,7 +3259,7 @@ int AbilityCalculator :: Reagent(ARGUMENT_LIST args)
 //Internal helper function to consume any reagents.
 void AbilityCalculator :: ConsumeReagent(void)
 {
-	if(mReagentItemID != 0)
+	if(mReagentItemID != 0 && ciSource->charPtr != NULL)
 	{
 		while(mReagentItemCount > 0) {
 			InventorySlot *slot = ciSource->charPtr->inventory.GetFirstItem(INV_CONTAINER, mReagentItemID);
@@ -3300,6 +3298,17 @@ int AbilityCalculator :: Nudify(ARGUMENT_LIST args)
 	int buffType = ResolveBuffCategoryID(mAbilityEntry->GetRowAsCString(ABROW::BUFF_CATEGORY));
 	ActiveBuff * buff = ciTarget->AddMod(mAbilityEntry->mTier, buffType, mAbilityEntry->mAbilityID, mAbilityEntry->mAbilityGroupID, timeSec);
 	ciSource->CAF_Nudify(buff->durationS);
+	return ABILITY_SUCCESS;
+}
+
+//Action.  Scale the player
+int AbilityCalculator :: Scale(ARGUMENT_LIST args)
+{
+	int timeSec = static_cast<int>(args.GetEvaluation(0, &g_AbilityManager));
+	float scale = args.GetFloat(1);
+	int buffType = ResolveBuffCategoryID(mAbilityEntry->GetRowAsCString(ABROW::BUFF_CATEGORY));
+	ActiveBuff * buff = ciTarget->AddMod(mAbilityEntry->mTier, buffType, mAbilityEntry->mAbilityID, mAbilityEntry->mAbilityGroupID, timeSec);
+	ciSource->CAF_Scale(scale, buff->durationS);
 	return ABILITY_SUCCESS;
 }
 
@@ -3539,6 +3548,8 @@ void AbilityCalculator :: CheckCritical(int &amount, int damageType)
 	}
 	//g_Log.AddMessageFormat("Final crit chance: %d (%d)", CritChance, (int)ciSource->css.mod_melee_to_crit);
 
+
+
 	//Roll critical. If CritChance is zero or less, it will never trigger.
 	int rnd = randint(1, 1000);
 	if(rnd <= CritChance)
@@ -3570,14 +3581,12 @@ void AbilityCalculator :: CheckCritical(int &amount, int damageType)
 			int SuperChance = (int)(luckMod * luckMod) * 10;
 
 			rnd = randint(1, 1000);
+
 			if(rnd <= SuperChance)
 			{
-				if(g_ProtocolVersion >= 37)
-					mCriticalHitState = CRITICAL_SUPER;
-				else
-					ciSource->NotifySuperCrit(ciTarget->CreatureID);
+				ciSource->NotifySuperCrit(ciTarget->CreatureID);
+				mCriticalHitState = CRITICAL_SUPER;
 				amount *= 2;
-				//g_Log.AddMessageFormatW(MSG_DIAGV, "Supercrit (chance: %d)", SuperChance);
 			}
 		}
 	}

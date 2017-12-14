@@ -570,4 +570,11 @@ public:
 	int handleCommand(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
 };
 
+class AchievementsHandler : public AbstractCommandHandler {
+public:
+	AchievementsHandler();
+	~AchievementsHandler() {};
+	int handleCommand(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
+};
+
 #endif

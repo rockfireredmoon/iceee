@@ -1,9 +1,0 @@
-[ENTRY]
-Description=SPM Credit Shop Item
-PriceCurrency=CREDITS
-PriceCopper=0
-PriceCredits=100
-ItemID=5731
-Category=ARMOR
-Status=NEW
-

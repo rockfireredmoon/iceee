@@ -330,18 +330,18 @@ bool NPCDialogManager::SaveItem(NPCDialogItem * item) {
 }
 
 NPCDialogItem * NPCDialogManager::LoadItem(std::string name) {
-	std::string buf = GetPath(name);
-	if (!Platform::FileExists(buf.c_str())) {
-		g_Logs.data->error("No file for dialog item [%v]", buf.c_str());
-		return NULL;
-	}
+//	std::string buf = GetPath(name);
+//	if (!Platform::FileExists(buf.c_str())) {
+//		g_Logs.data->error("No file for dialog item [%v]", buf.c_str());
+//		return NULL;
+//	}
 
 	NPCDialogItem *item = new NPCDialogItem();
 	item->mName = name;
 
 	FileReader lfr;
-	if (lfr.OpenText(buf.c_str()) != Err_OK) {
-		g_Logs.data->error("Could not open file [%v]", buf.c_str());
+	if (lfr.OpenText(name.c_str()) != Err_OK) {
+		g_Logs.data->error("Could not open file [%v]", name);
 		return NULL;
 	}
 
@@ -371,7 +371,7 @@ NPCDialogItem * NPCDialogManager::LoadItem(std::string name) {
 				item->mMaxInterval = lfr.BlockToIntC(1);
 			else
 				g_Logs.data->warn("Unknown identifier [%v] in file [%v]",
-						lfr.SecBuffer, buf.c_str());
+						lfr.SecBuffer, name);
 		}
 	}
 	lfr.CloseCurrent();
@@ -427,7 +427,7 @@ int NPCDialogManager::LoadItems(void) {
 	for (it = r.fileList.begin(); it != r.fileList.end(); ++it) {
 		std::string p = *it;
 		if (Util::HasEnding(p, ".txt")) {
-			LoadItem(Platform::JoinPath(dirpath, Platform::Basename(p).c_str()));
+			LoadItem(Platform::JoinPath(dirpath, Platform::Filename(p).c_str()));
 		}
 	}
 

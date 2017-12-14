@@ -1,9 +1,0 @@
-[ENTRY]
-Description=SPM Credit Shop Set
-PriceCurrency=CREDITS
-PriceCopper=0
-PriceCredits=100
-ItemID=5806
-Category=ARMOR
-Status=NEW
-

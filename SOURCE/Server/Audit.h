@@ -36,7 +36,7 @@ public:
 
 private:
 	ZoneAudit();
-	std::map<std::string, std::list<SceneryAudit> > mSceneryAudit; //Map a prop ID to a list of changes on that prop.  Important!  Lists are used because the allocated object must be static in memory.  Vector reallocation invalidates the pointer used by SceneryObject.
+	std::map<int, std::list<SceneryAudit> > mSceneryAudit; //Map a prop ID to a list of changes on that prop.  Important!  Lists are used because the allocated object must be static in memory.  Vector reallocation invalidates the pointer used by SceneryObject.
 	int mZone;
 	static bool mFolderCreated;
 

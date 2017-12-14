@@ -1,8 +1,0 @@
-[ENTRY]
-ID=151061726
-Asset=Bldg-Urban-Med_House1?ATS=ATS-Undead
-Name=Untitled
-Pos=96462.5,1372.98,62936.3
-Orient=0,0,0,1
-Scale=1,1,1
-

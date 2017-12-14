@@ -1,9 +1,0 @@
-[ENTRY]
-Description=Player made set
-PriceCurrency=CREDITS
-PriceCopper=0
-PriceCredits=100
-ItemID=7126
-Category=ARMOR
-Status=NEW
-

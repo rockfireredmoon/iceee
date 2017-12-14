@@ -12,6 +12,7 @@ tawd_SOURCES = md5.cc \
 	Ability2.cpp \
 	AbilityTime.cpp \
 	Account.cpp \
+	Achievements.cpp \
 	ActiveCharacter.cpp \
 	AIScript.cpp \
 	AIScript2.cpp \
@@ -141,6 +142,7 @@ tawd_SOURCES = md5.cc \
 	Ability2.h \
 	AbilityTime.h \
 	Account.h \
+	Achievements.h \
 	ActiveCharacter.h \
 	AIScript.h \
 	AIScript2.h \
@@ -304,6 +306,7 @@ tawdsvc_SOURCES = md5.cc \
 	Ability2.cpp \
 	AbilityTime.cpp \
 	Account.cpp \
+	Achievements.cpp \
 	ActiveCharacter.cpp \
 	AIScript.cpp \
 	AIScript2.cpp \
@@ -435,6 +438,7 @@ tawdsvc_SOURCES = md5.cc \
 	Ability2.h \
 	AbilityTime.h \
 	Account.h \
+	Achievements.h \
 	ActiveCharacter.h \
 	AIScript.h \
 	AIScript2.h \

@@ -207,6 +207,8 @@ public:
 	bool mAudit;             //If true, scenery edits are forced to be audited (by default, groves are not but normal gameplay zones are).
 	int mMaxAggroRange;      //This is a forced limit to the range that mobs may aggro.  Intended for places like the Rotted Maze
 	int mMaxLeashRange;      //Maximum leash range.  Even if the spawn point is given a higher leash range, it will never be higher than this value, if set.
+	int mMinLevel;			 //Minimum level that characters must be to enter this zone
+	int mMaxLevel;			 //Maximum level that characters must be to enter this zone
 
 	int mPlayerFilterType;    //If nonzero, filter players according to type.
 	std::vector<int> mPlayerFilterID;  //Creature Def IDs of the players to filter.

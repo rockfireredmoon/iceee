@@ -1,9 +1,0 @@
-[ENTRY]
-Description=Earn gold by destroying items anywhere and save trips to the vendor
-PriceCurrency=CREDITS
-PriceCopper=0
-PriceCredits=500
-ItemID=900009
-Category=RECIPES
-Status=<undefined>
-

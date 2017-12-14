@@ -5,6 +5,7 @@
 #include "CommonTypes.h"
 #include "Books.h"
 #include "Forms.h"
+#include "Achievements.h"
 
 const int MODMESSAGE_EVENT_SUPERCRIT = 1;
 const int MODMESSAGE_EVENT_EMOTE = 2;
@@ -45,15 +46,18 @@ int PrepExt_AbilityEvent(char *buffer, int creatureID, int abilityID, int abilit
 int PrepExt_CancelUseEvent(char *buffer, int CreatureID);
 int PrepExt_ActorJump(char *buffer, int actor);
 int PrepExt_RemoveCreature(char *buffer, int actorID);
+int PrepExt_Damage(char *buffer, int actorID, const char *damageString, const char *ability, int critical, int absorbed);
 int PrepExt_SendInfoMessage(char *buffer, const char *message, unsigned char eventID);
 int PrepExt_SendFallDamage(char *buffer, int damage);
 int PrepExt_GenericChatMessage(char *buffer, int creatureID, const char *name, const char *channel, const char *message);
 
 //Specific stat updates
+int PrepExt_Achievement(char *buffer, int creatureID, const char *achievement, const char *scoreSpec);
 int PrepExt_SendFormOpen(char *buffer, FormDefinition form);
 int PrepExt_SendFormClose(char *buffer, int formId);
 int PrepExt_SendBookOpen(char *buffer, int bookID, int page, int op);
 int PrepExt_Refashion(char *buffer);
+int PrepExt_Craft(char *buffer);
 int PrepExt_CooldownExpired(char *buffer, long actor, const char *cooldownCategory);
 int PrepExt_ChangeTarget(char *buffer, int sourceID, int targetID);
 int PrepExt_ExperienceGain(char *buffer, int CreatureID, int ExpAmount);

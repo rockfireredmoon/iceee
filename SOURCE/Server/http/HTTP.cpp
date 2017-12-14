@@ -319,6 +319,14 @@ bool AbstractCivetHandler::parseForm(CivetServer *server,
 	return true;
 }
 
+bool AbstractCivetHandler::isUserAgent(CivetServer *server, struct mg_connection *conn) {
+	const char* h = server->getHeader(conn, "User-Agent");
+	bool ok = h != NULL && strcmp(h, "ire3d(VERSION)") == 0;
+	if(!ok)
+		mg_set_as_close(conn);
+	return ok;
+}
+
 bool AbstractCivetHandler::isAuthorized(CivetServer *server, struct mg_connection *conn, std::string credentials) {
 	const char* h = server->getHeader(conn, "Authorization");
 	if(h != NULL) {

@@ -82,7 +82,7 @@ public:
 	void UnmonitorArea(std::string name);
 	int GetCIDForPropID(int propID);
 	int GetCreatureDistance(int CID, int CID2);
-	std::string GetCreatureSpawnProp(int CID);
+	int GetCreatureSpawnProp(int CID);
 	void PlayerMovement(CreatureInstance *creature);
 	void PlayerLeft(CreatureInstance *creature);
 	static int GetAbilityID(const char *name);
@@ -157,24 +157,24 @@ public:
 	void DetachItem(int CID, const char *type, const char *node);
 	void AttachItem(int CID, const char *type, const char *node);
 	void UnremoveProps();
-	void UnremoveProp(std::string propID);
-	bool RemoveProp(std::string propID);
+	void UnremoveProp(int propID);
+	bool RemoveProp(int propID);
 	void PlaySound(const char *name);
 	void ClearTarget(int CID);
 	bool AI(int CID, const char *label);
 	int GetPartyID(int CID);
 	Squirrel::Vector3I GetLocation(int CID);
 	const char *GetDisplayName(int CID);
-	int Transform(std::string propID, Sqrat::Table transformation);
-	int Asset(std::string propID, const char *newAsset, float scale);
+	int Transform(int propID, Sqrat::Table transformation);
+	int Asset(int propID, const char *newAsset, float scale);
 	int CountAlive(int CDefID);
 	bool AttachSidekick(int playerCID, int sidekickCID, int summonType);
 	bool InviteQuest(int CID, int questID, bool inviteParty);
 	bool JoinQuest(int CID, int questID, bool joinParty);
 	bool AdvanceQuest(int CID, int questID, int act, int objective, int outcome);
 	void DetachSceneryEffect(int propID, int tag);
-	std::string GetPropIDForSpawn(int CID);
-	int ParticleAttach(std::string propID, const char *effect, float scale, float offsetX, float offsetY, float offsetZ);
+	int GetPropIDForSpawn(int CID);
+	int ParticleAttach(int propID, const char *effect, float scale, float offsetX, float offsetY, float offsetZ);
 	void Emote(int cid, const char *emotion);
 	int CDefIDForCID(int cid);
 	void SetCreatureGTAE(int CID);
@@ -212,7 +212,7 @@ public:
 
 private:
 	std::vector<SceneryEffect> activeEffects;
-	void DoUnremoveProp(std::string propID);
+	void DoUnremoveProp(int propID);
 	ActiveParty * DoCreateParty(int leaderCID, int team);
 
 };
@@ -254,8 +254,8 @@ class WalkCallback : public ScriptCore::NutCallback
 {
 public:
 	CreatureInstance *mCreature;
-	std::string sPreviousPathNode;
-	std::string sNextPathNode;
+	int sPreviousPathNode;
+	int sNextPathNode;
 	int sTetherNodeX;
 	int sTetherNodeZ;
 	int sTetherNodeFacing;

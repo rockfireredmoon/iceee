@@ -404,7 +404,7 @@ std::string CreatureDefinition :: GetExtraDataString() {
 		Util::SafeFormat(buf, sizeof(buf), "%f", DropRateMult);
 		ExtraData.SetKeyValue("dropratemulti", buf);
 	}
-	for(std::vector<int>::iterator it = Items.begin() ; it != Items.end(); it++) {
+	for(std::vector<int>::iterator it = Items.begin() ; it != Items.end(); ++it) {
 		STRINGLIST str;
 		str.push_back("item");
 		str.push_back("");
@@ -432,7 +432,7 @@ void CreatureDefinition :: SaveToStream(FILE *output) {
 
 	if(DefaultEffects.size() > 0) {
 		fprintf(output, "Effects=");
-		for(std::vector<int>::iterator it = DefaultEffects.begin(); it != DefaultEffects.end(); it++) {
+		for(std::vector<int>::iterator it = DefaultEffects.begin(); it != DefaultEffects.end(); ++it) {
 			if(it != DefaultEffects.begin())
 				fprintf(output, ",");
 			fprintf(output, "%s", GetStatusNameByID(*it));
@@ -5359,7 +5359,7 @@ void CreatureInstance :: CheckPathLocation(void)
 
 	//Build a list of available nodes, excluding any node that would return to the previous
 	//node.
-	vector<std::string> openNode;
+	vector<int> openNode;
 	for(int i = 0; i < so->extraData->linkCount; i++)
 	{
 		if(so->extraData->link[i].type == SceneryObject::LINK_TYPE_PATH && so->extraData->link[i].propID != previousPathNode)
@@ -5370,7 +5370,7 @@ void CreatureInstance :: CheckPathLocation(void)
 	}
 
 	//If there are no new points, defaulting to the previous node is the only choice.
-	std::string newPathNode = previousPathNode;
+	int newPathNode = previousPathNode;
 	if(openNode.size() > 0)
 	{
 		int rndLink = randint(0, openNode.size() - 1);
@@ -7820,6 +7820,20 @@ bool CreatureInstance :: CAF_Nudify(int durationS)
 	return true;
 
 }
+bool CreatureInstance :: CAF_Scale(float scale, int durationS)
+{
+	if(transformModifier != NULL) {
+		return false;
+	}
+	g_Logs.server->debug("Scaling %v (app is %v) to %v", CreatureDefID, css.appearance.c_str(), scale);
+	char buf[64];
+	Util::SafeFormat(buf,sizeof(buf),"%f", scale);
+	transformModifier = new CreatureAttributeModifier("sz", buf);
+	_AddStatusList(StatusEffects::TRANSFORMED, durationS);
+	PushAppearanceModifier(transformModifier);
+	return true;
+
+}
 
 bool CreatureInstance :: CAF_Transform(int CDefID, int abID, int durationS)
 {
@@ -8678,7 +8692,7 @@ int CreatureDefManager :: LoadFile(std::string filename)
 				newItem.DropRateMult = str.GetValueFloatOrDefault("dropratemult", 1);
 				newItem.DropRateProfile = "";
 				str.GetValueString("droprateprofile", newItem.DropRateProfile);
-				for(MULTISTRING::iterator it = str.mData.begin(); it != str.mData.end(); it++) {
+				for(MULTISTRING::iterator it = str.mData.begin(); it != str.mData.end(); ++it) {
 					STRINGLIST sl = *it;
 					if(sl[0].compare("item") == 0) {
 						newItem.Items.push_back(Util::GetInteger(sl[1].c_str()));

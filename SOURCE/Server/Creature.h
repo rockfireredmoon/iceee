@@ -323,7 +323,6 @@ public:
 	AppearanceModifier * Clone();
 };
 
-
 class CreatureAttributeModifier : public AbstractAppearanceModifier {
 public:
 	std::string mAttribute;
@@ -519,8 +518,8 @@ public:
 	char setbackCount;
 	bool bOrbChanged;  //Flag that determines whether might/will or their charges need to be updated.
 
-	std::string previousPathNode;   //If nonzero, this is the ID of the spawnpoint that was last used.
-	std::string nextPathNode;       //If nonzero, the target ID of the next path node.
+	int previousPathNode;   //If nonzero, this is the ID of the spawnpoint that was last used.
+	int nextPathNode;       //If nonzero, the target ID of the next path node.
 	int lastIdleX;          //If aggro, this is the previous idle location.
 	int lastIdleZ;          //If aggro, this is the previous idle location.
 	int tetherNodeX;        //The anchor point of the current tether location.
@@ -778,6 +777,7 @@ public:
 	//Custom Ability Functions, called through the ability system to handle special operations
 	bool IsTransformed();
 	bool CAF_Nudify(int durationS);
+	bool CAF_Scale(float scale, int durationS);
 	bool CAF_Transform(int CDefID, int abId, int durationS);
 	bool CAF_Untransform();
 	int CAF_SummonSidekick(int CDefID, int maxSummon, short abGroupID);

@@ -186,7 +186,7 @@ InventoryManager :: ~InventoryManager()
 
 int InventoryManager :: AddItem(int containerID, InventorySlot &item)
 {
-	if(containerID >= 0 && containerID <= MAXCONTAINER)
+	if(containerID >= 0 && containerID < MAXCONTAINER)
 	{
 		//Hack to fix item counts for those that need them.
 		/*
@@ -256,6 +256,7 @@ InventorySlot * InventoryManager :: AddItem_Ex(int containerID, int itemID, int 
 		count += GetItemCount(DELIVERY_CONTAINER, itemDef->mID);
 		count += GetItemCount(AUCTION_CONTAINER, itemDef->mID);
 		count += GetItemCount(STAMPS_CONTAINER, itemDef->mID);
+		count += GetItemCount(BOOKSHELF_CONTAINER, itemDef->mID);
 		if(count >= itemDef->mOwnershipRestriction) {
 			// Already have the limit of this item
 			SetError(ERROR_LIMIT);
@@ -327,7 +328,7 @@ void InventoryManager :: FindNextExpunge()
 	NextExpunge = 0;
 	for(int i = 0 ; i < MAXCONTAINER; i++) {
 		int size = containerList[i].size();
-		for(std::vector<InventorySlot>::iterator it = containerList[i].begin(); it != containerList[i].end(); it++) {
+		for(std::vector<InventorySlot>::iterator it = containerList[i].begin(); it != containerList[i].end(); ++it) {
 			if((*it).secondsRemaining > -1) {
 				long remain = (*it).GetTimeRemaining();
 				if(NextExpunge == 0 || g_ServerTime + remain <= NextExpunge) {
@@ -346,7 +347,7 @@ int InventoryManager :: ScanExpiredItems(std::vector<InventoryQuery> &resultList
 	InventoryQuery iq;
 	for(int i = 0 ; i < MAXCONTAINER; i++) {
 		int size = containerList[i].size();
-		for(std::vector<InventorySlot>::iterator it = containerList[i].begin(); it != containerList[i].end(); it++) {
+		for(std::vector<InventorySlot>::iterator it = containerList[i].begin(); it != containerList[i].end(); ++it) {
 			if((*it).secondsRemaining > -1) {
 				long remain = (*it).GetTimeRemaining();
 				if(remain < 1) {
@@ -558,19 +559,24 @@ int InventoryManager :: GetFreeSlot(int containerID)
 InventorySlot * InventoryManager :: GetBestSpecialItem(int invID, char specialItemType)
 {
 	std::vector<InventorySlot> inv = containerList[invID];
-	InventorySlot *itemDef = NULL;
+	unsigned int ccsid = 0;
+	int max = 99999;
 	for(std::vector<InventorySlot>::iterator it = inv.begin(); it != inv.end() ; ++it) {
 		InventorySlot sl = *it;
 		if(!sl.IsExpired()) {
-			ItemDef *iDef = sl.dataPtr;
+			ItemDef *iDef = sl.ResolveItemPtr();
 			if(iDef != NULL && iDef->mSpecialItemType == specialItemType) {
-				if(itemDef == NULL || (itemDef != NULL && iDef->mIvMax1 > itemDef->dataPtr->mIvMax1)) {
-					itemDef = &sl;
+				int stack = iDef->GetDynamicMax(ItemIntegerType::STACKING);
+				if(stack < max) {
+					max = stack;
+					ccsid = sl.CCSID;
 				}
 			}
 		}
 	}
-	return itemDef;
+	if(ccsid == 0)
+		return NULL;
+	return GetItemPtrByCCSID(ccsid);
 }
 
 int InventoryManager :: CountUsedSlots(int containerID)
@@ -691,9 +697,10 @@ InventorySlot * InventoryManager :: GetFirstItem(int containerID, int itemID)
 	// Quick way to get the pointer of the first item.  Added this function
 	// for crafting, as a way to retrieve single items from the inventory
 	// (disregarding stack size) for deletion.
-	for(size_t a = 0; a < containerList[containerID].size(); a++)
-		if(containerList[containerID][a].IID == itemID)
-			return &containerList[containerID][a];
+	if(containerID < MAXCONTAINER)
+		for(size_t a = 0; a < containerList[containerID].size(); a++)
+			if(containerList[containerID][a].IID == itemID)
+				return &containerList[containerID][a];
 	return NULL;
 }
 

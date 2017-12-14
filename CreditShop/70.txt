@@ -1,9 +1,0 @@
-[ENTRY]
-Description=Adds stat bonuses for a limited time
-PriceCurrency=CREDITS
-PriceCopper=0
-PriceCredits=100
-ItemID=8311
-Category=CHARMS
-Status=<undefined>
-

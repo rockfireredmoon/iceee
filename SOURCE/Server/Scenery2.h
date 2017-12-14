@@ -62,11 +62,6 @@ struct GlobalSceneryVars
 		LastSave = 0;
 		PendingItems = 0;
 	}
-
-	std::string NewID() {
-		// TODO
-		return "";
-	}
 };
 
 namespace ActiveLocation
@@ -90,7 +85,7 @@ public:
 	//int PlacedBy;          //ID of the creature/player who placed this object.  If an object is being edited, this is a simulator index.
 
 	//The following data is used in the client
-	std::string ID;
+	int ID;
 
 	char Asset[128];   //Asset file
 	char Name[32];    //Arbitrary object name
@@ -134,10 +129,10 @@ public:
 	bool IsExtendedProperty(const char *propertyName);
 	bool SetExtendedProperty(const char *propertyName, const char *propertyValue);
 	void WriteToStream(FILE *file) const;
-	void AddLink(std::string PropID, int type);
-	void RemoveLink(std::string PropID);
+	void AddLink(int PropID, int type);
+	void RemoveLink(int PropID);
 	bool HasLinks(int linkType);
-	void EnumLinks(int linkType, std::vector<std::string> &output);
+	void EnumLinks(int linkType, std::vector<int> &output);
 	bool IsSpawnPoint(void);
 
 	const char *GetSpawnPackageName(void);
@@ -180,7 +175,7 @@ class SceneryPage
 	friend class SimulatorThread; //For debugging purposes!
 
 public:
-	typedef std::map<std::string, SceneryObject> SCENERY_MAP;  //Map PropID to its SceneryObject data.
+	typedef std::map<int, SceneryObject> SCENERY_MAP;  //Map PropID to its SceneryObject data.
 	typedef SCENERY_MAP::iterator SCENERY_IT;
 
 	SceneryPage();
@@ -196,12 +191,12 @@ public:
 	bool mHasSourceFile;  //If true, this page was loaded from an existing file, or was successfully saved to a file.
 
 	SceneryObject* AddProp(const SceneryObject& prop, bool notifyPendingChange);
-	bool DeleteProp(std::string propID);
+	bool DeleteProp(int propID);
 	void LoadScenery(void);
 	void CheckAutosave(int& debugPagesSaved, int& debugPropsSaved);
 	std::string GetFileName();
 	std::string GetFolderName();
-	SceneryObject *GetPropPtr(std::string propID);
+	SceneryObject *GetPropPtr(int propID);
 	void NotifyAccess(bool notifyPendingChange);
 	bool IsTileExpired(void);
 	void LoadSceneryFromFile(std::string fileName);  //Handles the actual work of loading a file.
@@ -229,10 +224,10 @@ public:
 
 	SceneryObject* AddProp(const SceneryObject& prop, bool notifyPendingChange);  //Add a prop, automatically determining the page from the prop's coordinates.  Create a new page for it, if the page doesn't not exist.
 	SceneryObject* ReplaceProp(const SceneryObject& prop);
-	void DeleteProp(std::string propID);
-	bool UpdateLink(std::string propID1, std::string propID2, int type);
+	void DeleteProp(int propID);
+	bool UpdateLink(int propID1, int propID2, int type);
 	SceneryPage* GetOrCreatePage(const SceneryPageKey& key);
-	SceneryObject* GetPropPtr(std::string propID, SceneryPage** foundPage);
+	SceneryObject* GetPropPtr(int propID, SceneryPage** foundPage);
 
 	void CheckAutosave(int& debugPagesSaved, int& debugPropsSaved);
 
@@ -254,7 +249,7 @@ struct SceneryPageRequest
 	int x;         //Tile coordinate to fetch scenery from.
 	int y;         //Tile coordinate to fetch scenery from.
 	bool skipQuery;  //Don't compile a query response.
-	std::list<std::string> excludedProps; //A list of prop IDs that should be excluded
+	std::list<int> excludedProps; //A list of prop IDs that should be excluded
 };
 
 //The root container for all scenery objects, subdivided into zones.
@@ -282,14 +277,14 @@ public:
 
 	bool ValidATSEntry(const std::string& atsName);
 	bool VerifyATS(const SceneryObject& prop);
-	SceneryObject* GlobalGetPropPtr(int zoneID, std::string propID, SceneryPage** foundPage);
+	SceneryObject* GlobalGetPropPtr(int zoneID, int propID, SceneryPage** foundPage);
 	SceneryObject* AddProp(int zoneID, const SceneryObject& prop);
 	SceneryObject* ReplaceProp(int zoneID, const SceneryObject& prop);
-	void DeleteProp(int zoneID, std::string propID);
-	bool UpdateLink(int zoneID, std::string propID1, std::string propID2, int type);
-	void NotifyChangedProp(int zoneID, std::string propID);
+	void DeleteProp(int zoneID, int propID);
+	bool UpdateLink(int zoneID, int propID1, int propID2, int type);
+	void NotifyChangedProp(int zoneID, int propID);
 	
-	void AddPageRequest(int socket, int queryID, int zone, int x, int y, bool skipQuery, std::list<std::string> excludedProps);
+	void AddPageRequest(int socket, int queryID, int zone, int x, int y, bool skipQuery, std::list<int> excludedProps);
 
 	bool IsGarbageCheckReady(void);
 	void TransferActiveLocations(const ActiveLocation::CONTAINER& source);

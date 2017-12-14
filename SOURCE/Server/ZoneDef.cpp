@@ -215,6 +215,8 @@ void ZoneDefInfo :: Clear(void)
 	mPageSize = DEFAULT_PAGESIZE;
 	mMaxAggroRange = DEFAULT_MAXAGGRORANGE;
 	mMaxLeashRange = DEFAULT_MAXLEASHRANGE;
+	mMinLevel = 0;
+	mMaxLevel = 9999;
 	
 	mReturnZone = 0;
 	mPersist = false;
@@ -268,6 +270,8 @@ void ZoneDefInfo :: CopyFrom(const ZoneDefInfo& other)
 	mEnvironmentCycle = other.mEnvironmentCycle;
 	mMaxAggroRange = other.mMaxAggroRange;
 	mMaxLeashRange = other.mMaxLeashRange;
+	mMinLevel = other.mMinLevel;
+	mMaxLevel = other.mMaxLevel;
 
 	mPlayerFilterType = other.mPlayerFilterType;
 	mPlayerFilterID.assign(other.mPlayerFilterID.begin(), other.mPlayerFilterID.end());
@@ -887,6 +891,10 @@ int ZoneDefManager :: LoadFile(std::string fileName)
 					newItem.mMaxAggroRange = lfr.BlockToIntC(1);
 				else if(strcmp(lfr.SecBuffer, "MAXLEASHRANGE") == 0)
 					newItem.mMaxLeashRange = lfr.BlockToIntC(1);
+				else if(strcmp(lfr.SecBuffer, "MINLEVEL") == 0)
+					newItem.mMinLevel= lfr.BlockToIntC(1);
+				else if(strcmp(lfr.SecBuffer, "MAXLEVEL") == 0)
+					newItem.mMaxLevel= lfr.BlockToIntC(1);
 				else if(strcmp(lfr.SecBuffer, "DEFLOC") == 0)
 				{
 					lfr.MultiBreak("=,"); //Re-split for this particular data.
@@ -1966,7 +1974,7 @@ void WeatherState :: RunCycle(ActiveInstance *instance) {
 }
 
 void WeatherState :: SendWeatherUpdate(ActiveInstance *instance) {
-	for(std::vector<SimulatorThread*>::iterator it = instance->RegSim.begin(); it != instance->RegSim.end(); it++) {
+	for(std::vector<SimulatorThread*>::iterator it = instance->RegSim.begin(); it != instance->RegSim.end(); ++it) {
 		for(std::vector<std::string>::iterator it2 = mMapNames.begin(); it2 != mMapNames.end(); it2++) {
 			if((*it)->pld.CurrentMapInt == -1 || MapDef.mMapList[(*it)->pld.CurrentMapInt].Name.compare(*it2) == 0) {
 				(*it)->AttemptSend((*it)->Aux1, PrepExt_SetWeather((*it)->Aux1, mWeatherType, mWeatherWeight));
@@ -1976,7 +1984,7 @@ void WeatherState :: SendWeatherUpdate(ActiveInstance *instance) {
 	}
 }
 void WeatherState :: SendThunder(ActiveInstance *instance) {
-	for(std::vector<SimulatorThread*>::iterator it = instance->RegSim.begin(); it != instance->RegSim.end(); it++) {
+	for(std::vector<SimulatorThread*>::iterator it = instance->RegSim.begin(); it != instance->RegSim.end(); ++it) {
 		for(std::vector<std::string>::iterator it2 = mMapNames.begin(); it2 != mMapNames.end(); it2++) {
 			if((*it)->pld.CurrentMapInt == -1 || MapDef.mMapList[(*it)->pld.CurrentMapInt].Name.compare(*it2) == 0) {
 				(*it)->AttemptSend((*it)->Aux1, PrepExt_Thunder((*it)->Aux1, mWeatherWeight));
@@ -2110,7 +2118,7 @@ std::vector<WeatherState*> WeatherManager :: RegisterInstance(ActiveInstance *in
 	}
 
 	/* Set up a weather state for all the MapDefInfo in this instance that have a weather def */
-	for(std::vector<MapDefInfo>::iterator it = d.begin(); it != d.end(); it++) {
+	for(std::vector<MapDefInfo>::iterator it = d.begin(); it != d.end(); ++it) {
 		if(!MaybeAddWeatherDef(instance->mInstanceID, (*it).Name, m))
 			continue;
 
@@ -2132,9 +2140,9 @@ void WeatherManager :: Deregister(std::vector<WeatherState*> states) {
 
 	/* Set up a weather state for all the map locations in this instance that have a weather def */
 	int s;
-	for(std::vector<WeatherState*>::iterator it = states.begin(); it != states.end(); it++) {
+	for(std::vector<WeatherState*>::iterator it = states.begin(); it != states.end(); ++it) {
 		s = 0;
-		for(std::vector<std::string>::iterator it2 = (*it)->mMapNames.begin(); it2 != (*it)->mMapNames.end(); it2++) {
+		for(std::vector<std::string>::iterator it2 = (*it)->mMapNames.begin(); it2 != (*it)->mMapNames.end(); ++it2) {
 			WeatherKey k;
 			k.instance = (*it)->mInstanceId;
 			k.mapName = *it2;

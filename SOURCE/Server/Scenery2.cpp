@@ -57,7 +57,7 @@ void SceneryObject::Destroy(void)
 
 void SceneryObject :: Clear(void)
 {
-	ID = "";
+	ID = 0;
 	Util::ClearString(Asset, sizeof(Asset));
 	Util::ClearString(Name, sizeof(Name));
 
@@ -331,7 +331,7 @@ bool SceneryObject :: SetExtendedProperty(const char *propertyName, const char *
 }
 
 void SceneryObject::ReadFromJSON(Json::Value &value) {
-	ID = value.get("id", 0).asCString();
+	ID = value.get("id", 0).asInt();
 	strcpy(Asset, value.get("asset", "").asCString());
 	strcpy(Name, value.get("name", "").asCString());
 
@@ -464,7 +464,7 @@ void SceneryObject::WriteToJSON(Json::Value &value) {
 void SceneryObject::WriteToStream(FILE *file) const
 {
 	fprintf(file, "[ENTRY]\r\n");
-	fprintf(file, "ID=%s\r\n", ID);
+	fprintf(file, "ID=%d\r\n", ID);
 	fprintf(file, "Asset=%s\r\n", Asset);
 	fprintf(file, "Name=%s\r\n", Name);
 	fprintf(file, "Pos=%g,%g,%g\r\n", LocationX, LocationY, LocationZ);
@@ -532,7 +532,7 @@ bool SceneryObject::ExtractATS(std::string& outputStr) const
 	return true;
 }
 
-void SceneryObject :: AddLink(std::string PropID, int type)
+void SceneryObject :: AddLink(int PropID, int type)
 {
 	if(CreateExtraData() == false)
 		return;
@@ -554,7 +554,7 @@ void SceneryObject :: AddLink(std::string PropID, int type)
 	extraData->linkCount++;
 }
 
-void SceneryObject :: RemoveLink(std::string PropID)
+void SceneryObject :: RemoveLink(int PropID)
 {
 	if(extraData == NULL)
 		return;
@@ -563,7 +563,7 @@ void SceneryObject :: RemoveLink(std::string PropID)
 	{
 		if(extraData->link[i].propID == PropID)
 		{
-			extraData->link[i].propID = "";
+			extraData->link[i].propID = 0;
 			extraData->link[i].type = 0;
 			for(int d = i + 1; d < CreatureSpawnDef::MAX_LINK - 1; d++)
 			{
@@ -587,7 +587,7 @@ bool SceneryObject :: HasLinks(int linkType)
 	return false;
 }
 
-void SceneryObject :: EnumLinks(int linkType, std::vector<std::string> &output)
+void SceneryObject :: EnumLinks(int linkType, std::vector<int> &output)
 {
 	output.clear();
 	if(extraData == NULL)
@@ -647,7 +647,7 @@ SceneryObject* SceneryPage::AddProp(const SceneryObject& prop, bool notifyPendin
 	return &obj;
 }
 
-bool SceneryPage::DeleteProp(std::string propID)
+bool SceneryPage::DeleteProp(int propID)
 {
 	SCENERY_IT it = mSceneryList.find(propID);
 	if(it == mSceneryList.end())
@@ -727,7 +727,7 @@ std::string SceneryPage::GetFileName()
 	if(mZone >= ZoneDefManager::GROVE_ZONE_ID_DEFAULT)
 		p = Platform::JoinPath(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "Grove"), buf), buf2);
 	else
-		p = Platform::JoinPath(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "Scenery"), buf), buf2);
+		p = Platform::JoinPath(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveVariableDataPath(), "Scenery"), buf), buf2);
 	return p;
 }
 
@@ -739,7 +739,7 @@ std::string SceneryPage::GetFolderName()
 	if(mZone >= ZoneDefManager::GROVE_ZONE_ID_DEFAULT)
 		p = Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "Grove"), buf);
 	else
-		p = Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "Scenery"), buf);
+		p = Platform::JoinPath(Platform::JoinPath(g_Config.ResolveVariableDataPath(), "Scenery"), buf);
 	return p;
 }
 
@@ -766,7 +766,7 @@ void SceneryPage::LoadSceneryFromFile(std::string fileName)
 		fr.BlockToStringC(0, FileReader3::CASE_UPPER);
 		if(strcmp(fr.CopyBuffer, "[ENTRY]") == 0)
 		{
-			if(prop.ID != "")
+			if(prop.ID != 0)
 			{
 				if(prop.Name[0] == 0)
 					prop.SetName("Untitled");
@@ -777,7 +777,7 @@ void SceneryPage::LoadSceneryFromFile(std::string fileName)
 			linkIndex = 0;
 		}
 		else if(strcmp(fr.CopyBuffer, "ID") == 0)
-			prop.ID = fr.BlockToStringC(1);
+			prop.ID = fr.BlockToIntC(1);
 		else if(strcmp(fr.CopyBuffer, "ASSET") == 0)
 		{
 			//The asset string needs to be single broken.
@@ -871,7 +871,7 @@ void SceneryPage::LoadSceneryFromFile(std::string fileName)
 		//END DEPRECATED
 	}
 
-	if(prop.ID != "")
+	if(prop.ID != 0)
 	{
 		if(prop.Name[0] == 0)
 			prop.SetName("Untitled");
@@ -883,7 +883,7 @@ void SceneryPage::LoadSceneryFromFile(std::string fileName)
 	//g_Log.AddMessageFormat("Loaded scenery file: [%s]", fileName);
 }
 
-SceneryObject* SceneryPage::GetPropPtr(std::string propID)
+SceneryObject* SceneryPage::GetPropPtr(int propID)
 {
 	SCENERY_IT it = mSceneryList.find(propID);
 	if(it != mSceneryList.end())
@@ -993,7 +993,7 @@ SceneryObject* SceneryZone::ReplaceProp(const SceneryObject& prop)
 	return NULL;
 }
 
-void SceneryZone::DeleteProp(std::string propID)
+void SceneryZone::DeleteProp(int propID)
 {
 	PAGEMAP::iterator it;
 	for(it = mPages.begin(); it != mPages.end(); ++it)
@@ -1001,7 +1001,7 @@ void SceneryZone::DeleteProp(std::string propID)
 			return;
 }
 
-bool SceneryZone::UpdateLink(std::string propID1, std::string propID2, int type)
+bool SceneryZone::UpdateLink(int propID1, int propID2, int type)
 {
 	if(propID1 == propID2)
 		return false;
@@ -1059,7 +1059,7 @@ void SceneryZone::CheckAutosave(int& debugPagesSaved, int& debugPropsSaved)
 		it->second.CheckAutosave(debugPagesSaved, debugPropsSaved);
 }
 
-SceneryObject* SceneryZone::GetPropPtr(std::string propID, SceneryPage** foundPage)
+SceneryObject* SceneryZone::GetPropPtr(int propID, SceneryPage** foundPage)
 {
 	SceneryObject *retProp = NULL;
 	PAGEMAP::iterator it;
@@ -1250,7 +1250,7 @@ void SceneryManager::ReleaseThread(void)
 	cs.Leave();
 }
 
-SceneryObject* SceneryManager::GlobalGetPropPtr(int zoneID, std::string propID, SceneryPage** foundPage)
+SceneryObject* SceneryManager::GlobalGetPropPtr(int zoneID, int propID, SceneryPage** foundPage)
 {
 	TimeObject to("SceneryManager::GlobalGetPropPtr");
 
@@ -1286,7 +1286,7 @@ SceneryObject* SceneryManager::ReplaceProp(int zoneID, const SceneryObject& prop
 	return it->second.ReplaceProp(prop);
 }
 
-void SceneryManager::DeleteProp(int zoneID, std::string propID)
+void SceneryManager::DeleteProp(int zoneID, int propID)
 {
 	TimeObject to("SceneryManager::DeleteProp");
 
@@ -1296,7 +1296,7 @@ void SceneryManager::DeleteProp(int zoneID, std::string propID)
 	it->second.DeleteProp(propID);
 }
 
-bool SceneryManager::UpdateLink(int zoneID, std::string propID1, std::string propID2, int type)
+bool SceneryManager::UpdateLink(int zoneID, int propID1, int propID2, int type)
 {
 	TimeObject to("SceneryManager::UpdateLink");
 	
@@ -1306,7 +1306,7 @@ bool SceneryManager::UpdateLink(int zoneID, std::string propID1, std::string pro
 	return it->second.UpdateLink(propID1, propID2, type);
 }
 
-void SceneryManager :: NotifyChangedProp(int zoneID, std::string propID)
+void SceneryManager :: NotifyChangedProp(int zoneID, int propID)
 {
 	ITERATOR it = mZones.find(zoneID);
 	if(it == mZones.end())
@@ -1318,7 +1318,7 @@ void SceneryManager :: NotifyChangedProp(int zoneID, std::string propID)
 	page->NotifyAccess(true);
 }
 
-void SceneryManager::AddPageRequest(int socket, int queryID, int zone, int x, int y, bool skipQuery, std::list<std::string> excludedProps)
+void SceneryManager::AddPageRequest(int socket, int queryID, int zone, int x, int y, bool skipQuery, std::list<int> excludedProps)
 {
 	SceneryPageRequest newItem;
 	newItem.socket = socket;
@@ -1413,7 +1413,7 @@ void SceneryManager::SendPageRequest(const SceneryPageRequest& request, std::lis
 		//No need to save row data unless the query is required.
 		if(request.skipQuery == false)
 		{
-			sprintf(idBuf, "%s", it->second.ID.c_str());
+			sprintf(idBuf, "%d", it->second.ID);
 			queryRows.push_back(idBuf);
 		}
 		
@@ -1623,7 +1623,7 @@ int PrepExt_UpdateScenery(char *buffer, SceneryObject *so)
 	wpos += PutByte(&buffer[wpos], 41);  //_handleSceneryUpdateMsg
 	wpos += PutShort(&buffer[wpos], 0);
 
-	wpos += PutStringUTF(&buffer[wpos], so->ID.c_str());  //ID
+	wpos += PutInteger(&buffer[wpos], so->ID);  //ID
 	wpos += PutByte(&buffer[wpos], mask);  //Mask
 
 	if(mask & SCENERY_UPDATE_ASSET)
@@ -1668,7 +1668,7 @@ int PrepExt_UpdateScenery(char *buffer, SceneryObject *so)
 		wpos += PutShort(&buffer[wpos], so->extraData->linkCount);  //count
 		for(int a = 0; a < so->extraData->linkCount; a++)
 		{
-			wpos += PutStringUTF(&buffer[wpos], so->extraData->link[a].propID.c_str());
+			wpos += PutInteger(&buffer[wpos], so->extraData->link[a].propID);
 			wpos += PutByte(&buffer[wpos], so->extraData->link[a].type);
 		}
 	}

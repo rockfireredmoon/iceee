@@ -1,9 +1,0 @@
-[ENTRY]
-Description=For a better chance of treasure
-PriceCurrency=CREDITS
-PriceCopper=0
-PriceCredits=500
-ItemID=900030
-Category=RECIPES
-Status=<undefined>
-

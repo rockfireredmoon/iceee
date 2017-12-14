@@ -1,9 +1,0 @@
-[ENTRY]
-Description=Earn experience 30% faster for 4 hours!
-PriceCurrency=CREDITS
-PriceCopper=0
-PriceCredits=250
-ItemID=900017
-Category=RECIPES
-Status=<undefined>
-

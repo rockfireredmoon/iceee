@@ -29,8 +29,9 @@
 //RestoreAppearanceHandler
 //
 
-int RestoreAppearanceHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
-		SimulatorQuery *query, CreatureInstance *creatureInstance) {
+int RestoreAppearanceHandler::handleQuery(SimulatorThread *sim,
+		CharacterServerData *pld, SimulatorQuery *query,
+		CreatureInstance *creatureInstance) {
 
 	//One string per row.
 	MULTISTRING output;
@@ -46,8 +47,9 @@ int RestoreAppearanceHandler::handleQuery(SimulatorThread *sim, CharacterServerD
 //AccountInfoHandler
 //
 
-int AccountInfoHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
-		SimulatorQuery *query, CreatureInstance *creatureInstance) {
+int AccountInfoHandler::handleQuery(SimulatorThread *sim,
+		CharacterServerData *pld, SimulatorQuery *query,
+		CreatureInstance *creatureInstance) {
 
 	if (query->argCount < 1)
 		return 0;
@@ -68,8 +70,8 @@ int AccountInfoHandler::handleQuery(SimulatorThread *sim, CharacterServerData *p
 		data = g_AccountManager.GetActiveAccountByID(quickData->mID);
 	}
 	if (data == NULL) {
-		Util::SafeFormat(sim->Aux2, sizeof(sim->Aux2), "Could not find account for '%s'",
-				query->args[0].c_str());
+		Util::SafeFormat(sim->Aux2, sizeof(sim->Aux2),
+				"Could not find account for '%s'", query->args[0].c_str());
 		sim->SendInfoMessage(sim->Aux2, INFOMSG_INFO);
 	} else {
 		Util::SafeFormat(sim->Aux2, sizeof(sim->Aux2),
@@ -104,8 +106,9 @@ int AccountInfoHandler::handleQuery(SimulatorThread *sim, CharacterServerData *p
 //AccountFulfillHandler
 //
 
-int AccountFulfillHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
-		SimulatorQuery *query, CreatureInstance *creatureInstance) {
+int AccountFulfillHandler::handleQuery(SimulatorThread *sim,
+		CharacterServerData *pld, SimulatorQuery *query,
+		CreatureInstance *creatureInstance) {
 
 	/* Query: account.fulfill
 	 Args : none
@@ -133,8 +136,8 @@ int EmoteHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 
 	target = sim->ResolveEmoteTarget(target);
 
-	int wpos = PrepExt_SendAdvancedEmote(sim->SendBuf, target, emoteName, emoteSpeed,
-			loop);
+	int wpos = PrepExt_SendAdvancedEmote(sim->SendBuf, target, emoteName,
+			emoteSpeed, loop);
 	creatureInstance->actInst->LSendToLocalSimulator(sim->SendBuf, wpos,
 			creatureInstance->CurrentX, creatureInstance->CurrentZ);
 	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
@@ -144,8 +147,9 @@ int EmoteHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 //EmoteControlHandler
 //
 
-int EmoteControlHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
-		SimulatorQuery *query, CreatureInstance *creatureInstance) {
+int EmoteControlHandler::handleQuery(SimulatorThread *sim,
+		CharacterServerData *pld, SimulatorQuery *query,
+		CreatureInstance *creatureInstance) {
 
 	//Requires a modded client to perform this action.
 	// [0] = target (0 = avatar, 1 = pet, else = explicit creature ID of pet);
@@ -164,7 +168,6 @@ int EmoteControlHandler::handleQuery(SimulatorThread *sim, CharacterServerData *
 	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
 }
 
-
 //
 //ResCostHandler
 //
@@ -172,7 +175,7 @@ int EmoteControlHandler::handleQuery(SimulatorThread *sim, CharacterServerData *
 int ResCostHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 		SimulatorQuery *query, CreatureInstance *creatureInstance) {
 	/*  Query: persona.resCost
-		 Sent when the player dies, to determine the cost of each resurrection option.
+	 Sent when the player dies, to determine the cost of each resurrection option.
 	 Args: [none]
 	 */
 	//For the three resurrect options [0,1,2], the client only asks for [1,2]
@@ -180,7 +183,7 @@ int ResCostHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 
 	int wpos = 0;
 	wpos += PutByte(&sim->SendBuf[wpos], 1);           //_handleQueryResultMsg
-	wpos += PutShort(&sim->SendBuf[wpos], 0);          //Placeholder for message size
+	wpos += PutShort(&sim->SendBuf[wpos], 0);     //Placeholder for message size
 	wpos += PutInteger(&sim->SendBuf[wpos], query->ID);  //Query response index
 	wpos += PutShort(&sim->SendBuf[wpos], 2);           //Number of arrays
 
@@ -198,13 +201,13 @@ int ResCostHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 	return wpos;
 }
 
-
 //
 //GuildInfoHandler
 //
 
-int GuildInfoHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
-		SimulatorQuery *query, CreatureInstance *creatureInstance) {
+int GuildInfoHandler::handleQuery(SimulatorThread *sim,
+		CharacterServerData *pld, SimulatorQuery *query,
+		CreatureInstance *creatureInstance) {
 
 	/*  Query: guild.info
 	 Retrieves the guild info of the Simulator player.
@@ -264,13 +267,13 @@ int GuildInfoHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld
 	return wpos;
 }
 
-
 //
 //GuildLeaveHandler
 //
 
-int GuildLeaveHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
-		SimulatorQuery *query, CreatureInstance *creatureInstance) {
+int GuildLeaveHandler::handleQuery(SimulatorThread *sim,
+		CharacterServerData *pld, SimulatorQuery *query,
+		CreatureInstance *creatureInstance) {
 
 	int guildDefID = atoi(query->args[0].c_str());
 
@@ -322,8 +325,9 @@ int GuildLeaveHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pl
 //ValidateNameHandler
 //
 
-int ValidateNameHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
-		SimulatorQuery *query, CreatureInstance *creatureInstance) {
+int ValidateNameHandler::handleQuery(SimulatorThread *sim,
+		CharacterServerData *pld, SimulatorQuery *query,
+		CreatureInstance *creatureInstance) {
 
 	int res = g_AccountManager.ValidateNameParts(query->args[0].c_str(),
 			query->args[1].c_str());
@@ -341,8 +345,9 @@ int ValidateNameHandler::handleQuery(SimulatorThread *sim, CharacterServerData *
 //VisWeaponHandler
 //
 
-int VisWeaponHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
-		SimulatorQuery *query, CreatureInstance *creatureInstance) {
+int VisWeaponHandler::handleQuery(SimulatorThread *sim,
+		CharacterServerData *pld, SimulatorQuery *query,
+		CreatureInstance *creatureInstance) {
 
 	/*  Query: visWeapon
 	 Sent to notify the server of a weapon visibility change, such as swapping
@@ -354,8 +359,8 @@ int VisWeaponHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld
 	if (query->argCount > 0) {
 		int visState = query->GetInteger(0);
 		creatureInstance->css.vis_weapon = visState;
-		int wpos = PrepExt_SendVisWeapon(sim->SendBuf, creatureInstance->CreatureID,
-				visState);
+		int wpos = PrepExt_SendVisWeapon(sim->SendBuf,
+				creatureInstance->CreatureID, visState);
 		creatureInstance->actInst->LSendToLocalSimulator(sim->SendBuf, wpos,
 				creatureInstance->CurrentX, creatureInstance->CurrentZ);
 	}
@@ -400,13 +405,15 @@ int PartyHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 				if (target != NULL) {
 					byName = true;
 					if (target->actInst->mZoneDefPtr->IsDungeon() == true)
-						return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+						return PrepExt_QueryResponseError(sim->SendBuf,
+								query->ID,
 								"You may not invite players if they are already inside a dungeon.");
 				}
 			}
 
 			if (byName == true) {
-				if (creatureInstance->actInst->mZoneDefPtr->IsDungeon() == false)
+				if (creatureInstance->actInst->mZoneDefPtr->IsDungeon()
+						== false)
 					return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 							"You must be inside a dungeon to invite players by command.");
 			}
@@ -416,8 +423,8 @@ int PartyHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 					int wpos = PartyManager::WriteInvite(sim->SendBuf,
 							creatureInstance->CreatureDefID,
 							creatureInstance->css.display_name);
-					creatureInstance->actInst->LSendToOneSimulator(sim->SendBuf, wpos,
-							target->simulatorPtr);
+					creatureInstance->actInst->LSendToOneSimulator(sim->SendBuf,
+							wpos, target->simulatorPtr);
 				} else {
 					return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 							"That player is already in a party.");
@@ -434,7 +441,8 @@ int PartyHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 				g_PartyManager.AcceptInvite(creatureInstance, leader);
 				//creatureInstance->PartyID = g_PartyManager.AcceptInvite(leader->CreatureDefID, pld->CreatureDefID, pld->CreatureID, creatureInstance->css.display_name);
 				int wpos = g_PartyManager.PrepMemberList(sim->SendBuf,
-						creatureInstance->PartyID, creatureInstance->CreatureID);
+						creatureInstance->PartyID,
+						creatureInstance->CreatureID);
 				if (wpos > 0)
 					sim->AttemptSend(sim->SendBuf, wpos);
 				g_PartyManager.BroadcastAddMember(creatureInstance);
@@ -507,7 +515,8 @@ int PartyHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 						INFOMSG_INFO);
 		}
 	} else if (strcmp(command, "loot.mode") == 0) {
-		ActiveParty *party = g_PartyManager.GetPartyByID(creatureInstance->PartyID);
+		ActiveParty *party = g_PartyManager.GetPartyByID(
+				creatureInstance->PartyID);
 		if (!g_Config.PartyLoot)
 			sim->SendInfoMessage("Party loot modes are currently disabled.",
 					INFOMSG_ERROR);
@@ -542,7 +551,8 @@ int PartyHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 			}
 		}
 	} else if (strcmp(command, "loot.flags") == 0) {
-		ActiveParty *party = g_PartyManager.GetPartyByID(creatureInstance->PartyID);
+		ActiveParty *party = g_PartyManager.GetPartyByID(
+				creatureInstance->PartyID);
 		if (!g_Config.PartyLoot)
 			sim->SendInfoMessage("Party loot modes are currently disabled.",
 					INFOMSG_ERROR);
@@ -594,11 +604,37 @@ int PartyHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 }
 
 //
+//PartyIsMemberHandler
+//
+
+int PartyIsMemberHandler::handleQuery(SimulatorThread *sim,
+		CharacterServerData *pld, SimulatorQuery *query,
+		CreatureInstance *creatureInstance) {
+	/*  Query: party
+	 Command to query if a creature is in a party.
+	 Args: [none]
+	 */
+	if (query->argCount < 2)
+		return PrepExt_QueryResponseNull(sim->SendBuf, query->ID);
+
+	int cdefId = query->GetInteger(0);
+	int cid = query->GetInteger(1);
+
+	ActiveParty* party = g_PartyManager.GetPartyByLeader(cdefId);
+	if (party != NULL) {
+		if (party->GetMemberByID(cid) != NULL)
+			return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "true");
+	}
+	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "false");
+}
+
+//
 //PrivateChannelJoinHandler
 //
 
-int PrivateChannelJoinHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
-		SimulatorQuery *query, CreatureInstance *creatureInstance) {
+int PrivateChannelJoinHandler::handleQuery(SimulatorThread *sim,
+		CharacterServerData *pld, SimulatorQuery *query,
+		CreatureInstance *creatureInstance) {
 
 	const char *name = NULL;
 	const char *password = NULL;
@@ -612,13 +648,13 @@ int PrivateChannelJoinHandler::handleQuery(SimulatorThread *sim, CharacterServer
 	return PrepExt_QueryResponseNull(sim->SendBuf, query->ID);
 }
 
-
 //
 //PrivateChannelLeaveHandler
 //
 
-int PrivateChannelLeaveHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
-		SimulatorQuery *query, CreatureInstance *creatureInstance) {
+int PrivateChannelLeaveHandler::handleQuery(SimulatorThread *sim,
+		CharacterServerData *pld, SimulatorQuery *query,
+		CreatureInstance *creatureInstance) {
 
 	const char *name = NULL;
 	if (query->argCount >= 1)
@@ -632,5 +668,117 @@ int PrivateChannelLeaveHandler::handleQuery(SimulatorThread *sim, CharacterServe
 
 	pld->charPtr->SetLastChannel(NULL, NULL);
 
+	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
+}
+
+//
+//PlayerAchievementsHandler
+//
+
+int PlayerAchievementsHandler::handleQuery(SimulatorThread *sim,
+		CharacterServerData *pld, SimulatorQuery *query,
+		CreatureInstance *creatureInstance) {
+	if (query->argCount > 0) {
+
+		CreatureInstance *cdata = creatureInstance->actInst->GetPlayerByID(
+				query->GetInteger(0));
+		if (cdata == NULL) {
+			Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1),
+					"No such character %s", query->GetString(0));
+			return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+					sim->Aux1);
+		}
+
+		AccountData *acc = g_AccountManager.GetActiveAccountByID(
+				cdata->charPtr->AccountID);
+		if (acc == NULL) {
+			return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+					"Account is not active.");
+		}
+
+		STRINGLIST l;
+
+		// First row is the player creature ID
+		l.push_back(query->GetString(0));
+
+		// Second row is the player score
+		Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1), "%d:%d:%d:%d",
+				g_AchievementsManager.GetTotalAchievements(),
+				acc->GetTotalCompletedAchievements(),
+				g_AchievementsManager.GetTotalObjectives(),
+				acc->GetTotalAchievementObjectives());
+		l.push_back(sim->Aux1);
+
+		for (std::map<std::string, Achievements::Achievement>::iterator it =
+				pld->accPtr->Achievements.begin();
+				it != pld->accPtr->Achievements.end(); ++it) {
+			Achievements::Achievement a = it->second;
+			for (std::vector<Achievements::AchievementObjectiveDef*>::iterator ait =
+					a.mCompletedObjectives.begin();
+					ait != a.mCompletedObjectives.end(); ++ait) {
+				Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1), "%s/%s",
+						a.mDef->mName.c_str(), (*ait)->mName.c_str());
+				l.push_back(sim->Aux1);
+			}
+		}
+
+		return PrepExt_QueryResponseStringList(sim->SendBuf, query->ID, l);
+	} else {
+		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+				"Missing argument.");
+	}
+	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
+}
+
+//
+//AchievementDefHandler
+//
+
+int AchievementDefHandler::handleQuery(SimulatorThread *sim,
+		CharacterServerData *pld, SimulatorQuery *query,
+		CreatureInstance *creatureInstance) {
+	if (query->argCount > 0) {
+		Achievements::AchievementDef *adata = g_AchievementsManager.GetItem(
+				query->GetString(0));
+		if (adata == NULL)
+			return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+					"No such achievement.");
+
+		int wpos = 0;
+		wpos += PutByte(&sim->SendBuf[wpos], 1);         //_handleQueryResultMsg
+		wpos += PutShort(&sim->SendBuf[wpos], 0); //Placeholder for message size
+		wpos += PutInteger(&sim->SendBuf[wpos], query->ID); //Query response index
+		wpos += PutShort(&sim->SendBuf[wpos], 1 + adata->mObjectives.size()); //Row count
+
+		wpos += PutByte(&sim->SendBuf[wpos], 7); //String count
+		wpos += PutStringUTF(&sim->SendBuf[wpos], adata->mName.c_str());  //name
+		wpos += PutStringUTF(&sim->SendBuf[wpos], adata->mTitle.c_str()); //title
+		Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1), "%d", adata->mCategory);
+		wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux1);   //category
+		wpos += PutStringUTF(&sim->SendBuf[wpos], adata->mDescription.c_str()); //description
+		wpos += PutStringUTF(&sim->SendBuf[wpos], adata->mIcon1.c_str()); //icon1
+		wpos += PutStringUTF(&sim->SendBuf[wpos], adata->mIcon2.c_str()); //icon2
+		wpos += PutStringUTF(&sim->SendBuf[wpos], adata->mTag.c_str());   //tag
+
+		for (std::vector<Achievements::AchievementObjectiveDef*>::iterator it =
+				adata->mObjectives.begin(); it != adata->mObjectives.end();
+				++it) {
+			Achievements::AchievementObjectiveDef* odef = (*it);
+			wpos += PutByte(&sim->SendBuf[wpos], 6); //String count
+			wpos += PutStringUTF(&sim->SendBuf[wpos], odef->mName.c_str()); //name
+			wpos += PutStringUTF(&sim->SendBuf[wpos], odef->mTitle.c_str()); //title
+			wpos += PutStringUTF(&sim->SendBuf[wpos],
+					odef->mDescription.c_str()); //description
+			wpos += PutStringUTF(&sim->SendBuf[wpos], odef->mIcon1.c_str()); //icon1
+			wpos += PutStringUTF(&sim->SendBuf[wpos], odef->mIcon2.c_str()); //icon2
+			wpos += PutStringUTF(&sim->SendBuf[wpos], odef->mTag.c_str()); //tag
+		}
+		PutShort(&sim->SendBuf[1], wpos - 3);                 //Message size
+		return wpos;
+
+	} else {
+		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+				"Missing argument.");
+	}
 	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
 }

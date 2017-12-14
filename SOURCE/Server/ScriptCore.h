@@ -488,10 +488,12 @@ public:
 	bool mActive; //If true, the script is considered to be running (has not terminated).
 	bool mHalting; //If true, the script is currently halting (subsequent halts will do nothing).
 	bool mRunning; //If true, a function call is currently running (will make halts be queued)
+	bool mHalted; //If true, VM is halted
 	bool mClear;
 	unsigned long mNextId;
 	PauseCondition *mPause; // If non-null is the current pause condition
 	long mSleeping; // If non-zero, how long the VM is sleeping for
+	int mSuspendTop; //Top of stack after a successful suspend, zero other
 	NutScriptEvent *mExecutingEvent; // If not NULL, will be the currently executing event
 
 	std::vector<std::string> mArgs; // Scripts may be called with arguments. This vector should be set before initialising the player

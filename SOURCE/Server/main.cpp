@@ -548,6 +548,7 @@ int InitServerMain(int argc, char *argv[]) {
 
 	if(PLATFORM_GETCWD(g_WorkingDirectory, 256) == NULL) {
 		printf("Failed to get current working directory.");
+		return 0;
 	}
 
 	START_EASYLOGGINGPP(argc, argv);
@@ -759,6 +760,7 @@ int InitServerMain(int argc, char *argv[]) {
 
 	g_QueryManager.queryHandlers["book.list"] = new BookListHandler();
 	g_QueryManager.queryHandlers["book.get"] = new BookGetHandler();
+	g_QueryManager.queryHandlers["book.item"] = new BookItemHandler();
 
 	g_QueryManager.queryHandlers["item.use"] = new ItemUseHandler();
 	g_QueryManager.queryHandlers["item.def.use"] = new ItemDefUseHandler();
@@ -840,8 +842,11 @@ int InitServerMain(int argc, char *argv[]) {
 	g_QueryManager.queryHandlers["validate.name"] = new ValidateNameHandler();
 	g_QueryManager.queryHandlers["visWeapon"] = new VisWeaponHandler();
 	g_QueryManager.queryHandlers["party"] = new PartyHandler();
+	g_QueryManager.queryHandlers["party.ismember"] = new PartyIsMemberHandler();
 	g_QueryManager.queryHandlers["ps.join"] = new PrivateChannelJoinHandler();
 	g_QueryManager.queryHandlers["ps.leave"] = new PrivateChannelLeaveHandler();
+	g_QueryManager.queryHandlers["player.achievements"] = new PlayerAchievementsHandler();
+	g_QueryManager.queryHandlers["achievement.def"] = new AchievementDefHandler();
 
 	// Commands
 	g_QueryManager.queryHandlers["team"] = new PVPTeamHandler();
@@ -920,6 +925,7 @@ int InitServerMain(int argc, char *argv[]) {
 	g_QueryManager.queryHandlers["script.clearqueue"] = new ScriptClearQueueHandler();
 	g_QueryManager.queryHandlers["user.auth.reset"] = new UserAuthResetHandler();
 	g_QueryManager.queryHandlers["maintain"] = new MaintainHandler();
+	g_QueryManager.queryHandlers["achievements"] = new AchievementsHandler();
 
 	// Some are shared
 	LootNeedGreedPassHandler *lootNeedGreedPassHandler = new LootNeedGreedPassHandler();
@@ -953,7 +959,8 @@ int InitServerMain(int argc, char *argv[]) {
 	g_CharacterManager.CreateDefaultCharacter();
 	g_ItemManager.LoadData();
 	g_ItemSetManager.LoadData();
-
+	g_AchievementsManager.LoadItems();
+	g_Logs.data->info("Loaded %v Achievements.", g_AchievementsManager.mDefs.size());
 	g_ModManager.LoadFromFile(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "ItemMod"), "ModTables.txt"));
 	g_Logs.data->info("Loaded %v ModTables.", g_ModManager.modTable.size());
 	g_ModTemplateManager.LoadFromFile(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "ItemMod"), "ModTemplates.txt"));
@@ -1034,7 +1041,7 @@ int InitServerMain(int argc, char *argv[]) {
 
 	g_SceneryManager.LoadData();
 
-	g_SpawnPackageManager.LoadFromFile("SpawnPackages", "SpawnPackageList.txt");
+	g_SpawnPackageManager.LoadFromFile(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "SpawnPackages"), "SpawnPackageList.txt");
 	g_Logs.data->info("Loaded %v Spawn Package lists.", g_SpawnPackageManager.packageList.size());
 
 	QuestDef.LoadQuestPackages(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Packages"), "QuestPack.txt"));

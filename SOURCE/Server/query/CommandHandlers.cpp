@@ -1815,7 +1815,8 @@ int PartyInviteHandler::handleCommand(SimulatorThread *sim,
 	query->args.push_back("invite");
 	query->args.push_back(charName);
 	query->argCount = query->args.size();
-	g_QueryManager.getQueryHandler("party")->handleQuery(sim, pld, query, creatureInstance);
+	g_QueryManager.getQueryHandler("party")->handleQuery(sim, pld, query,
+			creatureInstance);
 	return 0;
 }
 
@@ -2008,8 +2009,9 @@ int DtrigHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
 
 			char ConvBuf[32];
 			size_t i;
-			for(i = 0; i < NumStats; i++) {
-				g_Logs.simulator->info("%s=%s", StatList[i].name, GetStatValueAsString(i, ConvBuf, &ptr->css));
+			for (i = 0; i < NumStats; i++) {
+				g_Logs.simulator->info("%s=%s", StatList[i].name,
+						GetStatValueAsString(i, ConvBuf, &ptr->css));
 			}
 		}
 	}
@@ -2066,15 +2068,20 @@ int DtrigHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
 		int y1 = query->GetInteger(2) / pld->zoneDef->mPageSize;
 		int x2 = query->GetInteger(3) / pld->zoneDef->mPageSize;
 		int y2 = query->GetInteger(4) / pld->zoneDef->mPageSize;
-		std::string srcdir = Platform::JoinPath(g_Config.ResolveVariableDataPath(), "Scenery");
-		std::string targdir = Platform::JoinPath(g_Config.ResolveVariableDataPath(), "SceneryCopy");
+		std::string srcdir = Platform::JoinPath(
+				g_Config.ResolveVariableDataPath(), "Scenery");
+		std::string targdir = Platform::JoinPath(
+				g_Config.ResolveVariableDataPath(), "SceneryCopy");
 		Platform::MakeDirectory(targdir);
 		for (int y = y1; y <= y2; y++) {
 			for (int x = x1; x <= x2; x++) {
 				sprintf(sim->Aux1, "%d", pld->zoneDef->mID);
 				sprintf(sim->Aux2, "x%03dy%03d.txt", x, y);
-				Platform::FileCopy(Platform::JoinPath(Platform::JoinPath(srcdir, sim->Aux1),sim->Aux2),
-								   Platform::JoinPath(targdir, sim->Aux2));
+				Platform::FileCopy(
+						Platform::JoinPath(
+								Platform::JoinPath(srcdir, sim->Aux1),
+								sim->Aux2),
+						Platform::JoinPath(targdir, sim->Aux2));
 			}
 		}
 	}
@@ -2264,9 +2271,11 @@ int InfoHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
 		sprintf(sim->Aux1, "Scenery Tile: %d, %d",
 				creatureInstance->CurrentX / pld->zoneDef->mPageSize,
 				creatureInstance->CurrentZ / pld->zoneDef->mPageSize);
-	if(query->args[0].compare("terraintile") == 0)
+	if (query->args[0].compare("terraintile") == 0)
 		// TODO is this always correct?
-		sprintf(sim->Aux1, "Terrain Tile: %d, %d", creatureInstance->CurrentX / 1920, creatureInstance->CurrentZ / 1920);
+		sprintf(sim->Aux1, "Terrain Tile: %d, %d",
+				creatureInstance->CurrentX / 1920,
+				creatureInstance->CurrentZ / 1920);
 	if (sim->Aux1[0] != 0)
 		sim->SendInfoMessage(sim->Aux1, INFOMSG_INFO);
 	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
@@ -2366,9 +2375,12 @@ DngScaleHandler::DngScaleHandler() :
 int DngScaleHandler::handleCommand(SimulatorThread *sim,
 		CharacterServerData *pld, SimulatorQuery *query,
 		CreatureInstance *creatureInstance) {
-	if(pld->zoneDef->IsDungeon()) {
-		sim->SendInfoMessage("You may not set your dungeon scaler inside a dungeon. Once the scale has been set, it remains until the dungeon instance completely closes (which may be some time after all of your party exit the dungeon)", INFOMSG_ERROR);
-		return PrepExt_QueryResponseError(sim->SendBuf, query->ID, "You may not set your dungeon scaler inside a dungeon.");
+	if (pld->zoneDef->IsDungeon()) {
+		sim->SendInfoMessage(
+				"You may not set your dungeon scaler inside a dungeon. Once the scale has been set, it remains until the dungeon instance completely closes (which may be some time after all of your party exit the dungeon)",
+				INFOMSG_ERROR);
+		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+				"You may not set your dungeon scaler inside a dungeon.");
 	}
 
 	std::string outputMsg;
@@ -2529,7 +2541,9 @@ CycleHandler::CycleHandler() :
 int CycleHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
 		SimulatorQuery *query, CreatureInstance *creatureInstance) {
 	g_EnvironmentCycleManager.EndCurrentCycle();
-	g_Logs.server->info("Cycle is now: %v (%v)", g_EnvironmentCycleManager.mCurrentCycleIndex, g_EnvironmentCycleManager.GetCurrentTimeOfDay());
+	g_Logs.server->info("Cycle is now: %v (%v)",
+			g_EnvironmentCycleManager.mCurrentCycleIndex,
+			g_EnvironmentCycleManager.GetCurrentTimeOfDay());
 	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
 }
 //
@@ -3001,7 +3015,7 @@ int WarpExternalHandler::handleCommand(SimulatorThread *sim,
 				sim->SendInfoMessage("Warping target.", INFOMSG_INFO);
 				it->MainCallSetZone(zoneDef->mID, 0, true);
 				return PrepExt_QueryResponseString(sim->SendBuf, query->ID,
-							"OK");
+						"OK");
 			}
 	return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 			"Target not found.");
@@ -3031,11 +3045,11 @@ int ScriptExecHandler::handleCommand(SimulatorThread *sim,
 	ActiveInstance *inst = creatureInstance->actInst;
 	int start = 0;
 	bool queue = false;
-	if(string(query->GetString(0)).compare("-q") == 0) {
+	if (string(query->GetString(0)).compare("-q") == 0) {
 		queue = true;
 		start = 1;
 	}
-	if(start > query->argCount)
+	if (start > query->argCount)
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 				"Missing arguments.");
 	string funcName = query->GetString(start);
@@ -3119,8 +3133,10 @@ int ScriptWakeVMHandler::handleCommand(SimulatorThread *sim,
 	if (inst != NULL) {
 		if (inst->nutScriptPlayer != NULL) {
 			Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1),
-					"Woken VM for %s: %s", inst->nutScriptDef.mDescription.c_str(),
-					inst->nutScriptPlayer->WakeVM("By User") ? "Woke OK" : "Did not wake");
+					"Woken VM for %s: %s",
+					inst->nutScriptDef.mDescription.c_str(),
+					inst->nutScriptPlayer->WakeVM("By User") ?
+							"Woke OK" : "Did not wake");
 			sim->SendInfoMessage(sim->Aux1, INFOMSG_INFO);
 		}
 
@@ -3170,7 +3186,6 @@ int ScriptGCHandler::handleCommand(SimulatorThread *sim,
 	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
 }
 
-
 ScriptClearQueueHandler::ScriptClearQueueHandler() :
 		AbstractCommandHandler("Usage: /script.clearqueue", 0) {
 	mAllowedPermissions.push_back(Permission_Sage);
@@ -3193,30 +3208,24 @@ int ScriptClearQueueHandler::handleCommand(SimulatorThread *sim,
 	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
 }
 
-
-
-
 //
 // ScriptExecHandler
 //
 
 RotHandler::RotHandler() :
-		AbstractCommandHandler(
-				"Usage: /rot [<amount>]", 1) {
+		AbstractCommandHandler("Usage: /rot [<amount>]", 1) {
 }
 
-int RotHandler::handleCommand(SimulatorThread *sim,
-	CharacterServerData *pld, SimulatorQuery *query,
-	CreatureInstance *creatureInstance) {
-	if(query->argCount > 0) {
+int RotHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
+		SimulatorQuery *query, CreatureInstance *creatureInstance) {
+	if (query->argCount > 0) {
 		sim->SetRotation(query->GetInteger(0), 1);
 	}
-	Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1), "Rotation: %d", creatureInstance->Rotation);
+	Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1), "Rotation: %d",
+			creatureInstance->Rotation);
 	sim->SendInfoMessage(sim->Aux1, INFOMSG_INFO);
 	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
 }
-
-
 
 //
 //PVPTeamHandler
@@ -3271,7 +3280,8 @@ int PVPTeamHandler::handleCommand(SimulatorThread *sim,
 		if (creatureInstance->css.pvp_team == PVP::PVPTeams::NONE)
 			sim->SendInfoMessage("Your are not in a PVP team.", INFOMSG_INFO);
 		else {
-			Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1), "You are in the %s team.",
+			Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1),
+					"You are in the %s team.",
 					PVP::PVPTeams::GetNameByID(creatureInstance->css.pvp_team));
 			sim->SendInfoMessage(sim->Aux1, INFOMSG_INFO);
 		}
@@ -3303,8 +3313,10 @@ int PVPModeHandler::handleCommand(SimulatorThread *sim,
 		if (mode.compare("pvp") == 0) {
 			if (creatureInstance->actInst->arenaRuleset.mPVPStatus
 					!= PVP::GameMode::PVE_ONLY) {
-				if (creatureInstance->_HasStatusList(StatusEffects::PVPABLE) == -1)
-					creatureInstance->_AddStatusList(StatusEffects::PVPABLE, -1);
+				if (creatureInstance->_HasStatusList(StatusEffects::PVPABLE)
+						== -1)
+					creatureInstance->_AddStatusList(StatusEffects::PVPABLE,
+							-1);
 			}
 			if (creatureInstance->charPtr->Mode == PVP::GameMode::PVP) {
 				return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
@@ -3324,7 +3336,8 @@ int PVPModeHandler::handleCommand(SimulatorThread *sim,
 					!= PVP::GameMode::PVP_ONLY
 					&& creatureInstance->actInst->arenaRuleset.mPVPStatus
 							!= PVP::GameMode::SPECIAL_EVENT) {
-				if (creatureInstance->_HasStatusList(StatusEffects::PVPABLE) != -1)
+				if (creatureInstance->_HasStatusList(StatusEffects::PVPABLE)
+						!= -1)
 					creatureInstance->_RemoveStatusList(StatusEffects::PVPABLE);
 			}
 			if (creatureInstance->charPtr->Mode == PVP::GameMode::PVE) {
@@ -3426,8 +3439,8 @@ int InstanceHandler::handleCommand(SimulatorThread *sim,
 		if (inst->mZoneDefPtr->IsDungeon() == true
 				|| sim->CheckPermissionSimple(Perm_Account, Permission_Debug)
 						== true) {
-			Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1), "Drop rate bonus: %gx",
-					inst->mDropRateBonusMultiplier);
+			Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1),
+					"Drop rate bonus: %gx", inst->mDropRateBonusMultiplier);
 			sim->SendInfoMessage(sim->Aux1, INFOMSG_INFO);
 		}
 
@@ -3442,8 +3455,8 @@ int InstanceHandler::handleCommand(SimulatorThread *sim,
 					sim->SendInfoMessage(sim->Aux1, INFOMSG_INFO);
 				}
 			} else {
-				Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1), "Dungeon owner: %s",
-						inst->mOwnerName.c_str());
+				Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1),
+						"Dungeon owner: %s", inst->mOwnerName.c_str());
 				sim->SendInfoMessage(sim->Aux1, INFOMSG_INFO);
 			}
 		}
@@ -3456,14 +3469,14 @@ int InstanceHandler::handleCommand(SimulatorThread *sim,
 
 		if (sim->CheckPermissionSimple(Perm_Account, Permission_Debug)
 				== true) {
-			Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1), "Drop rate profile: %s",
+			Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1),
+					"Drop rate profile: %s",
 					inst->mZoneDefPtr->GetDropRateProfile().c_str());
 			sim->SendInfoMessage(sim->Aux1, INFOMSG_INFO);
 		}
 	}
 	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
 }
-
 
 //
 //UserAuthResetHandler
@@ -3478,12 +3491,12 @@ int UserAuthResetHandler::handleCommand(SimulatorThread *sim,
 		CharacterServerData *pld, SimulatorQuery *query,
 		CreatureInstance *creatureInstance) {
 
-
 	std::string accName = query->GetString(0);
 	AccountData * acc = g_AccountManager.FetchAccountByUsername(
 			accName.c_str());
 	if (acc == NULL) {
-		return PrepExt_QueryResponseError(sim->SendBuf, query->ID, "No such account.");
+		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+				"No such account.");
 	}
 
 	// Generate a new recovery key
@@ -3528,14 +3541,65 @@ MaintainHandler::MaintainHandler() :
 int MaintainHandler::handleCommand(SimulatorThread *sim,
 		CharacterServerData *pld, SimulatorQuery *query,
 		CreatureInstance *creatureInstance) {
-	if(query->argCount > 0) {
-		sim->BroadcastMessage("The server is now in maintenance mode. Further logins by anyone other than Administrators or Sages will be denied.");
+	if (query->argCount > 0) {
+		sim->BroadcastMessage(
+				"The server is now in maintenance mode. Further logins by anyone other than Administrators or Sages will be denied.");
 		g_Config.MaintenanceMessage = query->GetString(0);
-	}
-	else {
-		sim->BroadcastMessage("The server has now left maintenance mode. Anyone may login again");
+	} else {
+		sim->BroadcastMessage(
+				"The server has now left maintenance mode. Anyone may login again");
 		g_Config.MaintenanceMessage = "";
 	}
 
+	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
+}
+
+//
+//AchievementsHandler
+//
+AchievementsHandler::AchievementsHandler() :
+		AbstractCommandHandler("Usage: /achievements", 0) {
+}
+
+int AchievementsHandler::handleCommand(SimulatorThread *sim,
+		CharacterServerData *pld, SimulatorQuery *query,
+		CreatureInstance *creatureInstance) {
+
+	if (query->argCount >= 1) {
+		if (sim->CheckPermissionSimple(Perm_Account, Permission_Admin) == false)
+			return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+					"Permission denied.");
+
+		if (query->args[0].compare("add") == 0) {
+			if (query->argCount > 1) {
+				pld->accPtr->AddAchievement(query->args[1]);
+				pld->accPtr->PendingMinorUpdates++;
+				int wpos = PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
+				Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1), "%d:%d:%d:%d",
+						g_AchievementsManager.GetTotalAchievements(),
+						pld->accPtr->GetTotalCompletedAchievements(),
+						g_AchievementsManager.GetTotalObjectives(),
+						pld->accPtr->GetTotalAchievementObjectives());
+				wpos += PrepExt_Achievement(&sim->SendBuf[wpos],
+						creatureInstance->CreatureID, query->args[1].c_str(), sim->Aux1);
+				return wpos;
+			} else
+				return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+						"Add command requires fully qualified name of achievement.");
+		}
+	} else {
+		for (std::map<std::string, Achievements::Achievement>::iterator it =
+				pld->accPtr->Achievements.begin();
+				it != pld->accPtr->Achievements.end(); ++it) {
+			Achievements::Achievement a = it->second;
+			for (std::vector<Achievements::AchievementObjectiveDef*>::iterator ait =
+					a.mCompletedObjectives.begin();
+					ait != a.mCompletedObjectives.end(); ++ait) {
+				Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1), "%s/%s",
+						a.mDef->mName.c_str(), (*ait)->mName.c_str());
+				sim->SendInfoMessage(sim->Aux1, INFOMSG_INFO);
+			}
+		}
+	}
 	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
 }

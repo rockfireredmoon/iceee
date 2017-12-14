@@ -37,4 +37,13 @@ public:
 	int handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 			SimulatorQuery *query, CreatureInstance *creatureInstance);
 };
+
+class BookItemHandler: public QueryHandler {
+public:
+	~BookItemHandler() {
+	}
+
+	int handleQuery(SimulatorThread *sim, CharacterServerData *pld,
+			SimulatorQuery *query, CreatureInstance *creatureInstance);
+};
 #endif
