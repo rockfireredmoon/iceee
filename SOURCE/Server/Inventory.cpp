@@ -190,7 +190,7 @@ int InventoryManager :: AddItem(int containerID, InventorySlot &item)
 		return -1;
 	}
 
-	if(containerID >= 0 && containerID <= MAXCONTAINER)
+	if(containerID >= 0 && containerID < MAXCONTAINER)
 	{
 
 		if(item.secondsRemaining > -1) {
