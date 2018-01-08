@@ -110,9 +110,9 @@ void ActiveSpawner :: OnSpawnSuccess(void)
 int ActiveSpawner :: GetRespawnDelaySeconds(void)
 {
 	int delaySeconds = CreatureSpawnDef::DEFAULT_DESPAWNTIME;
-	if(spawnPoint->extraData != NULL)
+	if(spawnPoint->hasExtraData)
 	{
-		int delay = spawnPoint->extraData->despawnTime;
+		int delay = spawnPoint->extraData.despawnTime;
 		if(delay != 0 && delay != CreatureSpawnDef::DEFAULT_DESPAWNTIME)
 			delaySeconds = delay;
 	}
@@ -127,12 +127,12 @@ int ActiveSpawner :: GetLoyaltyRadius(void)
 {
 	if(spawnPoint == NULL)
 		return 0;
-	if(spawnPoint->extraData == NULL)
+	if(!spawnPoint->hasExtraData)
 		return 0;
 	if(spawnPackage == NULL)
 		return 0;
 
-	int loyaltyRadius = spawnPoint->extraData->loyaltyRadius;
+	int loyaltyRadius = spawnPoint->extraData.loyaltyRadius;
 	if(spawnPackage->loyaltyRadius > 0)
 		loyaltyRadius = spawnPackage->loyaltyRadius;
 	
@@ -304,13 +304,13 @@ void SpawnTile :: RunProcessing(ActiveInstance *inst)
 		}
 
 		//User-placed spawn points may not yet have extra data attached.
-		if(it->second.spawnPoint->extraData == NULL)
+		if(!it->second.spawnPoint->hasExtraData)
 		{
 			it->second.Invalidate();
 			continue;
 		}
 
-		if(it->second.refCount >= it->second.spawnPoint->extraData->maxActive)
+		if(it->second.refCount >= it->second.spawnPoint->extraData.maxActive)
 			continue;
 
 		if(it->second.spawnPackage == NULL)
@@ -370,13 +370,13 @@ CreatureInstance * SpawnTile :: SpawnCreature(ActiveInstance *inst, ActiveSpawne
 	bool propSpawn = false;
 	int CDefID = -1;
 	int SpawnFlags = 0;
-	if(forceCreatureDef == 0 && spawner->spawnPackage != NULL && spawner->spawnPoint->extraData->spawnPackage[0] == '#')
+	if(forceCreatureDef == 0 && spawner->spawnPackage != NULL && spawner->spawnPoint->extraData.spawnPackage.length() > 0 && spawner->spawnPoint->extraData.spawnPackage.at(0) == '#')
 	{
-		size_t len = strlen(spawner->spawnPoint->extraData->spawnPackage);
+		size_t len = spawner->spawnPoint->extraData.spawnPackage.length();
 		int cOffset = 1;
 		for(size_t i = 1; i < len; i++)
 		{
-			char p = spawner->spawnPoint->extraData->spawnPackage[i];
+			char p = spawner->spawnPoint->extraData.spawnPackage.at(i);
 			if(p == 'f' || p == 'F')
 			{
 				SpawnFlags |= SpawnPackageDef::FLAG_FRIENDLY;
@@ -435,7 +435,7 @@ CreatureInstance * SpawnTile :: SpawnCreature(ActiveInstance *inst, ActiveSpawne
 		if(propSpawn)
 		{
 			char buffer[256];
-			char* prop = spawner->spawnPoint->extraData->spawnPackage + 2;
+			std::string prop = spawner->spawnPoint->extraData.spawnPackage.substr(2);
 			Util::SafeFormat(buffer, sizeof(buffer), "p1:{[\"a\"]=\"%s\"}", prop);
 
 			/* Make a fake creature consisting of a prop. This means instance scripts (and so groves) could spawn props by
@@ -448,7 +448,7 @@ CreatureInstance * SpawnTile :: SpawnCreature(ActiveInstance *inst, ActiveSpawne
 			memcpy(newItem.css.creature_category, "Inanimate\0", 9);
 			newItem.css.SetAppearance(buffer);
 			newItem.CreatureDefID = CDefID;
-			newItem.css.SetDisplayName(spawner->spawnPoint->extraData->spawnName);
+			newItem.css.SetDisplayName(spawner->spawnPoint->extraData.spawnName.c_str());
 
 			CreatureDef.AddNPCDef(newItem);
 
@@ -457,7 +457,7 @@ CreatureInstance * SpawnTile :: SpawnCreature(ActiveInstance *inst, ActiveSpawne
 		}
 		else
 		{
-			CDefID = atoi(&spawner->spawnPoint->extraData->spawnPackage[cOffset]);
+			CDefID = atoi(spawner->spawnPoint->extraData.spawnPackage.substr(cOffset).c_str());
 		}
 		//g_Log.AddMessageFormat("[WARNING] SpawnCreature() resolved direct spawn: %d", CDefID);
 	}
@@ -531,19 +531,19 @@ CreatureInstance * SpawnTile :: SpawnCreature(ActiveInstance *inst, ActiveSpawne
 	int facing = Util::QuaternionToByteFacing(spawner->spawnPoint->QuatX, spawner->spawnPoint->QuatY, spawner->spawnPoint->QuatZ, spawner->spawnPoint->QuatW);
 
 	int leaseTime = 0;
-	if(spawner->spawnPoint->extraData != NULL)
+	if(spawner->spawnPoint->hasExtraData)
 	{
-		if(spawner->spawnPoint->extraData->facing != 0)
-			facing = spawner->spawnPoint->extraData->facing;
+		if(spawner->spawnPoint->extraData.facing != 0)
+			facing = spawner->spawnPoint->extraData.facing;
 
-		if(spawner->spawnPoint->extraData->linkCount > 0)
+		if(spawner->spawnPoint->extraData.link.size() > 0)
 		{
 			newItem.previousPathNode = spawner->spawnPoint->ID;
 			newItem.nextPathNode = spawner->spawnPoint->ID;  //Zero so it can immediate begin a search for pathnodes.
 		}
 
-		int inner = spawner->spawnPoint->extraData->innerRadius;
-		int outer = spawner->spawnPoint->extraData->outerRadius;
+		int inner = spawner->spawnPoint->extraData.innerRadius;
+		int outer = spawner->spawnPoint->extraData.outerRadius;
 		if(inner != 0 || outer != 0)
 		{
 			double angle = randdbl(0, DOUBLE_PI);
@@ -554,10 +554,10 @@ CreatureInstance * SpawnTile :: SpawnCreature(ActiveInstance *inst, ActiveSpawne
 			newItem.CurrentX += (int)((double)dist * cos(angle));
 			newItem.CurrentZ += (int)((double)dist * sin(angle));
 		}
-		leaseTime = spawner->spawnPoint->extraData->leaseTime;
+		leaseTime = spawner->spawnPoint->extraData.leaseTime;
 
-		if(strlen(spawner->spawnPoint->extraData->aiModule) > 0)
-			newItem.css.SetAIPackage(spawner->spawnPoint->extraData->aiModule);
+		if(spawner->spawnPoint->extraData.aiModule.length() > 0)
+			newItem.css.SetAIPackage(spawner->spawnPoint->extraData.aiModule.c_str());
 	}
 	newItem.tetherFacing = facing;
 	newItem.Speed = 0;
@@ -1035,9 +1035,9 @@ bool SpawnManager :: NotifyKill(ActiveSpawner *sourceSpawner, int creatureID)
 				actInst->uniqueSpawnManager.ReRoll(sourceSpawner->spawnPackage->packageName, sourceSpawner->GetRespawnDelaySeconds());
 		}
 		
-		if(sourceSpawner->spawnPoint->extraData == NULL)
+		if(sourceSpawner->spawnPoint->hasExtraData)
 			return false;
-		if(sourceSpawner->spawnPoint->extraData->sequential != 0)
+		if(sourceSpawner->spawnPoint->extraData.sequential != 0)
 			return true;
 	}
 
@@ -1588,39 +1588,53 @@ CreatureSpawnDef :: ~CreatureSpawnDef()
 
 void CreatureSpawnDef :: Clear()
 {
-	memset(this, 0, sizeof(CreatureSpawnDef));
 	maxActive = DEFAULT_MAXACTIVE;
 	despawnTime = DEFAULT_DESPAWNTIME;
 	maxLeash = DEFAULT_MAXLEASH;
+	spawnName = "";
+	spawnPackage = "";
+	dialog = "";
+	leaseTime = 0;
+	mobTotal = 0;
+	aiModule = "";
+	loyaltyRadius = 0;
+	wanderRadius = 0;
+	sequential = 0;
+	spawnLayer = "";
+	link.clear();
+	xpos = 0;
+	ypos = 0;
+	zpos = 0;
+	facing = 0;
+	sceneryName = "";
+	innerRadius = 0;
+	outerRadius = 0;
 }
 
 void CreatureSpawnDef :: copyFrom(CreatureSpawnDef *source)
 {
 	if(this == source)
 		return;
-	memcpy(spawnName, source->spawnName, sizeof(spawnName));
+	spawnName = source->spawnName;
 	leaseTime = source->leaseTime;
-	memcpy(spawnPackage, source->spawnPackage, sizeof(spawnPackage));
-	memcpy(dialog, source->dialog, sizeof(dialog));
+	spawnPackage = source->spawnPackage;
+	dialog = source->dialog;
 	mobTotal = source->mobTotal;
 	maxActive = source->maxActive;
-	memcpy(aiModule, source->aiModule, sizeof(aiModule));
+	aiModule = source->aiModule;
 	maxLeash = source->maxLeash;
 	loyaltyRadius = source->loyaltyRadius;
 	wanderRadius = source->wanderRadius;
 	despawnTime = source->despawnTime;
 	sequential = source->sequential;
-	memcpy(spawnLayer, source->spawnLayer, sizeof(spawnLayer));
+	spawnLayer = source->spawnLayer;
 	xpos = source->xpos;
 	ypos = source->ypos;
 	zpos = source->zpos;
 	facing = source->facing;
 
-	propCount = source->propCount;
-	linkCount = source->linkCount;
-	memcpy(sceneryName, source->sceneryName, sizeof(sceneryName));
-	memcpy(prop, source->prop, sizeof(prop));
-	memcpy(link, source->link, sizeof(link));
+	sceneryName = source->sceneryName;
+	link = source->link;
 	innerRadius = source->innerRadius;
 	outerRadius = source->outerRadius;
 }

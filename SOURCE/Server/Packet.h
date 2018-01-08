@@ -123,6 +123,7 @@ public:
 	PendingSocket* GetPendingSocket(int socket);
 	PendingSocket* GetSendSocket(int socket);
 	void GetPackets2(void);
+	void SendPacketsFor(int socket);
 	void SendPackets2(void);
 	int SendSocket(int socket, PendingSocket &data);
 	int AttemptSend2(int socket, const char *buffer, int length);

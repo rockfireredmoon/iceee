@@ -1,0 +1,14 @@
+; The unique name of this shard
+ShardName=EE1
+
+; A more descriptive name displayed in the shard selection screen (/shards)
+FullName=My Local Earth Eternal server
+
+; The address of this shards Redis instance
+Host=127.0.0.1
+
+; The port on which this shards Redis instance is listening
+Port=6379
+
+; The password to use to authenticate with the Redis instance. Leave blank or commented out if there is no password
+;Password=asecret

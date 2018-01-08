@@ -787,7 +787,7 @@ public:
 	int ResolveCooldownCategoryID(const char *cooldownName);
 	const char* ResolveCooldownCategoryName(int cooldownCategoryID);
 	int ResolveStatID(const char *statName);
-	int ResolveStatusEffectID(const char *statusEffectName);
+	int ResolveStatusEffectID(const std::string &statusEffectName);
 	int ResolveItemID(const char *itemID);
 
 	static int GetAbilityErrorCode(int value);

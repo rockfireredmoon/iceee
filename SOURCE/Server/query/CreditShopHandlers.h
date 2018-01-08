@@ -56,13 +56,4 @@ public:
 			SimulatorQuery *query, CreatureInstance *creatureInstance);
 };
 
-class CreditShopReloadHandler: public QueryHandler {
-public:
-	~CreditShopReloadHandler() {
-	}
-
-	int handleQuery(SimulatorThread *sim, CharacterServerData *pld,
-			SimulatorQuery *query, CreatureInstance *creatureInstance);
-};
-
 #endif

@@ -27,7 +27,7 @@
 #include "../util/Log.h"
 
 #include <sys/stat.h>
-#include <string.h>
+#include <cstring>
 
 using namespace HTTPD;
 
@@ -103,7 +103,7 @@ bool CARHandler::handleGet(CivetServer *server, struct mg_connection *conn) {
 	Util::Replace(nativePath,
 			std::string(1, PLATFORM_FOLDERINVALID).c_str()[0],
 			std::string(1, PLATFORM_FOLDERVALID).c_str()[0]);
-	file.filePath = std::string(g_HTTPBaseFolder) + nativePath;
+	file.filePath = std::string(g_Config.ResolveHTTPCARPath()) + nativePath;
 
 	/* Process headers */
 	const char * checksum = CivetServer::getHeader(conn, "If-None-Match");

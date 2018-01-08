@@ -13,6 +13,8 @@
 #include "Globals.h"
 #include "ZoneDef.h"
 #include "Util.h"
+#include "StringUtil.h"
+#include "Cluster.h"
 #include "ConfigString.h"
 #include "Inventory.h"
 #include "util/Log.h"
@@ -23,6 +25,7 @@
 //extern char GAuxBuf[];
 
 AccountManager g_AccountManager;
+UsedNameDatabase g_UsedNameDatabase;
 
 PermissionInfo PermissionDef[] = {
 	{Perm_Account, 0, Permission_TweakOther,     "tweakother" },
@@ -74,6 +77,76 @@ AccessToken :: ~AccessToken()
 }
 
 //
+// CharacterCacheEntry
+//
+CharacterCacheEntry :: CharacterCacheEntry() {
+	creatureDefID = 0;
+	level = 0;
+	profession = 0;
+}
+CharacterCacheEntry :: ~CharacterCacheEntry() {
+}
+
+void CharacterCacheEntry :: Clear() {
+	creatureDefID = 0;
+	level = 0;
+	profession = 0;
+	display_name.clear();
+	appearance.clear();
+	eq_appearance.clear();
+}
+
+bool CharacterCacheEntry :: WriteEntity(AbstractEntityWriter *writer) {
+	writer->Value("CreatureDefID", creatureDefID);
+	writer->Value("Level", level);
+	writer->Value("Profession", profession);
+	writer->Value("Display_Name", display_name);
+	writer->Value("Appearance", appearance);
+	writer->Value("EQ_Appearance", eq_appearance);
+	return true;
+}
+
+bool CharacterCacheEntry :: EntityKeys(AbstractEntityReader *reader) {
+	return true;
+}
+
+bool CharacterCacheEntry :: ReadEntity(AbstractEntityReader *reader) {
+	creatureDefID = reader->ValueInt("CreatureDefID");
+	level = reader->ValueInt("Level");
+	profession = reader->ValueInt("Profession");
+	display_name = reader->Value("Display_Name");
+	appearance = reader->Value("Appearance");
+	eq_appearance = reader->Value("EQ_Appearance");
+	return true;
+}
+
+//
+// AccountQuickData
+//
+
+bool AccountQuickData :: WriteEntity(AbstractEntityWriter *writer) {
+	writer->Key(KEYPREFIX_ACCOUNT_QUICK_DATA, mLoginName);
+	writer->Value("ID", mID);
+	writer->Value("LoginAuth", mLoginAuth);
+	writer->Value("RegKey", mRegKey);
+	writer->Value("GroveName", mGroveName);
+	return true;
+}
+
+bool AccountQuickData :: EntityKeys(AbstractEntityReader *reader) {
+	reader->Key(KEYPREFIX_ACCOUNT_QUICK_DATA, mLoginName, true);
+	return true;
+}
+
+bool AccountQuickData :: ReadEntity(AbstractEntityReader *reader) {
+	mID = reader->ValueInt("ID");
+	mLoginAuth = reader->Value("LoginAuth");
+	mRegKey = reader->Value("RegKey");
+	mGroveName = reader->Value("GroveName");
+	return true;
+}
+
+//
 // AccountData
 //
 
@@ -87,13 +160,221 @@ AccountData :: ~AccountData()
 	ClearAll();
 }
 
+bool AccountData :: EntityKeys(AbstractEntityReader *reader) {
+	reader->Key(KEYPREFIX_ACCOUNT_DATA, StringUtil::Format("%d", ID));
+	reader->Index("CHARACTERCACHE/CACHEENTRY");
+	return true;
+}
+
+bool AccountData :: ReadEntity(AbstractEntityReader *reader) {
+	if(!reader->Exists())
+		return false;
+
+	Name = reader->Value("Name");
+	AuthData = reader->Value("Auth");
+	RegKey = reader->Value("RegKey");
+	RecoveryKeys = reader->Value("RecoveryKeys");
+	SuspendTimeSec = reader->ValueULong("SuspendTime");
+	SuspendDurationSec = reader->ValueULong("SuspendDuration");
+	MaxCharacters = reader->ValueULong("MaxCharacters");
+	if(MaxCharacters < AccountData::DEFAULT_CHARACTER_SLOTS) {
+		MaxCharacters = AccountData::DEFAULT_CHARACTER_SLOTS;
+	}
+	LastLogOn = reader->Value("LastLogOn");
+	ConsecutiveDaysLoggedIn = reader->ValueULong("ConsecutiveDaysLoggedIn");
+	Credits = reader->ValueULong("Credits");
+	LastLogOnTimeSec = reader->ValueULong("LastLogOnTime");
+	CreatedTimeSec = reader->ValueULong("CreatedTime");
+	DeliveryBoxSlots = reader->ValueInt("DeliveryBoxSlots");
+	VeteranLevel = reader->ValueInt("VeteranLevel");
+	VeteranImported = reader->ValueBool("VeteranImported");
+	STRINGLIST characters = reader->ListValue("Characters", ",");
+	int s = 0;
+	for(auto a = characters.begin(); a != characters.end(); ++a) {
+		if(s < AccountData::MAX_CHARACTER_SLOTS)
+			CharacterSet[s] = atoi((*a).c_str());
+		s++;
+	}
+	if(s > MaxCharacters)
+		MaxCharacters = s;
+	STRINGLIST perms = reader->ListValue("Permissions", ",");
+	for(auto a = perms.begin(); a != perms.end(); ++a) {
+		if(SetPermission(Perm_Account, StringUtil::LowerCase(*a).c_str(), true) == false)
+			g_Logs.data->warn("Unknown permission identifier [%v] in Account %v.", ID);
+	}
+	STRINGLIST achievements = reader->ListValue("Achievements");
+	for(auto a = achievements.begin(); a != achievements.end(); ++a)
+		AddAchievement(*a);
+	GroveName = reader->Value("GroveName");
+	STRINGLIST aq = reader->ListValue("AccountQuest", ",");
+	for(auto a = aq.begin(); a != aq.end(); ++a) {
+		int qid = atoi((*a).c_str());
+		if(HasAccountCompletedQuest(qid))
+			g_Logs.data->warn("Account %v has multiple account quests with same ID %v, ignoring", ID, qid);
+		else
+			AccountQuests.push_back(qid);
+	}
+	SiteSession.xCSRF = reader->Value("xCSRF");
+	SiteSession.sessionID = reader->Value("SessionID");
+	SiteSession.sessionName = reader->Value("SessionName");
+	STRINGLIST build = reader->ListValue("Build");
+	for(auto a = build.begin(); a != build.end(); ++a) {
+		STRINGLIST l;
+		Util::Split(*a, ",", l);
+		if(l.size() > 4) {
+			BuildPermissionArea bpa;
+			bpa.ZoneID = atoi(l[0].c_str());
+			bpa.x1 = atoi(l[1].c_str());
+			bpa.y1 = atoi(l[2].c_str());
+			bpa.x2 = atoi(l[3].c_str());
+			bpa.y2 = atoi(l[4].c_str());
+
+			if(HasBuildZone(bpa) == false)
+				BuildPermissionList.push_back(bpa);
+		}
+		else {
+			g_Logs.data->warn("Invalid Build permissions spec '%v' for %v", *a, ID);
+		}
+	}
+	STRINGLIST prefs = reader->ListValue("Pref");
+	for(auto a = prefs.begin(); a != prefs.end(); ++a) {
+		size_t found = (*a).find_last_of(",");
+		if(found == string::npos)
+			preferenceList.SetPref((*a).c_str(), "");
+		else {
+			string k = (*a).substr(0, found);
+			string v = (*a).substr(found + 1).c_str();
+			preferenceList.SetPref(k.c_str(), v.c_str());
+		}
+	}
+	PlayerStats.ReadEntity(reader);
+
+	for(int a = 0; a < MAXCONTAINER; a++) {
+		std::string cnt = GetContainerNameFromID(a);
+		STRINGLIST inv = reader->ListValue(cnt);
+		for(auto a = inv.begin(); a != inv.end(); ++a) {
+			ReadInventory(cnt, *a, inventory, StringUtil::Format("%d", ID),  Name, "Account");
+		}
+	}
+
+	reader->PushSection("CHARACTERCACHE");
+	characterCache.ReadEntity(reader);
+	reader->PopSection();
+
+	return true;
+}
+
+bool AccountData :: WriteEntity(AbstractEntityWriter *writer) {
+	writer->Key(KEYPREFIX_ACCOUNT_DATA, StringUtil::Format("%d", ID));
+	writer->Value("Name", Name);
+	writer->Value("Auth", AuthData);
+	writer->Value("RegKey", RegKey);
+	if(MaxCharacters != DEFAULT_CHARACTER_SLOTS)
+		writer->Value("MaxCharacters", MaxCharacters);
+	writer->Value("RecoveryKeys", RecoveryKeys);
+	if(SuspendTimeSec >= 0)
+	{
+		writer->Value("SuspendTime", SuspendTimeSec);
+		writer->Value("SuspendDuration", SuspendDurationSec);
+	}
+	writer->Value("LastLogOn", LastLogOn);
+	writer->Value("LastLogOnTime", LastLogOnTimeSec);
+	writer->Value("CreatedTime", CreatedTimeSec);
+	writer->Value("ConsecutiveDaysLoggedIn", ConsecutiveDaysLoggedIn);
+	writer->Value("Credits", Credits);
+	writer->Value("DeliveryBoxSlots", DeliveryBoxSlots);
+	writer->Value("VeteranLevel", VeteranLevel);
+	writer->Value("VeteranImported", VeteranImported);
+
+	STRINGLIST l;
+	for(int a = 0; a < MaxCharacters; a++) {
+		if(CharacterSet[a] == 0)
+			continue;
+		l.push_back(StringUtil::Format("%d", CharacterSet[a]));
+	}
+	writer->ListValue("Characters", l);
+
+	l = STRINGLIST();
+	for(int a = 0; a < MaxPermissionDef; a++)
+		if((PermissionSet[PermissionDef[a].index] & PermissionDef[a].flag) == PermissionDef[a].flag)
+			l.push_back(PermissionDef[a].name);
+	writer->ListValue("Permissions", l);
+
+
+	l = STRINGLIST();
+	for(std::map<std::string,Achievements::Achievement>::iterator it = Achievements.begin(); it != Achievements.end(); ++it)
+		for(std::vector<Achievements::AchievementObjectiveDef*>::iterator it2 = (*it).second.mCompletedObjectives.begin(); it2 != (*it).second.mCompletedObjectives.end(); ++it2)
+			l.push_back(StringUtil::Format("%s/%s", (*it).first.c_str(), (*it2)->mName.c_str()));
+	writer->ListValue("Achievements", l);
+
+	writer->Value("GroveName", GroveName);
+
+	PlayerStats.WriteEntity(writer);
+
+	//	Util::WriteString(output, "xCSRF", SiteSession.xCSRF);
+	//	Util::WriteString(output, "SessionName", SiteSession.sessionName);
+	//	Util::WriteString(output, "SessionID", SiteSession.sessionID);
+
+	l = STRINGLIST();
+	for(size_t i = 0; i < BuildPermissionList.size(); i++) {
+		BuildPermissionArea &bpa = BuildPermissionList[i];
+		l.push_back(StringUtil::Format("%d,%d,%d,%d,%d", bpa.ZoneID, bpa.x1, bpa.y1, bpa.x2, bpa.y2));
+	}
+	writer->ListValue("Build", l);
+
+	l = STRINGLIST();
+	for(auto it = AccountQuests.begin(); it != AccountQuests.end(); ++it)
+		l.push_back(StringUtil::Format("%d", *it));
+	writer->ListValue("AccountQuest", l);
+
+	l = STRINGLIST();
+	for(auto a = preferenceList.PrefList.begin(); a != preferenceList.PrefList.end(); ++a) {
+		l.push_back(StringUtil::Format("%s,%s", (*a).name.c_str(), (*a).value.c_str()));
+	}
+	writer->ListValue("Pref", l);
+
+
+	int a, b;
+	for(a = 0; a < MAXCONTAINER; a++) {
+		l = STRINGLIST();
+		for(b = 0; b < (int)inventory.containerList[a].size(); b++)	{
+			InventorySlot *slot = &inventory.containerList[a][b];
+
+			bool extend = false;
+			if(slot->count > 0 || slot->customLook != 0 || slot->bindStatus != 0 || slot->secondsRemaining != -1)
+				extend = true;
+
+			if(extend == true)
+				l.push_back(StringUtil::Format("%lu,%d,%d,%d,%d,%ld", slot->CCSID & CONTAINER_SLOT, slot->IID, slot->count, slot->customLook, slot->bindStatus, slot->AdjustTimes()));
+			else
+				l.push_back(StringUtil::Format("%lu,%d", slot->CCSID & CONTAINER_SLOT, slot->IID));
+		}
+		if(l.size() > 0)
+			writer->ListValue(GetContainerNameFromID(a), l);
+	}
+
+
+		//TODO:VAULT fprintf(output, "CurrentVaultSize=%d\r\n", CurrentVaultSize);
+	//	for(size_t i = 0; i < vaultInventory.size(); i++)
+	//		vaultInventory[i].SaveToAccountStream("bank", output);
+	//	for(size_t i = 0; i < deliveryInventory.size(); i++)
+	//		deliveryInventory[i].SaveToAccountStream("delivery", output);
+
+
+	writer->PushSection("CHARACTERCACHE");
+	characterCache.WriteEntity(writer);
+	writer->PopSection();
+	PendingMinorUpdates = 0;
+	return true;
+}
+
 void AccountData :: ClearAll(void)
 {
 	ID = 0;
-	memset(Name, 0, sizeof(Name));
+	Name = "";
 	//memset(AuthPass, 0, sizeof(AuthPass));
-	memset(AuthData, 0, sizeof(AuthData));
-	memset(RegKey, 0, sizeof(RegKey));
+	AuthData = "";
+	RegKey = "";
 	RecoveryKeys.clear();
 	memset(CharacterSet, 0, sizeof(CharacterSet));
 	//memset(ResCharacterSet, 0, sizeof(ResCharacterSet));
@@ -118,10 +399,8 @@ void AccountData :: ClearAll(void)
 	VeteranImported = false;
 	inventory.ClearAll();
 //	deliveryInventory.clear();
+	LastLogOn = "";
 
-	memset(&LastLogOn, 0, sizeof(LastLogOn));
-
-	SessionLoginCount = 0;
 	ExpireTime = 0;
 
 	PlayerStats.Clear();
@@ -133,16 +412,16 @@ void AccountData :: ClearAll(void)
 
 void AccountData::FillAuthorizationHash(const char *hash)
 {
-	Util::SafeCopy(AuthData, hash, sizeof(AuthData));
+	AuthData = hash;
 }
 void AccountData::FillRegistrationKey(const char *key)
 {
-	Util::SafeCopy(RegKey, key, sizeof(RegKey));
+	RegKey = key;
 }
 
 bool AccountData :: MatchAuthData(const char *str)
 {
-	if(strcmp(AuthData, str) == 0)
+	if(strcmp(AuthData.c_str(), str) == 0)
 		return true;
 
 	return false;
@@ -367,9 +646,16 @@ void AccountData :: ClearBan(void)
 
 void AccountData :: AdjustSessionLoginCount(short count)
 {
-	SessionLoginCount += count;
+	if(count == 1) {
+		// Login
+		g_ClusterManager.Login(ID);
+	}
+	else if(count == -1) {
+		// Logout
+		g_ClusterManager.Logout(ID);
 
-	if(SessionLoginCount > 0)
+	}
+	if(g_ClusterManager.CountAccountSessions(ID) > 0)
 	{
 		ExpireTime = PlatformTime::MAX_TIME;
 	}
@@ -379,148 +665,11 @@ void AccountData :: AdjustSessionLoginCount(short count)
 	}
 }
 
-int AccountData :: GetSessionLoginCount(void)
-{
-	return SessionLoginCount;
-}
-
-/* Write the account data to a file.  The file must be open. */
-void AccountData :: SaveToStream(FILE *output)
-{
-	fprintf(output, "[ENTRY]\r\n");
-	fprintf(output, "ID=%d\r\n", ID);
-	fprintf(output, "Name=%s\r\n", Name);
-	fprintf(output, "Auth=%s\r\n", AuthData);
-	fprintf(output, "RegKey=%s\r\n", RegKey);
-	if(MaxCharacters != DEFAULT_CHARACTER_SLOTS)
-		fprintf(output, "MaxCharacters=%d\r\n", MaxCharacters);
-	fprintf(output, "RecoveryKeys=%s\r\n", RecoveryKeys.c_str());
-	if(SuspendTimeSec >= 0)
-	{
-		fprintf(output, "SuspendTime=%lu\r\n", SuspendTimeSec);
-		fprintf(output, "SuspendDuration=%lu\r\n", SuspendDurationSec);
-	}
-	fprintf(output, "LastLogOn=%s\r\n", LastLogOn);
-	fprintf(output, "LastLogOnTime=%lu\r\n", LastLogOnTimeSec);
-	fprintf(output, "CreatedTime=%lu\r\n", CreatedTimeSec);
-	fprintf(output, "ConsecutiveDaysLoggedIn=%d\r\n", ConsecutiveDaysLoggedIn);
-	fprintf(output, "Credits=%d\r\n", Credits);
-	fprintf(output, "DeliveryBoxSlots=%d\r\n", DeliveryBoxSlots);
-	fprintf(output, "VeteranLevel=%d\r\n", VeteranLevel);
-	fprintf(output, "VeteranImported=%d\r\n", VeteranImported ? 1 : 0);
-	fprintf(output, "\r\n");
-
-	fprintf(output, "Characters=");
-	for(int a = 0; a < MaxCharacters; a++)
-	{
-		if(CharacterSet[a] == 0)
-			continue;
-
-		if(a > 0)
-			fputc(',', output);
-		fprintf(output, "%d", CharacterSet[a]);
-	}
-	fprintf(output, "\r\n");
-
-	int write = 0;
-	for(int a = 0; a < MaxPermissionDef; a++)
-	{
-		if((PermissionSet[PermissionDef[a].index] & PermissionDef[a].flag) == PermissionDef[a].flag)
-		{
-			if(write == 0)
-				fprintf(output, "Permissions=");
-			if(write > 0)
-				fputc(',', output);
-			write++;
-
-			fprintf(output, "%s", PermissionDef[a].name);
-
-			if(write >= 5)
-			{
-				fprintf(output, "\r\n");
-				write = 0;
-			}
-		}
-	}
-	if(write > 0)
-		fprintf(output, "\r\n");
-
-	for(std::map<std::string,Achievements::Achievement>::iterator it = Achievements.begin(); it != Achievements.end(); ++it) {
-		write = 0;
-		fprintf(output, "Achievements=");
-		for(std::vector<Achievements::AchievementObjectiveDef*>::iterator it2 = (*it).second.mCompletedObjectives.begin(); it2 != (*it).second.mCompletedObjectives.end(); ++it2) {
-			if(write > 0)
-				fputc(',', output);
-			fprintf(output, "%s/%s", (*it).first.c_str(), (*it2)->mName.c_str());
-			write++;
-		}
-
-		fprintf(output, "\r\n");
-	}
-
-
-	Util::WriteString(output, "GroveName", GroveName);
-	PlayerStats.SaveToStream(output);
-
-
-//	Util::WriteString(output, "xCSRF", SiteSession.xCSRF);
-//	Util::WriteString(output, "SessionName", SiteSession.sessionName);
-//	Util::WriteString(output, "SessionID", SiteSession.sessionID);
-	for(size_t i = 0; i < BuildPermissionList.size(); i++)
-	{
-		BuildPermissionArea &bpa = BuildPermissionList[i];
-		fprintf(output, "Build=%d,%d,%d,%d,%d\r\n", bpa.ZoneID, bpa.x1, bpa.y1, bpa.x2, bpa.y2);
-	}
-
-	for(size_t i = 0; i < AccountQuests.size(); i++)
-		fprintf(output, "AccountQuest=%d\r\n", AccountQuests[i]);
-
-
-	//Preferences
-	for(size_t i = 0; i < preferenceList.PrefList.size(); i++)
-		fprintf(output, "Pref=%s,%s\r\n", preferenceList.PrefList[i].name.c_str(), preferenceList.PrefList[i].value.c_str());
-	fprintf(output, "\r\n");
-
-	int a, b;
-	for(a = 0; a < MAXCONTAINER + 1; a++)
-		{
-			for(b = 0; b < (int)inventory.containerList[a].size(); b++)
-			{
-				InventorySlot *slot = &inventory.containerList[a][b];
-				fprintf(output, "%s=%lu,%d",
-					GetContainerNameFromID((slot->CCSID & CONTAINER_ID) >> 16),
-					slot->CCSID & CONTAINER_SLOT,
-					slot->IID );
-
-				bool extend = false;
-				if(slot->count > 0 || slot->customLook != 0 || slot->bindStatus != 0 || slot->secondsRemaining != -1)
-					extend = true;
-
-				if(extend == true) {
-					fprintf(output, ",%d,%d,%d,%ld", slot->count, slot->customLook, slot->bindStatus, slot->AdjustTimes());
-				}
-
-				fprintf(output, "\r\n");
-			}
-		}
-
-
-	//TODO:VAULT fprintf(output, "CurrentVaultSize=%d\r\n", CurrentVaultSize);
-//	for(size_t i = 0; i < vaultInventory.size(); i++)
-//		vaultInventory[i].SaveToAccountStream("bank", output);
-//	for(size_t i = 0; i < deliveryInventory.size(); i++)
-//		deliveryInventory[i].SaveToAccountStream("delivery", output);
-
-	characterCache.SaveToStream(output);
-
-	PendingMinorUpdates = 0;
-}
-
 /* Determine if the account is ready for unloading. Normally honors login time unless forced
 to unload, such as during shutdown.*/
 bool AccountData :: QualifyGarbage(bool force)
 {
-	if(SessionLoginCount > 0)
+	if(g_ClusterManager.CountAccountSessions(ID, true, false) > 0)
 		return false;
 
 	if(PendingMinorUpdates > 0)
@@ -580,7 +729,7 @@ void AccountData :: GenerateAndApplyRegistrationKeyRecovery(void)
 	ConfigString str(RecoveryKeys);
 
 	std::string rkhash;
-	GenerateSaltedHash(RegKey, rkhash);
+	GenerateSaltedHash(RegKey.c_str(), rkhash);
 	str.SetKeyValue("regkey", rkhash.c_str());
 
 	std::string result;
@@ -634,9 +783,9 @@ bool AccountData :: MatchRegistrationKey(const char *regkey)
 	if(IsRegistrationKeyEmpty() == true)
 		return false;
 
-	if(strlen(regkey) != strlen(RegKey))
+	if(strlen(regkey) != strlen(RegKey.c_str()))
 		return false;
-	if(strcmp(RegKey, regkey) != 0)
+	if(strcmp(RegKey.c_str(), regkey) != 0)
 		return false;
 
 	return true;
@@ -645,7 +794,7 @@ bool AccountData :: MatchRegistrationKey(const char *regkey)
 bool AccountData :: IsRegistrationKeyEmpty(void)
 {
 	//Consider single digit keys to be wiped and invalid.
-	if(strlen(RegKey) <= 1)
+	if(strlen(RegKey.c_str()) <= 1)
 		return true;
 
 	return false;
@@ -675,12 +824,7 @@ void AccountData :: CheckRecoveryRegistrationKey(const char *regkey)
 			FillRegistrationKey(regkey);
 			PendingMinorUpdates++;
 
-			AccountQuickData *aqd = g_AccountManager.GetAccountQuickDataByUsername(Name);
-			if(aqd != NULL)
-			{
-				aqd->mRegKey = regkey;
-				g_AccountManager.AccountQuickDataChanges.AddChange();
-			}
+			g_AccountManager.AppendQuickData(this);
 
 			g_Logs.data->warn("Account [%v] missing registration key was restored from recovery key.", Name);
 		}
@@ -690,7 +834,7 @@ void AccountData :: CheckRecoveryRegistrationKey(const char *regkey)
 
 void AccountData :: ReadFromJSON(Json::Value &value)
 {
-	strcpy(Name, value.get("name", "").asCString());
+	Name = value.get("name", "").asString();
 	ID = value.get("id", 0).asInt();
 
 	characterCache.cacheData.clear();
@@ -707,7 +851,7 @@ void AccountData :: ReadFromJSON(Json::Value &value)
 	}
 	SuspendDurationSec = value["suspend"].asLargestUInt();
 	SuspendTimeSec = value["suspended"].asLargestUInt();
-	strcpy(LastLogOn, value["logon"].asCString());
+	LastLogOn = value["logon"].asString();
 	LastLogOnTimeSec = value["logonTime"].asLargestUInt();
 	CreatedTimeSec = value["createdTime"].asLargestUInt();
 	ConsecutiveDaysLoggedIn = value["days"].asInt();
@@ -764,8 +908,6 @@ void AccountData :: WriteToJSON(Json::Value &value)
 
 AccountManager :: AccountManager()
 {
-	NextCharacterID = DEFAULT_CHARACTER_ID;
-	NextAccountID = 1;
 	cs.Init();
 	cs.SetDebugName("CS_ACCOUNT");
 }
@@ -775,244 +917,12 @@ AccountManager :: ~AccountManager()
 	UnloadAllData();
 }
 
-void AccountManager :: LoadSectionGeneral(FileReader &fr, AccountData &ad, std::string debugFilename)
+AccountQuickData AccountManager :: GetAccountQuickDataByUsername(const std::string &username)
 {
-	char *NameBlock = fr.BlockToStringC(0, Case_Upper);
-
-	if(strcmp(NameBlock, "ID") == 0)
-		ad.ID = fr.BlockToIntC(1);
-	else if(strcmp(NameBlock, "NAME") == 0)
-		Util::SafeCopy(ad.Name, fr.BlockToStringC(1, 0), sizeof(ad.Name));
-	else if(strcmp(NameBlock, "AUTH") == 0)
-		ad.FillAuthorizationHash(fr.BlockToStringC(1, 0));
-	else if(strcmp(NameBlock, "REGKEY") == 0)
-		ad.FillRegistrationKey(fr.BlockToStringC(1, 0));
-	else if(strcmp(NameBlock, "RECOVERYKEYS") == 0)
-	{
-		fr.BreakUntil("=", '=');
-		ad.RecoveryKeys = fr.BlockToStringC(1, 0);
-	}
-	else if(strcmp(NameBlock, "SUSPENDTIME") == 0)
-		ad.SuspendTimeSec = fr.BlockToULongC(1);
-	else if(strcmp(NameBlock, "MAXCHARACTERS") == 0) {
-		ad.MaxCharacters = fr.BlockToULongC(1);
-		if(ad.MaxCharacters < AccountData::DEFAULT_CHARACTER_SLOTS) {
-			ad.MaxCharacters = AccountData::DEFAULT_CHARACTER_SLOTS;
-		}
-	}
-	else if(strcmp(fr.SecBuffer, "LASTLOGON") == 0)
-	{
-		strncpy(ad.LastLogOn, fr.BlockToStringC(1, 0), sizeof(ad.LastLogOn) - 1);
-	}
-	else if(strcmp(NameBlock, "CONSECUTIVEDAYSLOGGEDIN") == 0)
-		ad.ConsecutiveDaysLoggedIn = fr.BlockToULongC(1);
-	else if(strcmp(NameBlock, "CREDITS") == 0)
-			ad.Credits = fr.BlockToULongC(1);
-	else if(strcmp(NameBlock, "LASTLOGONTIME") == 0)
-		ad.LastLogOnTimeSec = fr.BlockToULongC(1);
-	else if(strcmp(NameBlock, "CREATEDTIME") == 0)
-		ad.CreatedTimeSec = fr.BlockToULongC(1);
-	else if(strcmp(NameBlock, "DELIVERYBOXSLOTS") == 0)
-		ad.DeliveryBoxSlots = fr.BlockToIntC(1);
-	else if(strcmp(NameBlock, "VETERANLEVEL") == 0)
-		ad.VeteranLevel = fr.BlockToIntC(1);
-	else if(strcmp(NameBlock, "VETERANIMPORTED") == 0)
-		ad.VeteranImported = fr.BlockToBoolC(1);
-	else if(strcmp(NameBlock, "SUSPENDDURATION") == 0)
-		ad.SuspendDurationSec = fr.BlockToULongC(1);
-	else if(strcmp(NameBlock, "CHARACTERS") == 0)
-	{
-		int NumChar = 0;
-		int a;
-		for(a = 0; a < AccountData::MAX_CHARACTER_SLOTS; a++)
-		{
-			if(fr.BlockLen[1 + a] > 0)
-			{
-				ad.CharacterSet[NumChar] = fr.BlockToIntC(1 + a);
-				NumChar++;
-			}
-			else
-			{
-				break;
-			}
-		}
-		if(NumChar > ad.MaxCharacters)
-			ad.MaxCharacters = NumChar;
-	}
-	else if(strcmp(NameBlock, "PERMISSIONS") == 0)
-	{
-		int a;
-		for(a = 1; a < fr.MULTIBLOCKCOUNT; a++)
-		{
-			if(fr.BlockLen[a] > 0)
-			{
-				if(ad.SetPermission(Perm_Account, fr.BlockToStringC(a, Case_Lower), true) == false)
-					g_Logs.data->warn("Unknown permission identifier [%v] in Accounts file.", fr.SecBuffer);
-			}
-			else
-			{
-				break;
-			}
-		}
-	}
-	else if(strcmp(NameBlock, "ACHIEVEMENTS") == 0) {
-		int a;
-		for(a = 1; a < fr.MULTIBLOCKCOUNT; a++)
-		{
-			if(fr.BlockLen[a] > 0)
-				ad.AddAchievement(fr.BlockToStringC(a, Case_None));
-			else
-				break;
-		}
-	}
-	else if(strcmp(NameBlock, "GROVENAME") == 0)
-		ad.GroveName = fr.BlockToStringC(1, 0);
-	else if(strcmp(NameBlock, "ACCOUNTQUEST") == 0)	{
-		int qid = fr.BlockToIntC(1);
-		if(ad.HasAccountCompletedQuest(qid)) {
-			g_Logs.data->warn("Account %v has multiple account quests with same ID %v, ignoring", ad.ID, qid);
-		}
-		else {
-			ad.AccountQuests.push_back(fr.BlockToIntC(1));
-		}
-	}
-	else if(strcmp(NameBlock, "XCSRF") == 0)
-		ad.SiteSession.xCSRF = fr.BlockToStringC(1, 0);
-	else if(strcmp(NameBlock, "SESSIONID") == 0)
-		ad.SiteSession.sessionID = fr.BlockToStringC(1, 0);
-	else if(strcmp(NameBlock, "SESSIONNAME") == 0)
-		ad.SiteSession.sessionName = fr.BlockToStringC(1, 0);
-	else if(strcmp(NameBlock, "BUILD") == 0)
-	{
-		BuildPermissionArea bpa;
-		bpa.ZoneID = fr.BlockToIntC(1);
-		bpa.x1 = fr.BlockToIntC(2);
-		bpa.y1 = fr.BlockToIntC(3);
-		bpa.x2 = fr.BlockToIntC(4);
-		bpa.y2 = fr.BlockToIntC(5);
-
-		if(ad.HasBuildZone(bpa) == false)
-			ad.BuildPermissionList.push_back(bpa);
-	}
-	else if(strcmp(NameBlock, "PREF") == 0)
-	{
-		//Slightly different format.
-		//Preference names contain "." and values contain "=" and ","
-		fr.BreakUntil("=,", ',');
-		std::string name = fr.BlockToStringC(1, 0);
-		std::string value = fr.BlockToStringC(2, 0);
-		ad.preferenceList.SetPref(name.c_str(), value.c_str());
-	}
-	/* TODO:VAULT
-	else if(strcmp(NameBlock, "CURRENTVAULTSIZE") == 0)
-	{
-		ad.CurrentVaultSize = fr.BlockToIntC(1);
-	}
-	*/
-//	else if(strcmp(NameBlock, "BANK") == 0)
-//	{
-//		InventorySlot slot;
-//		slot.CCSID = fr.BlockToIntC(1);
-//		slot.IID = fr.BlockToIntC(2);
-//		slot.count = fr.BlockToIntC(3);
-//		slot.customLook = fr.BlockToIntC(4);
-//		slot.bindStatus = fr.BlockToIntC(5);
-//		if(slot.VerifyItemExist() == true)
-//			ad.vaultInventory.push_back(slot);
-//	}
-//	else if(strcmp(NameBlock, "DELIVERY") == 0)
-//	{
-//		InventorySlot slot;
-//		slot.CCSID = fr.BlockToIntC(1);
-//		slot.IID = fr.BlockToIntC(2);
-//		slot.count = fr.BlockToIntC(3);
-//		slot.customLook = fr.BlockToIntC(4);
-//		slot.bindStatus = fr.BlockToIntC(5);
-//		if(slot.VerifyItemExist() == true)
-//			ad.deliveryInventory.push_back(slot);
-//	}
-	else if(!ad.PlayerStats.LoadFromStream(fr)) {
-		if(CheckSection_Inventory(fr, ad.inventory, debugFilename,  ad.Name, "Account") == -2) {
-			g_Logs.data->warn("Unknown identifier [%v] in file [%v]", NameBlock, debugFilename);
-		}
-	}
-}
-
-void AccountManager :: LoadSectionCharacterCache(FileReader &fr, AccountData &ad, std::string debugFilename)
-{
-	CharacterCacheEntry entry;
-	while(fr.FileOpen() == true)
-	{
-		int r = fr.ReadLine();
-		if(r > 0)
-		{
-			fr.BreakUntil("=", '=');
-			fr.BlockToStringC(0, 0);
-			if(strcmp(fr.SecBuffer, "[CACHEENTRY]") == 0)
-				entry.Clear();
-			else if(strcmp(fr.SecBuffer, "creatureDefID") == 0)
-				entry.creatureDefID = fr.BlockToIntC(1);
-			else if(strcmp(fr.SecBuffer, "level") == 0)
-				entry.level = fr.BlockToIntC(1);
-			else if(strcmp(fr.SecBuffer, "profession") == 0)
-				entry.profession = fr.BlockToIntC(1);
-			else if(strcmp(fr.SecBuffer, "display_name") == 0)
-				entry.display_name = fr.BlockToStringC(1, 0);
-			else if(strcmp(fr.SecBuffer, "appearance") == 0)
-				entry.appearance = fr.BlockToStringC(1, 0);
-			else if(strcmp(fr.SecBuffer, "eq_appearance") == 0)
-				entry.eq_appearance = fr.BlockToStringC(1, 0);
-			else if(strcmp(fr.SecBuffer, "[/CACHEENTRY]") == 0)
-				ad.characterCache.AddEntry(entry);
-			else if(strcmp(fr.SecBuffer, "[/CHARACTERCACHE]") == 0)
-				return;
-		}
-	}
-	g_Logs.data->info("Finished loading character cache");
-}
-
-void AccountManager :: LoadAccountFromStream(FileReader &fr, AccountData &ad, std::string debugFilename)
-{
-	bool curEntry = false;
-	int r;
-	while(fr.FileOpen())
-	{
-		long CurPos = ftell(fr.FileHandle[0]);
-		r = fr.ReadLine();
-		if(r > 0)
-		{
-			fr.MultiBreak("=,");
-			fr.BlockToStringC(0, Case_Upper);
-			if(strcmp(fr.SecBuffer, "[ENTRY]") == 0)
-			{
-				if(curEntry == true)
-				{
-					//Reset the position so it doesn't interfere with reading the next
-					//entry
-					fr.FilePos = CurPos;
-					fseek(fr.FileHandle[0], CurPos, SEEK_SET);
-					return;
-				}
-				else
-					curEntry = true;
-			}
-			else if(strcmp(fr.SecBuffer, "[END]") == 0)
-				return;
-			else if(strcmp(fr.SecBuffer, "[CHARACTERCACHE]") == 0)
-				LoadSectionCharacterCache(fr, ad, debugFilename);
-			else
-				LoadSectionGeneral(fr, ad, debugFilename);
-		}
-	}
-	fr.CloseCurrent();
-}
-
-AccountQuickData * AccountManager :: GetAccountQuickDataByUsername(const char *username)
-{
-	for(size_t i = 0; i < accountQuickData.size(); i++)
-		if(accountQuickData[i].mLoginName.compare(username) == 0)
-			return &accountQuickData[i];
-	return NULL;
+	AccountQuickData qd;
+	qd.mLoginName = username;
+	g_ClusterManager.ReadEntity(&qd);
+	return qd;
 }
 
 AccountData * AccountManager :: GetValidLogin(const char *loginName, const char *loginAuth)
@@ -1020,13 +930,9 @@ AccountData * AccountManager :: GetValidLogin(const char *loginName, const char 
 	//Takes the given login name and account strings, searching through the loaded
 	//account list to find an entry that matches the given credentials.
 
-	AccountQuickData *aqd = GetAccountQuickDataByUsername(loginName);
-	if(aqd != NULL)
-	{
-		if(aqd->mLoginAuth.compare(loginAuth) == 0) {
-			return FetchIndividualAccount(aqd->mID);
-		}
-	}
+	AccountQuickData aqd = GetAccountQuickDataByUsername(loginName);
+	if(aqd.mID != 0 &&  aqd.mLoginAuth.compare(loginAuth) == 0)
+		return FetchIndividualAccount(aqd.mID);
 	return NULL;
 }
 
@@ -1034,7 +940,7 @@ void AccountManager :: ResolveCharacters(void)
 {
 	ACCOUNT_ITERATOR it;
 	for(it = AccList.begin(); it != AccList.end(); ++it)
-		it->ResolveCharacters(it->Name);
+		it->ResolveCharacters(it->Name.c_str());
 }
 
 int AccountManager :: CreateAccount(const char *username, const char *password, const char *regKey, const char *grovename)
@@ -1044,10 +950,8 @@ int AccountManager :: CreateAccount(const char *username, const char *password, 
 	if(regKey == NULL)    return ACCOUNT_KEY;
 	if(grovename == NULL) return ACCOUNT_SIZEGROVE;
 
-	int keyIndex = GetRegistrationKey(regKey);
-	if(keyIndex == -1) return ACCOUNT_KEY;
 
-	if(strlen(username) < 3 || strlen(username) > sizeof(AccountData().Name) - 1)
+	if(strlen(username) < 3 || strlen(username) > 48)
 		return ACCOUNT_SIZENAME;
 	if(ValidString(username) == false)
 		return ACCOUNT_INVNAME;
@@ -1075,12 +979,7 @@ int AccountManager :: CreateAccount(const char *username, const char *password, 
 	//  *****  Everything verified.  Create the account.  *****
 	AccountData newAccount;
 
-	if(NextAccountID < (int)accountQuickData.size())
-	{
-		g_Logs.data->warn("NextAccountID is lower than current total (%v of %v)", NextAccountID, accountQuickData.size());
-		NextAccountID = accountQuickData.size();
-	}
-	newAccount.ID = NextAccountID++;
+	newAccount.ID = g_ClusterManager.NextValue(ID_NEXT_ACCOUNT_ID);
 	newAccount.CreatedTimeSec = time(NULL);
 
 	newAccount.SetPermission(Perm_Account, "regionchat", true);
@@ -1095,7 +994,7 @@ int AccountManager :: CreateAccount(const char *username, const char *password, 
 #endif
 
 	//Assign username and registration key
-	Util::SafeCopy(newAccount.Name, username, sizeof(newAccount.Name));
+	newAccount.Name = username;
 	newAccount.SetNewRegistrationKey(regKey);
 
 	//Generate and assign the password hash
@@ -1113,9 +1012,6 @@ int AccountManager :: CreateAccount(const char *username, const char *password, 
 	bp.y2 = 3;
 	newAccount.BuildPermissionList.push_back(bp);
 
-	KeyList.erase(KeyList.begin() + keyIndex);
-	KeyListChanges.AddChange();
-
 	g_Logs.event->info("[ACCOUNT] Account created [%v] with %v characters.", newAccount.Name, newAccount.GetCharacterCount());
 
 	newAccount.PendingMinorUpdates++;  //Save at the next available opportunity
@@ -1129,7 +1025,7 @@ int AccountManager :: CreateAccountFromService(const char *username)
 {
 	if(username == NULL)  return ACCOUNT_SIZENAME;
 
-	if(strlen(username) < 3 || strlen(username) > sizeof(AccountData().Name) - 1)
+	if(strlen(username) < 3 || strlen(username) > 48)
 		return ACCOUNT_SIZENAME;
 	if(ValidString(username) == false)
 		return ACCOUNT_INVNAME;
@@ -1139,14 +1035,9 @@ int AccountManager :: CreateAccountFromService(const char *username)
 
 	AccountData newAccount;
 
-	if(NextAccountID < (int)accountQuickData.size())
-	{
-		g_Logs.data->warn("NextAccountID is lower than current total (%v of %v)", NextAccountID, accountQuickData.size());
-		NextAccountID = accountQuickData.size();
-	}
-	newAccount.ID = NextAccountID++;
+	newAccount.ID = g_ClusterManager.NextValue(ID_NEXT_ACCOUNT_ID);
 	newAccount.CreatedTimeSec = time(NULL);
-	Util::SafeCopy(newAccount.Name, username, sizeof(newAccount.Name));
+	newAccount.Name = username;
 
 	newAccount.SetPermission(Perm_Account, "regionchat", true);
 	newAccount.SetPermission(Perm_Account, "forumpost", true);
@@ -1163,7 +1054,7 @@ int AccountManager :: CreateAccountFromService(const char *username)
 
 	newAccount.PendingMinorUpdates++;  //Save at the next available opportunity
 	AccList.push_back(newAccount);
-	AppendQuickData(&newAccount);
+	AppendQuickData(&newAccount, true);
 
 	return ACCOUNT_SUCCESS;
 }
@@ -1193,12 +1084,7 @@ int AccountManager :: ResetPassword(const char *username, const char *newpasswor
 	//Set the new password, then update the quickdata entry.
 	accPtr->SetNewPassword(username, newpassword);
 
-	AccountQuickData *aqd = GetAccountQuickDataByUsername(username);
-	if(aqd != NULL)
-	{
-		aqd->mLoginAuth = accPtr->AuthData;
-		AccountQuickDataChanges.AddChange();
-	}
+	AppendQuickData(accPtr);
 
 	if(checkPermission)
 		accPtr->SetPermission(Perm_Account, "passwordreset", false);
@@ -1213,8 +1099,8 @@ int AccountManager :: AccountRecover(const char *username, const char *keypass, 
 	if(type == NULL)    return ACCOUNT_BADREQUEST;
 
 	AccountData *accPtr = FetchAccountByUsername(username);
-	AccountQuickData *aqd = GetAccountQuickDataByUsername(username);
-	if(accPtr == NULL || aqd == NULL)
+	AccountQuickData aqd = GetAccountQuickDataByUsername(username);
+	if(accPtr == NULL || aqd.mID == 0)
 		return ACCOUNT_USERNOTFOUND;
 
 	if(accPtr->RecoveryKeys.size() == 0)
@@ -1229,12 +1115,9 @@ int AccountManager :: AccountRecover(const char *username, const char *keypass, 
 		if(accPtr->MatchRecoveryKey(type, key.c_str()) == true)
 		{
 			accPtr->FillRegistrationKey(keypass);
-			aqd->mRegKey = keypass;
-
 			accPtr->RecoveryKeys.clear();
-
 			accPtr->PendingMinorUpdates++;
-			AccountQuickDataChanges.AddChange();
+			AppendQuickData(accPtr);
 
 			return ACCOUNT_SUCCESSRECOVER;
 		}
@@ -1256,13 +1139,9 @@ int AccountManager :: AccountRecover(const char *username, const char *keypass, 
 		if(accPtr->MatchRecoveryKey(type, serverPass.c_str()) == true)
 		{
 			accPtr->FillAuthorizationHash(serverPass.c_str());
-			aqd->mLoginAuth = serverPass;
-
 			accPtr->RecoveryKeys.clear();
-
 			accPtr->PendingMinorUpdates++;
-			AccountQuickDataChanges.AddChange();
-
+			AppendQuickData(accPtr);
 			return ACCOUNT_SUCCESSRECOVER;
 		}
 		else
@@ -1276,18 +1155,9 @@ int AccountManager :: AccountRecover(const char *username, const char *keypass, 
 	}
 }
 
-void AccountManager :: LoadKeyList(std::string fileName)
+bool AccountManager :: PopRegistrationKey(const std::string &authKey)
 {
-	KeyFileName = fileName;
-	LoadStringsFile(fileName, KeyList);
-}
-
-int AccountManager :: GetRegistrationKey(const char *authKey)
-{
-	for(size_t i = 0; i < KeyList.size(); i++)
-		if(KeyList[i].compare(authKey) == 0)
-			return i;
-	return -1;
+	return g_ClusterManager.ListRemove(KEYPREFIX_REGISTRATION_KEYS, authKey, true);
 }
 
 bool AccountManager :: ValidString(const char *str)
@@ -1364,12 +1234,13 @@ AccountData * AccountManager :: FetchAccountByUsername(const char *username)
 {
 	ACCOUNT_ITERATOR it;
 	for(it = AccList.begin(); it != AccList.end(); ++it)
-		if(strcmp(it->Name, username) == 0)
+		if(strcmp(it->Name.c_str(), username) == 0)
 			return &*it;
 
-	for(size_t i = 0; i < accountQuickData.size(); i++)
-		if(accountQuickData[i].mLoginName.compare(username) == 0)
-			return FetchIndividualAccount(accountQuickData[i].mID);
+	AccountQuickData qd = GetAccountQuickDataByUsername(username);
+	if(qd.mID != 0) {
+		return FetchIndividualAccount(qd.mID);
+	}
 	return NULL;
 }
 
@@ -1423,39 +1294,6 @@ const char * AccountManager :: GetCharacterErrorMessage(int message)
 	}
 }
 
-int AccountManager :: CheckAutoSave(bool force)
-{
-	int saveOps = 0;
-	if(KeyListChanges.PendingChanges > 0)
-	{
-		if(force == true || KeyListChanges.IsLastChangeSince(5000))
-		{
-			saveOps++;
-			SaveKeyListChanges();
-		}
-	}
-
-	
-	if(UsedCharacterNames.HasChanged() == true)
-	{
-		if(force == true || UsedCharacterNames.mChanges.IsLastChangeSince(5000))
-		{
-			saveOps++;
-			SaveUsedNameListChanges();
-		}
-	}
-
-	if(AccountQuickDataChanges.PendingChanges > 0)
-	{
-		if(force == true || AccountQuickDataChanges.IsLastChangeSince(5000))
-		{
-			saveOps++;
-			SaveQuickData();
-		}
-	}
-	return saveOps;
-}
-
 int AccountManager :: HasPendingMinorUpdates(void)
 {
 	int pendingCount = 0;
@@ -1464,72 +1302,6 @@ int AccountManager :: HasPendingMinorUpdates(void)
 		pendingCount += it->PendingMinorUpdates;
 
 	return pendingCount;
-}
-
-void AccountManager :: SaveKeyListChanges(void)
-{
-	if(KeyListChanges.PendingChanges == 0)
-		return;
-
-	//Enter thread before attempting to open the file, otherwise
-	//a thread deadlock will wipe the file without writing new data.
-	cs.Enter("AccountManager::SaveKeyListChanges");
-
-	FILE *output = Util::OpenSaveFile(KeyFileName.c_str());
-	if(output == NULL)
-	{
-		g_Logs.data->error("Failed to open file for writing: [%v]", KeyFileName.c_str());
-		cs.Leave();
-		return;
-	}
-
-	Util::WriteAutoSaveHeader(output);
-
-	std::vector<std::string>::iterator it;
-	for(it = KeyList.begin(); it != KeyList.end(); ++it)
-		fprintf(output, "%s\r\n", it->c_str());
-
-	fclose(output);
-	KeyListChanges.ClearPending();
-	cs.Leave();
-
-	g_Logs.data->info("Saved registration key changes.");
-}
-
-void AccountManager :: SaveUsedNameListChanges(void)
-{
-	if(UsedCharacterNames.HasChanged() == false)
-		return;
-
-	//Enter thread before attempting to open the file, otherwise
-	//a thread deadlock will wipe the file without writing new data.
-	cs.Enter("AccountManager::SaveUsedNameListChanges");
-
-	FILE *output = Util::OpenSaveFile(UsedListFileName.c_str());
-	if(output == NULL)
-	{
-		g_Logs.data->error("Failed to open file for writing: [%v]", UsedListFileName.c_str());
-		cs.Leave();
-		return;
-	}
-
-	Util::WriteAutoSaveHeader(output);
-
-	/*
-	USEDCHAR_VECTOR::iterator it;
-	for(it = UsedCharacterNames.begin(); it != UsedCharacterNames.end(); ++it)
-		fprintf(output, "%d=%s\r\n", it->first, it->second.c_str());
-	*/
-	UsedNameDatabase::ITERATOR it;
-	UsedNameDatabase::CONTAINER_REF data = UsedCharacterNames.GetData();
-	for(it = data.begin(); it != data.end(); ++it)
-		fprintf(output, "%d=%s\r\n", it->first, it->second.c_str());
-
-	fclose(output);
-	UsedCharacterNames.mChanges.ClearPending();
-	cs.Leave();
-
-	g_Logs.data->info("Saved used character list changes.");
 }
 
 bool AccountManager :: ValidCharacterName(const std::string &name)
@@ -1560,10 +1332,8 @@ int AccountManager :: ValidateNameParts(const std::string &first, const std::str
 	if(ValidCharacterName(last) == 0)
 		return CHARACTER_LASTINV;
 
-	char buffer[3072];
-	sprintf(buffer, "%s %s", first.c_str(), last.c_str());
 	//Check character name
-	if(HasUsedCharacterName(buffer) == true)
+	if(g_UsedNameDatabase.HasName(StringUtil::Format("%s %s", first.c_str(), last.c_str())))
 		return CHARACTER_NAMEEXIST;
 
 	return CHARACTER_SUCCESS;
@@ -1590,7 +1360,6 @@ int AccountManager :: CreateCharacter(STRINGLIST &args, AccountData *accPtr, Cha
 		}
 
 		int newID = GetNewCharacterID();
-		SessionVarsChangeData.AddChange();
 		accPtr->CharacterSet[r] = newID;
 
 		newChar.CopyFrom(*g_CharacterManager.GetDefaultCharacter());
@@ -1736,7 +1505,7 @@ int AccountManager :: CreateCharacter(STRINGLIST &args, AccountData *accPtr, Cha
 		newChar.cdef.css.translocate_destination = "Mushroom Isle";
 
 		g_CharacterManager.AddExternalCharacter(newChar.cdef.CreatureDefID, newChar);
-		AddUsedCharacterName(newChar.cdef.CreatureDefID, newChar.cdef.css.display_name);
+		g_UsedNameDatabase.Add(newChar.cdef.CreatureDefID, newChar.cdef.css.display_name);
 		
 		CharacterCacheEntry entry;
 		entry.Clear();
@@ -1795,85 +1564,7 @@ int AccountManager :: CreateCharacter(STRINGLIST &args, AccountData *accPtr, Cha
 
 int AccountManager :: GetNewCharacterID(void)
 {
-	int retval = NextCharacterID;
-	NextCharacterID += CHARACTER_ID_INCREMENT;
-	return retval;
-}
-
-bool AccountManager :: HasUsedCharacterName(const char *characterName)
-{
-	return UsedCharacterNames.HasName(characterName);
-	/*
-	USEDCHAR_VECTOR::iterator it;
-	for(it = UsedCharacterNames.begin(); it != UsedCharacterNames.end(); ++it)
-		if(it->second.compare(characterName) == 0)
-			return it - UsedCharacterNames.begin();
-
-	return -1;
-	*/
-}
-
-int AccountManager :: GetCDefFromCharacterName(const char *characterName)
-{
-	return UsedCharacterNames.GetIDByName(characterName);
-	/*
-	USEDCHAR_VECTOR::iterator it;
-	for(it = UsedCharacterNames.begin(); it != UsedCharacterNames.end(); ++it)
-		if(it->second.compare(characterName) == 0)
-			return it->first;
-
-	return -1;
-	*/
-}
-
-const char* AccountManager :: GetCharacterNameFromCDef(int CDefID)
-{
-	return UsedCharacterNames.GetNameByID(CDefID);
-}
-
-void AccountManager :: AddUsedCharacterName(int CDefID, const char *characterName)
-{
-	if(HasUsedCharacterName(characterName) == false)
-	{
-		UsedCharacterNames.Add(CDefID, characterName);
-		//UsedCharacterNames.push_back(USEDCHAR_PAIR(CDefID, characterName));
-		//UsedNameListChanges.AddChange();
-	}
-
-	/*
-	int i = HasUsedCharacterName(characterName);
-	if(i == -1)
-	{
-		UsedCharacterNames.push_back(USEDCHAR_PAIR(CDefID, characterName));
-		UsedNameListChanges.AddChange();
-	}
-	*/
-}
-
-void AccountManager :: LoadUsedNameList(std::string fileName)
-{
-	UsedListFileName = fileName;
-	FileReader lfr;
-	if(lfr.OpenText(fileName.c_str()) != Err_OK)
-	{
-		g_Logs.data->error("Could not open file [%v]", fileName);
-		return;
-	}
-	lfr.CommentStyle = Comment_Semi;
-	while(lfr.FileOpen() == true)
-	{
-		lfr.ReadLine();
-		int r = lfr.SingleBreak("=");
-		if(r >= 2)
-		{
-			//Can't mix both Block() calls in the same statement since they share a data return buffer.
-			int CDefID = lfr.BlockToInt(0);
-			UsedCharacterNames.Add(CDefID, lfr.BlockToString(1), true);
-			//UsedCharacterNames.push_back(USEDCHAR_PAIR(CDefID, lfr.BlockToString(1)));
-		}
-	}
-	g_Logs.data->info("Loaded %v Used Names.", UsedCharacterNames.GetDataCount());
-	lfr.CloseCurrent();
+	return g_ClusterManager.NextValue(ID_NEXT_CHARACTER_ID, CHARACTER_ID_INCREMENT);
 }
 
 void AccountManager :: DeleteCharacter(int index, AccountData *accPtr)
@@ -1895,39 +1586,12 @@ void AccountManager :: DeleteCharacter(int index, AccountData *accPtr)
 
 	g_Logs.event->info("[CHARACTER] Deleted character ID:%v", CDefID);
 
-	char buf[32];
-	Util::SafeFormat(buf, sizeof(buf), "%d.txt", CDefID);
-	std::string deletedDir = Platform::JoinPath(g_Config.ResolveUserDataPath(), "Deleted");
-	std::string deletedFile = Platform::JoinPath(deletedDir, buf);
-	std::string sourceFile = Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "Characters"), buf);
-	Platform::MakeDirectory(deletedDir);
-	Platform::FileCopy(sourceFile, deletedFile);
-	Platform::Delete(sourceFile);
+	g_UsedNameDatabase.Remove(CDefID);
 
-	RemoveUsedCharacterName(CDefID);
 	cs.Leave();
 }
 
-void AccountManager :: RemoveUsedCharacterName(int CDefID)
-{
-	UsedCharacterNames.Remove(CDefID);
-
-	/*
-	USEDCHAR_VECTOR::iterator it;
-
-	for(it = UsedCharacterNames.begin(); it != UsedCharacterNames.end(); ++it)
-	{
-		if(it->first == CDefID)
-		{
-			UsedCharacterNames.erase(it);
-			break;
-		}
-	}
-	UsedNameListChanges.AddChange();
-	*/
-}
-
-void AccountManager :: AppendQuickData(AccountData *account)
+void AccountManager :: AppendQuickData(AccountData *account, bool sync)
 {
 	AccountQuickData object;
 	object.mID = account->ID;
@@ -1935,86 +1599,8 @@ void AccountManager :: AppendQuickData(AccountData *account)
 	object.mLoginAuth = account->AuthData;
 	object.mRegKey = account->RegKey;
 	object.mGroveName = account->GroveName;
-
-	accountQuickData.push_back(object);
-	AccountQuickDataChanges.AddChange();
-}
-
-bool AccountManager :: SaveQuickData(void)
-{
-	FILE *output = Util::OpenSaveFile(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "Dynamic"), "AccountList.txt").c_str());
-	if(output == NULL)
-		return false;
-
-	//Note: the registration key technically isn't necessary, but it's very handy to include
-	//since it allows easy administrative lookups with a simple text find to match with its
-	//account owner.  Sort of like how the character names file is handy to look up matching
-	//character files.
-	for(size_t i = 0; i < accountQuickData.size(); i++)
-	{
-		fprintf(output, "%d;%s;%s;%s;%s\r\n",
-			accountQuickData[i].mID,
-			accountQuickData[i].mLoginName.c_str(),
-			accountQuickData[i].mLoginAuth.c_str(),
-			accountQuickData[i].mRegKey.c_str(),
-			accountQuickData[i].mGroveName.c_str());
-	}
-	fpos_t pos;
-	fgetpos(output, &pos);
-
-	fflush(output);
-	fclose(output);
-	AccountQuickDataChanges.ClearPending();
-	return true;
-}
-
-void AccountManager :: LoadQuickData(void)
-{
-	FileReader lfr;
-	std::string fp = Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "Dynamic"), "AccountList.txt");
-	if(lfr.OpenText(fp.c_str()) != Err_OK)
-	{
-		g_Logs.data->error("Unable to open file: %v", fp);
-		return;
-	}
-	AccountQuickData data;
-	int highestID = 0;
-	int line = 0;
-	while(lfr.FileOpen() == true)
-	{
-		lfr.ReadLine();
-		line++;
-		int r = lfr.MultiBreak(";");
-		if(r >= 2)
-		{
-			data.mID = lfr.BlockToIntC(0);
-			data.mLoginName = lfr.BlockToStringC(1, 0);
-			if(r == 5) {
-				data.mLoginAuth = lfr.BlockToStringC(2, 0);
-				data.mRegKey = lfr.BlockToStringC(3, 0);
-				data.mGroveName = lfr.BlockToStringC(4, 0);
-			}
-
-			if(data.mID > highestID)
-				highestID = data.mID;
-
-			accountQuickData.push_back(data);
-			data.Clear();
-		}
-		else if(r != 0) {
-			g_Logs.data->warn("AccountList.txt invalid data on line %v (has %v elements)", line, r);
-		}
-	}
 	
-	//This is to fix any discrepancies with server data, to prevent a faulty or missing session value
-	//from overwriting new accounts.
-	highestID++; //The next available ID needs to be 1 past the current highest.
-	if(highestID > NextAccountID)
-	{
-		g_Logs.data->warn("LoadQuickData() NextAccountID incorrect (current: %v, highest: %v)", NextAccountID, highestID);
-		NextAccountID = highestID;
-	}
-	lfr.CloseCurrent();
+	g_ClusterManager.WriteEntity(&object, sync);
 }
 
 AccountData * AccountManager :: GetActiveAccountByID(int accountID)
@@ -2036,39 +1622,17 @@ AccountData * AccountManager :: FetchIndividualAccount(int accountID)
 	return LoadAccountID(accountID);
 }
 
-std::string AccountManager :: GetIndividualFilename(int accountID)
-{
-	char buf[32];
-	Util::SafeFormat(buf, sizeof(buf), "%08d.txt", accountID);
-	return Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "Accounts"), buf);
-}
-
-AccountData * AccountManager :: LoadAccountID(int accountID)
-{
-	std::string filename = GetIndividualFilename(accountID);
-
-	FileReader lfr;
-	if(lfr.OpenText(filename.c_str()) != Err_OK)
-	{
-		g_Logs.data->error("Failed to open account: %v", filename);
-		return NULL;
-	}
-
+AccountData * AccountManager :: LoadAccountID(int accountID) {
 	AccountData accData;
-	lfr.CommentStyle = Comment_Semi;
-	LoadAccountFromStream(lfr, accData, filename);
-	lfr.CloseCurrent();
+	accData.ID = accountID;
+	if(g_ClusterManager.ReadEntity(&accData)) {
+		g_Logs.data->info("Account %v was loaded from the cluster OK.", accountID);
+	}
+	else {
+		g_Logs.data->error("Failed to open account: %v", accountID);
+	}
 
-	if(accData.ID != 0)
-	{
-		g_Logs.data->info("Loaded account file: %v", filename);
-		AccList.push_back(accData);
-	}
-	else
-	{
-		g_Logs.data->error("Account file possibly damaged: %v", filename);
-		return NULL;
-	}
+	AccList.push_back(accData);
 
 	if(AccList.size() > 0)
 		if(AccList.back().ID == accountID)
@@ -2080,36 +1644,20 @@ AccountData * AccountManager :: LoadAccountID(int accountID)
 
 void AccountManager :: LoadAllData(void)
 {
-	char filebuf[256];
-	LoadQuickData();
-	LoadKeyList(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "Dynamic"), "RegistrationKeys.txt"));
-	LoadUsedNameList(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "Dynamic"), "UsedNames.txt"));
+	if(!g_ClusterManager.HasKey(ID_NEXT_CHARACTER_ID)) {
+		g_ClusterManager.SetKey(ID_NEXT_CHARACTER_ID, StringUtil::Format("%d", DEFAULT_CHARACTER_ID));
+	}
 }
 
 void AccountManager :: UnloadAllData(void)
 {
-	CheckAutoSave(true);
-
 	AccList.clear();
-	KeyList.clear();
-	accountQuickData.clear();
-	AccountQuickDataChanges.ClearPending();
 }
 
-/* Saves an account to an individual file.  The file is opened according to a name
-determined by ID, the contents are written, and the file is closed. */
 void AccountManager :: SaveIndividualAccount(AccountData *account)
 {
-	std::string filename = GetIndividualFilename(account->ID);
-	FILE *output = fopen(filename.c_str(), "wb");
-	if(output == NULL)
-	{
-		g_Logs.data->error("SaveAccountToStream could not open: %v", filename);
-		return;
-	}
-	account->SaveToStream(output);
-	fflush(output);
-	fclose(output);
+	if(!g_ClusterManager.WriteEntity(account))
+		g_Logs.data->error("SaveAccountToStream could not save: %v", account->ID);
 }
 
 void AccountManager :: RunUpdateCycle(bool force)
@@ -2140,49 +1688,8 @@ void AccountManager :: RunUpdateCycle(bool force)
 
 void AccountManager :: ImportKey(const char *key)
 {
-	KeyList.push_back(key);
-	KeyListChanges.AddChange();
+	g_ClusterManager.ListAdd(KEYPREFIX_REGISTRATION_KEYS, key, false);
 	g_Logs.server->info("Single key imported from external source");
-}
-
-void AccountManager :: ImportKeys(void)
-{
-	STRINGLIST importList;
-	LoadStringsFile("ImportKeys.txt", importList);
-	int fail = 0;
-	int succeed = 0;
-	for(size_t i = 0; i < importList.size(); i++)
-	{
-		bool bFound = false;
-		for(size_t s = 0; s < KeyList.size(); s++)
-		{
-			if(KeyList[s].compare(importList[i]) == 0)
-			{
-				bFound = true;
-				break;
-			}
-		}
-		for(size_t s = 0; s < accountQuickData.size(); s++)
-		{
-			if(accountQuickData[s].mRegKey.compare(importList[i]) == 0)
-			{
-				bFound = true;
-				break;
-			}
-		}
-		if(bFound == false)
-		{
-			KeyList.push_back(importList[i]);
-			succeed++;
-		}
-		else
-		{
-			g_Logs.data->error("Key import collision: %v", importList[i].c_str());
-			fail++;
-		}
-	}
-	KeyListChanges.AddChange();
-	g_Logs.data->info("Key import Success: %v, Failed: %v", succeed, fail);
 }
 
 bool AccountManager :: AcceptingLogins(void)
@@ -2268,30 +1775,39 @@ void CharacterCacheManager :: RemoveCharacter(int cdefID)
 	}
 }
 
-void CharacterCacheManager :: SaveToStream(FILE *output)
-{
-	fprintf(output, "[CHARACTERCACHE]\r\n");
-	for(size_t i = 0; i < cacheData.size(); i++)
-	{
-		fprintf(output, "[CACHEENTRY]\r\n");
-		fprintf(output, "creatureDefID=%d\r\n", cacheData[i].creatureDefID);
-		fprintf(output, "level=%d\r\n", cacheData[i].level);
-		fprintf(output, "profession=%d\r\n", cacheData[i].profession);
-		fprintf(output, "display_name=%s\r\n", cacheData[i].display_name.c_str());
-		fprintf(output, "appearance=%s\r\n", cacheData[i].appearance.c_str());
-		fprintf(output, "eq_appearance=%s\r\n", cacheData[i].eq_appearance.c_str());
-		fprintf(output, "[/CACHEENTRY]\r\n");
+bool CharacterCacheManager :: ReadEntity(AbstractEntityReader *reader) {
+
+	STRINGLIST sections = reader->Sections();
+//	cacheData.clear();
+	int i = 0;
+	for(auto a = sections.begin(); a != sections.end(); ++a) {
+		CharacterCacheEntry e;
+		reader->PushSection(StringUtil::Format("CACHEENTRY#%d", i++));
+		bool ok = e.ReadEntity(reader);
+		reader->PopSection();
+		if(!ok)
+			return false;
+		cacheData.push_back(e);
 	}
-	fprintf(output, "[/CHARACTERCACHE]\r\n");
+	return true;
+}
+
+bool CharacterCacheManager :: WriteEntity(AbstractEntityWriter *writer)
+{
+	for(size_t i = 0; i < cacheData.size(); i++) {
+		writer->PushSection(StringUtil::Format("CACHEENTRY#%d", i));
+		bool ok = cacheData[i].WriteEntity(writer);
+		writer->PopSection();
+		if(!ok)
+			return false;
+	}
+	return true;
 }
 
 void CharacterCacheManager :: AddEntry(CharacterCacheEntry &data)
 {
 	cacheData.push_back(data);
 }
-
-
-
 
 
 UsedNameDatabase :: UsedNameDatabase()
@@ -2302,74 +1818,34 @@ UsedNameDatabase :: ~UsedNameDatabase()
 {
 }
 
-UsedNameDatabase::CONTAINER_REF UsedNameDatabase :: GetData(void)
+void UsedNameDatabase :: Add(int CDefID, const std::string &name)
 {
-	return mData;
-}
-
-void UsedNameDatabase :: Add(int CDefID, const char *name, bool loadStage)
-{
-	mData[CDefID] = name;
-	mNameLookup[name] = CDefID;
-	if(loadStage == false)
-		mChanges.AddChange();
+	g_ClusterManager.SetKey(StringUtil::Format("%s:%s", KEYPREFIX_CHARACTER_NAME_TO_ID.c_str(), name.c_str()), StringUtil::Format("%d", CDefID));
+	g_ClusterManager.SetKey(StringUtil::Format("%s:%d", KEYPREFIX_CHARACTER_ID_TO_NAME.c_str(), CDefID), name.c_str());
 }
 
 void UsedNameDatabase :: Remove(int CDefID)
 {
-	ITERATOR it = mData.find(CDefID);
-	if(it == mData.end())
-		return;
-
-	//Erase from the reverse data map, then the main data map.
-	NAME_ITERATOR nit = mNameLookup.find(it->second);
-	if(nit != mNameLookup.end())
-		mNameLookup.erase(nit);
-
-	mData.erase(it);
-	mChanges.AddChange();
+	std::string name = GetNameByID(CDefID);
+	if(name.length() > 0)
+		g_ClusterManager.RemoveKey(StringUtil::Format("%s:%s", KEYPREFIX_CHARACTER_NAME_TO_ID, name.c_str()));
+	g_ClusterManager.RemoveKey(StringUtil::Format("%s:%d", KEYPREFIX_CHARACTER_ID_TO_NAME.c_str(), CDefID));
 }
 
-size_t UsedNameDatabase :: GetDataCount(void)
-{
-	return mData.size();
+bool UsedNameDatabase :: HasID(int CDefID) {
+	return g_ClusterManager.HasKey(StringUtil::Format("%s:%d", KEYPREFIX_CHARACTER_ID_TO_NAME.c_str(), CDefID));
 }
 
-bool UsedNameDatabase :: HasID(int CDefID)
-{
-	ITERATOR it = mData.find(CDefID);
-	if(it == mData.end())
-		return false;
-	return true;
+const char* UsedNameDatabase :: GetNameByID(int CDefID) {
+	return g_ClusterManager.GetKey(StringUtil::Format("%s:%d", KEYPREFIX_CHARACTER_ID_TO_NAME.c_str(), CDefID)).c_str();
 }
 
-const char* UsedNameDatabase :: GetNameByID(int CDefID)
-{
-	ITERATOR it = mData.find(CDefID);
-	if(it == mData.end())
-		return NULL;
-	return it->second.c_str();
+int UsedNameDatabase :: GetIDByName(const std::string &name) {
+	return atoi(g_ClusterManager.GetKey(StringUtil::Format("%s:%d", KEYPREFIX_CHARACTER_NAME_TO_ID.c_str(), name.c_str())).c_str());
 }
 
-int UsedNameDatabase :: GetIDByName(const char *name)
-{
-	NAME_ITERATOR it = mNameLookup.find(name);
-	if(it == mNameLookup.end())
-		return -1;
-	return it->second;
-}
-
-bool UsedNameDatabase :: HasName(const char *name)
-{
-	NAME_ITERATOR it = mNameLookup.find(name);
-	if(it == mNameLookup.end())
-		return false;
-	return true;
-}
-
-bool UsedNameDatabase :: HasChanged(void)
-{
-	return (mChanges.PendingChanges != 0);
+bool UsedNameDatabase :: HasName(const std::string &name) {
+	return g_ClusterManager.HasKey(StringUtil::Format("%s:%d", KEYPREFIX_CHARACTER_NAME_TO_ID.c_str(), name.c_str()));
 }
 
 

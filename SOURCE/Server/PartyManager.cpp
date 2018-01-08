@@ -560,8 +560,6 @@ void PartyManager :: DoQuestInvite(CreatureInstance *caller, const char *questNa
 void PartyManager :: DeletePartyByID(int partyID)
 {
 	// Remove any PVP team for this party too
-	PVP::PVPGame * game = g_PVPManager.GetGameForTeam(partyID);
-
 	for(size_t i = 0; i < mPartyList.size(); i++)
 	{
 		if(mPartyList[i].mPartyID == partyID)

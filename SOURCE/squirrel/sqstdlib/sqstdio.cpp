@@ -59,6 +59,9 @@ SQInteger sqstd_feof(SQFILE file)
     return feof((FILE *)file);
 }
 
+SQStream::~SQStream() {
+}
+
 //File
 struct SQFile : public SQStream {
     SQFile() { _handle = NULL; _owns = false;}

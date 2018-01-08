@@ -20,6 +20,8 @@
 
 #include "../Account.h"
 #include "../Scenery2.h"
+#include "../Cluster.h"
+#include "../StringUtil.h"
 #include <curl/curl.h>
 #include "../md5.hh"
 #include "../json/json.h"
@@ -34,7 +36,7 @@ ServiceAuthenticationHandler::~ServiceAuthenticationHandler() {
 
 }
 
-void ServiceAuthenticationHandler::copyVeteranPlayerDetails(std::string pfUsername, AccountData *data) {
+void ServiceAuthenticationHandler::copyVeteranPlayerDetails(const std::string &pfUsername, AccountData *data) {
 
 	g_Logs.server->info("Importing veteran details for account %v", data->Name);
 
@@ -137,13 +139,11 @@ void ServiceAuthenticationHandler::copyVeteranPlayerDetails(std::string pfUserna
 												spk.x, spk.y);
 
 								// Give prop new ID
-								int newPropID = g_SceneryVars.BaseSceneryID
-										+ g_SceneryVars.SceneryAdditive++;
+								int newPropID = zd.GetNextPropID();
 								g_Logs.server->info(
 										"       Copying object %v to %v",
 										prop.ID, newPropID);
 								prop.ID = newPropID;
-								SessionVarsChangeData.AddChange();
 
 								page->AddProp(prop, true);
 							}
@@ -166,8 +166,8 @@ void ServiceAuthenticationHandler::copyVeteranPlayerDetails(std::string pfUserna
 	data->PendingMinorUpdates++;
 }
 
-AccountData * ServiceAuthenticationHandler::onAuthenticate(SimulatorThread *sim,
-		std::string loginName, std::string authorizationHash) {
+AccountData * ServiceAuthenticationHandler::authenticate(
+		const std::string &unprocessedLoginName, const std::string &authorizationHash, std::string *errorMessage) {
 
 	AccountData *accPtr = NULL;
 
@@ -175,13 +175,12 @@ AccountData * ServiceAuthenticationHandler::onAuthenticate(SimulatorThread *sim,
 	 * the problematic characters, space, comma, semi-colon, pipe and apersand. It should
 	 * be rare we need to decode this (perhaps for some of the new integrated web services)
 	 */
-	std::string un = loginName;
-	Util::ReplaceAll(un, " ", "%20");
-	Util::ReplaceAll(un, ",", "%2c");
-	Util::ReplaceAll(un, ";", "%3b");
-	Util::ReplaceAll(un, "|", "%7c");
-	Util::ReplaceAll(un, "&", "%26");
-	loginName = un;
+	std::string loginName = unprocessedLoginName;
+	Util::ReplaceAll(loginName, " ", "%20");
+	Util::ReplaceAll(loginName, ",", "%2c");
+	Util::ReplaceAll(loginName, ";", "%3b");
+	Util::ReplaceAll(loginName, "|", "%7c");
+	Util::ReplaceAll(loginName, "&", "%26");
 
 	std::vector<std::string> prms;
 	Util::Split(authorizationHash, ":", prms);
@@ -236,9 +235,8 @@ AccountData * ServiceAuthenticationHandler::onAuthenticate(SimulatorThread *sim,
 			if (!parsingSuccessful) {
 				g_Logs.server->warn(
 						"Invalid data from authentication request.");
-				sim->ForceErrorMessage("Account information is not valid data.",
-						INFOMSG_ERROR);
-				sim->Disconnect("ServiceAuthentication::authenticate");
+				errorMessage->clear();
+				errorMessage->append("Account information is not valid data.");
 				return NULL;
 			}
 
@@ -246,10 +244,8 @@ AccountData * ServiceAuthenticationHandler::onAuthenticate(SimulatorThread *sim,
 			 * If no roles were returned, authentication failed
 			 */
 			if (!root.isMember("roles")) {
-				sim->ForceErrorMessage(
-						"Please sign in through the game website.",
-						INFOMSG_ERROR);
-				sim->Disconnect("ServiceAuthentication::authenticate");
+				errorMessage->clear();
+				errorMessage->append("Please sign in through the game website.");
 				g_Logs.server->warn("A likely attempt to login using the client directly.");
 				return NULL;
 			}
@@ -291,10 +287,8 @@ AccountData * ServiceAuthenticationHandler::onAuthenticate(SimulatorThread *sim,
 			}
 
 			if (!player && !sage && !admin && !developer && !builder) {
-				sim->ForceErrorMessage(
-						"User is valid, but does not have permission to play game.",
-						INFOMSG_ERROR);
-				sim->Disconnect("ServiceAuthentication::authenticate");
+				errorMessage->clear();
+				errorMessage->append("User is valid, but does not have permission to play game.");
 				g_Logs.server->info("User %v is valid, but does not any permission that allows play.",
 						loginName.c_str());
 				return NULL;
@@ -332,46 +326,37 @@ AccountData * ServiceAuthenticationHandler::onAuthenticate(SimulatorThread *sim,
 			}
 
 			// Some characters are unacceptable in grove names (i.e. separators in index and data files)
-			un = grove;
-			Util::ReplaceAll(un, "=", "%61");
-			Util::ReplaceAll(un, ";", "%3b");
-			Util::ReplaceAll(un, "\"", "%34");
-			grove = un;
+			std::string gn = grove;
+			Util::ReplaceAll(gn, "=", "%61");
+			Util::ReplaceAll(gn, ";", "%3b");
+			Util::ReplaceAll(gn, "\"", "%34");
+			grove = gn;
 
 			/*
 			 * Look up the account locally. If it already exists, just load it, otherwise
 			 * create a groveless account (without a registration key).
 			 */
-			AccountQuickData *aqd =
-					g_AccountManager.GetAccountQuickDataByUsername(
-							loginName.c_str());
-			if (aqd != NULL) {
+			AccountQuickData aqd =g_AccountManager.GetAccountQuickDataByUsername(loginName);
+			if (aqd.mID != 0) {
 				g_Logs.server->info("External service authenticated %v OK.",
 						loginName.c_str());
-				accPtr = g_AccountManager.FetchIndividualAccount(aqd->mID);
+				accPtr = g_AccountManager.FetchIndividualAccount(aqd.mID);
 
 			} else {
 				g_Logs.server->info(
 						"Service authenticated OK, but there was no local account with name %v, creating one",
 						loginName.c_str());
 				g_AccountManager.cs.Enter("ServiceAccountCreation");
-				int retval = g_AccountManager.CreateAccountFromService(
-						loginName.c_str());
+				int retval = g_AccountManager.CreateAccountFromService(loginName.c_str());
 				g_AccountManager.cs.Leave();
 				if (retval == g_AccountManager.ACCOUNT_SUCCESS) {
-					AccountQuickData *aqd =
-							g_AccountManager.GetAccountQuickDataByUsername(
-									loginName.c_str());
-					accPtr = g_AccountManager.FetchIndividualAccount(aqd->mID);
+					aqd = g_AccountManager.GetAccountQuickDataByUsername(loginName);
+					accPtr = g_AccountManager.FetchIndividualAccount(aqd.mID);
 					accPtr->GroveName = grove;
 					accPtr->PendingMinorUpdates++;
 				} else {
-					char buf[128];
-					Util::SafeFormat(buf, sizeof(buf),
-							"Failed to create account on game server. %s",
-							g_AccountManager.GetErrorMessage(retval));
-					sim->ForceErrorMessage(buf, INFOMSG_ERROR);
-					sim->Disconnect("ServiceAuthentication::authenticate");
+					errorMessage->clear();
+					errorMessage->append(StringUtil::Format("Failed to create account on game server. %s", g_AccountManager.GetErrorMessage(retval)));
 					return NULL;
 				}
 			}
@@ -396,12 +381,9 @@ AccountData * ServiceAuthenticationHandler::onAuthenticate(SimulatorThread *sim,
 					ZoneDefInfo *def = g_ZoneDefManager.GetPointerByGroveName(
 							grove.c_str());
 					if (def != NULL) {
-						char buf[128];
-						Util::SafeFormat(buf, sizeof(buf),
-								"The Grove name '%s' is already in use by another player. Please choose another. ",
-								grove.c_str());
-						sim->ForceErrorMessage(buf, INFOMSG_ERROR);
-						sim->Disconnect("ServiceAuthentication::authenticate");
+						errorMessage->clear();
+						errorMessage->append(StringUtil::Format("The Grove name '%s' is already in use by another player. Please choose another. ",
+								grove.c_str()));
 						return NULL;
 					}
 
@@ -423,13 +405,11 @@ AccountData * ServiceAuthenticationHandler::onAuthenticate(SimulatorThread *sim,
 									grove.c_str(), idx);
 							g_Logs.server->info("Grove %v is now %v",
 									zone->mWarpName.c_str(), buf);
+							g_ZoneDefManager.RemoveZoneFromIndexes(zone);
 							zone->mWarpName = buf;
 							zone->mGroveName = grove;
 							zone->PendingChanges++;
-
-							g_ZoneDefManager.UpdateZoneIndex(zone->mID,
-									accPtr->ID, zone->mWarpName.c_str(),
-									zone->mGroveName.c_str(), false);
+							g_ZoneDefManager.InsertZone(*zone, true);
 
 							idx++;
 						}
@@ -547,10 +527,8 @@ AccountData * ServiceAuthenticationHandler::onAuthenticate(SimulatorThread *sim,
 				accPtr->SiteSession.CopyFrom(&session);
 			}
 		} else {
-			sim->ForceErrorMessage(
-					"User not found on external service, please contact site administrator for assistance.",
-					INFOMSG_ERROR);
-			sim->Disconnect("ServiceAuthentication::authenticate");
+			errorMessage->clear();
+			errorMessage->append("User not found on external service, please contact site administrator for assistance.");
 			g_Logs.server->info(
 					"Service returned error when confirming authentication. Status %v",
 					res);

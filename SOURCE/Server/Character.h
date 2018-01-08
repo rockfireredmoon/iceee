@@ -13,12 +13,15 @@
 #include "PlayerStats.h"
 
 #include "Components.h"
+#include "Entities.h"
 #include "DirectoryAccess.h"
 #include "CreatureSpawner2.h" //For timer
 #include "AbilityTime.h"  //For cooldown data storage.
 #include "Leaderboard.h"
 
 using namespace std;
+
+static string ID_NEXT_CHARACTER_ID = "NextCharacterID";
 
 class ItemDef;
 struct ChangeData;
@@ -129,8 +132,8 @@ struct NamedLocation
 	void CopyFrom(const NamedLocation &source);
 };
 
-class CharacterData
-{
+
+class CharacterData: public AbstractEntity {
 public:
 	CharacterData();
 	~CharacterData();
@@ -150,10 +153,11 @@ public:
 	unsigned long SecondsLogged;  //Cumulative time count of seconds logged in.
 	unsigned long CreatedTimeSec; //Time in seconds since epoch the character was created
 	int SessionsLogged;      //Cumulative number of sessions logged in.
-	char TimeLogged[32];     //Human readable format of SecondsLogged (hh:mm:ss format)
-	char LastSession[32];    //Time logged during the last game session (hh:mm:ss format)
-	char LastLogOn[32];      //Date and time of last login.
-	char LastLogOff[32];     //Data and time of last logoff.
+	std::string TimeLogged;     //Human readable format of SecondsLogged (hh:mm:ss format)
+	std::string LastSession;    //Time logged during the last game session (hh:mm:ss format)
+	std::string LastLogOn;      //Date and time of last login.
+	std::string LastLogOff;     //Data and time of last logoff.
+	std::string Shard;		 //The players current shard. Should be blank if they are logged off
 
 	int CurrentVaultSize;    //Vault size in slot count (8 slots per row)
 	int CreditsPurchased;    //Unused. Total number of credits purchased.
@@ -206,6 +210,10 @@ public:
 	PlayerStatSet PlayerStats;
 
 	int clan;
+
+	bool WriteEntity(AbstractEntityWriter *writer);
+	bool ReadEntity(AbstractEntityReader *reader);
+	bool EntityKeys(AbstractEntityReader *reader);
 
 	void ClearAll();
 	void CopyFrom(CharacterData &source);
@@ -292,7 +300,7 @@ public:
 	void CheckGarbageCharacters(void);
 	void RemoveGarbageCharacters(void);
 	void UnloadAllCharacters(void);
-	bool SaveCharacter(int CDefID);
+	bool SaveCharacter(int CDefID, bool sync = false);
 	void UnloadCharacter(int CDefID);
 
 	CHARACTER_MAP charList;
@@ -323,8 +331,6 @@ extern CharacterManager g_CharacterManager;
 //extern vector<CharacterData> CharList;
 //int GetCharacterIndex(int CDefID);
 //int GetCharacterIndexByName(char *name);
-
-void SaveCharacterToStream(FILE *output, CharacterData &cd);
 
 int PrepExt_FriendsAdd(char *buffer, CharacterData *charData);
 int PrepExt_FriendsLogStatus(char *buffer, CharacterData *charData, int logStatus);

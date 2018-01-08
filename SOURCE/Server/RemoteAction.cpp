@@ -27,6 +27,31 @@
 #include "http/HTTPService.h"
 #include "util/Log.h"
 
+
+char *GetDataSizeStr(long value)
+{
+	//Prepares a string representation as a byte size of the given value.
+	//It is converted into an easier to read format of MB, KB, or B.
+	//Designed for the calling function that requires up to two distinct strings passed
+	//as arguments to sprintf() in a manner such as "%s sent / %s received".
+	//Each request is cycled into one of two string buffers, preventing overlap.
+	static char Buffer[2][32] = {0};
+	static int index = 0;
+
+	index++;
+	if(index > 1)
+		index = 0;
+
+	if(value >= 1000000)
+		sprintf(&Buffer[index][0], "%3.2f MB", (double)value / 1000000.0);
+	else if(value >= 1000)
+		sprintf(&Buffer[index][0], "%3.2f KB", (double)value / 1000.0);
+	else
+		sprintf(&Buffer[index][0], "%ld B", value);
+
+	return &Buffer[index][0];
+}
+
 const char *GetValueOfKey(MULTISTRING &extract, const char *key) {
 	//Search the given list of rows for an entry with a certain key value
 	//Then return a string pointer to its value.
@@ -115,13 +140,6 @@ int RunRemoteAction(ReportBuffer &report, MULTISTRING &header,
 	} else if (strcmp(action, "reloadelite") == 0) {
 		g_EliteManager.LoadData();
 		return REMOTE_COMPLETE;
-	} else if (strcmp(action, "setmotd") == 0) {
-		const char *data = GetValueOfKey(params, "data");
-		if (data == NULL)
-			return REMOTE_FAILED;
-
-		g_MOTD_Message = data;
-		return REMOTE_COMPLETE;
 	} else if (strcmp(action, "syschat") == 0) {
 		const char *data = GetValueOfKey(params, "data");
 		if (data == NULL)
@@ -129,9 +147,6 @@ int RunRemoteAction(ReportBuffer &report, MULTISTRING &header,
 
 		g_SimulatorManager.BroadcastChat(0, "System", "*SysChat", data);
 
-		return REMOTE_COMPLETE;
-	} else if (strcmp(action, "importkeys") == 0) {
-		g_AccountManager.ImportKeys();
 		return REMOTE_COMPLETE;
 	} else if (strcmp(action, "refreshpacket") == 0) {
 		Report::RefreshPacket(report);
@@ -280,9 +295,8 @@ void RefreshTime(ReportBuffer &report) {
 		if (aInst->mZoneDefPtr == NULL)
 			continue;
 
-		report.AddLine("ZoneID:%d  InstanceID:%d  Name:%s (%s)", aInst->mZone,
-				aInst->mInstanceID, aInst->mZoneDefPtr->mName.c_str(),
-				aInst->mZoneDefPtr->mShardName.c_str());
+		report.AddLine("ZoneID:%d  InstanceID:%d  Name:%s", aInst->mZone,
+				aInst->mInstanceID, aInst->mZoneDefPtr->mName.c_str());
 		report.AddLine("Owner CDefID:%d  Name:%s  Party:%d",
 				aInst->mOwnerCreatureDefID, aInst->mOwnerName.c_str(),
 				aInst->mOwnerPartyID);
@@ -609,11 +623,15 @@ int RunAccountCreation(MULTISTRING &params) {
 			g_Logs.http->error("Invalid remote authentication string.");
 			return REMOTE_AUTHFAILED;
 		}
-		int keyIndex = g_AccountManager.GetRegistrationKey(regkey);
-		if (keyIndex == -1) {
+		if (!g_AccountManager.PopRegistrationKey(regkey)) {
 			/* Key is not found, authtoken provided, so import this key as it is so
 			 * it can be immediately used to create an account */
 			g_AccountManager.ImportKey(regkey);
+		}
+	}
+	else {
+		if (!g_AccountManager.PopRegistrationKey(regkey)) {
+			return AccountManager::ErrorCode::ACCOUNT_KEY;
 		}
 	}
 

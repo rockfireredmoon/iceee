@@ -14,7 +14,7 @@ URLManager::URLManager()
 
 void URLManager::LoadFile(void)
 {
-	std::string filename = Platform::JoinPath(g_Config.ResolveUserDataPath(), "URL.txt");
+	std::string filename = Platform::JoinPath(g_Config.ResolveLocalConfigurationPath(), "URL.txt");
 
 	FileReader3 fr;
 	if(fr.OpenFile(filename.c_str()) != FileReader3::SUCCESS)

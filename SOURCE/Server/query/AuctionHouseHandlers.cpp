@@ -20,55 +20,12 @@
 #include "../Config.h"
 #include "../Chat.h"
 #include "../Instance.h"
+#include "../AuctionHouse.h"
+#include "../Cluster.h"
+#include "../StringUtil.h"
 #include <algorithm>
 
 using namespace std;
-
-static inline std::string FormatAuctionItemProto(AuctionHouseItem *item) {
-	char buf[32];
-	Util::SafeFormat(buf, sizeof(buf), "item%d:%d:%d:%d", item->mItemId,
-			item->mLookId, item->mCount, 0);
-	return buf;
-}
-
-static inline int WriteAuctionItem(char *buffer, char *scratch,
-		AuctionHouseItem *item) {
-	int wpos = 0;
-	Util::SafeFormat(scratch, sizeof(scratch), "%d", item->mId);
-	// 1
-	wpos += PutStringUTF(&buffer[wpos], scratch);
-	// 2
-	wpos += PutStringUTF(&buffer[wpos], FormatAuctionItemProto(item).c_str());
-	// 3
-	wpos += PutStringUTF(&buffer[wpos], item->mSellerName.c_str());
-	Util::SafeFormat(scratch, sizeof(scratch), "%lu", item->GetTimeRemaining());
-	// 4
-	wpos += PutStringUTF(&buffer[wpos], scratch);
-	Util::SafeFormat(scratch, sizeof(scratch), "%lu", item->mBuyItNowCopper);
-	// 5
-	wpos += PutStringUTF(&buffer[wpos], scratch);
-	Util::SafeFormat(scratch, sizeof(scratch), "%lu", item->mBuyItNowCredits);
-	// 6
-	wpos += PutStringUTF(&buffer[wpos], scratch);
-	Util::SafeFormat(scratch, sizeof(scratch), "%d", item->mBids.size());
-	// 7
-	wpos += PutStringUTF(&buffer[wpos], scratch);
-	if (item->mBids.size() > 0) {
-		AuctionHouseBid highBid = item->mBids[item->mBids.size() - 1];
-		Util::SafeFormat(scratch, sizeof(scratch), "%lu", highBid.mCopper);
-		// 8
-		wpos += PutStringUTF(&buffer[wpos], scratch);
-		Util::SafeFormat(scratch, sizeof(scratch), "%lu", highBid.mCredits);
-		// 9
-		wpos += PutStringUTF(&buffer[wpos], scratch);
-	} else {
-		// 8
-		wpos += PutStringUTF(&buffer[wpos], "0");
-		// 9
-		wpos += PutStringUTF(&buffer[wpos], "0");
-	}
-	return wpos;
-}
 
 //
 // AuctionHouseContentsHandler
@@ -102,7 +59,7 @@ int AuctionHouseContentsHandler::handleQuery(SimulatorThread *sim,
 	}
 	search.mAuctioneer = auctioneerInstance->CreatureDefID;
 
-	std::vector<AuctionHouseItem*> results;
+	std::vector<AuctionHouseItem> results;
 	g_AuctionHouseManager.Search(search, results);
 
 	int wpos = 0;
@@ -124,10 +81,12 @@ int AuctionHouseContentsHandler::handleQuery(SimulatorThread *sim,
 	wpos += PutStringUTF(&sim->SendBuf[wpos], auctioneerInstance->css.display_name);
 
 	int row = 0;
-	for (std::vector<AuctionHouseItem*>::iterator it = results.begin();
+	for (auto it = results.begin();
 			row < rows && it != results.end(); ++it, row++) {
 		wpos += PutByte(&sim->SendBuf[wpos], 9);
-		wpos += WriteAuctionItem(&sim->SendBuf[wpos], sim->Aux2, *it);
+		CharacterData *cd = g_CharacterManager.RequestCharacter((*it).mSeller, true);
+		std::string sellerName = cd == NULL ? "<Missing character>" : cd->cdef.css.display_name;
+		wpos += WriteAuctionItem(&sim->SendBuf[wpos], &(*it), sellerName);
 	}
 	PutShort(&sim->SendBuf[1], wpos - 3);
 	return wpos;
@@ -226,68 +185,13 @@ int AuctionHouseAuctionHandler::handleQuery(SimulatorThread *sim,
 				sim->Aux2);
 	}
 
-	if (copperCommision) {
-		creatureInstance->css.copper -= copperCommision;
-		creatureInstance->SendStatUpdate(STAT::COPPER);
-	}
-
-	if (creditsCommision > 0) {
-		creatureInstance->css.credits -= creditsCommision;
-		if (g_Config.AccountCredits) {
-			pld->accPtr->Credits = creatureInstance->css.credits;
-			pld->accPtr->PendingMinorUpdates++;
-		}
-		creatureInstance->SendStatUpdate(STAT::CREDITS);
-	}
-
-	AuctionHouseItem *ahItem = new AuctionHouseItem();
-	ahItem->mId = g_AuctionHouseManager.nextAuctionHouseItemID++;
-	ahItem->mAuctioneer = auctioneerInstance->CreatureDefID;
-	ahItem->mReserveCopper = reserveCopper;
-	ahItem->mReserveCredits = reserveCredits;
-	ahItem->mBuyItNowCopper = buyItNowCopper;
-	ahItem->mBuyItNowCredits = buyItNowCredits;
-	ahItem->mStartDate = time(NULL);
-	ahItem->mEndDate = ahItem->mStartDate + (hours * 60 * 60)
-			+ (days * 60 * 60 * 24);
-	ahItem->mSeller = pld->CreatureDefID;
-	ahItem->mItemId = slot.IID;
-	ahItem->mLookId = slot.customLook;
-	ahItem->mCount = slot.count;
-	ahItem->mSecondsRemaining = slot.secondsRemaining;
-
-	SessionVarsChangeData.AddChange();
-
-	g_AuctionHouseManager.SaveItem(ahItem);
-	AuctionTimerTask *tt = new AuctionTimerTask(ahItem);
-	ahItem->timerTask = tt;
-	g_TimerManager.AddTask(tt);
+	AuctionHouseItem ahItem = g_AuctionHouseManager.Auction(creatureInstance, pld, slot, copperCommision, creditsCommision, auctioneerInstance->CreatureDefID,
+			reserveCopper, reserveCredits, buyItNowCopper, buyItNowCredits, days, hours);
 
 	int wpos = PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
 	wpos += pld->charPtr->inventory.RemoveItemsAndUpdate(AUCTION_CONTAINER,
-			ahItem->mItemId, ahItem->mCount + 1, &sim->SendBuf[wpos]);
-
-	// Broadcast
-	int wpos2 = 0;
-	wpos2 += PutByte(&sim->Aux2[wpos2], 97);
-	wpos2 += PutShort(&sim->Aux2[wpos2], 0);
-	wpos2 += PutByte(&sim->Aux2[wpos2], 1);
-	Util::SafeFormat(sim->Aux3, sizeof(sim->Aux3), "%d", auctioneerInstance->CreatureID);
-	wpos2 += PutStringUTF(&sim->Aux2[wpos2], sim->Aux3);
-	wpos2 += WriteAuctionItem(&sim->Aux2[wpos2], sim->Aux3, ahItem);
-	PutShort(&sim->Aux2[1], wpos2 - 3);
-	g_SimulatorManager.SendToAllSimulators(sim->Aux2, wpos2, NULL);
-
-	ItemDef *item = g_ItemManager.GetSafePointerByID(ahItem->mItemId);
-	Util::SafeFormat(sim->Aux3, sizeof(sim->Aux3),
-			"%s is selling %s at %s's auction house",
-			pld->charPtr->cdef.css.display_name, item->mDisplayName.c_str(),
-			auctioneerInstance->css.display_name);
-	ChatMessage cm(sim->Aux3);
-	cm.mChannelName = "tc/";
-	cm.mChannel = GetChatInfoByChannel(cm.mChannelName.c_str());
-	cm.mSender = "EEBay";
-	g_ChatManager.SendChatMessage(cm, NULL);
+			ahItem.mItemId, ahItem.mCount + 1, &sim->SendBuf[wpos]);
+	pld->charPtr->pendingChanges++;
 
 	return wpos;
 }
@@ -311,61 +215,36 @@ int AuctionHouseBidHandler::handleQuery(SimulatorThread *sim,
 				"Unknown auctioneer.");
 	}
 
-
 	g_AuctionHouseManager.cs.Enter("AuctionHouseBidHandler::handleQuery");
-	if (g_AuctionHouseManager.mItems.find(auctionId)
-			== g_AuctionHouseManager.mItems.end()) {
+	AuctionHouseItem item = g_AuctionHouseManager.LoadItem(auctionId);
+	if (item.mId == 0) {
 		g_AuctionHouseManager.cs.Leave();
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 				"Could not find item.");
 	}
 
-	AuctionHouseItem *item = g_AuctionHouseManager.mItems[auctionId];
-	if (item->mAuctioneer != 0 && item->mAuctioneer != auctioneerInstance->CreatureDefID) {
+	if (item.mAuctioneer != 0 && item.mAuctioneer != auctioneerInstance->CreatureDefID) {
 		g_AuctionHouseManager.cs.Leave();
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 				"Incorrect auctioneer.");
 	}
 
-	if (item->IsExpired()) {
+	if (item.IsExpired()) {
 		g_AuctionHouseManager.cs.Leave();
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 				"Cannot bid on expired auctions.");
 	}
 
-	bool bidOk = item->Bid(pld->CreatureDefID, copper, credits);
-
-	g_AuctionHouseManager.SaveItem(item);
-
+	bool bidOk = item.Bid(pld->CreatureDefID, copper, credits);
 	g_AuctionHouseManager.cs.Leave();
 
 	if (!bidOk) {
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 				"Bid rejected.");
 	}
-
-	// Broadcast
-	int wpos2 = 0;
-	wpos2 += PutByte(&sim->Aux2[wpos2], 97);
-	wpos2 += PutShort(&sim->Aux2[wpos2], 0);
-	wpos2 += PutByte(&sim->Aux2[wpos2], 2);
-	Util::SafeFormat(sim->Aux3, sizeof(sim->Aux3), "%d", auctioneerInstance->CreatureID);
-	wpos2 += PutStringUTF(&sim->Aux2[wpos2], sim->Aux3);
-	Util::SafeFormat(sim->Aux3, sizeof(sim->Aux3), "%d", item->mId);
-	wpos2 += PutStringUTF(&sim->Aux2[wpos2], sim->Aux3);
-	Util::SafeFormat(sim->Aux3, sizeof(sim->Aux3), "%lu",
-			item->GetTimeRemaining());
-	wpos2 += PutStringUTF(&sim->Aux2[wpos2], sim->Aux3);
-	Util::SafeFormat(sim->Aux3, sizeof(sim->Aux3), "%d", item->mBids.size());
-	wpos2 += PutStringUTF(&sim->Aux2[wpos2], sim->Aux3);
-	AuctionHouseBid highBid = item->mBids[item->mBids.size() - 1];
-	Util::SafeFormat(sim->Aux3, sizeof(sim->Aux3), "%lu", highBid.mCopper);
-	wpos2 += PutStringUTF(&sim->Aux2[wpos2], sim->Aux3);
-	Util::SafeFormat(sim->Aux3, sizeof(sim->Aux3), "%lu", highBid.mCredits);
-	wpos2 += PutStringUTF(&sim->Aux2[wpos2], sim->Aux3);
-	PutShort(&sim->Aux2[1], wpos2 - 3);
-	g_SimulatorManager.SendToAllSimulators(sim->Aux2, wpos2, NULL);
-
+	g_AuctionHouseManager.SaveItem(item);
+	g_AuctionHouseManager.BroadcastUpdate(auctioneerInstance->CreatureID, item);
+	g_ClusterManager.AuctionItemUpdated(item.mId);
 	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
 }
 
@@ -378,10 +257,9 @@ int AuctionHouseBuyHandler::handleQuery(SimulatorThread *sim,
 		CreatureInstance *creatureInstance) {
 
 	int auctionId = atoi(query->GetString(1));
-
+	AuctionHouseItem item = g_AuctionHouseManager.LoadItem(auctionId);
 	g_AuctionHouseManager.cs.Enter("AuctionHouseBuyHandler::handleQuery");
-	if (g_AuctionHouseManager.mItems.find(auctionId)
-			== g_AuctionHouseManager.mItems.end()) {
+	if (item.mId == 0) {
 		g_AuctionHouseManager.cs.Leave();
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 				"Could not find item.");
@@ -395,14 +273,13 @@ int AuctionHouseBuyHandler::handleQuery(SimulatorThread *sim,
 				"Unknown auctioneer.");
 	}
 
-	AuctionHouseItem *item = g_AuctionHouseManager.mItems[auctionId];
-	if (item->mAuctioneer != 0 && item->mAuctioneer != auctioneerInstance->CreatureDefID) {
+	if (item.mAuctioneer != 0 && item.mAuctioneer != auctioneerInstance->CreatureDefID) {
 		g_AuctionHouseManager.cs.Leave();
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 				"Incorrect auctioneer.");
 	}
 
-	int errCode = g_AuctionHouseManager.ValidateItem(item, pld->accPtr,
+	int errCode = g_AuctionHouseManager.ValidateItem(&item, pld->accPtr,
 			&creatureInstance->css, creatureInstance->charPtr);
 	if (errCode != AuctionHouseError::NONE) {
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
@@ -410,7 +287,7 @@ int AuctionHouseBuyHandler::handleQuery(SimulatorThread *sim,
 	}
 
 	InventorySlot *sendSlot = creatureInstance->charPtr->inventory.AddItem_Ex(
-			INV_CONTAINER, item->mItemId, item->mCount + 1);
+			INV_CONTAINER, item.mItemId, item.mCount + 1);
 	if (sendSlot == NULL) {
 		int err = creatureInstance->charPtr->inventory.LastError;
 		if (err == InventoryManager::ERROR_ITEM)
@@ -426,16 +303,18 @@ int AuctionHouseBuyHandler::handleQuery(SimulatorThread *sim,
 			return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 					"Server error: undefined error.");
 	}
-	sendSlot->secondsRemaining = item->mSecondsRemaining;
-	sendSlot->customLook = item->mLookId;
+
+	creatureInstance->charPtr->pendingChanges++;
+	sendSlot->secondsRemaining = item.mSecondsRemaining;
+	sendSlot->customLook = item.mLookId;
 
 
-	CreatureInstance *sellerInstance = g_ActiveInstanceManager.GetPlayerCreatureByDefID(item->mSeller);
+	CreatureInstance *sellerInstance = g_ActiveInstanceManager.GetPlayerCreatureByDefID(item.mSeller);
 	CharacterStatSet *sellerCss = NULL;
 	AccountData *sellerAccount = NULL;
 	CharacterData *sellerCharacterData = NULL;
 	if(sellerInstance == NULL) {
-		sellerCharacterData = g_CharacterManager.RequestCharacter(item->mSeller, true);
+		sellerCharacterData = g_CharacterManager.RequestCharacter(item.mSeller, true);
 		if(sellerCharacterData == NULL) {
 			g_Logs.simulator->warn("Seller of auction item, no longer exists. Received copper and credits go to /dev/null!");
 		}
@@ -453,28 +332,17 @@ int AuctionHouseBuyHandler::handleQuery(SimulatorThread *sim,
 		sellerAccount = g_AccountManager.GetActiveAccountByID(sellerCharacterData->AccountID);
 	}
 
-	g_AuctionHouseManager.RemoveItem(item->mId);
+	g_AuctionHouseManager.RemoveItem(item.mId);
 	g_AuctionHouseManager.cs.Leave();
-
-	// Broadcast
-	int wpos2 = 0;
-	wpos2 += PutByte(&sim->Aux2[wpos2], 97);
-	wpos2 += PutShort(&sim->Aux2[wpos2], 0);
-	wpos2 += PutByte(&sim->Aux2[wpos2], 3);
-	Util::SafeFormat(sim->Aux3, sizeof(sim->Aux3), "%d", auctioneerInstance->CreatureID);
-	wpos2 += PutStringUTF(&sim->Aux2[wpos2], sim->Aux3);
-	Util::SafeFormat(sim->Aux3, sizeof(sim->Aux3), "%d", item->mId);
-	wpos2 += PutStringUTF(&sim->Aux2[wpos2], sim->Aux3);
-	PutShort(&sim->Aux2[1], wpos2 - 3);
-	g_SimulatorManager.SendToAllSimulators(sim->Aux2, wpos2, NULL);
+	g_AuctionHouseManager.BroadcastRemovedItem(auctioneerInstance->CreatureID, item.mId);
 
 	g_CharacterManager.GetThread("Simulator::MarketBuy");
 
-	if (item->mBuyItNowCopper > 0) {
-		creatureInstance->css.copper -= item->mBuyItNowCopper;
+	if (item.mBuyItNowCopper > 0) {
+		creatureInstance->css.copper -= item.mBuyItNowCopper;
 		creatureInstance->SendStatUpdate(STAT::COPPER);
 		if(sellerCss!= NULL) {
-			sellerCss->copper += item->mBuyItNowCopper;
+			sellerCss->copper += item.mBuyItNowCopper;
 		}
 		if(sellerCharacterData != NULL)
 			sellerCharacterData->pendingChanges++;
@@ -483,20 +351,20 @@ int AuctionHouseBuyHandler::handleQuery(SimulatorThread *sim,
 		}
 	}
 
-	if (item->mBuyItNowCredits > 0) {
-		creatureInstance->css.credits -= item->mBuyItNowCredits;
+	if (item.mBuyItNowCredits > 0) {
+		creatureInstance->css.credits -= item.mBuyItNowCredits;
 		if (g_Config.AccountCredits) {
 			pld->accPtr->Credits = creatureInstance->css.credits;
 			pld->accPtr->PendingMinorUpdates++;
 			if(sellerAccount != NULL) {
 				sellerAccount->Credits = sellerCss->credits;
-				sellerAccount->Credits += item->mBuyItNowCredits;
+				sellerAccount->Credits += item.mBuyItNowCredits;
 				sellerAccount->PendingMinorUpdates++;
 			}
 		}
 		else {
 			if(sellerCss!= NULL) {
-				sellerCss->credits += item->mBuyItNowCredits;
+				sellerCss->credits += item.mBuyItNowCredits;
 			}
 			if(sellerCharacterData != NULL) {
 				sellerCharacterData->pendingChanges++;
@@ -514,7 +382,7 @@ int AuctionHouseBuyHandler::handleQuery(SimulatorThread *sim,
 
 	g_CharacterManager.ReleaseThread();
 
-	ItemDef *itemData = g_ItemManager.GetSafePointerByID(item->mItemId);
+	ItemDef *itemData = g_ItemManager.GetSafePointerByID(item.mItemId);
 	Util::SafeFormat(sim->Aux3, sizeof(sim->Aux3),
 			"%s bought %s at %s's auction house",
 			pld->charPtr->cdef.css.display_name, itemData->mDisplayName.c_str(),

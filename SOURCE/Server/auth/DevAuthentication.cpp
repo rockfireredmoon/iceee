@@ -26,7 +26,7 @@ DevAuthenticationHandler::~DevAuthenticationHandler() {
 
 }
 
-AccountData * DevAuthenticationHandler::onAuthenticate(SimulatorThread *sim, std::string loginName, std::string authorizationHash) {
+AccountData * DevAuthenticationHandler::authenticate(const std::string &loginName, const std::string &authorizationHash, std::string *errorMessage) {
 
 	AccountData *accPtr = NULL;
 

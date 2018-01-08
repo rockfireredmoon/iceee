@@ -21,6 +21,7 @@
 #include "../Debug.h"
 #include "../Config.h"
 #include "../Crafting.h"
+#include "../Cluster.h"
 #include "../ConfigString.h"
 #include "../Ability2.h"
 #include "../util/Log.h"
@@ -467,20 +468,21 @@ int ItemMoveHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 	//Need this or else accounts with debug permissions (multiple simultaneous logins per account)
 	//will overwrite each other's vault contents. (Originally intended for shared vaults, which
 	//implementation was never finished, but might as well keep)
+	int sessions = g_ClusterManager.CountAccountSessions(pld->accPtr->ID);
 	if (((destContainer == BANK_CONTAINER) || (origContainer == BANK_CONTAINER))
-			&& (pld->accPtr->GetSessionLoginCount() > 1))
+			&& (sessions > 1))
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 				"You cannot use vaults while logged into multiple account characters at once.");
 
 	if (((destContainer == DELIVERY_CONTAINER)
 			|| (origContainer == DELIVERY_CONTAINER))
-			&& (pld->accPtr->GetSessionLoginCount() > 1))
+			&& (sessions > 1))
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 				"You cannot use delivery boxes while logged into multiple account characters at once.");
 
 	if (((destContainer == STAMPS_CONTAINER)
 			|| (origContainer == STAMPS_CONTAINER))
-			&& (pld->accPtr->GetSessionLoginCount() > 1))
+			&& (sessions > 1))
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 				"You cannot use stamp boxes while logged into multiple account characters at once.");
 
@@ -640,6 +642,7 @@ int ItemSplitHandler::handleQuery(SimulatorThread *sim,
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 				"Error creating new stack.");
 	}
+	pld->charPtr->pendingChanges++;
 
 	//Need to refetch since the pointer might've changed when adding the item.
 	item = pld->charPtr->inventory.GetItemPtrByCCSID(CCSID);
@@ -723,7 +726,9 @@ int ItemDeleteHandler::handleQuery(SimulatorThread *sim,
 					&pld->charPtr->inventory.containerList[origContainer][r]));
 
 	//Remove from server's inventory list
-	pld->charPtr->inventory.RemItem(InventoryID);
+	if(!pld->charPtr->inventory.RemItem(InventoryID))
+		g_Logs.server->error("Failed to find item %v to remove from inventory.", InventoryID);
+	pld->charPtr->pendingChanges++;
 
 	//Just in case a container was equipped or unequipped, update the max inventory slots
 	pld->charPtr->inventory.CountInventorySlots();
@@ -767,6 +772,7 @@ int ItemCreateHandler::handleQuery(SimulatorThread *sim,
 						creature->charPtr->inventory.AddItem_Ex(INV_CONTAINER,
 								item->mID, 1);
 				if (sendSlot != NULL) {
+					creature->charPtr->pendingChanges++;
 					g_Logs.event->info("[SAGE] %v gave %v to %v because '%v'",
 							pld->charPtr->cdef.css.display_name,
 							item->mDisplayName.c_str(),
@@ -834,6 +840,7 @@ int ItemDefDeleteHandler::handleQuery(SimulatorThread *sim,
 						g_CharacterManager.ReleaseThread();
 						creature->simulatorPtr->AttemptSend(sim->Aux1, wpos);
 						cdata->inventory.RemItem(slot->CCSID);
+						cdata->pendingChanges++;
 						return PrepExt_QueryResponseString(sim->SendBuf,
 								query->ID, "OK");
 					}
@@ -1286,7 +1293,7 @@ int CraftCreateHandler::protected_helper_query_craft_create(
 	itemPtr = inv.AddItem_Ex(INV_CONTAINER, itemPlan->resultItemId, 1);
 	if (itemPtr == NULL)
 		return QueryErrorMsg::INVCREATE;
-
+	pld->charPtr->pendingChanges++;
 	sim->ActivateActionAbilities(itemPtr);
 
 	int wpos = AddItemUpdate(sim->SendBuf, sim->Aux3, itemPtr);
@@ -1318,6 +1325,8 @@ int CraftCreateHandler::protected_helper_query_craft_create(
 	if (iq.size() > 0)
 		wpos += RemoveItemUpdate(&sim->SendBuf[wpos], sim->Aux3, iq[0].ptr);
 	inv.RemoveItems(iq);
+
+	pld->charPtr->pendingChanges++;
 
 	wpos += PrepExt_QueryResponseString(&sim->SendBuf[wpos], query->ID, "OK");
 	return wpos;
@@ -1425,6 +1434,7 @@ int ModCraftHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 				InventorySlot *newItem = inv.AddItem_Ex(INV_CONTAINER,
 						outputs[i].mID, outputs[i].mStackCount);
 				if (newItem) {
+					pld->charPtr->pendingChanges++;
 					ItemDef *itemDef = g_ItemManager.GetPointerByID(
 							outputs[i].mID);
 					std::string msg = "Obtained ";
@@ -1460,6 +1470,7 @@ int ModCraftHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 					wpos += RemoveItemUpdate(&sim->Aux1[wpos], sim->Aux2, remItem);
 				}
 				inv.RemItem(inputs[i].mCCSID);
+				pld->charPtr->pendingChanges++;
 			}
 
 			if(wpos > 0)

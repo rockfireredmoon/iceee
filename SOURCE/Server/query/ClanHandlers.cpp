@@ -104,7 +104,7 @@ int ClanDisbandHandler::handleQuery(SimulatorThread *sim,
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 				"Your clan does not exist!");
 
-	Clan c = g_ClanManager.mClans[clanID];
+	Clan c = g_ClanManager.GetClan(clanID);
 	ClanMember member = c.GetMember(pld->CreatureDefID);
 	if (member.mRank != Rank::LEADER) {
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
@@ -211,7 +211,7 @@ int ClanInfoHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 	if (!g_Config.Clans || clanID == 0 || !g_ClanManager.HasClan(clanID)) {
 		wpos += PutShort(&sim->SendBuf[wpos], 0);
 	} else {
-		Clans::Clan c = g_ClanManager.mClans[clanID];
+		Clans::Clan c = g_ClanManager.GetClan(clanID);
 		Clans::ClanMember leader = c.GetFirstMemberOfRank(Clans::Rank::LEADER);
 		wpos += PutShort(&sim->SendBuf[wpos], 3);
 
@@ -257,7 +257,7 @@ int ClanMotdHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 				"Your clan does not exist!");
 
-	Clans::Clan c = g_ClanManager.mClans[clanID];
+	Clans::Clan c = g_ClanManager.GetClan(clanID);
 	Clans::ClanMember member = c.GetMember(pld->CreatureDefID);
 	if (member.mRank < Clans::Rank::OFFICER) {
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
@@ -315,7 +315,7 @@ int ClanInviteAcceptHandler::handleQuery(SimulatorThread *sim,
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 				"The clan does not exist!");
 
-	Clans::Clan c = g_ClanManager.mClans[clanID];
+	Clans::Clan c = g_ClanManager.GetClan(clanID);
 	std::vector<int>::iterator pendingIt = std::find(c.mPendingMembers.begin(),
 			c.mPendingMembers.end(), pld->CreatureDefID);
 	if (pendingIt == c.mPendingMembers.end()) {
@@ -364,6 +364,8 @@ int ClanInviteAcceptHandler::handleQuery(SimulatorThread *sim,
 		}
 	}
 
+	g_ClanManager.cs.Leave();
+
 	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
 }
 
@@ -395,7 +397,7 @@ int ClanInviteHandler::handleQuery(SimulatorThread *sim,
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 				"Your clan does not exist!");
 
-	Clans::Clan c = g_ClanManager.mClans[clanID];
+	Clans::Clan c = g_ClanManager.GetClan(clanID);
 	Clans::ClanMember member = c.GetMember(pld->CreatureDefID);
 	if (member.mRank < Clans::Rank::OFFICER) {
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
@@ -413,7 +415,7 @@ int ClanInviteHandler::handleQuery(SimulatorThread *sim,
 
 	SendClanInvite(c, member, cd->cdef.CreatureDefID);
 	c.mPendingMembers.push_back(cd->cdef.CreatureDefID);
-	g_ClanManager.mClans[c.mId] = c;
+	g_ClanManager.SaveClan(c);
 
 	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
 }
@@ -448,14 +450,13 @@ int ClanRankHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 	std::string memberName = query->args[0];
 	int newRank = Clans::Rank::GetIDByName(query->args[1].c_str());
 
-	int memberCDefID = g_AccountManager.GetCDefFromCharacterName(
-			memberName.c_str());
+	int memberCDefID = g_UsedNameDatabase.GetIDByName(memberName);
 	if (memberCDefID == -1) {
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 				"No such clan member.");
 	}
 
-	Clans::Clan c = g_ClanManager.mClans[clanID];
+	Clans::Clan c = g_ClanManager.GetClan(clanID);
 
 	Clans::ClanMember me = c.GetMember(pld->CreatureDefID);
 	if (me.mID == 0)
@@ -498,7 +499,6 @@ int ClanRankHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 	g_ClanManager.cs.Enter("SimulatorThread::handle_query_clan_info");
 	c.UpdateMember(them);
 	g_ClanManager.SaveClan(c);
-	g_ClanManager.mClans[c.mId] = c;
 	g_ClanManager.cs.Leave();
 
 	BroadcastClanRankChange(memberName, c, them);
@@ -526,7 +526,7 @@ int ClanListHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 	if (!g_Config.Clans || clanID == 0 || !g_ClanManager.HasClan(clanID)) {
 		wpos += PutShort(&sim->SendBuf[wpos], 0);
 	} else {
-		Clans::Clan c = g_ClanManager.mClans[clanID];
+		Clans::Clan c = g_ClanManager.GetClan(clanID);
 
 		// Number of rows (number of clan members)
 		wpos += PutShort(&sim->SendBuf[wpos], c.mMembers.size());
@@ -600,7 +600,7 @@ int ClanRemoveHandler::handleQuery(SimulatorThread *sim,
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 				"Your clan does not exist!");
 
-	Clans::Clan c = g_ClanManager.mClans[clanID];
+	Clans::Clan c = g_ClanManager.GetClan(clanID);
 	Clans::ClanMember me = c.GetMember(pld->CreatureDefID);
 	if (me.mRank < Clans::Rank::OFFICER) {
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
@@ -609,8 +609,7 @@ int ClanRemoveHandler::handleQuery(SimulatorThread *sim,
 
 	// The target member
 	std::string memberName = query->args[0];
-	int memberCDefID = g_AccountManager.GetCDefFromCharacterName(
-			memberName.c_str());
+	int memberCDefID = g_UsedNameDatabase.GetIDByName(memberName);
 	if (memberCDefID == -1) {
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 				"No such clan member.");
@@ -687,7 +686,7 @@ int ClanLeaveHandler::handleQuery(SimulatorThread *sim,
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 				"Your clan does not exist!");
 
-	Clans::Clan c = g_ClanManager.mClans[clanID];
+	Clans::Clan c = g_ClanManager.GetClan(clanID);
 	Clans::ClanMember me = c.GetMember(pld->CreatureDefID);
 	if (me.mID == 0) {
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,

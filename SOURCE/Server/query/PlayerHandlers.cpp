@@ -54,11 +54,10 @@ int AccountInfoHandler::handleQuery(SimulatorThread *sim,
 	if (query->argCount < 1)
 		return 0;
 
-	AccountQuickData *quickData =
-			g_AccountManager.GetAccountQuickDataByUsername(
-					query->args[0].c_str());
+	AccountQuickData quickData =
+			g_AccountManager.GetAccountQuickDataByUsername(query->args[0]);
 	AccountData * data = NULL;
-	if (quickData == NULL) {
+	if (quickData.mID == 0) {
 		g_CharacterManager.GetThread(
 				"SimulatorThread::handle_query_account_info");
 		CharacterData *friendPtr = g_CharacterManager.GetCharacterByName(
@@ -67,7 +66,7 @@ int AccountInfoHandler::handleQuery(SimulatorThread *sim,
 			data = g_AccountManager.GetActiveAccountByID(friendPtr->AccountID);
 		g_CharacterManager.ReleaseThread();
 	} else {
-		data = g_AccountManager.GetActiveAccountByID(quickData->mID);
+		data = g_AccountManager.GetActiveAccountByID(quickData.mID);
 	}
 	if (data == NULL) {
 		Util::SafeFormat(sim->Aux2, sizeof(sim->Aux2),
@@ -75,7 +74,7 @@ int AccountInfoHandler::handleQuery(SimulatorThread *sim,
 		sim->SendInfoMessage(sim->Aux2, INFOMSG_INFO);
 	} else {
 		Util::SafeFormat(sim->Aux2, sizeof(sim->Aux2),
-				"Username: %s (%d) with %d characters  Grove: %s", data->Name,
+				"Username: %s (%d) with %d characters  Grove: %s", data->Name.c_str(),
 				data->ID, data->GetCharacterCount(), data->GroveName.c_str());
 		sim->SendInfoMessage(sim->Aux2, INFOMSG_INFO);
 		int b;

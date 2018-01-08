@@ -19,8 +19,8 @@
 #ifndef SQUIRRELOBJECTS_H
 #define SQUIRRELOBJECTS_H
 
-#include "sqrat.h"
-#include "json/json.h"
+#include "../sqrat.h"
+#include "../json/json.h"
 #include <string>
 
 namespace Squirrel {

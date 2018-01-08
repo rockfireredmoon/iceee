@@ -14,6 +14,8 @@
 #include "Debug.h"
 #include "Globals.h"
 #include "PVP.h"
+#include "Cluster.h"
+#include "StringUtil.h"
 #include "InstanceScale.h"
 #include "Inventory.h"
 #include "DirectoryAccess.h"
@@ -193,10 +195,11 @@ void CharacterData :: ClearAll(void)
 	SecondsLogged = 0;
 	CreatedTimeSec = 0;
 	SessionsLogged = 0;
-	memset(&TimeLogged, 0, sizeof(TimeLogged));
-	memset(&LastSession, 0, sizeof(LastSession));
-	memset(&LastLogOn, 0, sizeof(LastLogOn));
-	memset(&LastLogOff, 0, sizeof(LastLogOff));
+	TimeLogged = "";
+	LastSession = "";
+	LastLogOn = "";
+	LastLogOff = "";
+	Shard = "";
 
 	questJournal.Clear();
 
@@ -231,6 +234,435 @@ void CharacterData :: CopyFrom(CharacterData &source)
 	//Assign the vector lists
 	abilityList.AbilityList.assign(source.abilityList.AbilityList.begin(), source.abilityList.AbilityList.end());
 	preferenceList.PrefList.assign(source.preferenceList.PrefList.begin(), source.preferenceList.PrefList.end());
+}
+
+
+
+bool CharacterData :: EntityKeys(AbstractEntityReader *reader) {
+	reader->Key("CharacterData", StringUtil::Format("%d", cdef.CreatureDefID), true);
+	return true;
+}
+
+bool CharacterData :: ReadEntity(AbstractEntityReader *reader) {
+	if(!reader->Exists())
+		return false;
+
+	AccountID = reader->ValueInt("AccountID");
+	characterVersion = reader->ValueInt("CharacterVersion");
+	activeData.CurInstance = reader->ValueInt("Instance");
+	clan = reader->ValueInt("Clan");
+	activeData.CurZone = reader->ValueInt("Zone");
+	if(activeData.CurZone <= 0)
+		activeData.CurZone = g_DefZone;
+	activeData.CurX = reader->ValueInt("X");
+	if(activeData.CurX == -1)
+		activeData.CurX = g_DefX;
+	activeData.CurY = reader->ValueInt("Y");
+	if(activeData.CurY == -1)
+		activeData.CurY = g_DefY;
+	activeData.CurZ = reader->ValueInt("Z");
+	if(activeData.CurZ == -1)
+		activeData.CurZ = g_DefZ;
+	activeData.CurRotation = reader->ValueInt("Rotation");
+	StatusText = reader->Value("StatusText");
+	SecondsLogged = reader->ValueULong("SecondsLogged");
+	CreatedTimeSec = reader->ValueULong("CreatedTime");
+	SessionsLogged = reader->ValueULong("SessionsLogged");
+	TimeLogged = reader->Value("TimeLogged");
+	LastSession = reader->Value("LastSession");
+	LastLogOn = reader->Value("LastLogOn");
+	LastLogOff = reader->Value("LastLogOff");
+	Shard = reader->Value("Shard");
+	originalAppearance = reader->Value("OriginalAppearance");
+	originalAppearance = reader->Value("OriginalAppearance");
+	CurrentVaultSize = reader->ValueInt("CurrentVaultSize");
+	CreditsPurchased = reader->ValueInt("CreditsPurchased");
+	CreditsSpent = reader->ValueInt("CreditsSpent");
+	ExtraAbilityPoints = reader->ValueInt("ExtraAbilityPoints");
+	STRINGLIST l;
+	Util::Split(reader->Value("GroveReturn"), ",", l);
+	if(l.size() > 3) {
+		groveReturnPoint[0] = atoi(l[0].c_str());
+		groveReturnPoint[1] = atoi(l[1].c_str());
+		groveReturnPoint[2] = atoi(l[2].c_str());
+		groveReturnPoint[3] = atoi(l[3].c_str());
+	}
+	l.clear();
+	Util::Split(reader->Value("BindReturn"), ",", l);
+	if(l.size() > 3) {
+		bindReturnPoint[0] = atoi(l[0].c_str());
+		bindReturnPoint[1] = atoi(l[1].c_str());
+		bindReturnPoint[2] = atoi(l[2].c_str());
+		bindReturnPoint[3] = atoi(l[3].c_str());
+	}
+	LastWarpTime = reader->ValueULong("LastWarpTime");
+	UnstickCount = reader->ValueInt("UnstickCount");
+	LastUnstickTime = reader->ValueULong("LastUnstickTime");
+
+	l = reader->ListValue("HengeList", ",");
+	for(auto a = l.begin(); a != l.end(); ++a)
+		HengeAdd(atoi((*a).c_str()));
+
+	l = reader->ListValue("Abilities", ",");
+	for(auto a = l.begin(); a != l.end(); ++a) {
+		abilityList.AddAbility(atoi((*a).c_str()));
+	}
+
+	l = reader->ListValue("FriendList");
+	for(auto a = l.begin(); a != l.end(); ++a) {
+		STRINGLIST l2;
+		Util::Split(*a, ",", l2);
+		if(l2.size() > 1) {
+			int CDefID = atoi(l2[0].c_str());
+			if(CDefID != 0 && l2[1].length() > 0) {
+				AddFriend(CDefID, l2[1].c_str());
+			}
+		}
+	}
+	l = reader->ListValue("GuildList");
+	for(auto a = l.begin(); a != l.end(); ++a) {
+		STRINGLIST l2;
+		Util::Split(*a, ",", l2);
+		if(l2.size() > 1) {
+			int GuildDefID = atoi(l2[0].c_str());
+			int valour = atoi(l2[1].c_str());
+			if(GuildDefID != 0) {
+				JoinGuild(GuildDefID);
+				AddValour(GuildDefID, valour);
+			}
+		}
+	}
+	l = reader->ListValue("Sidekick");
+	for(auto a = l.begin(); a != l.end(); ++a) {
+		STRINGLIST l2;
+		Util::Split(*a, ",", l2);
+		if(l2.size() > 2) {
+			SidekickObject skobj;
+			skobj.CDefID = atoi(l2[0].c_str());
+			skobj.summonType = atoi(l2[1].c_str());
+			skobj.summonParam = atoi(l2[2].c_str());
+			SidekickList.push_back(skobj);
+		}
+	}
+	MaxSidekicks = reader->ValueInt("MaxSidekicks");
+	Mode = reader->ValueInt("Mode");
+	PrivateChannelName = reader->Value("PrivateChannelName");
+	PrivateChannelPassword = reader->Value("PrivateChannelPassword");
+	InstanceScaler = reader->Value("InstanceScaler");
+
+	PlayerStats.ReadEntity(reader);
+
+	STRINGLIST perms = reader->ListValue("Permissions", ",");
+	for(auto a = perms.begin(); a != perms.end(); ++a) {
+		if(SetPermission(Perm_Account, StringUtil::LowerCase(*a).c_str(), true) == false)
+			g_Logs.data->warn("Unknown permission identifier [%v] in Character %v.", cdef.CreatureDefID);
+	}
+
+	//
+	// Stats
+	//
+	reader->Section("STATS");
+	STRINGLIST keys = reader->Keys();
+	for(auto a = keys.begin(); a != keys.end(); ++a) {
+		int res = WriteStatToSetByName(*a, reader->Value(*a), &cdef.css);
+		if(res == -1)
+			g_Logs.data->warn("Unknown stat name in Character list: %v", *a);
+	}
+
+	//
+	// Preferences
+	//
+	reader->Section("PREFS");
+	keys = reader->Keys();
+	for(auto a = keys.begin(); a != keys.end(); ++a)
+		preferenceList.SetPref((*a).c_str(), reader->Value((*a)).c_str());
+
+	//
+	// Inventory
+	//
+	reader->Section("INV");
+	keys = reader->Keys();
+	for(auto i = keys.begin(); i != keys.end(); ++i) {
+		STRINGLIST l = reader->ListValue(*i);
+		for(std::vector<std::string>::iterator a = l.begin(); a != l.end(); ++a) {
+			std::string v = *a;
+			if(ReadInventory(StringUtil::LowerCase(*i), v, inventory, "CharacterData",  cdef.css.display_name, "Character") == -2) {
+				g_Logs.data->warn("Character [%v] invalid inventory item [%v]", cdef.css.display_name, v);
+			}
+		}
+	}
+
+	//
+	// Quest
+	//
+	reader->Section("QUEST");
+	keys = reader->Keys();
+	for(auto i = keys.begin(); i != keys.end(); ++i) {
+		STRINGLIST l = reader->ListValue(*i);
+		for(auto a = l.begin(); a != l.end(); ++a) {
+			STRINGLIST l;
+			Util::Split(*a, ",", l);
+
+			QuestReference newItem;
+			newItem.Reset();
+
+			int complete, count;
+			if((*i) == "active") {
+				if(l.size() > 1) {
+					// Index: 0   1  2   3        4         5        6         7        8
+					//    active=id,act,obj1comp,obj1count,obj2comp,obj2count,obj3comp,obj3count
+					newItem.QuestID = atoi(l[0].c_str());
+					newItem.CurAct = atoi(l[1].c_str());
+					int o = 0;
+					for(int a = 2; a < l.size() - 1; a++)
+					{
+						complete = atoi(l[a++].c_str());
+						count = atoi(l[a].c_str());
+						newItem.ObjComplete[o] = complete;
+						newItem.ObjCounter[o] = count;
+						o++;
+					}
+					questJournal.activeQuests.AddItem(newItem);
+				}
+				else {
+					g_Logs.data->warn("Invalid quest active spec [%v] in character [%v]", *a, cdef.CreatureDefID);
+				}
+			}
+			else if((*i) == "complete") {
+				for(int a = 0; a < l.size(); a++) {
+					newItem.QuestID = atoi(l[a].c_str());
+					questJournal.completedQuests.AddItem(newItem);
+				}
+			}
+			else if((*i) == "repeat") {
+				if(l.size() > 2) {
+					int ID = atoi(l[0].c_str());
+					unsigned long startMinute = strtoul(l[1].c_str(), NULL, 0);
+					unsigned long waitMinute = strtoul(l[2].c_str(), NULL, 0);
+					questJournal.AddQuestRepeatDelay(ID, startMinute, waitMinute);
+				}
+				else {
+					g_Logs.data->warn("Invalid quest repeat spec [%v] in character [%v]", *a, cdef.CreatureDefID);
+				}
+			}
+		}
+	}
+
+	//
+	// Cooldown
+	//
+	reader->Section("COOLDOWN");
+	keys = reader->Keys();
+	for(auto i = keys.begin(); i != keys.end(); ++i) {
+		STRINGLIST l = reader->ListValue(*i);
+		for(auto a = l.begin(); a != l.end(); ++a) {
+
+			STRINGLIST l;
+			Util::Split(*a, ",", l);
+
+			if(l.size() > 1) {
+				long remain = strtoul(l[0].c_str(), NULL, 0);  //For these, don't use the copy form so it doesn't overwrite the name block.
+				long elapsed = strtoul(l[1].c_str(), NULL, 0);
+				if(remain < 0)
+					remain = 0;
+				if(elapsed < 0)
+					elapsed = 0;
+
+				if(remain > 0) {
+					cooldownManager.LoadEntry((*i).c_str(), remain, elapsed);
+				}
+			}
+			else {
+				g_Logs.data->warn("Invalid cooldown spec [%v] in character [%v]", *a, cdef.CreatureDefID);
+			}
+		}
+	}
+
+	//
+	// Abilities
+	//
+	if(g_Config.PersistentBuffs) {
+		reader->Section("ABILITIES");
+		keys = reader->Keys();
+		for(auto i = keys.begin(); i != keys.end(); ++i) {
+			STRINGLIST l = reader->ListValue(*i);
+			for(auto a = l.begin(); a != l.end(); ++a) {
+
+				STRINGLIST l;
+				Util::Split(*a, ",", l);
+
+				if(l.size() > 4) {
+					//Expected formats:
+						//  Ability=tier,buffType,ability ID,ability group ID,remain
+
+					unsigned char tier = atoi(l[0].c_str());
+					unsigned char buffType = atoi(l[1].c_str());
+					short abID = atoi(l[2].c_str());
+					short abgID = atoi(l[3].c_str());
+					double remainS = (double)strtoul(l[4].c_str(), NULL, 0) / 1000.0;
+					buffManager.AddPersistentBuff(tier, buffType, abID, abgID, remainS);
+				}
+				else {
+					g_Logs.data->warn("Invalid abilities spec [%v] in character [%v]", *a, cdef.CreatureDefID);
+				}
+			}
+		}
+	}
+
+	return true;
+}
+
+bool CharacterData :: WriteEntity(AbstractEntityWriter *writer) {
+	writer->Key("CharacterData", StringUtil::Format("%d", cdef.CreatureDefID));
+	writer->Value("characterVersion", characterVersion);
+	writer->Value("AccountID", AccountID);
+	writer->Value("Clan", clan);
+	writer->Value("Instance", activeData.CurInstance);
+	writer->Value("Zone", activeData.CurZone);
+	writer->Value("X", activeData.CurX);
+	writer->Value("Y", activeData.CurY);
+	writer->Value("Z", activeData.CurZ);
+	writer->Value("Rotation", activeData.CurRotation);
+	writer->Value("StatusText", StatusText);
+	writer->Value("InstanceScaler", InstanceScaler);
+	writer->Value("PrivateChannelName", PrivateChannelName);
+	writer->Value("PrivateChannelPassword", PrivateChannelPassword);
+	writer->Value("CreatedTime", CreatedTimeSec);
+	writer->Value("SecondsLogged", SecondsLogged);
+	writer->Value("SessionsLogged", SessionsLogged);
+	writer->Value("TimeLogged", TimeLogged);
+	writer->Value("LastSession", LastSession);
+	writer->Value("LastLogOn", LastLogOn);
+	writer->Value("LastLogOff", LastLogOff);
+	writer->Value("Shard", Shard);
+	writer->Value("OriginalAppearance", originalAppearance);
+	writer->Value("CurrentVaultSize", CurrentVaultSize);
+	writer->Value("CreditsPurchased", CreditsPurchased);
+	writer->Value("CreditsSpent", CreditsSpent);
+	writer->Value("ExtraAbilityPoints", ExtraAbilityPoints);
+	writer->Value("GroveReturn", StringUtil::Format("%d,%d,%d,%d", groveReturnPoint[0], groveReturnPoint[1], groveReturnPoint[2], groveReturnPoint[3]));
+	writer->Value("BindReturn", StringUtil::Format("%d,%d,%d,%d", bindReturnPoint[0], bindReturnPoint[1], bindReturnPoint[2], bindReturnPoint[3]));
+	writer->Value("LastWarpTime", LastWarpTime);
+	writer->Value("UnstickCount", UnstickCount);
+	writer->Value("LastUnstickTime", LastUnstickTime);
+
+	PlayerStats.WriteEntity(writer);
+	STRINGLIST l;
+	for(auto a = hengeList.begin(); a != hengeList.end(); ++a)
+		l.push_back(StringUtil::Format("%d", *a));
+	writer->ListValue("HengeList", l);
+
+	l.clear();
+	for(int a = 0; a < MaxPermissionDef; a++)
+		if((PermissionSet[PermissionDef[a].index] & PermissionDef[a].flag) == PermissionDef[a].flag)
+			l.push_back(PermissionDef[a].name);
+	writer->ListValue("Permissions", l);
+
+	l.clear();
+	for(auto a = abilityList.AbilityList.begin(); a != abilityList.AbilityList.end(); ++a)
+		l.push_back(StringUtil::Format("%d", *a));
+	writer->ListValue("Abilities", l);
+
+	l.clear();
+	for(auto a = guildList.begin(); a != guildList.end(); ++a)
+		l.push_back(StringUtil::Format("%d,%d", (*a).GuildDefID, (*a).Valour));
+	writer->ListValue("GuildList", l);
+
+	l.clear();
+	for(auto a = friendList.begin(); a != friendList.end(); ++a)
+		l.push_back(StringUtil::Format("%d,%s", (*a).CDefID, (*a).Name.c_str()));
+	writer->ListValue("FriendList", l);
+
+	writer->Value("MaxSidekicks", MaxSidekicks);
+	writer->Value("Mode", Mode);
+
+	l.clear();
+	for(auto a = SidekickList.begin(); a != SidekickList.end(); ++a)
+		l.push_back(StringUtil::Format("%d,%d,%d", (*a).CDefID, (*a).summonType, (*a).summonParam));
+	writer->ListValue("Sidekicks", l);
+
+	//
+	// Stats
+	//
+	writer->Section("STATS");
+	for(int a = 0; a < NumStats; a++)
+		if(isStatZero(a, &cdef.css) == false)
+			WriteStatToEntity(a, &cdef.css, writer);
+	//
+	// Preferences
+	//
+	writer->Section("PREFS");
+	for(auto a = preferenceList.PrefList.begin(); a != preferenceList.PrefList.end(); ++a)
+		writer->Value((*a).name, (*a).value);
+
+	//
+	// Inventory
+	//
+	writer->Section("INV");
+	for(int a = 0; a < MAXCONTAINER; a++) {
+		STRINGLIST l;
+		for(int b = 0; b < (int)inventory.containerList[a].size(); b++) {
+			InventorySlot *slot = &inventory.containerList[a][b];
+
+			std::string s = StringUtil::Format("%lu,%d", slot->CCSID & CONTAINER_SLOT,
+					slot->IID );
+
+			bool extend = false;
+			if(slot->count > 0 || slot->customLook != 0 || slot->bindStatus != 0 || slot->secondsRemaining != -1)
+				s += StringUtil::Format(",%d,%d,%d,%ld", slot->count, slot->customLook, slot->bindStatus, slot->AdjustTimes());
+
+			l.push_back(s);
+		}
+		writer->ListValue(GetContainerNameFromID(a), l);
+	}
+
+	//
+	// Quests
+	//
+	writer->Section("QUEST");
+	l.clear();
+	for(auto a = questJournal.activeQuests.itemList.begin(); a != questJournal.activeQuests.itemList.end() ; ++a) {
+		QuestReference &qref = *a;
+		std::string s = StringUtil::Format("%d,%d", qref.QuestID, qref.CurAct);
+		for(int b = 0; b < MAXOBJECTIVES; b++) 		{
+			int comp = qref.ObjComplete[b];
+			int count = qref.ObjCounter[b];
+			s += StringUtil::Format(",%d,%d", comp, count);
+		}
+		l.push_back(s);
+	}
+	if(l.size() > 0)
+		writer->ListValue("active", l);
+
+	l.clear();
+	for(auto a = questJournal.completedQuests.itemList.begin(); a != questJournal.completedQuests.itemList.end() ; ++a) {
+		l.push_back(StringUtil::Format("%d", (*a).QuestID));
+	}
+	if(l.size() > 0)
+		writer->ListValue("complete", l);
+
+	l.clear();
+	for(auto a = questJournal.delayedRepeat.begin(); a != questJournal.delayedRepeat.end() ; ++a) {
+		l.push_back(StringUtil::Format("%d,%lu,%lu", (*a).QuestID, (*a).StartTimeMinutes, (*a).WaitTimeMinutes));
+	}
+	if(l.size() > 0)
+		writer->ListValue("repeat", l);
+
+	//
+	// Cooldown
+	//
+	writer->Section("COOLDOWN");
+	cooldownManager.WriteEntity(writer);
+
+	//
+	// Abilities
+	//
+	if(g_Config.PersistentBuffs) {
+		writer->Section("ABILITIES");
+		buffManager.WriteEntity(writer);
+	}
+
+	return true;
 }
 
 void CharacterData :: EraseExpirationTime(void)
@@ -506,7 +938,7 @@ void CharacterData :: UpdateEquipStats(CreatureInstance *destData)
 					Util::Split(modentry[i], "=", moddata);
 					if(moddata.size() >= 2)
 					{
-						int index = GetStatIndexByName(moddata[0].c_str());
+						int index = GetStatIndexByName(moddata[0]);
 						if(index >= 0)
 						{
 							if(StatList[index].isNumericalType() == true)
@@ -1151,472 +1583,6 @@ enum CharacterDataFileSections
 	CDFS_Abilities
 };
 
-int CheckSection_General(FileReader &fr, CharacterData &cd, std::string debugFilename)
-{
-	//Responsible for loading general variables from a character file
-	//Assumes that the line is already extracted and separated
-	if(strcmp(fr.SecBuffer, "ID") == 0)
-	{
-		cd.cdef.CreatureDefID = fr.BlockToInt(1);
-	}
-	else if(strcmp(fr.SecBuffer, "ACCOUNTID") == 0)
-	{
-		cd.AccountID = fr.BlockToInt(1);
-	}
-	else if(strcmp(fr.SecBuffer, "CHARACTERVERSION") == 0)
-	{
-		cd.characterVersion = fr.BlockToIntC(1);
-	}
-	else if(strcmp(fr.SecBuffer, "INSTANCE") == 0)
-	{
-		cd.activeData.CurInstance = fr.BlockToInt(1);
-	}
-	else if(strcmp(fr.SecBuffer, "CLAN") == 0)
-	{
-		cd.clan = fr.BlockToInt(1);
-	}
-	else if(strcmp(fr.SecBuffer, "ZONE") == 0)
-	{
-		cd.activeData.CurZone = fr.BlockToInt(1);
-		if(cd.activeData.CurZone <= 0)
-			cd.activeData.CurZone = g_DefZone;
-	}
-	else if(strcmp(fr.SecBuffer, "X") == 0)
-	{
-		cd.activeData.CurX = fr.BlockToInt(1);
-		if(cd.activeData.CurX == -1)
-			cd.activeData.CurX = g_DefX;
-	}
-	else if(strcmp(fr.SecBuffer, "Y") == 0)
-	{
-		cd.activeData.CurY = fr.BlockToInt(1);
-		if(cd.activeData.CurY == -1)
-			cd.activeData.CurY = g_DefY;
-	}
-	else if(strcmp(fr.SecBuffer, "Z") == 0)
-	{
-		cd.activeData.CurZ = fr.BlockToInt(1);
-		if(cd.activeData.CurZ == -1)
-			cd.activeData.CurZ = g_DefZ;
-	}
-	else if(strcmp(fr.SecBuffer, "ROTATION") == 0)
-	{
-		cd.activeData.CurRotation = fr.BlockToIntC(1) & 0xFF;
-	}
-	else if(strcmp(fr.SecBuffer, "STATUSTEXT") == 0)
-	{
-		cd.StatusText = fr.BlockToString(1);
-	}
-	else if(strcmp(fr.SecBuffer, "SECONDSLOGGED") == 0)
-	{
-		cd.SecondsLogged = fr.BlockToULongC(1);
-	}
-	else if(strcmp(fr.SecBuffer, "CREATEDTIME") == 0)
-	{
-		cd.CreatedTimeSec = fr.BlockToULongC(1);
-	}
-	else if(strcmp(fr.SecBuffer, "SESSIONSLOGGED") == 0)
-	{
-		cd.SessionsLogged = fr.BlockToIntC(1);
-	}
-	else if(strcmp(fr.SecBuffer, "TIMELOGGED") == 0)
-	{
-		strncpy(cd.TimeLogged, fr.BlockToStringC(1, 0), sizeof(cd.TimeLogged) - 1);
-	}
-	else if(strcmp(fr.SecBuffer, "LASTSESSION") == 0)
-	{
-		strncpy(cd.LastSession, fr.BlockToStringC(1, 0), sizeof(cd.LastSession) - 1);
-	}
-	else if(strcmp(fr.SecBuffer, "LASTLOGON") == 0)
-	{
-		strncpy(cd.LastLogOn, fr.BlockToStringC(1, 0), sizeof(cd.LastLogOn) - 1);
-	}
-	else if(strcmp(fr.SecBuffer, "LASTLOGOFF") == 0)
-	{
-		strncpy(cd.LastLogOff, fr.BlockToStringC(1, 0), sizeof(cd.LastLogOff) - 1);
-	}
-	else if(strcmp(fr.SecBuffer, "ORIGINALAPPEARANCE") == 0)
-	{
-		cd.originalAppearance = fr.BlockToStringC(1, 0);
-	}
-	else if(strcmp(fr.SecBuffer, "CURRENTVAULTSIZE") == 0)
-	{
-		cd.CurrentVaultSize = fr.BlockToIntC(1);
-	}
-	else if(strcmp(fr.SecBuffer, "CREDITSPURCHASED") == 0)
-	{
-		cd.CreditsPurchased = fr.BlockToIntC(1);
-	}
-	else if(strcmp(fr.SecBuffer, "CREDITSSPENT") == 0)
-	{
-		cd.CreditsSpent = fr.BlockToIntC(1);
-	}
-	else if(strcmp(fr.SecBuffer, "EXTRAABILITYPOINTS") == 0)
-	{
-		cd.ExtraAbilityPoints = fr.BlockToIntC(1);
-	}
-	else if(strcmp(fr.SecBuffer, "GROVERETURN") == 0)
-	{
-		//Restore this entry so it can be re-broken with multibreak instead
-		if(fr.BlockPos[1] > 0)
-			fr.DataBuffer[fr.BlockPos[1] - 1] = '=';
-		fr.MultiBreak("=,");
-		cd.groveReturnPoint[0] = fr.BlockToIntC(1);
-		cd.groveReturnPoint[1] = fr.BlockToIntC(2);
-		cd.groveReturnPoint[2] = fr.BlockToIntC(3);
-		cd.groveReturnPoint[3] = fr.BlockToIntC(4);
-	}
-	else if(strcmp(fr.SecBuffer, "BINDRETURN") == 0)
-	{
-		//Restore this entry so it can be re-broken with multibreak instead
-		if(fr.BlockPos[1] > 0)
-			fr.DataBuffer[fr.BlockPos[1] - 1] = '=';
-		fr.MultiBreak("=,");
-		cd.bindReturnPoint[0] = fr.BlockToIntC(1);
-		cd.bindReturnPoint[1] = fr.BlockToIntC(2);
-		cd.bindReturnPoint[2] = fr.BlockToIntC(3);
-		cd.bindReturnPoint[3] = fr.BlockToIntC(4);
-	}
-	else if(strcmp(fr.SecBuffer, "LASTWARPTIME") == 0)
-	{
-		cd.LastWarpTime = fr.BlockToULongC(1);
-	}
-	else if(strcmp(fr.SecBuffer, "UNSTICKCOUNT") == 0)
-	{
-		cd.UnstickCount = fr.BlockToIntC(1);
-	}
-	else if(strcmp(fr.SecBuffer, "LASTUNSTICKTIME") == 0)
-	{
-		cd.LastUnstickTime = fr.BlockToULongC(1);
-	}
-	else if(strcmp(fr.SecBuffer, "HENGELIST") == 0)
-	{
-		//Restore this entry so it can be re-broken with multibreak instead
-		if(fr.BlockPos[1] > 0)
-			fr.DataBuffer[fr.BlockPos[1] - 1] = '=';
-
-		int r = fr.MultiBreak("=,");
-		int a;
-		for(a = 1; a < r; a++)
-			cd.HengeAdd(fr.BlockToIntC(a));
-		cd.HengeSort();
-	}
-	else if(strcmp(fr.SecBuffer, "ABILITIES") == 0)
-	{
-		//Restore this entry so it can be re-broken with multibreak instead
-		if(fr.BlockPos[1] > 0)
-			fr.DataBuffer[fr.BlockPos[1] - 1] = '=';
-
-		int r = fr.MultiBreak("=,");
-		int a;
-		for(a = 1; a < r; a++)
-			cd.abilityList.AddAbility(fr.BlockToIntC(a));
-	}
-	else if(strcmp(fr.SecBuffer, "FRIENDLIST") == 0)
-	{
-		//Restore this entry so it can be re-broken with multibreak instead
-		if(fr.BlockPos[1] > 0)
-			fr.DataBuffer[fr.BlockPos[1] - 1] = '=';
-
-		int r = fr.MultiBreak("=,");
-		if(r >= 3)
-		{
-			int CDefID = fr.BlockToIntC(1);
-			char *name = fr.BlockToStringC(2, 0);
-
-			//For compatibility with older versions, which don't save the name.
-			if(CDefID != 0 && strlen(name) > 0)
-				cd.AddFriend(CDefID, name);
-		}
-	}
-	else if(strcmp(fr.SecBuffer, "GUILDLIST") == 0)
-		{
-			//Restore this entry so it can be re-broken with multibreak instead
-			if(fr.BlockPos[1] > 0)
-				fr.DataBuffer[fr.BlockPos[1] - 1] = '=';
-
-			int r = fr.MultiBreak("=,");
-			if(r >= 3)
-			{
-				int GuildDefID = fr.BlockToIntC(1);
-				int valour = fr.BlockToIntC(2);
-				if(GuildDefID != 0) {
-					cd.JoinGuild(GuildDefID);
-					cd.AddValour(GuildDefID, valour);
-				}
-			}
-		}
-	else if(strcmp(fr.SecBuffer, "SIDEKICK") == 0)
-	{
-		//Restore this entry so it can be re-broken with multibreak instead
-		if(fr.BlockPos[1] > 0)
-			fr.DataBuffer[fr.BlockPos[1] - 1] = '=';
-
-		fr.MultiBreak("=,");
-		SidekickObject skobj;
-		skobj.CDefID = fr.BlockToIntC(1);
-		skobj.summonType = fr.BlockToIntC(2);
-		skobj.summonParam = fr.BlockToIntC(3);
-		cd.SidekickList.push_back(skobj);
-	}
-	else if(strcmp(fr.SecBuffer, "MAXSIDEKICKS") == 0)
-	{
-		cd.MaxSidekicks = fr.BlockToIntC(1);
-	}
-	else if(strcmp(fr.SecBuffer, "MODE") == 0)
-	{
-		cd.Mode = fr.BlockToIntC(1);
-	}
-	else if(strcmp(fr.SecBuffer, "PRIVATECHANNELNAME") == 0)
-	{
-		cd.PrivateChannelName = fr.BlockToString(1);
-	}
-	else if(strcmp(fr.SecBuffer, "PRIVATECHANNELPASSWORD") == 0)
-	{
-		cd.PrivateChannelPassword = fr.BlockToString(1);
-	}
-	else if(strcmp(fr.SecBuffer, "PERMISSIONS") == 0)
-	{
-		if(fr.BlockPos[1] > 0)
-			fr.DataBuffer[fr.BlockPos[1] - 1] = '=';
-		fr.MultiBreak("=,");
-		for(int a = 1; a < fr.MULTIBLOCKCOUNT; a++)
-		{
-			if(fr.BlockLen[a] > 0)
-			{
-				if(cd.SetPermission(Perm_Account, fr.BlockToStringC(a, Case_Lower), true) == false)
-					g_Logs.data->warn("Unknown permission identifier [%v] in Character file.", fr.SecBuffer);
-			}
-			else
-				break;
-		}
-	}
-	else if(strcmp(fr.SecBuffer, "INSTANCESCALER") == 0)
-	{
-		cd.InstanceScaler = fr.BlockToStringC(1, 0);
-	}
-	else if(!cd.PlayerStats.LoadFromStream(fr)) {
-		g_Logs.data->warn("Unknown identifier [%v] in character General section (line: %v).", fr.BlockToString(0), fr.LineNumber);
-	}
-	return 0;
-}
-
-int CheckSection_Stats(FileReader &fr, CharacterData &cd, std::string debugFilename)
-{
-	static char StatName[64];
-	fr.BlockToStringC(0, Case_Lower);
-	strncpy(StatName, fr.SecBuffer, fr.BlockLen[0]);
-	if(fr.BlockLen[0] >= 63)
-		StatName[63] = 0;
-	else
-		StatName[fr.BlockLen[0]] = 0;
-
-	int res = WriteStatToSetByName(StatName, fr.BlockToStringC(1, 0), &cd.cdef.css);
-	if(res == -1)
-	{
-		g_Logs.data->warn("Unknown stat name in Character list: %v", StatName);
-	}
-	return 0;
-}
-
-
-int CheckSection_Preference(FileReader &fr, CharacterData &cd, std::string debugFilename)
-{
-	//Singlebreak leaves both strings null terminated, so calling them in this
-	//form won't overwrite the target buffer as the copy function would.
-	cd.preferenceList.SetPref(fr.BlockToString(0), fr.BlockToString(1));
-	//g_Log.AddMessageFormat("[%s]=[%s]", fr.BlockToString(0), fr.BlockToString(1));
-
-	return 0;
-}
-
-
-int CheckSection_Quest(FileReader &fr, CharacterData &cd, std::string debugFilename)
-{
-	//Expected formats:
-	//  active=id,act,obj1comp,obj1count,obj2comp,obj2count,obj3comp,obj3count
-	//  complete=a,b,c,d,e,f,g...
-	//  repeat=id,startMinute,waitTime
-
-	QuestReference newItem;
-	newItem.Reset();
-
-	if(fr.BlockPos[1] > 0)
-		fr.DataBuffer[fr.BlockPos[1] - 1] = '=';
-	int r = fr.MultiBreak("=,");
-
-	int complete, count;
-	char *tag = fr.BlockToStringC(0, 0);
-	if(strcmp(tag, "active") == 0)
-	{
-		// Index: 0   1  2   3        4         5        6         7        8
-		//    active=id,act,obj1comp,obj1count,obj2comp,obj2count,obj3comp,obj3count
-		newItem.QuestID = fr.BlockToIntC(1);
-		newItem.CurAct = fr.BlockToIntC(2);
-		for(int a = 0; a < MAXOBJECTIVES; a++ )
-		{
-			int offset = a * 2;
-			complete = fr.BlockToIntC(3 + offset);
-			count = fr.BlockToIntC(4 + offset);
-			newItem.ObjComplete[a] = complete;
-			newItem.ObjCounter[a] = count;
-		}
-		cd.questJournal.activeQuests.AddItem(newItem);
-	}
-	else if(strcmp(tag, "complete") == 0)
-	{
-		for(int a = 1; a < r; a++)
-		{
-			newItem.QuestID = fr.BlockToIntC(a);
-			cd.questJournal.completedQuests.AddItem(newItem);
-		}
-	}
-	else if(strcmp(tag, "repeat") == 0)
-	{
-		int ID = fr.BlockToIntC(1);
-		unsigned long startMinute = fr.BlockToULongC(2);
-		unsigned long waitMinute = fr.BlockToULongC(3);
-		cd.questJournal.AddQuestRepeatDelay(ID, startMinute, waitMinute);
-	}
-	return 0;
-}
-
-int CheckSection_Cooldown(FileReader &fr, CharacterData &cd, std::string debugFilename)
-{
-	//Expected formats:
-	//  cooldownCategoryName=remainingTimeMS,elapsedTimeMS
-
-	if(fr.BlockPos[1] > 0)
-		fr.DataBuffer[fr.BlockPos[1] - 1] = '=';
-	fr.MultiBreak("=,");
-
-	const char *name = fr.BlockToStringC(0, 0);
-	int remain = fr.BlockToInt(1);  //For these, don't use the copy form so it doesn't overwrite the name block.
-	int elapsed = fr.BlockToInt(2);
-	cd.cooldownManager.LoadEntry(name, remain, elapsed);
-	
-	return 0;
-}
-
-int CheckSection_Abilities(FileReader &fr, CharacterData &cd, std::string debugFilename)
-{
-	//Expected formats:
-	//  Ability=tier,buffType,ability ID,ability group ID,remain
-	if(g_Config.PersistentBuffs) {
-
-		if(fr.BlockPos[1] > 0)
-			fr.DataBuffer[fr.BlockPos[1] - 1] = '=';
-		fr.MultiBreak("=,");
-
-		unsigned char tier = fr.BlockToInt(1);
-		unsigned char buffType = fr.BlockToInt(2);
-		short abID = fr.BlockToInt(3);
-		short abgID = fr.BlockToInt(4);
-		double remainS = (double)fr.BlockToULongC(5) / 1000.0;
-		cd.buffManager.AddPersistentBuff(tier, buffType, abID, abgID, remainS);
-	}
-
-	return 0;
-}
-
-int LoadCharacterFromStream(FileReader &fr, CharacterData &cd, std::string debugFilename)
-{
-	//Return codes:
-	//   1  Section end marker reached.
-	//   0  End of file reached.
-	//  -1  Another entry was encountered
-
-	//Default stat assignments will be assigned to the original set.
-	//CharacterDataSet dataPtr = &cd.oss;
-
-	//Which dataset is currently being loaded
-	int Section = CDFS_General;
-
-	bool curEntry = false;
-	int r;
-	while(fr.FileOpen())
-	{
-		long CurPos = ftell(fr.FileHandle[0]);
-		r = fr.ReadLine();
-		if(r > 0)
-		{
-			r = fr.SingleBreak("=");
-			fr.BlockToStringC(0, Case_Upper);
-			if(strcmp(fr.SecBuffer, "[ENTRY]") == 0)
-			{
-				Section = CDFS_General;
-				if(curEntry == true)
-				{
-					//Reset the position so it doesn't interfere with reading the next
-					//entry
-					fr.FilePos = CurPos;
-					fseek(fr.FileHandle[0], CurPos, SEEK_SET);
-					return -1;
-				}
-				else
-					curEntry = true;
-			}
-			else if(strcmp(fr.SecBuffer, "[END]") == 0)
-			{
-				return 1;
-			}
-			else if(strcmp(fr.SecBuffer, "[GENERAL]") == 0)
-			{
-				Section = CDFS_General;
-			}
-			else if(strcmp(fr.SecBuffer, "[STATS]") == 0)
-			{
-				Section = CDFS_Stats;
-			}
-			else if(strcmp(fr.SecBuffer, "[PREFS]") == 0)
-			{
-				Section = CDFS_Prefs;
-			}
-			else if(strcmp(fr.SecBuffer, "[INV]") == 0)
-			{
-				Section = CDFS_Inv;
-			}
-			else if(strcmp(fr.SecBuffer, "[QUEST]") == 0)
-			{
-				Section = CDFS_Quest;
-			}
-			else if(strcmp(fr.SecBuffer, "[COOLDOWN]") == 0)
-			{
-				Section = CDFS_Cooldown;
-			}
-			else if(strcmp(fr.SecBuffer, "[ABILITIES]") == 0)
-			{
-				Section = CDFS_Abilities;
-			}
-			else
-			{
-				if(Section == CDFS_General)
-					CheckSection_General(fr, cd, debugFilename);
-				else if(Section == CDFS_Stats)
-					CheckSection_Stats(fr, cd, debugFilename);
-				else if(Section == CDFS_Prefs)
-					CheckSection_Preference(fr, cd, debugFilename);
-				else if(Section == CDFS_Inv) {
-					if(CheckSection_Inventory(fr, cd.inventory, debugFilename,  cd.cdef.css.display_name, "Character") == -2) {
-						g_Logs.data->warn("Character [%v] unknown container name [%v]", cd.cdef.css.display_name, fr.BlockToStringC(0, 0));
-					}
-				}
-				else if(Section == CDFS_Quest)
-					CheckSection_Quest(fr, cd, debugFilename);
-				else if(Section == CDFS_Cooldown)
-					CheckSection_Cooldown(fr, cd, debugFilename);
-				else if(Section == CDFS_Abilities)
-					CheckSection_Abilities(fr, cd, debugFilename);
-			}
-		}
-	}
-	fr.CloseCurrent();
-
-
-	//g_Log.AddMessageFormat("Loaded %d characters.", CharList.UsedCount);
-	return 1;
-}
-
 void CharacterData::WritePrivateToJSON(Json::Value &value)
 {
 
@@ -1637,6 +1603,7 @@ void CharacterData::WriteToJSON(Json::Value &value)
 	value["lastSession"] = LastSession;
 	value["lastLogon"] = LastLogOn;
 	value["lastLogoff"] = LastLogOff;
+	value["shard"] = Shard;
 	value["originalAppearance"] = originalAppearance;
 	value["instanceScale"] = InstanceScaler;
 	value["currentVaultSize"] = CurrentVaultSize;
@@ -1692,419 +1659,8 @@ void CharacterData::WriteToJSON(Json::Value &value)
 	}
 	value["guilds"] = guilds;
 
-
-//
-//	int write = 0;
-//		for(int a = 0; a < MaxPermissionDef; a++)
-//		{
-//			if((cd.PermissionSet[PermissionDef[a].index] & PermissionDef[a].flag) == PermissionDef[a].flag)
-//			{
-//				if(write == 0)
-//					fprintf(output, "Permissions=");
-//				if(write > 0)
-//					fputc(',', output);
-//				write++;
-//
-//				fprintf(output, "%s", PermissionDef[a].name);
-//				if(write >= 5)
-//				{
-//					fprintf(output, "\r\n");
-//					write = 0;
-//				}
-//			}
-//		}
-//		if(write > 0)
-//			fprintf(output, "\r\n");
-//
-//		Util::WriteIntegerList(output, "Abilities", cd.abilityList.AbilityList);
-//
-//		//Guild list
-//		for(size_t i = 0; i < cd.guildList.size(); i++)
-//			fprintf(output, "GuildList=%d,%d\r\n", cd.guildList[i].GuildDefID, cd.guildList[i].Valour);
-//
-//		//Friend list
-//		for(size_t i = 0; i < cd.friendList.size(); i++)
-//			fprintf(output, "FriendList=%d,%s\r\n", cd.friendList[i].CDefID, cd.friendList[i].Name.c_str());
-//
-//
-//		/*
-//		fcount = (int)cd.SidekickList.size();
-//		written = 0;
-//		while(written < fcount)
-//		{
-//			if((written % 10) == 0)
-//			{
-//				if(written > 0)
-//					fprintf(output, "\r\n");
-//				fprintf(output, "Sidekicks=%d", cd.SidekickList[written]);
-//			}
-//			else
-//			{
-//				fprintf(output, ",%d", cd.SidekickList[written]);
-//			}
-//			written++;
-//		}
-//		if(written > 0)
-//			fprintf(output, "\r\n");
-//			*/
-//		for(size_t i = 0; i < cd.SidekickList.size(); i++)
-//			fprintf(output, "Sidekick=%d,%d,%d\r\n", cd.SidekickList[i].CDefID, cd.SidekickList[i].summonType, cd.SidekickList[i].summonParam);
-//		fprintf(output, "\r\n");
-//
-//		//Stats
-//		fprintf(output, "\r\n");
-//
-//		//Preferences
-//		fprintf(output, "[PREFS]\r\n");
-//		for(a = 0; a < (int)cd.preferenceList.PrefList.size(); a++)
-//		{
-//			/* Not comparing against defaults anymore
-//			int r = defcd.preferenceList.GetPrefIndex((char*)cd.preferenceList.PrefList[a].name.c_str());
-//			bool save = true;
-//			if(r >= 0)
-//			{
-//				if(defcd.preferenceList.PrefList[r].value.compare(cd.preferenceList.PrefList[a].value) == 0)
-//					save = false;
-//			}
-//			if(save == true)
-//				fprintf(output, "%s=%s\r\n", cd.preferenceList.PrefList[a].name.c_str(), cd.preferenceList.PrefList[a].value.c_str());
-//			*/
-//			fprintf(output, "%s=%s\r\n", cd.preferenceList.PrefList[a].name.c_str(), cd.preferenceList.PrefList[a].value.c_str());
-//		}
-//		fprintf(output, "\r\n");
-//
-//		fprintf(output, "[INV]\r\n");
-//		int b;
-//		for(a = 0; a < MAXCONTAINER; a++)
-//		{
-//			for(b = 0; b < (int)cd.inventory.containerList[a].size(); b++)
-//			{
-//				InventorySlot *slot = &cd.inventory.containerList[a][b];
-//				fprintf(output, "%s=%lu,%d",
-//					GetContainerNameFromID((slot->CCSID & CONTAINER_ID) >> 16),
-//					slot->CCSID & CONTAINER_SLOT,
-//					slot->IID );
-//
-//				bool extend = false;
-//				if(slot->count > 0 || slot->customLook != 0 || slot->bindStatus != 0 || slot->secondsRemaining != -1)
-//					extend = true;
-//
-//				if(extend == true) {
-//					fprintf(output, ",%d,%d,%d,%ld", slot->count, slot->customLook, slot->bindStatus, slot->AdjustTimes());
-//				}
-//
-//				fprintf(output, "\r\n");
-//			}
-//		}
-//
-//
-//		//Active quests
-//		fprintf(output, "\r\n[QUEST]\r\n");
-//		for(a = 0; a < (int)cd.questJournal.activeQuests.itemList.size(); a++)
-//		{
-//			QuestReference &qref = cd.questJournal.activeQuests.itemList[a];
-//			fprintf(output, "active=%d,%d", qref.QuestID, qref.CurAct);
-//			for(b = 0; b < 3; b++)
-//			{
-//				int comp = qref.ObjComplete[b];
-//				int count = qref.ObjCounter[b];
-//				fprintf(output, ",%d,%d", comp, count);
-//			}
-//			fprintf(output, "\r\n");
-//		}
-//
-//		// Completed quests
-//		int fcount = (int)cd.questJournal.completedQuests.itemList.size();
-//		int written = 0;
-//		while(written < fcount)
-//		{
-//			if((written % 10) == 0)
-//			{
-//				if(written > 0)
-//					fprintf(output, "\r\n");
-//				fprintf(output, "complete=%d", cd.questJournal.completedQuests.itemList[written].QuestID);
-//			}
-//			else
-//			{
-//				fprintf(output, ",%d", cd.questJournal.completedQuests.itemList[written].QuestID);
-//			}
-//			written++;
-//		}
-//		if(written > 0)
-//			fprintf(output, "\r\n");
-//
-//		// Quests waiting to open again for repeat.
-//		for(size_t i = 0; i < cd.questJournal.delayedRepeat.size(); i++)
-//		{
-//			QuestRepeatDelay *d = &cd.questJournal.delayedRepeat[i];
-//			fprintf(output, "repeat=%d,%lu,%lu\r\n", d->QuestID, d->StartTimeMinutes, d->WaitTimeMinutes);
-//		}
-//
-//
-//
-//		fprintf(output, "\r\n[COOLDOWN]\r\n");
-//		cd.cooldownManager.SaveToStream(output);
-//
-//		if(g_Config.PersistentBuffs) {
-//			fprintf(output, "\r\n[ABILITIES]\r\n");
-//			cd.buffManager.SaveToStream(output);
-//		}
-
-
-
-
-
 }
 
-void SaveCharacterToStream(FILE *output, CharacterData &cd)
-{
-	fprintf(output, "[ENTRY]\r\n");
-	fprintf(output, "characterVersion=%d\r\n", cd.characterVersion);
-	fprintf(output, "AccountID=%d\r\n", cd.AccountID);
-	fprintf(output, "Clan=%d\r\n", cd.clan);
-	fprintf(output, "ID=%d\r\n", cd.cdef.CreatureDefID);
-	fprintf(output, "Instance=%d\r\n", cd.activeData.CurInstance);
-	fprintf(output, "Zone=%d\r\n", cd.activeData.CurZone);
-	fprintf(output, "X=%d\r\n", cd.activeData.CurX);
-	fprintf(output, "Y=%d\r\n", cd.activeData.CurY);
-	fprintf(output, "Z=%d\r\n", cd.activeData.CurZ);
-	fprintf(output, "Rotation=%d\r\n", cd.activeData.CurRotation);
-
-	fprintf(output, "StatusText=%s\r\n", cd.StatusText.c_str());
-	Util::WriteString(output, "InstanceScaler", cd.InstanceScaler);
-	Util::WriteString(output, "PrivateChannelName", cd.PrivateChannelName);
-	Util::WriteString(output, "PrivateChannelPassword", cd.PrivateChannelPassword);
-
-	fprintf(output, "CreatedTime=%lu\r\n", cd.CreatedTimeSec);
-	fprintf(output, "SecondsLogged=%lu\r\n", cd.SecondsLogged);
-	fprintf(output, "SessionsLogged=%d\r\n", cd.SessionsLogged);
-	fprintf(output, "TimeLogged=%s\r\n", cd.TimeLogged);
-	fprintf(output, "LastSession=%s\r\n", cd.LastSession);
-	fprintf(output, "LastLogOn=%s\r\n", cd.LastLogOn);
-	fprintf(output, "LastLogOff=%s\r\n", cd.LastLogOff);
-	fprintf(output, "OriginalAppearance=%s\r\n", cd.originalAppearance.c_str());
-
-	fprintf(output, "CurrentVaultSize=%d\r\n", cd.CurrentVaultSize);
-	fprintf(output, "CreditsPurchased=%d\r\n", cd.CreditsPurchased);
-	fprintf(output, "CreditsSpent=%d\r\n", cd.CreditsSpent);
-	fprintf(output, "ExtraAbilityPoints=%d\r\n", cd.ExtraAbilityPoints);
-
-	fprintf(output, "GroveReturn=%d,%d,%d,%d\r\n", cd.groveReturnPoint[0], cd.groveReturnPoint[1], cd.groveReturnPoint[2], cd.groveReturnPoint[3]);
-	fprintf(output, "BindReturn=%d,%d,%d,%d\r\n", cd.bindReturnPoint[0], cd.bindReturnPoint[1], cd.bindReturnPoint[2], cd.bindReturnPoint[3]);
-	fprintf(output, "LastWarpTime=%lu\r\n", cd.LastWarpTime);
-	fprintf(output, "UnstickCount=%d\r\n", cd.UnstickCount);
-	fprintf(output, "LastUnstickTime=%lu\r\n", cd.LastUnstickTime);
-
-	cd.PlayerStats.SaveToStream(output);
-
-	Util::WriteIntegerList(output, "hengeList", cd.hengeList);
-
-	int write = 0;
-	for(int a = 0; a < MaxPermissionDef; a++)
-	{
-		if((cd.PermissionSet[PermissionDef[a].index] & PermissionDef[a].flag) == PermissionDef[a].flag)
-		{
-			if(write == 0)
-				fprintf(output, "Permissions=");
-			if(write > 0)
-				fputc(',', output);
-			write++;
-
-			fprintf(output, "%s", PermissionDef[a].name);
-			if(write >= 5)
-			{
-				fprintf(output, "\r\n");
-				write = 0;
-			}
-		}
-	}
-	if(write > 0)
-		fprintf(output, "\r\n");
-
-	Util::WriteIntegerList(output, "Abilities", cd.abilityList.AbilityList);
-
-	//Guild list
-	for(size_t i = 0; i < cd.guildList.size(); i++)
-		fprintf(output, "GuildList=%d,%d\r\n", cd.guildList[i].GuildDefID, cd.guildList[i].Valour);
-
-	//Friend list
-	for(size_t i = 0; i < cd.friendList.size(); i++)
-		fprintf(output, "FriendList=%d,%s\r\n", cd.friendList[i].CDefID, cd.friendList[i].Name.c_str());
-
-	//Sidekicks
-	fprintf(output, "MaxSidekicks=%d\r\n", cd.MaxSidekicks);
-
-	//PVP/PVE mode
-	fprintf(output, "Mode=%d\r\n", cd.Mode);
-
-	/*
-	fcount = (int)cd.SidekickList.size();
-	written = 0;
-	while(written < fcount)
-	{
-		if((written % 10) == 0)
-		{
-			if(written > 0)
-				fprintf(output, "\r\n");
-			fprintf(output, "Sidekicks=%d", cd.SidekickList[written]);
-		}
-		else
-		{
-			fprintf(output, ",%d", cd.SidekickList[written]);
-		}
-		written++;
-	}
-	if(written > 0)
-		fprintf(output, "\r\n");
-		*/
-	for(size_t i = 0; i < cd.SidekickList.size(); i++)
-		fprintf(output, "Sidekick=%d,%d,%d\r\n", cd.SidekickList[i].CDefID, cd.SidekickList[i].summonType, cd.SidekickList[i].summonParam);
-	fprintf(output, "\r\n");
-
-	//Stats
-	fprintf(output, "[STATS]\r\n");
-	int a;
-	for(a = 0; a < NumStats; a++)
-		if(isStatZero(a, &cd.cdef.css) == false)
-			//if(isStatEqual(a, &cd.css, &defcd.css) == false)
-				WriteStatToFile(a, &cd.cdef.css, output);
-
-	fprintf(output, "\r\n");
-
-	//Preferences
-	fprintf(output, "[PREFS]\r\n");
-	for(a = 0; a < (int)cd.preferenceList.PrefList.size(); a++)
-	{
-		/* Not comparing against defaults anymore
-		int r = defcd.preferenceList.GetPrefIndex((char*)cd.preferenceList.PrefList[a].name.c_str());
-		bool save = true;
-		if(r >= 0)
-		{
-			if(defcd.preferenceList.PrefList[r].value.compare(cd.preferenceList.PrefList[a].value) == 0)
-				save = false;
-		}
-		if(save == true)
-			fprintf(output, "%s=%s\r\n", cd.preferenceList.PrefList[a].name.c_str(), cd.preferenceList.PrefList[a].value.c_str());
-		*/
-		fprintf(output, "%s=%s\r\n", cd.preferenceList.PrefList[a].name.c_str(), cd.preferenceList.PrefList[a].value.c_str());
-	}
-	fprintf(output, "\r\n");
-
-	fprintf(output, "[INV]\r\n");
-	int b;
-	for(a = 0; a < MAXCONTAINER; a++)
-	{
-		for(b = 0; b < (int)cd.inventory.containerList[a].size(); b++)
-		{
-			InventorySlot *slot = &cd.inventory.containerList[a][b];
-			fprintf(output, "%s=%lu,%d",
-				GetContainerNameFromID((slot->CCSID & CONTAINER_ID) >> 16),
-				slot->CCSID & CONTAINER_SLOT,
-				slot->IID );
-
-			bool extend = false;
-			if(slot->count > 0 || slot->customLook != 0 || slot->bindStatus != 0 || slot->secondsRemaining != -1)
-				extend = true;
-
-			if(extend == true) {
-				fprintf(output, ",%d,%d,%d,%ld", slot->count, slot->customLook, slot->bindStatus, slot->AdjustTimes());
-			}
-
-			fprintf(output, "\r\n");
-		}
-	}
-
-	//Active quests
-	fprintf(output, "\r\n[QUEST]\r\n");
-	for(a = 0; a < (int)cd.questJournal.activeQuests.itemList.size(); a++)
-	{
-		QuestReference &qref = cd.questJournal.activeQuests.itemList[a];
-		fprintf(output, "active=%d,%d", qref.QuestID, qref.CurAct);
-		for(b = 0; b < MAXOBJECTIVES; b++)
-		{
-			int comp = qref.ObjComplete[b];
-			int count = qref.ObjCounter[b];
-			fprintf(output, ",%d,%d", comp, count);
-		}
-		fprintf(output, "\r\n");
-	}
-
-	// Completed quests
-	int fcount = (int)cd.questJournal.completedQuests.itemList.size();
-	int written = 0;
-	while(written < fcount)
-	{
-		if((written % 10) == 0)
-		{
-			if(written > 0)
-				fprintf(output, "\r\n");
-			fprintf(output, "complete=%d", cd.questJournal.completedQuests.itemList[written].QuestID);
-		}
-		else
-		{
-			fprintf(output, ",%d", cd.questJournal.completedQuests.itemList[written].QuestID);
-		}
-		written++;
-	}
-	if(written > 0)
-		fprintf(output, "\r\n");
-
-	// Quests waiting to open again for repeat.
-	for(size_t i = 0; i < cd.questJournal.delayedRepeat.size(); i++)
-	{
-		QuestRepeatDelay *d = &cd.questJournal.delayedRepeat[i];
-		fprintf(output, "repeat=%d,%lu,%lu\r\n", d->QuestID, d->StartTimeMinutes, d->WaitTimeMinutes);
-	}
-
-
-
-	fprintf(output, "\r\n[COOLDOWN]\r\n");
-	cd.cooldownManager.SaveToStream(output);
-
-	if(g_Config.PersistentBuffs) {
-		fprintf(output, "\r\n[ABILITIES]\r\n");
-		cd.buffManager.SaveToStream(output);
-	}
-
-	fprintf(output, "\r\n");
-}
-
-/* TODO: Revamp
-int GetCharacterIndex(int CDefID)
-{
-	//Search the loaded character list for an entry matching the given ID
-	if(CDefID == 0)
-		return -1;
-
-	int a;
-	for(a = 0; a < (int)CharList.size(); a++)
-		if(CharList[a].cdef.CreatureDefID == CDefID)
-			return a;
-
-	return -1;
-}
-*/
-
-/* TODO: Revamp
-int GetCharacterIndexByName(char *name)
-{
-	int a;
-	for(a = 0; a < (int)CharList.size(); a++)
-		if(strcmp(CharList[a].cdef.css.display_name, name) == 0)
-			return a;
-	return -1;
-}
-*/
-
-//GuildListObject :: GuildListObject()
-//{
-//	Clear();
-//}
-//
-//GuildListObject :: ~GuildListObject()
-//{
-//}
-//
 
 void GuildListObject :: WriteToJSON(Json::Value &value)
 {
@@ -2146,21 +1702,18 @@ CharacterLeaderboard :: ~CharacterLeaderboard() {
 void CharacterLeaderboard :: OnBuild(std::vector<Leader> *leaders)
 {
 	unsigned int idx = 0;
-	g_AccountManager.cs.Enter("CharacterLeaderboard::OnBuild");
-	std::map<int, std::string> charCopy(g_AccountManager.UsedCharacterNames.GetData());
-	g_AccountManager.cs.Leave();
-	for(std::map<int, std::string>::iterator it = charCopy.begin(); it != charCopy.end(); ++it) {
-		CharacterData *cd = g_CharacterManager.RequestCharacter(it->first, true);
+	g_ClusterManager.Scan([this, leaders](const std::string &v){
+		STRINGLIST l;
+		Util::Split(v, ":", l);
+		CharacterData *cd = g_CharacterManager.RequestCharacter(atoi(l[1].c_str()), true);
 		if(cd != NULL) {
 			Leader l;
-			l.mId = it->first;
+			l.mId = cd->cdef.CreatureDefID;
 			l.mName = cd->cdef.css.display_name;
 			l.mStats.CopyFrom(&cd->PlayerStats);
 			leaders->push_back(l);
 		}
-		PLATFORM_SLEEP(1000);
-		idx++;
-	}
+	}, StringUtil::Format("%s:*", KEYPREFIX_CHARACTER_NAME_TO_ID.c_str()));
 }
 
 
@@ -2180,29 +1733,13 @@ void CharacterManager :: Clear(void)
 	charList.clear();
 }
 
-std::string GetCharacterPath(int CDefID) {
-	char BaseName[256];
-	Util::SafeFormat(BaseName, sizeof(BaseName), "%d.txt", CDefID);
-	return Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "Characters"), BaseName);
-}
-
 int CharacterManager :: LoadCharacter(int CDefID, bool tempResource)
 {
-	std::string FileName = GetCharacterPath(CDefID);
-
-	FileReader lfr;
-	if(lfr.OpenText(FileName.c_str()) != Err_OK)
-	{
-		g_Logs.data->error("Could not open character file [%v]", FileName);
-		return -1;
-	}
-
 	CharacterData newChar;
-	LoadCharacterFromStream(lfr, newChar, FileName);
-	lfr.CloseCurrent();
-	if(newChar.cdef.CreatureDefID != CDefID)
+	newChar.cdef.CreatureDefID = CDefID;
+	if(!g_ClusterManager.ReadEntity(&newChar))
 	{
-		g_Logs.data->error("LoadCharacter() ID mismatch, expected [%v], got [%v]", CDefID, newChar.cdef.CreatureDefID);
+		g_Logs.data->error("Failed to load character from cluster. [%v]", CDefID);
 		return -1;
 	}
 
@@ -2449,7 +1986,7 @@ bool CharacterManager :: RemoveSingleCharacter(void)
 	return false;
 }
 
-bool CharacterManager :: SaveCharacter(int CDefID)
+bool CharacterManager :: SaveCharacter(int CDefID, bool sync)
 {
 	CharacterData *ptr = GetPointerByID(CDefID);
 	if(ptr == NULL)
@@ -2458,22 +1995,13 @@ bool CharacterManager :: SaveCharacter(int CDefID)
 		return false;
 	}
 
-	std::string FileName = GetCharacterPath(CDefID);
-	FILE *output = fopen(FileName.c_str(), "wb");
-	if(output == NULL)
-	{
-		g_Logs.data->error("SaveCharacter() could not open file [%v]", FileName);
+	if(!g_ClusterManager.WriteEntity(ptr, sync)) {
+		g_Logs.data->error("SaveCharacter() could not save [%v]", CDefID);
 		return false;
 	}
-	SaveCharacterToStream(output, *ptr);
 
 	ptr->pendingChanges = 0;
 
-	if(fflush(output) != 0)
-		g_Logs.data->error("Failed to flush file: %v", FileName);
-	if(fclose(output) != 0)
-		g_Logs.data->error("Failed to close file: %v", FileName);
-		
 	g_Logs.data->info("Saved character %v [%v]", ptr->cdef.CreatureDefID, ptr->cdef.css.display_name);
 	return true;
 }

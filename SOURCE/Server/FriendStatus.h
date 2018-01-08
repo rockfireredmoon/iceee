@@ -7,9 +7,13 @@
 #include <map>
 #include <string>
 #include <vector>
+#include "Entities.h"
 
-struct SocialWindowEntry
-{
+static std::string KEYPREFIX_FRIEND_LIST = "FriendList";
+static std::string LISTPREFIX_FRIEND_NETWORK = "FriendNetwork";
+
+class SocialWindowEntry: public AbstractEntity {
+public:
 	int creatureDefID;
 	std::string name;
 	int level;
@@ -19,6 +23,10 @@ struct SocialWindowEntry
 	std::string shard;
 
 	SocialWindowEntry();
+
+	bool WriteEntity(AbstractEntityWriter *writer);
+	bool ReadEntity(AbstractEntityReader *reader);
+	bool EntityKeys(AbstractEntityReader *reader);
 	void Clear(void);
 	void CopyFrom(SocialWindowEntry& source);
 };
@@ -34,9 +42,6 @@ public:
 
 	typedef std::map<int, std::vector<int> > NETWORK_MAP;  //First = playerDefID, Second = Array of friended player defs.
 
-	void LoadAllData(void);
-	void SaveAllData(void);
-
 	//Friend SocialWindowEntry functions
 	void UpdateSocialEntry(SocialWindowEntry &data);
 	void EnumerateFriends(SEARCH_INPUT& inPlayers, SEARCH_OUTPUT& outResults);
@@ -47,16 +52,6 @@ public:
 	bool IsMutualFriendship(int selfDefID, int otherDefID);
 
 private:
-	std::string socialDataFile;
-	std::string networkDataFile;
-	SOCIAL_MAP socialData;        //This controls a list of player social entries.  The information they hold is relevant to the friend list in-game.
-	NETWORK_MAP networkData;      //This holds a network of friends.
-
-	void LoadSocialData(void);
-	void SaveSocialData(void);
-
-	void LoadNetworkData(void);
-	void SaveNetworkData(void);
 	bool HasPlayerInNetwork(int firstDefID, int otherDefID);
 };
 

@@ -25,7 +25,7 @@ set -e
 case "$1" in
   start)
 	echo -n "Starting $DESC: "
-	start-stop-daemon --start --quiet --chdir $DAEMON_DIR --exec $DAEMON --pidfile $PIDFILE -- -d -p $PIDFILE 
+	start-stop-daemon --start --quiet --chdir $DAEMON_DIR --exec $DAEMON --pidfile $PIDFILE -- -c /etc/tawd -d -p $PIDFILE 
 	echo "$NAME."
 	;;
   stop)
@@ -44,7 +44,7 @@ case "$1" in
 	if start-stop-daemon --stop --oknodo --retry TERM/5/KILL/30 --exec $DAEMON --pidfile $PIDFILE ; then 
 		rm -f $PIDFILE
 	fi
-	start-stop-daemon --start --quiet --chdir $DAEMON_DIR --exec $DAEMON -- -d -p $PIDFILE
+	start-stop-daemon --start --quiet --chdir $DAEMON_DIR --exec $DAEMON -- -c /etc/tawd -d -p $PIDFILE
 	echo "$NAME."
 	;;
   *)

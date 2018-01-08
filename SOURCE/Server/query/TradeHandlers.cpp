@@ -124,6 +124,7 @@ int TradeShopHandler::handleQuery(SimulatorThread *sim,
 	InventorySlot *newItem = pld->charPtr->inventory.AddItem_Ex(INV_CONTAINER,
 			newItemID, 1);
 	if (newItem == NULL) {
+		pld->charPtr->pendingChanges++;
 		int err = pld->charPtr->inventory.LastError;
 		if (err == InventoryManager::ERROR_ITEM)
 			return PrepExt_QueryResponseString(sim->SendBuf, query->ID,
@@ -171,6 +172,7 @@ int TradeShopHandler::helper_trade_shop_sell(SimulatorThread *sim,
 	wpos += pld->charPtr->inventory.AddBuyBack(item, &sim->SendBuf[wpos]);
 	wpos += RemoveItemUpdate(&sim->SendBuf[wpos], sim->Aux3, item);
 	pld->charPtr->inventory.RemItem(CCSID);
+	pld->charPtr->pendingChanges++;
 	creatureInstance->AdjustCopper(cost);
 
 	return wpos;
@@ -208,12 +210,14 @@ int TradeShopHandler::helper_trade_shop_buyback(SimulatorThread *sim,
 	if (r == -1)
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 				"Failed to create item.");
+	pld->charPtr->pendingChanges++;
 
 	int wpos = 0;
 	wpos = RemoveItemUpdate(sim->SendBuf, sim->Aux3, buybackItem);
 	wpos += AddItemUpdate(&sim->SendBuf[wpos], sim->Aux3, &newItem);
 	wpos += PrepExt_QueryResponseString(&sim->SendBuf[wpos], query->ID, "OK");
 	pld->charPtr->inventory.RemItem(buybackItem->CCSID);
+	pld->charPtr->pendingChanges++;
 	creatureInstance->AdjustCopper(-cost);
 	return wpos;
 }
@@ -329,6 +333,7 @@ int TradeEssenceHandler::handleQuery(SimulatorThread *sim,
 	InventorySlot *newItem = pld->charPtr->inventory.AddItem_Ex(INV_CONTAINER,
 			iptr->ItemID, 1);
 	if (newItem == NULL) {
+		pld->charPtr->pendingChanges++;
 		int err = pld->charPtr->inventory.LastError;
 		if (err == InventoryManager::ERROR_ITEM)
 			return PrepExt_QueryResponseString(sim->SendBuf, query->ID,
@@ -355,6 +360,7 @@ int TradeEssenceHandler::handleQuery(SimulatorThread *sim,
 
 	wpos += inv.RemoveItemsAndUpdate(INV_CONTAINER, esptr->EssenceID,
 			iptr->EssenceCost, &sim->SendBuf[wpos]);
+	pld->charPtr->pendingChanges++;
 	return wpos;
 }
 
@@ -723,6 +729,7 @@ int TradeAcceptHandler::protected_helper_query_trade_accept(SimulatorThread *sim
 				wpos += p1->inventory.RemoveItemUpdate(&sim->SendBuf[wpos], sim->Aux3,
 						item);
 				p1->inventory.RemItem(CCSID);
+				p1->pendingChanges++;
 			}
 		}
 		SendToOneSimulator(sim->SendBuf, wpos, origin->simulatorPtr);
@@ -742,6 +749,7 @@ int TradeAcceptHandler::protected_helper_query_trade_accept(SimulatorThread *sim
 				wpos += p2->inventory.RemoveItemUpdate(&sim->SendBuf[wpos], sim->Aux3,
 						item);
 				p2->inventory.RemItem(CCSID);
+				p2->pendingChanges++;
 			}
 		}
 		SendToOneSimulator(sim->SendBuf, wpos, target->simulatorPtr);
@@ -759,6 +767,7 @@ int TradeAcceptHandler::protected_helper_query_trade_accept(SimulatorThread *sim
 			if (item == NULL)
 				g_Logs.simulator->error("[%v] Failed to add item to first player.", sim->InternalID);
 			else {
+				p1->pendingChanges++;
 				g_Logs.event->info("[TRADE] From %v to %v (%v)",
 						tradeData->player[1].cInst->css.display_name,
 						tradeData->player[0].cInst->css.display_name,
@@ -783,6 +792,7 @@ int TradeAcceptHandler::protected_helper_query_trade_accept(SimulatorThread *sim
 			if (item == NULL)
 				g_Logs.simulator->error("[%v] Failed to add item to second player.", sim->InternalID);
 			else {
+				p2->pendingChanges++;
 				g_Logs.event->info("[TRADE] From %v to %v (%v)",
 						tradeData->player[0].cInst->css.display_name,
 						tradeData->player[1].cInst->css.display_name,

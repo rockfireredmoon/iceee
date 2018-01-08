@@ -19,26 +19,14 @@
 #include "../CreditShop.h"
 #include "../Account.h"
 #include "../Config.h"
+#include "../Cluster.h"
+#include "../Scheduler.h"
 #include "../Debug.h"
 #include "../util/Log.h"
 #include <algorithm>
 
 using namespace std;
 using namespace CS;
-
-//
-// CreditShopReloadHandler
-//
-
-int CreditShopReloadHandler::handleQuery(SimulatorThread *sim,
-		CharacterServerData *pld, SimulatorQuery *query,
-		CreatureInstance *creatureInstance) {
-	g_CreditShopManager.cs.Enter("SimulatorThread::MarketReload");
-	g_CreditShopManager.LoadItems();
-	g_CreditShopManager.cs.Leave();
-	g_Logs.cs->info("%v (%v) reloaded the credit shop", pld->accPtr->Name, pld->charPtr->cdef.css.display_name);
-	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
-}
 
 //
 // CreditShopPurchaseNameHandler
@@ -95,8 +83,8 @@ int CreditShopPurchaseNameHandler::handleQuery(SimulatorThread *sim,
 	memcpy(creatureInstance->css.display_name, fullName.c_str(),
 			fullName.size() + 1);
 
-	g_AccountManager.RemoveUsedCharacterName(pld->CreatureDefID);
-	g_AccountManager.AddUsedCharacterName(pld->CreatureDefID, fullName.c_str());
+	g_UsedNameDatabase.Remove(pld->CreatureDefID);
+	g_UsedNameDatabase.Add(pld->CreatureDefID, fullName);
 
 	g_Logs.cs->info("Player '%v' changed their name to '%v'",
 			currentName.c_str(), fullName.c_str());
@@ -128,15 +116,14 @@ int CreditShopEditHandler::handleQuery(SimulatorThread *sim,
 
 	if (strcmp(query->GetString(0), "DELETE") == 0 && query->args.size() > 1) {
 		int id = query->GetInteger(1);
-		CS::CreditShopItem *item = g_CreditShopManager.GetItem(id);
-		if (item == NULL)
+		CS::CreditShopItem item = g_CreditShopManager.GetItem(id);
+		if (item.mId == 0)
 			return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 					"Invalid item.");
 		else {
-			// TODO remove
 			if (g_CreditShopManager.RemoveItem(id)) {
 				g_Logs.event->info("[CS] Removed credit shop item %v",
-						item->mId);
+						item.mId);
 				return PrepExt_QueryResponseString(sim->SendBuf, query->ID,
 						"OK");
 			}
@@ -144,28 +131,13 @@ int CreditShopEditHandler::handleQuery(SimulatorThread *sim,
 					"Failed to remove.");
 		}
 	} else if (query->args.size() > 22) {
-		CS::CreditShopItem * csItem;
+		CS::CreditShopItem csItem;
 		bool isNew = strcmp(query->GetString(0), "NEW") == 0;
-		if (isNew) {
-			csItem = new CS::CreditShopItem();
-			csItem->mId = g_CreditShopManager.nextMarketItemID++;
-			csItem->mCreatedDate = g_ServerTime / 1000;
-			SessionVarsChangeData.AddChange();
-			Util::SafeFormat(sim->Aux3, sizeof(sim->Aux3),
-					"Created market csItem %d", csItem->mId);
-
-			g_Logs.cs->info("%v (%v) created %v (%v)", pld->accPtr->Name, pld->charPtr->cdef.css.display_name,
-					csItem->mId, csItem->mItemId);
-		} else {
+		if (!isNew) {
 			csItem = g_CreditShopManager.GetItem(query->GetInteger(0));
-			if (csItem == NULL)
+			if (csItem.mId == 0)
 				return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 						"Invalid item.");
-			Util::SafeFormat(sim->Aux3, sizeof(sim->Aux3),
-					"Save market csItem %d", csItem->mId);
-
-			g_Logs.cs->info("%v (%v) updated %v (%v)", pld->accPtr->Name, pld->charPtr->cdef.css.display_name,
-								csItem->mId, csItem->mItemId);
 		}
 
 		int currency = query->GetInteger(16);
@@ -186,38 +158,35 @@ int CreditShopEditHandler::handleQuery(SimulatorThread *sim,
 			priceCredits = atoi(priceElements[1].c_str());
 		}
 
-		csItem->mTitle = query->GetString(2);
-		csItem->mDescription = query->GetString(4);
-		csItem->mCategory = Category::GetIDByName(query->GetString(6));
-		csItem->mStatus = Status::GetIDByName(query->GetString(8));
-		Util::ParseDate(query->GetString(10), csItem->mStartDate);
-		Util::ParseDate(query->GetString(12), csItem->mEndDate);
-		csItem->mPriceCopper = priceCopper;
-		csItem->mPriceCredits = priceCredits;
-		csItem->mPriceCurrency = currency;
-		csItem->mQuantityLimit = query->GetInteger(18);
-		csItem->mQuantitySold = query->GetInteger(20);
-		csItem->ParseItemProto(query->GetString(22));
+		csItem.mTitle = query->GetString(2);
+		csItem.mDescription = query->GetString(4);
+		csItem.mCategory = Category::GetIDByName(query->GetString(6));
+		csItem.mStatus = Status::GetIDByName(query->GetString(8));
+		Util::ParseDate(query->GetString(10), csItem.mStartDate);
+		Util::ParseDate(query->GetString(12), csItem.mEndDate);
+		csItem.mPriceCopper = priceCopper;
+		csItem.mPriceCredits = priceCredits;
+		csItem.mPriceCurrency = currency;
+		csItem.mQuantityLimit = query->GetInteger(18);
+		csItem.mQuantitySold = query->GetInteger(20);
+		csItem.ParseItemProto(query->GetString(22));
 
 		// Check the item
-		ItemDef * item = g_ItemManager.GetSafePointerByID(csItem->mItemId);
+		ItemDef * item = g_ItemManager.GetSafePointerByID(csItem.mItemId);
 		if (item == NULL) {
-			if (isNew)
-				delete csItem;
 			return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 					"No such item!");
 		}
-		if (csItem->mTitle.compare(item->mDisplayName) == 0)
-			csItem->mTitle = "";
+		if (csItem.mTitle.compare(item->mDisplayName) == 0)
+			csItem.mTitle = "";
 
-		g_CreditShopManager.SaveItem(csItem);
-		g_CreditShopManager.cs.Enter(
-				"SimulatorThread :: handle_query_item_market_edit");
-		g_CreditShopManager.mItems[csItem->mId] = csItem;
-		g_CreditShopManager.cs.Leave();
+		if (csItem.mId == 0)
+			g_CreditShopManager.CreateItem(&csItem);
+		else
+			g_CreditShopManager.UpdateItem(&csItem);
 
-		g_Logs.cs->info("Updated Credit shop item %v '%v'", csItem->mId,
-				csItem->mTitle.c_str());
+		g_Logs.cs->info("Updated Credit shop item %v '%v'", csItem.mId,
+				csItem.mTitle.c_str());
 		return PrepExt_QueryResponseString(sim->SendBuf, query->ID, sim->Aux3);
 	}
 	return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
@@ -231,134 +200,160 @@ int CreditShopEditHandler::handleQuery(SimulatorThread *sim,
 int CreditShopListHandler::handleQuery(SimulatorThread *sim,
 		CharacterServerData *pld, SimulatorQuery *query,
 		CreatureInstance *creatureInstance) {
-	int wpos = 0;
-	wpos += PutByte(&sim->SendBuf[wpos], 1);       //_handleQueryResultMsg
-	wpos += PutShort(&sim->SendBuf[wpos], 0);      //Message size
-	wpos += PutInteger(&sim->SendBuf[wpos], query->ID);  //Query response index
 
-	wpos += PutShort(&sim->SendBuf[wpos], 0);
+	unsigned long simID = sim->InternalID;
+	int queryID = query->ID;
 
-	// First row has cost of name change
-	wpos += PutByte(&sim->SendBuf[wpos], 1);
-	sprintf(sim->Aux1, "%d", g_Config.NameChangeCost);
-	wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux1);
+	/* Put this operation in the pool as it may take a short while, and build the reply back in the main
+	 * thread.
+	 */
+	g_Scheduler.Pool([this, simID, queryID]() {
 
-	// Now the actual items
-	g_CreditShopManager.cs.Enter("handle_query_item_market_list");
-	std::vector<CS::CreditShopItem*> items;
-	std::map<int, std::string> names;
+		// Retrieve all of the actual items
+			std::vector<CS::CreditShopItem> allItems;
+			g_CreditShopManager.GetItems(allItems);
 
-	// Track maximum sold, to calculate what is 'HOT'.
-	int maxSold = 0;
-
-
-	// Get a list we can sort
-	for (auto it = g_CreditShopManager.mItems.begin();
-			it != g_CreditShopManager.mItems.end(); ++it) {
-
-		if (g_ServerTime < (it->second->mStartDate * 1000UL))
-			// Not available yet
-			continue;
-
-		if(it->second->mQuantitySold > maxSold)
-			maxSold = it->second->mQuantitySold;
-
-		ItemDef * item = it->second->mItemId != 0 ? g_ItemManager.GetSafePointerByID(it->second->mItemId) : NULL;
-		if (item != NULL) {
-
-			std::string name;
-			if (it->second->mTitle.size() == 0)
-				name = item->mDisplayName;
-			else
-				name = it->second->mTitle;
-			names[it->second->mId] = name;
-		}
-		else {
-			names[it->second->mId] = it->second->mTitle;
-		}
-		items.push_back(it->second);
-
-	}
-	std::sort(items.begin(), items.end(),
-			[&](CS::CreditShopItem *a, CS::CreditShopItem * b) -> bool {
-				return names[a->mId] < names[b->mId];
-			});
-
-	int hotAmount = max(1, (int)((float)maxSold * 0.75));
-
-	for (auto it = items.begin(); it != items.end(); ++it) {
-		wpos += PutByte(&sim->SendBuf[wpos], 12);
-
-		sprintf(sim->Aux1, "%d", (*it)->mId);
-		wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux1);
-		std::string name = names[(*it)->mId];
-		g_Logs.cs->debug("Sending name: %v", name);
-		sprintf(sim->Aux1, "%s", name.c_str());
-		wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux1);
-
-		sprintf(sim->Aux1, "%s", (*it)->mDescription.c_str());
-		wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux1);
-
-		// TODO get rid of choosable status in market editor
-		if((*it)->mQuantitySold >= hotAmount) {
-			sprintf(sim->Aux1, "%s", Status::GetNameByID(Status::HOT));
-		}
-		else {
-			time_t expire = ( g_Config.MaxNewCreditShopItemDays * 86400 ) + (*it)->mCreatedDate;
-			if((*it)->mCreatedDate > 0 && (g_ServerTime / 1000UL) < expire) {
-				sprintf(sim->Aux1, "%s", Status::GetNameByID(Status::NEW));
+			SimulatorThread *sim = g_SimulatorManager.GetPtrByID(simID);
+			if(sim == NULL) {
+				// Lost simulator
+				return;
 			}
-			else {
-				sprintf(sim->Aux1, "%s", Status::GetNameByID(Status::UNDEFINED));
+
+			// Filter and sort them back on the main thread
+			std::vector<CS::CreditShopItem> items;
+			std::map<int, std::string> names;
+
+			int wpos = 0;
+			wpos += PutByte(&sim->SendBuf[wpos], 1);//_handleQueryResultMsg
+			wpos += PutShort(&sim->SendBuf[wpos], 0);//Message size
+			wpos += PutInteger(&sim->SendBuf[wpos], queryID);//Query response index
+
+			wpos += PutShort(&sim->SendBuf[wpos], 0);
+
+			// First row has cost of name change
+			wpos += PutByte(&sim->SendBuf[wpos], 1);
+			sprintf(sim->Aux1, "%d", g_Config.NameChangeCost);
+			wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux1);
+
+			// Track maximum sold, to calculate what is 'HOT'.
+			int maxSold = 0;
+
+			// Get a list we can sort
+			for (auto it = allItems.begin();
+					it != allItems.end(); ++it) {
+
+				if (g_ServerTime < (it->mStartDate * 1000UL))
+				// Not available yet
+				continue;
+
+				if(it->mQuantitySold > maxSold)
+				maxSold = it->mQuantitySold;
+
+				ItemDef * item = it->mItemId != 0 ? g_ItemManager.GetSafePointerByID(it->mItemId) : NULL;
+				if (item != NULL) {
+
+					std::string name;
+					if (it->mTitle.size() == 0)
+					name = item->mDisplayName;
+					else
+					name = it->mTitle;
+					names[it->mId] = name;
+				}
+				else {
+					names[it->mId] = it->mTitle;
+				}
+				items.push_back(*it);
+
 			}
-		}
-		wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux1);
+			std::sort(items.begin(), items.end(),
+					[&](CS::CreditShopItem a, CS::CreditShopItem b) -> bool {
+						return names[a.mId] < names[b.mId];
+					});
 
-		sprintf(sim->Aux1, "%s", Category::GetNameByID((*it)->mCategory));
-		wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux1);
+			int hotAmount = max(1, (int)((float)maxSold * 0.75));
 
-		sprintf(sim->Aux1, "%s",
-				(*it)->mStartDate == 0 ?
-						"" : Util::FormatDate(&(*it)->mEndDate).c_str());
-		wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux1);
+			for (auto it = items.begin(); it != items.end(); ++it) {
+				wpos += PutByte(&sim->SendBuf[wpos], 12);
 
-		sprintf(sim->Aux1, "%s",
-				(*it)->mEndDate == 0 ?
+				sprintf(sim->Aux1, "%d", (*it).mId);
+				wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux1);
+				std::string name = names[(*it).mId];
+				g_Logs.cs->debug("Sending name: %v", name);
+
+				sprintf(sim->Aux1, "%s", name.c_str());
+				wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux1);
+
+				sprintf(sim->Aux1, "%s", (*it).mDescription.c_str());
+				wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux1);
+
+				// TODO get rid of choosable status in market editor
+				if((*it).mQuantitySold >= hotAmount) {
+					sprintf(sim->Aux1, "%s", Status::GetNameByID(Status::HOT).c_str());
+				}
+				else {
+					time_t expire = ( g_Config.MaxNewCreditShopItemDays * 86400 ) + (*it).mCreatedDate;
+					if((*it).mCreatedDate > 0 && (g_ServerTime / 1000UL) < expire) {
+						sprintf(sim->Aux1, "%s", Status::GetNameByID(Status::NEW).c_str());
+					}
+					else {
+						sprintf(sim->Aux1, "%s", Status::GetNameByID(Status::UNDEFINED).c_str());
+					}
+				}
+				wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux1);
+
+				sprintf(sim->Aux1, "%s", Category::GetNameByID((*it).mCategory).c_str());
+				wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux1);
+
+				sprintf(sim->Aux1, "%s",
+						(*it).mStartDate == 0 ?
+						"" : Util::FormatDate(&(*it).mEndDate).c_str());
+				wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux1);
+
+				sprintf(sim->Aux1, "%s",
+						(*it).mEndDate == 0 ?
 						"" :
-						(g_ServerTime >= ((*it)->mEndDate * 1000UL) ?
+						(g_ServerTime >= ((*it).mEndDate * 1000UL) ?
 								"Expired" :
-								Util::FormatDate(&(*it)->mEndDate).c_str()));
-		wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux1);
+								Util::FormatDate(&(*it).mEndDate).c_str()));
+				wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux1);
 
-		if ((*it)->mPriceCurrency == Currency::COPPER)
-			sprintf(sim->Aux1, "%lu", (*it)->mPriceCopper);
-		else if ((*it)->mPriceCurrency == Currency::CREDITS)
-			sprintf(sim->Aux1, "%lu", (*it)->mPriceCredits);
-		else if ((*it)->mPriceCurrency == Currency::COPPER_CREDITS)
-			sprintf(sim->Aux1, "%lu+%lu", (*it)->mPriceCopper,
-					(*it)->mPriceCredits);
-		else
-			sprintf(sim->Aux1, "999999");
-		wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux1);
+				if ((*it).mPriceCurrency == Currency::COPPER) {
+					sprintf(sim->Aux1, "%lu", (*it).mPriceCopper);
+				}
+				else if ((*it).mPriceCurrency == Currency::CREDITS) {
+					sprintf(sim->Aux1, "%lu", (*it).mPriceCredits);
+				}
+				else if ((*it).mPriceCurrency == Currency::COPPER_CREDITS) {
+					sprintf(sim->Aux1, "%lu+%lu", (*it).mPriceCopper,
+							(*it).mPriceCredits);
+				}
+				else {
+					sprintf(sim->Aux1, "999999");
+				}
 
-		sprintf(sim->Aux1, "%d", (*it)->mPriceCurrency);
-		wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux1);
+				wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux1);
 
-		sprintf(sim->Aux1, "%d", (*it)->mQuantityLimit);
-		wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux1);
+				sprintf(sim->Aux1, "%d", (*it).mPriceCurrency);
+				wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux1);
 
-		sprintf(sim->Aux1, "%d", (*it)->mQuantitySold);
-		wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux1);
+				sprintf(sim->Aux1, "%d", (*it).mQuantityLimit);
+				wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux1);
 
-		sprintf(sim->Aux1, "%d:%d:%d:%d", (*it)->mItemId, (*it)->mLookId,
-				(*it)->mIv1, (*it)->mIv2);
-		wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux1);
+				sprintf(sim->Aux1, "%d", (*it).mQuantitySold);
+				wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux1);
 
-	}
-	g_CreditShopManager.cs.Leave();
-	PutShort(&sim->SendBuf[7], items.size() + 1);
-	PutShort(&sim->SendBuf[1], wpos - 3);
-	return wpos;
+				sprintf(sim->Aux1, "%d:%d:%d:%d", (*it).mItemId, (*it).mLookId,
+						(*it).mIv1, (*it).mIv2);
+				wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux1);
+
+			}
+			PutShort(&sim->SendBuf[7], items.size() + 1);
+			PutShort(&sim->SendBuf[1], wpos - 3);
+			sim->AttemptSend(sim->SendBuf, wpos);
+
+		});
+
+	return 0;
 }
 
 //
@@ -372,25 +367,25 @@ int CreditShopBuyHandler::handleQuery(SimulatorThread *sim,
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 				"Invalid query.");
 	int id = query->GetInteger(0);
-	CreditShopItem * csItem = g_CreditShopManager.GetItem(id);
-	if (csItem == NULL) {
+	CreditShopItem csItem = g_CreditShopManager.GetItem(id);
+	if (csItem.mId == 0) {
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 				"No such item.");
 	} else {
-		int errCode = g_CreditShopManager.ValidateItem(csItem, pld->accPtr,
+		int errCode = g_CreditShopManager.ValidateItem(&csItem, pld->accPtr,
 				&creatureInstance->css, creatureInstance->charPtr);
 		if (errCode != CreditShopError::NONE) {
 			return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 					CreditShopError::GetDescription(errCode).c_str());
 		}
-		ItemDef *itemDef = g_ItemManager.GetSafePointerByID(csItem->mItemId);
+		ItemDef *itemDef = g_ItemManager.GetSafePointerByID(csItem.mItemId);
 		if (itemDef == NULL)
 			return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 					"No such item!");
 
 		InventorySlot *sendSlot =
 				creatureInstance->charPtr->inventory.AddItem_Ex(INV_CONTAINER,
-						itemDef->mID, csItem->mIv1 + 1);
+						itemDef->mID, csItem.mIv1 + 1);
 		if (sendSlot == NULL) {
 			int err = creatureInstance->charPtr->inventory.LastError;
 			if (err == InventoryManager::ERROR_ITEM)
@@ -406,19 +401,20 @@ int CreditShopBuyHandler::handleQuery(SimulatorThread *sim,
 				return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 						"Server error: undefined error.");
 		}
+		creatureInstance->charPtr->pendingChanges++;
 		sim->ActivateActionAbilities(sendSlot);
 
 		g_CharacterManager.GetThread("Simulator::MarketBuy");
 
-		if (csItem->mPriceCurrency == Currency::COPPER
-				|| csItem->mPriceCurrency == Currency::COPPER_CREDITS) {
-			creatureInstance->css.copper -= csItem->mPriceCopper;
+		if (csItem.mPriceCurrency == Currency::COPPER
+				|| csItem.mPriceCurrency == Currency::COPPER_CREDITS) {
+			creatureInstance->css.copper -= csItem.mPriceCopper;
 			creatureInstance->SendStatUpdate(STAT::COPPER);
 		}
 
-		if (csItem->mPriceCurrency == Currency::CREDITS
-				|| csItem->mPriceCurrency == Currency::COPPER_CREDITS) {
-			creatureInstance->css.credits -= csItem->mPriceCredits;
+		if (csItem.mPriceCurrency == Currency::CREDITS
+				|| csItem.mPriceCurrency == Currency::COPPER_CREDITS) {
+			creatureInstance->css.credits -= csItem.mPriceCredits;
 			if (g_Config.AccountCredits) {
 				pld->accPtr->Credits = creatureInstance->css.credits;
 				pld->accPtr->PendingMinorUpdates++;
@@ -426,8 +422,8 @@ int CreditShopBuyHandler::handleQuery(SimulatorThread *sim,
 			creatureInstance->SendStatUpdate(STAT::CREDITS);
 		}
 
-		csItem->mQuantitySold++;
-		g_CreditShopManager.SaveItem(csItem);
+		csItem.mQuantitySold++;
+		g_CreditShopManager.UpdateItem(&csItem);
 
 		int wpos = 0;
 		wpos += AddItemUpdate(&sim->SendBuf[wpos], sim->Aux2, sendSlot);
@@ -436,8 +432,9 @@ int CreditShopBuyHandler::handleQuery(SimulatorThread *sim,
 
 		g_CharacterManager.ReleaseThread();
 
-		g_Logs.cs->info("%v (%v) purchased %v (%v)", pld->accPtr->Name, pld->charPtr->cdef.css.display_name,
-				csItem->mId, csItem->mItemId);
+		g_Logs.cs->info("%v (%v) purchased %v (%v)", pld->accPtr->Name,
+				pld->charPtr->cdef.css.display_name, csItem.mId,
+				csItem.mItemId);
 
 		return wpos;
 	}

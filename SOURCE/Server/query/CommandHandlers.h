@@ -161,6 +161,13 @@ public:
 	int handleCommand(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
 };
 
+class ListShardsHandler : public AbstractCommandHandler {
+public:
+	ListShardsHandler();
+	~ListShardsHandler() {};
+	int handleCommand(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
+};
+
 class GMWhoHandler : public AbstractCommandHandler {
 public:
 	GMWhoHandler();
@@ -469,6 +476,12 @@ class CycleHandler : public AbstractCommandHandler {
 public:
 	CycleHandler();
 	~CycleHandler() {};
+	int handleCommand(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
+};
+class TimeHandler : public AbstractCommandHandler {
+public:
+	TimeHandler();
+	~TimeHandler() {};
 	int handleCommand(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
 };
 

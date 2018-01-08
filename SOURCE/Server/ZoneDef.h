@@ -11,8 +11,15 @@
 #include "CommonTypes.h"
 #include "Report.h"
 #include "Guilds.h"
+#include "Entities.h"
 
 #include "json/json.h"
+
+static std::string KEYPREFIX_ZONE_DEF_INFO = "ZoneDefInfo";
+static std::string LISTPREFIX_GROVE_NAME_TO_ZONE_ID = "GroveNameToZoneID";
+static std::string KEYPREFIX_WARP_NAME_TO_ZONE_ID = "WarpNameToZoneID";
+static std::string LISTPREFIX_ACCOUNT_ID_TO_ZONE_ID = "AccountIDToZoneID";
+static std::string ID_NEXT_ZONE_ID = "NextZoneID";
 
 class DropRateProfile;
 
@@ -28,7 +35,7 @@ public:
 	int mY2;
 	ZoneEditPermission();
 	void Clear(void);
-	void SaveToStream(FILE *output);
+	void WriteEntity(AbstractEntityWriter *writer);
 	void LoadFromConfig(const char *configStr);
 	bool IsValid(void);
 	bool HasEditPermission(int accountID, int characterDefID, const char *characterName, float x, float z, int pageSize);
@@ -165,16 +172,15 @@ public:
 	bool mThunder; // whether or not thunder will occur
 	unsigned long mNextThunder; // -1, thunder won't occur, otherwise server time when it next occurs
 	void RunCycle(ActiveInstance *instance); // run the cycle for the active instance
-	void SendWeatherUpdate(ActiveInstance *instance); // send the weather update message to everyone in this instance/area
-	void SendThunder(ActiveInstance *instance); // send the thunder message to everyone in this instance/area
+	void SendWeatherUpdate(ActiveInstance *instance, bool sendToCluster); // send the weather update message to everyone in this instance/area
+	void SendThunder(ActiveInstance *instance, bool sendToCluser); // send the thunder message to everyone in this instance/area
 	bool PickNewWeather();
 
 private:
 	void RollThunder(); // send the thunder message to everyone in this instance/area
 };
 
-class ZoneDefInfo
-{
+class ZoneDefInfo: public AbstractEntity {
 public:
 	// Values used in the old zone system.  These parameters were derived
 	// from the Sparkplay audit logs.
@@ -188,7 +194,6 @@ public:
 	std::string mRegions;          //Client: Unknown, the color map for region boundaries?
 
 	// These values were taken from the instance.
-	std::string mShardName;        //Prefix of the shard name.
 	std::string mGroveName;        //For groves, the special grove name that is provided when creating an account, used to help trace a grove back to its owner.
 	std::string mWarpName;         //Internal name used for on-demand warping.
 	std::string mTimeOfDay;		   //Start time of day (for when using TOD, but not cycling)
@@ -234,6 +239,12 @@ public:
 
 	ZoneDefInfo();
 	~ZoneDefInfo();
+
+	bool WriteEntity(AbstractEntityWriter *writer);
+	bool ReadEntity(AbstractEntityReader *reader);
+	bool EntityKeys(AbstractEntityReader *reader);
+
+	int GetNextPropID();
 	void Clear(void);
 	void CopyFrom(const ZoneDefInfo& other);
 	void SetDefaults(void);
@@ -246,7 +257,6 @@ public:
 	bool IsMobScalable(void);
 	bool HasDeathPenalty(void);
 	bool CanPlayerWarp(int CreatureDefID, int AccountID);
-	void SaveToStream(FILE *output);
 	void AddPlayerFilterID(int CreatureDefID, bool loadStage = false);
 	void RemovePlayerFilter(int CreatureDefID);
 	void ClearPlayerFilter(void);
@@ -255,7 +265,6 @@ public:
 	void UpdateGrovePermission(STRINGLIST &params);
 
 	void ChangeDefaultLocation(int newX, int newY, int newZ);
-	void ChangeShardName(const char *newName);
 	void ChangeName(const char *newName);
 	void ChangeEnvironment(const char *newEnvironment);
 	void ChangeEnvironmentUsage(void);
@@ -298,15 +307,12 @@ public:
 	std::map<int, ZoneDefInfo> mZoneList;
 	typedef std::map<int, ZoneDefInfo>::iterator ZONEDEF_ITERATOR;
 
-	std::map<int, ZoneIndexEntry> mZoneIndex;     //Maps ZoneID to an Index;
 	typedef std::map<int, ZoneIndexEntry>::iterator ZONEINDEX_ITERATOR;
-
-	int NextZoneID;  //Should only be modified by the class, but may be explicitly retrieved and set through session saving/loading
 
 	void LoadData(void);
 
 	ZoneDefInfo* GetPointerByID(int ID);
-	ZoneDefInfo* GetPointerByPartialWarpName(const char *name);
+	ZoneDefInfo* GetPointerByPartialWarpName(const std::string &name);
 	ZoneDefInfo* GetPointerByExactWarpName(const char *name);
 	ZoneDefInfo* GetPointerByGroveName(const char *name);
 
@@ -329,8 +335,10 @@ public:
 	void NotifyConfigurationChange(void);
 	bool ZoneUnloadReady(void);
 	void UnloadInactiveZones(std::vector<int>& activeZones);
+	void RemoveZoneFromIndexes(ZoneDefInfo *def);
 	
 	void GenerateReportActive(ReportBuffer &report);
+	void InsertZone(const ZoneDefInfo& newZone, bool createIndex);
 
 	//Special case destinations for warping (such as selecting from the grove list)
 	static const int HENGE_ID_CUSTOMWARP = 1;
@@ -342,20 +350,13 @@ private:
 	PlatformTime::TIME_VALUE mNextAutosaveTime;
 	PlatformTime::TIME_VALUE mNextZoneUnload;
 	ChangeData ZoneListChanges;
-	ChangeData ZoneIndexChanges;
 	Platform_CriticalSection cs;
-	std::string mDataFileIndex;
 
 	int GetNewZoneID(void);
 	int LoadFile(std::string fileName);
-	bool SaveIndex(void);
-	void LoadIndex(void);
-	void InitDefaultZoneIndex(void);
 
-	void InsertZone(const ZoneDefInfo& newZone, bool createIndex);
 	ZoneDefInfo * ResolveZoneDef(int ID);
 	ZoneDefInfo * LoadZoneDef(int ID);
-	std::string GetZoneFileName(int ID);
 };
 
 struct MapBarrierPoint
@@ -390,8 +391,21 @@ public:
 	void Deregister(std::vector<WeatherState*> states); // when an instance dies, we stop maintaining its weather regions (i.e. map names)
 	int LoadFromFile(std::string filename);
 	WeatherState* GetWeather(std::string mapName, int instanceId);
+	void ZoneThunder(int zoneId, std::string mapName);
+	void ZoneWeather(int zoneId, std::string mapName, std::string weatherType, int weight);
 private:
 	bool MaybeAddWeatherDef(int instanceID, std::string actualMapName, std::vector<WeatherState*> &m);
+};
+
+class EnvironmentCycle
+{
+public:
+	std::string mName;
+	unsigned long mStart;
+	unsigned long mEnd;
+	unsigned long GetDuration();
+	unsigned long GetNext();
+	bool InRange(unsigned long time);
 };
 
 class EnvironmentCycleManager
@@ -401,17 +415,16 @@ public:
 	static const int MILLISECOND_PER_SECOND = 1000;  //60000;
 
 	std::string mConfig;
-	unsigned long mNextUpdateTime;
-	std::vector<std::string> mCycleStrings;
-	std::vector<int> mCycleTimes;
-	size_t mCurrentCycleIndex;
+	std::vector<EnvironmentCycle> mCycles;
 
 	EnvironmentCycleManager();
 	~EnvironmentCycleManager();
+	void RescheduleUpdate();
+	void Init();
 	void ApplyConfig(const char *str);
-	bool HasCycleUpdated(void);
-	std::string GetCurrentTimeOfDay(void);
-	void EndCurrentCycle(void);
+	EnvironmentCycle GetCurrentCycle(void);
+private:
+	int mChangeTaskID;
 };
 
 class GroveTemplate

@@ -5,34 +5,43 @@
 
 #include <vector>
 #include <string>
+#include "Entities.h"
+
+static std::string KEYPREFIX_PETITION = "Petition";
+static std::string ID_NEXT_PETITION_ID = "NextPetitionID";
+static std::string LISTPREFIX_PENDING_PETITIONS = "PendingPetitions";
+static std::string LISTPREFIX_TAKEN_PETITIONS = "TakenPetitions";
+static std::string LISTPREFIX_CLOSED_PETITIONS = "ClosedPetitions";
 
 enum PetitionStatus {
 	PENDING = 1,
-	TAKEN = 2
+	TAKEN = 2,
+	CLOSED = 3
 };
 
-struct Petition
-{
+class Petition: public AbstractEntity {
+public:
 	int petitionId;
 	int status;
 	int category;
-	char description[4096];
+	std::string description;
 	int petitionerCDefID;
 	int sageCDefID;
 	unsigned long timestamp;
-	char resolution[4096];
+	std::string resolution;
 
-	Petition() { Clear(); }
-	~Petition() { }
+	Petition();
+	~Petition();
+
+	bool WriteEntity(AbstractEntityWriter *writer);
+	bool ReadEntity(AbstractEntityReader *reader);
+	bool EntityKeys(AbstractEntityReader *reader);
 	void Clear(void);
-	void RunLoadDefaults(void);
 };
 
 class PetitionManager
 {
 public:
-	int NextPetitionID;
-
 	PetitionManager();
 	~PetitionManager();
 
@@ -43,8 +52,7 @@ public:
 	std::vector<Petition> GetPetitions(int sageCharacterID);
 	int NewPetition(int petitionerCDefID, int category, const char *description);
 private:
-	Petition Load(std::string path, int id);
-	void FillPetitions(std::vector<Petition> *petitions, std::string path, PetitionStatus status);
+	void FillPetitions(std::vector<std::string> &in, std::vector<Petition> &out);
 };
 
 extern PetitionManager g_PetitionManager;

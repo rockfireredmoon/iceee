@@ -435,7 +435,7 @@ void CreatureDefinition :: SaveToStream(FILE *output) {
 		for(std::vector<int>::iterator it = DefaultEffects.begin(); it != DefaultEffects.end(); ++it) {
 			if(it != DefaultEffects.begin())
 				fprintf(output, ",");
-			fprintf(output, "%s", GetStatusNameByID(*it));
+			fprintf(output, "%s", GetStatusNameByID(*it).c_str());
 		}
 		fprintf(output, "\r\n");
 	}
@@ -1889,7 +1889,7 @@ void CreatureInstance :: ApplyItemStatModFromConfig(int itemID, const std::strin
 		Util::Split(modentry[i], "=", moddata);
 		if(moddata.size() >= 2)
 		{
-			int index = GetStatIndexByName(moddata[0].c_str());
+			int index = GetStatIndexByName(moddata[0]);
 			if(index >= 0)
 			{
 				if(StatList[index].isNumericalType() == true)
@@ -4675,9 +4675,8 @@ bool CreatureInstance :: HasCooldown(int cooldownCategory)
 	{
 		if(simulatorPtr->CheckPermissionSimple(Perm_Account, Permission_SelfDiag))
 		{
-			int remainTime = cooldownManager.cooldownList[r].GetRemainTimeMS();
 			char buffer[64];
-			Util::SafeFormat(buffer, sizeof(buffer), "Cooldown %d is active (%d ms remain)", cooldownCategory, remainTime);
+			Util::SafeFormat(buffer, sizeof(buffer), "Cooldown %d is active (%lu ms remain)", cooldownCategory, cooldownManager.cooldownList[r].GetRemainTimeMS());
 			simulatorPtr->SendInfoMessage(buffer, INFOMSG_INFO);
 		}
 	}
@@ -4902,9 +4901,9 @@ void CreatureInstance :: RunDialog(void)
 		 */
 		if(CurrentTarget.targ == NULL && (timer_dialog == 0 || g_ServerTime > timer_dialog))
 		{
-			if(spawnGen != NULL && spawnGen->spawnPoint != NULL && spawnGen->spawnPoint->extraData != NULL && spawnGen->spawnPoint->extraData != NULL && strcmp( spawnGen->spawnPoint->extraData->dialog, "") != 0) {
+			if(spawnGen != NULL && spawnGen->spawnPoint != NULL && spawnGen->spawnPoint->hasExtraData && spawnGen->spawnPoint->hasExtraData && spawnGen->spawnPoint->extraData.dialog.length() > 0) {
 				/* Only run dialog when there is 1) a new timer or timer triggers 2) no target */
-				NPCDialogItem *diag = g_NPCDialogManager.GetItem(spawnGen->spawnPoint->extraData->dialog);
+				NPCDialogItem *diag = g_NPCDialogManager.GetItem(spawnGen->spawnPoint->extraData.dialog);
 				if(diag != NULL && diag->mParagraphs.size() > 0) {
 					/* If the index is -1, this is the very first dialog paragraph, so wait for the
 					 * initial delay before actually performing it
@@ -4953,7 +4952,7 @@ void CreatureInstance :: RunDialog(void)
 					}
 				}
 				else {
-					g_Logs.simulator->warn("Request for unknown or empty NPC dialog %v", spawnGen->spawnPoint->extraData->dialog);
+					g_Logs.simulator->warn("Request for unknown or empty NPC dialog %v", spawnGen->spawnPoint->extraData.dialog);
 					/* Never bother again */
 					timer_dialog = -1;
 				}
@@ -5291,8 +5290,10 @@ void CreatureInstance :: RunProcessingCycle(void)
 
 			if(charPtr->inventory.NextExpunge != 0 && g_ServerTime >= charPtr->inventory.NextExpunge) {
 				int r = charPtr->inventory.RemoveExpiredItemsAndUpdate(GSendBuf);
-				if(r > 0)
+				if(r > 0) {
+					charPtr->pendingChanges++;
 					simulatorPtr->AttemptSend(GSendBuf, r);
+				}
 			}
 		}
 		else if(serverFlags & ServerFlags::IsSidekick)
@@ -5347,11 +5348,11 @@ void CreatureInstance :: CheckPathLocation(void)
 	}
 
 	//Prop needs attached data.
-	if(so->extraData == NULL)
+	if(!so->hasExtraData)
 		return;
 
 	//Needs linked points.
-	if(so->extraData->linkCount == 0)
+	if(so->extraData.link.size() == 0)
 	{
 		g_Logs.server->warn("CheckPathLocation() no links on prop: %v", nextPathNode);
 		return;
@@ -5360,11 +5361,11 @@ void CreatureInstance :: CheckPathLocation(void)
 	//Build a list of available nodes, excluding any node that would return to the previous
 	//node.
 	vector<int> openNode;
-	for(int i = 0; i < so->extraData->linkCount; i++)
+	for(auto a = so->extraData.link.begin(); a != so->extraData.link.end(); ++a)
 	{
-		if(so->extraData->link[i].type == SceneryObject::LINK_TYPE_PATH && so->extraData->link[i].propID != previousPathNode)
+		if((*a).type == SceneryObject::LINK_TYPE_PATH && (*a).propID != previousPathNode)
 		{
-			openNode.push_back(so->extraData->link[i].propID);
+			openNode.push_back((*a).propID);
 			//g_Log.AddMessageFormat("Found %d off %d", so->extraData->link[i].propID, nextPathNode);
 		}
 	}
@@ -5620,7 +5621,7 @@ void CreatureInstance :: CheckLeashMovement(void)
 		return;
 	if(spawnGen->spawnPoint == NULL)
 		return;
-	if(spawnGen->spawnPoint->extraData == NULL)
+	if(!spawnGen->spawnPoint->hasExtraData)
 		return;
 
 	//If we're already flagged for returning to a leash location, just skip all the stuff in here to
@@ -5628,7 +5629,7 @@ void CreatureInstance :: CheckLeashMovement(void)
 	if(serverFlags & ServerFlags::LeashRecall)
 		return;
 
-	int maxLeash = spawnGen->spawnPoint->extraData->GetLeashLength();
+	int maxLeash = spawnGen->spawnPoint->extraData.GetLeashLength();
 	if(actInst->mZoneDefPtr->IsDungeon() == true)
 	{
 		int leashLimit = actInst->mZoneDefPtr->mMaxLeashRange;
@@ -5636,8 +5637,8 @@ void CreatureInstance :: CheckLeashMovement(void)
 			maxLeash = leashLimit;
 	}
 
-	int wanderRadius = spawnGen->spawnPoint->extraData->wanderRadius;
-	int outerRadius = spawnGen->spawnPoint->extraData->outerRadius;
+	int wanderRadius = spawnGen->spawnPoint->extraData.wanderRadius;
+	int outerRadius = spawnGen->spawnPoint->extraData.outerRadius;
 	if(wanderRadius == 0)
 	{
 		if(spawnGen->spawnPackage != NULL)
@@ -7125,6 +7126,7 @@ int CreatureInstance :: ProcessQuestRewards(int QuestID, int outcomeIdx, const s
 			newItem = charPtr->inventory.AddItem_Ex(INV_CONTAINER, itemPtr->mID, count);
 		}
 		if(newItem != NULL) {
+			charPtr->pendingChanges++;
 			simulatorPtr->ActivateActionAbilities(newItem);
 			wpos += AddItemUpdate(&GSendBuf[wpos], GAuxBuf, newItem);
 		}
@@ -7263,6 +7265,7 @@ void CreatureInstance :: CheckQuestInteract(CreatureInstance *target)
 					else {
 						InventorySlot *sendSlot = charPtr->inventory.AddItem_Ex(INV_CONTAINER, item->mID, 1);
 						if(sendSlot != NULL) {
+							charPtr->pendingChanges++;
 							simulatorPtr->ActivateActionAbilities(sendSlot);
 							int wpos = AddItemUpdate(buf, buf2, sendSlot);
 							Util::SafeFormat(buf2, sizeof(buf2), "You now have '%s' in your inventory.", item->mDisplayName.c_str());
@@ -8340,7 +8343,7 @@ void CreatureInstance :: OnInstanceEnter(const ArenaRuleset &arenaRuleset)
 		if(pass == true)
 		{
 			g_Logs.server->debug("Matched: %v", rule->mRuleType);
-			int StatID = GetStatIndexByName(rule->mStatName.c_str());
+			int StatID = GetStatIndexByName(rule->mStatName);
 			if(StatID == -1)
 				continue;
 			float additive = 0.0F;
@@ -8490,9 +8493,9 @@ void CreatureInstance :: DebugGenerateReport(ReportBuffer &report)
 		int statID = activeStatusEffect[i].modStatusID;
 		unsigned long extime = activeStatusEffect[i].expireTime - g_ServerTime;
 		if(activeStatusEffect[i].expireTime == PlatformTime::MAX_TIME)
-			report.AddLine("%hd = infinite (%s)", activeStatusEffect[i].modStatusID, GetStatusNameByID(statID));
+			report.AddLine("%hd = infinite (%s)", activeStatusEffect[i].modStatusID, GetStatusNameByID(statID).c_str());
 		else
-			report.AddLine("%hd = %lu (%s)", activeStatusEffect[i].modStatusID, extime, GetStatusNameByID(statID));
+			report.AddLine("%hd = %lu (%s)", activeStatusEffect[i].modStatusID, extime, GetStatusNameByID(statID).c_str());
 	}
 
 	report.AddLine(NULL);

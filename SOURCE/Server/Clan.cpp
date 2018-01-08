@@ -1,8 +1,8 @@
-#include "CreditShop.h"
 #include "Util.h"
 #include "Clan.h"
-#include "FileReader.h"
 #include "Config.h"
+#include "StringUtil.h"
+#include "Cluster.h"
 #include "DirectoryAccess.h"
 
 #include <string.h>
@@ -71,6 +71,52 @@ Clan::Clan() {
 Clan::~Clan() {
 }
 
+bool Clan :: WriteEntity(AbstractEntityWriter *writer) {
+	writer->Key(KEYPREFIX_CLAN, StringUtil::Format("%d", mId));
+	writer->Value("Name", mName);
+	writer->Value("MOTD", mMOTD);
+	writer->Value("Created", mCreated);
+	STRINGLIST l;
+	for(auto a = mMembers.begin(); a != mMembers.end(); ++a) {
+		l.push_back(StringUtil::Format("%d:%d", (*a).mID, (*a).mRank));
+	}
+	writer->ListValue("Member", l);
+	l.clear();
+	for(auto a = mPendingMembers.begin(); a != mPendingMembers.end(); ++a) {
+		l.push_back(StringUtil::Format("%d", *a));
+	}
+	writer->ListValue("PendingMember", l);
+	return true;
+}
+
+bool Clan :: EntityKeys(AbstractEntityReader *reader) {
+	reader->Key(KEYPREFIX_CLAN, StringUtil::Format("%d", mId), true);
+	return true;
+}
+
+bool Clan :: ReadEntity(AbstractEntityReader *reader) {
+	mName = reader->Value("Name");
+	mMOTD = reader->Value("MOTD");
+	mCreated = reader->ValueULong("Created");
+	STRINGLIST m = reader->ListValue("Member");
+	for(auto a = m.begin(); a != m.end(); ++a) {
+		STRINGLIST l;
+		Util::Split(*a, ",", l);
+		ClanMember mem;
+		if (l.size() > 1) {
+			mem.mID = atoi(l[0].c_str());
+			mem.mRank = atoi(l[1].c_str());
+			mMembers.push_back(mem);
+		}
+	}
+	m = reader->ListValue("PendingMember");
+	for(auto a = m.begin(); a != m.end(); ++a) {
+		mPendingMembers.push_back(atoi((*a).c_str()));
+	}
+	return true;
+}
+
+
 ClanMember Clan::GetFirstMemberOfRank(int rank) {
 	for(std::vector<ClanMember>::iterator it = mMembers.begin(); it != mMembers.end(); ++it) {
 		if((*it).mRank == rank)
@@ -131,158 +177,63 @@ void Clan::WriteToJSON(Json::Value &value) {
 //
 
 ClanManager::ClanManager() {
-	nextClanID = 1;
 }
 
 ClanManager::~ClanManager() {
 }
 
-std::string ClanManager::GetPath(int id) {
-	char buf[128];
-	Util::SafeFormat(buf, sizeof(buf), "%d.txt", id);
-	return Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "Clan"), buf);
+void ClanManager::CreateClan(Clan &clan) {
+	clan.mId = g_ClusterManager.NextValue(ID_NEXT_CLAN_ID);
+	clan.mCreated = time(NULL);
+	SaveClan(clan);
 }
 
-void ClanManager::CreateClan(Clan &clan) {
-	clan.mId = nextClanID++;
-	clan.mCreated = time(NULL);
-	mClans[clan.mId] = clan;
-	SaveClan(clan);
-	SessionVarsChangeData.AddChange();
+Clan ClanManager::GetClan(int id) {
+	Clan c;
+	if(!LoadClan(id, c)) {
+		g_Logs.server->info("Failed to load clan [%v] from cluster", id);
+	}
+	return c;
+}
+
+std::vector<Clan> ClanManager::GetClans() {
+	std::vector<Clan> c;
+	g_ClusterManager.Scan([this, &c](const std::string &key) {
+		STRINGLIST l;
+		Util::Split(key, ":", l);
+		c.push_back(GetClan(atoi(l[1].c_str())));
+	}, StringUtil::Format("%s:", KEYPREFIX_CLAN.c_str()));
+	return c;
 }
 
 bool ClanManager::LoadClan(int id, Clan &clan) {
-	std::string path = GetPath(id);
-	if (!Platform::FileExists(path)) {
-		g_Logs.data->info("No file for CS item [%v]", path.c_str());
-		return NULL;
-	}
-
-	FileReader lfr;
-	if (lfr.OpenText(path.c_str()) != Err_OK) {
-		g_Logs.data->error("Could not open file [%v]", path.c_str());
-		return false;
-	}
-
-	lfr.CommentStyle = Comment_Semi;
-	int r = 0;
-	long amt = -1;
-	while (lfr.FileOpen() == true) {
-		r = lfr.ReadLine();
-		lfr.SingleBreak("=");
-		lfr.BlockToStringC(0, Case_Upper);
-		if (r > 0) {
-			if (strcmp(lfr.SecBuffer, "[ENTRY]") == 0) {
-				if (clan.mId != 0) {
-					g_Logs.data->warn(
-							"%v contains multiple entries. CS items have one entry per file",
-							path.c_str());
-					break;
-				}
-				clan.mId = id;
-			} else if (strcmp(lfr.SecBuffer, "NAME") == 0)
-				clan.mName = lfr.BlockToStringC(1, 0);
-			else if (strcmp(lfr.SecBuffer, "MOTD") == 0)
-				clan.mMOTD = lfr.BlockToStringC(1, 0);
-			else if (strcmp(lfr.SecBuffer, "MEMBER") == 0) {
-				std::vector<std::string> l;
-				Util::Split(lfr.BlockToStringC(1, 0), ",", l);
-				ClanMember mem;
-				if (l.size() > 1) {
-					mem.mID = atoi(l[0].c_str());
-					mem.mRank = atoi(l[1].c_str());
-					clan.mMembers.push_back(mem);
-				} else {
-					g_Logs.data->info(
-							"Incomplete clan member information [%v] in file [%v]",
-							lfr.SecBuffer, path.c_str());
-				}
-			} else
-				g_Logs.data->info("Unknown identifier [%v] in file [%v]",
-						lfr.SecBuffer, path.c_str());
-		}
-	}
-	lfr.CloseCurrent();
-	return true;
+	clan.mId = id;
+	return g_ClusterManager.ReadEntity(&clan);
 }
 
 bool ClanManager::HasClan(int clanID) {
-	return mClans.find(clanID) != mClans.end();
+	return g_ClusterManager.HasKey(StringUtil::Format("%s:%d", KEYPREFIX_CLAN.c_str(), clanID));
 }
 
-int ClanManager::FindClanID(std::string clanName) {
-	for(std::map<int, Clan>::iterator it = mClans.begin(); it != mClans.end(); ++it) {
-		if(it->second.mName.compare(clanName) == 0)
-			return it->first;
-	}
-	return -1;
+int ClanManager::FindClanID(const std::string &clanName) {
+	return atoi(g_ClusterManager.GetKey(StringUtil::Format("%s:%s", KEYPREFIX_CLAN_NAME_TO_ID.c_str(), clanName.c_str()), "-1").c_str());
 }
 
 bool ClanManager::RemoveClan(Clan &clan) {
-
-	std::string path = GetPath(clan.mId);
-	if (!Platform::FileExists(path)) {
-		g_Logs.server->info("No file for clan [%v] to remove", path.c_str());
+	g_ClusterManager.RemoveKey(StringUtil::Format("%s:%s", KEYPREFIX_CLAN_NAME_TO_ID.c_str(), clan.mName.c_str()));
+	if (!g_ClusterManager.RemoveEntity(&clan)) {
+		g_Logs.server->info("Failed to remove clan [%v] from cluster", clan.mName);
 		return false;
-	}
-	cs.Enter("ClanManager::RemoveClan");
-	mClans.erase(mClans.find(clan.mId));
-	cs.Leave();
-	char buf[128];
-	Util::SafeFormat(buf, sizeof(buf), "%d.del", clan.mId);
-	std::string delpath = Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "Clan"), buf);
-	if(!Platform::FileExists(delpath) || remove(delpath.c_str()) == 0) {
-		if(!rename(path.c_str(), delpath.c_str()) == 0) {
-			g_Logs.server->info("Failed to remove clan %v", clan.mId);
-			return false;
-		}
 	}
 	return true;
 }
 
-int ClanManager::LoadClans(void) {
-	mClans.clear();
-
-	Platform_DirectoryReader r;
-	std::string dir = r.GetDirectory();
-	r.SetDirectory(Platform::JoinPath(g_Config.ResolveUserDataPath(), "Clan"));
-	r.ReadFiles();
-	r.SetDirectory(dir);
-
-	std::vector<std::string>::iterator it;
-	for (it = r.fileList.begin(); it != r.fileList.end(); ++it) {
-		std::string p = *it;
-		if (Util::HasEnding(p, ".txt")) {
-			Clan c;
-			if (LoadClan(atoi(Platform::Basename(p).c_str()), c)) {
-				mClans[c.mId] = c;
-			}
-		}
-	}
-
-	return 0;
-}
-
-
 bool ClanManager::SaveClan(Clan &clan) {
-	std::string path = GetPath(clan.mId);
-	g_Logs.data->info("Saving clan to %v.", path.c_str());
-	FILE *output = fopen(path.c_str(), "wb");
-	if (output == NULL) {
-		g_Logs.data->error("Saving clan could not open: %v", path.c_str());
+	g_ClusterManager.SetKey(StringUtil::Format("%s:%s", KEYPREFIX_CLAN_NAME_TO_ID.c_str(), clan.mName.c_str()), StringUtil::Format("%d", clan.mId));
+	if(!g_ClusterManager.WriteEntity(&clan)) {
+		g_Logs.data->warn("Failed to save clan %v (%v) to cluster.", clan.mId, clan.mName);
 		return false;
 	}
-
-	fprintf(output, "[ENTRY]\r\n");
-	fprintf(output, "Name=%s\r\n", clan.mName.c_str());
-	fprintf(output, "MOTD=%s\r\n", clan.mMOTD.c_str());
-	for(std::vector<ClanMember>::iterator it = clan.mMembers.begin(); it != clan.mMembers.end(); ++it) {
-		fprintf(output, "Member=%d,%d\r\n", (*it).mID, (*it).mRank);
-	}
-	fprintf(output, "\r\n");
-	fflush(output);
-	fclose(output);
-	mClans[clan.mId] = clan;
 	return true;
 }
 

@@ -1,5 +1,7 @@
 #include "Components.h"
 #include "Debug.h"
+#include "Cluster.h"
+#include "StringUtil.h"
 #include "util/Log.h"
 
 #define VERIFYCINST(x)  EMPTY_OPERATION
@@ -66,13 +68,39 @@ ActiveInstanceManager g_ActiveInstanceManager;
 WorldMarker::WorldMarker() {
 	Clear();
 }
+WorldMarker::~WorldMarker() {
+}
 
 void WorldMarker::Clear() {
-	Name[0] = 0;
-	Comment[0] = 0;
+	Name = "";
+	Comment = "";
 	X = 0;
 	Y = 0;
 	Z = 0;
+}
+
+bool WorldMarker::EntityKeys(AbstractEntityReader *reader) {
+	reader->Key(KEYPREFIX_WORLD_MARKER, Name);
+	return true;
+}
+
+bool WorldMarker::ReadEntity(AbstractEntityReader *reader) {
+	if (!reader->Exists())
+		return false;
+	Comment = reader->Value("Comment");
+	X = reader->ValueInt("X");
+	Y = reader->ValueInt("Y");
+	Z = reader->ValueInt("Z");
+	return true;
+}
+
+bool WorldMarker::WriteEntity(AbstractEntityWriter *writer) {
+	writer->Key(KEYPREFIX_WORLD_MARKER, Name);
+	writer->Value("Comment", Comment);
+	writer->Value("X", X);
+	writer->Value("Y", Y);
+	writer->Value("Z", Z);
+	return true;
 }
 
 WorldMarkerContainer::WorldMarkerContainer() {
@@ -84,98 +112,141 @@ WorldMarkerContainer::~WorldMarkerContainer() {
 }
 
 void WorldMarkerContainer::Clear() {
+	mZoneID = -1;
 	WorldMarkerList.clear();
 }
 
 void WorldMarkerContainer::Save() {
+	if(mZoneID != -1) {
+		/* Remove all the existing markers for this zone */
+		std::string markerKey = StringUtil::Format("%s:%d", LISTPREFIX_WORLD_MARKERS.c_str(), mZoneID);
+		STRINGLIST keys = g_ClusterManager.GetList(markerKey);
+		for(auto it = keys.begin() ; it != keys.end(); ++it) {
+			WorldMarker m;
+			m.Name = *it;
+			g_ClusterManager.RemoveEntity(&m);
+		}
+		g_ClusterManager.RemoveKey(markerKey, true);
 
-	std::string dir = Platform::Dirname(mFilename);
-	if (!Platform::DirExists(dir)) {
-		Platform::MakeDirectory(dir);
+		/* Add them all back and the index */
+		for (auto it = WorldMarkerList.begin(); it != WorldMarkerList.end(); ++it) {
+			if(g_ClusterManager.WriteEntity(&(*it))) {
+				g_ClusterManager.ListAdd(markerKey, (*it).Name);
+			}
+		}
 	}
+	else {
 
-	g_Logs.data->info("Saving world markers to %v.", mFilename.c_str());
-	FILE *output = fopen(mFilename.c_str(), "wb");
-	if (output == NULL) {
-		g_Logs.data->error("Saving world markers could not open: %v",
-				mFilename.c_str());
-		return;
+		std::string dir = Platform::Dirname(mFilename);
+		if (!Platform::DirExists(dir)) {
+			Platform::MakeDirectory(dir);
+		}
+
+		g_Logs.data->info("Saving world markers to %v.", mFilename.c_str());
+		FILE *output = fopen(mFilename.c_str(), "wb");
+		if (output == NULL) {
+			g_Logs.data->error("Saving world markers could not open: %v",
+					mFilename.c_str());
+			return;
+		}
+
+		vector<WorldMarker>::iterator it;
+		for (it = WorldMarkerList.begin(); it != WorldMarkerList.end(); ++it) {
+			fprintf(output, "[ENTRY]\r\n");
+			fprintf(output, "Name=%s\r\n", it->Name.c_str());
+			string r = it->Comment;
+			Util::ReplaceAll(r, "\r\n", "\\r\\n");
+			Util::ReplaceAll(r, "\n", "\\n");
+			fprintf(output, "Comment=%s\r\n", r.c_str());
+			fprintf(output, "Position=%1.1f,%1.1f,%1.1f\r\n", it->X, it->Y, it->Z);
+			fprintf(output, "\r\n");
+		}
+
+		fflush(output);
+		fclose(output);
 	}
-
-	vector<WorldMarker>::iterator it;
-	for (it = WorldMarkerList.begin(); it != WorldMarkerList.end(); ++it) {
-		fprintf(output, "[ENTRY]\r\n");
-		fprintf(output, "Name=%s\r\n", it->Name);
-		string r = it->Comment;
-		Util::ReplaceAll(r, "\r\n", "\\r\\n");
-		Util::ReplaceAll(r, "\n", "\\n");
-		fprintf(output, "Comment=%s\r\n", r.c_str());
-		fprintf(output, "Position=%1.1f,%1.1f,%1.1f\r\n", it->X, it->Y, it->Z);
-		fprintf(output, "\r\n");
-	}
-
-	fflush(output);
-	fclose(output);
 }
 
 void WorldMarkerContainer::Reload() {
 	Clear();
-	FileReader lfr;
-	if (lfr.OpenText(mFilename.c_str()) != Err_OK) {
-		g_Logs.data->error("WorldMarker file [%v] not found.",
-				mFilename.c_str());
-		return;
-	}
-
-	WorldMarker newItem;
-
-	lfr.CommentStyle = Comment_Semi;
-	int r;
-	while (lfr.FileOpen() == true) {
-		r = lfr.ReadLine();
-		lfr.SingleBreak("=");
-		lfr.BlockToStringC(0, Case_Upper);
-		if (r > 0) {
-			if (strcmp(lfr.SecBuffer, "[ENTRY]") == 0) {
-				if (newItem.Name[0] != 0) {
-					WorldMarkerList.push_back(newItem);
-					newItem.Clear();
-				}
-			} else if (strcmp(lfr.SecBuffer, "NAME") == 0) {
-				Util::SafeCopy(newItem.Name, lfr.BlockToStringC(1, 0),
-						sizeof(newItem.Name));
-			} else if (strcmp(lfr.SecBuffer, "POSITION") == 0) {
-				STRINGLIST locData;
-				string str = lfr.BlockToStringC(1, 0);
-				Util::Split(str.c_str(), ",", locData);
-				if (locData.size() < 3) {
-					g_Logs.data->warn(
-							"WorldMarker:%v has incomplete Position string (%v)",
-							newItem.Name, str.c_str());
-				} else {
-					newItem.X = static_cast<float>(strtof(locData[0].c_str(),
-					NULL));
-					newItem.Y = static_cast<float>(strtof(locData[1].c_str(),
-					NULL));
-					newItem.Z = static_cast<float>(strtof(locData[2].c_str(),
-					NULL));
-				}
-			} else if (strcmp(lfr.SecBuffer, "COMMENT") == 0) {
-				string r = lfr.BlockToStringC(1, 0);
-				Util::ReplaceAll(r, "\\r\\n", "\r\n");
-				Util::ReplaceAll(r, "\\n", "\n");
-				Util::SafeCopy(newItem.Comment, r.c_str(),
-						sizeof(newItem.Comment));
+	if(mZoneID != 0) {
+		/* Load from cluster - Grove zone */
+		STRINGLIST markers = g_ClusterManager.GetList(StringUtil::Format("%s:%d", LISTPREFIX_WORLD_MARKERS.c_str(), mZoneID));
+		for(auto it = markers.begin() ; it != markers.end(); ++it) {
+			WorldMarker m;
+			m.Name = *it;
+			if(g_ClusterManager.ReadEntity(&m)) {
+				WorldMarkerList.push_back(m);
+			}
+			else {
+				g_Logs.data->warn("Failed to load world marker item %v", *it);
 			}
 		}
 	}
-	lfr.CloseCurrent();
-	if (newItem.Name[0] != 0)
-		WorldMarkerList.push_back(newItem);
+	else {
+		/* Load from file - Official zone */
+		FileReader lfr;
+		if (lfr.OpenText(mFilename.c_str()) != Err_OK) {
+			g_Logs.data->error("WorldMarker file [%v] not found.",
+					mFilename.c_str());
+			return;
+		}
+
+		WorldMarker newItem;
+
+		lfr.CommentStyle = Comment_Semi;
+		int r;
+		while (lfr.FileOpen() == true) {
+			r = lfr.ReadLine();
+			lfr.SingleBreak("=");
+			lfr.BlockToStringC(0, Case_Upper);
+			if (r > 0) {
+				if (strcmp(lfr.SecBuffer, "[ENTRY]") == 0) {
+					if (newItem.Name.length() > 0) {
+						WorldMarkerList.push_back(newItem);
+						newItem.Clear();
+					}
+				} else if (strcmp(lfr.SecBuffer, "NAME") == 0) {
+					newItem.Name = lfr.BlockToStringC(1, 0);
+				} else if (strcmp(lfr.SecBuffer, "POSITION") == 0) {
+					STRINGLIST locData;
+					string str = lfr.BlockToStringC(1, 0);
+					Util::Split(str.c_str(), ",", locData);
+					if (locData.size() < 3) {
+						g_Logs.data->warn(
+								"WorldMarker:%v has incomplete Position string (%v)",
+								newItem.Name, str);
+					} else {
+						newItem.X = static_cast<float>(strtof(locData[0].c_str(),
+						NULL));
+						newItem.Y = static_cast<float>(strtof(locData[1].c_str(),
+						NULL));
+						newItem.Z = static_cast<float>(strtof(locData[2].c_str(),
+						NULL));
+					}
+				} else if (strcmp(lfr.SecBuffer, "COMMENT") == 0) {
+					string r = lfr.BlockToStringC(1, 0);
+					Util::ReplaceAll(r, "\\r\\n", "\r\n");
+					Util::ReplaceAll(r, "\\n", "\n");
+					newItem.Comment = r;
+				}
+			}
+		}
+		lfr.CloseCurrent();
+		if (newItem.Name.length() > 0)
+			WorldMarkerList.push_back(newItem);
+	}
 }
 
 void WorldMarkerContainer::LoadFromFile(std::string filename) {
+	mZoneID = -1;
 	mFilename = filename;
+	Reload();
+}
+
+void WorldMarkerContainer::LoadFromCluster(int zoneID) {
+	mZoneID = zoneID;
+	mFilename = "";
 	Reload();
 }
 
@@ -1017,15 +1088,6 @@ int ActiveInstance::ProcessMessage(MessageComponent *msg) {
 					msg->SimulatorID);
 			SEND_DEBUG_MSG_ALL("END BCM_UpdateElevation", msg->SimulatorID);
 			break;
-		case BCM_SendHealth:
-			size = PrepExt_SendHealth(GSendBuf, msg->param1,
-					(short) msg->param2);
-			//LSendToAllSimulator(GSendBuf, size, -1);
-			LSendToLocalSimulator(GSendBuf, size, msg->x, msg->z);
-			break;
-		case BCM_RequestTarget:
-			((CreatureInstance*) msg->param1)->RequestTarget(msg->param2);
-			break;
 		case BCM_AbilityRequest:
 			VERIFYCINST((CreatureInstance*)msg->param1);
 			//ActivateAbility(msg->param1, (short)msg->param2, &SimChar[msg->simCall].csd);
@@ -1067,13 +1129,6 @@ int ActiveInstance::ProcessMessage(MessageComponent *msg) {
 			LSendToLocalSimulator(GSendBuf, size, msg->x, msg->z,
 					msg->SimulatorID);
 			SEND_DEBUG_MSG_ALL("END BCM_UpdateFullPosition", msg->SimulatorID);
-			break;
-		case BCM_Notice_MOTD:
-			if (g_MOTD_Message.size() == 0)
-				break;
-			size = PrepExt_GenericChatMessage(GSendBuf, 0, g_MOTD_Name.c_str(),
-					g_MOTD_Channel.c_str(), g_MOTD_Message.c_str());
-			LSendToOneSimulator(GSendBuf, size, msg->SimulatorID);
 			break;
 		case BCM_SpawnCreateCreature:
 			SpawnCreate((CreatureInstance*) msg->param1, msg->param2);
@@ -1139,12 +1194,6 @@ int ActiveInstance::ProcessMessage(MessageComponent *msg) {
 			break;
 		case BCM_RunPortalRequest:
 			((SimulatorThread*) (msg->param1))->RunPortalRequest();
-			break;
-		case BCM_Disconnect: {
-			SimulatorThread *sim = g_SimulatorManager.GetPtrByID(msg->param1);
-			if (sim != NULL)
-				sim->ProcessDisconnect();
-		}
 			break;
 		}
 
@@ -2416,24 +2465,25 @@ void ActiveInstance::InitializeData(void) {
 	spawnsys.SetInstancePointer(this);
 
 	//Load the new script system
-	std::string path = InstanceScript::InstanceNutDef::GetInstanceScriptPath(
-			mZoneDefPtr->mID, false, mZoneDefPtr->mGrove);
-	if (Util::HasEnding(path, ".nut")) {
-		nutScriptDef.Initialize(path.c_str());
-		nutScriptPlayer = new InstanceScript::InstanceNutPlayer();
-		nutScriptPlayer->SetInstancePointer(this);
-		std::string errors;
-		nutScriptPlayer->Initialize(&nutScriptDef, errors);
-		if (errors.length() > 0)
-			g_Logs.server->error("Failed to compile. %v", errors.c_str());
-	} else if (Util::HasEnding(path, ".txt")) {
-		scriptDef.CompileFromSource(path.c_str());
-		scriptPlayer = new InstanceScript::InstanceScriptPlayer();
-		scriptPlayer->Initialize(&scriptDef);
-		scriptPlayer->SetInstancePointer(this);
-		scriptPlayer->JumpToLabel("init");
-	} else {
-		g_Logs.server->error("No Squirrel script for instance %v", mZone);
+	if(!mZoneDefPtr->mGrove) {
+		std::string path = InstanceScript::InstanceNutDef::GetInstanceScriptPath(mZoneDefPtr->mID, false);
+		if (Util::HasEnding(path, ".nut")) {
+			nutScriptDef.Initialize(path.c_str());
+			nutScriptPlayer = new InstanceScript::InstanceNutPlayer();
+			nutScriptPlayer->SetInstancePointer(this);
+			std::string errors;
+			nutScriptPlayer->Initialize(&nutScriptDef, errors);
+			if (errors.length() > 0)
+				g_Logs.server->error("Failed to compile. %v", errors.c_str());
+		} else if (Util::HasEnding(path, ".txt")) {
+			scriptDef.CompileFromSource(path.c_str());
+			scriptPlayer = new InstanceScript::InstanceScriptPlayer();
+			scriptPlayer->Initialize(&scriptDef);
+			scriptPlayer->SetInstancePointer(this);
+			scriptPlayer->JumpToLabel("init");
+		} else {
+			g_Logs.server->error("No Squirrel script for instance %v", mZone);
+		}
 	}
 
 	/*  log debug disassembly
@@ -2446,52 +2496,43 @@ void ActiveInstance::InitializeData(void) {
 	char buf[64];
 	Util::SafeFormat(buf, sizeof(buf), "%d", mZone);
 
-	std::string p = Platform::JoinPath(
-			Platform::JoinPath(
-					mZoneDefPtr->mGrove ?
-							Platform::JoinPath(g_Config.ResolveUserDataPath(),
-									"Grove") :
-							Platform::JoinPath(
-									g_Config.ResolveVariableDataPath(),
-									"Instance"), buf), "EssenceShop.txt");
-	essenceShopList.LoadFromFile(p);
-	if (essenceShopList.EssenceShopList.size() > 0)
-		g_Logs.data->info("Loaded %v essence shops.",
-				essenceShopList.EssenceShopList.size());
+	std::string p;
+	if (!mZoneDefPtr->mGrove) {
+		/* Only non-grove zones can have shops and static spawns */
+		p = Platform::JoinPath(
+				Platform::JoinPath(
+						Platform::JoinPath(g_Config.ResolveVariableDataPath(),
+								"Instance"), buf), "EssenceShop.txt");
+		essenceShopList.LoadFromFile(p);
+		if (essenceShopList.EssenceShopList.size() > 0)
+			g_Logs.data->info("Loaded %v essence shops.",
+					essenceShopList.EssenceShopList.size());
 
-	p = Platform::JoinPath(
-			Platform::JoinPath(
-					mZoneDefPtr->mGrove ?
-							Platform::JoinPath(g_Config.ResolveUserDataPath(),
-									"Grove") :
-							Platform::JoinPath(
-									g_Config.ResolveVariableDataPath(),
-									"Instance"), buf), "Shop.txt");
-	itemShopList.LoadFromFile(p);
-	if (itemShopList.EssenceShopList.size() > 0)
-		g_Logs.data->info("Loaded %v item shops.",
-				itemShopList.EssenceShopList.size());
+		p = Platform::JoinPath(
+				Platform::JoinPath(
+						Platform::JoinPath(g_Config.ResolveVariableDataPath(),
+								"Instance"), buf), "Shop.txt");
+		itemShopList.LoadFromFile(p);
+		if (itemShopList.EssenceShopList.size() > 0)
+			g_Logs.data->info("Loaded %v item shops.",
+					itemShopList.EssenceShopList.size());
 
-	p = Platform::JoinPath(
-			Platform::JoinPath(
-					mZoneDefPtr->mGrove ?
-							Platform::JoinPath(g_Config.ResolveUserDataPath(),
-									"Grove") :
-							Platform::JoinPath(
-									g_Config.ResolveVariableDataPath(),
-									"Instance"), buf), "Static.txt");
-	LoadStaticObjects(p);
+		p = Platform::JoinPath(
+				Platform::JoinPath(
+						Platform::JoinPath(g_Config.ResolveVariableDataPath(),
+								"Instance"), buf), "Static.txt");
+		LoadStaticObjects(p);
 
-	//World markers (for devs)
-	p = Platform::JoinPath(
-			Platform::JoinPath(
-					mZoneDefPtr->mGrove ?
-							Platform::JoinPath(g_Config.ResolveUserDataPath(),
-									"Grove") :
-							Platform::JoinPath(
-									g_Config.ResolveVariableDataPath(),
-									"Instance"), buf), "WorldMarkers.txt");
-	worldMarkers.LoadFromFile(p);
+		//World markers (for devs)
+		p = Platform::JoinPath(
+				Platform::JoinPath(
+						Platform::JoinPath(g_Config.ResolveVariableDataPath(),
+								"Instance"), buf), "WorldMarkers.txt");
+		worldMarkers.LoadFromFile(p);
+	} else {
+		worldMarkers.LoadFromCluster(mZone);
+	}
+
 	if (worldMarkers.WorldMarkerList.size() > 0)
 		g_Logs.data->info("Loaded %v world markers.",
 				worldMarkers.WorldMarkerList.size());
@@ -3574,26 +3615,29 @@ bool ActiveInstance::RunScript(std::string &errors) {
 		delete nutScriptPlayer;
 
 	//Load the new script system
-	std::string path = InstanceScript::InstanceNutDef::GetInstanceScriptPath(
-			mZoneDefPtr->mID, false, mZoneDefPtr->mGrove);
-	if (Util::HasEnding(path, ".nut")) {
-		g_Logs.script->info("Running Squirrel script %v", path.c_str());
-		nutScriptDef.Initialize(path.c_str());
-		nutScriptPlayer = new InstanceScript::InstanceNutPlayer();
-		nutScriptPlayer->SetInstancePointer(this);
-		nutScriptPlayer->Initialize(&nutScriptDef, errors);
-	} else if (Util::HasEnding(path, ".txt")) {
-		g_Logs.script->info("Running TSL script %v", path.c_str());
-		scriptDef.CompileFromSource(path.c_str());
-		scriptPlayer = new InstanceScript::InstanceScriptPlayer();
-		scriptPlayer->Initialize(&scriptDef);
-		scriptPlayer->SetInstancePointer(this);
-		scriptPlayer->JumpToLabel("init");
-	} else {
-		g_Logs.script->info("No script for instance %v", mZone);
-		return false;
+	if(!mZoneDefPtr->mGrove) {
+		std::string path = InstanceScript::InstanceNutDef::GetInstanceScriptPath(
+				mZoneDefPtr->mID, false);
+		if (Util::HasEnding(path, ".nut")) {
+			g_Logs.script->info("Running Squirrel script %v", path.c_str());
+			nutScriptDef.Initialize(path.c_str());
+			nutScriptPlayer = new InstanceScript::InstanceNutPlayer();
+			nutScriptPlayer->SetInstancePointer(this);
+			nutScriptPlayer->Initialize(&nutScriptDef, errors);
+		} else if (Util::HasEnding(path, ".txt")) {
+			g_Logs.script->info("Running TSL script %v", path.c_str());
+			scriptDef.CompileFromSource(path.c_str());
+			scriptPlayer = new InstanceScript::InstanceScriptPlayer();
+			scriptPlayer->Initialize(&scriptDef);
+			scriptPlayer->SetInstancePointer(this);
+			scriptPlayer->JumpToLabel("init");
+		} else {
+			g_Logs.script->info("No script for instance %v", mZone);
+			return false;
+		}
+		return true;
 	}
-	return true;
+	return false;
 }
 
 void ActiveInstance::ClearScriptObjects() {

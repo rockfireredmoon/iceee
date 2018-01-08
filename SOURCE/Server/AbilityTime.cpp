@@ -2,6 +2,7 @@
 #include "Ability2.h"
 
 #include "Config.h"
+#include "StringUtil.h"
 #include <string.h>
 #include "util/Log.h"
 
@@ -160,8 +161,9 @@ void ActiveBuffManager :: CopyFrom(const ActiveBuffManager &source)
 	}
 }
 
-void ActiveBuffManager :: SaveToStream(FILE *output)
+void ActiveBuffManager :: WriteEntity(AbstractEntityWriter *writer)
 {
+	STRINGLIST l;
 	for(size_t i = 0; i < buffList.size(); i++)
 	{
 		long remain = buffList[i].castEndTimeMS - g_ServerTime;
@@ -170,10 +172,12 @@ void ActiveBuffManager :: SaveToStream(FILE *output)
 		if(abEntry != NULL && remain > 0 && !abEntry->IsPassive()) {
 			g_Logs.server->info("Saving ability %v,%v,%v,%v,%v\r\n", buffList[i].tier,
 					buffList[i].buffType, buffList[i].abID, buffList[i].abgID, remain);
-			fprintf(output, "Active=%d,%d,%d,%d,%lu\r\n", buffList[i].tier,
-					buffList[i].buffType, buffList[i].abID, buffList[i].abgID, remain);
+			l.push_back(StringUtil::Format("%d,%d,%d,%d,%lu", buffList[i].tier,
+					buffList[i].buffType, buffList[i].abID, buffList[i].abgID, remain));
 		}
 	}
+	if(l.size() > 0)
+		writer->ListValue("Active", l);
 }
 
 
@@ -187,14 +191,18 @@ void ActiveBuffManager :: ClearPersistent(void)
 	persistentBuffList.clear();
 }
 
-int ActiveCooldown :: GetRemainTimeMS(void)
+unsigned long ActiveCooldown :: GetRemainTimeMS(void)
 {
-	return (int)(castEndTimeMS - g_ServerTime);
+	if(g_ServerTime > castEndTimeMS)
+		return 0;
+	return (castEndTimeMS - g_ServerTime);
 }
 
-int ActiveCooldown :: GetElapsedTimeMS(void)
+unsigned long ActiveCooldown :: GetElapsedTimeMS(void)
 {
-	return (int)(g_ServerTime - castStartTimeMS);
+	if(castStartTimeMS > g_ServerTime)
+		return 0;
+	return (g_ServerTime - castStartTimeMS);
 }
 
 int ActiveCooldownManager :: HasCooldown(int category)
@@ -216,13 +224,13 @@ int ActiveCooldownManager :: HasCooldown(int category)
 	return -1;
 }
 
-void ActiveCooldownManager :: AddCooldown(int category, int durationMS, int timeElapsedMS)
+void ActiveCooldownManager :: AddCooldown(int category, unsigned long remainMS, unsigned long timeElapsedMS)
 {
 	ActiveCooldown acd;
 	acd.category = category;
-	acd.durationMS = durationMS;
-	acd.castEndTimeMS = g_ServerTime + durationMS;
-	acd.castStartTimeMS = g_ServerTime + timeElapsedMS;
+	acd.durationMS = remainMS;
+	acd.castEndTimeMS = g_ServerTime + acd.durationMS;
+	acd.castStartTimeMS = g_ServerTime - timeElapsedMS;
 	cooldownList.push_back(acd);
 }
 
@@ -236,7 +244,7 @@ void ActiveCooldownManager :: CopyFrom(const ActiveCooldownManager &source)
 	cooldownList.assign(source.cooldownList.begin(), source.cooldownList.end());
 }
 
-void ActiveCooldownManager :: SaveToStream(FILE *output)
+void ActiveCooldownManager :: WriteEntity(AbstractEntityWriter *writer)
 {
 	for(size_t i = 0; i < cooldownList.size(); i++)
 	{
@@ -247,14 +255,16 @@ void ActiveCooldownManager :: SaveToStream(FILE *output)
 			if(name == NULL)
 				continue;
 
-			int remain = cooldownList[i].GetRemainTimeMS();
-			int elapsed = cooldownList[i].GetElapsedTimeMS();
-			fprintf(output, "%s=%d,%d\r\n", name, remain, elapsed);
+			unsigned long rem = cooldownList[i].GetRemainTimeMS();
+			unsigned long el = cooldownList[i].GetElapsedTimeMS();
+			g_Logs.data->info("AbilityTyime WriteEntity %v = %v %v", name, rem, el);
+
+			writer->Value(name, StringUtil::Format("%lu,%lu", rem, el));
 		}
 	}
 }
 
-void ActiveCooldownManager :: LoadEntry(const char *name, int remainTimeMS, int timeElapsedMS)
+void ActiveCooldownManager :: LoadEntry(const char *name, unsigned long remainTimeMS, unsigned long timeElapsedMS)
 {
 	int category = g_AbilityManager.ResolveCooldownCategoryID(name);
 	if(category != 0)

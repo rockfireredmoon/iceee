@@ -19,6 +19,7 @@
 
 #include "CivetServer.h"
 #include "CAR.h"
+#include "GameInfo.h"
 #include "TAWApi.h"
 #include "OAuth2.h"
 #include "LegacyAccounts.h"
@@ -51,7 +52,7 @@ FileChecksum g_FileChecksum;
 
 void FileChecksum :: LoadFromFile()
 {
-	std::string filename = Platform::JoinPath(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveHTTPBasePath(), "Release"),
+	std::string filename = Platform::JoinPath(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveHTTPCARPath(), "Release"),
 			"Current"), "HTTPChecksum.txt");
 	if(!Platform::FileExists(filename)) {
 		g_Logs.http->warn("Could not find newer style checksum %v, trying old location", filename);
@@ -178,11 +179,14 @@ bool HTTPService::Start() {
 
 		zzOptions[idx++] = ports->c_str();
 
+		std::string alog = Platform::JoinPath(g_Config.ResolveLogPath(), "HTTPAccess.txt");
+		std::string elog = Platform::JoinPath(g_Config.ResolveLogPath(), "HTTPError.txt");
+
 		// Logs
 		zzOptions[idx++] = "access_log_file";
-		zzOptions[idx++] = "AccessLog.txt";
+		zzOptions[idx++] = alog.c_str();
 		zzOptions[idx++] = "error_log_file";
-		zzOptions[idx++] = "ErrorLog.txt";
+		zzOptions[idx++] = elog.c_str();
 		if(g_Config.HTTPKeepAlive) {
 			zzOptions[idx++] = "enable_keep_alive";
 			zzOptions[idx++] = "yes";
@@ -204,6 +208,9 @@ bool HTTPService::Start() {
 
 		// CAR files
 		civetServer->addHandler("**.car$", new CARHandler());
+
+		// Info
+		civetServer->addHandler("/info/*", new GameInfoHandler());
 
 		// API
 		if(g_Config.PublicAPI) {

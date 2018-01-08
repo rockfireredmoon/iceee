@@ -1311,7 +1311,6 @@ namespace ScriptCore
 	        	sq_poptop(v);
 	        	g_Logs.script->debug("Sleeping VM %v for %v. Stack at this point is %v", (&left.value)->def->mSourceFile.c_str(), right.value, sq_gettop(v));
 	            SQInteger ret = sq_suspendvm(v);
-	            g_Logs.script->debug("REMOVE Slept VM %v for %v. Stack at this point is %v (set suspendTop to this)", (&left.value)->def->mSourceFile.c_str(), right.value, sq_gettop(v));
 				left.value.mSuspendTop = sq_gettop(v);
 	            return ret;
 			}

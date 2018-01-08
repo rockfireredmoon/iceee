@@ -50,8 +50,8 @@ class InstanceNutDef: public ScriptCore::NutDef {
 public:
 	virtual ~InstanceNutDef();
 
-	static std::string GetInstanceNutScriptPath(int zoneID, bool grove);
-	static std::string GetInstanceScriptPath(int zoneID, bool pathIfNotExists, bool grove);
+	static std::string GetInstanceNutScriptPath(int zoneID);
+	static std::string GetInstanceScriptPath(int zoneID, bool pathIfNotExists);
 
 private:
 	std::map<std::string, Squirrel::Area> mLocationDef;
@@ -275,7 +275,7 @@ private:
 
 class InstanceScriptDef: public ScriptCore::ScriptDef {
 public:
-	static std::string GetInstanceTslScriptPath(int zoneID, bool grove);
+	static std::string GetInstanceTslScriptPath(int zoneID);
 	Squirrel::Area *GetLocationByName(const char *location);
 
 private:

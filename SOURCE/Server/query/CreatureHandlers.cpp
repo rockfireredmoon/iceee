@@ -294,8 +294,8 @@ int CreatureDefEditHandler::handleQuery(SimulatorThread *sim,
 			}
 
 			// Update used names
-			g_AccountManager.RemoveUsedCharacterName(ce->creatureDefID);
-			g_AccountManager.AddUsedCharacterName(ce->creatureDefID, value);
+			g_UsedNameDatabase.Remove(ce->creatureDefID);
+			g_UsedNameDatabase.Add(ce->creatureDefID, value);
 
 			ce->display_name = value;
 			acc->PendingMinorUpdates++;

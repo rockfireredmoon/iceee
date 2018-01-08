@@ -90,6 +90,7 @@ public:
 
 	bool SendChatMessageAsOffline(ChatMessage &message, HTTPD::SiteSession *session);
 	bool SendChatMessage(ChatMessage &message, CreatureInstance *sendingCreatureInstance);
+	bool DeliverChatMessage(ChatMessage &message, CreatureInstance *sendingCreatureInstance);
 	void LogChatMessage(ChatMessage &message);
 	void LogMessage(std::string message);
 	int handleCommunicationMsg(char *channel, char *message, char *name);

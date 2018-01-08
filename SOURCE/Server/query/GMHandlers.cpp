@@ -395,7 +395,7 @@ int SummonHandler::handleQuery(SimulatorThread *sim,
 			zId = creatureInstance->actInst->mZone;
 		}
 		else {
-			ZoneDefInfo *zd = g_ZoneDefManager.GetPointerByPartialWarpName(data.c_str());
+			ZoneDefInfo *zd = g_ZoneDefManager.GetPointerByPartialWarpName(data);
 			if(zd == NULL) {
 				return PrepExt_QueryResponseError(sim->SendBuf, query->ID, "Unknown zone.");
 			}

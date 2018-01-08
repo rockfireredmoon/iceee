@@ -11,6 +11,7 @@
 #include <map>
 #include "FileReader.h"
 #include "Util.h"
+#include "Entities.h"
 #include "Report.h"  //For debugging
 #include "json/json.h"
 
@@ -184,8 +185,7 @@ public:
 	bool isItemDefStat(int statID);
 };
 
-class VirtualItemDef
-{
+class VirtualItemDef: public AbstractEntity {
 public:
 	int mID;
 	char mType;
@@ -200,21 +200,10 @@ public:
 	std::string mModString;
 	VirtualItemDef();
 	void Clear(void);
-};
 
-struct VirtualItemPage
-{
-	static const int ITEMS_PER_PAGE = 256;
-	static const int AUTOSAVE_TIMER = 60000;
-	int pageIndex;
-	std::vector<VirtualItemDef> itemList;
-	bool bPendingSave;
-	VirtualItemPage();
-	VirtualItemPage(int page);
-	void Clear(void);
-	void AddVirtualItemDef(VirtualItemDef& vid);
-	void SaveToStream(FILE *output);
-	void DeleteID(int ID);
+	bool WriteEntity(AbstractEntityWriter *writer);
+	bool ReadEntity(AbstractEntityReader *reader);
+	bool EntityKeys(AbstractEntityReader *reader);
 };
 
 struct ItemLoadTable
@@ -489,7 +478,6 @@ public:
 	void Free();
 	
 	static const int BASE_VIRTUAL_ITEM_ID = 5000000;
-	int nextVirtualItemID;
 
 	ITEM_CONT ItemList;
 	VITEM_CONT VItemList;
@@ -512,19 +500,11 @@ public:
 	int EnumPointersByRangeType(ITEMDEFPTR_ARRAY &resultList, int minID, int maxID, int eqType);
 	int EnumPointersByQuery(ITEMDEFPTR_ARRAY &resultList, ItemListQuery *queryData);
 
-	unsigned long nextVirtualItemAutosave;
-	typedef std::map<int, VirtualItemPage> VIRTUALITEMPAGE;
-	typedef std::pair<int, VirtualItemPage> VIRTUALITEMPAGEPAIR;
-	VIRTUALITEMPAGE virtualItemPage;
 	int GetStandardCount(void);
 	int CreateNewVirtualItem(int rarity, VirtualItemSpawnParams &viParams);
 	int GetNewVirtualItemID(void);
-	int GetVirtualItemPage(int itemID);
-	VirtualItemPage* RequestVirtualItemPagePtr(int page);
 	void AddVirtualItemDef(VirtualItemDef& vid);
-	void CheckVirtualItemAutosave(bool force);
 	void LoadVirtualItemWithID(int itemID);
-	void LoadVirtualItemPage(VirtualItemPage* targetPage);
 	void ExpandVirtualItem(const VirtualItemDef& item);
 	void InsertVirtualItem(const VirtualItem& item);
 

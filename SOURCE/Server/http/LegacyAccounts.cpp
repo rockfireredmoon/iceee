@@ -56,7 +56,11 @@ bool NewAccountHandler::handlePost(CivetServer *server, struct mg_connection *co
 
 		int retval = 0;
 		g_AccountManager.cs.Enter("CreateAccount");
-		retval = g_AccountManager.CreateAccount(username, password, regkey, grove);
+
+		if(!g_AccountManager.PopRegistrationKey(regkey))
+			retval = AccountManager::ErrorCode::ACCOUNT_KEY;
+		else
+			retval = g_AccountManager.CreateAccount(username, password, regkey, grove);
 		g_AccountManager.cs.Leave();
 		writeStatus(server, conn, 200, "OK", g_AccountManager.GetErrorMessage(retval));
 	}

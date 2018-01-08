@@ -71,15 +71,6 @@ bool RemoteActionHandler::handlePost(CivetServer *server,
 				g_AbilityManager.LoadData();
 			} else if (action.compare("reloadelite") == 0) {
 				g_EliteManager.LoadData();
-			} else if (action.compare("setmotd") == 0) {
-				if (parms.find("data") == parms.end()
-						|| parms["data"].size() == 0) {
-					writeStatus(server, conn, 200, "OK", "Operation failed.");
-					return true;
-				}
-				g_MOTD_Message = parms["data"];
-			} else if (action.compare("importkeys") == 0) {
-				g_AccountManager.ImportKeys();
 			} else {
 				// Reports
 

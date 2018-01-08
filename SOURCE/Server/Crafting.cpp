@@ -223,9 +223,7 @@ const CraftRecipe* CraftManager::GetFirstRecipeForResult(int resultItemID)
 				continue;
 			if(args[0].compare("giveid") == 0)
 			{
-				int itemID = GetIntParam(args, 1);
-				int itemCount = GetIntParam(args, 2);
-				if(itemID == resultItemID)
+				if(GetIntParam(args, 1) == resultItemID)
 					return recipe;
 			}
 		}

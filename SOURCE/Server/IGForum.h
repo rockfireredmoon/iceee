@@ -8,7 +8,16 @@
 #include <string>
 
 #include "Util.h"
+#include "Entities.h"
 #include "Account.h"
+
+static std::string KEYPREFIX_IGF_CATEGORY = "IGFCategory";
+static std::string KEYPREFIX_IGF_THREAD = "IGFThread";
+static std::string KEYPREFIX_IGF_POST = "IGFPost";
+static std::string LISTPREFIX_IGF_CATEGORIES = "IGFCategories";
+static std::string ID_IGF_CATEGORY_ID = "NextIGFCategoryID";
+static std::string ID_IGF_THREAD_ID = "NextIGFThreadID";
+static std::string ID_IGF_POST_ID = "NextIGFPostID";
 
 //Categories are a nested tree, similar in heirarchy to file folders.
 //Each category contains its own list of threads.
@@ -29,8 +38,8 @@ struct IGFFlags
 	bool hasFlag(const int flag);
 };
 
-struct IGFCategory
-{
+class IGFCategory: public AbstractEntity {
+public:
 	int mID;                       //ID of this category.
 	std::string mTitle;            //The title of this category.
 	int mParentCategory;           //The ID of the parent category, so it knows what to track back to.
@@ -40,32 +49,21 @@ struct IGFCategory
 	unsigned long mLastUpdateTime; //Time index of the last post reply.  Not the actual time.  For relational purposes.
 	IGFFlags mFlags;
 	IGFCategory();
+
+	bool WriteEntity(AbstractEntityWriter *writer);
+	bool ReadEntity(AbstractEntityReader *reader);
+	bool EntityKeys(AbstractEntityReader *reader);
+
+
 	void Clear(void);
 	void UnattachThread(int threadID);
 	void AttachThread(int threadID);
 	void SetLastUpdateTime(void);
 };
 
-struct IGFCategoryPage
-{
-	typedef std::map<int, IGFCategory> CATEGORYENTRY;
-	typedef std::pair<int, IGFCategory> CATEGORYPAGE;
-	CATEGORYENTRY mEntries;
-	int mPage;
-	int mPendingChanges;
-	unsigned long mLastAccessTime;
-	IGFCategoryPage();
-	void SaveFile(std::string filename);
-	void LoadFile(std::string filename);
-	void InsertEntry(IGFCategory &entry, bool changePending);
-	IGFCategory* GetPointerByID(int ID);
-	void DeleteObject(int objectID);
-	bool QualifyGarbage(void);
-};
-
 // Threads contain a list of posts.
-struct IGFThread
-{
+class IGFThread: public AbstractEntity {
+public:
 	int mID;                       //ID of this thread.
 	std::string mTitle;            //The title of this thread.
 	int mCreationAccount;          //Account that created this thread.
@@ -78,30 +76,19 @@ struct IGFThread
 	bool mStickied;                //Thread is stickied and should always remain at the top of the list.
 	IGFFlags mFlags;
 	IGFThread();
+
+	bool WriteEntity(AbstractEntityWriter *writer);
+	bool ReadEntity(AbstractEntityReader *reader);
+	bool EntityKeys(AbstractEntityReader *reader);
+
 	void Clear(void);
 	void DeletePost(int ID);
 	int GetLastPostID(void);
 	void SetLastUpdateTime(void);
 };
 
-struct IGFThreadPage
-{
-	typedef std::map<int, IGFThread> THREADENTRY;
-	typedef std::pair<int, IGFThread> THREADPAIR;
-	THREADENTRY mEntries;
-	int mPage;
-	int mPendingChanges;
-	unsigned long mLastAccessTime;
-	IGFThreadPage();
-	void SaveFile(std::string filename);
-	void LoadFile(std::string filename);
-	void InsertEntry(IGFThread &entry, bool changePending);
-	IGFThread* GetPointerByID(int ID);
-	bool QualifyGarbage(void);
-};
-
-struct IGFPost
-{
+class IGFPost: public AbstractEntity {
+public:
 	int mID;                       //ID of this object.
 	int mCreationAccount;          //Account that created this object.
 	std::string mCreationTime;     //Time index this object was created.
@@ -112,24 +99,13 @@ struct IGFPost
 	unsigned long mLastUpdateTime; //Time index of the last edit.  Not the actual time.  For relational purposes.
 	int mEditCount;                //Number of edits applied to this post.
 	IGFPost();
+
+	bool WriteEntity(AbstractEntityWriter *writer);
+	bool ReadEntity(AbstractEntityReader *reader);
+	bool EntityKeys(AbstractEntityReader *reader);
+
 	void Clear(void);
 	void SetLastUpdateTime(void);
-};
-
-struct IGFPostPage
-{
-	typedef std::map<int, IGFPost> POSTENTRY;
-	typedef std::pair<int, IGFPost> POSTPAIR;
-	POSTENTRY mEntries;
-	int mPage;
-	int mPendingChanges;
-	unsigned long mLastAccessTime;
-	IGFPostPage();
-	void SaveFile(std::string filename);
-	void LoadFile(std::string filename);
-	void InsertEntry(IGFPost &entry, bool changePending);
-	IGFPost* GetPointerByID(int ID);
-	bool QualifyGarbage(void);
 };
 
 //The core manager that maintains the archives of categories, threads, and posts.
@@ -158,18 +134,11 @@ public:
 		ERROR_TITLELENGTH         = -14,  //A thread or category title name is too long.
 		ERROR_POSTLENGTH          = -15,  //A post's body text is too long.
 		ERROR_TARGETNOTCATEGORY   = -16,  //The target location is not a category.
-		ERROR_TARGETSAME          = -17   //The target location is the same as the source.
+		ERROR_TARGETSAME          = -17,   //The target location is the same as the source.
+		ERROR_CLUSTER	          = -18   //Cluster error saving or loading.
 	};
 
-	typedef std::map<int, IGFCategory> CATEGORY;
-	typedef std::pair<int, IGFCategory> CATEGORYPAIR;
-	typedef std::map<int, IGFThread> THREAD;
-	typedef std::pair<int, IGFThread> THREADPAIR;
-	typedef std::map<int, IGFPost> POST;
-	typedef std::pair<int, IGFPost> POSTPAIR;
-
 	static const int ROOT_CATEGORY = 0;  //An invalid category. This allows a root category while allowing searches to exclude it.
-	static const int CATEGORY_PER_PAGE = 64;  //The number of categories in a single savedata page file.
 	static const int THREAD_PER_PAGE = 64;    //The number of threads in a single savedata page file.
 	static const int POST_PER_PAGE = 64;      //The number of posts in a single savedata page file.
 
@@ -188,42 +157,12 @@ public:
 	static const unsigned long GARBAGE_CHECK_EXPIRE = 60000;
 	static const unsigned long GARBAGE_CHECK_FREQUENCY = 10000;
 	static const unsigned long AUTOSAVE_FREQUENCY = 10000;
-	unsigned long mNextGarbageCheck;
-	unsigned long mNextAutosaveCheck;
-
-	unsigned long mPlatformLaunchMinute;  //Time that the forum system was first instantiatiated (preserved across sessions).
-
-	/* OLD
-	CATEGORY mCategory;
-	THREAD mThread;
-	POST mPost;
-	*/
-	
-	typedef std::map<int, IGFCategoryPage> CATEGORYPAGE;
-	typedef std::pair<int, IGFCategoryPage> CATEGORYPAGEPAIR;
-	typedef std::map<int, IGFThreadPage> THREADPAGE;
-	typedef std::pair<int, IGFThreadPage> THREADPAGEPAIR;
-	typedef std::map<int, IGFPostPage> POSTPAGE;
-	typedef std::pair<int, IGFPostPage> POSTPAGEPAIR;
-
-	/* NEW */
-	CATEGORYPAGE mCategoryPages;
-	THREADPAGE mThreadPages;
-	POSTPAGE mPostPages;
-
-	int mNextCategoryID;
-	int mNextThreadID;
-	int mNextPostID;
 
 	bool mForumLocked;
 
-	int GetCategoryPage(int ID);
-	int GetThreadPage(int ID);
-	int GetPostPage(int ID);
-
 	void EnumCategoryList(int parentID, MULTISTRING &output);
 	void EnumThreadList(int parentID, MULTISTRING &output);
-	static bool ThreadSortAlphabetical(const IGFThread* lhs, const IGFThread* rhs);
+	static bool ThreadSortAlphabetical(const IGFThread &lhs, const IGFThread &rhs);
 
 	void GetCategory(int id, MULTISTRING &output);
 	void OpenCategory(int type, int id, MULTISTRING &output);
@@ -231,8 +170,6 @@ public:
 	int SendPost(AccountData *callerAccount, int type, int placementID, int postID, const char *threadTitle, const char *postBody, const char *displayName);
 	bool HasInvalidCharacters(const char *text, bool allowMarkup);
 	void ProcessPostBody(std::string &postBody);
-
-	unsigned long GetTimeOffset(unsigned long LastUpdateTime);
 
 	bool GetEditPermission(AccountData *callerAccount, int objectOwnerID);
 	int DeletePost(AccountData *callerAccount, int threadID, int postID);
@@ -244,16 +181,8 @@ public:
 	int RunAction(AccountData *callerAccount, int actionType, int param1, int param2); 
 	int RunMove(AccountData *callerAccount, int srcType, int srcID, int dstType, int dstID);
 
-	ChangeData cdCategory;
-	ChangeData cdThread;
-	ChangeData cdPost;
-
 	void SaveCategory();
 	void LoadCategory();
-
-	//std::string mPathCategory;
-	//std::string mPathThread;
-	//std::string mPathPost;
 
 	void Init(void);
 
@@ -262,37 +191,11 @@ public:
 	int GetNewThreadID(void);
 	int GetNewPostID(void);
 
-	void CheckAutoSave(bool force);
-	void SaveConfig(void);
-	void LoadConfig(void);
-
-	void RunGarbageCheck(void);
-
 private:
-	/* OLD
-	void InitPaths(void);
-	void InsertCategory(IGFCategory& object);
-	void InsertThread(IGFThread& object);
-	void InsertPost(IGFPost& object);
-	*/
 
-	/* NEW */
-	void InsertPagedCategory(IGFCategory& object);
-	void InsertPagedThread(IGFThread& object);
-	void InsertPagedPost(IGFPost& object);
-	IGFCategory* GetPagedCategoryPtr(int elementID);
-	IGFThread* GetPagedThreadPtr(int elementID);
-	IGFPost* GetPagedPostPtr(int elementID);
-	void LoadCategoryPage(int page);
-	void LoadThreadPage(int page);
-	void LoadPostPage(int page);
-	void AutosaveCategory(void);
-	void AutosaveThread(void);
-	void AutosavePost(void);
-
-	void MarkChangedCategory(int objectID);
-	void MarkChangedPost(int objectID);
-	void MarkChangedThread(int objectID);
+	IGFCategory GetPagedCategoryPtr(int elementID);
+	IGFThread GetPagedThreadPtr(int elementID);
+	IGFPost GetPagedPostPtr(int elementID);
 
 	void DeleteObjectData(int objectType, int objectID);
 	void SortCategoryThreads(IGFCategory *category);

@@ -303,7 +303,7 @@ void EliteManager :: ApplyAffixStat(const AffixEntry *affix, CreatureInstance *c
 	if(affix == NULL || creature == NULL)
 		return;
 
-	int statIndex = GetStatIndexByName(affix->mStatName.c_str());
+	int statIndex = GetStatIndexByName(affix->mStatName);
 	if(statIndex >= 0)
 	{
 		int statID = StatList[statIndex].ID;

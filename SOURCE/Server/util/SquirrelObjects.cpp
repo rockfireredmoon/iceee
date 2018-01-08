@@ -15,7 +15,7 @@
  * along with TAWD.  If not, see <http://www.gnu.org/licenses/
  */
 #include "SquirrelObjects.h"
-#include "Util.h"
+#include "../Util.h"
 
 namespace Squirrel {
 

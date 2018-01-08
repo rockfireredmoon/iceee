@@ -48,10 +48,11 @@ int g_DefZ = 0;                  //Default Z coordinate on the map
 int g_DefRotation = 0;
 int g_DefZone = 81;              //Default instance ID to log into
 
-unsigned long g_SceneryAutosaveTime = 300000;  //5 minutes
+unsigned long g_SceneryAutosaveTime = 30000;  //30 seconds
 
 //For the HTTP server
 char g_HTTPBaseFolder[512] = { 0 };
+char g_HTTPCARFolder[512] = { 0 };
 unsigned int g_HTTPListenPort = 80;
 
 #ifndef NO_SSL
@@ -170,6 +171,9 @@ void LoadConfig(std::string filename) {
 						sizeof(g_HTTPBaseFolder));
 				if (CheckDefaultHTTPBaseFolder() == true)
 					SetHTTPBaseFolderToCurrent();
+			} else if (strcmp(NameBlock, "HTTPCARFolder") == 0) {
+				Util::SafeCopy(g_HTTPCARFolder, lfr.BlockToString(1),
+						sizeof(g_HTTPCARFolder));
 			} else if (strcmp(NameBlock, "HTTPListenPort") == 0) {
 				g_HTTPListenPort = lfr.BlockToInt(1);
 			}
@@ -195,8 +199,6 @@ void LoadConfig(std::string filename) {
 				AppendString(g_HTTP404Message, lfr.BlockToStringC(1, 0));
 			} else if (strcmp(NameBlock, "HTTP404MessageFile") == 0) {
 				LoadFileIntoString(g_HTTP404Message, lfr.BlockToStringC(1, 0));
-			} else if (strcmp(NameBlock, "BaseSceneryID") == 0) {
-				g_SceneryVars.BaseSceneryID = lfr.BlockToInt(1);
 			} else if (strcmp(NameBlock, "ForceUpdateTime") == 0) {
 				g_ForceUpdateTime = lfr.BlockToInt(1);
 			} else if (strcmp(NameBlock, "ItemBindingTypeOverride") == 0) {
@@ -209,8 +211,6 @@ void LoadConfig(std::string filename) {
 				g_MOTD_Name = lfr.BlockToStringC(1, 0);
 			} else if (strcmp(NameBlock, "MOTD_Channel") == 0) {
 				g_MOTD_Channel = lfr.BlockToStringC(1, 0);
-			} else if (strcmp(NameBlock, "MOTD_Message") == 0) {
-				g_MOTD_Message = lfr.BlockToStringC(1, 0);
 			} else if (strcmp(NameBlock, "RemoteAuthenticationPassword") == 0) {
 				g_Config.RemoteAuthenticationPassword = lfr.BlockToStringC(1,
 						0);
@@ -336,6 +336,8 @@ void LoadConfig(std::string filename) {
 				g_Config.UseWeather = lfr.BlockToBool(1);
 			else if (strcmp(NameBlock, "UseReagents") == 0)
 				g_Config.UseReagents = lfr.BlockToBool(1);
+			else if (strcmp(NameBlock, "UseUserAgentProtection") == 0)
+				g_Config.UseUserAgentProtection = lfr.BlockToBool(1);
 			else if (strcmp(NameBlock, "InvalidLoginMessage") == 0)
 				g_Config.InvalidLoginMessage = lfr.BlockToStringC(1, 0);
 			else if(strcmp(NameBlock, "MaintenanceMessage") == 0)
@@ -437,8 +439,8 @@ void LoadConfig(std::string filename) {
 				g_Config.StaticDataPath = lfr.BlockToStringC(1, 0);
 			else if (strcmp(NameBlock, "VariableDataPath") == 0)
 				g_Config.VariableDataPath = lfr.BlockToStringC(1, 0);
-			else if (strcmp(NameBlock, "UserDataPath") == 0)
-				g_Config.UserDataPath = lfr.BlockToStringC(1, 0);
+			else if (strcmp(NameBlock, "LogPath") == 0)
+				g_Config.LogPath = lfr.BlockToStringC(1, 0);
 			else {
 				g_Logs.data->error("Unknown identifier [%v] in config file [%v]",
 						lfr.BlockToString(0), filename);
@@ -619,8 +621,9 @@ GlobalConfigData::GlobalConfigData() {
 	UseIntegerHealth = false;
 	UseMessageBox = false;
 	UseStopSwim = false;
-	UseWeather = false;
+	UseWeather = true;
 	UseReagents = false;
+	UseUserAgentProtection = true;
 
 	VerifyMovement = false;
 	DebugLogAIScriptUse = false;
@@ -676,9 +679,10 @@ GlobalConfigData::GlobalConfigData() {
 
 	ShutdownHandlerScript = "";
 
-	StaticDataPath = "";
-	VariableDataPath = "";
-	UserDataPath = "";
+	StaticDataPath = "Static";
+	VariableDataPath = "Variable";
+	LogPath = "Logs";
+	LocalConfigurationPath = "Local";
 }
 
 GlobalConfigData::~GlobalConfigData() {
@@ -688,16 +692,24 @@ std::string GlobalConfigData::ResolveStaticDataPath() {
 	return ResolvePath(StaticDataPath);
 }
 
+std::string GlobalConfigData::ResolveLocalConfigurationPath() {
+	return ResolvePath(LocalConfigurationPath);
+}
+
 std::string GlobalConfigData::ResolveHTTPBasePath() {
 	return ResolvePath(g_HTTPBaseFolder);
+}
+
+std::string GlobalConfigData::ResolveHTTPCARPath() {
+	return strlen(g_HTTPCARFolder) == 0 ? ResolvePath(g_HTTPBaseFolder) : ResolvePath(g_HTTPCARFolder);
 }
 
 std::string GlobalConfigData::ResolveVariableDataPath() {
 	return ResolvePath(VariableDataPath);
 }
 
-std::string GlobalConfigData::ResolveUserDataPath() {
-	return ResolvePath(UserDataPath);
+std::string GlobalConfigData::ResolveLogPath() {
+	return ResolvePath(LogPath);
 }
 
 std::string GlobalConfigData::ResolvePath(std::string path) {

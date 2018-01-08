@@ -441,8 +441,10 @@ void QuestNutPlayer::ChangeHeroism(int amount) {
 void QuestNutPlayer::RemoveItem(int itemID, int itemCount) {
 	char buffer[2048];
 	int len = source->charPtr->inventory.RemoveItemsAndUpdate(INV_CONTAINER, itemID, itemCount, buffer);
-	if(len > 0)
+	if(len > 0) {
+		source->charPtr->pendingChanges++;
 		source->simulatorPtr->AttemptSend(buffer, len);
+	}
 }
 
 void QuestNutPlayer::Transform(int cdefID) {
@@ -582,7 +584,6 @@ bool QuestNutPlayer::Invite(int questID) {
 int QuestNutPlayer::AddQuest(QuestDefinition questDefinition) {
 	unsigned long questID = QuestDef.mVirtualQuestID++;
 	questDefinition.questID = questID;
-	SessionVarsChangeData.AddChange();
 	QuestDef.AddIfValid(questDefinition);
 	return questID;
 }

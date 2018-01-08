@@ -8,3 +8,7 @@ libsqstdlib_a_SOURCES = sqstdaux.cpp \
 	sqstdstream.cpp \
 	sqstdstring.cpp \
 	sqstdsystem.cpp
+	
+EXTRA_DIST = sqstdblobimpl.h \
+	sqstdstream.h
+	

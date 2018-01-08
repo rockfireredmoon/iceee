@@ -2,7 +2,7 @@ dnl
 dnl Initialisation
 dnl
 
-AC_INIT(tawd, 0.1, emerald.icemoon@gmail.com)
+AC_INIT(tawd, 0.0.1, emerald.icemoon@gmail.com)
 	
 AC_CONFIG_AUX_DIR(config)
 AC_CONFIG_MACRO_DIR([m4])
@@ -142,6 +142,9 @@ fi
 #
 CPPFLAGS="$CPPFLAGS -DELPP_THREAD_SAFE=1"
 
+# TEMP!
+CPPFLAGS="$CPPFLAGS -fno-stack-protector"
+
 CPPFLAGS="$CPPFLAGS ${libcurl_CFLAGS}"
 LIBS="$LIBS ${libcurl_LIBS}"
 
@@ -164,13 +167,18 @@ dnl
 AC_CONFIG_FILES([
 	Makefile
 	asset/Makefile
+	Local/Makefile
 	Etc/Makefile
 	Etc/Linux/Makefile
 	SOURCE/Makefile
+	SOURCE/LibCPPRedis/Makefile
+	SOURCE/LibCPPRedis/tacopie/Makefile
 	SOURCE/squirrel/Makefile
 	SOURCE/squirrel/squirrel/Makefile
 	SOURCE/squirrel/sqstdlib/Makefile
 	SOURCE/Server/Makefile
+	SOURCE/Tools/Makefile
+	SOURCE/Daemon/Makefile
 ])
 AC_OUTPUT
 

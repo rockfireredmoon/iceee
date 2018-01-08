@@ -101,7 +101,7 @@ bool WhoHandler::handleAuthenticatedGet(CivetServer *server,
 				Util::SafeFormat(buf, sizeof(buf),
 						"%s\"%s\" : { \"zone\": \"%s\", \"shard\": \"%s\" }",
 						no > 0 ? "," : "", cd->cdef.css.display_name,
-						zd->mName.c_str(), zd->mShardName.c_str());
+						zd->mName.c_str(), cd->Shard.c_str());
 				no++;
 				response.append(buf);
 			}
@@ -158,16 +158,15 @@ bool CreditShopHandler::handleAuthenticatedPost(CivetServer *server,
 			unsigned int qty = atoi(parms["qty"].c_str());
 			int csItemId = atoi(parms["item"].c_str());
 
-			CS::CreditShopItem *csItem = g_CreditShopManager.GetItem(csItemId);
-			if (csItem == NULL) {
+			CS::CreditShopItem csItem = g_CreditShopManager.GetItem(csItemId);
+			if (csItem.mId == 0) {
 				writeStatusPlain(server, conn, 404, "Not found.",
 						"The item could not be found.");
 				return true;
 			}
 
 			std::string characterName = parms["character"];
-			int cdefID = g_AccountManager.GetCDefFromCharacterName(
-					characterName.c_str());
+			int cdefID = g_UsedNameDatabase.GetIDByName(characterName);
 
 			g_ActiveInstanceManager.cs.Enter(
 					"CreditShopHandler::handleAuthenticatedPost");
@@ -199,7 +198,7 @@ bool CreditShopHandler::handleAuthenticatedPost(CivetServer *server,
 				return true;
 			}
 
-			int errCode = g_CreditShopManager.ValidateItem(csItem, accPtr, css,
+			int errCode = g_CreditShopManager.ValidateItem(&csItem, accPtr, css,
 					cd);
 
 			if (errCode != CreditShopError::NONE) {
@@ -208,7 +207,7 @@ bool CreditShopHandler::handleAuthenticatedPost(CivetServer *server,
 				return true;
 			}
 			ItemDef *itemDef = g_ItemManager.GetSafePointerByID(
-					csItem->mItemId);
+					csItem.mItemId);
 			if (itemDef == NULL) {
 				writeStatusPlain(server, conn, 404, "Not found.",
 						"The item could not be found.");
@@ -221,7 +220,7 @@ bool CreditShopHandler::handleAuthenticatedPost(CivetServer *server,
 			}
 
 			InventorySlot *sendSlot =
-					cd->inventory.AddItem_Ex(INV_CONTAINER, itemDef->mID, csItem->mIv1 + 1);
+					cd->inventory.AddItem_Ex(INV_CONTAINER, itemDef->mID, csItem.mIv1 + 1);
 			if (sendSlot == NULL) {
 				int err = creatureInstance->charPtr->inventory.LastError;
 				if (err == InventoryManager::ERROR_ITEM) {
@@ -244,22 +243,23 @@ bool CreditShopHandler::handleAuthenticatedPost(CivetServer *server,
 			}
 
 			g_CharacterManager.GetThread("Simulator::MarketBuy");
+			cd->pendingChanges++;
 
 			if(creatureInstance != NULL && creatureInstance->simulatorPtr != NULL && creatureInstance->simulatorPtr->ProtocolState !=0 && creatureInstance->simulatorPtr->isConnected) {
 				creatureInstance->simulatorPtr->ActivateActionAbilities(sendSlot);
 			}
 
-			if (csItem->mPriceCurrency == Currency::COPPER
-					|| csItem->mPriceCurrency == Currency::COPPER_CREDITS) {
-				css->copper -= csItem->mPriceCopper;
+			if (csItem.mPriceCurrency == Currency::COPPER
+					|| csItem.mPriceCurrency == Currency::COPPER_CREDITS) {
+				css->copper -= csItem.mPriceCopper;
 				cd->pendingChanges++;
 				if(creatureInstance != NULL)
 					creatureInstance->SendStatUpdate(STAT::COPPER);
 			}
 
-			if (csItem->mPriceCurrency == Currency::CREDITS
-					|| csItem->mPriceCurrency == Currency::COPPER_CREDITS) {
-				css->credits -= csItem->mPriceCredits;
+			if (csItem.mPriceCurrency == Currency::CREDITS
+					|| csItem.mPriceCurrency == Currency::COPPER_CREDITS) {
+				css->credits -= csItem.mPriceCredits;
 				if (g_Config.AccountCredits) {
 					accPtr->Credits = css->credits;
 					accPtr->PendingMinorUpdates++;
@@ -268,9 +268,9 @@ bool CreditShopHandler::handleAuthenticatedPost(CivetServer *server,
 					creatureInstance->SendStatUpdate(STAT::CREDITS);
 			}
 
-			if (csItem->mQuantityLimit > 0) {
-				csItem->mQuantitySold++;
-				g_CreditShopManager.SaveItem(csItem);
+			if (csItem.mQuantityLimit > 0) {
+				csItem.mQuantitySold++;
+				g_CreditShopManager.UpdateItem(&csItem);
 			}
 
 			if(creatureInstance != NULL && creatureInstance->simulatorPtr != NULL && creatureInstance->simulatorPtr->ProtocolState !=0 && creatureInstance->simulatorPtr->isConnected) {
@@ -321,23 +321,21 @@ bool CreditShopHandler::handleAuthenticatedGet(CivetServer *server,
 		}
 
 		Json::Value root;
-		std::vector<CS::CreditShopItem*> items;
-		g_CreditShopManager.cs.Enter("LeaderboardHandler::g_CreditShopManager");
-		std::map<int, CS::CreditShopItem*> itemMap = g_CreditShopManager.mItems;
-		for (std::map<int, CS::CreditShopItem*>::iterator it = itemMap.begin();
-				it != itemMap.end(); ++it) {
-			if (it->second->mCategory == category) {
-				items.push_back(it->second);
+		std::vector<CS::CreditShopItem> allItems;
+		g_CreditShopManager.GetItems(allItems);
+		std::vector<CS::CreditShopItem> items;
+		for (auto it = allItems.begin(); it != allItems.end(); ++it) {
+			if (it->mCategory == category) {
+				items.push_back(*it);
 			}
 		}
-		g_CreditShopManager.cs.Leave();
 
 		Json::Value data;
 		int didx = 0;
 		for (int i = opts.start;
 				i < opts.start + opts.count && i < items.size(); i++) {
 			Json::Value jv;
-			writeCreditShopItemToJSON(items[i], jv);
+			writeCreditShopItemToJSON(&items[i], jv);
 
 			data[didx++] = jv;
 		}
@@ -349,13 +347,13 @@ bool CreditShopHandler::handleAuthenticatedGet(CivetServer *server,
 		writeJSON200(server, conn, writer.write(root));
 	} else {
 		int id = atoi(pathParts[pathParts.size() - 1].c_str());
-		CS::CreditShopItem *item = g_CreditShopManager.GetItem(id);
-		if (item == NULL) {
+		CS::CreditShopItem item = g_CreditShopManager.GetItem(id);
+		if (item.mId == 0) {
 			writeStatusPlain(server, conn, 404, "Not found.",
 					"The item could not be found.");
 			return true;
 		}
-		writeCreditShopItemToJSON(item, root);
+		writeCreditShopItemToJSON(&item, root);
 		Json::StyledWriter writer;
 		writeJSON200(server, conn, writer.write(root));
 	}
@@ -521,14 +519,11 @@ bool ClanHandler::handleAuthenticatedGet(CivetServer *server,
 	if (pathParts.size() > 0
 			&& pathParts[pathParts.size() - 1].compare("clans") == 0) {
 		// List clans
-		std::map<int, Clans::Clan> m = g_ClanManager.mClans;
-
-		for (std::map<int, Clans::Clan>::iterator it = m.begin(); it != m.end();
-				++it) {
+		std::vector<Clans::Clan> clns = g_ClanManager.GetClans();
+		for (auto it = clns.begin(); it != clns.end(); ++it) {
 			Json::Value c;
-			Clans::Clan clan = it->second;
-			writeClanToJSON(clan, c);
-			root[clan.mName] = c;
+			writeClanToJSON(*it, c);
+			root[(*it).mName] = c;
 		}
 	} else {
 		// TODO get clan
@@ -540,7 +535,8 @@ bool ClanHandler::handleAuthenticatedGet(CivetServer *server,
 					"The clan could not be found.");
 			return true;
 		}
-		writeClanToJSON(g_ClanManager.mClans[clanID], root);
+		Clans::Clan c = g_ClanManager.GetClan(clanID);
+		writeClanToJSON(c, root);
 	}
 	Json::StyledWriter writer;
 	writeJSON200(server, conn, writer.write(root));
@@ -689,8 +685,7 @@ bool ChatHandler::handleAuthenticatedPost(CivetServer *server,
 
 			ChatMessage cm(msg);
 			if (channel.compare("clan") == 0) {
-				int cdefID = g_AccountManager.GetCDefFromCharacterName(
-						from.c_str());
+				int cdefID = g_UsedNameDatabase.GetIDByName(from);
 				if (cdefID != -1) {
 					CharacterData *cd = g_CharacterManager.RequestCharacter(
 							cdefID, true);
@@ -764,12 +759,7 @@ bool UserHandler::handleAuthenticatedGet(CivetServer *server,
 		if (accountId == 0) {
 			std::string username = pathParts[pathParts.size() - 1];
 			Util::URLDecode(username);
-			AccountQuickData *aqd =
-					g_AccountManager.GetAccountQuickDataByUsername(
-							username.c_str());
-			if (aqd != NULL) {
-				accountId = aqd->mID;
-			}
+			accountId = g_AccountManager.GetAccountQuickDataByUsername(username).mID;
 		}
 
 		std::string p;
@@ -846,8 +836,7 @@ bool CharacterHandler::handleAuthenticatedGet(CivetServer *server,
 		if (cdefID == 0) {
 			std::string characterName = pathParts[pathParts.size() - 1];
 			Util::URLDecode(characterName);
-			cdefID = g_AccountManager.GetCDefFromCharacterName(
-					characterName.c_str());
+			cdefID = g_UsedNameDatabase.GetIDByName(characterName);
 		}
 		if (cdefID != 0) {
 			cd = g_CharacterManager.RequestCharacter(cdefID, true);
@@ -860,7 +849,7 @@ bool CharacterHandler::handleAuthenticatedGet(CivetServer *server,
 			Json::Value root;
 			cd->WriteToJSON(root);
 			if (cd->clan > 0) {
-				Clans::Clan c = g_ClanManager.mClans[cd->clan];
+				Clans::Clan c = g_ClanManager.GetClan(cd->clan);
 				root["clanName"] = c.mName;
 			}
 			Json::StyledWriter writer;
@@ -898,12 +887,7 @@ bool UserGrovesHandler::handleAuthenticatedGet(CivetServer *server,
 	else {
 		int accountId = atoi(pathParts[pathParts.size() - 2].c_str());
 		if (accountId == 0) {
-			AccountQuickData *aqd =
-					g_AccountManager.GetAccountQuickDataByUsername(
-							pathParts[pathParts.size() - 2].c_str());
-			if (aqd != NULL) {
-				accountId = aqd->mID;
-			}
+			accountId = g_AccountManager.GetAccountQuickDataByUsername(pathParts[pathParts.size() - 2]).mID;
 		}
 
 		AccountData * ad = g_AccountManager.FetchIndividualAccount(accountId);
@@ -971,28 +955,30 @@ bool ZoneHandler::handleAuthenticatedGet(CivetServer *server,
 			std::string dir;
 			char buf[16];
 			Util::SafeFormat(buf, sizeof(buf), "%d", zone->mID);
-			if (zone->mGrove)
-				dir = Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "Grove"), buf);
-			else
+			if (zone->mGrove) {
+				// TODO read from cluster
+			}
+			else {
 				dir = Platform::JoinPath(Platform::JoinPath(g_Config.ResolveVariableDataPath(), "Scenery"), buf);
 
-			Platform_DirectoryReader dr;
-			dr.SetDirectory(dir);
-			dr.ReadFiles();
+				Platform_DirectoryReader dr;
+				dr.SetDirectory(dir);
+				dr.ReadFiles();
 
-			Json::Value tiles;
-			int xx = 0;
-			int yy = 0;
-			for (std::vector<std::string>::iterator it = dr.fileList.begin();
-					it != dr.fileList.end(); ++it) {
-				if (sscanf((*it).c_str(), "x%03dy%03d.txt", &xx, &yy) == 2) {
-					Json::Value tile;
-					tile["x"] = xx;
-					tile["y"] = yy;
-					tiles.append(tile);
+				Json::Value tiles;
+				int xx = 0;
+				int yy = 0;
+				for (std::vector<std::string>::iterator it = dr.fileList.begin();
+						it != dr.fileList.end(); ++it) {
+					if (sscanf((*it).c_str(), "x%03dy%03d.txt", &xx, &yy) == 2) {
+						Json::Value tile;
+						tile["x"] = xx;
+						tile["y"] = yy;
+						tiles.append(tile);
+					}
 				}
+				root["tiles"] = tiles;
 			}
-			root["tiles"] = tiles;
 
 			Json::StyledWriter writer;
 			writeJSON200(server, conn, writer.write(root));
@@ -1138,13 +1124,17 @@ bool AuctionHandler::handleAuthenticatedGet(CivetServer *server,
 	Json::Value root;
 	if (pathParts.size() > 0
 			&& pathParts[pathParts.size() - 1].compare("auction") == 0) {
-		g_AuctionHouseManager.cs.Enter("AuctionHandler::handleAuthenticatedGet");
+
+		AuctionHouseSearch srch;
+		std::vector<AuctionHouseItem> ahis;
+		g_AuctionHouseManager.Search(srch, ahis);
 		std::vector<int> auctioneers;
-		for(std::map<int, AuctionHouseItem*>::iterator it = g_AuctionHouseManager.mItems.begin(); it != g_AuctionHouseManager.mItems.end(); ++it) {
-			if(std::find(auctioneers.begin(), auctioneers.end(), it->second->mAuctioneer) == auctioneers.end())
-				auctioneers.push_back(it->second->mAuctioneer);
+		for(auto it = ahis.begin(); it != ahis.end(); ++it) {
+			if(std::find(auctioneers.begin(), auctioneers.end(), it->mAuctioneer) == auctioneers.end()) {
+				auctioneers.push_back(it->mAuctioneer);
+			}
 		}
-		g_AuctionHouseManager.cs.Leave();
+
 		Json::StyledWriter writer;
 		Json::Value root(Json::arrayValue);
 		for(std::vector<int>::iterator it = auctioneers.begin(); it != auctioneers.end(); ++it) {
@@ -1166,24 +1156,28 @@ bool AuctionHandler::handleAuthenticatedGet(CivetServer *server,
 				id = def->CreatureDefID;
 			}
 		}
-		g_AuctionHouseManager.cs.Enter("AuctionHandler::handleAuthenticatedGet");
-		for(std::map<int, AuctionHouseItem*>::iterator it = g_AuctionHouseManager.mItems.begin(); it != g_AuctionHouseManager.mItems.end(); ++it) {
-			if(it->second->mAuctioneer == id) {
+
+		AuctionHouseSearch srch;
+		std::vector<AuctionHouseItem> ahis;
+		g_AuctionHouseManager.Search(srch, ahis);
+
+		for(auto it = ahis.begin(); it != ahis.end(); ++it) {
+			if(it->mAuctioneer == id) {
 				Json::Value item;
-				it->second->WriteToJSON(item);
-				ItemDef *itemDef = g_ItemManager.GetSafePointerByID(it->second->mItemId);
+				it->WriteToJSON(item);
+				ItemDef *itemDef = g_ItemManager.GetSafePointerByID(it->mItemId);
 				if(itemDef != NULL) {
 					Json::Value ij;
 					itemDef->WriteToJSON(ij);
 					item["item"] = ij;
 				}
-				CharacterData *data = g_CharacterManager.RequestCharacter(it->second->mSeller, true);
+				CharacterData *data = g_CharacterManager.RequestCharacter(it->mSeller, true);
 				if(data != NULL) {
 					Json::Value cj;
 					cj["name"] = data->cdef.css.display_name;
 					item["sellerDetail"] = cj;
 				}
-				Util::SafeFormat(buf, sizeof(buf),"%d", it->first);
+				Util::SafeFormat(buf, sizeof(buf),"%d", it->mId);
 				root[buf] = item;
 			}
 		}

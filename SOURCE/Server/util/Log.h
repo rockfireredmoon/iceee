@@ -18,6 +18,7 @@
 #define LOGS
 
 #include "easylogging++.h"
+//INITIALIZE_EASYLOGGINGPP
 
 using el::Logger;
 using el::Loggers;
@@ -26,6 +27,7 @@ class LogManager {
 public:
 	LogManager();
 	~LogManager();
+	void Init(el::Level level);
 	void FlushAll();
 	void CloseAll();
 	Logger *server;
@@ -39,6 +41,10 @@ public:
 	Logger *data;
 	Logger *script;
 	Logger *cs;
+	Logger *cluster;
+private:
+	el::Level mLevel;
+	Logger * ConfigureLogger(Logger *logger);
 };
 
 extern LogManager g_Logs;

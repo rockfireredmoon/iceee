@@ -1252,26 +1252,19 @@ int PrepExt_TradeItemOffer(char *buffer, char *convBuf, int offeringPlayerID, st
 }
 
 
-int CheckSection_Inventory(FileReader &fr, InventoryManager &cd, std::string debugFilename, const char *debugName, const char *debugType)
+int ReadInventory(const std::string &container, const std::string &spec, InventoryManager &cd, const std::string &debugFilename, const std::string &debugName, const std::string &debugType)
 {
-	//Expected format:
-	//  ContainerName=SlotID=ItemID
+	STRINGLIST l;
+	Util::Split(spec, ",", l);
 
-	//Restore this entry so it can be re-broken with multibreak instead
-	if(fr.BlockPos[1] > 0)
-		fr.DataBuffer[fr.BlockPos[1] - 1] = '=';
-	int r = fr.MultiBreak("=,");
-
-	int ContID = GetContainerIDFromName(fr.BlockToStringC(0, 0));
+	int ContID = GetContainerIDFromName(container.c_str());
 	if(ContID == -1)
-	{
 		return -2;
-	}
-	int slot = fr.BlockToInt(1);
-	int ID = fr.BlockToInt(2);
+	int slot = atoi(l[0].c_str());
+	int ID = atoi(l[1].c_str());
 	if(cd.GetItemBySlot(ContID, slot) >= 0)
 	{
-		g_Logs.server->warn("%v [%v] inventory [%v] slot already filled [%v]", debugType, debugName, fr.BlockToStringC(0, 0), slot);
+		g_Logs.server->warn("%v [%v] inventory [%v] slot already filled [%v]", debugType, debugName, ContID, slot);
 		return -1;
 	}
 
@@ -1280,7 +1273,7 @@ int CheckSection_Inventory(FileReader &fr, InventoryManager &cd, std::string deb
 	ItemDef *itemDef = g_ItemManager.GetPointerByID(ID);
 	if(itemDef == NULL)
 	{
-		g_Logs.event->warn("[INVENTORY] %v [%v] Item ID [%v] not found for container [%v]", debugType, debugName, ID, fr.BlockToStringC(0, 0));
+		g_Logs.event->warn("[INVENTORY] %v [%v] Item ID [%v] not found for container [%v]", debugType, debugName, ID, ContID);
 		return -1;
 	}
 	//tt.Finish();
@@ -1289,14 +1282,14 @@ int CheckSection_Inventory(FileReader &fr, InventoryManager &cd, std::string deb
 	int customLook = 0;
 	long secondsRemaining = -1;
 	char bindStatus = 0;
-	if(r >= 4)
-		count = fr.BlockToInt(3);
-	if(r >= 5)
-		customLook = fr.BlockToIntC(4);
-	if(r >= 6)
-		bindStatus = (char)fr.BlockToIntC(5);
-	if(r >= 7)
-		secondsRemaining = fr.BlockToLongC(6);
+	if(l.size() >= 3)
+		count = atoi(l[2].c_str());
+	if(l.size() >= 4)
+		customLook = atoi(l[3].c_str());
+	if(l.size() >= 5)
+		bindStatus = atoi(l[4].c_str());
+	if(l.size() >= 6)
+		secondsRemaining = atoi(l[5].c_str());
 
 	InventorySlot newItem;
 	newItem.CCSID = (ContID << 16) | slot;
@@ -1309,7 +1302,7 @@ int CheckSection_Inventory(FileReader &fr, InventoryManager &cd, std::string deb
 	newItem.timeLoaded = g_ServerTime;
 	if(cd.AddItem(ContID, newItem) == -1)
 	{
-		g_Logs.server->warn("%v [%v] failed to add item (container:%v, slot:%v, itemID:%v)", debugType, debugName, fr.BlockToStringC(0, 0), slot, ID);
+		g_Logs.server->warn("%v [%v] failed to add item (container:%v, slot:%v, itemID:%v)", debugType, debugName, ContID, slot, ID);
 		return -1;
 	}
 	return 0;

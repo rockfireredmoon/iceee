@@ -93,7 +93,7 @@ int ExtendedQuestAction :: GetComparator(const std::string &name)
 
 int ExtendedQuestAction :: GetStatIDByName(const std::string &name)
 {
-	int r = GetStatIndexByName(name.c_str());
+	int r = GetStatIndexByName(name);
 	if(r == -1)
 		return -1;
 	return StatList[r].ID;
@@ -271,8 +271,10 @@ int QuestActionContainer :: ExecuteSingleCommand(SimulatorThread *caller, Extend
 			int itemCount = e.param[1];
 			char buffer[2048];
 			int len = caller->pld.charPtr->inventory.RemoveItemsAndUpdate(INV_CONTAINER, itemID, itemCount, buffer);
-			if(len > 0)
+			if(len > 0) {
+				caller->pld.charPtr->pendingChanges++;
 				caller->AttemptSend(buffer, len);
+			}
 		}
 		break;
 	case ACTION_SEND_TEXT:

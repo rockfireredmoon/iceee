@@ -11,6 +11,8 @@
 #include "InstanceScale.h" //Drop rate profile
 #include "ConfigString.h"
 #include "Stats.h"
+#include "Cluster.h"
+#include "StringUtil.h"
 #include "util/Log.h"
 #include <stddef.h>
 
@@ -182,7 +184,8 @@ const char *GetContainerNameFromID(int ID)
 		if(InventoryMapping[a].ID == ID)
 			return InventoryMapping[a].name;
 
-	return NULL;
+	g_Logs.server->warn("Request for unknown container index %v", ID);
+	return "UNKNOWN";
 }
 
 const int EquipmentMappingCount = 29;
@@ -806,8 +809,6 @@ char *GetItemProto(char *convbuf, int ItemID, int count)
 
 ItemManager :: ItemManager()
 {
-	nextVirtualItemID = BASE_VIRTUAL_ITEM_ID;
-	nextVirtualItemAutosave = 0;
 }
 
 ItemManager :: ~ItemManager()
@@ -847,6 +848,9 @@ void ItemManager :: Finalize(void)
 
 void ItemManager :: LoadData(void)
 {
+	if(!g_ClusterManager.HasKey(ID_NEXT_VIRTUAL_ITEM_ID)) {
+		g_ClusterManager.SetKey(ID_NEXT_VIRTUAL_ITEM_ID, StringUtil::Format("%d", BASE_VIRTUAL_ITEM_ID));
+	}
 	char buffer[256];
 	LoadItemPackages(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Packages"), "ItemPack.txt"), false);
 	LoadItemPackages(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Packages"), "ItemPackOverride.txt"), true);

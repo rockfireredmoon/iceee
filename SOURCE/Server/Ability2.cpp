@@ -1580,7 +1580,7 @@ void AbilityManager2 :: VerifyFunctionArgument(const std::string &functionName, 
 			verifyInfo.AddError("Could not resolve Stat Name [%s] for function [%s]", argumentString.c_str(), functionName.c_str());
 		return;
 	case ABVerifier::EFFECT:
-		resolveResult = ResolveStatusEffectID(argumentString.c_str());
+		resolveResult = ResolveStatusEffectID(argumentString);
 		if(resolveResult == -1)
 			verifyInfo.AddError("Could not resolve Status Effect [%s] for function [%s]", argumentString.c_str(), functionName.c_str());
 		return;
@@ -2139,7 +2139,7 @@ int AbilityManager2 :: ResolveStatID(const char *statName)
 	g_Logs.data->warn("ResolveStatID failed to resolve [%v]", statName);
 	return -1;
 }
-int AbilityManager2 :: ResolveStatusEffectID(const char *statusEffectName)
+int AbilityManager2 :: ResolveStatusEffectID(const std::string &statusEffectName)
 {
 	int ID = GetStatusIDByName(statusEffectName);
 	if(ID >= 0)
@@ -2623,7 +2623,6 @@ int AbilityCalculator :: AddGrove(ARGUMENT_LIST args)
 			newZone.mTerrainConfig = gt->mTerrainCfg;
 			newZone.mEnvironmentType = gt->mEnvType;
 			newZone.mPageSize = ZoneDefManager::DEFAULT_GROVE_PAGE_SIZE;
-			newZone.mShardName = gt->mShortName;
 			newZone.mGroveName = ciTarget->simulatorPtr->pld.accPtr->GroveName;
 			newZone.mWarpName = name;
 			newZone.mMapName  = gt->mMapName;

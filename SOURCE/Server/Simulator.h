@@ -155,6 +155,7 @@ public:
 	void Disconnect(const char *debugCaller);
 	void AddPendingDisconnect(void);
 	void ProcessDisconnect(void);
+	void ProcessDetach(void);
 	void ForceErrorMessage(const char *message, int msgtype);
 	int AttemptSend(const char *buffer, unsigned int buflen);
 	void OnConnect(void);
@@ -277,7 +278,7 @@ public:
 	void RunTranslocate(void);
 	void RunPortalRequest(void);
 	void CreatureUseHenge(int creatureID, int creatureDefID);
-	void ShardSet(const char *shardName, const char *charName);
+	std::string ShardSet(std::string shardName, std::string charName);
 
 	const char * GetGenericErrorString(int errCode);
 	int CheckValidWarpZone(int ZoneID);
