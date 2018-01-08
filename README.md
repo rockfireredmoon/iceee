@@ -41,19 +41,33 @@ Many thanks to all those involved in making this game, and keeping it alive.
 Credits for additional audio content added to the game.
 
 *Gloom Horizon* - Ambient music used in Grunes Tal undead region
+
 *Crossing The Chasm* - Ambient music used in Swineland region
+
 *Dark Times* - Activate music used in Bloodkeep
+
 *Land Of Phantoms* - Ambient music used in Bloodkeep
+
 *Some Amount Of Evil* - Ambient music used in Bloodkeep
+
 *Killers* - Ambient music used in penultimate fight scene in Bloodkeep
+
 *Chee Zee Cave* - Music used in Southend Passage
+
 *Night Cave* - Music used in Forest Cave
+
 *Curse Of The Scarab* - Music used in Djinn Temple
+
 *Dragon And Toast* - Music used in Fangarian's Lair
+
 *Grim Idol* - Fight Music used in Fangarian's Lair
+
 *The Hive* - Background Music used in Skrill Queen Lair
+
 *Constance* - Fight Music used in Skrill Queen Lair
+
 *Christmas Rap* - Ambient music used for Winter Dawning region
+
 *Wish Backgroud*  - Ambient music used for Winter Dawning region
 
 Kevin MacLeod (incompetech.com)
@@ -70,11 +84,17 @@ game came from freesound.org. All of these are
 Licensed under Creative Commons: By Attribution 3.0
 
 *Forest Evening* - cediez - https://www.freesound.org/people/cediez/ 
+
 *Kankbeeld Horror Pack* - Kankbeeld - http://www.freesound.org/people/klankbeeld/
+
 *Dungeon Ambiance* - https://freesound.org/people/phlair/sounds/388340/
+
 *Lava loop* - Audionautics - https://freesound.org/people/Audionautics/sounds/133901/
+
 *Dripping Cave* - dobroide - https://freesound.org/people/dobroide/sounds/396314/
+
 *Thunder Pack* - hantorio - https://freesound.org/people/hantorio/packs/7640/ 
+
 *10 Second Countdown* - thomasevd - https://freesound.org/people/thomasevd/sounds/202193/
 
  And some from https://tabletopaudio.com
