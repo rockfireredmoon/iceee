@@ -1,3 +1,22 @@
+/*
+ *This file is part of TAWD.
+ *
+ * TAWD is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * TAWD is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with TAWD.  If not, see <http://www.gnu.org/licenses/
+ */
+
+#include <CompilerEnvironment.h>
+
 #include <Cluster.h>
 #include <Config.h>
 #include <Components.h>
@@ -6,13 +25,13 @@
 #include <util/Log.h>
 #include <curl/curl.h>
 #include <dirent.h>
-#include "Item.h"
-#include "VirtualItem.h"
-#include "ZoneDef.h"
-#include "CreditShop.h"
-#include "IGForum.h"
-#include "StringUtil.h"
-#include "FriendStatus.h"
+#include <Item.h>
+#include <VirtualItem.h>
+#include <ZoneDef.h>
+#include <CreditShop.h>
+#include <IGForum.h>
+#include <StringUtil.h>
+#include <FriendStatus.h>
 
 INITIALIZE_EASYLOGGINGPP
 
@@ -104,7 +123,6 @@ bool VirtualItemPage::ReadEntity(AbstractEntityReader *reader) {
 
 	STRINGLIST sections = reader->Sections();
 	for(auto a = sections.begin(); a != sections.end(); ++a) {
-		g_Logs.data->error("REMOVEME: SECT: %v", *a);
 		reader->PushSection(*a);
 		VirtualItemDef vi;
 		if(!vi.ReadEntity(reader))
@@ -262,7 +280,7 @@ int main(int argc, char *argv[]) {
 		}
 	}
 
-	g_Logs.Init(lvl);
+	g_Logs.Init(lvl, true);
 	g_Logs.data->info("Text-To-Redis");
 
 	curl_global_init(CURL_GLOBAL_DEFAULT);

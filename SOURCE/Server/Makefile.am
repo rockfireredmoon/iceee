@@ -137,7 +137,6 @@ libtawd_a_SOURCES = md5.cc \
 	query/StatusHandlers.cpp \
 	query/PlayerHandlers.cpp \
 	util/base64.cpp \
-	util/easylogging++.cc \
 	util/JsonHelpers.cpp \
 	util/SquirrelObjects.cpp \
 	util/Log.cpp \
@@ -162,6 +161,7 @@ libtawd_a_SOURCES = md5.cc \
 	Cluster.h \
 	Combat.h \
 	CreditShop.h \
+	CompilerEnvironment.h \
 	CommonTypes.h \
 	Components.h \
 	Config.h \

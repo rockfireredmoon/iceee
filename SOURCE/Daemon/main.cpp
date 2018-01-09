@@ -1,124 +1,24 @@
-/*   
-   I'm a hobbyist programmer with no formal programming education and no professional experience.
-   I learned a lot since I started this project.  The quality of code, coding standards and styles
-   and comment details (or lack thereof) will be dramatically different between files and functions.
-   Lots of code is really bad.  It seems to work though.
-
-   Most of the code in these project files is my own, with some notable exceptions:
-      The MD5 encryption algorithm in the files: md5.hh, md5.cc
-	  The derived code in the QuaternionToByteFacing() function.
-	  Some enums, variable names, and tables were copied out of the client's source code and adapted
-	  accordingly.
-	  Code for sockets and mutexes was derived or adapted from various internet tutorials
-
-   Developed in Microsoft Visual C++ 2008 Express Edition.  This compiler is pretty lax when it comes to
-   warnings and language standards.  You may see tons of warnings and maybe even build errors if using
-   a different compiler (even if all the project settings are set correctly).
-
-   Development began around December 22, 2010 after branching a new project file from a basic WinSock
-   tutorial and testing application.  The WinSock project is dated around November 18, 2010.  This is
-   the largest project I have ever worked on, and for the longest duration.
-
-   There are no guarantees of security, either for data or program integrity.  Bugs, exploits, hacks, and
-   data corruption may all be possible.  Use this software at your own risk.  Maintain backups of
-   important files.  It is recommended that you backup server data on a routine basis.
-
-   Brought to you buy a guy with way too much free time,
-     -Grethnefar
-*/
-
 /*
-
-The story continues.
-
-Around March 2015, myself and a small team of remaining players took Greth's generous release
-of his server source, data, and extensive documentation and have started to bolt new things on,
-add new content and generally mess with things.
-
-Our goal is to get the incomplete Grunes Tal and Swineland regions open (which has proved a lot of
-work for everyone involved, it's made me appreciate even me more what Greth did).
-
-I AM a professional programmer, although have never used C++ before, so expect bad habits,
-stupid ideas, and mis-understanding of original ideas. However, it does work, and adds some fun
-new things and future possibilities.
-
-PS Greth's disclaimer stands. No guarantees of anything :)
-
-For now I am developing on Linux only, with the intention of revisiting Windows to make sure it
-all still compiles (probably not). The project has been converted to autotools format, which
-should be familiar to most GCC developers.
-
-- Emerald Icemoon
-
+ *This file is part of TAWD.
+ *
+ * TAWD is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * TAWD is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with TAWD.  If not, see <http://www.gnu.org/licenses/
  */
-
-/*	NOTES ON COMPILING:
-
->>>	SEE "COMPONENTS.H" for information on compiler and platform specific defines.
-
-
-ADDING FILES TO THE PROJECT
-  In Visual C++:
-    In the Solution Explorer pane, there are folders for 'Header Files' and
-    'Source Files'.  Right click these folders, then click 'Add > Add Existing Item...' and
-	select all appropriate files.
-
-  In Code Blocks
-    In the Projects pane, under the Workspace tree.  Right click the project name, then click
-	'Add Files...'.
-
-ADD ALL OF THESE FILES TO THE PROJECT
-Header Files: All files with *.h and *.hh extensions.
-Source Files: All files with *.cpp and *.cc extensions.
-Note: The MD5 source code files use the .hh and .cc format.  Make sure to add them too.
-
-
-
-If compiling in Microsoft Visual C++ 2008 Express
-  Add this #define to ignore deprecation security warnings:
-	Project > Properties
-
-	  -- then, in the tree to the left, navigate to --
-	  Configuration Properties
-		C/C++
-		  Preprocessor
--- Then add --mu
-		 _CRT_SECURE_NO_WARNINGS
-	  -- Into the "Preprocessor Definitions" field. --
-
-
-If compiling in Code::Blocks,
-  Where to add libraries: (Project > Build Options > Linker Settings <Tab>)
-  Where to add #defines:  (Project > Build Options > #defines <Tab>)
-  Where to add Linker Options: (Project > Build Options > Linker Settings <Tab>)
-
-If using Code::Blocks on WINDOWS, and using the Windows GUI:
-	LIBRARIES
-		Ws2_32
-		Comdlg32
-		Gdi32
-		Comctl32
-
-	DEFINES
-		_WIN32_WINNT=0x0600
-
-
-If using Code::Blocks on LINUX
-	LIBRARIES
-		pthread
-
-	LINKER SETTINGS
-		-lrt
-		-rdynamic                   NOTE: this is needed for the crash backtrace
-
-	DEFINES
-		_GLIBCXX_DEBUG
-		_GLIBCXX_DEBUG_PEDANTIC
-
-*/
 
 //Enable to include memory leak detection using CRT runtimes (Windows only)
 //#define _CRTDEBUGGING
+
+#include <CompilerEnvironment.h>
 
 #ifdef _CRTDEBUGGING
  #define _CRTDBG_MAP_ALLOC
@@ -129,89 +29,87 @@ If using Code::Blocks on LINUX
 #ifdef _CRTDEBUGGING
  #include <crtdbg.h>
 #endif
-#include "DebugTracer.h"
-#include "util/Log.h"
-
-#include "Components.h"
-#include "SocketClass3.h"
-#include "Account.h"
-#include "Character.h"
-#include "Stats.h"
-#include "Globals.h"
-#include "Router.h"
-#include "SimulatorBase.h"
-#include "Simulator.h"
-#include "Scheduler.h"
-#include "BroadCast.h"
-#include "Util.h"
-#include "Scenery2.h"
-
-#include "Instance.h"
-#include "ZoneDef.h"
-#include "Cluster.h"
-#include "Chat.h"
-#include "Item.h"
-#include "Info.h"
-#include "ItemSet.h"
-#include "Creature.h"
-#include "AIScript.h"
-#include "AIScript2.h"
-#include "Ability2.h"
-#include "CreatureSpawner2.h"
-#include "Interact.h"
-#include "DropTable.h"
-#include "Config.h"
-#include "DirectoryAccess.h"
-#include "RemoteAction.h"
-#include "Gamble.h"
-#include "QuestScript.h"
-#include "ZoneObject.h"
-#include "VirtualItem.h"
-#include "FriendStatus.h"
-#include "Debug.h"
-#include "IGForum.h"
-#include "EliteMob.h"
-#include "Crafting.h"
-#include "InstanceScale.h"
-#include "CreditShop.h"
-#include "Guilds.h"
-#include "Clan.h"
-#include "Daily.h"
-#include "Books.h"
-#include "NPC.h"
-#include "Leaderboard.h"
-#include "http/HTTPService.h"
-#include "message/LobbyMessage.h"
-#include "message/SharedMessage.h"
-#include "message/GameMessage.h"
-#include "query/Lobby.h"
-#include "query/ClanHandlers.h"
-#include "query/PreferenceHandlers.h"
-#include "query/GMHandlers.h"
-#include "query/CreditShopHandlers.h"
-#include "query/VaultHandlers.h"
-#include "query/AuctionHouseHandlers.h"
-#include "query/ScriptHandlers.h"
-#include "query/MarkerHandlers.h"
-#include "query/SidekickHandlers.h"
-#include "query/QuestHandlers.h"
-#include "query/IGFHandlers.h"
-#include "query/TradeHandlers.h"
-#include "query/SceneryHandlers.h"
-#include "query/SupportHandlers.h"
-#include "query/BookHandlers.h"
-#include "query/ItemHandlers.h"
-#include "query/CommandHandlers.h"
-#include "query/LootHandlers.h"
-#include "query/FriendHandlers.h"
-#include "query/AbilityHandlers.h"
-#include "query/CreatureHandlers.h"
-#include "query/PetHandlers.h"
-#include "query/SpawnHandlers.h"
-#include "query/ZoneHandlers.h"
-#include "query/StatusHandlers.h"
-#include "query/PlayerHandlers.h"
-#include "query/FormHandlers.h"
+#include <DebugTracer.h>
+#include <util/Log.h>
+#include <Components.h>
+#include <SocketClass3.h>
+#include <Account.h>
+#include <Character.h>
+#include <Stats.h>
+#include <Globals.h>
+#include <Router.h>
+#include <SimulatorBase.h>
+#include <Simulator.h>
+#include <Scheduler.h>
+#include <BroadCast.h>
+#include <Util.h>
+#include <Scenery2.h>
+#include <Instance.h>
+#include <ZoneDef.h>
+#include <Cluster.h>
+#include <Chat.h>
+#include <Item.h>
+#include <Info.h>
+#include <ItemSet.h>
+#include <Creature.h>
+#include <AIScript.h>
+#include <AIScript2.h>
+#include <Ability2.h>
+#include <CreatureSpawner2.h>
+#include <Interact.h>
+#include <DropTable.h>
+#include <Config.h>
+#include <DirectoryAccess.h>
+#include <RemoteAction.h>
+#include <Gamble.h>
+#include <QuestScript.h>
+#include <ZoneObject.h>
+#include <VirtualItem.h>
+#include <FriendStatus.h>
+#include <Debug.h>
+#include <IGForum.h>
+#include <EliteMob.h>
+#include <Crafting.h>
+#include <InstanceScale.h>
+#include <CreditShop.h>
+#include <Guilds.h>
+#include <Clan.h>
+#include <Daily.h>
+#include <Books.h>
+#include <NPC.h>
+#include <Leaderboard.h>
+#include <http/HTTPService.h>
+#include <message/LobbyMessage.h>
+#include <message/SharedMessage.h>
+#include <message/GameMessage.h>
+#include <query/Lobby.h>
+#include <query/ClanHandlers.h>
+#include <query/PreferenceHandlers.h>
+#include <query/GMHandlers.h>
+#include <query/CreditShopHandlers.h>
+#include <query/VaultHandlers.h>
+#include <query/AuctionHouseHandlers.h>
+#include <query/ScriptHandlers.h>
+#include <query/MarkerHandlers.h>
+#include <query/SidekickHandlers.h>
+#include <query/QuestHandlers.h>
+#include <query/IGFHandlers.h>
+#include <query/TradeHandlers.h>
+#include <query/SceneryHandlers.h>
+#include <query/SupportHandlers.h>
+#include <query/BookHandlers.h>
+#include <query/ItemHandlers.h>
+#include <query/CommandHandlers.h>
+#include <query/LootHandlers.h>
+#include <query/FriendHandlers.h>
+#include <query/AbilityHandlers.h>
+#include <query/CreatureHandlers.h>
+#include <query/PetHandlers.h>
+#include <query/SpawnHandlers.h>
+#include <query/ZoneHandlers.h>
+#include <query/StatusHandlers.h>
+#include <query/PlayerHandlers.h>
+#include <query/FormHandlers.h>
 #include <curl/curl.h>
 #ifdef OUTPUT_TO_CONSOLE
 #define DAEMON_NO_CLOSE 1
@@ -410,51 +308,6 @@ void InstallSignalHandler(void)
 }
 #endif
 
-/*
-void Handle_SIGPIPE(int unknown)
-{
-	fprintf(stderr, "SIGPIPE encountered (%d)\n", unknown);
-	fflush(stderr);
-}
-
-void Handle_SIGSEGV(int unknown)
-{
-	fprintf(stderr, "SIGSEGV encountered (%d)\n", unknown);
-	fflush(stderr);
-	g_ServerStatus = SERVER_STATUS_EXCEPTION;
-}
-
-void Handle_SIGBUS(int unknown)
-{
-	fprintf(stderr, "SIGBUS encountered (%d)\n", unknown);
-	fflush(stderr);
-	g_ServerStatus = SERVER_STATUS_EXCEPTION;
-}
-
-void Handle_SIGFPE(int unknown)
-{
-	fprintf(stderr, "SIGFPE encountered (%d)\n", unknown);
-	fflush(stderr);
-	g_ServerStatus = SERVER_STATUS_EXCEPTION;
-}
-
-void Handle_SIGILL(int unknown)
-{
-	fprintf(stderr, "SIGILL encountered (%d)\n", unknown);
-	fflush(stderr);
-	g_ServerStatus = SERVER_STATUS_EXCEPTION;
-}
-
-void Handle_SIGINT(int unknown)
-{
-	fprintf(stderr, "SIGINT encountered (%d)\n", unknown);
-	fflush(stderr);
-	g_ServerStatus = SERVER_STATUS_EXCEPTION;
-}
-*/
-
-//#endif
-
 #ifdef WINDOWS_SERVICE
 int main() {
 	int argc = 0;
@@ -469,14 +322,6 @@ int main(int argc, char *argv[]) {
 	// Linux exception handling.
 #ifndef WINDOWS_PLATFORM
 	InstallSignalHandler();
-	/*
-	signal((int)SIGPIPE, Handle_SIGPIPE);
-	signal((int)SIGSEGV, Handle_SIGSEGV);
-	signal((int)SIGBUS, Handle_SIGBUS);
-	signal((int)SIGFPE, Handle_SIGFPE);
-	signal((int)SIGILL, Handle_SIGILL);
-	signal((int)SIGINT, Handle_SIGINT);
-	*/
 #endif
 
 #ifdef WINDOWS_SERVICE
@@ -560,6 +405,7 @@ int InitServerMain(int argc, char *argv[]) {
 	bool daemonize = false;
 	std::string pidfile = "";
 	el::Level lvl = el::Level::Warning;
+	bool consoleOut = false;
 
 	for(int i = 0 ; i < argc ; i++) {
 		if(i == 0) {
@@ -575,6 +421,9 @@ int InitServerMain(int argc, char *argv[]) {
 		}
 		else if(strcmp(argv[i], "-c") == 0) {
 			g_Config.LocalConfigurationPath = argv[++i];
+		}
+		else if(strcmp(argv[i], "-C") == 0) {
+			consoleOut = true;
 		}
 		else if(strcmp(argv[i], "-I") == 0) {
 			el::Loggers::addFlag(el::LoggingFlag::ImmediateFlush);
@@ -606,7 +455,7 @@ int InitServerMain(int argc, char *argv[]) {
 		}
 	}
 
-	g_Logs.Init(lvl);
+	g_Logs.Init(lvl, consoleOut);
 	curl_global_init(CURL_GLOBAL_DEFAULT);
 	bcm.mlog.reserve(100);
 
@@ -1018,9 +867,6 @@ int InitServerMain(int argc, char *argv[]) {
 	g_BookManager.Init();
 	g_Logs.data->info("Loaded %v Books.", g_BookManager.books.size());
 
-	g_InfoManager.Init();
-	g_Logs.data->info("Loaded %v Tips.", g_InfoManager.GetTips().size());
-
 	g_AuctionHouseManager.LoadItems();
 	g_AuctionHouseManager.ConnectToSite();
 
@@ -1044,6 +890,11 @@ int InitServerMain(int argc, char *argv[]) {
 
 	g_WeatherManager.LoadFromFile(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Data"), "Weather.txt"));
 	g_Logs.data->info("Loaded %v weather definitions.", g_WeatherManager.mWeatherDefinitions.size());
+
+	if(!g_InfoManager.Init()) {
+		return 0;
+	}
+	g_Logs.data->info("Loaded %v Tips.", g_InfoManager.GetTips().size());
 
 	g_SceneryManager.LoadData();
 

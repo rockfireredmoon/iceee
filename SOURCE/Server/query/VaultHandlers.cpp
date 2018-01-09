@@ -104,7 +104,7 @@ int VaultSendHandler::handleQuery(SimulatorThread *sim,
 	// Now we have a creature, we can try and get the account
 	AccountData *acc = g_AccountManager.GetActiveAccountByID(cd->AccountID);
 	if (acc == NULL) {
-		acc = g_AccountManager.LoadAccountID(cd->AccountID);
+		acc = g_AccountManager.FetchIndividualAccount(cd->AccountID);
 	}
 	if (acc == NULL) {
 		g_CharacterManager.ReleaseThread();

@@ -36,8 +36,22 @@ public:
 	std::string GetInGameNews();
 	std::vector<std::string> GetLoadingAnnouncments();
 	std::vector<Tip> GetTips();
+
+	std::string mGameName;
+	std::string mEdition;
+	int GetStartZone();
+	int GetStartX();
+	int GetStartY();
+	int GetStartZ();
+	int GetStartRotation();
+
 private:
 	std::vector<Tip> mTips;
+	int mStartZone;
+	int mStartX;
+	int mStartY;
+	int mStartZ;
+	int mStartRotation;
 };
 
 extern InfoManager g_InfoManager;

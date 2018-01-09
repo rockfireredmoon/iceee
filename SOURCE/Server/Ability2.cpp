@@ -2634,7 +2634,6 @@ int AbilityCalculator :: AddGrove(ARGUMENT_LIST args)
 			newZone.mRegions = gt->mRegionsPng;
 
 			//Flag for the next autosave.
-			newZone.PendingChanges = 1;
 
 			BuildPermissionArea bp;
 			bp.ZoneID = g_ZoneDefManager.CreateZone(newZone);;

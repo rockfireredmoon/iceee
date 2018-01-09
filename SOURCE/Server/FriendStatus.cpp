@@ -65,6 +65,18 @@ void FriendListManager::UpdateSocialEntry(SocialWindowEntry &data) {
 	}
 }
 
+bool FriendListManager::DeleteCharacter(int CreatureDefID) {
+	SocialWindowEntry we;
+	we.creatureDefID = CreatureDefID;
+	if(g_ClusterManager.RemoveEntity(&we))  {
+		g_ClusterManager.RemoveKey(
+		StringUtil::Format("%s:%d", LISTPREFIX_FRIEND_NETWORK.c_str(),
+				CreatureDefID));
+		return true;
+	}
+	return false;
+}
+
 void FriendListManager::EnumerateFriends(SEARCH_INPUT& inPlayers,
 		SEARCH_OUTPUT& outResults) {
 	SOCIAL_MAP::iterator it;

@@ -100,7 +100,7 @@ Licensed under Creative Commons: By Attribution 3.0
  And some from https://tabletopaudio.com
  Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License.
 
-#####In The Shadows - Ambient background 
+*In The Shadows* - Ambient background 
 
 ## Configuring A Server From This Repository
 
@@ -352,7 +352,32 @@ You now have everything you need to run the server. Assuming you are in the serv
 SOURCE/Daemon/tawd
 ```
 
-The server will now start up with a default logging level of INFO output to the console. 
+The server will now start up with a default logging level of INFO output to the console.
+
+### Creating The User Accounts
+
+Before logging on to the server using the client, you will need to create to create a user. The default configuration uses a built in user database.
+
+First off, create an administrator account :-
+ 
+
+```
+SOURCE/Tools/eeaccount -i create admin 'mysecret' admin --roles=administrator
+```
+
+You can then create accounts for your Sages (GMs) :-
+
+```
+SOURCE/Tools/eeaccount -i create sage1 'mysecret' sagegrove1 --roles=sage
+```
+
+And finally acccounts for ordinary players
+
+```
+SOURCE/Tools/eeaccount -i create aplayer 'mysecret' playergrove1
+```
+
+There are various other ways by which accounts by created, such as via HTTP calls. These are intended for integration with web sites. 
 
 
 ### Server Daemon Command Line Options

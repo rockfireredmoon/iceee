@@ -408,8 +408,8 @@ AccountData * ServiceAuthenticationHandler::authenticate(
 							g_ZoneDefManager.RemoveZoneFromIndexes(zone);
 							zone->mWarpName = buf;
 							zone->mGroveName = grove;
-							zone->PendingChanges++;
 							g_ZoneDefManager.InsertZone(*zone, true);
+							g_ClusterManager.WriteEntity(zone, false);
 
 							idx++;
 						}

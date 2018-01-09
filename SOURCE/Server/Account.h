@@ -23,6 +23,7 @@ static std::string KEYPREFIX_REGISTRATION_KEYS = "RegistrationKeys";
 static std::string KEYPREFIX_ACCOUNT_QUICK_DATA = "AccountQuickData";
 static std::string KEYPREFIX_ACCOUNT_DATA = "AccountData";
 static std::string ID_NEXT_ACCOUNT_ID = "NextAccountID";
+static std::string KEYPREFIX_ACCOUNT_SESSIONS = "AccountSessions";
 
 class CharacterData;
 
@@ -105,6 +106,8 @@ public:
 	std::string RecoveryKeys;
 	int CharacterSet[MAX_CHARACTER_SLOTS];
 	unsigned int PermissionSet[2];
+
+	void SetRoles(std::vector<std::string> &roles);
 	bool MatchAuthData(const char *str);
 	void ResolveCharacters(const char *debugName);
 	int GetCharacterCount(void);

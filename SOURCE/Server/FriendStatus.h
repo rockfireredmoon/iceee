@@ -46,6 +46,7 @@ public:
 	void UpdateSocialEntry(SocialWindowEntry &data);
 	void EnumerateFriends(SEARCH_INPUT& inPlayers, SEARCH_OUTPUT& outResults);
 	bool HasFriendOf(int playerDefID, int searchDefID);
+	bool DeleteCharacter(int CreatureDefID);
 	
 	//Network functions
 	void UpdateNetworkEntry(int CreatureDefID, std::vector<int>& FriendDefIDs);

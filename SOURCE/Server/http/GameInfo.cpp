@@ -45,7 +45,6 @@ bool GameInfoHandler::handleGet(CivetServer *server,
 
 	int status = 404;
 	string content;
-	g_Logs.http->info("REMOVEME GameInfo %v", ruri);
 
 	if (Util::HasEnding(ruri, "tips")) {
 		status = 200;

@@ -5,6 +5,7 @@
 #include "Config.h"       //For global variables holding default positions
    //To report errors
 #include "ItemSet.h"
+#include "Info.h"
 #include "Quest.h"
 #include <limits>
 #include "Account.h"  //For upgrade conversion only.
@@ -253,16 +254,16 @@ bool CharacterData :: ReadEntity(AbstractEntityReader *reader) {
 	clan = reader->ValueInt("Clan");
 	activeData.CurZone = reader->ValueInt("Zone");
 	if(activeData.CurZone <= 0)
-		activeData.CurZone = g_DefZone;
+		activeData.CurZone = g_InfoManager.GetStartZone();
 	activeData.CurX = reader->ValueInt("X");
 	if(activeData.CurX == -1)
-		activeData.CurX = g_DefX;
+		activeData.CurX = g_InfoManager.GetStartX();
 	activeData.CurY = reader->ValueInt("Y");
 	if(activeData.CurY == -1)
-		activeData.CurY = g_DefY;
+		activeData.CurY = g_InfoManager.GetStartY();
 	activeData.CurZ = reader->ValueInt("Z");
 	if(activeData.CurZ == -1)
-		activeData.CurZ = g_DefZ;
+		activeData.CurZ = g_InfoManager.GetStartZ();
 	activeData.CurRotation = reader->ValueInt("Rotation");
 	StatusText = reader->Value("StatusText");
 	SecondsLogged = reader->ValueULong("SecondsLogged");
@@ -600,20 +601,22 @@ bool CharacterData :: WriteEntity(AbstractEntityWriter *writer) {
 	//
 	writer->Section("INV");
 	for(int a = 0; a < MAXCONTAINER; a++) {
-		STRINGLIST l;
-		for(int b = 0; b < (int)inventory.containerList[a].size(); b++) {
-			InventorySlot *slot = &inventory.containerList[a][b];
+		if(IsContainerIDValid(a)) {
+			STRINGLIST l;
+			for(int b = 0; b < (int)inventory.containerList[a].size(); b++) {
+				InventorySlot *slot = &inventory.containerList[a][b];
 
-			std::string s = StringUtil::Format("%lu,%d", slot->CCSID & CONTAINER_SLOT,
-					slot->IID );
+				std::string s = StringUtil::Format("%lu,%d", slot->CCSID & CONTAINER_SLOT,
+						slot->IID );
 
-			bool extend = false;
-			if(slot->count > 0 || slot->customLook != 0 || slot->bindStatus != 0 || slot->secondsRemaining != -1)
-				s += StringUtil::Format(",%d,%d,%d,%ld", slot->count, slot->customLook, slot->bindStatus, slot->AdjustTimes());
+				bool extend = false;
+				if(slot->count > 0 || slot->customLook != 0 || slot->bindStatus != 0 || slot->secondsRemaining != -1)
+					s += StringUtil::Format(",%d,%d,%d,%ld", slot->count, slot->customLook, slot->bindStatus, slot->AdjustTimes());
 
-			l.push_back(s);
+				l.push_back(s);
+			}
+			writer->ListValue(GetContainerNameFromID(a), l);
 		}
-		writer->ListValue(GetContainerNameFromID(a), l);
 	}
 
 	//
@@ -1264,11 +1267,11 @@ void CharacterData :: OnCharacterCreation(void)
 		*/
 
 
-		activeData.CurZone = g_DefZone;
-		activeData.CurX = g_DefX;
-		activeData.CurY = g_DefY;
-		activeData.CurZ = g_DefZ;
-		activeData.CurRotation = g_DefRotation;
+		activeData.CurZone = g_InfoManager.GetStartZone();
+		activeData.CurX = g_InfoManager.GetStartX();
+		activeData.CurY = g_InfoManager.GetStartY();
+		activeData.CurZ = g_InfoManager.GetStartZ();
+		activeData.CurRotation = g_InfoManager.GetStartRotation();
 
 
 		std::string quickbar0;
@@ -1739,7 +1742,6 @@ int CharacterManager :: LoadCharacter(int CDefID, bool tempResource)
 	newChar.cdef.CreatureDefID = CDefID;
 	if(!g_ClusterManager.ReadEntity(&newChar))
 	{
-		g_Logs.data->error("Failed to load character from cluster. [%v]", CDefID);
 		return -1;
 	}
 
@@ -1822,6 +1824,7 @@ void CharacterManager :: CreateDefaultCharacter(void)
 
 	CharacterData newObj;
 	charList.insert(CHARACTER_PAIR(0, newObj));
+	g_CharacterManager.SaveCharacter(0);
 }
 
 void CharacterManager :: AddExternalCharacter(int CDefID, CharacterData &newChar)

@@ -449,7 +449,8 @@ extern ItemLoadTable ItemLoadDef[];
 //extern vector<ItemDef> ItemList;
 
 int GetContainerIDFromName(const char *name);
-const char *GetContainerNameFromID(int ID);
+std::string GetContainerNameFromID(int ID);
+bool IsContainerIDValid(int ID);
 
 int GetEQSlotFromName(char *name);
 

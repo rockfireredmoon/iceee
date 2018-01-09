@@ -189,7 +189,6 @@ ZoneDefInfo::~ZoneDefInfo() {
 }
 
 void ZoneDefInfo::Clear(void) {
-	PendingChanges = 0;
 	mID = 0;
 	mAccountID = 0;
 	mDesc.clear();
@@ -275,8 +274,6 @@ void ZoneDefInfo::CopyFrom(const ZoneDefInfo& other) {
 	mTileEnvironment.clear();
 	mTileEnvironment.insert(other.mTileEnvironment.begin(),
 			other.mTileEnvironment.end());
-
-	PendingChanges = other.PendingChanges;
 }
 
 void ZoneDefInfo::SetDefaults(void) {
@@ -557,14 +554,14 @@ void ZoneDefInfo::AddPlayerFilterID(int CreatureDefID, bool loadStage) {
 	// If we're not adding players from the ZoneDef load stage, this was probably added by a command, so
 	// mark a pending change.
 	if (loadStage == false)
-		PendingChanges++;
+		g_ClusterManager.WriteEntity(this, false);
 }
 
 void ZoneDefInfo::RemovePlayerFilter(int CreatureDefID) {
 	for (size_t i = 0; i < mPlayerFilterID.size(); i++) {
 		if (mPlayerFilterID[i] == CreatureDefID) {
 			mPlayerFilterID.erase(mPlayerFilterID.begin() + i);
-			PendingChanges++;
+			g_ClusterManager.WriteEntity(this, false);
 			return;
 		}
 	}
@@ -573,7 +570,7 @@ void ZoneDefInfo::RemovePlayerFilter(int CreatureDefID) {
 void ZoneDefInfo::ClearPlayerFilter(void) {
 	if (mPlayerFilterID.size() > 0) {
 		mPlayerFilterID.clear();
-		PendingChanges++;
+		g_ClusterManager.WriteEntity(this, false);
 	}
 }
 
@@ -619,12 +616,12 @@ void ZoneDefInfo::UpdateGrovePermission(STRINGLIST &params) {
 		p.mX2 = x2;
 		p.mY2 = y2;
 		mEditPermissions.push_back(p);
-		PendingChanges++;
+		g_ClusterManager.WriteEntity(this, false);
 	} else if (strcmp(action, "delete") == 0) {
 		size_t index = static_cast<size_t>(Util::GetInteger(params, 1));
 		if (index >= 0 && index < mEditPermissions.size()) {
 			mEditPermissions.erase(mEditPermissions.begin() + index);
-			PendingChanges++;
+			g_ClusterManager.WriteEntity(this, false);
 		}
 	}
 }
@@ -644,28 +641,25 @@ void ZoneDefInfo::ChangeDefaultLocation(int newX, int newY, int newZ) {
 	DefX = newX;
 	DefY = newY;
 	DefZ = newZ;
-	PendingChanges++;
+	g_ClusterManager.WriteEntity(this, false);
 }
 
 void ZoneDefInfo::ChangeName(const char *newName) {
 	mName = newName;
-	PendingChanges++;
+	g_ClusterManager.WriteEntity(this, false);
 }
 
 void ZoneDefInfo::ChangeEnvironment(const char *newEnvironment) {
 	mEnvironmentType = newEnvironment;
-	PendingChanges++;
+	g_ClusterManager.WriteEntity(this, false);
 }
 
 void ZoneDefInfo::ChangeEnvironmentUsage(void) {
 	mEnvironmentCycle = !mEnvironmentCycle;
-	PendingChanges++;
+	g_ClusterManager.WriteEntity(this, false);
 }
 
 bool ZoneDefInfo::QualifyDelete(void) {
-	if (PendingChanges > 0)
-		return false;
-
 	if (mID >= ZoneDefManager::GROVE_ZONE_ID_DEFAULT)
 		return true;
 
@@ -748,7 +742,7 @@ void ZoneDefInfo::CreateDefaultGrovePermission(void) {
 		entry.mY2 = gt->mTileY2;
 	}
 	mEditPermissions.insert(mEditPermissions.begin(), entry);
-	PendingChanges++;
+	g_ClusterManager.WriteEntity(this, false);
 }
 
 void ZoneDefInfo::ReadFromJSON(Json::Value &value) {
@@ -1178,16 +1172,15 @@ int ZoneDefManager::CreateZone(ZoneDefInfo &newZone) {
 
 	newZone.mID = newZoneID;
 	//Flag for the next autosave.
-	newZone.PendingChanges = 1;
 
 	InsertZone(newZone, true);
 
 	cs.Leave();
+	g_ClusterManager.WriteEntity(&newZone, false);
 	return newZoneID;
 }
 
 int ZoneDefManager::CreateGrove(int accountID, const char *grovename) {
-	cs.Enter("ZoneDefManager::CreateGrove");
 	int newZoneID = GetNewZoneID();
 	ZoneDefInfo newZone;
 
@@ -1209,12 +1202,10 @@ int ZoneDefManager::CreateGrove(int accountID, const char *grovename) {
 	newZone.mGrove = true;
 	newZone.mGuildHall = false;
 
-	//Flag for the next autosave.
-	newZone.PendingChanges = 1;
-
+	cs.Enter("ZoneDefManager::CreateGrove");
 	InsertZone(newZone, true);
-
 	cs.Leave();
+	g_ClusterManager.WriteEntity(&newZone, false);
 	return newZoneID;
 }
 
@@ -1230,6 +1221,26 @@ void ZoneDefManager::InsertZone(const ZoneDefInfo& newZone, bool createIndex) {
 		g_ClusterManager.ListAdd(StringUtil::Format("%s:%s", LISTPREFIX_GROVE_NAME_TO_ZONE_ID.c_str(), newZone.mGroveName.c_str()), StringUtil::Format("%d", newZone.mID), false);
 		g_ClusterManager.ListAdd(StringUtil::Format("%s:%d", LISTPREFIX_ACCOUNT_ID_TO_ZONE_ID.c_str(), newZone.mAccountID), StringUtil::Format("%d", newZone.mID), false);
 	}
+}
+
+bool ZoneDefManager::DeleteZone(int id) {
+	if(id < GROVE_ZONE_ID_DEFAULT) {
+		g_Logs.data->warn("Request to delete non-grove zone %v, ignoring", id);
+		return false;
+	}
+
+
+	ZoneDefInfo *def = GetPointerByID(id);
+	if (def != NULL) {
+		mZoneList.erase(mZoneList.find(id));
+		if (g_ClusterManager.RemoveEntity(def)) {
+			g_Logs.data->info("Removed zone %v", id);
+			g_ZoneDefManager.RemoveZoneFromIndexes(def);
+			g_SceneryManager.DeleteZone(id);
+			return true;
+		}
+	}
+	return false;
 }
 
 void ZoneDefManager::RemoveZoneFromIndexes(ZoneDefInfo *def) {
@@ -1251,14 +1262,6 @@ int ZoneDefManager::CheckAutoSave(bool force) {
 
 		def->AutosaveAudits(force); //Audits doesn't use the pending stuff, so we'll just toss it in here.
 
-		if (def->PendingChanges == 0)
-			continue;
-
-		if(!g_ClusterManager.WriteEntity(def)) {
-			g_Logs.data->error("Could not save zone [%v]", def->mID);
-			continue;
-		}
-		def->PendingChanges = 0;
 		saveOps++;
 	}
 	return saveOps;
@@ -1401,8 +1404,6 @@ void ZoneDefManager::GenerateReportActive(ReportBuffer &report) {
 		if (zd->IsPlayerGrove() == false)
 			continue;
 		report.AddLine("Name:%s ID:%d", zd->mName.c_str(), zd->mID);
-		if (zd->PendingChanges > 0)
-			report.AddLine("Has pending changes.");
 		report.AddLine(NULL);
 	}
 }

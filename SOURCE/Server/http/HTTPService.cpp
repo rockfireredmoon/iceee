@@ -27,6 +27,7 @@
 
 #include "../Config.h"
 #include "../Util.h"
+#include "../StringUtil.h"
 
 #include "../FileReader.h"
 #include <stdio.h>
@@ -145,17 +146,15 @@ bool HTTPService::Start() {
 	if(http) {
 
 		zzOptions[idx++] = "listening_ports";
-		char portbuf[6];
 
-		std::string *ports = new std::string();
+		std::string ports;
 		if(g_HTTPListenPort > 0) {
-			g_Logs.http->info("CivetWeb HTTP configured on port %v", g_HTTPListenPort);
 			if(strlen(g_BindAddress) > 0) {
-				ports->append(g_BindAddress);
-				ports->append(":");
+				ports.append(g_BindAddress);
+				ports.append(":");
 			}
-			Util::SafeFormat(portbuf, sizeof(portbuf), "%d", g_HTTPListenPort);
-			ports->append(portbuf);
+			ports.append(StringUtil::Format("%d", g_HTTPListenPort));
+			g_Logs.http->info("CivetWeb HTTP configured on port %v", ports);
 		}
 #ifndef NO_SSL
 		if(g_HTTPSListenPort > 0) {
@@ -166,18 +165,17 @@ bool HTTPService::Start() {
 				if(ports->size()> 0) {
 					ports->append(",");
 				}
-				g_Logs.http->info("CivetWeb HTTPS configured on port %v", g_HTTPSListenPort);
 				if(strlen(g_BindAddress) > 0) {
 					ports->append(g_BindAddress);
 					ports->append(":");
 				}
-				Util::SafeFormat(portbuf, sizeof(portbuf), "%ds", g_HTTPSListenPort);
-				ports->append(portbuf);
+				ports.append(StringUtil::Format("%d", g_HTTPSListenPort));
+				g_Logs.http->info("CivetWeb HTTPS configured on port %v", ports);
 			}
 		}
 #endif
 
-		zzOptions[idx++] = ports->c_str();
+		zzOptions[idx++] = ports.c_str();
 
 		std::string alog = Platform::JoinPath(g_Config.ResolveLogPath(), "HTTPAccess.txt");
 		std::string elog = Platform::JoinPath(g_Config.ResolveLogPath(), "HTTPError.txt");
@@ -200,67 +198,73 @@ bool HTTPService::Start() {
 		zzOptions[idx] = 0;
 
 		g_Logs.http->info("Starting CivetWeb");
-		civetServer = new CivetServer(zzOptions);
-		if(!civetServer->isConfigured()) {
-			g_Logs.http->warn("CivetWeb HTTP server disabled due to misconfiguration.");
+		BEGINTRY {
+			civetServer = new CivetServer(zzOptions);
+			if(!civetServer->isConfigured()) {
+				g_Logs.http->warn("CivetWeb HTTP server disabled due to misconfiguration.");
+				return false;
+			}
+
+			// CAR files
+			civetServer->addHandler("**.car$", new CARHandler());
+
+			// Info
+			civetServer->addHandler("/info/*", new GameInfoHandler());
+
+			// API
+			if(g_Config.PublicAPI) {
+				civetServer->addHandler("/api/up", new UpHandler());
+				civetServer->addHandler("/api/who", new WhoHandler());
+				civetServer->addHandler("/api/chat", new ChatHandler());
+				civetServer->addHandler("/api/user/*", new UserHandler());
+				civetServer->addHandler("/api/character/*", new CharacterHandler());
+				civetServer->addHandler("/api/user/*/groves", new UserGrovesHandler());
+				civetServer->addHandler("/api/zone/*", new ZoneHandler());
+				civetServer->addHandler("/api/scenery/*", new SceneryHandler());
+				HTTPD::LeaderboardHandler* leaderboardHandler =
+						new LeaderboardHandler();
+				civetServer->addHandler("/api/leaderboard", leaderboardHandler);
+				civetServer->addHandler("/api/leaderboard/*", leaderboardHandler);
+				HTTPD::CreditShopHandler* creditShopHandler =
+						new CreditShopHandler();
+				civetServer->addHandler("/api/cs", creditShopHandler);
+				civetServer->addHandler("/api/cs/*", creditShopHandler);
+				HTTPD::ClanHandler* clanHandler = new ClanHandler();
+				civetServer->addHandler("/api/clans", clanHandler);
+				civetServer->addHandler("/api/clan/*", clanHandler);
+				HTTPD::GuildHandler* guildHandler = new GuildHandler();
+				civetServer->addHandler("/api/guilds", guildHandler);
+				civetServer->addHandler("/api/guild/*", guildHandler);
+				civetServer->addHandler("/api/item/*", new ItemHandler());
+				HTTPD::AuctionHandler* auctionHandler = new AuctionHandler();
+				civetServer->addHandler("/api/auction", auctionHandler);
+				civetServer->addHandler("/api/auction/*", auctionHandler);
+			}
+
+			// OAuth - Used to authenticate external services
+			if(g_Config.OAuth2Clients.size() > 0) {
+				civetServer->addHandler("/oauth/authorize", new AuthorizeHandler());
+				civetServer->addHandler("/oauth/login", new LoginHandler());
+				civetServer->addHandler("/oauth/token", new TokenHandler());
+				civetServer->addHandler("/oauth/self", new SelfHandler());
+			}
+
+			// Legacy account maintenannce
+			if(g_Config.LegacyAccounts) {
+				civetServer->addHandler("/newaccount", new NewAccountHandler());
+				civetServer->addHandler("/resetpassword", new ResetPasswordHandler());
+				civetServer->addHandler("/accountrecover", new AccountRecoverHandler());
+			}
+
+			// Legacy web control panel
+			civetServer->addHandler("/remoteaction", new RemoteActionHandler());
+
+			return true;
+		}
+		BEGINCATCH {
+			g_Logs.http->error("CivetWeb HTTP server threw exception on startup. This is likely due to configuration or other services running on the same interface and / or port.");
 			return false;
 		}
-
-		// CAR files
-		civetServer->addHandler("**.car$", new CARHandler());
-
-		// Info
-		civetServer->addHandler("/info/*", new GameInfoHandler());
-
-		// API
-		if(g_Config.PublicAPI) {
-			civetServer->addHandler("/api/up", new UpHandler());
-			civetServer->addHandler("/api/who", new WhoHandler());
-			civetServer->addHandler("/api/chat", new ChatHandler());
-			civetServer->addHandler("/api/user/*", new UserHandler());
-			civetServer->addHandler("/api/character/*", new CharacterHandler());
-			civetServer->addHandler("/api/user/*/groves", new UserGrovesHandler());
-			civetServer->addHandler("/api/zone/*", new ZoneHandler());
-			civetServer->addHandler("/api/scenery/*", new SceneryHandler());
-			HTTPD::LeaderboardHandler* leaderboardHandler =
-					new LeaderboardHandler();
-			civetServer->addHandler("/api/leaderboard", leaderboardHandler);
-			civetServer->addHandler("/api/leaderboard/*", leaderboardHandler);
-			HTTPD::CreditShopHandler* creditShopHandler =
-					new CreditShopHandler();
-			civetServer->addHandler("/api/cs", creditShopHandler);
-			civetServer->addHandler("/api/cs/*", creditShopHandler);
-			HTTPD::ClanHandler* clanHandler = new ClanHandler();
-			civetServer->addHandler("/api/clans", clanHandler);
-			civetServer->addHandler("/api/clan/*", clanHandler);
-			HTTPD::GuildHandler* guildHandler = new GuildHandler();
-			civetServer->addHandler("/api/guilds", guildHandler);
-			civetServer->addHandler("/api/guild/*", guildHandler);
-			civetServer->addHandler("/api/item/*", new ItemHandler());
-			HTTPD::AuctionHandler* auctionHandler = new AuctionHandler();
-			civetServer->addHandler("/api/auction", auctionHandler);
-			civetServer->addHandler("/api/auction/*", auctionHandler);
-		}
-
-		// OAuth - Used to authenticate external services
-		if(g_Config.OAuth2Clients.size() > 0) {
-			civetServer->addHandler("/oauth/authorize", new AuthorizeHandler());
-			civetServer->addHandler("/oauth/login", new LoginHandler());
-			civetServer->addHandler("/oauth/token", new TokenHandler());
-			civetServer->addHandler("/oauth/self", new SelfHandler());
-		}
-
-		// Legacy account maintenannce
-		if(g_Config.LegacyAccounts) {
-			civetServer->addHandler("/newaccount", new NewAccountHandler());
-			civetServer->addHandler("/resetpassword", new ResetPasswordHandler());
-			civetServer->addHandler("/accountrecover", new AccountRecoverHandler());
-		}
-
-		// Legacy web control panel
-		civetServer->addHandler("/remoteaction", new RemoteActionHandler());
-
-		return true;
 	}
 	else {
 		g_Logs.http->warn("CivetWeb HTTP server disabled. No HTTP requests will be served.");

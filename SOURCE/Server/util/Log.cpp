@@ -98,12 +98,14 @@ Logger * LogManager::ConfigureLogger(Logger *logger) {
 		logger->configurations()->set(el::Level::Warning, el::ConfigurationType::Enabled, "TRUE");
 		break;
 	}
+	logger->configurations()->set(el::Level::Global, el::ConfigurationType::ToStandardOutput, mOutputToConsole ? "TRUE" : "FALSE");
 	logger->reconfigure();
 	return logger;
 }
 
-void LogManager::Init(el::Level level) {
+void LogManager::Init(el::Level level, bool outputToConsole) {
 	mLevel = level;
+	mOutputToConsole = outputToConsole;
 	el::Loggers::configureFromGlobal(Platform::JoinPath(g_Config.ResolveLocalConfigurationPath(), "LogConfig.txt").c_str());
 
 	el::Loggers::addFlag(el::LoggingFlag::NewLineForContainer);

@@ -1742,6 +1742,32 @@ void SceneryManager::LaunchThread(void)
 		g_Logs.server->info("SceneryManager::LaunchThread: successful");
 }
 
+bool SceneryManager::DeleteZone(int id) {
+	if(id < ZoneDefManager::GROVE_ZONE_ID_DEFAULT) {
+		g_Logs.data->warn("Request to delete non-grove zone %v, ignoring", id);
+		return false;
+	}
+	STRINGLIST pages;
+	g_ClusterManager.Scan([this, &pages](const std::string &key) {
+		pages.push_back(key);
+	},StringUtil::Format("%s:%d:*", KEYPREFIX_GROVE.c_str(), id));
+	for(auto it = pages.begin(); it != pages.end(); ++it) {
+		STRINGLIST props = g_ClusterManager.GetList(*it);
+		for(auto it2 = props.begin(); it2 != props.end(); ++it2) {
+			SceneryObject so;
+			so.ID = atoi((*it2).c_str());
+			so.Zone = id;
+			if(!g_ClusterManager.RemoveEntity(&so)) {
+				g_Logs.data->warn("Failed to remove scenery for zone %v (%v)", id, so.ID);
+			}
+		}
+		g_ClusterManager.RemoveKey(*it);
+	}
+	g_ClusterManager.RemoveKey(StringUtil::Format("%s:%d:*", ID_NEXT_SCENERY.c_str(), id));
+
+	return true;
+}
+
 void SceneryManager::ShutdownThread(void)
 {
 	bThreadActive = false;

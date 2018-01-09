@@ -14,40 +14,23 @@
  * You should have received a copy of the GNU General Public License
  * along with TAWD.  If not, see <http://www.gnu.org/licenses/
  */
-#ifndef LOGS
-#define LOGS
 
-#include "easylogging++.h"
-//INITIALIZE_EASYLOGGINGPP
+#pragma once
+#ifndef COMPILERENVIRONMENT_H
+#define COMPILERENVIRONMENT_H
 
-using el::Logger;
-using el::Loggers;
-
-class LogManager {
-public:
-	LogManager();
-	~LogManager();
-	void Init(el::Level level, bool outputToConsole);
-	void FlushAll();
-	void CloseAll();
-	Logger *server;
-	Logger *chat;
-	Logger *http;
-	Logger *event;
-	Logger *cheat;
-	Logger *leaderboard;
-	Logger *router;
-	Logger *simulator;
-	Logger *data;
-	Logger *script;
-	Logger *cs;
-	Logger *cluster;
-private:
-	el::Level mLevel;
-	bool mOutputToConsole;
-	Logger * ConfigureLogger(Logger *logger);
-};
-
-extern LogManager g_Logs;
-
+/* Default location to load local configuration files. The contents of LOCALCONFIGDIR/ServerConfig.txt
+ * determines the locations of the rest of the data files.
+ */
+#ifndef LOCALCONFIGDIR
+#define LOCALCONFIGDIR "Local"
 #endif
+
+/* Detect various platforms */
+#if (defined(_WIN32) || defined(_WIN64))
+#define WINDOWS_PLATFORM 1
+#else
+#undef WINDOWS_PLATFORM
+#endif
+
+#endif //COMPILERENVIRONMENT_H

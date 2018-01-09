@@ -177,13 +177,22 @@ int GetContainerIDFromName(const char *name)
 	return -1;
 }
 
-const char *GetContainerNameFromID(int ID)
+
+bool IsContainerIDValid(int ID)
+{
+	int a;
+	for(a = 0; a < InventoryMappingCount; a++)
+		if(InventoryMapping[a].ID == ID)
+			return true;
+	return false;
+}
+
+std::string GetContainerNameFromID(int ID)
 {
 	int a;
 	for(a = 0; a < InventoryMappingCount; a++)
 		if(InventoryMapping[a].ID == ID)
 			return InventoryMapping[a].name;
-
 	g_Logs.server->warn("Request for unknown container index %v", ID);
 	return "UNKNOWN";
 }

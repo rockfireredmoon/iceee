@@ -16,13 +16,7 @@
 <body>
 <div>
 
-<script type="text/javascript" src="targetAddress.js"></script>
-
 <script type="text/javascript">
-
-/*
-var targetAddress = "http://192.168.91.4:8080/";
-*/
 
 var xhttp;
 
@@ -55,8 +49,8 @@ function SendPOST(file, args)
 		xhttp = new XMLHttpRequest(); 
 
 	xhttp.onreadystatechange = HandlerOnReadyStateChange;
-
-	xhttp.open("POST", targetAddress + file);
+	xhttp.open("POST", "/" + file);
+	xhttp.setRequestHeader("User-Agent", "EETAW");
 	xhttp.send(args);    
 }
 

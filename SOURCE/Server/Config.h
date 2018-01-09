@@ -22,12 +22,6 @@ extern int g_ErrorSleep;
 extern char g_SimulatorAddress[128];
 extern char g_BindAddress[128];
 
-extern int g_DefX;
-extern int g_DefY;
-extern int g_DefZ;
-extern int g_DefZone;
-extern int g_DefRotation;
-
 //For the HTTP server
 extern char g_HTTPBaseFolder[512];
 extern unsigned int g_HTTPListenPort;
@@ -116,6 +110,12 @@ public:
 	//central logging system. (see LogLevel values)
 	//If the message provided is less than or equal to the specified LogLevel value, the message
 	//will be added.
+
+	int DefX;
+	int DefY;
+	int DefZ;
+	int DefRotation;
+	int DefZone;
 
 	int BuybackLimit;
 	int ProperSceneryList;     //Should be set to 1.  If zero, this is basically like having a global fastload permission applied to all players, which is bad for normal players.

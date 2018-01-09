@@ -42,12 +42,6 @@ int g_ThreadSleep = 1;
 int g_MainSleep = 1;
 int g_ErrorSleep = 5000;
 
-int g_DefX = 0;                  //Default X coordinate on the map
-int g_DefY = 0;
-int g_DefZ = 0;                  //Default Z coordinate on the map
-int g_DefRotation = 0;
-int g_DefZone = 81;              //Default instance ID to log into
-
 unsigned long g_SceneryAutosaveTime = 30000;  //30 seconds
 
 //For the HTTP server
@@ -157,15 +151,15 @@ void LoadConfig(std::string filename) {
 			} else if (strcmp(NameBlock, "MainSleep") == 0) {
 				g_MainSleep = lfr.BlockToInt(1);
 			} else if (strcmp(NameBlock, "DefX") == 0) {
-				g_DefX = lfr.BlockToInt(1);
+				g_Config.DefX = lfr.BlockToInt(1);
 			} else if (strcmp(NameBlock, "DefY") == 0) {
-				g_DefY = lfr.BlockToInt(1);
+				g_Config.DefY = lfr.BlockToInt(1);
 			} else if (strcmp(NameBlock, "DefZ") == 0) {
-				g_DefZ = lfr.BlockToInt(1);
+				g_Config.DefZ = lfr.BlockToInt(1);
 			} else if (strcmp(NameBlock, "DefZone") == 0) {
-				g_DefZone = lfr.BlockToInt(1);
+				g_Config.DefZone = lfr.BlockToInt(1);
 			} else if (strcmp(NameBlock, "DefRotation") == 0) {
-				g_DefRotation = lfr.BlockToInt(1);
+				g_Config.DefRotation = lfr.BlockToInt(1);
 			} else if (strcmp(NameBlock, "HTTPBaseFolder") == 0) {
 				Util::SafeCopy(g_HTTPBaseFolder, lfr.BlockToString(1),
 						sizeof(g_HTTPBaseFolder));
@@ -573,6 +567,12 @@ GlobalConfigData::GlobalConfigData() {
 	internalStatus_PingID = 0;
 	internalStatus_PingCount = 0;
 
+	DefX = -1;
+	DefY = -1;
+	DefZ = -1;
+	DefRotation = -1;
+	DefZone = -1;
+
 	AprilFools = 0;
 	AprilFoolsAccount = 0;
 
@@ -682,7 +682,7 @@ GlobalConfigData::GlobalConfigData() {
 	StaticDataPath = "Static";
 	VariableDataPath = "Variable";
 	LogPath = "Logs";
-	LocalConfigurationPath = "Local";
+	LocalConfigurationPath = LOCALCONFIGDIR;
 }
 
 GlobalConfigData::~GlobalConfigData() {

@@ -219,8 +219,6 @@ public:
 	std::vector<int> mPlayerFilterID;  //Creature Def IDs of the players to filter.
 
 	std::map<EnvironmentTileKey, std::string> mTileEnvironment; // Use a specific environment for certain tiles (the key is a string "<x>,<y>")
-	
-	int PendingChanges;  //Used internally to track whether this zone needs to be saved back to file.
 
 	static const int DEFAULT_PAGESIZE = 1920;
 	static const int DEFAULT_MAXAGGRORANGE = 1920;  //This value doesn't matter if it's greater than the range of the spawn system's maximum aggro range.  Only if it's lower.
@@ -336,6 +334,7 @@ public:
 	bool ZoneUnloadReady(void);
 	void UnloadInactiveZones(std::vector<int>& activeZones);
 	void RemoveZoneFromIndexes(ZoneDefInfo *def);
+	bool DeleteZone(int id);
 	
 	void GenerateReportActive(ReportBuffer &report);
 	void InsertZone(const ZoneDefInfo& newZone, bool createIndex);

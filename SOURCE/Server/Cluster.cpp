@@ -1,4 +1,5 @@
 #include "Cluster.h"
+#include "Account.h"
 #include "Config.h"
 #include "Components.h"
 #include "Scheduler.h"
@@ -24,8 +25,6 @@
 #define DEFAULT_SHARD_NAME "Default shard name for ICEEE Earth Eternal server"
 
 ClusterManager g_ClusterManager;
-
-static std::string KEYPREFIX_ACCOUNT_SESSIONS = "AccountSessions";
 
 static string SERVER_STARTED = "server-started";
 static string SERVER_STOPPED = "server-stopped";
@@ -157,10 +156,8 @@ bool ClusterEntityReader::Exists() {
 vector<string> ClusterEntityReader::Sections() {
 	if(!mGotSections) {
 		mGotSections = true;
-
 		/* Read the list of all the subkeys created for this entity.  */
 		string listKey = StringUtil::Format("%s:%s^%s",  mCatalog.c_str(), mID.c_str(), "_SUBKEYS_");
-
 		auto getListKey = mClient->lrange(listKey, 0, -1);
 		mClient->sync_commit();
 		auto reply = getListKey.get();
@@ -1158,11 +1155,14 @@ bool ClusterManager::WriteEntity(AbstractEntity *entity, bool sync) {
 bool ClusterManager::RemoveEntity(AbstractEntity *entity) {
 	ClusterEntityReader cer(&mClient);
 	if (cer.Start()) {
-		STRINGLIST sections = cer.Sections();
 		if (entity->EntityKeys(&cer)) {
+			g_Logs.data->info("Removing entity %v from %v", cer.mID, cer.mCatalog);
+			STRINGLIST sections = cer.Sections();
 			for (auto a = sections.begin(); a != sections.end(); ++a) {
-				RemoveKey(StringUtil::Format((*a).c_str()));
+				string k = StringUtil::Format("%s:%s:%s", cer.mCatalog.c_str(), cer.mID.c_str(), (*a).c_str());
+				RemoveKey(k);
 			}
+			RemoveKey(StringUtil::Format("%s:%s^_SUBKEYS_", cer.mCatalog.c_str(), cer.mID.c_str()));
 			return cer.End();
 		} else
 			cer.Abort();

@@ -1417,12 +1417,12 @@ void SimulatorThread::SetPersona(int personaIndex) {
 	if (ZoneID <= 0) {
 		//No zone has been set, maybe missing data in the character file.
 		//Set default zone and position.
-		ZoneID = g_DefZone;
-		pld.charPtr->activeData.CurZone = g_DefZone;
-		pld.charPtr->activeData.CurX = g_DefX;
-		pld.charPtr->activeData.CurY = g_DefY;
-		pld.charPtr->activeData.CurZ = g_DefZ;
-		pld.charPtr->activeData.CurRotation = g_DefRotation;
+		ZoneID = g_InfoManager.GetStartZone();
+		pld.charPtr->activeData.CurZone = g_InfoManager.GetStartZone();
+		pld.charPtr->activeData.CurX = g_InfoManager.GetStartX();
+		pld.charPtr->activeData.CurY = g_InfoManager.GetStartY();
+		pld.charPtr->activeData.CurZ = g_InfoManager.GetStartZ();
+		pld.charPtr->activeData.CurRotation = g_InfoManager.GetStartRotation();
 	}
 	//int InstanceID = pld.charPtr->activeData.CurInstance;
 	int InstanceID = 0;
@@ -4013,29 +4013,31 @@ void SimulatorThread::Debug_GenerateItemReport(ReportBuffer &report,
 	int rarityTotal[7] = { 0 };
 
 	for (int c = 0; c < MAXCONTAINER; c++) {
-		report.AddLine("%s", GetContainerNameFromID(c));
-		for (size_t i = 0; i < pld.charPtr->inventory.containerList[c].size();
-				i++) {
-			int ID = pld.charPtr->inventory.containerList[c][i].IID;
-			ItemDef *item = g_ItemManager.GetPointerByID(ID);
-			if (item == NULL)
-				continue;
-			if (item->mQualityLevel >= 0 && item->mQualityLevel < 7) {
-				rarityCount[(int) item->mQualityLevel]++;
-				rarityTotal[(int) item->mQualityLevel]++;
+		if(IsContainerIDValid(c)) {
+			report.AddLine("%s", GetContainerNameFromID(c).c_str());
+			for (size_t i = 0; i < pld.charPtr->inventory.containerList[c].size();
+					i++) {
+				int ID = pld.charPtr->inventory.containerList[c][i].IID;
+				ItemDef *item = g_ItemManager.GetPointerByID(ID);
+				if (item == NULL)
+					continue;
+				if (item->mQualityLevel >= 0 && item->mQualityLevel < 7) {
+					rarityCount[(int) item->mQualityLevel]++;
+					rarityTotal[(int) item->mQualityLevel]++;
+				}
+				if (simple == true)
+					report.AddLine("%d : %s (lev:%d, qlev:%d)", item->mID,
+							item->mDisplayName.c_str(), item->mLevel,
+							item->mQualityLevel);
+				else
+					item->Debug_WriteReport(report);
 			}
-			if (simple == true)
-				report.AddLine("%d : %s (lev:%d, qlev:%d)", item->mID,
-						item->mDisplayName.c_str(), item->mLevel,
-						item->mQualityLevel);
-			else
-				item->Debug_WriteReport(report);
+			for (size_t r = 0; r < 7; r++)
+				if (rarityCount[r] > 0)
+					report.AddLine("qlev:%d=%d", r, rarityCount[r]);
+			memset(rarityCount, 0, sizeof(rarityCount));
+			report.AddLine(NULL);
 		}
-		for (size_t r = 0; r < 7; r++)
-			if (rarityCount[r] > 0)
-				report.AddLine("qlev:%d=%d", r, rarityCount[r]);
-		memset(rarityCount, 0, sizeof(rarityCount));
-		report.AddLine(NULL);
 	}
 	report.AddLine("Total rarity counts:");
 	for (size_t r = 0; r < 7; r++)

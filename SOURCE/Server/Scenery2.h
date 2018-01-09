@@ -288,6 +288,7 @@ public:
 	SceneryObject* GlobalGetPropPtr(int zoneID, int propID, SceneryPage** foundPage);
 	SceneryObject* AddProp(int zoneID, const SceneryObject& prop);
 	SceneryObject* ReplaceProp(int zoneID, const SceneryObject& prop);
+	bool DeleteZone(int id);
 	void DeleteProp(int zoneID, int propID);
 	bool UpdateLink(int zoneID, int propID1, int propID2, int type);
 	void NotifyChangedProp(int zoneID, int propID);

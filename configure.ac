@@ -36,8 +36,14 @@ fi
 dnl
 dnl Arguments
 dnl
-
-
+AC_ARG_WITH([localconfigdir],
+        [AS_HELP_STRING([--with-localconfigdir=path : path to local game configuration])],
+        [],
+        [with_localconfigdir=no])
+LOCALCONFIGDIR=
+AS_IF([test "x$with_localconfigdir" != xno],
+      [AC_SUBST([LOCALCONFIGDIR], [\\\"$with_localconfigdir\\\"])])
+              
 AC_ARG_ENABLE(debug,
 AS_HELP_STRING([--enable-debug],
                [enable debugging, default: no]),
@@ -139,14 +145,15 @@ else
 	CPPFLAGS="$CPPFLAGS -DNO_SSL=1"
 fi
 
-#
-CPPFLAGS="$CPPFLAGS -DELPP_THREAD_SAFE=1"
+# Easylogging configuration
+CPPFLAGS="$CPPFLAGS -DELPP_THREAD_SAFE=1 -DELPP_NO_DEFAULT_LOG_FILE=1"
 
-# TEMP!
-CPPFLAGS="$CPPFLAGS -fno-stack-protector"
-
+# Curl
 CPPFLAGS="$CPPFLAGS ${libcurl_CFLAGS}"
 LIBS="$LIBS ${libcurl_LIBS}"
+
+# Locations
+CPPFLAGS="$CPPFLAGS -DLOCALCONFIGDIR=\"${LOCALCONFIGDIR}\""
 
 AX_PTHREAD([has_pthread=true],[has_pthread=false])
 if test "x${has_pthread}" != xtrue; then
@@ -200,6 +207,9 @@ AS_ECHO_N("pthread                     - ")
 AS_IF([test "x$has_pthread" = xtrue ],[AS_ECHO("Yes")],[AS_ECHO("No")])
 AS_ECHO_N("systemd                     - ")
 AS_IF([test "x$has_systemd" = xtrue ],[AS_ECHO("Yes")],[AS_ECHO("No")])
+AS_ECHO_N("Local configuration         - ")
+AS_ECHO("$with_localconfigdir")
+
 AS_ECHO("")
 AS_ECHO("HTTP Server")
 AS_ECHO("-----------------")
