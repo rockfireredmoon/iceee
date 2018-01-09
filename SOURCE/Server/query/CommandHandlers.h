@@ -161,6 +161,16 @@ public:
 	int handleCommand(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
 };
 
+class ShutdownHandler : public AbstractCommandHandler {
+public:
+	ShutdownHandler();
+	~ShutdownHandler() {};
+	int handleCommand(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
+private:
+	void ScheduleShutdown(int minutes, const std::string &reason);
+	int mShutdownTask;
+};
+
 class ListShardsHandler : public AbstractCommandHandler {
 public:
 	ListShardsHandler();

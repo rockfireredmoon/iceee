@@ -1961,6 +1961,81 @@ int RollHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
 	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
 }
 //
+//ShutdownHandler
+//
+ShutdownHandler::ShutdownHandler() :
+		AbstractCommandHandler("Usage: /shutdown <minutes> [<reason>]", 1) {
+	mAllowedPermissions.push_back(Permission_Admin);
+	mShutdownTask = 0;
+}
+
+void ShutdownHandler::ScheduleShutdown(int minutes, const std::string &reason) {
+	std::string time = Util::FormatTimeOfDayMS(g_ServerTime + ( 60000 * minutes ));
+	std::string color = "#3";
+	int wait = minutes;
+	if(minutes <= 1)
+		color = "#0";
+	else if(minutes <= 5)
+		color = "#1";
+	g_SimulatorManager.BroadcastChat(0, "System", "*SysChat",
+			StringUtil::Format("%sThe server will be restarted in %d minute%s (%s).# %s Please logout at your earliest convenience!", color.c_str(), minutes, minutes < 2 ? "" : "s", time.c_str(), reason.c_str()).c_str());
+	if(minutes > 9) {
+		wait -= 10;
+	}
+	else if(minutes > 5) {
+		wait -= 5;
+	}
+	else if(minutes > 3) {
+		wait -= 3;
+	}
+	else if(minutes > 2) {
+		wait -= 2;
+	}
+	else if(minutes > 1) {
+		wait -= 1;
+	}
+	else {
+		mShutdownTask = g_Scheduler.Schedule([this,wait](){
+			// Do shutdown!
+			g_SimulatorManager.BroadcastChat(0, "System", "*SysChat", "The server is now shutting down.");
+			g_Scheduler.Schedule([this](){
+				g_ServerStatus = SERVER_STATUS_STOPPED;
+			}, g_ServerTime + 5000);
+
+		}, g_ServerTime + (wait * 60000));
+		return;
+	}
+
+	mShutdownTask = g_Scheduler.Schedule([this,wait,minutes,reason](){
+		ScheduleShutdown(minutes - wait, reason);
+	}, g_ServerTime + ( wait * 60000));
+	return;
+}
+
+int ShutdownHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
+		SimulatorQuery *query, CreatureInstance *creatureInstance) {
+	int minutes = atoi(query->args[0].c_str());
+	std::string reason = query->args.size() > 1 ?  StringUtil::Format("The reason given was '%s'.", query->args[1].c_str()) : "No reason given.";
+	if(mShutdownTask == 0) {
+		if(query->args.size() < 3 || query->args[2] != "--nomaintenance")
+			g_Config.MaintenanceMessage = reason;
+		ScheduleShutdown(minutes, reason);
+		return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
+	}
+	else {
+		if(query->args[0] == "0") {
+			g_Scheduler.Cancel(mShutdownTask);
+			mShutdownTask = 0;
+			g_Config.MaintenanceMessage = "";
+			g_SimulatorManager.BroadcastChat(0, "System", "*SysChat", StringUtil::Format("The shutdown has been cancelled until further notice.").c_str());
+			return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
+		}
+		else {
+			return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "Shutdown is already scheduled. Use '/shutdown 0' to cancel it.");
+		}
+	}
+}
+//
 //ForumLockHandler
 //
 ForumLockHandler::ForumLockHandler() :
@@ -3647,12 +3722,10 @@ int MaintainHandler::handleCommand(SimulatorThread *sim,
 		CharacterServerData *pld, SimulatorQuery *query,
 		CreatureInstance *creatureInstance) {
 	if (query->argCount > 0) {
-		sim->BroadcastMessage(
-				"The server is now in maintenance mode. Further logins by anyone other than Administrators or Sages will be denied.");
+		g_SimulatorManager.BroadcastChat(0, "System", "*SysChat", "The server is now in maintenance mode. Further logins by anyone other than Administrators or Sages will be denied.");
 		g_Config.MaintenanceMessage = query->GetString(0);
 	} else {
-		sim->BroadcastMessage(
-				"The server has now left maintenance mode. Anyone may login again");
+		g_SimulatorManager.BroadcastChat(0, "System", "*SysChat", "The server has now left maintenance mode. Anyone may login again");
 		g_Config.MaintenanceMessage = "";
 	}
 

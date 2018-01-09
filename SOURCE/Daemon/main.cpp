@@ -748,6 +748,7 @@ int InitServerMain(int argc, char *argv[]) {
 	g_QueryManager.queryHandlers["partyzap"] = new PartyZapHandler();
 	g_QueryManager.queryHandlers["partyinvite"] = new PartyInviteHandler();
 	g_QueryManager.queryHandlers["roll"] = new RollHandler();
+	g_QueryManager.queryHandlers["shutdown"] = new ShutdownHandler();
 	g_QueryManager.queryHandlers["forumlock"] = new ForumLockHandler();
 	g_QueryManager.queryHandlers["zonename"] = new ZoneNameHandler();
 	g_QueryManager.queryHandlers["dtrig"] = new DtrigHandler();
