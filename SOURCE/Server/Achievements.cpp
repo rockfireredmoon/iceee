@@ -3,8 +3,6 @@
 #include "FileReader.h"
 #include "DirectoryAccess.h"
 #include "util/Log.h"
-#include <string.h>
-#include <algorithm>
 
 
 Achievements::AchievementsManager g_AchievementsManager;
@@ -118,7 +116,6 @@ AchievementDef * AchievementsManager::LoadDef(std::string name) {
 
 	lfr.CommentStyle = Comment_Semi;
 	int r = 0;
-	long amt = -1;
 	while (lfr.FileOpen() == true) {
 		r = lfr.ReadLine();
 		lfr.SingleBreak("=");
@@ -257,7 +254,7 @@ Achievement::~Achievement() {
 }
 
 bool Achievement::IsComplete() {
-	int c = 0;
+	size_t c = 0;
 	for(std::vector<AchievementObjectiveDef*>::iterator it = mDef->mObjectives.begin(); it != mDef->mObjectives.end(); ++it) {
 		if(std::find(mCompletedObjectives.begin(), mCompletedObjectives.end(), (*it)) != mCompletedObjectives.end()) {
 			c++;

@@ -196,9 +196,6 @@ extern const int LevelRequirements[71][2];
 
 extern double g_VendorMarkup;
 
-extern char GAuxBuf[1024];    //Note, if this size is modified, change all "extern" references
-extern char GSendBuf[32767];  //Note, if this size is modified, change all "extern" references
-
 namespace Global
 {
 	//We can possibly make these configurable variables at some point in the future.

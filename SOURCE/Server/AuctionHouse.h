@@ -86,8 +86,8 @@ public:
 	unsigned long mBuyPriceCopperEnd;
 	unsigned long mBuyPriceCreditsStart;
 	unsigned long mBuyPriceCreditsEnd;
-	unsigned long mLevelStart;
-	unsigned long mLevelEnd;
+	short mLevelStart;
+	short mLevelEnd;
 
 	std::string mSearch;
 };

@@ -717,10 +717,6 @@ std::string GlobalConfigData::ResolvePath(std::string path) {
 }
 
 bool GlobalConfigData::RemotePasswordMatch(const char *value) {
-#ifdef PRIVATE_USE_BUILD
-	return true;
-#endif
-
 	if (RemoteAuthenticationPassword.compare(value) == 0)
 		return true;
 	return false;

@@ -62,9 +62,7 @@ int SiteClient::sendRequest(HTTPD::SiteSession *session, std::string path, std::
 		//curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 0L);
 		//curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, 0L);
 
-		CURLcode res;
-		res = curl_easy_perform(curl);
-
+		curl_easy_perform(curl);
 		long http_code = 0;
 		curl_easy_getinfo (curl, CURLINFO_RESPONSE_CODE, &http_code);
 		curl_slist_free_all(headers);
@@ -122,8 +120,7 @@ int SiteClient::postJSON(HTTPD::SiteSession *session, std::string path, std::str
 		//curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 0L);
 		//curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, 0L);
 
-		CURLcode res;
-		res = curl_easy_perform(curl);
+		curl_easy_perform(curl);
 
 		long http_code = 0;
 		curl_easy_getinfo (curl, CURLINFO_RESPONSE_CODE, &http_code);

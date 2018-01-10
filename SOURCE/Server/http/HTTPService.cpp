@@ -162,12 +162,12 @@ bool HTTPService::Start() {
 				g_Logs.http->warn("SSL port has been set (%v), but no SSLCertificate has been set. SSL server cannot be started.", g_HTTPSListenPort);
 			}
 			else {
-				if(ports->size()> 0) {
-					ports->append(",");
+				if(ports.size()> 0) {
+					ports.append(",");
 				}
 				if(strlen(g_BindAddress) > 0) {
-					ports->append(g_BindAddress);
-					ports->append(":");
+					ports.append(g_BindAddress);
+					ports.append(":");
 				}
 				ports.append(StringUtil::Format("%d", g_HTTPSListenPort));
 				g_Logs.http->info("CivetWeb HTTPS configured on port %v", ports);

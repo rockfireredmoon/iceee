@@ -1,10 +1,5 @@
 project('tawd', ['cpp','c'], default_options : ['cpp_std=c++11'])
 
-add_global_arguments('-DELPP_THREAD_SAFE=1', language: ['cpp','c'])
-
-# TODO only when pthread is there (i.e. not on windows)
-add_global_arguments('-DHAS_PTHREAD=1', language: ['cpp','c'])
-
 #Setup
 server_inc = include_directories('SOURCE/Server')
 squirrel_inc = include_directories('SOURCE/squirrel/include')
@@ -16,6 +11,20 @@ tacopie_inc = include_directories('SOURCE/LibCPPRedis/tacopie/includes')
 #Dependencies
 thread_dep = dependency('threads')
 curl_dep = dependency('libcurl')
+openssl_dep = dependency('openssl', required: false)
+
+pthread_dep = meson.get_compiler('c').find_library('pthread', required: false)
+
+#Compiler arguments 
+add_global_arguments('-DELPP_THREAD_SAFE=1', language: ['cpp','c'])
+add_global_arguments('-DLOCALCONFIGDIR="' + get_option('localconfigdir') + '"', language: ['cpp','c'])
+
+if not openssl_dep.found() or not get_option('ssl')
+	add_global_arguments('-DNO_SSL=1', language: ['cpp','c'])
+endif
+if pthread_dep.found()
+	add_global_arguments('-DHAS_PTHREAD=1', language: ['cpp','c'])
+endif
 
 #Squirrel
 squirrel_lib = library('squirrel',[
@@ -82,7 +91,7 @@ cppredis_lib = library('cpp_redis',[
 	link_with: [tacopie_lib])
 
 #Server library
-server_lib = shared_module('server',[
+server_lib = library('server',[
 	'SOURCE/Server/md5.cc',
 	'SOURCE/Server/Ability2.cpp',
 	'SOURCE/Server/AbilityTime.cpp',
@@ -127,6 +136,7 @@ server_lib = shared_module('server',[
 	'SOURCE/Server/Globals.cpp',
 	'SOURCE/Server/Guilds.cpp',
 	'SOURCE/Server/GM.cpp',
+	'SOURCE/Server/Info.cpp',
 	'SOURCE/Server/IGForum.cpp',
 	'SOURCE/Server/Instance.cpp',
 	'SOURCE/Server/InstanceScale.cpp',
@@ -169,6 +179,7 @@ server_lib = shared_module('server',[
 	'SOURCE/Server/http/OAuth2.cpp',
 	'SOURCE/Server/http/TAWApi.cpp',
 	'SOURCE/Server/http/SiteClient.cpp',
+	'SOURCE/Server/http/GameInfo.cpp',
 	'SOURCE/Server/http/TAWClient.cpp',
 	'SOURCE/Server/http/LegacyAccounts.cpp',
 	'SOURCE/Server/http/WebControlPanel.cpp',
@@ -223,11 +234,83 @@ server_lib = shared_module('server',[
 #Main Daemon
 executable('tawd', 'SOURCE/Daemon/main.cpp', 
 	include_directories : [server_inc, squirrel_inc, sqstdlib_lib_inc], 
-	dependencies: [thread_dep, curl_dep],
-	link_with: [server_lib])
+	dependencies: [thread_dep, curl_dep, openssl_dep],
+	link_with: [server_lib], install: true)
 	
 #Pre-TAWD text file user data to TAWD Redis database
 executable('text2redis', 'SOURCE/Tools/TextToRedis.cpp', 
 	include_directories : [server_inc, squirrel_inc, sqstdlib_lib_inc], 
-	dependencies: [thread_dep, curl_dep],
-	link_with: [server_lib])
+	dependencies: [thread_dep, curl_dep, openssl_dep],
+	link_with: [server_lib], install: true)
+	
+#Pre-TAWD text file user data to TAWD Redis database
+executable('eeaccount', 'SOURCE/Tools/EEAccount.cpp', 
+	include_directories : [server_inc, squirrel_inc, sqstdlib_lib_inc], 
+	dependencies: [thread_dep, curl_dep, openssl_dep],
+	link_with: [server_lib], install: true)
+	
+#Other Installation
+datadir = get_option('serverdatadir')
+if datadir == ''
+	# When running without providing serverdatadir, 
+	datadir = 'var/lib/tawd'
+endif
+confdir = get_option('localconfigdir')
+if confdir == 'Local' 
+	confdir = 'etc/tawd'
+endif
+logpath = get_option('logsdir')
+if logpath == 'Logs'
+	logpath = get_option('prefix') + 'log/tawd'
+endif
+
+# Create actual configuration files from samples, changing the default
+# locations where appropraite 
+srchrepl_prog = find_program('configuration.py')
+custom_target('ServerConfig',
+    input : 'Local/ServerConfig.txt.sample',
+    output : 'ServerConfig.txt',
+    command : [srchrepl_prog, '@INPUT@', '@OUTPUT@','HTTPBaseFolder=asset','HTTPBaseFolder=' + get_option('prefix') + 'share/tawd/asset'])
+custom_target('ServerConfig',
+    input : 'ServerConfig.txt',
+    output : 'ServerConfig.txt',
+    command : [srchrepl_prog, '@INPUT@', '@OUTPUT@','HTTPCARFolder=../sparkplayer-eartheternal/bin/assets','HTTPCARFolder=' + get_option('prefix') + 'share/tawd/Release'])
+custom_target('ServerConfig',
+    input : 'ServerConfig.txt',
+    output : 'ServerConfig.txt',
+    command : [srchrepl_prog, '@INPUT@', '@OUTPUT@','StaticDataPath=../iceee-data/Static','StaticDataPath=' + get_option('prefix') + 'share/tawd/Static'])
+custom_target('ServerConfig',
+    input : 'ServerConfig.txt',
+    output : 'ServerConfig.txt',
+    command : [srchrepl_prog, '@INPUT@', '@OUTPUT@','VariableDataPath=../iceee-data/Variable','VariableDataPath=' + get_option('prefix') + 'share/tawd/Variable'])
+custom_target('ServerConfig',
+    input : 'ServerConfig.txt',
+    output : 'ServerConfig.txt',
+    command : [srchrepl_prog, '@INPUT@', '@OUTPUT@','LogPath=Logs','LogPath=' + logpath])
+    
+
+install_subdir('Local', install_dir : 'share/doc/tawd')
+install_data(sources: 'README.md', install_dir : 'share/doc/tawd')
+install_subdir('asset', install_dir : 'share/tawd')
+install_subdir('WebPages', install_dir : 'share/tawd')
+
+# Needed until https://github.com/mesonbuild/meson/issues/1487 is fixed
+#filecopier = find_program('filecopier.py')
+#a_p = custom_target('ServerConfig',
+    #input : 'Local/ServerConfig.txt.sample',
+#    output : 'ServerConfig.txt',
+    #command : [filecopier, '@INPUT@', '@OUTPUT@'])
+#a_p = custom_target('LogConfig',
+    #input : 'Local/LogConfig.txt.sample',
+    #output : 'LogConfig.txt',
+    #command : [filecopier, '@INPUT@', '@OUTPUT@'])
+#a_p = custom_target('Cluster',
+##    input : 'Local/Cluster.txt.sample',
+    #output : 'Cluster.txt',
+    #command : [filecopier, '@INPUT@', '@OUTPUT@'])
+    
+#install_data(sources: 'ServerConfig.txt', install_dir : confdir)
+#install_data(sources: 'LogConfig.txt', install_dir : confdir)
+#install_data(sources: 'Cluster.txt', install_dir : confdir)
+#install_subdir('WebPages', install_dir : datadir + '/WebPages')
+#install_subdir('asset', install_dir : datadir + '/asset')

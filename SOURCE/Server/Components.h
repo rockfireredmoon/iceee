@@ -21,19 +21,7 @@
 #define DEBUG_TIME  1
 #define DEBUG_PROFILER 1
 
-//#define PRIVATE_USE_BUILD  1    //Specific compilation options intended for a limited private distribution
-
-#ifdef PRIVATE_USE_BUILD
- #ifndef WINDOWS_PLATFORM
-  #error Private build is not for the Linux system.
- #endif
-#endif
-
 /*
-	USE_WINDOWS_GUI
-	If this is defined, the Windows-only GUI will be functional.  If not
-	defined, it will run in a console.
-
 	WINDOWS_PLATFORM
 	If this is defined, mutexes, server timing, popup messages, and
 	multithreading will be Windows-only.  Otherwise uses Linux equivalents.
@@ -123,6 +111,7 @@ extern char VersionString[];
 	#endif
 	#include <windows.h>
 #endif
+#include <mutex>
 
 
 class Platform_CriticalSection

@@ -150,8 +150,8 @@ SimulatorManager g_SimulatorManager;
 
 const int MapTickChange = 20;
 
-extern char GAuxBuf[1024];
-extern char GSendBuf[32767];
+char GAuxBuf[];
+char GSendBuf[];
 
 SimulatorThread * GetSimulatorByID(int ID) {
 	//In the old system, it uses an index into the hardcoded Simulator array.
@@ -906,7 +906,8 @@ int SimulatorThread::ItemMorph(bool command) {
 				reagentDef->mDisplayName.c_str());
 		wpos += PrepExt_SendInfoMessage(&SendBuf[wpos], Aux3, INFOMSG_INFO);
 		/* This refashion is taking up a reagent of sorts, a portable refashioner */
-		wpos += pld.charPtr->inventory.RemoveItemsAndUpdate(INV_CONTAINER,
+		if(unstack)
+			wpos += pld.charPtr->inventory.RemoveItemsAndUpdate(INV_CONTAINER,
 				reagentDef->mID, 1, &SendBuf[wpos]);
 	}
 

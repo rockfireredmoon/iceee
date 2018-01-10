@@ -2,6 +2,8 @@
 #include "../Config.h"
 #include "../DirectoryAccess.h"
 
+INITIALIZE_EASYLOGGINGPP
+
 LogManager g_Logs;
 
 LogManager::LogManager() {
@@ -18,6 +20,7 @@ LogManager::LogManager() {
 	cs = NULL;
 	cluster = NULL;
 	mLevel = el::Level::Warning;
+	mOutputToConsole = true;
 }
 
 LogManager::~LogManager() {

@@ -33,12 +33,6 @@
 #include <StringUtil.h>
 #include <FriendStatus.h>
 
-INITIALIZE_EASYLOGGINGPP
-
-char GAuxBuf[1024]; //Note, if this size is modified, change all "extern" references
-char GSendBuf[32767]; //Note, if this size is modified, change all "extern" references
-
-
 class VirtualItemPage: public AbstractEntity {
 public:
 	static const int ITEMS_PER_PAGE = 256;

@@ -1056,14 +1056,6 @@ int AccountManager::CreateAccount(const char *username, const char *password,
 	newAccount.SetPermission(Perm_Account, "regionchat", true);
 	newAccount.SetPermission(Perm_Account, "forumpost", true);
 
-#ifdef PRIVATE_USE_BUILD
-	newAccount.SetPermission(Perm_Account, "debug", true);
-	newAccount.SetPermission(Perm_Account, "tweakself", true);
-	newAccount.SetPermission(Perm_Account, "itemgive", true);
-	newAccount.SetPermission(Perm_Account, "fastload", true);
-	newAccount.SetPermission(Perm_Account, "admin", true);
-#endif
-
 	//Assign username and registration key
 	newAccount.Name = username;
 	newAccount.SetNewRegistrationKey(regKey);
@@ -1114,14 +1106,6 @@ int AccountManager::CreateAccountFromService(const char *username) {
 
 	newAccount.SetPermission(Perm_Account, "regionchat", true);
 	newAccount.SetPermission(Perm_Account, "forumpost", true);
-
-#ifdef PRIVATE_USE_BUILD
-	newAccount.SetPermission(Perm_Account, "debug", true);
-	newAccount.SetPermission(Perm_Account, "tweakself", true);
-	newAccount.SetPermission(Perm_Account, "itemgive", true);
-	newAccount.SetPermission(Perm_Account, "fastload", true);
-	newAccount.SetPermission(Perm_Account, "admin", true);
-#endif
 
 	g_Logs.event->info(
 			"[ACCOUNT] Account created [%v] with %v characters (via service).",
@@ -1786,13 +1770,6 @@ void AccountManager::ImportKey(const char *key) {
 }
 
 bool AccountManager::AcceptingLogins(void) {
-
-#ifdef PRIVATE_USE_BUILD
-	if(AccList.size() < MAX_CONCURRENT_LOGINS)
-	return true;
-	return false;
-#endif
-
 	return true;
 }
 

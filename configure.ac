@@ -42,7 +42,8 @@ AC_ARG_WITH([localconfigdir],
         [with_localconfigdir=no])
 LOCALCONFIGDIR=
 AS_IF([test "x$with_localconfigdir" != xno],
-      [AC_SUBST([LOCALCONFIGDIR], [\\\"$with_localconfigdir\\\"])])
+      [AC_SUBST([LOCALCONFIGDIR], [\\\"$with_localconfigdir\\\"])],
+      [AC_SUBST([LOCALCONFIGDIR], [\\\"Local\\\"])])
               
 AC_ARG_ENABLE(debug,
 AS_HELP_STRING([--enable-debug],
@@ -208,7 +209,7 @@ AS_IF([test "x$has_pthread" = xtrue ],[AS_ECHO("Yes")],[AS_ECHO("No")])
 AS_ECHO_N("systemd                     - ")
 AS_IF([test "x$has_systemd" = xtrue ],[AS_ECHO("Yes")],[AS_ECHO("No")])
 AS_ECHO_N("Local configuration         - ")
-AS_ECHO("$with_localconfigdir")
+AS_IF([test "x$with_localconfigdir" = xno ],[AS_ECHO("Local")],[AS_ECHO("$with_localconfigdir")])
 
 AS_ECHO("")
 AS_ECHO("HTTP Server")

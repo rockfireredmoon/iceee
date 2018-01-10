@@ -415,7 +415,7 @@ bool CharacterData :: ReadEntity(AbstractEntityReader *reader) {
 					newItem.QuestID = atoi(l[0].c_str());
 					newItem.CurAct = atoi(l[1].c_str());
 					int o = 0;
-					for(int a = 2; a < l.size() - 1; a++)
+					for(size_t a = 2; a < l.size() - 1; a++)
 					{
 						complete = atoi(l[a++].c_str());
 						count = atoi(l[a].c_str());

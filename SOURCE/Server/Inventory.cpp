@@ -327,7 +327,6 @@ void InventoryManager :: FindNextExpunge()
 {
 	NextExpunge = 0;
 	for(int i = 0 ; i < MAXCONTAINER; i++) {
-		int size = containerList[i].size();
 		for(std::vector<InventorySlot>::iterator it = containerList[i].begin(); it != containerList[i].end(); ++it) {
 			if((*it).secondsRemaining > -1) {
 				long remain = (*it).GetTimeRemaining();
@@ -346,7 +345,6 @@ int InventoryManager :: ScanExpiredItems(std::vector<InventoryQuery> &resultList
 
 	InventoryQuery iq;
 	for(int i = 0 ; i < MAXCONTAINER; i++) {
-		int size = containerList[i].size();
 		for(std::vector<InventorySlot>::iterator it = containerList[i].begin(); it != containerList[i].end(); ++it) {
 			if((*it).secondsRemaining > -1) {
 				long remain = (*it).GetTimeRemaining();
@@ -535,17 +533,17 @@ unsigned int InventoryManager :: GetCCSIDFromHexID(const char *hexStr)
 
 int InventoryManager :: GetFreeSlot(int containerID)
 {
-	int size = containerList[containerID].size();
+	size_t size = containerList[containerID].size();
 	if(size >= MaxContainerSlot[containerID])
 		return -1;
 
 	std::vector<bool> tempCon;
 	tempCon.resize(MaxContainerSlot[containerID]);
-	int a;
+	size_t a;
 	for(a = 0; a < size; a++)
 	{
 		int slot = containerList[containerID][a].CCSID & CONTAINER_SLOT;
-		if(slot < MaxContainerSlot[containerID])
+		if(slot < (int)MaxContainerSlot[containerID])
 			tempCon[slot] = true;
 	}
 
@@ -581,18 +579,18 @@ InventorySlot * InventoryManager :: GetBestSpecialItem(int invID, char specialIt
 
 int InventoryManager :: CountUsedSlots(int containerID)
 {
-	int size = containerList[containerID].size();
+	size_t size = containerList[containerID].size();
 	std::vector<bool> tempCon;
 	tempCon.resize(MaxContainerSlot[containerID]);
-	int a;
+	size_t a;
 	for(a = 0; a < size; a++)
 	{
-		int slot = containerList[containerID][a].CCSID & CONTAINER_SLOT;
+		unsigned int slot = containerList[containerID][a].CCSID & CONTAINER_SLOT;
 		if(slot < MaxContainerSlot[containerID])
 			tempCon[slot] = true;
 	}
 
-	int count = 0;
+	unsigned int count = 0;
 	for(a = 0; a < MaxContainerSlot[containerID]; a++)
 		if(tempCon[a] == true)
 			count++;
@@ -603,21 +601,21 @@ int InventoryManager :: CountUsedSlots(int containerID)
 
 int InventoryManager :: CountFreeSlots(int containerID)
 {
-	int size = containerList[containerID].size();
+	size_t size = containerList[containerID].size();
 	if(size >= MaxContainerSlot[containerID])
 		return 0;
 
 	std::vector<bool> tempCon;
 	tempCon.resize(MaxContainerSlot[containerID]);
-	int a;
+	size_t a;
 	for(a = 0; a < size; a++)
 	{
-		int slot = containerList[containerID][a].CCSID & CONTAINER_SLOT;
+		unsigned int slot = containerList[containerID][a].CCSID & CONTAINER_SLOT;
 		if(slot < MaxContainerSlot[containerID])
 			tempCon[slot] = true;
 	}
 
-	int count = 0;
+	size_t count = 0;
 	for(a = 0; a < MaxContainerSlot[containerID]; a++)
 		if(tempCon[a] == false)
 			count++;
@@ -1032,7 +1030,7 @@ bool InventoryManager :: VerifyContainerSlotBoundary(int container, int slot)
 		g_Logs.server->error("VerifyContainerSlotBoundary: invalid slot: %v", slot);
 		return false;
 	}
-	if(container == INV_CONTAINER && slot >= MaxContainerSlot[container])
+	if(container == INV_CONTAINER && slot >= (int)MaxContainerSlot[container])
 	{
 		g_Logs.server->error("VerifyContainerSlotBoundary: slot is too high: %v", slot);
 		return false;

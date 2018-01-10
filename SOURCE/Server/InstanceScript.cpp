@@ -16,10 +16,6 @@
 #include "util/SquirrelObjects.h"
 #include "util/Log.h"
 
-//#include <sqbind.h>
-
-//extern char GAuxBuf[];
-
 namespace InstanceScript {
 
 enum InstanceScriptExtOpCodes {
@@ -94,7 +90,7 @@ std::string InstanceNutDef::GetInstanceScriptPath(int zoneID,
 		bool pathIfNotExists) {
 	std::string p = GetInstanceNutScriptPath(zoneID);
 	if (!Platform::FileExists(p.c_str())) {
-		std:string t = Platform::JoinPath(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveVariableDataPath(), "Instance"), StringUtil::Format("%d", zoneID)), "Script.txt");
+		std::string t = Platform::JoinPath(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveVariableDataPath(), "Instance"), StringUtil::Format("%d", zoneID)), "Script.txt");
 		if (!Platform::FileExists(t.c_str()) && !pathIfNotExists) {
 			return "";
 		}
@@ -558,7 +554,6 @@ void AbstractInstanceNutPlayer::UnmonitorArea(std::string name) {
 }
 
 void AbstractInstanceNutPlayer::PlayerLeft(CreatureInstance *creature) {
-	bool inside;
 	bool contain;
 	for (std::vector<InstanceScript::MonitorArea>::iterator it =
 			monitorAreas.begin(); it != monitorAreas.end(); ++it) {

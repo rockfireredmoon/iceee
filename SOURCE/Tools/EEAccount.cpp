@@ -30,11 +30,6 @@
 #include "Account.h"
 #include "StringUtil.h"
 
-INITIALIZE_EASYLOGGINGPP
-
-char GAuxBuf[1024]; //Note, if this size is modified, change all "extern" references
-char GSendBuf[32767]; //Note, if this size is modified, change all "extern" references
-
 int main(int argc, char *argv[]) {
 
 	if (PLATFORM_GETCWD(g_WorkingDirectory, 256) == NULL) {

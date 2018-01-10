@@ -131,11 +131,6 @@ int InitService();
 
 ChangeData g_AutoSaveTimer;
 
-char GAuxBuf[1024];    //Note, if this size is modified, change all "extern" references
-char GSendBuf[32767];  //Note, if this size is modified, change all "extern" references
-
-INITIALIZE_EASYLOGGINGPP
-
 int InitServerMain(int argc, char *argv[]);
 void RunServerMain(void);
 void SendHeartbeatMessages(void);
@@ -807,8 +802,6 @@ int InitServerMain(int argc, char *argv[]) {
 //		handle_query_pref_setA();
 //	else if(query.name.compare("pref.set") == 0)
 //		handle_query_pref_set();
-
-	g_Scheduler.Init();
 	if(g_ClusterManager.Init(Platform::JoinPath(g_Config.ResolveLocalConfigurationPath(), "Cluster.txt")) < 0)
 		return 0;
 
@@ -998,6 +991,7 @@ int InitServerMain(int argc, char *argv[]) {
 
 	g_ClusterManager.Ready();
 	g_EnvironmentCycleManager.RescheduleUpdate();
+	g_Scheduler.Init();
 	g_Logs.server->verbose(0, "The server is ready");
 
 #ifdef WINDOWS_SERVICE

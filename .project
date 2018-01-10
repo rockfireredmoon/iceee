@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>EEServer36</name>
+	<name>tawd</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -30,24 +30,4 @@
 		<nature>org.eclipse.cdt.managedbuilder.core.ScannerConfigNature</nature>
 		<nature>org.eclipse.cdt.autotools.core.autotoolsNatureV2</nature>
 	</natures>
-	<filteredResources>
-		<filter>
-			<id>1514464823421</id>
-			<name></name>
-			<type>22</type>
-			<matcher>
-				<id>org.eclipse.ui.ide.multiFilter</id>
-				<arguments>1.0-name-matches-false-true-.*\.cnut</arguments>
-			</matcher>
-		</filter>
-		<filter>
-			<id>1514464823427</id>
-			<name></name>
-			<type>22</type>
-			<matcher>
-				<id>org.eclipse.ui.ide.multiFilter</id>
-				<arguments>1.0-name-matches-false-true-.*\.o</arguments>
-			</matcher>
-		</filter>
-	</filteredResources>
 </projectDescription>

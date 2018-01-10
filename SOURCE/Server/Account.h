@@ -241,10 +241,6 @@ public:
 	//typedef pair<int, std::string> USEDCHAR_PAIR;
 	//typedef std::vector<USEDCHAR_PAIR> USEDCHAR_VECTOR;
 
-#ifdef PRIVATE_USE_BUILD
-	static const int MAX_CONCURRENT_LOGINS = 4;
-#endif
-
 	AccountManager();
 	~AccountManager();
 	void LoadAllData(void);

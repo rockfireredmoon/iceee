@@ -458,7 +458,7 @@ void AuctionHouseManager::CompleteAuction(int auctionItemID) {
 			}
 
 			// Check the prospective recipient has enough credits
-			if (it->mCredits > 0 && it->mCredits > css->credits) {
+			if (it->mCredits > 0 && it->mCredits > (unsigned long)css->credits) {
 				Util::SafeFormat(buf, sizeof(buf),
 						"Your bid on '%s' failed because you do not have enough credits. Item goes to next bidder or back to seller.",
 						itemDef->mDisplayName.c_str());
@@ -640,7 +640,6 @@ void AuctionHouseManager::CompleteAuction(int auctionItemID) {
 
 void AuctionHouseManager::ExpireItem(AuctionHouseItem item) {
 	char buf[1024];
-	char buf2[256];
 
 	g_Logs.event->info(
 			"Removing auction house item '%v' (sold by %v) from auction list",
@@ -971,7 +970,7 @@ void AuctionHouseManager::Search(AuctionHouseSearch &search,
 			continue;
 		}
 
-		if (search.mMaxRows > -1 && results.size() >= search.mMaxRows)
+		if (search.mMaxRows > -1 && (int)results.size() >= search.mMaxRows)
 			break;
 
 		ItemDef *itemDef = g_ItemManager.GetSafePointerByID(item.mItemId);

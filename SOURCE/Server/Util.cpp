@@ -492,7 +492,7 @@ int PrepExt_SendFormOpen(char *buffer, FormDefinition form) {
 	wpos += PutStringUTF(&buffer[wpos], form.mTitle.c_str());
 	wpos += PutStringUTF(&buffer[wpos], form.mDescription.c_str());
 	wpos += PutShort(&buffer[wpos], form.mRows.size());
-	for (int i = 0; i < form.mRows.size(); i++) {
+	for (size_t i = 0; i < form.mRows.size(); i++) {
 		wpos += PutStringUTF(&buffer[wpos], form.mRows[i].mGroup.c_str());
 		int sz = form.mRows[i].mItems.size();
 		wpos += PutShort(&buffer[wpos], form.mRows[i].mHeight);
@@ -1429,8 +1429,8 @@ bool CaseInsensitiveStringFind(const std::string& str1,
 std::string URLDecode(std::string const &src) {
 	string ret;
 	char ch;
-	int i, ii;
-	for (i = 0; i < src.length(); i++) {
+	int ii;
+	for (size_t i = 0; i < src.length(); i++) {
 		if (int(src[i]) == 37) {
 			sscanf(src.substr(i + 1, 2).c_str(), "%x", &ii);
 			ch = static_cast<char>(ii);
@@ -1525,7 +1525,6 @@ std::string CaptureCommand(std::string cmd) {
 }
 
 int ParseDate(const std::string &str, time_t &time) {
-	char buf[128];
 	struct tm ptime;
 	if (sscanf(str.c_str(), "%2d/%2d/%4d", &ptime.tm_mday, &ptime.tm_mon,
 			&ptime.tm_year) != 3)

@@ -57,9 +57,6 @@ unsigned long CREATURE_DELETE_RECHECK = 60000; //Delay between rescanning for de
 #include "InstanceScript.h"
 #include "ScriptCore.h"
 
-extern char GSendBuf[32767];
-extern char GAuxBuf[1024];
-
 //ZoneDefContainer ZoneDef;
 MapDefContainer MapDef;
 MapLocationHandler MapLocation;

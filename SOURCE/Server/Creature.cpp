@@ -71,9 +71,6 @@ extern unsigned long g_ServerTime;
 CreatureDefManager CreatureDef;
 PendingOperation pendingOperations;
 
-extern char GSendBuf[];
-extern char GAuxBuf[];
-
 SelectedObject :: SelectedObject()
 {
 	Clear(true);
