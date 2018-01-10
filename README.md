@@ -387,7 +387,7 @@ There are a number of options available to aid debuggging and running the proces
 | Option | Arguments | Description |
 | ------ | --------- | ----------- |
 | -d | None | Daemonize the server. Once initialized, the process will be forked and placed into the background |
-| -p | <path> | Location to PIDFILE. The process ID of the server is written to this file once known |
-| -c | <path> | Location to a *Local* configuration directory (that contains ServerConfig.txt, LogConfig.txt and Cluster.txt) |
+| -p | [path] | Location to PIDFILE. The process ID of the server is written to this file once known |
+| -c | [path] | Location to a *Local* configuration directory (that contains ServerConfig.txt, LogConfig.txt and Cluster.txt) |
 | -I | None | Flush log output immediately. Ordinarilly this is buffered to aid performance, but disabling this can help in some debugging situations |
-| -L | <loglevel> | Set the default log level. Position values for <loglevel> include info, debug, error, fatal, trace, verbose or warning |
+| -L | [loglevel] | Set the default log level. Position values for <loglevel> include info, debug, error, fatal, trace, verbose or warning |
