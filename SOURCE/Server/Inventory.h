@@ -1,13 +1,14 @@
 #pragma once
 
 
-#define MAXCONTAINER     10
+#define MAXCONTAINER     11
 
 #ifndef INVENTORY_H
 #define INVENTORY_H
 
 #include "Item.h"
 #include "Stats.h"
+#include "Entities.h"
 #include <vector>
 #include <map>
 
@@ -144,7 +145,7 @@ public:
 };
 
 
-int CheckSection_Inventory(FileReader &fr, InventoryManager &cd, std::string debugFilename, const char *debugName, const char *debugType);
+int ReadInventory(const std::string &container, const std::string &spec, InventoryManager &cd, const std::string &debugFilename, const std::string &debugName, const std::string &debugType);
 int AddItemUpdate(char *buffer, char *convBuf, InventorySlot *slot);
 int RemoveItemUpdate(char *buffer, char *convBuf, InventorySlot *slot);
 int PrepExt_TradeItemOffer(char *buffer, char *convBuf, int offeringPlayerID, std::vector<InventorySlot>& itemList);

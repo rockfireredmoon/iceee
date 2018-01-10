@@ -84,7 +84,7 @@ void ZoneAudit::CreateAuditFolder(void)
 {
 	if(mFolderCreated == false)
 	{
-		Platform::MakeDirectory(Platform::JoinPath(g_Config.ResolveUserDataPath(), "Audit"));
+		Platform::MakeDirectory(Platform::JoinPath(g_Config.ResolveVariableDataPath(), "Audit"));
 		mFolderCreated = true;
 	}
 }
@@ -104,7 +104,7 @@ void ZoneAudit::AutosaveAudits(void)
 			{
 				char fileNameBuf[64];
 				Util::SafeFormat(fileNameBuf, sizeof(fileNameBuf), "Scenery_Z_%d.txt", mZone);
-				std::string dir = Platform::JoinPath(g_Config.ResolveUserDataPath(), "Audit");
+				std::string dir = Platform::JoinPath(g_Config.ResolveVariableDataPath(), "Audit");
 				Platform::MakeDirectory(dir);
 				std::string path = Platform::JoinPath(dir, fileNameBuf);
 				output = fopen(path.c_str(), "a");

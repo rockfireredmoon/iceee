@@ -17,6 +17,8 @@
 
 #include "Query.h"
 #include "SceneryHandlers.h"
+#include "../Cluster.h"
+#include "../StringUtil.h"
 #include "../util/Log.h"
 #include "../Instance.h"
 #include "../Config.h"
@@ -132,35 +134,34 @@ int SceneryEditHandler::protected_helper_query_scenery_edit(
 	} else {
 		//New prop, give it an ID.
 		newProp = true;
-		prop.ID = g_SceneryVars.BaseSceneryID + g_SceneryVars.SceneryAdditive++;
-		SessionVarsChangeData.AddChange();
+		prop.ID = pld->zoneDef->GetNextPropID();
 		g_Logs.simulator->debug("[%v] scenery.edit: (new) %v", sim->InternalID,
 				prop.ID);
 	}
 
 	for (unsigned int i = 1; i < query->argCount; i += 2) {
-		const char *field = query->args[i].c_str();
-		const char *data = query->args[i + 1].c_str();
+		std::string field = query->args[i];
+		std::string data = query->args[i + 1];
 
-		if (strcmp(field, "asset") == 0)
-			prop.SetAsset(data);
-		else if (strcmp(field, "p") == 0) {
+		if (field == "asset")
+			prop.Asset = data;
+		else if (field == "p") {
 			prop.SetPosition(data);
-		} else if (strcmp(field, "q") == 0) {
+		} else if (field == "q") {
 			prop.SetQ(data);
-		} else if (strcmp(field, "s") == 0)
+		} else if (field == "s")
 			prop.SetS(data);
-		else if (strcmp(field, "flags") == 0)
-			prop.Flags = atoi(data);
-		else if (strcmp(field, "name") == 0)
-			prop.SetName(data);
-		else if (strcmp(field, "layer") == 0)
-			prop.Layer = atoi(data);
-		else if (strcmp(field, "patrolSpeed") == 0)
-			prop.patrolSpeed = atoi(data);
-		else if (strcmp(field, "patrolEvent") == 0)
-			prop.SetPatrolEvent(data);
-		else if (strcmp(field, "ID") == 0) {
+		else if (field == "flags")
+			prop.Flags = atoi(data.c_str());
+		else if (field == "name")
+			prop.Name = data;
+		else if (field == "layer")
+			prop.Layer = atoi(data.c_str());
+		else if (field == "patrolSpeed")
+			prop.patrolSpeed = atoi(data.c_str());
+		else if (field == "patrolEvent")
+			prop.patrolEvent = data;
+		else if (field == "ID") {
 			//Don't do anything for this, otherwise it might create a
 			//duplicate entry.
 			//prop.ID = atoi(data);
@@ -173,7 +174,7 @@ int SceneryEditHandler::protected_helper_query_scenery_edit(
 					field);
 	}
 
-	if (strlen(prop.Asset) == 0)
+	if (prop.Asset.length() == 0)
 		return QueryErrorMsg::PROPASSETNULL;
 
 	//The client makes changes internally without waiting for confirmation.
@@ -299,7 +300,7 @@ int SceneryDeleteHandler::protected_helper_query_scenery_delete(
 	//operation.
 	SceneryObject prop;
 	prop.ID = PropID;
-	prop.Asset[0] = 0;
+	prop.Asset.clear();
 	int wpos = PrepExt_UpdateScenery(sim->SendBuf, &prop);
 	//creatureInst->actInst->LSendToAllSimulator(SendBuf, wpos, -1);
 	creatureInstance->actInst->LSendToLocalSimulator(sim->SendBuf, wpos,

@@ -8,6 +8,7 @@
 #include "Simulator.h"
 #include "Creature.h"
 #include "Config.h"
+#include "StringUtil.h"
 #include <stdlib.h>
 #include "sqrat.h"
 #include <algorithm>    // std::remove
@@ -86,27 +87,14 @@ const int maxExtOpCode = COUNT_ARRAY_ELEMENTS(extCoreOpCode);
 InstanceNutDef::~InstanceNutDef() {
 }
 
-std::string InstanceNutDef::GetInstanceNutScriptPath(int zoneID, bool grove) {
-	char strBuf[100];
-	Util::SafeFormat(strBuf, sizeof(strBuf), "%d", zoneID);
-	string p;
-	if(grove)
-		p = Platform::JoinPath(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "Grove"), strBuf), "Script.nut");
-	else
-		p = Platform::JoinPath(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveVariableDataPath(), "Instance"), strBuf), "Script.nut");
-	return p;
+std::string InstanceNutDef::GetInstanceNutScriptPath(int zoneID) {
+	return Platform::JoinPath(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveVariableDataPath(), "Instance"), StringUtil::Format("%d", zoneID)), "Script.nut");
 }
 std::string InstanceNutDef::GetInstanceScriptPath(int zoneID,
-		bool pathIfNotExists, bool grove) {
-	std::string p = GetInstanceNutScriptPath(zoneID, grove);
+		bool pathIfNotExists) {
+	std::string p = GetInstanceNutScriptPath(zoneID);
 	if (!Platform::FileExists(p.c_str())) {
-		char strBuf[100];
-		Util::SafeFormat(strBuf, sizeof(strBuf), "%d", zoneID);
-		std:string t;
-		if(grove)
-			t = Platform::JoinPath(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "Grove"), strBuf), "Script.txt");
-		else
-			t = Platform::JoinPath(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveVariableDataPath(), "Instance"), strBuf), "Script.txt");
+		std:string t = Platform::JoinPath(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveVariableDataPath(), "Instance"), StringUtil::Format("%d", zoneID)), "Script.txt");
 		if (!Platform::FileExists(t.c_str()) && !pathIfNotExists) {
 			return "";
 		}
@@ -1319,7 +1307,7 @@ bool InstanceNutPlayer::RemoveProp(int propID) {
 	//operation.
 	SceneryObject prop;
 	prop.ID = propID;
-	prop.Asset[0] = 0;
+	prop.Asset.clear();
 	char SendBuf[512];
 	int wpos = PrepExt_UpdateScenery(SendBuf, &prop);
 	actInst->LSendToLocalSimulator(SendBuf, wpos, propPtr->LocationX,
@@ -1414,7 +1402,7 @@ bool InstanceNutPlayer::AdvanceQuest(int CID, int questID, int act,
 				questID);
 		if (ref != NULL && ref->CurAct == act) {
 			QuestAct act = ref->DefPtr->actList[ref->CurAct];
-			if (objective >= 0 && objective < QuestAct::MAXOBJECTIVES) {
+			if (objective >= 0 && objective < MAXOBJECTIVES) {
 				char buffer[256];
 				int wpos = ref->CheckQuestObjective(CID, buffer,
 						act.objective[objective].type, ci->CreatureDefID,
@@ -1846,16 +1834,8 @@ int InstanceNutPlayer::OLDSpawnAt(int creatureID, float x, float y, float z,
 //
 //
 
-std::string InstanceScriptDef::GetInstanceTslScriptPath(int zoneID,
-		bool grove) {
-	char strBuf[100];
-	Util::SafeFormat(strBuf, sizeof(strBuf), "%d", zoneID);
-	string p;
-	if(grove)
-		p = Platform::JoinPath(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "Grove"), strBuf), "Script.txt");
-	else
-		p = Platform::JoinPath(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveVariableDataPath(), "Instance"), strBuf), "Script.txt");
-	return p;
+std::string InstanceScriptDef::GetInstanceTslScriptPath(int zoneID) {
+	return Platform::JoinPath(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveVariableDataPath(), "Instance"), StringUtil::Format("%d", zoneID)), "Script.txt");
 }
 
 void InstanceScriptDef::GetExtendedOpCodeTable(OpCodeInfo **arrayStart,
@@ -2293,6 +2273,7 @@ bool InstanceNutPlayer::GiveItem(int CID, int itemID) {
 	InventorySlot *sendSlot = creature->charPtr->inventory.AddItem_Ex(
 			INV_CONTAINER, item->mID, 1);
 	if (sendSlot != NULL) {
+		creature->charPtr->pendingChanges++;
 		creature->simulatorPtr->ActivateActionAbilities(sendSlot);
 		char buf[128];
 		char buf2[64];

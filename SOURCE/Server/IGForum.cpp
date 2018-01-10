@@ -3,6 +3,8 @@
 #include "IGForum.h"
 #include "FileReader.h"
 #include "Config.h"
+#include "Cluster.h"
+#include "StringUtil.h"
 #include "DirectoryAccess.h"
 
 #include "util/Log.h"
@@ -38,347 +40,46 @@ bool IGFFlags :: hasFlag(const int flag)
 	return ((mFlag & flag) ? true : false);
 }
 
+//
+// IGFCategory
+//
 
-IGFCategoryPage :: IGFCategoryPage()
-{
-	mPendingChanges = 0;
-	mPage = 0;
-	mLastAccessTime = 0;
-}
-
-void IGFCategoryPage :: SaveFile(std::string filename)
-{
-	FILE *output = fopen(filename.c_str(), "wb");
-	if(output == NULL)
-	{
-		g_Logs.data->error("IGFCategoryPage::SaveFile failed to open: %v", filename);
-		return;
-	}
-	CATEGORYENTRY::iterator it;
-	for(it = mEntries.begin(); it != mEntries.end(); it++)
-	{
-		fprintf(output, "[ENTRY]\r\n");
-		fprintf(output, "ID=%d\r\n", it->second.mID);
-		fprintf(output, "Title=%s\r\n", it->second.mTitle.c_str());
-		fprintf(output, "ParentCategory=%d\r\n", it->second.mParentCategory);
-		fprintf(output, "Locked=%d\r\n", it->second.mLocked);
-		fprintf(output, "Flags=%d\r\n", it->second.mFlags.getraw());
-		fprintf(output, "LastUpdateTime=%lu\r\n", it->second.mLastUpdateTime);
-		Util::WriteIntegerList(output, "ThreadList", it->second.mThreadList);
-		fprintf(output, "\r\n");
-	}
-	fclose(output);
-}
-
-void IGFCategoryPage :: LoadFile(std::string filename)
-{
-	FileReader lfr;
-	if(lfr.OpenText(filename.c_str()) != Err_OK)
-	{
-		g_Logs.data->error("IGFCategoryPage::LoadFile failed to open file.");
-		return;
-	}
-	lfr.CommentStyle = Comment_Semi;
-	IGFCategory entry;
-
-	while(lfr.FileOpen() == true)
-	{
-		lfr.ReadLine();
-		int r = lfr.BreakUntil("=", '=');
-		if(r > 0)
-		{
-			lfr.BlockToStringC(0, 0);
-			if(strcmp(lfr.SecBuffer, "[ENTRY]") == 0)
-			{
-				if(entry.mID != 0)
-					InsertEntry(entry, false);
-				entry.Clear();
-			}
-			else if(strcmp(lfr.SecBuffer, "ID") == 0)
-				entry.mID = lfr.BlockToIntC(1);
-			else if(strcmp(lfr.SecBuffer, "Title") == 0)
-				entry.mTitle = lfr.BlockToStringC(1, 0);
-			else if(strcmp(lfr.SecBuffer, "ParentCategory") == 0)
-				entry.mParentCategory = lfr.BlockToIntC(1);
-			else if(strcmp(lfr.SecBuffer, "Locked") == 0)
-				entry.mLocked = lfr.BlockToBoolC(1);
-			else if(strcmp(lfr.SecBuffer, "Flags") == 0)
-				entry.mFlags.setraw(lfr.BlockToIntC(1));
-			else if(strcmp(lfr.SecBuffer, "LastUpdateTime") == 0)
-				entry.mLastUpdateTime = lfr.BlockToULongC(1);
-			else if(strcmp(lfr.SecBuffer, "ThreadList") == 0)
-			{
-				r = lfr.MultiBreak("=,");
-				for(int i = 1; i < r; i++)
-					entry.mThreadList.push_back(lfr.BlockToIntC(i));
-			}
-			else
-				g_Logs.data->warn("IGFCategoryPage::LoadFile unknown identifier [%v] in file [%v] on line [%v]", lfr.SecBuffer, filename, lfr.LineNumber);
-		}
-	}
-	if(entry.mID != 0)
-		InsertEntry(entry, false);
-	lfr.CloseCurrent();
-}
-
-void IGFCategoryPage :: InsertEntry(IGFCategory &entry, bool changePending)
-{
-	mEntries.insert(mEntries.end(), CATEGORYPAGE(entry.mID, entry));
-	if(changePending == true)
-		mPendingChanges++;
-}
-
-IGFCategory* IGFCategoryPage :: GetPointerByID(int ID)
-{
-	CATEGORYENTRY::iterator it;
-	it = mEntries.find(ID);
-	if(it == mEntries.end())
-		return NULL;
-	return &it->second;
-}
-
-void IGFCategoryPage :: DeleteObject(int objectID)
-{
-	CATEGORYENTRY::iterator it;
-	it = mEntries.find(objectID);
-	if(it != mEntries.end())
-		mEntries.erase(it);
-}
-
-bool IGFCategoryPage :: QualifyGarbage(void)
-{
-	if(mPendingChanges != 0)
-		return false;
-	return (g_ServerTime >= (mLastAccessTime + IGFManager::GARBAGE_CHECK_EXPIRE));
-}
-
-IGFThreadPage :: IGFThreadPage()
-{
-	mPendingChanges = 0;
-	mPage = 0;
-	mLastAccessTime = 0;
-}
-void IGFThreadPage :: SaveFile(std::string filename)
-{
-	FILE *output = fopen(filename.c_str(), "wb");
-	if(output == NULL)
-	{
-		g_Logs.data->error("IGFThreadPage::SaveFile failed to open file.");
-		return;
-	}
-	THREADENTRY::iterator it;
-	for(it = mEntries.begin(); it != mEntries.end(); it++)
-	{
-		fprintf(output, "[ENTRY]\r\n");
-		fprintf(output, "ID=%d\r\n", it->second.mID);
-		fprintf(output, "Title=%s\r\n", it->second.mTitle.c_str());
-		fprintf(output, "CreationAccount=%d\r\n", it->second.mCreationAccount);
-		fprintf(output, "CreationTime=%s\r\n", it->second.mCreationTime.c_str());
-		fprintf(output, "CreatorName=%s\r\n", it->second.mCreatorName.c_str());
-		fprintf(output, "ParentCategory=%d\r\n", it->second.mParentCategory);
-		fprintf(output, "Locked=%d\r\n", it->second.mLocked);
-		fprintf(output, "Stickied=%d\r\n", it->second.mStickied);
-		fprintf(output, "Flags=%d\r\n", it->second.mFlags.getraw());
-		fprintf(output, "LastUpdateTime=%lu\r\n", it->second.mLastUpdateTime);
-
-		Util::WriteIntegerList(output, "PostList", it->second.mPostList);
-		fprintf(output, "\r\n");
-	}
-	fclose(output);
-}
-
-void IGFThreadPage :: LoadFile(std::string filename)
-{
-	FileReader lfr;
-	if(lfr.OpenText(filename.c_str()) != Err_OK)
-	{
-		g_Logs.data->error("IGFThreadPage::LoadFile failed to open file.");
-		return;
-	}
-	lfr.CommentStyle = Comment_Semi;
-	IGFThread entry;
-
-	while(lfr.FileOpen() == true)
-	{
-		lfr.ReadLine();
-		int r = lfr.BreakUntil("=", '=');
-		if(r > 0)
-		{
-			lfr.BlockToStringC(0, 0);
-			if(strcmp(lfr.SecBuffer, "[ENTRY]") == 0)
-			{
-				if(entry.mID != 0)
-					InsertEntry(entry, false);
-				entry.Clear();
-			}
-			else if(strcmp(lfr.SecBuffer, "ID") == 0)
-				entry.mID = lfr.BlockToIntC(1);
-			else if(strcmp(lfr.SecBuffer, "Title") == 0)
-				entry.mTitle = lfr.BlockToStringC(1, 0);
-			else if(strcmp(lfr.SecBuffer, "CreationAccount") == 0)
-				entry.mCreationAccount = lfr.BlockToIntC(1);
-			else if(strcmp(lfr.SecBuffer, "CreationTime") == 0)
-				entry.mCreationTime = lfr.BlockToStringC(1, 0);
-			else if(strcmp(lfr.SecBuffer, "CreatorName") == 0)
-				entry.mCreatorName = lfr.BlockToStringC(1, 0);
-			else if(strcmp(lfr.SecBuffer, "ParentCategory") == 0)
-				entry.mParentCategory = lfr.BlockToIntC(1);
-			else if(strcmp(lfr.SecBuffer, "Locked") == 0)
-				entry.mLocked = lfr.BlockToBoolC(1);
-			else if(strcmp(lfr.SecBuffer, "Stickied") == 0)
-				entry.mStickied = lfr.BlockToBoolC(1);
-			else if(strcmp(lfr.SecBuffer, "Flags") == 0)
-				entry.mFlags.setraw(lfr.BlockToIntC(1));
-			else if(strcmp(lfr.SecBuffer, "LastUpdateTime") == 0)
-				entry.mLastUpdateTime = lfr.BlockToULongC(1);
-			else if(strcmp(lfr.SecBuffer, "PostList") == 0)
-			{
-				r = lfr.MultiBreak("=,");
-				for(int i = 1; i < r; i++)
-					entry.mPostList.push_back(lfr.BlockToIntC(i));
-			}
-			else
-				g_Logs.data->warn("IGFThreadPage::LoadFile unknown identifier [%v] in file [%v] on line [%v]", lfr.SecBuffer, filename, lfr.LineNumber);
-		}
-	}
-	if(entry.mID != 0)
-		InsertEntry(entry, false);
-	lfr.CloseCurrent();
-}
-
-void IGFThreadPage :: InsertEntry(IGFThread &entry, bool changePending)
-{
-	mEntries.insert(mEntries.end(), THREADPAIR(entry.mID, entry));
-	if(changePending == true)
-		mPendingChanges++;
-}
-
-IGFThread * IGFThreadPage :: GetPointerByID(int ID)
-{
-	THREADENTRY::iterator it;
-	it = mEntries.find(ID);
-	if(it == mEntries.end())
-		return NULL;
-	return &it->second;
-}
-
-bool IGFThreadPage :: QualifyGarbage(void)
-{
-	if(mPendingChanges != 0)
-		return false;
-	return (g_ServerTime >= (mLastAccessTime + IGFManager::GARBAGE_CHECK_EXPIRE));
-}
-
-IGFPostPage :: IGFPostPage()
-{
-	mPendingChanges = 0;
-	mPage = 0;
-	mLastAccessTime = 0;
-}
-
-void IGFPostPage :: SaveFile(std::string filename)
-{
-	FILE *output = fopen(filename.c_str(), "wb");
-	if(output == NULL)
-	{
-		g_Logs.data->error("IGFPostPage::SaveFile failed to open file.");
-		return;
-	}
-	POSTENTRY::iterator it;
-	for(it = mEntries.begin(); it != mEntries.end(); it++)
-	{
-		fprintf(output, "[ENTRY]\r\n");
-		fprintf(output, "ID=%d\r\n", it->second.mID);
-		fprintf(output, "CreationAccount=%d\r\n", it->second.mCreationAccount);
-		fprintf(output, "CreationTime=%s\r\n", it->second.mCreationTime.c_str());
-		fprintf(output, "CreatorName=%s\r\n", it->second.mCreatorName.c_str());
-		fprintf(output, "ParentThread=%d\r\n", it->second.mParentThread);
-		fprintf(output, "PostedTime=%lu\r\n", it->second.mPostedTime);
-		fprintf(output, "LastUpdateTime=%lu\r\n", it->second.mLastUpdateTime);
-		fprintf(output, "EditCount=%d\r\n", it->second.mEditCount);
-		fprintf(output, "BodyText=%s\r\n", it->second.mBodyText.c_str());
-		fprintf(output, "\r\n");
-	}
-	fclose(output);
-}
-
-void IGFPostPage :: LoadFile(std::string filename)
-{
-	FileReader lfr;
-	if(lfr.OpenText(filename.c_str()) != Err_OK)
-	{
-		g_Logs.data->error("IGFPostPage::LoadFile failed to open: %v", filename);
-		return;
-	}
-	//lfr.CommentStyle = Comment_Semi;  //No comments since they're valid characters for posts.
-	IGFPost entry;
-
-	while(lfr.FileOpen() == true)
-	{
-		lfr.ReadLine();
-		int r = lfr.BreakUntil("=", '=');
-		if(r > 0)
-		{
-			lfr.BlockToStringC(0, 0);
-			if(strcmp(lfr.SecBuffer, "[ENTRY]") == 0)
-			{
-				if(entry.mID != 0)
-					InsertEntry(entry, false);
-				entry.Clear();
-			}
-			else if(strcmp(lfr.SecBuffer, "ID") == 0)
-				entry.mID = lfr.BlockToIntC(1);
-			else if(strcmp(lfr.SecBuffer, "CreationAccount") == 0)
-				entry.mCreationAccount = lfr.BlockToIntC(1);
-			else if(strcmp(lfr.SecBuffer, "CreationTime") == 0)
-				entry.mCreationTime = lfr.BlockToStringC(1, 0);
-			else if(strcmp(lfr.SecBuffer, "CreatorName") == 0)
-				entry.mCreatorName = lfr.BlockToStringC(1, 0);
-			else if(strcmp(lfr.SecBuffer, "ParentThread") == 0)
-				entry.mParentThread = lfr.BlockToIntC(1);
-			else if(strcmp(lfr.SecBuffer, "PostedTime") == 0)
-				entry.mPostedTime = lfr.BlockToULongC(1);
-			else if(strcmp(lfr.SecBuffer, "LastUpdateTime") == 0)
-				entry.mLastUpdateTime = lfr.BlockToULongC(1);
-			else if(strcmp(lfr.SecBuffer, "EditCount") == 0)
-				entry.mEditCount = lfr.BlockToULongC(1);
-			else if(strcmp(lfr.SecBuffer, "BodyText") == 0)
-				entry.mBodyText = lfr.BlockToStringC(1, 0);
-			else
-				g_Logs.data->warn("IGFPostPage::LoadFile unknown identifier [%v] in file [%v] on line [%v]", lfr.SecBuffer, filename, lfr.LineNumber);
-		}
-	}
-	if(entry.mID != 0)
-		InsertEntry(entry, false);
-	lfr.CloseCurrent();
-}
-
-void IGFPostPage :: InsertEntry(IGFPost &entry, bool changePending)
-{
-	mEntries.insert(mEntries.end(), POSTPAIR(entry.mID, entry));
-	if(changePending == true)
-		mPendingChanges++;
-}
-
-IGFPost * IGFPostPage :: GetPointerByID(int ID)
-{
-	POSTENTRY::iterator it;
-	it = mEntries.find(ID);
-	if(it == mEntries.end())
-		return NULL;
-	return &it->second;
-}
-
-bool IGFPostPage :: QualifyGarbage(void)
-{
-	if(mPendingChanges != 0)
-		return false;
-	return (g_ServerTime >= (mLastAccessTime + IGFManager::GARBAGE_CHECK_EXPIRE));
-}
 
 IGFCategory :: IGFCategory()
 {
 	Clear();
+}
+
+
+bool IGFCategory :: WriteEntity(AbstractEntityWriter *writer) {
+	writer->Key(KEYPREFIX_IGF_CATEGORY, StringUtil::Format("%d", mID));
+	writer->Value("Title", mTitle);
+	writer->Value("ParentCategory", mParentCategory);
+	writer->Value("Locked", mLocked);
+	writer->Value("Flags", mFlags.getraw());
+	writer->Value("LastUpdateTime", mLastUpdateTime);
+	STRINGLIST l;
+	for(auto it = mThreadList.begin(); it != mThreadList.end(); ++it)
+		l.push_back(StringUtil::Format("%d", *it));
+	writer->ListValue("ThreadList", l);
+	return true;
+}
+
+bool IGFCategory :: EntityKeys(AbstractEntityReader *reader) {
+	reader->Key(KEYPREFIX_IGF_CATEGORY, StringUtil::Format("%d", mID), true);
+	return true;
+}
+
+bool IGFCategory :: ReadEntity(AbstractEntityReader *reader) {
+	mTitle = reader->Value("Title");
+	mParentCategory = reader->ValueInt("ParentCategory");
+	mLocked = reader->ValueBool("Locked");
+	mFlags.setraw(reader->ValueInt("Flags"));
+	mLastUpdateTime = reader->ValueULong("LastUpdateTime");
+	STRINGLIST threads = reader->ListValue("ThreadList", ",");
+	for(auto it = threads.begin(); it != threads.end(); ++it)
+		mThreadList.push_back(atoi((*it).c_str()));
+	return true;
 }
 
 void IGFCategory :: Clear(void)
@@ -422,6 +123,46 @@ void IGFCategory :: SetLastUpdateTime(void)
 IGFThread :: IGFThread()
 {
 	Clear();
+}
+
+bool IGFThread :: WriteEntity(AbstractEntityWriter *writer) {
+	writer->Key(KEYPREFIX_IGF_THREAD, StringUtil::Format("%d", mID));
+
+	writer->Value("Title", mTitle);
+	writer->Value("CreationAccount", mCreationAccount);
+	writer->Value("CreationTime", mCreationTime);
+	writer->Value("CreatorName", mCreatorName);
+	writer->Value("ParentCategory", mParentCategory);
+	writer->Value("Locked", mLocked);
+	writer->Value("Stickied", mStickied);
+	writer->Value("Flags", mFlags.getraw());
+	writer->Value("LastUpdateTime", mLastUpdateTime);
+	STRINGLIST l;
+	for(auto it = mPostList.begin(); it != mPostList.end(); ++it)
+		l.push_back(StringUtil::Format("%d", *it));
+	writer->ListValue("PostList", l);
+	return true;
+}
+
+bool IGFThread :: EntityKeys(AbstractEntityReader *reader) {
+	reader->Key(KEYPREFIX_IGF_THREAD, StringUtil::Format("%d", mID), true);
+	return true;
+}
+
+bool IGFThread :: ReadEntity(AbstractEntityReader *reader) {
+	mTitle = reader->Value("Title");
+	mCreationAccount = reader->ValueInt("CreationAccount");
+	mCreationTime = reader->Value("CreationTime");
+	mCreatorName = reader->Value("CreatorName");
+	mParentCategory = reader->ValueInt("ParentCategory");
+	mLocked = reader->ValueBool("Locked");
+	mStickied = reader->ValueBool("Stickied");
+	mFlags.setraw(reader->ValueInt("Flags"));
+	mLastUpdateTime = reader->ValueULong("LastUpdateTime");
+	STRINGLIST posts = reader->ListValue("PostList", ",");
+	for(auto it = posts.begin(); it != posts.end(); ++it)
+		mPostList.push_back(atoi((*it).c_str()));
+	return true;
 }
 
 void IGFThread :: Clear(void)
@@ -470,6 +211,37 @@ IGFPost :: IGFPost()
 	Clear();
 }
 
+bool IGFPost :: WriteEntity(AbstractEntityWriter *writer) {
+	writer->Key(KEYPREFIX_IGF_POST, StringUtil::Format("%d", mID));
+	writer->Value("CreationAccount", mCreationAccount);
+	writer->Value("CreationTime", mCreationTime);
+	writer->Value("CreatorName", mCreatorName);
+	writer->Value("ParentThread", mParentThread);
+	writer->Value("PostedTime", mPostedTime);
+	writer->Value("LastUpdateTime", mLastUpdateTime);
+	writer->Value("EditCount", mEditCount);
+	writer->Value("BodyText", mBodyText);
+	return true;
+}
+
+bool IGFPost :: EntityKeys(AbstractEntityReader *reader) {
+	reader->Key(KEYPREFIX_IGF_POST, StringUtil::Format("%d", mID), true);
+	return true;
+}
+
+bool IGFPost :: ReadEntity(AbstractEntityReader *reader) {
+	mCreationAccount = reader->ValueInt("CreationAccount");
+	mCreationTime = reader->Value("CreationTime");
+	mCreatorName = reader->Value("CreatorName");
+	mParentThread = reader->ValueInt("ParentThread");
+	mPostedTime = reader->ValueULong("PostedTime");
+	mLastUpdateTime = reader->ValueULong("LastUpdateTime");
+	mEditCount = reader->ValueInt("EditCount");
+	mBodyText = reader->Value("BodyText");
+	return true;
+}
+
+
 void IGFPost :: Clear(void)
 {
 	mID = 0;
@@ -491,20 +263,15 @@ void IGFPost :: SetLastUpdateTime(void)
 
 IGFManager :: IGFManager()
 {
-	mNextCategoryID = 2;  //The root takes ID:1, so the next category needs to be a step higher
-	mNextThreadID = 1;
-	mNextPostID = 1;
-	mNextGarbageCheck = 0;
-	mNextAutosaveCheck = 0;
-	mPlatformLaunchMinute = 0;
 	mForumLocked = false;
 }
 
 void IGFManager :: Init(void)
 {
-	LoadConfig();
-	if(mPlatformLaunchMinute == 0)   //Config failed to load, so init the time value.
-		mPlatformLaunchMinute = g_PlatformTime.getAbsoluteMinutes();
+	if(!g_ClusterManager.HasKey(ID_IGF_CATEGORY_ID)) {
+		//The root takes ID:1, so the next category needs to be a step higher
+		g_ClusterManager.SetKey(ID_IGF_CATEGORY_ID, "1");
+	}
 
 	//InitPaths(); OLD
 
@@ -517,20 +284,17 @@ void IGFManager :: Init(void)
 		GetPagedCategoryPtr(i * CATEGORY_PER_PAGE);
 	*/
 
-	IGFCategory *category = GetPagedCategoryPtr(0);
-	if(category == NULL)
+	IGFCategory category = GetPagedCategoryPtr(0);
+	if(category.mID == 0)
 	{
 		IGFCategory root;
 		root.mID = 1;  //Zero ID indicates no data so the page file won't load the entry.
 		root.mTitle = "root";
 		root.mParentCategory = ROOT_CATEGORY;
-		InsertPagedCategory(root);
+		if(!g_ClusterManager.WriteEntity(&root)) {
+			g_Logs.data->error("Failed to write default IGF category.");
+		}
 	}
-	std::string igfdir = Platform::JoinPath(g_Config.ResolveUserDataPath(), "IGForum");
-	Platform::MakeDirectory(igfdir);
-	Platform::MakeDirectory(Platform::JoinPath(igfdir, "Category"));
-	Platform::MakeDirectory(Platform::JoinPath(igfdir, "Thread"));
-	Platform::MakeDirectory(Platform::JoinPath(igfdir, "Post"));
 }
 
 IGFManager :: ~IGFManager()
@@ -538,92 +302,76 @@ IGFManager :: ~IGFManager()
 
 }
 
-int IGFManager :: GetCategoryPage(int ID)
-{
-	return ID / CATEGORY_PER_PAGE;
-}
-
-int IGFManager :: GetThreadPage(int ID)
-{
-	return ID / THREAD_PER_PAGE;
-}
-
-int IGFManager :: GetPostPage(int ID)
-{
-	return ID / POST_PER_PAGE;
-}
-
 void IGFManager :: EnumCategoryList(int parentID, MULTISTRING &output)
 {
+	STRINGLIST l = g_ClusterManager.GetList(LISTPREFIX_IGF_CATEGORIES);
 	STRINGLIST entry;
-	CATEGORYPAGE::iterator it;
-	IGFCategoryPage::CATEGORYENTRY::iterator eit;
-	for(it = mCategoryPages.begin(); it != mCategoryPages.end(); ++it)
-	{
-		for(eit = it->second.mEntries.begin(); eit != it->second.mEntries.end(); ++eit)
-		{
-			if(eit->second.mParentCategory == parentID)
-			{
+	for(auto it = l.begin(); it != l.end(); ++it) {
+		IGFCategory c;
+		c.mID = atoi((*it).c_str());
+		if(g_ClusterManager.ReadEntity(&c)) {
+			if(c.mParentCategory == parentID) {
 				entry.push_back(ConvertInteger(TYPE_CATEGORY));
-				entry.push_back(ConvertInteger(eit->second.mID));
-				entry.push_back(ConvertInteger(eit->second.mLocked));
+				entry.push_back(ConvertInteger(c.mID));
+				entry.push_back(ConvertInteger(c.mLocked));
 				entry.push_back(ConvertInteger(0)); //Stickied.  Categories don't have this.
-				entry.push_back(eit->second.mTitle);
-				entry.push_back(ConvertInteger(eit->second.mThreadList.size()));
-				entry.push_back(ConvertInteger(GetTimeOffset(eit->second.mLastUpdateTime)));
-
+				entry.push_back(c.mTitle);
+				entry.push_back(ConvertInteger(c.mThreadList.size()));
+				entry.push_back(ConvertInteger(c.mLastUpdateTime));
 				output.push_back(entry);
 				entry.clear();
 			}
+		}
+		else {
+			g_Logs.data->error("Failed to read category %v", c.mID);
 		}
 	}
 }
 
 void IGFManager :: EnumThreadList(int parentID, MULTISTRING &output)
 {
-	IGFCategory* category = GetPagedCategoryPtr(parentID);
-	if(category == NULL)
+	IGFCategory category = GetPagedCategoryPtr(parentID);
+	if(category.mID == 0)
 		return;
 
 	//Pregenerate a list of threads
-	std::vector<IGFThread*> results;
-	for(size_t i = 0; i < category->mThreadList.size(); i++)
+	std::vector<IGFThread> results;
+	for(size_t i = 0; i < category.mThreadList.size(); i++)
 	{
-		IGFThread* thread = GetPagedThreadPtr(category->mThreadList[i]);
-		if(thread != NULL)
+		IGFThread thread = GetPagedThreadPtr(category.mThreadList[i]);
+		if(thread.mID != 0)
 			results.push_back(thread);
 	}
 
-	if(category->mFlags.hasFlag(IGFFlags::FLAG_SORTALPHABETICAL))
+	if(category.mFlags.hasFlag(IGFFlags::FLAG_SORTALPHABETICAL))
 		std::sort(results.begin(), results.end(), ThreadSortAlphabetical);
 
 	STRINGLIST entry;
-	for(size_t i = 0; i < results.size(); i++)
+	for(auto it = results.begin(); it != results.end(); ++it)
 	{
-		IGFThread* thread = results[i];
 		entry.push_back(ConvertInteger(TYPE_THREAD));
-		entry.push_back(ConvertInteger(thread->mID));
-		entry.push_back(ConvertInteger(thread->mLocked));
-		entry.push_back(ConvertInteger(thread->mStickied));
-		entry.push_back(thread->mTitle);
-		entry.push_back(ConvertInteger(thread->mPostList.size()));
-		entry.push_back(ConvertInteger(GetTimeOffset(thread->mLastUpdateTime)));
+		entry.push_back(ConvertInteger(it->mID));
+		entry.push_back(ConvertInteger(it->mLocked));
+		entry.push_back(ConvertInteger(it->mStickied));
+		entry.push_back(it->mTitle);
+		entry.push_back(ConvertInteger(it->mPostList.size()));
+		entry.push_back(ConvertInteger(it->mLastUpdateTime));
 
 		output.push_back(entry);
 		entry.clear();
 	}
 }
 
-bool IGFManager :: ThreadSortAlphabetical(const IGFThread* lhs, const IGFThread* rhs)
+bool IGFManager :: ThreadSortAlphabetical(const IGFThread &lhs, const IGFThread &rhs)
 {
-	if(lhs->mStickied == rhs->mStickied)
+	if(lhs.mStickied == rhs.mStickied)
 	{
-		if(lhs->mTitle.compare(rhs->mTitle) <= 0)
+		if(lhs.mTitle.compare(rhs.mTitle) <= 0)
 			return true;
 	}
 	else
 	{
-		if(lhs->mStickied == true)
+		if(lhs.mStickied == true)
 			return true;
 	}
 	
@@ -632,14 +380,14 @@ bool IGFManager :: ThreadSortAlphabetical(const IGFThread* lhs, const IGFThread*
 
 void IGFManager :: GetCategory(int id, MULTISTRING &output)
 {
-	IGFCategory *category = GetPagedCategoryPtr(id);
-	if(category == NULL)
+	IGFCategory category = GetPagedCategoryPtr(id);
+	if(category.mID == 0)
 		return;
 
 	STRINGLIST header;
 
 	header.push_back(ConvertInteger(id));
-	header.push_back(category->mTitle);
+	header.push_back(category.mTitle);
 	output.push_back(header);
 
 	EnumCategoryList(id, output);
@@ -651,36 +399,29 @@ void IGFManager :: OpenCategory(int type, int id, MULTISTRING &output)
 	//Expand an object.  If it's a category, enumerate a list of subcategories.
 	if(type == TYPE_CATEGORY)
 	{
-		IGFCategory *category = GetPagedCategoryPtr(id);
-		if(category != NULL)
+		IGFCategory category = GetPagedCategoryPtr(id);
+		if(category.mID != 0)
 		{
 			STRINGLIST header;
 			header.push_back(ConvertInteger(id));
-			header.push_back(category->mTitle);
+			header.push_back(category.mTitle);
 
 			output.push_back(header);
 
-			int searchID = category->mID;
+			int searchID = category.mID;
 			EnumCategoryList(searchID, output);
 			EnumThreadList(searchID, output);
 		}
 	}
 }
 
-unsigned long IGFManager :: GetTimeOffset(unsigned long LastUpdateTime)
-{
-	if(LastUpdateTime == 0)
-		LastUpdateTime = mPlatformLaunchMinute;
-	return g_PlatformTime.getAbsoluteMinutes() - LastUpdateTime;
-}
-
 void IGFManager :: OpenThread(int threadID, int startPost, int requestedCount, MULTISTRING &output)
 {
-	IGFThread *thread = GetPagedThreadPtr(threadID);
-	if(thread == NULL)
+	IGFThread thread = GetPagedThreadPtr(threadID);
+	if(thread.mID == 0)
 		return;
 
-	startPost = Util::ClipInt(startPost, 0, thread->mPostList.size() - 1);
+	startPost = Util::ClipInt(startPost, 0, thread.mPostList.size() - 1);
 
 	STRINGLIST row;
 
@@ -690,31 +431,31 @@ void IGFManager :: OpenThread(int threadID, int startPost, int requestedCount, M
 
 	//Prepare the header
 	row.push_back(ConvertInteger(threadID));  //[0]
-	row.push_back(thread->mTitle);   //[1]
+	row.push_back(thread.mTitle);   //[1]
 	row.push_back(ConvertInteger(startPost));  //[2]
-	row.push_back(ConvertInteger(thread->mPostList.size()));  //[3]
-	row.push_back(ConvertInteger(timeOffset - thread->mLastUpdateTime));  //[4]
+	row.push_back(ConvertInteger(thread.mPostList.size()));  //[3]
+	row.push_back(ConvertInteger(timeOffset - thread.mLastUpdateTime));  //[4]
 	output.push_back(row);
 	row.clear();
 
 	//Append the post data.
 	int count = 0;
-	for(size_t i = startPost; i < thread->mPostList.size(); i++)
+	for(size_t i = startPost; i < thread.mPostList.size(); i++)
 	{
-		IGFPost *post = GetPagedPostPtr(thread->mPostList[i]);
-		if(post == NULL)
+		IGFPost post = GetPagedPostPtr(thread.mPostList[i]);
+		if(post.mID == 0)
 		{
-			g_Logs.data->error("OpenThread: unable to find post: %v", thread->mPostList[i]);
+			g_Logs.data->error("OpenThread: unable to find post: %v", thread.mPostList[i]);
 			continue;
 		}
 
-		row.push_back(ConvertInteger(post->mID));  //[0]
-		row.push_back(post->mCreatorName.c_str());  //[1]
-		row.push_back(post->mCreationTime.c_str());  //[2]
-		row.push_back(ConvertInteger(timeOffset - post->mPostedTime)); //[3]
-		row.push_back(post->mBodyText.c_str());  //[4]
-		row.push_back(ConvertInteger(post->mEditCount)); //[5]
-		row.push_back(ConvertInteger(timeOffset - post->mLastUpdateTime)); //[6]
+		row.push_back(ConvertInteger(post.mID));  //[0]
+		row.push_back(post.mCreatorName.c_str());  //[1]
+		row.push_back(post.mCreationTime.c_str());  //[2]
+		row.push_back(ConvertInteger(timeOffset - post.mPostedTime)); //[3]
+		row.push_back(post.mBodyText.c_str());  //[4]
+		row.push_back(ConvertInteger(post.mEditCount)); //[5]
+		row.push_back(ConvertInteger(timeOffset - post.mLastUpdateTime)); //[6]
 
 		output.push_back(row);
 		row.clear();
@@ -737,7 +478,7 @@ int IGFManager :: SendPost(AccountData *callerAccount, int type, int placementID
 	if(HasInvalidCharacters(displayName, false))
 		return ERROR_INVALIDNAMETEXT;
 	
-	int threadID = 0;
+	IGFThread thread;
 	if(type == POST_THREAD)  //New thread
 	{
 		if(HasInvalidCharacters(threadTitle, false))
@@ -745,50 +486,45 @@ int IGFManager :: SendPost(AccountData *callerAccount, int type, int placementID
 		if(strlen(threadTitle) > MAX_TITLE_LENGTH)
 			return ERROR_TITLELENGTH;
 
-		IGFCategory *category = GetPagedCategoryPtr(placementID);
-		if(category == NULL)
+		IGFCategory category = GetPagedCategoryPtr(placementID);
+		if(category.mID == 0)
 			return ERROR_INVALIDCATEGORY;
-		if(category->mLocked == true)
+		if(category.mLocked == true)
 			return ERROR_CATEGORYLOCKED;
 
-		IGFThread newThread;
-		newThread.mID = GetNewThreadID();
-		newThread.mParentCategory = category->mID;
-		newThread.mTitle = threadTitle;
-		newThread.mCreationAccount = callerAccount->ID;
-		newThread.mCreatorName = displayName;
-		newThread.SetLastUpdateTime();
-		InsertPagedThread(newThread);
+		thread.mID = GetNewThreadID();
+		thread.mParentCategory = category.mID;
+		thread.mTitle = threadTitle;
+		thread.mCreationAccount = callerAccount->ID;
+		thread.mCreatorName = displayName;
+		thread.SetLastUpdateTime();
 
-		category->mThreadList.push_back(newThread.mID);
-
-		threadID = newThread.mID; //Update with thread ID so the rest of the function can proceed
+		category.mThreadList.push_back(thread.mID);
 	}
 	else if(type == POST_REPLY)
-		threadID = placementID;
+		thread = GetPagedThreadPtr(placementID);
 
 	//If creating a thread or replying, take the thread ID and append a new post.
 	if(type == POST_THREAD || type == POST_REPLY)
 	{
-		IGFThread *thread = GetPagedThreadPtr(threadID);
-		if(thread == NULL)
+		if(thread.mID == 0)
 			return ERROR_INVALIDTHREAD;
-		if(thread->mLocked == true)
+		if(thread.mLocked == true)
 			return ERROR_THREADLOCKED;
 
 		if(strlen(postBody) > MAX_POST_LENGTH)
 			return ERROR_POSTLENGTH;
 
-		IGFCategory *category = GetPagedCategoryPtr(thread->mParentCategory);
-		if(category == NULL)
+		IGFCategory category = GetPagedCategoryPtr(thread.mParentCategory);
+		if(category.mID == 0)
 			return ERROR_INVALIDCATEGORY;
 
-		category->SetLastUpdateTime();
-		thread->SetLastUpdateTime();
+		category.SetLastUpdateTime();
+		thread.SetLastUpdateTime();
 
 		IGFPost newPost;
 		newPost.mID = GetNewPostID();
-		newPost.mParentThread = thread->mID;
+		newPost.mParentThread = thread.mID;
 		newPost.mBodyText = postBody;
 		ProcessPostBody(newPost.mBodyText);
 		newPost.mCreationAccount = callerAccount->ID;
@@ -801,162 +537,49 @@ int IGFManager :: SendPost(AccountData *callerAccount, int type, int placementID
 		time(&curtime);
 		strftime(timeBuf, sizeof(timeBuf), "%x %X", localtime(&curtime));
 		newPost.mCreationTime = timeBuf;
-		
-		InsertPagedPost(newPost);
-		thread->mPostList.push_back(newPost.mID);
-		SortCategoryThreads(category);
-		MarkChangedThread(threadID);
-		MarkChangedCategory(category->mID);
+		thread.mPostList.push_back(newPost.mID);
+		SortCategoryThreads(&category);
+		g_ClusterManager.WriteEntity(&category, false);
+		g_ClusterManager.WriteEntity(&thread, false);
+		g_ClusterManager.WriteEntity(&newPost, false);
 	}
 	else if(type == POST_EDIT)
 	{
-		IGFThread *thread = GetPagedThreadPtr(placementID);
-		if(thread == NULL)
+		if(thread.mID == 0)
 			return ERROR_INVALIDTHREAD;
-		if(thread->mLocked == true && GetEditPermission(callerAccount, -1) == false)
+		if(thread.mLocked == true && GetEditPermission(callerAccount, -1) == false)
 			return ERROR_THREADLOCKED;
 
 		if(strlen(postBody) > MAX_POST_LENGTH)
 			return ERROR_POSTLENGTH;
 
-		IGFPost *post = GetPagedPostPtr(postID);
-		if(post == NULL)
+		IGFPost post = GetPagedPostPtr(postID);
+		if(post.mID == 0)
 			return ERROR_INVALIDPOST;
 
-		IGFCategory *category = GetPagedCategoryPtr(thread->mParentCategory);
-		if(category == NULL)
+		IGFCategory category = GetPagedCategoryPtr(thread.mParentCategory);
+		if(category.mID == 0)
 			return ERROR_INVALIDCATEGORY;
 
-		if(GetEditPermission(callerAccount, post->mCreationAccount) == false)
+		if(GetEditPermission(callerAccount, post.mCreationAccount) == false)
 			return ERROR_PERMISSIONDENIED;
 
-		post->mBodyText = postBody;
-		post->SetLastUpdateTime();
-		post->mEditCount++;
-		ProcessPostBody(post->mBodyText);
-		MarkChangedPost(postID);
+		post.mBodyText = postBody;
+		post.SetLastUpdateTime();
+		post.mEditCount++;
+		ProcessPostBody(post.mBodyText);
 
-		thread->SetLastUpdateTime();
-		category->SetLastUpdateTime();
-		SortCategoryThreads(category);
-		MarkChangedThread(thread->mID);
-		MarkChangedCategory(category->mID);
+		thread.SetLastUpdateTime();
+		category.SetLastUpdateTime();
+		SortCategoryThreads(&category);
+		g_ClusterManager.WriteEntity(&category, false);
+		g_ClusterManager.WriteEntity(&thread, false);
+		g_ClusterManager.WriteEntity(&post, false);
 	}
 
 	return ERROR_NONE;
 }
 
-
-/* OLD
-void IGFManager :: SaveCategory(void)
-{
-	const char *fileName = mPathCategory.c_str();
-	FILE *output = fopen(fileName, "wb");
-	if(output == NULL)
-	{
-		g_Log.AddMessageFormat("[ERROR] Failed to open file [%s] for saving", fileName);
-		return;
-	}
-	CATEGORY::iterator it;
-	for(it = mCategory.begin(); it != mCategory.end(); ++it)
-	{
-		fprintf(output, "[ENTRY]\r\n");
-		fprintf(output, "ID=%d\r\n", it->second.mID);
-		fprintf(output, "Title=%s\r\n", it->second.mTitle.c_str());
-		fprintf(output, "ParentCategory=%d\r\n", it->second.mParentCategory);
-		Util::WriteIntegerList(output, "ThreadList", it->second.mThreadList);
-		fprintf(output, "\r\n");
-	}
-	fclose(output);
-}
-*/
-
-/* OLD
-void IGFManager :: LoadCategory()
-{
-	const char *fileName = mPathCategory.c_str();
-	FileReader lfr;
-	if(lfr.OpenText(fileName) != Err_OK)
-	{
-		g_Log.AddMessageFormat("[ERROR] Failed to open file [%s] for reading", fileName);
-		return;
-	}
-	lfr.CommentStyle = Comment_Semi;
-	IGFCategory entry;
-	while(lfr.FileOpen() == true)
-	{
-		int r = lfr.ReadLine();
-		r = lfr.BreakUntil("=", '=');
-		if(r > 0)
-		{
-			lfr.BlockToStringC(0, 0);
-			if(strcmp(lfr.SecBuffer, "[ENTRY]") == 0)
-			{
-				if(entry.mID != 0)
-					InsertCategory(entry);
-				entry.Clear();
-			}
-			else if(strcmp(lfr.SecBuffer, "ID") == 0)
-				entry.mID = lfr.BlockToIntC(1);
-			else if(strcmp(lfr.SecBuffer, "Title") == 0)
-				entry.mTitle = lfr.BlockToStringC(1, 0);
-			else if(strcmp(lfr.SecBuffer, "ParentCategory") == 0)
-				entry.mParentCategory = lfr.BlockToIntC(1);
-			else if(strcmp(lfr.SecBuffer, "ThreadList") == 0)
-			{
-				int r = lfr.MultiBreak("=,");
-				for(int i = 1; i < r; i++)
-					entry.mThreadList.push_back(lfr.BlockToIntC(i));
-			}
-		}
-	}
-	if(entry.mID != 0)
-		InsertCategory(entry);
-	lfr.CloseCurrent();
-}
-*/
-
-/* OLD
-void IGFManager :: InitPaths(void)
-{
-	char buffer[256];
-
-	Util::SafeFormat(buffer, sizeof(buffer), "IGForum\\CategoryDB.txt");
-	Platform::FixPaths(buffer);
-	mPathCategory = buffer;
-
-	Util::SafeFormat(buffer, sizeof(buffer), "IGForum\\ThreadDB.txt");
-	Platform::FixPaths(buffer);
-	mPathThread = buffer;
-
-	Util::SafeFormat(buffer, sizeof(buffer), "IGForum\\PostDB.txt");
-	Platform::FixPaths(buffer);
-	mPathPost = buffer;
-}
-*/
-
-/* OLD
-int IGFManager :: CreateCategory(int parentCategoryID, const char *name)
-{
-	if(name == NULL)
-		return ERROR_INVALIDTITLE;
-	if(strlen(name) == 0)
-		return ERROR_INVALIDTITLE;
-
-	CATEGORY::iterator it;
-	it = mCategory.find(parentCategoryID);
-	if(it == mCategory.end())
-		return ERROR_INVALIDCATEGORY;
-
-	IGFCategory entry;
-	entry.mID = GetNewCategoryID();
-	entry.mTitle = name;
-	entry.mParentCategory = parentCategoryID;
-	InsertCategory(entry);
-	cdCategory.AddChange();
-	return ERROR_NONE;
-}
-*/
 int IGFManager :: CreateCategory(AccountData *callerAccount, int parentCategoryID, const char *name)
 {
 	if(GetEditPermission(callerAccount, -1) == false)
@@ -967,8 +590,8 @@ int IGFManager :: CreateCategory(AccountData *callerAccount, int parentCategoryI
 	if(strlen(name) == 0)
 		return ERROR_INVALIDTITLETEXT;
 
-	IGFCategory *category = GetPagedCategoryPtr(parentCategoryID);
-	if(category == NULL)
+	IGFCategory category = GetPagedCategoryPtr(parentCategoryID);
+	if(category.mID == 0)
 	{
 		g_Logs.data->error("Invalid category: %v", parentCategoryID);
 		return ERROR_INVALIDCATEGORY;
@@ -978,7 +601,9 @@ int IGFManager :: CreateCategory(AccountData *callerAccount, int parentCategoryI
 	entry.mID = GetNewCategoryID();
 	entry.mTitle = name;
 	entry.mParentCategory = parentCategoryID;
-	InsertPagedCategory(entry);
+	if(!g_ClusterManager.WriteEntity(&entry))
+		return ERROR_INVALIDCATEGORY;
+
 	return ERROR_NONE;
 }
 
@@ -1004,23 +629,24 @@ const char* IGFManager :: GetErrorString(int errCode)
 	case ERROR_POSTLENGTH: return "Post body text is too long.";
 	case ERROR_TARGETNOTCATEGORY: return "The target location must be a category.";
 	case ERROR_TARGETSAME: return "The target location must be different from the source.";
+	case ERROR_CLUSTER: return "This entity failed to save to the cluster.";
 	}
 	return "Unknown error.";
 }
 
 int IGFManager :: GetNewCategoryID(void)
 {
-	return mNextCategoryID++;
+	return g_ClusterManager.NextValue(ID_IGF_CATEGORY_ID);
 }
 
 int IGFManager :: GetNewThreadID(void)
 {
-	return mNextThreadID++;
+	return g_ClusterManager.NextValue(ID_IGF_THREAD_ID);
 }
 
 int IGFManager :: GetNewPostID(void)
 {
-	return mNextPostID++;
+	return g_ClusterManager.NextValue(ID_IGF_POST_ID);
 }
 
 bool IGFManager :: HasInvalidCharacters(const char *text, bool allowMarkup)
@@ -1084,217 +710,28 @@ void IGFManager :: ProcessPostBody(std::string &postBody)
 	}
 }
 
-
-void IGFManager :: InsertPagedCategory(IGFCategory& object)
+IGFCategory IGFManager :: GetPagedCategoryPtr(int elementID)
 {
-	int page = GetCategoryPage(object.mID);
-	if(mCategoryPages.find(page) == mCategoryPages.end())
-		LoadCategoryPage(page);
-
-	mCategoryPages[page].InsertEntry(object, true);
-	cdCategory.AddChange();
+	IGFCategory cat;
+	cat.mID = elementID;
+	g_ClusterManager.ReadEntity(&cat);
+	return cat;
 }
 
-void IGFManager :: InsertPagedThread(IGFThread& object)
+IGFThread IGFManager:: GetPagedThreadPtr(int elementID)
 {
-	int page = GetThreadPage(object.mID);
-	if(mThreadPages.find(page) == mThreadPages.end())
-		LoadThreadPage(page);
-
-	mThreadPages[page].InsertEntry(object, true);
-	cdThread.AddChange();
+	IGFThread thread;
+	thread.mID = elementID;
+	g_ClusterManager.ReadEntity(&thread);
+	return thread;
 }
 
-void IGFManager:: InsertPagedPost(IGFPost& object)
+IGFPost IGFManager:: GetPagedPostPtr(int elementID)
 {
-	int page = GetPostPage(object.mID);
-	if(mPostPages.find(page) == mPostPages.end())
-		LoadPostPage(page);
-
-	mPostPages[page].InsertEntry(object, true);
-	cdPost.AddChange();
-}
-
-IGFCategory* IGFManager :: GetPagedCategoryPtr(int elementID)
-{
-	int page = GetCategoryPage(elementID);
-	CATEGORYPAGE::iterator it = mCategoryPages.find(page);
-	if(it == mCategoryPages.end())
-		LoadCategoryPage(page);
-
-	mCategoryPages[page].mLastAccessTime = g_ServerTime;
-	return mCategoryPages[page].GetPointerByID(elementID);
-}
-
-IGFThread* IGFManager:: GetPagedThreadPtr(int elementID)
-{
-	int page = GetThreadPage(elementID);
-	THREADPAGE::iterator it = mThreadPages.find(page);
-	if(it == mThreadPages.end())
-		LoadThreadPage(page);
-	mThreadPages[page].mLastAccessTime = g_ServerTime;
-	return mThreadPages[page].GetPointerByID(elementID);
-}
-
-IGFPost* IGFManager:: GetPagedPostPtr(int elementID)
-{
-	int page = GetPostPage(elementID);
-	POSTPAGE::iterator it = mPostPages.find(page);
-	if(it == mPostPages.end())
-		LoadPostPage(page);
-	mPostPages[page].mLastAccessTime = g_ServerTime;
-	return mPostPages[page].GetPointerByID(elementID);
-}
-
-
-void IGFManager :: LoadCategoryPage(int page)
-{
-	char buffer[256];
-	Util::SafeFormat(buffer, sizeof(buffer), "%08d.txt", page);
-	std::string path = Platform::JoinPath(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "IGForum"), "Category"), buffer);
-	mCategoryPages[page].mPage = page;  //Set the page so autosave always write to page zero and overwrite old entries.
-	mCategoryPages[page].LoadFile(path);
-}
-
-void IGFManager :: LoadThreadPage(int page)
-{
-	char buffer[256];
-	Util::SafeFormat(buffer, sizeof(buffer), "%08d.txt", page);
-	std::string path = Platform::JoinPath(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "IGForum"), "Thread"), buffer);
-
-	mThreadPages[page].mPage = page;  //Set the page so autosave always write to page zero and overwrite old entries.
-	mThreadPages[page].LoadFile(path);
-}
-
-void IGFManager :: LoadPostPage(int page)
-{
-	char buffer[256];
-	Util::SafeFormat(buffer, sizeof(buffer), "%08d.txt", page);
-	std::string path = Platform::JoinPath(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "IGForum"), "Post"), buffer);
-
-	mPostPages[page].mPage = page;  //Set the page so autosave always write to page zero and overwrite old entries.
-	mPostPages[page].LoadFile(path);
-}
-
-void IGFManager :: CheckAutoSave(bool force)
-{
-	if(g_ServerTime < mNextAutosaveCheck && force == false)
-		return;
-
-	mNextAutosaveCheck = g_ServerTime + AUTOSAVE_FREQUENCY;
-
-	bool updateID = false;
-	if((cdCategory.CheckUpdateAndClear(AUTOSAVE_TIME) == true) || (force == true))
-	{
-		AutosaveCategory();
-		cdCategory.ClearPending();
-		updateID = true;
-	}
-	if((cdThread.CheckUpdateAndClear(AUTOSAVE_TIME) == true) || (force == true))
-	{
-		AutosaveThread();
-		cdThread.ClearPending();
-		updateID = true;
-	}
-	if((cdPost.CheckUpdateAndClear(AUTOSAVE_TIME) == true) || (force == true))
-	{
-		AutosavePost();
-		cdPost.ClearPending();
-		updateID = true;
-	}
-	if(updateID == true)
-		SaveConfig();
-}
-
-void IGFManager :: AutosaveCategory(void)
-{
-	char buffer[256];
-	CATEGORYPAGE::iterator it;
-	for(it = mCategoryPages.begin(); it != mCategoryPages.end(); ++it)
-	{
-		if(it->second.mPendingChanges == 0)
-			continue;
-		Util::SafeFormat(buffer, sizeof(buffer), "%08d.txt", it->second.mPage);
-		it->second.SaveFile(Platform::JoinPath(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "IGForum"), "Category"), buffer));
-		it->second.mPendingChanges = 0;
-	}
-}
-
-void IGFManager :: AutosaveThread(void)
-{
-	char buffer[256];
-	THREADPAGE::iterator it;
-	for(it = mThreadPages.begin(); it != mThreadPages.end(); ++it)
-	{
-		if(it->second.mPendingChanges == 0)
-			continue;
-		Util::SafeFormat(buffer, sizeof(buffer), "%08d.txt", it->second.mPage);
-		it->second.SaveFile(Platform::JoinPath(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "IGForum"), "Thread"), buffer));
-		it->second.mPendingChanges = 0;
-	}
-}
-
-void IGFManager :: AutosavePost(void)
-{
-	char buffer[256];
-	POSTPAGE::iterator it;
-	for(it = mPostPages.begin(); it != mPostPages.end(); ++it)
-	{
-		if(it->second.mPendingChanges == 0)
-			continue;
-		Util::SafeFormat(buffer, sizeof(buffer), "%08d.txt", it->second.mPage);
-		it->second.SaveFile(Platform::JoinPath(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "IGForum"), "Post"), buffer));
-		it->second.mPendingChanges = 0;
-	}
-}
-
-void IGFManager :: SaveConfig(void)
-{
-	std::string filename = Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "IGForum"), "IGFSession.txt");
-	FILE *output = fopen(filename.c_str(), "wb");
-	if(output == NULL)
-	{
-		g_Logs.data->error("IGFManager::SaveConfig failed to open file %v.", filename);
-		return;
-	}
-	fprintf(output, "NextCategoryID=%d\r\n", mNextCategoryID);
-	fprintf(output, "NextThreadID=%d\r\n", mNextThreadID);
-	fprintf(output, "NextPostID=%d\r\n", mNextPostID);
-	fprintf(output, "PlatformLaunchMinute=%lu\r\n", mPlatformLaunchMinute);
-	fclose(output);
-}
-
-
-void IGFManager :: LoadConfig(void)
-{
-	std::string filename = Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "IGForum"), "IGFSession.txt");
-	FileReader lfr;
-	if(lfr.OpenText(filename.c_str()) != Err_OK)
-	{
-		g_Logs.data->error("IGFManager::LoadConfig failed to open file %v.", filename);
-		return;
-	}
-	lfr.CommentStyle = Comment_Semi;
-	while(lfr.FileOpen() == true)
-	{
-		lfr.ReadLine();
-		int r = lfr.BreakUntil("=", '=');
-		if(r > 0)
-		{
-			lfr.BlockToStringC(0, 0);
-			if(strcmp(lfr.SecBuffer, "NextCategoryID") == 0)
-				mNextCategoryID = lfr.BlockToIntC(1);
-			else if(strcmp(lfr.SecBuffer, "NextThreadID") == 0)
-				mNextThreadID = lfr.BlockToIntC(1);
-			else if(strcmp(lfr.SecBuffer, "NextPostID") == 0)
-				mNextPostID = lfr.BlockToIntC(1);
-			else if(strcmp(lfr.SecBuffer, "PlatformLaunchMinute") == 0)
-				mPlatformLaunchMinute = lfr.BlockToULongC(1);
-			else
-				g_Logs.data->warn("IGFManager::LoadConfig unknown identifier [%v] in file [%v] on line [%v]", lfr.SecBuffer, filename, lfr.LineNumber);
-		}
-	}
-	lfr.CloseCurrent();
+	IGFPost post;
+	post.mID = elementID;
+	g_ClusterManager.ReadEntity(&post);
+	return post;
 }
 
 const char* IGFManager :: ConvertInteger(int value)
@@ -1324,26 +761,26 @@ bool IGFManager :: GetEditPermission(AccountData *callerAccount, int objectOwner
 
 int IGFManager :: DeletePost(AccountData *callerAccount, int threadID, int postID)
 {
-	IGFThread *thread = GetPagedThreadPtr(threadID);
-	if(thread == NULL)
+	IGFThread thread = GetPagedThreadPtr(threadID);
+	if(thread.mID == 0)
 		return ERROR_INVALIDTHREAD;
-	if(thread->mLocked == true && GetEditPermission(callerAccount, -1) == false)
+	if(thread.mLocked == true && GetEditPermission(callerAccount, -1) == false)
 		return ERROR_THREADLOCKED;
 
-	IGFPost *post = GetPagedPostPtr(postID);
-	if(post == NULL)
+	IGFPost post = GetPagedPostPtr(postID);
+	if(post.mID == 0)
 		return ERROR_INVALIDPOST;
 
 	bool perm = false;
-	if(post->mID == thread->GetLastPostID() && post->mCreationAccount == callerAccount->ID)
+	if(post.mID == thread.GetLastPostID() && post.mCreationAccount == callerAccount->ID)
 		perm = true;
 	else
 		perm = GetEditPermission(callerAccount, -1);
 	if(perm == false)
 		return ERROR_PERMISSIONDENIED;
 
-	MarkChangedThread(threadID);
-	thread->DeletePost(postID);
+	thread.DeletePost(postID);
+	g_ClusterManager.WriteEntity(&thread);
 	return ERROR_NONE;
 }
 
@@ -1354,24 +791,25 @@ int IGFManager :: DeleteObject(AccountData *callerAccount, int objectType, int o
 
 	if(objectType == TYPE_CATEGORY)
 	{
-		IGFCategory *category = GetPagedCategoryPtr(objectID);
-		if(category == NULL)
+		IGFCategory category = GetPagedCategoryPtr(objectID);
+		if(category.mID == 0)
 			return ERROR_INVALIDCATEGORY;
 
 		DeleteObjectData(TYPE_CATEGORY, objectID);
 	}
 	else if(objectType == TYPE_THREAD)
 	{
-		IGFThread *thread = GetPagedThreadPtr(objectID);
-		if(thread == NULL)
+		IGFThread thread = GetPagedThreadPtr(objectID);
+		if(thread.mID == 0)
 			return ERROR_INVALIDTHREAD;
 
-		IGFCategory *parent = GetPagedCategoryPtr(thread->mParentCategory);
-		if(parent == NULL)
+		IGFCategory parent = GetPagedCategoryPtr(thread.mParentCategory);
+		if(parent.mID == 0)
 			return ERROR_INVALIDCATEGORY;
 
-		MarkChangedCategory(parent->mID);
-		parent->UnattachThread(objectID);
+		parent.UnattachThread(objectID);
+		g_ClusterManager.WriteEntity(&parent, false);
+		g_ClusterManager.RemoveEntity(&thread);
 	}
 	else 
 		return ERROR_UNHANDLED;
@@ -1379,60 +817,30 @@ int IGFManager :: DeleteObject(AccountData *callerAccount, int objectType, int o
 	return ERROR_NONE;
 }
 
-void IGFManager :: MarkChangedCategory(int objectID)
-{
-	int page = GetCategoryPage(objectID);
-	if(mCategoryPages.find(page) == mCategoryPages.end())
-		return;
-
-	mCategoryPages[page].mPendingChanges++;
-	cdCategory.AddChange();
-}
-
-void IGFManager :: MarkChangedThread(int objectID)
-{
-	int page = GetThreadPage(objectID);
-	if(mThreadPages.find(page) == mThreadPages.end())
-		return;
-
-	mThreadPages[page].mPendingChanges++;
-	cdThread.AddChange();
-}
-
-void IGFManager :: MarkChangedPost(int objectID)
-{
-	int page = GetPostPage(objectID);
-	if(mPostPages.find(page) == mPostPages.end())
-		return;
-
-	mPostPages[page].mPendingChanges++;
-	cdPost.AddChange();
-}
-
 int IGFManager :: SetLockStatus(AccountData *callerAccount, int categoryType, int objectID, bool status)
 {
 	if(categoryType == TYPE_CATEGORY)
 	{
-		IGFCategory *category = GetPagedCategoryPtr(objectID);
-		if(category == NULL)
+		IGFCategory category = GetPagedCategoryPtr(objectID);
+		if(category.mID == 0)
 			return ERROR_INVALIDCATEGORY;
 		if(GetEditPermission(callerAccount, -1) == false)
 			return ERROR_PERMISSIONDENIED;
 
-		category->mLocked = status;
-		MarkChangedCategory(objectID);
+		category.mLocked = status;
+		g_ClusterManager.WriteEntity(&category, false);
 		return ERROR_NONE;
 	}
 	if(categoryType == TYPE_THREAD)
 	{
-		IGFThread *thread = GetPagedThreadPtr(objectID);
-		if(thread == NULL)
+		IGFThread thread = GetPagedThreadPtr(objectID);
+		if(thread.mID == 0)
 			return ERROR_INVALIDTHREAD;
-		if(GetEditPermission(callerAccount, thread->mCreationAccount) == false)
+		if(GetEditPermission(callerAccount, thread.mCreationAccount) == false)
 			return ERROR_PERMISSIONDENIED;
 
-		thread->mLocked = status;
-		MarkChangedThread(objectID);
+		thread.mLocked = status;
+		g_ClusterManager.WriteEntity(&thread, false);
 		return ERROR_NONE;
 	}
 	return ERROR_UNHANDLED;
@@ -1443,20 +851,20 @@ int IGFManager :: SetStickyStatus(AccountData *callerAccount, int categoryType, 
 	if(categoryType != TYPE_THREAD)
 		return ERROR_NOTATHREAD;
 
-	IGFThread *thread = GetPagedThreadPtr(objectID);
-	if(thread == NULL)
+	IGFThread thread = GetPagedThreadPtr(objectID);
+	if(thread.mID == 0)
 		return ERROR_INVALIDTHREAD;
 	if(GetEditPermission(callerAccount, -1) == false)
 		return ERROR_PERMISSIONDENIED;
 
-	IGFCategory *category = GetPagedCategoryPtr(thread->mParentCategory);
-	if(category == NULL)
+	IGFCategory category = GetPagedCategoryPtr(thread.mParentCategory);
+	if(category.mID == 0)
 		return ERROR_INVALIDCATEGORY;
 
-	thread->mStickied = status;
-	SortCategoryThreads(category);
-	MarkChangedThread(thread->mID);
-	MarkChangedCategory(category->mID);
+	thread.mStickied = status;
+	SortCategoryThreads(&category);
+	g_ClusterManager.WriteEntity(&thread, false);
+	g_ClusterManager.WriteEntity(&category, false);
 	return ERROR_NONE;
 }
 
@@ -1485,11 +893,11 @@ int IGFManager :: EditObject(AccountData *callerAccount, int categoryType, int p
 		}
 		else
 		{
-			IGFCategory *category = GetPagedCategoryPtr(renameID);
-			if(category == NULL)
+			IGFCategory category = GetPagedCategoryPtr(renameID);
+			if(category.mID == 0)
 				return ERROR_INVALIDCATEGORY;
-			category->mTitle = name;
-			MarkChangedCategory(renameID);
+			category.mTitle = name;
+			g_ClusterManager.WriteEntity(&category, false);
 		}
 	}
 	else if(categoryType == TYPE_THREAD)
@@ -1500,11 +908,11 @@ int IGFManager :: EditObject(AccountData *callerAccount, int categoryType, int p
 
 		if(renameID != 0)
 		{
-			IGFThread *thread = GetPagedThreadPtr(renameID);
-			if(thread == NULL)
+			IGFThread thread = GetPagedThreadPtr(renameID);
+			if(thread.mID == 0)
 				return ERROR_INVALIDTHREAD;
-			thread->mTitle = name;
-			MarkChangedThread(renameID);
+			thread.mTitle = name;
+			g_ClusterManager.WriteEntity(&thread, false);
 		}
 	}
 	else
@@ -1528,28 +936,29 @@ int IGFManager :: RunMove(AccountData *callerAccount, int srcType, int srcID, in
 	if(dstType != TYPE_CATEGORY)
 		return ERROR_TARGETNOTCATEGORY;
 
-	IGFThread *thread = GetPagedThreadPtr(srcID);
-	if(thread == NULL)
+	IGFThread thread = GetPagedThreadPtr(srcID);
+	if(thread.mID == 0)
 		return ERROR_INVALIDTHREAD;
 
-	IGFCategory *categorySrc = GetPagedCategoryPtr(thread->mParentCategory);
-	if(categorySrc == NULL)
+	IGFCategory categorySrc = GetPagedCategoryPtr(thread.mParentCategory);
+	if(categorySrc.mID == 0)
 		return ERROR_INVALIDCATEGORY;
 
-	IGFCategory *categoryDst = GetPagedCategoryPtr(dstID);
-	if(categoryDst == NULL)
+	IGFCategory categoryDst = GetPagedCategoryPtr(dstID);
+	if(categoryDst.mID == 0)
 		return ERROR_INVALIDCATEGORY;
 
-	if(categorySrc == categoryDst)
+	if(categorySrc.mID == categoryDst.mID)
 		return ERROR_TARGETSAME;
 
 	//Change the thread's owning category, swap the threads between containers, and mark them both as changed. 
-	thread->mParentCategory = categoryDst->mID;
-	categorySrc->UnattachThread(thread->mID);
-	categoryDst->AttachThread(thread->mID);
-	SortCategoryThreads(categoryDst);
-	MarkChangedCategory(categorySrc->mID);
-	MarkChangedCategory(categoryDst->mID);
+	thread.mParentCategory = categoryDst.mID;
+	categorySrc.UnattachThread(thread.mID);
+	categoryDst.AttachThread(thread.mID);
+	SortCategoryThreads(&categoryDst);
+	g_ClusterManager.WriteEntity(&thread, false);
+	g_ClusterManager.WriteEntity(&categorySrc, false);
+	g_ClusterManager.WriteEntity(&categoryDst, false);
 
 	return ERROR_NONE;
 }
@@ -1558,55 +967,12 @@ void IGFManager :: DeleteObjectData(int objectType, int objectID)
 {
 	if(objectType == TYPE_CATEGORY)
 	{
-		IGFCategory *category = GetPagedCategoryPtr(objectID);
-		if(category == NULL)
+		IGFCategory category = GetPagedCategoryPtr(objectID);
+		if(category.mID == 0)
 			return;
 
-		int page = GetCategoryPage(objectID);
-		CATEGORYPAGE::iterator it = mCategoryPages.find(page);
-		if(it != mCategoryPages.end())
-		{
-			it->second.DeleteObject(objectID);
-			cdCategory.AddChange();
-		}
-	}
-}
-
-void IGFManager :: RunGarbageCheck(void)
-{
-	if(g_ServerTime < mNextGarbageCheck)
-		return;
-
-	mNextGarbageCheck = g_ServerTime + GARBAGE_CHECK_FREQUENCY;
-
-	CATEGORYPAGE::iterator cit;
-	cit = mCategoryPages.begin();
-	while(cit != mCategoryPages.end())
-	{
-		if(cit->second.QualifyGarbage() == true)
-			mCategoryPages.erase(cit++);
-		else
-			++cit;
-	}
-
-	THREADPAGE::iterator tit;
-	tit = mThreadPages.begin();
-	while(tit != mThreadPages.end())
-	{
-		if(tit->second.QualifyGarbage() == true)
-			mThreadPages.erase(tit++);
-		else
-			++tit;
-	}
-
-	POSTPAGE::iterator pit;
-	pit = mPostPages.begin();
-	while(pit != mPostPages.end())
-	{
-		if(pit->second.QualifyGarbage() == true)
-			mPostPages.erase(pit++);
-		else
-			++pit;
+		g_ClusterManager.RemoveEntity(&category);
+		g_ClusterManager.ListRemove(LISTPREFIX_IGF_CATEGORIES, StringUtil::Format("%d", objectID));
 	}
 }
 
@@ -1633,15 +999,15 @@ void IGFManager :: SortCategoryThreads(IGFCategory *category)
 	for(size_t i = 0; i < category->mThreadList.size(); i++)
 	{
 		int threadID = category->mThreadList[i];
-		IGFThread *thread = GetPagedThreadPtr(threadID);
-		if(thread == NULL)
+		IGFThread thread = GetPagedThreadPtr(threadID);
+		if(thread.mID == 0)
 		{
 			g_Logs.data->error("IGFManager::SortCategoryThreads thread [%v] does not exist", threadID);
 			continue;
 		}
 		sortObj.mID = threadID;
-		sortObj.mLastUpdate = thread->mLastUpdateTime;
-		sortObj.mSticky = thread->mStickied;
+		sortObj.mLastUpdate = thread.mLastUpdateTime;
+		sortObj.mSticky = thread.mStickied;
 		threadList.push_back(sortObj);
 	}
 	std::sort(threadList.begin(), threadList.end());

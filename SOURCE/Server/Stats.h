@@ -9,6 +9,7 @@
 #include "json/json.h"
 #include "ByteBuffer.h"
 #include "CommonTypes.h"
+#include "Entities.h"
 
 //Macro to get the size of a structure member.
 //Derived from the offsetof() macro, which (for the 32 bit version) is defined as:
@@ -619,15 +620,15 @@ const int NumStats = 131;
 extern StatDefinition StatList[131];
 
 int GetStatIndex(short StatID);
-int GetStatIndexByName(const char *name);
-StatDefinition* GetStatDefByName(const char *name);
-int GetStatusIDByName(const char *name);
-const char* GetStatusNameByID(int id);
+int GetStatIndexByName(const std::string &name);
+StatDefinition* GetStatDefByName(const std::string &name);
+int GetStatusIDByName(const std::string &name);
+const std::string GetStatusNameByID(int id);
 
 int WriteCurrentStatToBuffer(char *buffer, short StatID, CharacterStatSet *css);
 int WriteStatToBuffer(char *buffer, short StatID, float value);
-int WriteStatToSet(int StatID, const char *value, CharacterStatSet *css);
-int WriteStatToSetByName(const char *name, const char *value, CharacterStatSet *css);
+int WriteStatToSet(int StatID, const std::string &value, CharacterStatSet *css);
+int WriteStatToSetByName(const std::string &name, const std::string &value, CharacterStatSet *css);
 
 bool isStatZero(int StatIndex, CharacterStatSet *css);
 bool isStatEqual(int StatIndex, CharacterStatSet *css1, CharacterStatSet *css2);
@@ -635,6 +636,7 @@ const char * GetStatValueAsString(int StatIndex, char *ConvBuf, CharacterStatSet
 int WriteStatToJSON(int StatIndex, CharacterStatSet *css, Json::Value &value);
 int WriteStatToFile(int StatIndex, CharacterStatSet *css, FILE *file);
 int WriteStatToFileByName(char *name, CharacterStatSet *css, FILE *file);
+int WriteStatToEntity(int StatIndex, CharacterStatSet *css, AbstractEntityWriter *writer);
 float GetStatValueByID(int statID, CharacterStatSet *css);
 int WriteValueToStat(int StatID, float value, CharacterStatSet *css);
 

@@ -120,17 +120,17 @@ int SocketClass :: CreateSocket(char *port, const char *address)
 	serveraddr.sin_port = htons(portNum);
 
 	// Em - 13/3/2015 - Allow binding to different address (to have multiple servers on same host with no client mod)
-	if(address) {
+	if(strlen(address) > 0) {
 		if(inet_aton(address, &serveraddr.sin_addr) < 0) {
-			g_Logs.server->warn("Binding to all address for port %v because bind address %v is invalid", portNum, address);
+			g_Logs.server->info("Binding to all address for port %v because bind address %v is invalid", portNum, address);
 			serveraddr.sin_addr.s_addr = INADDR_ANY;
 		}
 		else {
-			g_Logs.server->info("Bound port %v to %v", portNum, address);
+			g_Logs.server->info("Bound port %v to %v", portNum);
 		}
 	}
 	else {
-		g_Logs.server->warn("Binding to all address");
+		g_Logs.server->info("Binding to all address");
 		serveraddr.sin_addr.s_addr = INADDR_ANY;
 	}
 

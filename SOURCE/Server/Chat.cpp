@@ -8,6 +8,7 @@
 #include "Instance.h"
 #include "Clan.h"
 #include "Config.h"
+#include "Cluster.h"
 #include "http/SiteClient.h"
 #include "util/Log.h"
 
@@ -289,7 +290,7 @@ void ChatManager :: LogMessage(std::string message)
 
 bool ChatManager ::SendChatMessageAsOffline(ChatMessage &message, HTTPD::SiteSession *session) {
 	/* Look up the account name for the character */
-	int cdefID = g_AccountManager.GetCDefFromCharacterName(message.mRecipient.c_str());
+	int cdefID = g_UsedNameDatabase.GetIDByName(message.mRecipient);
 	int msgCode = INFOMSG_ERROR;
 	if(cdefID == -1) {
 		g_Logs.server->error("No such character \"%v\" .", message.mRecipient.c_str());
@@ -321,7 +322,22 @@ bool ChatManager ::SendChatMessageAsOffline(ChatMessage &message, HTTPD::SiteSes
 	return false;
 }
 
-bool ChatManager ::SendChatMessage(ChatMessage &message, CreatureInstance *sendingCreatureInstance) {
+bool ChatManager::SendChatMessage(ChatMessage &message, CreatureInstance *sendingCreatureInstance) {
+	bool ok = DeliverChatMessage(message, sendingCreatureInstance);
+	if(ok) {
+		g_ClusterManager.Chat(message);
+	}
+	else {
+		/* If the message was a /tell for a player on another shard, pass it on */
+		if(message.mTell && g_ClusterManager.IsPlayerOnOtherShard(message.mRecipient)) {
+			g_ClusterManager.Chat(message);
+			ok = true;
+		}
+	}
+	return ok;
+}
+
+bool ChatManager::DeliverChatMessage(ChatMessage &message, CreatureInstance *sendingCreatureInstance) {
 
 	message.mTime =  time(NULL);
 
@@ -416,7 +432,7 @@ bool ChatManager ::SendChatMessage(ChatMessage &message, CreatureInstance *sendi
 			case CHAT_SCOPE_CLAN:
 			{
 
-				Clans::Clan c = g_ClanManager.mClans[message.mSenderClanID];
+				Clans::Clan c = g_ClanManager.GetClan(message.mSenderClanID);
 				if(it->pld.CreatureDefID == message.mSenderCreatureDefID)  //Send to self
 					send = true;
 				else {

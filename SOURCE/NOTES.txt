@@ -1,3 +1,0 @@
-For client mods, see NOTES in the ClientMod folder.
-
-For the server, see main.cpp for info.

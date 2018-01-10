@@ -8,6 +8,9 @@
 
 typedef std::vector<std::string> STRINGLIST;
 
+static std::string KEYPREFIX_VIRTUAL_ITEM = "VirtualItem";
+static std::string ID_NEXT_VIRTUAL_ITEM_ID = "NextVirtualItemID";
+
 class DropRateProfile;
 
 struct ModRow

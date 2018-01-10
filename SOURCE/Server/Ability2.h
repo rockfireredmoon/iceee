@@ -676,6 +676,7 @@ public:
 	int InterruptChance(ARGUMENT_LIST args);
 	int Transform(ARGUMENT_LIST args);
 	int Nudify(ARGUMENT_LIST args);
+	int Scale(ARGUMENT_LIST args);
 	int Untransform(ARGUMENT_LIST args);
 	int NotTransformed(ARGUMENT_LIST args);
 
@@ -786,7 +787,7 @@ public:
 	int ResolveCooldownCategoryID(const char *cooldownName);
 	const char* ResolveCooldownCategoryName(int cooldownCategoryID);
 	int ResolveStatID(const char *statName);
-	int ResolveStatusEffectID(const char *statusEffectName);
+	int ResolveStatusEffectID(const std::string &statusEffectName);
 	int ResolveItemID(const char *itemID);
 
 	static int GetAbilityErrorCode(int value);

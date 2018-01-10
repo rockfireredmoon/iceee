@@ -50,13 +50,13 @@ int MarkerListHandler::handleQuery(SimulatorThread *sim,
 				it != creatureInstance->actInst->worldMarkers.WorldMarkerList.end();
 				++it) {
 			wpos += PutByte(&sim->SendBuf[wpos], 4);
-			sprintf(sim->Aux1, "%s", it->Name);
+			sprintf(sim->Aux1, "%s", it->Name.c_str());
 			wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux1);
 			sprintf(sim->Aux1, "%d", creatureInstance->actInst->mZone);
 			wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux1);
 			sprintf(sim->Aux1, "%f %f %f", it->X, it->Y, it->Z);
 			wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux1);
-			sprintf(sim->Aux1, "%s", it->Comment);
+			sprintf(sim->Aux1, "%s", it->Comment.c_str());
 			wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux1);
 		}
 
@@ -89,10 +89,9 @@ int MarkerEditHandler::handleQuery(SimulatorThread *sim,
 	for (it = creatureInstance->actInst->worldMarkers.WorldMarkerList.begin();
 			it != creatureInstance->actInst->worldMarkers.WorldMarkerList.end();
 			++it) {
-		if (strcmp(it->Name, query->args[0].c_str()) == 0) {
-			Util::SafeCopy(it->Name, query->args[2].c_str(), sizeof(it->Name));
-			Util::SafeCopy(it->Comment, query->args[4].c_str(),
-					sizeof(it->Comment));
+		if (it->Name.compare(query->args[0]) == 0) {
+			it->Name = query->args[2];
+			it->Comment = query->args[4];
 			it->X = creatureInstance->CurrentX;
 			it->Y = creatureInstance->CurrentY;
 			it->Z = creatureInstance->CurrentZ;
@@ -104,8 +103,8 @@ int MarkerEditHandler::handleQuery(SimulatorThread *sim,
 			query->args[2].c_str(), creatureInstance->actInst->mZone,
 			query->args[4].c_str());
 	WorldMarker wm;
-	Util::SafeCopy(wm.Name, query->args[2].c_str(), sizeof(wm.Name));
-	Util::SafeCopy(wm.Comment, query->args[4].c_str(), sizeof(wm.Comment));
+	wm.Name = query->args[2];
+	wm.Comment = query->args[4];
 	wm.X = creatureInstance->CurrentX;
 	wm.Y = creatureInstance->CurrentY;
 	wm.Z = creatureInstance->CurrentZ;
@@ -131,7 +130,7 @@ int MarkerDelHandler::handleQuery(SimulatorThread *sim,
 	for (it = creatureInstance->actInst->worldMarkers.WorldMarkerList.begin();
 			it != creatureInstance->actInst->worldMarkers.WorldMarkerList.end();
 			++it) {
-		if (strcmp(it->Name, query->args[0].c_str()) == 0) {
+		if (it->Name.compare(query->args[0]) == 0) {
 			creatureInstance->actInst->worldMarkers.WorldMarkerList.erase(it);
 			creatureInstance->actInst->worldMarkers.Save();
 			break;

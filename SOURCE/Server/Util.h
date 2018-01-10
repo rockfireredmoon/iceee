@@ -5,6 +5,7 @@
 #include "CommonTypes.h"
 #include "Books.h"
 #include "Forms.h"
+#include "Achievements.h"
 
 const int MODMESSAGE_EVENT_SUPERCRIT = 1;
 const int MODMESSAGE_EVENT_EMOTE = 2;
@@ -45,15 +46,18 @@ int PrepExt_AbilityEvent(char *buffer, int creatureID, int abilityID, int abilit
 int PrepExt_CancelUseEvent(char *buffer, int CreatureID);
 int PrepExt_ActorJump(char *buffer, int actor);
 int PrepExt_RemoveCreature(char *buffer, int actorID);
+int PrepExt_Damage(char *buffer, int actorID, const char *damageString, const char *ability, int critical, int absorbed);
 int PrepExt_SendInfoMessage(char *buffer, const char *message, unsigned char eventID);
 int PrepExt_SendFallDamage(char *buffer, int damage);
 int PrepExt_GenericChatMessage(char *buffer, int creatureID, const char *name, const char *channel, const char *message);
 
 //Specific stat updates
+int PrepExt_Achievement(char *buffer, int creatureID, const char *achievement, const char *scoreSpec);
 int PrepExt_SendFormOpen(char *buffer, FormDefinition form);
 int PrepExt_SendFormClose(char *buffer, int formId);
 int PrepExt_SendBookOpen(char *buffer, int bookID, int page, int op);
 int PrepExt_Refashion(char *buffer);
+int PrepExt_Craft(char *buffer);
 int PrepExt_CooldownExpired(char *buffer, long actor, const char *cooldownCategory);
 int PrepExt_ChangeTarget(char *buffer, int sourceID, int targetID);
 int PrepExt_ExperienceGain(char *buffer, int CreatureID, int ExpAmount);
@@ -62,6 +66,7 @@ int PrepExt_QueryResponseNull(char *buffer, int queryIndex);
 int PrepExt_QueryResponseString(char *buffer, int queryIndex, const char *strData);
 int PrepExt_QueryResponseString2(char *buffer, int queryIndex, const char *strData1, const char *strData2);
 int PrepExt_QueryResponseStringList(char *buffer, int queryIndex, const STRINGLIST &strData);
+int PrepExt_QueryResponseStringRows(char *buffer, int queryIndex, const STRINGLIST &strData);
 int PrepExt_QueryResponseMultiString(char *buffer, int queryIndex, const MULTISTRING &strData);
 int PrepExt_QueryResponseError(char *buffer, int queryIndex, const char *message);
 int PrepExt_SendEffect(char *buffer, int sourceID, const char *effectName, int targetID);
@@ -96,6 +101,7 @@ namespace Util
 	void WriteIntegerIfNot(FILE *output, const char *label, int value, int ignoreVal);
 	void WriteAutoSaveHeader(FILE *output);
 	FILE * OpenSaveFile(const char *filename);
+	int SplitEscaped(const std::string &source, const char *delim, std::vector<std::string> &dest);
 	int Split(const std::string &source, const char *delim, std::vector<std::string> &dest);
 	void Join(std::vector<std::string> &source, const char *delim, std::string &dest);
 	void Replace(std::string &source, char find, char replace);
@@ -133,6 +139,9 @@ namespace Util
 	void EncodeHTML(std::string& data);
 	std::string EncodeJSONString(std::string &str);
 	std::string FormatDate(time_t *time);
+	std::string FormatDateTime(time_t *time);
+	std::string FormatTimeOfDay(time_t *time);
+	std::string FormatTimeOfDayMS(unsigned long);
 	std::string CaptureCommand(std::string cmd);
 	void ReplaceAll(std::string& str, const std::string& from, const std::string& to);
 	void URLDecode(std::string &str);
@@ -152,7 +161,7 @@ namespace Util
 	void AssignFloatArrayFromStringSplit(float *arrayDest, size_t arraySize, const std::string &strData);
 	void TokenizeByWhitespace(const std::string &input, STRINGLIST &output);
 	std::string RandomStr(unsigned int size, bool all);
-	std::string RandomStrFrom(unsigned int size, const char alphanum[]);
+	std::string RandomStrFrom(unsigned int size, std::string from);
 	std::string RandomHexStr(unsigned int size);
 }
 

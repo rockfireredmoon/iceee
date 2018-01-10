@@ -10,6 +10,7 @@
 #include "Util.h"
 #include "Config.h"
 #include "Globals.h"
+#include "Cluster.h"
 #include "PartyManager.h"
 #include "Account.h"
 #include "AIScript.h"
@@ -23,6 +24,7 @@
 #include "DebugProfiler.h"
 #include "ZoneDef.h"
 #include "Interact.h"
+#include "Scheduler.h"
 #include "ChatChannel.h"
 #include "IGForum.h"
 #include <algorithm>  //for std::replace
@@ -30,10 +32,12 @@
 #include "Fun.h"
 #include "Crafting.h"
 #include "URL.h"
+#include "StringUtil.h"
 #include "InstanceScale.h"
 #include "Combat.h"
 #include "ConfigString.h"
 #include "GM.h"
+#include "Info.h"
 #include "PVP.h"
 #include "QuestScript.h"
 #include "CreditShop.h"
@@ -320,7 +324,8 @@ void SimulatorManager::ProcessPendingActions(void) {
 		bool res = regList[i]->WaitForStatus(ThreadRequest::STATUS_COMPLETE, 1,
 				ThreadRequest::DEFAULT_WAIT_TIME);
 		if (res == false)
-			g_Logs.server->warn("RunPendingActions() timed out while waiting for worker thread to complete.");
+			g_Logs.server->warn(
+					"RunPendingActions() timed out while waiting for worker thread to complete.");
 	}
 
 	regList.clear();
@@ -430,20 +435,20 @@ void SimulatorManager::SendToAllSimulators(const char *buffer,
 	cs.Leave();
 }
 
-void SimulatorManager :: BroadcastChat(int characterID, const char *display_name, const char *channel, const char *message){
+void SimulatorManager::BroadcastChat(int characterID, const char *display_name,
+		const char *channel, const char *message) {
 	char SendBuf[512];
 	int wpos = PrepExt_Chat(SendBuf, 0, "System", "*SysChat", message);
 	SIMULATOR_IT it;
-	for(it = Simulator.begin(); it != Simulator.end(); ++it)
-	{
-		if(it->ProtocolState == 0) {
+	for (it = Simulator.begin(); it != Simulator.end(); ++it) {
+		if (it->ProtocolState == 0) {
 			continue;
 		}
 
-		if(it->isConnected == false)
+		if (it->isConnected == false)
 			continue;
 
-		if(it->pld.charPtr == NULL)
+		if (it->pld.charPtr == NULL)
 			continue;
 
 		it->AttemptSend(SendBuf, wpos);
@@ -497,8 +502,8 @@ void SimulatorQuery::Clear(void) {
 
 bool SimulatorQuery::ValidArgIndex(unsigned int argIndex) {
 	if (argIndex < 0 || argIndex >= argCount) {
-		g_Logs.simulator->warn("Invalid index: %v for query: %v",
-				argIndex, name.c_str());
+		g_Logs.simulator->warn("Invalid index: %v for query: %v", argIndex,
+				name.c_str());
 		return false;
 	}
 	return true;
@@ -508,7 +513,7 @@ const char* SimulatorQuery::GetString(unsigned int argIndex) {
 	return ValidArgIndex(argIndex) ? args[argIndex].c_str() : NULL;
 }
 
-std::string SimulatorQuery :: GetStringObject(uint argIndex) {
+std::string SimulatorQuery::GetStringObject(uint argIndex) {
 	return ValidArgIndex(argIndex) ? args[argIndex] : "";
 }
 
@@ -751,11 +756,10 @@ void SimulatorThread::RunMainLoop(void) {
 								InternalID);
 						Status = Status_Restart;
 					} else {
-						if(sc.disconnecting) {
+						if (sc.disconnecting) {
 							g_Logs.simulator->info("Simulator shutdown.");
 							Status = Status_None;
-						}
-						else {
+						} else {
 							g_Logs.simulator->error("[%v] Sim recv failed: %v",
 									InternalID, sc.GetErrorMessage());
 							Status = Status_Restart;
@@ -831,29 +835,28 @@ int SimulatorThread::ItemMorph(bool command) {
 		/* If the refashioner is the player themselves, then make sure they have
 		 * a refashioning device
 		 */
-		if(creatureID == creatureInst->CreatureID) {
+		if (creatureID == creatureInst->CreatureID) {
 			free = true;
-			reagentPtr = pld.charPtr->inventory.GetBestSpecialItem(GetContainerIDFromName("inv"), PORTABLE_REFASHIONER);
-			if(reagentPtr == NULL) {
+			reagentPtr = pld.charPtr->inventory.GetBestSpecialItem(
+					GetContainerIDFromName("inv"), PORTABLE_REFASHIONER);
+			if (reagentPtr == NULL) {
 				return QueryErrorMsg::NOREFASHION;
-			}
-			else {
+			} else {
 				reagentDef = g_ItemManager.GetPointerByID(reagentPtr->IID);
-				if(reagentDef == NULL) {
+				if (reagentDef == NULL) {
 					return QueryErrorMsg::NOREFASHION;
 				}
 
-
 				/* Ok to refashion. If item is stackable, then the stack is decreased too (one-off refashion items) */
-				if(reagentPtr->ResolveItemPtr()->mIvMax1 > 1 && reagentPtr->GetStackCount() > 0) {
+				if (reagentPtr->ResolveItemPtr()->mIvMax1 > 1
+						&& reagentPtr->GetStackCount() > 0) {
 					unstack = true;
 				}
 			}
-		}
-		else {
+		} else {
 			// Make sure this object isn't too far away.
 			int distCheck = CheckDistance(creatureID);
-			if(distCheck != 0)
+			if (distCheck != 0)
 				return distCheck;
 		}
 	}
@@ -897,11 +900,14 @@ int SimulatorThread::ItemMorph(bool command) {
 
 	wpos += RemoveItemUpdate(&SendBuf[wpos], Aux3, newPtr);
 	pld.charPtr->inventory.RemItem(newLook);
-	if(reagentDef != NULL) {
-		Util::SafeFormat(Aux3, sizeof(Aux3), "You have used 1 %s.", reagentDef->mDisplayName.c_str());
+	pld.charPtr->pendingChanges++;
+	if (reagentDef != NULL) {
+		Util::SafeFormat(Aux3, sizeof(Aux3), "You have used 1 %s.",
+				reagentDef->mDisplayName.c_str());
 		wpos += PrepExt_SendInfoMessage(&SendBuf[wpos], Aux3, INFOMSG_INFO);
 		/* This refashion is taking up a reagent of sorts, a portable refashioner */
-		wpos += pld.charPtr->inventory.RemoveItemsAndUpdate(INV_CONTAINER, reagentDef->mID, 1, &SendBuf[wpos]);
+		wpos += pld.charPtr->inventory.RemoveItemsAndUpdate(INV_CONTAINER,
+				reagentDef->mID, 1, &SendBuf[wpos]);
 	}
 
 	wpos += AddItemUpdate(&SendBuf[wpos], Aux3, origPtr);
@@ -909,7 +915,6 @@ int SimulatorThread::ItemMorph(bool command) {
 	wpos += PrepExt_QueryResponseString(&SendBuf[wpos], query.ID, "OK");
 	return wpos;
 }
-
 
 void SimulatorThread::AddPendingDisconnect(void) {
 	g_SimulatorManager.AddPendingDisconnect(this);
@@ -924,6 +929,10 @@ void SimulatorThread::ProcessDisconnect(void) {
 	g_Logs.simulator->info("[%v] Disconnecting client", InternalID);
 
 	sc.ShutdownServer();
+	ProcessDetach();
+}
+
+void SimulatorThread::ProcessDetach(void) {
 
 	if (pld.charPtr != NULL) {
 		if (LoadStage == LOADSTAGE_GAMEPLAY) {
@@ -958,11 +967,12 @@ void SimulatorThread::ProcessDisconnect(void) {
 		SetAccountCharacterCache();
 		pld.charPtr->SetExpireTime();
 		pld.charPtr->pendingChanges = 1;
-		g_CharacterManager.SaveCharacter(pld.CreatureDefID);
+		g_CharacterManager.SaveCharacter(pld.CreatureDefID, true);
 		g_ChatChannelManager.LeaveChannel(InternalID, NULL); //Remove the simulator from any chat channels so they don't pollute the active member list.
 
 		pld.charPtr = NULL; //Can't believe I forgot this for so long... Disconnect was often called twice, too.
 	}
+	g_ClusterManager.LeftShard(pld.CreatureDefID);
 	g_PartyManager.RemovePlayerReferences(pld.CreatureDefID, true);
 	MainCallHelperInstanceUnregister();
 
@@ -1112,8 +1122,7 @@ void SimulatorThread::HandleReceivedMessage2(void) {
 	cs.Leave();
 
 	if (isConnected == false) {
-		g_Logs.simulator->fatal(
-				"Should not be processing data (size: %v)",
+		g_Logs.simulator->fatal("Should not be processing data (size: %v)",
 				procData.mData.size());
 		return;
 		procData.Clear();
@@ -1155,8 +1164,8 @@ void SimulatorThread::HandleReceivedMessage2(void) {
 				g_Logs.simulator->error(
 						"[%v] HandleReceivedMessage() Invalid first request, disconnecting (type: %v, size: %v)",
 						InternalID, msgType, msgSize);
-				Disconnect("SimulatorThread::HandleReceivedMessage2");
-				return;
+//				Disconnect("SimulatorThread::HandleReceivedMessage2");
+//				return;
 			}
 			firstConnect = false;
 		}
@@ -1217,8 +1226,7 @@ void SimulatorThread::HandleGameMsg(int msgType) {
 	if (mh == NULL) {
 		g_Logs.simulator->error("[%v] Unhandled message in Game mode: %v",
 				InternalID, msgType);
-	}
-	else {
+	} else {
 		int PendingData = mh->handleMessage(this, &pld, &query, creatureInst);
 		if (PendingData > 0) {
 			AttemptSend(SendBuf, PendingData);
@@ -1362,6 +1370,13 @@ void SimulatorThread::SetPersona(int personaIndex) {
 			}
 		}
 	}
+	ShardPlayer sp = g_ClusterManager.GetActivePlayer(CDefID);
+	if(sp.mID > 0 && sp.mShard.compare(g_ClusterManager.mShardName) != 0) {
+		ForceErrorMessage(StringUtil::Format("That character is already logged in on shard %s.", sp.mShard.c_str()).c_str(),
+				INFOMSG_INFO);
+		Disconnect("SimulatorThread::SetPersona");
+		return;
+	}
 
 	g_CharacterManager.GetThread("SimulatorThread::SetPersona");
 	pld.charPtr = g_CharacterManager.RequestCharacter(CDefID, false);
@@ -1402,12 +1417,12 @@ void SimulatorThread::SetPersona(int personaIndex) {
 	if (ZoneID <= 0) {
 		//No zone has been set, maybe missing data in the character file.
 		//Set default zone and position.
-		ZoneID = g_DefZone;
-		pld.charPtr->activeData.CurZone = g_DefZone;
-		pld.charPtr->activeData.CurX = g_DefX;
-		pld.charPtr->activeData.CurY = g_DefY;
-		pld.charPtr->activeData.CurZ = g_DefZ;
-		pld.charPtr->activeData.CurRotation = g_DefRotation;
+		ZoneID = g_InfoManager.GetStartZone();
+		pld.charPtr->activeData.CurZone = g_InfoManager.GetStartZone();
+		pld.charPtr->activeData.CurX = g_InfoManager.GetStartX();
+		pld.charPtr->activeData.CurY = g_InfoManager.GetStartY();
+		pld.charPtr->activeData.CurZ = g_InfoManager.GetStartZ();
+		pld.charPtr->activeData.CurRotation = g_InfoManager.GetStartRotation();
 	}
 	//int InstanceID = pld.charPtr->activeData.CurInstance;
 	int InstanceID = 0;
@@ -1415,7 +1430,8 @@ void SimulatorThread::SetPersona(int personaIndex) {
 	if (ProtectedSetZone(ZoneID, InstanceID) == false) {
 		ForceErrorMessage("SetPersona: critical error setting zone.",
 				INFOMSG_ERROR);
-		g_Logs.server->error("SetPersona: critical error setting zone: %v\n", ZoneID);
+		g_Logs.server->error("SetPersona: critical error setting zone: %v\n",
+				ZoneID);
 		Disconnect("SimulatorThread::SetPersona");
 		return;
 	}
@@ -1437,7 +1453,9 @@ void SimulatorThread::SetPersona(int personaIndex) {
 	//terrain won't load when you first log in.
 	UpdateSocialEntry(true, false);
 	UpdateSocialEntry(true, true);
-	BroadcastShardChanged();
+
+	// TODO is this needed? it happens in ProtectedSetZone>MainCallSetZone too
+	// BroadcastShardChanged();
 
 	//Since the character has been loaded into an instance and has acquired
 	//a character instance, run processing for abilities.
@@ -1445,7 +1463,8 @@ void SimulatorThread::SetPersona(int personaIndex) {
 	ActivatePassiveAbilities();
 
 	UpdateEqAppearance();
-	UpdateEqAppearance();
+	// TODO is this needed? twice?
+	//UpdateEqAppearance();
 
 	g_Logs.simulator->debug(
 			"[%v] Persona set to index:%v, (ID: %v, CDef: %v) (%v)", InternalID,
@@ -1517,7 +1536,7 @@ bool SimulatorThread::MainCallSetZone(int newZoneID, int newInstanceID,
 	g_Logs.simulator->info("[%v] Attempting to set zone: %v", InternalID,
 			newZoneID);
 
-	if(newZoneID == 0) {
+	if (newZoneID == 0) {
 		return false;
 	}
 
@@ -1563,7 +1582,9 @@ bool SimulatorThread::MainCallSetZone(int newZoneID, int newInstanceID,
 			pld.CurrentInstanceID, pld.CurrentZoneID);
 	pld.LastMapTick = MapTickChange;
 
-	int wpos = PrepExt_SendEnvironmentUpdateMsg(SendBuf, creatureInst->actInst, pld.CurrentZone, pld.zoneDef, creatureInst->CurrentX, creatureInst->CurrentZ, 0);
+	int wpos = PrepExt_SendEnvironmentUpdateMsg(SendBuf, creatureInst->actInst,
+			pld.CurrentZone, pld.zoneDef, creatureInst->CurrentX,
+			creatureInst->CurrentZ, 0);
 	wpos += PrepExt_SetTimeOfDay(&SendBuf[wpos], GetTimeOfDay().c_str());
 	AttemptSend(SendBuf, wpos);
 
@@ -1571,6 +1592,7 @@ bool SimulatorThread::MainCallSetZone(int newZoneID, int newInstanceID,
 
 	CheckMapUpdate(true);
 
+	g_ClusterManager.JoinedShard(ThreadID, pld.zoneDef->mID, pld.charPtr);
 	BroadcastShardChanged();  //Let friends know we changed shards.
 
 	int r = pld.charPtr->questJournal.CheckTravelLocations(
@@ -1601,55 +1623,18 @@ void SimulatorThread::LoadCharacterSession(void) {
 	TimeOnline = g_ServerTime;
 	TimeLastAutoSave = g_ServerTime;
 
+	pld.charPtr->Shard = g_ClusterManager.mShardName;
+
 	time_t curtime;
 	time(&curtime);
-	strftime(pld.charPtr->LastLogOn, sizeof(pld.charPtr->LastLogOn),
-			"%Y-%m-%d, %I:%M %p", localtime(&curtime));
-
-	// Determine if we should give a daily reward for the account
-		if(pld.accPtr->LastLogOn[0] == 0) {
-			pld.accPtr->DueDailyRewards = false;
-		}
-		else {
-			long loginDay = (long)(pld.accPtr->LastLogOnTimeSec / 86400 );
-			long todayDay = (long)(curtime / 86400 );
-			if(loginDay != todayDay) {
-				pld.accPtr->DueDailyRewards = true;
-			}
-			else {
-				pld.accPtr->DueDailyRewards = false;
-			}
-		}
-		if(pld.accPtr->DueDailyRewards) {
-			g_Logs.simulator->info("[%v] %v is logging on for the first time today",
-					InternalID, pld.accPtr->Name);
-			strcpy(pld.accPtr->LastLogOn, pld.charPtr->LastLogOn);
-
-			// Is this a consecutive day?
-			unsigned long lastLoginDay = pld.accPtr->LastLogOnTimeSec / 86400;
-			pld.accPtr->LastLogOnTimeSec = time(NULL);
-			strftime(pld.accPtr->LastLogOn, sizeof(pld.accPtr->LastLogOn), "%Y-%m-%d", localtime(&curtime));
-			unsigned long today =  pld.accPtr->LastLogOnTimeSec / 86400;
-			if(lastLoginDay == 0 || today == lastLoginDay + 1) {
-				// It is!
-				pld.accPtr->ConsecutiveDaysLoggedIn++;
-				g_Logs.simulator->info(
-						"[%d] %s has now logged in %d consecutive days.",
-						InternalID, pld.accPtr->Name,
-						pld.accPtr->ConsecutiveDaysLoggedIn);
-			}
-			else {
-				// Not a consecutive day, so not due daily rewards
-				pld.accPtr->DueDailyRewards = false;
-				pld.accPtr->ConsecutiveDaysLoggedIn = 0;
-			}
-
-			pld.accPtr->PendingMinorUpdates++;
-		}
+	char buf[24];
+	strftime(buf, sizeof(buf), 			"%Y-%m-%d, %I:%M %p", localtime(&curtime));
+	pld.charPtr->LastLogOn = buf;
+	pld.charPtr->Shard = g_ClusterManager.mShardName;
 
 
 	// Determine if we should give a daily reward for the account
-	if (pld.accPtr->LastLogOn[0] == 0) {
+	if (pld.accPtr->LastLogOn.length() == 0) {
 		pld.accPtr->DueDailyRewards = true;
 	} else {
 		// Test on the date portion only
@@ -1663,7 +1648,7 @@ void SimulatorThread::LoadCharacterSession(void) {
 	if (pld.accPtr->DueDailyRewards) {
 		g_Logs.simulator->info("[%v] %v is logging on for the first time today",
 				InternalID, pld.accPtr->Name);
-		strcpy(pld.accPtr->LastLogOn, pld.charPtr->LastLogOn);
+		pld.charPtr->LastLogOn = pld.accPtr->LastLogOn;
 
 		// Is this a consecutive day?
 		unsigned long lastLoginDay =
@@ -1675,7 +1660,7 @@ void SimulatorThread::LoadCharacterSession(void) {
 			// It is!
 			pld.accPtr->ConsecutiveDaysLoggedIn++;
 			g_Logs.simulator->info(
-					"[%d] %s has now logged in %d consecutive days.",
+					"[%v] %v has now logged in %v consecutive days.",
 					InternalID, pld.accPtr->Name,
 					pld.accPtr->ConsecutiveDaysLoggedIn);
 		} else {
@@ -1828,12 +1813,11 @@ void SimulatorThread::MainCallHelperInstanceRegister(int ZoneID,
 	}
 }
 
-std::string SimulatorThread :: GetTimeOfDay(void)
-{
-	if(CheckPermissionSimple(Perm_Account, Permission_Troll))
+std::string SimulatorThread::GetTimeOfDay(void) {
+	if (CheckPermissionSimple(Perm_Account, Permission_Troll))
 		return "Day";
 
-	if(creatureInst != NULL) {
+	if (creatureInst != NULL) {
 		return creatureInst->actInst->GetTimeOfDay().c_str();
 	}
 
@@ -1863,14 +1847,18 @@ void SimulatorThread::CheckMapUpdate(bool force) {
 				pld.CurrentMapInt = NewMap;
 				SendInfoMessage(MapDef.mMapList[pld.CurrentMapInt].Name.c_str(),
 						INFOMSG_LOCATION);
-				SendInfoMessage(pld.zoneDef->mShardName.c_str(), INFOMSG_SHARD);
+				SendInfoMessage(pld.charPtr->Shard.c_str(), INFOMSG_SHARD);
 				SendInfoMessage(
 						MapDef.mMapList[pld.CurrentMapInt].image.c_str(),
 						INFOMSG_MAPNAME);
 
-				WeatherState *ws = g_WeatherManager.GetWeather(MapDef.mMapList[pld.CurrentMapInt].Name, pld.CurrentInstanceID);
-				if(ws != NULL) {
-					AttemptSend(SendBuf, PrepExt_SetWeather(SendBuf, ws->mWeatherType, ws->mWeatherWeight));
+				WeatherState *ws = g_WeatherManager.GetWeather(
+						MapDef.mMapList[pld.CurrentMapInt].Name,
+						pld.CurrentInstanceID);
+				if (ws != NULL) {
+					AttemptSend(SendBuf,
+							PrepExt_SetWeather(SendBuf, ws->mWeatherType,
+									ws->mWeatherWeight));
 				}
 			}
 		} else {
@@ -1879,11 +1867,14 @@ void SimulatorThread::CheckMapUpdate(bool force) {
 			pld.CurrentMapInt = -1;
 
 			SendInfoMessage(pld.zoneDef->mName.c_str(), INFOMSG_LOCATION);
-			SendInfoMessage(pld.zoneDef->mShardName.c_str(), INFOMSG_SHARD);
+			SendInfoMessage(pld.charPtr->Shard.c_str(), INFOMSG_SHARD);
 
-			WeatherState *ws = g_WeatherManager.GetWeather(pld.zoneDef->mName, pld.CurrentInstanceID);
-			if(ws != NULL) {
-				AttemptSend(SendBuf, PrepExt_SetWeather(SendBuf, ws->mWeatherType, ws->mWeatherWeight));
+			WeatherState *ws = g_WeatherManager.GetWeather(pld.zoneDef->mName,
+					pld.CurrentInstanceID);
+			if (ws != NULL) {
+				AttemptSend(SendBuf,
+						PrepExt_SetWeather(SendBuf, ws->mWeatherType,
+								ws->mWeatherWeight));
 			}
 		}
 
@@ -1918,7 +1909,7 @@ void SimulatorThread::UpdateSocialEntry(bool newOnlineStatus,
 	data.profession = static_cast<char>(creatureInst->css.profession);
 	data.online = newOnlineStatus;
 	data.status = pld.charPtr->StatusText;
-	data.shard = pld.zoneDef->mShardName;
+	data.shard = pld.charPtr->Shard;
 
 	g_FriendListManager.UpdateSocialEntry(data);
 }
@@ -1945,7 +1936,7 @@ void SimulatorThread::BroadcastShardChanged(void) {
 
 	wpos += PutByte(&SendBuf[wpos], 15); //Event to change shards
 	wpos += PutStringUTF(&SendBuf[wpos], creatureInst->css.display_name);
-	wpos += PutStringUTF(&SendBuf[wpos], pld.zoneDef->mShardName.c_str());
+	wpos += PutStringUTF(&SendBuf[wpos], pld.charPtr->Shard.c_str());
 	PutShort(&SendBuf[1], wpos - 3);
 
 	SIMULATOR_IT it;
@@ -1991,20 +1982,17 @@ void SimulatorThread::AddMessage(long param1, long param2, int message) {
 void SimulatorThread::SendSetMap(void) {
 }
 
-
-void SimulatorThread :: SetRotation(int rot, int update)
-{
+void SimulatorThread::SetRotation(int rot, int update) {
 	creatureInst->Heading = creatureInst->Rotation = rot;
 
-	if(update == 1)
-	{
+	if (update == 1) {
 		pld.MovementBlockTime = g_ServerTime + g_Config.WarpMovementBlockTime;
 
 		// Tell everyone else
-		if(!IsGMInvisible())
-		{
+		if (!IsGMInvisible()) {
 			int size = PrepExt_UpdateVelocity(SendBuf, creatureInst);
-			creatureInst->actInst->LSendToLocalSimulator(SendBuf, size, creatureInst->CurrentX, creatureInst->CurrentZ);
+			creatureInst->actInst->LSendToLocalSimulator(SendBuf, size,
+					creatureInst->CurrentX, creatureInst->CurrentZ);
 		}
 
 		// Tell player
@@ -2037,7 +2025,7 @@ void SimulatorThread::SetPosition(int xpos, int ypos, int zpos, int update) {
 				size += PrepExt_ModStopSwimFlag(&SendBuf[size], false);
 			creatureInst->actInst->LSendToLocalSimulator(SendBuf, size,
 					creatureInst->CurrentX, creatureInst->CurrentZ);
-			AddMessage((long)creatureInst, 0, BCM_UpdateVelocity);
+			AddMessage((long) creatureInst, 0, BCM_UpdateVelocity);
 			AttemptSend(SendBuf, PrepExt_VelocityEvent(SendBuf, creatureInst));
 		}
 
@@ -2149,7 +2137,14 @@ void SimulatorThread::SetLoadingStatus(bool status, bool shutdown) {
 			}
 
 			g_PartyManager.CheckMemberLogin(creatureInst);
-			AddMessage(0, 0, BCM_Notice_MOTD);
+			g_Scheduler.Submit([this](){
+				std::string message = g_InfoManager.GetMOTD();
+				if (message.size() != 0) {
+					int size = PrepExt_GenericChatMessage(GSendBuf, 0, g_MOTD_Name.c_str(),
+							g_MOTD_Channel.c_str(), message.c_str());
+					this->creatureInst->actInst->LSendToOneSimulator(GSendBuf, size, this->ThreadID);
+				}
+			});
 
 			ProcessDailyRewards(pld.accPtr->ConsecutiveDaysLoggedIn,
 					pld.charPtr->cdef.css.level);
@@ -2165,12 +2160,14 @@ void SimulatorThread::SetLoadingStatus(bool status, bool shutdown) {
 						PrepExt_SendInfoMessage(SendBuf, buf, INFOMSG_INFO));
 			}
 
-
-			char buf[256];
-			std::vector<std::string> l;
-			Util::Split(Util::CaptureCommand(buf), "\r", l);
-			for(auto it = l.begin(); it != l.end(); ++it)
-				AttemptSend(SendBuf,PrepExt_SendInfoMessage(SendBuf, (*it).c_str(), INFOMSG_INFO));
+			// TODO I cannot remember what exactly this was for.
+//			char buf[256];
+//			std::vector<std::string> l;
+//			Util::Split(Util::CaptureCommand(buf), "\r", l);
+//			for (auto it = l.begin(); it != l.end(); ++it)
+//				AttemptSend(SendBuf,
+//						PrepExt_SendInfoMessage(SendBuf, (*it).c_str(),
+//								INFOMSG_INFO));
 
 			LoadStage = LOADSTAGE_LOADED; //Initial loading screen is finished, players should be able to control their characters.
 		}
@@ -2259,7 +2256,7 @@ int SimulatorThread::SendInventoryData(std::vector<InventorySlot> &cont) {
 	int wpos = 0;  //Current Write position
 	while (proc < count) {
 		InventorySlot *slot = &cont[proc];
-		if(slot->secondsRemaining == -1 || !slot->IsExpired()) {
+		if (slot->secondsRemaining == -1 || !slot->IsExpired()) {
 			wpos += AddItemUpdate(&SendBuf[wpos], Aux3, slot);
 			proc++;
 		}
@@ -2283,13 +2280,11 @@ bool SimulatorThread::CheckPermissionSimple(int permissionSet,
 	//permissions.  Return true if it does, or false if it doesn't.
 	//Intended to check for a specific permission or set of flags.
 	if (pld.accPtr == NULL) {
-		g_Logs.simulator->error(
-				"CheckPermissionSimple accPtr is NULL");
+		g_Logs.simulator->error("CheckPermissionSimple accPtr is NULL");
 		return false;
 	}
 	if (pld.charPtr == NULL) {
-		g_Logs.simulator->error(
-				"CheckPermissionSimple charPtr is NULL");
+		g_Logs.simulator->error("CheckPermissionSimple charPtr is NULL");
 		return false;
 	}
 
@@ -2385,6 +2380,34 @@ bool SimulatorThread::CheckWriteFlush(int &curPos) {
 		return true;
 	}
 	return false;
+}
+
+int SimulatorThread::protected_helper_tweak_self(int CDefID, int defhints,
+		int argOffset) {
+	if (CheckPermissionSimple(0, Permission_TweakClient) == true) {
+		const char *appearance = NULL;
+		for (uint i = 1 + argOffset; i < query.argCount; i += 2) {
+			const char *name = query.args[i].c_str();
+			const char *value = query.args[i + 1].c_str();
+			if (strcmp(name, "appearance") == 0) {
+				appearance = value;
+				break;
+			}
+		}
+		int size = 0;
+		if (appearance != NULL) {
+			std::vector<short> statID;
+			statID.push_back(STAT::APPEARANCE);
+			CharacterStatSet data;
+			//Util::SafeCopy(data.appearance, appearance, sizeof(data.appearance));
+			data.SetAppearance(appearance);
+			size = PrepExt_UpdateCreatureDef(SendBuf, CDefID, defhints, statID,
+					&data);
+		}
+		size += PrepExt_QueryResponseString(&SendBuf[size], query.ID, "OK");
+		return size;
+	} else
+		return -1;
 }
 
 int SimulatorThread::protected_CheckDistance(int creatureID) {
@@ -2500,6 +2523,7 @@ int SimulatorThread::protected_helper_query_loot_item(void) {
 		if (newItem == NULL)
 			return QueryErrorMsg::INVCREATE;
 
+		charData->pendingChanges++;
 		ActivateActionAbilities(newItem);
 
 		loot->RemoveItem(conIndex);
@@ -2537,7 +2561,6 @@ int SimulatorThread::protected_helper_query_loot_item(void) {
 
 	return QueryErrorMsg::NONE;
 }
-
 
 const char * SimulatorThread::GetErrorString(int error) {
 	switch (error) {
@@ -2598,14 +2621,15 @@ bool SimulatorThread::HasQueryArgs(unsigned int minCount) {
 	return true;
 }
 
-const char * SimulatorThread :: GetScriptUsable(CreatureInstance *target) {
+const char * SimulatorThread::GetScriptUsable(CreatureInstance *target) {
 
 	std::vector<ScriptCore::ScriptParam> parms;
 	parms.push_back(ScriptCore::ScriptParam(target->CreatureID));
 	parms.push_back(ScriptCore::ScriptParam(target->CreatureDefID));
 	parms.push_back(ScriptCore::ScriptParam(creatureInst->CreatureID));
 	parms.push_back(ScriptCore::ScriptParam(creatureInst->CreatureDefID));
-	return creatureInst->actInst->nutScriptPlayer->RunFunctionWithStringReturn("is_usable", parms, true).c_str();
+	return creatureInst->actInst->nutScriptPlayer->RunFunctionWithStringReturn(
+			"is_usable", parms, true).c_str();
 }
 
 /*
@@ -2639,8 +2663,9 @@ bool SimulatorThread::HasPropEditPermission(SceneryObject *prop, float x,
 		checkZ = prop->LocationZ;
 	}
 
-	if (CheckPermissionSimple(Perm_Account, Permission_Admin) || pld.accPtr->CheckBuildPermissionAdv(pld.zoneDef->mID,
-			pld.zoneDef->mPageSize, checkX, checkZ) == true)
+	if (CheckPermissionSimple(Perm_Account, Permission_Admin)
+			|| pld.accPtr->CheckBuildPermissionAdv(pld.zoneDef->mID,
+					pld.zoneDef->mPageSize, checkX, checkZ) == true)
 		return true;
 
 	if (pld.zoneDef->HasEditPermission(pld.accPtr->ID, pld.CreatureDefID,
@@ -2653,7 +2678,6 @@ bool SimulatorThread::HasPropEditPermission(SceneryObject *prop, float x,
 void SimulatorThread::SaveCharacterStats(void) {
 	//This function pushes the Active Character data back into the main Character Data
 	//in preparation for an autosave.
-
 
 	if (pld.charPtr == NULL) {
 		g_Logs.simulator->error("[%v] SaveCharacterStats() charPtr is NULL",
@@ -2673,8 +2697,7 @@ void SimulatorThread::SaveCharacterStats(void) {
 	int Minute = (TimeSpan / 60) % 60;
 	int Second = TimeSpan % 60;
 
-	Util::SafeFormat(pld.charPtr->LastSession, sizeof(pld.charPtr->LastSession),
-			"%02d:%02d:%02d", Hour, Minute, Second);
+	pld.charPtr->LastSession = StringUtil::Format("%02d:%02d:%02d", Hour, Minute, Second);
 
 	int secSinceAutoSave = (g_ServerTime - TimeLastAutoSave) / 1000;
 	TimeLastAutoSave = g_ServerTime;
@@ -2686,13 +2709,14 @@ void SimulatorThread::SaveCharacterStats(void) {
 	Minute = (TotalSec / 60) % 60;
 	Second = TotalSec % 60;
 
-	Util::SafeFormat(pld.charPtr->TimeLogged, sizeof(pld.charPtr->TimeLogged),
-			"%02d:%02d:%02d", Hour, Minute, Second);
+	pld.charPtr->TimeLogged = StringUtil::Format("%02d:%02d:%02d", Hour, Minute, Second);
 
 	time_t curtime;
 	time(&curtime);
-	strftime(pld.charPtr->LastLogOff, sizeof(pld.charPtr->LastLogOn),
-			"%Y-%m-%d, %I:%M %p", localtime(&curtime));
+	char buf[24];
+	strftime(buf, sizeof(buf), "%Y-%m-%d, %I:%M %p", localtime(&curtime));
+	pld.charPtr->LastLogOff = buf;
+	pld.charPtr->Shard = g_ClusterManager.mShardName;
 
 	//Need to copy the stats to the character definition, otherwise the updated
 	//information won't save out.
@@ -2726,6 +2750,7 @@ void SimulatorThread::DecrementStack(InventorySlot *slot) {
 		if (slot->count < 0) {
 			wpos += RemoveItemUpdate(SendBuf, Aux3, slot);
 			pld.charPtr->inventory.RemItem(slot->CCSID);
+			pld.charPtr->pendingChanges++;
 		} else
 			wpos += AddItemUpdate(SendBuf, Aux3, slot);
 	}
@@ -3167,7 +3192,7 @@ void SimulatorThread::WarpToZone(ZoneDefInfo *zoneDef, int xOverride,
 			creatureInst->CurrentZ, 1);
 
 	MainCallSetZone(zoneDef->mID, 0, false);
-	if(ValidPointers() == false) {
+	if (ValidPointers() == false) {
 		ForceErrorMessage("Critical error while changing zones.",
 				INFOMSG_ERROR);
 		Disconnect("SimulatorThread::WarpToZone");
@@ -3192,8 +3217,9 @@ void SimulatorThread::WarpToZone(ZoneDefInfo *zoneDef, int xOverride,
 
 void SimulatorThread::SetZoneMode(int mode) {
 	creatureInst->actInst->mZoneDefPtr->mMode = mode;
-	creatureInst->actInst->arenaRuleset.mEnabled = creatureInst->actInst->mZoneDefPtr->mMode
-			!= PVP::GameMode::PVE_ONLY;
+	creatureInst->actInst->arenaRuleset.mEnabled =
+			creatureInst->actInst->mZoneDefPtr->mMode
+					!= PVP::GameMode::PVE_ONLY;
 	creatureInst->actInst->arenaRuleset.mPVPStatus = mode;
 
 	cs.Enter("Simulator::SetZoneMode");
@@ -3237,8 +3263,7 @@ void SimulatorThread::SetZoneMode(int mode) {
 			if ((*it)->_HasStatusList(StatusEffects::PVPABLE) == -1)
 				(*it)->_AddStatusList(StatusEffects::PVPABLE, -1);
 		}
-		Util::SafeFormat(Aux1, sizeof(Aux1),
-				"%s is now a special event zone!",
+		Util::SafeFormat(Aux1, sizeof(Aux1), "%s is now a special event zone!",
 				creatureInst->actInst->mZoneDefPtr->mName.c_str());
 		break;
 	default:
@@ -3415,8 +3440,10 @@ int SimulatorThread::OfferLoot(int mode, ActiveLootContainer *loot,
 			party->mMemberList.size());
 	int offers = 0;
 	for (unsigned int i = 0; i < party->mMemberList.size(); i++) {
-		if(!party->mMemberList[i].IsOnlineAndValid()) {
-			g_Logs.simulator->info("[%v] Skipping party member %v because they have no simulator", InternalID, party->mMemberList[i].mCreatureID);
+		if (!party->mMemberList[i].IsOnlineAndValid()) {
+			g_Logs.simulator->info(
+					"[%v] Skipping party member %v because they have no simulator",
+					InternalID, party->mMemberList[i].mCreatureID);
 			continue;
 		}
 
@@ -3430,9 +3457,8 @@ int SimulatorThread::OfferLoot(int mode, ActiveLootContainer *loot,
 				LootTag * tag = party->TagItem(ItemID,
 						party->mMemberList[i].mCreaturePtr->CreatureID, CID);
 				Util::SafeFormat(Aux3, sizeof(Aux3), "%d", tag->lootTag);
-				g_Logs.simulator->info(
-						"Sending offer of %v to %v using tag %v", ItemID,
-						party->mMemberList[i].mCreatureID, Aux3);
+				g_Logs.simulator->info("Sending offer of %v to %v using tag %v",
+						ItemID, party->mMemberList[i].mCreatureID, Aux3);
 				WriteIdx = PartyManager::OfferLoot(SendBuf, ItemID, Aux3,
 						needOrGreed);
 				party->mMemberList[i].mCreaturePtr->actInst->LSendToOneSimulator(
@@ -3502,12 +3528,13 @@ void SimulatorThread::RunPortalRequest(void) {
 	int y;
 	int z;
 
-	if(pld.PortalRequestType == 0) {
+	if (pld.PortalRequestType == 0) {
 
-		InteractObject *iobj = g_InteractObjectContainer.GetHengeByTargetName(pld.PortalRequestDest);
-		if(iobj == NULL)
-		{
-			g_Logs.server->warn("Portal request target not found: %v", pld.PortalRequestDest);
+		InteractObject *iobj = g_InteractObjectContainer.GetHengeByTargetName(
+				pld.PortalRequestDest);
+		if (iobj == NULL) {
+			g_Logs.server->warn("Portal request target not found: %v",
+					pld.PortalRequestDest);
 			SendInfoMessage(Aux1, INFOMSG_ERROR);
 			return;
 		}
@@ -3516,27 +3543,29 @@ void SimulatorThread::RunPortalRequest(void) {
 		x = iobj->WarpX;
 		y = iobj->WarpY;
 		z = iobj->WarpZ;
-	}
-	else if(pld.PortalRequestType == 1) {
-		SimulatorThread *sim = GetSimulatorByCharacterName(pld.PortalRequestDest);
-		if(sim == NULL  || sim->LoadStage != LOADSTAGE_GAMEPLAY) {
-			g_Logs.server->warn("Portal request target not found: %v", pld.PortalRequestDest);
+	} else if (pld.PortalRequestType == 1) {
+		SimulatorThread *sim = GetSimulatorByCharacterName(
+				pld.PortalRequestDest);
+		if (sim == NULL || sim->LoadStage != LOADSTAGE_GAMEPLAY) {
+			g_Logs.server->warn("Portal request target not found: %v",
+					pld.PortalRequestDest);
 			SendInfoMessage(Aux1, INFOMSG_ERROR);
 			return;
 		}
 		x = sim->creatureInst->CurrentX + randmodrng(5, 20);
 		y = sim->creatureInst->CurrentY;
 		z = sim->creatureInst->CurrentZ + randmodrng(5, 20);
-		zone =sim->creatureInst->actInst->mZone;
-	}
-	else {
-		g_Logs.server->warn("Portal request type not found: %v (%v)", pld.PortalRequestDest, pld.PortalRequestType);
+		zone = sim->creatureInst->actInst->mZone;
+	} else {
+		g_Logs.server->warn("Portal request type not found: %v (%v)",
+				pld.PortalRequestDest, pld.PortalRequestType);
 		SendInfoMessage(Aux1, INFOMSG_ERROR);
 		return;
 	}
 
 	int wpos = PrepExt_RemoveCreature(SendBuf, creatureInst->CreatureID);
-	creatureInst->actInst->LSendToLocalSimulator(SendBuf, wpos, creatureInst->CurrentX, creatureInst->CurrentZ, InternalID);
+	creatureInst->actInst->LSendToLocalSimulator(SendBuf, wpos,
+			creatureInst->CurrentX, creatureInst->CurrentZ, InternalID);
 
 	MainCallSetZone(zone, 0, false);
 	SetPosition(x, y, z, 1);
@@ -3605,8 +3634,7 @@ void SimulatorThread::CreatureUseHenge(int creatureID, int creatureDefID) {
 		InteractObject *iobj = NULL;
 		iobj = g_InteractObjectContainer.GetHengeByDefID(creatureDefID);
 		if (iobj == NULL) {
-			g_Logs.simulator->warn(
-					"Henge not found in interact list: %v",
+			g_Logs.simulator->warn("Henge not found in interact list: %v",
 					creatureDefID);
 			return;
 		}
@@ -3682,51 +3710,68 @@ void SimulatorThread::CreatureUseHenge(int creatureID, int creatureDefID) {
  }
  */
 
-void SimulatorThread::ShardSet(const char *shardName, const char *charName) {
-	/*
-	 if(creatureInst->Speed != 0)
-	 {
-	 SendInfoMessage("You must be stationary.", INFOMSG_ERROR);
-	 return;
-	 }
-	 if(shardName == NULL)
-	 return;
-	 if(chardName != NULL)
-	 {
-	 unsigned long time = PlatformTime::getAbsoluteMilliseconds();
-	 time += 900000;  //15 minutes = warp timer;
-	 if(pld.charPtr->LastWarpTime + 900000 > time)
-	 {
-	 unsigned long difference = (time - LastWarpTime) / 1000;
-	 Util::FormatTime(Aux2, sizeof(Aux2), difference);
-	 Util::SafeFormat(Aux1, sizeof(Aux1), "You can't do that yet. Remaining time: %s", Aux2);
-	 SendInfoMessage(Aux1, INFOMSG_ERROR);
-	 return;
-	 }
-	 SimulatorThread *sim == GetSimulatorByCharacterName(charName);
-	 if(sim == NULL)
-	 {
-	 SendInfoMessage("That player is not logged in.", INFOMSG_ERROR);
-	 return;
-	 }
-	 if(sim->pld.zoneDef->mInstance == true)
-	 {
-	 SendInfoMessage("You cannot warp to a player inside an instance.", INFOMSG_ERROR);
-	 return;
-	 }
-	 int x = sim->creatureInst->CurrentX;
-	 int y = sim->creatureInst->CurrentY;
-	 int z = sim->creatureInst->CurrentZ;
-	 if(sim->pld.zoneDef->mID != pld.zoneDef->mID)
-	 {
-	 if(WarpToZone(sim->pld.zoneDef, false) == false)
-	 return;
-	 }
-	 SetPosition(x, y, z, 1);
+std::string SimulatorThread::ShardSet(std::string shardName, std::string charName) {
+	if (creatureInst->Speed != 0) {
+		return "You must be stationary.";
+	}
 
-	 pld.charPtr->LastWarpTime = time;
-	 }
-	 */
+	Shard s = g_ClusterManager.GetActiveShard(shardName);
+	if(s.mName.length() == 0) {
+		return "No such shard.";
+	}
+
+	g_Logs.data->info("%v is switching to shard %v", pld.charPtr->cdef.css.display_name, shardName);
+
+	unsigned warpAllowed = pld.charPtr->LastWarpTime == 0 ? 0 : pld.charPtr->LastWarpTime + 90000;
+	if (g_ServerTime < warpAllowed) {
+		return StringUtil::Format("You can't do that yet. Remaining time: %s", StringUtil::FormatTimeHHMMSS(warpAllowed - g_ServerTime).c_str());
+	}
+
+	if (charName.length() > 0) {
+//		SimulatorThread * sim == GetSimulatorByCharacterName(charName);
+//		if (sim == NULL) {
+//			SendInfoMessage("That player is not logged in.", INFOMSG_ERROR);
+//			return;
+//		}
+//		if (pld.zoneDef->mInstance == true) {
+//			SendInfoMessage("You cannot warp to a player inside an instance.",
+//					INFOMSG_ERROR);
+//			return;
+//		}
+//		int x = creatureInst->CurrentX;
+//		int y = creatureInst->CurrentY;
+//		int z = creatureInst->CurrentZ;
+//		if (pld.zoneDef->mID != pld.zoneDef->mID) {
+//			if (WarpToZone(pld.zoneDef, false) == false)
+//				return;
+//		}
+//		SetPosition(x, y, z, 1);
+//
+//		pld.charPtr->LastWarpTime = time;
+	}
+	else {
+
+	}
+	std::string token = g_ClusterManager.SimTransfer(pld.CreatureDefID, shardName);
+	g_Scheduler.Submit([this, s, token](){
+		int wpos = 0;
+		wpos += PutByte(&SendBuf[wpos], 56);  //_handleSimSwitch
+		wpos += PutShort(&SendBuf[wpos], 0);
+		wpos += PutStringUTF(&SendBuf[wpos], s.mSimulatorAddress.c_str());
+		wpos += PutInteger(&SendBuf[wpos], s.mSimulatorPort);
+		wpos += PutStringUTF(&SendBuf[wpos], token.c_str());
+		wpos += PutStringUTF(&SendBuf[wpos], pld.charPtr->cdef.css.display_name);
+		PutShort(&SendBuf[1], wpos - 3);
+		AttemptSend(SendBuf, wpos);
+
+		/* Make sure this and any other packets are delivered immiediately. Upon receiving this
+		 * the client will do the actual disconnection, then reconnection to the new simulator
+		 */
+		g_PacketManager.SendPacketsFor(this->sc.ClientSocket);
+		ProcessDetach();
+	});
+
+	return "";
 }
 
 /*
@@ -3915,7 +3960,8 @@ void SimulatorThread::SendAbilityErrorMessage(int abilityErrorCode) {
 		messageStr = "You are not near a sanctuary.";
 		break;
 	case Ability2::ABILITY_REAGENTS:
-		messageStr = "You do not have enough reagents of the right type to use this ability.";
+		messageStr =
+				"You do not have enough reagents of the right type to use this ability.";
 		break;
 	}
 
@@ -3967,29 +4013,31 @@ void SimulatorThread::Debug_GenerateItemReport(ReportBuffer &report,
 	int rarityTotal[7] = { 0 };
 
 	for (int c = 0; c < MAXCONTAINER; c++) {
-		report.AddLine("%s", GetContainerNameFromID(c));
-		for (size_t i = 0; i < pld.charPtr->inventory.containerList[c].size();
-				i++) {
-			int ID = pld.charPtr->inventory.containerList[c][i].IID;
-			ItemDef *item = g_ItemManager.GetPointerByID(ID);
-			if (item == NULL)
-				continue;
-			if (item->mQualityLevel >= 0 && item->mQualityLevel < 7) {
-				rarityCount[(int) item->mQualityLevel]++;
-				rarityTotal[(int) item->mQualityLevel]++;
+		if(IsContainerIDValid(c)) {
+			report.AddLine("%s", GetContainerNameFromID(c).c_str());
+			for (size_t i = 0; i < pld.charPtr->inventory.containerList[c].size();
+					i++) {
+				int ID = pld.charPtr->inventory.containerList[c][i].IID;
+				ItemDef *item = g_ItemManager.GetPointerByID(ID);
+				if (item == NULL)
+					continue;
+				if (item->mQualityLevel >= 0 && item->mQualityLevel < 7) {
+					rarityCount[(int) item->mQualityLevel]++;
+					rarityTotal[(int) item->mQualityLevel]++;
+				}
+				if (simple == true)
+					report.AddLine("%d : %s (lev:%d, qlev:%d)", item->mID,
+							item->mDisplayName.c_str(), item->mLevel,
+							item->mQualityLevel);
+				else
+					item->Debug_WriteReport(report);
 			}
-			if (simple == true)
-				report.AddLine("%d : %s (lev:%d, qlev:%d)", item->mID,
-						item->mDisplayName.c_str(), item->mLevel,
-						item->mQualityLevel);
-			else
-				item->Debug_WriteReport(report);
+			for (size_t r = 0; r < 7; r++)
+				if (rarityCount[r] > 0)
+					report.AddLine("qlev:%d=%d", r, rarityCount[r]);
+			memset(rarityCount, 0, sizeof(rarityCount));
+			report.AddLine(NULL);
 		}
-		for (size_t r = 0; r < 7; r++)
-			if (rarityCount[r] > 0)
-				report.AddLine("qlev:%d=%d", r, rarityCount[r]);
-		memset(rarityCount, 0, sizeof(rarityCount));
-		report.AddLine(NULL);
 	}
 	report.AddLine("Total rarity counts:");
 	for (size_t r = 0; r < 7; r++)
@@ -4056,7 +4104,8 @@ void SimulatorThread::UndoLoot(ActiveParty *party, ActiveLootContainer *loot,
 bool SimulatorThread::ActivateActionAbilities(InventorySlot *slot) {
 	ItemDef *itemDef = g_ItemManager.GetPointerByID(slot->IID);
 	if (itemDef == NULL) {
-		g_Logs.server->warn("Item [%v] does not exist. Cannot activate action abilities.",
+		g_Logs.server->warn(
+				"Item [%v] does not exist. Cannot activate action abilities.",
 				slot->IID);
 		return false;
 	} else {
@@ -4064,8 +4113,11 @@ bool SimulatorThread::ActivateActionAbilities(InventorySlot *slot) {
 			return creatureInst->RequestAbilityActivation(
 					itemDef->mActionAbilityId) == Ability2::ABILITY_SUCCESS;
 		else {
-			if(itemDef->mType == ItemType::SPECIAL && itemDef->mIvType1 == ItemIntegerType::BOOK_PAGE) {
-				AttemptSend(Aux1, PrepExt_SendBookOpen(Aux1, itemDef->mIvMax1, itemDef->mIvMax2 - 1, true));
+			if (itemDef->mType == ItemType::SPECIAL
+					&& itemDef->mIvType1 == ItemIntegerType::BOOK_PAGE) {
+				AttemptSend(Aux1,
+						PrepExt_SendBookOpen(Aux1, itemDef->mIvMax1,
+								itemDef->mIvMax2 - 1, true));
 			}
 		}
 		return true;
@@ -4201,8 +4253,11 @@ void SimulatorThread::CheckIfLootReadyToDistribute(ActiveLootContainer *loot,
 			for (unsigned int i = 0; i < party->mMemberList.size(); i++) {
 				// Skip the loot master or robin
 
-				LootTag *tag = party->mMemberList[i].IsOnlineAndValid() ? party->GetTag(lootTag->mItemId,
-						party->mMemberList[i].mCreaturePtr->CreatureID) : NULL;
+				LootTag *tag =
+						party->mMemberList[i].IsOnlineAndValid() ?
+								party->GetTag(lootTag->mItemId,
+										party->mMemberList[i].mCreaturePtr->CreatureID) :
+								NULL;
 				if (tag != NULL) {
 					Util::SafeFormat(Aux2, sizeof(Aux2), "%d:%d",
 							tag->mCreatureId, tag->mSlotIndex);
@@ -4221,8 +4276,10 @@ void SimulatorThread::CheckIfLootReadyToDistribute(ActiveLootContainer *loot,
 		LootTag *winnerTag = party->GetTag(lootTag->mItemId,
 				receivingCreature->CreatureID);
 		for (unsigned int i = 0; i < party->mMemberList.size(); i++) {
-			if(!party->mMemberList[i].IsOnlineAndValid()) {
-				g_Logs.simulator->info("[%v] Skipping informing %v of the winner (%v) as they have no simulator", InternalID, party->mMemberList[i].mCreatureID,
+			if (!party->mMemberList[i].IsOnlineAndValid()) {
+				g_Logs.simulator->info(
+						"[%v] Skipping informing %v of the winner (%v) as they have no simulator",
+						InternalID, party->mMemberList[i].mCreatureID,
 						lootTag->mCreatureId);
 				continue;
 			}
@@ -4272,6 +4329,7 @@ void SimulatorThread::CheckIfLootReadyToDistribute(ActiveLootContainer *loot,
 				ResetLoot(party, loot, lootTag->mItemId);
 				return;
 			}
+			charData->pendingChanges++;
 			ActivateActionAbilities(newItem);
 		}
 
@@ -4299,7 +4357,8 @@ void SimulatorThread::CheckIfLootReadyToDistribute(ActiveLootContainer *loot,
 
 				// Loot container now empty, remove it
 				CreatureInstance *lootCreature =
-						creatureInst->actInst->GetNPCInstanceByCID(lootCreatureID);
+						creatureInst->actInst->GetNPCInstanceByCID(
+								lootCreatureID);
 				if (lootCreature != NULL) {
 					lootCreature->activeLootID = 0;
 					lootCreature->css.ClearLootSeeablePlayerIDs();
@@ -4326,7 +4385,9 @@ void SimulatorThread::CheckIfLootReadyToDistribute(ActiveLootContainer *loot,
 
 			if (newItem != NULL && receivingCreature != NULL)
 				// Send an update to the actual of the item
-				receivingCreature->actInst->LSendToOneSimulator(SendBuf,  AddItemUpdate(SendBuf, Aux3, newItem), receivingCreature->simulatorPtr);
+				receivingCreature->actInst->LSendToOneSimulator(SendBuf,
+						AddItemUpdate(SendBuf, Aux3, newItem),
+						receivingCreature->simulatorPtr);
 		}
 	} else {
 		g_Logs.simulator->info("[%v] Loot %v not ready yet to distribute",

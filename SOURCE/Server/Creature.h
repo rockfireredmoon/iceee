@@ -323,7 +323,6 @@ public:
 	AppearanceModifier * Clone();
 };
 
-
 class CreatureAttributeModifier : public AbstractAppearanceModifier {
 public:
 	std::string mAttribute;
@@ -778,6 +777,7 @@ public:
 	//Custom Ability Functions, called through the ability system to handle special operations
 	bool IsTransformed();
 	bool CAF_Nudify(int durationS);
+	bool CAF_Scale(float scale, int durationS);
 	bool CAF_Transform(int CDefID, int abId, int durationS);
 	bool CAF_Untransform();
 	int CAF_SummonSidekick(int CDefID, int maxSummon, short abGroupID);

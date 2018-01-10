@@ -22,6 +22,7 @@
 #include <string.h>
 #include "../util/base64.h"
 #include "../util/Log.h"
+#include "../Config.h"
 
 using namespace HTTPD;
 
@@ -317,6 +318,16 @@ bool AbstractCivetHandler::parseForm(CivetServer *server,
 	}
 
 	return true;
+}
+
+bool AbstractCivetHandler::isUserAgent(CivetServer *server, struct mg_connection *conn) {
+	if(!g_Config.UseUserAgentProtection)
+		return true;
+	const char* h = server->getHeader(conn, "User-Agent");
+	bool ok = h != NULL && ( strcmp(h, "ire-3dply(VERSION)") == 0 ||  strcmp(h, "EETAW") == 0 );
+	if(!ok)
+		mg_set_as_close(conn);
+	return ok;
 }
 
 bool AbstractCivetHandler::isAuthorized(CivetServer *server, struct mg_connection *conn, std::string credentials) {

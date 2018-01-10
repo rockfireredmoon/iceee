@@ -250,6 +250,37 @@ void PacketManager::GetPackets2(void) {
 	 */
 }
 
+void PacketManager::SendPacketsFor(int socket) {
+	if (mSendData.size() == 0)
+		return;
+
+#ifdef DEBUG_TIME
+	Debug::TimeTrack("SendPacketsFor", 50);
+#endif
+
+	std::list<PendingSocket>::iterator it;
+	it = mSendData.begin();
+	while (it != mSendData.end()) {
+		if(it->mSocket == socket) {
+			int res = SendSocket(it->mSocket, *it);
+			if (res == SEND_DELAY) {
+				mTotalWait++;
+				++it;
+			} else {
+				//If we get here, it had a serious failure or it succeeded.
+				//Either way, we're done with the data, so it can be erased.
+				if (res == SEND_FAILED) {
+					g_Logs.server->error("Disconnecting Socket:%v", it->mSocket);
+					SocketClass::DisconnectClient(it->mSocket);
+				}
+				mSendData.erase(it++);
+			}
+		}
+		else
+			++it;
+	}
+}
+
 void PacketManager::SendPackets2(void) {
 	if (mSendData.size() == 0)
 		return;

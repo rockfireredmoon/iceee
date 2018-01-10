@@ -21,6 +21,7 @@
 #include "../Debug.h"
 #include "../Config.h"
 #include "../Crafting.h"
+#include "../Cluster.h"
 #include "../ConfigString.h"
 #include "../Ability2.h"
 #include "../util/Log.h"
@@ -107,14 +108,23 @@ int UseItem(SimulatorThread *sim, CharacterServerData *pld,
 			}
 		}
 	} else {
-		if(itemDef->mType == ItemType::SPECIAL && itemDef->mSpecialItemType == PORTABLE_REFASHIONER) {
+		if (itemDef->mType == ItemType::SPECIAL
+				&& itemDef->mSpecialItemType == PORTABLE_REFASHIONER) {
 			sim->AttemptSend(sim->Aux1, PrepExt_Refashion(sim->Aux1));
+			// TODO use when item is refashioned, IF the refashion window was opened this way, and the refashion item is not mulitple use
 			removeOnUse = false;
-		}
-		else if(itemDef->mType == ItemType::SPECIAL && itemDef->mIvType1 == ItemIntegerType::BOOK_PAGE) {
+		} else if (itemDef->mType == ItemType::SPECIAL
+				&& itemDef->mSpecialItemType == PORTABLE_CRAFTKIT) {
+			// TODO use when item is crafted, IF the craft window was opened this way, and the craft kit item is not mulitple use
+			sim->AttemptSend(sim->Aux1, PrepExt_Craft(sim->Aux1));
+			removeOnUse = false;
+		} else if (itemDef->mType == ItemType::SPECIAL
+				&& itemDef->mIvType1 == ItemIntegerType::BOOK_PAGE) {
 			g_Logs.simulator->debug("Opening book %v on page %v",
 					itemDef->mIvMax1, itemDef->mIvMax2);
-			sim->AttemptSend(sim->Aux1, PrepExt_SendBookOpen(sim->Aux1, itemDef->mIvMax1, itemDef->mIvMax2 - 1, 1));
+			sim->AttemptSend(sim->Aux1,
+					PrepExt_SendBookOpen(sim->Aux1, itemDef->mIvMax1,
+							itemDef->mIvMax2 - 1, 1));
 			removeOnUse = false;
 		} else {
 			ConfigString cfg(itemDef->Params);
@@ -141,9 +151,10 @@ int UseItem(SimulatorThread *sim, CharacterServerData *pld,
 					sim->SendInfoMessage(sim->Aux1, INFOMSG_INFO);
 					creatureInstance->SendStatUpdate(STAT::CREDITS);
 				}
-				if(heroism > 0) {
+				if (heroism > 0) {
 					creatureInstance->AddHeroism(heroism);
-					Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1), "You gain %d heroism.", heroism);
+					Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1),
+							"You gain %d heroism.", heroism);
 					sim->SendInfoMessage(sim->Aux1, INFOMSG_INFO);
 				}
 				if (abPoints > 0) {
@@ -457,20 +468,21 @@ int ItemMoveHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 	//Need this or else accounts with debug permissions (multiple simultaneous logins per account)
 	//will overwrite each other's vault contents. (Originally intended for shared vaults, which
 	//implementation was never finished, but might as well keep)
+	int sessions = g_ClusterManager.CountAccountSessions(pld->accPtr->ID);
 	if (((destContainer == BANK_CONTAINER) || (origContainer == BANK_CONTAINER))
-			&& (pld->accPtr->GetSessionLoginCount() > 1))
+			&& (sessions > 1))
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 				"You cannot use vaults while logged into multiple account characters at once.");
 
 	if (((destContainer == DELIVERY_CONTAINER)
 			|| (origContainer == DELIVERY_CONTAINER))
-			&& (pld->accPtr->GetSessionLoginCount() > 1))
+			&& (sessions > 1))
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 				"You cannot use delivery boxes while logged into multiple account characters at once.");
 
 	if (((destContainer == STAMPS_CONTAINER)
 			|| (origContainer == STAMPS_CONTAINER))
-			&& (pld->accPtr->GetSessionLoginCount() > 1))
+			&& (sessions > 1))
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 				"You cannot use stamp boxes while logged into multiple account characters at once.");
 
@@ -630,6 +642,7 @@ int ItemSplitHandler::handleQuery(SimulatorThread *sim,
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 				"Error creating new stack.");
 	}
+	pld->charPtr->pendingChanges++;
 
 	//Need to refetch since the pointer might've changed when adding the item.
 	item = pld->charPtr->inventory.GetItemPtrByCCSID(CCSID);
@@ -686,25 +699,36 @@ int ItemDeleteHandler::handleQuery(SimulatorThread *sim,
 		}
 
 		// If the item is a book page, then inform the client the book is gone
-		if(itemDef->mType == ItemType::SPECIAL && itemDef->mIvType1 == ItemIntegerType::BOOK_PAGE) {
-			sim->AttemptSend(sim->SendBuf, PrepExt_SendBookOpen(sim->SendBuf, itemDef->mIvMax1, itemDef->mIvMax2 - 1, 3));
+		if (itemDef->mType == ItemType::SPECIAL
+				&& itemDef->mIvType1 == ItemIntegerType::BOOK_PAGE) {
+			sim->AttemptSend(sim->SendBuf,
+					PrepExt_SendBookOpen(sim->SendBuf, itemDef->mIvMax1,
+							itemDef->mIvMax2 - 1, 3));
 		}
 	}
 
 	//Find the players best (in terms of recoup amount) grinder (if they have one)
 	int invId = GetContainerIDFromName("inv");
-	InventorySlot *grinderDef = pld->charPtr->inventory.GetBestSpecialItem(invId, ITEM_GRINDER);
+	InventorySlot *grinderDef = pld->charPtr->inventory.GetBestSpecialItem(
+			invId, ITEM_GRINDER);
 	if (grinderDef != NULL) {
-		int amt = (int)(((double)itemDef->mValue / 100.0) *  grinderDef->dataPtr->mIvMax1);
+		int stack = grinderDef->ResolveItemPtr()->GetDynamicMax(
+				ItemIntegerType::STACKING);
+		if (stack < 1)
+			stack = 1;
+		int amt = (int) (((double) itemDef->mValue / 100.0) * stack);
 		creatureInstance->AdjustCopper(amt);
 	}
 
 	//Append a delete notice to the response string
-	sim->AttemptSend(sim->SendBuf, RemoveItemUpdate(sim->SendBuf, sim->Aux3,
-			&pld->charPtr->inventory.containerList[origContainer][r]));
+	sim->AttemptSend(sim->SendBuf,
+			RemoveItemUpdate(sim->SendBuf, sim->Aux3,
+					&pld->charPtr->inventory.containerList[origContainer][r]));
 
 	//Remove from server's inventory list
-	pld->charPtr->inventory.RemItem(InventoryID);
+	if(!pld->charPtr->inventory.RemItem(InventoryID))
+		g_Logs.server->error("Failed to find item %v to remove from inventory.", InventoryID);
+	pld->charPtr->pendingChanges++;
 
 	//Just in case a container was equipped or unequipped, update the max inventory slots
 	pld->charPtr->inventory.CountInventorySlots();
@@ -716,7 +740,6 @@ int ItemDeleteHandler::handleQuery(SimulatorThread *sim,
 
 	return PrepExt_QueryResponseNull(sim->SendBuf, query->ID);
 }
-
 
 //
 //ItemCreateHandler
@@ -732,7 +755,8 @@ int ItemCreateHandler::handleQuery(SimulatorThread *sim,
 	int itemID = atoi(query->args[0].c_str());
 	int targetID = atoi(query->args[1].c_str());
 	g_CharacterManager.GetThread("SimulatorThread::ItemCreate");
-	CreatureInstance *creature = creatureInstance->actInst->GetPlayerByID(targetID);
+	CreatureInstance *creature = creatureInstance->actInst->GetPlayerByID(
+			targetID);
 	if (creature != NULL) {
 		ItemDef * item;
 		if (itemID == 0) {
@@ -748,27 +772,28 @@ int ItemCreateHandler::handleQuery(SimulatorThread *sim,
 						creature->charPtr->inventory.AddItem_Ex(INV_CONTAINER,
 								item->mID, 1);
 				if (sendSlot != NULL) {
-					g_Logs.event->info(
-							"[SAGE] %v gave %v to %v because '%v'",
+					creature->charPtr->pendingChanges++;
+					g_Logs.event->info("[SAGE] %v gave %v to %v because '%v'",
 							pld->charPtr->cdef.css.display_name,
 							item->mDisplayName.c_str(),
 							creature->charPtr->cdef.css.display_name,
 							query->args[2].c_str());
-					int wpos = AddItemUpdate(&sim->Aux1[0], sim->Aux2, sendSlot);
+					int wpos = AddItemUpdate(&sim->Aux1[0], sim->Aux2,
+							sendSlot);
 					sim->ActivateActionAbilities(sendSlot);
 					g_CharacterManager.ReleaseThread();
 					creature->simulatorPtr->AttemptSend(sim->Aux1, wpos);
-					return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
+					return PrepExt_QueryResponseString(sim->SendBuf, query->ID,
+							"OK");
 				}
 			}
 
 		}
 	}
 	g_CharacterManager.ReleaseThread();
-	return PrepExt_QueryResponseError(sim->SendBuf, query->ID, "Failed to give item.");
+	return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+			"Failed to give item.");
 }
-
-
 
 //
 //ItemDefDeleteHandler
@@ -784,7 +809,8 @@ int ItemDefDeleteHandler::handleQuery(SimulatorThread *sim,
 	int itemID = atoi(query->args[0].c_str());
 	int targetID = atoi(query->args[1].c_str());
 	g_CharacterManager.GetThread("SimulatorThread::ItemCreate");
-	CreatureInstance *creature = creatureInstance->actInst->GetPlayerByID(targetID);
+	CreatureInstance *creature = creatureInstance->actInst->GetPlayerByID(
+			targetID);
 	if (creature != NULL) {
 		ItemDef * item;
 		if (itemID == 0) {
@@ -809,12 +835,14 @@ int ItemDefDeleteHandler::handleQuery(SimulatorThread *sim,
 								item->mDisplayName.c_str(),
 								creature->charPtr->cdef.css.display_name,
 								query->args[2].c_str());
-						int wpos = RemoveItemUpdate(&sim->Aux1[0], sim->Aux2, slot);
+						int wpos = RemoveItemUpdate(&sim->Aux1[0], sim->Aux2,
+								slot);
 						g_CharacterManager.ReleaseThread();
 						creature->simulatorPtr->AttemptSend(sim->Aux1, wpos);
 						cdata->inventory.RemItem(slot->CCSID);
-						return PrepExt_QueryResponseString(sim->SendBuf, query->ID,
-								"OK");
+						cdata->pendingChanges++;
+						return PrepExt_QueryResponseString(sim->SendBuf,
+								query->ID, "OK");
 					}
 				}
 			}
@@ -833,8 +861,8 @@ int ItemDefContentsHandler::handleQuery(SimulatorThread *sim,
 		CharacterServerData *pld, SimulatorQuery *query,
 		CreatureInstance *creatureInstance) {
 	if (!sim->CheckPermissionSimple(Perm_Account, Permission_Sage))
-				return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
-						"Permission denied.");
+		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+				"Permission denied.");
 
 	int wpos = 0;
 	wpos += PutByte(&sim->SendBuf[wpos], 1);       //_handleQueryResultMsg
@@ -914,9 +942,9 @@ int ShopContentsHandler::handleQuery(SimulatorThread *sim,
 		//Fill the query with the contents of the buyback information.
 		g_Logs.simulator->debug("[%v] Shop contents self.", sim->InternalID);
 		int wpos = 0;
-		wpos += PutByte(&sim->SendBuf[wpos], 1);              //_handleQueryResultMsg
-		wpos += PutShort(&sim->SendBuf[wpos], 0);          //Placeholder for message size
-		wpos += PutInteger(&sim->SendBuf[wpos], query->ID);     //Query response ID
+		wpos += PutByte(&sim->SendBuf[wpos], 1);         //_handleQueryResultMsg
+		wpos += PutShort(&sim->SendBuf[wpos], 0); //Placeholder for message size
+		wpos += PutInteger(&sim->SendBuf[wpos], query->ID);  //Query response ID
 
 		int rowCount =
 				(int) pld->charPtr->inventory.containerList[BUYBACK_CONTAINER].size();
@@ -936,8 +964,8 @@ int ShopContentsHandler::handleQuery(SimulatorThread *sim,
 
 	int CDef = sim->ResolveCreatureDef(CID);
 
-	int wpos = creatureInstance->actInst->itemShopList.ProcessQueryShop(sim->SendBuf,
-			sim->Aux1, CDef, query->ID);
+	int wpos = creatureInstance->actInst->itemShopList.ProcessQueryShop(
+			sim->SendBuf, sim->Aux1, CDef, query->ID);
 	if (wpos == 0) {
 		g_Logs.simulator->warn("[%v] Shop Contents not found for [%v]",
 				sim->InternalID, CDef);
@@ -964,21 +992,23 @@ int EssenceShopContentsHandler::handleQuery(SimulatorThread *sim,
 		return 0;
 
 	int CID = atoi(query->args[0].c_str());
-	g_Logs.simulator->trace("[%v] essenceShop.contents: %v", sim->InternalID, CID);
+	g_Logs.simulator->trace("[%v] essenceShop.contents: %v", sim->InternalID,
+			CID);
 
 	int CDef = sim->ResolveCreatureDef(CID);
 
-	int WritePos = creatureInstance->actInst->essenceShopList.ProcessQueryEssenceShop(
-			sim->SendBuf, sim->Aux1, CDef, query->ID);
+	int WritePos =
+			creatureInstance->actInst->essenceShopList.ProcessQueryEssenceShop(
+					sim->SendBuf, sim->Aux1, CDef, query->ID);
 	if (WritePos == 0) {
 		g_Logs.simulator->warn("[%v] EssenceShop not found for [%v]",
 				sim->InternalID, CDef);
 		sprintf(sim->Aux3, "EssenceShop not found for [%d]", CDef);
-		WritePos = PrepExt_QueryResponseError(sim->SendBuf, query->ID, sim->Aux3);
+		WritePos = PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+				sim->Aux3);
 	}
 	return WritePos;
 }
-
 
 //
 //ItemPreviewHandler
@@ -991,7 +1021,8 @@ int ItemPreviewHandler::handleQuery(SimulatorThread *sim,
 	//[0] = Type (0 = invisible, 1 = nude, 2 = clone)
 	//[1] = Item ID
 	if (query->argCount < 2 || query->argCount > 66) //32 slots * 2, + 2 params should be plenty.  Bail on greater to be safe.
-		return PrepExt_QueryResponseError(sim->SendBuf, query->ID, "Invalid query->");
+		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+				"Invalid query->");
 
 	static const char *invis =
 			"n4:{[\"c\"]=\"Horde-Invisible_Biped\",[\"sk\"]={[\"main\"]=\"FFFFFF\"},[\"sz\"]=\"1.0\"}";
@@ -1001,7 +1032,8 @@ int ItemPreviewHandler::handleQuery(SimulatorThread *sim,
 
 	ItemDef *itemDef = g_ItemManager.GetPointerByID(itemID);
 	if (itemDef == NULL)
-		return PrepExt_QueryResponseError(sim->SendBuf, query->ID, "Server error.");
+		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+				"Server error.");
 
 	std::vector<int> eqArray;
 	for (unsigned int i = 2; i < query->argCount; i++)
@@ -1073,7 +1105,8 @@ int ItemPreviewHandler::handleQuery(SimulatorThread *sim,
 		targetEquipSlot = ItemEquipSlot::NONE;
 	}
 	if (targetEquipSlot == ItemEquipSlot::NONE)
-		return PrepExt_QueryResponseError(sim->SendBuf, query->ID, "Server error.");
+		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+				"Server error.");
 
 	if (type == 0 || type == 1) {
 		eqArray.clear();
@@ -1091,14 +1124,16 @@ int ItemPreviewHandler::handleQuery(SimulatorThread *sim,
 	for (size_t i = 0; i < eqArray.size(); i += 2) {
 		if (i > 0)
 			sim->Aux1[wpos++] = ',';
-		wpos += sprintf(&sim->Aux1[wpos], "[%d]=%d", eqArray[i], eqArray[i + 1]);
+		wpos += sprintf(&sim->Aux1[wpos], "[%d]=%d", eqArray[i],
+				eqArray[i + 1]);
 	}
 	sim->Aux1[wpos++] = '}';
 
-	CreatureInstance *cptr = creatureInstance->actInst->SpawnCreate(creatureInstance,
-			3509);  //Generic interact object, the details will be replaced.
+	CreatureInstance *cptr = creatureInstance->actInst->SpawnCreate(
+			creatureInstance, 3509); //Generic interact object, the details will be replaced.
 	if (cptr == NULL)
-		return PrepExt_QueryResponseError(sim->SendBuf, query->ID, "Server error.");
+		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+				"Server error.");
 
 	Util::SafeCopy(cptr->css.display_name, creatureInstance->css.display_name,
 			sizeof(cptr->css.display_name));
@@ -1150,7 +1185,8 @@ int CraftCreateHandler::handleQuery(SimulatorThread *sim,
 	 Args : [0] Item ID of the plan to create from.
 	 [1] Creature Instance ID of the vendor who processed this action.
 	 */
-	int rval = protected_helper_query_craft_create(sim, pld, query, creatureInstance);
+	int rval = protected_helper_query_craft_create(sim, pld, query,
+			creatureInstance);
 	if (rval <= 0)
 		rval = PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 				sim->GetErrorString(rval));
@@ -1158,19 +1194,14 @@ int CraftCreateHandler::handleQuery(SimulatorThread *sim,
 	return rval;
 }
 
-int CraftCreateHandler::protected_helper_query_craft_create(SimulatorThread *sim,
-		CharacterServerData *pld, SimulatorQuery *query,
+int CraftCreateHandler::protected_helper_query_craft_create(
+		SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query,
 		CreatureInstance *creatureInstance) {
 	if (query->argCount < 2)
 		return QueryErrorMsg::GENERIC;
 
 	int ItemID = atoi(query->args[0].c_str());
 	int CreatureID = atoi(query->args[1].c_str());
-
-	// Make sure this object isn't too far away.
-	int distCheck = sim->CheckDistance(CreatureID);
-	if (distCheck != 0)
-		return distCheck;
 
 	//Check that the item plan exists in the database.
 	ItemDef *itemPlan = g_ItemManager.GetPointerByID(ItemID);
@@ -1225,12 +1256,44 @@ int CraftCreateHandler::protected_helper_query_craft_create(SimulatorThread *sim
 	if (slotIndex == -1)
 		return QueryErrorMsg::INVSPACE;
 
+	InventorySlot * reagentPtr = NULL;
+	ItemDef * reagentDef = NULL;
+	bool unstack = false;
+	bool free = false;
+
+	if (CreatureID == creatureInstance->CreatureID) {
+		free = true;
+		reagentPtr = pld->charPtr->inventory.GetBestSpecialItem(
+				GetContainerIDFromName("inv"), PORTABLE_CRAFTKIT);
+		if (reagentPtr == NULL) {
+			return QueryErrorMsg::NOCRAFT;
+		} else {
+			reagentDef = g_ItemManager.GetPointerByID(reagentPtr->IID);
+			if (reagentDef == NULL) {
+				return QueryErrorMsg::NOCRAFT;
+			}
+
+			/* Ok to refashion. If item is stackable, then the stack is decreased too (one-off crafting items) */
+			if (reagentPtr->ResolveItemPtr()->GetDynamicMax(
+					ItemIntegerType::STACKING) >= 1
+					&& reagentPtr->GetStackCount() > 0) {
+				unstack = true;
+			}
+
+		}
+	} else {
+		// Make sure this object isn't too far away.
+		int distCheck = sim->protected_CheckDistance(CreatureID);
+		if (distCheck != 0)
+			return distCheck;
+	}
+
 	//Good to go, create the item.
 	InventorySlot *itemPtr = NULL;
 	itemPtr = inv.AddItem_Ex(INV_CONTAINER, itemPlan->resultItemId, 1);
 	if (itemPtr == NULL)
 		return QueryErrorMsg::INVCREATE;
-
+	pld->charPtr->pendingChanges++;
 	sim->ActivateActionAbilities(itemPtr);
 
 	int wpos = AddItemUpdate(sim->SendBuf, sim->Aux3, itemPtr);
@@ -1239,6 +1302,15 @@ int CraftCreateHandler::protected_helper_query_craft_create(SimulatorThread *sim
 	for (size_t i = 0; i < CraftID.size(); i++)
 		wpos += inv.RemoveItemsAndUpdate(INV_CONTAINER, CraftID[i], CraftReq[i],
 				&sim->SendBuf[wpos]);
+
+	/*
+	 * If a consumable crafting device used, remove it
+	 */
+	if (unstack) {
+		if (reagentPtr->GetStackCount() == 1)
+			g_ItemManager.NotifyDestroy(reagentPtr->IID, "mod.craft");
+		wpos += RemoveItemUpdate(&sim->SendBuf[wpos], sim->Aux3, reagentPtr);
+	}
 
 	vector<InventoryQuery> iq;
 
@@ -1254,6 +1326,8 @@ int CraftCreateHandler::protected_helper_query_craft_create(SimulatorThread *sim
 		wpos += RemoveItemUpdate(&sim->SendBuf[wpos], sim->Aux3, iq[0].ptr);
 	inv.RemoveItems(iq);
 
+	pld->charPtr->pendingChanges++;
+
 	wpos += PrepExt_QueryResponseString(&sim->SendBuf[wpos], query->ID, "OK");
 	return wpos;
 }
@@ -1262,19 +1336,20 @@ int CraftCreateHandler::protected_helper_query_craft_create(SimulatorThread *sim
 //ModCraftHandler
 //
 
-int ModCraftHandler::handleQuery(SimulatorThread *sim,
-		CharacterServerData *pld, SimulatorQuery *query,
-		CreatureInstance *creatureInstance) {
+int ModCraftHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
+		SimulatorQuery *query, CreatureInstance *creatureInstance) {
 
 	//Requires a modded client to perform this action.
 	// Arguments: list of container/slot IDs in hexadecimal notation.
 
 	InventoryManager &inv = pld->charPtr->inventory;
 
+	int creatureID = strtol(query->args[0].c_str(), NULL, 10);
+
 	//Resolve inputs.
 	std::vector<CraftInputSlot> inputs;
 	std::vector<CraftInputSlot> outputs;
-	for (unsigned int i = 0; i < query->argCount; i++) {
+	for (unsigned int i = 1; i < query->argCount; i++) {
 		unsigned int CCSID = inv.GetCCSIDFromHexID(query->GetString(i));
 		InventorySlot *slot = inv.GetItemPtrByCCSID(CCSID);
 		if (slot == NULL)
@@ -1321,11 +1396,45 @@ int ModCraftHandler::handleQuery(SimulatorThread *sim,
 		}
 
 		if (verified == true) {
+
+			InventorySlot * reagentPtr = NULL;
+			ItemDef * reagentDef = NULL;
+			bool unstack = false;
+			bool free = false;
+
+			if (creatureID == creatureInstance->CreatureID) {
+				free = true;
+				reagentPtr = pld->charPtr->inventory.GetBestSpecialItem(
+						GetContainerIDFromName("inv"), PORTABLE_CRAFTKIT);
+				if (reagentPtr == NULL) {
+					return QueryErrorMsg::NOCRAFT;
+				} else {
+					reagentDef = g_ItemManager.GetPointerByID(reagentPtr->IID);
+					if (reagentDef == NULL) {
+						return QueryErrorMsg::NOCRAFT;
+					}
+
+					/* Ok to refashion. If item is stackable, then the stack is decreased too (one-off crafting items) */
+					if (reagentPtr->ResolveItemPtr()->GetDynamicMax(
+							ItemIntegerType::STACKING) >= 1
+							&& reagentPtr->GetStackCount() > 0) {
+						unstack = true;
+					}
+
+				}
+			} else {
+				// Make sure this object isn't too far away.
+				int distCheck = sim->protected_CheckDistance(creatureID);
+				if (distCheck != 0)
+					return distCheck;
+			}
+
 			//Give resulting items.
 			for (size_t i = 0; i < outputs.size(); i++) {
 				InventorySlot *newItem = inv.AddItem_Ex(INV_CONTAINER,
 						outputs[i].mID, outputs[i].mStackCount);
 				if (newItem) {
+					pld->charPtr->pendingChanges++;
 					ItemDef *itemDef = g_ItemManager.GetPointerByID(
 							outputs[i].mID);
 					std::string msg = "Obtained ";
@@ -1340,6 +1449,17 @@ int ModCraftHandler::handleQuery(SimulatorThread *sim,
 				}
 			}
 
+			int wpos = 0;
+
+			/*
+			 * If a consumable crafting device used, remove it
+			 */
+			if(unstack) {
+				if(reagentPtr->GetStackCount() == 1)
+					g_ItemManager.NotifyDestroy(reagentPtr->IID, "mod.craft");
+				wpos += RemoveItemUpdate(sim->Aux1, sim->Aux2, reagentPtr);
+			}
+
 			//Remove crafting components.
 			for (size_t i = 0; i < inputs.size(); i++) {
 				InventorySlot *remItem = inv.GetItemPtrByCCSID(
@@ -1347,11 +1467,15 @@ int ModCraftHandler::handleQuery(SimulatorThread *sim,
 				if (remItem) {
 					if (remItem->GetStackCount() == 1)
 						g_ItemManager.NotifyDestroy(remItem->IID, "mod.craft");
-					int wpos = RemoveItemUpdate(sim->Aux1, sim->Aux2, remItem);
-					sim->AttemptSend(sim->Aux1, wpos);
+					wpos += RemoveItemUpdate(&sim->Aux1[wpos], sim->Aux2, remItem);
 				}
 				inv.RemItem(inputs[i].mCCSID);
+				pld->charPtr->pendingChanges++;
 			}
+
+			if(wpos > 0)
+				sim->AttemptSend(sim->Aux1, wpos);
+
 			success = true;
 		}
 	}

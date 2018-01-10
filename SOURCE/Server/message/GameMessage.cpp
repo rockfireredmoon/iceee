@@ -562,7 +562,7 @@ int CommunicateMessage::handleMessage(SimulatorThread *sim, CharacterServerData 
 	if (tell == true && found == false) {
 
 		/* Look up the account name for the character */
-		int cdefID = g_AccountManager.GetCDefFromCharacterName(sim->Aux3);
+		int cdefID = g_UsedNameDatabase.GetIDByName(sim->Aux3);
 		int msgCode = INFOMSG_ERROR;
 		if (cdefID == -1) {
 			sprintf(LogBuffer, "No such character \"%s\" .", sim->Aux3);

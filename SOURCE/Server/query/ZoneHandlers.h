@@ -44,6 +44,12 @@ public:
 	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
 };
 
+class WorldListHandler : public QueryHandler {
+public:
+	~WorldListHandler() {};
+	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
+};
+
 class ShardSetHandler : public QueryHandler {
 public:
 	~ShardSetHandler() {};

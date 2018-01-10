@@ -1,6 +1,7 @@
 #ifndef ACCOUNT_H
 #define ACCOUNT_H
 
+
 #include <list>
 #include <vector>
 #include <string>
@@ -8,12 +9,21 @@
 #include "Stats.h"
 #include "Components.h"
 #include "Inventory.h"
+#include "Achievements.h"
 #include "Character.h"
+#include "Entities.h"
 #include "PlayerStats.h"
 #include "Util.h"  //ChangeData was moved here
 #include "json/json.h"
 #include "http/HTTP.h"
 
+static std::string KEYPREFIX_CHARACTER_NAME_TO_ID = "CharacterNameToID";
+static std::string KEYPREFIX_CHARACTER_ID_TO_NAME = "CharacterIDToName";
+static std::string KEYPREFIX_REGISTRATION_KEYS = "RegistrationKeys";
+static std::string KEYPREFIX_ACCOUNT_QUICK_DATA = "AccountQuickData";
+static std::string KEYPREFIX_ACCOUNT_DATA = "AccountData";
+static std::string ID_NEXT_ACCOUNT_ID = "NextAccountID";
+static std::string KEYPREFIX_ACCOUNT_SESSIONS = "AccountSessions";
 
 class CharacterData;
 
@@ -46,29 +56,21 @@ struct BuildPermissionArea
 
 //An entry for a single character in the character select window. Holds a cache
 //of data so that the entire character list doesn't have to be explicitly loaded.
-struct CharacterCacheEntry
-{
+class CharacterCacheEntry: public AbstractEntity {
+public:
 	int creatureDefID;
 	int level;
 	int profession;
 	std::string display_name;
 	std::string appearance;
 	std::string eq_appearance;
-	CharacterCacheEntry()
-	{
-		creatureDefID = 0;
-		level = 0;
-		profession = 0;
-	}
-	void Clear(void)
-	{
-		creatureDefID = 0;
-		level = 0;
-		profession = 0;
-		display_name.clear();
-		appearance.clear();
-		eq_appearance.clear();
-	}
+
+	CharacterCacheEntry();
+	~CharacterCacheEntry();
+	void Clear(void);
+	bool WriteEntity(AbstractEntityWriter *writer);
+	bool ReadEntity(AbstractEntityReader *reader);
+	bool EntityKeys(AbstractEntityReader *reader);
 };
 
 //Manages the cache data for all characters visible in the character select window.
@@ -79,15 +81,18 @@ struct CharacterCacheManager
 	CharacterCacheEntry* ForceGetCharacter(int cdefID);
 	CharacterCacheEntry* UpdateCharacter(CharacterData *charData);
 	void RemoveCharacter(int cdefID);
-	void SaveToStream(FILE *output);
+	bool ReadEntity(AbstractEntityReader *reader);
+	bool WriteEntity(AbstractEntityWriter *writer);
 	void AddEntry(CharacterCacheEntry &data);
 };
 
-class AccountData
-{
+class AccountData: public AbstractEntity {
 public:
 	AccountData();
-	~AccountData();
+	virtual ~AccountData();
+	bool WriteEntity(AbstractEntityWriter *writer);
+	bool ReadEntity(AbstractEntityReader *reader);
+	bool EntityKeys(AbstractEntityReader *reader);
 
 	static const int EXPIRE_TIME = 5000;
 	static const int MAX_CHARACTER_SLOTS = 8;  //Absolute maximum number of characters an account can have
@@ -95,12 +100,14 @@ public:
 	static const int DEFAULT_CHARACTER_SLOTS = 4;  //Default number of characters an account can have
 
 	int ID;
-	char Name[48];
-	char AuthData[36];
-	char RegKey[36];
+	std::string Name;
+	std::string AuthData;
+	std::string RegKey;
 	std::string RecoveryKeys;
 	int CharacterSet[MAX_CHARACTER_SLOTS];
 	unsigned int PermissionSet[2];
+
+	void SetRoles(std::vector<std::string> &roles);
 	bool MatchAuthData(const char *str);
 	void ResolveCharacters(const char *debugName);
 	int GetCharacterCount(void);
@@ -110,7 +117,7 @@ public:
 	unsigned long SuspendDurationSec;  //Duration of ban
 	unsigned long SuspendTimeSec;      //Time when the ban was first set
 
-	char LastLogOn[32];      //Date and time of last login of any character in the account.
+	std::string LastLogOn;      //Date and time of last login of any character in the account.
 	unsigned long CreatedTimeSec; //Time in seconds since epoch the account was created
 	unsigned long LastLogOnTimeSec; //Last login time in seconds since epoch
 	int ConsecutiveDaysLoggedIn; // The number of consecutive days the account has logged in
@@ -133,6 +140,7 @@ public:
 	std::string GroveName;
 	std::vector<BuildPermissionArea> BuildPermissionList;
 	std::vector<int> AccountQuests;
+	std::map<std::string, Achievements::Achievement> Achievements;
 
 	int MaxCharacters;
 
@@ -143,6 +151,7 @@ public:
 
 	bool HasBuildZone(BuildPermissionArea &bpa);
 
+	void AddAchievement(std::string achievement);
 	bool ExpandCharacterSlots();
 	bool ExpandDeliveryBoxes();
 	void ClearAll(void);
@@ -160,8 +169,6 @@ public:
 	void ClearBan(void);
 
 	void AdjustSessionLoginCount(short count);
-	int GetSessionLoginCount(void);
-	void SaveToStream(FILE *output);
 	bool QualifyGarbage(bool force);
 
 	static void GenerateClientPasswordHash(const char *username, const char *password, std::string &outputString);
@@ -173,17 +180,18 @@ public:
 	bool MatchRegistrationKey(const char *regkey);
 	bool IsRegistrationKeyEmpty(void);
 	void CheckRecoveryRegistrationKey(const char *regkey);
+	int GetTotalAchievementObjectives();
+	int GetTotalCompletedAchievements();
 	void WriteToJSON(Json::Value &value);
 	void ReadFromJSON(Json::Value &value);
 private:
-	short SessionLoginCount;   //Number of Simulators logged into this account.
 	unsigned long ExpireTime;  //The server time when the account will be ready for garbage deletion.
 };
 
 class FileReader;
 
-struct AccountQuickData
-{
+class AccountQuickData: public AbstractEntity {
+public:
 	int mID;
 	std::string mLoginName;
 	std::string mLoginAuth;
@@ -194,6 +202,10 @@ struct AccountQuickData
 	{
 		mID = 0;
 	}
+
+	bool WriteEntity(AbstractEntityWriter *writer);
+	bool ReadEntity(AbstractEntityReader *reader);
+	bool EntityKeys(AbstractEntityReader *reader);
 
 	void Clear(void)
 	{
@@ -211,31 +223,15 @@ public:
 	UsedNameDatabase();
 	~UsedNameDatabase();
 
-	//To simplify access of the primary map.
-	typedef std::map<int, std::string>& CONTAINER_REF;
-	typedef std::map<int, std::string>::iterator ITERATOR;
-
-	UsedNameDatabase::CONTAINER_REF GetData(void);              //Return the primary data object.
-	size_t GetDataCount(void);                //Get primary map size.
-
-	void Add(int CDefID, const char *name, bool loadStage = false);   //Add a data pair to both maps.
+	void Add(int CDefID, const std::string &name);   //Add a data pair to both maps.
 	void Remove(int CDefID);                  //Remove an ID from both maps.
 
 	bool HasID(int CDefID);                   //Test if the ID exists.
 	const char *GetNameByID(int CDefID);      //Get the character name of the corresponding ID.
 
-	bool HasName(const char *name);           //Test if the character name exists.
-	int GetIDByName(const char *name);        //Get the ID of the corresponding character name.
+	bool HasName(const std::string &name);           //Test if the character name exists.
+	int GetIDByName(const std::string &name);        //Get the ID of the corresponding character name.
 
-	bool HasChanged(void);
-
-	ChangeData mChanges;
-
-private:
-	typedef std::map<std::string, int>::iterator NAME_ITERATOR;
-
-	std::map<int, std::string> mData;        //Primary data object.
-	std::map<std::string, int> mNameLookup;  //Secondary map for reverse lookups by name.
 };
 
 class AccountManager
@@ -254,35 +250,19 @@ public:
 	void LoadAllData(void);
 	void UnloadAllData(void);
 
-	int NextAccountID;
-
-	std::string KeyFileName;
-	std::string UsedListFileName;
-
 	Platform_CriticalSection cs;  //Needed for external account management since the HTTP threads might be accessing this concurrently.
 
 	static const int DEFAULT_CHARACTER_ID = -400000000;
 	static const int CHARACTER_ID_INCREMENT = -8;
-	int NextCharacterID;
 
-	std::vector<std::string> KeyList;
 	std::list<AccountData> AccList;
-	//USEDCHAR_VECTOR UsedCharacterNames;
-	UsedNameDatabase UsedCharacterNames;
 
-	ChangeData KeyListChanges;
-
-	std::vector<AccountQuickData> accountQuickData;
-	void AppendQuickData(AccountData *account);
-	bool SaveQuickData(void);
-	void LoadQuickData(void);
-	AccountQuickData * GetAccountQuickDataByUsername(const char *username);
-	ChangeData AccountQuickDataChanges;
+	void AppendQuickData(AccountData *account, bool sync = false);
+	AccountQuickData GetAccountQuickDataByUsername(const std::string &username);
 
 	AccountData * GetActiveAccountByID(int accountID);
 	AccountData * FetchIndividualAccount(int accountID);
 	AccountData * LoadAccountID(int accountID);
-	std::string GetIndividualFilename(int accountID);
 
 	AccountData * GetValidLogin(const char *loginName, const char *loginAuth);
 	void ResolveCharacters(void);
@@ -290,7 +270,7 @@ public:
 	void LoadKeyList(std::string fileName);
 	void ImportKeys(void);
 	void ImportKey(const char *key);
-	int GetRegistrationKey(const char *authKey);
+	bool PopRegistrationKey(const std::string &authKey);
 	int CreateAccountFromService(const char *username);
 	int CreateAccount(const char *username, const char *password, const char *regKey, const char *grovename);
 	int ResetPassword(const char *username, const char *newpassword, const char *regKey, bool checkPermission);
@@ -302,8 +282,6 @@ public:
 	int CheckAutoSave(bool force);
 	int HasPendingMinorUpdates(void);
 	void SaveIndividualAccount(AccountData *account);
-	void SaveKeyListChanges(void);
-	void SaveUsedNameListChanges(void);
 
 	//Placeholder character creation stuff.  Should probably be moved to
 	//the character system when that's redone.
@@ -314,12 +292,6 @@ public:
 	bool ValidCharacterName(const std::string &name);
 	const char * GetCharacterErrorMessage(int message);
 
-	bool HasUsedCharacterName(const char *characterName);
-	int GetCDefFromCharacterName(const char *characterName);
-	const char *GetCharacterNameFromCDef(int CDefID);
-	void AddUsedCharacterName(int CDefID, const char *characterName);
-	void RemoveUsedCharacterName(int CDefID);
-	void LoadUsedNameList(std::string fileName);
 	void RunUpdateCycle(bool force);
 	bool AcceptingLogins(void);
 	int ValidateNameParts(const std::string &first, const std::string &last);
@@ -368,9 +340,6 @@ public:
 	};
 	
 private:
-	void LoadAccountFromStream(FileReader &fr, AccountData &ad, std::string debugFilename);
-	void LoadSectionGeneral(FileReader &fr, AccountData &ad, std::string debugFilename);
-	void LoadSectionCharacterCache(FileReader &fr, AccountData &ad, std::string debugFilename);
 	Timer TimerGeneralUpdate;
 	std::map<std::string, AccessToken*> Tokens;
 	static const int GENERAL_UPDATE_FREQUENCY = 5000;
@@ -422,6 +391,7 @@ extern const int MaxPermissionDef;
 extern PermissionInfo PermissionDef[];
 
 extern AccountManager g_AccountManager;
+extern UsedNameDatabase g_UsedNameDatabase;
 
 void DeleteCharacterList(void);
 

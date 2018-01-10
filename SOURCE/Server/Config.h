@@ -22,12 +22,6 @@ extern int g_ErrorSleep;
 extern char g_SimulatorAddress[128];
 extern char g_BindAddress[128];
 
-extern int g_DefX;
-extern int g_DefY;
-extern int g_DefZ;
-extern int g_DefZone;
-extern int g_DefRotation;
-
 //For the HTTP server
 extern char g_HTTPBaseFolder[512];
 extern unsigned int g_HTTPListenPort;
@@ -52,7 +46,6 @@ extern int g_ItemWeaponTypeOverride;
 //New for Release 10
 extern string g_MOTD_Name;
 extern string g_MOTD_Channel;
-extern string g_MOTD_Message;
 
 //Internal variables, shouldn't be set in the config file
 extern char g_WorkingDirectory[];
@@ -110,12 +103,19 @@ class GlobalConfigData
 public:
 	GlobalConfigData();
 	~GlobalConfigData();
+
 	std::string RemoteAuthenticationPassword;
 
 	//These control whether messages from different components will be entered into the
 	//central logging system. (see LogLevel values)
 	//If the message provided is less than or equal to the specified LogLevel value, the message
 	//will be added.
+
+	int DefX;
+	int DefY;
+	int DefZ;
+	int DefRotation;
+	int DefZone;
 
 	int BuybackLimit;
 	int ProperSceneryList;     //Should be set to 1.  If zero, this is basically like having a global fastload permission applied to all players, which is bad for normal players.
@@ -203,6 +203,7 @@ public:
 	bool UseStopSwim;                        //If true, send a custom "stop swimming" notification to the client when sending reposition updates, like warps.  Requires a modded client for the custom event handler.
 	bool UseWeather;					     //If true, weather systems will be enabled
 	bool UseReagents;					     //If true, reagents are enabled and required for certain abilities and scrolls
+	bool UseUserAgentProtection;			 //Only allow HTTP calls from the Sparkplayer client user agent - 'ire3d(VERSION)'
 	std::string InvalidLoginMessage;         //The message string to send to the client if the account is wrong.
 	std::string MaintenanceMessage;          //The message string to send to the client if the server is in maintenance mode (sages and admins only).
 
@@ -251,6 +252,7 @@ public:
 	std::string APIAuthentication;		// Username:Password to allow API authentication
 	std::string SiteServiceUsername;
 	std::string SiteServicePassword;
+	std::string LocalConfigurationPath;
 
 	unsigned int ClanCost;
 	bool Clans;
@@ -264,15 +266,17 @@ public:
 	std::string ShutdownHandlerScript;
 	std::string StaticDataPath;			// Location of static data (not editable in game).
 	std::string VariableDataPath;		// Location of variable data (editable in game).
-	std::string UserDataPath;			// Location of user data (accounts and other game state data).
+	std::string LogPath;				// Location of logs other than Easylogging output (Civet for example)
 
 	unsigned long debugAdministrativeBehaviorFlags;
 	void SetAdministrativeBehaviorFlag(unsigned long bitValue, bool state);
 	bool HasAdministrativeBehaviorFlag(unsigned long bitValue);
 	std::string ResolveStaticDataPath();
 	std::string ResolveVariableDataPath();
-	std::string ResolveUserDataPath();
 	std::string ResolveHTTPBasePath();
+	std::string ResolveHTTPCARPath();
+	std::string ResolveLocalConfigurationPath();
+	std::string ResolveLogPath();
 
 private:
 	std::string ResolvePath(std::string path);
@@ -286,7 +290,6 @@ bool CheckDefaultHTTPBaseFolder(void);
 void SetHTTPBaseFolderToCurrent(void);
 void LoadFileIntoString(std::string &dest, std::string filename);
 int SaveSession(std::string filename);
-int LoadSession(std::string filename);
 int LoadStringsFile(std::string filename, vector<string> &list);
 int LoadStringKeyValFile(std::string filename, vector<StringKeyVal> &list);
 

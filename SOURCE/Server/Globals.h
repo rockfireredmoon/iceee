@@ -6,6 +6,7 @@
 
 
 #define MAXTARGET   8
+#define MAXOBJECTIVES 4
 
 //Shared between the servers
 extern const int SleepDelayError;
@@ -194,6 +195,9 @@ const int POSTAGE_STAMP_ITEM_ID = 8400;
 extern const int LevelRequirements[71][2];
 
 extern double g_VendorMarkup;
+
+extern char GAuxBuf[1024];    //Note, if this size is modified, change all "extern" references
+extern char GSendBuf[32767];  //Note, if this size is modified, change all "extern" references
 
 namespace Global
 {

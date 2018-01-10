@@ -1,5 +1,5 @@
 ACLOCAL_AMFLAGS = -I m4
-SUBDIRS = asset SOURCE AIScript Data Instance ItemMod Loot Packages QuestScripts SpawnPackages Scenery Etc
+SUBDIRS = asset SOURCE Etc Local
 EXTRA_DIST = autogen.sh
 
 if DEBUG
@@ -16,34 +16,19 @@ libtool: $(LIBTOOL_DEPS)
 	
 install-exec-hook:
 	mkdir -p $(DESTDIR)$(sysconfdir)/tawd ; \
-	cp -n ServerConfig.txt.sample $(DESTDIR)$(sysconfdir)/tawd/ServerConfig.txt ; \
-	cp -n LogConfig.txt.sample $(DESTDIR)$(sysconfdir)/tawd/LogConfig.txt ; \
-	cp -n URL.txt.sample $(DESTDIR)$(sysconfdir)/tawd/URL.txt ; \
+	cp -n Local/ServerConfig.txt.sample $(DESTDIR)$(sysconfdir)/tawd/ServerConfig.txt ; \
+	sed -i -e 's~StaticDataPath=\.\./iceee-data/Static~StaticDataPath=$(DESTDIR)$(datarootdir)/tawd/Static~g' $(DESTDIR)$(sysconfdir)/tawd/ServerConfig.txt ; \
+	sed -i -e 's~VariableDataPath=\.\./iceee-data/Variable~VariableDataPath=$(DESTDIR)$(localstatedir)/lib/tawd/Variable~g' $(DESTDIR)$(sysconfdir)/tawd/ServerConfig.txt ; \
+	sed -i -e 's~HTTPCARFolder=\.\./iceee-assets~HTTPCARFolder=$(DESTDIR)$(datarootdir)/tawd/asset~g' $(DESTDIR)$(sysconfdir)/tawd/ServerConfig.txt ; \
+	cp -n Local/LogConfig.txt.sample $(DESTDIR)$(sysconfdir)/tawd/LogConfig.txt ; \
+	cp -n Local/Cluster.txt.sample $(DESTDIR)$(sysconfdir)/tawd/Cluster.txt ; \
+	cp -n Local/URL.txt.sample $(DESTDIR)$(sysconfdir)/tawd/URL.txt ; \
 	\
-	mkdir -p $(DESTDIR)$(localstatedir)/lib/tawd ; \
-	ln -sf $(DESTDIR)$(sysconfdir)/tawd/LogConfig.txt $(DESTDIR)$(localstatedir)/lib/tawd/LogConfig.txt ; \
-	ln -sf $(DESTDIR)$(sysconfdir)/tawd/ServerConfig.txt $(DESTDIR)$(localstatedir)/lib/tawd/ServerConfig.txt ; \
-	ln -sf $(DESTDIR)$(datarootdir)/tawd/AIScript $(DESTDIR)$(localstatedir)/lib/tawd/AIScript ; \
-	ln -sf $(DESTDIR)$(datarootdir)/tawd/Data $(DESTDIR)$(localstatedir)/lib/tawd/Data ; \
-	ln -sf $(DESTDIR)$(datarootdir)/tawd/ItemMod $(DESTDIR)$(localstatedir)/lib/tawd/ItemMod ; \
-	ln -sf $(DESTDIR)$(datarootdir)/tawd/Loot $(DESTDIR)$(localstatedir)/lib/tawd/Loot ; \
-	ln -sf $(DESTDIR)$(datarootdir)/tawd/Packages $(DESTDIR)$(localstatedir)/lib/tawd/Packages ; \
-	ln -sf $(DESTDIR)$(datarootdir)/tawd/QuestScripts $(DESTDIR)$(localstatedir)/lib/tawd/QuestScripts ; \
-	ln -sf $(DESTDIR)$(datarootdir)/tawd/Scenery $(DESTDIR)$(localstatedir)/lib/tawd/Scenery ; \
-	ln -sf $(DESTDIR)$(datarootdir)/tawd/SpawnPackages $(DESTDIR)$(localstatedir)/lib/tawd/SpawnPackages ; \
-	mkdir -p $(DESTDIR)$(localstatedir)/lib/tawd/Accounts ; \
-	mkdir -p $(DESTDIR)$(localstatedir)/lib/tawd/Audit ; \
-	mkdir -p $(DESTDIR)$(localstatedir)/lib/tawd/AuctionHouse ; \
-	mkdir -p $(DESTDIR)$(localstatedir)/lib/tawd/Characters ; \
-	mkdir -p $(DESTDIR)$(localstatedir)/lib/tawd/Clan ; \
-	mkdir -p $(DESTDIR)$(localstatedir)/lib/tawd/Logs ; \
-	mkdir -p $(DESTDIR)$(localstatedir)/lib/tawd/CreditShop ; \
-	mkdir -p $(DESTDIR)$(localstatedir)/lib/tawd/Dynamic ; \
-	mkdir -p $(DESTDIR)$(localstatedir)/lib/tawd/Grove ; \
-	mkdir -p $(DESTDIR)$(localstatedir)/lib/tawd/IGForum ; \
-	mkdir -p $(DESTDIR)$(localstatedir)/lib/tawd/Petitions ; \
-	mkdir -p $(DESTDIR)$(localstatedir)/lib/tawd/VirtualItems ; \
-	mkdir -p $(DESTDIR)$(localstatedir)/lib/tawd/ZoneDef ; \
+	mkdir -p $(DESTDIR)$(localstatedir)/lib/tawd/Local ; \
+	ln -sf $(DESTDIR)$(sysconfdir)/tawd/LogConfig.txt $(DESTDIR)$(localstatedir)/lib/tawd/Local/LogConfig.txt ; \
+	ln -sf $(DESTDIR)$(sysconfdir)/tawd/ServerConfig.txt $(DESTDIR)$(localstatedir)/lib/tawd/Local/ServerConfig.txt ; \
+	ln -sf $(DESTDIR)$(sysconfdir)/tawd/URL.txt $(DESTDIR)$(localstatedir)/lib/tawd/Local/URL.txt ; \
+	ln -sf $(DESTDIR)$(sysconfdir)/tawd/Cluster.txt $(DESTDIR)$(localstatedir)/lib/tawd/Local/Cluster.txt ; \
 	mkdir -p $(DESTDIR)$(localstatedir)/log/tawd ; \
 	ln -sf $(DESTDIR)$(localstatedir)/log/tawd $(DESTDIR)$(localstatedir)/lib/tawd/Logs ; \
 	echo Done ;

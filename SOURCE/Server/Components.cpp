@@ -4,6 +4,7 @@
 #include <string.h>
 #include "util/Log.h"
 
+
 char VersionString[] = {"Version 36b : " __DATE__ }; 
 
 unsigned long g_ServerTime = 0;        //Current server time (milliseconds)
@@ -251,38 +252,59 @@ void Sleep_Nanosleep(int milliseconds)
 
 #endif //#ifndef WINDOWS_PLATFORM
 
-
+void PlatformTime :: Init() {
+	mServerLaunchMontonic = getMonotonicMilliseconds();
+	g_ServerLaunchTime = getUTCMilliSeconds();
+	g_ServerTime = getMilliseconds();
+}
 
 unsigned long PlatformTime :: getMilliseconds(void)
+{
+	return g_ServerLaunchTime + getElapsedMilliseconds();
+}
+
+unsigned long PlatformTime :: getMonotonicMilliseconds(void)
 {
 #ifdef WINDOWS_PLATFORM
 	return GetTickCount();
 #else
 	clock_getres(CLOCK_MONOTONIC_RAW, &timeSpec);
-//	g_Logs.server->info("[REMOVEME] RES!!! TV_NSEC =  %v  TV_SEC = %v", timeSpec.tv_nsec, timeSpec.tv_sec);
 	clock_gettime(CLOCK_MONOTONIC_RAW, &timeSpec);
-	long tm = (timeSpec.tv_sec * 1000) + (timeSpec.tv_nsec / 1000000);
-//	g_Logs.server->info("[REMOVEME] TIME!!! TV_NSEC =  %v  TV_SEC = %v = TM %v", timeSpec.tv_nsec, timeSpec.tv_sec, tm);
-	return tm;
-	// OBSOLETE, CAUSED PROBLEMS
-	//gettimeofday(&timeData, 0);
-	//return (timeData.tv_sec * 1000) + (timeData.tv_usec / 1000);
+	return (timeSpec.tv_sec * 1000) + (timeSpec.tv_nsec / 1000000);
 #endif
+}
+
+unsigned long PlatformTime :: getUTCMilliSeconds()
+{
+   struct timeval tv;
+   gettimeofday(&tv, NULL);
+   return (tv.tv_sec * 1000) + (tv.tv_usec / 1000);
+}
+
+unsigned long PlatformTime :: getLocalMilliSeconds()
+{
+   struct timeval tv;
+   gettimeofday(&tv, NULL);
+   return (tv.tv_sec * 1000) + (tv.tv_usec / 1000);
 }
 
 unsigned long PlatformTime :: getAbsoluteSeconds(void)
 {
-	time(&timeSecData);
-	return static_cast<unsigned long>(timeSecData);
+	return getMilliseconds() / 1000;
 }
 
 unsigned long PlatformTime :: getAbsoluteMinutes(void)
 {
-	time(&timeSecData);
-	return static_cast<unsigned long>(timeSecData / 60);
+	return getAbsoluteSeconds() / 60;
 }
 
 unsigned long PlatformTime :: getElapsedMilliseconds(void)
 {
-	return g_ServerTime - g_ServerLaunchTime;
+	return getMonotonicMilliseconds() - mServerLaunchMontonic;
+}
+
+unsigned long PlatformTime :: getPseudoTimeOfDayMilliseconds(void)
+{
+	//return ( getElapsedMilliseconds() * TIME_FACTOR ) % 86400000;
+	return ( getUTCMilliSeconds() * TIME_FACTOR ) % 86400000;
 }

@@ -85,6 +85,7 @@ struct QueryErrorMsg
 	static const int SELFBUSYSKILL = -27;  //Player is busy casting an ability or using a quest object.
 	static const int OTHERBUSYSKILL = -28; //Other player is busy casting an ability or using a quest object.
 	static const int NOREFASHION = -29;    //Cannot refashion item because ability to do so is missing.
+	static const int NOCRAFT= -30;    		//Cannot craft item because ability to do so is missing.
 };
 
 class SimulatorThread
@@ -154,6 +155,7 @@ public:
 	void Disconnect(const char *debugCaller);
 	void AddPendingDisconnect(void);
 	void ProcessDisconnect(void);
+	void ProcessDetach(void);
 	void ForceErrorMessage(const char *message, int msgtype);
 	int AttemptSend(const char *buffer, unsigned int buflen);
 	void OnConnect(void);
@@ -193,6 +195,8 @@ public:
 	int protected_CheckDistance(int creatureID);
 	int protected_helper_query_item_move(int origContainer, int origSlot, int destContainer, int destSlot, AccountData *destAccount);
 	int protected_helper_query_loot_item(void);
+	int protected_helper_tweak_self(int CDefID, int defhints, int argOffset);
+
 	bool HasPropEditPermission(SceneryObject *prop, float x = 0.0F, float z = 0.0F);
 	const char * GetErrorString(int error);
 	bool HasQueryArgs(unsigned int minCount);
@@ -274,7 +278,7 @@ public:
 	void RunTranslocate(void);
 	void RunPortalRequest(void);
 	void CreatureUseHenge(int creatureID, int creatureDefID);
-	void ShardSet(const char *shardName, const char *charName);
+	std::string ShardSet(std::string shardName, std::string charName);
 
 	const char * GetGenericErrorString(int errCode);
 	int CheckValidWarpZone(int ZoneID);

@@ -32,16 +32,13 @@ enum BCMEnum
 	BCM_UpdatePosInc,      //Incremental position update?
 	BCM_UpdateElevation,   //Update entity elevation
 	BCM_SendHealth,        //Send health
-	BCM_RequestTarget,     //Param1 = (CreatureInstance*) to modify, Param2 = Instance ID of selected object
 	BCM_AbilityRequest,    //Handle an ability request
 	BCM_AbilityActivate2,  //Handle a forced ability activation
 	BCM_ActorJump,         //Handle a jump ability
-	BCM_Disconnect,        //Handle a simulator disconnect param1=SimulatorID, param2=unused
 
 	BCM_RemoveCreature,    //Remove object from the creature list
 	BCM_UpdateFullPosition, //Full update
 
-	BCM_Notice_MOTD,       //No parameters
 	BCM_SpawnCreateCreature,   //Param1 = Creature Instance Ptr of spawner, Param2 = CDef ID
 	BCM_CreatureDelete,  //Param1 = Creature Instance Ptr of deleter, Param2 = Creature ID
 

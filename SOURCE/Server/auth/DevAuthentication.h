@@ -24,7 +24,7 @@ class DevAuthenticationHandler : public AuthHandler {
 public:
 	DevAuthenticationHandler();
 	~DevAuthenticationHandler();
-	AccountData *onAuthenticate(SimulatorThread *sim, std::string loginName, std::string authorizationHash);
+	AccountData *authenticate(const std::string &loginName, const std::string &authorizationHash, std::string *errorMessage);
 };
 
 

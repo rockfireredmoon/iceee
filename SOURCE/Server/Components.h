@@ -5,6 +5,11 @@
 #ifndef COMPONENTS_H
 #define COMPONENTS_H
 
+// Defines how many Gaia days are in a single Earth day. E.g. a value of 4 means
+// time on Gaia moves 4 times faster than on Earth. In practice, this is mainly
+// used to determine when to switch day cycles
+#define TIME_FACTOR 4
+
 // Define these depending on the platform and compiler settings below.
 // What they are defined as does not matter, just that they're defined.
 // Assigning a dummy value makes intellisense show a value to help see
@@ -234,10 +239,17 @@ public:
 	static const unsigned long MAX_TIME = (unsigned long)(~0);
     unsigned long getMilliseconds(void);
 	unsigned long getAbsoluteSeconds(void);
+	unsigned long getUTCMilliSeconds(void);
+	unsigned long getLocalMilliSeconds(void);
+	unsigned long getMonotonicMilliseconds(void);
 	unsigned long getAbsoluteMinutes(void);
 	unsigned long getElapsedMilliseconds(void);
+	unsigned long getPseudoTimeOfDayMilliseconds(void);
+	void Init();
 
 private:
+	unsigned long mPsuedoOffset;
+	unsigned long mServerLaunchMontonic;
 #ifndef WINDOWS_PLATFORM
 	//timeval timeData;
 	timespec timeSpec;
@@ -248,8 +260,8 @@ private:
 namespace Platform
 {
 	//Need these since maximums vary on 32 or 64 bit systems.
-	static const unsigned char MAX_UCHAR = (unsigned char)(~0);
-	static const char MAX_CHAR = MAX_UCHAR >> 1;
+	///static const unsigned char MAX_UCHAR = (unsigned char)(~0);
+	//static const char MAX_CHAR = MAX_UCHAR >> 1;
 
 	static const unsigned short MAX_USHORT = (unsigned short)(~0);
 	static const short MAX_SHORT = MAX_USHORT >> 1;
@@ -257,8 +269,8 @@ namespace Platform
 	static const unsigned int MAX_UINT = (unsigned int)(~0);
 	static const int MAX_INT = MAX_UINT >> 1;
 
-	static const unsigned long MAX_ULONG = (unsigned long)(~0);
-	static const long MAX_LONG = MAX_ULONG >> 1;
+	//static const unsigned long MAX_ULONG = (unsigned long)(~0);
+	//static const long MAX_LONG = MAX_ULONG >> 1;
 }
 
 extern PlatformTime g_PlatformTime;

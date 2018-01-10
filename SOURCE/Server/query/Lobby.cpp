@@ -190,7 +190,7 @@ int PersonaDeleteHandler::handleQuery(SimulatorThread *sim,
 		int CDefID = pld->accPtr->CharacterSet[index];
 		CharacterData *cd = g_CharacterManager.RequestCharacter(CDefID, true);
 		if (cd->clan > 0) {
-			Clans::Clan c = g_ClanManager.mClans[cd->clan];
+			Clans::Clan c = g_ClanManager.GetClan(cd->clan);
 			if (c.mId > 0) {
 				Clans::ClanMember me = c.GetMember(CDefID);
 				c.RemoveMember(me);

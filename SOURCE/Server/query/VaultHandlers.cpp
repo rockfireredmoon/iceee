@@ -70,7 +70,7 @@ int VaultSendHandler::handleQuery(SimulatorThread *sim,
 	/**
 	 * Get the recipient's creature
 	 */
-	int cdefID = g_AccountManager.GetCDefFromCharacterName(query->GetString(1));
+	int cdefID = g_UsedNameDatabase.GetIDByName(query->GetString(1));
 	if (cdefID == -1) {
 		Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1),
 				"Unknown character name '%s'", query->GetString(1));
@@ -104,7 +104,7 @@ int VaultSendHandler::handleQuery(SimulatorThread *sim,
 	// Now we have a creature, we can try and get the account
 	AccountData *acc = g_AccountManager.GetActiveAccountByID(cd->AccountID);
 	if (acc == NULL) {
-		acc = g_AccountManager.LoadAccountID(cd->AccountID);
+		acc = g_AccountManager.FetchIndividualAccount(cd->AccountID);
 	}
 	if (acc == NULL) {
 		g_CharacterManager.ReleaseThread();
@@ -167,6 +167,7 @@ int VaultSendHandler::handleQuery(SimulatorThread *sim,
 			wpos += pld->charPtr->inventory.RemoveItemsAndUpdate(
 					STAMPS_CONTAINER, POSTAGE_STAMP_ITEM_ID, 1,
 					&sim->SendBuf[wpos]);
+			pld->charPtr->pendingChanges++;
 			itemsSent++;
 		} else {
 			Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1),

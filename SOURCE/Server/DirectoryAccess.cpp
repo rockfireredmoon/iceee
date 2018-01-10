@@ -404,7 +404,11 @@ int Platform :: FileCopy(std::string sourceFile, std::string destFile)
 		int toRead = sizeof(buffer);
 		if(toRead > remain)
 			toRead = remain;
-		fread(buffer, toRead, 1, input);
+		if(fread(buffer, toRead, 1, input) != 0) {
+			// Premature EOF or error
+			return -1;
+		}
+
 		fwrite(buffer, toRead, 1, output);
 		remain -= toRead;
 	}

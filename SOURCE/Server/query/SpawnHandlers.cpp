@@ -133,40 +133,40 @@ int SpawnPropertyHandler::handleQuery(SimulatorThread *sim, CharacterServerData 
 			propID, NULL);
 	sim->Aux1[0] = 0;
 	if (so != NULL) {
-		if (so->extraData != NULL) {
+		if (so->hasExtraData) {
 			if (strcmp(propName, "spawnName") == 0)
-				Util::SafeCopy(sim->Aux1, so->extraData->spawnName, sizeof(sim->Aux1));
+				Util::SafeCopy(sim->Aux1, so->extraData.spawnName.c_str(), sizeof(sim->Aux1));
 			else if (strcmp(propName, "leaseTime") == 0)
-				sprintf(sim->Aux1, "%d", so->extraData->leaseTime);
+				sprintf(sim->Aux1, "%d", so->extraData.leaseTime);
 			else if (strcmp(propName, "spawnPackage") == 0)
-				Util::SafeCopy(sim->Aux1, so->extraData->spawnPackage, sizeof(sim->Aux1));
+				Util::SafeCopy(sim->Aux1, so->extraData.spawnPackage.c_str(), sizeof(sim->Aux1));
 			else if(strcmp(propName, "dialog") == 0)
-				Util::SafeCopy(sim->Aux1, so->extraData->dialog, sizeof(sim->Aux1));
+				Util::SafeCopy(sim->Aux1, so->extraData.dialog.c_str(), sizeof(sim->Aux1));
 			else if (strcmp(propName, "mobTotal") == 0)
-				sprintf(sim->Aux1, "%d", so->extraData->mobTotal);
+				sprintf(sim->Aux1, "%d", so->extraData.mobTotal);
 			else if (strcmp(propName, "maxActive") == 0)
-				sprintf(sim->Aux1, "%d", so->extraData->maxActive);
+				sprintf(sim->Aux1, "%d", so->extraData.maxActive);
 			else if (strcmp(propName, "aiModule") == 0)
-				Util::SafeCopy(sim->Aux1, so->extraData->aiModule, sizeof(sim->Aux1));
+				Util::SafeCopy(sim->Aux1, so->extraData.aiModule.c_str(), sizeof(sim->Aux1));
 			else if (strcmp(propName, "maxLeash") == 0)
-				sprintf(sim->Aux1, "%d", so->extraData->maxLeash);
+				sprintf(sim->Aux1, "%d", so->extraData.maxLeash);
 			else if (strcmp(propName, "loyaltyRadius") == 0)
-				sprintf(sim->Aux1, "%d", so->extraData->loyaltyRadius);
+				sprintf(sim->Aux1, "%d", so->extraData.loyaltyRadius);
 			else if (strcmp(propName, "wanderRadius") == 0)
-				sprintf(sim->Aux1, "%d", so->extraData->wanderRadius);
+				sprintf(sim->Aux1, "%d", so->extraData.wanderRadius);
 			else if (strcmp(propName, "despawnTime") == 0)
-				sprintf(sim->Aux1, "%d", so->extraData->despawnTime);
+				sprintf(sim->Aux1, "%d", so->extraData.despawnTime);
 			else if (strcmp(propName, "sequential") == 0)
-				sprintf(sim->Aux1, "%d", so->extraData->sequential);
+				sprintf(sim->Aux1, "%d", so->extraData.sequential);
 			else if (strcmp(propName, "spawnLayer") == 0)
-				Util::SafeCopy(sim->Aux1, so->extraData->spawnLayer, sizeof(sim->Aux1));
+				Util::SafeCopy(sim->Aux1, so->extraData.spawnLayer.c_str(), sizeof(sim->Aux1));
 			else
 				g_Logs.simulator->warn(
-						"[%d] spawn.property unknown request: [%s]", sim->InternalID,
+						"[%v] spawn.property unknown request: [%v]", sim->InternalID,
 						propName);
 		} else
 			g_Logs.simulator->warn(
-					"[%d] spawn.property requested for standard object [%d, %s]",
+					"[%v] spawn.property requested for standard object [%v, %v]",
 					sim->InternalID, so->ID, so->Asset);
 	}
 	g_SceneryManager.ReleaseThread();

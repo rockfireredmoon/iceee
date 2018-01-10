@@ -116,8 +116,9 @@ int AbstractScriptHandler::handleQuery(SimulatorThread *sim,
 		}
 
 		ZoneDefInfo *zoneDef = g_ZoneDefManager.GetPointerByID(instanceId);
-		path = InstanceScript::InstanceNutDef::GetInstanceScriptPath(instanceId,
-				true, zoneDef != NULL && zoneDef->mGrove);
+		if(!zoneDef->mGrove) {
+			path = InstanceScript::InstanceNutDef::GetInstanceScriptPath(instanceId, true);
+		}
 		break;
 	}
 	case 1:
@@ -421,31 +422,28 @@ int ScriptSaveHandler::handleScriptQuery(bool ownPlayer, int instanceID,
 	std::string tslHeader = "#!/bin/tsl";
 
 	if (path.length() == 0) {
+		if(!creatureInstance->actInst->mZoneDefPtr->mGrove) {
+			switch (type) {
+			case 0:
+				if (scriptText.substr(0, nutHeader.size()) == nutHeader)
+					path = InstanceScript::InstanceNutDef::GetInstanceNutScriptPath(
+							creatureInstance->actInst->mZone);
+				else if (scriptText.substr(0, tslHeader.size()) == tslHeader)
+					path =
+							InstanceScript::InstanceScriptDef::GetInstanceTslScriptPath(
+									creatureInstance->actInst->mZone);
+				break;
+			case 2:
 
-		switch (type) {
-		case 0:
-			if (scriptText.substr(0, nutHeader.size()) == nutHeader)
-				path = InstanceScript::InstanceNutDef::GetInstanceNutScriptPath(
-						creatureInstance->actInst->mZone,
-						creatureInstance->actInst->mZoneDefPtr->mGrove);
-			else if (scriptText.substr(0, tslHeader.size()) == tslHeader)
-				path =
-						InstanceScript::InstanceScriptDef::GetInstanceTslScriptPath(
-								creatureInstance->actInst->mZone,
-								creatureInstance->actInst->mZoneDefPtr->mGrove);
-			break;
-		case 2:
-
-			if (scriptText.substr(0, nutHeader.size()) == nutHeader)
-				path = InstanceScript::InstanceNutDef::GetInstanceNutScriptPath(
-						creatureInstance->actInst->mZone,
-						creatureInstance->actInst->mZoneDefPtr->mGrove);
-			else if (scriptText.substr(0, tslHeader.size()) == tslHeader)
-				path =
-						InstanceScript::InstanceScriptDef::GetInstanceTslScriptPath(
-								creatureInstance->actInst->mZone,
-								creatureInstance->actInst->mZoneDefPtr->mGrove);
-			break;
+				if (scriptText.substr(0, nutHeader.size()) == nutHeader)
+					path = InstanceScript::InstanceNutDef::GetInstanceNutScriptPath(
+							creatureInstance->actInst->mZone);
+				else if (scriptText.substr(0, tslHeader.size()) == tslHeader)
+					path =
+							InstanceScript::InstanceScriptDef::GetInstanceTslScriptPath(
+									creatureInstance->actInst->mZone);
+				break;
+			}
 		}
 
 		if (path.length() == 0) {

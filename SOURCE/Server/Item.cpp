@@ -11,6 +11,8 @@
 #include "InstanceScale.h" //Drop rate profile
 #include "ConfigString.h"
 #include "Stats.h"
+#include "Cluster.h"
+#include "StringUtil.h"
 #include "util/Log.h"
 #include <stddef.h>
 
@@ -147,7 +149,7 @@ namespace WeaponTypeClassRestrictions
 }
 
 //Note: if entries are changed here, then StandardContainerEnum must also be updated.
-const int InventoryMappingCount = 11;
+const int InventoryMappingCount = 12;
 InventoryMappingDef InventoryMapping[InventoryMappingCount] = {
 	{"inv",       0 },
 	{"inventory", 0 },  //When looking up the string from the ID, "inv" needs to take precedence
@@ -159,7 +161,8 @@ InventoryMappingDef InventoryMapping[InventoryMappingCount] = {
 	{"trade",     5 },
 	{"stamps",    7 },
 	{"delivery",  8 },
-	{"auction",   9 }
+	{"auction",   9 },
+	{"bookshelf", 10 }
 };
 
 
@@ -174,14 +177,24 @@ int GetContainerIDFromName(const char *name)
 	return -1;
 }
 
-const char *GetContainerNameFromID(int ID)
+
+bool IsContainerIDValid(int ID)
+{
+	int a;
+	for(a = 0; a < InventoryMappingCount; a++)
+		if(InventoryMapping[a].ID == ID)
+			return true;
+	return false;
+}
+
+std::string GetContainerNameFromID(int ID)
 {
 	int a;
 	for(a = 0; a < InventoryMappingCount; a++)
 		if(InventoryMapping[a].ID == ID)
 			return InventoryMapping[a].name;
-
-	return NULL;
+	g_Logs.server->warn("Request for unknown container index %v", ID);
+	return "UNKNOWN";
 }
 
 const int EquipmentMappingCount = 29;
@@ -449,6 +462,17 @@ void ItemDef :: Reset(void)
 	mMinUseLevel = 0;
 
 	Params.clear();
+}
+
+int ItemDef :: GetDynamicMax(int type ) {
+
+	if (mIvType1 == type)
+		return mIvMax1;
+
+	if (mIvType2 == type)
+		return mIvMax2;
+
+	return -1;
 }
 
 void ItemDef :: CopyFrom(ItemDef *source)
@@ -794,8 +818,6 @@ char *GetItemProto(char *convbuf, int ItemID, int count)
 
 ItemManager :: ItemManager()
 {
-	nextVirtualItemID = BASE_VIRTUAL_ITEM_ID;
-	nextVirtualItemAutosave = 0;
 }
 
 ItemManager :: ~ItemManager()
@@ -835,6 +857,9 @@ void ItemManager :: Finalize(void)
 
 void ItemManager :: LoadData(void)
 {
+	if(!g_ClusterManager.HasKey(ID_NEXT_VIRTUAL_ITEM_ID)) {
+		g_ClusterManager.SetKey(ID_NEXT_VIRTUAL_ITEM_ID, StringUtil::Format("%d", BASE_VIRTUAL_ITEM_ID));
+	}
 	char buffer[256];
 	LoadItemPackages(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Packages"), "ItemPack.txt"), false);
 	LoadItemPackages(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Packages"), "ItemPackOverride.txt"), true);

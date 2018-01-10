@@ -1,9 +1,0 @@
-[ENTRY]
-Description=Gain heroism faster
-PriceCurrency=CREDITS
-PriceCopper=0
-PriceCredits=500
-ItemID=900027
-Category=RECIPES
-Status=<undefined>
-

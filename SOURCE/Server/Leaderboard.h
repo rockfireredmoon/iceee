@@ -51,8 +51,6 @@ public:
 	virtual void OnBuild(std::vector<Leader> *leaders) =0;
 };
 
-PLATFORM_THREADRETURN LeaderboardThreadProc(PLATFORM_THREADARGS lpParam);
-
 class LeaderboardManager
 {
 public:

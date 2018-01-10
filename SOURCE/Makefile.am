@@ -1,1 +1,1 @@
-SUBDIRS = squirrel Server
+SUBDIRS = LibCPPRedis squirrel Server Tools Daemon

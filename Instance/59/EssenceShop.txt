@@ -1,5 +1,0 @@
-﻿; Gift Box
-[ENTRY]
-CreatureDefID=7808
-EssenceID=8116  ; Key
-Item=8117,1   ; Ghastly Purse

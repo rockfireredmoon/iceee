@@ -24,6 +24,7 @@
 
 #include "ServiceAuthentication.h"
 #include "DevAuthentication.h"
+#include "ClusterAuthentication.h"
 
 //
 // AuthHandler
@@ -32,31 +33,6 @@ AuthHandler::AuthHandler() {
 }
 
 AuthHandler::~AuthHandler() {
-}
-
-AccountData * AuthHandler::authenticate(SimulatorThread *sim) {
-	char loginName[128];
-	char authHash[128];
-
-	GetStringUTF(&sim->readPtr[sim->ReadPos], loginName, sizeof(loginName), sim->ReadPos);  //login name
-	GetStringUTF(&sim->readPtr[sim->ReadPos], authHash, sizeof(authHash), sim->ReadPos);  //authorization hash or or X-CSRF-Token:sess_id:session_name:uid
-
-	if(g_AccountManager.AcceptingLogins() == false)
-	{
-		sim->ForceErrorMessage("Not accepting more logins.", INFOMSG_ERROR);
-		sim->Disconnect("SimulatorThread::handle_lobby_authenticate");
-		return NULL;
-	}
-
-	AccountData *accPtr = this->onAuthenticate(sim, std::string(loginName), std::string(authHash));
-
-	if(accPtr == NULL)	{
-		g_Logs.simulator->error("[%v] Could not find account: %v", sim->InternalID, loginName);
-		sim->ForceErrorMessage(g_Config.InvalidLoginMessage.c_str(), INFOMSG_ERROR);
-		sim->Disconnect("SimulatorThread::handle_lobby_authenticate");
-	}
-
-	return accPtr;
 }
 
 //
@@ -69,14 +45,17 @@ AuthManager::AuthManager()
 {
 	AuthHandler *dev = new DevAuthenticationHandler();
 	AuthHandler *service = new ServiceAuthenticationHandler();
+	AuthHandler *cluster = new ClusterAuthenticationHandler();
 	authHandlers[(char)1] = dev;
 	authHandlers[(char)2] = service;
+	authHandlers[(char)3] = cluster;
 }
 
 AuthManager::~AuthManager()
 {
-	delete authHandlers.find((char)0)->second;
 	delete authHandlers.find((char)1)->second;
+	delete authHandlers.find((char)2)->second;
+	delete authHandlers.find((char)3)->second;
 }
 
 AuthHandler *AuthManager :: GetAuthenticator(char authCode)

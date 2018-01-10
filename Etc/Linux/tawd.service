@@ -6,7 +6,7 @@ After=network.target
 Type=forking
 PIDFile=/var/run/tawd.pid
 WorkingDirectory=/var/lib/tawd
-ExecStart=/usr/bin/tawd -d -p /var/run/tawd.pid
+ExecStart=/usr/bin/tawd -d -p /var/run/tawd.pid -c /etc/tawd
 ExecStop=/usr/bin/kill -SIGTERM $MAINPID
 
 [Install]

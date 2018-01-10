@@ -60,7 +60,7 @@ int QuestReference::CheckQuestObjective(int CID, char *buffer, int type,
 	int obj = qd->GetObjective(CurAct, type, targetCDefID);
 	if (obj >= 0) {
 		//TODO: debug check, can probably remove this later
-		if (obj >= 3) {
+		if (obj >= MAXOBJECTIVES) {
 			g_Logs.server->error("Obj out of range: %v", obj);
 			return 0;
 		}
@@ -161,7 +161,7 @@ int QuestReference::CheckCompletedAct(QuestAct *defAct) {
 	int reqCount = 0;
 	int hasCount = 0;
 
-	for (int b = 0; b < 3; b++) {
+	for (int b = 0; b < MAXOBJECTIVES; b++) {
 		if (defAct->objective[b].type != QuestObjective::OBJECTIVE_TYPE_NONE) {
 			reqCount++;
 			if (ObjComplete[b] != 0)
@@ -181,7 +181,7 @@ int QuestReference::CheckTravelLocation(int x, int y, int z, int zone) {
 	if (qdef == NULL)
 		return -1;
 
-	for (int i = 0; i < 3; i++) {
+	for (int i = 0; i < MAXOBJECTIVES; i++) {
 		QuestObjective &qobj = qdef->actList[CurAct].objective[i];
 		if (ObjComplete[i] != 0)
 			continue;
@@ -692,7 +692,7 @@ int QuestDefinition::GetObjective(int act, int type, int CDefID) {
 	int a;
 	if (act == -1) {
 		for (act = 0; act < actCount; act++) {
-			for (a = 0; a < 3; a++) {
+			for (a = 0; a < MAXOBJECTIVES; a++) {
 				int r = actList[act].objective[a].HasObjectiveCDef(type,
 						CDefID);
 				if (r >= 0)
@@ -700,7 +700,7 @@ int QuestDefinition::GetObjective(int act, int type, int CDefID) {
 			}
 		}
 	} else {
-		for (a = 0; a < 3; a++) {
+		for (a = 0; a < MAXOBJECTIVES; a++) {
 			int r = actList[act].objective[a].HasObjectiveCDef(type, CDefID);
 			if (r >= 0)
 				return a;
@@ -775,7 +775,7 @@ bool QuestDefinition::FilterSelectedRewards(int outcomeIndex,
 void QuestDefinition::RunLoadDefaults(void) {
 	//Run some postprocessing defaults before the quests are loaded.
 	for (size_t a = 0; a < actList.size(); a++) {
-		for (int ob = 0; ob < 3; ob++) {
+		for (int ob = 0; ob < MAXOBJECTIVES; ob++) {
 			if (actList[a].objective[ob].type
 					== QuestObjective::OBJECTIVE_TYPE_ACTIVATE) {
 				if (actList[a].objective[ob].ActivateTime == 0)
@@ -855,7 +855,7 @@ void QuestDefinition::RunLoadValidation(void) {
 	if (actList.size() > 0) {
 		int talkTarget = 0;
 		QuestAct *act = &actList[actList.size() - 1];
-		for (int ob = 0; ob < 3; ob++) {
+		for (int ob = 0; ob < MAXOBJECTIVES; ob++) {
 			if (act->objective[ob].type != QuestObjective::OBJECTIVE_TYPE_TALK)
 				continue;
 			talkTarget = act->objective[ob].myCreatureDefID;
@@ -1059,7 +1059,7 @@ void QuestDefinitionContainer::LoadFromFile(std::string filename) {
 			} else if (strcmp(lfr.SecBuffer, "OBJ") == 0) {
 				LastLoadString = NULL;
 				int index = lfr.BlockToIntC(1);
-				if (LimitIndex(index, 2) == true)
+				if (LimitIndex(index, MAXOBJECTIVES - 1) == true)
 					g_Logs.data->warn(
 							"Quest data Obj index is limited to 0-2 (line %d)",
 							lfr.LineNumber);
@@ -1230,7 +1230,7 @@ void QuestDefinitionContainer::ResolveQuestMarkers(void) {
 
 		if (qd->actCount > 0) {
 			QuestAct *act = &qd->actList[qd->actList.size() - 1];
-			for (int ob = 0; ob < 3; ob++) {
+			for (int ob = 0; ob < MAXOBJECTIVES; ob++) {
 				if (act->objective[ob].type
 						!= QuestObjective::OBJECTIVE_TYPE_TALK)
 					continue;
@@ -1350,7 +1350,7 @@ int QuestReferenceContainer::HasCreatureReturn(int searchVal) {
 			}
 		} else {
 			/* For standard ending quests */
-			for (int b = 0; b < 3; b++) {
+			for (int b = 0; b < MAXOBJECTIVES; b++) {
 				if (qd->actList[act].objective[b].type
 						== QuestObjective::OBJECTIVE_TYPE_TALK)
 					if (qd->actList[act].objective[b].myCreatureDefID
@@ -1372,7 +1372,7 @@ int QuestReferenceContainer::HasObjectInteraction(int CreatureDefID) {
 				continue;
 
 			int act = itemList[a].CurAct;
-			for (int b = 0; b < 3; b++) {
+			for (int b = 0; b < MAXOBJECTIVES; b++) {
 				if (itemList[a].ObjComplete[b] != 0)
 					continue;
 
@@ -1568,7 +1568,7 @@ int QuestJournal::QuestGenericData(char *buffer, int bufsize, char *convBuf,
 	wpos += PutInteger(&buffer[wpos], QueryIndex); //Query response index
 
 	wpos += PutShort(&buffer[wpos], 1);           //Array count
-	wpos += PutByte(&buffer[wpos], 24);           //String count
+	wpos += PutByte(&buffer[wpos], 15 + ( MAXOBJECTIVES * 3 ));           //String count
 
 	wpos += PutStringUTF(&buffer[wpos], StringFromInt(convBuf, qd->questID)); //[0] = Quest ID
 	wpos += PutStringUTF(&buffer[wpos], qd->title.c_str());   //[1] = Title
@@ -1592,7 +1592,7 @@ int QuestJournal::QuestGenericData(char *buffer, int bufsize, char *convBuf,
 	//  [2] = myItemID
 	//Spans Rows: {11, 12, 13}, {14, 15, 16}, {17, 18, 19}
 	int a;
-	for (a = 0; a < 3; a++) {
+	for (a = 0; a < MAXOBJECTIVES; a++) {
 		wpos += PutStringUTF(&buffer[wpos],
 				qd->actList[0].objective[a].description.c_str());
 		wpos += PutStringUTF(&buffer[wpos],
@@ -1639,7 +1639,7 @@ int QuestJournal::QuestData(char *buffer, char *convBuf, int QuestID,
 
 	QuestOutcome *outcome = qd->GetOutcome(qref == NULL ? 0 : qref->Outcome);
 
-	//Full data has 34 rows.
+	//Full data has 17 + (6 * MAXOBJECTIVES) rows.
 	int wpos = 0;
 	wpos += PutByte(&buffer[wpos], 1);            //_handleQueryResultMsg
 	wpos += PutShort(&buffer[wpos], 0);           //Message size
@@ -1647,7 +1647,7 @@ int QuestJournal::QuestData(char *buffer, char *convBuf, int QuestID,
 	wpos += PutInteger(&buffer[wpos], QueryIndex);    //Query response index
 
 	wpos += PutShort(&buffer[wpos], 1);           //Array count
-	wpos += PutByte(&buffer[wpos], 35);           //String count
+	wpos += PutByte(&buffer[wpos], 17 + (6 * MAXOBJECTIVES));           //String count
 
 	/*
 	 if(r == -1)
@@ -1707,7 +1707,7 @@ int QuestJournal::QuestData(char *buffer, char *convBuf, int QuestID,
 	//            {25, 26, 27, 28, 29, 30}
 
 	int a;
-	for (a = 0; a < 3; a++) {
+	for (a = 0; a < MAXOBJECTIVES; a++) {
 		wpos += PutStringUTF(&buffer[wpos],
 				qd->actList[act].objective[a].description.c_str());
 
@@ -1901,7 +1901,7 @@ QuestObjective * QuestJournal::CreatureUse(int CreatureDefID, int &QuestID,
 			continue;
 
 		int act = activeQuests.itemList[b].CurAct;
-		for (a = 0; a < 3; a++) {
+		for (a = 0; a < MAXOBJECTIVES; a++) {
 			// "creature.use" is only sent for gather or quest redeeming, so
 			// this should be safe from kill objectives.
 			QuestObjective *qo = &qdef->actList[act].objective[a];
@@ -1943,7 +1943,7 @@ int QuestJournal::CheckTravelLocations(int CID, char *buffer, int x, int y,
 
 			// If the objective triggers an 'outcome', then complete all the other objectives in this act
 			if (qdef->actList[qr.CurAct].objective[r].outcome > -1) {
-				for (int i = 0; i < 3; i++) {
+				for (int i = 0; i < MAXOBJECTIVES; i++) {
 					if (i != r && qr.ObjComplete[i] == 0) {
 						qr.ObjComplete[i] = 1;
 						wpos += PrepExt_QuestStatusMessage(&buffer[wpos],
@@ -2009,7 +2009,7 @@ int QuestJournal::CheckQuestTalk(char *buffer, int CreatureDefID,
 	}
 	//Resolve the objective.
 	int objective = -1;
-	for (int a = 0; a < 3; a++) {
+	for (int a = 0; a < MAXOBJECTIVES; a++) {
 		if (qdef->actList[questRef.CurAct].objective[a].type
 				== QuestObjective::OBJECTIVE_TYPE_TALK) {
 			if (qdef->actList[questRef.CurAct].objective[a].myCreatureDefID
@@ -2041,7 +2041,7 @@ int QuestJournal::CheckQuestTalk(char *buffer, int CreatureDefID,
 
 	// If the objective triggers an 'outcome', then complete all the other objectives in this act
 	if (qdef->actList[questRef.CurAct].objective[objective].outcome > -1) {
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < MAXOBJECTIVES; i++) {
 			if (i != objective && questRef.ObjComplete[i] == 0) {
 
 				questRef.ObjComplete[i] = 1;
@@ -2098,7 +2098,7 @@ int QuestJournal::ForceComplete(int CID, int QuestID, char *buffer) {
 			if (qdef == NULL)
 				continue;
 			int act = qref.CurAct;
-			for (int b = 0; b < 3; b++) {
+			for (int b = 0; b < MAXOBJECTIVES; b++) {
 				int count = 0;
 				switch (qdef->actList[act].objective[b].type) {
 				case QuestObjective::OBJECTIVE_TYPE_GATHER:
@@ -2206,7 +2206,7 @@ int QuestJournal::FilterEmote(int CID, char *outbuf, const char *message,
 		if (act < 0 || act >= qdef->actCount)
 			continue;
 
-		for (int obj = 0; obj < 3; obj++) {
+		for (int obj = 0; obj < MAXOBJECTIVES; obj++) {
 			QuestObjective *qo = &qdef->actList[act].objective[obj];
 			if (qo->type != QuestObjective::OBJECTIVE_TYPE_EMOTE)
 				continue;
@@ -2237,7 +2237,7 @@ int QuestJournal::FilterEmote(int CID, char *outbuf, const char *message,
 
 			// If the objective triggers an 'outcome', then complete all the other objectives in this act
 			if (qdef->actList[qr->CurAct].objective[obj].outcome > -1) {
-				for (int i = 0; i < 3; i++) {
+				for (int i = 0; i < MAXOBJECTIVES; i++) {
 					if (i != obj && qr->ObjComplete[i] == 0) {
 						qr->ObjComplete[i] = 1;
 						wpos += PrepExt_QuestStatusMessage(&outbuf[wpos],

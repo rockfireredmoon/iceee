@@ -26,8 +26,7 @@ class AuthHandler {
 public:
 	AuthHandler();
 	virtual ~AuthHandler();
-	AccountData *authenticate(SimulatorThread *sim);
-	virtual AccountData *onAuthenticate(SimulatorThread *sim, std::string loginName, std::string authorizationHash)=0;
+	virtual AccountData *authenticate(const std::string &loginName, const std::string &authorizationHash, std::string *errorMessage) =0;
 };
 
 class AuthManager {

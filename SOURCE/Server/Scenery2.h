@@ -6,9 +6,14 @@
 #include <list>
 #include "Packet.h"
 #include "Components.h"
+#include "CreatureSpawner2.h"
+#include "Entities.h"
 #include "json/json.h"
 
-class CreatureSpawnDef;
+static std::string KEYPREFIX_GROVE = "Grove";
+static std::string KEYPREFIX_SCENERY = "Scenery";
+static std::string ID_NEXT_SCENERY = "NextSceneryID";
+static std::string KEYPREFIX_SCENERY_OBJECT = "SceneryObject";
 
 
 /*  
@@ -50,15 +55,11 @@ public:
 
 struct GlobalSceneryVars
 {
-	int BaseSceneryID;
-	int SceneryAdditive;
 	unsigned long LastSave;
 	int PendingItems;
 
 	GlobalSceneryVars()
 	{
-		BaseSceneryID = 1000000;
-		SceneryAdditive = 0;
 		LastSave = 0;
 		PendingItems = 0;
 	}
@@ -70,77 +71,6 @@ namespace ActiveLocation
 	bool IsLocationInUse(const CONTAINER& source);
 }
 
-
-//Not the same as the SceneObject class in the client, this is just going to be specific to props.
-class SceneryObject
-{
-public:
-	SceneryObject(const SceneryObject& so);
-	SceneryObject();
-	~SceneryObject();
-	void Destroy(void);
-	void Clear(void);
-
-	//This data is used internally by the server program
-	//int PlacedBy;          //ID of the creature/player who placed this object.  If an object is being edited, this is a simulator index.
-
-	//The following data is used in the client
-	int ID;
-
-	char Asset[128];   //Asset file
-	char Name[32];    //Arbitrary object name
-
-	float LocationX;
-	float LocationY;
-	float LocationZ;
-
-	float QuatX;
-	float QuatY;
-	float QuatZ;
-	float QuatW;
-
-	float ScaleX;
-	float ScaleY;
-	float ScaleZ;
-
-	int Flags;
-
-	int Layer;
-	int patrolSpeed;
-	char patrolEvent[4];
-
-	CreatureSpawnDef *extraData;
-
-	static const int LINK_TYPE_LOYALTY = 0;   //Purple link type.  Not sure what the original purpose is.  Used in this server for linked mobs.
-	static const int LINK_TYPE_PATH = 1;      //Blue link type.  Most often used to link path nodes.
-
-	int SetAsset(const char *buffer);
-	int SetName(const char *buffer);
-	int SetPatrolEvent(const char *buffer);
-	int SetPosition(const char *buffer);
-	int SetQ(const char *buffer);
-	int SetS(const char *buffer);
-	void copyFrom(const SceneryObject *source);
-	bool CreateExtraData(void);
-	void SetPropertyCount(int count);
-	void SetProperty(int index, const char *propName, int propType, const char *propValue);
-	void SetLinkCount(int count);
-	void SetLink(int index, int linkID, int type);
-	bool IsExtendedProperty(const char *propertyName);
-	bool SetExtendedProperty(const char *propertyName, const char *propertyValue);
-	void WriteToStream(FILE *file) const;
-	void AddLink(int PropID, int type);
-	void RemoveLink(int PropID);
-	bool HasLinks(int linkType);
-	void EnumLinks(int linkType, std::vector<int> &output);
-	bool IsSpawnPoint(void);
-
-	const char *GetSpawnPackageName(void);
-	bool ExtractATS(std::string& outputStr) const;
-
-	void WriteToJSON(Json::Value &value);
-	void ReadFromJSON(Json::Value &value);
-};
 
 
 //Used as a key for storing and retrieving pages from a zone.
@@ -169,11 +99,79 @@ struct SceneryPageKey
 	}
 };
 
-//Contains all scenery in a page, subdivided into props.
-class SceneryPage
-{
-	friend class SimulatorThread; //For debugging purposes!
+//Not the same as the SceneObject class in the client, this is just going to be specific to props.
+class SceneryObject: public AbstractEntity {
+public:
+	SceneryObject();
+	SceneryObject(const SceneryObject &ob);
+	~SceneryObject();
+	void Clear(void);
 
+	//This data is used internally by the server program
+	//int PlacedBy;          //ID of the creature/player who placed this object.  If an object is being edited, this is a simulator index.
+
+	//The following data is used in the client
+	int ID;
+
+	SceneryPageKey Key;
+	int Zone;
+	std::string Asset;   //Asset file
+	std::string Name;    //Arbitrary object name
+
+	float LocationX;
+	float LocationY;
+	float LocationZ;
+
+	float QuatX;
+	float QuatY;
+	float QuatZ;
+	float QuatW;
+
+	float ScaleX;
+	float ScaleY;
+	float ScaleZ;
+
+	int Flags;
+
+	int Layer;
+	int patrolSpeed;
+	std::string patrolEvent;
+
+	bool hasExtraData;
+	CreatureSpawnDef extraData;
+
+	static const int LINK_TYPE_LOYALTY = 0;   //Purple link type.  Not sure what the original purpose is.  Used in this server for linked mobs.
+	static const int LINK_TYPE_PATH = 1;      //Blue link type.  Most often used to link path nodes.
+
+	bool WriteEntity(AbstractEntityWriter *writer);
+	bool ReadEntity(AbstractEntityReader *reader);
+	bool EntityKeys(AbstractEntityReader *reader);
+
+	int SetPosition(const std::string &buffer);
+	int SetQ(const std::string &buffer);
+	int SetS(const std::string &buffer);
+	void copyFrom(const SceneryObject *source);
+	bool CreateExtraData(void);
+	bool IsExtendedProperty(const std::string &propertyName);
+	bool SetExtendedProperty(const std::string &propertyName, const std::string &propertyValue);
+	void WriteToStream(FILE *file) const;
+	void AddLink(int PropID, int type);
+	void RemoveLink(int PropID);
+	bool HasLinks(int linkType);
+	void EnumLinks(int linkType, std::vector<int> &output);
+	bool IsSpawnPoint(void);
+	std::string GetClusterKey();
+
+	const char *GetSpawnPackageName(void);
+	bool ExtractATS(std::string& outputStr) const;
+
+	void WriteToJSON(Json::Value &value);
+	void ReadFromJSON(Json::Value &value);
+};
+
+//Contains all scenery in a page, subdivided into props.
+class SceneryPage: public AbstractEntity {
+	friend class SimulatorThread; //For debugging purposes!
 public:
 	typedef std::map<int, SceneryObject> SCENERY_MAP;  //Map PropID to its SceneryObject data.
 	typedef SCENERY_MAP::iterator SCENERY_IT;
@@ -190,6 +188,10 @@ public:
 	int mPendingChanges;  //Number of pending changes within this tile, used for autosave checks.
 	bool mHasSourceFile;  //If true, this page was loaded from an existing file, or was successfully saved to a file.
 
+	bool WriteEntity(AbstractEntityWriter *writer);
+	bool ReadEntity(AbstractEntityReader *reader);
+	bool EntityKeys(AbstractEntityReader *reader);
+
 	SceneryObject* AddProp(const SceneryObject& prop, bool notifyPendingChange);
 	bool DeleteProp(int propID);
 	void LoadScenery(void);
@@ -199,12 +201,18 @@ public:
 	SceneryObject *GetPropPtr(int propID);
 	void NotifyAccess(bool notifyPendingChange);
 	bool IsTileExpired(void);
-	void LoadSceneryFromFile(std::string fileName);  //Handles the actual work of loading a file.
+
+	bool IsGroveZone();
+	bool IsClusteredZone();
+	void RemoveFromCluster();
+	void LoadSceneryFromCluster();
+	void LoadSceneryFromFile(std::string fileName);
 
 private:
-	PlatformTime::TIME_VALUE mLastAccessTime;
+	unsigned long mLastAccessTime;
 	void RemoveFile(std::string fileName);
 	bool SaveFile(std::string fileName);
+	bool SaveToCluster();
 };
 
 //Contains all scenery in a zone, subdivided into pages.
@@ -280,6 +288,7 @@ public:
 	SceneryObject* GlobalGetPropPtr(int zoneID, int propID, SceneryPage** foundPage);
 	SceneryObject* AddProp(int zoneID, const SceneryObject& prop);
 	SceneryObject* ReplaceProp(int zoneID, const SceneryObject& prop);
+	bool DeleteZone(int id);
 	void DeleteProp(int zoneID, int propID);
 	bool UpdateLink(int zoneID, int propID1, int propID2, int type);
 	void NotifyChangedProp(int zoneID, int propID);

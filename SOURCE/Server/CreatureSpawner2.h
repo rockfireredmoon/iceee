@@ -8,6 +8,7 @@
 
 class SceneryObject;
 class ActiveInstance;
+class CreatureInstance;
 extern unsigned long g_ServerTime;
 class SpawnPackageDef;
 class SpawnManager;
@@ -27,24 +28,6 @@ public:
 	}
 };
 
-struct ExtraDataProperty
-{
-	char name[16];
-	char value[48];
-	char type;
-
-	/* NOT USED: the values that correspond to the "type" field above.
-	enum
-	{
-		PROPERTY_INTEGER = 0,   //receive as getInteger()
-		PROPERTY_FLOAT   = 1,   //getFloat()
-		PROPERTY_STRING  = 2,   //getStringUTF()
-		PROPERTY_SCENERY = 3,   //getInteger()
-		PROPERTY_NULL    = 4,   //
-	};
-	*/
-};
-
 struct ExtraDataLink
 {
 	int propID;
@@ -61,33 +44,28 @@ public:
 	static const int DEFAULT_DESPAWNTIME = 150;
 	static const int DEFAULT_MAXLEASH = 500;
 	
-	char spawnName[48];      //Internal name for this spawner entity
+	std::string spawnName;      //Internal name for this spawner entity
 	int leaseTime;           //Original purpose unknown... spawn delay?
-	char spawnPackage[56];   //Package to base spawn types on
-	char dialog[56];   		 //Name of NPC Dialog file
+	std::string spawnPackage;   //Package to base spawn types on
+	std::string dialog;   		 //Name of NPC Dialog file
 	int mobTotal;            //Total mobs (including dead?) that can be anchored to this point?
 	int maxActive;           //Total active that can be anchored to this point?
-	char aiModule[48];       //Unused?
+	std::string aiModule;       //Unused?
 	int maxLeash;            //Maximum attack distance until a mob is forced to return
 	int loyaltyRadius;       //Distance to aggro nearby idle mobs
 	int wanderRadius;        //Distance for random stray mobs
 	int despawnTime;        //Unknown purpose.  Used for spawn times.
 	int sequential;          //Unknown
-	char spawnLayer[48];     //Unknown
+	std::string spawnLayer;     //Unknown
 	float xpos;              //Spawn position
 	float ypos;              //Spawn position
 	float zpos;              //Spawn position
 	unsigned char facing;    //Directional facing on spawn (0-255)
 
-	static const int MAX_PROP = 3;
-	static const int MAX_LINK = 11;
-	char propCount;
-	char linkCount;
-	char sceneryName[38];
+	std::string sceneryName;
 	int innerRadius;
 	int outerRadius;
-	ExtraDataProperty prop[MAX_PROP];
-	ExtraDataLink link[MAX_LINK];
+	std::vector<ExtraDataLink> link;
 	void Clear();
 	void copyFrom(CreatureSpawnDef *source);
 	int GetLeashLength(void);
@@ -314,7 +292,7 @@ struct UniqueSpawnEntry
 	int mMaxSpawnCount;    //Maximum number spawn points to roll from.
 	size_t mRandomIndex;      //The chosen random index of a prop in the list to spawn from.
 	int mSpawnTime;        //Delay between restarting the cycle when a reroll is requested.
-	PlatformTime::TIME_VALUE mRestartTime;  //Time required to allow a new spawn cycle.
+	unsigned long mRestartTime;  //Time required to allow a new spawn cycle.
 	std::vector<int> mPropID;  //IDs of the SpawnPoints that called a request.
 	UniqueSpawnEntry();
 	size_t GetPropIndex(int PropID);

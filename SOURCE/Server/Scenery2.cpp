@@ -6,6 +6,9 @@
 #include "Config.h" //Need for loading the strings file.
 #include "DebugProfiler.h"
 #include "Globals.h"
+#include "Cluster.h"
+#include "StringUtil.h"
+#include "Util.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <errno.h>
@@ -14,6 +17,12 @@
 
 SceneryManager g_SceneryManager;
 GlobalSceneryVars g_SceneryVars;
+
+static std::vector<std::string> EXTENDED_PROPERTY_NAMES = {
+	"spawnname", "leasetime", "spawnpackage", "mobtotal",
+	"maxactive", "aimodule", "maxleash", "loyaltyradius", "dialog",
+	"wanderradius", "despawntime", "sequential", "spawnlayer",
+	"sceneryname", "innerradius", "outerradius" };
 
 namespace ActiveLocation
 {
@@ -26,41 +35,30 @@ namespace ActiveLocation
 	}
 }
 
-SceneryObject :: SceneryObject(const SceneryObject &so)
-{
-	extraData = NULL;
-	Clear();
-	copyFrom(&so);
-}
-
 SceneryObject :: SceneryObject()
 {
 	//Important, need to explicitly initialize as NULL before clear is called, or
 	//else Clear() will try to wipe data at an undefined location.
-	extraData = NULL;
+	hasExtraData = false;
 	Clear();
+}
+
+SceneryObject::SceneryObject(const SceneryObject &ob)
+{
+	hasExtraData = false;
+	copyFrom(&ob);
 }
 
 SceneryObject :: ~SceneryObject()
 {
-	Destroy();
-}
-
-void SceneryObject::Destroy(void)
-{
-	if(extraData != NULL)
-	{
-		delete extraData;
-		extraData = NULL;
-	}
 }
 
 void SceneryObject :: Clear(void)
 {
 	ID = 0;
-	Util::ClearString(Asset, sizeof(Asset));
-	Util::ClearString(Name, sizeof(Name));
-
+	Asset = "";
+	Name = "";
+	Key = SceneryPageKey();
 
 	LocationX = 0.0F;
 	LocationY = 0.0F;
@@ -80,109 +78,55 @@ void SceneryObject :: Clear(void)
 	Layer = 0;
 	patrolSpeed = 0;
 
-	Util::ClearString(patrolEvent, sizeof(patrolEvent));
+	patrolEvent = "";
 
-	//The loading functions use a single object clear it to prepare it for a new entry.
-	//We want to wipe the extra data, if applicable, but keep it attached to the object
-	//so it doesn't have to reallocate.
-	if(extraData != NULL)
-		extraData->Clear();
+	hasExtraData = false;
+	extraData.Clear();
 }
 
-int SceneryObject :: SetName(const char *buffer)
-{
-	//Sets the name from a string by copying the contents of the buffer into
-	//the Name member.
-	memset(Name, 0, sizeof(Name));
-
-	size_t ToCopy = strlen(buffer);
-	if(ToCopy > sizeof(Name) - 1)
-	{
-		ToCopy = sizeof(Name) - 1;
-		g_Logs.server->warn("Asset internal name clipped");
-	}
-	strncpy(Name, buffer, ToCopy);
-	return 0;
-}
-
-int SceneryObject :: SetAsset(const char *buffer)
-{
-	//Sets the name from a string by copying the contents of the buffer into
-	//the Asset member.
-
-	memset(Asset, 0, sizeof(Asset));
-	if(strlen(buffer) > sizeof(Asset) - 1)
-		g_Logs.server->warn("Asset resource name clipped");
-	Util::SafeCopy(Asset, buffer, sizeof(Asset));
-
-	//Debugging, empty assets cause permanent loading screens
-	if(buffer[0] == 0)
-		g_Logs.server->error("SetAsset() new data is empty");
-	if(Asset[0] == 0)
-		g_Logs.server->error("SetAsset() Asset name is empty");
-
-	return 0;
-}
-
-int SceneryObject :: SetPatrolEvent(const char *buffer)
-{
-	//Sets the name from a string by copying the contents of the buffer into
-	//the patrolEvent member.
-	memset(patrolEvent, 0, sizeof(patrolEvent));
-
-	size_t ToCopy = strlen(buffer);
-	if(ToCopy > sizeof(patrolEvent) - 1)
-	{
-		ToCopy = sizeof(patrolEvent) - 1;
-		g_Logs.server->warn("Asset patrolEvent clipped");
-	}
-	strncpy(patrolEvent, buffer, ToCopy);
-	return 0;
-}
-
-int SceneryObject :: SetPosition(const char *buffer)
+int SceneryObject :: SetPosition(const std::string &buffer)
 {
 	//Fill in the position data from the given string.  The string should contain 3
 	//numbers separated by a space.
 
 	int Start = 0;
-	LocationX = GetPartFloat(buffer, Start);
-	LocationY = GetPartFloat(buffer, Start);
-	LocationZ = GetPartFloat(buffer, Start);
+	LocationX = GetPartFloat(buffer.c_str(), Start);
+	LocationY = GetPartFloat(buffer.c_str(), Start);
+	LocationZ = GetPartFloat(buffer.c_str(), Start);
 	return 0;
 }
 
-int SceneryObject :: SetQ(const char *buffer)
+int SceneryObject :: SetQ(const std::string &buffer)
 {
 	//Quaternion (orientation) ?
 	int Start = 0;
-	QuatW = GetPartFloat(buffer, Start);
-	QuatX = GetPartFloat(buffer, Start);
-	QuatY = GetPartFloat(buffer, Start);
-	QuatZ = GetPartFloat(buffer, Start);
+	QuatW = GetPartFloat(buffer.c_str(), Start);
+	QuatX = GetPartFloat(buffer.c_str(), Start);
+	QuatY = GetPartFloat(buffer.c_str(), Start);
+	QuatZ = GetPartFloat(buffer.c_str(), Start);
 	return 0;
 }
 
-int SceneryObject :: SetS(const char *buffer)
+int SceneryObject :: SetS(const std::string &buffer)
 {
 	int Start = 0;
 	float temp;
-	temp = GetPartFloat(buffer, Start);
+	temp = GetPartFloat(buffer.c_str(), Start);
 	if(temp != 0.0F)
 		ScaleX = temp;
 	
-	if(Start >= (int)strlen(buffer))
+	if(Start >= buffer.length())
 	{
 		ScaleY = ScaleX;
 		ScaleZ = ScaleX;
 	}
 	else
 	{
-		temp = GetPartFloat(buffer, Start);
+		temp = GetPartFloat(buffer.c_str(), Start);
 		if(temp != 0.0F)
 			ScaleY = temp;
 
-		temp = GetPartFloat(buffer, Start);
+		temp = GetPartFloat(buffer.c_str(), Start);
 		if(temp != 0.0F)
 			ScaleZ = temp;
 	}
@@ -202,128 +146,94 @@ void SceneryObject :: copyFrom(const SceneryObject *source)
 	if(this == source)
 		return;
 
-	//Need to preserve the pointer, otherwise a memory leak could occur from
-	//a lost pointer, and two props may later try to free the same memory block.
-	CreatureSpawnDef *old = extraData;
-	memcpy(this, source, sizeof(SceneryObject));
-	extraData = old;
-	if(source->extraData != NULL)
+	ID = source->ID;
+	Key = source->Key;
+	Zone = source->Zone;
+	Asset = source->Asset;
+	Name = source->Name;
+	LocationX = source->LocationX;
+	LocationY = source->LocationY;
+	LocationZ = source->LocationZ;
+	QuatX = source->QuatX;
+	QuatY = source->QuatY;
+	QuatZ = source->QuatZ;
+	QuatW = source->QuatW;
+	ScaleX = source->ScaleX;
+	ScaleY = source->ScaleY;
+	ScaleZ = source->ScaleZ;
+	Flags = source->Flags;
+	Layer = source->Layer;
+	patrolSpeed = source->patrolSpeed;
+	patrolEvent = source->patrolEvent;
+	if(source->hasExtraData)
 	{
-		if(CreateExtraData() == true)
-			extraData->copyFrom(source->extraData);
+		hasExtraData = true;
+		CreatureSpawnDef def = source->extraData;
+		extraData.copyFrom(&def);
+
 	}
 }
 
 bool SceneryObject :: CreateExtraData(void)
 {
-	if(extraData == NULL)
-	{
-		extraData = new(nothrow) CreatureSpawnDef;
-		if(extraData != NULL)
-			extraData->Clear();
+	if(!hasExtraData) {
+		extraData.Clear();
+		hasExtraData = true;
 	}
-
-	return (extraData != NULL);
+	return hasExtraData;
 }
 
-void SceneryObject :: SetPropertyCount(int count)
+bool SceneryObject :: IsExtendedProperty(const std::string &propertyName)
 {
-	if(CreateExtraData() == false)
-		return;
-	extraData->propCount = count;
+	return std::find(EXTENDED_PROPERTY_NAMES.begin(), EXTENDED_PROPERTY_NAMES.end(), StringUtil::LowerCase(propertyName)) != EXTENDED_PROPERTY_NAMES.end();
 }
 
-void SceneryObject :: SetProperty(int index, const char *propName, int propType, const char *propValue)
-{
-	if(CreateExtraData() == false)
-		return;
-	if(index < 0 || index >= CreatureSpawnDef::MAX_PROP)
-	{
-		g_Logs.server->error("SetProperty index out of range [%v]", index);
-		return;
-	}
-	Util::SafeCopy(extraData->prop[index].name, propName, sizeof(extraData->prop[index].name));
-	extraData->prop[index].type = propType;
-	Util::SafeCopy(extraData->prop[index].value, propValue, sizeof(extraData->prop[index].value));
-}
-
-void SceneryObject :: SetLinkCount(int count)
-{
-	if(CreateExtraData() == false)
-		return;
-	extraData->linkCount = count;
-}
-
-void SceneryObject :: SetLink(int index, int linkID, int type)
-{
-	if(CreateExtraData() == false)
-		return;
-	if(index < 0 || index >= CreatureSpawnDef::MAX_LINK)
-	{
-		g_Logs.server->error("SetLink index out of range [%v]", index);
-		return;
-	}
-	extraData->link[index].propID = linkID;
-	extraData->link[index].type = type;
-}
-
-bool SceneryObject :: IsExtendedProperty(const char *propertyName)
-{
-	static const char * extPropNames[16] = {
-		"spawnName", "leaseTime", "spawnPackage", "mobTotal",
-		"maxActive", "aiModule", "maxLeash", "loyaltyRadius", "dialog",
-		"wanderRadius", "despawnTime", "sequential", "spawnLayer",
-		"sceneryName", "innerRadius", "outerRadius" };
-	for(int i = 0; i < 16; i++)
-		if(strcmp(propertyName, extPropNames[i]) == 0)
-			return true;
-	return false;
-}
-
-bool SceneryObject :: SetExtendedProperty(const char *propertyName, const char *propertyValue)
+bool SceneryObject :: SetExtendedProperty(const std::string &propertyName, const std::string &propertyValue)
 {
 	if(CreateExtraData() == false)
 		return false;
 
-	if(strcmp(propertyName, "spawnName") == 0)
-		Util::SafeCopy(extraData->spawnName, propertyValue, sizeof(extraData->spawnName));
-	else if(strcmp(propertyName, "leaseTime") == 0)
-		extraData->leaseTime = atoi(propertyValue);
-	else if(strcmp(propertyName, "spawnPackage") == 0)
-		Util::SafeCopy(extraData->spawnPackage, propertyValue, sizeof(extraData->spawnPackage));
-	else if(strcmp(propertyName, "dialog") == 0)
-		Util::SafeCopy(extraData->dialog, propertyValue, sizeof(extraData->dialog));
-	else if(strcmp(propertyName, "mobTotal") == 0)
-		extraData->mobTotal = Util::ClipInt(atoi(propertyValue), 0, 5);
-	else if(strcmp(propertyName, "maxActive") == 0)
-		extraData->maxActive = Util::ClipInt(atoi(propertyValue), 0, 5);
-	else if(strcmp(propertyName, "aiModule") == 0)
-		Util::SafeCopy(extraData->aiModule, propertyValue, sizeof(extraData->aiModule));
-	else if(strcmp(propertyName, "maxLeash") == 0)
-		extraData->maxLeash = atoi(propertyValue);
-	else if(strcmp(propertyName, "loyaltyRadius") == 0)
-		extraData->loyaltyRadius = atoi(propertyValue);
-	else if(strcmp(propertyName, "wanderRadius") == 0)
-		extraData->wanderRadius = atoi(propertyValue);
-	else if(strcmp(propertyName, "despawnTime") == 0)
-		extraData->despawnTime = Util::ClipInt(atoi(propertyValue), 1, Platform::MAX_INT);
-	else if(strcmp(propertyName, "sequential") == 0)
+	string pn = StringUtil::LowerCase(propertyName);
+
+	if(pn == "spawnname")
+		extraData.spawnName = propertyValue;
+	else if(pn == "leasetime")
+		extraData.leaseTime = atoi(propertyValue.c_str());
+	else if(pn == "spawnpackage")
+		extraData.spawnPackage=  propertyValue;
+	else if(pn == "dialog")
+		extraData.dialog = propertyValue;
+	else if(pn == "mobtotal")
+		extraData.mobTotal = Util::ClipInt(atoi(propertyValue.c_str()), 0, 5);
+	else if(pn == "maxactive")
+		extraData.maxActive = Util::ClipInt(atoi(propertyValue.c_str()), 0, 5);
+	else if(pn == "aimodule")
+		extraData.aiModule = propertyValue;
+	else if(pn == "maxleash")
+		extraData.maxLeash = atoi(propertyValue.c_str());
+	else if(pn == "loyaltyradius")
+		extraData.loyaltyRadius = atoi(propertyValue.c_str());
+	else if(pn == "wanderradius")
+		extraData.wanderRadius = atoi(propertyValue.c_str());
+	else if(pn == "despawntime")
+		extraData.despawnTime = Util::ClipInt(atoi(propertyValue.c_str()), 1, Platform::MAX_INT);
+	else if(pn == "sequential")
 	{
-		if(strcmp(propertyValue, "True") == 0)
-			extraData->sequential = true;
-		else if(strcmp(propertyValue, "False") == 0)
-			extraData->sequential = false;
+		if(propertyValue == "True")
+			extraData.sequential = true;
+		else if(propertyValue == "False")
+			extraData.sequential = false;
 		else
-			extraData->sequential = atoi(propertyValue);
+			extraData.sequential = atoi(propertyValue.c_str());
 	}
-	else if(strcmp(propertyName, "spawnLayer") == 0)
-		Util::SafeCopy(extraData->spawnLayer, propertyValue, sizeof(extraData->spawnLayer));
-	else if(strcmp(propertyName, "sceneryName") == 0)
-		Util::SafeCopy(extraData->sceneryName, propertyValue, sizeof(extraData->sceneryName));
-	else if(strcmp(propertyName, "innerRadius") == 0)
-		extraData->innerRadius = atoi(propertyValue);
-	else if(strcmp(propertyName, "outerRadius") == 0)
-		extraData->outerRadius = atoi(propertyValue);
+	else if(pn == "spawnlayer")
+		extraData.spawnLayer = propertyValue;
+	else if(pn == "sceneryname")
+		extraData.sceneryName = propertyValue;
+	else if(pn == "innerradius")
+		extraData.innerRadius = atoi(propertyValue.c_str());
+	else if(pn == "outerradius")
+		extraData.outerRadius = atoi(propertyValue.c_str());
 	else
 		return false;
 	
@@ -332,8 +242,8 @@ bool SceneryObject :: SetExtendedProperty(const char *propertyName, const char *
 
 void SceneryObject::ReadFromJSON(Json::Value &value) {
 	ID = value.get("id", 0).asInt();
-	strcpy(Asset, value.get("asset", "").asCString());
-	strcpy(Name, value.get("name", "").asCString());
+	Asset = value.get("asset", "").asString();
+	Name = value.get("name", "").asString();
 
 	Json::Value pos = value["pos"];
 	LocationX = pos.get("x", 0).asFloat();
@@ -354,34 +264,34 @@ void SceneryObject::ReadFromJSON(Json::Value &value) {
 	Flags = value["flags"].asInt();
 	Layer = value["layer"].asInt();
 	patrolSpeed = value["patrolSpeed"].asInt();
-	strcpy(patrolEvent, value.get("patrolEvent", "").asCString());
+	patrolEvent = value.get("patrolEvent", "").asString();
 
 	if(value.isMember("extra")) {
 		Json::Value extra = value["extra"];
 		if(CreateExtraData()) {
-			extraData->facing = extra["facing"].asInt();
-			strcpy(extraData->spawnName, value.get("spawnName", "").asCString());
-			extraData->leaseTime = extra["leaseTime"].asInt();
-			strcpy(extraData->spawnPackage, value.get("spawnPackage", "").asCString());
-			extraData->mobTotal = extra["mobTotal"].asInt();
+			extraData.facing = extra["facing"].asInt();
+			extraData.spawnName = extra.get("spawnName", "").asString();
+			extraData.leaseTime = extra["leaseTime"].asInt();
+			extraData.spawnPackage, extra.get("spawnPackage", "").asString();
+			extraData.mobTotal = extra["mobTotal"].asInt();
 			if(extra.isMember("maxActive"))
-				extraData->maxActive = extra["maxActive"].asInt();
-			strcpy(extraData->aiModule, value.get("aiModule", "").asCString());
+				extraData.maxActive = extra["maxActive"].asInt();
+			extraData.aiModule = extra.get("aiModule", "").asString();
 			if(extra.isMember("maxLeash"))
-				extraData->maxLeash = extra["maxLeash"].asInt();
-			extraData->loyaltyRadius = extra["loyaltyRadius"].asInt();
-			extraData->wanderRadius = extra["wanderRadius"].asInt();
+				extraData.maxLeash = extra["maxLeash"].asInt();
+			extraData.loyaltyRadius = extra["loyaltyRadius"].asInt();
+			extraData.wanderRadius = extra["wanderRadius"].asInt();
 			if(extra.isMember("despawnTime"))
-				extraData->despawnTime = extra["despawnTime"].asInt();
-			extraData->sequential = extra["sequential"].asInt();
-			strcpy(extraData->spawnLayer, value.get("spawnLayer", "").asCString());
+				extraData.despawnTime = extra["despawnTime"].asInt();
+			extraData.sequential = extra["sequential"].asInt();
+			extraData.spawnLayer= extra.get("spawnLayer", "").asString();
 			if(extra.isMember("links")) {
 				Json::Value links = extra["links"];
 				int count = 0;
 				for(Json::Value::iterator lit = links.begin(); lit != links.end(); ++lit) {
 					Json::Value litem = *lit;
-					extraData->link[count].propID = litem["prop"].asInt();
-					extraData->link[count].type = litem["type"].asInt();
+					extraData.link[count].propID = litem["prop"].asInt();
+					extraData.link[count].type = litem["type"].asInt();
 					count++;
 				}
 			}
@@ -418,40 +328,41 @@ void SceneryObject::WriteToJSON(Json::Value &value) {
 	value["patrolSpeed"] = patrolSpeed;
 	value["patrolEvent"] = patrolEvent;
 
-	if(extraData != NULL) {
+	if(hasExtraData) {
 		Json::Value extra;
 
-		extra["facing"] = extraData->facing;
-		extra["spawnName"] = extraData->spawnName;
-		extra["leaseTime"] = extraData->leaseTime;
-		extra["spawnPackage"] = extraData->spawnPackage;
-		extra["mobTotal"] = extraData->mobTotal;
+		extra["facing"] = extraData.facing;
+		extra["spawnName"] = extraData.spawnName;
+		extra["leaseTime"] = extraData.leaseTime;
+		extra["spawnPackage"] = extraData.spawnPackage;
+		extra["mobTotal"] = extraData.mobTotal;
 
-		if(extraData->maxActive != CreatureSpawnDef::DEFAULT_MAXACTIVE)
-			extra["maxActive"] = extraData->maxActive;
+		if(extraData.maxActive != CreatureSpawnDef::DEFAULT_MAXACTIVE)
+			extra["maxActive"] = extraData.maxActive;
 
-		extra["aiModule"] = extraData->aiModule;
+		extra["aiModule"] = extraData.aiModule;
 
-		if(extraData->maxLeash != CreatureSpawnDef::DEFAULT_MAXLEASH && extraData->maxLeash != 0)
-			extra["maxLeash"] = extraData->maxLeash;
+		if(extraData.maxLeash != CreatureSpawnDef::DEFAULT_MAXLEASH && extraData.maxLeash != 0)
+			extra["maxLeash"] = extraData.maxLeash;
 
-		extra["loyaltyRadius"] = extraData->loyaltyRadius;
-		extra["wanderRadius"] = extraData->wanderRadius;
+		extra["loyaltyRadius"] = extraData.loyaltyRadius;
+		extra["wanderRadius"] = extraData.wanderRadius;
 
-		if(extraData->despawnTime != CreatureSpawnDef::DEFAULT_DESPAWNTIME)
-			extra["despawnTime"] = extraData->despawnTime;
+		if(extraData.despawnTime != CreatureSpawnDef::DEFAULT_DESPAWNTIME)
+			extra["despawnTime"] = extraData.despawnTime;
 
-		extra["sequential"] = extraData->sequential;
-		extra["spawnLayer"] = extraData->spawnLayer;
+		extra["sequential"] = extraData.sequential;
+		extra["spawnLayer"] = extraData.spawnLayer;
 
-		if(extraData->linkCount > 0) {
+		if(extraData.link.size() > 0) {
 			Json::Value links;
-			for(int i = 0; i < extraData->linkCount; i++) {
-				if(extraData->link[i].propID != 0) {
+			int i = 0;
+			for(auto a = extraData.link.begin(); a != extraData.link.end(); ++a) {
+				if((*a).propID != 0) {
 					Json::Value link;
-					link["prop"] = extraData->link[i].propID;
-					link["type"] = extraData->link[i].type;
-					links[i] = link;
+					link["prop"] = (*a).propID;
+					link["type"] = (*a).type;
+					links[i++] = link;
 				}
 			}
 			extra["links"] = links;
@@ -461,45 +372,261 @@ void SceneryObject::WriteToJSON(Json::Value &value) {
 	}
 }
 
+bool SceneryObject :: WriteEntity(AbstractEntityWriter *writer) {
+	writer->Key(KEYPREFIX_SCENERY_OBJECT, StringUtil::Format("%d:%d", Zone, ID));
+	writer->Value("ID", ID);
+	writer->Value("Asset", Asset);
+	writer->Value("Name", Name);
+
+	if(ID != 0) {
+		if(Name.length() == 0)
+			Name = "Untitled";
+	}
+
+	writer->Value("Pos", StringUtil::Format("%g,%g,%g", LocationX, LocationY, LocationZ));
+	writer->Value("Orient", StringUtil::Format("%g,%g,%g,%g", QuatX, QuatY, QuatZ, QuatW));
+	writer->Value("Scale", StringUtil::Format("%g,%g,%g", ScaleX, ScaleY, ScaleZ));
+	writer->Value("Flags", Flags);
+	writer->Value("Layer", Layer);
+	writer->Value("PatrolSpeed", patrolSpeed);
+	writer->Value("PatrolEvent", patrolEvent);
+
+	if(hasExtraData)
+	{
+		writer->Value("Facing", (int)extraData.facing);
+		writer->Value("LeaseTime", extraData.leaseTime);
+		writer->Value("SpawnPackage", extraData.spawnPackage);
+		writer->Value("SpawnName", extraData.spawnName);
+		writer->Value("InnerRadius", extraData.innerRadius);
+		writer->Value("OuterRadius", extraData.outerRadius);
+		writer->Value("Dialog", extraData.dialog);
+		writer->Value("MobTotal", extraData.mobTotal);
+		if(extraData.maxActive != CreatureSpawnDef::DEFAULT_MAXACTIVE)
+			writer->Value("MaxActive", extraData.maxActive);
+		writer->Value("AIModule", extraData.aiModule);
+		if(extraData.maxLeash != CreatureSpawnDef::DEFAULT_MAXLEASH && extraData.maxLeash != 0)
+			writer->Value("MaxLeash", extraData.maxLeash);
+		writer->Value("LoyaltyRadius", extraData.loyaltyRadius);
+		writer->Value("WanderRadius", extraData.wanderRadius);
+		if(extraData.despawnTime != CreatureSpawnDef::DEFAULT_DESPAWNTIME)
+			writer->Value("DespawnTime", extraData.despawnTime);
+		writer->Value("Sequential", extraData.sequential);
+		writer->Value("SpawnLayer", extraData.spawnLayer);
+		writer->Value("SceneryName", extraData.sceneryName);
+		if(extraData.link.size() > 0) {
+			writer->Value("Link_Count", (int)extraData.link.size());
+			STRINGLIST l;
+			for(auto a = extraData.link.begin(); a != extraData.link.end(); ++a) {
+				if((*a).propID != 0)
+					l.push_back(StringUtil::Format("%d,%d", (*a).propID, (*a).type));
+			}
+			if(l.size() > 0)
+				writer->ListValue("Link", l);
+		}
+
+	}
+	return true;
+}
+
+std::string SceneryObject :: GetClusterKey() {
+	return StringUtil::Format("%s:%d:%d", KEYPREFIX_SCENERY_OBJECT.c_str(), Zone, ID);
+}
+
+bool SceneryObject :: EntityKeys(AbstractEntityReader *reader) {
+	reader->Key(KEYPREFIX_SCENERY_OBJECT, StringUtil::Format("%d:%d", Zone, ID));
+	return true;
+}
+
+bool SceneryObject :: ReadEntity(AbstractEntityReader *reader) {
+	ID = reader->ValueInt("ID");
+	Asset = reader->Value("Asset");
+	Name = reader->Value("Name");
+
+	//
+	// TODO all positions sizes rots need to be floats!!!
+	//
+
+	//
+	/// TODO links missing!!
+
+	STRINGLIST l;
+	Util::Split(reader->Value("Pos"), ",", l);
+	if(l.size() > 0) {
+		LocationX = atof(l[0].c_str());
+		if(l.size() > 1) {
+			LocationY = atof(l[1].c_str());
+			if(l.size() > 2) {
+				LocationZ = atof(l[2].c_str());
+			}
+		}
+	}
+	l.clear();
+	Util::Split(reader->Value("Orient"), ",", l);
+	if(l.size() > 0) {
+		QuatX = atof(l[0].c_str());
+		if(l.size() > 1) {
+			QuatY = atof(l[1].c_str());
+			if(l.size() > 2) {
+				QuatZ = atof(l[2].c_str());
+				if(l.size() > 3) {
+					QuatW = atof(l[3].c_str());
+				}
+			}
+		}
+	}
+	l.clear();
+	Util::Split(reader->Value("Scale"), ",", l);
+	if(l.size() > 0) {
+		ScaleX = atof(l[0].c_str());
+		if(l.size() > 1) {
+			ScaleY = atof(l[1].c_str());
+			if(l.size() > 2) {
+				ScaleZ = atof(l[2].c_str());
+			}
+		}
+	}
+	Flags = reader->ValueInt("Flags");
+	Layer = reader->ValueInt("Layer");
+	patrolSpeed = reader->ValueInt("PatrolSpeed");
+	patrolEvent = reader->Value("PatrolEvent");
+	int ival = reader->ValueInt("Facing", 9999);
+	if(ival != 9999 && CreateExtraData())
+		extraData.facing = ival;
+	std:string s = reader->Value("SpawnName");
+	if(s.length() > 0 && CreateExtraData())
+		extraData.spawnName = s;
+	ival = reader->ValueInt("LeaseTime", -1);
+	if(ival != -1 && CreateExtraData())
+		extraData.leaseTime = ival;
+	s = reader->Value("SpawnPackage");
+	if(s.length() > 0 && CreateExtraData())
+		extraData.spawnPackage = s;
+	s = reader->Value("Dialog");
+	if(s.length() > 0 && CreateExtraData())
+		extraData.dialog = reader->Value("Dialog");
+	ival = reader->ValueInt("MobTotal", -1);
+	if(ival != -1 && CreateExtraData())
+		extraData.mobTotal = Util::ClipInt(reader->ValueInt("MobTotal"), 0, 5);
+	ival = reader->ValueInt("MaxActive", -1);
+	if(ival != -1 && CreateExtraData())
+		extraData.maxActive = Util::ClipInt(reader->ValueInt("MaxActive"), 0, 5);
+	s = reader->Value("AIModule");
+	if(s.length() > 0 && CreateExtraData())
+		extraData.aiModule = reader->Value("AIModule");
+	ival = reader->ValueInt("MaxLeash", -1);
+	if(ival != -1 && CreateExtraData())
+		extraData.maxLeash = reader->ValueInt("MaxLeash");
+	ival = reader->ValueInt("LoyaltyRadius", -1);
+	if(ival != -1 && CreateExtraData())
+		extraData.loyaltyRadius = reader->ValueInt("LoyaltyRadius");
+	ival = reader->ValueInt("InnerRadius", -1);
+	if(ival != -1 && CreateExtraData())
+		extraData.innerRadius = reader->ValueInt("InnerRadius");
+	ival = reader->ValueInt("OuterRadius", -1);
+	if(ival != -1 && CreateExtraData())
+		extraData.outerRadius = reader->ValueInt("OuterRadius");
+	ival = reader->ValueInt("DespawnTime", -1);
+	if(ival != -1 && CreateExtraData())
+		extraData.despawnTime = Util::ClipInt(reader->ValueInt("DespawnTime"), 1, Platform::MAX_INT);
+	ival = reader->ValueInt("Sequential", -1);
+	if(ival != -1 && CreateExtraData())
+		extraData.sequential = reader->ValueBool("Sequential");
+	s = reader->Value("SpawnLayer");
+	if(s.length() > 0 && CreateExtraData())
+		extraData.spawnLayer = reader->Value("SpawnLayer");
+	s = reader->Value("SceneryName");
+	if(s.length() > 0 && CreateExtraData())
+		extraData.sceneryName = reader->Value("SceneryName");
+
+	STRINGLIST links = reader->ListValue("Link");
+	if(links.size() > 0 && CreateExtraData()) {
+		for(auto a = links.begin(); a != links.end(); ++a) {
+			STRINGLIST args;
+			Util::Split((*a), ",", args);
+			if(args.size() > 1) {
+				AddLink(atoi(args[0].c_str()), atoi(args[1].c_str()));
+			}
+		}
+	}
+
+	/* Deprecated, but some text data still uses this */
+	float f = reader->ValueFloat("PX", -99999.0);
+	if(f != -99999.0)
+		LocationX = f;
+	f = reader->ValueFloat("PY", -99999.0);
+	if(f != -99999.0)
+		LocationY = f;
+	f = reader->ValueFloat("PZ", -99999.0);
+	if(f != -99999.0)
+		LocationY = f;
+	f = reader->ValueFloat("QX", -99999.0);
+	if(f != -99999.0)
+		QuatX = f;
+	f = reader->ValueFloat("QY", -99999.0);
+	if(f != -99999.0)
+		QuatY = f;
+	f = reader->ValueFloat("QZ", -99999.0);
+	if(f != -99999.0)
+		QuatY = f;
+	f = reader->ValueFloat("QW", -99999.0);
+	if(f != -99999.0)
+		QuatW = f;
+	f = reader->ValueFloat("SX", -99999.0);
+	if(f != -99999.0)
+		ScaleX = f;
+	f = reader->ValueFloat("SY", -99999.0);
+	if(f != -99999.0)
+		ScaleY = f;
+	f = reader->ValueFloat("SZ", -99999.0);
+	if(f != -99999.0)
+		ScaleY = f;
+
+
+	return true;
+}
+
 void SceneryObject::WriteToStream(FILE *file) const
 {
 	fprintf(file, "[ENTRY]\r\n");
 	fprintf(file, "ID=%d\r\n", ID);
-	fprintf(file, "Asset=%s\r\n", Asset);
-	fprintf(file, "Name=%s\r\n", Name);
+	fprintf(file, "Asset=%s\r\n", Asset.c_str());
+	fprintf(file, "Name=%s\r\n", Name.c_str());
 	fprintf(file, "Pos=%g,%g,%g\r\n", LocationX, LocationY, LocationZ);
 	fprintf(file, "Orient=%g,%g,%g,%g\r\n", QuatX, QuatY, QuatZ, QuatW);
 	fprintf(file, "Scale=%g,%g,%g\r\n", ScaleX, ScaleY, ScaleZ);
 	Util::WriteInteger(file, "Flags", Flags);
 	Util::WriteInteger(file, "Layer", Layer);
 	Util::WriteInteger(file, "patrolSpeed", patrolSpeed);
-	Util::WriteString(file, "patrolEvent", patrolEvent);
-	if(extraData != NULL)
+	Util::WriteString(file, "patrolEvent", patrolEvent.c_str());
+	if(hasExtraData)
 	{
-		Util::WriteInteger(file, "Facing", extraData->facing);
-		Util::WriteString(file, "spawnName", extraData->spawnName);
-		Util::WriteInteger(file, "leaseTime", extraData->leaseTime);
-		Util::WriteString(file, "spawnPackage", extraData->spawnPackage);
-		Util::WriteString(file, "dialog", extraData->dialog);
-		Util::WriteInteger(file, "mobTotal", extraData->mobTotal);
-		if(extraData->maxActive != CreatureSpawnDef::DEFAULT_MAXACTIVE)
-			fprintf(file, "maxActive=%d\r\n", extraData->maxActive);
-		Util::WriteString(file, "aiModule", extraData->aiModule);
-		if(extraData->maxLeash != CreatureSpawnDef::DEFAULT_MAXLEASH && extraData->maxLeash != 0)
-			Util::WriteInteger(file, "maxLeash", extraData->maxLeash);
-		Util::WriteInteger(file, "loyaltyRadius", extraData->loyaltyRadius);
-		Util::WriteInteger(file, "wanderRadius", extraData->wanderRadius);
-		if(extraData->despawnTime != CreatureSpawnDef::DEFAULT_DESPAWNTIME)
-			Util::WriteInteger(file, "despawnTime", extraData->despawnTime);
-		Util::WriteInteger(file, "sequential", extraData->sequential);
-		Util::WriteString(file, "spawnLayer", extraData->spawnLayer);
-		if(extraData->linkCount > 0)
+		Util::WriteInteger(file, "Facing", extraData.facing);
+		Util::WriteString(file, "SpawnName", extraData.spawnName.c_str());
+		Util::WriteInteger(file, "LeaseTime", extraData.leaseTime);
+		Util::WriteString(file, "SpawnPackage", extraData.spawnPackage.c_str());
+		Util::WriteString(file, "SceneryName", extraData.sceneryName.c_str());
+		Util::WriteString(file, "Dialog", extraData.dialog.c_str());
+		Util::WriteInteger(file, "MobTotal", extraData.mobTotal);
+		if(extraData.maxActive != CreatureSpawnDef::DEFAULT_MAXACTIVE)
+			fprintf(file, "MaxActive=%d\r\n", extraData.maxActive);
+		Util::WriteString(file, "AIModule", extraData.aiModule.c_str());
+		if(extraData.maxLeash != CreatureSpawnDef::DEFAULT_MAXLEASH && extraData.maxLeash != 0)
+			Util::WriteInteger(file, "MaxLeash", extraData.maxLeash);
+		Util::WriteInteger(file, "LoyaltyRadius", extraData.loyaltyRadius);
+		Util::WriteInteger(file, "InnerRadius", extraData.innerRadius);
+		Util::WriteInteger(file, "OuterRadius", extraData.outerRadius);
+		Util::WriteInteger(file, "WanderRadius", extraData.wanderRadius);
+		if(extraData.despawnTime != CreatureSpawnDef::DEFAULT_DESPAWNTIME)
+			Util::WriteInteger(file, "DespawnTime", extraData.despawnTime);
+		Util::WriteInteger(file, "Sequential", extraData.sequential);
+		Util::WriteString(file, "SpawnLayer", extraData.spawnLayer.c_str());
+		if(extraData.link.size() > 0)
 		{
-			fprintf(file, "links_count=%d\r\n", extraData->linkCount);
-			for(int i = 0; i < extraData->linkCount; i++)
+			fprintf(file, "Links_Count=%lu\r\n", extraData.link.size());
+			for(auto a = extraData.link.begin(); a != extraData.link.end(); ++a)
 			{
-				if(extraData->link[i].propID != 0)
-					fprintf(file, "link=%d,%d\r\n", extraData->link[i].propID, extraData->link[i].type);
+				if((*a).propID != 0)
+					fprintf(file, "Link=%d,%d\r\n", (*a).propID, (*a).type);
 			}
 		}
 	}
@@ -508,15 +635,15 @@ void SceneryObject::WriteToStream(FILE *file) const
 
 const char* SceneryObject :: GetSpawnPackageName(void)
 {
-	if(extraData == NULL)
+	if(!hasExtraData)
 		return NULL;
 	
-	return extraData->spawnPackage;
+	return extraData.spawnPackage.c_str();
 }
 
 bool SceneryObject::ExtractATS(std::string& outputStr) const
 {
-	const char *start = strstr(Asset, "ATS=");
+	const char *start = strstr(Asset.c_str(), "ATS=");
 	if(start == NULL)
 		return false;
 	start += 4;
@@ -537,51 +664,40 @@ void SceneryObject :: AddLink(int PropID, int type)
 	if(CreateExtraData() == false)
 		return;
 
-	if(extraData->linkCount >= CreatureSpawnDef::MAX_LINK)
-		return;
-
-	for(int i = 0; i < extraData->linkCount; i++)
-	{
-		if(extraData->link[i].propID == PropID)
-		{
-			extraData->link[i].type = type;
+	for(auto a = extraData.link.begin(); a != extraData.link.end(); ++a) {
+		if((*a).propID == PropID) {
+			(*a).type = type;
 			return;
 		}
 	}
-	int slot = extraData->linkCount;
-	extraData->link[slot].propID = PropID;
-	extraData->link[slot].type = type;
-	extraData->linkCount++;
+
+	ExtraDataLink l;
+	l.propID = PropID;
+	l.type = type;
+	extraData.link.push_back(l);
 }
 
 void SceneryObject :: RemoveLink(int PropID)
 {
-	if(extraData == NULL)
+	if(!hasExtraData)
 		return;
 
-	for(int i = 0; i < extraData->linkCount; i++)
-	{
-		if(extraData->link[i].propID == PropID)
+	for(auto a = extraData.link.begin(); a != extraData.link.end(); ++a) {
+		if((*a).propID == PropID)
 		{
-			extraData->link[i].propID = 0;
-			extraData->link[i].type = 0;
-			for(int d = i + 1; d < CreatureSpawnDef::MAX_LINK - 1; d++)
-			{
-				extraData->link[d].propID = extraData->link[d + 1].propID;
-				extraData->link[d].type = extraData->link[d + 1].type;
-			}
-			extraData->linkCount--;
+			extraData.link.erase(a);
+			break;
 		}
 	}
 }
 
 bool SceneryObject :: HasLinks(int linkType)
 {
-	if(extraData == NULL)
+	if(!hasExtraData)
 		return false;
-	for(int i = 0; i < extraData->linkCount; i++)
+	for(auto a = extraData.link.begin(); a != extraData.link.end(); ++a)
 	{
-		if(extraData->link[i].type == linkType)
+		if((*a).type == linkType)
 			return true;
 	}
 	return false;
@@ -590,18 +706,18 @@ bool SceneryObject :: HasLinks(int linkType)
 void SceneryObject :: EnumLinks(int linkType, std::vector<int> &output)
 {
 	output.clear();
-	if(extraData == NULL)
+	if(!hasExtraData)
 		return;
-	for(int i = 0; i < extraData->linkCount; i++)
+	for(auto a = extraData.link.begin(); a != extraData.link.end(); ++a)
 	{
-		if(extraData->link[i].type == linkType)
-			output.push_back(extraData->link[i].propID);
+		if((*a).type == linkType)
+			output.push_back((*a).propID);
 	}
 }
 
 bool SceneryObject :: IsSpawnPoint(void)
 {
-	if(strstr(Asset, "Manipulator-SpawnPoint") != NULL)
+	if(Asset.find("Manipulator-SpawnPoint") != std::string::npos)
 		return true;
 	return false;
 }
@@ -624,8 +740,6 @@ SceneryPage::~SceneryPage()
 void SceneryPage::Destroy(void)
 {
 	SCENERY_IT it;
-	for(it = mSceneryList.begin(); it != mSceneryList.end(); ++it)
-		it->second.Destroy();
 	mSceneryList.clear();
 }
 
@@ -643,6 +757,9 @@ SceneryObject* SceneryPage::AddProp(const SceneryObject& prop, bool notifyPendin
 
 	SceneryObject &obj = mSceneryList[prop.ID];
 	obj.copyFrom(&prop);
+	obj.Key.x = mTileX;
+	obj.Key.y = mTileY;
+	obj.Zone = mZone;
 	NotifyAccess(notifyPendingChange);
 	return &obj;
 }
@@ -652,6 +769,17 @@ bool SceneryPage::DeleteProp(int propID)
 	SCENERY_IT it = mSceneryList.find(propID);
 	if(it == mSceneryList.end())
 		return false;
+
+	/* If clustered, we remove from the object from the cluster immediately (well on the worker thread).
+	 * The page key list will be removed if the scenery list becomes totally empty */
+	if(IsClusteredZone()) {
+		g_ClusterManager.RemoveEntity(&((*it).second));
+		if(IsGroveZone())
+			g_ClusterManager.ListRemove(StringUtil::Format("%s:%d:%d:%d", KEYPREFIX_GROVE.c_str(), mZone, mTileX, mTileY), StringUtil::Format("%d", propID), false);
+		else
+			g_ClusterManager.ListRemove(StringUtil::Format("%s:%d:%d:%d", KEYPREFIX_SCENERY.c_str(), mZone, mTileX, mTileY), StringUtil::Format("%d", propID), false);
+	}
+
 	mSceneryList.erase(it);
 	NotifyAccess(true);
 	return true;
@@ -660,7 +788,11 @@ bool SceneryPage::DeleteProp(int propID)
 void SceneryPage::LoadScenery(void)
 {
 	TimeObject to("SceneryPage::LoadScenery");
-	LoadSceneryFromFile(GetFileName());
+	if(IsClusteredZone()) {
+		LoadSceneryFromCluster();
+	}
+	else
+		LoadSceneryFromFile(GetFileName());
 	NotifyAccess(false);
 }
 
@@ -671,30 +803,106 @@ void SceneryPage::CheckAutosave(int& debugPagesSaved, int& debugPropsSaved)
 
 	if(mSceneryList.size() == 0)
 	{
-		RemoveFile(GetFileName());
+		if(IsClusteredZone()) {
+			RemoveFromCluster();
+		}
+		else {
+			RemoveFile(GetFileName());
+		}
 		mPendingChanges = 0;
 	}
 	else
 	{
-		if(mHasSourceFile == false)
-		{
-			Platform::MakeDirectory(GetFolderName());
+		if(IsClusteredZone()) {
+			if(SaveToCluster())
+			{
+				mPendingChanges = 0;
+				debugPropsSaved += mSceneryList.size();
+				mHasSourceFile = true;
+			}
 		}
+		else {
+			if(mHasSourceFile == false)
+			{
+				Platform::MakeDirectory(GetFolderName());
+			}
 
-		if(SaveFile(GetFileName()) == true)
-		{
-			mPendingChanges = 0;
-			debugPropsSaved += mSceneryList.size();
-			mHasSourceFile = true;
+			if(SaveFile(GetFileName()) == true)
+			{
+				mPendingChanges = 0;
+				debugPropsSaved += mSceneryList.size();
+				mHasSourceFile = true;
+			}
 		}
 	}
 	debugPagesSaved++;
+}
+
+bool SceneryPage::IsGroveZone()
+{
+	return mZone >= ZoneDefManager::GROVE_ZONE_ID_DEFAULT;
+}
+
+
+bool SceneryPage::IsClusteredZone()
+{
+	/* For now, just grove zones are clustered */
+	return IsGroveZone();
+}
+
+
+void SceneryPage::RemoveFromCluster()
+{
+	/* This will remove the index key, not the individual objects. Those should have
+	 * been removed (more or less) at the point of deletion by the user.
+	 */
+	if(g_ClusterManager.RemoveKey(StringUtil::Format("%s:%d:%d:%d",  ( IsGroveZone() ? KEYPREFIX_GROVE : KEYPREFIX_SCENERY ).c_str(), mZone, mTileX, mTileY), false)) {
+		g_Logs.data->info("Removed scenery page [%v %vx%v] from cluster", mZone, mTileX, mTileY);
+	}
+	else {
+		g_Logs.data->error("Failed to remove scenery page [%v] from cluster", mZone, mTileX, mTileY);
+	}
 }
 
 void SceneryPage::RemoveFile(std::string fileName)
 {
 	g_Logs.data->info("Removed [%v]", fileName);
 	remove(fileName.c_str());
+}
+
+bool SceneryPage::SaveToCluster()
+{
+	/* TODO. It should not be necessary to save every single prop in a tile
+	 * back to the cluster, but because saves are deferred, and the file
+	 * based scenery info saves every prop in a tile in a single file, we
+	 * still do this.
+	 *
+	 * We also need to use a synchronous save to the cluster so we know if
+	 * the object was new. This could be solved by providing callback interfaces
+	 * through the ClusterManager as well
+	 */
+	SCENERY_IT it;
+	for(it = mSceneryList.begin(); it != mSceneryList.end(); ++it)
+	{
+		g_Logs.data->debug("Saving prop [%v]", it->second.ID);
+		if(g_ClusterManager.WriteEntity(&((*it).second)), true) {
+			std:string k;
+			if(IsGroveZone())
+				k = StringUtil::Format("%s:%d:%d:%d", KEYPREFIX_GROVE.c_str(), mZone, mTileX, mTileY);
+			else
+				k = StringUtil::Format("%s:%d:%d:%d", KEYPREFIX_SCENERY.c_str(), mZone, mTileX, mTileY);
+
+			g_ClusterManager.ListRemove(k, StringUtil::Format("%d", (*it).second.ID), true);
+			g_ClusterManager.ListAdd(k, StringUtil::Format("%d", (*it).second.ID));
+
+		}
+		else {
+			g_Logs.data->error("Failed to save scenery page [%v %vx%v] to cluster", mZone, mTileX, mTileY);
+			return true;
+		}
+	}
+	g_Logs.data->info("Saved scenery page [%v %vx%v] to cluster", mZone, mTileX, mTileY);
+	return true;
 }
 
 bool SceneryPage::SaveFile(std::string fileName)
@@ -713,34 +921,73 @@ bool SceneryPage::SaveFile(std::string fileName)
 			it->second.WriteToStream(output);
 	}
 	fclose(output);
-	g_Logs.data->info("Saved prop [%v]", fileName);
+	g_Logs.data->info("Saved scenery page [%v]", fileName);
+	return true;
+}
+
+bool SceneryPage::WriteEntity(AbstractEntityWriter *writer) {
+	return true;
+}
+
+bool SceneryPage::EntityKeys(AbstractEntityReader *reader) {
+	if(IsGroveZone())
+		reader->Key(KEYPREFIX_GROVE, StringUtil::Format("%d:%d:%d", mZone, mTileX, mTileY), true);
+	else
+		reader->Key(KEYPREFIX_SCENERY, StringUtil::Format("%d:%d:%d", mZone, mTileX, mTileY), true);
+	return true;
+}
+
+bool SceneryPage::ReadEntity(AbstractEntityReader *reader) {
+	if(!reader->Exists())
+		return false;
+
+	reader->Index("ENTRY");
+
+	STRINGLIST sections = reader->Sections();
+	for(auto a = sections.begin(); a != sections.end(); ++a) {
+		reader->PushSection(*a);
+		SceneryObject so;
+		so.Key.x = mTileX;
+		so.Key.y = mTileY;
+		so.Zone = mZone;
+		if(!so.ReadEntity(reader))
+			return false;
+		mSceneryList[so.ID] = so;
+		reader->PopSection();
+	}
+
 	return true;
 }
 
 std::string SceneryPage::GetFileName()
 {
-	char buf[64];
-	Util::SafeFormat(buf, sizeof(buf), "%d", mZone);
-	char buf2[64];
-	Util::SafeFormat(buf2, sizeof(buf2), "x%03dy%03d.txt", mTileX, mTileY);
-	std::string p;
-	if(mZone >= ZoneDefManager::GROVE_ZONE_ID_DEFAULT)
-		p = Platform::JoinPath(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "Grove"), buf), buf2);
-	else
-		p = Platform::JoinPath(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "Scenery"), buf), buf2);
-	return p;
+	return Platform::JoinPath(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveVariableDataPath(), "Scenery"), StringUtil::Format("%d", mZone)), StringUtil::Format("x%03dy%03d.txt", mTileX, mTileY));
 }
 
 std::string SceneryPage::GetFolderName()
 {
-	char buf[64];
-	Util::SafeFormat(buf, sizeof(buf), "%d");
-	std::string p;
-	if(mZone >= ZoneDefManager::GROVE_ZONE_ID_DEFAULT)
-		p = Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "Grove"), buf);
-	else
-		p = Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "Scenery"), buf);
-	return p;
+	return Platform::JoinPath(Platform::JoinPath(g_Config.ResolveVariableDataPath(), "Scenery"), StringUtil::Format("%d", mZone));
+}
+
+void SceneryPage::LoadSceneryFromCluster()
+{
+	g_Logs.data->info("Loading scenery for %v (%vx%v) from the cluster", mZone, mTileX, mTileY);
+	STRINGLIST propKeys = g_ClusterManager.GetList(StringUtil::Format("%s:%d:%d:%d",  ( IsGroveZone() ? KEYPREFIX_GROVE : KEYPREFIX_SCENERY ).c_str(), mZone, mTileX, mTileY));
+	for(auto a = propKeys.begin(); a!= propKeys.end(); ++a) {
+		SceneryObject o;
+		o.Key.x = mTileX;
+		o.Key.y = mTileY;
+		o.Zone = mZone;
+		o.ID = atoi((*a).c_str());
+		if(g_ClusterManager.ReadEntity(&o)) {
+			g_Logs.data->debug("Loaded scenery object ", o.ID);
+			AddProp(o, false);
+		}
+		else {
+			g_Logs.data->warn("Failed to load scenery object %v from the cluster.", *a);
+		}
+	}
+	mHasSourceFile = propKeys.size() > 0;
 }
 
 void SceneryPage::LoadSceneryFromFile(std::string fileName)
@@ -753,11 +1000,10 @@ void SceneryPage::LoadSceneryFromFile(std::string fileName)
 	}
 	fr.SetCommentChar(';');
 	SceneryObject prop;
-	int propertyIndex = 0;
-	int linkIndex = 0;
 
 	while(fr.Readable() == true)
 	{
+
 		int r = fr.ReadLine();
 		if(r == 0)
 			continue;
@@ -768,24 +1014,23 @@ void SceneryPage::LoadSceneryFromFile(std::string fileName)
 		{
 			if(prop.ID != 0)
 			{
-				if(prop.Name[0] == 0)
-					prop.SetName("Untitled");
+				if(prop.Name.length() == 0)
+					prop.Name = "Untitled";
 				AddProp(prop, false);
 			}
 			prop.Clear();
-			propertyIndex = 0;
-			linkIndex = 0;
 		}
-		else if(strcmp(fr.CopyBuffer, "ID") == 0)
+		else if(strcmp(fr.CopyBuffer, "ID") == 0) {
 			prop.ID = fr.BlockToIntC(1);
+		}
 		else if(strcmp(fr.CopyBuffer, "ASSET") == 0)
 		{
 			//The asset string needs to be single broken.
 			fr.SingleBreak("=");
-			prop.SetAsset(fr.BlockToStringC(1));
+			prop.Asset = fr.BlockToStringC(1);
 		}
 		else if(strcmp(fr.CopyBuffer, "NAME") == 0)
-			prop.SetName(fr.BlockToStringC(1, 0));
+			prop.Name = fr.BlockToStringC(1, 0);
 		else if(strcmp(fr.CopyBuffer, "POS") == 0)
 		{
 			prop.LocationX = fr.BlockToFloatC(1);
@@ -812,25 +1057,13 @@ void SceneryPage::LoadSceneryFromFile(std::string fileName)
 		else if(strcmp(fr.CopyBuffer, "PATROLSPEED") == 0)
 			prop.patrolSpeed = fr.BlockToIntC(1);
 		else if(strcmp(fr.CopyBuffer, "PATROLEVENT") == 0)
-			prop.SetPatrolEvent(fr.BlockToStringC(1));
-		else if(strcmp(fr.CopyBuffer, "PROPS_COUNT") == 0)
-			prop.SetPropertyCount(fr.BlockToIntC(1));
-		else if(strcmp(fr.CopyBuffer, "PROPERTY") == 0)
-		{
-			//Calling BlockToStringC() overwrites the previous copy, so we need yet another
-			//copy buffer to hold one parameter while we get another.
-			char buffer[256];
-			Util::SafeCopy(buffer, fr.BlockToStringC(1), sizeof(buffer));
-			prop.SetProperty(propertyIndex++, buffer, fr.BlockToIntC(2), fr.BlockToStringC(3)); 
-		}
-		else if(strcmp(fr.CopyBuffer, "LINKS_COUNT") == 0)
-			prop.SetLinkCount(fr.BlockToIntC(1));
+			prop.patrolEvent = fr.BlockToStringC(1);
 		else if(strcmp(fr.CopyBuffer, "LINK") == 0)
 		{
 			int propID = fr.BlockToIntC(1);
 			int linkType = fr.BlockToIntC(2);
 			if(propID != 0)   //Fix to prevent null props.
-				prop.SetLink(linkIndex++, propID, linkType);
+				prop.AddLink(propID, linkType);
 		}
 		else if(strcmp(fr.CopyBuffer, "FACING") == 0)
 		{
@@ -839,7 +1072,7 @@ void SceneryPage::LoadSceneryFromFile(std::string fileName)
 			//facings rather than trying to look at the quaternion rotation of
 			//the spawnpoint prop itself.
 			if(prop.CreateExtraData() == true)
-				prop.extraData->facing = fr.BlockToIntC(1);
+				prop.extraData.facing = fr.BlockToIntC(1);
 		}
 		else if(prop.IsExtendedProperty(fr.BlockToStringC(0)) == true)
 		{
@@ -873,8 +1106,8 @@ void SceneryPage::LoadSceneryFromFile(std::string fileName)
 
 	if(prop.ID != 0)
 	{
-		if(prop.Name[0] == 0)
-			prop.SetName("Untitled");
+		if(prop.Name.length() == 0)
+			prop.Name = "Untitled";
 		AddProp(prop, false);
 	}
 
@@ -1036,8 +1269,9 @@ bool SceneryZone::UpdateLink(int propID1, int propID2, int type)
 SceneryPage* SceneryZone::GetOrCreatePage(const SceneryPageKey& key)
 {
 	PAGEMAP::iterator it = mPages.find(key);
-	if(it != mPages.end())
+	if(it != mPages.end()) {
 		return &it->second;
+	}
 
 	return LoadPage(key);
 }
@@ -1173,6 +1407,7 @@ SceneryZone* SceneryManager::GetOrCreateZone(int zoneID)
 
 SceneryPage* SceneryManager::GetOrCreatePage(int zoneID, int sceneryPageX, int sceneryPageY)
 {
+	g_Logs.server->debug("Get or create page %v x %v in zone %v", sceneryPageX, sceneryPageY, zoneID);
 	SceneryZone *zone = GetOrCreateZone(zoneID);
 	if(zone == NULL)
 	{
@@ -1507,6 +1742,32 @@ void SceneryManager::LaunchThread(void)
 		g_Logs.server->info("SceneryManager::LaunchThread: successful");
 }
 
+bool SceneryManager::DeleteZone(int id) {
+	if(id < ZoneDefManager::GROVE_ZONE_ID_DEFAULT) {
+		g_Logs.data->warn("Request to delete non-grove zone %v, ignoring", id);
+		return false;
+	}
+	STRINGLIST pages;
+	g_ClusterManager.Scan([this, &pages](const std::string &key) {
+		pages.push_back(key);
+	},StringUtil::Format("%s:%d:*", KEYPREFIX_GROVE.c_str(), id));
+	for(auto it = pages.begin(); it != pages.end(); ++it) {
+		STRINGLIST props = g_ClusterManager.GetList(*it);
+		for(auto it2 = props.begin(); it2 != props.end(); ++it2) {
+			SceneryObject so;
+			so.ID = atoi((*it2).c_str());
+			so.Zone = id;
+			if(!g_ClusterManager.RemoveEntity(&so)) {
+				g_Logs.data->warn("Failed to remove scenery for zone %v (%v)", id, so.ID);
+			}
+		}
+		g_ClusterManager.RemoveKey(*it);
+	}
+	g_ClusterManager.RemoveKey(StringUtil::Format("%s:%d:*", ID_NEXT_SCENERY.c_str(), id));
+
+	return true;
+}
+
 void SceneryManager::ShutdownThread(void)
 {
 	bThreadActive = false;
@@ -1607,11 +1868,11 @@ int PrepExt_UpdateScenery(char *buffer, SceneryObject *so)
 		SCENERY_UPDATE_LINKS | SCENERY_UPDATE_PROPERTIES;
 	*/
 
-	if(so->extraData != NULL)
+	if(so->hasExtraData)
 	{
-		if(so->extraData->linkCount > 0)
+		if(so->extraData.link.size() > 0)
 			mask |= SCENERY_UPDATE_LINKS;
-		if(so->extraData->spawnPackage[0] != 0)
+		if(so->extraData.spawnPackage.length() > 0)
 			mask |= SCENERY_UPDATE_PROPERTIES;
 	}
 
@@ -1628,7 +1889,7 @@ int PrepExt_UpdateScenery(char *buffer, SceneryObject *so)
 
 	if(mask & SCENERY_UPDATE_ASSET)
 	{
-		wpos += PutStringUTF(&buffer[wpos], so->Asset);
+		wpos += PutStringUTF(&buffer[wpos], so->Asset.c_str());
 		if(g_ProtocolVersion >= 23)
 		{
 			//Layer
@@ -1665,11 +1926,11 @@ int PrepExt_UpdateScenery(char *buffer, SceneryObject *so)
 
 	if(mask & SCENERY_UPDATE_LINKS)
 	{
-		wpos += PutShort(&buffer[wpos], so->extraData->linkCount);  //count
-		for(int a = 0; a < so->extraData->linkCount; a++)
+		wpos += PutShort(&buffer[wpos], so->extraData.link.size());  //count
+		for(auto a = so->extraData.link.begin(); a != so->extraData.link.end(); ++a)
 		{
-			wpos += PutInteger(&buffer[wpos], so->extraData->link[a].propID);
-			wpos += PutByte(&buffer[wpos], so->extraData->link[a].type);
+			wpos += PutInteger(&buffer[wpos], (*a).propID);
+			wpos += PutByte(&buffer[wpos], (*a).type);
 		}
 	}
 
@@ -1693,47 +1954,47 @@ int PrepExt_UpdateScenery(char *buffer, SceneryObject *so)
 		//the logged values sometimes use FLOAT instead of INTEGER
 		//property types, although it seems like values can be
 		//expressed with integers without any conflicts.
-		wpos += PutStringUTF(&buffer[wpos], so->extraData->sceneryName);
+		wpos += PutStringUTF(&buffer[wpos], so->extraData.sceneryName.c_str());
 		wpos += PutInteger(&buffer[wpos], 4);  //property count
 
 		wpos += PutStringUTF(&buffer[wpos], "innerRadius");
 		wpos += PutByte(&buffer[wpos], PROPERTY_INTEGER);
-		wpos += PutInteger(&buffer[wpos], so->extraData->innerRadius);
+		wpos += PutInteger(&buffer[wpos], so->extraData.innerRadius);
 
 		wpos += PutStringUTF(&buffer[wpos], "package");
 		wpos += PutByte(&buffer[wpos], PROPERTY_STRING);
-		wpos += PutStringUTF(&buffer[wpos], so->extraData->spawnPackage);
+		wpos += PutStringUTF(&buffer[wpos], so->extraData.spawnPackage.c_str());
 
 		wpos += PutStringUTF(&buffer[wpos], "dialog");
 		wpos += PutByte(&buffer[wpos], PROPERTY_STRING);
-		wpos += PutStringUTF(&buffer[wpos], so->extraData->dialog);
+		wpos += PutStringUTF(&buffer[wpos], so->extraData.dialog.c_str());
 
 		wpos += PutStringUTF(&buffer[wpos], "outerRadius");
 		wpos += PutByte(&buffer[wpos], PROPERTY_INTEGER);
-		wpos += PutInteger(&buffer[wpos], so->extraData->outerRadius);
+		wpos += PutInteger(&buffer[wpos], so->extraData.outerRadius);
 
 		/*
-		wpos += PutStringUTF(&buffer[wpos], so->extraData->sceneryName);
-		wpos += PutInteger(&buffer[wpos], so->extraData->propCount);
-		for(int a = 0; a < so->extraData->propCount; a++)
+		wpos += PutStringUTF(&buffer[wpos], so->extraData.sceneryName);
+		wpos += PutInteger(&buffer[wpos], so->extraData.propCount);
+		for(int a = 0; a < so->extraData.propCount; a++)
 		{
-			wpos += PutStringUTF(&buffer[wpos], so->extraData->prop[a].name);
-			wpos += PutByte(&buffer[wpos], so->extraData->prop[a].type);
-			switch(so->extraData->prop[a].type)
+			wpos += PutStringUTF(&buffer[wpos], so->extraData.prop[a].name);
+			wpos += PutByte(&buffer[wpos], so->extraData.prop[a].type);
+			switch(so->extraData.prop[a].type)
 			{
 			case PROPERTY_INTEGER:
 			case PROPERTY_SCENERY:
 				int iconv;
-				iconv = atoi(so->extraData->prop[a].value);
+				iconv = atoi(so->extraData.prop[a].value);
 				wpos += PutInteger(&buffer[wpos], iconv);
 				break;
 			case PROPERTY_FLOAT:
 				float fconv;
-				fconv = (float)atof(so->extraData->prop[a].value);
+				fconv = (float)atof(so->extraData.prop[a].value);
 				wpos += PutFloat(&buffer[wpos], fconv);
 				break;
 			case PROPERTY_STRING:
-				wpos += PutStringUTF(&buffer[wpos], so->extraData->prop[a].value);
+				wpos += PutStringUTF(&buffer[wpos], so->extraData.prop[a].value);
 				break;
 			}
 		}

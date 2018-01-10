@@ -93,7 +93,7 @@ int ExtendedQuestAction :: GetComparator(const std::string &name)
 
 int ExtendedQuestAction :: GetStatIDByName(const std::string &name)
 {
-	int r = GetStatIndexByName(name.c_str());
+	int r = GetStatIndexByName(name);
 	if(r == -1)
 		return -1;
 	return StatList[r].ID;
@@ -215,7 +215,9 @@ int QuestActionContainer :: ExecuteSingleCommand(SimulatorThread *caller, Extend
 			int count = caller->pld.charPtr->inventory.GetItemCount(INV_CONTAINER, itemID);
 			if(count >= itemCount)
 				return 0;
-			caller->SendInfoMessage("You don't have the required items in your backpack inventory.", INFOMSG_ERROR);
+			char buf[512];
+			Util::SafeFormat(buf, sizeof(buf), "You don't have the required items in your backpack inventory. You need %d of %s", itemCount, g_ItemManager.GetPointerByID(itemID)->mDisplayName.c_str());
+			caller->SendInfoMessage(buf, INFOMSG_ERROR);
 			return -1;
 		}
 		break;
@@ -269,8 +271,10 @@ int QuestActionContainer :: ExecuteSingleCommand(SimulatorThread *caller, Extend
 			int itemCount = e.param[1];
 			char buffer[2048];
 			int len = caller->pld.charPtr->inventory.RemoveItemsAndUpdate(INV_CONTAINER, itemID, itemCount, buffer);
-			if(len > 0)
+			if(len > 0) {
+				caller->pld.charPtr->pendingChanges++;
 				caller->AttemptSend(buffer, len);
+			}
 		}
 		break;
 	case ACTION_SEND_TEXT:

@@ -1,9 +1,0 @@
-[ENTRY]
-Description=Buy a new delivery box for your account
-PriceCurrency=CREDITS
-PriceCopper=0
-PriceCredits=250
-ItemID=8111
-Category=RECIPES
-Status=<undefined>
-

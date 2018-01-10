@@ -81,6 +81,11 @@ public:
 	~PartyHandler() {};
 	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
 };
+class PartyIsMemberHandler : public QueryHandler {
+public:
+	~PartyIsMemberHandler() {};
+	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
+};
 class PrivateChannelJoinHandler : public QueryHandler {
 public:
 	~PrivateChannelJoinHandler() {};
@@ -89,6 +94,16 @@ public:
 class PrivateChannelLeaveHandler : public QueryHandler {
 public:
 	~PrivateChannelLeaveHandler() {};
+	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
+};
+class PlayerAchievementsHandler : public QueryHandler {
+public:
+	~PlayerAchievementsHandler() {};
+	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
+};
+class AchievementDefHandler : public QueryHandler {
+public:
+	~AchievementDefHandler() {};
 	int handleQuery(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
 };
 

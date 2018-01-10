@@ -25,11 +25,16 @@
 #include "Components.h"
 #include "Account.h"
 #include "Character.h"
+#include "ActiveCharacter.h"
 #include "Item.h"
 #include "Stats.h"
-#include "Timer.h"
+#include "Scheduler.h"
 #include "http/SiteClient.h"
+#include "Entities.h"
 
+static std::string KEYPREFIX_AUCTION_ITEM = "AuctionItem";
+static std::string ID_NEXT_AUCTION_ITEM_ID = "NextAuctionItemID";
+static std::string LISTPREFIX_AUCTION_ITEMS = "AuctionItems";
 
 namespace AuctionHouseError
 {
@@ -100,8 +105,18 @@ public:
 	void WriteToJSON(Json::Value &value);
 };
 
-class AuctionHouseItem
-{
+class AuctionHouseItemState {
+public:
+	AuctionHouseItemState();
+	~AuctionHouseItemState();
+
+	// Transient
+	ItemDef *itemDef;
+	std::string mSellerName;
+	int timerTaskID;
+};
+
+class AuctionHouseItem: public AbstractEntity {
 public:
 	AuctionHouseItem();
 	~AuctionHouseItem();
@@ -111,8 +126,8 @@ public:
 	std::vector<std::string> mTags;
 	std::vector<AuctionHouseBid> mBids;
 	int mSeller;
-	time_t mStartDate;
-	time_t mEndDate;
+	unsigned long mStartDate;
+	unsigned long mEndDate;
 	unsigned long mReserveCopper;
 	unsigned long mReserveCredits;
 	unsigned long mBuyItNowCopper;
@@ -123,12 +138,11 @@ public:
 	int mCount;
 	bool mCompleted;
 
-	// Transient
-	ItemDef *itemDef;
-	std::string mSellerName;
-	TimerTask *timerTask;
+	bool WriteEntity(AbstractEntityWriter *writer);
+	bool ReadEntity(AbstractEntityReader *reader);
+	bool EntityKeys(AbstractEntityReader *reader);
 
-	unsigned long GetTimeRemaining();
+	unsigned long GetSecondsRemaining();
 	bool IsExpired();
 	bool Bid(int creatureDefID, unsigned long copper, unsigned long credits);
 	void WriteToJSON(Json::Value &value);
@@ -137,39 +151,34 @@ public:
 class AuctionHouseManager
 {
 public:
-	int nextAuctionHouseItemID;
 	Platform_CriticalSection cs;
 	HTTPD::SiteSession *session;
 
 	AuctionHouseManager();
 	~AuctionHouseManager();
-	std::map<int, AuctionHouseItem*> mItems;
-	AuctionHouseItem* LoadItem(int id);
+	AuctionHouseItem Auction(CreatureInstance *creatureInstance, CharacterServerData *pld, InventorySlot &slot, unsigned long copperCommision, unsigned long creditsCommision, int auctioneer, unsigned long reserveCopper, unsigned long reserveCredits, unsigned long buyItNowCopper, unsigned long buyItNowCredits,
+			int days, int hours);
+	AuctionHouseItem LoadItem(int id);
 	int LoadItems(void);
+	void BroadcastUpdate(int auctioneerCID, AuctionHouseItem &item);
+	void BroadcastRemovedItem(int auctioneerCID, int auctionItemID);
+	void BroadcastNewItem(int auctionItemID, const std::string &sellerName);
+	void CancelAllTimers(void);
 	int ValidateItem(AuctionHouseItem *item, AccountData *accPtr, CharacterStatSet *css, CharacterData *cd);
-	AuctionHouseItem* GetItem(int id);
 	bool RemoveItem(int id);
-	std::string GetPath(int id);
-	bool SaveItem(AuctionHouseItem * item);
-	void Search(AuctionHouseSearch &search, std::vector<AuctionHouseItem*> &results);
+	void BroadcastAndSetupTimer(AuctionHouseItem *ahItem, const std::string &sellerName);
+	bool SaveItem(AuctionHouseItem item);
+	void Search(AuctionHouseSearch &search, std::vector<AuctionHouseItem> &results);
 	void ConnectToSite();
+	void CompleteAuction(int auctionItemID);
+private:
+	std::map<int, int> mTimers;
+	void ExpireItem(AuctionHouseItem item);
+	void CancelItemTimer(int auctionItemID);
 };
 
-
-class AuctionTimerTask: public TimerTask {
-public:
-	AuctionTimerTask(AuctionHouseItem *mItem);
-	AuctionHouseItem *mItem;
-	void run();
-};
-
-
-class AuctionRemoveTimerTask: public TimerTask {
-public:
-	AuctionRemoveTimerTask(AuctionHouseItem *mItem);
-	AuctionHouseItem *mItem;
-	void run();
-};
+int WriteAuctionItem(char *buffer,
+		AuctionHouseItem *item, std::string sellerName);
 
 extern AuctionHouseManager g_AuctionHouseManager;
 

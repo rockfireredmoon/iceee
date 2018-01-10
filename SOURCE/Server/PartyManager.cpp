@@ -312,8 +312,16 @@ ActiveParty :: ActiveParty() {
 }
 
 ActiveParty :: ~ActiveParty() {
-	for(it_type iterator = lootTags.begin(); iterator != lootTags.end(); ++iterator)
-		delete iterator->second;
+	for(it_type iterator = lootTags.begin(); iterator != lootTags.end(); ++iterator) {
+		LootTag * t;
+		t = iterator->second;
+		if(t == NULL) {
+			g_Logs.server->warn("PartyDestruct HUH!!!! NULL value in loot tags map for %d", iterator->first);
+		}
+		else {
+			delete iterator->second;
+		}
+	}
 	lootTags.clear();
 }
 
@@ -552,8 +560,6 @@ void PartyManager :: DoQuestInvite(CreatureInstance *caller, const char *questNa
 void PartyManager :: DeletePartyByID(int partyID)
 {
 	// Remove any PVP team for this party too
-	PVP::PVPGame * game = g_PVPManager.GetGameForTeam(partyID);
-
 	for(size_t i = 0; i < mPartyList.size(); i++)
 	{
 		if(mPartyList[i].mPartyID == partyID)
@@ -778,6 +784,7 @@ void ActiveParty :: RemoveCreatureTags(int itemId, int creatureId)
 		t = itr->second;
 		if(t == NULL) {
 			g_Logs.server->warn("NULL value in loot tags map for %d in creature %d, item %d", itr->first, creatureId, itemId);
+			++itr;
 		}
 		else {
 			if ((itemId == -1 || (*itr->second).mItemId == itemId ) && (*itr->second).mCreatureId == creatureId) {

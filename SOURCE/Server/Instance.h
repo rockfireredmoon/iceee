@@ -18,6 +18,7 @@
 #include "CreatureSpawner2.h"
 #include "NPC.h"
 #include "EssenceShop.h"
+#include "Entities.h"
 #include "DropTable.h"
 #include "Trade.h"
 #include "ZoneDef.h"
@@ -27,6 +28,9 @@
 #include "PVP.h"
 #include "util/SquirrelObjects.h"
 using namespace std;
+
+static string KEYPREFIX_WORLD_MARKER = "WorldMarker";
+static std::string LISTPREFIX_WORLD_MARKERS = "WorldMarkers";
 
 class SimulatorThread;
 class InstanceScaleProfile;
@@ -55,13 +59,18 @@ typedef std::pair<int, SceneryEffectList> SceneryEffectPair;
 typedef std::map<int, SceneryEffectList> SceneryEffectMap;
 
 
-class WorldMarker {
+class WorldMarker: public AbstractEntity {
 public:
-	char Name[128];
-	char Comment[1024];
+	std::string Name;
+	std::string Comment;
 	float X, Y, Z;
 	WorldMarker();
+	~WorldMarker();
 	void Clear(void);
+
+	bool WriteEntity(AbstractEntityWriter *writer);
+	bool ReadEntity(AbstractEntityReader *reader);
+	bool EntityKeys(AbstractEntityReader *reader);
 };
 
 
@@ -71,14 +80,16 @@ class WorldMarkerContainer
 public:
 	WorldMarkerContainer();
 	~WorldMarkerContainer();
+
 	std::string mFilename;
+	std::vector<WorldMarker> WorldMarkerList;
+	int mZoneID;
 
 	void Clear(void);
-
-	std::vector<WorldMarker> WorldMarkerList;
 	void Save();
 	void Reload();
 	void LoadFromFile(std::string filename);
+	void LoadFromCluster(int zoneID);
 
 };
 

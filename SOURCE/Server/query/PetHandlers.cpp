@@ -81,6 +81,7 @@ int PetPurchaseHandler::handleQuery(SimulatorThread *sim, CharacterServerData *p
 	InventorySlot *sendSlot = im.AddItem_Ex(INV_CONTAINER, petDef->mItemDefID,
 			1);
 	if (sendSlot != NULL) {
+		pld->charPtr->pendingChanges++;
 		sim->ActivateActionAbilities(sendSlot);
 		wpos += AddItemUpdate(&sim->SendBuf[wpos], sim->Aux1, sendSlot);
 	}

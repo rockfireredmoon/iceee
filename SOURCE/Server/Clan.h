@@ -23,6 +23,11 @@
 #include <vector>
 #include "json/json.h"
 #include "Components.h"
+#include "Entities.h"
+
+static std::string KEYPREFIX_CLAN = "Clan";
+static std::string ID_NEXT_CLAN_ID = "NextClanID";
+static std::string KEYPREFIX_CLAN_NAME_TO_ID = "ClanNameToID";
 
 namespace Clans {
 
@@ -44,7 +49,7 @@ public:
 	void WriteToJSON(Json::Value &value);
 };
 
-class Clan {
+class Clan: public AbstractEntity {
 public:
 	Clan();
 	~Clan();
@@ -55,6 +60,10 @@ public:
 	std::vector<ClanMember> mMembers;
 	std::vector<int> mPendingMembers;
 	unsigned long mCreated;
+
+	bool WriteEntity(AbstractEntityWriter *writer);
+	bool ReadEntity(AbstractEntityReader *reader);
+	bool EntityKeys(AbstractEntityReader *reader);
 
 	ClanMember GetMember(int id);
 	bool RemoveMember(ClanMember &member);
@@ -67,20 +76,18 @@ public:
 
 class ClanManager {
 public:
-	int nextClanID;
 	Platform_CriticalSection cs;
 
 	ClanManager();
 	~ClanManager();
-	std::map<int, Clan> mClans;
 
-	std::string GetPath(int id);
 	bool HasClan(int id);
 	void CreateClan(Clan &clan);
-	int FindClanID(std::string clanName);
+	Clan GetClan(int id);
+	std::vector<Clan> GetClans();
+	int FindClanID(const std::string &clanName);
 	bool SaveClan(Clan &clan);
 	bool RemoveClan(Clan &clan);
-	int LoadClans(void);
 	bool LoadClan(int id, Clan &clan);
 
 };

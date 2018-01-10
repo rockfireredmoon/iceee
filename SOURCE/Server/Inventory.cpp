@@ -186,7 +186,7 @@ InventoryManager :: ~InventoryManager()
 
 int InventoryManager :: AddItem(int containerID, InventorySlot &item)
 {
-	if(containerID >= 0 && containerID <= MAXCONTAINER)
+	if(containerID >= 0 && containerID < MAXCONTAINER)
 	{
 		//Hack to fix item counts for those that need them.
 		/*
@@ -256,6 +256,7 @@ InventorySlot * InventoryManager :: AddItem_Ex(int containerID, int itemID, int 
 		count += GetItemCount(DELIVERY_CONTAINER, itemDef->mID);
 		count += GetItemCount(AUCTION_CONTAINER, itemDef->mID);
 		count += GetItemCount(STAMPS_CONTAINER, itemDef->mID);
+		count += GetItemCount(BOOKSHELF_CONTAINER, itemDef->mID);
 		if(count >= itemDef->mOwnershipRestriction) {
 			// Already have the limit of this item
 			SetError(ERROR_LIMIT);
@@ -327,7 +328,7 @@ void InventoryManager :: FindNextExpunge()
 	NextExpunge = 0;
 	for(int i = 0 ; i < MAXCONTAINER; i++) {
 		int size = containerList[i].size();
-		for(std::vector<InventorySlot>::iterator it = containerList[i].begin(); it != containerList[i].end(); it++) {
+		for(std::vector<InventorySlot>::iterator it = containerList[i].begin(); it != containerList[i].end(); ++it) {
 			if((*it).secondsRemaining > -1) {
 				long remain = (*it).GetTimeRemaining();
 				if(NextExpunge == 0 || g_ServerTime + remain <= NextExpunge) {
@@ -346,7 +347,7 @@ int InventoryManager :: ScanExpiredItems(std::vector<InventoryQuery> &resultList
 	InventoryQuery iq;
 	for(int i = 0 ; i < MAXCONTAINER; i++) {
 		int size = containerList[i].size();
-		for(std::vector<InventorySlot>::iterator it = containerList[i].begin(); it != containerList[i].end(); it++) {
+		for(std::vector<InventorySlot>::iterator it = containerList[i].begin(); it != containerList[i].end(); ++it) {
 			if((*it).secondsRemaining > -1) {
 				long remain = (*it).GetTimeRemaining();
 				if(remain < 1) {
@@ -558,19 +559,24 @@ int InventoryManager :: GetFreeSlot(int containerID)
 InventorySlot * InventoryManager :: GetBestSpecialItem(int invID, char specialItemType)
 {
 	std::vector<InventorySlot> inv = containerList[invID];
-	InventorySlot *itemDef = NULL;
+	unsigned int ccsid = 0;
+	int max = 99999;
 	for(std::vector<InventorySlot>::iterator it = inv.begin(); it != inv.end() ; ++it) {
 		InventorySlot sl = *it;
 		if(!sl.IsExpired()) {
-			ItemDef *iDef = sl.dataPtr;
+			ItemDef *iDef = sl.ResolveItemPtr();
 			if(iDef != NULL && iDef->mSpecialItemType == specialItemType) {
-				if(itemDef == NULL || (itemDef != NULL && iDef->mIvMax1 > itemDef->dataPtr->mIvMax1)) {
-					itemDef = &sl;
+				int stack = iDef->GetDynamicMax(ItemIntegerType::STACKING);
+				if(stack < max) {
+					max = stack;
+					ccsid = sl.CCSID;
 				}
 			}
 		}
 	}
-	return itemDef;
+	if(ccsid == 0)
+		return NULL;
+	return GetItemPtrByCCSID(ccsid);
 }
 
 int InventoryManager :: CountUsedSlots(int containerID)
@@ -691,9 +697,10 @@ InventorySlot * InventoryManager :: GetFirstItem(int containerID, int itemID)
 	// Quick way to get the pointer of the first item.  Added this function
 	// for crafting, as a way to retrieve single items from the inventory
 	// (disregarding stack size) for deletion.
-	for(size_t a = 0; a < containerList[containerID].size(); a++)
-		if(containerList[containerID][a].IID == itemID)
-			return &containerList[containerID][a];
+	if(containerID < MAXCONTAINER)
+		for(size_t a = 0; a < containerList[containerID].size(); a++)
+			if(containerList[containerID][a].IID == itemID)
+				return &containerList[containerID][a];
 	return NULL;
 }
 
@@ -1245,26 +1252,19 @@ int PrepExt_TradeItemOffer(char *buffer, char *convBuf, int offeringPlayerID, st
 }
 
 
-int CheckSection_Inventory(FileReader &fr, InventoryManager &cd, std::string debugFilename, const char *debugName, const char *debugType)
+int ReadInventory(const std::string &container, const std::string &spec, InventoryManager &cd, const std::string &debugFilename, const std::string &debugName, const std::string &debugType)
 {
-	//Expected format:
-	//  ContainerName=SlotID=ItemID
+	STRINGLIST l;
+	Util::Split(spec, ",", l);
 
-	//Restore this entry so it can be re-broken with multibreak instead
-	if(fr.BlockPos[1] > 0)
-		fr.DataBuffer[fr.BlockPos[1] - 1] = '=';
-	int r = fr.MultiBreak("=,");
-
-	int ContID = GetContainerIDFromName(fr.BlockToStringC(0, 0));
+	int ContID = GetContainerIDFromName(container.c_str());
 	if(ContID == -1)
-	{
 		return -2;
-	}
-	int slot = fr.BlockToInt(1);
-	int ID = fr.BlockToInt(2);
+	int slot = atoi(l[0].c_str());
+	int ID = atoi(l[1].c_str());
 	if(cd.GetItemBySlot(ContID, slot) >= 0)
 	{
-		g_Logs.server->warn("%v [%v] inventory [%v] slot already filled [%v]", debugType, debugName, fr.BlockToStringC(0, 0), slot);
+		g_Logs.server->warn("%v [%v] inventory [%v] slot already filled [%v]", debugType, debugName, ContID, slot);
 		return -1;
 	}
 
@@ -1273,7 +1273,7 @@ int CheckSection_Inventory(FileReader &fr, InventoryManager &cd, std::string deb
 	ItemDef *itemDef = g_ItemManager.GetPointerByID(ID);
 	if(itemDef == NULL)
 	{
-		g_Logs.event->warn("[INVENTORY] %v [%v] Item ID [%v] not found for container [%v]", debugType, debugName, ID, fr.BlockToStringC(0, 0));
+		g_Logs.event->warn("[INVENTORY] %v [%v] Item ID [%v] not found for container [%v]", debugType, debugName, ID, ContID);
 		return -1;
 	}
 	//tt.Finish();
@@ -1282,14 +1282,14 @@ int CheckSection_Inventory(FileReader &fr, InventoryManager &cd, std::string deb
 	int customLook = 0;
 	long secondsRemaining = -1;
 	char bindStatus = 0;
-	if(r >= 4)
-		count = fr.BlockToInt(3);
-	if(r >= 5)
-		customLook = fr.BlockToIntC(4);
-	if(r >= 6)
-		bindStatus = (char)fr.BlockToIntC(5);
-	if(r >= 7)
-		secondsRemaining = fr.BlockToLongC(6);
+	if(l.size() >= 3)
+		count = atoi(l[2].c_str());
+	if(l.size() >= 4)
+		customLook = atoi(l[3].c_str());
+	if(l.size() >= 5)
+		bindStatus = atoi(l[4].c_str());
+	if(l.size() >= 6)
+		secondsRemaining = atoi(l[5].c_str());
 
 	InventorySlot newItem;
 	newItem.CCSID = (ContID << 16) | slot;
@@ -1302,7 +1302,7 @@ int CheckSection_Inventory(FileReader &fr, InventoryManager &cd, std::string deb
 	newItem.timeLoaded = g_ServerTime;
 	if(cd.AddItem(ContID, newItem) == -1)
 	{
-		g_Logs.server->warn("%v [%v] failed to add item (container:%v, slot:%v, itemID:%v)", debugType, debugName, fr.BlockToStringC(0, 0), slot, ID);
+		g_Logs.server->warn("%v [%v] failed to add item (container:%v, slot:%v, itemID:%v)", debugType, debugName, ContID, slot, ID);
 		return -1;
 	}
 	return 0;

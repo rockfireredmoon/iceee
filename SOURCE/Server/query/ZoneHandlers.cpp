@@ -17,12 +17,14 @@
 
 #include "ZoneHandlers.h"
 #include "../Creature.h"
+#include "../Cluster.h"
 #include "../Instance.h"
 #include "../InstanceScale.h"
 #include "../Interact.h"
 #include "../Debug.h"
 #include "../Config.h"
 #include "../ZoneObject.h"
+#include "../StringUtil.h"
 #include "../util/Log.h"
 
 //
@@ -129,8 +131,44 @@ int ShardListHandler::handleQuery(SimulatorThread *sim,
 	/*  Query: shard.list
 	 Requests a list of shards for use in the minimap dropdown list.
 	 */
-	return PrepExt_QueryResponseString(sim->SendBuf, query->ID,
-			pld->zoneDef->mName.c_str());
+	return PrepExt_QueryResponseStringRows(sim->SendBuf, query->ID,
+			g_ClusterManager.GetAvailableShardNames());
+}
+
+//
+//WorldListHandler
+//
+
+int WorldListHandler::handleQuery(SimulatorThread *sim,
+		CharacterServerData *pld, SimulatorQuery *query,
+		CreatureInstance *creatureInstance) {
+	/*  Query: world.list
+	 Requests a list of shards for use in the shard selection screen.
+	 */
+
+	int wpos = 0;
+	wpos += PutByte(&sim->SendBuf[wpos], 1);              //_handleQueryResultMsg
+	wpos += PutShort(&sim->SendBuf[wpos], 0);           //Placeholder for message size
+	wpos += PutInteger(&sim->SendBuf[wpos], query->ID);  //Query response index
+
+	STRINGLIST shards = g_ClusterManager.GetAvailableShardNames();
+	wpos += PutShort(&sim->SendBuf[wpos], shards.size());             //Row count
+	for (int a = 0; a < shards.size(); a++) {
+		wpos += PutByte(&sim->SendBuf[wpos], 6); //String count
+		Shard s = g_ClusterManager.GetActiveShard(shards[a]);
+		wpos += PutStringUTF(&sim->SendBuf[wpos], s.mName.c_str());
+		if(pld->charPtr->Shard.compare(s.mName))
+			wpos += PutStringUTF(&sim->SendBuf[wpos], StringUtil::Format("!%s", s.mFullName.c_str()).c_str());
+		else
+			wpos += PutStringUTF(&sim->SendBuf[wpos], s.mFullName.c_str());
+		wpos += PutStringUTF(&sim->SendBuf[wpos], StringUtil::Format("%d", s.mPlayers).c_str());
+		time_t t = s.GetLocalTime() / 1000;
+		wpos += PutStringUTF(&sim->SendBuf[wpos], Util::FormatDateTime(&t).c_str());
+		wpos += PutStringUTF(&sim->SendBuf[wpos], StringUtil::Format("%d", s.mPing).c_str());
+		wpos += PutStringUTF(&sim->SendBuf[wpos], s.IsMaster() ? "Master" : "Slave");
+	}
+	PutShort(&sim->SendBuf[1], wpos - 3);
+	return wpos;
 }
 
 //
@@ -143,15 +181,18 @@ int ShardSetHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 	//Un-modified client only sets 1 row.  Modified client contains an additional field.
 	//[0] Shard Same
 	//[1] Character Name  [modded client]
-	const char *shardName = NULL;
-	const char *charName = NULL;
+	std::string shardName = "";
+	std::string charName = "";
 	if (query->argCount >= 1)
-		shardName = query->args[0].c_str();
+		shardName = query->args[0];
 	if (query->argCount >= 2)
-		charName = query->args[0].c_str();
+		charName = query->args[1];
 
-	sim->ShardSet(shardName, charName);
-	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
+	std::string res = sim->ShardSet(shardName, charName);
+	if(res.length() == 0)
+		return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
+	else
+		return PrepExt_QueryResponseError(sim->SendBuf, query->ID, res.c_str());
 }
 
 //
@@ -325,7 +366,7 @@ int MapMarkerHandler::handleQuery(SimulatorThread *sim,
 		else if(query->args[i].compare("Henge") == 0) {
 			/* All henges in zone */
 			if(pld->zoneDef != NULL && !pld->zoneDef->IsOverworld()) {
-				for(std::vector<InteractObject>::iterator it = g_InteractObjectContainer.objList.begin(); it != g_InteractObjectContainer.objList.end(); it++) {
+				for(std::vector<InteractObject>::iterator it = g_InteractObjectContainer.objList.begin(); it != g_InteractObjectContainer.objList.end(); ++it) {
 					if((*it).opType == InteractObject::TYPE_HENGE && (*it).WarpID == pld->CurrentZoneID) {
 						qRes.push_back(STRINGLIST());
 						qRes.back().push_back((*it).useMessage);
@@ -340,7 +381,7 @@ int MapMarkerHandler::handleQuery(SimulatorThread *sim,
 			/* All sanctuaries within 1000 */
 			ZoneMarkerData *zmd = g_ZoneMarkerDataManager.GetPtrByZoneID(pld->CurrentZoneID);
 			if(zmd != NULL && pld->zoneDef != NULL && !pld->zoneDef->IsOverworld()) {
-				for(std::vector<WorldCoord>::iterator it = zmd->sanctuary.begin(); it != zmd->sanctuary.end(); it++) {
+				for(std::vector<WorldCoord>::iterator it = zmd->sanctuary.begin(); it != zmd->sanctuary.end(); ++it) {
 					int xlen = abs((int)(*it).x - creatureInstance->CurrentX);
 					int zlen = abs((int)(*it).z - creatureInstance->CurrentZ);
 					double dist = sqrt((double)((xlen * xlen) + (zlen * zlen)));
@@ -490,7 +531,7 @@ int SetATSHandler::handleQuery(SimulatorThread *sim,
 				newAsset.append("?ATS=");
 				newAsset.append(atsName);
 			}
-			replaceProp.SetAsset(newAsset.c_str());
+			replaceProp.Asset = newAsset;
 			g_Logs.simulator->info("[%v] Setting prop: %v to asset: %v",
 					sim->InternalID, propID, newAsset.c_str());
 

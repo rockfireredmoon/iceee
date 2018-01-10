@@ -4,6 +4,7 @@
 //Manages buffs and cooldowns.
 #include <vector>
 #include <stdio.h>
+#include "Entities.h"
 
 struct ActiveBuff
 {
@@ -24,7 +25,7 @@ struct ActiveBuffManager
 	int HasBuff(unsigned char tier, unsigned char buffType);
 	int HasBuffNot(unsigned char tier, unsigned char buffType, int abilityGroup);
 	ActiveBuff * UpdateBuff(unsigned char tier, unsigned char buffType, short abID, short abgID, double duration, bool initialising);
-	void SaveToStream(FILE *output);
+	void WriteEntity(AbstractEntityWriter *writer);
 	ActiveBuff * GetPersistentBuff(unsigned char tier, short abID);
 	ActiveBuff * AddPersistentBuff(unsigned char tier, unsigned char buffType, short abID, short abgID, double duration);
 	ActiveBuff * AddBuff(unsigned char tier, unsigned char buffType, short abID, short abgID, double duration, bool initialising);
@@ -41,19 +42,19 @@ struct ActiveCooldown
 	int durationMS;
 	unsigned long castStartTimeMS;
 	unsigned long castEndTimeMS;
-	int GetRemainTimeMS(void);
-	int GetElapsedTimeMS(void);
+	unsigned long GetRemainTimeMS(void);
+	unsigned long GetElapsedTimeMS(void);
 };
 
 struct ActiveCooldownManager
 {
 	std::vector<ActiveCooldown> cooldownList;
 	int HasCooldown(int category);
-	void AddCooldown(int category, int durationMS, int timeElapsedMS);
+	void AddCooldown(int category, unsigned long durationMS, unsigned long timeElapsedMS);
 	void Clear(void);
 	void CopyFrom(const ActiveCooldownManager &source);
-	void SaveToStream(FILE *output);
-	void LoadEntry(const char *name, int remainTimeMS, int timeElapsedMS);
+	void WriteEntity(AbstractEntityWriter *writer);
+	void LoadEntry(const char *name, unsigned long remainTimeMS, unsigned long timeElapsedMS);
 };
 
 #endif //#ifndef ABILITYTIME_H

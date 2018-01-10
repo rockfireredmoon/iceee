@@ -17,7 +17,7 @@
 
 #include "CommandHandlers.h"
 #include "../util/Log.h"
-#include "Instance.h"
+#include "../Instance.h"
 #include "../ChatChannel.h"
 #include "../Crafting.h"
 #include "../Instance.h"
@@ -27,12 +27,16 @@
 #include "../InstanceScale.h"
 #include "../ConfigString.h"
 #include "../Scenery2.h"
+#include "../Cluster.h"
 #include "../IGForum.h"
 #include "../Ability2.h"
+#include "../StringUtil.h"
 #include "../Fun.h"
 #include "../InstanceScript.h"
 #include "../AIScript.h"
 #include "../AIScript2.h"
+#include "../Cluster.h"
+#include "../Scheduler.h"
 
 //
 //AbstractCommandHandler
@@ -254,8 +258,11 @@ int HealthHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
 	Util::ClipInt(amount, 1, max);
 	amount = amount & 0xFFFF;
 	creatureInstance->css.health = amount;
-	sim->AddMessage(pld->CreatureID, amount, BCM_SendHealth);
-
+	g_Scheduler.Submit([this, pld, amount, creatureInstance](){
+		char buf[32];
+		creatureInstance->actInst->LSendToLocalSimulator(buf, PrepExt_SendHealth(buf, pld->CreatureID,
+				amount), creatureInstance->CurrentX, creatureInstance->CurrentZ);
+	});
 	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
 }
 //
@@ -391,29 +398,37 @@ int WhoHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
 	int WritePos = 0;
 
 	bool debug = sim->CheckPermissionSimple(Perm_Account, Permission_Debug);
-	SIMULATOR_IT it;
-	for (it = Simulator.begin(); it != Simulator.end(); ++it) {
-		if (it->isConnected == true && it->ProtocolState == 1
-				&& it->LoadStage == sim->LOADSTAGE_GAMEPLAY) {
-			if (it->IsGMInvisible() == true) //Hide GM Invisibility from the list.
-				continue;
-			CharacterData *cd = it->pld.charPtr;
-			ZoneDefInfo *zd = g_ZoneDefManager.GetPointerByID(
-					it->pld.CurrentZoneID);
+	SYNCHRONIZED(g_ClusterManager.mMutex) {
+		for (std::map<int, ShardPlayer>::iterator it =
+				g_ClusterManager.mActivePlayers.begin();
+				it != g_ClusterManager.mActivePlayers.end(); ++it) {
+			ShardPlayer sp = it->second;
+			CharacterData *cd = sp.mCharacterData;
+			ZoneDefInfo *zd = g_ZoneDefManager.GetPointerByID(sp.mZoneID);
 			if (cd != NULL && zd != NULL) {
-				if (debug == true)
-					Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1),
-							"%s (%d, %d) %s (%s)", cd->cdef.css.display_name,
-							it->creatureInst->CurrentX,
-							it->creatureInst->CurrentZ, zd->mName.c_str(),
-							zd->mShardName.c_str());
-				else
+				if (debug == true
+						&& sp.mShard.compare(g_ClusterManager.mShardName)) {
+					SimulatorThread *psim = g_SimulatorManager.GetPtrByID(
+							sp.mSimID);
+					if (psim == NULL)
+						g_Logs.server->warn(
+								"Unknown simulator ID found in player list. %v for %v",
+								sp.mSimID, sp.mID);
+					else
+						Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1),
+								"%s (%s.%d) %s (%s) [%d, %d]",
+								cd->cdef.css.display_name,
+								Professions::GetAbbreviation(
+										cd->cdef.css.profession),
+								cd->cdef.css.level, zd->mName.c_str(),
+								cd->Shard.c_str(), psim->creatureInst->CurrentX,
+								psim->creatureInst->CurrentZ);
+				} else
 					Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1),
 							"%s (%s.%d) %s (%s)", cd->cdef.css.display_name,
-							Professions::GetAbbreviation(
-									cd->cdef.css.profession),
+							Professions::GetAbbreviation(cd->cdef.css.profession),
 							cd->cdef.css.level, zd->mName.c_str(),
-							zd->mShardName.c_str());
+							cd->Shard.c_str());
 
 				WritePos += PrepExt_SendInfoMessage(&sim->SendBuf[WritePos],
 						sim->Aux1, INFOMSG_INFO);
@@ -421,6 +436,37 @@ int WhoHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
 			}
 		}
 	}
+
+//	SIMULATOR_IT it;
+//	for (it = Simulator.begin(); it != Simulator.end(); ++it) {
+//		if (it->isConnected == true && it->ProtocolState == 1
+//				&& it->LoadStage == sim->LOADSTAGE_GAMEPLAY) {
+//			if (it->IsGMInvisible() == true) //Hide GM Invisibility from the list.
+//				continue;
+//			CharacterData *cd = it->pld.charPtr;
+//			ZoneDefInfo *zd = g_ZoneDefManager.GetPointerByID(
+//					it->pld.CurrentZoneID);
+//			if (cd != NULL && zd != NULL) {
+//				if (debug == true)
+//					Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1),
+//							"%s (%d, %d) %s (%s)", cd->cdef.css.display_name,
+//							it->creatureInst->CurrentX,
+//							it->creatureInst->CurrentZ, zd->mName.c_str(),
+//							cd->Shard.c_str());
+//				else
+//					Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1),
+//							"%s (%s.%d) %s (%s)", cd->cdef.css.display_name,
+//							Professions::GetAbbreviation(
+//									cd->cdef.css.profession),
+//							cd->cdef.css.level, zd->mName.c_str(),
+//							cd->Shard.c_str());
+//
+//				WritePos += PrepExt_SendInfoMessage(&sim->SendBuf[WritePos],
+//						sim->Aux1, INFOMSG_INFO);
+//				sim->CheckWriteFlush(WritePos);
+//			}
+//		}
+//	}
 	WritePos += PrepExt_QueryResponseString(&sim->SendBuf[WritePos], query->ID,
 			"OK");
 	return WritePos;
@@ -445,7 +491,7 @@ int GMWhoHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
 				&& it->LoadStage == sim->LOADSTAGE_GAMEPLAY) {
 			CharacterData *cd = it->pld.charPtr;
 			Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1), "%s (%s, AID:%d)",
-					cd->cdef.css.display_name, it->pld.accPtr->Name,
+					cd->cdef.css.display_name, it->pld.accPtr->Name.c_str(),
 					it->pld.accPtr->ID);
 			wpos += PrepExt_SendInfoMessage(&sim->SendBuf[wpos], sim->Aux1,
 					INFOMSG_INFO);
@@ -500,6 +546,40 @@ int CHWhoHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
 }
 
 //
+//ShardsHandler
+//
+ListShardsHandler::ListShardsHandler() :
+		AbstractCommandHandler("Usage: /listshards", 0) {
+}
+
+int ListShardsHandler::handleCommand(SimulatorThread *sim,
+		CharacterServerData *pld, SimulatorQuery *query,
+		CreatureInstance *creatureInstance) {
+	/*  Query: who
+	 Notify the client of a list of players currently logged in.
+	 Args : none
+	 */
+	int WritePos = 0;
+	STRINGLIST s = g_ClusterManager.GetAvailableShardNames();
+	for (STRINGLIST::iterator it = s.begin(); it != s.end(); ++it) {
+		Shard s = g_ClusterManager.GetActiveShard(*it);
+		time_t t = s.GetServerTime() / 1000;
+		time_t t2 = s.mStartTime / 1000;
+		WritePos += PrepExt_SendInfoMessage(&sim->SendBuf[WritePos],
+				StringUtil::Format("%s%-15s %-15s %3d [%s] %5dms - Now: [%s] Start: [%s]",
+						s.IsMaster() ? "*" : "", s.mName.c_str(),
+						s.mSimulatorAddress.c_str(), s.mPlayers,
+						s.mFullName.c_str(), s.mPing,
+						Util::FormatDateTime(&t).c_str(),
+						Util::FormatDateTime(&t2).c_str()).c_str(),
+				INFOMSG_ERROR);
+	}
+	WritePos += PrepExt_QueryResponseString(&sim->SendBuf[WritePos], query->ID,
+			"OK");
+	return WritePos;
+}
+
+//
 //GiveHandler
 //
 GiveHandler::GiveHandler() :
@@ -543,6 +623,7 @@ int GiveHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
 	if (sendSlot != NULL) {
 		sim->ActivateActionAbilities(sendSlot);
 		wpos += AddItemUpdate(&sim->SendBuf[wpos], sim->Aux1, sendSlot);
+		pld->charPtr->pendingChanges++;
 	}
 
 	wpos += PrepExt_QueryResponseString(&sim->SendBuf[wpos], query->ID, "OK");
@@ -597,6 +678,7 @@ int GiveIDHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
 	if (sendSlot != NULL) {
 		sim->ActivateActionAbilities(sendSlot);
 		wpos += AddItemUpdate(&sim->SendBuf[wpos], sim->Aux1, sendSlot);
+		pld->charPtr->pendingChanges++;
 	}
 
 	wpos += PrepExt_QueryResponseString(&sim->SendBuf[wpos], query->ID, "OK");
@@ -641,6 +723,7 @@ int GiveAllHandler::handleCommand(SimulatorThread *sim,
 			newItem.ApplyFromItemDef(resultList[i]);
 			newItem.CCSID = (INV_CONTAINER << 16) | slot;
 			pld->charPtr->inventory.AddItem(INV_CONTAINER, newItem);
+			pld->charPtr->pendingChanges++;
 			sim->ActivateActionAbilities(&newItem);
 			wpos += AddItemUpdate(&sim->SendBuf[wpos], sim->Aux3, &newItem);
 		} else {
@@ -703,6 +786,7 @@ int GiveAppHandler::handleCommand(SimulatorThread *sim,
 				newItem.ApplyFromItemDef(resultList[i]);
 				newItem.CCSID = (INV_CONTAINER << 16) | slot;
 				pld->charPtr->inventory.AddItem(INV_CONTAINER, newItem);
+				pld->charPtr->pendingChanges++;
 				wpos += AddItemUpdate(&sim->SendBuf[wpos], sim->Aux3, &newItem);
 				given++;
 			} else {
@@ -754,6 +838,7 @@ int DeleteAllHandler::handleCommand(SimulatorThread *sim,
 		sim->AttemptSend(sim->SendBuf, WritePos);
 
 	pld->charPtr->inventory.containerList[INV_CONTAINER].clear();
+	pld->charPtr->pendingChanges++;
 
 	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
 }
@@ -793,6 +878,7 @@ int DeleteAboveHandler::handleCommand(SimulatorThread *sim,
 						RemoveItemUpdate(&sim->SendBuf[WritePos], sim->Aux3,
 								&pld->charPtr->inventory.containerList[INV_CONTAINER][a]);
 				pld->charPtr->inventory.RemItem(CCSID);
+				pld->charPtr->pendingChanges++;
 				rcount++;
 				sim->CheckWriteFlush(WritePos);
 				bFound = true;
@@ -1183,8 +1269,8 @@ int SetStatHandler::handleCommand(SimulatorThread *sim,
 	if (targ == NULL)
 		targ = creatureInstance;
 
-	const char *statName = query->args[0].c_str();
-	const char *statValue = query->args[1].c_str();
+	std::string statName = query->args[0];
+	std:string statValue = query->args[1];
 	WriteStatToSetByName(statName, statValue, &targ->css);
 	if (targ == creatureInstance)
 		WriteStatToSetByName(statName, statValue, &pld->charPtr->cdef.css);
@@ -1417,7 +1503,7 @@ int BanHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
 		if (it->pld.charPtr == banChar) {
 			Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1),
 					"%s [%s] has been suspended.", charName,
-					it->pld.accPtr->Name);
+					it->pld.accPtr->Name.c_str());
 			it->pld.accPtr->SetBan(duration);
 			it->Disconnect("SimulatorThread::handle_command_ban");
 			bFound = true;
@@ -1540,7 +1626,7 @@ int SetBuildPermissionHandler::handleCommand(SimulatorThread *sim,
 				accPtr->BuildPermissionList.erase(it);
 				Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1),
 						"Removed permission for %s in zone %d (%d,%d,%d,%d)",
-						accPtr->Name, zoneID, pa.x1, pa.y1, pa.x2, pa.y2);
+						accPtr->Name.c_str(), zoneID, pa.x1, pa.y1, pa.x2, pa.y2);
 				sim->SendInfoMessage(sim->Aux1, INFOMSG_INFO);
 				found = true;
 				break;
@@ -1548,7 +1634,7 @@ int SetBuildPermissionHandler::handleCommand(SimulatorThread *sim,
 		}
 		if (!found) {
 			Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1),
-					"Could not find permission for %s in zone %d", accPtr->Name,
+					"Could not find permission for %s in zone %d", accPtr->Name.c_str(),
 					zoneID);
 			sim->SendInfoMessage(sim->Aux1, INFOMSG_ERROR);
 		}
@@ -1567,7 +1653,7 @@ int SetBuildPermissionHandler::handleCommand(SimulatorThread *sim,
 				found = true;
 				Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1),
 						"Updated permission for %s in zone %d (%d,%d,%d,%d)",
-						accPtr->Name, pa.ZoneID, pa.x1, pa.y1, pa.x2, pa.y2);
+						accPtr->Name.c_str(), pa.ZoneID, pa.x1, pa.y1, pa.x2, pa.y2);
 				sim->SendInfoMessage(sim->Aux1, INFOMSG_INFO);
 				break;
 			}
@@ -1582,7 +1668,7 @@ int SetBuildPermissionHandler::handleCommand(SimulatorThread *sim,
 			accPtr->BuildPermissionList.push_back(pa);
 			Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1),
 					"Added permission for %s in zone %d (%d,%d,%d,%d)",
-					accPtr->Name, pa.ZoneID, pa.x1, pa.y1, pa.y1, pa.y2);
+					accPtr->Name.c_str(), pa.ZoneID, pa.x1, pa.y1, pa.y1, pa.y2);
 			sim->SendInfoMessage(sim->Aux1, INFOMSG_INFO);
 		}
 	}
@@ -1737,6 +1823,7 @@ int DeriveSetHandler::handleCommand(SimulatorThread *sim,
 
 						newItem.dataPtr = NULL;
 						pld->charPtr->inventory.AddItem(INV_CONTAINER, newItem);
+						pld->charPtr->pendingChanges++;
 						wpos += AddItemUpdate(&sim->SendBuf[wpos], sim->Aux1,
 								&newItem);
 					}
@@ -1760,7 +1847,7 @@ int IGStatusHandler::handleCommand(SimulatorThread *sim,
 		CharacterServerData *pld, SimulatorQuery *query,
 		CreatureInstance *creatureInstance) {
 
-	int EffectID = GetStatusIDByName(query->args[0].c_str());
+	int EffectID = GetStatusIDByName(query->args[0]);
 	if (EffectID == -1)
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 				"Invalid effect.");
@@ -1815,7 +1902,8 @@ int PartyInviteHandler::handleCommand(SimulatorThread *sim,
 	query->args.push_back("invite");
 	query->args.push_back(charName);
 	query->argCount = query->args.size();
-	g_QueryManager.getQueryHandler("party")->handleQuery(sim, pld, query, creatureInstance);
+	g_QueryManager.getQueryHandler("party")->handleQuery(sim, pld, query,
+			creatureInstance);
 	return 0;
 }
 
@@ -1873,6 +1961,81 @@ int RollHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
 	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
 }
 //
+//ShutdownHandler
+//
+ShutdownHandler::ShutdownHandler() :
+		AbstractCommandHandler("Usage: /shutdown <minutes> [<reason>]", 1) {
+	mAllowedPermissions.push_back(Permission_Admin);
+	mShutdownTask = 0;
+}
+
+void ShutdownHandler::ScheduleShutdown(int minutes, const std::string &reason) {
+	std::string time = Util::FormatTimeOfDayMS(g_ServerTime + ( 60000 * minutes ));
+	std::string color = "#3";
+	int wait = minutes;
+	if(minutes <= 1)
+		color = "#0";
+	else if(minutes <= 5)
+		color = "#1";
+	g_SimulatorManager.BroadcastChat(0, "System", "*SysChat",
+			StringUtil::Format("%sThe server will be restarted in %d minute%s (%s).# %s Please logout at your earliest convenience!", color.c_str(), minutes, minutes < 2 ? "" : "s", time.c_str(), reason.c_str()).c_str());
+	if(minutes > 9) {
+		wait -= 10;
+	}
+	else if(minutes > 5) {
+		wait -= 5;
+	}
+	else if(minutes > 3) {
+		wait -= 3;
+	}
+	else if(minutes > 2) {
+		wait -= 2;
+	}
+	else if(minutes > 1) {
+		wait -= 1;
+	}
+	else {
+		mShutdownTask = g_Scheduler.Schedule([this,wait](){
+			// Do shutdown!
+			g_SimulatorManager.BroadcastChat(0, "System", "*SysChat", "The server is now shutting down.");
+			g_Scheduler.Schedule([this](){
+				g_ServerStatus = SERVER_STATUS_STOPPED;
+			}, g_ServerTime + 5000);
+
+		}, g_ServerTime + (wait * 60000));
+		return;
+	}
+
+	mShutdownTask = g_Scheduler.Schedule([this,wait,minutes,reason](){
+		ScheduleShutdown(minutes - wait, reason);
+	}, g_ServerTime + ( wait * 60000));
+	return;
+}
+
+int ShutdownHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
+		SimulatorQuery *query, CreatureInstance *creatureInstance) {
+	int minutes = atoi(query->args[0].c_str());
+	std::string reason = query->args.size() > 1 ?  StringUtil::Format("The reason given was '%s'.", query->args[1].c_str()) : "No reason given.";
+	if(mShutdownTask == 0) {
+		if(query->args.size() < 3 || query->args[2] != "--nomaintenance")
+			g_Config.MaintenanceMessage = reason;
+		ScheduleShutdown(minutes, reason);
+		return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
+	}
+	else {
+		if(query->args[0] == "0") {
+			g_Scheduler.Cancel(mShutdownTask);
+			mShutdownTask = 0;
+			g_Config.MaintenanceMessage = "";
+			g_SimulatorManager.BroadcastChat(0, "System", "*SysChat", StringUtil::Format("The shutdown has been cancelled until further notice.").c_str());
+			return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
+		}
+		else {
+			return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "Shutdown is already scheduled. Use '/shutdown 0' to cancel it.");
+		}
+	}
+}
+//
 //ForumLockHandler
 //
 ForumLockHandler::ForumLockHandler() :
@@ -1900,7 +2063,7 @@ int ForumLockHandler::handleCommand(SimulatorThread *sim,
 //ZoneNameHandler
 //
 ZoneNameHandler::ZoneNameHandler() :
-		AbstractCommandHandler("Usage: /zonename <0|1> <name>", 2) {
+		AbstractCommandHandler("Usage: /zonename <name>", 2) {
 	;
 	mAllowedPermissions.push_back(Permission_Admin);
 }
@@ -1909,20 +2072,16 @@ int ZoneNameHandler::handleCommand(SimulatorThread *sim,
 		CharacterServerData *pld, SimulatorQuery *query,
 		CreatureInstance *creatureInstance) {
 	if (query->argCount >= 2) {
-		int t = atoi(query->args[0].c_str());
-		const char *name = query->args[1].c_str();
+		const char *name = query->args[0].c_str();
 		ZoneDefInfo *zoneDef = g_ZoneDefManager.GetPointerByID(
 				pld->CurrentZoneID);
 		if (zoneDef != NULL) {
 			if (zoneDef->mGrove == true) {
-				if (t == 1)
-					zoneDef->ChangeShardName(name);
-				else
-					zoneDef->ChangeName(name);
+				zoneDef->ChangeName(name);
 				g_ZoneDefManager.NotifyConfigurationChange();
 				sim->SendSetMap();
-				sim->SendInfoMessage(pld->zoneDef->mShardName.c_str(),
-						INFOMSG_SHARD);
+//				sim->SendInfoMessage(pld->zoneDef->mShardName.c_str(),
+//						INFOMSG_SHARD);
 			}
 		}
 	}
@@ -1981,11 +2140,11 @@ int DtrigHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
 		std::map<std::string, int> pkgmap;
 		std::map<std::string, int>::iterator it;
 		for (size_t i = 0; i < search.size(); i++) {
-			if (strstr(search[i]->Asset, "SpawnPoint") == NULL)
+			if (strstr(search[i]->Asset.c_str(), "SpawnPoint") == NULL)
 				continue;
-			if (search[i]->extraData == NULL)
+			if (!search[i]->hasExtraData)
 				continue;
-			pkgmap[search[i]->extraData->spawnPackage]++;
+			pkgmap[search[i]->extraData.spawnPackage]++;
 		}
 		for (it = pkgmap.begin(); it != pkgmap.end(); ++it)
 			g_Logs.simulator->info("%v----:%v", it->first.c_str(), it->second);
@@ -2008,8 +2167,9 @@ int DtrigHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
 
 			char ConvBuf[32];
 			size_t i;
-			for(i = 0; i < NumStats; i++) {
-				g_Logs.simulator->info("%s=%s", StatList[i].name, GetStatValueAsString(i, ConvBuf, &ptr->css));
+			for (i = 0; i < NumStats; i++) {
+				g_Logs.simulator->info("%s=%s", StatList[i].name,
+						GetStatValueAsString(i, ConvBuf, &ptr->css));
 			}
 		}
 	}
@@ -2066,38 +2226,22 @@ int DtrigHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
 		int y1 = query->GetInteger(2) / pld->zoneDef->mPageSize;
 		int x2 = query->GetInteger(3) / pld->zoneDef->mPageSize;
 		int y2 = query->GetInteger(4) / pld->zoneDef->mPageSize;
-		std::string srcdir = Platform::JoinPath(g_Config.ResolveVariableDataPath(), "Scenery");
-		std::string targdir = Platform::JoinPath(g_Config.ResolveVariableDataPath(), "SceneryCopy");
+		std::string srcdir = Platform::JoinPath(
+				g_Config.ResolveVariableDataPath(), "Scenery");
+		std::string targdir = Platform::JoinPath(
+				g_Config.ResolveVariableDataPath(), "SceneryCopy");
 		Platform::MakeDirectory(targdir);
 		for (int y = y1; y <= y2; y++) {
 			for (int x = x1; x <= x2; x++) {
 				sprintf(sim->Aux1, "%d", pld->zoneDef->mID);
 				sprintf(sim->Aux2, "x%03dy%03d.txt", x, y);
-				Platform::FileCopy(Platform::JoinPath(Platform::JoinPath(srcdir, sim->Aux1),sim->Aux2),
-								   Platform::JoinPath(targdir, sim->Aux2));
+				Platform::FileCopy(
+						Platform::JoinPath(
+								Platform::JoinPath(srcdir, sim->Aux1),
+								sim->Aux2),
+						Platform::JoinPath(targdir, sim->Aux2));
 			}
 		}
-	}
-		break;
-	case 901:  //Poke grove index entry
-	{
-		if (query->argCount <= 4)
-			break;
-		int zoneID = query->GetInteger(1);
-		int accountID = query->GetInteger(2);
-		const char *warpName = query->GetString(3);
-		const char *groveName = query->GetString(4);
-		bool allowCreate = false;
-		if (query->argCount >= 5)
-			allowCreate = (query->GetInteger(5) == sim->InternalID);
-		if (allowCreate == false)
-			sim->SendInfoMessage(
-					"To create an entry, provide Simulator ID to confirm.",
-					INFOMSG_INFO);
-
-		g_ZoneDefManager.UpdateZoneIndex(zoneID, accountID, warpName, groveName,
-				allowCreate);
-		sim->SendInfoMessage("Updated.", INFOMSG_INFO);
 	}
 		break;
 	case 902: //Scenery import.  Not recommended for public server use, prefer to use offline first.
@@ -2125,7 +2269,7 @@ int DtrigHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
 				SceneryObject *nso = g_SceneryManager.AddProp(zoneID,
 						it->second);
 				if (nso)
-					nso->SetName("IMPORT");
+					nso->Name = "IMPORT";
 				add++;
 			} else if (allowMerge == true) {
 				so->copyFrom(&it->second);
@@ -2264,9 +2408,11 @@ int InfoHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
 		sprintf(sim->Aux1, "Scenery Tile: %d, %d",
 				creatureInstance->CurrentX / pld->zoneDef->mPageSize,
 				creatureInstance->CurrentZ / pld->zoneDef->mPageSize);
-	if(query->args[0].compare("terraintile") == 0)
+	if (query->args[0].compare("terraintile") == 0)
 		// TODO is this always correct?
-		sprintf(sim->Aux1, "Terrain Tile: %d, %d", creatureInstance->CurrentX / 1920, creatureInstance->CurrentZ / 1920);
+		sprintf(sim->Aux1, "Terrain Tile: %d, %d",
+				creatureInstance->CurrentX / 1920,
+				creatureInstance->CurrentZ / 1920);
 	if (sim->Aux1[0] != 0)
 		sim->SendInfoMessage(sim->Aux1, INFOMSG_INFO);
 	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
@@ -2296,16 +2442,14 @@ int GroveSettingHandler::handleCommand(SimulatorThread *sim,
 	if (query->args[0].compare("filtertype") == 0)
 		pld->zoneDef->mPlayerFilterType = query->GetInteger(1);
 	else if (query->args[0].compare("filteradd") == 0) {
-		int cdef = g_AccountManager.GetCDefFromCharacterName(
-				query->GetString(1));
+		int cdef = g_UsedNameDatabase.GetIDByName(query->GetString(1));
 		if (cdef == -1) {
 			sim->SendInfoMessage("Character not found.", INFOMSG_ERROR);
 			code = 0;
 		} else
 			pld->zoneDef->AddPlayerFilterID(cdef);
 	} else if (query->args[0].compare("filterremove") == 0) {
-		int cdef = g_AccountManager.GetCDefFromCharacterName(
-				query->GetString(1));
+		int cdef = g_UsedNameDatabase.GetIDByName(query->GetString(1));
 		if (cdef == -1) {
 			sim->SendInfoMessage("Character not found.", INFOMSG_ERROR);
 			code = 0;
@@ -2316,8 +2460,7 @@ int GroveSettingHandler::handleCommand(SimulatorThread *sim,
 	} else if (query->args[0].compare("filterlist") == 0) {
 		const std::vector<int> &IDs = pld->zoneDef->mPlayerFilterID;
 		for (size_t i = 0; i < IDs.size(); i++) {
-			const char *name = g_AccountManager.GetCharacterNameFromCDef(
-					IDs[i]);
+			const char *name = g_UsedNameDatabase.GetNameByID(IDs[i]);
 			if (name == NULL)
 				name = "<unknown character>";
 			Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1), "#%d:%s", i, name);
@@ -2366,9 +2509,12 @@ DngScaleHandler::DngScaleHandler() :
 int DngScaleHandler::handleCommand(SimulatorThread *sim,
 		CharacterServerData *pld, SimulatorQuery *query,
 		CreatureInstance *creatureInstance) {
-	if(pld->zoneDef->IsDungeon()) {
-		sim->SendInfoMessage("You may not set your dungeon scaler inside a dungeon. Once the scale has been set, it remains until the dungeon instance completely closes (which may be some time after all of your party exit the dungeon)", INFOMSG_ERROR);
-		return PrepExt_QueryResponseError(sim->SendBuf, query->ID, "You may not set your dungeon scaler inside a dungeon.");
+	if (pld->zoneDef->IsDungeon()) {
+		sim->SendInfoMessage(
+				"You may not set your dungeon scaler inside a dungeon. Once the scale has been set, it remains until the dungeon instance completely closes (which may be some time after all of your party exit the dungeon)",
+				INFOMSG_ERROR);
+		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+				"You may not set your dungeon scaler inside a dungeon.");
 	}
 
 	std::string outputMsg;
@@ -2425,13 +2571,13 @@ int PathLinksHandler::handleCommand(SimulatorThread *sim,
 			continue;
 		if (so->HasLinks(SceneryObject::LINK_TYPE_LOYALTY) == false)
 			continue;
-		if (so->extraData == NULL)
+		if (!so->hasExtraData)
 			continue;
 		int linkChanges = 0;
-		for (int li = 0; li < so->extraData->linkCount; li++) {
-			if (so->extraData->link[li].type
+		for (auto a = so->extraData.link.begin(); a != so->extraData.link.end(); ++a) {
+			if ((*a).type
 					== SceneryObject::LINK_TYPE_LOYALTY) {
-				so->extraData->link[li].type = SceneryObject::LINK_TYPE_PATH;
+				(*a).type = SceneryObject::LINK_TYPE_PATH;
 				linkChanges++;
 			}
 		}
@@ -2528,10 +2674,29 @@ CycleHandler::CycleHandler() :
 
 int CycleHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
 		SimulatorQuery *query, CreatureInstance *creatureInstance) {
-	g_EnvironmentCycleManager.EndCurrentCycle();
-	g_Logs.server->info("Cycle is now: %v (%v)", g_EnvironmentCycleManager.mCurrentCycleIndex, g_EnvironmentCycleManager.GetCurrentTimeOfDay());
+//	if(!g_ClusterManager.IsMaster())
+//		return PrepExt_QueryResponseError(sim->SendBuf, query->ID, "You must be on the master shard to be able to cycle environments.");
+////	g_EnvironmentCycleManager.EndCurrentCycle();
+//	g_Logs.server->info("Cycle is now: %v (%v)",
+//			g_EnvironmentCycleManager.mCurrentCycleIndex,
+//			g_EnvironmentCycleManager.GetCurrentTimeOfDay());
+//	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
+	return PrepExt_QueryResponseError(sim->SendBuf, query->ID, "No longer supported.");
+}
+
+//
+//TimeHandler
+//
+TimeHandler::TimeHandler() :
+		AbstractCommandHandler("Usage: /time", 0) {
+}
+
+int TimeHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
+		SimulatorQuery *query, CreatureInstance *creatureInstance) {
+	sim->SendInfoMessage(StringUtil::Format("Gaia Time: %s (%s)", StringUtil::FormatTimeHHMMSS(g_PlatformTime.getPseudoTimeOfDayMilliseconds()).c_str(), g_EnvironmentCycleManager.GetCurrentCycle().mName.c_str()).c_str(), INFOMSG_INFO);
 	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
 }
+
 //
 //SearSizeHandler
 //
@@ -2756,35 +2921,64 @@ int WarpInstanceHandler::handleCommand(SimulatorThread *sim,
 			return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 					"Permission denied.");
 
-	const char *warpTarg = query->args[0].c_str();
-	ZoneDefInfo *targZone = g_ZoneDefManager.GetPointerByPartialWarpName(
-			warpTarg);
-	if (targZone == NULL) {
-		Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1),
-				"Zone name not found: %s", warpTarg);
-		g_Logs.simulator->error("[%v] %v", sim->InternalID, sim->Aux1);
-		sim->SendInfoMessage(sim->Aux1, INFOMSG_ERROR);
-	} else {
-		int errCode = sim->CheckValidWarpZone(targZone->mID);
-		if (errCode != sim->ERROR_NONE)
-			return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
-					sim->GetGenericErrorString(errCode));
+	std::string warpTarg = query->args[0];
+	int queryID = query->ID;
+	int simID = sim->InternalID;
 
-		//If the avatar is running, it will glitch the position.
+	/* The partial name match now queries the cluster database directly as we do not
+	 * have all zone names in our own processes memory. This can take a comparatively
+	 * long time (>2 seconds on my machine). For this reason the whole operation is
+	 * put into the new thread pool for execution
+	 */
+	g_Scheduler.Pool([warpTarg, queryID, simID](){
+		ZoneDefInfo *targZone = g_ZoneDefManager.GetPointerByPartialWarpName(warpTarg);
+		/* Put the remainder of the processing back on the main server thread */
+		g_Scheduler.Submit([targZone, warpTarg, queryID, simID]() {
 
-		// EM - Is this really needed?
-		//		SetPosition(targZone->DefX, targZone->DefY, targZone->DefZ, 1);
+			SimulatorThread *sim = g_SimulatorManager.GetPtrByID(simID);
+			if(sim == NULL) {
+				g_Logs.simulator->error("Lost simulator [%v] before we got chance to warpi to %v", simID, warpTarg);
+			}
+			else  {
+				int wpos = 0;
+				if (targZone == NULL) {
+					std::string msg = StringUtil::Format("Zone name not found: %s", warpTarg.c_str());
+					g_Logs.simulator->error("[%v] %v", simID, msg);
+					//sim->SendInfoMessage(msg.c_str(), INFOMSG_ERROR);
+					wpos += PrepExt_QueryResponseError(sim->SendBuf, queryID,
+							msg.c_str());
+				} else {
+					int errCode = sim->CheckValidWarpZone(targZone->mID);
+					if (errCode != sim->ERROR_NONE)
+						wpos += PrepExt_QueryResponseError(sim->SendBuf, queryID,
+								sim->GetGenericErrorString(errCode));
+					else {
+						//If the avatar is running, it will glitch the position.
 
-		if (sim->ProtectedSetZone(targZone->mID, 0) == false) {
-			sim->ForceErrorMessage("Critical error while changing zones.",
-					INFOMSG_ERROR);
-			sim->Disconnect("SimulatorThread::handle_command_warpi");
-			return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
-					"Critical error.");
-		}
-		sim->SetPosition(targZone->DefX, targZone->DefY, targZone->DefZ, 1);
-	}
-	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
+						// EM - Is this really needed?
+						//		SetPosition(targZone->DefX, targZone->DefY, targZone->DefZ, 1);
+
+						if (sim->ProtectedSetZone(targZone->mID, 0) == false) {
+							sim->ForceErrorMessage("Critical error while changing zones.",
+									INFOMSG_ERROR);
+							sim->Disconnect("SimulatorThread::handle_command_warpi");
+							wpos += PrepExt_QueryResponseError(sim->SendBuf, queryID,
+									"Critical error.");
+						}
+						else  {
+							sim->SetPosition(targZone->DefX, targZone->DefY, targZone->DefZ, 1);
+							wpos += PrepExt_QueryResponseString(sim->SendBuf, queryID, "OK");
+						}
+					}
+				}
+				if(wpos > 0) {
+					sim->AttemptSend(sim->SendBuf, wpos);
+				}
+			}
+		});
+	});
+
+	return 0;
 }
 
 //
@@ -2932,8 +3126,7 @@ int WarpExternalOfflineHandler::handleCommand(SimulatorThread *sim,
 				"Character must be offline.");
 
 	g_AccountManager.cs.Enter("SimulatorThread::handle_command_warpext");
-	int CDef = g_AccountManager.GetCDefFromCharacterName(
-			query->args[0].c_str());
+	int CDef = g_UsedNameDatabase.GetIDByName(query->args[0]);
 	g_AccountManager.cs.Leave();
 
 	if (CDef == -1)
@@ -2960,6 +3153,7 @@ int WarpExternalOfflineHandler::handleCommand(SimulatorThread *sim,
 		warpy = atoi(query->args[4].c_str());
 
 	cd->activeData.CurZone = zoneDef->mID;
+	cd->LastWarpTime = g_ServerTime;
 	cd->activeData.CurX = warpx;
 	cd->activeData.CurY = warpy;
 	cd->activeData.CurZ = warpz;
@@ -3001,7 +3195,7 @@ int WarpExternalHandler::handleCommand(SimulatorThread *sim,
 				sim->SendInfoMessage("Warping target.", INFOMSG_INFO);
 				it->MainCallSetZone(zoneDef->mID, 0, true);
 				return PrepExt_QueryResponseString(sim->SendBuf, query->ID,
-							"OK");
+						"OK");
 			}
 	return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 			"Target not found.");
@@ -3031,11 +3225,11 @@ int ScriptExecHandler::handleCommand(SimulatorThread *sim,
 	ActiveInstance *inst = creatureInstance->actInst;
 	int start = 0;
 	bool queue = false;
-	if(string(query->GetString(0)).compare("-q") == 0) {
+	if (string(query->GetString(0)).compare("-q") == 0) {
 		queue = true;
 		start = 1;
 	}
-	if(start > query->argCount)
+	if (start > query->argCount)
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 				"Missing arguments.");
 	string funcName = query->GetString(start);
@@ -3119,8 +3313,10 @@ int ScriptWakeVMHandler::handleCommand(SimulatorThread *sim,
 	if (inst != NULL) {
 		if (inst->nutScriptPlayer != NULL) {
 			Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1),
-					"Woken VM for %s: %s", inst->nutScriptDef.mDescription.c_str(),
-					inst->nutScriptPlayer->WakeVM("By User") ? "Woke OK" : "Did not wake");
+					"Woken VM for %s: %s",
+					inst->nutScriptDef.mDescription.c_str(),
+					inst->nutScriptPlayer->WakeVM("By User") ?
+							"Woke OK" : "Did not wake");
 			sim->SendInfoMessage(sim->Aux1, INFOMSG_INFO);
 		}
 
@@ -3170,7 +3366,6 @@ int ScriptGCHandler::handleCommand(SimulatorThread *sim,
 	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
 }
 
-
 ScriptClearQueueHandler::ScriptClearQueueHandler() :
 		AbstractCommandHandler("Usage: /script.clearqueue", 0) {
 	mAllowedPermissions.push_back(Permission_Sage);
@@ -3193,30 +3388,24 @@ int ScriptClearQueueHandler::handleCommand(SimulatorThread *sim,
 	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
 }
 
-
-
-
 //
 // ScriptExecHandler
 //
 
 RotHandler::RotHandler() :
-		AbstractCommandHandler(
-				"Usage: /rot [<amount>]", 1) {
+		AbstractCommandHandler("Usage: /rot [<amount>]", 1) {
 }
 
-int RotHandler::handleCommand(SimulatorThread *sim,
-	CharacterServerData *pld, SimulatorQuery *query,
-	CreatureInstance *creatureInstance) {
-	if(query->argCount > 0) {
+int RotHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
+		SimulatorQuery *query, CreatureInstance *creatureInstance) {
+	if (query->argCount > 0) {
 		sim->SetRotation(query->GetInteger(0), 1);
 	}
-	Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1), "Rotation: %d", creatureInstance->Rotation);
+	Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1), "Rotation: %d",
+			creatureInstance->Rotation);
 	sim->SendInfoMessage(sim->Aux1, INFOMSG_INFO);
 	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
 }
-
-
 
 //
 //PVPTeamHandler
@@ -3271,7 +3460,8 @@ int PVPTeamHandler::handleCommand(SimulatorThread *sim,
 		if (creatureInstance->css.pvp_team == PVP::PVPTeams::NONE)
 			sim->SendInfoMessage("Your are not in a PVP team.", INFOMSG_INFO);
 		else {
-			Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1), "You are in the %s team.",
+			Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1),
+					"You are in the %s team.",
 					PVP::PVPTeams::GetNameByID(creatureInstance->css.pvp_team));
 			sim->SendInfoMessage(sim->Aux1, INFOMSG_INFO);
 		}
@@ -3303,8 +3493,10 @@ int PVPModeHandler::handleCommand(SimulatorThread *sim,
 		if (mode.compare("pvp") == 0) {
 			if (creatureInstance->actInst->arenaRuleset.mPVPStatus
 					!= PVP::GameMode::PVE_ONLY) {
-				if (creatureInstance->_HasStatusList(StatusEffects::PVPABLE) == -1)
-					creatureInstance->_AddStatusList(StatusEffects::PVPABLE, -1);
+				if (creatureInstance->_HasStatusList(StatusEffects::PVPABLE)
+						== -1)
+					creatureInstance->_AddStatusList(StatusEffects::PVPABLE,
+							-1);
 			}
 			if (creatureInstance->charPtr->Mode == PVP::GameMode::PVP) {
 				return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
@@ -3324,7 +3516,8 @@ int PVPModeHandler::handleCommand(SimulatorThread *sim,
 					!= PVP::GameMode::PVP_ONLY
 					&& creatureInstance->actInst->arenaRuleset.mPVPStatus
 							!= PVP::GameMode::SPECIAL_EVENT) {
-				if (creatureInstance->_HasStatusList(StatusEffects::PVPABLE) != -1)
+				if (creatureInstance->_HasStatusList(StatusEffects::PVPABLE)
+						!= -1)
 					creatureInstance->_RemoveStatusList(StatusEffects::PVPABLE);
 			}
 			if (creatureInstance->charPtr->Mode == PVP::GameMode::PVE) {
@@ -3426,8 +3619,8 @@ int InstanceHandler::handleCommand(SimulatorThread *sim,
 		if (inst->mZoneDefPtr->IsDungeon() == true
 				|| sim->CheckPermissionSimple(Perm_Account, Permission_Debug)
 						== true) {
-			Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1), "Drop rate bonus: %gx",
-					inst->mDropRateBonusMultiplier);
+			Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1),
+					"Drop rate bonus: %gx", inst->mDropRateBonusMultiplier);
 			sim->SendInfoMessage(sim->Aux1, INFOMSG_INFO);
 		}
 
@@ -3442,8 +3635,8 @@ int InstanceHandler::handleCommand(SimulatorThread *sim,
 					sim->SendInfoMessage(sim->Aux1, INFOMSG_INFO);
 				}
 			} else {
-				Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1), "Dungeon owner: %s",
-						inst->mOwnerName.c_str());
+				Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1),
+						"Dungeon owner: %s", inst->mOwnerName.c_str());
 				sim->SendInfoMessage(sim->Aux1, INFOMSG_INFO);
 			}
 		}
@@ -3456,14 +3649,14 @@ int InstanceHandler::handleCommand(SimulatorThread *sim,
 
 		if (sim->CheckPermissionSimple(Perm_Account, Permission_Debug)
 				== true) {
-			Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1), "Drop rate profile: %s",
+			Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1),
+					"Drop rate profile: %s",
 					inst->mZoneDefPtr->GetDropRateProfile().c_str());
 			sim->SendInfoMessage(sim->Aux1, INFOMSG_INFO);
 		}
 	}
 	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
 }
-
 
 //
 //UserAuthResetHandler
@@ -3478,19 +3671,19 @@ int UserAuthResetHandler::handleCommand(SimulatorThread *sim,
 		CharacterServerData *pld, SimulatorQuery *query,
 		CreatureInstance *creatureInstance) {
 
-
 	std::string accName = query->GetString(0);
 	AccountData * acc = g_AccountManager.FetchAccountByUsername(
 			accName.c_str());
 	if (acc == NULL) {
-		return PrepExt_QueryResponseError(sim->SendBuf, query->ID, "No such account.");
+		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+				"No such account.");
 	}
 
 	// Generate a new recovery key
 	std::string newKey = Util::RandomStr(32, false);
 
 	// Remove the existing registration key
-	Util::SafeFormat(acc->RegKey, sizeof(acc->RegKey), "%s", newKey.c_str());
+	acc->RegKey = newKey;
 
 //	// Generate a salt hash for the key
 //	std::string convertedKey;
@@ -3528,14 +3721,65 @@ MaintainHandler::MaintainHandler() :
 int MaintainHandler::handleCommand(SimulatorThread *sim,
 		CharacterServerData *pld, SimulatorQuery *query,
 		CreatureInstance *creatureInstance) {
-	if(query->argCount > 0) {
-		sim->BroadcastMessage("The server is now in maintenance mode. Further logins by anyone other than Administrators or Sages will be denied.");
+	if (query->argCount > 0) {
+		g_SimulatorManager.BroadcastChat(0, "System", "*SysChat", "The server is now in maintenance mode. Further logins by anyone other than Administrators or Sages will be denied.");
 		g_Config.MaintenanceMessage = query->GetString(0);
-	}
-	else {
-		sim->BroadcastMessage("The server has now left maintenance mode. Anyone may login again");
+	} else {
+		g_SimulatorManager.BroadcastChat(0, "System", "*SysChat", "The server has now left maintenance mode. Anyone may login again");
 		g_Config.MaintenanceMessage = "";
 	}
 
+	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
+}
+
+//
+//AchievementsHandler
+//
+AchievementsHandler::AchievementsHandler() :
+		AbstractCommandHandler("Usage: /achievements", 0) {
+}
+
+int AchievementsHandler::handleCommand(SimulatorThread *sim,
+		CharacterServerData *pld, SimulatorQuery *query,
+		CreatureInstance *creatureInstance) {
+
+	if (query->argCount >= 1) {
+		if (sim->CheckPermissionSimple(Perm_Account, Permission_Admin) == false)
+			return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+					"Permission denied.");
+
+		if (query->args[0].compare("add") == 0) {
+			if (query->argCount > 1) {
+				pld->accPtr->AddAchievement(query->args[1]);
+				pld->accPtr->PendingMinorUpdates++;
+				int wpos = PrepExt_QueryResponseString(sim->SendBuf, query->ID,
+						"OK");
+				Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1), "%d:%d:%d:%d",
+						g_AchievementsManager.GetTotalAchievements(),
+						pld->accPtr->GetTotalCompletedAchievements(),
+						g_AchievementsManager.GetTotalObjectives(),
+						pld->accPtr->GetTotalAchievementObjectives());
+				wpos += PrepExt_Achievement(&sim->SendBuf[wpos],
+						creatureInstance->CreatureID, query->args[1].c_str(),
+						sim->Aux1);
+				return wpos;
+			} else
+				return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
+						"Add command requires fully qualified name of achievement.");
+		}
+	} else {
+		for (std::map<std::string, Achievements::Achievement>::iterator it =
+				pld->accPtr->Achievements.begin();
+				it != pld->accPtr->Achievements.end(); ++it) {
+			Achievements::Achievement a = it->second;
+			for (std::vector<Achievements::AchievementObjectiveDef*>::iterator ait =
+					a.mCompletedObjectives.begin();
+					ait != a.mCompletedObjectives.end(); ++ait) {
+				Util::SafeFormat(sim->Aux1, sizeof(sim->Aux1), "%s/%s",
+						a.mDef->mName.c_str(), (*ait)->mName.c_str());
+				sim->SendInfoMessage(sim->Aux1, INFOMSG_INFO);
+			}
+		}
+	}
 	return PrepExt_QueryResponseString(sim->SendBuf, query->ID, "OK");
 }

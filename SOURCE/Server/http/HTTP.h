@@ -107,6 +107,8 @@ class AbstractCivetHandler: public CivetHandler {
 public:
 	std::string formatTime(std::time_t *now);
 
+	bool isUserAgent(CivetServer *server, struct mg_connection *conn);
+
 	bool isAuthorized(CivetServer *server, struct mg_connection *conn, std::string credentials);
 
 	bool parseMultiPart(CivetServer *server, struct mg_connection *conn, MultiPart *multipart);

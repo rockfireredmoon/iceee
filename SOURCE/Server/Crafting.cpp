@@ -71,6 +71,39 @@ const char *CraftRecipe::GetName(void) const
 	return mDesc.c_str();
 }
 
+int CraftRecipe::GetRequiredItemCount(int itemID) const
+{
+	for(size_t i = 0; i < mConditions.size(); i++)
+	{
+		STRINGVECTOR args;
+		Util::Split(mConditions[i], ",", args);
+		if(args.size() <= 2)
+			continue;
+
+		if(strcmp(args[1].c_str(), "requireid") == 0)
+		{
+			return atoi(args[3].c_str());
+		}
+	}
+	return 0;
+}
+
+void CraftRecipe::GetRequiredItems(std::vector<int> &requiredItems) const
+{
+	for(size_t i = 0; i < mConditions.size(); i++)
+	{
+		STRINGVECTOR args;
+		Util::Split(mConditions[i], ",", args);
+		if(args.size() <= 2)
+			continue;
+
+		if(strcmp(args[1].c_str(), "requireid") == 0)
+		{
+			requiredItems.push_back(atoi(args[2].c_str()));
+		}
+	}
+}
+
 CraftInputSlot::CraftInputSlot(unsigned int CCSID, int id, int stackCount, ItemDef *itemDef)
 {
 	mCCSID = CCSID;
@@ -172,6 +205,28 @@ const CraftRecipe* CraftManager::GetRecipe(std::vector<CraftInputSlot> &inputIte
 			continue;
 		if(CheckCondition(recipe->mConditions, inputItems) == true)
 			return recipe;
+	}
+	return NULL;
+}
+
+const CraftRecipe* CraftManager::GetFirstRecipeForResult(int resultItemID)
+{
+	for(size_t i = 0; i < mRecipes.size(); i++)
+	{
+		CraftRecipe *recipe = &mRecipes[i];
+
+		for(size_t i = 0; i < recipe->mActions.size(); i++)
+		{
+			STRINGVECTOR args;
+			Util::Split(recipe->mActions[i], ",", args);
+			if(args.size() == 0)
+				continue;
+			if(args[0].compare("giveid") == 0)
+			{
+				if(GetIntParam(args, 1) == resultItemID)
+					return recipe;
+			}
+		}
 	}
 	return NULL;
 }

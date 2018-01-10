@@ -181,9 +181,9 @@ int AbilityRemainingCooldownsHandler::handleQuery(SimulatorThread *sim, Characte
 				if (cooldownName == NULL)
 					continue;
 				row.push_back(cooldownName);  // [0] = category name
-				sprintf(sim->Aux1, "%d", cd->GetRemainTimeMS());
+				sprintf(sim->Aux1, "%lu", cd->GetRemainTimeMS());
 				row.push_back(sim->Aux1);
-				sprintf(sim->Aux1, "%d", cd->GetElapsedTimeMS());
+				sprintf(sim->Aux1, "%lu", cd->GetElapsedTimeMS());
 				row.push_back(sim->Aux1);
 				response.push_back(row);
 				row.clear();

@@ -13,6 +13,8 @@ default static item database.
 #include "Config.h"
 #include "Stats.h"
 #include "DirectoryAccess.h"
+#include "StringUtil.h"
+#include "Cluster.h"
 #include "util/Log.h"
 
 const char *FLAVOR_TEXT_HEADER = "</b></i><font size=\"16\"><b>";
@@ -144,73 +146,6 @@ void VirtualItemSpawnParams :: ClampLimits(void)
 		level = Util::ClipInt(level, 1, levelLimit);
 }
 
-VirtualItemPage :: VirtualItemPage()
-{
-	Clear();
-}
-
-VirtualItemPage :: VirtualItemPage(int page)
-{
-	Clear();
-	pageIndex = page;
-}
-
-void VirtualItemPage :: Clear(void)
-{
-	pageIndex = 0;
-	itemList.clear();
-	bPendingSave = false;
-}
-
-void VirtualItemPage :: AddVirtualItemDef(VirtualItemDef& vid)
-{
-	itemList.push_back(vid);
-	bPendingSave = true;
-}
-
-void VirtualItemPage :: SaveToStream(FILE *output)
-{
-	for(size_t i = 0; i < itemList.size(); i++)
-	{
-		fprintf(output, "[ENTRY]\r\n");
-		fprintf(output, "mID=%d\r\n", itemList[i].mID);
-		fprintf(output, "mLevel=%d\r\n", itemList[i].mLevel);
-		fprintf(output, "mQualityLevel=%d\r\n", itemList[i].mQualityLevel);
-		fprintf(output, "mValue=%d\r\n", itemList[i].mValue);
-		fprintf(output, "mType=%d\r\n", itemList[i].mType);
-		fprintf(output, "mEquipType=%d\r\n", itemList[i].mEquipType);
-		fprintf(output, "mWeaponType=%d\r\n", itemList[i].mWeaponType);
-		fprintf(output, "mDisplayName=%s\r\n", itemList[i].mDisplayName.c_str());
-		fprintf(output, "mIcon=%s\r\n", itemList[i].mIcon.c_str());
-		fprintf(output, "mAppearance=%s\r\n", itemList[i].mAppearance.c_str());
-		fprintf(output, "mods=%s\r\n", itemList[i].mModString.c_str());
-		fprintf(output, "\r\n");
-		/*
-		fprintf(output, "%d#%d#%d#%d#%d#%d#%s\r\n",
-		itemList[i].itemID,
-		itemList[i].mLevel,
-		itemList[i].mType,
-		itemList[i].mEquipType,
-		itemList[i].mWeaponType,
-		itemList[i].mValue,
-		itemList[i].mModString.c_str());
-		*/
-	}
-}
-
-void VirtualItemPage :: DeleteID(int ID)
-{
-	for(size_t i = 0; i < itemList.size(); i++)
-	{
-		if(itemList[i].mID == ID)
-		{
-			bPendingSave = true;
-			itemList.erase(itemList.begin() + i);
-			return;
-		}
-	}
-}
-
 VirtualItemDef :: VirtualItemDef()
 {
 	Clear();
@@ -231,6 +166,44 @@ void VirtualItemDef :: Clear(void)
 	mModString.clear();
 }
 
+bool VirtualItemDef::EntityKeys(AbstractEntityReader *reader) {
+	reader->Key(KEYPREFIX_VIRTUAL_ITEM, StringUtil::Format("%d", mID));
+	return true;
+}
+
+bool VirtualItemDef::ReadEntity(AbstractEntityReader *reader) {
+	if (!reader->Exists())
+		return false;
+
+	mID = reader->ValueInt("mID");
+	mType = reader->ValueInt("mType");
+	mEquipType = reader->ValueInt("mEquipType");
+	mWeaponType = reader->ValueInt("mWeaponType");
+	mValue = reader->ValueInt("mValue");
+	mLevel = reader->ValueInt("mLevel");
+	mQualityLevel = reader->ValueInt("mQualityLevel");
+	mDisplayName = reader->Value("mDisplayName");
+	mIcon = reader->Value("mIcon");
+	mAppearance = reader->Value("mAppearance");
+	mModString = reader->Value("mods");
+	return true;
+}
+
+bool VirtualItemDef::WriteEntity(AbstractEntityWriter *writer) {
+	writer->Key(KEYPREFIX_VIRTUAL_ITEM, StringUtil::Format("%d", mID));
+	writer->Value("mID", mID);
+	writer->Value("mType", mType);
+	writer->Value("mEquipType", mEquipType);
+	writer->Value("mWeaponType", mWeaponType);
+	writer->Value("mValue", mValue);
+	writer->Value("mLevel", mLevel);
+	writer->Value("mQualityLevel", mQualityLevel);
+	writer->Value("mDisplayName", mDisplayName);
+	writer->Value("mIcon", mIcon);
+	writer->Value("mAppearance", mAppearance);
+	writer->Value("mods", mModString);
+	return true;
+}
 
 void VirtualItem :: UpdateArmorType(void)
 {
@@ -952,35 +925,22 @@ void ItemManager :: NotifyDestroy(int itemID, const char *debugReason)
 	if(it == VItemList.end())
 		return;
 
-	int page = GetVirtualItemPage(itemID);
-	VIRTUALITEMPAGE::iterator pageit;
-	pageit = virtualItemPage.find(page);
-	if(pageit != virtualItemPage.end())
-		pageit->second.DeleteID(itemID);
-
+	VirtualItemDef d;
+	d.mID = itemID;
+	if(!g_ClusterManager.ReadEntity(&d) || !g_ClusterManager.RemoveEntity(&d)) {
+		g_Logs.event->info("[DESTROY] Failed to remove virtual item from cluster: %v (%v)", itemID, debugReason);
+	}
 	VItemList.erase(it);
 	g_Logs.event->info("[DESTROY] Destroyed virtual item: %v (%v)", itemID, debugReason);
-	SessionVarsChangeData.AddChange();
 }
 
 int ItemManager :: GetNewVirtualItemID(void)
 {
-	int ID = nextVirtualItemID++;
-
-	//IMPORTANT: need to load an existing page BEFORE adding a new item.
-	//Otherwise earlier entries will never load into the server.  When the
-	//server next autosaves, it won't have that information to save back out,
-	//effectively erasing the old data.
-
-	int page = GetVirtualItemPage(ID);
-	RequestVirtualItemPagePtr(page);
-
-	return ID;
+	return g_ClusterManager.NextValue(ID_NEXT_VIRTUAL_ITEM_ID);
 }
 
 int ItemManager :: CreateNewVirtualItem(int rarity, VirtualItemSpawnParams &viParams)
 {
-	SessionVarsChangeData.AddChange();
 	int ID = GetNewVirtualItemID();
 
 	VirtualItem newItem;
@@ -991,158 +951,23 @@ int ItemManager :: CreateNewVirtualItem(int rarity, VirtualItemSpawnParams &viPa
 	return ID;
 }
 
-int ItemManager :: GetVirtualItemPage(int itemID)
-{
-	return (itemID - BASE_VIRTUAL_ITEM_ID) / VirtualItemPage::ITEMS_PER_PAGE;
-}
-
-void ItemManager :: AddVirtualItemDef(VirtualItemDef& vid)
-{
-	int page = GetVirtualItemPage(vid.mID);
-
-	VIRTUALITEMPAGE::iterator it;
-	it = virtualItemPage.find(page);
-	if(it == virtualItemPage.end())
-		it = virtualItemPage.insert(virtualItemPage.end(), VIRTUALITEMPAGEPAIR(page, VirtualItemPage(page)));
-	it->second.AddVirtualItemDef(vid);
-}
-
-void ItemManager :: CheckVirtualItemAutosave(bool force)
-{
-	if(g_ServerTime < nextVirtualItemAutosave && force == false)
-		return;
-
-	char buf[256];
-	VIRTUALITEMPAGE::iterator it;
-	it = virtualItemPage.begin();
-	while(it != virtualItemPage.end())
-	{
-		bool del = false;
-		if(it->second.bPendingSave == true)
-		{
-			Util::SafeFormat(buf, sizeof(buf), "%08d.txt", it->second.pageIndex);
-			std::string filename = Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "VirtualItems"), buf);
-			if(it->second.itemList.size() > 0)
-			{
-				FILE *output = fopen(filename.c_str(), "wb");
-				if(output != NULL)
-				{
-					it->second.SaveToStream(output);
-					fclose(output);
-					it->second.bPendingSave = false;
-				}
-				else
-					g_Logs.server->error("Failed to open VirtualItem page: %v", filename);
-			}
-			else
-			{
-				remove(filename.c_str());
-				g_Logs.server->info("Removing item page [%v]", filename);
-				del = true;
-			}
-		}
-		if(del == true)
-			virtualItemPage.erase(it++);
-		else
-			++it;
+void ItemManager :: AddVirtualItemDef(VirtualItemDef& vid) {
+	if(!g_ClusterManager.WriteEntity(&vid)) {
+		g_Logs.data->error("Failed to save virtual item [%v] to cluster.", vid.mID);
 	}
-	nextVirtualItemAutosave = g_ServerTime + VirtualItemPage::AUTOSAVE_TIMER;
-}
-
-VirtualItemPage* ItemManager :: RequestVirtualItemPagePtr(int page)
-{
-	//Load the page if it doesn't exist.
-	//Return a pointer to the page.
-	VIRTUALITEMPAGE::iterator it = virtualItemPage.find(page);
-	if(it == virtualItemPage.end())
-	{
-		it = virtualItemPage.insert(virtualItemPage.end(), VIRTUALITEMPAGEPAIR(page, VirtualItemPage(page)));
-		if(it != virtualItemPage.end())
-		{
-			LoadVirtualItemPage(&it->second);
-			return &it->second;
-		}
-		g_Logs.server->error("ItemManager::GetVirtualItemPagePtr could not insert page.");
-		return NULL;
-	}
-	return &it->second;
 }
 
 void ItemManager :: LoadVirtualItemWithID(int itemID)
 {
-	int page = GetVirtualItemPage(itemID);
-	VirtualItemPage *pagePtr = RequestVirtualItemPagePtr(page);
-	if(pagePtr == NULL)
-		return;
-
-	for(size_t i = 0; i < pagePtr->itemList.size(); i++)
-	{
-		if(pagePtr->itemList[i].mID == itemID)
-		{
-			ExpandVirtualItem(pagePtr->itemList[i]);
-			return;
-		}
-	}
-}
-
-void ItemManager :: LoadVirtualItemPage(VirtualItemPage* targetPage)
-{
-	char buf[256];
-	Util::SafeFormat(buf, sizeof(buf), "%08d.txt", targetPage->pageIndex);
-	std::string filename = Platform::JoinPath(Platform::JoinPath(g_Config.ResolveUserDataPath(), "VirtualItems"), buf);
-	FileReader lfr;
-	if(lfr.OpenText(filename.c_str()) != Err_OK)
-	{
-		g_Logs.server->error("Unable to open VirtualItem page [%v]", filename);
+	VirtualItemDef def;
+	def.mID = itemID;
+	if(!g_ClusterManager.ReadEntity(&def)) {
+		g_Logs.data->error("Failed to load virtual item [%v] from cluster.", itemID);
 		return;
 	}
-
-	lfr.CommentStyle = Comment_Semi;
-
-	VirtualItemDef newItem;
-
-	while(lfr.FileOpen() == true)
-	{
-		lfr.ReadLine();
-		int r = lfr.BreakUntil("=", '=');
-		if(r > 0)
-		{
-			lfr.BlockToStringC(0, 0);
-			if(strcmp(lfr.SecBuffer, "[ENTRY]") == 0)
-			{
-				if(newItem.mID != 0)
-					targetPage->itemList.push_back(newItem);
-				newItem.Clear();
-			}
-			else if(strcmp(lfr.SecBuffer, "mID") == 0)
-				newItem.mID = lfr.BlockToIntC(1);
-			else if(strcmp(lfr.SecBuffer, "mLevel") == 0)
-				newItem.mLevel = lfr.BlockToIntC(1);
-			else if(strcmp(lfr.SecBuffer, "mQualityLevel") == 0)
-				newItem.mQualityLevel = lfr.BlockToIntC(1);
-			else if(strcmp(lfr.SecBuffer, "mValue") == 0)
-				newItem.mValue = lfr.BlockToIntC(1);
-			else if(strcmp(lfr.SecBuffer, "mType") == 0)
-				newItem.mType = lfr.BlockToIntC(1);
-			else if(strcmp(lfr.SecBuffer, "mEquipType") == 0)
-				newItem.mEquipType = lfr.BlockToIntC(1);
-			else if(strcmp(lfr.SecBuffer, "mWeaponType") == 0)
-				newItem.mWeaponType = lfr.BlockToIntC(1);
-			else if(strcmp(lfr.SecBuffer, "mDisplayName") == 0)
-				newItem.mDisplayName = lfr.BlockToStringC(1, 0);
-			else if(strcmp(lfr.SecBuffer, "mIcon") == 0)
-				newItem.mIcon = lfr.BlockToStringC(1, 0);
-			else if(strcmp(lfr.SecBuffer, "mAppearance") == 0)
-				newItem.mAppearance = lfr.BlockToStringC(1, 0);
-			else if(strcmp(lfr.SecBuffer, "mods") == 0)
-				newItem.mModString = lfr.BlockToStringC(1, 0);
-		}
-	}
-	if(newItem.mID != 0)
-		targetPage->itemList.push_back(newItem);
-
-	lfr.CloseCurrent();
+	ExpandVirtualItem(def);
 }
+
 
 void ItemManager :: ExpandVirtualItem(const VirtualItemDef& item)
 {

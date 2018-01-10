@@ -10,9 +10,14 @@
 #include "CommonTypes.h"
 #include "Account.h"
 #include "Character.h"
+#include "Entities.h"
 #include "Item.h"
 #include "Stats.h"
 #include "json/json.h"
+
+static std::string KEYPREFIX_CS_ITEM = "CSItem";
+static std::string LISTPREFIX_CS_ITEMS = "CSItems";
+static std::string ID_CS_ITEM_ID = "NextCSItemID";
 
 namespace Category
 {
@@ -27,7 +32,7 @@ namespace Category
 		PETS = 5,
 		MAX
 	};
-	const char *GetNameByID(int eventID);
+	std::string GetNameByID(int eventID);
 	int GetIDByName(const std::string &eventName);
 }
 
@@ -40,7 +45,7 @@ namespace Status
 		NEW = 1,
 		MAX
 	};
-	const char *GetNameByID(int eventID);
+	std::string GetNameByID(int eventID);
 	int GetIDByName(const std::string &eventName);
 }
 
@@ -54,7 +59,7 @@ namespace Currency
 		COPPER_CREDITS = 2,
 		MAX
 	};
-	const char *GetNameByID(int eventID);
+	std::string GetNameByID(int eventID);
 	int GetIDByName(const std::string &eventName);
 }
 
@@ -77,8 +82,8 @@ namespace CreditShopError
 namespace CS
 {
 
-class CreditShopItem
-{
+
+class CreditShopItem: public AbstractEntity {
 public:
 	CreditShopItem();
 	~CreditShopItem();
@@ -104,6 +109,10 @@ public:
 	void ParseItemProto(std::string proto);
 	void WriteToJSON(Json::Value &value);
 
+	bool WriteEntity(AbstractEntityWriter *writer);
+	bool ReadEntity(AbstractEntityReader *reader);
+	bool EntityKeys(AbstractEntityReader *reader);
+
 //	this.mItemProtoEntry.setText("item" + defId + ":" + (lookId != defId ? lookId : 0) + ":" + itemID.mItemData.mIv1 + ":" + itemID.mItemData.mIv2);
 
 };
@@ -111,19 +120,15 @@ public:
 class CreditShopManager
 {
 public:
-	int nextMarketItemID;
-	Platform_CriticalSection cs;
 
 	CreditShopManager();
 	~CreditShopManager();
-	std::map<int, CreditShopItem*> mItems;
-	CreditShopItem* LoadItem(int id);
-	int LoadItems(void);
-	CreditShopItem* GetItem(int id);
+	void GetItems(std::vector<CreditShopItem> &items);
+	CreditShopItem GetItem(int id);
 	int ValidateItem(CreditShopItem *item, AccountData *accPtr, CharacterStatSet *css, CharacterData *cd);
 	bool RemoveItem(int id);
-	std::string GetPath(int id);
-	bool SaveItem(CreditShopItem * item);
+	bool CreateItem(CreditShopItem * item);
+	bool UpdateItem(CreditShopItem * item);
 
 };
 

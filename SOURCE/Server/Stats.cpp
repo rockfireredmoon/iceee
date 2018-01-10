@@ -608,18 +608,18 @@ int GetStatIndex(short StatID)
 	return -1;
 }
 
-int GetStatIndexByName(const char *name)
+int GetStatIndexByName(const std::string &name)
 {
 	//Returns the index of the internal stat list by searching for a stat name.
 	//The name must be converted to match case before it is passed to this function.
 	for(int i = 0; i < NumStats; i++)
-		if(strcmp(StatList[i].name, name) == 0)
+		if(name.compare(StatList[i].name) == 0)
 			return i;
 	
 	return -1;
 }
 
-StatDefinition* GetStatDefByName(const char *name)
+StatDefinition* GetStatDefByName(const std::string &name)
 {
 	int r = GetStatIndexByName(name);
 	if(r >= 0)
@@ -628,27 +628,26 @@ StatDefinition* GetStatDefByName(const char *name)
 	return NULL;
 }
 
-int GetStatusIDByName(const char *name)
+int GetStatusIDByName(const std::string &name)
 {
 	//Returns the index of the internal status effect list by searching for a status
 	//effect name.  The name must be converted to match case before it is passed to
 	//this function.
 	int a;
 	for(a = 0; a < MAX_STATUSEFFECT; a++)
-		if(strcmp(StatusEffectBitData[a].name, name) == 0)
+		if(name.compare(StatusEffectBitData[a].name) == 0)
 			return StatusEffectBitData[a].effectID;
 	
 	return -1;
 }
 
-const char* GetStatusNameByID(int id)
+const std::string GetStatusNameByID(int id)
 {
-	static const char *unk = "UNKNOWN";
 	for(int i = 0; i < MAX_STATUSEFFECT; i++)
 		if(StatusEffectBitData[i].effectID == id)
 			return StatusEffectBitData[i].name;
 
-	return unk;
+	return "UNKNOWN";
 }
 
 int WriteCurrentStatToBuffer(char *buffer, short StatID, CharacterStatSet *css)
@@ -710,42 +709,43 @@ int WriteStatToBuffer(char *buffer, short StatID, float value)
 	return 0;
 }
 
-int WriteStatToSet(int StatIndex, const char *value, CharacterStatSet *css)
+int WriteStatToSet(int StatIndex, const std::string &value, CharacterStatSet *css)
 {
 	int r = StatIndex;
 	if(r == -1)
 		return -1;
 
 	char *base = (char*)css + StatList[r].offset;
+
 	switch(StatList[r].etype)
 	{
 	case StatType::SHORT:
 		{
-		short val = atoi(value);
+		short val = atoi(value.c_str());
 		memcpy(base, &val, sizeof(short));
 		return sizeof(short);
 		}
 	case StatType::INTEGER:
 		{
-		int val = atoi(value);
+		int val = atoi(value.c_str());
 		memcpy(base, &val, sizeof(int));
 		return sizeof(int);
 		}
 	case StatType::FLOAT:
 		{
-		float val = (float)atof(value);
+		float val = (float)atof(value.c_str());
 		memcpy(base, &val, sizeof(float));
 		return sizeof(float);
 		}
 	case StatType::CSTRING:
 		{
-		int len = strlen(value);
+		int len = value.length();
 		if(len > StatList[r].size - 1)
 		{
 			g_Logs.server->warn("Text is too long to fit variable size of %v (%v)", len, value);
 			len = StatList[r].size - 1;
 		}
-		strncpy(base, value, len);
+		value.copy(base, len);
 		base[len] = 0;
 		return len;
 		}
@@ -757,7 +757,7 @@ int WriteStatToSet(int StatIndex, const char *value, CharacterStatSet *css)
 	return -1;
 }
 
-int WriteStatToSetByName(const char *name, const char *value, CharacterStatSet *css)
+int WriteStatToSetByName(const std::string &name, const std::string &value, CharacterStatSet *css)
 {
 	return WriteStatToSet(GetStatIndexByName(name), value, css);
 }
@@ -806,6 +806,54 @@ int WriteStatToJSON(int StatIndex, CharacterStatSet *css, Json::Value &value)
 		value[StatList[r].name] = s;
 		return 0;
 		}
+	}
+
+	return -1;
+}
+
+int WriteStatToEntity(int StatIndex, CharacterStatSet *css, AbstractEntityWriter *writer)
+{
+	int r = StatIndex;
+	if(r == -1)
+		return -1;
+
+	char *base = (char*)css + StatList[r].offset;
+
+	switch(StatList[r].etype)
+	{
+	case StatType::SHORT:
+		{
+		short val = 0;
+		memcpy(&val, base, sizeof(short));
+		writer->Value(StatList[r].name, val);
+		return sizeof(short);
+		}
+	case StatType::INTEGER:
+		{
+		int val = 0;
+		memcpy(&val, base, sizeof(int));
+		writer->Value(StatList[r].name, val);
+		return sizeof(int);
+		}
+	case StatType::FLOAT:
+		{
+		float val = 0.0F;
+		memcpy(&val, base, sizeof(float));
+		writer->Value(StatList[r].name, val);
+		return sizeof(float);
+		}
+	case StatType::STRING:
+	{
+		std::string s = ((std::string*)base)->c_str();
+		writer->Value(StatList[r].name, s);
+		return s.length();
+	}
+	case StatType::CSTRING:
+	{
+		std::string s = base;
+		writer->Value(StatList[r].name, s);
+		return s.length();
+	}
 	}
 
 	return -1;

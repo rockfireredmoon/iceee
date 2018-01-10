@@ -1,17 +1,13 @@
-if WINSERVICE
-bin_PROGRAMS = tawd tawdsvc
-else
-bin_PROGRAMS = tawd
-endif
+noinst_LIBRARIES = libtawd.a
 
-tawd_CPPFLAGS = -I../squirrel/include
-tawd_LDADD = ../squirrel/squirrel/libsquirrel.a ../squirrel/sqstdlib/libsqstdlib.a
-tawd_LDFLAGS = -v
+libtawd_a_CPPFLAGS = -I../squirrel/include -I../LibCPPRedis/includes -I../LibCPPRedis/tacopie/includes
+libtawd_a_LIBADD = ../squirrel/squirrel/libsquirrel.a ../squirrel/sqstdlib/libsqstdlib.a ../LibCPPRedis/libcpp_redis.a ../LibCPPRedis/tacopie/libtacopie.a
 
-tawd_SOURCES = md5.cc \
+libtawd_a_SOURCES = md5.cc \
 	Ability2.cpp \
 	AbilityTime.cpp \
 	Account.cpp \
+	Achievements.cpp \
 	ActiveCharacter.cpp \
 	AIScript.cpp \
 	AIScript2.cpp \
@@ -25,6 +21,7 @@ tawd_SOURCES = md5.cc \
 	ChatChannel.cpp \
 	Chat.cpp \
 	Clan.cpp \
+	Cluster.cpp \
 	Combat.cpp \
 	Components.cpp \
 	Config.cpp \
@@ -38,6 +35,7 @@ tawd_SOURCES = md5.cc \
 	DebugTracer.cpp \
 	DirectoryAccess.cpp \
 	DropTable.cpp \
+	Entities.cpp \
 	EliteMob.cpp \
 	EssenceShop.cpp \
 	FileReader3.cpp \
@@ -50,6 +48,7 @@ tawd_SOURCES = md5.cc \
 	Guilds.cpp \
 	GM.cpp \
 	IGForum.cpp \
+	Info.cpp \
 	Instance.cpp \
 	InstanceScale.cpp \
 	InstanceScript.cpp \
@@ -59,8 +58,8 @@ tawd_SOURCES = md5.cc \
 	ItemSet.cpp \
 	jsoncpp.cpp \
 	Leaderboard.cpp \
-	main.cpp \
 	Mail.cpp \
+	md5.cc \
 	NPC.cpp \
 	Packet.cpp \
 	PartyManager.cpp \
@@ -74,12 +73,13 @@ tawd_SOURCES = md5.cc \
 	Report.cpp \
 	Router.cpp \
 	Scenery2.cpp \
+	Scheduler.cpp \
 	ScriptCore.cpp \
 	SimulatorBase.cpp \
 	Simulator.cpp \
 	SocketClass3.cpp \
 	Stats.cpp \
-	Timer.cpp \
+	StringUtil.cpp \
 	Trade.cpp \
 	URL.cpp \
 	Util.cpp \
@@ -88,6 +88,7 @@ tawd_SOURCES = md5.cc \
 	ZoneObject.cpp \
 	http/HTTP.cpp \
 	http/CAR.cpp \
+	http/GameInfo.cpp \
 	http/OAuth2.cpp \
 	http/TAWApi.cpp \
 	http/SiteClient.cpp \
@@ -100,6 +101,7 @@ tawd_SOURCES = md5.cc \
 	http/HTTPService.cpp \
 	auth/Auth.cpp \
 	auth/DevAuthentication.cpp \
+	auth/ClusterAuthentication.cpp \
 	auth/ServiceAuthentication.cpp \
 	message/MessageHandler.cpp \
 	message/LobbyMessage.cpp \
@@ -141,6 +143,7 @@ tawd_SOURCES = md5.cc \
 	Ability2.h \
 	AbilityTime.h \
 	Account.h \
+	Achievements.h \
 	ActiveCharacter.h \
 	AIScript.h \
 	AIScript2.h \
@@ -150,12 +153,15 @@ tawd_SOURCES = md5.cc \
 	Books.h \
 	BroadCast.h \
 	ByteBuffer.h \
+	Callback.h \
 	Character.h \
 	ChatChannel.h \
 	Chat.h \
 	Clan.h \
+	Cluster.h \
 	Combat.h \
 	CreditShop.h \
+	CompilerEnvironment.h \
 	CommonTypes.h \
 	Components.h \
 	Config.h \
@@ -171,6 +177,7 @@ tawd_SOURCES = md5.cc \
 	DecodePackets.h \
 	DirectoryAccess.h \
 	DropTable.h \
+	Entities.h \
 	EliteMob.h \
 	EssenceShop.h \
 	FileReader3.h \
@@ -183,6 +190,7 @@ tawd_SOURCES = md5.cc \
 	Globals.h \
 	Guilds.h \
 	GM.h \
+	Info.h \
 	IGForum.h \
 	Instance.h \
 	InstanceScale.h \
@@ -194,6 +202,7 @@ tawd_SOURCES = md5.cc \
 	ItemSet.h \
 	Leaderboard.h \
 	Mail.h \
+	md5.hh \
 	NPC.h \
 	Packet.h \
 	PartyManager.h \
@@ -208,13 +217,13 @@ tawd_SOURCES = md5.cc \
 	RotatingList.h \
 	Router.h \
 	Scenery2.h \
+	Scheduler.h \
 	ScriptCore.h \
-	Session.h \
 	SimulatorBase.h \
 	Simulator.h \
 	SocketClass3.h \
 	Stats.h \
-	Timer.h \
+	StringUtil.h \
 	Trade.h \
 	TradingBoard.h \
 	URL.h \
@@ -243,9 +252,11 @@ tawd_SOURCES = md5.cc \
 	sqrat/sqratUtil.h \
 	sqrat/sqratVM.h \
 	http/CAR.h \
+	http/GameInfo.h \
 	http/HTTP.h \
 	http/OAuth2.h \
 	http/TAWApi.h \
+	http/HTTPClient.h \
 	http/TAWClient.h \
 	http/SiteClient.h \
 	http/CivetServer.h \
@@ -257,6 +268,7 @@ tawd_SOURCES = md5.cc \
 	auth/Auth.h \
 	auth/DevAuthentication.h \
 	auth/ServiceAuthentication.h \
+	auth/ClusterAuthentication.h \
 	message/MessageHandler.h \
 	message/LobbyMessage.h \
 	message/SharedMessage.h \
@@ -291,300 +303,8 @@ tawd_SOURCES = md5.cc \
 	query/StatusHandlers.h \
 	query/PlayerHandlers.h \
 	util/base64.h \
+	util/easylogging++.h \
 	util/Log.h \
 	util/JsonHelpers.h \
 	util/SquirrelObjects.h
 	
-
-if WINSERVICE
-
-tawdsvc_CPPFLAGS = -I../squirrel/include -DWINDOWS_SERVICE=1
-tawdsvc_LDADD = ../squirrel/squirrel/libsquirrel.a ../squirrel/sqstdlib/libsqstdlib.a
-tawdsvc_SOURCES = md5.cc \
-	Ability2.cpp \
-	AbilityTime.cpp \
-	Account.cpp \
-	ActiveCharacter.cpp \
-	AIScript.cpp \
-	AIScript2.cpp \
-	Arena.cpp \
-	AuctionHouse.cpp \
-	Audit.cpp \
-	Books.cpp \
-	BroadCast.cpp \
-	ByteBuffer.cpp \
-	Character.cpp \
-	ChatChannel.cpp \
-	Chat.cpp \
-	Clan.cpp \
-	Combat.cpp \
-	Components.cpp \
-	Config.cpp \
-	ConfigString.cpp \
-	Crafting.cpp \
-	Creature.cpp \
-	CreditShop.cpp \
-	CreatureSpawner2.cpp \
-	Daily.cpp \
-	DebugProfiler.cpp \
-	DebugTracer.cpp \
-	DirectoryAccess.cpp \
-	DropTable.cpp \
-	EliteMob.cpp \
-	EssenceShop.cpp \
-	FileReader3.cpp \
-	FileReader.cpp \
-	FriendStatus.cpp \
-	Forms.cpp \
-	Fun.cpp \
-	Gamble.cpp \
-	Globals.cpp \
-	Guilds.cpp \
-	GM.cpp \
-	IGForum.cpp \
-	Instance.cpp \
-	InstanceScale.cpp \
-	InstanceScript.cpp \
-	Interact.cpp \
-	Inventory.cpp \
-	Item.cpp \
-	ItemSet.cpp \
-	jsoncpp.cpp \
-	main.cpp \
-	Leaderboard.cpp \
-	Mail.cpp \
-	NPC.cpp \
-	Packet.cpp \
-	PartyManager.cpp \
-	PlayerStats.cpp \
-	Preferences.cpp \
-	PVP.cpp \
-	QuestAction.cpp \
-	Quest.cpp \
-	QuestScript.cpp \
-	RemoteAction.cpp \
-	Report.cpp \
-	Router.cpp \
-	Scenery2.cpp \
-	ScriptCore.cpp \
-	SimulatorBase.cpp \
-	Simulator.cpp \
-	SocketClass3.cpp \
-	Stats.cpp \
-	Timer.cpp \
-	Trade.cpp \
-	URL.cpp \
-	Util.cpp \
-	VirtualItem.cpp \
-	ZoneDef.cpp \
-	ZoneObject.cpp \
-	http/HTTP.cpp \
-	http/CAR.cpp \
-	http/OAuth2.cpp \
-	http/TAWApi.cpp \
-	http/TAWClient.cpp \
-	http/SiteClient.cpp \
-	http/handle_form.inl \
-	http/CivetServer.cpp \
-	http/civetweb.c \
-	http/HTTPService.cpp \
-	http/LegacyAccounts.cpp \
-	http/WebControlPanel.cpp \
-	auth/Auth.cpp \
-	auth/DevAuthentication.cpp \
-	auth/ServiceAuthentication.cpp \
-	message/MessageHandler.cpp \
-	message/LobbyMessage.cpp \
-	message/SharedMessage.cpp \
-	message/GameMessage.cpp \
-	query/Query.cpp \
-	query/Lobby.cpp \
-	query/ClanHandlers.cpp \
-	query/PreferenceHandlers.cpp \
-	query/GMHandlers.cpp \
-	query/CreditShopHandlers.cpp \
-	query/VaultHandlers.cpp \
-	query/AuctionHouseHandlers.cpp \
-	query/FormHandlers.cpp \
-	query/ScriptHandlers.cpp \
-	query/MarkerHandlers.cpp \
-	query/SidekickHandlers.cpp \
-	query/QuestHandlers.cpp \
-	query/IGFHandlers.cpp \
-	query/TradeHandlers.cpp \
-	query/SceneryHandlers.cpp \
-	query/SupportHandlers.cpp \
-	query/BookHandlers.cpp \
-	query/BookHandlers.cpp \
-	query/ItemHandlers.cpp \
-	query/CommandHandlers.cpp \
-	query/LootHandlers.cpp \
-	query/FriendHandlers.cpp \
-	query/AbilityHandlers.cpp \
-	query/CreatureHandlers.cpp \
-	query/PetHandlers.cpp \
-	query/SpawnHandlers.cpp \
-	query/ZoneHandlers.cpp \
-	query/StatusHandlers.cpp \
-	query/PlayerHandlers.cpp \
-	util/base64.cpp \
-	util/JsonHelpers.cpp \
-	util/SquirrelObjects.cpp \
-	util/Log.cpp \
-	Books.h \
-	Ability2.h \
-	AbilityTime.h \
-	Account.h \
-	ActiveCharacter.h \
-	AIScript.h \
-	AIScript2.h \
-	Arena.h \
-	AuctionHouse.h \
-	Audit.h \
-	BroadCast.h \
-	ByteBuffer.h \
-	Character.h \
-	ChatChannel.h \
-	Chat.h \
-	Combat.h \
-	CreditShop.h \
-	Clan.h \
-	CommonTypes.h \
-	Components.h \
-	Config.h \
-	ConfigStr.h \
-	ConfigString.h \
-	Crafting.h \
-	Creature.h \
-	CreatureSpawner2.h \
-	Daily.h \
-	Debug.h \
-	DebugProfiler.h \
-	DebugTracer.h \
-	DecodePackets.h \
-	DirectoryAccess.h \
-	DropTable.h \
-	EliteMob.h \
-	EssenceShop.h \
-	FileReader3.h \
-	FileReader.h \
-	Formula.h \
-	Forms.h \
-	FriendStatus.h \
-	Fun.h \
-	Gamble.h \
-	Globals.h \
-	Guilds.h \
-	GM.h \
-	IGForum.h \
-	Instance.h \
-	InstanceScale.h \
-	InstanceScript.h \
-	IntArray.h \
-	Interact.h \
-	Inventory.h \
-	Item.h \
-	ItemSet.h \
-	Leaderboard.h \
-	Mail.h \
-	NPC.h \
-	Packet.h \
-	PartyManager.h \
-	PlayerStats.h \
-	Preferences.h \
-	PVP.h \
-	QuestAction.h \
-	Quest.h \
-	QuestScript.h \
-	RemoteAction.h \
-	Report.h \
-	RotatingList.h \
-	Router.h \
-	Scenery2.h \
-	ScriptCore.h \
-	Session.h \
-	SimulatorBase.h \
-	Simulator.h \
-	SocketClass3.h \
-	Stats.h \
-	Timer.h \
-	Trade.h \
-	TradingBoard.h \
-	URL.h \
-	Util.h \
-	VirtualItem.h \
-	ZoneDef.h \
-	ZoneObject.h \
-	json/json-forwards.h \
-	json/json.h \
-	sqmodule.h \
-	sqrat.h \
-	sqratimport.h \
-	sqrat/sqratAllocator.h \
-	sqrat/sqratArray.h \
-	sqrat/sqratClass.h \
-	sqrat/sqratClassType.h \
-	sqrat/sqratConst.h \
-	sqrat/sqratFunction.h \
-	sqrat/sqratGlobalMethods.h \
-	sqrat/sqratMemberMethods.h \
-	sqrat/sqratObject.h \
-	sqrat/sqratOverloadMethods.h \
-	sqrat/sqratScript.h \
-	sqrat/sqratTable.h \
-	sqrat/sqratTypes.h \
-	sqrat/sqratUtil.h \
-	sqrat/sqratVM.h \
-	http/CAR.h \
-	http/HTTP.h \
-	http/OAuth2.h \
-	http/TAWApi.h \
-	http/TAWClient.h \
-	http/SiteClient.h \
-	http/CivetServer.h \
-	http/civetweb.h \
-	http/HTTPService.h \
-	http/md5.inl \
-	http/LegacyAccounts.h \
-	http/WebControlPanel.h \
-	auth/Auth.h \
-	auth/DevAuthentication.h \
-	auth/ServiceAuthentication.h \
-	message/MessageHandler.h \
-	message/LobbyMessage.h \
-	message/SharedMessage.h \
-	message/GameMessage.h \
-	query/PreferenceHandlers.h \
-	query/Query.h \
-	query/Lobby.h \
-	query/ClanHandlers.h \
-	query/GMHandlers.h \
-	query/CreditShopHandlers.h \
-	query/VaultHandlers.h \
-	query/AuctionHouseHandlers.h \
-	query/BookHandlers.h \
-	query/ScriptHandlers.h \
-	query/FormHandlers.h \
-	query/MarkerHandlers.h \
-	query/SidekickHandlers.h \
-	query/QuestHandlers.h \
-	query/IGFHandlers.h \
-	query/TradeHandlers.h \
-	query/SceneryHandlers.h \
-	query/ItemHandlers.h \
-	query/CommandHandlers.h \
-	query/SupportHandlers.h \
-	query/LootHandlers.h \
-	query/FriendHandlers.h \
-	query/AbilityHandlers.h \
-	query/CreatureHandlers.h \
-	query/PetHandlers.h \
-	query/SpawnHandlers.h \
-	query/ZoneHandlers.h \
-	query/StatusHandlers.h \
-	query/PlayerHandlers.h \
-	util/base64.h \
-	util/Log.h \
-	util/JsonHelpers.h \
-	util/SquirrelObjects.h
-endif

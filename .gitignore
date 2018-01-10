@@ -36,7 +36,14 @@ aclocal.m4
 *.autotools
 /Audit/
 **/*.cnut
+**/*.o
+**/*.Po
 **/**/*.cnut
+**/**/.doxygen
+**/**/.appveyor.yml
+**/**/.travis.yml
+**/**/.clang-format
+**/**/.dirstamp
 **/**/Makefile
 /Clan/
 /Deleted/
@@ -50,3 +57,7 @@ aclocal.m4
 /BACKUP/
 /aclocal.m4
 /*.txt
+/Local.tmp/
+/Logs.tmp/
+/builddir/
+/logs/

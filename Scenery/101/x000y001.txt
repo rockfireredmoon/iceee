@@ -1,8 +1,0 @@
-[ENTRY]
-ID=1132679
-Asset=Prop-Cave#Prop-Cave_Entrance1
-Name=
-Pos=878.942,598.647,1949.59
-Orient=0,0.0249974,0,0.999687
-Scale=3,3,3
-

@@ -161,6 +161,23 @@ public:
 	int handleCommand(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
 };
 
+class ShutdownHandler : public AbstractCommandHandler {
+public:
+	ShutdownHandler();
+	~ShutdownHandler() {};
+	int handleCommand(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
+private:
+	void ScheduleShutdown(int minutes, const std::string &reason);
+	int mShutdownTask;
+};
+
+class ListShardsHandler : public AbstractCommandHandler {
+public:
+	ListShardsHandler();
+	~ListShardsHandler() {};
+	int handleCommand(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
+};
+
 class GMWhoHandler : public AbstractCommandHandler {
 public:
 	GMWhoHandler();
@@ -471,6 +488,12 @@ public:
 	~CycleHandler() {};
 	int handleCommand(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
 };
+class TimeHandler : public AbstractCommandHandler {
+public:
+	TimeHandler();
+	~TimeHandler() {};
+	int handleCommand(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
+};
 
 class SearSizeHandler : public AbstractCommandHandler {
 public:
@@ -567,6 +590,13 @@ class MaintainHandler : public AbstractCommandHandler {
 public:
 	MaintainHandler();
 	~MaintainHandler() {};
+	int handleCommand(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
+};
+
+class AchievementsHandler : public AbstractCommandHandler {
+public:
+	AchievementsHandler();
+	~AchievementsHandler() {};
 	int handleCommand(SimulatorThread *sim, CharacterServerData *pld, SimulatorQuery *query, CreatureInstance *creatureInstance);
 };
 

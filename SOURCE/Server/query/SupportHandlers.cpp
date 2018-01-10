@@ -153,7 +153,7 @@ int PetitionListHandler::handleQuery(SimulatorThread *sim,
 		}
 		sprintf(sim->Aux1, "%d", it->category);
 		wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux1);
-		wpos += PutStringUTF(&sim->SendBuf[wpos], it->description);
+		wpos += PutStringUTF(&sim->SendBuf[wpos], it->description.c_str());
 		wpos += PutStringUTF(&sim->SendBuf[wpos], "0");  // TODO score
 		time_t ts;
 		timeinfo = localtime(&ts);

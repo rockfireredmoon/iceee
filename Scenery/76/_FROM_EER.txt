@@ -1,3 +1,0 @@
-This data was extracted from EER log files.
-
-Removed starting NPCs.

@@ -9,16 +9,9 @@
 </head>
 <body>
 
-<script type="text/javascript" src="targetAddress.js"></script>
-
 <script type="text/javascript">
 
 var maxSimulator = 12;
-
-/*
-var targetAddress = "http://localhost/";
-*/
-
 var xhttp;
 
 function AppendParam(list, key, value)
@@ -214,10 +207,9 @@ function SendPOST(file, args)
 
 	xhttp = new XMLHttpRequest(); 
 	xhttp.onreadystatechange = HandlerOnReadyStateChange;
-	xhttp.open("POST", targetAddress + file);
+	xhttp.open("POST", "/" + file);
 	xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-	xhttp.setRequestHeader("Content-Length", args.length);
-	xhttp.setRequestHeader("Connection", "close");
+	xhttp.setRequestHeader("User-Agent", "EETAW");
 	xhttp.send(args);    
 }
 
