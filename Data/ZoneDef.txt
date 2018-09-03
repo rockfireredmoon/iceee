@@ -184,7 +184,7 @@ TERRAINCONFIG=Terrain-NewBremen#Terrain-NewBremen.cfg
 ENVIRONMENTTYPE=HappyWinter
 ShardName=Winter Land
 WarpName=Winterland
-DefLoc=24883,122,33093
+DefLoc=25100,125,31867
 
 [ENTRY]
 ID=1

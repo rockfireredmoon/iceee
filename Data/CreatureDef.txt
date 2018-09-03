@@ -32712,24 +32712,22 @@ dexterity=85
 constitution=125
 psyche=107
 spirit=125
-base_damage_melee=155
 damage_resist_melee=2194
 damage_resist_fire=2194
 damage_resist_frost=2194
 damage_resist_mystic=2194
 damage_resist_death=2194
-will_regen=1
-might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
+appearance=n4:{["sk"]={["base"]="7259E9",["eyes"]="FFFD00",["stripes"]="BFBFBF"},["c"]="Horde-Skrill-Worker",["sz"]=".8"}
 level=48
 display_name=Skrill Hivedrone
-profession=5
+profession=2
 creature_category=Mortal
 rarity=1
+base_damage_melee=155
 ai_package=4_druid_range_30
-appearance=n4:{["sk"]={["base"]="7259E9",["eyes"]="FFFD00",["stripes"]="BFBFBF"},["c"]="Horde-Skrill-Worker",["sz"]=".8"}
 total_size=5
 
 [ENTRY]
@@ -32744,15 +32742,13 @@ damage_resist_fire=2292
 damage_resist_frost=2292
 damage_resist_mystic=2292
 damage_resist_death=2292
-will_regen=1
-might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
 appearance=n4:{["sk"]={["stripe2"]="b78338",["skin"]="5c5e46",["wings"]="abc8c6",["stripe1"]="921101"},["c"]="Horde-Skrill-Trooper",["sz"]="1.2"}
 level=49
 display_name=Skrill Hivedrone
-profession=5
+profession=2
 creature_category=Mortal
 rarity=1
 base_damage_melee=164
@@ -32770,15 +32766,13 @@ damage_resist_fire=2341
 damage_resist_frost=2341
 damage_resist_mystic=2341
 damage_resist_death=2341
-will_regen=1
-might_regen=1
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
 appearance=n4:{["sk"]={["stripe2"]="b78338",["skin"]="5c5e46",["wings"]="abc8c6",["stripe1"]="464b94"},["c"]="Horde-Skrill-Trooper",["sz"]="1.2"}
 level=50
 display_name=Skrill Hivedrone
-profession=5
+profession=2
 creature_category=Mortal
 rarity=1
 base_damage_melee=169
@@ -74021,20 +74015,16 @@ ai_package=knight_brave_6
 
 [ENTRY]
 ID=3403
-strength=23
-dexterity=19
-constitution=23
-psyche=16
-spirit=16
-base_damage_melee=12
-damage_resist_melee=213
-damage_resist_fire=213
-damage_resist_frost=213
-damage_resist_mystic=213
-damage_resist_death=213
-base_health=253
-will_regen=1
-might_regen=1
+strength=15
+dexterity=13
+constitution=18
+psyche=11
+spirit=11
+damage_resist_melee=180
+damage_resist_fire=180
+damage_resist_frost=180
+damage_resist_mystic=180
+damage_resist_death=180
 offhand_weapon_damage=500
 casting_setback_chance=500
 channeling_break_chance=500
@@ -74043,6 +74033,8 @@ level=7
 display_name=Krusty the Crab
 profession=2
 creature_category=Mortal
+base_damage_melee=12
+base_health=253
 ai_package=knight_brave_6
 
 [ENTRY]
@@ -76492,4 +76484,15 @@ level=1
 display_name=Yellow Crystal
 profession=1
 creature_category=Inanimate
+ai_package=nothing
+
+[ENTRY]
+defHints=48
+ID=3560
+appearance=c2:{["sz"]="1.0",["g"]="m",["h"]=0,["r"]="y",["b"]="n",["c"]={["boots"]={["type"]="Armor-Cloth-Male-Fancy1",["colors"]=["151515","3f3f3f","fcd3b5","e9dbec","151515","151515","6a2112","606af0"]},["leggings"]={["type"]="Armor-Cloth-Male-Fancy2",["colors"]=["2f625d","ffffff","fae29a","4064c4","e9e94c","ffffff","151515","5d1b01"]},["collar"]={["type"]="Armor-Cloth-Female-Fancy2",["colors"]=[]},["chest"]={["type"]="Armor-Exotic-Valentines",["colors"]=["2b2d33","6a5656","fffe53","2a2a2a","e2e7e9"]},["gloves"]={["type"]="Armor-Warrior-Tauranian",["colors"]=["3f3f3f","583748","656fc6","e9a969"]}},["a"]=[{["node"]="right_hand",["type"]="Item-Talisman-Candelabra",["colors"]=[]}],["sk"]={["skin"]="60d4d4",["detail"]="ffffff",["headdetail"]="00bfbf",["hair"]="15e9e9"}}
+level=1
+display_name=Edward Skrinch
+profession=1
+creature_category=Mortal
+rarity=3
 ai_package=nothing

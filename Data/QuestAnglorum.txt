@@ -819,7 +819,7 @@ Obj.0.description=Find and kill Snatchclaw
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=0 of 1
-Obj.0.markerLocations=39822.0,60010.0,115.011,81;
+Obj.0.markerLocations=39822.0,115.011,60.01,81;
 [ACT]
 Act.BodyText=Return to the Bounty Board!
 Obj.0.type=talk
@@ -860,7 +860,7 @@ Obj.0.description=Kill Petrie
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=0 of 1
-Obj.0.markerLocations=59014.0,56000.0,246.323,81;
+Obj.0.markerLocations=59014.0,246.323,56000.0,81;
 [ACT]
 Act.BodyText=Return to the Bounty Board!
 Obj.0.type=talk
@@ -4035,7 +4035,7 @@ Obj.0.description=Defeat Mosk
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=0 of 1
-Obj.0.markerLocations=44826.0,49314.0,297.803,81;
+Obj.0.markerLocations=44826.0,297.803,49314.0,81;
 [ACT]
 Act.BodyText=Return to the Bounty Board!
 Obj.0.type=talk
@@ -4808,7 +4808,7 @@ Obj.0.description=Defeat Trabid
 Obj.0.myCreatureDefID=
 Obj.0.myItemID=
 Obj.0.completeText=0 of 1
-Obj.0.markerLocations=42389.0,46312.0,225.597,81;
+Obj.0.markerLocations=42389.0,225.597,46312.0,81;
 [ACT]
 Act.BodyText=Return to the Bounty Board!
 Obj.0.type=talk
