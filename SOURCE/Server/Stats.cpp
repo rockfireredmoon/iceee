@@ -206,92 +206,92 @@ StatDefinition StatList[] =
 const int MaxStatList = sizeof(StatList) / sizeof(StatList[0]);
 
 StatusEffectBitInfo StatusEffectBitData[] = {
-	{StatusEffects::DEAD,                  0, (1 << 0),  "DEAD" },
-	{StatusEffects::SILENCE,               0, (1 << 1),  "SILENCE" },
-	{StatusEffects::DISARM,                0, (1 << 2),  "DISARM" },
-	{StatusEffects::STUN,                  0, (1 << 3),  "STUN" },
+	{StatusEffects::DEAD,                  0,(unsigned int)(1 << 0),  "DEAD" },
+	{StatusEffects::SILENCE,               0,(unsigned int)(1 << 1),  "SILENCE" },
+	{StatusEffects::DISARM,                0,(unsigned int)(1 << 2),  "DISARM" },
+	{StatusEffects::STUN,                  0,(unsigned int)(1 << 3),  "STUN" },
 
-	{StatusEffects::DAZE,                  0, (1 << 4),  "DAZE" },
-	{StatusEffects::CHARM,                 0, (1 << 5),  "CHARM" },
-	{StatusEffects::FEAR,                  0, (1 << 6),  "FEAR" },
-	{StatusEffects::ROOT,                  0, (1 << 7),  "ROOT" },
-	
-	{StatusEffects::LOCKED,                0, (1 << 8),  "LOCKED" },
-	{StatusEffects::BROKEN,                0, (1 << 9),  "BROKEN" },
-	{StatusEffects::CAN_USE_WEAPON_2H,     0, (1 << 10), "CAN_USE_WEAPON_2H" },
-	{StatusEffects::CAN_USE_WEAPON_1H,     0, (1 << 11), "CAN_USE_WEAPON_1H" },
+	{StatusEffects::DAZE,                  0,(unsigned int)(1 << 4),  "DAZE" },
+	{StatusEffects::CHARM,                 0,(unsigned int)(1 << 5),  "CHARM" },
+	{StatusEffects::FEAR,                  0,(unsigned int)(1 << 6),  "FEAR" },
+	{StatusEffects::ROOT,                  0,(unsigned int)(1 << 7),  "ROOT" },
 
-	{StatusEffects::CAN_USE_WEAPON_SMALL,  0, (1 << 12), "CAN_USE_WEAPON_SMALL" },
-	{StatusEffects::CAN_USE_WEAPON_POLE,   0, (1 << 13), "CAN_USE_WEAPON_POLE" },
-	{StatusEffects::CAN_USE_WEAPON_BOW,    0, (1 << 14), "CAN_USE_WEAPON_BOW" },
-	{StatusEffects::CAN_USE_WEAPON_THROWN, 0, (1 << 15), "CAN_USE_WEAPON_THROWN" },
+	{StatusEffects::LOCKED,                0,(unsigned int)(1 << 8),  "LOCKED" },
+	{StatusEffects::BROKEN,                0,(unsigned int)(1 << 9),  "BROKEN" },
+	{StatusEffects::CAN_USE_WEAPON_2H,     0,(unsigned int)(1 << 10), "CAN_USE_WEAPON_2H" },
+	{StatusEffects::CAN_USE_WEAPON_1H,     0,(unsigned int)(1 << 11), "CAN_USE_WEAPON_1H" },
 
-	{StatusEffects::CAN_USE_WEAPON_WAND,   0, (1 << 16), "CAN_USE_WEAPON_WAND" },
-	{StatusEffects::CAN_USE_DUAL_WIELD,    0, (1 << 17), "CAN_USE_DUAL_WIELD" },
-	{StatusEffects::CAN_USE_PARRY,         0, (1 << 18), "CAN_USE_PARRY" },
-	{StatusEffects::CAN_USE_BLOCK,         0, (1 << 19), "CAN_USE_BLOCK" },
+	{StatusEffects::CAN_USE_WEAPON_SMALL,  0,(unsigned int)(1 << 12), "CAN_USE_WEAPON_SMALL" },
+	{StatusEffects::CAN_USE_WEAPON_POLE,   0,(unsigned int)(1 << 13), "CAN_USE_WEAPON_POLE" },
+	{StatusEffects::CAN_USE_WEAPON_BOW,    0,(unsigned int)(1 << 14), "CAN_USE_WEAPON_BOW" },
+	{StatusEffects::CAN_USE_WEAPON_THROWN, 0,(unsigned int)(1 << 15), "CAN_USE_WEAPON_THROWN" },
 
-	{StatusEffects::CAN_USE_ARMOR_CLOTH,   0, (1 << 20), "CAN_USE_ARMOR_CLOTH" },
-	{StatusEffects::CAN_USE_ARMOR_LIGHT,   0, (1 << 21), "CAN_USE_ARMOR_LIGHT" },
-	{StatusEffects::CAN_USE_ARMOR_MEDIUM,  0, (1 << 22), "CAN_USE_ARMOR_MEDIUM" },
-	{StatusEffects::CAN_USE_ARMOR_HEAVY,   0, (1 << 23), "CAN_USE_ARMOR_HEAVY" },
+	{StatusEffects::CAN_USE_WEAPON_WAND,   0,(unsigned int)(1 << 16), "CAN_USE_WEAPON_WAND" },
+	{StatusEffects::CAN_USE_DUAL_WIELD,    0,(unsigned int)(1 << 17), "CAN_USE_DUAL_WIELD" },
+	{StatusEffects::CAN_USE_PARRY,         0,(unsigned int)(1 << 18), "CAN_USE_PARRY" },
+	{StatusEffects::CAN_USE_BLOCK,         0,(unsigned int)(1 << 19), "CAN_USE_BLOCK" },
 
-	{StatusEffects::INVISIBLE,             0, (1 << 24), "INVISIBLE" },
-	{StatusEffects::ALL_SEEING,            0, (1 << 25), "ALL_SEEING" },
-	{StatusEffects::IN_COMBAT_STAND,       0, (1 << 26), "IN_COMBAT_STAND" },
-	{StatusEffects::INVINCIBLE,            0, (1 << 27), "INVINCIBLE" },
+	{StatusEffects::CAN_USE_ARMOR_CLOTH,   0,(unsigned int)(1 << 20), "CAN_USE_ARMOR_CLOTH" },
+	{StatusEffects::CAN_USE_ARMOR_LIGHT,   0,(unsigned int)(1 << 21), "CAN_USE_ARMOR_LIGHT" },
+	{StatusEffects::CAN_USE_ARMOR_MEDIUM,  0,(unsigned int)(1 << 22), "CAN_USE_ARMOR_MEDIUM" },
+	{StatusEffects::CAN_USE_ARMOR_HEAVY,   0,(unsigned int)(1 << 23), "CAN_USE_ARMOR_HEAVY" },
 
-	{StatusEffects::FLEE,                  0, (1 << 28), "FLEE" },
-	{StatusEffects::NO_AGGRO_GAINED,       0, (1 << 29), "NO_AGGRO_GAINED" },
-	{StatusEffects::UNATTACKABLE,          0, (1 << 30), "UNATTACKABLE" },
-	{StatusEffects::IS_USABLE,             0, (1 << 31), "IS_USABLE" },
+	{StatusEffects::INVISIBLE,             0,(unsigned int)(1 << 24), "INVISIBLE" },
+	{StatusEffects::ALL_SEEING,            0,(unsigned int)(1 << 25), "ALL_SEEING" },
+	{StatusEffects::IN_COMBAT_STAND,       0,(unsigned int)(1 << 26), "IN_COMBAT_STAND" },
+	{StatusEffects::INVINCIBLE,            0,(unsigned int)(1 << 27), "INVINCIBLE" },
 
-	// New array index
-	{StatusEffects::CLIENT_LOADING,        1, (1 << 0), "CLIENT_LOADING" },
-	{StatusEffects::IMMUNE_INTERRUPT,      1, (1 << 1), "IMMUNE_INTERRUPT" },
-	{StatusEffects::IMMUNE_SILENCE,        1, (1 << 2), "IMMUNE_SILENCE" },
-	{StatusEffects::IMMUNE_DISARM,         1, (1 << 3), "IMMUNE_DISARM" },
-
-	{StatusEffects::IMMUNE_BLEED,          1, (1 << 4), "IMMUNE_BLEED" },
-	{StatusEffects::IMMUNE_DAMAGE_FIRE,    1, (1 << 5), "IMMUNE_DAMAGE_FIRE" },
-	{StatusEffects::IMMUNE_DAMAGE_FROST,   1, (1 << 6), "IMMUNE_DAMAGE_FROST" },
-	{StatusEffects::IMMUNE_DAMAGE_MYSTIC,  1, (1 << 7), "IMMUNE_DAMAGE_MYSTIC" },
-
-	{StatusEffects::IMMUNE_DAMAGE_DEATH,   1, (1 << 8), "IMMUNE_DAMAGE_DEATH" },
-	{StatusEffects::IMMUNE_DAMAGE_MELEE,   1, (1 << 9), "IMMUNE_DAMAGE_MELEE" },
-	{StatusEffects::DISABLED,              1, (1 << 10), "DISABLED" },
-	{StatusEffects::AUTO_ATTACK,           1, (1 << 11), "AUTO_ATTACK" },
-
-	{StatusEffects::AUTO_ATTACK_RANGED,    1, (1 << 12), "AUTO_ATTACK_RANGED" },
-	{StatusEffects::CARRYING_RED_FLAG,     1, (1 << 13), "CARRYING_RED_FLAG" },
-	{StatusEffects::CARRYING_BLUE_FLAG,    1, (1 << 14), "CARRYING_BLUE_FLAG" },
-	{StatusEffects::HENGE,                 1, (1 << 15), "HENGE" },
-
-	{StatusEffects::TRANSFORMER,           1, (1 << 16), "TRANSFORMER" },
-	{StatusEffects::PVPABLE,               1, (1 << 17), "PVPABLE" },
-	{StatusEffects::IN_COMBAT,             1, (1 << 18), "IN_COMBAT" },
-	{StatusEffects::WALK_IN_SHADOWS,       1, (1 << 19), "WALK_IN_SHADOWS" },
-
-	{StatusEffects::EVADE,                 1, (1 << 20), "EVADE" },
-	{StatusEffects::TAUNTED,               1, (1 << 21), "TAUNTED" },
-	{StatusEffects::XP_BOOST,              1, (1 << 22), "XP_BOOST" },
-	{StatusEffects::REAGENT_GENERATOR,     1, (1 << 23), "REAGENT_GENERATOR" },
-
-	{StatusEffects::RES_PENALTY,           1, (1 << 24), "RES_PENALTY" },
-	{StatusEffects::IMMUNE_STUN,           1, (1 << 25), "IMMUNE_STUN" },
-	{StatusEffects::IMMUNE_DAZE,           1, (1 << 26), "IMMUNE_DAZE" },
-	{StatusEffects::GM_FROZEN,             1, (1 << 27), "GM_FROZEN" },
-
-	{StatusEffects::GM_INVISIBLE,          1, (1 << 28), "GM_INVISIBLE" },
-	{StatusEffects::GM_SILENCED,           1, (1 << 29), "GM_SILENCED" },
-
-	{StatusEffects::UNKILLABLE,            1, (1 << 30), "UNKILLABLE" },
-	{StatusEffects::TRANSFORMED,           1, (1 << 31), "TRANSFORMED" },
+	{StatusEffects::FLEE,                  0,(unsigned int)(1 << 28), "FLEE" },
+	{StatusEffects::NO_AGGRO_GAINED,       0,(unsigned int)(1 << 29), "NO_AGGRO_GAINED" },
+	{StatusEffects::UNATTACKABLE,          0,(unsigned int)(1 << 30), "UNATTACKABLE" },
+	{StatusEffects::IS_USABLE,             0,(unsigned int)(1 << 31), "IS_USABLE" },
 
 	// New array index
-	{StatusEffects::INVISIBLE_EQUIPMENT,   2, (1 << 0), "INVISIBLE_EQUIPMENT" },
-	{StatusEffects::USABLE_BY_COMBATANT,   2, (1 << 1), "USABLE_BY_COMBATANT" },
-	{StatusEffects::LEECHING,   		   2, (1 << 2), "LEECHING" },
+	{StatusEffects::CLIENT_LOADING,        1,(unsigned int)(1 << 0), "CLIENT_LOADING" },
+	{StatusEffects::IMMUNE_INTERRUPT,      1,(unsigned int)(1 << 1), "IMMUNE_INTERRUPT" },
+	{StatusEffects::IMMUNE_SILENCE,        1,(unsigned int)(1 << 2), "IMMUNE_SILENCE" },
+	{StatusEffects::IMMUNE_DISARM,         1,(unsigned int)(1 << 3), "IMMUNE_DISARM" },
+
+	{StatusEffects::IMMUNE_BLEED,          1,(unsigned int)(1 << 4), "IMMUNE_BLEED" },
+	{StatusEffects::IMMUNE_DAMAGE_FIRE,    1,(unsigned int)(1 << 5), "IMMUNE_DAMAGE_FIRE" },
+	{StatusEffects::IMMUNE_DAMAGE_FROST,   1,(unsigned int)(1 << 6), "IMMUNE_DAMAGE_FROST" },
+	{StatusEffects::IMMUNE_DAMAGE_MYSTIC,  1,(unsigned int)(1 << 7), "IMMUNE_DAMAGE_MYSTIC" },
+
+	{StatusEffects::IMMUNE_DAMAGE_DEATH,   1,(unsigned int)(1 << 8), "IMMUNE_DAMAGE_DEATH" },
+	{StatusEffects::IMMUNE_DAMAGE_MELEE,   1,(unsigned int)(1 << 9), "IMMUNE_DAMAGE_MELEE" },
+	{StatusEffects::DISABLED,              1,(unsigned int)(1 << 10), "DISABLED" },
+	{StatusEffects::AUTO_ATTACK,           1,(unsigned int)(1 << 11), "AUTO_ATTACK" },
+
+	{StatusEffects::AUTO_ATTACK_RANGED,    1,(unsigned int)(1 << 12), "AUTO_ATTACK_RANGED" },
+	{StatusEffects::CARRYING_RED_FLAG,     1,(unsigned int)(1 << 13), "CARRYING_RED_FLAG" },
+	{StatusEffects::CARRYING_BLUE_FLAG,    1,(unsigned int)(1 << 14), "CARRYING_BLUE_FLAG" },
+	{StatusEffects::HENGE,                 1,(unsigned int)(1 << 15), "HENGE" },
+
+	{StatusEffects::TRANSFORMER,           1,(unsigned int)(1 << 16), "TRANSFORMER" },
+	{StatusEffects::PVPABLE,               1,(unsigned int)(1 << 17), "PVPABLE" },
+	{StatusEffects::IN_COMBAT,             1,(unsigned int)(1 << 18), "IN_COMBAT" },
+	{StatusEffects::WALK_IN_SHADOWS,       1,(unsigned int)(1 << 19), "WALK_IN_SHADOWS" },
+
+	{StatusEffects::EVADE,                 1,(unsigned int)(1 << 20), "EVADE" },
+	{StatusEffects::TAUNTED,               1,(unsigned int)(1 << 21), "TAUNTED" },
+	{StatusEffects::XP_BOOST,              1,(unsigned int)(1 << 22), "XP_BOOST" },
+	{StatusEffects::REAGENT_GENERATOR,     1,(unsigned int)(1 << 23), "REAGENT_GENERATOR" },
+
+	{StatusEffects::RES_PENALTY,           1,(unsigned int)(1 << 24), "RES_PENALTY" },
+	{StatusEffects::IMMUNE_STUN,           1,(unsigned int)(1 << 25), "IMMUNE_STUN" },
+	{StatusEffects::IMMUNE_DAZE,           1,(unsigned int)(1 << 26), "IMMUNE_DAZE" },
+	{StatusEffects::GM_FROZEN,             1,(unsigned int)(1 << 27), "GM_FROZEN" },
+
+	{StatusEffects::GM_INVISIBLE,          1,(unsigned int)(1 << 28), "GM_INVISIBLE" },
+	{StatusEffects::GM_SILENCED,           1,(unsigned int)(1 << 29), "GM_SILENCED" },
+
+	{StatusEffects::UNKILLABLE,            1,(unsigned int)(1 << 30), "UNKILLABLE" },
+	{StatusEffects::TRANSFORMED,           1,(unsigned int)(1 << 31), "TRANSFORMED" },
+
+	// New array index
+	{StatusEffects::INVISIBLE_EQUIPMENT,   2,(unsigned int)(1 << 0), "INVISIBLE_EQUIPMENT" },
+	{StatusEffects::USABLE_BY_COMBATANT,   2,(unsigned int)(1 << 1), "USABLE_BY_COMBATANT" },
+	{StatusEffects::LEECHING,   		   2,(unsigned int)(1 << 2), "LEECHING" },
 };
 const int MAX_STATUSEFFECT = sizeof(StatusEffectBitData) / sizeof(StatusEffectBitInfo);
 

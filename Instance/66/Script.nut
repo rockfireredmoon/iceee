@@ -548,8 +548,12 @@ function reset_valkal1() {
     disengage_valkal(cid_valkal1);
    	inst.creature_chat(cid_valkal1, "s/", "Will no one face me? ... Cowards");
 	valkal1_full_health_count = 0;
-	inst.walk_then(cid_valkal1, loc_platform_centre, 192, CREATURE_WALK_SPEED, 0, function(res) {
-		inst.set_flag(cid_valkal1, SF_NON_COMBATANT, false);
+	
+	inst.exec(function() {
+		/* Must be queued as the function is not reentrant */
+		inst.walk_then(cid_valkal1, loc_platform_centre, 192, CREATURE_WALK_SPEED, 0, function(res) {
+			inst.set_flag(cid_valkal1, SF_NON_COMBATANT, false);
+		});
 	});
 }
 
@@ -563,8 +567,11 @@ function reset_valkal2() {
     disengage_valkal(cid_valkal2);
    	inst.creature_chat(cid_valkal2, "s/", "You've failed! You've all failed! ... You'll ALWAYS fail ....");
 	valkal2_full_health_count = 0;
-	inst.walk_then(cid_valkal2, valkal_2_positions[2].pos, valkal_2_positions[2].rot, CREATURE_RUN_SPEED, 0, function(res) {
-		inst.set_flag(cid_valkal2, SF_NON_COMBATANT, false);
+	inst.exec(function() {
+		/* Must be queued as the function is not reentrant */
+		inst.walk_then(cid_valkal2, valkal_2_positions[2].pos, valkal_2_positions[2].rot, CREATURE_RUN_SPEED, 0, function(res) {
+			inst.set_flag(cid_valkal2, SF_NON_COMBATANT, false);
+		});
 	});
 }
 

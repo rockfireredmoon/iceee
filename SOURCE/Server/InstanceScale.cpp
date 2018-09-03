@@ -140,7 +140,7 @@ void DropRateProfile::SetQualityFlags(int qualityLevel, const char *flags)
 		'*'
 	};
 
-	static const int FlagValue[11] = {
+	static const unsigned int FlagValue[11] = {
 		FLAG_RARITY_NORMAL_ALL        , FLAG_RARITY_NORMAL_NAMED,
 		FLAG_RARITY_HEROIC_ALL        , FLAG_RARITY_HEROIC_NAMED,
 		FLAG_RARITY_EPIC_ALL          , FLAG_RARITY_EPIC_NAMED,

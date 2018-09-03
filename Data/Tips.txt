@@ -1,0 +1,83 @@
+[ENTRY]
+Text=To access region chat, type in /region Your Message
+
+[ENTRY]
+Text=Refashion all types of items, applying one items apperance to another item's stats!
+
+[ENTRY]
+Text=Tired of walking!? Use your bind ability at a sanctuary and warp back in seconds!
+
+[ENTRY]
+Text=Anglorum and Europe are PvP enabled. Click on the [P] on your mini map to show you are willing to fight!
+
+[ENTRY]
+Text=You can press respecialize in the ability tab to reset all your points.
+
+[ENTRY]
+Text=Advanced crafting is now accessed from a Craft Artisan in any major town, the same as Standard Crafting.
+
+[ENTRY]
+Text=You may craft items anywhere if you have a portable crafting device. Obtain one from the Credit Shop!
+
+[ENTRY]
+Text=Access your bookshelf (an inventory specially for books and pages) using the /books command.
+
+[ENTRY]
+Text=To access local chat, type /say Your Message
+
+[ENTRY]
+Text=Get to your grove by standing on a Sanctuary and clicking the house icon on your mini-map
+
+[ENTRY]
+Text=Buy new groves from the Credit Shop, several 'templates' are available, with more to follow!
+
+[ENTRY]
+Text=Earn credits by killing named mobs.
+
+[ENTRY]
+Text=To access party chat, type in /party Your Message
+
+[ENTRY]
+Text=The more the merrier. Earn more credits by partying up for dungeons!
+
+[ENTRY]
+Text=Some enemies have special stages in their fight, keep sharp and find their weakness!
+
+[ENTRY]
+Text=Dungeons are great places to gear up but can be dangerous. Party up before entering!
+
+[ENTRY]
+Text=Everyone is welcome to play, please be kind and respectful to your fellow Beasts.
+
+[ENTRY]
+Text=Want more than 4 characters? New character slots can be purchased in Credit Shop.
+
+[ENTRY]
+Text=To send a player a private message, use /tell "Player Name"<br/>
+
+[ENTRY]
+Text=Want to send items to your offline friends? Use your delivery box and a postage stamp at any vault.
+
+[ENTRY]
+Text=We don't have bugs, honest! But ... if you find one, please report it with /bug.
+
+[ENTRY]
+Text=Get help from Earthsages by filing a /petition
+
+[ENTRY]
+Text=Use a Refashioner at any major town to give your items a new look.
+
+[ENTRY]
+Text=Every kill at or above your level earns you luck, which leads to heroism.
+
+[ENTRY]
+Text=Login every day to earn credits and other special gifts..
+
+[ENTRY]
+Text=Refashioning your thing? We now have Portable Refashioning Devices. Availble via crafting or the Credit Shop
+
+[ENTRY]
+Text=Use our dungeon scaler for tougher dungeons with more loot. See [Escape] -> Mod Settings -> Other Options
+
+[ENTRY]
+Text=To reply on a chat channel, click on the channel name in the chat log, e.g. [Region]
