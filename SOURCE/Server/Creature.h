@@ -578,6 +578,7 @@ public:
 	void LimitValueOverflows(void);
 	float GetHealthRatio(void);
 	void RunHealTick(void);
+	void OHKO();
 	void _SetStatusFlag(int statusID);
 	void _ClearStatusFlag(int statusID);
 	void SendFlags(void);

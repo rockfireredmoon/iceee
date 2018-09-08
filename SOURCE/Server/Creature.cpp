@@ -2233,6 +2233,33 @@ void CreatureInstance :: RunHealTick(void)
 	actInst->LSendToLocalSimulator(GSendBuf, size, CurrentX, CurrentZ);
 }
 
+void CreatureInstance :: OHKO()
+{
+	if(HasStatus(StatusEffects::DEAD) == true)
+		return;
+
+	int chealth = css.health;
+	css.health = 0;
+
+	int size = PrepExt_SendHealth(GSendBuf, CreatureID, css.health);
+	//actInst->LSendToAllSimulator(GSendBuf, size, -1);
+	actInst->LSendToLocalSimulator(GSendBuf, size, CurrentX, CurrentZ);
+
+	int amount = -chealth;
+	if(amount != 0)	{
+		size += PutByte(&GSendBuf[size], 4);
+		size += PutShort(&GSendBuf[size], 0);
+		size += PutInteger(&GSendBuf[size], CreatureID);
+		size += PutByte(&GSendBuf[size], 15);
+		//if(g_ProtocolVersion > 25)
+			size += PutInteger(&GSendBuf[size], CreatureID);
+		size += PutInteger(&GSendBuf[size], amount);
+		PutShort(&GSendBuf[1], size - 3);
+		//actInst->LSendToAllSimulator(GSendBuf, size, -1);
+		actInst->LSendToLocalSimulator(GSendBuf, size, CurrentX, CurrentZ);
+	}
+}
+
 void CreatureInstance :: Heal(int amount)
 {
 	if(HasStatus(StatusEffects::DEAD) == true)
