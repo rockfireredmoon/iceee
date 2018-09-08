@@ -2954,7 +2954,18 @@ void AbilityCalculator :: _DoDeathDamage(int amount)
 //OHK the target.
 int AbilityCalculator :: OHKO(ARGUMENT_LIST args)
 {
-	ciTarget->OHKO();
+	ciSource->CancelInvisibility();
+	mCriticalHitState = CRITICAL_SUPER;
+	ciSource->NotifySuperCrit(ciTarget->CreatureID);
+	mIsLightHit = false;
+	int div = ciTarget->css.health / 5;
+	mTotalDamage += ciTarget->css.health;
+	mTotalDamageFire += (ciTarget->css.health - (div * 4));
+	mTotalDamageDeath += div;
+	mTotalDamageFrost += div;
+	mTotalDamageMelee += div;
+	mTotalDamageMystic += div;
+	ciTarget->OnApplyDamage(ciSource, ciTarget->css.health);
 	return ABILITY_SUCCESS;
 }
 
