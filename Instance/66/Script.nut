@@ -795,11 +795,11 @@ function on_kill(cdefid, cid) {
 	}
 	else if(cdefid == CDEF_VAJ_1) {
 		death_toll.append(cid);
-   		inst.creature_chat(cid_valkal1, "s/", "No! This cannot be! My son ..");
+   		inst.creature_chat(cid_valkal2, "s/", "No! This cannot be! My son ..");
 	}
 	else if(cdefid == CDEF_VAJ_2) {
 		death_toll.append(cid);
-   		inst.creature_chat(cid_valkal1, "s/", "You .. you will pay .. I swear ...");
+   		inst.creature_chat(cid_valkal2, "s/", "You .. you will pay .. I swear ...");
 	}
 	
 }
