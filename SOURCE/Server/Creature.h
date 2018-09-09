@@ -631,6 +631,7 @@ public:
 	int RunMovementStep(void);
 	void UpdateDestination(void);
 	void MoveToTarget_Ex2(void);
+	void StopScriptMovement(int result);
 	void StopMovement(int result);
 	void MoveTo(int x, int z, int range, int speed);
 	void ProcessRegen(void);

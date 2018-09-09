@@ -5546,13 +5546,8 @@ void CreatureInstance :: CheckLeashMovement(void)
 	}
 }
 
-void CreatureInstance :: StopMovement(int result)
+void CreatureInstance :: StopScriptMovement(int result)
 {
-	if((CurrentTarget.DesLocX != 0 || CurrentTarget.DesLocZ != 0) && IsAtTether() && tetherFacing != -1) {
-		Rotation = tetherFacing;
-		Heading = tetherFacing;
-	}
-
 	if(scriptMoveEvent != -1) {
 		if(actInst != NULL && actInst->nutScriptPlayer != NULL) {
 			ScriptCore::NutScriptEvent *nse = actInst->nutScriptPlayer->GetEvent(scriptMoveEvent);
@@ -5565,6 +5560,17 @@ void CreatureInstance :: StopMovement(int result)
 		}
 		scriptMoveEvent = -1;
 	}
+}
+
+void CreatureInstance :: StopMovement(int result)
+{
+	if((CurrentTarget.DesLocX != 0 || CurrentTarget.DesLocZ != 0) && IsAtTether() && tetherFacing != -1) {
+		Rotation = tetherFacing;
+		Heading = tetherFacing;
+	}
+
+	StopScriptMovement(result);
+
 	CurrentTarget.DesLocX = 0;
 	CurrentTarget.DesLocZ = 0;
 	CurrentTarget.desiredRange = 0;

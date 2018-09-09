@@ -528,14 +528,16 @@ function valkals_desperation() {
 		inst.set_flag(cid_valkal1, SF_NON_COMBATANT, false);
 		inst.resume_ai(cid_valkal1);
 		inst.set_creature_gtae(cid_valkal1);
-        if(!inst.creature_use(cid_valkal1, THOUSAND_BATS)) {
-        	if(debug)
-            	inst.info("Failed to THOUSAND_BATS");
-            valkal_1_engage();
-        }
-        else {
-            inst.queue(valkal_1_engage, 10000);
-	    }
+		inst.exec(function() {
+	        if(!inst.creature_use(cid_valkal1, THOUSAND_BATS)) {
+	        	if(debug)
+	            	inst.info("Failed to THOUSAND_BATS");
+	            valkal_1_engage();
+	        }
+	        else {
+	            inst.queue(valkal_1_engage, 10000);
+		    }
+		});
     });
 }
 
