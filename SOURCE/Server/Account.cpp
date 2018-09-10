@@ -1422,8 +1422,8 @@ int AccountManager :: CreateCharacter(STRINGLIST &args, AccountData *accPtr)
 		if(args[7].compare("0.85") == 0)
 			args[7] = "1.0";
 		wpos += sprintf(&buffer[wpos], "[\"sz\"]=\"%s\",", args[7].c_str());
-		wpos += sprintf(&buffer[wpos], "[\"es\"]=\"%s\",", args[11].c_str());
-		wpos += sprintf(&buffer[wpos], "[\"ts\"]=\"%s\",", args[12].c_str());
+		wpos += sprintf(&buffer[wpos], "[\"ts\"]=\"%s\",", args[11].c_str());
+		wpos += sprintf(&buffer[wpos], "[\"es\"]=\"%s\",", args[12].c_str());
 
 		wpos += sprintf(&buffer[wpos], "[\"sk\"]={");
 		for(size_t i = 13; i < args.size(); i+=2)
