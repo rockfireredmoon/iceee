@@ -1,5 +1,7 @@
 # About TAWD - An Earth Eternal Server
 
+![](Web/GitHub/taw.png) 
+
 ## Introduction
 
 Earth Eternal is an abandoned MMORPG published and run by Sparkplay Media from 2007 to 2010. Since then it has been in various hands, but never achieved mainstream success. 
