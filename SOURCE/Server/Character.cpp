@@ -430,7 +430,7 @@ bool CharacterData :: ReadEntity(AbstractEntityReader *reader) {
 				}
 			}
 			else if((*i) == "complete") {
-				for(int a = 0; a < l.size(); a++) {
+				for(size_t a = 0; a < l.size(); a++) {
 					newItem.QuestID = atoi(l[a].c_str());
 					questJournal.completedQuests.AddItem(newItem);
 				}
@@ -609,7 +609,6 @@ bool CharacterData :: WriteEntity(AbstractEntityWriter *writer) {
 				std::string s = StringUtil::Format("%lu,%d", slot->CCSID & CONTAINER_SLOT,
 						slot->IID );
 
-				bool extend = false;
 				if(slot->count > 0 || slot->customLook != 0 || slot->bindStatus != 0 || slot->secondsRemaining != -1)
 					s += StringUtil::Format(",%d,%d,%d,%ld", slot->count, slot->customLook, slot->bindStatus, slot->AdjustTimes());
 
@@ -1704,7 +1703,6 @@ CharacterLeaderboard :: ~CharacterLeaderboard() {
 
 void CharacterLeaderboard :: OnBuild(std::vector<Leader> *leaders)
 {
-	unsigned int idx = 0;
 	g_ClusterManager.Scan([this, leaders](const std::string &v){
 		STRINGLIST l;
 		Util::Split(v, ":", l);

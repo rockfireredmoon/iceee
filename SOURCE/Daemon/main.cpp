@@ -195,7 +195,7 @@ void segfault_sigaction(int signum, siginfo_t *si, void *arg)
 		void *ptrBuf[256];
 
 		int numPtr = backtrace(ptrBuf, 256);
-		g_Logs.server->fatal("Number of pointers: %v", numPtr);
+		g_Logs.server->fatal("Number of poXinters: %v", numPtr);
 		char **result = backtrace_symbols(ptrBuf, numPtr);
 		g_Logs.server->fatal("Stack trace:");
 		if(result != NULL)

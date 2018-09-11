@@ -1259,10 +1259,8 @@ int CraftCreateHandler::protected_helper_query_craft_create(
 	InventorySlot * reagentPtr = NULL;
 	ItemDef * reagentDef = NULL;
 	bool unstack = false;
-	bool free = false;
 
 	if (CreatureID == creatureInstance->CreatureID) {
-		free = true;
 		reagentPtr = pld->charPtr->inventory.GetBestSpecialItem(
 				GetContainerIDFromName("inv"), PORTABLE_CRAFTKIT);
 		if (reagentPtr == NULL) {
@@ -1400,10 +1398,8 @@ int ModCraftHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 			InventorySlot * reagentPtr = NULL;
 			ItemDef * reagentDef = NULL;
 			bool unstack = false;
-			bool free = false;
 
 			if (creatureID == creatureInstance->CreatureID) {
-				free = true;
 				reagentPtr = pld->charPtr->inventory.GetBestSpecialItem(
 						GetContainerIDFromName("inv"), PORTABLE_CRAFTKIT);
 				if (reagentPtr == NULL) {

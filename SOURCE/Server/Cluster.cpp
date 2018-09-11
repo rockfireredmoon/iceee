@@ -282,7 +282,6 @@ bool ClusterEntityWriter::End() {
 
 	vector<pair<string, string>> a;
 	string lastSec;
-	int secIdx;
 
 	/* Write a key that contains a list of all the subkeys created for this entity. First
 	 * get the key. If it exists, remove all the existing keys first. Then we trim
@@ -339,7 +338,7 @@ bool ClusterEntityWriter::End() {
 			mClient->del({*it});
 		}
 	}
-	if(sync)
+	if(mSync)
 		mClient->sync_commit();
 	else
 		mClient->commit();

@@ -80,6 +80,8 @@ public:
 
 class FileResource {
 public:
+	FileResource(const std::string &path);
+	~FileResource();
 	FILE *fd;
 	std::string filePath;
 	unsigned long fileSize;
@@ -103,6 +105,7 @@ public:
 	bool requiresAuthentication;
 };
 
+
 class AbstractCivetHandler: public CivetHandler {
 public:
 	std::string formatTime(std::time_t *now);
@@ -116,6 +119,8 @@ public:
 	bool parseForm(CivetServer *server, struct mg_connection *conn,
 			std::map<std::string, std::string> &parms);
 
+	void send_file_data(struct mg_connection *conn, FileResource *filep);
+
 	void writeWWWAuthenticate(CivetServer *server, struct mg_connection *conn, std::string realm);
 
 	void writeJSON200(CivetServer *server, struct mg_connection *conn,
@@ -128,12 +133,16 @@ public:
 			std::string msg, std::string data);
 
 	void writeResponse(CivetServer *server, struct mg_connection *conn, std::string data, std::string contentType);
+
+	int openFile(const struct mg_request_info * req_info, FileResource *file);
+
+	void sendStatusFile(struct mg_connection *conn, const struct mg_request_info * req_info, int code, const std::string &codeText, const std::string &defaultMessage);
 };
 class PageOptions {
 public:
-	int count;
-	int top;
-	int start;
+	unsigned int count;
+	unsigned int top;
+	unsigned int start;
 	std::string sort;
 	bool desc;
 

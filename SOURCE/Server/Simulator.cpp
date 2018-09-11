@@ -3294,9 +3294,9 @@ bool SimulatorThread::QuestInvite(int QuestID) {
 		return false;
 
 	QuestDefinition *qdef = QuestDef.GetQuestDefPtrByID(QuestID);
-	ActiveParty *party =
-			creatureInst->PartyID > 0 ?
-					g_PartyManager.GetPartyByID(creatureInst->PartyID) : NULL;
+//	ActiveParty *party =
+//			creatureInst->PartyID > 0 ?
+//					g_PartyManager.GetPartyByID(creatureInst->PartyID) : NULL;
 	if (qdef != NULL) {
 		creatureInst->charPtr->BuildAvailableQuests(QuestDef);
 

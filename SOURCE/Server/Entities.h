@@ -54,6 +54,7 @@ public:
 	void Key(const std::string & catalog, const std::string &id);
 	bool Value(const std::string &key, const unsigned long value);
 	bool Value(const std::string &key, const int value);
+	bool Value(const std::string &key, const unsigned int value);
 	bool Value(const std::string &key, const bool value);
 	bool Value(const std::string &key, const float value);
 	void PushSection(const std::string &section);

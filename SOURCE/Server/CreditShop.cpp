@@ -305,7 +305,7 @@ int CreditShopManager::ValidateItem(CreditShopItem *csItem, AccountData *accPtr,
 			return CreditShopError::NOT_ENOUGH_CREDITS;
 	}
 
-	unsigned long nowTimeSec = time(NULL);
+	time_t nowTimeSec = time(NULL);
 	if (csItem->mStartDate != 0 && nowTimeSec < (csItem->mStartDate))
 		return CreditShopError::NOT_YET_AVAILABLE;
 

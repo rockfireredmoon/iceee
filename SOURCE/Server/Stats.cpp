@@ -641,7 +641,7 @@ int GetStatusIDByName(const std::string &name)
 	return -1;
 }
 
-const std::string GetStatusNameByID(int id)
+const std::string GetStatusNameByID(unsigned int id)
 {
 	for(int i = 0; i < MAX_STATUSEFFECT; i++)
 		if(StatusEffectBitData[i].effectID == id)

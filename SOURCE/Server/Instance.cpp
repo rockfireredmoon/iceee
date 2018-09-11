@@ -3175,12 +3175,8 @@ void ActiveInstance::RunScripts(void) {
 		for (unsigned int i = 0; i < questNutScriptList.size(); i++) {
 			QuestScript::QuestNutPlayer * p = questNutScriptList[i];
 			if (p->mActive) {
-				int events = p->mQueue.size();
-//				if(events >0)
-//					g_Log.AddMessageFormat("[REMOVEME] Running script for %d, quest %d (%d events)", mZone, ((QuestScript::QuestNutDef*)p->def)->mQuestID, events);
 				p->ExecQueue();
 			} else {
-//				g_Log.AddMessageFormat("[REMOVEME] Removing script for %d, quest %d", mZone, ((QuestScript::QuestNutDef*)p->def)->mQuestID);
 				g_QuestNutManager.RemoveActiveScript(p);
 			}
 		}

@@ -623,7 +623,7 @@ int GetStatIndex(short StatID);
 int GetStatIndexByName(const std::string &name);
 StatDefinition* GetStatDefByName(const std::string &name);
 int GetStatusIDByName(const std::string &name);
-const std::string GetStatusNameByID(int id);
+const std::string GetStatusNameByID(unsigned int id);
 
 int WriteCurrentStatToBuffer(char *buffer, short StatID, CharacterStatSet *css);
 int WriteStatToBuffer(char *buffer, short StatID, float value);

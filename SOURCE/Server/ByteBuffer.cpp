@@ -80,7 +80,7 @@ int PutByte(char *buffer, int val)
 	return 1;
 }
 
-unsigned char GetByte(const char *buffer, int &advance)
+unsigned char GetByte(const char *buffer, size_t &advance)
 {
 	advance += 1;
 	return (unsigned char)buffer[0];
@@ -100,7 +100,7 @@ int PutShortReq(void)
 	return 2;
 }
 
-unsigned short GetShort(const char *buffer, int &advance)
+unsigned short GetShort(const char *buffer, size_t &advance)
 {
 	short retval = ((unsigned char)buffer[0] << 8) | (unsigned char)buffer[1];
 	advance += 2;
@@ -128,7 +128,7 @@ int PutIntegerReq(void)
 	return 4;
 }
 
-int GetInteger(const char *buffer, int &advance)
+int GetInteger(const char *buffer, size_t &advance)
 {
 	int retval = ((unsigned char)buffer[0] << 24) | ((unsigned char)buffer[1] << 16) | ((unsigned char)buffer[2] << 8) | (unsigned char)buffer[3];
 	advance += 4;
@@ -145,7 +145,7 @@ int PutFloat(char *buffer, float val)
 	return 4;
 }
 
-float GetFloat(const char *buffer, int &advance)
+float GetFloat(const char *buffer, size_t &advance)
 {
 	float retval = 0;
 	char *data = (char*)&retval;
@@ -188,7 +188,7 @@ int PutStringReq(const char *tocopy)
 		return len + 3;
 }
 
-char *GetStringUTF(const char *buffer, char *recbuf, int bufsize, int &advance)
+char *GetStringUTF(const char *buffer, char *recbuf, int bufsize, size_t &advance)
 {
 	int len = (unsigned char)buffer[0];
 	int pos = 1;
@@ -207,9 +207,9 @@ char *GetStringUTF(const char *buffer, char *recbuf, int bufsize, int &advance)
 	return recbuf;
 }
 
-float GetPartFloat(const char *buffer, int &start)
+float GetPartFloat(const char *buffer, size_t &start)
 {
-	int len = strlen(buffer);
+	size_t len = strlen(buffer);
 
 	if(start >= len)
 		return 0.0;

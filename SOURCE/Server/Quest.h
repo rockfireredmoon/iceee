@@ -580,7 +580,7 @@ public:
 	void CopyFrom(const QuestDefinition &other);
 	int GetObjective(int act, int type, int CDefID);
 	QuestAct* GetActPtrByIndex(int index);
-	bool FilterSelectedRewards(int outcomeIndex, const std::vector<int>& selectedIndexes, std::vector<QuestItemReward>& outputRewardList);
+	bool FilterSelectedRewards(int outcomeIndex, const std::vector<size_t>& selectedIndexes, std::vector<QuestItemReward>& outputRewardList);
 	void RunLoadDefaults(void);
 	void RunLoadValidation(void);
 	void SetRepeatTime(const char *format);

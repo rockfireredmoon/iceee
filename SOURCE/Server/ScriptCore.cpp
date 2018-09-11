@@ -772,10 +772,12 @@ namespace ScriptCore
     	HaltCallback *cb = new HaltCallback(this);
     	NutScriptEvent *nse = new NutScriptEvent(new TimeCondition (0), cb);
     	nse->mRunWhenSuspended = true;
-    	if(immediate)
+    	if(immediate) {
     		QueueInsert(nse);
-    	else
+    	}
+    	else {
     		QueueAdd(nse);
+    	}
 		mHalting = true;
 	}
 
@@ -805,7 +807,7 @@ namespace ScriptCore
 			for(std::vector<ScriptCore::NutScriptEvent*>::iterator it = mQueue.begin(); it != mQueue.end(); ++it) {
 				nse = *it;
 				if(nse->mCallback != NULL) {
-					if(HaltCallback* wc = dynamic_cast<HaltCallback*>(nse->mCallback)) {
+					if(dynamic_cast<HaltCallback*>(nse->mCallback)) {
 						nse->Cancel();
 					}
 				}
@@ -932,7 +934,7 @@ namespace ScriptCore
 			return false;
 		}
 		unsigned long now = g_PlatformTime.getMilliseconds();
-		bool wasRunning = mRunning;
+
 		mRunning = true;
 
 		WakeVM(name);
@@ -1024,7 +1026,7 @@ namespace ScriptCore
 		return false;
 	}
 
-	bool NutPlayer :: ExecEvent(NutScriptEvent *nse, int index)
+	bool NutPlayer :: ExecEvent(NutScriptEvent *nse, unsigned int index)
 	{
 		unsigned long now = g_PlatformTime.getMilliseconds();
 		NutCallback *cb = nse->mCallback;
@@ -1185,7 +1187,7 @@ namespace ScriptCore
 		}
 	}
 
-	NutScriptEvent* NutPlayer::GetEvent(long id) {
+	NutScriptEvent* NutPlayer::GetEvent(unsigned long id) {
 		// Look for the event in all queues
 		std::vector<ScriptCore::NutScriptEvent*>::iterator it;
 		for(it = mQueue.begin(); it != mQueue.end(); ++it) {

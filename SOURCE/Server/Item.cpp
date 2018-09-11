@@ -860,7 +860,6 @@ void ItemManager :: LoadData(void)
 	if(!g_ClusterManager.HasKey(ID_NEXT_VIRTUAL_ITEM_ID)) {
 		g_ClusterManager.SetKey(ID_NEXT_VIRTUAL_ITEM_ID, StringUtil::Format("%d", BASE_VIRTUAL_ITEM_ID));
 	}
-	char buffer[256];
 	LoadItemPackages(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Packages"), "ItemPack.txt"), false);
 	LoadItemPackages(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Packages"), "ItemPackOverride.txt"), true);
 	g_Logs.data->info("Loaded %v items.", g_ItemManager.GetStandardCount());

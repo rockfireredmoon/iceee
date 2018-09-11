@@ -31,6 +31,7 @@
 #include "../ScriptCore.h"
 #include "../util/Log.h"
 #include "../http/SiteClient.h"
+#include <math.h>
 
 //
 //GameQueryMessage

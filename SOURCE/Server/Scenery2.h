@@ -318,11 +318,11 @@ public:
 private:
 	Platform_CriticalSection cs;
 	std::vector<std::string> mValidATS;
-	PlatformTime::TIME_VALUE mNextAutosaveTime;
+	unsigned long mNextAutosaveTime;
 	std::vector<SceneryPageRequest> mPendingPageRequest;
 	std::vector<SceneryPageRequest> mImmediatePageRequest;
 
-	PlatformTime::TIME_VALUE mNextGarbageCheckTime;
+	unsigned long mNextGarbageCheckTime;
 	ActiveLocation::CONTAINER mActiveLocations;
 
 	char prepBuf[4096];

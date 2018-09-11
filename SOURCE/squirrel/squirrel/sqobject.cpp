@@ -12,9 +12,9 @@
 #include "sqclosure.h"
 
 
-const SQChar *IdType2Name(SQObjectType type)
+const SQChar *IdType2Name(SQObjectType sqtype)
 {
-    switch(_RAW_TYPE(type))
+    switch(_RAW_TYPE(sqtype))
     {
     case _RT_NULL:return _SC("null");
     case _RT_INTEGER:return _SC("integer");
@@ -43,7 +43,7 @@ const SQChar *IdType2Name(SQObjectType type)
 
 const SQChar *GetTypeName(const SQObjectPtr &obj1)
 {
-    return IdType2Name(type(obj1));
+    return IdType2Name(sqtype(obj1));
 }
 
 SQString *SQString::Create(SQSharedState *ss,const SQChar *s,SQInteger len)
@@ -72,7 +72,7 @@ SQInteger SQString::Next(const SQObjectPtr &refpos, SQObjectPtr &outkey, SQObjec
 
 SQUnsignedInteger TranslateIndex(const SQObjectPtr &idx)
 {
-    switch(type(idx)){
+    switch(sqtype(idx)){
         case OT_NULL:
             return 0;
         case OT_INTEGER:
@@ -82,14 +82,14 @@ SQUnsignedInteger TranslateIndex(const SQObjectPtr &idx)
     return 0;
 }
 
-SQWeakRef *SQRefCounted::GetWeakRef(SQObjectType type)
+SQWeakRef *SQRefCounted::GetWeakRef(SQObjectType sqtype)
 {
     if(!_weakref) {
         sq_new(_weakref,SQWeakRef);
 #if defined(SQUSEDOUBLE) && !defined(_SQ64)
         _weakref->_obj._unVal.raw = 0; //clean the whole union on 32 bits with double
 #endif
-        _weakref->_obj._type = type;
+        _weakref->_obj._type = sqtype;
         _weakref->_obj._unVal.pRefCounted = this;
     }
     return _weakref;
@@ -139,7 +139,7 @@ bool SQGenerator::Yield(SQVM *v,SQInteger target)
 
     _stack.resize(size);
     SQObject _this = v->_stack[v->_stackbase];
-    _stack._vals[0] = ISREFCOUNTED(type(_this)) ? SQObjectPtr(_refcounted(_this)->GetWeakRef(type(_this))) : _this;
+    _stack._vals[0] = ISREFCOUNTED(sqtype(_this)) ? SQObjectPtr(_refcounted(_this)->GetWeakRef(sqtype(_this))) : _this;
     for(SQInteger n =1; n<target; n++) {
         _stack._vals[n] = v->_stack[v->_stackbase+n];
     }
@@ -191,7 +191,7 @@ bool SQGenerator::Resume(SQVM *v,SQObjectPtr &dest)
         et._stacksize += newbase;
     }
     SQObject _this = _stack._vals[0];
-    v->_stack[v->_stackbase] = type(_this) == OT_WEAKREF ? _weakref(_this)->_obj : _this;
+    v->_stack[v->_stackbase] = sqtype(_this) == OT_WEAKREF ? _weakref(_this)->_obj : _this;
 
     for(SQInteger n = 1; n<size; n++) {
         v->_stack[v->_stackbase+n] = _stack._vals[n];
@@ -312,9 +312,9 @@ bool CheckTag(HSQUIRRELVM v,SQWRITEFUNC read,SQUserPointer up,SQUnsignedInteger3
 
 bool WriteObject(HSQUIRRELVM v,SQUserPointer up,SQWRITEFUNC write,SQObjectPtr &o)
 {
-    SQUnsignedInteger32 _type = (SQUnsignedInteger32)type(o);
+    SQUnsignedInteger32 _type = (SQUnsignedInteger32)sqtype(o);
     _CHECK_IO(SafeWrite(v,write,up,&_type,sizeof(_type)));
-    switch(type(o)){
+    switch(sqtype(o)){
     case OT_STRING:
         _CHECK_IO(SafeWrite(v,write,up,&_string(o)->_len,sizeof(SQInteger)));
         _CHECK_IO(SafeWrite(v,write,up,_stringval(o),sq_rsl(_string(o)->_len)));
@@ -511,12 +511,12 @@ bool SQFunctionProto::Load(SQVM *v,SQUserPointer up,SQREADFUNC read,SQObjectPtr 
     _CHECK_IO(CheckTag(v,read,up,SQ_CLOSURESTREAM_PART));
 
     for(i = 0; i < noutervalues; i++){
-        SQUnsignedInteger type;
+        SQUnsignedInteger sqtype;
         SQObjectPtr name;
-        _CHECK_IO(SafeRead(v,read,up, &type, sizeof(SQUnsignedInteger)));
+        _CHECK_IO(SafeRead(v,read,up, &sqtype, sizeof(SQUnsignedInteger)));
         _CHECK_IO(ReadObject(v, up, read, o));
         _CHECK_IO(ReadObject(v, up, read, name));
-        f->_outervalues[i] = SQOuterVar(name,o, (SQOuterType)type);
+        f->_outervalues[i] = SQOuterVar(name,o, (SQOuterType)sqtype);
     }
     _CHECK_IO(CheckTag(v,read,up,SQ_CLOSURESTREAM_PART));
 

@@ -133,7 +133,7 @@ bool HTTPService::Start() {
 
 	// Document root
 	zzOptions[idx++] = "document_root";
-	zzOptions[idx++] = g_HTTPBaseFolder;
+	zzOptions[idx++] = Platform::JoinPath(g_Config.ResolveHTTPBasePath(), "Pages").c_str();
 
 	bool http = g_HTTPListenPort > 0;
 #ifndef NO_SSL

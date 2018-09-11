@@ -116,15 +116,14 @@ bool ExtendedQuestAction :: InitCommand(const STRINGLIST &tokenList)
 		g_Logs.data->warn("Quest command not recognized [%v]", tokenList[0].c_str());
 		return false;
 	}
-	size_t tokenCount = tokenList.size();
-	if(tokenCount != cmd->numParams + 1)  //First token is command itself
+	if(tokenList.size() != cmd->numParams + 1)  //First token is command itself
 	{
 		g_Logs.data->warn("Expected [%v] arguments for command [%v]", cmd->numParams, cmd->name);
 		return false;
 	}
 
 	opCode = cmd->opCode;
-	for(int i = 0; i < cmd->numParams; i++)
+	for(unsigned int i = 0; i < cmd->numParams; i++)
 	{
 		bool valid = false;
 		int result = 0;

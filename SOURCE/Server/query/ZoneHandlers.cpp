@@ -26,6 +26,7 @@
 #include "../ZoneObject.h"
 #include "../StringUtil.h"
 #include "../util/Log.h"
+#include <math.h>
 
 //
 //GoHandler
@@ -153,7 +154,7 @@ int WorldListHandler::handleQuery(SimulatorThread *sim,
 
 	STRINGLIST shards = g_ClusterManager.GetAvailableShardNames();
 	wpos += PutShort(&sim->SendBuf[wpos], shards.size());             //Row count
-	for (int a = 0; a < shards.size(); a++) {
+	for (size_t a = 0; a < shards.size(); a++) {
 		wpos += PutByte(&sim->SendBuf[wpos], 6); //String count
 		Shard s = g_ClusterManager.GetActiveShard(shards[a]);
 		wpos += PutStringUTF(&sim->SendBuf[wpos], s.mName.c_str());

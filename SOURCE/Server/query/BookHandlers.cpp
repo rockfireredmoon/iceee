@@ -38,7 +38,6 @@ int BookListHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 	InventoryManager inv = creatureInstance->charPtr->inventory;
 	std::set<int> booksFound;
 	for (size_t a = 0; a < inv.containerList[INV_CONTAINER].size(); a++) {
-		int slot = inv.containerList[INV_CONTAINER][a].GetSlot();
 		int ID = inv.containerList[INV_CONTAINER][a].IID;
 		ItemDef *itemDef =
 				inv.containerList[INV_CONTAINER][a].ResolveSafeItemPtr();
@@ -97,8 +96,6 @@ int BookGetHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 	int pagesFound = 0;
 	std::set<int> pagesFoundSet;
 	for (size_t a = 0; a < inv.containerList[INV_CONTAINER].size(); a++) {
-		int slot = inv.containerList[INV_CONTAINER][a].GetSlot();
-		int ID = inv.containerList[INV_CONTAINER][a].IID;
 		ItemDef *itemDef =
 				inv.containerList[INV_CONTAINER][a].ResolveSafeItemPtr();
 		if (itemDef != NULL && itemDef->mType == ItemType::SPECIAL) {
@@ -107,7 +104,7 @@ int BookGetHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 					&& itemDef->GetDynamicMax(ItemIntegerType::BOOK)
 							== def.bookID) {
 				/* An item with ItemIntegerType::BOOK but NO ItemIntegerType::BOOK_PAGE is a complete book, so return all the pages */
-				for (int i = 0; i < def.pages.size(); i++) {
+				for (size_t i = 0; i < def.pages.size(); i++) {
 					pagesFoundSet.insert(itemDef->mIvMax2);
 					wpos += PutByte(&sim->SendBuf[wpos], 2);
 					Util::SafeFormat(sim->Aux2, sizeof(sim->Aux2), "%d", i);

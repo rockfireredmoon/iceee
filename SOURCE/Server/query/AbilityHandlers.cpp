@@ -35,7 +35,7 @@ int AbilityBuyHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pl
 	 Args : [0] = Ability ID to purchase.
 	 */
 
-	if (query->argCount < 1 == false)
+	if (query->argCount < 1)
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID, "Query error.");
 
 	int abilityID = query->GetInteger(0);

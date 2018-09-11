@@ -291,7 +291,6 @@ void ChatManager :: LogMessage(std::string message)
 bool ChatManager ::SendChatMessageAsOffline(ChatMessage &message, HTTPD::SiteSession *session) {
 	/* Look up the account name for the character */
 	int cdefID = g_UsedNameDatabase.GetIDByName(message.mRecipient);
-	int msgCode = INFOMSG_ERROR;
 	if(cdefID == -1) {
 		g_Logs.server->error("No such character \"%v\" .", message.mRecipient.c_str());
 	}

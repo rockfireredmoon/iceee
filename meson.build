@@ -1,4 +1,8 @@
-project('tawd', ['cpp','c'], default_options : ['cpp_std=c++11'])
+project('tawd', ['cpp','c'], default_options : [
+	'cpp_std=c++11',
+	'prefix=/usr',
+	'sysconfdir=/etc',
+	'localstatedir=/var'])
 
 #Setup
 server_inc = include_directories('SOURCE/Server')
@@ -12,13 +16,11 @@ tacopie_inc = include_directories('SOURCE/LibCPPRedis/tacopie/includes')
 thread_dep = dependency('threads')
 curl_dep = dependency('libcurl')
 openssl_dep = dependency('openssl', required: false)
-
 pthread_dep = meson.get_compiler('c').find_library('pthread', required: false)
 
 #Compiler arguments 
 add_global_arguments('-DELPP_THREAD_SAFE=1', language: ['cpp','c'])
 add_global_arguments('-DLOCALCONFIGDIR="' + get_option('localconfigdir') + '"', language: ['cpp','c'])
-
 if not openssl_dep.found() or not get_option('ssl')
 	add_global_arguments('-DNO_SSL=1', language: ['cpp','c'])
 endif
@@ -225,6 +227,7 @@ server_lib = library('server',[
 	'SOURCE/Server/query/PlayerHandlers.cpp',
 	'SOURCE/Server/util/base64.cpp',
 	'SOURCE/Server/util/JsonHelpers.cpp',
+	'SOURCE/Server/util/easylogging++.cc',
 	'SOURCE/Server/util/SquirrelObjects.cpp',
 	'SOURCE/Server/util/Log.cpp'], 
 	include_directories : [squirrel_inc, sqstdlib_lib_inc, cppredis_inc, tacopie_inc],
@@ -232,10 +235,14 @@ server_lib = library('server',[
 	link_with: [squirrel_lib,sqstdlib_lib,cppredis_lib,tacopie_lib])
 
 #Main Daemon
+server_lib_cppargs = []
+if get_option('service') and build_machine.system() == 'windows'
+	server_lib_cppargs += '-DWINDOWS_SERVICE=1'
+endif
 executable('tawd', 'SOURCE/Daemon/main.cpp', 
 	include_directories : [server_inc, squirrel_inc, sqstdlib_lib_inc], 
 	dependencies: [thread_dep, curl_dep, openssl_dep],
-	link_with: [server_lib], install: true)
+	link_with: [server_lib], install: true, cpp_args: server_lib_cppargs)
 	
 #Pre-TAWD text file user data to TAWD Redis database
 executable('text2redis', 'SOURCE/Tools/TextToRedis.cpp', 
@@ -251,66 +258,55 @@ executable('eeaccount', 'SOURCE/Tools/EEAccount.cpp',
 	
 #Other Installation
 datadir = get_option('serverdatadir')
-if datadir == ''
-	# When running without providing serverdatadir, 
-	datadir = 'var/lib/tawd'
-endif
 confdir = get_option('localconfigdir')
-if confdir == 'Local' 
-	confdir = 'etc/tawd'
-endif
-logpath = get_option('logsdir')
-if logpath == 'Logs'
-	logpath = get_option('prefix') + 'log/tawd'
-endif
+logpath = get_option('localstatedir') + '/log/tawd'
 
 # Create actual configuration files from samples, changing the default
 # locations where appropraite 
-srchrepl_prog = find_program('configuration.py')
-custom_target('ServerConfig',
+srchrepl_prog = find_program('Meson/srchrepl.py') 
+copy_prog = find_program('Meson/copy.py')
+serverconfig_target = custom_target('ServerConfig',
     input : 'Local/ServerConfig.txt.sample',
     output : 'ServerConfig.txt',
-    command : [srchrepl_prog, '@INPUT@', '@OUTPUT@','HTTPBaseFolder=asset','HTTPBaseFolder=' + get_option('prefix') + 'share/tawd/asset'])
-custom_target('ServerConfig',
-    input : 'ServerConfig.txt',
-    output : 'ServerConfig.txt',
-    command : [srchrepl_prog, '@INPUT@', '@OUTPUT@','HTTPCARFolder=../sparkplayer-eartheternal/bin/assets','HTTPCARFolder=' + get_option('prefix') + 'share/tawd/Release'])
-custom_target('ServerConfig',
-    input : 'ServerConfig.txt',
-    output : 'ServerConfig.txt',
-    command : [srchrepl_prog, '@INPUT@', '@OUTPUT@','StaticDataPath=../iceee-data/Static','StaticDataPath=' + get_option('prefix') + 'share/tawd/Static'])
-custom_target('ServerConfig',
-    input : 'ServerConfig.txt',
-    output : 'ServerConfig.txt',
-    command : [srchrepl_prog, '@INPUT@', '@OUTPUT@','VariableDataPath=../iceee-data/Variable','VariableDataPath=' + get_option('prefix') + 'share/tawd/Variable'])
-custom_target('ServerConfig',
-    input : 'ServerConfig.txt',
-    output : 'ServerConfig.txt',
-    command : [srchrepl_prog, '@INPUT@', '@OUTPUT@','LogPath=Logs','LogPath=' + logpath])
+    command : [srchrepl_prog, '@INPUT@', '@OUTPUT@',
+    		'HTTPBaseFolder=Web','HTTPBaseFolder=' + get_option('prefix') + '/share/tawd/Web',
+    		'HTTPCARFolder=../sparkplayer-eartheternal/bin/assets','HTTPCARFolder=' + get_option('prefix') + '/share/tawd/Release',
+    		'StaticDataPath=../iceee-data/Static','StaticDataPath=' + get_option('prefix') + '/share/tawd/Static',
+    		'VariableDataPath=../iceee-data/Variable','VariableDataPath=' + get_option('localstatedir') + '/lib/tawd/Variable',
+    		'LogPath=Logs','LogPath=' + logpath],
+  	install : true,
+  	install_dir : confdir)
+logconfig_target = custom_target('LogConfig',
+    input : 'Local/LogConfig.txt.sample',
+    output : 'LogConfig.txt',
+    command : [srchrepl_prog, '@INPUT@', '@OUTPUT@',
+    		'FILENAME             =  "Logs/',
+    		'FILENAME             =  "' + logpath + '/'],
+  	install : true,
+  	install_dir : confdir)
+cluster_target = custom_target('Cluster', 
+	input : 'Local/Cluster.txt.sample', 
+	output : 'Cluster.txt', 
+	command : [copy_prog, '@INPUT@', '@OUTPUT@'],
+  	install : true,
+  	install_dir : confdir)
+url_target = custom_target('URL', 
+	input : 'Local/URL.txt.sample', 
+	output : 'URL.txt', 
+	command : [copy_prog, '@INPUT@', '@OUTPUT@'],
+  	install : true,
+  	install_dir : confdir)
     
+if get_option('service') and build_machine.system() == 'linux'
+	systemd_dep = dependency('systemd')
+	if systemd_dep.found()
+		install_data(sources: 'Etc/Linux/tawd.service', install_dir : get_option('systemdservicedir'))
+	else
+		install_data(sources: 'Etc/Linux/tawd', install_dir : get_option('sysconfdir') + '/etc/init.d')
+	endif
+endif
 
-install_subdir('Local', install_dir : 'share/doc/tawd')
-install_data(sources: 'README.md', install_dir : 'share/doc/tawd')
-install_subdir('asset', install_dir : 'share/tawd')
-install_subdir('WebPages', install_dir : 'share/tawd')
+install_data(sources: ['Local/ServerConfig.txt.sample','Local/LogConfig.txt.sample','Local/Cluster.txt.sample','Local/URL.txt.sample'], install_dir : 'share/doc/tawd')
+install_data(sources: ['README.md','LICENSE'], install_dir : 'share/doc/tawd')
+install_subdir('Web', install_dir : 'share/tawd')
 
-# Needed until https://github.com/mesonbuild/meson/issues/1487 is fixed
-#filecopier = find_program('filecopier.py')
-#a_p = custom_target('ServerConfig',
-    #input : 'Local/ServerConfig.txt.sample',
-#    output : 'ServerConfig.txt',
-    #command : [filecopier, '@INPUT@', '@OUTPUT@'])
-#a_p = custom_target('LogConfig',
-    #input : 'Local/LogConfig.txt.sample',
-    #output : 'LogConfig.txt',
-    #command : [filecopier, '@INPUT@', '@OUTPUT@'])
-#a_p = custom_target('Cluster',
-##    input : 'Local/Cluster.txt.sample',
-    #output : 'Cluster.txt',
-    #command : [filecopier, '@INPUT@', '@OUTPUT@'])
-    
-#install_data(sources: 'ServerConfig.txt', install_dir : confdir)
-#install_data(sources: 'LogConfig.txt', install_dir : confdir)
-#install_data(sources: 'Cluster.txt', install_dir : confdir)
-#install_subdir('WebPages', install_dir : datadir + '/WebPages')
-#install_subdir('asset', install_dir : datadir + '/asset')

@@ -36,28 +36,6 @@ RebroadcastDelay=18000     ;Milliseconds to wait between sending constant object
 
 SceneryAutosaveTime=5000   ; Milliseconds between autosaving modified scenery pages
 
-; Under normal game conditions, a file not found error is returned so the
-; client's cache is not crashed.  This message cannot be modified.
-; These conditions are used only if an empty file request is made.
-;
-; HTTP404Header
-;   The response header can be composed by several strings (use multiple
-;   HTTP404Header lines) up to 256 total bytes.
-;
-; HTTP404Message
-;   This message is appended to the header.  This is the data loaded
-;   into the browser window, therefore it supports HTML markup.  Limit is
-;   512 bytes.
-
-; Header response to redirect
-;HTTP404Header=HTTP/1.1 301 Moved Permanently
-;HTTP404Header=Location: http://example.com/
-
-; Header response for when a file cannot be found.
-HTTP404Header=HTTP/1.1 404 Not Found
-HTTP404MessageFile=404.html
-
-
 ForceUpdateTime=1500      ;Milliseconds after a character stops moving to force an exact position update
 
 ; As of version 19, the item override can be either:
@@ -175,9 +153,8 @@ ShutdownHandlerScript=
 ; Location of data files and assets
 
 ; For the HTTP server, this is the base folder that contains files that can
-; be served over HTTP (such as web control panel, password reset etc). If HTTPCARFolder 
-; is not set, this includes the Client Assets too (CAR files that will exist under the 'Release' subdirectory). 
-HTTPBaseFolder=asset
+; be served over HTTP (such as web control panel, password reset etc). 
+HTTPBaseFolder=Web
 
 ; Fot the HTTP server, this is the folder that contains the Client Assets that can
 ; be server over HTTP (CAR files). For example, if the client requests the following file:

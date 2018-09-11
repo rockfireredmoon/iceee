@@ -32,7 +32,7 @@ public:
 	std::string mUsage;
 protected:
 	std::vector<int> mAllowedPermissions;
-	int mRequiredArgs;
+	unsigned int mRequiredArgs;
 };
 
 class HelpHandler : public AbstractCommandHandler {

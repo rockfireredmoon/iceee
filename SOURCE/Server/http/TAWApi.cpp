@@ -219,6 +219,12 @@ bool CreditShopHandler::handleAuthenticatedPost(CivetServer *server,
 				return true;
 			}
 
+			if (csItem.mQuantityLimit > 0 && (csItem.mQuantitySold + qty) > csItem.mQuantityLimit) {
+				writeStatusPlain(server, conn, 403, "Forbidden.",
+						"There are not enough of this restricted item left.");
+				return true;
+			}
+
 			InventorySlot *sendSlot =
 					cd->inventory.AddItem_Ex(INV_CONTAINER, itemDef->mID, csItem.mIv1 + 1);
 			if (sendSlot == NULL) {
@@ -291,8 +297,6 @@ bool CreditShopHandler::handleAuthenticatedPost(CivetServer *server,
 
 bool CreditShopHandler::handleAuthenticatedGet(CivetServer *server,
 		struct mg_connection *conn) {
-	char buf[256];
-	int no = 0;
 
 	const struct mg_request_info * req_info = mg_get_request_info(conn);
 	std::string ruri;
@@ -332,7 +336,7 @@ bool CreditShopHandler::handleAuthenticatedGet(CivetServer *server,
 
 		Json::Value data;
 		int didx = 0;
-		for (int i = opts.start;
+		for (size_t i = opts.start;
 				i < opts.start + opts.count && i < items.size(); i++) {
 			Json::Value jv;
 			writeCreditShopItemToJSON(&items[i], jv);
@@ -384,8 +388,6 @@ bool pvpDeathsSort(const Leader &l1, const Leader &l2) {
 
 bool LeaderboardHandler::handleAuthenticatedGet(CivetServer *server,
 		struct mg_connection *conn) {
-	char buf[256];
-	int no = 0;
 
 	PageOptions opts;
 	opts.Init(server, conn);
@@ -424,11 +426,11 @@ bool LeaderboardHandler::handleAuthenticatedGet(CivetServer *server,
 
 		Json::Value data;
 		int didx = 0;
-		for (int i = opts.start; i < opts.start + opts.count && i < l.size();
+		for (size_t i = opts.start; i < opts.start + opts.count && i < l.size();
 				i++) {
 			Json::Value jv;
 			l[i].WriteToJSON(jv);
-			jv["rank"] = i + 1;
+			jv["rank"] = (int)(i + 1);
 			data[didx++] = jv;
 		}
 
@@ -1104,7 +1106,6 @@ void AuctionHandler::writeAuctionItemToJSON(AuctionHouseItem * item,
 bool AuctionHandler::handleAuthenticatedGet(CivetServer *server,
 		struct mg_connection *conn) {
 	char buf[256];
-	int no = 0;
 
 	const struct mg_request_info * req_info = mg_get_request_info(conn);
 	std::string ruri;

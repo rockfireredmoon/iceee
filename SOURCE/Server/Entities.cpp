@@ -133,6 +133,10 @@ bool AbstractEntityWriter::Value(const std::string &key, const unsigned long val
 	return Value(key, StringUtil::Format("%lu", value));
 }
 
+bool AbstractEntityWriter::Value(const std::string &key, const unsigned int value) {
+	return Value(key, StringUtil::Format("%u", value));
+}
+
 bool AbstractEntityWriter::Value(const std::string &key, const int value) {
 	return Value(key, StringUtil::Format("%d", value));
 }
@@ -273,7 +277,6 @@ bool TextFileEntityReader::CheckLoaded() {
 			std::string sectionPath;
 
 			while (lfr.FileOpen()) {
-				long CurPos = ftell(lfr.FileHandle[0]);
 				r = lfr.ReadLine();
 				if (r > 0) {
 					lfr.MultiBreak("=");

@@ -163,7 +163,7 @@ int AuctionHouseAuctionHandler::handleQuery(SimulatorThread *sim,
 	unsigned long creditsCommision = (unsigned long) ((double) credits
 			* (g_Config.PercentageCommisionPerHour / 100) * totalHours);
 
-	if (copperCommision > creatureInstance->css.copper) {
+	if ((int)copperCommision > creatureInstance->css.copper) {
 		Util::SafeFormat(sim->Aux2, sizeof(sim->Aux2),
 				"You do not have enough copper to list this item. %lu are required, but you only have %lu.",
 				copperCommision,
@@ -172,15 +172,15 @@ int AuctionHouseAuctionHandler::handleQuery(SimulatorThread *sim,
 				sim->Aux2);
 	}
 
-	if ((g_Config.AccountCredits && creditsCommision > pld->accPtr->Credits)
+	if ((g_Config.AccountCredits && (int)creditsCommision > pld->accPtr->Credits)
 			|| (!g_Config.AccountCredits
-					&& creditsCommision > creatureInstance->css.copper)) {
+					&& (int)creditsCommision > creatureInstance->css.credits)) {
 		Util::SafeFormat(sim->Aux2, sizeof(sim->Aux2),
 				"You do not have enough credits to list this item. %lu are required, but you only have %lu.",
 				creditsCommision,
 				g_Config.AccountCredits ?
 						pld->accPtr->Credits :
-						creditsCommision > creatureInstance->css.copper);
+						(int)creditsCommision > creatureInstance->css.copper);
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 				sim->Aux2);
 	}

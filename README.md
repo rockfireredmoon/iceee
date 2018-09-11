@@ -24,6 +24,7 @@ This is the Git repository for the server data and source for TAWD, the continua
   * Clan support
   * HTTP API for website integration
   * Other tidying
+  * New Meson based build
 
 ### Credits
 
@@ -130,7 +131,7 @@ These are dependencies needed at run-time.
   
 ### Compiling The Server
 
-This project is distributed as an 'autotools' project. 
+This project is distributed as an Meson (http://mesonbuild.com/) project. 
 
 #### Preparing the source tree
 
@@ -141,48 +142,27 @@ your platform.
 If you have downloaded a source bundle, this step is not required so you can jump straight
 to Configure The Source.  
 
-You will need the following packages installed :-
+You will need the following installed :-
 
-* autoconf
-* automake
-* libtool
-* g++
+* Meson (http://mesonbuild.com/)
+* Ninja. Make system. https://ninja-build.org/
+* C++11 Compiler and Linker (e.g. GCC 5+, MSVC 2015)
 
 Other packages may be needed for various common libraries used. All of these should be
 easily obtainable for your OS/Distribution. 
- 
-Now run :-
-
-```bash
-autoreconf -fi
-```
-
-#### Configuration of the source tree
-
-Now all of the autotools files are in place, you can configure the tree for compilation on
-your platform.
 
 Run :-
 
 ```bash
-./configure  
-```
-
-The configure script will examine your system for the required libraries and tools and produce a report 
-as to which compile time options have been selected. You can alter the behavior of the build by passing
-options to ./configure. For example, to enable debugging symbols (recommended), use :-
-
-```bash
-./configure --enable-debug
+meson builddir --default-library=static 
 ```
 
 #### Compile
 
-All that remains now is to compile the source. The '-j 4' makes the compiler use up to 4 cores for compilation. 
-This greatly speeds up the build. Adjust depending on the nuumber of cores you have (or want to use of course).
+Now compile the source :-
 
 ```bash
-make -j4
+ninja compile
 ```
 
 ### Configuring The Server
@@ -301,9 +281,9 @@ Music, Sounds, Client Logic and more).
 
 ##### Game Server Data
 
-We currently have two different Game Server Data sets that will run on this server. They are both stored in a seperate GitHub repository - https://github.com/rockfireredmoon/iceee-data. One is for 'The Anubian War' (currently under development), and one for 'Valkal's Shadow' (our current live and active server).
+We currently have two different Game Server Data sets that will run on this server. They are both stored in a separate GitHub repository - https://github.com/rockfireredmoon/iceee-data. One is for 'The Anubian War' (currently under development), and one for 'Valkal's Shadow' (our current live and active server).
 
-Assuming you are starting from the server source directory, it is recommended you clone the game server data reopsitory into the same parent folder as the server source. This way the default file locations in *ServerConfig.txt* are all ready setup as needed and ready to go.
+Assuming you are starting from the server source directory, it is recommended you clone the game server data repository into the same parent folder as the server source. This way the default file locations in *ServerConfig.txt* are all ready setup as needed and ready to go.
 
 ```
 cd ..
@@ -356,7 +336,7 @@ The server will now start up with a default logging level of INFO output to the 
 
 ### Creating The User Accounts
 
-Before logging on to the server using the client, you will need to create to create a user. The default configuration uses a built in user database.
+Before logging on to the server using the client, you will need to create a user. The default configuration uses a built in user database.
 
 First off, create an administrator account :-
  
@@ -387,7 +367,39 @@ There are a number of options available to aid debuggging and running the proces
 | Option | Arguments | Description |
 | ------ | --------- | ----------- |
 | -d | None | Daemonize the server. Once initialized, the process will be forked and placed into the background |
+| -C | None | Output all logging to the console as well as log files. |
 | -p | [path] | Location to PIDFILE. The process ID of the server is written to this file once known |
 | -c | [path] | Location to a *Local* configuration directory (that contains ServerConfig.txt, LogConfig.txt and Cluster.txt) |
 | -I | None | Flush log output immediately. Ordinarilly this is buffered to aid performance, but disabling this can help in some debugging situations |
 | -L | [loglevel] | Set the default log level. Position values for <loglevel> include info, debug, error, fatal, trace, verbose or warning |
+
+## Installation
+
+At some point, you will probably want to actually the server, or create installable packages for your
+distribution.
+
+Again, working from build workspace 'builddir' :-
+
+```bash
+cd ..
+meson configure --default-library=static -Dprefix=/usr -Dlocalstatedir=/var -Dsysconfdir=/etc -Dlocalconfigdir=/etc/tawd
+```
+
+NOTE: Old versions of Meson use a slightly different command that must be run inside the builddir.
+
+```bash
+mesonconf --default-library=static -Dprefix=/usr -Dlocalstatedir=/var -Dsysconfdir=/etc -Dlocalconfigdir=/etc/tawd
+```
+
+If you want to install as a service (e.g Windows Service, SystemD Service etc), then add this property as well:-
+
+```bash
+-Dservice=true
+```
+
+Finally run the install. You will probably need to run this as administrator if the files are installed in system locations (the default) :-
+
+```bash
+cd builddir
+sudo meson install
+```

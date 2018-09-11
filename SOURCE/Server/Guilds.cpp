@@ -133,7 +133,7 @@ int GuildManager::GetStandardCount(void) {
 }
 
 GuildDefinition * GuildManager::FindGuildDefinition(std::string name) {
-	for (int i = 0; i < defList.size(); i++) {
+	for (size_t i = 0; i < defList.size(); i++) {
 		g_Logs.data->debug("Looking for guild .. %v against %v", name.c_str(), defList[i].defName.c_str());
 		if (defList[i].defName.compare(name) == 0)
 			return &defList[i];

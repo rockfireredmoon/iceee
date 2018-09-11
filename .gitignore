@@ -39,6 +39,7 @@ aclocal.m4
 **/*.o
 **/*.Po
 **/**/*.cnut
+**/**/*.a
 **/**/.doxygen
 **/**/.appveyor.yml
 **/**/.travis.yml
@@ -61,3 +62,4 @@ aclocal.m4
 /Logs.tmp/
 /builddir/
 /logs/
+/build/

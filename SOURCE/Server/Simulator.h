@@ -128,8 +128,8 @@ public:
 	long TotalSendBytes;
 	long TotalRecBytes;
 	int MessageEnd;
-	int ReadPos;    //Current read position within RecBuf(), when extracting data from packets.
-	int WritePos;   //Current write position within SendBuf(), when writing packets.
+	size_t ReadPos;    //Current read position within RecBuf(), when extracting data from packets.
+	size_t WritePos;   //Current write position within SendBuf(), when writing packets.
 	bool PendingSend; //If set to true, the recv() handler will send any data marked for sending
 	char Aux1[4096];          //Generic large buffer.
 	char Aux2[128];           //Generic small buffer.

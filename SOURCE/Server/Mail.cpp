@@ -17,7 +17,6 @@ MailManager::~MailManager() {
 bool MailManager::Mail(const char *subject, const char *recipient,
 		const char *body) {
 	CURL *curl;
-	CURLcode res = CURLE_OK;
 	//struct curl_slist *recipients = NULL;
 	//struct upload_status upload_ctx;
 

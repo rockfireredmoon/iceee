@@ -1315,7 +1315,6 @@ bool CreatureInstance :: RegisterHostility(CreatureInstance *attacker, int hosti
 
 	SetServerFlag(ServerFlags::LocalActive, true);
 
-	CreatureInstance *oldTarget = CurrentTarget.targ;
 
 	if(aiScript != NULL || aiNut != NULL)
 	{
@@ -2151,7 +2150,6 @@ bool CreatureInstance :: RemoveAbilityBuffWithStat(int statID, float sign)
 {
 	size_t pos = 0;
 	bool del = false;
-	bool abilityCanceled = false;
 	int foundAbilityID = 0;
 	while(pos < activeStatMod.size())
 	{
@@ -4939,7 +4937,7 @@ void CreatureInstance :: RunDialog(void)
 						switch(diag->mSequence) {
 						case Sequence::SEQUENTIAL:
 							dialogIndex++;
-							if(dialogIndex >= diag->mParagraphs.size())
+							if(dialogIndex >= (int)diag->mParagraphs.size())
 								dialogIndex = 0;
 							break;
 						case Sequence::RANDOM:
@@ -5559,15 +5557,15 @@ int CreatureInstance :: RunMovementStep(void)
 
 			float angle = (float)Rotation * 6.283185F / 255.0F;
 
-			int oldX = CurrentX;
-			int oldZ = CurrentZ;
+//			int oldX = CurrentX;
+//			int oldZ = CurrentZ;
 
 			CurrentZ += (int)((float)updateDist * cos(angle));
 			CurrentX += (int)((float)updateDist * sin(angle));
 
-			int xlen = oldX - CurrentX;
-			int zlen = oldZ - CurrentZ;
-			double actDist = sqrt(double((xlen * xlen) + (zlen * zlen)));
+//			int xlen = oldX - CurrentX;
+//			int zlen = oldZ - CurrentZ;
+			//double actDist = sqrt(double((xlen * xlen) + (zlen * zlen)));
 			//g_Log.AddMessageFormat("Update Dist: %d   Spd:%d   Time:%d   Dist/s:%g   Remain:%d   Actual:%g", updateDist, Speed, nextMoveTime, distPerSecond, distRemain, actDist);
 		}
 		else
@@ -5748,7 +5746,7 @@ void CreatureInstance :: MoveToTarget_Ex2(void)
 	static const int MOV_REQDIST = 50;
 	static const int REQDIST = 100;
 	static const int FARDIST = 350;
-	static const int YOFFSET = 50;
+//	static const int YOFFSET = 50;
 	static const int CLOSE_SCATTER_RANGE = 15;
 
 	//No destination set, check for sidekick return

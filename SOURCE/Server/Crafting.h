@@ -28,8 +28,8 @@ class CraftRecipe
 
 private:
 	std::string mDesc;
-	int mInputCount;  //Exact number of distinct items, or stacks of items that recipe must have.
-	int mOutputCount; //Exact number of output items.  Used to make sure the player has enough inventory space.
+	size_t mInputCount;  //Exact number of distinct items, or stacks of items that recipe must have.
+	size_t mOutputCount; //Exact number of output items.  Used to make sure the player has enough inventory space.
 	STRINGVECTOR mConditions;
 	STRINGVECTOR mActions;
 	CraftRecipe()

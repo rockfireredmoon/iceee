@@ -37,7 +37,6 @@ int LootListHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 	if (query->argCount < 1)
 		return 0;
 
-	int WritePos = 0;
 	int CreatureID = query->GetInteger(0);
 	int r = creatureInstance->actInst->lootsys.GetCreature(CreatureID);
 	if (r == -1)

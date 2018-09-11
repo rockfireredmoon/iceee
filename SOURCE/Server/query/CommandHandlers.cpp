@@ -1270,7 +1270,7 @@ int SetStatHandler::handleCommand(SimulatorThread *sim,
 		targ = creatureInstance;
 
 	std::string statName = query->args[0];
-	std:string statValue = query->args[1];
+	std::string statValue = query->args[1];
 	WriteStatToSetByName(statName, statValue, &targ->css);
 	if (targ == creatureInstance)
 		WriteStatToSetByName(statName, statValue, &pld->charPtr->cdef.css);
@@ -2120,7 +2120,6 @@ int DtrigHandler::handleCommand(SimulatorThread *sim, CharacterServerData *pld,
 					sprintf(sim->Aux2, "%d", ptr->CurrentZ);
 					query->args.push_back(sim->Aux1);
 					query->args.push_back(sim->Aux2);
-					int dummy = 0;
 					return g_QueryManager.queryHandlers[query->name]->handleQuery(
 							sim, pld, query, creatureInstance);
 					break;
@@ -3223,7 +3222,7 @@ int ScriptExecHandler::handleCommand(SimulatorThread *sim,
 		return PrepExt_QueryResponseError(sim->SendBuf, query->ID,
 				"Permission denied.");
 	ActiveInstance *inst = creatureInstance->actInst;
-	int start = 0;
+	size_t start = 0;
 	bool queue = false;
 	if (string(query->GetString(0)).compare("-q") == 0) {
 		queue = true;
@@ -3417,7 +3416,6 @@ PVPTeamHandler::PVPTeamHandler() :
 int PVPTeamHandler::handleCommand(SimulatorThread *sim,
 		CharacterServerData *pld, SimulatorQuery *query,
 		CreatureInstance *creatureInstance) {
-	ActiveInstance *inst = creatureInstance->actInst;
 	if (query->argCount > 0) {
 
 		if (pld->accPtr->HasPermission(Perm_Account, Permission_Sage) == false)

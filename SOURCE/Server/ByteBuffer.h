@@ -34,23 +34,24 @@ public:
 
 
 int PutByte(char *buffer, int val);
-unsigned char GetByte(const char *buffer, int &advance);
 int PutShort(char *buffer, int val);
 int PutShortReq(void);
-unsigned short GetShort(const char *buffer, int &advance);
 int PutInteger(char *buffer, int val);
 int PutIntegerReq(void);
-int GetInteger(const char *buffer, int &advance);
 int PutFloat(char *buffer, float val);
-float GetFloat(const char *buffer, int &advance);
 int PutStringUTF(char *buffer, const char *tocopy);
 int PutStringReq(const char *tocopy);
-char *GetStringUTF(const char *buffer, char *recbuf, int bufsize, int &advance);
+
+float GetFloat(const char *buffer, size_t &advance);
+unsigned char GetByte(const char *buffer, size_t &advance);
+unsigned short GetShort(const char *buffer, size_t &advance);
+int GetInteger(const char *buffer, size_t &advance);
 
 //The next two functions scan a string with text elements separated by spaces
 //the function reads the text until the next space, or end of string if none is found
 //the extract substring is converted into a numeric value of the required type and
 //returned.
-float GetPartFloat(const char *buffer, int &start);
+char *GetStringUTF(const char *buffer, char *recbuf, int bufsize, size_t &advance);
+float GetPartFloat(const char *buffer, size_t &start);
 
 #endif //BYTEBUFFER_H

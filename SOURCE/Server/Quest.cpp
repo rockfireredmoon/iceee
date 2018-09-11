@@ -220,7 +220,7 @@ void QuestReference::ClearObjectiveData(void) {
 }
 
 int QuestReference::QuestJournal(int CID, char *buffer, QuestDefinition *qdef) {
-	int wpos = PutByte(&buffer[wpos], 7);  //_handleQuestEventMsg
+	int wpos = PutByte(&buffer[0], 7);  //_handleQuestEventMsg
 	wpos += PutShort(&buffer[wpos], 0); //Size
 	wpos += PutInteger(&buffer[wpos], qdef->questID); //Quest ID
 	wpos += PutByte(&buffer[wpos], QuestObjective::EVENTMSG_JOURNAL);
@@ -234,7 +234,7 @@ int QuestReference::CompleteQuest(int CID, char *buffer,
 
 	//Send a quest complete message instead of act complete.
 
-	int wpos = PutByte(&buffer[wpos], 7);  //_handleQuestEventMsg
+	int wpos = PutByte(&buffer[0], 7);  //_handleQuestEventMsg
 	wpos += PutShort(&buffer[wpos], 0); //Size
 	wpos += PutInteger(&buffer[wpos], qdef->questID); //Quest ID
 	wpos += PutByte(&buffer[wpos], QuestObjective::EVENTMSG_QUESTCOMPLETED);
@@ -683,7 +683,7 @@ int QuestDefinition::GetObjective(int act, int type, int CDefID) {
 	//Search the objective list to see if any targets match the given ID.
 	//Return a pointer to the objective definition.
 
-	if (act < -1 || (act != -1 && act >= actList.size())) {
+	if (act < -1 || (act != -1 && act >= (int)actList.size())) {
 		g_Logs.server->warn(
 				"GetKillObjective() act [%d] is out of range for Quest ID: %d",
 				act, questID);
@@ -725,7 +725,7 @@ QuestAct* QuestDefinition::GetActPtrByIndex(int index) {
 //Note that numRewards is only used for quests with multiple-choice reward options, and specifies
 //exactly how many items must be selected by the player.
 bool QuestDefinition::FilterSelectedRewards(int outcomeIndex,
-		const std::vector<int>& selectedIndexes,
+		const std::vector<size_t>& selectedIndexes,
 		std::vector<QuestItemReward>& outputRewardList) {
 	int possibleRewards = 0;
 	int choiceCount = 0;
@@ -960,7 +960,6 @@ void QuestDefinitionContainer::LoadFromFile(std::string filename) {
 	bool firstAct = true;
 	string *LastLoadString = NULL;
 	lfr.CommentStyle = Comment_Slash;
-	int outcome = -1;
 	while (lfr.FileOpen() == true) {
 		int r = lfr.ReadLine();
 		r = lfr.BreakUntil(".=", '=');
@@ -1713,10 +1712,8 @@ int QuestJournal::QuestData(char *buffer, char *convBuf, int QuestID,
 
 		//TODO: probably need to enforce updated objectives at all time
 		int complete = qd->actList[act].objective[a].complete;
-		int count = 0;
 		if (qref != NULL) {
 			complete = qref->ObjComplete[a];
-			count = qref->ObjCounter[a];
 		}
 
 		wpos += PutStringUTF(&buffer[wpos], StringFromBool(convBuf, complete));

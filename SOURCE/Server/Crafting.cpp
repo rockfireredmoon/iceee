@@ -360,7 +360,7 @@ void CraftManager::GenerateOutputs(const CraftRecipe *recipe, std::vector<CraftI
 		else if(args[0].compare("giveidxmult") == 0)
 		{
 			int itemID = GetIntParam(args, 1);
-			int checkIndex = GetIntParam(args, 2);
+			size_t checkIndex = (size_t)GetIntParam(args, 2);
 			int mult = GetIntParam(args, 3);
 			if(mult < 1)
 				mult = 1;
@@ -372,7 +372,7 @@ void CraftManager::GenerateOutputs(const CraftRecipe *recipe, std::vector<CraftI
 		else if(args[0].compare("giveidxdiv") == 0)
 		{
 			int itemID = GetIntParam(args, 1);
-			int checkIndex = GetIntParam(args, 2);
+			size_t checkIndex = (size_t)GetIntParam(args, 2);
 			int div = GetIntParam(args, 3);
 			if(div < 1)
 				div = 1;

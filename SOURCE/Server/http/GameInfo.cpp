@@ -85,12 +85,9 @@ bool GameInfoHandler::handleGet(CivetServer *server,
 	}
 	default:
 		g_Logs.http->info("Could not find %v", ruri.c_str());
-		mg_printf(conn, "HTTP/1.1 404 Not Found\r\n");
-		mg_printf(conn, "Content-Length: %d\r\n",
-				(int) g_HTTP404Message.size());
-		mg_printf(conn, "Content-Type: text/html\r\n\r\n");
-		mg_printf(conn, "%s", g_HTTP404Message.c_str());
+		sendStatusFile(conn, req_info, status, "Not Found", "File not found.");
 		mg_set_as_close(conn);
+		break;
 		break;
 	}
 	return true;

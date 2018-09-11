@@ -22,6 +22,7 @@
 #include "HTTPService.h"
 #include "../Util.h"
 #include "../Config.h"
+#include "../StringUtil.h"
 #include "../DirectoryAccess.h"
 
 #include "../util/Log.h"
@@ -30,54 +31,6 @@
 #include <cstring>
 
 using namespace HTTPD;
-
-/* Send bytes from the opened file to the client. */
-static void send_file_data(struct mg_connection *conn, FileResource *filep) {
-	char buf[MG_BUF_LEN];
-	int to_read, num_read, num_written;
-	long len = filep->fileSize;
-
-	/* Sanity check the offset */
-
-	if (len > 0 && filep->fd != NULL) {
-		while (len > 0) {
-			/* Calculate how much to read from the file in the buffer */
-			to_read = sizeof(buf);
-			if (to_read > len) {
-				to_read = (int) len;
-			}
-
-			/* Read from file, exit the loop on error */
-			if ((num_read = (int) fread(buf, 1, (size_t) to_read, filep->fd))
-					<= 0) {
-				break;
-			}
-
-			/* Send read bytes to the client, exit the loop on error */
-			if ((num_written = mg_write(conn, buf, (size_t) num_read))
-					!= num_read) {
-				break;
-			}
-
-			/* Both read and were successful, adjust counters */
-//            conn->num_bytes_sent += num_written;
-			len -= num_written;
-		}
-	}
-}
-
-int CARHandler::openFile(const struct mg_request_info * req_info, FileResource *file) {
-	file->fd = fopen(file->filePath.c_str(), "rb");
-	if (file->fd == NULL) {
-		return 404;
-	} else {
-		if (file->fileSize > 0) {
-			return 200;
-		} else
-			fclose(file->fd);
-		return 0;
-	}
-}
 
 bool CARHandler::handleGet(CivetServer *server, struct mg_connection *conn) {
 	/* Handler may access the request info using mg_get_request_info */
@@ -95,29 +48,20 @@ bool CARHandler::handleGet(CivetServer *server, struct mg_connection *conn) {
 
 	//
 	int status = 304;
-	FileResource file;
-	std::string newChecksum;
 
 	/* Get the full path of the file */
 	std::string nativePath = ruri;
 	Util::Replace(nativePath,
 			std::string(1, PLATFORM_FOLDERINVALID).c_str()[0],
 			std::string(1, PLATFORM_FOLDERVALID).c_str()[0]);
-	file.filePath = std::string(g_Config.ResolveHTTPCARPath()) + nativePath;
+
+	FileResource file(std::string(g_Config.ResolveHTTPCARPath()) + nativePath);
+	std::string newChecksum;
 
 	/* Process headers */
 	const char * checksum = CivetServer::getHeader(conn, "If-None-Match");
 	if (checksum == NULL) {
 		checksum = CivetServer::getHeader(conn, "If-Modified-Since");
-	}
-
-	// Get size and last modified details regardless
-	struct stat st;
-	if (!stat(file.filePath.c_str(), &st)) {
-		file.fileSize = st.st_size;
-		file.lastModified = st.st_mtime;
-	} else {
-		file.lastModified = (std::time_t) 0;
 	}
 
 	// Open the file if either there was no condition, or the checksum doesn't match
@@ -168,11 +112,7 @@ bool CARHandler::handleGet(CivetServer *server, struct mg_connection *conn) {
 	}
 	default:
 		g_Logs.http->info("Could not find %v", ruri.c_str());
-		mg_printf(conn, "HTTP/1.1 404 Not Found\r\n");
-		mg_printf(conn, "Content-Length: %d\r\n",
-				(int) g_HTTP404Message.size());
-		mg_printf(conn, "Content-Type: text/html\r\n\r\n");
-		mg_printf(conn, "%s", g_HTTP404Message.c_str());
+		sendStatusFile(conn, req_info, status, "Not Found", "File not found.");
 		mg_set_as_close(conn);
 		break;
 	}

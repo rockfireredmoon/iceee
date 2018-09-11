@@ -514,7 +514,7 @@ public:
 	void RegisterCoreFunctions(NutPlayer *instance, Sqrat::Class<NutPlayer> *clazz);
 	virtual void HaltDerivedExecution();
 	virtual void HaltedDerived();
-	NutScriptEvent* GetEvent(long id);
+	NutScriptEvent* GetEvent(unsigned long id);
 	void HaltExecution();
 	void Initialize(NutDef *defPtr, std::string &errors);
 	bool Tick(void);     //Run a single instruction.
@@ -576,7 +576,7 @@ public:
 private:
 	void DoInitialize(int stackSize, NutDef *defPtr, std::string &errors);
 	void FinaliseExecution(std::string name, int top);
-	bool ExecEvent(NutScriptEvent *nse, int index);
+	bool ExecEvent(NutScriptEvent *nse, unsigned int index);
 	bool DoRunFunction(std::string name, std::vector<ScriptParam> parms, bool time, bool retval);
 
 };

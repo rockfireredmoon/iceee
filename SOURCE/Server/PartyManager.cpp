@@ -135,7 +135,7 @@ PartyMember* ActiveParty :: GetMemberByID(int memberID)
 
 PartyMember* ActiveParty :: GetNextLooter()
 {
-	for(int i = 0 ; i < mMemberList.size(); i++) {
+	for(size_t i = 0 ; i < mMemberList.size(); i++) {
 		if(mNextToGetLoot >= mMemberList.size()) {
 			mNextToGetLoot = 0;
 		}

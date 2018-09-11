@@ -89,7 +89,7 @@ int SceneryObject :: SetPosition(const std::string &buffer)
 	//Fill in the position data from the given string.  The string should contain 3
 	//numbers separated by a space.
 
-	int Start = 0;
+	size_t Start = 0;
 	LocationX = GetPartFloat(buffer.c_str(), Start);
 	LocationY = GetPartFloat(buffer.c_str(), Start);
 	LocationZ = GetPartFloat(buffer.c_str(), Start);
@@ -99,7 +99,7 @@ int SceneryObject :: SetPosition(const std::string &buffer)
 int SceneryObject :: SetQ(const std::string &buffer)
 {
 	//Quaternion (orientation) ?
-	int Start = 0;
+	size_t Start = 0;
 	QuatW = GetPartFloat(buffer.c_str(), Start);
 	QuatX = GetPartFloat(buffer.c_str(), Start);
 	QuatY = GetPartFloat(buffer.c_str(), Start);
@@ -109,7 +109,7 @@ int SceneryObject :: SetQ(const std::string &buffer)
 
 int SceneryObject :: SetS(const std::string &buffer)
 {
-	int Start = 0;
+	size_t Start = 0;
 	float temp;
 	temp = GetPartFloat(buffer.c_str(), Start);
 	if(temp != 0.0F)
@@ -272,7 +272,7 @@ void SceneryObject::ReadFromJSON(Json::Value &value) {
 			extraData.facing = extra["facing"].asInt();
 			extraData.spawnName = extra.get("spawnName", "").asString();
 			extraData.leaseTime = extra["leaseTime"].asInt();
-			extraData.spawnPackage, extra.get("spawnPackage", "").asString();
+			extraData.spawnPackage = extra.get("spawnPackage", "").asString();
 			extraData.mobTotal = extra["mobTotal"].asInt();
 			if(extra.isMember("maxActive"))
 				extraData.maxActive = extra["maxActive"].asInt();
@@ -492,7 +492,7 @@ bool SceneryObject :: ReadEntity(AbstractEntityReader *reader) {
 	int ival = reader->ValueInt("Facing", 9999);
 	if(ival != 9999 && CreateExtraData())
 		extraData.facing = ival;
-	std:string s = reader->Value("SpawnName");
+	std::string s = reader->Value("SpawnName");
 	if(s.length() > 0 && CreateExtraData())
 		extraData.spawnName = s;
 	ival = reader->ValueInt("LeaseTime", -1);
@@ -886,7 +886,7 @@ bool SceneryPage::SaveToCluster()
 	{
 		g_Logs.data->debug("Saving prop [%v]", it->second.ID);
 		if(g_ClusterManager.WriteEntity(&((*it).second)), true) {
-			std:string k;
+			std::string k;
 			if(IsGroveZone())
 				k = StringUtil::Format("%s:%d:%d:%d", KEYPREFIX_GROVE.c_str(), mZone, mTileX, mTileY);
 			else
@@ -1428,7 +1428,6 @@ SceneryPage* SceneryManager::GetOrCreatePage(int zoneID, int sceneryPageX, int s
 
 void SceneryManager::LoadData(void)
 {
-	char buffer[256];
 	LoadStringsFile(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveStaticDataPath(), "Data"), "Valid_ATS.txt"), mValidATS);
 	g_Logs.server->info("Marked %v valid ATS files.", mValidATS.size());
 }

@@ -347,7 +347,6 @@ NPCDialogItem * NPCDialogManager::LoadItem(std::string name) {
 
 	lfr.CommentStyle = Comment_Semi;
 	int r = 0;
-	long amt = -1;
 	while (lfr.FileOpen() == true) {
 		r = lfr.ReadLine();
 		lfr.SingleBreak("=");

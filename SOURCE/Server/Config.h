@@ -23,7 +23,6 @@ extern char g_SimulatorAddress[128];
 extern char g_BindAddress[128];
 
 //For the HTTP server
-extern char g_HTTPBaseFolder[512];
 extern unsigned int g_HTTPListenPort;
 extern unsigned int g_HTTPSListenPort;
 extern std::string g_SSLCertificate;
@@ -33,10 +32,6 @@ extern unsigned long g_LocalActivityScanDelay;
 extern int g_LocalActivityRange;
 
 extern unsigned long g_SceneryAutosaveTime;
-
-extern std::string g_HTTP404Header;
-extern std::string g_HTTP404Message;
-extern int g_HTTP404Redirect;
 
 extern int g_ForceUpdateTime;
 extern int g_ItemBindingTypeOverride;
@@ -50,7 +45,6 @@ extern string g_MOTD_Channel;
 //Internal variables, shouldn't be set in the config file
 extern char g_WorkingDirectory[];
 extern char g_Executable[];
-//extern long g_HTTP404FileDataSize;
 
 extern const int g_JumpConstant;
 
@@ -103,6 +97,9 @@ class GlobalConfigData
 public:
 	GlobalConfigData();
 	~GlobalConfigData();
+
+	std::string HTTPBaseFolder;
+	std::string HTTPCARFolder;
 
 	std::string RemoteAuthenticationPassword;
 
@@ -214,7 +211,7 @@ public:
 	unsigned int SquirrelGCCallCount;				 //How many function calls must be performed before Garbage Collection is triggered
 	unsigned int SquirrelGCDelay;				 	 //How long the queue must be idle for before GC can go ahead.
 	unsigned int SquirrelGCMaxDelay;				 	 //How long after reaching call count before GC is forced.
-	int SquirrelVMStackSize;						// Initial VM stack size
+	unsigned long SquirrelVMStackSize;						// Initial VM stack size
 	int SquirrelQueueSpeed;							// Global queue speed. This value is divide by the script 'speed' to get the event delay for that script
 
 	bool PersistentBuffs;              //If true, active buffs will be saved and restored on next login
@@ -286,8 +283,6 @@ extern GlobalConfigData g_Config;
 
 void AppendString(std::string &dest, char *appendStr);
 void LoadConfig(std::string filename);
-bool CheckDefaultHTTPBaseFolder(void);
-void SetHTTPBaseFolderToCurrent(void);
 void LoadFileIntoString(std::string &dest, std::string filename);
 int SaveSession(std::string filename);
 int LoadStringsFile(std::string filename, vector<string> &list);

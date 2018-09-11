@@ -272,7 +272,7 @@ int QuestCompleteHandler::handleQuery(SimulatorThread *sim,
 		int CID = 0;
 		//int Reward = -1;  //Zero or above in the server reward processing indicates an item was selected from the reward list.
 
-		std::vector<int> selectionList;
+		std::vector<size_t> selectionList;
 
 		if (query->argCount > 0)
 			QID = query->GetInteger(0);
@@ -280,7 +280,7 @@ int QuestCompleteHandler::handleQuery(SimulatorThread *sim,
 			CID = query->GetInteger(1);
 		if (query->argCount > 2) {
 			for (unsigned int i = 2; i < query->argCount; i++)
-				selectionList.push_back(query->GetInteger(i));
+				selectionList.push_back((size_t)query->GetInteger(i));
 		}
 
 		QuestJournal *qj = pld->GetQuestJournal();

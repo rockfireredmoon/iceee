@@ -45,8 +45,6 @@ int g_ErrorSleep = 5000;
 unsigned long g_SceneryAutosaveTime = 30000;  //30 seconds
 
 //For the HTTP server
-char g_HTTPBaseFolder[512] = { 0 };
-char g_HTTPCARFolder[512] = { 0 };
 unsigned int g_HTTPListenPort = 80;
 
 #ifndef NO_SSL
@@ -60,11 +58,6 @@ unsigned long g_RebroadcastDelay = 25000;
 //Milliseconds between rescanning which creatures are within local range of players.
 unsigned long g_LocalActivityScanDelay = 3000;
 int g_LocalActivityRange = 1200;  //600
-
-std::string g_HTTP404Header;
-std::string g_HTTP404Message;
-int g_HTTP404Redirect = 0;
-//char * g_HTTP404FileData = NULL;
 
 int g_ForceUpdateTime = 1500; //Time after a character stops moving to force a character update.  Helps resync elevation if characters are walking on the edge of platform and other clients see someone dropping off the edge even though they didn't.
 
@@ -80,7 +73,6 @@ string g_MOTD_Message = "";
 // ***************************  Internal Variables  **************************
 char g_WorkingDirectory[256] = { 0 }; //If the size of this changes, need to change the parameter by _getcwd() in the main() function.
 char g_Executable[512] = { 0 };
-//long g_HTTP404FileDataSize = 0;
 
 const int g_JumpConstant = 32767;
 // *******************************  Functions  *******************************
@@ -161,13 +153,9 @@ void LoadConfig(std::string filename) {
 			} else if (strcmp(NameBlock, "DefRotation") == 0) {
 				g_Config.DefRotation = lfr.BlockToInt(1);
 			} else if (strcmp(NameBlock, "HTTPBaseFolder") == 0) {
-				Util::SafeCopy(g_HTTPBaseFolder, lfr.BlockToString(1),
-						sizeof(g_HTTPBaseFolder));
-				if (CheckDefaultHTTPBaseFolder() == true)
-					SetHTTPBaseFolderToCurrent();
+				g_Config.HTTPBaseFolder = lfr.BlockToString(1);
 			} else if (strcmp(NameBlock, "HTTPCARFolder") == 0) {
-				Util::SafeCopy(g_HTTPCARFolder, lfr.BlockToString(1),
-						sizeof(g_HTTPCARFolder));
+				g_Config.HTTPCARFolder = lfr.BlockToString(1);
 			} else if (strcmp(NameBlock, "HTTPListenPort") == 0) {
 				g_HTTPListenPort = lfr.BlockToInt(1);
 			}
@@ -185,14 +173,6 @@ void LoadConfig(std::string filename) {
 				g_RebroadcastDelay = lfr.BlockToULongC(1);
 			} else if (strcmp(NameBlock, "SceneryAutosaveTime") == 0) {
 				g_SceneryAutosaveTime = lfr.BlockToULongC(1);
-			} else if (strcmp(NameBlock, "HTTP404Header") == 0) {
-				AppendString(g_HTTP404Header, lfr.BlockToStringC(1, 0));
-			} else if (strcmp(NameBlock, "HTTP404Redirect") == 0) {
-				g_HTTP404Redirect = lfr.BlockToIntC(1);
-			} else if (strcmp(NameBlock, "HTTP404Message") == 0) {
-				AppendString(g_HTTP404Message, lfr.BlockToStringC(1, 0));
-			} else if (strcmp(NameBlock, "HTTP404MessageFile") == 0) {
-				LoadFileIntoString(g_HTTP404Message, lfr.BlockToStringC(1, 0));
 			} else if (strcmp(NameBlock, "ForceUpdateTime") == 0) {
 				g_ForceUpdateTime = lfr.BlockToInt(1);
 			} else if (strcmp(NameBlock, "ItemBindingTypeOverride") == 0) {
@@ -444,30 +424,6 @@ void LoadConfig(std::string filename) {
 	lfr.CloseCurrent();
 }
 
-bool CheckDefaultHTTPBaseFolder(void) {
-	if (strlen(g_HTTPBaseFolder) == 0)
-		return true;
-	if (strcmp(g_HTTPBaseFolder, "this") == 0)
-		return true;
-	if (strcmp(g_HTTPBaseFolder, ".") == 0)
-		return true;
-
-	return false;
-}
-
-void SetHTTPBaseFolderToCurrent(void) {
-	memset(g_HTTPBaseFolder, 0, sizeof(g_HTTPBaseFolder));
-	PLATFORM_GETCWD(g_HTTPBaseFolder, sizeof(g_HTTPBaseFolder) - 1);
-	size_t len = strlen(g_HTTPBaseFolder);
-	if (len > 0) {
-		if (g_HTTPBaseFolder[len - 1] == '\\'
-				|| g_HTTPBaseFolder[len - 1] == '/')
-			g_HTTPBaseFolder[len - 1] = 0;
-
-		g_Logs.data->info("HTTPBaseFolder defaulting to current working directory [%v]",
-				g_HTTPBaseFolder);
-	}
-}
 void LoadFileIntoString(std::string &dest, std::string filename) {
 	FILE *input = fopen(filename.c_str(), "rb");
 	if (input == NULL) {
@@ -697,11 +653,11 @@ std::string GlobalConfigData::ResolveLocalConfigurationPath() {
 }
 
 std::string GlobalConfigData::ResolveHTTPBasePath() {
-	return ResolvePath(g_HTTPBaseFolder);
+	return ResolvePath(HTTPBaseFolder);
 }
 
 std::string GlobalConfigData::ResolveHTTPCARPath() {
-	return strlen(g_HTTPCARFolder) == 0 ? ResolvePath(g_HTTPBaseFolder) : ResolvePath(g_HTTPCARFolder);
+	return ResolvePath(HTTPCARFolder);
 }
 
 std::string GlobalConfigData::ResolveVariableDataPath() {

@@ -614,7 +614,6 @@ int QuestNutPlayer::RecruitSidekick(int CID, int type, int param, int hate) {
 
 	CreatureInstance *instance = source->actInst->GetNPCInstanceByCID(CID);
 	if(instance  != NULL) {
-		int exist = source->charPtr->CountSidekick(type);
 
 		SidekickObject skobj(instance->CreatureDefID);
 		skobj.summonType = type;
@@ -633,7 +632,7 @@ int QuestNutPlayer::RecruitSidekick(int CID, int type, int param, int hate) {
 }
 
 int QuestNutPlayer::AddSidekick(int cdefID, int type, int param, int hate) {
-	int exist = source->charPtr->CountSidekick(type);
+	//int exist = source->charPtr->CountSidekick(type);
 
 	SidekickObject skobj(cdefID);
 	skobj.summonType = type;

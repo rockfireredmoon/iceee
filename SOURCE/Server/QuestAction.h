@@ -60,7 +60,7 @@ struct QuestScriptCommandDef
 {
 	const char *name;
 	int opCode;
-	int numParams;
+	unsigned int numParams;
 	int paramType[3];
 };
 

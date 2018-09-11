@@ -99,8 +99,8 @@ public:
 	unsigned long mPriceCopper;
 	unsigned long mPriceCredits;
 	int mPriceCurrency;
-	int mQuantityLimit;
-	int mQuantitySold;
+	unsigned int mQuantityLimit;
+	unsigned int mQuantitySold;
 	int mItemId;
 	int mLookId;
 	int mIv1;

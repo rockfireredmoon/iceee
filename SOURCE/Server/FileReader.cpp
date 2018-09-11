@@ -85,11 +85,9 @@ void FileReader :: SeekStart(void)
 int FileReader :: ReadLine(void)
 {
 	char *pos = fgets(DataBuffer, sizeof(DataBuffer), FileHandle[ActiveFile]);
-	int len = 0;
 	bool line = false;
 	if(pos != NULL)
 	{
-		len = strlen(DataBuffer);
 		int len = strlen(DataBuffer);
 		for(int a = len - 1; a >= 0; a--)
 		{

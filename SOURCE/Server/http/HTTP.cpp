@@ -23,8 +23,10 @@
 #include "../util/base64.h"
 #include "../util/Log.h"
 #include "../Config.h"
+#include "../StringUtil.h"
+#include "../DirectoryAccess.h"
 
-using namespace HTTPD;
+using namespace HTTPD;\
 
 //
 // SiteSession
@@ -44,6 +46,24 @@ void SiteSession::Clear() {
 	uid = 0;
 	unreadMessages = 0;
 }
+
+//
+// FileResource
+//
+FileResource::FileResource(const std::string &path) {
+	fd = 0;
+	struct stat st;
+	filePath = path;
+	if (!stat(filePath.c_str(), &st)) {
+		fileSize = st.st_size;
+		lastModified = st.st_mtime;
+	}
+	else {
+		lastModified = (std::time_t) 0;
+		fileSize = 0;
+	}
+}
+FileResource::~FileResource() { }
 
 //
 // MultiPart
@@ -109,6 +129,72 @@ std::map<std::string, std::string> Part::getHeaderValues(std::string name) {
 //
 // AbstractCivetHandler
 //
+
+
+/* Send bytes from the opened file to the client. */
+void AbstractCivetHandler::send_file_data(struct mg_connection *conn, FileResource *filep) {
+	char buf[MG_BUF_LEN];
+	int to_read, num_read, num_written;
+	long len = filep->fileSize;
+
+	/* Sanity check the offset */
+
+	if (len > 0 && filep->fd != NULL) {
+		while (len > 0) {
+			/* Calculate how much to read from the file in the buffer */
+			to_read = sizeof(buf);
+			if (to_read > len) {
+				to_read = (int) len;
+			}
+
+			/* Read from file, exit the loop on error */
+			if ((num_read = (int) fread(buf, 1, (size_t) to_read, filep->fd))
+					<= 0) {
+				break;
+			}
+
+			/* Send read bytes to the client, exit the loop on error */
+			if ((num_written = mg_write(conn, buf, (size_t) num_read))
+					!= num_read) {
+				break;
+			}
+
+			/* Both read and were successful, adjust counters */
+//            conn->num_bytes_sent += num_written;
+			len -= num_written;
+		}
+	}
+}
+
+void AbstractCivetHandler::sendStatusFile(struct mg_connection *conn, const struct mg_request_info * req_info, int code, const std::string &codeText, const std::string &defaultMessage) {
+	FileResource errfile(Platform::JoinPath(Platform::JoinPath(g_Config.ResolveHTTPBasePath(), "Errors"), StringUtil::Format("%d.html", code)));
+	mg_printf(conn, "HTTP/1.1 %d %s\r\n", code, codeText.c_str());
+	mg_printf(conn, "Content-Type: text/html\r\n");
+	int errstatus = openFile(req_info, &errfile);
+	if(errstatus == 200) {
+		mg_printf(conn, "Content-Length: %d\r\n\r\n",
+				(int) errfile.fileSize);
+		send_file_data(conn, &errfile);
+	}
+	else {
+		mg_printf(conn, "Content-Length: %lu\r\n\r\n", defaultMessage.size());
+		mg_printf(conn, "%s", defaultMessage.c_str());
+	}
+	fclose(errfile.fd);
+}
+
+int AbstractCivetHandler::openFile(const struct mg_request_info * req_info, FileResource *file) {
+	file->fd = fopen(file->filePath.c_str(), "rb");
+	if (file->fd == NULL) {
+		return 404;
+	} else {
+		if (file->fileSize > 0) {
+			return 200;
+		} else
+			fclose(file->fd);
+		return 0;
+	}
+}
 
 std::string AbstractCivetHandler::formatTime(std::time_t *now) {
 	std::tm * ptm = std::localtime(now);
