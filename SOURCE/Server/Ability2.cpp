@@ -1179,6 +1179,7 @@ void AbilityManager2 :: InitFunctionTables(void)
 	InsertFunction("MysticDamage", &AbilityCalculator::MysticDamage);
 	InsertFunction("DeathDamage", &AbilityCalculator::DeathDamage);
 	InsertFunction("Heal", &AbilityCalculator::Heal);
+	InsertFunction("OHKO", &AbilityCalculator::OHKO);
 	InsertFunction("A_Heal", &AbilityCalculator::A_Heal);
 	InsertFunction("Harm", &AbilityCalculator::Harm);
 	InsertFunction("PercentMaxHealth", &AbilityCalculator::PercentMaxHealth);
@@ -1247,6 +1248,8 @@ void AbilityManager2 :: InitFunctionTables(void)
 	InsertVerifier("Amp",     ABVerifier(ABVerifier::STATID, ABVerifier::AMOUNT, ABVerifier::TIME));  //Amp(statID, amount, time)
 	InsertVerifier("AmpCore", ABVerifier(ABVerifier::AMOUNT, ABVerifier::TIME));    //AmpCore(amount, time)
 	InsertVerifier("Nullify", ABVerifier(ABVerifier::STATID, ABVerifier::AMOUNT));  //Nullify(amount, time)
+
+	InsertVerifier("OHKO", ABVerifier());
 
 	InsertVerifier("Heal", ABVerifier(ABVerifier::AMOUNT));  //Heal(amount)
 	InsertVerifier("A_Heal", ABVerifier(ABVerifier::AMOUNT));  //A_Heal(amount)
@@ -2931,6 +2934,24 @@ void AbilityCalculator :: _DoDeathDamage(int amount)
 	mTotalDamageDeath += amount;
 	mTotalDamage += amount;
 	//ciTarget->RegisterHostility(ciSource, 1);
+}
+
+//OHK the target.
+int AbilityCalculator :: OHKO(ARGUMENT_LIST args)
+{
+	ciSource->CancelInvisibility();
+	mCriticalHitState = CRITICAL_SUPER;
+	ciSource->NotifySuperCrit(ciTarget->CreatureID);
+	mIsLightHit = false;
+	int div = ciTarget->css.health / 5;
+	mTotalDamage += ciTarget->css.health;
+	mTotalDamageFire += (ciTarget->css.health - (div * 4));
+	mTotalDamageDeath += div;
+	mTotalDamageFrost += div;
+	mTotalDamageMelee += div;
+	mTotalDamageMystic += div;
+	ciTarget->OnApplyDamage(ciSource, ciTarget->css.health);
+	return ABILITY_SUCCESS;
 }
 
 //Heal the target.

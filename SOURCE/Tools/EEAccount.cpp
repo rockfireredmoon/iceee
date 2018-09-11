@@ -26,6 +26,7 @@
 #include <util/Log.h>
 #include <curl/curl.h>
 #include <dirent.h>
+#include "json/json.h"
 #include "Item.h"
 #include "Account.h"
 #include "StringUtil.h"
@@ -124,7 +125,7 @@ int main(int argc, char *argv[]) {
 		/* Set password */
 		if (options.size() != 2) {
 			g_Logs.data->error(
-					"'password' requires at 2 arguments. <userName> <password>.");
+					"'password' requires 2 arguments. <userName> <password>.");
 			return 1;
 		}
 		std::string username = options[0].c_str();
@@ -137,8 +138,30 @@ int main(int argc, char *argv[]) {
 		} else {
 			accPtr->SetNewPassword(username.c_str(), options[1].c_str());
 			g_AccountManager.SaveIndividualAccount(accPtr);
+			g_AccountManager.AppendQuickData(accPtr, true);
+			g_Logs.data->info("Password changed for account %v", username);
 		}
-	} else if (command == "roles") {
+	} else if (command == "show") {
+		/* Set password */
+		if (options.size() != 1) {
+			g_Logs.data->error(
+					"'show' requires 1 argument. <userName>");
+			return 1;
+		}
+		std::string username = options[0].c_str();
+		AccountQuickData aqd = g_AccountManager.GetAccountQuickDataByUsername(
+				username);
+		AccountData *accPtr = g_AccountManager.FetchIndividualAccount(aqd.mID);
+		if (accPtr == NULL) {
+			g_Logs.data->error("Could not find account %v [%v]", username,
+					aqd.mID);
+		} else {
+			Json::Value str;
+			accPtr->WriteToJSON(str);
+			Json::StyledWriter writer;
+			printf("%s\n", writer.write(str).c_str());
+		}
+	}else if (command == "roles") {
 		/* Roles */
 		if (options.size() < 2) {
 			g_Logs.data->error(

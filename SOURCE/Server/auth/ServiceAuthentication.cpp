@@ -456,6 +456,14 @@ AccountData * ServiceAuthenticationHandler::authenticate(
 					accPtr->PendingMinorUpdates++;
 				}
 
+				// Veteran
+				if (veteran
+						!= accPtr->HasPermission(Perm_Account,
+								Permission_Veteran)) {
+					accPtr->SetPermission(Perm_Account, "veteran", needBuilder);
+					accPtr->PendingMinorUpdates++;
+				}
+
 				// Item give
 				bool needItemGive = sage || admin;
 				if (needItemGive

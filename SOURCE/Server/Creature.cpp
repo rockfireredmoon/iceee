@@ -5708,6 +5708,16 @@ void CreatureInstance :: StopMovement(int result)
 		Heading = tetherFacing;
 	}
 
+	StopScriptMovement(result);
+
+	CurrentTarget.DesLocX = 0;
+	CurrentTarget.DesLocZ = 0;
+	CurrentTarget.desiredRange = 0;
+	CurrentTarget.desiredSpeed = 0;
+}
+
+void CreatureInstance :: StopScriptMovement(int result)
+{
 	if(scriptMoveEvent != -1) {
 		if(actInst != NULL && actInst->nutScriptPlayer != NULL) {
 			ScriptCore::NutScriptEvent *nse = actInst->nutScriptPlayer->GetEvent(scriptMoveEvent);
@@ -5720,11 +5730,8 @@ void CreatureInstance :: StopMovement(int result)
 		}
 		scriptMoveEvent = -1;
 	}
-	CurrentTarget.DesLocX = 0;
-	CurrentTarget.DesLocZ = 0;
-	CurrentTarget.desiredRange = 0;
-	CurrentTarget.desiredSpeed = 0;
 }
+
 void CreatureInstance :: MoveTo(int x, int z, int range, int speed)
 {
 	StopMovement(ScriptCore::Result::INTERRUPTED);

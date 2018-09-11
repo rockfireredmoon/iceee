@@ -765,7 +765,7 @@ int ItemCreateHandler::handleQuery(SimulatorThread *sim,
 		} else {
 			item = g_ItemManager.GetSafePointerByID(itemID);
 		}
-		if (item != NULL) {
+		if (item != NULL && item != g_ItemManager.GetDefaultItemPtr()) {
 			int slot = pld->charPtr->inventory.GetFreeSlot(INV_CONTAINER);
 			if (slot != -1) {
 				InventorySlot *sendSlot =

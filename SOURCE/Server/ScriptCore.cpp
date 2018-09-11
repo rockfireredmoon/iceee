@@ -379,6 +379,7 @@ namespace ScriptCore
 		mNextId = 1;
 		mCaller = 0;
 		mSuspendTop = 0;
+		mPreventReentry = false;
 	}
 
 	NutPlayer::~NutPlayer() {

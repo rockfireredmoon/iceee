@@ -637,6 +637,7 @@ public:
 	void UpdateDestination(void);
 	void MoveToTarget_Ex2(void);
 	void StopMovement(int result);
+	void StopScriptMovement(int result);
 	void MoveTo(int x, int z, int range, int speed);
 	void ProcessRegen(void);
 	void ProcessAutoAttack(void);

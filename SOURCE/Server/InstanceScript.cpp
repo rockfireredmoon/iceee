@@ -1636,6 +1636,10 @@ long InstanceNutPlayer::WalkThen(int CID, Squirrel::Point point, int facing,
 
 	CreatureInstance *ci = GetNPCPtr(CID);
 	if (ci) {
+		if(mPreventReentry)
+			g_Logs.script->warn("Attempt to re-enter WalkThen, ignoring.");
+		else
+			ci->StopScriptMovement(ScriptCore::Result::INTERRUPTED);
 		return ci->scriptMoveEvent = QueueAdd(
 				new ScriptCore::NutScriptEvent(new ScriptCore::NeverCondition(),
 						new WalkCallback(this, ci, point, facing, speed, range,
@@ -2368,11 +2372,13 @@ bool WalkCallback::Execute() {
 	bool ok = false;
 	if (!mFunction.IsNull()) {
 		try {
+			mNut->mPreventReentry = true;
 			Sqrat::SharedPtr<bool> ptr = mFunction.Evaluate<bool>(mResult);
 			ok = ptr.Get() == NULL || ptr.Get();
 		} catch (Sqrat::Exception &e) {
 			g_Logs.script->error("Exception while execute script function.");
 		}
+		mNut->mPreventReentry = false;
 
 	}
 
@@ -2392,6 +2398,7 @@ bool WalkCallback::Execute() {
 		mCreature->tetherNodeZ = sTetherNodeZ;
 	}
 
+	mCreature ->scriptMoveEvent = -1;
 	return ok;
 }
 

@@ -599,6 +599,7 @@ public:
 	int FrostDamage(ARGUMENT_LIST args);
 	int MysticDamage(ARGUMENT_LIST args);
 	int DeathDamage(ARGUMENT_LIST args);
+	int OHKO(ARGUMENT_LIST args);
 	int Heal(ARGUMENT_LIST args);
 	int A_Heal(ARGUMENT_LIST args);
 	int Harm(ARGUMENT_LIST args);

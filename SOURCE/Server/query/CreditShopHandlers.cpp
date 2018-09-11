@@ -236,7 +236,7 @@ int CreditShopListHandler::handleQuery(SimulatorThread *sim,
 			wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux1);
 
 			// Track maximum sold, to calculate what is 'HOT'.
-			int maxSold = 0;
+			unsigned int maxSold = 0;
 
 			// Get a list we can sort
 			for (auto it = allItems.begin();
@@ -247,7 +247,7 @@ int CreditShopListHandler::handleQuery(SimulatorThread *sim,
 				continue;
 
 				if(it->mQuantitySold > maxSold)
-				maxSold = it->mQuantitySold;
+					maxSold = it->mQuantitySold;
 
 				ItemDef * item = it->mItemId != 0 ? g_ItemManager.GetSafePointerByID(it->mItemId) : NULL;
 				if (item != NULL) {
@@ -270,7 +270,7 @@ int CreditShopListHandler::handleQuery(SimulatorThread *sim,
 						return names[a.mId] < names[b.mId];
 					});
 
-			int hotAmount = max(1, (int)((float)maxSold * 0.75));
+			unsigned int hotAmount = max(1, (int)((float)maxSold * 0.75));
 
 			for (auto it = items.begin(); it != items.end(); ++it) {
 				wpos += PutByte(&sim->SendBuf[wpos], 12);
@@ -292,7 +292,7 @@ int CreditShopListHandler::handleQuery(SimulatorThread *sim,
 				}
 				else {
 					time_t expire = ( g_Config.MaxNewCreditShopItemDays * 86400 ) + (*it).mCreatedDate;
-					if((*it).mCreatedDate > 0 && (g_ServerTime / 1000UL) < expire) {
+					if((*it).mCreatedDate > 0 && (time_t)(g_ServerTime / 1000UL) < expire) {
 						sprintf(sim->Aux1, "%s", Status::GetNameByID(Status::NEW).c_str());
 					}
 					else {

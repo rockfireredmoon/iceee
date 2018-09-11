@@ -368,8 +368,9 @@ enum PermissionFlagEnum
 	Permission_Troll          = 0x00010000,     //Just for fun.
 	Permission_TrollChat      = 0x00020000,     //Just for fun.  Uses a customizable phrase replace on region chat messages.
 	Permission_SelfDiag       = 0x10000000,     //Not a "permission" but helps to track down arbitrary stuff for specific players.
-	Permission_PasswordReset  = 0x20000000,     //The password can be reset on this account.
+	Permission_PasswordReset  = 0x20000000,     //The password can be reset on this account.c
 	Permission_Builder        = 0x30000000,     //Can build anywhere.
+	Permission_Veteran        = 0x40000000,     //Not actually used, but signals the player has been around since the previous major version.
 
 	//Full permissions for all flags of a given set
 	Permission_FullSet    = 0xFFFFFFFF     //Full permissions for all flags of this set
