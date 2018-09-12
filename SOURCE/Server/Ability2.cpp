@@ -1509,6 +1509,23 @@ void AbilityManager2 :: LoadAbilityTable(std::string filename)
 	g_Logs.data->info("Loaded ability file [%v], %v abilities loaded.", filename, loadCount);
 }
 
+
+bool AbilityManager2 :: GetPageAsStrings(unsigned int page, unsigned int pageSize, MULTISTRING &list) {
+	unsigned int r = page * pageSize;
+	unsigned int e = r + pageSize;
+	unsigned int i = 0;
+	for (std::map<int, AbilityEntry2>::iterator it2 = mAbilityIndex.begin();
+			it2 != mAbilityIndex.end(); ++it2) {
+		i++;
+		if(i > e)
+			break;
+		if(i <= r)
+			continue;
+		list.push_back(it2->second.mRowData);
+	}
+	return i > 0 && i < mAbilityIndex.size();
+}
+
 void AbilityManager2 :: InsertAbility(int abilityID, const STRINGLIST &rowData)
 {
 	mAbilityIndex[abilityID].ImportRow(rowData);

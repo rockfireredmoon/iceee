@@ -1010,7 +1010,6 @@ AccountData * AccountManager::GetValidLogin(const char *loginName,
 	//account list to find an entry that matches the given credentials.
 
 	AccountQuickData aqd = GetAccountQuickDataByUsername(loginName);
-	g_Logs.data->error("GetValidLogin: %v:%v:%v:%v", loginName, loginAuth, aqd.mID, aqd.mLoginAuth);
 	if (aqd.mID != 0 && aqd.mLoginAuth.compare(loginAuth) == 0)
 		return FetchIndividualAccount(aqd.mID);
 	return NULL;

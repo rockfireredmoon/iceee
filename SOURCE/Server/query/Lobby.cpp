@@ -19,9 +19,11 @@
 #include "../Util.h"
 #include "ClanHandlers.h"
 #include "../Account.h"
+#include "../Ability2.h"
 #include "../Config.h"
 #include "../URL.h"
 #include "../util/Log.h"
+#include <algorithm>
 
 //
 //PersonaListHandler
@@ -285,3 +287,28 @@ int ModGetURLHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld
 		SimulatorQuery *query, CreatureInstance *creatureInstance) {
 	return PrepExt_QueryResponseMultiString(sim->SendBuf, query->ID, g_URLManager.GetURLs());
 }
+
+//
+// AbilitiesHandler
+//
+
+int AbilitiesHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
+		SimulatorQuery *query, CreatureInstance *creatureInstance) {
+
+	int page = 0;
+	int pageSize = 25;
+	if (sim->query.argCount >= 1)
+		page = atoi(query->args[0].c_str());
+	if (sim->query.argCount >= 2)
+		pageSize = atoi(query->args[1].c_str());
+
+	MULTISTRING l;
+	STRINGLIST header;
+	if(g_AbilityManager.GetPageAsStrings(page, pageSize, l))
+		header.push_back("true");
+	else
+		header.push_back("false");
+	l.insert(l.begin(), header);
+	return PrepExt_QueryResponseMultiString(sim->SendBuf, query->ID, l);
+}
+

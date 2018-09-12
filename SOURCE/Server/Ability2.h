@@ -800,6 +800,7 @@ public:
 	void GetCooldownCategoryStrings(STRINGLIST &output);
 	const char* GetAbilityNameByID(int abilityID);
 	int GetAbilityIDByName(const char *name);
+	bool GetPageAsStrings(unsigned int page, unsigned int pageSize, MULTISTRING &list);
 
 private:
 

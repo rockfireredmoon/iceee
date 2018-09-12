@@ -502,6 +502,7 @@ int InitServerMain(int argc, char *argv[]) {
 	g_QueryManager.lobbyQueryHandlers["persona.create"] = new PersonaCreateHandler();
 	g_QueryManager.lobbyQueryHandlers["persona.delete"] = new PersonaDeleteHandler();
 	g_QueryManager.lobbyQueryHandlers["mod.getURL"] = new ModGetURLHandler();
+	g_QueryManager.lobbyQueryHandlers["game.abilities"] = new AbilitiesHandler();
 
 	// Game Query Handlers
 	g_QueryManager.queryHandlers["clan.disband"] = new ClanDisbandHandler();
