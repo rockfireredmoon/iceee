@@ -10177,7 +10177,7 @@ int SimulatorThread :: protected_helper_query_item_morph(bool command)
 	wpos += RemoveItemUpdate(&SendBuf[wpos], Aux3, newPtr);
 	pld.charPtr->inventory.RemItem(newLook);
 
-	if(reagentDef != NULL) {
+	if(unstack) {
 		Util::SafeFormat(Aux3, sizeof(Aux3), "You have used 1 %s.", reagentDef->mDisplayName.c_str());
 		wpos += PrepExt_SendInfoMessage(&SendBuf[wpos], Aux3, INFOMSG_INFO);
 		/* This refashion is taking up a reagent of sorts, a portable refashioner */
