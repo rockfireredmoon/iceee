@@ -16,7 +16,12 @@ tacopie_inc = include_directories('SOURCE/LibCPPRedis/tacopie/includes')
 thread_dep = dependency('threads')
 curl_dep = dependency('libcurl')
 openssl_dep = dependency('openssl', required: false)
-pthread_dep = meson.get_compiler('c').find_library('pthread', required: false)
+# TODO test when less than 0.31.0
+if meson.version() == '0.29.0'
+	pthread_dep = find_library('pthread', required: false)
+else
+	pthread_dep = meson.get_compiler('c').find_library('pthread', required: false)
+endif
 
 #Compiler arguments 
 add_global_arguments('-DELPP_THREAD_SAFE=1', language: ['cpp','c'])
@@ -24,9 +29,9 @@ add_global_arguments('-DLOCALCONFIGDIR="' + get_option('localconfigdir') + '"', 
 if not openssl_dep.found() or not get_option('ssl')
 	add_global_arguments('-DNO_SSL=1', language: ['cpp','c'])
 endif
-if pthread_dep.found()
-	add_global_arguments('-DHAS_PTHREAD=1', language: ['cpp','c'])
-endif
+#if pthread_dep.found()
+add_global_arguments('-DHAS_PTHREAD=1', language: ['cpp','c'])
+#endif
 
 #Squirrel
 squirrel_lib = library('squirrel',[
