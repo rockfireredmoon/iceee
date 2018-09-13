@@ -16,12 +16,7 @@ tacopie_inc = include_directories('SOURCE/LibCPPRedis/tacopie/includes')
 thread_dep = dependency('threads')
 curl_dep = dependency('libcurl')
 openssl_dep = dependency('openssl', required: false)
-# TODO test when less than 0.31.0
-if meson.version() == '0.29.0'
-	pthread_dep = find_library('pthread', required: false)
-else
-	pthread_dep = meson.get_compiler('c').find_library('pthread', required: false)
-endif
+pthread_dep = meson.get_compiler('c').find_library('pthread', required: false)
 
 #Compiler arguments 
 add_global_arguments('-DELPP_THREAD_SAFE=1', language: ['cpp','c'])
