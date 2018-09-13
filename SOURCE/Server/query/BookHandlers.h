@@ -27,6 +27,8 @@ public:
 
 	int handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 			SimulatorQuery *query, CreatureInstance *creatureInstance);
+private:
+	int PopulateBookList(SimulatorThread *sim, int wpos, InventoryManager &inv, int container, std::set<int> &booksFound);
 };
 
 class BookGetHandler: public QueryHandler {
@@ -36,6 +38,9 @@ public:
 
 	int handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 			SimulatorQuery *query, CreatureInstance *creatureInstance);
+private:
+	int PopulateBookDetails(SimulatorThread *sim, int wpos, InventoryManager &inv, int container, std::set<int> &pagesFoundSet, BookDefinition &def);
+
 };
 
 class BookItemHandler: public QueryHandler {

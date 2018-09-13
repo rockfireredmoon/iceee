@@ -37,6 +37,15 @@ int BookListHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 
 	InventoryManager inv = creatureInstance->charPtr->inventory;
 	std::set<int> booksFound;
+	wpos = PopulateBookList(sim, wpos, inv, INV_CONTAINER, booksFound);
+	wpos = PopulateBookList(sim, wpos, inv, BOOKSHELF_CONTAINER, booksFound);
+	PutShort(&sim->SendBuf[7], booksFound.size());
+	PutShort(&sim->SendBuf[1], wpos - 3);
+	return wpos;
+}
+
+int BookListHandler::PopulateBookList(SimulatorThread *sim, int wpos, InventoryManager &inv, int container, std::set<int> &booksFound) {
+
 	for (size_t a = 0; a < inv.containerList[INV_CONTAINER].size(); a++) {
 		int ID = inv.containerList[INV_CONTAINER][a].IID;
 		ItemDef *itemDef =
@@ -65,10 +74,9 @@ int BookListHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 			}
 		}
 	}
-	PutShort(&sim->SendBuf[7], booksFound.size());
-	PutShort(&sim->SendBuf[1], wpos - 3);
 	return wpos;
 }
+
 
 //
 // BookGetHandler
@@ -93,8 +101,15 @@ int BookGetHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 	wpos += PutShort(&sim->SendBuf[wpos], 0);  //Have pages
 
 	InventoryManager inv = creatureInstance->charPtr->inventory;
-	int pagesFound = 0;
 	std::set<int> pagesFoundSet;
+	wpos = PopulateBookDetails(sim, wpos, inv, INV_CONTAINER, pagesFoundSet, def);
+	wpos = PopulateBookDetails(sim, wpos, inv, BOOKSHELF_CONTAINER, pagesFoundSet, def);
+	PutShort(&sim->SendBuf[7], pagesFoundSet.size());
+	PutShort(&sim->SendBuf[1], wpos - 3);
+	return wpos;
+}
+
+int BookGetHandler :: PopulateBookDetails(SimulatorThread *sim, int wpos, InventoryManager &inv, int container, std::set<int> &pagesFoundSet, BookDefinition &def) {
 	for (size_t a = 0; a < inv.containerList[INV_CONTAINER].size(); a++) {
 		ItemDef *itemDef =
 				inv.containerList[INV_CONTAINER][a].ResolveSafeItemPtr();
@@ -111,7 +126,6 @@ int BookGetHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 					wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux2);
 					wpos += PutStringUTF(&sim->SendBuf[wpos],
 							def.pages[i].c_str());
-					pagesFound++;
 				}
 			} else if (itemDef->GetDynamicMax(ItemIntegerType::BOOK)
 					== def.bookID && pageNo > 0
@@ -124,12 +138,9 @@ int BookGetHandler::handleQuery(SimulatorThread *sim, CharacterServerData *pld,
 				wpos += PutStringUTF(&sim->SendBuf[wpos], sim->Aux2);
 				wpos += PutStringUTF(&sim->SendBuf[wpos],
 						def.pages[pageNo - 1].c_str());
-				pagesFound++;
 			}
 		}
 	}
-	PutShort(&sim->SendBuf[7], pagesFound);
-	PutShort(&sim->SendBuf[1], wpos - 3);
 	return wpos;
 }
 
